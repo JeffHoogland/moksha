@@ -27,6 +27,7 @@ static void _e_module_free(E_Module *m);
 static E_Menu *_e_module_control_menu_new(E_Module *mod);
 static void _e_module_menu_free(void *obj);
 static void _e_module_control_menu_about(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_module_control_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_module_control_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_module_dialog_disable_show(char *title, char *body, E_Module *m);
 static void _e_module_cb_dialog_disable(void *data, E_Dialog *dia);
@@ -378,7 +379,8 @@ e_module_menu_new(void)
 	
 	mod = l->data;
 	mi = e_menu_item_new(m);
-	if ((mod->api) && (mod->api->name)) e_menu_item_label_set(mi, mod->api->name);
+	if ((mod->api) && (mod->api->name))
+	  e_menu_item_label_set(mi, mod->api->name);
 	else e_menu_item_label_set(mi, mod->name);
 	if (mod->edje_icon_file)
 	  {
@@ -483,14 +485,14 @@ _e_module_control_menu_new(E_Module *mod)
    if (mod->enabled) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _e_module_control_menu_enabled, mod);
 
-   if (mod->config_menu)
+   if (mod->func.config)
      {
 	mi = e_menu_item_new(m);
 	e_menu_item_separator_set(mi, 1);
 	
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Configuration"));
-	e_menu_item_submenu_set(mi, mod->config_menu);
+	e_menu_item_callback_set(mi, _e_module_control_menu_configuration, mod);
      }
    return m;
 }
@@ -519,6 +521,15 @@ _e_module_control_menu_about(void *data, E_Menu *m, E_Menu_Item *mi)
    
    mod = data;
    mod->func.about(mod);
+}
+
+static void
+_e_module_control_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Module *mod;
+   
+   mod = data;
+   mod->func.config(mod);
 }
 
 static void

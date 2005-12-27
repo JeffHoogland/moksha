@@ -3682,6 +3682,7 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
      {
 	if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return 1;
 	else if (e->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR) return 1;
+	else if (e->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR_VIRTUAL) return 1;
      }
    else if (e->mode == ECORE_X_EVENT_MODE_GRAB)
      {
@@ -3689,12 +3690,14 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
 	else if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return 1;
 	else if (e->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR_VIRTUAL) return 1;
 	else if (e->detail == ECORE_X_EVENT_DETAIL_ANCESTOR) return 1;
+	else if (e->detail == ECORE_X_EVENT_DETAIL_VIRTUAL) return 1;
      }
    else if (e->mode == ECORE_X_EVENT_MODE_UNGRAB)
      {
 	/* for firefox/thunderbird (xul) menu walking */
 	/* NB: why did i disable this before? */
 	if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return 1;
+	else if (e->detail == ECORE_X_EVENT_DETAIL_POINTER) return 1;
      }
    else if (e->mode == ECORE_X_EVENT_MODE_WHILE_GRABBED)
      {

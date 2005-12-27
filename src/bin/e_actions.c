@@ -1068,6 +1068,7 @@ ACT_FN_GO(exec)
 	Ecore_Exe *exe;
 	
 	exe = ecore_exe_run(params, NULL);
+	e_exehist_add("action/exec", params);
 	if (exe) ecore_exe_free(exe);
      }
 }
@@ -1100,7 +1101,10 @@ ACT_FN_GO(app)
 		  else if (!strcmp(p2, "exe:"))
 		    a = e_app_exe_find(p + 1);
 		  if (a)
-		    e_zone_app_exec(zone, a);
+		    {
+		       e_zone_app_exec(zone, a);
+		       e_exehist_add("action/app", a->exe);
+		    }
 	       }
 	  }
      }

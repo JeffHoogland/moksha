@@ -19,7 +19,7 @@ e_configure_show(E_Container *con)
 {
    E_Configure *eco;
    E_Manager *man;
-   Evas_Coord w, h, ew, eh;   
+   Evas_Coord w, h, ew, eh, mw, mh;
    
    if (!con)
      {
@@ -55,6 +55,8 @@ e_configure_show(E_Container *con)
    
    eco->ilist = e_widget_ilist_add(eco->evas, 48, 48, NULL);
    e_widget_ilist_selector_set(eco->ilist, 1);
+   e_widget_min_size_get(eco->ilist, &mw, &mh);
+   edje_extern_object_min_size_set(eco->ilist, mw, mh);
    edje_object_part_swallow(eco->edje, "item", eco->ilist);
    edje_object_part_text_set(eco->edje, "title", _("Configuration Panel"));
 
@@ -71,7 +73,10 @@ e_configure_show(E_Container *con)
    /* FIXME: we should have a way for modules to hook in here and add their
     * own entries
     */
+   
    eco->close = e_widget_button_add(eco->evas, _("Close"), NULL, _e_configure_cb_close, eco, NULL);
+   e_widget_min_size_get(eco->close, &mw, &mh);
+   edje_extern_object_min_size_set(eco->close, mw, mh);
    edje_object_part_swallow(eco->edje, "button", eco->close);
 
    edje_object_size_min_calc(eco->edje, &ew, &eh);

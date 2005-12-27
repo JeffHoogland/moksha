@@ -63,7 +63,7 @@ _fill_data(CFData *cfdata)
    cfdata->border_shade_transition = e_config->border_shade_transition;
    cfdata->border_shade_speed = e_config->border_shade_speed;
    if (cfdata->move_info_visible ||
-       cfdata->resize_info_follows) cfdata->move_resize_info = 1;
+       cfdata->resize_info_visible) cfdata->move_resize_info = 1;
    if (cfdata->border_shade_animate) cfdata->animate_shading = 1;
    cfdata->placement = cfdata->window_placement_policy;
 }
@@ -98,6 +98,11 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
      {
 	e_config->move_info_visible = 1;
 	e_config->resize_info_visible = 1;
+     }
+   else
+     {
+	e_config->move_info_visible = 0;
+	e_config->resize_info_visible = 0;
      }
    e_config->window_placement_policy = cfdata->placement;
    e_config->border_shade_animate = cfdata->animate_shading;

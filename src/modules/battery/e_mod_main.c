@@ -925,26 +925,60 @@ _battery_linux_apm_check(Battery *ef)
    return stat;
 }
 
+
+/* hack for pmu */
+
+/* This function converts a string to an integer. Additionally to
+ * atoi() it converts also hexadecimal values
+ */
+static int
+axtoi(char *arg)
+{
+   int n, val, pwr=1, m, rc = 0;
+   char hex[9], c;
+   
+   for (n = 0, m = 0; n < strlen(arg); n++)
+     {
+	if (arg[n] != ' ')
+	  {
+	     hex[m++] = c = toupper(arg[n]);
+	     if ((m == sizeof(hex)) || (c < '0') || (c > 'F'))
+	       return 0;   /* overflow or invalid */
+	  }
+     }
+   hex[m] = '\0';  /* terminate string */
+   
+   for (n = 0; n < m; n++)
+     {
+	c = hex[m-n-1];
+	if ((c >= 'A') && (c <= 'F'))
+	  val = c -'A' + 10;
+	else
+	  val = c - '0';
+	rc = rc + val * pwr;
+	pwr *= 16;
+     }
+   return rc;
+}
+
 static Status *
 _battery_linux_powerbook_check(Battery *ef)
 {
    Ecore_List *bats;
    char buf[4096], buf2[4096];
    char *name;
-
+   char *token;
    FILE *f;
-
    int discharging = 0;
    int charging = 0;
-
    int battery = 0;
    int ac = 0;
    int seconds = 0;
    int hours, minutes;
-
+   int flags;
+   int voltage;
    int charge;
    int max_charge;
-
    Status *stat;
 
    stat = E_NEW(Status, 1);
@@ -980,24 +1014,44 @@ _battery_linux_powerbook_check(Battery *ef)
 		  int time = 0;
 		  int current = 0;
 
+		  while (fgets (buf,sizeof (buf), f))
+		    {
+		       if ((token = strtok (buf, ":\n")))
+			 {
+			    if (!strncmp ("flags", token, 5))
+			      flags = axtoi (strtok (0, ":\n"));
+			    else if (!strncmp ("charge", token, 6))
+			      charge = atoi(strtok(0, ":\n"));
+			    else if (!strncmp ("max_charge", token, 9))
+			      max_charge += atoi (strtok(0,":\n"));
+			    else if (!strncmp ("current", token, 7))
+			      current = atoi (strtok(0, ":\n"));
+			    else if (!strncmp ("voltage", token, 7))
+			      voltage = atoi (strtok(0,":\n"));
+			    else if (!strncmp ("time rem.", token, 8))
+			      time = atoi (strtok(0, ":\n"));
+			    else
+			      strtok (0,":\n");
+			 }
+		    }
 		  /* Skip flag; */
-		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+//		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
 		  /* Read charge */
-		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-		  tmp = _battery_int_get(buf2);
-		  charge += tmp;
+//		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+//		  tmp = _battery_int_get(buf2);
+//		  charge += tmp;
 		  /* Read max charge */
-		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-		  tmp = _battery_int_get(buf2);
-		  max_charge += tmp;
+//		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+//		  tmp = _battery_int_get(buf2);
+//		  max_charge += tmp;
 		  /* Read current */
-		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-		  current = _battery_int_get(buf2);
+//		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+//		  current = _battery_int_get(buf2);
 		  /* Skip voltage */
-		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+//		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
 		  /* Get time remaining */
-		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-		  time = _battery_int_get(buf2);
+//		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+//		  time = _battery_int_get(buf2);
 		  fclose(f);
 
 		  battery++;
@@ -1057,6 +1111,7 @@ _battery_linux_powerbook_check(Battery *ef)
 	       }
 	  }
 	stat->level = (double)charge / (double)max_charge;
+       if (stat->level > 1.0) stat->level = 1.0;
 	snprintf(buf, sizeof(buf), "%.0f%%", stat->level * 100.0);
 	stat->reading = strdup(buf);
 	snprintf(buf, sizeof(buf), "%i:%02i", hours, minutes);

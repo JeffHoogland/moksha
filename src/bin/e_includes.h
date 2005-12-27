@@ -106,3 +106,4 @@
 #include "e_deskpreview.h"
 #include "e_exebuf.h"
 #include "e_int_config_modules.h"
+#include "e_exehist.h"

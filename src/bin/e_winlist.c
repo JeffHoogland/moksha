@@ -719,7 +719,8 @@ _e_winlist_cb_key_up(void *data, int type, void *event)
    Ecore_X_Event_Key_Up *ev;
    
    ev = event;
-   if (ev->win != input_window) return 1;
+   if (!winlist) return 1;
+//   if (ev->win != input_window) return 1;
    if (hold_mod)
      {
 	if      ((hold_mod & ECORE_X_MODIFIER_SHIFT) && (!strcmp(ev->keysymbol, "Shift_L"))) hold_count--;

@@ -366,18 +366,18 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, input_method, STR); /**/
    E_CONFIG_LIST(D, T, path_append_input_methods, _e_config_path_append_edd); /**/
    E_CONFIG_LIST(D, T, path_append_messages, _e_config_path_append_edd); /**/
-   E_CONFIG_VAL(D, T, exebuf_max_exe_list, INT); /**/
-   E_CONFIG_VAL(D, T, exebuf_max_eap_list, INT); /**/
-   E_CONFIG_VAL(D, T, exebuf_scroll_animate, INT); /**/
-   E_CONFIG_VAL(D, T, exebuf_scroll_speed, DOUBLE); /**/
-   E_CONFIG_VAL(D, T, exebuf_pos_align_x, DOUBLE); /**/
-   E_CONFIG_VAL(D, T, exebuf_pos_align_y, DOUBLE); /**/
-   E_CONFIG_VAL(D, T, exebuf_pos_size_w, DOUBLE); /**/
-   E_CONFIG_VAL(D, T, exebuf_pos_size_h, DOUBLE); /**/
-   E_CONFIG_VAL(D, T, exebuf_pos_min_w, INT); /**/
-   E_CONFIG_VAL(D, T, exebuf_pos_min_h, INT); /**/
-   E_CONFIG_VAL(D, T, exebuf_pos_max_w, INT); /**/
-   E_CONFIG_VAL(D, T, exebuf_pos_max_h, INT); /**/
+   E_CONFIG_VAL(D, T, exebuf_max_exe_list, INT);
+   E_CONFIG_VAL(D, T, exebuf_max_eap_list, INT);
+   E_CONFIG_VAL(D, T, exebuf_scroll_animate, INT);
+   E_CONFIG_VAL(D, T, exebuf_scroll_speed, DOUBLE);
+   E_CONFIG_VAL(D, T, exebuf_pos_align_x, DOUBLE);
+   E_CONFIG_VAL(D, T, exebuf_pos_align_y, DOUBLE);
+   E_CONFIG_VAL(D, T, exebuf_pos_size_w, DOUBLE);
+   E_CONFIG_VAL(D, T, exebuf_pos_size_h, DOUBLE);
+   E_CONFIG_VAL(D, T, exebuf_pos_min_w, INT);
+   E_CONFIG_VAL(D, T, exebuf_pos_min_h, INT);
+   E_CONFIG_VAL(D, T, exebuf_pos_max_w, INT);
+   E_CONFIG_VAL(D, T, exebuf_pos_max_h, INT);
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
      {
@@ -666,7 +666,7 @@ e_config_init(void)
 	     eb->action = evas_stringshare_add("menu_show");
 	     eb->params = evas_stringshare_add("favorites");
 	     e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
-	     
+/*	     
 	     eb = E_NEW(E_Config_Binding_Mouse, 1);
 	     eb->context = E_BINDING_CONTEXT_CONTAINER;
 	     eb->button = 1;
@@ -675,6 +675,7 @@ e_config_init(void)
 	     eb->action = evas_stringshare_add("edit_mode");
 	     eb->params = NULL;
 	     e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
+*/
 	  }
 	  {
 	     E_Config_Binding_Key *eb;
@@ -1766,7 +1767,7 @@ e_config_domain_save(char *domain, E_Config_DD *edd, void *data)
    ef = eet_open(buf, EET_FILE_MODE_WRITE);
    if (ef)
      {
-	ok = eet_data_write(ef, edd, "config", data, 0);
+	ok = eet_data_write(ef, edd, "config", data, 1);
 	eet_close(ef);
      }
    return ok;

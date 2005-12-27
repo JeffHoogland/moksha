@@ -30,18 +30,18 @@
 #define E_OBJECT_DEL_SET(x, del_func)   e_object_del_func_set(E_OBJECT(x), E_OBJECT_CLEANUP_FUNC(del_func))
 
 #ifdef OBJECT_PARANOIA_CHECK
-# define E_OBJECT_CHECK(x)                  do {if (e_object_error(E_OBJECT(x))) return;} while (0)
-# define E_OBJECT_CHECK_RETURN(x, ret)      do {if (e_object_error(E_OBJECT(x))) return ret;} while (0)
-#  define E_OBJECT_TYPE_CHECK(x, tp)      do {if ((E_OBJECT(x)->type) != (tp)) { fprintf(stderr, "Object type check failed in %s\n", __FUNCTION__); return;} } while (0)
-#  define E_OBJECT_TYPE_CHECK_RETURN(x, tp, ret)  do {if ((E_OBJECT(x)->type) != tp) { fprintf(stderr, "Object type check failed in %s\n", __FUNCTION__); return ret;} } while (0)
-# define E_OBJECT_IF_NOT_TYPE(x, tp)      if (E_OBJECT(x)->type != (tp))
+# define E_OBJECT_CHECK(x)                       do {if (e_object_error(E_OBJECT(x))) return;} while (0)
+# define E_OBJECT_CHECK_RETURN(x, ret)           do {if (e_object_error(E_OBJECT(x))) return ret;} while (0)
+#  define E_OBJECT_TYPE_CHECK(x, tp)             do {if ((E_OBJECT(x)->type) != (tp)) { fprintf(stderr, "Object type check failed in %s\n", __FUNCTION__); return;} } while (0)
+#  define E_OBJECT_TYPE_CHECK_RETURN(x, tp, ret) do {if ((E_OBJECT(x)->type) != tp) { fprintf(stderr, "Object type check failed in %s\n", __FUNCTION__); return ret;} } while (0)
+# define E_OBJECT_IF_NOT_TYPE(x, tp)             if (E_OBJECT(x)->type != (tp))
 #else
 # ifdef OBJECT_CHECK
-#  define E_OBJECT_CHECK(x)                 do {if ((!E_OBJECT(x)) || (E_OBJECT(x)->magic != E_OBJECT_MAGIC)) return;} while (0)
-#  define E_OBJECT_CHECK_RETURN(x, ret)     do {if ((!E_OBJECT(x)) || (E_OBJECT(x)->magic != E_OBJECT_MAGIC)) return ret;} while (0)
-#  define E_OBJECT_TYPE_CHECK(x, tp)        do {if ((E_OBJECT(x)->type) != (tp)) { fprintf(stderr, "Object type check failed in %s\n", __FUNCTION__); return;} } while (0)
+#  define E_OBJECT_CHECK(x)                       do {if ((!E_OBJECT(x)) || (E_OBJECT(x)->magic != E_OBJECT_MAGIC)) return;} while (0)
+#  define E_OBJECT_CHECK_RETURN(x, ret)           do {if ((!E_OBJECT(x)) || (E_OBJECT(x)->magic != E_OBJECT_MAGIC)) return ret;} while (0)
+#  define E_OBJECT_TYPE_CHECK(x, tp)              do {if ((E_OBJECT(x)->type) != (tp)) { fprintf(stderr, "Object type check failed in %s\n", __FUNCTION__); return;} } while (0)
 #  define E_OBJECT_TYPE_CHECK_RETURN(x, tp, ret)  do {if ((E_OBJECT(x)->type) != (tp)) { fprintf(stderr, "Object type check failed in %s\n", __FUNCTION__); return ret;} } while (0)
-# define E_OBJECT_IF_NOT_TYPE(x, type)      if (E_OBJECT(x)->type != (type))
+# define E_OBJECT_IF_NOT_TYPE(x, type)            if (E_OBJECT(x)->type != (type))
 # else
 #  define E_OBJECT_CHECK(x)               
 #  define E_OBJECT_CHECK_RETURN(x, ret)   

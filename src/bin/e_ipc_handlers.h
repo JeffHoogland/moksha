@@ -29,7 +29,7 @@ if (e->data) { \
    char *__str = NULL; \
    if (e_ipc_codec_str_dec(e->data, e->size, &__str)) {
 # define END_STRING(__str) \
-      free(__str); \
+      if (__str) free(__str); \
    } \
 } \
 break;
@@ -4426,7 +4426,12 @@ break;
    REQ_STRING(params[0], HDL);
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
-   if (e_theme_transition_find(s))
+   if (!s)
+     {
+	if (e_config->transition_start) evas_stringshare_del(e_config->transition_start);
+	e_config->transition_start = NULL;
+     }
+   if ((s) && (e_theme_transition_find(s)))
      {
 	if (e_config->transition_start) evas_stringshare_del(e_config->transition_start);
 	e_config->transition_start = NULL;
@@ -4471,13 +4476,18 @@ break;
    REQ_STRING(params[0], HDL);
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
-   if (e_theme_transition_find(s))
+   if (!s)
+     {
+	if (e_config->transition_desk) evas_stringshare_del(e_config->transition_desk);
+	e_config->transition_desk = NULL;
+     }
+   if ((s) && (e_theme_transition_find(s)))
      {
 	if (e_config->transition_desk) evas_stringshare_del(e_config->transition_desk);
 	e_config->transition_desk = NULL;
 	if (s) e_config->transition_desk = evas_stringshare_add(s);
-       	SAVE;
      }
+   SAVE;
    END_STRING(s);
 #elif (TYPE == E_REMOTE_IN)
 #endif
@@ -4516,7 +4526,12 @@ break;
    REQ_STRING(params[0], HDL);
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
-   if (e_theme_transition_find(s))
+   if (!s)
+     {
+	if (e_config->transition_change) evas_stringshare_del(e_config->transition_change);
+	e_config->transition_change = NULL;
+     }
+   if ((s) && (e_theme_transition_find(s)))
      {
 	if (e_config->transition_change) evas_stringshare_del(e_config->transition_change);
 	e_config->transition_change = NULL;

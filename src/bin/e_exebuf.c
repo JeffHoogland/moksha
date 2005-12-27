@@ -18,6 +18,8 @@ struct _E_Exebuf_Exe
 
 static void _e_exebuf_exe_free(E_Exebuf_Exe *exe);
 static void _e_exebuf_matches_clear(void);
+static int _e_exebuf_cb_sort_eap(void *data1, void *data2);
+static int _e_exebuf_cb_sort_exe(void *data1, void *data2);
 static void _e_exebuf_update(void);
 static void _e_exebuf_exec(void);
 static void _e_exebuf_exe_sel(E_Exebuf_Exe *exe);
@@ -306,12 +308,21 @@ _e_exebuf_exec(void)
    if (exe_sel)
      {
 	if (exe_sel->app)
-	  e_zone_app_exec(exebuf->zone, exe_sel->app);
+	  {
+	     e_zone_app_exec(exebuf->zone, exe_sel->app);
+	     e_exehist_add("exebuf", exe_sel->app->exe);
+	  }
 	else
-	  e_zone_exec(exebuf->zone, exe_sel->file);
+	  {
+	     e_zone_exec(exebuf->zone, exe_sel->file);
+	     e_exehist_add("exebuf", exe_sel->file);
+	  }
      }
    else
-     e_zone_exec(exebuf->zone, cmd_buf);
+     {
+	e_zone_exec(exebuf->zone, cmd_buf);
+	e_exehist_add("exebuf", cmd_buf);
+     }
    
    e_exebuf_hide();
 }
@@ -608,6 +619,32 @@ _e_exebuf_backspace(void)
      }
 }
 
+static int
+_e_exebuf_cb_sort_eap(void *data1, void *data2)
+{
+   E_App *a1, *a2;
+   double t1, t2;
+   
+   a1 = data1;
+   a2 = data2;
+   t1 = e_exehist_newest_run_get(a1->exe);
+   t2 = e_exehist_newest_run_get(a2->exe);
+   return (int)(t2 - t1);
+}
+
+static int
+_e_exebuf_cb_sort_exe(void *data1, void *data2)
+{
+   char *e1, *e2;
+   double t1, t2;
+   
+   e1 = data1;
+   e2 = data2;
+   t1 = e_exehist_newest_run_get(e1);
+   t2 = e_exehist_newest_run_get(e2);
+   return (int)(t2 - t1);
+}
+
 static void
 _e_exebuf_matches_update(void)
 {
@@ -723,6 +760,8 @@ _e_exebuf_matches_update(void)
    /* FIXME: sort eap matches with most recently selected matches at the
     * start and then from shortest to longest string
     */
+   eap_matches = evas_list_sort(eap_matches, evas_list_count(eap_matches), _e_exebuf_cb_sort_eap);
+   
    max = e_config->exebuf_max_eap_list;
    e_box_freeze(eap_list_object);
    for (i = 0, l = eap_matches; l && (i < max); l = l->next, i++)
@@ -760,9 +799,11 @@ _e_exebuf_matches_update(void)
      }
    e_box_thaw(eap_list_object);
    
-   /* FIXME: sort eap matches with most recently selected matches at the
+   /* FIXME: sort exe matches with most recently selected matches at the
     * start and then from shortest to longest string
     */
+   exe_matches = evas_list_sort(exe_matches, evas_list_count(exe_matches), _e_exebuf_cb_sort_exe);
+   
    max = e_config->exebuf_max_exe_list;
    e_box_freeze(exe_list_object);
    for (i = 0, l = exe_matches; l && (i < max); l = l->next, i++)

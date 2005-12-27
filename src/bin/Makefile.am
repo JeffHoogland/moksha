@@ -125,7 +125,8 @@ e_int_config_theme.h \
 e_int_config_menus.h \
 e_deskpreview.h \
 e_exebuf.h \
-e_int_config_modules.h
+e_int_config_modules.h \
+e_exehist.h
 
 enlightenment_src = \
 e_user.c \
@@ -232,6 +233,7 @@ e_int_config_menus.c \
 e_deskpreview.c \
 e_exebuf.c \
 e_int_config_modules.c \
+e_exehist.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \

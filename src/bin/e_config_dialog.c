@@ -120,9 +120,29 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 	e_dialog_button_disable_num_set(cfd->dia, 1, 1);
      }
    e_dialog_button_add(cfd->dia, _("Close"), NULL, NULL, NULL);
-   e_win_centered_set(cfd->dia->win, 1);
-   e_dialog_show(cfd->dia);
+   if (!pdia)
+     {
+	e_win_centered_set(cfd->dia->win, 1);
+	e_dialog_show(cfd->dia);
+     }
+   else
+     {
+	int x, y;
+
+	e_dialog_show(cfd->dia);
+	x = pdia->win->border->x + ((pdia->win->w - cfd->dia->win->w) / 2);
+	y = pdia->win->border->y + ((pdia->win->h - cfd->dia->win->h) / 2);
+	if (x < 0) x = 0;
+	if (y < 0) y = 0;
+	if ((x + cfd->dia->win->w) > (pdia->win->container->w))
+	  x = pdia->win->container->w - cfd->dia->win->w;
+	if ((y + cfd->dia->win->h) > (pdia->win->container->h))
+	  x = pdia->win->container->h - cfd->dia->win->h;
+	e_win_move(cfd->dia->win, x, y);
+	e_win_placed_set(cfd->dia->win, 1);
+     }
    cfd->view_type = type;
+   
    if (pdia)
      {
 	e_object_del_attach_func_set(E_OBJECT(pdia), NULL);
@@ -169,11 +189,11 @@ _e_config_dialog_cb_apply(void *data, E_Dialog *dia)
      ok = cfd->view.advanced.apply_cfdata(cfd, cfd->cfdata);
    if (ok)
      {
-	_e_config_dialog_go(cfd, cfd->view_type);
-	/*
+// FIXME: this is a nasty hack - from modules conf dialog patch i think. 
+// bad bad. make the modules dialog work WITHOUT this
+//	_e_config_dialog_go(cfd, cfd->view_type);
 	e_dialog_button_disable_num_set(cfd->dia, 0, 1);
 	e_dialog_button_disable_num_set(cfd->dia, 1, 1);
-	*/
      }
 }
 
@@ -202,13 +222,15 @@ _e_config_dialog_cb_changed(void *data, Evas_Object *obj)
    
    cfd = data;
 
-   if(cfd->view_dirty)
+// FIXME: this is a nasty hack - from modules conf dialog patch i think. 
+// bad bad. make the modules dialog work WITHOUT this
+//   if (cfd->view_dirty)
+//     {
+//	_e_config_dialog_go(cfd, cfd->view_type);
+//     }
+//   else if (!cfd->hide_buttons)
      {
-       _e_config_dialog_go(cfd, cfd->view_type);
-     }
-   else if(!cfd->hide_buttons)
-     {
-   e_dialog_button_disable_num_set(cfd->dia, 0, 0);
-   e_dialog_button_disable_num_set(cfd->dia, 1, 0);
+	e_dialog_button_disable_num_set(cfd->dia, 0, 0);
+	e_dialog_button_disable_num_set(cfd->dia, 1, 0);
      }
 }

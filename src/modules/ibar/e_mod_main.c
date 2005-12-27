@@ -1222,7 +1222,11 @@ _ibar_icon_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ic = data;
    if (ev->button == 1)
      {
-	if (!drag) e_zone_app_exec(ic->ibb->gmc->zone, ic->app);
+	if (!drag)
+	  {
+	     e_zone_app_exec(ic->ibb->gmc->zone, ic->app);
+	     e_exehist_add("ibar", ic->app->exe);
+	  }
 	drag = 0;
 	drag_start = 0;
      }

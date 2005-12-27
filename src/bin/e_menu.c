@@ -1428,6 +1428,7 @@ _e_menu_items_layout_update(E_Menu *m)
 static void
 _e_menu_item_unrealize(E_Menu_Item *mi)
 {
+   e_box_freeze(mi->container_object);
    if (mi->separator_object) evas_object_del(mi->separator_object);
    mi->separator_object = NULL;
    if (mi->bg_object) evas_object_del(mi->bg_object);
@@ -1454,9 +1455,11 @@ _e_menu_unrealize(E_Menu *m)
    Evas_List *l;
    
    if (!m->realized) return;
+   evas_event_freeze(m->evas);
    e_container_shape_hide(m->shape);
    e_object_del(E_OBJECT(m->shape));
    m->shape = NULL;
+   e_box_freeze(m->container_object);
    for (l = m->items; l; l = l->next)
      {
 	E_Menu_Item *mi;
@@ -2057,6 +2060,8 @@ _e_menu_item_ensure_onscreen(E_Menu_Item *mi)
    int x, y, w, h;
    int dx, dy;
    
+   if (!mi->menu) return;
+   if (!mi->menu->zone) return;
    x = mi->x + mi->menu->cur.x;
    y = mi->y + mi->menu->cur.y;
    w = mi->w;
@@ -2065,10 +2070,12 @@ _e_menu_item_ensure_onscreen(E_Menu_Item *mi)
    dy = 0;
    if ((x + w) > (mi->menu->zone->x + mi->menu->zone->w))
      dx = (mi->menu->zone->x + mi->menu->zone->w) - (x + w);
+   else if (x < mi->menu->zone->x)
+     dx = mi->menu->zone->x - x;
    if ((y + h) > (mi->menu->zone->y + mi->menu->zone->h))
      dy = (mi->menu->zone->y + mi->menu->zone->h) - (y + h);
-   if (x < 0) dx = x;
-   if (y < 0) dy = y;
+   else if (y < mi->menu->zone->y)
+     dy = mi->menu->zone->y - y;
    if ((dx != 0) || (dy != 0))
      _e_menu_scroll_by(dx, dy);
 }

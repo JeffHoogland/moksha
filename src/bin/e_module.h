@@ -30,7 +30,7 @@ struct _E_Module
       int    (*save)        (E_Module *m);
       int    (*info)        (E_Module *m);
       int    (*about)       (E_Module *m);
-      int    (*config)       (E_Module *m);
+      int    (*config)      (E_Module *m);
    } func;
    
    unsigned char        enabled : 1;

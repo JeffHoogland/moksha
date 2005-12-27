@@ -7,10 +7,10 @@ typedef struct _E_Dialog E_Dialog;
 typedef struct _E_Dialog_Button E_Dialog_Button;
 
 #else
-# ifndef E_DIALOG_H
-#  define E_DIALOG_H
+#ifndef E_DIALOG_H
+#define E_DIALOG_H
 
-#  define E_DIALOG_TYPE 0xE0b01012
+#define E_DIALOG_TYPE 0xE0b01012
 
 struct _E_Dialog
 {
@@ -41,5 +41,5 @@ EAPI void      e_dialog_content_set            (E_Dialog *dia, Evas_Object *obj,
 EAPI void      e_dialog_resizable_set          (E_Dialog *dia, int resizable);
 EAPI void      e_dialog_show                   (E_Dialog *dia);
 
-# endif
+#endif
 #endif
