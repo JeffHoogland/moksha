@@ -387,8 +387,13 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    cfdata->gui.configure = ob;
    e_widget_disabled_set(ob, 1);
    e_widget_frametable_object_append(of, ob, 0, 4, 1, 1, 32, 32, 1, 1);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);  
 
+   ob = e_widget_button_add(evas, "About", NULL, _module_about, ilist, NULL);
+   cfdata->gui.about = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 0, 5, 1, 1, 32, 32, 1, 1);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);  
+   
    of = e_widget_framelist_add(evas, "Unloaded", 1);
    
    /* Get Modules; For each module, if it's not loaded, list it */
