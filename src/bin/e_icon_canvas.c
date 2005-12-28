@@ -246,7 +246,7 @@ e_icon_canvas_pack(Evas_Object *obj, Evas_Object *child, Evas_Object *(*create)(
        li->y = sd->yc;
        	   
        sd->xc += li->w + sd->xs;              
-       sd->vh = sd->yc - sd->y;	 
+       sd->vh = (sd->yc - sd->y) + li->h;
     }       
    else
      {
