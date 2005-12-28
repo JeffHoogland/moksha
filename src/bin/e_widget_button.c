@@ -122,9 +122,13 @@ _e_wid_disable_hook(Evas_Object *obj)
 static void
 _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
-   e_widget_focus_steal(data);
-   _e_wid_activate_hook(data);
-   e_widget_change(data);
+   Evas_Object *wid;
+
+   wid = data;
+   if (!wid || e_widget_disabled_get(wid)) return;
+   e_widget_focus_steal(wid);
+   _e_wid_activate_hook(wid);
+   e_widget_change(wid);
 }
 
 static void
