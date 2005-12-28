@@ -174,10 +174,7 @@ e_ilist_selected_label_get(Evas_Object *obj)
    API_ENTRY return NULL;
    if (!sd->items) return NULL;
    si = evas_list_nth(sd->items, sd->selected);
-   if (si) 
-   {
-    return edje_object_part_text_get(si->base_obj, "label");
-   }
+   if (si) return edje_object_part_text_get(si->base_obj, "label");
    return NULL;
 }
 
