@@ -84,7 +84,6 @@ e_modapi_init(E_Module *m)
    Dropshadow *ds;
    
    ds = _ds_init(m);
-   //m->config_menu = _ds_config_menu_new(ds);
 #if 0
      {
 	Shpix *sh;
@@ -450,7 +449,7 @@ _ds_shadow_obj_init(Shadow *sh)
 	evas_object_layer_set(sh->object[i], 10);
 	evas_object_pass_events_set(sh->object[i], 1);
 	evas_object_move(sh->object[i], 0, 0);
-	evas_object_resize(sh->object[i], 0, 0);	//255
+	evas_object_resize(sh->object[i], 0, 0);
 	evas_object_color_set(sh->object[i],
 			      255, 255, 255, 
 			      255 * sh->ds->conf->shadow_darkness);
@@ -1114,8 +1113,6 @@ _ds_config_darkness_set(Dropshadow *ds, double v)
    
    if (v < 0.0) v = 0.0;
    else if (v > 1.0) v = 1.0;
-   //if (ds->conf->shadow_darkness == v) return;
-   //ds->conf->shadow_darkness = v;
    for (l = ds->shadows; l; l = l->next)
      {
 	Shadow *sh;
@@ -1142,7 +1139,6 @@ _ds_config_darkness_set(Dropshadow *ds, double v)
 				     255 * ds->conf->shadow_darkness);
 	  }
      }
-   //e_config_save_queue();
 }
 
 static void
@@ -1150,9 +1146,6 @@ _ds_config_shadow_xy_set(Dropshadow *ds, int x, int y)
 {
    Evas_List *l;
    
-   //if ((ds->conf->shadow_x == x) && (ds->conf->shadow_y == y)) return;
-   //ds->conf->shadow_x = x;
-   //ds->conf->shadow_y = y;
    if (ds->conf->shadow_x >= ds->conf->blur_size)
      ds->conf->shadow_x = ds->conf->blur_size - 1;
    if (ds->conf->shadow_y >= ds->conf->blur_size)
@@ -1174,8 +1167,6 @@ _ds_config_blur_set(Dropshadow *ds, int blur)
    Evas_List *l;
    
    if (blur < 0) blur = 0;
-   //if (ds->conf->blur_size == blur) return;
-   //ds->conf->blur_size = blur;
    
    if (ds->conf->shadow_x >= ds->conf->blur_size)
      ds->conf->shadow_x = ds->conf->blur_size - 1;
