@@ -19,7 +19,7 @@ e_configure_show(E_Container *con)
 {
    E_Configure *eco;
    E_Manager *man;
-   Evas_Coord w, h, ew, eh, mw, mh;
+   Evas_Coord ew, eh, mw, mh;
    
    if (!con)
      {

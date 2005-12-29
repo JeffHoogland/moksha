@@ -435,7 +435,6 @@ static E_Icon_Canvas_Item *
 _e_icon_canvas_adopt(E_Smart_Data *sd, Evas_Object *obj)
 {
    E_Icon_Canvas_Item *li;
-   Evas_Coord w, h;
    
    li = calloc(1, sizeof(E_Icon_Canvas_Item));
    if (!li) return NULL;
@@ -669,7 +668,6 @@ void
 _e_icon_canvas_pack(E_Smart_Data *sd, E_Icon_Canvas_Item *li)
 {    
    E_Icon_Canvas_Tile *t;
-   Evas_Object *o;      
     
    if((t =_e_icon_canvas_tile_get_at_coord(sd, li->x, li->y)) == NULL)
      t = _e_icon_canvas_tile_add(sd, li->x, li->y);
@@ -845,7 +843,6 @@ static void
 _e_icon_canvas_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 {
    E_Smart_Data *sd;
-   int i, j;
 
    if(!obj) return;
    sd = evas_object_smart_data_get(obj);
