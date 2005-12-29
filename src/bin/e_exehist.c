@@ -100,7 +100,7 @@ e_exehist_popularity_get(const char *exe)
    int count = 0;
    
    _e_exehist_load();
-   if (!_e_exehist) return;
+   if (!_e_exehist) return 0;
    for (l = _e_exehist->history; l; l = l->next)
      {
 	E_Exehist_Item *ei;
@@ -117,7 +117,7 @@ e_exehist_newest_run_get(const char *exe)
    Evas_List *l;
    
    _e_exehist_load();
-   if (!_e_exehist) return;
+   if (!_e_exehist) return 0.0;
    for (l = evas_list_last(_e_exehist->history); l; l = l->prev)
      {
 	E_Exehist_Item *ei;
