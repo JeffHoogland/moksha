@@ -1305,21 +1305,21 @@ _ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 		  p1 = pp;
 #ifdef MMX
 		  /* sum 4 pixels at once */
-		  pxor_r2r(mm7, mm7); // mm7 = 00000000
-		  pxor_r2r(mm2, mm2); // mm2 = 00000000
+		  pxor_r2r(mm7, mm7); /* mm7 = 00000000 */
+		  pxor_r2r(mm2, mm2); /* mm2 = 00000000 */
 		  for (l = 0; l <= (l2 - 3); l += 4)
 		    {
-		       movd_m2r(((int *)p1)[0], mm0); // mm0 = 0000abcd
-		       movd_m2r(((int *)(&lut[l]))[0], mm1); // mm1 = 0000wxyz
-		       punpcklbw_r2r(mm2, mm0); // mm0 = 0a0b0c0d
-		       punpcklbw_r2r(mm2, mm1); // mm1 = 0w0x0y0z
-		       pmaddwd_r2r(mm0, mm1); // mm1 = (a * w) + (b * x) | (c * y) + (d * z)
-		       paddd_r2r(mm1, mm7); // mm7 += (c * y) + (d * z)
-		       psrlq_i2r(32, mm1); // mm0 = 0000 | (a * w) + (b * x)
-		       paddd_r2r(mm1, mm7); // mm7 += (a * w) + (b * x)
+		       movd_m2r(((int *)p1)[0], mm0); /* mm0 = 0000abcd */
+		       movd_m2r(((int *)(&lut[l]))[0], mm1); /* mm1 = 0000wxyz */
+		       punpcklbw_r2r(mm2, mm0); /* mm0 = 0a0b0c0d */
+		       punpcklbw_r2r(mm2, mm1); /* mm1 = 0w0x0y0z */
+		       pmaddwd_r2r(mm0, mm1); /* mm1 = (a * w) + (b * x) | (c * y) + (d * z) */
+		       paddd_r2r(mm1, mm7); /* mm7 += (c * y) + (d * z) */
+		       psrlq_i2r(32, mm1); /* mm0 = 0000 | (a * w) + (b * x) */
+		       paddd_r2r(mm1, mm7); /* mm7 += (a * w) + (b * x) */
 		       p1 += 4;
 		    }
-		  movd_r2m(mm7, sum); // sum = mm7
+		  movd_r2m(mm7, sum); /* sum = mm7 */
 		  for (; l <= l2; l++)
 		    {
 		       sum += (int)(*p1) * (int)lut[l];
@@ -1467,24 +1467,24 @@ _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 		  p1 = pp;
 #ifdef MMX
 		  /* sum 4 pixels at once */
-		  pxor_r2r(mm7, mm7); // mm7 = 00000000
-		  pxor_r2r(mm2, mm2); // mm2 = 00000000
+		  pxor_r2r(mm7, mm7); /* mm7 = 00000000 */
+		  pxor_r2r(mm2, mm2); /* mm2 = 00000000 */
 		  for (l = 0; l <= (l2 - 3); l += 4)
 		    {
 		       tpix = (p1[0]); p1 += pix_w;
 		       tpix |= (p1[0] << 8); p1 += pix_w;
 		       tpix |= (p1[0] << 16); p1 += pix_w;
 		       tpix |= (p1[0] << 24); p1 += pix_w;
-		       movd_m2r(tpix, mm0); // mm0 = 0000abcd
-		       movd_m2r(((int *)(&lut[l]))[0], mm1); // mm1 = 0000wxyz
-		       punpcklbw_r2r(mm2, mm0); // mm0 = 0a0b0c0d
-		       punpcklbw_r2r(mm2, mm1); // mm1 = 0w0x0y0z
-		       pmaddwd_r2r(mm0, mm1); // mm1 = (a * w) + (b * x) | (c * y) + (d * z)
-		       paddd_r2r(mm1, mm7); // mm7 += (c * y) + (d * z)
-		       psrlq_i2r(32, mm1); // mm0 = 0000 | (a * w) + (b * x)
-		       paddd_r2r(mm1, mm7); // mm7 += (a * w) + (b * x)
+		       movd_m2r(tpix, mm0); /* mm0 = 0000abcd */
+		       movd_m2r(((int *)(&lut[l]))[0], mm1); /* mm1 = 0000wxyz */
+		       punpcklbw_r2r(mm2, mm0); /* mm0 = 0a0b0c0d */
+		       punpcklbw_r2r(mm2, mm1); /* mm1 = 0w0x0y0z */
+		       pmaddwd_r2r(mm0, mm1); /* mm1 = (a * w) + (b * x) | (c * y) + (d * z) */
+		       paddd_r2r(mm1, mm7); /* mm7 += (c * y) + (d * z) */
+		       psrlq_i2r(32, mm1); /* mm0 = 0000 | (a * w) + (b * x) */
+		       paddd_r2r(mm1, mm7); /* mm7 += (a * w) + (b * x) */
 		    }
-		  movd_r2m(mm7, sum); // sum = mm7
+		  movd_r2m(mm7, sum); /* sum = mm7 */
 		  for (; l <= l2; l++)
 		    {
 		       sum += (int)(*p1) * (int)lut[l];
@@ -1819,10 +1819,10 @@ _ds_shpix_object_set(Shpix *sp, Evas_Object *o, int x, int y, int w, int h)
 	     for (xx = 0; xx < (w - 1); xx += 2)
 	       {
 		  pix = (p[1] << 24) | (p[0] << 8);
-		  movd_m2r(pix, mm1); // mm1 = A0a0
-		  pxor_r2r(mm0, mm0); // mm0 = 00000000
-		  punpcklbw_r2r(mm1, mm0); // mm0 = A000a000
-		  movq_r2m(mm0, p2[0]); // *p2 = mm0;
+		  movd_m2r(pix, mm1); /* mm1 = A0a0 */
+		  pxor_r2r(mm0, mm0); /* mm0 = 00000000 */
+		  punpcklbw_r2r(mm1, mm0); /* mm0 = A000a000 */
+		  movq_r2m(mm0, p2[0]); /* *p2 = mm0; */
 		  p2 += 2;
 		  p += 2;
 	       }
