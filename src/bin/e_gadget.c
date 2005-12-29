@@ -169,7 +169,6 @@ void
 e_gadget_face_theme_set(E_Gadget_Face *face, char *category, char *group)
 {
    Evas_Object *o;
-   Evas_Coord x, y, w, h;
    if(!face) return;
 
    o = edje_object_add(face->evas);
@@ -272,6 +271,10 @@ _e_gadget_face_cb_gmc_change(void * data, E_Gadman_Client *gmc, E_Gadman_Change 
 	      evas_object_raise(face->event_obj);
 	   }
 	 break;
+      case E_GADMAN_CHANGE_EDGE:
+	break;
+      case E_GADMAN_CHANGE_ZONE:
+	break;
      }
 
    if (gdc->gadget->funcs.change) (gdc->gadget->funcs.change)(gdc->gadget->data, gdc->face, gmc, change);
