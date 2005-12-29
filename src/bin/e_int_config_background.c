@@ -121,7 +121,7 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 {
    /* generate the core widget layout for a basic dialog */
-   Evas_Object *o, *ob, *fr, *im = NULL;
+   Evas_Object *o, *fr, *im = NULL;
    Evas_Object *il;
    char buf[4096];
    char *homedir;
@@ -148,21 +148,20 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 	bgs = ecore_file_ls(buf);
 	if (bgs)
 	  {
-	     char *bg;
+	     char *bgfile;
 	     char fullbg[PATH_MAX];
 	     Evas_Object *o;
 	     Ecore_Evas *eebuf;
 	     Evas *evasbuf;
-	     Evas_List *l;
 	     int i = 0;
 	     
 	     eebuf = ecore_evas_buffer_new(1, 1);
 	     evasbuf = ecore_evas_get(eebuf);
 	     o = edje_object_add(evasbuf);
 		  
-	     while ((bg = ecore_list_next(bgs)))
+	     while ((bgfile = ecore_list_next(bgs)))
 	       {
-		  snprintf(fullbg, sizeof(fullbg), "%s/%s", buf, bg);
+		  snprintf(fullbg, sizeof(fullbg), "%s/%s", buf, bgfile);
 		  if (ecore_file_is_dir(fullbg))
 		    continue;
 		  
@@ -175,19 +174,19 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 		       
 		       o = e_thumb_generate_begin(fullbg, 48, 48, cfd->dia->win->evas, &o, NULL, NULL);
 		       
-		       ext = strrchr(bg ,'.');
+		       ext = strrchr(bgfile ,'.');
 		       
 		       if (!ext)
 			 {
-			    noext = strdup(bg);
+			    noext = strdup(bgfile);
 			 }
 		       else
 			 {
-			    noext = malloc((ext - bg + 1));
-			    if (bg)
+			    noext = malloc((ext - bgfile + 1));
+			    if (bgfile)
 			      {
-				 memcpy(noext, bg, ext - bg);
-				 noext[ext - bg] = 0;
+				 memcpy(noext, bgfile, ext - bgfile);
+				 noext[ext - bgfile] = 0;
 			      }
 			 }
 		       cb_data = E_NEW(E_Cfg_Bg_Data, 1);
@@ -235,7 +234,7 @@ static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 {
    /* generate the core widget layout for an advanced dialog */
-   Evas_Object *o, *ob, *of;
+   Evas_Object *o;
    
    _fill_data(cfdata);
    
