@@ -936,7 +936,6 @@ static void
 _e_container_free(E_Container *con)
 {
    Evas_List *l, *tmp;
-   int i;
 
    ecore_x_window_del(con->event_win);
     /* We can't use e_object_del here, because border adds a ref to itself
@@ -945,6 +944,8 @@ _e_container_free(E_Container *con)
  * looping (particularly remember/lock config dialogs). this is just
  * disabled until we put in some special handling for this
  *
+   int i;
+
    for (i = 0; i < 7; i++)
      {
 	for (l = con->layers[i].clients; l;)
