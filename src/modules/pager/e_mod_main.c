@@ -20,7 +20,6 @@ static void        _pager_config_menu_new(Pager *pager);
 static Pager_Face *_pager_face_new(Pager *pager, E_Zone *zone, Evas *evas);
 static void        _pager_face_free(Pager_Face *face);
 static void        _pager_face_menu_new(Pager_Face *face);
-static void        _pager_face_enable(Pager_Face *face);
 static void        _pager_face_disable(Pager_Face *face);
 static void        _pager_face_zone_set(Pager_Face *face, E_Zone *zone);
 static void        _pager_face_zone_unset(Pager_Face *face);
@@ -471,6 +470,8 @@ _pager_face_new(Pager *pager, E_Zone *zone, Evas *evas)
    e_gadman_client_change_func_set(face->gmc, _pager_face_cb_gmc_change, face);
    e_gadman_client_load(face->gmc);
 
+   Evas_Coord g, z;
+   e_gadman_client_geometry_get(face->gmc, NULL, NULL, &g, &z);
    _pager_face_deskname_position_change(face);
 
    return face;
@@ -525,23 +526,6 @@ _pager_face_menu_new(Pager_Face *face)
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Fix Aspect (Keep Width)"));
    e_menu_item_callback_set(mi, _pager_menu_cb_aspect_keep_width, face->pager);
-}
-
-static void
-_pager_face_enable(Pager_Face *face)
-{
-   Evas_List  *l;
-
-   face->conf->enabled = 1;
-   evas_object_show(face->pager_object);
-   for (l = face->desks; l; l = l->next)
-     {
-	Pager_Desk *pd;
-
-	pd = l->data;
-	evas_object_show(pd->event_object);
-     }
-   e_config_save_queue();
 }
 
 static void
@@ -862,6 +846,7 @@ _pager_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change chan
 
    face = data;
    e_gadman_client_geometry_get(face->gmc, &x, &y, &w, &h);
+   
    face->fx = x;
    face->fy = y;
    face->fw = w;
@@ -1541,7 +1526,7 @@ _pager_cb_event_desk_show(void *data, int type, void *event)
 	     face->current_popup = pp;
 
 	     evas_object_geometry_get(face->pager_object, NULL, NULL, &w, &h);
-
+	     
 	     pp->face = _pager_face_new(face->pager, face->zone, pp->popup->evas);
 	     evas_object_move(pp->face->pager_object, 0, 0);
 	     evas_object_resize(pp->face->pager_object, w, h);
@@ -1764,7 +1749,6 @@ _pager_window_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_i
    /* make this configurable */
    if (ev->button == 1)
      {
-//	printf("DN: %d\n", pw);
 	pw->drag.start = 1;
 	pw->drag.x = -1;
 	pw->drag.y = -1;
@@ -1781,7 +1765,6 @@ _pager_window_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_inf
    pw = data;
    if (!pw) return;
 
-//   printf("UP: %d\n", pw);
    pw->drag.start = 0;
 }
 
@@ -2010,7 +1993,6 @@ _pager_face_cb_drop(void *data, const char *type, void *event_info)
 
    desk = e_desk_at_xy_get(face->zone, x, y);
 
-   printf("drop %s\n", type);
 
    if (!strcmp(type, "enlightenment/pager_win"))
      {
