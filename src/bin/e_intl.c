@@ -521,7 +521,7 @@ _e_intl_language_path_find(char *language)
 	     char *file;
 	     
 	     ecore_list_goto_first(files);
-	     while (file = ecore_list_next(files))
+	     while ((file = ecore_list_next(files)) != NULL)
 	       {
 		  /* Match canonicalized locale against each possible search */
 		  for (next_search = search_list ; next_search && !found ; next_search = next_search->next)
