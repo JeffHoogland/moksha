@@ -360,6 +360,7 @@ Evas_Object *
 e_icon_layout_viewport_get(Evas_Object *obj)
 {
    /* TODO */
+   return NULL;
 }
 
 
@@ -368,7 +369,6 @@ static E_Icon_Layout_Item *
 _e_icon_layout_smart_adopt(E_Smart_Data *sd, Evas_Object *obj)
 {
    E_Icon_Layout_Item *li;
-   Evas_Coord w, h;
    
    li = calloc(1, sizeof(E_Icon_Layout_Item));
    if (!li) return NULL;
