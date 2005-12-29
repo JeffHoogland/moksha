@@ -400,24 +400,6 @@ _clock_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 }
 
 static void
-_clock_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Clock_Face *face;
-   unsigned char enabled;
-
-   face = data;
-   enabled = e_menu_item_toggle_get(mi);
-   if ((face->conf->enabled) && (!enabled))
-     {
-	_clock_face_disable(face);
-     }
-   else if ((!face->conf->enabled) && (enabled))
-     {
-	_clock_face_enable(face);
-     }
-}
-
-static void
 _clock_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    Clock_Face *face;
