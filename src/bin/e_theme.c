@@ -32,8 +32,6 @@ int
 e_theme_init(void)
 {
    Evas_List *l;
-   E_Theme_Result *res;
-   char *category, *p;
    
    /* this is a fallback that is ALWAYS there - if all fails things will */
    /* always fall back to the default theme. the rest after this are config */
