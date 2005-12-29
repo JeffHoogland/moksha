@@ -18,7 +18,7 @@ static void _e_wid_del_hook(Evas_Object *obj);
 static void _e_wid_focus_hook(Evas_Object *obj);
 static void _e_wid_disable_hook(Evas_Object *obj);
 static void _e_wid_on_change_hook(void *data, Evas_Object *obj);    
-static void _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char *source);
+//static void _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_wid_text_change(void *data, Evas_Object *entry, char *key);
     
