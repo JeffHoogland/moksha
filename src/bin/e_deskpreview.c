@@ -79,7 +79,6 @@ static void
 _e_smart_add(Evas_Object *obj)
 {
    E_Smart_Data *sd;
-   Evas_Object *o;
    
    sd = calloc(1, sizeof(E_Smart_Data));
    if (!sd) return;

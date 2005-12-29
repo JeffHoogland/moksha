@@ -400,7 +400,6 @@ _e_exebuf_eap_scroll_to(int i)
 static void
 _e_exebuf_next(void)
 {
-   E_Exebuf_Exe *exe;
    Evas_List *l;
    int i;
    
@@ -470,7 +469,6 @@ _e_exebuf_next(void)
 static void
 _e_exebuf_prev(void)
 {
-   E_Exebuf_Exe *exe;
    Evas_List *l;
    int i;
 
