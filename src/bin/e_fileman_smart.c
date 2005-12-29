@@ -615,7 +615,6 @@ e_fm_icon_destroy(Evas_Object *obj, void *data)
 static void
 _e_fm_smart_add(Evas_Object *object)
 {
-   char dir[PATH_MAX];
    E_Fm_Smart_Data *sd;
 
    sd = E_NEW(E_Fm_Smart_Data, 1);
@@ -1455,15 +1454,12 @@ _e_fm_menu_refresh_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
 {
-   Evas_List              *l;
    Evas_List             *list;
    Ecore_Sheap            *heap;
    char                   *f;
    int                     type;
    DIR                    *dir2;
    struct dirent          *dp;   
-   E_Event_Fm_Reconfigure *ev;
-   E_Event_Fm_Directory_Change *ev2;
 
    if (!dir) return;
    if ((sd->dir) && (!strcmp(sd->dir, dir))) return;
@@ -1472,7 +1468,7 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
    
    type = E_FM_FILE_TYPE_NORMAL;   
    list = NULL;
-   while(dp = readdir(dir2))
+   while((dp = readdir(dir2)))
      {
 	if ((!strcmp(dp->d_name, ".") || (!strcmp (dp->d_name, "..")))) continue;
 	if ((dp->d_name[0] == '.') && (!(type & E_FM_FILE_TYPE_HIDDEN))) continue;
@@ -1570,12 +1566,9 @@ static int
 _e_fm_dir_files_get(void *data)
 {
    E_Fm_Smart_Data *sd;
-   Evas_List       *l;
    E_Fm_Icon       *icon;   
-   struct dirent   *dir_entry;   
    char             path[PATH_MAX];
    int              i;
-   int              type;
 
    i = 0;
    sd = data;
@@ -1711,6 +1704,10 @@ _e_fm_dir_monitor_cb(void *data, Ecore_File_Monitor *ecore_file_monitor,
    
    switch (event)
      {
+      case ECORE_FILE_EVENT_NONE:
+	break;
+      case ECORE_FILE_EVENT_MODIFIED:
+	break;
       case ECORE_FILE_EVENT_DELETED_SELF:		          
 	 dir = _e_fm_dir_pop(sd->dir);
 	 /* FIXME: we need to fix this, uber hack alert */
