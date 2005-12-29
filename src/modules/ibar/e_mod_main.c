@@ -88,7 +88,7 @@ static void    _ibar_icon_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, v
 static void    _ibar_icon_reorder_before(IBar_Icon *ic, IBar_Icon *before);
 #endif
 
-static void    _ibar_bar_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
+//static void    _ibar_bar_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
 static void    _ibar_bar_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void    _ibar_bar_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
 static void    _ibar_drag_cb_intercept_move(void *data, Evas_Object *o, Evas_Coord x, Evas_Coord y);
