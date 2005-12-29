@@ -21,7 +21,6 @@ static void    _clock_face_disable(Clock_Face *face);
 static void    _clock_face_menu_new(Clock_Face *face);
 static void    _clock_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
 static void    _clock_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void    _clock_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
 static void    _clock_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void    _clock_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
 
@@ -328,7 +327,7 @@ _clock_face_disable(Clock_Face *face)
 static void
 _clock_face_menu_new(Clock_Face *face)
 {
-   E_Menu *mn, *smn;
+   E_Menu *mn;
    E_Menu_Item *mi;
 
    mn = e_menu_new();
@@ -352,7 +351,6 @@ _clock_face_menu_new(Clock_Face *face)
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Edit Mode"));
    e_menu_item_callback_set(mi, _clock_face_cb_menu_edit, face);
-
 }
 
 static void
@@ -432,7 +430,6 @@ static void
 _clock_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    Clock_Face *face;
-   E_Config_Dialog *cfd;
 
    face = data;
    if (!face) return;
