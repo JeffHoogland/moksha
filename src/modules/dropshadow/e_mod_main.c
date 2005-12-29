@@ -1,5 +1,6 @@
 #include "e.h"
 #include "e_mod_main.h"
+#include "e_mod_config.h"
 
 /* i measure a mere 9% speedup using mmx for simd sums. :(
  * need to detect mmx capbale cpu's to enable this though
@@ -17,10 +18,6 @@
 /* module private routines */
 static Dropshadow *_ds_init(E_Module *m);
 static void        _ds_shutdown(Dropshadow *ds);
-//static E_Menu     *_ds_config_menu_new(Dropshadow *ds);
-static void        _ds_menu_high_quality(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _ds_menu_medium_quality(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _ds_menu_low_quality(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _ds_container_shapes_add(Dropshadow *ds, E_Container *con);
 static void        _ds_shape_change(void *data, E_Container_Shape *es, E_Container_Shape_Change ch);
 static Shadow     *_ds_shadow_find(Dropshadow *ds, E_Container_Shape *es);
@@ -453,7 +450,7 @@ _ds_shadow_obj_init(Shadow *sh)
 	evas_object_layer_set(sh->object[i], 10);
 	evas_object_pass_events_set(sh->object[i], 1);
 	evas_object_move(sh->object[i], 0, 0);
-	evas_object_resize(sh->object[i], 0, 0);
+	evas_object_resize(sh->object[i], 0, 0);	//255
 	evas_object_color_set(sh->object[i],
 			      255, 255, 255, 
 			      255 * sh->ds->conf->shadow_darkness);
