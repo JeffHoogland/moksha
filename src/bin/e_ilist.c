@@ -261,7 +261,6 @@ e_ilist_remove_label(Evas_Object *obj, char *label)
    E_Smart_Item *si;
    Evas_List *l;
    int i;
-   char *t;
    
    API_ENTRY return;
    if (!sd->items) return;
@@ -271,6 +270,7 @@ e_ilist_remove_label(Evas_Object *obj, char *label)
 	si = l->data;
 	if (si) 
 	  {
+	     char *t;
 	     t = strdup(edje_object_part_text_get(si->base_obj, "label"));
 	     if (!strcmp(t, label)) 
 	       {
@@ -280,9 +280,9 @@ e_ilist_remove_label(Evas_Object *obj, char *label)
 		  free(si);
 		  break;
 	       }
+	     free(t);
 	  }
      }
-   free(t);
 }
 
 /* local subsystem functions */
@@ -370,7 +370,6 @@ static void
 _e_smart_add(Evas_Object *obj)
 {
    E_Smart_Data *sd;
-   Evas_Object *o;
    
    sd = calloc(1, sizeof(E_Smart_Data));
    if (!sd) return;

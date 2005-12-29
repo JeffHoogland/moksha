@@ -30,7 +30,6 @@ e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, char **value)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
-   Evas_Coord mw, mh;
    
    obj = e_widget_add(evas);
    
