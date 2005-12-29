@@ -22,6 +22,8 @@ EAPI void         e_icon_canvas_redraw_force       (Evas_Object *obj);
 EAPI void         e_icon_canvas_clip_freeze        (Evas_Object *obj);
 EAPI void         e_icon_canvas_clip_thaw          (Evas_Object *obj);
 EAPI void         e_icon_canvas_viewport_set       (Evas_Object *obj, Evas_Object *viewport);
+EAPI void         e_icon_canvas_xy_freeze          (Evas_Object *obj);
+EAPI void         e_icon_canvas_xy_thaw            (Evas_Object *obj);
 
 #endif
 #endif
