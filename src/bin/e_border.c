@@ -1622,8 +1622,8 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	      e_border_move_resize(bd,x1,y1,w,h);
 	      break;
 	  }
-	if( bd->maximized == E_MAXIMIZE_HORIZONTAL && max == E_MAXIMIZE_VERTICAL ||
-	    bd->maximized == E_MAXIMIZE_VERTICAL && max == E_MAXIMIZE_HORIZONTAL )
+	if( (bd->maximized == E_MAXIMIZE_HORIZONTAL && max == E_MAXIMIZE_VERTICAL) ||
+	    (bd->maximized == E_MAXIMIZE_VERTICAL && max == E_MAXIMIZE_HORIZONTAL) )
 	  bd->maximized = e_config->maximize_policy;
 	else
 	  bd->maximized = max;
@@ -1768,6 +1768,12 @@ e_border_unmaximize(E_Border *bd)
 	   case E_MAXIMIZE_FILL:
 	      /* Ignore */
 	      break;
+	   case E_MAXIMIZE_VERTICAL:
+	      /*Ignore*/
+	     break;
+	   case E_MAXIMIZE_HORIZONTAL:
+	      /*Ignore*/
+	     break;
 	  }
 	bd->maximized = E_MAXIMIZE_NONE;
 
