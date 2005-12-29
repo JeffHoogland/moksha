@@ -1637,7 +1637,7 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 }
 /***sndev : e_border_unmaxmize_vh *******************************************************/
 void
-e_border_unmaximize_vh(E_Border *bd, E_Maximize max )
+e_border_unmaximize_vh(E_Border *bd, E_Maximize max)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
