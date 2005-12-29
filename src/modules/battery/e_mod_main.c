@@ -1010,7 +1010,6 @@ _battery_linux_powerbook_check(Battery *ef)
 	     f = fopen(buf, "r");
 	     if (f)
 	       {
-		  int tmp = 0;
 		  int time = 0;
 		  int current = 0;
 
@@ -1034,24 +1033,21 @@ _battery_linux_powerbook_check(Battery *ef)
 			      strtok (0,":\n");
 			 }
 		    }
-		  /* Skip flag; */
-//		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-		  /* Read charge */
-//		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-//		  tmp = _battery_int_get(buf2);
-//		  charge += tmp;
-		  /* Read max charge */
-//		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-//		  tmp = _battery_int_get(buf2);
-//		  max_charge += tmp;
-		  /* Read current */
-//		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-//		  current = _battery_int_get(buf2);
-		  /* Skip voltage */
-//		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-		  /* Get time remaining */
-//		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-//		  time = _battery_int_get(buf2);
+		  /* Skip flag;
+		  int tmp = 0;		  
+		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+		  tmp = _battery_int_get(buf2);
+		  charge += tmp;
+		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+		  tmp = _battery_int_get(buf2);
+		  max_charge += tmp;
+		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+		  current = _battery_int_get(buf2);
+		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+		  time = _battery_int_get(buf2);
+		   */
 		  fclose(f);
 
 		  battery++;
@@ -1452,7 +1448,7 @@ _battery_darwin_check(Battery *ef)
 	       {
 		  stat->state = BATTERY_STATE_DISCHARGING;
 	       }
-	     // CFRelease(values);
+	     /* CFRelease(values); */
 	     break;
 	  }
 
@@ -1483,14 +1479,14 @@ _battery_darwin_check(Battery *ef)
     */
    values = CFDictionaryGetValue(device_dict, CFSTR(kIOPSCurrentCapacityKey));
    CFNumberGetValue(values, kCFNumberSInt32Type, &currentval);
-   // CFRelease(values);
+   /* CFRelease(values); */
 
    /*
     * Retrieve the max capacity key.
     */
    values = CFDictionaryGetValue(device_dict, CFSTR(kIOPSMaxCapacityKey));
    CFNumberGetValue(values, kCFNumberSInt32Type, &maxval);
-   // CFRelease(values);
+   /* CFRelease(values); */
 
    /*
     * Calculate the percentage charged.
@@ -1505,7 +1501,7 @@ _battery_darwin_check(Battery *ef)
      {
 	values = CFDictionaryGetValue(device_dict, CFSTR(kIOPSTimeToEmptyKey));
 	CFNumberGetValue(values, kCFNumberSInt32Type, &currentval);
-	// CFRelease(values);
+	/* CFRelease(values); */
 
 	/*
 	 * Display remaining battery percentage.
@@ -1526,7 +1522,7 @@ _battery_darwin_check(Battery *ef)
      {
 	values = CFDictionaryGetValue(device_dict, CFSTR(kIOPSTimeToFullChargeKey));
 	CFNumberGetValue(values, kCFNumberSInt32Type, &currentval);
-	// CFRelease(values);
+	/* CFRelease(values); */
 
 	stat->reading = strdup(_("Charging"));
 
