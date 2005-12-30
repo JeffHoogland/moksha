@@ -163,7 +163,6 @@ e_modapi_config(E_Module *m)
 	if (face->con == e_container_current_get(e_manager_current_get()))
 	  _config_ibox_module(face->con, face->ibox);	
      }
-   evas_list_free(l);
    return 1;
 }
 
