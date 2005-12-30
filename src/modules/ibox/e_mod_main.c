@@ -160,8 +160,11 @@ e_modapi_config(E_Module *m)
 	IBox_Box *face;
 	face = l->data;
 	if (!face) return 0;
-	if (face->con == e_container_current_get(e_manager_current_get()))
-	  _config_ibox_module(face->con, face->ibox);	
+	if (face->con == e_container_current_get(e_manager_current_get())) 
+	  {
+	     _config_ibox_module(face->con, face->ibox);
+	     break;
+	  }	
      }
    return 1;
 }
