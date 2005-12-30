@@ -157,14 +157,26 @@ int
 e_modapi_config(E_Module *m)
 {
    Pager *e;
-   Pager_Face *face;
-   
+   Evas_List *l;
+   E_Zone *zone;
+   E_Container *con;
+		
    e = m->data;
    if (!e) return 0;
    if (!e->faces) return 0;
-   face = e->faces->data;
-   if (!face) return 0;
-   _config_pager_module(e_container_current_get(e_manager_current_get()), e);
+   con = e_container_current_get(e_manager_current_get());
+   zone = e_zone_current_get(con);
+   for (l = e->faces; l; l = l->next) 
+     {
+	Pager_Face *face;
+	face = l->data;
+	if (!face) return 0;
+	if (face->zone = zone) 
+	  {
+	     _config_pager_module(con, e);
+	     break;
+	  }
+     }
    return 1;
 }
 
