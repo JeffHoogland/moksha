@@ -137,14 +137,22 @@ int
 e_modapi_config(E_Module *m)
 {
    Battery *e;
-   Battery_Face *face;
+   Evas_List *l;
 
    e = m->data;
    if (!e) return 0;
    if (!e->faces) return 0;
-   face = e->faces->data;
-   if (!face) return 0;
-   _config_battery_module(face->con, face->battery);
+   for (l = e->faces; l; l = l->next) 
+     {
+	Battery_Face *face;
+	face = l->data;
+	if (!face) return 0;
+	if (face->con == e_container_current_get(e_manager_current_get())) 
+	  {     
+	     _config_battery_module(face->con, face->battery);
+	     break;
+	  }
+     }   
    return 1;
 }
 
