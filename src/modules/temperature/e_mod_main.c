@@ -104,14 +104,22 @@ int
 e_modapi_config(E_Module *m)
 {
    Temperature *e;
-   Temperature_Face *face;
+   Evas_List *l;
    
    e = m->data;
    if (!e) return 0;
    if (!e->faces) return 0;
-   face = e->faces->data;
-   if (!face) return 0;
-   _config_temperature_module(face->con, face->temp);
+   for (l = e->faces; l; l = l->next) 
+     {
+	Temperature_Face *face;
+	face = l->data;
+	if (!face) return 0;
+	if (face->con == e_container_current_get(e_manager_current_get())) 
+	  {
+	     _config_temperature_module(face->con, face->temp);
+	     break;
+	  }
+     }
    return 1;
 }
 
