@@ -166,10 +166,18 @@ e_modapi_config(E_Module *m)
 {
    IBar *ib;
    E_Container *con;
+   Evas_List *l;
    
    ib = m->data;
    con = e_container_current_get(e_manager_current_get());
-   if (ib) _config_ibar_module(con, ib);
+   for (l = ib->bars; l; l = l->next) 
+     {
+	IBar_Bar *ibb;
+	
+	ibb = l->data;
+	if (ibb->con == con) _config_ibar_module(con, ib);
+	break;
+     }
    return 1;
 }
 
