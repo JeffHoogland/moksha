@@ -150,8 +150,8 @@ e_module_new(char *name)
 				       "The full path to this module is:<br>"
 				       "%s<br>"
 				       "The error reported was:<br>"
-				       "%s<br>"),
-				     name, buf, dlerror());
+				       "Module does not contain all needed functions<br>"),
+				     name, buf);
 	_e_module_dialog_disable_show(_("Error loading Module"), body, m);
 	m->api = NULL;
 	m->func.init = NULL;
