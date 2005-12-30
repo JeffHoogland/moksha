@@ -169,6 +169,7 @@ e_modapi_config(E_Module *m)
    
    ib = m->data;
    if (!ib) return 0;
+   if (!ib->bars) return 0;
    for (l = ib->bars; l; l = l->next) 
      {
 	IBar_Bar *ibb;
