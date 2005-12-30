@@ -171,7 +171,7 @@ e_modapi_config(E_Module *m)
 	Pager_Face *face;
 	face = l->data;
 	if (!face) return 0;
-	if (face->zone = zone) 
+	if (face->zone == zone) 
 	  {
 	     _config_pager_module(con, e);
 	     break;
