@@ -149,14 +149,21 @@ int
 e_modapi_config(E_Module *m)
 {
    IBox *e;
-   IBox_Box *face;
+   Evas_List *l;
    
    e = m->data;
    if (!e) return 0;
    if (!e->boxes) return 0;
-   face = e->boxes->data;
-   if (!face) return 0;
-   _config_ibox_module(face->con, face->ibox);
+   
+   for (l = e->boxes; l; l = l->next) 
+     {
+	IBox_Box *face;
+	face = l->data;
+	if (!face) return 0;
+	if (face->con == e_container_current_get(e_manager_current_get()))
+	  _config_ibox_module(face->con, face->ibox);	
+     }
+   evas_list_free(l);
    return 1;
 }
 
@@ -259,7 +266,7 @@ _ibox_new()
 }
 
 static void
-  _ibox_free(IBox *ib)
+_ibox_free(IBox *ib)
 {
    E_CONFIG_DD_FREE(conf_edd);
    E_CONFIG_DD_FREE(conf_box_edd);
