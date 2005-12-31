@@ -11,6 +11,9 @@ static int         _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
 */
 
+static void _dialog_cb_ok(void *data, E_Dialog *dia);
+static void _dialog_cb_cancel(void *data, E_Dialog *dia);
+
 struct _CFData 
 {
    int show_splash;
@@ -87,6 +90,12 @@ _free_data(E_Config_Dialog *cfd, CFData *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata) 
 {
+   E_Action *a;
+   int restart = 0;
+   
+   if (e_config->use_e_cursor != cfdata->use_e_cursor) restart = 1;
+   if (e_config->cursor_size != cfdata->cursor_size) restart = 1;
+   
    e_border_button_bindings_ungrab_all();
    e_config->show_splash = cfdata->show_splash;
    if (cfdata->framerate <= 0.0) cfdata->framerate = 1.0;
@@ -97,6 +106,22 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    e_config->cursor_size = cfdata->cursor_size;
    e_border_button_bindings_grab_all();
    e_config_save_queue();
+   
+   if (restart) 
+     {
+	E_Dialog *dia;
+	
+	dia = e_dialog_new(cfd->con);
+	if (!dia) return 1;
+	e_dialog_title_set(dia, _("Are you sure you want to restart ?"));
+	e_dialog_text_set(dia, _("Your changes require Enlightenment to be restarted<br>before they can take effect.<br><br>Would you like to restart now ?"));
+	e_dialog_icon_set(dia, "enlightenment/reset", 64);
+	e_dialog_button_add(dia, _("Yes"), NULL, _dialog_cb_ok, NULL);
+	e_dialog_button_add(dia, _("No"), NULL, _dialog_cb_cancel, NULL);
+	e_dialog_button_focus_num(dia, 1);
+	e_win_centered_set(dia->win, 1);
+	e_dialog_show(dia);
+     }   
    return 1;
 }
 
@@ -154,3 +179,19 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    return o;
 }
 */
+
+static void
+_dialog_cb_ok(void *data, E_Dialog *dia) 
+{
+   E_Action *a;
+
+   e_object_del(E_OBJECT(dia));
+   a = e_action_find("restart");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);   
+}
+
+static void
+_dialog_cb_cancel(void *data, E_Dialog *dia) 
+{
+   e_object_del(E_OBJECT(dia));
+}
