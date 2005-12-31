@@ -281,7 +281,7 @@ main(int argc, char **argv)
    _e_main_shutdown_push(ecore_file_shutdown);   
    
    /* setup my args */
-   ecore_app_args_set((int)argc, (const char **)argv);
+   ecore_app_args_set(argc, (const char **)argv);
    /* setup a handler for when e is asked to exit via a system signal */
    if (!ecore_event_handler_add(ECORE_EVENT_SIGNAL_EXIT, _e_main_cb_signal_exit, NULL))
      {
