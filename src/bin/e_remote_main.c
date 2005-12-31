@@ -89,7 +89,7 @@ main(int argc, char **argv)
 	       "Perhaps you are out of memory?\n");
 	exit(-1);
      }
-   ecore_app_args_set((int)argc, (const char **)argv);
+   ecore_app_args_set(argc, (const char **)argv);
    /* setup a handler for when e is asked to exit via a system signal */
    if (!ecore_event_handler_add(ECORE_EVENT_SIGNAL_EXIT, _e_cb_signal_exit, NULL))
      {
