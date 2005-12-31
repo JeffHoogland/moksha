@@ -43,7 +43,7 @@ static void    _ibar_config_menu_new(IBar *ib);
 static IBar_Bar *_ibar_bar_new(IBar *ib, E_Container *con);
 static void    _ibar_bar_free(IBar_Bar *ibb);
 static void    _ibar_bar_menu_new(IBar_Bar *ibb);
-static void    _ibar_bar_enable(IBar_Bar *ibb);
+/* static void    _ibar_bar_enable(IBar_Bar *ibb); */
 static void    _ibar_bar_disable(IBar_Bar *ibb);
 static void    _ibar_bar_frame_resize(IBar_Bar *ibb);
 static void    _ibar_bar_edge_change(IBar_Bar *ibb, int edge);
@@ -662,6 +662,7 @@ _ibar_bar_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
    _config_ibar_module(ibb->con, ibb->ibar);
 }
 
+/*
 static void
 _ibar_bar_enable(IBar_Bar *ibb)
 {
@@ -672,6 +673,7 @@ _ibar_bar_enable(IBar_Bar *ibb)
    evas_object_show(ibb->event_object);
    e_config_save_queue();
 }
+*/
 
 static void
 _ibar_bar_disable(IBar_Bar *ibb)

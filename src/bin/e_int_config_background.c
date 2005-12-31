@@ -10,9 +10,7 @@ typedef struct _E_Cfg_Bg_Data E_Cfg_Bg_Data;
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, CFData *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
-static int _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
-static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
 
 /* Actual config data we will be playing with whil the dialog is active */
 struct _CFData
@@ -20,7 +18,6 @@ struct _CFData
    /*- BASIC -*/
    char *file ;
    /*- ADVANCED -*/
-
 };
 
 struct _E_Cfg_Bg_Data
@@ -92,17 +89,9 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    printf("file: %s\n", cfdata->file);
    //e_bg_add(cfd->con, z, 0, 0, cfdata->file);
    if (e_config->desktop_default_background) evas_stringshare_del(e_config->desktop_default_background);
-   e_config->desktop_default_background = evas_stringshare_add(cfdata->file);
+   e_config->desktop_default_background = (char *)evas_stringshare_add(cfdata->file);
    e_bg_update();
    e_config_save_queue();
-   return 1; /* Apply was OK */
-}
-
-static int
-_advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
-{
-   /* Actually take our cfdata settings and apply them in real life */
-
    return 1; /* Apply was OK */
 }
 
@@ -226,19 +215,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    e_widget_min_size_set(fr, 180, 150);
    e_widget_table_object_append(o, fr, 1, 0, 1, 1, 1, 1, 1, 1);   
    e_widget_framelist_object_append(fr, im);   
-   
-   return o;
-}
-
-static Evas_Object *
-_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
-{
-   /* generate the core widget layout for an advanced dialog */
-   Evas_Object *o;
-   
-   _fill_data(cfdata);
-   
-   o = e_widget_list_add(evas, 0, 0);
    
    return o;
 }

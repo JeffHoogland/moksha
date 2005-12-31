@@ -16,7 +16,7 @@ static void    _clock_config_menu_new(Clock *clock);
 
 static Clock_Face *_clock_face_new(E_Container *con);
 static void    _clock_face_free(Clock_Face *face);
-static void    _clock_face_enable(Clock_Face *face);
+/* static void    _clock_face_enable(Clock_Face *face); */
 static void    _clock_face_disable(Clock_Face *face);
 static void    _clock_face_menu_new(Clock_Face *face);
 static void    _clock_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
@@ -306,6 +306,7 @@ _clock_face_free(Clock_Face *face)
    _clock_count--;
 }
 
+/*
 static void
 _clock_face_enable(Clock_Face *face)
 {
@@ -314,6 +315,7 @@ _clock_face_enable(Clock_Face *face)
    evas_object_show(face->event_object);
    e_config_save_queue();
 }
+*/
 
 static void
 _clock_face_disable(Clock_Face *face)
