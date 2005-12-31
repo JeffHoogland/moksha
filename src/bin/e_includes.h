@@ -103,6 +103,7 @@
 #include "e_int_config_background.h"
 #include "e_int_config_theme.h"
 #include "e_int_config_menus.h"
+#include "e_int_config_general.h"
 #include "e_deskpreview.h"
 #include "e_exebuf.h"
 #include "e_int_config_modules.h"

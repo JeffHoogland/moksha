@@ -123,6 +123,7 @@ e_int_config_window_display.h \
 e_int_config_background.h \
 e_int_config_theme.h \
 e_int_config_menus.h \
+e_int_config_general.h \
 e_deskpreview.h \
 e_exebuf.h \
 e_int_config_modules.h \
@@ -230,6 +231,7 @@ e_int_config_window_display.c \
 e_int_config_background.c \
 e_int_config_theme.c \
 e_int_config_menus.c \
+e_int_config_general.c \
 e_deskpreview.c \
 e_exebuf.c \
 e_int_config_modules.c \
