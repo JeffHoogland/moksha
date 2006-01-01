@@ -463,6 +463,7 @@ group {
 	 description {
 	    state: "active" 0.0;
 	    align: 1.0 0.5;
+		fixed: 1 0;	    
 	    rel1 {
 	       relative: 1.0  0.0;
 	       offset:   -8   7;
