@@ -1,8 +1,5 @@
 #include "e.h"
 
-#define FONT_CACHE_MAX (32 * 1024)
-#define IMAGE_CACHE_MAX (256 * 1024)
-
 typedef struct _CFData CFData;
 
 static void        *_create_data(E_Config_Dialog *cfd);
@@ -67,8 +64,8 @@ _fill_data(CFData *cfdata)
    cfdata->cursor_size = e_config->cursor_size;
    
    /* Advanced */
-   cfdata->image_cache = e_config->image_cache;
-   cfdata->font_cache = e_config->font_cache;
+   cfdata->image_cache = (e_config->image_cache / 1024);
+   cfdata->font_cache = (e_config->font_cache / 1024);
    cfdata->edje_cache = e_config->edje_cache;
    cfdata->edje_collection_cache = e_config->edje_collection_cache;
    
@@ -85,7 +82,6 @@ _create_data(E_Config_Dialog *cfd)
    CFData *cfdata;
    
    cfdata = E_NEW(CFData, 1);
-   _fill_data(cfdata);   
    return cfdata;
 }
 
@@ -137,7 +133,9 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata) 
 {
    Evas_Object *o, *of, *ob;
-      
+
+   _fill_data(cfdata);
+   
    o = e_widget_list_add(evas, 0, 0);
    
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
@@ -145,7 +143,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Framerate"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 0.0, 200.0, 5.0, 0, &(cfdata->framerate), NULL, 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f fps"), 0.0, 200.0, 5.0, 0, &(cfdata->framerate), NULL, 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
@@ -154,7 +152,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Mouse Pointer Size"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 0, 1024, 1, 0, NULL, &(cfdata->cursor_size), 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f pixels"), 0, 1024, 1, 0, NULL, &(cfdata->cursor_size), 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);   
    return o;
@@ -163,16 +161,41 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 static int
 _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata) 
 {
-   _basic_apply_data(cfd, cfdata);
+   int restart = 0;
+   
+   if (e_config->use_e_cursor != cfdata->use_e_cursor) restart = 1;
+   if (e_config->cursor_size != cfdata->cursor_size) restart = 1;
    
    e_border_button_bindings_ungrab_all();
-   e_config->font_cache = cfdata->font_cache;
-   e_config->image_cache = cfdata->image_cache;
+   e_config->show_splash = cfdata->show_splash;
+   if (cfdata->framerate <= 0.0) cfdata->framerate = 1.0;
+   e_config->framerate = cfdata->framerate;
+   e_config->use_e_cursor = cfdata->use_e_cursor;
+   /* Trap for idiots that may set cursor size == 0 */
+   if (cfdata->cursor_size <= 0) cfdata->cursor_size = 1;
+   e_config->cursor_size = cfdata->cursor_size;
+   e_config->font_cache = (cfdata->font_cache * 1024);
+   e_config->image_cache = (cfdata->image_cache * 1024);
    e_config->edje_cache = cfdata->edje_cache;
    e_config->edje_collection_cache = cfdata->edje_collection_cache;
    
    e_border_button_bindings_grab_all();
    e_config_save_queue();
+   if (restart) 
+     {
+	E_Dialog *dia;
+	
+	dia = e_dialog_new(cfd->con);
+	if (!dia) return 1;
+	e_dialog_title_set(dia, _("Are you sure you want to restart ?"));
+	e_dialog_text_set(dia, _("Your changes require Enlightenment to be restarted<br>before they can take effect.<br><br>Would you like to restart now ?"));
+	e_dialog_icon_set(dia, "enlightenment/reset", 64);
+	e_dialog_button_add(dia, _("Yes"), NULL, _dialog_cb_ok, NULL);
+	e_dialog_button_add(dia, _("No"), NULL, _dialog_cb_cancel, NULL);
+	e_dialog_button_focus_num(dia, 1);
+	e_win_centered_set(dia->win, 1);
+	e_dialog_show(dia);
+     }   
    return 1;
 }
 
@@ -181,7 +204,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 {
    Evas_Object *o, *ob, *of;
    
-   //_fill_data(cfdata);
+   _fill_data(cfdata);
 
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
@@ -189,7 +212,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Framerate"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 0.0, 200.0, 5.0, 0, &(cfdata->framerate), NULL, 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f fps"), 0.0, 200.0, 5.0, 0, &(cfdata->framerate), NULL, 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
@@ -198,26 +221,26 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Mouse Pointer Size"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 0, 1024, 1, 0, NULL, &(cfdata->cursor_size), 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f pixels"), 0, 1024, 1, 0, NULL, &(cfdata->cursor_size), 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);   
 
    of = e_widget_framelist_add(evas, _("Cache Settings"), 0);
    ob = e_widget_label_add(evas, _("Font Cache"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 0, FONT_CACHE_MAX, 100.0, 0, NULL, &(cfdata->font_cache), 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f MB"), 0, 32, 1, 0, NULL, &(cfdata->font_cache), 200);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Image Cache"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 0, IMAGE_CACHE_MAX, 100.0, 0, NULL, &(cfdata->image_cache), 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f MB"), 0, 256, 1, 0, NULL, &(cfdata->image_cache), 200);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Edje Cache"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 0, 256, 1, 0, NULL, &(cfdata->edje_cache), 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f MB"), 0, 256, 1, 0, NULL, &(cfdata->edje_cache), 200);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Edje Collection Cache"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 0, 512, 1, 0, NULL, &(cfdata->edje_collection_cache), 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f MB"), 0, 512, 1, 0, NULL, &(cfdata->edje_collection_cache), 200);
    e_widget_framelist_object_append(of, ob);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);   
