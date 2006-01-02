@@ -141,7 +141,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 	free(homedir);
      }
 
-   if ((ecore_file_exists(buf)) && (ecore_file_is_dir(buf)))
+   if (ecore_file_is_dir(buf))
      {
 	Ecore_List *themes;
 	
@@ -221,7 +221,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
      }
 
    e_widget_ilist_go(il);   
-   e_widget_min_size_set(il, 240, 60);
+   e_widget_min_size_set(il, 180, 40);
    e_widget_table_object_append(o, il, 0, 0, 1, 2, 1, 1, 1, 1);
    fr = e_widget_framelist_add(evas, "Preview", 0);
    if (im == NULL)
@@ -232,8 +232,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 	      320, 240);
      }
    cfd->data = im;
-   e_widget_min_size_set(fr, 340, 260);
-   e_widget_table_object_append(o, fr, 1, 0, 1, 1, 1, 1, 1, 1);   
+   e_widget_min_size_set(fr, 320, 240);
+   e_widget_table_object_append(o, fr, 1, 0, 1, 2, 1, 1, 1, 1);   
    e_widget_framelist_object_append(fr, im);   
    
    return o;
