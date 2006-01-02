@@ -839,7 +839,6 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
    E_Menu *root;
-   int num = 0;
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
    root = e_menu_root_get(m);
@@ -864,7 +863,7 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 	     free(homedir);
 	  }
 	
-	if ((ecore_file_exists(buf)) && (ecore_file_is_dir(buf)))
+	if (ecore_file_is_dir(buf))
 	  {
 	     Ecore_List *themes;
 	     
@@ -883,19 +882,17 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 		       E_Config_Theme *et;
 		       
 		       et = l->data;
-		       if (!strcmp(et->category, "theme"))
-			 deftheme = et->file;
+		       if (!strcmp(et->category, "theme")) deftheme = et->file;
 		    }		  		  
 
 		  mi = e_menu_item_new(m);
 		  e_menu_item_radio_set(mi, 1);
 		  e_menu_item_radio_group_set(mi, 1);
-		  if (((deftheme) && (!strcmp("default", deftheme))) ||
+		  if (((deftheme) && (!strcmp("default", deftheme))) || 
 		      (!deftheme))
 		    e_menu_item_toggle_set(mi, 1);
 		  e_menu_item_label_set(mi, "default");
 		  e_menu_item_callback_set(mi, _e_int_menus_themes_edit_mode_cb, NULL);
-		  num++;
 		  
 		  eebuf = ecore_evas_buffer_new(1, 1);
 		  evasbuf = ecore_evas_get(eebuf);
@@ -904,8 +901,7 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 		  while ((theme = ecore_list_next(themes)))
 		    {
 		       snprintf(fulltheme, sizeof(fulltheme), "%s/%s", buf, theme);
-		       if (ecore_file_is_dir(fulltheme))
-			 continue;
+		       if (ecore_file_is_dir(fulltheme)) continue;
 		       
 		       /* minimum theme requirements */
 		       if(edje_object_file_set(o, fulltheme, "widgets/border/default/border"))
@@ -917,10 +913,9 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 			      {			  
 				 if (!strcmp(theme, deftheme))
 				   e_menu_item_toggle_set(mi, 1);
-			      }
+			      }			    
 			    e_menu_item_label_set(mi, theme);
 			    e_menu_item_callback_set(mi, _e_int_menus_themes_edit_mode_cb, NULL);
-			    num++;
 			 }
 		    }
 		  
