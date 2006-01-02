@@ -221,7 +221,7 @@ _ibar_new()
    if (!ib->conf)
      {
 	ib->conf = E_NEW(Config, 1);
-	ib->conf->appdir = evas_stringshare_add("bar");
+	ib->conf->appdir = (char *)evas_stringshare_add("bar");
 	ib->conf->follower = 1;
 	ib->conf->follow_speed = 0.9;
 	ib->conf->autoscroll_speed = 0.95;
