@@ -67,7 +67,7 @@ typedef enum _E_Engine_Context
 struct _E_Config
 {
    int         config_version;
-   int         show_splash;
+   int         show_splash; //GUI
    char       *desktop_default_background;
    Evas_List  *desktop_backgrounds;
    char       *desktop_default_name;
@@ -78,11 +78,11 @@ struct _E_Config
    int         border_shade_animate; // GUI
    int         border_shade_transition; // GUI
    double      border_shade_speed; // GUI
-   double      framerate;
-   int         image_cache;
-   int         font_cache;
-   int         edje_cache;
-   int         edje_collection_cache;
+   double      framerate; //GUI
+   int         image_cache; //GUI
+   int         font_cache; //GUI
+   int         edje_cache; //GUI
+   int         edje_collection_cache; //GUI
    double      cache_flush_interval;
    int         zone_desks_x_count;
    int         zone_desks_y_count;
@@ -167,8 +167,8 @@ struct _E_Config
    int         resize_info_visible; // GUI
    int         focus_last_focused_per_desktop;
    int         focus_revert_on_hide_or_close;
-   int         use_e_cursor;
-   int         cursor_size;
+   int         use_e_cursor; // GUI
+   int         cursor_size; //GUI
    int         menu_autoscroll_margin; // GUI
    int         menu_autoscroll_cursor_margin; // GUI
    char	      *input_method;
