@@ -65,9 +65,9 @@ static int
 _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata) 
 {
    E_Action *a;
-   int restart = 0;
+   int changed = 0;
    
-   if (e_config->use_e_cursor != cfdata->use_e_cursor) restart = 1;
+   if (e_config->use_e_cursor != cfdata->use_e_cursor) changed = 1;
    
    e_border_button_bindings_ungrab_all();
    e_config->show_splash = cfdata->show_splash;
@@ -75,20 +75,17 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    e_border_button_bindings_grab_all();
    e_config_save_queue();
    
-   if (restart) 
+   if (changed) 
      {
-	E_Dialog *dia;
+	Evas_List *l;
 	
-	dia = e_dialog_new(cfd->con);
-	if (!dia) return 1;
-	e_dialog_title_set(dia, _("Are you sure you want to restart ?"));
-	e_dialog_text_set(dia, _("Your changes require Enlightenment to be restarted<br>before they can take effect.<br><br>Would you like to restart now ?"));
-	e_dialog_icon_set(dia, "enlightenment/reset", 64);
-	e_dialog_button_add(dia, _("Yes"), NULL, _dialog_cb_ok, NULL);
-	e_dialog_button_add(dia, _("No"), NULL, _dialog_cb_cancel, NULL);
-	e_dialog_button_focus_num(dia, 1);
-	e_win_centered_set(dia->win, 1);
-	e_dialog_show(dia);
+	for (l = e_manager_list(); l; l = l->next) 
+	  {
+	     E_Manager *man;
+	     man = l->data;
+	     if (man->pointer) e_object_del(E_OBJECT(man->pointer));
+	     man->pointer = e_pointer_window_new(man->root);
+	  }
      }   
    return 1;
 }
@@ -118,10 +115,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 static int
 _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata) 
 {
-   int restart = 0;
+   int changed = 0;
    
-   if (e_config->use_e_cursor != cfdata->use_e_cursor) restart = 1;
-   if (e_config->cursor_size != cfdata->cursor_size) restart = 1;
+   if (e_config->use_e_cursor != cfdata->use_e_cursor) changed = 1;
+   if (e_config->cursor_size != cfdata->cursor_size) changed = 1;
    
    e_border_button_bindings_ungrab_all();
    e_config->show_splash = cfdata->show_splash;
@@ -131,20 +128,18 @@ _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    
    e_border_button_bindings_grab_all();
    e_config_save_queue();
-   if (restart) 
+   if (changed) 
      {
-	E_Dialog *dia;
+	Evas_List *l;
 	
-	dia = e_dialog_new(cfd->con);
-	if (!dia) return 1;
-	e_dialog_title_set(dia, _("Are you sure you want to restart ?"));
-	e_dialog_text_set(dia, _("Your changes require Enlightenment to be restarted<br>before they can take effect.<br><br>Would you like to restart now ?"));
-	e_dialog_icon_set(dia, "enlightenment/reset", 64);
-	e_dialog_button_add(dia, _("Yes"), NULL, _dialog_cb_ok, NULL);
-	e_dialog_button_add(dia, _("No"), NULL, _dialog_cb_cancel, NULL);
-	e_dialog_button_focus_num(dia, 1);
-	e_win_centered_set(dia->win, 1);
-	e_dialog_show(dia);
+	e_pointers_size_set(e_config->cursor_size);
+	for (l = e_manager_list(); l; l = l->next) 
+	  {
+	     E_Manager *man;
+	     man = l->data;
+	     if (man->pointer) e_object_del(E_OBJECT(man->pointer));
+	     man->pointer = e_pointer_window_new(man->root);
+	  }	
      }   
    return 1;
 }
