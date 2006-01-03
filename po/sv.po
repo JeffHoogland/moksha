@@ -1,6 +1,6 @@
-# Swedish translation of Enlightenment.
+# Swedish translation of E17.
 # This file is put in the public domain.
-# Anders Trobäck <enlightenment@troback.com>, 2005.
+# Anders Trobäck <enlightenment@troback.com>, 2006.
 # , fuzzy
 # 
 # 
@@ -8,15 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment E17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-12-19 00:01+0100\n"
-"PO-Revision-Date: 2005-12-19 16:01+0100\n"
+"POT-Creation-Date: 2006-01-03 08:49+0100\n"
+"PO-Revision-Date: 2006-01-03 11:20+0100\n"
 "Last-Translator: Anders Trobäck <enlightenment@troback.com>\n"
 "Language-Team: Swedish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit"
 
-#: src/bin/e_about.c:41 src/bin/e_int_menus.c:136
+#: src/bin/e_about.c:41 src/bin/e_int_menus.c:135
 msgid "About Enlightenment"
 msgstr "Om Enlightenment"
 
@@ -44,24 +44,26 @@ msgstr ""
 msgid "<title>The Team</title>"
 msgstr "<title>The Team</title>"
 
-#: src/bin/e_actions.c:1266
+#: src/bin/e_actions.c:1270
 msgid "Are you sure you want to exit?"
 msgstr "Är du säker på att du vill avsluta?"
 
-#: src/bin/e_actions.c:1268
+#: src/bin/e_actions.c:1272
 msgid ""
 "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
 msgstr ""
 "Du har valt att avsluta Enlightenment.<br><br>Är du säker på att du vill "
 "avsluta?"
 
-#: src/bin/e_actions.c:1273 src/bin/e_fileman_smart.c:1029
-#: src/bin/e_module.c:559 src/modules/randr/e_mod_main.c:317
+#: src/bin/e_actions.c:1277 src/bin/e_fileman_smart.c:1028
+#: src/bin/e_module.c:570 src/bin/e_int_config_general.c:87
+#: src/bin/e_int_config_general.c:143 src/modules/randr/e_mod_main.c:317
 msgid "Yes"
 msgstr "Ja"
 
-#: src/bin/e_actions.c:1275 src/bin/e_fileman_smart.c:1030
-#: src/bin/e_module.c:560 src/modules/randr/e_mod_main.c:318
+#: src/bin/e_actions.c:1279 src/bin/e_fileman_smart.c:1029
+#: src/bin/e_module.c:571 src/bin/e_int_config_general.c:88
+#: src/bin/e_int_config_general.c:144 src/modules/randr/e_mod_main.c:318
 msgid "No"
 msgstr "Nej"
 
@@ -99,18 +101,18 @@ msgstr ""
 "\n"
 "Kommandot gick inte att hitta\n"
 
-#: src/bin/e_config_dialog.c:88 src/modules/battery/e_mod_config.c:122
+#: src/bin/e_config_dialog.c:88 src/modules/battery/e_mod_config.c:121
 msgid "Advanced Settings"
 msgstr "Avancerade inställningar"
 
-#: src/bin/e_config_dialog.c:103 src/modules/battery/e_mod_config.c:89
+#: src/bin/e_config_dialog.c:103 src/modules/battery/e_mod_config.c:88
 msgid "Basic Settings"
 msgstr "Grundinställningar"
 
 #: src/bin/e_config_dialog.c:117 src/bin/e_error.c:196 src/bin/e_error.c:205
 #: src/bin/e_int_border_remember.c:245 src/bin/e_int_border_remember.c:325
-#: src/bin/e_int_border_remember.c:367 src/bin/e_module.c:419
-#: src/modules/ibar/e_mod_main.c:1590
+#: src/bin/e_int_border_remember.c:367 src/bin/e_module.c:421
+#: src/modules/ibar/e_mod_main.c:1607
 msgid "OK"
 msgstr "OK"
 
@@ -118,9 +120,10 @@ msgstr "OK"
 msgid "Apply"
 msgstr "Verkställ"
 
-#: src/bin/e_config_dialog.c:123 src/bin/e_file_dialog.c:67
-msgid "Cancel"
-msgstr "Avbryt"
+#: src/bin/e_config_dialog.c:122 src/bin/e_configure.c:79
+#: src/bin/e_int_border_menu.c:331
+msgid "Close"
+msgstr "Stäng"
 
 #: src/bin/e_config.c:389
 msgid ""
@@ -155,46 +158,62 @@ msgstr ""
 "Detta är inte bra och som en säkerhetsåtgärd så har din\n"
 "konfiguration återställts till standard. Beklagar detta.\n"
 
-#: src/bin/e_config.c:2077
+#: src/bin/e_config.c:2078
 msgid "Configuration Upgraded"
 msgstr "Konfigurationen uppgraderad"
 
-#: src/bin/e_configure.c:44
+#: src/bin/e_configure.c:45
 msgid "Enlightenment Configuration"
 msgstr "Enlightenment Konfiguration"
 
-#: src/bin/e_configure.c:58 src/bin/e_int_menus.c:636
+#: src/bin/e_configure.c:61 src/bin/e_int_menus.c:636
 msgid "Configuration Panel"
 msgstr "Konfigurationspanel"
 
-#: src/bin/e_configure.c:61 src/bin/e_int_config_focus.c:44
-msgid "Focus Settings"
-msgstr "Fokus inställningar"
+#: src/bin/e_configure.c:64 src/bin/e_int_config_background.c:45
+msgid "Background Settings"
+msgstr "Bakgrundsinställningar"
 
-#: src/bin/e_configure.c:62 src/bin/e_int_config_desks.c:45
+#: src/bin/e_configure.c:65 src/bin/e_int_config_theme.c:47
+msgid "Theme Selector"
+msgstr "Välj tema"
+
+#: src/bin/e_configure.c:66 src/bin/e_int_config_modules.c:70
+msgid "Module Settings"
+msgstr "Modul inställningar"
+
+#: src/bin/e_configure.c:67 src/bin/e_int_config_general.c:37
+#: src/bin/e_int_config_general.c:105 src/bin/e_int_config_general.c:160
+#: src/bin/e_int_config_performance.c:87
+#: src/bin/e_int_config_performance.c:123 src/modules/clock/e_mod_config.c:75
+#: src/modules/pager/e_mod_config.c:91 src/modules/pager/e_mod_config.c:146
+msgid "General Settings"
+msgstr "Allmänna inställningar"
+
+#: src/bin/e_configure.c:68 src/bin/e_int_config_desks.c:45
 msgid "Desktop Settings"
 msgstr "Skrivbordsinställningar"
 
-#: src/bin/e_configure.c:63 src/bin/e_int_config_menus.c:39
+#: src/bin/e_configure.c:69 src/bin/e_int_config_focus.c:44
+msgid "Focus Settings"
+msgstr "Fokus inställningar"
+
+#: src/bin/e_configure.c:70 src/bin/e_int_config_menus.c:39
 #: src/bin/e_int_config_menus.c:92 src/bin/e_int_config_menus.c:145
 msgid "Menu Settings"
 msgstr "Meny inställningar"
 
-#: src/bin/e_configure.c:64 src/bin/e_int_config_window_manipulation.c:48
-msgid "Window Manipulation"
-msgstr "Hantera Fönster"
+#: src/bin/e_configure.c:71 src/bin/e_int_config_performance.c:37
+msgid "Performance Settings"
+msgstr "Prestanda inställningar"
 
-#: src/bin/e_configure.c:65 src/bin/e_int_config_window_display.c:49
+#: src/bin/e_configure.c:72 src/bin/e_int_config_window_display.c:49
 msgid "Window Display"
 msgstr "Visa Fönster"
 
-#: src/bin/e_configure.c:66 src/bin/e_int_config_background.c:47
-msgid "Background Settings"
-msgstr "Bakgrundsinställningar"
-
-#: src/bin/e_configure.c:67
-msgid "Module Settings"
-msgstr "Modul inställningar"
+#: src/bin/e_configure.c:73 src/bin/e_int_config_window_manipulation.c:48
+msgid "Window Manipulation"
+msgstr "Hantera Fönster"
 
 #: src/bin/e_container.c:118
 #, c-format
@@ -221,7 +240,7 @@ msgstr "Program namn"
 msgid "Executable"
 msgstr "Exekverbar fil"
 
-#: src/bin/e_eap_editor.c:310 src/bin/e_fileman_smart.c:1246
+#: src/bin/e_eap_editor.c:310 src/bin/e_fileman_smart.c:1245
 msgid "General"
 msgstr "Allmänt"
 
@@ -293,174 +312,178 @@ msgstr "Skrivbord"
 msgid "Icons"
 msgstr "Ikoner"
 
-#: src/bin/e_file_dialog.c:66 src/bin/e_fileman_smart.c:934
-#: src/modules/battery/e_mod_main.c:550 src/modules/cpufreq/e_mod_main.c:306
-#: src/modules/cpufreq/e_mod_main.c:334
+#: src/bin/e_file_dialog.c:66 src/bin/e_fileman_smart.c:933
+#: src/modules/battery/e_mod_main.c:548 src/modules/cpufreq/e_mod_main.c:305
+#: src/modules/cpufreq/e_mod_main.c:333
 msgid "Ok"
 msgstr "Ok"
 
-#: src/bin/e_fileman_smart.c:936
+#: src/bin/e_file_dialog.c:67
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: src/bin/e_fileman_smart.c:935
 msgid "Error"
 msgstr "Fel"
 
-#: src/bin/e_fileman_smart.c:937
+#: src/bin/e_fileman_smart.c:936
 #, c-format
 msgid "Could not delete  <br><b>%s</b>"
 msgstr "Kan inte ta bort  <br><b>%s</b>"
 
-#: src/bin/e_fileman_smart.c:1032
+#: src/bin/e_fileman_smart.c:1031
 msgid "Confirm"
 msgstr "Bekräfta"
 
-#: src/bin/e_fileman_smart.c:1033
+#: src/bin/e_fileman_smart.c:1032
 #, c-format
 msgid " Are you sure you want to delete <br><b>%s</b> ?"
 msgstr " Är du säker på att du vill ta bort <br><b>%s</b> ?"
 
-#: src/bin/e_fileman_smart.c:1255
+#: src/bin/e_fileman_smart.c:1254
 #, c-format
 msgid "File:"
 msgstr "Fil:"
 
-#: src/bin/e_fileman_smart.c:1264
+#: src/bin/e_fileman_smart.c:1263
 #, c-format
 msgid "Size:"
 msgstr "Storlek:"
 
-#: src/bin/e_fileman_smart.c:1273
+#: src/bin/e_fileman_smart.c:1272
 #, c-format
 msgid "Type:"
 msgstr "Typ:"
 
-#: src/bin/e_fileman_smart.c:1282
+#: src/bin/e_fileman_smart.c:1281
 msgid "Protect this file"
 msgstr "Skydda denna fil"
 
-#: src/bin/e_fileman_smart.c:1288
+#: src/bin/e_fileman_smart.c:1287
 msgid "Let others see this file"
 msgstr "Låt andra se denna fil"
 
-#: src/bin/e_fileman_smart.c:1292
+#: src/bin/e_fileman_smart.c:1291
 msgid "Let others modify this file"
 msgstr "Låt andra ändra denna fil"
 
-#: src/bin/e_fileman_smart.c:1296
+#: src/bin/e_fileman_smart.c:1295
 msgid "Dont let others see or modify this file"
 msgstr "Låt inte andra se eller ändra denna fil"
 
-#: src/bin/e_fileman_smart.c:1300
+#: src/bin/e_fileman_smart.c:1299
 msgid "Custom settings"
 msgstr "Anpassade inställningar"
 
-#: src/bin/e_fileman_smart.c:1337
+#: src/bin/e_fileman_smart.c:1336
 msgid "File Info:"
 msgstr "Fil info:"
 
-#: src/bin/e_fileman_smart.c:1338
+#: src/bin/e_fileman_smart.c:1337
 msgid "Owner:"
 msgstr "Ägare:"
 
-#: src/bin/e_fileman_smart.c:1343
+#: src/bin/e_fileman_smart.c:1342
 msgid "Group:"
 msgstr "Grupp:"
 
-#: src/bin/e_fileman_smart.c:1348
+#: src/bin/e_fileman_smart.c:1347
 msgid "Last Access:"
 msgstr "Senast öppnad:"
 
-#: src/bin/e_fileman_smart.c:1353
+#: src/bin/e_fileman_smart.c:1352
 msgid "Last Modified:"
 msgstr "Senast ändrad:"
 
-#: src/bin/e_fileman_smart.c:1360
+#: src/bin/e_fileman_smart.c:1359
 msgid "Permissions:"
 msgstr "Rättigheter:"
 
-#: src/bin/e_fileman_smart.c:1361
+#: src/bin/e_fileman_smart.c:1360
 msgid "Me"
 msgstr "Jag"
 
-#: src/bin/e_fileman_smart.c:1363 src/bin/e_fileman_smart.c:1372
-#: src/bin/e_fileman_smart.c:1381
+#: src/bin/e_fileman_smart.c:1362 src/bin/e_fileman_smart.c:1371
+#: src/bin/e_fileman_smart.c:1380
 msgid "r"
 msgstr "r"
 
-#: src/bin/e_fileman_smart.c:1365 src/bin/e_fileman_smart.c:1374
-#: src/bin/e_fileman_smart.c:1383
+#: src/bin/e_fileman_smart.c:1364 src/bin/e_fileman_smart.c:1373
+#: src/bin/e_fileman_smart.c:1382
 msgid "w"
 msgstr "w"
 
-#: src/bin/e_fileman_smart.c:1367 src/bin/e_fileman_smart.c:1376
-#: src/bin/e_fileman_smart.c:1385
+#: src/bin/e_fileman_smart.c:1366 src/bin/e_fileman_smart.c:1375
+#: src/bin/e_fileman_smart.c:1384
 msgid "x"
 msgstr "x"
 
-#: src/bin/e_fileman_smart.c:1370
+#: src/bin/e_fileman_smart.c:1369
 msgid "My Group"
 msgstr "Min Grupp"
 
-#: src/bin/e_fileman_smart.c:1379
+#: src/bin/e_fileman_smart.c:1378
 msgid "Everyone"
 msgstr "Alla"
 
-#: src/bin/e_fileman_smart.c:1411 src/bin/e_fileman_smart.c:2050
-#: src/bin/e_fileman_smart.c:2299
+#: src/bin/e_fileman_smart.c:1410 src/bin/e_fileman_smart.c:2047
+#: src/bin/e_fileman_smart.c:2296
 msgid "Properties"
 msgstr "Egenskaper"
 
-#: src/bin/e_fileman_smart.c:1963
+#: src/bin/e_fileman_smart.c:1960
 msgid "Arrange Icons"
 msgstr "Ordna Ikoner"
 
-#: src/bin/e_fileman_smart.c:1973
+#: src/bin/e_fileman_smart.c:1970
 msgid "By Name"
 msgstr "Efter Namn"
 
-#: src/bin/e_fileman_smart.c:1984
+#: src/bin/e_fileman_smart.c:1981
 msgid "By Mod Time"
 msgstr "Efter Ändringstid"
 
-#: src/bin/e_fileman_smart.c:1995
+#: src/bin/e_fileman_smart.c:1992
 msgid "New"
 msgstr "Ny"
 
-#: src/bin/e_fileman_smart.c:2005
+#: src/bin/e_fileman_smart.c:2002
 msgid "Directory"
 msgstr "Mapp"
 
-#: src/bin/e_fileman_smart.c:2013
+#: src/bin/e_fileman_smart.c:2010
 msgid "View"
 msgstr "Visa"
 
-#: src/bin/e_fileman_smart.c:2023
+#: src/bin/e_fileman_smart.c:2020
 msgid "Name Only"
 msgstr "Endast Namn"
 
-#: src/bin/e_fileman_smart.c:2032
+#: src/bin/e_fileman_smart.c:2029
 msgid "Details"
 msgstr "Detaljer"
 
-#: src/bin/e_fileman_smart.c:2042
+#: src/bin/e_fileman_smart.c:2039
 msgid "Refresh"
 msgstr "Uppdatera"
 
-#: src/bin/e_fileman_smart.c:2250
+#: src/bin/e_fileman_smart.c:2247
 msgid "Open"
 msgstr "Öppna"
 
-#: src/bin/e_fileman_smart.c:2261
+#: src/bin/e_fileman_smart.c:2258
 msgid "Copy"
 msgstr "Kopiera"
 
-#: src/bin/e_fileman_smart.c:2269
+#: src/bin/e_fileman_smart.c:2266
 msgid "Cut"
 msgstr "Klipp ut"
 
-#: src/bin/e_fileman_smart.c:2280
+#: src/bin/e_fileman_smart.c:2277
 msgid "Rename"
 msgstr "Byt namn"
 
-#: src/bin/e_fileman_smart.c:2288
+#: src/bin/e_fileman_smart.c:2285
 msgid "Delete"
 msgstr "Ta bort"
 
@@ -615,7 +638,7 @@ msgstr "Kom ihåg dessa Lås"
 msgid "Always On Top"
 msgstr "Alltid överst"
 
-#: src/bin/e_int_border_menu.c:53 src/modules/temperature/e_mod_config.c:171
+#: src/bin/e_int_border_menu.c:53 src/modules/temperature/e_mod_config.c:188
 msgid "Normal"
 msgstr "Normal"
 
@@ -688,10 +711,6 @@ msgstr "Döda"
 #: src/bin/e_int_border_menu.c:320
 msgid "Iconify"
 msgstr "Minimera"
-
-#: src/bin/e_int_border_menu.c:331
-msgid "Close"
-msgstr "Stäng"
 
 #: src/bin/e_intl.c:348
 msgid "Input Method Error"
@@ -923,54 +942,58 @@ msgstr "Ett klick på ett fönster ger alltid det fokus"
 msgid "Favorite Applications"
 msgstr "Favorit program"
 
-#: src/bin/e_int_menus.c:100
+#: src/bin/e_int_menus.c:92 src/bin/e_int_config_modules.c:263
+msgid "Modules"
+msgstr "Moduler"
+
+#: src/bin/e_int_menus.c:99
 msgid "Desktops"
 msgstr "Skrivbord"
 
-#: src/bin/e_int_menus.c:107
+#: src/bin/e_int_menus.c:106
 msgid "Windows"
 msgstr "Fönster"
 
-#: src/bin/e_int_menus.c:114
+#: src/bin/e_int_menus.c:113
 msgid "Lost Windows"
 msgstr "Förlorade fönster"
 
-#: src/bin/e_int_menus.c:121
+#: src/bin/e_int_menus.c:120
 msgid "Gadgets"
 msgstr "Tillbehör"
 
-#: src/bin/e_int_menus.c:128
+#: src/bin/e_int_menus.c:127
 msgid "Themes"
 msgstr "Teman"
 
-#: src/bin/e_int_menus.c:143
+#: src/bin/e_int_menus.c:142
 msgid "Run Command"
 msgstr "Kör kommando"
 
-#: src/bin/e_int_menus.c:149
+#: src/bin/e_int_menus.c:148
 msgid "Files"
 msgstr "Filer"
 
-#: src/bin/e_int_menus.c:156 src/bin/e_module.c:492
-#: src/modules/battery/e_mod_main.c:237 src/modules/battery/e_mod_main.c:369
-#: src/modules/clock/e_mod_main.c:188 src/modules/clock/e_mod_main.c:348
-#: src/modules/ibar/e_mod_main.c:278 src/modules/ibar/e_mod_main.c:635
-#: src/modules/ibox/e_mod_main.c:245 src/modules/ibox/e_mod_main.c:459
-#: src/modules/pager/e_mod_main.c:390 src/modules/pager/e_mod_main.c:523
-#: src/modules/temperature/e_mod_main.c:206
-#: src/modules/temperature/e_mod_main.c:358
+#: src/bin/e_int_menus.c:155 src/bin/e_module.c:494
+#: src/modules/battery/e_mod_main.c:244 src/modules/battery/e_mod_main.c:367
+#: src/modules/clock/e_mod_main.c:187 src/modules/clock/e_mod_main.c:349
+#: src/modules/ibar/e_mod_main.c:289 src/modules/ibar/e_mod_main.c:646
+#: src/modules/ibox/e_mod_main.c:253 src/modules/ibox/e_mod_main.c:458
+#: src/modules/pager/e_mod_main.c:400 src/modules/pager/e_mod_main.c:527
+#: src/modules/temperature/e_mod_main.c:213
+#: src/modules/temperature/e_mod_main.c:356
 msgid "Configuration"
 msgstr "Konfiguration"
 
-#: src/bin/e_int_menus.c:164
+#: src/bin/e_int_menus.c:163
 msgid "Restart Enlightenment"
 msgstr "Starta om Enlightenment"
 
-#: src/bin/e_int_menus.c:169
+#: src/bin/e_int_menus.c:168
 msgid "Exit Enlightenment"
 msgstr "Avsluta·Enlightenment"
 
-#: src/bin/e_int_menus.c:470
+#: src/bin/e_int_menus.c:469
 msgid "(No Applications)"
 msgstr "(Inga program)"
 
@@ -990,11 +1013,11 @@ msgstr "Ny skrivbords kolumn"
 msgid "Remove Column of Desktops"
 msgstr "Ta bort skrivbords kolumn"
 
-#: src/bin/e_int_menus.c:698 src/bin/e_int_menus.c:987
+#: src/bin/e_int_menus.c:698 src/bin/e_int_menus.c:980
 msgid "(No Windows)"
 msgstr "(Inga fönster)"
 
-#: src/bin/e_int_menus.c:713 src/bin/e_int_menus.c:1001
+#: src/bin/e_int_menus.c:713 src/bin/e_int_menus.c:994
 msgid "No name!!"
 msgstr "Inget namn!!!"
 
@@ -1002,11 +1025,11 @@ msgstr "Inget namn!!!"
 msgid "Cleanup Windows"
 msgstr "Städa upp fönster"
 
-#: src/bin/e_int_menus.c:810 src/bin/e_gadget.c:196
-#: src/modules/battery/e_mod_main.c:374 src/modules/clock/e_mod_main.c:353
-#: src/modules/cpufreq/e_mod_main.c:946 src/modules/ibar/e_mod_main.c:640
-#: src/modules/ibox/e_mod_main.c:464 src/modules/pager/e_mod_main.c:527
-#: src/modules/start/e_mod_main.c:230 src/modules/temperature/e_mod_main.c:363
+#: src/bin/e_int_menus.c:810 src/bin/e_gadget.c:195
+#: src/modules/battery/e_mod_main.c:372 src/modules/clock/e_mod_main.c:354
+#: src/modules/cpufreq/e_mod_main.c:937 src/modules/ibar/e_mod_main.c:651
+#: src/modules/ibox/e_mod_main.c:463 src/modules/pager/e_mod_main.c:531
+#: src/modules/start/e_mod_main.c:229 src/modules/temperature/e_mod_main.c:361
 msgid "Edit Mode"
 msgstr "Redigeringsläge"
 
@@ -1014,7 +1037,7 @@ msgstr "Redigeringsläge"
 msgid "(Unused)"
 msgstr "(Används ej)"
 
-#: src/bin/e_int_menus.c:848 src/bin/e_theme_about.c:41
+#: src/bin/e_int_menus.c:847 src/bin/e_theme_about.c:41
 msgid "About This Theme"
 msgstr "Om detta tema"
 
@@ -1291,7 +1314,7 @@ msgstr ""
 msgid "Enlightenment Starting. Please wait."
 msgstr "Enlightenment startar. Vargod vänta."
 
-#: src/bin/e_module.c:111
+#: src/bin/e_module.c:112
 #, c-format
 msgid ""
 "There was an error loading module named: %s<br>No module named %s could be "
@@ -1300,11 +1323,11 @@ msgstr ""
 "Det blev fel när modulen %s skulle laddas<br>Ingen modul med namnet %s kunde "
 "hittas i<br>sökvägarna för moduler.<br>"
 
-#: src/bin/e_module.c:115 src/bin/e_module.c:128 src/bin/e_module.c:154
+#: src/bin/e_module.c:116 src/bin/e_module.c:129 src/bin/e_module.c:155
 msgid "Error loading Module"
 msgstr "Fel vid öppnandet av modul"
 
-#: src/bin/e_module.c:122 src/bin/e_module.c:148
+#: src/bin/e_module.c:123
 #, c-format
 msgid ""
 "There was an error loading module named: %s<br>The full path to this module "
@@ -1313,7 +1336,18 @@ msgstr ""
 "Det blev fel när modulen %s skulle laddas.<br>Den fulständiga sökvägen till "
 "denna modul är:<br> %s<br>Felet som raporterades är:<br>%s<br>"
 
-#: src/bin/e_module.c:170
+#: src/bin/e_module.c:149
+#, c-format
+msgid ""
+"There was an error loading module named: %s<br>The full path to this module "
+"is:<br>%s<br>The error reported was:<br>Module does not contain all needed "
+"functions<br>"
+msgstr ""
+"Det gick inte att ladda modul: %s<br>den fullständiga sökvägen till modulen  "
+"är:<br>%s<br>Felet som rapporterades var:<br>Modulen innehåller inte alla "
+"funktioner som behövs<br>"
+
+#: src/bin/e_module.c:171
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -1324,24 +1358,24 @@ msgstr ""
 "version %i av modul API<br>Versionen på API som raporteras av Enlightenment "
 "är: %i.<br>"
 
-#: src/bin/e_module.c:175
+#: src/bin/e_module.c:176
 #, c-format
 msgid "Enlightenment %s Module"
 msgstr "Enlightenment %s modul"
 
-#: src/bin/e_module.c:403
+#: src/bin/e_module.c:405
 msgid "(No Loaded Modules)"
 msgstr "(Inga moduler laddade)"
 
-#: src/bin/e_module.c:477
+#: src/bin/e_module.c:479
 msgid "About..."
 msgstr "Om..."
 
-#: src/bin/e_module.c:481
+#: src/bin/e_module.c:483 src/bin/e_int_config_modules.c:298
 msgid "Enabled"
 msgstr "Aktiverad"
 
-#: src/bin/e_module.c:554
+#: src/bin/e_module.c:565
 msgid "Would you like to unload this module?<br>"
 msgstr "Vill du stänga av denna modulen?<br>"
 
@@ -1369,82 +1403,82 @@ msgstr ""
 msgid "Select a window"
 msgstr "Välj ett fönster"
 
-#: src/bin/e_int_config_window_display.c:136
+#: src/bin/e_int_config_window_display.c:141
 msgid "Display"
 msgstr "Visa"
 
-#: src/bin/e_int_config_window_display.c:137
+#: src/bin/e_int_config_window_display.c:142
 msgid "Show window geometry information when moving or resizing"
 msgstr "Visa information om geometri när fönster flyttas eller ändrar stolek"
 
-#: src/bin/e_int_config_window_display.c:139
-#: src/bin/e_int_config_window_display.c:182
+#: src/bin/e_int_config_window_display.c:144
+#: src/bin/e_int_config_window_display.c:187
 msgid "Animate the shading and unshading of windows"
 msgstr "Animera växling mellan skuggat och oskuggat fönster"
 
-#: src/bin/e_int_config_window_display.c:143
-#: src/bin/e_int_config_window_display.c:197
+#: src/bin/e_int_config_window_display.c:148
+#: src/bin/e_int_config_window_display.c:202
 msgid "Automatic New Window Placement"
 msgstr "Automatisk Fönster Placering"
 
-#: src/bin/e_int_config_window_display.c:145
-#: src/bin/e_int_config_window_display.c:199
+#: src/bin/e_int_config_window_display.c:150
+#: src/bin/e_int_config_window_display.c:204
 msgid "Smart Placement"
 msgstr "Smart placering"
 
-#: src/bin/e_int_config_window_display.c:147
-#: src/bin/e_int_config_window_display.c:201
+#: src/bin/e_int_config_window_display.c:152
+#: src/bin/e_int_config_window_display.c:206
 msgid "Place at mouse pointer"
 msgstr "Placera vid muspekaren"
 
-#: src/bin/e_int_config_window_display.c:149
-#: src/bin/e_int_config_window_display.c:203
+#: src/bin/e_int_config_window_display.c:154
+#: src/bin/e_int_config_window_display.c:208
 msgid "Place manually with the mouse"
 msgstr "Placera manuellt med musen"
 
-#: src/bin/e_int_config_window_display.c:167
+#: src/bin/e_int_config_window_display.c:172
 msgid "Window Move Geometry"
 msgstr "Flytta Fönster Geometri"
 
-#: src/bin/e_int_config_window_display.c:168
-#: src/bin/e_int_config_window_display.c:175
+#: src/bin/e_int_config_window_display.c:173
+#: src/bin/e_int_config_window_display.c:180
 msgid "Display information"
 msgstr "Visa information"
 
-#: src/bin/e_int_config_window_display.c:170
+#: src/bin/e_int_config_window_display.c:175
 msgid "Follow the window as it moves"
 msgstr "Följ fönstret när det flyttas"
 
-#: src/bin/e_int_config_window_display.c:174
+#: src/bin/e_int_config_window_display.c:179
 msgid "Window Resize Geometry"
 msgstr "Fönster Storlek Geometri"
 
-#: src/bin/e_int_config_window_display.c:177
+#: src/bin/e_int_config_window_display.c:182
 msgid "Follow the window as it resizes"
 msgstr "Följ fönstret när det ändrar storlek"
 
-#: src/bin/e_int_config_window_display.c:181
+#: src/bin/e_int_config_window_display.c:186
 msgid "Window Shading"
 msgstr "Skymma Fönster"
 
-#: src/bin/e_int_config_window_display.c:184 src/bin/e_int_config_menus.c:172
+#: src/bin/e_int_config_window_display.c:189 src/bin/e_int_config_menus.c:172
 #, c-format
 msgid "%4.0f pixels/sec"
 msgstr "%4.0f pixlar/sek"
 
-#: src/bin/e_int_config_window_display.c:187
+#: src/bin/e_int_config_window_display.c:192
 msgid "Linear"
 msgstr "Linjär"
 
-#: src/bin/e_int_config_window_display.c:189
+#: src/bin/e_int_config_window_display.c:194
 msgid "Smooth accelerate and decelerate"
 msgstr "Mjuk acceleration och deacceleration"
 
-#: src/bin/e_int_config_window_display.c:191
+#: src/bin/e_int_config_window_display.c:196
 msgid "Accelerate"
 msgstr "Accelerera"
 
-#: src/bin/e_int_config_window_display.c:193
+#: src/bin/e_int_config_window_display.c:198
 msgid "Decelerate"
 msgstr "Deacceleration"
 
@@ -1491,7 +1525,7 @@ msgid "Delay before raising:"
 msgstr "Fördröjning innan höjning"
 
 #: src/bin/e_int_config_window_manipulation.c:168
-#: src/bin/e_int_config_desks.c:202
+#: src/bin/e_int_config_desks.c:200
 #, c-format
 msgid "%1.1f sec"
 msgstr "%1.1f sek"
@@ -1524,27 +1558,60 @@ msgstr "Resistens vid kanten på skärmen:"
 msgid "Resistance to desktop gadgets:"
 msgstr "Resistens för skrivbordstillbehör"
 
-#: src/bin/e_int_config_desks.c:157 src/bin/e_int_config_desks.c:186
+#: src/bin/e_int_config_desks.c:156 src/bin/e_int_config_desks.c:184
 msgid "Number of Desktops"
 msgstr "Antal Skrivbord"
 
-#: src/bin/e_int_config_desks.c:160 src/bin/e_int_config_desks.c:162
-#: src/bin/e_int_config_desks.c:189 src/bin/e_int_config_desks.c:191
+#: src/bin/e_int_config_desks.c:159 src/bin/e_int_config_desks.c:161
+#: src/bin/e_int_config_desks.c:187 src/bin/e_int_config_desks.c:189
 #, c-format
 msgid "%1.0f"
 msgstr "%1.0f"
 
-#: src/bin/e_int_config_desks.c:167 src/bin/e_int_config_desks.c:196
+#: src/bin/e_int_config_desks.c:166 src/bin/e_int_config_desks.c:194
 msgid "Desktop Mouse Flip"
 msgstr "Skrivbordsbyte Med Mus"
 
-#: src/bin/e_int_config_desks.c:168 src/bin/e_int_config_desks.c:197
+#: src/bin/e_int_config_desks.c:167 src/bin/e_int_config_desks.c:195
 msgid "Flip desktops when mouse at screen edge"
 msgstr "Byt skrivbord när musen kommer till kanten på skärmen"
 
-#: src/bin/e_int_config_desks.c:200
+#: src/bin/e_int_config_desks.c:198
 msgid "Time the mouse is at the edge before flipping:"
 msgstr "Tid innan skrivbordet byts:"
+
+#: src/bin/e_int_config_general.c:84 src/bin/e_int_config_general.c:140
+msgid "Are you sure you want to restart ?"
+msgstr "Är du säker på att du vill starta om?"
+
+#: src/bin/e_int_config_general.c:85 src/bin/e_int_config_general.c:141
+msgid ""
+"Your changes require Enlightenment to be restarted<br>before they can take "
+"effect.<br><br>Would you like to restart now ?"
+msgstr ""
+"Dina ändringar kräver att Enlightenment startar om<br>innan de träder i "
+"kraft <br><br>Vill du starta om nu?"
+
+#: src/bin/e_int_config_general.c:106 src/bin/e_int_config_general.c:161
+msgid "Show Splash Screen At Boot"
+msgstr "Visa animation vid start"
+
+#: src/bin/e_int_config_general.c:110 src/bin/e_int_config_general.c:165
+msgid "Mouse Pointer Settings"
+msgstr "Inställningar för muspekare"
+
+#: src/bin/e_int_config_general.c:111 src/bin/e_int_config_general.c:166
+msgid "Use E Mouse Pointer"
+msgstr "Använd E muspekare"
+
+#: src/bin/e_int_config_general.c:168
+msgid "Mouse Pointer Size"
+msgstr "Storlek på muspekare"
+
+#: src/bin/e_int_config_general.c:170
+#, c-format
+msgid "%1.0f pixels"
+msgstr "%1.0f pixlar"
 
 #: src/bin/e_int_config_menus.c:93 src/bin/e_int_config_menus.c:146
 msgid "Show Name In Menu"
@@ -1581,26 +1648,86 @@ msgstr "%5.0f pixlar/sek"
 
 #: src/bin/e_int_config_menus.c:170
 msgid "Fast Mouse Move Threshhold"
-msgstr ""
+msgstr "Tröskelvärde för snabb musrörelse"
 
 #: src/bin/e_int_config_menus.c:174
 msgid "Click Drag Timeout"
-msgstr ""
+msgstr "Tidsgräns för klicka och drag"
 
 #: src/bin/e_int_config_menus.c:176
 #, c-format
 msgid "%2.1f seconds"
 msgstr "%2.1f sekunder"
 
-#: src/bin/e_int_config_modules.c:64
-msgid "Modules Settings"
-msgstr "Modul inställningar"
+#: src/bin/e_int_config_modules.c:302
+msgid "Loaded"
+msgstr "Laddad"
 
-#: src/modules/battery/e_mod_main.c:128
+#: src/bin/e_int_config_modules.c:306
+msgid "Unloaded"
+msgstr "Ej laddad"
+
+#: src/bin/e_int_config_modules.c:310
+msgid "Configure"
+msgstr "Konfigurera"
+
+#: src/bin/e_int_config_modules.c:314
+msgid "About"
+msgstr "Om"
+
+#: src/bin/e_int_config_performance.c:88
+#: src/bin/e_int_config_performance.c:124
+msgid "Framerate"
+msgstr "Bildhastighet"
+
+#: src/bin/e_int_config_performance.c:90
+#: src/bin/e_int_config_performance.c:126
+#, c-format
+msgid "%1.0f fps"
+msgstr "%1.0f bps"
+
+#: src/bin/e_int_config_performance.c:130
+msgid "Cache Settings"
+msgstr "Buffert inställningar"
+
+#: src/bin/e_int_config_performance.c:131
+msgid "Cache Flush Interval"
+msgstr "Intervall för att tömma buffert"
+
+#: src/bin/e_int_config_performance.c:133
+#, c-format
+msgid "%1.0f seconds"
+msgstr "%1.0f sekunder"
+
+#: src/bin/e_int_config_performance.c:136
+msgid "Font Cache"
+msgstr "Buffert för teckensnitt"
+
+#: src/bin/e_int_config_performance.c:138
+#: src/bin/e_int_config_performance.c:143
+#: src/bin/e_int_config_performance.c:148
+#: src/bin/e_int_config_performance.c:153
+#, c-format
+msgid "%1.0f MB"
+msgstr "%1.0f MB"
+
+#: src/bin/e_int_config_performance.c:141
+msgid "Image Cache"
+msgstr "Buffert för bilder"
+
+#: src/bin/e_int_config_performance.c:146
+msgid "Edje Cache"
+msgstr "Buffert för Edje"
+
+#: src/bin/e_int_config_performance.c:151
+msgid "Edje Collection Cache"
+msgstr "Buffert för Edje insamling"
+
+#: src/modules/battery/e_mod_main.c:127
 msgid "Enlightenment Battery Module"
 msgstr "Enlightenment batterimodul"
 
-#: src/modules/battery/e_mod_main.c:129
+#: src/modules/battery/e_mod_main.c:128
 msgid ""
 "A basic battery meter that uses either<hilight>ACPI</hilight> or "
 "<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
@@ -1612,110 +1739,105 @@ msgstr ""
 "nätdels <br>status. Detta fungerar under Linux och FreeBSD och är "
 "endast<br>lika exakt som ditt BIOS eller din kärnas drivrutiner."
 
-#: src/modules/battery/e_mod_main.c:547
+#: src/modules/battery/e_mod_main.c:545
 msgid ""
 "Battery Running Low<br>Your battery is running low.<br>You may wish to "
 "switch to an AC source."
 msgstr ""
 "Batterinivå låg<br>Ditt batteri börjar ta slut. Du bör byta till nätdrift."
 
-#: src/modules/battery/e_mod_main.c:612
+#: src/modules/battery/e_mod_main.c:610
 msgid "NO INFO"
 msgstr "Ingen info"
 
-#: src/modules/battery/e_mod_main.c:787 src/modules/battery/e_mod_main.c:1048
-#: src/modules/battery/e_mod_main.c:1197
+#: src/modules/battery/e_mod_main.c:785 src/modules/battery/e_mod_main.c:1096
+#: src/modules/battery/e_mod_main.c:1246
 msgid "NO BAT"
 msgstr "Inget batteri"
 
-#: src/modules/battery/e_mod_main.c:811 src/modules/battery/e_mod_main.c:1222
+#: src/modules/battery/e_mod_main.c:809 src/modules/battery/e_mod_main.c:1271
 msgid "BAD DRIVER"
 msgstr "Fel drivrutin"
 
-#: src/modules/battery/e_mod_main.c:835 src/modules/battery/e_mod_main.c:1079
-#: src/modules/battery/e_mod_main.c:1246
+#: src/modules/battery/e_mod_main.c:833 src/modules/battery/e_mod_main.c:1128
+#: src/modules/battery/e_mod_main.c:1295
 msgid "FULL"
 msgstr "Fullt"
 
-#: src/modules/battery/e_mod_main.c:896 src/modules/battery/e_mod_main.c:1307
+#: src/modules/battery/e_mod_main.c:894 src/modules/battery/e_mod_main.c:1356
 msgid "High"
 msgstr "Hög"
 
-#: src/modules/battery/e_mod_main.c:900 src/modules/battery/e_mod_main.c:1311
+#: src/modules/battery/e_mod_main.c:898 src/modules/battery/e_mod_main.c:1360
 msgid "Low"
 msgstr "Låg"
 
-#: src/modules/battery/e_mod_main.c:904 src/modules/battery/e_mod_main.c:1315
+#: src/modules/battery/e_mod_main.c:902 src/modules/battery/e_mod_main.c:1364
 msgid "Danger"
 msgstr "Fara"
 
-#: src/modules/battery/e_mod_main.c:908 src/modules/battery/e_mod_main.c:1319
-#: src/modules/battery/e_mod_main.c:1486
+#: src/modules/battery/e_mod_main.c:906 src/modules/battery/e_mod_main.c:1368
+#: src/modules/battery/e_mod_main.c:1535
 msgid "Charging"
 msgstr "Laddar"
 
-#: src/modules/battery/e_mod_config.c:43
+#: src/modules/battery/e_mod_config.c:42
 msgid "Battery Configuration"
 msgstr "Batteri konfiguration"
 
-#: src/modules/battery/e_mod_config.c:90
-#: src/modules/battery/e_mod_config.c:130
+#: src/modules/battery/e_mod_config.c:89
+#: src/modules/battery/e_mod_config.c:129
 msgid "Show alert when battery is low"
 msgstr "Visa varning vid låg batteri nivå"
 
-#: src/modules/battery/e_mod_config.c:124
+#: src/modules/battery/e_mod_config.c:123
 msgid "Check battery every:"
 msgstr "Kontrollera batteri varje:"
 
-#: src/modules/battery/e_mod_config.c:127 src/modules/pager/e_mod_config.c:171
-#: src/modules/temperature/e_mod_config.c:315
+#: src/modules/battery/e_mod_config.c:126 src/modules/pager/e_mod_config.c:171
+#: src/modules/temperature/e_mod_config.c:348
 #, c-format
 msgid "%1.1f seconds"
 msgstr "%1.1f sekunder"
 
-#: src/modules/battery/e_mod_config.c:133
+#: src/modules/battery/e_mod_config.c:132
 msgid "Alert when battery is down to:"
 msgstr "Varna när batteri nivån är nere på:"
 
-#: src/modules/battery/e_mod_config.c:136
+#: src/modules/battery/e_mod_config.c:135
 #, c-format
 msgid "%1.0f minutes"
 msgstr "%1.0f minuter"
 
-#: src/modules/clock/e_mod_main.c:95
+#: src/modules/clock/e_mod_main.c:94
 msgid "Enlightenment Clock Module"
 msgstr "Enlightenment·Klockmodul"
 
-#: src/modules/clock/e_mod_main.c:96
+#: src/modules/clock/e_mod_main.c:95
 msgid "A simple module to give E17 a clock."
 msgstr "En enkel klock modul till E17"
 
-#: src/modules/clock/e_mod_config.c:41
+#: src/modules/clock/e_mod_config.c:40
 msgid "Clock Configuration"
 msgstr "Konfigurera klocka"
 
-#: src/modules/clock/e_mod_config.c:76 src/modules/pager/e_mod_config.c:92
-#: src/modules/pager/e_mod_config.c:146
-msgid "General Settings"
-msgstr "Allmänna inställningar"
-
-#: src/modules/clock/e_mod_config.c:78
+#: src/modules/clock/e_mod_config.c:77
 msgid "No Digital Display"
 msgstr "Ingen digital visning"
 
-#: src/modules/clock/e_mod_config.c:80
+#: src/modules/clock/e_mod_config.c:79
 msgid "12 Hour Display"
 msgstr "12 timmar visning"
 
-#: src/modules/clock/e_mod_config.c:82
+#: src/modules/clock/e_mod_config.c:81
 msgid "24 Hour Display"
 msgstr "24 timmars visning"
 
-#: src/modules/cpufreq/e_mod_main.c:114
+#: src/modules/cpufreq/e_mod_main.c:113
 msgid "CPU Frequency Controller Module"
 msgstr "CPU frekvens kontroll modul"
 
-#: src/modules/cpufreq/e_mod_main.c:115
+#: src/modules/cpufreq/e_mod_main.c:114
 msgid ""
 "A simple module to control the frequency of the system CPU.<br>This is "
 "especially useful to save power on laptops."
@@ -1723,23 +1845,23 @@ msgstr ""
 "En enkel modul för att kotrollera frekvensen på din system CPU.<br>Det är "
 "speciellt användbart på Laptops för att spara ström."
 
-#: src/modules/cpufreq/e_mod_main.c:215 src/modules/cpufreq/e_mod_main.c:547
+#: src/modules/cpufreq/e_mod_main.c:214 src/modules/cpufreq/e_mod_main.c:546
 msgid "Set Poll Time"
 msgstr "Ställ updateringsintervall"
 
-#: src/modules/cpufreq/e_mod_main.c:221
+#: src/modules/cpufreq/e_mod_main.c:220
 msgid "Restore Controller on Startup"
 msgstr "Återställ kontroller vid uppstart"
 
-#: src/modules/cpufreq/e_mod_main.c:228 src/modules/cpufreq/e_mod_main.c:559
+#: src/modules/cpufreq/e_mod_main.c:227 src/modules/cpufreq/e_mod_main.c:558
 msgid "Set Controller"
 msgstr "Ställ kontroller"
 
-#: src/modules/cpufreq/e_mod_main.c:236 src/modules/cpufreq/e_mod_main.c:566
+#: src/modules/cpufreq/e_mod_main.c:235 src/modules/cpufreq/e_mod_main.c:565
 msgid "Set Speed"
 msgstr "Ställ hastighet"
 
-#: src/modules/cpufreq/e_mod_main.c:304
+#: src/modules/cpufreq/e_mod_main.c:303
 msgid ""
 "There was an error trying to set the cpu frequency<br>governor via the "
 "module's setfreq utility."
@@ -1747,7 +1869,7 @@ msgstr ""
 "Fel vid försök att ställa CPU frekvens<br>governor via modulens setfreq "
 "verktyg."
 
-#: src/modules/cpufreq/e_mod_main.c:332
+#: src/modules/cpufreq/e_mod_main.c:331
 msgid ""
 "There was an error trying to set the cpu frequency<br>setting via the "
 "module's setfreq utility."
@@ -1755,65 +1877,65 @@ msgstr ""
 "Fel vid försök att ställa CPU frekvensens<br>inställningar via modulens "
 "setfreq verktyg."
 
-#: src/modules/cpufreq/e_mod_main.c:455
+#: src/modules/cpufreq/e_mod_main.c:454
 msgid "Check Fast (0.5 sec)"
 msgstr "Kontrollera ofta (0,5 sek)"
 
-#: src/modules/cpufreq/e_mod_main.c:462
+#: src/modules/cpufreq/e_mod_main.c:461
 msgid "Check Medium (1 sec)"
 msgstr "Kontrollera mellan (1 sek)"
 
-#: src/modules/cpufreq/e_mod_main.c:469
+#: src/modules/cpufreq/e_mod_main.c:468
 msgid "Check Normal (2 sec)"
 msgstr "Kontrollera normalt (2 sek)"
 
-#: src/modules/cpufreq/e_mod_main.c:476
+#: src/modules/cpufreq/e_mod_main.c:475
 msgid "Check Slow (5 sec)"
 msgstr "Kontrollera sällan (5 sek)"
 
-#: src/modules/cpufreq/e_mod_main.c:483
+#: src/modules/cpufreq/e_mod_main.c:482
 msgid "Check Very Slow (30 sec)"
 msgstr "Kontrollera mycket sällan (30 sek)"
 
-#: src/modules/cpufreq/e_mod_main.c:499
+#: src/modules/cpufreq/e_mod_main.c:498
 msgid "Manual"
 msgstr "Manuellt"
 
-#: src/modules/cpufreq/e_mod_main.c:501
+#: src/modules/cpufreq/e_mod_main.c:500
 msgid "Automatic"
 msgstr "Automatiskt"
 
-#: src/modules/cpufreq/e_mod_main.c:503
+#: src/modules/cpufreq/e_mod_main.c:502
 msgid "Lower Power Automatic"
 msgstr "Sänk hastighet automatiskt"
 
-#: src/modules/cpufreq/e_mod_main.c:505
+#: src/modules/cpufreq/e_mod_main.c:504
 msgid "Minimum Speed"
 msgstr "Minsta hastighet"
 
-#: src/modules/cpufreq/e_mod_main.c:507
+#: src/modules/cpufreq/e_mod_main.c:506
 msgid "Maximum Speed"
 msgstr "Högsta hastighet"
 
-#: src/modules/cpufreq/e_mod_main.c:529
+#: src/modules/cpufreq/e_mod_main.c:528
 #, c-format
 msgid "%i Mhz"
 msgstr "%i Mhz"
 
-#: src/modules/cpufreq/e_mod_main.c:532
+#: src/modules/cpufreq/e_mod_main.c:531
 #, c-format
 msgid "%i.%i Ghz"
 msgstr "%i.%i Ghz"
 
-#: src/modules/cpufreq/e_mod_main.c:553
+#: src/modules/cpufreq/e_mod_main.c:552
 msgid "Restore Governor on Startup"
 msgstr "Återställ Governor vid start"
 
-#: src/modules/dropshadow/e_mod_main.c:187
+#: src/modules/dropshadow/e_mod_main.c:159
 msgid "Enlightenment Dropshadow Module"
 msgstr "Enlightenment skuggkastingsmodul"
 
-#: src/modules/dropshadow/e_mod_main.c:188
+#: src/modules/dropshadow/e_mod_main.c:160
 msgid ""
 "This is the dropshadow module that allows dropshadows to be cast<br>on the "
 "desktop background - without special X-Server extensions<br>or hardware "
@@ -1822,83 +1944,95 @@ msgstr ""
 "Detta är skuggkastinings modulen som gör skuggor på<br>skrivbordsbakgrunden "
 "- utan speciella X server tilllägg eller<br>hårdvaruaccelaretion."
 
-#: src/modules/dropshadow/e_mod_main.c:298
-msgid "Very Fuzzy"
-msgstr "Mycket oklar"
+#: src/modules/dropshadow/e_mod_config.c:42
+msgid "Dropshadow Configuration"
+msgstr "Inställningar för skuggkastning"
 
-#: src/modules/dropshadow/e_mod_main.c:307
-msgid "Fuzzy"
-msgstr "Oklar"
+#: src/modules/dropshadow/e_mod_config.c:117
+msgid "Quality"
+msgstr "Kvalitet"
 
-#: src/modules/dropshadow/e_mod_main.c:316
-msgid "Medium"
-msgstr "Medium"
-
-#: src/modules/dropshadow/e_mod_main.c:325
-msgid "Sharp"
-msgstr "Hård"
-
-#: src/modules/dropshadow/e_mod_main.c:334
-msgid "Very Sharp"
-msgstr "Väldigt hård"
-
-#: src/modules/dropshadow/e_mod_main.c:346
-msgid "Very Dark"
-msgstr "Väldigt mörk"
-
-#: src/modules/dropshadow/e_mod_main.c:355
-msgid "Dark"
-msgstr "Mörk"
-
-#: src/modules/dropshadow/e_mod_main.c:364
-msgid "Light"
-msgstr "Ljus"
-
-#: src/modules/dropshadow/e_mod_main.c:373
-msgid "Very Light"
-msgstr "Väldigt ljus"
-
-#: src/modules/dropshadow/e_mod_main.c:385
-msgid "Very Far"
-msgstr "Väldigt avlägsen"
-
-#: src/modules/dropshadow/e_mod_main.c:394
-msgid "Far"
-msgstr "Avlägsen"
-
-#: src/modules/dropshadow/e_mod_main.c:403
-msgid "Near"
-msgstr "Nära"
-
-#: src/modules/dropshadow/e_mod_main.c:412
-msgid "Very Near"
-msgstr "Väldigt nära"
-
-#: src/modules/dropshadow/e_mod_main.c:421
-msgid "Extremely Near"
-msgstr "Extremt nära"
-
-#: src/modules/dropshadow/e_mod_main.c:430
-msgid "Immediately Underneath"
-msgstr "Direkt under"
-
-#: src/modules/dropshadow/e_mod_main.c:442
+#: src/modules/dropshadow/e_mod_config.c:119
 msgid "High Quality"
 msgstr "Hög kvalitet"
 
-#: src/modules/dropshadow/e_mod_main.c:452
+#: src/modules/dropshadow/e_mod_config.c:121
 msgid "Medium Quality"
 msgstr "Mellan kvalitet"
 
-#: src/modules/dropshadow/e_mod_main.c:462
+#: src/modules/dropshadow/e_mod_config.c:123
 msgid "Low Quality"
 msgstr "Låg kvalitet"
 
-#: src/modules/ibar/e_mod_main.c:157
+#: src/modules/dropshadow/e_mod_config.c:127
+msgid "Blur Type"
+msgstr "Kant typ"
+
+#: src/modules/dropshadow/e_mod_config.c:129
+msgid "Very Fuzzy"
+msgstr "Mycket oklar"
+
+#: src/modules/dropshadow/e_mod_config.c:131
+msgid "Fuzzy"
+msgstr "Oklar"
+
+#: src/modules/dropshadow/e_mod_config.c:133
+msgid "Medium"
+msgstr "Medium"
+
+#: src/modules/dropshadow/e_mod_config.c:135
+msgid "Sharp"
+msgstr "Hård"
+
+#: src/modules/dropshadow/e_mod_config.c:137
+msgid "Very Sharp"
+msgstr "Väldigt hård"
+
+#: src/modules/dropshadow/e_mod_config.c:141
+msgid "Shadow Distance"
+msgstr "Skuggans avstånd"
+
+#: src/modules/dropshadow/e_mod_config.c:143
+msgid "Very Far"
+msgstr "Väldigt avlägsen"
+
+#: src/modules/dropshadow/e_mod_config.c:145
+msgid "Far"
+msgstr "Avlägsen"
+
+#: src/modules/dropshadow/e_mod_config.c:147
+msgid "Near"
+msgstr "Nära"
+
+#: src/modules/dropshadow/e_mod_config.c:149
+msgid "Very Near"
+msgstr "Väldigt nära"
+
+#: src/modules/dropshadow/e_mod_config.c:153
+msgid "Shadow Darkness"
+msgstr "Skuggans kontrast"
+
+#: src/modules/dropshadow/e_mod_config.c:155
+msgid "Very Dark"
+msgstr "Väldigt mörk"
+
+#: src/modules/dropshadow/e_mod_config.c:157
+msgid "Dark"
+msgstr "Mörk"
+
+#: src/modules/dropshadow/e_mod_config.c:159
+msgid "Light"
+msgstr "Ljus"
+
+#: src/modules/dropshadow/e_mod_config.c:161
+msgid "Very Light"
+msgstr "Väldigt ljus"
+
+#: src/modules/ibar/e_mod_main.c:156
 msgid "Enlightenment IBar Module"
 msgstr "Enlightenment IBar modul"
 
-#: src/modules/ibar/e_mod_main.c:158
+#: src/modules/ibar/e_mod_main.c:157
 msgid ""
 "This is the IBar Application Launcher bar module for Enlightenment.<br>It is "
 "a first example module and is being used to flesh out several<br>interfaces "
@@ -1910,11 +2044,11 @@ msgstr ""
 "Enlightenment·0.17.0. Den är under kraftig utveckling så du kan<br>förvänta "
 "dig att den <hilight>går sönder ofta</hilight> och att den ändrar sig mycket."
 
-#: src/modules/ibar/e_mod_main.c:1583
+#: src/modules/ibar/e_mod_main.c:1600
 msgid "Cannot add icon"
 msgstr "Kan inte lägga till ikon"
 
-#: src/modules/ibar/e_mod_main.c:1585
+#: src/modules/ibar/e_mod_main.c:1602
 msgid ""
 "You tried to drop an icon of an application that<br>does not have a matching "
 "application file.<br><br>The icon cannot be added to IBar."
@@ -1926,58 +2060,58 @@ msgstr ""
 msgid "IBar Configuration"
 msgstr "IBar konfiguration"
 
-#: src/modules/ibar/e_mod_config.c:88 src/modules/ibox/e_mod_config.c:88
+#: src/modules/ibar/e_mod_config.c:88 src/modules/ibox/e_mod_config.c:87
 msgid "Show Follower"
 msgstr "Visa följeslagare"
 
-#: src/modules/ibar/e_mod_config.c:90 src/modules/ibox/e_mod_config.c:90
+#: src/modules/ibar/e_mod_config.c:90 src/modules/ibox/e_mod_config.c:89
 msgid "Auto Fit Icons"
 msgstr "Anpassa ikoner automatiskt"
 
-#: src/modules/ibar/e_mod_config.c:138 src/modules/ibox/e_mod_config.c:138
+#: src/modules/ibar/e_mod_config.c:138 src/modules/ibox/e_mod_config.c:136
 msgid "Follower"
 msgstr "Följe|slagare"
 
-#: src/modules/ibar/e_mod_config.c:139 src/modules/ibox/e_mod_config.c:139
+#: src/modules/ibar/e_mod_config.c:139 src/modules/ibox/e_mod_config.c:137
 msgid "Visible"
 msgstr "Synlig"
 
-#: src/modules/ibar/e_mod_config.c:141 src/modules/ibox/e_mod_config.c:141
+#: src/modules/ibar/e_mod_config.c:141 src/modules/ibox/e_mod_config.c:139
 msgid "Follow Speed"
 msgstr "Följeslagarens hastighet"
 
 #: src/modules/ibar/e_mod_config.c:143 src/modules/ibar/e_mod_config.c:157
-#: src/modules/ibox/e_mod_config.c:143 src/modules/ibox/e_mod_config.c:157
+#: src/modules/ibox/e_mod_config.c:141 src/modules/ibox/e_mod_config.c:155
 #, c-format
 msgid "%1.2f px/s"
 msgstr "%1.2f px/s"
 
-#: src/modules/ibar/e_mod_config.c:147 src/modules/ibox/e_mod_config.c:147
+#: src/modules/ibar/e_mod_config.c:147 src/modules/ibox/e_mod_config.c:145
 msgid "Icon Size"
 msgstr "Storlek på ikoner"
 
-#: src/modules/ibar/e_mod_config.c:148 src/modules/ibox/e_mod_config.c:148
+#: src/modules/ibar/e_mod_config.c:148 src/modules/ibox/e_mod_config.c:146
 #, c-format
 msgid "%3.0f pixels"
 msgstr "%3.0f pixlar"
 
-#: src/modules/ibar/e_mod_config.c:152 src/modules/ibox/e_mod_config.c:152
+#: src/modules/ibar/e_mod_config.c:152 src/modules/ibox/e_mod_config.c:150
 msgid "Width"
 msgstr "Bredd"
 
-#: src/modules/ibar/e_mod_config.c:153 src/modules/ibox/e_mod_config.c:153
+#: src/modules/ibar/e_mod_config.c:153 src/modules/ibox/e_mod_config.c:151
 msgid "Auto Fit"
 msgstr "Anpassa automatiskt"
 
-#: src/modules/ibar/e_mod_config.c:155 src/modules/ibox/e_mod_config.c:155
+#: src/modules/ibar/e_mod_config.c:155 src/modules/ibox/e_mod_config.c:153
 msgid "Autoscroll Speed:"
 msgstr "Hastighet på Autoscroll:"
 
-#: src/modules/ibox/e_mod_main.c:143
+#: src/modules/ibox/e_mod_main.c:142
 msgid "Enlightenment IBox Module"
 msgstr "Enlightenment IBox modul"
 
-#: src/modules/ibox/e_mod_main.c:144
+#: src/modules/ibox/e_mod_main.c:143
 msgid ""
 "This is the IBox Iconified Application module for Enlightenment.<br>It will "
 "hold minimized applications"
@@ -1985,47 +2119,47 @@ msgstr ""
 "Detta är IBox applikation ikon modul till Enlightenment.<br>Den kommer att "
 "innehålla minimerade applikationer."
 
-#: src/modules/ibox/e_mod_config.c:47
+#: src/modules/ibox/e_mod_config.c:46
 msgid "IBox Configuration"
 msgstr "IBox konfiguration"
 
-#: src/modules/pager/e_mod_main.c:153
+#: src/modules/pager/e_mod_main.c:151
 msgid "Enlightenment Pager Module"
 msgstr "Enlightenment Sökar modul"
 
-#: src/modules/pager/e_mod_main.c:154
+#: src/modules/pager/e_mod_main.c:152
 msgid "A pager module to navigate virtual desktops."
 msgstr "En sökarmodul för att navigera i virtuella skrivbord."
 
-#: src/modules/pager/e_mod_main.c:394 src/modules/pager/e_mod_main.c:531
+#: src/modules/pager/e_mod_main.c:404 src/modules/pager/e_mod_main.c:535
 msgid "Fix Aspect (Keep Height)"
 msgstr "Fast aspekt (Behåll höjd)"
 
-#: src/modules/pager/e_mod_main.c:398 src/modules/pager/e_mod_main.c:535
+#: src/modules/pager/e_mod_main.c:408 src/modules/pager/e_mod_main.c:539
 msgid "Fix Aspect (Keep Width)"
 msgstr "Fast aspekt (Behåll bredd)"
 
-#: src/modules/pager/e_mod_config.c:44
+#: src/modules/pager/e_mod_config.c:43
 msgid "Pager Configuration"
 msgstr "Pager konfiguration"
 
-#: src/modules/pager/e_mod_config.c:93 src/modules/pager/e_mod_config.c:147
+#: src/modules/pager/e_mod_config.c:92 src/modules/pager/e_mod_config.c:147
 msgid "Show Popup"
 msgstr "Visa popup"
 
-#: src/modules/pager/e_mod_config.c:95 src/modules/pager/e_mod_config.c:149
+#: src/modules/pager/e_mod_config.c:94 src/modules/pager/e_mod_config.c:149
 msgid "Show Desktop Name"
 msgstr "Visa skrivbordsnamn"
 
-#: src/modules/pager/e_mod_config.c:99 src/modules/pager/e_mod_config.c:153
+#: src/modules/pager/e_mod_config.c:98 src/modules/pager/e_mod_config.c:153
 msgid "Desktop Name Position"
 msgstr "Position på skrivbordsnamn"
 
-#: src/modules/pager/e_mod_config.c:101 src/modules/pager/e_mod_config.c:155
+#: src/modules/pager/e_mod_config.c:100 src/modules/pager/e_mod_config.c:155
 msgid "Top"
 msgstr "Topp"
 
-#: src/modules/pager/e_mod_config.c:103 src/modules/pager/e_mod_config.c:157
+#: src/modules/pager/e_mod_config.c:102 src/modules/pager/e_mod_config.c:157
 msgid "Bottom"
 msgstr "Botten"
 
@@ -2075,19 +2209,19 @@ msgstr ""
 "Behålla den nya upplösningen <hilight>%dx%d</hilight>?<br><br>Återställer "
 "tidigare upplösning %dx%d NU!"
 
-#: src/modules/start/e_mod_main.c:78
+#: src/modules/start/e_mod_main.c:77
 msgid "Enlightenment Start Module"
 msgstr "Enlightenment Start modul"
 
-#: src/modules/start/e_mod_main.c:79
+#: src/modules/start/e_mod_main.c:78
 msgid "Experimental Button module for E17"
 msgstr "Experimental Knapp module för E17"
 
-#: src/modules/temperature/e_mod_main.c:97
+#: src/modules/temperature/e_mod_main.c:96
 msgid "Enlightenment Temperature Module"
 msgstr "Enlightenment Temeraturmodul"
 
-#: src/modules/temperature/e_mod_main.c:98
+#: src/modules/temperature/e_mod_main.c:97
 msgid ""
 "A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux."
 "<br>It is especially useful for modern Laptops with high speed<br>CPUs that "
@@ -2097,97 +2231,125 @@ msgstr ""
 "<br>Det är speciellt användbart på moderna Laptops med "
 "snabba<br>processorersom alstrar mycket värme."
 
-#: src/modules/temperature/e_mod_config.c:52
+#: src/modules/temperature/e_mod_config.c:65
 msgid "Temperature Configuration"
 msgstr "Temperatur konfigurering"
 
-#: src/modules/temperature/e_mod_config.c:159
-#: src/modules/temperature/e_mod_config.c:264
+#: src/modules/temperature/e_mod_config.c:176
+#: src/modules/temperature/e_mod_config.c:297
 msgid "Display Units"
 msgstr "Visa enhet"
 
-#: src/modules/temperature/e_mod_config.c:161
-#: src/modules/temperature/e_mod_config.c:266
-msgid "Celcius"
-msgstr "Celcius"
+#: src/modules/temperature/e_mod_config.c:178
+#: src/modules/temperature/e_mod_config.c:299
+msgid "Celsius"
+msgstr "Celsius"
 
-#: src/modules/temperature/e_mod_config.c:163
-#: src/modules/temperature/e_mod_config.c:268
+#: src/modules/temperature/e_mod_config.c:180
+#: src/modules/temperature/e_mod_config.c:301
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: src/modules/temperature/e_mod_config.c:167
-#: src/modules/temperature/e_mod_config.c:314
+#: src/modules/temperature/e_mod_config.c:184
+#: src/modules/temperature/e_mod_config.c:347
 msgid "Check Interval"
 msgstr "Uppdateringsintervall"
 
-#: src/modules/temperature/e_mod_config.c:169
+#: src/modules/temperature/e_mod_config.c:186
 msgid "Fast"
 msgstr "Snabb"
 
-#: src/modules/temperature/e_mod_config.c:173
+#: src/modules/temperature/e_mod_config.c:190
 msgid "Slow"
 msgstr "Långsam"
 
-#: src/modules/temperature/e_mod_config.c:175
+#: src/modules/temperature/e_mod_config.c:192
 msgid "Very Slow"
 msgstr "Väldigt långsam"
 
-#: src/modules/temperature/e_mod_config.c:179
-#: src/modules/temperature/e_mod_config.c:319
-msgid "Low Temperature"
-msgstr "Låg temperatur"
-
-#: src/modules/temperature/e_mod_config.c:181
-msgid "40 F"
-msgstr "40 F"
-
-#: src/modules/temperature/e_mod_config.c:183
-msgid "80 F"
-msgstr "80 F"
-
-#: src/modules/temperature/e_mod_config.c:185
-msgid "100 F"
-msgstr "100 F"
-
-#: src/modules/temperature/e_mod_config.c:189
-#: src/modules/temperature/e_mod_config.c:324
+#: src/modules/temperature/e_mod_config.c:199
+#: src/modules/temperature/e_mod_config.c:223
+#: src/modules/temperature/e_mod_config.c:368
+#: src/modules/temperature/e_mod_config.c:380
 msgid "High Temperature"
 msgstr "Hög temperatur"
 
-#: src/modules/temperature/e_mod_config.c:191
-msgid "60 F"
-msgstr "60 F"
+#: src/modules/temperature/e_mod_config.c:202
+msgid "200 F"
+msgstr "200 F"
 
-#: src/modules/temperature/e_mod_config.c:193
-msgid "140 F"
-msgstr "140 F"
+#: src/modules/temperature/e_mod_config.c:204
+msgid "150 F"
+msgstr "150 F"
 
-#: src/modules/temperature/e_mod_config.c:195
-msgid "220 F"
-msgstr "220 F"
+#: src/modules/temperature/e_mod_config.c:206
+#: src/modules/temperature/e_mod_config.c:215
+msgid "110 F"
+msgstr "110 F"
 
-#: src/modules/temperature/e_mod_config.c:296
+#: src/modules/temperature/e_mod_config.c:210
+#: src/modules/temperature/e_mod_config.c:234
+#: src/modules/temperature/e_mod_config.c:373
+#: src/modules/temperature/e_mod_config.c:385
+msgid "Low Temperature"
+msgstr "Låg temperatur"
+
+#: src/modules/temperature/e_mod_config.c:213
+msgid "130 F"
+msgstr "130 F"
+
+#: src/modules/temperature/e_mod_config.c:217
+msgid "90 F"
+msgstr "90 F"
+
+#: src/modules/temperature/e_mod_config.c:226
+msgid "93 C"
+msgstr "93 C"
+
+#: src/modules/temperature/e_mod_config.c:228
+msgid "65 C"
+msgstr "65 C"
+
+#: src/modules/temperature/e_mod_config.c:230
+#: src/modules/temperature/e_mod_config.c:239
+msgid "43 C"
+msgstr "43 C"
+
+#: src/modules/temperature/e_mod_config.c:237
+msgid "55 C"
+msgstr "55 C"
+
+#: src/modules/temperature/e_mod_config.c:241
+msgid "32 C"
+msgstr "32 C"
+
+#: src/modules/temperature/e_mod_config.c:329
 msgid "Sensors"
 msgstr "Sensorer"
 
-#: src/modules/temperature/e_mod_config.c:298
+#: src/modules/temperature/e_mod_config.c:331
 msgid "Temp 1"
 msgstr "Temp 1"
 
-#: src/modules/temperature/e_mod_config.c:300
+#: src/modules/temperature/e_mod_config.c:333
 msgid "Temp 2"
 msgstr "Temp 2"
 
-#: src/modules/temperature/e_mod_config.c:302
+#: src/modules/temperature/e_mod_config.c:335
 msgid "Temp 3"
 msgstr "Temp 3"
 
-#: src/modules/temperature/e_mod_config.c:320
-#: src/modules/temperature/e_mod_config.c:325
+#: src/modules/temperature/e_mod_config.c:369
+#: src/modules/temperature/e_mod_config.c:374
 #, c-format
 msgid "%1.0f F"
 msgstr "%1.0f F"
+
+#: src/modules/temperature/e_mod_config.c:381
+#: src/modules/temperature/e_mod_config.c:386
+#, c-format
+msgid "%1.0f C"
+msgstr "%1.0f C"
 
 #: src/modules/test/e_mod_main.c:21
 msgid "Module Config Menu Item 1"
