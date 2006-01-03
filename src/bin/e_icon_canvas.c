@@ -293,10 +293,14 @@ e_icon_canvas_unpack(Evas_Object *obj)
    if(!obj) return;
    li = evas_object_data_get(obj, "e_icon_canvas_data");
    if (!li) return;
+   
    sd = li->sd;         
    sd->items = evas_list_remove(sd->items, li);
-   li->tile->items = evas_list_remove(li->tile->items, li);
    _e_icon_canvas_disown(obj);
+
+   if (!li->tile) return;
+   if (!li->tile->items) return;   
+   li->tile->items = evas_list_remove(li->tile->items, li);
 }
 
 void
