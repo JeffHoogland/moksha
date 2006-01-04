@@ -69,6 +69,7 @@ e_configure_show(E_Container *con)
    e_configure_standard_item_add(eco, "enlightenment/e", _("Focus Settings"), e_int_config_focus);
    e_configure_standard_item_add(eco, "enlightenment/favorites", _("Menu Settings"), e_int_config_menus);
    e_configure_standard_item_add(eco, "enlightenment/configuration", _("Performance Settings"), e_int_config_performance);
+   e_configure_standard_item_add(eco, "enlightenment/windows", _("Window List Settings"), e_int_config_winlist);
    e_configure_standard_item_add(eco, "enlightenment/windows", _("Window Display"), e_int_config_window_display);
    e_configure_standard_item_add(eco, "enlightenment/windows", _("Window Manipulation"), e_int_config_window_manipulation);
    

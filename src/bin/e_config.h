@@ -83,7 +83,7 @@ struct _E_Config
    int         font_cache; //GUI
    int         edje_cache; //GUI
    int         edje_collection_cache; //GUI
-   double      cache_flush_interval;
+   double      cache_flush_interval; //GUI
    int         zone_desks_x_count;
    int         zone_desks_y_count;
    int         use_virtual_roots;
@@ -131,26 +131,26 @@ struct _E_Config
    int         desk_resist; // GUI
    int         window_resist; // GUI
    int         gadget_resist; // GUI
-   int         winlist_warp_while_selecting;
-   int         winlist_warp_at_end;
-   double      winlist_warp_speed;
-   int         winlist_scroll_animate;
-   double      winlist_scroll_speed;
-   int         winlist_list_show_iconified;
-   int         winlist_list_show_other_desk_windows;
-   int         winlist_list_show_other_screen_windows;
-   int         winlist_list_uncover_while_selecting;
-   int         winlist_list_jump_desk_while_selecting;
-   int         winlist_list_focus_while_selecting;
-   int         winlist_list_raise_while_selecting;
-   double      winlist_pos_align_x;
-   double      winlist_pos_align_y;
-   double      winlist_pos_size_w;
-   double      winlist_pos_size_h;
-   int         winlist_pos_min_w;
-   int         winlist_pos_min_h;
-   int         winlist_pos_max_w;
-   int         winlist_pos_max_h;
+   int         winlist_warp_while_selecting; // GUI
+   int         winlist_warp_at_end; // GUI
+   double      winlist_warp_speed; // GUI
+   int         winlist_scroll_animate; // GUI
+   double      winlist_scroll_speed; // GUI
+   int         winlist_list_show_iconified; // GUI
+   int         winlist_list_show_other_desk_windows; // GUI
+   int         winlist_list_show_other_screen_windows; // GUI
+   int         winlist_list_uncover_while_selecting; // GUI
+   int         winlist_list_jump_desk_while_selecting; // GUI
+   int         winlist_list_focus_while_selecting; // GUI
+   int         winlist_list_raise_while_selecting; // GUI
+   double      winlist_pos_align_x; // GUI
+   double      winlist_pos_align_y; // GUI
+   double      winlist_pos_size_w; // GUI
+   double      winlist_pos_size_h; // GUI
+   int         winlist_pos_min_w; // GUI
+   int         winlist_pos_min_h; // GUI
+   int         winlist_pos_max_w; // GUI
+   int         winlist_pos_max_h; // GUI
    int         maximize_policy; // GUI
    int         kill_if_close_not_possible;
    int         kill_process;
