@@ -9,9 +9,6 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFDa
 static int         _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
 
-static void _dialog_cb_ok(void *data, E_Dialog *dia);
-static void _dialog_cb_cancel(void *data, E_Dialog *dia);
-
 struct _CFData 
 {
    int show_splash;
@@ -64,7 +61,6 @@ _free_data(E_Config_Dialog *cfd, CFData *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata) 
 {
-   E_Action *a;
    int changed = 0;
    
    if (e_config->use_e_cursor != cfdata->use_e_cursor) changed = 1;
@@ -166,20 +162,4 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);   
    return o;
-}
-
-static void
-_dialog_cb_ok(void *data, E_Dialog *dia) 
-{
-   E_Action *a;
-
-   e_object_del(E_OBJECT(dia));
-   a = e_action_find("restart");
-   if ((a) && (a->func.go)) a->func.go(NULL, NULL);   
-}
-
-static void
-_dialog_cb_cancel(void *data, E_Dialog *dia) 
-{
-   e_object_del(E_OBJECT(dia));
 }
