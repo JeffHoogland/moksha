@@ -182,6 +182,9 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    char *v;
    int i;
 
+   e_widget_disabled_set(cfdata->gui.configure, 1);
+   e_widget_disabled_set(cfdata->gui.about, 1);
+   
    v = strdup(e_widget_ilist_selected_label_get(cfdata->gui.list));
    for (i = 0; i < evas_list_count(cfdata->modules); i++)
      {
@@ -193,13 +196,17 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 	     if (cm->state != cfdata->state)
 	       {
 		  m = e_module_find(v);
+		  if (!m) 
+		    { 
+		       m = e_module_new(v);
+		       if (!m) break;
+		    }		  
 		  switch (cfdata->state)
 		    {
 		     case MOD_ENABLED:
-		       if (!m) m = e_module_new(v);
-		       if (!m->enabled)
-			 {
-			    e_module_enable(m);
+		       if (!m->enabled) e_module_enable(m);
+		       if (m->enabled) 
+			 {	 
 			    if (m->func.config)
 			      e_widget_disabled_set(cfdata->gui.configure, 0);
 			    if (m->func.about)
@@ -208,21 +215,14 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 		       cm->state = MOD_ENABLED;
 		       break;
 		     case MOD_LOADED:
-		       if (!m) m = e_module_new(v);
 		       if (m->enabled) 
 			 {
 			    e_module_save(m);
 			    e_module_disable(m);
-			    if (m->func.config)
-			      e_widget_disabled_set(cfdata->gui.configure, 1);			    
 			 }
-		       else 
-			 {	    
-			    if (m->func.config)
-			      e_widget_disabled_set(cfdata->gui.configure, 0);
-			    if (m->func.about)
-			      e_widget_disabled_set(cfdata->gui.about, 0);
-			 }
+		       //e_widget_disabled_set(cfdata->gui.configure, 1);			    
+		       if (m->func.about)
+			 e_widget_disabled_set(cfdata->gui.about, 0);
 		       
 		       cm->state = MOD_LOADED;
 		       break;
@@ -372,29 +372,16 @@ _ilist_cb_change(void *data, Evas_Object *obj)
 		  edje_object_signal_emit(wd->o_radio, "toggle_on", "");
 		  break;
 	       }
+	     e_widget_disabled_set(cfdata->gui.about, 1);
+	     e_widget_disabled_set(cfdata->gui.configure, 1);
 	     m = e_module_find(v);
 	     if (m)
 	       {
-		  if (m->enabled)
-		    {
-		       if (m->func.config)
-			 e_widget_disabled_set(cfdata->gui.configure, 0);
-		       else
-			 e_widget_disabled_set(cfdata->gui.configure, 1);
-		    }
-		  else
-		    {
-		       e_widget_disabled_set(cfdata->gui.configure, 1);
-		    }
 		  if (m->func.about)
 		    e_widget_disabled_set(cfdata->gui.about, 0);
-		  else
-		    e_widget_disabled_set(cfdata->gui.about, 1);
-	       }
-	     else
-	       {
-		  e_widget_disabled_set(cfdata->gui.about, 1);
-		  e_widget_disabled_set(cfdata->gui.configure, 1);
+
+		  if (m->enabled && m->func.config) 
+		    e_widget_disabled_set(cfdata->gui.configure, 0);		       
 	       }
 	     break;
 	  }
