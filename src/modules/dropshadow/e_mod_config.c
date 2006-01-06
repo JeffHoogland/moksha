@@ -40,6 +40,7 @@ _config_dropshadow_module(E_Container *con, Dropshadow *ds)
    v.advanced.create_widgets = NULL;
    
    cfd = e_config_dialog_new(con, _("Dropshadow Configuration"), NULL, 0, &v, ds);   
+   ds->config_dialog = cfd;
 }
 
 static void 

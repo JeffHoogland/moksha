@@ -38,6 +38,7 @@ _config_clock_module(E_Container *con, Clock_Face *c)
 
    /* Create The Dialog */
    cfd = e_config_dialog_new(con, _("Clock Configuration"), NULL, 0, &v, c);   
+   c->config_dialog = cfd;
 }
 
 static void 

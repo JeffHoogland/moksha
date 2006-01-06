@@ -129,7 +129,15 @@ e_modapi_shutdown(E_Module *m)
    Dropshadow *ds;
    
    ds = m->data;
-   if (ds) _ds_shutdown(ds);
+   if (ds) 
+     {
+	if (ds->config_dialog) 
+	  {
+	     e_object_del(E_OBJECT(ds->config_dialog));
+	     ds->config_dialog = NULL;
+	  }
+	_ds_shutdown(ds);
+     }
    return 1;
 }
 

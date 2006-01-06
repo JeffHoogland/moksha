@@ -42,6 +42,7 @@ struct _Clock_Face
    Evas_Object *event_object;
    
    E_Gadman_Client *gmc;
+   E_Config_Dialog *config_dialog;
 };
 
 EAPI extern E_Module_Api e_modapi;

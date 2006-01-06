@@ -45,6 +45,7 @@ _config_ibar_module(E_Container *con, IBar *ibar)
 
    /* Create The Dialog */
    cfd = e_config_dialog_new(con, _("IBar Configuration"), NULL, 0, &v, ibar);
+   ibar->config_dialog = cfd;
 }
 
 static void 

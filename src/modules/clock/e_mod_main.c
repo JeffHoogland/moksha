@@ -62,9 +62,10 @@ e_modapi_shutdown(E_Module *module)
      module->config_menu = NULL;
 
    clock = module->data;
-   if (clock)
-     _clock_shutdown(clock);
-
+   if (clock) 
+     {
+	_clock_shutdown(clock);
+     }
    return 1;
 }
 
@@ -295,6 +296,11 @@ _clock_face_new(E_Container *con)
 static void
 _clock_face_free(Clock_Face *face)
 {
+   if (face->config_dialog) 
+     {
+	e_object_del(E_OBJECT(face->config_dialog));
+	face->config_dialog = NULL;
+     }
    e_object_unref(E_OBJECT(face->con));
    e_object_del(E_OBJECT(face->gmc));
    evas_object_del(face->clock_object);

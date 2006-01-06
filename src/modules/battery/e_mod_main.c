@@ -95,9 +95,15 @@ e_modapi_shutdown(E_Module *m)
      m->config_menu = NULL;
 
    e = m->data;
-   if (e)
-     _battery_shutdown(e);
-
+   if (e) 
+     {
+	if (e->config_dialog) 
+	  {
+	     e_object_del(E_OBJECT(e->config_dialog));
+	     e->config_dialog = NULL;
+	  }
+	_battery_shutdown(e);
+     }
    return 1;
 }
 

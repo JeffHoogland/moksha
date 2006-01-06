@@ -40,6 +40,7 @@ _config_battery_module(E_Container *con, Battery *bat)
    v.advanced.create_widgets = _advanced_create_widgets;
    
    cfd = e_config_dialog_new(con, _("Battery Configuration"), NULL, 0, &v, bat);
+   bat->config_dialog = cfd;
 }
 
 static void

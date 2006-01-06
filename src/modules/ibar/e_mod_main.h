@@ -36,6 +36,7 @@ struct _IBar
    E_Menu      *config_menu;
 
    Config      *conf;
+   E_Config_Dialog *config_dialog;   
 };
 
 struct _IBar_Bar

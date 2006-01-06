@@ -125,8 +125,15 @@ e_modapi_shutdown(E_Module *m)
      m->config_menu = NULL;
 
    ib = m->data;
-   if (ib)
-     _ibar_free(ib);
+   if (ib) 
+     {
+	if (ib->config_dialog) 
+	  {
+	     e_object_del(E_OBJECT(ib->config_dialog));
+	     ib->config_dialog = NULL;
+	  }
+	_ibar_free(ib);
+     }
    return 1;
 }
 

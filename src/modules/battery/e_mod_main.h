@@ -41,6 +41,7 @@ struct _Battery
    int           battery_prev_drain;
    int           battery_prev_ac;
    int           battery_prev_battery;
+   E_Config_Dialog *config_dialog;
 };
 
 struct _Battery_Face
