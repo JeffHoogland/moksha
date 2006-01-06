@@ -12,7 +12,6 @@ Some of the things (in very short form) that need to be done to E17...
 * BUG: IBAR follower speed and autoscroll speed are not pixels / sec (they are
   recursive multiplication values). should invert gui valus and display as a
   factor, not px/sec
-* BUG: fullscreen does not respect min/max window size
 * BUG: changing border from shaped to not shaped produces shadow bugs
 * BUG: xdaliclock -transparent doesnt use shaped border (not handling shape
   change later)
