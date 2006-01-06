@@ -26,6 +26,8 @@ struct _E_Menu
 {
    E_Object             e_obj_inherit;
    
+   char *		category;
+
    struct {
       char              visible : 1;
       int               x, y, w, h;
@@ -140,6 +142,13 @@ EAPI int          e_menu_freeze(E_Menu *m);
 EAPI int          e_menu_thaw(E_Menu *m);
 EAPI void         e_menu_title_set(E_Menu *m, char *title);
 EAPI void         e_menu_icon_file_set(E_Menu *m, char *icon);
+
+/* menu categories functions */
+EAPI void         e_menu_category_set(E_Menu *m, char *category);
+EAPI void         e_menu_category_data_set(char *category, void *data);
+EAPI void         e_menu_category_callback_set(char *category, void (*create) (E_Menu *m, void *category_data, void *data), void (free) (void *data), void *data);
+
+	
 EAPI void         e_menu_pre_activate_callback_set(E_Menu *m,  void (*func) (void *data, E_Menu *m), void *data);
 EAPI void         e_menu_post_deactivate_callback_set(E_Menu *m,  void (*func) (void *data, E_Menu *m), void *data);
 

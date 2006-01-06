@@ -34,6 +34,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
    if (bd->border_menu) return;
    
    m = e_menu_new();
+   e_menu_category_set(m,"border/stacking");
+   e_menu_category_data_set("border/stacking",bd);
    bd->border_stacking_menu = m;
    /* Only allow to change layer for windows in "normal" layers */
    if ((!bd->lock_user_stacking) &&
@@ -72,6 +74,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
      }
 
    m = e_menu_new();
+   e_menu_category_set(m,"border/maximize");
+   e_menu_category_data_set("border/maximize",bd);
    bd->border_maximize_menu = m;
    /* Only allow to change layer for windows in "normal" layers */
    if ((!bd->lock_user_maximize) &&
@@ -121,6 +125,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
    }
 
    m = e_menu_new();
+   e_menu_category_set(m,"border");
+   e_menu_category_data_set("border",bd);
    e_object_data_set(E_OBJECT(m), bd);
    bd->border_menu = m;
    e_menu_post_deactivate_callback_set(m, _e_border_cb_border_menu_end, NULL);

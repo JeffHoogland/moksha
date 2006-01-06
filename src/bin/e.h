@@ -18,6 +18,11 @@
 #include <fnmatch.h>
 #include <limits.h>
 #include <ctype.h>
+#include <time.h>
+#include <dirent.h>
+#include <pwd.h>
+#include <grp.h>
+#include <glob.h>
 
 #include <Evas.h>
 #include <Evas_Engine_Buffer.h>

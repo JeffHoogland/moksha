@@ -3,12 +3,179 @@
  */
 #ifdef E_TYPEDEFS
 
+typedef struct _E_Fm_Smart_Data             E_Fm_Smart_Data;
+typedef struct _E_Fm_Icon                   E_Fm_Icon;
+typedef struct _E_Fm_Icon_CFData            E_Fm_Icon_CFData;
+typedef struct _E_Fm_Config                 E_Fm_Config;
+typedef struct _E_Fm_Dir_Metadata           E_Fm_Dir_Metadata;
+typedef struct _E_Fm_Fake_Mouse_Up_Info     E_Fm_Fake_Mouse_Up_Info;
+typedef enum   _E_Fm_Arrange                E_Fm_Arrange;
+typedef enum   _E_Fm_State                  E_Fm_State;
 typedef struct _E_Event_Fm_Reconfigure      E_Event_Fm_Reconfigure;
 typedef struct _E_Event_Fm_Directory_Change E_Event_Fm_Directory_Change;
+typedef struct _E_Fm_Assoc_App              E_Fm_Assoc_App;
 
 #else
 #ifndef E_FM_SMART_H
 #define E_FM_SMART_H
+
+struct _E_Fm_Config
+{
+   int width;
+   int height;
+   Evas_List *apps;
+};
+
+struct _E_Fm_Dir_Metadata
+{
+   char *name;             /* dir name */
+   char *bg;               /* dir's custom bg */
+   int   view;             /* dir's saved view type */
+   Evas_List *files;       /* files in dir */
+
+   /* these are generated post-load */
+   Evas_Hash *files_hash;  /* quick lookup hash */
+};
+
+struct _E_Fm_Icon
+{
+   E_Fm_File       *file;
+   Evas_Object     *icon_obj;
+   E_Fm_Smart_Data *sd;
+
+   struct {
+      unsigned char selected : 1;
+   }
+   state;
+
+   E_Menu *menu;
+};
+
+struct _E_Fm_Icon_CFData
+{
+   /*- BASIC -*/
+   int protect;
+   int readwrite;
+   /*- ADVANCED -*/
+   struct {
+      int r;
+      int w;
+      int x;
+   }
+   user, group, world;
+   /*- common -*/
+   E_Fm_Icon *icon;
+};
+
+enum _E_Fm_Arrange
+{
+   E_FILEMAN_CANVAS_ARRANGE_NAME = 0,
+     E_FILEMAN_CANVAS_ARRANGE_MODTIME = 1,
+     E_FILEMAN_CANVAS_ARRANGE_SIZE = 2,
+};
+
+enum _E_Fm_State
+{
+   E_FILEMAN_STATE_IDLE = 0,
+     E_FILEMAN_STATE_TYPEBUFFER = 1,
+     E_FILEMAN_STATE_RENAME = 2,
+};
+
+struct _E_Fm_Fake_Mouse_Up_Info
+{
+   Evas *canvas;
+   int button;
+};
+
+struct _E_Fm_Smart_Data
+{
+   E_Menu *menu;
+   E_Win *win;
+   Evas *evas;
+
+   Evas_Object *edje_obj;
+   Evas_Object *event_obj;
+   Evas_Object *clip_obj;
+   Evas_Object *layout;
+   Evas_Object *object;
+   Evas_Object *entry_obj;
+
+   E_Fm_Dir_Metadata *meta;
+
+   Evas_Hash *mime_menu_hash;
+
+   char *dir;
+   DIR  *dir2;
+
+   double timer_int;
+   Ecore_Timer *timer;
+
+   Evas_List *event_handlers;
+
+   Evas_List *files;
+   Evas_List *files_raw;
+   Ecore_File_Monitor *monitor;
+   E_Fm_Arrange arrange;
+
+   E_Fm_State state;
+   //  E_Fm_Icon *active_file;
+   int frozen;
+   double position;
+
+   int is_selector;
+   void (*selector_func) (Evas_Object *object, char *file, void *data);
+   void  *selector_data;
+   void (*selector_hilite_func) (Evas_Object *object, char *file, void *data);
+
+   Evas_Coord x, y, w, h;
+
+   struct {
+      unsigned char start : 1;
+      int x, y;
+      Ecore_Evas *ecore_evas;
+      Evas *evas;
+      Ecore_X_Window win;
+      E_Fm_Icon *icon_obj;
+      Evas_Object *image_object;
+   }
+   drag;
+
+   struct {
+      Evas_Coord x_space, y_space, w, h;
+   }
+   icon_info;
+
+   struct {
+      Evas_Coord x, y, w, h;
+   }
+   child;
+
+   struct {
+      Evas_List *files;
+
+      struct {
+	 E_Fm_Icon *file;
+	 Evas_List *ptr;
+      }
+      current;
+
+      struct {
+	 unsigned char enabled : 1;
+	 Evas_Coord x, y;
+	 Evas_Object *obj;
+	 Evas_List *files;
+      }
+      band;
+
+   }
+   selection;
+
+   struct {
+      E_Config_DD *main_edd;
+      E_Fm_Config *main;
+   }
+   conf;
+};
 
 struct _E_Event_Fm_Reconfigure  
 {
@@ -20,6 +187,12 @@ struct _E_Event_Fm_Directory_Change
 {
    Evas_Object *object;
    Evas_Coord w, h;  
+};
+
+struct _E_Fm_Assoc_App
+{
+   char *mime;
+   char *app;
 };
 
 EAPI int                   e_fm_init(void);

@@ -23,6 +23,23 @@
  * * support obscures to indicate offscreen/not visible menu parts
  */
 
+/* local subsystem data types */
+typedef struct _E_Menu_Category E_Menu_Category;
+typedef struct _E_Menu_Category_Callback E_Menu_Category_Callback;
+
+struct _E_Menu_Category
+{
+	void *data;
+	Evas_List *callbacks;
+};
+
+struct _E_Menu_Category_Callback
+{
+	void *data;
+	void (*create) (E_Menu *m, void *category_data, void *data);	
+	void (*free) (void *data);	
+};
+
 /* local subsystem functions */
 static void _e_menu_free                          (E_Menu *m);
 static void _e_menu_item_free                     (E_Menu_Item *mi);
@@ -69,10 +86,13 @@ static int  _e_menu_cb_scroll_timer               (void *data);
 static int  _e_menu_cb_window_shape               (void *data, int ev_type, void *ev);
 
 static void _e_menu_cb_item_submenu_post_default  (void *data, E_Menu *m, E_Menu_Item *mi);
+static Evas_Bool _e_menu_categories_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata);
 
 /* local subsystem globals */
 static Ecore_X_Window       _e_menu_win                 = 0;
 static Evas_List           *_e_active_menus             = NULL;
+/*static Evas_Hash	   *_e_menu_category_items	= NULL;*/
+static Evas_Hash	   *_e_menu_categories		= NULL;
 static Ecore_X_Time         _e_menu_activate_time       = 0;
 static int                  _e_menu_activate_floating   = 0;
 static Ecore_Timer         *_e_menu_scroll_timer        = NULL;
@@ -128,6 +148,13 @@ e_menu_shutdown(void)
 	e_object_unref(E_OBJECT(m));
      }
    _e_active_menus = NULL;
+   if (_e_menu_categories)
+     {
+	evas_hash_foreach(_e_menu_categories, _e_menu_categories_free_cb, NULL);
+	evas_hash_free(_e_menu_categories);
+	_e_menu_categories = NULL;
+     }
+  
    return 1;
 }
 
@@ -140,8 +167,10 @@ e_menu_new(void)
    if (!m) return NULL;
    m->cur.w = 1;
    m->cur.h = 1;
+   m->category = NULL;
    return m;
 }
+
 
 void
 e_menu_activate_key(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir)
@@ -341,6 +370,57 @@ e_menu_icon_file_set(E_Menu *m, char *icon)
 }
 
 void
+e_menu_category_set(E_Menu *m, char *category)
+{
+   E_OBJECT_CHECK(m);
+   E_OBJECT_TYPE_CHECK(m, E_MENU_TYPE);
+   if (m->category)
+     {
+	evas_stringshare_del(m->category);
+	m->category = NULL;
+     }
+   if (category) m->category = evas_stringshare_add(category);
+   else m->category = NULL;
+   m->changed = 1;
+}
+void
+e_menu_category_data_set(char *category, void *data)
+{
+   E_Menu_Category *cat;
+   
+   cat = evas_hash_find(_e_menu_categories, category);
+   if (cat)
+   	cat->data = data;
+   /* if it isnt found create the new hash */
+   else
+     {
+	cat = calloc(1, sizeof(E_Menu_Category));
+	cat->data = data;
+	_e_menu_categories = evas_hash_add(_e_menu_categories,category,cat);
+     }
+}
+
+void
+e_menu_category_callback_set(char *category, void (*create) (E_Menu *m, void *category_data, void *data), void (*free) (void *data), void *data)
+{
+   E_Menu_Category *cat;
+   E_Menu_Category_Callback *cb;
+   
+   cat = evas_hash_find(_e_menu_categories, category);
+   /* if it isnt found create the new hash */
+   if (!cat)
+     {
+	cat = calloc(1, sizeof(E_Menu_Category));
+	_e_menu_categories = evas_hash_add(_e_menu_categories,category,cat);
+     }
+   cb = calloc(1, sizeof(E_Menu_Category_Callback));
+   cb->data = data;
+   cb->create = create;
+   cb->free = free;
+   cat->callbacks = evas_list_append(cat->callbacks,cb);
+}
+
+void
 e_menu_pre_activate_callback_set(E_Menu *m, void (*func) (void *data, E_Menu *m), void *data)
 {
    E_OBJECT_CHECK(m);
@@ -402,6 +482,7 @@ e_menu_item_num_get(E_Menu_Item *mi)
    int i;
    
    E_OBJECT_CHECK_RETURN(mi, -1);
+   E_OBJECT_CHECK_RETURN(m->menu, -1);
    E_OBJECT_TYPE_CHECK_RETURN(mi, E_MENU_TYPE, -1);
    for (i = 0, l = mi->menu->items; l; l = l->next, i++)
      {
@@ -847,7 +928,20 @@ static void
 _e_menu_free(E_Menu *m)
 {
    Evas_List *l, *tmp;
+   E_Menu_Category *cat;
    
+   /* the foreign menu items */
+   cat = evas_hash_find(_e_menu_categories, m->category);
+   if(cat)
+   {
+	for(l = cat->callbacks; l; l = l->next)
+	{
+		E_Menu_Category_Callback *cb;
+
+		cb = l->data;
+		if(cb->free) cb->free(cb->data);
+	}
+   }
    _e_menu_unrealize(m);
    E_FREE(m->shape_rects);
    m->shape_rects_num = 0;
@@ -878,6 +972,21 @@ _e_menu_item_free(E_Menu_Item *mi)
      }
    if (mi->menu->realized) _e_menu_item_unrealize(mi);
    mi->menu->items = evas_list_remove(mi->menu->items, mi);
+   if (mi->icon) evas_stringshare_del(mi->icon);
+   if (mi->icon_key) evas_stringshare_del(mi->icon_key);
+   if (mi->label) evas_stringshare_del(mi->label);
+   free(mi);
+}
+
+static void
+_e_menu_category_item_free(E_Menu_Item *mi)
+{
+   if (mi->submenu)
+     {
+	mi->submenu->parent_item = NULL;
+	e_object_unref(E_OBJECT(mi->submenu));
+     }
+   if (mi->menu->realized) _e_menu_item_unrealize(mi);
    if (mi->icon) evas_stringshare_del(mi->icon);
    if (mi->icon_key) evas_stringshare_del(mi->icon_key);
    if (mi->label) evas_stringshare_del(mi->label);
@@ -1155,6 +1264,9 @@ _e_menu_realize(E_Menu *m)
 {
    Evas_Object *o;
    Evas_List *l;
+   E_Menu_Category *cat;
+
+   
    int ok;
    
    if (m->realized) return;
@@ -1212,6 +1324,7 @@ _e_menu_realize(E_Menu *m)
    e_box_homogenous_set(o, 0);
    edje_object_part_swallow(m->bg_object, "items", m->container_object);
    
+   
    for (l = m->items; l; l = l->next)
      {
 	E_Menu_Item *mi;
@@ -1219,7 +1332,7 @@ _e_menu_realize(E_Menu *m)
 	mi = l->data;
 	_e_menu_item_realize(mi);
      }
-   
+
    o = m->container_object;
    _e_menu_items_layout_update(m);
    e_box_thaw(o);
@@ -1452,6 +1565,7 @@ _e_menu_item_unrealize(E_Menu_Item *mi)
 static void
 _e_menu_unrealize(E_Menu *m)
 {
+   E_Menu_Category *cat;
    Evas_List *l;
    
    if (!m->realized) return;
@@ -1460,6 +1574,7 @@ _e_menu_unrealize(E_Menu *m)
    e_object_del(E_OBJECT(m->shape));
    m->shape = NULL;
    e_box_freeze(m->container_object);
+   
    for (l = m->items; l; l = l->next)
      {
 	E_Menu_Item *mi;
@@ -1487,6 +1602,9 @@ _e_menu_unrealize(E_Menu *m)
 static void
 _e_menu_activate_internal(E_Menu *m, E_Zone *zone)
 {
+   Evas_List *l;
+   E_Menu_Category *cat;
+
    if (m->pre_activate_cb.func)
      m->pre_activate_cb.func(m->pre_activate_cb.data, m);
    m->fast_mouse = 0;
@@ -1519,6 +1637,18 @@ _e_menu_activate_internal(E_Menu *m, E_Zone *zone)
 	m->active = 1;
 	e_object_ref(E_OBJECT(m));
      }
+   /* the foreign menu items */
+   cat = evas_hash_find(_e_menu_categories, m->category);
+   if(cat)
+   {
+	for(l = cat->callbacks; l; l = l->next)
+	{
+		E_Menu_Category_Callback *cb;
+
+		cb = l->data;
+		if(cb->create) cb->create(m,cat->data,cb->data);
+	}
+   }
    m->cur.visible = 1;
    m->zone = zone;
 }
@@ -2473,3 +2603,20 @@ _e_menu_cb_item_submenu_post_default(void *data, E_Menu *m, E_Menu_Item *mi)
    e_menu_item_submenu_set(mi, NULL);
    e_object_del(E_OBJECT(subm));
 }
+
+
+static Evas_Bool _e_menu_categories_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
+{
+   Evas_List *l;
+   E_Menu_Category *cat;
+   
+   cat = (E_Menu_Category *)data;
+   l = (Evas_List *)cat->callbacks;
+   while (l)
+     {
+	free(l->data); /* free the callback struct */
+	l = evas_list_remove_list(l,l);
+     }
+   free(cat);
+}
+

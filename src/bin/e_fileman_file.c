@@ -9,13 +9,6 @@
 # define D(x)  ((void) 0)
 #endif
 
-typedef struct _E_Fm_Assoc_App              E_Fm_Assoc_App;
-struct _E_Fm_Assoc_App
-{
-   char *mime;
-   char *app;
-};
-
 /* local subsystem functions */
 static void _e_fm_file_free(E_Fm_File *file);
 
@@ -23,30 +16,11 @@ static void _e_fm_file_free(E_Fm_File *file);
 static E_Config_DD *assoc_app_edd = NULL;
 static Evas_List   *assoc_apps = NULL;
 
-#if 0
-	{
-	   E_Fm_Assoc_App *assoc;
-
-	   assoc = E_NEW(E_Fm_Assoc_App, 1);
-	   assoc->mime = (char*)E_NEW(char *, 5);
-	   snprintf(assoc->mime, 5, "%s", ".jpg");
-	   assoc->app = (char*)E_NEW(char *, 7);
-	   snprintf(assoc->app, 7, "gqview");
-	   sd->conf.main->apps = evas_list_append(sd->conf.main->apps, assoc);
-
-	   assoc = E_NEW(E_Fm_Assoc_App, 1);
-	   assoc->mime = (char*)E_NEW(char *, 5);
-	   snprintf(assoc->mime, 5, "%s", ".png");
-	   assoc->app = (char*)E_NEW(char *, 7);
-	   snprintf(assoc->app, 7, "gqview");
-	   sd->conf.main->apps = evas_list_append(sd->conf.main->apps, assoc);
-	}
-#endif
-
 /* externally accessible functions */
 E_Fm_File *
 e_fm_file_new(const char *filename)
 {
+   char *ext;
    E_Fm_File *file;
    struct stat st;
 
@@ -77,8 +51,10 @@ e_fm_file_new(const char *filename)
    file->mtime = st.st_mtime;
    file->ctime = st.st_ctime;
 
-   if (S_ISDIR(file->mode))
-     file->type |= E_FM_FILE_TYPE_DIRECTORY;
+   if (S_ISDIR(file->mode)){
+      file->type |= E_FM_FILE_TYPE_DIRECTORY;
+      file->mime = "directory";
+   }
    else if (S_ISREG(file->mode))
      file->type = E_FM_FILE_TYPE_FILE;
    else if (S_ISLNK(file->mode))
@@ -96,10 +72,20 @@ e_fm_file_new(const char *filename)
    file->preview_funcs[3] = e_fm_file_is_eap;
    file->preview_funcs[4] = NULL;
 
+   if(!file->mime)
+     {
+	ext = strrchr(file->name, '.');
+	if (ext)
+	  {
+	     file->mime = ext;
+	  }
+	else
+	  file->mime = "unknown";
+     }
    D(("e_fm_file_new: %s\n", filename));
    return file;
 
-error:
+   error:
    if (file->path) free(file->path);
    if (file->name) free(file->name);
    free(file);
@@ -182,7 +168,7 @@ e_fm_file_can_preview(E_Fm_File *file)
    for (i = 0; file->preview_funcs[i]; i++)
      {
 	E_Fm_File_Preview_Function func;
-	
+
 	func = file->preview_funcs[i];
 	if (func(file))
 	  return 1;
@@ -206,7 +192,7 @@ e_fm_file_is_image(E_Fm_File *file)
 
    D(("e_fm_file_is_image: (%p)\n", file));
    return (!strcasecmp(ext, ".jpg")) || (!strcasecmp(ext, ".png")) ||
-	  (!strcasecmp(ext, ".jpeg"));
+     (!strcasecmp(ext, ".jpeg"));
 }
 
 int
@@ -383,7 +369,7 @@ e_fm_file_assoc_exec(E_Fm_File *file)
    Ecore_Exe *exe;
 
    if (!assoc_apps) return 0;
-   
+
    for (l = assoc_apps; l; l = l->next)
      {
 	char *ext;
@@ -418,6 +404,28 @@ e_fm_file_assoc_exec(E_Fm_File *file)
    return 1;
 }
 
+int 
+e_fm_file_exec_with(E_Fm_File *file, char* exec_with)
+{
+   Ecore_Exe *exe;
+   char app[PATH_MAX * 2];
+   if (!exec_with || !file) return 0;
+
+   snprintf(app, PATH_MAX * 2, "%s \"%s\"", exec_with, file->path);
+   exe = ecore_exe_run(app, NULL);
+
+   if (!exe)
+     {
+	e_error_dialog_show(_("Run Error"),
+			    _("3 Enlightenment was unable fork a child process:\n"
+			      "\n"
+			      "%s\n"
+			      "\n"),
+			    app);
+	return 0;
+     }
+}
+
 /* local subsystem functions */
 static void
 _e_fm_file_free(E_Fm_File *file)
@@ -426,6 +434,7 @@ _e_fm_file_free(E_Fm_File *file)
    free(file->preview_funcs);
    if (file->path) free(file->path);
    if (file->name) free(file->name);
+   ///???  if (file->mime) free(file->mime);
    free(file);
 }
 

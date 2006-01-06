@@ -72,6 +72,7 @@ e_int_menus_main_new(void)
    e_object_data_set(E_OBJECT(m), dat);   
    e_object_del_attach_func_set(E_OBJECT(m), _e_int_menus_main_del_hook);
    
+   e_menu_category_set(m,"main");
    subm = e_int_menus_favorite_apps_new();
    dat->apps = subm;
    mi = e_menu_item_new(m);

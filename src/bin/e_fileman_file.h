@@ -37,6 +37,7 @@ struct _E_Fm_File
 
    char     *path;            /* full name with path */
    char     *name;            /* file name without parent directories */
+   char     *mime;            /* mimetype (just the extension) */
 
    dev_t     device;          /* ID of device containing file */
    ino_t     inode;           /* inode number */
@@ -66,6 +67,7 @@ EAPI int        e_fm_file_can_exec    (E_Fm_File *file);
 EAPI int        e_fm_file_exec        (E_Fm_File *file);
 EAPI int        e_fm_file_assoc_set   (E_Fm_File *file, const char *assoc);
 EAPI int        e_fm_file_assoc_exec  (E_Fm_File *file);
+EAPI int	e_fm_file_exec_with   (E_Fm_File *file, char* exec_with);
 
 #endif
 #endif
