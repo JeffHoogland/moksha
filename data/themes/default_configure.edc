@@ -144,15 +144,14 @@ group {
 	    fixed: 0 1;
 	    rel1 {
 	    	to_y: "item";
-	       relative: 0.0 1.0;
-	       offset:   16   2;
+	       relative: 0.5 1.0;
+	       offset:   0   2;
 	    }
 	    rel2 {
-	       relative: 1.0 1.0;
-	       offset:   -17  -2;
-		}	       	    
+	       relative: 0.5 1.0;
+	       offset:   0  -2;
+	    }	       	    
 	 }
       }
-      	   
    }
 }
