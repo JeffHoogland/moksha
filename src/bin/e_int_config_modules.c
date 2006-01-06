@@ -182,9 +182,6 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    char *v;
    int i;
 
-   e_widget_disabled_set(cfdata->gui.configure, 1);
-   e_widget_disabled_set(cfdata->gui.about, 1);
-   
    v = strdup(e_widget_ilist_selected_label_get(cfdata->gui.list));
    for (i = 0; i < evas_list_count(cfdata->modules); i++)
      {
@@ -195,6 +192,9 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 	  {
 	     if (cm->state != cfdata->state)
 	       {
+		  e_widget_disabled_set(cfdata->gui.configure, 1);
+		  e_widget_disabled_set(cfdata->gui.about, 1);
+		  
 		  m = e_module_find(v);
 		  if (!m) 
 		    { 
@@ -220,7 +220,6 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 			    e_module_save(m);
 			    e_module_disable(m);
 			 }
-		       //e_widget_disabled_set(cfdata->gui.configure, 1);			    
 		       if (m->func.about)
 			 e_widget_disabled_set(cfdata->gui.about, 0);
 		       
