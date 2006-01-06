@@ -44,6 +44,7 @@ e_configure_show(E_Container *con)
    
    e_win_title_set(eco->win, _("Enlightenment Configuration"));
    e_win_name_class_set(eco->win, "E", "_configure");
+   e_win_dialog_set(eco->win, 1);
    eco->evas = e_win_evas_get(eco->win);
    e_win_delete_callback_set(eco->win, _e_configure_cb_del_req);
    e_win_resize_callback_set(eco->win, _e_configure_cb_resize);   

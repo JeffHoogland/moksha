@@ -8,9 +8,12 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: mouse pointer changes are buggy - white box for x curosrs the first
-  time that cursor is used. also sometimes forgets what cursor to use and
-  was being used etc.
+* BUG: fullscreen does not respect min/max window size
+* BUG: changing border from shaped to not shaped produces shadow bugs
+* BUG: xdaliclock -transparent doesnt use shaped border (not handling shape
+  change later)
+* BUG: if a user selects a border the border should not just shange based on
+  properties. if user selects a border in border selector, then lock border
 * BUG: if you iconify a window and while iconified the window unmaps
   (rhythmbox does this a lot apparently) e doesnt realise and still thinks
   its iconified.
@@ -33,7 +36,6 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
-* add fullscreen (zoom) support (e16 xvidmode or xrandr style)
 * implement thees maximise/fullscreen modes:
   Which of these should be different modes, and which should be options for
   a mode? i think they all should be distinct actions of their own bound

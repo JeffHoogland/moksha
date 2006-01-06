@@ -39,10 +39,10 @@ e_dialog_new(E_Container *con)
 	free(dia);
 	return NULL;
      }
-   ecore_x_netwm_window_type_set(dia->win->evas_win, ECORE_X_WINDOW_TYPE_DIALOG);
    e_win_delete_callback_set(dia->win, _e_dialog_cb_delete);
    e_win_resize_callback_set(dia->win, _e_dialog_cb_resize);
    dia->win->data = dia;
+   e_win_dialog_set(dia->win, 1);
    e_win_name_class_set(dia->win, "E", "_dialog");
    o = edje_object_add(e_win_evas_get(dia->win));
    dia->bg_object = o;

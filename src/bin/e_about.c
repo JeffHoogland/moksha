@@ -37,6 +37,7 @@ e_about_new(E_Container *con)
      }
    e_win_delete_callback_set(about->win, _e_about_cb_delete);
    about->win->data = about;
+   e_win_dialog_set(about->win, 1);
    e_win_name_class_set(about->win, "E", "_about");
    e_win_title_set(about->win, _("About Enlightenment"));
    

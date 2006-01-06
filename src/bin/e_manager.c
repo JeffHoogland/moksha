@@ -8,6 +8,7 @@ static void _e_manager_free(E_Manager *man);
 
 static int _e_manager_cb_window_show_request(void *data, int ev_type, void *ev);
 static int _e_manager_cb_window_configure(void *data, int ev_type, void *ev);
+static int _e_manager_cb_key_up(void *data, int ev_type, void *ev);
 static int _e_manager_cb_key_down(void *data, int ev_type, void *ev);
 static int _e_manager_cb_frame_extents_request(void *data, int ev_type, void *ev);
 static int _e_manager_cb_ping(void *data, int ev_type, void *ev);
@@ -114,6 +115,8 @@ e_manager_new(Ecore_X_Window root, int num)
    h = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE, _e_manager_cb_window_configure, man);
    if (h) man->handlers = evas_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN, _e_manager_cb_key_down, man);
+   if (h) man->handlers = evas_list_append(man->handlers, h);
+   h = ecore_event_handler_add(ECORE_X_EVENT_KEY_UP, _e_manager_cb_key_up, man);
    if (h) man->handlers = evas_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_FRAME_EXTENTS_REQUEST, _e_manager_cb_frame_extents_request, man);
    h = ecore_event_handler_add(ECORE_X_EVENT_PING, _e_manager_cb_ping, man);
@@ -502,10 +505,22 @@ _e_manager_cb_key_down(void *data, int ev_type __UNUSED__, void *ev)
    
    man = data;
    e = ev;
-//   printf("KEY %s [win=%x event_win=%x]\n", e->keyname, e->win, e->event_win);
+//   printf("KD %s [win=%x event_win=%x]\n", e->keyname, e->win, e->event_win);
    if (e->event_win != man->root) return 1;
    if (e_bindings_key_down_event_handle(E_BINDING_CONTEXT_MANAGER, E_OBJECT(man), ev))
      return 0;
+   return 1;
+}
+
+static int
+_e_manager_cb_key_up(void *data, int ev_type __UNUSED__, void *ev)
+{
+   E_Manager *man;
+   Ecore_X_Event_Key_Up *e;
+   
+   man = data;
+   e = ev;
+//   printf("KU %s [win=%x event_win=%x]\n", e->keyname, e->win, e->event_win);
    return 1;
 }
 

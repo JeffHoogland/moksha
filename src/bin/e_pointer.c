@@ -103,19 +103,16 @@ e_pointer_window_new(Ecore_X_Window win)
 
 	/* Init the cursor object */
 	if (ecore_x_cursor_color_supported_get())
-	  {
-	     p->color = 1;
-	  }
+	  p->color = 1;
 	else
-	  {
-	     p->color = 0;
-	  }
+	  p->color = 0;
 
 	/* init edje */
 	evas_object_move(p->pointer_object, 0, 0);
 	evas_object_resize(p->pointer_object, p->w, p->h);
 	evas_object_show(p->pointer_object);
 
+	ecore_x_cursor_size_set(e_config->cursor_size * 3 / 4);
 	e_pointer_type_push(p, p, "default");
 
 	_e_pointers = evas_list_append(_e_pointers, p);
@@ -183,14 +180,12 @@ e_pointer_type_push(E_Pointer *p, void *obj, const char *type)
 {
    E_Pointer_Stack *stack;
 
+   p->e_cursor = e_config->use_e_cursor;
    if (!_e_pointer_type_set(p, type))
      {
-	p->e_cursor = !p->e_cursor;
+	p->e_cursor = 0;
 	if (!_e_pointer_type_set(p, type))
-	  {
-	     printf("BUG: Can't set cursor!\n");
-	     return;
-	  }
+	  return;
      }
 
    if (p->type) evas_stringshare_del(p->type);
@@ -205,9 +200,6 @@ e_pointer_type_push(E_Pointer *p, void *obj, const char *type)
 	stack->e_cursor = p->e_cursor;
 	p->stack = evas_list_prepend(p->stack, stack);
      }
-
-   /* try the default cursor next time */
-   p->e_cursor = e_config->use_e_cursor;
 }
 
 void
@@ -345,35 +337,28 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
    if (p->e_cursor)
      {
 	Evas_Object *o;
-	char         cursor[1024];
+	char cursor[1024];
 
 	o = p->pointer_object;
 	if (p->color)
 	  {
 	     snprintf(cursor, sizeof(cursor), "pointer/enlightenment/%s/color", type);
-	     if (!e_theme_edje_object_set(o,
-					  "base/theme/pointer",
-					  cursor))
-	       {
-		  return 0;
-	       }
+	     if (!e_theme_edje_object_set(o, "base/theme/pointer", cursor))
+	       return 0;
 	  }
 	else
 	  {
 	     snprintf(cursor, sizeof(cursor), "pointer/enlightenment/%s/mono", type);
-	     if (!e_theme_edje_object_set(o,
-					  "base/theme/pointer",
-					  cursor))
-	       {
-		  return 0;
-	       }
+	     if (!e_theme_edje_object_set(o, "base/theme/pointer", cursor))
+	       return 0;
 	  }
 	edje_object_part_swallow(p->pointer_object, "hotspot", p->hot_object);
 	p->hot.update = 1;
      }
    else
      {
-	Ecore_X_Cursor cursor;
+	Ecore_X_Cursor cursor = 0;
+	
 	if (!strcmp(type, "move"))
 	  {
 	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_FLEUR);
@@ -449,6 +434,7 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
 	     if (!cursor) printf("X Cursor for default is missing\n");
 	     ecore_x_window_cursor_set(p->win, cursor);
 	  }
+	if (cursor) ecore_x_cursor_free(cursor);
      }
    return 1;
 }

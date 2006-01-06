@@ -42,10 +42,6 @@ static void _e_int_menus_clients_item_cb     (void *data, E_Menu *m, E_Menu_Item
 static void _e_int_menus_clients_cleanup_cb  (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_desktops_pre_cb     (void *data, E_Menu *m);
 static void _e_int_menus_desktops_item_cb    (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_desktops_row_add_cb (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_desktops_row_del_cb (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_desktops_col_add_cb (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_desktops_col_del_cb (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_gadgets_pre_cb      (void *data, E_Menu *m);
 static void _e_int_menus_gadgets_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_themes_pre_cb       (void *data, E_Menu *m);
@@ -523,8 +519,6 @@ _e_int_menus_desktops_pre_cb(void *data, E_Menu *m)
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
    root = e_menu_root_get(m);
-   /* Get the desktop list for this zone */
-   /* FIXME: Menu code needs to determine what zone menu was clicked in */
    if ((root) && (root->zone))
      {
 	int i;
@@ -544,66 +538,6 @@ _e_int_menus_desktops_pre_cb(void *data, E_Menu *m)
 	     e_menu_item_callback_set(mi, _e_int_menus_desktops_item_cb, desk);
 	  }
      }
-
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("New Row of Desktops"));
-   e_menu_item_callback_set(mi, _e_int_menus_desktops_row_add_cb, NULL);
-	       
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Remove Row of Desktops"));
-   e_menu_item_callback_set(mi, _e_int_menus_desktops_row_del_cb, NULL);
-
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("New Column of Desktops"));
-   e_menu_item_callback_set(mi, _e_int_menus_desktops_col_add_cb, NULL);
-	       
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Remove Column of Desktops"));
-   e_menu_item_callback_set(mi, _e_int_menus_desktops_col_del_cb, NULL);
-}
-
-/* FIXME: Use the zone the menu was clicked in */
-static void
-_e_int_menus_desktops_row_add_cb(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Menu *root;
-     
-   root = e_menu_root_get(m);
-   if (root)
-     e_desk_row_add(root->zone);
-}
-
-static void
-_e_int_menus_desktops_row_del_cb(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Menu *root;
-     
-   root = e_menu_root_get(m);
-   if (root)
-     e_desk_row_remove(root->zone);
-}
-
-static void
-_e_int_menus_desktops_col_add_cb(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Menu *root;
-     
-   root = e_menu_root_get(m);
-   if (root)
-     e_desk_col_add(root->zone);
-}
-
-static void
-_e_int_menus_desktops_col_del_cb(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Menu *root;
-     
-   root = e_menu_root_get(m);
-   if (root)
-     e_desk_col_remove(root->zone);
 }
 
 static void

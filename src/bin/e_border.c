@@ -4759,42 +4759,6 @@ _e_border_eval(E_Border *bd)
 	  }
 	bd->client.icccm.fetch.protocol = 0;
      }
-   if (bd->client.mwm.fetch.hints)
-     {
-	int pb;
-
-	bd->client.mwm.exists =
-	  ecore_x_mwm_hints_get(bd->client.win,
-				&bd->client.mwm.func,
-				&bd->client.mwm.decor,
-				&bd->client.mwm.input);
-	pb = bd->client.mwm.borderless;
-	bd->client.mwm.borderless = 0;
-	if (bd->client.mwm.exists)
-	  {
-//	     printf("##- MWM HINTS SET 0x%x!\n", bd->client.win);
-	     if ((!(bd->client.mwm.decor & ECORE_X_MWM_HINT_DECOR_ALL)) &&
-		 (!(bd->client.mwm.decor & ECORE_X_MWM_HINT_DECOR_TITLE)) &&
-		 (!(bd->client.mwm.decor & ECORE_X_MWM_HINT_DECOR_BORDER)))
-	       bd->client.mwm.borderless = 1;
-	  }
-	if (bd->client.mwm.borderless != pb)
-	  {
-	     if (((!bd->lock_border) || (!bd->client.border.name))
-		 && (!bd->shaded))
-	       {
-		  if (bd->client.border.name) evas_stringshare_del(bd->client.border.name);
-		  if (bd->client.mwm.borderless)
-		    bd->client.border.name = evas_stringshare_add("borderless");
-		  else
-		    bd->client.border.name = evas_stringshare_add("default");
-//	     if (bd->client.mwm.borderless)
-//	       printf("client %s borderless\n", bd->client.icccm.title);
-		  bd->client.border.changed = 1;
-	       }
-	  }
-	bd->client.mwm.fetch.hints = 0;
-     }
    if (bd->client.icccm.fetch.transient_for)
      {
 	bd->client.icccm.transient_for = ecore_x_icccm_transient_for_get(bd->client.win);
@@ -4810,12 +4774,6 @@ _e_border_eval(E_Border *bd)
 	bd->client.icccm.window_role = ecore_x_icccm_window_role_get(bd->client.win);
 	bd->client.icccm.fetch.window_role = 0;
      }
-   if (bd->client.netwm.update.state)
-     {
-	e_hints_window_state_set(bd);
-	bd->client.netwm.update.state = 0;
-     }
-
    if (bd->changes.shape)
      {
 	Ecore_X_Rectangle *rects;
@@ -4858,6 +4816,46 @@ _e_border_eval(E_Border *bd)
 	  bd->client.shaped = 0;
 	bd->need_shape_merge = 1;
      }
+   if (bd->client.mwm.fetch.hints)
+     {
+	int pb;
+
+	bd->client.mwm.exists =
+	  ecore_x_mwm_hints_get(bd->client.win,
+				&bd->client.mwm.func,
+				&bd->client.mwm.decor,
+				&bd->client.mwm.input);
+	pb = bd->client.mwm.borderless;
+	bd->client.mwm.borderless = 0;
+	if (bd->client.mwm.exists)
+	  {
+//	     printf("##- MWM HINTS SET 0x%x!\n", bd->client.win);
+	     if ((!(bd->client.mwm.decor & ECORE_X_MWM_HINT_DECOR_ALL)) &&
+		 (!(bd->client.mwm.decor & ECORE_X_MWM_HINT_DECOR_TITLE)) &&
+		 (!(bd->client.mwm.decor & ECORE_X_MWM_HINT_DECOR_BORDER)))
+	       bd->client.mwm.borderless = 1;
+	  }
+	if (bd->client.mwm.borderless != pb)
+	  {
+	     if (((!bd->lock_border) || (!bd->client.border.name))
+		 && (!bd->shaded))
+	       {
+		  if (bd->client.border.name)
+		    evas_stringshare_del(bd->client.border.name);
+		  if (bd->client.mwm.borderless)
+		    bd->client.border.name = evas_stringshare_add("borderless");
+		  else
+		    bd->client.border.name = evas_stringshare_add("default");
+		  bd->client.border.changed = 1;
+	       }
+	  }
+	bd->client.mwm.fetch.hints = 0;
+     }
+   if (bd->client.netwm.update.state)
+     {
+	e_hints_window_state_set(bd);
+	bd->client.netwm.update.state = 0;
+     }
 
    if (bd->new_client)
      {
@@ -4870,6 +4868,40 @@ _e_border_eval(E_Border *bd)
 //	e_object_breadcrumb_add(E_OBJECT(bd), "border_add_event");
 	ecore_event_add(E_EVENT_BORDER_ADD, ev, _e_border_event_border_add_free, NULL);
 
+	if (((!bd->lock_border) || (!bd->client.border.name))
+	    && (!bd->shaded))
+	  {
+	     if (bd->client.border.name)
+	       evas_stringshare_del(bd->client.border.name);
+	     if (bd->client.mwm.borderless)
+	       bd->client.border.name = evas_stringshare_add("borderless");
+	     else if (((bd->client.icccm.transient_for != 0) ||
+		       (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)) &&
+		      (bd->client.icccm.min_w == bd->client.icccm.max_w) &&
+		      (bd->client.icccm.min_h == bd->client.icccm.max_h))
+	       bd->client.border.name = evas_stringshare_add("noresize_dialog");
+	     else if ((bd->client.icccm.min_w == bd->client.icccm.max_w) &&
+		      (bd->client.icccm.min_h == bd->client.icccm.max_h))
+	       bd->client.border.name = evas_stringshare_add("noresize");
+	     else if (bd->client.shaped)
+	       bd->client.border.name = evas_stringshare_add("shaped");
+	     else if ((!bd->client.icccm.accepts_focus) &&
+		      (!bd->client.icccm.take_focus))
+	       bd->client.border.name = evas_stringshare_add("nofocus");
+	     else if (bd->client.icccm.urgent)
+	       bd->client.border.name = evas_stringshare_add("urgent");
+	     else if ((bd->client.icccm.transient_for != 0) ||
+		      (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG))
+	       bd->client.border.name = evas_stringshare_add("dialog");
+	     else if (bd->client.netwm.state.modal)
+	       bd->client.border.name = evas_stringshare_add("modal");
+	     else if ((bd->client.netwm.state.skip_taskbar) ||
+		      (bd->client.netwm.state.skip_pager))
+	       bd->client.border.name = evas_stringshare_add("skipped");
+	     else
+	       bd->client.border.name = evas_stringshare_add("default");
+	     bd->client.border.changed = 1;
+	  }
 	if (!bd->remember)
 	  {
 	     rem = e_remember_find(bd);
@@ -5704,7 +5736,8 @@ _e_border_eval(E_Border *bd)
 
 	if ((!bd->placed) && (!bd->re_manage) &&
 	    (e_config->window_placement_policy == E_WINDOW_PLACEMENT_MANUAL) &&
-	    (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_DIALOG) &&
+	    (!((bd->client.icccm.transient_for != 0) ||
+	       (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG))) &&
 	    (!move) && (!resize))
 	  {
 	     /* Set this window into moving state */

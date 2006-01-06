@@ -413,4 +413,8 @@ e17_ilist_bg1.png \
 e17_slider_bt0.png \
 e17_slider_bt1.png \
 e17_slider_bt_glow.png \
-e17_entry_cursor.png
+e17_entry_cursor.png \
+e17_border1b.png \
+e17_border3b.png \
+e17_border5b.png \
+e17_border7b.png

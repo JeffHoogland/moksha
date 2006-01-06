@@ -1558,8 +1558,8 @@ _pager_cb_event_desk_show(void *data, int type, void *event)
 	     e_popup_edje_bg_object_set(pp->popup, pp->bg_object);
 	     e_popup_ignore_events_set(pp->popup, 1);
 	     e_popup_move_resize(pp->popup,
-				 pp->popup->zone->x + ((pp->popup->zone->w - w) / 2),
-				 pp->popup->zone->y + ((pp->popup->zone->h - h) / 2),
+				 ((pp->popup->zone->w - w) / 2),
+				 ((pp->popup->zone->h - h) / 2),
 				 w, h);
 	     e_bindings_mouse_grab(E_BINDING_CONTEXT_POPUP, pp->popup->evas_win);
 	     e_bindings_wheel_grab(E_BINDING_CONTEXT_POPUP, pp->popup->evas_win);

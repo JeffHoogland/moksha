@@ -33,7 +33,8 @@ struct _E_Win
    void                *data;
 
    struct {
-	unsigned char   centered : 1;
+      unsigned char   centered : 1;
+      unsigned char   dialog : 1;
    } state;
 };
 
@@ -65,6 +66,7 @@ EAPI void   e_win_name_class_set     (E_Win *win, char *name, char *class);
 EAPI void   e_win_title_set          (E_Win *win, char *title);
 
 EAPI void   e_win_centered_set       (E_Win *win, int centered);
+EAPI void   e_win_dialog_set         (E_Win *win, int dialog);
 
 #endif
 #endif

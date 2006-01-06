@@ -104,6 +104,7 @@ e_win_show(E_Win *win)
 	     ecore_evas_software_x11_extra_event_window_add(win->ecore_evas, win->border->event_win);
 	  }
      }
+   _e_win_prop_update(win);
    e_border_show(win->border);
    ecore_evas_show(win->ecore_evas);
 }
@@ -341,6 +342,23 @@ e_win_centered_set(E_Win *win, int centered)
      }
 }
 
+void
+e_win_dialog_set(E_Win *win, int dialog)
+{
+   E_OBJECT_CHECK(win);
+   E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
+   if ((win->state.dialog) && (!dialog))
+     {
+	win->state.dialog = 0;
+	_e_win_prop_update(win);
+     }
+   else if ((!win->state.dialog) && (dialog))
+     {
+	win->state.dialog = 1;
+	_e_win_prop_update(win);
+     }
+}
+
 /* local subsystem functions */
 static void
 _e_win_free(E_Win *win)
@@ -375,6 +393,16 @@ _e_win_prop_update(E_Win *win)
 				    win->base_w, win->base_h,
 				    win->step_x, win->step_y,
 				    win->min_aspect, win->max_aspect);
+   if (win->state.dialog)
+     {
+	ecore_x_icccm_transient_for_set(win->evas_win, win->container->manager->root);
+	ecore_x_netwm_window_type_set(win->evas_win, ECORE_X_WINDOW_TYPE_DIALOG);
+     }
+   else
+     {
+	ecore_x_icccm_transient_for_unset(win->evas_win);
+	ecore_x_netwm_window_type_set(win->evas_win, ECORE_X_WINDOW_TYPE_NORMAL);
+     }
 }
 
 static void
@@ -387,13 +415,9 @@ _e_win_state_update(E_Win *win)
      state[num++] = E_ATOM_WINDOW_STATE_CENTERED;
 
    if (num)
-     {
-	ecore_x_window_prop_card32_set(win->evas_win, E_ATOM_WINDOW_STATE, state, num);
-     }
+     ecore_x_window_prop_card32_set(win->evas_win, E_ATOM_WINDOW_STATE, state, num);
    else
-     {
-	ecore_x_window_prop_property_del(win->evas_win, E_ATOM_WINDOW_STATE);
-     }
+     ecore_x_window_prop_property_del(win->evas_win, E_ATOM_WINDOW_STATE);
 }
 
 static void

@@ -168,13 +168,18 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 							   "widgets/border/default/stacking"),
 			     "widgets/border/default/stacking");
    
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Maximize"));
-   e_menu_item_submenu_set(mi, bd->border_maximize_menu);
-   e_menu_item_icon_edje_set(mi,
-			     (char *)e_theme_edje_file_get("base/theme/borders",
-							   "widgets/border/default/maximize"),
-			     "widgets/border/default/maximize");
+   if (!(((bd->client.icccm.min_w == bd->client.icccm.max_w) &&
+	  (bd->client.icccm.min_h == bd->client.icccm.max_h)) ||
+	 (bd->lock_user_maximize)))
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Maximize"));
+	e_menu_item_submenu_set(mi, bd->border_maximize_menu);
+	e_menu_item_icon_edje_set(mi,
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/maximize"),
+				  "widgets/border/default/maximize");
+     }
 
    if ((!bd->lock_user_shade) && (!(!strcmp("borderless", bd->client.border.name))))
      {

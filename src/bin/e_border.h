@@ -203,18 +203,18 @@ struct _E_Border
 	 int num_icons;
 	 unsigned int user_time;
 	 struct {
-	      int left;
-	      int right;
-	      int top;
-	      int bottom;
-	      int left_start_y;
-	      int left_end_y;
-	      int right_start_y;
-	      int right_end_y;
-	      int top_start_x;
-	      int top_end_x;
-	      int bottom_start_x;
-	      int bottom_end_x;
+	    int left;
+	    int right;
+	    int top;
+	    int bottom;
+	    int left_start_y;
+	    int left_end_y;
+	    int right_start_y;
+	    int right_end_y;
+	    int top_start_x;
+	    int top_end_x;
+	    int bottom_start_x;
+	    int bottom_end_x;
 	 } strut;
 	 unsigned char ping : 1;
 	 struct {
@@ -260,7 +260,7 @@ struct _E_Border
 	 } fetch;
 
 	 struct {
-	      unsigned char state : 1;
+	    unsigned char state : 1;
 	 } update;
       } netwm;
 
