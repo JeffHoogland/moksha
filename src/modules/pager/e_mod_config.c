@@ -41,6 +41,7 @@ _config_pager_module(E_Container *con, Pager *pager)
    v.advanced.create_widgets = _advanced_create_widgets;
    
    cfd = e_config_dialog_new(con, _("Pager Configuration"), NULL, 0, &v, pager);
+   pager->config_dialog = cfd;
 }
 
 static void 

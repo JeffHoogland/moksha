@@ -68,6 +68,8 @@ struct _Pager
    Ecore_Event_Handler *ev_handler_zone_desk_count_set;
    Ecore_Event_Handler *ev_handler_desk_show;
    Ecore_Event_Handler *ev_handler_desk_name_change;
+   
+   E_Config_Dialog *config_dialog;
 };
 
 struct _Pager_Face

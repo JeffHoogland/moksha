@@ -118,9 +118,15 @@ e_modapi_shutdown(E_Module *module)
      module->config_menu = NULL;
 
    pager = module->data;
-   if (pager)
-     _pager_free(pager);
-
+   if (pager) 
+     {
+	if (pager->config_dialog) 
+	  {
+	     e_object_del(E_OBJECT(pager->config_dialog));
+	     pager->config_dialog = NULL;
+	  }
+	_pager_free(pager);	
+     }
    return 1;
 }
 

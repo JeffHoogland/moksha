@@ -34,6 +34,7 @@ struct _IBox
    E_Menu      *config_menu;
    
    Config      *conf;
+   E_Config_Dialog *config_dialog;
 };
 
 struct _IBox_Box

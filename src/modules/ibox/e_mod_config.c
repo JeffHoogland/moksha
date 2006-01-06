@@ -44,6 +44,7 @@ _config_ibox_module(E_Container *con, IBox *ibox)
 
    /* Create The Dialog */
    cfd = e_config_dialog_new(con, _("IBox Configuration"), NULL, 0, &v, ibox);
+   ibox->config_dialog = cfd;
 }
 
 static void 

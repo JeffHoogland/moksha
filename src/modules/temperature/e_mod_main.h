@@ -41,13 +41,13 @@ struct _Temperature
 
    Config           *conf;
    Ecore_Timer      *temperature_check_timer;
-
-   unsigned char     have_temp;
+   E_Config_Dialog  *config_dialog;
+   unsigned char    have_temp;
 };
 
 struct _Temperature_Face
 {
-	Temperature *temp;
+   Temperature *temp;
    E_Container *con;
    E_Menu      *menu;
    Config_Face *conf;
