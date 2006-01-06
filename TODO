@@ -8,6 +8,10 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: modules need to destroy config dialogs on shutdown (otherwise - segv!)
+* BUG: IBAR follower speed and autoscroll speed are not pixels / sec (they are
+  recursive multiplication values). should invert gui valus and display as a
+  factor, not px/sec
 * BUG: fullscreen does not respect min/max window size
 * BUG: changing border from shaped to not shaped produces shadow bugs
 * BUG: xdaliclock -transparent doesnt use shaped border (not handling shape
@@ -121,6 +125,9 @@ Some of the things (in very short form) that need to be done to E17...
   "NICE TO HAVE" FEATURES
 -------------------------------------------------------------------------------
 
+* option to NOT raise on focus in click to focus
+* switch to desktop of a new window if it opens on another desktop than the
+  current one
 * add key input focus control for desktop modules
 * emit signal to submenu entries if they have a submenu shown for them or not
 * screensaver/lock module
