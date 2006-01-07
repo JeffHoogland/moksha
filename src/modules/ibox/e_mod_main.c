@@ -42,7 +42,6 @@ static void    _ibox_config_menu_new(IBox *ib);
 static IBox_Box *_ibox_box_new(IBox *ib, E_Container *con);
 static void    _ibox_box_free(IBox_Box *ibb);
 static void    _ibox_box_menu_new(IBox_Box *ibb);
-static void    _ibox_box_enable(IBox_Box *ibb);
 static void    _ibox_box_disable(IBox_Box *ibb);
 static void    _ibox_box_frame_resize(IBox_Box *ibb);
 static void    _ibox_box_edge_change(IBox_Box *ibb, int edge);
@@ -479,17 +478,6 @@ _ibox_box_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
    ibb = (IBox_Box *)data;
    if (!ibb) return;
    _config_ibox_module(ibb->con, ibb->ibox);
-}
-
-static void
-_ibox_box_enable(IBox_Box *ibb)
-{
-   ibb->conf->enabled = 1;
-   evas_object_show(ibb->box_object);
-   if (ibb->overlay_object) evas_object_show(ibb->overlay_object);
-   evas_object_show(ibb->item_object);
-   evas_object_show(ibb->event_object);
-   e_config_save_queue();
 }
 
 static void
