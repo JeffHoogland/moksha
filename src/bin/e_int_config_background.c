@@ -89,7 +89,7 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    printf("file: %s\n", cfdata->file);
    //e_bg_add(cfd->con, z, 0, 0, cfdata->file);
    if (e_config->desktop_default_background) evas_stringshare_del(e_config->desktop_default_background);
-   e_config->desktop_default_background = (char *)evas_stringshare_add(cfdata->file);
+   e_config->desktop_default_background = evas_stringshare_add(cfdata->file);
    e_bg_update();
    e_config_save_queue();
    return 1; /* Apply was OK */

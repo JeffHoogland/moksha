@@ -406,7 +406,7 @@ _cpufreq_menu_restore_governor(void *data, E_Menu *m, E_Menu_Item *mi)
    if ((!e->conf->governor) || strcmp(e->status->cur_governor, e->conf->governor))
      {
 	if (e->conf->governor) evas_stringshare_del(e->conf->governor);
-	e->conf->governor = (char *)evas_stringshare_add(e->status->cur_governor);
+	e->conf->governor = evas_stringshare_add(e->status->cur_governor);
      }
    e_config_save_queue();
 }
@@ -423,7 +423,7 @@ _cpufreq_menu_governor(void *data, E_Menu *m, E_Menu_Item *mi)
      {
 	_cpufreq_set_governor(e, governor);
 	if (e->conf->governor) evas_stringshare_del(e->conf->governor);
-	e->conf->governor = (char *)evas_stringshare_add(governor);
+	e->conf->governor = evas_stringshare_add(governor);
      }
    e_config_save_queue();
 }
