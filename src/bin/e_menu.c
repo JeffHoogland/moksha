@@ -1265,9 +1265,7 @@ _e_menu_realize(E_Menu *m)
 {
    Evas_Object *o;
    Evas_List *l;
-   E_Menu_Category *cat;
-
-   
+ 
    int ok;
    
    if (m->realized) return;
@@ -1566,9 +1564,8 @@ _e_menu_item_unrealize(E_Menu_Item *mi)
 static void
 _e_menu_unrealize(E_Menu *m)
 {
-   E_Menu_Category *cat;
    Evas_List *l;
-   
+ 
    if (!m->realized) return;
    evas_event_freeze(m->evas);
    e_container_shape_hide(m->shape);
@@ -2606,7 +2603,8 @@ _e_menu_cb_item_submenu_post_default(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 
-static Evas_Bool _e_menu_categories_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
+static Evas_Bool
+_e_menu_categories_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
 {
    Evas_List *l;
    E_Menu_Category *cat;
@@ -2619,5 +2617,6 @@ static Evas_Bool _e_menu_categories_free_cb(Evas_Hash *hash, const char *key, vo
 	l = evas_list_remove_list(l,l);
      }
    free(cat);
+   return 1;
 }
 
