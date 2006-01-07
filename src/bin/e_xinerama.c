@@ -10,42 +10,42 @@ static Evas_List *all_screens = NULL;
 static Evas_List *chosen_screens = NULL;
 static Evas_List *fake_screens = NULL;
 
-int
+EAPI int
 e_xinerama_init(void)
 {
    _e_xinerama_update();
    return 1;
 }
 
-int
+EAPI int
 e_xinerama_shutdown(void)
 {
    _e_xinerama_clean();
    return 1;
 }
 
-void
+EAPI void
 e_xinerama_update(void)
 {
    _e_xinerama_clean();
    _e_xinerama_update();
 }
 
-const Evas_List *
+EAPI const Evas_List *
 e_xinerama_screens_get(void)
 {
    if (fake_screens) return fake_screens;
    return chosen_screens;
 }
 
-const Evas_List *
+EAPI const Evas_List *
 e_xinerama_screens_all_get(void)
 {
    if (fake_screens) return fake_screens;
    return all_screens;
 }
 
-void
+EAPI void
 e_xinerama_fake_screen_add(int x, int y, int w, int h)
 {
    E_Screen *scr;

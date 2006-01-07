@@ -85,13 +85,13 @@ static void    _ibox_box_cb_follower(void *data);
 static void    _ibox_box_cb_iconsize_change(void *data);
 
 /* public module routines. all modules must have these */
-E_Module_Api e_modapi =
+EAPI E_Module_Api e_modapi =
 {
    E_MODULE_API_VERSION,
      "IBox"
 };
 
-void *
+EAPI void *
 e_modapi_init(E_Module *m)
 {
    IBox *ib;
@@ -102,7 +102,7 @@ e_modapi_init(E_Module *m)
    return ib;
 }
 
-int
+EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    IBox *ib;
@@ -123,7 +123,7 @@ e_modapi_shutdown(E_Module *m)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_save(E_Module *m)
 {
    IBox *ib;
@@ -133,7 +133,7 @@ e_modapi_save(E_Module *m)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_info(E_Module *m)
 {
    char buf[4096];
@@ -143,7 +143,7 @@ e_modapi_info(E_Module *m)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_about(E_Module *m)
 {
    e_module_dialog_show(_("Enlightenment IBox Module"),
@@ -152,7 +152,7 @@ e_modapi_about(E_Module *m)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_config(E_Module *m)
 {
    IBox *e;

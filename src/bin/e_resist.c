@@ -14,7 +14,7 @@ struct _E_Resist_Rect
 
 static void _e_resist_rects(Evas_List *rects, int px, int py, int pw, int ph, int x, int y, int w, int h, int *rx, int *ry, int *rw, int *rh);
 
-int
+EAPI int
 e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
 				   int px, int py, int pw, int ph,
 				   int x, int y, int w, int h,
@@ -108,7 +108,7 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
    return 1;
 }
 
-int
+EAPI int
 e_resist_container_gadman_position(E_Container *con, Evas_List *skiplist,
 				   int px, int py, int pw, int ph,
 				   int x, int y, int w, int h,

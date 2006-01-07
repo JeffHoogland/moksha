@@ -4,13 +4,13 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-E_Module_Api e_modapi = 
+EAPI E_Module_Api e_modapi = 
 {
    E_MODULE_API_VERSION,
    "Test"
 };
 
-void *
+EAPI void *
 e_modapi_init(E_Module *m)
 {
    E_Menu *mn;
@@ -32,7 +32,7 @@ e_modapi_init(E_Module *m)
    return e_modapi_init; /* bogus pointer - just to say we worked */
 }
 
-int
+EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    if (m->config_menu)
@@ -44,19 +44,19 @@ e_modapi_shutdown(E_Module *m)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_save(E_Module *m)
 {
    return 1;
 }
 
-int
+EAPI int
 e_modapi_info(E_Module *m)
 {
    return 1;
 }
 
-int
+EAPI int
 e_modapi_about(E_Module *m)
 {
    e_module_dialog_show(_("Enlightenment Test Module"),

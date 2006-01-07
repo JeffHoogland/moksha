@@ -67,9 +67,8 @@ struct _E_Gadget_Change
   E_Gadget_Face *face;
 };
 
-E_Gadget *e_gadget_new(E_Gadget_Api *api);
-
-void e_gadget_face_theme_set(E_Gadget_Face *face, char *category, char *group);
+EAPI E_Gadget *e_gadget_new(E_Gadget_Api *api);
+EAPI void      e_gadget_face_theme_set(E_Gadget_Face *face, char *category, char *group);
 
 #endif
 #endif

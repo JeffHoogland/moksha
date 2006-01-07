@@ -98,7 +98,7 @@ _e_wid_text_change(void *data, Evas_Object *entry, char *key)
 }
 
 /* externally accessible functions */
-Evas_Object *
+EAPI Evas_Object *
 e_widget_entry_add(Evas *evas, char **val)
 {   
    Evas_Object *obj, *o;
@@ -138,7 +138,7 @@ e_widget_entry_add(Evas *evas, char **val)
    return obj;         
 }
 
-void
+EAPI void
 e_widget_entry_on_change_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj), void *data)
 {
    E_Widget_Data *wd;

@@ -20,7 +20,7 @@ static Evas_List *_e_popup_list = NULL;
 
 /* externally accessible functions */
 
-int
+EAPI int
 e_popup_init(void)
 {
    _e_popup_window_shape_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,
@@ -34,7 +34,7 @@ e_popup_init(void)
    return 1;
 }
 
-int
+EAPI int
 e_popup_shutdown(void)
 {
    E_FN_DEL(ecore_event_handler_del, _e_popup_window_shape_handler);
@@ -44,7 +44,7 @@ e_popup_shutdown(void)
    return 1;
 }
 
-E_Popup *
+EAPI E_Popup *
 e_popup_new(E_Zone *zone, int x, int y, int w, int h)
 {
    E_Popup *pop;
@@ -75,7 +75,7 @@ e_popup_new(E_Zone *zone, int x, int y, int w, int h)
    return pop;
 }
 
-void
+EAPI void
 e_popup_show(E_Popup *pop)
 {
    E_OBJECT_CHECK(pop);
@@ -86,7 +86,7 @@ e_popup_show(E_Popup *pop)
    e_container_shape_show(pop->shape);
 }
 
-void
+EAPI void
 e_popup_hide(E_Popup *pop)
 {
    E_OBJECT_CHECK(pop);
@@ -97,7 +97,7 @@ e_popup_hide(E_Popup *pop)
    e_container_shape_hide(pop->shape);
 }
 
-void
+EAPI void
 e_popup_move(E_Popup *pop, int x, int y)
 {
    E_OBJECT_CHECK(pop);
@@ -113,7 +113,7 @@ e_popup_move(E_Popup *pop, int x, int y)
 			  pop->zone->y + pop->y);
 }
 
-void
+EAPI void
 e_popup_resize(E_Popup *pop, int w, int h)
 {
    E_OBJECT_CHECK(pop);
@@ -125,7 +125,7 @@ e_popup_resize(E_Popup *pop, int w, int h)
    e_container_shape_resize(pop->shape, pop->w, pop->h);
 }
   
-void
+EAPI void
 e_popup_move_resize(E_Popup *pop, int x, int y, int w, int h)
 {
    E_OBJECT_CHECK(pop);
@@ -146,13 +146,13 @@ e_popup_move_resize(E_Popup *pop, int x, int y, int w, int h)
    e_container_shape_resize(pop->shape, pop->w, pop->h);
 }
 
-void
+EAPI void
 e_popup_ignore_events_set(E_Popup *pop, int ignore)
 {
    ecore_evas_ignore_events_set(pop->ecore_evas, ignore);
 }
 
-void
+EAPI void
 e_popup_edje_bg_object_set(E_Popup *pop, Evas_Object *o)
 {
    const char *shape_option;
@@ -170,7 +170,7 @@ e_popup_edje_bg_object_set(E_Popup *pop, Evas_Object *o)
      }
 }
 
-void
+EAPI void
 e_popup_layer_set(E_Popup *pop, int layer)
 {
    E_OBJECT_CHECK(pop);
@@ -179,7 +179,7 @@ e_popup_layer_set(E_Popup *pop, int layer)
    e_container_window_raise(pop->zone->container, pop->evas_win, pop->layer);
 }
 
-void
+EAPI void
 e_popup_idler_before(void)
 {
    Evas_List *l;

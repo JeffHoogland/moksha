@@ -614,7 +614,7 @@ main(int argc, char **argv)
 }
 
 /* FIXME: make safe to delete within a callback */
-E_Before_Idler *
+EAPI E_Before_Idler *
 e_main_idler_before_add(int (*func) (void *data), void *data, int once)
 {
    E_Before_Idler *eb;
@@ -627,7 +627,7 @@ e_main_idler_before_add(int (*func) (void *data), void *data, int once)
    return eb;
 }
 
-void
+EAPI void
 e_main_idler_before_del(E_Before_Idler *eb)
 {
    eb->delete_me = 1;

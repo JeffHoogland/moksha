@@ -38,7 +38,7 @@ static void _e_wid_hilite_cb(E_File_Dialog *dia, char *file, void *data);
 /* local subsystem functions */
 
 /* externally accessible functions */
-Evas_Object *
+EAPI Evas_Object *
 e_widget_iconsel_add(Evas *evas, Evas_Object *icon, Evas_Coord minw, Evas_Coord minh, char **file)
 {
    Evas_Object *obj, *o;
@@ -97,7 +97,7 @@ e_widget_iconsel_add(Evas *evas, Evas_Object *icon, Evas_Coord minw, Evas_Coord 
    return obj;
 }
 
-Evas_Object *
+EAPI Evas_Object *
 e_widget_iconsel_add_from_file(Evas *evas, char *icon, Evas_Coord minw, Evas_Coord minh, char **file)
 {
    Evas_Object *obj, *o;
@@ -149,7 +149,7 @@ e_widget_iconsel_add_from_file(Evas *evas, char *icon, Evas_Coord minw, Evas_Coo
    return obj;
 }
 
-void
+EAPI void
 e_widget_iconsel_select_callback_add(Evas_Object *obj, void (*func)(Evas_Object *obj, char *file, void *data), void *data)
 {    
    E_Widget_Data *wd;
@@ -159,7 +159,7 @@ e_widget_iconsel_select_callback_add(Evas_Object *obj, void (*func)(Evas_Object 
    wd->select_data = data;     
 }
 
-void
+EAPI void
 e_widget_iconsel_hilite_callback_add(Evas_Object *obj, void (*func)(Evas_Object *obj, char *file, void *data), void *data)
 {    
    E_Widget_Data *wd;

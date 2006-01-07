@@ -35,7 +35,7 @@ struct _CFData
    int pos_max_h;
 };
 
-E_Config_Dialog *
+EAPI E_Config_Dialog *
 e_int_config_winlist(E_Container *con) 
 {
    E_Config_Dialog *cfd;

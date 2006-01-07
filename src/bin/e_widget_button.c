@@ -22,7 +22,7 @@ static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *even
 /* local subsystem functions */
 
 /* externally accessible functions */
-Evas_Object *
+EAPI Evas_Object *
 e_widget_button_add(Evas *evas, char *label, char *icon, void (*func) (void *data, void *data2), void *data, void *data2)
 {
    Evas_Object *obj, *o;

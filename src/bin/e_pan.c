@@ -36,14 +36,14 @@ static void _e_smart_init(void);
 static Evas_Smart *_e_smart = NULL;
 
 /* externally accessible functions */
-Evas_Object *
+EAPI Evas_Object *
 e_pan_add(Evas *evas)
 {
    _e_smart_init();
    return evas_object_smart_add(evas, _e_smart);
 }
 
-void
+EAPI void
 e_pan_child_set(Evas_Object *obj, Evas_Object *child)
 {
    API_ENTRY return;
@@ -78,14 +78,14 @@ e_pan_child_set(Evas_Object *obj, Evas_Object *child)
    evas_object_smart_callback_call(sd->smart_obj, "changed", NULL);
 }
 
-Evas_Object *
+EAPI Evas_Object *
 e_pan_child_get(Evas_Object *obj)
 {
    API_ENTRY return NULL;
    return sd->child_obj;
 }
 
-void
+EAPI void
 e_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 {
    API_ENTRY return;
@@ -100,7 +100,7 @@ e_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    evas_object_smart_callback_call(sd->smart_obj, "changed", NULL);
 }
 
-void
+EAPI void
 e_pan_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
 {
    API_ENTRY return;
@@ -108,7 +108,7 @@ e_pan_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
    if (y) *y = sd->py;
 }
 
-void
+EAPI void
 e_pan_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
 {
    API_ENTRY return;
@@ -124,7 +124,7 @@ e_pan_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
      }
 }
 
-void
+EAPI void
 e_pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 {
    API_ENTRY return;

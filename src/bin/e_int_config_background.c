@@ -27,7 +27,7 @@ struct _E_Cfg_Bg_Data
 };
 
 /* a nice easy setup function that does the dirty work */
-E_Config_Dialog *
+EAPI E_Config_Dialog *
 e_int_config_background(E_Container *con)
 {
    E_Config_Dialog *cfd;

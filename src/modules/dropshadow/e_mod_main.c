@@ -72,13 +72,13 @@ static void        _tilebuf_free_render_rects(Evas_List *rects);
 #define TILE(tb, x, y) ((tb)->tiles.tiles[((y) * (tb)->tiles.w) + (x)])
 
 /* public module routines. all modules must have these */
-E_Module_Api e_modapi = 
+EAPI E_Module_Api e_modapi = 
 {
    E_MODULE_API_VERSION,
    "Dropshadow"
 };
 
-void *
+EAPI void *
 e_modapi_init(E_Module *m)
 {
    Dropshadow *ds;
@@ -123,7 +123,7 @@ e_modapi_init(E_Module *m)
    return ds;
 }
 
-int
+EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    Dropshadow *ds;
@@ -141,7 +141,7 @@ e_modapi_shutdown(E_Module *m)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_save(E_Module *m)
 {
    Dropshadow *ds;
@@ -151,7 +151,7 @@ e_modapi_save(E_Module *m)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_info(E_Module *m)
 {
    char buf[4096];
@@ -161,7 +161,7 @@ e_modapi_info(E_Module *m)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_about(E_Module *m)
 {
    e_module_dialog_show(_("Enlightenment Dropshadow Module"),
@@ -171,7 +171,7 @@ e_modapi_about(E_Module *m)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_config(E_Module *m) 
 {
    Dropshadow *ds;

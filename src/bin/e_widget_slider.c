@@ -17,7 +17,7 @@ static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *even
 static void _e_wid_cb_changed(void *data, Evas_Object *obj, void *event_info);
 
 /* externally accessible functions */
-Evas_Object *
+EAPI Evas_Object *
 e_widget_slider_add(Evas *evas, int horiz, int rev, char *fmt, double min, double max, double step, int count, double *dval, int *ival, Evas_Coord size)
 {
    Evas_Object *obj, *o;

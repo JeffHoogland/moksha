@@ -18,7 +18,7 @@ struct _CFData
    int cursor_size;
 };
 
-E_Config_Dialog *
+EAPI E_Config_Dialog *
 e_int_config_general(E_Container *con) 
 {
    E_Config_Dialog *cfd;

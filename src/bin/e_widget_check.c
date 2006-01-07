@@ -21,7 +21,7 @@ static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *even
 /* local subsystem functions */
 
 /* externally accessible functions */
-Evas_Object *
+EAPI Evas_Object *
 e_widget_check_add(Evas *evas, char *label, int *val)
 {
    Evas_Object *obj, *o;

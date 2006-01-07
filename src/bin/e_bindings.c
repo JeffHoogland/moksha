@@ -20,7 +20,7 @@ static Evas_List *wheel_bindings = NULL;
 
 /* externally accessible functions */
 
-int
+EAPI int
 e_bindings_init(void)
 {
    Evas_List *l;
@@ -78,7 +78,7 @@ e_bindings_init(void)
    return 1;
 }
 
-int
+EAPI int
 e_bindings_shutdown(void)
 {
    while (mouse_bindings)
@@ -116,7 +116,7 @@ e_bindings_shutdown(void)
    return 1;
 }
 
-void
+EAPI void
 e_bindings_mouse_add(E_Binding_Context ctxt, int button, E_Binding_Modifier mod, int any_mod, char *action, char *params)
 {
    E_Binding_Mouse *bind;
@@ -131,7 +131,7 @@ e_bindings_mouse_add(E_Binding_Context ctxt, int button, E_Binding_Modifier mod,
    mouse_bindings = evas_list_append(mouse_bindings, bind);
 }
 
-void
+EAPI void
 e_bindings_mouse_del(E_Binding_Context ctxt, int button, E_Binding_Modifier mod, int any_mod, char *action, char *params)
 {
    Evas_List *l;
@@ -157,7 +157,7 @@ e_bindings_mouse_del(E_Binding_Context ctxt, int button, E_Binding_Modifier mod,
      }
 }
 
-void
+EAPI void
 e_bindings_mouse_grab(E_Binding_Context ctxt, Ecore_X_Window win)
 {
    Evas_List *l;
@@ -185,7 +185,7 @@ e_bindings_mouse_grab(E_Binding_Context ctxt, Ecore_X_Window win)
      }
 }
 
-void
+EAPI void
 e_bindings_mouse_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
 {
    Evas_List *l;
@@ -210,7 +210,7 @@ e_bindings_mouse_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
      }
 }
 
-E_Action *
+EAPI E_Action *
 e_bindings_mouse_down_find(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Down *ev, E_Binding_Mouse **bind_ret)
 {
    E_Binding_Modifier mod = 0;
@@ -241,7 +241,7 @@ e_bindings_mouse_down_find(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_
    return NULL;
 }
 
-E_Action *
+EAPI E_Action *
 e_bindings_mouse_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Down *ev)
 {
    E_Action *act;
@@ -259,7 +259,7 @@ e_bindings_mouse_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_
    return act;
 }
 
-E_Action *
+EAPI E_Action *
 e_bindings_mouse_up_find(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Up *ev, E_Binding_Mouse **bind_ret)
 {
    E_Binding_Modifier mod = 0;
@@ -290,7 +290,7 @@ e_bindings_mouse_up_find(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mo
    return NULL;
 }
 
-E_Action *
+EAPI E_Action *
 e_bindings_mouse_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Up *ev)
 {
    E_Action *act;
@@ -308,7 +308,7 @@ e_bindings_mouse_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_
    return act;
 }
 
-void
+EAPI void
 e_bindings_key_add(E_Binding_Context ctxt, char *key, E_Binding_Modifier mod, int any_mod, char *action, char *params)
 {
    E_Binding_Key *bind;
@@ -323,7 +323,7 @@ e_bindings_key_add(E_Binding_Context ctxt, char *key, E_Binding_Modifier mod, in
    key_bindings = evas_list_append(key_bindings, bind);
 }
 
-void
+EAPI void
 e_bindings_key_del(E_Binding_Context ctxt, char *key, E_Binding_Modifier mod, int any_mod, char *action, char *params)
 {
    Evas_List *l;
@@ -349,7 +349,7 @@ e_bindings_key_del(E_Binding_Context ctxt, char *key, E_Binding_Modifier mod, in
      }
 }
 
-void
+EAPI void
 e_bindings_key_grab(E_Binding_Context ctxt, Ecore_X_Window win)
 {
    Evas_List *l;
@@ -374,7 +374,7 @@ e_bindings_key_grab(E_Binding_Context ctxt, Ecore_X_Window win)
      }
 }
 
-void
+EAPI void
 e_bindings_key_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
 {
    Evas_List *l;
@@ -399,7 +399,7 @@ e_bindings_key_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
      }
 }
 
-E_Action *
+EAPI E_Action *
 e_bindings_key_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Key_Down *ev)
 {
    E_Binding_Modifier mod = 0;
@@ -437,7 +437,7 @@ e_bindings_key_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_
    return NULL;
 }
 
-E_Action *
+EAPI E_Action *
 e_bindings_key_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Key_Up *ev)
 {
    E_Binding_Modifier mod = 0;
@@ -476,7 +476,7 @@ e_bindings_key_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Ev
 }
 
 /* FIXME: finish off signal bindings */
-void
+EAPI void
 e_bindings_signal_add(E_Binding_Context ctxt, char *sig, char *src, E_Binding_Modifier mod, int any_mod, char *action, char *params)
 {
    E_Binding_Signal *bind;
@@ -492,7 +492,7 @@ e_bindings_signal_add(E_Binding_Context ctxt, char *sig, char *src, E_Binding_Mo
    signal_bindings = evas_list_append(signal_bindings, bind);
 }
 
-void
+EAPI void
 e_bindings_signal_del(E_Binding_Context ctxt, char *sig, char *src, E_Binding_Modifier mod, int any_mod, char *action, char *params)
 {
    Evas_List *l;
@@ -521,7 +521,7 @@ e_bindings_signal_del(E_Binding_Context ctxt, char *sig, char *src, E_Binding_Mo
      }
 }
 
-E_Action  *
+EAPI E_Action  *
 e_bindings_signal_find(E_Binding_Context ctxt, E_Object *obj, char *sig, char *src, E_Binding_Signal **bind_ret)
 {
    E_Binding_Modifier mod = 0;
@@ -553,7 +553,7 @@ e_bindings_signal_find(E_Binding_Context ctxt, E_Object *obj, char *sig, char *s
    return NULL;
 }
 
-E_Action *
+EAPI E_Action *
 e_bindings_signal_handle(E_Binding_Context ctxt, E_Object *obj, char *sig, char *src)
 {
    E_Action *act;
@@ -574,7 +574,7 @@ e_bindings_signal_handle(E_Binding_Context ctxt, E_Object *obj, char *sig, char 
 }
 
 /* FIXME: finish off wheel bindings */
-void
+EAPI void
 e_bindings_wheel_add(E_Binding_Context ctxt, int direction, int z, E_Binding_Modifier mod, int any_mod, char *action, char *params)
 {
    E_Binding_Wheel *bind;
@@ -590,7 +590,7 @@ e_bindings_wheel_add(E_Binding_Context ctxt, int direction, int z, E_Binding_Mod
    wheel_bindings = evas_list_append(wheel_bindings, bind);
 }
 
-void
+EAPI void
 e_bindings_wheel_del(E_Binding_Context ctxt, int direction, int z, E_Binding_Modifier mod, int any_mod, char *action, char *params)
 {
    Evas_List *l;
@@ -617,7 +617,7 @@ e_bindings_wheel_del(E_Binding_Context ctxt, int direction, int z, E_Binding_Mod
      }
 }
 
-void
+EAPI void
 e_bindings_wheel_grab(E_Binding_Context ctxt, Ecore_X_Window win)
 {
    Evas_List *l;
@@ -656,7 +656,7 @@ e_bindings_wheel_grab(E_Binding_Context ctxt, Ecore_X_Window win)
      }
 }
 
-void
+EAPI void
 e_bindings_wheel_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
 {
    Evas_List *l;
@@ -693,7 +693,7 @@ e_bindings_wheel_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
      }
 }
 
-E_Action *
+EAPI E_Action *
 e_bindings_wheel_find(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Wheel *ev, E_Binding_Wheel **bind_ret)
 {
    E_Binding_Modifier mod = 0;
@@ -725,7 +725,7 @@ e_bindings_wheel_find(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse
    return NULL;
 }
 
-E_Action *
+EAPI E_Action *
 e_bindings_wheel_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Wheel *ev)
 {
    E_Action *act;

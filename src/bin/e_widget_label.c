@@ -6,7 +6,7 @@
 /* local subsystem functions */
 
 /* externally accessible functions */
-Evas_Object *
+EAPI Evas_Object *
 e_widget_label_add(Evas *evas, char *label)
 {
    Evas_Object *obj, *o;

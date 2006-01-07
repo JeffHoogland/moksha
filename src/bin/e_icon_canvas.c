@@ -80,14 +80,14 @@ static void _e_icon_canvas_smart_clip_unset(Evas_Object *obj);
 static Evas_Smart *_e_smart = NULL;
 
 /* externally accessible functions */
-Evas_Object *
+EAPI Evas_Object *
 e_icon_canvas_add(Evas *evas)
 {
    _e_icon_canvas_smart_init();
    return evas_object_smart_add(evas, _e_smart);
 }
 
-int
+EAPI int
 e_icon_canvas_freeze(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -99,7 +99,7 @@ e_icon_canvas_freeze(Evas_Object *obj)
    return sd->frozen;
 }
 
-int
+EAPI int
 e_icon_canvas_thaw(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -112,7 +112,7 @@ e_icon_canvas_thaw(Evas_Object *obj)
    return sd->frozen;
 }
 
-void
+EAPI void
 e_icon_canvas_virtual_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 {
    E_Smart_Data *sd;
@@ -124,7 +124,7 @@ e_icon_canvas_virtual_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
    if (h) *h = sd->vh;
 }
 
-void
+EAPI void
 e_icon_canvas_width_fix(Evas_Object *obj, Evas_Coord w)
 {
    E_Smart_Data *sd;
@@ -141,7 +141,7 @@ e_icon_canvas_width_fix(Evas_Object *obj, Evas_Coord w)
    if (sd->frozen <= 0) _e_icon_canvas_reconfigure(sd);
 }
 
-void
+EAPI void
 e_icon_canvas_height_fix(Evas_Object *obj, Evas_Coord h)
 {
    E_Smart_Data *sd;
@@ -158,7 +158,7 @@ e_icon_canvas_height_fix(Evas_Object *obj, Evas_Coord h)
    if (sd->frozen <= 0) _e_icon_canvas_reconfigure(sd);
 }
 
-void
+EAPI void
 e_icon_canvas_sort(Evas_Object *obj, int (*func)(void *d1, void *d2))
 {
 #if 0   
@@ -172,7 +172,8 @@ e_icon_canvas_sort(Evas_Object *obj, int (*func)(void *d1, void *d2))
 #endif   
 }
    
-void e_icon_canvas_icon_callbacks_set(Evas_Object *child, void (*appear)(Evas_Object *obj, void *data), void (*disappear)(Evas_Object *obj, void *data), void *data)
+EAPI void
+e_icon_canvas_icon_callbacks_set(Evas_Object *child, void (*appear)(Evas_Object *obj, void *data), void (*disappear)(Evas_Object *obj, void *data), void *data)
 {
 #if 0   
    E_Icon_Canvas_Item *li;
@@ -186,7 +187,7 @@ void e_icon_canvas_icon_callbacks_set(Evas_Object *child, void (*appear)(Evas_Ob
 #endif   
 }
 
-void
+EAPI void
 e_icon_canvas_pack_at_location(Evas_Object *obj, Evas_Object *child, Evas_Object *(*create)(void *data), void (*destroy)(Evas_Object *obj, void *data), void *data, Evas_Coord x, Evas_Coord y)
 {    
 #if 0   
@@ -217,7 +218,7 @@ e_icon_canvas_pack_at_location(Evas_Object *obj, Evas_Object *child, Evas_Object
    
 }
 
-void
+EAPI void
 e_icon_canvas_pack(Evas_Object *obj, Evas_Object *child, Evas_Object *(*create)(void *data), void (*destroy)(Evas_Object *obj, void *data), void *data)
 {
    E_Smart_Data *sd;
@@ -269,7 +270,7 @@ e_icon_canvas_pack(Evas_Object *obj, Evas_Object *child, Evas_Object *(*create)(
    _e_icon_canvas_pack(sd, li);
 }
 
-void
+EAPI void
 e_icon_canvas_child_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 {
    E_Icon_Canvas_Item *li;
@@ -284,7 +285,7 @@ e_icon_canvas_child_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    _e_icon_canvas_move_resize_item(li);
 }
 
-void
+EAPI void
 e_icon_canvas_unpack(Evas_Object *obj)
 {
    E_Icon_Canvas_Item *li;
@@ -303,7 +304,7 @@ e_icon_canvas_unpack(Evas_Object *obj)
    li->tile->items = evas_list_remove(li->tile->items, li);
 }
 
-void
+EAPI void
 e_icon_canvas_spacing_set(Evas_Object *obj, Evas_Coord xs, Evas_Coord ys)
 {
    E_Smart_Data *sd;
@@ -325,7 +326,7 @@ e_icon_canvas_spacing_set(Evas_Object *obj, Evas_Coord xs, Evas_Coord ys)
    if (sd->frozen <= 0) _e_icon_canvas_reconfigure(sd);
 }
 
-void         
+EAPI void         
 e_icon_canvas_redraw_force(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -338,7 +339,7 @@ e_icon_canvas_redraw_force(Evas_Object *obj)
    if (sd->frozen <= 0) _e_icon_canvas_reconfigure(sd);   
 }
 
-void
+EAPI void
 e_icon_canvas_reset(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -385,7 +386,7 @@ e_icon_canvas_reset(Evas_Object *obj)
    sd->y = sd->viewport.y;
 }
 
-void
+EAPI void
 e_icon_canvas_xy_freeze(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -396,7 +397,7 @@ e_icon_canvas_xy_freeze(Evas_Object *obj)
    sd->xy_frozen = 1;
 }
 
-void
+EAPI void
 e_icon_canvas_xy_thaw(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -407,7 +408,7 @@ e_icon_canvas_xy_thaw(Evas_Object *obj)
    sd->xy_frozen = 0;
 }
 
-void
+EAPI void
 e_icon_canvas_viewport_set(Evas_Object *obj, Evas_Object *viewport)
 {
    E_Smart_Data *sd;
@@ -422,7 +423,7 @@ e_icon_canvas_viewport_set(Evas_Object *obj, Evas_Object *viewport)
    if (sd->frozen <= 0) _e_icon_canvas_reconfigure(sd);
 }
 
-Evas_Object *
+EAPI Evas_Object *
 e_icon_canvas_viewport_get(Evas_Object *obj)
 {
    E_Smart_Data *sd;

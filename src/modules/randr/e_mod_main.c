@@ -26,13 +26,13 @@ static void _randr_save_res(Randr_Resolution *res);
 static E_Config_DD *conf_edd;
 static E_Config_DD *conf_manager_edd;
 
-E_Module_Api e_modapi = 
+EAPI E_Module_Api e_modapi = 
 {
    E_MODULE_API_VERSION,
    "RandR"
 };
 
-void *
+EAPI void *
 e_modapi_init(E_Module *m)
 {
    Randr *e;
@@ -43,7 +43,7 @@ e_modapi_init(E_Module *m)
    return e;
 }
 
-int
+EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    Randr *e;
@@ -55,7 +55,7 @@ e_modapi_shutdown(E_Module *m)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_save(E_Module *m)
 {
    Randr *e;
@@ -66,7 +66,7 @@ e_modapi_save(E_Module *m)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_info(E_Module *m)
 {
    /*
@@ -78,7 +78,7 @@ e_modapi_info(E_Module *m)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_about(E_Module *m)
 {
    e_module_dialog_show(_("Enlightenment Randr Module"), 

@@ -57,20 +57,20 @@ static Ecore_Timer *scroll_timer = NULL;
 static Ecore_Timer *animator = NULL;
 
 /* externally accessible functions */
-int
+EAPI int
 e_winlist_init(void)
 {
    return 1;
 }
 
-int
+EAPI int
 e_winlist_shutdown(void)
 {
    e_winlist_hide();
    return 1;
 }
 
-int
+EAPI int
 e_winlist_show(E_Zone *zone)
 {
    int x, y, w, h;
@@ -175,7 +175,7 @@ e_winlist_show(E_Zone *zone)
    return 1;
 }
 
-void
+EAPI void
 e_winlist_hide(void)
 {
    E_Border *bd = NULL;
@@ -270,14 +270,14 @@ e_winlist_hide(void)
      }
 }
 
-int
+EAPI int
 e_winlist_active_get(void)
 {
    if (winlist) return 1;
    return 0;
 }
 
-void
+EAPI void
 e_winlist_next(void)
 {
    if (!winlist) return;
@@ -301,7 +301,7 @@ e_winlist_next(void)
    _e_winlist_activate();
 }
 
-void
+EAPI void
 e_winlist_prev(void)
 {
    if (!winlist) return;
@@ -325,7 +325,7 @@ e_winlist_prev(void)
    _e_winlist_activate();
 }
 
-void
+EAPI void
 e_winlist_modifiers_set(int mod)
 {
    if (!winlist) return;

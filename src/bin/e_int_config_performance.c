@@ -21,7 +21,7 @@ struct _CFData
    int edje_collection_cache;
 };
 
-E_Config_Dialog *
+EAPI E_Config_Dialog *
 e_int_config_performance(E_Container *con) 
 {
    E_Config_Dialog *cfd;

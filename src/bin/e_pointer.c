@@ -25,7 +25,7 @@ static void _e_pointer_free(E_Pointer *p);
 static int  _e_pointer_type_set(E_Pointer *p, const char *type);
 
 /* externally accessible functions */
-E_Pointer *
+EAPI E_Pointer *
 e_pointer_window_new(Ecore_X_Window win)
 {
    E_Pointer *p = NULL;
@@ -132,7 +132,7 @@ e_pointer_window_new(Ecore_X_Window win)
    return p;
 }
 
-void
+EAPI void
 e_pointers_size_set(int size)
 {
    Evas_List *l;
@@ -175,7 +175,7 @@ e_pointers_size_set(int size)
      }
 }
 
-void
+EAPI void
 e_pointer_type_push(E_Pointer *p, void *obj, const char *type)
 {
    E_Pointer_Stack *stack;
@@ -202,7 +202,7 @@ e_pointer_type_push(E_Pointer *p, void *obj, const char *type)
      }
 }
 
-void
+EAPI void
 e_pointer_type_pop(E_Pointer *p, void *obj, const char *type)
 {
    Evas_List *l;
@@ -257,7 +257,7 @@ e_pointer_type_pop(E_Pointer *p, void *obj, const char *type)
    p->e_cursor = e_config->use_e_cursor;
 }
 
-void
+EAPI void
 e_pointer_idler_before(void)
 {
    Evas_List *l;

@@ -51,14 +51,14 @@ static void _e_smart_init(void);
 static Evas_Smart *_e_smart = NULL;
 
 /* externally accessible functions */
-Evas_Object *
+EAPI Evas_Object *
 e_ilist_add(Evas *evas)
 {
    _e_smart_init();
    return evas_object_smart_add(evas, _e_smart);
 }
 
-void
+EAPI void
 e_ilist_icon_size_set(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 {
    Evas_List *l;
@@ -90,7 +90,7 @@ e_ilist_icon_size_set(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
      }
 }
 
-void
+EAPI void
 e_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label,  void (*func) (void *data, void *data2), void *data, void *data2)
 {
    E_Smart_Item *si;
@@ -133,7 +133,7 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label,  void (*func) (
    evas_object_show(si->base_obj);
 }
 
-void
+EAPI void
 e_ilist_selected_set(Evas_Object *obj, int n)
 {
    E_Smart_Item *si;
@@ -158,7 +158,7 @@ e_ilist_selected_set(Evas_Object *obj, int n)
      }
 }
 
-int
+EAPI int
 e_ilist_selected_get(Evas_Object *obj)
 {
    API_ENTRY return -1;
@@ -166,7 +166,7 @@ e_ilist_selected_get(Evas_Object *obj)
    return sd->selected;
 }
 
-const char *
+EAPI const char *
 e_ilist_selected_label_get(Evas_Object *obj)
 {
    E_Smart_Item *si;
@@ -178,7 +178,7 @@ e_ilist_selected_label_get(Evas_Object *obj)
    return NULL;
 }
 
-void *
+EAPI void *
 e_ilist_selected_data_get(Evas_Object *obj)
 {
    E_Smart_Item *si;
@@ -190,7 +190,7 @@ e_ilist_selected_data_get(Evas_Object *obj)
    return NULL;
 }
 
-void *
+EAPI void *
 e_ilist_selected_data2_get(Evas_Object *obj)
 {
    E_Smart_Item *si;
@@ -202,7 +202,7 @@ e_ilist_selected_data2_get(Evas_Object *obj)
    return NULL;
 }
 
-void
+EAPI void
 e_ilist_selected_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h)
 {
    E_Smart_Item *si;
@@ -217,28 +217,28 @@ e_ilist_selected_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y, Ev
      }
 }
 
-void
+EAPI void
 e_ilist_min_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 {
    API_ENTRY return;
    e_box_min_size_get(sd->box_obj, w, h);
 }
 
-void
+EAPI void
 e_ilist_selector_set(Evas_Object *obj, int selector)
 {
    API_ENTRY return;
    sd->selector = selector;
 }
 
-int
+EAPI int
 e_ilist_selector_get(Evas_Object *obj)
 {
    API_ENTRY return 0;
    return sd->selector;
 }
 
-void
+EAPI void
 e_ilist_remove_num(Evas_Object *obj, int n)
 {
    E_Smart_Item *si;
@@ -255,7 +255,7 @@ e_ilist_remove_num(Evas_Object *obj, int n)
    }
 }
 
-void
+EAPI void
 e_ilist_remove_label(Evas_Object *obj, char *label)
 {
    E_Smart_Item *si;

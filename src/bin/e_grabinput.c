@@ -14,19 +14,19 @@ static E_Focus_Method focus_method = E_FOCUS_METHOD_NO_INPUT;
 static double last_focus_time = 0.0;
 
 /* externally accessible functions */
-int
+EAPI int
 e_grabinput_init(void)
 {
    return 1;
 }
 
-int
+EAPI int
 e_grabinput_shutdown(void)
 {
    return 1;
 }
 
-void
+EAPI void
 e_grabinput_get(Ecore_X_Window mouse_win, int confine_mouse, Ecore_X_Window key_win)
 {
    if (grab_mouse_win)
@@ -55,7 +55,7 @@ e_grabinput_get(Ecore_X_Window mouse_win, int confine_mouse, Ecore_X_Window key_
      }
 }
 
-void
+EAPI void
 e_grabinput_release(Ecore_X_Window mouse_win, Ecore_X_Window key_win)
 {
    if (mouse_win == grab_mouse_win)
@@ -76,7 +76,7 @@ e_grabinput_release(Ecore_X_Window mouse_win, Ecore_X_Window key_win)
      }
 }
 
-void
+EAPI void
 e_grabinput_focus(Ecore_X_Window win, E_Focus_Method method)
 {
    if (grab_key_win != 0)
@@ -88,7 +88,7 @@ e_grabinput_focus(Ecore_X_Window win, E_Focus_Method method)
      _e_grabinput_focus(win, method);
 }
 
-double
+EAPI double
 e_grabinput_last_focus_time_get(void)
 {
    return last_focus_time;

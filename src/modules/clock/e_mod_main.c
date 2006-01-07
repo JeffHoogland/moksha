@@ -36,13 +36,13 @@ const int
   ;
 
 /* public module routines. all modules must have these */
-E_Module_Api e_modapi =
+EAPI E_Module_Api e_modapi =
 {
    E_MODULE_API_VERSION,
      "Clock"
 };
 
-void *
+EAPI void *
 e_modapi_init(E_Module *module)
 {
    Clock *clock;
@@ -53,7 +53,7 @@ e_modapi_init(E_Module *module)
    return clock;
 }
 
-int
+EAPI int
 e_modapi_shutdown(E_Module *module)
 {
    Clock *clock;
@@ -69,7 +69,7 @@ e_modapi_shutdown(E_Module *module)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_save(E_Module *module)
 {
    Clock *clock;
@@ -79,7 +79,7 @@ e_modapi_save(E_Module *module)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_info(E_Module *module)
 {
    char buf[4096];
@@ -89,7 +89,7 @@ e_modapi_info(E_Module *module)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_about(E_Module *module)
 {
    e_module_dialog_show(_("Enlightenment Clock Module"),
@@ -97,7 +97,7 @@ e_modapi_about(E_Module *module)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_config(E_Module *m)
 {
    Clock *e;

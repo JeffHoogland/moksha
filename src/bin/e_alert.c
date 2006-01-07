@@ -24,7 +24,7 @@ static Window       win = 0, b1 = 0, b2 = 0, b3 = 0;
 static int          ww = 600, hh = 440;   
 
 /* externally accessible functions */
-int
+EAPI int
 e_alert_init(const char *disp)
 {
    XGCValues            gcv;
@@ -72,7 +72,7 @@ e_alert_init(const char *disp)
    return 1;
 }
 
-int
+EAPI int
 e_alert_shutdown(void)
 {
    XDestroyWindow(dd, win);
@@ -90,7 +90,7 @@ e_alert_shutdown(void)
    return 1;
 }
 
-void
+EAPI void
 e_alert_show(const char *text)
 {
    int                  w, i, j, k;

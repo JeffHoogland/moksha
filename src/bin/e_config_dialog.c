@@ -17,7 +17,7 @@ static void _e_config_dialog_cb_changed(void *data, Evas_Object *obj);
 
 /* externally accessible functions */
 
-E_Config_Dialog *
+EAPI E_Config_Dialog *
 e_config_dialog_new(E_Container *con, char *title, char *icon, int icon_size, E_Config_Dialog_View *view, void *data)
 {
    E_Config_Dialog *cfd;

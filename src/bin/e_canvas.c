@@ -11,7 +11,7 @@ static Evas_List *_e_canvases = NULL;
 static Ecore_Timer *_e_canvas_cache_flush_timer = NULL;
 
 /* externally accessible functions */
-void
+EAPI void
 e_canvas_add(Ecore_Evas *ee)
 {
    Evas *e;
@@ -25,13 +25,13 @@ e_canvas_add(Ecore_Evas *ee)
 //   evas_image_cache_reload(e);
 }
 
-void
+EAPI void
 e_canvas_del(Ecore_Evas *ee)
 {
    _e_canvases = evas_list_remove(_e_canvases, ee);
 }
 
-int
+EAPI int
 e_canvas_engine_decide(int engine)
 {
    /* if use default - use it */
@@ -53,7 +53,7 @@ e_canvas_engine_decide(int engine)
    return engine;
 }
 
-void
+EAPI void
 e_canvas_recache(void)
 {
    Evas_List *l;
@@ -83,7 +83,7 @@ e_canvas_recache(void)
      }
 }
 
-void
+EAPI void
 e_canvas_cache_flush(void)
 {
    Evas_List *l;
@@ -102,7 +102,7 @@ e_canvas_cache_flush(void)
    edje_collection_cache_flush();
 }
 
-void
+EAPI void
 e_canvas_cache_reload(void)
 {
    Evas_List *l;
@@ -118,7 +118,7 @@ e_canvas_cache_reload(void)
      }
 }
 
-Ecore_Evas *
+EAPI Ecore_Evas *
 e_canvas_new(int engine_hint, Ecore_X_Window win, int x, int y, int w, int h,
 	     int direct_resize, int override, Ecore_X_Window *win_ret,
 	     Ecore_X_Window *subwin_ret)

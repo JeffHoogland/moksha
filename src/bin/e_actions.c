@@ -1346,7 +1346,7 @@ static Evas_List *action_names = NULL;
 
 /* externally accessible functions */
 
-int
+EAPI int
 e_actions_init(void)
 {
    E_Action *act;
@@ -1438,7 +1438,7 @@ e_actions_init(void)
    return 1;
 }
 
-int
+EAPI int
 e_actions_shutdown(void)
 {
    action_names = evas_list_free(action_names);
@@ -1449,13 +1449,13 @@ e_actions_shutdown(void)
    return 1;
 }
 
-Evas_List *
+EAPI Evas_List *
 e_action_name_list(void)
 {
    return action_names;
 }
 
-E_Action *
+EAPI E_Action *
 e_action_add(const char *name)
 {
    E_Action *act;
@@ -1472,7 +1472,7 @@ e_action_add(const char *name)
    return act;
 }
 
-E_Action *
+EAPI E_Action *
 e_action_find(const char *name)
 {
    E_Action *act;

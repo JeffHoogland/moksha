@@ -68,14 +68,14 @@ static void _e_smart_init(void);
 static Evas_Smart *_e_smart = NULL;
 
 /* externally accessible functions */
-Evas_Object *
+EAPI Evas_Object *
 e_scrollframe_add(Evas *evas)
 {
    _e_smart_init();
    return evas_object_smart_add(evas, _e_smart);
 }
 
-void
+EAPI void
 e_scrollframe_child_set(Evas_Object *obj, Evas_Object *child)
 {
    Evas_Coord w, h;
@@ -114,7 +114,7 @@ e_scrollframe_child_set(Evas_Object *obj, Evas_Object *child)
    _e_smart_scrollbar_reset(sd);
 }
 
-void
+EAPI void
 e_scrollframe_extern_pan_set(Evas_Object *obj, Evas_Object *pan,
 			     void (*pan_set) (Evas_Object *obj, Evas_Coord x, Evas_Coord y),
 			     void (*pan_get) (Evas_Object *obj, Evas_Coord *x, Evas_Coord *y),
@@ -157,7 +157,7 @@ e_scrollframe_extern_pan_set(Evas_Object *obj, Evas_Object *pan,
    evas_object_show(sd->pan_obj);
 }
 
-void
+EAPI void
 e_scrollframe_custom_theme_set(Evas_Object *obj, char *custom_category, char *custom_group)
 {
    API_ENTRY return;
@@ -165,7 +165,7 @@ e_scrollframe_custom_theme_set(Evas_Object *obj, char *custom_category, char *cu
    e_theme_edje_object_set(sd->edje_obj, custom_category, custom_group);
 }
 
-void
+EAPI void
 e_scrollframe_child_pos_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 {
    Evas_Coord mx = 0, my = 0;
@@ -186,14 +186,14 @@ e_scrollframe_child_pos_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    sd->pan_func.set(sd->pan_obj, x, y);
 }
 
-void
+EAPI void
 e_scrollframe_child_pos_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
 {
    API_ENTRY return;
    sd->pan_func.get(sd->pan_obj, x, y);
 }
 
-void
+EAPI void
 e_scrollframe_child_region_show(Evas_Object *obj, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h)
 {
    Evas_Coord mx = 0, my = 0, cw = 0, ch = 0, px = 0, py = 0, nx, ny;
@@ -221,7 +221,7 @@ e_scrollframe_child_region_show(Evas_Object *obj, Evas_Coord x, Evas_Coord y, Ev
    e_scrollframe_child_pos_set(obj, nx, ny);
 }
 
-void
+EAPI void
 e_scrollframe_child_viewport_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 {
    API_ENTRY return;
@@ -229,7 +229,7 @@ e_scrollframe_child_viewport_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coor
    evas_object_geometry_get(sd->pan_obj, NULL, NULL, w, h);
 }
 
-void
+EAPI void
 e_scrollframe_step_size_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 {
    API_ENTRY return;
@@ -240,7 +240,7 @@ e_scrollframe_step_size_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    _e_smart_scrollbar_size_adjust(sd);
 }
 
-void
+EAPI void
 e_scrollframe_step_size_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
 {
    API_ENTRY return;
@@ -248,7 +248,7 @@ e_scrollframe_step_size_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
    if (y) *y = sd->step.y;
 }
 
-void
+EAPI void
 e_scrollframe_page_size_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 {
    API_ENTRY return;
@@ -257,7 +257,7 @@ e_scrollframe_page_size_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    _e_smart_scrollbar_size_adjust(sd);
 }
 
-void
+EAPI void
 e_scrollframe_page_size_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
 {
    API_ENTRY return;
@@ -265,7 +265,7 @@ e_scrollframe_page_size_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
    if (y) *y = sd->page.y;
 }
 
-void
+EAPI void
 e_scrollframe_policy_set(Evas_Object *obj, E_Scrollframe_Policy hbar, E_Scrollframe_Policy vbar)
 {
    API_ENTRY return;
@@ -275,7 +275,7 @@ e_scrollframe_policy_set(Evas_Object *obj, E_Scrollframe_Policy hbar, E_Scrollfr
    _e_smart_scrollbar_size_adjust(sd);
 }
 
-void
+EAPI void
 e_scrollframe_policy_get(Evas_Object *obj, E_Scrollframe_Policy *hbar, E_Scrollframe_Policy *vbar)
 {
    API_ENTRY return;
@@ -283,7 +283,7 @@ e_scrollframe_policy_get(Evas_Object *obj, E_Scrollframe_Policy *hbar, E_Scrollf
    if (vbar) *vbar = sd->vbar_flags;
 }
 
-Evas_Object *
+EAPI Evas_Object *
 e_scrollframe_edje_object_get(Evas_Object *obj)
 {
    API_ENTRY return NULL;

@@ -9,20 +9,20 @@
 static Evas_Hash *store = NULL;
 
 /* externally accessible functions */
-void
+EAPI void
 e_datastore_set(char *key, void *data)
 {
    store = evas_hash_del(store, key, NULL);
    store = evas_hash_add(store, key, data);
 }
 
-void *
+EAPI void *
 e_datastore_get(char *key)
 {
    return evas_hash_find(store, key);
 }
 
-void
+EAPI void
 e_datastore_del(char *key)
 {
    store = evas_hash_del(store, key, NULL);

@@ -9,7 +9,7 @@ static int _e_ipc_cb_client_data(void *data, int type, void *event);
 static Ecore_Ipc_Server *_e_ipc_server = NULL;
 
 /* externally accessible functions */
-int
+EAPI int
 e_ipc_init(void)
 {
    char buf[1024];
@@ -28,7 +28,7 @@ e_ipc_init(void)
    return 1;
 }
 
-void
+EAPI void
 e_ipc_shutdown(void)
 {
    e_ipc_codec_shutdown();

@@ -52,14 +52,14 @@ static void _e_file_selector_scroll_child_size_get(Evas_Object *obj, Evas_Coord 
 static Evas_Smart *_e_smart = NULL;
 
 /* externally accessible functions */
-Evas_Object *
+EAPI Evas_Object *
 e_file_selector_add(Evas *evas)
 {
    _e_smart_init();
    return evas_object_smart_add(evas, _e_smart);
 }
 
-void
+EAPI void
 e_file_selector_view_set(Evas_Object *obj, int type)
 {
    API_ENTRY return;
@@ -74,14 +74,14 @@ e_file_selector_view_set(Evas_Object *obj, int type)
      }   
 }
 
-int
+EAPI int
 e_file_selector_view_get(Evas_Object *obj)
 {
    API_ENTRY return 0;
    return sd->view;
 }
 
-void
+EAPI void
 e_file_selector_callback_add(Evas_Object *obj, void (*func) (Evas_Object *obj, char *file, void *data), void (*func_hilite) (Evas_Object *obj, char *file, void *data), void *data)
 {
    API_ENTRY return;

@@ -9,7 +9,7 @@
 #define DEF_MENUCLICK 0.25
 #endif
 
-E_Config *e_config = NULL;
+EAPI E_Config *e_config = NULL;
 
 /* local subsystem functions */
 static void _e_config_save_cb(void *data);
@@ -36,7 +36,7 @@ static E_Config_DD *_e_config_desktop_name_edd = NULL;
 static E_Config_DD *_e_config_remember_edd = NULL;
 
 /* externally accessible functions */
-int
+EAPI int
 e_config_init(void)
 {
    _e_config_profile = getenv("CONF_PROFILE");
@@ -1515,7 +1515,7 @@ e_config_init(void)
    return 1;
 }
 
-int
+EAPI int
 e_config_shutdown(void)
 {
    E_FREE(_e_config_profile);
@@ -1535,7 +1535,7 @@ e_config_shutdown(void)
    return 1;
 }
 
-E_Config_DD *
+EAPI E_Config_DD *
 e_config_descriptor_new(const char *name, int size)
 {
    Eet_Data_Descriptor_Class eddc;
@@ -1557,7 +1557,7 @@ e_config_descriptor_new(const char *name, int size)
    return (E_Config_DD *)eet_data_descriptor2_new(&eddc);
 }
 
-int
+EAPI int
 e_config_save(void)
 {
    if (_e_config_save_job)
@@ -1569,7 +1569,7 @@ e_config_save(void)
    return e_config_domain_save("e", _e_config_edd, e_config);
 }
 
-void
+EAPI void
 e_config_save_flush(void)
 {
    if (_e_config_save_job)
@@ -1580,26 +1580,27 @@ e_config_save_flush(void)
      }
 }
 
-void
+EAPI void
 e_config_save_queue(void)
 {
    if (_e_config_save_job) ecore_job_del(_e_config_save_job);
    _e_config_save_job = ecore_job_add(_e_config_save_cb, NULL);
 }
 
-char *
+EAPI char *
 e_config_profile_get(void)
 {
    return _e_config_profile;
 }
 
-void e_config_profile_set(char *prof)
+EAPI void
+e_config_profile_set(char *prof)
 {
    E_FREE(_e_config_profile);
    _e_config_profile = strdup(prof);
 }
 
-Evas_List *
+EAPI Evas_List *
 e_config_profile_list(void)
 {
    Ecore_List *files;
@@ -1628,7 +1629,7 @@ e_config_profile_list(void)
    return flist;
 }
 
-void
+EAPI void
 e_config_profile_add(char *prof)
 {
    char buf[4096];
@@ -1641,7 +1642,7 @@ e_config_profile_add(char *prof)
    E_FREE(homedir);
 }
 
-void
+EAPI void
 e_config_profile_del(char *prof)
 {
    Ecore_List *files;
@@ -1670,7 +1671,7 @@ e_config_profile_del(char *prof)
    E_FREE(homedir);
 }
 
-Evas_List *
+EAPI Evas_List *
 e_config_engine_list(void)
 {
    Evas_List *l = NULL;
@@ -1684,19 +1685,19 @@ e_config_engine_list(void)
    return l;
 }
 
-void
+EAPI void
 e_config_save_block_set(int block)
 {
   _e_config_save_block = block;
 }
 
-int
+EAPI int
 e_config_save_block_get(void)
 {
    return _e_config_save_block;
 }
 
-void *
+EAPI void *
 e_config_domain_load(char *domain, E_Config_DD *edd)
 {
    Eet_File *ef;
@@ -1723,7 +1724,7 @@ e_config_domain_load(char *domain, E_Config_DD *edd)
    return data;
 }
 
-int
+EAPI int
 e_config_profile_save(void)
 {
    Eet_File *ef;
@@ -1747,7 +1748,7 @@ e_config_profile_save(void)
    return ok;
 }
 
-int
+EAPI int
 e_config_domain_save(char *domain, E_Config_DD *edd, void *data)
 {
    Eet_File *ef;
@@ -1773,7 +1774,7 @@ e_config_domain_save(char *domain, E_Config_DD *edd, void *data)
    return ok;
 }
 
-E_Config_Binding_Mouse *
+EAPI E_Config_Binding_Mouse *
 e_config_binding_mouse_match(E_Config_Binding_Mouse *eb_in)
 {
    Evas_List *l;
@@ -1796,7 +1797,7 @@ e_config_binding_mouse_match(E_Config_Binding_Mouse *eb_in)
    return NULL;
 }
 
-E_Config_Binding_Key *
+EAPI E_Config_Binding_Key *
 e_config_binding_key_match(E_Config_Binding_Key *eb_in)
 {
    Evas_List *l;
@@ -1820,7 +1821,7 @@ e_config_binding_key_match(E_Config_Binding_Key *eb_in)
    return NULL;
 }
 
-E_Config_Binding_Signal *
+EAPI E_Config_Binding_Signal *
 e_config_binding_signal_match(E_Config_Binding_Signal *eb_in)
 {
    Evas_List *l;
@@ -1846,7 +1847,7 @@ e_config_binding_signal_match(E_Config_Binding_Signal *eb_in)
    return NULL;
 }
 
-E_Config_Binding_Wheel *
+EAPI E_Config_Binding_Wheel *
 e_config_binding_wheel_match(E_Config_Binding_Wheel *eb_in)
 {
    Evas_List *l;

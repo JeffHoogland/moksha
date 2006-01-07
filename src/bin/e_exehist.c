@@ -35,7 +35,7 @@ static E_Exehist *_e_exehist = NULL;
 static Ecore_Timer *_e_exehist_unload_timer = NULL;
 
 /* externally accessible functions */
-int
+EAPI int
 e_exehist_init(void)
 {
    _e_exehist_config_item_edd = E_CONFIG_DD_NEW("E_Exehist_Item", E_Exehist_Item);
@@ -56,7 +56,7 @@ e_exehist_init(void)
    return 1;
 }
 
-int
+EAPI int
 e_exehist_shutdown(void)
 {
    _e_exehist_unload();
@@ -65,7 +65,7 @@ e_exehist_shutdown(void)
    return 1;
 }
 
-void
+EAPI void
 e_exehist_add(const char *launch_method, const char *exe)
 {
    E_Exehist_Item *ei;
@@ -83,7 +83,7 @@ e_exehist_add(const char *launch_method, const char *exe)
    _e_exehist_unload_queue();
 }
 
-void
+EAPI void
 e_exehist_clear(void)
 {
    _e_exehist_load();
@@ -93,7 +93,7 @@ e_exehist_clear(void)
    _e_exehist_unload_queue();
 }
 
-int
+EAPI int
 e_exehist_popularity_get(const char *exe)
 {
    Evas_List *l;
@@ -111,7 +111,7 @@ e_exehist_popularity_get(const char *exe)
    return count;
 }
 
-double
+EAPI double
 e_exehist_newest_run_get(const char *exe)
 {
    Evas_List *l;

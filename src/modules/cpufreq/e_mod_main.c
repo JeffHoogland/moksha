@@ -56,13 +56,13 @@ static E_Config_DD *conf_face_edd;
 static int cpufreq_count;
 
 /* public module routines */
-E_Module_Api e_modapi = 
+EAPI E_Module_Api e_modapi = 
 {
    E_MODULE_API_VERSION,
    "Cpufreq"
 };
 
-void *
+EAPI void *
 e_modapi_init(E_Module *module)
 {
    Cpufreq *freq;
@@ -72,7 +72,7 @@ e_modapi_init(E_Module *module)
    return freq;
 }
 
-int
+EAPI int
 e_modapi_shutdown(E_Module *module)
 {
    Cpufreq *cpufreq;
@@ -87,7 +87,7 @@ e_modapi_shutdown(E_Module *module)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_save(E_Module *module)
 {
    Cpufreq *e;
@@ -97,7 +97,7 @@ e_modapi_save(E_Module *module)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_info(E_Module *module)
 {
    char buf[4096];
@@ -107,7 +107,7 @@ e_modapi_info(E_Module *module)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_about(E_Module *module)
 {
    e_module_dialog_show(_("CPU Frequency Controller Module"), 

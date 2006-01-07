@@ -14,7 +14,7 @@ static void _e_wid_del_hook(Evas_Object *obj);
 /* local subsystem functions */
 
 /* externally accessible functions */
-Evas_Object *
+EAPI Evas_Object *
 e_widget_frametable_add(Evas *evas, char *label, int homogenous)
 {
    Evas_Object *obj, *o;
@@ -49,7 +49,7 @@ e_widget_frametable_add(Evas *evas, char *label, int homogenous)
    return obj;
 }
 
-void
+EAPI void
 e_widget_frametable_object_append(Evas_Object *obj, Evas_Object *sobj, int col, int row, int colspan, int rowspan, int fill_w, int fill_h, int expand_w, int expand_h)
 {
    E_Widget_Data *wd;

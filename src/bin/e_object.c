@@ -30,7 +30,7 @@ static sigjmp_buf _e_object_segv_buf;
 #endif
 
 /* externally accessible functions */
-void *
+EAPI void *
 e_object_alloc(int size, int type, E_Object_Cleanup_Func cleanup_func)
 {
    E_Object *obj;
@@ -44,7 +44,7 @@ e_object_alloc(int size, int type, E_Object_Cleanup_Func cleanup_func)
    return obj;
 }
 
-void
+EAPI void
 e_object_del(E_Object *obj)
 {
    E_OBJECT_CHECK(obj);
@@ -55,28 +55,28 @@ e_object_del(E_Object *obj)
    e_object_unref(obj);
 }
 
-int
+EAPI int
 e_object_is_del(E_Object *obj)
 {
    E_OBJECT_CHECK_RETURN(obj, 1);
    return obj->deleted;
 }
 
-void
+EAPI void
 e_object_del_func_set(E_Object *obj, E_Object_Cleanup_Func del_func)
 {
    E_OBJECT_CHECK(obj);
    obj->del_func = del_func;
 }
 
-void
+EAPI void
 e_object_type_set(E_Object *obj, int type)
 {
    E_OBJECT_CHECK(obj);
    obj->type = type;
 }
 
-void
+EAPI void
 e_object_free(E_Object *obj)
 {
    E_OBJECT_CHECK(obj);
@@ -92,7 +92,7 @@ e_object_free(E_Object *obj)
    obj->cleanup_func(obj);
 }
 
-int
+EAPI int
 e_object_ref(E_Object *obj)
 {
    E_OBJECT_CHECK_RETURN(obj, -1);
@@ -100,7 +100,7 @@ e_object_ref(E_Object *obj)
    return obj->references;
 }
 
-int
+EAPI int
 e_object_unref(E_Object *obj)
 {
    int ref;
@@ -112,14 +112,14 @@ e_object_unref(E_Object *obj)
    return ref;
 }
 
-int
+EAPI int
 e_object_ref_get(E_Object *obj)
 {
    E_OBJECT_CHECK_RETURN(obj, 0);
    return obj->references;
 }
 
-int
+EAPI int
 e_object_error(E_Object *obj)
 {
 #ifdef OBJECT_PARANOIA_CHECK   
@@ -231,28 +231,28 @@ e_object_error(E_Object *obj)
 #endif   
 }
 
-void
+EAPI void
 e_object_data_set(E_Object *obj, void *data)
 {
    E_OBJECT_CHECK(obj);
    obj->data = data;
 }
 
-void *
+EAPI void *
 e_object_data_get(E_Object *obj)
 {
    E_OBJECT_CHECK_RETURN(obj, NULL);
    return obj->data;
 }
 
-void
+EAPI void
 e_object_free_attach_func_set(E_Object *obj, void (*func) (void *obj))
 {
    E_OBJECT_CHECK(obj);
    obj->free_att_func = func;
 }
 
-void
+EAPI void
 e_object_del_attach_func_set(E_Object *obj, void (*func) (void *obj))
 {
    E_OBJECT_CHECK(obj);

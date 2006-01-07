@@ -3,7 +3,7 @@
  */
 #include "e.h"
 
-void
+EAPI void
 e_place_zone_region_smart_cleanup(E_Zone *zone)
 {
    E_Desk *desk;
@@ -64,7 +64,7 @@ _e_place_cb_sort_cmp(const void *v1, const void *v2)
    return (*((int *)v1)) - (*((int *)v2));
 }
 
-int
+EAPI int
 e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w, int h, int *rx, int *ry)
 {
    int                 a_w = 0, a_h = 0, a_alloc_w = 0, a_alloc_h = 0;
@@ -450,7 +450,7 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
    return 1;
 }
 
-int
+EAPI int
 e_place_zone_cursor(E_Zone *zone, int x, int y, int w, int h, int it, int *rx, int *ry)
 {
    int cursor_x = 0, cursor_y = 0;
@@ -480,7 +480,7 @@ e_place_zone_cursor(E_Zone *zone, int x, int y, int w, int h, int it, int *rx, i
    return 1;
 }
 
-int
+EAPI int
 e_place_zone_manual(E_Zone *zone, int w, int h, int *rx, int *ry)
 {
    int cursor_x = 0, cursor_y = 0;

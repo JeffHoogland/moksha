@@ -12,7 +12,7 @@ static int obj_y = 0;
 static int obj_w = 0;
 static int obj_h = 0;
 
-void
+EAPI void
 e_resize_begin(E_Zone *zone, int w, int h)
 {
    Evas_Coord ew, eh;
@@ -55,7 +55,7 @@ e_resize_begin(E_Zone *zone, int w, int h)
    visible = 1;
 }
 
-void
+EAPI void
 e_resize_end(void)
 {
    if (e_config->resize_info_visible)
@@ -75,7 +75,7 @@ e_resize_end(void)
    visible = 0;
 }
 
-void
+EAPI void
 e_resize_update(int w, int h)
 {
    char buf[40];
@@ -91,7 +91,7 @@ e_resize_update(int w, int h)
    edje_object_part_text_set(_obj, "text", buf);
 }
 
-void
+EAPI void
 e_move_begin(E_Zone *zone, int x, int y)
 {
    Evas_Coord ew, eh;
@@ -132,7 +132,7 @@ e_move_begin(E_Zone *zone, int x, int y)
 //   visible = 1;
 }
 
-void
+EAPI void
 e_move_end(void)
 {
    if (e_config->move_info_visible)
@@ -152,7 +152,7 @@ e_move_end(void)
    visible = 0;
 }
 
-void
+EAPI void
 e_move_update(int x, int y)
 {
    char buf[40];
@@ -168,7 +168,7 @@ e_move_update(int x, int y)
    edje_object_part_text_set(_obj, "text", buf);
 }
 
-void
+EAPI void
 e_move_resize_object_coords_set(int x, int y, int w, int h)
 {
    obj_x = x;

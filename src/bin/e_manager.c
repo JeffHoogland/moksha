@@ -44,13 +44,13 @@ static Evas_List *managers = NULL;
 static Evas_Hash *frame_extents = NULL;
     
 /* externally accessible functions */
-int
+EAPI int
 e_manager_init(void)
 {
    return 1;
 }
 
-int
+EAPI int
 e_manager_shutdown(void)
 {
    Evas_List *l, *tmp;
@@ -69,13 +69,13 @@ e_manager_shutdown(void)
    return 1;
 }
 
-Evas_List *
+EAPI Evas_List *
 e_manager_list(void)
 {
    return managers;
 }
 
-E_Manager *
+EAPI E_Manager *
 e_manager_new(Ecore_X_Window root, int num)
 {
    E_Manager *man;
@@ -127,7 +127,7 @@ e_manager_new(Ecore_X_Window root, int num)
    return man;
 }
 
-void
+EAPI void
 e_manager_manage_windows(E_Manager *man)
 {
    Ecore_X_Window *windows;
@@ -214,7 +214,7 @@ e_manager_manage_windows(E_Manager *man)
      }
 }
 
-void
+EAPI void
 e_manager_show(E_Manager *man)
 {
    Evas_List *l;
@@ -248,7 +248,7 @@ e_manager_show(E_Manager *man)
    man->visible = 1;
 }
 
-void
+EAPI void
 e_manager_hide(E_Manager *man)
 {
    Evas_List *l;
@@ -268,7 +268,7 @@ e_manager_hide(E_Manager *man)
    man->visible = 0; 
 }
 
-void
+EAPI void
 e_manager_move(E_Manager *man, int x, int y)
 {
    E_OBJECT_CHECK(man);
@@ -282,7 +282,7 @@ e_manager_move(E_Manager *man, int x, int y)
      }
 }
 
-void
+EAPI void
 e_manager_resize(E_Manager *man, int w, int h)
 {
    Evas_List *l;
@@ -306,7 +306,7 @@ e_manager_resize(E_Manager *man, int w, int h)
    ecore_x_netwm_desk_size_set(man->root, man->w, man->h);
 }
 
-void
+EAPI void
 e_manager_move_resize(E_Manager *man, int x, int y, int w, int h)
 {
    Evas_List *l;
@@ -332,7 +332,7 @@ e_manager_move_resize(E_Manager *man, int x, int y, int w, int h)
      }
 }
 
-void
+EAPI void
 e_manager_raise(E_Manager *man)
 {
    E_OBJECT_CHECK(man);
@@ -354,7 +354,7 @@ e_manager_raise(E_Manager *man)
      }
 }
 
-void
+EAPI void
 e_manager_lower(E_Manager *man)
 {
    E_OBJECT_CHECK(man);
@@ -363,7 +363,7 @@ e_manager_lower(E_Manager *man)
      ecore_x_window_lower(man->win);
 }
 
-E_Manager *
+EAPI E_Manager *
 e_manager_current_get(void)
 {
    Evas_List *l;
@@ -381,7 +381,7 @@ e_manager_current_get(void)
    return managers->data;
 }
 
-E_Manager *
+EAPI E_Manager *
 e_manager_number_get(int num)
 {
    Evas_List *l;
@@ -397,7 +397,7 @@ e_manager_number_get(int num)
    return NULL;
 }
 
-void
+EAPI void
 e_managers_keys_grab(void)
 {
    Evas_List *l;
@@ -411,7 +411,7 @@ e_managers_keys_grab(void)
      }
 }
 
-void
+EAPI void
 e_managers_keys_ungrab(void)
 {
    Evas_List *l;

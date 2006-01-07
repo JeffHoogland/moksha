@@ -12,7 +12,7 @@ static void _e_theme_about_cb_close(void *data, Evas_Object *obj, const char *em
 
 /* externally accessible functions */
 
-E_Theme_About *
+EAPI E_Theme_About *
 e_theme_about_new(E_Container *con)
 {
    E_Theme_About *about;
@@ -54,7 +54,7 @@ e_theme_about_new(E_Container *con)
    return about;
 }
 
-void
+EAPI void
 e_theme_about_show(E_Theme_About *about)
 {
    Evas_Coord w, h, mw, mh;

@@ -71,20 +71,20 @@ static Ecore_Timer *animator = NULL;
 #define EXEBUFLEN 2048
 
 /* externally accessible functions */
-int
+EAPI int
 e_exebuf_init(void)
 {
    return 1;
 }
 
-int
+EAPI int
 e_exebuf_shutdown(void)
 {
    e_exebuf_hide();
    return 1;
 }
 
-int
+EAPI int
 e_exebuf_show(E_Zone *zone)
 {
    Evas_Object *o;
@@ -185,7 +185,7 @@ e_exebuf_show(E_Zone *zone)
    return 1;
 }
 
-void
+EAPI void
 e_exebuf_hide(void)
 {
    if (!exebuf) return;

@@ -28,12 +28,12 @@ static void _e_container_shape_change_call(E_Container_Shape *es, E_Container_Sh
 static void _e_container_resize_handle(E_Container *con);
 static void _e_container_event_container_resize_free(void *data, void *ev);
 
-int E_EVENT_CONTAINER_RESIZE = 0;
+EAPI int E_EVENT_CONTAINER_RESIZE = 0;
 static int container_count;
 static Evas_List *handlers = NULL;
 
 /* externally accessible functions */
-int
+EAPI int
 e_container_init(void)
 {
    E_EVENT_CONTAINER_RESIZE = ecore_event_type_new();
@@ -48,7 +48,7 @@ e_container_init(void)
    return 1;
 }
 
-int
+EAPI int
 e_container_shutdown(void)
 {
    while (handlers)
@@ -59,7 +59,7 @@ e_container_shutdown(void)
    return 1;
 }
 
-E_Container *
+EAPI E_Container *
 e_container_new(E_Manager *man)
 {
    E_Container *con;
@@ -179,7 +179,7 @@ e_container_new(E_Manager *man)
    return con;
 }
         
-void
+EAPI void
 e_container_show(E_Container *con)
 {
    E_OBJECT_CHECK(con);
@@ -197,7 +197,7 @@ e_container_show(E_Container *con)
    con->visible = 1;
 }
         
-void
+EAPI void
 e_container_hide(E_Container *con)
 {
    E_OBJECT_CHECK(con);
@@ -209,7 +209,7 @@ e_container_hide(E_Container *con)
    con->visible = 0;
 }
 
-E_Container *
+EAPI E_Container *
 e_container_current_get(E_Manager *man)
 {
    Evas_List *l;
@@ -229,7 +229,7 @@ e_container_current_get(E_Manager *man)
    return (E_Container *)l->data;
 }
 
-E_Container *
+EAPI E_Container *
 e_container_number_get(E_Manager *man, int num)
 {
    Evas_List *l;
@@ -247,7 +247,7 @@ e_container_number_get(E_Manager *man, int num)
    return NULL;
 }
 
-void
+EAPI void
 e_container_move(E_Container *con, int x, int y)
 {
    E_OBJECT_CHECK(con);
@@ -260,7 +260,7 @@ e_container_move(E_Container *con, int x, int y)
    evas_object_move(con->bg_blank_object, con->x, con->y);
 }
         
-void
+EAPI void
 e_container_resize(E_Container *con, int w, int h)
 {
    E_OBJECT_CHECK(con);
@@ -275,7 +275,7 @@ e_container_resize(E_Container *con, int w, int h)
    _e_container_resize_handle(con);
 }
 
-void
+EAPI void
 e_container_move_resize(E_Container *con, int x, int y, int w, int h)
 {
    E_OBJECT_CHECK(con);
@@ -293,7 +293,7 @@ e_container_move_resize(E_Container *con, int x, int y, int w, int h)
    _e_container_resize_handle(con);
 }
 
-void
+EAPI void
 e_container_raise(E_Container *con)
 {
    E_OBJECT_CHECK(con);
@@ -310,7 +310,7 @@ e_container_raise(E_Container *con)
 #endif
 }
 
-void
+EAPI void
 e_container_lower(E_Container *con)
 {
    E_OBJECT_CHECK(con);
@@ -325,7 +325,7 @@ e_container_lower(E_Container *con)
 #endif
 }
 
-E_Zone *
+EAPI E_Zone *
 e_container_zone_at_point_get(E_Container *con, int x, int y)
 {
    Evas_List *l;
@@ -344,7 +344,7 @@ e_container_zone_at_point_get(E_Container *con, int x, int y)
    return NULL;
 }
 
-E_Zone *
+EAPI E_Zone *
 e_container_zone_number_get(E_Container *con, int num)
 {
    Evas_List *l;
@@ -362,7 +362,7 @@ e_container_zone_number_get(E_Container *con, int num)
    return NULL;
 }
 
-E_Container_Shape *
+EAPI E_Container_Shape *
 e_container_shape_add(E_Container *con)
 {
    E_Container_Shape *es;
@@ -378,7 +378,7 @@ e_container_shape_add(E_Container *con)
    return es;
 }
 
-void
+EAPI void
 e_container_shape_show(E_Container_Shape *es)
 {
    E_OBJECT_CHECK(es);
@@ -388,7 +388,7 @@ e_container_shape_show(E_Container_Shape *es)
    _e_container_shape_change_call(es, E_CONTAINER_SHAPE_SHOW);
 }
 
-void
+EAPI void
 e_container_shape_hide(E_Container_Shape *es)
 {
    E_OBJECT_CHECK(es);
@@ -398,7 +398,7 @@ e_container_shape_hide(E_Container_Shape *es)
    _e_container_shape_change_call(es, E_CONTAINER_SHAPE_HIDE);
 }
 
-void
+EAPI void
 e_container_shape_move(E_Container_Shape *es, int x, int y)
 {
    E_OBJECT_CHECK(es);
@@ -409,7 +409,7 @@ e_container_shape_move(E_Container_Shape *es, int x, int y)
    _e_container_shape_change_call(es, E_CONTAINER_SHAPE_MOVE);
 }
 
-void
+EAPI void
 e_container_shape_resize(E_Container_Shape *es, int w, int h)
 {
    E_OBJECT_CHECK(es);
@@ -422,7 +422,7 @@ e_container_shape_resize(E_Container_Shape *es, int w, int h)
    _e_container_shape_change_call(es, E_CONTAINER_SHAPE_RESIZE);
 }
 
-Evas_List *
+EAPI Evas_List *
 e_container_shape_list_get(E_Container *con)
 {
    E_OBJECT_CHECK_RETURN(con, NULL);
@@ -430,7 +430,7 @@ e_container_shape_list_get(E_Container *con)
    return con->shapes;
 }
 
-void
+EAPI void
 e_container_shape_geometry_get(E_Container_Shape *es, int *x, int *y, int *w, int *h)
 {
    E_OBJECT_CHECK(es);
@@ -441,7 +441,7 @@ e_container_shape_geometry_get(E_Container_Shape *es, int *x, int *y, int *w, in
    if (h) *h = es->h;
 }
 
-E_Container *
+EAPI E_Container *
 e_container_shape_container_get(E_Container_Shape *es)
 {
    E_OBJECT_CHECK_RETURN(es, NULL);
@@ -449,7 +449,7 @@ e_container_shape_container_get(E_Container_Shape *es)
    return es->con;
 }
 
-void
+EAPI void
 e_container_shape_change_callback_add(E_Container *con, void (*func) (void *data, E_Container_Shape *es, E_Container_Shape_Change ch), void *data)
 {
    E_Container_Shape_Callback *cb;
@@ -463,7 +463,7 @@ e_container_shape_change_callback_add(E_Container *con, void (*func) (void *data
    con->shape_change_cb = evas_list_append(con->shape_change_cb, cb);
 }
 
-void
+EAPI void
 e_container_shape_change_callback_del(E_Container *con, void (*func) (void *data, E_Container_Shape *es, E_Container_Shape_Change ch), void *data)
 {
    Evas_List *l;
@@ -485,7 +485,7 @@ e_container_shape_change_callback_del(E_Container *con, void (*func) (void *data
      }
 }
 
-Evas_List *
+EAPI Evas_List *
 e_container_shape_rects_get(E_Container_Shape *es)
 {
    E_OBJECT_CHECK_RETURN(es, NULL);
@@ -493,7 +493,7 @@ e_container_shape_rects_get(E_Container_Shape *es)
    return es->shape;
 }
 
-void
+EAPI void
 e_container_shape_rects_set(E_Container_Shape *es, Ecore_X_Rectangle *rects, int num)
 {
    Evas_List *l;
@@ -527,7 +527,7 @@ e_container_shape_rects_set(E_Container_Shape *es, Ecore_X_Rectangle *rects, int
    _e_container_shape_change_call(es, E_CONTAINER_SHAPE_RECTS);
 }
 
-void
+EAPI void
 e_container_shape_solid_rect_set(E_Container_Shape *es, int x, int y, int w, int h)
 {
    es->solid_rect.x = x;
@@ -536,7 +536,7 @@ e_container_shape_solid_rect_set(E_Container_Shape *es, int x, int y, int w, int
    es->solid_rect.h = h;
 }
 
-void
+EAPI void
 e_container_shape_solid_rect_get(E_Container_Shape *es, int *x, int *y, int *w, int *h)
 {
    if (x) *x = es->solid_rect.x;
@@ -553,7 +553,7 @@ e_container_shape_solid_rect_get(E_Container_Shape *es, int *x, int *y, int *w, 
  * 200 = fullscreen
  * 999 = internal on top windows for E
  */
-int
+EAPI int
 e_container_borders_count(E_Container *con)
 {
    /* FIXME: This could be stored and not calculated */
@@ -566,7 +566,7 @@ e_container_borders_count(E_Container *con)
    return num;
 }
 
-void
+EAPI void
 e_container_border_add(E_Border *bd)
 {
    int pos;
@@ -582,7 +582,7 @@ e_container_border_add(E_Border *bd)
       evas_list_append(bd->zone->container->layers[pos].clients, bd);
 }
 
-void
+EAPI void
 e_container_border_remove(E_Border *bd)
 {
    int i;
@@ -596,7 +596,7 @@ e_container_border_remove(E_Border *bd)
      }
 }
 
-void
+EAPI void
 e_container_window_raise(E_Container *con, Ecore_X_Window win, int layer)
 {
    int pos;
@@ -615,7 +615,7 @@ e_container_window_raise(E_Container *con, Ecore_X_Window win, int layer)
 			    con->layers[pos].win, ECORE_X_WINDOW_STACK_BELOW);
 }
 
-void
+EAPI void
 e_container_window_lower(E_Container *con, Ecore_X_Window win, int layer)
 {
    int pos;
@@ -634,7 +634,7 @@ e_container_window_lower(E_Container *con, Ecore_X_Window win, int layer)
 			    con->layers[pos].win, ECORE_X_WINDOW_STACK_ABOVE);
 }
 
-E_Border *
+EAPI E_Border *
 e_container_border_raise(E_Border *bd)
 {
    E_Border *above = NULL;
@@ -687,7 +687,7 @@ e_container_border_raise(E_Border *bd)
    return above;
 }
 
-E_Border *
+EAPI E_Border *
 e_container_border_lower(E_Border *bd)
 {
    E_Border *below = NULL;
@@ -739,7 +739,7 @@ e_container_border_lower(E_Border *bd)
    return below;
 }
 
-void
+EAPI void
 e_container_border_stack_above(E_Border *bd, E_Border *above)
 {
    int pos;
@@ -775,7 +775,7 @@ e_container_border_stack_above(E_Border *bd, E_Border *above)
       evas_list_append_relative(bd->zone->container->layers[pos].clients, bd, above);
 }
 
-void
+EAPI void
 e_container_border_stack_below(E_Border *bd, E_Border *below)
 {
    int pos;
@@ -811,7 +811,7 @@ e_container_border_stack_below(E_Border *bd, E_Border *below)
       evas_list_prepend_relative(bd->zone->container->layers[pos].clients, bd, below);
 }
 
-E_Border_List *
+EAPI E_Border_List *
 e_container_border_list_first(E_Container *con)
 {
    E_Border_List *list;
@@ -826,7 +826,7 @@ e_container_border_list_first(E_Container *con)
    return list;
 }
 
-E_Border_List *
+EAPI E_Border_List *
 e_container_border_list_last(E_Container *con)
 {
    E_Border_List *list;
@@ -846,7 +846,7 @@ e_container_border_list_last(E_Container *con)
    return list;
 }
 
-E_Border *
+EAPI E_Border *
 e_container_border_list_next(E_Border_List *list)
 {
    E_Border *bd;
@@ -861,7 +861,7 @@ e_container_border_list_next(E_Border_List *list)
    return bd;
 }
 
-E_Border *
+EAPI E_Border *
 e_container_border_list_prev(E_Border_List *list)
 {
    E_Border *bd;
@@ -880,14 +880,14 @@ e_container_border_list_prev(E_Border_List *list)
    return bd;
 }
 
-void
+EAPI void
 e_container_border_list_free(E_Border_List *list)
 {
    e_object_unref(E_OBJECT(list->container));
    free(list);
 }
 
-void
+EAPI void
 e_container_all_freeze(void)
 {
    Evas_List *managers, *l;
@@ -909,7 +909,7 @@ e_container_all_freeze(void)
      }
 }
 
-void
+EAPI void
 e_container_all_thaw(void)
 {
    Evas_List *managers, *l;

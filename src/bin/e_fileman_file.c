@@ -17,7 +17,7 @@ static E_Config_DD *assoc_app_edd = NULL;
 static Evas_List   *assoc_apps = NULL;
 
 /* externally accessible functions */
-E_Fm_File *
+EAPI E_Fm_File *
 e_fm_file_new(const char *filename)
 {
    char *ext;
@@ -92,7 +92,7 @@ e_fm_file_new(const char *filename)
    return NULL;
 }
 
-int
+EAPI int
 e_fm_file_rename(E_Fm_File *file, const char *name)
 {
    char path[PATH_MAX], *dir;
@@ -119,7 +119,7 @@ e_fm_file_rename(E_Fm_File *file, const char *name)
      }
 }
 
-int
+EAPI int
 e_fm_file_delete(E_Fm_File *file)
 {
    if (ecore_file_recursive_rm(file->path))
@@ -138,7 +138,7 @@ e_fm_file_delete(E_Fm_File *file)
      }
 }
 
-int
+EAPI int
 e_fm_file_copy(E_Fm_File *file, const char *name)
 {
    if ((!name) || (!name[0])) return 0;
@@ -159,7 +159,7 @@ e_fm_file_copy(E_Fm_File *file, const char *name)
      }
 }
 
-int
+EAPI int
 e_fm_file_can_preview(E_Fm_File *file)
 {
    int i;
@@ -176,7 +176,7 @@ e_fm_file_can_preview(E_Fm_File *file)
    return 0;
 }
 
-int
+EAPI int
 e_fm_file_is_image(E_Fm_File *file)
 {
    /* We need to check if it is a filetype supported by evas.
@@ -195,7 +195,7 @@ e_fm_file_is_image(E_Fm_File *file)
      (!strcasecmp(ext, ".jpeg"));
 }
 
-int
+EAPI int
 e_fm_file_is_etheme(E_Fm_File *file)
 {
    int          val;
@@ -227,7 +227,7 @@ e_fm_file_is_etheme(E_Fm_File *file)
    return val;
 }
 
-int
+EAPI int
 e_fm_file_is_ebg(E_Fm_File *file)
 {
    int          val;
@@ -259,7 +259,7 @@ e_fm_file_is_ebg(E_Fm_File *file)
    return val;
 }
 
-int
+EAPI int
 e_fm_file_is_eap(E_Fm_File *file)
 {
    char *ext;
@@ -283,7 +283,7 @@ e_fm_file_is_eap(E_Fm_File *file)
    return 1;
 }
 
-int
+EAPI int
 e_fm_file_can_exec(E_Fm_File *file)
 {
    char *ext;
@@ -308,7 +308,7 @@ e_fm_file_can_exec(E_Fm_File *file)
    return 0;
 }
 
-int
+EAPI int
 e_fm_file_exec(E_Fm_File *file)
 {
    Ecore_Exe *exe;
@@ -353,14 +353,14 @@ e_fm_file_exec(E_Fm_File *file)
    return 1;
 }
 
-int
+EAPI int
 e_fm_file_assoc_set(E_Fm_File *file, const char *assoc)
 {
    /* TODO */
    return 1;
 }
 
-int
+EAPI int
 e_fm_file_assoc_exec(E_Fm_File *file)
 {
    char app[PATH_MAX * 2];
@@ -404,7 +404,7 @@ e_fm_file_assoc_exec(E_Fm_File *file)
    return 1;
 }
 
-int 
+EAPI int 
 e_fm_file_exec_with(E_Fm_File *file, char* exec_with)
 {
    Ecore_Exe *exe;

@@ -3,7 +3,7 @@
  */
 #include "e.h"
 
-E_Gadget_Face *_e_gadget_face_new(E_Gadget *gad, E_Container *con, E_Zone *zone);
+static E_Gadget_Face *_e_gadget_face_new(E_Gadget *gad, E_Container *con, E_Zone *zone);
 static void _e_gadget_menu_init(E_Gadget *gad);
 static void _e_gadget_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_gadget_free(E_Gadget *gad);
@@ -36,7 +36,7 @@ static void _e_gadget_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void 
  * void *data - a pointer to some data to be passed to all callbacks.
  * 
  */
-E_Gadget *
+EAPI E_Gadget *
 e_gadget_new(E_Gadget_Api *api)
 {
    E_Gadget *gad;
@@ -95,7 +95,7 @@ e_gadget_new(E_Gadget_Api *api)
    return gad;
 }
 
-E_Gadget_Face *
+static E_Gadget_Face *
 _e_gadget_face_new(E_Gadget *gad, E_Container *con, E_Zone *zone)
 {
    E_Gadget_Face *face;
@@ -165,7 +165,7 @@ _e_gadget_face_new(E_Gadget *gad, E_Container *con, E_Zone *zone)
    return face;
 }
 
-void
+EAPI void
 e_gadget_face_theme_set(E_Gadget_Face *face, char *category, char *group)
 {
    Evas_Object *o;

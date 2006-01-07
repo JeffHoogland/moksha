@@ -18,7 +18,7 @@ static char *_prefix_path_data = NULL;
 static char *_prefix_path_lib = NULL;
 
 /* externally accessible functions */
-int
+EAPI int
 e_prefix_determine(char *argv0)
 {
    char *p;
@@ -102,7 +102,7 @@ e_prefix_determine(char *argv0)
    return 0;
 }
 
-void
+EAPI void
 e_prefix_fallback(void)
 {
    E_FREE(_exe_path);
@@ -114,31 +114,31 @@ e_prefix_fallback(void)
    _e_prefix_fallbacks();
 }
 
-const char *
+EAPI const char *
 e_prefix_get(void)
 {
    return _prefix_path;
 }
 
-const char *
+EAPI const char *
 e_prefix_locale_get(void)
 {
    return _prefix_path_locale;
 }
 
-const char *
+EAPI const char *
 e_prefix_bin_get(void)
 {
    return _prefix_path_bin;
 }
 
-const char *
+EAPI const char *
 e_prefix_data_get(void)
 {
    return _prefix_path_data;
 }
 
-const char *
+EAPI const char *
 e_prefix_lib_get(void)
 {
    return _prefix_path_lib;

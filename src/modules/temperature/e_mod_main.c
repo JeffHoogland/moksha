@@ -39,13 +39,13 @@ static E_Config_DD *conf_face_edd;
 static int temperature_count;
 
 /* public module routines. all modules must have these */
-E_Module_Api e_modapi = 
+EAPI E_Module_Api e_modapi = 
 {
    E_MODULE_API_VERSION,
    "Temperature"
 };
 
-void *
+EAPI void *
 e_modapi_init(E_Module *m)
 {
    Temperature *e;
@@ -56,7 +56,7 @@ e_modapi_init(E_Module *m)
    return e;
 }
 
-int
+EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    Temperature *e;
@@ -77,7 +77,7 @@ e_modapi_shutdown(E_Module *m)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_save(E_Module *m)
 {
    Temperature *e;
@@ -87,7 +87,7 @@ e_modapi_save(E_Module *m)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_info(E_Module *m)
 {
    char buf[4096];
@@ -97,7 +97,7 @@ e_modapi_info(E_Module *m)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_about(E_Module *m)
 {
    e_module_dialog_show(_("Enlightenment Temperature Module"),
@@ -107,7 +107,7 @@ e_modapi_about(E_Module *m)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_config(E_Module *m)
 {
    Temperature *e;

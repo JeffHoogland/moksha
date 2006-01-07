@@ -58,7 +58,7 @@ static Evas_List 	*_e_intl_imc_dir_scan(const char *dir);
 static E_Input_Method_Config *_e_intl_imc_find(Evas_List *imc_list, char *name);
 
 
-int
+EAPI int
 e_intl_init(void)
 {
    char *s;
@@ -102,7 +102,7 @@ e_intl_init(void)
    return 1;
 }
 
-int
+EAPI int
 e_intl_shutdown(void)
 {
    E_FREE(_e_intl_language);
@@ -121,7 +121,7 @@ e_intl_shutdown(void)
 }
 
 /* Setup configuration settings and start services */
-int
+EAPI int
 e_intl_post_init(void)
 {
    if ((e_config->language) && (e_config->language[0] != 0))
@@ -134,7 +134,7 @@ e_intl_post_init(void)
    return 1;
 }
 
-int
+EAPI int
 e_intl_post_shutdown(void)
 {
    if (_e_intl_exit_handler)
@@ -159,7 +159,7 @@ e_intl_post_shutdown(void)
  * - Add support of compound locales i.e. (en_US;zh_CN;C) ==Defer==
  * - Add Configuration for to-be-set environment variables
  */
-void
+EAPI void
 e_intl_language_set(const char *lang)
 {
    char *alias_locale;
@@ -243,13 +243,13 @@ e_intl_language_set(const char *lang)
    free(alias_locale);
 }
 
-const char *
+EAPI const char *
 e_intl_language_get(void)
 {
    return _e_intl_language;
 }
 
-Evas_List *
+EAPI Evas_List *
 e_intl_language_list(void)
 {
    Evas_List *next;
@@ -307,7 +307,8 @@ _e_intl_language_list_find(Evas_List *language_list, char * language)
    
    return 0;
 }
-void
+
+EAPI void
 e_intl_input_method_set(const char *method)
 {
    if (_e_intl_input_method) free(_e_intl_input_method);
@@ -372,13 +373,13 @@ e_intl_input_method_set(const char *method)
      }   
 }
 
-const char *
+EAPI const char *
 e_intl_input_method_get(void)
 {
    return _e_intl_input_method;   
 }
 
-Evas_List *
+EAPI Evas_List *
 e_intl_input_method_list(void)
 {
    Evas_List *input_methods;
@@ -408,7 +409,7 @@ e_intl_input_method_list(void)
 }
 
 /* Get the input method configuration from the file */
-E_Input_Method_Config *
+EAPI E_Input_Method_Config *
 e_intl_input_method_config_read (Eet_File * imc_file)
 {
    E_Input_Method_Config *imc;
@@ -422,7 +423,7 @@ e_intl_input_method_config_read (Eet_File * imc_file)
 }
 
 /* Write the input method configuration to the file */
-int
+EAPI int
 e_intl_input_method_config_write (Eet_File * imc_file, E_Input_Method_Config * imc)
 {
    int ok = 0;
@@ -434,7 +435,7 @@ e_intl_input_method_config_write (Eet_File * imc_file, E_Input_Method_Config * i
    return ok;
 }
 
-void
+EAPI void
 e_intl_input_method_config_free (E_Input_Method_Config *imc)
 {
    if (imc != NULL)

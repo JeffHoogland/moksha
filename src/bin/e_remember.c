@@ -14,7 +14,7 @@ static void _e_remember_free(E_Remember *rem);
 
 /* externally accessible functions */
 
-int
+EAPI int
 e_remember_init(void)
 {
    Evas_List *l;
@@ -31,13 +31,13 @@ e_remember_init(void)
    return 1;
 }
 
-int
+EAPI int
 e_remember_shutdown(void)
 {
    return 1;
 }
 
-E_Remember *
+EAPI E_Remember *
 e_remember_new(void)
 {
    E_Remember *rem;
@@ -48,20 +48,20 @@ e_remember_new(void)
    return rem;
 }
 
-int
+EAPI int
 e_remember_usable_get(E_Remember *rem)
 {
    if ((rem->apply_first_only) && (rem->used_count > 0)) return 0;
    return 1;
 }
 
-void
+EAPI void
 e_remember_use(E_Remember *rem)
 {
    rem->used_count++;
 }
 
-void
+EAPI void
 e_remember_unuse(E_Remember *rem)
 {
    rem->used_count--;
@@ -69,7 +69,7 @@ e_remember_unuse(E_Remember *rem)
      _e_remember_free(rem);
 }
 
-void
+EAPI void
 e_remember_del(E_Remember *rem)
 {
    if (rem->delete_me) return;
@@ -94,7 +94,7 @@ e_remember_del(E_Remember *rem)
    _e_remember_free(rem);
 }
 
-E_Remember *
+EAPI E_Remember *
 e_remember_find(E_Border *bd)
 {
    Evas_List *l;
@@ -148,7 +148,7 @@ e_remember_find(E_Border *bd)
    return NULL;
 }
 
-void
+EAPI void
 e_remember_update(E_Remember *rem, E_Border *bd)
 {
    if (rem->name) evas_stringshare_del(rem->name);

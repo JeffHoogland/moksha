@@ -55,7 +55,7 @@ static XDnd *_xdnd;
 
 /* externally accessible functions */
 
-int
+EAPI int
 e_dnd_init(void)
 {
    Evas_List *l, *l2;
@@ -114,7 +114,7 @@ e_dnd_init(void)
    return 1;
 }
 
-int
+EAPI int
 e_dnd_shutdown(void)
 {
    Evas_List *l;
@@ -153,7 +153,7 @@ e_dnd_shutdown(void)
    return 1;
 }
 
-E_Drag*
+EAPI E_Drag*
 e_drag_new(E_Container *container, int x, int y,
 	   const char **types, unsigned int num_types,
 	   void *data, int size,
@@ -214,13 +214,13 @@ e_drag_new(E_Container *container, int x, int y,
    return drag;
 }
 
-Evas *
+EAPI Evas *
 e_drag_evas_get(E_Drag *drag)
 {
    return drag->evas;
 }
 
-void
+EAPI void
 e_drag_object_set(E_Drag *drag, Evas_Object *object)
 {
    if (drag->object) evas_object_del(drag->object);
@@ -228,7 +228,7 @@ e_drag_object_set(E_Drag *drag, Evas_Object *object)
    evas_object_resize(drag->object, drag->w, drag->h);
 }
 
-void
+EAPI void
 e_drag_resize(E_Drag *drag, int w, int h)
 {
    if ((drag->w == w) && (drag->h == h)) return;
@@ -239,13 +239,13 @@ e_drag_resize(E_Drag *drag, int w, int h)
    e_container_shape_resize(drag->shape, drag->w, drag->h);
 }
 
-int
+EAPI int
 e_dnd_active(void)
 {
    return (_drag_win != 0);
 }
 
-int
+EAPI int
 e_drag_start(E_Drag *drag, int x, int y)
 {
    Evas_List *l;
@@ -283,7 +283,7 @@ e_drag_start(E_Drag *drag, int x, int y)
    return 1;
 }
 
-int
+EAPI int
 e_drag_xdnd_start(E_Drag *drag, int x, int y)
 {
    if (_drag_win) return 0;
@@ -307,7 +307,7 @@ e_drag_xdnd_start(E_Drag *drag, int x, int y)
    return 1;
 }
 
-E_Drop_Handler *
+EAPI E_Drop_Handler *
 e_drop_handler_add(void *data,
 		   void (*enter_cb)(void *data, const char *type, void *event),
 		   void (*move_cb)(void *data, const char *type, void *event),
@@ -343,7 +343,7 @@ e_drop_handler_add(void *data,
    return handler;
 }
 
-void
+EAPI void
 e_drop_handler_geometry_set(E_Drop_Handler *handler, int x, int y, int w, int h)
 {
    handler->x = x;
@@ -352,7 +352,7 @@ e_drop_handler_geometry_set(E_Drop_Handler *handler, int x, int y, int w, int h)
    handler->h = h;
 }
 
-void
+EAPI void
 e_drop_handler_del(E_Drop_Handler *handler)
 {
    int i;
@@ -368,7 +368,7 @@ e_drop_handler_del(E_Drop_Handler *handler)
 }
 
 
-void
+EAPI void
 e_drag_idler_before(void)
 {
    Evas_List *l;

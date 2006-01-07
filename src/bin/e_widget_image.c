@@ -12,7 +12,7 @@ struct _E_Widget_Data
 /* local subsystem functions */
 
 /* externally accessible functions */
-Evas_Object *
+EAPI Evas_Object *
 e_widget_image_add_from_object(Evas *evas, Evas_Object *object, int minw, int minh)
 {
    Evas_Object *obj, *o;
@@ -34,7 +34,7 @@ e_widget_image_add_from_object(Evas *evas, Evas_Object *object, int minw, int mi
    return obj;
 }
 
-Evas_Object *
+EAPI Evas_Object *
 e_widget_image_add_from_file(Evas *evas, char *file, int minw, int minh)
 {   
    Evas_Object *obj, *o, *o2;
@@ -58,7 +58,7 @@ e_widget_image_add_from_file(Evas *evas, char *file, int minw, int minh)
    return obj;
 }
 
-void
+EAPI void
 e_widget_image_edje_set(Evas_Object *obj, char *file, char *part)
 {
    E_Widget_Data *wd;
@@ -68,7 +68,7 @@ e_widget_image_edje_set(Evas_Object *obj, char *file, char *part)
    evas_object_show(wd->img);
 }
 
-void
+EAPI void
 e_widget_image_file_set(Evas_Object *obj, char *file)
 {
    E_Widget_Data *wd;
@@ -78,7 +78,7 @@ e_widget_image_file_set(Evas_Object *obj, char *file)
    evas_object_show(wd->img);
 }
 
-void
+EAPI void
 e_widget_image_file_key_set(Evas_Object *obj, char *file, char *key)
 {
    E_Widget_Data *wd;
@@ -88,7 +88,7 @@ e_widget_image_file_key_set(Evas_Object *obj, char *file, char *key)
    evas_object_show(wd->img);
 }
 
-void
+EAPI void
 e_widget_image_object_set(Evas_Object *obj, Evas_Object *o)
 {
    E_Widget_Data *wd;

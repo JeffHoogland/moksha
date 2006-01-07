@@ -21,7 +21,7 @@ static void _e_eapp_cache_fill(E_App_Cache *ac, E_App *a);
 
 static Eet_Data_Descriptor *_e_app_cache_edd = NULL;
 
-int
+EAPI int
 e_app_cache_init(void)
 {
    Eet_Data_Descriptor_Class eddc;
@@ -61,14 +61,14 @@ e_app_cache_init(void)
    return 1;
 }
 
-int
+EAPI int
 e_app_cache_shutdown(void)
 {
    FREED(_e_app_cache_edd);
    return 1;
 }
 
-E_App_Cache *
+EAPI E_App_Cache *
 e_app_cache_load(char *path)
 {
    Eet_File *ef;
@@ -96,7 +96,7 @@ e_app_cache_load(char *path)
    return ac;
 }
 
-E_App_Cache *
+EAPI E_App_Cache *
 e_app_cache_generate(E_App *a)
 {
    E_App_Cache *ac;
@@ -129,7 +129,7 @@ e_app_cache_generate(E_App *a)
    return ac;
 }
 
-void
+EAPI void
 e_app_cache_free(E_App_Cache *ac)
 {
    if (!ac) return;
@@ -155,7 +155,7 @@ e_app_cache_free(E_App_Cache *ac)
    free(ac);
 }
 
-int
+EAPI int
 e_app_cache_save(E_App_Cache *ac, char *path)
 {
    Eet_File *ef;

@@ -19,7 +19,7 @@ struct _E_Maximize_Rect
 
 static void _e_maximize_border_rects_fill(E_Border *bd, Evas_List *list, int *x1, int *y1, int *x2, int *y2);
 
-void
+EAPI void
 e_maximize_border_gadman_fit(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
 {
    Evas_List *l;
@@ -76,7 +76,7 @@ e_maximize_border_gadman_fit(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
    if (y2) *y2 = cy2;
 }
 
-void
+EAPI void
 e_maximize_border_dock_fit(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
 {
    E_Border_List *bl;
@@ -168,7 +168,7 @@ e_maximize_border_dock_fit(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
    if (y2) *y2 = cy2;
 }
 
-void
+EAPI void
 e_maximize_border_gadman_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
 {
    Evas_List *l, *rects = NULL;
@@ -191,7 +191,7 @@ e_maximize_border_gadman_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
      }
 }
 
-void
+EAPI void
 e_maximize_border_border_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
 {
    Evas_List *l, *rects = NULL;

@@ -4,7 +4,7 @@
 #include "e.h"
 
 /* externally accessible functions */
-char *
+EAPI char *
 e_user_homedir_get(void)
 {
    char *homedir;

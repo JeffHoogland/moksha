@@ -12,21 +12,21 @@ static Evas_List *_e_font_font_dir_available_get (Evas_List * available_fonts, c
 
 static char _fn_buf[1024];
 
-int
+EAPI int
 e_font_init(void)
 {
    /* all init stuff is in e_config */
    return 1;
 }
 
-int
+EAPI int
 e_font_shutdown(void)
 {
    /* e_config will do this */
    return 1;
 }
 
-void
+EAPI void
 e_font_apply(void)
 {
    char buf[1024];
@@ -88,7 +88,7 @@ e_font_apply(void)
      }
 }
 
-Evas_List *
+EAPI Evas_List *
 e_font_available_list(void)
 {
    Evas_List *dir_list;
@@ -107,7 +107,7 @@ e_font_available_list(void)
    return available;
 }
 
-void
+EAPI void
 e_font_available_list_free(Evas_List *available)
 {
    E_Font_Available *efa;
@@ -121,7 +121,7 @@ e_font_available_list_free(Evas_List *available)
      }
 }
 
-void
+EAPI void
 e_font_fallback_clear(void)
 {
    E_Font_Fallback *eff;
@@ -137,7 +137,7 @@ e_font_fallback_clear(void)
     }
 }
 
-void
+EAPI void
 e_font_fallback_append(const char *font)
 {
    E_Font_Fallback *eff;
@@ -149,7 +149,7 @@ e_font_fallback_append(const char *font)
    e_config->font_fallbacks = evas_list_append(e_config->font_fallbacks, eff);
 }
 
-void
+EAPI void
 e_font_fallback_prepend(const char *font)
 {
    E_Font_Fallback *eff;
@@ -161,7 +161,7 @@ e_font_fallback_prepend(const char *font)
    e_config->font_fallbacks = evas_list_prepend(e_config->font_fallbacks, eff);
 }
 
-void
+EAPI void
 e_font_fallback_remove(const char *font)
 {
    Evas_List *next;
@@ -182,13 +182,13 @@ e_font_fallback_remove(const char *font)
      }
 }
 
-Evas_List *
+EAPI Evas_List *
 e_font_fallback_list(void)
 {
    return e_config->font_fallbacks;
 }
 
-void
+EAPI void
 e_font_default_set(const char *text_class, const char *font, int size)
 {
    E_Font_Default *efd;
@@ -224,7 +224,7 @@ e_font_default_set(const char *text_class, const char *font, int size)
 /*
  * returns a pointer to the data, return null if nothing if found.
  */
-E_Font_Default *
+EAPI E_Font_Default *
 e_font_default_get(const char *text_class)
 {
    E_Font_Default *efd = NULL, *defd = NULL;
@@ -251,7 +251,7 @@ e_font_default_get(const char *text_class)
    return defd;
 }
 
-void
+EAPI void
 e_font_default_remove(const char *text_class)
 {
    E_Font_Default *efd;
@@ -273,13 +273,13 @@ e_font_default_remove(const char *text_class)
     }
 }
 
-Evas_List *
+EAPI Evas_List *
 e_font_default_list(void)
 {
    return e_config->font_defaults;
 }
 
-const char *
+EAPI const char *
 e_font_default_string_get(const char *text_class, int *size_ret)
 {
    E_Font_Default *efd;

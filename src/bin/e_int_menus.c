@@ -59,7 +59,7 @@ static Ecore_Job *_e_int_menus_quit_job = NULL;
 static Evas_Hash *_e_int_menus_augmentation = NULL;
 
 /* externally accessible functions */
-E_Menu *
+EAPI E_Menu *
 e_int_menus_main_new(void)
 {
    E_Menu *m, *subm;
@@ -168,7 +168,7 @@ e_int_menus_main_new(void)
    return m;
 }
 
-E_Menu *
+EAPI E_Menu *
 e_int_menus_apps_new(char *dir)
 {
    E_Menu *m;
@@ -183,7 +183,7 @@ e_int_menus_apps_new(char *dir)
    return m;
 }
 
-E_Menu *
+EAPI E_Menu *
 e_int_menus_desktops_new(void)
 {
    E_Menu *m;
@@ -193,7 +193,7 @@ e_int_menus_desktops_new(void)
    return m;
 }
 
-E_Menu *
+EAPI E_Menu *
 e_int_menus_favorite_apps_new(void)
 {
    E_Menu *m;
@@ -211,7 +211,7 @@ e_int_menus_favorite_apps_new(void)
    return NULL;
 }
 
-E_Menu *
+EAPI E_Menu *
 e_int_menus_config_new(void)
 {
    E_Menu *m;
@@ -222,7 +222,7 @@ e_int_menus_config_new(void)
    return m;
 }
 
-E_Menu *
+EAPI E_Menu *
 e_int_menus_clients_new(void)
 {
    E_Menu *m;
@@ -232,7 +232,7 @@ e_int_menus_clients_new(void)
    return m;
 }
 
-E_Menu *
+EAPI E_Menu *
 e_int_menus_gadgets_new(void)
 {
    E_Menu *m;
@@ -242,7 +242,7 @@ e_int_menus_gadgets_new(void)
    return m;
 }
 
-E_Menu *
+EAPI E_Menu *
 e_int_menus_themes_new(void)
 {
    E_Menu *m;
@@ -252,7 +252,7 @@ e_int_menus_themes_new(void)
    return m;
 }
 
-E_Menu *
+EAPI E_Menu *
 e_int_menus_lost_clients_new(void)
 {
    E_Menu *m;
@@ -262,7 +262,7 @@ e_int_menus_lost_clients_new(void)
    return m;
 }
 
-E_Int_Menu_Augmentation *
+EAPI E_Int_Menu_Augmentation *
 e_int_menus_menu_augmentation_add(const char *menu,
 				  void (*func_add) (void *data, E_Menu *m),
 				  void *data_add,
@@ -288,7 +288,7 @@ e_int_menus_menu_augmentation_add(const char *menu,
    return maug;
 }
 
-void
+EAPI void
 e_int_menus_menu_augmentation_del(const char *menu, E_Int_Menu_Augmentation *maug)
 {
    Evas_List *l;

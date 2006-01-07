@@ -20,7 +20,7 @@ static Evas_Coord _e_init_icon_size = 0;
 static Evas_List *_e_init_icon_list = NULL;
 
 /* externally accessible functions */
-int
+EAPI int
 e_init_init(void)
 {
    int w, h;
@@ -108,7 +108,7 @@ e_init_init(void)
    return 1;
 }
 
-int
+EAPI int
 e_init_shutdown(void)
 {
    e_init_hide();
@@ -116,7 +116,7 @@ e_init_shutdown(void)
    return 1;
 }
 
-void
+EAPI void
 e_init_show(void)
 {
    if (!_e_init_ecore_evas) return;
@@ -124,7 +124,7 @@ e_init_show(void)
    ecore_evas_show(_e_init_ecore_evas);
 }
 
-void
+EAPI void
 e_init_hide(void)
 {
    /* FIXME: emit signal to edje and wait for it to respond or until a */
@@ -149,41 +149,41 @@ e_init_hide(void)
    e_canvas_cache_flush();
 }
 
-void
+EAPI void
 e_init_title_set(const char *str)
 {
    if (!_e_init_object) return;
    edje_object_part_text_set(_e_init_object, "title", str);
 }
 
-void
+EAPI void
 e_init_version_set(const char *str)
 {
    if (!_e_init_object) return;
    edje_object_part_text_set(_e_init_object, "version", str);
 }
 
-void
+EAPI void
 e_init_status_set(const char *str)
 {
    if (!_e_init_object) return;
    edje_object_part_text_set(_e_init_object, "status", str);
 }
 
-Ecore_X_Window
+EAPI Ecore_X_Window
 e_init_window_get(void)
 {
    return _e_init_win;
 }
 
-void
+EAPI void
 e_init_done(void)
 {
    if (!_e_init_object) return;
    edje_object_signal_emit(_e_init_object, "done", "");
 }
 
-void
+EAPI void
 e_init_icons_app_add(E_App *app)
 {
    Evas_Object *o;

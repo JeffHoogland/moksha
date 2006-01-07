@@ -114,7 +114,7 @@ static Evas_List   *_e_apps_start_pending = NULL;
 
 
 /* externally accessible functions */
-int
+EAPI int
 e_app_init(void)
 {
    char *home;
@@ -134,7 +134,7 @@ e_app_init(void)
    return 1;
 }
 
-int
+EAPI int
 e_app_shutdown(void)
 {
    _e_apps_start_pending = evas_list_free(_e_apps_start_pending);
@@ -173,7 +173,7 @@ e_app_shutdown(void)
    return 1;
 }
 
-E_App *
+EAPI E_App *
 e_app_raw_new(void)
 {
    E_App *a;
@@ -198,7 +198,7 @@ _e_app_cb_scan_hash_foreach(Evas_Hash *hash, const char *key, void *data, void *
    return 1;
 }
 
-E_App *
+EAPI E_App *
 e_app_new(const char *path, int scan_subdirs)
 {
    E_App *a;
@@ -278,7 +278,7 @@ error:
    return NULL;
 }
 
-E_App *
+EAPI E_App *
 e_app_empty_new(const char *path)
 {
    E_App *a;
@@ -289,7 +289,7 @@ e_app_empty_new(const char *path)
    return a;      
 }
 
-int
+EAPI int
 e_app_is_parent(E_App *parent, E_App *app)
 {
    E_App *current;
@@ -306,7 +306,7 @@ e_app_is_parent(E_App *parent, E_App *app)
    return 0;
 }
 
-int
+EAPI int
 e_app_equals(E_App *app1, E_App *app2)
 {
    if ((!app1) || (!app2)) return 0;
@@ -314,7 +314,7 @@ e_app_equals(E_App *app1, E_App *app2)
 	   (app1 == app2->orig) || (app1->orig == app2->orig));
 }
 
-void
+EAPI void
 e_app_subdir_scan(E_App *a, int scan_subdirs)
 {
    Ecore_List *files;
@@ -392,7 +392,7 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
    e_app_cache_free(ac);
 }
 
-int
+EAPI int
 e_app_exec(E_App *a, int launch_id)
 {
    Ecore_Exe *exe;
@@ -431,7 +431,7 @@ e_app_exec(E_App *a, int launch_id)
    return 1;
 }
 
-int
+EAPI int
 e_app_starting_get(E_App *a)
 {
    E_OBJECT_CHECK_RETURN(a, 0);
@@ -439,7 +439,7 @@ e_app_starting_get(E_App *a)
    return a->starting;
 }
 
-int
+EAPI int
 e_app_running_get(E_App *a)
 {
    E_OBJECT_CHECK_RETURN(a, 0);
@@ -448,7 +448,7 @@ e_app_running_get(E_App *a)
    return 0;
 }
 
-void
+EAPI void
 e_app_prepend_relative(E_App *add, E_App *before)
 {
    char buf[PATH_MAX];
@@ -477,7 +477,7 @@ e_app_prepend_relative(E_App *add, E_App *before)
    _e_app_change(before->parent, E_APP_ORDER);
 }
 
-void
+EAPI void
 e_app_append(E_App *add, E_App *parent)
 {
    char buf[PATH_MAX];
@@ -502,7 +502,7 @@ e_app_append(E_App *add, E_App *parent)
    _e_app_change(add, E_APP_ADD);
 }
 
-void
+EAPI void
 e_app_files_prepend_relative(Evas_List *files, E_App *before)
 {
    Evas_List *l;
@@ -558,7 +558,7 @@ e_app_files_prepend_relative(Evas_List *files, E_App *before)
      }
 }
 
-void
+EAPI void
 e_app_files_append(Evas_List *files, E_App *parent)
 {
    Evas_List *l, *subapps;
@@ -610,7 +610,7 @@ e_app_files_append(Evas_List *files, E_App *parent)
      }
 }
 
-void
+EAPI void
 e_app_remove(E_App *a)
 {
    char buf[PATH_MAX];
@@ -635,7 +635,7 @@ e_app_remove(E_App *a)
    a->parent = NULL;
 }
 
-void
+EAPI void
 e_app_change_callback_add(void (*func) (void *data, E_App *a, E_App_Change ch), void *data)
 {
    E_App_Callback *cb;
@@ -646,7 +646,7 @@ e_app_change_callback_add(void (*func) (void *data, E_App *a, E_App_Change ch), 
    _e_apps_change_callbacks = evas_list_append(_e_apps_change_callbacks, cb);
 }
 
-void
+EAPI void
 e_app_change_callback_del(void (*func) (void *data, E_App *a, E_App_Change ch), void *data)
 {
    Evas_List *l;
@@ -673,7 +673,7 @@ e_app_change_callback_del(void (*func) (void *data, E_App *a, E_App_Change ch), 
      }
 }
 
-E_App *
+EAPI E_App *
 e_app_launch_id_pid_find(int launch_id, pid_t pid)
 {
    Evas_List *l, *ll;
@@ -700,7 +700,7 @@ e_app_launch_id_pid_find(int launch_id, pid_t pid)
    return NULL;
 }
 
-E_App *
+EAPI E_App *
 e_app_window_name_class_title_role_find(const char *name, const char *class,
 					const char *title, const char *role)
 {
@@ -741,7 +741,7 @@ e_app_window_name_class_title_role_find(const char *name, const char *class,
    return NULL;
 }
 
-E_App *
+EAPI E_App *
 e_app_file_find(char *file)
 {
    Evas_List *l;
@@ -773,7 +773,7 @@ e_app_file_find(char *file)
    return NULL;
 }
 
-E_App *
+EAPI E_App *
 e_app_name_find(char *name)
 {
    Evas_List *l;
@@ -798,7 +798,7 @@ e_app_name_find(char *name)
    return NULL;
 }
 
-E_App *
+EAPI E_App *
 e_app_generic_find(char *generic)
 {
    Evas_List *l;
@@ -823,7 +823,7 @@ e_app_generic_find(char *generic)
    return NULL;
 }
 
-E_App *
+EAPI E_App *
 e_app_exe_find(char *exe)
 {
    Evas_List *l;
@@ -850,7 +850,7 @@ e_app_exe_find(char *exe)
 
 
 
-Evas_List *
+EAPI Evas_List *
 e_app_name_glob_list(char *name)
 {
    Evas_List *l, *list = NULL;
@@ -871,7 +871,7 @@ e_app_name_glob_list(char *name)
    return list;
 }
 
-Evas_List *
+EAPI Evas_List *
 e_app_generic_glob_list(char *generic)
 {
    Evas_List *l, *list = NULL;
@@ -892,7 +892,7 @@ e_app_generic_glob_list(char *generic)
    return list;
 }
 
-Evas_List *
+EAPI Evas_List *
 e_app_exe_glob_list(char *exe)
 {
    Evas_List *l, *list = NULL;
@@ -913,7 +913,7 @@ e_app_exe_glob_list(char *exe)
    return list;
 }
 
-Evas_List *
+EAPI Evas_List *
 e_app_comment_glob_list(char *comment)
 {
    Evas_List *l, *list = NULL;
@@ -938,7 +938,7 @@ e_app_comment_glob_list(char *comment)
 
 
 
-void
+EAPI void
 e_app_fields_fill(E_App *a, const char *path)
 {
    Eet_File *ef;
@@ -1026,7 +1026,7 @@ e_app_fields_fill(E_App *a, const char *path)
  * We also need to fix startup-notify and wait-exit as they currently
  * dont save too.
  */
-void
+EAPI void
 e_app_fields_save(E_App *a)
 {
    Eet_File *ef;
@@ -1135,7 +1135,7 @@ e_app_fields_save(E_App *a)
    eet_close(ef);
 }
 
-void
+EAPI void
 e_app_fields_empty(E_App *a)
 {
    if (a->name) evas_stringshare_del(a->name);
@@ -1158,7 +1158,7 @@ e_app_fields_empty(E_App *a)
    a->win_role = NULL;
 }
 
-Ecore_List *
+EAPI Ecore_List *
 e_app_dir_file_list_get(E_App *a)
 {
    Ecore_List *files, *files2;
@@ -1228,7 +1228,7 @@ e_app_dir_file_list_get(E_App *a)
    return files;
 }
 
-int
+EAPI int
 e_app_valid_exe_get(E_App *a)
 {
    char *exe;

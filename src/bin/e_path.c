@@ -9,7 +9,7 @@ static void      _e_path_cache_free(E_Path *ep);
 static Evas_Bool _e_path_cache_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata);
 
 /* externally accessible functions */
-E_Path *
+EAPI E_Path *
 e_path_new(void)
 {
    E_Path *ep;
@@ -18,7 +18,7 @@ e_path_new(void)
    return ep;
 }
 
-void
+EAPI void
 e_path_default_path_append(E_Path *ep, const char *path)
 {
    E_OBJECT_CHECK(ep);
@@ -68,7 +68,7 @@ e_path_default_path_append(E_Path *ep, const char *path)
    _e_path_cache_free(ep);
 }
 
-void
+EAPI void
 e_path_user_path_set(E_Path *ep, Evas_List **user_dir_list)
 {
 
@@ -79,7 +79,7 @@ e_path_user_path_set(E_Path *ep, Evas_List **user_dir_list)
    _e_path_cache_free(ep);
 }
 
-void
+EAPI void
 e_path_user_path_append(E_Path *ep, const char *path)
 {
    E_OBJECT_CHECK(ep);
@@ -129,7 +129,7 @@ e_path_user_path_append(E_Path *ep, const char *path)
    _e_path_cache_free(ep);
 }
 
-void
+EAPI void
 e_path_user_path_prepend(E_Path *ep, const char *path)
 {
    E_OBJECT_CHECK(ep);
@@ -179,7 +179,7 @@ e_path_user_path_prepend(E_Path *ep, const char *path)
    _e_path_cache_free(ep);
 }
 
-void
+EAPI void
 e_path_user_path_remove(E_Path *ep, const char *path)
 {
    Evas_List *l;
@@ -249,7 +249,7 @@ e_path_user_path_remove(E_Path *ep, const char *path)
      }
 }
 
-char *
+EAPI char *
 e_path_find(E_Path *ep, const char *file)
 {
    Evas_List *l;
@@ -315,7 +315,7 @@ e_path_find(E_Path *ep, const char *file)
    return NULL;
 }
 
-void
+EAPI void
 e_path_evas_append(E_Path *ep, Evas *evas)
 {
    Evas_List *l;
@@ -340,7 +340,7 @@ e_path_evas_append(E_Path *ep, Evas *evas)
 }
 
 /* combine default_list and and user_list in and easy to use list */
-Evas_List *
+EAPI Evas_List *
 e_path_dir_list_get(E_Path *ep)
 {
    Evas_List	*dir_list;
@@ -372,7 +372,7 @@ e_path_dir_list_get(E_Path *ep)
    return dir_list;
 }
 
-void
+EAPI void
 e_path_dir_list_free(Evas_List *dir_list)
 {
    E_Path_Dir *epd;

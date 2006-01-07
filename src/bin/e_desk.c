@@ -12,10 +12,10 @@ static void _e_desk_free(E_Desk *desk);
 static void _e_border_event_desk_show_free(void *data, void *ev);
 static void _e_border_event_desk_name_change_free(void *data, void *ev);
 
-int E_EVENT_DESK_SHOW = 0;
-int E_EVENT_DESK_NAME_CHANGE = 0;
+EAPI int E_EVENT_DESK_SHOW = 0;
+EAPI int E_EVENT_DESK_NAME_CHANGE = 0;
 
-int
+EAPI int
 e_desk_init(void)
 {
    E_EVENT_DESK_SHOW = ecore_event_type_new();
@@ -23,13 +23,13 @@ e_desk_init(void)
    return 1;
 }
 
-int
+EAPI int
 e_desk_shutdown(void)
 {
    return 1;
 }
 
-E_Desk *
+EAPI E_Desk *
 e_desk_new(E_Zone *zone, int x, int y)
 {
    E_Desk      *desk;
@@ -74,7 +74,7 @@ e_desk_new(E_Zone *zone, int x, int y)
    return desk;
 }
 
-void
+EAPI void
 e_desk_name_set(E_Desk *desk, const char *name)
 {
    E_Event_Desk_Name_Change *ev;
@@ -90,7 +90,7 @@ e_desk_name_set(E_Desk *desk, const char *name)
    ecore_event_add(E_EVENT_DESK_NAME_CHANGE, ev, _e_border_event_desk_name_change_free, NULL);
 }
 
-void
+EAPI void
 e_desk_name_add(int container, int zone, int desk_x, int desk_y, char *name)
 {
    E_Config_Desktop_Name *cfname;
@@ -105,7 +105,7 @@ e_desk_name_add(int container, int zone, int desk_x, int desk_y, char *name)
    e_config->desktop_names = evas_list_append(e_config->desktop_names, cfname);
 }
 
-void
+EAPI void
 e_desk_name_del(int container, int zone, int desk_x, int desk_y)
 {
    Evas_List *l;
@@ -126,7 +126,7 @@ e_desk_name_del(int container, int zone, int desk_x, int desk_y)
      }
 }
 
-void
+EAPI void
 e_desk_name_update(void)
 {
    Evas_List *m, *c, *z, *l;
@@ -180,7 +180,7 @@ e_desk_name_update(void)
      }
 }
 
-void
+EAPI void
 e_desk_show(E_Desk *desk)
 {
    E_Border_List     *bl;
@@ -253,7 +253,7 @@ e_desk_show(E_Desk *desk)
    
 }
 
-void
+EAPI void
 e_desk_last_focused_focus(E_Desk *desk)
 {
    Evas_List *l;
@@ -273,31 +273,31 @@ e_desk_last_focused_focus(E_Desk *desk)
      }
 }
 
-void
+EAPI void
 e_desk_row_add(E_Zone *zone)
 {
    e_zone_desk_count_set(zone, zone->desk_x_count, zone->desk_y_count + 1);
 }
 
-void
+EAPI void
 e_desk_row_remove(E_Zone *zone)
 {
    e_zone_desk_count_set(zone, zone->desk_x_count, zone->desk_y_count - 1);
 }
 
-void
+EAPI void
 e_desk_col_add(E_Zone *zone)
 {
    e_zone_desk_count_set(zone, zone->desk_x_count + 1, zone->desk_y_count);
 }
 
-void
+EAPI void
 e_desk_col_remove(E_Zone *zone)
 {
    e_zone_desk_count_set(zone, zone->desk_x_count - 1, zone->desk_y_count);
 }
 
-E_Desk *
+EAPI E_Desk *
 e_desk_current_get(E_Zone *zone)
 {
    E_OBJECT_CHECK_RETURN(zone, NULL);
@@ -305,7 +305,7 @@ e_desk_current_get(E_Zone *zone)
    return e_desk_at_xy_get(zone, zone->desk_x_current, zone->desk_y_current);
 }
 
-E_Desk *
+EAPI E_Desk *
 e_desk_at_xy_get(E_Zone *zone, int x, int y)
 {
    E_OBJECT_CHECK_RETURN(zone, NULL);
@@ -319,7 +319,7 @@ e_desk_at_xy_get(E_Zone *zone, int x, int y)
    return zone->desks[x + (y * zone->desk_x_count)];
 }
 
-E_Desk *
+EAPI E_Desk *
 e_desk_at_pos_get(E_Zone *zone, int pos)
 {
    int x, y;
@@ -336,7 +336,7 @@ e_desk_at_pos_get(E_Zone *zone, int pos)
    return zone->desks[x + (y * zone->desk_x_count)];
 }
 
-void
+EAPI void
 e_desk_xy_get(E_Desk *desk, int *x, int *y)
 {
    E_OBJECT_CHECK(desk);
@@ -346,7 +346,7 @@ e_desk_xy_get(E_Desk *desk, int *x, int *y)
    if (y) *y = desk->y;
 }
 
-void
+EAPI void
 e_desk_next(E_Zone *zone)
 {
    int          x, y;
@@ -372,7 +372,7 @@ e_desk_next(E_Zone *zone)
    e_desk_show(e_desk_at_xy_get(zone, x, y));
 }
 
-void
+EAPI void
 e_desk_prev(E_Zone *zone)
 {
    int          x, y;

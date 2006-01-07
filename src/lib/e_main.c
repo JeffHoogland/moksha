@@ -58,30 +58,30 @@ static void e_lib_binding_mouse_handle(int hdl, unsigned int context, unsigned i
 
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
 
-int E_RESPONSE_MODULE_LIST = 0;
-int E_RESPONSE_BACKGROUND_GET = 0;
-int E_RESPONSE_LANGUAGE_GET = 0;
-int E_RESPONSE_THEME_GET = 0;
+EAPI int E_RESPONSE_MODULE_LIST = 0;
+EAPI int E_RESPONSE_BACKGROUND_GET = 0;
+EAPI int E_RESPONSE_LANGUAGE_GET = 0;
+EAPI int E_RESPONSE_THEME_GET = 0;
 
-int E_RESPONSE_DATA_DIRS_LIST = 0;
-int E_RESPONSE_IMAGE_DIRS_LIST = 0;
-int E_RESPONSE_FONT_DIRS_LIST = 0;
-int E_RESPONSE_THEME_DIRS_LIST = 0;
-int E_RESPONSE_INIT_DIRS_LIST = 0;
-int E_RESPONSE_ICON_DIRS_LIST = 0;
-int E_RESPONSE_MODULE_DIRS_LIST = 0;
-int E_RESPONSE_BACKGROUND_DIRS_LIST = 0;
+EAPI int E_RESPONSE_DATA_DIRS_LIST = 0;
+EAPI int E_RESPONSE_IMAGE_DIRS_LIST = 0;
+EAPI int E_RESPONSE_FONT_DIRS_LIST = 0;
+EAPI int E_RESPONSE_THEME_DIRS_LIST = 0;
+EAPI int E_RESPONSE_INIT_DIRS_LIST = 0;
+EAPI int E_RESPONSE_ICON_DIRS_LIST = 0;
+EAPI int E_RESPONSE_MODULE_DIRS_LIST = 0;
+EAPI int E_RESPONSE_BACKGROUND_DIRS_LIST = 0;
 
-int E_RESPONSE_BINDING_KEY_LIST = 0;
-int E_RESPONSE_BINDING_MOUSE_LIST = 0;
-int E_RESPONSE_BINDING_WHEEL_LIST = 0;
-int E_RESPONSE_BINDING_SIGNAL_LIST = 0;
+EAPI int E_RESPONSE_BINDING_KEY_LIST = 0;
+EAPI int E_RESPONSE_BINDING_MOUSE_LIST = 0;
+EAPI int E_RESPONSE_BINDING_WHEEL_LIST = 0;
+EAPI int E_RESPONSE_BINDING_SIGNAL_LIST = 0;
 
 /*
  * initialise connection to the current E running on "display".
  * If parameter is null try to use DISPLAY env var.
  */
-int
+EAPI int
 e_lib_init(const char* display)
 {
    char *disp, *pos;
@@ -174,7 +174,7 @@ e_lib_init(const char* display)
 /* 
  * close our connection to E
  */
-int
+EAPI int
 e_lib_shutdown(void)
 {
    e_ipc_codec_shutdown();
@@ -186,25 +186,25 @@ e_lib_shutdown(void)
 }
 
 /* actual IPC calls */
-void
+EAPI void
 e_lib_restart(void)
 {
    _e_ipc_call(E_IPC_OP_RESTART, NULL);
 }
     
-void
+EAPI void
 e_lib_quit(void)
 {
    _e_ipc_call(E_IPC_OP_SHUTDOWN, NULL);
 }
 
-void
+EAPI void
 e_lib_config_panel_show(void)
 {
    _e_ipc_call(E_IPC_OP_CONFIG_PANEL_SHOW, NULL);
 }
 
-void
+EAPI void
 e_lib_module_enabled_set(const char *module, int enable)
 {
    char *tmp;
@@ -220,7 +220,7 @@ e_lib_module_enabled_set(const char *module, int enable)
    free(tmp);
 }
 
-void
+EAPI void
 e_lib_module_load_set(const char *module, int load)
 {
    char *tmp;
@@ -235,13 +235,13 @@ e_lib_module_load_set(const char *module, int load)
    free(tmp);
 }
 
-void
+EAPI void
 e_lib_module_list(void)
 {
    _e_ipc_call(E_IPC_OP_MODULE_LIST, NULL);
 }
 
-void
+EAPI void
 e_lib_background_set(const char *bgfile)
 {
    char *tmp;
@@ -253,13 +253,13 @@ e_lib_background_set(const char *bgfile)
    free(tmp);
 }
 
-void
+EAPI void
 e_lib_background_get(void)
 {
    _e_ipc_call(E_IPC_OP_BG_GET, NULL);
 }
 
-void
+EAPI void
 e_lib_desktop_background_add(const int con, const int zone, const int desk_x, const int desk_y, const char *bgfile)
 {
    char *params[5];
@@ -285,7 +285,7 @@ e_lib_desktop_background_add(const int con, const int zone, const int desk_x, co
    free(params[4]);
 }
 
-void
+EAPI void
 e_lib_desktop_background_del(const int con, const int zone, const int desk_x, const int desk_y)
 {
    int i;
@@ -306,7 +306,7 @@ e_lib_desktop_background_del(const int con, const int zone, const int desk_x, co
    free(params[3]);
 }
 
-void
+EAPI void
 e_lib_theme_get(const char *category)
 {
    char *tmp;
@@ -318,7 +318,7 @@ e_lib_theme_get(const char *category)
    free(tmp);
 }
 
-void
+EAPI void
 e_lib_theme_set(const char *category, const char *file)
 {
    char *tmp[2];
@@ -333,7 +333,7 @@ e_lib_theme_set(const char *category, const char *file)
    free(tmp[1]);
 }
 
-void
+EAPI void
 e_lib_language_set(const char *lang)
 {
    char *tmp;
@@ -345,69 +345,69 @@ e_lib_language_set(const char *lang)
    free(tmp);
 }
 
-void
+EAPI void
 e_lib_language_get(void)
 {
    _e_ipc_call(E_IPC_OP_LANG_GET, NULL);
 }
 
-void
+EAPI void
 e_lib_data_dirs_list(void)
 {
    char *type = "data";
    _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
 }
 
-void
+EAPI void
 e_lib_image_dirs_list(void)
 {
    char *type = "images";
    _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
 }
 
-void
+EAPI void
 e_lib_font_dirs_list(void)
 {
    char *type = "fonts";
    _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
 }
 
-void
+EAPI void
 e_lib_theme_dirs_list(void)
 {
    char *type = "themes";
    _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
 }
 
-void
+EAPI void
 e_lib_init_dirs_list(void)
 {
    char *type = "inits";
    _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
 }
 
-void
+EAPI void
 e_lib_icon_dirs_list(void)
 {
    char *type = "icons";
    _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
 }
 
-void
+EAPI void
 e_lib_module_dirs_list(void)
 {
    char *type = "modules";
    _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
 }
 
-void
+EAPI void
 e_lib_background_dirs_list(void)
 {
    char *type = "backgrounds";
    _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
 }
 
-void
+EAPI void
 e_lib_bindings_key_list(void)
 {
    _e_ipc_call(E_IPC_OP_BINDING_KEY_LIST, NULL);
@@ -452,21 +452,21 @@ e_lib_binding_key_handle(int hdl, unsigned int context, unsigned int modifiers, 
    free(params[5]);
 }
 
-void
+EAPI void
 e_lib_binding_key_del(unsigned int context, unsigned int modifiers, const char *key, 
 		      unsigned int any_mod, const char *action, const char *params)
 {
    e_lib_binding_key_handle(E_IPC_OP_BINDING_KEY_DEL, context, modifiers, key, any_mod, action, params);
 }
 
-void
+EAPI void
 e_lib_binding_key_add(unsigned int context, unsigned int modifiers, const char *key, 
 		      unsigned int any_mod, const char *action, const char *params)
 {
    e_lib_binding_key_handle(E_IPC_OP_BINDING_KEY_ADD, context, modifiers, key, any_mod, action, params);
 }
 
-void
+EAPI void
 e_lib_bindings_mouse_list(void)
 {
    _e_ipc_call(E_IPC_OP_BINDING_MOUSE_LIST, NULL);
@@ -512,14 +512,14 @@ e_lib_binding_mouse_handle(int hdl, unsigned int context, unsigned int modifiers
    free(params[5]);
 }
 
-void
+EAPI void
 e_lib_binding_mouse_del(unsigned int context, unsigned int modifiers, unsigned int button, 
 			unsigned int any_mod, const char *action, const char *params)
 {
    e_lib_binding_mouse_handle(E_IPC_OP_BINDING_MOUSE_DEL, context, modifiers, button, any_mod, action, params);
 }
 
-void
+EAPI void
 e_lib_binding_mouse_add(unsigned int context, unsigned int modifiers, unsigned int button, 
 		   	unsigned int any_mod, const char *action, const char *params)
 {

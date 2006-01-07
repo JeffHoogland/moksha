@@ -56,7 +56,7 @@ static void           _e_eap_edit_hilite_cb(Evas_Object *obj, char *file, void *
 
 /* externally accessible functions */
 
-void
+EAPI void
 e_eap_edit_show(E_Container *con, E_App *a)
 {
    E_Config_Dialog *cfd;

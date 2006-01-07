@@ -9,7 +9,7 @@ static void _e_bg_signal(void *data, Evas_Object *obj, const char *emission, con
 /* local subsystem globals */
 
 /* externally accessible functions */
-void
+EAPI void
 e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 {
    Evas_Object *o;
@@ -136,7 +136,7 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
      }
 }
 
-void
+EAPI void
 e_bg_add(int container, int zone, int desk_x, int desk_y, char *file)
 {
    E_Config_Desktop_Background *cfbg;
@@ -151,7 +151,7 @@ e_bg_add(int container, int zone, int desk_x, int desk_y, char *file)
    e_config->desktop_backgrounds = evas_list_append(e_config->desktop_backgrounds, cfbg);
 }
 
-void
+EAPI void
 e_bg_del(int container, int zone, int desk_x, int desk_y)
 {
    Evas_List *l;
@@ -172,7 +172,7 @@ e_bg_del(int container, int zone, int desk_x, int desk_y)
      }
 }
 
-void
+EAPI void
 e_bg_update(void)
 {
    Evas_List *l, *ll, *lll;

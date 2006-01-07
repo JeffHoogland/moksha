@@ -9,25 +9,25 @@ static int _e_focus_raise_timer(void* data);
 /* local subsystem globals */
 
 /* externally accessible functions */
-int
+EAPI int
 e_focus_init(void)
 {
    return 1;
 }
 
-int
+EAPI int
 e_focus_shutdown(void)
 {
    return 1;
 }
 
-void
+EAPI void
 e_focus_idler_before(void)
 {
    return;
 }
 
-void
+EAPI void
 e_focus_event_mouse_in(E_Border* bd)
 {
    if ((e_config->focus_policy == E_FOCUS_MOUSE) ||
@@ -50,7 +50,7 @@ e_focus_event_mouse_in(E_Border* bd)
      }
 }
 
-void
+EAPI void
 e_focus_event_mouse_out(E_Border* bd)
 {
    if (e_config->focus_policy == E_FOCUS_MOUSE)
@@ -74,7 +74,7 @@ e_focus_event_mouse_out(E_Border* bd)
      }
 }
 
-void
+EAPI void
 e_focus_event_mouse_down(E_Border* bd)
 {
    if (e_config->focus_policy == E_FOCUS_CLICK)
@@ -99,12 +99,12 @@ e_focus_event_mouse_down(E_Border* bd)
      }
 }
 
-void
+EAPI void
 e_focus_event_mouse_up(E_Border* bd)
 {
 }
 
-void
+EAPI void
 e_focus_event_focus_in(E_Border *bd)
 {
    if ((e_config->focus_policy == E_FOCUS_CLICK) &&
@@ -123,7 +123,7 @@ e_focus_event_focus_in(E_Border *bd)
      }
 }
 
-void
+EAPI void
 e_focus_event_focus_out(E_Border *bd)
 {
    if ((e_config->focus_policy == E_FOCUS_CLICK) &&
@@ -147,7 +147,7 @@ e_focus_event_focus_out(E_Border *bd)
      }
 }
 
-void
+EAPI void
 e_focus_setup(E_Border *bd)
 {
    if ((e_config->focus_policy == E_FOCUS_CLICK) ||
@@ -171,7 +171,7 @@ e_focus_setup(E_Border *bd)
      }
 }
 
-void
+EAPI void
 e_focus_setdown(E_Border *bd)
 {
    if (!bd->button_grabbed) return;

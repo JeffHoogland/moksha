@@ -23,7 +23,7 @@ struct _CFData
    int menu_autoscroll_cursor_margin;
 };
 
-E_Config_Dialog *
+EAPI E_Config_Dialog *
 e_int_config_menus(E_Container *con) 
 {
    E_Config_Dialog *cfd;

@@ -62,14 +62,14 @@ static void _e_box_smart_clip_unset(Evas_Object *obj);
 static Evas_Smart *_e_smart = NULL;
 
 /* externally accessible functions */
-Evas_Object *
+EAPI Evas_Object *
 e_box_add(Evas *evas)
 {
    _e_box_smart_init();
    return evas_object_smart_add(evas, _e_smart);
 }
 
-int
+EAPI int
 e_box_freeze(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -80,7 +80,7 @@ e_box_freeze(Evas_Object *obj)
    return sd->frozen;
 }
 
-int
+EAPI int
 e_box_thaw(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -92,7 +92,7 @@ e_box_thaw(Evas_Object *obj)
    return sd->frozen;
 }
 
-void
+EAPI void
 e_box_orientation_set(Evas_Object *obj, int horizontal)
 {
    E_Smart_Data *sd;
@@ -106,7 +106,7 @@ e_box_orientation_set(Evas_Object *obj, int horizontal)
    if (sd->frozen <= 0) _e_box_smart_reconfigure(sd);
 }
 
-int
+EAPI int
 e_box_orientation_get(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -116,7 +116,7 @@ e_box_orientation_get(Evas_Object *obj)
    return sd->horizontal;
 }
 
-void
+EAPI void
 e_box_homogenous_set(Evas_Object *obj, int homogenous)
 {
    E_Smart_Data *sd;
@@ -129,7 +129,7 @@ e_box_homogenous_set(Evas_Object *obj, int homogenous)
    if (sd->frozen <= 0) _e_box_smart_reconfigure(sd);
 }
 
-int
+EAPI int
 e_box_pack_start(Evas_Object *obj, Evas_Object *child)
 {
    E_Smart_Data *sd;
@@ -143,7 +143,7 @@ e_box_pack_start(Evas_Object *obj, Evas_Object *child)
    return 0;
 }
 
-int
+EAPI int
 e_box_pack_end(Evas_Object *obj, Evas_Object *child)
 {
    E_Smart_Data *sd;
@@ -157,7 +157,7 @@ e_box_pack_end(Evas_Object *obj, Evas_Object *child)
    return evas_list_count(sd->items) - 1;
 }
 
-int
+EAPI int
 e_box_pack_before(Evas_Object *obj, Evas_Object *child, Evas_Object *before)
 {
    E_Smart_Data *sd;
@@ -177,7 +177,7 @@ e_box_pack_before(Evas_Object *obj, Evas_Object *child, Evas_Object *before)
    return i;
 }
 
-int
+EAPI int
 e_box_pack_after(Evas_Object *obj, Evas_Object *child, Evas_Object *after)
 {
    E_Smart_Data *sd;
@@ -197,7 +197,7 @@ e_box_pack_after(Evas_Object *obj, Evas_Object *child, Evas_Object *after)
    return i;
 }
 
-int
+EAPI int
 e_box_pack_count_get(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -207,7 +207,7 @@ e_box_pack_count_get(Evas_Object *obj)
    return evas_list_count(sd->items);
 }
 
-Evas_Object *
+EAPI Evas_Object *
 e_box_pack_object_nth(Evas_Object *obj, int n)
 {
    E_Smart_Data *sd;
@@ -217,7 +217,7 @@ e_box_pack_object_nth(Evas_Object *obj, int n)
    return evas_list_nth(sd->items, n);
 }
 
-Evas_Object *
+EAPI Evas_Object *
 e_box_pack_object_first(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -227,7 +227,7 @@ e_box_pack_object_first(Evas_Object *obj)
    return evas_list_data(sd->items);
 }
 
-Evas_Object *
+EAPI Evas_Object *
 e_box_pack_object_last(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -237,7 +237,7 @@ e_box_pack_object_last(Evas_Object *obj)
    return evas_list_data(evas_list_last(sd->items));
 }
 
-void
+EAPI void
 e_box_pack_options_set(Evas_Object *obj, int fill_w, int fill_h, int expand_w, int expand_h, double align_x, double align_y, Evas_Coord min_w, Evas_Coord min_h, Evas_Coord max_w, Evas_Coord max_h)
 {
    E_Box_Item *bi;
@@ -258,7 +258,7 @@ e_box_pack_options_set(Evas_Object *obj, int fill_w, int fill_h, int expand_w, i
    if (bi->sd->frozen <= 0) _e_box_smart_reconfigure(bi->sd);
 }
 
-void
+EAPI void
 e_box_unpack(Evas_Object *obj)
 {
    E_Box_Item *bi;
@@ -274,7 +274,7 @@ e_box_unpack(Evas_Object *obj)
    if (sd->frozen <= 0) _e_box_smart_reconfigure(sd);
 }
 
-void
+EAPI void
 e_box_min_size_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh)
 {
    E_Smart_Data *sd;
@@ -286,7 +286,7 @@ e_box_min_size_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh)
    if (minh) *minh = sd->min.h;
 }
 
-void
+EAPI void
 e_box_max_size_get(Evas_Object *obj, Evas_Coord *maxw, Evas_Coord *maxh)
 {
    E_Smart_Data *sd;
@@ -298,7 +298,7 @@ e_box_max_size_get(Evas_Object *obj, Evas_Coord *maxw, Evas_Coord *maxh)
    if (maxh) *maxh = sd->max.h;
 }
 
-void
+EAPI void
 e_box_align_get(Evas_Object *obj, double *ax, double *ay)
 {
    E_Smart_Data *sd;
@@ -309,7 +309,7 @@ e_box_align_get(Evas_Object *obj, double *ax, double *ay)
    if (ay) *ay = sd->align.y;
 }
 
-void
+EAPI void
 e_box_align_set(Evas_Object *obj, double ax, double ay)
 {
    E_Smart_Data *sd;

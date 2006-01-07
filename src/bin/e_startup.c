@@ -17,7 +17,7 @@ static Ecore_Timer *timeout_timer = NULL;
 static E_App       *waiting_app = NULL;
 
 /* externally accessible functions */
-void
+EAPI void
 e_startup(E_Startup_Mode mode)
 {
    char *homedir;

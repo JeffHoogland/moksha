@@ -57,14 +57,14 @@ static void _e_icon_layout_smart_clip_unset(Evas_Object *obj);
 static Evas_Smart *_e_smart = NULL;
 
 /* externally accessible functions */
-Evas_Object *
+EAPI Evas_Object *
 e_icon_layout_add(Evas *evas)
 {
    _e_icon_layout_smart_init();
    return evas_object_smart_add(evas, _e_smart);
 }
 
-int
+EAPI int
 e_icon_layout_freeze(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -76,7 +76,7 @@ e_icon_layout_freeze(Evas_Object *obj)
    return sd->frozen;
 }
 
-int
+EAPI int
 e_icon_layout_thaw(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -90,7 +90,7 @@ e_icon_layout_thaw(Evas_Object *obj)
    return sd->frozen;
 }
 
-void
+EAPI void
 e_icon_layout_virtual_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 {
    E_Smart_Data *sd;
@@ -102,7 +102,7 @@ e_icon_layout_virtual_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
    if (h) *h = sd->vh;
 }
 
-void
+EAPI void
 e_icon_layout_width_fix(Evas_Object *obj, Evas_Coord w)
 {
    E_Smart_Data *sd;
@@ -119,7 +119,7 @@ e_icon_layout_width_fix(Evas_Object *obj, Evas_Coord w)
    if (sd->frozen <= 0) _e_icon_layout_smart_reconfigure(sd);   
 }
 
-void
+EAPI void
 e_icon_layout_height_fix(Evas_Object *obj, Evas_Coord h)
 {
    E_Smart_Data *sd;
@@ -136,7 +136,7 @@ e_icon_layout_height_fix(Evas_Object *obj, Evas_Coord h)
    if (sd->frozen <= 0) _e_icon_layout_smart_reconfigure(sd);   
 }
 
-void
+EAPI void
 e_icon_layout_sort(Evas_Object *obj, int (*func)(void *d1, void *d2))
 {
    E_Smart_Data *sd;
@@ -148,7 +148,8 @@ e_icon_layout_sort(Evas_Object *obj, int (*func)(void *d1, void *d2))
    _e_icon_layout_smart_reconfigure(sd);   
 }
    
-void e_icon_layout_icon_callbacks_set(Evas_Object *child, void (*appear)(Evas_Object *obj, void *data), void (*disappear)(Evas_Object *obj, void *data), void *data)
+EAPI void
+e_icon_layout_icon_callbacks_set(Evas_Object *child, void (*appear)(Evas_Object *obj, void *data), void (*disappear)(Evas_Object *obj, void *data), void *data)
 {
    E_Icon_Layout_Item *li;
    
@@ -160,7 +161,7 @@ void e_icon_layout_icon_callbacks_set(Evas_Object *child, void (*appear)(Evas_Ob
    li->data = data;
 }
 
-void
+EAPI void
 e_icon_layout_pack(Evas_Object *obj, Evas_Object *child)
 {
    E_Smart_Data *sd;
@@ -234,7 +235,7 @@ e_icon_layout_pack(Evas_Object *obj, Evas_Object *child)
    _e_icon_layout_smart_move_resize_item(li);
 }
 
-void
+EAPI void
 e_icon_layout_child_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 {
    E_Icon_Layout_Item *li;
@@ -249,7 +250,7 @@ e_icon_layout_child_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    _e_icon_layout_smart_move_resize_item(li);
 }
 
-void
+EAPI void
 e_icon_layout_unpack(Evas_Object *obj)
 {
    E_Icon_Layout_Item *li;
@@ -262,7 +263,7 @@ e_icon_layout_unpack(Evas_Object *obj)
    _e_icon_layout_smart_disown(obj);
 }
 
-void
+EAPI void
 e_icon_layout_spacing_set(Evas_Object *obj, Evas_Coord xs, Evas_Coord ys)
 {
    E_Smart_Data *sd;
@@ -284,7 +285,7 @@ e_icon_layout_spacing_set(Evas_Object *obj, Evas_Coord xs, Evas_Coord ys)
    if (sd->frozen <= 0) _e_icon_layout_smart_reconfigure(sd);   
 }
 
-void         
+EAPI void         
 e_icon_layout_redraw_force(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -297,7 +298,7 @@ e_icon_layout_redraw_force(Evas_Object *obj)
    if (sd->frozen <= 0) _e_icon_layout_smart_reconfigure(sd);   
 }
 
-void
+EAPI void
 e_icon_layout_reset(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -319,7 +320,7 @@ e_icon_layout_reset(Evas_Object *obj)
     }      
 }
 
-void
+EAPI void
 e_icon_layout_clip_freeze(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -330,7 +331,7 @@ e_icon_layout_clip_freeze(Evas_Object *obj)
    sd->clip_frozen = 1;
 }
 
-void
+EAPI void
 e_icon_layout_clip_thaw(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -341,7 +342,7 @@ e_icon_layout_clip_thaw(Evas_Object *obj)
    sd->clip_frozen = 0;
 }
 
-void
+EAPI void
 e_icon_layout_viewport_set(Evas_Object *obj, Evas_Object *viewport)
 {
    E_Smart_Data *sd;
@@ -356,7 +357,7 @@ e_icon_layout_viewport_set(Evas_Object *obj, Evas_Object *viewport)
    if (sd->frozen <= 0) _e_icon_layout_smart_reconfigure(sd);   
 }
 
-Evas_Object *
+EAPI Evas_Object *
 e_icon_layout_viewport_get(Evas_Object *obj)
 {
    /* TODO */

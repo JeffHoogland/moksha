@@ -14,7 +14,7 @@ static void _e_wid_del_hook(Evas_Object *obj);
 /* local subsystem functions */
 
 /* externally accessible functions */
-Evas_Object *
+EAPI Evas_Object *
 e_widget_list_add(Evas *evas, int homogenous, int horiz)
 {
    Evas_Object *obj, *o;
@@ -37,7 +37,7 @@ e_widget_list_add(Evas *evas, int homogenous, int horiz)
    return obj;
 }
 
-void
+EAPI void
 e_widget_list_object_append(Evas_Object *obj, Evas_Object *sobj, int fill, int expand, double align)
 {
    E_Widget_Data *wd;

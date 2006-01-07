@@ -47,7 +47,7 @@ struct _CFData
 };
 
 /* a nice easy setup function that does the dirty work */
-void
+EAPI void
 e_int_border_locks(E_Border *bd)
 {
    E_Config_Dialog *cfd;

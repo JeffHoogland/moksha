@@ -4,19 +4,19 @@
 #include "e.h"
 
 /* Atoms */
-Ecore_X_Atom E_ATOM_MANAGED = 0;
-Ecore_X_Atom E_ATOM_CONTAINER = 0;
-Ecore_X_Atom E_ATOM_ZONE = 0;
-Ecore_X_Atom E_ATOM_DESK = 0;
-Ecore_X_Atom E_ATOM_MAPPED = 0;
-Ecore_X_Atom E_ATOM_SHADE_DIRECTION = 0;
-Ecore_X_Atom E_ATOM_HIDDEN = 0;
-Ecore_X_Atom E_ATOM_BORDER_SIZE = 0;
-Ecore_X_Atom E_ATOM_WINDOW_STATE = 0;
-Ecore_X_Atom E_ATOM_WINDOW_STATE_CENTERED = 0;
+EAPI Ecore_X_Atom E_ATOM_MANAGED = 0;
+EAPI Ecore_X_Atom E_ATOM_CONTAINER = 0;
+EAPI Ecore_X_Atom E_ATOM_ZONE = 0;
+EAPI Ecore_X_Atom E_ATOM_DESK = 0;
+EAPI Ecore_X_Atom E_ATOM_MAPPED = 0;
+EAPI Ecore_X_Atom E_ATOM_SHADE_DIRECTION = 0;
+EAPI Ecore_X_Atom E_ATOM_HIDDEN = 0;
+EAPI Ecore_X_Atom E_ATOM_BORDER_SIZE = 0;
+EAPI Ecore_X_Atom E_ATOM_WINDOW_STATE = 0;
+EAPI Ecore_X_Atom E_ATOM_WINDOW_STATE_CENTERED = 0;
 
 /* externally accessible functions */
-int
+EAPI int
 e_atoms_init(void)
 {
    E_ATOM_MANAGED = ecore_x_atom_get("__E_WINDOW_MANAGED");
@@ -33,7 +33,7 @@ e_atoms_init(void)
    return 1;
 }
 
-int
+EAPI int
 e_atoms_shutdown(void)
 {
    /* Nothing really to do here yet, just present for consistency right now */

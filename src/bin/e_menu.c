@@ -111,7 +111,7 @@ static Ecore_Event_Handler *_e_menu_mouse_wheel_handler  = NULL;
 static Ecore_Event_Handler *_e_menu_window_shape_handler = NULL;
 
 /* externally accessible functions */
-int
+EAPI int
 e_menu_init(void)
 {
    _e_menu_key_down_handler     = ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,          _e_menu_cb_key_down,    NULL);
@@ -124,7 +124,7 @@ e_menu_init(void)
    return 1;
 }
 
-int
+EAPI int
 e_menu_shutdown(void)
 {
    E_FN_DEL(ecore_event_handler_del, _e_menu_key_down_handler);
@@ -158,7 +158,7 @@ e_menu_shutdown(void)
    return 1;
 }
 
-E_Menu *
+EAPI E_Menu *
 e_menu_new(void)
 {
    E_Menu *m;
@@ -172,7 +172,7 @@ e_menu_new(void)
 }
 
 
-void
+EAPI void
 e_menu_activate_key(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir)
 {
    E_OBJECT_CHECK(m);
@@ -225,7 +225,7 @@ e_menu_activate_key(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir
      }
 }
 
-void
+EAPI void
 e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir, Ecore_X_Time activate_time)
 {
    E_Menu_Item *pmi;
@@ -269,7 +269,7 @@ e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int d
    if (pmi) e_menu_item_active_set(pmi, 0);
 }
 
-void
+EAPI void
 e_menu_activate(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir)
 {
    E_Menu_Item *pmi;
@@ -313,7 +313,7 @@ e_menu_activate(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir)
    if (pmi) e_menu_item_active_set(pmi, 0);
 }
 
-void
+EAPI void
 e_menu_deactivate(E_Menu *m)
 {
    E_OBJECT_CHECK(m);
@@ -324,7 +324,7 @@ e_menu_deactivate(E_Menu *m)
      m->post_deactivate_cb.func(m->post_deactivate_cb.data, m);
 }
 
-int
+EAPI int
 e_menu_freeze(E_Menu *m)
 {
    E_OBJECT_CHECK_RETURN(m, 0);
@@ -333,7 +333,7 @@ e_menu_freeze(E_Menu *m)
    return m->frozen;
 }
 
-int
+EAPI int
 e_menu_thaw(E_Menu *m)
 {
    E_OBJECT_CHECK_RETURN(m, 0);
@@ -343,7 +343,7 @@ e_menu_thaw(E_Menu *m)
    return m->frozen;
 }
 
-void
+EAPI void
 e_menu_title_set(E_Menu *m, char *title)
 {
    E_OBJECT_CHECK(m);
@@ -361,7 +361,7 @@ e_menu_title_set(E_Menu *m, char *title)
    m->changed = 1;
 }
 
-void
+EAPI void
 e_menu_icon_file_set(E_Menu *m, char *icon)
 {
    E_OBJECT_CHECK(m);
@@ -369,7 +369,7 @@ e_menu_icon_file_set(E_Menu *m, char *icon)
    /* FIXME: support menu icons */
 }
 
-void
+EAPI void
 e_menu_category_set(E_Menu *m, char *category)
 {
    E_OBJECT_CHECK(m);
@@ -383,7 +383,8 @@ e_menu_category_set(E_Menu *m, char *category)
    else m->category = NULL;
    m->changed = 1;
 }
-void
+
+EAPI void
 e_menu_category_data_set(char *category, void *data)
 {
    E_Menu_Category *cat;
@@ -400,7 +401,7 @@ e_menu_category_data_set(char *category, void *data)
      }
 }
 
-void
+EAPI void
 e_menu_category_callback_set(char *category, void (*create) (E_Menu *m, void *category_data, void *data), void (*free) (void *data), void *data)
 {
    E_Menu_Category *cat;
@@ -420,7 +421,7 @@ e_menu_category_callback_set(char *category, void (*create) (E_Menu *m, void *ca
    cat->callbacks = evas_list_append(cat->callbacks,cb);
 }
 
-void
+EAPI void
 e_menu_pre_activate_callback_set(E_Menu *m, void (*func) (void *data, E_Menu *m), void *data)
 {
    E_OBJECT_CHECK(m);
@@ -429,7 +430,7 @@ e_menu_pre_activate_callback_set(E_Menu *m, void (*func) (void *data, E_Menu *m)
    m->pre_activate_cb.data = data;
 }
 
-void
+EAPI void
 e_menu_post_deactivate_callback_set(E_Menu *m, void (*func) (void *data, E_Menu *m), void *data)
 {
    E_OBJECT_CHECK(m);
@@ -438,7 +439,7 @@ e_menu_post_deactivate_callback_set(E_Menu *m, void (*func) (void *data, E_Menu 
    m->post_deactivate_cb.data = data;
 }
 
-E_Menu *
+EAPI E_Menu *
 e_menu_root_get(E_Menu *m)
 {
    E_Menu *ret;
@@ -454,7 +455,7 @@ e_menu_root_get(E_Menu *m)
    return ret;
 }
 
-E_Menu_Item *
+EAPI E_Menu_Item *
 e_menu_item_new(E_Menu *m)
 {
    E_Menu_Item *mi;
@@ -467,7 +468,7 @@ e_menu_item_new(E_Menu *m)
    return mi;
 }
 
-E_Menu_Item *
+EAPI E_Menu_Item *
 e_menu_item_nth(E_Menu *m, int n)
 {
    E_OBJECT_CHECK_RETURN(m, NULL);
@@ -475,7 +476,7 @@ e_menu_item_nth(E_Menu *m, int n)
    return (E_Menu_Item *)evas_list_nth(m->items, n);
 }
 
-int
+EAPI int
 e_menu_item_num_get(E_Menu_Item *mi)
 {
    Evas_List *l;
@@ -494,7 +495,7 @@ e_menu_item_num_get(E_Menu_Item *mi)
    return -1;
 }
 
-void
+EAPI void
 e_menu_item_icon_file_set(E_Menu_Item *mi, const char *icon)
 {
    E_OBJECT_CHECK(mi);
@@ -511,7 +512,7 @@ e_menu_item_icon_file_set(E_Menu_Item *mi, const char *icon)
    mi->menu->changed = 1;
 }
 
-void
+EAPI void
 e_menu_item_icon_edje_set(E_Menu_Item *mi, const char *icon, const char *key)
 {
    E_OBJECT_CHECK(mi);
@@ -530,7 +531,7 @@ e_menu_item_icon_edje_set(E_Menu_Item *mi, const char *icon, const char *key)
    mi->menu->changed = 1;
 }
 
-void
+EAPI void
 e_menu_item_label_set(E_Menu_Item *mi, const char *label)
 {
    E_OBJECT_CHECK(mi);
@@ -545,7 +546,7 @@ e_menu_item_label_set(E_Menu_Item *mi, const char *label)
    mi->menu->changed = 1;
 }
 
-void
+EAPI void
 e_menu_item_submenu_set(E_Menu_Item *mi, E_Menu *sub)
 {
    E_OBJECT_CHECK(mi);
@@ -557,7 +558,7 @@ e_menu_item_submenu_set(E_Menu_Item *mi, E_Menu *sub)
    mi->menu->changed = 1;
 }
 
-void
+EAPI void
 e_menu_item_separator_set(E_Menu_Item *mi, int sep)
 {
    E_OBJECT_CHECK(mi);
@@ -569,7 +570,7 @@ e_menu_item_separator_set(E_Menu_Item *mi, int sep)
    mi->menu->changed = 1;
 }
 
-void
+EAPI void
 e_menu_item_check_set(E_Menu_Item *mi, int chk)
 {
    E_OBJECT_CHECK(mi);
@@ -581,7 +582,7 @@ e_menu_item_check_set(E_Menu_Item *mi, int chk)
    mi->menu->changed = 1;
 }
 
-void
+EAPI void
 e_menu_item_radio_set(E_Menu_Item *mi, int rad)
 {
    E_OBJECT_CHECK(mi);
@@ -593,7 +594,7 @@ e_menu_item_radio_set(E_Menu_Item *mi, int rad)
    mi->menu->changed = 1;
 }
 
-void
+EAPI void
 e_menu_item_radio_group_set(E_Menu_Item *mi, int radg)
 {
    E_OBJECT_CHECK(mi);
@@ -604,7 +605,7 @@ e_menu_item_radio_group_set(E_Menu_Item *mi, int radg)
    mi->menu->changed = 1;
 }
 
-void
+EAPI void
 e_menu_item_toggle_set(E_Menu_Item *mi, int tog)
 {
    E_OBJECT_CHECK(mi);
@@ -662,7 +663,7 @@ e_menu_item_toggle_set(E_Menu_Item *mi, int tog)
      }
 }
 
-int
+EAPI int
 e_menu_item_toggle_get(E_Menu_Item *mi)
 {
    E_OBJECT_CHECK_RETURN(mi, 0);
@@ -670,7 +671,7 @@ e_menu_item_toggle_get(E_Menu_Item *mi)
    return mi->toggle;
 }
 
-void
+EAPI void
 e_menu_item_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data)
 {
    E_OBJECT_CHECK(mi);
@@ -679,7 +680,7 @@ e_menu_item_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, 
    mi->cb.data = data;
 }
 
-void
+EAPI void
 e_menu_item_submenu_pre_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data)
 {
    E_OBJECT_CHECK(mi);
@@ -690,7 +691,7 @@ e_menu_item_submenu_pre_callback_set(E_Menu_Item *mi,  void (*func) (void *data,
      mi->submenu_post_cb.func = _e_menu_cb_item_submenu_post_default;
 }
 
-void
+EAPI void
 e_menu_item_submenu_post_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data)
 {
    E_OBJECT_CHECK(mi);
@@ -699,7 +700,7 @@ e_menu_item_submenu_post_callback_set(E_Menu_Item *mi,  void (*func) (void *data
    mi->submenu_post_cb.data = data;
 }
 
-void
+EAPI void
 e_menu_item_active_set(E_Menu_Item *mi, int active)
 {
    E_OBJECT_CHECK(mi);
@@ -747,7 +748,7 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
      }
 }
 
-void
+EAPI void
 e_menu_idler_before(void)
 {
    /* when e goes "idle" this gets called so leave all our hard work till */
@@ -917,7 +918,7 @@ e_menu_idler_before(void)
      }
 }
 
-Ecore_X_Window
+EAPI Ecore_X_Window
 e_menu_grab_window_get(void)
 {
   return _e_menu_win;

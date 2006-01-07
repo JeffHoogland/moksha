@@ -25,7 +25,7 @@ static void _e_border_menu_cb_skip_winlist(void *data, E_Menu *m, E_Menu_Item *m
 static void _e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_sendto(void *data, E_Menu *m, E_Menu_Item *mi);
 
-void
+EAPI void
 e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_Time timestamp)
 {
    E_Menu *m;
@@ -355,7 +355,7 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 			   E_MENU_POP_DIRECTION_DOWN, timestamp);
 }
 
-void
+EAPI void
 e_int_border_menu_del(E_Border *bd)
 {
    int was_menu = 0;

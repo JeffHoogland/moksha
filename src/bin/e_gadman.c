@@ -82,7 +82,7 @@ static void _e_gadman_client_geom_store(E_Gadman_Client *gmc);
 static E_Config_DD *gadman_config_edd = NULL;
 
 /* externally accessible functions */
-int
+EAPI int
 e_gadman_init(void)
 {
    gadman_config_edd = E_CONFIG_DD_NEW("Gadman_Client_Config", Gadman_Client_Config);
@@ -110,7 +110,7 @@ e_gadman_init(void)
    return 1;
 }
 
-int
+EAPI int
 e_gadman_shutdown(void)
 {
    E_CONFIG_DD_FREE(gadman_config_edd);
@@ -118,7 +118,7 @@ e_gadman_shutdown(void)
    return 1;
 }
 
-E_Gadman *
+EAPI E_Gadman *
 e_gadman_new(E_Container *con)
 {
    E_Gadman    *gm;
@@ -129,7 +129,7 @@ e_gadman_new(E_Container *con)
    return gm;
 }
 
-void
+EAPI void
 e_gadman_mode_set(E_Gadman *gm, E_Gadman_Mode mode)
 {
    Evas_List *l;
@@ -160,7 +160,7 @@ e_gadman_mode_set(E_Gadman *gm, E_Gadman_Mode mode)
      }
 }
 
-E_Gadman_Mode
+EAPI E_Gadman_Mode
 e_gadman_mode_get(E_Gadman *gm)
 {
    E_OBJECT_CHECK_RETURN(gm, E_GADMAN_MODE_NORMAL);
@@ -168,7 +168,7 @@ e_gadman_mode_get(E_Gadman *gm)
    return gm->mode;
 }
 
-void
+EAPI void
 e_gadman_all_save(E_Gadman *gm)
 {
    Evas_List *l;
@@ -183,7 +183,7 @@ e_gadman_all_save(E_Gadman *gm)
      }
 }
 
-void
+EAPI void
 e_gadman_container_resize(E_Gadman *gm)
 {
    Evas_List *l;
@@ -198,7 +198,7 @@ e_gadman_container_resize(E_Gadman *gm)
      }
 }
 
-E_Gadman_Client *
+EAPI E_Gadman_Client *
 e_gadman_client_new(E_Gadman *gm)
 {
    E_Gadman_Client *gmc;
@@ -223,7 +223,7 @@ e_gadman_client_new(E_Gadman *gm)
    return gmc;
 }
 
-void
+EAPI void
 e_gadman_client_save(E_Gadman_Client *gmc)
 {
    Gadman_Client_Config *cf, *cf2;
@@ -265,7 +265,7 @@ e_gadman_client_save(E_Gadman_Client *gmc)
    e_config_domain_save(buf, gadman_config_edd, cf);
 }
 
-void
+EAPI void
 e_gadman_client_load(E_Gadman_Client *gmc)
 {
    Gadman_Client_Config *cf, *cf2;
@@ -374,7 +374,7 @@ e_gadman_client_load(E_Gadman_Client *gmc)
      _e_gadman_client_edit_begin(gmc);
 }
 
-void
+EAPI void
 e_gadman_client_domain_set(E_Gadman_Client *gmc, char *domain, int instance)
 {
    E_OBJECT_CHECK(gmc);
@@ -384,7 +384,7 @@ e_gadman_client_domain_set(E_Gadman_Client *gmc, char *domain, int instance)
    gmc->instance = instance;
 }
 
-void
+EAPI void
 e_gadman_client_zone_set(E_Gadman_Client *gmc, E_Zone *zone)
 {
    E_OBJECT_CHECK(gmc);
@@ -401,7 +401,7 @@ e_gadman_client_zone_set(E_Gadman_Client *gmc, E_Zone *zone)
    e_object_unref(E_OBJECT(gmc));
 }
 
-void
+EAPI void
 e_gadman_client_policy_set(E_Gadman_Client *gmc, E_Gadman_Policy pol)
 {
    E_OBJECT_CHECK(gmc);
@@ -426,7 +426,7 @@ e_gadman_client_policy_set(E_Gadman_Client *gmc, E_Gadman_Policy pol)
    
 }
 
-void
+EAPI void
 e_gadman_client_min_size_set(E_Gadman_Client *gmc, Evas_Coord minw, Evas_Coord minh)
 {
    E_OBJECT_CHECK(gmc);
@@ -447,7 +447,7 @@ e_gadman_client_min_size_set(E_Gadman_Client *gmc, Evas_Coord minw, Evas_Coord m
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
-void
+EAPI void
 e_gadman_client_max_size_set(E_Gadman_Client *gmc, Evas_Coord maxw, Evas_Coord maxh)
 {
    E_OBJECT_CHECK(gmc);
@@ -468,7 +468,7 @@ e_gadman_client_max_size_set(E_Gadman_Client *gmc, Evas_Coord maxw, Evas_Coord m
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
-void
+EAPI void
 e_gadman_client_align_set(E_Gadman_Client *gmc, double xalign, double yalign)
 {
    E_OBJECT_CHECK(gmc);
@@ -481,7 +481,7 @@ e_gadman_client_align_set(E_Gadman_Client *gmc, double xalign, double yalign)
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
-void
+EAPI void
 e_gadman_client_aspect_set(E_Gadman_Client *gmc, double mina, double maxa)
 {
    E_OBJECT_CHECK(gmc);
@@ -490,7 +490,7 @@ e_gadman_client_aspect_set(E_Gadman_Client *gmc, double mina, double maxa)
    gmc->maxa = maxa;
 }
 
-void
+EAPI void
 e_gadman_client_padding_set(E_Gadman_Client *gmc, int l, int r, int t, int b)
 {
    E_OBJECT_CHECK(gmc);
@@ -501,7 +501,7 @@ e_gadman_client_padding_set(E_Gadman_Client *gmc, int l, int r, int t, int b)
    gmc->pad.b = b;
 }
 
-void
+EAPI void
 e_gadman_client_auto_size_set(E_Gadman_Client *gmc, Evas_Coord autow, Evas_Coord autoh)
 {
    E_OBJECT_CHECK(gmc);
@@ -521,7 +521,7 @@ e_gadman_client_auto_size_set(E_Gadman_Client *gmc, Evas_Coord autow, Evas_Coord
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
-void
+EAPI void
 e_gadman_client_edge_set(E_Gadman_Client *gmc, E_Gadman_Edge edge)
 {
    E_OBJECT_CHECK(gmc);
@@ -529,7 +529,7 @@ e_gadman_client_edge_set(E_Gadman_Client *gmc, E_Gadman_Edge edge)
    gmc->edge = edge;
 }
 
-E_Gadman_Edge
+EAPI E_Gadman_Edge
 e_gadman_client_edge_get(E_Gadman_Client *gmc)
 {
    E_OBJECT_CHECK_RETURN(gmc, E_GADMAN_EDGE_TOP);
@@ -537,7 +537,7 @@ e_gadman_client_edge_get(E_Gadman_Client *gmc)
    return gmc->edge;
 }
 
-void
+EAPI void
 e_gadman_client_geometry_get(E_Gadman_Client *gmc, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h)
 {
    E_OBJECT_CHECK(gmc);
@@ -548,7 +548,7 @@ e_gadman_client_geometry_get(E_Gadman_Client *gmc, Evas_Coord *x, Evas_Coord *y,
    if (h) *h = gmc->h;
 }
 
-void
+EAPI void
 e_gadman_client_user_resize(E_Gadman_Client *gmc, Evas_Coord w, Evas_Coord h)
 {
    E_OBJECT_CHECK(gmc);
@@ -565,7 +565,7 @@ e_gadman_client_user_resize(E_Gadman_Client *gmc, Evas_Coord w, Evas_Coord h)
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
-void
+EAPI void
 e_gadman_client_resize(E_Gadman_Client *gmc, Evas_Coord w, Evas_Coord h)
 {
    int re_adjust = 0;
@@ -593,7 +593,7 @@ e_gadman_client_resize(E_Gadman_Client *gmc, Evas_Coord w, Evas_Coord h)
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
-void
+EAPI void
 e_gadman_client_change_func_set(E_Gadman_Client *gmc, void (*func) (void *data, E_Gadman_Client *gmc, E_Gadman_Change change), void *data)
 {
    E_OBJECT_CHECK(gmc);
@@ -602,7 +602,7 @@ e_gadman_client_change_func_set(E_Gadman_Client *gmc, void (*func) (void *data, 
    gmc->data = data;
 }
 
-E_Menu *
+EAPI E_Menu *
 e_gadman_client_menu_new(E_Gadman_Client *gmc)
 {
    E_Menu *m;

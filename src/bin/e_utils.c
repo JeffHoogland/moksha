@@ -3,20 +3,20 @@
  */
 #include "e.h"
 
-E_Path *path_data    = NULL;
-E_Path *path_images  = NULL;
-E_Path *path_fonts   = NULL;
-E_Path *path_themes  = NULL;
-E_Path *path_init    = NULL;
-E_Path *path_icons   = NULL;
-E_Path *path_modules = NULL;
-E_Path *path_backgrounds = NULL;
-E_Path *path_input_methods = NULL;
-E_Path *path_messages = NULL;
-int     restart      = 0;
-int     good         = 0;
-int     evil         = 0;
-int     starting     = 1;
+EAPI E_Path *path_data    = NULL;
+EAPI E_Path *path_images  = NULL;
+EAPI E_Path *path_fonts   = NULL;
+EAPI E_Path *path_themes  = NULL;
+EAPI E_Path *path_init    = NULL;
+EAPI E_Path *path_icons   = NULL;
+EAPI E_Path *path_modules = NULL;
+EAPI E_Path *path_backgrounds = NULL;
+EAPI E_Path *path_input_methods = NULL;
+EAPI E_Path *path_messages = NULL;
+EAPI int     restart      = 0;
+EAPI int     good         = 0;
+EAPI int     evil         = 0;
+EAPI int     starting     = 1;
 
 typedef struct _E_Util_Fake_Mouse_Up_Info E_Util_Fake_Mouse_Up_Info;
 
@@ -34,7 +34,7 @@ static int _e_util_wakeup_cb(void *data);
 static Ecore_Timer *_e_util_dummy_timer = NULL;
 
 /* externally accessible functions */
-void
+EAPI void
 e_util_container_fake_mouse_up_later(E_Container *con, int button)
 {
    E_Util_Fake_Mouse_Up_Info *info;
@@ -52,7 +52,7 @@ e_util_container_fake_mouse_up_later(E_Container *con, int button)
      }
 }
 
-void
+EAPI void
 e_util_container_fake_mouse_up_all_later(E_Container *con)
 {
    E_OBJECT_CHECK(con);
@@ -63,14 +63,14 @@ e_util_container_fake_mouse_up_all_later(E_Container *con)
    e_util_container_fake_mouse_up_later(con, 3);
 }
 
-void
+EAPI void
 e_util_wakeup(void)
 {
    if (_e_util_dummy_timer) return;
    _e_util_dummy_timer = ecore_timer_add(0.0, _e_util_wakeup_cb, NULL);
 }
 
-void
+EAPI void
 e_util_env_set(const char *var, const char *val)
 {
    if (val)
@@ -97,7 +97,7 @@ e_util_env_set(const char *var, const char *val)
      }
 }
 
-E_Zone *
+EAPI E_Zone *
 e_util_zone_current_get(E_Manager *man)
 {
    E_Container *con;
@@ -115,35 +115,13 @@ e_util_zone_current_get(E_Manager *man)
    return NULL;
 }
 
-/* local subsystem functions */
-static void
-_e_util_container_fake_mouse_up_cb(void *data)
-{
-   E_Util_Fake_Mouse_Up_Info *info;
-   
-   info = data;
-   if (info)
-     {
-	evas_event_feed_mouse_up(info->con->bg_evas, info->button, EVAS_BUTTON_NONE, ecore_x_current_time_get(), NULL);
-	e_object_unref(E_OBJECT(info->con));
-	free(info);
-     }
-}
-
-static int
-_e_util_wakeup_cb(void *data)
-{
-   _e_util_dummy_timer = NULL;
-   return 0;
-}
-
-int
+EAPI int
 e_util_utils_installed(void)
 {
    return ecore_file_app_installed("emblem");
 }
 
-int
+EAPI int
 e_util_glob_match(const char *str, const char *glob)
 {
    if (glob[0] == 0)
@@ -156,7 +134,7 @@ e_util_glob_match(const char *str, const char *glob)
    return 0;
 }
 
-int
+EAPI int
 e_util_glob_case_match(const char *str, const char *glob)
 {
    char *tstr, *tglob, *p, *tp;
@@ -177,7 +155,7 @@ e_util_glob_case_match(const char *str, const char *glob)
    return 0;
 }
 
-E_Container *
+EAPI E_Container *
 e_util_container_number_get(int num)
 {
    Evas_List *l;
@@ -194,7 +172,7 @@ e_util_container_number_get(int num)
    return NULL;
 }
 
-E_Zone *
+EAPI E_Zone *
 e_util_container_zone_number_get(int con_num, int zone_num)
 {
    E_Container *con;
@@ -204,7 +182,7 @@ e_util_container_zone_number_get(int con_num, int zone_num)
    return e_container_zone_number_get(con, zone_num);
 }
 
-int
+EAPI int
 e_util_head_exec(int head, char *cmd)
 {
    char *penv_display;
@@ -259,7 +237,7 @@ e_util_head_exec(int head, char *cmd)
    return ok;
 }
 
-int
+EAPI int
 e_util_strcmp(char *s1, char *s2)
 {
    if ((s1) && (s2))
@@ -267,7 +245,7 @@ e_util_strcmp(char *s1, char *s2)
    return 0x7fffffff;
 }
 
-int
+EAPI int
 e_util_both_str_empty(char *s1, char *s2)
 {
    int empty = 0;
@@ -279,7 +257,7 @@ e_util_both_str_empty(char *s1, char *s2)
    return 0;
 }
 
-int
+EAPI int
 e_util_immortal_check(void)
 {
    Evas_List *wins;
@@ -300,7 +278,7 @@ e_util_immortal_check(void)
    return 0;
 }
 
-int
+EAPI int
 e_util_edje_icon_list_set(Evas_Object *obj, char *list)
 {
    char *buf;
@@ -330,7 +308,7 @@ e_util_edje_icon_list_set(Evas_Object *obj, char *list)
    return 0;
 }
 
-int
+EAPI int
 e_util_menu_item_edje_icon_list_set(E_Menu_Item *mi, char *list)
 {
    char *buf;
@@ -360,7 +338,7 @@ e_util_menu_item_edje_icon_list_set(E_Menu_Item *mi, char *list)
    return 0;
 }
 
-int
+EAPI int
 e_util_edje_icon_set(Evas_Object *obj, char *name)
 {
    char *file;
@@ -377,7 +355,7 @@ e_util_edje_icon_set(Evas_Object *obj, char *name)
    return 0;
 }
 
-int
+EAPI int
 e_util_menu_item_edje_icon_set(E_Menu_Item *mi, char *name)
 {
    char *file;
@@ -394,7 +372,7 @@ e_util_menu_item_edje_icon_set(E_Menu_Item *mi, char *name)
    return 0;
 }
 
-E_Container *
+EAPI E_Container *
 e_util_container_window_find(Ecore_X_Window win)
 {
    Evas_List *l, *ll;
@@ -417,7 +395,7 @@ e_util_container_window_find(Ecore_X_Window win)
    return NULL;
 }
 
-E_Border *
+EAPI E_Border *
 e_util_desk_border_above(E_Border *bd)
 {
    E_Border *above = NULL;
@@ -460,7 +438,7 @@ e_util_desk_border_above(E_Border *bd)
    return above;
 }
 
-E_Border *
+EAPI E_Border *
 e_util_desk_border_below(E_Border *bd)
 {
    E_Border *below = NULL;
@@ -506,3 +484,26 @@ e_util_desk_border_below(E_Border *bd)
 
    return below;
 }
+
+/* local subsystem functions */
+static void
+_e_util_container_fake_mouse_up_cb(void *data)
+{
+   E_Util_Fake_Mouse_Up_Info *info;
+   
+   info = data;
+   if (info)
+     {
+	evas_event_feed_mouse_up(info->con->bg_evas, info->button, EVAS_BUTTON_NONE, ecore_x_current_time_get(), NULL);
+	e_object_unref(E_OBJECT(info->con));
+	free(info);
+     }
+}
+
+static int
+_e_util_wakeup_cb(void *data)
+{
+   _e_util_dummy_timer = NULL;
+   return 0;
+}
+

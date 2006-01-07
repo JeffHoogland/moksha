@@ -36,7 +36,7 @@ static void _e_module_cb_dialog_disable(void *data, E_Dialog *dia);
 static Evas_List *_e_modules = NULL;
 
 /* externally accessible functions */
-int
+EAPI int
 e_module_init(void)
 {
    Evas_List *pl = NULL, *l;
@@ -67,7 +67,7 @@ e_module_init(void)
    return 1;
 }
 
-int
+EAPI int
 e_module_shutdown(void)
 {
    Evas_List *l, *tmp;
@@ -88,7 +88,7 @@ e_module_shutdown(void)
    return 1;
 }
 
-E_Module *
+EAPI E_Module *
 e_module_new(char *name)
 {
    E_Module *m;
@@ -236,7 +236,7 @@ init_done:
    return m;
 }
 
-int
+EAPI int
 e_module_save(E_Module *m)
 {
    E_OBJECT_CHECK_RETURN(m, 0);
@@ -245,7 +245,7 @@ e_module_save(E_Module *m)
    return m->func.save(m);
 }
 
-const char *
+EAPI const char *
 e_module_dir_get(E_Module *m)
 {
    E_OBJECT_CHECK_RETURN(m, NULL);
@@ -253,7 +253,7 @@ e_module_dir_get(E_Module *m)
    return m->dir;
 }
 
-int
+EAPI int
 e_module_enable(E_Module *m)
 {
    Evas_List *l;
@@ -282,7 +282,7 @@ e_module_enable(E_Module *m)
    return 0;
 }
 
-int
+EAPI int
 e_module_disable(E_Module *m)
 {
    Evas_List *l;
@@ -309,7 +309,7 @@ e_module_disable(E_Module *m)
    return ret;
 }
 
-int
+EAPI int
 e_module_enabled_get(E_Module *m)
 {
    E_OBJECT_CHECK_RETURN(m, 0);
@@ -317,7 +317,7 @@ e_module_enabled_get(E_Module *m)
    return m->enabled;
 }
 
-int
+EAPI int
 e_module_save_all(void)
 {
    Evas_List *l;
@@ -338,7 +338,7 @@ e_module_save_all(void)
    return ret;
 }
 
-E_Module *
+EAPI E_Module *
 e_module_find(char *name)
 {
    Evas_List *l;
@@ -354,13 +354,13 @@ e_module_find(char *name)
    return NULL;
 }
 
-Evas_List *
+EAPI Evas_List *
 e_module_list(void)
 {
    return _e_modules;
 }
 
-E_Menu *
+EAPI E_Menu *
 e_module_menu_new(void)
 {
    E_Menu *m, *subm;
@@ -407,7 +407,7 @@ e_module_menu_new(void)
    return m;
 }
 
-void
+EAPI void
 e_module_dialog_show(char *title, char *body)
 {
    E_Dialog *dia;

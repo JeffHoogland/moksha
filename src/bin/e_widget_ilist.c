@@ -25,7 +25,7 @@ static void _e_wid_cb_item_sel(void *data, void *data2);
 static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
 /* externally accessible functions */
-Evas_Object *
+EAPI Evas_Object *
 e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, char **value)
 {
    Evas_Object *obj, *o;
@@ -60,7 +60,7 @@ e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, char **value)
    return obj;
 }
 
-void
+EAPI void
 e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, void (*func) (void *data), void *data, char *val)
 {
    E_Widget_Data *wd;
@@ -88,7 +88,7 @@ e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, void (*f
      }
 }
 
-void
+EAPI void
 e_widget_ilist_selected_set(Evas_Object *obj, int n)
 {
    E_Widget_Data *wd;
@@ -97,7 +97,7 @@ e_widget_ilist_selected_set(Evas_Object *obj, int n)
    e_ilist_selected_set(wd->o_ilist, n);
 }
 
-int
+EAPI int
 e_widget_ilist_selected_get(Evas_Object *obj)
 {
    E_Widget_Data *wd;
@@ -106,7 +106,7 @@ e_widget_ilist_selected_get(Evas_Object *obj)
    return e_ilist_selected_get(wd->o_ilist);
 }
 
-const char *
+EAPI const char *
 e_widget_ilist_selected_label_get(Evas_Object *obj)
 {
    E_Widget_Data *wd;
@@ -115,7 +115,7 @@ e_widget_ilist_selected_label_get(Evas_Object *obj)
    return e_ilist_selected_label_get(wd->o_ilist);
 }
 
-void
+EAPI void
 e_widget_ilist_selector_set(Evas_Object *obj, int selector)
 {
    E_Widget_Data *wd;
@@ -124,7 +124,7 @@ e_widget_ilist_selector_set(Evas_Object *obj, int selector)
    e_ilist_selector_set(wd->o_ilist, selector);
 }
 
-void
+EAPI void
 e_widget_ilist_go(Evas_Object *obj)
 {
    E_Widget_Data *wd;
@@ -133,7 +133,7 @@ e_widget_ilist_go(Evas_Object *obj)
    wd->o_widget = obj;
 }
 
-void
+EAPI void
 e_widget_ilist_remove_num(Evas_Object *obj, int n)
 {
    E_Widget_Data *wd;
@@ -142,7 +142,7 @@ e_widget_ilist_remove_num(Evas_Object *obj, int n)
    e_ilist_remove_num(wd->o_ilist, n);
 }
 
-void
+EAPI void
 e_widget_ilist_remove_label(Evas_Object *obj, char *label)
 {
    E_Widget_Data *wd;

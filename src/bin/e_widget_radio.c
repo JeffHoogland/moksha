@@ -27,7 +27,7 @@ static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *even
 /* local subsystem functions */
 
 /* externally accessible functions */
-E_Radio_Group *
+EAPI E_Radio_Group *
 e_widget_radio_group_new(int *val)
 {
    E_Radio_Group *group;
@@ -37,7 +37,7 @@ e_widget_radio_group_new(int *val)
    return group;
 }
 
-Evas_Object *
+EAPI Evas_Object *
 e_widget_radio_add(Evas *evas, char *label, int valnum, E_Radio_Group *group)
 {
    Evas_Object *obj, *o;

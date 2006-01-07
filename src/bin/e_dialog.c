@@ -15,7 +15,7 @@ static void _e_dialog_cb_wid_on_focus(void *data, Evas_Object *obj);
 
 /* externally accessible functions */
 
-E_Dialog *
+EAPI E_Dialog *
 e_dialog_new(E_Container *con)
 {
    E_Dialog *dia;
@@ -74,7 +74,7 @@ e_dialog_new(E_Container *con)
    return dia;
 }
 
-void
+EAPI void
 e_dialog_button_add(E_Dialog *dia, char *label, char *icon, void (*func) (void *data, E_Dialog *dia), void *data)
 {
    Evas_Object *o;
@@ -85,7 +85,7 @@ e_dialog_button_add(E_Dialog *dia, char *label, char *icon, void (*func) (void *
    dia->buttons = evas_list_append(dia->buttons, o);
 }
 
-int
+EAPI int
 e_dialog_button_focus_num(E_Dialog *dia, int button)
 {
    Evas_Object *o;
@@ -95,7 +95,7 @@ e_dialog_button_focus_num(E_Dialog *dia, int button)
    return 1;
 }
 
-int
+EAPI int
 e_dialog_button_disable_num_set(E_Dialog *dia, int button, int disabled)
 {
    Evas_Object *o;
@@ -105,7 +105,7 @@ e_dialog_button_disable_num_set(E_Dialog *dia, int button, int disabled)
    return 1;
 }
 
-int
+EAPI int
 e_dialog_button_disable_num_get(E_Dialog *dia, int button)
 {
    Evas_Object *o;
@@ -116,13 +116,13 @@ e_dialog_button_disable_num_get(E_Dialog *dia, int button)
    return ret;
 }
 
-void
+EAPI void
 e_dialog_title_set(E_Dialog *dia, char *title)
 {
    e_win_title_set(dia->win, title);
 }
 
-void
+EAPI void
 e_dialog_text_set(E_Dialog *dia, char *text)
 {
    if (!dia->text_object)
@@ -139,7 +139,7 @@ e_dialog_text_set(E_Dialog *dia, char *text)
    edje_object_part_text_set(dia->text_object, "text", text);
 }
 
-void
+EAPI void
 e_dialog_icon_set(E_Dialog *dia, char *icon, Evas_Coord size)
 {
    if (!icon) return;
@@ -151,7 +151,7 @@ e_dialog_icon_set(E_Dialog *dia, char *icon, Evas_Coord size)
    evas_object_show(dia->icon_object);
 }
 
-void
+EAPI void
 e_dialog_content_set(E_Dialog *dia, Evas_Object *obj, Evas_Coord minw, Evas_Coord minh)
 {
    dia->content_object = obj;
@@ -161,7 +161,7 @@ e_dialog_content_set(E_Dialog *dia, Evas_Object *obj, Evas_Coord minw, Evas_Coor
    evas_object_show(obj);
 }
 
-void
+EAPI void
 e_dialog_resizable_set(E_Dialog *dia, int resizable)
 {
    dia->resizable = resizable;
@@ -179,7 +179,7 @@ e_dialog_resizable_set(E_Dialog *dia, int resizable)
      }
 }
 
-void
+EAPI void
 e_dialog_show(E_Dialog *dia)
 {
    Evas_Coord mw, mh;

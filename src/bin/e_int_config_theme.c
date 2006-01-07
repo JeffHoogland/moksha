@@ -30,7 +30,7 @@ struct _E_Cfg_Theme_Data
 };
 
 /* a nice easy setup function that does the dirty work */
-E_Config_Dialog *
+EAPI E_Config_Dialog *
 e_int_config_theme(E_Container *con)
 {
    E_Config_Dialog *cfd;

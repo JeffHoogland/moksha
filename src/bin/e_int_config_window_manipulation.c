@@ -31,7 +31,7 @@ struct _CFData
 };
 
 /* a nice easy setup function that does the dirty work */
-E_Config_Dialog *
+EAPI E_Config_Dialog *
 e_int_config_window_manipulation(E_Container *con)
 {
    E_Config_Dialog *cfd;

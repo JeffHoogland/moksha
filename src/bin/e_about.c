@@ -12,7 +12,7 @@ static void _e_about_cb_close(void *data, Evas_Object *obj, const char *emission
 
 /* externally accessible functions */
 
-E_About *
+EAPI E_About *
 e_about_new(E_Container *con)
 {
    E_About *about;
@@ -125,7 +125,7 @@ e_about_new(E_Container *con)
    return about;
 }
 
-void
+EAPI void
 e_about_show(E_About *about)
 {
    Evas_Coord w, h, mw, mh;

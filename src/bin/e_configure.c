@@ -14,7 +14,7 @@ static void _e_configure_cb_resize(E_Win *win);
 static void _e_configure_cb_standard(void *data);
 static void _e_configure_cb_close(void *data, void *data2);
 
-E_Configure *
+EAPI E_Configure *
 e_configure_show(E_Container *con)
 {
    E_Configure *eco;
@@ -99,7 +99,7 @@ e_configure_show(E_Container *con)
    return eco;
 }
 
-void
+EAPI void
 e_configure_standard_item_add(E_Configure *eco, char *icon, char *label, E_Config_Dialog *(*func) (E_Container *con))
 {
    Evas_Object *o;

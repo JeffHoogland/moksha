@@ -31,7 +31,7 @@ struct _E_Thumb_Item
    void  *data;
 };
 
-int
+EAPI int
 e_thumb_init(void)
 {
    char *homedir;
@@ -56,7 +56,7 @@ e_thumb_init(void)
    return 1;
 }
 
-int
+EAPI int
 e_thumb_shutdown(void)
 {
    E_FREE(thumb_path);
@@ -71,14 +71,14 @@ e_thumb_shutdown(void)
 }
 
 /* return dir where thumbs are saved */
-const char *
+EAPI const char *
 e_thumb_dir_get(void)
 {
    return thumb_path;
 }
 
 /* queue an image for thumbnailing or return the thumb if it exists */
-Evas_Object *
+EAPI Evas_Object *
 e_thumb_generate_begin(char *path, Evas_Coord w, Evas_Coord h, Evas *evas, Evas_Object **tmp, void (*cb)(Evas_Object *obj, void *data), void *data)
 {
    E_Thumb_Item *t;
@@ -107,7 +107,7 @@ e_thumb_generate_begin(char *path, Evas_Coord w, Evas_Coord h, Evas *evas, Evas_
 }
 
 /* delete an image from the thumb queue */
-void
+EAPI void
 e_thumb_generate_end(char *path)
 {
    Evas_List *l;
@@ -125,7 +125,7 @@ e_thumb_generate_end(char *path)
 }
 
 /* return hashed path of thumb */
-char *
+EAPI char *
 e_thumb_file_get(char *file)
 {
    char *id;
@@ -141,7 +141,7 @@ e_thumb_file_get(char *file)
 /* return the width and height of a thumb, if from_eet is set, then we
  * assume that the file being passed is the thumb's eet
  */
-void
+EAPI void
 e_thumb_geometry_get(char *file, int *w, int *h, int from_eet)
 {
    Eet_File *ef;   
@@ -190,7 +190,7 @@ e_thumb_geometry_get(char *file, int *w, int *h, int from_eet)
 }
 
 /* return true if the saved thumb exists OR if its an eap */
-int
+EAPI int
 e_thumb_exists(char *file)
 {
    char *thumb;
@@ -209,7 +209,7 @@ e_thumb_exists(char *file)
    return 0;
 }
 
-int *
+EAPI int *
 _e_thumb_image_create(char *file, Evas_Coord w, Evas_Coord h, int *ww, int *hh, int *alpha, Evas_Object **im, Ecore_Evas **buf)
 {
    Evas *evasbuf;
@@ -354,7 +354,7 @@ _e_thumb_etheme_create(char *file, Evas_Coord w, Evas_Coord h, int *ww, int *hh,
 }
 
 /* create and save a thumb to disk */
-int
+EAPI int
 e_thumb_create(char *file, Evas_Coord w, Evas_Coord h)
 {
    Eet_File *ef;
@@ -416,7 +416,7 @@ e_thumb_create(char *file, Evas_Coord w, Evas_Coord h)
 }
 
 /* get evas object containing image of the thumb */
-Evas_Object *
+EAPI Evas_Object *
 e_thumb_evas_object_get(char *file, Evas *evas, Evas_Coord width, Evas_Coord height, int shrink)
 {
    Eet_File *ef;

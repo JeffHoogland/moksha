@@ -85,7 +85,7 @@ _e_wid_fileman_hilited_cb(Evas_Object *obj, char *file, void *data)
 }
 
 /* externally accessible functions */
-Evas_Object *
+EAPI Evas_Object *
 e_widget_fileman_add(Evas *evas, char **val)
 {   
    Evas_Object *obj;
@@ -115,7 +115,7 @@ e_widget_fileman_add(Evas *evas, char **val)
    return obj;         
 }
 
-void
+EAPI void
 e_widget_fileman_select_callback_add(Evas_Object *obj, void (*func) (Evas_Object *obj, char *file, void *data), void *data)
 {
    E_Widget_Data *wd;   
@@ -125,7 +125,7 @@ e_widget_fileman_select_callback_add(Evas_Object *obj, void (*func) (Evas_Object
    wd->select_data = data;
 }
 
-void
+EAPI void
 e_widget_fileman_hilite_callback_add(Evas_Object *obj, void (*func) (Evas_Object *obj, char *file, void *data), void *data)
 {
    E_Widget_Data *wd;   

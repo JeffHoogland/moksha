@@ -62,7 +62,7 @@ static int                   e_editable_text_style_use_count = 0;
 
 static Evas_Smart           *e_entry_smart = NULL;
 
-Evas_Object *
+EAPI Evas_Object *
 e_editable_text_add(Evas *evas)
 {
    if (!e_editable_text_smart)
@@ -83,7 +83,7 @@ e_editable_text_add(Evas *evas)
    return evas_object_smart_add(evas, e_editable_text_smart);
 }
 
-const char*
+EAPI const char*
 e_editable_text_text_get(Evas_Object *object)
 {
    E_Editable_Text_Smart_Data *sd;
@@ -101,7 +101,7 @@ e_editable_text_text_get(Evas_Object *object)
  * @param object an editable text object
  * @param text the text to set
  */
-void
+EAPI void
 e_editable_text_text_set(Evas_Object *object, const char *text)
 {
    E_Editable_Text_Smart_Data *sd;
@@ -120,7 +120,7 @@ e_editable_text_text_set(Evas_Object *object, const char *text)
  * @param object an editable text object
  * @param text the text to insert
  */
-void
+EAPI void
 e_editable_text_insert(Evas_Object *object, const char *text)
 {
    E_Editable_Text_Smart_Data *sd;
@@ -146,7 +146,7 @@ e_editable_text_insert(Evas_Object *object, const char *text)
  * @brief Deletes the char placed before the cursor
  * @param object an editable text object
  */
-void
+EAPI void
 e_editable_text_delete_char_before(Evas_Object *object)
 {
    E_Editable_Text_Smart_Data *sd;
@@ -170,7 +170,7 @@ e_editable_text_delete_char_before(Evas_Object *object)
  * @brief Deletes the char placed after the cursor
  * @param object an editable text object
  */
-void
+EAPI void
 e_editable_text_delete_char_after(Evas_Object *object)
 {
    E_Editable_Text_Smart_Data *sd;
@@ -200,7 +200,7 @@ e_editable_text_delete_char_after(Evas_Object *object)
  * @brief Moves the cursor of the editable text object at the start of the text
  * @param object an editable text object
  */
-void
+EAPI void
 e_editable_text_cursor_move_at_start(Evas_Object *object)
 {
    E_Editable_Text_Smart_Data *sd;
@@ -222,7 +222,7 @@ e_editable_text_cursor_move_at_start(Evas_Object *object)
  * @brief Moves the cursor of the editable text object at the end of the text
  * @param object an editable text object
  */
-void
+EAPI void
 e_editable_text_cursor_move_at_end(Evas_Object *object)
 {
    E_Editable_Text_Smart_Data *sd;
@@ -244,7 +244,7 @@ e_editable_text_cursor_move_at_end(Evas_Object *object)
  * @brief Moves the cursor of the editable text object to the left
  * @param object an editable text object
  */
-void
+EAPI void
 e_editable_text_cursor_move_left(Evas_Object *object)
 {
    E_Editable_Text_Smart_Data *sd;
@@ -267,7 +267,7 @@ e_editable_text_cursor_move_left(Evas_Object *object)
  * @brief Moves the cursor of the editable text object to the right
  * @param object an editable text object
  */
-void
+EAPI void
 e_editable_text_cursor_move_right(Evas_Object *object)
 {
    E_Editable_Text_Smart_Data *sd;
@@ -288,7 +288,7 @@ e_editable_text_cursor_move_right(Evas_Object *object)
  * @brief Shows the cursor of the editable text object
  * @param object the editable text object
  */
-void
+EAPI void
 e_editable_text_cursor_show(Evas_Object *object)
 {
    E_Editable_Text_Smart_Data *sd;
@@ -304,7 +304,7 @@ e_editable_text_cursor_show(Evas_Object *object)
  * @brief Hides the cursor of the editable text object
  * @param object the editable text object
  */
-void
+EAPI void
 e_editable_text_cursor_hide(Evas_Object *object)
 {
    E_Editable_Text_Smart_Data *sd;
@@ -316,7 +316,7 @@ e_editable_text_cursor_hide(Evas_Object *object)
    _e_editable_text_cursor_visibility_update(object);
 }
 
-Evas_Object *
+EAPI Evas_Object *
 e_entry_add(Evas *evas)
 {
    if(!e_entry_smart)
@@ -335,7 +335,7 @@ e_entry_add(Evas *evas)
    return evas_object_smart_add(evas, e_entry_smart);
 }
 
-void
+EAPI void
 e_entry_change_handler_set(Evas_Object *object, void (*func)(void *data, Evas_Object *entry, char *key), void *data)
 {
    E_Entry_Smart_Data *sd;
@@ -347,7 +347,7 @@ e_entry_change_handler_set(Evas_Object *object, void (*func)(void *data, Evas_Ob
    sd->change_data = data;
 }
 
-void
+EAPI void
 e_entry_text_set(Evas_Object *entry, const char *text)
 {
    E_Entry_Smart_Data *sd;
@@ -358,7 +358,7 @@ e_entry_text_set(Evas_Object *entry, const char *text)
    e_editable_text_text_set(sd->entry_object, text);
 }
 
-const char*
+EAPI const char*
 e_entry_text_get(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
@@ -369,7 +369,7 @@ e_entry_text_get(Evas_Object *entry)
    return e_editable_text_text_get(sd->entry_object);
 }
 
-void
+EAPI void
 e_entry_text_insert(Evas_Object *entry, const char *text)
 {
    E_Entry_Smart_Data *sd;
@@ -380,7 +380,7 @@ e_entry_text_insert(Evas_Object *entry, const char *text)
    e_editable_text_insert(sd->entry_object, text);
 }
 
-void
+EAPI void
 e_entry_delete_char_before(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
@@ -391,7 +391,7 @@ e_entry_delete_char_before(Evas_Object *entry)
    e_editable_text_delete_char_before(sd->entry_object);
 }
 
-void
+EAPI void
 e_entry_delete_char_after(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
@@ -402,7 +402,7 @@ e_entry_delete_char_after(Evas_Object *entry)
    e_editable_text_delete_char_after(sd->entry_object);
 }
 
-void
+EAPI void
 e_entry_cursor_move_at_start(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
@@ -413,7 +413,7 @@ e_entry_cursor_move_at_start(Evas_Object *entry)
    e_editable_text_cursor_move_at_start(sd->entry_object);
 }
 
-void
+EAPI void
 e_entry_cursor_move_at_end(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
@@ -424,7 +424,7 @@ e_entry_cursor_move_at_end(Evas_Object *entry)
    e_editable_text_cursor_move_at_end(sd->entry_object);
 }
 
-void
+EAPI void
 e_entry_cursor_move_left(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
@@ -435,7 +435,7 @@ e_entry_cursor_move_left(Evas_Object *entry)
    e_editable_text_cursor_move_left(sd->entry_object);
 }
 
-void
+EAPI void
 e_entry_cursor_move_right(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
@@ -446,7 +446,7 @@ e_entry_cursor_move_right(Evas_Object *entry)
    e_editable_text_cursor_move_right(sd->entry_object);
 }
 
-void
+EAPI void
 e_entry_cursor_show(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
@@ -457,7 +457,7 @@ e_entry_cursor_show(Evas_Object *entry)
    e_editable_text_cursor_show(sd->entry_object);
 }
 
-void
+EAPI void
 e_entry_cursor_hide(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
@@ -468,7 +468,7 @@ e_entry_cursor_hide(Evas_Object *entry)
    e_editable_text_cursor_hide(sd->entry_object);
 }
 
-void
+EAPI void
 e_entry_focus(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
@@ -479,7 +479,7 @@ e_entry_focus(Evas_Object *entry)
    edje_object_signal_emit(sd->edje_object, "focus_in", "");
 }
 
-void
+EAPI void
 e_entry_unfocus(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;

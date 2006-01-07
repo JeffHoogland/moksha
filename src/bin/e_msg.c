@@ -32,7 +32,7 @@ static int E_EVENT_MSG = 0;
 static Ecore_Event_Handler *hand = NULL;
 
 /* externally accessible functions */
-int
+EAPI int
 e_msg_init(void)
 {
    E_EVENT_MSG = ecore_event_type_new();
@@ -40,7 +40,7 @@ e_msg_init(void)
    return 1;
 }
 
-int
+EAPI int
 e_msg_shutdown(void)
 {
    while (handlers) e_msg_handler_del(handlers->data);
@@ -50,7 +50,7 @@ e_msg_shutdown(void)
    return 1;
 }
 
-void
+EAPI void
 e_msg_send(char *name, char *info, int val, E_Object *obj)
 {
    E_Msg_Event *ev;
@@ -66,7 +66,7 @@ e_msg_send(char *name, char *info, int val, E_Object *obj)
    ecore_event_add(E_EVENT_MSG, ev, _e_msg_event_free, NULL);
 }
 
-E_Msg_Handler *
+EAPI E_Msg_Handler *
 e_msg_handler_add(void (*func) (void *data, char *name, char *info, int val, E_Object *obj), void *data)
 {
    E_Msg_Handler *emsgh;
@@ -79,7 +79,7 @@ e_msg_handler_add(void (*func) (void *data, char *name, char *info, int val, E_O
    return emsgh;
 }
 
-void
+EAPI void
 e_msg_handler_del(E_Msg_Handler *emsgh)
 {
    if (processing_handlers > 0)

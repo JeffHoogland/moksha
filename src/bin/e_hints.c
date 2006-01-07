@@ -4,7 +4,7 @@
 #include "e.h"
 #include "config.h"
 
-void
+EAPI void
 e_hints_init(void)
 {
    Ecore_X_Window *roots = NULL;
@@ -128,7 +128,7 @@ e_hints_init(void)
  * to do old e16 style ipc. in fact we just ignore it... but set up the
  * window port anyway
  */
-void
+EAPI void
 e_hints_e16_comms_pretend(E_Manager *man)
 {
    Ecore_X_Window win;
@@ -152,7 +152,7 @@ e_hints_e16_comms_pretend(E_Manager *man)
    ecore_x_window_prop_property_set(man->root, enlightenment_comms, string, 8, buf, 14);
 }
 
-void
+EAPI void
 e_hints_manager_init(E_Manager *man)
 {
    /* Set desktop count, desktop names and workarea */
@@ -208,7 +208,7 @@ e_hints_manager_init(E_Manager *man)
 }
 
 /* FIXME, this should set the list in map order, not stack order */
-void
+EAPI void
 e_hints_client_list_set(void)
 {
    Evas_List *ml = NULL, *cl = NULL;
@@ -270,7 +270,7 @@ e_hints_client_list_set(void)
 
 /* Client list is already in stacking order, so this function is nearly
  * identical to the previous one */
-void
+EAPI void
 e_hints_client_stacking_set(void)
 {
    Evas_List *ml = NULL, *cl = NULL;
@@ -327,7 +327,7 @@ e_hints_client_stacking_set(void)
    E_FREE(clients);
 }
 
-void
+EAPI void
 e_hints_active_window_set(E_Manager *man, E_Border *bd)
 {
    E_OBJECT_CHECK(man);
@@ -337,7 +337,7 @@ e_hints_active_window_set(E_Manager *man, E_Border *bd)
      ecore_x_netwm_client_active_set(man->root, 0);
 }
 
-void
+EAPI void
 e_hints_window_init(E_Border *bd)
 {
    E_Remember *rem = NULL;
@@ -496,7 +496,7 @@ e_hints_window_init(E_Border *bd)
    e_hints_client_stacking_set();
 }
 
-void
+EAPI void
 e_hints_window_state_set(E_Border *bd)
 {
    Ecore_X_Window_State state[10];
@@ -536,17 +536,19 @@ e_hints_window_state_set(E_Border *bd)
    ecore_x_netwm_window_state_set(bd->client.win, state, num);
 }
 
-void e_hints_window_type_set(E_Border *bd)
+EAPI void
+e_hints_window_type_set(E_Border *bd)
 {
    ecore_x_netwm_window_type_set(bd->client.win, bd->client.netwm.type);
 }
 
-void e_hints_window_type_get(E_Border *bd)
+EAPI void
+e_hints_window_type_get(E_Border *bd)
 {
    ecore_x_netwm_window_type_get(bd->client.win, &bd->client.netwm.type);
 }
 
-void
+EAPI void
 e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 			    Ecore_X_Window_State_Action action)
 {
@@ -824,7 +826,7 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
      }
 }
 
-void
+EAPI void
 e_hints_window_state_get(E_Border *bd)
 {
    unsigned int i, num;
@@ -896,7 +898,7 @@ e_hints_window_state_get(E_Border *bd)
      }
 }
 
-void
+EAPI void
 e_hints_window_visible_set(E_Border *bd)
 {
    if (bd->client.icccm.state != ECORE_X_WINDOW_STATE_HINT_NORMAL)
@@ -912,7 +914,7 @@ e_hints_window_visible_set(E_Border *bd)
      }
 }
 
-void
+EAPI void
 e_hints_window_iconic_set(E_Border *bd)
 {
    if (bd->client.icccm.state != ECORE_X_WINDOW_STATE_HINT_ICONIC)
@@ -928,7 +930,7 @@ e_hints_window_iconic_set(E_Border *bd)
      }
 }
 
-void
+EAPI void
 e_hints_window_hidden_set(E_Border *bd)
 {
    if (bd->client.icccm.state != ECORE_X_WINDOW_STATE_HINT_ICONIC)
@@ -944,7 +946,7 @@ e_hints_window_hidden_set(E_Border *bd)
      }
 }
 
-void
+EAPI void
 e_hints_window_shaded_set(E_Border *bd, int on)
 {
    if ((!bd->client.netwm.state.shaded) && (on))
@@ -961,13 +963,13 @@ e_hints_window_shaded_set(E_Border *bd, int on)
      }
 }
 
-void
+EAPI void
 e_hints_window_shade_direction_set(E_Border *bd, E_Direction dir)
 {
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_SHADE_DIRECTION, &dir, 1);
 }
 
-E_Direction
+EAPI E_Direction
 e_hints_window_shade_direction_get(E_Border *bd)
 {
    int ret;
@@ -982,7 +984,7 @@ e_hints_window_shade_direction_get(E_Border *bd)
    return E_DIRECTION_UP;
 }
 
-void
+EAPI void
 e_hints_window_size_set(E_Border *bd)
 {
    unsigned int sizes[4];
@@ -994,13 +996,13 @@ e_hints_window_size_set(E_Border *bd)
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_BORDER_SIZE, sizes, 4);
 }
 
-void
+EAPI void
 e_hints_window_size_unset(E_Border *bd)
 {
    ecore_x_window_prop_property_del(bd->client.win, E_ATOM_BORDER_SIZE);
 }
 
-int
+EAPI int
 e_hints_window_size_get(E_Border *bd)
 {
    int ret;
@@ -1020,7 +1022,7 @@ e_hints_window_size_get(E_Border *bd)
    return 1;
 }
 
-void
+EAPI void
 e_hints_window_maximized_set(E_Border *bd, int on)
 {
 
@@ -1102,7 +1104,7 @@ e_hints_window_maximized_set(E_Border *bd, int on)
      }*/
 }
 
-void
+EAPI void
 e_hints_window_fullscreen_set(E_Border *bd, int on)
 {
    if ((!bd->client.netwm.state.fullscreen) && (on))
@@ -1119,7 +1121,7 @@ e_hints_window_fullscreen_set(E_Border *bd, int on)
      }
 }
 
-void
+EAPI void
 e_hints_window_sticky_set(E_Border *bd, int on)
 {
    if ((!bd->client.netwm.state.sticky) && (on))
@@ -1136,7 +1138,7 @@ e_hints_window_sticky_set(E_Border *bd, int on)
      }
 }
 
-void
+EAPI void
 e_hints_window_stacking_set(E_Border *bd, E_Stacking stacking)
 {
    if (bd->client.netwm.state.stacking == stacking) return;
@@ -1145,7 +1147,7 @@ e_hints_window_stacking_set(E_Border *bd, E_Stacking stacking)
    bd->changed = 1;
 }
 
-void
+EAPI void
 e_hints_window_desktop_set(E_Border *bd)
 {
    /* This function is only called when really changing desktop,
@@ -1168,7 +1170,7 @@ e_hints_window_desktop_set(E_Border *bd)
    bd->client.netwm.desktop = (bd->desk->y * bd->zone->desk_x_count) + bd->desk->x;
 }
 
-void
+EAPI void
 e_hints_window_e_state_get(E_Border *bd)
 {
    /* Remember to update the count if we add more states! */
@@ -1188,13 +1190,13 @@ e_hints_window_e_state_get(E_Border *bd)
      }
 }
 
-void
+EAPI void
 e_hints_window_e_state_set(E_Border *bd)
 {
    /* TODO */
 }
 
-void
+EAPI void
 e_hints_openoffice_gnome_fake(Ecore_X_Window root)
 {
    Ecore_X_Atom gnome_atom, string_atom;
@@ -1206,7 +1208,7 @@ e_hints_openoffice_gnome_fake(Ecore_X_Window root)
 				    8, (void *)string, strlen(string));
 }
 
-void
+EAPI void
 e_hints_openoffice_kde_fake(Ecore_X_Window root)
 {
    Ecore_X_Window win2;

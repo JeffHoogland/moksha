@@ -57,13 +57,13 @@ static Evas_List  *event_handlers = NULL;
 static Eet_Data_Descriptor *_e_fm_icon_meta_edd = NULL;
 
 /* externally accessible functions */
-int
+EAPI int
 e_fm_icon_init(void)
 {
    return 1;
 }
 
-int
+EAPI int
 e_fm_icon_shutdown(void)
 {
    while (event_handlers)
@@ -76,7 +76,7 @@ e_fm_icon_shutdown(void)
    return 1;
 }
 
-Evas_Object *
+EAPI Evas_Object *
 e_fm_icon_add(Evas *evas)
 {
    Evas_Object *e_fm_icon_smart;
@@ -102,7 +102,7 @@ e_fm_icon_add(Evas *evas)
    return e_fm_icon_smart;
 }
 
-void
+EAPI void
 e_fm_icon_type_set(Evas_Object *obj, int type)
 {
    E_Smart_Data *sd;
@@ -117,7 +117,7 @@ e_fm_icon_type_set(Evas_Object *obj, int type)
    _e_fm_icon_type_set(sd);
 }
 
-E_Fm_File *
+EAPI E_Fm_File *
 e_fm_icon_file_get(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -128,7 +128,7 @@ e_fm_icon_file_get(Evas_Object *obj)
    return sd->file;
 }
 
-void
+EAPI void
 e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
 {
    E_Smart_Data *sd;
@@ -191,7 +191,7 @@ e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
    evas_object_resize(sd->obj, 80, icon_h);
 }
 
-void
+EAPI void
 e_fm_icon_appear_cb(Evas_Object *obj, void *data)
 {
    E_Smart_Data *sd;
@@ -216,7 +216,7 @@ e_fm_icon_appear_cb(Evas_Object *obj, void *data)
    evas_object_show(obj);
 }
 
-void
+EAPI void
 e_fm_icon_disappear_cb(Evas_Object *obj, void *data)
 {
    E_Smart_Data *sd;
@@ -236,7 +236,7 @@ e_fm_icon_disappear_cb(Evas_Object *obj, void *data)
    E_FREE(sd->saved_title);
 }
 
-char *
+EAPI char *
 e_fm_icon_title_get(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -247,7 +247,7 @@ e_fm_icon_title_get(Evas_Object *obj)
    return edje_object_part_text_get(sd->icon_object, "icon_title");
 }
 
-void
+EAPI void
 e_fm_icon_title_set(Evas_Object *obj, const char *title)
 {
    E_Smart_Data *sd;
@@ -286,7 +286,7 @@ e_fm_icon_title_set(Evas_Object *obj, const char *title)
      }
 }
 
-void
+EAPI void
 e_fm_icon_edit_entry_set(Evas_Object *obj, Evas_Object *entry)
 {
    E_Smart_Data *sd;
@@ -305,7 +305,7 @@ e_fm_icon_edit_entry_set(Evas_Object *obj, Evas_Object *entry)
      }
 }
 
-void
+EAPI void
 e_fm_icon_signal_emit(Evas_Object *obj, const char *source, const char *emission)
 {
    E_Smart_Data *sd;
@@ -316,7 +316,7 @@ e_fm_icon_signal_emit(Evas_Object *obj, const char *source, const char *emission
    if (sd->image_object) edje_object_signal_emit(sd->image_object, source, emission);
 }
 
-E_Fm_Icon_Metadata *
+EAPI E_Fm_Icon_Metadata *
 e_fm_icon_meta_generate(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -334,7 +334,7 @@ e_fm_icon_meta_generate(Evas_Object *obj)
    return m;
 }
 
-void
+EAPI void
 e_fm_icon_meta_free(E_Fm_Icon_Metadata *m)
 {
    if (!m) return;
@@ -343,7 +343,7 @@ e_fm_icon_meta_free(E_Fm_Icon_Metadata *m)
    free(m);
 }
 
-int
+EAPI int
 e_fm_icon_assoc_set(Evas_Object *obj, const char *assoc)
 {
    /* TODO

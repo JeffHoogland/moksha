@@ -4,7 +4,7 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-E_Module_Api e_modapi = 
+EAPI E_Module_Api e_modapi = 
 {
    E_MODULE_API_VERSION,
    "Gadget Test"
@@ -17,7 +17,7 @@ static void _test_menu_init(void *data, E_Gadget *gad);
 static void _test_face_menu_init(void *data, E_Gadget_Face *face);
 
 
-void *
+EAPI void *
 e_modapi_init(E_Module *m)
 {
    E_Gadget_Api *api = NULL;
@@ -48,7 +48,7 @@ e_modapi_init(E_Module *m)
    return gad;
 }
 
-int
+EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    E_Gadget *gad;
@@ -58,19 +58,19 @@ e_modapi_shutdown(E_Module *m)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_save(E_Module *m)
 {
    return 1;
 }
 
-int
+EAPI int
 e_modapi_info(E_Module *m)
 {
    return 1;
 }
 
-int
+EAPI int
 e_modapi_about(E_Module *m)
 {
    e_module_dialog_show(_("Enlightenment Test Module"), _("Gadget test"));

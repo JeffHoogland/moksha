@@ -29,14 +29,14 @@ static void _e_icon_smart_clip_unset(Evas_Object *obj);
 static Evas_Smart *_e_smart = NULL;
 
 /* externally accessible functions */
-Evas_Object *
+EAPI Evas_Object *
 e_icon_add(Evas *evas)
 {
    _e_icon_smart_init();
    return evas_object_smart_add(evas, _e_smart);
 }
 
-void
+EAPI void
 e_icon_file_set(Evas_Object *obj, const char *file)
 {
    E_Smart_Data *sd;
@@ -48,7 +48,7 @@ e_icon_file_set(Evas_Object *obj, const char *file)
    _e_icon_smart_reconfigure(sd);
 }
 
-void
+EAPI void
 e_icon_file_key_set(Evas_Object *obj, const char *file, const char *key)
 {
    E_Smart_Data *sd;
@@ -60,7 +60,7 @@ e_icon_file_key_set(Evas_Object *obj, const char *file, const char *key)
    _e_icon_smart_reconfigure(sd);
 }
 
-void
+EAPI void
 e_icon_file_edje_set(Evas_Object *obj, const char *file, const char *part)
 {
    E_Smart_Data *sd;
@@ -74,7 +74,7 @@ e_icon_file_edje_set(Evas_Object *obj, const char *file, const char *part)
    _e_icon_smart_reconfigure(sd);
 }
 
-void
+EAPI void
 e_icon_object_set(Evas_Object *obj, Evas_Object *o)
 {
    E_Smart_Data *sd;
@@ -87,7 +87,7 @@ e_icon_object_set(Evas_Object *obj, Evas_Object *o)
    _e_icon_smart_reconfigure(sd);   
 }
 
-const char *
+EAPI const char *
 e_icon_file_get(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -104,7 +104,7 @@ e_icon_file_get(Evas_Object *obj)
    return file;
 }
 
-void
+EAPI void
 e_icon_smooth_scale_set(Evas_Object *obj, int smooth)
 {
    E_Smart_Data *sd;
@@ -116,7 +116,7 @@ e_icon_smooth_scale_set(Evas_Object *obj, int smooth)
    evas_object_image_smooth_scale_set(sd->obj, smooth);
 }
 
-int
+EAPI int
 e_icon_smooth_scale_get(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -128,7 +128,7 @@ e_icon_smooth_scale_get(Evas_Object *obj)
    return evas_object_image_smooth_scale_get(sd->obj);
 }
 
-void
+EAPI void
 e_icon_alpha_set(Evas_Object *obj, int alpha)
 {
    E_Smart_Data *sd;
@@ -140,7 +140,7 @@ e_icon_alpha_set(Evas_Object *obj, int alpha)
    evas_object_image_alpha_set(sd->obj, alpha);
 }
 
-int
+EAPI int
 e_icon_alpha_get(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -152,7 +152,7 @@ e_icon_alpha_get(Evas_Object *obj)
    return evas_object_image_alpha_get(sd->obj);
 }
 
-void
+EAPI void
 e_icon_size_get(Evas_Object *obj, int *w, int *h)
 {
    E_Smart_Data *sd;
@@ -162,7 +162,7 @@ e_icon_size_get(Evas_Object *obj, int *w, int *h)
    return evas_object_image_size_get(sd->obj, w, h);
 }
 
-int
+EAPI int
 e_icon_fill_inside_get(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -172,7 +172,7 @@ e_icon_fill_inside_get(Evas_Object *obj)
    return 0;
 }
 
-void
+EAPI void
 e_icon_fill_inside_set(Evas_Object *obj, int fill_inside)
 {
    E_Smart_Data *sd;
@@ -185,7 +185,7 @@ e_icon_fill_inside_set(Evas_Object *obj, int fill_inside)
    _e_icon_smart_reconfigure(sd);
 }
 
-void
+EAPI void
 e_icon_data_set(Evas_Object *obj, void *data, int w, int h)
 {
    E_Smart_Data *sd;
@@ -198,7 +198,7 @@ e_icon_data_set(Evas_Object *obj, void *data, int w, int h)
    evas_object_image_data_copy_set(sd->obj, data);
 }
 
-void *
+EAPI void *
 e_icon_data_get(Evas_Object *obj, int *w, int *h)
 {
    E_Smart_Data *sd;

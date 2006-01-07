@@ -28,7 +28,7 @@ static void _e_fileman_scroll_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coor
 static void _e_fileman_scroll_child_size_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
 static int  _e_fileman_reconfigure_cb(void *data, int type, void *event);
 
-E_Fileman *
+EAPI E_Fileman *
 e_fileman_new(E_Container *con)
 {
    char dir[PATH_MAX];
@@ -39,7 +39,7 @@ e_fileman_new(E_Container *con)
    return e_fileman_new_to_dir(con, dir);
 }
 
-E_Fileman *
+EAPI E_Fileman *
 e_fileman_new_to_dir(E_Container *con, char *path)
 {
    E_Fileman *fileman;
@@ -147,7 +147,7 @@ _e_fileman_scroll_child_size_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
    e_fm_geometry_virtual_get(obj, x, y);
 }
 
-void
+EAPI void
 e_fileman_selector_enable(E_Fileman *fileman, void (*func)(E_Fileman *fileman, char *file, void *data), void *data)
 {   
    fileman->selector.func = func;
@@ -155,7 +155,7 @@ e_fileman_selector_enable(E_Fileman *fileman, void (*func)(E_Fileman *fileman, c
    e_fm_selector_enable(fileman->smart, _e_fileman_selector_cb, NULL, fileman);
 }
 
-void
+EAPI void
 e_fileman_show(E_Fileman *fileman)
 {
    if (!fileman) return;
@@ -165,7 +165,7 @@ e_fileman_show(E_Fileman *fileman)
    evas_object_show(fileman->main);
 }
 
-void
+EAPI void
 e_fileman_hide(E_Fileman *fileman)
 {
    if (!fileman) return;

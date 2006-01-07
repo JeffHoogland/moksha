@@ -28,7 +28,7 @@ static Evas_List *borders = NULL;
 
 /* externally accessible functions */
 
-int
+EAPI int
 e_theme_init(void)
 {
    Evas_List *l;
@@ -89,7 +89,7 @@ e_theme_init(void)
  *  e_theme_file_set("base/theme/modules/temperature", "default.edj");
  */
 
-int
+EAPI int
 e_theme_shutdown(void)
 {
    if (mappings)
@@ -121,7 +121,7 @@ e_theme_shutdown(void)
    return 1;
 }
 
-int
+EAPI int
 e_theme_edje_object_set(Evas_Object *o, char *category, char *group)
 {
    E_Theme_Result *res;
@@ -187,7 +187,7 @@ e_theme_edje_object_set(Evas_Object *o, char *category, char *group)
    return e_theme_edje_object_set(o, buf, group);
 }
 
-const char *
+EAPI const char *
 e_theme_edje_file_get(char *category, char *group)
 {
    E_Theme_Result *res;
@@ -260,7 +260,7 @@ e_theme_edje_file_get(char *category, char *group)
    return e_theme_edje_file_get(buf, group);
 }
 
-void
+EAPI void
 e_theme_file_set(char *category, char *file)
 {
    E_Theme_Result *res;
@@ -284,7 +284,7 @@ e_theme_file_set(char *category, char *file)
    mappings = evas_hash_add(mappings, category, res);
 }
 
-int
+EAPI int
 e_theme_config_set(const char *category, const char *file)
 {
    E_Config_Theme *ect;
@@ -319,7 +319,7 @@ e_theme_config_set(const char *category, const char *file)
 /*
  * returns a pointer to the data, return null if nothing if found.
  */
-E_Config_Theme *
+EAPI E_Config_Theme *
 e_theme_config_get(const char *category)
 {
    E_Config_Theme *ect = NULL;
@@ -337,7 +337,7 @@ e_theme_config_get(const char *category)
    return NULL;
 }
 
-int
+EAPI int
 e_theme_config_remove(const char *category)
 {
    E_Config_Theme *ect;
@@ -360,13 +360,13 @@ e_theme_config_remove(const char *category)
    return 1;
 }
 
-Evas_List *
+EAPI Evas_List *
 e_theme_config_list(void)
 {
    return e_config->themes;
 }
 
-int
+EAPI int
 e_theme_category_find(const char *category)
 {
    Evas_List *l;
@@ -379,13 +379,13 @@ e_theme_category_find(const char *category)
    return 0;
 }
 
-Evas_List *
+EAPI Evas_List *
 e_theme_category_list(void)
 {
    return categories;
 }
 
-int
+EAPI int
 e_theme_transition_find(const char *transition)
 {
    Evas_List *l;
@@ -398,13 +398,13 @@ e_theme_transition_find(const char *transition)
    return 0;
 }
 
-Evas_List *
+EAPI Evas_List *
 e_theme_transition_list(void)
 {
    return transitions;
 }
 
-int
+EAPI int
 e_theme_border_find(const char *border)
 {
    Evas_List *l;
@@ -417,7 +417,7 @@ e_theme_border_find(const char *border)
    return 0;
 }
 
-Evas_List *
+EAPI Evas_List *
 e_theme_border_list(void)
 {
    return borders;

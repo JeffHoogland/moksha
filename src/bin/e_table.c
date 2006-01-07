@@ -65,14 +65,14 @@ static void _e_table_smart_clip_unset(Evas_Object *obj);
 static Evas_Smart *_e_smart = NULL;
 
 /* externally accessible functions */
-Evas_Object *
+EAPI Evas_Object *
 e_table_add(Evas *evas)
 {
    _e_table_smart_init();
    return evas_object_smart_add(evas, _e_smart);
 }
 
-int
+EAPI int
 e_table_freeze(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -82,7 +82,7 @@ e_table_freeze(Evas_Object *obj)
    return sd->frozen;
 }
 
-int
+EAPI int
 e_table_thaw(Evas_Object *obj)
 {
    E_Smart_Data *sd;
@@ -93,7 +93,7 @@ e_table_thaw(Evas_Object *obj)
    return sd->frozen;
 }
 
-void
+EAPI void
 e_table_homogenous_set(Evas_Object *obj, int homogenous)
 {
    E_Smart_Data *sd;
@@ -105,7 +105,7 @@ e_table_homogenous_set(Evas_Object *obj, int homogenous)
    if (sd->frozen <= 0) _e_table_smart_reconfigure(sd);
 }
 
-void
+EAPI void
 e_table_pack(Evas_Object *obj, Evas_Object *child, int col, int row, int colspan, int rowspan)
 {
    E_Smart_Data *sd;
@@ -128,7 +128,7 @@ e_table_pack(Evas_Object *obj, Evas_Object *child, int col, int row, int colspan
    if (sd->frozen <= 0) _e_table_smart_reconfigure(sd);
 }
 
-void
+EAPI void
 e_table_pack_options_set(Evas_Object *obj, int fill_w, int fill_h, int expand_w, int expand_h, double align_x, double align_y, Evas_Coord min_w, Evas_Coord min_h, Evas_Coord max_w, Evas_Coord max_h)
 {
    E_Table_Item *ti;
@@ -149,7 +149,7 @@ e_table_pack_options_set(Evas_Object *obj, int fill_w, int fill_h, int expand_w,
    if (ti->sd->frozen <= 0) _e_table_smart_reconfigure(ti->sd);
 }
 
-void
+EAPI void
 e_table_unpack(Evas_Object *obj)
 {
    E_Table_Item *ti;
@@ -164,7 +164,7 @@ e_table_unpack(Evas_Object *obj)
    if (sd->frozen <= 0) _e_table_smart_reconfigure(sd);
 }
 
-void
+EAPI void
 e_table_col_row_size_get(Evas_Object *obj, int *cols, int *rows)
 {
    E_Smart_Data *sd;
@@ -175,7 +175,7 @@ e_table_col_row_size_get(Evas_Object *obj, int *cols, int *rows)
    if (rows) *rows = sd->size.rows;
 }
 
-void
+EAPI void
 e_table_min_size_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh)
 {
    E_Smart_Data *sd;
@@ -186,7 +186,7 @@ e_table_min_size_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh)
    if (minh) *minh = sd->min.h;
 }
 
-void
+EAPI void
 e_table_max_size_get(Evas_Object *obj, Evas_Coord *maxw, Evas_Coord *maxh)
 {
    E_Smart_Data *sd;
@@ -197,7 +197,7 @@ e_table_max_size_get(Evas_Object *obj, Evas_Coord *maxw, Evas_Coord *maxh)
    if (maxh) *maxh = sd->max.h;
 }
 
-void
+EAPI void
 e_table_align_get(Evas_Object *obj, double *ax, double *ay)
 {
    E_Smart_Data *sd;
@@ -207,7 +207,7 @@ e_table_align_get(Evas_Object *obj, double *ax, double *ay)
    if (ay) *ay = sd->align.y;
 }
 
-void
+EAPI void
 e_table_align_set(Evas_Object *obj, double ax, double ay)
 {
    E_Smart_Data *sd;

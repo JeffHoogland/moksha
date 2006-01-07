@@ -21,13 +21,13 @@ static int button_count;
 static E_Config_DD *conf_edd;
 static E_Config_DD *conf_face_edd;
 
-E_Module_Api e_modapi = 
+EAPI E_Module_Api e_modapi = 
 {
    E_MODULE_API_VERSION,
    "Start"
 };
 
-void *
+EAPI void *
 e_modapi_init(E_Module *m)
 {
    Start *e;
@@ -38,7 +38,7 @@ e_modapi_init(E_Module *m)
    return e;
 }
 
-int
+EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    Start *e;
@@ -50,7 +50,7 @@ e_modapi_shutdown(E_Module *m)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_save(E_Module *m)
 {
    Start *e;
@@ -61,7 +61,7 @@ e_modapi_save(E_Module *m)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_info(E_Module *m)
 {
    char buf[4096];
@@ -71,7 +71,7 @@ e_modapi_info(E_Module *m)
    return 1;
 }
 
-int
+EAPI int
 e_modapi_about(E_Module *m)
 {
    e_module_dialog_show(_("Enlightenment Start Module"),

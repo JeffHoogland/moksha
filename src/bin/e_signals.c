@@ -12,7 +12,7 @@
 /* a tricky little devil, requires e and it's libs to be built
  * with the -rdynamic flag to GCC for any sort of decent output. 
  */
-void
+EAPI void
 e_sigseg_act(int x, siginfo_t *info, void *data)
 {
    void *array[255];
@@ -43,7 +43,7 @@ e_sigseg_act(int x, siginfo_t *info, void *data)
    exit(-11); 
 }
 #else
-void
+EAPI void
 e_sigseg_act(int x, siginfo_t *info, void *data)
 {
    write(2, "**** SEGMENTATION FAULT ****\n", 29);
@@ -69,7 +69,7 @@ e_sigseg_act(int x, siginfo_t *info, void *data)
 }
 #endif
 
-void
+EAPI void
 e_sigill_act(int x, siginfo_t *info, void *data)
 {
    write(2, "**** ILLEGAL INSTRUCTION ****\n", 30);
@@ -95,7 +95,7 @@ e_sigill_act(int x, siginfo_t *info, void *data)
    exit(-11);
 }
 
-void
+EAPI void
 e_sigfpe_act(int x, siginfo_t *info, void *data)
 {
    write(2, "**** FLOATING POINT EXCEPTION ****\n", 35);
@@ -120,7 +120,7 @@ e_sigfpe_act(int x, siginfo_t *info, void *data)
    exit(-11);
 }
 
-void
+EAPI void
 e_sigbus_act(int x, siginfo_t *info, void *data)
 {
    write(2, "**** BUS ERROR ****\n", 21);

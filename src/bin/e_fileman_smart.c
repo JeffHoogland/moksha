@@ -169,7 +169,7 @@ static Eet_Data_Descriptor *_e_fm_dir_meta_edd = NULL;
 static Eet_Data_Descriptor *_e_fm_icon_meta_edd = NULL;
 
 /* externally accessible functions */
-int
+EAPI int
 e_fm_init(void)
 {
    char *homedir;
@@ -217,7 +217,7 @@ e_fm_init(void)
    return 1;
 }
 
-int
+EAPI int
 e_fm_shutdown(void)
 {
    FREED(_e_fm_dir_meta_edd);
@@ -226,13 +226,13 @@ e_fm_shutdown(void)
    return 1;
 }
 
-Evas_Object *
+EAPI Evas_Object *
 e_fm_add(Evas *evas)
 {
    return evas_object_smart_add(evas, e_fm_smart);
 }
 
-void
+EAPI void
 e_fm_dir_set(Evas_Object *object, const char *dir)
 {
    E_Fm_Smart_Data *sd;
@@ -243,7 +243,7 @@ e_fm_dir_set(Evas_Object *object, const char *dir)
    _e_fm_dir_set(sd, dir);
 }
 
-char *
+EAPI char *
 e_fm_dir_get(Evas_Object *object)
 {
    E_Fm_Smart_Data *sd;
@@ -254,7 +254,7 @@ e_fm_dir_get(Evas_Object *object)
    return strdup(sd->dir);
 }
 
-void
+EAPI void
 e_fm_e_win_set(Evas_Object *object, E_Win *win)
 {
    E_Fm_Smart_Data *sd;
@@ -265,7 +265,7 @@ e_fm_e_win_set(Evas_Object *object, E_Win *win)
    sd->win = win;
 }
 
-E_Win *
+EAPI E_Win *
 e_fm_e_win_get(Evas_Object *object)
 {
    E_Fm_Smart_Data *sd;
@@ -276,7 +276,7 @@ e_fm_e_win_get(Evas_Object *object)
    return sd->win;
 }
 
-void
+EAPI void
 e_fm_scroll_set(Evas_Object *object, Evas_Coord x, Evas_Coord y)
 {
    E_Fm_Smart_Data *sd;
@@ -298,7 +298,7 @@ e_fm_scroll_set(Evas_Object *object, Evas_Coord x, Evas_Coord y)
    evas_object_smart_callback_call(sd->object, "changed", NULL);
 }
 
-void
+EAPI void
 e_fm_scroll_max_get(Evas_Object *object, Evas_Coord *x, Evas_Coord *y)
 {
    E_Fm_Smart_Data *sd;
@@ -318,7 +318,7 @@ e_fm_scroll_max_get(Evas_Object *object, Evas_Coord *x, Evas_Coord *y)
      }
 }
 
-void
+EAPI void
 e_fm_scroll_get(Evas_Object *object, Evas_Coord *x, Evas_Coord *y)
 {
    E_Fm_Smart_Data *sd;
@@ -330,7 +330,7 @@ e_fm_scroll_get(Evas_Object *object, Evas_Coord *x, Evas_Coord *y)
    if (y) *y = sd->child.y;
 }
 
-void
+EAPI void
 e_fm_geometry_virtual_get(Evas_Object *object, Evas_Coord *w, Evas_Coord *h)
 {
    E_Fm_Smart_Data *sd;
@@ -345,7 +345,7 @@ e_fm_geometry_virtual_get(Evas_Object *object, Evas_Coord *w, Evas_Coord *h)
      *h = sd->child.h;
 }
 
-void
+EAPI void
 e_fm_menu_set(Evas_Object *object, E_Menu *menu)
 {
    E_Fm_Smart_Data *sd;
@@ -357,7 +357,7 @@ e_fm_menu_set(Evas_Object *object, E_Menu *menu)
      sd->menu = menu;
 }
 
-E_Menu *
+EAPI E_Menu *
 e_fm_menu_get(Evas_Object *object)
 {
    E_Fm_Smart_Data *sd;
@@ -368,7 +368,7 @@ e_fm_menu_get(Evas_Object *object)
    return sd->menu;
 }
 
-int
+EAPI int
 e_fm_freeze(Evas_Object *object)
 {
    E_Fm_Smart_Data *sd;
@@ -382,7 +382,7 @@ e_fm_freeze(Evas_Object *object)
    return sd->frozen;
 }
 
-int
+EAPI int
 e_fm_thaw(Evas_Object *object)
 {
    E_Fm_Smart_Data *sd;
@@ -398,7 +398,7 @@ e_fm_thaw(Evas_Object *object)
    return sd->frozen;
 }
 
-void
+EAPI void
 e_fm_selector_enable(Evas_Object *object, void (*func)(Evas_Object *object, char *file, void *data), void (*hilite_func)(Evas_Object *object, char *file, void *data), void *data)
 {
    E_Fm_Smart_Data *sd;
@@ -413,7 +413,7 @@ e_fm_selector_enable(Evas_Object *object, void (*func)(Evas_Object *object, char
 }
 
 /* This isnt working yet */
-void
+EAPI void
 e_fm_background_set(Evas_Object *object, Evas_Object *bg)
 {
    E_Fm_Smart_Data *sd;
@@ -431,8 +431,8 @@ e_fm_background_set(Evas_Object *object, Evas_Object *bg)
    edje_object_part_swallow(sd->edje_obj, "background", bg);
 }
 
-Evas_Object *
-  e_fm_icon_create(void *data)
+EAPI Evas_Object *
+e_fm_icon_create(void *data)
 {
    E_Fm_Icon *icon;
 
@@ -450,7 +450,7 @@ Evas_Object *
    return icon->icon_obj;
 }
 
-void
+EAPI void
 e_fm_icon_destroy(Evas_Object *obj, void *data)
 {
    E_Fm_Icon *icon;

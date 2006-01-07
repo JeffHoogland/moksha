@@ -21,7 +21,7 @@ static void _e_error_cb_job_ecore_evas_free(void *data);
 static int error_gui = 0;
 
 /* externally accessible functions */
-void
+EAPI void
 e_error_message_show_internal(char *txt)
 {
    printf("_______                     _______\n"
@@ -32,7 +32,7 @@ e_error_message_show_internal(char *txt)
    if (error_gui) _e_error_message_show_x(txt);
 }
 
-void
+EAPI void
 e_error_dialog_show_internal(char *title, char *txt)
 {
    Evas_List *l;
@@ -44,13 +44,13 @@ e_error_dialog_show_internal(char *title, char *txt)
    e_error_message_manager_show(man, title, txt);
 }
 
-void
+EAPI void
 e_error_gui_set(int on)
 {
    error_gui = on;
 }
 
-void
+EAPI void
 e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 {
    Ecore_Evas  *ee;

@@ -12,7 +12,7 @@ static void _e_file_dialog_free(E_File_Dialog *dia);
 static void _e_file_dialog_file_select_cb(Evas_Object *obj, char *file, void *data);
 static void _e_file_dialog_file_hilite_cb(Evas_Object *obj, char *file, void *data);
 
-E_File_Dialog *
+EAPI E_File_Dialog *
 e_file_dialog_new(E_Container *con)
 {
    E_File_Dialog *dia;
@@ -69,27 +69,27 @@ e_file_dialog_new(E_Container *con)
    return dia;
 }
 
-void
+EAPI void
 e_file_dialog_show(E_File_Dialog *dia)
 {
    e_dialog_resizable_set(dia->dia, 1);
    e_dialog_show(dia->dia);
 }
 
-void
+EAPI void
 e_file_dialog_title_set(E_File_Dialog *dia, const char *title)
 {
    e_dialog_title_set(dia->dia, (char *)title);
 }
 
-void
+EAPI void
 e_file_dialog_select_callback_add(E_File_Dialog *dia, void (*func)(E_File_Dialog *dia, char *file, void *data), void *data)
 {    
    dia->select_func = func;
    dia->select_data = data;
 }
 
-void
+EAPI void
 e_file_dialog_hilite_callback_add(E_File_Dialog *dia, void (*func)(E_File_Dialog *dia, char *file, void *data), void *data)
 {    
    dia->hilite_func = func;
