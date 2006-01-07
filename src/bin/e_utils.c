@@ -137,7 +137,8 @@ e_util_glob_match(const char *str, const char *glob)
 EAPI int
 e_util_glob_case_match(const char *str, const char *glob)
 {
-   char *tstr, *tglob, *p, *tp;
+   const char *p;
+   char *tstr, *tglob, *tp;
    
    if (glob[0] == 0)
      {
