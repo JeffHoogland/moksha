@@ -49,12 +49,13 @@ static void  _e_fm_icon_meta_fill(E_Fm_Icon_Metadata *m, E_Smart_Data *sd);
 /* local subsystem globals */
 static Evas_Smart *e_smart = NULL;
 
-static pid_t       pid = -1;
 static Evas_List  *thumb_files = NULL;
 
 static Evas_List  *event_handlers = NULL;
 
+/*
 static Eet_Data_Descriptor *_e_fm_icon_meta_edd = NULL;
+*/
 
 /* externally accessible functions */
 EAPI int
@@ -123,7 +124,7 @@ e_fm_icon_file_get(Evas_Object *obj)
    E_Smart_Data *sd;
 
    sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
+   if (!sd) return NULL;
 
    return sd->file;
 }
@@ -242,7 +243,7 @@ e_fm_icon_title_get(Evas_Object *obj)
    E_Smart_Data *sd;
 
    sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
+   if (!sd) return NULL;
 
    return edje_object_part_text_get(sd->icon_object, "icon_title");
 }
@@ -323,7 +324,7 @@ e_fm_icon_meta_generate(Evas_Object *obj)
    E_Fm_Icon_Metadata *m;
 
    sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
+   if (!sd) return NULL;
 
    m = calloc(1, sizeof(E_Fm_Icon_Metadata));
    if (!m) return NULL;

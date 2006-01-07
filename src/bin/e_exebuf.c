@@ -289,7 +289,7 @@ _e_exebuf_update(void)
    
    edje_object_part_text_set(bg_object, "label", cmd_buf);
    if (icon_object) evas_object_del(icon_object);
-   icon_object == NULL;
+   icon_object = NULL;
    a = e_app_exe_find(cmd_buf);
    if (!a) a = e_app_name_find(cmd_buf);
    if (!a) a = e_app_generic_find(cmd_buf);

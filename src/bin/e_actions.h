@@ -15,7 +15,7 @@ struct _E_Action
 {
    E_Object             e_obj_inherit;
    
-   char *name;
+   const char *name;
    struct {
       void (*go)        (E_Object *obj, char *params);
       void (*go_mouse)  (E_Object *obj, char *params, Ecore_X_Event_Mouse_Button_Down *ev);
