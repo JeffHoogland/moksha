@@ -359,7 +359,7 @@ e_thumb_create(char *file, Evas_Coord w, Evas_Coord h)
 {
    Eet_File *ef;
    char *thumbpath, *ext;
-   Evas_Object *im;
+   Evas_Object *im = NULL;
    const int *data;
    int size, ww, hh;
    Ecore_Evas *buf;
@@ -375,7 +375,7 @@ e_thumb_create(char *file, Evas_Coord w, Evas_Coord h)
    
    if (ext)
      {
-	if(!strcasecmp(ext, ".edj"))
+	if (!strcasecmp(ext, ".edj"))
 	  {
 	     /* for now, this function does both the bg and theme previews */
 	     data = _e_thumb_etheme_create(file, w, h, &ww, &hh, &alpha, &im, &buf);
@@ -392,7 +392,7 @@ e_thumb_create(char *file, Evas_Coord w, Evas_Coord h)
 	if (!ef)
 	  {
 	     free(thumbpath);
-	     evas_object_del(im);
+	     if (im) evas_object_del(im);
 	     ecore_evas_free(buf);
 	     return -1;
 	  }
@@ -403,14 +403,14 @@ e_thumb_create(char *file, Evas_Coord w, Evas_Coord h)
 					 (void *)data, ww, hh, alpha,
 					 0, 91, 1)) <= 0)
 	  {
-	     evas_object_del(im);
+	     if (im) evas_object_del(im);
 	     ecore_evas_free(buf);
 	     eet_close(ef);
 	     return -1;
 	  }
 	eet_close(ef);
      }
-   evas_object_del(im);
+   if (im) evas_object_del(im);
    ecore_evas_free(buf);
    return 1;
 }
