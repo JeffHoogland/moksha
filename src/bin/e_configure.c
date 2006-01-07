@@ -71,8 +71,8 @@ e_configure_show(E_Container *con)
    e_configure_standard_item_add(eco, "enlightenment/favorites", _("Menu Settings"), e_int_config_menus);
    e_configure_standard_item_add(eco, "enlightenment/configuration", _("Performance Settings"), e_int_config_performance);
    e_configure_standard_item_add(eco, "enlightenment/windows", _("Window List Settings"), e_int_config_winlist);
-   e_configure_standard_item_add(eco, "enlightenment/windows", _("Window Display"), e_int_config_window_display);
-   e_configure_standard_item_add(eco, "enlightenment/windows", _("Window Manipulation"), e_int_config_window_manipulation);
+   e_configure_standard_item_add(eco, "enlightenment/windows", _("Window Display Settings"), e_int_config_window_display);
+   e_configure_standard_item_add(eco, "enlightenment/windows", _("Window Manipulation Settings"), e_int_config_window_manipulation);
    
    /* FIXME: we should have a way for modules to hook in here and add their
     * own entries
