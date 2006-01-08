@@ -3,6 +3,7 @@
  */
 #include "e.h"
 #include "e_mod_main.h"
+#include "e_mod_config.h"
 #include "config.h"
 
 /* celsius */
@@ -49,7 +50,7 @@ static int           _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 static Evas_Object   *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
 static int           _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 
-void
+EAPI void
 _config_temperature_module(E_Container *con, Temperature *temp) 
 {
    E_Config_Dialog *cfd;
@@ -148,8 +149,8 @@ _fill_data(Temperature *t, CFData *cfdata)
      }
 }
 
-static void
-*_create_data(E_Config_Dialog *cfd) 
+static void *
+_create_data(E_Config_Dialog *cfd) 
 {
    CFData *cfdata;
    
@@ -160,11 +161,15 @@ static void
 static void
 _free_data(E_Config_Dialog *cfd, CFData *cfdata) 
 {
+   Temperature *t;
+   
+   t = cfd->data;
+   t->config_dialog = NULL;
    free(cfdata);
 }
 
-static Evas_Object
-*_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata) 
+static Evas_Object *
+_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata) 
 {
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
@@ -284,8 +289,8 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    return 1;
 }
 
-static Evas_Object
-*_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata) 
+static Evas_Object *
+_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata) 
 {
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
@@ -387,8 +392,7 @@ static Evas_Object
 	ob = e_widget_slider_add(evas, 1, 0, _("%1.0f C"), 0, 95, 1, 0, NULL, &(cfdata->low_temp), 200);
 	e_widget_framelist_object_append(of, ob);
 	e_widget_list_object_append(o, of, 1, 1, 0.5);
-     }
-   
+     }  
    return o;
 }
 

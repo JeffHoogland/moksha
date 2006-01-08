@@ -1,5 +1,6 @@
 #include "e.h"
 #include "e_mod_main.h"
+#include "e_mod_config.h"
 #include "config.h"
 
 typedef struct _cfdata CFData;
@@ -27,7 +28,7 @@ static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
 static int _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 
-void 
+EAPI void 
 _config_pager_module(E_Container *con, Pager *pager)
 {
    E_Config_Dialog *cfd;
@@ -63,8 +64,8 @@ _fill_data(Pager *p, CFData *cfdata)
    cfdata->popup_speed = p->conf->popup_speed;
 }
 
-static void 
-*_create_data(E_Config_Dialog *cfd) 
+static void *
+_create_data(E_Config_Dialog *cfd) 
 {
    CFData *cfdata;
    
@@ -75,11 +76,15 @@ static void
 static void 
 _free_data(E_Config_Dialog *cfd, CFData *cfdata) 
 {
+   Pager *p;
+   
+   p = cfd->data;
+   p->config_dialog = NULL;
    free(cfdata);
 }
 
-static Evas_Object 
-*_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
+static Evas_Object *
+_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 {
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
@@ -133,8 +138,8 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    return 1;
 }
 
-static Evas_Object 
-*_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
+static Evas_Object *
+_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 {
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;

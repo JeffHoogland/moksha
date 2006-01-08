@@ -1,5 +1,6 @@
 #include "e.h"
 #include "e_mod_main.h"
+#include "e_mod_config.h"
 #include "config.h"
 
 typedef struct _cfdata CFData;
@@ -28,7 +29,7 @@ static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
 static int _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 
-void 
+EAPI void 
 _config_ibox_module(E_Container *con, IBox *ibox)
 {
    E_Config_Dialog *cfd;
@@ -57,8 +58,8 @@ _fill_data(IBox *ib, CFData *cfdata)
    cfdata->autoscroll_speed = ib->conf->autoscroll_speed;
 }
 
-static void 
-*_create_data(E_Config_Dialog *cfd)
+static void *
+_create_data(E_Config_Dialog *cfd)
 {
    CFData *cfdata;
    IBox *ib;
@@ -72,11 +73,15 @@ static void
 static void 
 _free_data(E_Config_Dialog *cfd, CFData *cfdata)
 {
+   IBox *ib;
+   
+   ib = cfd->data;
+   ib->config_dialog = NULL;
    free(cfdata);
 }
 
-static Evas_Object 
-*_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
+static Evas_Object *
+_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 {
    Evas_Object *o, *ob;
    IBox *ib;
@@ -123,8 +128,8 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    return 1;
 }
 
-static Evas_Object 
-*_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
+static Evas_Object *
+_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 {
    Evas_Object *o, *of, *ob;
    IBox *ib;

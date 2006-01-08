@@ -1,5 +1,6 @@
 #include "e.h"
 #include "e_mod_main.h"
+#include "e_mod_config.h"
 #include "config.h"
 
 typedef struct _cfdata CFData;
@@ -26,7 +27,7 @@ static void _free_data(E_Config_Dialog *cfd, CFData *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 
-void
+EAPI void
 _config_dropshadow_module(E_Container *con, Dropshadow *ds) 
 {
    E_Config_Dialog *cfd;
@@ -85,8 +86,8 @@ _fill_data(Dropshadow *ds, CFData *cfdata)
      }   
 }
 
-static void
-*_create_data(E_Config_Dialog *cfd) 
+static void *
+_create_data(E_Config_Dialog *cfd) 
 {
    CFData *cfdata;
    Dropshadow *ds;
@@ -100,11 +101,15 @@ static void
 static void
 _free_data(E_Config_Dialog *cfd, CFData *cfdata) 
 {
+   Dropshadow *ds;
+   
+   ds = cfd->data;
+   ds->config_dialog = NULL;
    free(cfdata);
 }
 
-static Evas_Object
-*_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata) 
+static Evas_Object *
+_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata) 
 {
    Evas_Object *o, *ob, *of;
    E_Radio_Group *rg;

@@ -1,5 +1,6 @@
 #include "e.h"
 #include "e_mod_main.h"
+#include "e_mod_confg.h"
 #include "config.h"
 
 typedef struct _cfdata CFData;
@@ -22,7 +23,7 @@ static void _free_data(E_Config_Dialog *cfd, CFData *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 
-void 
+EAPI void 
 _config_clock_module(E_Container *con, Clock_Face *c) 
 {
    E_Config_Dialog *cfd;
@@ -47,8 +48,8 @@ _fill_data(Clock_Face *clk, CFData *cfdata)
    cfdata->digital_style = clk->conf->digitalStyle;
 }
 
-static void 
-*_create_data(E_Config_Dialog *cfd) 
+static void *
+_create_data(E_Config_Dialog *cfd) 
 {
    CFData *cfdata;
    
@@ -59,11 +60,15 @@ static void
 static void 
 _free_data(E_Config_Dialog *cfd, CFData *cfdata) 
 {
+   Clock_Face *c;
+   
+   c = cfd->data;
+   c->config_dialog = NULL;
    free(cfdata);
 }
 
-static Evas_Object 
-*_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
+static Evas_Object *
+_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 {
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
