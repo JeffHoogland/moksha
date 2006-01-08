@@ -27,7 +27,7 @@ static void _free_data(E_Config_Dialog *cfd, CFData *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 
-EAPI void
+void
 _config_dropshadow_module(E_Container *con, Dropshadow *ds) 
 {
    E_Config_Dialog *cfd;

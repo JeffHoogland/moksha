@@ -29,7 +29,7 @@ static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
 static int _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 
-EAPI void 
+void 
 _config_ibox_module(E_Container *con, IBox *ibox)
 {
    E_Config_Dialog *cfd;
