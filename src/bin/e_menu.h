@@ -13,6 +13,8 @@
 
 typedef struct _E_Menu         E_Menu;
 typedef struct _E_Menu_Item    E_Menu_Item;
+typedef struct _E_Menu_Category_Callback E_Menu_Category_Callback;
+
 
 #else
 #ifndef E_MENU_H
@@ -130,6 +132,15 @@ struct _E_Menu_Item
    unsigned char  active : 1;
 };
 
+struct _E_Menu_Category_Callback
+{
+   const char *category;
+   void *data;
+   void (*create) (E_Menu *m, void *category_data, void *data);	
+   void (*free) (void *data);	
+};
+
+
 EAPI int          e_menu_init(void);
 EAPI int          e_menu_shutdown(void);
 
@@ -146,7 +157,8 @@ EAPI void         e_menu_icon_file_set(E_Menu *m, char *icon);
 /* menu categories functions */
 EAPI void         e_menu_category_set(E_Menu *m, char *category);
 EAPI void         e_menu_category_data_set(char *category, void *data);
-EAPI void         e_menu_category_callback_set(char *category, void (*create) (E_Menu *m, void *category_data, void *data), void (free) (void *data), void *data);
+EAPI E_Menu_Category_Callback  *e_menu_category_callback_add(char *category, void (*create) (E_Menu *m, void *category_data, void *data), void (free) (void *data), void *data);
+EAPI void         e_menu_category_callback_del(E_Menu_Category_Callback *cb);
 
 	
 EAPI void         e_menu_pre_activate_callback_set(E_Menu *m,  void (*func) (void *data, E_Menu *m), void *data);

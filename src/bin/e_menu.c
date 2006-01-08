@@ -25,19 +25,11 @@
 
 /* local subsystem data types */
 typedef struct _E_Menu_Category E_Menu_Category;
-typedef struct _E_Menu_Category_Callback E_Menu_Category_Callback;
 
 struct _E_Menu_Category
 {
 	void *data;
 	Evas_List *callbacks;
-};
-
-struct _E_Menu_Category_Callback
-{
-	void *data;
-	void (*create) (E_Menu *m, void *category_data, void *data);	
-	void (*free) (void *data);	
 };
 
 /* local subsystem functions */
@@ -379,8 +371,10 @@ e_menu_category_set(E_Menu *m, char *category)
 	evas_stringshare_del(m->category);
 	m->category = NULL;
      }
-   if (category) m->category = evas_stringshare_add(category);
-   else m->category = NULL;
+   if (category)
+      m->category = evas_stringshare_add(category);
+   else
+      m->category = NULL;
    m->changed = 1;
 }
 
@@ -392,33 +386,54 @@ e_menu_category_data_set(char *category, void *data)
    cat = evas_hash_find(_e_menu_categories, category);
    if (cat)
    	cat->data = data;
-   /* if it isnt found create the new hash */
-   else
+   else   /* if it isnt found create the new hash */
      {
 	cat = calloc(1, sizeof(E_Menu_Category));
 	cat->data = data;
-	_e_menu_categories = evas_hash_add(_e_menu_categories,category,cat);
+	_e_menu_categories = evas_hash_add(_e_menu_categories, category, cat);
      }
 }
 
-EAPI void
-e_menu_category_callback_set(char *category, void (*create) (E_Menu *m, void *category_data, void *data), void (*free) (void *data), void *data)
+EAPI E_Menu_Category_Callback *
+e_menu_category_callback_add(char *category, void (*create) (E_Menu *m, void *category_data, void *data), void (*free) (void *data), void *data)
 {
    E_Menu_Category *cat;
-   E_Menu_Category_Callback *cb;
+   E_Menu_Category_Callback *cb = NULL;
    
    cat = evas_hash_find(_e_menu_categories, category);
-   /* if it isnt found create the new hash */
-   if (!cat)
+   if (!cat)   /* if it isnt found create the new hash */
      {
 	cat = calloc(1, sizeof(E_Menu_Category));
-	_e_menu_categories = evas_hash_add(_e_menu_categories,category,cat);
+	_e_menu_categories = evas_hash_add(_e_menu_categories, category, cat);
      }
-   cb = calloc(1, sizeof(E_Menu_Category_Callback));
-   cb->data = data;
-   cb->create = create;
-   cb->free = free;
-   cat->callbacks = evas_list_append(cat->callbacks,cb);
+   if (cat)
+      {
+         cb = calloc(1, sizeof(E_Menu_Category_Callback));
+	 if (cb)
+	    {
+               cb->data = data;
+               cb->create = create;
+               cb->free = free;
+	       cb->category = evas_stringshare_add(category);
+               cat->callbacks = evas_list_append(cat->callbacks, cb);
+	    }
+      }
+   return cb;
+}
+
+EAPI void
+e_menu_category_callback_del(E_Menu_Category_Callback *cb)
+{
+   E_Menu_Category *cat;
+
+   if (cb)
+      {
+         cat = evas_hash_find(_e_menu_categories, cb->category);
+	 if (cat)
+            cat->callbacks = evas_list_remove(cat->callbacks, cb);
+         evas_stringshare_del(cb->category);
+         free(cb);
+      }
 }
 
 EAPI void
@@ -940,7 +955,7 @@ _e_menu_free(E_Menu *m)
 		E_Menu_Category_Callback *cb;
 
 		cb = l->data;
-		if(cb->free) cb->free(cb->data);
+		if(cb->free)   cb->free(cb->data);
 	}
    }
    _e_menu_unrealize(m);
@@ -1644,7 +1659,7 @@ _e_menu_activate_internal(E_Menu *m, E_Zone *zone)
 		E_Menu_Category_Callback *cb;
 
 		cb = l->data;
-		if(cb->create) cb->create(m,cat->data,cb->data);
+		if(cb->create)   cb->create(m, cat->data, cb->data);
 	}
    }
    m->cur.visible = 1;
@@ -2609,14 +2624,13 @@ _e_menu_categories_free_cb(Evas_Hash *hash, const char *key, void *data, void *f
    Evas_List *l;
    E_Menu_Category *cat;
    
-   cat = (E_Menu_Category *)data;
-   l = (Evas_List *)cat->callbacks;
+   cat = (E_Menu_Category *) data;
+   l = (Evas_List *) cat->callbacks;
    while (l)
      {
 	free(l->data); /* free the callback struct */
-	l = evas_list_remove_list(l,l);
+	l = evas_list_remove_list(l, l);
      }
    free(cat);
    return 1;
 }
-
