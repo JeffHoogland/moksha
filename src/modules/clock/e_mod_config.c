@@ -1,6 +1,6 @@
 #include "e.h"
 #include "e_mod_main.h"
-#include "e_mod_confg.h"
+#include "e_mod_config.h"
 #include "config.h"
 
 typedef struct _cfdata CFData;
