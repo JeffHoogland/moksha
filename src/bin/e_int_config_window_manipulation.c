@@ -28,6 +28,7 @@ struct _CFData
    int window_resist;
    int gadget_resist;
    int maximize_policy;
+   int allow_shading;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -65,6 +66,7 @@ _fill_data(CFData *cfdata)
    if (cfdata->use_auto_raise) cfdata->auto_raise = 1;
    if (cfdata->use_resist) cfdata->resist = 1;
    cfdata->maximize = cfdata->maximize_policy;
+   cfdata->allow_shading = e_config->allow_shading;
 }
 
 static void *
@@ -111,6 +113,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    e_config->window_resist = cfdata->window_resist;
    e_config->gadget_resist = cfdata->gadget_resist;
    e_config->maximize_policy = cfdata->maximize_policy;
+   e_config->allow_shading = cfdata->allow_shading;
    e_config_save_queue();
    return 1; /* Apply was OK */
 }
@@ -195,6 +198,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    ob = e_widget_radio_add(evas, _("Expand the window"), E_MAXIMIZE_EXPAND, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Fill available space"), E_MAXIMIZE_FILL, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Allow shading/resizing"), &(cfdata->allow_shading));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
