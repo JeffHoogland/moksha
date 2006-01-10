@@ -8,11 +8,7 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: performance dialg - edje cache is not MB but items. also not enough
-  detail to set 512k (0.5mb) cache for fonts (default) - fix ranges etc.
-* BUG: bg settings dialog has no advanced section (to set for this desktop only
-  or all desktops or just as the default etc.)
-* BUG: bg settings dialog doesnt clip/get miniature view right the first time
+* BUG: bg settings dialog still needs 2 Advanced options implemented. 
 * BUG: general settings is too... general
 * BUG: desktop settings is missing preview
 * BUG: modules need to destroy config dialogs on shutdown (otherwise - segv!)
