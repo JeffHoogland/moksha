@@ -2,7 +2,6 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 #include "e.h"
-#include "config.h"
 
 /* E_Zone is a child object of E_Container. There is one zone per screen
  * in a xinerama setup. Each zone has one or more desktops.

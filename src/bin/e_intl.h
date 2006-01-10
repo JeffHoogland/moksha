@@ -3,9 +3,6 @@
  */
 #ifdef E_TYPEDEFS
 
-#include <locale.h>
-#include <libintl.h>
-
 #define _(str) gettext(str)
 #define d_(str, dom) dgettext(PACKAGE dom, str)
 

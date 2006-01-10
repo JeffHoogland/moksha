@@ -4,6 +4,7 @@
 #ifndef E_H
 #define E_H
 
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,6 +24,23 @@
 #include <pwd.h>
 #include <grp.h>
 #include <glob.h>
+#include <locale.h>
+#include <libintl.h>
+#include <errno.h>
+
+#ifdef HAVE_ALLOCA_H
+#include <alloca.h>
+#endif
+
+#ifdef HAVE_VALGRIND
+# include <memcheck.h>
+#endif
+
+#ifdef OBJECT_PARANOIA_CHECK
+#include <execinfo.h>
+#include <signal.h>
+#include <setjmp.h>
+#endif
 
 #include <Evas.h>
 #include <Evas_Engine_Buffer.h>
@@ -39,14 +57,6 @@
 #include <Ecore_X_Cursor.h>
 #include <Eet.h>
 #include <Edje.h>
-
-#ifdef USE_E_CONFIG_H
-#include "config.h"
-#endif
-
-#ifdef HAVE_ALLOCA_H
-#include <alloca.h>
-#endif
 
 #if HAVE___ATTRIBUTE__
 #define __UNUSED__ __attribute__((unused))
@@ -66,7 +76,7 @@
 #else
 # ifdef __GNUC__
 #  if __GNUC__ >= 4
-#   pragma GCC visibility push(hidden)
+/*#   pragma GCC visibility push(hidden)*/
 #   define EAPI __attribute__ ((visibility("default")))
 #  else
 #   define EAPI

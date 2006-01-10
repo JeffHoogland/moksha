@@ -7,7 +7,6 @@
 #include "e.h"
 
 #ifdef OBJECT_PARANOIA_CHECK   
-#include <execinfo.h>
 
 /* a tricky little devil, requires e and it's libs to be built
  * with the -rdynamic flag to GCC for any sort of decent output. 

@@ -17,10 +17,6 @@
 /* yes - i know. glibc specific... but i like being able to do my own */
 /* backtraces! NB: you need CFLAGS="-rdynamic -g" LDFLAGS="-rdynamic -g" */
 #ifdef OBJECT_PARANOIA_CHECK
-#include <execinfo.h>
-#include <stdio.h>
-#include <signal.h>
-#include <setjmp.h>
 
 /* local subsystem functions */
 static void _e_object_segv(int sig);
