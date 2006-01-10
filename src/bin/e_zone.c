@@ -605,7 +605,7 @@ e_zone_exec(E_Zone *zone, char *exe)
    if (!ex)
      {
 	e_error_dialog_show(_("Run Error"),
-			    _("Enlightenment was unable fork a child process:\n"
+			    _("Enlightenment was unable to fork a child process:\n"
 			      "\n"
 			      "%s\n"
 			      "\n"),
