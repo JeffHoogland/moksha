@@ -1836,13 +1836,12 @@ _e_apps_cb_exit(void *data, int type, void *event)
    a = ai->app;
    if (!a) return 1;
 
+   /* FIXME: maybe we could capture stdout/stderr and display it here? */
    if (ev->exit_code == 127) /* /bin/sh uses this if cmd not found */
      e_error_dialog_show(_("Run Error"),
 			 _("Enlightenment was unable to run the program:\n"
 			   "\n"
-			   "%s\n"
-			   "\n"
-			   "The command was not found\n"),
+			   "%s\n"),
 			 a->exe);
    if (ai->expire_timer) ecore_timer_del(ai->expire_timer);
    free(ai);
