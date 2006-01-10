@@ -59,7 +59,15 @@ static void
 _fill_data(CFData *cfdata)
 {
    cfdata->bg_method = BG_SET_DEFAULT_DESK;
-   cfdata->current_file = strdup(e_config->desktop_default_background);
+   if (e_config->desktop_default_background) 
+     {
+	cfdata->current_file = strdup(e_config->desktop_default_background);
+     }
+   else 
+     {
+	cfdata->current_file = NULL;
+     }
+   
    /* TODO: get default bg */
 }
 
