@@ -76,7 +76,8 @@
 #else
 # ifdef __GNUC__
 #  if __GNUC__ >= 4
-/*#   pragma GCC visibility push(hidden)*/
+// BROKEN in gcc 4 on amd64
+//#   pragma GCC visibility push(hidden)
 #   define EAPI __attribute__ ((visibility("default")))
 #  else
 #   define EAPI
