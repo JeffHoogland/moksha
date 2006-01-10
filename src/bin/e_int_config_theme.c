@@ -45,7 +45,6 @@ e_int_config_theme(E_Container *con)
    v.advanced.create_widgets = NULL; 
    /* create config diaolg for NULL object/data */
    cfd = e_config_dialog_new(con, _("Theme Selector"), NULL, 0, &v, NULL);
-   //e_dialog_resizable_set(cfd->dia, 1);
    return cfd;
 }
 
@@ -54,11 +53,9 @@ static void
 _fill_data(CFData *cfdata)
 {
    /* get current theme */
-
    E_Config_Theme * c;
    c = e_theme_config_get("theme");
    cfdata->current_theme = strdup(c->file);
-
 }
 
 static void *
@@ -87,15 +84,9 @@ _free_data(E_Config_Dialog *cfd, CFData *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 {
-   E_Zone *z;
-   E_Desk *d;
    E_Action *a;
    
-   z = e_zone_current_get(cfd->con);
-   d = e_desk_current_get(z);
    /* Actually take our cfdata settings and apply them in real life */
-   printf("set theme: %s\n", cfdata->theme);
-
    e_theme_config_set("theme", cfdata->theme);
    e_config_save_queue();
 
@@ -109,9 +100,17 @@ void
 _e_config_theme_cb_standard(void *data)
 {
    E_Cfg_Theme_Data *d;
+   CFData *cfdata;
    
    d = data;
    e_widget_image_object_set(d->cfd->data, e_thumb_evas_object_get(d->file, d->cfd->dia->win->evas, 160, 120, 1));
+   
+   cfdata = d->cfd->cfdata;
+   if (!strcmp(cfdata->theme, cfdata->current_theme)) 
+     {
+	e_dialog_button_disable_num_set(d->cfd->dia, 0, 1);
+	e_dialog_button_disable_num_set(d->cfd->dia, 1, 1);	
+     }
 }
 
 
@@ -176,44 +175,27 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 		  if (edje_object_file_set(o, fulltheme, "desktop/background"))
 		    {
 		       Evas_Object *o = NULL;
-		       char *noext, *ext;
+		       char *noext;
 		       E_Cfg_Theme_Data *cb_data;
 		       
 		       o = e_thumb_generate_begin(fulltheme, 48, 48, cfd->dia->win->evas, &o, NULL, NULL);
-		       
-		       ext = strrchr(themefile ,'.');
-		       
-		       if (!ext)
-			 {
-			    noext = strdup(themefile);
-			 }
-		       else
-			 {
-			    noext = malloc((ext - themefile + 1));
-			    if (themefile)
-			      {
-				 memcpy(noext, themefile, ext - themefile);
-				 noext[ext - themefile] = 0;
-			      }
-			 }
+		       noext = ecore_file_strip_ext(themefile);		       
 		       cb_data = E_NEW(E_Cfg_Theme_Data, 1);
 		       cb_data->cfd = cfd;
 		       cb_data->file = strdup(fulltheme);
 		       cb_data->theme = strdup(themefile);
 		       e_widget_ilist_append(il, o, noext, _e_config_theme_cb_standard, cb_data, themefile);
-		       
 		       if (!(strcmp(themefile, cfdata->current_theme)))
 			 {
 			    e_widget_ilist_selected_set(il, i);
 			    im = e_widget_image_add_from_object(evas, theme, 320, 240);
-			    e_widget_image_object_set(im, e_thumb_evas_object_get(fulltheme, evas, 160, 120, 1));
+			    e_widget_image_object_set(im, e_thumb_evas_object_get(fulltheme, evas, 320, 240, 1));
 			 }
-		       
 		       free(noext);
 		       i++;
 		    }
 	       }
-	     
+	     free(themefile);
 	     evas_object_del(o);
 	     ecore_evas_free(eebuf);
 	     ecore_list_destroy(themes);
@@ -227,9 +209,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    if (im == NULL)
      {
 	theme = e_thumb_generate_begin(PACKAGE_DATA_DIR"/data/themes/default.edj",
-	      160, 120, evas, &theme, NULL, NULL);
-	im = e_widget_image_add_from_object(evas, theme,
-	      320, 240);
+	      320, 240, evas, &theme, NULL, NULL);
+	im = e_widget_image_add_from_object(evas, theme, 320, 240);
      }
    cfd->data = im;
    e_widget_min_size_set(fr, 320, 240);
