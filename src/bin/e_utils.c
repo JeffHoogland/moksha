@@ -221,7 +221,7 @@ e_util_head_exec(int head, char *cmd)
    if (!exe)
      {
 	e_error_dialog_show(_("Run Error"),
-			    _("Enlightenment was unable fork a child process:\n"
+			    _("Enlightenment was unable to fork a child process:\n"
 			      "\n"
 			      "%s\n"
 			      "\n"),

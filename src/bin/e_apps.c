@@ -410,7 +410,7 @@ e_app_exec(E_App *a, int launch_id)
      {
 	free(inst);
 	e_error_dialog_show(_("Run Error"),
-			    _("Enlightenment was unable fork a child process:\n"
+			    _("Enlightenment was unable to fork a child process:\n"
 			      "\n"
 			      "%s\n"
 			      "\n"),
@@ -1838,7 +1838,7 @@ _e_apps_cb_exit(void *data, int type, void *event)
 
    if (ev->exit_code == 127) /* /bin/sh uses this if cmd not found */
      e_error_dialog_show(_("Run Error"),
-			 _("Enlightenment was unable run the program:\n"
+			 _("Enlightenment was unable to run the program:\n"
 			   "\n"
 			   "%s\n"
 			   "\n"

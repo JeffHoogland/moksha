@@ -338,7 +338,7 @@ e_fm_file_exec(E_Fm_File *file)
    if (!exe)
      {
 	e_error_dialog_show(_("Run Error"),
-			    _("Enlightenment was unable fork a child process:\n"
+			    _("Enlightenment was unable to fork a child process:\n"
 			      "\n"
 			      "%s\n"
 			      "\n"),
@@ -389,7 +389,7 @@ e_fm_file_assoc_exec(E_Fm_File *file)
    if (!exe)
      {
 	e_error_dialog_show(_("Run Error"),
-			    _("Enlightenment was unable fork a child process:\n"
+			    _("Enlightenment was unable to fork a child process:\n"
 			      "\n"
 			      "%s\n"
 			      "\n"),
@@ -417,7 +417,7 @@ e_fm_file_exec_with(E_Fm_File *file, char* exec_with)
    if (!exe)
      {
 	e_error_dialog_show(_("Run Error"),
-			    _("3 Enlightenment was unable fork a child process:\n"
+			    _("3 Enlightenment was unable to fork a child process:\n"
 			      "\n"
 			      "%s\n"
 			      "\n"),
