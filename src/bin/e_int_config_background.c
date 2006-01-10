@@ -24,6 +24,7 @@ struct _CFData
 {
    /*- BASIC -*/
    char *file ;
+   char *current_file;
    /*- ADVANCED -*/
    int bg_method;
 };
@@ -58,6 +59,7 @@ static void
 _fill_data(CFData *cfdata)
 {
    cfdata->bg_method = BG_SET_DEFAULT_DESK;
+   cfdata->current_file = strdup(e_config->desktop_default_background);
    /* TODO: get default bg */
 }
 
@@ -78,7 +80,8 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, CFData *cfdata)
 {
-   /* Free the cfdata */  
+   /* Free the cfdata */
+   free(cfdata->current_file);
    free(cfdata);
 }
 
@@ -90,6 +93,7 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    e_config->desktop_default_background = evas_stringshare_add(cfdata->file);
    e_bg_update();
    e_config_save_queue();
+   cfdata->current_file = strdup(cfdata->file);
    return 1; /* Apply was OK */
 }
 
@@ -97,9 +101,16 @@ void
 _e_config_bg_cb_standard(void *data)
 {
    E_Cfg_Bg_Data *d;
+   CFData *cfdata;
    
    d = data;
    e_widget_image_object_set(d->cfd->data, e_thumb_evas_object_get(d->file, d->cfd->dia->win->evas, 200, 160, 1));
+   cfdata = d->cfd->cfdata;
+   if (!strcmp(d->file, cfdata->current_file)) 
+     {
+	e_dialog_button_disable_num_set(d->cfd->dia, 0, 1);
+	e_dialog_button_disable_num_set(d->cfd->dia, 1, 1);	
+     }
 }
 
 /**--GUI--**/
@@ -149,6 +160,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 	e_config->desktop_default_background = evas_stringshare_add(cfdata->file);
 	e_bg_update();
 	e_config_save_queue();
+	cfdata->current_file = strdup(cfdata->file);	
 	break;
       case BG_SET_THIS_DESK:
 	d = e_desk_current_get(z);
