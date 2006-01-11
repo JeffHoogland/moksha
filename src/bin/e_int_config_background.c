@@ -114,10 +114,13 @@ _e_config_bg_cb_standard(void *data)
    d = data;
    e_widget_image_object_set(d->cfd->data, e_thumb_evas_object_get(d->file, d->cfd->dia->win->evas, 200, 160, 1));
    cfdata = d->cfd->cfdata;
-   if (!strcmp(d->file, cfdata->current_file)) 
+   if (cfdata->current_file) 
      {
-	e_dialog_button_disable_num_set(d->cfd->dia, 0, 1);
-	e_dialog_button_disable_num_set(d->cfd->dia, 1, 1);	
+	if (!strcmp(d->file, cfdata->current_file)) 
+	  {
+	     e_dialog_button_disable_num_set(d->cfd->dia, 0, 1);
+	     e_dialog_button_disable_num_set(d->cfd->dia, 1, 1);	
+	  }
      }
 }
 
@@ -157,7 +160,6 @@ _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 {
    E_Zone *z;
    E_Desk *d;
-   Evas_List *l;
    int x, y;
 
    z = e_zone_current_get(cfd->con);   
