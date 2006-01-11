@@ -106,10 +106,13 @@ _e_config_theme_cb_standard(void *data)
    e_widget_image_object_set(d->cfd->data, e_thumb_evas_object_get(d->file, d->cfd->dia->win->evas, 160, 120, 1));
    
    cfdata = d->cfd->cfdata;
-   if (!strcmp(cfdata->theme, cfdata->current_theme)) 
+   if (cfdata->current_theme) 
      {
-	e_dialog_button_disable_num_set(d->cfd->dia, 0, 1);
-	e_dialog_button_disable_num_set(d->cfd->dia, 1, 1);	
+	if (!strcmp(cfdata->theme, cfdata->current_theme)) 
+	  {
+	     e_dialog_button_disable_num_set(d->cfd->dia, 0, 1);
+	     e_dialog_button_disable_num_set(d->cfd->dia, 1, 1);	
+	  }
      }
 }
 
