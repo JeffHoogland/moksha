@@ -17,7 +17,7 @@ static Pager      *_pager_new(void);
 static void        _pager_free(Pager *pager);
 static void        _pager_config_menu_new(Pager *pager);
 
-static Pager_Face *_pager_face_new(Pager *pager, E_Zone *zone, Evas *evas);
+static Pager_Face *_pager_face_new(Pager *pager, E_Zone *zone, Evas *evas, int use_gmc);
 static void        _pager_face_free(Pager_Face *face);
 static void        _pager_face_menu_new(Pager_Face *face);
 static void        _pager_face_disable(Pager_Face *face);
@@ -260,7 +260,8 @@ _pager_new(void)
 	       {
 		  zone = l3->data;
 
-		  face = _pager_face_new(pager, zone, zone->container->bg_evas);
+		  face = _pager_face_new(pager, zone, zone->container->bg_evas,
+					 1);
 		  if (face)
 		    {
 		       pager->faces = evas_list_append(pager->faces, face);
@@ -416,7 +417,7 @@ _pager_config_menu_new(Pager *pager)
 }
 
 static Pager_Face *
-_pager_face_new(Pager *pager, E_Zone *zone, Evas *evas)
+_pager_face_new(Pager *pager, E_Zone *zone, Evas *evas, int use_gmc)
 {
    Pager_Face  *face;
    Evas_Object *o;
@@ -459,8 +460,14 @@ _pager_face_new(Pager *pager, E_Zone *zone, Evas *evas)
 					   drop, 2,
 					   face->fx, face->fy, face->fw, face->fh);
 
-   face->gmc = e_gadman_client_new(zone->container->gadman);
    _pager_face_zone_set(face, zone);
+   _pager_face_deskname_position_change(face);
+
+   /* popup does not want a gadman entry! */
+   if (!use_gmc)
+     return face;
+
+   face->gmc = e_gadman_client_new(zone->container->gadman);
 
    e_gadman_client_domain_set(face->gmc, "module.pager", _pager_count++);
    e_gadman_client_zone_set(face->gmc, face->zone);
@@ -490,7 +497,6 @@ _pager_face_new(Pager *pager, E_Zone *zone, Evas *evas)
 
    Evas_Coord g, z;
    e_gadman_client_geometry_get(face->gmc, NULL, NULL, &g, &z);
-   _pager_face_deskname_position_change(face);
 
    return face;
 }
@@ -500,8 +506,11 @@ _pager_face_free(Pager_Face *face)
 {
    if (face->pager_object) evas_object_del(face->pager_object);
    if (face->table_object) evas_object_del(face->table_object);
-   e_gadman_client_save(face->gmc);
-   e_object_del(E_OBJECT(face->gmc));
+   if (face->gmc)
+     {
+	e_gadman_client_save(face->gmc);
+	e_object_del(E_OBJECT(face->gmc));
+     }
 
    e_drop_handler_del(face->drop_handler);
 
@@ -1545,7 +1554,8 @@ _pager_cb_event_desk_show(void *data, int type, void *event)
 
 	     evas_object_geometry_get(face->pager_object, NULL, NULL, &w, &h);
 	     
-	     pp->face = _pager_face_new(face->pager, face->zone, pp->popup->evas);
+	     pp->face = _pager_face_new(face->pager, face->zone,
+					pp->popup->evas, 0);
 	     evas_object_move(pp->face->pager_object, 0, 0);
 	     evas_object_resize(pp->face->pager_object, w, h);
 
