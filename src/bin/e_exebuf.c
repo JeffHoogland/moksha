@@ -767,6 +767,7 @@ _e_exebuf_matches_update(void)
 	E_Exebuf_Exe *exe;
 	Evas_Coord mw, mh;
 	Evas_Object *o;
+	int opt = 0;
 	
 	exe = calloc(1, sizeof(E_Exebuf_Exe));
         eaps = evas_list_append(eaps, exe);
@@ -776,7 +777,18 @@ _e_exebuf_matches_update(void)
         exe->bg_object = o;
 	e_theme_edje_object_set(o, "base/theme/exebuf",
 				"widgets/exebuf/item");
-	edje_object_part_text_set(o, "title_text", exe->app->name);
+	if (e_config->menu_eap_name_show && exe->app->name) opt |= 0x4;
+	if (e_config->menu_eap_generic_show && exe->app->generic) opt |= 0x2;
+	if (e_config->menu_eap_comment_show && exe->app->comment) opt |= 0x1;
+	if      (opt == 0x7) snprintf(buf, sizeof(buf), "%s (%s) [%s]", exe->app->name, exe->app->generic, exe->app->comment);
+	else if (opt == 0x6) snprintf(buf, sizeof(buf), "%s (%s)", exe->app->name, exe->app->generic);
+	else if (opt == 0x5) snprintf(buf, sizeof(buf), "%s [%s]", exe->app->name, exe->app->comment);
+	else if (opt == 0x4) snprintf(buf, sizeof(buf), "%s", exe->app->name);
+	else if (opt == 0x3) snprintf(buf, sizeof(buf), "%s [%s]", exe->app->generic, exe->app->comment);
+	else if (opt == 0x2) snprintf(buf, sizeof(buf), "%s", exe->app->generic);
+	else if (opt == 0x1) snprintf(buf, sizeof(buf), "%s", exe->app->comment);
+	else snprintf(buf, sizeof(buf), "%s", exe->app->name);
+	edje_object_part_text_set(o, "title_text", buf);
 	evas_object_show(o);
 	if (edje_object_part_exists(exe->bg_object, "icon_swallow"))
 	  {

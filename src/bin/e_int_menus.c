@@ -23,6 +23,7 @@ static void _e_int_menus_quit                (void);
 static void _e_int_menus_quit_cb             (void *data);
 static void _e_int_menus_main_del_hook       (void *obj);
 static void _e_int_menus_main_about          (void *data, E_Menu *m, E_Menu_Item *mi);
+static int  _e_int_menus_main_run_defer_cb   (void *data);
 static void _e_int_menus_main_run            (void *data, E_Menu *m, E_Menu_Item*mi);
 static void _e_int_menus_main_restart        (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_exit           (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -80,6 +81,11 @@ e_int_menus_main_new(void)
    e_menu_item_submenu_set(mi, subm);
   
    mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Run Command"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/run");
+   e_menu_item_callback_set(mi, _e_int_menus_main_run, NULL);	
+
+   mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
    subm = e_module_menu_new();
@@ -131,14 +137,6 @@ e_int_menus_main_new(void)
    e_menu_item_label_set(mi, _("About Enlightenment"));   
    e_util_menu_item_edje_icon_set(mi, "enlightenment/e");
    e_menu_item_callback_set(mi, _e_int_menus_main_about, NULL);
-
-   if (ecore_file_app_installed("exige"))
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Run Command"));
-	e_util_menu_item_edje_icon_set(mi, "enlightenment/run");
-	e_menu_item_callback_set(mi, _e_int_menus_main_run, NULL);	
-     }
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Files"));
@@ -370,13 +368,23 @@ _e_int_menus_themes_about(void *data, E_Menu *m, E_Menu_Item *mi)
    if (about) e_theme_about_show(about);
 }
 
+/* FIXME: this is a workaround for menus' haveing a key grab ANd exebuf
+ * wanting one too
+ */
+static int
+_e_int_menus_main_run_defer_cb(void *data)
+{
+   E_Zone *zone;
+   
+   zone = data;
+   e_exebuf_show(zone);
+   return 0;
+}
+
 static void
 _e_int_menus_main_run(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   Ecore_Exe *exe;
-
-   exe = ecore_exe_run("exige", NULL);
-   if (exe) ecore_exe_free(exe);
+   ecore_idle_enterer_add(_e_int_menus_main_run_defer_cb, m->zone);
 }
 
 static void
