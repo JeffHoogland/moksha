@@ -91,8 +91,7 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    e_config_save_queue();
 
    a = e_action_find("restart");
-   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
-   
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);   
    return 1; /* Apply was OK */
 }
 
@@ -101,6 +100,7 @@ _e_config_theme_cb_standard(void *data)
 {
    E_Cfg_Theme_Data *d;
    CFData *cfdata;
+   const char *tmp;
    
    d = data;
    e_widget_image_object_set(d->cfd->data, e_thumb_evas_object_get(d->file, d->cfd->dia->win->evas, 160, 120, 1));
@@ -108,7 +108,8 @@ _e_config_theme_cb_standard(void *data)
    cfdata = d->cfd->cfdata;
    if (cfdata->current_theme) 
      {
-	if (!strcmp(cfdata->theme, cfdata->current_theme)) 
+	tmp = ecore_file_get_file(d->file);
+	if (!strcmp(tmp, cfdata->current_theme)) 
 	  {
 	     e_dialog_button_disable_num_set(d->cfd->dia, 0, 1);
 	     e_dialog_button_disable_num_set(d->cfd->dia, 1, 1);	
@@ -126,7 +127,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    Evas_Object *il;
    char buf[4096];
    char *homedir;
-   Evas_Object *theme;   
+   Evas_Object *theme;
+   char fulltheme[PATH_MAX];
    
    theme = edje_object_add(evas);
    
@@ -154,12 +156,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 	     ecore_list_prepend(themes, strdup("default.edj"));
 	     ecore_list_goto_first(themes);
 	     
-	     char *themefile;
-	     char fulltheme[PATH_MAX];
 	     Evas_Object *o;
 	     Ecore_Evas *eebuf;
 	     Evas *evasbuf;
 	     int i = 0;
+	     char *themefile;
 	     
 	     eebuf = ecore_evas_buffer_new(1, 1);
 	     evasbuf = ecore_evas_get(eebuf);
@@ -211,9 +212,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    fr = e_widget_framelist_add(evas, "Preview", 0);
    if (im == NULL)
      {
-	theme = e_thumb_generate_begin(PACKAGE_DATA_DIR"/data/themes/default.edj",
-	      320, 240, evas, &theme, NULL, NULL);
+	snprintf(fulltheme, sizeof(fulltheme), PACKAGE_DATA_DIR"/data/themes/default.edj");
+	theme = e_thumb_generate_begin(fulltheme, 320, 240, evas, &theme, NULL, NULL);
 	im = e_widget_image_add_from_object(evas, theme, 320, 240);
+	e_widget_image_object_set(im, e_thumb_evas_object_get(fulltheme, evas, 320, 240, 1));
      }
    cfd->data = im;
    e_widget_min_size_set(fr, 320, 240);
