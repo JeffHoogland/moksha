@@ -486,6 +486,24 @@ e_util_desk_border_below(E_Border *bd)
    return below;
 }
 
+EAPI int
+e_util_edje_collection_exists(char *file, char *coll)
+{
+   Evas_List *clist, *l;
+   
+   clist = edje_file_collection_list(file);
+   for (l = clist; l; l = l->next)
+     {
+	if (!strcmp(coll, l->data))
+	  {
+	     edje_file_collection_list_free(clist);
+	     return 1;
+	  }
+     }
+   edje_file_collection_list_free(clist);
+   return 0;
+}
+
 /* local subsystem functions */
 static void
 _e_util_container_fake_mouse_up_cb(void *data)

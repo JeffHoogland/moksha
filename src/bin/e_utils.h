@@ -28,6 +28,7 @@ EAPI int          e_util_menu_item_edje_icon_set(E_Menu_Item *mi, char *name);
 EAPI E_Container *e_util_container_window_find(Ecore_X_Window win);
 EAPI E_Border    *e_util_desk_border_above(E_Border *bd);
 EAPI E_Border    *e_util_desk_border_below(E_Border *bd);
+EAPI int          e_util_edje_collection_exists(char *file, char *coll);
     
 #endif
 #endif
