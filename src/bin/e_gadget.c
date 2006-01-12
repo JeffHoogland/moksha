@@ -3,6 +3,19 @@
  */
 #include "e.h"
 
+/*
+ * Todo:
+ *
+ * Add module init / free callbacks
+ * Automate configuration loading / saving (pass in an EDD, handle the rest)
+ * Decide on a location / filename convention for 3rd party themes, and
+ *   fallback to this for the "theme/modules/module_name" category
+ * Should the functions be done in a similar fashion to the module functions?
+ *   (that is, set function names, used if defined in module, otherwise not).
+ *   This would require making e_module aware of them somehow.
+ *
+ */
+
 static E_Gadget_Face *_e_gadget_face_new(E_Gadget *gad, E_Container *con, E_Zone *zone);
 static void _e_gadget_menu_init(E_Gadget *gad);
 static void _e_gadget_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
