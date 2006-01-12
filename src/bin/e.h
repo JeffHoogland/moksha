@@ -101,6 +101,8 @@ typedef struct _E_Rect E_Rect;
 #define E_NEW_BIG(s, n) (s *)malloc(n * sizeof(s))
 #define E_FREE(p) { if (p) {free(p); p = NULL;} }
 
+#define E_CLAMP(x, min, max) (x < min ? min : (x > max ? max : x))
+
 #define E_REMOTE_OPTIONS 1
 #define E_REMOTE_OUT     2
 #define E_WM_IN          3

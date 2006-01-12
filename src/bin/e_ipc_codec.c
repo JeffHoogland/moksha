@@ -24,6 +24,8 @@ static Eet_Data_Descriptor *_e_ipc_3int_4str_edd = NULL;
 static Eet_Data_Descriptor *_e_ipc_3int_4str_list_edd = NULL;
 static Eet_Data_Descriptor *_e_ipc_3int_3str_edd = NULL;
 static Eet_Data_Descriptor *_e_ipc_3int_3str_list_edd = NULL;
+static Eet_Data_Descriptor *_e_ipc_str_4int_edd = NULL;
+static Eet_Data_Descriptor *_e_ipc_str_4int_list_edd = NULL;
 
 #define E_IPC_DD_NEW(str, typ) \
    eet_data_descriptor_new(str, sizeof(typ), \
@@ -122,6 +124,17 @@ e_ipc_codec_init(void)
 
    _e_ipc_3int_3str_list_edd = E_IPC_DD_NEW("3int_3str_list", E_Ipc_List);
    E_CONFIG_LIST(_e_ipc_3int_3str_list_edd, E_Ipc_List, list, _e_ipc_3int_3str_edd);
+
+   _e_ipc_str_4int_edd = E_IPC_DD_NEW("str_4int", E_Ipc_Str_4Int);
+   E_CONFIG_VAL(_e_ipc_str_4int_edd, E_Ipc_Str_4Int, str, STR);
+   E_CONFIG_VAL(_e_ipc_str_4int_edd, E_Ipc_Str_4Int, val1, INT);
+   E_CONFIG_VAL(_e_ipc_str_4int_edd, E_Ipc_Str_4Int, val2, INT);
+   E_CONFIG_VAL(_e_ipc_str_4int_edd, E_Ipc_Str_4Int, val3, INT);
+   E_CONFIG_VAL(_e_ipc_str_4int_edd, E_Ipc_Str_4Int, val4, INT);
+
+   _e_ipc_str_4int_list_edd = E_IPC_DD_NEW("str_4int_list", E_Ipc_List);
+   E_CONFIG_LIST(_e_ipc_str_4int_list_edd, E_Ipc_List, list, _e_ipc_str_4int_edd);
+
    return 1;
 }
 
@@ -607,5 +620,53 @@ e_ipc_codec_3int_3str_list_enc(Evas_List *list, int *size_ret)
    dat.list = list;
    return eet_data_descriptor_encode(_e_ipc_3int_3str_list_edd, &dat, size_ret);
 }
+
+EAPI int
+e_ipc_codec_str_4int_dec(char *data, int bytes, E_Ipc_Str_4Int **dest)
+{
+  E_Ipc_Str_4Int *dat;
+
+  if (!data) return 0;
+  dat = eet_data_descriptor_decode(_e_ipc_str_4int_edd, data, bytes);
+  if (!dat) return 0;
+  if (dest) *dest = dat;
+  return 1;
+}
+
+EAPI void *
+e_ipc_codec_str_4int_enc(char *str1, int val1, int val2, int val3, int val4, int *size_ret)
+{
+  E_Ipc_Str_4Int dat;
+
+  dat.str = str1;
+  dat.val1 = val1;
+  dat.val2 = val2;
+  dat.val3 = val3;
+  dat.val4 = val4;
+
+  return eet_data_descriptor_encode(_e_ipc_str_4int_edd, &dat, size_ret);
+}
+
+EAPI int
+e_ipc_codec_str_4int_list_dec(char *data, int bytes, Evas_List **dest)
+{
+   E_Ipc_List *dat;
+
+   if (!data) return 0;
+   dat = eet_data_descriptor_decode(_e_ipc_str_4int_list_edd, data, bytes);
+   if (!dat) return 0;
+   if (dest) *dest = dat->list;
+   free(dat);
+   return 1;
+}
+
+EAPI void *
+e_ipc_codec_str_4int_list_enc(Evas_List *list, int *size_ret)
+{
+   E_Ipc_List dat;
+   dat.list = list;
+   return eet_data_descriptor_encode(_e_ipc_str_4int_list_edd, &dat, size_ret);
+}
+
 /* local subsystem globals */
 

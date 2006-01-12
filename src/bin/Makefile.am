@@ -129,7 +129,8 @@ e_int_config_winlist.h \
 e_deskpreview.h \
 e_exebuf.h \
 e_int_config_modules.h \
-e_exehist.h
+e_exehist.h \
+e_color_class.h
 
 enlightenment_src = \
 e_user.c \
@@ -240,6 +241,7 @@ e_deskpreview.c \
 e_exebuf.c \
 e_int_config_modules.c \
 e_exehist.c \
+e_color_class.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \

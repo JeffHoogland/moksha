@@ -180,6 +180,27 @@ if (e->data) { \
 } \
 break;
 
+# define STRING_4INT(__str, __int1, __int2, __int3, __int4, __str_4int, HDL) \
+case HDL: \
+if (e->data) { \
+   char *__str = NULL; \
+   int __int1, __int2, __int3, __int4; \
+   E_Ipc_Str_4Int *__str_4int = NULL; \
+   __str_4int = calloc(1, sizeof(E_Ipc_Str_4Int)); \
+   if (e_ipc_codec_str_4int_dec(e->data, e->size, &(__str_4int))) { \
+      __str  = __str_4int->str; \
+      __int1 = __str_4int->val1; \
+      __int2 = __str_4int->val2; \
+      __int3 = __str_4int->val3; \
+      __int4 = __str_4int->val4; 
+# define END_STRING_4INT(__str_4int) \
+      free(__str_4int->str); \
+      free(__str_4int); \
+   } \
+} \
+break;
+
+
 /**
  * Get event data for libe processing
  */
@@ -278,6 +299,16 @@ break;
 # define REQ_2STRING_INT(__str1, __str2, __int, HDL) \
 case HDL: { void *data; int bytes; \
    data = e_ipc_codec_2str_int_enc(__str1, __str2, __int, &bytes); \
+   if (data) { \
+      ecore_ipc_server_send(e->server, E_IPC_DOMAIN_REQUEST, HDL, 0, 0, 0, data, bytes); \
+      free(data); \
+   } \
+} \
+break;
+
+# define REQ_STRING_4INT(__str, __int1, __int2, __int3, __int4, HDL) \
+case HDL: { void *data; int bytes; \
+   data = e_ipc_codec_str_4int_enc(__str, __int1, __int2, __int3, __int4, &bytes); \
    if (data) { \
       ecore_ipc_server_send(e->server, E_IPC_DOMAIN_REQUEST, HDL, 0, 0, 0, data, bytes); \
       free(data); \
@@ -620,6 +651,50 @@ free(data);
     FREE_LIST(dat); \
  } \
    break;
+
+# define STRING_INT4_LIST(__v, HDL) \
+ case HDL: { \
+    Evas_List *dat = NULL, *l; \
+    if (e_ipc_codec_str_4int_list_dec(e->data, e->size, &dat)) { \
+       for (l = dat; l; l = l->next) { \
+	  E_Ipc_Str_4Int *__v; \
+	  __v = l->data;
+#define END_STRING_INT4_LIST(__v) \
+	  free(__v->str); \
+	  free(__v); \
+       } \
+       evas_list_free(dat); \
+    } \
+ } \
+   break;
+
+/** 
+ * SEND_STRING_INT4_LIST:
+ * Start to encode a list of objects to prepare them for sending via
+ * ipc. The object __v1 will be of type __typ1 and __v2 will be of type
+ * E_Ipc_Str_4Int. 
+ *
+ * Use END_SEND_STRING_INT4_LIST to terminate the encode iteration and 
+ * send that data. The list will be freed.
+ */
+#define SEND_STRING_INT4_LIST(__list, __typ1, __v1, __v2, HDL) \
+ case HDL: { \
+    Evas_List *dat = NULL, *l; \
+    void *data; int bytes; \
+    for (l = __list; l; l = l->next) { \
+       __typ1 *__v1; \
+       E_Ipc_Str_4Int *__v2; \
+       __v1 = l->data; \
+       __v2 = calloc(1, sizeof(E_Ipc_Str_4Int));
+#define END_SEND_STRING_INT4_LIST(__v1, __op) \
+       dat = evas_list_append(dat, __v1); \
+    } \
+    data = e_ipc_codec_str_4int_list_enc(dat, &bytes); \
+    SEND_DATA(__op); \
+    FREE_LIST(dat); \
+ } \
+   break;
+
 
 /**
  * STRING2_INT_LIST:
@@ -7113,4 +7188,126 @@ break;
    END_INT
 #endif
 #undef HDL
+/****************************************************************************/
+#define HDL E_IPC_OP_COLOR_CLASS_COLOR_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-color-class-color-set", 5, "Set color_class (OPT1) r, g, b, a (OPT2-5)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING_4INT(params[0], atoi(params[1]), atoi(params[2]), atoi(params[3]), atoi(params[4]), HDL) 
+#elif (TYPE == E_WM_IN)
+   STRING_4INT(color_class, r, g, b, a, e_str_4int, HDL);
+   e_color_class_set(color_class, r, g, b, a, -1, -1, -1, -1, -1, -1, -1, -1);
+   SAVE;   
+   END_STRING_4INT(e_str_4int);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+/****************************************************************************/
+#define HDL E_IPC_OP_COLOR_CLASS_COLOR2_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-color-class-color-set2", 5, "Set color_class (OPT1) color2 r, g, b, a (OPT2-5)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING_4INT(params[0], atoi(params[1]), atoi(params[2]), atoi(params[3]), atoi(params[4]), HDL) 
+#elif (TYPE == E_WM_IN)
+   STRING_4INT(color_class, r, g, b, a, e_str_4int, HDL);
+   e_color_class_set(color_class, -1, -1, -1, -1, r, g, b, a, -1, -1, -1, -1);
+   SAVE;   
+   END_STRING_4INT(e_str_4int);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+/****************************************************************************/
+#define HDL E_IPC_OP_COLOR_CLASS_COLOR3_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-color-class-color-set3", 5, "Set color_class (OPT1) color3 r, g, b, a (OPT2-5)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING_4INT(params[0], atoi(params[1]), atoi(params[2]), atoi(params[3]), atoi(params[4]), HDL) 
+#elif (TYPE == E_WM_IN)
+   STRING_4INT(color_class, r, g, b, a, e_str_4int, HDL);
+   e_color_class_set(color_class, -1, -1, -1, -1, -1, -1, -1, -1, r, g, b, a);
+   SAVE;   
+   END_STRING_4INT(e_str_4int);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+/****************************************************************************/
+#define HDL E_IPC_OP_COLOR_CLASS_COLOR_LIST
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-color-class-color-list", 0, "List color values for all set color classes", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_STRING_INT4_LIST(e_color_class_list(), E_Color_Class, cc, v, HDL);
+   v->str = cc->name;
+   v->val1 = cc->r;
+   v->val2 = cc->g;
+   v->val3 = cc->b;
+   v->val4 = cc->a;
+   END_SEND_STRING_INT4_LIST(v, E_IPC_OP_COLOR_CLASS_COLOR_LIST_REPLY);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+/****************************************************************************/
+#define HDL E_IPC_OP_COLOR_CLASS_COLOR2_LIST
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-color-class-color2-list", 0, "List color2 values for all set color classes", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_STRING_INT4_LIST(e_color_class_list(), E_Color_Class, cc, v, HDL);
+   v->str = cc->name;
+   v->val1 = cc->r2;
+   v->val2 = cc->g2;
+   v->val3 = cc->b2;
+   v->val4 = cc->a2;
+   END_SEND_STRING_INT4_LIST(v, E_IPC_OP_COLOR_CLASS_COLOR_LIST_REPLY);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+/****************************************************************************/
+#define HDL E_IPC_OP_COLOR_CLASS_COLOR3_LIST
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-color-class-color3-list", 0, "List color3 values for all set color classes", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_STRING_INT4_LIST(e_color_class_list(), E_Color_Class, cc, v, HDL);
+   v->str = cc->name;
+   v->val1 = cc->r3;
+   v->val2 = cc->g3;
+   v->val3 = cc->b3;
+   v->val4 = cc->a3;
+   END_SEND_STRING_INT4_LIST(v, E_IPC_OP_COLOR_CLASS_COLOR_LIST_REPLY);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+/****************************************************************************/
+#define HDL E_IPC_OP_COLOR_CLASS_DEL
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-color-class-del", 1, "Delete color class named OPT1", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING(params[0], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING(s, HDL);
+   e_color_class_del(s);
+   END_STRING(s);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_COLOR_CLASS_COLOR_LIST_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   STRING_INT4_LIST(v, HDL);
+   if (v->str) printf("REPLY: \"%s\" (RGBA) %i %i %i %i\n", v->str, v->val1, v->val2, v->val3, v->val4);
+   else printf("REPLY: \"\" (RGBA) %i %i %i %i\n", v->val1, v->val2, v->val3, v->val4);
+   END_STRING_INT_LIST(v);
+#elif (TYPE == E_LIB_IN)
+   /* FIXME implement */
+#endif
+#undef HDL
+     
 /****************************************************************************/

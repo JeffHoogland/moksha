@@ -34,6 +34,8 @@ static E_Config_DD *_e_config_path_append_edd = NULL;
 static E_Config_DD *_e_config_desktop_bg_edd = NULL;
 static E_Config_DD *_e_config_desktop_name_edd = NULL;
 static E_Config_DD *_e_config_remember_edd = NULL;
+static E_Config_DD *_e_config_color_class_edd = NULL;
+
 
 /* externally accessible functions */
 EAPI int
@@ -242,6 +244,25 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, prop.head, INT);
    E_CONFIG_VAL(D, T, prop.command, STR);
    
+   _e_config_color_class_edd = E_CONFIG_DD_NEW("E_Color_Class", E_Color_Class);
+#undef T
+#undef D
+#define T E_Color_Class
+#define D _e_config_color_class_edd
+   E_CONFIG_VAL(D, T, name, STR);
+   E_CONFIG_VAL(D, T, r, INT);
+   E_CONFIG_VAL(D, T, g, INT);
+   E_CONFIG_VAL(D, T, b, INT);
+   E_CONFIG_VAL(D, T, a, INT);
+   E_CONFIG_VAL(D, T, r2, INT);
+   E_CONFIG_VAL(D, T, g2, INT);
+   E_CONFIG_VAL(D, T, b2, INT);
+   E_CONFIG_VAL(D, T, a2, INT);
+   E_CONFIG_VAL(D, T, r3, INT);
+   E_CONFIG_VAL(D, T, g3, INT);
+   E_CONFIG_VAL(D, T, b3, INT);
+   E_CONFIG_VAL(D, T, a3, INT);
+
    _e_config_edd = E_CONFIG_DD_NEW("E_Config", E_Config);
 #undef T
 #undef D
@@ -379,6 +400,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, exebuf_pos_min_h, INT);
    E_CONFIG_VAL(D, T, exebuf_pos_max_w, INT);
    E_CONFIG_VAL(D, T, exebuf_pos_max_h, INT);
+   E_CONFIG_LIST(D, T, color_classes, _e_config_color_class_edd);
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
      {
@@ -2064,6 +2086,15 @@ _e_config_free(void)
 	     if (rem->prop.command) evas_stringshare_del(rem->prop.command);
 	     
 	     E_FREE(rem);
+	  }
+	while (e_config->color_classes)
+	  {
+	     E_Color_Class *cc;
+	     cc = e_config->color_classes->data;
+	     e_config->color_classes = evas_list_remove_list(e_config->color_classes, e_config->color_classes);
+
+	     if (cc->name) evas_stringshare_del(cc->name);
+	     E_FREE(cc);
 	  }
 	if (e_config->desktop_default_background) evas_stringshare_del(e_config->desktop_default_background);
 	if (e_config->desktop_default_name) evas_stringshare_del(e_config->desktop_default_name);

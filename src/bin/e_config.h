@@ -199,6 +199,7 @@ struct _E_Config
    int         exebuf_pos_min_h;
    int         exebuf_pos_max_w;
    int         exebuf_pos_max_h;
+   Evas_List  *color_classes;
 };
 
 struct _E_Config_Module
