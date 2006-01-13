@@ -50,7 +50,7 @@ e_thumb_init(void)
    
    event_handlers = 
      evas_list_append(event_handlers,
-		      ecore_event_handler_add(ECORE_EVENT_EXE_EXIT,
+		      ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
 					      _e_thumb_cb_exe_exit,
 					      NULL));      
    return 1;

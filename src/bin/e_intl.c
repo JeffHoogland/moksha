@@ -129,7 +129,7 @@ e_intl_post_init(void)
    if ((e_config->input_method) && (e_config->input_method[0] != 0))
      e_intl_input_method_set(e_config->input_method); 
 
-   _e_intl_exit_handler = ecore_event_handler_add(ECORE_EVENT_EXE_EXIT, _e_intl_cb_exit, NULL);
+   _e_intl_exit_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_intl_cb_exit, NULL);
    return 1;
 }
 
