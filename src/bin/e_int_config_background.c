@@ -22,6 +22,7 @@ static void        _load_bgs(Evas *evas, E_Config_Dialog *cfd, Evas_Object *il);
 /* Actual config data we will be playing with whil the dialog is active */
 struct _CFData
 {
+   E_Config_Dialog *cfd;
    /*- BASIC -*/
    char *file ;
    char *current_file;
@@ -76,6 +77,7 @@ _create_data(E_Config_Dialog *cfd)
    CFData *cfdata;
    
    cfdata = E_NEW(CFData, 1);
+   cfdata->cfd = cfd;
    _fill_data(cfdata);
    return cfdata;
 }
@@ -111,20 +113,18 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 void
 _e_config_bg_cb_standard(void *data)
 {
-   E_Cfg_Bg_Data *d;
    CFData *cfdata;
    
-   d = data;
-   cfdata = d->cfd->cfdata;
+   cfdata = data;
    e_widget_image_object_set
-     (d->cfd->data,
-      e_thumb_evas_object_get(d->file, d->cfd->dia->win->evas, 200, 160, 1));
+     (cfdata->cfd->data,
+      e_thumb_evas_object_get(cfdata->file, cfdata->cfd->dia->win->evas, 200, 160, 1));
    if (cfdata->current_file) 
      {
-	if (!strcmp(d->file, cfdata->current_file)) 
+	if (!strcmp(cfdata->file, cfdata->current_file)) 
 	  {
-	     e_dialog_button_disable_num_set(d->cfd->dia, 0, 1);
-	     e_dialog_button_disable_num_set(d->cfd->dia, 1, 1);	
+	     e_dialog_button_disable_num_set(cfdata->cfd->dia, 0, 1);
+	     e_dialog_button_disable_num_set(cfdata->cfd->dia, 1, 1);	
 	  }
      }
 }
@@ -153,7 +153,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    e_widget_table_object_append(o, il, 0, 0, 1, 2, 1, 1, 1, 1);
 
    fr = e_widget_framelist_add(evas, "Preview", 0);
-   e_widget_min_size_set(fr, 180, 160);
+   e_widget_min_size_set(fr, 200, 160);
    e_widget_table_object_append(o, fr, 1, 0, 1, 1, 1, 1, 1, 1);   
    e_widget_framelist_object_append(fr, im);   
    
@@ -168,26 +168,28 @@ _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    int x, y;
 
    if (!cfdata->file) return 0;
+   z = e_zone_current_get(cfd->con);   
+   d = e_desk_current_get(z);
+   e_desk_xy_get(d, &x, &y);
    switch (cfdata->bg_method) 
      {
       case BG_SET_DEFAULT_DESK:
-	while (e_config->desktop_backgrounds)
-	  {
-	     E_Config_Desktop_Background *cfbg;
-	     
-	     cfbg = e_config->desktop_backgrounds->data;
-	     e_bg_del(cfbg->container, cfbg->zone, cfbg->desk_x, cfbg->desk_y);
-	  }
+	e_bg_del(-1, -1, -1, -1);
+	e_bg_del(-1, z->num, x, y);
+	e_bg_del(z->container->num, -1, x, y);
+	e_bg_del(z->container->num, z->num, x, y);
+	e_bg_del(-1, z->num, -1, -1);
+	e_bg_del(z->container->num, -1, -1, -1);
+	e_bg_del(z->container->num, z->num, -1, -1);
 	if (e_config->desktop_default_background) evas_stringshare_del(e_config->desktop_default_background);
 	e_config->desktop_default_background = evas_stringshare_add(cfdata->file);
 	e_bg_update();
 	e_config_save_queue();
 	break;
       case BG_SET_THIS_DESK:
-	z = e_zone_current_get(cfd->con);   
-	d = e_desk_current_get(z);
-	e_desk_xy_get(d, &x, &y);
 	e_bg_del(-1, -1, -1, -1);
+	e_bg_del(-1, z->num, x, y);
+	e_bg_del(z->container->num, -1, x, y);
 	e_bg_del(z->container->num, z->num, x, y);
 	e_bg_add(z->container->num, z->num, x, y, cfdata->file);
 	e_bg_update();
@@ -236,14 +238,14 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    e_widget_table_object_append(o, il, 0, 0, 1, 2, 1, 1, 1, 1);
 
    fr = e_widget_framelist_add(evas, "Preview", 0);
-   e_widget_min_size_set(fr, 180, 160);
+   e_widget_min_size_set(fr, 200, 160);
    e_widget_table_object_append(o, fr, 1, 0, 1, 1, 1, 1, 1, 1);   
    e_widget_framelist_object_append(fr, im);   
    
    rg = e_widget_radio_group_new(&(cfdata->bg_method));
    
    fr = e_widget_framelist_add(evas, "Set Background For", 0);
-   e_widget_min_size_set(fr, 180, 160);
+   e_widget_min_size_set(fr, 200, 160);
    
    oc = e_widget_radio_add(evas, _("Default Desktop"), BG_SET_DEFAULT_DESK, rg);
    e_widget_framelist_object_append(fr, oc);   
@@ -266,12 +268,30 @@ _load_bgs(Evas *evas, E_Config_Dialog *cfd, Evas_Object *il)
    Evas_Object *bg = NULL;
    char buf[4096];
    char *homedir;
+   E_Zone *z;
+   int iw, ih, pw, ph;
    
    homedir = e_user_homedir_get();
    if (homedir)
      {
 	snprintf(buf, sizeof(buf), "%s/.e/e/backgrounds", homedir);
 	free(homedir);
+     }
+   
+   z = e_zone_current_get(cfd->con);   
+   iw = 48;
+   ih = ((double)z->h * iw) / (double)z->w;
+   if (ih > 48)
+     {
+	ih = 48;
+	iw = ((double)z->w * ih) / (double)z->h;
+     }
+   pw = 160;
+   ph = ((double)z->h * pw) / (double)z->w;
+   if (ph > 120)
+     {
+	ph = 120;
+	pw = ((double)z->w * ph) / (double)z->h;
      }
    
    if (ecore_file_is_dir(buf))
@@ -296,15 +316,10 @@ _load_bgs(Evas *evas, E_Config_Dialog *cfd, Evas_Object *il)
 		    {
 		       Evas_Object *o = NULL;
 		       char *noext;
-		       E_Cfg_Bg_Data *cb_data;
 		       
-		       o = e_thumb_generate_begin(fullbg, 48, 48, evas, &o, NULL, NULL);
+		       o = e_thumb_generate_begin(fullbg, iw, ih, evas, &o, NULL, NULL);
 		       noext = ecore_file_strip_ext(bgfile);
-		       /* FIXME: cb_data is leaked - not freed ever */
-		       cb_data = E_NEW(E_Cfg_Bg_Data, 1);
-		       cb_data->cfd = cfd;
-		       cb_data->file = strdup(fullbg);
-		       e_widget_ilist_append(il, o, noext, _e_config_bg_cb_standard, cb_data, cb_data->file);
+		       e_widget_ilist_append(il, o, noext, _e_config_bg_cb_standard, cfd->cfdata, fullbg);
 		       
 		       if ((e_config->desktop_default_background) && 
 			   (!strcmp(e_config->desktop_default_background, fullbg)))
@@ -312,9 +327,9 @@ _load_bgs(Evas *evas, E_Config_Dialog *cfd, Evas_Object *il)
 			    e_widget_ilist_selected_set(il, i);
 			    bg = edje_object_add(evas);
 			    edje_object_file_set(bg, e_config->desktop_default_background, "desktop/background");
-			    im = e_widget_image_add_from_object(evas, bg, 200, 160);
+			    im = e_widget_image_add_from_object(evas, bg, pw, ph);
 			    e_widget_image_object_set(im, e_thumb_evas_object_get(fullbg, evas, 200, 160, 1));
-			 }		       
+			 }
 		       free(noext);
 		       i++;
 		    }
@@ -326,10 +341,13 @@ _load_bgs(Evas *evas, E_Config_Dialog *cfd, Evas_Object *il)
 
    if (im == NULL)
      {
+	/* FIXME: this is broken as the edje extends outside at the start
+	 * for some reason */
 	bg = edje_object_add(evas);
 	e_theme_edje_object_set(bg, "base/theme/background", "desktop/background");
-	im = e_widget_image_add_from_object(evas, bg, 200, 160);
+	im = e_widget_image_add_from_object(evas, bg, pw, ph);
      }
+
    cfd->data = im;
 }
 

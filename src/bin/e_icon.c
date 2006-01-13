@@ -71,6 +71,7 @@ e_icon_file_edje_set(Evas_Object *obj, const char *file, const char *part)
    if (sd->obj) evas_object_del(sd->obj);
    sd->obj = edje_object_add(evas_object_evas_get(obj));
    edje_object_file_set(sd->obj, file, part);
+   evas_object_smart_member_add(sd->obj, obj);
    _e_icon_smart_reconfigure(sd);
 }
 
@@ -84,6 +85,7 @@ e_icon_object_set(Evas_Object *obj, Evas_Object *o)
    /* smart code here */
    if (sd->obj) evas_object_del(sd->obj);
    sd->obj = o;
+   evas_object_smart_member_add(sd->obj, obj);
    _e_icon_smart_reconfigure(sd);   
 }
 
@@ -218,40 +220,49 @@ _e_icon_smart_reconfigure(E_Smart_Data *sd)
    int iw, ih;
    Evas_Coord x, y, w, h;
    
-   ih = 0;
-   ih = 0;
    if (!strcmp(evas_object_type_get(sd->obj), "edje"))
-     edje_object_size_min_calc(sd->obj, &iw, &ih);
-   else
-     evas_object_image_size_get(sd->obj, &iw, &ih);
-   if (iw < 1) iw = 1;
-   if (ih < 1) ih = 1;
-
-   if (sd->fill_inside)
      {
 	w = sd->w;
-	h = ((double)ih * w) / (double)iw;
-	if (h > sd->h)
+	h = sd->h;
+	x = sd->x;
+	y = sd->y;
+	evas_object_move(sd->obj, x, y);
+	evas_object_resize(sd->obj, w, h);
+     }
+   else
+     {
+	ih = 0;
+	ih = 0;
+	evas_object_image_size_get(sd->obj, &iw, &ih);
+	if (iw < 1) iw = 1;
+	if (ih < 1) ih = 1;
+	
+	if (sd->fill_inside)
 	  {
-	     h = sd->h;
-	     w = ((double)iw * h) / (double)ih;
+	     w = sd->w;
+	     h = ((double)ih * w) / (double)iw;
+	     if (h > sd->h)
+	       {
+		  h = sd->h;
+		  w = ((double)iw * h) / (double)ih;
+	       }
 	  }
-     }
-   else
-     {
-	w = sd->w;
-	h = ((double)ih * w) / (double)iw;
-	if (h < sd->h)
+	else
 	  {
-	     h = sd->h;
-	     w = ((double)iw * h) / (double)ih;
-	  }	
+	     w = sd->w;
+	     h = ((double)ih * w) / (double)iw;
+	     if (h < sd->h)
+	       {
+		  h = sd->h;
+		  w = ((double)iw * h) / (double)ih;
+	       }	
+	  }
+	x = sd->x + ((sd->w - w) / 2);
+	y = sd->y + ((sd->h - h) / 2);
+	evas_object_move(sd->obj, x, y);
+	evas_object_image_fill_set(sd->obj, 0, 0, w, h);
+	evas_object_resize(sd->obj, w, h);
      }
-   x = sd->x + ((sd->w - w) / 2);
-   y = sd->y + ((sd->h - h) / 2);
-   evas_object_move(sd->obj, x, y);
-   evas_object_image_fill_set(sd->obj, 0, 0, w, h);
-   evas_object_resize(sd->obj, w, h);
 }
 
 static void

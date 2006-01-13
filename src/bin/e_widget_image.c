@@ -23,7 +23,8 @@ e_widget_image_add_from_object(Evas *evas, Evas_Object *object, int minw, int mi
       
    evas_object_show(object);
    o = e_icon_add(evas);
-   e_icon_object_set(o, object);   
+   e_icon_fill_inside_set(o, 1);
+   e_icon_object_set(o, object);
    wd->img = o;
    e_widget_data_set(obj, wd);   
    e_widget_can_focus_set(obj, 0);
@@ -44,6 +45,7 @@ e_widget_image_add_from_file(Evas *evas, char *file, int minw, int minh)
    wd = calloc(1, sizeof(E_Widget_Data));
    
    o = e_icon_add(evas);
+   e_icon_fill_inside_set(o, 1);
    o2 = evas_object_image_add(evas);
    evas_object_image_file_set(o2, file, NULL);
    e_icon_object_set(o, o2);
