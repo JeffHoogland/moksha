@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-01-12 01:09+0900\n"
+"POT-Creation-Date: 2006-01-14 11:57+0900\n"
 "PO-Revision-Date: 2005-09-23 13:00+0700\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "About Enlightenment"
 msgstr "Enlightenment について"
 
-#: src/bin/e_about.c:51 src/bin/e_main.c:567
+#: src/bin/e_about.c:51 src/bin/e_main.c:574
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
@@ -40,21 +40,21 @@ msgstr ""
 msgid "<title>The Team</title>"
 msgstr ""
 
-#: src/bin/e_actions.c:1270
+#: src/bin/e_actions.c:1280
 msgid "Are you sure you want to exit?"
 msgstr "本当に終了しますか"
 
-#: src/bin/e_actions.c:1272
+#: src/bin/e_actions.c:1282
 msgid ""
 "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
 msgstr "Enlightenment を終了しようとしています.<br><br>本当に終了しますか."
 
-#: src/bin/e_actions.c:1277 src/bin/e_fileman_smart.c:966
+#: src/bin/e_actions.c:1287 src/bin/e_fileman_smart.c:966
 #: src/bin/e_module.c:565 src/modules/randr/e_mod_main.c:317
 msgid "Yes"
 msgstr "はい"
 
-#: src/bin/e_actions.c:1279 src/bin/e_fileman_smart.c:967
+#: src/bin/e_actions.c:1289 src/bin/e_fileman_smart.c:967
 #: src/bin/e_module.c:566 src/modules/randr/e_mod_main.c:318
 msgid "No"
 msgstr "いいえ"
@@ -91,7 +91,7 @@ msgstr ""
 "%s\n"
 "\n"
 
-#: src/bin/e_config.c:390
+#: src/bin/e_config.c:412
 msgid ""
 "Configuration data needed upgrading. Your old configuration\n"
 "has been wiped and a new set of defaults initialized. This\n"
@@ -113,7 +113,7 @@ msgstr ""
 "追加すれば更新されます. これで好きなように設定できます.\n"
 "ちょっと面倒ですが, よろしくお願いします.\n"
 
-#: src/bin/e_config.c:404
+#: src/bin/e_config.c:426
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very\n"
 "strange. This should not happen unless you downgraded\n"
@@ -128,7 +128,7 @@ msgstr ""
 "これではまずいので, 念のためデフォルトの設定に置き換えました.\n"
 "ご不便をおかけしますが, よろしくお願いします.\n"
 
-#: src/bin/e_config.c:2082
+#: src/bin/e_config.c:2113
 msgid "Configuration Upgraded"
 msgstr "設定をアップグレードしました"
 
@@ -165,7 +165,7 @@ msgstr "Enlightenment の設定"
 msgid "Configuration Panel"
 msgstr "設定パネル"
 
-#: src/bin/e_configure.c:65 src/bin/e_int_config_background.c:53
+#: src/bin/e_configure.c:65 src/bin/e_int_config_background.c:54
 msgid "Background Settings"
 msgstr "背景の設定"
 
@@ -202,25 +202,25 @@ msgstr "フォーカスの設定"
 msgid "Menu Settings"
 msgstr "メニューの設定"
 
-#: src/bin/e_configure.c:72 src/bin/e_int_config_performance.c:37
 #
+#: src/bin/e_configure.c:72 src/bin/e_int_config_performance.c:37
 msgid "Performance Settings"
 msgstr "性能の調整"
 
 #
-#: src/bin/e_configure.c:73 src/bin/e_int_config_winlist.c:51
 #
+#: src/bin/e_configure.c:73 src/bin/e_int_config_winlist.c:51
 msgid "Window List Settings"
 msgstr "ウィンドウリストの設定"
 
 #
-#: src/bin/e_configure.c:74
 #
+#: src/bin/e_configure.c:74
 msgid "Window Display Settings"
 msgstr "ウィンドウ表示の設定"
 
-#: src/bin/e_configure.c:75
 #
+#: src/bin/e_configure.c:75
 msgid "Window Manipulation Settings"
 msgstr "ウィンドウ動作の設定"
 
@@ -503,9 +503,8 @@ msgid "Refresh"
 msgstr "更新する"
 
 #: src/bin/e_fileman_smart.c:2241 src/bin/e_fileman_smart.c:2251
-#, fuzzy
 msgid "Open with"
-msgstr "開く"
+msgstr "開くツール"
 
 #: src/bin/e_fileman_smart.c:2260
 msgid "Open"
@@ -527,10 +526,10 @@ msgstr "名前を変える"
 msgid "Delete"
 msgstr "削除する"
 
-#: src/bin/e_gadget.c:195 src/bin/e_int_menus.c:752
+#: src/bin/e_gadget.c:208 src/bin/e_int_menus.c:752
 #: src/modules/battery/e_mod_main.c:378 src/modules/clock/e_mod_main.c:360
 #: src/modules/cpufreq/e_mod_main.c:937 src/modules/ibar/e_mod_main.c:658
-#: src/modules/ibox/e_mod_main.c:469 src/modules/pager/e_mod_main.c:537
+#: src/modules/ibox/e_mod_main.c:469 src/modules/pager/e_mod_main.c:546
 #: src/modules/start/e_mod_main.c:229 src/modules/temperature/e_mod_main.c:368
 msgid "Edit Mode"
 msgstr "編集モード"
@@ -819,7 +818,7 @@ msgid ""
 msgstr ""
 "<hilight>記憶方法が指定されていない</hilight>ウィンドウに対して, サイズや位"
 "置, ボーダースタイルなどの<br>プロパティを必ず適用するよう Enlightenment に要"
-"求しています.<br>br>最低 1 種類は記憶方法を指定して下さい."
+"求しています.<br><br>最低 1 種類は記憶方法を指定して下さい."
 
 #: src/bin/e_int_border_remember.c:349
 msgid ""
@@ -921,16 +920,16 @@ msgid "Window list skip"
 msgstr "ウィンドウリストスキップ"
 
 #
-#: src/bin/e_int_config_background.c:219
+#: src/bin/e_int_config_background.c:250
 msgid "Default Desktop"
 msgstr "デフォルトのデスクトップ"
 
 #
-#: src/bin/e_int_config_background.c:221
+#: src/bin/e_int_config_background.c:252
 msgid "This Desktop"
 msgstr "このデスクトップ"
 
-#: src/bin/e_int_config_background.c:224
+#: src/bin/e_int_config_background.c:255
 msgid "All Desktops"
 msgstr "全デスクトップ"
 
@@ -1196,7 +1195,7 @@ msgstr "デスクトップガジェット抵抗値"
 
 #: src/bin/e_int_config_window_manipulation.c:202
 msgid "Allow shading/resizing"
-msgstr ""
+msgstr "シェーディングとサイズ変更を許可する"
 
 #: src/bin/e_int_menus.c:79
 msgid "Favorite Applications"
@@ -1239,7 +1238,7 @@ msgstr "ファイル"
 #: src/modules/clock/e_mod_main.c:188 src/modules/clock/e_mod_main.c:355
 #: src/modules/ibar/e_mod_main.c:296 src/modules/ibar/e_mod_main.c:653
 #: src/modules/ibox/e_mod_main.c:259 src/modules/ibox/e_mod_main.c:464
-#: src/modules/pager/e_mod_main.c:406 src/modules/pager/e_mod_main.c:533
+#: src/modules/pager/e_mod_main.c:407 src/modules/pager/e_mod_main.c:542
 #: src/modules/temperature/e_mod_main.c:220
 #: src/modules/temperature/e_mod_main.c:363
 msgid "Configuration"
@@ -1554,11 +1553,15 @@ msgstr "Enlightenment でモジュールシステムが準備できません."
 msgid "Enlightenment cannot set up its window list system."
 msgstr "Enlightenment でウィンドウリストシステムが準備できません."
 
-#: src/bin/e_main.c:550
+#: src/bin/e_main.c:551
+msgid "Enlightenment cannot set up its color class system."
+msgstr "Enlightenment でカラークラスシステムが準備できません."
+
+#: src/bin/e_main.c:557
 msgid "Enlightenment IPC setup error!"
 msgstr "Enlightenment IPC 初期化エラー!"
 
-#: src/bin/e_main.c:551
+#: src/bin/e_main.c:558
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an existing copy of Enlightenment.\n"
@@ -1574,7 +1577,7 @@ msgstr ""
 "~/.ecore/enlightenment-* にあるファイルをすべて削除してから再起動してみてくだ"
 "さい."
 
-#: src/bin/e_main.c:569
+#: src/bin/e_main.c:576
 msgid "Enlightenment Starting. Please wait."
 msgstr "Enlightenment を起動しています. しばらくお待ちください."
 
@@ -1608,8 +1611,8 @@ msgid ""
 "functions<br>"
 msgstr ""
 "モジュール %s のロード中にエラーが発生しました.<br>このモジュールのフルパスは"
-"<br>%s<br>です。そしてエラーの内容は、<br>"
-"このモジュールには必要な機能が欠けています。<br>"
+"<br>%s<br>です。そしてエラーの内容は、<br>このモジュールには必要な機能が欠け"
+"ています。<br>"
 
 #: src/bin/e_module.c:166
 #, c-format
@@ -2354,11 +2357,11 @@ msgstr "Enlightenment ページャモジュール"
 msgid "A pager module to navigate virtual desktops."
 msgstr "仮想デスクトップを切替えるためのページャモジュールです."
 
-#: src/modules/pager/e_mod_main.c:410 src/modules/pager/e_mod_main.c:541
+#: src/modules/pager/e_mod_main.c:411 src/modules/pager/e_mod_main.c:550
 msgid "Fix Aspect (Keep Height)"
 msgstr "幅を調整する(高さはそのまま)"
 
-#: src/modules/pager/e_mod_main.c:414 src/modules/pager/e_mod_main.c:545
+#: src/modules/pager/e_mod_main.c:415 src/modules/pager/e_mod_main.c:554
 msgid "Fix Aspect (Keep Width)"
 msgstr "高さを調整する(幅はそのまま)"
 
