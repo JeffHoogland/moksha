@@ -161,6 +161,10 @@ _e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, void *data)
    eap->startup_notify = cfdata->startup_notify;
    eap->wait_exit = cfdata->wait_exit;
    
+   /* FIXME: hardcoded until the eap editor provides fields to change it */
+   eap->width = 128;
+   eap->height = 128;   
+   
    e_app_fields_save(eap);
    
    return 1;
@@ -213,6 +217,10 @@ _e_eap_edit_advanced_apply_data(E_Config_Dialog *cfd, void *data)
    if (cfdata->wrole) eap->win_role = evas_stringshare_add(cfdata->wrole);
    if (cfdata->iclass) eap->icon_class = evas_stringshare_add(cfdata->iclass);
    if (cfdata->path) eap->path = evas_stringshare_add(cfdata->path);
+
+   /* FIXME: hardcoded until the eap editor provides fields to change it */
+   eap->width = 128;
+   eap->height = 128;
    
    e_app_fields_save(eap);
    return 1;

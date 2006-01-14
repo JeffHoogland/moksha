@@ -63,6 +63,8 @@ struct _E_App
    unsigned char       deleted : 1; /* this app's file is deleted from disk */
    
    char               *image; /* used when we're saving a image into the eap */
+   int                 width; /* used for saving eap's image width in edje */
+   int                 height; /* used for saving eap's image height in edje */
 };
 
 struct _E_App_Instance
@@ -79,6 +81,7 @@ EAPI int         e_app_shutdown                          (void);
 
 EAPI E_App      *e_app_new                               (const char *path, int scan_subdirs);
 EAPI E_App      *e_app_empty_new                         (const char *path);
+EAPI void        e_app_image_size_set                    (E_App *a, int w, int h);
 EAPI int         e_app_is_parent                         (E_App *parent, E_App *app);
 EAPI int         e_app_equals                            (E_App *app1, E_App *app2);
 EAPI void        e_app_subdir_scan                       (E_App *a, int scan_subdirs);

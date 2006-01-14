@@ -74,13 +74,17 @@ e_fm_file_new(const char *filename)
 
    if(!file->mime)
      {
-	ext = strrchr(file->name, '.');
-	if (ext)
-	  {
-	     file->mime = ext;
-	  }
-	else
-	  file->mime = "unknown";
+  ext = strrchr(file->name, '.');
+  if (ext)
+    {
+       char *ext2;
+       ext = strdup(ext);
+       ext2 = ext;
+       for (; *ext2; ext2++) *ext2 = tolower(*ext2);
+       file->mime = ext;
+    }
+  else
+    file->mime = "unknown";
      }
    D(("e_fm_file_new: %s\n", filename));
    return file;
@@ -105,17 +109,17 @@ e_fm_file_rename(E_Fm_File *file, const char *name)
 
    if (ecore_file_mv(file->path, path))
      {
-	free(file->path);
-	file->path = strdup(path);
-	free(file->name);
-	file->name = strdup(name);
-	D(("e_fm_file_rename: ok (%p) (%s)\n", file, name));
-	return 1;
+  free(file->path);
+  file->path = strdup(path);
+  free(file->name);
+  file->name = strdup(name);
+  D(("e_fm_file_rename: ok (%p) (%s)\n", file, name));
+  return 1;
      }
    else
      {
-	D(("e_fm_file_rename: fail (%p) (%s)\n", file, name));
-	return 0;
+  D(("e_fm_file_rename: fail (%p) (%s)\n", file, name));
+  return 0;
      }
 }
 
@@ -124,17 +128,17 @@ e_fm_file_delete(E_Fm_File *file)
 {
    if (ecore_file_recursive_rm(file->path))
      {
-	free(file->path);
-	file->path = NULL;
-	free(file->name);
-	file->name = NULL;
-	D(("e_fm_file_delete: ok (%p) (%s)\n", file, file->name));
-	return 1;
+  free(file->path);
+  file->path = NULL;
+  free(file->name);
+  file->name = NULL;
+  D(("e_fm_file_delete: ok (%p) (%s)\n", file, file->name));
+  return 1;
      }
    else
      {
-	D(("e_fm_file_delete: fail (%p) (%s)\n", file, file->name));
-	return 0;
+  D(("e_fm_file_delete: fail (%p) (%s)\n", file, file->name));
+  return 0;
      }
 }
 
@@ -145,18 +149,34 @@ e_fm_file_copy(E_Fm_File *file, const char *name)
 
    if (ecore_file_cp(file->path, name))
      {
-	free(file->path);
-	file->path = strdup(name);
-	free(file->name);
-	file->name = strdup(ecore_file_get_file(name));
-	D(("e_fm_file_copy: ok (%p) (%s)\n", file, name));
-	return 1;
+  free(file->path);
+  file->path = strdup(name);
+  free(file->name);
+  file->name = strdup(ecore_file_get_file(name));
+  D(("e_fm_file_copy: ok (%p) (%s)\n", file, name));
+  return 1;
      }
    else
      {
-	D(("e_fm_file_copy: fail (%p) (%s)\n", file, name));
-	return 0;
+  D(("e_fm_file_copy: fail (%p) (%s)\n", file, name));
+  return 0;
      }
+}
+
+int
+e_fm_file_is_regular(E_Fm_File *file) /* TODO: find better name */
+{
+   return ((file->type == E_FM_FILE_TYPE_FILE) 
+        || (file->type == E_FM_FILE_TYPE_SYMLINK)); 
+}
+
+EAPI int
+e_fm_file_has_mime(E_Fm_File *file, char* mime)
+{
+   if (!file->mime) return 0;
+
+   D(("e_fm_file_has_mime: (%p) : %s\n", file,file->mime));
+   return (!strcasecmp(file->mime, mime));
 }
 
 EAPI int
@@ -167,11 +187,11 @@ e_fm_file_can_preview(E_Fm_File *file)
    D(("e_fm_file_can_preview: (%s) (%p)\n", file->name, file));
    for (i = 0; file->preview_funcs[i]; i++)
      {
-	E_Fm_File_Preview_Function func;
+  E_Fm_File_Preview_Function func;
 
-	func = file->preview_funcs[i];
-	if (func(file))
-	  return 1;
+  func = file->preview_funcs[i];
+  if (func(file))
+    return 1;
      }
    return 0;
 }
@@ -183,31 +203,22 @@ e_fm_file_is_image(E_Fm_File *file)
     * If it isn't supported by evas, we can't show it in the
     * canvas.
     */
-   char *ext;
-
-   if ((file->type != E_FM_FILE_TYPE_FILE) && (file->type != E_FM_FILE_TYPE_SYMLINK)) return 0;
-
-   ext = strrchr(file->name, '.');
-   if (!ext) return 0;
-
-   D(("e_fm_file_is_image: (%p)\n", file));
-   return (!strcasecmp(ext, ".jpg")) || (!strcasecmp(ext, ".png")) ||
-     (!strcasecmp(ext, ".jpeg"));
+   
+   //D(("e_fm_file_is_image: (%p)\n", file));
+   
+   return e_fm_file_is_regular(file)
+        &&(e_fm_file_has_mime(file,".jpg") 
+        || e_fm_file_has_mime(file,".jpeg") 
+        || e_fm_file_has_mime(file,".png")); 
 }
 
 EAPI int
 e_fm_file_is_etheme(E_Fm_File *file)
 {
    int          val;
-   char        *ext;
    Evas_List   *groups, *l;
 
-   if ((file->type != E_FM_FILE_TYPE_FILE) && (file->type != E_FM_FILE_TYPE_SYMLINK)) return 0;
-
-   ext = strrchr(file->name, '.');
-   if (!ext) return 0;
-
-   if (strcasecmp(ext, ".edj"))
+   if (!e_fm_file_is_regular(file) || !e_fm_file_has_mime(file,".edj"))
      return 0;
 
    val = 0;
@@ -216,13 +227,13 @@ e_fm_file_is_etheme(E_Fm_File *file)
      return 0;
 
    for (l = groups; l; l = l->next)
-     {
-	if (!strcmp(l->data, "widgets/border/default/border"))
-	  {
-	     val = 1;
-	     break;
-	  }
-     }
+   {
+    if (!strcmp(l->data, "widgets/border/default/border"))
+    {
+       val = 1;
+       break;
+    }
+   }
    edje_file_collection_list_free(groups);
    return val;
 }
@@ -231,30 +242,24 @@ EAPI int
 e_fm_file_is_ebg(E_Fm_File *file)
 {
    int          val;
-   char        *ext;
    Evas_List   *groups, *l;
 
-   if ((file->type != E_FM_FILE_TYPE_FILE) && (file->type != E_FM_FILE_TYPE_SYMLINK)) return 0;
-
-   ext = strrchr(file->name, '.');
-   if (!ext) return 0;
-
-   if (strcasecmp(ext, ".edj"))
+   if (!e_fm_file_is_regular(file) || !e_fm_file_has_mime(file,".edj"))
      return 0;
-
+  
    val = 0;
    groups = edje_file_collection_list(file->path);
    if (!groups)
      return 0;
 
    for (l = groups; l; l = l->next)
-     {
-	if (!strcmp(l->data, "desktop/background"))
-	  {
-	     val = 1;
-	     break;
-	  }
-     }
+   {
+    if (!strcmp(l->data, "desktop/background"))
+    {
+       val = 1;
+       break;
+    }
+   }
    edje_file_collection_list_free(groups);
    return val;
 }
@@ -262,23 +267,18 @@ e_fm_file_is_ebg(E_Fm_File *file)
 EAPI int
 e_fm_file_is_eap(E_Fm_File *file)
 {
-   char *ext;
+
    E_App *app;
 
-   if ((file->type != E_FM_FILE_TYPE_FILE) && (file->type != E_FM_FILE_TYPE_SYMLINK)) return 0;
-
-   ext = strrchr(file->name, '.');
-   if (!ext) return 0;
-
-   if (strcasecmp(ext, ".eap"))
+  if (!e_fm_file_is_regular(file) || !e_fm_file_has_mime(file,".eap"))
      return 0;
-
+  
    app = e_app_new(file->path, 0);
    if (!app)
-     {
-	e_object_unref(E_OBJECT(app));
-	return 0;
-     }
+   {
+    e_object_unref(E_OBJECT(app));
+    return 0;
+   }
    e_object_unref(E_OBJECT(app));
    return 1;
 }
@@ -286,23 +286,17 @@ e_fm_file_is_eap(E_Fm_File *file)
 EAPI int
 e_fm_file_can_exec(E_Fm_File *file)
 {
-   char *ext;
-
-   ext = strrchr(file->name, '.');
-   if (ext)
-     {
-	if (!strcasecmp(ext, ".eap"))
-	  {
-	     D(("e_fm_file_can_exec: true (%p) (%s)\n", file, file->name));
-	     return 1;
-	  }
-     }
+   if (e_fm_file_has_mime(file,".eap"))
+   {
+     D(("e_fm_file_can_exec: true (%p) (%s)\n", file, file->name));
+     return 1;
+   }
 
    if (ecore_file_can_exec(file->path))
-     {
-	D(("e_fm_file_can_exec: true (%p) (%s)\n", file, file->name));
-	return 1;
-     }
+   {
+    D(("e_fm_file_can_exec: true (%p) (%s)\n", file, file->name));
+    return 1;
+   }
 
    D(("e_fm_file_can_exec: false (%p) (%s)\n", file, file->name));
    return 0;
@@ -312,40 +306,35 @@ EAPI int
 e_fm_file_exec(E_Fm_File *file)
 {
    Ecore_Exe *exe;
-   char *ext;
 
-   ext = strrchr(file->name, '.');
-   if (ext)
-     {
-	if (!strcasecmp(ext, ".eap"))
-	  {
-	     E_App *e_app;
-	     Ecore_Exe *exe;
+   if(e_fm_file_has_mime(file,".eap"))
+   {
+       E_App *e_app;
+       Ecore_Exe *exe;
 
-	     e_app = e_app_new(file->path, 0);
+       e_app = e_app_new(file->path, 0);
 
-	     if (!e_app) return 0;
+       if (!e_app) return 0;
 
-	     exe = ecore_exe_run(e_app->exe, NULL);
-	     if (exe) ecore_exe_free(exe);
-	     e_object_unref(E_OBJECT(e_app));
-	     D(("e_fm_file_exec: eap (%p) (%s)\n", file, file->name));
-	     return 1;
-	  }
-     }
+       exe = ecore_exe_run(e_app->exe, NULL);
+       if (exe) ecore_exe_free(exe);
+       e_object_unref(E_OBJECT(e_app));
+       D(("e_fm_file_exec: eap (%p) (%s)\n", file, file->name));
+       return 1;
+    } 
 
    exe = ecore_exe_run(file->path, NULL);
    if (!exe)
-     {
-	e_error_dialog_show(_("Run Error"),
-			    _("Enlightenment was unable to fork a child process:\n"
-			      "\n"
-			      "%s\n"
-			      "\n"),
-			    file->path);
-	D(("e_fm_file_exec: fail (%p) (%s)\n", file, file->name));
-	return 0;
-     }
+   {
+    e_error_dialog_show(_("Run Error"),
+          _("Enlightenment was unable to fork a child process:\n"
+            "\n"
+            "%s\n"
+            "\n"),
+          file->path);
+    D(("e_fm_file_exec: fail (%p) (%s)\n", file, file->name));
+    return 0;
+   }
    /* E/app is the correct tag if the data is en E_App!
    ecore_exe_tag_set(exe, "E/app");
    */
@@ -371,15 +360,12 @@ e_fm_file_assoc_exec(E_Fm_File *file)
    if (!assoc_apps) return 0;
 
    for (l = assoc_apps; l; l = l->next)
-     {
-	char *ext;
-
-	assoc = l->data;
-	ext = strrchr(file->path, '.');
-	if ((ext) && (!strcasecmp(ext, assoc->mime)))
-	  break;
-	assoc = NULL;
-     }
+   {
+    assoc = l->data;
+    if (e_fm_file_has_mime(file,assoc->mime))
+      break;
+    assoc = NULL;
+   }
 
    if (!assoc) return 0;
 
@@ -387,16 +373,16 @@ e_fm_file_assoc_exec(E_Fm_File *file)
    exe = ecore_exe_run(app, NULL);
 
    if (!exe)
-     {
-	e_error_dialog_show(_("Run Error"),
-			    _("Enlightenment was unable to fork a child process:\n"
-			      "\n"
-			      "%s\n"
-			      "\n"),
-			    app);
-	D(("e_fm_assoc_exec: fail (%s)\n", app));
-	return 0;
-     }
+   {
+    e_error_dialog_show(_("Run Error"),
+          _("Enlightenment was unable to fork a child process:\n"
+            "\n"
+            "%s\n"
+            "\n"),
+          app);
+    D(("e_fm_assoc_exec: fail (%s)\n", app));
+    return 0;
+   }
    /*
     * ecore_exe_tag_set(exe, "E/app");
     */
@@ -435,7 +421,7 @@ _e_fm_file_free(E_Fm_File *file)
    free(file->preview_funcs);
    if (file->path) free(file->path);
    if (file->name) free(file->name);
-   ///???  if (file->mime) free(file->mime);
+   ///???  if (file->mime) free(file->mime); 
    free(file);
 }
 

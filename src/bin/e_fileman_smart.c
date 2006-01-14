@@ -1211,7 +1211,7 @@ _e_fm_icon_prop_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *dat
    e_widget_frametable_object_append(o, e_widget_label_add(evas, text),
 				     0, 2, 1, 1,
 				     1, 1, 1, 1);
-   snprintf(text, 512, "%s", "An Image");
+   snprintf(text, 512, "%s", icon->file->mime);
    e_widget_frametable_object_append(o, e_widget_label_add(evas, text),
 				     1, 2, 1, 1,
 				     1, 1, 1, 1);
@@ -2120,7 +2120,7 @@ _e_fm_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 	     if(icon->sd->win)
 	       icon->sd->drag.start = 0;
 
-	     if (!strcmp(icon->file->name, ".")) return;
+	     if (!strcmp(icon->file->name, ".")) return; /* this case cant happen!? */
 
 	     if (!strcmp(icon->file->name, ".."))
 	       {
@@ -2215,7 +2215,7 @@ _e_fm_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 	     for (l = icon->sd->conf.main->apps; l; l = l->next)
 	       {
 		  assoc = l->data;
-		  if (strcmp(icon->file->mime, assoc->mime) == 0)
+		  if (e_fm_file_has_mime(icon->file, assoc->mime))
 		    {
 
 		       mi = e_menu_item_new(mo);

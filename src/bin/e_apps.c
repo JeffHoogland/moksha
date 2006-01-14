@@ -72,6 +72,9 @@ static char        *_e_apps_path_all = NULL;
 static char        *_e_apps_path_trash = NULL;
 static Evas_List   *_e_apps_start_pending = NULL;
 
+#define EAP_MIN_WIDTH 8
+#define EAP_MIN_HEIGHT 8
+
 #define EAP_EDC_TMPL \
 "images {\n"  \
 "   image: \"%s\" COMP;\n" \
@@ -234,6 +237,8 @@ e_app_new(const char *path, int scan_subdirs)
 	     
 	     /* no image for now */
 	     a->image = NULL;
+	     a->width = 0;
+	     a->height = 0;
 	     /* record the path */
 	     a->path = evas_stringshare_add(path);
 	     
@@ -287,6 +292,13 @@ e_app_empty_new(const char *path)
    a->image = NULL;
    if (path) a->path = evas_stringshare_add(path);   
    return a;      
+}
+
+EAPI void
+e_app_image_size_set(E_App *a, int w, int h)
+{
+   a->width = w;
+   a->height = h;
 }
 
 EAPI int
@@ -1022,10 +1034,6 @@ e_app_fields_fill(E_App *a, const char *path)
    eet_close(ef);
 }
 
-/* 
- * We also need to fix startup-notify and wait-exit as they currently
- * dont save too.
- */
 EAPI void
 e_app_fields_save(E_App *a)
 {
@@ -1119,16 +1127,20 @@ e_app_fields_save(E_App *a)
 	iw = 0; ih = 0;
 	evas_object_image_size_get(im, &iw, &ih);
 	alpha = evas_object_image_alpha_get(im);
+	if(a->width <= EAP_MIN_WIDTH)
+	  a->width = EAP_MIN_WIDTH;
+	if(a->height <= EAP_MIN_HEIGHT)
+	  a->height = EAP_MIN_HEIGHT;	
 	if ((iw > 0) && (ih > 0))
 	  {
 	     /* we need to change the sizes */
-	     ecore_evas_resize(buf, 48, 48);
-	     evas_object_image_fill_set(im, 0, 0, 48, 48);
-	     evas_object_resize(im, 48, 48);
+	     ecore_evas_resize(buf, a->width, a->height);
+	     evas_object_image_fill_set(im, 0, 0, a->width, a->height);
+	     evas_object_resize(im, a->height, a->width);
 	     evas_object_move(im, 0, 0);
 	     evas_object_show(im);	     
 	     data = ecore_evas_buffer_pixels_get(buf);
-	     eet_data_image_write(ef, "images/0", (void *)data, 48, 48, alpha, 1, 0, 0);
+	     eet_data_image_write(ef, "images/0", (void *)data, a->width, a->height, alpha, 1, 0, 0);
 	  }
      }
 
@@ -1320,7 +1332,13 @@ _e_app_new_save(E_App *a)
    else ipart[0] = '\0';
    
    if (a->image)
-     fprintf(out, EAP_EDC_TMPL, a->image, "48", "48", a->image);
+     {
+	if(a->width <= 0)
+	  a->width = EAP_MIN_WIDTH;
+	if(a->height <= 0)
+	  a->height = EAP_MIN_HEIGHT;
+	fprintf(out, EAP_EDC_TMPL, a->image, a->width, a->height, a->image);
+     }
    else
      fprintf(out, EAP_EDC_TMPL_EMPTY);
    fclose(out);

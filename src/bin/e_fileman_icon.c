@@ -496,32 +496,22 @@ _e_fm_icon_smart_clip_unset(Evas_Object *obj)
 static void
 _e_fm_icon_icon_mime_get(E_Smart_Data *sd)
 {
-   sd->image_object = edje_object_add(sd->evas);
-   if (sd->file->type ==  E_FM_FILE_TYPE_DIRECTORY)
-     e_theme_edje_object_set(sd->image_object, "base/theme/fileman",
-			     "icons/fileman/folder");
-   else
-     {
-	char *ext;
-
-	ext = strrchr(sd->file->name, '.');
-	if (ext)
-	  {
-	     char part[PATH_MAX];
-	     char *ext2;
-
-	     ext = strdup(ext);
-	     ext2 = ext;
-	     for (; *ext2; ext2++) *ext2 = tolower(*ext2);
-
-	     snprintf(part, PATH_MAX, "icons/fileman/%s", (ext + 1));
-	     if (!e_theme_edje_object_set(sd->image_object, "base/theme/fileman", part))
+  char part[PATH_MAX];
+	
+	sd->image_object = edje_object_add(sd->evas);
+	
+	// since a mime is set with every creation of an E_Fm_File its existence isn´t checked here
+	if(sd->file->type ==  E_FM_FILE_TYPE_DIRECTORY)
+		 	e_theme_edje_object_set(sd->image_object, "base/theme/fileman", "icons/fileman/folder");
+  
+  else if(e_fm_file_has_mime(sd->file,"unknown"))
+   	  e_theme_edje_object_set(sd->image_object, "base/theme/fileman", "icons/fileman/file");
+  else 
+  {
+   	  snprintf(part, PATH_MAX, "icons/fileman/%s", (sd->file->mime + 1)); 
+	    if (!e_theme_edje_object_set(sd->image_object, "base/theme/fileman", part))
 	       e_theme_edje_object_set(sd->image_object, "base/theme/fileman", "icons/fileman/file");
-	     free(ext);
-	  }
-	else
-	  e_theme_edje_object_set(sd->image_object, "base/theme/fileman", "icons/fileman/file");
-     }
+   }
    evas_object_show(sd->image_object);
    edje_extern_object_min_size_set(sd->image_object, sd->iw, sd->ih);
    edje_extern_object_max_size_set(sd->image_object, sd->iw, sd->ih);
@@ -529,19 +519,16 @@ _e_fm_icon_icon_mime_get(E_Smart_Data *sd)
 			    sd->image_object);
 }
 
+
+
 void
 _e_fm_icon_thumb_generate_cb(Evas_Object *obj, void *data)
 {
    E_Smart_Data         *sd;
-   char                 *ext;
 
    sd = data;
 
-   ext = strrchr(sd->file->name, '.');
-   if ((ext) && (strcasecmp(ext, ".eap")))
-     ext = NULL;
-
-   if ((ext) || (ecore_file_exists(sd->thumb_path)))
+   if (e_fm_file_has_mime(sd->file,".eap") || (ecore_file_exists(sd->thumb_path)))
      {
 	Evas_Coord icon_w, icon_h;
 
