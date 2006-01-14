@@ -3,10 +3,9 @@
 #include "e_mod_config.h"
 #include "config.h"
 
-typedef struct _cfdata CFData;
 typedef struct _Cfg_File_Data Cfg_File_Data;
 
-struct _cfdata 
+struct _E_Config_Dialog_Data
 {
    int show_alert;   
    double poll_time;   
@@ -21,11 +20,11 @@ struct _Cfg_File_Data
 
 /* Protos */
 static void          *_create_data(E_Config_Dialog *cfd);
-static void          _free_data(E_Config_Dialog *cfd, CFData *cfdata);
-static Evas_Object   *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
-static int           _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
-static Evas_Object   *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
-static int           _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
+static void          _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object   *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int           _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object   *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int           _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 
 void
 _config_battery_module(E_Container *con, Battery *bat) 
@@ -45,7 +44,7 @@ _config_battery_module(E_Container *con, Battery *bat)
 }
 
 static void
-_fill_data(Battery *b, CFData *cfdata) 
+_fill_data(Battery *b, E_Config_Dialog_Data *cfdata) 
 {
    cfdata->alarm_time = b->conf->alarm;
    cfdata->poll_time = b->conf->poll_time;
@@ -62,17 +61,17 @@ _fill_data(Battery *b, CFData *cfdata)
 static void *
 _create_data(E_Config_Dialog *cfd) 
 {
-   CFData *cfdata;
+   E_Config_Dialog_Data *cfdata;
    Battery *b;
    
    b = cfd->data;
-   cfdata = E_NEW(CFData, 1);
+   cfdata = E_NEW(E_Config_Dialog_Data, 1);
    _fill_data(b, cfdata);
    return cfdata;
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, CFData *cfdata) 
+_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    Battery *b;
    
@@ -82,7 +81,7 @@ _free_data(E_Config_Dialog *cfd, CFData *cfdata)
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata) 
+_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Battery *b;
    Evas_Object *o, *of, *ob;
@@ -99,7 +98,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 }
 
 static int 
-_basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata) 
+_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    Battery *b;
    
@@ -114,7 +113,7 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 }
 
 static Evas_Object *
-_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata) 
+_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *o, *of, *ob;
    Battery *b;
@@ -146,7 +145,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 }
 
 static int 
-_advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata) 
+_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    Battery *b;
    

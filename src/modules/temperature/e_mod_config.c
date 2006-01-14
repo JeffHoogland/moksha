@@ -17,10 +17,9 @@
 #define FAR_2_CEL(x) (x - 32) / 1.8
 #define CEL_2_FAR(x) (x * 1.8) + 32
 
-typedef struct _cfdata CFData;
 typedef struct _Cfg_File_Data Cfg_File_Data;
 
-struct _cfdata 
+struct _E_Config_Dialog_Data
 {
    int poll_method;
    double poll_time;
@@ -44,11 +43,11 @@ struct _Cfg_File_Data
 
 /* Protos */
 static void          *_create_data(E_Config_Dialog *cfd);
-static void          _free_data(E_Config_Dialog *cfd, CFData *cfdata);
-static Evas_Object   *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
-static int           _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
-static Evas_Object   *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
-static int           _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
+static void          _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object   *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int           _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object   *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int           _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 
 void
 _config_temperature_module(E_Container *con, Temperature *temp) 
@@ -68,7 +67,7 @@ _config_temperature_module(E_Container *con, Temperature *temp)
 }
 
 static void
-_fill_data(Temperature *t, CFData *cfdata) 
+_fill_data(Temperature *t, E_Config_Dialog_Data *cfdata) 
 {
    double p;
    
@@ -152,14 +151,14 @@ _fill_data(Temperature *t, CFData *cfdata)
 static void *
 _create_data(E_Config_Dialog *cfd) 
 {
-   CFData *cfdata;
+   E_Config_Dialog_Data *cfdata;
    
-   cfdata = E_NEW(CFData, 1);
+   cfdata = E_NEW(E_Config_Dialog_Data, 1);
    return cfdata;
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, CFData *cfdata) 
+_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    Temperature *t;
    
@@ -169,7 +168,7 @@ _free_data(E_Config_Dialog *cfd, CFData *cfdata)
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata) 
+_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
@@ -253,7 +252,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 }
 
 static int
-_basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata) 
+_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    Temperature *t;
    
@@ -290,7 +289,7 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 }
 
 static Evas_Object *
-_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata) 
+_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
@@ -397,7 +396,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 }
 
 static int
-_advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata) 
+_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    Temperature *t;
    

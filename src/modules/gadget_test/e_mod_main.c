@@ -24,9 +24,9 @@ e_modapi_init(E_Module *m)
    E_Gadget *gad = NULL;
   
    Test *t = E_NEW(Test, 1);
-   if (!t) return;
+   if (!t) return NULL;
    api = E_NEW(E_Gadget_Api, 1);
-   if (!api) return;
+   if (!api) return NULL;
 
    /*
     * set up gadget -- only module and name are required, but the gadget would
@@ -80,10 +80,7 @@ e_modapi_about(E_Module *m)
 static void
 _test_face_init(void *data, E_Gadget_Face *face)
 {
-   Test *t = data;
-
    e_gadget_face_theme_set(face, "base/theme/modules/clock", "modules/clock/main");
-   
 }
 
 static void
