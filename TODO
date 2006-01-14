@@ -8,7 +8,6 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: bg settings dialog still needs 2 Advanced options implemented. 
 * BUG: general settings is too... general
 * BUG: desktop settings is missing preview
 * BUG: modules need to destroy config dialogs on shutdown (otherwise - segv!)
