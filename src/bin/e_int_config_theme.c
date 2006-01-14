@@ -109,6 +109,7 @@ _e_config_theme_cb_standard(void *data)
    if (cfdata->current_theme) 
      {
 	tmp = ecore_file_get_file(d->file);
+	tmp = ecore_file_strip_ext(tmp);
 	if (!strcmp(tmp, cfdata->current_theme)) 
 	  {
 	     e_dialog_button_disable_num_set(d->cfd->dia, 0, 1);
@@ -116,7 +117,6 @@ _e_config_theme_cb_standard(void *data)
 	  }
      }
 }
-
 
 /**--GUI--**/
 static Evas_Object *
@@ -183,11 +183,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 		       E_Cfg_Theme_Data *cb_data;
 		       
 		       o = e_thumb_generate_begin(fulltheme, 48, 48, cfd->dia->win->evas, &o, NULL, NULL);
-		       noext = ecore_file_strip_ext(themefile);		       
+		       noext = ecore_file_strip_ext(themefile);
+		       
 		       cb_data = E_NEW(E_Cfg_Theme_Data, 1);
 		       cb_data->cfd = cfd;
 		       cb_data->file = strdup(fulltheme);
 		       cb_data->theme = strdup(themefile);
+		       
 		       e_widget_ilist_append(il, o, noext, _e_config_theme_cb_standard, cb_data, themefile);
 		       if (!(strcmp(themefile, cfdata->current_theme)))
 			 {
