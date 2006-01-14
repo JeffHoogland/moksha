@@ -1462,6 +1462,21 @@ _pager_cb_event_zone_desk_count_set(void *data, int type, void *event)
 	else dh = 0;
 	dh *= (desks_y - face->ynum);
 
+	/* Loop to add new desks */
+	for (x = 0; x < desks_x; x++)
+	  {
+	     for (y = 0; y < desks_y; y++)
+	       {
+		  if ((x >= face->xnum) || (y >= face->ynum))
+		    {
+		       /* add desk */
+		       desk = e_desk_at_xy_get(ev->zone, x, y);
+		       pd = _pager_desk_new(face, desk, x, y);
+		       if (pd)
+			 face->desks = evas_list_append(face->desks, pd);
+		    }
+	       }
+	  }
 	/* Loop to remove extra desks */
 	for (l2 = face->desks; l2;)
 	  {
@@ -1478,21 +1493,6 @@ _pager_cb_event_zone_desk_count_set(void *data, int type, void *event)
 		    }
 		  face->desks = evas_list_remove(face->desks, pd);
 		  _pager_desk_free(pd);
-	       }
-	  }
-	/* Loop to add new desks */
-	for (x = 0; x < desks_x; x++)
-	  {
-	     for (y = 0; y < desks_y; y++)
-	       {
-		  if ((x >= face->xnum) || (y >= face->ynum))
-		    {
-		       /* add desk */
-		       desk = e_desk_at_xy_get(ev->zone, x, y);
-		       pd = _pager_desk_new(face, desk, x, y);
-		       if (pd)
-			 face->desks = evas_list_append(face->desks, pd);
-		    }
 	       }
 	  }
 
