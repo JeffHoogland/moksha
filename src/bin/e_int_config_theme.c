@@ -4,16 +4,15 @@
 #include "e.h"
 
 /* PROTOTYPES - same all the time */
-typedef struct _CFData CFData;
 typedef struct _E_Cfg_Theme_Data E_Cfg_Theme_Data;
 
 static void *_create_data(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd, CFData *cfdata);
-static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
-static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
+static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 /* Actual config data we will be playing with whil the dialog is active */
-struct _CFData
+struct _E_Config_Dialog_Data
 {
    /*- BASIC -*/
    char *theme;
@@ -50,7 +49,7 @@ e_int_config_theme(E_Container *con)
 
 /**--CREATE--**/
 static void
-_fill_data(CFData *cfdata)
+_fill_data(E_Config_Dialog_Data *cfdata)
 {
    /* get current theme */
    E_Config_Theme * c;
@@ -65,15 +64,15 @@ _create_data(E_Config_Dialog *cfd)
     * dialog will be dealing with while configuring. it will be applied to
     * the running systems/config in the apply methods
     */
-   CFData *cfdata;
+   E_Config_Dialog_Data *cfdata;
    
-   cfdata = E_NEW(CFData, 1);
+   cfdata = E_NEW(E_Config_Dialog_Data, 1);
    _fill_data(cfdata);
    return cfdata;
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, CFData *cfdata)
+_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    /* Free the cfdata */  
    free(cfdata->current_theme);
@@ -82,7 +81,7 @@ _free_data(E_Config_Dialog *cfd, CFData *cfdata)
 
 /**--APPLY--**/
 static int
-_basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
+_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    E_Action *a;
    
@@ -99,7 +98,7 @@ void
 _e_config_theme_cb_standard(void *data)
 {
    E_Cfg_Theme_Data *d;
-   CFData *cfdata;
+   E_Config_Dialog_Data *cfdata;
    const char *tmp;
    
    d = data;
@@ -120,7 +119,7 @@ _e_config_theme_cb_standard(void *data)
 
 /**--GUI--**/
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
+_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for a basic dialog */
    Evas_Object *o, *fr, *im = NULL;

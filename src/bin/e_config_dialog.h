@@ -11,6 +11,7 @@ typedef enum _E_Config_Dialog_CFData_Type
 
 typedef struct _E_Config_Dialog      E_Config_Dialog;
 typedef struct _E_Config_Dialog_View E_Config_Dialog_View;
+typedef struct _E_Config_Dialog_Data E_Config_Dialog_Data;
 
 #else
 #ifndef E_CONFIG_DIALOG_H
@@ -21,10 +22,10 @@ typedef struct _E_Config_Dialog_View E_Config_Dialog_View;
 struct _E_Config_Dialog_View
 {
    void           *(*create_cfdata)     (E_Config_Dialog *cfd);
-   void            (*free_cfdata)       (E_Config_Dialog *cfd, void *cfdata);
+   void            (*free_cfdata)       (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
    struct {
-      int          (*apply_cfdata)      (E_Config_Dialog *cfd, void *cfdata);
-      Evas_Object *(*create_widgets)    (E_Config_Dialog *cfd, Evas *evas, void *cfdata);
+      int          (*apply_cfdata)      (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+      Evas_Object *(*create_widgets)    (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
    } basic, advanced;
 };
 
@@ -34,7 +35,7 @@ struct _E_Config_Dialog
    
    E_Config_Dialog_CFData_Type  view_type;
    E_Config_Dialog_View         view;
-   void                        *cfdata;
+   E_Config_Dialog_Data        *cfdata;
    E_Container                 *con;
    char                        *title;
    char                        *icon;

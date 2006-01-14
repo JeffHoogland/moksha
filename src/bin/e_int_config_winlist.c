@@ -1,15 +1,13 @@
 #include "e.h"
 
-typedef struct _CFData CFData;
-
 static void        *_create_data(E_Config_Dialog *cfd);
-static void        _free_data(E_Config_Dialog *cfd, CFData *cfdata);
-static int         _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
-static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
-static int         _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
-static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
+static void        _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int         _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int         _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
-struct _CFData 
+struct _E_Config_Dialog_Data 
 {
    int warp_while_selecting;
    int warp_at_end;
@@ -53,7 +51,7 @@ e_int_config_winlist(E_Container *con)
 }
 
 static void
-_fill_data(CFData *cfdata) 
+_fill_data(E_Config_Dialog_Data *cfdata) 
 {
    cfdata->warp_while_selecting = e_config->winlist_warp_while_selecting;
    cfdata->warp_at_end = e_config->winlist_warp_at_end;
@@ -80,20 +78,20 @@ _fill_data(CFData *cfdata)
 static void *
 _create_data(E_Config_Dialog *cfd) 
 {
-   CFData *cfdata;
+   E_Config_Dialog_Data *cfdata;
    
-   cfdata = E_NEW(CFData, 1);
+   cfdata = E_NEW(E_Config_Dialog_Data, 1);
    return cfdata;
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, CFData *cfdata) 
+_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    free(cfdata);
 }
 
 static int
-_basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata) 
+_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    e_border_button_bindings_ungrab_all();
    e_config->winlist_list_show_iconified = cfdata->list_show_iconified;
@@ -113,7 +111,7 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata) 
+_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *o, *of, *ob;
 
@@ -157,7 +155,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 }
 
 static int
-_advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata) 
+_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    e_border_button_bindings_ungrab_all();
    e_config->winlist_list_show_iconified = cfdata->list_show_iconified;
@@ -185,7 +183,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 }
 
 static Evas_Object *
-_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata) 
+_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *o, *of, *ob, *ot;
 

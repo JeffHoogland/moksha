@@ -4,16 +4,15 @@
 #include "e.h"
 
 /* PROTOTYPES - same all the time */
-typedef struct _CFData CFData;
 typedef struct _CFBorder CFBorder;
 
 static void *_create_data(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd, CFData *cfdata);
-static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
-static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
+static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 /* Actual config data we will be playing with whil the dialog is active */
-struct _CFData
+struct _E_Config_Dialog_Data
 {
    E_Border *border;
    char *bordername;
@@ -23,7 +22,7 @@ struct _CFData
 
 struct _CFBorder
 {
-   CFData     *cfdata;
+   E_Config_Dialog_Data     *cfdata;
    const char *bordername;
 };
 
@@ -49,7 +48,7 @@ e_int_border_border(E_Border *bd)
 
 /**--CREATE--**/
 static void
-_fill_data(CFData *cfdata)
+_fill_data(E_Config_Dialog_Data *cfdata)
 {
    if ((cfdata->border->remember) &&
        (cfdata->border->remember->apply & E_REMEMBER_APPLY_BORDER))
@@ -64,16 +63,16 @@ _create_data(E_Config_Dialog *cfd)
     * dialog will be dealing with while configuring. it will be applied to
     * the running systems/config in the apply methods
     */
-   CFData *cfdata;
+   E_Config_Dialog_Data *cfdata;
    
-   cfdata = E_NEW(CFData, 1);
+   cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->border = cfd->data;
    _fill_data(cfdata);
    return cfdata;
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, CFData *cfdata)
+_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    /* Free the cfdata */
    cfdata->border->border_border_dialog = NULL;
@@ -88,7 +87,7 @@ _free_data(E_Config_Dialog *cfd, CFData *cfdata)
 
 /**--APPLY--**/
 static int
-_basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
+_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    /* FIXME: need to check if the remember stuff will actually work or notx
     * (see e_int_border_remember.c where it checks and warns) */
@@ -136,7 +135,7 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 
 /**--GUI--**/
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
+_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for a basic dialog */
    Evas_Object *o, *ob, *oi, *oj, *orect;

@@ -8,19 +8,18 @@
 #define BG_SET_ALL_DESK 2
 
 /* PROTOTYPES - same all the time */
-typedef struct _CFData CFData;
 typedef struct _E_Cfg_Bg_Data E_Cfg_Bg_Data;
 
 static void        *_create_data(E_Config_Dialog *cfd);
-static void        _free_data(E_Config_Dialog *cfd, CFData *cfdata);
-static int         _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
-static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
-static int         _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
-static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
+static void        _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int         _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int         _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void        _load_bgs(Evas *evas, E_Config_Dialog *cfd, Evas_Object *il);
 
 /* Actual config data we will be playing with whil the dialog is active */
-struct _CFData
+struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
    /*- BASIC -*/
@@ -57,7 +56,7 @@ e_int_config_background(E_Container *con)
 
 /**--CREATE--**/
 static void
-_fill_data(CFData *cfdata)
+_fill_data(E_Config_Dialog_Data *cfdata)
 {
    cfdata->bg_method = BG_SET_DEFAULT_DESK;
    if (e_config->desktop_default_background) 
@@ -74,16 +73,16 @@ _create_data(E_Config_Dialog *cfd)
     * dialog will be dealing with while configuring. it will be applied to
     * the running systems/config in the apply methods
     */
-   CFData *cfdata;
+   E_Config_Dialog_Data *cfdata;
    
-   cfdata = E_NEW(CFData, 1);
+   cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->cfd = cfd;
    _fill_data(cfdata);
    return cfdata;
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, CFData *cfdata)
+_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    /* Free the cfdata */
    if (cfdata->current_file) free(cfdata->current_file);
@@ -92,7 +91,7 @@ _free_data(E_Config_Dialog *cfd, CFData *cfdata)
 
 /**--APPLY--**/
 static int
-_basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
+_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    while (e_config->desktop_backgrounds)
      {
@@ -113,7 +112,7 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 void
 _e_config_bg_cb_standard(void *data)
 {
-   CFData *cfdata;
+   E_Config_Dialog_Data *cfdata;
    
    cfdata = data;
    e_widget_image_object_set
@@ -131,7 +130,7 @@ _e_config_bg_cb_standard(void *data)
 
 /**--GUI--**/
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
+_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *fr, *il;
    Evas_Object *im = NULL;
@@ -161,7 +160,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 }
 
 static int
-_advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata) 
+_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    E_Zone *z;
    E_Desk *d;
@@ -214,7 +213,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 }
 
 static Evas_Object *
-_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata) 
+_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *o, *fr, *il;
    Evas_Object *im = NULL;
@@ -303,7 +302,6 @@ _load_bgs(Evas *evas, E_Config_Dialog *cfd, Evas_Object *il)
 	  {
 	     char *bgfile;
 	     char fullbg[PATH_MAX];
-	     Evas_Object *o, *otmp;
 	     int i = 0;
 	     
 	     while ((bgfile = ecore_list_next(bgs)))

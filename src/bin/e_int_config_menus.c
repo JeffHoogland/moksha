@@ -1,15 +1,13 @@
 #include "e.h"
 
-typedef struct _CFData CFData;
-
 static void *_create_data(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd, CFData *cfdata);
-static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
-static int _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
-static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
-static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
+static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
-struct _CFData 
+struct _E_Config_Dialog_Data 
 {
    int menu_eap_name_show;
    int menu_eap_generic_show;
@@ -41,7 +39,7 @@ e_int_config_menus(E_Container *con)
 }
 
 static void 
-_fill_data(CFData *cfdata) 
+_fill_data(E_Config_Dialog_Data *cfdata) 
 {
    cfdata->menu_eap_name_show = e_config->menu_eap_name_show;
    cfdata->menu_eap_generic_show = e_config->menu_eap_generic_show;
@@ -56,21 +54,21 @@ _fill_data(CFData *cfdata)
 static void *
 _create_data(E_Config_Dialog *cfd) 
 {
-   CFData *cfdata;
+   E_Config_Dialog_Data *cfdata;
    
-   cfdata = E_NEW(CFData, 1);
+   cfdata = E_NEW(E_Config_Dialog_Data, 1);
    _fill_data(cfdata);
    return cfdata;
 }
 
 static void 
-_free_data(E_Config_Dialog *cfd, CFData *cfdata) 
+_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    free(cfdata);
 }
 
 static int 
-_basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata) 
+_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    e_border_button_bindings_ungrab_all();
    e_config->menu_eap_name_show = cfdata->menu_eap_name_show;
@@ -82,7 +80,7 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata) 
+_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *o, *of, *ob;
    
@@ -101,7 +99,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 }
 
 static int 
-_advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata) 
+_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    e_border_button_bindings_ungrab_all();
    e_config->menu_eap_name_show = cfdata->menu_eap_name_show;
@@ -135,7 +133,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 }
 
 static Evas_Object *
-_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata) 
+_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *o, *of, *ob;
    
