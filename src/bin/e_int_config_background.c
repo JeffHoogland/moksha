@@ -101,7 +101,9 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	e_bg_del(cfbg->container, cfbg->zone, cfbg->desk_x, cfbg->desk_y);
      }
    if (e_config->desktop_default_background) evas_stringshare_del(e_config->desktop_default_background);
-   e_config->desktop_default_background = evas_stringshare_add(cfdata->file);
+   if (strlen(cfdata->file) == 0) e_config->desktop_default_background = NULL;
+   else
+     e_config->desktop_default_background = evas_stringshare_add(cfdata->file);
    e_bg_update();
    e_config_save_queue();
    if (cfdata->current_file) free(cfdata->current_file);
@@ -115,9 +117,22 @@ _e_config_bg_cb_standard(void *data)
    E_Config_Dialog_Data *cfdata;
    
    cfdata = data;
-   e_widget_image_object_set
-     (cfdata->cfd->data,
-      e_thumb_evas_object_get(cfdata->file, cfdata->cfd->dia->win->evas, 200, 160, 1));
+   if (strlen(cfdata->file) == 0)
+     {
+	Evas_Object *bg;
+	
+	bg = edje_object_add(cfdata->cfd->dia->win->evas);
+	e_theme_edje_object_set(bg, "base/theme/background", "desktop/background");
+	e_widget_image_object_set(cfdata->cfd->data, bg);
+     }
+   else
+     {
+	e_widget_image_object_set
+	  (cfdata->cfd->data,
+	   e_thumb_evas_object_get(cfdata->file,
+				   cfdata->cfd->dia->win->evas,
+				   160, 120, 1));
+     }
    if (cfdata->current_file) 
      {
 	if (!strcmp(cfdata->file, cfdata->current_file)) 
@@ -181,7 +196,9 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	e_bg_del(z->container->num, -1, -1, -1);
 	e_bg_del(z->container->num, z->num, -1, -1);
 	if (e_config->desktop_default_background) evas_stringshare_del(e_config->desktop_default_background);
-	e_config->desktop_default_background = evas_stringshare_add(cfdata->file);
+	if (strlen(cfdata->file) == 0) e_config->desktop_default_background = NULL;
+	else
+	  e_config->desktop_default_background = evas_stringshare_add(cfdata->file);
 	e_bg_update();
 	e_config_save_queue();
 	break;
@@ -190,7 +207,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	e_bg_del(-1, z->num, x, y);
 	e_bg_del(z->container->num, -1, x, y);
 	e_bg_del(z->container->num, z->num, x, y);
-	e_bg_add(z->container->num, z->num, x, y, cfdata->file);
+	if (strlen(cfdata->file) != 0)
+	  e_bg_add(z->container->num, z->num, x, y, cfdata->file);
 	e_bg_update();
         e_config_save_queue();
 	break;
@@ -202,7 +220,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     cfbg = e_config->desktop_backgrounds->data;
 	     e_bg_del(cfbg->container, cfbg->zone, cfbg->desk_x, cfbg->desk_y);
 	  }
-	e_bg_add(-1, -1, -1, -1, cfdata->file);
+	if (strlen(cfdata->file) != 0)
+	  e_bg_add(-1, -1, -1, -1, cfdata->file);
 	e_bg_update();
         e_config_save_queue();
 	break;
@@ -269,6 +288,7 @@ _load_bgs(Evas *evas, E_Config_Dialog *cfd, Evas_Object *il)
    char *homedir;
    E_Zone *z;
    int iw, ih, pw, ph;
+   Evas_Object *oi;
    
    homedir = e_user_homedir_get();
    if (homedir)
@@ -292,6 +312,14 @@ _load_bgs(Evas *evas, E_Config_Dialog *cfd, Evas_Object *il)
 	ph = 120;
 	pw = ((double)z->w * ph) / (double)z->h;
      }
+
+   oi = evas_object_rectangle_add(evas);
+   evas_object_color_set(oi, 0, 0, 0, 0);
+   e_widget_ilist_append(il, oi, _("Theme Background"),
+			 _e_config_bg_cb_standard, cfd->cfdata, "");
+   
+   if ((!e_config->desktop_default_background))
+     e_widget_ilist_selected_set(il, 0);
    
    if (ecore_file_is_dir(buf))
      {
@@ -302,7 +330,8 @@ _load_bgs(Evas *evas, E_Config_Dialog *cfd, Evas_Object *il)
 	  {
 	     char *bgfile;
 	     char fullbg[PATH_MAX];
-	     int i = 0;
+	     Evas_Object *o, *otmp;
+	     int i = 1;
 	     
 	     while ((bgfile = ecore_list_next(bgs)))
 	       {
@@ -326,7 +355,7 @@ _load_bgs(Evas *evas, E_Config_Dialog *cfd, Evas_Object *il)
 			    bg = edje_object_add(evas);
 			    edje_object_file_set(bg, e_config->desktop_default_background, "desktop/background");
 			    im = e_widget_image_add_from_object(evas, bg, pw, ph);
-			    e_widget_image_object_set(im, e_thumb_evas_object_get(fullbg, evas, 200, 160, 1));
+			    e_widget_image_object_set(im, e_thumb_evas_object_get(fullbg, evas, 160, 120, 1));
 			 }
 		       free(noext);
 		       i++;
@@ -339,8 +368,6 @@ _load_bgs(Evas *evas, E_Config_Dialog *cfd, Evas_Object *il)
 
    if (im == NULL)
      {
-	/* FIXME: this is broken as the edje extends outside at the start
-	 * for some reason */
 	bg = edje_object_add(evas);
 	e_theme_edje_object_set(bg, "base/theme/background", "desktop/background");
 	im = e_widget_image_add_from_object(evas, bg, pw, ph);

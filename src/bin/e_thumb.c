@@ -201,7 +201,7 @@ e_thumb_exists(char *file)
      return 1;
 
    thumb = e_thumb_file_get(file);
-   if (ecore_file_exists(thumb))
+   if ((thumb) && (ecore_file_exists(thumb)))
      {
 	free(thumb);
 	return 1;

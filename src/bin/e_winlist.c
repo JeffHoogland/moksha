@@ -555,16 +555,16 @@ _e_winlist_activate(void)
 	    (e_config->winlist_warp_while_selecting))
 	  { 
 	     warp_to_x = ww->border->x + (ww->border->w / 2); 
-	     if (warp_to_x < 1)
-	       warp_to_x = (ww->border->x + ww->border->w) / 2;
-	     else if (warp_to_x > (ww->border->zone->w - 1))
-	       warp_to_x = ww->border->x + ((ww->border->zone->w - ww->border->x) / 2); 
+	     if (warp_to_x < (ww->border->zone->x + 1))
+	       warp_to_x = ww->border->zone->x + ((ww->border->x + ww->border->w - ww->border->zone->x) / 2);
+	     else if (warp_to_x >= (ww->border->zone->x + ww->border->zone->w - 1))
+	       warp_to_x = (ww->border->zone->x + ww->border->zone->w + ww->border->x) / 2; 
      
 	     warp_to_y = ww->border->y + (ww->border->h / 2);
-	     if (warp_to_y < 1)
-	       warp_to_y = (ww->border->y + ww->border->h) / 2;
-	     else if (warp_to_y > (ww->border->zone->h - 1))
-	       warp_to_y = ww->border->y + ((ww->border->zone->h - ww->border->y) / 2); 
+	     if (warp_to_y < (ww->border->zone->y + 1))
+	       warp_to_y = ww->border->zone->y + ((ww->border->y + ww->border->h - ww->border->zone->y) / 2);
+	     else if (warp_to_y >= (ww->border->zone->y + ww->border->zone->h - 1))
+	       warp_to_y = (ww->border->zone->y + ww->border->zone->h + ww->border->y) / 2; 
 	  }
 	if (e_config->winlist_warp_while_selecting)
 	  {
