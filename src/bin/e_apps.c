@@ -1127,9 +1127,9 @@ e_app_fields_save(E_App *a)
 	iw = 0; ih = 0;
 	evas_object_image_size_get(im, &iw, &ih);
 	alpha = evas_object_image_alpha_get(im);
-	if(a->width <= EAP_MIN_WIDTH)
+	if (a->width <= EAP_MIN_WIDTH)
 	  a->width = EAP_MIN_WIDTH;
-	if(a->height <= EAP_MIN_HEIGHT)
+	if (a->height <= EAP_MIN_HEIGHT)
 	  a->height = EAP_MIN_HEIGHT;	
 	if ((iw > 0) && (ih > 0))
 	  {
@@ -1333,9 +1333,9 @@ _e_app_new_save(E_App *a)
    
    if (a->image)
      {
-	if(a->width <= 0)
+	if (a->width <= 0)
 	  a->width = EAP_MIN_WIDTH;
-	if(a->height <= 0)
+	if (a->height <= 0)
 	  a->height = EAP_MIN_HEIGHT;
 	fprintf(out, EAP_EDC_TMPL, a->image, a->width, a->height, a->image);
      }
