@@ -1841,7 +1841,7 @@ _e_app_save_order(E_App *app)
 static int
 _e_apps_cb_exit(void *data, int type, void *event)
 {
-   Ecore_Event_Exe_Exit *ev;
+   Ecore_Exe_Event_Del *ev;
    E_App_Instance *ai;
    E_App *a;
 

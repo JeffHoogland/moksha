@@ -567,7 +567,7 @@ _e_thumb_generate(void)
 static int
 _e_thumb_cb_exe_exit(void *data, int type, void *event)
 {
-   Ecore_Event_Exe_Exit *ev;
+   Ecore_Exe_Event_Del *ev;
    E_Thumb_Item         *t;
    char                 *ext;
    

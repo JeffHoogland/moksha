@@ -451,7 +451,7 @@ e_intl_input_method_config_free (E_Input_Method_Config *imc)
 static int
 _e_intl_cb_exit(void *data, int type, void *event)
 {
-   Ecore_Event_Exe_Exit *ev;
+   Ecore_Exe_Event_Del *ev;
    
    ev = event;
    if (!ev->exe) return 1;
