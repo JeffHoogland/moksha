@@ -82,7 +82,7 @@ static Evas_List   *_e_apps_start_pending = NULL;
 "collections {\n" \
 "   group {\n" \
 "      name: \"icon\";\n" \
-"      max: %s %s;\n" \
+"      max: %d %d;\n" \
 "      parts {\n" \
 "	 part {\n" \
 "	    name: \"image\";\n" \
