@@ -189,9 +189,6 @@ _e_config_dialog_cb_apply(void *data, E_Dialog *dia)
      ok = cfd->view.advanced.apply_cfdata(cfd, cfd->cfdata);
    if (ok)
      {
-// FIXME: this is a nasty hack - from modules conf dialog patch i think. 
-// bad bad. make the modules dialog work WITHOUT this
-//	_e_config_dialog_go(cfd, cfd->view_type);
 	e_dialog_button_disable_num_set(cfd->dia, 0, 1);
 	e_dialog_button_disable_num_set(cfd->dia, 1, 1);
      }
@@ -221,16 +218,6 @@ _e_config_dialog_cb_changed(void *data, Evas_Object *obj)
    E_Config_Dialog *cfd;
    
    cfd = data;
-
-// FIXME: this is a nasty hack - from modules conf dialog patch i think. 
-// bad bad. make the modules dialog work WITHOUT this
-//   if (cfd->view_dirty)
-//     {
-//	_e_config_dialog_go(cfd, cfd->view_type);
-//     }
-//   else if (!cfd->hide_buttons)
-     {
-	e_dialog_button_disable_num_set(cfd->dia, 0, 0);
-	e_dialog_button_disable_num_set(cfd->dia, 1, 0);
-     }
+   e_dialog_button_disable_num_set(cfd->dia, 0, 0);
+   e_dialog_button_disable_num_set(cfd->dia, 1, 0);
 }
