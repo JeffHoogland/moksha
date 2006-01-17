@@ -42,20 +42,23 @@ e_color_class_set(const char *color_class, int r, int g, int b, int a, int r2, i
     cc = E_NEW(E_Color_Class, 1);
     e_config->color_classes = evas_list_append(e_config->color_classes, cc);
     cc->name = evas_stringshare_add(color_class);
+    cc->r = cc->g = cc->b = cc->a = 255;
+    cc->r2 = cc->g2 = cc->b2 = cc->a2 = 255;
+    cc->r3 = cc->g3 = cc->b3 = cc->a3 = 255;
   }
 
   if (r != -1) cc->r = E_CLAMP(r, 0, 255);
   if (g != -1) cc->g = E_CLAMP(g, 0, 255);
   if (b != -1) cc->b = E_CLAMP(b, 0, 255);
   if (a != -1) cc->a = E_CLAMP(a, 0, 255);
-  if (r != -1) cc->r2 = E_CLAMP(r2, 0, 255);
-  if (g != -1) cc->g2 = E_CLAMP(g2, 0, 255);
-  if (b != -1) cc->b2 = E_CLAMP(b2, 0, 255);
-  if (a != -1) cc->a2 = E_CLAMP(a2, 0, 255);
-  if (r != -1) cc->r3 = E_CLAMP(r3, 0, 255);
-  if (g != -1) cc->g3 = E_CLAMP(g3, 0, 255);
-  if (b != -1) cc->b3 = E_CLAMP(b3, 0, 255);
-  if (a != -1) cc->a3 = E_CLAMP(a3, 0, 255);
+  if (r2 != -1) cc->r2 = E_CLAMP(r2, 0, 255);
+  if (g2 != -1) cc->g2 = E_CLAMP(g2, 0, 255);
+  if (b2 != -1) cc->b2 = E_CLAMP(b2, 0, 255);
+  if (a2 != -1) cc->a2 = E_CLAMP(a2, 0, 255);
+  if (r3 != -1) cc->r3 = E_CLAMP(r3, 0, 255);
+  if (g3 != -1) cc->g3 = E_CLAMP(g3, 0, 255);
+  if (b3 != -1) cc->b3 = E_CLAMP(b3, 0, 255);
+  if (a3 != -1) cc->a3 = E_CLAMP(a3, 0, 255);
 
   edje_color_class_set(cc->name,
                        cc->r, cc->g, cc->b, cc->a,
@@ -72,8 +75,7 @@ e_color_class_del(const char *name)
   if (cc)
   {
     e_config->color_classes = evas_list_remove(e_config->color_classes, cc);
-    /* FIXME: add edje_color_class_del() and use that) */
-    edje_color_class_set(cc->name, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255);
+    edje_color_class_del(cc->name);
     evas_stringshare_del(cc->name);
     E_FREE(cc);
   }

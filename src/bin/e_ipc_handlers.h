@@ -7205,7 +7205,7 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_COLOR_CLASS_COLOR2_SET
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-color-class-color-set2", 5, "Set color_class (OPT1) color2 r, g, b, a (OPT2-5)", 0, HDL)
+   OP("-color-class-color2-set", 5, "Set color_class (OPT1) color2 r, g, b, a (OPT2-5)", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_STRING_4INT(params[0], atoi(params[1]), atoi(params[2]), atoi(params[3]), atoi(params[4]), HDL) 
 #elif (TYPE == E_WM_IN)
@@ -7219,7 +7219,7 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_COLOR_CLASS_COLOR3_SET
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-color-class-color-set3", 5, "Set color_class (OPT1) color3 r, g, b, a (OPT2-5)", 0, HDL)
+   OP("-color-class-color3-set", 5, "Set color_class (OPT1) color3 r, g, b, a (OPT2-5)", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_STRING_4INT(params[0], atoi(params[1]), atoi(params[2]), atoi(params[3]), atoi(params[4]), HDL) 
 #elif (TYPE == E_WM_IN)
@@ -7304,10 +7304,43 @@ break;
    STRING_INT4_LIST(v, HDL);
    if (v->str) printf("REPLY: \"%s\" (RGBA) %i %i %i %i\n", v->str, v->val1, v->val2, v->val3, v->val4);
    else printf("REPLY: \"\" (RGBA) %i %i %i %i\n", v->val1, v->val2, v->val3, v->val4);
-   END_STRING_INT_LIST(v);
+   END_STRING_INT4_LIST(v);
 #elif (TYPE == E_LIB_IN)
    /* FIXME implement */
 #endif
 #undef HDL
      
+/****************************************************************************/
+#define HDL E_IPC_OP_COLOR_CLASS_LIST
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-color-class-list", 0, "List all color classes used by currently loaded edje objects.", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   GENERIC(HDL);
+   LIST_DATA();
+   ENCODE(edje_color_class_list(), e_ipc_codec_str_list_enc);
+   SEND_DATA(E_IPC_OP_COLOR_CLASS_LIST_REPLY);
+   END_GENERIC();
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+/****************************************************************************/
+#define HDL E_IPC_OP_COLOR_CLASS_LIST_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   GENERIC(HDL);
+   LIST();
+   DECODE(e_ipc_codec_str_list_dec) {
+      FOR(dat) {
+	 printf("REPLY: \"%s\"\n", (char *)(l->data));
+      }
+      FREE_LIST(dat);
+   }
+   END_GENERIC();
+#endif
+#undef HDL
+
 /****************************************************************************/
