@@ -64,6 +64,7 @@ e_color_class_set(const char *color_class, int r, int g, int b, int a, int r2, i
                        cc->r, cc->g, cc->b, cc->a,
                        cc->r2, cc->g2, cc->b2, cc->a2,
                        cc->r3, cc->g3, cc->b3, cc->a3);
+  e_config_save_queue();
 }
 
 EAPI void
@@ -78,6 +79,8 @@ e_color_class_del(const char *name)
     edje_color_class_del(cc->name);
     evas_stringshare_del(cc->name);
     E_FREE(cc);
+
+    e_config_save_queue();
   }
 }
 
