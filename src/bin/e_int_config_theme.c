@@ -108,7 +108,6 @@ _e_config_theme_cb_standard(void *data)
    if (cfdata->current_theme) 
      {
 	tmp = ecore_file_get_file(d->file);
-	tmp = ecore_file_strip_ext(tmp);
 	if (!strcmp(tmp, cfdata->current_theme)) 
 	  {
 	     e_dialog_button_disable_num_set(d->cfd->dia, 0, 1);
@@ -180,8 +179,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 		       Evas_Object *o = NULL;
 		       char *noext;
 		       E_Cfg_Theme_Data *cb_data;
-		       
-		       o = e_thumb_generate_begin(fulltheme, 48, 48, cfd->dia->win->evas, &o, NULL, NULL);
+
+		       if (!e_thumb_exists(fulltheme))
+			 o = e_thumb_generate_begin(fulltheme, 48, 48, cfd->dia->win->evas, &o, NULL, NULL);
+		       else
+			 o = e_thumb_evas_object_get(fulltheme, cfd->dia->win->evas, 48, 48, 1);
+
 		       noext = ecore_file_strip_ext(themefile);
 		       
 		       cb_data = E_NEW(E_Cfg_Theme_Data, 1);
