@@ -260,9 +260,9 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
    if (!e_config->desktop_default_background)
      {
 	e_widget_ilist_selected_set(il, 0);
-	im = e_widget_image_add_from_object(cfd->dia->win->evas, bg_obj, 320, 240);
-	e_widget_image_object_set(im,  e_thumb_evas_object_get(c, cfd->dia->win->evas, 320, 240, 1));
      }
+   im = e_widget_image_add_from_object(cfd->dia->win->evas, bg_obj, 320, 240);
+   e_widget_image_object_set(im,  e_thumb_evas_object_get(c, cfd->dia->win->evas, 320, 240, 1));
 
    evas_object_del(o);
    ecore_evas_free(eebuf);
