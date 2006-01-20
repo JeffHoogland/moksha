@@ -55,8 +55,8 @@ _create_data(E_Config_Dialog *cfd)
    E_Config_Dialog_Data *cfdata;
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
-   _fill_data(cfdata);
    cfd->cfdata = cfdata;
+   _fill_data(cfdata);
    return cfdata;
 }
 
@@ -72,7 +72,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    Evas_Object *o, *ot, *of, *il, *im;
 
-   //_fill_data(cfdata);
+   _fill_data(cfdata);
 
    ot = e_widget_table_add(evas, 0);
    il = e_widget_ilist_add(evas, 48, 48, &(cfdata->bg));
@@ -98,9 +98,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   const char *theme;
-
-   theme = e_theme_edje_file_get("base/theme/backgrounds", "desktop/background");
    while (e_config->desktop_backgrounds)
      {
 	E_Config_Desktop_Background *cfbg;
@@ -127,7 +124,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    Evas_Object *o, *ot, *of, *il, *im, *oc;
    E_Radio_Group *rg;
 
-   //_fill_data(cfdata);
+   _fill_data(cfdata);
 
    ot = e_widget_table_add(evas, 0);
    il = e_widget_ilist_add(evas, 48, 48, &(cfdata->bg));
@@ -138,7 +135,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    _load_bgs(cfd, il);
    im = cfd->data;
 
-   //e_widget_focus_set(il, 1);
+   e_widget_focus_set(il, 1);
    e_widget_ilist_go(il);
    e_widget_table_object_append(ot, il, 0, 0, 1, 3, 1, 1, 1, 1);
 
@@ -151,11 +148,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    of = e_widget_framelist_add(evas, _("Set Background For"), 0);
    e_widget_min_size_set(of, 200, 160);
 
-   oc = e_widget_radio_add(evas, _("Default Desktop"), 0, rg);
+   oc = e_widget_radio_add(evas, _("Default Desktop"), BG_SET_DEFAULT_DESK, rg);
    e_widget_framelist_object_append(of, oc);
-   oc = e_widget_radio_add(evas, _("This Desktop"), 1, rg);
+   oc = e_widget_radio_add(evas, _("This Desktop"), BG_SET_THIS_DESK, rg);
    e_widget_framelist_object_append(of, oc);
-   oc = e_widget_radio_add(evas, _("All Desktops"), 2, rg);
+   oc = e_widget_radio_add(evas, _("All Desktops"), BG_SET_ALL_DESK, rg);
    e_widget_framelist_object_append(of, oc);
 
    e_widget_table_object_append(ot, of, 1, 2, 1, 1, 1, 1, 1, 1);
@@ -168,13 +165,11 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    E_Zone *z;
    E_Desk *d;
    int x, y;
-   const char *theme;
 
    if (!cfdata->bg) return 0;
    z = e_zone_current_get(cfd->con);
    d = e_desk_current_get(z);
    e_desk_xy_get(d, &x, &y);
-   theme = e_theme_edje_file_get("base/theme/backgrounds", "desktop/background");
 
    switch (cfdata->bg_method)
      {
@@ -203,7 +198,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	e_bg_del(-1, z->num, x, y);
 	e_bg_del(z->container->num, -1, x, y);
 	e_bg_del(z->container->num, z->num, x, y);
-	if (!(cfdata->bg[0])) 
+	if (cfdata->bg[0]) 
 	  e_bg_add(z->container->num, z->num, x, y, cfdata->bg);	
 	
 	e_bg_update();
@@ -217,7 +212,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     cfbg = e_config->desktop_backgrounds->data;
 	     e_bg_del(cfbg->container, cfbg->zone, cfbg->desk_x, cfbg->desk_y);
 	  }
-	if (!(cfdata->bg[0])) 
+	if (cfdata->bg[0]) 
 	  e_bg_add(-1, -1, -1, -1, cfdata->bg);
 
 	e_bg_update();
@@ -306,7 +301,7 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
 		       e_widget_ilist_selected_set(il, i);
 		       o = edje_object_add(cfd->dia->win->evas);
 		       edje_object_file_set(o, e_config->desktop_default_background, "desktop/background");
-		       im = e_widget_image_add_from_object(cfd->dia->win->evas, o, 320, 240);
+		       //im = e_widget_image_add_from_object(cfd->dia->win->evas, o, 320, 240);
 		       e_widget_image_object_set(im, e_thumb_evas_object_get(full_path, cfd->dia->win->evas, 320, 240, 1));
 		    }
 		  i++;
