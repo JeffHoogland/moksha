@@ -301,7 +301,7 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
 		       e_widget_ilist_selected_set(il, i);
 		       o = edje_object_add(cfd->dia->win->evas);
 		       edje_object_file_set(o, e_config->desktop_default_background, "desktop/background");
-		       //im = e_widget_image_add_from_object(cfd->dia->win->evas, o, 320, 240);
+		       im = e_widget_image_add_from_object(cfd->dia->win->evas, o, 320, 240);
 		       e_widget_image_object_set(im, e_thumb_evas_object_get(full_path, cfd->dia->win->evas, 320, 240, 1));
 		    }
 		  i++;
