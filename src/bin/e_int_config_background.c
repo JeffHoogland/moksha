@@ -83,7 +83,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    _load_bgs(cfd, il);
    im = cfd->data;
 
-   e_widget_focus_set(il, 1);
+   /* e_widget_focus_set(il, 1); */
    e_widget_ilist_go(il);
    e_widget_table_object_append(ot, il, 0, 0, 1, 2, 1, 1, 1, 1);
 
