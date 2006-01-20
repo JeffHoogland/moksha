@@ -8,6 +8,7 @@ typedef struct _Cfg_File_Data Cfg_File_Data;
 struct _E_Config_Dialog_Data
 {   
    int digital_style;
+   int allow_overlap;
 };
 
 struct _Cfg_File_Data 
@@ -45,6 +46,7 @@ static void
 _fill_data(Clock_Face *clk, E_Config_Dialog_Data *cfdata) 
 {
    cfdata->digital_style = clk->conf->digitalStyle;
+   cfdata->allow_overlap = clk->clock->conf->allow_overlap;
 }
 
 static void *
@@ -86,6 +88,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_radio_add(evas, _("24 Hour Display"), 2, rg);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
+
+   of = e_widget_framelist_add(evas, _("Extras"), 0);
+   ob = e_widget_check_add(evas, _("Allow Overlap"), &(cfdata->allow_overlap));
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+
    return o;
 }
 
@@ -97,6 +105,12 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    clk = cfd->data;
    e_border_button_bindings_ungrab_all();
    clk->conf->digitalStyle = cfdata->digital_style;
+
+   if (cfdata->allow_overlap && !clk->clock->conf->allow_overlap)
+     clk->clock->conf->allow_overlap = 1;
+   else if (!cfdata->allow_overlap && clk->clock->conf->allow_overlap)
+     clk->clock->conf->allow_overlap = 0;
+
    e_border_button_bindings_grab_all();
    e_config_save_queue();
    

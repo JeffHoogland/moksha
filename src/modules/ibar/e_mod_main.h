@@ -21,6 +21,7 @@ struct _Config
    double        autoscroll_speed;
    int           iconsize;
    int           width;
+   int		 allow_overlap;
    Evas_List    *bars;
 };
 

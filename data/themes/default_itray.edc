@@ -1,0 +1,275 @@
+images {
+   image: "e17_ibar_bg_h.png" COMP;
+   image: "e17_ibar_bg_v.png" COMP;
+   image: "e17_ibar_lamp_d.png" COMP;
+   image: "e17_ibar_lamp_l.png" COMP;
+   image: "e17_ibar_lamp_r.png" COMP;
+   image: "e17_ibar_lamp_u.png" COMP;
+   image: "e17_ibar_over_h.png" COMP;
+   image: "e17_ibar_over_v.png" COMP;
+}
+group {
+   name: "modules/itray/main";
+   data {
+      //	 item: "item_list", "item item2 item3";
+   }
+   script {
+      public orient;
+   }
+   parts {
+      part {
+	 name:          "background";
+	 mouse_events:  1;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       to:       "overlay";
+	    }
+	    rel2 {
+	       to:       "overlay";
+	    }
+	    image {
+	       normal: "e17_ibar_bg_h.png";
+	       border: 6 6 6 6;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+	 description {
+	    state:    "vert" 0.0;
+	    inherit:  "default" 0.0;
+	    image {
+	       normal: "e17_ibar_bg_v.png";
+	    }
+	 }
+      }
+      part {
+	 name:          "items_clip";
+	 type:          RECT;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       to:       "background";
+	       offset:   4    4;
+	    }
+	    rel2 {
+	       to:       "background";
+	       offset:   -5    -5;
+	    }
+	    color: 255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "items";
+	 type:          SWALLOW;
+	 mouse_events:  0;
+	 clip_to:       "items_clip";
+	 description {
+	    state:    "default" 0.0;
+	    align: 0.5 0.5;
+	    rel1 {
+	       offset:   4    4;
+	    }
+	    rel2 {
+	       offset:   -5    -5;
+	    }
+	    color: 0 0 0 0;
+	 }
+	 description {
+	    state:    "top" 0.0;
+	    inherit:  "default" 0.0;
+	 }
+	 description {
+	    state:    "left" 0.0;
+	    inherit:  "default" 0.0;
+	 }
+	 description {
+	    state:    "right" 0.0;
+	    inherit:  "default" 0.0;
+	 }
+      }
+      part {
+	name:          "tray";
+	type:          SWALLOW;
+	mouse_events:  0;
+	description {
+	  state: "default" 0.0;
+	  align: 0.5 0.5;
+	  rel1 { offset: 7 6; }
+	  rel2 { offset: -7 -6; }
+	  color: 0 0 255 64;
+	}
+      }
+      part {
+	 name:          "overlay";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    image {
+	       normal: "e17_ibar_over_h.png";
+	       border: 13 13 13 13;
+	       middle: 0;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+	 description {
+	    state:    "top" 0.0;
+	    inherit:  "default" 0.0;
+	 }
+	 description {
+	    state:    "left" 0.0;
+	    inherit:  "default" 0.0;
+	 }
+	 description {
+	    state:    "right" 0.0;
+	    inherit:  "default" 0.0;
+	 }
+      }
+      part {
+	 name:          "inn";
+	 type:          RECT;
+	 repeat_events: 1;
+	 description {
+	    state:    "default" 0.0;
+	    color: 0 0 0 0;
+	 }
+      }
+   }
+   programs {
+      program {
+	 name:    "orient";
+	 signal:  "set_orientation";
+	 source:  "*";
+	 script {
+	    // sig, src
+	    if (!strcmp(src, "left")) {
+	       set_int(orient, 0);
+	       set_state(PART:"background", "vert", 0.0);
+	       set_state(PART:"overlay", "left", 0.0);
+	       set_state(PART:"items", "left", 0.0);
+	    }
+	    else if (!strcmp(src, "right")) {
+	       set_int(orient, 1);
+	       set_state(PART:"background", "vert", 0.0);
+	       set_state(PART:"overlay", "right", 0.0);
+	       set_state(PART:"items", "right", 0.0);
+	    }
+	    else if (!strcmp(src, "top")) {
+	       set_int(orient, 2);
+	       set_state(PART:"background", "default", 0.0);
+	       set_state(PART:"overlay", "top", 0.0);
+	       set_state(PART:"items", "top", 0.0);
+	    }
+	    else if (!strcmp(src, "bottom")) {
+	       set_int(orient, 3);
+	       set_state(PART:"background", "default", 0.0);
+	       set_state(PART:"overlay", "default", 0.0);
+	       set_state(PART:"items", "default", 0.0);
+	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "modules/itray/follower";
+   min: 56 56;
+   data {
+      //	 item: "item_list", "item item2 item3";
+   }
+   parts {
+      part {
+	 name:          "top";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   0   -14;
+	    }
+	    rel2 {
+	       relative: 1.0  0.0;
+	       offset:   -1   26;
+	    }
+	    image {
+	       normal: "e17_ibar_lamp_d.png";
+	    }
+	 }
+	 description {
+	    state:    "top" 0.0;
+	    rel1 {
+	       relative: 0.0  1.0;
+	       offset:   0   -26;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   14;
+	    }
+	    image {
+	       normal: "e17_ibar_lamp_u.png";
+	    }
+	 }
+	 description {
+	    state:    "right" 0.0;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:   -14 0;
+	    }
+	    rel2 {
+	       relative: 0.0 1.0;
+	       offset:   26 -1;
+	    }
+	    image {
+	       normal: "e17_ibar_lamp_r.png";
+	    }
+	 }
+	 description {
+	    state:    "left" 0.0;
+	    rel1 {
+	       relative: 1.0 0.0;
+	       offset:   -26  0;
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   14  -1;
+	    }
+	    image {
+	       normal: "e17_ibar_lamp_l.png";
+	    }
+	 }
+      }
+      program {
+	 name:    "orient";
+	 signal:  "set_orientation";
+	 source:  "bottom";
+	 action:  STATE_SET "default" 0.0;
+	 target:  "top";
+      }
+      program {
+	 name:    "orient2";
+	 signal:  "set_orientation";
+	 source:  "top";
+	 action:  STATE_SET "top" 0.0;
+	 target:  "top";
+      }
+      program {
+	 name:    "orient3";
+	 signal:  "set_orientation";
+	 source:  "left";
+	 action:  STATE_SET "left" 0.0;
+	 target:  "top";
+      }
+      program {
+	 name:    "orient4";
+	 signal:  "set_orientation";
+	 source:  "right";
+	 action:  STATE_SET "right" 0.0;
+	 target:  "top";
+      }
+   }
+}
+

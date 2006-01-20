@@ -13,7 +13,10 @@ typedef enum _E_Gadman_Policy
    E_GADMAN_POLICY_HSIZE = 1 << 9,
    E_GADMAN_POLICY_VSIZE = 1 << 10,
    E_GADMAN_POLICY_HMOVE = 1 << 11,
-   E_GADMAN_POLICY_VMOVE = 1 << 12
+   E_GADMAN_POLICY_VMOVE = 1 << 12,
+   /* more extra flags */
+   E_GADMAN_POLICY_ALLOW_OVERLAP = 1 << 15,
+   E_GADMAN_POLICY_ALWAYS_ON_TOP = 1 << 16 // not used yet
 } E_Gadman_Policy;
 
 typedef enum _E_Gadman_Change

@@ -6,7 +6,7 @@
 #include "e_int_menus.h"
 
 static Start *_start_new(void);
-static Start_Face *_start_face_new(E_Container *con);
+static Start_Face *_start_face_new(Start *s, E_Container *con);
 static void _start_free(Start *e);
 static void _start_face_free(Start_Face *face);
 static void _start_face_disable(Start_Face *e);
@@ -16,6 +16,9 @@ static void _start_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _start_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
 static void _start_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _start_menu_cb_post_deactivate(void *data, E_Menu *m);
+
+static void _start_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _start_cb_update_policy(void *data);
 
 static int button_count;
 static E_Config_DD *conf_edd;
@@ -79,6 +82,21 @@ e_modapi_about(E_Module *m)
    return 1;
 }
 
+int
+e_modapi_config(E_Module *m)
+{
+  Start *s;
+  Start_Face *face;
+
+  s = m->data;
+  if (s == NULL) return 0;
+  if (s->faces == NULL) return 0;
+  face = s->faces->data;
+  if (face == NULL) return 0;
+  _config_start_module(e_container_current_get(e_manager_current_get()), s);
+  return 1;
+}
+
 static Start *
 _start_new(void)
 {
@@ -103,9 +121,15 @@ _start_new(void)
 #define T Config
 #define D conf_edd
    E_CONFIG_LIST(D, T, faces, conf_face_edd);
+   E_CONFIG_VAL(D, T, allow_overlap, INT);
    
    e->conf = e_config_domain_load("module.start", conf_edd);
-   if (!e->conf) e->conf = E_NEW(Config, 1);
+   if (!e->conf)
+     {
+       e->conf = E_NEW(Config, 1);
+       e->conf->allow_overlap = 0;
+     }
+   E_CONFIG_LIMIT(e->conf->allow_overlap, 0, 1);
    
    _start_config_menu_new(e);
    
@@ -122,9 +146,10 @@ _start_new(void)
 	     Start_Face *face;
 	     
 	     con = l2->data;
-	     face = _start_face_new(con);
+	     face = _start_face_new(e, con);
 	     if (face)
 	       {
+		  face->start = e;
 		  e->faces = evas_list_append(e->faces, face);
 		  /* Config */
 		  if (!cl)
@@ -142,6 +167,10 @@ _start_new(void)
 		  /* Menu */
 		  /* This menu must be initialized after conf */
 		  _start_face_menu_new(face);
+
+		  mi = e_menu_item_new(e->config_menu);
+		  e_menu_item_label_set(mi, _("Configuration"));
+		  e_menu_item_callback_set(mi, _start_face_cb_menu_configure, face);
 		  
 		  mi = e_menu_item_new(e->config_menu);
 		  e_menu_item_label_set(mi, con->name);
@@ -157,10 +186,11 @@ _start_new(void)
 }
 
 static Start_Face *
-_start_face_new(E_Container *con)
+_start_face_new(Start *s, E_Container *con)
 {
    Start_Face *face;
    Evas_Object *o;
+   E_Gadman_Policy policy;
    
    face = E_NEW(Start_Face, 1);
    if (!face) return NULL;
@@ -186,12 +216,20 @@ _start_face_new(E_Container *con)
    
    face->gmc = e_gadman_client_new(con->gadman);
    e_gadman_client_domain_set(face->gmc, "module.start", button_count++);
-   e_gadman_client_policy_set(face->gmc,
-			      E_GADMAN_POLICY_ANYWHERE |
-			      E_GADMAN_POLICY_HMOVE |
-			      E_GADMAN_POLICY_VMOVE |
-			      E_GADMAN_POLICY_HSIZE |
-			      E_GADMAN_POLICY_VSIZE);
+
+   policy = E_GADMAN_POLICY_ANYWHERE |
+           E_GADMAN_POLICY_HMOVE |
+           E_GADMAN_POLICY_VMOVE |
+           E_GADMAN_POLICY_HSIZE |
+           E_GADMAN_POLICY_VSIZE;
+
+   if (s->conf->allow_overlap == 0)
+     policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
+   else
+     policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
+
+   e_gadman_client_policy_set(face->gmc, policy);
+
    e_gadman_client_min_size_set(face->gmc, 4, 4);
    e_gadman_client_max_size_set(face->gmc, 512, 512);
    e_gadman_client_auto_size_set(face->gmc, 40, 40);
@@ -225,6 +263,10 @@ _start_face_menu_new(Start_Face *face)
     */
    
    /* Edit */
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Configuration"));
+   e_menu_item_callback_set(mi, _start_face_cb_menu_configure, face);
+
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Edit Mode"));
    e_menu_item_callback_set(mi, _start_face_cb_menu_edit, face);
@@ -358,3 +400,39 @@ _start_menu_cb_post_deactivate(void *data, E_Menu *m)
    e_object_del(E_OBJECT(face->main_menu));
    face->main_menu = NULL;
 }
+void _start_cb_config_updated( void *data )
+{
+  _start_cb_update_policy(data);
+}
+
+void
+_start_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Start_Face *face;
+
+   face = (Start_Face*)data;
+   if (!face) return;
+   _config_start_module(face->con, face->start);
+}
+
+static void _start_cb_update_policy(void *data)
+{
+  Start     *s;
+  Start_Face *sf;
+  Evas_List   *l;
+  E_Gadman_Policy policy;
+
+  s = data;
+  for (l = s->faces; l; l = l->next)
+    {
+      sf = l->data;
+      policy = sf->gmc->policy;
+
+      if (s->conf->allow_overlap == 0)
+	 policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
+      else
+	 policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
+      e_gadman_client_policy_set(sf->gmc , policy);
+    }
+}
+

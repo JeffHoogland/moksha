@@ -85,6 +85,8 @@ static void        _pager_menu_cb_aspect_keep_height(void *data, E_Menu *m, E_Me
 static void        _pager_menu_cb_aspect_keep_width(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _pager_menu_cb_configure(void *data, E_Menu *m, E_Menu_Item *mi);
 
+static void	   _pager_cb_update_policy(void *data);
+
 static int         _pager_count;
 
 static E_Config_DD *_conf_edd;
@@ -223,6 +225,7 @@ _pager_new(void)
    E_CONFIG_VAL(D, T, deskname_pos, UINT);
    E_CONFIG_VAL(D, T, popup_speed, DOUBLE);
    E_CONFIG_VAL(D, T, popup, UINT);
+   E_CONFIG_VAL(D, T, allow_overlap, INT);
 
    pager->conf = e_config_domain_load("module.pager", _conf_edd);
 
@@ -232,10 +235,12 @@ _pager_new(void)
 	pager->conf->deskname_pos = PAGER_DESKNAME_NONE;
 	pager->conf->popup_speed = 1.0;
 	pager->conf->popup = 1;
+	pager->conf->allow_overlap = 0;
      }
    E_CONFIG_LIMIT(pager->conf->deskname_pos, PAGER_DESKNAME_NONE, PAGER_DESKNAME_RIGHT);
    E_CONFIG_LIMIT(pager->conf->popup_speed, 0.1, 10.0);
    E_CONFIG_LIMIT(pager->conf->popup, 0, 1);
+   E_CONFIG_LIMIT(pager->conf->allow_overlap, 0, 1);
 
    _pager_config_menu_new(pager);
 
@@ -424,6 +429,7 @@ _pager_face_new(Pager *pager, E_Zone *zone, Evas *evas, int use_gmc)
    Evas_Coord   x, y, w, h;
    double       aspect;
    const char  *drop[] = { "enlightenment/border", "enlightenment/pager_win" };
+   E_Gadman_Policy  policy;
 
    face = E_NEW(Pager_Face, 1);
    if (!face) return NULL;
@@ -471,13 +477,21 @@ _pager_face_new(Pager *pager, E_Zone *zone, Evas *evas, int use_gmc)
 
    e_gadman_client_domain_set(face->gmc, "module.pager", _pager_count++);
    e_gadman_client_zone_set(face->gmc, face->zone);
-   e_gadman_client_policy_set(face->gmc,
-//			      E_GADMAN_POLICY_FIXED_ZONE |
-			      E_GADMAN_POLICY_ANYWHERE |
-			      E_GADMAN_POLICY_HMOVE |
-			      E_GADMAN_POLICY_VMOVE |
-			      E_GADMAN_POLICY_HSIZE |
-			      E_GADMAN_POLICY_VSIZE);
+
+   policy = E_GADMAN_POLICY_ANYWHERE |
+           E_GADMAN_POLICY_HMOVE |
+           E_GADMAN_POLICY_VMOVE |
+           E_GADMAN_POLICY_HSIZE |
+  //                         E_GADMAN_POLICY_FIXED_ZONE |
+           E_GADMAN_POLICY_VSIZE;
+
+   if (pager->conf->allow_overlap == 0)
+     policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
+   else
+     policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
+
+   e_gadman_client_policy_set(face->gmc, policy);
+
    e_gadman_client_min_size_set(face->gmc, 8, 8);
    e_gadman_client_max_size_set(face->gmc, 600, 600);
    e_gadman_client_auto_size_set(face->gmc,
@@ -2139,6 +2153,7 @@ _pager_cb_config_updated(void *data)
 
    /* Handle Desktop Name Position Change */
    pager = data;
+   _pager_cb_update_policy(pager);
    for (l = pager->faces; l; l = l->next)
      {
 	Pager_Face *face;
@@ -2147,3 +2162,24 @@ _pager_cb_config_updated(void *data)
 	_pager_face_deskname_position_change(face);
      }   
 }
+static void _pager_cb_update_policy(void *data)
+{
+  Pager     *pg;
+  Pager_Face *pf;
+  Evas_List   *l;
+  E_Gadman_Policy policy;
+
+  pg = data;
+  for (l = pg->faces; l; l = l->next)
+    {
+      pf = l->data;
+      policy = pf->gmc->policy;
+
+      if (pg->conf->allow_overlap == 0)
+	policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
+      else
+	policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
+      e_gadman_client_policy_set(pf->gmc , policy);
+    }
+}
+

@@ -8,6 +8,9 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: edge flip for desktops still active if turned off when dragging a window
+  off the desktop - either a separate config value (recommended) or turn it
+  off for window dragging too
 * BUG: general settings is too... general
 * BUG: desktop settings is missing preview
 * BUG: modules need to destroy config dialogs on shutdown (otherwise - segv!)
@@ -126,6 +129,7 @@ Some of the things (in very short form) that need to be done to E17...
   "NICE TO HAVE" FEATURES
 -------------------------------------------------------------------------------
 
+* winlist and exebuf can let the mouse select items
 * option to NOT raise on focus in click to focus
 * switch to desktop of a new window if it opens on another desktop than the
   current one

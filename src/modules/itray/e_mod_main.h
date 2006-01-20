@@ -6,22 +6,22 @@
 
 typedef struct _Config      Config;
 typedef struct _Config_Box  Config_Box;
-typedef struct _IBox        IBox;
-typedef struct _IBox_Box    IBox_Box;
-typedef struct _IBox_Icon   IBox_Icon;
+typedef struct _ITray        ITray;
+typedef struct _ITray_Box    ITray_Box;
+typedef struct _ITray_Tray   ITray_Tray;
 
-#define IBOX_WIDTH_AUTO -1
-#define IBOX_WIDTH_FIXED -2
+#define ITRAY_WIDTH_AUTO -1
+#define ITRAY_WIDTH_FIXED -2
 
 struct _Config
 {
    double        follow_speed;
    int           follower;
    double        autoscroll_speed;
-   int           iconsize;
-   int		 allow_overlap;
+   int           rowsize;
    int           width;
    Evas_List    *boxes;
+   int           allow_overlap;
 };
 
 struct _Config_Box
@@ -29,7 +29,7 @@ struct _Config_Box
    unsigned char enabled;
 };
 
-struct _IBox
+struct _ITray
 {
    Evas_List   *boxes;
    E_Menu      *config_menu;
@@ -38,9 +38,9 @@ struct _IBox
    E_Config_Dialog *config_dialog;
 };
 
-struct _IBox_Box
+struct _ITray_Box
 {
-   IBox        *ibox;
+   ITray        *itray;
    E_Container *con;
    Evas        *evas;
    E_Menu      *menu;
@@ -49,12 +49,6 @@ struct _IBox_Box
    Evas_Object *overlay_object;
    Evas_Object *item_object;
    Evas_Object *event_object;
-   
-   Evas_List   *icons;
-
-   Ecore_Event_Handler *ev_handler_border_iconify;
-   Ecore_Event_Handler *ev_handler_border_uniconify;
-   Ecore_Event_Handler *ev_handler_border_remove;
    
    double          align, align_req;
    double          follow, follow_req;
@@ -65,25 +59,22 @@ struct _IBox_Box
    struct {
 	Evas_Coord l, r, t, b;
    } box_inset;
-   struct {
-	Evas_Coord l, r, t, b;
-   } icon_inset;
 
    E_Gadman_Client *gmc;
 
+   ITray_Tray    *tray;
    Config_Box     *conf;
 };
 
-struct _IBox_Icon
+struct _ITray_Tray
 {
-   IBox_Box      *ibb;
-   E_Border      *border;
-   Evas_Object   *bg_object;
-   Evas_Object   *overlay_object;
-   Evas_Object   *icon_object;
-   Evas_Object   *event_object;
+   int			w, h;
+   int			icons, rows;
+   Evas_List		*wins;
+   Ecore_X_Window	win;
 
-   unsigned char  raise_on_hilight : 1;
+   Ecore_Event_Handler	*msg_handler;
+   Ecore_Event_Handler	*dst_handler;
 };
 
 EAPI extern E_Module_Api e_modapi;
@@ -95,6 +86,6 @@ EAPI int   e_modapi_info     (E_Module *m);
 EAPI int   e_modapi_about    (E_Module *m);
 EAPI int   e_modapi_config   (E_Module *m);
 
-void _ibox_box_cb_config_updated(void *data);
+void _itray_box_cb_config_updated(void *data);
 
 #endif

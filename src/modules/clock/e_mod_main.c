@@ -14,7 +14,7 @@ static Clock  *_clock_new();
 static void    _clock_shutdown(Clock *clock);
 static void    _clock_config_menu_new(Clock *clock);
 
-static Clock_Face *_clock_face_new(E_Container *con);
+static Clock_Face *_clock_face_new(Clock *clock, E_Container *con);
 static void    _clock_face_free(Clock_Face *face);
 /* static void    _clock_face_enable(Clock_Face *face); */
 static void    _clock_face_disable(Clock_Face *face);
@@ -23,6 +23,8 @@ static void    _clock_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gad
 static void    _clock_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void    _clock_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void    _clock_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
+
+static void    _clock_face_cb_update_policy(void *data);
 
 static int _clock_count;
 
@@ -137,13 +139,16 @@ _clock_new()
 #undef D
 #define T Config
 #define D conf_edd
+   E_CONFIG_VAL(D, T, allow_overlap, INT);
    E_CONFIG_LIST(D, T, faces, conf_face_edd);
 
    clock->conf = e_config_domain_load("module.clock", conf_edd);
    if (!clock->conf)
      {
 	clock->conf = E_NEW(Config, 1);
+	clock->conf->allow_overlap = 0;
      }
+   E_CONFIG_LIMIT(clock->conf->allow_overlap, 0, 1);
 
    _clock_config_menu_new(clock);
 
@@ -160,9 +165,10 @@ _clock_new()
 	     Clock_Face *face;
 
 	     con = l2->data;
-	     face = _clock_face_new(con);
+	     face = _clock_face_new(clock, con);
 	     if (face)
 	       {
+		  face->clock = clock;
 		  clock->faces = evas_list_append(clock->faces, face);
 		  /* Config */
 		  if (!cl)
@@ -228,11 +234,12 @@ _clock_config_menu_new(Clock *clock)
 }
 
 static Clock_Face *
-_clock_face_new(E_Container *con)
+_clock_face_new(Clock *clock, E_Container *con)
 {
    Clock_Face *face;
    Evas_Object *o;
    Evas_Coord x, y, w, h;
+   E_Gadman_Policy  policy;
 
    face = E_NEW(Clock_Face, 1);
    if (!face) return NULL;
@@ -266,12 +273,19 @@ _clock_face_new(E_Container *con)
 
    face->gmc = e_gadman_client_new(con->gadman);
    e_gadman_client_domain_set(face->gmc, "module.clock", _clock_count++);
-   e_gadman_client_policy_set(face->gmc,
-			      E_GADMAN_POLICY_ANYWHERE |
-			      E_GADMAN_POLICY_HMOVE |
-			      E_GADMAN_POLICY_VMOVE |
-			      E_GADMAN_POLICY_HSIZE |
-			      E_GADMAN_POLICY_VSIZE);
+
+   policy = E_GADMAN_POLICY_ANYWHERE |
+	    E_GADMAN_POLICY_HMOVE |
+	    E_GADMAN_POLICY_VMOVE |
+	    E_GADMAN_POLICY_HSIZE |
+	    E_GADMAN_POLICY_VSIZE;
+
+   if (clock->conf->allow_overlap == 0)
+     policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
+   else
+     policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
+
+   e_gadman_client_policy_set(face->gmc, policy);
    e_gadman_client_min_size_set(face->gmc, 4, 4);
    e_gadman_client_max_size_set(face->gmc, 512, 512);
    e_gadman_client_auto_size_set(face->gmc,
@@ -437,4 +451,28 @@ _clock_face_cb_config_updated(void *data)
    memset(buf, 0, sizeof(buf));
    snprintf(buf, sizeof(buf), "%i", face->conf->digitalStyle);
    edje_object_part_text_set(face->clock_object, "digitalStyle", buf);
+
+   _clock_face_cb_update_policy(face->clock);
+}
+
+static void _clock_face_cb_update_policy(void *data)
+{
+  Clock               *clock;
+  Clock_Face   *cf;
+  Evas_List   *l;
+  E_Gadman_Policy policy;
+
+  clock = data;
+  for (l = clock->faces; l; l = l->next)
+    {
+      cf = l->data;
+      policy = cf->gmc->policy;
+
+      if (clock->conf->allow_overlap ==0)
+        policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
+      else
+        policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
+
+      e_gadman_client_policy_set(cf->gmc , policy);
+    }
 }

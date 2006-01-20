@@ -22,6 +22,7 @@ struct _Config
    Evas_List *faces;
    char *sensor_name;
    Unit units;
+   int	allow_overlap;
 };
 
 struct _Config_Face

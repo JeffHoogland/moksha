@@ -20,6 +20,7 @@ struct _Config
 {
    double     poll_time;
    int        alarm;
+   int	      allow_overlap;
    Evas_List *faces;
 };
 

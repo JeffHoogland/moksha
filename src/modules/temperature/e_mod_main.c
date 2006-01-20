@@ -22,7 +22,7 @@ static void     _temperature_free(Temperature *e);
 static void     _temperature_config_menu_new(Temperature *e);
 static int      _temperature_cb_check(void *data);
 
-static Temperature_Face *_temperature_face_new(E_Container *con);
+static Temperature_Face *_temperature_face_new(Temperature *t, E_Container *con);
 static void     _temperature_face_free(Temperature_Face *ef);
 static void     _temperature_face_enable(Temperature_Face *face);
 static void     _temperature_face_disable(Temperature_Face *face);
@@ -32,6 +32,8 @@ static void     _temperature_face_cb_mouse_down(void *data, Evas *e, Evas_Object
 static void     _temperature_face_level_set(Temperature_Face *ef, double level);
 static void     _temperature_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void     _temperature_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
+
+static void	_temperature_cb_update_policy(void *data);
 
 static E_Config_DD *conf_edd;
 static E_Config_DD *conf_face_edd;
@@ -160,6 +162,7 @@ _temperature_new()
    E_CONFIG_LIST(D, T, faces, conf_face_edd);
    E_CONFIG_VAL(D, T, sensor_name, STR);
    E_CONFIG_VAL(D, T, units, INT);
+   E_CONFIG_VAL(D, T, allow_overlap, INT);
 
    e->conf = e_config_domain_load("module.temperature", conf_edd);
    if (!e->conf)
@@ -170,11 +173,13 @@ _temperature_new()
 	e->conf->high = 80;
 	e->conf->sensor_name = "temp1";
 	e->conf->units = CELCIUS;
+	e->conf->allow_overlap = 0;
      }
    E_CONFIG_LIMIT(e->conf->poll_time, 0.5, 1000.0);
    E_CONFIG_LIMIT(e->conf->low, 0, 100);
    E_CONFIG_LIMIT(e->conf->high, 0, 220);
    E_CONFIG_LIMIT(e->conf->units, CELCIUS, FAHRENHEIT);
+   E_CONFIG_LIMIT(e->conf->allow_overlap, 0, 1);
 
    _temperature_config_menu_new(e);
    e->have_temp = -1;
@@ -193,7 +198,7 @@ _temperature_new()
 	     Temperature_Face *ef;
 
 	     con = l2->data;
-	     ef = _temperature_face_new(con);
+	     ef = _temperature_face_new(e, con);
 	     if (ef)
 	       {
 		  ef->temp = e;
@@ -270,10 +275,11 @@ _temperature_config_menu_new(Temperature *e)
 }
 
 static Temperature_Face *
-_temperature_face_new(E_Container *con)
+_temperature_face_new(Temperature *t, E_Container *con)
 {
    Evas_Object *o;
    Temperature_Face *ef;
+   E_Gadman_Policy  policy;
 
    ef = E_NEW(Temperature_Face, 1);
    if (!ef) return NULL;
@@ -299,12 +305,19 @@ _temperature_face_new(E_Container *con)
 
    ef->gmc = e_gadman_client_new(ef->con->gadman);
    e_gadman_client_domain_set(ef->gmc, "module.temperature", temperature_count++);
-   e_gadman_client_policy_set(ef->gmc,
-			      E_GADMAN_POLICY_ANYWHERE |
-			      E_GADMAN_POLICY_HMOVE |
-			      E_GADMAN_POLICY_VMOVE |
-			      E_GADMAN_POLICY_HSIZE |
-			      E_GADMAN_POLICY_VSIZE);
+
+   policy = E_GADMAN_POLICY_ANYWHERE |
+	    E_GADMAN_POLICY_HMOVE |
+	    E_GADMAN_POLICY_VMOVE |
+	    E_GADMAN_POLICY_HSIZE |
+	    E_GADMAN_POLICY_VSIZE;
+
+   if (t->conf->allow_overlap == 0)
+     policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
+   else
+     policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
+
+   e_gadman_client_policy_set(ef->gmc, policy);
    e_gadman_client_min_size_set(ef->gmc, 4, 4);
    e_gadman_client_max_size_set(ef->gmc, 128, 128);
    e_gadman_client_auto_size_set(ef->gmc, 40, 40);
@@ -623,5 +636,28 @@ _temperature_face_cb_config_updated(Temperature *temp)
    /* Call all funcs needed to handle update */
    ecore_timer_del(temp->temperature_check_timer);
    temp->temperature_check_timer = ecore_timer_add(temp->conf->poll_time, _temperature_cb_check, temp);
+   _temperature_cb_update_policy(temp);
 }
 
+void
+_temperature_cb_update_policy(void *data)
+{
+  Temperature *temp;
+  Temperature_Face *tf;
+  Evas_List *l;
+  E_Gadman_Policy policy;
+
+  temp = data;
+  for (l = temp->faces; l; l = l->next)
+    {
+      tf = l->data;
+      policy = tf->gmc->policy;
+
+      if (temp->conf->allow_overlap == 0)
+	policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
+      else
+	policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
+
+      e_gadman_client_policy_set(tf->gmc, policy);
+    }
+}

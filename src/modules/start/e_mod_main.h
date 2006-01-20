@@ -9,6 +9,7 @@ typedef struct _Start_Face  Start_Face;
 struct _Config
 {
    Evas_List *faces;
+   int	     allow_overlap;
 };
 
 struct _Config_Face
@@ -29,6 +30,7 @@ struct _Start_Face
    E_Container *con;
    E_Menu      *menu;
    E_Menu      *main_menu;
+   Start       *start;
    
    Config_Face *conf;
    
@@ -46,5 +48,7 @@ EAPI int   e_modapi_save     (E_Module *m);
 EAPI int   e_modapi_info     (E_Module *m);
 EAPI int   e_modapi_about    (E_Module *m);
 /* EAPI int   e_modapi_config   (E_Module *module); */
+
+EAPI void  _start_cb_config_updated(void *data);
 
 #endif

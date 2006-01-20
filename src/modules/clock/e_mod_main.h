@@ -11,6 +11,7 @@ typedef struct _Clock_Face  Clock_Face;
 
 struct _Config
 {
+   int	      allow_overlap;
    Evas_List *faces;
 };
 
@@ -33,6 +34,7 @@ struct _Clock_Face
    E_Container *con;
    E_Menu      *menu;
    Config_Face *conf;
+   Clock       *clock;
    
    struct {
 	Evas_Coord l, r, t, b;
