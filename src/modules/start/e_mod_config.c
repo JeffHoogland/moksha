@@ -1,11 +1,11 @@
 #include "e.h"
 #include "e_mod_main.h"
+#include "e_mod_config.h"
 #include "config.h"
 
-typedef struct _cfdata CFData;
 typedef struct _Cfg_File_Data Cfg_File_Data;
 
-struct _cfdata 
+struct _E_Config_Dialog_Data 
 {
    int allow_overlap;
 };
@@ -17,11 +17,10 @@ struct _Cfg_File_Data
 };
 
 /* Protos */
-static Evas_Object *_create_widgets(E_Config_Dialog *cfd, Evas *evas, Config *cfdata);
 static void *_create_data(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd, CFData *cfdata);
-static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
-static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
+static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 
 void 
 _config_start_module(E_Container *con, Start *start)
@@ -40,31 +39,31 @@ _config_start_module(E_Container *con, Start *start)
 }
 
 static void 
-_fill_data(Start *s, CFData *cfdata) 
+_fill_data(Start *s, E_Config_Dialog_Data *cfdata) 
 {
    cfdata->allow_overlap = s->conf->allow_overlap;
 }
 
-static void 
-*_create_data(E_Config_Dialog *cfd) 
+static void *
+_create_data(E_Config_Dialog *cfd) 
 {
-   CFData *cfdata;
+   E_Config_Dialog_Data *cfdata;
    Start  *s;
    
    s = cfd->data;
-   cfdata = E_NEW(CFData, 1);
+   cfdata = E_NEW(E_Config_Dialog_Data, 1);
    _fill_data(s, cfdata);
    return cfdata;
 }
 
 static void 
-_free_data(E_Config_Dialog *cfd, CFData *cfdata) 
+_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    free(cfdata);
 }
 
-static Evas_Object 
-*_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
+static Evas_Object *
+_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob;
    Start *s;
@@ -82,7 +81,7 @@ static Evas_Object
 }
 
 static int 
-_basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
+_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    Start *s;
    

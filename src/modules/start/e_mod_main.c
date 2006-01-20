@@ -3,7 +3,8 @@
  */
 #include "e.h"
 #include "e_mod_main.h"
-#include "e_int_menus.h"
+#include "e_mod_config.h"
+//#include "e_int_menus.h"
 
 static Start *_start_new(void);
 static Start_Face *_start_face_new(Start *s, E_Container *con);
@@ -27,7 +28,7 @@ static E_Config_DD *conf_face_edd;
 EAPI E_Module_Api e_modapi = 
 {
    E_MODULE_API_VERSION,
-   "Start"
+     "Start"
 };
 
 EAPI void *
@@ -85,16 +86,18 @@ e_modapi_about(E_Module *m)
 int
 e_modapi_config(E_Module *m)
 {
-  Start *s;
-  Start_Face *face;
+   Start *s;
+   Start_Face *face;
 
-  s = m->data;
-  if (s == NULL) return 0;
-  if (s->faces == NULL) return 0;
-  face = s->faces->data;
-  if (face == NULL) return 0;
-  _config_start_module(e_container_current_get(e_manager_current_get()), s);
-  return 1;
+   s = m->data;
+   if (!s) return 0;
+   if (!s->faces) return 0;
+  
+   face = s->faces->data;
+   if (!face) return 0;
+   
+   _config_start_module(e_container_current_get(e_manager_current_get()), s);
+   return 1;
 }
 
 static Start *
@@ -126,8 +129,8 @@ _start_new(void)
    e->conf = e_config_domain_load("module.start", conf_edd);
    if (!e->conf)
      {
-       e->conf = E_NEW(Config, 1);
-       e->conf->allow_overlap = 0;
+	e->conf = E_NEW(Config, 1);
+	e->conf->allow_overlap = 0;
      }
    E_CONFIG_LIMIT(e->conf->allow_overlap, 0, 1);
    
@@ -224,7 +227,7 @@ _start_face_new(Start *s, E_Container *con)
            E_GADMAN_POLICY_VSIZE;
 
    if (s->conf->allow_overlap == 0)
-     policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
+     policy &= E_GADMAN_POLICY_ALLOW_OVERLAP;
    else
      policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
 
@@ -400,9 +403,11 @@ _start_menu_cb_post_deactivate(void *data, E_Menu *m)
    e_object_del(E_OBJECT(face->main_menu));
    face->main_menu = NULL;
 }
-void _start_cb_config_updated( void *data )
+
+void 
+_start_cb_config_updated(void *data)
 {
-  _start_cb_update_policy(data);
+   _start_cb_update_policy(data);
 }
 
 void
@@ -415,24 +420,25 @@ _start_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
    _config_start_module(face->con, face->start);
 }
 
-static void _start_cb_update_policy(void *data)
+static void 
+_start_cb_update_policy(void *data)
 {
-  Start     *s;
-  Start_Face *sf;
-  Evas_List   *l;
-  E_Gadman_Policy policy;
+   Start     *s;
+   Start_Face *sf;
+   Evas_List   *l;
+   E_Gadman_Policy policy;
 
-  s = data;
-  for (l = s->faces; l; l = l->next)
-    {
-      sf = l->data;
-      policy = sf->gmc->policy;
+   s = data;
+   for (l = s->faces; l; l = l->next)
+     {
+	sf = l->data;
+	policy = sf->gmc->policy;
 
-      if (s->conf->allow_overlap == 0)
-	 policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
-      else
-	 policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
-      e_gadman_client_policy_set(sf->gmc , policy);
-    }
+	if (s->conf->allow_overlap == 0)
+	  policy &= E_GADMAN_POLICY_ALLOW_OVERLAP;
+	else
+	  policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
+	e_gadman_client_policy_set(sf->gmc , policy);
+     }
 }
 
