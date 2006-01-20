@@ -187,7 +187,9 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	e_bg_del(z->container->num, -1, -1, -1);
 	e_bg_del(z->container->num, z->num, -1, -1);
 
-	if (e_config->desktop_default_background) evas_stringshare_del(e_config->desktop_default_background);
+	if (e_config->desktop_default_background) 
+	  evas_stringshare_del(e_config->desktop_default_background);
+	
 	if (!(cfdata->bg[0]))
 	  e_config->desktop_default_background = NULL;
 	else
@@ -201,8 +203,9 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	e_bg_del(-1, z->num, x, y);
 	e_bg_del(z->container->num, -1, x, y);
 	e_bg_del(z->container->num, z->num, x, y);
-	if (!(cfdata->bg[0]))
-	  e_bg_add(z->container->num, z->num, x, y, cfdata->bg);
+	if (!(cfdata->bg[0])) 
+	  e_bg_add(z->container->num, z->num, x, y, cfdata->bg);	
+	
 	e_bg_update();
         e_config_save_queue();
 	break;
@@ -214,8 +217,9 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     cfbg = e_config->desktop_backgrounds->data;
 	     e_bg_del(cfbg->container, cfbg->zone, cfbg->desk_x, cfbg->desk_y);
 	  }
-	if (!(cfdata->bg[0]))
+	if (!(cfdata->bg[0])) 
 	  e_bg_add(-1, -1, -1, -1, cfdata->bg);
+
 	e_bg_update();
         e_config_save_queue();
 	break;
@@ -248,7 +252,6 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
    if (edje_object_file_set(o, f, "desktop/background"))
      {
 	Evas_Object *o = NULL;
-	char b[4096];
 
 	if (!e_thumb_exists(c))
 	  o = e_thumb_generate_begin(c, 48, 48, cfd->dia->win->evas, &o, NULL, NULL);
@@ -258,9 +261,8 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
 	e_widget_ilist_append(il, o, _("Theme Background"), _ilist_cb_bg_selected, cfd, "");
      }
    if (!e_config->desktop_default_background)
-     {
-	e_widget_ilist_selected_set(il, 0);
-     }
+     e_widget_ilist_selected_set(il, 0);
+   
    im = e_widget_image_add_from_object(cfd->dia->win->evas, bg_obj, 320, 240);
    e_widget_image_object_set(im,  e_thumb_evas_object_get(c, cfd->dia->win->evas, 320, 240, 1));
 
