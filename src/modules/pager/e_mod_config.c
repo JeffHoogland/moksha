@@ -131,7 +131,6 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    Pager *p;
    
    p = cfd->data;
-   e_border_button_bindings_ungrab_all();
    p->conf->popup = cfdata->show_popup;
    
    p->conf->deskname_pos = cfdata->name_pos;
@@ -142,7 +141,6 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    else if (!cfdata->allow_overlap && p->conf->allow_overlap)
      p->conf->allow_overlap = 0;
 
-   e_border_button_bindings_grab_all();
    e_config_save_queue();
    
    _pager_cb_config_updated(p);
