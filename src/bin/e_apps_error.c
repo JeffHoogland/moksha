@@ -55,7 +55,7 @@ _e_app_error_dialog_fill_data(E_App_Autopsy *app, E_Config_Dialog_Data *cfdata)
       {
          cfdata->exit = malloc((length + 64) * sizeof(char));
          if (cfdata->exit)
-            sprintf(cfdata->exit, "An exit code of %i was return from %s", app->del.exit_code, app->app->exe);
+            sprintf(cfdata->exit, "An exit code of %i was returned from %s", app->del.exit_code, app->app->exe);
       }
    if ((app->del.signalled) && (!cfdata->signal))
       {
