@@ -32,10 +32,13 @@ e_config_dialog_new(E_Container *con, char *title, char *icon, int icon_size, E_
 	cfd->icon_size = icon_size;
      }
    cfd->data = data;
-   cfd->hide_buttons = 0;
-   
+   cfd->hide_buttons = 1;
+
+   if ((cfd->view.basic.apply_cfdata) || (cfd->view.advanced.apply_cfdata))
+      cfd->hide_buttons = 0;
+
    _e_config_dialog_go(cfd, E_CONFIG_DIALOG_CFDATA_TYPE_BASIC);
-   
+
    return cfd;
 }
 
@@ -85,7 +88,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 	     ob = cfd->view.basic.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
 	     e_widget_list_object_append(o, ob, 1, 1, 0.0);
 	     ob = e_widget_button_add(e_win_evas_get(cfd->dia->win),
-				      _("Advanced Settings"), "widget/new_dialog",
+				      _("Advanced"), "widget/new_dialog",
 				      _e_config_dialog_cb_advanced, cfd, NULL);
 	     e_widget_list_object_append(o, ob, 0, 0, 1.0);
 	  }
@@ -100,7 +103,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 	     ob = cfd->view.advanced.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
 	     e_widget_list_object_append(o, ob, 1, 1, 0.0);
 	     ob = e_widget_button_add(e_win_evas_get(cfd->dia->win), 
-				      _("Basic Settings"), "widget/new_dialog",
+				      _("Basic"), "widget/new_dialog",
 				      _e_config_dialog_cb_basic, cfd, NULL);
 	     e_widget_list_object_append(o, ob, 0, 0, 1.0);
 	  }
@@ -170,9 +173,15 @@ _e_config_dialog_cb_ok(void *data, E_Dialog *dia)
    
    cfd = dia->data;
    if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
-     ok = cfd->view.basic.apply_cfdata(cfd, cfd->cfdata);
+      {
+         if (cfd->view.basic.apply_cfdata)
+            ok = cfd->view.basic.apply_cfdata(cfd, cfd->cfdata);
+      }
    else
-     ok = cfd->view.advanced.apply_cfdata(cfd, cfd->cfdata);
+      {
+         if (cfd->view.advanced.apply_cfdata)
+            ok = cfd->view.advanced.apply_cfdata(cfd, cfd->cfdata);
+      }
    if (ok) e_object_del(E_OBJECT(cfd));
 }
 
@@ -184,10 +193,16 @@ _e_config_dialog_cb_apply(void *data, E_Dialog *dia)
 
    cfd = dia->data;
    if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
-     ok = cfd->view.basic.apply_cfdata(cfd, cfd->cfdata);
+      {
+         if (cfd->view.basic.apply_cfdata)
+            ok = cfd->view.basic.apply_cfdata(cfd, cfd->cfdata);
+      }
    else
-     ok = cfd->view.advanced.apply_cfdata(cfd, cfd->cfdata);
-   if (ok)
+      {
+         if (cfd->view.advanced.apply_cfdata)
+            ok = cfd->view.advanced.apply_cfdata(cfd, cfd->cfdata);
+      }
+   if ((ok) && (!cfd->hide_buttons))
      {
 	e_dialog_button_disable_num_set(cfd->dia, 0, 1);
 	e_dialog_button_disable_num_set(cfd->dia, 1, 1);
@@ -218,6 +233,9 @@ _e_config_dialog_cb_changed(void *data, Evas_Object *obj)
    E_Config_Dialog *cfd;
    
    cfd = data;
-   e_dialog_button_disable_num_set(cfd->dia, 0, 0);
-   e_dialog_button_disable_num_set(cfd->dia, 1, 0);
+   if (!cfd->hide_buttons)
+      {
+         e_dialog_button_disable_num_set(cfd->dia, 0, 0);
+         e_dialog_button_disable_num_set(cfd->dia, 1, 0);
+      }
 }
