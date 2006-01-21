@@ -12,6 +12,7 @@ static void _e_config_dialog_cb_apply(void *data, E_Dialog *dia);
 static void _e_config_dialog_cb_advanced(void *data, void *data2);
 static void _e_config_dialog_cb_basic(void *data, void *data2);
 static void _e_config_dialog_cb_changed(void *data, Evas_Object *obj);
+static void _e_config_dialog_cb_close(void *data, E_Dialog *dia);
 
 /* local subsystem globals */
 
@@ -22,8 +23,16 @@ e_config_dialog_new(E_Container *con, char *title, char *icon, int icon_size, E_
 {
    E_Config_Dialog *cfd;
    
+
    cfd = E_OBJECT_ALLOC(E_Config_Dialog, E_CONFIG_DIALOG_TYPE, _e_config_dialog_free);
    cfd->view = *view;
+   /* Seems that every user of this allocates view it on the stack and doesn't clear it, 
+    * so I can't rely on this being NULL.  I currently set it to NULL in e_config_dialog_new()
+    * and if you want to use it, set it in create_widgets();
+    * I suspect that allocating a structure on the stack that lives beyond the function 
+    * call is just asking for trouble.
+    */
+   cfd->view.close_cfdata = NULL;
    cfd->con = con;
    cfd->title = evas_stringshare_add(title);
    if (icon)
@@ -122,7 +131,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 	e_dialog_button_disable_num_set(cfd->dia, 0, 1);
 	e_dialog_button_disable_num_set(cfd->dia, 1, 1);
      }
-   e_dialog_button_add(cfd->dia, _("Close"), NULL, NULL, NULL);
+   e_dialog_button_add(cfd->dia, _("Close"), NULL, _e_config_dialog_cb_close, cfd);
    if (!pdia)
      {
 	e_win_centered_set(cfd->dia->win, 1);
@@ -238,4 +247,18 @@ _e_config_dialog_cb_changed(void *data, Evas_Object *obj)
          e_dialog_button_disable_num_set(cfd->dia, 0, 0);
          e_dialog_button_disable_num_set(cfd->dia, 1, 0);
       }
+}
+
+static void
+_e_config_dialog_cb_close(void *data, E_Dialog *dia)
+{
+   E_Config_Dialog *cfd;
+   int ok = 1;
+
+   cfd = dia->data;
+   if (cfd->view.close_cfdata)
+      ok = cfd->view.close_cfdata(cfd, cfd->cfdata);
+
+   if (ok)
+      e_object_del(E_OBJECT(dia));
 }
