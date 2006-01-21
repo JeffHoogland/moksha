@@ -33,7 +33,7 @@ _e_app_error_dialog(E_Container *con, E_App_Autopsy *app)
    v.advanced.create_widgets = _e_app_error_dialog_advanced_create_widgets;
 
    /* Create The Dialog */
-   cfd = e_config_dialog_new(con, _("Run error"), NULL, 0, &v, app);
+   cfd = e_config_dialog_new(con, _("Run error, wtf?  That sux."), NULL, 0, &v, app);
    app->error_dialog = cfd;
 }
 
