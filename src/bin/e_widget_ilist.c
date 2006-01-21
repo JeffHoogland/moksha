@@ -22,6 +22,7 @@ static void _e_wid_del_hook(Evas_Object *obj);
 static void _e_wid_focus_hook(Evas_Object *obj);
 static void _e_wid_cb_scrollframe_resize(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_wid_cb_item_sel(void *data, void *data2);
+static void _e_wid_cb_item_hilight(void *data, void *data2);
 static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
 /* externally accessible functions */
@@ -73,7 +74,7 @@ e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, void (*f
    wcb->data = data;
    if (val) wcb->value = strdup(val);
    wd->callbacks = evas_list_append(wd->callbacks, wcb);
-   e_ilist_append(wd->o_ilist, icon, label, _e_wid_cb_item_sel, wd, wcb);
+   e_ilist_append(wd->o_ilist, icon, label, _e_wid_cb_item_sel, _e_wid_cb_item_hilight, wd, wcb);
    if (icon) evas_object_show(icon);
    e_ilist_min_size_get(wd->o_ilist, &mw, &mh);
    evas_object_resize(wd->o_ilist, mw, mh);
@@ -225,6 +226,19 @@ _e_wid_cb_item_sel(void *data, void *data2)
 	  }
 	if (wcb->func) wcb->func(wcb->data);
      }
+}
+
+static void
+_e_wid_cb_item_hilight(void *data, void *data2)
+{
+   E_Widget_Data *wd;
+   Evas_Coord x, y, w, h;
+   E_Widget_Callback *wcb;
+   
+   wd = data;
+   wcb = data2;
+   e_ilist_selected_geometry_get(wd->o_ilist, &x, &y, &w, &h);
+   e_scrollframe_child_region_show(wd->o_scrollframe, x, y, w, h);
 }
 
 static void

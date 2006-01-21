@@ -27,6 +27,7 @@ struct _E_Smart_Item
    Evas_Object   *base_obj;
    Evas_Object   *icon_obj;
    void         (*func) (void *data, void *data2);
+   void         (*func_hilight) (void *data, void *data2);
    void          *data;
    void          *data2;
 };
@@ -91,7 +92,7 @@ e_ilist_icon_size_set(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 }
 
 EAPI void
-e_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label,  void (*func) (void *data, void *data2), void *data, void *data2)
+e_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, void (*func) (void *data, void *data2), void (*func_hilight) (void *data, void *data2), void *data, void *data2)
 {
    E_Smart_Item *si;
    Evas_Coord mw = 0, mh = 0;
@@ -114,7 +115,8 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label,  void (*func) (
 	edje_object_part_swallow(si->base_obj, "icon_swallow", si->icon_obj);
 	evas_object_show(si->icon_obj);
      }
-   si->func = func;
+   si->func = func; 
+   si->func_hilight = func_hilight;
    si->data = data;
    si->data2 = data2;
    sd->items = evas_list_append(sd->items, si);
@@ -151,6 +153,7 @@ e_ilist_selected_set(Evas_Object *obj, int n)
      {
 	evas_object_raise(si->base_obj);
 	edje_object_signal_emit(si->base_obj, "active", "");
+	if (si->func_hilight) si->func_hilight(si->data, si->data2);
 	if (!sd->selector)
 	  {
 	     if (si->func) si->func(si->data, si->data2);
