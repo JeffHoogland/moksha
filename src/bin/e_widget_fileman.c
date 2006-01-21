@@ -79,8 +79,8 @@ _e_wid_fileman_hilited_cb(Evas_Object *obj, char *file, void *data)
 
 
    if (wd->hilite_func)
-     wd->hilite_func(wd->wid, file, wd->select_data);
-
+     wd->hilite_func(wd->wid, file, wd->hilite_data);
+     
    printf("e_widget_fileman (hilited): %s\n", file);
 }
 
