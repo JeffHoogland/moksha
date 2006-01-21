@@ -13,6 +13,9 @@
  * - clean up the add app functions. To much similar code.
  */
 
+extern void _e_app_error_dialog(E_Container *con, E_App_Autopsy *app);
+
+
 /* local subsystem functions */
 typedef struct _E_App_Change_Info E_App_Change_Info;
 typedef struct _E_App_Callback    E_App_Callback;
@@ -417,7 +420,8 @@ e_app_exec(E_App *a, int launch_id)
     * the eapp file */
    inst = E_NEW(E_App_Instance, 1);
    if (!inst) return 0;
-   exe = ecore_exe_run(a->exe, inst);
+   /* We want the stdout and stderr as lines for the error dialog if it exits abnormally. */
+   exe = ecore_exe_pipe_run(a->exe, ECORE_EXE_PIPE_AUTO| ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR | ECORE_EXE_PIPE_READ_LINE_BUFFERED | ECORE_EXE_PIPE_ERROR_LINE_BUFFERED, inst);
    if (!exe)
      {
 	free(inst);
@@ -429,6 +433,8 @@ e_app_exec(E_App *a, int launch_id)
 			    a->exe);
 	return 0;
      }
+   /* 20 lines at start and end, 20x100 limit on bytes at each end. */
+   ecore_exe_auto_limits_set(exe, 2000, 2000, 20, 20);
    ecore_exe_tag_set(exe, "E/app");
    inst->app = a;
    inst->exe = exe;
@@ -1854,13 +1860,25 @@ _e_apps_cb_exit(void *data, int type, void *event)
    a = ai->app;
    if (!a) return 1;
 
-   /* FIXME: maybe we could capture stdout/stderr and display it here? */
-   if (ev->exit_code == 127) /* /bin/sh uses this if cmd not found */
-     e_error_dialog_show(_("Run Error"),
-			 _("Enlightenment was unable to run the program:\n"
-			   "\n"
-			   "%s\n"),
-			 a->exe);
+   if ( (ev->exited) && (ev->exit_code == 127) ) /* /bin/sh uses this if cmd not found */
+     {
+        e_error_dialog_show(_("Run Error"),
+			    _("Enlightenment was unable to run the program:\n"
+			      "\n"
+			      "%s\n"),
+			    a->exe);
+      }
+   else if ( ! ((ev->exited) && (ev->exit_code == EXIT_SUCCESS)) )   /* Let's hope that everyhing returns this properly. */
+      {   /* Show the error dialog with details from the exe. */
+         E_App_Autopsy *aut;
+
+         aut = E_NEW(E_App_Autopsy, 1);
+	 aut->app = a;
+         aut->del = *ev;
+         aut->read = ecore_exe_event_data_get(ai->exe, ECORE_FD_READ);
+         aut->error = ecore_exe_event_data_get(ai->exe, ECORE_FD_ERROR);
+         _e_app_error_dialog(NULL, aut);
+      }
    if (ai->expire_timer) ecore_timer_del(ai->expire_timer);
    free(ai);
    a->instances = evas_list_remove(a->instances, ai);

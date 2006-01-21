@@ -208,6 +208,7 @@ e_widget_table.c \
 e_widget_entry.c \
 e_widget_image.c \
 e_config_dialog.c \
+e_apps_error.c \
 e_int_config_focus.c \
 e_icon_grid.c \
 e_icon_canvas.c \

@@ -17,6 +17,7 @@ typedef enum _E_App_Change
 
 typedef struct _E_App          E_App;
 typedef struct _E_App_Instance E_App_Instance;
+typedef struct _E_App_Autopsy  E_App_Autopsy;
 
 #else
 #ifndef E_APPS_H
@@ -74,6 +75,15 @@ struct _E_App_Instance
    int          launch_id;
    double       launch_time;
    Ecore_Timer *expire_timer;
+};
+
+struct _E_App_Autopsy
+{
+   E_App       *app;
+
+   Ecore_Exe_Event_Del del;
+   E_Config_Dialog *error_dialog;   
+   Ecore_Exe_Event_Data *error, *read;
 };
 
 EAPI int         e_app_init                              (void);
