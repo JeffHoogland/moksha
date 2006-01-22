@@ -453,10 +453,17 @@ _bg_file_added(void *data, Ecore_File_Monitor *monitor, Ecore_File_Event event, 
 static int
 _bg_dialog_close(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {   
+   E_Dialog *dia;
+   E_Border *bd;
+   
    if (!cfd) return 0;
    if (!cfdata) return 0;
    if (!cfdata->import) return 1;
    if (!cfdata->import->dia) return 1;
+   
+   dia = cfdata->import->dia;
+   bd = e_border_find_by_window(dia->win->evas_win);
+   if (!bd) return 1;
    
    e_object_del(E_OBJECT(cfdata->import->dia));   
    return 1;
