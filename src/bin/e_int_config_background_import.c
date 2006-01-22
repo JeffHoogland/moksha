@@ -83,8 +83,6 @@ static void        *_create_data               (E_Config_Dialog *cfd);
 static void         _free_data                 (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int          _basic_apply_data          (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets      (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int          _advanced_apply_data       (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_advanced_create_widgets   (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void         _fill_data                 (E_Config_Dialog_Data *cfdata);
 static void         _efm_hilite_cb             (Evas_Object *obj, char *file, void *data);
 static void         _bg_edj_gen                (Evas *evas, char *filename, int method);
@@ -144,7 +142,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (!cfdata->file[0]) return 0;
 
    f = e_fm_file_new(cfdata->file);
-   if (!f) return;
+   if (!f) return 0;
       
    if (!e_fm_file_is_image(f)) return 0;
    free(f);
@@ -157,88 +155,32 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_Object *o, *ot, *of, *ofm;
+   Evas_Object *o, *of, *ofm, *ol;
    E_Dialog *dia;
    E_Radio_Group *rg;
    
    _fill_data(cfdata);
    
    dia = cfd->dia;
-   
-   ot = e_widget_table_add(evas, 0);
-   
-   of = e_widget_framelist_add(evas, _("Image To Import"), 0);
 
+   ol = e_widget_list_add(evas, 0, 0);
+   of = e_widget_framelist_add(evas, _("Image To Import"), 0);   
    ofm = e_widget_fileman_add(evas, (&(cfdata->file)));
    e_widget_fileman_hilite_callback_add(ofm, _efm_hilite_cb, dia);
+   e_widget_framelist_object_append(of, ofm);   
+   e_widget_list_object_append(ol, of, 1, 1, 0.5);
    
-   e_widget_framelist_object_append(of, ofm);
-   e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
-
-   of = e_widget_framelist_add(evas, _("Options"), 0);
+   of = e_widget_frametable_add(evas, _("Options"), 0);
    rg = e_widget_radio_group_new(&cfdata->method);
    o = e_widget_radio_add(evas, _("Center"), E_BG_CENTER, rg);
-   e_widget_framelist_object_append(of, o);
+   e_widget_frametable_object_append(of, o, 0, 0, 1, 1, 1, 0, 1, 0);
    o = e_widget_radio_add(evas, _("Scale"), E_BG_SCALE, rg);
-   e_widget_framelist_object_append(of, o);
+   e_widget_frametable_object_append(of, o, 0, 1, 1, 1, 1, 0, 1, 0);
    o = e_widget_radio_add(evas, _("Tile"), E_BG_TILE, rg);
-   e_widget_framelist_object_append(of, o);
-   e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 0, 1, 0);
-   
-   return ot;
-}
+   e_widget_frametable_object_append(of, o, 0, 2, 1, 1, 1, 0, 1, 0);
 
-static int 
-_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
-{
-   E_Fm_File *f;
-   Evas *evas;
-   
-   if (!cfdata->file[0]) return 0;
-
-   f = e_fm_file_new(cfdata->file);
-   if (!f) return;
-      
-   if (!e_fm_file_is_image(f)) return 0;
-   free(f);
-   
-   evas = e_win_evas_get(cfd->dia->win);
-   _bg_edj_gen(evas, cfdata->file, cfdata->method);
-   return 1;
-}
-
-static Evas_Object *
-_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
-{
-   Evas_Object *o, *ot, *of, *ofm;
-   E_Dialog *dia;
-   E_Radio_Group *rg;
-   
-   _fill_data(cfdata);
-   
-   dia = cfd->dia;
-   
-   ot = e_widget_table_add(evas, 0);
-   
-   of = e_widget_framelist_add(evas, _("Image To Import"), 0);
-
-   ofm = e_widget_fileman_add(evas, (&(cfdata->file)));
-   e_widget_fileman_hilite_callback_add(ofm, _efm_hilite_cb, dia);
-   
-   e_widget_framelist_object_append(of, ofm);
-   e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
-   
-   of = e_widget_framelist_add(evas, _("Options"), 0);
-   rg = e_widget_radio_group_new(&cfdata->method);
-   o = e_widget_radio_add(evas, _("Center"), E_BG_CENTER, rg);
-   e_widget_framelist_object_append(of, o);
-   o = e_widget_radio_add(evas, _("Scale"), E_BG_SCALE, rg);
-   e_widget_framelist_object_append(of, o);
-   o = e_widget_radio_add(evas, _("Tile"), E_BG_TILE, rg);
-   e_widget_framelist_object_append(of, o);
-   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 0, 1, 0);
-   
-   return ot;
+   e_widget_list_object_append(ol, of, 1, 1, 0.5);
+   return ol;
 }
 
 static void
@@ -272,7 +214,7 @@ _bg_edj_gen(Evas *evas, char *filename, int method)
 {
    Evas_Object *img;
    int fd = 0;
-   int w, h, ret;
+   int w, h;
    const char *file;
    char buff[4096], cmd[4096];
    char ipart[512];

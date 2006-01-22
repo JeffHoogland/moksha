@@ -456,10 +456,8 @@ _bg_dialog_close(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (!cfd) return 0;
    if (!cfdata) return 0;
    if (!cfdata->import) return 1;
-   if (!cfdata->import->dia) return 0;
+   if (!cfdata->import->dia) return 1;
    
-   e_object_del_attach_func_set(E_OBJECT(cfd->dia), NULL);
-   e_object_del(E_OBJECT(cfdata->import->dia));
-   
+   e_object_del(E_OBJECT(cfdata->import->dia));   
    return 1;
 }
