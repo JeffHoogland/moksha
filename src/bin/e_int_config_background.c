@@ -434,7 +434,6 @@ _bg_file_added(void *data, Ecore_File_Monitor *monitor, Ecore_File_Event event, 
    file = (char *)ecore_file_get_file((char *)path);
    if (event == ECORE_FILE_EVENT_CREATED_FILE) 
      {
-	printf("File Added: %s\n", path);
 	if (e_util_edje_collection_exists((char *)path, "desktop/background")) 
 	  {
 	     if (!e_thumb_exists((char *)path))

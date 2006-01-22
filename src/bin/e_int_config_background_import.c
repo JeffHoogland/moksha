@@ -4,13 +4,6 @@
 #define E_BG_TILE 1
 #define E_BG_CENTER 2
 
-/* TODO:
- *      Currently the bg config dialog needs to be reloaded in order
- *      to display new images created from here.
- *
- *      If you close the bg config dialog, before closing this then SEGV.
-*/
-
 /* Personally I hate having to define this twice, but Tileing needs a fill */
 #define IMG_EDC_TMPL_TILE \
 "images {\n" \
@@ -116,8 +109,8 @@ e_int_config_background_import(E_Config_Dialog *parent)
    v->free_cfdata             = _free_data;
    v->basic.apply_cfdata      = _basic_apply_data;
    v->basic.create_widgets    = _basic_create_widgets;
-   v->advanced.apply_cfdata   = NULL; //_advanced_apply_data;
-   v->advanced.create_widgets = NULL;//_advanced_create_widgets;
+   v->advanced.apply_cfdata   = NULL;
+   v->advanced.create_widgets = NULL;
    
    cfd = e_config_dialog_new(parent->con, _("Import An Image"), NULL, 0, v, NULL);
    ecore_x_icccm_transient_for_set(cfd->dia->win->evas_win, parent->dia->win->evas_win);
