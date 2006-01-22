@@ -33,17 +33,19 @@ EAPI E_Config_Dialog *
 e_int_config_theme(E_Container *con)
 {
    E_Config_Dialog *cfd;
-   E_Config_Dialog_View v;
+   E_Config_Dialog_View *v;
+   
+   v = E_NEW(E_Config_Dialog_View, 1);
    
    /* methods */
-   v.create_cfdata           = _create_data;
-   v.free_cfdata             = _free_data;
-   v.basic.apply_cfdata      = _basic_apply_data;
-   v.basic.create_widgets    = _basic_create_widgets;
-   v.advanced.apply_cfdata   = NULL;
-   v.advanced.create_widgets = NULL; 
+   v->create_cfdata           = _create_data;
+   v->free_cfdata             = _free_data;
+   v->basic.apply_cfdata      = _basic_apply_data;
+   v->basic.create_widgets    = _basic_create_widgets;
+   v->advanced.apply_cfdata   = NULL;
+   v->advanced.create_widgets = NULL; 
    /* create config diaolg for NULL object/data */
-   cfd = e_config_dialog_new(con, _("Theme Selector"), NULL, 0, &v, NULL);
+   cfd = e_config_dialog_new(con, _("Theme Selector"), NULL, 0, v, NULL);
    return cfd;
 }
 

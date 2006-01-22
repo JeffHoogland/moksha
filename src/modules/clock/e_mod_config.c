@@ -27,18 +27,20 @@ void
 _config_clock_module(E_Container *con, Clock_Face *c) 
 {
    E_Config_Dialog *cfd;
-   E_Config_Dialog_View v;
+   E_Config_Dialog_View *v;
+   
+   v = E_NEW(E_Config_Dialog_View, 1);
    
    /* Dialog Methods */
-   v.create_cfdata = _create_data;
-   v.free_cfdata = _free_data;
-   v.basic.apply_cfdata = _basic_apply_data;
-   v.basic.create_widgets = _basic_create_widgets;
-   v.advanced.apply_cfdata = NULL;
-   v.advanced.create_widgets = NULL;
+   v->create_cfdata = _create_data;
+   v->free_cfdata = _free_data;
+   v->basic.apply_cfdata = _basic_apply_data;
+   v->basic.create_widgets = _basic_create_widgets;
+   v->advanced.apply_cfdata = NULL;
+   v->advanced.create_widgets = NULL;
 
    /* Create The Dialog */
-   cfd = e_config_dialog_new(con, _("Clock Configuration"), NULL, 0, &v, c);   
+   cfd = e_config_dialog_new(con, _("Clock Configuration"), NULL, 0, v, c);   
    c->config_dialog = cfd;
 }
 

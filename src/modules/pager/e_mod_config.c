@@ -32,16 +32,18 @@ void
 _config_pager_module(E_Container *con, Pager *pager)
 {
    E_Config_Dialog *cfd;
-   E_Config_Dialog_View v;
+   E_Config_Dialog_View *v;
    
-   v.create_cfdata = _create_data;
-   v.free_cfdata = _free_data;
-   v.basic.apply_cfdata = _basic_apply_data;
-   v.basic.create_widgets = _basic_create_widgets;
-   v.advanced.apply_cfdata = _advanced_apply_data;
-   v.advanced.create_widgets = _advanced_create_widgets;
+   v = E_NEW(E_Config_Dialog_View, 1);
    
-   cfd = e_config_dialog_new(con, _("Pager Configuration"), NULL, 0, &v, pager);
+   v->create_cfdata = _create_data;
+   v->free_cfdata = _free_data;
+   v->basic.apply_cfdata = _basic_apply_data;
+   v->basic.create_widgets = _basic_create_widgets;
+   v->advanced.apply_cfdata = _advanced_apply_data;
+   v->advanced.create_widgets = _advanced_create_widgets;
+   
+   cfd = e_config_dialog_new(con, _("Pager Configuration"), NULL, 0, v, pager);
    pager->config_dialog = cfd;
 }
 
