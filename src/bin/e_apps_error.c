@@ -24,18 +24,19 @@ _e_app_error_dialog(E_Container *con, E_App_Autopsy *app)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   v = E_NEW(E_Config_Dialog_View, 1);  /* FIXME: Currenly this never gets free'd, awaiting the outcome of mailing list discussion. */
-   /* Dialog Methods */
-   v->create_cfdata = _e_app_error_dialog_create_data;
-   v->free_cfdata = _e_app_error_dialog_free_data;
-//   v->basic.apply_cfdata = NULL;
-   v->basic.create_widgets = _e_app_error_dialog_basic_create_widgets;
-//   v->advanced.apply_cfdata = NULL;
-   v->advanced.create_widgets = _e_app_error_dialog_advanced_create_widgets;
+   v = E_NEW(E_Config_Dialog_View, 1);  /* This gets freed by e_config_dialog. */
+   if (v)
+      {
+         /* Dialog Methods */
+         v->create_cfdata = _e_app_error_dialog_create_data;
+         v->free_cfdata = _e_app_error_dialog_free_data;
+         v->basic.create_widgets = _e_app_error_dialog_basic_create_widgets;
+         v->advanced.create_widgets = _e_app_error_dialog_advanced_create_widgets;
 
-   /* Create The Dialog */
-   cfd = e_config_dialog_new(con, _("Run error, wtf?  That sux."), NULL, 0, v, app);
-   app->error_dialog = cfd;
+         /* Create The Dialog */
+         cfd = e_config_dialog_new(con, _("Run error, wtf?  That sux."), NULL, 0, v, app);
+         app->error_dialog = cfd;
+      }
 }
 
 static void 

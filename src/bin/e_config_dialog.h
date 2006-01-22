@@ -23,10 +23,6 @@ struct _E_Config_Dialog_View
 {
    void           *(*create_cfdata)     (E_Config_Dialog *cfd);
    void            (*free_cfdata)       (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-   /* Seems that every user of this structure allocates it on the stack and doesn't clear it, 
-    * so I can't rely on this being NULL.  I currently set it to NULL in e_config_dialog_new()
-    * and if you want to use it, set it in create_widgets();
-    */
    int             (*close_cfdata)      (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
    struct {
       int          (*apply_cfdata)      (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -39,7 +35,7 @@ struct _E_Config_Dialog
    E_Object                     e_obj_inherit;
    
    E_Config_Dialog_CFData_Type  view_type;
-   E_Config_Dialog_View         view;
+   E_Config_Dialog_View        *view;
    E_Config_Dialog_Data        *cfdata;
    E_Container                 *con;
    char                        *title;

@@ -25,14 +25,7 @@ e_config_dialog_new(E_Container *con, char *title, char *icon, int icon_size, E_
    
 
    cfd = E_OBJECT_ALLOC(E_Config_Dialog, E_CONFIG_DIALOG_TYPE, _e_config_dialog_free);
-   cfd->view = *view;
-   /* Seems that every user of this allocates view it on the stack and doesn't clear it, 
-    * so I can't rely on this being NULL.  I currently set it to NULL in e_config_dialog_new()
-    * and if you want to use it, set it in create_widgets();
-    * I suspect that allocating a structure on the stack that lives beyond the function 
-    * call is just asking for trouble.
-    */
-   cfd->view.close_cfdata = NULL;
+   cfd->view = view;
    cfd->con = con;
    cfd->title = evas_stringshare_add(title);
    if (icon)
@@ -43,7 +36,7 @@ e_config_dialog_new(E_Container *con, char *title, char *icon, int icon_size, E_
    cfd->data = data;
    cfd->hide_buttons = 1;
 
-   if ((cfd->view.basic.apply_cfdata) || (cfd->view.advanced.apply_cfdata))
+   if ((cfd->view->basic.apply_cfdata) || (cfd->view->advanced.apply_cfdata))
       cfd->hide_buttons = 0;
 
    _e_config_dialog_go(cfd, E_CONFIG_DIALOG_CFDATA_TYPE_BASIC);
@@ -60,7 +53,7 @@ _e_config_dialog_free(E_Config_Dialog *cfd)
    if (cfd->icon) evas_stringshare_del(cfd->icon);
    if (cfd->cfdata)
      {
-	cfd->view.free_cfdata(cfd, cfd->cfdata);
+	cfd->view->free_cfdata(cfd, cfd->cfdata);
 	cfd->cfdata = NULL;
      }
    if (cfd->dia)
@@ -69,6 +62,7 @@ _e_config_dialog_free(E_Config_Dialog *cfd)
 	e_object_del(E_OBJECT(cfd->dia));
 	cfd->dia = NULL;
      }
+   E_FREE(cfd->view);
    free(cfd);
 }
 
@@ -87,14 +81,14 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    e_dialog_title_set(cfd->dia, cfd->title);
    if (cfd->icon) e_dialog_icon_set(cfd->dia, cfd->icon, cfd->icon_size);
    
-   if (!cfd->cfdata) cfd->cfdata = cfd->view.create_cfdata(cfd);
+   if (!cfd->cfdata) cfd->cfdata = cfd->view->create_cfdata(cfd);
    
    if (type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
      {
-	if (cfd->view.advanced.create_widgets)
+	if (cfd->view->advanced.create_widgets)
 	  {
 	     o = e_widget_list_add(e_win_evas_get(cfd->dia->win), 0, 0);
-	     ob = cfd->view.basic.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
+	     ob = cfd->view->basic.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
 	     e_widget_list_object_append(o, ob, 1, 1, 0.0);
 	     ob = e_widget_button_add(e_win_evas_get(cfd->dia->win),
 				      _("Advanced"), "widget/new_dialog",
@@ -102,14 +96,14 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 	     e_widget_list_object_append(o, ob, 0, 0, 1.0);
 	  }
 	else
-	  o = cfd->view.basic.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
+	  o = cfd->view->basic.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
      }
    else
      {
-	if (cfd->view.basic.create_widgets)
+	if (cfd->view->basic.create_widgets)
 	  {
 	     o = e_widget_list_add(e_win_evas_get(cfd->dia->win), 0, 0);
-	     ob = cfd->view.advanced.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
+	     ob = cfd->view->advanced.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
 	     e_widget_list_object_append(o, ob, 1, 1, 0.0);
 	     ob = e_widget_button_add(e_win_evas_get(cfd->dia->win), 
 				      _("Basic"), "widget/new_dialog",
@@ -117,7 +111,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 	     e_widget_list_object_append(o, ob, 0, 0, 1.0);
 	  }
 	else
-	  o = cfd->view.advanced.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
+	  o = cfd->view->advanced.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
      }
    
    e_widget_min_size_get(o, &mw, &mh);
@@ -167,7 +161,7 @@ _e_config_dialog_cb_dialog_del(void *obj)
 {
    E_Dialog *dia;
    E_Config_Dialog *cfd;
-   
+
    dia = obj;
    cfd = dia->data;
    cfd->dia = NULL;
@@ -183,13 +177,13 @@ _e_config_dialog_cb_ok(void *data, E_Dialog *dia)
    cfd = dia->data;
    if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
       {
-         if (cfd->view.basic.apply_cfdata)
-            ok = cfd->view.basic.apply_cfdata(cfd, cfd->cfdata);
+         if (cfd->view->basic.apply_cfdata)
+            ok = cfd->view->basic.apply_cfdata(cfd, cfd->cfdata);
       }
    else
       {
-         if (cfd->view.advanced.apply_cfdata)
-            ok = cfd->view.advanced.apply_cfdata(cfd, cfd->cfdata);
+         if (cfd->view->advanced.apply_cfdata)
+            ok = cfd->view->advanced.apply_cfdata(cfd, cfd->cfdata);
       }
    if (ok) e_object_del(E_OBJECT(cfd));
 }
@@ -203,13 +197,13 @@ _e_config_dialog_cb_apply(void *data, E_Dialog *dia)
    cfd = dia->data;
    if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
       {
-         if (cfd->view.basic.apply_cfdata)
-            ok = cfd->view.basic.apply_cfdata(cfd, cfd->cfdata);
+         if (cfd->view->basic.apply_cfdata)
+            ok = cfd->view->basic.apply_cfdata(cfd, cfd->cfdata);
       }
    else
       {
-         if (cfd->view.advanced.apply_cfdata)
-            ok = cfd->view.advanced.apply_cfdata(cfd, cfd->cfdata);
+         if (cfd->view->advanced.apply_cfdata)
+            ok = cfd->view->advanced.apply_cfdata(cfd, cfd->cfdata);
       }
    if ((ok) && (!cfd->hide_buttons))
      {
@@ -256,8 +250,8 @@ _e_config_dialog_cb_close(void *data, E_Dialog *dia)
    int ok = 1;
 
    cfd = dia->data;
-   if (cfd->view.close_cfdata)
-      ok = cfd->view.close_cfdata(cfd, cfd->cfdata);
+   if (cfd->view->close_cfdata)
+      ok = cfd->view->close_cfdata(cfd, cfd->cfdata);
 
    if (ok)
       e_object_del(E_OBJECT(dia));
