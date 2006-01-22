@@ -178,6 +178,10 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_ilist_go(il);
    e_widget_table_object_append(ot, il, 0, 0, 1, 3, 1, 1, 1, 1);
 
+   /* Add import Button */
+   o = e_widget_button_add(evas, _("Import An Image"), NULL, _bg_config_dialog_cb_import, cfd, NULL);
+   e_widget_table_object_append(ot, o, 0, 3, 1, 1, 1, 0, 0, 0);
+   
    of = e_widget_framelist_add(evas, _("Background Preview"), 0);
    e_widget_min_size_set(of, 320, 240);
    e_widget_table_object_append(ot, of, 1, 0, 1, 2, 1, 1, 1, 1);
@@ -451,6 +455,7 @@ _bg_dialog_close(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {   
    if (!cfd) return 0;
    if (!cfdata) return 0;
+   if (!cfdata->import) return 1;
    if (!cfdata->import->dia) return 0;
    
    e_object_del_attach_func_set(E_OBJECT(cfd->dia), NULL);
