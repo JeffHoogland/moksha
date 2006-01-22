@@ -1,41 +1,54 @@
 /*
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
+
 #include "e.h"
 
 #define BG_SET_DEFAULT_DESK 0
 #define BG_SET_THIS_DESK 1
 #define BG_SET_ALL_DESK 2
 
-static void        *_create_data              (E_Config_Dialog *cfd);
-static void         _free_data                (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int          _basic_apply_data         (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create_widgets     (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int          _advanced_apply_data      (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_advanced_create_widgets  (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static void        _load_bgs                  (E_Config_Dialog *cfd, Evas_Object *il);
-void               _ilist_cb_bg_selected      (void *data);
+static void        *_create_data                (E_Config_Dialog *cfd);
+static void         _free_data                  (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void         _fill_data                  (E_Config_Dialog_Data *cfdata);
+static int          _basic_apply_data           (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create_widgets       (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int          _advanced_apply_data        (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_advanced_create_widgets    (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static void         _load_bgs                   (E_Config_Dialog *cfd, Evas_Object *il);
+void                _ilist_cb_bg_selected       (void *data);
+static void         _bg_config_dialog_cb_import (void *data, void *data2);
+static int          _bg_dialog_close            (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void         _bg_file_added              (void *data, Ecore_File_Monitor *monitor, Ecore_File_Event event, const char *path);
+
+static Ecore_File_Monitor *_bg_file_monitor;
 
 struct _E_Config_Dialog_Data
 {
    char *bg, *current_bg;
    int bg_method;
+   E_Config_Dialog *cfd;
+   E_Config_Dialog *import;
+   Evas_Object *il;
 };
 
 EAPI E_Config_Dialog *
 e_int_config_background(E_Container *con)
 {
    E_Config_Dialog *cfd;
-   E_Config_Dialog_View v;
+   E_Config_Dialog_View *v;
 
-   v.create_cfdata           = _create_data;
-   v.free_cfdata             = _free_data;
-   v.basic.apply_cfdata      = _basic_apply_data;
-   v.basic.create_widgets    = _basic_create_widgets;
-   v.advanced.apply_cfdata   = _advanced_apply_data;
-   v.advanced.create_widgets = _advanced_create_widgets;
+   v = E_NEW(E_Config_Dialog_View, 1);
+   
+   v->create_cfdata           = _create_data;
+   v->free_cfdata             = _free_data;
+   v->basic.apply_cfdata      = _basic_apply_data;
+   v->basic.create_widgets    = _basic_create_widgets;
+   v->advanced.apply_cfdata   = _advanced_apply_data;
+   v->advanced.create_widgets = _advanced_create_widgets;
+   v->close_cfdata            = _bg_dialog_close;
 
-   cfd = e_config_dialog_new(con, _("Background Settings"), NULL, 0, &v, NULL);
+   cfd = e_config_dialog_new(con, _("Background Settings"), NULL, 0, v, NULL);
    return cfd;
 }
 
@@ -55,14 +68,20 @@ _create_data(E_Config_Dialog *cfd)
    E_Config_Dialog_Data *cfdata;
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
-   cfd->cfdata = cfdata;
    _fill_data(cfdata);
+   cfd->cfdata = cfdata;
+   cfdata->cfd = cfd;
    return cfdata;
 }
 
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
+   if (_bg_file_monitor) 
+     { 
+	ecore_file_monitor_del(_bg_file_monitor);
+	_bg_file_monitor = NULL;
+     }   
    if (cfdata->current_bg) free(cfdata->current_bg);
    free(cfdata);
 }
@@ -71,11 +90,15 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *ot, *of, *il, *im;
-
+   char path[4096];
+   
    _fill_data(cfdata);
 
    ot = e_widget_table_add(evas, 0);
    il = e_widget_ilist_add(evas, 48, 48, &(cfdata->bg));
+
+   cfdata->il = il;
+   
    e_widget_ilist_selector_set(il, 1);
    e_widget_min_size_set(il, 180, 40);
 
@@ -87,17 +110,31 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_ilist_go(il);
    e_widget_table_object_append(ot, il, 0, 0, 1, 2, 1, 1, 1, 1);
 
+   /* Add import Button */
+   o = e_widget_button_add(evas, _("Import An Image"), NULL, _bg_config_dialog_cb_import, cfd, NULL);
+   e_widget_table_object_append(ot, o, 0, 2, 1, 1, 1, 0, 0, 0);
+   
    of = e_widget_framelist_add(evas, _("Background Preview"), 0);
    e_widget_min_size_set(of, 320, 240);
    e_widget_table_object_append(ot, of, 1, 0, 1, 2, 1, 1, 1, 1);
    e_widget_framelist_object_append(of, im);
 
+   if (_bg_file_monitor) 
+     {
+	ecore_file_monitor_del(_bg_file_monitor);
+	_bg_file_monitor = NULL;
+     }
+      
+   snprintf(path, sizeof(path), "%s/.e/e/backgrounds", e_user_homedir_get());
+   _bg_file_monitor = ecore_file_monitor_add(path, _bg_file_added, cfdata);
    return ot;
 }
 
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
+   if (!cfdata->bg) return 1;
+
    while (e_config->desktop_backgrounds)
      {
 	E_Config_Desktop_Background *cfbg;
@@ -106,8 +143,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      }
    if (e_config->desktop_default_background)
      evas_stringshare_del(e_config->desktop_default_background);
-
-   if (!(cfdata->bg[0])) e_config->desktop_default_background = NULL;
+   
+   if (!cfdata->bg[0]) e_config->desktop_default_background = NULL;
    else
      e_config->desktop_default_background = evas_stringshare_add(cfdata->bg);
 
@@ -123,11 +160,13 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 {
    Evas_Object *o, *ot, *of, *il, *im, *oc;
    E_Radio_Group *rg;
-
+   char path[4096];
+   
    _fill_data(cfdata);
 
    ot = e_widget_table_add(evas, 0);
    il = e_widget_ilist_add(evas, 48, 48, &(cfdata->bg));
+   cfdata->il = il;
    e_widget_ilist_selector_set(il, 1);
    e_widget_min_size_set(il, 180, 40);
 
@@ -156,6 +195,15 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, oc);
 
    e_widget_table_object_append(ot, of, 1, 2, 1, 1, 1, 1, 1, 1);
+
+   if (_bg_file_monitor) 
+     { 
+	ecore_file_monitor_del(_bg_file_monitor);
+	_bg_file_monitor = NULL;
+     }
+
+   snprintf(path, sizeof(path), "%s/.e/e/backgrounds", e_user_homedir_get());   
+   _bg_file_monitor = ecore_file_monitor_add(path, _bg_file_added, cfdata);   
    return ot;
 }
 
@@ -185,8 +233,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if (e_config->desktop_default_background) 
 	  evas_stringshare_del(e_config->desktop_default_background);
 	
-	if (!(cfdata->bg[0]))
-	  e_config->desktop_default_background = NULL;
+	if (!cfdata->bg[0]) e_config->desktop_default_background = NULL;
 	else
 	  e_config->desktop_default_background = evas_stringshare_add(cfdata->bg);
 
@@ -234,8 +281,10 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
    Evas *evasbuf;
    const char *f;
    char *c;
-   evas = evas_object_evas_get(il);
 
+   if (!il) return;
+   
+   evas = evas_object_evas_get(il);
    bg_obj = edje_object_add(cfd->dia->win->evas);
 
    /* Load The Theme's Background */
@@ -253,13 +302,13 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
 	else
 	  o = e_thumb_evas_object_get(c, cfd->dia->win->evas, 48, 48, 1);
 
-	e_widget_ilist_append(il, o, _("Theme Background"), _ilist_cb_bg_selected, cfd, "");
+	e_widget_ilist_append(il, o, "Theme Background", _ilist_cb_bg_selected, cfd, "");
      }
    if (!e_config->desktop_default_background)
      e_widget_ilist_selected_set(il, 0);
    
    im = e_widget_image_add_from_object(cfd->dia->win->evas, bg_obj, 320, 240);
-   e_widget_image_object_set(im,  e_thumb_evas_object_get(c, cfd->dia->win->evas, 320, 240, 1));
+   e_widget_image_object_set(im, e_thumb_evas_object_get(c, cfd->dia->win->evas, 320, 240, 1));
 
    evas_object_del(o);
    ecore_evas_free(eebuf);
@@ -279,7 +328,7 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
 
 	     bgs = ecore_file_ls(d->dir);
 	     if (!bgs) continue;
-	     while (bg_file = ecore_list_next(bgs))
+	     while ((bg_file = ecore_list_next(bgs)))
 	       {
 		  char full_path[4096];
 
@@ -349,3 +398,64 @@ _ilist_cb_bg_selected(void *data)
      }
 }
 
+static void
+_bg_config_dialog_cb_import(void *data, void *data2) 
+{
+   E_Config_Dialog *parent;
+   E_Config_Dialog *import;
+   
+   parent = data;
+   if (!parent) return;
+
+   import = e_int_config_background_import(parent);
+   parent->cfdata->import = import;
+}
+
+static void 
+_bg_file_added(void *data, Ecore_File_Monitor *monitor, Ecore_File_Event event, const char *path) 
+{
+   E_Config_Dialog *cfd;
+   E_Config_Dialog_Data *cfdata;
+   Evas *evas;
+   Evas_Object *il, *ic;
+   char *file;
+   
+   cfdata = data;
+   if (!cfdata) return;
+   
+   il = cfdata->il;
+   if (!il) return;
+   
+   cfd = cfdata->cfd;
+   if (!cfd) return;
+   
+   evas = e_win_evas_get(cfd->dia->win);
+   
+   file = (char *)ecore_file_get_file((char *)path);
+   if (event == ECORE_FILE_EVENT_CREATED_FILE) 
+     {
+	printf("File Added: %s\n", path);
+	if (e_util_edje_collection_exists((char *)path, "desktop/background")) 
+	  {
+	     if (!e_thumb_exists((char *)path))
+	       ic = e_thumb_generate_begin((char *)path, 48, 48, evas, &ic, NULL, NULL);
+	     else
+	       ic = e_thumb_evas_object_get((char *)path, evas, 48, 48, 1);
+	     e_widget_ilist_append(il, ic, ecore_file_strip_ext(file), _ilist_cb_bg_selected, cfd, (char *)path);	     
+	  }
+     }
+   free(file);
+}
+
+static int
+_bg_dialog_close(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+{   
+   if (!cfd) return 0;
+   if (!cfdata) return 0;
+   if (!cfdata->import->dia) return 0;
+   
+   e_object_del_attach_func_set(E_OBJECT(cfd->dia), NULL);
+   e_object_del(E_OBJECT(cfdata->import->dia));
+   
+   return 1;
+}

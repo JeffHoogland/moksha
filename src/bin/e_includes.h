@@ -101,6 +101,7 @@
 #include "e_int_config_window_manipulation.h"
 #include "e_int_config_window_display.h"
 #include "e_int_config_background.h"
+#include "e_int_config_background_import.h"
 #include "e_int_config_theme.h"
 #include "e_int_config_menus.h"
 #include "e_int_config_general.h"
