@@ -1,5 +1,5 @@
 module.la
-e_mod_main.lo
+*.lo
 Makefile.in
 Makefile
 .libs

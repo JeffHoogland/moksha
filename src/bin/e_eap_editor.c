@@ -60,7 +60,7 @@ EAPI void
 e_eap_edit_show(E_Container *con, E_App *a)
 {
    E_Config_Dialog *cfd;
-   E_Config_Dialog_View v;   
+   E_Config_Dialog_View *v;
    E_App_Edit *editor;
 
    if (!con) return;
@@ -71,15 +71,19 @@ e_eap_edit_show(E_Container *con, E_App *a)
    editor->eap = a;
    editor->img = NULL;
    
-   /* methods */
-   v.create_cfdata           = _e_eap_edit_create_data;
-   v.free_cfdata             = _e_eap_edit_free_data;
-   v.basic.apply_cfdata      = _e_eap_edit_basic_apply_data;
-   v.basic.create_widgets    = _e_eap_edit_basic_create_widgets;
-   v.advanced.apply_cfdata   = _e_eap_edit_advanced_apply_data;
-   v.advanced.create_widgets = _e_eap_edit_advanced_create_widgets;
-   /* create config diaolg for NULL object/data */
-   cfd = e_config_dialog_new(con, _("Eap Editor"), NULL, 0, &v, editor);
+   v = E_NEW(E_Config_Dialog_View, 1);
+   if (v)
+      {
+         /* methods */
+         v->create_cfdata           = _e_eap_edit_create_data;
+         v->free_cfdata             = _e_eap_edit_free_data;
+         v->basic.apply_cfdata      = _e_eap_edit_basic_apply_data;
+         v->basic.create_widgets    = _e_eap_edit_basic_create_widgets;
+         v->advanced.apply_cfdata   = _e_eap_edit_advanced_apply_data;
+         v->advanced.create_widgets = _e_eap_edit_advanced_create_widgets;
+         /* create config diaolg for NULL object/data */
+         cfd = e_config_dialog_new(con, _("Eap Editor"), NULL, 0, v, editor);
+      }
 }
 
 /* local subsystem functions */

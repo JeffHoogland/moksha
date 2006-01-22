@@ -107,8 +107,6 @@ e_int_config_background_import(E_Config_Dialog *parent)
    v->free_cfdata             = _free_data;
    v->basic.apply_cfdata      = _basic_apply_data;
    v->basic.create_widgets    = _basic_create_widgets;
-   v->advanced.apply_cfdata   = NULL;
-   v->advanced.create_widgets = NULL;
    
    cfd = e_config_dialog_new(parent->con, _("Import An Image"), NULL, 0, v, NULL);
    e_dialog_resizable_set(cfd->dia, 1);

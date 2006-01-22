@@ -1332,19 +1332,23 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Fm_Icon *icon;
    E_Config_Dialog *cfd;
-   E_Config_Dialog_View v;
+   E_Config_Dialog_View *v;
 
    icon = data;
 
-   /* methods */
-   v.create_cfdata           = _e_fm_icon_prop_create_data;
-   v.free_cfdata             = _e_fm_icon_prop_free_data;
-   v.basic.apply_cfdata      = _e_fm_icon_prop_basic_apply_data;
-   v.basic.create_widgets    = _e_fm_icon_prop_basic_create_widgets;
-   v.advanced.apply_cfdata   = _e_fm_icon_prop_advanced_apply_data;
-   v.advanced.create_widgets = _e_fm_icon_prop_advanced_create_widgets;
-   /* create config diaolg for NULL object/data */
-   cfd = e_config_dialog_new(icon->sd->win->container, _("Properties"), NULL, 0, &v, icon);
+   v = E_NEW(E_Config_Dialog_View, 1);
+   if (v)
+      {
+         /* methods */
+         v->create_cfdata           = _e_fm_icon_prop_create_data;
+         v->free_cfdata             = _e_fm_icon_prop_free_data;
+         v->basic.apply_cfdata      = _e_fm_icon_prop_basic_apply_data;
+         v->basic.create_widgets    = _e_fm_icon_prop_basic_create_widgets;
+         v->advanced.apply_cfdata   = _e_fm_icon_prop_advanced_apply_data;
+         v->advanced.create_widgets = _e_fm_icon_prop_advanced_create_widgets;
+         /* create config diaolg for NULL object/data */
+         cfd = e_config_dialog_new(icon->sd->win->container, _("Properties"), NULL, 0, v, icon);
+      }
 }
 
 static void

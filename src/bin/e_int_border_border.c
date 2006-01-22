@@ -31,19 +31,21 @@ EAPI void
 e_int_border_border(E_Border *bd)
 {
    E_Config_Dialog *cfd;
-   E_Config_Dialog_View v;
+   E_Config_Dialog_View *v;
    
-   /* methods */
-   v.create_cfdata           = _create_data;
-   v.free_cfdata             = _free_data;
-   v.basic.apply_cfdata      = _basic_apply_data;
-   v.basic.create_widgets    = _basic_create_widgets;
-   v.advanced.apply_cfdata   = NULL;
-   v.advanced.create_widgets = NULL;
-   /* create config diaolg for bd object/data */
-   cfd = e_config_dialog_new(bd->zone->container, 
-			     _("Window Border Selection"), NULL, 0, &v, bd);
-   bd->border_border_dialog = cfd;
+   v = E_NEW(E_Config_Dialog_View, 1);
+   if (v)
+      {
+         /* methods */
+         v->create_cfdata           = _create_data;
+         v->free_cfdata             = _free_data;
+         v->basic.apply_cfdata      = _basic_apply_data;
+         v->basic.create_widgets    = _basic_create_widgets;
+         /* create config diaolg for bd object/data */
+         cfd = e_config_dialog_new(bd->zone->container, 
+			     _("Window Border Selection"), NULL, 0, v, bd);
+         bd->border_border_dialog = cfd;
+      }
 }
 
 /**--CREATE--**/
