@@ -113,6 +113,7 @@ e_int_config_background_import(E_Config_Dialog *parent)
    v->advanced.create_widgets = NULL;
    
    cfd = e_config_dialog_new(parent->con, _("Import An Image"), NULL, 0, v, NULL);
+   e_dialog_resizable_set(cfd->dia, 1);
    ecore_x_icccm_transient_for_set(cfd->dia->win->evas_win, parent->dia->win->evas_win);
    return cfd;
 }
