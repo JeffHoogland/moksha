@@ -11,8 +11,9 @@ Vendor: %{?_vendorinfo:%{_vendorinfo}}%{!?_vendorinfo:The Enlightenment Project 
 Distribution: %{?_distribution:%{_distribution}}%{!?_distribution:%{_vendor}}
 Prefix: %{_prefix}
 #BuildSuggests: xorg-x11-devel
-BuildRequires: libjpeg-devel XFree86-devel eet-devel embryo-devel
-BuildRequires: evas-devel edb-devel edje-devel imlib2-devel ecore-devel
+BuildRequires: XFree86-devel
+BuildRequires: evas-devel edje-devel ecore-devel eet-devel
+Requires: evas edje ecore eet evas-module_loader_eet evas-module_saver_eet evas-module_loader_png evas-module_saver_png evas-module_loader_jpeg evas-module_saver_jpeg evas-module_engine_software_x11 evas-module_engine_buffer
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
 %description
@@ -22,8 +23,8 @@ Enlightenment is a window manager.
 Summary: Development headers for Enlightenment. 
 Group: User Interface/Desktops
 Requires: %{name} = %{version}
-Requires: libjpeg-devel XFree86-devel eet-devel embryo-devel
-Requires: evas-devel edb-devel edje-devel imlib2-devel ecore-devel
+Requires: XFree86-devel eet-devel
+Requires: evas-devel edje-devel ecore-devel
 
 %description devel
 Development headers for Enlightenment.

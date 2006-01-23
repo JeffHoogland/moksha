@@ -354,10 +354,60 @@ main(int argc, char **argv)
     }
    if (!ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_SOFTWARE_X11))
      {
-	e_error_message_show(_("Enlightenment found ecore_evas doesnt support Software X11\n"
+	e_error_message_show(_("Enlightenment found ecore_evas doesn't support the Software X11\n"
 			       "rendering in Evas. Please check your installation of Evas and\n"
-			       "Ecore and check they support Software X11 rendering."));
+			       "Ecore and check they support the Software X11 rendering engine."));
 	_e_main_shutdown(-1);
+     }
+   if (!ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_SOFTWARE_BUFFER))
+     {
+	e_error_message_show(_("Enlightenment found ecore_evas doesn't support the Software Buffer\n"
+			       "rendering in Evas. Please check your installation of Evas and\n"
+			       "Ecore and check they support the Software Buffer rendering engine."));
+	_e_main_shutdown(-1);
+     }
+     {
+	Ecore_Evas *ee;
+	Evas_Object *im;
+	char buf[4096];
+	
+	ee = ecore_evas_buffer_new(1, 1);
+	if (!ee)
+	  {
+	     e_error_message_show(_("Enlightenment found evas can't create a buffer canvas. Please check\n"
+				    "Evas has Software Buffer engine support.\n"));
+	     _e_main_shutdown(-1);
+	  }
+	im = evas_object_image_add(ecore_evas_get(ee));
+
+	snprintf(buf, sizeof(buf), "%s/data/images/test.png", e_prefix_data_get());
+	evas_object_image_file_set(im, buf, NULL);
+	if (evas_object_image_load_error_get(im) != EVAS_LOAD_ERROR_NONE)
+	  {
+	     e_error_message_show(_("Enlightenment found evas can't load PNG files. Check Evas has PNG\n"
+				    "loader support.\n"));
+	     _e_main_shutdown(-1);
+	  }
+	
+	snprintf(buf, sizeof(buf), "%s/data/images/test.jpg", e_prefix_data_get());
+	evas_object_image_file_set(im, buf, NULL);
+	if (evas_object_image_load_error_get(im) != EVAS_LOAD_ERROR_NONE)
+	  {
+	     e_error_message_show(_("Enlightenment found evas can't load JPEG files. Check Evas has JPEG\n"
+				    "loader support.\n"));
+	     _e_main_shutdown(-1);
+	  }
+
+	snprintf(buf, sizeof(buf), "%s/data/images/test.edj", e_prefix_data_get());
+	evas_object_image_file_set(im, buf, "images/0");
+	if (evas_object_image_load_error_get(im) != EVAS_LOAD_ERROR_NONE)
+	  {
+	     e_error_message_show(_("Enlightenment found evas can't load EET files. Check Evas has EET\n"
+				    "loader support.\n"));
+	     _e_main_shutdown(-1);
+	  }
+	evas_object_del(im);
+	ecore_evas_free(ee);
      }
    _e_main_shutdown_push(ecore_evas_shutdown);        
    
