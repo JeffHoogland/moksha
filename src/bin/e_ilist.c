@@ -19,7 +19,7 @@ struct _E_Smart_Data
    int            selected;
    Evas_Coord     icon_w, icon_h;
    unsigned char  selector : 1;
-}; 
+};
 
 struct _E_Smart_Item
 {
@@ -101,11 +101,12 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, void (*func) (v
    si = E_NEW(E_Smart_Item, 1);
    si->sd = sd;
    si->base_obj = edje_object_add(evas_object_evas_get(sd->smart_obj));
+
    if (evas_list_count(sd->items) & 0x1)
-     e_theme_edje_object_set(si->base_obj, "base/theme/widgets",
+      e_theme_edje_object_set(si->base_obj, "base/theme/widgets",
 			     "widgets/ilist_odd");
    else
-     e_theme_edje_object_set(si->base_obj, "base/theme/widgets",
+      e_theme_edje_object_set(si->base_obj, "base/theme/widgets",
 			     "widgets/ilist");
    edje_object_part_text_set(si->base_obj, "label", label);
    si->icon_obj = icon;
@@ -287,6 +288,14 @@ e_ilist_remove_label(Evas_Object *obj, char *label)
 	  }
      }
 }
+
+EAPI int
+e_ilist_count(Evas_Object *obj)
+{
+   API_ENTRY return 0;
+   return evas_list_count(sd->items);
+}
+
 
 /* local subsystem functions */
 static void 

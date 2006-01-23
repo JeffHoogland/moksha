@@ -152,6 +152,15 @@ e_widget_ilist_remove_label(Evas_Object *obj, char *label)
    e_ilist_remove_label(wd->o_ilist, label);
 }
 
+EAPI int
+e_widget_ilist_count(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   return e_ilist_count(wd->o_ilist);
+}
+
 static void
 _e_wid_del_hook(Evas_Object *obj)
 {
