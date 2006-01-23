@@ -410,6 +410,8 @@ e17_sb_runnerh.png \
 e17_sb_runnerv.png \
 e17_ilist_bg0.png \
 e17_ilist_bg1.png \
+e17_tlist_bg0.png \
+e17_tlist_bg1.png \
 e17_slider_bt0.png \
 e17_slider_bt1.png \
 e17_slider_bt_glow.png \
