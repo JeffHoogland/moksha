@@ -113,9 +113,11 @@ e_file_selector.h \
 e_file_dialog.h \
 e_int_border_menu.h \
 e_ilist.h \
+e_tlist.h \
 e_livethumb.h \
 e_int_border_border.h \
 e_widget_ilist.h \
+e_widget_tlist.h \
 e_slider.h \
 e_widget_slider.h \
 e_int_config_window_manipulation.h \
@@ -226,9 +228,11 @@ e_file_selector.c \
 e_file_dialog.c \
 e_int_border_menu.c \
 e_ilist.c \
+e_tlist.c \
 e_livethumb.c \
 e_int_border_border.c \
 e_widget_ilist.c \
+e_widget_tlist.c \
 e_slider.c \
 e_widget_slider.c \
 e_int_config_window_manipulation.c \
