@@ -15,6 +15,7 @@ EAPI void
 e_canvas_add(Ecore_Evas *ee)
 {
    Evas *e;
+
    
    _e_canvases = evas_list_prepend(_e_canvases, ee);
    e = ecore_evas_get(ee);
@@ -137,6 +138,8 @@ e_canvas_new(int engine_hint, Ecore_X_Window win, int x, int y, int w, int h,
 	     if (win_ret) *win_ret = ecore_evas_gl_x11_window_get(ee);
 	     if (subwin_ret) *subwin_ret = ecore_evas_gl_x11_subwindow_get(ee);
 	  }
+	else
+	  goto try2;
      }
    else if (engine == E_EVAS_ENGINE_XRENDER_X11)
      {
@@ -148,9 +151,12 @@ e_canvas_new(int engine_hint, Ecore_X_Window win, int x, int y, int w, int h,
 	     if (win_ret) *win_ret = ecore_evas_xrender_x11_window_get(ee);
 	     if (subwin_ret) *subwin_ret = ecore_evas_xrender_x11_subwindow_get(ee);
 	  }
+	else
+	  goto try2;
      }
    else
      {
+	try2:
 	ee = ecore_evas_software_x11_new(NULL, win, x, y, w, h);
 	if (ee)
 	  {
