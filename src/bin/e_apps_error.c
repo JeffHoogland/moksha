@@ -147,11 +147,11 @@ _e_app_error_dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_D
 
    os = e_widget_framelist_add(evas, _(title), 0);
 
-   obj = e_widget_ilist_add(evas, 0, 0, NULL);
+   obj = e_widget_tlist_add(evas, NULL);
 
    for (i = 0; lines[i].line != NULL; i++)
-      e_widget_ilist_append(obj, NULL, lines[i].line, NULL, NULL, NULL);
-   e_widget_min_size_set(obj, 100, 100);
+      e_widget_tlist_append(obj, lines[i].line, NULL, NULL, NULL);
+   e_widget_min_size_set(obj, 200, 200);
 
    e_widget_framelist_object_append(os, obj);
 
