@@ -199,11 +199,11 @@ e_int_config_background_import(E_Config_Dialog *parent)
    edje_object_part_swallow(import->bg_obj, "content_swallow", o);
    evas_object_show(o);
    
-   import->ok_obj = e_widget_button_add(evas, _("Import"), NULL, _import_cb_ok, win, cfdata);
+   import->ok_obj = e_widget_button_add(evas, _("Ok"), NULL, _import_cb_ok, win, cfdata);
    e_widget_disabled_set(import->ok_obj, 1);
    e_widget_list_object_append(import->box_obj, import->ok_obj, 1, 0, 0.5);
 
-   import->close_obj = e_widget_button_add(evas, _("Close"), NULL, _import_cb_close, win, NULL);
+   import->close_obj = e_widget_button_add(evas, _("Cancel"), NULL, _import_cb_close, win, NULL);
    e_widget_list_object_append(import->box_obj, import->close_obj, 1, 0, 0.5);
    
    e_win_centered_set(win, 1);
@@ -374,19 +374,32 @@ _import_cb_ok(void *data, void *data2)
    Evas *evas;
    E_Win *win;
    E_Config_Dialog_Data *cfdata;
+   Bg_Import_Window *import;
    
    win = data;   
+   import = win->data;
    cfdata = data2;
+
+   if (!cfdata->file[0]) 
+     {
+	if (import) e_widget_disabled_set(import->ok_obj, 1);
+	return;
+     }
    
-   if (!cfdata->file[0]) return;
 
    f = e_fm_file_new(cfdata->file);
    if (!f) return;
-   if (!e_fm_file_is_image(f)) return;
+   if (!e_fm_file_is_image(f)) 
+     { 
+	if (import) e_widget_disabled_set(import->ok_obj, 1);
+	return;
+     }
+   
    free(f);
 
    evas = e_win_evas_get(win);
    _bg_edj_gen(evas, cfdata->file, cfdata->method);
+   if (import) e_widget_disabled_set(import->ok_obj, 1);
 }
 
 static void 
