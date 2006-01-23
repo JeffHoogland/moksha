@@ -79,14 +79,33 @@
 
 static Ecore_Event_Handler *_edj_exe_exit_handler = NULL;
 
-static void        *_create_data               (E_Config_Dialog *cfd);
-static void         _free_data                 (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int          _basic_apply_data          (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create_widgets      (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static void         _fill_data                 (E_Config_Dialog_Data *cfdata);
 static void         _efm_hilite_cb             (Evas_Object *obj, char *file, void *data);
 static void         _bg_edj_gen                (Evas *evas, char *filename, int method);
 static int          _edj_exe_exit_cb           (void *data, int type, void *event);
+
+static void _import_cb_delete(E_Win *win);
+static void _import_cb_resize(E_Win *win);
+static void _import_cb_close(void *data, void *data2);
+static void _import_cb_ok(void *data, void *data2);
+static void _import_cb_wid_on_focus(void *data, Evas_Object *obj);
+static void _import_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event);
+
+typedef struct _Bg_Import_Window Bg_Import_Window;
+struct _Bg_Import_Window 
+{
+   E_Config_Dialog *parent;
+   E_Config_Dialog_Data *cfdata;
+   
+   Evas_Object *bg_obj;
+   Evas_Object *box_obj;
+   Evas_Object *event_obj;
+   Evas_Object *content_obj;
+   
+   Evas_Object *ok_obj;
+   Evas_Object *close_obj;
+   
+   E_Win *win;
+};
 
 struct _E_Config_Dialog_Data 
 {
@@ -94,116 +113,137 @@ struct _E_Config_Dialog_Data
    int method;
 };
 
-EAPI E_Config_Dialog *
+EAPI E_Win *
 e_int_config_background_import(E_Config_Dialog *parent)
 {
-   E_Config_Dialog *cfd;
-   E_Config_Dialog_View *v;
-   
-   /* Create A New Import Dialog */
-   v = E_NEW(E_Config_Dialog_View, 1);
-   
-   v->create_cfdata           = _create_data;
-   v->free_cfdata             = _free_data;
-   v->basic.apply_cfdata      = _basic_apply_data;
-   v->basic.create_widgets    = _basic_create_widgets;
-   
-   cfd = e_config_dialog_new(parent->con, _("Import An Image"), NULL, 0, v, NULL);
-   e_dialog_resizable_set(cfd->dia, 1);
-   ecore_x_icccm_transient_for_set(cfd->dia->win->evas_win, parent->dia->win->evas_win);
-   return cfd;
-}
-
-static void *
-_create_data(E_Config_Dialog *cfd) 
-{
-   E_Config_Dialog_Data *cfdata;
-
-   cfdata = E_NEW(E_Config_Dialog_Data, 1);
-   cfd->cfdata = cfdata;
-   _fill_data(cfdata);
-   return cfdata;   
-}
-
-static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
-{
-   free(cfdata);
-}
-
-static int
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
-{  
-   E_Fm_File *f;
    Evas *evas;
-   
-   if (!cfdata->file[0]) return 0;
-
-   f = e_fm_file_new(cfdata->file);
-   if (!f) return 0;
-      
-   if (!e_fm_file_is_image(f)) return 0;
-   free(f);
-   
-   evas = e_win_evas_get(cfd->dia->win);
-   _bg_edj_gen(evas, cfdata->file, cfdata->method);
-   return 1;
-}
-
-static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
-{
-   Evas_Object *o, *of, *ofm, *ol;
-   E_Dialog *dia;
+   E_Win *win;
+   Bg_Import_Window *import;
+   Evas_Object *o, *of, *ofm, *ord;
    E_Radio_Group *rg;
+   Evas_Coord w, h;
+   E_Config_Dialog_Data *cfdata;
+   Evas_Modifier_Mask mask;
    
-   _fill_data(cfdata);
+   import = E_NEW(Bg_Import_Window, 1);
+   if (!import) return NULL;
    
-   dia = cfd->dia;
+   win = e_win_new(parent->con);
+   if (!win) 
+     { 
+	free(import);
+	return NULL;	
+     }
+   
+   cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   cfdata->method = 0;
+   import->cfdata = cfdata;
+   import->win = win;
+   
+   evas = e_win_evas_get(win);
+   
+   import->parent = parent;
 
-   ol = e_widget_list_add(evas, 0, 0);
-   of = e_widget_framelist_add(evas, _("Image To Import"), 0);   
-   ofm = e_widget_fileman_add(evas, (&(cfdata->file)));
-   e_widget_fileman_hilite_callback_add(ofm, _efm_hilite_cb, dia);
-   e_widget_framelist_object_append(of, ofm);   
-   e_widget_list_object_append(ol, of, 1, 1, 0.5);
+   e_win_title_set(win, _("Import An Image"));
+   e_win_delete_callback_set(win, _import_cb_delete);
+   e_win_resize_callback_set(win, _import_cb_resize);
+   e_win_dialog_set(win, 1);
+   e_win_name_class_set(win, "E", "_dialog");
+
+   o = edje_object_add(evas);
+   import->bg_obj = o;
+   e_theme_edje_object_set(o, "base/theme/dialog", "widgets/dialog/main");
+   evas_object_move(o, 0, 0);
+   evas_object_show(o);
    
+   o = e_widget_list_add(evas, 1, 1);
+   e_widget_on_focus_hook_set(o, _import_cb_wid_on_focus, import);
+   import->box_obj = o;
+   edje_object_part_swallow(import->bg_obj, "buttons_swallow", o);
+   
+   o = evas_object_rectangle_add(evas);
+   import->event_obj = o;
+   mask = 0;
+   evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   mask = evas_key_modifier_mask_get(evas, "Shift");
+   evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   mask = 0;
+   evas_object_key_grab(o, "Return", mask, ~mask, 0);
+   mask = 0;
+   evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
+   mask = 0;
+   evas_object_key_grab(o, "Space", mask, ~mask, 0);
+   mask = 0;
+   evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _import_cb_key_down, import);
+   
+   o = e_widget_list_add(evas, 0, 0);   
+   import->content_obj = o;
+
+   ofm = e_widget_fileman_add(evas, (&(cfdata->file)));
+   e_widget_fileman_hilite_callback_add(ofm, _efm_hilite_cb, import);
+   e_widget_list_object_append(o, ofm, 1, 1, 0.5);
+
    of = e_widget_frametable_add(evas, _("Options"), 0);
    rg = e_widget_radio_group_new(&cfdata->method);
-   o = e_widget_radio_add(evas, _("Center"), E_BG_CENTER, rg);
-   e_widget_frametable_object_append(of, o, 0, 0, 1, 1, 1, 0, 1, 0);
-   o = e_widget_radio_add(evas, _("Scale"), E_BG_SCALE, rg);
-   e_widget_frametable_object_append(of, o, 0, 1, 1, 1, 1, 0, 1, 0);
-   o = e_widget_radio_add(evas, _("Tile"), E_BG_TILE, rg);
-   e_widget_frametable_object_append(of, o, 0, 2, 1, 1, 1, 0, 1, 0);
+   ord = e_widget_radio_add(evas, _("Center Image"), E_BG_CENTER, rg);
+   e_widget_frametable_object_append(of, ord, 0, 0, 1, 1, 1, 0, 1, 0);
+   ord = e_widget_radio_add(evas, _("Scale Image"), E_BG_SCALE, rg);
+   e_widget_frametable_object_append(of, ord, 0, 1, 1, 1, 1, 0, 1, 0);
+   ord = e_widget_radio_add(evas, _("Tile Image"), E_BG_TILE, rg);
+   e_widget_frametable_object_append(of, ord, 0, 2, 1, 1, 1, 0, 1, 0);
+   
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   
+   e_widget_min_size_get(o, &w, &h);
+   edje_extern_object_min_size_set(o, w, h);
+   edje_object_part_swallow(import->bg_obj, "content_swallow", o);
+   evas_object_show(o);
+   
+   import->ok_obj = e_widget_button_add(evas, _("Import"), NULL, _import_cb_ok, win, cfdata);
+   e_widget_disabled_set(import->ok_obj, 1);
+   e_widget_list_object_append(import->box_obj, import->ok_obj, 1, 0, 0.5);
 
-   e_widget_list_object_append(ol, of, 1, 1, 0.5);
-   return ol;
-}
-
-static void
-_fill_data(E_Config_Dialog_Data *cfdata)
-{
-   cfdata->method = E_BG_SCALE;
+   import->close_obj = e_widget_button_add(evas, _("Close"), NULL, _import_cb_close, win, NULL);
+   e_widget_list_object_append(import->box_obj, import->close_obj, 1, 0, 0.5);
+   
+   e_win_centered_set(win, 1);
+   
+   o = import->box_obj;
+   e_widget_min_size_get(o, &w, &h);
+   edje_extern_object_min_size_set(o, w, h);
+   edje_object_part_swallow(import->bg_obj, "buttons_swallow", o);
+   
+   edje_object_size_min_calc(import->bg_obj, &w, &h);
+   evas_object_resize(import->bg_obj, w, h);
+   e_win_resize(win, w, h);
+   e_win_size_min_set(win, w, h);
+   e_win_size_max_set(win, 99999, 99999);
+   e_win_show(win);
+   
+   if (!e_widget_focus_get(import->bg_obj))
+     e_widget_focus_set(import->box_obj, 1);
+   
+   win->data = import;
+   return win;
 }
 
 static void 
 _efm_hilite_cb(Evas_Object *obj, char *file, void *data) 
 {
-   E_Dialog *dia;
    E_Fm_File *f;
+   Bg_Import_Window *import;
    
-   dia = (E_Dialog *)data;
-   if (!dia) return;
-
    f = e_fm_file_new(file);
    if (!f) return;
    
+   import = data;
+   if (!import) return;
+   
    if (e_fm_file_is_image(f)) 
-     {
-	e_dialog_button_disable_num_set(dia, 0, 0);   
-	e_dialog_button_disable_num_set(dia, 1, 0);	
-     }
+     e_widget_disabled_set(import->ok_obj, 0);
+   else 
+     e_widget_disabled_set(import->ok_obj, 1);	
+   
    free(f);
 }
 
@@ -289,8 +329,133 @@ _edj_exe_exit_cb(void *data, int type, void *event)
    
    x = NULL;
    ecore_event_handler_del(_edj_exe_exit_handler);
-
+   _edj_exe_exit_handler = NULL;
+   
    unlink(data);   
-
    return 0;
+}
+
+static void 
+_import_cb_delete(E_Win *win) 
+{
+   Bg_Import_Window *import;
+   
+   import = win->data;
+   if (import) free(import);
+   e_object_del(E_OBJECT(win));
+}
+
+static void 
+_import_cb_resize(E_Win *win) 
+{
+   Bg_Import_Window *import;
+   
+   import = win->data;
+   if (!import) return;
+   evas_object_resize(import->bg_obj, win->w, win->h);
+}
+
+static void 
+_import_cb_close(void *data, void *data2) 
+{
+   Bg_Import_Window *import;
+   E_Win *win;
+   
+   win = data;   
+   import = win->data;
+   if (import) free(import);
+   e_object_del(E_OBJECT(win));
+}
+
+static void 
+_import_cb_ok(void *data, void *data2) 
+{
+   E_Fm_File *f;
+   Evas *evas;
+   E_Win *win;
+   E_Config_Dialog_Data *cfdata;
+   
+   win = data;   
+   cfdata = data2;
+   
+   if (!cfdata->file[0]) return;
+
+   f = e_fm_file_new(cfdata->file);
+   if (!f) return;
+   if (!e_fm_file_is_image(f)) return;
+   free(f);
+
+   evas = e_win_evas_get(win);
+   _bg_edj_gen(evas, cfdata->file, cfdata->method);
+}
+
+static void 
+_import_cb_wid_on_focus(void *data, Evas_Object *obj) 
+{
+   Bg_Import_Window *import;
+   
+   import = data;
+   if (obj == import->content_obj)
+     e_widget_focused_object_clear(import->box_obj);
+   else if (import->content_obj)
+     e_widget_focused_object_clear(import->content_obj);
+}
+
+static void 
+_import_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event) 
+{
+   Evas_Event_Key_Down *ev;
+   Bg_Import_Window *dia;
+
+   ev = event;
+   dia = data;
+   if (!strcmp(ev->keyname, "Tab"))
+     {
+	if (evas_key_modifier_is_set(evas_key_modifier_get(e_win_evas_get(dia->win)), "Shift"))
+	  {
+	     if (e_widget_focus_get(dia->box_obj))
+	       {
+		  if (!e_widget_focus_jump(dia->box_obj, 0))
+		    {
+		       e_widget_focus_set(dia->content_obj, 0);
+		       if (!e_widget_focus_get(dia->content_obj))
+			 e_widget_focus_set(dia->box_obj, 0);
+		    }
+	       }
+	     else
+	       {
+		  if (!e_widget_focus_jump(dia->content_obj, 0))
+		    e_widget_focus_set(dia->box_obj, 0);
+	       }
+	  }
+	else
+	  {
+	     if (e_widget_focus_get(dia->box_obj))
+	       {
+		  if (!e_widget_focus_jump(dia->box_obj, 1))
+		    {
+		       e_widget_focus_set(dia->content_obj, 1);
+		       if (!e_widget_focus_get(dia->content_obj))
+			 e_widget_focus_set(dia->box_obj, 1);
+		    }
+	       }
+	     else
+	       {
+		  if (!e_widget_focus_jump(dia->content_obj, 1))
+		    e_widget_focus_set(dia->box_obj, 1);
+	       }
+	  }
+     }
+   else if (((!strcmp(ev->keyname, "Return")) || 
+	     (!strcmp(ev->keyname, "KP_Enter")) || 
+	     (!strcmp(ev->keyname, "space"))))
+     {
+	Evas_Object *o = NULL;
+	
+	if ((dia->content_obj) && (e_widget_focus_get(dia->content_obj)))
+	  o = e_widget_focused_object_get(dia->content_obj);
+	else
+	  o = e_widget_focused_object_get(dia->box_obj);
+	if (o) e_widget_activate(o);
+     }   
 }

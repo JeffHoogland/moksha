@@ -3,6 +3,7 @@
  */
 
 #include "e.h"
+//#include <Ecore_X.h>
 
 #define BG_SET_DEFAULT_DESK 0
 #define BG_SET_THIS_DESK 1
@@ -21,6 +22,9 @@ static void         _bg_config_dialog_cb_import (void *data, void *data2);
 static int          _bg_dialog_close            (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static void         _bg_file_added              (void *data, Ecore_File_Monitor *monitor, Ecore_File_Event event, const char *path);
 
+static void _import_cb_closed(void *obj);
+static int import_open = 0;
+
 static Ecore_File_Monitor *_bg_file_monitor;
 
 struct _E_Config_Dialog_Data
@@ -28,8 +32,9 @@ struct _E_Config_Dialog_Data
    char *bg, *current_bg;
    int bg_method;
    E_Config_Dialog *cfd;
-   E_Config_Dialog *import;
    Evas_Object *il;
+   
+   E_Win *import;
 };
 
 EAPI E_Config_Dialog *
@@ -406,13 +411,23 @@ static void
 _bg_config_dialog_cb_import(void *data, void *data2) 
 {
    E_Config_Dialog *parent;
-   E_Config_Dialog *import;
+   E_Win *import;
    
    parent = data;
    if (!parent) return;
 
    import = e_int_config_background_import(parent);
-   parent->cfdata->import = import;
+   if (import) 
+     { 	
+	parent->cfdata->import = import;
+	import_open = 1;
+	e_object_del_attach_func_set(E_OBJECT(import), _import_cb_closed);
+     }
+   else 
+     {
+	parent->cfdata->import = NULL;
+	import_open = 0;
+     }
 }
 
 static void 
@@ -452,19 +467,18 @@ _bg_file_added(void *data, Ecore_File_Monitor *monitor, Ecore_File_Event event, 
 
 static int
 _bg_dialog_close(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
-{   
-   E_Dialog *dia;
-   E_Border *bd;
-   
+{
    if (!cfd) return 0;
    if (!cfdata) return 0;
    if (!cfdata->import) return 1;
-   if (!cfdata->import->dia) return 1;
+   if (!import_open) return 1;
    
-   dia = cfdata->import->dia;
-   bd = e_border_find_by_window(dia->win->evas_win);
-   if (!bd) return 1;
-   
-   e_object_del(E_OBJECT(cfdata->import->dia));   
+   e_object_del(E_OBJECT(cfdata->import));   	   
    return 1;
+}
+
+static void
+_import_cb_closed(void *obj) 
+{
+   import_open = 0;
 }
