@@ -97,8 +97,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    Evas_Object *o, *ot, *of, *il, *im;
    char path[4096];
    
-   _fill_data(cfdata);
-
    ot = e_widget_table_add(evas, 0);
    il = e_widget_ilist_add(evas, 48, 48, &(cfdata->bg));
 
@@ -167,8 +165,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    E_Radio_Group *rg;
    char path[4096];
    
-   _fill_data(cfdata);
-
    ot = e_widget_table_add(evas, 0);
    il = e_widget_ilist_add(evas, 48, 48, &(cfdata->bg));
    cfdata->il = il;
