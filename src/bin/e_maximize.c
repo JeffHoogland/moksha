@@ -37,14 +37,14 @@ int _e_mzone_cb_height_reverse_sort(void *e1, void *e2); // not used yet
 EAPI void
 e_maximize_border_gadman_fit(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
 {
-  int ii, jj;
+  /* Unused variables int ii, jj; */
   Evas_List *l, *ll;
 
   Evas_List *mzones = NULL;
   Evas_List *tmp_mzones = NULL;
 
   struct _m_zone *mzone = NULL;
-  struct _m_zone *mzone_split;
+  /* Unused variable: struct _m_zone *mzone_split; */
 
   mzone = (struct _m_zone *)malloc(sizeof(struct _m_zone));
   if (mzone == NULL)
@@ -135,7 +135,8 @@ e_maximize_border_gadman_fit(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
     }
   else if (mzones != NULL && mzones->next != NULL)
     {
-      Evas_List *wl = NULL, *hl = NULL;
+      Evas_List *wl = NULL;
+      /* Unused var *hl = NULL; */
 
       /* The use of *_width_reverse_sort or *_height_reverse_sort depends
        * on the preferences of the user - what window he/she would like to
@@ -143,18 +144,18 @@ e_maximize_border_gadman_fit(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
        */
       wl = evas_list_sort(mzones, evas_list_count(mzones), _e_mzone_cb_width_reverse_sort);
       mzones = NULL;
-     // hl = evas_list_sort(mzones, -1, _e_mzone_cb_height_reverse_sort);
+     /* hl = evas_list_sort(mzones, -1, _e_mzone_cb_height_reverse_sort); */
 
       mzone = wl->data;
-      //mzone = hl->data;
+      /* mzone = hl->data; */
       *x1 = mzone->x1;
       *y1 = mzone->y1;
       *x2 = mzone->x2;
       *y2 = mzone->y2;
 
-     // evas_list_free( wl );
-     // evas_list_free( hl );
-
+     /* evas_list_free( wl );
+        evas_list_free( hl );
+      */ 
       mzones = wl;
     }
 
