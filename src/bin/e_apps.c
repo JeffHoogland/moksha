@@ -1875,8 +1875,8 @@ _e_apps_cb_exit(void *data, int type, void *event)
          aut = E_NEW(E_App_Autopsy, 1);
 	 aut->app = a;
          aut->del = *ev;
-         aut->read = ecore_exe_event_data_get(ai->exe, ECORE_FD_READ);
-         aut->error = ecore_exe_event_data_get(ai->exe, ECORE_FD_ERROR);
+         aut->error = ecore_exe_event_data_get(ai->exe, ECORE_EXE_PIPE_ERROR);
+         aut->read = ecore_exe_event_data_get(ai->exe, ECORE_EXE_PIPE_READ);
          _e_app_error_dialog(NULL, aut);
       }
    if (ai->expire_timer) ecore_timer_del(ai->expire_timer);
