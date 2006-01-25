@@ -16,6 +16,7 @@ EAPI const char *e_widget_ilist_selected_label_get(Evas_Object *obj);
 EAPI void e_widget_ilist_remove_num(Evas_Object *obj, int n);
 EAPI void e_widget_ilist_remove_label(Evas_Object *obj, char *label);
 EAPI int e_widget_ilist_count(Evas_Object *obj);
+EAPI void e_widget_ilist_clear(Evas_Object *obj);
 
 #endif
 #endif

@@ -296,6 +296,21 @@ e_ilist_count(Evas_Object *obj)
    return evas_list_count(sd->items);
 }
 
+EAPI void
+e_ilist_clear(Evas_Object *obj) 
+{
+   INTERNAL_ENTRY;
+   while (sd->items)
+     {
+	E_Smart_Item *si;
+
+	si = sd->items->data;
+	sd->items = evas_list_remove_list(sd->items, sd->items);
+	if (si->icon_obj) evas_object_del(si->icon_obj);
+	evas_object_del(si->base_obj);
+	free(si);
+     }
+}
 
 /* local subsystem functions */
 static void 

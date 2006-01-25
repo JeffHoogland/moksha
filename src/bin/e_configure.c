@@ -65,11 +65,12 @@ e_configure_show(E_Container *con)
    e_configure_standard_item_add(eco, "enlightenment/desktops", _("Background Settings"), e_int_config_background);
    e_configure_standard_item_add(eco, "enlightenment/themes", _("Theme Selector"), e_int_config_theme);   
    e_configure_standard_item_add(eco, "enlightenment/modules", _("Module Settings"), e_int_config_modules);
-   e_configure_standard_item_add(eco, "enlightenment/e", _("General Settings"), e_int_config_general);
+   e_configure_standard_item_add(eco, "enlightenment/mouse", _("Cursor Settings"), e_int_config_cursor);
    e_configure_standard_item_add(eco, "enlightenment/desktops", _("Desktop Settings"), e_int_config_desks);
    e_configure_standard_item_add(eco, "enlightenment/e", _("Focus Settings"), e_int_config_focus);
    e_configure_standard_item_add(eco, "enlightenment/favorites", _("Menu Settings"), e_int_config_menus);
    e_configure_standard_item_add(eco, "enlightenment/configuration", _("Performance Settings"), e_int_config_performance);
+   e_configure_standard_item_add(eco, "enlightenment/run", _("Startup Settings"), e_int_config_startup);
    e_configure_standard_item_add(eco, "enlightenment/windows", _("Window List Settings"), e_int_config_winlist);
    e_configure_standard_item_add(eco, "enlightenment/windows", _("Window Display Settings"), e_int_config_window_display);
    e_configure_standard_item_add(eco, "enlightenment/windows", _("Window Manipulation Settings"), e_int_config_window_manipulation);
