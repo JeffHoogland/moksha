@@ -29,6 +29,7 @@ images {
    image: "e17_pager_window.png" COMP;
    
    image: "e17_icon_right_arrow.png" COMP;
+   image: "e17_pointer.png" COMP;      
 }
 
 group {
@@ -510,4 +511,21 @@ group {
       }
    }
 }
-
+group {
+   name: "icons/enlightenment/mouse";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      64 64;
+	    image {
+	       normal: "e17_pointer.png";
+	    }
+	 }
+     }
+  }
+}
