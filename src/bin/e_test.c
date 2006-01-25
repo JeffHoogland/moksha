@@ -534,6 +534,42 @@ _e_test_internal(E_Container *con)
    
    evas_object_focus_set(o, 1);
 }
+#elif 0
+static void
+_e_test_internal(E_Container *con)
+{
+   E_Dialog *dia;
+   Evas_Object *o;
+   Evas_Coord mw, mh;
+   
+   dia = e_dialog_new(con);
+   e_dialog_title_set(dia, "A Test Dialog");
+   
+   o = e_widget_textblock_add(dia->win->evas);
+   e_widget_textblock_markup_set(o,
+				 "<title>A title</title>"
+				 "This is some text<br>"
+				 "Blah blah<br>"
+				 "<hilight>hilighted text</hilight><br>"
+				 "<br>"
+				 "More lines of text<br>"
+				 "And yet more lines of text<br>"
+				 "A very very long line of text that SHOULD be getting word wrapped because it is so long.<br>"
+				 "And another line<br>"
+				 "Some more<br>"
+				 "Smelly fish on a stick<br>"
+				 "Whatever."
+				 );
+   evas_object_show(o);
+   
+   e_dialog_content_set(dia, o, 160, 160);
+   
+   e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
+   
+   evas_object_focus_set(o, 1);
+}
 #else
 static void
 _e_test_internal(E_Container *con)

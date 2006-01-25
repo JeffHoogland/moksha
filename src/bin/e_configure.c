@@ -54,7 +54,7 @@ e_configure_show(E_Container *con)
    e_theme_edje_object_set(eco->edje, "base/theme/configure",
 			   "widgets/configure/main");
    
-   eco->ilist = e_widget_ilist_add(eco->evas, 48, 48, NULL);
+   eco->ilist = e_widget_ilist_add(eco->evas, 24, 24, NULL);
    e_widget_ilist_selector_set(eco->ilist, 1);
    e_widget_min_size_get(eco->ilist, &mw, &mh);
    edje_extern_object_min_size_set(eco->ilist, mw, mh);

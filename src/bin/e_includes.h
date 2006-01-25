@@ -113,3 +113,4 @@
 #include "e_int_config_modules.h"
 #include "e_exehist.h"
 #include "e_color_class.h"
+#include "e_widget_textblock.h"

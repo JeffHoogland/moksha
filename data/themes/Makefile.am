@@ -51,7 +51,8 @@ default_scrollframe.edc \
 default_ilist.edc \
 default_tlist.edc \
 default_slider.edc \
-default_exebuf.edc
+default_exebuf.edc \
+default_textblock.edc
 
 default.edj: Makefile $(EXTRA_DIST)
 	$(EDJE_CC) $(EDJE_FLAGS) \
