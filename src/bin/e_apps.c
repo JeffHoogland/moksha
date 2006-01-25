@@ -1860,25 +1860,45 @@ _e_apps_cb_exit(void *data, int type, void *event)
    a = ai->app;
    if (!a) return 1;
 
-   if ( (ev->exited) && (ev->exit_code == 127) ) /* /bin/sh uses this if cmd not found */
+   /* /bin/sh uses this if cmd not found */
+   if ((ev->exited) &&
+       ((ev->exit_code == 127) || (ev->exit_code == 255)))
      {
-        e_error_dialog_show(_("Run Error"),
-			    _("Enlightenment was unable to run the program:\n"
-			      "\n"
-			      "%s\n"),
-			    a->exe);
-      }
-   else if ( ! ((ev->exited) && (ev->exit_code == EXIT_SUCCESS)) )   /* Let's hope that everyhing returns this properly. */
-      {   /* Show the error dialog with details from the exe. */
-         E_App_Autopsy *aut;
-
-         aut = E_NEW(E_App_Autopsy, 1);
-	 aut->app = a;
-         aut->del = *ev;
-         aut->error = ecore_exe_event_data_get(ai->exe, ECORE_EXE_PIPE_ERROR);
-         aut->read = ecore_exe_event_data_get(ai->exe, ECORE_EXE_PIPE_READ);
-         _e_app_error_dialog(NULL, aut);
-      }
+	E_Dialog *dia;
+	
+	dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
+	if (dia)
+	  {
+	     char buf[4096];
+	     
+	     e_dialog_title_set(dia, _("Application run error"));
+	     snprintf(buf, sizeof(buf),
+		      _("Enlightenment was unable to run the application:<br>"
+			"<br>"
+			"%s<br>"
+			"<br>"
+			"The application failed to start."),
+		      a->exe);
+	     e_dialog_text_set(dia, buf);
+//	     e_dialog_icon_set(dia, "enlightenment/error", 64);
+	     e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
+	     e_dialog_button_focus_num(dia, 1);
+	     e_win_centered_set(dia->win, 1);
+	     e_dialog_show(dia);
+	  }
+     }
+   /* Let's hope that everyhing returns this properly. */
+   else if (!((ev->exited) && (ev->exit_code == EXIT_SUCCESS))) 
+     {   /* Show the error dialog with details from the exe. */
+	E_App_Autopsy *aut;
+	
+	aut = E_NEW(E_App_Autopsy, 1);
+	aut->app = a;
+	aut->del = *ev;
+	aut->error = ecore_exe_event_data_get(ai->exe, ECORE_EXE_PIPE_ERROR);
+	aut->read = ecore_exe_event_data_get(ai->exe, ECORE_EXE_PIPE_READ);
+	_e_app_error_dialog(NULL, aut);
+     }
    if (ai->expire_timer) ecore_timer_del(ai->expire_timer);
    free(ai);
    a->instances = evas_list_remove(a->instances, ai);
