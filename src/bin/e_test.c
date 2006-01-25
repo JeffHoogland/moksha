@@ -546,6 +546,7 @@ _e_test_internal(E_Container *con)
    e_dialog_title_set(dia, "A Test Dialog");
    
    o = e_widget_textblock_add(dia->win->evas);
+#if 0
    e_widget_textblock_markup_set(o,
 				 "<title>A title</title>"
 				 "This is some text<br>"
@@ -560,6 +561,15 @@ _e_test_internal(E_Container *con)
 				 "Smelly fish on a stick<br>"
 				 "Whatever."
 				 );
+#else
+   e_widget_textblock_plain_set(o,
+				"And here is some plaintext\n"
+				"with some newlines & other special characters\n"
+				"that should get escaped like < and >.\n"
+				"\n"
+				"\tTabs should become 8 spaces too.\n"
+				);
+#endif   
    evas_object_show(o);
    
    e_dialog_content_set(dia, o, 160, 160);

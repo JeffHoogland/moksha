@@ -34,7 +34,7 @@ _e_app_error_dialog(E_Container *con, E_App_Autopsy *app)
          v->advanced.create_widgets = _e_app_error_dialog_advanced_create_widgets;
 
          /* Create The Dialog */
-         cfd = e_config_dialog_new(con, _("Run error, wtf?  That sux."), NULL, 0, v, app);
+         cfd = e_config_dialog_new(con, _("Application Execution Error"), NULL, 0, v, app);
          app->error_dialog = cfd;
       }
 }
@@ -42,28 +42,54 @@ _e_app_error_dialog(E_Container *con, E_App_Autopsy *app)
 static void 
 _e_app_error_dialog_fill_data(E_App_Autopsy *app, E_Config_Dialog_Data *cfdata)
 {
-   int length;
+   char buf[4096];
 
-   length = strlen(app->app->name);
    if (!cfdata->label)
       {
-         cfdata->label = malloc((length + 20) * sizeof(char));
-         if (cfdata->label)
-            sprintf(cfdata->label, "%s may have crashed.", app->app->name);
+	 snprintf(buf, sizeof(buf), _("%s stopped running unexpectedly."), 
+		  app->app->name);
+         cfdata->label = strdup(buf);
       }
 
-   length = strlen(app->app->exe);
    if ((app->del.exited) && (!cfdata->exit))
       {
-         cfdata->exit = malloc((length + 64) * sizeof(char));
-         if (cfdata->exit)
-            sprintf(cfdata->exit, "An exit code of %i was returned from %s", app->del.exit_code, app->app->exe);
+	 snprintf(buf, sizeof(buf), _("An exit code of %i was returned from %s"),
+		  app->del.exit_code, app->app->exe);
+         cfdata->exit = strdup(buf);
       }
    if ((app->del.signalled) && (!cfdata->signal))
       {
-         cfdata->signal = malloc((length + 64) * sizeof(char));
-         if (cfdata->signal)
-            sprintf(cfdata->signal, "%s was interupted by signal %i", app->app->exe, app->del.exit_signal);   /* FIXME: add a description of the signal. */
+	 if (app->del.exit_signal == SIGINT)
+	   snprintf(buf, sizeof(buf), _("%s was interrupted by an Interrupt Singal"),
+		    app->app->exe, app->del.exit_signal);
+	 else if (app->del.exit_signal == SIGQUIT)
+	   snprintf(buf, sizeof(buf), _("%s was interrupted by a Quit Singal"),
+		    app->app->exe, app->del.exit_signal);
+	 else if (app->del.exit_signal == SIGABRT)
+	   snprintf(buf, sizeof(buf), _("%s was interrupted by an Abort Singal"),
+		    app->app->exe, app->del.exit_signal);
+	 else if (app->del.exit_signal == SIGFPE)
+	   snprintf(buf, sizeof(buf), _("%s was interrupted by a Floating Point Error"),
+		    app->app->exe, app->del.exit_signal);
+	 else if (app->del.exit_signal == SIGKILL)
+	   snprintf(buf, sizeof(buf), _("%s was interrupted by an Uninterruptable Kill Singal"),
+		    app->app->exe, app->del.exit_signal);
+	 else if (app->del.exit_signal == SIGSEGV)
+	   snprintf(buf, sizeof(buf), _("%s was interrupted by a Segmentation Fault"),
+		    app->app->exe, app->del.exit_signal);
+	 else if (app->del.exit_signal == SIGPIPE)
+	   snprintf(buf, sizeof(buf), _("%s was interrupted by a Broken Pipe"),
+		    app->app->exe, app->del.exit_signal);
+	 else if (app->del.exit_signal == SIGTERM)
+	   snprintf(buf, sizeof(buf), _("%s was interrupted by a Termination Singal"),
+		    app->app->exe, app->del.exit_signal);
+	 else if (app->del.exit_signal == SIGBUS)
+	   snprintf(buf, sizeof(buf), _("%s was interrupted by a Bus Error"),
+		    app->app->exe, app->del.exit_signal);
+	 else
+	   snprintf(buf, sizeof(buf), _("%s was interupted by the signal number %i"),
+		    app->app->exe, app->del.exit_signal);
+         cfdata->signal = strdup(buf);
 /* FIXME: Add  sigchld_info stuff
  * app->del.data
  *    siginfo_t
@@ -144,14 +170,28 @@ _e_app_error_dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_D
 {
    int i;
    Evas_Object *obj, *os;
+   char *text;
+   int tlen;
 
    os = e_widget_framelist_add(evas, _(title), 0);
 
-   obj = e_widget_tlist_add(evas, NULL);
+   obj = e_widget_textblock_add(evas);
 
+   tlen = 0;
    for (i = 0; lines[i].line != NULL; i++)
-      e_widget_tlist_append(obj, lines[i].line, NULL, NULL, NULL);
-   e_widget_min_size_set(obj, 200, 200);
+     tlen += strlen(lines[i].line) + 1;
+   text = alloca(tlen + 1);
+   if (text)
+     {
+	text[0] = 0;
+	for (i = 0; lines[i].line != NULL; i++)
+	  {
+	     strcat(text, lines[i].line);
+	     strcat(text, "\n");
+	  }
+	e_widget_textblock_plain_set(obj, text);
+     }
+   e_widget_min_size_set(obj, 240, 120);
 
    e_widget_framelist_object_append(os, obj);
 
@@ -177,7 +217,7 @@ _e_app_error_dialog_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Con
       error_length = app->error->size;
    if (error_length)
       {
-         os = _e_app_error_dialog_scrolltext_create(evas, "Error", app->error->lines);
+         os = _e_app_error_dialog_scrolltext_create(evas, _("Error Logs"), app->error->lines);
          e_widget_list_object_append(o, os, 1, 1, 0.5);
       }
    else
@@ -208,7 +248,7 @@ _e_app_error_dialog_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_
 
    if (cfdata->exit)
       {
-         of = e_widget_framelist_add(evas, _("Exit code"), 0);
+         of = e_widget_framelist_add(evas, _("Error Information"), 0);
          ob = e_widget_label_add(evas, _(cfdata->exit));
          e_widget_framelist_object_append(of, ob);
          e_widget_list_object_append(o, of, 1, 1, 0.5);
@@ -216,7 +256,7 @@ _e_app_error_dialog_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_
 
    if (cfdata->signal)
       {
-         of = e_widget_framelist_add(evas, _("Signal"), 0);
+         of = e_widget_framelist_add(evas, _("Error Signal Information"), 0);
          ob = e_widget_label_add(evas, _(cfdata->signal));
          e_widget_framelist_object_append(of, ob);
          e_widget_list_object_append(o, of, 1, 1, 0.5);
@@ -227,13 +267,13 @@ _e_app_error_dialog_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_
 
    if (read_length)
       {
-         of = _e_app_error_dialog_scrolltext_create(evas, "Output", app->read->lines);
+         of = _e_app_error_dialog_scrolltext_create(evas, _("Output Data"), app->read->lines);
 /* FIXME: Add stdout "start". */
 /* FIXME: Add stdout "end". */
       }
    else
       {
-         of = e_widget_framelist_add(evas, _("Output"), 0);
+         of = e_widget_framelist_add(evas, _("Output Data"), 0);
          ob = e_widget_label_add(evas, _("There was no output."));
          e_widget_framelist_object_append(of, ob);
       }
@@ -243,13 +283,13 @@ _e_app_error_dialog_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_
       error_length = app->error->size;
    if (error_length)
       {
-         of = _e_app_error_dialog_scrolltext_create(evas, "Error", app->error->lines);
+         of = _e_app_error_dialog_scrolltext_create(evas, _("Error Logs"), app->error->lines);
 /* FIXME: Add stderr "start". */
 /* FIXME: Add stderr "end". */
       }
    else
       {
-         of = e_widget_framelist_add(evas, _("Error"), 0);
+         of = e_widget_framelist_add(evas, _("Error Logs"), 0);
          ob = e_widget_label_add(evas, _("There was no error message."));
          e_widget_framelist_object_append(of, ob);
       }

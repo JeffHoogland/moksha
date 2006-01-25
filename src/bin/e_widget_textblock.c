@@ -67,10 +67,64 @@ e_widget_textblock_markup_set(Evas_Object *obj, const char *text)
 EAPI void
 e_widget_textblock_plain_set(Evas_Object *obj, const char *text)
 {
-   /* FIXME: parse text escape anything htmlish, - generate new text, set
-    * as markup
+   char *markup, *p, *d;
+   int mlen;
+
+   if (!text)
+     {
+	e_widget_textblock_markup_set(obj, NULL);
+	return;
+     }
+   mlen = strlen(text);
+   /* need to look for these and replace with a new string (on the right)
+    * '\n' -> "<br>"
+    * '\t' -> "        "
+    * '<'  -> "&lt;"
+    * '>'  -> "&gt;"
+    * '&'  -> "&amp;"
     */
-   e_widget_textblock_markup_set(obj, text);
+   for (p = text; *p != 0; p++)
+     {
+	if (*p == '\n') mlen += 4 - 1;
+	else if (*p == '\t') mlen += 8 - 1;
+	else if (*p == '<') mlen += 4 - 1;
+	else if (*p == '>') mlen += 4 - 1;
+	else if (*p == '&') mlen += 5 - 1;
+     }
+   markup = alloca(mlen + 1);
+   if (!markup) return;
+   markup[0] = 0;
+   for (d = markup, p = text; *p != 0; p++, d++)
+     {
+	if (*p == '\n')
+	  {
+	     strcpy(d, "<br>");
+	     d += 4 - 1;
+	  }
+	else if (*p == '\t')
+	  {
+	     strcpy(d, "        ");
+	     d += 8 - 1;
+	  }
+	else if (*p == '<')
+	  {
+	     strcpy(d, "&lt;");
+	     d += 4 - 1;
+	  }
+	else if (*p == '>')
+	  {
+	     strcpy(d, "&gt;");
+	     d += 4 - 1;
+	  }
+	else if (*p == '&')
+	  {
+	     strcpy(d, "&amp;");
+	     d += 5 - 1;
+	  }
+	else *d = *p;
+     }
+   *d = 0;
+   e_widget_textblock_markup_set(obj, markup);
 }
 
 
