@@ -1,6 +1,6 @@
 usr/share/enlightenment/data/fonts/*
 usr/share/enlightenment/data/icons/*.edj
-usr/share/enlightenment/data/images/*.png
+usr/share/enlightenment/data/images/*
 usr/share/enlightenment/data/input_methods/*
 usr/share/enlightenment/data/themes/*.edj
 usr/share/enlightenment/data/init/*.edj
