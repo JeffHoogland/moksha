@@ -179,7 +179,7 @@ _e_app_error_dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_D
 
    tlen = 0;
    for (i = 0; lines[i].line != NULL; i++)
-     tlen += strlen(lines[i].line) + 1;
+     tlen += lines[i].size + 1;
    text = alloca(tlen + 1);
    if (text)
      {
