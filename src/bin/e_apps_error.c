@@ -61,31 +61,31 @@ _e_app_error_dialog_fill_data(E_App_Autopsy *app, E_Config_Dialog_Data *cfdata)
       {
 	 if (app->del.exit_signal == SIGINT)
 	   snprintf(buf, sizeof(buf), _("%s was interrupted by an Interrupt Singal"),
-		    app->app->exe, app->del.exit_signal);
+		    app->app->exe);
 	 else if (app->del.exit_signal == SIGQUIT)
 	   snprintf(buf, sizeof(buf), _("%s was interrupted by a Quit Singal"),
-		    app->app->exe, app->del.exit_signal);
+		    app->app->exe);
 	 else if (app->del.exit_signal == SIGABRT)
 	   snprintf(buf, sizeof(buf), _("%s was interrupted by an Abort Singal"),
-		    app->app->exe, app->del.exit_signal);
+		    app->app->exe);
 	 else if (app->del.exit_signal == SIGFPE)
 	   snprintf(buf, sizeof(buf), _("%s was interrupted by a Floating Point Error"),
-		    app->app->exe, app->del.exit_signal);
+		    app->app->exe);
 	 else if (app->del.exit_signal == SIGKILL)
 	   snprintf(buf, sizeof(buf), _("%s was interrupted by an Uninterruptable Kill Singal"),
-		    app->app->exe, app->del.exit_signal);
+		    app->app->exe);
 	 else if (app->del.exit_signal == SIGSEGV)
 	   snprintf(buf, sizeof(buf), _("%s was interrupted by a Segmentation Fault"),
-		    app->app->exe, app->del.exit_signal);
+		    app->app->exe);
 	 else if (app->del.exit_signal == SIGPIPE)
 	   snprintf(buf, sizeof(buf), _("%s was interrupted by a Broken Pipe"),
-		    app->app->exe, app->del.exit_signal);
+		    app->app->exe);
 	 else if (app->del.exit_signal == SIGTERM)
 	   snprintf(buf, sizeof(buf), _("%s was interrupted by a Termination Singal"),
-		    app->app->exe, app->del.exit_signal);
+		    app->app->exe);
 	 else if (app->del.exit_signal == SIGBUS)
 	   snprintf(buf, sizeof(buf), _("%s was interrupted by a Bus Error"),
-		    app->app->exe, app->del.exit_signal);
+		    app->app->exe);
 	 else
 	   snprintf(buf, sizeof(buf), _("%s was interupted by the signal number %i"),
 		    app->app->exe, app->del.exit_signal);
@@ -202,7 +202,7 @@ static Evas_Object *
 _e_app_error_dialog_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    int error_length = 0;
-   Evas_Object *o, *o2, *of, *ob, *os;
+   Evas_Object *o, *ob, *os;
    E_App_Autopsy *app;
 
    app = cfd->data;
@@ -234,7 +234,7 @@ _e_app_error_dialog_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_
 {
    int read_length = 0;
    int error_length = 0;
-   Evas_Object *o, *of, *ob, *ot, *os;
+   Evas_Object *o, *of, *ob, *ot;
    E_App_Autopsy *app;
    
    app = cfd->data;
