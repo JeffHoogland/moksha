@@ -33,8 +33,6 @@ EAPI void
 e_color_class_set(const char *color_class, int r, int g, int b, int a, int r2, int b2, int g2, int a2, int r3, int g3, int b3, int a3)
 {
   E_Color_Class *cc = NULL;
-  Evas_List *l;
-  int found = 0;
 
   cc = e_color_class_find(color_class);
   if (!cc)
