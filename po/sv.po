@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Enlightenment E17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-01-24 09:51+0100\n"
-"PO-Revision-Date: 2006-01-25 08:33+0100\n"
+"PO-Revision-Date: 2006-01-26 12:05+0100\n"
 "Last-Translator: Anders Trobäck <enlightenment@troback.com>\n"
 "Language-Team: Swedish\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgstr ""
 "Copyright &copy; 1999-2005, by the Enlightenment Development Team.<br><br>Vi "
 "hoppas att Du har lika mycket glädje av denna mjukvaran som vi har haft när "
 "vi skrev den.<br><br> Mjukvaran leverars som den är utan några garantier. "
-"Mjukvaran är kontrollerad av licensvillkår så vänligen läs COPYING och "
+"Mjukvaran är kontrollerad av licensvillkor så vänligen läs COPYING och "
 "COPYING-PLAIN licensfiler som är installerade på ditt system."
 "<br><br>Enlightenment är under <hilight>KRAFTIG UTVECKLING</hilight> och är "
 "därför inte stabilt. Många funktioner är inte kompletta eller så kan de till "
@@ -108,7 +108,7 @@ msgstr "Avancerat"
 
 #: src/bin/e_config_dialog.c:109
 msgid "Basic"
-msgstr "Enkla"
+msgstr "Enkelt"
 
 #: src/bin/e_config_dialog.c:123 src/bin/e_error.c:196 src/bin/e_error.c:205
 #: src/bin/e_int_border_remember.c:247 src/bin/e_int_border_remember.c:327
@@ -165,7 +165,7 @@ msgstr "Konfigurationen uppgraderad"
 
 #: src/bin/e_configure.c:45
 msgid "Enlightenment Configuration"
-msgstr "Enlightenment konfiguration"
+msgstr "Konfigurera Enlightenment"
 
 #: src/bin/e_configure.c:62 src/bin/e_int_menus.c:578
 msgid "Configuration Panel"
@@ -173,15 +173,15 @@ msgstr "Konfigurationspanel"
 
 #: src/bin/e_configure.c:65 src/bin/e_int_config_background.c:56
 msgid "Background Settings"
-msgstr "Bakgrundsinställningar"
+msgstr "Bakgrund"
 
 #: src/bin/e_configure.c:66 src/bin/e_int_config_theme.c:46
 msgid "Theme Selector"
-msgstr "Välj tema"
+msgstr "Tema"
 
 #: src/bin/e_configure.c:67 src/bin/e_int_config_modules.c:68
 msgid "Module Settings"
-msgstr "Modulinställningar"
+msgstr "Moduler"
 
 #: src/bin/e_configure.c:68 src/bin/e_int_config_general.c:34
 #: src/bin/e_int_config_general.c:98 src/bin/e_int_config_general.c:151
@@ -190,36 +190,36 @@ msgstr "Modulinställningar"
 #: src/modules/clock/e_mod_config.c:82 src/modules/pager/e_mod_config.c:100
 #: src/modules/pager/e_mod_config.c:163
 msgid "General Settings"
-msgstr "Allmänna inställningar"
+msgstr "Allmänt"
 
 #: src/bin/e_configure.c:69 src/bin/e_int_config_desks.c:45
 msgid "Desktop Settings"
-msgstr "Skrivbordsinställningar"
+msgstr "Skrivbord"
 
 #: src/bin/e_configure.c:70 src/bin/e_int_config_focus.c:45
 msgid "Focus Settings"
-msgstr "Fokusinställningar"
+msgstr "Fokus"
 
 #: src/bin/e_configure.c:71 src/bin/e_int_config_menus.c:39
 #: src/bin/e_int_config_menus.c:92 src/bin/e_int_config_menus.c:145
 msgid "Menu Settings"
-msgstr "Menyinställningar"
+msgstr "Meny"
 
 #: src/bin/e_configure.c:72 src/bin/e_int_config_performance.c:37
 msgid "Performance Settings"
-msgstr "Prestandainställningar"
+msgstr "Prestanda"
 
 #: src/bin/e_configure.c:73 src/bin/e_int_config_winlist.c:51
 msgid "Window List Settings"
-msgstr "Inställningar för fönsterlista"
+msgstr "Fönsterlista"
 
 #: src/bin/e_configure.c:74
 msgid "Window Display Settings"
-msgstr "Inställningar för att visa fönster"
+msgstr "Visa fönster"
 
 #: src/bin/e_configure.c:75
 msgid "Window Manipulation Settings"
-msgstr "Inställningar för fönsterhantering"
+msgstr "Fönsterhantering"
 
 #: src/bin/e_container.c:118
 #, c-format
@@ -1954,7 +1954,7 @@ msgid ""
 "accurate as your BIOS or kernel drivers."
 msgstr ""
 "En enkel batterimätare som antingen använder<hilight>ACPI</hilight> eller "
-"<hilight>APM</hilight><br>på Linux för att övervaka ditt batteri och din AC "
+"<hilight>APM</hilight><br>på Linux för att övervaka ditt batteri och din "
 "nätdels <br>status. Detta fungerar under Linux och FreeBSD och är "
 "endast<br>lika exakt som ditt BIOS eller din kärnas drivrutiner."
 
