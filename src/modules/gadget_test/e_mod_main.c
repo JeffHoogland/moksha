@@ -13,7 +13,6 @@ EAPI E_Module_Api e_modapi =
 static void _test_face_init(void *data, E_Gadget_Face *face);
 static void _test_face_free(void *data, E_Gadget_Face *face);
 static void _test_face_change(void *data, E_Gadget_Face *face, E_Gadman_Client *gmc, E_Gadman_Change change);
-static void _test_menu_init(void *data, E_Gadget *gad);
 static void _test_face_menu_init(void *data, E_Gadget_Face *face);
 
 
@@ -39,11 +38,11 @@ e_modapi_init(E_Module *m)
    api->func_face_init = _test_face_init;
    api->func_face_free = _test_face_free;
    api->func_change = _test_face_change;
-   api->func_menu_init = _test_menu_init;
    api->func_face_menu_init = _test_face_menu_init;
    api->data = t;
 
    gad = e_gadget_new(api);
+   E_FREE(api);
 
    return gad;
 }
@@ -97,15 +96,6 @@ static void
 _test_face_change(void *data, E_Gadget_Face *face, E_Gadman_Client *gmc, E_Gadman_Change change)
 {
    printf("change face!\n");
-}
-
-static void
-_test_menu_init(void *data, E_Gadget *gad)
-{
-   E_Menu_Item *mi;
-
-   mi = e_menu_item_new(gad->menu);
-   e_menu_item_label_set(mi, _("Test Menu Item"));
 }
 
 static void

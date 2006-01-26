@@ -18,9 +18,8 @@ struct _E_Gadget_Api
   int per_zone; /* 1 - one face per zone, 0 - one per container */
   void (*func_face_init) (void *data, E_Gadget_Face *gadget_face);
   void (*func_face_free) (void *data, E_Gadget_Face *gadget_face);
-  void (*func_change) (void *data, E_Gadget_Face *gadget_face, E_Gadman_Client *gmc, E_Gadman_Change change);
-  void (*func_menu_init) (void *data, E_Gadget *gadget);
   void (*func_face_menu_init) (void *data, E_Gadget_Face *gadget_face);
+  void (*func_change) (void *data, E_Gadget_Face *gadget_face, E_Gadman_Client *gmc, E_Gadman_Change change);
   void *data;
 };
 
@@ -31,16 +30,17 @@ struct _E_Gadget
 
   E_Module *module;
   const char *name;
-  E_Menu *menu;
 
   struct {
     void (*face_init) (void *data, E_Gadget_Face *gadget_face);
     void (*face_free) (void *data, E_Gadget_Face *gadget_face);
-    void (*change) (void *data, E_Gadget_Face *gadget_face, E_Gadman_Client *gmc, E_Gadman_Change change);
-    void (*menu_init) (void *data, E_Gadget *gadget);
     void (*face_menu_init) (void *data, E_Gadget_Face *gadget_face);
+    void (*change) (void *data, E_Gadget_Face *gadget_face, E_Gadman_Client *gmc, E_Gadman_Change change);
   } funcs;
 
+  int num_faces;
+
+  void *conf;
   void *data;
 };
 
@@ -50,6 +50,7 @@ struct _E_Gadget_Face
   E_Container *con;
   E_Zone *zone;
   Evas *evas;
+  int face_num;
 
   E_Menu *menu;
   void *conf;

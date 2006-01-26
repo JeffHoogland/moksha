@@ -17,11 +17,9 @@
  */
 
 static E_Gadget_Face *_e_gadget_face_new(E_Gadget *gad, E_Container *con, E_Zone *zone);
-static void _e_gadget_menu_init(E_Gadget *gad);
 static void _e_gadget_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_gadget_free(E_Gadget *gad);
 static void _e_gadget_face_cb_gmc_change(void * data, E_Gadman_Client *gmc, E_Gadman_Change change);
-static void _e_gadget_menu_init(E_Gadget *gad);
 static void _e_gadget_face_menu_init(E_Gadget_Face *face);
 static void _e_gadget_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
@@ -32,20 +30,24 @@ static void _e_gadget_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void 
  * func_face_free should be defined. The possible fields api fields are:
  *
  * E_Module *module - the module that contains this gadget
+ *
  * char *name - a unique name for this module
+ *
  * void (*func_face_init) (void *data, E_Gadget_Face *gadget_face) - 
  *    A function that initializes the gadget's face. All evas objects should 
  *    be drawn on gadget_face->evas.
+ *
  * void (*func_face_free) (void *data, E_Gadget_Face *gadget_face) -
  *    A function that frees all memory allocated in func_face_init
+ *
  * void (*func_change) (void *data, E_Gadget_Face *gadget_face,
  *			E_Gadman_Client *gmc, E_Gadman_Change change) -
  *    A function that is called whenever the gadget is resized.
- * void (*func_menu_init) (void *data, E_Gadget *gadget) -
- *    A function that initializes the gadget's main menu. 
+ *
  * void (*func_face_menu_init) (void *data, E_Gadget_Face *gadget_face) -
  *    A function that initializes the gadget's face menu. This is displayed
  *    when the user right clicks on the gadget's face.
+ *
  * void *data - a pointer to some data to be passed to all callbacks.
  * 
  */
@@ -69,10 +71,8 @@ e_gadget_new(E_Gadget_Api *api)
    gad->funcs.face_init = api->func_face_init;
    gad->funcs.face_free = api->func_face_free;
    gad->funcs.change = api->func_change;
-   gad->funcs.menu_init = api->func_menu_init;
    gad->funcs.face_menu_init = api->func_face_menu_init;
    gad->data = api->data;
-
 
    /* get all desktop evases, and call init function on them */
    managers = e_manager_list();
@@ -103,7 +103,6 @@ e_gadget_new(E_Gadget_Api *api)
 	       }
 	  }
      }
-   _e_gadget_menu_init(gad);
 
    return gad;
 }
@@ -142,20 +141,7 @@ _e_gadget_face_new(E_Gadget *gad, E_Container *con, E_Zone *zone)
    snprintf(buf, sizeof(buf), "module.%s", gad->name);
    face->gmc = e_gadman_client_new(con->gadman);
    e_gadman_client_zone_set(face->gmc, face->zone);
-   e_gadman_client_domain_set(face->gmc, buf, evas_list_count(gad->faces));
-
-   /* call the user init */
-   if (gad->funcs.face_init) (gad->funcs.face_init)(gad->data, face);
-
-   _e_gadget_face_menu_init(face);
-
-   change = E_NEW(E_Gadget_Change, 1);
-   if (change)
-     {
-	printf("set change func\n");
-	change->gadget = gad;
-	change->face = face;
-     }
+   e_gadman_client_domain_set(face->gmc, buf, gad->num_faces);
 
    /* set up some gadman defaults */
    e_gadman_client_policy_set(face->gmc,
@@ -169,11 +155,27 @@ _e_gadget_face_new(E_Gadget *gad, E_Container *con, E_Zone *zone)
    e_gadman_client_auto_size_set(face->gmc, 40, 40);
    e_gadman_client_align_set(face->gmc, 1.0, 1.0);
    e_gadman_client_resize(face->gmc, 40, 40);
+
+   change = E_NEW(E_Gadget_Change, 1);
+   if (change)
+     {
+	change->gadget = gad;
+	change->face = face;
+     }
    e_gadman_client_change_func_set(face->gmc, _e_gadget_face_cb_gmc_change, change);
+
+   gad->faces = evas_list_append(gad->faces, face);
+   face->face_num = gad->num_faces;
+   gad->num_faces++;
+
+   /* call the user init */
+   if (gad->funcs.face_init) (gad->funcs.face_init)(gad->data, face);
+
+   _e_gadget_face_menu_init(face);
+
    e_gadman_client_load(face->gmc);
    evas_event_thaw(face->evas);
 
-   gad->faces = evas_list_append(gad->faces, face);
 
    return face;
 }
@@ -188,13 +190,6 @@ e_gadget_face_theme_set(E_Gadget_Face *face, char *category, char *group)
    face->main_obj = o;
    e_theme_edje_object_set(o, category, group);
    evas_object_show(o);
-}
-
-static void
-_e_gadget_menu_init(E_Gadget *gad)
-{
-   gad->module->config_menu = gad->menu = e_menu_new();
-   if (gad->funcs.menu_init) (gad->funcs.menu_init)(gad->data, gad);
 }
 
 static void
@@ -242,7 +237,6 @@ _e_gadget_free(E_Gadget *gad)
    evas_list_free(gad->faces);
    gad->module->config_menu = NULL;
    e_object_unref(E_OBJECT(gad->module));
-   e_object_del(E_OBJECT(gad->menu));
    if (gad->name) evas_stringshare_del(gad->name);
    free(gad);
   
@@ -303,7 +297,7 @@ _e_gadget_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    face = data;
    if (!face) return;
 
-   if (ev->button == 3 && face->gad->menu)
+   if (ev->button == 3 && face->menu)
      {
 	e_menu_activate_mouse(face->menu, e_zone_current_get(face->con),
 			      ev->output.x, ev->output.y, 1, 1,
