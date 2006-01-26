@@ -32,31 +32,18 @@ struct _Config_Face
 
 struct _Temperature
 {
-   E_Menu           *config_menu;
-   E_Menu           *config_menu_low;
-   E_Menu           *config_menu_high;
-   E_Menu           *config_menu_poll;
-   E_Menu           *config_menu_sensor;
-   E_Menu           *config_menu_unit;
-   Evas_List        *faces;
-
    Config           *conf;
    Ecore_Timer      *temperature_check_timer;
    E_Config_Dialog  *config_dialog;
    unsigned char    have_temp;
+   E_Gadget	    *gad;
 };
 
 struct _Temperature_Face
 {
    Temperature *temp;
-   E_Container *con;
-   E_Menu      *menu;
    Config_Face *conf;
 
-   Evas_Object *temp_object;
-   Evas_Object *event_object;
-
-   E_Gadman_Client *gmc;
 };
 
 EAPI extern E_Module_Api e_modapi;

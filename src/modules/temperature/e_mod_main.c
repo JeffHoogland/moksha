@@ -17,28 +17,18 @@
 
 /* module private routines */
 static Temperature *_temperature_new();
-static void     _temperature_free(Temperature *e);
-//static void     _temperature_config_menu_boundaries_new(Temperature *e);
-static void     _temperature_config_menu_new(Temperature *e);
-static int      _temperature_cb_check(void *data);
+static void      _temperature_free(Temperature *e);
+static int       _temperature_cb_check(void *data);
 
-static Temperature_Face *_temperature_face_new(Temperature *t, E_Container *con);
-static void     _temperature_face_free(Temperature_Face *ef);
-static void     _temperature_face_enable(Temperature_Face *face);
-static void     _temperature_face_disable(Temperature_Face *face);
-static void     _temperature_face_menu_new(Temperature_Face *face);
-static void     _temperature_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
-static void     _temperature_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void     _temperature_face_level_set(Temperature_Face *ef, double level);
-static void     _temperature_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
-static void     _temperature_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
+static void      _temperature_face_init(void *data, E_Gadget_Face *face);
+static void      _temperature_face_free(void *data, E_Gadget_Face *face);
+
+static void      _temperature_face_level_set(E_Gadget_Face *face, double level);
 
 static void	_temperature_cb_update_policy(void *data);
 
 static E_Config_DD *conf_edd;
 static E_Config_DD *conf_face_edd;
-
-static int temperature_count;
 
 /* public module routines. all modules must have these */
 EAPI E_Module_Api e_modapi = 
@@ -50,24 +40,42 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
+   E_Gadget *gad = NULL;
+   E_Gadget_Api *api;
    Temperature *e;
 
-   /* actually init temperature */
-   e = _temperature_new(m);
-   m->config_menu = e->config_menu;
-   return e;
+   e = _temperature_new();
+
+   /* set up our actual gadget */
+   api = E_NEW(E_Gadget_Api, 1);
+   api->module = m;
+   api->name = "temperature";
+   api->func_face_init = _temperature_face_init;
+   api->func_face_free = _temperature_face_free;
+   api->data = e;
+
+   gad = e_gadget_new(api);
+   E_FREE(api);
+
+   /* start the timer */
+   e->gad = gad;
+   e->temperature_check_timer = ecore_timer_add(e->conf->poll_time, _temperature_cb_check, gad);
+   return gad;
 }
 
 EAPI int
 e_modapi_shutdown(E_Module *m)
 {
+   E_Gadget *gad;
    Temperature *e;
 
-   if (m->config_menu)
-     m->config_menu = NULL;
+   E_CONFIG_DD_FREE(conf_edd);
+   E_CONFIG_DD_FREE(conf_face_edd);
 
-   e = m->data;
-   if (e) 
+   gad = m->data;
+   if (!gad) return;
+   e = gad->data;
+   if (e)
      {
 	if (e->config_dialog) 
 	  {
@@ -76,15 +84,20 @@ e_modapi_shutdown(E_Module *m)
 	  }
 	_temperature_free(e);
      }
+   e_object_del(E_OBJECT(gad));
    return 1;
 }
 
 EAPI int
 e_modapi_save(E_Module *m)
 {
+   E_Gadget *gad;
    Temperature *e;
 
-   e = m->data;
+   gad = m->data;
+   if (!gad) return 0;
+   e = gad->data;
+   if (!e) return 0;
    e_config_domain_save("module.temperature", conf_edd, e->conf);
    return 1;
 }
@@ -112,38 +125,30 @@ e_modapi_about(E_Module *m)
 EAPI int
 e_modapi_config(E_Module *m)
 {
+   E_Gadget *gad;
    Temperature *e;
    Evas_List *l;
    
-   e = m->data;
-   if (!e) return 0;
-   if (!e->faces) return 0;
-   for (l = e->faces; l; l = l->next) 
-     {
-	Temperature_Face *face;
-	face = l->data;
-	if (!face) return 0;
-	if (face->con == e_container_current_get(e_manager_current_get())) 
-	  {
-	     _config_temperature_module(face->con, face->temp);
-	     break;
-	  }
-     }
+   gad = m->data;
+   if (!gad) return 0;
+   e = gad->data; 
+   _config_temperature_module(e_container_current_get(e_manager_current_get()), e);
+     
    return 1;
 }
+
+
 
 /* module private routines */
 static Temperature *
 _temperature_new()
 {
    Temperature *e;
-   Evas_List *managers, *l, *l2, *cl;
-   E_Menu_Item *mi;
 
-   temperature_count = 0;
    e = E_NEW(Temperature, 1);
    if (!e) return NULL;
 
+   /* create the config edd */
    conf_face_edd = E_CONFIG_DD_NEW("Temperature_Config_Face", Config_Face);
 #undef T
 #undef D
@@ -181,79 +186,59 @@ _temperature_new()
    E_CONFIG_LIMIT(e->conf->units, CELCIUS, FAHRENHEIT);
    E_CONFIG_LIMIT(e->conf->allow_overlap, 0, 1);
 
-   _temperature_config_menu_new(e);
    e->have_temp = -1;
-   e->temperature_check_timer = ecore_timer_add(e->conf->poll_time, _temperature_cb_check, e);
-
-   managers = e_manager_list();
-   cl = e->conf->faces;
-   for (l = managers; l; l = l->next)
-     {
-	E_Manager *man;
-
-	man = l->data;
-	for (l2 = man->containers; l2; l2 = l2->next)
-	  {
-	     E_Container *con;
-	     Temperature_Face *ef;
-
-	     con = l2->data;
-	     ef = _temperature_face_new(e, con);
-	     if (ef)
-	       {
-		  ef->temp = e;
-		  e->faces = evas_list_append(e->faces, ef);
-		  /* Config */
-		  if (!cl)
-		    {
-		       ef->conf = E_NEW(Config_Face, 1);
-		       ef->conf->enabled = 1;
-		       e->conf->faces = evas_list_append(e->conf->faces, ef->conf);
-		    }
-		  else
-		    {
-		       ef->conf = cl->data;
-		       cl = cl->next;
-		    }
-
-		  /* Menu */
-		  /* This menu must be initialized after conf */
-		  _temperature_face_menu_new(ef);
-
-		  /* Add main menu to face menu */
-		  mi = e_menu_item_new(e->config_menu);
-		  e_menu_item_label_set(mi, _("Configuration"));
-		  e_menu_item_callback_set(mi, _temperature_face_cb_menu_configure, ef);
-
-		  mi = e_menu_item_new(e->config_menu);
-		  e_menu_item_label_set(mi, con->name);
-		  e_menu_item_submenu_set(mi, ef->menu);
-
-		  /* Setup */
-		  if (!ef->conf->enabled)
-		    _temperature_face_disable(ef);
-	       }
-	  }
-     }
-
-   _temperature_cb_check(e);
 
    return e;
+}
+
+void _temperature_face_init(void *data, E_Gadget_Face *face)
+{
+   Temperature *e;
+   Temperature_Face *ef;
+   Config_Face *cf;
+   Evas_Object *o;
+   E_Gadman_Policy  policy;
+
+   e = data;
+
+   ef = E_NEW(Temperature_Face, 1);
+   if (!ef) return;
+
+   e_gadget_face_theme_set(face, "base/theme/modules/temperature",
+			   "modules/temperature/main");
+
+   policy = E_GADMAN_POLICY_ANYWHERE |
+	    E_GADMAN_POLICY_HMOVE |
+	    E_GADMAN_POLICY_VMOVE |
+	    E_GADMAN_POLICY_HSIZE |
+	    E_GADMAN_POLICY_VSIZE;
+
+   if (e->conf->allow_overlap == 0)
+     policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
+   else
+     policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
+
+   e_gadman_client_policy_set(face->gmc, policy);
+
+   ef->conf = evas_list_nth(e->conf->faces, face->face_num);
+   if (!ef->conf)
+     {
+	ef->conf = E_NEW(Config_Face, 1);
+	ef->conf->enabled = 1;
+	e->conf->faces = evas_list_append(e->conf->faces, ef->conf);
+     }
+
+   face->data = ef;
+
+   _temperature_cb_check(face->gad);
+
+   return;
 }
 
 static void
 _temperature_free(Temperature *e)
 {
    Evas_List *l;
-
-   E_CONFIG_DD_FREE(conf_edd);
-   E_CONFIG_DD_FREE(conf_face_edd);
-
-   for (l = e->faces; l; l = l->next)
-     _temperature_face_free(l->data);
-   evas_list_free(e->faces);
-
-   e_object_del(E_OBJECT(e->config_menu));
 
    ecore_timer_del(e->temperature_check_timer);
 
@@ -264,175 +249,21 @@ _temperature_free(Temperature *e)
    free(e);
 }
 
-
 static void
-_temperature_config_menu_new(Temperature *e)
+_temperature_face_free(void *data, E_Gadget_Face *face)
 {
-   E_Menu *mn;
-
-   mn = e_menu_new();
-   e->config_menu = mn;
-}
-
-static Temperature_Face *
-_temperature_face_new(Temperature *t, E_Container *con)
-{
-   Evas_Object *o;
    Temperature_Face *ef;
-   E_Gadman_Policy  policy;
-
-   ef = E_NEW(Temperature_Face, 1);
-   if (!ef) return NULL;
-
-   ef->con = con;
-   e_object_ref(E_OBJECT(con));
-
-   evas_event_freeze(con->bg_evas);
-   o = edje_object_add(con->bg_evas);
-   ef->temp_object = o;
-
-   e_theme_edje_object_set(o, "base/theme/modules/temperature",
-			   "modules/temperature/main");
-   evas_object_show(o);
-
-   o = evas_object_rectangle_add(con->bg_evas);
-   ef->event_object = o;
-   evas_object_layer_set(o, 2);
-   evas_object_repeat_events_set(o, 1);
-   evas_object_color_set(o, 0, 0, 0, 0);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _temperature_face_cb_mouse_down, ef);
-   evas_object_show(o);
-
-   ef->gmc = e_gadman_client_new(ef->con->gadman);
-   e_gadman_client_domain_set(ef->gmc, "module.temperature", temperature_count++);
-
-   policy = E_GADMAN_POLICY_ANYWHERE |
-	    E_GADMAN_POLICY_HMOVE |
-	    E_GADMAN_POLICY_VMOVE |
-	    E_GADMAN_POLICY_HSIZE |
-	    E_GADMAN_POLICY_VSIZE;
-
-   if (t->conf->allow_overlap == 0)
-     policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
-   else
-     policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
-
-   e_gadman_client_policy_set(ef->gmc, policy);
-   e_gadman_client_min_size_set(ef->gmc, 4, 4);
-   e_gadman_client_max_size_set(ef->gmc, 128, 128);
-   e_gadman_client_auto_size_set(ef->gmc, 40, 40);
-   e_gadman_client_align_set(ef->gmc, 1.0, 1.0);
-   e_gadman_client_resize(ef->gmc, 40, 40);
-   e_gadman_client_change_func_set(ef->gmc, _temperature_face_cb_gmc_change, ef);
-   e_gadman_client_load(ef->gmc);
-
-   evas_event_thaw(con->bg_evas);
-
-   return ef;
-}
-
-static void
-_temperature_face_free(Temperature_Face *ef)
-{
-   e_object_unref(E_OBJECT(ef->con));
-   e_object_del(E_OBJECT(ef->gmc));
-   evas_object_del(ef->temp_object);
-   evas_object_del(ef->event_object);
-   e_object_del(E_OBJECT(ef->menu));
+   ef = face->data;
 
    free(ef);
-   temperature_count--;
-}
-
-static void
-_temperature_face_enable(Temperature_Face *face)
-{
-   face->conf->enabled = 1;
-   evas_object_show(face->temp_object);
-   evas_object_show(face->event_object);
-   e_config_save_queue();
-}
-
-static void
-_temperature_face_disable(Temperature_Face *face)
-{
-   face->conf->enabled = 0;
-   evas_object_hide(face->temp_object);
-   evas_object_hide(face->event_object);
-   e_config_save_queue();
-}
-
-static void
-_temperature_face_menu_new(Temperature_Face *face)
-{
-   E_Menu *mn;
-   E_Menu_Item *mi;
-
-   mn = e_menu_new();
-   face->menu = mn;
-   
-   /* Config */
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Configuration"));
-   e_menu_item_callback_set(mi, _temperature_face_cb_menu_configure, face);
-   
-   /* Edit */
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Edit Mode"));
-   e_menu_item_callback_set(mi, _temperature_face_cb_menu_edit, face);
-}
-
-static void
-_temperature_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change)
-{
-   Temperature_Face *ef;
-   Evas_Coord x, y, w, h;
-
-   ef = data;
-   switch (change)
-     {
-      case E_GADMAN_CHANGE_MOVE_RESIZE:
-	 e_gadman_client_geometry_get(ef->gmc, &x, &y, &w, &h);
-	 evas_object_move(ef->temp_object, x, y);
-	 evas_object_move(ef->event_object, x, y);
-	 evas_object_resize(ef->temp_object, w, h);
-	 evas_object_resize(ef->event_object, w, h);
-	 break;
-      case E_GADMAN_CHANGE_RAISE:
-	 evas_object_raise(ef->temp_object);
-	 evas_object_raise(ef->event_object);
-	 break;
-      case E_GADMAN_CHANGE_EDGE:
-      case E_GADMAN_CHANGE_ZONE:
-	 /* FIXME
-	  * Must we do something here?
-	  */
-	 break;
-     }
-}
-
-static void
-_temperature_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-   Evas_Event_Mouse_Down *ev;
-   Temperature_Face *ef;
-
-   ev = event_info;
-   ef = data;
-   if (ev->button == 3)
-     {
-	e_menu_activate_mouse(ef->menu, e_zone_current_get(ef->con),
-			      ev->output.x, ev->output.y, 1, 1,
-			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
-	e_util_container_fake_mouse_up_all_later(ef->con);
-     }
 }
 
 static int
 _temperature_cb_check(void *data)
 {
-   Temperature *ef;
-   Temperature_Face *face;
+   E_Gadget *gad;
+   E_Gadget_Face *face;
+   Temperature *t;
    int ret = 0;
    Ecore_List *therms;
    Evas_List *l;
@@ -442,7 +273,12 @@ _temperature_cb_check(void *data)
    static int mib[5] = {-1};
    int len;
 #endif
-   ef = data;
+
+   gad = data;
+   if (!gad) return;
+   t = gad->data;
+   if (!t) return;
+
 #ifdef __FreeBSD__
    if (mib[0] == -1)
      {
@@ -482,7 +318,7 @@ _temperature_cb_check(void *data)
 	       {
 		  char *name, *sensor;
 
-		  sensor = ef->conf->sensor_name;
+		  sensor = t->conf->sensor_name;
 		  if (!sensor) sensor = "temp1";
 
 		  while ((name = ecore_list_next(therms)))
@@ -547,87 +383,69 @@ _temperature_cb_check(void *data)
      }
 #endif   
    
-   if (ef->conf->units == FAHRENHEIT)
+   if (t->conf->units == FAHRENHEIT)
 	temp = (temp * 9.0 / 5.0) + 32;
-   
+
    if (ret)
      {
 	char *utf8;
 
-	if (ef->have_temp != 1)
+	if (t->have_temp != 1)
 	  {
 	     /* enable therm object */
-	     for (l = ef->faces; l; l = l->next)
+	     for (l = gad->faces; l; l = l->next)
 	       {
 		  face = l->data;
-		  edje_object_signal_emit(face->temp_object, "known", "");
+		  edje_object_signal_emit(face->main_obj, "known", "");
 	       }
-	     ef->have_temp = 1;
+	     t->have_temp = 1;
 	  }
 
-	if (ef->conf->units == FAHRENHEIT) 
+	if (t->conf->units == FAHRENHEIT) 
 	  snprintf(buf, sizeof(buf), "%i°F", temp);
 	else
 	  snprintf(buf, sizeof(buf), "%i°C", temp);               
 	utf8 = ecore_txt_convert("iso-8859-1", "utf-8", buf);
 
-	for (l = ef->faces; l; l = l->next)
+	for (l = gad->faces; l; l = l->next)
 	  {
 	     face = l->data;
 	     _temperature_face_level_set(face,
-				    (double)(temp - ef->conf->low) /
-				    (double)(ef->conf->high - ef->conf->low));
+				    (double)(temp - t->conf->low) /
+				    (double)(t->conf->high - t->conf->low));
 		  
-	     edje_object_part_text_set(face->temp_object, "reading", utf8);
+	     edje_object_part_text_set(face->main_obj, "reading", utf8);
 	  }
 	free(utf8);
      }
    else
      {
-	if (ef->have_temp != 0)
+	if (t->have_temp != 0)
 	  {
 	     /* disable therm object */
-	     for (l = ef->faces; l; l = l->next)
+	     for (l = gad->faces; l; l = l->next)
+
 	       {
 		  face = l->data;
-		  edje_object_signal_emit(face->temp_object, "unknown", "");
-		  edje_object_part_text_set(face->temp_object, "reading", "NO TEMP");
+		  edje_object_signal_emit(face->main_obj, "unknown", "");
+		  edje_object_part_text_set(face->main_obj, "reading", "NO TEMP");
 		  _temperature_face_level_set(face, 0.5);
 	       }
-	     ef->have_temp = 0;
+	     t->have_temp = 0;
 	  }
      }
    return 1;
 }
 
 static void
-_temperature_face_level_set(Temperature_Face *ef, double level)
+_temperature_face_level_set(E_Gadget_Face *face, double level)
 {
    Edje_Message_Float msg;
 
    if (level < 0.0) level = 0.0;
    else if (level > 1.0) level = 1.0;
    msg.val = level;
-   edje_object_message_send(ef->temp_object, EDJE_MESSAGE_FLOAT, 1, &msg);
-}
-
-static void
-_temperature_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Temperature_Face *face;
-
-   face = data;
-   e_gadman_mode_set(face->gmc->gadman, E_GADMAN_MODE_EDIT);
-}
-
-static void
-_temperature_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi) 
-{
-   Temperature_Face *tf;
-   
-   tf = data;
-   if (!tf) return;
-   _config_temperature_module(tf->con, tf->temp);
+   edje_object_message_send(face->main_obj, EDJE_MESSAGE_FLOAT, 1, &msg);
 }
 
 void 
@@ -635,29 +453,35 @@ _temperature_face_cb_config_updated(Temperature *temp)
 {
    /* Call all funcs needed to handle update */
    ecore_timer_del(temp->temperature_check_timer);
-   temp->temperature_check_timer = ecore_timer_add(temp->conf->poll_time, _temperature_cb_check, temp);
+   temp->temperature_check_timer = ecore_timer_add(temp->conf->poll_time, _temperature_cb_check, temp->gad);
    _temperature_cb_update_policy(temp);
+   
 }
 
 void
 _temperature_cb_update_policy(void *data)
 {
   Temperature *temp;
-  Temperature_Face *tf;
+  E_Gadget_Face *face;
   Evas_List *l;
   E_Gadman_Policy policy;
+  E_Gadget *gad;
 
   temp = data;
-  for (l = temp->faces; l; l = l->next)
+  if (!temp) return;
+  gad = temp->gad;
+  if (!gad) return;
+
+  for (l = gad->faces; l; l = l->next)
     {
-      tf = l->data;
-      policy = tf->gmc->policy;
+      face = l->data;
+      policy = face->gmc->policy;
 
       if (temp->conf->allow_overlap == 0)
 	policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
       else
 	policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
 
-      e_gadman_client_policy_set(tf->gmc, policy);
+      e_gadman_client_policy_set(face->gmc, policy);
     }
 }

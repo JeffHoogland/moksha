@@ -17,8 +17,6 @@
 #define FAR_2_CEL(x) (x - 32) / 1.8
 #define CEL_2_FAR(x) (x * 1.8) + 32
 
-typedef struct _Cfg_File_Data Cfg_File_Data;
-
 struct _E_Config_Dialog_Data
 {
    int poll_method;
@@ -35,12 +33,6 @@ struct _E_Config_Dialog_Data
    int allow_overlap;
 
    int sensor;
-};
-
-struct _Cfg_File_Data 
-{
-   E_Config_Dialog *cfd;
-   char *file;
 };
 
 /* Protos */
