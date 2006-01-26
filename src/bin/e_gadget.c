@@ -17,6 +17,7 @@
  */
 
 static E_Gadget_Face *_e_gadget_face_new(E_Gadget *gad, E_Container *con, E_Zone *zone);
+static void _e_gadget_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_gadget_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_gadget_free(E_Gadget *gad);
 static void _e_gadget_face_cb_gmc_change(void * data, E_Gadman_Client *gmc, E_Gadman_Change change);
@@ -197,13 +198,36 @@ _e_gadget_face_menu_init(E_Gadget_Face *face)
 {
    E_Menu_Item *mi;
 
+   if (!face) return;
+
    face->menu = e_menu_new();
+
+   if (face->gad && face->gad->module && face->gad->module->func.config) 
+     {
+	mi = e_menu_item_new(face->menu);
+	e_menu_item_label_set(mi, _("Configuration"));
+	e_menu_item_callback_set(mi, _e_gadget_cb_menu_configure, face->gad);
+     }
 
    mi = e_menu_item_new(face->menu);
    e_menu_item_label_set(mi, _("Edit Mode"));
    e_menu_item_callback_set(mi, _e_gadget_cb_menu_edit, face);
 
    if (face->gad->funcs.face_menu_init) (face->gad->funcs.face_menu_init)(face->gad->data, face);
+}
+
+static void
+_e_gadget_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Gadget *gad;
+   E_Module *module;
+
+   gad = data;
+   if (!gad) return;
+   module = gad->module;
+   if (!module) return;
+
+   if (module->func.config) (module->func.config)(module);
 }
 
 static void
