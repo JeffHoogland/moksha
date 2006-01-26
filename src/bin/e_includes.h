@@ -114,3 +114,4 @@
 #include "e_exehist.h"
 #include "e_color_class.h"
 #include "e_widget_textblock.h"
+#include "e_apps_error.h"

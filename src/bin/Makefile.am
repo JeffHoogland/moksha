@@ -135,7 +135,8 @@ e_exebuf.h \
 e_int_config_modules.h \
 e_exehist.h \
 e_color_class.h \
-e_widget_textblock.h
+e_widget_textblock.h \
+e_apps_error.h
 
 enlightenment_src = \
 e_user.c \
@@ -213,7 +214,6 @@ e_widget_table.c \
 e_widget_entry.c \
 e_widget_image.c \
 e_config_dialog.c \
-e_apps_error.c \
 e_int_config_focus.c \
 e_icon_grid.c \
 e_icon_canvas.c \
@@ -253,6 +253,7 @@ e_int_config_modules.c \
 e_exehist.c \
 e_color_class.c \
 e_widget_textblock.c \
+e_apps_error.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \

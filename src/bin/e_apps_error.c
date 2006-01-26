@@ -18,8 +18,8 @@ static void         _e_app_error_dialog_free_data(E_Config_Dialog *cfd, E_Config
 static Evas_Object *_e_app_error_dialog_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_e_app_error_dialog_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
-void 
-_e_app_error_dialog(E_Container *con, E_App_Autopsy *app)
+EAPI void 
+e_app_error_dialog(E_Container *con, E_App_Autopsy *app)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;

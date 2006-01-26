@@ -13,9 +13,6 @@
  * - clean up the add app functions. To much similar code.
  */
 
-extern void _e_app_error_dialog(E_Container *con, E_App_Autopsy *app);
-
-
 /* local subsystem functions */
 typedef struct _E_App_Change_Info E_App_Change_Info;
 typedef struct _E_App_Callback    E_App_Callback;
@@ -1897,7 +1894,7 @@ _e_apps_cb_exit(void *data, int type, void *event)
 	aut->del = *ev;
 	aut->error = ecore_exe_event_data_get(ai->exe, ECORE_EXE_PIPE_ERROR);
 	aut->read = ecore_exe_event_data_get(ai->exe, ECORE_EXE_PIPE_READ);
-	_e_app_error_dialog(NULL, aut);
+	e_app_error_dialog(NULL, aut);
      }
    if (ai->expire_timer) ecore_timer_del(ai->expire_timer);
    free(ai);
