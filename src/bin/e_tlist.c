@@ -31,6 +31,7 @@ struct _E_Smart_Item
    void         (*func_hilight) (void *data, void *data2);
    void          *data;
    void          *data2;
+   unsigned char  markup : 1;
 };
 
 /* local subsystem functions */
@@ -115,7 +116,13 @@ e_tlist_selected_label_get(Evas_Object *obj)
    API_ENTRY return NULL;
    if (!sd->items) return NULL;
    si = evas_list_nth(sd->items, sd->selected);
-   if (si) return edje_object_part_text_get(si->base_obj, "label");
+   if (si)
+      {
+         if (si->markup)
+            return edje_object_part_text_get(si->base_obj, "labelblock");
+	 else
+            return edje_object_part_text_get(si->base_obj, "label");
+      }
    return NULL;
 }
 
@@ -211,7 +218,10 @@ e_tlist_remove_label(Evas_Object *obj, char *label)
 	if (si) 
 	  {
 	     char *t;
-	     t = strdup(edje_object_part_text_get(si->base_obj, "label"));
+             if (si->markup)
+	        t = strdup(edje_object_part_text_get(si->base_obj, "labelblock"));
+	     else
+	        t = strdup(edje_object_part_text_get(si->base_obj, "label"));
 	     if (!strcmp(t, label)) 
 	       {
 		  evas_object_del(si->base_obj);
@@ -242,6 +252,7 @@ _e_tlist_append(Evas_Object *obj, char *label, void (*func) (void *data, void *d
    API_ENTRY return;
    si = E_NEW(E_Smart_Item, 1);
    si->sd = sd;
+   si->markup = markup;
    si->base_obj = edje_object_add(evas_object_evas_get(sd->smart_obj));
 
    /* FIXME: Use a color class or something to avoid duplicating the theme with only the background piccie being different. */
@@ -251,7 +262,7 @@ _e_tlist_append(Evas_Object *obj, char *label, void (*func) (void *data, void *d
    else
       e_theme_edje_object_set(si->base_obj, "base/theme/widgets",
 			     "widgets/tlist");
-   if (markup)
+   if (si->markup)
       edje_object_part_text_set(si->base_obj, "labelblock", label);
    else
       edje_object_part_text_set(si->base_obj, "label", label);
