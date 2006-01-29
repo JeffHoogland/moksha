@@ -73,7 +73,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Extras"), 0);
-   ob = e_widget_check_add(evas, _("Allow Overlap"), &(cfdata->allow_overlap));
+   ob = e_widget_check_add(evas, _("Allow windows to overlap this gadget"), &(cfdata->allow_overlap));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
