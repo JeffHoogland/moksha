@@ -156,9 +156,9 @@ _basic_create_widgets(E_Config_Dialog *cdd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("Number of Desktops"), 0);
    
    ot = e_widget_table_add(evas, 0);
-   ob = e_widget_slider_add(evas, 0, 0, _("%1.0f"), 1.0, 8.0, 1.0, 0, NULL, &(cfdata->y), 150);
+   ob = e_widget_slider_add(evas, 0, 0, _("%1.0f"), 1.0, 12.0, 1.0, 0, NULL, &(cfdata->y), 150);
    e_widget_table_object_append(ot, ob, 1, 0, 1, 1, 0, 1, 0, 1);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 8.0, 1.0, 0, NULL, &(cfdata->x), 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 12.0, 1.0, 0, NULL, &(cfdata->x), 200);
    e_widget_table_object_append(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0);
    e_widget_framelist_object_append(of, ot);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
@@ -184,9 +184,9 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    of = e_widget_framelist_add(evas, _("Number of Desktops"), 0);
    
    ot = e_widget_table_add(evas, 0);
-   ob = e_widget_slider_add(evas, 0, 0, _("%1.0f"), 1.0, 8.0, 1.0, 0, NULL, &(cfdata->y), 150);
+   ob = e_widget_slider_add(evas, 0, 0, _("%1.0f"), 1.0, 12.0, 1.0, 0, NULL, &(cfdata->y), 150);
    e_widget_table_object_append(ot, ob, 1, 0, 1, 1, 0, 1, 0, 1);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 8.0, 1.0, 0, NULL, &(cfdata->x), 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 12.0, 1.0, 0, NULL, &(cfdata->x), 200);
    e_widget_table_object_append(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0);
    e_widget_framelist_object_append(of, ot);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
