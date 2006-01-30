@@ -36,6 +36,7 @@ static void _e_int_menus_main_fm(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_config_pre_cb       (void *data, E_Menu *m);
 static void _e_int_menus_config_free_hook    (void *obj);
 static void _e_int_menus_config_item_cb      (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_module_item_cb      (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_clients_pre_cb      (void *data, E_Menu *m);
 static void _e_int_menus_clients_free_hook   (void *obj);
 static void _e_int_menus_clients_item_cb     (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -579,6 +580,13 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    e_menu_item_callback_set(mi, _e_int_menus_config_item_cb, NULL);
 
    mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Module Settings"));
+   e_menu_item_callback_set(mi, _e_int_menus_module_item_cb, NULL);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+   
+   mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Eap Editor"));
    e_menu_item_callback_set(mi, _e_int_menus_eapedit_item_cb, NULL);   
 
@@ -608,6 +616,12 @@ static void
 _e_int_menus_config_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    e_configure_show(m->zone->container);
+}
+
+static void
+_e_int_menus_module_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   e_int_config_modules(m->zone->container);
 }
 
 static void
