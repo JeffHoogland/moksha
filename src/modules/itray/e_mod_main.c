@@ -21,7 +21,7 @@
 
 #define XEMBED_EMBEDDED_NOTIFY      0
 
-#define TRAY_ICON_SIZE		    24
+#define TRAY_ICON_SIZE		    27
 
 /* Bug List:
  *
@@ -1030,20 +1030,87 @@ _itray_tray_active_set(ITray_Box *itb, int active)
 static void
 _itray_tray_add(ITray_Box *itb, Ecore_X_Window win) 
 {
+   if (!win) return;
    if (evas_list_find(itb->tray->wins, (void *)win))
      return;
+   e_stolen_win_add(win);
    ecore_x_window_show(itb->tray->win);
    evas_object_show(itb->item_object);
 
-   /* FIXME: need a way to register managed windows so the
-    * managers default configure request handler doesnt do anything
+   /* FIXME: adding a window id AS a pointer - BAD! */
+   /* FIXME: add property to the window so on restart we can pick it up again */
+   /* FIXME: need to listen for shape change events on icons */
+   /* FIXME: on shape change need to inherit shape */
+   /* FIXME: need to solve the windows above canvas event problem */
+   /* FIXME: need to handle min/max size of tray client window? */
+   /* FIXME: properties u might find on sample windows:
+    * 
+    * GDK_TIMESTAMP_PROP(GDK_TIMESTAMP_PROP) = 0x61
+    * _NET_WM_SYNC_REQUEST_COUNTER(CARDINAL) = 29360209
+    * _XEMBED_INFO(_XEMBED_INFO) = 0x1, 0x1
+    * WM_CLIENT_LEADER(WINDOW): window id # 0x1c00001
+    * _NET_WM_PID(CARDINAL) = 17802
+    * WM_LOCALE_NAME(STRING) = "ja_JP.UTF-8"
+    * WM_CLIENT_MACHINE(STRING) = "icky"
+    * WM_NORMAL_HINTS(WM_SIZE_HINTS):
+    *                 program specified minimum size: 24 by 24
+    *                 window gravity: NorthWest
+    * WM_PROTOCOLS(ATOM): protocols  WM_DELETE_WINDOW, WM_TAKE_FOCUS, _NET_WM_PING, _NET_WM_SYNC_REQUEST
+    * WM_CLASS(STRING) = "gaim", "Gaim"
+    * WM_ICON_NAME(STRING) = "Gaim"
+    * _NET_WM_ICON_NAME(UTF8_STRING) = 0x47, 0x61, 0x69, 0x6d
+    * WM_NAME(STRING) = "Gaim"
+    * _NET_WM_NAME(UTF8_STRING) = 0x47, 0x61, 0x69, 0x6d
+    *---
+    * GDK_TIMESTAMP_PROP(GDK_TIMESTAMP_PROP) = 0x61
+    * _NET_WM_SYNC_REQUEST_COUNTER(CARDINAL) = 29360172
+    * _XEMBED_INFO(_XEMBED_INFO) = 0x1, 0x1
+    * WM_CLIENT_LEADER(WINDOW): window id # 0x1c00001
+    * _NET_WM_PID(CARDINAL) = 17841
+    * WM_LOCALE_NAME(STRING) = "ja_JP.UTF-8"
+    * WM_CLIENT_MACHINE(STRING) = "icky"
+    * WM_NORMAL_HINTS(WM_SIZE_HINTS):
+    *                 program specified minimum size: 16 by 16
+    *                 window gravity: NorthWest
+    * WM_PROTOCOLS(ATOM): protocols  WM_DELETE_WINDOW, WM_TAKE_FOCUS, _NET_WM_PING, _NET_WM_SYNC_REQUEST
+    * WM_CLASS(STRING) = "gnomemeeting", "Gnomemeeting"
+    * WM_ICON_NAME(STRING) = "GnomeMeeting Tray Icon"
+    * _NET_WM_ICON_NAME(UTF8_STRING) = 0x47, 0x6e, 0x6f, 0x6d, 0x65, 0x4d, 0x65, 0x65, 0x74, 0x69, 0x6e, 0x67, 0x20, 0x54, 0x72, 0x61, 0x79, 0x20, 0x49, 0x63, 0x6f, 0x6e
+    * WM_NAME(STRING) = "GnomeMeeting Tray Icon"
+    * _NET_WM_NAME(UTF8_STRING) = 0x47, 0x6e, 0x6f, 0x6d, 0x65, 0x4d, 0x65, 0x65, 0x74, 0x69, 0x6e, 0x67, 0x20, 0x54, 0x72, 0x61, 0x79, 0x20, 0x49, 0x63, 0x6f, 0x6e
+    *---
+    * _KDE_NET_WM_SYSTEM_TRAY_WINDOW_FOR(WINDOW): window id # 0x0
+    * KWM_DOCKWINDOW(KWM_DOCKWINDOW) = 0x0
+    * WM_CLIENT_LEADER(WINDOW): window id # 0x1c00006
+    * WM_WINDOW_ROLE(STRING) = "skypedock"
+    * _NET_WM_PID(CARDINAL) = 18018
+    * _NET_WM_WINDOW_TYPE(ATOM) = _NET_WM_WINDOW_TYPE_NORMAL
+    * WM_PROTOCOLS(ATOM): protocols  WM_DELETE_WINDOW, WM_TAKE_FOCUS, _NET_WM_PING
+    * WM_NAME(STRING) = "skype"
+    * WM_LOCALE_NAME(STRING) = "ja_JP.UTF-8"
+    * WM_CLASS(STRING) = "skypedock", "Skype"
+    * WM_HINTS(WM_HINTS):
+    *                 Initial state is Normal State.
+    *                 bitmap id # to use for icon: 0x1c00025
+    *                 bitmap id # of mask for icon: 0x1c00026
+    *                 window id # to use for icon: 0x1c000b1
+    *                 window id # of group leader: 0x1c000b1
+    * WM_NORMAL_HINTS(WM_SIZE_HINTS):
+    *                 user specified size: 22 by 22
+    *                 program specified size: 22 by 22
+    *                 program specified minimum size: 22 by 22
+    *                 program specified maximum size: 22 by 22
+    *                 window gravity: NorthWest
+    * WM_CLIENT_MACHINE(STRING) = "icky"
+    * 
     */
    /* we want to insert at the end, so as not to move all icons on each add */
    itb->tray->wins = evas_list_append(itb->tray->wins, (void *)win);
    itb->tray->icons++;
    ecore_x_window_client_manage(win);
    ecore_x_window_resize(win, TRAY_ICON_SIZE, TRAY_ICON_SIZE);
-
+   
+   ecore_x_window_save_set_add(win);
    ecore_x_window_reparent(win, itb->tray->win, 0, 0);
    _itray_tray_layout(itb);
    _itray_box_frame_resize(itb);
@@ -1060,7 +1127,7 @@ _itray_tray_remove(ITray_Box *itb, Ecore_X_Window win)
      return;
    if (!evas_list_find(itb->tray->wins, (void *)win)) /* if was not found */
      return;
-
+   e_stolen_win_del(win);
    itb->tray->wins = evas_list_remove(itb->tray->wins, (void *)win);
    itb->tray->icons--;
    _itray_tray_layout(itb);
@@ -1080,26 +1147,29 @@ _itray_tray_cb_msg(void *data, int type, void *event)
    ITray_Box *itb;
 
    itb = data;
-   if (type == ECORE_X_EVENT_CLIENT_MESSAGE) {
+   if (type == ECORE_X_EVENT_CLIENT_MESSAGE)
+     {
 	ev = event;
-	if (ev->message_type == ecore_x_atom_get("_NET_SYSTEM_TRAY_OPCODE")) {
-	     _itray_tray_add(itb, (Ecore_X_Window) ev->data.l[2]);
-
+	if (ev->message_type == ecore_x_atom_get("_NET_SYSTEM_TRAY_OPCODE"))
+	  {
+	     _itray_tray_add(itb, (Ecore_X_Window)ev->data.l[2]);
 	     /* Should proto be set according to clients _XEMBED_INFO? */
-	     ecore_x_client_message32_send(
-		   ev->data.l[2], 
-		   ecore_x_atom_get("_XEMBED"),
-		   ECORE_X_EVENT_MASK_NONE, CurrentTime,
-		   XEMBED_EMBEDDED_NOTIFY, 0, itb->con->bg_win, /*proto*/1);
-
-	} else if (ev->message_type == ecore_x_atom_get("_NET_SYSTEM_TRAY_MESSAGE_DATA")) {
+	     ecore_x_client_message32_send(ev->data.l[2], 
+					   ecore_x_atom_get("_XEMBED"),
+					   ECORE_X_EVENT_MASK_NONE, CurrentTime,
+					   XEMBED_EMBEDDED_NOTIFY, 0, itb->con->bg_win, /*proto*/1);
+	     
+	  }
+	else if (ev->message_type == ecore_x_atom_get("_NET_SYSTEM_TRAY_MESSAGE_DATA"))
+	  {
 	     printf("got message\n");
-	} 
-   } else if (type == ECORE_X_EVENT_WINDOW_DESTROY) {
+	  } 
+     }
+   else if (type == ECORE_X_EVENT_WINDOW_DESTROY)
+     {
 	dst = event;
 	_itray_tray_remove(itb, (Ecore_X_Window) dst->win);
-   } 
-
+     }
    return 1;
 
 }
@@ -1149,48 +1219,53 @@ _itray_tray_layout(ITray_Box *itb)
      }
    w = ((itb->tray->icons + (itb->tray->icons % c)) / c) * TRAY_ICON_SIZE;
 
-   if (edge == E_GADMAN_EDGE_BOTTOM || edge == E_GADMAN_EDGE_TOP) {
+   if (edge == E_GADMAN_EDGE_BOTTOM || edge == E_GADMAN_EDGE_TOP)
+     {
 	edje_object_part_unswallow(itb->box_object, itb->item_object);
 	evas_object_resize(itb->item_object, w, h);
 	ecore_x_window_resize(itb->tray->win, (int) w, (int) h);
-
+	
 	edje_extern_object_min_size_set(itb->item_object, w, h);
 	edje_extern_object_max_size_set(itb->item_object, w, h);
 	edje_object_part_swallow(itb->box_object, "tray", itb->item_object);
-   } else {
+     }
+   else
+     {
 	edje_object_part_unswallow(itb->box_object, itb->item_object);
 	evas_object_resize(itb->item_object, h, w);
 	ecore_x_window_resize(itb->tray->win, (int) h, (int) w);
-
+	
 	edje_extern_object_min_size_set(itb->item_object, w, h);
 	edje_extern_object_max_size_set(itb->item_object, w, h);
 	edje_object_part_swallow(itb->box_object, "tray", itb->item_object);
-   }
-
+     }
+   
    x = 0;
    if (edge == E_GADMAN_EDGE_BOTTOM || edge == E_GADMAN_EDGE_RIGHT)
      y = h - TRAY_ICON_SIZE;
    else
      y = 0;
    d = 0;
-   for (wins = itb->tray->wins; wins; wins = wins->next) {
+   for (wins = itb->tray->wins; wins; wins = wins->next)
+     {
 	if (edge == E_GADMAN_EDGE_BOTTOM || edge == E_GADMAN_EDGE_TOP)
 	  ecore_x_window_move((Ecore_X_Window) wins->data, x, y);
 	else
 	  ecore_x_window_move((Ecore_X_Window) wins->data, y, x);
-
+	
 	d++;
-	if (d % c == 0) {
+	if (d % c == 0)
+	  {
 	     x += TRAY_ICON_SIZE;
 	     if (edge == E_GADMAN_EDGE_BOTTOM || edge == E_GADMAN_EDGE_RIGHT)
 	       y = h - TRAY_ICON_SIZE;
 	     else
 	       y = 0;
-	} else
-	  if (edge == E_GADMAN_EDGE_BOTTOM || edge == E_GADMAN_EDGE_RIGHT)
-	    y -= TRAY_ICON_SIZE;
-	  else
-	    y += TRAY_ICON_SIZE;
-   }
+	  }
+	else if (edge == E_GADMAN_EDGE_BOTTOM || edge == E_GADMAN_EDGE_RIGHT)
+	  y -= TRAY_ICON_SIZE;
+	else
+	  y += TRAY_ICON_SIZE;
+     }
    itb->tray->rows = c;
 }

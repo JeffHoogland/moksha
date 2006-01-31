@@ -462,6 +462,7 @@ _e_manager_cb_window_show_request(void *data, int ev_type __UNUSED__, void *ev)
    
    man = data;
    e = ev;
+   if (e_stolen_win_get(e->win)) return 1;
 #if 0   
    if (e->parent != man->root)
      return 1; /* try other handlers for this */

@@ -3161,6 +3161,7 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
    bd = e_border_find_by_client_window(e->win);
    if (!bd)
      {
+	if (e_stolen_win_get(e->win)) return 1;
 //	printf("generic config request 0x%x 0x%lx %i %i %ix%i %i 0x%x 0x%x...\n",
 //	       e->win, e->value_mask, e->x, e->y, e->w, e->h, e->border, e->abovewin, e->detail);
 	if (!e_util_container_window_find(e->win))
@@ -3366,6 +3367,7 @@ _e_border_cb_window_resize_request(void *data, int ev_type, void *ev)
    bd = e_border_find_by_client_window(e->win);
    if (!bd)
      {
+	if (e_stolen_win_get(e->win)) return 1;
 //	printf("generic resize request %x %ix%i ...\n",
 //	       e->win, e->w, e->h);
 	ecore_x_window_resize(e->win, e->w, e->h);
@@ -3429,6 +3431,7 @@ _e_border_cb_window_stack_request(void *data, int ev_type, void *ev)
 //   printf("stack req for %0x bd %p\n", e->win, bd);
    if (!bd)
      {
+	if (e_stolen_win_get(e->win)) return 1;
 	if (!e_util_container_window_find(e->win))
 	  {
 	     if (e->detail == ECORE_X_WINDOW_STACK_ABOVE)
