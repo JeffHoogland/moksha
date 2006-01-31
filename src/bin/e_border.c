@@ -2356,37 +2356,52 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 	e_util_edje_icon_set(o, "enlightenment/e");
 	return o;
      }
-   if ((bd->client.icccm.name) && (bd->client.icccm.class))
+   if (e_config->use_app_icon)
      {
-	char *title = "";
-	
-	if (bd->client.netwm.name) title = bd->client.netwm.name;
-	else title = bd->client.icccm.title;
-	a = e_app_window_name_class_title_role_find(bd->client.icccm.name,
-						    bd->client.icccm.class,
-						    title,
-						    bd->client.icccm.window_role);
+	if (bd->client.netwm.icons)
+	  {
+	     o = e_icon_add(evas);
+	     e_icon_data_set(o, bd->client.netwm.icons[0].data,
+			     bd->client.netwm.icons[0].width,
+			     bd->client.netwm.icons[0].height);
+	     e_icon_alpha_set(o, 1);
+	     return o;
+	  }
      }
-   if (!a)
+   if (!o)
      {
-	a = e_app_launch_id_pid_find(bd->client.netwm.startup_id,
-				     bd->client.netwm.pid);
-     }
-   if (a)
-     {
-	o = e_app_icon_add(evas, a);
-	bd->app = a;
-	e_object_ref(E_OBJECT(bd->app));
-	return o;
-     }
-   else if (bd->client.netwm.icons)
-     {
-	o = e_icon_add(evas);
-	e_icon_data_set(o, bd->client.netwm.icons[0].data,
-			bd->client.netwm.icons[0].width,
-			bd->client.netwm.icons[0].height);
-	e_icon_alpha_set(o, 1);
-	return o;
+	if ((bd->client.icccm.name) && (bd->client.icccm.class))
+	  {
+	     char *title = "";
+	     
+	     if (bd->client.netwm.name) title = bd->client.netwm.name;
+	     else title = bd->client.icccm.title;
+	     a = e_app_window_name_class_title_role_find(bd->client.icccm.name,
+							 bd->client.icccm.class,
+							 title,
+							 bd->client.icccm.window_role);
+	  }
+	if (!a)
+	  {
+	     a = e_app_launch_id_pid_find(bd->client.netwm.startup_id,
+					  bd->client.netwm.pid);
+	  }
+	if (a)
+	  {
+	     o = e_app_icon_add(evas, a);
+	     bd->app = a;
+	     e_object_ref(E_OBJECT(bd->app));
+	     return o;
+	  }
+	else if (bd->client.netwm.icons)
+	  {
+	     o = e_icon_add(evas);
+	     e_icon_data_set(o, bd->client.netwm.icons[0].data,
+			     bd->client.netwm.icons[0].width,
+			     bd->client.netwm.icons[0].height);
+	     e_icon_alpha_set(o, 1);
+	     return o;
+	  }
      }
    if (!o)
      {
@@ -4480,6 +4495,8 @@ _e_border_cb_grab_replay(void *data, int type, void *event)
 static void
 _e_border_eval(E_Border *bd)
 {
+   int change_urgent = 0;
+   
    /* fetch any info queued to be fetched */
    if (bd->client.icccm.fetch.title)
      {
@@ -4675,6 +4692,8 @@ _e_border_eval(E_Border *bd)
 				    &is_urgent))
 	  {
 	     bd->client.icccm.accepts_focus = accepts_focus;
+	     if (bd->client.icccm.urgent != is_urgent)
+	       change_urgent = 1;
 	     bd->client.icccm.urgent = is_urgent;
 
 	     /* If this is a new window, set the state as requested. */
@@ -5137,6 +5156,8 @@ _e_border_eval(E_Border *bd)
 	       edje_object_signal_emit(bd->bg_object, "fullscreen", "");
 	     if (bd->hung)
 	       edje_object_signal_emit(bd->bg_object, "hung", "");
+	     if (bd->client.icccm.urgent)
+	       edje_object_signal_emit(bd->bg_object, "urgent", "");
 	     
 	     evas_object_move(bd->bg_object, 0, 0);
 	     evas_object_resize(bd->bg_object, bd->w, bd->h);
@@ -5824,6 +5845,17 @@ _e_border_eval(E_Border *bd)
 			     _e_border_event_border_icon_change_free, NULL);
 	  }
 	bd->changes.icon = 0;
+     }
+
+   if (change_urgent)
+     {
+	if (bd->client.icccm.urgent)
+	  edje_object_signal_emit(bd->bg_object, "urgent", "");
+	else
+	  edje_object_signal_emit(bd->bg_object, "not_urgent", "");
+	/* FIXME: we should probably do something with the pager or
+	 * maybe raising the window if it becomes urgent
+	 */
      }
    
    bd->new_client = 0;

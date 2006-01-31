@@ -8,6 +8,7 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: itray. need i say more (it's riddled with problems)
 * BUG: dnd icon from window that has no .eap defining its ocon to ibar and the
   ibar icon ends up blank (cant build .eap freom ARGB pixels)
 * BUG: edge flip for desktops still active if turned off when dragging a window
@@ -70,12 +71,6 @@ Some of the things (in very short form) that need to be done to E17...
   adjusted size) is smaller that screen max size, fill in space in between
   with black. for 3. we want to fill the inbewteen space with some theme
   defined image data
-* netwm window types and states need addressing (do special/appropriate things)
-  for each of them.
-* do something with the icccm urgency field hint
-* different borders for non-resizable windows, shaped windows etc.
-* window icons should be able to be chosen if e eapp icon overrides netwm
-  icon or the other way around (and remember this).
 * actions to make current zone different (warp mouse to there)
 * actions to make the current container different
 * titlebar/border expansion/gadget panel for modules to put window widgets in

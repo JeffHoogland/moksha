@@ -401,6 +401,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, exebuf_pos_max_w, INT);
    E_CONFIG_VAL(D, T, exebuf_pos_max_h, INT);
    E_CONFIG_LIST(D, T, color_classes, _e_config_color_class_edd);
+   E_CONFIG_VAL(D, T, use_app_icon, INT);
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
      {
@@ -546,6 +547,8 @@ e_config_init(void)
 	e_config->exebuf_pos_min_h = 160;
 	e_config->exebuf_pos_max_w = 400;
 	e_config->exebuf_pos_max_h = 320;
+	e_config->color_classes = NULL;
+	e_config->use_app_icon = 0;
 	
 	  {
 	     E_Config_Module *em;
@@ -1537,6 +1540,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->menu_eap_name_show, 0, 1);
    E_CONFIG_LIMIT(e_config->menu_eap_generic_show, 0, 1);
    E_CONFIG_LIMIT(e_config->menu_eap_comment_show, 0, 1);
+   E_CONFIG_LIMIT(e_config->use_app_icon, 0, 1);
    return 1;
 }
 

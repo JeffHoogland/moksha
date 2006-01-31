@@ -27,6 +27,7 @@ struct _E_Config_Dialog_Data
    int border_shade_animate;
    int border_shade_transition;
    double border_shade_speed;
+   int use_app_icon;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -66,6 +67,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
        cfdata->resize_info_visible) cfdata->move_resize_info = 1;
    if (cfdata->border_shade_animate) cfdata->animate_shading = 1;
    cfdata->placement = cfdata->window_placement_policy;
+   cfdata->use_app_icon = e_config->use_app_icon;
 }
 
 static void *
@@ -122,6 +124,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->border_shade_animate = cfdata->border_shade_animate;
    e_config->border_shade_transition = cfdata->border_shade_transition;
    e_config->border_shade_speed = cfdata->border_shade_speed;
+   e_config->use_app_icon = cfdata->use_app_icon;
    e_config_save_queue();
    return 1; /* Apply was OK */
 }
@@ -206,6 +209,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_radio_add(evas, _("Place at mouse pointer"), E_WINDOW_PLACEMENT_CURSOR, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Place manually with the mouse"), E_WINDOW_PLACEMENT_MANUAL, rg);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   
+   of = e_widget_framelist_add(evas, _("Window Frame"), 0);
+   ob = e_widget_check_add(evas, _("Use application provided icon instead"), &(cfdata->use_app_icon));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    

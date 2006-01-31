@@ -200,6 +200,7 @@ struct _E_Config
    int         exebuf_pos_max_w;
    int         exebuf_pos_max_h;
    Evas_List  *color_classes;
+   int         use_app_icon;
 };
 
 struct _E_Config_Module
