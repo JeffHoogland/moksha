@@ -170,7 +170,7 @@ CPPFLAGS="${PCPPFLAGS}"
 AC_SUBST(cf_cflags)
 AC_SUBST(cf_libs)
 
-ALL_LINGUAS="bg de es fi fr ja pl pt ru zh_CN hu sl it cs da sk sv nb nl zh_TW"
+ALL_LINGUAS="bg de es fi fr ja pl pt ru zh_CN hu sl it cs da sk sv nb nl zh_TW ko"
 AC_SUBST(ALL_LINGUAS)
 
 AM_GNU_GETTEXT([external])

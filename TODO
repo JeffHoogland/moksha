@@ -8,6 +8,8 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: dnd icon from window that has no .eap defining its ocon to ibar and the
+  ibar icon ends up blank (cant build .eap freom ARGB pixels)
 * BUG: edge flip for desktops still active if turned off when dragging a window
   off the desktop - either a separate config value (recommended) or turn it
   off for window dragging too

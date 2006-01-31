@@ -1,0 +1,1831 @@
+# Enlightenment korean translation.
+# This file is put in the public domain.
+# Walter Hengely <whengely@gmail.com>, 2005.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2005-11-29 00:57-0800\n"
+"PO-Revision-Date: 2006-01-20 00:57-0800\n"
+"Last-Translator: Walter Hengely <whengely@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/modules/ibox/e_mod_main.c:151
+msgid "Enlightenment IBox Module"
+msgstr "Enlightenment IBox 모듈"
+
+#: src/modules/ibox/e_mod_main.c:152
+msgid ""
+"This is the IBox Iconified Application module for Enlightenment.<br>It will "
+"hold minimized applications"
+msgstr ""
+
+#: src/modules/ibox/e_mod_main.c:238 src/modules/ibox/e_mod_main.c:692
+#: src/modules/ibar/e_mod_main.c:275 src/modules/ibar/e_mod_main.c:928
+msgid "Options"
+msgstr "선택사항"
+
+#: src/modules/ibox/e_mod_main.c:242 src/modules/ibox/e_mod_main.c:696
+#: src/modules/ibar/e_mod_main.c:279 src/modules/ibar/e_mod_main.c:932
+#: src/bin/e_int_border_locks.c:321 src/bin/e_int_border_locks.c:340
+#: src/bin/e_int_border_remember.c:496
+msgid "Size"
+msgstr "크기"
+
+#: src/modules/ibox/e_mod_main.c:454 src/modules/battery/e_mod_main.c:589
+#: src/modules/cpufreq/e_mod_main.c:947
+#: src/modules/temperature/e_mod_main.c:922 src/modules/ibar/e_mod_main.c:647
+#: src/modules/start/e_mod_main.c:230 src/modules/pager/e_mod_main.c:621
+#: src/modules/clock/e_mod_main.c:328 src/bin/e_int_menus.c:803
+msgid "Edit Mode"
+msgstr "편집 모드"
+
+#: src/modules/ibox/e_mod_main.c:599 src/modules/ibar/e_mod_main.c:835
+msgid "Auto fit icons"
+msgstr ""
+
+#: src/modules/ibox/e_mod_main.c:605 src/modules/ibar/e_mod_main.c:841
+msgid "Follower"
+msgstr "신봉자"
+
+#: src/modules/ibox/e_mod_main.c:614 src/modules/ibar/e_mod_main.c:850
+msgid "Microscopic"
+msgstr "미세함"
+
+#: src/modules/ibox/e_mod_main.c:621 src/modules/ibar/e_mod_main.c:857
+msgid "Tiny"
+msgstr "자그마함"
+
+#: src/modules/ibox/e_mod_main.c:628 src/modules/ibar/e_mod_main.c:864
+msgid "Very Small"
+msgstr "아주 작음"
+
+#: src/modules/ibox/e_mod_main.c:635 src/modules/ibar/e_mod_main.c:871
+msgid "Small"
+msgstr "작음"
+
+#: src/modules/ibox/e_mod_main.c:642 src/modules/ibar/e_mod_main.c:878
+#: src/modules/dropshadow/e_mod_main.c:316
+msgid "Medium"
+msgstr "중간"
+
+#: src/modules/ibox/e_mod_main.c:649 src/modules/ibar/e_mod_main.c:885
+msgid "Large"
+msgstr "큼"
+
+#: src/modules/ibox/e_mod_main.c:656 src/modules/ibar/e_mod_main.c:892
+msgid "Very Large"
+msgstr "아주 큼"
+
+#: src/modules/ibox/e_mod_main.c:663 src/modules/ibar/e_mod_main.c:899
+msgid "Extremely Large"
+msgstr "대단히 큼"
+
+#: src/modules/ibox/e_mod_main.c:670 src/modules/ibar/e_mod_main.c:906
+msgid "Huge"
+msgstr "지극히 큼"
+
+#: src/modules/ibox/e_mod_main.c:677 src/modules/ibar/e_mod_main.c:913
+msgid "Enormous"
+msgstr "거대함"
+
+#: src/modules/ibox/e_mod_main.c:684 src/modules/ibar/e_mod_main.c:920
+msgid "Gigantic"
+msgstr "방대함"
+
+#: src/modules/battery/e_mod_main.c:125
+msgid "Enlightenment Battery Module"
+msgstr "Enlightenment 배터리 모듈"
+
+#: src/modules/battery/e_mod_main.c:126
+msgid ""
+"A basic battery meter that uses either<hilight>ACPI</hilight> or "
+"<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
+"adaptor<br>status. This will work under Linux and FreeBSD and is only<br>as "
+"accurate as your BIOS or kernel drivers."
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:218 src/modules/battery/e_mod_main.c:497
+#: src/modules/cpufreq/e_mod_main.c:215 src/modules/cpufreq/e_mod_main.c:548
+msgid "Set Poll Time"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:222 src/modules/battery/e_mod_main.c:501
+msgid "Set Alarm"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:404
+msgid "Disable"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:411
+msgid "10 mins"
+msgstr "10 분"
+
+#: src/modules/battery/e_mod_main.c:418
+msgid "20 mins"
+msgstr "20 분"
+
+#: src/modules/battery/e_mod_main.c:425
+msgid "30 mins"
+msgstr "30 분"
+
+#: src/modules/battery/e_mod_main.c:432
+msgid "40 mins"
+msgstr "40 분"
+
+#: src/modules/battery/e_mod_main.c:439
+msgid "50 mins"
+msgstr "50 분"
+
+#: src/modules/battery/e_mod_main.c:446
+msgid "1 hour"
+msgstr "1 시간"
+
+#: src/modules/battery/e_mod_main.c:458
+msgid "Check Fast (1 sec)"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:465
+msgid "Check Medium (5 sec)"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:472
+msgid "Check Normal (10 sec)"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:479
+msgid "Check Slow (30 sec)"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:486
+msgid "Check Very Slow (60 sec)"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:762
+msgid ""
+"Battery Running Low<br>Your battery is running low.<br>You may wish to "
+"switch to an AC source."
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:765 src/modules/cpufreq/e_mod_main.c:305
+#: src/modules/cpufreq/e_mod_main.c:333
+msgid "Ok"
+msgstr "확인"
+
+#: src/modules/battery/e_mod_main.c:827
+msgid "NO INFO"
+msgstr "정보 없음"
+
+#: src/modules/battery/e_mod_main.c:1002 src/modules/battery/e_mod_main.c:1263
+#: src/modules/battery/e_mod_main.c:1412
+msgid "NO BAT"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:1026 src/modules/battery/e_mod_main.c:1437
+msgid "BAD DRIVER"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:1050 src/modules/battery/e_mod_main.c:1294
+#: src/modules/battery/e_mod_main.c:1461
+msgid "FULL"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:1111 src/modules/battery/e_mod_main.c:1522
+msgid "High"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:1115 src/modules/battery/e_mod_main.c:1526
+msgid "Low"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:1119 src/modules/battery/e_mod_main.c:1530
+msgid "Danger"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:1123 src/modules/battery/e_mod_main.c:1534
+#: src/modules/battery/e_mod_main.c:1701
+msgid "Charging"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:114
+msgid "CPU Frequency Controller Module"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:115
+msgid ""
+"A simple module to control the frequency of the system CPU.<br>This is "
+"especially useful to save power on laptops."
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:221
+msgid "Restore Controller on Startup"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:228 src/modules/cpufreq/e_mod_main.c:560
+msgid "Set Controller"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:236 src/modules/cpufreq/e_mod_main.c:567
+msgid "Set Speed"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:303
+msgid ""
+"There was an error trying to set the cpu frequency<br>governor via the "
+"module's setfreq utility."
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:331
+msgid ""
+"There was an error trying to set the cpu frequency<br>setting via the "
+"module's setfreq utility."
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:456
+msgid "Check Fast (0.5 sec)"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:463
+msgid "Check Medium (1 sec)"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:470
+msgid "Check Normal (2 sec)"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:477
+msgid "Check Slow (5 sec)"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:484
+msgid "Check Very Slow (30 sec)"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:500
+msgid "Manual"
+msgstr "수동식"
+
+#: src/modules/cpufreq/e_mod_main.c:502
+msgid "Automatic"
+msgstr "자동식"
+
+#: src/modules/cpufreq/e_mod_main.c:504
+msgid "Lower Power Automatic"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:506
+msgid "Minimum Speed"
+msgstr "저속"
+
+#: src/modules/cpufreq/e_mod_main.c:508
+msgid "Maximum Speed"
+msgstr "고속"
+
+#: src/modules/cpufreq/e_mod_main.c:530
+#, c-format
+msgid "%i Mhz"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:533
+#, c-format
+msgid "%i.%i Ghz"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:554
+msgid "Restore Governor on Startup"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:95
+msgid "Enlightenment Temperature Module"
+msgstr "Enlightenment 온도 모듈"
+
+#: src/modules/temperature/e_mod_main.c:96
+msgid ""
+"A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux."
+"<br>It is especially useful for modern Laptops with high speed<br>CPUs that "
+"generate a lot of heat."
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:188
+#: src/modules/temperature/e_mod_main.c:798
+msgid "Check Interval"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:192
+#: src/modules/temperature/e_mod_main.c:806
+msgid "Low Temperature"
+msgstr "저온"
+
+#: src/modules/temperature/e_mod_main.c:196
+#: src/modules/temperature/e_mod_main.c:810
+msgid "High Temperature"
+msgstr "고온"
+
+#: src/modules/temperature/e_mod_main.c:200
+#: src/modules/temperature/e_mod_main.c:802
+msgid "Unit"
+msgstr "단위"
+
+#: src/modules/temperature/e_mod_main.c:676
+msgid "Fast (1 sec)"
+msgstr "삐름 (1초)"
+
+#: src/modules/temperature/e_mod_main.c:683
+msgid "Medium (5 sec)"
+msgstr "약간 빠름 (5초)"
+
+#: src/modules/temperature/e_mod_main.c:690
+msgid "Normal (10 sec)"
+msgstr "표준 (10 초)"
+
+#: src/modules/temperature/e_mod_main.c:697
+msgid "Slow (30 sec)"
+msgstr "느림 (30초)"
+
+#: src/modules/temperature/e_mod_main.c:704
+msgid "Very Slow (60 sec)"
+msgstr "매우 느림 (60초)"
+
+#: src/modules/temperature/e_mod_main.c:715
+msgid "Fahrenheit"
+msgstr "화씨"
+
+#: src/modules/temperature/e_mod_main.c:722
+msgid "Celcius"
+msgstr "섭씨"
+
+#: src/modules/temperature/e_mod_main.c:758
+msgid "Temp1"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:767
+msgid "Temp2"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:776
+msgid "Temp3"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:816
+msgid "Sensor"
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:165
+msgid "Enlightenment IBar Module"
+msgstr "Enlightenment IBar 모듈"
+
+#: src/modules/ibar/e_mod_main.c:166
+msgid ""
+"This is the IBar Application Launcher bar module for Enlightenment.<br>It is "
+"a first example module and is being used to flesh out several<br>interfaces "
+"in Enlightenment 0.17.0. It is under heavy development,<br>so expect it to "
+"<hilight>break often</hilight> and change as it improves."
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:1685
+msgid "Cannot add icon"
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:1687
+msgid ""
+"You tried to drop an icon of an application that<br>does not have a matching "
+"application file.<br><br>The icon cannot be added to IBar."
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:1692 src/bin/e_config_dialog.c:113
+#: src/bin/e_module.c:403 src/bin/e_int_border_remember.c:245
+#: src/bin/e_int_border_remember.c:325 src/bin/e_int_border_remember.c:367
+#: src/bin/e_error.c:196 src/bin/e_error.c:205
+msgid "OK"
+msgstr "확인"
+
+#: src/modules/test/e_mod_main.c:21
+msgid "Module Config Menu Item 1"
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:23
+msgid "Module Config Menu Item 2"
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:26
+msgid "Module Config Menu Item 3"
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:29
+msgid "Something Else"
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:62
+msgid "Enlightenment Test Module"
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:63
+msgid ""
+"This module is VERY simple and is only used to test the basic<br>interface "
+"of the Enlightenment 0.17.0 module system. Please<br>ignore this module "
+"unless you are working on the module system."
+msgstr ""
+
+#: src/modules/start/e_mod_main.c:78
+msgid "Enlightenment Start Module"
+msgstr "Enlightenment 시작 Module"
+
+#: src/modules/start/e_mod_main.c:79
+msgid "Experimental Button module for E17"
+msgstr ""
+
+#: src/modules/pager/e_mod_main.c:165
+msgid "Enlightenment Pager Module"
+msgstr ""
+
+#: src/modules/pager/e_mod_main.c:166
+msgid "A pager module to navigate virtual desktops."
+msgstr ""
+
+#: src/modules/pager/e_mod_main.c:397
+msgid "None"
+msgstr "없음"
+
+#: src/modules/pager/e_mod_main.c:405
+msgid "Top"
+msgstr "위"
+
+#: src/modules/pager/e_mod_main.c:413
+msgid "Bottom"
+msgstr "아래"
+
+#: src/modules/pager/e_mod_main.c:444
+msgid "Very Slow"
+msgstr "매우 느림"
+
+#: src/modules/pager/e_mod_main.c:451
+msgid "Slow"
+msgstr "느림"
+
+#: src/modules/pager/e_mod_main.c:458 src/modules/clock/e_mod_main.c:349
+#: src/bin/e_int_border_menu.c:51
+msgid "Normal"
+msgstr "표준"
+
+#: src/modules/pager/e_mod_main.c:465
+msgid "Fast"
+msgstr "빠름"
+
+#: src/modules/pager/e_mod_main.c:472
+msgid "Very Fast"
+msgstr "매우 빠름"
+
+#: src/modules/pager/e_mod_main.c:480 src/modules/pager/e_mod_main.c:626
+msgid "Desktop Name"
+msgstr "데스크탑 이름"
+
+#: src/modules/pager/e_mod_main.c:484 src/modules/pager/e_mod_main.c:630
+msgid "Enable Popup"
+msgstr "팝압 가능"
+
+#: src/modules/pager/e_mod_main.c:490 src/modules/pager/e_mod_main.c:636
+msgid "Popup Speed"
+msgstr ""
+
+#: src/modules/pager/e_mod_main.c:494 src/modules/pager/e_mod_main.c:640
+msgid "Fix Aspect (Keep Height)"
+msgstr ""
+
+#: src/modules/pager/e_mod_main.c:498 src/modules/pager/e_mod_main.c:644
+msgid "Fix Aspect (Keep Width)"
+msgstr ""
+
+#: src/modules/clock/e_mod_main.c:96
+msgid "Enlightenment Clock Module"
+msgstr "Enlightenment 시계 Module"
+
+#: src/modules/clock/e_mod_main.c:97
+msgid "A simple module to give E17 a clock."
+msgstr ""
+
+#: src/modules/clock/e_mod_main.c:338
+msgid "No Digital Display"
+msgstr "디지털 디스플레이 없음"
+
+#: src/modules/clock/e_mod_main.c:360
+msgid "24 Hour"
+msgstr "24 시간"
+
+#: src/modules/clock/e_mod_main.c:372
+msgid "Digital Display"
+msgstr "디지털 디스플레이"
+
+#: src/modules/randr/e_mod_main.c:84
+msgid "Enlightenment Randr Module"
+msgstr ""
+
+#: src/modules/randr/e_mod_main.c:85
+msgid "Module to change screen resolution for E17"
+msgstr ""
+
+#: src/modules/randr/e_mod_main.c:187
+msgid "Restore Resolution on Startup"
+msgstr ""
+
+#: src/modules/randr/e_mod_main.c:210
+msgid "Resolution"
+msgstr ""
+
+#: src/modules/randr/e_mod_main.c:309
+msgid "Resolution change"
+msgstr ""
+
+#: src/modules/randr/e_mod_main.c:311 src/modules/randr/e_mod_main.c:381
+#, c-format
+msgid ""
+"Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
+"resolution %dx%d in %d seconds."
+msgstr ""
+
+#: src/modules/randr/e_mod_main.c:317 src/bin/e_module.c:543
+#: src/bin/e_actions.c:1200
+msgid "Yes"
+msgstr "네"
+
+#: src/modules/randr/e_mod_main.c:318 src/bin/e_module.c:544
+#: src/bin/e_actions.c:1202
+msgid "No"
+msgstr "아니오"
+
+#: src/modules/randr/e_mod_main.c:390
+#, c-format
+msgid ""
+"Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
+"resolution %dx%d NOW!"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:187
+msgid "Enlightenment Dropshadow Module"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:188
+msgid ""
+"This is the dropshadow module that allows dropshadows to be cast<br>on the "
+"desktop background - without special X-Server extensions<br>or hardware "
+"acceleration."
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:298
+msgid "Very Fuzzy"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:307
+msgid "Fuzzy"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:325
+msgid "Sharp"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:334
+msgid "Very Sharp"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:346
+msgid "Very Dark"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:355
+msgid "Dark"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:364
+msgid "Light"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:373
+msgid "Very Light"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:385
+msgid "Very Far"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:394
+msgid "Far"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:403
+msgid "Near"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:412
+msgid "Very Near"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:421
+msgid "Extremely Near"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:430
+msgid "Immediately Underneath"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:442
+msgid "High Quality"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:452
+msgid "Medium Quality"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:462
+msgid "Low Quality"
+msgstr ""
+
+#: src/bin/e_int_border_border.c:46
+msgid "Window Border Selection"
+msgstr "윈도 경계 선택"
+
+#: src/bin/e_int_border_border.c:196
+msgid "Remember this Border for this window next time it appears"
+msgstr ""
+
+#: src/bin/e_int_border_menu.c:41
+msgid "Always On Top"
+msgstr "항상 위"
+
+#: src/bin/e_int_border_menu.c:61
+msgid "Always Below"
+msgstr "항상 아래"
+
+#: src/bin/e_int_border_menu.c:78 src/bin/e_int_border_locks.c:65
+msgid "Window Locks"
+msgstr "윈도 자물쇠"
+
+#: src/bin/e_int_border_menu.c:85
+msgid "Remember"
+msgstr "암기"
+
+#: src/bin/e_int_border_menu.c:92
+msgid "Borders"
+msgstr "경계"
+
+#: src/bin/e_int_border_menu.c:102
+msgid "Send to Desktop"
+msgstr "데스크탑으로 이동"
+
+#: src/bin/e_int_border_menu.c:113 src/bin/e_int_border_locks.c:323
+#: src/bin/e_int_border_locks.c:342 src/bin/e_int_border_remember.c:498
+msgid "Stacking"
+msgstr "쌓기"
+
+#: src/bin/e_int_border_menu.c:123
+msgid "Shaded"
+msgstr "그림자"
+
+#: src/bin/e_int_border_menu.c:136
+msgid "Maximized"
+msgstr "최대 증가"
+
+#: src/bin/e_int_border_menu.c:149
+msgid "Sticky"
+msgstr "끈적임"
+
+#: src/bin/e_int_border_menu.c:162
+msgid "Borderless"
+msgstr "무경계"
+
+#: src/bin/e_int_border_menu.c:175
+#: src/bin/e_int_config_window_manipulation.c:139
+#: src/bin/e_int_config_window_manipulation.c:191
+msgid "Fullscreen"
+msgstr "풀스크린"
+
+#: src/bin/e_int_border_menu.c:189
+msgid "Skip Window List"
+msgstr "윈도 목록을 건너뛰기"
+
+#: src/bin/e_int_border_menu.c:205
+msgid "Edit Icon"
+msgstr "아이콘 편집"
+
+#: src/bin/e_int_border_menu.c:212
+msgid "Create Icon"
+msgstr "아이콘 만들기"
+
+#: src/bin/e_int_border_menu.c:222
+msgid "Kill"
+msgstr "죽이기"
+
+#: src/bin/e_int_border_menu.c:235
+msgid "Iconify"
+msgstr "아이코니파이"
+
+#: src/bin/e_int_border_menu.c:246
+msgid "Close"
+msgstr "닫기"
+
+#: src/bin/e_int_border_locks.c:293
+msgid "Generic Locks"
+msgstr "일반 자물쇠"
+
+#: src/bin/e_int_border_locks.c:294
+msgid "Lock the Window so it does only what I tell it to"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:296
+msgid "Protect this window from me accidentally changing it"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:298
+msgid ""
+"Protect this window from being accidentally closed because it is important"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:300
+msgid "Do not allow the border to change on this window"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:303
+msgid "Remember these Locks for this window next time it appears"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:318
+msgid "Lock program changing:"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:319 src/bin/e_int_border_locks.c:338
+#: src/bin/e_int_border_remember.c:494
+msgid "Position"
+msgstr "위치"
+
+#: src/bin/e_int_border_locks.c:325 src/bin/e_int_border_locks.c:344
+msgid "Iconified state"
+msgstr "아이코니파이 상태"
+
+#: src/bin/e_int_border_locks.c:327 src/bin/e_int_border_locks.c:346
+#: src/bin/e_int_border_remember.c:504
+msgid "Stickiness"
+msgstr "끈적임"
+
+#: src/bin/e_int_border_locks.c:329 src/bin/e_int_border_locks.c:348
+#: src/bin/e_int_border_remember.c:508
+msgid "Shaded state"
+msgstr "그림자 상태"
+
+#: src/bin/e_int_border_locks.c:331 src/bin/e_int_border_locks.c:350
+msgid "Maximized state"
+msgstr "최대 증가 상태"
+
+#: src/bin/e_int_border_locks.c:333 src/bin/e_int_border_locks.c:352
+msgid "Fullscreen state"
+msgstr "풀스크린 상태"
+
+#: src/bin/e_int_border_locks.c:337
+msgid "Lock me from changing:"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:354
+msgid "The border style"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:358
+msgid "Stop me from:"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:359
+msgid "Closing the window"
+msgstr "창을 닫음"
+
+#: src/bin/e_int_border_locks.c:361
+msgid "Exiting my login with this window open"
+msgstr "위도를 연 상태에서 로그아웃"
+
+#: src/bin/e_int_border_locks.c:365
+msgid "Remember these Locks"
+msgstr "다음 자물쇠 암기"
+
+#: src/bin/e_theme_about.c:41 src/bin/e_int_menus.c:841
+msgid "About This Theme"
+msgstr "테마 정보"
+
+#: src/bin/e_about.c:41 src/bin/e_int_menus.c:135
+msgid "About Enlightenment"
+msgstr "Enlightenment 정보"
+
+#: src/bin/e_about.c:50 src/bin/e_main.c:568
+msgid "Enlightenment"
+msgstr ""
+
+#: src/bin/e_about.c:55
+msgid ""
+"Copyright &copy; 1999-2005, by the Enlightenment Development Team.<br><br>We "
+"hope you enjoy using this software as much as we enjoyed writing it."
+"<br><br>This software is provided as-is with no explicit or implied "
+"warranty. This software is governed by licensing conditions, so please see "
+"the COPYING and COPYING-PLAIN licence files installed on your system."
+"<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it "
+"is not stable. Many features are incomplete or even non-existant yet and may "
+"have many bugs. You have been <hilight>WARNED!</hilight>"
+msgstr ""
+
+#: src/bin/e_about.c:80
+msgid "<title>The Team</title>"
+msgstr "<title>팀</title>"
+
+#: src/bin/e_eap_editor.c:74 src/bin/e_int_menus.c:635
+msgid "Eap Editor"
+msgstr "Eap 편집"
+
+#: src/bin/e_eap_editor.c:210 src/bin/e_eap_editor.c:332
+msgid "Icon"
+msgstr "아이콘"
+
+#: src/bin/e_eap_editor.c:231
+msgid "Basic Info"
+msgstr "초급 정보"
+
+#: src/bin/e_eap_editor.c:272 src/bin/e_fileman_smart.c:1216
+msgid "General"
+msgstr "일반"
+
+#: src/bin/e_eap_editor.c:296
+msgid "Window"
+msgstr "윈도"
+
+#: src/bin/e_eap_editor.c:356
+msgid "Misc"
+msgstr "키타"
+
+#: src/bin/e_int_menus.c:82
+msgid "Favorite Applications"
+msgstr "제일 좋아하는 프로그감"
+
+#: src/bin/e_int_menus.c:92
+msgid "Modules"
+msgstr "모듈"
+
+#: src/bin/e_int_menus.c:99
+msgid "Desktops"
+msgstr "데스크탑"
+
+#: src/bin/e_int_menus.c:106
+msgid "Windows"
+msgstr "윈도우"
+
+#: src/bin/e_int_menus.c:113
+msgid "Lost Windows"
+msgstr ""
+
+#: src/bin/e_int_menus.c:120
+msgid "Gadgets"
+msgstr "장치"
+
+#: src/bin/e_int_menus.c:127
+msgid "Themes"
+msgstr "테마"
+
+#: src/bin/e_int_menus.c:142
+msgid "Run Command"
+msgstr "실행"
+
+#: src/bin/e_int_menus.c:148
+msgid "Files"
+msgstr "파일"
+
+#: src/bin/e_int_menus.c:155 src/bin/e_module.c:476
+msgid "Configuration"
+msgstr "설정"
+
+#: src/bin/e_int_menus.c:163
+msgid "Restart Enlightenment"
+msgstr "다시 시작"
+
+#: src/bin/e_int_menus.c:168
+msgid "Exit Enlightenment"
+msgstr "종료"
+
+#: src/bin/e_int_menus.c:465
+msgid "(No Applications)"
+msgstr "(프로그램 없음)"
+
+#: src/bin/e_int_menus.c:547
+msgid "New Row of Desktops"
+msgstr "데스크탑 새 줄"
+
+#: src/bin/e_int_menus.c:551
+msgid "Remove Row of Desktops"
+msgstr "데스크탑 줄 옮김"
+
+#: src/bin/e_int_menus.c:555
+msgid "New Column of Desktops"
+msgstr "데스크탑 새 칼럼"
+
+#: src/bin/e_int_menus.c:559
+msgid "Remove Column of Desktops"
+msgstr "작업공간의 칼럼 삭제"
+
+#: src/bin/e_int_menus.c:631 src/bin/e_configure.c:58
+msgid "Configuration Panel"
+msgstr "설정 페널"
+
+#: src/bin/e_int_menus.c:693 src/bin/e_int_menus.c:971
+msgid "(No Windows)"
+msgstr "(윈도우 없음)"
+
+#: src/bin/e_int_menus.c:708 src/bin/e_int_menus.c:985
+msgid "No name!!"
+msgstr "이름 없음!!"
+
+#: src/bin/e_int_menus.c:724
+msgid "Cleanup Windows"
+msgstr "윈도우 청소"
+
+#: src/bin/e_int_menus.c:809
+msgid "(Unused)"
+msgstr "(쓰지 않음)"
+
+#: src/bin/e_config_dialog.c:86
+msgid "Advanced Settings"
+msgstr "고급 설정"
+
+#: src/bin/e_config_dialog.c:101
+msgid "Basic Settings"
+msgstr "초급 설정"
+
+#: src/bin/e_config_dialog.c:114
+msgid "Apply"
+msgstr "적용"
+
+#: src/bin/e_config_dialog.c:115
+msgid "Cancel"
+msgstr "취소"
+
+#: src/bin/e_module.c:110
+#, c-format
+msgid ""
+"There was an error loading module named: %s<br>No module named %s could be "
+"found in the<br>module search directories.<br>"
+msgstr ""
+"모듈 이름 %s 로드할때 종류:<br>모듈 디렉토리에 그런 모듈을<br>"
+"찾을 수 없음"
+
+#: src/bin/e_module.c:114 src/bin/e_module.c:127 src/bin/e_module.c:151
+msgid "Error loading Module"
+msgstr "모듈 로딩 오차"
+
+#: src/bin/e_module.c:121 src/bin/e_module.c:145
+#, c-format
+msgid ""
+"There was an error loading module named: %s<br>The full path to this module "
+"is:<br>%s<br>The error reported was:<br>%s<br>"
+msgstr ""
+"모듈 이름 %s 로드할때 종류:<br>그파일의 디렉토리에 있음:<br>%s<br>"
+"종류을 신고했음:<br>%s<br>"
+
+#: src/bin/e_module.c:165
+#, c-format
+msgid ""
+"Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
+"module API version of: %i.<br>The module API advertized by Enlightenment is: "
+"%i.<br>"
+msgstr ""
+
+#: src/bin/e_module.c:170
+#, c-format
+msgid "Enlightenment %s Module"
+msgstr "Enlightenment %s 모듈"
+
+#: src/bin/e_module.c:387
+msgid "(No Loaded Modules)"
+msgstr "(로드한 모듈 없음)"
+
+#: src/bin/e_module.c:461
+msgid "About..."
+msgstr "정보"
+
+#: src/bin/e_module.c:465
+msgid "Enabled"
+msgstr "작동"
+
+#: src/bin/e_module.c:538
+msgid "Would you like to unload this module?<br>"
+msgstr "이모듈을 옮기겠습니까?<br>"
+
+#: src/bin/e_int_config_focus.c:44 src/bin/e_configure.c:61
+msgid "Focus Settings"
+msgstr "초점 설정"
+
+#: src/bin/e_int_config_focus.c:144
+msgid "Click Window to Focus"
+msgstr "포커스 위해 위도우 클릭"
+
+#: src/bin/e_int_config_focus.c:146
+msgid "Window under the Mouse"
+msgstr "마우스 아래 있는 윈도"
+
+#: src/bin/e_int_config_focus.c:148
+msgid "Most recent Window under the Mouse"
+msgstr "마우스 아래 있는 가장 최근 윈도"
+
+#: src/bin/e_int_config_focus.c:164
+msgid "Focus"
+msgstr "초점"
+
+#: src/bin/e_int_config_focus.c:166
+msgid "Click to focus"
+msgstr "포커스 위해 클릭"
+
+#: src/bin/e_int_config_focus.c:168
+msgid "Pointer focus"
+msgstr "포인터 초점"
+
+#: src/bin/e_int_config_focus.c:170
+msgid "Sloppy focus"
+msgstr "엉성한 초점"
+
+#: src/bin/e_int_config_focus.c:174
+msgid "New Window Focus"
+msgstr "새 윈도 초점"
+
+#: src/bin/e_int_config_focus.c:176
+msgid "No new windows get focus"
+msgstr "새 윈도에 초점 없음"
+
+#: src/bin/e_int_config_focus.c:178
+msgid "All new windows get focus"
+msgstr "모든 새 윈도에 초점"
+
+#: src/bin/e_int_config_focus.c:180
+msgid "Only new dialogs get focus"
+msgstr "새 다얼로그에만 초점"
+
+#: src/bin/e_int_config_focus.c:182
+msgid "Only new dialogs get focus if the parent has focus"
+msgstr "초점이 있는 부모의 다얼로그에만 초점"
+
+#: src/bin/e_int_config_focus.c:186
+msgid "Other Settings"
+msgstr "다른 설정"
+
+#: src/bin/e_int_config_focus.c:187
+msgid "Always pass on caught click events to programs"
+msgstr "클릭한 이벤트를 항상 프로그램에 보냄"
+
+#: src/bin/e_int_config_focus.c:189
+msgid "A click on a window always raises it"
+msgstr "창을 클릭하면 윈도가 올라감"
+
+#: src/bin/e_int_config_focus.c:191
+msgid "A click in a window always focuses it"
+msgstr "창을 클릭하면 윈도 초점이 맞음"
+
+#: src/bin/e_actions.c:1193
+msgid "Are you sure you want to exit?"
+msgstr "종료하겠습니까?"
+
+#: src/bin/e_actions.c:1195
+msgid ""
+"You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
+msgstr "종료하겠습니까?"
+
+#: src/bin/e_fileman_smart.c:1225
+#, c-format
+msgid "File:"
+msgstr "파일:"
+
+#: src/bin/e_fileman_smart.c:1234
+#, c-format
+msgid "Size:"
+msgstr "크기:"
+
+#: src/bin/e_fileman_smart.c:1243
+#, c-format
+msgid "Type:"
+msgstr "타입:"
+
+#: src/bin/e_fileman_smart.c:1252
+msgid "Protect this file"
+msgstr "파일 보호"
+
+#: src/bin/e_fileman_smart.c:1258
+msgid "Let others see this file"
+msgstr ""
+
+#: src/bin/e_fileman_smart.c:1262
+msgid "Let others modify this file"
+msgstr ""
+
+#: src/bin/e_fileman_smart.c:1266
+msgid "Dont let others see or modify this file"
+msgstr ""
+
+#: src/bin/e_fileman_smart.c:1270
+msgid "Custom settings"
+msgstr "개별적인 설정"
+
+#: src/bin/e_fileman_smart.c:1307
+msgid "File Info:"
+msgstr "파일 정보:"
+
+#: src/bin/e_fileman_smart.c:1330
+msgid "Permissions:"
+msgstr "모드:"
+
+#: src/bin/e_fileman_smart.c:1333 src/bin/e_fileman_smart.c:1342
+#: src/bin/e_fileman_smart.c:1351
+msgid "r"
+msgstr ""
+
+#: src/bin/e_fileman_smart.c:1335 src/bin/e_fileman_smart.c:1344
+#: src/bin/e_fileman_smart.c:1353
+msgid "w"
+msgstr ""
+
+#: src/bin/e_fileman_smart.c:1337 src/bin/e_fileman_smart.c:1346
+#: src/bin/e_fileman_smart.c:1355
+msgid "x"
+msgstr ""
+
+#: src/bin/e_fileman_smart.c:1381 src/bin/e_fileman_smart.c:2237
+msgid "Properties"
+msgstr "소유"
+
+#: src/bin/e_fileman_smart.c:2188
+msgid "Open"
+msgstr "열기"
+
+#: src/bin/e_fileman_smart.c:2199
+msgid "Copy"
+msgstr "복사"
+
+#: src/bin/e_fileman_smart.c:2207
+msgid "Cut"
+msgstr "자르기"
+
+#: src/bin/e_fileman_smart.c:2218
+msgid "Rename"
+msgstr "이름 바꾸기"
+
+#: src/bin/e_fileman_smart.c:2226
+msgid "Delete"
+msgstr "삭제"
+
+#: src/bin/e_gadman.c:626
+msgid "Automatic Width"
+msgstr "자동 폭"
+
+#: src/bin/e_gadman.c:637
+msgid "Half Screen Width"
+msgstr "스크린반 폭"
+
+#: src/bin/e_gadman.c:643
+msgid "Full Screen Width"
+msgstr "풀스크린 폭"
+
+#: src/bin/e_gadman.c:655
+msgid "Center Horizontally"
+msgstr "수평으로 중앙"
+
+#: src/bin/e_gadman.c:673
+msgid "Automatic Height"
+msgstr "자동 높이"
+
+#: src/bin/e_gadman.c:684
+msgid "Half Screen Height"
+msgstr "스크린반 높이"
+
+#: src/bin/e_gadman.c:690
+msgid "Full Screen Height"
+msgstr "풀스크린 높이"
+
+#: src/bin/e_gadman.c:701
+msgid "Center Vertically"
+msgstr "수직으로 중앙"
+
+#: src/bin/e_gadman.c:713
+msgid "End Edit Mode"
+msgstr "편집 모드 끝"
+
+#: src/bin/e_init.c:38
+#, c-format
+msgid "X reports there are no root windows and %i screens!\n"
+msgstr ""
+
+#: src/bin/e_init.c:102
+msgid "Disable this splash screen in the future?"
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:67
+msgid "Window Remember"
+msgstr "윈도 암기"
+
+#: src/bin/e_int_border_remember.c:228
+msgid "Window properties are not a unique match"
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:231
+msgid ""
+"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"as size, location, border style etc.) to<br>a window that <hilight>does not "
+"have unique properties</hilight>.<br><br>This means it shares Name/Class, "
+"Transience, Role etc. properties<br>with more than 1 other window on the "
+"screen and remembering<br>properties for this window will apply to all other "
+"windows<br>that match these properties.<br><br>This is just a warning in "
+"case you did not intend this to happen.<br>If you did, simply press "
+"<hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your "
+"settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
+"sure and nothing will be affected."
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:316 src/bin/e_int_border_remember.c:346
+msgid "No match properties set"
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:319
+msgid ""
+"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"as size, location, border style etc.) to<br>a window <hilight>without "
+"specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
+"way of remembering this window."
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:349
+msgid ""
+"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"as size, location, border style etc.) to<br>a window that <hilight>does not "
+"have unique properties</hilight>.<br><br>This means it shares Name/Class, "
+"Transience, Role etc. properties<br>with more than 1 other window on the "
+"screen and remembering<br>properties for this window will apply to all other "
+"windows<br>that match these properties.<br><br>You may wish to enable the "
+"<hilight>Match only one window</hilight> option if<br>you only intend one "
+"instance of this window to be modified, with<br>additional instances not "
+"being modified.<br><br>This is just a warning in case you did not intend "
+"this to happen.<br>If you did, simply press <hilight>Apply</hilight> or "
+"<hilight>OK</hilight> buttons<br>and your settings will be accepted. Press "
+"<hilight>Cancel</hilight> if you<br>are not sure and nothing will be "
+"affected."
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:422
+msgid "Nothing"
+msgstr "무"
+
+#: src/bin/e_int_border_remember.c:424
+msgid "Size and Position"
+msgstr "크기와 위치"
+
+#: src/bin/e_int_border_remember.c:426 src/bin/e_int_border_remember.c:500
+msgid "Locks"
+msgstr "자물쇠"
+
+#: src/bin/e_int_border_remember.c:428
+msgid "Size, Position and Locks"
+msgstr "크기와 위치, 자물쇠"
+
+#: src/bin/e_int_border_remember.c:430
+msgid "Everything"
+msgstr "종합"
+
+#: src/bin/e_int_border_remember.c:444
+msgid "Remember using"
+msgstr "사용법 기억"
+
+#: src/bin/e_int_border_remember.c:450
+msgid "Window name and class"
+msgstr "윈도 이름과 항목"
+
+#: src/bin/e_int_border_remember.c:460
+msgid "Title"
+msgstr "제목"
+
+#: src/bin/e_int_border_remember.c:470
+msgid "Window Role"
+msgstr "윈도 역할"
+
+#: src/bin/e_int_border_remember.c:479
+msgid "Window type"
+msgstr "창 타입"
+
+#: src/bin/e_int_border_remember.c:486
+msgid "Transience"
+msgstr "일시적"
+
+#: src/bin/e_int_border_remember.c:490
+msgid "Match only one window"
+msgstr "창 1개와만 조화"
+
+#: src/bin/e_int_border_remember.c:493
+msgid "Properties to remember"
+msgstr "암기할 소유"
+
+#: src/bin/e_int_border_remember.c:502
+msgid "Border style"
+msgstr "윈도 경계 타입"
+
+#: src/bin/e_int_border_remember.c:506
+msgid "Virtual Desktop"
+msgstr "가상 데스크탑"
+
+#: src/bin/e_int_border_remember.c:510
+msgid "Screen zone"
+msgstr "데스크탑 지대"
+
+#: src/bin/e_int_border_remember.c:512
+msgid "Window list skip"
+msgstr "윈도우 목록 건너뛰기"
+
+#: src/bin/e_main.c:195
+#, c-format
+msgid ""
+"Options:\n"
+"\t-display DISPLAY\n"
+"\t\tConnect to display named DISPLAY.\n"
+"\t\tEG: -display :1.0\n"
+"\t-fake-xinerama-screen WxH+X+Y\n"
+"\t\tAdd a FAKE xinerama screen (instead of the real ones)\n"
+"\t\tgiven the geometry. Add as many as you like. They all\n"
+"\t\treplace the real xinerama screens, if any. This can\n"
+"\t\tbe used to simulate xinerama.\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
+"+0\n"
+"\t-profile CONF_PROFILE\n"
+"\t\tUse the configuration profile CONF_PROFILE instead of the the user "
+"selected default or just \"default\".\n"
+"\t-good\n"
+"\t\tBe good.\n"
+"\t-evil\n"
+"\t\tBe evil.\n"
+"\t-psychotic\n"
+"\t\tBe psychotic.\n"
+msgstr ""
+
+#: src/bin/e_main.c:264
+msgid ""
+"Enlightenment cannot Initialize Ecore!\n"
+"Perhaps you are out of memory?"
+msgstr ""
+
+#: src/bin/e_main.c:277
+msgid ""
+"Enlightenment cannot initialize the File system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+
+#: src/bin/e_main.c:288
+msgid ""
+"Enlightenment cannot set up an exit signal handler.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+
+#: src/bin/e_main.c:294
+msgid ""
+"Enlightenment cannot set up a HUP signal handler.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+
+#: src/bin/e_main.c:305
+msgid ""
+"Enlightenment cannot initialize its X connection.\n"
+"Have you set your DISPLAY variable?"
+msgstr ""
+
+#: src/bin/e_main.c:313
+msgid ""
+"Enlightenment cannot initialize its emergency alert system.\n"
+"Have you set your DISPLAY variable?"
+msgstr ""
+
+#: src/bin/e_main.c:320
+msgid ""
+"Enlightenment cannot setup xinerama wrapping.\n"
+"This should not happen."
+msgstr ""
+
+#: src/bin/e_main.c:336
+msgid ""
+"Enlightenment cannot initialize the connections system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+
+#: src/bin/e_main.c:344
+msgid ""
+"Enlightenment cannot initialize the IPC system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+
+#: src/bin/e_main.c:352
+msgid ""
+"Enlightenment cannot initialize the Evas system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+
+#: src/bin/e_main.c:358
+msgid ""
+"Enlightenment found ecore_evas doesnt support Software X11\n"
+"rendering in Evas. Please check your installation of Evas and\n"
+"Ecore and check they support Software X11 rendering."
+msgstr ""
+
+#: src/bin/e_main.c:368
+msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
+msgstr ""
+
+#: src/bin/e_main.c:377
+msgid "Enlightenment cannot initialize the File manager.\n"
+msgstr ""
+
+#: src/bin/e_main.c:388
+msgid ""
+"Enlightenment cannot create directories in your home directory.\n"
+"Perhaps you have no home directory or the disk is full?"
+msgstr ""
+
+#: src/bin/e_main.c:396
+msgid "Enlightenment cannot set up its config system."
+msgstr ""
+
+#: src/bin/e_main.c:403
+msgid ""
+"Enlightenment cannot set up paths for finding files.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+
+#: src/bin/e_main.c:411
+msgid "Enlightenment cannot set up its intl system."
+msgstr ""
+
+#: src/bin/e_main.c:418
+msgid "Enlightenment cannot set up its actions system."
+msgstr ""
+
+#: src/bin/e_main.c:425
+msgid "Enlightenment cannot set up its bindings system."
+msgstr ""
+
+#: src/bin/e_main.c:432
+msgid "Enlightenment cannot set up its popup system."
+msgstr ""
+
+#: src/bin/e_main.c:443
+msgid "Enlightenment cannot set up its font system."
+msgstr ""
+
+#: src/bin/e_main.c:453
+msgid "Enlightenment cannot set up its theme system."
+msgstr ""
+
+#: src/bin/e_main.c:462
+msgid ""
+"Enlightenment cannot set up init screen.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+
+#: src/bin/e_main.c:471
+msgid ""
+"Enlightenment set up window management for all the screens on your system\n"
+"failed. Perhaps another window manager is running?\n"
+msgstr ""
+
+#: src/bin/e_main.c:478
+msgid "Enlightenment cannot set up its app system."
+msgstr ""
+
+#: src/bin/e_main.c:485
+msgid "Enlightenment cannot setup remember settings."
+msgstr ""
+
+#: src/bin/e_main.c:501
+msgid ""
+"Enlightenment cannot set up the IPC socket.\n"
+"It likely is already in use by an existing copy of Enlightenment.\n"
+"Double check to see if Enlightenment is not already on this display,\n"
+"but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
+"and try running again.\n"
+"\n"
+"If you use AFS then maybe you might want to make a symlink from\n"
+"~/.ecore to /tmp/my_directory/ecore where sockets can be made."
+msgstr ""
+
+#: src/bin/e_main.c:517
+msgid "Enlightenment cannot set up its msg system."
+msgstr ""
+
+#: src/bin/e_main.c:524
+msgid "Enlightenment cannot set up its dnd system."
+msgstr ""
+
+#: src/bin/e_main.c:531
+msgid "Enlightenment cannot set up its input grab handling system."
+msgstr ""
+
+#: src/bin/e_main.c:538
+msgid "Enlightenment cannot set up its module system."
+msgstr ""
+
+#: src/bin/e_main.c:545
+msgid "Enlightenment cannot set up its window list system."
+msgstr ""
+
+#: src/bin/e_main.c:551
+msgid "Enlightenment IPC setup error!"
+msgstr ""
+
+#: src/bin/e_main.c:552
+msgid ""
+"Enlightenment cannot set up the IPC socket.\n"
+"It likely is already in use by an existing copy of Enlightenment.\n"
+"Double check to see if Enlightenment is not already on this display,\n"
+"but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
+"and try running again."
+msgstr ""
+
+#: src/bin/e_main.c:570
+msgid "Enlightenment Starting. Please wait."
+msgstr "Enlightenment를 시작할때 작업공간 기다리십시오."
+
+#: src/bin/e_container.c:118
+#, c-format
+msgid "Container %d"
+msgstr ""
+
+#: src/bin/e_intl.c:360
+msgid "Input Method Error"
+msgstr ""
+
+#: src/bin/e_intl.c:361
+msgid ""
+"Error starting the input method executable\n"
+"\n"
+"please make sure that your input\n"
+"method configuration is correct and\n"
+"that your configuration's\n"
+"executable is in your PATH\n"
+msgstr ""
+
+#: src/bin/e_int_config_window_display.c:49 src/bin/e_configure.c:63
+msgid "Window Display"
+msgstr "윈도 디스플레이"
+
+#: src/bin/e_int_config_window_display.c:136
+msgid "Display"
+msgstr "디스플레이"
+
+#: src/bin/e_int_config_window_display.c:137
+msgid "Show window geometry information when moving or resizing"
+msgstr "윈도를 옯기거나 크기를 바꿀 때 구조 표시"
+
+#: src/bin/e_int_config_window_display.c:139
+msgid "Animate the shading and unshading of windows"
+msgstr "윈도 그림자를 깔거나 없앨 때 애니메이션"
+#: src/bin/e_int_config_window_display.c:182
+msgid "Animate shading and unshading of windows"
+msgstr "윈도 그림자를 깔거나 없앨 때 애니메이션"
+
+#: src/bin/e_int_config_window_display.c:143
+#: src/bin/e_int_config_window_display.c:197
+msgid "Automatic New Window Placement"
+msgstr "새로운 창을 자동으로 배치"
+
+#: src/bin/e_int_config_window_display.c:145
+#: src/bin/e_int_config_window_display.c:199
+msgid "Smart Placement"
+msgstr "스스로 배치"
+
+#: src/bin/e_int_config_window_display.c:147
+#: src/bin/e_int_config_window_display.c:201
+msgid "Place at mouse pointer"
+msgstr "마우스 포인터에 배치"
+
+#: src/bin/e_int_config_window_display.c:149
+#: src/bin/e_int_config_window_display.c:203
+msgid "Place manually with the mouse"
+msgstr "마우스로 수동으로 배치"
+
+#: src/bin/e_int_config_window_display.c:167
+msgid "Window Move Geometry"
+msgstr "윈도 위치를 바꾸는 구조"
+
+#: src/bin/e_int_config_window_display.c:168
+#: src/bin/e_int_config_window_display.c:175
+msgid "Display information"
+msgstr "디스플레이 정보"
+
+#: src/bin/e_int_config_window_display.c:170
+msgid "Follow the window as it moves"
+msgstr "움직이는 윈도와 동행"
+
+#: src/bin/e_int_config_window_display.c:174
+msgid "Window Resize Geometry"
+msgstr "윈도 크기 조정 구조"
+
+#: src/bin/e_int_config_window_display.c:177
+msgid "Follow the window as it resizes"
+msgstr "크기 조정하는 윈도와 동행"
+
+#: src/bin/e_int_config_window_display.c:181
+msgid "Window Shading"
+msgstr "윈도 그림자"
+
+#: src/bin/e_int_config_window_display.c:184
+#, c-format
+msgid "%4.0f pixels/sec"
+msgstr "%4.0f 픽셀/초"
+
+#: src/bin/e_int_config_window_display.c:187
+msgid "Linear"
+msgstr "일선"
+
+#: src/bin/e_int_config_window_display.c:189
+msgid "Smooth accelerate and decelerate"
+msgstr "매끄럽게 가속, 감속"
+
+#: src/bin/e_int_config_window_display.c:191
+msgid "Accelerate"
+msgstr "가속"
+
+#: src/bin/e_int_config_window_display.c:193
+msgid "Decelerate"
+msgstr "감속"
+
+#: src/bin/e_config.c:374
+msgid ""
+"Configuration data needed upgrading. Your old configuration\n"
+"has been wiped and a new set of defaults initialized. This\n"
+"will happen regularly during development, so don't report a\n"
+"bug. This simply means Enlightenment needs new configuration\n"
+"data by default for usable functionality that your old\n"
+"configuration simply lacks. This new set of defaults will fix\n"
+"that by adding it in. You can re-configure things now to your\n"
+"liking. Sorry for the hiccup in your configuration.\n"
+msgstr ""
+
+#: src/bin/e_config.c:388
+msgid ""
+"Your configuration is NEWER than Enlightenment. This is very\n"
+"strange. This should not happen unless you downgraded\n"
+"Enlightenment or copied the configuration from a place where\n"
+"a newer version of Enlightenment was running. This is bad and\n"
+"as a precaution your configuration has been now restored to\n"
+"defaults. Sorry for the inconvenience.\n"
+msgstr ""
+
+#: src/bin/e_config.c:1974
+msgid "Configuration Upgraded"
+msgstr ""
+
+#: src/bin/e_int_config_window_manipulation.c:48 src/bin/e_configure.c:62
+msgid "Window Manipulation"
+msgstr "윈도 조작"
+
+#: src/bin/e_int_config_window_manipulation.c:130
+msgid "Miscellaneous Options"
+msgstr "기타 선택권"
+
+#: src/bin/e_int_config_window_manipulation.c:131
+#: src/bin/e_int_config_window_manipulation.c:164
+msgid "Automatically raise windows on mouse over"
+msgstr "위도에 마우스가 있을때 자동으로 높임"
+
+#: src/bin/e_int_config_window_manipulation.c:133
+msgid "When moving or resizing windows, resist at the boundaries"
+msgstr "윈도 위치나 크기를 바꿀 때 경게에서 그침"
+
+#: src/bin/e_int_config_window_manipulation.c:137
+#: src/bin/e_int_config_window_manipulation.c:189
+msgid "Maximize Policy"
+msgstr "약관을 쵀대 크기로"
+
+#: src/bin/e_int_config_window_manipulation.c:141
+#: src/bin/e_int_config_window_manipulation.c:193
+msgid "Smart expansion"
+msgstr "스스로 확장"
+
+#: src/bin/e_int_config_window_manipulation.c:143
+#: src/bin/e_int_config_window_manipulation.c:195
+msgid "Expand the window"
+msgstr "윈도 확장"
+
+#: src/bin/e_int_config_window_manipulation.c:145
+#: src/bin/e_int_config_window_manipulation.c:197
+msgid "Fill available space"
+msgstr "가능한 공간 메움"
+
+#: src/bin/e_int_config_window_manipulation.c:163
+msgid "Autoraise"
+msgstr "자동으로 높임"
+
+#: src/bin/e_int_config_window_manipulation.c:166
+msgid "Delay before raising:"
+msgstr "높이기 전에 지연:"
+
+#: src/bin/e_int_config_window_manipulation.c:168
+#, c-format
+msgid "%1.1f sec"
+msgstr "%1.1f 초"
+
+#: src/bin/e_int_config_window_manipulation.c:172
+msgid "Resistance"
+msgstr "저항"
+
+#: src/bin/e_int_config_window_manipulation.c:173
+msgid "Resist moving or resizing a window over an obstacle"
+msgstr "장애물 위로 윈도를 옯기거나 크기를 바꾸는 것에 반대"
+
+#: src/bin/e_int_config_window_manipulation.c:175
+msgid "Resistance between windows:"
+msgstr "윈도끼리 저항:"
+
+#: src/bin/e_int_config_window_manipulation.c:177
+#: src/bin/e_int_config_window_manipulation.c:181
+#: src/bin/e_int_config_window_manipulation.c:185
+#, c-format
+msgid "%2.0f pixels"
+msgstr "%2.0f 픽셀"
+
+#: src/bin/e_int_config_window_manipulation.c:179
+msgid "Resistance at the edge of the screen:"
+msgstr "스크린에 이르면 저항:"
+
+#: src/bin/e_int_config_window_manipulation.c:183
+msgid "Resistance to desktop gadgets:"
+msgstr "장치에 저항:"
+
+#: src/bin/e_apps.c:413 src/bin/e_apps.c:1783 src/bin/e_fileman_file.c:354
+#: src/bin/e_fileman_file.c:405 src/bin/e_utils.c:222
+msgid "Run Error"
+msgstr "실행 오차"
+
+#: src/bin/e_apps.c:414 src/bin/e_fileman_file.c:355
+#: src/bin/e_fileman_file.c:406 src/bin/e_utils.c:223
+#, c-format
+msgid ""
+"Enlightenment was unable fork a child process:\n"
+"\n"
+"%s\n"
+"\n"
+msgstr ""
+
+#: src/bin/e_apps.c:1784
+#, c-format
+msgid ""
+"Enlightenment was unable run the program:\n"
+"\n"
+"%s\n"
+"\n"
+"The command was not found\n"
+msgstr ""
+
+#: src/bin/e_error.c:352
+msgid "Enlightenment: Error!"
+msgstr "Enlightenment: 오류!"
+
+#: src/bin/e_configure.c:44
+msgid "Enlightenment Configuration"
+msgstr "Enlightenment 설정"
+
+#: src/bin/e_winlist.c:122
+msgid "Select a window"
+msgstr "윈도 선택"
+
+#: src/bin/e_startup.c:68
+#, c-format
+msgid "Starting %s"
+msgstr "%s 시작"
+
+#: src/bin/e_utils.c:268
+msgid "Cannot exit - immortal windows."
+msgstr ""
+
+#: src/bin/e_utils.c:269
+msgid ""
+"Some windows are left still around with the Lifespan lock enabled. This "
+"means\n"
+"that Enlightenment will not allow itself to exit until these windows have\n"
+"been closed or have the lifespan lock removed.\n"
+msgstr ""
+
+#: src/bin/e_configure.c:62
+msgid "Desktop Settings"
+msgstr "데스크탑 설정"
+
+#: src/bin/e_int_config_desks.c:197
+msgid "Flip desktops when mouse at screen edge"
+msgstr "마우스가 스크린 테두리에 놓이면 데스크탑 회전"
+
+#: src/bin/e_configure.c:196
+msgid "Desktop Mouse Flip"
+msgstr "데스크탑 마우스 회전"
+
+#: src/bin/e_int_config_desks.c:200
+msgid "Time the mouse is at the edge before flipping:"
+msgstr "회전하기 전에 얼마 동안 지연:"
+
+#: src/bin/e_int_config_desks.c:186
+msgid "Number of Desktops"
+msgstr "데스크탑 숫자"
+
+
+
