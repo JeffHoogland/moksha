@@ -122,6 +122,12 @@ e_util_utils_installed(void)
 }
 
 EAPI int
+e_util_app_installed(char *app) 
+{
+   return ecore_file_app_installed(app);
+}
+
+EAPI int
 e_util_glob_match(const char *str, const char *glob)
 {
    if (glob[0] == 0)
