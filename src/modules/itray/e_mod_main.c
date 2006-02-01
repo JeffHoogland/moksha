@@ -81,11 +81,15 @@ static void    _itray_box_cb_width_auto(void *data);
 static void    _itray_tray_init(ITray_Box *itb);
 static void    _itray_tray_shutdown(ITray_Box *itb);
 static int     _itray_tray_cb_msg(void *data, int type, void *event);
+static int     _itray_tray_cb_destroy(void *data, int type, void *event);
+static int     _itray_tray_cb_hide(void *data, int type, void *event);
+static int     _itray_tray_cb_shape(void *data, int type, void *event);
+static int     _itray_exists(ITray_Box *itb, Ecore_X_Window win);
+static void    _itray_reshape(ITray_Box *itb);
 static void    _itray_tray_active_set();
 
 static void    _itray_tray_add(ITray_Box *itb, Ecore_X_Window win);
 static void    _itray_tray_remove(ITray_Box *itb, Ecore_X_Window win);
-static int     _itray_tray_cb_msg(void *data, int type, void *event);
 
 static void    _itray_tray_cb_move(void *data, Evas_Object *o, Evas_Coord x, Evas_Coord y);
 static void    _itray_tray_cb_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_Coord h);
@@ -317,7 +321,7 @@ _itray_box_new(ITray *it, E_Container *con)
    itb->event_object = o;
    evas_object_layer_set(o, 2);
    evas_object_repeat_events_set(o, 1);
-   evas_object_color_set(o, 0, 0, 0, 0);
+   evas_object_color_set(o, 255, 255, 255, 255);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN,  _itray_box_cb_mouse_in,  itb);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_OUT, _itray_box_cb_mouse_out, itb);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _itray_box_cb_mouse_down, itb);
@@ -638,10 +642,11 @@ _itray_box_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 	  {
 	     win = (Ecore_X_Window)l->data;
 	     
-	     ecore_x_window_geometry_get(win, &x, &y, &w, &h);
 	     evas_pointer_output_xy_get(itb->evas, &xx, &yy);
-	     xx -= itb->x;
-	     yy -= itb->y;
+	     evas_object_geometry_get(itb->item_object, &x, &y, NULL, NULL);
+	     xx -= x;
+	     yy -= y;
+	     ecore_x_window_geometry_get(win, &x, &y, &w, &h);
 	     if (E_CONTAINS(x, y, w, h, xx, yy, 1, 1))
 	       {
 		  x = xx - x;
@@ -680,10 +685,11 @@ _itray_box_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	  {
 	     win = (Ecore_X_Window)l->data;
 	     
-	     ecore_x_window_geometry_get(win, &x, &y, &w, &h);
 	     evas_pointer_output_xy_get(itb->evas, &xx, &yy);
-	     xx -= itb->x;
-	     yy -= itb->y;
+	     evas_object_geometry_get(itb->item_object, &x, &y, NULL, NULL);
+	     xx -= x;
+	     yy -= y;
+	     ecore_x_window_geometry_get(win, &x, &y, &w, &h);
 	     if (E_CONTAINS(x, y, w, h, xx, yy, 1, 1))
 	       {
 		  x = xx - x;
@@ -706,18 +712,22 @@ _itray_box_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
    itb = data;
      {
 	Ecore_X_Window win;
-	int x, y, w, h;
+	int x, y, w, h, xx, yy;
 	Evas_List *l;
 	
 	for (l = itb->tray->wins; l; l = l->next)
 	  {
 	     win = (Ecore_X_Window)l->data;
 	     
+	     evas_pointer_output_xy_get(itb->evas, &xx, &yy);
+	     evas_object_geometry_get(itb->item_object, &x, &y, NULL, NULL);
+	     xx -= x;
+	     yy -= y;
 	     ecore_x_window_geometry_get(win, &x, &y, &w, &h);
-	     if (E_CONTAINS(x, y, w, h, ev->cur.canvas.x, ev->cur.canvas.y, 1, 1))
+	     if (E_CONTAINS(x, y, w, h, xx, yy, 1, 1))
 	       {
-		  x = ev->cur.canvas.x - x;
-		  y = ev->cur.canvas.y - y;
+		  x = xx - x;
+		  y = yy - y;
 		  win = ecore_x_window_at_xy_begin_get(win, x, y);
 		  ecore_x_mouse_move_send(win, x, y);
 		  break;
@@ -809,10 +819,11 @@ _itray_tray_init(ITray_Box *itb)
    evas_object_geometry_get(itb->item_object, &x, &y, &w, &h);
    itb->tray->win = ecore_x_window_new(itb->con->bg_win, x, y, w, h);
    ecore_x_window_container_manage(itb->tray->win);
-   ecore_x_window_background_color_set(itb->tray->win, 0, 0, 0);
+   /* this sucks because some icons inherit the bg pixmap/color of the parent win and thus the color... and are not shaped */
+   ecore_x_window_background_color_set(itb->tray->win, 0xffff, 0xffff, 0xffff);
 
    itb->tray->msg_handler = ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, _itray_tray_cb_msg, itb);
-   itb->tray->dst_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_DESTROY, _itray_tray_cb_msg, itb);
+   itb->tray->dst_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_DESTROY, _itray_tray_cb_destroy, itb);
 
    windows = ecore_x_window_children_get(itb->con->manager->root, &wnum);
    if (windows)
@@ -870,6 +881,7 @@ _itray_tray_init(ITray_Box *itb)
 	  }
         free(windows);
      }
+   _itray_reshape(itb);
 }
 
 void
@@ -1038,55 +1050,156 @@ static int
 _itray_tray_cb_msg(void *data, int type, void *event)
 {
    Ecore_X_Event_Client_Message *ev;
-   Ecore_X_Event_Window_Destroy *dst;
    ITray_Box *itb;
    static Ecore_X_Atom atom_opcode = 0;
    static Ecore_X_Atom atom_message = 0;
    static Ecore_X_Atom atom_xmbed = 0;
 
+   itb = data;
+   ev = event;
    if (atom_opcode == 0)
      atom_opcode = ecore_x_atom_get("_NET_SYSTEM_TRAY_OPCODE");
    if (atom_message == 0)
      atom_message =  ecore_x_atom_get("_NET_SYSTEM_TRAY_MESSAGE_DATA");
-  if (atom_xmbed == 0)
+   if (atom_xmbed == 0)
      atom_xmbed = ecore_x_atom_get("_XEMBED");
-   itb = data;
-   if (type == ECORE_X_EVENT_CLIENT_MESSAGE)
+   if (ev->message_type == atom_opcode)
      {
-	ev = event;
-	if (ev->message_type == atom_opcode)
+	if (ev->data.l[1] == SYSTEM_TRAY_REQUEST_DOCK)
 	  {
-	     if (ev->data.l[1] == 0)
-	       {
-		  _itray_tray_add(itb, (Ecore_X_Window)ev->data.l[2]);
-		  /* Should proto be set according to clients _XEMBED_INFO? */
-		  ecore_x_client_message32_send(ev->data.l[2], 
-						atom_xmbed,
-						ECORE_X_EVENT_MASK_NONE, CurrentTime,
-						XEMBED_EMBEDDED_NOTIFY, 0, itb->con->bg_win, /*proto*/1);
-
-	       }
-	     else if (ev->data.l[1] == 1)
-	       {
-		  printf("begin message\n");
-	       }
-	     else if (ev->data.l[1] == 3)
-	       {
-		  printf("cacnel message\n");
-	       }
+	     _itray_tray_add(itb, (Ecore_X_Window)ev->data.l[2]);
+	     /* Should proto be set according to clients _XEMBED_INFO? */
+	     ecore_x_client_message32_send(ev->data.l[2], 
+					   atom_xmbed,
+					   ECORE_X_EVENT_MASK_NONE, CurrentTime,
+					   XEMBED_EMBEDDED_NOTIFY, 0, itb->con->bg_win, /*proto*/1);
+	     
+	     _itray_reshape(itb);
 	  }
-	else if (ev->message_type == atom_message)
+	else if (ev->data.l[1] == SYSTEM_TRAY_BEGIN_MESSAGE)
 	  {
-	     printf("got message\n");
-	  } 
+	     printf("begin message\n");
+	  }
+	else if (ev->data.l[1] == SYSTEM_TRAY_CANCEL_MESSAGE)
+	  {
+	     printf("cancel message\n");
+	  }
      }
-   else if (type == ECORE_X_EVENT_WINDOW_DESTROY)
+   else if (ev->message_type == atom_message)
      {
-	dst = event;
-	_itray_tray_remove(itb, (Ecore_X_Window) dst->win);
-     }
+	printf("got message\n");
+     } 
    return 1;
 
+}
+
+static int
+_itray_tray_cb_destroy(void *data, int type, void *event)
+{
+   Ecore_X_Event_Window_Destroy *ev;
+   ITray_Box *itb;
+   int exists;
+   
+   itb = data;
+   ev = event;
+   exists = _itray_exists(itb, ev->win);
+   _itray_tray_remove(itb, ev->win);
+   if (exists) _itray_reshape(itb);
+   return 1;
+}
+
+static int
+_itray_tray_cb_hide(void *data, int type, void *event)
+{
+   Ecore_X_Event_Window_Destroy *ev;
+   ITray_Box *itb;
+   int exists;
+   
+   itb = data;
+   ev = event;
+   exists = _itray_exists(itb, ev->win);
+   _itray_tray_remove(itb, ev->win);
+   if (exists) _itray_reshape(itb);
+   return 1;
+}
+
+static int
+_itray_tray_cb_shape(void *data, int type, void *event)
+{
+   Ecore_X_Event_Window_Shape *ev;
+   ITray_Box *itb;
+   Evas_List *l;
+   
+   itb = data;
+   ev = event;
+   if (_itray_exists(itb, ev->win)) _itray_reshape(itb);
+   return 1;
+}
+
+static int
+_itray_exists(ITray_Box *itb, Ecore_X_Window win)
+{
+   Evas_List *l;
+   
+   for (l = itb->tray->wins; l; l = l->next)
+     {
+	Ecore_X_Window w;
+	
+	w = (Ecore_X_Window)l->data;
+	if (w == win) return 1;
+     }
+   return 0;
+}
+
+static void
+_itray_reshape(ITray_Box *itb)
+{
+   Evas_List *l;
+   Ecore_X_Window twin;
+   int i;
+
+   printf("reshape %p win %x\n", itb, itb->tray->win);
+   twin = ecore_x_window_override_new(itb->tray->win, 0, 0, 100, 100);
+   for (i = 0, l = itb->tray->wins; l; l = l->next, i++)
+     {
+	Ecore_X_Window win;
+        Ecore_X_Rectangle *rects;
+	int num;
+	int x, y, w, h;
+	
+	win = (Ecore_X_Window)l->data;
+	printf("SH%i %x\n", i, win);
+	ecore_x_window_geometry_get(win, &x, &y, &w, &h);
+        rects = ecore_x_window_shape_rectangles_get(win, &num);
+	if (rects)
+	  {
+	     printf("shaped! %i\n", num);
+	     if (i == 0)
+	       {
+		  ecore_x_window_shape_window_set_xy(twin, win, x, y);
+	       }
+	     else
+	       {
+		  ecore_x_window_shape_window_add_xy(twin, win, x, y);
+	       }
+	     free(rects);
+	  }
+	else
+	  {
+	     printf("not shaped!\n");
+	     if (i == 0)
+	       {
+		  ecore_x_window_shape_rectangle_set(twin, x, y, w, h);
+	       }
+	     else
+	       {
+		  ecore_x_window_shape_rectangle_add(twin, x, y, w, h);
+	       }
+	  }
+	if (i > 1000) break;
+     }
+   ecore_x_window_shape_window_set(itb->tray->win, twin);
+   ecore_x_window_del(twin);
 }
 
 static void
