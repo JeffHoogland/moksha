@@ -619,6 +619,7 @@ _itray_box_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 
    ev = event_info;
    itb = data;
+/*   
    if (ev->button == 3)
      {
 	e_menu_activate_mouse(itb->menu, e_zone_current_get(itb->con),
@@ -627,6 +628,7 @@ _itray_box_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 	e_util_container_fake_mouse_up_later(itb->con, 3);
      }
    else
+ */
      {
 	Ecore_X_Window win;
 	int x, y, w, h, xx, yy;
@@ -645,7 +647,10 @@ _itray_box_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 		  x = xx - x;
 		  y = yy - y;
 		  win = ecore_x_window_at_xy_begin_get(win, x, y);
+		  ecore_x_pointer_ungrab();
+		  ecore_x_flush();
 		  ecore_x_mouse_down_send(win, x, y, ev->button);
+		  e_util_container_fake_mouse_up_later(itb->con, ev->button);
 		  break;
 	       }
 	  }
@@ -660,10 +665,12 @@ _itray_box_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
    ev = event_info;
    itb = data;
+/*   
    if (ev->button == 3)
      {
      }
    else
+ */
      {
 	Ecore_X_Window win;
 	int x, y, w, h, xx, yy;
@@ -802,7 +809,7 @@ _itray_tray_init(ITray_Box *itb)
    evas_object_geometry_get(itb->item_object, &x, &y, &w, &h);
    itb->tray->win = ecore_x_window_new(itb->con->bg_win, x, y, w, h);
    ecore_x_window_container_manage(itb->tray->win);
-   ecore_x_window_background_color_set(itb->tray->win, 255, 0, 0);
+   ecore_x_window_background_color_set(itb->tray->win, 0, 0, 0);
 
    itb->tray->msg_handler = ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, _itray_tray_cb_msg, itb);
    itb->tray->dst_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_DESTROY, _itray_tray_cb_msg, itb);
@@ -824,7 +831,8 @@ _itray_tray_init(ITray_Box *itb)
 	     
              if (ecore_x_window_attributes_get(windows[i], &att))
 	       {
-		  if (att.visible)
+//		  if (0)
+//		  if (att.visible)
 		    {
 		       unsigned char *data = NULL;
 		       int count;
@@ -852,6 +860,7 @@ _itray_tray_init(ITray_Box *itb)
 			 }
 		       if (data)
 			 {
+			    printf("found %x\n", windows[i]);
 			    _itray_tray_add(itb, windows[i]);
 			    free(data);
 			    data = NULL;
@@ -874,6 +883,7 @@ _itray_tray_shutdown(ITray_Box *itb)
 	Ecore_X_Window_Attributes att;
 	
 	win = (Ecore_X_Window)(itb->tray->wins->data);
+	ecore_x_window_hide(win);
 	ecore_x_window_reparent(win, itb->con->manager->root, 0, 0);
 	itb->tray->wins = evas_list_remove_list(itb->tray->wins, itb->tray->wins);
      }
@@ -923,12 +933,10 @@ _itray_tray_add(ITray_Box *itb, Ecore_X_Window win)
    evas_object_show(itb->item_object);
 
    /* FIXME: adding a window id AS a pointer - BAD! */
-   /* FIXME: add property to the window so on restart we can pick it up again */
    /* FIXME: need to listen for shape change events on icons */
    /* FIXME: on shape change need to inherit shape */
-   /* FIXME: need to solve the windows above canvas event problem */
-   /* FIXME: need to handle min/max size of tray client window? */
-   /* FIXME: properties u might find on sample windows:
+   
+   /* properties u might find on sample windows:
     * 
     * GDK_TIMESTAMP_PROP(GDK_TIMESTAMP_PROP) = 0x61
     * _NET_WM_SYNC_REQUEST_COUNTER(CARDINAL) = 29360209
@@ -996,6 +1004,7 @@ _itray_tray_add(ITray_Box *itb, Ecore_X_Window win)
    ecore_x_window_resize(win, TRAY_ICON_SIZE, TRAY_ICON_SIZE);
    
    ecore_x_window_save_set_add(win);
+   ecore_x_window_shape_events_select(win, 1);
    ecore_x_window_reparent(win, itb->tray->win, 0, 0);
    ecore_x_window_raise(itb->con->event_win);
    _itray_tray_layout(itb);

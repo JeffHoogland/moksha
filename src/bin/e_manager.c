@@ -139,7 +139,15 @@ e_manager_manage_windows(E_Manager *man)
    if (windows)
      {
 	int i;
-
+        Ecore_X_Atom atom_xmbed, atom_kde_netwm_systray, atom_kwm_dockwindow,
+	  atom_window;
+	unsigned char *data = NULL;
+	int count;
+	
+	atom_window = ecore_x_atom_get("WINDOW");
+	atom_xmbed = ecore_x_atom_get("_XEMBED_INFO");
+	atom_kde_netwm_systray = ecore_x_atom_get("_KDE_NET_WM_SYSTEM_TRAY_WINDOW_FOR");
+	atom_kwm_dockwindow = ecore_x_atom_get("KWM_DOCKWINDOW");
 	for (i = 0; i < wnum; i++)
 	  {
 	     Ecore_X_Window_Attributes att;
@@ -147,6 +155,33 @@ e_manager_manage_windows(E_Manager *man)
 	     int ret;
 
 	     ecore_x_window_attributes_get(windows[i], &att);
+	     if (!ecore_x_window_prop_property_get(windows[i],
+						   atom_xmbed,
+						   atom_xmbed, 32,
+						   &data, &count))
+	       data = NULL;
+	     if (!data)
+	       {
+		  if (!ecore_x_window_prop_property_get(windows[i],
+							atom_kde_netwm_systray,
+							atom_xmbed, 32,
+							&data, &count))
+		    data = NULL;
+	       }
+	     if (!data)
+	       {
+		  if (!ecore_x_window_prop_property_get(windows[i],
+							atom_kwm_dockwindow,
+							atom_kwm_dockwindow, 32,
+							&data, &count))
+		    data = NULL;
+	       }
+	     if (data)
+	       {
+		  continue;
+		  free(data);
+		  data = NULL;
+	       }
 	     ret = ecore_x_window_prop_card32_get(windows[i],
 						  E_ATOM_MANAGED,
 						  &ret_val, 1);
