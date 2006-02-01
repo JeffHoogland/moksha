@@ -628,7 +628,32 @@ _itray_box_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
      }
    else
      {
-	/* FIXME: fake mouse events onto tray windows */
+	Ecore_X_Window win;
+	int x, y, w, h, xx, yy;
+	Evas_List *l;
+
+	printf("fakie!\n");
+	for (l = itb->tray->wins; l; l = l->next)
+	  {
+	     win = (Ecore_X_Window)l->data;
+	     
+	     printf("check..\n");
+	     ecore_x_window_geometry_get(win, &x, &y, &w, &h);
+	     evas_pointer_output_xy_get(itb->evas, &xx, &yy);
+	     xx -= itb->x;
+	     yy -= itb->y;
+	     printf("%i %i %i %i | %i %i %i %i\n",
+		    x, y, w, h, xx, yy, 1, 1);
+	     if (E_CONTAINS(x, y, w, h, xx, yy, 1, 1))
+	       {
+		  x = xx - x;
+		  y = yy - y;
+		  win = ecore_x_window_at_xy_begin_get(win, x, y);
+		  printf("send %x! %i %i\n", win, x, y);
+		  ecore_x_mouse_down_send(win, x, y, ev->button);
+		  break;
+	       }
+	  }
      }
 }
 
@@ -645,7 +670,27 @@ _itray_box_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
      }
    else
      {
-	/* FIXME: fake mouse events onto tray windows */
+	Ecore_X_Window win;
+	int x, y, w, h, xx, yy;
+	Evas_List *l;
+	
+	for (l = itb->tray->wins; l; l = l->next)
+	  {
+	     win = (Ecore_X_Window)l->data;
+	     
+	     ecore_x_window_geometry_get(win, &x, &y, &w, &h);
+	     evas_pointer_output_xy_get(itb->evas, &xx, &yy);
+	     xx -= itb->x;
+	     yy -= itb->y;
+	     if (E_CONTAINS(x, y, w, h, xx, yy, 1, 1))
+	       {
+		  x = xx - x;
+		  y = yy - y;
+		  win = ecore_x_window_at_xy_begin_get(win, x, y);
+		  ecore_x_mouse_up_send(win, x, y, ev->button);
+		  break;
+	       }
+	  }
      }
 }
 
@@ -654,10 +699,29 @@ _itray_box_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 {
    Evas_Event_Mouse_Move *ev;
    ITray_Box *itb;
-
+   
    ev = event_info;
    itb = data;
-   /* FIXME: fake mouse events onto tray windows */
+     {
+	Ecore_X_Window win;
+	int x, y, w, h;
+	Evas_List *l;
+	
+	for (l = itb->tray->wins; l; l = l->next)
+	  {
+	     win = (Ecore_X_Window)l->data;
+	     
+	     ecore_x_window_geometry_get(win, &x, &y, &w, &h);
+	     if (E_CONTAINS(x, y, w, h, ev->cur.canvas.x, ev->cur.canvas.y, 1, 1))
+	       {
+		  x = ev->cur.canvas.x - x;
+		  y = ev->cur.canvas.y - y;
+		  win = ecore_x_window_at_xy_begin_get(win, x, y);
+		  ecore_x_mouse_move_send(win, x, y);
+		  break;
+	       }
+	  }
+     }
 }
 
 static void
