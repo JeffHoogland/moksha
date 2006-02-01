@@ -734,7 +734,7 @@ _itray_tray_init(ITray_Box *itb)
    itb->tray->wins = NULL;
 
    evas_object_resize(itb->item_object, itb->tray->w, itb->tray->h);
-   evas_object_color_set(itb->item_object, 180, 0, 0, 0);
+   evas_object_color_set(itb->item_object, 0, 0, 0, 0);
    evas_object_intercept_move_callback_add(itb->item_object, _itray_tray_cb_move, itb);
    evas_object_intercept_resize_callback_add(itb->item_object, _itray_tray_cb_resize, itb);
 
@@ -743,7 +743,7 @@ _itray_tray_init(ITray_Box *itb)
    evas_object_geometry_get(itb->item_object, &x, &y, &w, &h);
    itb->tray->win = ecore_x_window_new(itb->con->bg_win, x, y, w, h);
    ecore_x_window_container_manage(itb->tray->win);
-   ecore_x_window_background_color_set(itb->tray->win, 255, 255, 255);
+   ecore_x_window_background_color_set(itb->tray->win, 255, 0, 0);
 
    itb->tray->msg_handler = ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, _itray_tray_cb_msg, itb);
    itb->tray->dst_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_DESTROY, _itray_tray_cb_msg, itb);
@@ -762,36 +762,42 @@ _itray_tray_init(ITray_Box *itb)
 	for (i = 0; i < wnum; i++)
 	  {
              Ecore_X_Window_Attributes att;
-	     unsigned char *data = NULL;
-	     int count;
 	     
-             ecore_x_window_attributes_get(windows[i], &att);
-             if (!ecore_x_window_prop_property_get(windows[i],
-						   atom_xmbed,
-						   atom_xmbed, 32, 
-						   &data, &count))
-	       data = NULL;
-	     if (!data)
+             if (ecore_x_window_attributes_get(windows[i], &att))
 	       {
-		  if (!ecore_x_window_prop_property_get(windows[i],
-							atom_kde_netwm_systray,
-							atom_xmbed, 32, 
-							&data, &count))
-		    data = NULL;
-	       }
-	     if (!data)
-	       {
-		  if (!ecore_x_window_prop_property_get(windows[i],
-							atom_kwm_dockwindow,
-							atom_kwm_dockwindow, 32, 
-							&data, &count))
-		    data = NULL;
-	       }
-	     if (data)
-	       {
-		  _itray_tray_add(itb, windows[i]);
-		  free(data);
-		  data = NULL;
+		  if (att.visible)
+		    {
+		       unsigned char *data = NULL;
+		       int count;
+		       
+		       if (!ecore_x_window_prop_property_get(windows[i],
+							     atom_xmbed,
+							     atom_xmbed, 32, 
+							     &data, &count))
+			 data = NULL;
+		       if (!data)
+			 {
+			    if (!ecore_x_window_prop_property_get(windows[i],
+								  atom_kde_netwm_systray,
+								  atom_xmbed, 32, 
+								  &data, &count))
+			      data = NULL;
+			 }
+		       if (!data)
+			 {
+			    if (!ecore_x_window_prop_property_get(windows[i],
+								  atom_kwm_dockwindow,
+								  atom_kwm_dockwindow, 32, 
+								  &data, &count))
+			      data = NULL;
+			 }
+		       if (data)
+			 {
+			    _itray_tray_add(itb, windows[i]);
+			    free(data);
+			    data = NULL;
+			 }
+		    }
 	       }
 	  }
         free(windows);
@@ -806,6 +812,7 @@ _itray_tray_shutdown(ITray_Box *itb)
    while (itb->tray->wins)
      {
 	Ecore_X_Window win;
+	Ecore_X_Window_Attributes att;
 	
 	win = (Ecore_X_Window)(itb->tray->wins->data);
 	ecore_x_window_reparent(win, itb->con->manager->root, 0, 0);
@@ -823,25 +830,24 @@ _itray_tray_active_set(ITray_Box *itb, int active)
 {
    Ecore_X_Window win;
    Display *display;
-   Window root;
    char buf[32];
-   Atom selection_atom;
+   Ecore_X_Atom selection_atom;
 
    win = 0;
    if (active)
      win = itb->con->bg_win;
 
    display = ecore_x_display_get();
-   root = RootWindow (display, DefaultScreen(display));
-
-   snprintf(buf, sizeof(buf), "_NET_SYSTEM_TRAY_S%d", DefaultScreen(display));
+   snprintf(buf, sizeof(buf), "_NET_SYSTEM_TRAY_S%d", itb->con->manager->num);
    selection_atom = ecore_x_atom_get(buf);
+   /* FIXXME: nasty xlib snippets! */
    XSetSelectionOwner(display, selection_atom, win, CurrentTime);
-
    if ((active) &&
-	 (XGetSelectionOwner(display, selection_atom) == itb->con->bg_win))
+       (XGetSelectionOwner(display, selection_atom) == itb->con->bg_win))
      {
-	ecore_x_client_message32_send(root, ecore_x_atom_get("MANAGER"),
+	printf("send message thast we own the tray now\n");
+	ecore_x_client_message32_send(itb->con->manager->root,
+				      ecore_x_atom_get("MANAGER"),
 				      ECORE_X_EVENT_MASK_WINDOW_CONFIGURE,
 				      CurrentTime, selection_atom, win, 0, 0);
      }
@@ -966,22 +972,42 @@ _itray_tray_cb_msg(void *data, int type, void *event)
    Ecore_X_Event_Client_Message *ev;
    Ecore_X_Event_Window_Destroy *dst;
    ITray_Box *itb;
+   static Ecore_X_Atom atom_opcode = 0;
+   static Ecore_X_Atom atom_message = 0;
+   static Ecore_X_Atom atom_xmbed = 0;
 
+   if (atom_opcode == 0)
+     atom_opcode = ecore_x_atom_get("_NET_SYSTEM_TRAY_OPCODE");
+   if (atom_message == 0)
+     atom_message =  ecore_x_atom_get("_NET_SYSTEM_TRAY_MESSAGE_DATA");
+  if (atom_xmbed == 0)
+     atom_xmbed = ecore_x_atom_get("_XEMBED");
    itb = data;
    if (type == ECORE_X_EVENT_CLIENT_MESSAGE)
      {
 	ev = event;
-	if (ev->message_type == ecore_x_atom_get("_NET_SYSTEM_TRAY_OPCODE"))
+	if (ev->message_type == atom_opcode)
 	  {
-	     _itray_tray_add(itb, (Ecore_X_Window)ev->data.l[2]);
-	     /* Should proto be set according to clients _XEMBED_INFO? */
-	     ecore_x_client_message32_send(ev->data.l[2], 
-					   ecore_x_atom_get("_XEMBED"),
-					   ECORE_X_EVENT_MASK_NONE, CurrentTime,
-					   XEMBED_EMBEDDED_NOTIFY, 0, itb->con->bg_win, /*proto*/1);
-	     
+	     if (ev->data.l[1] == 0)
+	       {
+		  _itray_tray_add(itb, (Ecore_X_Window)ev->data.l[2]);
+		  /* Should proto be set according to clients _XEMBED_INFO? */
+		  ecore_x_client_message32_send(ev->data.l[2], 
+						atom_xmbed,
+						ECORE_X_EVENT_MASK_NONE, CurrentTime,
+						XEMBED_EMBEDDED_NOTIFY, 0, itb->con->bg_win, /*proto*/1);
+
+	       }
+	     else if (ev->data.l[1] == 1)
+	       {
+		  printf("begin message\n");
+	       }
+	     else if (ev->data.l[1] == 3)
+	       {
+		  printf("cacnel message\n");
+	       }
 	  }
-	else if (ev->message_type == ecore_x_atom_get("_NET_SYSTEM_TRAY_MESSAGE_DATA"))
+	else if (ev->message_type == atom_message)
 	  {
 	     printf("got message\n");
 	  } 
