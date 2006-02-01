@@ -27,7 +27,6 @@
  *
  * Changing the number of rows breaks the layout.
  *	It's magically fixed when the module is moved.
- * Remove the follower code, or make it work on top of the tray icons.
  *
  * TODO List:
  * 
@@ -64,9 +63,6 @@ static void    _itray_box_disable(ITray_Box *itb);
 static void    _itray_box_frame_resize(ITray_Box *itb);
 static void    _itray_box_edge_change(ITray_Box *itb, int edge);
 static void    _itray_box_update_policy(ITray_Box *itb);
-static void    _itray_box_motion_handle(ITray_Box *itb, Evas_Coord mx, Evas_Coord my);
-static void    _itray_box_timer_handle(ITray_Box *itb);
-static void    _itray_box_follower_reset(ITray_Box *itb);
 
 static void    _itray_box_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
 static void    _itray_box_cb_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -75,22 +71,21 @@ static void    _itray_box_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, v
 static void    _itray_box_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void    _itray_box_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
-/* Follower */
-static int     _itray_box_cb_timer(void *data);
-static int     _itray_box_cb_animator(void *data);
-
 static void    _itray_box_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
 static void    _itray_box_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 
 /* Config Updated Function Protos */
 static void    _itray_box_cb_width_auto(void *data);
-static void    _itray_box_cb_follower(void *data);
 
 /* Tray */
 static void    _itray_tray_init(ITray_Box *itb);
 static void    _itray_tray_shutdown(ITray_Box *itb);
 static int     _itray_tray_cb_msg(void *data, int type, void *event);
 static void    _itray_tray_active_set();
+
+static void    _itray_tray_add(ITray_Box *itb, Ecore_X_Window win);
+static void    _itray_tray_remove(ITray_Box *itb, Ecore_X_Window win);
+static int     _itray_tray_cb_msg(void *data, int type, void *event);
 
 static void    _itray_tray_cb_move(void *data, Evas_Object *o, Evas_Coord x, Evas_Coord y);
 static void    _itray_tray_cb_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_Coord h);
@@ -212,9 +207,6 @@ _itray_new()
 #undef D
 #define T Config
 #define D conf_edd
-   E_CONFIG_VAL(D, T, follower, INT);
-   E_CONFIG_VAL(D, T, follow_speed, DOUBLE);
-   E_CONFIG_VAL(D, T, autoscroll_speed, DOUBLE);
    E_CONFIG_VAL(D, T, rowsize, INT);
    E_CONFIG_VAL(D, T, width, INT);
    E_CONFIG_LIST(D, T, boxes, conf_box_edd);
@@ -223,14 +215,9 @@ _itray_new()
    if (!it->conf)
      {
 	it->conf = E_NEW(Config, 1);
-	it->conf->follower = 1;
-	it->conf->follow_speed = 0.9;
-	it->conf->autoscroll_speed = 0.95;
 	it->conf->rowsize = 1;
 	it->conf->width = ITRAY_WIDTH_AUTO;
      }
-   E_CONFIG_LIMIT(it->conf->follow_speed, 0.01, 1.0);
-   E_CONFIG_LIMIT(it->conf->autoscroll_speed, 0.01, 1.0);
    E_CONFIG_LIMIT(it->conf->rowsize, 1, 6);
    E_CONFIG_LIMIT(it->conf->width, -2, -1);
 
@@ -326,16 +313,6 @@ _itray_box_new(ITray *it, E_Container *con)
 			   "modules/itray/main");
    evas_object_show(o);
 
-   if (itb->itray->conf->follower)
-     {
-	o = edje_object_add(itb->evas);
-	itb->overlay_object = o;
-	evas_object_layer_set(o, 1);
-	e_theme_edje_object_set(o, "base/theme/modules/itray",
-				"modules/itray/follower");
-	evas_object_show(o);
-     }
-
    o = evas_object_rectangle_add(itb->evas);
    itb->event_object = o;
    evas_object_layer_set(o, 2);
@@ -355,8 +332,6 @@ _itray_box_new(ITray *it, E_Container *con)
    edje_object_part_swallow(itb->box_object, "tray", o);
    evas_object_show(o);
 
-   itb->align_req = 0.5;
-   itb->align = 0.5;
    e_box_align_set(itb->item_object, 0.5, 0.5);
 
    evas_object_resize(itb->box_object, 1000, 1000);
@@ -389,12 +364,6 @@ _itray_box_new(ITray *it, E_Container *con)
    /* We need to resize, if the width is auto and the number
     * of apps has changed since last startup */
    _itray_box_frame_resize(itb);
-
-   /*
-   edje_object_signal_emit(itb->box_object, "passive", "");
-   edje_object_signal_emit(itb->overlay_object, "passive", "");
-   */
-
    return itb;
 }
 
@@ -404,10 +373,7 @@ _itray_box_free(ITray_Box *itb)
    e_object_unref(E_OBJECT(itb->con));
    e_object_del(E_OBJECT(itb->menu));
 
-   if (itb->timer) ecore_timer_del(itb->timer);
-   if (itb->animator) ecore_animator_del(itb->animator);
    evas_object_del(itb->box_object);
-   if (itb->overlay_object) evas_object_del(itb->overlay_object);
    evas_object_del(itb->item_object);
    evas_object_del(itb->event_object);
 
@@ -462,7 +428,6 @@ _itray_box_disable(ITray_Box *itb)
 {
    itb->conf->enabled = 0;
    evas_object_hide(itb->box_object);
-   if (itb->overlay_object) evas_object_hide(itb->overlay_object);
    evas_object_hide(itb->item_object);
    evas_object_hide(itb->event_object);
    e_config_save_queue();
@@ -563,17 +528,7 @@ _itray_box_edge_change(ITray_Box *itb, int edge)
    edje_object_signal_emit(o, "set_orientation", _itray_main_orientation[edge]);
    edje_object_message_signal_process(o);
 
-   if (itb->overlay_object)
-     {
-	o = itb->overlay_object;
-	edje_object_signal_emit(o, "set_orientation", _itray_main_orientation[edge]);
-	edje_object_message_signal_process(o);
-     }
-
    e_box_freeze(itb->item_object);
-
-   itb->align_req = 0.5;
-   itb->align = 0.5;
    e_box_align_set(itb->item_object, 0.5, 0.5);
 
    policy = E_GADMAN_POLICY_EDGES | E_GADMAN_POLICY_HMOVE | E_GADMAN_POLICY_VMOVE;
@@ -637,78 +592,6 @@ _itray_box_update_policy(ITray_Box *itb)
 }
 
 static void
-_itray_box_motion_handle(ITray_Box *itb, Evas_Coord mx, Evas_Coord my)
-{
-   Evas_Coord x, y, w, h;
-   double relx, rely;
-
-   evas_object_geometry_get(itb->item_object, &x, &y, &w, &h);
-   if (w > 0) relx = (double)(mx - x) / (double)w;
-   else relx = 0.0;
-   if (h > 0) rely = (double)(my - y) / (double)h;
-   else rely = 0.0;
-   if ((e_gadman_client_edge_get(itb->gmc) == E_GADMAN_EDGE_BOTTOM) ||
-       (e_gadman_client_edge_get(itb->gmc) == E_GADMAN_EDGE_TOP))
-     {
-	itb->align_req = 1.0 - relx;
-	itb->follow_req = relx;
-     }
-   else if ((e_gadman_client_edge_get(itb->gmc) == E_GADMAN_EDGE_LEFT) ||
-	    (e_gadman_client_edge_get(itb->gmc) == E_GADMAN_EDGE_RIGHT))
-     {
-	itb->align_req = 1.0 - rely;
-	itb->follow_req = rely;
-     }
-}
-
-static void
-_itray_box_timer_handle(ITray_Box *itb)
-{
-   if (!itb->timer)
-     itb->timer = ecore_timer_add(0.01, _itray_box_cb_timer, itb);
-   if (!itb->animator)
-     itb->animator = ecore_animator_add(_itray_box_cb_animator, itb);
-}
-
-static void
-_itray_box_follower_reset(ITray_Box *itb)
-{
-   Evas_Coord ww, hh, bx, by, bw, bh, d1, d2, mw, mh;
-
-   if (!itb->overlay_object) return;
-
-   evas_output_viewport_get(itb->evas, NULL, NULL, &ww, &hh);
-   evas_object_geometry_get(itb->item_object, &bx, &by, &bw, &bh);
-   edje_object_size_min_get(itb->overlay_object, &mw, &mh);
-   if ((e_gadman_client_edge_get(itb->gmc) == E_GADMAN_EDGE_BOTTOM) ||
-       (e_gadman_client_edge_get(itb->gmc) == E_GADMAN_EDGE_TOP))
-     {
-	d1 = bx;
-	d2 = ww - (bx + bw);
-	if (bw > 0)
-	  {
-	     if (d1 < d2)
-	       itb->follow_req = -((double)(d1 + (mw * 4)) / (double)bw);
-	     else
-	       itb->follow_req = 1.0 + ((double)(d2 + (mw * 4)) / (double)bw);
-	  }
-     }
-   else if ((e_gadman_client_edge_get(itb->gmc) == E_GADMAN_EDGE_LEFT) ||
-	    (e_gadman_client_edge_get(itb->gmc) == E_GADMAN_EDGE_RIGHT))
-     {
-	d1 = by;
-	d2 = hh - (by + bh);
-	if (bh > 0)
-	  {
-	     if (d1 < d2)
-	       itb->follow_req = -((double)(d1 + (mh * 4)) / (double)bh);
-	     else
-	       itb->follow_req = 1.0 + ((double)(d2 + (mh * 4)) / (double)bh);
-	  }
-     }
-}
-
-static void
 _itray_box_cb_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_In *ev;
@@ -716,10 +599,6 @@ _itray_box_cb_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
    ev = event_info;
    itb = data;
-   if (itb->overlay_object)
-     edje_object_signal_emit(itb->overlay_object, "active", "");
-   _itray_box_motion_handle(itb, ev->canvas.x, ev->canvas.y);
-   _itray_box_timer_handle(itb);
 }
 
 static void
@@ -730,10 +609,6 @@ _itray_box_cb_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
    ev = event_info;
    itb = data;
-   if (itb->overlay_object)
-     edje_object_signal_emit(itb->overlay_object, "passive", "");
-   _itray_box_follower_reset(itb);
-   _itray_box_timer_handle(itb);
 }
 
 static void
@@ -751,6 +626,10 @@ _itray_box_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
 	e_util_container_fake_mouse_up_later(itb->con, 3);
      }
+   else
+     {
+	/* FIXME: fake mouse events onto tray windows */
+     }
 }
 
 static void
@@ -761,6 +640,13 @@ _itray_box_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
    ev = event_info;
    itb = data;
+   if (ev->button == 3)
+     {
+     }
+   else
+     {
+	/* FIXME: fake mouse events onto tray windows */
+     }
 }
 
 static void
@@ -771,86 +657,7 @@ _itray_box_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 
    ev = event_info;
    itb = data;
-   _itray_box_motion_handle(itb, ev->cur.canvas.x, ev->cur.canvas.y);
-   _itray_box_timer_handle(itb);
-}
-
-static int
-_itray_box_cb_timer(void *data)
-{
-   ITray_Box *itb;
-   double dif, dif2;
-   double v;
-
-   itb = data;
-   v = itb->itray->conf->autoscroll_speed;
-   itb->align = (itb->align_req * (1.0 - v)) + (itb->align * v);
-   v = itb->itray->conf->follow_speed;
-   itb->follow = (itb->follow_req * (1.0 - v)) + (itb->follow * v);
-
-   dif = itb->align - itb->align_req;
-   if (dif < 0) dif = -dif;
-   if (dif < 0.001) itb->align = itb->align_req;
-
-   dif2 = itb->follow - itb->follow_req;
-   if (dif2 < 0) dif2 = -dif2;
-   if (dif2 < 0.001) itb->follow = itb->follow_req;
-
-   if ((dif < 0.001) && (dif2 < 0.001))
-     {
-	itb->timer = NULL;
-	return 0;
-     }
-   return 1;
-}
-
-static int
-_itray_box_cb_animator(void *data)
-{
-   ITray_Box *itb;
-   Evas_Coord x, y, w, h, mw, mh;
-
-   itb = data;
-
-   if ((e_gadman_client_edge_get(itb->gmc) == E_GADMAN_EDGE_BOTTOM) ||
-       (e_gadman_client_edge_get(itb->gmc) == E_GADMAN_EDGE_TOP))
-     {
-        e_box_min_size_get(itb->item_object, &mw, &mh);
-	evas_object_geometry_get(itb->item_object, NULL, NULL, &w, &h);
-	if (mw > w)
-	  e_box_align_set(itb->item_object, itb->align, 0.5);
-	else
-	  e_box_align_set(itb->item_object, 0.5, 0.5);
-
-	if (itb->overlay_object)
-	  {
-	     evas_object_geometry_get(itb->item_object, &x, &y, &w, &h);
-	     edje_object_size_min_get(itb->overlay_object, &mw, &mh);
-	     evas_object_resize(itb->overlay_object, mw, h);
-	     evas_object_move(itb->overlay_object, x + (w * itb->follow) - (mw / 2), y);
-	  }
-     }
-   else if ((e_gadman_client_edge_get(itb->gmc) == E_GADMAN_EDGE_LEFT) ||
-	    (e_gadman_client_edge_get(itb->gmc) == E_GADMAN_EDGE_RIGHT))
-     {
-        e_box_min_size_get(itb->item_object, &mw, &mh);
-	evas_object_geometry_get(itb->item_object, NULL, NULL, &w, &h);
-	if (mh > h)
-	  e_box_align_set(itb->item_object, 0.5, itb->align);
-	else
-	  e_box_align_set(itb->item_object, 0.5, 0.5);
-
-	if (itb->overlay_object)
-	  {
-	     evas_object_geometry_get(itb->item_object, &x, &y, &w, &h);
-	     edje_object_size_min_get(itb->overlay_object, &mw, &mh);
-	     evas_object_resize(itb->overlay_object, w, mh);
-	     evas_object_move(itb->overlay_object, x, y + (h * itb->follow) - (mh / 2));
-	  }
-     }
-   if (itb->timer) return 1;
-   itb->animator = NULL;
-   return 0;
+   /* FIXME: fake mouse events onto tray windows */
 }
 
 static void
@@ -869,10 +676,6 @@ _itray_box_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change chang
 
 	evas_object_move(itb->box_object, itb->x, itb->y);
 	evas_object_resize(itb->box_object, itb->w, itb->h);
-
-	_itray_box_follower_reset(itb);
-	_itray_box_timer_handle(itb);
-
 	break;
       case E_GADMAN_CHANGE_EDGE:
 	_itray_box_edge_change(itb, e_gadman_client_edge_get(itb->gmc));
@@ -909,51 +712,10 @@ _itray_box_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
    e_gadman_mode_set(itb->gmc->gadman, E_GADMAN_MODE_EDIT);
 }
 
-static void
-_itray_box_cb_follower(void *data)
-{
-   ITray          *it;
-   ITray_Box      *itb;
-   unsigned char  enabled;
-   Evas_List     *l;
-
-   it = (ITray *)data;
-   enabled = it->conf->follower;
-   if (enabled)
-     {
-	for (l = it->boxes; l; l = l->next)
-	  {
-	     Evas_Object *o;
-
-	     itb = l->data;
-	     if (itb->overlay_object) continue;
-	     o = edje_object_add(itb->evas);
-	     itb->overlay_object = o;
-	     evas_object_layer_set(o, 1);
-	     e_theme_edje_object_set(o, "base/theme/modules/itray",
-				     "modules/itray/follower");
-	     edje_object_signal_emit(o, "set_orientation", _itray_main_orientation[e_gadman_client_edge_get(itb->gmc)]);
-	     edje_object_message_signal_process(o);
-	     evas_object_show(o);
-	  }
-     }
-   else if (!enabled)
-     {
-	for (l = it->boxes; l; l = l->next)
-	  {
-	     itb = l->data;
-	     if (!itb->overlay_object) continue;
-	     evas_object_del(itb->overlay_object);
-	     itb->overlay_object = NULL;
-	  }
-     }
-}
-
 void
 _itray_box_cb_config_updated(void *data)
 {
    /* Call Any Needed Funcs To Let Module Handle Config Changes */
-   _itray_box_cb_follower(data);
    _itray_box_cb_width_auto(data);
 }
 
@@ -961,6 +723,8 @@ void
 _itray_tray_init(ITray_Box *itb)
 {
    Evas_Coord x, y, w, h;
+   Ecore_X_Window *windows;
+   int wnum;
 
    /* FIXME - temp */
    itb->tray = malloc(sizeof(ITray_Tray));
@@ -983,6 +747,55 @@ _itray_tray_init(ITray_Box *itb)
 
    itb->tray->msg_handler = ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, _itray_tray_cb_msg, itb);
    itb->tray->dst_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_DESTROY, _itray_tray_cb_msg, itb);
+
+   windows = ecore_x_window_children_get(itb->con->manager->root, &wnum);
+   if (windows)
+     {
+        int i;
+	Ecore_X_Atom atom_xmbed, atom_kde_netwm_systray, atom_kwm_dockwindow,
+	  atom_window;
+               
+	atom_window = ecore_x_atom_get("WINDOW");
+	atom_xmbed = ecore_x_atom_get("_XEMBED_INFO");
+	atom_kde_netwm_systray = ecore_x_atom_get("_KDE_NET_WM_SYSTEM_TRAY_WINDOW_FOR");
+	atom_kwm_dockwindow = ecore_x_atom_get("KWM_DOCKWINDOW");
+	for (i = 0; i < wnum; i++)
+	  {
+             Ecore_X_Window_Attributes att;
+	     unsigned char *data = NULL;
+	     int count;
+	     
+             ecore_x_window_attributes_get(windows[i], &att);
+             if (!ecore_x_window_prop_property_get(windows[i],
+						   atom_xmbed,
+						   atom_xmbed, 32, 
+						   &data, &count))
+	       data = NULL;
+	     if (!data)
+	       {
+		  if (!ecore_x_window_prop_property_get(windows[i],
+							atom_kde_netwm_systray,
+							atom_xmbed, 32, 
+							&data, &count))
+		    data = NULL;
+	       }
+	     if (!data)
+	       {
+		  if (!ecore_x_window_prop_property_get(windows[i],
+							atom_kwm_dockwindow,
+							atom_kwm_dockwindow, 32, 
+							&data, &count))
+		    data = NULL;
+	       }
+	     if (data)
+	       {
+		  _itray_tray_add(itb, windows[i]);
+		  free(data);
+		  data = NULL;
+	       }
+	  }
+        free(windows);
+     }
 }
 
 void
@@ -990,9 +803,16 @@ _itray_tray_shutdown(ITray_Box *itb)
 {
    _itray_tray_active_set(itb, 0);
 
-   evas_list_free(itb->tray->wins);
+   while (itb->tray->wins)
+     {
+	Ecore_X_Window win;
+	
+	win = (Ecore_X_Window)(itb->tray->wins->data);
+	ecore_x_window_reparent(win, itb->con->manager->root, 0, 0);
+	itb->tray->wins = evas_list_remove_list(itb->tray->wins, itb->tray->wins);
+     }
    evas_object_del(itb->item_object);
-
+   
    ecore_event_handler_del(itb->tray->msg_handler);
    ecore_event_handler_del(itb->tray->dst_handler);
    ecore_x_window_del(itb->tray->win);
@@ -1016,14 +836,14 @@ _itray_tray_active_set(ITray_Box *itb, int active)
 
    snprintf(buf, sizeof(buf), "_NET_SYSTEM_TRAY_S%d", DefaultScreen(display));
    selection_atom = ecore_x_atom_get(buf);
-   XSetSelectionOwner (display, selection_atom, win, CurrentTime);
+   XSetSelectionOwner(display, selection_atom, win, CurrentTime);
 
-   if (active &&
-	 XGetSelectionOwner (display, selection_atom) == itb->con->bg_win)
+   if ((active) &&
+	 (XGetSelectionOwner(display, selection_atom) == itb->con->bg_win))
      {
 	ecore_x_client_message32_send(root, ecore_x_atom_get("MANAGER"),
-	      ECORE_X_EVENT_MASK_WINDOW_CONFIGURE,
-	      CurrentTime, selection_atom, win, 0, 0);
+				      ECORE_X_EVENT_MASK_WINDOW_CONFIGURE,
+				      CurrentTime, selection_atom, win, 0, 0);
      }
 }
 
@@ -1112,6 +932,7 @@ _itray_tray_add(ITray_Box *itb, Ecore_X_Window win)
    
    ecore_x_window_save_set_add(win);
    ecore_x_window_reparent(win, itb->tray->win, 0, 0);
+   ecore_x_window_raise(itb->con->event_win);
    _itray_tray_layout(itb);
    _itray_box_frame_resize(itb);
 

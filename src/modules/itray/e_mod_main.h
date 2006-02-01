@@ -15,9 +15,6 @@ typedef struct _ITray_Tray   ITray_Tray;
 
 struct _Config
 {
-   double        follow_speed;
-   int           follower;
-   double        autoscroll_speed;
    int           rowsize;
    int           width;
    Evas_List    *boxes;
@@ -40,24 +37,18 @@ struct _ITray
 
 struct _ITray_Box
 {
-   ITray        *itray;
+   ITray       *itray;
    E_Container *con;
    Evas        *evas;
    E_Menu      *menu;
    
    Evas_Object *box_object;
-   Evas_Object *overlay_object;
    Evas_Object *item_object;
    Evas_Object *event_object;
    
-   double          align, align_req;
-   double          follow, follow_req;
-   Ecore_Timer    *timer;
-   Ecore_Animator *animator;
-   
    Evas_Coord      x, y, w, h;
    struct {
-	Evas_Coord l, r, t, b;
+      Evas_Coord l, r, t, b;
    } box_inset;
 
    E_Gadman_Client *gmc;
