@@ -632,24 +632,19 @@ _itray_box_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 	int x, y, w, h, xx, yy;
 	Evas_List *l;
 
-	printf("fakie!\n");
 	for (l = itb->tray->wins; l; l = l->next)
 	  {
 	     win = (Ecore_X_Window)l->data;
 	     
-	     printf("check..\n");
 	     ecore_x_window_geometry_get(win, &x, &y, &w, &h);
 	     evas_pointer_output_xy_get(itb->evas, &xx, &yy);
 	     xx -= itb->x;
 	     yy -= itb->y;
-	     printf("%i %i %i %i | %i %i %i %i\n",
-		    x, y, w, h, xx, yy, 1, 1);
 	     if (E_CONTAINS(x, y, w, h, xx, yy, 1, 1))
 	       {
 		  x = xx - x;
 		  y = yy - y;
 		  win = ecore_x_window_at_xy_begin_get(win, x, y);
-		  printf("send %x! %i %i\n", win, x, y);
 		  ecore_x_mouse_down_send(win, x, y, ev->button);
 		  break;
 	       }
