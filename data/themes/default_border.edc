@@ -4784,19 +4784,71 @@ group {
 	 action:  STATE_SET "default" 0.0;
 	 target:  "title_hung";
       }
-  }
+   }  
 }
 
+group {
+   name: "widgets/border/pixel/border";
+   // ALSO:
+   // borderless, noresize, shaped, nofocus, urgent, dialog, modal, skipped
+   data {
+// this tells e the border is shaped      
+//      item: "shaped" "1";
+   }
+   parts {      
+      part {
+	 name:           "pixel";
+	 type:           RECT;
+	 description {
+	    state: "default" 0.0;
+	    visible: 1;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:   0   0;
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -1  -1;
+	    }
+	    color: 0 0 0 255;	    
+	 }
+      }            
+      part {
+	 name:           "whole";
+	 type:           RECT;
+	 description {
+	    state: "default" 0.0;
+	    visible: 0;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:   0   0;
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -1  -1;
+	    }
+	 }
+      }      
+      part {
+	 name:          "client";
+	 type:          SWALLOW;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   1    1;
+	       to:     "pixel";
 
-
-
-
-
-
-
-
-
-
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -2   -2;
+	       to: "pixel";
+	    }
+	 }
+      }
+   }
+}
 
 FULL_SIZE_BORDER_BUTTON("close")
 FULL_SIZE_BORDER_BUTTON("minimize")
