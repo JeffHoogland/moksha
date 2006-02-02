@@ -409,10 +409,10 @@ _ibox_box_new(IBox *ib, E_Container *con)
    e_gadman_client_min_size_set(ibb->gmc, 8, 8);
    e_gadman_client_max_size_set(ibb->gmc, 3200, 3200);
    e_gadman_client_auto_size_set(ibb->gmc, -1, -1);
-   e_gadman_client_align_set(ibb->gmc, 0.0, 0.5);
+   e_gadman_client_align_set(ibb->gmc, 1.0, 1.0);
    e_gadman_client_resize(ibb->gmc, 400, 32 + ibb->box_inset.t + ibb->box_inset.b);
    e_gadman_client_change_func_set(ibb->gmc, _ibox_box_cb_gmc_change, ibb);
-   e_gadman_client_edge_set(ibb->gmc, E_GADMAN_EDGE_LEFT);
+   e_gadman_client_edge_set(ibb->gmc, E_GADMAN_EDGE_BOTTOM);
    e_gadman_client_load(ibb->gmc);
 
    evas_event_thaw(ibb->evas);

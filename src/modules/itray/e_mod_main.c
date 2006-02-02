@@ -160,7 +160,13 @@ e_modapi_about(E_Module *m)
 {
    e_module_dialog_show(_("Enlightenment ITray Module"),
 			_("This is the ITray system tray module for Enlightenment.<br>"
-			  "It will hold system tray icons."));
+			  "It will hold system tray icons.<br>"
+			  "Beware that this can be buggy due to many systray providing<br>"
+			  "applications not handling the protocol properly, ad the way<br>"
+			  "systray icons work being very limiting and hacky. Do not use<br>"
+			  "this module unless you absolutely must, and if you do, beware<br>"
+			  "of issues that will appear."
+			  ));
    return 1;
 }
 
@@ -321,7 +327,7 @@ _itray_box_new(ITray *it, E_Container *con)
    itb->event_object = o;
    evas_object_layer_set(o, 2);
    evas_object_repeat_events_set(o, 1);
-   evas_object_color_set(o, 255, 255, 255, 255);
+   evas_object_color_set(o, 0, 0, 0, 0);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN,  _itray_box_cb_mouse_in,  itb);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_OUT, _itray_box_cb_mouse_out, itb);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _itray_box_cb_mouse_down, itb);
@@ -357,10 +363,10 @@ _itray_box_new(ITray *it, E_Container *con)
    e_gadman_client_min_size_set(itb->gmc, 8, 8);
    e_gadman_client_max_size_set(itb->gmc, 3200, 3200);
    e_gadman_client_auto_size_set(itb->gmc, -1, -1);
-   e_gadman_client_align_set(itb->gmc, 0.0, 0.5);
+   e_gadman_client_align_set(itb->gmc, 0.0, 1.0);
    e_gadman_client_resize(itb->gmc, 400, 32);
    e_gadman_client_change_func_set(itb->gmc, _itray_box_cb_gmc_change, itb);
-   e_gadman_client_edge_set(itb->gmc, E_GADMAN_EDGE_LEFT);
+   e_gadman_client_edge_set(itb->gmc, E_GADMAN_EDGE_BOTTOM);
    e_gadman_client_load(itb->gmc);
 
    evas_event_thaw(itb->evas);

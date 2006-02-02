@@ -504,6 +504,8 @@ e_gadman_client_padding_set(E_Gadman_Client *gmc, int l, int r, int t, int b)
 EAPI void
 e_gadman_client_auto_size_set(E_Gadman_Client *gmc, Evas_Coord autow, Evas_Coord autoh)
 {
+   Evas_List *l;
+   
    E_OBJECT_CHECK(gmc);
    E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
    gmc->autow = autow;
@@ -518,6 +520,23 @@ e_gadman_client_auto_size_set(E_Gadman_Client *gmc, Evas_Coord autow, Evas_Coord
 	gmc->h = gmc->autoh;
 	gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) * gmc->ay);
      }
+   /* FIXME: check for overlap and fix */
+/*   
+   for (l = gmc->zone->container->gadman->clients; l; l = l->next)
+     {
+	E_Gadman_Client *gmc2;
+	
+	gmc2 = l->data;
+	if (gmc != gmc2)
+	  {
+	     if ((E_SPANS_COMMON(gmc->x, gmc->w, gmc2->x, gmc2->w)) &&
+		 (E_SPANS_COMMON(gmc->y, gmc->h, gmc2->y, gmc2->h)))
+	       {
+		  // blah
+	       }
+	  }
+     }
+ */
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 

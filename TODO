@@ -8,7 +8,6 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: itray. need i say more (it's riddled with problems)
 * BUG: dnd icon from window that has no .eap defining its ocon to ibar and the
   ibar icon ends up blank (cant build .eap freom ARGB pixels)
 * BUG: edge flip for desktops still active if turned off when dragging a window
@@ -46,6 +45,7 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
+* when gadgets expand they should expand in a way to not overlap if possible
 * implement thees maximise/fullscreen modes:
   Which of these should be different modes, and which should be options for
   a mode? i think they all should be distinct actions of their own bound
