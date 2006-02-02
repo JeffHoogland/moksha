@@ -1799,7 +1799,7 @@ msgid "Size Settings"
 msgstr "Impostazioni delle dimensioni"
 
 #: src/bin/e_int_config_winlist.c:252
-msgid "Minimun Width"
+msgid "Minimum Width"
 msgstr "Larghezza minima"
 
 #: src/bin/e_int_config_winlist.c:254 src/bin/e_int_config_winlist.c:258
@@ -1809,7 +1809,7 @@ msgid "%4.0f"
 msgstr "%4.0f"
 
 #: src/bin/e_int_config_winlist.c:256
-msgid "Minimun Height"
+msgid "Minimum Height"
 msgstr "Altezza minima"
 
 #: src/bin/e_int_config_winlist.c:260
