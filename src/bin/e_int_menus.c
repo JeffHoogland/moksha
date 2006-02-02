@@ -13,7 +13,7 @@ struct _Main_Data
    E_Menu *clients;
 //   E_Menu *modules;
    E_Menu *gadgets;
-   E_Menu *themes;
+//   E_Menu *themes;
    E_Menu *config;
    E_Menu *lost_clients;
 };
@@ -130,27 +130,32 @@ e_int_menus_main_new(void)
    e_menu_item_label_set(mi, _("Gadgets"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/gadgets");
    e_menu_item_submenu_set(mi, subm);
-   
+
+/* We have a config dialog for this - this menu was a hack nayway to start
+ * with
+ */
+/*   
    subm = e_int_menus_themes_new();
    dat->themes = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Themes"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/themes");
    e_menu_item_submenu_set(mi, subm);   
-  
+ */
+   
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
-   
+
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("About Enlightenment"));   
    e_util_menu_item_edje_icon_set(mi, "enlightenment/e");
    e_menu_item_callback_set(mi, _e_int_menus_main_about, NULL);
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Files"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/fileman");
-   e_menu_item_callback_set(mi, _e_int_menus_main_fm, NULL);   
-      
+   e_menu_item_label_set(mi, _("About This Theme"));   
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/theme");
+   e_menu_item_callback_set(mi, _e_int_menus_themes_about, NULL);
+   
    subm = e_int_menus_config_new();
    dat->config = subm;
    mi = e_menu_item_new(m);
@@ -247,6 +252,7 @@ e_int_menus_gadgets_new(void)
    return m;
 }
 
+/*
 EAPI E_Menu *
 e_int_menus_themes_new(void)
 {
@@ -256,6 +262,7 @@ e_int_menus_themes_new(void)
    e_menu_pre_activate_callback_set(m, _e_int_menus_themes_pre_cb, NULL);
    return m;
 }
+*/
 
 EAPI E_Menu *
 e_int_menus_lost_clients_new(void)
@@ -351,7 +358,7 @@ _e_int_menus_main_del_hook(void *obj)
 	e_object_del(E_OBJECT(dat->desktops));
 	e_object_del(E_OBJECT(dat->clients));
 	e_object_del(E_OBJECT(dat->gadgets));
-	e_object_del(E_OBJECT(dat->themes));	
+//	e_object_del(E_OBJECT(dat->themes));	
 	e_object_del(E_OBJECT(dat->config));
 	e_object_del(E_OBJECT(dat->lost_clients));
 	free(dat);
@@ -597,6 +604,14 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    e_menu_item_label_set(mi, _("Eap Editor"));
    e_menu_item_callback_set(mi, _e_int_menus_eapedit_item_cb, NULL);   
 
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+   
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Test Filemanager"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/fileman");
+   e_menu_item_callback_set(mi, _e_int_menus_main_fm, NULL);   
+      
    l = evas_hash_find(_e_int_menus_augmentation, "config");
    if (l)
      {
@@ -797,6 +812,7 @@ _e_int_menus_gadgets_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
  * 
  * Remove this later, keep for fast theme switching now.
  */
+/*
 static void
 _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 {
@@ -866,7 +882,6 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 		       snprintf(fulltheme, sizeof(fulltheme), "%s/%s", buf, theme);
 		       if (ecore_file_is_dir(fulltheme)) continue;
 		       
-		       /* minimum theme requirements */
 		       if(edje_object_file_set(o, fulltheme, "widgets/border/default/border"))
 			 {
 			    mi = e_menu_item_new(m);
@@ -920,7 +935,8 @@ _e_int_menus_themes_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    a = e_action_find("restart");
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
-
+*/
+		       
 static void
 _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
 {
