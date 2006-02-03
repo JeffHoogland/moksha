@@ -90,10 +90,59 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 
    x -= zone->x;
    y -= zone->y;
+      
+   if (e_config->window_placement_policy == E_WINDOW_PLACEMENT_ANTIGADGET)
+     {
+      Evas_List *l;
+      int cx1, cx2, cy1, cy2;
+
+      cx1 = zone->x;
+      cy1 = zone->y;
+      cx2 = zone->x + zone->w;
+      cy2 = zone->y + zone->h;
    
-   zw = zone->w;
-   zh = zone->h;
-   
+      /* Find the smallest box */
+      for (l = zone->container->gadman->clients; l; l = l->next)
+        {
+           E_Gadman_Client *gmc;
+	   double ax, ay;
+
+	   gmc = l->data;
+	   if ((gmc->zone != zone)) continue;
+
+	   ax = gmc->ax;
+	   ay = gmc->ay;
+
+	   if (((ax == 0.0) || (ax == 1.0)) &&
+	       ((ay == 0.0) || (ay == 1.0)))
+	     {
+	        /* corner gadget */
+	        /* Fake removal from one alignment :) */
+	        if (gmc->w > gmc->h)
+	          ax = 0.5;
+	        else
+	          ay = 0.5;
+	     }
+
+	   if ((ax == 0.0) && (gmc->x + gmc->w) > cx1)
+	     cx1 = (gmc->x + gmc->w);
+	   else if ((ax == 1.0) && (gmc->x < cx2))
+	     cx2 = gmc->x;
+	   else if ((ay == 0.0) && ((gmc->y + gmc->h) > cy1))
+	     cy1 = (gmc->y + gmc->h);
+	   else if ((ay == 1.0) && (gmc->y < cy2))
+	     cy2 = gmc->y;
+        }
+
+
+      zw = cx2 - cx1;
+      zh = cy2 - cy1;
+     }
+   else
+     {
+	     zw = zone->w;
+	     zh = zone->h;
+     }
    u_x = calloc(zw + 1, sizeof(char));
    u_y = calloc(zh + 1, sizeof(char));
    
@@ -186,8 +235,8 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 	{
 	   for (i = 0; i < a_w - 1; i++)
 	     {
-		if ((a_x[i] < (zone->w - w)) &&
-		    (a_y[j] < (zone->h - h)))
+		if ((a_x[i] < (zw - w)) &&
+		    (a_y[j] < (zh - h)))
 		  {
 		     int ar = 0;
 
@@ -250,7 +299,7 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 			     goto done;
 		       }
 		  }
-		if ((a_x[i + 1] - w > 0) && (a_y[j] < (zone->h - h)))
+		if ((a_x[i + 1] - w > 0) && (a_y[j] < (zh - h)))
 		  {
 		     int ar = 0;
 
@@ -376,7 +425,7 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 			     goto done;
 		       }
 		  }
-		if ((a_x[i] < (zone->w - w)) && (a_y[j + 1] - h > 0))
+		if ((a_x[i] < (zw - w)) && (a_y[j + 1] - h > 0))
 		  {
 		     int ar = 0;
 

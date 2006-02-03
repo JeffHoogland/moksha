@@ -5306,7 +5306,7 @@ _e_border_eval(E_Border *bd)
 		       else
 			 new_y = bd->zone->y;
 
-		       if (e_config->window_placement_policy == E_WINDOW_PLACEMENT_SMART)
+		       if ((e_config->window_placement_policy == E_WINDOW_PLACEMENT_SMART)||(e_config->window_placement_policy == E_WINDOW_PLACEMENT_ANTIGADGET))
 			 {
 			    skiplist = evas_list_append(skiplist, bd);
 			    e_place_zone_region_smart(bd->zone, skiplist,
