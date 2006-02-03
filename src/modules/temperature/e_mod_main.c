@@ -73,7 +73,7 @@ e_modapi_shutdown(E_Module *m)
    E_CONFIG_DD_FREE(conf_face_edd);
 
    gad = m->data;
-   if (!gad) return;
+   if (!gad) return 0;
    e = gad->data;
    if (e)
      {
@@ -127,7 +127,6 @@ e_modapi_config(E_Module *m)
 {
    E_Gadget *gad;
    Temperature *e;
-   Evas_List *l;
    
    gad = m->data;
    if (!gad) return 0;
@@ -195,8 +194,6 @@ void _temperature_face_init(void *data, E_Gadget_Face *face)
 {
    Temperature *e;
    Temperature_Face *ef;
-   Config_Face *cf;
-   Evas_Object *o;
    E_Gadman_Policy  policy;
 
    e = data;
@@ -275,9 +272,9 @@ _temperature_cb_check(void *data)
 #endif
 
    gad = data;
-   if (!gad) return;
+   if (!gad) return 0;
    t = gad->data;
-   if (!t) return;
+   if (!t) return 0;
 
 #ifdef __FreeBSD__
    if (mib[0] == -1)
