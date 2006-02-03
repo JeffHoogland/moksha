@@ -23,6 +23,8 @@ struct _E_Config_Dialog_Data
    int pass_click_on;
    int always_click_to_raise;
    int always_click_to_focus;
+   int focus_last_focused_per_desktop;
+   int focus_revert_on_hide_or_close;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -55,6 +57,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->pass_click_on = e_config->pass_click_on;
    cfdata->always_click_to_raise = e_config->always_click_to_raise;
    cfdata->always_click_to_focus = e_config->always_click_to_focus;
+   cfdata->focus_last_focused_per_desktop = e_config->focus_last_focused_per_desktop;
+   cfdata->focus_revert_on_hide_or_close = e_config->focus_revert_on_hide_or_close;
 
    cfdata->mode = cfdata->focus_policy;
 }
@@ -93,6 +97,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	e_config->pass_click_on = 1;
 	e_config->always_click_to_raise = 0;
 	e_config->always_click_to_focus = 0;
+	e_config->focus_last_focused_per_desktop = 0;
+	e_config->focus_revert_on_hide_or_close = 1;
      }
    else if (cfdata->mode == E_FOCUS_MOUSE)
      {
@@ -101,6 +107,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	e_config->pass_click_on = 1;
 	e_config->always_click_to_raise = 0;
 	e_config->always_click_to_focus = 0;
+	e_config->focus_last_focused_per_desktop = 0;
+	e_config->focus_revert_on_hide_or_close = 0;
      }
    else
      {
@@ -109,6 +117,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	e_config->pass_click_on = 1;
 	e_config->always_click_to_raise = 0;
 	e_config->always_click_to_focus = 0;
+	e_config->focus_last_focused_per_desktop = 1;
+	e_config->focus_revert_on_hide_or_close = 1;
      }
    e_border_button_bindings_grab_all();
    e_config_save_queue();
@@ -125,6 +135,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->pass_click_on = cfdata->pass_click_on;
    e_config->always_click_to_raise = cfdata->always_click_to_raise;
    e_config->always_click_to_focus = cfdata->always_click_to_focus;
+   e_config->focus_last_focused_per_desktop = cfdata->focus_last_focused_per_desktop;
+   e_config->focus_revert_on_hide_or_close = cfdata->focus_revert_on_hide_or_close;
    e_border_button_bindings_grab_all();
    e_config_save_queue();
    return 1; /* Apply was OK */
@@ -190,6 +202,10 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_check_add(evas, _("A click on a window always raises it"), &(cfdata->always_click_to_raise));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("A click in a window always focuses it"), &(cfdata->always_click_to_focus));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Refocus last focused window on desktop switch"), &(cfdata->focus_last_focused_per_desktop));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Revert focus when hiding or closing a window"), &(cfdata->focus_revert_on_hide_or_close));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    

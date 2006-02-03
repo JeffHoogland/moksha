@@ -78,7 +78,7 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
    e_menu_category_data_set("border/maximize",bd);
    bd->border_maximize_menu = m;
    /* Only allow to change layer for windows in "normal" layers */
-   if ((!bd->lock_user_maximize) &&
+   if ((!bd->lock_user_maximize) && (!bd->shaded) &&
        ((bd->layer == 50) || (bd->layer == 100) || (bd->layer == 150)))
    { 
      int __fullmaximization = 0;
@@ -187,7 +187,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 				  "widgets/border/default/maximize");
      }
 
-   if ((!bd->lock_user_shade) && (!(!strcmp("borderless", bd->client.border.name))))
+   if ((!bd->lock_user_shade) && (!bd->fullscreen) && (!bd->maximized) &&
+       (!(!strcmp("borderless", bd->client.border.name))))
      {
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Shaded"));
@@ -265,7 +266,7 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 				  "widgets/border/default/borderless");
      }
    
-   if (!bd->lock_user_fullscreen)
+   if ((!bd->lock_user_fullscreen) && (!bd->shaded))
      {
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Fullscreen"));
@@ -325,7 +326,7 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	e_menu_item_separator_set(mi, 1);
      }
    
-   if (!bd->lock_user_iconify)
+   if ((!bd->lock_user_iconify) && (!bd->fullscreen))
      {
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Iconify"));

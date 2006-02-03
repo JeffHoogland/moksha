@@ -49,6 +49,9 @@ static void _e_menu_reposition                    (E_Menu *m);
 static int  _e_menu_active_call                   (void);
 static void _e_menu_item_activate_next            (void);
 static void _e_menu_item_activate_previous        (void);
+static void _e_menu_item_activate_first           (void);
+static void _e_menu_item_activate_last            (void);
+static void _e_menu_item_activate_nth             (int n);
 static void _e_menu_activate_next                 (void);
 static void _e_menu_activate_previous             (void);
 static void _e_menu_activate_first                (void);
@@ -194,6 +197,7 @@ e_menu_activate_key(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir
 	_e_menu_activate_last();
 	break;
       case E_MENU_POP_DIRECTION_DOWN:
+	_e_menu_realize(m);
 	m->cur.x = x + w;
 	m->cur.y = y + h;
 	_e_menu_activate_first();
@@ -726,6 +730,7 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
 	E_Menu_Item *pmi;
 	
 	pmi = _e_menu_item_active_get();
+	if (mi == pmi) return;
 	if (pmi) e_menu_item_active_set(pmi, 0);
 	mi->active = 1;
 	if (mi->bg_object)
@@ -1928,6 +1933,84 @@ _e_menu_item_activate_previous(void)
 }
 
 static void
+_e_menu_item_activate_first(void)
+{
+   E_Menu *m;
+   Evas_List *ll;
+   E_Menu_Item *mi;
+
+   /* FIXME: inefficient. should track current menu and active item */
+   m = _e_menu_active_get();
+   if (m)
+     {
+	ll = m->items;
+	mi = ll->data;
+	while ((mi->separator) && (ll->next))
+	  {
+	     ll = ll->next;
+	     mi = ll->data;
+	  }
+	if (mi->separator) return;
+	e_menu_item_active_set(mi, 1);
+	_e_menu_item_ensure_onscreen(mi);
+	return;
+     }
+   _e_menu_activate_first();
+}
+
+static void
+_e_menu_item_activate_last(void)
+{
+   E_Menu *m;
+   Evas_List *ll;
+   E_Menu_Item *mi;
+
+   /* FIXME: inefficient. should track current menu and active item */
+   m = _e_menu_active_get();
+   if (m)
+     {
+	ll = evas_list_last(m->items);
+	mi = ll->data;
+	while ((mi->separator) && (ll->prev))
+	  {
+	     ll = ll->prev;
+	     mi = ll->data;
+	  }
+	if (mi->separator) return;
+	e_menu_item_active_set(mi, 1);
+	_e_menu_item_ensure_onscreen(mi);
+	return;
+     }
+   _e_menu_activate_first();
+}
+
+static void
+_e_menu_item_activate_nth(int n)
+{
+   E_Menu *m;
+   E_Menu_Item *mi;
+   Evas_List *ll;
+   int i;
+   
+   mi = _e_menu_item_active_get();
+   if (!mi)
+     {
+	_e_menu_activate_first();
+	mi = _e_menu_item_active_get();
+	if (!mi) return;
+     }
+   m = mi->menu;
+   for (i = -1, ll = m->items; ll; ll = ll->next)
+     {
+	mi = ll->data;
+	if (!mi->separator) i++;
+	if (i == n) break;
+     }
+   e_menu_item_active_set(mi, 1);
+   _e_menu_item_ensure_onscreen(mi);
+}
+
+static void
 _e_menu_activate_next(void)
 {
    E_Menu_Item *mi;
@@ -2346,45 +2429,56 @@ _e_menu_cb_key_down(void *data, int type, void *event)
    
    ev = event;
    if (ev->win != _e_menu_win) return 1;
-   if      (!strcmp(ev->keysymbol, "Up"))
+   if      ((!strcmp(ev->keysymbol, "Up")) ||
+	    (!strcmp(ev->keysymbol, "KP_Up")))
      _e_menu_item_activate_previous();
-   else if (!strcmp(ev->keysymbol, "Down"))
+   else if ((!strcmp(ev->keysymbol, "Down")) ||
+	    (!strcmp(ev->keysymbol, "KP_Down")))
      _e_menu_item_activate_next();
-   else if (!strcmp(ev->keysymbol, "Left"))
+   else if ((!strcmp(ev->keysymbol, "Left")) ||
+	    (!strcmp(ev->keysymbol, "KP_Left")))
      _e_menu_activate_previous();
-   else if (!strcmp(ev->keysymbol, "Right"))
+   else if ((!strcmp(ev->keysymbol, "Right")) ||
+	    (!strcmp(ev->keysymbol, "KP_Right")))
      _e_menu_activate_next();
+   else if ((!strcmp(ev->keysymbol, "Home")) ||
+	    (!strcmp(ev->keysymbol, "KP_Home")))
+     _e_menu_item_activate_first();
+   else if ((!strcmp(ev->keysymbol, "End")) ||
+	    (!strcmp(ev->keysymbol, "KP_End")))
+     _e_menu_item_activate_last();
    else if (!strcmp(ev->keysymbol, "space"))
      {
 	_e_menu_active_call();
      }
-   else if (!strcmp(ev->keysymbol, "Return"))
+   else if ((!strcmp(ev->keysymbol, "Return")) ||
+	    (!strcmp(ev->keysymbol, "KP_Enter")))
      {
 	_e_menu_active_call();
 	_e_menu_deactivate_all();
      }
    else if (!strcmp(ev->keysymbol, "Escape"))
      _e_menu_deactivate_all();
-   else if (!strcmp(ev->keysymbol, "1"))
-     _e_menu_activate_nth(0);
-   else if (!strcmp(ev->keysymbol, "2"))
-     _e_menu_activate_nth(1);
-   else if (!strcmp(ev->keysymbol, "3"))
-     _e_menu_activate_nth(2);
-   else if (!strcmp(ev->keysymbol, "4"))
-     _e_menu_activate_nth(3);
-   else if (!strcmp(ev->keysymbol, "5"))
-     _e_menu_activate_nth(4);
-   else if (!strcmp(ev->keysymbol, "6"))
-     _e_menu_activate_nth(5);
-   else if (!strcmp(ev->keysymbol, "7"))
-     _e_menu_activate_nth(6);
-   else if (!strcmp(ev->keysymbol, "8"))
-     _e_menu_activate_nth(7);
-   else if (!strcmp(ev->keysymbol, "9"))
-     _e_menu_activate_nth(8);
-   else if (!strcmp(ev->keysymbol, "0"))
-     _e_menu_activate_nth(9);
+   else if ((!strcmp(ev->keysymbol, "1")) || (!strcmp(ev->keysymbol, "KP_1")))
+     _e_menu_item_activate_first();
+   else if ((!strcmp(ev->keysymbol, "2")) || (!strcmp(ev->keysymbol, "KP_2")))
+     _e_menu_item_activate_nth(1);
+   else if ((!strcmp(ev->keysymbol, "3")) || (!strcmp(ev->keysymbol, "KP_3")))
+     _e_menu_item_activate_nth(2);
+   else if ((!strcmp(ev->keysymbol, "4")) || (!strcmp(ev->keysymbol, "KP_4")))
+     _e_menu_item_activate_nth(3);
+   else if ((!strcmp(ev->keysymbol, "5")) || (!strcmp(ev->keysymbol, "KP_5")))
+     _e_menu_item_activate_nth(4);
+   else if ((!strcmp(ev->keysymbol, "6")) || (!strcmp(ev->keysymbol, "KP_6")))
+     _e_menu_item_activate_nth(5);
+   else if ((!strcmp(ev->keysymbol, "7")) || (!strcmp(ev->keysymbol, "KP_7")))
+     _e_menu_item_activate_nth(6);
+   else if ((!strcmp(ev->keysymbol, "8")) || (!strcmp(ev->keysymbol, "KP_8")))
+     _e_menu_item_activate_nth(7);
+   else if ((!strcmp(ev->keysymbol, "9")) || (!strcmp(ev->keysymbol, "KP_9")))
+     _e_menu_item_activate_nth(8);
+   else if ((!strcmp(ev->keysymbol, "0")) || (!strcmp(ev->keysymbol, "KP_0")))
+     _e_menu_item_activate_last();
    return 1;
 }
 
