@@ -54,7 +54,8 @@ e_configure_show(E_Container *con)
    e_theme_edje_object_set(eco->edje, "base/theme/configure",
 			   "widgets/configure/main");
    
-   eco->ilist = e_widget_ilist_add(eco->evas, 24, 24, NULL);
+   /* 24 */
+   eco->ilist = e_widget_ilist_add(eco->evas, 32, 32, NULL);
    e_widget_ilist_selector_set(eco->ilist, 1);
    e_widget_min_size_get(eco->ilist, &mw, &mh);
    edje_extern_object_min_size_set(eco->ilist, mw, mh);
@@ -67,6 +68,7 @@ e_configure_show(E_Container *con)
    e_configure_standard_item_add(eco, "enlightenment/modules", _("Module Settings"), e_int_config_modules);
    e_configure_standard_item_add(eco, "enlightenment/mouse", _("Cursor Settings"), e_int_config_cursor);
    e_configure_standard_item_add(eco, "enlightenment/desktops", _("Desktop Settings"), e_int_config_desks);
+   e_configure_standard_item_add(eco, "enlightenment/desktops", _("Display Settings"), e_int_config_display);
    e_configure_standard_item_add(eco, "enlightenment/e", _("Focus Settings"), e_int_config_focus);
    e_configure_standard_item_add(eco, "enlightenment/favorites", _("Menu Settings"), e_int_config_menus);
    e_configure_standard_item_add(eco, "enlightenment/configuration", _("Performance Settings"), e_int_config_performance);
