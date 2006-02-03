@@ -227,7 +227,7 @@ _start_face_new(Start *s, E_Container *con)
            E_GADMAN_POLICY_VSIZE;
 
    if (s->conf->allow_overlap == 0)
-     policy &= E_GADMAN_POLICY_ALLOW_OVERLAP;
+     policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
    else
      policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
 
