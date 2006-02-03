@@ -223,8 +223,8 @@ e_intl_language_set(const char *lang)
              locale_path = _e_intl_language_path_find(alias_locale);
              if (locale_path == NULL)
 	       {
-		  fprintf(stderr, "The eMonkeys can not find the "
-			 "eTranslation for your eLocale(%s). "
+		  fprintf(stderr, "Can't find the "
+			 "translation for your locale(%s). "
 			 "Please make sure your messages "
 			 "path is in order. If this locale "
 			 "is an alias make sure you have your "
