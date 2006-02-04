@@ -213,7 +213,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_ilist_go(il);   
    e_widget_min_size_set(il, 180, 40);
    e_widget_table_object_append(o, il, 0, 0, 1, 2, 1, 1, 1, 1);
-   fr = e_widget_framelist_add(evas, "Preview", 0);
+   fr = e_widget_framelist_add(evas, _("Preview"), 0);
    if (im == NULL)
      {
 	snprintf(fulltheme, sizeof(fulltheme), PACKAGE_DATA_DIR"/data/themes/default.edj");
