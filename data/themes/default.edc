@@ -61,5 +61,6 @@ collections {
 #include "default_slider.edc"
 #include "default_exebuf.edc"
 #include "default_textblock.edc"
+#include "default_shelf.edc"
 }
 

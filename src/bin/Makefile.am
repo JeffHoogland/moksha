@@ -139,7 +139,8 @@ e_color_class.h \
 e_widget_textblock.h \
 e_apps_error.h \
 e_stolen.h \
-e_gadcon.h
+e_gadcon.h \
+e_shelf.h
 
 enlightenment_src = \
 e_user.c \
@@ -260,6 +261,7 @@ e_widget_textblock.c \
 e_apps_error.c \
 e_stolen.c \
 e_gadcon.c \
+e_shelf.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \

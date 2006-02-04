@@ -602,6 +602,20 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_color_class_shutdown);
+   /* setup gadcon */
+   if (!e_gadcon_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its gadget control system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_gadcon_shutdown);
+   /* setup shelves */
+   if (!e_shelf_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its shelf system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_shelf_shutdown);
 
    if (ipc_failed)
      e_error_dialog_show(_("Enlightenment IPC setup error!"),
@@ -640,6 +654,39 @@ main(int argc, char **argv)
    
    /* run any testing code now we are set up */
    e_test();
+
+   /* FIXME: for testing only */
+   if (0)
+     {
+	Evas_List *l, *l2, *l3, *managers;
+	int snum;
+	
+	snum = 0;
+	for (l = e_manager_list(); l; l = l->next)
+	  {
+	     E_Manager *man;
+	     
+	     man = l->data;
+	     for (l2 = man->containers; l2; l2 = l2->next)
+	       {
+		  E_Container *con;
+		  
+		  con = l2->data;
+		  for (l3 = con->zones; l3; l3 = l3->next)
+		    {
+		       E_Zone *zone;
+		       E_Shelf *es;
+		       char buf[256];
+		       
+		       zone = l3->data;
+		       snprintf(buf, sizeof(buf), "shelf.%i", snum);
+		       snum++;
+		       es = e_shelf_zone_new(zone, buf);
+		       e_shelf_populate(es);
+		    }
+	       }
+	  }
+     }
 
    /* no longer starting up */
    starting = 0;
