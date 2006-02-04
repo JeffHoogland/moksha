@@ -37,7 +37,7 @@ e_int_config_window_display(E_Container *con)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    
-   v = E_NEW(E_Config_Dialog, 1);
+   v = E_NEW(E_Config_Dialog_View, 1);
    
    /* methods */
    v->create_cfdata           = _create_data;
@@ -207,6 +207,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    of = e_widget_framelist_add(evas, _("Automatic New Window Placement"), 0);
    rg = e_widget_radio_group_new(&(cfdata->placement));
    ob = e_widget_radio_add(evas, _("Smart Placement"), E_WINDOW_PLACEMENT_SMART, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Dont hide Gadgets"), E_WINDOW_PLACEMENT_ANTIGADGET, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Place at mouse pointer"), E_WINDOW_PLACEMENT_CURSOR, rg);
    e_widget_framelist_object_append(of, ob);
