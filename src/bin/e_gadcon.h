@@ -3,12 +3,6 @@
  */
 #ifdef E_TYPEDEFS
 
-typedef enum _E_Gadcon_Type
-{
-   E_GADCON_TYPE_FREEFLOAT,
-   E_GADCON_TYPE_ARRANGE,
-} E_Gadcon_Type;
-
 typedef enum _E_Gadcon_Orient
 {
    /* generic orientations */
@@ -21,8 +15,9 @@ typedef enum _E_Gadcon_Orient
      E_GADCON_ORIENT_BOTTOM
 } E_Gadcon_Orient;
 
-typedef struct _E_Gadcon        E_Gadcon;
-typedef struct _E_Gadcon_Client E_Gadcon_Client;
+typedef struct _E_Gadcon              E_Gadcon;
+typedef struct _E_Gadcon_Client       E_Gadcon_Client;
+typedef struct _E_Gadcon_Client_Class E_Gadcon_Client_Class;
 
 #else
 #ifndef E_GADCON_H
@@ -35,42 +30,54 @@ struct _E_Gadcon
 {
    E_Object             e_obj_inherit;
 
-   E_Gadcon_Type        type;
+   char                *name;
+   char                *id;
+   
    struct {
       Evas_Object      *o_parent;
       char             *swallow_name;
-      E_Gadcon_Orient   orient;
    } edje;
-   struct {
-      Ecore_Evas       *ee;
-   } ecore_evas;
+   
+   E_Gadcon_Orient      orient;
    
    Evas                *evas;
    Evas_Object         *o_container;
    Evas_List           *clients;
 };
 
+#define GADCON_CLIENT_CLASS_VERSION 1
+struct _E_Gadcon_Client_Class
+{
+   int   version;
+   char *name;
+   struct {
+      E_Gadcon_Client *(*init)     (E_Gadcon *gc, char *name);
+      void             (*shutdown) (E_Gadcon_Client *gcc);
+      void             (*orient)   (E_Gadcon_Client *gcc);
+   } func;
+};
+
 struct _E_Gadcon_Client
 {
-   E_Object             e_obj_inherit;
-   E_Gadcon            *gadcon;
-   
-   Evas_Object         *o_base;
-   struct {
-      Evas_Coord        w, h;
-   } min, max, asked, given;
+   E_Object               e_obj_inherit;
+   E_Gadcon              *gadcon;
+   char                  *name;
+   Evas_Object           *o_base;
+   E_Gadcon_Client_Class  client_class;
+   void                  *data;
 };
 
 EAPI int              e_gadcon_init(void);
 EAPI int              e_gadcon_shutdown(void);
-EAPI E_Gadcon        *e_gadcon_swallowed_new(Evas_Object *obj, char *swallow_name);
-EAPI E_Gadcon        *e_gadcon_freefloat_new(Ecore_Evas *ee);
-EAPI void             e_gadcon_resize(E_Gadcon *gc, int w, int h);
-EAPI void             e_gadcon_orient_set(E_Gadcon *gc, E_Gadcon_Orient orient);
-
-
-
-EAPI E_Gadcon_Client *e_gadcon_client_new(E_Gadcon *gc);
-
+EAPI void             e_gadcon_provider_register(E_Gadcon_Client_Class *cc);
+EAPI void             e_gadcon_provider_unregister(E_Gadcon_Client_Class *cc);
+EAPI E_Gadcon        *e_gadcon_swallowed_new(char *name, char *id, Evas_Object *obj, char *swallow_name);
+EAPI void             e_gadcon_populate(E_Gadcon *gc);
+EAPI void             e_gadcon_orient(E_Gadcon *gc, E_Gadcon_Orient orient);
+    
+EAPI E_Gadcon_Client *e_gadcon_client_new(E_Gadcon *gc, char *name, Evas_Object *base_obj);
+EAPI void             e_gadcon_client_size_request(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h);
+    
 #endif
 #endif
+

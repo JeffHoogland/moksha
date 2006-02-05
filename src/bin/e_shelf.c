@@ -6,6 +6,7 @@
 static void _e_shelf_free(E_Shelf *es);
 
 static Evas_List *shelves = NULL;
+static int shelf_id = 0;
 
 /* externally accessible functions */
 EAPI int
@@ -47,23 +48,12 @@ e_shelf_zone_new(E_Zone *zone, char *name)
    e_popup_edje_bg_object_set(es->popup, es->o_base);
    e_popup_show(es->popup);
    
-   es->gadcon = e_gadcon_swallowed_new(es->o_base, "items");
+   snprintf(buf, sizeof(buf), "%i", shelf_id);
+   shelf_id++;
+   es->gadcon = e_gadcon_swallowed_new(es->name, buf, es->o_base, "items");
+   e_gadcon_orient(es->gadcon, E_GADCON_ORIENT_HORIZ);
    
    shelves = evas_list_append(shelves, es);
-   
-   return es;
-}
-
-EAPI E_Shelf *
-e_shelf_inline_new(Ecore_Evas *ee, char *name)
-{
-   E_Shelf *es;
-
-   /* not done yet */
-   return NULL;
-   
-   es = E_OBJECT_ALLOC(E_Shelf, E_SHELF_TYPE, _e_shelf_free);
-   if (!es) return NULL;
    
    return es;
 }
@@ -73,7 +63,7 @@ e_shelf_populate(E_Shelf *es)
 {
    E_OBJECT_CHECK(es);
    E_OBJECT_TYPE_CHECK(es, E_GADMAN_SHELF_TYPE);
-   /* actually tell all the moduels that livbed in this shelf to populate it */
+   e_gadcon_populate(es->gadcon);
 }
 
 /* local subsystem functions */

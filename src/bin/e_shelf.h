@@ -29,7 +29,6 @@ struct _E_Shelf
 EAPI int              e_shelf_init(void);
 EAPI int              e_shelf_shutdown(void);
 EAPI E_Shelf         *e_shelf_zone_new(E_Zone *zone, char *name);
-EAPI E_Shelf         *e_shelf_inline_new(Ecore_Evas *ee, char *name);
 EAPI void             e_shelf_populate(E_Shelf *es);
     
 #endif

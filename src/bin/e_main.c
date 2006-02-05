@@ -31,7 +31,7 @@ static void _e_main_desk_save(void);
 static void _e_main_desk_restore(E_Manager *man, E_Container *con);
 
 /* local subsystem globals */
-#define MAX_LEVEL 32
+#define MAX_LEVEL 64
 static int (*_e_main_shutdown_func[MAX_LEVEL]) (void);
 static int _e_main_level = 0;
 static int _e_cacheburst = 0;
@@ -659,9 +659,7 @@ main(int argc, char **argv)
    if (0)
      {
 	Evas_List *l, *l2, *l3, *managers;
-	int snum;
 	
-	snum = 0;
 	for (l = e_manager_list(); l; l = l->next)
 	  {
 	     E_Manager *man;
@@ -676,12 +674,9 @@ main(int argc, char **argv)
 		    {
 		       E_Zone *zone;
 		       E_Shelf *es;
-		       char buf[256];
 		       
 		       zone = l3->data;
-		       snprintf(buf, sizeof(buf), "shelf.%i", snum);
-		       snum++;
-		       es = e_shelf_zone_new(zone, buf);
+		       es = e_shelf_zone_new(zone, "shelf");
 		       e_shelf_populate(es);
 		    }
 	       }
