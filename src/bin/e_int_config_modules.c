@@ -74,11 +74,11 @@ _module_configure(void *data, void *data2)
 {
    Evas_Object *obj;
    E_Module *m;
-   char *v;
+   const char *v;
 
    obj = data;
-   v = strdup(e_widget_ilist_selected_label_get(obj));
-   m = e_module_find(v);
+   v = e_widget_ilist_selected_label_get(obj);
+   m = e_module_find((char *)v);
    if (m)
      {
 	if (m->func.config)
@@ -91,11 +91,11 @@ _module_about(void *data, void *data2)
 {
    Evas_Object *obj;
    E_Module *m;
-   char *v;
+   const char *v;
 
    obj = data;
-   v = strdup(e_widget_ilist_selected_label_get(obj));
-   m = e_module_find(v);
+   v = e_widget_ilist_selected_label_get(obj);
+   m = e_module_find((char *)v);
    if (m)
      {
 	if (m->func.about)
@@ -137,6 +137,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 			    cfdata->modules = evas_list_append(cfdata->modules, m);
 			 }
 		    }
+		  ecore_list_destroy(dirs);
 	       }
 	  }
      }
@@ -146,7 +147,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
    /* Free Lists */
    if (l) evas_list_free(l);
-   if (dirs != NULL) ecore_list_destroy(dirs);
    return;
 }
 
@@ -168,7 +168,18 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   /* Free the cfdata */
+   Evas_List *l;
+
+   while (l = cfdata->modules)
+     {
+        CFModule *m;
+
+        m = l->data;
+        cfdata->modules = evas_list_remove_list(cfdata->modules, l);
+        free(m->name);
+        free(m->path);
+        E_FREE(m);
+     }
    free(cfdata);
 }
 
@@ -177,10 +188,10 @@ static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    E_Module *m;
-   char *v;
+   const char *v;
    int i;
 
-   v = strdup(e_widget_ilist_selected_label_get(cfdata->gui.list));
+   v = e_widget_ilist_selected_label_get(cfdata->gui.list);
    for (i = 0; i < evas_list_count(cfdata->modules); i++)
      {
 	CFModule *cm;
@@ -193,10 +204,10 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 		  e_widget_disabled_set(cfdata->gui.configure, 1);
 		  e_widget_disabled_set(cfdata->gui.about, 1);
 		  
-		  m = e_module_find(v);
+		  m = e_module_find((char *)v);
 		  if (!m) 
 		    { 
-		       m = e_module_new(v);
+		       m = e_module_new((char *)v);
 		       if (!m) break;
 		    }		  
 		  switch (cfdata->state)
@@ -328,12 +339,12 @@ _ilist_cb_change(void *data, Evas_Object *obj)
    E_Module *m;
    E_Widget_Data *wd;
    E_Config_Dialog_Data *cfdata;
-   char *v;
+   const char *v;
    int i;
 
    cfdata = data;
 
-   v = strdup(e_widget_ilist_selected_label_get(obj));
+   v = e_widget_ilist_selected_label_get(obj);
    for (i = 0; i < evas_list_count(cfdata->modules); i++)
      {
 	CFModule *cm;
@@ -371,7 +382,7 @@ _ilist_cb_change(void *data, Evas_Object *obj)
 	       }
 	     e_widget_disabled_set(cfdata->gui.about, 1);
 	     e_widget_disabled_set(cfdata->gui.configure, 1);
-	     m = e_module_find(v);
+	     m = e_module_find((char *)v);
 	     if (m)
 	       {
 		  if (m->func.about)
