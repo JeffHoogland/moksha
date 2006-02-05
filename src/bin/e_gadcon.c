@@ -8,29 +8,29 @@ static void _e_gadcon_client_free(E_Gadcon_Client *gcc);
 
 static Evas_Object *e_gadcon_layout_add(Evas *evas);
 static void e_gadcon_layout_orientation_set(Evas_Object *obj, int horizontal);
+static void e_gadcon_layout_min_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h);
+static void e_gadcon_layout_asked_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h);
 static int e_gadcon_layout_pack(Evas_Object *obj, Evas_Object *child);
 static void e_gadcon_layout_pack_size_set(Evas_Object *obj, int size);
-static void e_gadcon_layout_pack_initial_set(Evas_Object *obj, double pos, int size);
-static void e_gadcon_layout_pack_options_set(Evas_Object *obj, int pos, int size);
+static void e_gadcon_layout_pack_request_set(Evas_Object *obj, int pos, int size);
+static void e_gadcon_layout_pack_options_set(Evas_Object *obj, int pos, int size, int res);
 static void e_gadcon_layout_unpack(Evas_Object *obj);
 
-static Evas_List *providers = NULL;
+static Evas_Hash *providers = NULL;
 
 static E_Gadcon_Client *
-__test(E_Gadcon *gc, char *name)
+__test(E_Gadcon *gc, char *name, char *id)
 {
    Evas_Object *o;
    E_Gadcon_Client *gcc;
-   double p;
    
-   printf("create gadcon client \"%s\" for \"%s\" \"%s\"\n",
-	  name, gc->name, gc->id);
+   printf("create gadcon client \"%s\" \"%s\" for \"%s\" \"%s\"\n",
+	  name, id, 
+	  gc->name, gc->id);
    o = evas_object_rectangle_add(gc->evas);
    evas_object_color_set(o, rand() & 0xff, rand() & 0xff, rand() & 0xff, 150);
-   gcc = e_gadcon_client_new(gc, name, o);
-   p = (double)(rand() % 5) / 4.0;
-   e_gadcon_layout_pack_initial_set(o, p, 32 + (rand() & 0x2f));
-   gcc->data = NULL;
+   gcc = e_gadcon_client_new(gc, name, id, o);
+   gcc->data = NULL; // this is where a module would hook private data
    return gcc;
 }
 
@@ -44,11 +44,13 @@ __test2(E_Gadcon_Client *gcc)
 EAPI int
 e_gadcon_init(void)
 {
+   /* FIXME: these would be provided by modules registering gadget creation
+    * classes */
      {
 	static E_Gadcon_Client_Class cc = 
 	  {
 	     GADCON_CLIENT_CLASS_VERSION,
-	       "test0",
+	       "ibar",
 	       {
 		  __test, __test2, NULL
 	       }
@@ -59,7 +61,7 @@ e_gadcon_init(void)
 	static E_Gadcon_Client_Class cc = 
 	  {
 	     GADCON_CLIENT_CLASS_VERSION,
-	       "test2",
+	       "start",
 	       {
 		  __test, __test2, NULL
 	       }
@@ -70,7 +72,7 @@ e_gadcon_init(void)
 	static E_Gadcon_Client_Class cc = 
 	  {
 	     GADCON_CLIENT_CLASS_VERSION,
-	       "test3",
+	       "pager",
 	       {
 		  __test, __test2, NULL
 	       }
@@ -81,25 +83,13 @@ e_gadcon_init(void)
 	static E_Gadcon_Client_Class cc = 
 	  {
 	     GADCON_CLIENT_CLASS_VERSION,
-	       "test3",
+	       "clock",
 	       {
 		  __test, __test2, NULL
 	       }
 	  };
 	e_gadcon_provider_register(&cc);
      }
-     {
-	static E_Gadcon_Client_Class cc = 
-	  {
-	     GADCON_CLIENT_CLASS_VERSION,
-	       "test4",
-	       {
-		  __test, __test2, NULL
-	       }
-	  };
-	e_gadcon_provider_register(&cc);
-     }
-   
    return 1;
 }
 
@@ -112,13 +102,13 @@ e_gadcon_shutdown(void)
 EAPI void
 e_gadcon_provider_register(E_Gadcon_Client_Class *cc)
 {
-   providers = evas_list_append(providers, cc);
+   providers = evas_hash_direct_add(providers, cc->name, cc);
 }
 
 EAPI void
 e_gadcon_provider_unregister(E_Gadcon_Client_Class *cc)
 {
-   providers = evas_list_remove(providers, cc);
+   providers = evas_hash_del(providers, cc->name, cc);
 }
 
 EAPI E_Gadcon *
@@ -129,10 +119,10 @@ e_gadcon_swallowed_new(char *name, char *id, Evas_Object *obj, char *swallow_nam
    gc = E_OBJECT_ALLOC(E_Gadcon, E_GADCON_TYPE, _e_gadcon_free);
    if (!gc) return NULL;
    
-   gc->name = strdup(name);
-   gc->id = strdup(id);
+   gc->name = evas_stringshare_add(name);
+   gc->id = evas_stringshare_add(id);
    gc->edje.o_parent = obj;
-   gc->edje.swallow_name = strdup(swallow_name);
+   gc->edje.swallow_name = evas_stringshare_add(swallow_name);
 
    gc->orient = E_GADCON_ORIENT_HORIZ;
    gc->evas = evas_object_evas_get(obj);
@@ -151,32 +141,45 @@ e_gadcon_populate(E_Gadcon *gc)
    E_OBJECT_CHECK_RETURN(gc, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(gc, E_GADCON_TYPE, NULL);
 
-   for (i = 0; i < 5; i++)
+   for (i = 0; i < 6; i++)
      {
-	char buf[256];
+	E_Gadcon_Client_Class *cc;
+	char *name, *id;
+	int pos, size, res;
 
-	/* hardcoded 4 sample clients
-	 * "test0" "test1" "test2" "test3"
+	/* FIXME: a hardcoded sample that woudl cnormally be saved config
 	 */
-	snprintf(buf, sizeof(buf), "test%i", i);
-	for (l = providers; l; l = l->next)
+	if (i == 0) {
+	   name = "ibar"; id = "0";
+	   size = 280; pos = 400 - (size / 2); res = 800;
+	} else if (i == 1) {
+	   name = "start"; id = "0";
+	   size = 32; pos = 0; res = 800;
+	} else if (i == 2) {
+	   name = "pager"; id = "0";
+	   size = 200; pos = 0; res = 800;
+	} else if (i == 3) {
+	   name = "clock"; id = "0";
+	   size = 32; pos = 800 - size; res = 800;
+	} else if (i == 4) {
+	   name = "clock"; id = "1";
+	   size = 32; pos = 800 - size; res = 800;
+	} else if (i == 5) {
+	   name = "clock"; id = "2";
+	   size = 32; pos = 800 - size; res = 800;
+	}
+	cc = evas_hash_find(providers, name);
+	if (cc)
 	  {
-	     E_Gadcon_Client_Class *cc;
+	     E_Gadcon_Client *gcc;
 	     
-	     cc = l->data;
-	     if ((cc->name) && (!strcmp(cc->name, buf)))
+	     gcc = cc->func.init(gc, cc->name, id);
+	     if (gcc)
 	       {
-		  E_Gadcon_Client *gcc;
-		  
-		  gcc = cc->func.init(gc, cc->name);
-		  if (gcc)
-		    {
-		       gcc->client_class = *cc;
-		       if (gcc->client_class.func.orient)
-			 gcc->client_class.func.orient(gcc);
-		       /* FIXME: apply saved config */
-//		       e_gadcon_layout_pack_options_set(gcc->o_base, pos, size, res);
-		    }
+		  gcc->client_class = *cc;
+		  e_gadcon_layout_pack_options_set(gcc->o_base, pos, size, res);
+		  if (gcc->client_class.func.orient)
+		    gcc->client_class.func.orient(gcc);
 	       }
 	  }
      }
@@ -200,7 +203,7 @@ e_gadcon_orient(E_Gadcon *gc, E_Gadcon_Orient orient)
 }
 
 EAPI E_Gadcon_Client *
-e_gadcon_client_new(E_Gadcon *gc, char *name, Evas_Object *base_obj)
+e_gadcon_client_new(E_Gadcon *gc, char *name, char *id, Evas_Object *base_obj)
 {
    E_Gadcon_Client *gcc;
    
@@ -211,7 +214,8 @@ e_gadcon_client_new(E_Gadcon *gc, char *name, Evas_Object *base_obj)
    if (!gcc) return NULL;
    gcc->gadcon = gc;
    gcc->o_base = base_obj;
-   gcc->name = strdup(name);
+   gcc->name = evas_stringshare_add(name);
+   gcc->id = evas_stringshare_add(id);
    gc->clients = evas_list_append(gc->clients, gcc);
    e_gadcon_layout_pack(gc->o_container, gcc->o_base);
    evas_object_show(gcc->o_base);
@@ -221,6 +225,38 @@ e_gadcon_client_new(E_Gadcon *gc, char *name, Evas_Object *base_obj)
 EAPI void
 e_gadcon_client_size_request(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h)
 {
+   E_OBJECT_CHECK(gcc);
+   E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
+   
+   switch (gcc->gadcon->orient)
+     {
+      case E_GADCON_ORIENT_HORIZ:
+      case E_GADCON_ORIENT_TOP:
+      case E_GADCON_ORIENT_BOTTOM:
+	e_gadcon_layout_pack_size_set(gcc->o_base, w);
+	break;
+      case E_GADCON_ORIENT_VERT:
+      case E_GADCON_ORIENT_LEFT:
+      case E_GADCON_ORIENT_RIGHT:
+	e_gadcon_layout_pack_size_set(gcc->o_base, h);
+	break;
+      default:
+	break;
+     }
+}
+
+EAPI void
+e_gadcon_client_min_size_set(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h)
+{
+   E_OBJECT_CHECK(gcc);
+   E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
+}
+
+EAPI void
+e_gadcon_client_max_size_set(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h)
+{
+   E_OBJECT_CHECK(gcc);
+   E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
 }
 
 /* local subsystem functions */
@@ -228,9 +264,9 @@ static void
 _e_gadcon_free(E_Gadcon *gc)
 {
    if (gc->o_container) evas_object_del(gc->o_container);
-   E_FREE(gc->name);
-   E_FREE(gc->id);
-   E_FREE(gc->edje.swallow_name);
+   evas_stringshare_del(gc->name);
+   evas_stringshare_del(gc->id);
+   evas_stringshare_del(gc->edje.swallow_name);
    free(gc);
 }
 
@@ -238,13 +274,15 @@ static void
 _e_gadcon_client_free(E_Gadcon_Client *gcc)
 {
    gcc->gadcon->clients = evas_list_remove(gcc->gadcon->clients, gcc);
-   E_FREE(gcc->name);
+   evas_stringshare_del(gcc->name);
+   evas_stringshare_del(gcc->id);
    free(gcc);
 }
 
 
 
 
+/* a smart object JUST for gadcon */
 
 typedef struct _E_Smart_Data E_Smart_Data;
 typedef struct _E_Gadcon_Layout_Item  E_Gadcon_Layout_Item;
@@ -265,6 +303,9 @@ struct _E_Gadcon_Layout_Item
       int           pos, size, res;
    } ask;
    int              hookp;
+   struct {
+      Evas_Coord    w, h;
+   } min, max;
    Evas_Coord       x, y, w, h;
    Evas_Object     *obj;
 };
@@ -304,10 +345,71 @@ e_gadcon_layout_orientation_set(Evas_Object *obj, int horizontal)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-   if (((sd->horizontal) && (horizontal)) ||
+   if (((sd->horizontal) && (horizontal)) || 
        ((!sd->horizontal) && (!horizontal))) return;
    sd->horizontal = horizontal;
    _e_gadcon_layout_smart_reconfigure(sd);
+}
+
+static void
+e_gadcon_layout_min_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
+{
+   E_Smart_Data *sd;
+   Evas_List *l;
+   Evas_Coord tw = 0, th = 0;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   
+   for (l = sd->items; l; l = l->next)
+     {
+	E_Gadcon_Layout_Item *bi;
+	Evas_Object *obj;
+	
+	obj = l->data;
+	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+	if (sd->horizontal)
+	  {
+	     tw += bi->min.w;
+	     if (bi->min.h > th) th = bi->min.h;
+	  }
+	else
+	  {
+	     th += bi->min.h;
+	     if (bi->min.w > tw) tw = bi->min.w;
+	  }
+     }
+   if (w) *w = tw;
+   if (h) *h = th;
+}
+
+static void
+e_gadcon_layout_asked_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
+{
+   E_Smart_Data *sd;
+   Evas_List *l;
+   Evas_Coord tw = 0, th = 0;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   for (l = sd->items; l; l = l->next)
+     {
+	E_Gadcon_Layout_Item *bi;
+	Evas_Object *obj;
+	
+	obj = l->data;
+	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+	if (sd->horizontal)
+	  {
+	     tw += bi->ask.size;
+	  }
+	else
+	  {
+	     th += bi->ask.size;
+	  }
+     }
+   if (w) *w = tw;
+   if (h) *h = th;
 }
 
 static int
@@ -327,15 +429,55 @@ static void
 e_gadcon_layout_pack_size_set(Evas_Object *obj, int size)
 {
    E_Gadcon_Layout_Item *bi;
+   int xx;
    
    bi = evas_object_data_get(obj, "e_gadcon_layout_data");
    if (!bi) return;
-   bi->ask.size = size;
+   xx = bi->ask.pos + (bi->ask.size / 2);
+   if (xx < (bi->ask.res / 3))
+     { /* hooked to start */
+	bi->ask.size = size;
+     }
+   else if (xx > ((2 * bi->ask.res) / 3))
+     { /* hooked to end */
+	bi->ask.pos = (bi->ask.pos + bi->ask.size) - size;
+	bi->ask.size = size;
+     }
+   else
+     { /* hooked to middle */
+	if ((bi->ask.pos <= (bi->ask.res / 2)) &&
+	    ((bi->ask.pos + bi->ask.size) > (bi->ask.res / 2)))
+	  { /* straddles middle */
+	     if (bi->ask.res > 2)
+	       bi->ask.pos = (bi->ask.res / 2) +
+	       (((bi->ask.pos + (bi->ask.size / 2) -
+		  (bi->ask.res / 2)) *
+		 (bi->ask.res / 2)) /
+		(bi->ask.res / 2)) - (bi->ask.size / 2);
+	     else
+	       bi->x = bi->ask.res / 2;
+	     bi->ask.size = size;
+	  }
+	else
+	  { 
+	     if (xx < (bi->ask.res / 2))
+	       {
+		  bi->ask.pos = (bi->ask.pos + bi->ask.size) - size;
+		  bi->ask.size = size;
+	       }
+	     else
+	       {
+		  bi->ask.size = size;
+	       }
+	  }
+        bi->ask.size = size;
+     }
    _e_gadcon_layout_smart_reconfigure(bi->sd);
 }
 
+/* called when a users moves/resizes the gadcon client explicitly */
 static void
-e_gadcon_layout_pack_initial_set(Evas_Object *obj, double pos, int size)
+e_gadcon_layout_pack_request_set(Evas_Object *obj, int pos, int size)
 {
    E_Gadcon_Layout_Item *bi;
    
@@ -346,21 +488,19 @@ e_gadcon_layout_pack_initial_set(Evas_Object *obj, double pos, int size)
    else
      bi->ask.res = bi->sd->h;
    bi->ask.size = size;
-   bi->ask.pos = pos * (bi->ask.res - bi->ask.size);
+   bi->ask.pos = pos;
    _e_gadcon_layout_smart_reconfigure(bi->sd);
 }
 
+/* called when restoring config from saved config */
 static void
-e_gadcon_layout_pack_options_set(Evas_Object *obj, int pos, int size)
+e_gadcon_layout_pack_options_set(Evas_Object *obj, int pos, int size, int res)
 {
    E_Gadcon_Layout_Item *bi;
    
    bi = evas_object_data_get(obj, "e_gadcon_layout_data");
    if (!bi) return;
-   if (bi->sd->horizontal)
-     bi->ask.res = bi->sd->w;
-   else
-     bi->ask.res = bi->sd->h;
+   bi->ask.res = res;
    bi->ask.size = size;
    bi->ask.pos = pos;
    _e_gadcon_layout_smart_reconfigure(bi->sd);
@@ -563,6 +703,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	
 	obj = l->data;
 	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+	again1:
 	for (l2 = l->prev; l2; l2 = l2->prev)
 	  {
 	     E_Gadcon_Layout_Item *bi2;
@@ -570,7 +711,10 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	     obj = l2->data;
 	     bi2 = evas_object_data_get(obj, "e_gadcon_layout_data");
 	     if (E_SPANS_COMMON(bi->x, bi->w, bi2->x, bi2->w))
-	       bi->x = bi2->x + bi2->w;
+	       {
+		  bi->x = bi2->x + bi2->w;
+		  goto again1;
+	       }
 	  }
      }
    for (l = list_m; l; l = l->next)
@@ -580,6 +724,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	
 	obj = l->data;
 	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+	again2:
 	for (l2 = l->prev; l2; l2 = l2->prev)
 	  {
 	     E_Gadcon_Layout_Item *bi2;
@@ -592,6 +737,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 		    bi->x = bi2->x - bi->w;
 		  else
 		    bi->x = bi2->x + bi2->w;
+		  goto again2;
 	       }
 	  }
      }
@@ -602,6 +748,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	
 	obj = l->data;
 	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+	again3:
 	for (l2 = l->prev; l2; l2 = l2->prev)
 	  {
 	     E_Gadcon_Layout_Item *bi2;
@@ -609,7 +756,10 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	     obj = l2->data;
 	     bi2 = evas_object_data_get(obj, "e_gadcon_layout_data");
 	     if (E_SPANS_COMMON(bi->x, bi->w, bi2->x, bi2->w))
-	       bi->x = bi2->x - bi->w;
+	       {
+		  bi->x = bi2->x - bi->w;
+		  goto again3;
+	       }
 	  }
      }
    /* FIXME: now walk all 3 lists - if any memebrs of any list overlay another
@@ -621,7 +771,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
    evas_list_free(list_s);
    evas_list_free(list_m);
    evas_list_free(list_e);
-   /* sort items in 3 lists (based on hook point) */
+   
    for (l = sd->items; l; l = l->next)
      {
 	E_Gadcon_Layout_Item *bi;

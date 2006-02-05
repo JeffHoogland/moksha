@@ -51,7 +51,7 @@ struct _E_Gadcon_Client_Class
    int   version;
    char *name;
    struct {
-      E_Gadcon_Client *(*init)     (E_Gadcon *gc, char *name);
+      E_Gadcon_Client *(*init)     (E_Gadcon *gc, char *name, char *id);
       void             (*shutdown) (E_Gadcon_Client *gcc);
       void             (*orient)   (E_Gadcon_Client *gcc);
    } func;
@@ -62,6 +62,7 @@ struct _E_Gadcon_Client
    E_Object               e_obj_inherit;
    E_Gadcon              *gadcon;
    char                  *name;
+   char                  *id;
    Evas_Object           *o_base;
    E_Gadcon_Client_Class  client_class;
    void                  *data;
@@ -75,9 +76,11 @@ EAPI E_Gadcon        *e_gadcon_swallowed_new(char *name, char *id, Evas_Object *
 EAPI void             e_gadcon_populate(E_Gadcon *gc);
 EAPI void             e_gadcon_orient(E_Gadcon *gc, E_Gadcon_Orient orient);
     
-EAPI E_Gadcon_Client *e_gadcon_client_new(E_Gadcon *gc, char *name, Evas_Object *base_obj);
+EAPI E_Gadcon_Client *e_gadcon_client_new(E_Gadcon *gc, char *name, char *id, Evas_Object *base_obj);
 EAPI void             e_gadcon_client_size_request(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h);
-    
+EAPI void             e_gadcon_client_min_size_set(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h);
+EAPI void             e_gadcon_client_max_size_set(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h);
+
 #endif
 #endif
 
