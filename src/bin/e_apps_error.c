@@ -141,9 +141,9 @@ _e_app_error_dialog_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata
             ecore_exe_event_data_free(app->read);
          free(app);
       }
-   if (cfdata->label)
+   if (cfdata->signal)
       free(cfdata->signal);
-   if (cfdata->label)
+   if (cfdata->exit)
       free(cfdata->exit);
    if (cfdata->label)
       free(cfdata->label);
