@@ -16,6 +16,19 @@ struct _E_Exebuf_Exe
    char        *file;
 };
 
+typedef struct _E_Exe E_Exe;
+typedef struct _E_Exe_List E_Exe_List;
+
+struct _E_Exe
+{
+   char *path;
+};
+
+struct _E_Exe_List
+{
+   Evas_List *list;
+};
+
 static void _e_exebuf_exe_free(E_Exebuf_Exe *exe);
 static void _e_exebuf_matches_clear(void);
 static int _e_exebuf_cb_sort_eap(void *data1, void *data2);
@@ -41,6 +54,8 @@ static int _e_exebuf_animator(void *data);
 static int _e_exebuf_idler(void *data);
 
 /* local subsystem globals */
+static E_Config_DD *exelist_exe_edd = NULL;
+static E_Config_DD *exelist_edd = NULL;
 static E_Popup *exebuf = NULL;
 static Evas_Object *bg_object = NULL;
 static Evas_Object *icon_object = NULL;
@@ -54,6 +69,7 @@ static Evas_List *exe_matches = NULL;
 static Evas_List *exe_path = NULL;
 static DIR       *exe_dir = NULL;
 static Evas_List *exe_list = NULL;
+static Evas_List *exe_list2 = NULL;
 static Ecore_Idler *exe_list_idler = NULL;
 static Evas_List *exes = NULL;
 static Evas_List *eaps = NULL;
@@ -78,12 +94,28 @@ static Ecore_Timer *animator = NULL;
 EAPI int
 e_exebuf_init(void)
 {
+   exelist_exe_edd = E_CONFIG_DD_NEW("E_Exe", E_Exe);
+#undef T
+#undef D
+#define T E_Exe
+#define D exelist_exe_edd
+   E_CONFIG_VAL(D, T, path, STR);
+   
+   exelist_edd = E_CONFIG_DD_NEW("E_Exe_List", E_Exe_List);
+#undef T
+#undef D
+#define T E_Exe_List
+#define D exelist_edd
+   E_CONFIG_LIST(D, T, list, exelist_exe_edd);
+   
    return 1;
 }
 
 EAPI int
 e_exebuf_shutdown(void)
 {
+   E_CONFIG_DD_FREE(exelist_edd);
+   E_CONFIG_DD_FREE(exelist_exe_edd);
    e_exebuf_hide();
    return 1;
 }
@@ -95,6 +127,7 @@ e_exebuf_show(E_Zone *zone)
    int x, y, w, h;
    Evas_Coord mw, mh;
    char *path, *p, *last;
+   E_Exe_List *el;
    
    E_OBJECT_CHECK_RETURN(zone, 0);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
@@ -184,6 +217,21 @@ e_exebuf_show(E_Zone *zone)
      (handlers, ecore_event_handler_add
       (ECORE_X_EVENT_MOUSE_WHEEL, _e_exebuf_cb_mouse_wheel, NULL));
 
+   el = e_config_domain_load("exebuf_exelist_cache", exelist_edd);
+   if (el)
+     {
+	while (el->list)
+	  {
+	     E_Exe *ee;
+	     
+	     ee = el->list->data;
+	     exe_list = evas_list_append(exe_list, strdup(ee->path));
+	     evas_stringshare_del(ee->path);
+	     free(ee);
+	     el->list = evas_list_remove_list(el->list, el->list);
+	  }
+	free(el);
+     }
    path = getenv("PATH");
    if (path)
      {
@@ -267,6 +315,11 @@ e_exebuf_hide(void)
      {
 	free(exe_list->data);
 	exe_list = evas_list_remove_list(exe_list, exe_list);
+     }
+   while (exe_list2)
+     {
+	free(exe_list2->data);
+	exe_list2 = evas_list_remove_list(exe_list2, exe_list2);
      }
    which_list = NO_LIST;
    exe_sel = NULL;
@@ -1061,6 +1114,57 @@ _e_exebuf_idler(void *data)
    /* no more path items left - stop scanning */
    if (!exe_path)
      {
+	Evas_List *l, *l2;
+	E_Exe_List *el;
+	E_Exe *ee;
+	int different = 0;
+	
+	/* FIXME: check theat they match or not */
+	for (l = exe_list, l2 = exe_list2; l && l2; l = l->next, l2 = l2->next)
+	  {
+	     if (strcmp(l->data, l2->data))
+	       {
+		  different = 1;
+		  break;
+	       }
+	  }
+	if ((l) || (l2)) different = 1;
+	if (exe_list2)
+	  {
+	     while (exe_list)
+	       {
+		  free(exe_list->data);
+		  exe_list = evas_list_remove_list(exe_list, exe_list);
+	       }
+	     exe_list = exe_list2;
+	     exe_list2 = NULL;
+	  }
+	if (different)
+	  {
+	     el = calloc(1, sizeof(E_Exe_List));
+	     if (el)
+	       {
+		  el->list = NULL;
+		  for (l = exe_list; l; l = l->next)
+		    {
+		       ee = malloc(sizeof(E_Exe));
+		       if (ee)
+			 {
+			    ee->path = evas_stringshare_add(l->data);
+			    el->list = evas_list_append(el->list, ee);
+			 }
+		    }
+		  e_config_domain_save("exebuf_exelist_cache", exelist_edd, el);
+		  while (el->list)
+		    {
+		       ee = el->list->data;
+		       evas_stringshare_del(ee->path);
+		       free(ee);
+		       el->list = evas_list_remove_list(el->list, el->list);
+		    }
+		  free(el);
+	       }
+	  }
 	exe_list_idler = NULL;
 	return 0;
      }
@@ -1084,7 +1188,12 @@ _e_exebuf_idler(void *data)
 		  if ((stat(buf, &st) == 0) &&
 		      ((!S_ISDIR(st.st_mode)) &&
 		       (!access(buf, X_OK))))
-		    exe_list = evas_list_append(exe_list, strdup(buf));
+		    {
+		       if (!exe_list)
+			 exe_list = evas_list_append(exe_list, strdup(buf));
+		       else
+			 exe_list2 = evas_list_append(exe_list2, strdup(buf));
+		    }
 	       }
 	  }
 	else
