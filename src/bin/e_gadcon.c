@@ -121,6 +121,8 @@ e_gadcon_swallowed_new(char *name, char *id, Evas_Object *obj, char *swallow_nam
    
    gc->name = evas_stringshare_add(name);
    gc->id = evas_stringshare_add(id);
+   gc->layout_policy = E_GADCON_LAYOUT_POLICY_PANEL;
+   
    gc->edje.o_parent = obj;
    gc->edje.swallow_name = evas_stringshare_add(swallow_name);
 
@@ -133,6 +135,16 @@ e_gadcon_swallowed_new(char *name, char *id, Evas_Object *obj, char *swallow_nam
 }
 
 EAPI void
+e_gadcon_layout_policy_set(E_Gadcon *gc, E_Gadcon_Layout_Policy layout_policy)
+{
+   E_OBJECT_CHECK(gc);
+   E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
+   if (gc->layout_policy == layout_policy) return;
+   gc->layout_policy = layout_policy;
+   /* FIXME: delete container obj, re-pack all clients */
+}
+
+EAPI void
 e_gadcon_populate(E_Gadcon *gc)
 {
    Evas_List *l;
@@ -140,7 +152,6 @@ e_gadcon_populate(E_Gadcon *gc)
    
    E_OBJECT_CHECK_RETURN(gc, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(gc, E_GADCON_TYPE, NULL);
-
    for (i = 0; i < 6; i++)
      {
 	E_Gadcon_Client_Class *cc;
@@ -190,6 +201,8 @@ e_gadcon_orient(E_Gadcon *gc, E_Gadcon_Orient orient)
 {
    Evas_List *l;
    
+   E_OBJECT_CHECK(gc);
+   E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    if (gc->orient == orient) return;
    gc->orient = orient;
    for (l = gc->clients; l; l = l->next)
@@ -209,7 +222,6 @@ e_gadcon_client_new(E_Gadcon *gc, char *name, char *id, Evas_Object *base_obj)
    
    E_OBJECT_CHECK_RETURN(gc, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(gc, E_GADCON_TYPE, NULL);
-   
    gcc = E_OBJECT_ALLOC(E_Gadcon_Client, E_GADCON_CLIENT_TYPE, _e_gadcon_client_free);
    if (!gcc) return NULL;
    gcc->gadcon = gc;
@@ -227,7 +239,6 @@ e_gadcon_client_size_request(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h)
 {
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
-   
    switch (gcc->gadcon->orient)
      {
       case E_GADCON_ORIENT_HORIZ:
