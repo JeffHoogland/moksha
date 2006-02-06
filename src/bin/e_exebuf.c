@@ -38,6 +38,7 @@ static int _e_exebuf_cb_mouse_wheel(void *data, int type, void *event);
 static int _e_exebuf_exe_scroll_timer(void *data);
 static int _e_exebuf_eap_scroll_timer(void *data);
 static int _e_exebuf_animator(void *data);
+static int _e_exebuf_idler(void *data);
 
 /* local subsystem globals */
 static E_Popup *exebuf = NULL;
@@ -50,7 +51,10 @@ static Ecore_X_Window input_window = 0;
 static char *cmd_buf = NULL;
 static Evas_List *eap_matches = NULL;
 static Evas_List *exe_matches = NULL;
-static Ecore_List *exe_list = NULL;
+static Evas_List *exe_path = NULL;
+static DIR       *exe_dir = NULL;
+static Evas_List *exe_list = NULL;
+static Ecore_Idler *exe_list_idler = NULL;
 static Evas_List *exes = NULL;
 static Evas_List *eaps = NULL;
 #define NO_LIST 0
@@ -90,6 +94,7 @@ e_exebuf_show(E_Zone *zone)
    Evas_Object *o;
    int x, y, w, h;
    Evas_Coord mw, mh;
+   char *path, *p, *last;
    
    E_OBJECT_CHECK_RETURN(zone, 0);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
@@ -178,8 +183,25 @@ e_exebuf_show(E_Zone *zone)
    handlers = evas_list_append
      (handlers, ecore_event_handler_add
       (ECORE_X_EVENT_MOUSE_WHEEL, _e_exebuf_cb_mouse_wheel, NULL));
-   
-   exe_list = ecore_file_app_list();
+
+   path = getenv("PATH");
+   if (path)
+     {
+	path = strdup(path);
+	last = path;
+	for (p = path; p[0]; p++)
+	  {
+	     if (p[0] == ':') p[0] = '\0';
+	     if (p[0] == 0)
+	       {
+		  exe_path = evas_list_append(exe_path, strdup(last));
+		  last = p + 1;
+	       }
+	  }
+	if (p > last)
+	  exe_path = evas_list_append(exe_path, strdup(last));
+     }
+   exe_list_idler = ecore_idler_add(_e_exebuf_idler, NULL);
    
    e_popup_show(exebuf);
    return 1;
@@ -226,10 +248,25 @@ e_exebuf_hide(void)
    input_window = 0;
    free(cmd_buf);
    cmd_buf = NULL;
-   if (exe_list)
+   if (exe_dir)
      {
-	ecore_list_destroy(exe_list);
-	exe_list = NULL;
+	closedir(exe_dir);
+	exe_dir = NULL;
+     }
+   while (exe_path)
+     {
+	free(exe_path->data);
+	exe_path = evas_list_remove_list(exe_path, exe_path);
+     }
+   if (exe_list_idler)
+     {
+	ecore_idler_del(exe_list_idler);
+	exe_list_idler = NULL;
+     }
+   while (exe_list)
+     {
+	free(exe_list->data);
+	exe_list = evas_list_remove_list(exe_list, exe_list);
      }
    which_list = NO_LIST;
    exe_sel = NULL;
@@ -735,9 +772,11 @@ _e_exebuf_matches_update(void)
    snprintf(buf, sizeof(buf), "%s*", cmd_buf);
    if (exe_list)
      {
-	ecore_list_goto_first(exe_list);
-	while ((path = ecore_list_next(exe_list)) != NULL)
+	Evas_List *l;
+
+	for (l = exe_list; l; l = l->next)
 	  {
+	     path = l->data;
 	     file = (char *)ecore_file_get_file(path);
 	     if (file)
 	       {
@@ -1009,4 +1048,63 @@ _e_exebuf_animator(void *data)
    if ((exe_scroll_to) || (eap_scroll_to)) return 1;
    animator = NULL;
    return 0;
+}
+
+static int
+_e_exebuf_idler(void *data)
+{
+   struct stat st;
+   struct dirent *dp;
+   char *dir;
+   char buf[4096];
+
+   /* no more path items left - stop scanning */
+   if (!exe_path)
+     {
+	exe_list_idler = NULL;
+	return 0;
+     }
+   /* no dir is open - open the first path item */
+   if (!exe_dir)
+     {
+	dir = exe_path->data;
+	exe_dir = opendir(dir);
+     }
+   /* if we have an opened dir - scan the next item */
+   if (exe_dir)
+     {
+	dir = exe_path->data;
+	
+	dp = readdir(exe_dir);
+	if (dp)
+	  {
+	     if ((strcmp(dp->d_name, ".")) && (strcmp(dp->d_name, "..")))
+	       {
+		  snprintf(buf, sizeof(buf), "%s/%s", dir, dp->d_name);
+		  if ((stat(buf, &st) == 0) &&
+		      ((!S_ISDIR(st.st_mode)) &&
+		       (!access(buf, X_OK))))
+		    exe_list = evas_list_append(exe_list, strdup(buf));
+	       }
+	  }
+	else
+	  {
+	     /* we reached the end of a dir - remove the dir at the head
+	      * of the path list so we advance and next loop we will pick up
+	      * the next item, or if null- abort
+	      */
+	     closedir(exe_dir);
+	     exe_dir = NULL;
+	     free(exe_path->data);
+	     exe_path = evas_list_remove_list(exe_path, exe_path);
+	  }
+     }
+   /* obviously the dir open failed - so remove the first path item */
+   else
+     {
+	free(exe_path->data);
+	exe_path = evas_list_remove_list(exe_path, exe_path);
+     }
+   /* we have mroe scannign to do */
+   return 1;
 }
