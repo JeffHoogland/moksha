@@ -236,6 +236,10 @@ group {
 	 source: "button_image";
 	 action: STATE_SET "default" 0.0;
 	 target: "button_image";
+	 after: "button_unclick2";
+      }
+      program {
+	 name:   "button_unclick2";
 	 action: SIGNAL_EMIT "close" "";
       }
    }
