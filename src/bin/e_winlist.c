@@ -102,6 +102,9 @@ e_winlist_show(E_Zone *zone)
    
    winlist = e_popup_new(zone, x, y, w, h); 
    if (!winlist) return 0;
+   
+   evas_event_feed_mouse_move(winlist->evas, -1000000, -1000000, ecore_x_current_time_get(), NULL);
+   
    e_popup_layer_set(winlist, 255);
    evas_event_freeze(winlist->evas);
    o = edje_object_add(winlist->evas);

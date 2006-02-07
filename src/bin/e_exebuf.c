@@ -350,6 +350,7 @@ _e_exebuf_matches_clear(void)
 	exe_matches = evas_list_remove_list(exe_matches, exe_matches);
      }
    
+   evas_event_freeze(exebuf->evas);
    e_box_freeze(eap_list_object);
    e_box_freeze(exe_list_object);
    while (exes)
@@ -364,6 +365,7 @@ _e_exebuf_matches_clear(void)
      }
    e_box_thaw(exe_list_object);
    e_box_thaw(eap_list_object);
+   evas_event_thaw(exebuf->evas);
    
    e_box_align_set(eap_list_object, 0.5, 0.0);
    e_box_align_set(exe_list_object, 0.5, 1.0);
@@ -853,6 +855,7 @@ _e_exebuf_matches_update(void)
    eap_matches = evas_list_sort(eap_matches, evas_list_count(eap_matches), _e_exebuf_cb_sort_eap);
    
    max = e_config->exebuf_max_eap_list;
+   evas_event_thaw(exebuf->evas);
    e_box_freeze(eap_list_object);
    for (i = 0, l = eap_matches; l && (i < max); l = l->next, i++)
      {
@@ -949,6 +952,7 @@ _e_exebuf_matches_update(void)
 			       );
      }
    e_box_thaw(exe_list_object);
+   evas_event_thaw(exebuf->evas);
 }
 
 static int
