@@ -128,6 +128,7 @@ static void                _e_fm_icon_mouse_in_cb   (void *data, Evas *e, Evas_O
 static void                _e_fm_icon_mouse_out_cb  (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void                _e_fm_icon_mouse_move_cb (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static int                 _e_fm_win_mouse_up_cb    (void *data, int type, void *event);
+static int                 _e_fm_win_mouse_move_cb    (void *data, int type, void *event);
 
 static void                _e_fm_string_replace(const char *src, const char *key, const char *replacement, char *result, size_t resultsize);
 
@@ -139,12 +140,13 @@ static void                _e_fm_icon_select_left(E_Fm_Smart_Data *sd);
 static void                _e_fm_icon_select_right(E_Fm_Smart_Data *sd);
 static void                _e_fm_icon_run(E_Fm_Smart_Data *sd);
 
-static int                 _e_fm_drop_enter_cb     (void *data, int type, void *event);
-static int                 _e_fm_drop_leave_cb     (void *data, int type, void *event);
-static int                 _e_fm_drop_position_cb  (void *data, int type, void *event);
-static int                 _e_fm_drop_drop_cb      (void *data, int type, void *event);
-static int                 _e_fm_drop_selection_cb (void *data, int type, void *event);
-static void                _e_fm_drop_done_cb      (E_Drag *drag, int dropped);
+static int                 _e_fm_xdnd_enter_cb     (void *data, int type, void *event);
+static int                 _e_fm_xdnd_leave_cb     (void *data, int type, void *event);
+static int                 _e_fm_xdnd_position_cb  (void *data, int type, void *event);
+static int                 _e_fm_xdnd_status_cb    (void *data, int type, void *event);
+static int                 _e_fm_xdnd_drop_cb      (void *data, int type, void *event);
+static int                 _e_fm_xdnd_selection_cb (void *data, int type, void *event);
+static int                 _e_fm_xdnd_finished_cb  (void *data, int type, void *event);
 
 static int                 _e_fm_files_sort_name_cb    (void *d1, void *d2);
 static int                 _e_fm_files_sort_modtime_cb (void *d1, void *d2);
@@ -162,6 +164,7 @@ static void                _e_fm_dir_meta_fill(E_Fm_Dir_Metadata *m, E_Fm_Smart_
 
 static int 								 _e_fm_init_assoc(E_Fm_Smart_Data *sd);
 static Ecore_Event_Handler *e_fm_mouse_up_handler = NULL;
+static Ecore_Event_Handler *e_fm_mouse_move_handler = NULL;
 static double               e_fm_grab_time = 0;
 static Evas_Smart          *e_fm_smart = NULL;
 static char                *meta_path = NULL;
@@ -586,24 +589,32 @@ _e_fm_smart_add(Evas_Object *object)
 
    sd->event_handlers = evas_list_append(sd->event_handlers,
 					 ecore_event_handler_add(ECORE_X_EVENT_XDND_ENTER,
-								 _e_fm_drop_enter_cb,
+								 _e_fm_xdnd_enter_cb,
 								 sd));
    sd->event_handlers = evas_list_append(sd->event_handlers,
 					 ecore_event_handler_add(ECORE_X_EVENT_XDND_LEAVE,
-								 _e_fm_drop_leave_cb,
+								 _e_fm_xdnd_leave_cb,
+								 sd));
+   sd->event_handlers = evas_list_append(sd->event_handlers,
+					 ecore_event_handler_add(ECORE_X_EVENT_XDND_STATUS,
+								 _e_fm_xdnd_status_cb,
 								 sd));
    sd->event_handlers = evas_list_append(sd->event_handlers,
 					 ecore_event_handler_add(ECORE_X_EVENT_XDND_POSITION,
-								 _e_fm_drop_position_cb,
+								 _e_fm_xdnd_position_cb,
 								 sd));
    sd->event_handlers = evas_list_append(sd->event_handlers,
 					 ecore_event_handler_add(ECORE_X_EVENT_XDND_DROP,
-								 _e_fm_drop_drop_cb,
+								 _e_fm_xdnd_drop_cb,
 								 sd));
    sd->event_handlers = evas_list_append(sd->event_handlers,
 					 ecore_event_handler_add(ECORE_X_EVENT_SELECTION_NOTIFY,
-								 _e_fm_drop_selection_cb,
+								 _e_fm_xdnd_selection_cb,
 								 sd));
+   sd->event_handlers = evas_list_append(sd->event_handlers,
+					 ecore_event_handler_add(ECORE_X_EVENT_XDND_FINISHED,
+								 _e_fm_xdnd_finished_cb,
+								 sd));   
    sd->monitor = NULL;
    sd->position = 0.0;
 
@@ -2412,37 +2423,51 @@ _e_fm_icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 
 	     if (((dx * dx) + (dy * dy)) > (100))
 	       {
-		  E_Drag *drag;
 		  Evas_Object *o = NULL;
 		  Evas_Coord x, y, w, h;
 		  int cx, cy;
-		  char data[PATH_MAX];
-		  const char *drop_types[] = { "text/uri-list" };
-
-		  snprintf(data, sizeof(data), "file://%s", icon->file->path);
+		  char *data;
+		  char **drop_types;
+		  
+		  drop_types = calloc(1, sizeof(char*));
+		  drop_types[0] = strdup("text/uri-list");
+		  
+		  data = calloc(PATH_MAX, sizeof(char));
+		  snprintf(data, PATH_MAX * sizeof(char), "file://%s", icon->file->path);
 
 		  ecore_evas_geometry_get(sd->win->ecore_evas, &cx, &cy, NULL, NULL);
 		  evas_object_geometry_get(icon->icon_obj, &x, &y, &w, &h);
-		  drag = e_drag_new(sd->win->container, cx + x, cy + y,
-				    drop_types, 1, strdup(data), strlen(data),
-				    _e_fm_drop_done_cb);
-
-		  o = e_fm_icon_add(drag->evas);
-		  e_fm_icon_file_set(o, icon->file);
-		  e_fm_icon_title_set(o, "");
-		  evas_object_resize(o, w, h);
-
-		  if (!o)
+		  
+		  sd->drag.ecore_evas = ecore_evas_software_x11_new(0, 0, cx + x, cx + y, w, h);
+		  sd->drag.evas = ecore_evas_get(sd->drag.ecore_evas);
+		  sd->drag.win = ecore_evas_software_x11_window_get(sd->drag.ecore_evas);
+		  ecore_evas_shaped_set(sd->drag.ecore_evas, 1);
+		  
+		  sd->drag.image_object = e_fm_icon_add(sd->drag.evas);
+		  e_fm_icon_file_set(sd->drag.image_object, icon->file);
+		  e_fm_icon_title_set(sd->drag.image_object, "");
+		  if (!sd->drag.image_object)
 		    {
-		       // FIXME: fallback icon for drag
-		       o = evas_object_rectangle_add(drag->evas);
-		       evas_object_color_set(o, 255, 255, 255, 255);
+		       sd->drag.image_object = evas_object_rectangle_add(sd->drag.evas);
+		       evas_object_color_set(sd->drag.image_object, 255, 255, 255, 255);
 		    }
-		  e_drag_object_set(drag, o);
+                  evas_object_resize(sd->drag.image_object, w, h);
+		  evas_object_move(sd->drag.image_object, 0, 0);
+		  evas_object_show(sd->drag.image_object);
+		  
+                  e_fm_mouse_up_handler = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
+								  _e_fm_win_mouse_up_cb, sd);
+		  
+		  e_fm_mouse_move_handler = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
+								    _e_fm_win_mouse_move_cb, sd);
+		  
+		  ecore_x_pointer_confine_grab(sd->drag.win);
+		  ecore_x_keyboard_grab(sd->drag.win);
+		  ecore_x_dnd_aware_set(sd->drag.win, 1);
+		  ecore_x_mwm_borderless_set(sd->drag.win, 1);
+		  ecore_x_dnd_types_set(sd->drag.win, drop_types, 1);
+		  ecore_x_dnd_begin(sd->drag.win, data, PATH_MAX * sizeof(char));
 
-		  e_drag_resize(drag, w, h);
-
-		  e_drag_xdnd_start(drag, sd->drag.x, sd->drag.y);
 		  evas_event_feed_mouse_up(sd->evas, 1, EVAS_BUTTON_NONE, ev->timestamp, NULL);
 		  sd->drag.start = 0;
 	       }
@@ -2451,35 +2476,50 @@ _e_fm_icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 }
 
 static int
-_e_fm_win_mouse_up_cb(void *data, int type, void *event)
+  _e_fm_win_mouse_move_cb(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Move *ev;
+   E_Fm_Smart_Data *sd;
+   
+   printf("MOVE!!!\n");
+   
+   sd = data;
+   ev = event;
+      
+   ecore_evas_show(sd->drag.ecore_evas);
+   ecore_evas_move(sd->drag.ecore_evas, ev->x , ev->y );
+   printf("moving window to %d %d\n", ev->x , ev->y );
+   return 1;
+}
+
+static int
+  _e_fm_win_mouse_up_cb(void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_Button_Up *ev;
-   E_Fm_Icon *icon;
-   double t;
-   const char *name;
-
-   /* FIXME: DONT use ecore_x events for this. use evas callbacks! */
-   return 1;
-   ev = event;
-   icon = data;
-
-   t = ecore_time_get() - e_fm_grab_time;
-   if (t < 1.0) return 1;
-
-   name = e_entry_text_get(icon->sd->entry_obj);
-   e_fm_icon_edit_entry_set(icon->icon_obj, NULL);
-   evas_object_focus_set(icon->sd->entry_obj, 0);
-   evas_object_del(icon->sd->entry_obj);
-   icon->sd->entry_obj = NULL;
-
-   _e_fm_file_rename(icon, name);
-
+   E_Fm_Smart_Data *sd;
+   
+   sd = data;
+   
+   printf("UP!\n");
+   
+   ecore_x_pointer_ungrab();
+   ecore_x_keyboard_ungrab();
+   
+   ecore_x_dnd_drop();
+   
    ecore_event_handler_del(e_fm_mouse_up_handler);
    e_fm_mouse_up_handler = NULL;
-
-   e_grabinput_release(icon->sd->win->evas_win, icon->sd->win->evas_win);
-   return 0;
+   
+   ecore_event_handler_del(e_fm_mouse_move_handler);
+   e_fm_mouse_move_handler = NULL;
+   
+   sd->drag.start = 0;
+   
+   ecore_evas_free(sd->drag.ecore_evas);
+   
+   return 1;
 }
+
 
 static void
 _e_fm_string_replace(const char *src, const char *key, const char *replacement, char *result, size_t resultsize)
@@ -3162,7 +3202,7 @@ _e_fm_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static int
-_e_fm_drop_enter_cb(void *data, int type, void *event)
+_e_fm_xdnd_enter_cb(void *data, int type, void *event)
 {
    Ecore_X_Event_Xdnd_Enter *ev;
    E_Fm_Smart_Data *sd;
@@ -3175,7 +3215,7 @@ _e_fm_drop_enter_cb(void *data, int type, void *event)
 }
 
 static int
-_e_fm_drop_leave_cb(void *data, int type, void *event)
+_e_fm_xdnd_leave_cb(void *data, int type, void *event)
 {
    Ecore_X_Event_Xdnd_Leave *ev;
    E_Fm_Smart_Data *sd;
@@ -3188,7 +3228,20 @@ _e_fm_drop_leave_cb(void *data, int type, void *event)
 }
 
 static int
-_e_fm_drop_position_cb(void *data, int type, void *event)
+_e_fm_xdnd_status_cb(void *data, int type, void *event)
+{
+   Ecore_X_Event_Xdnd_Leave *ev;
+   E_Fm_Smart_Data *sd;
+
+   ev = event;
+   sd = data;
+   if (ev->win != sd->win->evas_win) return 1;
+
+   return 1;
+}
+
+static int
+_e_fm_xdnd_position_cb(void *data, int type, void *event)
 {
    Ecore_X_Event_Xdnd_Position *ev;
    E_Fm_Smart_Data *sd;
@@ -3209,7 +3262,7 @@ _e_fm_drop_position_cb(void *data, int type, void *event)
 }
 
 static int
-_e_fm_drop_drop_cb(void *data, int type, void *event)
+_e_fm_xdnd_drop_cb(void *data, int type, void *event)
 {
    Ecore_X_Event_Xdnd_Drop *ev;
    E_Fm_Smart_Data *sd;
@@ -3224,7 +3277,7 @@ _e_fm_drop_drop_cb(void *data, int type, void *event)
 }
 
 static int
-_e_fm_drop_selection_cb(void *data, int type, void *event)
+_e_fm_xdnd_selection_cb(void *data, int type, void *event)
 {
    Ecore_X_Event_Selection_Notify *ev;
    E_Fm_Smart_Data *sd;
@@ -3253,11 +3306,12 @@ _e_fm_drop_selection_cb(void *data, int type, void *event)
    return 1;
 }
 
-static void
-_e_fm_drop_done_cb(E_Drag *drag, int dropped)
+static int
+_e_fm_xdnd_finished_cb(void *data, int type, void *event)
 {
    /* FIXME: If someone takes this internal drop, we might want to not free it */
-   free(drag->data);
+
+   return 1;
 }
 
 /* sort functions */

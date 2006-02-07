@@ -132,6 +132,7 @@ struct _E_Fm_Smart_Data
    struct {
       unsigned char start : 1;
       int x, y;
+      int dx, dy;
       Ecore_Evas *ecore_evas;
       Evas *evas;
       Ecore_X_Window win;
