@@ -154,6 +154,8 @@ e_exebuf_show(E_Zone *zone)
 	return 0;
      }
    cmd_buf[0] = 0;
+
+   evas_event_feed_mouse_move(exebuf->evas, -1000000, -1000000, ecore_x_current_time_get(), NULL);
    
    e_popup_layer_set(exebuf, 255);
    evas_event_freeze(exebuf->evas);
