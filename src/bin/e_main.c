@@ -685,6 +685,7 @@ main(int argc, char **argv)
 		       zone = l3->data;
 		       es = e_shelf_zone_new(zone, "shelf");
 		       e_shelf_populate(es);
+		       e_gadcon_edit_begin(es->gadcon);
 		    }
 	       }
 	  }
