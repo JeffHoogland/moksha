@@ -190,7 +190,6 @@ e_icon_canvas_icon_callbacks_set(Evas_Object *child, void (*appear)(Evas_Object 
 EAPI void
 e_icon_canvas_pack_at_location(Evas_Object *obj, Evas_Object *child, Evas_Object *(*create)(void *data), void (*destroy)(Evas_Object *obj, void *data), void *data, Evas_Coord x, Evas_Coord y)
 {    
-#if 0   
    E_Smart_Data *sd;   
    E_Icon_Canvas_Item *li;
    
@@ -212,10 +211,6 @@ e_icon_canvas_pack_at_location(Evas_Object *obj, Evas_Object *child, Evas_Object
      sd->vh = li->y + li->h;   
    
    _e_icon_canvas_pack(sd, li);
-#endif
-
-   e_icon_canvas_pack(obj, child, create, destroy, data);
-   
 }
 
 EAPI void
