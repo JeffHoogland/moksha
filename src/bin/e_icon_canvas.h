@@ -16,6 +16,7 @@ EAPI void         e_icon_canvas_height_fix         (Evas_Object *obj, Evas_Coord
 EAPI void         e_icon_canvas_pack               (Evas_Object *obj, Evas_Object *child, Evas_Object *(*create)(void *data), void (*destroy)(Evas_Object *obj, void *data), void *data);
 EAPI void         e_icon_canvas_pack_at_location   (Evas_Object *obj, Evas_Object *child, Evas_Object *(*create)(void *data), void (*destroy)(Evas_Object *obj, void *data), void *data, Evas_Coord x, Evas_Coord y);
 EAPI void         e_icon_canvas_child_resize       (Evas_Object *obj, Evas_Coord w, Evas_Coord h);
+EAPI void         e_icon_canvas_child_move         (Evas_Object *obj, Evas_Coord x, Evas_Coord y);
 EAPI void         e_icon_canvas_unpack             (Evas_Object *obj);
 EAPI void         e_icon_canvas_spacing_set        (Evas_Object *obj, Evas_Coord xs, Evas_Coord ys);
 EAPI void         e_icon_canvas_redraw_force       (Evas_Object *obj);

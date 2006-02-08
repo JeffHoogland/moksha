@@ -285,6 +285,19 @@ e_icon_canvas_child_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    _e_icon_canvas_move_resize_item(li);
 }
 
+EAPI void         
+e_icon_canvas_child_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
+{
+   E_Icon_Canvas_Item *li;
+   
+   li = evas_object_data_get(obj, "e_icon_canvas_data");
+   if(x < 0) x = 0;
+   if(y < 0) y = 0;
+   li->x = x;
+   li->y = y;
+   _e_icon_canvas_move_resize_item(li);
+}
+
 EAPI void
 e_icon_canvas_unpack(Evas_Object *obj)
 {

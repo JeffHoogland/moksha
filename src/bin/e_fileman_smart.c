@@ -25,7 +25,7 @@
  * - is the offset code working properly? i have a feeling we're displayin
  *   more icons that the visible space can take and they are being hidden.
  *
- * - allow for icon movement inside the canvas
+ * + allow for icon movement inside the canvas
  *
  * - double check dir monitoring. note: when we are in a dir that is constantly
  *   changing, we cant keep calling redraw_new as it will kill us.
@@ -1419,6 +1419,14 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
 
    if (!(dir2 = opendir(dir))) return;
 
+   /* save the old meta */
+   if(sd->meta)
+     {
+	_e_fm_dir_meta_save(sd);
+	_e_fm_dir_meta_free(sd->meta);
+	sd->meta = NULL;
+     }
+
    type = E_FM_FILE_TYPE_NORMAL;
    list = NULL;
    while((dp = readdir(dir2)))
@@ -1445,16 +1453,12 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
    if (sd->dir) free (sd->dir);
    sd->dir = strdup(dir);
 
-   if(sd->meta)
-     {
-	_e_fm_dir_meta_free(sd->meta);
-	sd->meta = NULL;
-     }
-
+   
    _e_fm_dir_meta_load(sd);
 
    if(sd->meta)
      {
+	/* FIXME whats the purpose of this */
 	Evas_List *l;
 
 	for(l = sd->meta->files; l; l = l->next)
@@ -1501,6 +1505,7 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
 	     icon->sd = sd;
 	     e_fm_icon_file_set(icon->icon_obj, icon->file);
 	     sd->files = evas_list_prepend(sd->files, icon);
+			    
 	     e_icon_canvas_pack(sd->layout, icon->icon_obj, e_fm_icon_create, e_fm_icon_destroy, icon);
 	     evas_object_event_callback_add(icon->icon_obj, EVAS_CALLBACK_MOUSE_DOWN, _e_fm_icon_mouse_down_cb, icon);
 	     evas_object_event_callback_add(icon->icon_obj, EVAS_CALLBACK_MOUSE_UP, _e_fm_icon_mouse_up_cb, icon);
@@ -1528,6 +1533,7 @@ _e_fm_dir_files_get(void *data)
 
    e_icon_canvas_freeze(sd->layout);
 
+   /* add two files per each timer call */
    while (i < 2)
      {
 	char *f;
@@ -1604,8 +1610,6 @@ _e_fm_dir_files_get(void *data)
 
    if(!sd->files_raw) {
       sd->timer = NULL;
-      if(sd->meta)
-	_e_fm_dir_meta_save(sd);
 
       return 0;
    }
@@ -2439,11 +2443,11 @@ _e_fm_icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 		  ecore_evas_geometry_get(sd->win->ecore_evas, &cx, &cy, NULL, NULL);
 		  evas_object_geometry_get(icon->icon_obj, &x, &y, &w, &h);
 		  
-		  sd->drag.dx = cx;
-		  sd->drag.dy = cy;
+		  sd->drag.dx = cx + 5;
+		  sd->drag.dy = cy + 5;
 
 		  if(!sd->drag.ecore_evas)
-		    sd->drag.ecore_evas = ecore_evas_software_x11_new(NULL, 0, cx + x, cx + y, w, h);
+		    sd->drag.ecore_evas = ecore_evas_software_x11_new(NULL, 0, cx + x, cy + y, w, h);
 		  
 		  sd->drag.evas = ecore_evas_get(sd->drag.ecore_evas);
 		  sd->drag.win = ecore_evas_software_x11_window_get(sd->drag.ecore_evas);
@@ -3210,6 +3214,7 @@ _e_fm_xdnd_enter_cb(void *data, int type, void *event)
 
    ev = event;
    sd = data;
+
    if (ev->win != sd->win->evas_win) return 1;
    
    return 1;
@@ -3267,10 +3272,38 @@ _e_fm_xdnd_drop_cb(void *data, int type, void *event)
 {
    Ecore_X_Event_Xdnd_Drop *ev;
    E_Fm_Smart_Data *sd;
+   int ax, ay, x, y;
 
    ev = event;
    sd = data;
+		  
    if (ev->win != sd->win->evas_win) return 1;
+
+   ecore_evas_geometry_get(sd->win->ecore_evas, &ax, &ay, NULL, NULL);
+
+   x = ev->position.x - ax - 5; /* 5 because we already shift 5 pixels creating the window */
+   y = ev->position.y - ay - 5;
+   e_icon_canvas_child_move(sd->drag.icon_obj->icon_obj,x,y); 
+   
+   
+   /* update the metadata for the new coords */
+   if(sd->meta)
+     {
+	Evas_List *l;
+	for(l = sd->meta->files; l; l = l->next)
+	  {
+	     E_Fm_Icon_Metadata *m;
+
+	     m = l->data;
+	     if(!strcmp(m->name, sd->drag.icon_obj->file->name))
+	       {
+		  m->x = x;
+		  m->y = y;
+		  break;
+	       }
+	  }
+     }
+   
 
    ecore_x_selection_xdnd_request(sd->win->evas_win, "text/uri-list");
 
@@ -3414,11 +3447,6 @@ _e_fm_dir_meta_load(E_Fm_Smart_Data *sd)
    char buf[PATH_MAX];
    char *hash;
 
-   /*******
-    * DISABLE FOR NOW
-    *******/
-   return 0;
-
    if (!sd->dir) return 0;
 
    hash = _e_fm_dir_meta_dir_id(sd->dir);
@@ -3436,6 +3464,7 @@ _e_fm_dir_meta_load(E_Fm_Smart_Data *sd)
 	     E_Fm_Icon_Metadata *im;
 
 	     im = l->data;
+	     printf("Loading meta: %d %d for file %s\n", im->x, im->y, im->name);
 	     m->files_hash = evas_hash_add(m->files_hash, im->name, im);
 	  }
      }
@@ -3507,7 +3536,7 @@ _e_fm_dir_meta_save(E_Fm_Smart_Data *sd)
 	     E_Fm_Icon_Metadata *m;
 
 	     m = l->data;
-	     //printf("Saving meta: %d %d\n", m->x, m->y);
+	     printf("Saving meta: %d %d for file %s\n", m->x, m->y, m->name);
 	  }
      }
 
