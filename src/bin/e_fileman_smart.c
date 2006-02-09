@@ -128,7 +128,7 @@ static void                _e_fm_icon_mouse_in_cb   (void *data, Evas *e, Evas_O
 static void                _e_fm_icon_mouse_out_cb  (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void                _e_fm_icon_mouse_move_cb (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static int                 _e_fm_win_mouse_up_cb    (void *data, int type, void *event);
-static int                 _e_fm_win_mouse_move_cb    (void *data, int type, void *event);
+static int                 _e_fm_win_mouse_move_cb  (void *data, int type, void *event);
 
 static void                _e_fm_string_replace(const char *src, const char *key, const char *replacement, char *result, size_t resultsize);
 
@@ -2430,6 +2430,7 @@ _e_fm_icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 	       {		  
 		  Evas_Object *o = NULL;
 		  Evas_Coord x, y, w, h;
+		  int rx,ry,rw,rh;
 		  int cx, cy;
 		  char *data;
 		  char **drop_types;
@@ -2443,20 +2444,19 @@ _e_fm_icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 		  ecore_evas_geometry_get(sd->win->ecore_evas, &cx, &cy, NULL, NULL);
 		  evas_object_geometry_get(icon->icon_obj, &x, &y, &w, &h);
 		  
-		  sd->drag.dx = cx + 5;
-		  sd->drag.dy = cy + 5;
-
+		  
 		  if(!sd->drag.ecore_evas)
 		    sd->drag.ecore_evas = ecore_evas_software_x11_new(NULL, 0, cx + x, cy + y, w, h);
-		  
+		  sd->drag.dx = ev->cur.canvas.x;
+		  sd->drag.dy = ev->cur.canvas.y; 
 		  sd->drag.evas = ecore_evas_get(sd->drag.ecore_evas);
 		  sd->drag.win = ecore_evas_software_x11_window_get(sd->drag.ecore_evas);
 		  
-		  ecore_x_dnd_aware_set(sd->drag.win, 1);		  
 		  ecore_evas_shaped_set(sd->drag.ecore_evas, 1);
 		  ecore_evas_borderless_set(sd->drag.ecore_evas, 1);
 		  ecore_evas_name_class_set(sd->drag.ecore_evas, "E", "_e_drag_window");
 		  ecore_evas_title_set(sd->drag.ecore_evas, "E Drag");
+		  ecore_evas_ignore_events_set(sd->drag.ecore_evas, 1);
 		  
 		  sd->drag.image_object = e_fm_icon_add(sd->drag.evas);
 		  e_fm_icon_file_set(sd->drag.image_object, icon->file);
@@ -2470,16 +2470,20 @@ _e_fm_icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 		  evas_object_move(sd->drag.image_object, 0, 0);
 		  evas_object_show(sd->drag.image_object);
 		  
-		  ecore_x_dnd_types_set(sd->drag.win, drop_types, 1);
-		  ecore_x_dnd_begin(sd->drag.win, data, PATH_MAX * sizeof(char));
+   
 
 		  evas_event_feed_mouse_up(sd->evas, 1, EVAS_BUTTON_NONE, ev->timestamp, NULL);
 		  
 		  e_fm_mouse_move_handler = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
 								    _e_fm_win_mouse_move_cb, sd);
-		  
+		  		  
                   e_fm_mouse_up_handler = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
 								  _e_fm_win_mouse_up_cb, sd);
+		  
+		  ecore_x_dnd_aware_set(sd->drag.win, 1);
+		  ecore_x_dnd_types_set(sd->drag.win, drop_types, 1);
+		  ecore_x_dnd_begin(sd->drag.win, data, PATH_MAX * sizeof(char));
+		  
 		  sd->drag.start = 0;
 	       }
 	  }
@@ -2491,11 +2495,16 @@ _e_fm_win_mouse_move_cb(void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_Move *ev;
    E_Fm_Smart_Data *sd;
+   int cx,cy,x,y;
    
    sd = data;
    ev = event;
    
-   ecore_evas_move(sd->drag.ecore_evas, ev->x + sd->drag.dx, ev->y + sd->drag.dy);
+
+   ecore_evas_geometry_get(sd->win->ecore_evas, &cx, &cy, NULL, NULL);
+   evas_object_geometry_get(sd->drag.icon_obj->icon_obj, &x, &y, NULL, NULL);
+   
+   ecore_evas_move(sd->drag.ecore_evas, cx + x + ev->x - sd->drag.dx, cy + y + ev->y - sd->drag.dy);
    if(!ecore_evas_visibility_get(sd->drag.ecore_evas))
      ecore_evas_show(sd->drag.ecore_evas);
 
@@ -2509,18 +2518,20 @@ static int
    E_Fm_Smart_Data *sd;
    
    sd = data;
-      
+   
    ecore_x_dnd_drop();
-          
+   
    ecore_event_handler_del(e_fm_mouse_up_handler);
    e_fm_mouse_up_handler = NULL;
    
    ecore_event_handler_del(e_fm_mouse_move_handler);
    e_fm_mouse_move_handler = NULL;
    
+   ecore_evas_free(sd->drag.ecore_evas);
+   sd->drag.ecore_evas = NULL;
+   
    sd->drag.start = 0;
    
-   ecore_evas_hide(sd->drag.ecore_evas);
    
    return 1;
 }
@@ -3217,6 +3228,10 @@ _e_fm_xdnd_enter_cb(void *data, int type, void *event)
 
    if (ev->win != sd->win->evas_win) return 1;
    
+   printf("enter\n");
+   if(evas_object_visible_get(sd->drag.icon_obj->icon_obj))
+     evas_object_hide(sd->drag.icon_obj->icon_obj);
+   
    return 1;
 }
 
@@ -3228,6 +3243,7 @@ _e_fm_xdnd_leave_cb(void *data, int type, void *event)
 
    ev = event;
    sd = data;
+   printf("leave\n");
    if (ev->win != sd->win->evas_win) return 1;
 
    return 1;
@@ -3255,6 +3271,7 @@ _e_fm_xdnd_position_cb(void *data, int type, void *event)
 
    ev = event;
    sd = data;
+   printf("pos\n");
    if (ev->win != sd->win->evas_win) return 1;
 
    rect.x = 0;
@@ -3276,16 +3293,20 @@ _e_fm_xdnd_drop_cb(void *data, int type, void *event)
 
    ev = event;
    sd = data;
-		  
+
+   evas_object_show(sd->drag.icon_obj->icon_obj);
+   
    if (ev->win != sd->win->evas_win) return 1;
 
+   
+   printf("drop same\n");
+   evas_object_geometry_get(sd->drag.icon_obj->icon_obj, &x, &y, NULL, NULL);
    ecore_evas_geometry_get(sd->win->ecore_evas, &ax, &ay, NULL, NULL);
 
-   x = ev->position.x - ax - 5; /* 5 because we already shift 5 pixels creating the window */
-   y = ev->position.y - ay - 5;
-   e_icon_canvas_child_move(sd->drag.icon_obj->icon_obj,x,y); 
-   
-   
+   x = (ev->position.x - ax) - (sd->drag.dx - x);
+   y = (ev->position.y - ay) - (sd->drag.dy - y);
+   e_icon_canvas_child_move(sd->drag.icon_obj->icon_obj,x,y);
+
    /* update the metadata for the new coords */
    if(sd->meta)
      {
@@ -3464,7 +3485,7 @@ _e_fm_dir_meta_load(E_Fm_Smart_Data *sd)
 	     E_Fm_Icon_Metadata *im;
 
 	     im = l->data;
-	     printf("Loading meta: %d %d for file %s\n", im->x, im->y, im->name);
+	     //printf("Loading meta: %d %d for file %s\n", im->x, im->y, im->name);
 	     m->files_hash = evas_hash_add(m->files_hash, im->name, im);
 	  }
      }
@@ -3536,7 +3557,7 @@ _e_fm_dir_meta_save(E_Fm_Smart_Data *sd)
 	     E_Fm_Icon_Metadata *m;
 
 	     m = l->data;
-	     printf("Saving meta: %d %d for file %s\n", m->x, m->y, m->name);
+	     //printf("Saving meta: %d %d for file %s\n", m->x, m->y, m->name);
 	  }
      }
 
