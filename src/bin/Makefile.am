@@ -126,6 +126,7 @@ e_int_config_background.h \
 e_int_config_background_import.h \
 e_int_config_theme.h \
 e_int_config_menus.h \
+e_int_config_keybindings.h \
 e_int_config_cursor.h \
 e_int_config_startup.h \
 e_int_config_performance.h \
@@ -247,6 +248,7 @@ e_int_config_background.c \
 e_int_config_background_import.c \
 e_int_config_theme.c \
 e_int_config_menus.c \
+e_int_config_keybindings.c \
 e_int_config_cursor.c \
 e_int_config_startup.c \
 e_int_config_performance.c \

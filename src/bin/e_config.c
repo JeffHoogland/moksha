@@ -815,7 +815,6 @@ e_config_init(void)
 	     eb->params = NULL;
 	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
 
-	     // sndev : start
 	     eb = E_NEW( E_Config_Binding_Key, 1 );
 	     eb->context = E_BINDING_CONTEXT_ANY;
 	     eb->key = evas_stringshare_add("F10");
@@ -833,7 +832,6 @@ e_config_init(void)
 	     eb->action = evas_stringshare_add( "window_maximized_toggle" );
 	     eb->params = evas_stringshare_add( "horizontal" );
 	     e_config->key_bindings = evas_list_append( e_config->key_bindings, eb );
-	     // sndev : end
 
 	     eb = E_NEW(E_Config_Binding_Key, 1);
 	     eb->context = E_BINDING_CONTEXT_ANY;

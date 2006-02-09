@@ -66,6 +66,7 @@ e_configure_show(E_Container *con)
    e_configure_standard_item_add(eco, "enlightenment/desktops", _("Background Settings"), e_int_config_background);
    e_configure_standard_item_add(eco, "enlightenment/themes", _("Theme Selector"), e_int_config_theme);   
    e_configure_standard_item_add(eco, "enlightenment/modules", _("Module Settings"), e_int_config_modules);
+   e_configure_standard_item_add(eco, "enlightenment/e", _("Key Binding Settings"), e_int_config_keybindings);
    e_configure_standard_item_add(eco, "enlightenment/mouse", _("Cursor Settings"), e_int_config_cursor);
    e_configure_standard_item_add(eco, "enlightenment/desktops", _("Desktop Settings"), e_int_config_desks);
    e_configure_standard_item_add(eco, "enlightenment/desktops", _("Display Settings"), e_int_config_display);
