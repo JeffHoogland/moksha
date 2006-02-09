@@ -1124,6 +1124,11 @@ group {
 	       inherit: "default" 0.0;
 	       color: 255 255 255 255;
 	    }
+	    description {
+	       state: "dragged" 0.0;
+	       inherit: "default" 0.0;
+	       color: 10 10 10 30;
+	    }
 	 }      	 
 	 part {
 	    name: "icon_box";
@@ -1235,6 +1240,24 @@ group {
       program { 
 	 name:   "unclicked"; 
 	 signal: "unclicked"; 
+	 source: ""; 
+	 action: STATE_SET "default" 0.0;
+	 transition: LINEAR 0.2;	 
+	 target: "icon_title"; 
+         target: "icon_overlay";	 
+      }      
+      program { 
+	 name:   "dragged"; 
+	 signal: "dragged"; 
+	 source: ""; 
+	 action: STATE_SET "dragged" 0.0;
+	 transition: LINEAR 0.2;	 
+	 target: "icon_title"; 
+         target: "icon_overlay";	 
+      }      
+      program { 
+	 name:   "dropped"; 
+	 signal: "dropped"; 
 	 source: ""; 
 	 action: STATE_SET "default" 0.0;
 	 transition: LINEAR 0.2;	 

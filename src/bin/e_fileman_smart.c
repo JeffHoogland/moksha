@@ -2435,6 +2435,8 @@ _e_fm_icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 		  char *data;
 		  char **drop_types;
 
+		  e_fm_icon_signal_emit(icon->icon_obj, "dragged", "");
+		  
 		  drop_types = calloc(1, sizeof(char*));
 		  drop_types[0] = strdup("text/uri-list");
 
@@ -2445,18 +2447,22 @@ _e_fm_icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 		  evas_object_geometry_get(icon->icon_obj, &x, &y, &w, &h);
 		  
 		  
-		  if(!sd->drag.ecore_evas)
-		    sd->drag.ecore_evas = ecore_evas_software_x11_new(NULL, 0, cx + x, cy + y, w, h);
+		  if(sd->drag.ecore_evas)
+		    ecore_evas_free(sd->drag.ecore_evas);
+		       
+		  
 		  sd->drag.dx = ev->cur.canvas.x;
 		  sd->drag.dy = ev->cur.canvas.y; 
+		  sd->drag.ecore_evas = ecore_evas_software_x11_new(NULL, 0, cx + x, cy + y, w, h);
 		  sd->drag.evas = ecore_evas_get(sd->drag.ecore_evas);
 		  sd->drag.win = ecore_evas_software_x11_window_get(sd->drag.ecore_evas);
-		  
+		  		  
 		  ecore_evas_shaped_set(sd->drag.ecore_evas, 1);
 		  ecore_evas_borderless_set(sd->drag.ecore_evas, 1);
 		  ecore_evas_name_class_set(sd->drag.ecore_evas, "E", "_e_drag_window");
 		  ecore_evas_title_set(sd->drag.ecore_evas, "E Drag");
 		  ecore_evas_ignore_events_set(sd->drag.ecore_evas, 1);
+		  ecore_evas_show(sd->drag.ecore_evas);
 		  
 		  sd->drag.image_object = e_fm_icon_add(sd->drag.evas);
 		  e_fm_icon_file_set(sd->drag.image_object, icon->file);
@@ -2472,7 +2478,7 @@ _e_fm_icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 		  
    
 
-		  evas_event_feed_mouse_up(sd->evas, 1, EVAS_BUTTON_NONE, ev->timestamp, NULL);
+		  //evas_event_feed_mouse_up(sd->evas, 1, EVAS_BUTTON_NONE, ev->timestamp, NULL);
 		  
 		  e_fm_mouse_move_handler = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
 								    _e_fm_win_mouse_move_cb, sd);
@@ -2505,9 +2511,7 @@ _e_fm_win_mouse_move_cb(void *data, int type, void *event)
    evas_object_geometry_get(sd->drag.icon_obj->icon_obj, &x, &y, NULL, NULL);
    
    ecore_evas_move(sd->drag.ecore_evas, cx + x + ev->x - sd->drag.dx, cy + y + ev->y - sd->drag.dy);
-   if(!ecore_evas_visibility_get(sd->drag.ecore_evas))
-     ecore_evas_show(sd->drag.ecore_evas);
-
+   
    return 1;
 }
 
@@ -2518,6 +2522,8 @@ static int
    E_Fm_Smart_Data *sd;
    
    sd = data;
+		  
+   e_fm_icon_signal_emit(sd->drag.icon_obj->icon_obj, "dropped", "");
    
    ecore_x_dnd_drop();
    
@@ -2527,8 +2533,7 @@ static int
    ecore_event_handler_del(e_fm_mouse_move_handler);
    e_fm_mouse_move_handler = NULL;
    
-   ecore_evas_free(sd->drag.ecore_evas);
-   sd->drag.ecore_evas = NULL;
+   ecore_evas_hide(sd->drag.ecore_evas);
    
    sd->drag.start = 0;
    
@@ -3229,8 +3234,13 @@ _e_fm_xdnd_enter_cb(void *data, int type, void *event)
    if (ev->win != sd->win->evas_win) return 1;
    
    printf("enter\n");
-   if(evas_object_visible_get(sd->drag.icon_obj->icon_obj))
-     evas_object_hide(sd->drag.icon_obj->icon_obj);
+   /*if (ev->win == sd->drag->evas_win)
+     {
+	
+	e_fm_icon_signal_emit(icon->icon_obj, "default", "");
+     }*/
+   /*if(evas_object_visible_get(sd->drag.icon_obj->icon_obj))
+     evas_object_hide(sd->drag.icon_obj->icon_obj);*/
    
    return 1;
 }
@@ -3294,9 +3304,13 @@ _e_fm_xdnd_drop_cb(void *data, int type, void *event)
    ev = event;
    sd = data;
 
-   evas_object_show(sd->drag.icon_obj->icon_obj);
+   //evas_object_show(sd->drag.icon_obj->icon_obj);
    
-   if (ev->win != sd->win->evas_win) return 1;
+   if (ev->win != sd->win->evas_win) 
+     {
+	printf("drop different\n");
+	return 1;
+     }
 
    
    printf("drop same\n");
