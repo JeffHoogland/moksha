@@ -91,17 +91,6 @@ e_gadcon_init(void)
 	static E_Gadcon_Client_Class cc = 
 	  {
 	     GADCON_CLIENT_CLASS_VERSION,
-	       "start",
-	       {
-		  __test, __test2, NULL
-	       }
-	  };
-	e_gadcon_provider_register(&cc);
-     }
-     {
-	static E_Gadcon_Client_Class cc = 
-	  {
-	     GADCON_CLIENT_CLASS_VERSION,
 	       "clock",
 	       {
 		  __test, __test2, NULL
@@ -756,6 +745,8 @@ struct _E_Smart_Data
    Evas_Object     *obj;
    Evas_Object     *clip;
    unsigned char    horizontal : 1;
+   unsigned char    doing_config : 1;
+   unsigned char    redo_config : 1;
    Evas_List       *items;
    int              frozen;
 }; 
@@ -1120,6 +1111,11 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
    Evas_List *list_s = NULL, *list_m = NULL, *list_e = NULL, *list = NULL;
 
    if (sd->frozen) return;
+   if (sd->doing_config)
+     {
+	sd->redo_config = 1;
+	return;
+     }
    
    x = sd->x;
    y = sd->y;
@@ -1531,6 +1527,12 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	  }
 	evas_object_move(obj, xx, yy);
 	evas_object_resize(obj, bi->w, bi->h);
+     }
+   sd->doing_config = 0;
+   if (sd->redo_config)
+     {
+	_e_gadcon_layout_smart_reconfigure(sd);
+	sd->redo_config = 0;
      }
 }
 
