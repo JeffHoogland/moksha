@@ -112,8 +112,6 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	zone = e_gadcon_zone_get(inst->gcc->gadcon);
 	if (!zone)
 	  zone = e_util_zone_current_get(e_manager_current_get());
-	x -= zone->x;
-	y -= zone->y;
 	if (!inst->main_menu)
 	  inst->main_menu = e_int_menus_main_new();
 	if (inst->main_menu)
@@ -128,25 +126,15 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	       {
 		case E_GADCON_ORIENT_TOP:
 		  dir = E_MENU_POP_DIRECTION_DOWN;
-// these make the menu pop off the panels' edge, not the module's object - not
-// a very generic thing though.
-//		  y = cy;
-//		  h = ch;
 		  break;
 		case E_GADCON_ORIENT_BOTTOM:
 		  dir = E_MENU_POP_DIRECTION_UP;
-//		  y = cy;
-//		  h = ch;
 		  break;
 		case E_GADCON_ORIENT_LEFT:
 		  dir = E_MENU_POP_DIRECTION_RIGHT;
-//		  x = cx;
-//		  w = cw;
 		  break;
 		case E_GADCON_ORIENT_RIGHT:
 		  dir = E_MENU_POP_DIRECTION_LEFT;
-//		  x = cx;
-//		  w = cw;
 		  break;
 		default:
 		  break;
