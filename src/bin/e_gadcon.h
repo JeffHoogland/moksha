@@ -45,6 +45,8 @@ struct _E_Gadcon
       Evas_Object      *o_parent;
       char             *swallow_name;
    } edje;
+   Ecore_Evas          *ecore_evas;
+   E_Zone              *zone;
    
    E_Gadcon_Orient      orient;
    
@@ -96,10 +98,15 @@ EAPI void             e_gadcon_edit_begin(E_Gadcon *gc);
 EAPI void             e_gadcon_edit_end(E_Gadcon *gc);
 EAPI void             e_gadcon_all_edit_begin(void);
 EAPI void             e_gadcon_all_edit_end(void);
+EAPI void             e_gadcon_zone_set(E_Gadcon *gc, E_Zone *zone);
+EAPI E_Zone          *e_gadcon_zone_get(E_Gadcon *gc);
+EAPI void             e_gadcon_ecore_evas_set(E_Gadcon *gc, Ecore_Evas *ee);
+EAPI int              e_gadcon_canvas_zone_geometry_get(E_Gadcon *gc, int *x, int *y, int *w, int *h);
     
 EAPI E_Gadcon_Client *e_gadcon_client_new(E_Gadcon *gc, char *name, char *id, Evas_Object *base_obj);
 EAPI void             e_gadcon_client_size_request(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h);
 EAPI void             e_gadcon_client_min_size_set(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h);
+EAPI void             e_gadcon_client_aspect_set(E_Gadcon_Client *gcc, int w, int h);
 EAPI void             e_gadcon_client_edit_begin(E_Gadcon_Client *gcc);
 EAPI void             e_gadcon_client_edit_end(E_Gadcon_Client *gcc);
     

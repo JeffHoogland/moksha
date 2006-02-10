@@ -65,6 +65,7 @@ _gc_init(E_Gadcon *gc, char *name, char *id)
     * another to be the same */
    e_gadcon_client_size_request(gcc, 32, 32);
    e_gadcon_client_min_size_set(gcc, 16, 16);
+   e_gadcon_client_aspect_set(gcc, 1, 1);
    return gcc;
 }
     
@@ -101,21 +102,59 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if (ev->button == 1)
      {
 	Evas_Coord x, y, w, h;
-
-	/* FIXME: need a way of getting screen-relative coords */
+	int cx, cy, cw, ch;
+	E_Zone *zone;
+	
 	evas_object_geometry_get(inst->o_button, &x, &y, &w, &h); 
+	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy, &cw, &ch);
+	x += cx;
+	y += cy;
+	zone = e_gadcon_zone_get(inst->gcc->gadcon);
+	if (!zone)
+	  zone = e_util_zone_current_get(e_manager_current_get());
+	x -= zone->x;
+	y -= zone->y;
 	if (!inst->main_menu)
 	  inst->main_menu = e_int_menus_main_new();
 	if (inst->main_menu)
 	  {
+	     int dir;
+	     
 	     e_menu_post_deactivate_callback_set(inst->main_menu,
 						 _menu_cb_post,
 						 inst);
-	     /* FIXME: need a way of getting gadcon zone */
+	     dir = E_MENU_POP_DIRECTION_AUTO;
+	     switch (inst->gcc->gadcon->orient)
+	       {
+		case E_GADCON_ORIENT_TOP:
+		  dir = E_MENU_POP_DIRECTION_DOWN;
+// these make the menu pop off the panels' edge, not the module's object - not
+// a very generic thing though.
+//		  y = cy;
+//		  h = ch;
+		  break;
+		case E_GADCON_ORIENT_BOTTOM:
+		  dir = E_MENU_POP_DIRECTION_UP;
+//		  y = cy;
+//		  h = ch;
+		  break;
+		case E_GADCON_ORIENT_LEFT:
+		  dir = E_MENU_POP_DIRECTION_RIGHT;
+//		  x = cx;
+//		  w = cw;
+		  break;
+		case E_GADCON_ORIENT_RIGHT:
+		  dir = E_MENU_POP_DIRECTION_LEFT;
+//		  x = cx;
+//		  w = cw;
+		  break;
+		default:
+		  break;
+	       }
 	     e_menu_activate_mouse(inst->main_menu,
 				   e_util_zone_current_get(e_manager_current_get()),
 				   x, y, w, h,
-				   E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
+				   dir, ev->timestamp);
 	     edje_object_signal_emit(inst->o_button, "active", "");
 	     evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button, EVAS_BUTTON_NONE, ev->timestamp, NULL);
 	  }

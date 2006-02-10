@@ -51,10 +51,11 @@ e_shelf_zone_new(E_Zone *zone, char *name)
    snprintf(buf, sizeof(buf), "%i", shelf_id);
    shelf_id++;
    es->gadcon = e_gadcon_swallowed_new(es->name, buf, es->o_base, "items");
-   e_gadcon_orient(es->gadcon, E_GADCON_ORIENT_HORIZ);
+   e_gadcon_orient(es->gadcon, E_GADCON_ORIENT_TOP);
+   e_gadcon_zone_set(es->gadcon, zone);
+   e_gadcon_ecore_evas_set(es->gadcon, es->ee);
    
    shelves = evas_list_append(shelves, es);
-   
    return es;
 }
 

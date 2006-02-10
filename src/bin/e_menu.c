@@ -182,7 +182,9 @@ e_menu_activate_key(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir
       case E_MENU_POP_DIRECTION_LEFT:
 	_e_menu_realize(m);
 	m->cur.x = x - m->cur.w;
-	m->cur.y = y ;
+	m->cur.y = y;
+	if ((m->cur.y + m->cur.h) > (m->zone->y + m->zone->h))
+	  m->cur.y = y + h - m->cur.h;
 	_e_menu_activate_first();
 	break;
       case E_MENU_POP_DIRECTION_RIGHT:
@@ -192,14 +194,20 @@ e_menu_activate_key(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir
 	break;
       case E_MENU_POP_DIRECTION_UP:
 	_e_menu_realize(m);
-	m->cur.x = x + w;
+	m->cur.x = x;
+	if ((m->cur.x + m->cur.w) > (m->zone->x + m->zone->w))
+	  m->cur.x = x + w - m->cur.w;
 	m->cur.y = y - m->cur.h;
 	_e_menu_activate_last();
 	break;
       case E_MENU_POP_DIRECTION_DOWN:
 	_e_menu_realize(m);
-	m->cur.x = x + w;
+	m->cur.x = x;
+	if ((m->cur.x + m->cur.w) > (m->zone->x + m->zone->w))
+	  m->cur.x = x + w - m->cur.w;
 	m->cur.y = y + h;
+	if ((m->cur.y + m->cur.h) > (m->zone->y + m->zone->h))
+	  m->cur.y = y + h - m->cur.h;
 	_e_menu_activate_first();
 	break;
       case E_MENU_POP_DIRECTION_AUTO:
@@ -238,20 +246,33 @@ e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int d
       case E_MENU_POP_DIRECTION_LEFT:
 	_e_menu_realize(m);
 	m->cur.x = x - m->cur.w;
-	m->cur.y = y ;
+	m->cur.y = y;
+	if ((m->cur.y + m->cur.h) > (m->zone->y + m->zone->h))
+	  m->cur.y = y + h - m->cur.h;
+	_e_menu_activate_first();
 	break;
       case E_MENU_POP_DIRECTION_RIGHT:
 	m->cur.x = x + w;
 	m->cur.y = y ;
+	_e_menu_activate_first();
 	break;
       case E_MENU_POP_DIRECTION_UP:
 	_e_menu_realize(m);
-	m->cur.x = x + w;
+	m->cur.x = x;
+	if ((m->cur.x + m->cur.w) > (m->zone->x + m->zone->w))
+	  m->cur.x = x + w - m->cur.w;
 	m->cur.y = y - m->cur.h;
+	_e_menu_activate_last();
 	break;
       case E_MENU_POP_DIRECTION_DOWN:
-	m->cur.x = x + w;
+	_e_menu_realize(m);
+	m->cur.x = x;
+	if ((m->cur.x + m->cur.w) > (m->zone->x + m->zone->w))
+	  m->cur.x = x + w - m->cur.w;
 	m->cur.y = y + h;
+	if ((m->cur.y + m->cur.h) > (m->zone->y + m->zone->h))
+	  m->cur.y = y + h - m->cur.h;
+	_e_menu_activate_first();
 	break;
       case E_MENU_POP_DIRECTION_AUTO:
 	_e_menu_auto_place(m, x, y, w, h);
@@ -282,20 +303,33 @@ e_menu_activate(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir)
       case E_MENU_POP_DIRECTION_LEFT:
 	_e_menu_realize(m);
 	m->cur.x = x - m->cur.w;
-	m->cur.y = y ;
+	m->cur.y = y;
+	if ((m->cur.y + m->cur.h) > (m->zone->y + m->zone->h))
+	  m->cur.y = y + h - m->cur.h;
+	_e_menu_activate_first();
 	break;
       case E_MENU_POP_DIRECTION_RIGHT:
 	m->cur.x = x + w;
 	m->cur.y = y ;
+	_e_menu_activate_first();
 	break;
       case E_MENU_POP_DIRECTION_UP:
 	_e_menu_realize(m);
-	m->cur.x = x + w;
+	m->cur.x = x;
+	if ((m->cur.x + m->cur.w) > (m->zone->x + m->zone->w))
+	  m->cur.x = x + w - m->cur.w;
 	m->cur.y = y - m->cur.h;
+	_e_menu_activate_last();
 	break;
       case E_MENU_POP_DIRECTION_DOWN:
-	m->cur.x = x + w;
+	_e_menu_realize(m);
+	m->cur.x = x;
+	if ((m->cur.x + m->cur.w) > (m->zone->x + m->zone->w))
+	  m->cur.x = x + w - m->cur.w;
 	m->cur.y = y + h;
+	if ((m->cur.y + m->cur.h) > (m->zone->y + m->zone->h))
+	  m->cur.y = y + h - m->cur.h;
+	_e_menu_activate_first();
 	break;
       case E_MENU_POP_DIRECTION_AUTO:
 	_e_menu_auto_place(m, x, y, w, h);
