@@ -1216,6 +1216,7 @@ ACT_FN_GO(edit_mode)
 	if (!obj) return;
      }
    e_gadman_mode_set(((E_Container *)obj)->gadman, E_GADMAN_MODE_EDIT);
+   e_gadcon_all_edit_begin();
 }
 ACT_FN_END(edit_mode)
 {
@@ -1227,6 +1228,7 @@ ACT_FN_END(edit_mode)
 	if (!obj) return;
      }
    e_gadman_mode_set(((E_Container *)obj)->gadman, E_GADMAN_MODE_NORMAL);
+   e_gadcon_all_edit_end();
 }
 
 /***************************************************************************/

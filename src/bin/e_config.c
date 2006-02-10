@@ -35,6 +35,8 @@ static E_Config_DD *_e_config_desktop_bg_edd = NULL;
 static E_Config_DD *_e_config_desktop_name_edd = NULL;
 static E_Config_DD *_e_config_remember_edd = NULL;
 static E_Config_DD *_e_config_color_class_edd = NULL;
+static E_Config_DD *_e_config_gadcon_edd = NULL;
+static E_Config_DD *_e_config_gadcon_client_edd = NULL;
 
 
 /* externally accessible functions */
@@ -75,6 +77,27 @@ e_config_init(void)
 	  _e_config_profile = strdup("default");
      }
    else _e_config_profile = strdup(_e_config_profile);
+
+   _e_config_gadcon_client_edd = E_CONFIG_DD_NEW("E_Config_Gadcon_Client", E_Config_Gadcon_Client);
+#undef T
+#undef D
+#define T E_Config_Gadcon_Client
+#define D _e_config_gadcon_client_edd
+   E_CONFIG_VAL(D, T, name, STR);
+   E_CONFIG_VAL(D, T, id, STR);
+   E_CONFIG_VAL(D, T, geom.pos, INT);
+   E_CONFIG_VAL(D, T, geom.size, INT);
+   E_CONFIG_VAL(D, T, geom.res, INT);
+   
+   _e_config_gadcon_edd = E_CONFIG_DD_NEW("E_Config_Gadcon", E_Config_Gadcon);
+#undef T
+#undef D
+#define T E_Config_Gadcon
+#define D _e_config_gadcon_edd
+   E_CONFIG_VAL(D, T, name, STR);
+   E_CONFIG_VAL(D, T, id, STR);
+   E_CONFIG_LIST(D, T, clients, _e_config_gadcon_client_edd);
+   
    _e_config_desktop_bg_edd = E_CONFIG_DD_NEW("E_Config_Desktop_Background", E_Config_Desktop_Background);
 #undef T
 #undef D
@@ -402,6 +425,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, exebuf_pos_max_h, INT);
    E_CONFIG_LIST(D, T, color_classes, _e_config_color_class_edd);
    E_CONFIG_VAL(D, T, use_app_icon, INT);
+   E_CONFIG_LIST(D, T, gadcons, _e_config_gadcon_edd);
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
      {
@@ -549,6 +573,42 @@ e_config_init(void)
 	e_config->exebuf_pos_max_h = 320;
 	e_config->color_classes = NULL;
 	e_config->use_app_icon = 0;
+	e_config->gadcons = NULL;
+	
+	/* FIXME: fill up default gadcons! */
+	  {
+	     E_Config_Gadcon *cf_gc;
+	     E_Config_Gadcon_Client *cf_gcc;
+	     
+	     cf_gc = E_NEW(E_Config_Gadcon, 1);
+	     cf_gc->name = evas_stringshare_add("shelf");
+	     cf_gc->id = evas_stringshare_add("0");
+	     e_config->gadcons = evas_list_append(e_config->gadcons, cf_gc);
+	     
+	     cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
+	     cf_gcc->name = evas_stringshare_add("ibar");
+	     cf_gcc->id = evas_stringshare_add("default");
+	     cf_gcc->geom.res = 800;
+	     cf_gcc->geom.size = 200;
+	     cf_gcc->geom.pos = 400 - (cf_gcc->geom.size / 2);
+	     cf_gc->clients = evas_list_append(cf_gc->clients, cf_gcc);
+	     
+	     cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
+	     cf_gcc->name = evas_stringshare_add("clock");
+	     cf_gcc->id = evas_stringshare_add("default");
+	     cf_gcc->geom.res = 800;
+	     cf_gcc->geom.size = 32;
+	     cf_gcc->geom.pos = 800 - (cf_gcc->geom.size);
+	     cf_gc->clients = evas_list_append(cf_gc->clients, cf_gcc);
+
+	     cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
+	     cf_gcc->name = evas_stringshare_add("start");
+	     cf_gcc->id = evas_stringshare_add("default");
+	     cf_gcc->geom.res = 800;
+	     cf_gcc->geom.size = 32;
+	     cf_gcc->geom.pos = 0;
+	     cf_gc->clients = evas_list_append(cf_gc->clients, cf_gcc);
+	  }
 	
 	  {
 	     E_Config_Module *em;
@@ -1559,6 +1619,8 @@ e_config_shutdown(void)
    E_CONFIG_DD_FREE(_e_config_desktop_bg_edd);
    E_CONFIG_DD_FREE(_e_config_desktop_name_edd);
    E_CONFIG_DD_FREE(_e_config_remember_edd);
+   E_CONFIG_DD_FREE(_e_config_gadcon_edd);
+   E_CONFIG_DD_FREE(_e_config_gadcon_client_edd);
    return 1;
 }
 

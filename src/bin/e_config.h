@@ -33,6 +33,9 @@ typedef struct _E_Config_Binding_Signal     E_Config_Binding_Signal;
 typedef struct _E_Config_Binding_Wheel      E_Config_Binding_Wheel;
 typedef struct _E_Config_Desktop_Background E_Config_Desktop_Background;
 typedef struct _E_Config_Desktop_Name       E_Config_Desktop_Name;
+typedef struct _E_Config_Gadcon             E_Config_Gadcon;
+typedef struct _E_Config_Gadcon_Client      E_Config_Gadcon_Client;
+
 typedef Eet_Data_Descriptor                 E_Config_DD;
 
 #else
@@ -44,7 +47,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
  * versioning feature. the value of this is really irrelevant - just as
  * long as it increases every time we change something
  */
-#define E_CONFIG_FILE_VERSION 135
+#define E_CONFIG_FILE_VERSION 136
 
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1
@@ -201,6 +204,7 @@ struct _E_Config
    int         exebuf_pos_max_h;
    Evas_List  *color_classes;
    int         use_app_icon;
+   Evas_List  *gadcons;
 };
 
 struct _E_Config_Module
@@ -273,6 +277,20 @@ struct _E_Config_Desktop_Name
    int            desk_x;
    int            desk_y;
    char          *name;
+};
+
+struct _E_Config_Gadcon
+{
+   char *name, *id;
+   Evas_List *clients;
+};
+
+struct _E_Config_Gadcon_Client
+{
+   char *name, *id;
+   struct {
+      int pos, size, res;
+   } geom;
 };
 
 EAPI int        e_config_init(void);

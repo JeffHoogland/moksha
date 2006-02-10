@@ -76,6 +76,10 @@ struct _E_Gadcon_Client
    Evas_Object           *o_event;
    E_Gadcon_Client_Class  client_class;
    void                  *data;
+   struct {
+      int                 pos, size, res;
+   } config;
+   
    unsigned char          moving : 1;
    Evas_Coord             dx, dy, sx, sy;
 };
@@ -89,12 +93,15 @@ EAPI void             e_gadcon_layout_policy_set(E_Gadcon *gc, E_Gadcon_Layout_P
 EAPI void             e_gadcon_populate(E_Gadcon *gc);
 EAPI void             e_gadcon_orient(E_Gadcon *gc, E_Gadcon_Orient orient);
 EAPI void             e_gadcon_edit_begin(E_Gadcon *gc);
+EAPI void             e_gadcon_edit_end(E_Gadcon *gc);
+EAPI void             e_gadcon_all_edit_begin(void);
+EAPI void             e_gadcon_all_edit_end(void);
     
 EAPI E_Gadcon_Client *e_gadcon_client_new(E_Gadcon *gc, char *name, char *id, Evas_Object *base_obj);
 EAPI void             e_gadcon_client_size_request(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h);
 EAPI void             e_gadcon_client_min_size_set(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h);
-EAPI void             e_gadcon_client_max_size_set(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h);
 EAPI void             e_gadcon_client_edit_begin(E_Gadcon_Client *gcc);
+EAPI void             e_gadcon_client_edit_end(E_Gadcon_Client *gcc);
     
 #endif
 #endif
