@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2005-09-27 07:14+0200\n"
-"PO-Revision-Date: 2006-02-01 21:48+0100\n"
+"PO-Revision-Date: 2006-02-08 04:03+0100\n"
 "Last-Translator: Morten Nilsen <morten@nilsen.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/bin/e_utils.c:223
+#: src/bin/e_utils.c:229
 #: src/bin/e_apps.c:425
 #: src/bin/e_zone.c:607
 #: src/bin/e_fileman_file.c:329
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Run Error"
 msgstr "Kjørefeil"
 
-#: src/bin/e_utils.c:224
+#: src/bin/e_utils.c:230
 #: src/bin/e_apps.c:426
 #: src/bin/e_zone.c:608
 #: src/bin/e_fileman_file.c:330
@@ -41,11 +41,11 @@ msgstr ""
 "%s\n"
 "\n"
 
-#: src/bin/e_utils.c:269
+#: src/bin/e_utils.c:275
 msgid "Cannot exit - immortal windows."
 msgstr "Kan ikke avslutte - udødelige vinduer."
 
-#: src/bin/e_utils.c:270
+#: src/bin/e_utils.c:276
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This means\n"
 "that Enlightenment will not allow itself to exit until these windows have\n"
@@ -163,39 +163,39 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nei"
 
-#: src/bin/e_gadman.c:626
+#: src/bin/e_gadman.c:645
 msgid "Automatic Width"
 msgstr "Automatisk bredde"
 
-#: src/bin/e_gadman.c:637
+#: src/bin/e_gadman.c:656
 msgid "Half Screen Width"
 msgstr "Halv skjermbredde"
 
-#: src/bin/e_gadman.c:643
+#: src/bin/e_gadman.c:662
 msgid "Full Screen Width"
 msgstr "Full skjermbredde"
 
-#: src/bin/e_gadman.c:655
+#: src/bin/e_gadman.c:674
 msgid "Center Horizontally"
 msgstr "Sentrér vannrett"
 
-#: src/bin/e_gadman.c:673
+#: src/bin/e_gadman.c:692
 msgid "Automatic Height"
 msgstr "Automatisk høyde"
 
-#: src/bin/e_gadman.c:684
+#: src/bin/e_gadman.c:703
 msgid "Half Screen Height"
 msgstr "Halv skjermhøyde"
 
-#: src/bin/e_gadman.c:690
+#: src/bin/e_gadman.c:709
 msgid "Full Screen Height"
 msgstr "Full skjermhøyde"
 
-#: src/bin/e_gadman.c:702
+#: src/bin/e_gadman.c:721
 msgid "Center Vertically"
 msgstr "Sentrér loddrett"
 
-#: src/bin/e_gadman.c:714
+#: src/bin/e_gadman.c:733
 msgid "End Edit Mode"
 msgstr "Avslutt redigeringsmodus"
 
@@ -212,49 +212,41 @@ msgstr "X rapporterer mangel på rotvindu og %i skjermbilder!\n"
 msgid "Disable this splash screen in the future?"
 msgstr "Fjern velkomstbildet i fremtiden?"
 
-#: src/bin/e_int_menus.c:80
+#: src/bin/e_int_menus.c:79
 msgid "Favorite Applications"
 msgstr "Favoritter"
 
-#: src/bin/e_int_menus.c:85
+#: src/bin/e_int_menus.c:84
 msgid "Run Command"
 msgstr "Kjør ..."
 
-#: src/bin/e_int_menus.c:95
-#: src/bin/e_int_config_modules.c:260
-msgid "Modules"
-msgstr "Moduler"
-
-#: src/bin/e_int_menus.c:102
+#: src/bin/e_int_menus.c:108
 msgid "Desktops"
 msgstr "Skrivebord"
 
-#: src/bin/e_int_menus.c:109
+#: src/bin/e_int_menus.c:115
 msgid "Windows"
 msgstr "Vinduer"
 
-#: src/bin/e_int_menus.c:116
+#: src/bin/e_int_menus.c:122
 msgid "Lost Windows"
 msgstr "Fortapte vinduer"
 
-#: src/bin/e_int_menus.c:123
+#: src/bin/e_int_menus.c:129
 msgid "Gadgets"
 msgstr "Dingser"
 
-#: src/bin/e_int_menus.c:130
-msgid "Themes"
-msgstr "Temaer"
-
-#: src/bin/e_int_menus.c:138
+#: src/bin/e_int_menus.c:149
 #: src/bin/e_about.c:42
 msgid "About Enlightenment"
 msgstr "Om Enlightenment"
 
-#: src/bin/e_int_menus.c:143
-msgid "Files"
-msgstr "Filer"
+#: src/bin/e_int_menus.c:154
+#: src/bin/e_theme_about.c:42
+msgid "About This Theme"
+msgstr "Om dette temaet"
 
-#: src/bin/e_int_menus.c:150
+#: src/bin/e_int_menus.c:161
 #: src/bin/e_gadget.c:208
 #: src/bin/e_module.c:489
 #: src/modules/battery/e_mod_main.c:255
@@ -269,53 +261,51 @@ msgstr "Filer"
 #: src/modules/pager/e_mod_main.c:556
 #: src/modules/start/e_mod_main.c:175
 #: src/modules/start/e_mod_main.c:270
-#: src/modules/itray/e_mod_main.c:441
+#: src/modules/itray/e_mod_main.c:417
 msgid "Configuration"
 msgstr "Konfigurasjon"
 
-#: src/bin/e_int_menus.c:158
+#: src/bin/e_int_menus.c:169
 msgid "Restart Enlightenment"
 msgstr "Omstart av Enlightenment"
 
-#: src/bin/e_int_menus.c:163
+#: src/bin/e_int_menus.c:174
 msgid "Exit Enlightenment"
 msgstr "Avslutt Enlightenment"
 
-#: src/bin/e_int_menus.c:474
+#: src/bin/e_int_menus.c:487
 msgid "(No Applications)"
 msgstr "(Ingen programmer)"
 
-#: src/bin/e_int_menus.c:579
-#: src/bin/e_configure.c:62
+#: src/bin/e_int_menus.c:592
+#: src/bin/e_configure.c:63
 msgid "Configuration Panel"
 msgstr "Kontrollpanel"
 
-#: src/bin/e_int_menus.c:583
-#: src/bin/e_configure.c:67
-#: src/bin/e_int_config_modules.c:68
-msgid "Module Settings"
-msgstr "Modulinnstillinger"
-
-#: src/bin/e_int_menus.c:590
+#: src/bin/e_int_menus.c:600
 #: src/bin/e_eap_editor.c:85
 msgid "Eap Editor"
 msgstr "Applikasjonsikoneditor"
 
-#: src/bin/e_int_menus.c:654
-#: src/bin/e_int_menus.c:936
+#: src/bin/e_int_menus.c:608
+msgid "Test Filemanager"
+msgstr "Testfilbehandler"
+
+#: src/bin/e_int_menus.c:667
+#: src/bin/e_int_menus.c:950
 msgid "(No Windows)"
 msgstr "(Ingen vindu)"
 
-#: src/bin/e_int_menus.c:669
-#: src/bin/e_int_menus.c:950
+#: src/bin/e_int_menus.c:682
+#: src/bin/e_int_menus.c:964
 msgid "No name!!"
 msgstr "Uten navn"
 
-#: src/bin/e_int_menus.c:687
+#: src/bin/e_int_menus.c:700
 msgid "Cleanup Windows"
 msgstr "Rydd vinduer"
 
-#: src/bin/e_int_menus.c:766
+#: src/bin/e_int_menus.c:779
 #: src/bin/e_gadget.c:213
 #: src/modules/battery/e_mod_main.c:389
 #: src/modules/clock/e_mod_main.c:374
@@ -324,18 +314,13 @@ msgstr "Rydd vinduer"
 #: src/modules/pager/e_mod_main.c:560
 #: src/modules/cpufreq/e_mod_main.c:999
 #: src/modules/start/e_mod_main.c:274
-#: src/modules/itray/e_mod_main.c:446
+#: src/modules/itray/e_mod_main.c:422
 msgid "Edit Mode"
 msgstr "Redigeringsmodus"
 
-#: src/bin/e_int_menus.c:772
+#: src/bin/e_int_menus.c:785
 msgid "(Unused)"
 msgstr "(Ubrukt)"
-
-#: src/bin/e_int_menus.c:803
-#: src/bin/e_theme_about.c:42
-msgid "About This Theme"
-msgstr "Om dette temaet"
 
 #: src/bin/e_main.c:194
 #, c-format
@@ -630,11 +615,24 @@ msgstr "Enlightenment klarer ikke å sette opp vinduslistesystemet."
 msgid "Enlightenment cannot set up its color class system."
 msgstr "Enlightenment klarer ikke sette opp fargeklassesystemet."
 
-#: src/bin/e_main.c:607
+#: src/bin/e_main.c:608
+msgid "Enlightenment cannot set up its gadget control system."
+msgstr "Enlightenment klarer ikke å sette opp dingskontrollsystemet."
+
+#: src/bin/e_main.c:615
+msgid "Enlightenment cannot set up its shelf system."
+msgstr "Enlightenment klarte ikke sette opp hyllesystemet."
+
+#: src/bin/e_main.c:622
+#, fuzzy
+msgid "Enlightenment cannot set up its exebuf system."
+msgstr "Enlightenment klarte ikke sette opp exebufsystemet."
+
+#: src/bin/e_main.c:628
 msgid "Enlightenment IPC setup error!"
 msgstr "Enlightenment feilet ved oppsett av IPC"
 
-#: src/bin/e_main.c:608
+#: src/bin/e_main.c:629
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an existing copy of Enlightenment.\n"
@@ -648,12 +646,12 @@ msgstr ""
 "dersom det ikke er tilfellet slette alle filer i ~/.ecore/enlightenment-*\n"
 "og prøv igjen."
 
-#: src/bin/e_main.c:624
+#: src/bin/e_main.c:645
 #: src/bin/e_about.c:51
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
-#: src/bin/e_main.c:626
+#: src/bin/e_main.c:647
 msgid "Enlightenment Starting. Please wait."
 msgstr "Enlightenment starter opp, vennligst vent."
 
@@ -697,7 +695,7 @@ msgid "About..."
 msgstr "Om..."
 
 #: src/bin/e_module.c:478
-#: src/bin/e_int_config_modules.c:295
+#: src/bin/e_int_config_modules.c:306
 msgid "Enabled"
 msgstr "Aktivert"
 
@@ -722,67 +720,77 @@ msgstr "<title>Utviklerteamet</title>"
 msgid "Enlightenment Configuration"
 msgstr "Konfigurasjon av Enlightenment"
 
-#: src/bin/e_configure.c:65
+#: src/bin/e_configure.c:66
 #: src/bin/e_int_config_background.c:56
 msgid "Background Settings"
 msgstr "Skrivebordsbakgrunn"
 
-#: src/bin/e_configure.c:66
+#: src/bin/e_configure.c:67
 #: src/bin/e_int_config_theme.c:46
 msgid "Theme Selector"
 msgstr "Endre skrivebordstema"
 
 #: src/bin/e_configure.c:68
+#: src/bin/e_int_config_modules.c:68
+msgid "Module Settings"
+msgstr "Modulinnstillinger"
+
+#: src/bin/e_configure.c:69
 #: src/bin/e_int_config_cursor.c:33
 #: src/bin/e_int_config_cursor.c:95
 #: src/bin/e_int_config_cursor.c:144
 msgid "Cursor Settings"
 msgstr "Musepekeroppsett"
 
-#: src/bin/e_configure.c:69
+#: src/bin/e_configure.c:70
 #: src/bin/e_int_config_desks.c:45
 msgid "Desktop Settings"
 msgstr "Skrivebordsoppsett"
 
-#: src/bin/e_configure.c:70
-#: src/bin/e_int_config_focus.c:45
+#: src/bin/e_configure.c:71
+#: src/bin/e_int_config_display.c:47
+msgid "Display Settings"
+msgstr "Skjerminnstillinger"
+
+#: src/bin/e_configure.c:72
+#: src/bin/e_int_config_focus.c:47
 msgid "Focus Settings"
 msgstr "Tastaturfokusinnstillinger"
 
-#: src/bin/e_configure.c:71
+#: src/bin/e_configure.c:73
 #: src/bin/e_int_config_menus.c:39
 #: src/bin/e_int_config_menus.c:92
 #: src/bin/e_int_config_menus.c:145
 msgid "Menu Settings"
 msgstr "Menyoppsett"
 
-#: src/bin/e_configure.c:72
+#: src/bin/e_configure.c:74
 #: src/bin/e_int_config_performance.c:37
 msgid "Performance Settings"
 msgstr "Ytelsesoppsett"
 
-#: src/bin/e_configure.c:73
+#: src/bin/e_configure.c:75
 #: src/bin/e_int_config_startup.c:26
 #: src/bin/e_int_config_startup.c:71
 msgid "Startup Settings"
 msgstr "Oppstartsinnstillinger"
 
-#: src/bin/e_configure.c:74
+#: src/bin/e_configure.c:76
 #: src/bin/e_int_config_winlist.c:51
 msgid "Window List Settings"
 msgstr "Applikasjonslisteoppsett"
 
-#: src/bin/e_configure.c:75
+#: src/bin/e_configure.c:77
 msgid "Window Display Settings"
-msgstr ""
+msgstr "Vinduvisningsoppsett"
 
-#: src/bin/e_configure.c:76
+#: src/bin/e_configure.c:78
 msgid "Window Manipulation Settings"
-msgstr ""
+msgstr "Vindumanipulasjonsoppsett"
 
-#: src/bin/e_configure.c:82
+#: src/bin/e_configure.c:84
 #: src/bin/e_config_dialog.c:129
-#: src/bin/e_int_border_menu.c:342
+#: src/bin/e_int_border_menu.c:343
 msgid "Close"
 msgstr "Lukk"
 
@@ -1184,69 +1192,77 @@ msgstr "Skjermsone"
 msgid "Window list skip"
 msgstr "Hopp over vindu"
 
-#: src/bin/e_int_config_focus.c:145
+#: src/bin/e_int_config_focus.c:157
 msgid "Click Window to Focus"
 msgstr "Klikk vindu for fokus"
 
-#: src/bin/e_int_config_focus.c:147
+#: src/bin/e_int_config_focus.c:159
 msgid "Window under the Mouse"
 msgstr "Vindu under musen"
 
-#: src/bin/e_int_config_focus.c:149
+#: src/bin/e_int_config_focus.c:161
 msgid "Most recent Window under the Mouse"
 msgstr "Siste vindu under musepekeren"
 
-#: src/bin/e_int_config_focus.c:165
+#: src/bin/e_int_config_focus.c:177
 msgid "Focus"
 msgstr "Fokus"
 
-#: src/bin/e_int_config_focus.c:167
+#: src/bin/e_int_config_focus.c:179
 msgid "Click to focus"
 msgstr "Fokus ved klikk"
 
-#: src/bin/e_int_config_focus.c:169
+#: src/bin/e_int_config_focus.c:181
 msgid "Pointer focus"
 msgstr "Pekerfokus"
 
-#: src/bin/e_int_config_focus.c:171
+#: src/bin/e_int_config_focus.c:183
 msgid "Sloppy focus"
 msgstr "Løs fokus"
 
-#: src/bin/e_int_config_focus.c:175
+#: src/bin/e_int_config_focus.c:187
 msgid "New Window Focus"
 msgstr "Fokus for nye vinduer"
 
-#: src/bin/e_int_config_focus.c:177
+#: src/bin/e_int_config_focus.c:189
 msgid "No new windows get focus"
 msgstr "Ingen nye vinduer får fokus"
 
-#: src/bin/e_int_config_focus.c:179
+#: src/bin/e_int_config_focus.c:191
 msgid "All new windows get focus"
 msgstr "Alle nye vinduer får fokus"
 
-#: src/bin/e_int_config_focus.c:181
+#: src/bin/e_int_config_focus.c:193
 msgid "Only new dialogs get focus"
 msgstr "Bare nye dialoger får fokus"
 
-#: src/bin/e_int_config_focus.c:183
+#: src/bin/e_int_config_focus.c:195
 msgid "Only new dialogs get focus if the parent has focus"
 msgstr "Bare nye dialoger hvis foreldre har fokus får fokus"
 
-#: src/bin/e_int_config_focus.c:187
+#: src/bin/e_int_config_focus.c:199
 msgid "Other Settings"
 msgstr "Andre innstillinger"
 
-#: src/bin/e_int_config_focus.c:188
+#: src/bin/e_int_config_focus.c:200
 msgid "Always pass on caught click events to programs"
 msgstr "Alltid videresend museklikk til andre applikasjoner"
 
-#: src/bin/e_int_config_focus.c:190
+#: src/bin/e_int_config_focus.c:202
 msgid "A click on a window always raises it"
 msgstr "Museklikk på et vindu bringer det alltid til forgrunnen"
 
-#: src/bin/e_int_config_focus.c:192
+#: src/bin/e_int_config_focus.c:204
 msgid "A click in a window always focuses it"
 msgstr "Museklikk i et vindu gir det alltid fokus"
+
+#: src/bin/e_int_config_focus.c:206
+msgid "Refocus last focused window on desktop switch"
+msgstr ""
+
+#: src/bin/e_int_config_focus.c:208
+msgid "Revert focus when hiding or closing a window"
+msgstr ""
 
 #: src/bin/e_eap_editor.c:250
 #: src/bin/e_eap_editor.c:382
@@ -1371,41 +1387,41 @@ msgstr "Send til skrivebord"
 msgid "Maximize"
 msgstr "Maksimér"
 
-#: src/bin/e_int_border_menu.c:193
+#: src/bin/e_int_border_menu.c:194
 msgid "Shaded"
 msgstr "Opprullet"
 
-#: src/bin/e_int_border_menu.c:245
+#: src/bin/e_int_border_menu.c:246
 msgid "Sticky"
 msgstr "Fast"
 
-#: src/bin/e_int_border_menu.c:258
+#: src/bin/e_int_border_menu.c:259
 msgid "Borderless"
 msgstr "Rammeløs"
 
-#: src/bin/e_int_border_menu.c:271
+#: src/bin/e_int_border_menu.c:272
 #: src/bin/e_int_config_window_manipulation.c:142
 #: src/bin/e_int_config_window_manipulation.c:194
 msgid "Fullscreen"
 msgstr "Fullskjerm"
 
-#: src/bin/e_int_border_menu.c:285
+#: src/bin/e_int_border_menu.c:286
 msgid "Skip Window List"
 msgstr "Hopp over vindu"
 
-#: src/bin/e_int_border_menu.c:301
+#: src/bin/e_int_border_menu.c:302
 msgid "Edit Icon"
 msgstr "Rediger ikon"
 
-#: src/bin/e_int_border_menu.c:308
+#: src/bin/e_int_border_menu.c:309
 msgid "Create Icon"
 msgstr "Lag ikon"
 
-#: src/bin/e_int_border_menu.c:318
+#: src/bin/e_int_border_menu.c:319
 msgid "Kill"
 msgstr "Drep"
 
-#: src/bin/e_int_border_menu.c:331
+#: src/bin/e_int_border_menu.c:332
 msgid "Iconify"
 msgstr "Minimér"
 
@@ -1430,82 +1446,87 @@ msgid "Show window geometry information when moving or resizing"
 msgstr "Vis geometrisk informasjon om vinduet mens the flyttes eller skaleres"
 
 #: src/bin/e_int_config_window_display.c:147
-#: src/bin/e_int_config_window_display.c:190
+#: src/bin/e_int_config_window_display.c:192
 msgid "Animate the shading and unshading of windows"
 msgstr "Animér sammen- og ut- rulling av vinduer"
 
 #: src/bin/e_int_config_window_display.c:151
-#: src/bin/e_int_config_window_display.c:205
+#: src/bin/e_int_config_window_display.c:207
 msgid "Automatic New Window Placement"
 msgstr "Automatisk plassering av nye vinduer"
 
 #: src/bin/e_int_config_window_display.c:153
-#: src/bin/e_int_config_window_display.c:207
+#: src/bin/e_int_config_window_display.c:209
 msgid "Smart Placement"
 msgstr "Smart plassering"
 
 #: src/bin/e_int_config_window_display.c:155
-#: src/bin/e_int_config_window_display.c:209
+#: src/bin/e_int_config_window_display.c:211
+msgid "Dont hide Gadgets"
+msgstr "Ikke skjul dingser"
+
+#: src/bin/e_int_config_window_display.c:157
+#: src/bin/e_int_config_window_display.c:213
 msgid "Place at mouse pointer"
 msgstr "Plasser ved musepeker"
 
-#: src/bin/e_int_config_window_display.c:157
-#: src/bin/e_int_config_window_display.c:211
+#: src/bin/e_int_config_window_display.c:159
+#: src/bin/e_int_config_window_display.c:215
 msgid "Place manually with the mouse"
 msgstr "Plassér manuelt med musepeker"
 
-#: src/bin/e_int_config_window_display.c:175
+#: src/bin/e_int_config_window_display.c:177
 msgid "Window Move Geometry"
 msgstr "Geometri for flytting av vindu"
 
-#: src/bin/e_int_config_window_display.c:176
-#: src/bin/e_int_config_window_display.c:183
+#: src/bin/e_int_config_window_display.c:178
+#: src/bin/e_int_config_window_display.c:185
 msgid "Display information"
 msgstr "Vis informasjon"
 
-#: src/bin/e_int_config_window_display.c:178
+#: src/bin/e_int_config_window_display.c:180
 msgid "Follow the window as it moves"
 msgstr "Følg vinduet mens det flyttes"
 
-#: src/bin/e_int_config_window_display.c:182
+#: src/bin/e_int_config_window_display.c:184
 msgid "Window Resize Geometry"
 msgstr "Geometri for skalering av vindu"
 
-#: src/bin/e_int_config_window_display.c:185
+#: src/bin/e_int_config_window_display.c:187
 msgid "Follow the window as it resizes"
 msgstr "Følg vinduet mens det skaleres"
 
-#: src/bin/e_int_config_window_display.c:189
+#: src/bin/e_int_config_window_display.c:191
 msgid "Window Shading"
 msgstr "Opprulling av vindu"
 
-#: src/bin/e_int_config_window_display.c:192
+#: src/bin/e_int_config_window_display.c:194
 #: src/bin/e_int_config_menus.c:172
 #, c-format
 msgid "%4.0f pixels/sec"
 msgstr "%4.0f pixels/sec"
 
-#: src/bin/e_int_config_window_display.c:195
+#: src/bin/e_int_config_window_display.c:197
 msgid "Linear"
 msgstr "Lineær"
 
-#: src/bin/e_int_config_window_display.c:197
+#: src/bin/e_int_config_window_display.c:199
 msgid "Smooth accelerate and decelerate"
 msgstr "Glatt akselerasjon og deakselerasjon"
 
-#: src/bin/e_int_config_window_display.c:199
+#: src/bin/e_int_config_window_display.c:201
 msgid "Accelerate"
 msgstr "Akselerer"
 
-#: src/bin/e_int_config_window_display.c:201
+#: src/bin/e_int_config_window_display.c:203
 msgid "Decelerate"
 msgstr "Deakselerer"
 
-#: src/bin/e_int_config_window_display.c:215
+#: src/bin/e_int_config_window_display.c:219
 msgid "Window Frame"
 msgstr "Vindusramme"
 
-#: src/bin/e_int_config_window_display.c:216
+#: src/bin/e_int_config_window_display.c:220
 msgid "Use application provided icon instead"
 msgstr "Bruk applikasjonens eget ikon istedet"
 
@@ -1595,14 +1616,17 @@ msgid "Allow shading/resizing"
 msgstr "Tillat opprulling/reskalering"
 
 #: src/bin/e_int_config_background.c:117
-#: src/bin/e_int_config_background.c:183
-msgid "Select An Image"
-msgstr "Velg bildefil"
+msgid "Select Another Image..."
+msgstr "Velg et annet bilde..."
 
 #: src/bin/e_int_config_background.c:120
 #: src/bin/e_int_config_background.c:186
 msgid "Background Preview"
 msgstr "Forhåndsvisning av bagkrunn"
+
+#: src/bin/e_int_config_background.c:183
+msgid "Select Another Image"
+msgstr "Velg et annet bilde..."
 
 #: src/bin/e_int_config_background.c:192
 msgid "Set Background For"
@@ -1671,9 +1695,8 @@ msgid "Autoscroll Margin"
 msgstr "Marg for automatisk rulling"
 
 #: src/bin/e_int_config_menus.c:159
-#, fuzzy
 msgid "Autoscroll Cursor Margin"
-msgstr "Pekermarg for automatisk rulling"
+msgstr "Pekermargin ved autoscrolling"
 
 #: src/bin/e_int_config_menus.c:166
 msgid "Menu Scroll Speed"
@@ -1697,21 +1720,29 @@ msgstr "Klikk/Dra forsinkelse"
 msgid "%2.1f seconds"
 msgstr "%2.1f sekunder"
 
-#: src/bin/e_int_config_modules.c:299
+#: src/bin/e_int_config_modules.c:271
+msgid "Modules"
+msgstr "Moduler"
+
+#: src/bin/e_int_config_modules.c:310
 msgid "Loaded"
 msgstr "Lastet"
 
-#: src/bin/e_int_config_modules.c:303
+#: src/bin/e_int_config_modules.c:314
 msgid "Unloaded"
 msgstr "Ikke lastet"
 
-#: src/bin/e_int_config_modules.c:307
+#: src/bin/e_int_config_modules.c:318
 msgid "Configure"
 msgstr "Konfigurér"
 
-#: src/bin/e_int_config_modules.c:311
+#: src/bin/e_int_config_modules.c:322
 msgid "About"
 msgstr "Om"
+
+#: src/bin/e_int_config_theme.c:216
+msgid "Preview"
+msgstr "Forhåndsvisning"
 
 #: src/bin/e_int_config_performance.c:87
 #: src/bin/e_int_config_performance.c:123
@@ -1836,13 +1867,15 @@ msgstr "Flytt musepeker til valgt vindu på slutten"
 
 #: src/bin/e_int_config_winlist.c:151
 #: src/bin/e_int_config_winlist.c:231
+#, fuzzy
 msgid "Scroll Settings"
-msgstr ""
+msgstr "Scrolleinnstillinger"
 
 #: src/bin/e_int_config_winlist.c:152
 #: src/bin/e_int_config_winlist.c:232
+#, fuzzy
 msgid "Scroll Animate"
-msgstr ""
+msgstr "Animer scrolling"
 
 #: src/bin/e_int_config_winlist.c:225
 msgid "Warp Speed"
@@ -1877,7 +1910,8 @@ msgid "Size Settings"
 msgstr "Størrelsesoppsett"
 
 #: src/bin/e_int_config_winlist.c:252
-msgid "Minimun Width"
+#, fuzzy
+msgid "Minimum Width"
 msgstr "Minimal bredde"
 
 #: src/bin/e_int_config_winlist.c:254
@@ -1889,7 +1923,7 @@ msgid "%4.0f"
 msgstr "%4.0f"
 
 #: src/bin/e_int_config_winlist.c:256
-msgid "Minimun Height"
+msgid "Minimum Height"
 msgstr "Minimal høyde"
 
 #: src/bin/e_int_config_winlist.c:260
@@ -1916,53 +1950,55 @@ msgstr "%2$s returnerte feilkoden %1$i"
 
 #: src/bin/e_apps_error.c:63
 #, c-format
-msgid "%s was interrupted by an Interrupt Singal"
-msgstr ""
+msgid "%s was interrupted by an Interrupt Signal"
+msgstr "%s ble avbrutt av et avbruddssignal"
 
 #: src/bin/e_apps_error.c:66
 #, c-format
-msgid "%s was interrupted by a Quit Singal"
-msgstr ""
+msgid "%s was interrupted by a Quit Signal"
+msgstr "%s ble avbrutt av et avlsutningssignal"
 
 #: src/bin/e_apps_error.c:69
-#, c-format
-msgid "%s was interrupted by an Abort Singal"
-msgstr ""
+#, c-format 
+#, fuzzy
+msgid "%s was interrupted by an Abort Signal"
+msgstr "%s ble avbrutt av et abortsignal"
 
 #: src/bin/e_apps_error.c:72
 #, c-format
 msgid "%s was interrupted by a Floating Point Error"
-msgstr ""
+msgstr "%s ble avbrutt av en flytpunktfeil"
 
 #: src/bin/e_apps_error.c:75
 #, c-format
-msgid "%s was interrupted by an Uninterruptable Kill Singal"
-msgstr ""
+#, fuzzy
+msgid "%s was interrupted by an Uninterruptable Kill Signal"
+msgstr "%s ble avbrutt av et uavbrytelig drepesignal"
 
 #: src/bin/e_apps_error.c:78
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault"
-msgstr ""
+msgstr "%s ble avbrutt av en segmenteringsfeil"
 
 #: src/bin/e_apps_error.c:81
 #, c-format
 msgid "%s was interrupted by a Broken Pipe"
-msgstr ""
+msgstr "%s ble avbrutt av en brukken pipe"
 
 #: src/bin/e_apps_error.c:84
 #, c-format
-msgid "%s was interrupted by a Termination Singal"
-msgstr ""
+msgid "%s was interrupted by a Termination Signal"
+msgstr "%s ble avbrutt av et terminasjonssignal"
 
 #: src/bin/e_apps_error.c:87
 #, c-format
 msgid "%s was interrupted by a Bus Error"
-msgstr ""
+msgstr "%s ble avbrutt av en bussfeil"
 
 #: src/bin/e_apps_error.c:90
 #, c-format
-msgid "%s was interupted by the signal number %i"
-msgstr ""
+msgid "%s was interrupted by the signal number %i"
+msgstr "%s ble avbrutt av signal nummer %i"
 
 #: src/bin/e_apps_error.c:220
 #: src/bin/e_apps_error.c:286
@@ -2024,11 +2060,20 @@ msgstr "Pekerstørrelse"
 #: src/bin/e_int_config_cursor.c:149
 #, c-format
 msgid "%1.0f pixels"
-msgstr ""
+msgstr "%1.0f piksler"
 
 #: src/bin/e_int_config_startup.c:72
 msgid "Show Splash Screen At Boot"
 msgstr "Vis oppstartsskjerm"
+
+#: src/bin/e_int_config_display.c:142
+#: src/modules/randr/e_mod_main.c:210
+msgid "Resolution"
+msgstr "Oppløsning"
+
+#: src/bin/e_int_config_display.c:150
+msgid "Refresh Rate"
+msgstr "Oppfriskningshastighet"
 
 #: src/modules/battery/e_mod_main.c:135
 msgid "Enlightenment Battery Module"
@@ -2107,8 +2152,8 @@ msgstr "Vis advarsel når batterinivået er lavt"
 #: src/modules/temperature/e_mod_config.c:249
 #: src/modules/temperature/e_mod_config.c:404
 #: src/modules/start/e_mod_config.c:75
-#: src/modules/itray/e_mod_config.c:105
-#: src/modules/itray/e_mod_config.c:179
+#: src/modules/itray/e_mod_config.c:90
+#: src/modules/itray/e_mod_config.c:130
 msgid "Extras"
 msgstr "Tillegg"
 
@@ -2124,8 +2169,8 @@ msgstr "Tillegg"
 #: src/modules/temperature/e_mod_config.c:250
 #: src/modules/temperature/e_mod_config.c:405
 #: src/modules/start/e_mod_config.c:76
-#: src/modules/itray/e_mod_config.c:106
-#: src/modules/itray/e_mod_config.c:180
+#: src/modules/itray/e_mod_config.c:91
+#: src/modules/itray/e_mod_config.c:131
 msgid "Allow windows to overlap this gadget"
 msgstr "Tillat vinduer å overlappe dette objektet"
 
@@ -2291,7 +2336,6 @@ msgstr "IBar oppsett"
 
 #: src/modules/ibar/e_mod_config.c:96
 #: src/modules/ibox/e_mod_config.c:96
-#: src/modules/itray/e_mod_config.c:99
 msgid "Show Follower"
 msgstr "Vis følger"
 
@@ -2302,19 +2346,16 @@ msgstr "Lag plass til ikoner"
 
 #: src/modules/ibar/e_mod_config.c:153
 #: src/modules/ibox/e_mod_config.c:154
-#: src/modules/itray/e_mod_config.c:155
 msgid "Follower"
 msgstr "Søkelys"
 
 #: src/modules/ibar/e_mod_config.c:154
 #: src/modules/ibox/e_mod_config.c:155
-#: src/modules/itray/e_mod_config.c:156
 msgid "Visible"
 msgstr "Synlig"
 
 #: src/modules/ibar/e_mod_config.c:156
 #: src/modules/ibox/e_mod_config.c:157
-#: src/modules/itray/e_mod_config.c:158
 msgid "Follow Speed"
 msgstr "Følgehastighet"
 
@@ -2322,7 +2363,6 @@ msgstr "Følgehastighet"
 #: src/modules/ibar/e_mod_config.c:172
 #: src/modules/ibox/e_mod_config.c:159
 #: src/modules/ibox/e_mod_config.c:173
-#: src/modules/itray/e_mod_config.c:160
 #, c-format
 msgid "%1.2f px/s"
 msgstr ""
@@ -2336,7 +2376,7 @@ msgstr "Ikonstørrelse"
 #: src/modules/ibox/e_mod_config.c:164
 #, c-format
 msgid "%3.0f pixels"
-msgstr ""
+msgstr "%3.0f piksler"
 
 #: src/modules/ibar/e_mod_config.c:167
 #: src/modules/ibox/e_mod_config.c:168
@@ -2691,10 +2731,6 @@ msgstr "Modul som gir mulighet for å bytte oppløsning i E17"
 msgid "Restore Resolution on Startup"
 msgstr "Gjenopprett oppløsningen ved oppstart"
 
-#: src/modules/randr/e_mod_main.c:210
-msgid "Resolution"
-msgstr "Oppløsning"
-
 #: src/modules/randr/e_mod_main.c:309
 msgid "Resolution change"
 msgstr "Endre oppløsning"
@@ -2716,26 +2752,26 @@ msgstr ""
 
 #: src/modules/gadget_test/e_mod_main.c:107
 msgid "Test Face Menu Item"
-msgstr ""
+msgstr "Testansiktmenyobjekt"
 
-#: src/modules/itray/e_mod_config.c:51
+#: src/modules/itray/e_mod_config.c:46
 msgid "ITray Configuration"
 msgstr "ITray oppsett"
 
-#: src/modules/itray/e_mod_config.c:164
+#: src/modules/itray/e_mod_config.c:125
 msgid "Number of Rows"
 msgstr "Antall rader"
 
-#: src/modules/itray/e_mod_config.c:165
+#: src/modules/itray/e_mod_config.c:126
 #, c-format
 msgid "%3.0f"
 msgstr "%3.0f"
 
-#: src/modules/itray/e_mod_main.c:162
+#: src/modules/itray/e_mod_main.c:161
 msgid "Enlightenment ITray Module"
-msgstr ""
+msgstr "Enlightenment ITray-modul"
 
-#: src/modules/itray/e_mod_main.c:163
-msgid "This is the ITray system tray module for Enlightenment.<br>It will hold system tray icons."
+#: src/modules/itray/e_mod_main.c:162
+msgid "This is the ITray system tray module for Enlightenment.<br>It will hold system tray icons.<br>Beware that this can be buggy due to many systray providing<br>applications not handling the protocol properly, ad the way<br>systray icons work being very limiting and hacky. Do not use<br>this module unless you absolutely must, and if you do, beware<br>of issues that will appear."
 msgstr ""
 
