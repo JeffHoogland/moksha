@@ -122,13 +122,18 @@ static void                _e_fm_key_down_cb        (void *data, Evas *e, Evas_O
 static void                _e_fm_mouse_down_cb      (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void                _e_fm_mouse_move_cb      (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void                _e_fm_mouse_up_cb        (void *data, Evas *e, Evas_Object *obj, void *event_info);
+
 static void                _e_fm_icon_mouse_down_cb (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void                _e_fm_icon_mouse_up_cb   (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void                _e_fm_icon_mouse_in_cb   (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void                _e_fm_icon_mouse_out_cb  (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void                _e_fm_icon_mouse_move_cb (void *data, Evas *e, Evas_Object *obj, void *event_info);
-static int                 _e_fm_win_mouse_up_cb    (void *data, int type, void *event);
-static int                 _e_fm_win_mouse_move_cb  (void *data, int type, void *event);
+static int                _e_fm_icon_autoscroll_cb (void *data);
+
+
+static int                 _e_fm_drag_mouse_up_cb    (void *data, int type, void *event);
+static int                 _e_fm_drag_mouse_move_cb    (void *data, int type, void *event);
+
 
 static void                _e_fm_string_replace(const char *src, const char *key, const char *replacement, char *result, size_t resultsize);
 
@@ -163,8 +168,8 @@ static int                 _e_fm_dir_meta_save(E_Fm_Smart_Data *sd);
 static void                _e_fm_dir_meta_fill(E_Fm_Dir_Metadata *m, E_Fm_Smart_Data *sd);
 
 static int 								 _e_fm_init_assoc(E_Fm_Smart_Data *sd);
-static Ecore_Event_Handler *e_fm_mouse_up_handler = NULL;
-static Ecore_Event_Handler *e_fm_mouse_move_handler = NULL;
+static Ecore_Event_Handler *e_fm_drag_mouse_up_handler = NULL;
+static Ecore_Event_Handler *e_fm_drag_mouse_move_handler = NULL;
 static double               e_fm_grab_time = 0;
 static Evas_Smart          *e_fm_smart = NULL;
 static char                *meta_path = NULL;
@@ -434,6 +439,9 @@ e_fm_background_set(Evas_Object *object, Evas_Object *bg)
    edje_object_part_swallow(sd->edje_obj, "background", bg);
 }
 
+/* creates the evas_obect of the icon, will be called when the 
+ * icon canvas wants to draw again these icon
+ */
 EAPI Evas_Object *
 e_fm_icon_create(void *data)
 {
@@ -450,6 +458,10 @@ e_fm_icon_create(void *data)
    evas_object_event_callback_add(icon->icon_obj, EVAS_CALLBACK_MOUSE_OUT, _e_fm_icon_mouse_out_cb, icon);
    evas_object_event_callback_add(icon->icon_obj, EVAS_CALLBACK_MOUSE_MOVE, _e_fm_icon_mouse_move_cb, icon->sd);
    evas_object_show(icon->icon_obj);
+	
+   if(icon->state.selected)
+     e_fm_icon_signal_emit(icon->icon_obj, "clicked", "");
+     
    return icon->icon_obj;
 }
 
@@ -2095,6 +2107,7 @@ _e_fm_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	evas_object_geometry_get(sd->selection.band.obj, &x, &y, &w, &h);
 	_e_fm_selections_rect_add(sd, x, y, w, h);
      }
+   
 }
 
 static void
@@ -2182,33 +2195,22 @@ _e_fm_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 
 	     if(icon->sd->win)
 	       {
+		  int x,y;
+		  
+		  evas_object_geometry_get(icon->icon_obj, &x, &y, NULL, NULL);
+		  
 		  icon->sd->drag.start = 1;
-		  icon->sd->drag.x = icon->sd->win->x + ev->canvas.x;
-		  icon->sd->drag.y = icon->sd->win->y + ev->canvas.y;
+		  icon->sd->drag.doing = 0;
+		  icon->sd->drag.x = ev->canvas.x;
+		  icon->sd->drag.y = ev->canvas.y;
 		  icon->sd->drag.icon_obj = icon;
 	       }
 
 	     if (!icon->state.selected)
 	       {
-		  if (evas_key_modifier_is_set(evas_key_modifier_get(icon->sd->evas), "Control"))
-		    icon->sd->selection.files =
-		    evas_list_append(icon->sd->selection.files, icon);
-		  else
-		    _e_fm_selections_clear(icon->sd);
-
-		  _e_fm_selections_add(icon, evas_list_find_list(icon->sd->files, icon));
-	       }
-	     else
-	       {
-		  if (evas_key_modifier_is_set(evas_key_modifier_get(icon->sd->evas), "Control"))
-		    _e_fm_selections_del(icon);
-		  else
-		    {
+		  if (!evas_key_modifier_is_set(evas_key_modifier_get(icon->sd->evas), "Control"))
 		       _e_fm_selections_clear(icon->sd);
-		       _e_fm_selections_add(icon, evas_list_find_list(icon->sd->files, icon));
-		    }
 	       }
-
 	  }
      }
    else if (ev->button == 3)
@@ -2355,7 +2357,7 @@ _e_fm_icon_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
    ev = event_info;
    icon = data;
-
+	
    if(!strcmp(edje_object_part_state_get(icon->sd->edje_obj, "typebuffer", NULL), "shown"))
      {
 	E_Fm_Icon *i;
@@ -2370,7 +2372,37 @@ _e_fm_icon_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
      }
 
    if(icon->sd->win)
-     icon->sd->drag.start = 0;
+	icon->sd->drag.start = 0;
+
+   /* if we arent doing a drag its a simple mouse out */
+   if(!icon->sd->drag.doing)
+     {
+	     if (!icon->state.selected)
+	       {
+		  if (evas_key_modifier_is_set(evas_key_modifier_get(icon->sd->evas), "Control"))
+		    {
+		       _e_fm_selections_add(icon, evas_list_find_list(icon->sd->files, icon));
+		    }
+		  else
+		    {
+		       _e_fm_selections_clear(icon->sd);
+		       _e_fm_selections_add(icon, evas_list_find_list(icon->sd->files, icon));
+
+		    }
+	       }
+	     else
+	       {
+		  if (evas_key_modifier_is_set(evas_key_modifier_get(icon->sd->evas), "Control"))
+		    {
+		       _e_fm_selections_del(icon);
+		    }
+		  else
+		    {
+		       _e_fm_selections_clear(icon->sd);
+		       _e_fm_selections_add(icon, evas_list_find_list(icon->sd->files, icon));
+		    }
+	       }
+     }
 }
 
 static void
@@ -2428,6 +2460,7 @@ _e_fm_icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 
 	     if (((dx * dx) + (dy * dy)) > (100))
 	       {		  
+		  Evas_List *l;
 		  Evas_Object *o = NULL;
 		  Evas_Coord x, y, w, h;
 		  int rx,ry,rw,rh;
@@ -2435,7 +2468,18 @@ _e_fm_icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 		  char *data;
 		  char **drop_types;
 
-		  e_fm_icon_signal_emit(icon->icon_obj, "dragged", "");
+   
+		  icon->sd->drag.doing = 1;
+		
+		  _e_fm_selections_add(icon, evas_list_find_list(icon->sd->files, icon));
+		  /* send the dragged signal to all the selected icons */
+		  for(l = sd->selection.files; l; l = l->next)
+		    {
+		       E_Fm_Icon *ic;
+		       ic = (E_Fm_Icon*)l->data;
+		       if(ic->icon_obj)
+			 e_fm_icon_signal_emit(ic->icon_obj, "dragged", "");
+		    }
 		  
 		  drop_types = calloc(1, sizeof(char*));
 		  drop_types[0] = strdup("text/uri-list");
@@ -2451,8 +2495,9 @@ _e_fm_icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 		    ecore_evas_free(sd->drag.ecore_evas);
 		       
 		  
-		  sd->drag.dx = ev->cur.canvas.x;
-		  sd->drag.dy = ev->cur.canvas.y; 
+		  sd->drag.dx = ev->cur.canvas.x - x;
+		  sd->drag.dy = ev->cur.canvas.y - y; 
+		
 		  sd->drag.ecore_evas = ecore_evas_software_x11_new(NULL, 0, cx + x, cy + y, w, h);
 		  sd->drag.evas = ecore_evas_get(sd->drag.ecore_evas);
 		  sd->drag.win = ecore_evas_software_x11_window_get(sd->drag.ecore_evas);
@@ -2476,71 +2521,106 @@ _e_fm_icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 		  evas_object_move(sd->drag.image_object, 0, 0);
 		  evas_object_show(sd->drag.image_object);
 		  
-   
-
-		  //evas_event_feed_mouse_up(sd->evas, 1, EVAS_BUTTON_NONE, ev->timestamp, NULL);
-		  
-		  e_fm_mouse_move_handler = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
-								    _e_fm_win_mouse_move_cb, sd);
-		  		  
-                  e_fm_mouse_up_handler = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
-								  _e_fm_win_mouse_up_cb, sd);
-		  
 		  ecore_x_dnd_aware_set(sd->drag.win, 1);
 		  ecore_x_dnd_types_set(sd->drag.win, drop_types, 1);
 		  ecore_x_dnd_begin(sd->drag.win, data, PATH_MAX * sizeof(char));
 		  
 		  sd->drag.start = 0;
+	       
+
+		  e_fm_drag_mouse_move_handler = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
+                                                                    _e_fm_drag_mouse_move_cb, sd);
+
+                  e_fm_drag_mouse_up_handler = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
+                                                                  _e_fm_drag_mouse_up_cb, sd);
+	       
 	       }
 	  }
      }
 }
 
-static int
-_e_fm_win_mouse_move_cb(void *data, int type, void *event)
-{
-   Ecore_X_Event_Mouse_Move *ev;
-   E_Fm_Smart_Data *sd;
-   int cx,cy,x,y;
-   
-   sd = data;
-   ev = event;
-   
 
-   ecore_evas_geometry_get(sd->win->ecore_evas, &cx, &cy, NULL, NULL);
-   evas_object_geometry_get(sd->drag.icon_obj->icon_obj, &x, &y, NULL, NULL);
+/* the autoscroll will be disabled, there are several issues with the icon canvas */
+static int                
+_e_fm_icon_autoscroll_cb (void *data)
+{
+   E_Fm_Smart_Data *sd;
+
+   sd = data;
+
+   /*if(sd->autoscroll.direction & E_FILEMAN_AUTOSCROLL_UP)
+     {
+	sd->child.y -= sd->autoscroll.timer_int;
+	if(sd->child.y < 0) sd->child.y = 0;
+
+     }
+   if(sd->autoscroll.direction & E_FILEMAN_AUTOSCROLL_DOWN)
+     {
+	sd->child.y += sd->autoscroll.timer_int;
+	if(sd->child.y > sd->child.h) sd->child.y = sd->child.h;
+     }
+   if(sd->autoscroll.direction & E_FILEMAN_AUTOSCROLL_LEFT)
+     {
+	sd->child.x -= sd->autoscroll.timer_int;
+	if(sd->child.x < 0) sd->child.x = 0;
+
+     }
+   if(sd->autoscroll.direction & E_FILEMAN_AUTOSCROLL_RIGHT)
+     {
+	sd->child.x += sd->autoscroll.timer_int;
+	if(sd->child.x > sd->child.w) sd->child.x = sd->child.w - 1;
+     }
+  
+   sd->autoscroll.timer_int = exp(sd->autoscroll.timer_int);
+   if(sd->autoscroll.timer_int > 50)
+     sd->autoscroll.timer_int = 50;
+
    
-   ecore_evas_move(sd->drag.ecore_evas, cx + x + ev->x - sd->drag.dx, cy + y + ev->y - sd->drag.dy);
+   e_icon_canvas_xy_freeze(sd->layout);
+   evas_object_move(sd->layout, sd->x - sd->child.x, sd->y - sd->child.y);
+   e_icon_canvas_xy_thaw(sd->layout);
+   evas_object_smart_callback_call(sd->object, "changed", NULL);*/
    
    return 1;
 }
 
-static int
-  _e_fm_win_mouse_up_cb(void *data, int type, void *event)
+static int                 
+_e_fm_drag_mouse_move_cb(void *data, int type, void *event)
 {
-   Ecore_X_Event_Mouse_Button_Up *ev;
    E_Fm_Smart_Data *sd;
-   
+   Ecore_X_Event_Mouse_Move *ev;
+   int cx,cy,cw,ch;
+   int x,y;
+
    sd = data;
-		  
-   e_fm_icon_signal_emit(sd->drag.icon_obj->icon_obj, "dropped", "");
-   
+
+   ecore_evas_geometry_get(sd->win->ecore_evas, &cx, &cy, &cw, &ch);
+   x = cx + ev->x - sd->drag.dx;
+   y = cy + ev->y - sd->drag.dy;
+   ecore_evas_move(sd->drag.ecore_evas, x, y);
+
+   return 1;
+}
+static int 
+_e_fm_drag_mouse_up_cb(void *data, int type, void *event)
+{
+   E_Fm_Smart_Data *sd;
+
+   sd = data;
+	
    ecore_x_dnd_drop();
+
+   ecore_event_handler_del(e_fm_drag_mouse_move_handler);
+   e_fm_drag_mouse_move_handler = NULL;
    
-   ecore_event_handler_del(e_fm_mouse_up_handler);
-   e_fm_mouse_up_handler = NULL;
-   
-   ecore_event_handler_del(e_fm_mouse_move_handler);
-   e_fm_mouse_move_handler = NULL;
-   
+   ecore_event_handler_del(e_fm_drag_mouse_up_handler);
+   e_fm_drag_mouse_up_handler = NULL;
+
    ecore_evas_hide(sd->drag.ecore_evas);
    
-   sd->drag.start = 0;
-   
-   
    return 1;
-}
 
+}
 
 static void
 _e_fm_string_replace(const char *src, const char *key, const char *replacement, char *result, size_t resultsize)
@@ -3233,7 +3313,6 @@ _e_fm_xdnd_enter_cb(void *data, int type, void *event)
 
    if (ev->win != sd->win->evas_win) return 1;
    
-   printf("enter\n");
    /*if (ev->win == sd->drag->evas_win)
      {
 	
@@ -3253,9 +3332,16 @@ _e_fm_xdnd_leave_cb(void *data, int type, void *event)
 
    ev = event;
    sd = data;
-   printf("leave\n");
+   
    if (ev->win != sd->win->evas_win) return 1;
 
+
+   /* in we leaved an efm window with autoscroll disable it*/
+   if(sd->autoscroll.timer)
+     {
+	ecore_timer_del(sd->autoscroll.timer);
+	sd->autoscroll.timer = NULL;
+     }
    return 1;
 }
 
@@ -3281,9 +3367,64 @@ _e_fm_xdnd_position_cb(void *data, int type, void *event)
 
    ev = event;
    sd = data;
-   printf("pos\n");
-   if (ev->win != sd->win->evas_win) return 1;
+   if (ev->win != sd->win->evas_win) 
+     {
+	/* outside an efm window */
+	return 1;
+     }
 
+   /* autoscroll */
+     {
+	/* look to set up the direction of the autoscroll
+	 * add timer callbacks for automatic scroll in case the mouse is over 
+	 * that region, the threshold region to scroll is the 20% of the 
+	 * window size */
+   
+	int dx,dy,dw,dh;
+	int rw,rh;
+	int x,y;
+	
+	ecore_evas_geometry_get(sd->win->ecore_evas, &dx, &dy, &dw, &dh);
+
+	x = ev->position.x - dx;
+	y = ev->position.y - dy;
+	
+	rw = dw * 0.2;
+	rh = dh * 0.2;
+   
+	sd->autoscroll.direction = E_FILEMAN_AUTOSCROLL_NONE;
+	if( (y < rh) && (y >= 0) )
+	  sd->autoscroll.direction |= E_FILEMAN_AUTOSCROLL_UP;
+
+	if( (y > dh - rh) && (y <= dh) )
+	  sd->autoscroll.direction |= E_FILEMAN_AUTOSCROLL_DOWN;
+
+	if( (x < rw) && (x >= 0) )
+	  sd->autoscroll.direction |= E_FILEMAN_AUTOSCROLL_LEFT;
+
+	if( (x > dw - rw) && (x <= dw) )
+	  sd->autoscroll.direction |= E_FILEMAN_AUTOSCROLL_RIGHT;
+
+	if(sd->autoscroll.direction)
+	  {
+	     /* if the timer callback isnt set, set it */
+	     if(!sd->autoscroll.timer)
+	       {
+		  sd->autoscroll.timer_int = 0.05;
+		  sd->autoscroll.timer = ecore_timer_add(sd->autoscroll.timer_int, _e_fm_icon_autoscroll_cb, sd);
+	       }
+	  }
+	else
+	  {
+	     /* we arent on the region, disable the callback */
+	     if(sd->autoscroll.timer)
+	       {
+		  ecore_timer_del(sd->autoscroll.timer);
+		  sd->autoscroll.timer = NULL;
+	       }
+	  }
+
+     }
    rect.x = 0;
    rect.y = 0;
    rect.width = 0;
@@ -3299,47 +3440,78 @@ _e_fm_xdnd_drop_cb(void *data, int type, void *event)
 {
    Ecore_X_Event_Xdnd_Drop *ev;
    E_Fm_Smart_Data *sd;
-   int ax, ay, x, y;
+   Evas_List *l;
+   int dx, dy, dw, dh;
+   int x,y;
 
    ev = event;
    sd = data;
 
-   //evas_object_show(sd->drag.icon_obj->icon_obj);
-   
    if (ev->win != sd->win->evas_win) 
      {
-	printf("drop different\n");
 	return 1;
      }
 
-   
-   printf("drop same\n");
-   evas_object_geometry_get(sd->drag.icon_obj->icon_obj, &x, &y, NULL, NULL);
-   ecore_evas_geometry_get(sd->win->ecore_evas, &ax, &ay, NULL, NULL);
-
-   x = (ev->position.x - ax) - (sd->drag.dx - x);
-   y = (ev->position.y - ay) - (sd->drag.dy - y);
-   e_icon_canvas_child_move(sd->drag.icon_obj->icon_obj,x,y);
-
-   /* update the metadata for the new coords */
-   if(sd->meta)
+   /* we will receive this callback for every efm window, even if the drop isnt done
+    * on this window
+    */
+   ecore_evas_geometry_get(sd->win->ecore_evas, &dx, &dy, &dw, &dh);
+   if(sd->drag.doing)
      {
-	Evas_List *l;
-	for(l = sd->meta->files; l; l = l->next)
+	/* send the dropped signal to all the selected icons 
+	 * move the selected icons relative to the cursor that
+	 * that start the drag
+	 * */
+	
+	x = ev->position.x - dx - sd->drag.x; 
+	y = ev->position.y - dy - sd->drag.y;
+	
+	for(l = sd->selection.files; l; l = l->next)
 	  {
-	     E_Fm_Icon_Metadata *m;
-
-	     m = l->data;
-	     if(!strcmp(m->name, sd->drag.icon_obj->file->name))
+	     E_Fm_Icon *ic;
+	     ic = (E_Fm_Icon*)l->data;
+	     if(ic->icon_obj)
 	       {
-		  m->x = x;
-		  m->y = y;
-		  break;
+		  int ix, iy;
+		  
+		  evas_object_geometry_get(ic->icon_obj, &ix, &iy, NULL, NULL);
+		  ix += x; 
+		  iy += y; 
+		  e_icon_canvas_child_move(ic->icon_obj,ix,iy);
+		  e_fm_icon_signal_emit(ic->icon_obj, "dropped", "");
 	       }
-	  }
-     }
-   
+	     /*if(sd->meta)
+	       {
+		  Evas_List *l;
+		  for(l = sd->meta->files; l; l = l->next)
+		    {
+		       E_Fm_Icon_Metadata *m;
 
+		       m = l->data;
+		       if(!strcmp(m->name, sd->drag.icon_obj->file->name))
+			 {
+			    m->x = x;
+			    m->y = y;
+			    break;
+			 }
+		    }
+	       }*/
+	  }
+	sd->drag.doing = 0;
+	sd->drag.start = 0;
+     }
+   else
+     {
+	printf("outside drop\n");
+     }
+
+   /* if we drop on an auto scrollable area, delete the timer */
+   if(sd->autoscroll.timer)
+     {
+	ecore_timer_del(sd->autoscroll.timer);
+	sd->autoscroll.timer = NULL;
+     }
+	 
    ecore_x_selection_xdnd_request(sd->win->evas_win, "text/uri-list");
 
    return 1;

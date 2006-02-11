@@ -11,6 +11,7 @@ typedef struct _E_Fm_Dir_Metadata           E_Fm_Dir_Metadata;
 typedef struct _E_Fm_Fake_Mouse_Up_Info     E_Fm_Fake_Mouse_Up_Info;
 typedef enum   _E_Fm_Arrange                E_Fm_Arrange;
 typedef enum   _E_Fm_State                  E_Fm_State;
+typedef enum   _E_Fm_Autoscroll             E_Fm_Autoscroll;
 typedef struct _E_Event_Fm_Reconfigure      E_Event_Fm_Reconfigure;
 typedef struct _E_Event_Fm_Directory_Change E_Event_Fm_Directory_Change;
 typedef struct _E_Fm_Assoc_App              E_Fm_Assoc_App;
@@ -81,6 +82,15 @@ enum _E_Fm_State
      E_FILEMAN_STATE_RENAME = 2,
 };
 
+enum _E_Fm_Autoscroll
+{
+   E_FILEMAN_AUTOSCROLL_NONE = 0,
+   E_FILEMAN_AUTOSCROLL_UP = 1,
+   E_FILEMAN_AUTOSCROLL_DOWN = 2,
+   E_FILEMAN_AUTOSCROLL_LEFT = 4,
+   E_FILEMAN_AUTOSCROLL_RIGHT = 8,
+};
+
 struct _E_Fm_Fake_Mouse_Up_Info
 {
    Evas *canvas;
@@ -131,8 +141,9 @@ struct _E_Fm_Smart_Data
 
    struct {
       unsigned char start : 1;
-      int x, y;
-      int dx, dy;
+      unsigned char doing : 1;
+      int x, y;			/* the position of the pointer's x,y, relative to the canvas */
+      int dx, dy;		/* the difference from the icon's x,y and the pointer's x,y */
       Ecore_Evas *ecore_evas;
       Evas *evas;
       Ecore_X_Window win;
@@ -140,6 +151,13 @@ struct _E_Fm_Smart_Data
       Evas_Object *image_object;
    }
    drag;
+
+   struct {
+	double timer_int;
+	Ecore_Timer *timer;
+	E_Fm_Autoscroll direction;
+   }
+   autoscroll;
 
    struct {
       Evas_Coord x_space, y_space, w, h;
