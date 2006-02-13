@@ -121,7 +121,7 @@ struct _E_Config
    Evas_List  *path_append_backgrounds;
    Evas_List  *path_append_input_methods;
    Evas_List  *path_append_messages;
-   int         window_placement_policy; //
+   int         window_placement_policy; // GUI
    int         focus_policy; // GUI
    int         focus_setting; // GUI
    int         pass_click_on; // GUI
@@ -190,20 +190,20 @@ struct _E_Config
    int         menu_eap_generic_show; // GUI
    int         menu_eap_comment_show; // GUI
    int         fullscreen_policy;
-   int         exebuf_max_exe_list;
-   int         exebuf_max_eap_list;
-   int         exebuf_scroll_animate;
-   double      exebuf_scroll_speed;
-   double      exebuf_pos_align_x;
-   double      exebuf_pos_align_y;
-   double      exebuf_pos_size_w;
-   double      exebuf_pos_size_h;
-   int         exebuf_pos_min_w;
-   int         exebuf_pos_min_h;
-   int         exebuf_pos_max_w;
-   int         exebuf_pos_max_h;
+   int         exebuf_max_exe_list; // GUI
+   int         exebuf_max_eap_list; // GUI
+   int         exebuf_scroll_animate; // GUI
+   double      exebuf_scroll_speed; // GUI
+   double      exebuf_pos_align_x; // GUI
+   double      exebuf_pos_align_y; // GUI
+   double      exebuf_pos_size_w; // GUI
+   double      exebuf_pos_size_h; // GUI
+   int         exebuf_pos_min_w; // GUI
+   int         exebuf_pos_min_h; // GUI
+   int         exebuf_pos_max_w; // GUI
+   int         exebuf_pos_max_h; // GUI
    Evas_List  *color_classes;
-   int         use_app_icon;
+   int         use_app_icon; // GUI
    Evas_List  *gadcons;
 };
 
