@@ -80,10 +80,6 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 {
    Evas_Object *o, *ob, *of;
-   ITray *ib;
-   
-   ib = cfd->data;
-   _fill_data(ib, cfdata);
 
    o = e_widget_list_add(evas, 0, 0);
    
@@ -115,10 +111,6 @@ static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 {
    Evas_Object *o, *of, *ob;
-   ITray *ib;
-   
-   ib = cfd->data;
-   _fill_data(ib, cfdata);
 
    o = e_widget_list_add(evas, 0, 0);
    
@@ -143,9 +135,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    ib = cfd->data;
    e_border_button_bindings_ungrab_all();
    if (cfdata->rowsize != ib->conf->rowsize) 
-     {
-	ib->conf->rowsize = cfdata->rowsize;
-     }
+     ib->conf->rowsize = cfdata->rowsize;
    if (cfdata->allow_overlap && !ib->conf->allow_overlap)
      ib->conf->allow_overlap = 1;
    else if (!cfdata->allow_overlap && ib->conf->allow_overlap)

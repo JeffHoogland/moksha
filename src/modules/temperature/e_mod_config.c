@@ -69,79 +69,49 @@ _fill_data(Temperature *t, E_Config_Dialog_Data *cfdata)
    
    cfdata->units = t->conf->units;
    if (t->conf->units == CELCIUS) 
-     {
-	cfdata->unit_method = 0;
-     }
+     cfdata->unit_method = 0;
    else 
-     {
-	cfdata->unit_method = 1;
-     }
+     cfdata->unit_method = 1;
    
    p = t->conf->poll_time;
    cfdata->poll_time = p;
    if ((p >= 0) && (p <= 5)) 
-     {
-	cfdata->poll_method = 1; //Fast
-     }
+     cfdata->poll_method = 1; //Fast
    else if ((p > 5) && (p <= 10)) 
-     {
-	cfdata->poll_method = 10; //Normal
-     }
+     cfdata->poll_method = 10; //Normal
    else if ((p > 10) && (p <= 30)) 
-     {
-	cfdata->poll_method = 30; //Slow
-     }
+     cfdata->poll_method = 30; //Slow
    else if (p > 30) 
-     {
-	cfdata->poll_method = 60; //Very Slow
-     }
+     cfdata->poll_method = 60; //Very Slow
    
    p = t->conf->low;
    if (cfdata->units == FAHRENHEIT)
      p = FAR_2_CEL(p - 1); // -1 so the conversion doesn't make mid go hi
    cfdata->low_temp = p;
    if ((p >= 0) && (p <= TEMP_LOW_LOW)) 
-     {
-	cfdata->low_method = TEMP_LOW_LOW;
-     }
+     cfdata->low_method = TEMP_LOW_LOW;
    else if ((p > TEMP_LOW_LOW) && (p <= TEMP_LOW_MID)) 
-     {
-	cfdata->low_method = TEMP_LOW_MID;
-     }
+     cfdata->low_method = TEMP_LOW_MID;
    else if (p > TEMP_LOW_MID) 
-     {
-	cfdata->low_method = TEMP_LOW_HIGH;
-     }
+     cfdata->low_method = TEMP_LOW_HIGH;
 
    p = t->conf->high;
    if (cfdata->units == FAHRENHEIT)
      p = FAR_2_CEL(p - 1);
    cfdata->high_temp = p;
    if ((p >= 0) && (p <= TEMP_HIGH_LOW)) 
-     {
-	cfdata->high_method = TEMP_HIGH_LOW;
-     }
+     cfdata->high_method = TEMP_HIGH_LOW;
    else if ((p > TEMP_HIGH_LOW) && (p <= TEMP_HIGH_MID)) 
-     {
-	cfdata->high_method = TEMP_HIGH_MID;
-     }
+     cfdata->high_method = TEMP_HIGH_MID;
    else if (p > TEMP_HIGH_MID) 
-     {
-	cfdata->high_method = TEMP_HIGH_HIGH;
-     }
+     cfdata->high_method = TEMP_HIGH_HIGH;
    
    if (!strcmp(t->conf->sensor_name, "temp1")) 
-     {
-	cfdata->sensor = 0;
-     }
+     cfdata->sensor = 0;
    else if (!strcmp(t->conf->sensor_name, "temp2")) 
-     {
-	cfdata->sensor = 1;
-     }
+     cfdata->sensor = 1;
    else if (!strcmp(t->conf->sensor_name, "temp3")) 
-     {
-	cfdata->sensor = 2;
-     }
+     cfdata->sensor = 2;
 
    cfdata->allow_overlap = t->conf->allow_overlap;
 }
@@ -150,8 +120,11 @@ static void *
 _create_data(E_Config_Dialog *cfd) 
 {
    E_Config_Dialog_Data *cfdata;
+   Temperature *t;
    
+   t = cfd->data;
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   _fill_data(t, cfdata);
    return cfdata;
 }
 
@@ -170,10 +143,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
-   Temperature *t;
-   
-   t = cfd->data;
-   _fill_data(t, cfdata);
    
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Display Units"), 0);
@@ -262,13 +231,9 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    t = cfd->data;
    e_border_button_bindings_ungrab_all();
    if (cfdata->unit_method == 0) 
-     {
-	t->conf->units = CELCIUS;	
-     }
+     t->conf->units = CELCIUS;	
    else 
-     {
-	t->conf->units = FAHRENHEIT;
-     }
+     t->conf->units = FAHRENHEIT;
    
    t->conf->poll_time = (double)cfdata->poll_method;
 
@@ -304,7 +269,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    Temperature *t;
    
    t = cfd->data;
-   _fill_data(t, cfdata);
    
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Display Units"), 0);
@@ -434,13 +398,9 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      }
 
    if (cfdata->unit_method == 0) 
-     {
-	t->conf->units = CELCIUS;	
-     }
+     t->conf->units = CELCIUS;	
    else 
-     {
-	t->conf->units = FAHRENHEIT;
-     }
+     t->conf->units = FAHRENHEIT;
    
    t->conf->poll_time = cfdata->poll_time;
 

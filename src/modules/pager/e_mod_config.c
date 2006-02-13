@@ -71,8 +71,11 @@ static void *
 _create_data(E_Config_Dialog *cfd) 
 {
    E_Config_Dialog_Data *cfdata;
+   Pager *p;
    
+   p = cfd->data;
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   _fill_data(p, cfdata);
    return cfdata;
 }
 
@@ -91,10 +94,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
-   Pager *p;
-   
-   p = cfd->data;
-   _fill_data(p, cfdata);
    
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
@@ -154,10 +153,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 {
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
-   Pager *p;
-   
-   p = cfd->data;
-   _fill_data(p, cfdata);
 
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("General Settings"), 0);

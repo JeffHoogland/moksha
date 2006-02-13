@@ -53,8 +53,11 @@ static void *
 _create_data(E_Config_Dialog *cfd) 
 {
    E_Config_Dialog_Data *cfdata;
+   Clock_Face *cf;
    
+   cf = cfd->data;
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   _fill_data(cf, cfdata);
    return cfdata;
 }
 
@@ -73,10 +76,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
-   Clock_Face *c;
-   
-   c = cfd->data;
-   _fill_data(c, cfdata);
    
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("General Settings"), 0);

@@ -52,13 +52,9 @@ _fill_data(Battery *b, E_Config_Dialog_Data *cfdata)
    cfdata->alarm_time = b->conf->alarm;
    cfdata->poll_time = b->conf->poll_time;
    if (cfdata->alarm_time > 0) 
-     {
-	cfdata->show_alert = 1;
-     }
+     cfdata->show_alert = 1;
    else 
-     {
-	cfdata->show_alert = 0;
-     }
+     cfdata->show_alert = 0;
    cfdata->allow_overlap = b->conf->allow_overlap;
 }
 
@@ -87,12 +83,8 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
-   Battery *b;
    Evas_Object *o, *of, *ob;
-   
-   b = cfd->data;
-   _fill_data(b, cfdata);
-   
+      
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Basic Settings"), 0);
    ob = e_widget_check_add(evas, _("Show alert when battery is low"), &(cfdata->show_alert));
@@ -131,12 +123,8 @@ static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *o, *of, *ob;
-   Battery *b;
    
    /* Use Sliders for both cfg options */
-   b = cfd->data;
-   _fill_data(b, cfdata);
-
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_frametable_add(evas, _("Advanced Settings"), 1);
    
@@ -174,13 +162,9 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    
    b->conf->poll_time = cfdata->poll_time;
    if (cfdata->show_alert) 
-     {
-	b->conf->alarm = cfdata->alarm_time;
-     }
+     b->conf->alarm = cfdata->alarm_time;
    else 
-     {
-	b->conf->alarm = 0;
-     }
+     b->conf->alarm = 0;
 
    if (cfdata->allow_overlap && !b->conf->allow_overlap)
      b->conf->allow_overlap = 1;

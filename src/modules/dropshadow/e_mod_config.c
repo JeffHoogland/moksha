@@ -112,10 +112,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    Evas_Object *o, *ob, *of;
    E_Radio_Group *rg;
-   Dropshadow *ds;
-   
-   ds = cfd->data;
-   _fill_data(ds, cfdata);
    
    o = e_widget_list_add(evas, 0, 0);
 
