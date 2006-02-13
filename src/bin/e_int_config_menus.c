@@ -85,9 +85,7 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *o, *of, *ob;
-   
-   _fill_data(cfdata);
-   
+      
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Menu Settings"), 0);
    ob = e_widget_check_add(evas, _("Show Name In Menu"), &(cfdata->menu_eap_name_show));
@@ -109,22 +107,14 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->menu_eap_comment_show = cfdata->menu_eap_comment_show;
    
    if (cfdata->menus_scroll_speed == 0) 
-     {
-	e_config->menus_scroll_speed = 1.0;
-     }
+     e_config->menus_scroll_speed = 1.0;
    else 
-     {
-	e_config->menus_scroll_speed = cfdata->menus_scroll_speed;
-     }
+     e_config->menus_scroll_speed = cfdata->menus_scroll_speed;
    
    if (cfdata->menus_fast_mouse_move_threshhold == 0) 
-     {
-	e_config->menus_fast_mouse_move_threshhold = 1.0;
-     }
-    else 
-     {
-	e_config->menus_fast_mouse_move_threshhold = cfdata->menus_fast_mouse_move_threshhold;
-     }
+     e_config->menus_fast_mouse_move_threshhold = 1.0;
+   else 
+     e_config->menus_fast_mouse_move_threshhold = cfdata->menus_fast_mouse_move_threshhold;
    
    e_config->menus_click_drag_timeout = cfdata->menus_click_drag_timeout;
    e_config->menu_autoscroll_margin = cfdata->menu_autoscroll_margin;
@@ -138,8 +128,6 @@ static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *o, *of, *ob;
-   
-   _fill_data(cfdata);
    
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Menu Settings"), 0);

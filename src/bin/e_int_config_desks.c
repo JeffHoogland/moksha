@@ -148,9 +148,7 @@ _basic_create_widgets(E_Config_Dialog *cdd, Evas *evas, E_Config_Dialog_Data *cf
 {
    /* generate the core widget layout for a basic dialog */
    Evas_Object *o, *ob, *of, *ot;
-   
-   _fill_data(cfdata);
-   
+      
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Number of Desktops"), 0);
@@ -176,8 +174,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 {
    /* generate the core widget layout for an advanced dialog */
    Evas_Object *o, *ob, *of, *ot;
-   
-   _fill_data(cfdata);
    
    o = e_widget_list_add(evas, 0, 0);
    

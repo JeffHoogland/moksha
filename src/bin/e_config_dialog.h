@@ -43,7 +43,7 @@ struct _E_Config_Dialog
    int                          icon_size;
    E_Dialog                    *dia;
    void                        *data;
-   int                          view_dirty;
+   int                          cfg_changed;
    int                          hide_buttons;
 };
 

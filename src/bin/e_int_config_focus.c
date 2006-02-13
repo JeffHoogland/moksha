@@ -149,9 +149,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    /* generate the core widget layout for a basic dialog */
    Evas_Object *o, *ob;
    E_Radio_Group *rg;
-   
-   _fill_data(cfdata);
-   
+      
    o = e_widget_list_add(evas, 0, 0);
    rg = e_widget_radio_group_new(&(cfdata->mode));
    ob = e_widget_radio_add(evas, _("Click Window to Focus"), E_FOCUS_CLICK, rg);
@@ -169,9 +167,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    /* generate the core widget layout for an advanced dialog */
    Evas_Object *o, *ob, *of;
    E_Radio_Group *rg;
-   
-   _fill_data(cfdata);
-   
+      
    o = e_widget_list_add(evas, 0, 0);
    
    of = e_widget_framelist_add(evas, _("Focus"), 0);
