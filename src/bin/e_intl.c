@@ -345,14 +345,13 @@ e_intl_input_method_set(const char *method)
 	       	       
 		       if (  !_e_intl_input_method_exec || 
 			     !ecore_exe_pid_get(_e_intl_input_method_exec))    
-			 e_error_dialog_show(_("Input Method Error"),
-					_( "Error starting the input method "
-					   "executable\n\n"
-					   
-					"please make sure that your input\n"
-					"method configuration is correct and\n"
-					"that your configuration's\n" 
-					"executable is in your PATH\n"));  
+			 e_util_dialog_show(_("Input Method Error"),
+					    _( "Error starting the input method executable<br><br>"
+					       
+					       "please make sure that your input<br>"
+					       "method configuration is correct and<br>"
+					       "that your configuration's<br>"
+					       "executable is in your PATH<br>"));  
 		    }
 	       }	
 

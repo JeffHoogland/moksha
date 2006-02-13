@@ -6,6 +6,15 @@
 #ifndef E_UTILS_H
 #define E_UTILS_H
 
+#define e_util_dialog_show(title, args...) \
+{ \
+   char __tmpbuf[4096]; \
+   \
+   snprintf(__tmpbuf, sizeof(__tmpbuf), ##args); \
+   e_util_dialog_internal(title, __tmpbuf); \
+}
+
+
 EAPI void         e_util_container_fake_mouse_up_later(E_Container *con, int button);
 EAPI void         e_util_container_fake_mouse_up_all_later(E_Container *con);
 EAPI void         e_util_wakeup(void);
@@ -29,6 +38,7 @@ EAPI E_Container *e_util_container_window_find(Ecore_X_Window win);
 EAPI E_Border    *e_util_desk_border_above(E_Border *bd);
 EAPI E_Border    *e_util_desk_border_below(E_Border *bd);
 EAPI int          e_util_edje_collection_exists(char *file, char *coll);
+EAPI void         e_util_dialog_internal(char *title, char *txt);
     
 #endif
 #endif

@@ -226,12 +226,11 @@ e_util_head_exec(int head, char *cmd)
    exe = ecore_exe_run(cmd, NULL);
    if (!exe)
      {
-	e_error_dialog_show(_("Run Error"),
-			    _("Enlightenment was unable to fork a child process:\n"
-			      "\n"
-			      "%s\n"
-			      "\n"),
-			    cmd);
+	e_util_dialog_show(_("Run Error"),
+			   _("Enlightenment was unable to fork a child process:<br>"
+			     "<br>"
+			     "%s<br>"),
+			   cmd);
 	ok = 0;
      }
    
@@ -272,10 +271,10 @@ e_util_immortal_check(void)
    wins = e_border_immortal_windows_get();
    if (wins)
      {
-	e_error_dialog_show(_("Cannot exit - immortal windows."),
-			    _("Some windows are left still around with the Lifespan lock enabled. This means\n"
-			      "that Enlightenment will not allow itself to exit until these windows have\n"
-			      "been closed or have the lifespan lock removed.\n"));
+	e_util_dialog_show(_("Cannot exit - immortal windows."),
+			   _("Some windows are left still around with the Lifespan lock enabled. This means<br>"
+			     "that Enlightenment will not allow itself to exit until these windows have<br>"
+			     "been closed or have the lifespan lock removed.<br>"));
 	/* FIXME: should really display a list of these lifespan locked */
 	/* windows in a dialog and let the user disable their locks in */
 	/* this dialog */
@@ -508,6 +507,22 @@ e_util_edje_collection_exists(char *file, char *coll)
      }
    edje_file_collection_list_free(clist);
    return 0;
+}
+
+EAPI void
+e_util_dialog_internal(char *title, char *txt)
+{
+   E_Dialog *dia;
+   
+   dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
+   if (!dia) return;
+   e_dialog_title_set(dia, title);
+   e_dialog_text_set(dia, txt);
+   e_dialog_icon_set(dia, "enlightenment/error", 64);
+   e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
+   e_dialog_button_focus_num(dia, 0);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
 }
 
 /* local subsystem functions */

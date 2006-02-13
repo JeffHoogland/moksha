@@ -422,12 +422,11 @@ e_app_exec(E_App *a, int launch_id)
    if (!exe)
      {
 	free(inst);
-	e_error_dialog_show(_("Run Error"),
-			    _("Enlightenment was unable to fork a child process:\n"
-			      "\n"
-			      "%s\n"
-			      "\n"),
-			    a->exe);
+	e_util_dialog_show(_("Run Error"),
+			   _("Enlightenment was unable to fork a child process:<br>"
+			     "<br>"
+			     "%s<br>"),
+			   a->exe);
 	return 0;
      }
    /* 20 lines at start and end, 20x100 limit on bytes at each end. */
@@ -1541,6 +1540,10 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	     printf("BUG: Weird event for .directory.eap: %d\n", event);
 	  }
      }
+   else if (!strcmp(file, ".eap.cache.cfg"))
+     {
+	/* ignore this file */
+     }
    else
      {
 	if (event == ECORE_FILE_EVENT_MODIFIED)
@@ -2003,7 +2006,7 @@ _e_app_cb_scan_cache_timer(void *data)
      }
    snprintf(buf, sizeof(buf), "%s/%s", sc->path, s);
    is_dir = ecore_file_is_dir(buf);
-   if (e_util_glob_match(s, "*.eap") || is_dir)
+   if (_e_app_is_eapp(s) || is_dir)
      {
 	ac = evas_hash_find(sc->cache->subapps_hash, s);
 	if (ac)

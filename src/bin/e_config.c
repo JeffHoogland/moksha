@@ -434,26 +434,26 @@ e_config_init(void)
 	     /* your config is too old - need new defaults */
 	     _e_config_free();
 	     ecore_timer_add(1.0, _e_config_cb_timer,
-			     _("Configuration data needed upgrading. Your old configuration\n"
-			       "has been wiped and a new set of defaults initialized. This\n"
-			       "will happen regularly during development, so don't report a\n"
-			       "bug. This simply means Enlightenment needs new configuration\n"
-			       "data by default for usable functionality that your old\n"
-			       "configuration simply lacks. This new set of defaults will fix\n"
-			       "that by adding it in. You can re-configure things now to your\n"
-			       "liking. Sorry for the hiccup in your configuration.\n"));
+			     _("Configuration data needed upgrading. Your old configuration<br>"
+			       "has been wiped and a new set of defaults initialized. This<br>"
+			       "will happen regularly during development, so don't report a<br>"
+			       "bug. This simply means Enlightenment needs new configuration<br>"
+			       "data by default for usable functionality that your old<br>"
+			       "configuration simply lacks. This new set of defaults will fix<br>"
+			       "that by adding it in. You can re-configure things now to your<br>"
+			       "liking. Sorry for the hiccup in your configuration.<br>"));
 	  }
 	else if (e_config->config_version > E_CONFIG_FILE_VERSION)
 	  {
 	     /* your config is too new - what the fuck??? */
 	     _e_config_free();
 	     ecore_timer_add(1.0, _e_config_cb_timer,
-			     _("Your configuration is NEWER than Enlightenment. This is very\n"
-			       "strange. This should not happen unless you downgraded\n"
-			       "Enlightenment or copied the configuration from a place where\n"
-			       "a newer version of Enlightenment was running. This is bad and\n"
-			       "as a precaution your configuration has been now restored to\n"
-			       "defaults. Sorry for the inconvenience.\n"));
+			     _("Your configuration is NEWER than Enlightenment. This is very<br>"
+			       "strange. This should not happen unless you downgraded<br>"
+			       "Enlightenment or copied the configuration from a place where<br>"
+			       "a newer version of Enlightenment was running. This is bad and<br>"
+			       "as a precaution your configuration has been now restored to<br>"
+			       "defaults. Sorry for the inconvenience.<br>"));
 	  }
      }
    
@@ -2174,7 +2174,7 @@ _e_config_free(void)
 static int
 _e_config_cb_timer(void *data)
 {
-   e_error_dialog_show(_("Configuration Upgraded"),
-			 data);
+   e_util_dialog_show(_("Configuration Upgraded"),
+		      data);
    return 0;
 }

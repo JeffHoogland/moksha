@@ -307,6 +307,9 @@ e_fm_file_exec(E_Fm_File *file)
 {
    Ecore_Exe *exe;
 
+   /* FIXME: use the e app execution mechanisms where possible so we can
+    * collect error output
+    */
    if(e_fm_file_has_mime(file,".eap"))
    {
        E_App *e_app;
@@ -359,6 +362,9 @@ e_fm_file_assoc_exec(E_Fm_File *file)
 
    if (!assoc_apps) return 0;
 
+   /* FIXME: use the e app execution mechanisms where possible so we can
+    * collect error output
+    */
    for (l = assoc_apps; l; l = l->next)
    {
     assoc = l->data;
@@ -397,6 +403,9 @@ e_fm_file_exec_with(E_Fm_File *file, char* exec_with)
    char app[PATH_MAX * 2];
    if (!exec_with || !file) return 0;
 
+   /* FIXME: use the e app execution mechanisms where possible so we can
+    * collect error output
+    */
    snprintf(app, PATH_MAX * 2, "%s \"%s\"", exec_with, file->path);
    exe = ecore_exe_run(app, NULL);
 
