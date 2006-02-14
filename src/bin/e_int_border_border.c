@@ -146,7 +146,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    int sel, n;
    CFBorder *cfb;
    
-   _fill_data(cfdata);
    o = e_widget_list_add(evas, 0, 0);
    
    oi = e_widget_ilist_add(evas, 80, 48, &(cfdata->bordername));
