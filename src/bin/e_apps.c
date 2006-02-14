@@ -418,7 +418,7 @@ e_app_exec(E_App *a, int launch_id)
    inst = E_NEW(E_App_Instance, 1);
    if (!inst) return 0;
    /* We want the stdout and stderr as lines for the error dialog if it exits abnormally. */
-   exe = ecore_exe_pipe_run(a->exe, ECORE_EXE_PIPE_AUTO| ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR | ECORE_EXE_PIPE_READ_LINE_BUFFERED | ECORE_EXE_PIPE_ERROR_LINE_BUFFERED, inst);
+   exe = ecore_exe_pipe_run(a->exe, ECORE_EXE_PIPE_AUTO | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR | ECORE_EXE_PIPE_READ_LINE_BUFFERED | ECORE_EXE_PIPE_ERROR_LINE_BUFFERED, inst);
    if (!exe)
      {
 	free(inst);
