@@ -139,9 +139,6 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _check_matches(E_Border *bd, int matchflags)
 {
-   
-
-   
    Evas_List *l;
    int n = 0;
    char *title;
@@ -418,7 +415,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    Evas_Object *o, *ob;
    E_Radio_Group *rg;
    
-   _fill_data(cfdata);
    o = e_widget_list_add(evas, 0, 0);
    rg = e_widget_radio_group_new(&(cfdata->mode));
    ob = e_widget_radio_add(evas, _("Nothing"), MODE_NOTHING, rg);
@@ -440,7 +436,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    /* generate the core widget layout for an advanced dialog */
    Evas_Object *o, *ob, *of;
 
-   _fill_data(cfdata);
    o = e_widget_list_add(evas, 0, 0);
    
    of = e_widget_framelist_add(evas, _("Remember using"), 0);
