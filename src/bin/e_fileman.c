@@ -1,6 +1,52 @@
 /*
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
+/* e_fileman.c
+ * ===========
+ *
+ * fileman is the FILE MANager for e.
+ * its composed of several entities:
+ * (check each .c for more reference)
+ *
+ * +-------------+-+
+ * | x  x  x  x  |s|
+ * |             | |
+ * | x  x  x  x  | |
+ * |            o| |
+ * | x  x  x  x  | |
+ * +-------------+-+
+ * l-s-----------i-i
+ * 
+ *
+ * graphically:
+ * o = icon_canvas
+ * x = icon
+ * s = scrollframe
+ *
+ * internally:
+ * a fileman has a fileman_smart. 
+ * 
+ * fileman_smart
+ * ============= 
+ * has a list of fileman_icon of that directory (files).
+ * is created above an icon_canvas
+ * has a list of fileman_file of that directory?
+ * has a list of icons
+ * 
+ * fileman_icon
+ * ============
+ * a fileman_icon has a fileman_file associated to it.
+ * 
+ * fileman_file
+ * ============
+ * a fileman_file has a fileman_mime_entry
+ * 
+ * fileman_mime
+ * ============
+ * a fileman_mime_entry has a list of fileman_mime_actions
+ * 
+ */
+
 #include "e.h"
 
 /****

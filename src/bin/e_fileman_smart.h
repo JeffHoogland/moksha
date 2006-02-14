@@ -46,6 +46,7 @@ struct _E_Fm_Icon
 
    struct {
       unsigned char selected : 1;
+      unsigned char visible  : 1;
    }
    state;
 
@@ -122,8 +123,8 @@ struct _E_Fm_Smart_Data
 
    Evas_List *event_handlers;
 
-   Evas_List *files;
-   Evas_List *files_raw;
+   Evas_List *icons;            /* list of E_Fm_Icons on the current directory */
+   Evas_List *files_raw;        /* raw char filenames of files on the current directory */
    Ecore_File_Monitor *monitor;
    E_Fm_Arrange arrange;
 
@@ -170,10 +171,11 @@ struct _E_Fm_Smart_Data
    child;
 
    struct {
-      Evas_List *files;
+      Evas_List *icons;         /* list of E_Fm_Icons selected */
+      E_Fm_Mime_Entry  *mime;   /* the computed mime for all the selected icons */
 
       struct {
-	 E_Fm_Icon *file;
+	 E_Fm_Icon *file; /* FIXME should be called icon! */
 	 Evas_List *ptr;
       }
       current;

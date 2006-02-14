@@ -85,6 +85,7 @@ e_fileman.h \
 e_fileman_smart.h \
 e_fileman_file.h \
 e_fileman_icon.h \
+e_fileman_mime.h \
 e_widget.h \
 e_widget_check.h \
 e_widget_radio.h \
@@ -208,6 +209,7 @@ e_fileman.c \
 e_fileman_smart.c \
 e_fileman_file.c \
 e_fileman_icon.c \
+e_fileman_mime.c \
 e_widget.c \
 e_widget_check.c \
 e_widget_radio.c \

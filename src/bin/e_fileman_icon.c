@@ -498,20 +498,13 @@ _e_fm_icon_icon_mime_get(E_Smart_Data *sd)
 {
   char part[PATH_MAX];
 	
-	sd->image_object = edje_object_add(sd->evas);
-	
-	// since a mime is set with every creation of an E_Fm_File its existence isn´t checked here
-	if(sd->file->type ==  E_FM_FILE_TYPE_DIRECTORY)
-		 	e_theme_edje_object_set(sd->image_object, "base/theme/fileman", "icons/fileman/folder");
-  
-  else if(e_fm_file_has_mime(sd->file,"unknown"))
-   	  e_theme_edje_object_set(sd->image_object, "base/theme/fileman", "icons/fileman/file");
-  else 
-  {
-   	  snprintf(part, PATH_MAX, "icons/fileman/%s", (sd->file->mime + 1)); 
-	    if (!e_theme_edje_object_set(sd->image_object, "base/theme/fileman", part))
-	       e_theme_edje_object_set(sd->image_object, "base/theme/fileman", "icons/fileman/file");
-   }
+  sd->image_object = edje_object_add(sd->evas);
+  /* since a mime is set with every creation of an E_Fm_File its existence isnt checked here */
+   	  
+  snprintf(part, PATH_MAX, "icons/fileman/%s", (sd->file->mime->name)); 
+  if (!e_theme_edje_object_set(sd->image_object, "base/theme/fileman", part))
+    e_theme_edje_object_set(sd->image_object, "base/theme/fileman", "icons/fileman/file");
+
    evas_object_show(sd->image_object);
    edje_extern_object_min_size_set(sd->image_object, sd->iw, sd->ih);
    edje_extern_object_max_size_set(sd->image_object, sd->iw, sd->ih);

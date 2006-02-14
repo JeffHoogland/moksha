@@ -51,9 +51,10 @@ e_fm_file_new(const char *filename)
    file->mtime = st.st_mtime;
    file->ctime = st.st_ctime;
 
+   /* FIXME clean this for the new mime handler */
    if (S_ISDIR(file->mode)){
       file->type |= E_FM_FILE_TYPE_DIRECTORY;
-      file->mime = "directory";
+      //file->mime = "directory";
    }
    else if (S_ISREG(file->mode))
      file->type = E_FM_FILE_TYPE_FILE;
@@ -72,7 +73,7 @@ e_fm_file_new(const char *filename)
    file->preview_funcs[3] = e_fm_file_is_eap;
    file->preview_funcs[4] = NULL;
 
-   if(!file->mime)
+   /*if(!file->mime)
      {
   ext = strrchr(file->name, '.');
   if (ext)
@@ -85,7 +86,8 @@ e_fm_file_new(const char *filename)
     }
   else
     file->mime = "unknown";
-     }
+     }*/
+   e_fm_mime_set(file);
    D(("e_fm_file_new: %s\n", filename));
    return file;
 

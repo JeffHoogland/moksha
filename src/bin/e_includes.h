@@ -66,6 +66,7 @@
 #include "e_fileman_smart.h"
 #include "e_fileman_file.h"
 #include "e_fileman_icon.h"
+#include "e_fileman_mime.h"
 #include "e_widget.h"
 #include "e_widget_check.h"
 #include "e_widget_radio.h"

@@ -28,7 +28,7 @@ struct _E_Fm_File
 
    int          type;
 
-   Evas        *evas;
+   Evas        *evas; /* what is it used for? the icon theme? use the mime instead */
    Evas_Object *icon_object;
    /* Do we need those?
     * Evas_Object *image_object;
@@ -37,7 +37,7 @@ struct _E_Fm_File
 
    char     *path;            /* full name with path */
    char     *name;            /* file name without parent directories */
-   char     *mime;            /* mimetype (just the extension, beginning with dot) */
+   E_Fm_Mime_Entry *mime;
 
    dev_t     device;          /* ID of device containing file */
    ino_t     inode;           /* inode number */
@@ -51,7 +51,7 @@ struct _E_Fm_File
    time_t    mtime;           /* time of last modification */
    time_t    ctime;           /* time of last status change */
    
-   E_Fm_File_Preview_Function *preview_funcs;
+   E_Fm_File_Preview_Function *preview_funcs; /* FIXME the preview should be part of mime.c */
 };
 
 EAPI E_Fm_File *e_fm_file_new         (const char *filename);
