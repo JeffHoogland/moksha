@@ -142,6 +142,8 @@ e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
    sd->file = file;
    file->icon_object = obj;
 
+   /* FIXME fix this */
+#if 0
    if (e_fm_file_can_preview(sd->file))
      {
 	sd->thumb_path = e_thumb_file_get(sd->file->path);
@@ -182,6 +184,7 @@ e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
 	  }
      }
    else
+#endif 
      {
 	_e_fm_icon_icon_mime_get(sd);
      }
@@ -521,6 +524,8 @@ _e_fm_icon_thumb_generate_cb(Evas_Object *obj, void *data)
 
    sd = data;
 
+   /* FIXME fix this */
+#if 0
    if (e_fm_file_has_mime(sd->file,".eap") || (ecore_file_exists(sd->thumb_path)))
      {
 	Evas_Coord icon_w, icon_h;
@@ -550,6 +555,7 @@ _e_fm_icon_thumb_generate_cb(Evas_Object *obj, void *data)
 	edje_object_part_swallow(sd->icon_object, "icon_swallow",
 				 sd->image_object);
      }
+#endif
 }
 
 static void

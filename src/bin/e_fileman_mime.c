@@ -52,6 +52,10 @@
  * 3. by file contents (if a dir is full of mp3, might be an audio dir)
  *
  *
+ * previews and thumbnails
+ * =======================
+ * a thumbnail can be done for example on images,videos,or any graphical file
+ * but a preview is for example that when you are over an audio file it starts playing
  *
  * actions
  * =======
@@ -68,9 +72,15 @@
 
 #include "e.h"
 
-static char * _e_fm_mime_suffix_get(char *filename);
-static void _e_fm_mime_action_append(E_Fm_Mime_Entry *entry, char *action_name);
-static char *_e_fm_mime_action_tokenizer(Evas_List *files, E_Fm_Mime_Action *action);
+static E_Fm_Mime_Entry  *_e_fm_mime_common(E_Fm_Mime_Entry *e1, E_Fm_Mime_Entry *e2);
+static char             *_e_fm_mime_suffix_get(char *filename);
+static void              _e_fm_mime_action_append(E_Fm_Mime_Entry *entry, char *action_name);
+static void              _e_fm_mime_action_default_set(E_Fm_Mime_Entry *entry, char *action_name);
+static char             *_e_fm_mime_string_tokenizer(Evas_List *files, char *dir, char *istr);
+/* definitions of the internal actions */
+static void              _e_fm_mime_action_internal_folder_open(E_Fm_Smart_Data *data);
+static void              _e_fm_mime_action_internal_folder_open_other(E_Fm_Smart_Data *data);
+
 
 static int init_count = 0;
 static Evas_List *entries = NULL;
@@ -88,6 +98,21 @@ e_fm_mime_init(void)
    if(init_count)
      return 1;
    
+   /* internal actions */
+   /********************/
+   action = E_NEW(E_Fm_Mime_Action,1);
+   action->name = strdup("_folder_open");
+   action->label = strdup("Open the Folder");
+   action->is_internal = 1;
+   action->internal.function = &_e_fm_mime_action_internal_folder_open;
+   actions = evas_list_append(actions,action);
+
+   action = E_NEW(E_Fm_Mime_Action,1);
+   action->name = strdup("_folder_open_other");
+   action->label = strdup("Open the Folder in other Window");
+   action->is_internal = 1;
+   action->internal.function = &_e_fm_mime_action_internal_folder_open_other;
+   actions = evas_list_append(actions,action);
    
    /* actions */
    /***********/
@@ -98,6 +123,13 @@ e_fm_mime_init(void)
    action->multiple = 1;
    actions = evas_list_append(actions,action);
 
+   action = E_NEW(E_Fm_Mime_Action,1);
+   action->name = strdup("exhibit_view");
+   action->label = strdup("View with Exhibit");
+   action->cmd = strdup("exhibit %f");
+   action->multiple = 0;
+   actions = evas_list_append(actions,action);
+   
    action = E_NEW(E_Fm_Mime_Action,1);
    action->name = strdup("xmms_enqueue");
    action->label = strdup("Add to XMMS Queue");
@@ -134,7 +166,9 @@ e_fm_mime_init(void)
 	entry->label = strdup("Image File");
 	entry->parent = l1;
 	entry->level = 2;
-	_e_fm_mime_action_append(entry, "gimp_edit");
+	entries = evas_list_append(entries,entry);
+	_e_fm_mime_action_default_set(entry, "gimp_edit");
+	_e_fm_mime_action_append(entry, "exhibit_view");
 	l2 = entry;
 	  {
 	     /* jpg */
@@ -162,6 +196,7 @@ e_fm_mime_init(void)
 	entry->label = strdup("Audio File");
 	entry->parent = l1;
 	entry->level = 2;
+	entries = evas_list_append(entries,entry);
 	_e_fm_mime_action_append(entry, "xmms_play");
 	_e_fm_mime_action_append(entry, "xmms_enqueue");
 	l2 = entry;
@@ -202,6 +237,8 @@ e_fm_mime_init(void)
    entry->parent = root;
    entry->level = 1;
    entries = evas_list_append(entries,entry);
+   _e_fm_mime_action_default_set(entry, "_folder_open");
+   _e_fm_mime_action_append(entry, "_folder_open_other");
    l1 = entry;
 
 
@@ -216,62 +253,26 @@ e_fm_mime_shutdwon(void)
    init_count--;
 }
 
-/* returns the shortest root for both entries @e1 and @e2 
- * FIXME can be implemented faster?
- */
-E_Fm_Mime_Entry *
-e_fm_mime_common(E_Fm_Mime_Entry *e1, E_Fm_Mime_Entry *e2)
-{
 
-   E_Fm_Mime_Entry *tmp;
-   int i;
-   int count;
-   
-   /* take the lowest on the tree */
-   /* set the e1 upper, e2 lower  */
-   if(e1->level > e2->level)
-     {
-	count = e1->level - e2->level;
-	tmp = e1;
-	e1 = e2;
-	e2 = tmp;
-     }
-   else
-	count = e2->level - e1-> level;
-	   
-   /* first equal levels */
-   for(i = 0; i < count; i++)
-     {
-	e2 = e2->parent;
-     }
-   /* get up on the tree until we find the same parent */
-   for(i = e1->level; i >= 0; i--)
-     {
-	if(!strcmp(e1->name,e2->name))
-	  return e1;
-	e1 = e1->parent;
-	e2 = e2->parent;
-     }
-   /* this should never happen */
-   return NULL;
-}
-
-/* returns the shortest root of a list of mime entries @mis 
+/* returns the shortest root mime for a list of @files 
  * FIXME can be implemented faster? delete the list while iterating
  */
 E_Fm_Mime_Entry *
-e_fm_mime_list(Evas_List *mis)
+e_fm_mime_get_from_list(Evas_List *files)
 {
+   E_Fm_File *file;
    E_Fm_Mime_Entry *entry;
    Evas_List *l;
 
-   entry = (E_Fm_Mime_Entry *)mis->data;
-   for(l = mis->next; l; l = l->next)
+   file = (E_Fm_Mime_Entry *)files->data;
+   entry = file->mime;
+   for(l = files->next; l; l = l->next)
      {
 	E_Fm_Mime_Entry *eme;
 
-	eme = (E_Fm_Mime_Entry *)l->data;
-	entry = e_fm_mime_common(entry,eme);
+	file = (E_Fm_Mime_Entry *)l->data;
+	eme = file->mime;
+	entry = _e_fm_mime_common(entry,eme);
      }
    return entry;
 }
@@ -329,9 +330,9 @@ e_fm_mime_action_get_by_label(char *label)
    return action;
 }
 
-/* will call the command of an @action for the list of E_Fm_Files @files */
-int
-e_fm_mime_action_call(Evas_List *files, E_Fm_Mime_Action *action)
+/* will call the command of an @action for the fileman_smart @sd */
+EAPI int
+e_fm_mime_action_call(E_Fm_Smart_Data *sd, E_Fm_Mime_Action *action)
 {
    Ecore_Exe *exe;
    char *command;
@@ -339,28 +340,106 @@ e_fm_mime_action_call(Evas_List *files, E_Fm_Mime_Action *action)
    /* FIXME: use the e app execution mechanisms where possible so we can
     * collect error output
     */
-   command = _e_fm_mime_action_tokenizer(files,action);
-   printf("going to execute %s\n", command);
-   exe = ecore_exe_run(command, NULL);
-
-   if (!exe)
+   if(action->is_internal)
      {
-	e_error_dialog_show(_("Run Error"),
+	action->internal.function(sd);
+     }
+   else
+     {
+	command = _e_fm_mime_string_tokenizer(sd->operation.files,sd->operation.dir,action->cmd);
+	printf("going to execute %s\n", command);
+	exe = ecore_exe_run(command, NULL);
+
+   
+	if (!exe)
+     
+	  {
+	
+	     e_error_dialog_show(_("Run Error"),
 			    _("Enlightenment was unable to fork a child process:\n"
 			      "\n"
 			      "%s\n"
 			      "\n"),
 			    command);
-	return 0;
+	     return 0;
+	  }
      }
    return 1;
+}
+
+EAPI int
+e_fm_mime_action_default_call(E_Fm_Smart_Data *sd)
+{
+   E_Fm_Mime_Entry  *mime;
+   E_Fm_Mime_Action *action;
+
+   mime = sd->operation.mime;
+   do
+     {
+	action = mime->action_default;
+	     
+	if(!action)
+	  {
+	     mime = mime->parent;
+	     continue;
+	  }
+	/* if we reach here we have an action */
+	break;
+     } while(mime);
+   if(!action)
+     return;
+   
+   e_fm_mime_action_call(sd, action);
 }
 
 
 /* subsystem functions */
 /***********************/
+
+/* returns the shortest root for both entries @e1 and @e2 
+ * FIXME can be implemented faster?
+ */
+
+static E_Fm_Mime_Entry *
+_e_fm_mime_common(E_Fm_Mime_Entry *e1, E_Fm_Mime_Entry *e2)
+{
+
+   E_Fm_Mime_Entry *tmp;
+   int i;
+   int count;
+   
+   /* take the lowest on the tree */
+   /* set the e1 upper, e2 lower  */
+   if(e1->level > e2->level)
+     {
+	count = e1->level - e2->level;
+	tmp = e1;
+	e1 = e2;
+	e2 = tmp;
+     }
+   else
+	count = e2->level - e1-> level;
+	   
+   /* first equal levels */
+   for(i = 0; i < count; i++)
+     {
+	e2 = e2->parent;
+     }
+   /* get up on the tree until we find the same parent */
+   for(i = e1->level; i >= 0; i--)
+     {
+	if(!strcmp(e1->name,e2->name))
+	  return e1;
+	e1 = e1->parent;
+	e2 = e2->parent;
+     }
+   /* this should never happen */
+   return NULL;
+}
+
+/* will translate %f,%d to file,dir respective */
 static char*
-_e_fm_mime_action_tokenizer(Evas_List *files, E_Fm_Mime_Action *action)
+_e_fm_mime_string_tokenizer(Evas_List *files, char *dir, char *istr)
 {
    char *buf;
    char *c;
@@ -371,7 +450,7 @@ _e_fm_mime_action_tokenizer(Evas_List *files, E_Fm_Mime_Action *action)
    bsize = PATH_MAX;
    i = 0;
    trans = 0;
-   for(c = action->cmd; *c; c++)
+   for(c = istr; *c; c++)
      {
 	if( i > bsize - 1)
 	  {
@@ -439,6 +518,26 @@ _e_fm_mime_action_append(E_Fm_Mime_Entry *entry, char *action_name)
      }
 }
 
+static void
+_e_fm_mime_action_default_set(E_Fm_Mime_Entry *entry, char *action_name)
+{
+   Evas_List *l;
+
+   for(l = actions; l; l = l->next)
+     {
+	E_Fm_Mime_Action *action;
+
+	action = (E_Fm_Mime_Action *)l->data;
+	if(!strcmp(action->name, action_name))
+	  {
+	     /* overwrite the old default action */
+	     entry->action_default = action;
+	     entry->actions = evas_list_append(entry->actions, action);
+	     break;
+	  }
+     }
+}
+
 static char *
 _e_fm_mime_suffix_get(char *filename)
 {
@@ -453,3 +552,26 @@ _e_fm_mime_suffix_get(char *filename)
      }
    return NULL;
 }
+
+
+static void 
+_e_fm_mime_action_internal_folder_open(E_Fm_Smart_Data *sd)
+{
+   E_Fm_File *file;
+
+   file = sd->operation.files->data;
+   e_fm_dir_set(sd->object, file->path);
+
+}
+
+static void 
+_e_fm_mime_action_internal_folder_open_other(E_Fm_Smart_Data *sd)
+{
+   E_Fileman *fileman;
+   E_Fm_File *file;
+
+   file = sd->operation.files->data;
+   fileman = e_fileman_new_to_dir(e_container_current_get(e_manager_current_get()), file->path);
+   e_fileman_show(fileman);
+}
+

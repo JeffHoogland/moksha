@@ -51,11 +51,8 @@ e_fm_file_new(const char *filename)
    file->mtime = st.st_mtime;
    file->ctime = st.st_ctime;
 
-   /* FIXME clean this for the new mime handler */
-   if (S_ISDIR(file->mode)){
+   if (S_ISDIR(file->mode))
       file->type |= E_FM_FILE_TYPE_DIRECTORY;
-      //file->mime = "directory";
-   }
    else if (S_ISREG(file->mode))
      file->type = E_FM_FILE_TYPE_FILE;
    else if (S_ISLNK(file->mode))
@@ -66,27 +63,7 @@ e_fm_file_new(const char *filename)
    if (file->name[0] == '.')
      file->type |= E_FM_FILE_TYPE_HIDDEN;
 
-   file->preview_funcs = E_NEW(E_Fm_File_Preview_Function, 5);
-   file->preview_funcs[0] = e_fm_file_is_image;
-   file->preview_funcs[1] = e_fm_file_is_etheme;
-   file->preview_funcs[2] = e_fm_file_is_ebg;
-   file->preview_funcs[3] = e_fm_file_is_eap;
-   file->preview_funcs[4] = NULL;
-
-   /*if(!file->mime)
-     {
-  ext = strrchr(file->name, '.');
-  if (ext)
-    {
-       char *ext2;
-       ext = strdup(ext);
-       ext2 = ext;
-       for (; *ext2; ext2++) *ext2 = tolower(*ext2);
-       file->mime = ext;
-    }
-  else
-    file->mime = "unknown";
-     }*/
+   
    e_fm_mime_set(file);
    D(("e_fm_file_new: %s\n", filename));
    return file;
@@ -173,13 +150,30 @@ e_fm_file_is_regular(E_Fm_File *file) /* TODO: find better name */
 }
 
 EAPI int
+e_fm_file_is_image(E_Fm_File *file)
+{
+   /* We need to check if it is a filetype supported by evas.
+    * If it isn't supported by evas, we can't show it in the
+    * canvas.
+    */
+   
+   D(("e_fm_file_is_image: (%p)\n", file));
+   return e_fm_file_is_regular(file)
+        &&(e_fm_file_has_mime(file,"jpg") 
+        || e_fm_file_has_mime(file,"png")); 
+}
+
+EAPI int
 e_fm_file_has_mime(E_Fm_File *file, char* mime)
 {
    if (!file->mime) return 0;
 
-   D(("e_fm_file_has_mime: (%p) : %s\n", file,file->mime));
-   return (!strcasecmp(file->mime, mime));
+   D(("e_fm_file_has_mime: (%p) : %s\n", file,file->mime->name));
+   return (!strcasecmp(file->mime->name, mime));
 }
+
+/* this is pointless for the new model */
+#if 0
 
 EAPI int
 e_fm_file_can_preview(E_Fm_File *file)
@@ -198,21 +192,6 @@ e_fm_file_can_preview(E_Fm_File *file)
    return 0;
 }
 
-EAPI int
-e_fm_file_is_image(E_Fm_File *file)
-{
-   /* We need to check if it is a filetype supported by evas.
-    * If it isn't supported by evas, we can't show it in the
-    * canvas.
-    */
-   
-   //D(("e_fm_file_is_image: (%p)\n", file));
-   
-   return e_fm_file_is_regular(file)
-        &&(e_fm_file_has_mime(file,".jpg") 
-        || e_fm_file_has_mime(file,".jpeg") 
-        || e_fm_file_has_mime(file,".png")); 
-}
 
 EAPI int
 e_fm_file_is_etheme(E_Fm_File *file)
@@ -284,7 +263,6 @@ e_fm_file_is_eap(E_Fm_File *file)
    e_object_unref(E_OBJECT(app));
    return 1;
 }
-
 EAPI int
 e_fm_file_can_exec(E_Fm_File *file)
 {
@@ -398,43 +376,15 @@ e_fm_file_assoc_exec(E_Fm_File *file)
    return 1;
 }
 
-
-/* FIXME get rid of this */
-EAPI int 
-e_fm_file_exec_with(E_Fm_File *file, char* exec_with)
-{
-   Ecore_Exe *exe;
-   char app[PATH_MAX * 2];
-   if (!exec_with || !file) return 0;
-
-   /* FIXME: use the e app execution mechanisms where possible so we can
-    * collect error output
-    */
-   snprintf(app, PATH_MAX * 2, "%s \"%s\"", exec_with, file->path);
-   exe = ecore_exe_run(app, NULL);
-
-   if (!exe)
-     {
-	e_error_dialog_show(_("Run Error"),
-			    _("Enlightenment was unable to fork a child process:\n"
-			      "\n"
-			      "%s\n"
-			      "\n"),
-			    app);
-	return 0;
-     }
-   return 1;
-}
+#endif
 
 /* local subsystem functions */
 static void
 _e_fm_file_free(E_Fm_File *file)
 {
    D(("_e_fm_file_free: (%p) (%s)\n", file, file->name));
-   free(file->preview_funcs);
    if (file->path) free(file->path);
    if (file->name) free(file->name);
-   ///???  if (file->mime) free(file->mime); 
    free(file);
 }
 

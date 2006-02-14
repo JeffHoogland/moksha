@@ -115,7 +115,7 @@ struct _E_Fm_Smart_Data
 
    Evas_Hash *mime_menu_hash;
 
-   char *dir;
+   char *dir;                   /* FIXME this could be actually a E_Fm_Dir */
    DIR  *dir2;
 
    double timer_int;
@@ -172,7 +172,6 @@ struct _E_Fm_Smart_Data
 
    struct {
       Evas_List *icons;         /* list of E_Fm_Icons selected */
-      E_Fm_Mime_Entry  *mime;   /* the computed mime for all the selected icons */
 
       struct {
 	 E_Fm_Icon *file; /* FIXME should be called icon! */
@@ -189,7 +188,15 @@ struct _E_Fm_Smart_Data
       band;
 
    }
-   selection;
+   selection;                  /* the selected icons */
+
+   struct {
+      Evas_List        *files; /* list of E_Fm_Files */
+      E_Fm_File        *dir;   /* the file of the relative directory for operations */
+      E_Fm_Mime_Entry  *mime;  /* overall mime for all the icons we are going to operate wirh */
+   }
+   operation;                  /* the operating files, for wich we are going to make actions
+				  might be the selected files or the dropped files */
 
    struct {
       E_Config_DD *main_edd;

@@ -5,7 +5,6 @@
 
 typedef struct _E_Fm_File            E_Fm_File;
 typedef struct _E_Fm_File_Attributes E_Fm_File_Attributes;
-typedef int(*E_Fm_File_Preview_Function) (E_Fm_File*);
 
 #define E_FM_FILE_TYPE_FILE      (1 << 8)
 #define E_FM_FILE_TYPE_DIRECTORY (1 << 9)
@@ -51,7 +50,6 @@ struct _E_Fm_File
    time_t    mtime;           /* time of last modification */
    time_t    ctime;           /* time of last status change */
    
-   E_Fm_File_Preview_Function *preview_funcs; /* FIXME the preview should be part of mime.c */
 };
 
 EAPI E_Fm_File *e_fm_file_new         (const char *filename);
@@ -67,7 +65,6 @@ EAPI int        e_fm_file_can_exec    (E_Fm_File *file);
 EAPI int        e_fm_file_exec        (E_Fm_File *file);
 EAPI int        e_fm_file_assoc_set   (E_Fm_File *file, const char *assoc);
 EAPI int        e_fm_file_assoc_exec  (E_Fm_File *file);
-EAPI int				e_fm_file_exec_with   (E_Fm_File *file, char* exec_with);
 EAPI int				e_fm_file_has_mime    (E_Fm_File *file, char* mime);
 EAPI int        e_fm_file_is_regular  (E_Fm_File *file);
 #endif
