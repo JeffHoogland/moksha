@@ -136,7 +136,13 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 		case E_GADCON_ORIENT_RIGHT:
 		  dir = E_MENU_POP_DIRECTION_LEFT;
 		  break;
+		case E_GADCON_ORIENT_FLOAT:
+		case E_GADCON_ORIENT_CORNER_TL:
+		case E_GADCON_ORIENT_CORNER_TR:
+		case E_GADCON_ORIENT_CORNER_BL:
+		case E_GADCON_ORIENT_CORNER_BR:
 		default:
+		  dir = E_MENU_POP_DIRECTION_AUTO;
 		  break;
 	       }
 	     e_menu_activate_mouse(inst->main_menu,

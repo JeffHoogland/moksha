@@ -683,7 +683,7 @@ main(int argc, char **argv)
 		       E_Shelf *es;
 		       
 		       zone = l3->data;
-		       es = e_shelf_zone_new(zone, "shelf");
+		       es = e_shelf_zone_new(zone, "shelf", 0, 200);
 		       e_shelf_populate(es);
 		    }
 	       }

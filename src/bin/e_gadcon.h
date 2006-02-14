@@ -12,13 +12,17 @@ typedef enum _E_Gadcon_Layout_Policy
 typedef enum _E_Gadcon_Orient
 {
    /* generic orientations */
-   E_GADCON_ORIENT_HORIZ,
+   E_GADCON_ORIENT_FLOAT,
+     E_GADCON_ORIENT_HORIZ,
      E_GADCON_ORIENT_VERT,
-     /* specific oreintations */
      E_GADCON_ORIENT_LEFT,
      E_GADCON_ORIENT_RIGHT,
      E_GADCON_ORIENT_TOP,
-     E_GADCON_ORIENT_BOTTOM
+     E_GADCON_ORIENT_BOTTOM,
+     E_GADCON_ORIENT_CORNER_TL,
+     E_GADCON_ORIENT_CORNER_TR,
+     E_GADCON_ORIENT_CORNER_BL,
+     E_GADCON_ORIENT_CORNER_BR
 } E_Gadcon_Orient;
 
 typedef struct _E_Gadcon              E_Gadcon;

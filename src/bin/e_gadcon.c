@@ -458,6 +458,11 @@ e_gadcon_client_size_request(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h)
       case E_GADCON_ORIENT_RIGHT:
 	e_gadcon_layout_pack_size_set(gcc->o_base, h);
 	break;
+      case E_GADCON_ORIENT_FLOAT:
+      case E_GADCON_ORIENT_CORNER_TL:
+      case E_GADCON_ORIENT_CORNER_TR:
+      case E_GADCON_ORIENT_CORNER_BL:
+      case E_GADCON_ORIENT_CORNER_BR:
       default:
 	break;
      }
