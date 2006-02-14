@@ -3893,22 +3893,27 @@ _e_fm_menu_context_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, un
 ;
 }
 
+/* callback when a mime action is clicked on the actions menu */
 static void                
 _e_fm_menu_actions(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Fm_Smart_Data *sd;
    E_Fm_Mime_Action *action;
    Evas_List *l;
+   Evas_List *files = NULL;
 
    sd = data;
    /* search for the action clicked */
-   for(l = sd->selection.mime; l; l = l->next)
+   action = e_fm_mime_action_get_by_label(mi->label);
+     /* get the list of files selected */
+   for(l = sd->selection.icons; l; l = l->next)
      {
-	action = (E_Fm_Mime_Action*)l->data;
-	if(!strcmp(action->label,mi->label))
-	  break;
+	E_Fm_Icon *icon;
+
+	icon = (E_Fm_Icon *)l->data;
+	files = evas_list_append(files,icon->file);
      }
    /* execute the action on the files */
-
+   e_fm_mime_action_call(files,action);
 }
 

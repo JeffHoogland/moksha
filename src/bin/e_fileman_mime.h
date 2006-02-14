@@ -32,12 +32,13 @@ struct _E_Fm_Mime_Action
    int  multiple; /* support for multiple files at once */
 };
 
-EAPI int              e_fm_mime_init(void);
-EAPI void             e_fm_mime_shutdwon(void);
-EAPI void             e_fm_mime_set(E_Fm_File *file);
-EAPI void             e_fm_mime_action_call(Evas_List *files, E_Fm_Mime_Action *action);
-EAPI E_Fm_Mime_Entry *e_fm_mime_common(E_Fm_Mime_Entry *e1, E_Fm_Mime_Entry *e2);
-EAPI E_Fm_Mime_Entry *e_fm_mime_list(Evas_List *mis);
+EAPI int               e_fm_mime_init(void);
+EAPI void              e_fm_mime_shutdwon(void);
+EAPI void              e_fm_mime_set(E_Fm_File *file);
+EAPI int               e_fm_mime_action_call(Evas_List *files, E_Fm_Mime_Action *action);
+EAPI E_Fm_Mime_Entry  *e_fm_mime_common(E_Fm_Mime_Entry *e1, E_Fm_Mime_Entry *e2);
+EAPI E_Fm_Mime_Entry  *e_fm_mime_list(Evas_List *mis);
+EAPI E_Fm_Mime_Action *e_fm_mime_action_get_by_label(char *label);
 
 
 #endif

@@ -398,6 +398,8 @@ e_fm_file_assoc_exec(E_Fm_File *file)
    return 1;
 }
 
+
+/* FIXME get rid of this */
 EAPI int 
 e_fm_file_exec_with(E_Fm_File *file, char* exec_with)
 {

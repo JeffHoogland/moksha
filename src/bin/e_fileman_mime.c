@@ -70,6 +70,7 @@
 
 static char * _e_fm_mime_suffix_get(char *filename);
 static void _e_fm_mime_action_append(E_Fm_Mime_Entry *entry, char *action_name);
+static char *_e_fm_mime_action_tokenizer(Evas_List *files, E_Fm_Mime_Action *action);
 
 static int init_count = 0;
 static Evas_List *entries = NULL;
@@ -313,16 +314,112 @@ e_fm_mime_set(E_Fm_File *file)
      file->mime = (E_Fm_Mime_Entry*)entries->data;
 }
 
-/* will call the command of an @action for the list of @files */
-void
+E_Fm_Mime_Action *
+e_fm_mime_action_get_by_label(char *label)
+{
+   Evas_List *l;
+   E_Fm_Mime_Action *action = NULL;
+   
+   for(l = actions; l; l = l->next)
+     {
+	action = (E_Fm_Mime_Action*)l->data;
+	if(!strcmp(label,action->label))
+	  break;
+     }
+   return action;
+}
+
+/* will call the command of an @action for the list of E_Fm_Files @files */
+int
 e_fm_mime_action_call(Evas_List *files, E_Fm_Mime_Action *action)
 {
-   printf("executing\n");
+   Ecore_Exe *exe;
+   char *command;
+
+   /* FIXME: use the e app execution mechanisms where possible so we can
+    * collect error output
+    */
+   command = _e_fm_mime_action_tokenizer(files,action);
+   printf("going to execute %s\n", command);
+   exe = ecore_exe_run(command, NULL);
+
+   if (!exe)
+     {
+	e_error_dialog_show(_("Run Error"),
+			    _("Enlightenment was unable to fork a child process:\n"
+			      "\n"
+			      "%s\n"
+			      "\n"),
+			    command);
+	return 0;
+     }
+   return 1;
 }
 
 
 /* subsystem functions */
 /***********************/
+static char*
+_e_fm_mime_action_tokenizer(Evas_List *files, E_Fm_Mime_Action *action)
+{
+   char *buf;
+   char *c;
+   int i, bsize,trans;
+   Evas_List *l;
+
+   buf = calloc(PATH_MAX,sizeof(char));
+   bsize = PATH_MAX;
+   i = 0;
+   trans = 0;
+   for(c = action->cmd; *c; c++)
+     {
+	if( i > bsize - 1)
+	  {
+	     bsize += PATH_MAX;
+	     buf = realloc(buf,bsize);
+	  }
+	if(trans)
+	  {
+	     char *astr = NULL;
+	     if(*c == 'f')
+	       {
+		  int i = 2;
+		  char *f = NULL;
+
+		  astr = calloc(PATH_MAX,sizeof(char));
+		  for(l = files; l; l = l->next)
+		    {
+		       E_Fm_File *file;
+		       
+		       file = (E_Fm_File *)l->data;
+		       sprintf(astr,"%s %s",astr,file->path);
+		       astr = realloc(astr,PATH_MAX*i);
+		       i++;
+		    }
+	       }
+	     if(!astr)
+	       continue;
+	     if(bsize < i + strlen(astr))
+	       {
+		  bsize += strlen(astr) + 1;
+		  buf = realloc(buf,bsize);
+	       }
+	     buf[i-1] = '\0';
+	     sprintf(buf, "%s%s", buf, astr);
+	     i += strlen(astr) - 1;
+	     trans = 0;
+	     free(astr);
+	     continue;
+	  }
+	if(*c == '%')
+	     trans = 1;
+	else
+	     buf[i] = *c;
+	i++;
+     }
+   return buf;
+}
+
 
 static void
 _e_fm_mime_action_append(E_Fm_Mime_Entry *entry, char *action_name)
