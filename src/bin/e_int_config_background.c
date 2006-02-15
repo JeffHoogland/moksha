@@ -52,7 +52,7 @@ e_int_config_background(E_Container *con)
    v->advanced.apply_cfdata   = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
    v->close_cfdata            = _bg_dialog_close;
-
+   v->override_auto_apply = 1;
    cfd = e_config_dialog_new(con, _("Background Settings"), NULL, 0, v, NULL);
    return cfd;
 }

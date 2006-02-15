@@ -18,7 +18,6 @@ struct _E_Config_Dialog_Data
    char *theme;
    char *current_theme;
    /*- ADVANCED -*/
-
 };
 
 struct _E_Cfg_Theme_Data
@@ -42,6 +41,8 @@ e_int_config_theme(E_Container *con)
    v->free_cfdata             = _free_data;
    v->basic.apply_cfdata      = _basic_apply_data;
    v->basic.create_widgets    = _basic_create_widgets;
+   v->override_auto_apply = 1;
+   
    /* create config diaolg for NULL object/data */
    cfd = e_config_dialog_new(con, _("Theme Selector"), NULL, 0, v, NULL);
    return cfd;

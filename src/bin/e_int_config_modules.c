@@ -62,7 +62,8 @@ e_int_config_modules(E_Container *con)
    v->free_cfdata             = _free_data;
    v->basic.create_widgets    = _basic_create_widgets;
    /* v->basic.apply_cfdata      = _basic_apply_data; */
-
+   v->override_auto_apply = 1;
+   
    cfd = e_config_dialog_new(con, _("Module Settings"), NULL, 0, v, NULL);
    return cfd;
 }
