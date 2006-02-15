@@ -89,6 +89,8 @@ struct _E_App_Autopsy
 EAPI int         e_app_init                              (void);
 EAPI int         e_app_shutdown                          (void);
 
+EAPI void        e_app_unmonitor_all                     (void);
+    
 EAPI E_App      *e_app_new                               (const char *path, int scan_subdirs);
 EAPI E_App      *e_app_empty_new                         (const char *path);
 EAPI void        e_app_image_size_set                    (E_App *a, int w, int h);

@@ -712,6 +712,10 @@ main(int argc, char **argv)
    /* if we were flagged to restart, then  restart. */
    if (restart)
      {
+	/* selected shutdown */
+	e_app_unmonitor_all();
+	e_ipc_shutdown();
+	ecore_file_shutdown();
 	ecore_app_restart();
      }
    

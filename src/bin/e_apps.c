@@ -176,6 +176,24 @@ e_app_shutdown(void)
    return 1;
 }
 
+EAPI void
+e_app_unmonitor_all(void)
+{
+   Evas_List *l;
+   
+   for (l = _e_apps_list; l; l = l->next)
+     {
+	E_App *a;
+
+	a = l->data;
+	if (a->monitor)
+	  {
+	     ecore_file_monitor_del(a->monitor);
+	     a->monitor = NULL;
+	  }
+     }
+}
+
 EAPI E_App *
 e_app_raw_new(void)
 {
