@@ -21,13 +21,15 @@ typedef struct _E_Config_Dialog_Data E_Config_Dialog_Data;
 
 struct _E_Config_Dialog_View
 {
+   int override_auto_apply;
+   
    void           *(*create_cfdata)     (E_Config_Dialog *cfd);
    void            (*free_cfdata)       (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
    int             (*close_cfdata)      (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
    struct {
       int          (*apply_cfdata)      (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
       Evas_Object *(*create_widgets)    (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-   } basic, advanced;
+   } basic, advanced;   
 };
 
 struct _E_Config_Dialog

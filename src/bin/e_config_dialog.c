@@ -35,11 +35,38 @@ e_config_dialog_new(E_Container *con, char *title, char *icon, int icon_size, E_
    cfd->data = data;
    cfd->hide_buttons = 1;
    cfd->cfg_changed = 0;
-   
-   if ((cfd->view->basic.apply_cfdata) || (cfd->view->advanced.apply_cfdata))
-      cfd->hide_buttons = 0;
 
-   _e_config_dialog_go(cfd, E_CONFIG_DIALOG_CFDATA_TYPE_BASIC);
+   if (cfd->view->override_auto_apply)
+     {
+	/* Dialog Requested To Not Auto-Apply */
+	if ((cfd->view->basic.apply_cfdata) || (cfd->view->advanced.apply_cfdata))
+	  cfd->hide_buttons = 0;
+     }
+   else
+     {
+	/* Ok To Override, Or Not Specified. Use Config Value */
+	if (e_config->cfgdlg_auto_apply)
+	  cfd->hide_buttons = 1;
+	else
+	  {
+	     if ((cfd->view->basic.apply_cfdata) || (cfd->view->advanced.apply_cfdata))
+	       cfd->hide_buttons = 0;
+	  }
+     }
+
+   switch (e_config->cfgdlg_default_mode)
+     {
+      case E_CONFIG_DIALOG_CFDATA_TYPE_BASIC:
+	if (cfd->view->basic.create_widgets)
+	  _e_config_dialog_go(cfd, E_CONFIG_DIALOG_CFDATA_TYPE_BASIC);
+	break;
+      case E_CONFIG_DIALOG_CFDATA_TYPE_ADVANCED:
+	if (cfd->view->advanced.create_widgets)
+	  _e_config_dialog_go(cfd, E_CONFIG_DIALOG_CFDATA_TYPE_ADVANCED);
+	else if (cfd->view->basic.create_widgets)
+	  _e_config_dialog_go(cfd, E_CONFIG_DIALOG_CFDATA_TYPE_BASIC);	
+	break;
+     }
 
    return cfd;
 }
@@ -207,7 +234,7 @@ _e_config_dialog_cb_apply(void *data, E_Dialog *dia)
       {
          if (cfd->view->advanced.apply_cfdata)
             ok = cfd->view->advanced.apply_cfdata(cfd, cfd->cfdata);
-      }
+      }   
    if ((ok) && (!cfd->hide_buttons))
      {
 	cfd->cfg_changed = 0;
@@ -238,6 +265,7 @@ static void
 _e_config_dialog_cb_changed(void *data, Evas_Object *obj)
 {
    E_Config_Dialog *cfd;
+   int ok = 0;
    
    cfd = data;
    if (!cfd->hide_buttons)
@@ -246,6 +274,19 @@ _e_config_dialog_cb_changed(void *data, Evas_Object *obj)
          e_dialog_button_disable_num_set(cfd->dia, 0, 0);
          e_dialog_button_disable_num_set(cfd->dia, 1, 0);
       }
+   else
+     {
+	if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
+	  {
+	     if (cfd->view->basic.apply_cfdata)
+	       ok = cfd->view->basic.apply_cfdata(cfd, cfd->cfdata);
+	  }
+	else
+	  {
+	     if (cfd->view->advanced.apply_cfdata)
+	       ok = cfd->view->advanced.apply_cfdata(cfd, cfd->cfdata);
+	  }
+     }   
 }
 
 static void
