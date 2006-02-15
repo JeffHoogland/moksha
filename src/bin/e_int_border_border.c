@@ -41,6 +41,8 @@ e_int_border_border(E_Border *bd)
          v->free_cfdata             = _free_data;
          v->basic.apply_cfdata      = _basic_apply_data;
          v->basic.create_widgets    = _basic_create_widgets;
+	 v->override_auto_apply = 1;
+	 
          /* create config diaolg for bd object/data */
          cfd = e_config_dialog_new(bd->zone->container, 
 			     _("Window Border Selection"), NULL, 0, v, bd);

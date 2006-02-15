@@ -63,6 +63,8 @@ e_int_border_remember(E_Border *bd)
          v->basic.create_widgets    = _basic_create_widgets;
          v->advanced.apply_cfdata   = _advanced_apply_data;
          v->advanced.create_widgets = _advanced_create_widgets;
+	 v->override_auto_apply = 1;
+	 
          /* create config dialog for bd object/data */
          cfd = e_config_dialog_new(bd->zone->container, 
 			     _("Window Remember"), NULL, 0, v, bd);
