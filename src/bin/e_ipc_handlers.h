@@ -7314,7 +7314,7 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_COLOR_CLASS_LIST
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-color-class-list", 0, "List all color classes used by currently loaded edje objects.", 1, HDL)
+   OP("-color-class-list", 0, "List all color classes used by currently loaded edje objects", 1, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
@@ -7343,5 +7343,90 @@ break;
    END_GENERIC();
 #endif
 #undef HDL
+/****************************************************************************/
+#define HDL E_IPC_OP_CFGDLG_AUTO_APPLY_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-cfgdlg-auto-apply-set", 1, "Set config dialogs to use auto apply, 1 for enabled 0 for disabled", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(policy, HDL);
+   e_config->cfgdlg_auto_apply = policy;
+   E_CONFIG_LIMIT(e_config->cfgdlg_auto_apply, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+/****************************************************************************/
+#define HDL E_IPC_OP_CFGDLG_AUTO_APPLY_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-cfgdlg-auto-apply-get", 0, "Get config dialogs use auto apply policy, 1 for enabled 0 for disabled", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->cfgdlg_auto_apply, E_IPC_OP_CFGDLG_AUTO_APPLY_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
 
 /****************************************************************************/
+#define HDL E_IPC_OP_CFGDLG_AUTO_APPLY_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(policy, HDL);
+   printf("REPLY: POLICY=%d\n", policy);
+   END_INT;
+#endif
+#undef HDL
+/****************************************************************************/
+#define HDL E_IPC_OP_CFGDLG_DEFAULT_MODE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-cfgdlg-default-mode-set", 1, "Set default mode for config dialogs. OPT1 = BASIC or ADVANCED", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT_START(HDL)
+   int value = 0;
+   if (!strcmp(params[0], "BASIC")) value = E_CONFIG_DIALOG_CFDATA_TYPE_BASIC;
+   else if (!strcmp(params[0], "ADVANCED")) value = E_CONFIG_DIALOG_CFDATA_TYPE_ADVANCED;
+   else
+     {
+	 printf("default mode must be BASIC or ADVANCED\n");
+	 exit(-1);
+     }
+   REQ_INT_END(value, HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(value, HDL);
+   e_config->cfgdlg_default_mode = value;
+   E_CONFIG_LIMIT(e_config->cfgdlg_default_mode, E_CONFIG_DIALOG_CFDATA_TYPE_BASIC, E_CONFIG_DIALOG_CFDATA_TYPE_ADVANCED);
+   SAVE;
+   END_INT
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+/****************************************************************************/
+#define HDL E_IPC_OP_CFGDLG_DEFAULT_MODE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-cfgdlg-default-mode-get", 0, "Get default mode for config dialogs", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->cfgdlg_default_mode, E_IPC_OP_CFGDLG_DEFAULT_MODE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+/****************************************************************************/
+#define HDL E_IPC_OP_CFGDLG_DEFAULT_MODE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(policy, HDL);
+   if (policy == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
+     printf("REPLY: BASIC\n");
+   else if (policy == E_CONFIG_DIALOG_CFDATA_TYPE_ADVANCED)
+     printf("REPLY: ADVANCED\n");
+   END_INT
+#endif
+#undef HDL
