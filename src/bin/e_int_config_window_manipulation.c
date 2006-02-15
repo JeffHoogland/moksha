@@ -15,17 +15,14 @@ static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E
 struct _E_Config_Dialog_Data
 {
    /*- BASIC -*/
-   int auto_raise;
-   int resist;
-   int maximize;
-   /*- ADVANCED -*/
    int use_auto_raise;
-   double auto_raise_delay;
    int use_resist;
+   int maximize_policy;
+   /*- ADVANCED -*/
+   double auto_raise_delay;
    int desk_resist;
    int window_resist;
    int gadget_resist;
-   int maximize_policy;
    int allow_shading;
 };
 
@@ -63,9 +60,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->maximize_policy = e_config->maximize_policy;
    if (cfdata->maximize_policy == E_MAXIMIZE_NONE)
      cfdata->maximize_policy = E_MAXIMIZE_FULLSCREEN;
-   if (cfdata->use_auto_raise) cfdata->auto_raise = 1;
-   if (cfdata->use_resist) cfdata->resist = 1;
-   cfdata->maximize = cfdata->maximize_policy;
    cfdata->allow_shading = e_config->allow_shading;
 }
 
@@ -95,9 +89,9 @@ static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    /* Actually take our cfdata settings and apply them in real life */
-   e_config->use_auto_raise = cfdata->auto_raise;
-   cfdata->use_resist = cfdata->resist;
-   e_config->maximize_policy = cfdata->maximize;
+   e_config->use_auto_raise = cfdata->use_auto_raise;
+   e_config->use_resist = cfdata->use_resist;
+   e_config->maximize_policy = cfdata->maximize_policy;
    e_config_save_queue();
    return 1; /* Apply was OK */
 }
@@ -129,14 +123,14 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_list_add(evas, 0, 0);
    
    of = e_widget_framelist_add(evas, _("Miscellaneous Options"), 0);
-   ob = e_widget_check_add(evas, _("Automatically raise windows on mouse over"), &(cfdata->auto_raise));
+   ob = e_widget_check_add(evas, _("Automatically raise windows on mouse over"), &(cfdata->use_auto_raise));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("When moving or resizing windows, resist at the boundaries"), &(cfdata->resist));
+   ob = e_widget_check_add(evas, _("When moving or resizing windows, resist at the boundaries"), &(cfdata->use_resist));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Maximize Policy"), 0);
-   rg = e_widget_radio_group_new(&(cfdata->maximize));
+   rg = e_widget_radio_group_new(&(cfdata->maximize_policy));
    ob = e_widget_radio_add(evas, _("Fullscreen"), E_MAXIMIZE_FULLSCREEN, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Smart expansion"), E_MAXIMIZE_SMART, rg);
