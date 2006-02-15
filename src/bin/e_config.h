@@ -47,7 +47,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
  * versioning feature. the value of this is really irrelevant - just as
  * long as it increases every time we change something
  */
-#define E_CONFIG_FILE_VERSION 136
+#define E_CONFIG_FILE_VERSION 137
 
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1
@@ -204,6 +204,8 @@ struct _E_Config
    int         exebuf_pos_max_h; // GUI
    Evas_List  *color_classes;
    int         use_app_icon; // GUI
+   int         cfgdlg_auto_apply; // GUI
+   int         cfgdlg_default_mode; // GUI   
    Evas_List  *gadcons;
 };
 
