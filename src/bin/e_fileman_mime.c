@@ -264,9 +264,12 @@ e_fm_mime_get_from_list(Evas_List *files)
    E_Fm_Mime_Entry *entry;
    Evas_List *l;
 
+   if (files == NULL) 
+     return NULL;
+   
    file = (E_Fm_Mime_Entry *)files->data;
    entry = file->mime;
-   for(l = files->next; l; l = l->next)
+   for (l = files->next; l; l = l->next)
      {
 	E_Fm_Mime_Entry *eme;
 

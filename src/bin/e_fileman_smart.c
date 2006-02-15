@@ -2257,7 +2257,6 @@ _e_fm_icon_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    E_Fm_Icon *icon;
    Evas_Event_Mouse_Up *ev;
    Evas_List *l;
-   Evas_List *mimes = NULL;
 
    ev = event_info;
    icon = data;
@@ -2314,8 +2313,21 @@ _e_fm_icon_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	/* the xdnd_drop will handle this case */
 	if(icon->sd->drag.doing)
 	  break;
-	/* FIXME if it isnt null free the list */
-	icon->sd->operation.files = NULL;
+
+	/* Free file list before recreating */	
+	while (icon->sd->operation.files)
+	  {
+	     E_Fm_File *file;
+	     
+	     file = icon->sd->operation.files->data;
+	     icon->sd->operation.files = evas_list_remove_list(
+			icon->sd->operation.files, icon->sd->operation.files);
+	     /*
+	      * FIXME: should this be freed, it looks like we just need to free the list here? 
+	      * e_object_del(E_OBJECT(file));
+	     */
+	  }
+	
 	/* set the operation files equal to the selected icons */
 	for(l = icon->sd->selection.icons; l; l = l->next)
 	  {
