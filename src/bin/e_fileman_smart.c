@@ -2168,7 +2168,7 @@ _e_fm_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 	     _e_fm_selections_clear(icon->sd);
 	     _e_fm_selections_add(icon, evas_list_find_list(icon->sd->icons, icon));
 	     icon->sd->operation.hover = NULL;
-	     icon->sd->operation.files = evas_list_append(icon->sd->operation.files, icon->file);
+	     icon->sd->operation.files = evas_list_append(icon->sd->operation.files, e_fm_file_new(icon->file->path));
 	     icon->sd->operation.mime = icon->file->mime;
 	     e_fm_mime_action_default_call(icon->sd);
 	  }
