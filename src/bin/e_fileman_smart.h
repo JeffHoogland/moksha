@@ -9,12 +9,15 @@ typedef struct _E_Fm_Icon_CFData            E_Fm_Icon_CFData;
 typedef struct _E_Fm_Config                 E_Fm_Config;
 typedef struct _E_Fm_Dir_Metadata           E_Fm_Dir_Metadata;
 typedef struct _E_Fm_Fake_Mouse_Up_Info     E_Fm_Fake_Mouse_Up_Info;
-typedef enum   _E_Fm_Arrange                E_Fm_Arrange;
-typedef enum   _E_Fm_State                  E_Fm_State;
-typedef enum   _E_Fm_Autoscroll             E_Fm_Autoscroll;
 typedef struct _E_Event_Fm_Reconfigure      E_Event_Fm_Reconfigure;
 typedef struct _E_Event_Fm_Directory_Change E_Event_Fm_Directory_Change;
 typedef struct _E_Fm_Assoc_App              E_Fm_Assoc_App;
+
+typedef enum   _E_Fm_Arrange                E_Fm_Arrange;
+typedef enum   _E_Fm_State                  E_Fm_State;
+typedef enum   _E_Fm_Autoscroll             E_Fm_Autoscroll;
+typedef enum   _E_Fm_Drag_Status            E_Fm_Drag_Status;
+typedef enum   _E_Fm_Drag_Button            E_Fm_Drag_Button;
 
 #else
 #ifndef E_FM_SMART_H
@@ -46,7 +49,8 @@ struct _E_Fm_Icon
 
    struct {
       unsigned char selected : 1;
-      unsigned char visible  : 1;
+      unsigned char hover    : 1;
+      unsigned char visible  : 1; /* FIXME what was it for?to stop comparing icon_obj to NULL */
    }
    state;
 
@@ -72,15 +76,15 @@ struct _E_Fm_Icon_CFData
 enum _E_Fm_Arrange
 {
    E_FILEMAN_CANVAS_ARRANGE_NAME = 0,
-     E_FILEMAN_CANVAS_ARRANGE_MODTIME = 1,
-     E_FILEMAN_CANVAS_ARRANGE_SIZE = 2,
+   E_FILEMAN_CANVAS_ARRANGE_MODTIME = 1,
+   E_FILEMAN_CANVAS_ARRANGE_SIZE = 2,
 };
 
 enum _E_Fm_State
 {
    E_FILEMAN_STATE_IDLE = 0,
-     E_FILEMAN_STATE_TYPEBUFFER = 1,
-     E_FILEMAN_STATE_RENAME = 2,
+   E_FILEMAN_STATE_TYPEBUFFER = 1,
+   E_FILEMAN_STATE_RENAME = 2,
 };
 
 enum _E_Fm_Autoscroll
@@ -90,6 +94,23 @@ enum _E_Fm_Autoscroll
    E_FILEMAN_AUTOSCROLL_DOWN = 2,
    E_FILEMAN_AUTOSCROLL_LEFT = 4,
    E_FILEMAN_AUTOSCROLL_RIGHT = 8,
+};
+
+enum _E_Fm_Drag_Status
+{
+   E_FILEMAN_DRAG_NONE = 0,     /* to not create the drag window on every mouse move */
+   E_FILEMAN_DRAG_START = 1,    /* to create the fake window and identify the fileman sd 
+				   that does the drag */
+   E_FILEMAN_DRAG_DOING = 2,    /* to know when to launch the context menu/call default
+				   relative action */
+   E_FILEMAN_DRAG_DONE = 3,     /* the mouse up event is *before* the xdnd selection, 
+				   we need this */
+};
+
+enum _E_Fm_Drag_Button
+{
+   E_FILEMAN_DRAG_PRIMARY = 1,
+   E_FILEMAN_DRAG_SECONDARY = 3,
 };
 
 struct _E_Fm_Fake_Mouse_Up_Info
@@ -141,8 +162,8 @@ struct _E_Fm_Smart_Data
    Evas_Coord x, y, w, h;
 
    struct {
-      unsigned char start : 1;
-      unsigned char doing : 1;
+      E_Fm_Drag_Status status;
+      E_Fm_Drag_Button button;
       int x, y;			/* the position of the pointer's x,y, relative to the canvas */
       int dx, dy;		/* the difference from the icon's x,y and the pointer's x,y */
       Ecore_Evas *ecore_evas;
@@ -192,7 +213,7 @@ struct _E_Fm_Smart_Data
 
    struct {
       Evas_List        *files; /* list of E_Fm_Files */
-      E_Fm_File        *dir;   /* the file of the relative directory for operations */
+      E_Fm_File        *hover; /* the file of the relative directory for operations */
       E_Fm_Mime_Entry  *mime;  /* overall mime for all the icons we are going to operate wirh */
    }
    operation;                  /* the operating files, for wich we are going to make actions

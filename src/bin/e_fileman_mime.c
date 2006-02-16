@@ -349,7 +349,7 @@ e_fm_mime_action_call(E_Fm_Smart_Data *sd, E_Fm_Mime_Action *action)
      }
    else
      {
-	command = _e_fm_mime_string_tokenizer(sd->operation.files,sd->operation.dir,action->cmd);
+	command = _e_fm_mime_string_tokenizer(sd->operation.files,sd->operation.hover,action->cmd);
 	printf("going to execute %s\n", command);
 	exe = ecore_exe_run(command, NULL);
 

@@ -30,6 +30,7 @@ struct _E_Fm_Mime_Entry
    int              level; /* the level on the three for easy search/comparsion */
    E_Fm_Mime_Entry  *parent;
    E_Fm_Mime_Action *action_default; /* the default action also exists on the actions list */
+   E_Fm_Mime_Action *action_default_relative;
    Evas_List        *actions;
    /* the autodetect features */
    char             *suffix;

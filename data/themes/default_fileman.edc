@@ -1129,6 +1129,11 @@ group {
 	       inherit: "default" 0.0;
 	       color: 10 10 10 30;
 	    }
+	    description {
+	       state: "hover" 0.0;
+	       inherit: "default" 0.0;
+	       color: 10 10 10 30;
+	    }
 	 }      	 
 	 part {
 	    name: "icon_box";
@@ -1260,6 +1265,24 @@ group {
 	 signal: "dropped"; 
 	 source: ""; 
 	 action: STATE_SET "clicked" 0.0;
+	 transition: LINEAR 0.2;	 
+	 target: "icon_title"; 
+         target: "icon_overlay";	 
+      }      
+      program { 
+	 name:   "hover"; 
+	 signal: "hover"; 
+	 source: ""; 
+	 action: STATE_SET "hover" 0.0;
+	 transition: LINEAR 0.2;	 
+	 target: "icon_title"; 
+         target: "icon_overlay";	 
+      }      
+      program { 
+	 name:   "unhover"; 
+	 signal: "unhover"; 
+	 source: ""; 
+	 action: STATE_SET "default" 0.0;
 	 transition: LINEAR 0.2;	 
 	 target: "icon_title"; 
          target: "icon_overlay";	 
