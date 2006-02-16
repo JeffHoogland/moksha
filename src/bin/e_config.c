@@ -425,8 +425,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, exebuf_pos_max_h, INT);
    E_CONFIG_LIST(D, T, color_classes, _e_config_color_class_edd);
    E_CONFIG_VAL(D, T, use_app_icon, INT);
-   E_CONFIG_VAL(D, T, cfgdlg_auto_apply, INT);
-   E_CONFIG_VAL(D, T, cfgdlg_default_mode, INT);   
+   E_CONFIG_VAL(D, T, cfgdlg_auto_apply, INT); /**/
+   E_CONFIG_VAL(D, T, cfgdlg_default_mode, INT); /**/
    E_CONFIG_LIST(D, T, gadcons, _e_config_gadcon_edd);
 
    e_config = e_config_domain_load("e", _e_config_edd);

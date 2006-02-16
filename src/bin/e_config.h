@@ -169,8 +169,8 @@ struct _E_Config
    int         resize_info_follows; // GUI
    int         move_info_visible; // GUI
    int         resize_info_visible; // GUI
-   int         focus_last_focused_per_desktop;
-   int         focus_revert_on_hide_or_close;
+   int         focus_last_focused_per_desktop; // GUI
+   int         focus_revert_on_hide_or_close; // GUI
    int         use_e_cursor; // GUI
    int         cursor_size; //GUI
    int         menu_autoscroll_margin; // GUI
@@ -189,7 +189,7 @@ struct _E_Config
    int         menu_eap_name_show; // GUI
    int         menu_eap_generic_show; // GUI
    int         menu_eap_comment_show; // GUI
-   int         fullscreen_policy;
+   int         fullscreen_policy; // GUI
    int         exebuf_max_exe_list; // GUI
    int         exebuf_max_eap_list; // GUI
    int         exebuf_scroll_animate; // GUI
