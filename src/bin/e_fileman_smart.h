@@ -11,6 +11,8 @@ typedef struct _E_Fm_Dir_Metadata           E_Fm_Dir_Metadata;
 typedef struct _E_Fm_Fake_Mouse_Up_Info     E_Fm_Fake_Mouse_Up_Info;
 typedef struct _E_Event_Fm_Reconfigure      E_Event_Fm_Reconfigure;
 typedef struct _E_Event_Fm_Directory_Change E_Event_Fm_Directory_Change;
+typedef struct _E_Fm_Menu_Item_Data         E_Fm_Menu_Item_Data;
+
 typedef struct _E_Fm_Assoc_App              E_Fm_Assoc_App;
 
 typedef enum   _E_Fm_Arrange                E_Fm_Arrange;
@@ -22,6 +24,14 @@ typedef enum   _E_Fm_Drag_Button            E_Fm_Drag_Button;
 #else
 #ifndef E_FM_SMART_H
 #define E_FM_SMART_H
+
+/* this is for passing the E_Fm_Mime_Action of a menu item and the E_Fm_Smart_Data
+ * in one struct for the menu item callback */
+struct _E_Fm_Menu_Item_Data
+{
+   E_Fm_Mime_Action *action;
+   E_Fm_Smart_Data *sd;
+};
 
 struct _E_Fm_Config
 {
@@ -50,11 +60,9 @@ struct _E_Fm_Icon
    struct {
       unsigned char selected : 1;
       unsigned char hover    : 1;
-      unsigned char visible  : 1; /* FIXME what was it for?to stop comparing icon_obj to NULL */
+      unsigned char visible  : 1; /* to stop comparing icon_obj to NULL */
    }
    state;
-
-   E_Menu *menu;
 };
 
 struct _E_Fm_Icon_CFData
@@ -134,7 +142,7 @@ struct _E_Fm_Smart_Data
 
    E_Fm_Dir_Metadata *meta;
 
-   Evas_Hash *mime_menu_hash;
+   Evas_Hash *mime_menu_hash;   /* FIXME delete this */
 
    char *dir;                   /* FIXME this could be actually a E_Fm_Dir */
    DIR  *dir2;
@@ -215,6 +223,8 @@ struct _E_Fm_Smart_Data
       Evas_List        *files; /* list of E_Fm_Files */
       E_Fm_File        *hover; /* the file of the relative directory for operations */
       E_Fm_Mime_Entry  *mime;  /* overall mime for all the icons we are going to operate wirh */
+      E_Menu           *menu;  /* the menu displayed for it (action/context) */
+      Evas_List        *menu_item_data; /* the data created for each callback, for free later */
    }
    operation;                  /* the operating files, for wich we are going to make actions
 				  might be the selected files or the dropped files */

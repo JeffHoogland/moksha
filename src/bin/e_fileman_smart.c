@@ -186,6 +186,11 @@ static void                _e_fm_menu_default(void *data, E_Menu *m, E_Menu_Item
 
 static int                 _e_fm_init_assoc(E_Fm_Smart_Data *sd);
 
+/* free functions */
+/******************/
+static void                 _e_fm_operation_menu_free(E_Fm_Smart_Data *sd);
+static void                 _e_fm_operation_files_free(E_Fm_Smart_Data *sd);
+static void                 _e_fm_operation_free(E_Fm_Smart_Data *sd);
 
 static Ecore_Event_Handler *e_fm_drag_mouse_up_handler = NULL;
 static Ecore_Event_Handler *e_fm_drag_mouse_move_handler = NULL;
@@ -2206,12 +2211,10 @@ _e_fm_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 	     icon->sd->drag.y = ev->canvas.y;
 	     icon->sd->drag.icon_obj = icon;
 	  }
-	     
 	if (!icon->state.selected)
 	  {
 	     if (!evas_key_modifier_is_set(evas_key_modifier_get(icon->sd->evas), "Control"))
 	       _e_fm_selections_clear(icon->sd);
-	       
 	  }
      }	
 }
@@ -2292,25 +2295,15 @@ _e_fm_icon_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 			_e_fm_selections_add(icon, evas_list_find_list(icon->sd->icons, icon));
 		     }
 		}
-	      /* Free file list before recreating */	
-	      while (icon->sd->operation.files)
-		{
-		   E_Fm_File *file;
-	     
-		   file = icon->sd->operation.files->data;
-		   icon->sd->operation.files = evas_list_remove_list(
-			icon->sd->operation.files, icon->sd->operation.files);
-	     /*
-	      * FIXME: should this be freed, it looks like we just need to free the list here? 
-	      * e_object_del(E_OBJECT(file));
-	     */
-		}
+	      /* free operation struct before recreating */
+	      _e_fm_operation_free(icon->sd);
 	      /* set the operation files equal to the selected icons */
 	      for(l = icon->sd->selection.icons; l; l = l->next)
 		{
 		   E_Fm_Icon *ic;
 		   ic = (E_Fm_Icon *)l->data;
-		   icon->sd->operation.files = evas_list_append(icon->sd->operation.files, ic->file);
+		   /* duplicate the selected files, to not free the selected ones directly */
+		   icon->sd->operation.files = evas_list_append(icon->sd->operation.files, e_fm_file_new(ic->file->path));
 		}
 	      /* get the overall mime entry for the selected files */
 	      icon->sd->operation.hover = NULL; 
@@ -2326,7 +2319,7 @@ _e_fm_icon_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	 else if(icon->sd->drag.status == E_FILEMAN_DRAG_DONE)
 	  {
 	     printf("popping up the context menu\n");
-	     //_e_fm_menu_context_display(icon->sd, ev->output.x, ev->output.y, ev->timestamp);
+	     _e_fm_menu_context_display(icon->sd, ev->output.x, ev->output.y, ev->timestamp);
 	  }
 	break;
 
@@ -3391,7 +3384,12 @@ _e_fm_xdnd_position_cb(void *data, int type, void *event)
 	/* check the position of every icon and compare the coords
 	 * until we find an icon below
 	 */
-	sd->operation.hover = NULL;
+		  
+	if(sd->operation.hover)
+	  {
+	     e_object_del(E_OBJECT(sd->operation.hover));
+	     sd->operation.hover = NULL;
+	  }
 	for (l = sd->icons; l; l = l->next)
 	  {
 	     E_Fm_Icon *icon;
@@ -3405,7 +3403,13 @@ _e_fm_xdnd_position_cb(void *data, int type, void *event)
 	       {
 		  icon->state.hover = 1;
 		  e_fm_icon_signal_emit(icon->icon_obj, "hover", "");
-		  sd->operation.hover = icon->file;
+		  if(sd->operation.hover)
+		    {
+		       e_object_del(E_OBJECT(sd->operation.hover));
+		       sd->operation.hover = NULL;
+		    }
+		  sd->operation.hover = e_fm_file_new(icon->file->path);
+		  
 	       }
 	     else
 	       {
@@ -3420,6 +3424,9 @@ _e_fm_xdnd_position_cb(void *data, int type, void *event)
 		    e_fm_icon_signal_emit(icon->icon_obj, "clicked", "");
 	       }
 	  }
+	/* if we arent above any icon, the file is the dir itself */
+	if(!sd->operation.hover)
+	  sd->operation.hover = e_fm_file_new(sd->dir);
      }
    
    rect.x = 0;
@@ -3547,9 +3554,8 @@ _e_fm_xdnd_selection_cb(void *data, int type, void *event)
 	      files = ev->data;
 	      if(files->num_files < 1)
 		break;
-		   
-	      /* FIXME clean in a better way the list */
-	      sd->operation.files = NULL;
+	      /* free the operation struct before recreating */
+	      _e_fm_operation_files_free(sd);
 	      i = 0;
 	      do
 		{
@@ -3810,12 +3816,16 @@ _e_fm_menu_action_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, uns
    E_Fm_Mime_Action *action;
    E_Fm_Mime_Action *default_action;
    E_Fm_Mime_Entry *mime;
+   E_Fm_Menu_Item_Data *mid;
    int multiple = 0; 
 
 
-   /* if we dont have any selection, how do we get here ? */
-   if(!sd->selection.icons)
+   /* if we dont have any operation files, how do we get here ? */
+   if(!sd->operation.files)
      return;
+   /* to know if the action can be performed on multiple files */
+   if(sd->operation.files->next)
+     multiple = 1;
    /* to know if the action can be performed on multiple files */
    if(sd->operation.files->next)
      multiple = 1;
@@ -3839,15 +3849,21 @@ _e_fm_menu_action_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, uns
 	     mime = mime->parent;
 	     continue;
 	  }
+	if(action->relative)
+	  continue;
 	if(!action->multiple && multiple)
 	  {
 	     mime = mime->parent;
 	     continue;
 	  }
 
+	mid = E_NEW(E_Fm_Menu_Item_Data,1);
+	mid->action = action;
+	mid->sd = sd;
+	sd->operation.menu_item_data = evas_list_append(sd->operation.menu_item_data, mid);
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _(action->label));
-	e_menu_item_callback_set(mi, _e_fm_menu_actions, sd);
+	e_menu_item_callback_set(mi, _e_fm_menu_actions, mid);
 	e_menu_item_icon_edje_set(mi, (char *)e_theme_edje_file_get("base/theme/fileman",
 		 "fileman/button/open"),"fileman/button/open");
    
@@ -3874,10 +3890,18 @@ _e_fm_menu_action_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, uns
 	     /* if its the same as the default one, skip it */
 	     if(action == default_action)
 	       continue;
+	     if(action->relative)
+	       continue;
+	     
+	
+	     mid = E_NEW(E_Fm_Menu_Item_Data,1);
+	     mid->action = action;
+	     mid->sd = sd;
+	     sd->operation.menu_item_data = evas_list_append(sd->operation.menu_item_data, mid);
 	     
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _(action->label));
-	     e_menu_item_callback_set(mi, _e_fm_menu_actions, sd);
+	     e_menu_item_callback_set(mi, _e_fm_menu_actions, mid);
 	     e_menu_item_icon_edje_set(mi, (char *)e_theme_edje_file_get("base/theme/fileman",
              "fileman/button/open"),"fileman/button/open");
 	       
@@ -3935,7 +3959,7 @@ _e_fm_menu_action_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, uns
 	 (char *)e_theme_edje_file_get("base/theme/fileman",
 				       "fileman/button/properties"),
 				       "fileman/button/properties");
-   //sd->selection.icon->menu = mn;
+   sd->operation.menu = mn;
    
    if (!sd->win) return;
    
@@ -3961,14 +3985,15 @@ _e_fm_menu_context_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, un
    E_Fm_Mime_Entry *mime;
    E_Fm_Mime_Action *action;
    E_Fm_Mime_Action *default_action;
+   E_Fm_Menu_Item_Data *mid;
    
-   /* if we dont have any selection, how do we get here ? */
-   if(!sd->selection.icons)
+   /* if we dont have any operation files, how do we get here ? */
+   if(!sd->operation.files)
      return;
    /* to know if the action can be performed on multiple files */
    if(sd->operation.files->next)
      multiple = 1;
- 
+    
    mn = e_menu_new();
    e_menu_category_set(mn,"fileman/action");
    e_menu_category_data_set("fileman/action",sd);
@@ -3993,9 +4018,14 @@ _e_fm_menu_context_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, un
 	     continue;
 	  }
 
+	mid = E_NEW(E_Fm_Menu_Item_Data,1);
+	mid->action = action;
+	mid->sd = sd;
+	sd->operation.menu_item_data = evas_list_append(sd->operation.menu_item_data, mid);
+	
 	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, _(action->label));
-	e_menu_item_callback_set(mi, _e_fm_menu_actions, sd);
+	e_menu_item_label_set(mi, e_fm_mime_translate(sd, action->label));
+	e_menu_item_callback_set(mi, _e_fm_menu_actions, mid);
 	e_menu_item_icon_edje_set(mi, (char *)e_theme_edje_file_get("base/theme/fileman",
 		 "fileman/button/open"),"fileman/button/open");
    
@@ -4017,7 +4047,6 @@ _e_fm_menu_context_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, un
 	actions = mime->actions;
 	for(l = actions; l; l = l->next)
 	  {
-
 	     action = (E_Fm_Mime_Action*)l->data;
 	     /* if its not relative skip it */
 	     if(!action->relative)
@@ -4028,9 +4057,15 @@ _e_fm_menu_context_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, un
 	     if(action == default_action)
 	       continue;
 	     
+	
+	     mid = E_NEW(E_Fm_Menu_Item_Data,1);
+	     mid->action = action;
+	     mid->sd = sd;
+	     sd->operation.menu_item_data = evas_list_append(sd->operation.menu_item_data, mid);
+	     
 	     mi = e_menu_item_new(mn);
-	     e_menu_item_label_set(mi, _(action->label));
-	     e_menu_item_callback_set(mi, _e_fm_menu_actions, sd);
+	     e_menu_item_label_set(mi, e_fm_mime_translate(sd, action->label));
+	     e_menu_item_callback_set(mi, _e_fm_menu_actions, mid);
 	     e_menu_item_icon_edje_set(mi, (char *)e_theme_edje_file_get("base/theme/fileman",
              "fileman/button/open"),"fileman/button/open");
 	       
@@ -4038,6 +4073,8 @@ _e_fm_menu_context_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, un
 	mime = mime->parent;
      } while(mime);
    
+   sd->operation.menu = mn;
+  
    if (!sd->win) return;
    
    ecore_evas_geometry_get(sd->win->ecore_evas, &x, &y, &w, &h);
@@ -4049,14 +4086,64 @@ _e_fm_menu_context_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, un
 static void                
 _e_fm_menu_actions(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Fm_Smart_Data *sd;
-   E_Fm_Mime_Action *action;
-   Evas_List *l;
-   Evas_List *files = NULL;
+   E_Fm_Menu_Item_Data *mid;
 
-   sd = data;
-   /* search for the action clicked */
-   action = e_fm_mime_action_get_by_label(mi->label);
+   mid = data;
    /* execute the action on the files */
-   e_fm_mime_action_call(sd,action);
+   e_fm_mime_action_call(mid->sd,mid->action);
+}
+
+static void
+_e_fm_operation_from_selection(E_Fm_Smart_Data *sd)
+{
+
+}
+
+/* free functions */
+/******************/
+static void                 
+_e_fm_operation_menu_free(E_Fm_Smart_Data *sd)
+{
+   if(sd->operation.menu)
+	e_object_del(E_OBJECT(sd->operation.menu));
+   sd->operation.menu = NULL;
+   while(sd->operation.menu_item_data)
+     {
+	E_Fm_Menu_Item_Data *mid;
+
+	mid = (E_Fm_Menu_Item_Data*)sd->operation.menu_item_data->data;
+	E_FREE(mid);
+	sd->operation.menu_item_data = evas_list_remove_list(sd->operation.menu_item_data, sd->operation.menu_item_data);
+     }
+}
+
+static void
+_e_fm_operation_files_free(E_Fm_Smart_Data *sd)
+{
+   while (sd->operation.files)
+     {
+	E_Fm_File *file;
+	
+	file = sd->operation.files->data;
+	sd->operation.files = evas_list_remove_list(
+	      sd->operation.files, sd->operation.files);
+	/* also delete the file, its a copy of the selected or a new file
+	 * in case of a drop
+	 */
+	e_object_del(E_OBJECT(file));
+     }
+   /* also delete the menu associated with this operation */
+   _e_fm_operation_menu_free(sd);
+}
+
+static void
+_e_fm_operation_free(E_Fm_Smart_Data *sd)
+{
+   if(sd->operation.hover)
+     {
+	e_object_del(E_OBJECT(sd->operation.hover));
+	sd->operation.hover = NULL;
+     }
+   /* delete the files and the menu */
+   _e_fm_operation_files_free(sd);
 }

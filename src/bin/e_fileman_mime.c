@@ -63,7 +63,7 @@
  * to define the command to execute there are several tokens like:
  *
  * %f => file input
- * %d => current directory
+ * %h => hover file (might be the current directory, other file, whatever)
  * 
  *
  *
@@ -76,10 +76,12 @@ static E_Fm_Mime_Entry  *_e_fm_mime_common(E_Fm_Mime_Entry *e1, E_Fm_Mime_Entry 
 static char             *_e_fm_mime_suffix_get(char *filename);
 static void              _e_fm_mime_action_append(E_Fm_Mime_Entry *entry, char *action_name);
 static void              _e_fm_mime_action_default_set(E_Fm_Mime_Entry *entry, char *action_name);
-static char             *_e_fm_mime_string_tokenizer(Evas_List *files, char *dir, char *istr);
+static char             *_e_fm_mime_string_tokenizer(Evas_List *files, E_Fm_File *dir, char *istr);
 /* definitions of the internal actions */
 static void              _e_fm_mime_action_internal_folder_open(E_Fm_Smart_Data *data);
 static void              _e_fm_mime_action_internal_folder_open_other(E_Fm_Smart_Data *data);
+static void              _e_fm_mime_action_internal_copy_to(E_Fm_Smart_Data *data);
+static void              _e_fm_mime_action_internal_move_to(E_Fm_Smart_Data *data);
 
 
 static int init_count = 0;
@@ -112,6 +114,22 @@ e_fm_mime_init(void)
    action->label = strdup("Open the Folder in other Window");
    action->is_internal = 1;
    action->internal.function = &_e_fm_mime_action_internal_folder_open_other;
+   actions = evas_list_append(actions,action);
+   
+   action = E_NEW(E_Fm_Mime_Action,1);
+   action->name = strdup("_copy_to");
+   action->label = strdup("Copy to %h");
+   action->relative = 1;
+   action->is_internal = 1;
+   action->internal.function = &_e_fm_mime_action_internal_copy_to;
+   actions = evas_list_append(actions,action);
+   
+   action = E_NEW(E_Fm_Mime_Action,1);
+   action->name = strdup("_move_to");
+   action->label = strdup("Move to %h");
+   action->relative = 1;
+   action->is_internal = 1;
+   action->internal.function = &_e_fm_mime_action_internal_move_to;
    actions = evas_list_append(actions,action);
    
    /* actions */
@@ -151,6 +169,8 @@ e_fm_mime_init(void)
    root->label = strdup("Unkown File");
    root->level = 0;
    entries = evas_list_append(entries,root);
+   _e_fm_mime_action_default_set(root, "_copy_to");
+   _e_fm_mime_action_append(root, "_move_to");
    /* data */
    entry = E_NEW(E_Fm_Mime_Entry,1);
    entry->name = strdup("data");
@@ -267,13 +287,13 @@ e_fm_mime_get_from_list(Evas_List *files)
    if (files == NULL) 
      return NULL;
    
-   file = (E_Fm_Mime_Entry *)files->data;
+   file = (E_Fm_File *)files->data;
    entry = file->mime;
    for (l = files->next; l; l = l->next)
      {
 	E_Fm_Mime_Entry *eme;
 
-	file = (E_Fm_Mime_Entry *)l->data;
+	file = (E_Fm_File *)l->data;
 	eme = file->mime;
 	entry = _e_fm_mime_common(entry,eme);
      }
@@ -318,7 +338,8 @@ e_fm_mime_set(E_Fm_File *file)
      file->mime = (E_Fm_Mime_Entry*)entries->data;
 }
 
-E_Fm_Mime_Action *
+#if 0
+EAPI E_Fm_Mime_Action *
 e_fm_mime_action_get_by_label(char *label)
 {
    Evas_List *l;
@@ -332,6 +353,7 @@ e_fm_mime_action_get_by_label(char *label)
      }
    return action;
 }
+#endif
 
 /* will call the command of an @action for the fileman_smart @sd */
 EAPI int
@@ -355,7 +377,6 @@ e_fm_mime_action_call(E_Fm_Smart_Data *sd, E_Fm_Mime_Action *action)
 
    
 	if (!exe)
-     
 	  {
 	
 	     e_error_dialog_show(_("Run Error"),
@@ -395,6 +416,15 @@ e_fm_mime_action_default_call(E_Fm_Smart_Data *sd)
    e_fm_mime_action_call(sd, action);
 }
 
+EAPI char *
+e_fm_mime_translate(E_Fm_Smart_Data *sd, char *istr)
+{
+   char *ostr;
+
+   ostr = _e_fm_mime_string_tokenizer(sd->operation.files,sd->operation.hover, istr);
+
+   return ostr;
+}
 
 /* subsystem functions */
 /***********************/
@@ -442,7 +472,7 @@ _e_fm_mime_common(E_Fm_Mime_Entry *e1, E_Fm_Mime_Entry *e2)
 
 /* will translate %f,%d to file,dir respective */
 static char*
-_e_fm_mime_string_tokenizer(Evas_List *files, char *dir, char *istr)
+_e_fm_mime_string_tokenizer(Evas_List *files, E_Fm_File *hover, char *istr)
 {
    char *buf;
    char *c;
@@ -465,7 +495,7 @@ _e_fm_mime_string_tokenizer(Evas_List *files, char *dir, char *istr)
 	     char *astr = NULL;
 	     if(*c == 'f')
 	       {
-		  int i = 2;
+		  int j = 2;
 		  char *f = NULL;
 
 		  astr = calloc(PATH_MAX,sizeof(char));
@@ -475,9 +505,13 @@ _e_fm_mime_string_tokenizer(Evas_List *files, char *dir, char *istr)
 		       
 		       file = (E_Fm_File *)l->data;
 		       sprintf(astr,"%s %s",astr,file->path);
-		       astr = realloc(astr,PATH_MAX*i);
-		       i++;
+		       astr = realloc(astr,PATH_MAX*j);
+		       j++;
 		    }
+	       }
+	     if(*c == 'h')
+	       {
+		  astr = strdup(hover->path);
 	       }
 	     if(!astr)
 	       continue;
@@ -534,7 +568,10 @@ _e_fm_mime_action_default_set(E_Fm_Mime_Entry *entry, char *action_name)
 	if(!strcmp(action->name, action_name))
 	  {
 	     /* overwrite the old default action */
-	     entry->action_default = action;
+	     if(action->relative)
+	       entry->action_default_relative = action;
+	     else
+	       entry->action_default = action;
 	     entry->actions = evas_list_append(entry->actions, action);
 	     break;
 	  }
@@ -576,5 +613,15 @@ _e_fm_mime_action_internal_folder_open_other(E_Fm_Smart_Data *sd)
    file = sd->operation.files->data;
    fileman = e_fileman_new_to_dir(e_container_current_get(e_manager_current_get()), file->path);
    e_fileman_show(fileman);
+}
+static void 
+_e_fm_mime_action_internal_copy_to(E_Fm_Smart_Data *sd)
+{
+   printf("going to copy to %s\n", sd->operation.hover->path);
+}
+static void 
+_e_fm_mime_action_internal_move_to(E_Fm_Smart_Data *sd)
+{
+   printf("going to move to %s\n", sd->operation.hover->path);
 }
 
