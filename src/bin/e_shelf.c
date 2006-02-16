@@ -4,6 +4,7 @@
 #include "e.h"
 
 static void _e_shelf_free(E_Shelf *es);
+static void _e_shelf_config_port(E_Config_Shelf_Config *cf1, E_Config_Shelf_Config *cf2);
 
 static Evas_List *shelves = NULL;
 static int shelf_id = 0;
@@ -21,8 +22,82 @@ e_shelf_shutdown(void)
    return 1;
 }
 
+EAPI void
+e_shelf_config_init(void)
+{
+   Evas_List *l, *l2;
+   
+   for (l = e_config->shelves; l; l = l->next)
+     {
+	E_Config_Shelf *cf_es;
+	E_Config_Shelf_Config *cf_escf, *cf_escf2;
+	E_Zone *zone;
+	int closeness;
+	
+	cf_es = l->data;
+	zone = e_util_container_zone_number_get(cf_es->container, cf_es->zone);
+	if (zone)
+	  {
+	     cf_escf2 = NULL;
+	     closeness = 0x7fffffff;
+	     for (l2 = cf_es->configs; l2; l2 = l2->next)
+	       {
+		  cf_escf = l2->data;
+		  if ((cf_escf->res.w == zone->w) &&
+		      (cf_escf->res.h == zone->h))
+		    {
+		       cf_escf2 = cf_escf;
+		       closeness = 0;
+		       break;
+		    }
+		  else
+		    {
+		       int difx, dify;
+		       
+		       difx = cf_escf->res.w - zone->w;
+		       if (difx < 0) difx = -difx;
+		       dify = cf_escf->res.h - zone->h;
+		       if (dify < 0) dify = -dify;
+		       difx = difx * dify;
+		       if (difx < closeness)
+			 {
+			    closeness = difx;
+			    cf_escf2 = cf_escf;
+			 }
+		    }
+	       }
+	     if ((closeness != 0) && (cf_escf2))
+	       {
+		  cf_escf = E_NEW(E_Config_Shelf_Config, 1);
+		  cf_escf->res.w = zone->w;
+		  cf_escf->res.h = zone->h;
+		  cf_escf->orient = cf_escf2->orient;
+		  cf_escf->style = evas_stringshare_add(cf_escf2->style);
+		  _e_shelf_config_port(cf_escf2, cf_escf);
+		  cf_escf2 = cf_escf;
+		  e_config_save_queue();
+	       }
+	     if (cf_escf2)
+	       {
+		  E_Shelf *es;
+		  
+		  es = e_shelf_zone_new(zone, cf_es->name, cf_escf2->style,
+					cf_es->popup, cf_es->layer);
+		  if (es)
+		    {
+		       e_shelf_move_resize(es, cf_escf2->x, cf_escf2->y,
+					   cf_escf2->w, cf_escf2->h);
+		       e_shelf_orient(es, cf_escf2->orient);
+		       e_shelf_populate(es);
+		       e_shelf_show(es);
+		    }
+	       }
+	  }
+     }
+}
+
 EAPI E_Shelf *
-e_shelf_zone_new(E_Zone *zone, char *name, int popup, int layer)
+e_shelf_zone_new(E_Zone *zone, char *name, char *style, int popup, int layer)
 {
    E_Shelf *es;
    char buf[1024];
@@ -30,11 +105,9 @@ e_shelf_zone_new(E_Zone *zone, char *name, int popup, int layer)
    es = E_OBJECT_ALLOC(E_Shelf, E_SHELF_TYPE, _e_shelf_free);
    if (!es) return NULL;
 
-   /* FIXME: geometry, layer and style shoudl be loaded from config for this
-    named shelf */
    es->x = 0;
    es->y = 0;
-   es->w = zone->w;
+   es->w = 32;
    es->h = 32;
    if (popup)
      {
@@ -50,25 +123,24 @@ e_shelf_zone_new(E_Zone *zone, char *name, int popup, int layer)
      }
    es->layer = layer;
    es->zone = zone;
-   es->style = strdup("default");
+   es->style = evas_stringshare_add(style);
    
    es->o_base = edje_object_add(es->evas);
-   es->name = strdup(name);
+   es->name = evas_stringshare_add(name);
    snprintf(buf, sizeof(buf), "shelf/%s/base", es->style);
    evas_object_resize(es->o_base, es->w, es->h);
    if (!e_theme_edje_object_set(es->o_base, "base/theme/shelf", buf))
      e_theme_edje_object_set(es->o_base, "base/theme/shelf", "shelf/default/base");
    if (es->popup)
      {
+	evas_object_show(es->o_base);
 	e_popup_edje_bg_object_set(es->popup, es->o_base);
-	e_popup_show(es->popup);
      }
    else
      {
 	evas_object_move(es->o_base, es->zone->x + es->x, es->zone->y + es->y);
 	evas_object_layer_set(es->o_base, layer);
      }
-   evas_object_show(es->o_base);
    
    snprintf(buf, sizeof(buf), "%i", shelf_id);
    shelf_id++;
@@ -87,6 +159,28 @@ e_shelf_populate(E_Shelf *es)
    E_OBJECT_CHECK(es);
    E_OBJECT_TYPE_CHECK(es, E_GADMAN_SHELF_TYPE);
    e_gadcon_populate(es->gadcon);
+}
+
+EAPI void
+e_shelf_show(E_Shelf *es)
+{
+   E_OBJECT_CHECK(es);
+   E_OBJECT_TYPE_CHECK(es, E_GADMAN_SHELF_TYPE);
+   if (es->popup)
+     e_popup_show(es->popup);
+   else
+     evas_object_show(es->o_base);
+}
+
+EAPI void
+e_shelf_hide(E_Shelf *es)
+{
+   E_OBJECT_CHECK(es);
+   E_OBJECT_TYPE_CHECK(es, E_GADMAN_SHELF_TYPE);
+   if (es->popup)
+     e_popup_hide(es->popup);
+   else
+     evas_object_hide(es->o_base);
 }
 
 EAPI void
@@ -110,7 +204,10 @@ e_shelf_resize(E_Shelf *es, int w, int h)
    es->w = w;
    es->h = h;
    if (es->popup)
-     e_popup_resize(es->popup, es->w, es->h);
+     {
+	e_popup_resize(es->popup, es->w, es->h);
+	evas_object_resize(es->o_base, es->w, es->h);
+     }
    else
      evas_object_resize(es->o_base, es->w, es->h);
 }
@@ -125,7 +222,10 @@ e_shelf_move_resize(E_Shelf *es, int x, int y, int w, int h)
    es->w = w;
    es->h = h;
    if (es->popup)
-     e_popup_move_resize(es->popup, es->x, es->y, es->w, es->h);
+     {
+	e_popup_move_resize(es->popup, es->x, es->y, es->w, es->h);
+	evas_object_resize(es->o_base, es->w, es->h);
+     }
    else
      {
 	evas_object_move(es->o_base, es->zone->x + es->x, es->zone->y + es->y);
@@ -156,6 +256,16 @@ e_shelf_save(E_Shelf *es)
 }
 
 EAPI void
+e_shelf_unsave(E_Shelf *es)
+{
+   E_OBJECT_CHECK(es);
+   E_OBJECT_TYPE_CHECK(es, E_GADMAN_SHELF_TYPE);
+   /* FIXME: find or create saved shelf node and then delete and queue a
+    * save
+    */
+}
+
+EAPI void
 e_shelf_orient(E_Shelf *es, E_Gadcon_Orient orient)
 {
    E_OBJECT_CHECK(es);
@@ -169,9 +279,49 @@ _e_shelf_free(E_Shelf *es)
 {
    shelves = evas_list_remove(shelves, es);
    e_object_del(E_OBJECT(es->gadcon));
-   E_FREE(es->name);
-   E_FREE(es->style);
+   evas_stringshare_del(es->name);
+   evas_stringshare_del(es->style);
    evas_object_del(es->o_base);
    if (es->popup) e_object_del(E_OBJECT(es->popup));
    free(es);
+}
+
+static void
+_e_shelf_config_port(E_Config_Shelf_Config *cf1, E_Config_Shelf_Config *cf2)
+{
+   int px[4], py[4];
+   int i;
+   
+   /* 
+    * We have 4 corners. figure out what gravity zone (3x3 grid) they are in
+    * then lock them in relative to the edge or middle of that zone and re
+    * calculate it all then.
+    */
+   px[0] = cf1->x;
+   px[1] = cf1->x + cf1->w - 1;
+   px[2] = cf1->x;
+   px[3] = cf1->x + cf1->w - 1;
+   py[0] = cf1->y;
+   py[1] = cf1->y;
+   py[2] = cf1->y + cf1->h - 1;
+   py[3] = cf1->y + cf1->h - 1;
+   for (i = 0; i < 4; i++)
+     {
+	if (px[i] < (cf1->res.w / 3))
+	  px[i] = px[i];
+	else if (px[i] > ((2 * cf1->res.w) / 3))
+	  px[i] = (cf2->res.w) + (px[i] - cf1->res.w);
+	else
+	  px[i] = (cf2->res.w / 2) + (px[i] - (cf1->res.w / 2));
+	if (py[i] < (cf1->res.h / 3))
+	  py[i] = py[i];
+	else if (py[i] > ((2 * cf1->res.h) / 3))
+	  py[i] = (cf2->res.h) + (py[i] - cf1->res.h);
+	else
+	  py[i] = (cf2->res.h / 2) + (py[i] - (cf1->res.h / 2));
+     }
+   cf2->x = px[0];
+   cf2->y = py[0];
+   cf2->w = px[3] - px[0] + 1;
+   cf2->h = py[3] = py[0] + 1;
 }

@@ -37,6 +37,8 @@ static E_Config_DD *_e_config_remember_edd = NULL;
 static E_Config_DD *_e_config_color_class_edd = NULL;
 static E_Config_DD *_e_config_gadcon_edd = NULL;
 static E_Config_DD *_e_config_gadcon_client_edd = NULL;
+static E_Config_DD *_e_config_shelf_edd = NULL;
+static E_Config_DD *_e_config_shelf_config_edd = NULL;
 
 
 /* externally accessible functions */
@@ -97,6 +99,32 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, name, STR);
    E_CONFIG_VAL(D, T, id, STR);
    E_CONFIG_LIST(D, T, clients, _e_config_gadcon_client_edd);
+   
+   _e_config_shelf_config_edd = E_CONFIG_DD_NEW("E_Config_Shelf_Config", E_Config_Shelf_Config);
+#undef T
+#undef D
+#define T E_Config_Shelf_Config
+#define D _e_config_shelf_config_edd
+   E_CONFIG_VAL(D, T, res.w, INT);
+   E_CONFIG_VAL(D, T, res.h, INT);
+   E_CONFIG_VAL(D, T, x, INT);
+   E_CONFIG_VAL(D, T, y, INT);
+   E_CONFIG_VAL(D, T, w, INT);
+   E_CONFIG_VAL(D, T, h, INT);
+   E_CONFIG_VAL(D, T, orient, INT);
+   E_CONFIG_VAL(D, T, style, STR);
+   
+   _e_config_shelf_edd = E_CONFIG_DD_NEW("E_Config_Shelf", E_Config_Shelf);
+#undef T
+#undef D
+#define T E_Config_Shelf
+#define D _e_config_shelf_edd
+   E_CONFIG_VAL(D, T, name, STR);
+   E_CONFIG_VAL(D, T, container, INT);
+   E_CONFIG_VAL(D, T, zone, INT);
+   E_CONFIG_VAL(D, T, layer, INT);
+   E_CONFIG_VAL(D, T, popup, UCHAR);
+   E_CONFIG_LIST(D, T, configs, _e_config_shelf_config_edd);
    
    _e_config_desktop_bg_edd = E_CONFIG_DD_NEW("E_Config_Desktop_Background", E_Config_Desktop_Background);
 #undef T
@@ -428,6 +456,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, cfgdlg_auto_apply, INT); /**/
    E_CONFIG_VAL(D, T, cfgdlg_default_mode, INT); /**/
    E_CONFIG_LIST(D, T, gadcons, _e_config_gadcon_edd);
+   E_CONFIG_LIST(D, T, shelves, _e_config_shelf_edd);
 
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -581,6 +610,30 @@ e_config_init(void)
 	e_config->gadcons = NULL;
 	
 	/* FIXME: fill up default gadcons! */
+	  {
+	     E_Config_Shelf *cf_es;
+	     E_Config_Shelf_Config *cf_escf;
+	     
+	     cf_es = E_NEW(E_Config_Shelf, 1);
+	     cf_es->name = evas_stringshare_add("shelf");
+	     cf_es->container = 0;
+	     cf_es->zone = 0;
+	     cf_es->popup = 1;
+	     cf_es->layer = 200;
+	     e_config->shelves = evas_list_append(e_config->shelves, cf_es);
+	     
+	     cf_escf = E_NEW(E_Config_Shelf_Config, 1);
+	     cf_escf->res.w = 800;
+	     cf_escf->res.h = 600;
+	     cf_escf->x = 0;
+	     cf_escf->y = 0;
+	     cf_escf->w = 800;
+	     cf_escf->h = 32;
+	     cf_escf->orient = E_GADCON_ORIENT_TOP;
+	     cf_escf->style = evas_stringshare_add("default");
+	     cf_es->configs = evas_list_append(cf_es->configs, cf_escf);
+	  }
+	
 	  {
 	     E_Config_Gadcon *cf_gc;
 	     E_Config_Gadcon_Client *cf_gcc;
@@ -1628,6 +1681,8 @@ e_config_shutdown(void)
    E_CONFIG_DD_FREE(_e_config_remember_edd);
    E_CONFIG_DD_FREE(_e_config_gadcon_edd);
    E_CONFIG_DD_FREE(_e_config_gadcon_client_edd);
+   E_CONFIG_DD_FREE(_e_config_shelf_edd);
+   E_CONFIG_DD_FREE(_e_config_shelf_config_edd);
    return 1;
 }
 

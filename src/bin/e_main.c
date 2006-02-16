@@ -663,33 +663,8 @@ main(int argc, char **argv)
    e_test();
 
    /* FIXME: for testing only */
-   if (0)
-     {
-	Evas_List *l, *l2, *l3, *managers;
-	
-	for (l = e_manager_list(); l; l = l->next)
-	  {
-	     E_Manager *man;
-	     
-	     man = l->data;
-	     for (l2 = man->containers; l2; l2 = l2->next)
-	       {
-		  E_Container *con;
-		  
-		  con = l2->data;
-		  for (l3 = con->zones; l3; l3 = l3->next)
-		    {
-		       E_Zone *zone;
-		       E_Shelf *es;
-		       
-		       zone = l3->data;
-		       es = e_shelf_zone_new(zone, "shelf", 0, 200);
-		       e_shelf_populate(es);
-		    }
-	       }
-	  }
-     }
-
+//   e_shelf_config_init();
+   
    /* no longer starting up */
    starting = 0;
    /* start our main loop */

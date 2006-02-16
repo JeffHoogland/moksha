@@ -35,6 +35,8 @@ typedef struct _E_Config_Desktop_Background E_Config_Desktop_Background;
 typedef struct _E_Config_Desktop_Name       E_Config_Desktop_Name;
 typedef struct _E_Config_Gadcon             E_Config_Gadcon;
 typedef struct _E_Config_Gadcon_Client      E_Config_Gadcon_Client;
+typedef struct _E_Config_Shelf              E_Config_Shelf;
+typedef struct _E_Config_Shelf_Config       E_Config_Shelf_Config;
 
 typedef Eet_Data_Descriptor                 E_Config_DD;
 
@@ -47,7 +49,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
  * versioning feature. the value of this is really irrelevant - just as
  * long as it increases every time we change something
  */
-#define E_CONFIG_FILE_VERSION 137
+#define E_CONFIG_FILE_VERSION 138
 
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1
@@ -207,6 +209,7 @@ struct _E_Config
    int         cfgdlg_auto_apply; // GUI
    int         cfgdlg_default_mode; // GUI   
    Evas_List  *gadcons;
+   Evas_List  *shelves;
 };
 
 struct _E_Config_Module
@@ -293,6 +296,25 @@ struct _E_Config_Gadcon_Client
    struct {
       int pos, size, res;
    } geom;
+};
+
+struct _E_Config_Shelf
+{
+   char *name;
+   int container, zone;
+   int layer;
+   unsigned char popup;
+   Evas_List *configs;
+};
+
+struct _E_Config_Shelf_Config
+{
+   struct {
+      int w, h;
+   } res;
+   int x, y, w, h;
+   int orient;
+   char *style;
 };
 
 EAPI int        e_config_init(void);
