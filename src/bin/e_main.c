@@ -880,6 +880,7 @@ _e_main_screens_init(void)
 	  {
 	     e_error_message_show("Cannot create manager object for screen %i\n", 
 				  i);
+	     free(roots);
 	     return 0;
 	  }
 	con = e_container_new(man);
@@ -895,6 +896,7 @@ _e_main_screens_init(void)
 	  {
 	     e_error_message_show("Cannot create desktop object for manager on screen %i\n", 
 				  i);
+	     free(roots);
 	     return 0;
 	  }
      }
