@@ -85,6 +85,7 @@ e_shelf_config_init(void)
 					cf_es->popup, cf_es->layer);
 		  if (es)
 		    {
+		       es->cfg = cf_es;
 		       e_shelf_move_resize(es, cf_escf2->x, cf_escf2->y,
 					   cf_escf2->w, cf_escf2->h);
 		       e_shelf_orient(es, cf_escf2->orient);
@@ -250,9 +251,66 @@ e_shelf_save(E_Shelf *es)
 {
    E_OBJECT_CHECK(es);
    E_OBJECT_TYPE_CHECK(es, E_GADMAN_SHELF_TYPE);
-   /* FIXME: find or create saved shelf node and then modify and queue a
-    * save
-    */
+   if (es->cfg)
+     {
+	Evas_List *l;
+	E_Config_Shelf_Config *cf_escf = NULL;
+	
+	for (l = es->cfg->configs; l; l = l->next)
+	  {
+	     cf_escf = l->data;
+	     if ((cf_escf->res.w == es->zone->w) &&
+		 (cf_escf->res.h == es->zone->h))
+	       break;
+	     cf_escf = NULL;
+	  }
+	if (!cf_escf)
+	  {
+             cf_escf = E_NEW(E_Config_Shelf_Config, 1);
+	     if (cf_escf)
+	       {
+		  cf_escf->res.w = es->zone->w;
+		  cf_escf->res.h = es->zone->h;
+		  es->cfg->configs = evas_list_append(es->cfg->configs, cf_escf);
+	       }
+	  }
+	if (cf_escf)
+	  {
+	     cf_escf->x = es->x;
+	     cf_escf->y = es->y;
+	     cf_escf->w = es->w;
+	     cf_escf->h = es->h;
+	     cf_escf->orient = es->gadcon->orient;
+	     if (cf_escf->style) evas_stringshare_del(cf_escf->style);
+	     cf_escf->style = evas_stringshare_add(es->style);
+	  }
+     }
+   else
+     {
+	E_Config_Shelf *cf_es;
+	E_Config_Shelf_Config *cf_escf = NULL;
+	
+	cf_es = E_NEW(E_Config_Shelf, 1);
+	cf_es->name = evas_stringshare_add(es->name);
+	cf_es->container = es->zone->container->num;
+	cf_es->zone = es->zone->num;
+	if (es->popup) cf_es->popup = 1;
+	cf_es->layer = es->layer;
+	e_config->shelves = evas_list_append(e_config->shelves, cf_es);
+	es->cfg = cf_es;
+	
+	cf_escf = E_NEW(E_Config_Shelf_Config, 1);
+	cf_escf->res.w = es->zone->w;
+	cf_escf->res.h = es->zone->h;
+	cf_escf->x = es->x;
+	cf_escf->y = es->y;
+	cf_escf->w = es->w;
+	cf_escf->h = es->h;
+	cf_escf->orient = es->gadcon->orient;
+	cf_escf->style = evas_stringshare_add(es->style);
+	cf_es->configs = evas_list_append(cf_es->configs, cf_escf);
+     }
+   e_config_save_queue();
 }
 
 EAPI void
@@ -260,9 +318,21 @@ e_shelf_unsave(E_Shelf *es)
 {
    E_OBJECT_CHECK(es);
    E_OBJECT_TYPE_CHECK(es, E_GADMAN_SHELF_TYPE);
-   /* FIXME: find or create saved shelf node and then delete and queue a
-    * save
-    */
+   if (es->cfg)
+     {
+	e_config->shelves = evas_list_remove(e_config->shelves, es->cfg);
+	evas_stringshare_del(es->cfg->name);
+	while (es->cfg->configs)
+	  {
+	     E_Config_Shelf_Config *cf_escf;
+	     
+	     cf_escf = es->cfg->configs->data;
+	     if (cf_escf->style) evas_stringshare_del(cf_escf->style);
+	     free(cf_escf);
+	     es->cfg->configs = evas_list_remove_list(es->cfg->configs, es->cfg->configs);
+	  }
+	free(es->cfg);
+     }
 }
 
 EAPI void

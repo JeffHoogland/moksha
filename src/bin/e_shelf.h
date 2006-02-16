@@ -24,9 +24,7 @@ struct _E_Shelf
    E_Gadcon            *gadcon;
    char                *name;
    char                *style;
-   /* FIXME: we need a more powerful sizing/placement policy rather than just
-    * x,y, width & height
-    */
+   E_Config_Shelf      *cfg;
 };
 
 EAPI int              e_shelf_init(void);
