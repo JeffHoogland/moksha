@@ -539,8 +539,8 @@ _e_intl_language_path_find(char *language)
 			      {
 				 directory = strdup(epd->dir);
 			      }
-			    free(clean_file);
 			 }
+		       E_FREE(clean_file);
 		    } 
 	       }
 	     ecore_list_destroy(files);
