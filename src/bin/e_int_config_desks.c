@@ -19,8 +19,6 @@ struct _E_Config_Dialog_Data
    int y;
    int flip;
    /*- ADVANCED -*/
-   int zone_desks_x_count;
-   int zone_desks_y_count;
    int use_edge_flip;
    double edge_flip_timeout;
 };
@@ -50,14 +48,10 @@ e_int_config_desks(E_Container *con)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
-   cfdata->zone_desks_x_count = e_config->zone_desks_x_count;
-   cfdata->zone_desks_y_count = e_config->zone_desks_y_count;
+   cfdata->x = e_config->zone_desks_x_count;
+   cfdata->y = e_config->zone_desks_y_count;
    cfdata->use_edge_flip = e_config->use_edge_flip;
-   cfdata->edge_flip_timeout = e_config->edge_flip_timeout;
-   
-   cfdata->x = cfdata->zone_desks_x_count;
-   cfdata->y = cfdata->zone_desks_y_count;
-   cfdata->flip = cfdata->use_edge_flip;
+   cfdata->edge_flip_timeout = e_config->edge_flip_timeout;   
 }
 
 static void *
@@ -105,7 +99,8 @@ _basic_apply_data(E_Config_Dialog *cdd, E_Config_Dialog_Data *cfdata)
 	  }
      }
    
-   e_config->use_edge_flip = cfdata->flip;
+   e_config->use_edge_flip = cfdata->use_edge_flip;
+   e_zone_update_flip_all();
 
    e_config_save_queue();
    return 1; /* Apply was OK */
@@ -129,7 +124,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     for (lll = con ->zones; lll; lll = lll->next)
 	       {
 		  zone = lll->data;
-		  e_zone_desk_count_set(zone, cfdata->zone_desks_x_count, cfdata->zone_desks_y_count);
+		  e_zone_desk_count_set(zone, cfdata->x, cfdata->y);
 	       }
 	  }
      }
@@ -162,7 +157,7 @@ _basic_create_widgets(E_Config_Dialog *cdd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
    of = e_widget_framelist_add(evas, _("Desktop Mouse Flip"), 0);
-   ob = e_widget_check_add(evas, _("Flip desktops when mouse at screen edge"), &(cfdata->flip));
+   ob = e_widget_check_add(evas, _("Flip desktops when mouse at screen edge"), &(cfdata->use_edge_flip));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
