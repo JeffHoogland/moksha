@@ -89,11 +89,11 @@ struct _E_Config
    int         edje_cache; //GUI
    int         edje_collection_cache; //GUI
    double      cache_flush_interval; //GUI
-   int         zone_desks_x_count;
-   int         zone_desks_y_count;
+   int         zone_desks_x_count; // GUI
+   int         zone_desks_y_count; // GUI
    int         use_virtual_roots;
-   int         use_edge_flip;
-   double      edge_flip_timeout;
+   int         use_edge_flip; // GUI
+   double      edge_flip_timeout; // GUI
    int         evas_engine_default;
    int         evas_engine_container;
    int         evas_engine_init;
