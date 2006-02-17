@@ -162,7 +162,7 @@ e_modapi_about(E_Module *m)
 			_("This is the ITray system tray module for Enlightenment.<br>"
 			  "It will hold system tray icons.<br>"
 			  "Beware that this can be buggy due to many systray providing<br>"
-			  "applications not handling the protocol properly, ad the way<br>"
+			  "applications not handling the protocol properly, and the way<br>"
 			  "systray icons work being very limiting and hacky. Do not use<br>"
 			  "this module unless you absolutely must, and if you do, beware<br>"
 			  "of issues that will appear."
