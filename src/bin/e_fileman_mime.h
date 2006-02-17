@@ -6,7 +6,6 @@
 
 typedef struct _E_Fm_Mime_Entry E_Fm_Mime_Entry;
 typedef struct _E_Fm_Mime_Action E_Fm_Mime_Action;
-typedef int    (*E_Fm_Mime_Thumbnail_Function) (E_Fm_File*);
 typedef int    (*E_Fm_Mime_Preview_Function) (E_Fm_File*);
 
 #if 0
@@ -36,9 +35,9 @@ struct _E_Fm_Mime_Entry
    char             *suffix;
    int              type;
    /* to thumbnail this file type */
-   E_Fm_Mime_Thumbnail_Function preview; 
+   Evas_Object * (*thumbnail) (char *path, Evas_Coord w, Evas_Coord h, Evas *evas, Evas_Object **tmp, void (*cb)(Evas_Object *obj, void *data), void *data);
    /* to preview this file type */
-   E_Fm_Mime_Preview_Function thumbnail; 
+   E_Fm_Mime_Preview_Function preview; 
 
 };
 

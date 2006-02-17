@@ -66,7 +66,14 @@
  * %h => hover file (might be the current directory, other file, whatever)
  * 
  *
- *
+ * FUTURE
+ * ======
+ * a new approach can be made, but is too expensive for what e17 currently needs.
+ * the mime subsystem can be in fact independent from e_fileman_smart (the function calls 
+ * are very simple to change, just pass always an Evas_List of files, and the E_Fm_File hover, 
+ * instead of the E_Fileman_Smart). What is complicated is how to pass the data to the internal
+ * actions, and if we should define the internal actions here or in the component that will
+ * use the mime subsytem.
  *
  */
 
@@ -82,6 +89,8 @@ static void              _e_fm_mime_action_internal_folder_open(E_Fm_Smart_Data 
 static void              _e_fm_mime_action_internal_folder_open_other(E_Fm_Smart_Data *data);
 static void              _e_fm_mime_action_internal_copy_to(E_Fm_Smart_Data *data);
 static void              _e_fm_mime_action_internal_move_to(E_Fm_Smart_Data *data);
+/* definitions of thumbnail functions */
+Evas_Object * _e_fm_mime_thumbnail_evas(char *path, Evas_Coord w, Evas_Coord h, Evas *evas, Evas_Object **tmp, void (*cb)(Evas_Object *obj, void *data), void *data);
 
 
 static int init_count = 0;
@@ -198,6 +207,7 @@ e_fm_mime_init(void)
 	     entry->parent = l2;
 	     entry->level = 3;
 	     entry->suffix = strdup("jpg");
+	     entry->thumbnail = &_e_fm_mime_thumbnail_evas;
 	     entries = evas_list_append(entries,entry);
 	     
 	     /* png */
@@ -207,6 +217,7 @@ e_fm_mime_init(void)
 	     entry->parent = l2;
 	     entry->level = 3;
 	     entry->suffix = strdup("png");
+	     entry->thumbnail = &_e_fm_mime_thumbnail_evas;
 	     entries = evas_list_append(entries,entry);
 
 	  }
@@ -322,7 +333,7 @@ e_fm_mime_set(E_Fm_File *file)
 	       continue;
 	     if(!strcmp(suffix,entry->suffix))
 	       {
-		  printf("found by suffix %s\n", suffix);
+		  //printf("found by suffix %s\n", suffix);
 		  file->mime = entry;
 	       }
 	     free(suffix);
@@ -623,5 +634,18 @@ static void
 _e_fm_mime_action_internal_move_to(E_Fm_Smart_Data *sd)
 {
    printf("going to move to %s\n", sd->operation.hover->path);
+}
+
+/* thumbnail functions */
+/***********************/
+Evas_Object * _e_fm_mime_thumbnail_evas(char *path, Evas_Coord w, Evas_Coord h, Evas *evas, Evas_Object **tmp, void (*cb)(Evas_Object *obj, void *data), void *data)
+{
+   Evas_Object *r;
+
+   r = e_thumb_generate_begin(path, w,
+         h, evas, tmp, cb,
+         data);
+
+   return r;
 }
 

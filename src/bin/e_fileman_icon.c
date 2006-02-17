@@ -143,8 +143,7 @@ e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
    file->icon_object = obj;
 
    /* FIXME fix this */
-#if 0
-   if (e_fm_file_can_preview(sd->file))
+   if (sd->file->mime->thumbnail)
      {
 	sd->thumb_path = e_thumb_file_get(sd->file->path);
 	if (e_thumb_exists(sd->file->path))
@@ -174,7 +173,7 @@ e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
 	  }
 	else
 	  {
-	     sd->thumb_object = e_thumb_generate_begin(sd->file->path, sd->iw,
+	     sd->thumb_object = sd->file->mime->thumbnail(sd->file->path, sd->iw,
 						       sd->ih, sd->evas,
 						       &sd->thumb_object,
 						       _e_fm_icon_thumb_generate_cb,
@@ -184,7 +183,6 @@ e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
 	  }
      }
    else
-#endif 
      {
 	_e_fm_icon_icon_mime_get(sd);
      }
