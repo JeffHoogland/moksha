@@ -562,7 +562,7 @@ _battery_cb_check(void *data)
 				 e_dialog_text_set(dia, _("Battery Running Low<br>"
 							  "Your battery is running low.<br>"
 							  "You may wish to switch to an AC source."));
-				 e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
+				 e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
 				 e_win_centered_set(dia->win, 1);
 				 e_dialog_show(dia);
 			      }

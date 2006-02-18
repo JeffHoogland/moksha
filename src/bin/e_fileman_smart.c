@@ -906,7 +906,7 @@ _e_fm_file_delete(E_Fm_Icon *icon)
 	char text[PATH_MAX + 256];
 
 	dia = e_dialog_new(icon->sd->win->container);
-	e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
+	e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
 	e_dialog_button_focus_num(dia, 1);
 	e_dialog_title_set(dia, _("Error"));
 	snprintf(text, PATH_MAX + 256, _("Could not delete  <br><b>%s</b>"), icon->file->path);

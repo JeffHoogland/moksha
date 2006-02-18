@@ -1,6 +1,5 @@
 MAINTAINERCLEANFILES = Makefile.in
-INCLUDES = -I$(includedir) \
-	   -I$(top_srcdir) \
+INCLUDES = -I$(top_srcdir) \
 	   -I$(top_srcdir)/src/bin \
 	   -I$(top_srcdir)/src/lib \
 	   @e_cflags@ \

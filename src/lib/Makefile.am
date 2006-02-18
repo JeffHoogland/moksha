@@ -1,6 +1,5 @@
 MAINTAINERCLEANFILES	= Makefile.in
-INCLUDES		= -I$(includedir) \
-			  -I$(top_srcdir)/src/bin \
+INCLUDES		= -I$(top_srcdir)/src/bin \
 			  @e_cflags@
 
 lib_LTLIBRARIES		= libe.la

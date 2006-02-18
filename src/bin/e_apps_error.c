@@ -60,19 +60,19 @@ _e_app_error_dialog_fill_data(E_App_Autopsy *app, E_Config_Dialog_Data *cfdata)
    if ((app->del.signalled) && (!cfdata->signal))
       {
 	 if (app->del.exit_signal == SIGINT)
-	   snprintf(buf, sizeof(buf), _("%s was interrupted by an Interrupt Singal"),
+	   snprintf(buf, sizeof(buf), _("%s was interrupted by an Interrupt Signal"),
 		    app->app->exe);
 	 else if (app->del.exit_signal == SIGQUIT)
-	   snprintf(buf, sizeof(buf), _("%s was interrupted by a Quit Singal"),
+	   snprintf(buf, sizeof(buf), _("%s was interrupted by a Quit Signal"),
 		    app->app->exe);
 	 else if (app->del.exit_signal == SIGABRT)
-	   snprintf(buf, sizeof(buf), _("%s was interrupted by an Abort Singal"),
+	   snprintf(buf, sizeof(buf), _("%s was interrupted by an Abort Signal"),
 		    app->app->exe);
 	 else if (app->del.exit_signal == SIGFPE)
 	   snprintf(buf, sizeof(buf), _("%s was interrupted by a Floating Point Error"),
 		    app->app->exe);
 	 else if (app->del.exit_signal == SIGKILL)
-	   snprintf(buf, sizeof(buf), _("%s was interrupted by an Uninterruptable Kill Singal"),
+	   snprintf(buf, sizeof(buf), _("%s was interrupted by an Uninterruptable Kill Signal"),
 		    app->app->exe);
 	 else if (app->del.exit_signal == SIGSEGV)
 	   snprintf(buf, sizeof(buf), _("%s was interrupted by a Segmentation Fault"),
@@ -87,7 +87,7 @@ _e_app_error_dialog_fill_data(E_App_Autopsy *app, E_Config_Dialog_Data *cfdata)
 	   snprintf(buf, sizeof(buf), _("%s was interrupted by a Bus Error"),
 		    app->app->exe);
 	 else
-	   snprintf(buf, sizeof(buf), _("%s was interupted by the signal number %i"),
+	   snprintf(buf, sizeof(buf), _("%s was interrupted by the signal number %i"),
 		    app->app->exe, app->del.exit_signal);
          cfdata->signal = strdup(buf);
 /* FIXME: Add  sigchld_info stuff

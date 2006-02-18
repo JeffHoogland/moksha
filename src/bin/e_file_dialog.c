@@ -63,7 +63,7 @@ e_file_dialog_new(E_Container *con)
    e_widget_min_size_get(ol, &w, &h);
    e_dialog_content_set(dia->dia, ol, w, h);
    
-   e_dialog_button_add(dia->dia, _("Ok"), NULL, _e_file_dialog_button1_click, dia);
+   e_dialog_button_add(dia->dia, _("OK"), NULL, _e_file_dialog_button1_click, dia);
    e_dialog_button_add(dia->dia, _("Cancel"), NULL, _e_file_dialog_button2_click, dia);
    
    return dia;

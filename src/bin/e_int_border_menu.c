@@ -32,15 +32,16 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
    E_Menu_Item *mi;
 
    if (bd->border_menu) return;
-   
-   m = e_menu_new();
-   e_menu_category_set(m,"border/stacking");
-   e_menu_category_data_set("border/stacking",bd);
-   bd->border_stacking_menu = m;
+
    /* Only allow to change layer for windows in "normal" layers */
    if ((!bd->lock_user_stacking) &&
        ((bd->layer == 50) || (bd->layer == 100) || (bd->layer == 150)))
      {
+	m = e_menu_new();
+	e_menu_category_set(m,"border/stacking");
+	e_menu_category_data_set("border/stacking",bd);
+	bd->border_stacking_menu = m;
+
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Always On Top"));
 	e_menu_item_radio_set(mi, 1);
@@ -51,6 +52,7 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 				  (char *)e_theme_edje_file_get("base/theme/borders",
 								"widgets/border/default/stack_on_top"),
 				  "widgets/border/default/stack_on_top");
+	
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Normal"));
 	e_menu_item_radio_set(mi, 1);
@@ -61,6 +63,7 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 				  (char *)e_theme_edje_file_get("base/theme/borders",
 								"widgets/border/default/stack_normal"),
 				  "widgets/border/default/stack_normal");
+
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Always Below"));
 	e_menu_item_radio_set(mi, 1);
@@ -73,15 +76,17 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 				  "widgets/border/default/stack_below");
      }
 
-   m = e_menu_new();
-   e_menu_category_set(m,"border/maximize");
-   e_menu_category_data_set("border/maximize",bd);
-   bd->border_maximize_menu = m;
    /* Only allow to change layer for windows in "normal" layers */
    if ((!bd->lock_user_maximize) && (!bd->shaded) &&
        ((bd->layer == 50) || (bd->layer == 100) || (bd->layer == 150)))
    { 
      int __fullmaximization = 0;
+
+     m = e_menu_new();
+     e_menu_category_set(m,"border/maximize");
+     e_menu_category_data_set("border/maximize",bd);
+     bd->border_maximize_menu = m;
+
      mi = e_menu_item_new(m);
      e_menu_item_label_set(mi, _("Maximized"));
      e_menu_item_check_set(mi, 1);

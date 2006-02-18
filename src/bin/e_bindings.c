@@ -475,7 +475,6 @@ e_bindings_key_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Ev
    return NULL;
 }
 
-/* FIXME: finish off signal bindings */
 EAPI void
 e_bindings_signal_add(E_Binding_Context ctxt, char *sig, char *src, E_Binding_Modifier mod, int any_mod, char *action, char *params)
 {
@@ -573,7 +572,6 @@ e_bindings_signal_handle(E_Binding_Context ctxt, E_Object *obj, char *sig, char 
    return act;
 }
 
-/* FIXME: finish off wheel bindings */
 EAPI void
 e_bindings_wheel_add(E_Binding_Context ctxt, int direction, int z, E_Binding_Modifier mod, int any_mod, char *action, char *params)
 {

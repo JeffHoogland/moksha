@@ -315,7 +315,7 @@ _cpufreq_set_governor(Cpufreq *e, const char *governor)
 	e_dialog_icon_set(dia, "enlightenment/e", 64);
 	e_dialog_text_set(dia, _("There was an error trying to set the cpu frequency<br>"
 				 "governor via the module's setfreq utility."));
-	e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
+	e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
 	e_win_centered_set(dia->win, 1);
 	e_dialog_show(dia);
      }
@@ -343,7 +343,7 @@ _cpufreq_set_frequency(Cpufreq *e, int frequency)
 	e_dialog_icon_set(dia, "enlightenment/e", 64);
 	e_dialog_text_set(dia, _("There was an error trying to set the cpu frequency<br>"
 				 "setting via the module's setfreq utility."));
-	e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
+	e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
 	e_win_centered_set(dia->win, 1);
 	e_dialog_show(dia);
      }
@@ -570,10 +570,10 @@ _cpufreq_config_menu_new(Cpufreq *e)
 	     frequency = (int)l->data;
 	     mi = e_menu_item_new(mn);
 	     if (frequency < 1000000)
-	       snprintf(buf, sizeof(buf), _("%i Mhz"), 
+	       snprintf(buf, sizeof(buf), _("%i MHz"), 
 			frequency / 1000);
 	     else
-	       snprintf(buf, sizeof(buf), _("%i.%i Ghz"), 
+	       snprintf(buf, sizeof(buf), _("%i.%i GHz"), 
 			frequency / 1000000, (frequency % 1000000) / 100000);
 	     buf[sizeof(buf) - 1] = 0;
 	     e_menu_item_label_set(mi, buf);

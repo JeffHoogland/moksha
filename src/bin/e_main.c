@@ -202,7 +202,7 @@ main(int argc, char **argv)
 		  "\t\tbe used to simulate xinerama.\n"
 		  "\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
 		  "\t-profile CONF_PROFILE\n"
-		  "\t\tUse the configuration profile CONF_PROFILE instead of the the user selected default or just \"default\".\n"
+		  "\t\tUse the configuration profile CONF_PROFILE instead of the user selected default or just \"default\".\n"
 		  "\t-good\n"
 		  "\t\tBe good.\n"
 		  "\t-evil\n"
@@ -374,7 +374,7 @@ main(int argc, char **argv)
 	ee = ecore_evas_buffer_new(1, 1);
 	if (!ee)
 	  {
-	     e_error_message_show(_("Enlightenment found evas can't create a buffer canvas. Please check\n"
+	     e_error_message_show(_("Enlightenment found Evas can't create a buffer canvas. Please check\n"
 				    "Evas has Software Buffer engine support.\n"));
 	     _e_main_shutdown(-1);
 	  }
@@ -384,7 +384,7 @@ main(int argc, char **argv)
 	evas_object_image_file_set(im, buf, NULL);
 	if (evas_object_image_load_error_get(im) != EVAS_LOAD_ERROR_NONE)
 	  {
-	     e_error_message_show(_("Enlightenment found evas can't load PNG files. Check Evas has PNG\n"
+	     e_error_message_show(_("Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 				    "loader support.\n"));
 	     _e_main_shutdown(-1);
 	  }
@@ -393,7 +393,7 @@ main(int argc, char **argv)
 	evas_object_image_file_set(im, buf, NULL);
 	if (evas_object_image_load_error_get(im) != EVAS_LOAD_ERROR_NONE)
 	  {
-	     e_error_message_show(_("Enlightenment found evas can't load JPEG files. Check Evas has JPEG\n"
+	     e_error_message_show(_("Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 				    "loader support.\n"));
 	     _e_main_shutdown(-1);
 	  }
@@ -402,7 +402,7 @@ main(int argc, char **argv)
 	evas_object_image_file_set(im, buf, "images/0");
 	if (evas_object_image_load_error_get(im) != EVAS_LOAD_ERROR_NONE)
 	  {
-	     e_error_message_show(_("Enlightenment found evas can't load EET files. Check Evas has EET\n"
+	     e_error_message_show(_("Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 				    "loader support.\n"));
 	     _e_main_shutdown(-1);
 	  }

@@ -145,8 +145,8 @@ e_module_new(char *name)
 				       "The full path to this module is:<br>"
 				       "%s<br>"
 				       "The error reported was:<br>"
-				       "Module does not contain all needed functions<br>"),
-				     name, buf);
+				       "%s<br>"),
+				     name, buf, _("Module does not contain all needed functions"));
 	_e_module_dialog_disable_show(_("Error loading Module"), body, m);
 	m->api = NULL;
 	m->func.init = NULL;
@@ -471,7 +471,7 @@ _e_module_control_menu_new(E_Module *mod)
    m = e_menu_new();
    
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("About..."));
+   e_menu_item_label_set(mi, _("About…"));
    e_menu_item_callback_set(mi, _e_module_control_menu_about, mod);
    
    mi = e_menu_item_new(m);

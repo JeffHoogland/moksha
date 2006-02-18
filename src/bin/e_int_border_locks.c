@@ -351,7 +351,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Fullscreen state"), &(cfdata->lock.user.fullscreen));
    e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_check_add(evas, _("The border style"), &(cfdata->lock.border));
+   ob = e_widget_check_add(evas, _("Border style"), &(cfdata->lock.border));
    e_widget_frametable_object_append(of, ob, 1, 3, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    

@@ -150,7 +150,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    rg = e_widget_radio_group_new(&(cfdata->placement));
    ob = e_widget_radio_add(evas, _("Smart Placement"), E_WINDOW_PLACEMENT_SMART, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Dont hide Gadgets"), E_WINDOW_PLACEMENT_ANTIGADGET, rg);
+   ob = e_widget_radio_add(evas, _("Don't hide Gadgets"), E_WINDOW_PLACEMENT_ANTIGADGET, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Place at mouse pointer"), E_WINDOW_PLACEMENT_CURSOR, rg);
    e_widget_framelist_object_append(of, ob);
@@ -204,7 +204,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    rg = e_widget_radio_group_new(&(cfdata->placement));
    ob = e_widget_radio_add(evas, _("Smart Placement"), E_WINDOW_PLACEMENT_SMART, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Dont hide Gadgets"), E_WINDOW_PLACEMENT_ANTIGADGET, rg);
+   ob = e_widget_radio_add(evas, _("Don't hide Gadgets"), E_WINDOW_PLACEMENT_ANTIGADGET, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Place at mouse pointer"), E_WINDOW_PLACEMENT_CURSOR, rg);
    e_widget_framelist_object_append(of, ob);

@@ -2,7 +2,6 @@ MAINTAINERCLEANFILES = Makefile.in
 
 INCLUDES               = -I. \
                          -I$(top_srcdir) \
-			 -I$(includedir) \
                          -I$(top_srcdir)src/preload \
                          @x_cflags@
 pkgdir                 = $(libdir)/enlightenment/preload

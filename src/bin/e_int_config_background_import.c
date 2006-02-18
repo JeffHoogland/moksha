@@ -199,7 +199,7 @@ e_int_config_background_import(E_Config_Dialog *parent)
    edje_object_part_swallow(import->bg_obj, "content_swallow", o);
    evas_object_show(o);
    
-   import->ok_obj = e_widget_button_add(evas, _("Ok"), NULL, _import_cb_ok, win, cfdata);
+   import->ok_obj = e_widget_button_add(evas, _("OK"), NULL, _import_cb_ok, win, cfdata);
    e_widget_disabled_set(import->ok_obj, 1);
    e_widget_list_object_append(import->box_obj, import->ok_obj, 1, 0, 0.5);
 
