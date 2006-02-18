@@ -322,8 +322,8 @@ e_fm_mime_set(E_Fm_File *file)
 	E_Fm_Mime_Entry *entry;
 	
 	entry = (E_Fm_Mime_Entry *)l->data;
+	
 	/* FIXME add all the possible comparision, suffix,regexp,flags,etc */
-
 	if(entry->suffix)
 	  {
 	     char *suffix;
@@ -331,7 +331,7 @@ e_fm_mime_set(E_Fm_File *file)
 	     suffix = _e_fm_mime_suffix_get(file->name);
 	     if(!suffix)
 	       continue;
-	     if(!strcmp(suffix,entry->suffix))
+	     if(!strcasecmp(suffix,entry->suffix))
 	       {
 		  //printf("found by suffix %s\n", suffix);
 		  file->mime = entry;
