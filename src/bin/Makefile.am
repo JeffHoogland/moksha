@@ -136,6 +136,7 @@ e_int_config_exebuf.h \
 e_int_config_cfgdialogs.h \
 e_deskpreview.h \
 e_exebuf.h \
+e_desklock.h \
 e_int_config_modules.h \
 e_exehist.h \
 e_color_class.h \
@@ -261,6 +262,7 @@ e_int_config_exebuf.c \
 e_int_config_cfgdialogs.c \
 e_deskpreview.c \
 e_exebuf.c \
+e_desklock.c \
 e_int_config_modules.c \
 e_exehist.c \
 e_color_class.c \

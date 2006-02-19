@@ -1352,6 +1352,15 @@ ACT_FN_GO(exebuf)
      e_exebuf_show(zone);
 }
 
+ACT_FN_GO(desk_lock)
+{
+/*  E_Zone *zone;
+
+  zone = _e_actions_zone_get(obj);
+  if (zone)*/
+  e_desklock_show();
+}
+
 /* local subsystem globals */
 static Evas_Hash *actions = NULL;
 static Evas_List *action_names = NULL;
@@ -1446,6 +1455,7 @@ e_actions_init(void)
    ACT_GO(pointer_resize_pop);
    
    ACT_GO(exebuf);
+   ACT_GO(desk_lock);
    
    return 1;
 }
