@@ -248,6 +248,9 @@ const ACTION actions_predefined_names[ ] = {
 					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
   {"Menu Show", "menu_show", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
 
+  {"Desktop Lock", "desk_lock", NULL, _DEFAULT_ACTION, 
+				      EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
+
   {"Toggle Edit Mode", "edit_mode_toggle", NULL, _DEFAULT_ACTION,
 					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
 
@@ -499,6 +502,17 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
   E_Config_Binding_Key	*bk, *bk2;
   size_t size, size2;
   unsigned int i, j;
+
+  //we should call for autoapply here, since this prevents a bug, when only one
+  //NEW keybinding is made and apply/ok button is pressed. Thus, this keybinding does
+  //not lost.
+  if (cfdata->cur_eckb)
+    if (_keybind_cb_auto_apply(cfdata) != 0)
+      {
+	//TODO: message box which should ask if we really should proceed.
+	//If yes, then the current 'empty' binding will be deleted
+	_keybind_delete_keybinding(cfdata);
+      }
 
   // here the removing of the old keybindings goes
   while (e_config->key_bindings)
