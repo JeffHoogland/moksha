@@ -212,7 +212,7 @@ _e_gadget_face_menu_init(E_Gadget_Face *face)
 
    mi = e_menu_item_new(face->menu);
    e_menu_item_label_set(mi, _("Edit Mode"));
-	e_util_menu_item_edje_icon_set(mi, "enlightenment/gadget");
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/gadgets");
    e_menu_item_callback_set(mi, _e_gadget_cb_menu_edit, face);
 
    if (face->gad->funcs.face_menu_init) (face->gad->funcs.face_menu_init)(face->gad->data, face);
