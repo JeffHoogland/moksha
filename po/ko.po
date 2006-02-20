@@ -1,6 +1,7 @@
 # Enlightenment korean translation.
 # This file is put in the public domain.
 # Walter Hengely <whengely@gmail.com>, 2005.
+# Jerome Pinot, 박은리 <ngc891@gmail.com>, 2006.
 #
 #, fuzzy
 msgid ""
@@ -8,8 +9,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2005-11-29 00:57-0800\n"
-"PO-Revision-Date: 2006-01-20 00:57-0800\n"
-"Last-Translator: Walter Hengely <whengely@gmail.com>\n"
+"PO-Revision-Date: 2006-02-18 14:50-0900\n"
+"Last-Translator: Jerome Pinot, 박은리 <ngc891@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,7 +48,7 @@ msgstr "편집 모드"
 
 #: src/modules/ibox/e_mod_main.c:599 src/modules/ibar/e_mod_main.c:835
 msgid "Auto fit icons"
-msgstr ""
+msgstr "자동 아이콘"
 
 #: src/modules/ibox/e_mod_main.c:605 src/modules/ibar/e_mod_main.c:841
 msgid "Follower"
@@ -185,7 +186,7 @@ msgstr "정보 없음"
 #: src/modules/battery/e_mod_main.c:1002 src/modules/battery/e_mod_main.c:1263
 #: src/modules/battery/e_mod_main.c:1412
 msgid "NO BAT"
-msgstr ""
+msgstr "배터리 없음"
 
 #: src/modules/battery/e_mod_main.c:1026 src/modules/battery/e_mod_main.c:1437
 msgid "BAD DRIVER"
@@ -206,7 +207,7 @@ msgstr ""
 
 #: src/modules/battery/e_mod_main.c:1119 src/modules/battery/e_mod_main.c:1530
 msgid "Danger"
-msgstr ""
+msgstr "위험"
 
 #: src/modules/battery/e_mod_main.c:1123 src/modules/battery/e_mod_main.c:1534
 #: src/modules/battery/e_mod_main.c:1701
@@ -334,7 +335,7 @@ msgstr "단위"
 
 #: src/modules/temperature/e_mod_main.c:676
 msgid "Fast (1 sec)"
-msgstr "삐름 (1초)"
+msgstr "빠름 (1초)"
 
 #: src/modules/temperature/e_mod_main.c:683
 msgid "Medium (5 sec)"
@@ -374,7 +375,7 @@ msgstr ""
 
 #: src/modules/temperature/e_mod_main.c:816
 msgid "Sensor"
-msgstr ""
+msgstr "센서"
 
 #: src/modules/ibar/e_mod_main.c:165
 msgid "Enlightenment IBar Module"
@@ -390,7 +391,7 @@ msgstr ""
 
 #: src/modules/ibar/e_mod_main.c:1685
 msgid "Cannot add icon"
-msgstr ""
+msgstr "아이콘 추가할수 없음"
 
 #: src/modules/ibar/e_mod_main.c:1687
 msgid ""
@@ -419,11 +420,11 @@ msgstr ""
 
 #: src/modules/test/e_mod_main.c:29
 msgid "Something Else"
-msgstr ""
+msgstr "그 밖의 것"
 
 #: src/modules/test/e_mod_main.c:62
 msgid "Enlightenment Test Module"
-msgstr ""
+msgstr "Enlightenment 모듈 검사"
 
 #: src/modules/test/e_mod_main.c:63
 msgid ""
@@ -434,7 +435,7 @@ msgstr ""
 
 #: src/modules/start/e_mod_main.c:78
 msgid "Enlightenment Start Module"
-msgstr "Enlightenment 시작 Module"
+msgstr "Enlightenment 시작 모듈"
 
 #: src/modules/start/e_mod_main.c:79
 msgid "Experimental Button module for E17"
@@ -483,15 +484,15 @@ msgstr "매우 빠름"
 
 #: src/modules/pager/e_mod_main.c:480 src/modules/pager/e_mod_main.c:626
 msgid "Desktop Name"
-msgstr "데스크탑 이름"
+msgstr "데스크탑 명칭"
 
 #: src/modules/pager/e_mod_main.c:484 src/modules/pager/e_mod_main.c:630
 msgid "Enable Popup"
-msgstr "팝압 가능"
+msgstr "팝업 가능"
 
 #: src/modules/pager/e_mod_main.c:490 src/modules/pager/e_mod_main.c:636
 msgid "Popup Speed"
-msgstr ""
+msgstr "팝업 속도"
 
 #: src/modules/pager/e_mod_main.c:494 src/modules/pager/e_mod_main.c:640
 msgid "Fix Aspect (Keep Height)"
@@ -503,7 +504,7 @@ msgstr ""
 
 #: src/modules/clock/e_mod_main.c:96
 msgid "Enlightenment Clock Module"
-msgstr "Enlightenment 시계 Module"
+msgstr "Enlightenment 시계 모듈"
 
 #: src/modules/clock/e_mod_main.c:97
 msgid "A simple module to give E17 a clock."
@@ -551,7 +552,7 @@ msgstr ""
 #: src/modules/randr/e_mod_main.c:317 src/bin/e_module.c:543
 #: src/bin/e_actions.c:1200
 msgid "Yes"
-msgstr "네"
+msgstr "예"
 
 #: src/modules/randr/e_mod_main.c:318 src/bin/e_module.c:544
 #: src/bin/e_actions.c:1202
@@ -578,55 +579,55 @@ msgstr ""
 
 #: src/modules/dropshadow/e_mod_main.c:298
 msgid "Very Fuzzy"
-msgstr ""
+msgstr "매우 흐리게"
 
 #: src/modules/dropshadow/e_mod_main.c:307
 msgid "Fuzzy"
-msgstr ""
+msgstr "흐리게"
 
 #: src/modules/dropshadow/e_mod_main.c:325
 msgid "Sharp"
-msgstr ""
+msgstr "명료하게"
 
 #: src/modules/dropshadow/e_mod_main.c:334
 msgid "Very Sharp"
-msgstr ""
+msgstr "매우 명료하게"
 
 #: src/modules/dropshadow/e_mod_main.c:346
 msgid "Very Dark"
-msgstr ""
+msgstr "매우 어둡게"
 
 #: src/modules/dropshadow/e_mod_main.c:355
 msgid "Dark"
-msgstr ""
+msgstr "어둡게"
 
 #: src/modules/dropshadow/e_mod_main.c:364
 msgid "Light"
-msgstr ""
+msgstr "밝게"
 
 #: src/modules/dropshadow/e_mod_main.c:373
 msgid "Very Light"
-msgstr ""
+msgstr "매우 밝게"
 
 #: src/modules/dropshadow/e_mod_main.c:385
 msgid "Very Far"
-msgstr ""
+msgstr "매우 멀리"
 
 #: src/modules/dropshadow/e_mod_main.c:394
 msgid "Far"
-msgstr ""
+msgstr "멀리"
 
 #: src/modules/dropshadow/e_mod_main.c:403
 msgid "Near"
-msgstr ""
+msgstr "가깝게"
 
 #: src/modules/dropshadow/e_mod_main.c:412
 msgid "Very Near"
-msgstr ""
+msgstr "매우 가깝게"
 
 #: src/modules/dropshadow/e_mod_main.c:421
 msgid "Extremely Near"
-msgstr ""
+msgstr "상당히 가깝게"
 
 #: src/modules/dropshadow/e_mod_main.c:430
 msgid "Immediately Underneath"
@@ -634,27 +635,27 @@ msgstr ""
 
 #: src/modules/dropshadow/e_mod_main.c:442
 msgid "High Quality"
-msgstr ""
+msgstr "높은 품질"
 
 #: src/modules/dropshadow/e_mod_main.c:452
 msgid "Medium Quality"
-msgstr ""
+msgstr "중간 품질"
 
 #: src/modules/dropshadow/e_mod_main.c:462
 msgid "Low Quality"
-msgstr ""
+msgstr "낮은 품질"
 
 #: src/bin/e_int_border_border.c:46
 msgid "Window Border Selection"
-msgstr "윈도 경계 선택"
+msgstr "윈도우 경계 선택"
 
 #: src/bin/e_int_border_border.c:196
 msgid "Remember this Border for this window next time it appears"
-msgstr ""
+msgstr "다음번에 이 윈도우 경계선이 나타나도록 기억하기"
 
 #: src/bin/e_int_border_menu.c:41
 msgid "Always On Top"
-msgstr "항상 위"
+msgstr "항상 위에"
 
 #: src/bin/e_int_border_menu.c:61
 msgid "Always Below"
@@ -662,15 +663,15 @@ msgstr "항상 아래"
 
 #: src/bin/e_int_border_menu.c:78 src/bin/e_int_border_locks.c:65
 msgid "Window Locks"
-msgstr "윈도 자물쇠"
+msgstr "윈도우 자물쇠"
 
 #: src/bin/e_int_border_menu.c:85
 msgid "Remember"
-msgstr "암기"
+msgstr "기억"
 
 #: src/bin/e_int_border_menu.c:92
 msgid "Borders"
-msgstr "경계"
+msgstr "경계선"
 
 #: src/bin/e_int_border_menu.c:102
 msgid "Send to Desktop"
@@ -691,11 +692,11 @@ msgstr "최대 증가"
 
 #: src/bin/e_int_border_menu.c:149
 msgid "Sticky"
-msgstr "끈적임"
+msgstr "붙박이"
 
 #: src/bin/e_int_border_menu.c:162
 msgid "Borderless"
-msgstr "무경계"
+msgstr "경계 없음"
 
 #: src/bin/e_int_border_menu.c:175
 #: src/bin/e_int_config_window_manipulation.c:139
@@ -705,7 +706,7 @@ msgstr "풀스크린"
 
 #: src/bin/e_int_border_menu.c:189
 msgid "Skip Window List"
-msgstr "윈도 목록을 건너뛰기"
+msgstr "윈도우 목록 건너뛰기"
 
 #: src/bin/e_int_border_menu.c:205
 msgid "Edit Icon"
@@ -717,11 +718,11 @@ msgstr "아이콘 만들기"
 
 #: src/bin/e_int_border_menu.c:222
 msgid "Kill"
-msgstr "죽이기"
+msgstr "창 닫기"
 
 #: src/bin/e_int_border_menu.c:235
 msgid "Iconify"
-msgstr "아이코니파이"
+msgstr "아이콘화하기"
 
 #: src/bin/e_int_border_menu.c:246
 msgid "Close"
@@ -763,12 +764,12 @@ msgstr "위치"
 
 #: src/bin/e_int_border_locks.c:325 src/bin/e_int_border_locks.c:344
 msgid "Iconified state"
-msgstr "아이코니파이 상태"
+msgstr "아이콘화한 상태"
 
 #: src/bin/e_int_border_locks.c:327 src/bin/e_int_border_locks.c:346
 #: src/bin/e_int_border_remember.c:504
 msgid "Stickiness"
-msgstr "끈적임"
+msgstr "붙박이"
 
 #: src/bin/e_int_border_locks.c:329 src/bin/e_int_border_locks.c:348
 #: src/bin/e_int_border_remember.c:508
@@ -789,7 +790,7 @@ msgstr ""
 
 #: src/bin/e_int_border_locks.c:354
 msgid "The border style"
-msgstr ""
+msgstr "경계선 스타일"
 
 #: src/bin/e_int_border_locks.c:358
 msgid "Stop me from:"
@@ -817,7 +818,7 @@ msgstr "Enlightenment 정보"
 
 #: src/bin/e_about.c:50 src/bin/e_main.c:568
 msgid "Enlightenment"
-msgstr ""
+msgstr "Enlightenment"
 
 #: src/bin/e_about.c:55
 msgid ""
@@ -845,7 +846,7 @@ msgstr "아이콘"
 
 #: src/bin/e_eap_editor.c:231
 msgid "Basic Info"
-msgstr "초급 정보"
+msgstr "기본 정보"
 
 #: src/bin/e_eap_editor.c:272 src/bin/e_fileman_smart.c:1216
 msgid "General"
@@ -853,15 +854,15 @@ msgstr "일반"
 
 #: src/bin/e_eap_editor.c:296
 msgid "Window"
-msgstr "윈도"
+msgstr "윈도우"
 
 #: src/bin/e_eap_editor.c:356
 msgid "Misc"
-msgstr "키타"
+msgstr "기타"
 
 #: src/bin/e_int_menus.c:82
 msgid "Favorite Applications"
-msgstr "제일 좋아하는 프로그감"
+msgstr "제일 좋아하는 프로그램"
 
 #: src/bin/e_int_menus.c:92
 msgid "Modules"
@@ -877,7 +878,7 @@ msgstr "윈도우"
 
 #: src/bin/e_int_menus.c:113
 msgid "Lost Windows"
-msgstr ""
+msgstr "윈도우 잃어버림"
 
 #: src/bin/e_int_menus.c:120
 msgid "Gadgets"
@@ -937,7 +938,7 @@ msgstr "(윈도우 없음)"
 
 #: src/bin/e_int_menus.c:708 src/bin/e_int_menus.c:985
 msgid "No name!!"
-msgstr "이름 없음!!"
+msgstr "명칭 없음!!"
 
 #: src/bin/e_int_menus.c:724
 msgid "Cleanup Windows"
@@ -974,7 +975,7 @@ msgstr ""
 
 #: src/bin/e_module.c:114 src/bin/e_module.c:127 src/bin/e_module.c:151
 msgid "Error loading Module"
-msgstr "모듈 로딩 오차"
+msgstr "모듈 로딩 오류"
 
 #: src/bin/e_module.c:121 src/bin/e_module.c:145
 #, c-format
@@ -1004,7 +1005,7 @@ msgstr "(로드한 모듈 없음)"
 
 #: src/bin/e_module.c:461
 msgid "About..."
-msgstr "정보"
+msgstr "...대해서"
 
 #: src/bin/e_module.c:465
 msgid "Enabled"
@@ -1048,15 +1049,15 @@ msgstr "엉성한 초점"
 
 #: src/bin/e_int_config_focus.c:174
 msgid "New Window Focus"
-msgstr "새 윈도 초점"
+msgstr "새 윈도우 초점"
 
 #: src/bin/e_int_config_focus.c:176
 msgid "No new windows get focus"
-msgstr "새 윈도에 초점 없음"
+msgstr "새 윈도우 초점 없음"
 
 #: src/bin/e_int_config_focus.c:178
 msgid "All new windows get focus"
-msgstr "모든 새 윈도에 초점"
+msgstr "모든 새 윈도우 초점"
 
 #: src/bin/e_int_config_focus.c:180
 msgid "Only new dialogs get focus"
@@ -1112,15 +1113,15 @@ msgstr "파일 보호"
 
 #: src/bin/e_fileman_smart.c:1258
 msgid "Let others see this file"
-msgstr ""
+msgstr "이 파일을 다른 사람들과 보기"
 
 #: src/bin/e_fileman_smart.c:1262
 msgid "Let others modify this file"
-msgstr ""
+msgstr "이 파일을 다른 사람들과 수정하기"
 
 #: src/bin/e_fileman_smart.c:1266
 msgid "Dont let others see or modify this file"
-msgstr ""
+msgstr "이 파일을 다른 사람들과 보기나 수정할 수 없음"
 
 #: src/bin/e_fileman_smart.c:1270
 msgid "Custom settings"
@@ -1220,7 +1221,7 @@ msgstr ""
 
 #: src/bin/e_int_border_remember.c:67
 msgid "Window Remember"
-msgstr "윈도 암기"
+msgstr "윈도우 기억하기"
 
 #: src/bin/e_int_border_remember.c:228
 msgid "Window properties are not a unique match"
@@ -1271,7 +1272,7 @@ msgstr ""
 
 #: src/bin/e_int_border_remember.c:422
 msgid "Nothing"
-msgstr "무"
+msgstr "아무 것도 없음"
 
 #: src/bin/e_int_border_remember.c:424
 msgid "Size and Position"
@@ -1303,7 +1304,7 @@ msgstr "제목"
 
 #: src/bin/e_int_border_remember.c:470
 msgid "Window Role"
-msgstr "윈도 역할"
+msgstr "윈도우 역할"
 
 #: src/bin/e_int_border_remember.c:479
 msgid "Window type"
@@ -1567,7 +1568,7 @@ msgstr ""
 
 #: src/bin/e_int_config_window_display.c:49 src/bin/e_configure.c:63
 msgid "Window Display"
-msgstr "윈도 디스플레이"
+msgstr "윈도우 디스플레이"
 
 #: src/bin/e_int_config_window_display.c:136
 msgid "Display"
@@ -1575,14 +1576,14 @@ msgstr "디스플레이"
 
 #: src/bin/e_int_config_window_display.c:137
 msgid "Show window geometry information when moving or resizing"
-msgstr "윈도를 옯기거나 크기를 바꿀 때 구조 표시"
+msgstr "윈도우를 옮기거나 크기를 바꿀 때 구조 표시"
 
 #: src/bin/e_int_config_window_display.c:139
 msgid "Animate the shading and unshading of windows"
-msgstr "윈도 그림자를 깔거나 없앨 때 애니메이션"
+msgstr "윈도우 그림자를 깔거나 없앨 때 애니메이션"
 #: src/bin/e_int_config_window_display.c:182
 msgid "Animate shading and unshading of windows"
-msgstr "윈도 그림자를 깔거나 없앨 때 애니메이션"
+msgstr "윈도우 그림자를 깔거나 없앨 때 애니메이션"
 
 #: src/bin/e_int_config_window_display.c:143
 #: src/bin/e_int_config_window_display.c:197
@@ -1606,7 +1607,7 @@ msgstr "마우스로 수동으로 배치"
 
 #: src/bin/e_int_config_window_display.c:167
 msgid "Window Move Geometry"
-msgstr "윈도 위치를 바꾸는 구조"
+msgstr "윈도우 위치를 바꾸는 구조"
 
 #: src/bin/e_int_config_window_display.c:168
 #: src/bin/e_int_config_window_display.c:175
@@ -1615,19 +1616,19 @@ msgstr "디스플레이 정보"
 
 #: src/bin/e_int_config_window_display.c:170
 msgid "Follow the window as it moves"
-msgstr "움직이는 윈도와 동행"
+msgstr "움직이는 윈도우와 동행"
 
 #: src/bin/e_int_config_window_display.c:174
 msgid "Window Resize Geometry"
-msgstr "윈도 크기 조정 구조"
+msgstr "윈도우 크기 조정 구조"
 
 #: src/bin/e_int_config_window_display.c:177
 msgid "Follow the window as it resizes"
-msgstr "크기 조정하는 윈도와 동행"
+msgstr "크기 조정하는 윈도우와 동행"
 
 #: src/bin/e_int_config_window_display.c:181
 msgid "Window Shading"
-msgstr "윈도 그림자"
+msgstr "윈도우 그림자"
 
 #: src/bin/e_int_config_window_display.c:184
 #, c-format
@@ -1636,7 +1637,7 @@ msgstr "%4.0f 픽셀/초"
 
 #: src/bin/e_int_config_window_display.c:187
 msgid "Linear"
-msgstr "일선"
+msgstr "직선"
 
 #: src/bin/e_int_config_window_display.c:189
 msgid "Smooth accelerate and decelerate"
@@ -1678,7 +1679,7 @@ msgstr ""
 
 #: src/bin/e_int_config_window_manipulation.c:48 src/bin/e_configure.c:62
 msgid "Window Manipulation"
-msgstr "윈도 조작"
+msgstr "윈도우 조작"
 
 #: src/bin/e_int_config_window_manipulation.c:130
 msgid "Miscellaneous Options"
@@ -1687,11 +1688,11 @@ msgstr "기타 선택권"
 #: src/bin/e_int_config_window_manipulation.c:131
 #: src/bin/e_int_config_window_manipulation.c:164
 msgid "Automatically raise windows on mouse over"
-msgstr "위도에 마우스가 있을때 자동으로 높임"
+msgstr "윈도우 마우스가 있을때 자동으로 높임"
 
 #: src/bin/e_int_config_window_manipulation.c:133
 msgid "When moving or resizing windows, resist at the boundaries"
-msgstr "윈도 위치나 크기를 바꿀 때 경게에서 그침"
+msgstr "윈도우 위치나 크기를 바꿀 때 경게에서 그침"
 
 #: src/bin/e_int_config_window_manipulation.c:137
 #: src/bin/e_int_config_window_manipulation.c:189
@@ -1706,7 +1707,7 @@ msgstr "스스로 확장"
 #: src/bin/e_int_config_window_manipulation.c:143
 #: src/bin/e_int_config_window_manipulation.c:195
 msgid "Expand the window"
-msgstr "윈도 확장"
+msgstr "윈도우 확장"
 
 #: src/bin/e_int_config_window_manipulation.c:145
 #: src/bin/e_int_config_window_manipulation.c:197
@@ -1732,11 +1733,11 @@ msgstr "저항"
 
 #: src/bin/e_int_config_window_manipulation.c:173
 msgid "Resist moving or resizing a window over an obstacle"
-msgstr "장애물 위로 윈도를 옯기거나 크기를 바꾸는 것에 반대"
+msgstr "장애물 위로 윈도우를 옮기거나 크기를 바꾸는 것에 반대"
 
 #: src/bin/e_int_config_window_manipulation.c:175
 msgid "Resistance between windows:"
-msgstr "윈도끼리 저항:"
+msgstr "윈도우끼리 저항:"
 
 #: src/bin/e_int_config_window_manipulation.c:177
 #: src/bin/e_int_config_window_manipulation.c:181
@@ -1751,12 +1752,12 @@ msgstr "스크린에 이르면 저항:"
 
 #: src/bin/e_int_config_window_manipulation.c:183
 msgid "Resistance to desktop gadgets:"
-msgstr "장치에 저항:"
+msgstr "데스크탑 장치에 저항:"
 
 #: src/bin/e_apps.c:413 src/bin/e_apps.c:1783 src/bin/e_fileman_file.c:354
 #: src/bin/e_fileman_file.c:405 src/bin/e_utils.c:222
 msgid "Run Error"
-msgstr "실행 오차"
+msgstr "실행 오류"
 
 #: src/bin/e_apps.c:414 src/bin/e_fileman_file.c:355
 #: src/bin/e_fileman_file.c:406 src/bin/e_utils.c:223
@@ -1788,7 +1789,7 @@ msgstr "Enlightenment 설정"
 
 #: src/bin/e_winlist.c:122
 msgid "Select a window"
-msgstr "윈도 선택"
+msgstr "윈도우 선택"
 
 #: src/bin/e_startup.c:68
 #, c-format
@@ -1797,7 +1798,7 @@ msgstr "%s 시작"
 
 #: src/bin/e_utils.c:268
 msgid "Cannot exit - immortal windows."
-msgstr ""
+msgstr "윈도우 창 닫힐 수 없음"
 
 #: src/bin/e_utils.c:269
 msgid ""
