@@ -297,6 +297,7 @@ _ibar_new()
 
 		  mi = e_menu_item_new(ib->config_menu);
 		  e_menu_item_label_set(mi, _("Configuration"));
+		  e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");		  
 		  e_menu_item_callback_set(mi, _ibar_bar_cb_menu_configure, ibb);
 
 		  mi = e_menu_item_new(ib->config_menu);
@@ -660,11 +661,13 @@ _ibar_bar_menu_new(IBar_Bar *ibb)
    /* Config */
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Configuration"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");   
    e_menu_item_callback_set(mi, _ibar_bar_cb_menu_configure, ibb);
 
    /* Edit */
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Edit Mode"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/gadgets");   
    e_menu_item_callback_set(mi, _ibar_bar_cb_menu_edit, ibb);
 }
 

@@ -415,11 +415,13 @@ _itray_box_menu_new(ITray_Box *itb)
    /* Config */
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Configuration"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");   
    e_menu_item_callback_set(mi, _itray_box_cb_menu_configure, itb);
 
    /* Edit */
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Edit Mode"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/gadgets");   
    e_menu_item_callback_set(mi, _itray_box_cb_menu_edit, itb);
 }
 

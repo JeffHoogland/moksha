@@ -192,6 +192,7 @@ _clock_new()
 
 		  mi = e_menu_item_new(clock->config_menu);
 		  e_menu_item_label_set(mi, _("Configuration"));
+		  e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");		  
 		  e_menu_item_callback_set(mi, _clock_face_cb_menu_configure, face);
 
 		  mi = e_menu_item_new(clock->config_menu);
@@ -367,11 +368,13 @@ _clock_face_menu_new(Clock_Face *face)
    /* Config */
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Configuration"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");   
    e_menu_item_callback_set(mi, _clock_face_cb_menu_configure, face);
 
    /* Edit */
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Edit Mode"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/gadgets");
    e_menu_item_callback_set(mi, _clock_face_cb_menu_edit, face);
 }
 
