@@ -34,10 +34,10 @@ e_desklock_show(void)
   
   E_Zone  *zone = NULL;
 
-  e_error_dialog_show(_("Enlightenment Desktop Lock!"),
+  /*e_error_dialog_show(_("Enlightenment Desktop Lock!"),
 		      _("The Desktop Lock mechanism is not complitely working yet.\n"
 		        "It is just a simple development version of Desktop Locking.\n"
-		        "To return to E, just hit Enter"));
+		        "To return to E, just hit Enter"));*/
 
   zone = e_zone_current_get(e_container_current_get(e_manager_current_get()));
   {
@@ -45,10 +45,10 @@ e_desklock_show(void)
     ecore_x_window_show(elock_wnd);
     e_grabinput_get(elock_wnd, 0, elock_wnd);
 
-    x = zone->x + 100;
-    y = zone->y + 100;
-    w = zone->w - 200;
-    h = zone->h - 200;
+    x = zone->x;
+    y = zone->y;
+    w = zone->w;
+    h = zone->h;
 
     elock_wnd_popup = e_popup_new(zone, x, y, w, h);
     evas_event_feed_mouse_move(elock_wnd_popup->evas, -1000000, -1000000,
@@ -60,15 +60,16 @@ e_desklock_show(void)
     bg_object = edje_object_add(elock_wnd_popup->evas);
 
     // this option should be made as a user option.
-    e_theme_edje_object_set(bg_object, "base/theme/background", "desktop/background");
+    /*e_theme_edje_object_set(bg_object, "base/theme/background", "desktop/background");
 
     passwd_entry = edje_object_add(elock_wnd_popup->evas);
-    e_theme_edje_object_set(passwd_entry, "base/theme/exebuf", "widgets/exebuf/main");
-    edje_object_part_text_set(passwd_entry, "label", passwd);
+    e_theme_edje_object_set(passwd_entry, "base/theme/desklock", "widgets/desklock/main");
+    edje_object_part_text_set(passwd_entry, "passwd", passwd);
 
     edje_object_part_swallow(bg_object, "passwd_entry", passwd_entry);
     evas_object_move(passwd_entry, x + 200, y + 200);
-    evas_object_show(passwd_entry);
+    evas_object_show(passwd_entry);*/
+    e_theme_edje_object_set(bg_object, "base/theme/desklock", "widgets/desklock/main");
 
 
     e_popup_move_resize(elock_wnd_popup, x, y, w, h);
@@ -177,6 +178,7 @@ e_desklock_show(void)
 			   "Double check to see if Enlightenment is not already on this display,\n"
 			   "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
 			   "and try running again."));*/
+  _e_desklock_passwd_update();
 
   return 1;
 }
@@ -204,6 +206,8 @@ e_desklock_hide(void)
   ecore_x_window_del(elock_wnd);
   e_grabinput_release(elock_wnd, elock_wnd);
   elock_wnd = 0;
+
+  memset(passwd, 0, sizeof(char) * PASSWD_LEN);
 }
 
 static int
@@ -219,13 +223,22 @@ _e_desklock_cb_key_down(void *data, int type, void *event)
   else if (!strcmp(ev->keysymbol, "KP_Enter"))
     {
       // here we have to go to auth
-      e_desklock_hide(); // Actually, escape MUST be ignored.
-      ;
+      if (1 || strcmp(passwd, "password") == 0)
+	e_desklock_hide(); // Actually, escape MUST be ignored.
+      else
+	; // report about invalid password
+      memset(passwd, 0, sizeof(char) * PASSWD_LEN);
+      _e_desklock_passwd_update();
     }
   else if (!strcmp(ev->keysymbol, "Return"))
     {
       // here we have to go to auth
-      e_desklock_hide(); // Actually, escape MUST be ignored.
+      if (1 || strcmp(passwd, "password") == 0)
+	e_desklock_hide(); // Actually, escape MUST be ignored.
+      else
+	; // report about invalid password
+      memset(passwd, 0, sizeof(char) * PASSWD_LEN);
+      _e_desklock_passwd_update();
     }
   else if (!strcmp(ev->keysymbol, "BackSpace"))
     _e_desklock_backspace();
@@ -301,8 +314,8 @@ _e_desklock_passwd_update()
     {
       strcat(passwd_hidden, "*");
     }
-  edje_object_part_text_set(passwd_entry, "label", passwd_hidden);
-  //edje_object_part_text_set(passwd_entry, "label", passwd);
+  edje_object_part_text_set(bg_object, "passwd", passwd_hidden);
+  /*edje_object_part_text_set(bg_object, "passwd", passwd);*/
   return;
 }
 

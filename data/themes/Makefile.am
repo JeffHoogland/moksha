@@ -52,6 +52,7 @@ default_ilist.edc \
 default_tlist.edc \
 default_slider.edc \
 default_exebuf.edc \
+default_desklock.edc \
 default_textblock.edc \
 default_shelf.edc
 
