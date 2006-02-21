@@ -192,6 +192,9 @@ e_border_shutdown(void)
 	handlers = evas_list_remove_list(handlers, handlers);
 	ecore_event_handler_del(h);
      }
+   
+   e_app_change_callback_del(_e_border_app_change, NULL);
+   
    return 1;
 }
 

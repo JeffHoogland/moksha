@@ -678,6 +678,18 @@ e_app_change_callback_add(void (*func) (void *data, E_App *a, E_App_Change ch), 
    _e_apps_change_callbacks = evas_list_append(_e_apps_change_callbacks, cb);
 }
 
+/* 
+ * Delete the registered callback which has been registered with the data 
+ * given data pointer. This function will return after the first match is
+ * made.
+ *
+ * This will only delete the internal callback function reference. It will 
+ * not delete the data. If the data or callback pointers can not be matched 
+ * this function does nothing. 
+ * 
+ * @func pointer to function to be deleted 
+ * @data pointer that was initialy registered with the add function
+ */
 EAPI void
 e_app_change_callback_del(void (*func) (void *data, E_App *a, E_App_Change ch), void *data)
 {

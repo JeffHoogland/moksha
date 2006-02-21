@@ -685,7 +685,9 @@ main(int argc, char **argv)
 
    /* Store current selected desktops */
    _e_main_desk_save();
-#if 0   
+
+   /* FIXME: why? oh why is this disabled? */
+#if 0
    /* unroll our stack of shutdown functions with exit code of 0 */
    _e_main_shutdown(0);
    
@@ -701,6 +703,8 @@ main(int argc, char **argv)
 	ecore_file_shutdown();
 	ecore_app_restart();
      }
+
+   e_prefix_shutdown();
    
    /* just return 0 to keep the compiler quiet */
    return 0;

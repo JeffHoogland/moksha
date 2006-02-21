@@ -22,12 +22,7 @@ e_prefix_determine(char *argv0)
 {
    char *p;
 
-   E_FREE(_exe_path);
-   E_FREE(_prefix_path);
-   E_FREE(_prefix_path_locale);
-   E_FREE(_prefix_path_bin);
-   E_FREE(_prefix_path_data);
-   E_FREE(_prefix_path_lib);
+   e_prefix_shutdown();
    
    if (!_e_prefix_try_proc())
      {
@@ -102,7 +97,7 @@ e_prefix_determine(char *argv0)
 }
 
 EAPI void
-e_prefix_fallback(void)
+e_prefix_shutdown(void)
 {
    E_FREE(_exe_path);
    E_FREE(_prefix_path);
@@ -110,6 +105,12 @@ e_prefix_fallback(void)
    E_FREE(_prefix_path_bin);
    E_FREE(_prefix_path_data);
    E_FREE(_prefix_path_lib);
+}
+   
+EAPI void
+e_prefix_fallback(void)
+{
+   e_prefix_shutdown();
    _e_prefix_fallbacks();
 }
 

@@ -209,9 +209,9 @@ e_intl_language_set(const char *lang)
    alias_locale = _e_intl_locale_alias_get(_e_intl_language);
    if (!_e_intl_locale_validate(alias_locale))
      {
-	fprintf(stderr, "Locale %s is NO GOOD. Please "
-	       "install this locale or don't "
-               "use it!\n", alias_locale);
+	fprintf(stderr, "The locale %s cannot be found on your "
+	       "system. Please install this locale or try "
+               "something else.\n", alias_locale);
      }
    else
      {
@@ -224,11 +224,14 @@ e_intl_language_set(const char *lang)
              if (locale_path == NULL)
 	       {
 		  fprintf(stderr, "Can't find the "
-			 "translation for your locale(%s). "
+			 "translation path for the locale %s. "
 			 "Please make sure your messages "
 			 "path is in order. If this locale "
 			 "is an alias make sure you have your "
-			 "locale.aliases file in the right place\n", alias_locale);
+			 "locale.aliases file in the right place. Note: "
+			 "If your locale is C, POSIX, en_US, en_GB, "
+			 "en_US.utf8 etc. this is normal.\n", 
+			 alias_locale);
 	       }
 	     else
 	       {
