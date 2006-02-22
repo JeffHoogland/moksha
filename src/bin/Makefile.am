@@ -132,6 +132,7 @@ e_int_config_startup.h \
 e_int_config_performance.h \
 e_int_config_winlist.h \
 e_int_config_display.h \
+e_int_config_desklock.h \
 e_int_config_exebuf.h \
 e_int_config_cfgdialogs.h \
 e_deskpreview.h \
@@ -258,6 +259,7 @@ e_int_config_startup.c \
 e_int_config_performance.c \
 e_int_config_winlist.c \
 e_int_config_display.c \
+e_int_config_desklock.c \
 e_int_config_exebuf.c \
 e_int_config_cfgdialogs.c \
 e_deskpreview.c \

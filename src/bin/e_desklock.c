@@ -5,14 +5,26 @@
 
 #define PASSWD_LEN 256
 
+
+/**************************** private data ******************************/
 static Ecore_X_Window elock_wnd = 0;
 static Evas_List *handlers = NULL;
-static E_Popup *elock_wnd_popup = NULL;
 
+static E_Popup *elock_wnd_popup = NULL;
 static Evas_Object *bg_object = NULL;
-static Evas_Object *passwd_entry = NULL;
+
+struct _E_Desklock_Data
+{
+  Ecore_X_Window  elock_wnd;
+  Evas_List	  *handlers;
+  Evas_List	  *popus_wnd;
+  Evas_Object	  *bg_object;
+};
+//static Evas_Object *passwd_entry = NULL;
 
 static char passwd[PASSWD_LEN]="";
+
+/***********************************************************************/
 
 static int _e_desklock_cb_key_down(void *data, int type, void *event);
 static int _e_desklock_cb_mouse_down(void *data, int type, void *event);
@@ -29,8 +41,6 @@ e_desklock_show(void)
 {
   //Evas_List  *managers, *l, *l2, *l3;
   Evas_Object *eo;
-  int x, y, w, h;
-  //Evas_List *elock_wnd_list = NULL;
   
   E_Zone  *zone = NULL;
 
@@ -45,12 +55,7 @@ e_desklock_show(void)
     ecore_x_window_show(elock_wnd);
     e_grabinput_get(elock_wnd, 0, elock_wnd);
 
-    x = zone->x;
-    y = zone->y;
-    w = zone->w;
-    h = zone->h;
-
-    elock_wnd_popup = e_popup_new(zone, x, y, w, h);
+    elock_wnd_popup = e_popup_new(zone, zone->x, zone->y, zone->w, zone->h);
     evas_event_feed_mouse_move(elock_wnd_popup->evas, -1000000, -1000000,
 			       ecore_x_current_time_get(), NULL);
 
@@ -72,9 +77,9 @@ e_desklock_show(void)
     e_theme_edje_object_set(bg_object, "base/theme/desklock", "widgets/desklock/main");
 
 
-    e_popup_move_resize(elock_wnd_popup, x, y, w, h);
+    e_popup_move_resize(elock_wnd_popup, zone->x, zone->y, zone->w, zone->h);
     evas_object_move(bg_object, 0, 0);
-    evas_object_resize(bg_object, w, h);
+    evas_object_resize(bg_object, zone->w, zone->h);
     evas_object_show(bg_object);
     e_popup_edje_bg_object_set(elock_wnd_popup, bg_object);
 
@@ -101,8 +106,6 @@ e_desklock_show(void)
   }
 
   /*
-  // TODO: I think that creation of the elock_wnd can be moved into the e_main.c.
-  // Actually this lock wnd can be created just once. And then used.
   managers = e_manager_list();
 
   for (l = managers; l; l = l->next)
@@ -223,8 +226,8 @@ _e_desklock_cb_key_down(void *data, int type, void *event)
   else if (!strcmp(ev->keysymbol, "KP_Enter"))
     {
       // here we have to go to auth
-      if (1 || strcmp(passwd, "password") == 0)
-	e_desklock_hide(); // Actually, escape MUST be ignored.
+      if (strcmp(passwd, e_config->desklock_personal_passwd) == 0)
+	e_desklock_hide();
       else
 	; // report about invalid password
       memset(passwd, 0, sizeof(char) * PASSWD_LEN);
@@ -233,8 +236,8 @@ _e_desklock_cb_key_down(void *data, int type, void *event)
   else if (!strcmp(ev->keysymbol, "Return"))
     {
       // here we have to go to auth
-      if (1 || strcmp(passwd, "password") == 0)
-	e_desklock_hide(); // Actually, escape MUST be ignored.
+      if (strcmp(passwd, e_config->desklock_personal_passwd) == 0)
+	e_desklock_hide();
       else
 	; // report about invalid password
       memset(passwd, 0, sizeof(char) * PASSWD_LEN);

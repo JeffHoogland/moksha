@@ -457,6 +457,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, cfgdlg_default_mode, INT); /**/
    E_CONFIG_LIST(D, T, gadcons, _e_config_gadcon_edd);
    E_CONFIG_LIST(D, T, shelves, _e_config_shelf_edd);
+   E_CONFIG_VAL(D, T, desklock_personal_passwd, STR);
 
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -608,6 +609,7 @@ e_config_init(void)
 	e_config->cfgdlg_auto_apply = 0;
 	e_config->cfgdlg_default_mode = 0;
 	e_config->gadcons = NULL;
+	e_config->desklock_personal_passwd = NULL;
 	
 	/* FIXME: fill up default gadcons! */
 	  {

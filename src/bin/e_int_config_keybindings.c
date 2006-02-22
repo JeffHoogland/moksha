@@ -8,6 +8,15 @@
 #define ILIST_ICON_WITH_KEYBIND	    "enlightenment/e"
 #define ILIST_ICON_WITHOUT_KEYBIND  ""
 
+#define	_DEFAULT_ACTION	0
+#define _NONDEFAULT_ACTION  1
+
+#define EDIT_RESTRICT_NONE  (0 << 0)
+#define EDIT_RESTRICT_ACTION (1 << 0)
+#define EDIT_RESTRICT_PARAMS (1 << 1)
+
+#define E_BINDING_CONTEXT_NUMBER  10
+
 static void	    *_create_data(E_Config_Dialog *cfd);
 static void	    _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int	    _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -38,143 +47,12 @@ typedef struct _E_Widget_Entry_Data	  E_Widget_Entry_Data;
 typedef struct _E_Smart_Item		  E_Smart_Item;
 typedef struct _E_Smart_Data		  E_Smart_Data;
 
-struct _E_Smart_Data
-{ 
-   Evas_Coord   x, y, w, h;
-   
-   Evas_Object   *smart_obj;
-   Evas_Object   *box_obj;
-   Evas_List     *items;
-   int            selected;
-   Evas_Coord     icon_w, icon_h;
-   unsigned char  selector : 1;
-};
-
-struct _E_Smart_Item
-{
-   E_Smart_Data  *sd;
-   Evas_Object   *base_obj;
-   Evas_Object   *icon_obj;
-   void         (*func) (void *data, void *data2);
-   void         (*func_hilight) (void *data, void *data2);
-   void          *data;
-   void          *data2;
-};
-
-struct _E_Widget_IList_Data
-{
-   Evas_Object *o_widget, *o_scrollframe, *o_ilist;
-   Evas_List *callbacks;
-   char **value;
-};
-
-struct _E_Widget_Radio_Data
-{
-   E_Radio_Group *group;
-   Evas_Object *o_radio;
-   int valnum;
-};
-
-struct _E_Widget_Checkbox_Data
-{
-  Evas_Object *o_check;
-  int *valptr;
-};
-
-struct _E_Widget_Button_Data
-{
-   Evas_Object *o_button;
-   Evas_Object *o_icon;
-   void (*func) (void *data, void *data2);
-   void *data;
-   void *data2;   
-};
-
-struct _E_Widget_Entry_Data
-{
-   Evas_Object *o_entry;
-   Evas_Object *obj;
-   char **valptr;
-   void (*on_change_func) (void *data, Evas_Object *obj);
-   void  *on_change_data;
-};
-#define E_BINDING_CONTEXT_NUMBER  10
-
-struct _E_Config_KeyBind
-{
-  int acn;
-  Evas_List *bk_list;
-};
-
-struct _E_Config_Dialog_Data
-{
-  Evas_List *key_bindings;
-
-  int cur_eckb_kb_sel;
-  E_Config_KeyBind  *cur_eckb;
-  Evas	*evas;
-
-  int binding_context;
-  struct
-    {
-      int shift;
-      int ctrl;
-      int alt;
-      int win;
-    } bind_mod;
-  char *key_bind;
-  char *key_action;
-  char *key_params;
-
-  struct
-    {
-      Evas_Object *ilist;
-      /*Evas_Object *btn_add;
-      Evas_Object *btn_del;*/
-      
-      Evas_Object *btn_prev_keybind;
-      Evas_Object *btn_next_keybind;
-      Evas_Object *btn_add_keybind;
-      Evas_Object *btn_del_keybind;
-
-      Evas_Object *bind_context[E_BINDING_CONTEXT_NUMBER];
-      struct
-	{
-	  Evas_Object *shift;
-	  Evas_Object *ctrl;
-	  Evas_Object *alt;
-	  Evas_Object *win;
-	} bind_mod_obj;
-      Evas_Object *key_bind;
-      Evas_Object *key_action;
-      Evas_Object *key_params;
-    } gui;
-};
-
-EAPI E_Config_Dialog *
-e_int_config_keybindings(E_Container *con)
-{
-  E_Config_Dialog *cfd;
-  E_Config_Dialog_View *v;
-
-  v = E_NEW(E_Config_Dialog_View, 1);
-
-  v->create_cfdata = _create_data;
-  v->free_cfdata = _free_data;
-  v->basic.apply_cfdata = _basic_apply_data;
-  v->basic.create_widgets = _basic_create_widgets;
-
-  cfd = e_config_dialog_new(con, _("Key Binding Settings"), NULL, 0, v, NULL);
-  return cfd;
-}
-
-typedef struct
+/*typedef struct
 {
   char *key;
   int  modifiers;
   int  context;
-}KEY_ACTION_BINDING;
-
+}KEY_ACTION_BINDING;*/
 
 typedef struct
 {
@@ -184,13 +62,6 @@ typedef struct
   int	def_action;
   int	restrictions;
 }ACTION;
-
-#define	_DEFAULT_ACTION	0
-#define _NONDEFAULT_ACTION  1
-
-#define EDIT_RESTRICT_NONE  (0 << 0)
-#define EDIT_RESTRICT_ACTION (1 << 0)
-#define EDIT_RESTRICT_PARAMS (1 << 1)
 
 const ACTION actions_predefined_names[ ] = {
   {"Flip Desktop Left", "desk_flip_by", "-1 0", _DEFAULT_ACTION,
@@ -335,6 +206,136 @@ const ACTION actions_predefined_names[ ] = {
   {NULL, NULL, NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_NONE }
 };
 
+struct _E_Smart_Data
+{ 
+   Evas_Coord   x, y, w, h;
+   
+   Evas_Object   *smart_obj;
+   Evas_Object   *box_obj;
+   Evas_List     *items;
+   int            selected;
+   Evas_Coord     icon_w, icon_h;
+   unsigned char  selector : 1;
+};
+
+struct _E_Smart_Item
+{
+   E_Smart_Data  *sd;
+   Evas_Object   *base_obj;
+   Evas_Object   *icon_obj;
+   void         (*func) (void *data, void *data2);
+   void         (*func_hilight) (void *data, void *data2);
+   void          *data;
+   void          *data2;
+};
+
+struct _E_Widget_IList_Data
+{
+   Evas_Object *o_widget, *o_scrollframe, *o_ilist;
+   Evas_List *callbacks;
+   char **value;
+};
+
+struct _E_Widget_Radio_Data
+{
+   E_Radio_Group *group;
+   Evas_Object *o_radio;
+   int valnum;
+};
+
+struct _E_Widget_Checkbox_Data
+{
+  Evas_Object *o_check;
+  int *valptr;
+};
+
+struct _E_Widget_Button_Data
+{
+   Evas_Object *o_button;
+   Evas_Object *o_icon;
+   void (*func) (void *data, void *data2);
+   void *data;
+   void *data2;   
+};
+
+struct _E_Widget_Entry_Data
+{
+   Evas_Object *o_entry;
+   Evas_Object *obj;
+   char **valptr;
+   void (*on_change_func) (void *data, Evas_Object *obj);
+   void  *on_change_data;
+};
+
+struct _E_Config_KeyBind
+{
+  int acn;
+  Evas_List *bk_list;
+};
+
+struct _E_Config_Dialog_Data
+{
+  Evas_List *key_bindings;
+
+  int cur_eckb_kb_sel;
+  E_Config_KeyBind  *cur_eckb;
+  Evas	*evas;
+
+  int binding_context;
+  struct
+    {
+      int shift;
+      int ctrl;
+      int alt;
+      int win;
+    } bind_mod;
+  char *key_bind;
+  char *key_action;
+  char *key_params;
+
+  struct
+    {
+      Evas_Object *ilist;
+      /*Evas_Object *btn_add;
+      Evas_Object *btn_del;*/
+      
+      Evas_Object *btn_prev_keybind;
+      Evas_Object *btn_next_keybind;
+      Evas_Object *btn_add_keybind;
+      Evas_Object *btn_del_keybind;
+
+      Evas_Object *bind_context[E_BINDING_CONTEXT_NUMBER];
+      struct
+	{
+	  Evas_Object *shift;
+	  Evas_Object *ctrl;
+	  Evas_Object *alt;
+	  Evas_Object *win;
+	} bind_mod_obj;
+      Evas_Object *key_bind;
+      Evas_Object *key_action;
+      Evas_Object *key_params;
+    } gui;
+};
+
+
+EAPI E_Config_Dialog *
+e_int_config_keybindings(E_Container *con)
+{
+  E_Config_Dialog *cfd;
+  E_Config_Dialog_View *v;
+
+  v = E_NEW(E_Config_Dialog_View, 1);
+
+  v->create_cfdata = _create_data;
+  v->free_cfdata = _free_data;
+  v->basic.apply_cfdata = _basic_apply_data;
+  v->basic.create_widgets = _basic_create_widgets;
+
+  cfd = e_config_dialog_new(con, _("Key Binding Settings"), NULL, 0, v, NULL);
+  return cfd;
+}
+
 static void
 _fill_keybindings_data(E_Config_Dialog_Data *cfdata)
 {
@@ -446,9 +447,9 @@ _create_data(E_Config_Dialog *cfd)
   cfdata = E_NEW(E_Config_Dialog_Data, 1);
   
   cfdata->binding_context = E_BINDING_CONTEXT_ANY;
-  cfdata->key_bind = NULL;
-  cfdata->key_action = NULL;
-  cfdata->key_params = NULL;
+  cfdata->key_bind = strdup("");
+  cfdata->key_action = strdup("");
+  cfdata->key_params = strdup("");
   return cfdata;
 }
 
@@ -461,12 +462,9 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
   E_Config_Binding_Key *bk;
 
 
-  if (cfdata->key_bind)
-    E_FREE(cfdata->key_bind);
-  if (cfdata->key_action)
-    E_FREE(cfdata->key_action);
-  if (cfdata->key_params)
-    E_FREE(cfdata->key_params);
+  E_FREE(cfdata->key_bind);
+  E_FREE(cfdata->key_action);
+  E_FREE(cfdata->key_params);
 
   size = evas_list_count(cfdata->key_bindings);
   for (i = 0; i < size; i++)
@@ -480,10 +478,9 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	      bk = evas_list_nth(eckb->bk_list, j);
 	      if (bk)
 		{
-		  if (bk->key) E_FREE(bk->key);
-		  if (bk->action) E_FREE(bk->action);
-		  if (bk->params) E_FREE(bk->params);
-
+		  E_FREE(bk->key);
+		  E_FREE(bk->action);
+		  E_FREE(bk->params);
 		  E_FREE(bk);
 		}
 	    }
@@ -558,7 +555,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	    }
 	}
     }
-
+  e_config_save_queue();
   return 1;
 }
 
@@ -781,7 +778,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
     e_widget_table_object_append(oft, of2, 1, 0, 1, 1, 1, 1, 1, 1);
   }
   e_widget_list_object_append(o, oft, 1, 1, 0.5);
-  e_dialog_resizable_set(cfd->dia, 1);
+  e_dialog_resizable_set(cfd->dia, 0);
   return o;
 }
 
