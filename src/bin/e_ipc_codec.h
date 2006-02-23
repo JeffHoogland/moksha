@@ -144,8 +144,10 @@ EAPI int      e_ipc_codec_3int_3str_dec(char *data, int bytes, E_Ipc_3Int_3Str *
 EAPI void    *e_ipc_codec_3int_3str_enc(int val1, int val2, int val3, char *str1, char *str2, char *str3, int *size_ret);
 EAPI int      e_ipc_codec_3int_3str_list_dec(char *data, int bytes, Evas_List **dest);
 EAPI void    *e_ipc_codec_3int_3str_list_enc(Evas_List *list, int *size_ret);   
+
 EAPI int      e_ipc_codec_str_4int_dec(char *data, int bytes, E_Ipc_Str_4Int **dest);
 EAPI void    *e_ipc_codec_str_4int_enc(char *str1, int val1, int val2, int val3, int val4, int *size_ret);
- 
+EAPI int      e_ipc_codec_str_4int_list_dec(char *data, int bytes, Evas_List **dest);
+EAPI void    *e_ipc_codec_str_4int_list_enc(Evas_List *list, int *size_ret);
 #endif
 #endif

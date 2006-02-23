@@ -61,24 +61,6 @@ EAPI int
 e_intl_init(void)
 {
    char *s;
-
-   /* supporeted languages - as we get translations - add them here
-    * 
-    * if you add a language:
-    * 
-    * NOTE: add a language NAME for this in e_intl_language_name_get() if
-    *       there isn't one yet (use the english name - then we will add
-    *       translations of the language names to the .po file)
-    * NOTE: add a translation logic list to take all possible ways to address
-    *       a language locale and convert it to a simplified one that is in
-    *       the list here below. languages can often have multiple ways of
-    *       being addressed (same language spoken in multiple countries or
-    *       many variants of the language). this translation allows all the
-    *       variants to be used and mapped to a simple "single" name for that
-    *       language. if the differences in variants are large (eg simplified
-    *       vs. traditional chinese) we may refer to them as separate languages
-    *       entirely.
-    */
    
    _e_intl_input_method_config_edd = E_CONFIG_DD_NEW("input_method_config", E_Input_Method_Config);
    E_CONFIG_VAL(_e_intl_input_method_config_edd, E_Input_Method_Config, version, INT);
@@ -125,6 +107,8 @@ e_intl_post_init(void)
 {
    if ((e_config->language) && (e_config->language[0] != 0))
      e_intl_language_set(e_config->language);
+   else 
+     e_intl_language_set(NULL);
    
    if ((e_config->input_method) && (e_config->input_method[0] != 0))
      e_intl_input_method_set(e_config->input_method); 
@@ -143,14 +127,15 @@ e_intl_post_shutdown(void)
      }
    
    e_intl_input_method_set(NULL);
+   
    e_intl_language_set(NULL);
+   
    E_EXE_STOP(_e_intl_input_method_exec);
    return 1;
 }
 
 /*
  * TODO 
- * - Set the env variables only after the locale has been validated
  * - Add error dialogs explaining any errors while setting the locale
  *      * Locale aliases need to be configured
  *      * Locale is invalid
@@ -185,36 +170,28 @@ e_intl_language_set(const char *lang)
      }
     
    if (lang)
-     {
-	_e_intl_language = strdup(lang);
-	/* Only set env vars is a non NULL locale was passed */
-	if (set_envars)
-	  {
-	     /* FIXME: maybe we should set these anyway? */
-	     if (getenv("LANGUAGE"))
-	       e_util_env_set("LANGUAGE", _e_intl_language);
-	     if (getenv("LANG"))        
-	       e_util_env_set("LANG", _e_intl_language);
-	     if (getenv("LC_ALL"))
-	       e_util_env_set("LC_ALL", _e_intl_language);
-	     if (getenv("LC_MESSAGES"))
-	       e_util_env_set("LC_MESSAGES", _e_intl_language);
-	  }
-     }
+     _e_intl_language = strdup(lang);
    else
-     {
-	_e_intl_language = NULL;
-     }
+     _e_intl_language = NULL;
 
    alias_locale = _e_intl_locale_alias_get(_e_intl_language);
    if (!_e_intl_locale_validate(alias_locale))
      {
-	fprintf(stderr, "The locale %s cannot be found on your "
+	fprintf(stderr, "The locale '%s' cannot be found on your "
 	       "system. Please install this locale or try "
                "something else.\n", alias_locale);
      }
    else
      {
+	/* Only set env vars is a non NULL locale was passed */
+	if (set_envars)
+	  {
+	     e_util_env_set("LANGUAGE", _e_intl_language);
+	     e_util_env_set("LANG", _e_intl_language);
+	     e_util_env_set("LC_ALL", _e_intl_language);
+	     e_util_env_set("LC_MESSAGES", _e_intl_language);
+	  }
+	
     	setlocale(LC_ALL, _e_intl_language);
         if (_e_intl_language)
 	  {
@@ -223,15 +200,32 @@ e_intl_language_set(const char *lang)
              locale_path = _e_intl_language_path_find(alias_locale);
              if (locale_path == NULL)
 	       {
-		  fprintf(stderr, "Can't find the "
-			 "translation path for the locale %s. "
-			 "Please make sure your messages "
-			 "path is in order. If this locale "
-			 "is an alias make sure you have your "
-			 "locale.aliases file in the right place. Note: "
-			 "If your locale is C, POSIX, en_US, en_GB, "
-			 "en_US.utf8 etc. this is normal.\n", 
-			 alias_locale);
+		  char * match_lang;
+
+		  match_lang = _e_intl_locale_canonic_get(alias_locale, E_LOC_LANG);
+		  
+		  /* If locale is C or some form of en don't report an error */
+		  if ( match_lang == NULL && strcmp (alias_locale, "C") )
+		    {
+		       fprintf(stderr, "The locale you have chosen '%s' "
+			     "appears to be an alias, however, it can not be "
+			     "resloved. Please make sure you have a "
+			     "'locale.aliases' file in your 'messages' path "
+			     "which can resolve this alias.\n"
+			     "\n"
+			     "Enlightenment will not be translated.\n", 
+			     alias_locale);
+		    }
+		  else if ( match_lang != NULL && strcmp(match_lang, "en") ) 
+		    {
+		       fprintf(stderr, "The translation files for the "
+			     "locale you have chosen (%s) cannot be found in "
+			     "your 'messages' path.\n"
+			     "\n"
+			     "Enlightenment will not be translated.\n", 
+			     alias_locale);
+		    }
+		  E_FREE(match_lang);
 	       }
 	     else
 	       {
@@ -358,7 +352,7 @@ e_intl_input_method_set(const char *method)
 		    }
 	       }	
 
-	/* Need to free up the directory listing */
+	/* Free up the directory listing */
        	while (input_methods)
 	  {
 	     E_Input_Method_Config *imc;

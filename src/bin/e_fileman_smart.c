@@ -697,8 +697,6 @@ _e_fm_smart_del(Evas_Object *object)
 
    if(sd->timer)
      {
-	if(sd->dir2)
-	  closedir(sd->dir2);
 	ecore_timer_del(sd->timer);
 	sd->timer = NULL;
      }
@@ -1435,13 +1433,13 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
    Ecore_Sheap            *heap;
    char                   *f;
    int                     type;
-   DIR                    *dir2;
-   struct dirent          *dp;
+   DIR                    *dir_handle;
+   struct dirent          *dir_entry;
 
    if (!dir) return;
    if ((sd->dir) && (!strcmp(sd->dir, dir))) return;
 
-   if (!(dir2 = opendir(dir))) return;
+   if (!(dir_handle = opendir(dir))) return;
 
    /* save the old meta */
    if(sd->meta)
@@ -1451,17 +1449,19 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
 	sd->meta = NULL;
      }
 
+   /* Get list of files for directory */
    type = E_FM_FILE_TYPE_NORMAL;
    list = NULL;
-   while((dp = readdir(dir2)))
+   while((dir_entry = readdir(dir_handle)))
      {
-	if ((!strcmp(dp->d_name, ".") || (!strcmp (dp->d_name, "..")))) continue;
-	if ((dp->d_name[0] == '.') && (!(type & E_FM_FILE_TYPE_HIDDEN))) continue;
-	f = strdup(dp->d_name);
+	if ((!strcmp(dir_entry->d_name, ".") || (!strcmp (dir_entry->d_name, "..")))) continue;
+	if ((dir_entry->d_name[0] == '.') && (!(type & E_FM_FILE_TYPE_HIDDEN))) continue;
+	f = strdup(dir_entry->d_name);
 	list = evas_list_append(list, f);
      }
-   closedir(dir2);
+   closedir(dir_handle);
 
+   /* Sort file list */
    heap = ecore_sheap_new(ECORE_COMPARE_CB(strcasecmp), evas_list_count(list));
    while (list)
      {
@@ -1474,24 +1474,15 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
      sd->files_raw = evas_list_append(sd->files_raw, f);
 
    ecore_sheap_destroy(heap);
+
+   /* Set new directory name */
    if (sd->dir) free (sd->dir);
    sd->dir = strdup(dir);
 
-   
+   /* Load meta data for this directory and the Icons in the directory */
    _e_fm_dir_meta_load(sd);
 
-   if(sd->meta)
-     {
-	/* FIXME whats the purpose of this */
-	Evas_List *l;
-
-	for(l = sd->meta->files; l; l = l->next)
-	  {
-	     E_Fm_Icon_Metadata *im;
-	     im = l->data;
-	  }
-     }
-   else
+   if (!sd->meta)
      e_icon_canvas_width_fix(sd->layout, sd->w);
 
    /* Reset position */
@@ -1539,7 +1530,6 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
 	  }
      }
 
-   sd->dir2 = dir2;
    if(sd->timer)
      ecore_timer_del(sd->timer);
    sd->timer = ecore_timer_add(sd->timer_int, _e_fm_dir_files_get, sd);
@@ -1635,7 +1625,6 @@ _e_fm_dir_files_get(void *data)
 
    if(!sd->files_raw) {
       sd->timer = NULL;
-
       return 0;
    }
    else
@@ -3638,6 +3627,7 @@ _e_fm_selector_send_hilite_file(E_Fm_Icon *icon)
    icon->sd->selector_hilite_func(icon->sd->object, strdup(icon->file->path), icon->sd->selector_data);
 }
 
+/* Hash function based on directory stat information, Creates unique directory ID. */
 static char *
 _e_fm_dir_meta_dir_id(char *dir)
 {
@@ -3679,6 +3669,12 @@ _e_fm_dir_meta_dir_id(char *dir)
    return strdup(s);
 }
 
+/* Read metadata from meta data file <meta_path>/<dir_hash>. Set meta data 
+ * from file to sd->meta and create sd->meta->files_hash.
+ *
+ * @sd Smart Data for directory
+ * @return 1 if file found and loaded 0 if no data was loaded
+ */
 static int
 _e_fm_dir_meta_load(E_Fm_Smart_Data *sd)
 {
@@ -3691,10 +3687,13 @@ _e_fm_dir_meta_load(E_Fm_Smart_Data *sd)
 
    hash = _e_fm_dir_meta_dir_id(sd->dir);
    snprintf(buf, sizeof(buf), "%s/%s", meta_path, hash);
+   free(hash);
    ef = eet_open(buf, EET_FILE_MODE_READ);
    if (!ef) return 0;
    m = eet_data_read(ef, _e_fm_dir_meta_edd, "metadata");
    eet_close(ef);
+
+   /* Hash the metadata for quick access */
    if (m)
      {
 	Evas_List *l;
@@ -3708,7 +3707,6 @@ _e_fm_dir_meta_load(E_Fm_Smart_Data *sd)
 	     m->files_hash = evas_hash_add(m->files_hash, im->name, im);
 	  }
      }
-   free(hash);
    sd->meta = m;
    return 1;
 }
@@ -3782,11 +3780,11 @@ _e_fm_dir_meta_save(E_Fm_Smart_Data *sd)
 
    hash = _e_fm_dir_meta_dir_id(sd->dir);
    snprintf(buf, sizeof(buf), "%s/%s", meta_path, hash);
+   free(hash);
    ef = eet_open(buf, EET_FILE_MODE_WRITE);
    if (!ef) return 0;
    ret = eet_data_write(ef, _e_fm_dir_meta_edd, "metadata", sd->meta, 1);
    eet_close(ef);
-   free(hash);
 
    return ret;
 }

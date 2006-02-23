@@ -1538,7 +1538,8 @@ break;
    LIST_DATA()
    Evas_List *dir_list = NULL;
    E_PATH_GET(path, s);
-   dir_list = e_path_dir_list_get(path);
+   if (path)
+      dir_list = e_path_dir_list_get(path);
      
    E_Path_Dir *p;
    if (s) {
@@ -1632,7 +1633,7 @@ break;
    STRING2(s1, s2, e_2str, HDL);
    {
       E_PATH_GET(path, s1)
-      e_path_user_path_append(path, s2);
+      if (path) e_path_user_path_append(path, s2);
    }
    SAVE;
    END_STRING2(e_2str)
@@ -1651,7 +1652,7 @@ break;
    STRING2(s1, s2, e_2str, HDL);
    {
       E_PATH_GET(path, s1)
-      e_path_user_path_prepend(path, s2);
+      if (path) e_path_user_path_prepend(path, s2);
    }
    SAVE;
    END_STRING2(e_2str)
@@ -1670,7 +1671,7 @@ break;
    STRING2(s1, s2, e_2str, HDL);
    {
       E_PATH_GET(path, s1)
-      e_path_user_path_remove(path, s2);
+      if (path) e_path_user_path_remove(path, s2);
    }
    SAVE;
    END_STRING2(e_2str)

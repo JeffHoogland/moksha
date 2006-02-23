@@ -145,7 +145,6 @@ struct _E_Fm_Smart_Data
    Evas_Hash *mime_menu_hash;   /* FIXME delete this */
 
    char *dir;                   /* FIXME this could be actually a E_Fm_Dir */
-   DIR  *dir2;
 
    double timer_int;
    Ecore_Timer *timer;
