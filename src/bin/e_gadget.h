@@ -58,6 +58,7 @@ struct _E_Gadget_Face
   Evas_Object *main_obj;
   Evas_Object *event_obj;
   E_Gadman_Client *gmc;
+  E_Gadget_Change *change;
 
   void *data;
 };

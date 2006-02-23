@@ -162,6 +162,7 @@ _e_gadget_face_new(E_Gadget *gad, E_Container *con, E_Zone *zone)
      {
 	change->gadget = gad;
 	change->face = face;
+	face->change = change;
      }
    e_gadman_client_change_func_set(face->gmc, _e_gadget_face_cb_gmc_change, change);
 
@@ -254,10 +255,12 @@ _e_gadget_free(E_Gadget *gad)
 	e_object_unref(E_OBJECT(face->con));
 	e_object_del(E_OBJECT(face->gmc));
 	e_object_del(E_OBJECT(face->menu));
+	E_FREE(face->change);
 	
 	if (face->main_obj) evas_object_del(face->main_obj);
 	if (face->event_obj) evas_object_del(face->event_obj);
 	if(gad->funcs.face_free) (gad->funcs.face_free)(gad->data, face);
+	E_FREE(face);
    }
    
    evas_list_free(gad->faces);
