@@ -148,7 +148,7 @@ static int                 _e_fm_drag_mouse_move_cb    (void *data, int type, vo
 static void                _e_fm_string_replace(const char *src, const char *key, const char *replacement, char *result, size_t resultsize);
 
 static void                _e_fm_autocomplete(E_Fm_Smart_Data *sd);
-static void                _e_fm_icon_select_glob(E_Fm_Smart_Data *sd, char *glb);
+static void                _e_fm_icon_select_glob(E_Fm_Smart_Data *sd, const char *glb);
 static void                _e_fm_icon_select_up(E_Fm_Smart_Data *sd);
 static void                _e_fm_icon_select_down(E_Fm_Smart_Data *sd);
 static void                _e_fm_icon_select_left(E_Fm_Smart_Data *sd);
@@ -1245,7 +1245,7 @@ _e_fm_icon_prop_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *dat
    e_widget_frametable_object_append(o, e_widget_label_add(evas, text),
 				     0, 2, 1, 1,
 				     1, 1, 1, 1);
-   snprintf(text, 512, "%s", icon->file->mime);
+   snprintf(text, 512, "%s", icon->file->mime->name);
    e_widget_frametable_object_append(o, e_widget_label_add(evas, text),
 				     1, 2, 1, 1,
 				     1, 1, 1, 1);
@@ -2350,7 +2350,7 @@ _e_fm_icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 
    ev = event_info;
    sd = data;
-
+   icon = NULL;
 		  
    //printf("icon mouse move\n");
    if(sd->win)
@@ -2375,10 +2375,8 @@ _e_fm_icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 	     if (((dx * dx) + (dy * dy)) > (100))
 	       {		  
 		  Evas_List *l;
-		  Evas_Object *o = NULL;
 		  Evas_Coord x, y, w, h;
 		  int i;
-		  int rx,ry,rw,rh;
 		  int cx, cy;
 		  char *data;
 		  char *tmp;
@@ -2518,6 +2516,7 @@ _e_fm_drag_mouse_move_cb(void *data, int type, void *event)
    int x,y;
 
    sd = data;
+   ev = event;
 
    ecore_evas_geometry_get(sd->win->ecore_evas, &cx, &cy, &cw, &ch);
    x = cx + ev->x - sd->drag.dx;
@@ -2588,7 +2587,7 @@ _e_fm_autocomplete(E_Fm_Smart_Data *sd)
 }
 
 static void
-_e_fm_icon_select_glob(E_Fm_Smart_Data *sd, char *glb)
+_e_fm_icon_select_glob(E_Fm_Smart_Data *sd, const char *glb)
 {
    E_Fm_Icon *icon, *anchor;
    Evas_List *l;
@@ -2764,7 +2763,7 @@ _e_fm_icon_select_up(E_Fm_Smart_Data *sd)
 	       {
 		  int flag = 0;
 		  icon = l->data;
-		  if (flag = icon->state.selected)
+		  if ((flag = icon->state.selected))
 		    {
 		       if (l->next->next)
 			 icon = l->next->next->data;
@@ -2851,7 +2850,7 @@ _e_fm_icon_select_down(E_Fm_Smart_Data *sd)
 	       {
 		  int flag = 0;
 		  icon = l->data;
-		  if(flag = icon->state.selected)
+		  if((flag = icon->state.selected))
 		    {
 		       if(l->prev->prev)
 			 icon = l->prev->prev->data;
@@ -3203,8 +3202,7 @@ _e_fm_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	  }
 	else if (ev->string)
 	  {
-	     char *str;
-	     str = NULL;
+	     const char *str;
 	     str = edje_object_part_text_get(sd->edje_obj, "text");
 	     if(str)
 	       {
@@ -3526,7 +3524,6 @@ _e_fm_xdnd_selection_cb(void *data, int type, void *event)
    Ecore_X_Event_Selection_Notify *ev;
    E_Fm_Smart_Data *sd;
    Ecore_X_Selection_Data_Files *files;
-   int i;
 
    ev = event;
    sd = data;
@@ -3806,7 +3803,7 @@ static void
 _e_fm_menu_action_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, unsigned int timestamp)
 {
 
-   E_Menu      *mn,*mo;
+   E_Menu      *mn;
    E_Menu_Item *mi;
    int x, y, w, h;
    
@@ -3833,7 +3830,7 @@ _e_fm_menu_action_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, uns
    e_menu_category_data_set("fileman/action",sd);
 
    mi = NULL;
-
+   default_action = NULL;
 
    mime = sd->operation.mime;
    printf("mime for selection %s\n", mime->name);
@@ -3973,7 +3970,7 @@ _e_fm_menu_action_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, uns
 static void
 _e_fm_menu_context_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, unsigned int timestamp)
 {
-   E_Menu      *mn,*mo;
+   E_Menu      *mn;
    E_Menu_Item *mi;
 
    int x, y, w, h;
@@ -3997,6 +3994,7 @@ _e_fm_menu_context_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, un
    e_menu_category_data_set("fileman/action",sd);
 
    mi = NULL;
+   default_action = NULL;
    
    mime = sd->operation.mime;
    printf("mime for selection %s\n", mime->name);
