@@ -691,7 +691,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	ob = e_widget_entry_add(evas, &(cfdata->key_bind));
 	e_widget_entry_on_change_callback_set(ob, _entry_keybind_cb_text_change, cfdata);
 	cfdata->gui.key_bind = ob;
-	//e_widget_disabled_set(ob, 1);
+	e_widget_disabled_set(ob, 1);
 	e_widget_min_size_set(ob, 200, 25);
 	e_widget_frametable_object_append(oft1, ob, 1, 0, 4, 1, 1, 0, 1, 0);
 
@@ -973,6 +973,8 @@ static void _update_key_binding_entry(E_Config_Dialog_Data *cfdata)
 
   if ((bk = evas_list_nth(cfdata->cur_eckb->bk_list, cfdata->cur_eckb_kb_sel)) == NULL )
     return;
+
+  e_widget_disabled_set(cfdata->gui.key_bind, 0);
 
   if (cfdata->key_bind != NULL)
     E_FREE(cfdata->key_bind);
