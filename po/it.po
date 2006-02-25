@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-02-18 17:53+0100\n"
-"PO-Revision-Date: 2006-02-19 10:03+0100\n"
+"POT-Creation-Date: 2006-02-25 13:25+0100\n"
+"PO-Revision-Date: 2006-02-25 14:13+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@inwind.it>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8-bit\n"
 
 #: src/bin/e_int_config_menus.c:39 src/bin/e_int_config_menus.c:90
-#: src/bin/e_int_config_menus.c:133 src/bin/e_configure.c:75
+#: src/bin/e_int_config_menus.c:133 src/bin/e_configure.c:76
 msgid "Menu Settings"
 msgstr "Impostazioni del menù"
 
@@ -209,13 +209,13 @@ msgstr "Informazioni su Enlightenment"
 msgid "About This Theme"
 msgstr "Informazioni su questo tema"
 
-#: src/bin/e_int_menus.c:161 src/bin/e_module.c:489 src/bin/e_gadget.c:208
-#: src/modules/ibar/e_mod_main.c:299 src/modules/ibar/e_mod_main.c:662
-#: src/modules/ibox/e_mod_main.c:262 src/modules/ibox/e_mod_main.c:473
-#: src/modules/clock/e_mod_main.c:194 src/modules/clock/e_mod_main.c:369
+#: src/bin/e_int_menus.c:161 src/bin/e_module.c:489 src/bin/e_gadget.c:209
+#: src/modules/ibar/e_mod_main.c:299 src/modules/ibar/e_mod_main.c:663
+#: src/modules/ibox/e_mod_main.c:262 src/modules/ibox/e_mod_main.c:474
+#: src/modules/clock/e_mod_main.c:194 src/modules/clock/e_mod_main.c:370
 #: src/modules/itray/e_mod_main.c:417 src/modules/pager/e_mod_main.c:412
-#: src/modules/pager/e_mod_main.c:556 src/modules/battery/e_mod_main.c:255
-#: src/modules/battery/e_mod_main.c:384
+#: src/modules/pager/e_mod_main.c:557 src/modules/battery/e_mod_main.c:255
+#: src/modules/battery/e_mod_main.c:385
 msgid "Configuration"
 msgstr "Configurazione"
 
@@ -255,11 +255,11 @@ msgstr "Nessun nome!!"
 msgid "Cleanup Windows"
 msgstr "Ordina Finestre"
 
-#: src/bin/e_int_menus.c:779 src/bin/e_gadget.c:213
-#: src/modules/ibar/e_mod_main.c:667 src/modules/ibox/e_mod_main.c:478
-#: src/modules/cpufreq/e_mod_main.c:999 src/modules/clock/e_mod_main.c:374
-#: src/modules/itray/e_mod_main.c:422 src/modules/pager/e_mod_main.c:560
-#: src/modules/battery/e_mod_main.c:389
+#: src/bin/e_int_menus.c:779 src/bin/e_gadget.c:215
+#: src/modules/ibar/e_mod_main.c:669 src/modules/ibox/e_mod_main.c:480
+#: src/modules/cpufreq/e_mod_main.c:999 src/modules/clock/e_mod_main.c:376
+#: src/modules/itray/e_mod_main.c:423 src/modules/pager/e_mod_main.c:562
+#: src/modules/battery/e_mod_main.c:391
 msgid "Edit Mode"
 msgstr "Modalità modifica"
 
@@ -377,13 +377,14 @@ msgstr "Errore di esecuzione"
 #: src/bin/e_apps.c:444 src/bin/e_utils.c:230
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
-msgstr "Enlightenment non ha potuto fare il fork di un processo figlio:<br><br>%s<br>"
+msgstr ""
+"Enlightenment non ha potuto fare il fork di un processo figlio:<br><br>%s<br>"
 
-#: src/bin/e_apps.c:1892
+#: src/bin/e_apps.c:1904
 msgid "Application run error"
 msgstr "Errore d'esecuzione dell'applicazione"
 
-#: src/bin/e_apps.c:1894
+#: src/bin/e_apps.c:1906
 #, c-format
 msgid ""
 "Enlightenment was unable to run the application:<br><br>%s<br><br>The "
@@ -392,14 +393,14 @@ msgstr ""
 "Enlightenment non ha potuto avviare l'applicazione:<br><br>%"
 "s<br><br>L'applicazione non è partita"
 
-#: src/bin/e_apps.c:1902 src/bin/e_int_border_remember.c:246
+#: src/bin/e_apps.c:1914 src/bin/e_int_border_remember.c:246
 #: src/bin/e_int_border_remember.c:326 src/bin/e_int_border_remember.c:368
-#: src/bin/e_config_dialog.c:149 src/bin/e_fileman_smart.c:909
+#: src/bin/e_config_dialog.c:149 src/bin/e_fileman_smart.c:907
 #: src/bin/e_module.c:416 src/bin/e_file_dialog.c:66 src/bin/e_error.c:196
 #: src/bin/e_error.c:205 src/bin/e_int_config_background_import.c:202
-#: src/bin/e_utils.c:522 src/modules/ibar/e_mod_main.c:1634
+#: src/bin/e_utils.c:522 src/modules/ibar/e_mod_main.c:1637
 #: src/modules/cpufreq/e_mod_main.c:318 src/modules/cpufreq/e_mod_main.c:346
-#: src/modules/battery/e_mod_main.c:565
+#: src/modules/battery/e_mod_main.c:568
 msgid "OK"
 msgstr "OK"
 
@@ -432,40 +433,44 @@ msgstr "Impostazioni dei desktop"
 msgid "Display Settings"
 msgstr "Impostazioni dello schermo"
 
-#: src/bin/e_configure.c:73 src/bin/e_int_config_focus.c:47
+#: src/bin/e_configure.c:73 src/bin/e_int_config_desklock.c:56
+msgid "Desktop Lock Settings"
+msgstr "Impostazioni del blocco del desktop"
+
+#: src/bin/e_configure.c:74 src/bin/e_int_config_focus.c:47
 msgid "Focus Settings"
 msgstr "Impostazioni del fuoco"
 
-#: src/bin/e_configure.c:74 src/bin/e_int_config_keybindings.c:167
+#: src/bin/e_configure.c:75 src/bin/e_int_config_keybindings.c:335
 msgid "Key Binding Settings"
 msgstr "Impostazioni delle associazioni di tasti"
 
-#: src/bin/e_configure.c:76 src/bin/e_int_config_performance.c:37
+#: src/bin/e_configure.c:77 src/bin/e_int_config_performance.c:37
 msgid "Performance Settings"
 msgstr "Impostazioni delle prestazioni"
 
-#: src/bin/e_configure.c:77
+#: src/bin/e_configure.c:78
 msgid "Run Command Settings"
 msgstr "Impostazioni di \"Esegui comando\""
 
-#: src/bin/e_configure.c:78 src/bin/e_int_config_startup.c:26
+#: src/bin/e_configure.c:79 src/bin/e_int_config_startup.c:26
 #: src/bin/e_int_config_startup.c:70
 msgid "Startup Settings"
 msgstr "Impostazioni dell'avvio"
 
-#: src/bin/e_configure.c:79 src/bin/e_int_config_winlist.c:51
+#: src/bin/e_configure.c:80 src/bin/e_int_config_winlist.c:51
 msgid "Window List Settings"
 msgstr "Impostazioni lista finestre"
 
-#: src/bin/e_configure.c:80
+#: src/bin/e_configure.c:81
 msgid "Window Display Settings"
 msgstr "Impostazioni visualizzazione finestre"
 
-#: src/bin/e_configure.c:81
+#: src/bin/e_configure.c:82
 msgid "Window Manipulation Settings"
 msgstr "Impostazioni manipolazione finestre"
 
-#: src/bin/e_configure.c:87 src/bin/e_config_dialog.c:158
+#: src/bin/e_configure.c:88 src/bin/e_config_dialog.c:158
 #: src/bin/e_int_border_menu.c:348
 msgid "Close"
 msgstr "Chiudi"
@@ -834,178 +839,178 @@ msgstr "Basilari"
 msgid "Apply"
 msgstr "Applica"
 
-#: src/bin/e_fileman_smart.c:911
+#: src/bin/e_fileman_smart.c:909
 msgid "Error"
 msgstr "Errore"
 
-#: src/bin/e_fileman_smart.c:912
+#: src/bin/e_fileman_smart.c:910
 #, c-format
 msgid "Could not delete  <br><b>%s</b>"
 msgstr "Impossibile cancellare <br><b>%s</b>"
 
-#: src/bin/e_fileman_smart.c:1002 src/bin/e_module.c:565
+#: src/bin/e_fileman_smart.c:1000 src/bin/e_module.c:565
 #: src/bin/e_actions.c:1289 src/modules/randr/e_mod_main.c:317
 msgid "Yes"
 msgstr "Sì"
 
-#: src/bin/e_fileman_smart.c:1003 src/bin/e_module.c:566
+#: src/bin/e_fileman_smart.c:1001 src/bin/e_module.c:566
 #: src/bin/e_actions.c:1291 src/modules/randr/e_mod_main.c:318
 msgid "No"
 msgstr "No"
 
-#: src/bin/e_fileman_smart.c:1005
+#: src/bin/e_fileman_smart.c:1003
 msgid "Confirm"
 msgstr "Conferma"
 
-#: src/bin/e_fileman_smart.c:1006
+#: src/bin/e_fileman_smart.c:1004
 #, c-format
 msgid " Are you sure you want to delete <br><b>%s</b> ?"
 msgstr "Siete sicuri di voler cancellare <br><b>%s</b> ?"
 
-#: src/bin/e_fileman_smart.c:1219 src/bin/e_eap_editor.c:322
+#: src/bin/e_fileman_smart.c:1217 src/bin/e_eap_editor.c:322
 msgid "General"
 msgstr "Generale"
 
-#: src/bin/e_fileman_smart.c:1228
+#: src/bin/e_fileman_smart.c:1226
 #, c-format
 msgid "File:"
 msgstr "File:"
 
-#: src/bin/e_fileman_smart.c:1237
+#: src/bin/e_fileman_smart.c:1235
 #, c-format
 msgid "Size:"
 msgstr "Dimensione:"
 
-#: src/bin/e_fileman_smart.c:1246
+#: src/bin/e_fileman_smart.c:1244
 #, c-format
 msgid "Type:"
 msgstr "Tipo:"
 
-#: src/bin/e_fileman_smart.c:1255
+#: src/bin/e_fileman_smart.c:1253
 msgid "Protect this file"
 msgstr "Proteggi questo file"
 
-#: src/bin/e_fileman_smart.c:1261
+#: src/bin/e_fileman_smart.c:1259
 msgid "Let others see this file"
 msgstr "Consenti agli altri di vedere il file"
 
-#: src/bin/e_fileman_smart.c:1265
+#: src/bin/e_fileman_smart.c:1263
 msgid "Let others modify this file"
 msgstr "Consenti agli altri di modificare il file"
 
-#: src/bin/e_fileman_smart.c:1269
+#: src/bin/e_fileman_smart.c:1267
 msgid "Dont let others see or modify this file"
 msgstr "Non consentire ad altri di vedere o modificare il file"
 
-#: src/bin/e_fileman_smart.c:1273
+#: src/bin/e_fileman_smart.c:1271
 msgid "Custom settings"
 msgstr "Impostazioni personalizzate"
 
-#: src/bin/e_fileman_smart.c:1310
+#: src/bin/e_fileman_smart.c:1308
 msgid "File Info:"
 msgstr "Informazioni sul file:"
 
-#: src/bin/e_fileman_smart.c:1311
+#: src/bin/e_fileman_smart.c:1309
 msgid "Owner:"
 msgstr "Proprietario:"
 
-#: src/bin/e_fileman_smart.c:1316
+#: src/bin/e_fileman_smart.c:1314
 msgid "Group:"
 msgstr "Gruppo:"
 
-#: src/bin/e_fileman_smart.c:1321
+#: src/bin/e_fileman_smart.c:1319
 msgid "Last Access:"
 msgstr "Ultimo accesso:"
 
-#: src/bin/e_fileman_smart.c:1326
+#: src/bin/e_fileman_smart.c:1324
 msgid "Last Modified:"
 msgstr "Ultima modifica:"
 
-#: src/bin/e_fileman_smart.c:1333
+#: src/bin/e_fileman_smart.c:1331
 msgid "Permissions:"
 msgstr "Permessi:"
 
-#: src/bin/e_fileman_smart.c:1334
+#: src/bin/e_fileman_smart.c:1332
 msgid "Me"
 msgstr "Me stesso"
 
-#: src/bin/e_fileman_smart.c:1336 src/bin/e_fileman_smart.c:1345
-#: src/bin/e_fileman_smart.c:1354
+#: src/bin/e_fileman_smart.c:1334 src/bin/e_fileman_smart.c:1343
+#: src/bin/e_fileman_smart.c:1352
 msgid "r"
 msgstr "lettura"
 
-#: src/bin/e_fileman_smart.c:1338 src/bin/e_fileman_smart.c:1347
-#: src/bin/e_fileman_smart.c:1356
+#: src/bin/e_fileman_smart.c:1336 src/bin/e_fileman_smart.c:1345
+#: src/bin/e_fileman_smart.c:1354
 msgid "w"
 msgstr "scrittura"
 
-#: src/bin/e_fileman_smart.c:1340 src/bin/e_fileman_smart.c:1349
-#: src/bin/e_fileman_smart.c:1358
+#: src/bin/e_fileman_smart.c:1338 src/bin/e_fileman_smart.c:1347
+#: src/bin/e_fileman_smart.c:1356
 msgid "x"
 msgstr "esecuzione"
 
-#: src/bin/e_fileman_smart.c:1343
+#: src/bin/e_fileman_smart.c:1341
 msgid "My Group"
 msgstr "Il mio gruppo"
 
-#: src/bin/e_fileman_smart.c:1352
+#: src/bin/e_fileman_smart.c:1350
 msgid "Everyone"
 msgstr "Tutti"
 
-#: src/bin/e_fileman_smart.c:1386 src/bin/e_fileman_smart.c:2044
-#: src/bin/e_fileman_smart.c:3956
+#: src/bin/e_fileman_smart.c:1384 src/bin/e_fileman_smart.c:2033
+#: src/bin/e_fileman_smart.c:3951
 msgid "Properties"
 msgstr "Proprietà"
 
-#: src/bin/e_fileman_smart.c:1951
+#: src/bin/e_fileman_smart.c:1940
 msgid "Arrange Icons"
 msgstr "Ordina icone"
 
-#: src/bin/e_fileman_smart.c:1963
+#: src/bin/e_fileman_smart.c:1952
 msgid "By Name"
 msgstr "Per nome"
 
-#: src/bin/e_fileman_smart.c:1974
+#: src/bin/e_fileman_smart.c:1963
 msgid "By Mod Time"
 msgstr "Per data di modifica"
 
-#: src/bin/e_fileman_smart.c:1985
+#: src/bin/e_fileman_smart.c:1974
 msgid "New"
 msgstr "Nuovo"
 
-#: src/bin/e_fileman_smart.c:1997
+#: src/bin/e_fileman_smart.c:1986
 msgid "Directory"
 msgstr "Directory"
 
-#: src/bin/e_fileman_smart.c:2005
+#: src/bin/e_fileman_smart.c:1994
 msgid "View"
 msgstr "Visualizza"
 
-#: src/bin/e_fileman_smart.c:2017
+#: src/bin/e_fileman_smart.c:2006
 msgid "Name Only"
 msgstr "Solo nomi"
 
-#: src/bin/e_fileman_smart.c:2026
+#: src/bin/e_fileman_smart.c:2015
 msgid "Details"
 msgstr "Dettagli"
 
-#: src/bin/e_fileman_smart.c:2036
+#: src/bin/e_fileman_smart.c:2025
 msgid "Refresh"
 msgstr "Aggiorna"
 
-#: src/bin/e_fileman_smart.c:3916
+#: src/bin/e_fileman_smart.c:3911
 msgid "Copy"
 msgstr "Copia"
 
-#: src/bin/e_fileman_smart.c:3923
+#: src/bin/e_fileman_smart.c:3918
 msgid "Cut"
 msgstr "Taglia"
 
-#: src/bin/e_fileman_smart.c:3935
+#: src/bin/e_fileman_smart.c:3930
 msgid "Rename"
 msgstr "Rinomina"
 
-#: src/bin/e_fileman_smart.c:3944
+#: src/bin/e_fileman_smart.c:3939
 msgid "Delete"
 msgstr "Cancella"
 
@@ -1018,19 +1023,19 @@ msgstr "X sostiene che non vi è root window e schermi %i!\n"
 msgid "Disable this splash screen in the future?"
 msgstr "Disabilitare questo splash screen nel futuro?"
 
-#: src/bin/e_intl.c:348
+#: src/bin/e_intl.c:345
 msgid "Input Method Error"
 msgstr "Errore del metodo di input"
 
-#: src/bin/e_intl.c:349
+#: src/bin/e_intl.c:346
 msgid ""
 "Error starting the input method executable<br><br>please make sure that your "
 "input<br>method configuration is correct and<br>that your "
 "configuration's<br>executable is in your PATH<br>"
 msgstr ""
-"Errore nell'esecuzione del metodo di input<br><br>Si prega di assicurarsi che "
-"la configurazione<br>del metodo di input sia giusta e che<br>l'eseguibile di "
-"configurazione sia nel<br>proprio PATH<br>"
+"Errore nell'esecuzione del metodo di input<br><br>Si prega di assicurarsi "
+"che la configurazione<br>del metodo di input sia giusta e "
+"che<br>l'eseguibile di configurazione sia nel<br>proprio PATH<br>"
 
 #: src/bin/e_main.c:194
 #, c-format
@@ -1383,11 +1388,17 @@ msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema exebuf (riga di comando)."
 
-#: src/bin/e_main.c:628
+#: src/bin/e_main.c:630
+msgid "Enlightenment cannot set up its desk locking system."
+msgstr ""
+"Enlightenment non riesce a configurare il suo\n"
+"sistema di blocco del desktop."
+
+#: src/bin/e_main.c:636
 msgid "Enlightenment IPC setup error!"
 msgstr "Errore impostazione IPC di Enlightenment"
 
-#: src/bin/e_main.c:629
+#: src/bin/e_main.c:637
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an existing copy of Enlightenment.\n"
@@ -1401,11 +1412,11 @@ msgstr ""
 "su questo display, altrimenti provate a cancellare tutti i file\n"
 "in ~/.ecore/enlightenment-* e riavviatelo."
 
-#: src/bin/e_main.c:645 src/bin/e_about.c:51
+#: src/bin/e_main.c:653 src/bin/e_about.c:51
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
-#: src/bin/e_main.c:647
+#: src/bin/e_main.c:655
 msgid "Enlightenment Starting. Please wait."
 msgstr "Avvio di Enlightenment. Attendere prego."
 
@@ -1616,7 +1627,7 @@ msgstr ""
 "Avete chiesto di uscire da Enlightenment.<br><br>Siete sicuri di voler "
 "uscire?"
 
-#: src/bin/e_config.c:469
+#: src/bin/e_config.c:470
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -1626,18 +1637,17 @@ msgid ""
 "defaults will fix<br>that by adding it in. You can re-configure things now "
 "to your<br>liking. Sorry for the hiccup in your configuration.<br>"
 msgstr ""
-"I dati di configurazione avevano bisogno di essere aggiornati.<br>"
-"La vecchia configurazione è stata sostituita con un nuovo set<br>"
-"di impostazioni predefinite. Questo avverrà spesso durante lo<br>"
-"sviluppo, quindi non riportate bug in proposito. Significa<br>"
-"semplicemente che Enlightenment ha bisogno di nuovi dati di<br>"
-"configurazione da usare per funzionalità che non erano presenti<br>"
-"nella vecchia configurazione. Questo nuovo set di impostazioni<br>"
-"predefinite sistemerà il tutto aggiungendo le nuove funzionalità.<br>"
-"Adesso è possibile riconfigurare le cose a proprio piacimento.<br>"
-"Ci scusiamo per il disagio.<br>"
+"I dati di configurazione avevano bisogno di essere aggiornati.<br>La vecchia "
+"configurazione è stata sostituita con un nuovo set<br>di impostazioni "
+"predefinite. Questo avverrà spesso durante lo<br>sviluppo, quindi non "
+"riportate bug in proposito. Significa<br>semplicemente che Enlightenment ha "
+"bisogno di nuovi dati di<br>configurazione da usare per funzionalità che non "
+"erano presenti<br>nella vecchia configurazione. Questo nuovo set di "
+"impostazioni<br>predefinite sistemerà il tutto aggiungendo le nuove "
+"funzionalità.<br>Adesso è possibile riconfigurare le cose a proprio "
+"piacimento.<br>Ci scusiamo per il disagio.<br>"
 
-#: src/bin/e_config.c:483
+#: src/bin/e_config.c:484
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very<br>strange. "
 "This should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -1645,15 +1655,14 @@ msgid ""
 "running. This is bad and<br>as a precaution your configuration has been now "
 "restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
-"La vostra configurazione è più NUOVA di Enlightenment. Questo<br>"
-"è molto strano. Non dovrebbe accadere a meno che si sia passati<br>"
-"ad una versione precedente di Enlightenment o si abbia copiato la<br>"
-"configurazione da una macchina su cui gira una versione più recente<br>"
-"di Enlightenment. Questo è male, quindi la vostra configurazione è<br>"
-"stata ripristinata a scopo precauzionale ai valori predefiniti. Ci<br>"
-"scusiamo per l'inconveniente.<br>"
+"La vostra configurazione è più NUOVA di Enlightenment. Questo<br>è molto "
+"strano. Non dovrebbe accadere a meno che si sia passati<br>ad una versione "
+"precedente di Enlightenment o si abbia copiato la<br>configurazione da una "
+"macchina su cui gira una versione più recente<br>di Enlightenment. Questo è "
+"male, quindi la vostra configurazione è<br>stata ripristinata a scopo "
+"precauzionale ai valori predefiniti. Ci<br>scusiamo per l'inconveniente.<br>"
 
-#: src/bin/e_config.c:2239
+#: src/bin/e_config.c:2250
 msgid "Configuration Upgraded"
 msgstr "Aggiornamento configurazione"
 
@@ -1899,91 +1908,91 @@ msgstr "Aggiungi"
 msgid "Delete Key Binding"
 msgstr "Cancella"
 
-#: src/bin/e_int_config_keybindings.c:567
+#: src/bin/e_int_config_keybindings.c:578
 msgid "Action"
 msgstr "Azioni"
 
-#: src/bin/e_int_config_keybindings.c:614
+#: src/bin/e_int_config_keybindings.c:625
 msgid "Parameters"
 msgstr "Parametri"
 
-#: src/bin/e_int_config_keybindings.c:617
+#: src/bin/e_int_config_keybindings.c:628
 msgid "Binding Context"
 msgstr "Contesto dell'associazione"
 
-#: src/bin/e_int_config_keybindings.c:620
+#: src/bin/e_int_config_keybindings.c:631
 msgid "Any"
 msgstr "Qualunque"
 
-#: src/bin/e_int_config_keybindings.c:625
+#: src/bin/e_int_config_keybindings.c:636
 msgid "Border"
 msgstr "Bordo"
 
-#: src/bin/e_int_config_keybindings.c:630
+#: src/bin/e_int_config_keybindings.c:641
 msgid "Zone"
 msgstr "Zona"
 
-#: src/bin/e_int_config_keybindings.c:636
+#: src/bin/e_int_config_keybindings.c:647
 msgid "Container"
 msgstr "Contenitore"
 
-#: src/bin/e_int_config_keybindings.c:641
+#: src/bin/e_int_config_keybindings.c:652
 msgid "Manager"
 msgstr "Manager"
 
-#: src/bin/e_int_config_keybindings.c:646
+#: src/bin/e_int_config_keybindings.c:657
 msgid "Menu"
 msgstr "Menù"
 
-#: src/bin/e_int_config_keybindings.c:652
+#: src/bin/e_int_config_keybindings.c:663
 msgid "Win List"
 msgstr "Lista finestre"
 
-#: src/bin/e_int_config_keybindings.c:657
+#: src/bin/e_int_config_keybindings.c:668
 msgid "Popup"
 msgstr "Popup"
 
-#: src/bin/e_int_config_keybindings.c:662
+#: src/bin/e_int_config_keybindings.c:673
 msgid "None"
 msgstr "Nessuno"
 
-#: src/bin/e_int_config_keybindings.c:668
+#: src/bin/e_int_config_keybindings.c:679
 msgid "Unknown"
 msgstr "Sconosciuto"
 
-#: src/bin/e_int_config_keybindings.c:675
+#: src/bin/e_int_config_keybindings.c:686
 msgid "Key Binding"
 msgstr "Combinazione di tasti"
 
-#: src/bin/e_int_config_keybindings.c:677
+#: src/bin/e_int_config_keybindings.c:688
 msgid "Key :"
 msgstr "Tasto :"
 
-#: src/bin/e_int_config_keybindings.c:687
+#: src/bin/e_int_config_keybindings.c:698
 msgid "Shift"
 msgstr "Maiuscole"
 
-#: src/bin/e_int_config_keybindings.c:692
+#: src/bin/e_int_config_keybindings.c:703
 msgid "Control"
 msgstr "Control"
 
-#: src/bin/e_int_config_keybindings.c:697
+#: src/bin/e_int_config_keybindings.c:708
 msgid "Alt"
 msgstr "Alt"
 
-#: src/bin/e_int_config_keybindings.c:702
+#: src/bin/e_int_config_keybindings.c:713
 msgid "Win"
 msgstr "Windows"
 
-#: src/bin/e_int_config_keybindings.c:709
+#: src/bin/e_int_config_keybindings.c:720
 msgid "Key Action"
 msgstr "Azione della combinazione"
 
-#: src/bin/e_int_config_keybindings.c:711
+#: src/bin/e_int_config_keybindings.c:722
 msgid "Action :"
 msgstr "Azione :"
 
-#: src/bin/e_int_config_keybindings.c:720
+#: src/bin/e_int_config_keybindings.c:731
 msgid "Params :"
 msgstr "Parametri :"
 
@@ -2249,9 +2258,17 @@ msgid ""
 "means<br>that Enlightenment will not allow itself to exit until these "
 "windows have<br>been closed or have the lifespan lock removed.<br>"
 msgstr ""
-"Alcune finestre sono ancora in giro con il blocco Perpetua abilitato.<br>"
-"Questo significa che Enlightenment non uscirà finche queste finestre<br>"
-"non saranno chiuse o avranno il blocco Perpetua disabilitato.<br>"
+"Alcune finestre sono ancora in giro con il blocco Perpetua abilitato."
+"<br>Questo significa che Enlightenment non uscirà finche queste "
+"finestre<br>non saranno chiuse o avranno il blocco Perpetua disabilitato.<br>"
+
+#: src/bin/e_int_config_desklock.c:121
+msgid "Personalized Password:"
+msgstr "Password personale:"
+
+#: src/bin/e_int_config_desklock.c:129
+msgid "Show Password"
+msgstr "Mostra password"
 
 #: src/modules/ibar/e_mod_config.c:49
 msgid "IBar Configuration"
@@ -2343,11 +2360,11 @@ msgstr ""
 "varie interfacce in Enlightenment 0.17.0. È sotto pieno<br>sviluppo, quindi "
 "aspettatevi che <hilight>crashi spesso</hilight> e cambi nel tempo."
 
-#: src/modules/ibar/e_mod_main.c:1627
+#: src/modules/ibar/e_mod_main.c:1630
 msgid "Cannot add icon"
 msgstr "Impossibile aggiungere icona"
 
-#: src/modules/ibar/e_mod_main.c:1629
+#: src/modules/ibar/e_mod_main.c:1632
 msgid ""
 "You tried to drop an icon of an application that<br>does not have a matching "
 "application file.<br><br>The icon cannot be added to IBar."
@@ -2609,11 +2626,11 @@ msgstr "Modulo Pager di Enlightenment"
 msgid "A pager module to navigate virtual desktops."
 msgstr "Un modulo per navigare i desktop virtuali."
 
-#: src/modules/pager/e_mod_main.c:416 src/modules/pager/e_mod_main.c:564
+#: src/modules/pager/e_mod_main.c:417 src/modules/pager/e_mod_main.c:567
 msgid "Fix Aspect (Keep Height)"
 msgstr "Correggi aspetto (mantieni altezza)"
 
-#: src/modules/pager/e_mod_main.c:420 src/modules/pager/e_mod_main.c:568
+#: src/modules/pager/e_mod_main.c:421 src/modules/pager/e_mod_main.c:571
 msgid "Fix Aspect (Keep Width)"
 msgstr "Correggi aspetto (mantieni larghezza)"
 
@@ -2945,7 +2962,7 @@ msgstr ""
 "della batteria<br>e dell'alimentatore AC. Questo funzionerà sotto Linux<br>e "
 "FreeBSD, e la sua precisione dipende dal BIOS o dai<br>driver del kernel."
 
-#: src/modules/battery/e_mod_main.c:562
+#: src/modules/battery/e_mod_main.c:565
 msgid ""
 "Battery Running Low<br>Your battery is running low.<br>You may wish to "
 "switch to an AC source."
@@ -2953,37 +2970,37 @@ msgstr ""
 "Batteria esaurita<br>La vostra batteria si sta esaurendo.<br>Vogliate "
 "passare ad una alimentazione di rete."
 
-#: src/modules/battery/e_mod_main.c:627
+#: src/modules/battery/e_mod_main.c:630
 msgid "NO INFO"
 msgstr "NESSUNA INFORMAZIONE"
 
-#: src/modules/battery/e_mod_main.c:802 src/modules/battery/e_mod_main.c:1113
-#: src/modules/battery/e_mod_main.c:1263
+#: src/modules/battery/e_mod_main.c:805 src/modules/battery/e_mod_main.c:1116
+#: src/modules/battery/e_mod_main.c:1266
 msgid "NO BAT"
 msgstr "NESSUNA BATTERIA"
 
-#: src/modules/battery/e_mod_main.c:826 src/modules/battery/e_mod_main.c:1288
+#: src/modules/battery/e_mod_main.c:829 src/modules/battery/e_mod_main.c:1291
 msgid "BAD DRIVER"
 msgstr "DRIVER SBAGLIATO"
 
-#: src/modules/battery/e_mod_main.c:850 src/modules/battery/e_mod_main.c:1145
-#: src/modules/battery/e_mod_main.c:1312
+#: src/modules/battery/e_mod_main.c:853 src/modules/battery/e_mod_main.c:1148
+#: src/modules/battery/e_mod_main.c:1315
 msgid "FULL"
 msgstr "CARICA"
 
-#: src/modules/battery/e_mod_main.c:911 src/modules/battery/e_mod_main.c:1373
+#: src/modules/battery/e_mod_main.c:914 src/modules/battery/e_mod_main.c:1376
 msgid "High"
 msgstr "Alta"
 
-#: src/modules/battery/e_mod_main.c:915 src/modules/battery/e_mod_main.c:1377
+#: src/modules/battery/e_mod_main.c:918 src/modules/battery/e_mod_main.c:1380
 msgid "Low"
 msgstr "Bassa"
 
-#: src/modules/battery/e_mod_main.c:919 src/modules/battery/e_mod_main.c:1381
+#: src/modules/battery/e_mod_main.c:922 src/modules/battery/e_mod_main.c:1384
 msgid "Danger"
 msgstr "Pericolo"
 
-#: src/modules/battery/e_mod_main.c:923 src/modules/battery/e_mod_main.c:1385
-#: src/modules/battery/e_mod_main.c:1552
+#: src/modules/battery/e_mod_main.c:926 src/modules/battery/e_mod_main.c:1388
+#: src/modules/battery/e_mod_main.c:1555
 msgid "Charging"
 msgstr "In carica"
