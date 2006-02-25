@@ -22,6 +22,7 @@ static Evas_List *_e_pointers = NULL;
 
 static void _e_pointer_cb_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
 static void _e_pointer_free(E_Pointer *p);
+static void _e_pointer_stack_free(E_Pointer_Stack *elem);
 static int  _e_pointer_type_set(E_Pointer *p, const char *type);
 
 /* externally accessible functions */
@@ -208,18 +209,15 @@ e_pointer_type_pop(E_Pointer *p, void *obj, const char *type)
    Evas_List *l;
    E_Pointer_Stack *stack;
 
-   for (l = p->stack; l;)
+   for (l = p->stack; l; l = l->next)
      {
-	Evas_List *l2;
-
 	stack = l->data;
-	l2 = l;
-	l = l->next;
 
 	if ((stack->obj == obj) &&
 	    ((!type) || (!strcmp(stack->type, type))))
 	  {
-	     p->stack = evas_list_remove_list(p->stack, l2);
+	     _e_pointer_stack_free(stack);
+	     p->stack = evas_list_remove_list(p->stack, l);
 	     if (type) break;
 	  }
      }
@@ -315,17 +313,20 @@ _e_pointer_free(E_Pointer *p)
 
    while (p->stack)
      {
-	E_Pointer_Stack *stack;
-
-	stack = p->stack->data;
-	if (stack->type) evas_stringshare_del(stack->type);
-	free(stack);
-
+	_e_pointer_stack_free(p->stack->data);
 	p->stack = evas_list_remove_list(p->stack, p->stack);
      }
 
    if (p->type) evas_stringshare_del(p->type);
    free(p);
+}
+
+static void
+_e_pointer_stack_free(E_Pointer_Stack *elem)
+{
+   if (elem->type) 
+     evas_stringshare_del(elem->type);
+   free(elem);
 }
 
 static int
