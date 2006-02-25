@@ -250,6 +250,7 @@ e_exebuf_show(E_Zone *zone)
 	  }
 	if (p > last)
 	  exe_path = evas_list_append(exe_path, strdup(last));
+	free(path);
      }
    exe_list_idler = ecore_idler_add(_e_exebuf_idler, NULL);
    
