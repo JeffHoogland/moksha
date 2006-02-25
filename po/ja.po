@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-02-21 22:41+0900\n"
+"POT-Creation-Date: 2006-02-24 22:14+0900\n"
 "PO-Revision-Date: 2005-09-23 13:00+0700\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,12 +49,12 @@ msgid ""
 "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
 msgstr "Enlightenment を終了しようとしています.<br><br>本当に終了しますか."
 
-#: src/bin/e_actions.c:1289 src/bin/e_fileman_smart.c:1002
+#: src/bin/e_actions.c:1289 src/bin/e_fileman_smart.c:1000
 #: src/bin/e_module.c:565 src/modules/randr/e_mod_main.c:317
 msgid "Yes"
 msgstr "はい"
 
-#: src/bin/e_actions.c:1291 src/bin/e_fileman_smart.c:1003
+#: src/bin/e_actions.c:1291 src/bin/e_fileman_smart.c:1001
 #: src/bin/e_module.c:566 src/modules/randr/e_mod_main.c:318
 msgid "No"
 msgstr "いいえ"
@@ -71,22 +71,22 @@ msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
 msgstr ""
 "Enlightenment で以下の子プロセスが fork できませんでした.<br><br>%s<br>"
 
-#: src/bin/e_apps.c:1892
+#: src/bin/e_apps.c:1904
 msgid "Application run error"
 msgstr "アプリケーション実行エラー"
 
-#: src/bin/e_apps.c:1894
+#: src/bin/e_apps.c:1906
 #, c-format
 msgid ""
 "Enlightenment was unable to run the application:<br><br>%s<br><br>The "
 "application failed to start."
 msgstr ""
-"Enlightenment で以下のアプリケーションが実行できませんでした."
-"<br><br>%s<br><br>起動に失敗しました."
+"Enlightenment で以下のアプリケーションが実行できませんでした.<br><br>%"
+"s<br><br>起動に失敗しました."
 
-#: src/bin/e_apps.c:1902 src/bin/e_config_dialog.c:149 src/bin/e_error.c:196
+#: src/bin/e_apps.c:1914 src/bin/e_config_dialog.c:149 src/bin/e_error.c:196
 #: src/bin/e_error.c:205 src/bin/e_file_dialog.c:66
-#: src/bin/e_fileman_smart.c:909 src/bin/e_int_border_remember.c:246
+#: src/bin/e_fileman_smart.c:907 src/bin/e_int_border_remember.c:246
 #: src/bin/e_int_border_remember.c:326 src/bin/e_int_border_remember.c:368
 #: src/bin/e_module.c:416 src/bin/e_utils.c:522
 #: src/bin/e_int_config_background_import.c:202
@@ -95,7 +95,7 @@ msgstr ""
 msgid "OK"
 msgstr "了解"
 
-#: src/bin/e_config.c:469
+#: src/bin/e_config.c:470
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -112,7 +112,7 @@ msgstr ""
 "いデフォルト設定<br>を追加すれば更新されます. これで好きなように設定できます."
 "ちょっと面倒ですが, <br>よろしくお願いします.<br>"
 
-#: src/bin/e_config.c:483
+#: src/bin/e_config.c:484
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very<br>strange. "
 "This should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -126,7 +126,7 @@ msgstr ""
 "<br>これではまずいので, 念のためデフォルトの設定に置き換えました.<br>ご不便を"
 "おかけしますが, よろしくお願いします.<br>"
 
-#: src/bin/e_config.c:2248
+#: src/bin/e_config.c:2250
 msgid "Configuration Upgraded"
 msgstr "設定をアップグレードしました"
 
@@ -142,7 +142,7 @@ msgstr "基本設定"
 msgid "Apply"
 msgstr "適用"
 
-#: src/bin/e_config_dialog.c:158 src/bin/e_configure.c:87
+#: src/bin/e_config_dialog.c:158 src/bin/e_configure.c:88
 #: src/bin/e_int_border_menu.c:348
 msgid "Close"
 msgstr "閉じる"
@@ -189,49 +189,54 @@ msgstr "仮想デスクトップの設定"
 msgid "Display Settings"
 msgstr "ディスプレイの設定"
 
-#: src/bin/e_configure.c:73 src/bin/e_int_config_focus.c:47
+#
+#: src/bin/e_configure.c:73 src/bin/e_int_config_desklock.c:56
+msgid "Desktop Lock Settings"
+msgstr "デスクトップロックの設定"
+
+#: src/bin/e_configure.c:74 src/bin/e_int_config_focus.c:47
 msgid "Focus Settings"
 msgstr "フォーカスの設定"
 
 #
-#: src/bin/e_configure.c:74 src/bin/e_int_config_keybindings.c:167
+#: src/bin/e_configure.c:75 src/bin/e_int_config_keybindings.c:335
 msgid "Key Binding Settings"
 msgstr "キーバインドの設定"
 
 #
-#: src/bin/e_configure.c:75 src/bin/e_int_config_menus.c:39
+#: src/bin/e_configure.c:76 src/bin/e_int_config_menus.c:39
 #: src/bin/e_int_config_menus.c:90 src/bin/e_int_config_menus.c:133
 msgid "Menu Settings"
 msgstr "メニューの設定"
 
 #
-#: src/bin/e_configure.c:76 src/bin/e_int_config_performance.c:37
+#: src/bin/e_configure.c:77 src/bin/e_int_config_performance.c:37
 msgid "Performance Settings"
 msgstr "性能の調整"
 
-#: src/bin/e_configure.c:77
+#: src/bin/e_configure.c:78
 msgid "Run Command Settings"
 msgstr "コマンド実行の設定"
 
-#: src/bin/e_configure.c:78 src/bin/e_int_config_startup.c:26
+#: src/bin/e_configure.c:79 src/bin/e_int_config_startup.c:26
 #: src/bin/e_int_config_startup.c:70
 msgid "Startup Settings"
 msgstr "起動時の設定"
 
 #
 #
-#: src/bin/e_configure.c:79 src/bin/e_int_config_winlist.c:51
+#: src/bin/e_configure.c:80 src/bin/e_int_config_winlist.c:51
 msgid "Window List Settings"
 msgstr "ウィンドウリストの設定"
 
 #
 #
-#: src/bin/e_configure.c:80
+#: src/bin/e_configure.c:81
 msgid "Window Display Settings"
 msgstr "ウィンドウ表示の設定"
 
 #
-#: src/bin/e_configure.c:81
+#: src/bin/e_configure.c:82
 msgid "Window Manipulation Settings"
 msgstr "ウィンドウ動作の設定"
 
@@ -262,7 +267,7 @@ msgstr "アプリケーション名"
 msgid "Executable"
 msgstr "実行ファイル名"
 
-#: src/bin/e_eap_editor.c:322 src/bin/e_fileman_smart.c:1219
+#: src/bin/e_eap_editor.c:322 src/bin/e_fileman_smart.c:1217
 msgid "General"
 msgstr "一般"
 
@@ -360,171 +365,171 @@ msgstr ""
 "\n"
 
 #
-#: src/bin/e_fileman_smart.c:911
+#: src/bin/e_fileman_smart.c:909
 msgid "Error"
 msgstr "エラー"
 
-#: src/bin/e_fileman_smart.c:912
+#: src/bin/e_fileman_smart.c:910
 #, c-format
 msgid "Could not delete  <br><b>%s</b>"
 msgstr "以下が削除できません. <br><b>%s</b>"
 
 #
-#: src/bin/e_fileman_smart.c:1005
+#: src/bin/e_fileman_smart.c:1003
 msgid "Confirm"
 msgstr "確認"
 
-#: src/bin/e_fileman_smart.c:1006
+#: src/bin/e_fileman_smart.c:1004
 #, c-format
 msgid " Are you sure you want to delete <br><b>%s</b> ?"
 msgstr "以下を本当に削除しますか. <br><b>%s</b>"
 
-#: src/bin/e_fileman_smart.c:1228
+#: src/bin/e_fileman_smart.c:1226
 #, c-format
 msgid "File:"
 msgstr "ファイル"
 
-#: src/bin/e_fileman_smart.c:1237
+#: src/bin/e_fileman_smart.c:1235
 #, c-format
 msgid "Size:"
 msgstr "サイズ"
 
-#: src/bin/e_fileman_smart.c:1246
+#: src/bin/e_fileman_smart.c:1244
 #, c-format
 msgid "Type:"
 msgstr "タイプ"
 
-#: src/bin/e_fileman_smart.c:1255
+#: src/bin/e_fileman_smart.c:1253
 msgid "Protect this file"
 msgstr "このファイルを保護する"
 
-#: src/bin/e_fileman_smart.c:1261
+#: src/bin/e_fileman_smart.c:1259
 msgid "Let others see this file"
 msgstr "他でもこのファイルの閲覧を可能にする"
 
-#: src/bin/e_fileman_smart.c:1265
+#: src/bin/e_fileman_smart.c:1263
 msgid "Let others modify this file"
 msgstr "他でもこのファイルの変更を可能にする"
 
-#: src/bin/e_fileman_smart.c:1269
+#: src/bin/e_fileman_smart.c:1267
 msgid "Dont let others see or modify this file"
 msgstr "他ではこのファイルの閲覧と変更を禁止する"
 
-#: src/bin/e_fileman_smart.c:1273
+#: src/bin/e_fileman_smart.c:1271
 msgid "Custom settings"
 msgstr "カスタム設定"
 
-#: src/bin/e_fileman_smart.c:1310
+#: src/bin/e_fileman_smart.c:1308
 msgid "File Info:"
 msgstr "ファイル情報"
 
-#: src/bin/e_fileman_smart.c:1311
+#: src/bin/e_fileman_smart.c:1309
 msgid "Owner:"
 msgstr "所有者"
 
-#: src/bin/e_fileman_smart.c:1316
+#: src/bin/e_fileman_smart.c:1314
 msgid "Group:"
 msgstr "グループ"
 
-#: src/bin/e_fileman_smart.c:1321
+#: src/bin/e_fileman_smart.c:1319
 msgid "Last Access:"
 msgstr "最終アクセス日"
 
-#: src/bin/e_fileman_smart.c:1326
+#: src/bin/e_fileman_smart.c:1324
 msgid "Last Modified:"
 msgstr "最終更新日"
 
-#: src/bin/e_fileman_smart.c:1333
+#: src/bin/e_fileman_smart.c:1331
 msgid "Permissions:"
 msgstr "許可情報"
 
-#: src/bin/e_fileman_smart.c:1334
+#: src/bin/e_fileman_smart.c:1332
 msgid "Me"
 msgstr "所有者"
 
-#: src/bin/e_fileman_smart.c:1336 src/bin/e_fileman_smart.c:1345
-#: src/bin/e_fileman_smart.c:1354
+#: src/bin/e_fileman_smart.c:1334 src/bin/e_fileman_smart.c:1343
+#: src/bin/e_fileman_smart.c:1352
 msgid "r"
 msgstr "r(読取)"
 
-#: src/bin/e_fileman_smart.c:1338 src/bin/e_fileman_smart.c:1347
-#: src/bin/e_fileman_smart.c:1356
+#: src/bin/e_fileman_smart.c:1336 src/bin/e_fileman_smart.c:1345
+#: src/bin/e_fileman_smart.c:1354
 msgid "w"
 msgstr "w(書込)"
 
-#: src/bin/e_fileman_smart.c:1340 src/bin/e_fileman_smart.c:1349
-#: src/bin/e_fileman_smart.c:1358
+#: src/bin/e_fileman_smart.c:1338 src/bin/e_fileman_smart.c:1347
+#: src/bin/e_fileman_smart.c:1356
 msgid "x"
 msgstr "x(実行)"
 
-#: src/bin/e_fileman_smart.c:1343
+#: src/bin/e_fileman_smart.c:1341
 msgid "My Group"
 msgstr "グループ"
 
-#: src/bin/e_fileman_smart.c:1352
+#: src/bin/e_fileman_smart.c:1350
 msgid "Everyone"
 msgstr "その他"
 
-#: src/bin/e_fileman_smart.c:1386 src/bin/e_fileman_smart.c:2044
-#: src/bin/e_fileman_smart.c:3956
+#: src/bin/e_fileman_smart.c:1384 src/bin/e_fileman_smart.c:2033
+#: src/bin/e_fileman_smart.c:3951
 msgid "Properties"
 msgstr "プロパティ"
 
 #
-#: src/bin/e_fileman_smart.c:1951
+#: src/bin/e_fileman_smart.c:1940
 msgid "Arrange Icons"
 msgstr "アイコンの整頓"
 
 #
-#: src/bin/e_fileman_smart.c:1963
+#: src/bin/e_fileman_smart.c:1952
 msgid "By Name"
 msgstr "名前で"
 
-#: src/bin/e_fileman_smart.c:1974
+#: src/bin/e_fileman_smart.c:1963
 msgid "By Mod Time"
 msgstr "更新日で"
 
-#: src/bin/e_fileman_smart.c:1985
+#: src/bin/e_fileman_smart.c:1974
 msgid "New"
 msgstr "新規"
 
-#: src/bin/e_fileman_smart.c:1997
+#: src/bin/e_fileman_smart.c:1986
 msgid "Directory"
 msgstr "ディレクトリ"
 
-#: src/bin/e_fileman_smart.c:2005
+#: src/bin/e_fileman_smart.c:1994
 msgid "View"
 msgstr "閲覧"
 
-#: src/bin/e_fileman_smart.c:2017
+#: src/bin/e_fileman_smart.c:2006
 msgid "Name Only"
 msgstr "名前だけ"
 
-#: src/bin/e_fileman_smart.c:2026
+#: src/bin/e_fileman_smart.c:2015
 msgid "Details"
 msgstr "詳細"
 
-#: src/bin/e_fileman_smart.c:2036
+#: src/bin/e_fileman_smart.c:2025
 msgid "Refresh"
 msgstr "更新する"
 
-#: src/bin/e_fileman_smart.c:3916
+#: src/bin/e_fileman_smart.c:3911
 msgid "Copy"
 msgstr "コピーする"
 
-#: src/bin/e_fileman_smart.c:3923
+#: src/bin/e_fileman_smart.c:3918
 msgid "Cut"
 msgstr "カットする"
 
-#: src/bin/e_fileman_smart.c:3935
+#: src/bin/e_fileman_smart.c:3930
 msgid "Rename"
 msgstr "名前を変える"
 
-#: src/bin/e_fileman_smart.c:3944
+#: src/bin/e_fileman_smart.c:3939
 msgid "Delete"
 msgstr "削除する"
 
-#: src/bin/e_gadget.c:208 src/bin/e_int_menus.c:161 src/bin/e_module.c:489
+#: src/bin/e_gadget.c:209 src/bin/e_int_menus.c:161 src/bin/e_module.c:489
 #: src/modules/battery/e_mod_main.c:255 src/modules/battery/e_mod_main.c:385
 #: src/modules/clock/e_mod_main.c:194 src/modules/clock/e_mod_main.c:370
 #: src/modules/ibar/e_mod_main.c:299 src/modules/ibar/e_mod_main.c:663
@@ -534,7 +539,7 @@ msgstr "削除する"
 msgid "Configuration"
 msgstr "設定"
 
-#: src/bin/e_gadget.c:214 src/bin/e_int_menus.c:779
+#: src/bin/e_gadget.c:215 src/bin/e_int_menus.c:779
 #: src/modules/battery/e_mod_main.c:391 src/modules/clock/e_mod_main.c:376
 #: src/modules/cpufreq/e_mod_main.c:999 src/modules/ibar/e_mod_main.c:669
 #: src/modules/ibox/e_mod_main.c:480 src/modules/pager/e_mod_main.c:562
@@ -1576,11 +1581,11 @@ msgid "(Unused)"
 msgstr "(未使用)"
 
 #
-#: src/bin/e_intl.c:348
+#: src/bin/e_intl.c:345
 msgid "Input Method Error"
 msgstr "インプットメソッドエラー"
 
-#: src/bin/e_intl.c:349
+#: src/bin/e_intl.c:346
 msgid ""
 "Error starting the input method executable<br><br>please make sure that your "
 "input<br>method configuration is correct and<br>that your "
@@ -1625,8 +1630,8 @@ msgstr ""
 "\t\t例: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
 "+0\n"
 "\t-profile CONF_PROFILE\n"
-"\t\tユーザーが決めたデフォルトの設定プロファイルの代わりに CONF_PROFILE を使う."
-"さもなければ \"default\" が使われる.\n"
+"\t\tユーザーが決めたデフォルトの設定プロファイルの代わりに CONF_PROFILE を使"
+"う.さもなければ \"default\" が使われる.\n"
 "\t-good\n"
 "\t\t良くしてて\n"
 "\t-evil\n"
@@ -2192,95 +2197,103 @@ msgstr "キーバインドを追加する"
 msgid "Delete Key Binding"
 msgstr "キーバインドを削除する"
 
-#: src/bin/e_int_config_keybindings.c:581
+#: src/bin/e_int_config_keybindings.c:578
 msgid "Action"
 msgstr "アクション"
 
-#: src/bin/e_int_config_keybindings.c:628
+#: src/bin/e_int_config_keybindings.c:625
 msgid "Parameters"
 msgstr "パラメータ"
 
-#: src/bin/e_int_config_keybindings.c:631
+#: src/bin/e_int_config_keybindings.c:628
 msgid "Binding Context"
 msgstr "カテゴリー"
 
-#: src/bin/e_int_config_keybindings.c:634
+#: src/bin/e_int_config_keybindings.c:631
 msgid "Any"
 msgstr "無指定"
 
 #
-#: src/bin/e_int_config_keybindings.c:639
+#: src/bin/e_int_config_keybindings.c:636
 msgid "Border"
 msgstr "ボーダー"
 
-#: src/bin/e_int_config_keybindings.c:644
+#: src/bin/e_int_config_keybindings.c:641
 msgid "Zone"
 msgstr "ゾーン"
 
-#: src/bin/e_int_config_keybindings.c:650
+#: src/bin/e_int_config_keybindings.c:647
 msgid "Container"
 msgstr "コンテナ"
 
-#: src/bin/e_int_config_keybindings.c:655
+#: src/bin/e_int_config_keybindings.c:652
 msgid "Manager"
 msgstr "マネージャ"
 
-#: src/bin/e_int_config_keybindings.c:660
+#: src/bin/e_int_config_keybindings.c:657
 msgid "Menu"
 msgstr "メニュー"
 
-#: src/bin/e_int_config_keybindings.c:666
+#: src/bin/e_int_config_keybindings.c:663
 msgid "Win List"
 msgstr "ウィンドウリスト"
 
-#: src/bin/e_int_config_keybindings.c:671
+#: src/bin/e_int_config_keybindings.c:668
 msgid "Popup"
 msgstr "ポップアップ"
 
-#: src/bin/e_int_config_keybindings.c:676
+#: src/bin/e_int_config_keybindings.c:673
 msgid "None"
 msgstr "無し"
 
-#: src/bin/e_int_config_keybindings.c:682
+#: src/bin/e_int_config_keybindings.c:679
 msgid "Unknown"
 msgstr "不明"
 
-#: src/bin/e_int_config_keybindings.c:689
+#: src/bin/e_int_config_keybindings.c:686
 msgid "Key Binding"
 msgstr "バインドするキー"
 
-#: src/bin/e_int_config_keybindings.c:691
+#: src/bin/e_int_config_keybindings.c:688
 msgid "Key :"
 msgstr "キー:"
 
-#: src/bin/e_int_config_keybindings.c:701
+#: src/bin/e_int_config_keybindings.c:698
 msgid "Shift"
 msgstr ""
 
-#: src/bin/e_int_config_keybindings.c:706
+#: src/bin/e_int_config_keybindings.c:703
 msgid "Control"
 msgstr ""
 
-#: src/bin/e_int_config_keybindings.c:711
+#: src/bin/e_int_config_keybindings.c:708
 msgid "Alt"
 msgstr ""
 
 #
-#: src/bin/e_int_config_keybindings.c:716
+#: src/bin/e_int_config_keybindings.c:713
 msgid "Win"
 msgstr ""
 
-#: src/bin/e_int_config_keybindings.c:723
+#: src/bin/e_int_config_keybindings.c:720
 msgid "Key Action"
 msgstr "バインドするアクション"
 
-#: src/bin/e_int_config_keybindings.c:725
+#: src/bin/e_int_config_keybindings.c:722
 msgid "Action :"
 msgstr "アクション:"
 
-#: src/bin/e_int_config_keybindings.c:734
+#: src/bin/e_int_config_keybindings.c:731
 msgid "Params :"
 msgstr "パラメータ:"
+
+#: src/bin/e_int_config_desklock.c:121
+msgid "Personalized Password:"
+msgstr "ロック解除用パスワード"
+
+#: src/bin/e_int_config_desklock.c:129
+msgid "Show Password"
+msgstr "パスワードを表示する"
 
 #: src/modules/battery/e_mod_config.c:45
 msgid "Battery Configuration"
