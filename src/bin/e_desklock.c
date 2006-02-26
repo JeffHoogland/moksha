@@ -7,22 +7,24 @@
 
 
 /**************************** private data ******************************/
-static Ecore_X_Window elock_wnd = 0;
-static Evas_List *handlers = NULL;
+typedef struct _E_Desklock_Data		E_Desklock_Data;
+typedef struct _E_Desklock_Popup_Data	E_Desklock_Popup_Data;
 
-static E_Popup *elock_wnd_popup = NULL;
-static Evas_Object *bg_object = NULL;
+struct _E_Desklock_Popup_Data
+{
+  E_Popup     *popup_wnd;
+  Evas_Object *bg_object;
+};
 
 struct _E_Desklock_Data
 {
+  Evas_List	  *elock_wnd_list;
   Ecore_X_Window  elock_wnd;
   Evas_List	  *handlers;
-  Evas_List	  *popus_wnd;
-  Evas_Object	  *bg_object;
+  char		  passwd[PASSWD_LEN];
 };
-//static Evas_Object *passwd_entry = NULL;
 
-static char passwd[PASSWD_LEN]="";
+static	E_Desklock_Data	*edd = NULL;
 
 /***********************************************************************/
 
@@ -39,83 +41,34 @@ static void _e_desklock_delete();
 EAPI int
 e_desklock_show(void)
 {
-  //Evas_List  *managers, *l, *l2, *l3;
-  Evas_Object *eo;
-  
-  E_Zone  *zone = NULL;
+  Evas_List  *managers, *l, *l2, *l3;
+  //E_Zone  *zone = NULL;
+  int m = 0, c = 0, z = 0;
 
-  /*e_error_dialog_show(_("Enlightenment Desktop Lock!"),
-		      _("The Desktop Lock mechanism is not complitely working yet.\n"
-		        "It is just a simple development version of Desktop Locking.\n"
-		        "To return to E, just hit Enter"));*/
+  E_Desklock_Popup_Data	*edp;
 
-  zone = e_zone_current_get(e_container_current_get(e_manager_current_get()));
-  {
-    elock_wnd = ecore_x_window_input_new(zone->container->win, 0, 0, 1, 1);
-    ecore_x_window_show(elock_wnd);
-    e_grabinput_get(elock_wnd, 0, elock_wnd);
+  if (!edd)
+    {
+      edd = E_NEW(E_Desklock_Data, 1);
+      if (!edd) return 0;
+      edd->elock_wnd_list = NULL;
+      edd->elock_wnd = 0;
+      edd->handlers = NULL;
+      edd->passwd[0] = 0;
+    }
 
-    elock_wnd_popup = e_popup_new(zone, zone->x, zone->y, zone->w, zone->h);
-    evas_event_feed_mouse_move(elock_wnd_popup->evas, -1000000, -1000000,
-			       ecore_x_current_time_get(), NULL);
-
-    e_popup_layer_set(elock_wnd_popup, ELOCK_POPUP_LAYER);
-
-    evas_event_freeze(elock_wnd_popup->evas);
-    bg_object = edje_object_add(elock_wnd_popup->evas);
-
-    // this option should be made as a user option.
-    /*e_theme_edje_object_set(bg_object, "base/theme/background", "desktop/background");
-
-    passwd_entry = edje_object_add(elock_wnd_popup->evas);
-    e_theme_edje_object_set(passwd_entry, "base/theme/desklock", "widgets/desklock/main");
-    edje_object_part_text_set(passwd_entry, "passwd", passwd);
-
-    edje_object_part_swallow(bg_object, "passwd_entry", passwd_entry);
-    evas_object_move(passwd_entry, x + 200, y + 200);
-    evas_object_show(passwd_entry);*/
-    e_theme_edje_object_set(bg_object, "base/theme/desklock", "widgets/desklock/main");
-
-
-    e_popup_move_resize(elock_wnd_popup, zone->x, zone->y, zone->w, zone->h);
-    evas_object_move(bg_object, 0, 0);
-    evas_object_resize(bg_object, zone->w, zone->h);
-    evas_object_show(bg_object);
-    e_popup_edje_bg_object_set(elock_wnd_popup, bg_object);
-
-    evas_event_thaw(elock_wnd_popup->evas);
-
-    /* handlers */
-    handlers = evas_list_append(handlers,
-				ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,
-							_e_desklock_cb_key_down, NULL));
-    handlers = evas_list_append(handlers, 
-				ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN,
-							_e_desklock_cb_mouse_down, NULL));
-    handlers = evas_list_append(handlers,
-				ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
-							_e_desklock_cb_mouse_up, NULL));
-    handlers = evas_list_append(handlers,
-				ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL,
-							_e_desklock_cb_mouse_wheel,
-							NULL));
-
-    //elock_wnd_idler = ecore_idler_add(_e_desklock_idler, NULL);
-
-    e_popup_show(elock_wnd_popup);
-  }
-
-  /*
   managers = e_manager_list();
-
   for (l = managers; l; l = l->next)
     {
       E_Manager *man;
+      m ++;
 
       man = l->data;
       for (l2 = man->containers; l2; l2 = l2->next)
 	{
 	  E_Container *con;
+
+	  c ++;
 
 	  con = l2->data;
 	  for (l3 = con->zones; l3; l3 = l3->next)
@@ -123,94 +76,97 @@ e_desklock_show(void)
 	      E_Zone *zone;
 
 	      zone = l3->data;
+	      if (!edd->elock_wnd)
+		{
+		  edd->elock_wnd = ecore_x_window_input_new(zone->container->win, 0, 0, 1, 1);
+		  ecore_x_window_show(edd->elock_wnd);
+		  e_grabinput_get(edd->elock_wnd, 0, edd->elock_wnd);
+		}
+    
+	      edp = E_NEW(E_Desklock_Popup_Data, 1);
+	      if (edp)
+		{
+		  edp->popup_wnd = e_popup_new(zone, 0, 0, zone->w, zone->h);
+		  evas_event_feed_mouse_move(edp->popup_wnd->evas, -1000000, -1000000,
+					     ecore_x_current_time_get(), NULL);
 
-	      input_window = ecore_x_window_input_new(zone->container->win, 0, 0, 1, 1);
-	      ecore_x_window_show(input_window);
-	      //e_grabinput_get(input_window, 0, input_window);
+		  e_popup_layer_set(edp->popup_wnd, ELOCK_POPUP_LAYER);
 
-	      x = zone->x + 20;
-	      y = zone->y + 20 + ((zone->h - 20 - 20 - 20)/ 2);
-	      w = zone->w - 20 - 20;
-	      h = 20;
+		  evas_event_freeze(edp->popup_wnd->evas);
+		  edp->bg_object = edje_object_add(edp->popup_wnd->evas);
+		  //FIXME: This should come from config file
+		  e_theme_edje_object_set(edp->bg_object, "base/theme/desklock",
+							  "widgets/desklock/main");
 
-	      elock_wnd = e_popup_new(zone, 100, 100, 400, 300);
-	      evas_event_feed_mouse_move(elock_wnd->evas, -1000000, -1000000,
-					 ecore_x_current_time_get(), NULL);
+		  evas_object_move(edp->bg_object, 0, 0);
+		  evas_object_resize(edp->bg_object, zone->w, zone->h);
+		  evas_object_show(edp->bg_object);
+		  e_popup_edje_bg_object_set(edp->popup_wnd, edp->bg_object);
+		  evas_event_thaw(edp->popup_wnd->evas);
 
-	      e_popup_layer_set(elock_wnd, ELOCK_POPUP_LAYER);
+		  e_popup_show(edp->popup_wnd);
 
-	      evas_event_freeze(elock_wnd->evas);
-	      eo = edje_object_add(elock_wnd->evas);
-
-	      evas_object_move(eo, 0, 0);
-	      evas_object_resize(eo, 400, 300);
-
-	      // this option should be made as a user option.
-	      e_theme_edje_object_set(eo, "base/theme/background", "desktop/background");
-	      evas_object_show(eo);
-
-	      e_popup_edje_bg_object_set(elock_wnd, eo);
-
-	      evas_event_thaw(elock_wnd->evas);
-
-	      handlers = evas_list_append(handlers,
-					  ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,
-								  _e_desklock_cb_key_down, NULL));
-	      handlers = evas_list_append(handlers, 
-					  ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN,
-								  _e_desklock_cb_mouse_down, NULL));
-	      handlers = evas_list_append(handlers,
-					  ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
-								  _e_desklock_cb_mouse_up, NULL));
-	      handlers = evas_list_append(handlers,
-					  ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL,
-								  _e_desklock_cb_mouse_wheel,
-								  NULL));
-
-	      //elock_wnd_idler = ecore_idler_add(_e_desklock_idler, NULL);
-
-	      e_popup_show(elock_wnd);
+		  edd->elock_wnd_list = evas_list_append(edd->elock_wnd_list, edp);
+		}
 	    }
 	}
-    }*/
+    }
 
+  /* handlers */
+  edd->handlers = evas_list_append(edd->handlers,
+			      ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,
+						      _e_desklock_cb_key_down, NULL));
+  edd->handlers = evas_list_append(edd->handlers, 
+			      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN,
+						      _e_desklock_cb_mouse_down, NULL));
+  edd->handlers = evas_list_append(edd->handlers,
+			      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
+						      _e_desklock_cb_mouse_up, NULL));
+  edd->handlers = evas_list_append(edd->handlers,
+			      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL,
+						      _e_desklock_cb_mouse_wheel,
+						      NULL));
+  //elock_wnd_idler = ecore_idler_add(_e_desklock_idler, NULL);
 
-   /*  e_error_dialog_show(_("Enlightenment IPC setup error!"),
-			 _("Enlightenment cannot set up the IPC socket.\n"
-			   "It likely is already in use by an existing copy of Enlightenment.\n"
-			   "Double check to see if Enlightenment is not already on this display,\n"
-			   "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
-			   "and try running again."));*/
   _e_desklock_passwd_update();
-
   return 1;
 }
 
 EAPI void
 e_desklock_hide(void)
 {
-  if (!elock_wnd_popup) return;
+  E_Desklock_Popup_Data	*edp;
 
-  evas_event_freeze(elock_wnd_popup->evas);
+  if (!edd) return;
 
-  e_popup_hide(elock_wnd_popup);
-  evas_object_del(bg_object);
-  bg_object = NULL;
-
-  evas_event_thaw(elock_wnd_popup->evas);
-  e_object_del(E_OBJECT(elock_wnd_popup));
-  elock_wnd_popup = NULL;
-
-  while (handlers)
+  while (edd->elock_wnd_list)
     {
-      ecore_event_handler_del(handlers->data);
-      handlers = evas_list_remove_list(handlers, handlers);
-    }
-  ecore_x_window_del(elock_wnd);
-  e_grabinput_release(elock_wnd, elock_wnd);
-  elock_wnd = 0;
+      edp = edd->elock_wnd_list->data;
+      if (edp)
+	{
+	  e_popup_hide(edp->popup_wnd);
 
-  memset(passwd, 0, sizeof(char) * PASSWD_LEN);
+	  evas_event_freeze(edp->popup_wnd->evas);
+	  evas_object_del(edp->bg_object);
+	  evas_event_thaw(edp->popup_wnd->evas);
+
+	  e_object_del(E_OBJECT(edp->popup_wnd));
+	  E_FREE(edp);
+	}
+      edd->elock_wnd_list = evas_list_remove_list(edd->elock_wnd_list, edd->elock_wnd_list);
+    }
+
+  while (edd->handlers)
+    {
+      ecore_event_handler_del(edd->handlers->data);
+      edd->handlers = evas_list_remove_list(edd->handlers, edd->handlers);
+    }
+
+  e_grabinput_release(edd->elock_wnd, edd->elock_wnd);
+  ecore_x_window_del(edd->elock_wnd);
+
+  E_FREE(edd);
+  edd = NULL;
 }
 
 static int
@@ -219,28 +175,36 @@ _e_desklock_cb_key_down(void *data, int type, void *event)
   Ecore_X_Event_Key_Down *ev;
 
   ev = event;
-  if (ev->win != elock_wnd) return 1;
+  if (ev->win != edd->elock_wnd) return 1;
 
   if (!strcmp(ev->keysymbol, "Escape"))
     ;
   else if (!strcmp(ev->keysymbol, "KP_Enter"))
     {
       // here we have to go to auth
-      if (strcmp(passwd, e_config->desklock_personal_passwd) == 0)
+      if (strcmp(edd->passwd, e_config->desklock_personal_passwd) == 0)
+      {
 	e_desklock_hide();
+	return 1;
+      }
       else
 	; // report about invalid password
-      memset(passwd, 0, sizeof(char) * PASSWD_LEN);
+
+      memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
       _e_desklock_passwd_update();
     }
   else if (!strcmp(ev->keysymbol, "Return"))
     {
       // here we have to go to auth
-      if (strcmp(passwd, e_config->desklock_personal_passwd) == 0)
+      if (strcmp(edd->passwd, e_config->desklock_personal_passwd) == 0)
+      {
 	e_desklock_hide();
+	return 1;
+      }
       else
 	; // report about invalid password
-      memset(passwd, 0, sizeof(char) * PASSWD_LEN);
+
+      memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
       _e_desklock_passwd_update();
     }
   else if (!strcmp(ev->keysymbol, "BackSpace"))
@@ -252,9 +216,9 @@ _e_desklock_cb_key_down(void *data, int type, void *event)
       // here we have to grab a password
       if (ev->key_compose)
 	{
-	  if ((strlen(passwd) < (PASSWD_LEN - strlen(ev->key_compose))))
+	  if ((strlen(edd->passwd) < (PASSWD_LEN - strlen(ev->key_compose))))
 	    {
-	      strcat(passwd, ev->key_compose);
+	      strcat(edd->passwd, ev->key_compose);
 	      _e_desklock_passwd_update();
 	    }
 	}
@@ -312,13 +276,22 @@ _e_desklock_passwd_update()
 {
   int ii;
   char passwd_hidden[PASSWD_LEN * 3]="";
+  E_Desklock_Popup_Data	*edp;
+  Evas_List *l;
 
-  for (ii = 0; ii < strlen(passwd); ii ++)
+  if (!edd) return;
+
+  for (ii = 0; ii < strlen(edd->passwd); ii ++)
     {
-      strcat(passwd_hidden, "*");
+      passwd_hidden[ii] = '*';
+      passwd_hidden[ii+1] = 0;
     }
-  edje_object_part_text_set(bg_object, "passwd", passwd_hidden);
-  /*edje_object_part_text_set(bg_object, "passwd", passwd);*/
+
+  for (l = edd->elock_wnd_list; l; l = l->next)
+  {
+    edp = l->data;
+    edje_object_part_text_set(edp->bg_object, "passwd", passwd_hidden);
+  }
   return;
 }
 
@@ -327,13 +300,15 @@ _e_desklock_backspace()
 {
   int len, val, pos;
 
-  len = strlen(passwd);
+  if (!edd) return;
+
+  len = strlen(edd->passwd);
   if (len > 0)
     {
-      pos = evas_string_char_prev_get(passwd, len, &val);
+      pos = evas_string_char_prev_get(edd->passwd, len, &val);
       if ((pos < len) && (pos >= 0))
 	{
-	  passwd[pos] = 0;
+	  edd->passwd[pos] = 0;
 	  _e_desklock_passwd_update();
 	}
     }
@@ -343,3 +318,5 @@ _e_desklock_delete()
 {
   _e_desklock_backspace();
 }
+
+
