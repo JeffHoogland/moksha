@@ -1,164 +1,126 @@
-# Enlightenment Slovakian translation.
-# This file is put in the public domain.
-# hrobar <0367742402@karneval.cz>, 2006.
-#
-# fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-02-16 23:05+0100\n"
-"PO-Revision-Date: \n"
+"POT-Creation-Date: 2006-02-24 22:14+0900\n"
+"PO-Revision-Date: 2006-02-26 02:17+0100\n"
 "Last-Translator: hrobar <0367742402@karneval.cz>\n"
-"Language-Team: \n"
+"Language-Team: Slovakian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Slovak\n"
 
-#: src/bin/e_about.c:42 src/bin/e_int_menus.c:137
+#: src/bin/e_about.c:42
+#: src/bin/e_int_menus.c:149
 msgid "About Enlightenment"
 msgstr "O Enlightenment"
 
-#: src/bin/e_about.c:51 src/bin/e_main.c:574
+#: src/bin/e_about.c:51
+#: src/bin/e_main.c:653
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
 #: src/bin/e_about.c:56
-msgid ""
-"Copyright &copy; 1999-2005, by the Enlightenment Development Team.<br><br>We "
-"hope you enjoy using this software as much as we enjoyed writing it."
-"<br><br>This software is provided as-is with no explicit or implied "
-"warranty. This software is governed by licensing conditions, so please see "
-"the COPYING and COPYING-PLAIN licence files installed on your system."
-"<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it "
-"is not stable. Many features are incomplete or even non-existant yet and may "
-"have many bugs. You have been <hilight>WARNED!</hilight>"
-msgstr ""
-"Copyright &copy; 1999-2005, patrí vývojárskemu tímu Enlightenment.<br><br>Veríme, "
-"že Vás používanie tohoto softvéru baví rovnako ako nás baví ho programovať."
-"<br><br>Tento softvér je poskytovaný tak ako je, bez akejkoťvek explicitnej alebo "
-"implicitnej záruky. Tento softvér podlieha licenčným podmienkam, preto si prosím "
-"prečítajte licenčné súbory COPYING a COPYING-PLAIN, ktoré sú nainštalované v systéme."
-"<br><br>Enlightenment je v <hilight>INTENZÍVNOM VÝVOJI</hilight> a "
-"nieje stabilný. Veľa funkcií je nekompletných alebo zatiaľ vôbec neexistujú, prípadne "
-"majú veľa chýb. Boli ste <hilight>VAROVANÝ!</hilight>"
+msgid "Copyright &copy; 1999-2005, by the Enlightenment Development Team.<br><br>We hope you enjoy using this software as much as we enjoyed writing it.<br><br>This software is provided as-is with no explicit or implied warranty. This software is governed by licensing conditions, so please see the COPYING and COPYING-PLAIN licence files installed on your system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it is not stable. Many features are incomplete or even non-existant yet and may have many bugs. You have been <hilight>WARNED!</hilight>"
+msgstr "Copyright &copy; 1999-2005, patrí vývojárskemu tímu Enlightenment.<br><br>Veríme, že Vás používanie tohoto softvéru baví rovnako ako nás baví ho programovať.<br><br>Tento softvér je poskytovaný tak ako je, bez akejkoľvek explicitnej alebo implicitnej záruky. Tento softvér podlieha licenčným podmienkam, preto si prosím prečítajte licenčné súbory COPYING a COPYING-PLAIN, ktoré sú nainštalované v systéme.<br><br>Enlightenment je v <hilight>INTENZÍVNOM VÝVOJI</hilight> a nie je stabilný. Veľa funkcií je nekompletných alebo zatiaľ vôbec neexistujú, prípadne majú veľa chýb. Boli ste <hilight>VAROVANÝ!</hilight>"
 
 #: src/bin/e_about.c:81
 msgid "<title>The Team</title>"
 msgstr "<title>Tím</title>"
 
-#: src/bin/e_actions.c:1280
+#: src/bin/e_actions.c:1282
 msgid "Are you sure you want to exit?"
 msgstr "Ste si istý, že chcete skončiť?"
 
-#: src/bin/e_actions.c:1282
-msgid ""
-"You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
-msgstr ""
-"Požadujete ukončenie Enlightenment.<br><br>Ste si istý, že chcete skončiť?"
+#: src/bin/e_actions.c:1284
+msgid "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
+msgstr "Požadujete ukončenie Enlightenment.<br><br>Ste si istý, že chcete skončiť?"
 
-#: src/bin/e_actions.c:1287 src/bin/e_fileman_smart.c:966
-#: src/bin/e_module.c:565 src/modules/randr/e_mod_main.c:317
+#: src/bin/e_actions.c:1289
+#: src/bin/e_fileman_smart.c:1000
+#: src/bin/e_module.c:565
+#: src/modules/randr/e_mod_main.c:317
 msgid "Yes"
 msgstr "Áno"
 
-#: src/bin/e_actions.c:1289 src/bin/e_fileman_smart.c:967
-#: src/bin/e_module.c:566 src/modules/randr/e_mod_main.c:318
+#: src/bin/e_actions.c:1291
+#: src/bin/e_fileman_smart.c:1001
+#: src/bin/e_module.c:566
+#: src/modules/randr/e_mod_main.c:318
 msgid "No"
 msgstr "Nie"
 
-#: src/bin/e_apps.c:412 src/bin/e_apps.c:1841 src/bin/e_fileman_file.c:340
-#: src/bin/e_fileman_file.c:391 src/bin/e_fileman_file.c:419
-#: src/bin/e_utils.c:223 src/bin/e_zone.c:607
+#: src/bin/e_apps.c:443
+#: src/bin/e_fileman_file.c:312
+#: src/bin/e_fileman_file.c:363
+#: src/bin/e_utils.c:229
+#: src/bin/e_zone.c:607
+#: src/bin/e_fileman_mime.c:393
 msgid "Run Error"
 msgstr "Chyba pri Spustení"
 
-#: src/bin/e_apps.c:413 src/bin/e_fileman_file.c:341
-#: src/bin/e_fileman_file.c:392 src/bin/e_utils.c:224 src/bin/e_zone.c:608
+#: src/bin/e_apps.c:444
+#: src/bin/e_utils.c:230
 #, c-format
-msgid ""
-"Enlightenment was unable to fork a child process:\n"
-"\n"
-"%s\n"
-"\n"
-msgstr ""
-"Enlightenment nemôže forknúť proces potomka:\n"
-"\n"
-"%s\n"
-"\n"
+msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
+msgstr "Enlightenment nemôže vytvoriť proces potomka:<br><br>%s<br>"
 
-#: src/bin/e_apps.c:1842
+#: src/bin/e_apps.c:1904
+msgid "Application run error"
+msgstr "Chyba pri spustení aplikácie"
+
+#: src/bin/e_apps.c:1906
 #, c-format
-msgid ""
-"Enlightenment was unable to run the program:\n"
-"\n"
-"%s\n"
-msgstr ""
-"Enlightenment nemôže forknúť proces potomka:\n"
-"\n"
-"%s\n"
-"\n"
+msgid "Enlightenment was unable to run the application:<br><br>%s<br><br>The application failed to start."
+msgstr "Enlightenment nemôže spustiť aplikáciu.<br><br>%s<br><br>起動 Aplikácia zlyhala pri spustení."
 
-#: src/bin/e_config.c:412
-msgid ""
-"Configuration data needed upgrading. Your old configuration\n"
-"has been wiped and a new set of defaults initialized. This\n"
-"will happen regularly during development, so don't report a\n"
-"bug. This simply means Enlightenment needs new configuration\n"
-"data by default for usable functionality that your old\n"
-"configuration simply lacks. This new set of defaults will fix\n"
-"that by adding it in. You can re-configure things now to your\n"
-"liking. Sorry for the hiccup in your configuration.\n"
-msgstr ""
-"Konfiguračné dáta je treba aktualizovať. Vaša stará konfigurácia\n"
-"bola vymazaná a nová sada štandardných nastavení bola zinicializovaná.\n"
-"Toto sa bude stávať pravidelne počas vývoja, takže neposielajte\n"
-"hlásenie o chybe. Zjednodušene povedané Enlightenment potrebuje nové\n"
-"konfiguračné dáta s novými možnostami nastavení, ktoré staré\n"
-"dáta neobsahujú. Teraz si môžete nakonfigurovať veci podľa Vašich\n"
-"predstáv. Ospravedlňujeme sa za nečakané zmeny v konfigurácii.\n"
-
-#: src/bin/e_config.c:426
-msgid ""
-"Your configuration is NEWER than Enlightenment. This is very\n"
-"strange. This should not happen unless you downgraded\n"
-"Enlightenment or copied the configuration from a place where\n"
-"a newer version of Enlightenment was running. This is bad and\n"
-"as a precaution your configuration has been now restored to\n"
-"defaults. Sorry for the inconvenience.\n"
-msgstr ""
-"Vaše nastavenie je NOVŠIE než Enlightenment. To je veľmi\n"
-"zvláštne. Nemalo by se to stať za predpokladu, že ste nedowngradovali\n"
-"Enlightenment alebo nekopírovali súbory s nastavením z miesta, kde\n"
-"bežala novšia verzia Enlightenment. Je to chyba a v rámci nápravy\n"
-"bolo Vaše nastavenie vrátené na pôvodné hodnoty.\n"
-"Ospravedlňujeme se za vzniknuté problémy.\n"
-
-#: src/bin/e_config.c:2113
-msgid "Configuration Upgraded"
-msgstr "Konfigurácia bola aktualizovaná"
-
-#: src/bin/e_config_dialog.c:88 src/modules/battery/e_mod_config.c:127
-msgid "Haladó"
-msgstr "Posuvný"
-
-#: src/bin/e_config_dialog.c:103 src/modules/battery/e_mod_config.c:94
-msgid "Alap"
-msgstr "Báza"
-
-#: src/bin/e_config_dialog.c:117 src/bin/e_error.c:196 src/bin/e_error.c:205
-#: src/bin/e_int_border_remember.c:245 src/bin/e_int_border_remember.c:325
-#: src/bin/e_int_border_remember.c:367 src/bin/e_module.c:416
-#: src/modules/ibar/e_mod_main.c:1614
+#: src/bin/e_apps.c:1914
+#: src/bin/e_config_dialog.c:149
+#: src/bin/e_error.c:196
+#: src/bin/e_error.c:205
+#: src/bin/e_file_dialog.c:66
+#: src/bin/e_fileman_smart.c:907
+#: src/bin/e_int_border_remember.c:246
+#: src/bin/e_int_border_remember.c:326
+#: src/bin/e_int_border_remember.c:368
+#: src/bin/e_module.c:416
+#: src/bin/e_utils.c:522
+#: src/bin/e_int_config_background_import.c:202
+#: src/modules/battery/e_mod_main.c:568
+#: src/modules/cpufreq/e_mod_main.c:318
+#: src/modules/cpufreq/e_mod_main.c:346
+#: src/modules/ibar/e_mod_main.c:1637
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_config_dialog.c:118
+#: src/bin/e_config.c:470
+msgid "Configuration data needed upgrading. Your old configuration<br>has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Enlightenment needs new configuration<br>data by default for usable functionality that your old<br>configuration simply lacks. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your configuration.<br>"
+msgstr "Konfiguračné dáta je treba aktualizovať. Vaša stará konfigurácia<br>bola vymazaná a nová sada štandardných nastavení bola inicializovaná. Toto<br>sa bude stávať pravidelne počas vývoja, takže neposielajte hlásenie o<br>chybe. Zjednodušene povedané Enlightenment potrebuje nové konfiguračné<br>dáta s novými možnosťami nastavenia, ktoré staré<br>dáta neobsahujú. Teraz si môžete nakonfigurovať veci podľa Vašich<br>predstáv. Ospravedlňujeme sa za nečakané zmeny vo Vašej konfigurácii.<br>"
+
+#: src/bin/e_config.c:484
+msgid "Your configuration is NEWER than Enlightenment. This is very<br>strange. This should not happen unless you downgraded<br>Enlightenment or copied the configuration from a place where<br>a newer version of Enlightenment was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
+msgstr "Vaše nastavenie je NOVŠIE než Enlightenment. To je veľmi<br>zvláštne. Nemalo by sa to stať za predpokladu, že ste nedowngradovali<br>Enlightenment alebo nekopírovali súbory s nastavením z miesta, kde<br>bežala novšia verzia Enlightenment. Nie je to v poriadku<br>a preto v rámci nápravy bolo Vaše nastavenie vrátené na<br>pôvodné hodnoty.Ospravedlňujeme sa za vzniknuté problémy.<br>"
+
+#: src/bin/e_config.c:2250
+msgid "Configuration Upgraded"
+msgstr "Konfigurácia bola aktualizovaná"
+
+#: src/bin/e_config_dialog.c:120
+msgid "Advanced"
+msgstr "Pokročilé"
+
+#: src/bin/e_config_dialog.c:135
+msgid "Basic"
+msgstr "Základné"
+
+#: src/bin/e_config_dialog.c:150
 msgid "Apply"
 msgstr "Nastav"
 
-#: src/bin/e_config_dialog.c:122 src/bin/e_configure.c:81
-#: src/bin/e_int_border_menu.c:342
+#: src/bin/e_config_dialog.c:158
+#: src/bin/e_configure.c:88
+#: src/bin/e_int_border_menu.c:348
 msgid "Close"
 msgstr "Uzavrieť"
 
@@ -166,57 +128,95 @@ msgstr "Uzavrieť"
 msgid "Enlightenment Configuration"
 msgstr "Enlightenment Konfigurácia"
 
-#: src/bin/e_configure.c:62 src/bin/e_int_menus.c:578
+#: src/bin/e_configure.c:63
+#: src/bin/e_int_menus.c:592
 msgid "Configuration Panel"
 msgstr "Konfiguračný Panel"
 
-#: src/bin/e_configure.c:65 src/bin/e_int_config_background.c:54
+#: src/bin/e_configure.c:66
+#: src/bin/e_int_config_background.c:56
 msgid "Background Settings"
 msgstr "Nastavenia Pozadia"
 
-#: src/bin/e_configure.c:66 src/bin/e_int_config_theme.c:47
+#: src/bin/e_configure.c:67
+#: src/bin/e_int_config_theme.c:47
 msgid "Theme Selector"
 msgstr "Výber Témy"
 
-#: src/bin/e_configure.c:67 src/bin/e_int_config_modules.c:70
+#: src/bin/e_configure.c:68
+#: src/bin/e_int_config_modules.c:63
 msgid "Module Settings"
 msgstr "Nastavenia Modulov"
 
-#: src/bin/e_configure.c:68 src/bin/e_int_config_general.c:34
-#: src/bin/e_int_config_general.c:98 src/bin/e_int_config_general.c:151
-#: src/bin/e_int_config_performance.c:87
-#: src/bin/e_int_config_performance.c:123 src/bin/e_int_config_winlist.c:124
-#: src/modules/clock/e_mod_config.c:81 src/modules/pager/e_mod_config.c:97
-#: src/modules/pager/e_mod_config.c:152
-msgid "General Settings"
-msgstr "Hlavné Nastavenia"
+#: src/bin/e_configure.c:69
+#: src/bin/e_int_config_cfgdialogs.c:34
+msgid "Config Dialog Settings"
+msgstr "Nastavenia Konfiguračného Dialógu"
 
-#: src/bin/e_configure.c:69 src/bin/e_int_config_desks.c:45
+#: src/bin/e_configure.c:70
+#: src/bin/e_int_config_cursor.c:33
+#: src/bin/e_int_config_cursor.c:94
+#: src/bin/e_int_config_cursor.c:140
+msgid "Cursor Settings"
+msgstr "Nastavenia Kurzora"
+
+#: src/bin/e_configure.c:71
+#: src/bin/e_int_config_desks.c:43
 msgid "Desktop Settings"
 msgstr "Nastavenia Desktopu"
 
-#: src/bin/e_configure.c:70 src/bin/e_int_config_focus.c:44
+#: src/bin/e_configure.c:72
+#: src/bin/e_int_config_display.c:48
+msgid "Display Settings"
+msgstr "Nastavenia Displeja"
+
+#: src/bin/e_configure.c:73
+#: src/bin/e_int_config_desklock.c:56
+msgid "Desktop Lock Settings"
+msgstr "Nastavenia uzamknutia plochy"
+
+#: src/bin/e_configure.c:74
+#: src/bin/e_int_config_focus.c:47
 msgid "Focus Settings"
 msgstr "Nastavenia Zaostrenia"
 
-#: src/bin/e_configure.c:71 src/bin/e_int_config_menus.c:39
-#: src/bin/e_int_config_menus.c:92 src/bin/e_int_config_menus.c:145
+#: src/bin/e_configure.c:75
+#: src/bin/e_int_config_keybindings.c:335
+msgid "Key Binding Settings"
+msgstr "Nastavenia pre klávesové skratky"
+
+#: src/bin/e_configure.c:76
+#: src/bin/e_int_config_menus.c:39
+#: src/bin/e_int_config_menus.c:90
+#: src/bin/e_int_config_menus.c:133
 msgid "Menu Settings"
 msgstr "Nastavenia Menu"
 
-#: src/bin/e_configure.c:72 src/bin/e_int_config_performance.c:37
+#: src/bin/e_configure.c:77
+#: src/bin/e_int_config_performance.c:37
 msgid "Performance Settings"
 msgstr "Nastavenia Výkonu"
 
-#: src/bin/e_configure.c:73 src/bin/e_int_config_winlist.c:51
+#: src/bin/e_configure.c:78
+msgid "Run Command Settings"
+msgstr "Nastavenia pre spustenie príkazu"
+
+#: src/bin/e_configure.c:79
+#: src/bin/e_int_config_startup.c:26
+#: src/bin/e_int_config_startup.c:70
+msgid "Startup Settings"
+msgstr "Štartovacie Nastavenia "
+
+#: src/bin/e_configure.c:80
+#: src/bin/e_int_config_winlist.c:51
 msgid "Window List Settings"
 msgstr "Nastavenia Zoznamu Okien"
 
-#: src/bin/e_configure.c:74
+#: src/bin/e_configure.c:81
 msgid "Window Display Settings"
 msgstr "Nastavenia Displeju pre Okná"
 
-#: src/bin/e_configure.c:75
+#: src/bin/e_configure.c:82
 msgid "Window Manipulation Settings"
 msgstr "Nastavenia Manipulácie s Oknami "
 
@@ -225,75 +225,79 @@ msgstr "Nastavenia Manipulácie s Oknami "
 msgid "Container %d"
 msgstr "Kontajnér %d"
 
-#: src/bin/e_eap_editor.c:82 src/bin/e_int_menus.c:582
+#: src/bin/e_eap_editor.c:85
+#: src/bin/e_int_menus.c:600
 msgid "Eap Editor"
 msgstr "Eap Editor"
 
-#: src/bin/e_eap_editor.c:238 src/bin/e_eap_editor.c:370
+#: src/bin/e_eap_editor.c:250
+#: src/bin/e_eap_editor.c:382
 msgid "Icon"
 msgstr "Ikona"
 
-#: src/bin/e_eap_editor.c:269
+#: src/bin/e_eap_editor.c:281
 msgid "Basic Info"
 msgstr "Základné Informácie"
 
-#: src/bin/e_eap_editor.c:271
+#: src/bin/e_eap_editor.c:283
 msgid "App name"
 msgstr "Meno aplikácie"
 
-#: src/bin/e_eap_editor.c:281
+#: src/bin/e_eap_editor.c:293
 msgid "Executable"
-msgstr "Spustitelné"
+msgstr "Spustiteľné"
 
-#: src/bin/e_eap_editor.c:310 src/bin/e_fileman_smart.c:1183
+#: src/bin/e_eap_editor.c:322
+#: src/bin/e_fileman_smart.c:1217
 msgid "General"
 msgstr "Hlavné"
 
-#: src/bin/e_eap_editor.c:313
+#: src/bin/e_eap_editor.c:325
 msgid "Generic Info"
-msgstr "Generic Informácie"
+msgstr "Základné Informácie"
 
-#: src/bin/e_eap_editor.c:322
+#: src/bin/e_eap_editor.c:334
 msgid "Comment"
 msgstr "Komentár"
 
-#: src/bin/e_eap_editor.c:334
+#: src/bin/e_eap_editor.c:346
 msgid "Window"
 msgstr "Okno"
 
-#: src/bin/e_eap_editor.c:336
+#: src/bin/e_eap_editor.c:348
 msgid "Window Name"
 msgstr "Meno Okna"
 
-#: src/bin/e_eap_editor.c:345
+#: src/bin/e_eap_editor.c:357
 msgid "Window Class"
 msgstr "Trieda Okna"
 
-#: src/bin/e_eap_editor.c:352
+#: src/bin/e_eap_editor.c:364
 msgid "Window Title"
 msgstr "Názov Okna"
 
-#: src/bin/e_eap_editor.c:359 src/bin/e_int_border_remember.c:470
+#: src/bin/e_eap_editor.c:371
+#: src/bin/e_int_border_remember.c:469
 msgid "Window Role"
 msgstr "Úloha Okna"
 
-#: src/bin/e_eap_editor.c:372
+#: src/bin/e_eap_editor.c:384
 msgid "Icon Class"
 msgstr "Trieda Ikony"
 
-#: src/bin/e_eap_editor.c:381
+#: src/bin/e_eap_editor.c:393
 msgid "Path"
 msgstr "Cesta"
 
-#: src/bin/e_eap_editor.c:394
+#: src/bin/e_eap_editor.c:406
 msgid "Misc"
 msgstr "Rozmanité"
 
-#: src/bin/e_eap_editor.c:396
+#: src/bin/e_eap_editor.c:408
 msgid "Startup Notify"
 msgstr "Notifikácia pri Štarte"
 
-#: src/bin/e_eap_editor.c:400
+#: src/bin/e_eap_editor.c:412
 msgid "Wait Exit"
 msgstr "Počkaj pri Ukončení"
 
@@ -317,336 +321,361 @@ msgstr "Plocha"
 msgid "Icons"
 msgstr "Ikony"
 
-#: src/bin/e_file_dialog.c:66 src/bin/e_fileman_smart.c:854
-#: src/modules/battery/e_mod_main.c:554 src/modules/cpufreq/e_mod_main.c:305
-#: src/modules/cpufreq/e_mod_main.c:333
-msgid "Ok"
-msgstr "Ok"
-
 #: src/bin/e_file_dialog.c:67
+#: src/bin/e_int_config_background_import.c:206
 msgid "Cancel"
 msgstr "Ukonči"
 
-#: src/bin/e_fileman_file.c:420
+#: src/bin/e_fileman_file.c:313
+#: src/bin/e_fileman_file.c:364
+#: src/bin/e_zone.c:608
+#: src/bin/e_fileman_mime.c:394
 #, c-format
 msgid ""
-"3 Enlightenment was unable to fork a child process:\n"
+"Enlightenment was unable to fork a child process:\n"
 "\n"
 "%s\n"
 "\n"
 msgstr ""
-"3 Enlightenment nemôže forknúť proces potomka:\n"
+"Enlightenment nemôže vytvoriť proces potomka:\n"
 "\n"
 "%s\n"
 "\n"
 
-#: src/bin/e_fileman_smart.c:856
+#: src/bin/e_fileman_smart.c:909
 msgid "Error"
 msgstr "Chyba"
 
-#: src/bin/e_fileman_smart.c:857
+#: src/bin/e_fileman_smart.c:910
 #, c-format
 msgid "Could not delete  <br><b>%s</b>"
 msgstr "Nemôžem zmazať <br><b>%s</b>"
 
-#: src/bin/e_fileman_smart.c:969
+#: src/bin/e_fileman_smart.c:1003
 msgid "Confirm"
 msgstr "Potvrdiť"
 
-#: src/bin/e_fileman_smart.c:970
+#: src/bin/e_fileman_smart.c:1004
 #, c-format
 msgid " Are you sure you want to delete <br><b>%s</b> ?"
 msgstr "Ste si istý, že chcete zmazať <br><b>%s</b> ?"
 
-#: src/bin/e_fileman_smart.c:1192
+#: src/bin/e_fileman_smart.c:1226
 #, c-format
 msgid "File:"
 msgstr "Súbor:"
 
-#: src/bin/e_fileman_smart.c:1201
+#: src/bin/e_fileman_smart.c:1235
 #, c-format
 msgid "Size:"
 msgstr "Rozmery:"
 
-#: src/bin/e_fileman_smart.c:1210
+#: src/bin/e_fileman_smart.c:1244
 #, c-format
 msgid "Type:"
 msgstr "Typ:"
 
-#: src/bin/e_fileman_smart.c:1219
+#: src/bin/e_fileman_smart.c:1253
 msgid "Protect this file"
 msgstr "Chráň tento súbor"
 
-#: src/bin/e_fileman_smart.c:1225
+#: src/bin/e_fileman_smart.c:1259
 msgid "Let others see this file"
 msgstr "Umožni ostatným prehliadať tento súbor"
 
-#: src/bin/e_fileman_smart.c:1229
+#: src/bin/e_fileman_smart.c:1263
 msgid "Let others modify this file"
 msgstr "Znemožni ostatným modifikovať tento súbor"
 
-#: src/bin/e_fileman_smart.c:1233
+#: src/bin/e_fileman_smart.c:1267
 msgid "Dont let others see or modify this file"
 msgstr "Znemožni ostatným prehliadať alebo modifikovať tento súbor"
 
-#: src/bin/e_fileman_smart.c:1237
+#: src/bin/e_fileman_smart.c:1271
 msgid "Custom settings"
-msgstr "Vybrané Nastavenia"
+msgstr "Vybrané nastavenia"
 
-#: src/bin/e_fileman_smart.c:1274
+#: src/bin/e_fileman_smart.c:1308
 msgid "File Info:"
 msgstr "Informácie o Súbore:"
 
-#: src/bin/e_fileman_smart.c:1275
+#: src/bin/e_fileman_smart.c:1309
 msgid "Owner:"
 msgstr "Majiteľ:"
 
-#: src/bin/e_fileman_smart.c:1280
+#: src/bin/e_fileman_smart.c:1314
 msgid "Group:"
 msgstr "Skupina:"
 
-#: src/bin/e_fileman_smart.c:1285
+#: src/bin/e_fileman_smart.c:1319
 msgid "Last Access:"
 msgstr "Posledný Prístup:"
 
-#: src/bin/e_fileman_smart.c:1290
+#: src/bin/e_fileman_smart.c:1324
 msgid "Last Modified:"
 msgstr "Posledný Modifikovaný:"
 
-#: src/bin/e_fileman_smart.c:1297
+#: src/bin/e_fileman_smart.c:1331
 msgid "Permissions:"
 msgstr "Oprávnenia:"
 
-#: src/bin/e_fileman_smart.c:1298
+#: src/bin/e_fileman_smart.c:1332
 msgid "Me"
 msgstr "Ja"
 
-#: src/bin/e_fileman_smart.c:1300 src/bin/e_fileman_smart.c:1309
-#: src/bin/e_fileman_smart.c:1318
+#: src/bin/e_fileman_smart.c:1334
+#: src/bin/e_fileman_smart.c:1343
+#: src/bin/e_fileman_smart.c:1352
 msgid "r"
 msgstr "r"
 
-#: src/bin/e_fileman_smart.c:1302 src/bin/e_fileman_smart.c:1311
-#: src/bin/e_fileman_smart.c:1320
+#: src/bin/e_fileman_smart.c:1336
+#: src/bin/e_fileman_smart.c:1345
+#: src/bin/e_fileman_smart.c:1354
 msgid "w"
 msgstr "w"
 
-#: src/bin/e_fileman_smart.c:1304 src/bin/e_fileman_smart.c:1313
-#: src/bin/e_fileman_smart.c:1322
+#: src/bin/e_fileman_smart.c:1338
+#: src/bin/e_fileman_smart.c:1347
+#: src/bin/e_fileman_smart.c:1356
 msgid "x"
 msgstr "x"
 
-#: src/bin/e_fileman_smart.c:1307
+#: src/bin/e_fileman_smart.c:1341
 msgid "My Group"
 msgstr "Moja Skupina"
 
-#: src/bin/e_fileman_smart.c:1316
+#: src/bin/e_fileman_smart.c:1350
 msgid "Everyone"
 msgstr "Všetci"
 
-#: src/bin/e_fileman_smart.c:1347 src/bin/e_fileman_smart.c:1998
-#: src/bin/e_fileman_smart.c:2309
+#: src/bin/e_fileman_smart.c:1384
+#: src/bin/e_fileman_smart.c:2033
+#: src/bin/e_fileman_smart.c:3951
 msgid "Properties"
 msgstr "Nastavenia"
 
-#: src/bin/e_fileman_smart.c:1905
+#: src/bin/e_fileman_smart.c:1940
 msgid "Arrange Icons"
 msgstr "Usporiadaj Ikony"
 
-#: src/bin/e_fileman_smart.c:1917
+#: src/bin/e_fileman_smart.c:1952
 msgid "By Name"
 msgstr "Podľa Mena"
 
-#: src/bin/e_fileman_smart.c:1928
+#: src/bin/e_fileman_smart.c:1963
 msgid "By Mod Time"
 msgstr "Podľa Času Modifikácie"
 
-#: src/bin/e_fileman_smart.c:1939
+#: src/bin/e_fileman_smart.c:1974
 msgid "New"
 msgstr "Nový"
 
-#: src/bin/e_fileman_smart.c:1951
+#: src/bin/e_fileman_smart.c:1986
 msgid "Directory"
 msgstr "Adresár"
 
-#: src/bin/e_fileman_smart.c:1959
+#: src/bin/e_fileman_smart.c:1994
 msgid "View"
 msgstr "Ukáž"
 
-#: src/bin/e_fileman_smart.c:1971
+#: src/bin/e_fileman_smart.c:2006
 msgid "Name Only"
 msgstr "Iba Meno"
 
-#: src/bin/e_fileman_smart.c:1980
+#: src/bin/e_fileman_smart.c:2015
 msgid "Details"
 msgstr "Detaily"
 
-#: src/bin/e_fileman_smart.c:1990
+#: src/bin/e_fileman_smart.c:2025
 msgid "Refresh"
-msgstr "Obnoviť"
+msgstr "Obnov"
 
-#: src/bin/e_fileman_smart.c:2241 src/bin/e_fileman_smart.c:2251
-msgid "Open with"
-msgstr "Otvoriť pomocou"
-
-#: src/bin/e_fileman_smart.c:2260
-msgid "Open"
-msgstr "Otvoriť"
-
-#: src/bin/e_fileman_smart.c:2271
+#: src/bin/e_fileman_smart.c:3911
 msgid "Copy"
-msgstr "Zkopírovať"
+msgstr "Kopíruj"
 
-#: src/bin/e_fileman_smart.c:2279
+#: src/bin/e_fileman_smart.c:3918
 msgid "Cut"
 msgstr "Vybrať"
 
-#: src/bin/e_fileman_smart.c:2290
+#: src/bin/e_fileman_smart.c:3930
 msgid "Rename"
 msgstr "Premenovať"
 
-#: src/bin/e_fileman_smart.c:2298
+#: src/bin/e_fileman_smart.c:3939
 msgid "Delete"
 msgstr "Zmazať"
 
-#: src/bin/e_gadget.c:208 src/bin/e_int_menus.c:752
-#: src/modules/battery/e_mod_main.c:378 src/modules/clock/e_mod_main.c:360
-#: src/modules/cpufreq/e_mod_main.c:937 src/modules/ibar/e_mod_main.c:658
-#: src/modules/ibox/e_mod_main.c:469 src/modules/pager/e_mod_main.c:546
-#: src/modules/start/e_mod_main.c:229 src/modules/temperature/e_mod_main.c:368
+#: src/bin/e_gadget.c:209
+#: src/bin/e_int_menus.c:161
+#: src/bin/e_module.c:489
+#: src/modules/battery/e_mod_main.c:255
+#: src/modules/battery/e_mod_main.c:385
+#: src/modules/clock/e_mod_main.c:194
+#: src/modules/clock/e_mod_main.c:370
+#: src/modules/ibar/e_mod_main.c:299
+#: src/modules/ibar/e_mod_main.c:663
+#: src/modules/ibox/e_mod_main.c:262
+#: src/modules/ibox/e_mod_main.c:474
+#: src/modules/pager/e_mod_main.c:412
+#: src/modules/pager/e_mod_main.c:557
+#: src/modules/itray/e_mod_main.c:417
+msgid "Configuration"
+msgstr "Konfigurácia"
+
+#: src/bin/e_gadget.c:215
+#: src/bin/e_int_menus.c:779
+#: src/modules/battery/e_mod_main.c:391
+#: src/modules/clock/e_mod_main.c:376
+#: src/modules/cpufreq/e_mod_main.c:999
+#: src/modules/ibar/e_mod_main.c:669
+#: src/modules/ibox/e_mod_main.c:480
+#: src/modules/pager/e_mod_main.c:562
+#: src/modules/itray/e_mod_main.c:423
 msgid "Edit Mode"
 msgstr "Editačný Mód"
 
-#: src/bin/e_gadman.c:626
+#: src/bin/e_gadman.c:645
 msgid "Automatic Width"
 msgstr "Automatická Šírka"
 
-#: src/bin/e_gadman.c:637
+#: src/bin/e_gadman.c:656
 msgid "Half Screen Width"
 msgstr "Šírka Polovice Obrazovky"
 
-#: src/bin/e_gadman.c:643
+#: src/bin/e_gadman.c:662
 msgid "Full Screen Width"
-msgstr "Šířka Celej Obrazovky"
+msgstr "Šírka Celej Obrazovky"
 
-#: src/bin/e_gadman.c:655
+#: src/bin/e_gadman.c:674
 msgid "Center Horizontally"
 msgstr "Vystrediť Horizontálne"
 
-#: src/bin/e_gadman.c:673
+#: src/bin/e_gadman.c:692
 msgid "Automatic Height"
 msgstr "Automatická Výška"
 
-#: src/bin/e_gadman.c:684
+#: src/bin/e_gadman.c:703
 msgid "Half Screen Height"
 msgstr "Výška Polovice Obrazovky"
 
-#: src/bin/e_gadman.c:690
+#: src/bin/e_gadman.c:709
 msgid "Full Screen Height"
 msgstr "Výška Celej Obrazovky"
 
-#: src/bin/e_gadman.c:702
+#: src/bin/e_gadman.c:721
 msgid "Center Vertically"
 msgstr "Vystrediť Vertikálne"
 
-#: src/bin/e_gadman.c:714
+#: src/bin/e_gadman.c:733
 msgid "End Edit Mode"
 msgstr "Ukonči Editačný Mód"
 
 #: src/bin/e_init.c:38
 #, c-format
 msgid "X reports there are no root windows and %i screens!\n"
-msgstr "X hlási, že tu niesú žiadné root-okná a %i obrazoviek!\n"
+msgstr "X hlási, že tu nie sú žiadne root-okná a %i obrazoviek!\n"
 
 #: src/bin/e_init.c:102
 msgid "Disable this splash screen in the future?"
-msgstr "Zablokovať uvodnú obrazovku pre budúcnosť?"
+msgstr "Zablokovať úvodnú obrazovku pre budúcnosť?"
 
-#: src/bin/e_int_border_border.c:46
+#: src/bin/e_int_border_border.c:48
 msgid "Window Border Selection"
 msgstr "Výber Okraju Okna"
 
-#: src/bin/e_int_border_border.c:196
+#: src/bin/e_int_border_border.c:198
 msgid "Remember this Border for this window next time it appears"
-msgstr "Zapamätaj si Okraj okna keď sa objaví nabudúce"
+msgstr "Zapamätaj si okraj okna keď sa objaví nabudúce"
 
-#: src/bin/e_int_border_locks.c:65 src/bin/e_int_border_menu.c:135
+#: src/bin/e_int_border_locks.c:67
+#: src/bin/e_int_border_menu.c:140
 msgid "Window Locks"
-msgstr "Uzamknutie Okien"
+msgstr "Zámky Okna"
 
-#: src/bin/e_int_border_locks.c:293
+#: src/bin/e_int_border_locks.c:295
 msgid "Generic Locks"
-msgstr "Generic Zámky"
-
-#: src/bin/e_int_border_locks.c:294
-msgid "Lock the Window so it does only what I tell it to"
-msgstr "Uzamkni okno tak aby došlo k zmenám, ktoré sám iniciujem"
+msgstr "Základné Zámky"
 
 #: src/bin/e_int_border_locks.c:296
-msgid "Protect this window from me accidentally changing it"
-msgstr "Ochráň toto okno pred náhodnou zmenou"
+msgid "Lock the Window so it does only what I tell it to"
+msgstr "Uzamkni okno tak aby došlo iba k zmenám, ktoré sám iniciujem"
 
 #: src/bin/e_int_border_locks.c:298
-msgid ""
-"Protect this window from being accidentally closed because it is important"
-msgstr "Znemožni náhodné uzavretie tohoto okna, pretože je dôležité"
+msgid "Protect this window from me accidentally changing it"
+msgstr "Zabráň náhodnej zmene toho okna"
 
 #: src/bin/e_int_border_locks.c:300
-msgid "Do not allow the border to change on this window"
-msgstr "Znemožni zmenu okraju pre toto okno"
+msgid "Protect this window from being accidentally closed because it is important"
+msgstr "Zabráň náhodnému uzavretiu tohoto okna, pretože je dôležité"
 
-#: src/bin/e_int_border_locks.c:303
+#: src/bin/e_int_border_locks.c:302
+msgid "Do not allow the border to change on this window"
+msgstr "Zabráň zmene okraju tohoto okna"
+
+#: src/bin/e_int_border_locks.c:305
 msgid "Remember these Locks for this window next time it appears"
-msgstr "Zapamätaj si Zámky pre toto okno pre ďalšie spustenie"
+msgstr "Zapamätaj si zámky pre toto okno pre ďalšie spustenie"
 
 #: src/bin/e_int_border_locks.c:318
 msgid "Lock program changing:"
-msgstr "Uzamkni proti zmenám programu:"
+msgstr "Zabráň programu zmeniť:"
 
-#: src/bin/e_int_border_locks.c:319 src/bin/e_int_border_locks.c:338
-#: src/bin/e_int_border_remember.c:494
+#: src/bin/e_int_border_locks.c:319
+#: src/bin/e_int_border_locks.c:338
+#: src/bin/e_int_border_remember.c:493
 msgid "Position"
-msgstr "Pozícia"
+msgstr "Umiestnenie"
 
-#: src/bin/e_int_border_locks.c:321 src/bin/e_int_border_locks.c:340
-#: src/bin/e_int_border_remember.c:496
+#: src/bin/e_int_border_locks.c:321
+#: src/bin/e_int_border_locks.c:340
+#: src/bin/e_int_border_remember.c:495
 msgid "Size"
 msgstr "Rozmery"
 
-#: src/bin/e_int_border_locks.c:323 src/bin/e_int_border_locks.c:342
-#: src/bin/e_int_border_menu.c:170 src/bin/e_int_border_remember.c:498
+#: src/bin/e_int_border_locks.c:323
+#: src/bin/e_int_border_locks.c:342
+#: src/bin/e_int_border_menu.c:175
+#: src/bin/e_int_border_remember.c:497
 msgid "Stacking"
-msgstr "Hromadenie"
+msgstr "Usporiadanie"
 
-#: src/bin/e_int_border_locks.c:325 src/bin/e_int_border_locks.c:344
+#: src/bin/e_int_border_locks.c:325
+#: src/bin/e_int_border_locks.c:344
 msgid "Iconified state"
-msgstr "Stav Minimalizovaný"
+msgstr "Minimalizovaný"
 
-#: src/bin/e_int_border_locks.c:327 src/bin/e_int_border_locks.c:346
-#: src/bin/e_int_border_remember.c:504
+#: src/bin/e_int_border_locks.c:327
+#: src/bin/e_int_border_locks.c:346
+#: src/bin/e_int_border_remember.c:503
 msgid "Stickiness"
 msgstr "Lepkavosť"
 
-#: src/bin/e_int_border_locks.c:329 src/bin/e_int_border_locks.c:348
-#: src/bin/e_int_border_remember.c:508
+#: src/bin/e_int_border_locks.c:329
+#: src/bin/e_int_border_locks.c:348
+#: src/bin/e_int_border_remember.c:507
 msgid "Shaded state"
-msgstr "Tieňový Stav"
+msgstr "Tieňový stav"
 
-#: src/bin/e_int_border_locks.c:331 src/bin/e_int_border_locks.c:350
+#: src/bin/e_int_border_locks.c:331
+#: src/bin/e_int_border_locks.c:350
 msgid "Maximized state"
-msgstr "Stav Maximalizovaný"
+msgstr "Maximalizovaný"
 
-#: src/bin/e_int_border_locks.c:333 src/bin/e_int_border_locks.c:352
+#: src/bin/e_int_border_locks.c:333
+#: src/bin/e_int_border_locks.c:352
 msgid "Fullscreen state"
-msgstr "Stav Celej Obrazovky"
+msgstr "Celá Obrazovka"
 
 #: src/bin/e_int_border_locks.c:337
 msgid "Lock me from changing:"
 msgstr "Uzamkni pred zmenou:"
 
 #: src/bin/e_int_border_locks.c:354
-msgid "The border style"
-msgstr "Štýl okraju"
+#: src/bin/e_int_border_remember.c:501
+msgid "Border style"
+msgstr "Štýl Okrajov"
 
 #: src/bin/e_int_border_locks.c:358
 msgid "Stop me from:"
@@ -654,7 +683,7 @@ msgstr "Zastav ma pred:"
 
 #: src/bin/e_int_border_locks.c:359
 msgid "Closing the window"
-msgstr "Uzatvor Okno"
+msgstr "Uzatváram Okno"
 
 #: src/bin/e_int_border_locks.c:361
 msgid "Exiting my login with this window open"
@@ -662,162 +691,111 @@ msgstr "Ukonči môj login s týmto oknom otvoreným"
 
 #: src/bin/e_int_border_locks.c:365
 msgid "Remember these Locks"
-msgstr "Zapamätať tieto Zámky"
+msgstr "Zapamätať si tieto zámky"
 
-#: src/bin/e_int_border_menu.c:45
+#: src/bin/e_int_border_menu.c:46
 msgid "Always On Top"
-msgstr "Vždy Navrchu"
+msgstr "Vždy nad"
 
-#: src/bin/e_int_border_menu.c:55 src/modules/temperature/e_mod_config.c:194
+#: src/bin/e_int_border_menu.c:57
+#: src/modules/temperature/e_mod_config.c:160
 msgid "Normal"
 msgstr "Normálne"
 
-#: src/bin/e_int_border_menu.c:65
+#: src/bin/e_int_border_menu.c:68
 msgid "Always Below"
-msgstr "Vždy Pod"
+msgstr "Vždy pod"
 
-#: src/bin/e_int_border_menu.c:86
+#: src/bin/e_int_border_menu.c:91
 msgid "Maximized"
 msgstr "Maximalizované"
 
-#: src/bin/e_int_border_menu.c:99
+#: src/bin/e_int_border_menu.c:104
 msgid "Maximized verticaly"
 msgstr "Maximalizované vertikálne"
 
-#: src/bin/e_int_border_menu.c:113
+#: src/bin/e_int_border_menu.c:118
 msgid "Maximized horizontaly"
 msgstr "Maximalizované horizontálne"
 
-#: src/bin/e_int_border_menu.c:142
+#: src/bin/e_int_border_menu.c:147
 msgid "Remember"
 msgstr "Zapamätať"
 
-#: src/bin/e_int_border_menu.c:149
+#: src/bin/e_int_border_menu.c:154
 msgid "Borders"
 msgstr "Okraje"
 
-#: src/bin/e_int_border_menu.c:159
+#: src/bin/e_int_border_menu.c:164
 msgid "Send to Desktop"
-msgstr "Pošli na Plochu"
+msgstr "Premiestni na Plochu"
 
-#: src/bin/e_int_border_menu.c:182
+#: src/bin/e_int_border_menu.c:187
 msgid "Maximize"
 msgstr "Maximalizuj"
 
-#: src/bin/e_int_border_menu.c:193
+#: src/bin/e_int_border_menu.c:199
 msgid "Shaded"
 msgstr "Schované"
 
-#: src/bin/e_int_border_menu.c:245
+#: src/bin/e_int_border_menu.c:251
 msgid "Sticky"
 msgstr "Lepkavé"
 
-#: src/bin/e_int_border_menu.c:258
+#: src/bin/e_int_border_menu.c:264
 msgid "Borderless"
 msgstr "Bez Okrajov"
 
-#: src/bin/e_int_border_menu.c:271
-#: src/bin/e_int_config_window_manipulation.c:142
-#: src/bin/e_int_config_window_manipulation.c:194
+#: src/bin/e_int_border_menu.c:277
+#: src/bin/e_int_config_window_manipulation.c:134
+#: src/bin/e_int_config_window_manipulation.c:184
 msgid "Fullscreen"
 msgstr "Celá Obrazovka"
 
-#: src/bin/e_int_border_menu.c:285
+#: src/bin/e_int_border_menu.c:291
 msgid "Skip Window List"
 msgstr "Vynechať zo Zoznamu Okien"
 
-#: src/bin/e_int_border_menu.c:301
+#: src/bin/e_int_border_menu.c:307
 msgid "Edit Icon"
 msgstr "Upraviť Ikonu"
 
-#: src/bin/e_int_border_menu.c:308
+#: src/bin/e_int_border_menu.c:314
 msgid "Create Icon"
 msgstr "Vytvoriť Ikonu"
 
-#: src/bin/e_int_border_menu.c:318
+#: src/bin/e_int_border_menu.c:324
 msgid "Kill"
 msgstr "Zabiť"
 
-#: src/bin/e_int_border_menu.c:331
+#: src/bin/e_int_border_menu.c:337
 msgid "Iconify"
 msgstr "Minimalizuj"
 
-#: src/bin/e_int_border_remember.c:67
+#: src/bin/e_int_border_remember.c:70
 msgid "Window Remember"
 msgstr "Zapamätať Okno"
 
-#: src/bin/e_int_border_remember.c:228
+#: src/bin/e_int_border_remember.c:229
 msgid "Window properties are not a unique match"
-msgstr "Nastavenia okna niesú unikátne"
+msgstr "Nastavenia okna nie sú unikátne"
 
-#: src/bin/e_int_border_remember.c:231
-msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
-"as size, location, border style etc.) to<br>a window that <hilight>does not "
-"have unique properties</hilight>.<br><br>This means it shares Name/Class, "
-"Transience, Role etc. properties<br>with more than 1 other window on the "
-"screen and remembering<br>properties for this window will apply to all other "
-"windows<br>that match these properties.<br><br>This is just a warning in "
-"case you did not intend this to happen.<br>If you did, simply press "
-"<hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your "
-"settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
-"sure and nothing will be affected."
-msgstr ""
-"Chcete aby si Enlightenment zapamätal, že má aplikovať<br>nastavenia (ako je "
-"velkosť, umiestnenie, štýl okraju atď.) pre<br>okno, ktoré <hilight>nemá unikátne "
-"nastavenia</hilight>.<br><br>To znamená, že zdieľa Meno/Triedu, Priesvitnosť, "
-"Úlohu a dalšie nastavenia s viac ako jedným ďalším oknom na obrazovke a "
-"zapamätanie<br>nastavení pre toto okno sa aplikuje aj na všetky ostatné okná<br>ktoré,"
-"majú rovnaké nastavenia.<br><br>Vhodné je zapnúť voľbu <hilight>Aplikuj iba "
-"pre jedno okno</hilight> v prípade, že si<br>prajete aby nastavenia platili iba pre"
-"jednu inštanciu tohoto okna a<br>nie pre všetky inštancie.<br><br>Toto je iba varovanie"
-"pre prípad, že neočakávate takýto priebeh.<br>V prípade, že očakávate stlačte "
-"<hilight>Aplikuj</hilight> alebo <hilight>OK</hilight> tlačítko<br>a Vaše nastavenia budú "
-"uložené. Stlač <hilight>Zrušiť</hilight> pokiaľ<br>niesi si istý a žiadne zmeny sa neaplikujú."
+#: src/bin/e_int_border_remember.c:232
+msgid "You are trying to ask Enlightenment to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window that <hilight>does not have unique properties</hilight>.<br><br>This means it shares Name/Class, Transience, Role etc. properties<br>with more than 1 other window on the screen and remembering<br>properties for this window will apply to all other windows<br>that match these properties.<br><br>This is just a warning in case you did not intend this to happen.<br>If you did, simply press <hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not sure and nothing will be affected."
+msgstr "Chcete aby si Enlightenment zapamätal, že má aplikovať<br>nastavenia (ako je veľkosť, umiestnenie, štýl okraju atď.) pre<br>okno, ktoré <hilight>nemá unikátne nastavenia</hilight>.<br><br>To znamená, že zdieľa Meno/Triedu, Priesvitnosť, Úlohu a ďalšie nastavenia s viac ako jedným ďalším oknom na obrazovke a zapamätanie<br>nastavení pre toto okno sa aplikuje aj na všetky ostatné okná<br>ktoré,majú rovnaké nastavenia.<br><br>Vhodné je zapnúť voľbu <hilight>Aplikuj iba pre jedno okno</hilight> v prípade, že si<br>prajete aby nastavenia platili iba pre jednu inštanciu tohoto okna a<br>nie pre všetky inštancie.<br><br>Toto je iba varovanie pre prípad, že neočakávate takýto priebeh.<br>V prípade, že očakávate stlačte <hilight>Aplikuj</hilight> alebo <hilight>OK</hilight> tlačítko<br>a Vaše nastavenia budú uložené. Stlač <hilight>Zrušiť</hilight> pokiaľ<br>nie si si istý a žiadne zmeny sa neaplikujú."
 
-#: src/bin/e_int_border_remember.c:316 src/bin/e_int_border_remember.c:346
+#: src/bin/e_int_border_remember.c:317
+#: src/bin/e_int_border_remember.c:347
 msgid "No match properties set"
 msgstr "Žiadne zhodné nastavenia nastavené"
 
-#: src/bin/e_int_border_remember.c:319
-msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
-"as size, location, border style etc.) to<br>a window <hilight>without "
-"specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
-"way of remembering this window."
-msgstr ""
-"Chcete aby si Enlightenment zapamätal, že má aplikovať<br>nastavenia (ako je "
-"velkosť, umiestnenie, štýl okraju atď.) pre<br>okno <hilight>bez "
-"špecifikovania ako si ich zapamätať</hilight>.<br><br>Musíte špecifikovať aspoň 1 "
-"spôsob ako si zapamätať nastavenia pre toto okno."
+#: src/bin/e_int_border_remember.c:320
+msgid "You are trying to ask Enlightenment to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window <hilight>without specifying how to remember it</hilight>.<br><br>You must specify at least 1 way of remembering this window."
+msgstr "Chcete aby si Enlightenment zapamätal, že má aplikovať<br>nastavenia (ako je veľkosť, umiestnenie, štýl okraju atď.) pre<br>okno <hilight>bez špecifikovania ako si ich zapamätať</hilight>.<br><br>Musíte špecifikovať aspoň 1 spôsob ako si zapamätať nastavenia pre toto okno."
 
-#: src/bin/e_int_border_remember.c:349
-msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
-"as size, location, border style etc.) to<br>a window that <hilight>does not "
-"have unique properties</hilight>.<br><br>This means it shares Name/Class, "
-"Transience, Role etc. properties<br>with more than 1 other window on the "
-"screen and remembering<br>properties for this window will apply to all other "
-"windows<br>that match these properties.<br><br>You may wish to enable the "
-"<hilight>Match only one window</hilight> option if<br>you only intend one "
-"instance of this window to be modified, with<br>additional instances not "
-"being modified.<br><br>This is just a warning in case you did not intend "
-"this to happen.<br>If you did, simply press <hilight>Apply</hilight> or "
-"<hilight>OK</hilight> buttons<br>and your settings will be accepted. Press "
-"<hilight>Cancel</hilight> if you<br>are not sure and nothing will be "
-"affected."
-msgstr ""
-"Chcete aby si Enlightenment zapamätal, že má aplikovať<br>nastavenia (ako je "
-"velkosť, umiestnenie, štýl okraju atď.) pre<br>okno, ktoré <hilight>nemá unikátne "
-"nastavenia</hilight>.<br><br>To znamená, že zdieľa Meno/Triedu, Priesvitnosť, "
-"Úlohu a dalšie nastavenia s viac ako jedným ďalším oknom na obrazovke a "
-"zapamätanie<br>nastavení pre toto okno sa aplikuje aj na všetky ostatné okná<br>ktoré,"
-"majú rovnaké nastavenia.<br><br>Vhodné je zapnúť voľbu <hilight>Aplikuj iba "
-"pre jedno okno</hilight> v prípade, že si<br>prajete aby nastavenia platili iba pre"
-"jednu inštanciu tohoto okna a<br>nie pre všetky inštancie.<br><br>Toto je iba varovanie"
-"pre prípad, že neočakávate takýto priebeh.<br>V prípade, že očakávate stlačte "
-"<hilight>Aplikuj</hilight> alebo <hilight>OK</hilight> tlačítko<br>a Vaše nastavenia budú "
-"uložené. Stlač <hilight>Zrušiť</hilight> pokiaľ<br>niesi si istý a žiadne zmeny sa neaplikujú."
+#: src/bin/e_int_border_remember.c:350
+msgid "You are trying to ask Enlightenment to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window that <hilight>does not have unique properties</hilight>.<br><br>This means it shares Name/Class, Transience, Role etc. properties<br>with more than 1 other window on the screen and remembering<br>properties for this window will apply to all other windows<br>that match these properties.<br><br>You may wish to enable the <hilight>Match only one window</hilight> option if<br>you only intend one instance of this window to be modified, with<br>additional instances not being modified.<br><br>This is just a warning in case you did not intend this to happen.<br>If you did, simply press <hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not sure and nothing will be affected."
+msgstr "Chcete aby si Enlightenment zapamätal, že má aplikovať<br>nastavenia (ako je veľkosť, umiestnenie, štýl okraju atď.) pre<br>okno, ktoré <hilight>nemá unikátne nastavenia</hilight>.<br><br>To znamená, že zdieľa Meno/Triedu, Priesvitnosť, Úlohu a ďalšie nastavenia s viac ako jedným ďalším oknom na obrazovke a zapamätanie<br>nastavení pre toto okno sa aplikuje aj na všetky ostatné okná<br>ktoré,majú rovnaké nastavenia.<br><br>Vhodné je zapnúť voľbu <hilight>Aplikuj iba pre jedno okno</hilight> v prípade, že si<br>prajete aby nastavenia platili iba pre jednu inštanciu tohoto okna a<br>nie pre všetky inštancie.<br><br>Toto je iba varovanie pre prípad, že neočakávate takýto priebeh.<br>V prípade, že očakávate stlačte <hilight>Aplikuj</hilight> alebo <hilight>OK</hilight> tlačítko<br>a Vaše nastavenia budú uložené. Stlač <hilight>Zrušiť</hilight> pokiaľ<br>nie si si istý a žiadne zmeny sa neaplikujú."
 
 #: src/bin/e_int_border_remember.c:422
 msgid "Nothing"
@@ -827,580 +805,671 @@ msgstr "Nič"
 msgid "Size and Position"
 msgstr "Veľkosť a Pozícia"
 
-#: src/bin/e_int_border_remember.c:426 src/bin/e_int_border_remember.c:500
+#: src/bin/e_int_border_remember.c:426
+#: src/bin/e_int_border_remember.c:499
 msgid "Locks"
 msgstr "Zámky"
 
 #: src/bin/e_int_border_remember.c:428
 msgid "Size, Position and Locks"
-msgstr "Velkosť, Umiestnenie a Zámky"
+msgstr "Veľkosť, Umiestnenie a Zámky"
 
 #: src/bin/e_int_border_remember.c:430
 msgid "Everything"
 msgstr "Všetko"
 
-#: src/bin/e_int_border_remember.c:444
+#: src/bin/e_int_border_remember.c:443
 msgid "Remember using"
-msgstr "Zapamätaj použitie "
+msgstr "Zapamätaj si použitie "
 
-#: src/bin/e_int_border_remember.c:450
+#: src/bin/e_int_border_remember.c:449
 msgid "Window name and class"
 msgstr "Trieda a meno okna"
 
-#: src/bin/e_int_border_remember.c:460
+#: src/bin/e_int_border_remember.c:459
 msgid "Title"
 msgstr "Názov"
 
-#: src/bin/e_int_border_remember.c:479
+#: src/bin/e_int_border_remember.c:478
 msgid "Window type"
 msgstr "Typy Okien"
 
-#: src/bin/e_int_border_remember.c:486
+#: src/bin/e_int_border_remember.c:485
 msgid "Transience"
 msgstr "Priehľadnosť"
 
-#: src/bin/e_int_border_remember.c:490
+#: src/bin/e_int_border_remember.c:489
 msgid "Match only one window"
 msgstr "Platí iba pre jedno okno"
 
-#: src/bin/e_int_border_remember.c:493
+#: src/bin/e_int_border_remember.c:492
 msgid "Properties to remember"
 msgstr "Zapamätať nastavenia"
 
-#: src/bin/e_int_border_remember.c:502
-msgid "Border style"
-msgstr "Štýl Okrajov"
-
-#: src/bin/e_int_border_remember.c:506
+#: src/bin/e_int_border_remember.c:505
 msgid "Virtual Desktop"
 msgstr "Virtuálna Plocha"
 
-#: src/bin/e_int_border_remember.c:510
+#: src/bin/e_int_border_remember.c:509
 msgid "Screen zone"
 msgstr "Zóna Obrazovky"
 
-#: src/bin/e_int_border_remember.c:512
+#: src/bin/e_int_border_remember.c:511
 msgid "Window list skip"
 msgstr "Vynechať zo Zoznamu Okien"
 
-#: src/bin/e_int_config_background.c:250
+#: src/bin/e_int_config_background.c:117
+msgid "Select Another Image..."
+msgstr "Vyber iný obrázok..."
+
+#: src/bin/e_int_config_background.c:120
+#: src/bin/e_int_config_background.c:186
+msgid "Background Preview"
+msgstr "Náhľad na Pozadie"
+
+#: src/bin/e_int_config_background.c:183
+msgid "Select Another Image"
+msgstr "Vyber iný obrázok"
+
+#: src/bin/e_int_config_background.c:192
+msgid "Set Background For"
+msgstr "Nastav pozadie na"
+
+#: src/bin/e_int_config_background.c:195
 msgid "Default Desktop"
 msgstr "Základná Plocha"
 
-#: src/bin/e_int_config_background.c:252
+#: src/bin/e_int_config_background.c:197
 msgid "This Desktop"
 msgstr "Táto Plocha"
 
-#: src/bin/e_int_config_background.c:255
+#: src/bin/e_int_config_background.c:199
 msgid "All Desktops"
 msgstr "Všetky Plochy"
 
-#: src/bin/e_int_config_desks.c:156 src/bin/e_int_config_desks.c:184
+#: src/bin/e_int_config_desks.c:149
+#: src/bin/e_int_config_desks.c:175
 msgid "Number of Desktops"
 msgstr "Počet Plôch"
 
-#: src/bin/e_int_config_desks.c:159 src/bin/e_int_config_desks.c:161
-#: src/bin/e_int_config_desks.c:187 src/bin/e_int_config_desks.c:189
+#: src/bin/e_int_config_desks.c:152
+#: src/bin/e_int_config_desks.c:154
+#: src/bin/e_int_config_desks.c:178
+#: src/bin/e_int_config_desks.c:180
+#: src/bin/e_int_config_exebuf.c:103
+#: src/bin/e_int_config_exebuf.c:107
+#: src/bin/e_int_config_exebuf.c:149
+#: src/bin/e_int_config_exebuf.c:153
 #, c-format
 msgid "%1.0f"
 msgstr "%1.0f"
 
-#: src/bin/e_int_config_desks.c:166 src/bin/e_int_config_desks.c:194
+#: src/bin/e_int_config_desks.c:159
+#: src/bin/e_int_config_desks.c:185
 msgid "Desktop Mouse Flip"
 msgstr "Preklopenie Plochy Myšou"
 
-#: src/bin/e_int_config_desks.c:167 src/bin/e_int_config_desks.c:195
+#: src/bin/e_int_config_desks.c:160
+#: src/bin/e_int_config_desks.c:186
 msgid "Flip desktops when mouse at screen edge"
-msgstr "Preklop plochu keď je myš na okraji"
+msgstr "Preklop plochu keď  je myš na okraji"
 
-#: src/bin/e_int_config_desks.c:198
+#: src/bin/e_int_config_desks.c:189
 msgid "Time the mouse is at the edge before flipping:"
 msgstr "Čas pokiaľ je myš na okraji pred preklopením"
 
-#: src/bin/e_int_config_desks.c:200
-#: src/bin/e_int_config_window_manipulation.c:171
+#: src/bin/e_int_config_desks.c:191
+#: src/bin/e_int_config_window_manipulation.c:161
 #, c-format
 msgid "%1.1f sec"
 msgstr "%1.1f sek"
 
-#: src/bin/e_int_config_focus.c:144
+#: src/bin/e_int_config_focus.c:155
 msgid "Click Window to Focus"
 msgstr "Stlač na okne pre zaostrenie"
 
-#: src/bin/e_int_config_focus.c:146
+#: src/bin/e_int_config_focus.c:157
 msgid "Window under the Mouse"
 msgstr "Okno pod myšou"
 
-#: src/bin/e_int_config_focus.c:148
+#: src/bin/e_int_config_focus.c:159
 msgid "Most recent Window under the Mouse"
 msgstr "Posledné okno pod myšou"
 
-#: src/bin/e_int_config_focus.c:164
+#: src/bin/e_int_config_focus.c:173
 msgid "Focus"
 msgstr "Zaostrenie"
 
-#: src/bin/e_int_config_focus.c:166
+#: src/bin/e_int_config_focus.c:175
 msgid "Click to focus"
 msgstr "Stlačenie pre zaostrenie"
 
-#: src/bin/e_int_config_focus.c:168
+#: src/bin/e_int_config_focus.c:177
 msgid "Pointer focus"
 msgstr "Pointer zaostrenie"
 
-#: src/bin/e_int_config_focus.c:170
+#: src/bin/e_int_config_focus.c:179
 msgid "Sloppy focus"
 msgstr "Sloppy zaostrenie"
 
-#: src/bin/e_int_config_focus.c:174
+#: src/bin/e_int_config_focus.c:183
 msgid "New Window Focus"
 msgstr "Zaostrenie nového okna"
 
-#: src/bin/e_int_config_focus.c:176
+#: src/bin/e_int_config_focus.c:185
 msgid "No new windows get focus"
 msgstr "Nové okná nezískajú zaostrenie"
 
-#: src/bin/e_int_config_focus.c:178
+#: src/bin/e_int_config_focus.c:187
 msgid "All new windows get focus"
 msgstr "Všetky nové okná získajú zaostrenie"
 
-#: src/bin/e_int_config_focus.c:180
+#: src/bin/e_int_config_focus.c:189
 msgid "Only new dialogs get focus"
 msgstr "Iba nové dialógy získajú zaostrenie"
 
-#: src/bin/e_int_config_focus.c:182
+#: src/bin/e_int_config_focus.c:191
 msgid "Only new dialogs get focus if the parent has focus"
 msgstr "Nové dialógy získajú zaostrenie pokiaľ rodič má zaostrenie"
 
-#: src/bin/e_int_config_focus.c:186
+#: src/bin/e_int_config_focus.c:195
 msgid "Other Settings"
 msgstr "Ostatné Nastavenia"
 
-#: src/bin/e_int_config_focus.c:187
+#: src/bin/e_int_config_focus.c:196
 msgid "Always pass on caught click events to programs"
 msgstr "Vždy prepošli zachytené udalosti programu"
 
-#: src/bin/e_int_config_focus.c:189
+#: src/bin/e_int_config_focus.c:198
 msgid "A click on a window always raises it"
 msgstr "Kliknutie do okna ho zdvihne"
 
-#: src/bin/e_int_config_focus.c:191
+#: src/bin/e_int_config_focus.c:200
 msgid "A click in a window always focuses it"
 msgstr "Kliknutie do okna naň zaostrí"
 
-#: src/bin/e_int_config_general.c:99 src/bin/e_int_config_general.c:152
+#: src/bin/e_int_config_focus.c:202
+msgid "Refocus last focused window on desktop switch"
+msgstr "Zaostri na posledné používané okno pri prepnutí plochy"
+
+#: src/bin/e_int_config_focus.c:204
+msgid "Revert focus when hiding or closing a window"
+msgstr "Vráť späť zaostrenie pri schovaní alebo uzavretí okna"
+
+#: src/bin/e_int_config_startup.c:71
 msgid "Show Splash Screen At Boot"
-msgstr "Ukáž Úvodnú Obrazovku pri Štarte"
+msgstr "Ukáž úvodnú obrazovku pri štarte"
 
-#: src/bin/e_int_config_general.c:103 src/bin/e_int_config_general.c:156
-msgid "Mouse Pointer Settings"
-msgstr "Nastavenia Kurzoru Myši"
-
-#: src/bin/e_int_config_general.c:104 src/bin/e_int_config_general.c:157
-msgid "Use E Mouse Pointer"
-msgstr "Použi E Kurzor pre Myš"
-
-#: src/bin/e_int_config_general.c:159
-msgid "Mouse Pointer Size"
-msgstr "Veľkosť Kurzora Myši"
-
-#: src/bin/e_int_config_general.c:161
-#, c-format
-msgid "%1.0f pixels"
-msgstr "%1.0f pixelov"
-
-#: src/bin/e_int_config_menus.c:93 src/bin/e_int_config_menus.c:146
+#: src/bin/e_int_config_menus.c:91
+#: src/bin/e_int_config_menus.c:134
 msgid "Show Name In Menu"
-msgstr "Ukazuj Mená v Menu"
+msgstr "Ukazuj mená v menu"
 
-#: src/bin/e_int_config_menus.c:95 src/bin/e_int_config_menus.c:148
+#: src/bin/e_int_config_menus.c:93
+#: src/bin/e_int_config_menus.c:136
 msgid "Show Comment In Menu"
-msgstr "Ukazuj Komentáre v Menu"
+msgstr "Ukazuj komentáre v menu"
 
-#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:150
+#: src/bin/e_int_config_menus.c:95
+#: src/bin/e_int_config_menus.c:138
 msgid "Show Generic In Menu"
-msgstr "Ukazuj Generic informácie v Menu"
+msgstr "Ukazuj všeobecné informácie v menu"
 
-#: src/bin/e_int_config_menus.c:154
+#: src/bin/e_int_config_menus.c:142
 msgid "Autoscroll Settings"
 msgstr "Nastavenia Autoscrollu"
 
-#: src/bin/e_int_config_menus.c:155
+#: src/bin/e_int_config_menus.c:143
 msgid "Autoscroll Margin"
 msgstr "Okraj pre Autoscroll"
 
-#: src/bin/e_int_config_menus.c:157 src/bin/e_int_config_menus.c:161
-#: src/bin/e_int_config_window_manipulation.c:180
-#: src/bin/e_int_config_window_manipulation.c:184
-#: src/bin/e_int_config_window_manipulation.c:188
+#: src/bin/e_int_config_menus.c:145
+#: src/bin/e_int_config_menus.c:149
+#: src/bin/e_int_config_window_manipulation.c:170
+#: src/bin/e_int_config_window_manipulation.c:174
+#: src/bin/e_int_config_window_manipulation.c:178
 #, c-format
 msgid "%2.0f pixels"
 msgstr "%2.0f pixelov"
 
-#: src/bin/e_int_config_menus.c:159
+#: src/bin/e_int_config_menus.c:147
 msgid "Autoscroll Cursor Margin"
-msgstr "Okraj Kurzoru pre Autoscroll"
+msgstr "Okraj Kurzora pre Autoscroll"
 
-#: src/bin/e_int_config_menus.c:165
-#: src/bin/e_int_config_window_manipulation.c:133
+#: src/bin/e_int_config_menus.c:153
+#: src/bin/e_int_config_window_manipulation.c:125
 msgid "Miscellaneous Options"
 msgstr "Zmiešané Nastavenia"
 
-#: src/bin/e_int_config_menus.c:166
+#: src/bin/e_int_config_menus.c:154
 msgid "Menu Scroll Speed"
 msgstr "Rýchlosť Rolovania Menu"
 
-#: src/bin/e_int_config_menus.c:168
+#: src/bin/e_int_config_menus.c:156
 #, c-format
 msgid "%5.0f pixels/sec"
 msgstr "%5.0f pixelov/sek"
 
-#: src/bin/e_int_config_menus.c:170
+#: src/bin/e_int_config_menus.c:158
 msgid "Fast Mouse Move Threshhold"
 msgstr "Prah pri rýchlom posune myšou"
 
-#: src/bin/e_int_config_menus.c:172 src/bin/e_int_config_window_display.c:189
+#: src/bin/e_int_config_menus.c:160
+#: src/bin/e_int_config_window_display.c:190
 #, c-format
 msgid "%4.0f pixels/sec"
 msgstr "%4.0f pixelov/sek"
 
-#: src/bin/e_int_config_menus.c:174
+#: src/bin/e_int_config_menus.c:162
 msgid "Click Drag Timeout"
 msgstr "Časový limit pre uchopenie"
 
-#: src/bin/e_int_config_menus.c:176
+#: src/bin/e_int_config_menus.c:164
 #, c-format
 msgid "%2.1f seconds"
 msgstr "%2.1f sekúnd"
 
-#: src/bin/e_int_config_modules.c:262 src/bin/e_int_menus.c:94
+#: src/bin/e_int_config_modules.c:259
 msgid "Modules"
 msgstr "Moduly"
 
-#: src/bin/e_int_config_modules.c:297 src/bin/e_module.c:478
+#: src/bin/e_int_config_modules.c:292
+msgid "Module State"
+msgstr "Stav Modulu"
+
+#: src/bin/e_int_config_modules.c:297
+#: src/bin/e_module.c:478
 msgid "Enabled"
 msgstr "Aktivovaný"
 
-#: src/bin/e_int_config_modules.c:301
+#: src/bin/e_int_config_modules.c:302
 msgid "Loaded"
 msgstr "Loadnuté"
 
-#: src/bin/e_int_config_modules.c:305
+#: src/bin/e_int_config_modules.c:307
 msgid "Unloaded"
 msgstr "Unloadni"
 
-#: src/bin/e_int_config_modules.c:309
+#: src/bin/e_int_config_modules.c:315
+msgid "Module Actions"
+msgstr "Možnosti Modulu"
+
+#: src/bin/e_int_config_modules.c:316
 msgid "Configure"
 msgstr "Konfiguruj"
 
-#: src/bin/e_int_config_modules.c:313
+#: src/bin/e_int_config_modules.c:320
 msgid "About"
 msgstr "O aplikácii..."
 
-#: src/bin/e_int_config_performance.c:88
-#: src/bin/e_int_config_performance.c:124
+#: src/bin/e_int_config_performance.c:86
+#: src/bin/e_int_config_performance.c:120
+#: src/bin/e_int_config_winlist.c:123
+#: src/bin/e_int_config_cfgdialogs.c:78
+#: src/bin/e_int_config_cfgdialogs.c:104
+#: src/bin/e_int_config_exebuf.c:100
+#: src/bin/e_int_config_exebuf.c:146
+#: src/modules/clock/e_mod_config.c:81
+#: src/modules/pager/e_mod_config.c:99
+#: src/modules/pager/e_mod_config.c:158
+msgid "General Settings"
+msgstr "Hlavné Nastavenia"
+
+#: src/bin/e_int_config_performance.c:87
+#: src/bin/e_int_config_performance.c:121
 msgid "Framerate"
 msgstr "Počet Obrázkov"
 
-#: src/bin/e_int_config_performance.c:90
-#: src/bin/e_int_config_performance.c:126
+#: src/bin/e_int_config_performance.c:89
+#: src/bin/e_int_config_performance.c:123
 #, c-format
 msgid "%1.0f fps"
 msgstr "%1.0f fps"
 
-#: src/bin/e_int_config_performance.c:130
+#: src/bin/e_int_config_performance.c:127
 msgid "Cache Settings"
 msgstr "Nastavenia Cache"
 
-#: src/bin/e_int_config_performance.c:131
+#: src/bin/e_int_config_performance.c:128
 msgid "Cache Flush Interval"
 msgstr "Interval Vyprázdnenia Cache"
 
-#: src/bin/e_int_config_performance.c:133
+#: src/bin/e_int_config_performance.c:130
 #, c-format
 msgid "%1.0f seconds"
 msgstr "%1.0f sekúnd"
 
-#: src/bin/e_int_config_performance.c:136
+#: src/bin/e_int_config_performance.c:133
 msgid "Size Of Font Cache"
-msgstr "Velkosť Cache pre Fonty"
+msgstr "Veľkosť Cache pre Fonty"
 
-#: src/bin/e_int_config_performance.c:138
+#: src/bin/e_int_config_performance.c:135
 #, c-format
 msgid "%1.1f MB"
 msgstr "%1.0f MB"
 
-#: src/bin/e_int_config_performance.c:141
+#: src/bin/e_int_config_performance.c:138
 msgid "Size Of Image Cache"
-msgstr "Velkosť Cache pre Obrázok"
+msgstr "Veľkosť Cache pre Obrázok"
 
-#: src/bin/e_int_config_performance.c:143
+#: src/bin/e_int_config_performance.c:140
 #, c-format
 msgid "%1.0f MB"
 msgstr "%1.0f MB"
 
-#: src/bin/e_int_config_performance.c:146
+#: src/bin/e_int_config_performance.c:143
 msgid "Number Of Edje Files To Cache"
 msgstr "Počet Edje Súborov pre Cache"
 
-#: src/bin/e_int_config_performance.c:148
+#: src/bin/e_int_config_performance.c:145
 #, c-format
 msgid "%1.0f files"
 msgstr "%1.0f súbory"
 
-#: src/bin/e_int_config_performance.c:151
+#: src/bin/e_int_config_performance.c:148
 msgid "Number Of Edje Collections To Cache"
 msgstr "Počet Edje Kolekcií pre Cache"
 
-#: src/bin/e_int_config_performance.c:153
+#: src/bin/e_int_config_performance.c:150
 #, c-format
 msgid "%1.0f collections"
 msgstr "%1.0f kolekcie"
 
-#: src/bin/e_int_config_window_display.c:49
+#: src/bin/e_int_config_theme.c:217
+msgid "Preview"
+msgstr "Náhľad"
+
+#: src/bin/e_int_config_window_display.c:50
 msgid "Window Display"
 msgstr "Displej Okien"
 
-#: src/bin/e_int_config_window_display.c:141
+#: src/bin/e_int_config_window_display.c:142
 msgid "Display"
 msgstr "Displej"
 
-#: src/bin/e_int_config_window_display.c:142
+#: src/bin/e_int_config_window_display.c:143
 msgid "Show window geometry information when moving or resizing"
 msgstr "Zobrazuj rozmery pri presune alebo zmene veľkosti okna"
 
-#: src/bin/e_int_config_window_display.c:144
-#: src/bin/e_int_config_window_display.c:187
+#: src/bin/e_int_config_window_display.c:145
+#: src/bin/e_int_config_window_display.c:188
 msgid "Animate the shading and unshading of windows"
 msgstr "Animuj schovanie a odkrytie okien"
 
-#: src/bin/e_int_config_window_display.c:148
-#: src/bin/e_int_config_window_display.c:202
+#: src/bin/e_int_config_window_display.c:149
+#: src/bin/e_int_config_window_display.c:203
 msgid "Automatic New Window Placement"
 msgstr "Automatické Umiestnenie Nového Okna"
 
-#: src/bin/e_int_config_window_display.c:150
-#: src/bin/e_int_config_window_display.c:204
+#: src/bin/e_int_config_window_display.c:151
+#: src/bin/e_int_config_window_display.c:205
 msgid "Smart Placement"
 msgstr "Inteligentné Umiestnenie"
 
-#: src/bin/e_int_config_window_display.c:152
-#: src/bin/e_int_config_window_display.c:206
+#: src/bin/e_int_config_window_display.c:153
+#: src/bin/e_int_config_window_display.c:207
+msgid "Don't hide Gadgets"
+msgstr "Neschovávaj Špeciality"
+
+#: src/bin/e_int_config_window_display.c:155
+#: src/bin/e_int_config_window_display.c:209
 msgid "Place at mouse pointer"
 msgstr "Umiestni pod kurzor myši"
 
-#: src/bin/e_int_config_window_display.c:154
-#: src/bin/e_int_config_window_display.c:208
+#: src/bin/e_int_config_window_display.c:157
+#: src/bin/e_int_config_window_display.c:211
 msgid "Place manually with the mouse"
 msgstr "Umiestni manuálne s myšou"
 
-#: src/bin/e_int_config_window_display.c:172
+#: src/bin/e_int_config_window_display.c:173
 msgid "Window Move Geometry"
 msgstr "Geometria sa hýbe s oknom"
 
-#: src/bin/e_int_config_window_display.c:173
-#: src/bin/e_int_config_window_display.c:180
+#: src/bin/e_int_config_window_display.c:174
+#: src/bin/e_int_config_window_display.c:181
 msgid "Display information"
 msgstr "Zobrazuj informácie"
 
-#: src/bin/e_int_config_window_display.c:175
+#: src/bin/e_int_config_window_display.c:176
 msgid "Follow the window as it moves"
 msgstr "Sleduj okno pri pohybe"
 
-#: src/bin/e_int_config_window_display.c:179
+#: src/bin/e_int_config_window_display.c:180
 msgid "Window Resize Geometry"
 msgstr "Zmena Geometrie Okna"
 
-#: src/bin/e_int_config_window_display.c:182
+#: src/bin/e_int_config_window_display.c:183
 msgid "Follow the window as it resizes"
 msgstr "Sleduj okno pri zmene veľkosti"
 
-#: src/bin/e_int_config_window_display.c:186
+#: src/bin/e_int_config_window_display.c:187
 msgid "Window Shading"
-msgstr "Tieňe Okien"
+msgstr "Tiene Okien"
 
-#: src/bin/e_int_config_window_display.c:192
+#: src/bin/e_int_config_window_display.c:193
 msgid "Linear"
 msgstr "Lineárne"
 
-#: src/bin/e_int_config_window_display.c:194
+#: src/bin/e_int_config_window_display.c:195
 msgid "Smooth accelerate and decelerate"
-msgstr "Plynulé zrýchlenie a zpomalenie"
+msgstr "Plynulé zrýchlenie a spomalenie"
 
-#: src/bin/e_int_config_window_display.c:196
+#: src/bin/e_int_config_window_display.c:197
 msgid "Accelerate"
 msgstr "Zrýchliť"
 
-#: src/bin/e_int_config_window_display.c:198
+#: src/bin/e_int_config_window_display.c:199
 msgid "Decelerate"
-msgstr "Zpomalit"
+msgstr "Spomaliť"
 
-#: src/bin/e_int_config_window_manipulation.c:49
+#: src/bin/e_int_config_window_display.c:215
+msgid "Window Frame"
+msgstr "Rám Okna"
+
+#: src/bin/e_int_config_window_display.c:216
+msgid "Use application provided icon instead"
+msgstr "Použi ikonu od aplikácie"
+
+#: src/bin/e_int_config_window_manipulation.c:46
 msgid "Window Manipulation"
 msgstr "Manipulácia s Oknami"
 
-#: src/bin/e_int_config_window_manipulation.c:134
-#: src/bin/e_int_config_window_manipulation.c:167
+#: src/bin/e_int_config_window_manipulation.c:126
+#: src/bin/e_int_config_window_manipulation.c:157
 msgid "Automatically raise windows on mouse over"
 msgstr "Automaticky zdvíhaj okná pri prechode myšou cez ne"
 
-#: src/bin/e_int_config_window_manipulation.c:136
+#: src/bin/e_int_config_window_manipulation.c:128
 msgid "When moving or resizing windows, resist at the boundaries"
 msgstr "Pri hýbaní a zmene veľkosti okien, klaď odpor na hraniciach"
 
-
-#: src/bin/e_int_config_window_manipulation.c:140
-#: src/bin/e_int_config_window_manipulation.c:192
+#: src/bin/e_int_config_window_manipulation.c:132
+#: src/bin/e_int_config_window_manipulation.c:182
 msgid "Maximize Policy"
 msgstr "Pravidlá Maximalizácie"
 
-#: src/bin/e_int_config_window_manipulation.c:144
-#: src/bin/e_int_config_window_manipulation.c:196
+#: src/bin/e_int_config_window_manipulation.c:136
+#: src/bin/e_int_config_window_manipulation.c:186
 msgid "Smart expansion"
 msgstr "Inteligentné zväčšenie"
 
-#: src/bin/e_int_config_window_manipulation.c:146
-#: src/bin/e_int_config_window_manipulation.c:198
+#: src/bin/e_int_config_window_manipulation.c:138
+#: src/bin/e_int_config_window_manipulation.c:188
 msgid "Expand the window"
 msgstr "Zväčši okno"
 
-#: src/bin/e_int_config_window_manipulation.c:148
-#: src/bin/e_int_config_window_manipulation.c:200
+#: src/bin/e_int_config_window_manipulation.c:140
+#: src/bin/e_int_config_window_manipulation.c:190
 msgid "Fill available space"
 msgstr "Vyplň dostupné miesto"
 
-#: src/bin/e_int_config_window_manipulation.c:166
+#: src/bin/e_int_config_window_manipulation.c:156
 msgid "Autoraise"
 msgstr "Autozdvihnutie"
 
-#: src/bin/e_int_config_window_manipulation.c:169
+#: src/bin/e_int_config_window_manipulation.c:159
 msgid "Delay before raising:"
-msgstr "Spozdenie pred zdvihnutím:"
+msgstr "Oneskorenie pred zdvihnutím:"
 
-#: src/bin/e_int_config_window_manipulation.c:175
+#: src/bin/e_int_config_window_manipulation.c:165
 msgid "Resistance"
 msgstr "Odolnosť"
 
-#: src/bin/e_int_config_window_manipulation.c:176
+#: src/bin/e_int_config_window_manipulation.c:166
 msgid "Resist moving or resizing a window over an obstacle"
-msgstr "Zabráň pohybu alebo zmene velkosti okna cez prekážku"
+msgstr "Zabráň pohybu alebo zmene veľkosti okna cez prekážku"
 
-#: src/bin/e_int_config_window_manipulation.c:178
+#: src/bin/e_int_config_window_manipulation.c:168
 msgid "Resistance between windows:"
 msgstr "Odolnosť medzi oknami:"
 
-#: src/bin/e_int_config_window_manipulation.c:182
+#: src/bin/e_int_config_window_manipulation.c:172
 msgid "Resistance at the edge of the screen:"
 msgstr "Odolnosť na okraji obrazovky:"
 
-#: src/bin/e_int_config_window_manipulation.c:186
+#: src/bin/e_int_config_window_manipulation.c:176
 msgid "Resistance to desktop gadgets:"
 msgstr "Odolnosť voči špecialitám plochy:"
 
-#: src/bin/e_int_config_window_manipulation.c:202
+#: src/bin/e_int_config_window_manipulation.c:192
 msgid "Allow shading/resizing"
 msgstr "Povoľ schovanie/zmenu veľkosti"
 
-#: src/bin/e_int_config_winlist.c:125
+#: src/bin/e_int_config_winlist.c:124
 msgid "Show iconified windows"
 msgstr "Ukazuj ikonifikované okná"
 
-#: src/bin/e_int_config_winlist.c:127
+#: src/bin/e_int_config_winlist.c:126
 msgid "Show windows from other desks"
 msgstr "Ukazuj okná z ostatných plôch"
 
-#: src/bin/e_int_config_winlist.c:129
+#: src/bin/e_int_config_winlist.c:128
 msgid "Show windows from other screens"
 msgstr "Ukazuj okná z ostatných obrazoviek"
 
-#: src/bin/e_int_config_winlist.c:133 src/bin/e_int_config_winlist.c:209
+#: src/bin/e_int_config_winlist.c:132
+#: src/bin/e_int_config_winlist.c:206
 msgid "Selection Settings"
 msgstr "Nastavenie Výberu"
 
-#: src/bin/e_int_config_winlist.c:134 src/bin/e_int_config_winlist.c:210
+#: src/bin/e_int_config_winlist.c:133
+#: src/bin/e_int_config_winlist.c:207
 msgid "Focus window while selecting"
 msgstr "Zaostri okno počas výberu"
 
-#: src/bin/e_int_config_winlist.c:136 src/bin/e_int_config_winlist.c:212
+#: src/bin/e_int_config_winlist.c:135
+#: src/bin/e_int_config_winlist.c:209
 msgid "Raise window while selecting"
 msgstr "Zdvihni okno počas výberu"
 
-#: src/bin/e_int_config_winlist.c:138 src/bin/e_int_config_winlist.c:214
+#: src/bin/e_int_config_winlist.c:137
+#: src/bin/e_int_config_winlist.c:211
 msgid "Warp mouse to window while selecting"
 msgstr "Presuň kurzor na okno počas výberu"
 
-#: src/bin/e_int_config_winlist.c:140 src/bin/e_int_config_winlist.c:216
+#: src/bin/e_int_config_winlist.c:139
+#: src/bin/e_int_config_winlist.c:213
 msgid "Uncover windows while selecting"
 msgstr "Odkry okná počas výberu"
 
-#: src/bin/e_int_config_winlist.c:142 src/bin/e_int_config_winlist.c:218
+#: src/bin/e_int_config_winlist.c:141
+#: src/bin/e_int_config_winlist.c:215
 msgid "Jump to desk while selecting"
 msgstr "Prechádzaj cez plochy počas výberu"
 
-#: src/bin/e_int_config_winlist.c:146 src/bin/e_int_config_winlist.c:222
+#: src/bin/e_int_config_winlist.c:145
+#: src/bin/e_int_config_winlist.c:219
 msgid "Warp Settings"
 msgstr "Nastavenia Presunu"
 
-#: src/bin/e_int_config_winlist.c:147 src/bin/e_int_config_winlist.c:223
+#: src/bin/e_int_config_winlist.c:146
+#: src/bin/e_int_config_winlist.c:220
 msgid "Warp At End"
-msgstr "Presun Na Koniec"
+msgstr "Presun Na Konci"
 
-#: src/bin/e_int_config_winlist.c:151 src/bin/e_int_config_winlist.c:231
+#: src/bin/e_int_config_winlist.c:150
+#: src/bin/e_int_config_winlist.c:228
+#: src/bin/e_int_config_exebuf.c:111
+#: src/bin/e_int_config_exebuf.c:157
 msgid "Scroll Settings"
 msgstr "Nastavenia Rolovania"
 
-#: src/bin/e_int_config_winlist.c:152 src/bin/e_int_config_winlist.c:232
+#: src/bin/e_int_config_winlist.c:151
+#: src/bin/e_int_config_winlist.c:229
+#: src/bin/e_int_config_exebuf.c:112
+#: src/bin/e_int_config_exebuf.c:158
 msgid "Scroll Animate"
 msgstr "Animované Rolovanie"
 
-#: src/bin/e_int_config_winlist.c:225
+#: src/bin/e_int_config_winlist.c:222
 msgid "Warp Speed"
 msgstr "Rýchlosť Presúvania"
 
-#: src/bin/e_int_config_winlist.c:227 src/bin/e_int_config_winlist.c:236
-#: src/bin/e_int_config_winlist.c:243 src/bin/e_int_config_winlist.c:247
+#: src/bin/e_int_config_winlist.c:224
+#: src/bin/e_int_config_winlist.c:233
+#: src/bin/e_int_config_winlist.c:240
+#: src/bin/e_int_config_winlist.c:244
+#: src/bin/e_int_config_exebuf.c:162
+#: src/bin/e_int_config_exebuf.c:169
+#: src/bin/e_int_config_exebuf.c:173
 #, c-format
 msgid "%1.2f"
 msgstr "%1.2f"
 
-#: src/bin/e_int_config_winlist.c:234
+#: src/bin/e_int_config_winlist.c:231
+#: src/bin/e_int_config_exebuf.c:160
 msgid "Scroll Speed"
 msgstr "Rýchlosť Rolovania"
 
-#: src/bin/e_int_config_winlist.c:240
+#: src/bin/e_int_config_winlist.c:237
+#: src/bin/e_int_config_exebuf.c:166
 msgid "Position Settings"
 msgstr "Nastavenia Pozície"
 
-#: src/bin/e_int_config_winlist.c:241
+#: src/bin/e_int_config_winlist.c:238
+#: src/bin/e_int_config_exebuf.c:167
 msgid "X-Axis Alignment"
-msgstr "Os X Zarovnanie"
+msgstr "Zarovnanie podľa osi X"
 
-#: src/bin/e_int_config_winlist.c:245
+#: src/bin/e_int_config_winlist.c:242
+#: src/bin/e_int_config_exebuf.c:171
 msgid "Y-Axis Alignment"
-msgstr "Os Y Zarovnanie"
+msgstr "Zarovnanie podľa osi Y"
 
-#: src/bin/e_int_config_winlist.c:251
+#: src/bin/e_int_config_winlist.c:248
+#: src/bin/e_int_config_exebuf.c:177
 msgid "Size Settings"
 msgstr "Nastavenia Veľkosti"
 
-#: src/bin/e_int_config_winlist.c:252
-msgid "Minimun Width"
+#: src/bin/e_int_config_winlist.c:249
+#: src/bin/e_int_config_exebuf.c:178
+msgid "Minimum Width"
 msgstr "Minimálna Šírka"
 
-#: src/bin/e_int_config_winlist.c:254 src/bin/e_int_config_winlist.c:258
-#: src/bin/e_int_config_winlist.c:262 src/bin/e_int_config_winlist.c:266
+#: src/bin/e_int_config_winlist.c:251
+#: src/bin/e_int_config_winlist.c:255
+#: src/bin/e_int_config_winlist.c:259
+#: src/bin/e_int_config_winlist.c:263
+#: src/bin/e_int_config_exebuf.c:180
+#: src/bin/e_int_config_exebuf.c:184
+#: src/bin/e_int_config_exebuf.c:188
+#: src/bin/e_int_config_exebuf.c:192
 #, c-format
 msgid "%4.0f"
 msgstr "%4.0f"
 
-#: src/bin/e_int_config_winlist.c:256
-msgid "Minimun Height"
+#: src/bin/e_int_config_winlist.c:253
+#: src/bin/e_int_config_exebuf.c:182
+msgid "Minimum Height"
 msgstr "Minimálna Výška"
 
-#: src/bin/e_int_config_winlist.c:260
+#: src/bin/e_int_config_winlist.c:257
+#: src/bin/e_int_config_exebuf.c:186
 msgid "Maximum Width"
 msgstr "Maximálna Šírka"
 
-#: src/bin/e_int_config_winlist.c:264
+#: src/bin/e_int_config_winlist.c:261
+#: src/bin/e_int_config_exebuf.c:190
 msgid "Maximum Height"
 msgstr "Maximálna Výška"
 
@@ -1412,92 +1481,68 @@ msgstr "Obľúbené Aplikácie"
 msgid "Run Command"
 msgstr "Spusti Príkaz"
 
-#: src/bin/e_int_menus.c:101
+#: src/bin/e_int_menus.c:108
 msgid "Desktops"
 msgstr "Pracovné Plochy"
 
-#: src/bin/e_int_menus.c:108
+#: src/bin/e_int_menus.c:115
 msgid "Windows"
 msgstr "Okná"
 
-#: src/bin/e_int_menus.c:115
-msgid "Lost Windows"
-msgstr "Ztratené Okná"
-
 #: src/bin/e_int_menus.c:122
+msgid "Lost Windows"
+msgstr "Stratené Okná"
+
+#: src/bin/e_int_menus.c:129
 msgid "Gadgets"
 msgstr "Špeciality"
 
-#: src/bin/e_int_menus.c:129
-msgid "Themes"
-msgstr "Témy"
-
-#: src/bin/e_int_menus.c:142
-msgid "Files"
-msgstr "Súbory"
-
-#: src/bin/e_int_menus.c:149 src/bin/e_module.c:489
-#: src/modules/battery/e_mod_main.c:250 src/modules/battery/e_mod_main.c:373
-#: src/modules/clock/e_mod_main.c:188 src/modules/clock/e_mod_main.c:355
-#: src/modules/ibar/e_mod_main.c:296 src/modules/ibar/e_mod_main.c:653
-#: src/modules/ibox/e_mod_main.c:259 src/modules/ibox/e_mod_main.c:464
-#: src/modules/pager/e_mod_main.c:407 src/modules/pager/e_mod_main.c:542
-#: src/modules/temperature/e_mod_main.c:220
-#: src/modules/temperature/e_mod_main.c:363
-msgid "Configuration"
-msgstr "Konfigurácia"
-
-#: src/bin/e_int_menus.c:157
-msgid "Restart Enlightenment"
-msgstr "Reštartovať Enlightenment"
-
-#: src/bin/e_int_menus.c:162
-msgid "Exit Enlightenment"
-msgstr "Ukončiť Enlightenment"
-
-#: src/bin/e_int_menus.c:473
-msgid "(No Applications)"
-msgstr "(Žiadne Aplikácie)"
-
-#: src/bin/e_int_menus.c:640 src/bin/e_int_menus.c:922
-msgid "(No Windows)"
-msgstr "(Žiadne Okná)"
-
-#: src/bin/e_int_menus.c:655 src/bin/e_int_menus.c:936
-msgid "No name!!"
-msgstr "Žiadne meno!!"
-
-#: src/bin/e_int_menus.c:673
-msgid "Cleanup Windows"
-msgstr "Usporiadať Okná"
-
-#: src/bin/e_int_menus.c:758
-msgid "(Unused)"
-msgstr "(Nepoužité)"
-
-#: src/bin/e_int_menus.c:789 src/bin/e_theme_about.c:42
+#: src/bin/e_int_menus.c:154
+#: src/bin/e_theme_about.c:42
 msgid "About This Theme"
 msgstr "O tejto Téme"
 
-#: src/bin/e_intl.c:348
+#: src/bin/e_int_menus.c:169
+msgid "Restart Enlightenment"
+msgstr "Reštartovať Enlightenment"
+
+#: src/bin/e_int_menus.c:174
+msgid "Exit Enlightenment"
+msgstr "Ukončiť Enlightenment"
+
+#: src/bin/e_int_menus.c:487
+msgid "(No Applications)"
+msgstr "(Žiadne Aplikácie)"
+
+#: src/bin/e_int_menus.c:608
+msgid "Test Filemanager"
+msgstr "Testovací Súborový Manažér"
+
+#: src/bin/e_int_menus.c:667
+#: src/bin/e_int_menus.c:956
+msgid "(No Windows)"
+msgstr "(Žiadne Okná)"
+
+#: src/bin/e_int_menus.c:682
+#: src/bin/e_int_menus.c:970
+msgid "No name!!"
+msgstr "Žiadne meno!!"
+
+#: src/bin/e_int_menus.c:700
+msgid "Cleanup Windows"
+msgstr "Usporiadať Okná"
+
+#: src/bin/e_int_menus.c:785
+msgid "(Unused)"
+msgstr "(Nepoužité)"
+
+#: src/bin/e_intl.c:345
 msgid "Input Method Error"
 msgstr "Chyba Vstupu"
 
-#: src/bin/e_intl.c:349
-msgid ""
-"Error starting the input method executable\n"
-"\n"
-"please make sure that your input\n"
-"method configuration is correct and\n"
-"that your configuration's\n"
-"executable is in your PATH\n"
-msgstr ""
-"Chyba pri spúšťaní vstupnej metódy\n"
-"\n"
-"prosím uistite sa, že Vaša\n"
-"konfigurácia metódy je správna a\n"
-" že Vaša konfigurácia\n"
-"je umiestnená v PATH\n"
+#: src/bin/e_intl.c:346
+msgid "Error starting the input method executable<br><br>please make sure that your input<br>method configuration is correct and<br>that your configuration's<br>executable is in your PATH<br>"
+msgstr "Chyba pri spúšťaní vstupnej metódy<br><br>prosím uistite sa, že Vaša<br>konfigurácia vstupnej metódy je správna a<br>súbor pre spustenie metódy je v PATH<br>"
 
 #: src/bin/e_main.c:194
 #, c-format
@@ -1511,11 +1556,9 @@ msgid ""
 "\t\tgiven the geometry. Add as many as you like. They all\n"
 "\t\treplace the real xinerama screens, if any. This can\n"
 "\t\tbe used to simulate xinerama.\n"
-"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
-"+0\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
 "\t-profile CONF_PROFILE\n"
-"\t\tUse the configuration profile CONF_PROFILE instead of the the user "
-"selected default or just \"default\".\n"
+"\t\tUse the configuration profile CONF_PROFILE instead of the user selected default or just \"default\".\n"
 "\t-good\n"
 "\t\tBe good.\n"
 "\t-evil\n"
@@ -1525,18 +1568,16 @@ msgid ""
 msgstr ""
 "Možnosti:\n"
 "\t-display DISPLAY\n"
-"\t\tPripoj sa k obrazovke DISPLAY.\n"
+"\t\tPripoj sa k obrazovke s menom DISPLAY.\n"
 "\t\tnapr: -display :1.0\n"
 "\t-fake-xinerama-screen WxH+X+Y\n"
 "\t\tPridá FALOŠNÚ xinerama obrazovku (namiesto skutočnej)\n"
 "\t\ts danou geometriou. Môžete ich pridať koľko chcete. Všetky\n"
-"\t\tnahrádzajú reálné obrazovky xinerama, pokiaľ nejaké sú.\n"
+"\t\tnahrádzajú reálne obrazovky xinerama, pokiaľ nejaké sú.\n"
 "\t\tToto môže byť použité k simulácii xineramy.\n"
-"\t\tnapr: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
-"+0\n"
+"\t\tnapr: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
 "\t-profile CONF_PROFILE\n"
-"\t\tPouži konfiguračný profil CONF_PROFILE miesto defaultného užívateľského "
-"alebo \"default\".\n"
+"\t\tPouži konfiguračný profil CONF_PROFILE miesto štandardného užívateľského alebo \"default\".\n"
 "\t-good\n"
 "\t\tByť dobrý.\n"
 "\t-evil\n"
@@ -1626,35 +1667,77 @@ msgstr ""
 
 #: src/bin/e_main.c:357
 msgid ""
-"Enlightenment found ecore_evas doesnt support Software X11\n"
+"Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
-"Ecore and check they support Software X11 rendering."
+"Ecore and check they support the Software X11 rendering engine."
 msgstr ""
 "Enlightenment zistil, že ecore_evas nepodporuje softvérové X11\n"
-"vykresľovanie v Evas. Prosím zkontrolujte, či Evas a Ecore podporujú\n"
-"softvérové vykresľovanie cez X11."
+"vykresľovanie v Evas. Prosím skontrolujte, či Evas a\n"
+"Ecore podporujú engine s vykresľovaním cez softvérový  X11."
 
-#: src/bin/e_main.c:367
+#: src/bin/e_main.c:364
+msgid ""
+"Enlightenment found ecore_evas doesn't support the Software Buffer\n"
+"rendering in Evas. Please check your installation of Evas and\n"
+"Ecore and check they support the Software Buffer rendering engine."
+msgstr ""
+"Enlightenment zistil, že ecore_evas nepodporuje vykresľovanie cez softvérový buffer\n"
+"v Evas. Prosím skontrolujte, či Evas a\n"
+" Ecore podporujú engine s vykresľovaním cez softvérový  buffer."
+
+#: src/bin/e_main.c:377
+msgid ""
+"Enlightenment found Evas can't create a buffer canvas. Please check\n"
+"Evas has Software Buffer engine support.\n"
+msgstr ""
+"Enlightenment zistil, že Evas nemôže vytvoriť buffer pre canvas. Prosím skontroluj,\n"
+" že Evas má podporu pre softvérový buffer engine.\n"
+
+#: src/bin/e_main.c:387
+msgid ""
+"Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
+"loader support.\n"
+msgstr ""
+"Enlightenment zistil, že Evas nemôže nahrať PNG súbory. Skontroluj či má Evas podporu\n"
+" pre nahrávanie PNG.\n"
+
+#: src/bin/e_main.c:396
+msgid ""
+"Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
+"loader support.\n"
+msgstr ""
+"Enlightenment zistil, že Evas nemôže nahrať JPEG súbory. Skontroluj či má Evas podporu\n"
+" pre nahrávanie JPEG.\n"
+
+#: src/bin/e_main.c:405
+msgid ""
+"Enlightenment found Evas can't load EET files. Check Evas has EET\n"
+"loader support.\n"
+msgstr ""
+"Enlightenment zistil, že Evas nemôže nahrať EET súbory. Skontroluj či má Evas podporu\n"
+" pre nahrávanie EET.\n"
+
+#: src/bin/e_main.c:417
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "Enlightenment nemôže zinicializovať Thumbnail systém.\n"
 
-#: src/bin/e_main.c:376
+#: src/bin/e_main.c:426
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment nemôže zinicializovať Súborový manažér.\n"
 
-#: src/bin/e_main.c:387
+#: src/bin/e_main.c:437
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
 msgstr ""
-"Enlightenment nemôže vytvoriť adresáre vo Vašom domovskom adresáry.\n"
+"Enlightenment nemôže vytvoriť adresáre vo Vašom domovskom adresári.\n"
 "Možno nemáte domovský adresár alebo je disk plný."
 
-#: src/bin/e_main.c:395
+#: src/bin/e_main.c:445
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment nemôže spustiť systém nastavení."
 
-#: src/bin/e_main.c:402
+#: src/bin/e_main.c:452
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -1662,55 +1745,55 @@ msgstr ""
 "Enlightenment nemôže nastaviť cesty pre vyhľadávanie súborov.\n"
 "Možno máte nedostatok pamäte."
 
-#: src/bin/e_main.c:410
+#: src/bin/e_main.c:460
 msgid "Enlightenment cannot set up its intl system."
 msgstr "Enlightenment nemôže spustiť intl systém."
 
-#: src/bin/e_main.c:417
+#: src/bin/e_main.c:467
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Enlightenment nemôže spustiť systém akcií."
 
-#: src/bin/e_main.c:424
+#: src/bin/e_main.c:474
 msgid "Enlightenment cannot set up its bindings system."
-msgstr "Enlightenment nemôže nastaviť systém klávesových zkratiek."
+msgstr "Enlightenment nemôže nastaviť systém klávesových skratiek."
 
-#: src/bin/e_main.c:431
+#: src/bin/e_main.c:481
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Enlightenment nemôže spustiť popup systém."
 
-#: src/bin/e_main.c:442
+#: src/bin/e_main.c:492
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment nemôže spustiť systém fontov."
 
-#: src/bin/e_main.c:452
+#: src/bin/e_main.c:502
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Enlightenment nemôže spustiť systém tém."
 
-#: src/bin/e_main.c:461
+#: src/bin/e_main.c:511
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
 msgstr ""
 "Enlightenment nemôže spustiť úvodnú obrazovku.\n"
-"Možno máte nedostatok pamäte."
+"Možno máte nedostatok pamäte?"
 
-#: src/bin/e_main.c:470
+#: src/bin/e_main.c:520
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
-"Nastavenie manažéru okien na všetkých obrazovkách v systéme zlyhalo.\n"
+"Nastavenie manažéra okien na všetkých obrazovkách v systéme zlyhalo.\n"
 "Nebeží už iný okenný manažér?\n"
 
-#: src/bin/e_main.c:477
+#: src/bin/e_main.c:527
 msgid "Enlightenment cannot set up its app system."
 msgstr "Enlightenment nemôže spustiť systém pre aplikácie."
 
-#: src/bin/e_main.c:484
-msgid "Enlightenment cannot setup remember settings.\n"
-msgstr "Enlightenment nemôže obnoviť uložené nastavenia.\n"
+#: src/bin/e_main.c:534
+msgid "Enlightenment cannot setup remember settings."
+msgstr "Enlightenment nemôže nastaviť uložené nastavenia."
 
-#: src/bin/e_main.c:500
+#: src/bin/e_main.c:550
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an existing copy of Enlightenment.\n"
@@ -1725,42 +1808,58 @@ msgstr ""
 "Pravdepodobne ho používa už bežiaca kópia Enlightenment.\n"
 "Skontrolujte, či už Enlightenment nebeží na tejto obrazovke,\n"
 "pokiaľ nie, zmažte všetky súbory v ~/.ecore/enlightenment-*\n"
-"a zkúste spustiť znova.\n"
+"a skúste spustiť znova.\n"
 "\n"
 "Pokiaľ používate AFS, tak je možné, že je treba vytvoriť symbolický link z\n"
-"~/.ecore na /tmp/my_directory/ecore kde majú byť vytvorené sockety."
+"~/.ecore na /tmp/my_directory/ecore kde majú byť vytvorené sokety."
 
-#: src/bin/e_main.c:516
+#: src/bin/e_main.c:566
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Enlightenment nemôže spustiť systém msg."
 
-#: src/bin/e_main.c:523
+#: src/bin/e_main.c:573
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment nemôže spustiť systém dnd."
 
-#: src/bin/e_main.c:530
+#: src/bin/e_main.c:580
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr ""
 "Enlightenment nemôže spustiť systém na spracovanie zachyteného\n"
 "vstupu."
 
-#: src/bin/e_main.c:537
+#: src/bin/e_main.c:587
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment nemôže spustiť systém modulov."
 
-#: src/bin/e_main.c:544
+#: src/bin/e_main.c:594
 msgid "Enlightenment cannot set up its window list system."
 msgstr "Enlightenment nemôže spustiť systém zoznamu okien "
 
-#: src/bin/e_main.c:551
+#: src/bin/e_main.c:601
 msgid "Enlightenment cannot set up its color class system."
 msgstr "Enlightenment nemôže spustiť systém tried farieb."
 
-#: src/bin/e_main.c:557
+#: src/bin/e_main.c:608
+msgid "Enlightenment cannot set up its gadget control system."
+msgstr "Enlightenment nemôže nastaviť systém pre ovládanie špecialít. "
+
+#: src/bin/e_main.c:615
+msgid "Enlightenment cannot set up its shelf system."
+msgstr "Enlightenment nemôže nastaviť shelf systém."
+
+#: src/bin/e_main.c:622
+msgid "Enlightenment cannot set up its exebuf system."
+msgstr "Enlightenment nemôže nastaviť exebuf systém."
+
+#: src/bin/e_main.c:630
+msgid "Enlightenment cannot set up its desk locking system."
+msgstr "Enlightenment nemôže nastaviť systém pre uzamknutie plochy."
+
+#: src/bin/e_main.c:636
 msgid "Enlightenment IPC setup error!"
 msgstr "Chyba v nastavení Enlightenment IPC!"
 
-#: src/bin/e_main.c:558
+#: src/bin/e_main.c:637
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an existing copy of Enlightenment.\n"
@@ -1772,54 +1871,37 @@ msgstr ""
 "Pravdepodobne ho používa už bežiaca kópia Enlightenment.\n"
 "Skontrolujte, či už Enlightenment nebeží na tejto obrazovke,\n"
 "pokiaľ nie, zmažte všetky súbory v ~/.ecore/enlightenment-*\n"
-"a zkúste spustiť znova."
+"a skúste spustiť znova."
 
-#: src/bin/e_main.c:576
+#: src/bin/e_main.c:655
 msgid "Enlightenment Starting. Please wait."
 msgstr "Enlightenment Štartuje. Prosím čakajte."
 
 #: src/bin/e_module.c:107
 #, c-format
-msgid ""
-"There was an error loading module named: %s<br>No module named %s could be "
-"found in the<br>module search directories.<br>"
-msgstr ""
-"Došlo k chybe pri načítaní modulu: %s<br>Žiadný modul s názvom %s nebol "
-"najdený v<br>adresároch s modulmi.<br>"
+msgid "There was an error loading module named: %s<br>No module named %s could be found in the<br>module search directories.<br>"
+msgstr "Došlo k chybe pri načítaní modulu: %s<br>Žiadny modul s názvom %s nebol nájdený v<br>adresároch s modulmi.<br>"
 
-#: src/bin/e_module.c:111 src/bin/e_module.c:124 src/bin/e_module.c:150
+#: src/bin/e_module.c:111
+#: src/bin/e_module.c:124
+#: src/bin/e_module.c:150
 msgid "Error loading Module"
 msgstr "Chyba pri nahrávaní modulu"
 
 #: src/bin/e_module.c:118
-#, c-format
-msgid ""
-"There was an error loading module named: %s<br>The full path to this module "
-"is:<br>%s<br>The error reported was:<br>%s<br>"
-msgstr ""
-"Došlo k chybe pri načítaní modulu: %s<br>Úplná cesta k modulu "
-"je:<br>%s<br>Došlo k chybe:<br>%s<br>"
-
 #: src/bin/e_module.c:144
 #, c-format
-msgid ""
-"There was an error loading module named: %s<br>The full path to this module "
-"is:<br>%s<br>The error reported was:<br>Module does not contain all needed "
-"functions<br>"
-msgstr ""
-"Došlo k chybe pri načítaní modulu: %s<br>Úplná cesta k modulu "
-"je:<br>%s<br>Došlo k chybe:<br>Modul neobsahuje všetky potrebné "
-"funkcie<br>"
+msgid "There was an error loading module named: %s<br>The full path to this module is:<br>%s<br>The error reported was:<br>%s<br>"
+msgstr "Došlo k chybe pri načítaní modulu: %s<br>Úplná cesta k modulu je:<br>%s<br>Došlo k chybe:<br>%s<br>"
+
+#: src/bin/e_module.c:149
+msgid "Module does not contain all needed functions"
+msgstr "Modul neobsahuje všetky potrebné funkcie"
 
 #: src/bin/e_module.c:166
 #, c-format
-msgid ""
-"Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
-"module API version of: %i.<br>The module API advertized by Enlightenment is: "
-"%i.<br>"
-msgstr ""
-"Chyba API Modulu<br>Chyba pri inicializácii modulu: %s<br>Je potrebný API modul "
-"minimálne vo verzii: %i.<br>API modul v Enlightenment je vo verzii: %i.<br>"
+msgid "Module API Error<br>Error initializing Module: %s<br>It requires a minimum module API version of: %i.<br>The module API advertized by Enlightenment is: %i.<br>"
+msgstr "Chyba API Modulu<br>Chyba pri inicializácii modulu: %s<br>Je potrebný API modul minimálne vo verzii: %i.<br>API modul v Enlightenment je vo verzii: %i.<br>"
 
 #: src/bin/e_module.c:171
 #, c-format
@@ -1831,8 +1913,8 @@ msgid "(No Loaded Modules)"
 msgstr "(Žiadne Moduly)"
 
 #: src/bin/e_module.c:474
-msgid "About..."
-msgstr "O aplikácii..."
+msgid "About…"
+msgstr "O..."
 
 #: src/bin/e_module.c:560
 msgid "Would you like to unload this module?<br>"
@@ -1843,112 +1925,419 @@ msgstr "Chceš unloadnúť tento modul?<br>"
 msgid "Starting %s"
 msgstr "Spúšťam %s"
 
-#: src/bin/e_utils.c:269
+#: src/bin/e_utils.c:274
 msgid "Cannot exit - immortal windows."
 msgstr "Nemôžem skončiť - nesmrteľné okná."
 
-#: src/bin/e_utils.c:270
-msgid ""
-"\n"
-"Some windows are left still around with the Lifespan lock enabled. This "
-"means\n"
-"that Enlightenment will not allow itself to exit until these windows have\n"
-"been closed or have the lifespan lock removed.\n"
-msgstr ""
-"\n"
-"Nejaké okná su stále aktívne pretože majú aktivovaný Lifespan zámok. To "
-"znamená,\n"
-"že Enlightenment nebude možné ukončiť pokiaľ tieto okná nebudú \n"
-"uzatvorené, alebo lifespan zámok nebude deaktivovaný.\n"
+#: src/bin/e_utils.c:275
+msgid "Some windows are left still around with the Lifespan lock enabled. This means<br>that Enlightenment will not allow itself to exit until these windows have<br>been closed or have the lifespan lock removed.<br>"
+msgstr "Niekoľko okien je stále aktívnych, pretože majú zapnutý Lifespan zámok. To znamená, že<br>Enlightenment nebude možné ukončiť pokiaľ tieto okná nebudú<br>uzatvorené, alebo lifespan zámok nebude vypnutý.<br>"
 
-#: src/bin/e_winlist.c:122
+#: src/bin/e_winlist.c:125
 msgid "Select a window"
 msgstr "Vyber Okno"
 
-#: src/modules/battery/e_mod_config.c:43
+#: src/bin/e_apps_error.c:38
+msgid "Application Execution Error"
+msgstr "Chyba pri spustení aplikácie"
+
+#: src/bin/e_apps_error.c:50
+#, c-format
+msgid "%s stopped running unexpectedly."
+msgstr "%s neočakávane ukončil svoj beh."
+
+#: src/bin/e_apps_error.c:57
+#, c-format
+msgid "An exit code of %i was returned from %s"
+msgstr "Návratová hodnota %i bola vrátená od  %s"
+
+#: src/bin/e_apps_error.c:64
+#, c-format
+msgid "%s was interrupted by an Interrupt Signal"
+msgstr "%s bol prerušený signálom Interrupt"
+
+#: src/bin/e_apps_error.c:67
+#, c-format
+msgid "%s was interrupted by a Quit Signal"
+msgstr "%s bol prerušený signálom Quit"
+
+#: src/bin/e_apps_error.c:70
+#, c-format
+msgid "%s was interrupted by an Abort Signal"
+msgstr "%s bol prerušený signálom Abort"
+
+#: src/bin/e_apps_error.c:73
+#, c-format
+msgid "%s was interrupted by a Floating Point Error"
+msgstr "%s bol prerušený chybou v plávajúcej čiarke"
+
+#: src/bin/e_apps_error.c:76
+#, c-format
+msgid "%s was interrupted by an Uninterruptable Kill Signal"
+msgstr "%s bol prerušený neprerušiteľným Kill signálom"
+
+#: src/bin/e_apps_error.c:79
+#, c-format
+msgid "%s was interrupted by a Segmentation Fault"
+msgstr "%s bol prerušený chybou pri segmentácii"
+
+#: src/bin/e_apps_error.c:82
+#, c-format
+msgid "%s was interrupted by a Broken Pipe"
+msgstr "%s bol prerušený chybou rúry"
+
+#: src/bin/e_apps_error.c:85
+#, c-format
+msgid "%s was interrupted by a Termination Singal"
+msgstr "%s bol prerušený ukončovacím signálom"
+
+#: src/bin/e_apps_error.c:88
+#, c-format
+msgid "%s was interrupted by a Bus Error"
+msgstr "%s bol prerušený chybou zbernice"
+
+#: src/bin/e_apps_error.c:91
+#, c-format
+msgid "%s was interrupted by the signal number %i"
+msgstr "%s bol prerušený signálom číslo %i"
+
+#: src/bin/e_apps_error.c:221
+#: src/bin/e_apps_error.c:290
+#: src/bin/e_apps_error.c:296
+msgid "Error Logs"
+msgstr "Logy s chybami"
+
+#: src/bin/e_apps_error.c:226
+#: src/bin/e_apps_error.c:297
+msgid "There was no error message."
+msgstr "Žiadna chybová hláška."
+
+#: src/bin/e_apps_error.c:230
+#: src/bin/e_apps_error.c:304
+msgid "Save This Message"
+msgstr "Ulož túto správu"
+
+#: src/bin/e_apps_error.c:255
+msgid "Error Information"
+msgstr "Informácia o chybe"
+
+#: src/bin/e_apps_error.c:263
+msgid "Error Signal Information"
+msgstr "Informácia Chybového Signálu"
+
+#: src/bin/e_apps_error.c:274
+#: src/bin/e_apps_error.c:280
+msgid "Output Data"
+msgstr "Výstupné dáta"
+
+#: src/bin/e_apps_error.c:281
+msgid "There was no output."
+msgstr "Žiaden výstup"
+
+#: src/bin/e_int_config_background_import.c:147
+msgid "Import An Image"
+msgstr "Importuj obrázok"
+
+#: src/bin/e_int_config_background_import.c:186
+msgid "Options"
+msgstr "Nastavenia"
+
+#: src/bin/e_int_config_background_import.c:188
+msgid "Center Image"
+msgstr "Vycentruj obrázok"
+
+#: src/bin/e_int_config_background_import.c:190
+msgid "Scale Image"
+msgstr "Roztiahni obrázok"
+
+#: src/bin/e_int_config_background_import.c:192
+msgid "Tile Image"
+msgstr "Obrázok ako dlaždice"
+
+#: src/bin/e_int_config_cursor.c:95
+#: src/bin/e_int_config_cursor.c:141
+msgid "Use Enlightenment Cursor"
+msgstr "Použi Enlightenment Kurzor"
+
+#: src/bin/e_int_config_cursor.c:143
+msgid "Cursor Size"
+msgstr "Veľkosť Kurzora"
+
+#: src/bin/e_int_config_cursor.c:145
+#, c-format
+msgid "%1.0f pixels"
+msgstr "%1.0f pixelov"
+
+#: src/bin/e_int_config_display.c:143
+#: src/modules/randr/e_mod_main.c:210
+msgid "Resolution"
+msgstr "Rozlíšenie"
+
+#: src/bin/e_int_config_display.c:151
+msgid "Refresh Rate"
+msgstr "Obnovovacia Frekvencia"
+
+#: src/bin/e_int_config_cfgdialogs.c:79
+#: src/bin/e_int_config_cfgdialogs.c:105
+msgid "Auto-Apply Configuration Changes"
+msgstr "Automaticky Aplikuj Zmeny v Konfigurácii"
+
+#: src/bin/e_int_config_cfgdialogs.c:109
+msgid "Default Dialog Mode"
+msgstr "Štandardný mód dialógu"
+
+#: src/bin/e_int_config_cfgdialogs.c:112
+msgid "Basic Mode"
+msgstr "Základný Mód"
+
+#: src/bin/e_int_config_cfgdialogs.c:114
+msgid "Advanced Mode"
+msgstr "Pokročilý Mód"
+
+#: src/bin/e_int_config_exebuf.c:42
+msgid "Exebuf Settings"
+msgstr "Nastavenia Exebuf"
+
+#: src/bin/e_int_config_exebuf.c:101
+#: src/bin/e_int_config_exebuf.c:147
+msgid "Maximum Number Of Matched Eaps To List"
+msgstr "表Maximálny počet eap súborov v zozname"
+
+#: src/bin/e_int_config_exebuf.c:105
+#: src/bin/e_int_config_exebuf.c:151
+msgid "Maximum Number Of Matched Exes To List"
+msgstr "表示Maximálny počet exe súborov v zozname"
+
+#: src/bin/e_int_config_keybindings.c:3
+msgid "Next Key Binding"
+msgstr "次Nasledujúca klávesová skratka"
+
+#: src/bin/e_int_config_keybindings.c:4
+msgid "Prev Key Binding"
+msgstr "Predchádzajúca klávesová skratka"
+
+#: src/bin/e_int_config_keybindings.c:5
+msgid "Add Key Binding"
+msgstr "Pridaj klávesovú skratku"
+
+#: src/bin/e_int_config_keybindings.c:6
+msgid "Delete Key Binding"
+msgstr "Zmaž klávesovú skratku"
+
+#: src/bin/e_int_config_keybindings.c:578
+msgid "Action"
+msgstr "Akcia"
+
+#: src/bin/e_int_config_keybindings.c:625
+msgid "Parameters"
+msgstr "Parametre"
+
+#: src/bin/e_int_config_keybindings.c:628
+msgid "Binding Context"
+msgstr "Spojiť Kontext"
+
+#: src/bin/e_int_config_keybindings.c:631
+msgid "Any"
+msgstr "Každý"
+
+#: src/bin/e_int_config_keybindings.c:636
+msgid "Border"
+msgstr "Okraj"
+
+#: src/bin/e_int_config_keybindings.c:641
+msgid "Zone"
+msgstr "Zóna"
+
+#: src/bin/e_int_config_keybindings.c:647
+msgid "Container"
+msgstr "Kontajnér"
+
+#: src/bin/e_int_config_keybindings.c:652
+msgid "Manager"
+msgstr "Manažér"
+
+#: src/bin/e_int_config_keybindings.c:657
+msgid "Menu"
+msgstr "Menu"
+
+#: src/bin/e_int_config_keybindings.c:663
+msgid "Win List"
+msgstr "Zoznam Okien"
+
+#: src/bin/e_int_config_keybindings.c:668
+msgid "Popup"
+msgstr "Popup"
+
+#: src/bin/e_int_config_keybindings.c:673
+msgid "None"
+msgstr "Žiadny"
+
+#: src/bin/e_int_config_keybindings.c:679
+msgid "Unknown"
+msgstr "Neznáme"
+
+#: src/bin/e_int_config_keybindings.c:686
+msgid "Key Binding"
+msgstr "Klávesové skratky"
+
+#: src/bin/e_int_config_keybindings.c:688
+msgid "Key :"
+msgstr "Kľúč :"
+
+#: src/bin/e_int_config_keybindings.c:698
+msgid "Shift"
+msgstr "Shift"
+
+#: src/bin/e_int_config_keybindings.c:703
+msgid "Control"
+msgstr "Ovládanie"
+
+#: src/bin/e_int_config_keybindings.c:708
+msgid "Alt"
+msgstr "Alt"
+
+#: src/bin/e_int_config_keybindings.c:713
+msgid "Win"
+msgstr "Win"
+
+#: src/bin/e_int_config_keybindings.c:720
+msgid "Key Action"
+msgstr "Kľúčová Akcia"
+
+#: src/bin/e_int_config_keybindings.c:722
+msgid "Action :"
+msgstr "Akcia:"
+
+#: src/bin/e_int_config_keybindings.c:731
+msgid "Params :"
+msgstr "Parametre:"
+
+#: src/bin/e_int_config_desklock.c:121
+msgid "Personalized Password:"
+msgstr "Osobné heslo:"
+
+#: src/bin/e_int_config_desklock.c:129
+msgid "Show Password"
+msgstr "Ukáž Heslo"
+
+#: src/modules/battery/e_mod_config.c:45
 msgid "Battery Configuration"
 msgstr "Konfigurácia Batérie"
 
-#: src/modules/battery/e_mod_config.c:95
-#: src/modules/battery/e_mod_config.c:135
+#: src/modules/battery/e_mod_config.c:89
+msgid "Basic Settings"
+msgstr "Základné Nastavenia"
+
+#: src/modules/battery/e_mod_config.c:90
+#: src/modules/battery/e_mod_config.c:137
 msgid "Show alert when battery is low"
 msgstr "Upozorni keď bude batéria takmer vybitá"
 
+#: src/modules/battery/e_mod_config.c:94
+#: src/modules/battery/e_mod_config.c:148
+#: src/modules/clock/e_mod_config.c:91
+#: src/modules/ibar/e_mod_config.c:169
+#: src/modules/ibox/e_mod_config.c:177
+#: src/modules/pager/e_mod_config.c:114
+#: src/modules/pager/e_mod_config.c:187
+#: src/modules/temperature/e_mod_config.c:218
+#: src/modules/temperature/e_mod_config.c:368
+#: src/modules/itray/e_mod_config.c:86
+#: src/modules/itray/e_mod_config.c:122
+msgid "Extras"
+msgstr "Príslušenstvo"
+
+#: src/modules/battery/e_mod_config.c:95
+#: src/modules/battery/e_mod_config.c:149
+#: src/modules/clock/e_mod_config.c:92
+#: src/modules/ibar/e_mod_config.c:97
+#: src/modules/ibar/e_mod_config.c:170
+#: src/modules/ibox/e_mod_config.c:101
+#: src/modules/ibox/e_mod_config.c:178
+#: src/modules/pager/e_mod_config.c:115
+#: src/modules/pager/e_mod_config.c:188
+#: src/modules/temperature/e_mod_config.c:219
+#: src/modules/temperature/e_mod_config.c:369
+#: src/modules/itray/e_mod_config.c:87
+#: src/modules/itray/e_mod_config.c:123
+msgid "Allow windows to overlap this gadget"
+msgstr "Umožni oknám prekryť túto špecialitu"
+
 #: src/modules/battery/e_mod_config.c:129
+msgid "Advanced Settings"
+msgstr "Pokročilé Nastavenia"
+
+#: src/modules/battery/e_mod_config.c:131
 msgid "Check battery every:"
 msgstr "Interval kontroly batérie:"
 
-#: src/modules/battery/e_mod_config.c:132 src/modules/pager/e_mod_config.c:177
-#: src/modules/temperature/e_mod_config.c:354
+#: src/modules/battery/e_mod_config.c:134
+#: src/modules/pager/e_mod_config.c:183
+#: src/modules/temperature/e_mod_config.c:325
 #, c-format
 msgid "%1.1f seconds"
 msgstr "%1.1f sekúnd"
 
-#: src/modules/battery/e_mod_config.c:138
+#: src/modules/battery/e_mod_config.c:140
 msgid "Alert when battery is down to:"
 msgstr "Upozorni keď batéria bude na:"
 
-#: src/modules/battery/e_mod_config.c:141
+#: src/modules/battery/e_mod_config.c:143
 #, c-format
 msgid "%1.0f minutes"
 msgstr "%1.0f minút"
 
-#: src/modules/battery/e_mod_main.c:133
+#: src/modules/battery/e_mod_main.c:135
 msgid "Enlightenment Battery Module"
 msgstr "Modul Batéria pre Enlightenment"
 
-#: src/modules/battery/e_mod_main.c:134
-msgid ""
-"A basic battery meter that uses either<hilight>ACPI</hilight> or "
-"<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
-"adaptor<br>status. This will work under Linux and FreeBSD and is only<br>as "
-"accurate as your BIOS or kernel drivers."
-msgstr ""
-"Základný ukazateľ stavu batérie, ktorý používa buď<hilight>ACPI</hilight> alebo "
-"<hilight>APM</hilight><br>pre monitorovanie stavu napájacieho adaptéru<br> a batérie. "
-"Funguje iba pod Linuxom, FreeBSD a jeho<br>presnosť je ovplyvnená ovládačmi jadra"
-"alebo BIOSom."
+#: src/modules/battery/e_mod_main.c:136
+msgid "A basic battery meter that uses either<hilight>ACPI</hilight> or <hilight>APM</hilight><br>on Linux to monitor your battery and AC power adaptor<br>status. This will work under Linux and FreeBSD and is only<br>as accurate as your BIOS or kernel drivers."
+msgstr "Základný ukazateľ stavu batérie, ktorý používa buď<hilight>ACPI</hilight> alebo <hilight>APM</hilight><br>pre monitorovanie stavu napájacieho adaptéra<br> a batérie. Funguje iba pod Linuxom, FreeBSD a jeho<br>presnosť je ovplyvnená ovládačmi jadra alebo BIOSom."
 
-#: src/modules/battery/e_mod_main.c:551
-msgid ""
-"Battery Running Low<br>Your battery is running low.<br>You may wish to "
-"switch to an AC source."
-msgstr ""
-"Batéria je takmer vybitá<br>Vaša batéria je už skoro vybitá.<br>Bolo by "
-"dobré pripojiť napájanie do siete."
+#: src/modules/battery/e_mod_main.c:565
+msgid "Battery Running Low<br>Your battery is running low.<br>You may wish to switch to an AC source."
+msgstr "Batéria je takmer vybitá<br>Vaša batéria je už skoro vybitá.<br>Bolo by dobré pripojiť napájanie do siete."
 
-#: src/modules/battery/e_mod_main.c:616
+#: src/modules/battery/e_mod_main.c:630
 msgid "NO INFO"
 msgstr "ŽIADNE INFO"
 
-#: src/modules/battery/e_mod_main.c:791 src/modules/battery/e_mod_main.c:1102
-#: src/modules/battery/e_mod_main.c:1252
+#: src/modules/battery/e_mod_main.c:805
+#: src/modules/battery/e_mod_main.c:1116
+#: src/modules/battery/e_mod_main.c:1266
 msgid "NO BAT"
 msgstr "ŽIADNA BATÉRIA"
 
-#: src/modules/battery/e_mod_main.c:815 src/modules/battery/e_mod_main.c:1277
+#: src/modules/battery/e_mod_main.c:829
+#: src/modules/battery/e_mod_main.c:1291
 msgid "BAD DRIVER"
-msgstr "ZLÝ OVLADAČ"
+msgstr "ZLÝ OVLÁDAČ"
 
-#: src/modules/battery/e_mod_main.c:839 src/modules/battery/e_mod_main.c:1134
-#: src/modules/battery/e_mod_main.c:1301
+#: src/modules/battery/e_mod_main.c:853
+#: src/modules/battery/e_mod_main.c:1148
+#: src/modules/battery/e_mod_main.c:1315
 msgid "FULL"
 msgstr "PLNÁ"
 
-#: src/modules/battery/e_mod_main.c:900 src/modules/battery/e_mod_main.c:1362
+#: src/modules/battery/e_mod_main.c:914
+#: src/modules/battery/e_mod_main.c:1376
 msgid "High"
 msgstr "Veľa Energie"
 
-#: src/modules/battery/e_mod_main.c:904 src/modules/battery/e_mod_main.c:1366
+#: src/modules/battery/e_mod_main.c:918
+#: src/modules/battery/e_mod_main.c:1380
 msgid "Low"
 msgstr "Málo Energie"
 
-#: src/modules/battery/e_mod_main.c:908 src/modules/battery/e_mod_main.c:1370
+#: src/modules/battery/e_mod_main.c:922
+#: src/modules/battery/e_mod_main.c:1384
 msgid "Danger"
 msgstr "Nebezpečenstvo"
 
-#: src/modules/battery/e_mod_main.c:912 src/modules/battery/e_mod_main.c:1374
-#: src/modules/battery/e_mod_main.c:1541
+#: src/modules/battery/e_mod_main.c:926
+#: src/modules/battery/e_mod_main.c:1388
+#: src/modules/battery/e_mod_main.c:1555
 msgid "Charging"
 msgstr "Nabíja sa"
 
@@ -1968,193 +2357,189 @@ msgstr "12 Hodinový Displej"
 msgid "24 Hour Display"
 msgstr "24 Hodinový Displej"
 
-#: src/modules/clock/e_mod_main.c:95
+#: src/modules/clock/e_mod_main.c:97
 msgid "Enlightenment Clock Module"
 msgstr "Modul Hodiny pre Enlightenment"
 
-#: src/modules/clock/e_mod_main.c:96
+#: src/modules/clock/e_mod_main.c:98
 msgid "A simple module to give E17 a clock."
 msgstr "Jednoduchý modul, ktorý pridá do E17 hodiny."
 
-#: src/modules/cpufreq/e_mod_main.c:113
+#: src/modules/cpufreq/e_mod_main.c:116
 msgid "CPU Frequency Controller Module"
 msgstr "Modul pre ovládanie frekvencie CPU"
 
-#: src/modules/cpufreq/e_mod_main.c:114
-msgid ""
-"A simple module to control the frequency of the system CPU.<br>This is "
-"especially useful to save power on laptops."
-msgstr ""
-"Jednoduchý modul, ktorý umožnuje riadiť frekvenciu CPU.<br>Uplatní sa najmä pri "
-"šetrení energie na laptopoch."
+#: src/modules/cpufreq/e_mod_main.c:117
+msgid "A simple module to control the frequency of the system CPU.<br>This is especially useful to save power on laptops."
+msgstr "Jednoduchý modul, ktorý umožňuje riadiť frekvenciu CPU.<br>Uplatní sa najmä pri šetrení energie na notebookoch."
 
-#: src/modules/cpufreq/e_mod_main.c:214 src/modules/cpufreq/e_mod_main.c:546
+#: src/modules/cpufreq/e_mod_main.c:220
+#: src/modules/cpufreq/e_mod_main.c:591
+msgid "Allow Overlap"
+msgstr "Povoľ Prekrytie"
+
+#: src/modules/cpufreq/e_mod_main.c:227
+#: src/modules/cpufreq/e_mod_main.c:597
 msgid "Set Poll Time"
 msgstr "Interval Aktualizácie"
 
-#: src/modules/cpufreq/e_mod_main.c:220
+#: src/modules/cpufreq/e_mod_main.c:233
 msgid "Restore Controller on Startup"
 msgstr "Obnoviť Ovládač pri Štarte"
 
-#: src/modules/cpufreq/e_mod_main.c:227 src/modules/cpufreq/e_mod_main.c:558
+#: src/modules/cpufreq/e_mod_main.c:240
+#: src/modules/cpufreq/e_mod_main.c:609
 msgid "Set Controller"
 msgstr "Nastaviť Ovládač"
 
-#: src/modules/cpufreq/e_mod_main.c:235 src/modules/cpufreq/e_mod_main.c:565
+#: src/modules/cpufreq/e_mod_main.c:248
+#: src/modules/cpufreq/e_mod_main.c:616
 msgid "Set Speed"
 msgstr "Nastaviť Rýchlosť"
 
-#: src/modules/cpufreq/e_mod_main.c:303
-msgid ""
-"There was an error trying to set the cpu frequency<br>governor via the "
-"module's setfreq utility."
-msgstr ""
-"Došlo k chybe pri pokuse nastaviť správcu frekvencie cpu<br>pomocou "
-"utility setfreq."
+#: src/modules/cpufreq/e_mod_main.c:316
+msgid "There was an error trying to set the cpu frequency<br>governor via the module's setfreq utility."
+msgstr "Došlo k chybe pri pokuse nastaviť správcu frekvencie cpu<br>pomocou utility setfreq."
 
-#: src/modules/cpufreq/e_mod_main.c:331
-msgid ""
-"There was an error trying to set the cpu frequency<br>setting via the "
-"module's setfreq utility."
-msgstr ""
-"Došlo k chybe pri pokuse nastaviť správcu frekvencie cpu<br>pomocou "
-"utility setfreq."
+#: src/modules/cpufreq/e_mod_main.c:344
+msgid "There was an error trying to set the cpu frequency<br>setting via the module's setfreq utility."
+msgstr "Došlo k chybe pri pokuse nastaviť správcu frekvencie cpu<br>pomocou utility setfreq."
 
-#: src/modules/cpufreq/e_mod_main.c:454
+#: src/modules/cpufreq/e_mod_main.c:499
 msgid "Check Fast (0.5 sec)"
-msgstr "Rýchlo (0.5 sek)"
+msgstr "Kontroluj Rýchlo (0.5 sek)"
 
-#: src/modules/cpufreq/e_mod_main.c:461
+#: src/modules/cpufreq/e_mod_main.c:506
 msgid "Check Medium (1 sec)"
-msgstr "Stredne Rýchlo (1 sek)"
+msgstr "Kontroluj Stredne Rýchlo (1 sek)"
 
-#: src/modules/cpufreq/e_mod_main.c:468
+#: src/modules/cpufreq/e_mod_main.c:513
 msgid "Check Normal (2 sec)"
-msgstr "Normálne (2 sek)"
+msgstr "Kontroluj Normálne (2 sek)"
 
-#: src/modules/cpufreq/e_mod_main.c:475
+#: src/modules/cpufreq/e_mod_main.c:520
 msgid "Check Slow (5 sec)"
-msgstr "Pomaly (5 sek)"
+msgstr "Kontroluj Pomaly (5 sek)"
 
-#: src/modules/cpufreq/e_mod_main.c:482
+#: src/modules/cpufreq/e_mod_main.c:527
 msgid "Check Very Slow (30 sec)"
-msgstr "Veľmi Pomaly (30 sek)"
+msgstr "Kontroluj Veľmi Pomaly (30 sek)"
 
-#: src/modules/cpufreq/e_mod_main.c:498
+#: src/modules/cpufreq/e_mod_main.c:543
 msgid "Manual"
 msgstr "Manuálne"
 
-#: src/modules/cpufreq/e_mod_main.c:500
+#: src/modules/cpufreq/e_mod_main.c:545
 msgid "Automatic"
 msgstr "Automaticky"
 
-#: src/modules/cpufreq/e_mod_main.c:502
+#: src/modules/cpufreq/e_mod_main.c:547
 msgid "Lower Power Automatic"
 msgstr "Automaticky Znižuj Spotrebu"
 
-#: src/modules/cpufreq/e_mod_main.c:504
+#: src/modules/cpufreq/e_mod_main.c:549
 msgid "Minimum Speed"
 msgstr "Minimálna Rýchlosť"
 
-#: src/modules/cpufreq/e_mod_main.c:506
+#: src/modules/cpufreq/e_mod_main.c:551
 msgid "Maximum Speed"
 msgstr "Maximálna Rýchlosť"
 
-#: src/modules/cpufreq/e_mod_main.c:528
+#: src/modules/cpufreq/e_mod_main.c:573
 #, c-format
-msgid "%i Mhz"
-msgstr "%i Mhz"
+msgid "%i MHz"
+msgstr "%i MHz"
 
-#: src/modules/cpufreq/e_mod_main.c:531
+#: src/modules/cpufreq/e_mod_main.c:576
 #, c-format
-msgid "%i.%i Ghz"
-msgstr "%i.%i Ghz"
+msgid "%i.%i GHz"
+msgstr "%i.%i GHz"
 
-#: src/modules/cpufreq/e_mod_main.c:552
+#: src/modules/cpufreq/e_mod_main.c:603
 msgid "Restore Governor on Startup"
 msgstr "Obnoviť Regulátor pri Štarte"
 
-#: src/modules/dropshadow/e_mod_config.c:43
+#: src/modules/dropshadow/e_mod_config.c:42
 msgid "Dropshadow Configuration"
 msgstr "Konfigurácia Tieňov"
 
-#: src/modules/dropshadow/e_mod_config.c:123
+#: src/modules/dropshadow/e_mod_config.c:118
 msgid "Quality"
 msgstr "Kvalita"
 
-#: src/modules/dropshadow/e_mod_config.c:125
+#: src/modules/dropshadow/e_mod_config.c:120
 msgid "High Quality"
 msgstr "Vysoká Kvalita"
 
-#: src/modules/dropshadow/e_mod_config.c:127
+#: src/modules/dropshadow/e_mod_config.c:122
 msgid "Medium Quality"
 msgstr "Stredná Kvalita"
 
-#: src/modules/dropshadow/e_mod_config.c:129
+#: src/modules/dropshadow/e_mod_config.c:124
 msgid "Low Quality"
 msgstr "Nízka Kvalita"
 
-#: src/modules/dropshadow/e_mod_config.c:133
+#: src/modules/dropshadow/e_mod_config.c:128
 msgid "Blur Type"
 msgstr "Rozostrené"
 
-#: src/modules/dropshadow/e_mod_config.c:135
+#: src/modules/dropshadow/e_mod_config.c:130
 msgid "Very Fuzzy"
 msgstr "Veľmi Rozmazané"
 
-#: src/modules/dropshadow/e_mod_config.c:137
+#: src/modules/dropshadow/e_mod_config.c:132
 msgid "Fuzzy"
 msgstr "Rozmazané"
 
-#: src/modules/dropshadow/e_mod_config.c:139
+#: src/modules/dropshadow/e_mod_config.c:134
 msgid "Medium"
 msgstr "Stredne Veľké"
 
-#: src/modules/dropshadow/e_mod_config.c:141
+#: src/modules/dropshadow/e_mod_config.c:136
 msgid "Sharp"
 msgstr "Ostré"
 
-#: src/modules/dropshadow/e_mod_config.c:143
+#: src/modules/dropshadow/e_mod_config.c:138
 msgid "Very Sharp"
 msgstr "Veľmi Ostré"
 
-#: src/modules/dropshadow/e_mod_config.c:147
+#: src/modules/dropshadow/e_mod_config.c:142
 msgid "Shadow Distance"
 msgstr "Vzdialenosť Tieňov"
 
-#: src/modules/dropshadow/e_mod_config.c:149
+#: src/modules/dropshadow/e_mod_config.c:144
 msgid "Very Far"
 msgstr "Veľmi Vzdialené"
 
-#: src/modules/dropshadow/e_mod_config.c:151
+#: src/modules/dropshadow/e_mod_config.c:146
 msgid "Far"
 msgstr "Vzdialené"
 
-#: src/modules/dropshadow/e_mod_config.c:153
+#: src/modules/dropshadow/e_mod_config.c:148
 msgid "Near"
 msgstr "Blízke"
 
-#: src/modules/dropshadow/e_mod_config.c:155
+#: src/modules/dropshadow/e_mod_config.c:150
 msgid "Very Near"
 msgstr "Veľmi Blízke"
 
-#: src/modules/dropshadow/e_mod_config.c:159
+#: src/modules/dropshadow/e_mod_config.c:154
 msgid "Shadow Darkness"
 msgstr "Tmavosť Tieňov"
 
-#: src/modules/dropshadow/e_mod_config.c:161
+#: src/modules/dropshadow/e_mod_config.c:156
 msgid "Very Dark"
 msgstr "Veľmi Tmavé"
 
-#: src/modules/dropshadow/e_mod_config.c:163
+#: src/modules/dropshadow/e_mod_config.c:158
 msgid "Dark"
 msgstr "Tmavé"
 
-#: src/modules/dropshadow/e_mod_config.c:165
+#: src/modules/dropshadow/e_mod_config.c:160
 msgid "Light"
 msgstr "Svetlé"
 
-#: src/modules/dropshadow/e_mod_config.c:167
+#: src/modules/dropshadow/e_mod_config.c:162
 msgid "Very Light"
 msgstr "Veľmi Svetlé"
 
@@ -2163,79 +2548,82 @@ msgid "Enlightenment Dropshadow Module"
 msgstr "Modul Tiene pre Enlightenment"
 
 #: src/modules/dropshadow/e_mod_main.c:168
-msgid ""
-"This is the dropshadow module that allows dropshadows to be cast<br>on the "
-"desktop background - without special X-Server extensions<br>or hardware "
-"acceleration."
-msgstr ""
-"Toto je modul tieňov, ktorý umožňuje oknám vytvárať tiene<br>na "
-"pracovnej ploche bez potreby špeciálnych rozšíření X serveru<br>alebo "
-"hardvérovej akcelerácie."
+msgid "This is the dropshadow module that allows dropshadows to be cast<br>on the desktop background - without special X-Server extensions<br>or hardware acceleration."
+msgstr "Toto je modul tieňov, ktorý umožňuje oknám vytvárať tiene<br>na pracovnej ploche bez potreby špeciálnych rozšírení X serveru<br>alebo hardvérovej akcelerácie."
 
-#: src/modules/gadget_test/e_mod_main.c:76 src/modules/test/e_mod_main.c:62
+#: src/modules/gadget_test/e_mod_main.c:75
+#: src/modules/test/e_mod_main.c:62
 msgid "Enlightenment Test Module"
 msgstr "Enlightenment Testovací Modul"
 
-#: src/modules/gadget_test/e_mod_main.c:76
+#: src/modules/gadget_test/e_mod_main.c:75
 msgid "Gadget test"
-msgstr "Test Špecialít"
+msgstr "Test špecialít"
 
-#: src/modules/gadget_test/e_mod_main.c:111
-msgid "Test Menu Item"
-msgstr "Testovacia Položka Menu"
-
-#: src/modules/gadget_test/e_mod_main.c:120
+#: src/modules/gadget_test/e_mod_main.c:107
 msgid "Test Face Menu Item"
 msgstr "Testovacia Šablóna Položky Menu"
 
-#: src/modules/ibar/e_mod_config.c:47
+#: src/modules/ibar/e_mod_config.c:49
 msgid "IBar Configuration"
 msgstr "Konfigurácia IBaru"
 
-#: src/modules/ibar/e_mod_config.c:93 src/modules/ibox/e_mod_config.c:93
+#: src/modules/ibar/e_mod_config.c:92
+#: src/modules/ibox/e_mod_config.c:96
 msgid "Show Follower"
 msgstr "Ukáž Nasledovníka"
 
-#: src/modules/ibar/e_mod_config.c:95 src/modules/ibox/e_mod_config.c:95
+#: src/modules/ibar/e_mod_config.c:94
+#: src/modules/ibox/e_mod_config.c:98
 msgid "Auto Fit Icons"
-msgstr "Automaticky usporiadať ikony"
+msgstr "Automaticky prispôsobiť ikony"
 
-#: src/modules/ibar/e_mod_config.c:142 src/modules/ibox/e_mod_config.c:142
+#: src/modules/ibar/e_mod_config.c:145
+#: src/modules/ibox/e_mod_config.c:154
 msgid "Follower"
 msgstr "Nasledovník"
 
-#: src/modules/ibar/e_mod_config.c:143 src/modules/ibox/e_mod_config.c:143
+#: src/modules/ibar/e_mod_config.c:146
+#: src/modules/ibox/e_mod_config.c:155
 msgid "Visible"
 msgstr "Viditeľný"
 
-#: src/modules/ibar/e_mod_config.c:145 src/modules/ibox/e_mod_config.c:145
+#: src/modules/ibar/e_mod_config.c:148
+#: src/modules/ibox/e_mod_config.c:157
 msgid "Follow Speed"
 msgstr "Rýchlosť Nasledovania"
 
-#: src/modules/ibar/e_mod_config.c:147 src/modules/ibar/e_mod_config.c:161
-#: src/modules/ibox/e_mod_config.c:147 src/modules/ibox/e_mod_config.c:161
+#: src/modules/ibar/e_mod_config.c:150
+#: src/modules/ibar/e_mod_config.c:164
+#: src/modules/ibox/e_mod_config.c:159
+#: src/modules/ibox/e_mod_config.c:173
 #, c-format
 msgid "%1.2f px/s"
 msgstr "%1.2f px/s"
 
-#: src/modules/ibar/e_mod_config.c:151 src/modules/ibox/e_mod_config.c:151
+#: src/modules/ibar/e_mod_config.c:154
+#: src/modules/ibox/e_mod_config.c:163
 msgid "Icon Size"
 msgstr "Veľkosť Ikony"
 
-#: src/modules/ibar/e_mod_config.c:152 src/modules/ibox/e_mod_config.c:152
+#: src/modules/ibar/e_mod_config.c:155
+#: src/modules/ibox/e_mod_config.c:164
 #, c-format
 msgid "%3.0f pixels"
 msgstr "%3.0f pixelov"
 
-#: src/modules/ibar/e_mod_config.c:156 src/modules/ibox/e_mod_config.c:156
+#: src/modules/ibar/e_mod_config.c:159
+#: src/modules/ibox/e_mod_config.c:168
 msgid "Width"
 msgstr "Šírka"
 
-#: src/modules/ibar/e_mod_config.c:157 src/modules/ibox/e_mod_config.c:157
+#: src/modules/ibar/e_mod_config.c:160
+#: src/modules/ibox/e_mod_config.c:169
 msgid "Auto Fit"
-msgstr "Automaticky usporiadať"
+msgstr "Automaticky prispôsobiť"
 
-#: src/modules/ibar/e_mod_config.c:159 src/modules/ibox/e_mod_config.c:159
+#: src/modules/ibar/e_mod_config.c:162
+#: src/modules/ibox/e_mod_config.c:171
 msgid "Autoscroll Speed:"
 msgstr "Rýchlosť Autoscrollu:"
 
@@ -2244,30 +2632,18 @@ msgid "Enlightenment IBar Module"
 msgstr "Enlightenment IBar Modul"
 
 #: src/modules/ibar/e_mod_main.c:164
-msgid ""
-"This is the IBar Application Launcher bar module for Enlightenment.<br>It is "
-"a first example module and is being used to flesh out several<br>interfaces "
-"in Enlightenment 0.17.0. It is under heavy development,<br>so expect it to "
-"<hilight>break often</hilight> and change as it improves."
-msgstr ""
-"Toto je IBar - lišta pre spúštanie aplikácií pre Enlightenment.<br>"
-"Je to prvý ukážkový modul a používá sa ako rozhranie pre spúštanie <br>"
-"aplikácií v Enlightenment 0.17.0. Prebieha na ňom intenzívny vývoj,<br>"
-"takže sa dá očakávať <hilight>veľa chýb</hilight> a časté zmeny v rámci vylepšovania."
+msgid "This is the IBar Application Launcher bar module for Enlightenment.<br>It is a first example module and is being used to flesh out several<br>interfaces in Enlightenment 0.17.0. It is under heavy development,<br>so expect it to <hilight>break often</hilight> and change as it improves."
+msgstr "Toto je IBar - lišta pre spúšťanie aplikácií pre Enlightenment.<br>Je to prvý ukážkový modul a používa sa ako rozhranie pre spúšťanie <br>aplikácií v Enlightenment 0.17.0. Prebieha na ňom intenzívny vývoj,<br>takže sa dá očakávať <hilight>veľa chýb</hilight> a časté zmeny v rámci vylepšovania."
 
-#: src/modules/ibar/e_mod_main.c:1607
+#: src/modules/ibar/e_mod_main.c:1630
 msgid "Cannot add icon"
 msgstr "Nemôžem pridať ikonu"
 
-#: src/modules/ibar/e_mod_main.c:1609
-msgid ""
-"You tried to drop an icon of an application that<br>does not have a matching "
-"application file.<br><br>The icon cannot be added to IBar."
-msgstr ""
-"Snažíš sa pridať ikonu aplikácie, ktorá<br>nemá príslušný "
-"aplikačný súbor.<br><br>Ikona nemôže byť pridaná na IBar."
+#: src/modules/ibar/e_mod_main.c:1632
+msgid "You tried to drop an icon of an application that<br>does not have a matching application file.<br><br>The icon cannot be added to IBar."
+msgstr "Snažíš sa pridať ikonu aplikácie, ktorá<br>nemá príslušný aplikačný súbor.<br><br>Ikona nemôže byť pridaná na IBar."
 
-#: src/modules/ibox/e_mod_config.c:47
+#: src/modules/ibox/e_mod_config.c:49
 msgid "IBox Configuration"
 msgstr "Konfigurácia IBoxu"
 
@@ -2276,58 +2652,61 @@ msgid "Enlightenment IBox Module"
 msgstr "Enlightenment IBox Modul"
 
 #: src/modules/ibox/e_mod_main.c:149
-msgid ""
-"This is the IBox Iconified Application module for Enlightenment.<br>It will "
-"hold minimized applications"
-msgstr ""
-"Toto je IBox Aplikácia s minimalizovanými ikonami pre Enlightenment.<br>Sú do nej "
-"umiestnené minimalizované aplikácie"
+msgid "This is the IBox Iconified Application module for Enlightenment.<br>It will hold minimized applications"
+msgstr "Toto je IBox Aplikácia s minimalizovanými ikonami pre Enlightenment.<br>Sú do nej umiestnené minimalizované aplikácie"
 
-#: src/modules/pager/e_mod_config.c:44
+#: src/modules/pager/e_mod_config.c:46
 msgid "Pager Configuration"
 msgstr "Konfigurácia Pageru"
 
-#: src/modules/pager/e_mod_config.c:98 src/modules/pager/e_mod_config.c:153
+#: src/modules/pager/e_mod_config.c:100
+#: src/modules/pager/e_mod_config.c:159
 msgid "Show Popup"
 msgstr "Ukáž Popup"
 
-#: src/modules/pager/e_mod_config.c:100 src/modules/pager/e_mod_config.c:155
+#: src/modules/pager/e_mod_config.c:102
+#: src/modules/pager/e_mod_config.c:161
 msgid "Show Desktop Name"
 msgstr "Meno Plochy"
 
-#: src/modules/pager/e_mod_config.c:104 src/modules/pager/e_mod_config.c:159
+#: src/modules/pager/e_mod_config.c:106
+#: src/modules/pager/e_mod_config.c:165
 msgid "Desktop Name Position"
 msgstr "Umiestnenie Názvu Plochy"
 
-#: src/modules/pager/e_mod_config.c:106 src/modules/pager/e_mod_config.c:161
+#: src/modules/pager/e_mod_config.c:108
+#: src/modules/pager/e_mod_config.c:167
 msgid "Top"
 msgstr "Hore"
 
-#: src/modules/pager/e_mod_config.c:108 src/modules/pager/e_mod_config.c:163
+#: src/modules/pager/e_mod_config.c:110
+#: src/modules/pager/e_mod_config.c:169
 msgid "Bottom"
 msgstr "Dole"
 
-#: src/modules/pager/e_mod_config.c:174
+#: src/modules/pager/e_mod_config.c:180
 msgid "Popup Settings"
 msgstr "Nastavenie Popup"
 
-#: src/modules/pager/e_mod_config.c:175
+#: src/modules/pager/e_mod_config.c:181
 msgid "Popup Speed"
 msgstr "Rýchlosť Popup"
 
-#: src/modules/pager/e_mod_main.c:157
+#: src/modules/pager/e_mod_main.c:159
 msgid "Enlightenment Pager Module"
 msgstr "Modul Pager pre Enlightenment"
 
-#: src/modules/pager/e_mod_main.c:158
+#: src/modules/pager/e_mod_main.c:160
 msgid "A pager module to navigate virtual desktops."
 msgstr "Modul pager pre pohyb medzi virtuálnymi plochami."
 
-#: src/modules/pager/e_mod_main.c:411 src/modules/pager/e_mod_main.c:550
+#: src/modules/pager/e_mod_main.c:417
+#: src/modules/pager/e_mod_main.c:567
 msgid "Fix Aspect (Keep Height)"
 msgstr "Oprav Aspekt (Nastav Výšku)"
 
-#: src/modules/pager/e_mod_main.c:415 src/modules/pager/e_mod_main.c:554
+#: src/modules/pager/e_mod_main.c:421
+#: src/modules/pager/e_mod_main.c:571
 msgid "Fix Aspect (Keep Width)"
 msgstr "Oprav Aspekt (Nastav Šírku)"
 
@@ -2337,179 +2716,162 @@ msgstr "Enlightenment Randr Modul"
 
 #: src/modules/randr/e_mod_main.c:85
 msgid "Module to change screen resolution for E17"
-msgstr "Modul pre zmenu rozlíšenia v E17"
+msgstr "Modul pre zmenu rozlíšenia obrazovky v E17"
 
 #: src/modules/randr/e_mod_main.c:187
 msgid "Restore Resolution on Startup"
 msgstr "Obnov Rozlíšenie pri Štarte"
 
-#: src/modules/randr/e_mod_main.c:210
-msgid "Resolution"
-msgstr "Rozlíšenie"
-
 #: src/modules/randr/e_mod_main.c:309
 msgid "Resolution change"
-msgstr "Zmena Rozlíšenia"
+msgstr "Zmena rozlíšenia"
 
-#: src/modules/randr/e_mod_main.c:311 src/modules/randr/e_mod_main.c:381
+#: src/modules/randr/e_mod_main.c:311
+#: src/modules/randr/e_mod_main.c:381
 #, c-format
-msgid ""
-"Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
-"resolution %dx%d in %d seconds."
-msgstr ""
-"Nastaviť nové rozlíšenie <hilight>%dx%d</hilight>?<br><br>Obnoviť staré "
-"rozlíšenie %dx%d za %d sekúnd."
+msgid "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old resolution %dx%d in %d seconds."
+msgstr "Nastaviť nové rozlíšenie <hilight>%dx%d</hilight>?<br><br>Obnoviť staré rozlíšenie %dx%d za %d sekúnd."
 
 #: src/modules/randr/e_mod_main.c:390
 #, c-format
-msgid ""
-"Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
-"resolution %dx%d NOW!"
-msgstr ""
-"Nastaviť nové rozslíšenie <hilight>%dx%d</hilight>?<br><br>Obnoviť staré "
-"rozlíšenie %dx%d OKAMŽITE!"
+msgid "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old resolution %dx%d NOW!"
+msgstr "Nastaviť nové rozlíšenie <hilight>%dx%d</hilight>?<br><br>Obnoviť staré rozlíšenie %dx%d OKAMŽITE!"
 
-#: src/modules/start/e_mod_main.c:77
+#: src/modules/start/e_mod_main.c:214
 msgid "Enlightenment Start Module"
 msgstr "Modul Start pre Enlightenment"
 
-#: src/modules/start/e_mod_main.c:78
+#: src/modules/start/e_mod_main.c:215
 msgid "Experimental Button module for E17"
 msgstr "Experimentálny Tlačítkový modul pre E17"
 
-#: src/modules/temperature/e_mod_config.c:66
+#: src/modules/temperature/e_mod_config.c:61
 msgid "Temperature Configuration"
 msgstr "Konfigurácia Teploty"
 
-#: src/modules/temperature/e_mod_config.c:182
-#: src/modules/temperature/e_mod_config.c:303
+#: src/modules/temperature/e_mod_config.c:148
+#: src/modules/temperature/e_mod_config.c:274
 msgid "Display Units"
 msgstr "Zobrazuj Jednotky"
 
-#: src/modules/temperature/e_mod_config.c:184
-#: src/modules/temperature/e_mod_config.c:305
+#: src/modules/temperature/e_mod_config.c:150
+#: src/modules/temperature/e_mod_config.c:276
 msgid "Celsius"
 msgstr "Celzius"
 
-#: src/modules/temperature/e_mod_config.c:186
-#: src/modules/temperature/e_mod_config.c:307
+#: src/modules/temperature/e_mod_config.c:152
+#: src/modules/temperature/e_mod_config.c:278
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: src/modules/temperature/e_mod_config.c:190
-#: src/modules/temperature/e_mod_config.c:353
+#: src/modules/temperature/e_mod_config.c:156
+#: src/modules/temperature/e_mod_config.c:324
 msgid "Check Interval"
 msgstr "Interval Aktualizácie"
 
-#: src/modules/temperature/e_mod_config.c:192
+#: src/modules/temperature/e_mod_config.c:158
 msgid "Fast"
 msgstr "Rýchlo"
 
-#: src/modules/temperature/e_mod_config.c:196
+#: src/modules/temperature/e_mod_config.c:162
 msgid "Slow"
 msgstr "Pomaly"
 
-#: src/modules/temperature/e_mod_config.c:198
+#: src/modules/temperature/e_mod_config.c:164
 msgid "Very Slow"
 msgstr "Veľmi Pomaly"
 
-#: src/modules/temperature/e_mod_config.c:205
-#: src/modules/temperature/e_mod_config.c:229
-#: src/modules/temperature/e_mod_config.c:374
-#: src/modules/temperature/e_mod_config.c:386
+#: src/modules/temperature/e_mod_config.c:171
+#: src/modules/temperature/e_mod_config.c:195
+#: src/modules/temperature/e_mod_config.c:345
+#: src/modules/temperature/e_mod_config.c:357
 msgid "High Temperature"
 msgstr "Vysoká Teplota"
 
-#: src/modules/temperature/e_mod_config.c:208
+#: src/modules/temperature/e_mod_config.c:174
 msgid "200 F"
 msgstr "200 F"
 
-#: src/modules/temperature/e_mod_config.c:210
+#: src/modules/temperature/e_mod_config.c:176
 msgid "150 F"
 msgstr "150 F"
 
-#: src/modules/temperature/e_mod_config.c:212
-#: src/modules/temperature/e_mod_config.c:221
+#: src/modules/temperature/e_mod_config.c:178
+#: src/modules/temperature/e_mod_config.c:187
 msgid "110 F"
 msgstr "110 F"
 
-#: src/modules/temperature/e_mod_config.c:216
-#: src/modules/temperature/e_mod_config.c:240
-#: src/modules/temperature/e_mod_config.c:379
-#: src/modules/temperature/e_mod_config.c:391
+#: src/modules/temperature/e_mod_config.c:182
+#: src/modules/temperature/e_mod_config.c:206
+#: src/modules/temperature/e_mod_config.c:350
+#: src/modules/temperature/e_mod_config.c:362
 msgid "Low Temperature"
 msgstr "Nízka Teplota"
 
-#: src/modules/temperature/e_mod_config.c:219
+#: src/modules/temperature/e_mod_config.c:185
 msgid "130 F"
 msgstr "130 F"
 
-#: src/modules/temperature/e_mod_config.c:223
+#: src/modules/temperature/e_mod_config.c:189
 msgid "90 F"
 msgstr "90 F"
 
-#: src/modules/temperature/e_mod_config.c:232
+#: src/modules/temperature/e_mod_config.c:198
 msgid "93 C"
 msgstr "93 C"
 
-#: src/modules/temperature/e_mod_config.c:234
+#: src/modules/temperature/e_mod_config.c:200
 msgid "65 C"
 msgstr "65 C"
 
-#: src/modules/temperature/e_mod_config.c:236
-#: src/modules/temperature/e_mod_config.c:245
+#: src/modules/temperature/e_mod_config.c:202
+#: src/modules/temperature/e_mod_config.c:211
 msgid "43 C"
 msgstr "43 C"
 
-#: src/modules/temperature/e_mod_config.c:243
+#: src/modules/temperature/e_mod_config.c:209
 msgid "55 C"
 msgstr "55 C"
 
-#: src/modules/temperature/e_mod_config.c:247
+#: src/modules/temperature/e_mod_config.c:213
 msgid "32 C"
 msgstr "32 C"
 
-#: src/modules/temperature/e_mod_config.c:335
+#: src/modules/temperature/e_mod_config.c:306
 msgid "Sensors"
 msgstr "Senzory"
 
-#: src/modules/temperature/e_mod_config.c:337
+#: src/modules/temperature/e_mod_config.c:308
 msgid "Temp 1"
 msgstr "Teplota 1"
 
-#: src/modules/temperature/e_mod_config.c:339
+#: src/modules/temperature/e_mod_config.c:310
 msgid "Temp 2"
 msgstr "Teplota 2"
 
-#: src/modules/temperature/e_mod_config.c:341
+#: src/modules/temperature/e_mod_config.c:312
 msgid "Temp 3"
 msgstr "Teplota 3"
 
-#: src/modules/temperature/e_mod_config.c:375
-#: src/modules/temperature/e_mod_config.c:380
+#: src/modules/temperature/e_mod_config.c:346
+#: src/modules/temperature/e_mod_config.c:351
 #, c-format
 msgid "%1.0f F"
 msgstr "%1.0f F"
 
-#: src/modules/temperature/e_mod_config.c:387
-#: src/modules/temperature/e_mod_config.c:392
+#: src/modules/temperature/e_mod_config.c:358
+#: src/modules/temperature/e_mod_config.c:363
 #, c-format
 msgid "%1.0f C"
 msgstr "%1.0f °C"
 
-#: src/modules/temperature/e_mod_main.c:103
+#: src/modules/temperature/e_mod_main.c:118
 msgid "Enlightenment Temperature Module"
 msgstr "Modul Teplota pre Enlightenment"
 
-#: src/modules/temperature/e_mod_main.c:104
-msgid ""
-"A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux."
-"<br>It is especially useful for modern Laptops with high speed<br>CPUs that "
-"generate a lot of heat."
-msgstr ""
-"Modul, ktorý zobrazuje teplotu meranú <hilight>ACPI senzorom</hilight> na Linuxe."
-"<br>Svoje uplatnenie nájde najmä v moderných laptopoch s rýchlymi<br>CPU, ktoré "
-"produkujú veľa tepla."
+#: src/modules/temperature/e_mod_main.c:119
+msgid "A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux.<br>It is especially useful for modern Laptops with high speed<br>CPUs that generate a lot of heat."
+msgstr "Modul, ktorý zobrazuje teplotu meranú <hilight>ACPI senzorom</hilight> na Linuxe.<br>Svoje uplatnenie nájde najmä v moderných notebookoch s rýchlymi<br>CPU, ktoré produkujú veľa tepla."
 
 #: src/modules/test/e_mod_main.c:21
 msgid "Module Config Menu Item 1"
@@ -2525,15 +2887,321 @@ msgstr "Nastavenie Modulu Položka Menu 3"
 
 #: src/modules/test/e_mod_main.c:29
 msgid "Something Else"
-msgstr "Niečo Iné"
+msgstr "Niečo iné"
 
 #: src/modules/test/e_mod_main.c:63
+msgid "This module is VERY simple and is only used to test the basic<br>interface of the Enlightenment 0.17.0 module system. Please<br>ignore this module unless you are working on the module system."
+msgstr "Tento modul je VEĽMI jednoduchý a slúži pre testovanie základného<br>rozhrania systému modulov v Enlightenment 0.17.0. Prosím<br>ignorujte ho, pokiaľ sa nezaoberáte vývojom systému modulov."
+
+#: src/modules/itray/e_mod_config.c:46
+msgid "ITray Configuration"
+msgstr "Konfigurácia ITray"
+
+#: src/modules/itray/e_mod_config.c:117
+msgid "Number of Rows"
+msgstr "Počet Riadkov"
+
+#: src/modules/itray/e_mod_config.c:118
+#, c-format
+msgid "%3.0f"
+msgstr "%3.0f"
+
+#: src/modules/itray/e_mod_main.c:161
+msgid "Enlightenment ITray Module"
+msgstr "Enlightenment ITray Modul"
+
+#: src/modules/itray/e_mod_main.c:162
+msgid "This is the ITray system tray module for Enlightenment.<br>It will hold system tray icons.<br>Beware that this can be buggy due to many systray providing<br>applications not handling the protocol properly, and the way<br>systray icons work being very limiting and hacky. Do not use<br>this module unless you absolutely must, and if you do, beware<br>of issues that will appear."
+msgstr "Toto je ITray, systémový tray modul pre Enlightenment.<br>Sú doňho umiestnené systémové tray ikony.<br>Varovanie tento modul môže vykazovať chyby, pretože veľa aplikácií<br> je nedostatočne naprogramovaných pre umiestnenie do systray a spôsob<br>akým systray funguje má isté obmedzenia a nedostatky. Nepoužívajte<br>tento modul pokiaľ to nie je skutočne nutné a v prípade, že ho použijete pozor<br>na chyby, ktoré sa objavia."
+
+msgid "Ok"
+msgstr "Ok"
+
+msgid "The border style"
+msgstr "Štýl okraju"
+
+msgid "There was an error loading module named: %s<br>The full path to this module is:<br>%s<br>The error reported was:<br>Module does not contain all needed functions<br>"
+msgstr "Došlo k chybe pri načítaní modulu: %s<br>Úplná cesta k modulu je:<br>%s<br>Došlo k chybe:<br>Modul neobsahuje všetky potrebné funkcie<br>"
+
+msgid "About..."
+msgstr "O..."
+
+msgid "Open with"
+msgstr "Otvoriť pomocou"
+
+msgid "Open"
+msgstr "Otvoriť"
+
+msgid "Use E Cursor"
+msgstr "Použi E Kurzor"
+
+msgid "Start Module Configuration"
+msgstr "Konfigurácia Štart Modulu"
+
+msgid "Themes"
+msgstr "Témy"
+
+msgid "Files"
+msgstr "Súbory"
+
+msgid "This is the ITray system tray module for Enlightenment.<br>It will hold system tray icons."
+msgstr "Toto je ITray, systémový tray modul pre Enlightenment.<br>Sú v ňom umiestnené systémové tray ikony."
+
 msgid ""
-"This module is VERY simple and is only used to test the basic<br>interface "
-"of the Enlightenment 0.17.0 module system. Please<br>ignore this module "
-"unless you are working on the module system."
+"Enlightenment was unable to run the program:\n"
+"\n"
+"%s\n"
 msgstr ""
-"Tento modul je VEĽMI jednoduchý a slúži pre testovanie základného<br>rozhrania "
-"systému modulov v Enlightenment 0.17.0. Prosím<br>ignorujte ho, pokiaľ sa "
-"nezaoberáte vývojom systému modulov."
+"Enlightenment nemôže spustiť program:\n"
+"\n"
+"%s\n"
+
+msgid ""
+"3 Enlightenment was unable to fork a child process:\n"
+"\n"
+"%s\n"
+"\n"
+msgstr ""
+"3 Enlightenment nemôže vytvoriť proces potomka:\n"
+"\n"
+"%s\n"
+"\n"
+
+msgid "Mouse Pointer Settings"
+msgstr "Nastavenia Kurzoru Myši"
+
+msgid "Test Menu Item"
+msgstr "Testovacia Položka Menu"
+
+msgid ""
+"Enlightenment was unable run the program:\n"
+"\n"
+"%s\n"
+"\n"
+"The command was not found\n"
+msgstr ""
+"Enlightenment nemôže spustiť program:\n"
+"\n"
+"%s\n"
+"\n"
+"Nepodarilo sa nájsť príkaz\n"
+
+msgid "New Row of Desktops"
+msgstr "Nový riadok pracovných plôch"
+
+msgid "Remove Row of Desktops"
+msgstr "Odstráň riadok pracovných plôch"
+
+msgid "New Column of Desktops"
+msgstr "Nový stĺpec pracovných plôch"
+
+msgid "Remove Column of Desktops"
+msgstr "Odstráň stĺpec pracovných plôch"
+
+msgid "Battery Module"
+msgstr "Modul Batéria"
+
+msgid "10 Mins"
+msgstr "10 Min"
+
+#
+msgid "30 Mins"
+msgstr "30 分Min"
+
+#
+msgid "1 Hour"
+msgstr "1 時間Hodina"
+
+msgid "Clock Module"
+msgstr "Modul Hodiny"
+
+msgid "Extremely Near"
+msgstr "Extrémne Blízko"
+
+msgid "Immediately Underneath"
+msgstr "真下Hneď  pod"
+
+msgid "IBar Module"
+msgstr "IBar Modul"
+
+msgid "Small"
+msgstr "Malý"
+
+msgid "Large"
+msgstr "Veľký"
+
+msgid "Very Large"
+msgstr "Veľmi Veľké"
+
+msgid "Icon Size:"
+msgstr "Veľkosť Ikony:"
+
+msgid "IBox Module"
+msgstr "IBox Modul"
+
+msgid "Very Fast"
+msgstr "Veľmi Rýchlo"
+
+msgid "Enable Popup"
+msgstr "Aktivuj Popup"
+
+msgid "Unit"
+msgstr "単位Jednotka"
+
+msgid "Fast (1 sec)"
+msgstr "Rýchlo (1 sek)"
+
+msgid "Medium (5 sec)"
+msgstr "Stredne Rýchlo (5 sek)"
+
+msgid "Normal (10 sec)"
+msgstr "Normálne (10 sek)"
+
+msgid "Slow (30 sec)"
+msgstr "Pomaly (30 sek)"
+
+msgid "Very Slow (60 sec)"
+msgstr "Veľmi Pomaly (60 sek)"
+
+msgid "Set Alarm"
+msgstr "Nastav Poplach"
+
+msgid "20 mins"
+msgstr "20 minút"
+
+msgid "40 mins"
+msgstr "40 minút"
+
+msgid "50 mins"
+msgstr "50 minút"
+
+msgid "Check Fast (1 sec)"
+msgstr "Kontroluj Rýchlo (1 sek)"
+
+msgid "Check Medium (5 sec)"
+msgstr "Kontroluj Stredne Rýchlo (5 sek)"
+
+msgid "Check Normal (10 sec)"
+msgstr "Kontroluj Normálne (10 sek)"
+
+msgid "Check Slow (30 sec)"
+msgstr "Kontroluj Pomaly (30 sek)"
+
+msgid "Check Very Slow (60 sec)"
+msgstr "Kontroluj Veľmi Pomaly (60 sek)"
+
+msgid "Digital Display"
+msgstr "Digitálny Displej"
+
+msgid "Microscopic"
+msgstr "Mikroskopické"
+
+msgid "Tiny"
+msgstr "Malé"
+
+msgid "Very Small"
+msgstr "Veľmi Malé"
+
+msgid "Extremely Large"
+msgstr "Extrémne Veľké"
+
+msgid "Huge"
+msgstr "Obrovské"
+
+msgid "Enormous"
+msgstr "巨大Enormné"
+
+msgid "Gigantic"
+msgstr "超巨大Gigantické"
+
+msgid "Shade"
+msgstr "Tieň"
+
+msgid "User"
+msgstr "Užívateľ"
+
+msgid "Lifespan"
+msgstr "寿命Lifespan"
+
+msgid "Remember This Window"
+msgstr "Zapamätaj si toto okno"
+
+msgid "Remember This Instance Only"
+msgstr "Zapamätaj si iba túto inštanciu"
+
+msgid "Match by Class"
+msgstr "Podľa triedy"
+
+msgid "Match by Title"
+msgstr "Podľa názvu"
+
+msgid "Match by Role"
+msgstr "Podľa úlohy"
+
+msgid "Match by Transient Status"
+msgstr "Podľa stavu priesvitnosti"
+
+msgid "Remember Position"
+msgstr "Zapamätaj si umiestnenie"
+
+msgid "Remember Size"
+msgstr "Zapamätaj si veľkosť"
+
+msgid "Remember Border"
+msgstr "Zapamätaj si okraj"
+
+msgid "Remember Desktop"
+msgstr "Zapamätaj si plochu"
+
+msgid "Remember Shaded State"
+msgstr "Zapamätaj si schovaný stav"
+
+msgid "Remember Zone"
+msgstr "Zapamätaj si oblasť"
+
+msgid "Remember Skip Window List"
+msgstr "Zapamätaj si vynechanie zo zoznamu okien"
+
+msgid "Send To"
+msgstr "Premiestni na:"
+
+msgid ""
+"Error starting icon editor\n"
+"\n"
+"please install e_util_eapp_edit\n"
+"or make sure it is in your PATH\n"
+msgstr ""
+"Chyba pri spustení editoru ikon\n"
+"\n"
+"prosím nainštaluj e_util_eapp_edit\n"
+",alebo sa uisti, že je uvedená v  PATH\n"
+
+msgid "Clock"
+msgstr "Hodiny"
+
+msgid "Cpufreq"
+msgstr "Cpufreq"
+
+msgid "Enlightenment Cpufreq Module"
+msgstr "Modul Cpufreq pre Enlightenment"
+
+msgid "CpuFreq"
+msgstr "CpuFreq"
+
+msgid "Dropshadow"
+msgstr "Tieň"
+
+msgid "IBar"
+msgstr "IBar"
+
+msgid "Pager"
+msgstr "Pager"
+
+msgid "Start"
+msgstr "Štart"
+
+#~ msgid "Haladó"
+#~ msgstr "Posuvný"
+#~ msgid "Alap"
+#~ msgstr "Báza"
 
