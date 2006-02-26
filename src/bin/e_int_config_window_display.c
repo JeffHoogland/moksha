@@ -17,9 +17,9 @@ struct _E_Config_Dialog_Data
    /*- BASIC -*/
    int move_resize_info;
    int animate_shading;
-   int placement;
-   /*- ADVANCED -*/
    int window_placement_policy;
+
+   /*- ADVANCED -*/
    int move_info_visible;
    int move_info_follows;
    int resize_info_visible;
@@ -66,7 +66,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    if (cfdata->move_info_visible ||
        cfdata->resize_info_visible) cfdata->move_resize_info = 1;
    if (cfdata->border_shade_animate) cfdata->animate_shading = 1;
-   cfdata->placement = cfdata->window_placement_policy;
    cfdata->use_app_icon = e_config->use_app_icon;
 }
 
@@ -106,7 +105,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	e_config->move_info_visible = 0;
 	e_config->resize_info_visible = 0;
      }
-   e_config->window_placement_policy = cfdata->placement;
+   e_config->window_placement_policy = cfdata->window_placement_policy;
    e_config->border_shade_animate = cfdata->animate_shading;
    e_config_save_queue();
    return 1; /* Apply was OK */
@@ -147,7 +146,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Automatic New Window Placement"), 0);
-   rg = e_widget_radio_group_new(&(cfdata->placement));
+   rg = e_widget_radio_group_new(&(cfdata->window_placement_policy));
    ob = e_widget_radio_add(evas, _("Smart Placement"), E_WINDOW_PLACEMENT_SMART, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Don't hide Gadgets"), E_WINDOW_PLACEMENT_ANTIGADGET, rg);
@@ -201,7 +200,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
    of = e_widget_framelist_add(evas, _("Automatic New Window Placement"), 0);
-   rg = e_widget_radio_group_new(&(cfdata->placement));
+   rg = e_widget_radio_group_new(&(cfdata->window_placement_policy));
    ob = e_widget_radio_add(evas, _("Smart Placement"), E_WINDOW_PLACEMENT_SMART, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Don't hide Gadgets"), E_WINDOW_PLACEMENT_ANTIGADGET, rg);
