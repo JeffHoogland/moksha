@@ -512,11 +512,16 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
       }
 
   // here the removing of the old keybindings goes
+  e_managers_keys_ungrab();
   while (e_config->key_bindings)
     {
        E_Config_Binding_Key *eb;
        
        eb = e_config->key_bindings->data;
+
+       e_bindings_key_del(eb->context, eb->key, eb->modifiers, eb->any_mod,
+			  eb->action, eb->params);
+
        e_config->key_bindings  = evas_list_remove_list(e_config->key_bindings,
 						       e_config->key_bindings);
        if (eb->key) evas_stringshare_del(eb->key);
@@ -526,6 +531,19 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
     }
 
   // here the adding of new keybinds are going.
+
+  /*while (key_bindings)
+    {
+      E_Binding_Key *bind;
+      bind = l->data;
+
+      if (bind->key) evas_stringshare_del(bind->key);
+      if (bind->action) evas_stringshare_del(bind->action);
+      if (bind->action) evas_stringshare_del(bind->params);
+      free(bind);
+      key_bindings = evas_list_remove_list(key_bindings,key_bindings);
+    }*/
+
   size = evas_list_count(cfdata->key_bindings);
   for (i = 0; i < size; i++)
     {
@@ -550,11 +568,14 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 		      bk2->params = bk->params == NULL ? NULL : 
 							 (char *)evas_stringshare_add(bk->params);
 		      e_config->key_bindings = evas_list_append(e_config->key_bindings, bk2);
+		      e_bindings_key_add(bk->context, bk->key, bk->modifiers, bk->any_mod,
+					 bk->action, bk->params);
 		    }
 		}
 	    }
 	}
     }
+  e_managers_keys_grab();
   e_config_save_queue();
   return 1;
 }
@@ -1368,11 +1389,11 @@ _keybind_cb_add_keybinding(void *data, void *data2)
     return;
 
   bk->context = E_BINDING_CONTEXT_ANY;
-  bk->key = NULL;
+  bk->key = strdup("");
   bk->modifiers = E_BINDING_MODIFIER_NONE;
-  bk->action = actions_predefined_names[cfdata->cur_eckb->acn].action_cmd == NULL ? NULL :
+  bk->action = actions_predefined_names[cfdata->cur_eckb->acn].action_cmd == NULL ? strdup("") :
     strdup(actions_predefined_names[cfdata->cur_eckb->acn].action_cmd);
-  bk->params = actions_predefined_names[cfdata->cur_eckb->acn].action_params == NULL ? NULL :
+  bk->params = actions_predefined_names[cfdata->cur_eckb->acn].action_params == NULL ? strdup("") :
     strdup(actions_predefined_names[cfdata->cur_eckb->acn].action_params);
 
   cfdata->cur_eckb->bk_list = evas_list_append(cfdata->cur_eckb->bk_list, bk);
