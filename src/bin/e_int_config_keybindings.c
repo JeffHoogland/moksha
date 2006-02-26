@@ -508,7 +508,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
       {
 	//TODO: message box which should ask if we really should proceed.
 	//If yes, then the current 'empty' binding will be deleted
-	_keybind_delete_keybinding(cfdata);
+	//_keybind_delete_keybinding(cfdata);
       }
 
   // here the removing of the old keybindings goes
@@ -697,22 +697,22 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
 	ob = e_widget_check_add(evas, _("Shift"), &(cfdata->bind_mod.shift));
 	cfdata->gui.bind_mod_obj.shift = ob;
-	//e_widget_disabled_set(ob, 1);
+	e_widget_disabled_set(ob, 1);
 	e_widget_frametable_object_append(oft1, ob, 0, 1, 1, 1, 1, 0, 1, 0);
 
 	ob = e_widget_check_add(evas, _("Control"), &(cfdata->bind_mod.ctrl));
 	cfdata->gui.bind_mod_obj.ctrl = ob;
-	//e_widget_disabled_set(ob, 1);
+	e_widget_disabled_set(ob, 1);
 	e_widget_frametable_object_append(oft1, ob, 1, 1, 1, 1, 1, 0, 1, 0);
 
 	ob = e_widget_check_add(evas, _("Alt"), &(cfdata->bind_mod.alt));
 	cfdata->gui.bind_mod_obj.alt = ob;
-	//e_widget_disabled_set(ob, 1);
+	e_widget_disabled_set(ob, 1);
 	e_widget_frametable_object_append(oft1, ob, 2, 1, 1, 1, 1, 0, 1, 0);
 
 	ob = e_widget_check_add(evas, _("Win"), &(cfdata->bind_mod.win));
 	cfdata->gui.bind_mod_obj.win = ob;
-	//e_widget_disabled_set(ob, 1);
+	e_widget_disabled_set(ob, 1);
 	e_widget_frametable_object_append(oft1, ob, 3, 1, 1, 1, 1, 0, 1, 0);
       }
       e_widget_framelist_object_append(of2, oft1);
@@ -798,9 +798,6 @@ static void _update_context_radios(E_Config_Dialog_Data *cfdata)
   wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_BORDER]);
   edje_object_signal_emit(wd->o_radio, "toggle_off", "");
 
-  wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_BORDER]);
-  edje_object_signal_emit(wd->o_radio, "toggle_off", "");
-
   wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_ZONE]);
   edje_object_signal_emit(wd->o_radio, "toggle_off", "");
 
@@ -821,6 +818,17 @@ static void _update_context_radios(E_Config_Dialog_Data *cfdata)
 
   wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_ANY]);
   edje_object_signal_emit(wd->o_radio, "toggle_off", "");
+
+  e_widget_disabled_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_NONE], 0);
+  e_widget_disabled_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_UNKNOWN], 0);
+  e_widget_disabled_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_BORDER], 0);
+  e_widget_disabled_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_ZONE], 0);
+  e_widget_disabled_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_CONTAINER], 0);
+  e_widget_disabled_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_MANAGER], 0);
+  e_widget_disabled_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_MENU], 0);
+  e_widget_disabled_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_WINLIST], 0);
+  e_widget_disabled_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_POPUP], 0);
+  e_widget_disabled_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_ANY], 0);
 
   if (cfdata->cur_eckb == NULL) return;
   if (cfdata->cur_eckb->bk_list == NULL) return;
@@ -919,6 +927,11 @@ static void _update_modifiers_checkboxs(E_Config_Dialog_Data *cfdata)
 
   if (cfdata->cur_eckb == NULL) return;
   if (cfdata->cur_eckb->bk_list == NULL) return;
+
+  e_widget_disabled_set(cfdata->gui.bind_mod_obj.ctrl, 0);
+  e_widget_disabled_set(cfdata->gui.bind_mod_obj.alt, 0);
+  e_widget_disabled_set(cfdata->gui.bind_mod_obj.shift, 0);
+  e_widget_disabled_set(cfdata->gui.bind_mod_obj.win, 0);
 
   if ((bk = evas_list_nth(cfdata->cur_eckb->bk_list, cfdata->cur_eckb_kb_sel)) == NULL )
     return;
@@ -1230,12 +1243,12 @@ _ilist_kb_cb_change(void *data, Evas_Object *obj)
     {
       bk = E_NEW(E_Config_Binding_Key, 1);
 
-      bk->key = NULL;
+      bk->key = strdup("");
       bk->modifiers = E_BINDING_MODIFIER_NONE;
       bk->any_mod = 0;
-      bk->action = actions_predefined_names[acn].action_cmd == NULL ? NULL :
+      bk->action = actions_predefined_names[acn].action_cmd == NULL ? strdup("") :
 					       strdup(actions_predefined_names[acn].action_cmd);
-      bk->params = actions_predefined_names[acn].action_params == NULL ? NULL :
+      bk->params = actions_predefined_names[acn].action_params == NULL ? strdup("") :
 					       strdup(actions_predefined_names[acn].action_params);
 
       cfdata->cur_eckb->bk_list = evas_list_append(cfdata->cur_eckb->bk_list, bk);
@@ -1411,8 +1424,8 @@ _keybind_cb_auto_apply(E_Config_Dialog_Data *cfdata)
   if (!cfdata || !cfdata->cur_eckb)
     return -1;
 
-  if (cfdata->key_bind == NULL || strlen(cfdata->key_bind) == 0)
-    return -1;
+  /*if (cfdata->key_bind == NULL || strlen(cfdata->key_bind) == 0)
+    return -1;*/
 
   bk = evas_list_nth(cfdata->cur_eckb->bk_list, cfdata->cur_eckb_kb_sel);
   if (bk == NULL)
