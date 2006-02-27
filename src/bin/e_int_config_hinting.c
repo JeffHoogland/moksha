@@ -43,7 +43,6 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
    cfdata->hinting = e_config->font_hinting;
-   printf("Hinting: %d\n", e_config->font_hinting);
 }
 
 static void *
