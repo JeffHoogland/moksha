@@ -135,6 +135,7 @@ e_int_config_display.h \
 e_int_config_desklock.h \
 e_int_config_exebuf.h \
 e_int_config_cfgdialogs.h \
+e_int_config_hinting.h \
 e_deskpreview.h \
 e_exebuf.h \
 e_desklock.h \
@@ -262,6 +263,7 @@ e_int_config_display.c \
 e_int_config_desklock.c \
 e_int_config_exebuf.c \
 e_int_config_cfgdialogs.c \
+e_int_config_hinting.c \
 e_deskpreview.c \
 e_exebuf.c \
 e_desklock.c \

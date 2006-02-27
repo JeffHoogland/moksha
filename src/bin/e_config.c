@@ -458,6 +458,7 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, gadcons, _e_config_gadcon_edd);
    E_CONFIG_LIST(D, T, shelves, _e_config_shelf_edd);
    E_CONFIG_VAL(D, T, desklock_personal_passwd, STR);
+   E_CONFIG_VAL(D, T, font_hinting, INT);
 
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -610,6 +611,7 @@ e_config_init(void)
 	e_config->cfgdlg_default_mode = 0;
 	e_config->gadcons = NULL;
 	e_config->desklock_personal_passwd = NULL;
+	e_config->font_hinting = 0;
 	
 	/* FIXME: fill up default gadcons! */
 	  {
@@ -1670,6 +1672,15 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->use_app_icon, 0, 1);
    E_CONFIG_LIMIT(e_config->cfgdlg_auto_apply, 0, 1);
    E_CONFIG_LIMIT(e_config->cfgdlg_default_mode, 0, 1);
+   E_CONFIG_LIMIT(e_config->font_hinting, 0, 2);
+   
+   if (e_config->font_hinting == 0)
+     evas_imaging_font_hinting_set(EVAS_FONT_HINTING_BYTECODE);
+   else if (e_config->font_hinting == 1)
+     evas_imaging_font_hinting_set(EVAS_FONT_HINTING_AUTO);
+   else if (e_config->font_hinting == 2)
+     evas_imaging_font_hinting_set(EVAS_FONT_HINTING_NONE);
+   
    return 1;
 }
 

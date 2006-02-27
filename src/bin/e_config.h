@@ -211,6 +211,7 @@ struct _E_Config
    Evas_List  *gadcons;
    Evas_List  *shelves;
    char	      *desklock_personal_passwd; // GUI
+   int         font_hinting; // GUI
 };
 
 struct _E_Config_Module
