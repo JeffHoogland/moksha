@@ -69,8 +69,8 @@ e_configure_show(E_Container *con)
    e_configure_standard_item_add(eco, "enlightenment/configuration", _("Config Dialog Settings"), e_int_config_cfgdialogs);
    e_configure_standard_item_add(eco, "enlightenment/mouse", _("Cursor Settings"), e_int_config_cursor);
    e_configure_standard_item_add(eco, "enlightenment/desktops", _("Desktop Settings"), e_int_config_desks);
-   e_configure_standard_item_add(eco, "enlightenment/desktops", _("Display Settings"), e_int_config_display);
    e_configure_standard_item_add(eco, "enlightenment/desktops", _("Desktop Lock Settings"), e_int_config_desklock);
+   e_configure_standard_item_add(eco, "enlightenment/desktops", _("Display Settings"), e_int_config_display);
    e_configure_standard_item_add(eco, "enlightenment/e", _("Focus Settings"), e_int_config_focus);
    e_configure_standard_item_add(eco, "enlightenment/e", _("Key Binding Settings"), e_int_config_keybindings);
    e_configure_standard_item_add(eco, "enlightenment/favorites", _("Menu Settings"), e_int_config_menus);
