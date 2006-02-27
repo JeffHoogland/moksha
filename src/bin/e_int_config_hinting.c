@@ -43,6 +43,7 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
    cfdata->hinting = e_config->font_hinting;
+   printf("Hinting: %d\n", e_config->font_hinting);
 }
 
 static void *
@@ -88,17 +89,17 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    rg = e_widget_radio_group_new(&(cfdata->hinting));
    if (evas_imaging_font_hinting_can_hint(EVAS_FONT_HINTING_BYTECODE))
      {
-	ob = e_widget_radio_add(evas, _("Bytecode Hinting"), 0, rg);
+	ob = e_widget_radio_add(evas, _("Bytecode Hinting"), EVAS_FONT_HINTING_BYTECODE, rg);
 	e_widget_list_object_append(o, ob, 1, 1, 0.5);
      }
    if (evas_imaging_font_hinting_can_hint(EVAS_FONT_HINTING_AUTO))
      {
-	ob = e_widget_radio_add(evas, _("Automatic Hinting"), 1, rg);
+	ob = e_widget_radio_add(evas, _("Automatic Hinting"), EVAS_FONT_HINTING_AUTO, rg);
 	e_widget_list_object_append(o, ob, 1, 1, 0.5);
      }
    if (evas_imaging_font_hinting_can_hint(EVAS_FONT_HINTING_NONE))
      {
-	ob = e_widget_radio_add(evas, _("No Hinting"), 2, rg);
+	ob = e_widget_radio_add(evas, _("No Hinting"), EVAS_FONT_HINTING_NONE, rg);
 	e_widget_list_object_append(o, ob, 1, 1, 0.5);
      }
    return o;
