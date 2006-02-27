@@ -86,5 +86,56 @@ group {
 	    }
 	 }
       }
+      part {
+	 name:          "drag";
+	 mouse_events:  1;
+	 type:          RECT;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   2    2;
+	    }
+	    rel2 {
+	       relative: 1.0  0.0;
+	       offset:   -3   5;
+	    }
+	    color: 255 0 0 100;
+	 }
+      }
+      part {
+	 name:          "resize_l";
+	 mouse_events:  1;
+	 type:          RECT;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   2    6;
+	    }
+	    rel2 {
+	       relative: 0.0  1.0;
+	       offset:   5   -7;
+	    }
+	    color: 0 0 255 100;
+	 }
+      }
+      part {
+	 name:          "resize_r";
+	 mouse_events:  1;
+	 type:          RECT;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 1.0  0.0;
+	       offset:   -6    6;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -3   -7;
+	    }
+	    color: 0 0 255 100;
+	 }
+      }
    }
 }

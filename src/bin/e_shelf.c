@@ -9,6 +9,13 @@ static void _e_shelf_config_port(E_Config_Shelf_Config *cf1, E_Config_Shelf_Conf
 static Evas_List *shelves = NULL;
 static int shelf_id = 0;
 
+/* FIXME: shelves need to do this:
+ * 1. allow them to be moved, resized etc. etc.
+ * 2. have a configuration panel per shelf to select if its inline, layer etc.
+ * 3. catch all right clicks not on modules for right click context menu
+ * 4. a global config dialog that lists shelves u have to configure them
+ */
+
 /* externally accessible functions */
 EAPI int
 e_shelf_init(void)
@@ -131,7 +138,8 @@ e_shelf_zone_new(E_Zone *zone, char *name, char *style, int popup, int layer)
    snprintf(buf, sizeof(buf), "shelf/%s/base", es->style);
    evas_object_resize(es->o_base, es->w, es->h);
    if (!e_theme_edje_object_set(es->o_base, "base/theme/shelf", buf))
-     e_theme_edje_object_set(es->o_base, "base/theme/shelf", "shelf/default/base");
+     e_theme_edje_object_set(es->o_base, "base/theme/shelf",
+			     "shelf/default/base");
    if (es->popup)
      {
 	evas_object_show(es->o_base);
