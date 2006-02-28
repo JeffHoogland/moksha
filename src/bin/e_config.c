@@ -1674,13 +1674,6 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->cfgdlg_default_mode, 0, 1);
    E_CONFIG_LIMIT(e_config->font_hinting, 0, 2);
    
-   if (e_config->font_hinting == 0)
-     evas_imaging_font_hinting_set(EVAS_FONT_HINTING_BYTECODE);
-   else if (e_config->font_hinting == 1)
-     evas_imaging_font_hinting_set(EVAS_FONT_HINTING_AUTO);
-   else if (e_config->font_hinting == 2)
-     evas_imaging_font_hinting_set(EVAS_FONT_HINTING_NONE);
-   
    return 1;
 }
 
