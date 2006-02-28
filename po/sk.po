@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-02-24 22:14+0900\n"
-"PO-Revision-Date: 2006-02-26 02:17+0100\n"
+"PO-Revision-Date: 2006-02-28 20:08+0100\n"
 "Last-Translator: hrobar <0367742402@karneval.cz>\n"
 "Language-Team: Slovakian\n"
 "MIME-Version: 1.0\n"
@@ -173,7 +173,7 @@ msgstr "Nastavenia Displeja"
 #: src/bin/e_configure.c:73
 #: src/bin/e_int_config_desklock.c:56
 msgid "Desktop Lock Settings"
-msgstr "Nastavenia uzamknutia plochy"
+msgstr "Nastavenia Uzamknutia Plochy"
 
 #: src/bin/e_configure.c:74
 #: src/bin/e_int_config_focus.c:47
@@ -183,7 +183,7 @@ msgstr "Nastavenia Zaostrenia"
 #: src/bin/e_configure.c:75
 #: src/bin/e_int_config_keybindings.c:335
 msgid "Key Binding Settings"
-msgstr "Nastavenia pre klávesové skratky"
+msgstr "Nastavenia pre Klávesové Skratky"
 
 #: src/bin/e_configure.c:76
 #: src/bin/e_int_config_menus.c:39
@@ -199,7 +199,7 @@ msgstr "Nastavenia Výkonu"
 
 #: src/bin/e_configure.c:78
 msgid "Run Command Settings"
-msgstr "Nastavenia pre spustenie príkazu"
+msgstr "Nastavenia pre Spustenie Príkazu"
 
 #: src/bin/e_configure.c:79
 #: src/bin/e_int_config_startup.c:26
@@ -237,11 +237,11 @@ msgstr "Ikona"
 
 #: src/bin/e_eap_editor.c:281
 msgid "Basic Info"
-msgstr "Základné Informácie"
+msgstr "Základné Info"
 
 #: src/bin/e_eap_editor.c:283
 msgid "App name"
-msgstr "Meno aplikácie"
+msgstr "Názov aplikácie"
 
 #: src/bin/e_eap_editor.c:293
 msgid "Executable"
@@ -254,7 +254,7 @@ msgstr "Hlavné"
 
 #: src/bin/e_eap_editor.c:325
 msgid "Generic Info"
-msgstr "Základné Informácie"
+msgstr "Všeobecné Info"
 
 #: src/bin/e_eap_editor.c:334
 msgid "Comment"
@@ -266,7 +266,7 @@ msgstr "Okno"
 
 #: src/bin/e_eap_editor.c:348
 msgid "Window Name"
-msgstr "Meno Okna"
+msgstr "Názov Okna"
 
 #: src/bin/e_eap_editor.c:357
 msgid "Window Class"
@@ -295,11 +295,11 @@ msgstr "Rozmanité"
 
 #: src/bin/e_eap_editor.c:408
 msgid "Startup Notify"
-msgstr "Notifikácia pri Štarte"
+msgstr "Upozorniť pri Štarte"
 
 #: src/bin/e_eap_editor.c:412
 msgid "Wait Exit"
-msgstr "Počkaj pri Ukončení"
+msgstr "Počkať pri Ukončení"
 
 #: src/bin/e_error.c:352
 msgid "Enlightenment: Error!"
@@ -324,7 +324,7 @@ msgstr "Ikony"
 #: src/bin/e_file_dialog.c:67
 #: src/bin/e_int_config_background_import.c:206
 msgid "Cancel"
-msgstr "Ukonči"
+msgstr "Ukončiť"
 
 #: src/bin/e_fileman_file.c:313
 #: src/bin/e_fileman_file.c:364
@@ -377,19 +377,19 @@ msgstr "Typ:"
 
 #: src/bin/e_fileman_smart.c:1253
 msgid "Protect this file"
-msgstr "Chráň tento súbor"
+msgstr "Chrániť tento súbor"
 
 #: src/bin/e_fileman_smart.c:1259
 msgid "Let others see this file"
-msgstr "Umožni ostatným prehliadať tento súbor"
+msgstr "Umožniť ostatným prehliadať tento súbor"
 
 #: src/bin/e_fileman_smart.c:1263
 msgid "Let others modify this file"
-msgstr "Znemožni ostatným modifikovať tento súbor"
+msgstr "Znemožniť ostatným modifikovať tento súbor"
 
 #: src/bin/e_fileman_smart.c:1267
 msgid "Dont let others see or modify this file"
-msgstr "Znemožni ostatným prehliadať alebo modifikovať tento súbor"
+msgstr "Znemožniť ostatným prehliadať alebo modifikovať tento súbor"
 
 #: src/bin/e_fileman_smart.c:1271
 msgid "Custom settings"
@@ -457,7 +457,7 @@ msgstr "Nastavenia"
 
 #: src/bin/e_fileman_smart.c:1940
 msgid "Arrange Icons"
-msgstr "Usporiadaj Ikony"
+msgstr "Usporiadať Ikony"
 
 #: src/bin/e_fileman_smart.c:1952
 msgid "By Name"
@@ -477,7 +477,7 @@ msgstr "Adresár"
 
 #: src/bin/e_fileman_smart.c:1994
 msgid "View"
-msgstr "Ukáž"
+msgstr "Ukázať"
 
 #: src/bin/e_fileman_smart.c:2006
 msgid "Name Only"
@@ -489,11 +489,11 @@ msgstr "Detaily"
 
 #: src/bin/e_fileman_smart.c:2025
 msgid "Refresh"
-msgstr "Obnov"
+msgstr "Obnoviť"
 
 #: src/bin/e_fileman_smart.c:3911
 msgid "Copy"
-msgstr "Kopíruj"
+msgstr "Kopírovať"
 
 #: src/bin/e_fileman_smart.c:3918
 msgid "Cut"
@@ -534,7 +534,7 @@ msgstr "Konfigurácia"
 #: src/modules/pager/e_mod_main.c:562
 #: src/modules/itray/e_mod_main.c:423
 msgid "Edit Mode"
-msgstr "Editačný Mód"
+msgstr "Mód Úprav"
 
 #: src/bin/e_gadman.c:645
 msgid "Automatic Width"
@@ -570,7 +570,7 @@ msgstr "Vystrediť Vertikálne"
 
 #: src/bin/e_gadman.c:733
 msgid "End Edit Mode"
-msgstr "Ukonči Editačný Mód"
+msgstr "Ukončiť Mód Úprav"
 
 #: src/bin/e_init.c:38
 #, c-format
@@ -587,7 +587,7 @@ msgstr "Výber Okraju Okna"
 
 #: src/bin/e_int_border_border.c:198
 msgid "Remember this Border for this window next time it appears"
-msgstr "Zapamätaj si okraj okna keď sa objaví nabudúce"
+msgstr "Zapamätať si okraj okna keď sa objaví nabudúce"
 
 #: src/bin/e_int_border_locks.c:67
 #: src/bin/e_int_border_menu.c:140
@@ -600,27 +600,27 @@ msgstr "Základné Zámky"
 
 #: src/bin/e_int_border_locks.c:296
 msgid "Lock the Window so it does only what I tell it to"
-msgstr "Uzamkni okno tak aby došlo iba k zmenám, ktoré sám iniciujem"
+msgstr "Uzamknúť tak, aby došlo iba k zmenám, ktoré iniciuje užívateľ"
 
 #: src/bin/e_int_border_locks.c:298
 msgid "Protect this window from me accidentally changing it"
-msgstr "Zabráň náhodnej zmene toho okna"
+msgstr "Zabrániť náhodnej zmene tohoto okna užívateľom"
 
 #: src/bin/e_int_border_locks.c:300
 msgid "Protect this window from being accidentally closed because it is important"
-msgstr "Zabráň náhodnému uzavretiu tohoto okna, pretože je dôležité"
+msgstr "Zabrániť náhodnému uzavretiu tohoto okna, pretože je dôležité"
 
 #: src/bin/e_int_border_locks.c:302
 msgid "Do not allow the border to change on this window"
-msgstr "Zabráň zmene okraju tohoto okna"
+msgstr "Zabrániť zmene okraju tohoto okna"
 
 #: src/bin/e_int_border_locks.c:305
 msgid "Remember these Locks for this window next time it appears"
-msgstr "Zapamätaj si zámky pre toto okno pre ďalšie spustenie"
+msgstr "Zapamätať si zámky pre toto okno"
 
 #: src/bin/e_int_border_locks.c:318
 msgid "Lock program changing:"
-msgstr "Zabráň programu zmeniť:"
+msgstr "Uzamknúť pred zmenou programom:"
 
 #: src/bin/e_int_border_locks.c:319
 #: src/bin/e_int_border_locks.c:338
@@ -644,7 +644,7 @@ msgstr "Usporiadanie"
 #: src/bin/e_int_border_locks.c:325
 #: src/bin/e_int_border_locks.c:344
 msgid "Iconified state"
-msgstr "Minimalizovaný"
+msgstr "Minimalizovanosť"
 
 #: src/bin/e_int_border_locks.c:327
 #: src/bin/e_int_border_locks.c:346
@@ -661,7 +661,7 @@ msgstr "Tieňový stav"
 #: src/bin/e_int_border_locks.c:331
 #: src/bin/e_int_border_locks.c:350
 msgid "Maximized state"
-msgstr "Maximalizovaný"
+msgstr "Maximalizovanosť"
 
 #: src/bin/e_int_border_locks.c:333
 #: src/bin/e_int_border_locks.c:352
@@ -670,7 +670,7 @@ msgstr "Celá Obrazovka"
 
 #: src/bin/e_int_border_locks.c:337
 msgid "Lock me from changing:"
-msgstr "Uzamkni pred zmenou:"
+msgstr "Uzamknúť pred zmenou užívateľom:"
 
 #: src/bin/e_int_border_locks.c:354
 #: src/bin/e_int_border_remember.c:501
@@ -679,19 +679,19 @@ msgstr "Štýl Okrajov"
 
 #: src/bin/e_int_border_locks.c:358
 msgid "Stop me from:"
-msgstr "Zastav ma pred:"
+msgstr "Zastaviť pred:"
 
 #: src/bin/e_int_border_locks.c:359
 msgid "Closing the window"
-msgstr "Uzatváram Okno"
+msgstr "Uzatvorením Okna"
 
 #: src/bin/e_int_border_locks.c:361
 msgid "Exiting my login with this window open"
-msgstr "Ukonči môj login s týmto oknom otvoreným"
+msgstr "Ukončením Enligtenment  s týmto oknom otvoreným"
 
 #: src/bin/e_int_border_locks.c:365
 msgid "Remember these Locks"
-msgstr "Zapamätať si tieto zámky"
+msgstr "Zapamätať si zámky"
 
 #: src/bin/e_int_border_menu.c:46
 msgid "Always On Top"
@@ -732,7 +732,7 @@ msgstr "Premiestni na Plochu"
 
 #: src/bin/e_int_border_menu.c:187
 msgid "Maximize"
-msgstr "Maximalizuj"
+msgstr "Maximalizovať"
 
 #: src/bin/e_int_border_menu.c:199
 msgid "Shaded"
@@ -770,7 +770,7 @@ msgstr "Zabiť"
 
 #: src/bin/e_int_border_menu.c:337
 msgid "Iconify"
-msgstr "Minimalizuj"
+msgstr "Minimalizovať"
 
 #: src/bin/e_int_border_remember.c:70
 msgid "Window Remember"
@@ -803,7 +803,7 @@ msgstr "Nič"
 
 #: src/bin/e_int_border_remember.c:424
 msgid "Size and Position"
-msgstr "Veľkosť a Pozícia"
+msgstr "Veľkosť a Pozíciu"
 
 #: src/bin/e_int_border_remember.c:426
 #: src/bin/e_int_border_remember.c:499
@@ -820,7 +820,7 @@ msgstr "Všetko"
 
 #: src/bin/e_int_border_remember.c:443
 msgid "Remember using"
-msgstr "Zapamätaj si použitie "
+msgstr "Zapamätať si použitie "
 
 #: src/bin/e_int_border_remember.c:449
 msgid "Window name and class"
@@ -832,7 +832,7 @@ msgstr "Názov"
 
 #: src/bin/e_int_border_remember.c:478
 msgid "Window type"
-msgstr "Typy Okien"
+msgstr "Typ Okna"
 
 #: src/bin/e_int_border_remember.c:485
 msgid "Transience"
@@ -860,7 +860,7 @@ msgstr "Vynechať zo Zoznamu Okien"
 
 #: src/bin/e_int_config_background.c:117
 msgid "Select Another Image..."
-msgstr "Vyber iný obrázok..."
+msgstr "Vybrať iný obrázok..."
 
 #: src/bin/e_int_config_background.c:120
 #: src/bin/e_int_config_background.c:186
@@ -869,11 +869,11 @@ msgstr "Náhľad na Pozadie"
 
 #: src/bin/e_int_config_background.c:183
 msgid "Select Another Image"
-msgstr "Vyber iný obrázok"
+msgstr "Vybrať iný obrázok"
 
 #: src/bin/e_int_config_background.c:192
 msgid "Set Background For"
-msgstr "Nastav pozadie na"
+msgstr "Nastaviť pozadie na"
 
 #: src/bin/e_int_config_background.c:195
 msgid "Default Desktop"
@@ -912,7 +912,7 @@ msgstr "Preklopenie Plochy Myšou"
 #: src/bin/e_int_config_desks.c:160
 #: src/bin/e_int_config_desks.c:186
 msgid "Flip desktops when mouse at screen edge"
-msgstr "Preklop plochu keď  je myš na okraji"
+msgstr "Preklopiť plochu keď  je myš na okraji"
 
 #: src/bin/e_int_config_desks.c:189
 msgid "Time the mouse is at the edge before flipping:"
@@ -926,7 +926,7 @@ msgstr "%1.1f sek"
 
 #: src/bin/e_int_config_focus.c:155
 msgid "Click Window to Focus"
-msgstr "Stlač na okne pre zaostrenie"
+msgstr "Stlačiť na okne pre zaostrenie"
 
 #: src/bin/e_int_config_focus.c:157
 msgid "Window under the Mouse"
@@ -942,11 +942,11 @@ msgstr "Zaostrenie"
 
 #: src/bin/e_int_config_focus.c:175
 msgid "Click to focus"
-msgstr "Stlačenie pre zaostrenie"
+msgstr "Kliknúť pre zaostrenie"
 
 #: src/bin/e_int_config_focus.c:177
 msgid "Pointer focus"
-msgstr "Pointer zaostrenie"
+msgstr "Ukázať pre zaostrenie"
 
 #: src/bin/e_int_config_focus.c:179
 msgid "Sloppy focus"
@@ -978,7 +978,7 @@ msgstr "Ostatné Nastavenia"
 
 #: src/bin/e_int_config_focus.c:196
 msgid "Always pass on caught click events to programs"
-msgstr "Vždy prepošli zachytené udalosti programu"
+msgstr "Vždy preposlať zachytené udalosti programu"
 
 #: src/bin/e_int_config_focus.c:198
 msgid "A click on a window always raises it"
@@ -990,7 +990,7 @@ msgstr "Kliknutie do okna naň zaostrí"
 
 #: src/bin/e_int_config_focus.c:202
 msgid "Refocus last focused window on desktop switch"
-msgstr "Zaostri na posledné používané okno pri prepnutí plochy"
+msgstr "Zaostriť na posledné používané okno pri prepnutí plochy"
 
 #: src/bin/e_int_config_focus.c:204
 msgid "Revert focus when hiding or closing a window"
@@ -998,22 +998,22 @@ msgstr "Vráť späť zaostrenie pri schovaní alebo uzavretí okna"
 
 #: src/bin/e_int_config_startup.c:71
 msgid "Show Splash Screen At Boot"
-msgstr "Ukáž úvodnú obrazovku pri štarte"
+msgstr "Zobraziť úvodnú obrazovku pri štarte"
 
 #: src/bin/e_int_config_menus.c:91
 #: src/bin/e_int_config_menus.c:134
 msgid "Show Name In Menu"
-msgstr "Ukazuj mená v menu"
+msgstr "Zobrazovať mená v menu"
 
 #: src/bin/e_int_config_menus.c:93
 #: src/bin/e_int_config_menus.c:136
 msgid "Show Comment In Menu"
-msgstr "Ukazuj komentáre v menu"
+msgstr "Zobrazovať komentáre v menu"
 
 #: src/bin/e_int_config_menus.c:95
 #: src/bin/e_int_config_menus.c:138
 msgid "Show Generic In Menu"
-msgstr "Ukazuj všeobecné informácie v menu"
+msgstr "Zobrazovať všeobecné informácie v menu"
 
 #: src/bin/e_int_config_menus.c:142
 msgid "Autoscroll Settings"
@@ -1039,7 +1039,7 @@ msgstr "Okraj Kurzora pre Autoscroll"
 #: src/bin/e_int_config_menus.c:153
 #: src/bin/e_int_config_window_manipulation.c:125
 msgid "Miscellaneous Options"
-msgstr "Zmiešané Nastavenia"
+msgstr "Rozmanité Nastavenia"
 
 #: src/bin/e_int_config_menus.c:154
 msgid "Menu Scroll Speed"
@@ -1189,12 +1189,12 @@ msgstr "Displej"
 
 #: src/bin/e_int_config_window_display.c:143
 msgid "Show window geometry information when moving or resizing"
-msgstr "Zobrazuj rozmery pri presune alebo zmene veľkosti okna"
+msgstr "Zobrazovať rozmery pri presune alebo zmene veľkosti okna"
 
 #: src/bin/e_int_config_window_display.c:145
 #: src/bin/e_int_config_window_display.c:188
 msgid "Animate the shading and unshading of windows"
-msgstr "Animuj schovanie a odkrytie okien"
+msgstr "Animovať schovanie a odkrytie okien"
 
 #: src/bin/e_int_config_window_display.c:149
 #: src/bin/e_int_config_window_display.c:203
@@ -1209,17 +1209,17 @@ msgstr "Inteligentné Umiestnenie"
 #: src/bin/e_int_config_window_display.c:153
 #: src/bin/e_int_config_window_display.c:207
 msgid "Don't hide Gadgets"
-msgstr "Neschovávaj Špeciality"
+msgstr "Neschovávať Špeciality"
 
 #: src/bin/e_int_config_window_display.c:155
 #: src/bin/e_int_config_window_display.c:209
 msgid "Place at mouse pointer"
-msgstr "Umiestni pod kurzor myši"
+msgstr "Umiestniť pod kurzor myši"
 
 #: src/bin/e_int_config_window_display.c:157
 #: src/bin/e_int_config_window_display.c:211
 msgid "Place manually with the mouse"
-msgstr "Umiestni manuálne s myšou"
+msgstr "Umiestniť manuálne s myšou"
 
 #: src/bin/e_int_config_window_display.c:173
 msgid "Window Move Geometry"
@@ -1228,11 +1228,11 @@ msgstr "Geometria sa hýbe s oknom"
 #: src/bin/e_int_config_window_display.c:174
 #: src/bin/e_int_config_window_display.c:181
 msgid "Display information"
-msgstr "Zobrazuj informácie"
+msgstr "Zobraziť informáciu"
 
 #: src/bin/e_int_config_window_display.c:176
 msgid "Follow the window as it moves"
-msgstr "Sleduj okno pri pohybe"
+msgstr "Sledovať okno pri pohybe"
 
 #: src/bin/e_int_config_window_display.c:180
 msgid "Window Resize Geometry"
@@ -1240,7 +1240,7 @@ msgstr "Zmena Geometrie Okna"
 
 #: src/bin/e_int_config_window_display.c:183
 msgid "Follow the window as it resizes"
-msgstr "Sleduj okno pri zmene veľkosti"
+msgstr "Sledovať okno pri zmene veľkosti"
 
 #: src/bin/e_int_config_window_display.c:187
 msgid "Window Shading"
@@ -1268,7 +1268,7 @@ msgstr "Rám Okna"
 
 #: src/bin/e_int_config_window_display.c:216
 msgid "Use application provided icon instead"
-msgstr "Použi ikonu od aplikácie"
+msgstr "Použit ikonu od aplikácie"
 
 #: src/bin/e_int_config_window_manipulation.c:46
 msgid "Window Manipulation"
@@ -1277,11 +1277,11 @@ msgstr "Manipulácia s Oknami"
 #: src/bin/e_int_config_window_manipulation.c:126
 #: src/bin/e_int_config_window_manipulation.c:157
 msgid "Automatically raise windows on mouse over"
-msgstr "Automaticky zdvíhaj okná pri prechode myšou cez ne"
+msgstr "Automaticky dvíhať okná pri prechode myšou cez ne"
 
 #: src/bin/e_int_config_window_manipulation.c:128
 msgid "When moving or resizing windows, resist at the boundaries"
-msgstr "Pri hýbaní a zmene veľkosti okien, klaď odpor na hraniciach"
+msgstr "Pri hýbaní a zmene veľkosti okien, klásť odpor na hraniciach"
 
 #: src/bin/e_int_config_window_manipulation.c:132
 #: src/bin/e_int_config_window_manipulation.c:182
@@ -1291,17 +1291,17 @@ msgstr "Pravidlá Maximalizácie"
 #: src/bin/e_int_config_window_manipulation.c:136
 #: src/bin/e_int_config_window_manipulation.c:186
 msgid "Smart expansion"
-msgstr "Inteligentné zväčšenie"
+msgstr "Inteligentne zväčšiť"
 
 #: src/bin/e_int_config_window_manipulation.c:138
 #: src/bin/e_int_config_window_manipulation.c:188
 msgid "Expand the window"
-msgstr "Zväčši okno"
+msgstr "Zväčšiť okno"
 
 #: src/bin/e_int_config_window_manipulation.c:140
 #: src/bin/e_int_config_window_manipulation.c:190
 msgid "Fill available space"
-msgstr "Vyplň dostupné miesto"
+msgstr "Vyplniť dostupné miesto"
 
 #: src/bin/e_int_config_window_manipulation.c:156
 msgid "Autoraise"
@@ -1317,7 +1317,7 @@ msgstr "Odolnosť"
 
 #: src/bin/e_int_config_window_manipulation.c:166
 msgid "Resist moving or resizing a window over an obstacle"
-msgstr "Zabráň pohybu alebo zmene veľkosti okna cez prekážku"
+msgstr "Zabrániť pohybu, alebo zmene veľkosti okna cez prekážku"
 
 #: src/bin/e_int_config_window_manipulation.c:168
 msgid "Resistance between windows:"
@@ -1333,49 +1333,49 @@ msgstr "Odolnosť voči špecialitám plochy:"
 
 #: src/bin/e_int_config_window_manipulation.c:192
 msgid "Allow shading/resizing"
-msgstr "Povoľ schovanie/zmenu veľkosti"
+msgstr "Povoliť schovanie/zmenu veľkosti"
 
 #: src/bin/e_int_config_winlist.c:124
 msgid "Show iconified windows"
-msgstr "Ukazuj ikonifikované okná"
+msgstr "Zobrazovať ikonifikované okná"
 
 #: src/bin/e_int_config_winlist.c:126
 msgid "Show windows from other desks"
-msgstr "Ukazuj okná z ostatných plôch"
+msgstr "Zobrazovať okná z ostatných plôch"
 
 #: src/bin/e_int_config_winlist.c:128
 msgid "Show windows from other screens"
-msgstr "Ukazuj okná z ostatných obrazoviek"
+msgstr "Zobrazovať okná z ostatných obrazoviek"
 
 #: src/bin/e_int_config_winlist.c:132
 #: src/bin/e_int_config_winlist.c:206
 msgid "Selection Settings"
-msgstr "Nastavenie Výberu"
+msgstr "Nastavenia Výberu"
 
 #: src/bin/e_int_config_winlist.c:133
 #: src/bin/e_int_config_winlist.c:207
 msgid "Focus window while selecting"
-msgstr "Zaostri okno počas výberu"
+msgstr "Zaostriť okno počas výberu"
 
 #: src/bin/e_int_config_winlist.c:135
 #: src/bin/e_int_config_winlist.c:209
 msgid "Raise window while selecting"
-msgstr "Zdvihni okno počas výberu"
+msgstr "Zdvihnúť okno počas výberu"
 
 #: src/bin/e_int_config_winlist.c:137
 #: src/bin/e_int_config_winlist.c:211
 msgid "Warp mouse to window while selecting"
-msgstr "Presuň kurzor na okno počas výberu"
+msgstr "Presunúť kurzor nad okno počas výberu"
 
 #: src/bin/e_int_config_winlist.c:139
 #: src/bin/e_int_config_winlist.c:213
 msgid "Uncover windows while selecting"
-msgstr "Odkry okná počas výberu"
+msgstr "Odkryť okná počas výberu"
 
 #: src/bin/e_int_config_winlist.c:141
 #: src/bin/e_int_config_winlist.c:215
 msgid "Jump to desk while selecting"
-msgstr "Prechádzaj cez plochy počas výberu"
+msgstr "Prechádzať cez plochy počas výberu"
 
 #: src/bin/e_int_config_winlist.c:145
 #: src/bin/e_int_config_winlist.c:219
@@ -1385,7 +1385,7 @@ msgstr "Nastavenia Presunu"
 #: src/bin/e_int_config_winlist.c:146
 #: src/bin/e_int_config_winlist.c:220
 msgid "Warp At End"
-msgstr "Presun Na Konci"
+msgstr "Presunúť Na Konci"
 
 #: src/bin/e_int_config_winlist.c:150
 #: src/bin/e_int_config_winlist.c:228
@@ -1424,17 +1424,17 @@ msgstr "Rýchlosť Rolovania"
 #: src/bin/e_int_config_winlist.c:237
 #: src/bin/e_int_config_exebuf.c:166
 msgid "Position Settings"
-msgstr "Nastavenia Pozície"
+msgstr "Nastavenia Umiestnenia"
 
 #: src/bin/e_int_config_winlist.c:238
 #: src/bin/e_int_config_exebuf.c:167
 msgid "X-Axis Alignment"
-msgstr "Zarovnanie podľa osi X"
+msgstr "Zarovnať podľa osi X"
 
 #: src/bin/e_int_config_winlist.c:242
 #: src/bin/e_int_config_exebuf.c:171
 msgid "Y-Axis Alignment"
-msgstr "Zarovnanie podľa osi Y"
+msgstr "Zarovnať podľa osi Y"
 
 #: src/bin/e_int_config_winlist.c:248
 #: src/bin/e_int_config_exebuf.c:177
@@ -1479,7 +1479,7 @@ msgstr "Obľúbené Aplikácie"
 
 #: src/bin/e_int_menus.c:84
 msgid "Run Command"
-msgstr "Spusti Príkaz"
+msgstr "Spustiť Príkaz"
 
 #: src/bin/e_int_menus.c:108
 msgid "Desktops"
@@ -1927,7 +1927,7 @@ msgstr "Spúšťam %s"
 
 #: src/bin/e_utils.c:274
 msgid "Cannot exit - immortal windows."
-msgstr "Nemôžem skončiť - nesmrteľné okná."
+msgstr "Nie je možné skončiť - nesmrteľné okná."
 
 #: src/bin/e_utils.c:275
 msgid "Some windows are left still around with the Lifespan lock enabled. This means<br>that Enlightenment will not allow itself to exit until these windows have<br>been closed or have the lifespan lock removed.<br>"
@@ -1935,7 +1935,7 @@ msgstr "Niekoľko okien je stále aktívnych, pretože majú zapnutý Lifespan z
 
 #: src/bin/e_winlist.c:125
 msgid "Select a window"
-msgstr "Vyber Okno"
+msgstr "Vybrať Okno"
 
 #: src/bin/e_apps_error.c:38
 msgid "Application Execution Error"
@@ -2015,7 +2015,7 @@ msgstr "Žiadna chybová hláška."
 #: src/bin/e_apps_error.c:230
 #: src/bin/e_apps_error.c:304
 msgid "Save This Message"
-msgstr "Ulož túto správu"
+msgstr "Uložiť túto správu"
 
 #: src/bin/e_apps_error.c:255
 msgid "Error Information"
@@ -2036,7 +2036,7 @@ msgstr "Žiaden výstup"
 
 #: src/bin/e_int_config_background_import.c:147
 msgid "Import An Image"
-msgstr "Importuj obrázok"
+msgstr "Importovať obrázok"
 
 #: src/bin/e_int_config_background_import.c:186
 msgid "Options"
@@ -2044,11 +2044,11 @@ msgstr "Nastavenia"
 
 #: src/bin/e_int_config_background_import.c:188
 msgid "Center Image"
-msgstr "Vycentruj obrázok"
+msgstr "Vycentrovať obrázok"
 
 #: src/bin/e_int_config_background_import.c:190
 msgid "Scale Image"
-msgstr "Roztiahni obrázok"
+msgstr "Roztiahnúť obrázok"
 
 #: src/bin/e_int_config_background_import.c:192
 msgid "Tile Image"
@@ -2057,7 +2057,7 @@ msgstr "Obrázok ako dlaždice"
 #: src/bin/e_int_config_cursor.c:95
 #: src/bin/e_int_config_cursor.c:141
 msgid "Use Enlightenment Cursor"
-msgstr "Použi Enlightenment Kurzor"
+msgstr "Použiť Enlightenment Kurzor"
 
 #: src/bin/e_int_config_cursor.c:143
 msgid "Cursor Size"
@@ -2080,7 +2080,7 @@ msgstr "Obnovovacia Frekvencia"
 #: src/bin/e_int_config_cfgdialogs.c:79
 #: src/bin/e_int_config_cfgdialogs.c:105
 msgid "Auto-Apply Configuration Changes"
-msgstr "Automaticky Aplikuj Zmeny v Konfigurácii"
+msgstr "Automaticky aplikovať zmeny v konfigurácii"
 
 #: src/bin/e_int_config_cfgdialogs.c:109
 msgid "Default Dialog Mode"
@@ -2101,28 +2101,28 @@ msgstr "Nastavenia Exebuf"
 #: src/bin/e_int_config_exebuf.c:101
 #: src/bin/e_int_config_exebuf.c:147
 msgid "Maximum Number Of Matched Eaps To List"
-msgstr "表Maximálny počet eap súborov v zozname"
+msgstr "Maximálny počet eap súborov v zozname"
 
 #: src/bin/e_int_config_exebuf.c:105
 #: src/bin/e_int_config_exebuf.c:151
 msgid "Maximum Number Of Matched Exes To List"
-msgstr "表示Maximálny počet exe súborov v zozname"
+msgstr "Maximálny počet exe súborov v zozname"
 
 #: src/bin/e_int_config_keybindings.c:3
 msgid "Next Key Binding"
-msgstr "次Nasledujúca klávesová skratka"
+msgstr "Nasledujúca skratka"
 
 #: src/bin/e_int_config_keybindings.c:4
 msgid "Prev Key Binding"
-msgstr "Predchádzajúca klávesová skratka"
+msgstr "Predchádzajúca skratka"
 
 #: src/bin/e_int_config_keybindings.c:5
 msgid "Add Key Binding"
-msgstr "Pridaj klávesovú skratku"
+msgstr "Pridaj skratku"
 
 #: src/bin/e_int_config_keybindings.c:6
 msgid "Delete Key Binding"
-msgstr "Zmaž klávesovú skratku"
+msgstr "Zmaž skratku"
 
 #: src/bin/e_int_config_keybindings.c:578
 msgid "Action"
@@ -2134,11 +2134,11 @@ msgstr "Parametre"
 
 #: src/bin/e_int_config_keybindings.c:628
 msgid "Binding Context"
-msgstr "Spojiť Kontext"
+msgstr "V Kontexte:"
 
 #: src/bin/e_int_config_keybindings.c:631
 msgid "Any"
-msgstr "Každý"
+msgstr "Každom"
 
 #: src/bin/e_int_config_keybindings.c:636
 msgid "Border"
@@ -2170,19 +2170,19 @@ msgstr "Popup"
 
 #: src/bin/e_int_config_keybindings.c:673
 msgid "None"
-msgstr "Žiadny"
+msgstr "Žiadnom"
 
 #: src/bin/e_int_config_keybindings.c:679
 msgid "Unknown"
-msgstr "Neznáme"
+msgstr "Neznámom"
 
 #: src/bin/e_int_config_keybindings.c:686
 msgid "Key Binding"
-msgstr "Klávesové skratky"
+msgstr "Klávesová skratka"
 
 #: src/bin/e_int_config_keybindings.c:688
 msgid "Key :"
-msgstr "Kľúč :"
+msgstr "Klávesa :"
 
 #: src/bin/e_int_config_keybindings.c:698
 msgid "Shift"
@@ -2202,7 +2202,7 @@ msgstr "Win"
 
 #: src/bin/e_int_config_keybindings.c:720
 msgid "Key Action"
-msgstr "Kľúčová Akcia"
+msgstr "Akcia pre Skratku"
 
 #: src/bin/e_int_config_keybindings.c:722
 msgid "Action :"
@@ -2218,7 +2218,7 @@ msgstr "Osobné heslo:"
 
 #: src/bin/e_int_config_desklock.c:129
 msgid "Show Password"
-msgstr "Ukáž Heslo"
+msgstr "Ukázať Heslo"
 
 #: src/modules/battery/e_mod_config.c:45
 msgid "Battery Configuration"
@@ -2231,7 +2231,7 @@ msgstr "Základné Nastavenia"
 #: src/modules/battery/e_mod_config.c:90
 #: src/modules/battery/e_mod_config.c:137
 msgid "Show alert when battery is low"
-msgstr "Upozorni keď bude batéria takmer vybitá"
+msgstr "Upozorniť keď bude batéria takmer vybitá"
 
 #: src/modules/battery/e_mod_config.c:94
 #: src/modules/battery/e_mod_config.c:148
@@ -2261,7 +2261,7 @@ msgstr "Príslušenstvo"
 #: src/modules/itray/e_mod_config.c:87
 #: src/modules/itray/e_mod_config.c:123
 msgid "Allow windows to overlap this gadget"
-msgstr "Umožni oknám prekryť túto špecialitu"
+msgstr "Umožniť oknám prekryť túto špecialitu"
 
 #: src/modules/battery/e_mod_config.c:129
 msgid "Advanced Settings"
@@ -2269,7 +2269,7 @@ msgstr "Pokročilé Nastavenia"
 
 #: src/modules/battery/e_mod_config.c:131
 msgid "Check battery every:"
-msgstr "Interval kontroly batérie:"
+msgstr "Kontrolovať batériu každých:"
 
 #: src/modules/battery/e_mod_config.c:134
 #: src/modules/pager/e_mod_config.c:183
@@ -2280,7 +2280,7 @@ msgstr "%1.1f sekúnd"
 
 #: src/modules/battery/e_mod_config.c:140
 msgid "Alert when battery is down to:"
-msgstr "Upozorni keď batéria bude na:"
+msgstr "Upozorniť keď  bude batéria na:"
 
 #: src/modules/battery/e_mod_config.c:143
 #, c-format
@@ -2301,13 +2301,13 @@ msgstr "Batéria je takmer vybitá<br>Vaša batéria je už skoro vybitá.<br>Bo
 
 #: src/modules/battery/e_mod_main.c:630
 msgid "NO INFO"
-msgstr "ŽIADNE INFO"
+msgstr "NO INFO"
 
 #: src/modules/battery/e_mod_main.c:805
 #: src/modules/battery/e_mod_main.c:1116
 #: src/modules/battery/e_mod_main.c:1266
 msgid "NO BAT"
-msgstr "ŽIADNA BATÉRIA"
+msgstr "NO BAT"
 
 #: src/modules/battery/e_mod_main.c:829
 #: src/modules/battery/e_mod_main.c:1291
@@ -2376,7 +2376,7 @@ msgstr "Jednoduchý modul, ktorý umožňuje riadiť frekvenciu CPU.<br>Uplatní
 #: src/modules/cpufreq/e_mod_main.c:220
 #: src/modules/cpufreq/e_mod_main.c:591
 msgid "Allow Overlap"
-msgstr "Povoľ Prekrytie"
+msgstr "Povoliť Prekrytie"
 
 #: src/modules/cpufreq/e_mod_main.c:227
 #: src/modules/cpufreq/e_mod_main.c:597
@@ -2407,23 +2407,23 @@ msgstr "Došlo k chybe pri pokuse nastaviť správcu frekvencie cpu<br>pomocou u
 
 #: src/modules/cpufreq/e_mod_main.c:499
 msgid "Check Fast (0.5 sec)"
-msgstr "Kontroluj Rýchlo (0.5 sek)"
+msgstr "Kontrolovať Rýchlo (0.5 sek)"
 
 #: src/modules/cpufreq/e_mod_main.c:506
 msgid "Check Medium (1 sec)"
-msgstr "Kontroluj Stredne Rýchlo (1 sek)"
+msgstr "Kontrolovať Stredne Rýchlo (1 sek)"
 
 #: src/modules/cpufreq/e_mod_main.c:513
 msgid "Check Normal (2 sec)"
-msgstr "Kontroluj Normálne (2 sek)"
+msgstr "Kontrolovať Normálne (2 sek)"
 
 #: src/modules/cpufreq/e_mod_main.c:520
 msgid "Check Slow (5 sec)"
-msgstr "Kontroluj Pomaly (5 sek)"
+msgstr "Kontrolovať Pomaly (5 sek)"
 
 #: src/modules/cpufreq/e_mod_main.c:527
 msgid "Check Very Slow (30 sec)"
-msgstr "Kontroluj Veľmi Pomaly (30 sek)"
+msgstr "Kontrolovať Veľmi Pomaly (30 sek)"
 
 #: src/modules/cpufreq/e_mod_main.c:543
 msgid "Manual"
@@ -2435,7 +2435,7 @@ msgstr "Automaticky"
 
 #: src/modules/cpufreq/e_mod_main.c:547
 msgid "Lower Power Automatic"
-msgstr "Automaticky Znižuj Spotrebu"
+msgstr "Automaticky Znižovať Spotrebu"
 
 #: src/modules/cpufreq/e_mod_main.c:549
 msgid "Minimum Speed"
@@ -2571,7 +2571,7 @@ msgstr "Konfigurácia IBaru"
 #: src/modules/ibar/e_mod_config.c:92
 #: src/modules/ibox/e_mod_config.c:96
 msgid "Show Follower"
-msgstr "Ukáž Nasledovníka"
+msgstr "Ukázať Nasledovníka"
 
 #: src/modules/ibar/e_mod_config.c:94
 #: src/modules/ibox/e_mod_config.c:98
@@ -2662,7 +2662,7 @@ msgstr "Konfigurácia Pageru"
 #: src/modules/pager/e_mod_config.c:100
 #: src/modules/pager/e_mod_config.c:159
 msgid "Show Popup"
-msgstr "Ukáž Popup"
+msgstr "Zobrazovať Popup"
 
 #: src/modules/pager/e_mod_config.c:102
 #: src/modules/pager/e_mod_config.c:161
@@ -2703,12 +2703,12 @@ msgstr "Modul pager pre pohyb medzi virtuálnymi plochami."
 #: src/modules/pager/e_mod_main.c:417
 #: src/modules/pager/e_mod_main.c:567
 msgid "Fix Aspect (Keep Height)"
-msgstr "Oprav Aspekt (Nastav Výšku)"
+msgstr "Oprav Vzhľad (Nastav Výšku)"
 
 #: src/modules/pager/e_mod_main.c:421
 #: src/modules/pager/e_mod_main.c:571
 msgid "Fix Aspect (Keep Width)"
-msgstr "Oprav Aspekt (Nastav Šírku)"
+msgstr "Oprav Vzhľad (Nastav Šírku)"
 
 #: src/modules/randr/e_mod_main.c:84
 msgid "Enlightenment Randr Module"
@@ -2720,11 +2720,11 @@ msgstr "Modul pre zmenu rozlíšenia obrazovky v E17"
 
 #: src/modules/randr/e_mod_main.c:187
 msgid "Restore Resolution on Startup"
-msgstr "Obnov Rozlíšenie pri Štarte"
+msgstr "Obnoviť Rozlíšenie pri Štarte"
 
 #: src/modules/randr/e_mod_main.c:309
 msgid "Resolution change"
-msgstr "Zmena rozlíšenia"
+msgstr "Zmeniť rozlíšenie"
 
 #: src/modules/randr/e_mod_main.c:311
 #: src/modules/randr/e_mod_main.c:381
@@ -2752,7 +2752,7 @@ msgstr "Konfigurácia Teploty"
 #: src/modules/temperature/e_mod_config.c:148
 #: src/modules/temperature/e_mod_config.c:274
 msgid "Display Units"
-msgstr "Zobrazuj Jednotky"
+msgstr "Zobraziť Jednotky"
 
 #: src/modules/temperature/e_mod_config.c:150
 #: src/modules/temperature/e_mod_config.c:276
@@ -2767,7 +2767,7 @@ msgstr "Fahrenheit"
 #: src/modules/temperature/e_mod_config.c:156
 #: src/modules/temperature/e_mod_config.c:324
 msgid "Check Interval"
-msgstr "Interval Aktualizácie"
+msgstr "Interval Kontroly"
 
 #: src/modules/temperature/e_mod_config.c:158
 msgid "Fast"
@@ -2933,7 +2933,7 @@ msgid "Open"
 msgstr "Otvoriť"
 
 msgid "Use E Cursor"
-msgstr "Použi E Kurzor"
+msgstr "Použiť E Kurzor"
 
 msgid "Start Module Configuration"
 msgstr "Konfigurácia Štart Modulu"
@@ -2987,16 +2987,16 @@ msgstr ""
 "Nepodarilo sa nájsť príkaz\n"
 
 msgid "New Row of Desktops"
-msgstr "Nový riadok pracovných plôch"
+msgstr "Vytvoriť riadok pracovných plôch"
 
 msgid "Remove Row of Desktops"
-msgstr "Odstráň riadok pracovných plôch"
+msgstr "Odstrániť riadok pracovných plôch"
 
 msgid "New Column of Desktops"
-msgstr "Nový stĺpec pracovných plôch"
+msgstr "Vytvoriť stĺpec pracovných plôch"
 
 msgid "Remove Column of Desktops"
-msgstr "Odstráň stĺpec pracovných plôch"
+msgstr "Odstrániť stĺpec pracovných plôch"
 
 msgid "Battery Module"
 msgstr "Modul Batéria"
@@ -3076,19 +3076,19 @@ msgid "50 mins"
 msgstr "50 minút"
 
 msgid "Check Fast (1 sec)"
-msgstr "Kontroluj Rýchlo (1 sek)"
+msgstr "Kontrolovať Rýchlo (1 sek)"
 
 msgid "Check Medium (5 sec)"
-msgstr "Kontroluj Stredne Rýchlo (5 sek)"
+msgstr "Kontrolovať Stredne Rýchlo (5 sek)"
 
 msgid "Check Normal (10 sec)"
-msgstr "Kontroluj Normálne (10 sek)"
+msgstr "Kontrolovať Normálne (10 sek)"
 
 msgid "Check Slow (30 sec)"
-msgstr "Kontroluj Pomaly (30 sek)"
+msgstr "Kontrolovať Pomaly (30 sek)"
 
 msgid "Check Very Slow (60 sec)"
-msgstr "Kontroluj Veľmi Pomaly (60 sek)"
+msgstr "Kontrolovať Veľmi Pomaly (60 sek)"
 
 msgid "Digital Display"
 msgstr "Digitálny Displej"
@@ -3124,10 +3124,10 @@ msgid "Lifespan"
 msgstr "寿命Lifespan"
 
 msgid "Remember This Window"
-msgstr "Zapamätaj si toto okno"
+msgstr "Zapamätať si toto okno"
 
 msgid "Remember This Instance Only"
-msgstr "Zapamätaj si iba túto inštanciu"
+msgstr "Zapamätať si iba túto inštanciu"
 
 msgid "Match by Class"
 msgstr "Podľa triedy"
@@ -3142,28 +3142,28 @@ msgid "Match by Transient Status"
 msgstr "Podľa stavu priesvitnosti"
 
 msgid "Remember Position"
-msgstr "Zapamätaj si umiestnenie"
+msgstr "Zapamätať si umiestnenie"
 
 msgid "Remember Size"
-msgstr "Zapamätaj si veľkosť"
+msgstr "Zapamätať si veľkosť"
 
 msgid "Remember Border"
-msgstr "Zapamätaj si okraj"
+msgstr "Zapamätať si okraj"
 
 msgid "Remember Desktop"
-msgstr "Zapamätaj si plochu"
+msgstr "Zapamätať si plochu"
 
 msgid "Remember Shaded State"
-msgstr "Zapamätaj si schovaný stav"
+msgstr "Zapamätať si schovaný stav"
 
 msgid "Remember Zone"
-msgstr "Zapamätaj si oblasť"
+msgstr "Zapamätať si oblasť"
 
 msgid "Remember Skip Window List"
-msgstr "Zapamätaj si vynechanie zo zoznamu okien"
+msgstr "Zapamätať si vynechanie zo zoznamu okien"
 
 msgid "Send To"
-msgstr "Premiestni na:"
+msgstr "Premiestniť na:"
 
 msgid ""
 "Error starting icon editor\n"
@@ -3173,8 +3173,8 @@ msgid ""
 msgstr ""
 "Chyba pri spustení editoru ikon\n"
 "\n"
-"prosím nainštaluj e_util_eapp_edit\n"
-",alebo sa uisti, že je uvedená v  PATH\n"
+"prosím nainštalujte e_util_eapp_edit\n"
+",a zároveň sa uistite, že je uvedená v  PATH\n"
 
 msgid "Clock"
 msgstr "Hodiny"
