@@ -73,6 +73,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    /* Actually take our cfdata settings and apply them in real life */
    e_config->font_hinting = cfdata->hinting;
    e_config_save_queue();
+   e_canvas_rehint();
    return 1; /* Apply was OK */
 }
 

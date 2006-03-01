@@ -125,6 +125,27 @@ e_canvas_cache_reload(void)
      }
 }
 
+EAPI void
+e_canvas_rehint(void)
+{
+   Evas_List *l;
+   
+   for (l = _e_canvases; l; l = l->next)
+     {
+	Ecore_Evas *ee;
+	Evas *e;
+	
+	ee = l->data;
+	e = ecore_evas_get(ee);
+	if (e_config->font_hinting == 0)
+	  evas_font_hinting_set(e, EVAS_FONT_HINTING_BYTECODE);
+	else if (e_config->font_hinting == 1)
+	  evas_font_hinting_set(e, EVAS_FONT_HINTING_AUTO);
+	else if (e_config->font_hinting == 2)
+	  evas_font_hinting_set(e, EVAS_FONT_HINTING_NONE);
+     }
+}
+
 EAPI Ecore_Evas *
 e_canvas_new(int engine_hint, Ecore_X_Window win, int x, int y, int w, int h,
 	     int direct_resize, int override, Ecore_X_Window *win_ret,

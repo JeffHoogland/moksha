@@ -8,6 +8,9 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: openoffice 2 when ddisplaying a presentation with xinerama (multiple
+  zones) weird things happen (the presentation doesnt display - it seemingly
+  attaches to the 2nd zone, not the first), crashes have been reported too.
 * BUG: dnd icon from window that has no .eap defining its ocon to ibar and the
   ibar icon ends up blank (cant build .eap freom ARGB pixels)
 * BUG: edge flip for desktops still active if turned off when dragging a window
