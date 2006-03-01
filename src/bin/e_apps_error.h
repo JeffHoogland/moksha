@@ -7,7 +7,7 @@
 #ifndef E_APPS_ERROR_H
 #define E_APPS_ERROR_H
 
-EAPI void        e_app_error_dialog                      (E_Container *con, E_App_Autopsy *app);
+EAPI void           e_app_error_dialog(E_Container * con, E_App_Autopsy * app);
 
 #endif
 #endif

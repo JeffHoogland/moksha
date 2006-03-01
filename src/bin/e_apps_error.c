@@ -5,49 +5,67 @@
 
 struct _E_Config_Dialog_Data
 {
-   char *label;
-   char *exit;
-   char *signal;
+   char               *label;
+   char               *exit;
+   char               *signal;
 };
 
 /* Protos */
-static void *       _e_app_error_dialog_create_data(E_Config_Dialog *cfd);
-static void         _e_app_error_dialog_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_e_app_error_dialog_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_e_app_error_dialog_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static void         _e_app_error_dialog_resize(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static Evas_Object *_e_app_error_dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *lines);
+static void        *_e_app_error_dialog_create_data(E_Config_Dialog * cfd);
+static void         _e_app_error_dialog_free_data(E_Config_Dialog * cfd,
+						  E_Config_Dialog_Data *
+						  cfdata);
+static Evas_Object *_e_app_error_dialog_basic_create_widgets(E_Config_Dialog *
+							     cfd, Evas * evas,
+							     E_Config_Dialog_Data
+							     * cfdata);
+static Evas_Object *_e_app_error_dialog_advanced_create_widgets(E_Config_Dialog
+								* cfd,
+								Evas * evas,
+								E_Config_Dialog_Data
+								* cfdata);
+static void         _e_app_error_dialog_resize(void *data, Evas * e,
+					       Evas_Object * obj,
+					       void *event_info);
+static Evas_Object *_e_app_error_dialog_scrolltext_create(Evas * evas,
+							  char *title,
+							  Ecore_Exe_Event_Data_Line
+							  * lines);
 static void         _e_app_error_dialog_save_cb(void *data, void *data2);
 
-EAPI void 
-e_app_error_dialog(E_Container *con, E_App_Autopsy *app)
+EAPI void
+e_app_error_dialog(E_Container * con, E_App_Autopsy * app)
 {
-   E_Config_Dialog *cfd;
+   E_Config_Dialog    *cfd;
    E_Config_Dialog_View *v;
 
-   v = E_NEW(E_Config_Dialog_View, 1);  /* This gets freed by e_config_dialog. */
+   v = E_NEW(E_Config_Dialog_View, 1);	/* This gets freed by e_config_dialog. */
    if (v)
      {
 	/* Dialog Methods */
 	v->create_cfdata = _e_app_error_dialog_create_data;
 	v->free_cfdata = _e_app_error_dialog_free_data;
 	v->basic.create_widgets = _e_app_error_dialog_basic_create_widgets;
-	v->advanced.create_widgets = _e_app_error_dialog_advanced_create_widgets;
+	v->advanced.create_widgets =
+	   _e_app_error_dialog_advanced_create_widgets;
 
 	/* Create The Dialog */
-	cfd = e_config_dialog_new(con, _("Application Execution Error"), NULL, 0, v, app);
+	cfd =
+	   e_config_dialog_new(con, _("Application Execution Error"), NULL, 0,
+			       v, app);
 	app->error_dialog = cfd;
      }
 }
 
-static void 
-_e_app_error_dialog_fill_data(E_App_Autopsy *app, E_Config_Dialog_Data *cfdata)
+static void
+_e_app_error_dialog_fill_data(E_App_Autopsy * app,
+			      E_Config_Dialog_Data * cfdata)
 {
-   char buf[4096];
+   char                buf[4096];
 
    if (!cfdata->label)
      {
-	snprintf(buf, sizeof(buf), _("%s stopped running unexpectedly."), 
+	snprintf(buf, sizeof(buf), _("%s stopped running unexpectedly."),
 		 app->app->name);
 	cfdata->label = strdup(buf);
      }
@@ -61,35 +79,41 @@ _e_app_error_dialog_fill_data(E_App_Autopsy *app, E_Config_Dialog_Data *cfdata)
    if ((app->del.signalled) && (!cfdata->signal))
      {
 	if (app->del.exit_signal == SIGINT)
-	  snprintf(buf, sizeof(buf), _("%s was interrupted by an Interrupt Signal"),
-		   app->app->exe);
+	   snprintf(buf, sizeof(buf),
+		    _("%s was interrupted by an Interrupt Signal"),
+		    app->app->exe);
 	else if (app->del.exit_signal == SIGQUIT)
-	  snprintf(buf, sizeof(buf), _("%s was interrupted by a Quit Signal"),
-		   app->app->exe);
+	   snprintf(buf, sizeof(buf), _("%s was interrupted by a Quit Signal"),
+		    app->app->exe);
 	else if (app->del.exit_signal == SIGABRT)
-	  snprintf(buf, sizeof(buf), _("%s was interrupted by an Abort Signal"),
-		   app->app->exe);
+	   snprintf(buf, sizeof(buf),
+		    _("%s was interrupted by an Abort Signal"), app->app->exe);
 	else if (app->del.exit_signal == SIGFPE)
-	  snprintf(buf, sizeof(buf), _("%s was interrupted by a Floating Point Error"),
-		   app->app->exe);
+	   snprintf(buf, sizeof(buf),
+		    _("%s was interrupted by a Floating Point Error"),
+		    app->app->exe);
 	else if (app->del.exit_signal == SIGKILL)
-	  snprintf(buf, sizeof(buf), _("%s was interrupted by an Uninterruptable Kill Signal"),
-		   app->app->exe);
+	   snprintf(buf, sizeof(buf),
+		    _("%s was interrupted by an Uninterruptable Kill Signal"),
+		    app->app->exe);
 	else if (app->del.exit_signal == SIGSEGV)
-	  snprintf(buf, sizeof(buf), _("%s was interrupted by a Segmentation Fault"),
-		   app->app->exe);
+	   snprintf(buf, sizeof(buf),
+		    _("%s was interrupted by a Segmentation Fault"),
+		    app->app->exe);
 	else if (app->del.exit_signal == SIGPIPE)
-	  snprintf(buf, sizeof(buf), _("%s was interrupted by a Broken Pipe"),
-		   app->app->exe);
+	   snprintf(buf, sizeof(buf), _("%s was interrupted by a Broken Pipe"),
+		    app->app->exe);
 	else if (app->del.exit_signal == SIGTERM)
-	  snprintf(buf, sizeof(buf), _("%s was interrupted by a Termination Singal"),
-		   app->app->exe);
+	   snprintf(buf, sizeof(buf),
+		    _("%s was interrupted by a Termination Singal"),
+		    app->app->exe);
 	else if (app->del.exit_signal == SIGBUS)
-	  snprintf(buf, sizeof(buf), _("%s was interrupted by a Bus Error"),
-		   app->app->exe);
+	   snprintf(buf, sizeof(buf), _("%s was interrupted by a Bus Error"),
+		    app->app->exe);
 	else
-	  snprintf(buf, sizeof(buf), _("%s was interrupted by the signal number %i"),
-		   app->app->exe, app->del.exit_signal);
+	   snprintf(buf, sizeof(buf),
+		    _("%s was interrupted by the signal number %i"),
+		    app->app->exe, app->del.exit_signal);
 	cfdata->signal = strdup(buf);
 	/* FIXME: Add  sigchld_info stuff
 	 * app->del.data
@@ -114,65 +138,69 @@ _e_app_error_dialog_fill_data(E_App_Autopsy *app, E_Config_Dialog_Data *cfdata)
      }
 }
 
-static void *
-_e_app_error_dialog_create_data(E_Config_Dialog *cfd)
+static void        *
+_e_app_error_dialog_create_data(E_Config_Dialog * cfd)
 {
    E_Config_Dialog_Data *cfdata;
-   E_App_Autopsy *app;
-   
+   E_App_Autopsy      *app;
+
    app = cfd->data;
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    _e_app_error_dialog_fill_data(app, cfdata);
    return cfdata;
 }
 
-static void 
-_e_app_error_dialog_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+static void
+_e_app_error_dialog_free_data(E_Config_Dialog * cfd,
+			      E_Config_Dialog_Data * cfdata)
 {
-   E_App_Autopsy *app;
+   E_App_Autopsy      *app;
 
    app = cfd->data;
 
-   if(app)
+   if (app)
      {
 	app->error_dialog = NULL;
 	if (app->error)
-	  ecore_exe_event_data_free(app->error);
+	   ecore_exe_event_data_free(app->error);
 	if (app->read)
-	  ecore_exe_event_data_free(app->read);
+	   ecore_exe_event_data_free(app->read);
 	free(app);
      }
    if (cfdata->signal)
-     free(cfdata->signal);
+      free(cfdata->signal);
    if (cfdata->exit)
-     free(cfdata->exit);
+      free(cfdata->exit);
    if (cfdata->label)
-     free(cfdata->label);
+      free(cfdata->label);
 
    free(cfdata);
 }
 
 static void
-_e_app_error_dialog_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_app_error_dialog_resize(void *data, Evas * e, Evas_Object * obj,
+			   void *event_info)
 {
-   Evas_Coord mw, mh, vw, vh, w, h;
-   
+   Evas_Coord          mw, mh, vw, vh, w, h;
+
    e_scrollframe_child_viewport_size_get(obj, &vw, &vh);
    e_widget_min_size_get(data, &mw, &mh);
    evas_object_geometry_get(data, NULL, NULL, &w, &h);
    if (vw >= mw)
      {
-	if (w != vw) evas_object_resize(data, vw, h);
+	if (w != vw)
+	   evas_object_resize(data, vw, h);
      }
 }
 
 static Evas_Object *
-_e_app_error_dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *lines)
+_e_app_error_dialog_scrolltext_create(Evas * evas, char *title,
+				      Ecore_Exe_Event_Data_Line * lines)
 {
-   int i;
-   Evas_Object *obj, *os;
-   char *text;
-   int tlen;
+   int                 i;
+   Evas_Object        *obj, *os;
+   char               *text;
+   int                 tlen;
 
    os = e_widget_framelist_add(evas, _(title), 0);
 
@@ -180,7 +208,7 @@ _e_app_error_dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_D
 
    tlen = 0;
    for (i = 0; lines[i].line != NULL; i++)
-     tlen += lines[i].size + 1;
+      tlen += lines[i].size + 1;
    text = alloca(tlen + 1);
    if (text)
      {
@@ -200,11 +228,12 @@ _e_app_error_dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_D
 }
 
 static Evas_Object *
-_e_app_error_dialog_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_e_app_error_dialog_basic_create_widgets(E_Config_Dialog * cfd, Evas * evas,
+					 E_Config_Dialog_Data * cfdata)
 {
-   int error_length = 0;
-   Evas_Object *o, *ob, *os;
-   E_App_Autopsy *app;
+   int                 error_length = 0;
+   Evas_Object        *o, *ob, *os;
+   E_App_Autopsy      *app;
 
    app = cfd->data;
    _e_app_error_dialog_fill_data(app, cfdata);
@@ -215,10 +244,12 @@ _e_app_error_dialog_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Con
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
 
    if (app->error)
-     error_length = app->error->size;
+      error_length = app->error->size;
    if (error_length)
      {
-	os = _e_app_error_dialog_scrolltext_create(evas, _("Error Logs"), app->error->lines);
+	os =
+	   _e_app_error_dialog_scrolltext_create(evas, _("Error Logs"),
+						 app->error->lines);
 	e_widget_list_object_append(o, os, 1, 1, 0.5);
      }
    else
@@ -227,20 +258,23 @@ _e_app_error_dialog_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Con
 	e_widget_list_object_append(o, ob, 1, 1, 0.5);
      }
 
-   ob = e_widget_button_add(evas, _("Save This Message"), "enlightenment/run", _e_app_error_dialog_save_cb, app, cfdata);
+   ob =
+      e_widget_button_add(evas, _("Save This Message"), "enlightenment/run",
+			  _e_app_error_dialog_save_cb, app, cfdata);
    e_widget_list_object_append(o, ob, 0, 0, 0.5);
 
    return o;
 }
 
 static Evas_Object *
-_e_app_error_dialog_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_e_app_error_dialog_advanced_create_widgets(E_Config_Dialog * cfd, Evas * evas,
+					    E_Config_Dialog_Data * cfdata)
 {
-   int read_length = 0;
-   int error_length = 0;
-   Evas_Object *o, *of, *ob, *ot;
-   E_App_Autopsy *app;
-   
+   int                 read_length = 0;
+   int                 error_length = 0;
+   Evas_Object        *o, *of, *ob, *ot;
+   E_App_Autopsy      *app;
+
    app = cfd->data;
    _e_app_error_dialog_fill_data(app, cfdata);
 
@@ -267,11 +301,13 @@ _e_app_error_dialog_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_
      }
 
    if (app->read)
-     read_length = app->read->size;
+      read_length = app->read->size;
 
    if (read_length)
      {
-	of = _e_app_error_dialog_scrolltext_create(evas, _("Output Data"), app->read->lines);
+	of =
+	   _e_app_error_dialog_scrolltext_create(evas, _("Output Data"),
+						 app->read->lines);
 	/* FIXME: Add stdout "start". */
 	/* FIXME: Add stdout "end". */
      }
@@ -282,12 +318,14 @@ _e_app_error_dialog_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_
 	e_widget_framelist_object_append(of, ob);
      }
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
-   
+
    if (app->error)
-     error_length = app->error->size;
+      error_length = app->error->size;
    if (error_length)
      {
-	of = _e_app_error_dialog_scrolltext_create(evas, _("Error Logs"), app->error->lines);
+	of =
+	   _e_app_error_dialog_scrolltext_create(evas, _("Error Logs"),
+						 app->error->lines);
 	/* FIXME: Add stderr "start". */
 	/* FIXME: Add stderr "end". */
      }
@@ -301,51 +339,56 @@ _e_app_error_dialog_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_
 
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
 
-   ob = e_widget_button_add(evas, _("Save This Message"), "enlightenment/run", _e_app_error_dialog_save_cb, app, cfdata);
+   ob =
+      e_widget_button_add(evas, _("Save This Message"), "enlightenment/run",
+			  _e_app_error_dialog_save_cb, app, cfdata);
    e_widget_list_object_append(o, ob, 0, 0, 0.5);
-   
+
    return o;
 }
 
-static void 
+static void
 _e_app_error_dialog_save_cb(void *data, void *data2)
 {
-   E_App_Autopsy *app;
+   E_App_Autopsy      *app;
    E_Config_Dialog_Data *cfdata;
-   FILE *f;
-   char *text;
-   char buf[1024];
-   char buffer[4096];
-   int read_length = 0;
-   int i, tlen;
-   
+   FILE               *f;
+   char               *text;
+   char                buf[1024];
+   char                buffer[4096];
+   int                 read_length = 0;
+   int                 i, tlen;
+
    app = data;
    cfdata = data2;
-   
-   snprintf(buf, sizeof(buf), "%s/%s.log", e_user_homedir_get(), app->app->name);
+
+   snprintf(buf, sizeof(buf), "%s/%s.log", e_user_homedir_get(),
+	    app->app->name);
    f = fopen(buf, "w");
    if (!f)
-     return;
+      return;
 
    if (cfdata->exit)
      {
-	snprintf(buffer, sizeof(buffer), "Error Information:\n\t%s\n\n", cfdata->exit);
+	snprintf(buffer, sizeof(buffer), "Error Information:\n\t%s\n\n",
+		 cfdata->exit);
 	fwrite(buffer, sizeof(char), strlen(buffer), f);
      }
    if (cfdata->signal)
      {
-	snprintf(buffer, sizeof(buffer), "Error Signal Information:\n\t%s\n\n", cfdata->signal);
-	fwrite(buffer, sizeof(char), strlen(buffer), f);	
+	snprintf(buffer, sizeof(buffer), "Error Signal Information:\n\t%s\n\n",
+		 cfdata->signal);
+	fwrite(buffer, sizeof(char), strlen(buffer), f);
      }
 
    if (app->read)
-     read_length = app->read->size;
+      read_length = app->read->size;
 
    if (read_length)
      {
 	tlen = 0;
 	for (i = 0; app->read->lines[i].line != NULL; i++)
-	  tlen += app->read->lines[i].size + 1;
+	   tlen += app->read->lines[i].size + 1;
 	text = alloca(tlen + 1);
 	if (text)
 	  {
@@ -362,20 +405,21 @@ _e_app_error_dialog_save_cb(void *data, void *data2)
      }
    else
      {
-	snprintf(buffer, sizeof(buffer), "Output Data:\n\tThere was no output\n\n");
-	fwrite(buffer, sizeof(char), strlen(buffer), f);	
+	snprintf(buffer, sizeof(buffer),
+		 "Output Data:\n\tThere was no output\n\n");
+	fwrite(buffer, sizeof(char), strlen(buffer), f);
      }
-   
+
    /* Reusing this var */
    read_length = 0;
    if (app->error)
-     read_length = app->error->size;
+      read_length = app->error->size;
 
    if (read_length)
      {
 	tlen = 0;
 	for (i = 0; app->error->lines[i].line != NULL; i++)
-	  tlen += app->error->lines[i].size + 1;
+	   tlen += app->error->lines[i].size + 1;
 	text = alloca(tlen + 1);
 	if (text)
 	  {
@@ -390,11 +434,12 @@ _e_app_error_dialog_save_cb(void *data, void *data2)
 	     fwrite(buffer, sizeof(char), strlen(buffer), f);
 	  }
      }
-   else 
+   else
      {
-	snprintf(buffer, sizeof(buffer), "Error Logs:\n\tThere was no error message\n");
+	snprintf(buffer, sizeof(buffer),
+		 "Error Logs:\n\tThere was no error message\n");
 	fwrite(buffer, sizeof(char), strlen(buffer), f);
      }
-   
+
    fclose(f);
 }
