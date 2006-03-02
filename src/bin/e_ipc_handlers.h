@@ -426,9 +426,9 @@ free(data);
    END_INT3_STRING3_LIST_START()
 
 #define END_INT3_STRING3_LIST_ITERATE(__v) \
-          free(__v->str1); \
-          free(__v->str2); \
-          free(__v->str3); \
+          evas_stringshare_del(__v->str1); \
+          evas_stringshare_del(__v->str2); \
+          evas_stringshare_del(__v->str3); \
           free(__v); \
        } 
 #define END_INT3_STRING3_LIST_START() \
@@ -489,8 +489,8 @@ free(data);
    END_INT4_STRING2_LIST_START()
 
 #define END_INT4_STRING2_LIST_ITERATE(__v) \
-          free(__v->str1); \
-          free(__v->str2); \
+          evas_stringshare_del(__v->str1); \
+          evas_stringshare_del(__v->str2); \
           free(__v); \
        } \
        evas_list_free(dat);
@@ -613,10 +613,10 @@ free(data);
    END_INT3_STRING4_LIST_START()
 
 #define END_INT3_STRING4_LIST_ITERATE(__v) \
-          free(__v->str1); \
-          free(__v->str2); \
-          free(__v->str3); \
-          free(__v->str4); \
+          evas_stringshare_del(__v->str1); \
+          evas_stringshare_del(__v->str2); \
+          evas_stringshare_del(__v->str3); \
+          evas_stringshare_del(__v->str4); \
           free(__v); \
        } \
        evas_list_free(dat);
@@ -1598,7 +1598,7 @@ break;
    LIST();
    DECODE(e_ipc_codec_str_list_dec) {
       int count;
-      char *type;
+      char * type;
       int res;
       RESPONSE(r, E_Response_Dirs_List);
 
@@ -1607,6 +1607,8 @@ break;
       r->dirs = malloc(sizeof(char *) * count);
       r->count = count - 1; /* leave off the "type" */
 
+      type = NULL;
+      res = 0;
       count = 0;
       FOR(dat) {
 	 if (dat == l)
@@ -1626,7 +1628,7 @@ break;
       else if (!strcmp(type, "themes"))
 	res = E_RESPONSE_THEME_DIRS_LIST;
       else if (!strcmp(type, "init"))
-	res = E_RESPONSE_START_DIRS_LIST;
+	res = E_RESPONSE_INIT_DIRS_LIST;
       else if (!strcmp(type, "icons"))
 	res = E_RESPONSE_ICON_DIRS_LIST;
       else if (!strcmp(type, "modules"))
@@ -5996,8 +5998,8 @@ break;
 
 	 d = malloc(sizeof(E_Response_Binding_Signal_Data));
 	 d->ctx = v->val1;
-	 d->signal = v->str1;
-	 d->source = v->str2;
+	 d->signal = ((v->str1) ? evas_stringshare_add(v->str1) : NULL);
+	 d->source = ((v->str2) ? evas_stringshare_add(v->str2) : NULL);
 	 d->mod = v->val2;
 	 d->any_mod = v->val3;
 	 d->action = ((v->str3) ? evas_stringshare_add(v->str3) : NULL);
