@@ -84,23 +84,25 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    /* generate the core widget layout for a basic dialog */
    Evas_Object *o, *ob;
    E_Radio_Group *rg;
+   int option_enable;
       
    o = e_widget_list_add(evas, 0, 0);
    rg = e_widget_radio_group_new(&(cfdata->hinting));
-   if (evas_font_hinting_can_hint(evas, EVAS_FONT_HINTING_BYTECODE))
-     {
-	ob = e_widget_radio_add(evas, _("Bytecode Hinting"), 0, rg);
-	e_widget_list_object_append(o, ob, 1, 1, 0.5);
-     }
-   if (evas_font_hinting_can_hint(evas, EVAS_FONT_HINTING_AUTO))
-     {
-	ob = e_widget_radio_add(evas, _("Automatic Hinting"), 1, rg);
-	e_widget_list_object_append(o, ob, 1, 1, 0.5);
-     }
-   if (evas_font_hinting_can_hint(evas, EVAS_FONT_HINTING_NONE))
-     {
-	ob = e_widget_radio_add(evas, _("No Hinting"), 2, rg);
-	e_widget_list_object_append(o, ob, 1, 1, 0.5);
-     }
+   
+   option_enable = evas_font_hinting_can_hint(evas, EVAS_FONT_HINTING_BYTECODE);
+   ob = e_widget_radio_add(evas, _("Bytecode Hinting"), 0, rg);
+   e_widget_disabled_set(ob, !option_enable);
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+
+   option_enable = evas_font_hinting_can_hint(evas, EVAS_FONT_HINTING_AUTO);
+   ob = e_widget_radio_add(evas, _("Automatic Hinting"), 1, rg);
+   e_widget_disabled_set(ob, !option_enable);
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+
+   option_enable = evas_font_hinting_can_hint(evas, EVAS_FONT_HINTING_NONE);
+   ob = e_widget_radio_add(evas, _("No Hinting"), 2, rg);
+   e_widget_disabled_set(ob, !option_enable);
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   
    return o;
 }
