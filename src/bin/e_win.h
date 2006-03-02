@@ -62,8 +62,8 @@ EAPI void   e_win_size_min_set       (E_Win *win, int w, int h);
 EAPI void   e_win_size_max_set       (E_Win *win, int w, int h);
 EAPI void   e_win_size_base_set      (E_Win *win, int w, int h);
 EAPI void   e_win_step_set           (E_Win *win, int x, int y);
-EAPI void   e_win_name_class_set     (E_Win *win, char *name, char *class);
-EAPI void   e_win_title_set          (E_Win *win, char *title);
+EAPI void   e_win_name_class_set     (E_Win *win, const char *name, const char *class);
+EAPI void   e_win_title_set          (E_Win *win, const char *title);
 
 EAPI void   e_win_centered_set       (E_Win *win, int centered);
 EAPI void   e_win_dialog_set         (E_Win *win, int dialog);

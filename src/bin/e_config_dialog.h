@@ -40,8 +40,8 @@ struct _E_Config_Dialog
    E_Config_Dialog_View        *view;
    E_Config_Dialog_Data        *cfdata;
    E_Container                 *con;
-   char                        *title;
-   char                        *icon;
+   const char                  *title;
+   const char                  *icon;
    int                          icon_size;
    E_Dialog                    *dia;
    void                        *data;
@@ -49,7 +49,7 @@ struct _E_Config_Dialog
    int                          hide_buttons;
 };
 
-EAPI E_Config_Dialog *e_config_dialog_new(E_Container *con, char *title, char *icon, int icon_size, E_Config_Dialog_View *view, void *data);
+EAPI E_Config_Dialog *e_config_dialog_new(E_Container *con, const char *title, const char *icon, int icon_size, E_Config_Dialog_View *view, void *data);
 
 #endif
 #endif

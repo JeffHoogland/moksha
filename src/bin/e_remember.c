@@ -104,7 +104,7 @@ e_remember_find(E_Border *bd)
 	E_Remember *rem;
 	int required_matches;
 	int matches;
-	char *title = "";
+	const char *title = "";
 	
 	rem = l->data;
 	matches = 0;

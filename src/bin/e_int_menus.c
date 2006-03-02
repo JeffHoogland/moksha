@@ -180,7 +180,7 @@ e_int_menus_main_new(void)
 }
 
 EAPI E_Menu *
-e_int_menus_apps_new(char *dir)
+e_int_menus_apps_new(const char *dir)
 {
    E_Menu *m;
    E_App *a;
@@ -671,7 +671,7 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
    Evas_List *l, *borders = NULL;
    E_Menu *root;
    E_Zone *zone = NULL;
-   char *s;
+   const char *s;
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
    root = e_menu_root_get(m);

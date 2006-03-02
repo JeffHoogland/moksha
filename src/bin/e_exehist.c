@@ -16,8 +16,8 @@ struct _E_Exehist
 
 struct _E_Exehist_Item
 {
-   char         *exe;
-   char         *launch_method;
+   const char   *exe;
+   const char   *launch_method;
    double        exetime;
 };
 

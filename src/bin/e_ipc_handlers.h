@@ -841,13 +841,29 @@ case HDL: { void *data; int bytes; \
 } \
 break;
 
-#define LIST_DATA() \
+/* 
+   Declare variables used when encoding that needs to first be 
+   constructed into a list using the FOR macro. The list to create
+   will be called 'dat' and the list to iterate will be l;
+ */
+#define LIST_ENCODE_INIT() \
    Evas_List *dat = NULL, *l; \
+   void *data; int bytes;
+
+/* 
+   Declare variables used by the encode macro. Is separate to allow
+   operations to be done between declairation and encoding. 
+ */
+#define ENCODE_INIT() \
    void *data; int bytes;
 
 #define ENCODE(__dat, __enc) \
    data = __enc(__dat, &bytes);
 
+/*
+   Iterate an evas_list starting with the pointer to __start. l 
+   is the pointer to the current position in the list. 
+ */
 #define FOR(__start) \
    for (l = __start; l; l = l->next)
 #define GENERIC(HDL) \
@@ -1036,7 +1052,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    SEND_STRING_INT_LIST(e_module_list(), E_Module, mod, v, HDL);
-   v->str = mod->name;
+   v->str = (char *) mod->name;
    v->val = mod->enabled;
    END_SEND_STRING_INT_LIST(v, E_IPC_OP_MODULE_LIST_REPLY);
 #elif (TYPE == E_REMOTE_IN)
@@ -1143,7 +1159,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
-   LIST_DATA();
+   LIST_ENCODE_INIT();
    E_Font_Available *fa;
    Evas_List *fa_list;
    fa_list = e_font_available_list();
@@ -1240,7 +1256,7 @@ break;
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
 
-   LIST_DATA();
+   LIST_ENCODE_INIT();
    E_Font_Fallback *ff;
    FOR(e_config->font_fallbacks) { ff = l->data;
       dat = evas_list_append(dat, ff->name);
@@ -1365,8 +1381,8 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    SEND_STRING2_INT_LIST(e_font_default_list(), E_Font_Default, efd, v, HDL);
-   v->str1 = efd->text_class;
-   v->str2 = efd->font;
+   v->str1 = (char *) efd->text_class;
+   v->str2 = (char *) efd->font;
    v->val  = efd->size;
    END_SEND_STRING2_INT_LIST(v, E_IPC_OP_FONT_DEFAULT_LIST_REPLY);
 #elif (TYPE == E_REMOTE_IN)
@@ -1441,7 +1457,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
-   LIST_DATA();
+   ENCODE_INIT();
    Evas_List *languages;
    languages = e_intl_language_list();
    ENCODE(languages, e_ipc_codec_str_list_enc);
@@ -1535,7 +1551,7 @@ break;
    REQ_STRING(params[0], HDL);
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
-   LIST_DATA()
+   LIST_ENCODE_INIT()
    Evas_List *dir_list = NULL;
    E_PATH_GET(path, s);
    if (path)
@@ -2443,8 +2459,8 @@ break;
    SEND_INT4_STRING2_LIST(e_config->mouse_bindings, E_Config_Binding_Mouse, emb, v, HDL);
    v->val1 = emb->context;
    v->val2 = emb->modifiers;
-   v->str1 = emb->action;
-   v->str2 = emb->params;
+   v->str1 = (char *) emb->action;
+   v->str2 = (char *) emb->params;
    v->val3 = emb->button;
    v->val4 = emb->any_mod;
    END_SEND_INT4_STRING2_LIST(v, E_IPC_OP_BINDING_MOUSE_LIST_REPLY);
@@ -2772,9 +2788,9 @@ break;
    v->val1 = ekb->context;
    v->val2 = ekb->modifiers;
    v->val3 = ekb->any_mod;
-   v->str1 = ekb->key;
-   v->str2 = ekb->action;
-   v->str3 = ekb->params;
+   v->str1 = (char *) ekb->key;
+   v->str2 = (char *) ekb->action;
+   v->str3 = (char *) ekb->params;
    END_SEND_INT3_STRING3_LIST(v, E_IPC_OP_BINDING_KEY_LIST_REPLY);
 #elif (TYPE == E_REMOTE_IN)
 #endif
@@ -3538,7 +3554,7 @@ break;
    v->val2 = cfbg->zone;
    v->val3 = cfbg->desk_x;
    v->val4 = cfbg->desk_y;
-   v->str1 = cfbg->file;
+   v->str1 = (char *) cfbg->file;
    v->str2 = "";
    END_SEND_INT4_STRING2_LIST(v, E_IPC_OP_DESKTOP_BG_LIST_REPLY);
 #elif (TYPE == E_REMOTE_IN)
@@ -4746,8 +4762,8 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    SEND_STRING2_LIST(e_config->themes, E_Config_Theme, theme, v, HDL);
-   v->str1 = theme->category;
-   v->str2 = theme->file;
+   v->str1 = (char *) theme->category;
+   v->str2 = (char *) theme->file;
    END_SEND_STRING2_LIST(v, E_IPC_OP_THEME_LIST_REPLY);
 #elif (TYPE == E_REMOTE_IN)
 #endif
@@ -5140,7 +5156,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
-   LIST_DATA();
+   ENCODE_INIT();
    Evas_List *profiles;
    profiles = e_config_profile_list();
    ENCODE(profiles, e_ipc_codec_str_list_enc);
@@ -5215,7 +5231,7 @@ break;
    v->val2 = cfname->zone;
    v->val3 = cfname->desk_x;
    v->val4 = cfname->desk_y;
-   v->str1 = cfname->name;
+   v->str1 = (char *) cfname->name;
    v->str2 = "";
    END_SEND_INT4_STRING2_LIST(v, E_IPC_OP_DESKTOP_NAME_LIST_REPLY);
 #elif (TYPE == E_REMOTE_IN)
@@ -5728,7 +5744,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
-   LIST_DATA();
+   ENCODE_INIT();
    Evas_List *iml;
    iml = e_intl_input_method_list();
    ENCODE(iml, e_ipc_codec_str_list_enc);
@@ -5885,12 +5901,12 @@ break;
    /* e_ipc decode request and do action or send reply */
    SEND_INT3_STRING4_LIST(e_config->signal_bindings, E_Config_Binding_Signal, emb, v, HDL);
    v->val1 = emb->context;
-   v->str1 = emb->signal;
-   v->str2 = emb->source;
+   v->str1 = (char *) emb->signal;
+   v->str2 = (char *) emb->source;
    v->val2 = emb->modifiers;
    v->val3 = emb->any_mod;
-   v->str3 = emb->action;
-   v->str4 = emb->params;
+   v->str3 = (char *) emb->action;
+   v->str4 = (char *) emb->params;
    END_SEND_INT3_STRING4_LIST(v, E_IPC_OP_BINDING_SIGNAL_LIST_REPLY);
 #endif
 #undef HDL
@@ -6227,8 +6243,8 @@ break;
    v->val3 = emb->z;
    v->val4 = emb->modifiers;
    v->val5 = emb->any_mod;
-   v->str1 = emb->action;
-   v->str2 = emb->params;
+   v->str1 = (char *) emb->action;
+   v->str2 = (char *) emb->params;
    END_SEND_INT5_STRING2_LIST(v, E_IPC_OP_BINDING_WHEEL_LIST_REPLY);
 #endif
 #undef HDL
@@ -6633,7 +6649,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
-   LIST_DATA();
+   ENCODE_INIT();
    ENCODE(e_theme_category_list(), e_ipc_codec_str_list_enc);
    SEND_DATA(E_IPC_OP_THEME_CATEGORY_LIST_REPLY);
    END_GENERIC();
@@ -6667,7 +6683,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
-   LIST_DATA();
+   ENCODE_INIT();
    ENCODE(e_theme_transition_list(), e_ipc_codec_str_list_enc);
    SEND_DATA(E_IPC_OP_TRANSITION_LIST_REPLY);
    END_GENERIC();
@@ -6701,7 +6717,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
-   LIST_DATA();
+   ENCODE_INIT();
    ENCODE(e_action_name_list(), e_ipc_codec_str_list_enc);
    SEND_DATA(E_IPC_OP_ACTION_LIST_REPLY);
    END_GENERIC();
@@ -6830,7 +6846,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
-   LIST_DATA();
+   ENCODE_INIT();
    Evas_List *engines;
    engines = e_config_engine_list();
    ENCODE(engines, e_ipc_codec_str_list_enc);
@@ -7240,7 +7256,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    SEND_STRING_INT4_LIST(e_color_class_list(), E_Color_Class, cc, v, HDL);
-   v->str = cc->name;
+   v->str = (char *) cc->name;
    v->val1 = cc->r;
    v->val2 = cc->g;
    v->val3 = cc->b;
@@ -7257,7 +7273,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    SEND_STRING_INT4_LIST(e_color_class_list(), E_Color_Class, cc, v, HDL);
-   v->str = cc->name;
+   v->str = (char *) cc->name;
    v->val1 = cc->r2;
    v->val2 = cc->g2;
    v->val3 = cc->b2;
@@ -7274,7 +7290,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    SEND_STRING_INT4_LIST(e_color_class_list(), E_Color_Class, cc, v, HDL);
-   v->str = cc->name;
+   v->str = (char *) cc->name;
    v->val1 = cc->r3;
    v->val2 = cc->g3;
    v->val3 = cc->b3;
@@ -7320,7 +7336,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
-   LIST_DATA();
+   ENCODE_INIT();
    ENCODE(edje_color_class_list(), e_ipc_codec_str_list_enc);
    SEND_DATA(E_IPC_OP_COLOR_CLASS_LIST_REPLY);
    END_GENERIC();

@@ -25,7 +25,7 @@ struct _E_Pointer
    Ecore_X_Window    win;
    int               w, h;
 
-   char             *type;
+   const char       *type;
    void             *obj;
    Evas_List        *stack;
 

@@ -28,7 +28,7 @@ struct _E_Menu
 {
    E_Object             e_obj_inherit;
    
-   char *		category;
+   const char	       *category;
 
    struct {
       char              visible : 1;
@@ -38,8 +38,8 @@ struct _E_Menu
    int                  frozen;
    
    struct {
-      char             *title;
-      char             *icon_file;
+      const char       *title;
+      const char       *icon_file;
       Evas_Object      *icon;
    } header;
    
@@ -82,9 +82,9 @@ struct _E_Menu_Item
 {
    E_Object       e_obj_inherit;
    E_Menu        *menu;
-   char          *icon;
-   char          *icon_key;
-   char          *label;
+   const char    *icon;
+   const char    *icon_key;
+   const char    *label;
    E_Menu        *submenu;
    
    Evas_Object   *separator_object;

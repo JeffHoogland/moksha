@@ -55,8 +55,8 @@ static int       _e_app_cb_event_border_add(void *data, int type, void *event);
 static int       _e_app_cb_expire_timer    (void *data);
 static void      _e_app_cache_copy         (E_App_Cache *ac, E_App *a);
 static int       _e_app_cb_scan_cache_timer(void *data);
-static E_App    *_e_app_cache_new          (E_App_Cache *ac, char *path, int scan_subdirs);
-static int       _e_app_exe_valid_get      (char *exe);
+static E_App    *_e_app_cache_new          (E_App_Cache *ac, const char *path, int scan_subdirs);
+static int       _e_app_exe_valid_get      (const char *exe);
 
 /* local subsystem globals */
 static Evas_Hash   *_e_apps = NULL;
@@ -68,8 +68,8 @@ static Ecore_Event_Handler *_e_apps_exit_handler = NULL;
 static Ecore_Event_Handler *_e_apps_border_add_handler = NULL;
 static Evas_List   *_e_apps_repositories = NULL;
 static E_App       *_e_apps_all = NULL;
-static char        *_e_apps_path_all = NULL;
-static char        *_e_apps_path_trash = NULL;
+static const char  *_e_apps_path_all = NULL;
+static const char  *_e_apps_path_trash = NULL;
 static Evas_List   *_e_apps_start_pending = NULL;
 
 #define EAP_MIN_WIDTH 8
@@ -235,10 +235,10 @@ e_app_new(const char *path, int scan_subdirs)
 	return a;
      }
 
-   ac = e_app_cache_load((char *)path);
+   ac = e_app_cache_load(path);
    if (ac)
      {
-	a = _e_app_cache_new(ac, (char *)path, scan_subdirs);
+	a = _e_app_cache_new(ac, path, scan_subdirs);
 	if (a)
 	  {
 	     _e_apps = evas_hash_add(_e_apps, a->path, a);
@@ -786,7 +786,7 @@ e_app_window_name_class_title_role_find(const char *name, const char *class,
 }
 
 EAPI E_App *
-e_app_file_find(char *file)
+e_app_file_find(const char *file)
 {
    Evas_List *l;
    
@@ -818,7 +818,7 @@ e_app_file_find(char *file)
 }
 
 EAPI E_App *
-e_app_name_find(char *name)
+e_app_name_find(const char *name)
 {
    Evas_List *l;
    
@@ -843,7 +843,7 @@ e_app_name_find(char *name)
 }
 
 EAPI E_App *
-e_app_generic_find(char *generic)
+e_app_generic_find(const char *generic)
 {
    Evas_List *l;
    
@@ -868,7 +868,7 @@ e_app_generic_find(char *generic)
 }
 
 EAPI E_App *
-e_app_exe_find(char *exe)
+e_app_exe_find(const char *exe)
 {
    Evas_List *l;
    
@@ -895,7 +895,7 @@ e_app_exe_find(char *exe)
 
 
 EAPI Evas_List *
-e_app_name_glob_list(char *name)
+e_app_name_glob_list(const char *name)
 {
    Evas_List *l, *list = NULL;
    
@@ -916,7 +916,7 @@ e_app_name_glob_list(char *name)
 }
 
 EAPI Evas_List *
-e_app_generic_glob_list(char *generic)
+e_app_generic_glob_list(const char *generic)
 {
    Evas_List *l, *list = NULL;
    
@@ -937,7 +937,7 @@ e_app_generic_glob_list(char *generic)
 }
 
 EAPI Evas_List *
-e_app_exe_glob_list(char *exe)
+e_app_exe_glob_list(const char *exe)
 {
    Evas_List *l, *list = NULL;
    
@@ -958,7 +958,7 @@ e_app_exe_glob_list(char *exe)
 }
 
 EAPI Evas_List *
-e_app_comment_glob_list(char *comment)
+e_app_comment_glob_list(const char *comment)
 {
    Evas_List *l, *list = NULL;
    
@@ -2071,7 +2071,7 @@ _e_app_cb_scan_cache_timer(void *data)
 }
 
 static E_App *
-_e_app_cache_new(E_App_Cache *ac, char *path, int scan_subdirs)
+_e_app_cache_new(E_App_Cache *ac, const char *path, int scan_subdirs)
 {
    Evas_List *l;
    E_App *a;
@@ -2160,7 +2160,7 @@ _e_app_cache_new(E_App_Cache *ac, char *path, int scan_subdirs)
 }
 
 static int
-_e_app_exe_valid_get(char *exe)
+_e_app_exe_valid_get(const char *exe)
 {
    if ((!exe) || (!exe[0])) return 0;
    return 1;

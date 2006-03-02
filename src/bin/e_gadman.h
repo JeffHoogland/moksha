@@ -75,7 +75,7 @@ struct _E_Gadman_Client
    unsigned char        resizing_u : 1;
    unsigned char        resizing_d : 1;
    E_Gadman_Edge        edge;
-   char                *domain;
+   const char          *domain;
    E_Zone              *zone;
    int                  instance;
    E_Gadman_Policy      policy;

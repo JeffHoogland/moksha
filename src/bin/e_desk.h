@@ -18,7 +18,7 @@ struct _E_Desk
    E_Object             e_obj_inherit;
 
    E_Zone              *zone;
-   char                *name;
+   const char          *name;
    int                  x, y;
    char                 visible : 1;
 
@@ -39,7 +39,7 @@ EAPI int          e_desk_init(void);
 EAPI int          e_desk_shutdown(void);
 EAPI E_Desk      *e_desk_new(E_Zone *zone, int x, int y);
 EAPI void         e_desk_name_set(E_Desk *desk, const char *name);
-EAPI void         e_desk_name_add(int container, int zone, int desk_x, int desk_y, char *name);
+EAPI void         e_desk_name_add(int container, int zone, int desk_x, int desk_y, const char *name);
 EAPI void         e_desk_name_del(int container, int zone, int desk_x, int desk_y);
 EAPI void         e_desk_name_update(void);
 EAPI void         e_desk_show(E_Desk *desk);

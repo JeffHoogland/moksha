@@ -132,7 +132,7 @@ e_font_fallback_clear(void)
 	e_config->font_fallbacks = evas_list_remove_list(
 					e_config->font_fallbacks, 
 					e_config->font_fallbacks);
-	E_FREE(eff->name);
+	if (eff->name) evas_stringshare_del(eff->name);
 	E_FREE(eff);
     }
 }

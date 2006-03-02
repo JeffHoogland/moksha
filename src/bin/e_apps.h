@@ -32,19 +32,19 @@ struct _E_App
    E_App              *parent; /* the parent e_app node */
    E_App              *orig; /* if this is a copy, point to the original */
    
-   char               *name; /* app name */
-   char               *generic; /* generic app name */
-   char               *comment; /* a longer description */
-   char               *exe; /* command to execute, NULL if directory */
+   const char         *name; /* app name */
+   const char         *generic; /* generic app name */
+   const char         *comment; /* a longer description */
+   const char         *exe; /* command to execute, NULL if directory */
    
-   char               *path; /* path to .eet containing icons etc. etc. */
+   const char         *path; /* path to .eet containing icons etc. etc. */
 
-   char               *win_name; /* window name */
-   char               *win_class; /* window class */
-   char               *win_title; /* window title */
-   char               *win_role; /* window role */
+   const char         *win_name; /* window name */
+   const char         *win_class; /* window class */
+   const char         *win_title; /* window title */
+   const char         *win_role; /* window role */
 
-   char               *icon_class; /* icon_class */
+   const char         *icon_class; /* icon_class */
    
    Evas_List          *subapps; /* if this a directory, a list of more E_App's */
    
@@ -63,7 +63,7 @@ struct _E_App
 
    unsigned char       deleted : 1; /* this app's file is deleted from disk */
    
-   char               *image; /* used when we're saving a image into the eap */
+   const char         *image; /* used when we're saving a image into the eap */
    int                 width; /* used for saving eap's image width in edje */
    int                 height; /* used for saving eap's image height in edje */
 };
@@ -111,15 +111,15 @@ EAPI void        e_app_change_callback_del               (void (*func) (void *da
 
 EAPI E_App      *e_app_launch_id_pid_find                (int launch_id, pid_t pid);
 EAPI E_App      *e_app_window_name_class_title_role_find (const char *name, const char *class, const char *title, const char *role);
-EAPI E_App      *e_app_file_find                         (char *file);
-EAPI E_App      *e_app_name_find                         (char *name);
-EAPI E_App      *e_app_generic_find                      (char *generic);
-EAPI E_App      *e_app_exe_find                          (char *exe);
+EAPI E_App      *e_app_file_find                         (const char *file);
+EAPI E_App      *e_app_name_find                         (const char *name);
+EAPI E_App      *e_app_generic_find                      (const char *generic);
+EAPI E_App      *e_app_exe_find                          (const char *exe);
 
-EAPI Evas_List  *e_app_name_glob_list                    (char *name);
-EAPI Evas_List  *e_app_generic_glob_list                 (char *generic);
-EAPI Evas_List  *e_app_exe_glob_list                     (char *exe);
-EAPI Evas_List  *e_app_comment_glob_list                 (char *comment);
+EAPI Evas_List  *e_app_name_glob_list                    (const char *name);
+EAPI Evas_List  *e_app_generic_glob_list                 (const char *generic);
+EAPI Evas_List  *e_app_exe_glob_list                     (const char *exe);
+EAPI Evas_List  *e_app_comment_glob_list                 (const char *comment);
     
 EAPI void         e_app_fields_fill                       (E_App *a, const char *path);
 EAPI void         e_app_fields_save                       (E_App *a);

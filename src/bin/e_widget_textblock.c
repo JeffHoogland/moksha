@@ -67,7 +67,9 @@ e_widget_textblock_markup_set(Evas_Object *obj, const char *text)
 EAPI void
 e_widget_textblock_plain_set(Evas_Object *obj, const char *text)
 {
-   char *markup, *p, *d;
+   char *markup;
+   char *d;
+   const char *p; 
    int mlen;
 
    if (!text)

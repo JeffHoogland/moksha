@@ -249,7 +249,7 @@ e_path_user_path_remove(E_Path *ep, const char *path)
      }
 }
 
-EAPI char *
+EAPI const char *
 e_path_find(E_Path *ep, const char *file)
 {
    Evas_List *l;

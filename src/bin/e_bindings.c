@@ -117,7 +117,7 @@ e_bindings_shutdown(void)
 }
 
 EAPI void
-e_bindings_mouse_add(E_Binding_Context ctxt, int button, E_Binding_Modifier mod, int any_mod, char *action, char *params)
+e_bindings_mouse_add(E_Binding_Context ctxt, int button, E_Binding_Modifier mod, int any_mod, const char *action, const char *params)
 {
    E_Binding_Mouse *bind;
    
@@ -132,7 +132,7 @@ e_bindings_mouse_add(E_Binding_Context ctxt, int button, E_Binding_Modifier mod,
 }
 
 EAPI void
-e_bindings_mouse_del(E_Binding_Context ctxt, int button, E_Binding_Modifier mod, int any_mod, char *action, char *params)
+e_bindings_mouse_del(E_Binding_Context ctxt, int button, E_Binding_Modifier mod, int any_mod, const char *action, const char *params)
 {
    Evas_List *l;
    
@@ -309,7 +309,7 @@ e_bindings_mouse_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_
 }
 
 EAPI void
-e_bindings_key_add(E_Binding_Context ctxt, char *key, E_Binding_Modifier mod, int any_mod, char *action, char *params)
+e_bindings_key_add(E_Binding_Context ctxt, const char *key, E_Binding_Modifier mod, int any_mod, const char *action, const char *params)
 {
    E_Binding_Key *bind;
    
@@ -324,7 +324,7 @@ e_bindings_key_add(E_Binding_Context ctxt, char *key, E_Binding_Modifier mod, in
 }
 
 EAPI void
-e_bindings_key_del(E_Binding_Context ctxt, char *key, E_Binding_Modifier mod, int any_mod, char *action, char *params)
+e_bindings_key_del(E_Binding_Context ctxt, const char *key, E_Binding_Modifier mod, int any_mod, const char *action, const char *params)
 {
    Evas_List *l;
    
@@ -476,7 +476,7 @@ e_bindings_key_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Ev
 }
 
 EAPI void
-e_bindings_signal_add(E_Binding_Context ctxt, char *sig, char *src, E_Binding_Modifier mod, int any_mod, char *action, char *params)
+e_bindings_signal_add(E_Binding_Context ctxt, const char *sig, const char *src, E_Binding_Modifier mod, int any_mod, const char *action, const char *params)
 {
    E_Binding_Signal *bind;
    
@@ -492,7 +492,7 @@ e_bindings_signal_add(E_Binding_Context ctxt, char *sig, char *src, E_Binding_Mo
 }
 
 EAPI void
-e_bindings_signal_del(E_Binding_Context ctxt, char *sig, char *src, E_Binding_Modifier mod, int any_mod, char *action, char *params)
+e_bindings_signal_del(E_Binding_Context ctxt, const char *sig, const char *src, E_Binding_Modifier mod, int any_mod, const char *action, const char *params)
 {
    Evas_List *l;
    
@@ -573,7 +573,7 @@ e_bindings_signal_handle(E_Binding_Context ctxt, E_Object *obj, char *sig, char 
 }
 
 EAPI void
-e_bindings_wheel_add(E_Binding_Context ctxt, int direction, int z, E_Binding_Modifier mod, int any_mod, char *action, char *params)
+e_bindings_wheel_add(E_Binding_Context ctxt, int direction, int z, E_Binding_Modifier mod, int any_mod, const char *action, const char *params)
 {
    E_Binding_Wheel *bind;
    
@@ -589,7 +589,7 @@ e_bindings_wheel_add(E_Binding_Context ctxt, int direction, int z, E_Binding_Mod
 }
 
 EAPI void
-e_bindings_wheel_del(E_Binding_Context ctxt, int direction, int z, E_Binding_Modifier mod, int any_mod, char *action, char *params)
+e_bindings_wheel_del(E_Binding_Context ctxt, int direction, int z, E_Binding_Modifier mod, int any_mod, const char *action, const char *params)
 {
    Evas_List *l;
    

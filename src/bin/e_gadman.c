@@ -627,7 +627,7 @@ e_gadman_client_menu_new(E_Gadman_Client *gmc)
    E_Menu *m;
    E_Menu_Item *mi;
    int disallow, seperator;
-   char *s;
+   const char *s;
    
    E_OBJECT_CHECK_RETURN(gmc, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(gmc, E_GADMAN_CLIENT_TYPE, NULL);

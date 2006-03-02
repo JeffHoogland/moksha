@@ -139,7 +139,7 @@ struct _E_Border
       struct {
 	 unsigned char changed : 1;
 	 unsigned char user_selected : 1;
-	 char *name;
+	 const char *name;
       } border;
       
       unsigned char shaped : 1;
@@ -551,11 +551,11 @@ EAPI Evas_List *e_border_immortal_windows_get(void);
 
 EAPI const char *e_border_name_get(E_Border *bd);
 
-EAPI void e_border_signal_move_begin(E_Border *bd, char *sig, char *src);
-EAPI void e_border_signal_move_end(E_Border *bd, char *sig, char *src);
+EAPI void e_border_signal_move_begin(E_Border *bd, const char *sig, const char *src);
+EAPI void e_border_signal_move_end(E_Border *bd, const char *sig, const char *src);
 EAPI int  e_border_resizing_get(E_Border *bd);
-EAPI void e_border_signal_resize_begin(E_Border *bd, char *dir, char *sig, char *src);
-EAPI void e_border_signal_resize_end(E_Border *bd, char *dir, char *sig, char *src);
+EAPI void e_border_signal_resize_begin(E_Border *bd, const char *dir, const char *sig, const char *src);
+EAPI void e_border_signal_resize_end(E_Border *bd, const char *dir, const char *sig, const char *src);
 EAPI void e_border_resize_limit(E_Border *bd, int *w, int *h);
     
 extern EAPI int E_EVENT_BORDER_RESIZE;

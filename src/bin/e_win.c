@@ -303,7 +303,7 @@ e_win_step_set(E_Win *win, int x, int y)
 }
 
 EAPI void
-e_win_name_class_set(E_Win *win, char *name, char *class)
+e_win_name_class_set(E_Win *win, const char *name, const char *class)
 {
    E_OBJECT_CHECK(win);
    E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
@@ -311,7 +311,7 @@ e_win_name_class_set(E_Win *win, char *name, char *class)
 }
 
 EAPI void
-e_win_title_set(E_Win *win, char *title)
+e_win_title_set(E_Win *win, const char *title)
 {
    E_OBJECT_CHECK(win);
    E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);

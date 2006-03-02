@@ -94,7 +94,7 @@ EAPI int              e_gadcon_init(void);
 EAPI int              e_gadcon_shutdown(void);
 EAPI void             e_gadcon_provider_register(E_Gadcon_Client_Class *cc);
 EAPI void             e_gadcon_provider_unregister(E_Gadcon_Client_Class *cc);
-EAPI E_Gadcon        *e_gadcon_swallowed_new(char *name, char *id, Evas_Object *obj, char *swallow_name);
+EAPI E_Gadcon        *e_gadcon_swallowed_new(const char *name, char *id, Evas_Object *obj, char *swallow_name);
 EAPI void             e_gadcon_layout_policy_set(E_Gadcon *gc, E_Gadcon_Layout_Policy layout_policy);
 EAPI void             e_gadcon_populate(E_Gadcon *gc);
 EAPI void             e_gadcon_orient(E_Gadcon *gc, E_Gadcon_Orient orient);

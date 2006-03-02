@@ -34,7 +34,10 @@ struct _E_Remember
    int            match;
    unsigned char  apply_first_only;
    int            used_count;
-   char          *name, *class, *title, *role;
+   const char    *name;
+   const char    *class;
+   const char    *title;
+   const char    *role;
    int            type;
    unsigned char  transient;
    int            apply;
@@ -71,7 +74,7 @@ struct _E_Remember
       unsigned char lock_focus_out; 
       unsigned char lock_life;
       
-      char         *border;
+      const char   *border;
       
       unsigned char sticky;
       

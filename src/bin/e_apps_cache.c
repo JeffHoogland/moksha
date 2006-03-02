@@ -69,7 +69,7 @@ e_app_cache_shutdown(void)
 }
 
 EAPI E_App_Cache *
-e_app_cache_load(char *path)
+e_app_cache_load(const char *path)
 {
    Eet_File *ef;
    char buf[PATH_MAX];
@@ -156,7 +156,7 @@ e_app_cache_free(E_App_Cache *ac)
 }
 
 EAPI int
-e_app_cache_save(E_App_Cache *ac, char *path)
+e_app_cache_save(E_App_Cache *ac, const char *path)
 {
    Eet_File *ef;
    char buf[4096];

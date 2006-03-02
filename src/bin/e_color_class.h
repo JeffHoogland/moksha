@@ -12,7 +12,7 @@ typedef struct _E_Color_Class E_Color_Class;
 
 struct _E_Color_Class
 {
-   char		 *name;
+   const char	 *name;
    int		  r, g, b, a;
    int		  r2, g2, b2, a2;
    int		  r3, g3, b3, a3;

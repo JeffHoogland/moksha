@@ -153,7 +153,6 @@ e_thumb_geometry_get(char *file, int *w, int *h, int from_eet)
 	eet_file = _e_thumb_file_id(file);
 	if(!eet_file)
 	  {
-	     eet_close(ef);	     
 	     if(w) *w = -1;
 	     if(h) *h = -1;
 	     return;

@@ -11,20 +11,20 @@ typedef struct _E_App_Cache E_App_Cache;
 
 struct _E_App_Cache
 {
-   char               *name; /* app name */
-   char               *generic; /* generic app name */
-   char               *comment; /* a longer description */
-   char               *exe; /* command to execute, NULL if directory */
-   
-   char               *file; /* the .eap filename */
+   const char         *name; /* app name */
+   const char         *generic; /* generic app name */
+   const char         *comment; /* a longer description */
+   const char         *exe; /* command to execute, NULL if directory */
+  
+   const char         *file; /* the .eap filename */
    unsigned long long  file_mod_time; /* the last modified time of the file */
    
-   char               *win_name; /* window name */
-   char               *win_class; /* window class */
-   char               *win_title; /* window title */
-   char               *win_role; /* window role */
+   const char         *win_name; /* window name */
+   const char         *win_class; /* window class */
+   const char         *win_title; /* window title */
+   const char         *win_role; /* window role */
    
-   char               *icon_class; /* icon_class */
+   const char         *icon_class; /* icon_class */
    
    Evas_List          *subapps; /* if this a directory, a list of more E_App's */
    
@@ -41,10 +41,10 @@ struct _E_App_Cache
 EAPI int          e_app_cache_init(void);
 EAPI int          e_app_cache_shutdown(void);
 
-EAPI E_App_Cache *e_app_cache_load(char *path);
+EAPI E_App_Cache *e_app_cache_load(const char *path);
 EAPI E_App_Cache *e_app_cache_generate(E_App *a);
 EAPI void         e_app_cache_free(E_App_Cache *ac);
-EAPI int          e_app_cache_save(E_App_Cache *ac, char *path);
+EAPI int          e_app_cache_save(E_App_Cache *ac, const char *path);
 
 #endif
 #endif

@@ -19,7 +19,7 @@ static void _e_config_dialog_cb_close(void *data, E_Dialog *dia);
 /* externally accessible functions */
 
 EAPI E_Config_Dialog *
-e_config_dialog_new(E_Container *con, char *title, char *icon, int icon_size, E_Config_Dialog_View *view, void *data)
+e_config_dialog_new(E_Container *con, const char *title, const char *icon, int icon_size, E_Config_Dialog_View *view, void *data)
 {
    E_Config_Dialog *cfd;
    

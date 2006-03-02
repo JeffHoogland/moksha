@@ -10,56 +10,56 @@
       if (act) act->func.go = _e_actions_act_##name##_go; \
    }
 #define ACT_FN_GO(act) \
-   static void _e_actions_act_##act##_go(E_Object *obj, char *params)
+   static void _e_actions_act_##act##_go(E_Object *obj, const char *params)
 #define ACT_GO_MOUSE(name) \
    { \
       act = e_action_add(#name); \
       if (act) act->func.go_mouse = _e_actions_act_##name##_go_mouse; \
    }
 #define ACT_FN_GO_MOUSE(act) \
-   static void _e_actions_act_##act##_go_mouse(E_Object *obj, char *params, Ecore_X_Event_Mouse_Button_Down *ev)
+   static void _e_actions_act_##act##_go_mouse(E_Object *obj, const char *params, Ecore_X_Event_Mouse_Button_Down *ev)
 #define ACT_GO_WHEEL(name) \
    { \
       act = e_action_add(#name); \
       if (act) act->func.go_wheel = _e_actions_act_##name##_go_wheel; \
    }
 #define ACT_FN_GO_WHEEL(act) \
-   static void _e_actions_act_##act##_go_wheel(E_Object *obj, char *params, Ecore_X_Event_Mouse_Wheel *ev)
+   static void _e_actions_act_##act##_go_wheel(E_Object *obj, const char *params, Ecore_X_Event_Mouse_Wheel *ev)
 #define ACT_GO_SIGNAL(name) \
    { \
       act = e_action_add(#name); \
       if (act) act->func.go_signal = _e_actions_act_##name##_go_signal; \
    }
 #define ACT_FN_GO_SIGNAL(act) \
-   static void _e_actions_act_##act##_go_signal(E_Object *obj, char *params, char *sig, char *src)
+   static void _e_actions_act_##act##_go_signal(E_Object *obj, const char *params, const char *sig, const char *src)
 #define ACT_GO_KEY(name) \
    { \
       act = e_action_add(#name); \
       if (act) act->func.go_key = _e_actions_act_##name##_go_key; \
    }
 #define ACT_FN_GO_KEY(act) \
-   static void _e_actions_act_##act##_go_key(E_Object *obj, char *params, Ecore_X_Event_Key_Down *ev)
+   static void _e_actions_act_##act##_go_key(E_Object *obj, const char *params, Ecore_X_Event_Key_Down *ev)
 #define ACT_END(name) \
    { \
       act = e_action_add(#name); \
       if (act) act->func.end = _e_actions_act_##name##_end; \
    }
 #define ACT_FN_END(act) \
-   static void _e_actions_act_##act##_end(E_Object *obj, char *params)
+   static void _e_actions_act_##act##_end(E_Object *obj, const char *params)
 #define ACT_END_MOUSE(name) \
    { \
       act = e_action_add(#name); \
       if (act) act->func.end_mouse = _e_actions_act_##name##_end_mouse; \
    }
 #define ACT_FN_END_MOUSE(act) \
-   static void _e_actions_act_##act##_end_mouse(E_Object *obj, char *params, Ecore_X_Event_Mouse_Button_Up *ev)
+   static void _e_actions_act_##act##_end_mouse(E_Object *obj, const char *params, Ecore_X_Event_Mouse_Button_Up *ev)
 #define ACT_END_KEY(name) \
    { \
       act = e_action_add(#name); \
       if (act) act->func.end_key = _e_actions_act_##name##_end_key; \
    }
 #define ACT_FN_END_KEY(act) \
-   static void _e_actions_act_##act##_end_key(E_Object *obj, char *params, Ecore_X_Event_Key_Up *ev)
+   static void _e_actions_act_##act##_end_key(E_Object *obj, const char *params, Ecore_X_Event_Key_Up *ev)
 
 /* local subsystem functions */
 static void _e_action_free(E_Action *act);
@@ -963,7 +963,7 @@ _e_actions_cb_menu_end(void *data, E_Menu *m)
    e_object_del(E_OBJECT(m));
 }
 static E_Menu *
-_e_actions_menu_find(char *name)
+_e_actions_menu_find(const char *name)
 {
    if (!strcmp(name, "main")) return e_int_menus_main_new();
    else if (!strcmp(name, "favorites")) return e_int_menus_favorite_apps_new();

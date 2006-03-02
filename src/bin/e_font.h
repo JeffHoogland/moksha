@@ -13,19 +13,19 @@ typedef struct _E_Font_Fallback E_Font_Available;
 
 struct _E_Font_Default
 {
-   char *text_class;
-   char *font;
-   int   size;
+   const char *text_class;
+   const char *font;
+   int         size;
 };
 
 struct _E_Font_Fallback
 {
-   char *name;
+   const char *name;
 };
 
 struct _E_Font_Available
 {
-   char *name;
+   const char *name;
 };
 
 EAPI int		e_font_init(void);

@@ -8,8 +8,8 @@ typedef struct _E_Theme_Result E_Theme_Result;
 
 struct _E_Theme_Result
 {
-   char *file;
-   char *cache;
+   const char *file;
+   const char *cache;
 };
 
 static Evas_Bool _e_theme_mappings_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata);
@@ -122,7 +122,7 @@ e_theme_shutdown(void)
 }
 
 EAPI int
-e_theme_edje_object_set(Evas_Object *o, char *category, char *group)
+e_theme_edje_object_set(Evas_Object *o, const char *category, const char *group)
 {
    E_Theme_Result *res;
    char buf[256];
@@ -133,7 +133,7 @@ e_theme_edje_object_set(Evas_Object *o, char *category, char *group)
    res = evas_hash_find(mappings, category);
    if (res)
      {
-	char *str;
+	const char *str;
 	
 	/* if found check cached path */
 	str = res->cache;
@@ -188,7 +188,7 @@ e_theme_edje_object_set(Evas_Object *o, char *category, char *group)
 }
 
 EAPI const char *
-e_theme_edje_file_get(char *category, char *group)
+e_theme_edje_file_get(const char *category, const char *group)
 {
    E_Theme_Result *res;
    char buf[4096];
@@ -199,7 +199,7 @@ e_theme_edje_file_get(char *category, char *group)
    res = evas_hash_find(mappings, category);
    if (res)
      {
-	char *str;
+	const char *str;
 	
 	/* if found check cached path */
 	str = res->cache;
@@ -261,7 +261,7 @@ e_theme_edje_file_get(char *category, char *group)
 }
 
 EAPI void
-e_theme_file_set(char *category, char *file)
+e_theme_file_set(const char *category, const char *file)
 {
    E_Theme_Result *res;
 
@@ -480,7 +480,7 @@ _e_theme_collection_items_find(const char *base, const char *collname)
 	res = evas_hash_find(mappings, category);
 	if (res)
 	  {
-	     char *str;
+	     const char *str;
 	     
 	     /* if found check cached path */
 	     str = res->cache;

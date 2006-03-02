@@ -7,15 +7,15 @@ typedef struct _E_Msg_Event E_Msg_Event;
 
 struct _E_Msg_Handler
 {
-   void (*func) (void *data, char *name, char *info, int val, E_Object *obj);
+   void (*func) (void *data, const char *name, const char *info, int val, E_Object *obj);
    void *data;
    unsigned char delete_me : 1;
 };
 
 struct _E_Msg_Event
 {
-   char *name;
-   char *info;
+   const char *name;
+   const char *info;
    int   val;
    E_Object *obj;
 };
@@ -51,7 +51,7 @@ e_msg_shutdown(void)
 }
 
 EAPI void
-e_msg_send(char *name, char *info, int val, E_Object *obj)
+e_msg_send(const char *name, const char *info, int val, E_Object *obj)
 {
    E_Msg_Event *ev;
    
@@ -67,7 +67,7 @@ e_msg_send(char *name, char *info, int val, E_Object *obj)
 }
 
 EAPI E_Msg_Handler *
-e_msg_handler_add(void (*func) (void *data, char *name, char *info, int val, E_Object *obj), void *data)
+e_msg_handler_add(void (*func) (void *data, const char *name, const char *info, int val, E_Object *obj), void *data)
 {
    E_Msg_Handler *emsgh;
    

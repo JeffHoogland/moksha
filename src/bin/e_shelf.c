@@ -105,7 +105,7 @@ e_shelf_config_init(void)
 }
 
 EAPI E_Shelf *
-e_shelf_zone_new(E_Zone *zone, char *name, char *style, int popup, int layer)
+e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, int layer)
 {
    E_Shelf *es;
    char buf[1024];

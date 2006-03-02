@@ -24,7 +24,7 @@ static void _e_module_menu_free(void *obj);
 static void _e_module_control_menu_about(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_module_control_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_module_control_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_module_dialog_disable_show(char *title, char *body, E_Module *m);
+static void _e_module_dialog_disable_show(const char *title, const char *body, E_Module *m);
 static void _e_module_cb_dialog_disable(void *data, E_Dialog *dia);
 
 /* local subsystem globals */
@@ -84,12 +84,13 @@ e_module_shutdown(void)
 }
 
 EAPI E_Module *
-e_module_new(char *name)
+e_module_new(const char *name)
 {
    E_Module *m;
    char buf[4096];
    char body[4096], title[1024];
-   char *modpath, *s;
+   const char *modpath;
+   char *s;
    Evas_List *l;
    int in_list = 0;
 
@@ -334,7 +335,7 @@ e_module_save_all(void)
 }
 
 EAPI E_Module *
-e_module_find(char *name)
+e_module_find(const char *name)
 {
    Evas_List *l;
    
@@ -403,7 +404,7 @@ e_module_menu_new(void)
 }
 
 EAPI void
-e_module_dialog_show(char *title, char *body)
+e_module_dialog_show(const char *title, const char *body)
 {
    E_Dialog *dia;
 
@@ -548,7 +549,7 @@ _e_module_control_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_module_dialog_disable_show(char *title, char *body, E_Module *m)
+_e_module_dialog_disable_show(const char *title, const char *body, E_Module *m)
 {
    E_Dialog *dia;
    char buf[4096];

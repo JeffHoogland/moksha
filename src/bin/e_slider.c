@@ -16,7 +16,7 @@ struct _E_Smart_Data
    Evas_Object   *edje_obj;
    double         val, val_min, val_max, step_size;
    int            reversed, step_count, horizontal;
-   char          *format;
+   const char    *format;
    Evas_Coord     minw, minh;
    Ecore_Timer   *set_timer;
 };

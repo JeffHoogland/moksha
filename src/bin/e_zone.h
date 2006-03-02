@@ -20,7 +20,7 @@ struct _E_Zone
    E_Object             e_obj_inherit;
 
    int                  x, y, w, h;
-   char                *name;
+   const char          *name;
    /* num matches the id of the xinerama screen
     * this zone belongs to. */
    unsigned int         num;

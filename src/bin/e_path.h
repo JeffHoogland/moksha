@@ -14,7 +14,7 @@ typedef struct _E_Path_Dir E_Path_Dir;
 
 struct _E_Path_Dir
 {
-   char * dir;
+   const char * dir;
 };
 
 struct _E_Path
@@ -38,7 +38,7 @@ EAPI void        e_path_default_path_append(E_Path *ep, const char *path);
 EAPI void        e_path_user_path_append(E_Path *ep, const char *path);
 EAPI void        e_path_user_path_prepend(E_Path *ep, const char *path);
 EAPI void        e_path_user_path_remove(E_Path *ep, const char *path);
-EAPI char       *e_path_find(E_Path *ep, const char *file); /* for conveience this doesnt return a malloc'd string. it's a static buffer, so a new call will replace this buffer, but thsi means there is no need to free the return */
+EAPI const char *e_path_find(E_Path *ep, const char *file); 
 EAPI void        e_path_evas_append(E_Path *ep, Evas *evas);
 EAPI Evas_List  *e_path_dir_list_get(E_Path *ep);
 EAPI void	 e_path_dir_list_free(Evas_List *dir_list);

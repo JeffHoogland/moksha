@@ -190,7 +190,7 @@ e_util_container_zone_number_get(int con_num, int zone_num)
 }
 
 EAPI int
-e_util_head_exec(int head, char *cmd)
+e_util_head_exec(int head, const char *cmd)
 {
    char *penv_display;
    char *p1, *p2;
@@ -244,7 +244,7 @@ e_util_head_exec(int head, char *cmd)
 }
 
 EAPI int
-e_util_strcmp(char *s1, char *s2)
+e_util_strcmp(const char *s1, const char *s2)
 {
    if ((s1) && (s2))
      return strcmp(s1, s2);
@@ -252,7 +252,7 @@ e_util_strcmp(char *s1, char *s2)
 }
 
 EAPI int
-e_util_both_str_empty(char *s1, char *s2)
+e_util_both_str_empty(const char *s1, const char *s2)
 {
    int empty = 0;
    
@@ -285,10 +285,11 @@ e_util_immortal_check(void)
 }
 
 EAPI int
-e_util_edje_icon_list_set(Evas_Object *obj, char *list)
+e_util_edje_icon_list_set(Evas_Object *obj, const char *list)
 {
    char *buf;
-   char *p, *c;
+   const char *p;
+   const char *c;
    
    if ((!list) || (!list[0])) return 0;
    buf = alloca(strlen(list) + 1);
@@ -315,10 +316,11 @@ e_util_edje_icon_list_set(Evas_Object *obj, char *list)
 }
 
 EAPI int
-e_util_menu_item_edje_icon_list_set(E_Menu_Item *mi, char *list)
+e_util_menu_item_edje_icon_list_set(E_Menu_Item *mi, const char *list)
 {
    char *buf;
-   char *p, *c;
+   const char *p;
+   char *c;
    
    if ((!list) || (!list[0])) return 0;
    buf = alloca(strlen(list) + 1);
@@ -345,7 +347,7 @@ e_util_menu_item_edje_icon_list_set(E_Menu_Item *mi, char *list)
 }
 
 EAPI int
-e_util_edje_icon_set(Evas_Object *obj, char *name)
+e_util_edje_icon_set(Evas_Object *obj, const char *name)
 {
    char *file;
    char buf[4096];
@@ -362,7 +364,7 @@ e_util_edje_icon_set(Evas_Object *obj, char *name)
 }
 
 EAPI int
-e_util_menu_item_edje_icon_set(E_Menu_Item *mi, char *name)
+e_util_menu_item_edje_icon_set(E_Menu_Item *mi, const char *name)
 {
    char *file;
    char buf[4096];
@@ -492,7 +494,7 @@ e_util_desk_border_below(E_Border *bd)
 }
 
 EAPI int
-e_util_edje_collection_exists(char *file, char *coll)
+e_util_edje_collection_exists(const char *file, const char *coll)
 {
    Evas_List *clist, *l;
    
@@ -510,7 +512,7 @@ e_util_edje_collection_exists(char *file, char *coll)
 }
 
 EAPI void
-e_util_dialog_internal(char *title, char *txt)
+e_util_dialog_internal(const char *title, const char *txt)
 {
    E_Dialog *dia;
    

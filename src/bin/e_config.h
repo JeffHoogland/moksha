@@ -73,9 +73,9 @@ struct _E_Config
 {
    int         config_version;
    int         show_splash; //GUI
-   char       *desktop_default_background;
+   const char *desktop_default_background;
    Evas_List  *desktop_backgrounds;
-   char       *desktop_default_name;
+   const char *desktop_default_name;
    Evas_List  *desktop_names;
    double      menus_scroll_speed; // GUI
    double      menus_fast_mouse_move_threshhold; // GUI
@@ -104,7 +104,7 @@ struct _E_Config
    int         evas_engine_drag;
    int         evas_engine_win;
    int         evas_engine_zone;
-   char       *language;
+   const char *language;
    Evas_List  *modules;
    Evas_List  *font_fallbacks;
    Evas_List  *font_defaults;
@@ -163,9 +163,9 @@ struct _E_Config
    double      kill_timer_wait;
    int         ping_clients;
    double      ping_clients_wait;
-   char       *transition_start;
-   char       *transition_desk;
-   char       *transition_change;
+   const char *transition_start;
+   const char *transition_desk;
+   const char *transition_change;
    Evas_List  *remembers;
    int         move_info_follows; // GUI
    int         resize_info_follows; // GUI
@@ -177,7 +177,7 @@ struct _E_Config
    int         cursor_size; //GUI
    int         menu_autoscroll_margin; // GUI
    int         menu_autoscroll_cursor_margin; // GUI
-   char	      *input_method;
+   const char *input_method;
    struct {
 	int    move;
 	int    resize;
@@ -216,22 +216,22 @@ struct _E_Config
 
 struct _E_Config_Module
 {
-   char          *name;
+   const char    *name;
    unsigned char  enabled;
 };
 
 struct _E_Config_Theme
 {
-   char          *category;
-   char          *file;
+   const char    *category;
+   const char    *file;
 };
 
 struct _E_Config_Binding_Mouse
 {
    int            context;
    int            modifiers;
-   char          *action;
-   char          *params;
+   const char    *action;
+   const char    *params;
    unsigned char  button;
    unsigned char  any_mod;
 };
@@ -240,21 +240,21 @@ struct _E_Config_Binding_Key
 {
    int            context;
    int            modifiers;
-   char          *key;
-   char          *action;
-   char          *params;
+   const char    *key;
+   const char    *action;
+   const char    *params;
    unsigned char  any_mod;
 };
 
 struct _E_Config_Binding_Signal
 {
    int            context;
-   char          *signal;
-   char          *source;
+   const char    *signal;
+   const char    *source;
    int            modifiers;
    unsigned char  any_mod;
-   char          *action;
-   char          *params;
+   const char    *action;
+   const char    *params;
 };
 
 struct _E_Config_Binding_Wheel
@@ -264,8 +264,8 @@ struct _E_Config_Binding_Wheel
    int            z;
    int            modifiers;
    unsigned char  any_mod;
-   char          *action;
-   char          *params;
+   const char    *action;
+   const char    *params;
 };
 
 struct _E_Config_Desktop_Background
@@ -274,7 +274,7 @@ struct _E_Config_Desktop_Background
    int            zone;
    int            desk_x;
    int            desk_y;
-   char          *file;
+   const char    *file;
 };
 
 struct _E_Config_Desktop_Name
@@ -283,18 +283,20 @@ struct _E_Config_Desktop_Name
    int            zone;
    int            desk_x;
    int            desk_y;
-   char          *name;
+   const char    *name;
 };
 
 struct _E_Config_Gadcon
 {
-   char *name, *id;
-   Evas_List *clients;
+   const char	 *name;
+   const char	 *id;
+   Evas_List	 *clients;
 };
 
 struct _E_Config_Gadcon_Client
 {
-   char *name, *id;
+   const char	 *name;
+   const char	 *id;
    struct {
       int pos, size, res;
    } geom;
@@ -302,7 +304,7 @@ struct _E_Config_Gadcon_Client
 
 struct _E_Config_Shelf
 {
-   char *name;
+   const char *name;
    int container, zone;
    int layer;
    unsigned char popup;
@@ -316,7 +318,7 @@ struct _E_Config_Shelf_Config
    } res;
    int x, y, w, h;
    int orient;
-   char *style;
+   const char *style;
 };
 
 EAPI int        e_config_init(void);

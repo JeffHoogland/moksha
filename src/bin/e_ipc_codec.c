@@ -242,11 +242,11 @@ e_ipc_codec_str_dec(char *data, int bytes, char **dest)
 }
 
 EAPI void *
-e_ipc_codec_str_enc(char *str, int *size_ret)
+e_ipc_codec_str_enc(const char *str, int *size_ret)
 {
    E_Ipc_Str dat;
    
-   dat.str = str;
+   dat.str = (char *) str;
    return eet_data_descriptor_encode(_e_ipc_str_edd, &dat, size_ret);
 }
 
@@ -263,12 +263,12 @@ e_ipc_codec_2str_dec(char *data, int bytes, E_Ipc_2Str **dest)
 }
 
 EAPI void *
-e_ipc_codec_2str_enc(char *str1, char *str2, int *size_ret)
+e_ipc_codec_2str_enc(const char *str1, const char *str2, int *size_ret)
 {
    E_Ipc_2Str dat;
    
-   dat.str1 = str1;
-   dat.str2 = str2;
+   dat.str1 = (char *) str1;
+   dat.str2 = (char *) str2;
    return eet_data_descriptor_encode(_e_ipc_2str_edd, &dat, size_ret);
 }
 
@@ -357,11 +357,11 @@ e_ipc_codec_str_int_dec(char *data, int bytes, E_Ipc_Str_Int **dest)
 }
 
 EAPI void *
-e_ipc_codec_str_int_enc(char *str, int val, int *size_ret)
+e_ipc_codec_str_int_enc(const char *str, int val, int *size_ret)
 {
    E_Ipc_Str_Int dat;
    
-   dat.str = str;
+   dat.str = (char *) str;
    dat.val = val;
    return eet_data_descriptor_encode(_e_ipc_str_int_edd, &dat, size_ret);
 }
@@ -400,12 +400,12 @@ e_ipc_codec_2str_int_dec(char *data, int bytes, E_Ipc_2Str_Int **dest)
 }
 
 EAPI void *
-e_ipc_codec_2str_int_enc(char *str1, char *str2, int val, int *size_ret)
+e_ipc_codec_2str_int_enc(const char *str1, const char *str2, int val, int *size_ret)
 {
    E_Ipc_2Str_Int dat;
    
-   dat.str1 = str1;
-   dat.str2 = str2;
+   dat.str1 = (char *) str1;
+   dat.str2 = (char *) str2;
    dat.val = val;
    return eet_data_descriptor_encode(_e_ipc_2str_int_edd, &dat, size_ret);
 }
@@ -444,7 +444,7 @@ e_ipc_codec_4int_2str_dec(char *data, int bytes, E_Ipc_4Int_2Str **dest)
 }
 
 EAPI void *
-e_ipc_codec_4int_2str_enc(int val1, int val2, int val3, int val4, char *str1, char *str2, int *size_ret)
+e_ipc_codec_4int_2str_enc(int val1, int val2, int val3, int val4, const char *str1, const char *str2, int *size_ret)
 {
    E_Ipc_4Int_2Str dat;
 
@@ -452,8 +452,8 @@ e_ipc_codec_4int_2str_enc(int val1, int val2, int val3, int val4, char *str1, ch
    dat.val2 = val2;
    dat.val3 = val3;
    dat.val4 = val4;
-   dat.str1 = str1;
-   dat.str2 = str2;
+   dat.str1 = (char *) str1;
+   dat.str2 = (char *) str2;
    return eet_data_descriptor_encode(_e_ipc_4int_2str_edd, &dat, size_ret);   
 }
 
@@ -491,7 +491,7 @@ e_ipc_codec_5int_2str_dec(char *data, int bytes, E_Ipc_5Int_2Str **dest)
 }
 
 EAPI void *
-e_ipc_codec_5int_2str_enc(int val1, int val2, int val3, int val4, int val5, char *str1, char *str2, int *size_ret)
+e_ipc_codec_5int_2str_enc(int val1, int val2, int val3, int val4, int val5, const char *str1, const char *str2, int *size_ret)
 {
    E_Ipc_5Int_2Str dat;
 
@@ -500,8 +500,8 @@ e_ipc_codec_5int_2str_enc(int val1, int val2, int val3, int val4, int val5, char
    dat.val3 = val3;
    dat.val4 = val4;
    dat.val5 = val5;
-   dat.str1 = str1;
-   dat.str2 = str2;
+   dat.str1 = (char *) str1;
+   dat.str2 = (char *) str2;
    return eet_data_descriptor_encode(_e_ipc_5int_2str_edd, &dat, size_ret);   
 }
 
@@ -539,17 +539,17 @@ e_ipc_codec_3int_4str_dec(char *data, int bytes, E_Ipc_3Int_4Str **dest)
 }
 
 EAPI void *
-e_ipc_codec_3int_4str_enc(int val1, int val2, int val3, char *str1, char *str2, char *str3, char *str4, int *size_ret)
+e_ipc_codec_3int_4str_enc(int val1, int val2, int val3, const char *str1, const char *str2, const char *str3, const char *str4, int *size_ret)
 {
    E_Ipc_3Int_4Str dat;
 
    dat.val1 = val1;
    dat.val2 = val2;
    dat.val3 = val3;
-   dat.str1 = str1;
-   dat.str2 = str2;
-   dat.str3 = str3;
-   dat.str4 = str4;
+   dat.str1 = (char *) str1;
+   dat.str2 = (char *) str2;
+   dat.str3 = (char *) str3;
+   dat.str4 = (char *) str4;
    return eet_data_descriptor_encode(_e_ipc_3int_4str_edd, &dat, size_ret);   
 }
 
@@ -587,16 +587,16 @@ e_ipc_codec_3int_3str_dec(char *data, int bytes, E_Ipc_3Int_3Str **dest)
 }
 
 EAPI void *
-e_ipc_codec_3int_3str_enc(int val1, int val2, int val3, char *str1, char *str2, char *str3, int *size_ret)
+e_ipc_codec_3int_3str_enc(int val1, int val2, int val3, const char *str1, const char *str2, const char *str3, int *size_ret)
 {
    E_Ipc_3Int_3Str dat;
 
    dat.val1 = val1;
    dat.val2 = val2;
    dat.val3 = val3;
-   dat.str1 = str1;
-   dat.str2 = str2;
-   dat.str3 = str3;
+   dat.str1 = (char *) str1;
+   dat.str2 = (char *) str2;
+   dat.str3 = (char *) str3;
    return eet_data_descriptor_encode(_e_ipc_3int_3str_edd, &dat, size_ret);   
 }
 
@@ -634,11 +634,11 @@ e_ipc_codec_str_4int_dec(char *data, int bytes, E_Ipc_Str_4Int **dest)
 }
 
 EAPI void *
-e_ipc_codec_str_4int_enc(char *str1, int val1, int val2, int val3, int val4, int *size_ret)
+e_ipc_codec_str_4int_enc(const char *str1, int val1, int val2, int val3, int val4, int *size_ret)
 {
   E_Ipc_Str_4Int dat;
 
-  dat.str = str1;
+  dat.str = (char *) str1;
   dat.val1 = val1;
   dat.val2 = val2;
   dat.val3 = val3;

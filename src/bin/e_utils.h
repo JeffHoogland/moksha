@@ -26,19 +26,19 @@ EAPI int          e_util_glob_match(const char *str, const char *glob);
 EAPI int          e_util_glob_case_match(const char *str, const char *glob);
 EAPI E_Container *e_util_container_number_get(int num);
 EAPI E_Zone      *e_util_container_zone_number_get(int con_num, int zone_num);
-EAPI int          e_util_head_exec(int head, char *cmd);
-EAPI int          e_util_strcmp(char *s1, char *s2);    
-EAPI int          e_util_both_str_empty(char *s1, char *s2);
+EAPI int          e_util_head_exec(int head, const char *cmd);
+EAPI int          e_util_strcmp(const char *s1, const char *s2);    
+EAPI int          e_util_both_str_empty(const char *s1, const char *s2);
 EAPI int          e_util_immortal_check(void);
-EAPI int          e_util_edje_icon_list_set(Evas_Object *obj, char *list);
-EAPI int          e_util_menu_item_edje_icon_list_set(E_Menu_Item *mi, char *list);
-EAPI int          e_util_edje_icon_set(Evas_Object *obj, char *name);
-EAPI int          e_util_menu_item_edje_icon_set(E_Menu_Item *mi, char *name);
+EAPI int          e_util_edje_icon_list_set(Evas_Object *obj, const char *list);
+EAPI int          e_util_menu_item_edje_icon_list_set(E_Menu_Item *mi, const char *list);
+EAPI int          e_util_edje_icon_set(Evas_Object *obj, const char *name);
+EAPI int          e_util_menu_item_edje_icon_set(E_Menu_Item *mi, const char *name);
 EAPI E_Container *e_util_container_window_find(Ecore_X_Window win);
 EAPI E_Border    *e_util_desk_border_above(E_Border *bd);
 EAPI E_Border    *e_util_desk_border_below(E_Border *bd);
-EAPI int          e_util_edje_collection_exists(char *file, char *coll);
-EAPI void         e_util_dialog_internal(char *title, char *txt);
+EAPI int          e_util_edje_collection_exists(const char *file, const char *coll);
+EAPI void         e_util_dialog_internal(const char *title, const char *txt);
     
 #endif
 #endif

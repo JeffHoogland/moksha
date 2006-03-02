@@ -62,7 +62,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
    E_Container *con;
    Ecore_X_Window win;
    int          x, y;
-   char        *s;
+   const char  *s;
 
    con = e_container_current_get(man);
 
@@ -357,7 +357,7 @@ _e_error_cb_ok_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
    Ecore_Evas *ee;
-   char *s;
+   const char *s;
    
    ev = event_info;
    if (ev->button != 1) return;
@@ -373,7 +373,7 @@ _e_error_cb_ok_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    Evas_Event_Mouse_Up *ev;
    Ecore_Evas *ee;
    Evas_Object *o;
-   char *s;
+   const char *s;
 
    ev = event_info;
    if (ev->button != 1) return;

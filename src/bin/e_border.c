@@ -2622,7 +2622,7 @@ e_border_name_get(E_Border *bd)
 
 
 EAPI void
-e_border_signal_move_begin(E_Border *bd, char *sig, char *src)
+e_border_signal_move_begin(E_Border *bd, const char *sig, const char *src)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -2634,7 +2634,7 @@ e_border_signal_move_begin(E_Border *bd, char *sig, char *src)
 }
 
 EAPI void
-e_border_signal_move_end(E_Border *bd, char *sig, char *src)
+e_border_signal_move_end(E_Border *bd, const char *sig, const char *src)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -2656,7 +2656,7 @@ e_border_resizing_get(E_Border *bd)
 }
 
 EAPI void
-e_border_signal_resize_begin(E_Border *bd, char *dir, char *sig, char *src)
+e_border_signal_resize_begin(E_Border *bd, const char *dir, const char *sig, const char *src)
 {
    Ecore_X_Gravity grav = ECORE_X_GRAVITY_NW;
    int resize_mode = RESIZE_BR;
@@ -2712,7 +2712,7 @@ e_border_signal_resize_begin(E_Border *bd, char *dir, char *sig, char *src)
 }
 
 EAPI void
-e_border_signal_resize_end(E_Border *bd, char *dir, char *sig, char *src)
+e_border_signal_resize_end(E_Border *bd, const char *dir, const char *sig, const char *src)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);

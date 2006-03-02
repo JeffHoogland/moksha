@@ -14,7 +14,7 @@ typedef struct _E_Pointer_Stack E_Pointer_Stack;
 struct _E_Pointer_Stack
 {
    void          *obj;
-   char          *type;
+   const char    *type;
    unsigned char  e_cursor : 1;
 };
 
@@ -165,7 +165,7 @@ e_pointers_size_set(int size)
 	  }
 	else
 	  {
-	     char *type;
+	     const char *type;
 
 	     ecore_x_cursor_size_set(e_config->cursor_size * 3 / 4);
 	     type = p->type;

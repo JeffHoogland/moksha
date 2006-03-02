@@ -340,10 +340,8 @@ static void
 _fill_keybindings_data(E_Config_Dialog_Data *cfdata)
 {
   int i, j;
-  int found;
   E_Config_KeyBind  *eckb;
   E_Config_Binding_Key	*bk, *t;
-  const char *action_name = NULL;
 
   for( i = 0; actions_predefined_names[i].action_name; i++ )
     {
@@ -379,11 +377,13 @@ _fill_keybindings_data(E_Config_Dialog_Data *cfdata)
 		    continue;
 
 		  bk->context = t->context;
-		  bk->key = strdup(t->key);
+		  bk->key = evas_stringshare_add(t->key);
 		  bk->modifiers = t->modifiers;
 		  bk->any_mod = t->any_mod;
-		  bk->action = t->action == NULL ? NULL : strdup(t->action);
-		  bk->params = t->params == NULL ? NULL : strdup(t->params);
+		  bk->action = t->action == NULL ? 
+		     NULL : evas_stringshare_add(t->action);
+		  bk->params = t->params == NULL ? 
+		     NULL : evas_stringshare_add(t->params);
 
 		  eckb->bk_list = evas_list_append(eckb->bk_list, bk);
 		  break;
@@ -403,11 +403,13 @@ _fill_keybindings_data(E_Config_Dialog_Data *cfdata)
 		    continue;
 
 		  bk->context = t->context;
-		  bk->key = strdup(t->key);
+		  bk->key = evas_stringshare_add(t->key);
 		  bk->modifiers = t->modifiers;
 		  bk->any_mod = t->any_mod;
-		  bk->action = t->action == NULL ? NULL : strdup(t->action);
-		  bk->params = t->params == NULL ? NULL : strdup(t->params);
+		  bk->action = t->action == NULL ? 
+		     NULL : evas_stringshare_add(t->action);
+		  bk->params = t->params == NULL ? 
+		     NULL : evas_stringshare_add(t->params);
 
 		  eckb->bk_list = evas_list_append(eckb->bk_list, bk);
 		  break;
@@ -425,11 +427,13 @@ _fill_keybindings_data(E_Config_Dialog_Data *cfdata)
 		    continue;
 
 		  bk->context = t->context;
-		  bk->key = strdup(t->key);
+		  bk->key = evas_stringshare_add(t->key);
 		  bk->modifiers = t->modifiers;
 		  bk->any_mod = t->any_mod;
-		  bk->action = t->action == NULL ? NULL : strdup(t->action);
-		  bk->params = t->params == NULL ? NULL : strdup(t->params);
+		  bk->action = t->action == NULL ? 
+		     NULL : evas_stringshare_add(t->action);
+		  bk->params = t->params == NULL ? 
+		     NULL : evas_stringshare_add(t->params);
 
 		  eckb->bk_list = evas_list_append(eckb->bk_list, bk);
 		  break;
@@ -478,9 +482,9 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	      bk = evas_list_nth(eckb->bk_list, j);
 	      if (bk)
 		{
-		  E_FREE(bk->key);
-		  E_FREE(bk->action);
-		  E_FREE(bk->params);
+		  if (bk->key) evas_stringshare_del(bk->key);
+		  if (bk->action) evas_stringshare_del(bk->action);
+		  if (bk->params) evas_stringshare_del(bk->params);
 		  E_FREE(bk);
 		}
 	    }
@@ -560,7 +564,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 		  if (bk2)
 		    {
 		      bk2->context = bk->context;
-		      bk2->key = (char *)evas_stringshare_add(bk->key);
+		      bk2->key = evas_stringshare_add(bk->key);
 		      bk2->modifiers = bk->modifiers;
 		      bk2->any_mod = bk->any_mod;
 		      bk2->action = bk->action == NULL ? NULL : 
@@ -1080,7 +1084,6 @@ _update_next_prev_add_del_buttons(E_Config_Dialog_Data *cfdata)
   E_Widget_Button_Data	*wd_prev;
   E_Widget_Button_Data	*wd_add;
   E_Widget_Button_Data	*wd_del;
-  E_Config_Binding_Key	*bk;
 
   if (cfdata == NULL) return;
 
@@ -1172,7 +1175,6 @@ _update_next_prev_add_del_buttons(E_Config_Dialog_Data *cfdata)
 static void
 _update_ilist_cur_selection_icon(E_Config_Dialog_Data *cfdata)
 {
-  int sel_indx;
   E_Smart_Item *si;
   E_Smart_Data *sd;
   E_Widget_IList_Data *wd;
@@ -1228,8 +1230,6 @@ _update_ilist_cur_selection_icon(E_Config_Dialog_Data *cfdata)
 static void
 _ilist_kb_cb_change(void *data, Evas_Object *obj)
 {
-  char buf[256];
-
   int acn, i;
   char *label;
   E_Config_Dialog_Data	*cfdata;
@@ -1267,10 +1267,12 @@ _ilist_kb_cb_change(void *data, Evas_Object *obj)
       bk->key = strdup("");
       bk->modifiers = E_BINDING_MODIFIER_NONE;
       bk->any_mod = 0;
-      bk->action = actions_predefined_names[acn].action_cmd == NULL ? strdup("") :
-					       strdup(actions_predefined_names[acn].action_cmd);
-      bk->params = actions_predefined_names[acn].action_params == NULL ? strdup("") :
-					       strdup(actions_predefined_names[acn].action_params);
+      bk->action = actions_predefined_names[acn].action_cmd == NULL ? 
+		evas_stringshare_add("") :
+		evas_stringshare_add(actions_predefined_names[acn].action_cmd);
+      bk->params = actions_predefined_names[acn].action_params == NULL ? 
+		evas_stringshare_add("") :
+		evas_stringshare_add(actions_predefined_names[acn].action_params);
 
       cfdata->cur_eckb->bk_list = evas_list_append(cfdata->cur_eckb->bk_list, bk);
     }
@@ -1327,9 +1329,7 @@ _keybind_cb_next_keybind(void *data, void *data2)
 static void
 _keybind_cb_prev_keybind(void *data, void *data2)
 {
-  char buf[50];
   E_Config_Dialog_Data *cfdata;
-  E_Widget_Button_Data *wd_next, *wd_prev;
 
   int old_kb_sel;
   int old_bk_list_size;
@@ -1391,10 +1391,12 @@ _keybind_cb_add_keybinding(void *data, void *data2)
   bk->context = E_BINDING_CONTEXT_ANY;
   bk->key = strdup("");
   bk->modifiers = E_BINDING_MODIFIER_NONE;
-  bk->action = actions_predefined_names[cfdata->cur_eckb->acn].action_cmd == NULL ? strdup("") :
-    strdup(actions_predefined_names[cfdata->cur_eckb->acn].action_cmd);
-  bk->params = actions_predefined_names[cfdata->cur_eckb->acn].action_params == NULL ? strdup("") :
-    strdup(actions_predefined_names[cfdata->cur_eckb->acn].action_params);
+  bk->action = actions_predefined_names[cfdata->cur_eckb->acn].action_cmd == NULL ? 
+     evas_stringshare_add("") :
+     evas_stringshare_add(actions_predefined_names[cfdata->cur_eckb->acn].action_cmd);
+  bk->params = actions_predefined_names[cfdata->cur_eckb->acn].action_params == NULL ? 
+     evas_stringshare_add("") :
+     evas_stringshare_add(actions_predefined_names[cfdata->cur_eckb->acn].action_params);
 
   cfdata->cur_eckb->bk_list = evas_list_append(cfdata->cur_eckb->bk_list, bk);
   cfdata->cur_eckb_kb_sel = evas_list_count(cfdata->cur_eckb->bk_list) - 1;
@@ -1410,10 +1412,7 @@ _keybind_cb_add_keybinding(void *data, void *data2)
 static void
 _keybind_cb_del_keybinding(void *data, void *data2)
 {
-  int i;
   E_Config_Dialog_Data	*cfdata;
-  E_Config_Binding_Key	*bk, *bk_del;
-  Evas_List *new_bk_list;
 
   cfdata = data;
 
@@ -1453,8 +1452,8 @@ _keybind_cb_auto_apply(E_Config_Dialog_Data *cfdata)
     return -1;
 
   bk->context = cfdata->binding_context;
-  if (bk->key) E_FREE(bk->key);
-  bk->key = strdup(cfdata->key_bind);
+  if (bk->key) evas_stringshare_del(bk->key);
+  bk->key = evas_stringshare_add(cfdata->key_bind);
 
   bk->modifiers = 0;
   if (cfdata->bind_mod.shift)
@@ -1467,12 +1466,12 @@ _keybind_cb_auto_apply(E_Config_Dialog_Data *cfdata)
     bk->modifiers |= E_BINDING_MODIFIER_WIN;
 
   bk->any_mod = 0;
-  if (bk->action) E_FREE(bk->action);
+  if (bk->action) evas_stringshare_del(bk->action);
   bk->action = (cfdata->key_action == NULL || strlen(cfdata->key_action) == 0) ? NULL :
-	       strdup(cfdata->key_action);
-  if (bk->params) E_FREE(bk->params);
+	       evas_stringshare_add(cfdata->key_action);
+  if (bk->params) evas_stringshare_del(bk->params);
   bk->params = (cfdata->key_params == NULL || strlen(cfdata->key_params) == 0) ? NULL :
-	       strdup(cfdata->key_params);
+	       evas_stringshare_add(cfdata->key_params);
 
   return 0;
 }
@@ -1507,12 +1506,9 @@ _keybind_delete_keybinding(E_Config_Dialog_Data *cfdata)
 					   evas_list_nth(cfdata->cur_eckb->bk_list, i));
 	}
 
-      if (bk_del->key != NULL)
-	E_FREE(bk_del->key);
-      if (bk_del->action != NULL)
-	E_FREE(bk_del->action);
-      if (bk_del->params != NULL)
-	E_FREE(bk_del->params);
+      if (bk_del->key) evas_stringshare_del(bk_del->key);
+      if (bk_del->action) evas_stringshare_del(bk_del->action);
+      if (bk_del->params) evas_stringshare_del(bk_del->params);
       bk_del->key = bk_del->action = bk_del->params = NULL;
       E_FREE(bk_del);
 
@@ -1524,8 +1520,7 @@ _keybind_delete_keybinding(E_Config_Dialog_Data *cfdata)
       bk_del = evas_list_nth(cfdata->cur_eckb->bk_list, 0);
       if (!bk_del) return -1;
       bk_del->context = E_BINDING_CONTEXT_NONE;
-      if (bk_del->key != NULL)
-	E_FREE(bk_del->key);
+      if (bk_del->key) evas_stringshare_del(bk_del->key);
       bk_del->key = NULL;
       bk_del->modifiers = E_BINDING_MODIFIER_NONE;
       bk_del->any_mod = 0;

@@ -103,7 +103,7 @@ e_fm_mime_init(void)
 {
    E_Fm_Mime_Entry *root;
    E_Fm_Mime_Entry *entry;
-   E_Fm_Mime_Entry *l1,*l2,*l3;
+   E_Fm_Mime_Entry *l1,*l2;
    E_Fm_Mime_Action *action;
 
    if(init_count)
@@ -402,7 +402,7 @@ e_fm_mime_action_call(E_Fm_Smart_Data *sd, E_Fm_Mime_Action *action)
    return 1;
 }
 
-EAPI int
+EAPI void
 e_fm_mime_action_default_call(E_Fm_Smart_Data *sd)
 {
    E_Fm_Mime_Entry  *mime;
@@ -507,7 +507,6 @@ _e_fm_mime_string_tokenizer(Evas_List *files, E_Fm_File *hover, char *istr)
 	     if(*c == 'f')
 	       {
 		  int j = 2;
-		  char *f = NULL;
 
 		  astr = calloc(PATH_MAX,sizeof(char));
 		  for(l = files; l; l = l->next)

@@ -21,7 +21,7 @@ typedef struct _E_Exe_List E_Exe_List;
 
 struct _E_Exe
 {
-   char *path;
+   const char *path;
 };
 
 struct _E_Exe_List

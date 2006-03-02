@@ -121,7 +121,7 @@ e_gadcon_provider_unregister(E_Gadcon_Client_Class *cc)
 }
 
 EAPI E_Gadcon *
-e_gadcon_swallowed_new(char *name, char *id, Evas_Object *obj, char *swallow_name)
+e_gadcon_swallowed_new(const char *name, char *id, Evas_Object *obj, char *swallow_name)
 {
    E_Gadcon    *gc;
    

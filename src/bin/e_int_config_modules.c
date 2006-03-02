@@ -160,7 +160,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    Evas_List *l;
 
-   while (l = cfdata->modules)
+   while ((l = cfdata->modules))
      {
         CFModule *m;
 

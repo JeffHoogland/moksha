@@ -20,8 +20,8 @@ struct _E_Module
 
    E_Module_Api        *api;
    
-   char                *name;
-   char                *dir;
+   const char          *name;
+   const char          *dir;
    void                *handle;
    
    struct {
@@ -57,17 +57,17 @@ struct _E_Module_Api
 EAPI int          e_module_init(void);
 EAPI int          e_module_shutdown(void);
 
-EAPI E_Module    *e_module_new(char *name);
+EAPI E_Module    *e_module_new(const char *name);
 EAPI int          e_module_save(E_Module *m);
 EAPI const char  *e_module_dir_get(E_Module *m);
 EAPI int          e_module_enable(E_Module *m);
 EAPI int          e_module_disable(E_Module *m);
 EAPI int          e_module_enabled_get(E_Module *m);
 EAPI int          e_module_save_all(void);
-EAPI E_Module    *e_module_find(char *name);
+EAPI E_Module    *e_module_find(const char *name);
 EAPI Evas_List   *e_module_list(void);
 EAPI E_Menu      *e_module_menu_new(void);
-EAPI void         e_module_dialog_show(char *title, char *body);
+EAPI void         e_module_dialog_show(const char *title, const char *body);
 
 #endif
 #endif

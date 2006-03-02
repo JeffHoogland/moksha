@@ -29,7 +29,7 @@ e_init_init(void)
    int num;
    Evas_Object *o;
    Evas_List *l, *screens;
-   char *s;
+   const char *s;
    
    num = 0;
    roots = ecore_x_window_root_list(&num);

@@ -75,12 +75,12 @@ e_dialog_new(E_Container *con)
 }
 
 EAPI void
-e_dialog_button_add(E_Dialog *dia, char *label, char *icon, void (*func) (void *data, E_Dialog *dia), void *data)
+e_dialog_button_add(E_Dialog *dia, const char *label, const char *icon, void (*func) (void *data, E_Dialog *dia), void *data)
 {
    Evas_Object *o;
 
    if (!func) func = _e_dialog_del_func_cb;
-   o = e_widget_button_add(e_win_evas_get(dia->win), label, icon, func, data, dia);
+   o = e_widget_button_add(e_win_evas_get(dia->win), label, icon, (void (*) (void*, void*)) func, data, dia);
    e_widget_list_object_append(dia->box_object, o, 1, 0, 0.5);
    dia->buttons = evas_list_append(dia->buttons, o);
 }
@@ -117,13 +117,13 @@ e_dialog_button_disable_num_get(E_Dialog *dia, int button)
 }
 
 EAPI void
-e_dialog_title_set(E_Dialog *dia, char *title)
+e_dialog_title_set(E_Dialog *dia, const char *title)
 {
    e_win_title_set(dia->win, title);
 }
 
 EAPI void
-e_dialog_text_set(E_Dialog *dia, char *text)
+e_dialog_text_set(E_Dialog *dia, const char *text)
 {
    if (!dia->text_object)
      {
@@ -140,7 +140,7 @@ e_dialog_text_set(E_Dialog *dia, char *text)
 }
 
 EAPI void
-e_dialog_icon_set(E_Dialog *dia, char *icon, Evas_Coord size)
+e_dialog_icon_set(E_Dialog *dia, const char *icon, Evas_Coord size)
 {
    if (!icon) return;
    

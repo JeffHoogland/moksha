@@ -60,7 +60,7 @@ EAPI void              e_fm_mime_shutdwon(void);
 EAPI E_Fm_Mime_Entry  *e_fm_mime_get_from_list(Evas_List *files);
 EAPI void              e_fm_mime_set(E_Fm_File *file);
 EAPI int               e_fm_mime_action_call(E_Fm_Smart_Data *sd, E_Fm_Mime_Action *action);
-EAPI int               e_fm_mime_action_default_call(E_Fm_Smart_Data *sd);
+EAPI void              e_fm_mime_action_default_call(E_Fm_Smart_Data *sd);
 EAPI char             *e_fm_mime_translate(E_Fm_Smart_Data *sd, char *istr);
 
 

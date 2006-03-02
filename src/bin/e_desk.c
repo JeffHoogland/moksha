@@ -91,7 +91,7 @@ e_desk_name_set(E_Desk *desk, const char *name)
 }
 
 EAPI void
-e_desk_name_add(int container, int zone, int desk_x, int desk_y, char *name)
+e_desk_name_add(int container, int zone, int desk_x, int desk_y, const char *name)
 {
    E_Config_Desktop_Name *cfname;
    
