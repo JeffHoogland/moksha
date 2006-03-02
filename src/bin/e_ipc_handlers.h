@@ -846,7 +846,7 @@ break;
    constructed into a list using the FOR macro. The list to create
    will be called 'dat' and the list to iterate will be l;
  */
-#define LIST_ENCODE_INIT() \
+#define LIST_ENCODE_START() \
    Evas_List *dat = NULL, *l; \
    void *data; int bytes;
 
@@ -854,7 +854,7 @@ break;
    Declare variables used by the encode macro. Is separate to allow
    operations to be done between declairation and encoding. 
  */
-#define ENCODE_INIT() \
+#define ENCODE_START() \
    void *data; int bytes;
 
 #define ENCODE(__dat, __enc) \
@@ -1159,7 +1159,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
-   LIST_ENCODE_INIT();
+   LIST_ENCODE_START();
    E_Font_Available *fa;
    Evas_List *fa_list;
    fa_list = e_font_available_list();
@@ -1256,7 +1256,7 @@ break;
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
 
-   LIST_ENCODE_INIT();
+   LIST_ENCODE_START();
    E_Font_Fallback *ff;
    FOR(e_config->font_fallbacks) { ff = l->data;
       dat = evas_list_append(dat, ff->name);
@@ -1457,7 +1457,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
-   ENCODE_INIT();
+   ENCODE_START();
    Evas_List *languages;
    languages = e_intl_language_list();
    ENCODE(languages, e_ipc_codec_str_list_enc);
@@ -1551,7 +1551,7 @@ break;
    REQ_STRING(params[0], HDL);
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
-   LIST_ENCODE_INIT()
+   LIST_ENCODE_START()
    Evas_List *dir_list = NULL;
    E_PATH_GET(path, s);
    if (path)
@@ -1626,7 +1626,7 @@ break;
       else if (!strcmp(type, "themes"))
 	res = E_RESPONSE_THEME_DIRS_LIST;
       else if (!strcmp(type, "init"))
-	res = E_RESPONSE_INIT_DIRS_LIST;
+	res = E_RESPONSE_START_DIRS_LIST;
       else if (!strcmp(type, "icons"))
 	res = E_RESPONSE_ICON_DIRS_LIST;
       else if (!strcmp(type, "modules"))
@@ -5156,7 +5156,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
-   ENCODE_INIT();
+   ENCODE_START();
    Evas_List *profiles;
    profiles = e_config_profile_list();
    ENCODE(profiles, e_ipc_codec_str_list_enc);
@@ -5744,7 +5744,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
-   ENCODE_INIT();
+   ENCODE_START();
    Evas_List *iml;
    iml = e_intl_input_method_list();
    ENCODE(iml, e_ipc_codec_str_list_enc);
@@ -6649,7 +6649,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
-   ENCODE_INIT();
+   ENCODE_START();
    ENCODE(e_theme_category_list(), e_ipc_codec_str_list_enc);
    SEND_DATA(E_IPC_OP_THEME_CATEGORY_LIST_REPLY);
    END_GENERIC();
@@ -6683,7 +6683,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
-   ENCODE_INIT();
+   ENCODE_START();
    ENCODE(e_theme_transition_list(), e_ipc_codec_str_list_enc);
    SEND_DATA(E_IPC_OP_TRANSITION_LIST_REPLY);
    END_GENERIC();
@@ -6717,7 +6717,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
-   ENCODE_INIT();
+   ENCODE_START();
    ENCODE(e_action_name_list(), e_ipc_codec_str_list_enc);
    SEND_DATA(E_IPC_OP_ACTION_LIST_REPLY);
    END_GENERIC();
@@ -6846,7 +6846,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
-   ENCODE_INIT();
+   ENCODE_START();
    Evas_List *engines;
    engines = e_config_engine_list();
    ENCODE(engines, e_ipc_codec_str_list_enc);
@@ -7336,7 +7336,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
-   ENCODE_INIT();
+   ENCODE_START();
    ENCODE(edje_color_class_list(), e_ipc_codec_str_list_enc);
    SEND_DATA(E_IPC_OP_COLOR_CLASS_LIST_REPLY);
    END_GENERIC();
