@@ -426,9 +426,9 @@ free(data);
    END_INT3_STRING3_LIST_START()
 
 #define END_INT3_STRING3_LIST_ITERATE(__v) \
-          evas_stringshare_del(__v->str1); \
-          evas_stringshare_del(__v->str2); \
-          evas_stringshare_del(__v->str3); \
+          free(__v->str1); \
+          free(__v->str2); \
+          free(__v->str3); \
           free(__v); \
        } 
 #define END_INT3_STRING3_LIST_START() \
@@ -489,8 +489,8 @@ free(data);
    END_INT4_STRING2_LIST_START()
 
 #define END_INT4_STRING2_LIST_ITERATE(__v) \
-          evas_stringshare_del(__v->str1); \
-          evas_stringshare_del(__v->str2); \
+          E_FREE(__v->str1); \
+          E_FREE(__v->str2); \
           free(__v); \
        } \
        evas_list_free(dat);
@@ -551,8 +551,8 @@ free(data);
    END_INT5_STRING2_LIST_START()
 
 #define END_INT5_STRING2_LIST_ITERATE(__v) \
-          free(__v->str1); \
-          free(__v->str2); \
+          E_FREE(__v->str1); \
+          E_FREE(__v->str2); \
           free(__v); \
        } \
        evas_list_free(dat);
@@ -613,10 +613,10 @@ free(data);
    END_INT3_STRING4_LIST_START()
 
 #define END_INT3_STRING4_LIST_ITERATE(__v) \
-          evas_stringshare_del(__v->str1); \
-          evas_stringshare_del(__v->str2); \
-          evas_stringshare_del(__v->str3); \
-          evas_stringshare_del(__v->str4); \
+          E_FREE(__v->str1); \
+          E_FREE(__v->str2); \
+          E_FREE(__v->str3); \
+          E_FREE(__v->str4); \
           free(__v); \
        } \
        evas_list_free(dat);
@@ -660,7 +660,7 @@ free(data);
 	  E_Ipc_Str_4Int *__v; \
 	  __v = l->data;
 #define END_STRING_INT4_LIST(__v) \
-	  free(__v->str); \
+	  E_FREE(__v->str); \
 	  free(__v); \
        } \
        evas_list_free(dat); \
@@ -712,8 +712,8 @@ free(data);
 	  E_Ipc_2Str_Int *__v; \
 	  __v = l->data;
 #define END_STRING2_INT_LIST(__v) \
-	  free(__v->str1); \
-	  free(__v->str2); \
+	  E_FREE(__v->str1); \
+	  E_FREE(__v->str2); \
 	  free(__v); \
        } \
        evas_list_free(dat); \
@@ -764,8 +764,8 @@ free(data);
 	  E_Ipc_2Str *__v; \
 	  __v = l->data;
 #define END_STRING2_LIST(__v) \
-	  free(__v->str1); \
-	  free(__v->str2); \
+	  E_FREE(__v->str1); \
+	  E_FREE(__v->str2); \
 	  free(__v); \
        } \
        evas_list_free(dat); \
@@ -1600,6 +1600,8 @@ break;
       int count;
       char * type;
       int res;
+
+      res = 0;
       RESPONSE(r, E_Response_Dirs_List);
 
       /* FIXME - this is a mess, needs to be merged into macros... */
@@ -1608,7 +1610,6 @@ break;
       r->count = count - 1; /* leave off the "type" */
 
       type = NULL;
-      res = 0;
       count = 0;
       FOR(dat) {
 	 if (dat == l)
