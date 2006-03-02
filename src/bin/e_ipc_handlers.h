@@ -29,7 +29,7 @@ if (e->data) { \
    char *__str = NULL; \
    if (e_ipc_codec_str_dec(e->data, e->size, &__str)) {
 # define END_STRING(__str) \
-      if (__str) free(__str); \
+      E_FREE(__str); \
    } \
 } \
 break;
@@ -48,8 +48,8 @@ if (e->data) { \
       __str1 = __2str->str1; \
       __str2 = __2str->str2;
 # define END_STRING2(__2str) \
-      free(__2str->str1); \
-      free(__2str->str2); \
+      E_FREE(__2str->str1); \
+      E_FREE(__2str->str2); \
       free(__2str); \
    } \
 } \
@@ -66,9 +66,9 @@ if (e->data) { \
    __3int_3str = calloc(1, sizeof(E_Ipc_3Int_3Str)); \
    if (e_ipc_codec_3int_3str_dec(e->data, e->size, &(__3int_3str))) {
 # define END_INT3_STRING3(__3int_3str) \
-      free(__3int_3str->str1); \
-      free(__3int_3str->str2); \
-      free(__3int_3str->str3); \
+      E_FREE(__3int_3str->str1); \
+      E_FREE(__3int_3str->str2); \
+      E_FREE(__3int_3str->str3); \
       free(__3int_3str); \
    } \
 } \
@@ -85,8 +85,8 @@ if (e->data) { \
    __4int_2str = calloc(1, sizeof(E_Ipc_4Int_2Str)); \
    if (e_ipc_codec_4int_2str_dec(e->data, e->size, &(__4int_2str))) {
 # define END_INT4_STRING2(__4int_2str) \
-      free(__4int_2str->str1); \
-      free(__4int_2str->str2); \
+      E_FREE(__4int_2str->str1); \
+      E_FREE(__4int_2str->str2); \
       free(__4int_2str); \
    } \
 } \
@@ -103,8 +103,8 @@ if (e->data) { \
    __5int_2str = calloc(1, sizeof(E_Ipc_5Int_2Str)); \
    if (e_ipc_codec_5int_2str_dec(e->data, e->size, &(__5int_2str))) {
 # define END_INT5_STRING2(__5int_2str) \
-      free(__5int_2str->str1); \
-      free(__5int_2str->str2); \
+      E_FREE(__5int_2str->str1); \
+      E_FREE(__5int_2str->str2); \
       free(__5int_2str); \
    } \
 } \
@@ -121,10 +121,10 @@ if (e->data) { \
    __3int_4str = calloc(1, sizeof(E_Ipc_3Int_4Str)); \
    if (e_ipc_codec_3int_4str_dec(e->data, e->size, &(__3int_4str))) {
 # define END_INT3_STRING4(__3int_4str) \
-      free(__3int_4str->str1); \
-      free(__3int_4str->str2); \
-      free(__3int_4str->str3); \
-      free(__3int_4str->str4); \
+      E_FREE(__3int_4str->str1); \
+      E_FREE(__3int_4str->str2); \
+      E_FREE(__3int_4str->str3); \
+      E_FREE(__3int_4str->str4); \
       free(__3int_4str); \
    } \
 } \
@@ -142,8 +142,8 @@ if (e->data) { \
       __str2 = __2str_int->str2; \
       __int  = __2str_int->val;
 # define END_STRING2_INT(__2str_int) \
-      free(__2str_int->str1); \
-      free(__2str_int->str2); \
+      E_FREE(__2str_int->str1); \
+      E_FREE(__2str_int->str2); \
       free(__2str_int); \
    } \
 } \
@@ -194,7 +194,7 @@ if (e->data) { \
       __int3 = __str_4int->val3; \
       __int4 = __str_4int->val4; 
 # define END_STRING_4INT(__str_4int) \
-      free(__str_4int->str); \
+      E_FREE(__str_4int->str); \
       free(__str_4int); \
    } \
 } \
@@ -375,7 +375,7 @@ free(data);
 	  E_Ipc_Str_Int *__v; \
 	  __v = l->data;
 #define END_STRING_INT_LIST(__v) \
-	  free(__v->str); \
+	  E_FREE(__v->str); \
 	  free(__v); \
        } \
        evas_list_free(dat); \
@@ -426,9 +426,9 @@ free(data);
    END_INT3_STRING3_LIST_START()
 
 #define END_INT3_STRING3_LIST_ITERATE(__v) \
-          free(__v->str1); \
-          free(__v->str2); \
-          free(__v->str3); \
+          E_FREE(__v->str1); \
+          E_FREE(__v->str2); \
+          E_FREE(__v->str3); \
           free(__v); \
        } 
 #define END_INT3_STRING3_LIST_START() \
@@ -805,9 +805,7 @@ free(data);
 case HDL: { void *data; int bytes = 0; \
    data = e_ipc_codec_str_enc(__str, &bytes); \
    ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, __op, 0, 0, 0, data, bytes); \
-   if (data) { \
-      free(data); \
-   } \
+   E_FREE(data); \
 } \
 break;
 
