@@ -87,6 +87,10 @@ e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, void (*f
 	e_widget_min_size_get(obj, &wmw, &wmh);
 	e_widget_min_size_set(obj, mw + (w - vw), wmh);
      }
+   else if (mw < vw)
+     {
+	evas_object_resize(wd->o_ilist, vw,mh);
+     }
 }
 
 EAPI void
@@ -170,6 +174,7 @@ e_widget_ilist_clear(Evas_Object *obj)
    wd = e_widget_data_get(obj);
    e_ilist_clear(wd->o_ilist);
 
+   /*
    e_ilist_min_size_get(wd->o_ilist, &mw, &mh);
    evas_object_resize(wd->o_ilist, mw, mh);
    e_scrollframe_child_viewport_size_get(wd->o_scrollframe, &vw, &vh);
@@ -180,8 +185,8 @@ e_widget_ilist_clear(Evas_Object *obj)
 	
 	e_widget_min_size_get(obj, &wmw, &wmh);
 	e_widget_min_size_set(obj, mw + (w - vw), wmh);
-     }   
-   return;
+     }
+    */
 }
 
 static void
