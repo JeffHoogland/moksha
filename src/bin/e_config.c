@@ -457,8 +457,11 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, cfgdlg_default_mode, INT); /**/
    E_CONFIG_LIST(D, T, gadcons, _e_config_gadcon_edd);
    E_CONFIG_LIST(D, T, shelves, _e_config_shelf_edd);
-   E_CONFIG_VAL(D, T, desklock_personal_passwd, STR);
    E_CONFIG_VAL(D, T, font_hinting, INT);
+
+   E_CONFIG_VAL(D, T, desklock_personal_passwd, STR);
+   E_CONFIG_VAL(D, T, desklock_background, STR);
+   E_CONFIG_VAL(D, T, desklock_login_box_zone, INT);
 
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -610,8 +613,11 @@ e_config_init(void)
 	e_config->cfgdlg_auto_apply = 0;
 	e_config->cfgdlg_default_mode = 0;
 	e_config->gadcons = NULL;
-	e_config->desklock_personal_passwd = NULL;
 	e_config->font_hinting = 0;
+
+	e_config->desklock_personal_passwd = NULL;
+	e_config->desklock_background = NULL;
+	e_config->desklock_login_box_zone = -1;
 	
 	/* FIXME: fill up default gadcons! */
 	  {
@@ -1673,6 +1679,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->cfgdlg_auto_apply, 0, 1);
    E_CONFIG_LIMIT(e_config->cfgdlg_default_mode, 0, 1);
    E_CONFIG_LIMIT(e_config->font_hinting, 0, 2);
+   E_CONFIG_LIMIT(e_config->desklock_login_box_zone, -2, 1000);
    
    return 1;
 }

@@ -1,5 +1,18 @@
 #include "e.h"
 
+#define LOGINBOX_SHOW_ALL_SCREENS	  -1
+#define LOGINBOX_SHOW_CURRENT_SCREENS     -2
+#define LOGINBOX_SHOW_SPECIFIC_SCREEN	  0
+
+#define BG_LIST_ICON_SIZE_W 32
+#define BG_LIST_ICON_SIZE_H 32
+
+#define BG_PREVIEW_W 280
+#define BG_PREVIEW_H 200
+
+#define DEF_DESKLOCK_BACKGROUND	"theme_desklock_background"
+#define DEF_THEME_BACKGROUND	"theme_background"
+
 
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -7,24 +20,67 @@ static int  _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata
 static Evas_Object  *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas,
 					   E_Config_Dialog_Data *cfdata);
 
+static int  _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object  *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas,
+					      E_Config_Dialog_Data *cfdata);
+
+
+/******************************************************************************************/
 
 static void _e_desklock_passwd_cb_change(void *data, Evas_Object *obj);
 static void _e_desklock_cb_show_passwd(void *data, Evas_Object *obj, const char *emission,
 				       const char *source);
+static int  _e_desklock_zone_num_get();
+
+static void _load_bgs(E_Config_Dialog_Data *cfdata);
+static void _ibg_list_cb_bg_selected(void *data);
+
+static void _e_desklock_cb_lb_show_on_all_screens(void *data, Evas_Object *obj,
+						  const char *emission, const char *source);
+static void _e_desklock_cb_lb_show_on_current_screen(void *data, Evas_Object *obj,
+						     const char *emission, const char *source);
+static void _e_desklock_cb_lb_show_on_specific_screen(void *data, Evas_Object *obj,
+						      const char *emission, const char *source);
+
+/*******************************************************************************************/
 
 struct _E_Config_Dialog_Data
 {
   char *desklock_passwd;
   char *desklock_passwd_cp;
-  int show_password;
+  int show_password; // local
+
+  int login_box_zone; // in e_config;
+  int specific_lb_zone; // local variable
+  int specific_lb_zone_backup; // used to have smart iface
+
+  int zone_count; // local variable;
+
+  char *cur_bg; // local variable;
+  Evas *evas; // local variable
+  Evas_Object *preview_image; // local variable
+
+  /*double  vertical_lb_align;
+  double  horizontal_lb_align;*/
+
 
   struct {
     Evas_Object	*passwd_field;
+    Evas_Object *bg_list;
+
+    struct {
+      Evas_Object *show_all_screens;
+      Evas_Object *show_current_screen;
+      Evas_Object *show_specific_screen;
+      Evas_Object *screen_slider;
+    } loginbox_obj;
   } gui;
 };
 
-typedef struct _E_Widget_Entry_Data E_Widget_Entry_Data;
-typedef struct _E_Widget_Check_Data E_Widget_Check_Data;
+typedef struct _E_Widget_Entry_Data   E_Widget_Entry_Data;
+typedef struct _E_Widget_Check_Data   E_Widget_Check_Data;
+typedef	struct _E_Widget_Radio_Data   E_Widget_Radio_Data;
+typedef struct _E_Widget_Slider_Data  E_Widget_Slider_Data;
 
 struct _E_Widget_Entry_Data
 {
@@ -34,10 +90,25 @@ struct _E_Widget_Entry_Data
    void (*on_change_func) (void *data, Evas_Object *obj);
    void  *on_change_data;
 };
+
 struct _E_Widget_Check_Data
 {
    Evas_Object *o_check;
    int *valptr;
+};
+
+struct _E_Widget_Radio_Data
+{
+  E_Radio_Group *group;
+  Evas_Object	*o_radio;
+  int		valnum;
+};
+
+struct _E_Widget_Slider_Data
+{
+  Evas_Object *o_widget, *o_slider;
+  double *dval;
+  int	 *ival;
 };
 
 EAPI E_Config_Dialog *
@@ -52,6 +123,10 @@ e_int_config_desklock(E_Container *con)
   v->free_cfdata = _free_data;
   v->basic.apply_cfdata = _basic_apply_data;
   v->basic.create_widgets = _basic_create_widgets;
+  v->advanced.apply_cfdata = _advanced_apply_data;
+  v->advanced.create_widgets = _advanced_create_widgets;
+
+  v->override_auto_apply = 1;
 
   cfd = e_config_dialog_new(con, _("Desktop Lock Settings"), NULL, 0, v, NULL);
   return cfd;
@@ -66,7 +141,37 @@ _fill_desklock_data(E_Config_Dialog_Data *cfdata)
       cfdata->desklock_passwd = strdup(e_config->desklock_personal_passwd);
       cfdata->desklock_passwd_cp = strdup(e_config->desklock_personal_passwd);
     }
+  else
+    {
+      cfdata->desklock_passwd = strdup("");
+      cfdata->desklock_passwd_cp = strdup("");
+    }
+      
+  /* should be taken from e_config */
+  //cfdata->login_box_on_zone = -1;
+
+  if (e_config->desklock_login_box_zone >= 0)
+    {
+      cfdata->login_box_zone = LOGINBOX_SHOW_SPECIFIC_SCREEN;
+      cfdata->specific_lb_zone_backup = cfdata->specific_lb_zone =
+	e_config->desklock_login_box_zone;
+    }
+  else
+    {
+      cfdata->login_box_zone = e_config->desklock_login_box_zone;
+      cfdata->specific_lb_zone_backup = cfdata->specific_lb_zone = 0;
+    }
+
+  cfdata->zone_count = _e_desklock_zone_num_get();
+
   cfdata->show_password = 0;
+
+  if (!e_config->desklock_background)
+    cfdata->cur_bg = strdup(DEF_DESKLOCK_BACKGROUND);
+  else
+    cfdata->cur_bg = strdup(e_config->desklock_background);
+
+    //vertical_lb_align = e_config->desklock_login
 }
 
 static void *
@@ -78,6 +183,8 @@ _create_data(E_Config_Dialog *cfd)
   cfdata->desklock_passwd = strdup("");
   cfdata->desklock_passwd_cp = strdup("");
 
+  _fill_desklock_data(cfdata);
+
   return cfdata;
 }
 static void
@@ -87,6 +194,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
   E_FREE(cfdata->desklock_passwd);
   E_FREE(cfdata->desklock_passwd_cp);
+  E_FREE(cfdata->cur_bg);
 
   free(cfdata);
 }
@@ -114,7 +222,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
   Evas_Object *o, *of, *ob;
   E_Widget_Check_Data *wd;
 
-  _fill_desklock_data(cfdata);
+  //_fill_desklock_data(cfdata);
 
   o = e_widget_list_add(evas, 0, 0);
 
@@ -139,6 +247,144 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
   return o;
 }
+
+/* advanced window */
+
+static int
+_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+{
+  if (!cfdata) return 0;
+
+  if (cfdata->cur_bg)
+    {
+      if (e_config->desklock_background)
+	evas_stringshare_del(e_config->desklock_background);
+      e_config->desklock_background = (char *)evas_stringshare_add(cfdata->cur_bg);
+    }
+
+  if (_e_desklock_zone_num_get() > 1)
+    {
+      if (cfdata->login_box_zone >= 0)
+	e_config->desklock_login_box_zone = cfdata->specific_lb_zone;
+      else
+	e_config->desklock_login_box_zone = cfdata->login_box_zone;
+    }
+  else
+    e_config->desklock_login_box_zone = LOGINBOX_SHOW_ALL_SCREENS;
+
+  e_config_save_queue();
+  return 1;
+}
+
+static Evas_Object *
+_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+{
+  Evas_Object *o, *of, *of1, *ob;
+  E_Widget_Radio_Data *wd;
+
+  E_Radio_Group *rg, *rg_bkg;
+  Evas_Object *ot;
+
+  //_fill_desklock_data(cfdata);
+  
+  cfdata->evas = evas;
+
+  ot = e_widget_table_add(evas, 0);
+  {
+    Evas_Object *ot1;
+    /* start: bkg list */
+    cfdata->gui.bg_list = e_widget_ilist_add(evas, BG_LIST_ICON_SIZE_W,
+					     BG_LIST_ICON_SIZE_H, &(cfdata->cur_bg));
+    {
+      e_widget_ilist_selector_set(cfdata->gui.bg_list, 1);
+      e_widget_min_size_set(cfdata->gui.bg_list, 180, 200);
+
+      _load_bgs(cfdata);
+
+      e_widget_focus_set(cfdata->gui.bg_list, 1);
+      e_widget_ilist_go(cfdata->gui.bg_list);
+    }
+    e_widget_table_object_append(ot, cfdata->gui.bg_list, 0, 0, 1, 2, 1, 1, 1, 1);
+    /* end: bkg list */
+
+    /* start: Desk Lock Window Preview */
+    ot1 = e_widget_frametable_add(evas, _("Desk Lock Window Preview"), 0);
+    {
+      e_widget_frametable_object_append(ot1, cfdata->preview_image, 0, 1, 1, 1, 1, 1, 1, 1);
+    }
+    e_widget_table_object_append(ot, ot1, 1, 0, 1, 1, 1, 1, 1, 1);
+    /* end: Desk Lock Window Preview */
+
+    /* start: login box options */
+
+    /* Actually I do not know if I have to enable this if. However, if it is enabled
+     * this options will be seen only for those peoples who has xinerama.
+     * Otherwise, all the other world will not even know about them.
+     * Let the world know about them. Maybe in the feature somebody will turn this if
+     */
+
+    if (1 || _e_desklock_zone_num_get() > 1)
+      {
+	of = e_widget_framelist_add(evas, _("Login Box Settings"), 0);
+	{
+	  rg = e_widget_radio_group_new((int *)(&(cfdata->login_box_zone)));
+
+	  ob = e_widget_radio_add(evas, _("Show On All Screen Zones"), LOGINBOX_SHOW_ALL_SCREENS,
+				  rg);
+	  cfdata->gui.loginbox_obj.show_all_screens = ob;
+	  if (cfdata->zone_count == 1) e_widget_disabled_set(ob, 1);
+	  e_widget_framelist_object_append(of, ob);
+
+	  ob = e_widget_radio_add(evas, _("Show On Current Screen Zone"),
+				  LOGINBOX_SHOW_CURRENT_SCREENS, rg);
+	  cfdata->gui.loginbox_obj.show_current_screen = ob;
+	  if (cfdata->zone_count == 1) e_widget_disabled_set(ob, 1);
+	  e_widget_framelist_object_append(of, ob);
+
+	  ob = e_widget_radio_add(evas, _("Show On Screen Zone :"), LOGINBOX_SHOW_SPECIFIC_SCREEN,
+				  rg);
+	  cfdata->gui.loginbox_obj.show_specific_screen = ob;
+	  if (cfdata->zone_count == 1) e_widget_disabled_set(ob, 1);
+	  e_widget_framelist_object_append(of, ob);
+
+	  ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 0.0, (double)(cfdata->zone_count - 1),
+				   1.0, 0, NULL, &(cfdata->specific_lb_zone), 100);
+	  cfdata->gui.loginbox_obj.screen_slider = ob;
+	  if (cfdata->zone_count == 1 ||
+	      cfdata->login_box_zone == LOGINBOX_SHOW_ALL_SCREENS)
+	    {
+	      e_widget_disabled_set(ob, 1);
+	    }
+	  e_widget_framelist_object_append(of, ob);
+	}
+	e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
+      }
+    /* end: login box options */
+  }
+
+  /* register callbacks for the radios in login box options
+   * in order to propertly update interface
+   */
+
+  wd = e_widget_data_get(cfdata->gui.loginbox_obj.show_all_screens);
+  edje_object_signal_callback_add(wd->o_radio, "toggle_on", "",
+				  _e_desklock_cb_lb_show_on_all_screens, cfdata);
+
+  wd = e_widget_data_get(cfdata->gui.loginbox_obj.show_current_screen);
+  edje_object_signal_callback_add(wd->o_radio, "toggle_on", "",
+				  _e_desklock_cb_lb_show_on_current_screen, cfdata);
+
+  wd = e_widget_data_get(cfdata->gui.loginbox_obj.show_specific_screen);
+  edje_object_signal_callback_add(wd->o_radio, "toggle_on", "",
+				  _e_desklock_cb_lb_show_on_specific_screen, cfdata);
+
+
+  e_dialog_resizable_set(cfd->dia, 0);
+  return ot;
+}
+
+
+/* general functionality/callbacks */
 
 static void
 _e_desklock_passwd_cb_change(void *data, Evas_Object *obj)
@@ -201,3 +447,252 @@ _e_desklock_cb_show_passwd(void *data, Evas_Object *obj, const char *emission, c
   cfdata = data;
   _e_desklock_passwd_cb_change(cfdata, cfdata->gui.passwd_field);
 }
+
+static int
+_e_desklock_zone_num_get()
+{
+  int num;
+  Evas_List *l, *l2;
+
+  num = 0;
+  for (l = e_manager_list(); l; l = l->next)
+    {
+      E_Manager *man = l->data;
+
+      for (l2 = man->containers; l2; l2 = l2->next)
+	{
+	  E_Container *con = l2->data;
+
+	  num += evas_list_count(con->zones);
+	}
+    }
+
+  return num;
+}
+
+static void
+_load_bgs(E_Config_Dialog_Data *cfdata)
+{
+  Evas_Object *bg_obj, *o, *ic, *im;
+  Ecore_Evas *eebuf;
+  Evas *evasbuf;
+  Evas_List *bg_dirs, *bg;
+  const char *f, *f1;
+  char *c;
+
+  if (!cfdata || !cfdata->gui.bg_list)
+    return;
+
+  bg_obj = edje_object_add(cfdata->evas);
+
+
+  eebuf = ecore_evas_buffer_new(1, 1);
+  evasbuf = ecore_evas_get(eebuf);
+
+  /* Desklock background */
+  o = edje_object_add(evasbuf);
+  f1 = e_theme_edje_file_get("base/theme/desklock", "desklock/background");
+  c = strdup(f1);
+
+  if (edje_object_file_set(o, f1, "desklock/background"))
+    {
+      Evas_Object *o = NULL;
+
+      if (!e_thumb_exists(c))
+	o = e_thumb_generate_begin(c, BG_LIST_ICON_SIZE_W, BG_LIST_ICON_SIZE_H,
+				   cfdata->evas, &o, NULL, NULL);
+      else
+	o = e_thumb_evas_object_get(c, cfdata->evas, BG_LIST_ICON_SIZE_W, BG_LIST_ICON_SIZE_H, 1);
+
+      e_widget_ilist_append(cfdata->gui.bg_list, o, "Theme DeskLock Background",
+			    _ibg_list_cb_bg_selected, cfdata, DEF_DESKLOCK_BACKGROUND);
+    }
+
+  if (!e_config->desklock_background ||
+      !strcmp(e_config->desklock_background, DEF_DESKLOCK_BACKGROUND))
+    e_widget_ilist_selected_set(cfdata->gui.bg_list, 0);
+
+  im = e_widget_image_add_from_object(cfdata->evas, bg_obj, BG_PREVIEW_W, BG_PREVIEW_H);
+  e_widget_image_object_set(im, e_thumb_evas_object_get(c, cfdata->evas, BG_PREVIEW_W,
+							BG_PREVIEW_H, 1));
+
+  evas_object_del(o);
+  ecore_evas_free(eebuf);
+  free(c);
+  /* end: Desklock background */
+
+  /* Theme Background */
+
+
+  eebuf = ecore_evas_buffer_new(1, 1);
+  evasbuf = ecore_evas_get(eebuf);
+
+  o = edje_object_add(evasbuf);
+  f = e_theme_edje_file_get("base/theme/backgrounds", "desktop/background");
+  c = strdup(f);
+  if (edje_object_file_set(o, f, "desktop/background"))
+    {
+      Evas_Object *o = NULL;
+
+      if (!e_thumb_exists(c))
+	o = e_thumb_generate_begin(c, BG_LIST_ICON_SIZE_W, BG_LIST_ICON_SIZE_H,
+				   cfdata->evas, &o, NULL, NULL);
+      else
+	o = e_thumb_evas_object_get(c, cfdata->evas, BG_LIST_ICON_SIZE_W, BG_LIST_ICON_SIZE_H, 1);
+
+      e_widget_ilist_append(cfdata->gui.bg_list, o, "Theme Background", _ibg_list_cb_bg_selected,
+			    cfdata, DEF_THEME_BACKGROUND);
+    }
+
+  if (e_config->desklock_background &&
+      strcmp(e_config->desklock_background, DEF_THEME_BACKGROUND) == 0)
+    {
+      e_widget_ilist_selected_set(cfdata->gui.bg_list, 1);
+
+      im = e_widget_image_add_from_object(cfdata->evas, bg_obj, BG_PREVIEW_W, BG_PREVIEW_H);
+      e_widget_image_object_set(im, e_thumb_evas_object_get(c, cfdata->evas, BG_PREVIEW_W,
+							    BG_PREVIEW_H, 1));
+    }
+
+  evas_object_del(o);
+  ecore_evas_free(eebuf);
+  free(c);
+
+  bg_dirs = e_path_dir_list_get(path_backgrounds);
+  for (bg = bg_dirs; bg; bg = bg->next)
+    {
+      E_Path_Dir *d;
+
+      d = bg->data;
+      if (ecore_file_is_dir(d->dir))
+	{
+	  char *bg_file;
+	  Ecore_List *bgs;
+	  int i = e_widget_ilist_count(cfdata->gui.bg_list);
+
+	  bgs = ecore_file_ls(d->dir);
+	  if (!bgs) continue;
+	  while ((bg_file = ecore_list_next(bgs)))
+	    {
+	      char full_path[4096];
+
+	      snprintf(full_path, sizeof(full_path), "%s/%s", d->dir, bg_file);
+	      if (ecore_file_is_dir(full_path)) continue;
+	      if (!e_util_edje_collection_exists(full_path, "desktop/background")) continue;
+
+	      if (!e_thumb_exists(full_path))
+		ic = e_thumb_generate_begin(full_path, BG_LIST_ICON_SIZE_W, BG_LIST_ICON_SIZE_H,
+					    cfdata->evas, &ic, NULL, NULL);
+	      else
+		ic = e_thumb_evas_object_get(full_path, cfdata->evas, BG_LIST_ICON_SIZE_W,
+					     BG_LIST_ICON_SIZE_H, 1);
+
+	      e_widget_ilist_append(cfdata->gui.bg_list, ic, ecore_file_strip_ext(bg_file),
+				    _ibg_list_cb_bg_selected, cfdata, full_path);
+
+	      if ((e_config->desklock_background) &&
+		  (!strcmp(e_config->desklock_background, full_path)))
+		{
+		  Evas_Object *o = NULL;
+
+		  e_widget_ilist_selected_set(cfdata->gui.bg_list, i);
+		  o = edje_object_add(cfdata->evas);
+		  edje_object_file_set(o, e_config->desktop_default_background,
+				       "desktop/background");
+
+		  im = e_widget_image_add_from_object(cfdata->evas, o, BG_PREVIEW_W, BG_PREVIEW_H);
+		  e_widget_image_object_set(im, e_thumb_evas_object_get(full_path, cfdata->evas,
+									BG_PREVIEW_W, BG_PREVIEW_H,
+									1));
+		}
+	      i++;
+	    }
+	  free(bg_file);
+	  ecore_list_destroy(bgs);
+	}
+      free(d);
+    }
+  evas_list_free(bg);
+  evas_list_free(bg_dirs);
+
+  cfdata->preview_image = im;
+}
+
+static void
+_ibg_list_cb_bg_selected(void *data)
+{
+  E_Config_Dialog_Data *cfdata;
+
+  cfdata = data;
+
+  if (cfdata->cur_bg[0])
+    {
+      if (strcmp(cfdata->cur_bg, DEF_DESKLOCK_BACKGROUND) == 0)
+	{
+	  const char *theme;
+	  theme = e_theme_edje_file_get("base/theme/desklock", "desklock/background");
+	  e_widget_image_object_set(cfdata->preview_image, 
+				    e_thumb_evas_object_get(strdup(theme), cfdata->evas,
+							    BG_PREVIEW_W, BG_PREVIEW_H, 1));
+	}
+      else if (strcmp(cfdata->cur_bg, DEF_THEME_BACKGROUND) == 0)
+	{
+	  const char *theme;
+	  theme = e_theme_edje_file_get("base/theme/backgrounds", "desktop/background");
+	  e_widget_image_object_set(cfdata->preview_image, 
+				    e_thumb_evas_object_get(strdup(theme), cfdata->evas,
+							    BG_PREVIEW_W, BG_PREVIEW_H, 1));
+	}
+      else
+      {
+	e_widget_image_object_set(cfdata->preview_image,
+				  e_thumb_evas_object_get(cfdata->cur_bg, cfdata->evas,
+							  BG_PREVIEW_W, BG_PREVIEW_H, 1));
+      }
+    }
+  else
+    {
+      const char *theme;
+      theme = e_theme_edje_file_get("base/theme/desklock", "desklock/background");
+      e_widget_image_object_set(cfdata->preview_image, 
+				e_thumb_evas_object_get(strdup(theme), cfdata->evas,
+							BG_PREVIEW_W, BG_PREVIEW_H, 1));
+    }
+}
+
+static void
+_e_desklock_cb_lb_show_on_all_screens(void *data, Evas_Object *obj, const char *emission,
+				      const char *source)
+{
+  E_Config_Dialog_Data *cfdata;
+
+  if (!(cfdata = data)) return;
+
+  cfdata->specific_lb_zone_backup = cfdata->specific_lb_zone;
+
+  e_widget_disabled_set(cfdata->gui.loginbox_obj.screen_slider, 1);
+}
+
+static void
+_e_desklock_cb_lb_show_on_current_screen(void *data, Evas_Object *obj, const char *emission,
+					 const char *source)
+{
+  _e_desklock_cb_lb_show_on_all_screens(data, obj, emission, source);
+}
+
+static void
+_e_desklock_cb_lb_show_on_specific_screen(void *data, Evas_Object *obj, const char *emission,
+					 const char *source)
+{
+  E_Widget_Slider_Data	*wd;
+  E_Config_Dialog_Data	*cfdata;
+
+  if (!(cfdata = data)) return;
+
+  wd = e_widget_data_get(cfdata->gui.loginbox_obj.screen_slider);
+  e_slider_value_set(wd->o_slider, cfdata->specific_lb_zone_backup);
+  cfdata->specific_lb_zone = cfdata->specific_lb_zone_backup;
+
+  //e_widget_disabled_set(wd->o_widget, 1);
+}
+

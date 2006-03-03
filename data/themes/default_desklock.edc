@@ -7,6 +7,201 @@ images {
 }
 
 group {
+  name, "desklock/background";
+  parts {
+    part {
+       name: "background_image";
+       description {
+	  state: "default" 0.0;
+	  image {
+	     normal: "e17_brushed.png";
+	  }
+	  fill {
+	     size {
+		relative: 0 0;
+		offset:   400 300;
+	     }
+	  }
+       }
+    }
+    part {
+       name: "reflection_shadow_overlay";
+       description {
+	  state: "default" 0.0;
+	  image {
+	     normal: "e17_"SM"reflection_shadow_overlay.png";
+	  }
+       }
+    }
+  }
+}
+group 
+  {
+    name, "desklock/login_box";
+    parts 
+      {
+	part 
+	  {
+	    name: "logo";
+	    mouse_events: 0;
+	    description
+	    {
+	       state: "default" 0.0;
+	       min: 64 64;
+	       max: 64 64;
+	       //align: 0.45 0.5;
+	       image {
+		    normal: "e17_logo.png";
+	       }
+	    }
+	  }
+	part 
+	  {
+	    name: "label";
+	    type: TEXT;
+	    effect: SHADOW;
+	    description {
+	       state: "default" 0.0;
+	       color: 0 0 0 255;
+	       fixed: 0 1;
+	       align: 0.0 0.5;
+	       rel1 {
+		    relative: 1.0 0.0;
+		    offset: 20 0;
+		    to: "logo";
+	       }
+	       rel2 {
+		    relative: 1.0 0.3;
+		    offset: 0 0;
+		    to: "logo";
+	       }
+	       color: 0 0 0 255;
+	       color3: 255 255 255 128;
+	       text {
+		  text: "Please enter your unlock password";
+		  font: "Edje-Vera-Bold";
+		  size: 10;
+		  align: 0.0 0.5;
+		  min: 1 1;
+	       }
+	    }
+	  }
+	part
+	  {
+	     name: "passwd_entry_clip";
+	     type: RECT;
+	     mouse_events: 0;
+	     description
+	       {
+		  state: "default" 0.0;
+		  visible: 1;
+		  rel1
+		    {
+		       relative: 0.0 0.0;
+		       offset: 10 10;
+		       to: "passwd_border";
+		    }
+		  rel2
+		    {
+		       relative: 1.0 1.0;
+		       offset: -17 -10;
+		       to: "passwd_border";
+		    }
+	       }
+	    }
+	  part 
+	    {
+	       name: "passwd";
+	       type: TEXT;
+	       effect: SHADOW;
+	       clip_to: "passwd_entry_clip";
+	       description {
+		  state: "default" 0.0;
+		  color: 0 0 0 255;
+		  fixed: 0 1;
+		  align: 0.0 0.5;
+		  
+		  rel1
+		    {
+		       relative: 0.0 0.0;
+		       offset: 0 0;
+		       to: "passwd_entry_clip";
+		    }
+		  rel2
+		    {
+		       relative: 0.0 1.0;
+		       offset: 0 0;
+		       to: "passwd_entry_clip";
+		    }
+		  
+		  color: 0 0 0 255;
+		  color3: 255 255 255 128;
+		  text {
+		     text: "****";
+		     font: "Edje-Vera-Bold";
+		     size: 16;
+		     align: 0.0 0.5;
+		     min: 1 1;
+		     text_class: "desklock_passwd";
+		  }
+	       }
+	    }
+	  part 
+	    {
+	       name: "cursor";
+	       mouse_events: 0;
+	       clip_to: "passwd_entry_clip";
+	       description {
+		  state: "default" 0.0;
+		  min: 16 16;
+		  max: 16 16;
+		  align: 0.0 0.5;
+		  fixed: 1 1;
+		  rel1 {
+		     relative: 1.0 0.0;
+		     offset: 0 -2;
+		     to: "passwd";
+		  }
+		  rel2 {
+		     relative: 1.0 0.9;
+		     offset: 0 0;
+		     to: "passwd";
+		  }
+		  image {
+		     normal: "e17_entry_cursor.png";
+		  }
+	       }
+	    }
+	  part
+	    {
+	       name: "passwd_border";
+	       mouse_events: 0;
+	       description
+		 {
+		    state: "default" 0.0;
+		    rel1 
+		      {
+			 relative: 1.0 0.3;
+			 offset: 0 0;
+			 to: "logo";
+		      }
+		    rel2
+		      {
+			 relative: 5.0 0.9;
+			 offset: 0 0;
+			 to: "logo";
+		      }
+		    image
+		      {
+			 normal: "e17_gadman_overlay.png";
+			 border: 15 15 15 15;
+		      }
+		 }
+	    }
+      }
+  }
+
+/*group {
    name, "widgets/desklock/main";
    parts
      {
@@ -207,4 +402,4 @@ group {
 	       }
 	  }
      }
-}
+}*/

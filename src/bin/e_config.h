@@ -49,7 +49,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
  * versioning feature. the value of this is really irrelevant - just as
  * long as it increases every time we change something
  */
-#define E_CONFIG_FILE_VERSION 139
+#define E_CONFIG_FILE_VERSION 140
 
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1
@@ -210,8 +210,11 @@ struct _E_Config
    int         cfgdlg_default_mode; // GUI   
    Evas_List  *gadcons;
    Evas_List  *shelves;
-   char	      *desklock_personal_passwd; // GUI
    int         font_hinting; // GUI
+
+   char	      *desklock_personal_passwd; // GUI
+   char	      *desklock_background; // GUI
+   int	      desklock_login_box_zone; //GUI
 };
 
 struct _E_Config_Module

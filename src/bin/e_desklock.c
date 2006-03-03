@@ -9,8 +9,9 @@ typedef struct _E_Desklock_Popup_Data	E_Desklock_Popup_Data;
 
 struct _E_Desklock_Popup_Data
 {
-   E_Popup     *popup_wnd;
-   Evas_Object *bg_object;
+   E_Popup	*popup_wnd;
+   Evas_Object	*bg_object;
+   Evas_Object	*login_box;
 };
 
 struct _E_Desklock_Data
@@ -22,6 +23,7 @@ struct _E_Desklock_Data
 };
 
 static	E_Desklock_Data	*edd = NULL;
+static	E_Zone		*last_active_zone = NULL;
 
 /***********************************************************************/
 
@@ -29,18 +31,23 @@ static int _e_desklock_cb_key_down(void *data, int type, void *event);
 static int _e_desklock_cb_mouse_down(void *data, int type, void *event);
 static int _e_desklock_cb_mouse_up(void *data, int type, void *event);
 static int _e_desklock_cb_mouse_wheel(void *data, int type, void *event);
+static int _e_desklock_cb_mouse_move(void *data, int type, void *event);
 //static int _e_desklock_idler(void *data);
 
 static void _e_desklock_passwd_update();
 static void _e_desklock_backspace();
 static void _e_desklock_delete();
+static int  _e_desklock_zone_num_get();
 
 EAPI int
 e_desklock_show(void)
 {
-   Evas_List  *managers, *l, *l2, *l3;
-   int m = 0, c = 0, z = 0;   
-   E_Desklock_Popup_Data	*edp;
+   Evas_List		  *managers, *l, *l2, *l3;
+   E_Desklock_Popup_Data  *edp;
+   Evas_Coord		  mw, mh;
+   E_Zone		  *current_zone;
+   int			  zone_counter;
+   int			  total_zone_num;
 
    if (!e_config->desklock_personal_passwd)
      {
@@ -65,24 +72,27 @@ e_desklock_show(void)
 	edd->handlers = NULL;
 	edd->passwd[0] = 0;
      }
+
+   last_active_zone = current_zone = 
+     e_zone_current_get(e_container_current_get(e_manager_current_get()));
    
+   zone_counter = 0;
+   total_zone_num = _e_desklock_zone_num_get();
    managers = e_manager_list();
    for (l = managers; l; l = l->next)
      {
 	E_Manager *man;
 	
-	m++;
 	man = l->data;
 	for (l2 = man->containers; l2; l2 = l2->next)
 	  {
 	     E_Container *con;
 	     
-	     c++;
-	     
 	     con = l2->data;
 	     for (l3 = con->zones; l3; l3 = l3->next)
 	       {
 		  E_Zone *zone;
+
 		  
 		  zone = l3->data;
 		  if (!edd->elock_wnd)
@@ -103,16 +113,69 @@ e_desklock_show(void)
 		       
 		       evas_event_freeze(edp->popup_wnd->evas);
 		       edp->bg_object = edje_object_add(edp->popup_wnd->evas);
-		       //FIXME: This should come from config file
-		       e_theme_edje_object_set(edp->bg_object,
-					       "base/theme/desklock",
-					       "widgets/desklock/main");
-		       
+
+		       if (!e_config->desklock_background ||
+			   !strcmp(e_config->desklock_background, "theme_desklock_background"))
+			 {
+			   e_theme_edje_object_set(edp->bg_object,
+						   "base/theme/desklock",
+						   "desklock/background");
+			 }
+		       else if (!strcmp(e_config->desklock_background, "theme_background"))
+			 {
+			   e_theme_edje_object_set(edp->bg_object,
+						   "base/theme/backgrounds",
+						   "desktop/background");
+			 }
+		       else
+			 {
+			   if (e_util_edje_collection_exists(e_config->desklock_background,
+							     "desklock/background"))
+			     {
+			       edje_object_file_set(edp->bg_object, e_config->desklock_background,
+						    "desklock/background");
+			     }
+			   else
+			     {
+			       if (!edje_object_file_set(edp->bg_object,
+							 e_config->desklock_background,
+							 "desktop/background"))
+				 {
+				   edje_object_file_set(edp->bg_object,
+						      e_theme_edje_file_get("base/theme/desklock",
+									    "desklock/background"),
+									    "desklock/background");
+				 }
+			     }
+			 }
+
 		       evas_object_move(edp->bg_object, 0, 0);
 		       evas_object_resize(edp->bg_object, zone->w, zone->h);
 		       evas_object_show(edp->bg_object);
-		       edje_object_part_text_set(edp->bg_object, "title", 
-						 _("Please enter your unlock password"));
+		       /*edje_object_part_text_set(edp->bg_object, "title", 
+						 _("Please enter your unlock password"));*/
+
+		       /**/
+		       edp->login_box = edje_object_add(edp->popup_wnd->evas);
+		       e_theme_edje_object_set(edp->login_box,
+					       "base/theme/desklock", "desklock/login_box");
+		       edje_object_part_swallow(edp->bg_object, "login_box", edp->login_box);
+		       edje_object_size_min_calc(edp->login_box, &mw, &mh);
+		       evas_object_move(edp->login_box, (int)((zone->w - mw)/2),
+						    (int)((zone->h - mh)/2));
+
+		       if (total_zone_num > 1)
+		       {
+			 if (e_config->desklock_login_box_zone == -1)
+			   evas_object_show(edp->login_box);
+			 else if(e_config->desklock_login_box_zone == -2 && zone == current_zone)
+			   evas_object_show(edp->login_box);
+			 else if(e_config->desklock_login_box_zone == zone_counter )
+			   evas_object_show(edp->login_box);
+		       }
+		       else
+			 evas_object_show(edp->login_box);
+		       /**/
 		       
 		       e_popup_edje_bg_object_set(edp->popup_wnd, edp->bg_object);
 		       evas_event_thaw(edp->popup_wnd->evas);
@@ -121,6 +184,8 @@ e_desklock_show(void)
 		       
 		       edd->elock_wnd_list = evas_list_append(edd->elock_wnd_list, edp);
 		    }
+
+		  zone_counter ++;
 	       }
 	  }
      }
@@ -139,6 +204,11 @@ e_desklock_show(void)
 				    ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL,
 							    _e_desklock_cb_mouse_wheel,
 							    NULL));
+   if (total_zone_num > 1 && e_config->desklock_login_box_zone == -2 )
+     edd->handlers = evas_list_append(edd->handlers,
+				      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
+							      _e_desklock_cb_mouse_move,
+							      NULL));
    //elock_wnd_idler = ecore_idler_add(_e_desklock_idler, NULL);
    
    _e_desklock_passwd_update();
@@ -161,6 +231,7 @@ e_desklock_hide(void)
 	     
 	     evas_event_freeze(edp->popup_wnd->evas);
 	     evas_object_del(edp->bg_object);
+	     evas_object_del(edp->login_box);
 	     evas_event_thaw(edp->popup_wnd->evas);
 	     
 	     e_object_del(E_OBJECT(edp->popup_wnd));
@@ -257,6 +328,32 @@ _e_desklock_cb_mouse_wheel(void *data, int type, void *event)
    return 1;
 }
 static int
+_e_desklock_cb_mouse_move(void *data, int type, void *event)
+{
+  E_Desklock_Popup_Data	*edp;
+  E_Zone *current_zone;
+  Evas_List *l;
+
+  current_zone = e_zone_current_get(e_container_current_get(e_manager_current_get()));
+
+  if (current_zone == last_active_zone)
+    return 1;
+
+  for (l = edd->elock_wnd_list; l; l = l->next)
+    {
+      edp = l->data;
+
+      if (!edp) continue;
+
+      if (edp->popup_wnd->zone == last_active_zone)
+	evas_object_hide(edp->login_box);
+      else if (edp->popup_wnd->zone == current_zone)
+	evas_object_show(edp->login_box);
+    }
+  last_active_zone = current_zone;
+  return 1;
+}
+static int
 _e_desklock_idler(void *data)
 {
    return 1;
@@ -304,7 +401,7 @@ _e_desklock_passwd_update()
    for (l = edd->elock_wnd_list; l; l = l->next)
      {
 	edp = l->data;
-	edje_object_part_text_set(edp->bg_object, "passwd", passwd_hidden);
+	edje_object_part_text_set(edp->login_box, "passwd", passwd_hidden);
      }
 }
 
@@ -333,4 +430,25 @@ _e_desklock_delete()
   _e_desklock_backspace();
 }
 
+static int
+_e_desklock_zone_num_get()
+{
+  int num;
+  Evas_List *l, *l2;
+
+  num = 0;
+  for (l = e_manager_list(); l; l = l->next)
+    {
+      E_Manager *man = l->data;
+
+      for (l2 = man->containers; l2; l2 = l2->next)
+	{
+	  E_Container *con = l2->data;
+
+	  num += evas_list_count(con->zones);
+	}
+    }
+
+  return num;
+}
 

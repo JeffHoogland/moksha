@@ -43,6 +43,7 @@ _e_wid_focus_hook(Evas_Object *obj)
      {
 	e_entry_focus(wd->o_entry);
 	evas_object_focus_set(wd->o_entry, 1);
+	e_entry_cursor_move_at_end(wd->o_entry);
 	e_entry_cursor_show(wd->o_entry);
      }
    else
