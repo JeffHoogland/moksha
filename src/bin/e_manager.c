@@ -12,6 +12,7 @@ static int _e_manager_cb_key_up(void *data, int ev_type, void *ev);
 static int _e_manager_cb_key_down(void *data, int ev_type, void *ev);
 static int _e_manager_cb_frame_extents_request(void *data, int ev_type, void *ev);
 static int _e_manager_cb_ping(void *data, int ev_type, void *ev);
+static int _e_manager_cb_screensaver_notify(void *data, int ev_type, void *ev);
 
 static Evas_Bool _e_manager_frame_extents_free_cb(Evas_Hash *hash __UNUSED__,
 						  const char *key __UNUSED__,
@@ -47,6 +48,7 @@ static Evas_Hash *frame_extents = NULL;
 EAPI int
 e_manager_init(void)
 {
+   ecore_x_screensaver_event_listen_set(1);
    return 1;
 }
 
@@ -110,6 +112,7 @@ e_manager_new(Ecore_X_Window root, int num)
      {
 	man->win = man->root;
      }
+   
    h = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHOW_REQUEST, _e_manager_cb_window_show_request, man);
    if (h) man->handlers = evas_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE, _e_manager_cb_window_configure, man);
@@ -119,7 +122,10 @@ e_manager_new(Ecore_X_Window root, int num)
    h = ecore_event_handler_add(ECORE_X_EVENT_KEY_UP, _e_manager_cb_key_up, man);
    if (h) man->handlers = evas_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_FRAME_EXTENTS_REQUEST, _e_manager_cb_frame_extents_request, man);
+   if (h) man->handlers = evas_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_PING, _e_manager_cb_ping, man);
+   if (h) man->handlers = evas_list_append(man->handlers, h);
+   h = ecore_event_handler_add(ECORE_X_EVENT_SCREENSAVER_NOTIFY, _e_manager_cb_screensaver_notify, man);
    if (h) man->handlers = evas_list_append(man->handlers, h);
 
    man->pointer = e_pointer_window_new(man->root);
@@ -713,6 +719,22 @@ _e_manager_cb_ping(void *data, int ev_type __UNUSED__, void *ev)
    if (!bd) return 1;
 
    bd->ping_ok = 1;
+   return 1;
+}
+
+static int
+_e_manager_cb_screensaver_notify(void *data, int ev_type __UNUSED__, void *ev)
+{
+   E_Manager *man;
+   Ecore_X_Event_Screensaver_Notify *e;
+   
+   man = data;
+   e = ev;
+   
+   if (e->on)
+     {
+	if (e_config->desklock_autolock) e_desklock_show();
+     }
    return 1;
 }
 

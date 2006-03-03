@@ -46,35 +46,35 @@ static void _e_desklock_cb_lb_show_on_specific_screen(void *data, Evas_Object *o
 
 struct _E_Config_Dialog_Data
 {
-  char *desklock_passwd;
-  char *desklock_passwd_cp;
-  int show_password; // local
-
-  int login_box_zone; // in e_config;
-  int specific_lb_zone; // local variable
-  int specific_lb_zone_backup; // used to have smart iface
-
-  int zone_count; // local variable;
-
-  char *cur_bg; // local variable;
-  Evas *evas; // local variable
-  Evas_Object *preview_image; // local variable
-
-  /*double  vertical_lb_align;
-  double  horizontal_lb_align;*/
-
-
-  struct {
-    Evas_Object	*passwd_field;
-    Evas_Object *bg_list;
-
-    struct {
-      Evas_Object *show_all_screens;
-      Evas_Object *show_current_screen;
-      Evas_Object *show_specific_screen;
-      Evas_Object *screen_slider;
-    } loginbox_obj;
-  } gui;
+   char *desklock_passwd;
+   char *desklock_passwd_cp;
+   int show_password; // local
+   
+   int autolock; // in e_config;
+   int use_timeout; // in e_config;
+   double timeout; // in e_config;
+   
+   int login_box_zone; // in e_config;
+   int specific_lb_zone; // local variable
+   int specific_lb_zone_backup; // used to have smart iface
+   
+   int zone_count; // local variable;
+   
+   char *cur_bg; // local variable;
+   Evas *evas; // local variable
+   Evas_Object *preview_image; // local variable
+   
+   struct {
+      Evas_Object	*passwd_field;
+      Evas_Object *bg_list;
+      
+      struct {
+	 Evas_Object *show_all_screens;
+	 Evas_Object *show_current_screen;
+	 Evas_Object *show_specific_screen;
+	 Evas_Object *screen_slider;
+      } loginbox_obj;
+   } gui;
 };
 
 typedef struct _E_Widget_Entry_Data   E_Widget_Entry_Data;
@@ -135,43 +135,47 @@ e_int_config_desklock(E_Container *con)
 static void
 _fill_desklock_data(E_Config_Dialog_Data *cfdata)
 {
-  // we have to read it from e_config->...
-  if (e_config->desklock_personal_passwd)
-    {
-      cfdata->desklock_passwd = strdup(e_config->desklock_personal_passwd);
-      cfdata->desklock_passwd_cp = strdup(e_config->desklock_personal_passwd);
-    }
-  else
-    {
-      cfdata->desklock_passwd = strdup("");
-      cfdata->desklock_passwd_cp = strdup("");
-    }
-      
-  /* should be taken from e_config */
-  //cfdata->login_box_on_zone = -1;
-
-  if (e_config->desklock_login_box_zone >= 0)
-    {
-      cfdata->login_box_zone = LOGINBOX_SHOW_SPECIFIC_SCREEN;
-      cfdata->specific_lb_zone_backup = cfdata->specific_lb_zone =
-	e_config->desklock_login_box_zone;
-    }
-  else
-    {
-      cfdata->login_box_zone = e_config->desklock_login_box_zone;
-      cfdata->specific_lb_zone_backup = cfdata->specific_lb_zone = 0;
-    }
-
-  cfdata->zone_count = _e_desklock_zone_num_get();
-
-  cfdata->show_password = 0;
-
-  if (!e_config->desklock_background)
-    cfdata->cur_bg = strdup(DEF_DESKLOCK_BACKGROUND);
-  else
-    cfdata->cur_bg = strdup(e_config->desklock_background);
-
-    //vertical_lb_align = e_config->desklock_login
+   // we have to read it from e_config->...
+   if (e_config->desklock_personal_passwd)
+     {
+	cfdata->desklock_passwd = strdup(e_config->desklock_personal_passwd);
+	cfdata->desklock_passwd_cp = strdup(e_config->desklock_personal_passwd);
+     }
+   else
+     {
+	cfdata->desklock_passwd = strdup("");
+	cfdata->desklock_passwd_cp = strdup("");
+     }
+   
+   cfdata->autolock = e_config->desklock_autolock;
+   cfdata->use_timeout = e_config->desklock_use_timeout;
+   cfdata->timeout = e_config->desklock_timeout;
+   
+   /* should be taken from e_config */
+   //cfdata->login_box_on_zone = -1;
+   
+   if (e_config->desklock_login_box_zone >= 0)
+     {
+	cfdata->login_box_zone = LOGINBOX_SHOW_SPECIFIC_SCREEN;
+	cfdata->specific_lb_zone_backup = cfdata->specific_lb_zone =
+	  e_config->desklock_login_box_zone;
+     }
+   else
+     {
+	cfdata->login_box_zone = e_config->desklock_login_box_zone;
+	cfdata->specific_lb_zone_backup = cfdata->specific_lb_zone = 0;
+     }
+   
+   cfdata->zone_count = _e_desklock_zone_num_get();
+   
+   cfdata->show_password = 0;
+   
+   if (!e_config->desklock_background)
+     cfdata->cur_bg = strdup(DEF_DESKLOCK_BACKGROUND);
+   else
+     cfdata->cur_bg = strdup(e_config->desklock_background);
+   
+   //vertical_lb_align = e_config->desklock_login
 }
 
 static void *
@@ -202,50 +206,71 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-  if (cfdata->desklock_passwd_cp)
-    {
-      if (e_config->desklock_personal_passwd)
-	{
-	  if (strcmp(e_config->desklock_personal_passwd, cfdata->desklock_passwd_cp) == 0)
-	    return 1;
+   if (cfdata->desklock_passwd_cp)
+     {
+	if (e_config->desklock_personal_passwd)
 	  evas_stringshare_del(e_config->desklock_personal_passwd);
-	}
-      e_config->desklock_personal_passwd = (char *)evas_stringshare_add(cfdata->desklock_passwd_cp);
-      e_config_save_queue();
-    }
+     }
+   e_config->desklock_personal_passwd = (char *)evas_stringshare_add(cfdata->desklock_passwd_cp);
+   e_config->desklock_autolock = cfdata->autolock;
+   e_config->desklock_use_timeout = cfdata->use_timeout;
+   e_config->desklock_timeout = cfdata->timeout;
+   if (e_config->desklock_use_timeout)
+     {
+	ecore_x_screensaver_timeout_set(e_config->desklock_timeout);
+	printf("%3.3f\n", e_config->desklock_timeout);
+     }
+   e_config_save_queue();
   return 1;
 }
 
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-  Evas_Object *o, *of, *ob;
-  E_Widget_Check_Data *wd;
+   Evas_Object *o, *of, *ob;
+   E_Widget_Check_Data *wd;
+   
+   //_fill_desklock_data(cfdata);
+   
+   o = e_widget_list_add(evas, 0, 0);
+   
+   of = e_widget_framelist_add(evas, _("Personalized Password:"), 0);
+   
+   cfdata->gui.passwd_field = ob = e_widget_entry_add(evas, &(cfdata->desklock_passwd));
+   _e_desklock_passwd_cb_change(cfdata, ob);
+   e_widget_entry_on_change_callback_set(ob, _e_desklock_passwd_cb_change, cfdata);
+   e_widget_min_size_set(ob, 200, 25);
+   e_widget_framelist_object_append(of, ob);
+   
+   ob = e_widget_check_add(evas, _("Show Password"), &(cfdata->show_password));
+   e_widget_framelist_object_append(of, ob);
+   
+   wd = (E_Widget_Check_Data*)e_widget_data_get(ob);
+   edje_object_signal_callback_add(wd->o_check,"toggle_on", "", _e_desklock_cb_show_passwd, cfdata);
+   edje_object_signal_callback_add(wd->o_check,"toggle_off", "", _e_desklock_cb_show_passwd, cfdata);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   
+   of = e_widget_framelist_add(evas, _("Automatic Locking"), 0);
+   
+   ob = e_widget_check_add(evas, _("Lock when the Screensaver starts"), &(cfdata->autolock));
+   e_widget_framelist_object_append(of, ob);
 
-  //_fill_desklock_data(cfdata);
-
-  o = e_widget_list_add(evas, 0, 0);
-
-  of = e_widget_framelist_add(evas, _("Personalized Password:"), 0);
-
-  cfdata->gui.passwd_field = ob = e_widget_entry_add(evas, &(cfdata->desklock_passwd));
-  _e_desklock_passwd_cb_change(cfdata, ob);
-  e_widget_entry_on_change_callback_set(ob, _e_desklock_passwd_cb_change, cfdata);
-  e_widget_min_size_set(ob, 200, 25);
-  e_widget_framelist_object_append(of, ob);
-
-  ob = e_widget_check_add(evas, _("Show Password"), &(cfdata->show_password));
-  wd = (E_Widget_Check_Data*)e_widget_data_get(ob);
-
-  edje_object_signal_callback_add(wd->o_check,"toggle_on", "", _e_desklock_cb_show_passwd, cfdata);
-  edje_object_signal_callback_add(wd->o_check,"toggle_off", "", _e_desklock_cb_show_passwd, cfdata);
-
-  e_widget_framelist_object_append(of, ob);
-
-  e_widget_list_object_append(o, of, 1, 1, 0.5);
-  e_dialog_resizable_set(cfd->dia, 0);
-
-  return o;
+   ob = e_widget_check_add(evas, _("Set the screensaver timeout"), &(cfdata->use_timeout));
+   e_widget_framelist_object_append(of, ob);
+   
+   ob = e_widget_label_add(evas, _("Time until screensaver starts"));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f seconds"),
+			    1.0, 600.0,
+			    1.0, 0, &(cfdata->timeout), NULL,
+			    200);
+   e_widget_framelist_object_append(of, ob);
+   
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   
+   e_dialog_resizable_set(cfd->dia, 0);
+   
+   return o;
 }
 
 /* advanced window */
@@ -253,27 +278,31 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-  if (!cfdata) return 0;
+   if (!cfdata) return 0;
+   
+   if (cfdata->cur_bg)
+     {
+	if (e_config->desklock_background)
+	  evas_stringshare_del(e_config->desklock_background);
+	e_config->desklock_background = (char *)evas_stringshare_add(cfdata->cur_bg);
+     }
+   
+   if (_e_desklock_zone_num_get() > 1)
+     {
+	if (cfdata->login_box_zone >= 0)
+	  e_config->desklock_login_box_zone = cfdata->specific_lb_zone;
+	else
+	  e_config->desklock_login_box_zone = cfdata->login_box_zone;
+     }
+   else
+     e_config->desklock_login_box_zone = LOGINBOX_SHOW_ALL_SCREENS;
 
-  if (cfdata->cur_bg)
-    {
-      if (e_config->desklock_background)
-	evas_stringshare_del(e_config->desklock_background);
-      e_config->desklock_background = (char *)evas_stringshare_add(cfdata->cur_bg);
-    }
-
-  if (_e_desklock_zone_num_get() > 1)
-    {
-      if (cfdata->login_box_zone >= 0)
-	e_config->desklock_login_box_zone = cfdata->specific_lb_zone;
-      else
-	e_config->desklock_login_box_zone = cfdata->login_box_zone;
-    }
-  else
-    e_config->desklock_login_box_zone = LOGINBOX_SHOW_ALL_SCREENS;
-
-  e_config_save_queue();
-  return 1;
+   e_config->desklock_autolock = cfdata->autolock;
+   e_config->desklock_use_timeout = cfdata->use_timeout;
+   e_config->desklock_timeout = cfdata->timeout;
+   
+   e_config_save_queue();
+   return 1;
 }
 
 static Evas_Object *
@@ -282,6 +311,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
   Evas_Object *o, *of, *of1, *ob;
   E_Widget_Radio_Data *wd;
 
+   /* FIXME: this dialog is broken. advanced options should ALSO INCLUDE basic options */
   E_Radio_Group *rg, *rg_bkg;
   Evas_Object *ot;
 

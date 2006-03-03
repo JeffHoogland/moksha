@@ -214,7 +214,11 @@ struct _E_Config
 
    char	      *desklock_personal_passwd; // GUI
    char	      *desklock_background; // GUI
-   int	      desklock_login_box_zone; //GUI
+   int	      desklock_login_box_zone; // GUI
+   int        desklock_autolock; // GUI
+   int        desklock_use_timeout; // GUI
+   double     desklock_timeout; // GUI
+   int        desklock_disable_screensaver;
 };
 
 struct _E_Config_Module

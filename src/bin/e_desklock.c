@@ -49,6 +49,8 @@ e_desklock_show(void)
    int			  zone_counter;
    int			  total_zone_num;
 
+   if (edd) return 0;
+   
    if (!e_config->desklock_personal_passwd)
      {
 	E_Zone  *zone;
@@ -114,8 +116,8 @@ e_desklock_show(void)
 		       evas_event_freeze(edp->popup_wnd->evas);
 		       edp->bg_object = edje_object_add(edp->popup_wnd->evas);
 
-		       if (!e_config->desklock_background ||
-			   !strcmp(e_config->desklock_background, "theme_desklock_background"))
+		       if ((!e_config->desklock_background) ||
+			   (!strcmp(e_config->desklock_background, "theme_desklock_background")))
 			 {
 			   e_theme_edje_object_set(edp->bg_object,
 						   "base/theme/desklock",
@@ -123,9 +125,9 @@ e_desklock_show(void)
 			 }
 		       else if (!strcmp(e_config->desklock_background, "theme_background"))
 			 {
-			   e_theme_edje_object_set(edp->bg_object,
-						   "base/theme/backgrounds",
-						   "desktop/background");
+			    e_theme_edje_object_set(edp->bg_object,
+						    "base/theme/backgrounds",
+						    "desktop/background");
 			 }
 		       else
 			 {
@@ -152,13 +154,12 @@ e_desklock_show(void)
 		       evas_object_move(edp->bg_object, 0, 0);
 		       evas_object_resize(edp->bg_object, zone->w, zone->h);
 		       evas_object_show(edp->bg_object);
-		       /*edje_object_part_text_set(edp->bg_object, "title", 
-						 _("Please enter your unlock password"));*/
-
-		       /**/
 		       edp->login_box = edje_object_add(edp->popup_wnd->evas);
 		       e_theme_edje_object_set(edp->login_box,
-					       "base/theme/desklock", "desklock/login_box");
+					       "base/theme/desklock",
+					       "desklock/login_box");
+		       edje_object_part_text_set(edp->login_box, "title", 
+						 _("Please enter your unlock password"));
 		       edje_object_part_swallow(edp->bg_object, "login_box", edp->login_box);
 		       edje_object_size_min_calc(edp->login_box, &mw, &mh);
 		       evas_object_move(edp->login_box, (int)((zone->w - mw)/2),
@@ -362,16 +363,13 @@ _e_desklock_idler(void *data)
 EAPI int
 e_desklock_init(void)
 {
-//  desklock_edd = E_CONFIG_DD_NEW("E_Desklock", E_Decklock);
-//#undef T
-//#undef D
-//#define T E_Desklock
-//#define D desklock_edd
-  //E_CONFIG_VAL(D, T, path, STR);
-
-//#undef T
-//#undef D
-
+   if (e_config->desklock_disable_screensaver)
+     ecore_x_screensaver_timeout_set(0);
+   else
+     {
+	if (e_config->desklock_use_timeout)
+	  ecore_x_screensaver_timeout_set(e_config->desklock_timeout);
+     }
    return 1;
 }
 
