@@ -112,6 +112,23 @@ e_manager_new(Ecore_X_Window root, int num)
      {
 	man->win = man->root;
      }
+
+   /* FIXME: this handles 1 screen only - not multihead. multihead randr
+    * and xinerama are complex oin terms of interaction, so for now only
+    * really have this work in single head. the randr module kept this
+    * as a list, and i might move it to be the same too, but for now, keep
+    * it as is
+    */
+   if (e_config->display_res_restore)
+     {
+        Ecore_X_Screen_Size size;
+	Ecore_X_Screen_Refresh_Rate rate;
+	
+	size.width = e_config->display_res_width;
+	size.height = e_config->display_res_height;
+	rate.rate = e_config->display_res_hz;
+	ecore_x_randr_screen_refresh_rate_set(man->root, size, rate);
+     }
    
    h = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHOW_REQUEST, _e_manager_cb_window_show_request, man);
    if (h) man->handlers = evas_list_append(man->handlers, h);
