@@ -253,15 +253,15 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_disabled_set(of, !ecore_x_screensaver_event_available_get());
    
    ob = e_widget_check_add(evas, _("Lock when the Screensaver starts"), &(cfdata->autolock));
-   e_widget_disabled_set(ob, !ecore_x_screensaver_event_avaialable_get());
+   e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_check_add(evas, _("Set the screensaver timeout"), &(cfdata->use_timeout));
-   e_widget_disabled_set(ob, !ecore_x_screensaver_event_avaialable_get());
+   e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
    e_widget_framelist_object_append(of, ob);
    
    ob = e_widget_label_add(evas, _("Time until screensaver starts"));
-   e_widget_disabled_set(ob, !ecore_x_screensaver_event_avaialable_get());
+   e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f seconds"),
 			    1.0, 600.0,
