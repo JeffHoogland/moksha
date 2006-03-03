@@ -218,7 +218,6 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (e_config->desklock_use_timeout)
      {
 	ecore_x_screensaver_timeout_set(e_config->desklock_timeout);
-	printf("%3.3f\n", e_config->desklock_timeout);
      }
    e_config_save_queue();
   return 1;
@@ -251,14 +250,18 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
    of = e_widget_framelist_add(evas, _("Automatic Locking"), 0);
+   e_widget_disabled_set(of, !ecore_x_screensaver_event_avaialable_get());
    
    ob = e_widget_check_add(evas, _("Lock when the Screensaver starts"), &(cfdata->autolock));
+   e_widget_disabled_set(ob, !ecore_x_screensaver_event_avaialable_get());
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_check_add(evas, _("Set the screensaver timeout"), &(cfdata->use_timeout));
+   e_widget_disabled_set(ob, !ecore_x_screensaver_event_avaialable_get());
    e_widget_framelist_object_append(of, ob);
    
    ob = e_widget_label_add(evas, _("Time until screensaver starts"));
+   e_widget_disabled_set(ob, !ecore_x_screensaver_event_avaialable_get());
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f seconds"),
 			    1.0, 600.0,
