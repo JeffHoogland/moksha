@@ -57,7 +57,7 @@ group
 	  }
 	part 
 	  {
-	    name: "label";
+	    name: "title";
 	    type: TEXT;
 	    effect: SHADOW;
 	    description {
