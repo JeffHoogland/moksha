@@ -253,6 +253,8 @@ e_ilist_remove_num(Evas_Object *obj, int n)
    if (si) 
    {
       sd->items = evas_list_remove(sd->items, si);
+      if (e_ilist_selected_get(obj) == n)
+	sd->selected = -1;
       if (si->icon_obj) evas_object_del(si->icon_obj);
       evas_object_del(si->base_obj);
       free(si);  
@@ -310,6 +312,7 @@ e_ilist_clear(Evas_Object *obj)
 	evas_object_del(si->base_obj);
 	free(si);
      }
+   sd->selected = -1;
 }
 
 /* local subsystem functions */
