@@ -32,7 +32,7 @@ group {
 	    state:    "disabled" 0.0;
 	    inherit:  "default" 0.0;
 	    image {
-	       normal: "e17_menu_check0.png";
+	       normal: "e17_menu_radio0.png";
 	    }
 	 }
       }
