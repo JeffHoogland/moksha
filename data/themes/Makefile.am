@@ -28,7 +28,6 @@ default_temperature.edc \
 default_error.edc \
 default_cpufreq.edc \
 default_ibox.edc \
-default_itray.edc \
 default_start.edc \
 default_winlist.edc \
 default_transitions.edc \

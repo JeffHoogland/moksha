@@ -1,6 +1,5 @@
 MAINTAINERCLEANFILES = Makefile.in
 SUBDIRS = \
-test \
 ibar \
 dropshadow \
 clock \
@@ -9,6 +8,4 @@ battery \
 temperature \
 cpufreq \
 ibox \
-itray \
-start \
-gadget_test
+start

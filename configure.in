@@ -286,8 +286,6 @@ src/Makefile
 src/lib/Makefile
 src/bin/Makefile
 src/modules/Makefile
-src/modules/test/Makefile
-src/modules/gadget_test/Makefile
 src/modules/ibar/Makefile
 src/modules/dropshadow/Makefile
 src/modules/clock/Makefile
@@ -296,7 +294,6 @@ src/modules/battery/Makefile
 src/modules/temperature/Makefile
 src/modules/cpufreq/Makefile
 src/modules/ibox/Makefile
-src/modules/itray/Makefile
 src/modules/start/Makefile
 src/preload/Makefile
 data/Makefile
