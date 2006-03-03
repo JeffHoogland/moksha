@@ -298,7 +298,6 @@ src/modules/cpufreq/Makefile
 src/modules/ibox/Makefile
 src/modules/itray/Makefile
 src/modules/start/Makefile
-src/modules/randr/Makefile
 src/preload/Makefile
 data/Makefile
 data/fonts/Makefile

@@ -458,7 +458,6 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, gadcons, _e_config_gadcon_edd);
    E_CONFIG_LIST(D, T, shelves, _e_config_shelf_edd);
    E_CONFIG_VAL(D, T, font_hinting, INT);
-
    E_CONFIG_VAL(D, T, desklock_personal_passwd, STR);
    E_CONFIG_VAL(D, T, desklock_background, STR);
    E_CONFIG_VAL(D, T, desklock_login_box_zone, INT);
@@ -467,6 +466,11 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, desklock_timeout, DOUBLE);
    E_CONFIG_VAL(D, T, desklock_disable_screensaver, INT);
 
+   E_CONFIG_VAL(D, T, display_res_restore, INT);
+   E_CONFIG_VAL(D, T, display_res_width, INT);
+   E_CONFIG_VAL(D, T, display_res_height, INT);
+   E_CONFIG_VAL(D, T, display_res_hz, INT);
+   
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
      {
@@ -627,6 +631,11 @@ e_config_init(void)
 	e_config->desklock_timeout = 300.0;
 	e_config->desklock_disable_screensaver = 0;
 	
+	e_config->display_res_restore = 0;
+	e_config->display_res_width = 0;
+	e_config->display_res_height = 0;
+	e_config->display_res_hz = 0;
+	
 	/* FIXME: fill up default gadcons! */
 	  {
 	     E_Config_Shelf *cf_es;
@@ -723,10 +732,6 @@ e_config_init(void)
 	     e_config->modules = evas_list_append(e_config->modules, em);
 	     em = E_NEW(E_Config_Module, 1);
 	     em->name = evas_stringshare_add("pager");
-	     em->enabled = 1;
-	     e_config->modules = evas_list_append(e_config->modules, em);
-	     em = E_NEW(E_Config_Module, 1);
-	     em->name = evas_stringshare_add("randr");
 	     em->enabled = 1;
 	     e_config->modules = evas_list_append(e_config->modules, em);
 	  }
@@ -1692,6 +1697,10 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->desklock_use_timeout, 0, 1);
    E_CONFIG_LIMIT(e_config->desklock_timeout, 1.0, 600.0);
    E_CONFIG_LIMIT(e_config->desklock_disable_screensaver, 0, 1);
+   E_CONFIG_LIMIT(e_config->display_res_restore, 0, 1);
+   E_CONFIG_LIMIT(e_config->display_res_width, 1, 8192);
+   E_CONFIG_LIMIT(e_config->display_res_height, 1, 8192);
+   E_CONFIG_LIMIT(e_config->display_res_hz, 0, 250);
    
    return 1;
 }

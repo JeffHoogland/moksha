@@ -11,5 +11,4 @@ cpufreq \
 ibox \
 itray \
 start \
-randr \
 gadget_test

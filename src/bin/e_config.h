@@ -49,7 +49,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
  * versioning feature. the value of this is really irrelevant - just as
  * long as it increases every time we change something
  */
-#define E_CONFIG_FILE_VERSION 140
+#define E_CONFIG_FILE_VERSION 141
 
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1
@@ -219,6 +219,11 @@ struct _E_Config
    int        desklock_use_timeout; // GUI
    double     desklock_timeout; // GUI
    int        desklock_disable_screensaver;
+
+   int        display_res_restore;
+   int        display_res_width;
+   int        display_res_height;
+   int        display_res_hz;
 };
 
 struct _E_Config_Module
