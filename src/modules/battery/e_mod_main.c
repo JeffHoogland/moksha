@@ -1007,6 +1007,7 @@ _battery_linux_powerbook_check(Battery *ef)
    int voltage;
    int charge;
    int max_charge;
+   double tmp;
    Status *stat;
 
    stat = E_NEW(Status, 1);
@@ -1043,22 +1044,22 @@ _battery_linux_powerbook_check(Battery *ef)
 
 		  while (fgets (buf,sizeof (buf), f))
 		    {
-		       if ((token = strtok (buf, ":\n")))
+		       if ((token = strtok (buf, ":")))
 			 {
 			    if (!strncmp ("flags", token, 5))
-			      flags = axtoi (strtok (0, ":\n"));
-			    else if (!strncmp ("charge", token, 6))
-			      charge = atoi(strtok(0, ":\n"));
+			      flags = axtoi (strtok (0, ": "));
+			    else if (!strncmp ("charge", token, 6)) 
+			      charge = atoi(strtok(0, ": "));
 			    else if (!strncmp ("max_charge", token, 9))
-			      max_charge += atoi (strtok(0,":\n"));
+			      max_charge = atoi (strtok(0,": "));
 			    else if (!strncmp ("current", token, 7))
-			      current = atoi (strtok(0, ":\n"));
+			      current = atoi (strtok(0, ": "));
+			    else if (!strncmp ("time rem", token, 8))
+			      time = atoi (strtok(0, ": "));
 			    else if (!strncmp ("voltage", token, 7))
-			      voltage = atoi (strtok(0,":\n"));
-			    else if (!strncmp ("time rem.", token, 8))
-			      time = atoi (strtok(0, ":\n"));
+			      voltage = atoi (strtok(0,": "));
 			    else
-			      strtok (0,":\n");
+			      strtok (0,": ");
 			 }
 		    }
 		  /* Skip flag;
@@ -1078,7 +1079,7 @@ _battery_linux_powerbook_check(Battery *ef)
 		   */
 		  fclose(f);
 
-		  battery++;
+		  battery = 1;
 		  if (!current)
 		    {
 		       /* Neither charging nor discharging */
@@ -1086,21 +1087,21 @@ _battery_linux_powerbook_check(Battery *ef)
 		  else if (!ac)
 		    {
 		       /* When on dc, we are discharging */
-		       discharging++;
+		       discharging = 1;
 		       seconds += time;
 		    }
 		  else
 		    {
 		       /* Charging */
-		       charging++;
+		       charging = 1;
 		       /* Charging works in paralell */
 		       seconds = MAX(time, seconds);
 		    }
+
 	       }
 	  }
 	ecore_list_destroy(bats);
      }
-
    hours = seconds / (60 * 60);
    seconds -= hours * (60 * 60);
    minutes = seconds / 60;
@@ -1109,6 +1110,7 @@ _battery_linux_powerbook_check(Battery *ef)
    if (hours < 0) hours = 0;
    if (minutes < 0) minutes = 0;
 
+   
    if (!battery)
      {
 	stat->has_battery = 0;
@@ -1136,7 +1138,11 @@ _battery_linux_powerbook_check(Battery *ef)
 	  }
 	stat->level = (double)charge / (double)max_charge;
        if (stat->level > 1.0) stat->level = 1.0;
-	snprintf(buf, sizeof(buf), "%.0f%%", stat->level * 100.0);
+	tmp = (double)max_charge / 100;
+	tmp = (double)charge / tmp;
+	stat->level = (double)tmp / 100;
+
+	snprintf(buf, sizeof(buf), "%.0f%%", tmp);
 	stat->reading = strdup(buf);
 	snprintf(buf, sizeof(buf), "%i:%02i", hours, minutes);
 	stat->time = strdup(buf);
