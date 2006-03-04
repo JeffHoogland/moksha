@@ -19,6 +19,7 @@ struct _E_Desklock_Data
    Evas_List	  *elock_wnd_list;
    Ecore_X_Window  elock_wnd;
    Evas_List	  *handlers;
+   Ecore_X_Window  elock_grab_break_wnd;
    char		  passwd[PASSWD_LEN];
 };
 
@@ -65,22 +66,63 @@ e_desklock_show(void)
 	return 0;
      }
    
-   if (!edd)
+   edd = E_NEW(E_Desklock_Data, 1);
+   if (!edd) return 0;
+   edd->elock_wnd = ecore_x_window_input_new(e_manager_current_get()->root, 
+					     0, 0, 1, 1);
+   ecore_x_window_show(edd->elock_wnd);
+   managers = e_manager_list();
+   if (!e_grabinput_get(edd->elock_wnd, 0, edd->elock_wnd))
      {
-	edd = E_NEW(E_Desklock_Data, 1);
-	if (!edd) return 0;
-	edd->elock_wnd_list = NULL;
-	edd->elock_wnd = 0;
-	edd->handlers = NULL;
-	edd->passwd[0] = 0;
+	for (l = managers; l; l = l->next)
+	  {
+	     E_Manager *man;
+	     Ecore_X_Window *windows;
+	     int wnum;
+	     
+	     man = l->data;
+	     windows = ecore_x_window_children_get(man->root, &wnum);
+	     if (windows)
+	       {
+		  int i;
+		  
+		  for (i = 0; i < wnum; i++)
+		    {
+		       Ecore_X_Window_Attributes att;
+		       
+		       ecore_x_window_attributes_get(windows[i], &att);
+		       if (att.visible)
+			 {
+			    ecore_x_window_hide(windows[i]);
+			    if (e_grabinput_get(edd->elock_wnd, 0, edd->elock_wnd))
+			      {
+				 edd->elock_grab_break_wnd = windows[i];
+				 free(windows);
+				 goto works;
+			      }
+			    ecore_x_window_show(windows[i]);
+			 }
+		    }
+		  free(windows);
+	       }
+	  }
+	/* everything failed - cant lock */
+	e_util_dialog_show(_("Lock Failed"),
+			   _("Locking the desktop failed because some application<br>"
+			     "has grabbed either they keyboard or the mouse or both<br>"
+			     "and their grab is unable to be broken."));
+	ecore_x_window_del(edd->elock_wnd);
+	free(edd);
+	edd = NULL;
+	return 0;
      }
-
+   works:
+   
    last_active_zone = current_zone = 
      e_zone_current_get(e_container_current_get(e_manager_current_get()));
    
    zone_counter = 0;
    total_zone_num = _e_desklock_zone_num_get();
-   managers = e_manager_list();
    for (l = managers; l; l = l->next)
      {
 	E_Manager *man;
@@ -94,16 +136,8 @@ e_desklock_show(void)
 	     for (l3 = con->zones; l3; l3 = l3->next)
 	       {
 		  E_Zone *zone;
-
 		  
 		  zone = l3->data;
-		  if (!edd->elock_wnd)
-		    {
-		       edd->elock_wnd = ecore_x_window_input_new(zone->container->win, 0, 0, 1, 1);
-		       ecore_x_window_show(edd->elock_wnd);
-		       e_grabinput_get(edd->elock_wnd, 0, edd->elock_wnd);
-		    }
-		  
 		  edp = E_NEW(E_Desklock_Popup_Data, 1);
 		  if (edp)
 		    {
@@ -112,6 +146,7 @@ e_desklock_show(void)
 						  ecore_x_current_time_get(), NULL);
 		       
 		       e_popup_layer_set(edp->popup_wnd, ELOCK_POPUP_LAYER);
+		       ecore_evas_raise(edp->popup_wnd->ecore_evas);
 		       
 		       evas_event_freeze(edp->popup_wnd->evas);
 		       edp->bg_object = edje_object_add(edp->popup_wnd->evas);
@@ -222,7 +257,9 @@ e_desklock_hide(void)
    E_Desklock_Popup_Data	*edp;
    
    if (!edd) return;
-   
+
+   if (edd->elock_grab_break_wnd)
+     ecore_x_window_show(edd->elock_grab_break_wnd);
    while (edd->elock_wnd_list)
      {
 	edp = edd->elock_wnd_list->data;

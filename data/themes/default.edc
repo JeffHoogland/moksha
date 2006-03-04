@@ -62,5 +62,6 @@ collections {
 #include "default_desklock.edc"
 #include "default_textblock.edc"
 #include "default_shelf.edc"
+#include "default_preview.edc"
 }
 

@@ -103,7 +103,8 @@ _e_config_theme_cb_standard(void *data)
    const char *tmp;
    
    d = data;
-   e_widget_image_object_set(d->cfd->data, e_thumb_evas_object_get(d->file, d->cfd->dia->win->evas, 160, 120, 1));
+   e_widget_preview_edje_set(d->cfd->data, d->file, "desktop/background");
+//   e_widget_image_object_set(d->cfd->data, e_thumb_evas_object_get(d->file, d->cfd->dia->win->evas, 160, 120, 1));
    
    cfdata = d->cfd->cfdata;
    if (cfdata->current_theme) 
@@ -197,8 +198,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 		       if (!(strcmp(themefile, cfdata->current_theme)))
 			 {
 			    e_widget_ilist_selected_set(il, i);
-			    im = e_widget_image_add_from_object(evas, theme, 320, 240);
-			    e_widget_image_object_set(im, e_thumb_evas_object_get(fulltheme, evas, 320, 240, 1));
+			    im = e_widget_preview_add(evas, 320, 240);
+			    e_widget_preview_edje_set(im, fulltheme, "desktop/background");
+//			    im = e_widget_image_add_from_object(evas, theme, 320, 240);
+//			    e_widget_image_object_set(im, e_thumb_evas_object_get(fulltheme, evas, 320, 240, 1));
 			 }
 		       free(noext);
 		       i++;
@@ -214,18 +217,18 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_ilist_go(il);   
    e_widget_min_size_set(il, 180, 40);
    e_widget_table_object_append(o, il, 0, 0, 1, 2, 1, 1, 1, 1);
-   fr = e_widget_framelist_add(evas, _("Preview"), 0);
    if (im == NULL)
      {
 	snprintf(fulltheme, sizeof(fulltheme), PACKAGE_DATA_DIR"/data/themes/default.edj");
-	theme = e_thumb_generate_begin(fulltheme, 320, 240, evas, &theme, NULL, NULL);
-	im = e_widget_image_add_from_object(evas, theme, 320, 240);
-	e_widget_image_object_set(im, e_thumb_evas_object_get(fulltheme, evas, 320, 240, 1));
+	im = e_widget_preview_add(evas, 320, 240);
+	e_widget_preview_edje_set(im, fulltheme, "desktop/background");
+//	theme = e_thumb_generate_begin(fulltheme, 320, 240, evas, &theme, NULL, NULL);
+//	im = e_widget_image_add_from_object(evas, theme, 320, 240);
+//	e_widget_image_object_set(im, e_thumb_evas_object_get(fulltheme, evas, 320, 240, 1));
      }
    cfd->data = im;
-   e_widget_min_size_set(fr, 320, 240);
-   e_widget_table_object_append(o, fr, 1, 0, 1, 2, 1, 1, 1, 1);   
-   e_widget_framelist_object_append(fr, im);   
+   
+   e_widget_table_object_append(o, im, 1, 0, 1, 2, 1, 1, 1, 1);   
    
    return o;
 }

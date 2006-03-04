@@ -1,0 +1,82 @@
+images {
+   image: "e17_ibar_bg_v.png" COMP;
+   image: "e17_ibar_over_v.png" COMP;
+}
+
+group {
+   name: "widgets/preview";
+   parts {
+      part {
+	 name:          "bg";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       to: "item";
+	       offset: -3 -3;
+	    }
+	    rel2 {
+	       to: "item";
+	       offset: 2 2;
+	    }
+	    image {
+	       normal: "e17_ibar_bg_v.png";
+	       border: 7 7 7 7;
+	    }
+	    fill {
+	       smooth : 0;
+	    }
+	 }
+      }
+      part {
+	 name: "clipper";
+	 type: RECT;
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    rel1 {
+	       to: "item";
+	    }
+	    rel2 {
+	       to: "item";
+	    }
+	 }
+      }
+      part {
+	 name: "item";
+	 clip_to: "clipper";
+	 type: SWALLOW;
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    color: 0 0 0 0;
+	    rel1 {
+	       offset: 2 2;
+	    }
+	    rel2 {
+	       offset: -3 -3;
+	    }
+	 }
+      }
+      part {
+	 name:          "conf_over";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       to:       "bg";
+	    }
+	    rel2 {
+	       to:       "bg";
+	    }
+	    image {
+	       normal: "e17_ibar_over_v.png";
+	       border: 13 13 13 13;
+	    }
+            fill {
+	       smooth : 0;
+	    }
+	 }
+      }
+   }
+}

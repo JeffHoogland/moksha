@@ -26,7 +26,7 @@ e_grabinput_shutdown(void)
    return 1;
 }
 
-EAPI void
+EAPI int
 e_grabinput_get(Ecore_X_Window mouse_win, int confine_mouse, Ecore_X_Window key_win)
 {
    if (grab_mouse_win)
@@ -42,15 +42,29 @@ e_grabinput_get(Ecore_X_Window mouse_win, int confine_mouse, Ecore_X_Window key_
      }
    if (mouse_win)
      {
+	int ret = 0;
+	
 	if (confine_mouse)
-	  ecore_x_pointer_confine_grab(mouse_win);
+	  ret = ecore_x_pointer_confine_grab(mouse_win);
 	else
-	  ecore_x_pointer_grab(mouse_win);
+	  ret = ecore_x_pointer_grab(mouse_win);
+	if (!ret) return 0;
 	grab_mouse_win = mouse_win;
      }
    if (key_win)
      {
-	ecore_x_keyboard_grab(key_win);
+	int ret = 0;
+	
+	ret = ecore_x_keyboard_grab(key_win);
+	if (!ret)
+	  {
+	     if (grab_mouse_win)
+	       {
+		  ecore_x_pointer_ungrab();
+		  grab_mouse_win = 0;
+	       }
+	     return 0;
+	  }
 	grab_key_win = key_win;
      }
 }

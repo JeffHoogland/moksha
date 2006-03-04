@@ -9,6 +9,8 @@ struct _E_Widget_Data
    Evas_Object *img;
 };
 
+static void _e_wid_del_hook(Evas_Object *obj);
+
 /* local subsystem functions */
 
 /* externally accessible functions */
@@ -19,6 +21,7 @@ e_widget_image_add_from_object(Evas *evas, Evas_Object *object, int minw, int mi
    E_Widget_Data *wd;
    
    obj = e_widget_add(evas);
+   e_widget_del_hook_set(obj, _e_wid_del_hook);
    wd = calloc(1, sizeof(E_Widget_Data));
       
    evas_object_show(object);
@@ -52,6 +55,7 @@ e_widget_image_add_from_file(Evas *evas, char *file, int minw, int minh)
    
    wd->img = o;   
    evas_object_show(o);
+   e_widget_data_set(obj, wd);   
    e_widget_can_focus_set(obj, 0);
    e_widget_min_size_set(obj, minw, minh);
    e_widget_sub_object_add(obj, o);
@@ -98,4 +102,14 @@ e_widget_image_object_set(Evas_Object *obj, Evas_Object *o)
    wd = e_widget_data_get(obj);
    e_icon_object_set(wd->img, o);
    evas_object_show(wd->img);
+}
+
+
+static void
+_e_wid_del_hook(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   free(wd);
 }

@@ -3,7 +3,6 @@
  */
 
 #include "e.h"
-//#include <Ecore_X.h>
 
 #define BG_SET_DEFAULT_DESK 0
 #define BG_SET_THIS_DESK 1
@@ -117,10 +116,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_button_add(evas, _("Select Another Image..."), NULL, _bg_config_dialog_cb_import, cfd, NULL);
    e_widget_table_object_append(ot, o, 0, 2, 1, 1, 1, 0, 0, 0);
    
-   of = e_widget_framelist_add(evas, _("Background Preview"), 0);
-   e_widget_min_size_set(of, 320, 240);
-   e_widget_table_object_append(ot, of, 1, 0, 1, 2, 1, 1, 1, 1);
-   e_widget_framelist_object_append(of, im);
+   e_widget_table_object_append(ot, im, 1, 0, 1, 2, 1, 1, 1, 1);
 
    if (_bg_file_monitor) 
      {
@@ -183,10 +179,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    o = e_widget_button_add(evas, _("Select Another Image"), NULL, _bg_config_dialog_cb_import, cfd, NULL);
    e_widget_table_object_append(ot, o, 0, 3, 1, 1, 1, 0, 0, 0);
    
-   of = e_widget_framelist_add(evas, _("Background Preview"), 0);
-   e_widget_min_size_set(of, 320, 240);
-   e_widget_table_object_append(ot, of, 1, 0, 1, 2, 1, 1, 1, 1);
-   e_widget_framelist_object_append(of, im);
+   e_widget_table_object_append(ot, im, 1, 0, 1, 2, 1, 1, 1, 1);
 
    rg = e_widget_radio_group_new(&(cfdata->bg_method));
    of = e_widget_framelist_add(evas, _("Set Background For"), 0);
@@ -300,20 +293,23 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
    c = strdup(f);
    if (edje_object_file_set(o, f, "desktop/background"))
      {
-	Evas_Object *o = NULL;
+	Evas_Object *ic = NULL;
 
 	if (!e_thumb_exists(c))
-	  o = e_thumb_generate_begin(c, 48, 48, cfd->dia->win->evas, &o, NULL, NULL);
+	  ic = e_thumb_generate_begin(c, 48, 48, cfd->dia->win->evas, &ic, NULL, NULL);
 	else
-	  o = e_thumb_evas_object_get(c, cfd->dia->win->evas, 48, 48, 1);
+	  ic = e_thumb_evas_object_get(c, cfd->dia->win->evas, 48, 48, 1);
 
-	e_widget_ilist_append(il, o, "Theme Background", _ilist_cb_bg_selected, cfd, "");
+	e_widget_ilist_append(il, ic, "Theme Background", _ilist_cb_bg_selected, cfd, "");
      }
    if (!e_config->desktop_default_background)
      e_widget_ilist_selected_set(il, 0);
    
-   im = e_widget_image_add_from_object(cfd->dia->win->evas, bg_obj, 320, 240);
-   e_widget_image_object_set(im, e_thumb_evas_object_get(c, cfd->dia->win->evas, 320, 240, 1));
+   im = e_widget_preview_add(cfd->dia->win->evas, 320, 240);
+   e_widget_preview_edje_set(im, f, "desktop/background");
+   evas_object_del(bg_obj);
+//   im = e_widget_preview_add_from_object(cfd->dia->win->evas, bg_obj, 320, 240);
+//   e_widget_preview_object_set(im, e_thumb_evas_object_get(c, cfd->dia->win->evas, 320, 240, 1));
 
    evas_object_del(o);
    ecore_evas_free(eebuf);
@@ -350,13 +346,12 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
 		  if ((e_config->desktop_default_background) &&
 		      (!strcmp(e_config->desktop_default_background, full_path)))
 		    {
-		       Evas_Object *o = NULL;
-
 		       e_widget_ilist_selected_set(il, i);
-		       o = edje_object_add(cfd->dia->win->evas);
-		       edje_object_file_set(o, e_config->desktop_default_background, "desktop/background");
-		       im = e_widget_image_add_from_object(cfd->dia->win->evas, o, 320, 240);
-		       e_widget_image_object_set(im, e_thumb_evas_object_get(full_path, cfd->dia->win->evas, 320, 240, 1));
+		       
+		       im = e_widget_preview_add(cfd->dia->win->evas, 320, 240);
+		       e_widget_preview_edje_set(im, e_config->desktop_default_background, "desktop/background");
+//		       im = e_widget_preview_add_from_object(cfd->dia->win->evas, o, 320, 240);
+//		       e_widget_preview_object_set(im, e_thumb_evas_object_get(full_path, cfd->dia->win->evas, 320, 240, 1));
 		    }
 		  i++;
 	       }
@@ -385,12 +380,15 @@ _ilist_cb_bg_selected(void *data)
    if (!(cfdata->bg[0]))
      {
 	const char *theme;
+	
 	theme = e_theme_edje_file_get("base/theme/backgrounds", "desktop/background");
-	e_widget_image_object_set(cfd->data, e_thumb_evas_object_get(strdup(theme), evas, 320, 240, 1));
+	e_widget_preview_edje_set(cfd->data, theme, "desktop/background");
+//	e_widget_preview_object_set(cfd->data, e_thumb_evas_object_get(strdup(theme), evas, 320, 240, 1));
      }
    else
      {
-	e_widget_image_object_set(cfd->data, e_thumb_evas_object_get(cfdata->bg, evas, 320, 240, 1));
+	e_widget_preview_edje_set(cfd->data, cfdata->bg, "desktop/background");
+//	e_widget_preview_object_set(cfd->data, e_thumb_evas_object_get(cfdata->bg, evas, 320, 240, 1));
      }
 
    if (cfdata->current_bg)

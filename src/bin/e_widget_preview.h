@@ -1,0 +1,14 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
+#ifdef E_TYPEDEFS
+#else
+#ifndef E_WIDGET_PREVIEW_H
+#define E_WIDGET_PREVIEW_H
+
+EAPI Evas_Object     *e_widget_preview_add(Evas *evas, int minw, int minh);
+EAPI int              e_widget_preview_file_set(Evas_Object *obj, char *file, char *key);
+EAPI int              e_widget_preview_edje_set(Evas_Object *obj, char *file, char *group);
+    
+#endif
+#endif
