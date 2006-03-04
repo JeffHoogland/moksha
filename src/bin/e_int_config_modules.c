@@ -73,7 +73,7 @@ _module_configure(void *data, void *data2)
 
    obj = data;
    v = e_widget_ilist_selected_label_get(obj);
-   m = e_module_find((char *)v);
+   m = e_module_find(v);
    if (m)
      {
 	if (m->func.config)
@@ -90,7 +90,7 @@ _module_about(void *data, void *data2)
 
    obj = data;
    v = e_widget_ilist_selected_label_get(obj);
-   m = e_module_find((char *)v);
+   m = e_module_find(v);
    if (m)
      {
 	if (m->func.about)
@@ -193,10 +193,10 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 		  e_widget_disabled_set(cfdata->gui.configure, 1);
 		  e_widget_disabled_set(cfdata->gui.about, 1);
 		  
-		  m = e_module_find((char *)v);
+		  m = e_module_find(v);
 		  if (!m) 
 		    { 
-		       m = e_module_new((char *)v);
+		       m = e_module_new(v);
 		       if (!m) break;
 		    }		  
 		  switch (cfdata->state)
@@ -382,7 +382,7 @@ _ilist_cb_change(void *data, Evas_Object *obj)
 	       }
 	     e_widget_disabled_set(cfdata->gui.about, 1);
 	     e_widget_disabled_set(cfdata->gui.configure, 1);
-	     m = e_module_find((char *)v);
+	     m = e_module_find(v);
 	     if (m)
 	       {
 		  if (m->func.about)
