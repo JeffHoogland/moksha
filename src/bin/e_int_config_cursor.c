@@ -6,7 +6,6 @@ static int         _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data 
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int         _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static void         _cursor_check_toggle(void *data, Evas_Object *obj, const char *emission, const char *source);
 
 struct _E_Config_Dialog_Data 
 {
@@ -14,13 +13,6 @@ struct _E_Config_Dialog_Data
 
    /* Advanced */
    int cursor_size;
-};
-
-typedef struct _E_Widget_Check_Data E_Widget_Check_Data;
-struct _E_Widget_Check_Data 
-{
-   Evas_Object *o_check;
-   int *valptr;
 };
 
 EAPI E_Config_Dialog *
@@ -96,17 +88,17 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *o, *of, *ob;
-   E_Widget_Check_Data *wd;
+   E_Radio_Group *rg;
    
    o = e_widget_list_add(evas, 0, 0);
       
    of = e_widget_framelist_add(evas, _("Cursor Settings"), 0);
-   ob = e_widget_check_add(evas, _("Use Enlightenment Cursor"), &(cfdata->use_e_cursor));
-   wd = e_widget_data_get(ob);
-   edje_object_signal_callback_add(wd->o_check, "toggle_on", "", _cursor_check_toggle, ob);
-   edje_object_signal_callback_add(wd->o_check, "toggle_off", "", _cursor_check_toggle, ob);
-   
+   rg = e_widget_radio_group_new(&cfdata->use_e_cursor);
+   ob = e_widget_radio_add(evas, _("Use Enlightenment Cursor"), 1, rg);   
    e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Use X Cursor"), 0, rg);   
+   e_widget_framelist_object_append(of, ob);
+
    e_widget_list_object_append(o, of, 1, 1, 0.5);   
 
    return o;
@@ -147,15 +139,15 @@ static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *o, *ob, *of;
-   E_Widget_Check_Data *wd;
+   E_Radio_Group *rg;
       
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Cursor Settings"), 0);
-   ob = e_widget_check_add(evas, _("Use Enlightenment Cursor"), &(cfdata->use_e_cursor));
-   wd = e_widget_data_get(ob);
-   edje_object_signal_callback_add(wd->o_check, "toggle_on", "", _cursor_check_toggle, ob);
-   edje_object_signal_callback_add(wd->o_check, "toggle_off", "", _cursor_check_toggle, ob);
+   rg = e_widget_radio_group_new(&cfdata->use_e_cursor);
+   ob = e_widget_radio_add(evas, _("Use Enlightenment Cursor"), 1, rg);   
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Use X Cursor"), 0, rg);   
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Cursor Size"));
    e_widget_framelist_object_append(of, ob);
@@ -163,21 +155,4 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);   
    return o;
-}
-
-static void 
-_cursor_check_toggle(void *data, Evas_Object *obj, const char *emission, const char *source) 
-{
-   E_Widget_Check_Data *wd;
-   Evas_Object *o;
-   
-   if (!(o = data)) return;
-   wd = e_widget_data_get(o);
-   if (!wd->valptr)
-     return;
-
-   if (*(wd->valptr) == 0)
-     edje_object_part_text_set(wd->o_check, "label", _("Use X Cursor"));
-   else
-     edje_object_part_text_set(wd->o_check, "label", _("Use Enlightenment Cursor"));
 }
