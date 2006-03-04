@@ -89,6 +89,7 @@ e_desklock_show(void)
 		  for (i = 0; i < wnum; i++)
 		    {
 		       Ecore_X_Window_Attributes att;
+		       memset(&att, 0, sizeof(Ecore_X_Window_Attributes));
 		       
 		       ecore_x_window_attributes_get(windows[i], &att);
 		       if (att.visible)

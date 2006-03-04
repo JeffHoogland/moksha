@@ -67,6 +67,7 @@ e_grabinput_get(Ecore_X_Window mouse_win, int confine_mouse, Ecore_X_Window key_
 	  }
 	grab_key_win = key_win;
      }
+   return 1;
 }
 
 EAPI void
