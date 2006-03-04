@@ -190,6 +190,8 @@ _e_widget_tlist_append(Evas_Object * obj, char *label,
 	e_widget_min_size_get(obj, &wmw, &wmh);
 	e_widget_min_size_set(obj, mw + (w - vw), wmh);
      }
+   else if (mw < vw)
+      evas_object_resize(wd->o_tlist, vw, mh);
 }
 
 static void

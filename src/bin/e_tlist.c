@@ -241,6 +241,8 @@ e_tlist_remove_num(Evas_Object * obj, int n)
    if (si)
      {
 	sd->items = evas_list_remove(sd->items, si);
+	if (e_tlist_selected_get(obj) == n)
+	   sd->selected = -1;
 	evas_object_del(si->base_obj);
 	free(si);
      }
