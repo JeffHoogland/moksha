@@ -1,34 +1,60 @@
-/*
- * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
- */
-#include "e.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include "config.h"
+
+static void env_set(const char *var, const char *val);
+static int prefix_determine(char *argv0);
+static const char *prefix_get(void);
+
+static void
+env_set(const char *var, const char *val)
+{
+   if (val)
+     {
+#ifdef HAVE_SETENV
+	setenv(var, val, 1);
+#else
+	char buf[8192];
+	
+	snprintf(buf, sizeof(buf), "%s=%s", var, val);
+	if (getenv(var))
+	  putenv(buf);
+	else
+	  putenv(strdup(buf));
+#endif
+     }
+   else
+     {
+#ifdef HAVE_UNSETENV
+	unsetenv(var);
+#else
+	if (getenv(var)) putenv(var);
+#endif
+     }
+}
 
 /* local subsystem functions */
-static int _e_prefix_fallbacks(void);
-static int _e_prefix_try_proc(void);
-static int _e_prefix_try_argv(char *argv0);
+static int _prefix_fallbacks(void);
+static int _prefix_try_proc(void);
+static int _prefix_try_argv(char *argv0);
 
 /* local subsystem globals */
 static char *_exe_path = NULL;
 static char *_prefix_path = NULL;
-static char *_prefix_path_locale = NULL;
-static char *_prefix_path_bin = NULL;
-static char *_prefix_path_data = NULL;
-static char *_prefix_path_lib = NULL;
 
 /* externally accessible functions */
-EAPI int
-e_prefix_determine(char *argv0)
+static int
+prefix_determine(char *argv0)
 {
    char *p;
 
-   e_prefix_shutdown();
-   
-   if (!_e_prefix_try_proc())
+   if (!_prefix_try_proc())
      {
-	if (!_e_prefix_try_argv(argv0))
+	if (!_prefix_try_argv(argv0))
 	  {
-	     _e_prefix_fallbacks();
+	     _prefix_fallbacks();
 	     return 0;
 	  }
      }
@@ -37,10 +63,6 @@ e_prefix_determine(char *argv0)
     * exe        = /blah/whatever/bin/exe
     *   then
     * prefix     = /blah/whatever
-    * bin_dir    = /blah/whatever/bin
-    * data_dir   = /blah/whatever/share/enlightenment
-    * locale_dir = /blah/whatever/share/locale
-    * lib_dir    = /blah/whatever/lib
     */
    p = strrchr(_exe_path, '/');
    if (p)
@@ -55,35 +77,13 @@ e_prefix_determine(char *argv0)
 		    {
 		       strncpy(_prefix_path, _exe_path, p - _exe_path);
 		       _prefix_path[p - _exe_path] = 0;
-		       
-		       _prefix_path_locale = malloc(strlen(_prefix_path) + 1 +
-						    strlen("/share/locale"));
-		       strcpy(_prefix_path_locale, _prefix_path);
-		       strcat(_prefix_path_locale, "/share/locale");
-		       
-		       _prefix_path_bin = malloc(strlen(_prefix_path) + 1 +
-						 strlen("/bin"));
-		       strcpy(_prefix_path_bin, _prefix_path);
-		       strcat(_prefix_path_bin, "/bin");
-		       
-		       _prefix_path_data = malloc(strlen(_prefix_path) + 1 +
-						  strlen("/share/enlightenment"));
-		       strcpy(_prefix_path_data, _prefix_path);
-		       strcat(_prefix_path_data, "/share/enlightenment");
-		       
-		       _prefix_path_lib = malloc(strlen(_prefix_path) + 1 +
-						 strlen("/lib"));
-		       strcpy(_prefix_path_lib, _prefix_path);
-		       strcat(_prefix_path_lib, "/lib");
-		       
-		       printf("DYNAMIC DETERMINED PREFIX: %s\n", _prefix_path);
 		       return 1;
 		    }
 		  else
 		    {
 		       free(_exe_path);
 		       _exe_path = NULL;
-		       _e_prefix_fallbacks();
+		       _prefix_fallbacks();
 		       return 0;
 		    }
 	       }
@@ -92,71 +92,24 @@ e_prefix_determine(char *argv0)
      }
    free(_exe_path);
    _exe_path = NULL;
-   _e_prefix_fallbacks();
+   _prefix_fallbacks();
    return 0;
 }
 
-EAPI void
-e_prefix_shutdown(void)
-{
-   E_FREE(_exe_path);
-   E_FREE(_prefix_path);
-   E_FREE(_prefix_path_locale);
-   E_FREE(_prefix_path_bin);
-   E_FREE(_prefix_path_data);
-   E_FREE(_prefix_path_lib);
-}
-   
-EAPI void
-e_prefix_fallback(void)
-{
-   e_prefix_shutdown();
-   _e_prefix_fallbacks();
-}
-
-EAPI const char *
-e_prefix_get(void)
+static const char *
+prefix_get(void)
 {
    return _prefix_path;
 }
 
-EAPI const char *
-e_prefix_locale_get(void)
-{
-   return _prefix_path_locale;
-}
-
-EAPI const char *
-e_prefix_bin_get(void)
-{
-   return _prefix_path_bin;
-}
-
-EAPI const char *
-e_prefix_data_get(void)
-{
-   return _prefix_path_data;
-}
-
-EAPI const char *
-e_prefix_lib_get(void)
-{
-   return _prefix_path_lib;
-}
-
-/* local subsystem functions */
 static int
-_e_prefix_fallbacks(void)
+_prefix_fallbacks(void)
 {
    char *p;
 
    _prefix_path = strdup(PACKAGE_BIN_DIR);
    p = strrchr(_prefix_path, '/');
    if (p) *p = 0;
-   _prefix_path_locale = strdup(LOCALE_DIR);
-   _prefix_path_bin = strdup(PACKAGE_BIN_DIR);
-   _prefix_path_data = strdup(PACKAGE_DATA_DIR);
-   _prefix_path_lib = strdup(PACKAGE_LIB_DIR);
    printf("WARNING: Enlightenment could not determine its installed prefix\n"
 	  "         and is falling back on the compiled in default:\n"
 	  "         %s\n", _prefix_path);
@@ -164,13 +117,13 @@ _e_prefix_fallbacks(void)
 }
 
 static int
-_e_prefix_try_proc(void)
+_prefix_try_proc(void)
 {
    FILE *f;
    char buf[4096];
    void *func = NULL;
 
-   func = (void *)_e_prefix_try_proc;
+   func = (void *)_prefix_try_proc;
    f = fopen("/proc/self/maps", "r");
    if (!f) return 0;
    while (fgets(buf, sizeof(buf), f))
@@ -214,7 +167,7 @@ _e_prefix_try_proc(void)
 }
 
 static int
-_e_prefix_try_argv(char *argv0)
+_prefix_try_argv(char *argv0)
 {
    char *path, *p, *cp, *s;
    int len, lenexe;
@@ -296,4 +249,37 @@ _e_prefix_try_argv(char *argv0)
      }
    /* 4. big problems. arg[0] != executable - weird execution */
    return 0;
+}
+
+int
+main(int argc, char **argv)
+{
+   int i;
+   char buf[16384];
+   char **args;
+   char *p;
+
+   prefix_determine(argv[0]);
+   p = getenv("PATH");
+   if (p)
+     snprintf(buf, sizeof(buf), "%s/bin:%s", _prefix_path, p);
+   else
+     snprintf(buf, sizeof(buf), "%s/bin", _prefix_path);
+   env_set("PATH", buf);
+
+   p = getenv("LD_LIBRARY_PATH");
+   if (p)
+     snprintf(buf, sizeof(buf), "%s/lib:%s", _prefix_path, p);
+   else
+     snprintf(buf, sizeof(buf), "%s/lib", _prefix_path);
+   env_set("LD_LIBRARY_PATH", buf);
+
+   args = malloc((argc + 1) * sizeof(char *));
+   args[0] = "enlightenment";
+   for (i = 1; i < argc; i++)
+     args[i] = argv[i];
+   args[i] = NULL;
+   
+   snprintf(buf, sizeof(buf), "%s/bin/enlightenment", _prefix_path);
+   return execv(buf, args);
 }

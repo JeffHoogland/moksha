@@ -3,5 +3,5 @@ Encoding=UTF-8
 Name=Enlightenment
 Comment=Log in using Enlightenment (Version @VERSION@)
 Type=XSession
-Exec=@bindir@/enlightenment
-TryExec=@bindir@/enlightenment
+Exec=@bindir@/enlightenment_start
+TryExec=@bindir@/enlightenment_start
