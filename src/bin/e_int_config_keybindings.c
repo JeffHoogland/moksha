@@ -58,7 +58,6 @@ static char	    *_e_keybinding_get_keybinding_text(E_Config_Binding_Key *bk);
 
 static void	    _e_keybinding_shortcut_wnd_hide(E_Config_Dialog_Data *cfdata);
 static int	    _e_keybinding_cb_shortcut_key_down(void *data, int type, void *event);
-//static int	    _e_keybinding_cb_shortcut_key_up(void *data, int type, void *event);
 static int	    _e_keybinding_cb_mouse_handler_dumb(void *data, int type, void *event);
 
 static int	    _e_keybinding_keybind_cb_auto_apply(E_Config_Dialog_Data *cfdata);
@@ -67,19 +66,11 @@ static int	    _e_keybinding_keybind_cb_auto_apply(E_Config_Dialog_Data *cfdata)
 typedef struct _E_Config_KeyBind	  E_Config_KeyBind;
 typedef struct _E_Widget_IList_Data	  E_Widget_IList_Data;
 typedef struct _E_Widget_Radio_Data	  E_Widget_Radio_Data;
-typedef struct _E_Widget_Checkbox_Data	  E_Widget_Checkbox_Data;
 typedef struct _E_Widget_Button_Data	  E_Widget_Button_Data;
 typedef struct _E_Widget_Entry_Data	  E_Widget_Entry_Data;
 
 typedef struct _E_Smart_Item		  E_Smart_Item;
 typedef struct _E_Smart_Data		  E_Smart_Data;
-
-/*typedef struct
-{
-  char *key;
-  int  modifiers;
-  int  context;
-}KEY_ACTION_BINDING;*/
 
 typedef struct
 {
@@ -270,12 +261,6 @@ struct _E_Widget_Radio_Data
    int valnum;
 };
 
-struct _E_Widget_Checkbox_Data
-{
-  Evas_Object *o_check;
-  int *valptr;
-};
-
 struct _E_Widget_Button_Data
 {
    Evas_Object *o_button;
@@ -350,7 +335,7 @@ e_int_config_keybindings(E_Container *con)
   v->free_cfdata = _free_data;
   v->basic.apply_cfdata = _basic_apply_data;
   v->basic.create_widgets = _basic_create_widgets;
-  v->override_auto_apply = 1;
+  //v->override_auto_apply = 1;
 
   cfd = e_config_dialog_new(con, _("Key Binding Settings"), NULL, 0, v, NULL);
   return cfd;
@@ -807,15 +792,6 @@ _e_keybinding_binding_ilist_cb_change(void *data, Evas_Object *obj)
   cfdata = data;
   if (!cfdata) return;
 
- /* if (cfdata->cur_eckb)
-  {
-    _update_context_radios(cfdata);
-    _update_action_param_entries(cfdata);
-    _update_keybinding_button(cfdata);
-    _update_add_delete_buttons(cfdata);
-  }*/
-
-  //FIXME: for now comment it. uncomment and check when all other thigs will be working
   if (cfdata->cur_eckb)
     if (_e_keybinding_keybind_cb_auto_apply(cfdata) != 0)
       {
@@ -854,7 +830,6 @@ _e_keybinding_action_ilist_cb_change(void *data, Evas_Object *obj)
   if (!cfdata) return;
 
 
-  //FIXME: for now comment it. uncomment and check when all other thigs will be working
   if (cfdata->cur_eckb)
     if (_e_keybinding_keybind_cb_auto_apply(cfdata) != 0)
       {
@@ -885,8 +860,8 @@ _e_keybinding_action_ilist_cb_change(void *data, Evas_Object *obj)
 
   /*if (cfdata->changed == 0)
     {*/
-      e_dialog_button_disable_num_set(cfdata->cfd->dia, 0, 1);
-      e_dialog_button_disable_num_set(cfdata->cfd->dia, 1, 1);
+      //e_dialog_button_disable_num_set(cfdata->cfd->dia, 0, 1);
+      //e_dialog_button_disable_num_set(cfdata->cfd->dia, 1, 1);
     //}
 }
 
@@ -1375,7 +1350,6 @@ _e_keybinding_keybind_cb_add_keybinding(void *data, void *data2)
 
   if (cfdata == NULL) return;
 
-  //FIXME: enable this after some testing
   if (_e_keybinding_keybind_cb_auto_apply(cfdata) != 0)
     {
       //TODO: message box, that a keybinding cannot be added
@@ -1525,23 +1499,55 @@ _e_keybinding_cb_shortcut_key_down(void *data, int type, void *event)
 	  if (cfdata && cfdata->cur_eckb && cfdata->cur_eckb_kb_sel >= 0 &&
 	      cfdata->cur_eckb->bk_list)
 	    {
-	      bk = evas_list_nth(cfdata->cur_eckb->bk_list, cfdata->cur_eckb_kb_sel);
-	      bk->modifiers = E_BINDING_MODIFIER_NONE;
+	      Evas_List *l, *l2;
+
+	      E_Config_KeyBind *eckb;
+	      E_Config_Binding_Key *bk_tmp;
+
+	      int found = 0;
+	      int mod = E_BINDING_MODIFIER_NONE;
 
 	      if (ev->modifiers & ECORE_X_MODIFIER_SHIFT)
-		bk->modifiers |= E_BINDING_MODIFIER_SHIFT;
+		mod |= E_BINDING_MODIFIER_SHIFT;
 	      if (ev->modifiers & ECORE_X_MODIFIER_CTRL)
-		bk->modifiers |= E_BINDING_MODIFIER_CTRL;
+		mod |= E_BINDING_MODIFIER_CTRL;
 	      if (ev->modifiers & ECORE_X_MODIFIER_ALT)
-		bk->modifiers |= E_BINDING_MODIFIER_ALT;
+		mod |= E_BINDING_MODIFIER_ALT;
 	      if (ev->modifiers & ECORE_X_MODIFIER_WIN)
-		bk->modifiers |= E_BINDING_MODIFIER_WIN;
+		mod |= E_BINDING_MODIFIER_WIN;
 
-	      if (bk->key)
-		evas_stringshare_del(bk->key);
-	      bk->key = evas_stringshare_add(ev->keysymbol);
+	      for (l = cfdata->key_bindings; l && !found; l = l->next)
+		{
+		  eckb = l->data;
+		  for (l2 = eckb->bk_list; l2 && !found; l2 = l2->next)
+		    {
+		      bk_tmp = l2->data;
 
-	      _e_keybinding_update_binding_list(cfdata);
+		      if (bk_tmp->modifiers == mod && !strcmp(ev->keysymbol, bk_tmp->key))
+			found = 1;
+		    }
+		}
+
+	      if (!found)
+		{
+		  bk = evas_list_nth(cfdata->cur_eckb->bk_list, cfdata->cur_eckb_kb_sel);
+		  bk->modifiers = E_BINDING_MODIFIER_NONE;
+
+		  bk->modifiers = mod;
+
+		  if (bk->key)
+		    evas_stringshare_del(bk->key);
+		  bk->key = evas_stringshare_add(ev->keysymbol);
+
+		  _e_keybinding_update_binding_list(cfdata);
+		}
+	      else
+		{
+		  e_util_dialog_show(_("Binding Key Error"), 
+				     _("The binding key sequence, that you choose,"
+					" is already used.<br>Please choose another binding key"
+					" sequence."));
+		}
 	      _e_keybinding_keybind_shortcut_wnd_hide(cfdata);
 	    }
 	}
