@@ -620,6 +620,7 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
 		  (!strcmp(e_config->desklock_background, full_path)))
 		{
 		   e_widget_ilist_selected_set(cfdata->gui.bg_list, i);
+		   evas_object_del(im);
 		   im = e_widget_preview_add(cfdata->evas, BG_PREVIEW_W, BG_PREVIEW_H);
 		   e_widget_preview_edje_set(im, full_path, "desktop/background");
 //		  im = e_widget_image_add_from_object(cfdata->evas, o, BG_PREVIEW_W, BG_PREVIEW_H);
