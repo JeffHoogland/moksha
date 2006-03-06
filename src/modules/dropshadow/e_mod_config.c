@@ -65,6 +65,14 @@ _fill_data(Dropshadow *ds, E_Config_Dialog_Data *cfdata)
      {
 	cfdata->shadow_x = 4;
      }
+   else if ((cfdata->shadow_x < 4) && (cfdata->shadow_x >= 2))
+     {
+	cfdata->shadow_x = 2;	
+     }
+   else if ((cfdata->shadow_x < 2) && (cfdata->shadow_x >= 0))
+     {
+	cfdata->shadow_x = 0;	
+     }   
    
    cfdata->shadow_darkness = ds->conf->shadow_darkness;
    if (cfdata->shadow_darkness == 1.0) 
@@ -149,6 +157,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Very Near"), 4, rg);
    e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Near"), 2, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Underneath"), 0, rg);
+   e_widget_framelist_object_append(of, ob);   
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Shadow Darkness"), 0);
