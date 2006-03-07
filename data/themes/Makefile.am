@@ -53,7 +53,8 @@ default_slider.edc \
 default_exebuf.edc \
 default_desklock.edc \
 default_textblock.edc \
-default_shelf.edc
+default_shelf.edc \
+default_preview.edc
 
 default.edj: Makefile $(EXTRA_DIST)
 	$(EDJE_CC) $(EDJE_FLAGS) \
