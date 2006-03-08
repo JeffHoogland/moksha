@@ -143,6 +143,7 @@ struct _E_Border
       } border;
       
       unsigned char shaped : 1;
+      unsigned char argb : 1;
       
       struct {
 	 char *title;

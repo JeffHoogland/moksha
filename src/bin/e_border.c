@@ -212,7 +212,12 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
 
    bd->w = 1;
    bd->h = 1;
-   bd->win = ecore_x_window_override_new(con->win, 0, 0, bd->w, bd->h);
+   /* FIXME: ewww - round trip */
+   bd->client.argb = ecore_x_window_argb_get(win);
+   if (bd->client.argb)
+     bd->win = ecore_x_window_manager_argb_new(con->win, 0, 0, bd->w, bd->h);
+   else
+     bd->win = ecore_x_window_override_new(con->win, 0, 0, bd->w, bd->h);
    ecore_x_window_shape_events_select(bd->win, 1);
    e_bindings_mouse_grab(E_BINDING_CONTEXT_BORDER, bd->win);
    e_bindings_wheel_grab(E_BINDING_CONTEXT_BORDER, bd->win);
@@ -226,7 +231,10 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
    ecore_x_window_shape_events_select(bd->bg_win, 1);
    ecore_evas_name_class_set(bd->bg_ecore_evas, "E", "Frame_Window");
    ecore_evas_title_set(bd->bg_ecore_evas, "Enlightenment Frame");
-   bd->client.shell_win = ecore_x_window_override_new(bd->win, 0, 0, 1, 1);
+   if (bd->client.argb)
+     bd->client.shell_win = ecore_x_window_manager_argb_new(bd->win, 0, 0, 1, 1);
+   else
+     bd->client.shell_win = ecore_x_window_override_new(bd->win, 0, 0, 1, 1);
    ecore_x_window_container_manage(bd->client.shell_win);
    if (!internal) ecore_x_window_client_manage(win);
    /* FIXME: Round trip. XCB */
