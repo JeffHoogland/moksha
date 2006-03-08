@@ -244,7 +244,7 @@ e_manager_manage_windows(E_Manager *man)
 					    deskxy[1]);
 
 		    {
-		       bd = e_border_new(con, windows[i], 1);
+		       bd = e_border_new(con, windows[i], 1, 0);
 		       if (bd)
 			 {
 			    /* FIXME:
@@ -263,7 +263,7 @@ e_manager_manage_windows(E_Manager *man)
 		  E_Container *con;
 		  E_Border *bd;
 		  con = e_container_current_get(man);
-		  bd = e_border_new(con, windows[i], 1);
+		  bd = e_border_new(con, windows[i], 1, 0);
 		  if (bd)
 		    e_border_show(bd);
 	       }
@@ -535,7 +535,7 @@ _e_manager_cb_window_show_request(void *data, int ev_type __UNUSED__, void *ev)
 	con = e_container_current_get(man);
 	if (!e_border_find_by_client_window(e->win))
 	  {
-	     bd = e_border_new(con, e->win, 0);
+	     bd = e_border_new(con, e->win, 0, 0);
 	     if (!bd)
 	       ecore_x_window_show(e->win);
 	  }

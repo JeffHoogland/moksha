@@ -22,7 +22,6 @@ struct _E_Win
    Ecore_Evas          *ecore_evas;
    Evas                *evas;
    Ecore_X_Window       evas_win;
-   Ecore_X_Window       evas_sub_win;
    unsigned char        placed : 1;
    int                  min_w, min_h, max_w, max_h, base_w, base_h;
    int                  step_x, step_y;

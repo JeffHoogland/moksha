@@ -199,7 +199,7 @@ e_border_shutdown(void)
 }
 
 EAPI E_Border *
-e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
+e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
 {
    E_Border *bd;
    Ecore_X_Window_Attributes *att;
@@ -228,7 +228,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    ecore_evas_title_set(bd->bg_ecore_evas, "Enlightenment Frame");
    bd->client.shell_win = ecore_x_window_override_new(bd->win, 0, 0, 1, 1);
    ecore_x_window_container_manage(bd->client.shell_win);
-   ecore_x_window_client_manage(win);
+   if (!internal) ecore_x_window_client_manage(win);
    /* FIXME: Round trip. XCB */
    /* fetch needed to avoid grabbing the server as window may vanish */
    att = &bd->client.initial_attributes;
@@ -1195,9 +1195,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	if (bd->focused)
 	  {
 	     if (bd->internal)
-	       {
-		  e_grabinput_focus(bd->win, E_FOCUS_METHOD_PASSIVE);
-	       }
+	       e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_PASSIVE);
 	     else
 	       {
 		  if ((!bd->client.icccm.accepts_focus) &&

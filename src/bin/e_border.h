@@ -487,7 +487,7 @@ struct _E_Event_Border_Icon_Change
 EAPI int       e_border_init(void);
 EAPI int       e_border_shutdown(void);
 
-EAPI E_Border *e_border_new(E_Container *con, Ecore_X_Window win, int first_map);
+EAPI E_Border *e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal);
 EAPI void      e_border_free(E_Border *bd);
 EAPI void      e_border_ref(E_Border *bd);
 EAPI void      e_border_unref(E_Border *bd);

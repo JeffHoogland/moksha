@@ -46,7 +46,7 @@ e_win_new(E_Container *con)
    win->engine = e_canvas_engine_decide(e_config->evas_engine_win);
    win->ecore_evas = e_canvas_new(e_config->evas_engine_win, con->manager->root,
 				  0, 0, 1, 1, 1, 0,
-				  &(win->evas_win), &(win->evas_sub_win));
+				  &(win->evas_win), NULL);
    e_canvas_add(win->ecore_evas);
    ecore_evas_data_set(win->ecore_evas, "E_Win", win);
    ecore_evas_callback_move_set(win->ecore_evas, _e_win_cb_move);
@@ -83,11 +83,12 @@ e_win_show(E_Win *win)
      {
 	_e_win_prop_update(win);
 	ecore_evas_lower(win->ecore_evas);
-	win->border = e_border_new(win->container, win->evas_win, 1);
+	win->border = e_border_new(win->container, win->evas_win, 1, 1);
 	if (!win->placed)
 	  win->border->re_manage = 0;
 	win->border->internal = 1;
 	win->border->internal_ecore_evas = win->ecore_evas;
+/*	
 	if (win->engine == E_EVAS_ENGINE_GL_X11)
 	  {
 	     ecore_evas_gl_x11_extra_event_window_add(win->ecore_evas, win->border->win);
@@ -103,6 +104,7 @@ e_win_show(E_Win *win)
 	     ecore_evas_software_x11_extra_event_window_add(win->ecore_evas, win->border->win);
 	     ecore_evas_software_x11_extra_event_window_add(win->ecore_evas, win->border->event_win);
 	  }
+ */
      }
    _e_win_prop_update(win);
    e_border_show(win->border);
