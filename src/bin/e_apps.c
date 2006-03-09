@@ -57,6 +57,7 @@ static void      _e_app_cache_copy         (E_App_Cache *ac, E_App *a);
 static int       _e_app_cb_scan_cache_timer(void *data);
 static E_App    *_e_app_cache_new          (E_App_Cache *ac, const char *path, int scan_subdirs);
 static int       _e_app_exe_valid_get      (const char *exe);
+static char      *_e_app_localized_val_get (Eet_File *ef, const char *lang, const char *field, int *size);
 
 /* local subsystem globals */
 static Evas_Hash   *_e_apps = NULL;
@@ -986,7 +987,6 @@ EAPI void
 e_app_fields_fill(E_App *a, const char *path)
 {
    Eet_File *ef;
-   char buf[PATH_MAX];
    char *str, *v;
    char *lang;
    int size;
@@ -1009,34 +1009,11 @@ e_app_fields_fill(E_App *a, const char *path)
 	a->member = evas_stringshare_add(str); \
 	free(v); \
      }
-   if (lang)
-     {
-	snprintf(buf, sizeof(buf), "app/info/name[%s]", lang);
-	v = eet_read(ef, buf, &size);
-	if (!v) v = eet_read(ef, "app/info/name", &size);
-     }
-   else
-     v = eet_read(ef, "app/info/name", &size);
+   v = _e_app_localized_val_get(ef, lang, "app/info/name", &size);
    STORE(name);
-
-   if (lang)
-     {
-	snprintf(buf, sizeof(buf), "app/info/generic[%s]", lang);
-	v = eet_read(ef, buf, &size);
-	if (!v) v = eet_read(ef, "app/info/generic", &size);
-     }
-   else
-     v = eet_read(ef, "app/info/generic", &size);
+   v = _e_app_localized_val_get(ef, lang, "app/info/generic", &size);
    STORE(generic);
-
-   if (lang)
-     {
-	snprintf(buf, sizeof(buf), "app/info/comment[%s]", lang);
-	v = eet_read(ef, buf, &size);
-	if (!v) v = eet_read(ef, "app/info/comment", &size);
-     }
-   else
-     v = eet_read(ef, "app/info/comment", &size);
+   v = _e_app_localized_val_get(ef, lang, "app/info/comment", &size);
    STORE(comment);
 
    v = eet_read(ef, "app/info/exe", &size);
@@ -1064,6 +1041,32 @@ e_app_fields_fill(E_App *a, const char *path)
 	free(v);
      }
    eet_close(ef);
+}
+
+static char *
+_e_app_localized_val_get(Eet_File *ef, const char *lang, const char *field, int *size)
+{
+   char *s, *v;
+   char buf[PATH_MAX];
+
+   if (lang)
+     {
+	s = e_intl_locale_canonic_get(lang, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+	snprintf(buf, sizeof(buf), "%s[%s]", field, s);
+	free(s);
+	v = eet_read(ef, buf, size);
+	if (v)
+	  return v;
+
+	s = e_intl_locale_canonic_get(lang, E_INTL_LOC_LANG);
+	snprintf(buf, sizeof(buf), "%s[%s]", field, s);
+	free(s);
+	v = eet_read(ef, buf, size);
+	if (v)
+	  return v;
+     }
+   /* Fall back to default locale */
+   return eet_read(ef, field, size);
 }
 
 EAPI void

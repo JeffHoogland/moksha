@@ -27,10 +27,10 @@ static int loc_mask;
 #define E_EXE_STOP(EXE) if (EXE != NULL) { ecore_exe_terminate(EXE); ecore_exe_free(EXE); EXE = NULL; }
 #define E_EXE_IS_VALID(EXE) (!((EXE == NULL) || (EXE[0] == 0)))
 
-#define E_LOC_CODESET	1 << 0
-#define E_LOC_REGION	1 << 1
-#define E_LOC_MODIFIER	1 << 2
-#define E_LOC_LANG	1 << 3
+#define E_LOC_CODESET	E_INTL_LOC_CODESET
+#define E_LOC_REGION	E_INTL_LOC_REGION
+#define E_LOC_MODIFIER	E_INTL_LOC_MODIFIER
+#define E_LOC_LANG	E_INTL_LOC_LANG
 
 #define E_LOC_ALL	E_LOC_LANG | E_LOC_REGION | E_LOC_CODESET | E_LOC_MODIFIER
 #define E_LOC_SIGNIFICANT E_LOC_LANG | E_LOC_REGION | E_LOC_CODESET
@@ -41,7 +41,6 @@ static Evas_List 	*_e_intl_language_dir_scan(const char *dir);
 static int 		 _e_intl_language_list_find(Evas_List *language_list, char *language);
 
 /* Locale Validation and Discovery */
-static char		*_e_intl_locale_canonic_get(char *locale, int ret_mask);
 static char		*_e_intl_locale_alias_get(char *language); 
 static Evas_Hash	*_e_intl_locale_alias_hash_get(void);
 static Evas_List	*_e_intl_locale_system_locales_get(void);
@@ -202,7 +201,7 @@ e_intl_language_set(const char *lang)
 	       {
 		  char * match_lang;
 
-		  match_lang = _e_intl_locale_canonic_get(alias_locale, E_LOC_LANG);
+		  match_lang = e_intl_locale_canonic_get(alias_locale, E_LOC_LANG);
 		  
 		  /* If locale is C or some form of en don't report an error */
 		  if ( match_lang == NULL && strcmp (alias_locale, "C") )
@@ -526,7 +525,7 @@ _e_intl_language_path_find(char *language)
 		       char *search_locale;
 		       
 		       search_locale = next_search->data;
-		       clean_file = _e_intl_locale_canonic_get(file, E_LOC_ALL);
+		       clean_file = e_intl_locale_canonic_get(file, E_LOC_ALL);
 		       /* Match directory with the search locale */
 		       if (clean_file && !strcmp(clean_file, search_locale))
 			 {
@@ -603,7 +602,7 @@ _e_intl_locale_alias_get(char *language)
    if (language == NULL || !strncmp(language, "POSIX", strlen("POSIX")))
      return strdup("C");
    
-   canonic = _e_intl_locale_canonic_get(language, E_LOC_ALL );
+   canonic = e_intl_locale_canonic_get(language, E_LOC_ALL );
    
    alias_hash = _e_intl_locale_alias_hash_get();
    if (alias_hash == NULL) 
@@ -702,8 +701,8 @@ _e_intl_locale_alias_hash_get(void)
  * 
  * the returned string needs to be freed
  */
-static char *
-_e_intl_locale_canonic_get(char *locale, int ret_mask)
+EAPI char *
+e_intl_locale_canonic_get(char *locale, int ret_mask)
 {
    char *clean_locale;
    int   clean_e_intl_locale_size;
@@ -880,7 +879,7 @@ _e_intl_locale_validate(char *locale)
    int found;
    
    found = 0;
-   search_locale = _e_intl_locale_canonic_get(locale, E_LOC_SIGNIFICANT );
+   search_locale = e_intl_locale_canonic_get(locale, E_LOC_SIGNIFICANT );
    if ( search_locale == NULL )
      search_locale = strdup(locale); 
      /* If this validates their is probably an alias issue */
@@ -897,7 +896,7 @@ _e_intl_locale_validate(char *locale)
 	     char *clean_test_locale;
 	     
 	     /* FOR BSD, need to canonicalize the locale from "locale -a" */ 
-	     clean_test_locale = _e_intl_locale_canonic_get(test_locale, E_LOC_ALL);
+	     clean_test_locale = e_intl_locale_canonic_get(test_locale, E_LOC_ALL);
 	     if (clean_test_locale)
 	       {
 		  if (!strcmp(clean_test_locale, search_locale)) found = 1;
@@ -930,7 +929,7 @@ _e_intl_locale_search_order_get(char *locale)
    search_list = NULL;
    for ( mask = E_LOC_ALL; mask >= E_LOC_LANG; mask-- )
        {
-	  masked_locale = _e_intl_locale_canonic_get(locale, mask);
+	  masked_locale = e_intl_locale_canonic_get(locale, mask);
 	  
 	  if (loc_mask == mask) 
 	    search_list = evas_list_append(search_list, masked_locale);

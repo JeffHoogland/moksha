@@ -16,6 +16,11 @@ typedef struct _E_Language_Pack E_Language_Pack;
 #define E_INTL_LANGUAGE_PACK_VERSION 1
 #define E_INTL_INPUT_METHOD_CONFIG_VERSION 1
 
+#define E_INTL_LOC_CODESET   1 << 0
+#define E_INTL_LOC_REGION    1 << 1
+#define E_INTL_LOC_MODIFIER  1 << 2
+#define E_INTL_LOC_LANG      1 << 3
+
 struct _E_Language_Pack
 {
    int		 language_pack_version;
@@ -50,5 +55,7 @@ EAPI Evas_List		*e_intl_input_method_list(void);
 EAPI E_Input_Method_Config *e_intl_input_method_config_read (Eet_File *imc_file);
 EAPI int		 e_intl_input_method_config_write (Eet_File *imc_file, E_Input_Method_Config *imc);
 EAPI void		 e_intl_input_method_config_free (E_Input_Method_Config *imc);
+/* Getting locale */
+EAPI char		*e_intl_locale_canonic_get(char *locale, int ret_mask);
 #endif
 #endif
