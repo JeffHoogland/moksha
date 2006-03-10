@@ -5,6 +5,8 @@
 #include <config.h>
 #endif
 
+#ifdef USE_IPC
+  
 #if HAVE___ATTRIBUTE__
 #define __UNUSED__ __attribute__((unused))
 #else
@@ -22,6 +24,8 @@
 #include "e_ipc.h"
 #undef E_TYPEDEFS
 #include "e_ipc.h"
+
+#endif
 
 #endif
 

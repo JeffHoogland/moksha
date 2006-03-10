@@ -1,5 +1,6 @@
 #include "e.h"
 
+#ifdef USE_IPC
 /* local subsystem functions */
 
 /* encode functions, Should these be global? */
@@ -670,3 +671,4 @@ e_ipc_codec_str_4int_list_enc(Evas_List *list, int *size_ret)
 
 /* local subsystem globals */
 
+#endif

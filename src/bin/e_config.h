@@ -45,11 +45,14 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
 #define E_CONFIG_H
 
 /* increment this whenever we change config enough that you need new 
- * defaults for e to work - started at 100 when we introduced this config
- * versioning feature. the value of this is really irrelevant - just as
- * long as it increases every time we change something
+ * defaults for e to work.
  */
-#define E_CONFIG_FILE_VERSION 141
+#define E_CONFIG_FILE_EPOCH      0x0000
+/* incriment this whenever a new set of configvalues are added but the users
+ * config doesn't need top be wiped - simply new values need to be put in
+ */
+#define E_CONFIG_FILE_GENERATION 0x008d
+#define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1

@@ -474,7 +474,7 @@ e_config_init(void)
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
      {
-	if (e_config->config_version < E_CONFIG_FILE_VERSION)
+	if ((e_config->config_version >> 16) < E_CONFIG_FILE_EPOCH)
 	  {
 	     /* your config is too old - need new defaults */
 	     _e_config_free();
@@ -506,1120 +506,588 @@ e_config_init(void)
      {
 	/* DEFAULT CONFIG */
 	e_config = E_NEW(E_Config, 1);
-	e_config->config_version = E_CONFIG_FILE_VERSION;
-	e_config->show_splash = 1;
-	e_config->desktop_default_background = NULL;
-	e_config->desktop_default_name = evas_stringshare_add("Desktop %i, %i");
-	e_config->menus_scroll_speed = 1000.0;
-	e_config->menus_fast_mouse_move_threshhold = 300.0;
-	e_config->menus_click_drag_timeout = DEF_MENUCLICK;
-	e_config->border_shade_animate = 1;
-	e_config->border_shade_transition = E_TRANSITION_DECELERATE;
-	e_config->border_shade_speed = 3000.0;
-	e_config->framerate = 30.0;
-	e_config->image_cache = 4096;
-	e_config->font_cache = 512;
-	e_config->edje_cache = 32;
-	e_config->edje_collection_cache = 64;
-	e_config->cache_flush_interval = 60.0;
-	e_config->zone_desks_x_count = 4;
-	e_config->zone_desks_y_count = 1;
-	e_config->use_virtual_roots = 0;
-	e_config->use_edge_flip = 1;
-	e_config->edge_flip_timeout = 0.25;
-	e_config->evas_engine_default = E_EVAS_ENGINE_SOFTWARE_X11;
-	e_config->evas_engine_container = E_EVAS_ENGINE_DEFAULT;
-	e_config->evas_engine_init = E_EVAS_ENGINE_DEFAULT;
-	e_config->evas_engine_menus = E_EVAS_ENGINE_DEFAULT;
-	e_config->evas_engine_borders = E_EVAS_ENGINE_DEFAULT;
-	e_config->evas_engine_errors = E_EVAS_ENGINE_DEFAULT;
-	e_config->evas_engine_popups = E_EVAS_ENGINE_DEFAULT;
-	e_config->evas_engine_drag = E_EVAS_ENGINE_DEFAULT;
-	e_config->evas_engine_win = E_EVAS_ENGINE_DEFAULT;
-	e_config->evas_engine_zone = E_EVAS_ENGINE_DEFAULT;
-	e_config->language = NULL;
-	e_config->window_placement_policy = E_WINDOW_PLACEMENT_SMART;
-	e_config->focus_policy = E_FOCUS_SLOPPY;
-	e_config->focus_setting = E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED;
-	e_config->pass_click_on = 1;
-	e_config->always_click_to_raise = 0;
-	e_config->always_click_to_focus = 0;
-	e_config->use_auto_raise = 0;
-	e_config->auto_raise_delay = 0.5;
-	e_config->use_resist = 1;
-	e_config->drag_resist = 16;
-	e_config->desk_resist = 32;
-	e_config->window_resist = 12;
-	e_config->gadget_resist = 32;
-	e_config->winlist_warp_while_selecting = 1;
-	e_config->winlist_warp_at_end = 1;
-	e_config->winlist_warp_speed = 0.1;
-	e_config->winlist_scroll_animate = 1;
-	e_config->winlist_scroll_speed = 0.1;
-	e_config->winlist_list_show_iconified = 1;
-	e_config->winlist_list_show_other_desk_windows = 0;
-	e_config->winlist_list_show_other_screen_windows = 0;
-	e_config->winlist_list_uncover_while_selecting = 0;
-	e_config->winlist_list_jump_desk_while_selecting = 0;
-	e_config->winlist_list_focus_while_selecting = 1;
-	e_config->winlist_list_raise_while_selecting = 1;
-	e_config->winlist_pos_align_x = 0.5;
-	e_config->winlist_pos_align_y = 0.5;
-	e_config->winlist_pos_size_w = 0.5;
-	e_config->winlist_pos_size_h = 0.5;
-	e_config->winlist_pos_min_w = 0;
-	e_config->winlist_pos_min_h = 0;
-	e_config->winlist_pos_max_w = 320;
-	e_config->winlist_pos_max_h = 320;
-	e_config->maximize_policy = E_MAXIMIZE_FULLSCREEN;
-	e_config->allow_shading = 0;
-	e_config->kill_if_close_not_possible = 1;
-	e_config->kill_process = 1;
-	e_config->kill_timer_wait = 10.0;
-	e_config->ping_clients = 1;
-	e_config->ping_clients_wait = 10.0;
-	e_config->transition_start = NULL;
-	e_config->transition_desk = evas_stringshare_add("vswipe");
-	e_config->transition_change = evas_stringshare_add("crossfade");
-	e_config->move_info_follows = 1;
-	e_config->resize_info_follows = 1;
-	e_config->move_info_visible = 1;
-	e_config->resize_info_visible = 1;
-	e_config->focus_last_focused_per_desktop = 1;
-	e_config->focus_revert_on_hide_or_close = 1;
-	e_config->use_e_cursor = 1;
-	e_config->cursor_size = 32;
-	e_config->menu_autoscroll_margin = 0;
-	e_config->menu_autoscroll_cursor_margin = 1;
-	e_config->transient.move = 1;
-	e_config->transient.resize = 0;
-	e_config->transient.raise = 1;
-	e_config->transient.lower = 1;
-	e_config->transient.layer = 1;
-	e_config->transient.desktop = 1;
-	e_config->transient.iconify = 1;
-	e_config->modal_windows = 1;
-	e_config->menu_eap_name_show = 1;
-	e_config->menu_eap_generic_show = 1;
-	e_config->menu_eap_comment_show = 0;
-	e_config->fullscreen_policy = E_FULLSCREEN_RESIZE;
-	e_config->input_method = NULL;	
-	e_config->exebuf_max_exe_list = 20;
-	e_config->exebuf_max_eap_list = 20;
-	e_config->exebuf_scroll_animate = 1;
-	e_config->exebuf_scroll_speed = 0.1;
-	e_config->exebuf_pos_align_x = 0.5;
-	e_config->exebuf_pos_align_y = 0.5;
-	e_config->exebuf_pos_size_w = 0.75;
-	e_config->exebuf_pos_size_h = 0.25;
-	e_config->exebuf_pos_min_w = 200;
-	e_config->exebuf_pos_min_h = 160;
-	e_config->exebuf_pos_max_w = 400;
-	e_config->exebuf_pos_max_h = 320;
-	e_config->color_classes = NULL;
-	e_config->use_app_icon = 0;
-	e_config->cfgdlg_auto_apply = 0;
-	e_config->cfgdlg_default_mode = 0;
-	e_config->gadcons = NULL;
-	e_config->font_hinting = 0;
-
-	e_config->desklock_personal_passwd = NULL;
-	e_config->desklock_background = NULL;
-	e_config->desklock_login_box_zone = -1;
-	e_config->desklock_autolock = 0;
-	e_config->desklock_use_timeout = 0;
-	e_config->desklock_timeout = 300.0;
-	e_config->desklock_disable_screensaver = 0;
-	
-	e_config->display_res_restore = 0;
-	e_config->display_res_width = 0;
-	e_config->display_res_height = 0;
-	e_config->display_res_hz = 0;
-	
-	/* FIXME: fill up default gadcons! */
-	  {
-	     E_Config_Shelf *cf_es;
-	     E_Config_Shelf_Config *cf_escf;
-	     
-	     cf_es = E_NEW(E_Config_Shelf, 1);
-	     cf_es->name = evas_stringshare_add("shelf");
-	     cf_es->container = 0;
-	     cf_es->zone = 0;
-	     cf_es->popup = 1;
-	     cf_es->layer = 200;
-	     e_config->shelves = evas_list_append(e_config->shelves, cf_es);
-	     
-	     cf_escf = E_NEW(E_Config_Shelf_Config, 1);
-	     cf_escf->res.w = 800;
-	     cf_escf->res.h = 600;
-	     cf_escf->x = 0;
-	     cf_escf->y = 0;
-	     cf_escf->w = 800;
-	     cf_escf->h = 32;
-	     cf_escf->orient = E_GADCON_ORIENT_TOP;
-	     cf_escf->style = evas_stringshare_add("default");
-	     cf_es->configs = evas_list_append(cf_es->configs, cf_escf);
-	  }
-	
-	  {
-	     E_Config_Gadcon *cf_gc;
-	     E_Config_Gadcon_Client *cf_gcc;
-	     
-	     cf_gc = E_NEW(E_Config_Gadcon, 1);
-	     cf_gc->name = evas_stringshare_add("shelf");
-	     cf_gc->id = evas_stringshare_add("0");
-	     e_config->gadcons = evas_list_append(e_config->gadcons, cf_gc);
-	     
-	     cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
-	     cf_gcc->name = evas_stringshare_add("ibar");
-	     cf_gcc->id = evas_stringshare_add("default");
-	     cf_gcc->geom.res = 800;
-	     cf_gcc->geom.size = 200;
-	     cf_gcc->geom.pos = 400 - (cf_gcc->geom.size / 2);
-	     cf_gc->clients = evas_list_append(cf_gc->clients, cf_gcc);
-	     
-	     cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
-	     cf_gcc->name = evas_stringshare_add("clock");
-	     cf_gcc->id = evas_stringshare_add("default");
-	     cf_gcc->geom.res = 800;
-	     cf_gcc->geom.size = 32;
-	     cf_gcc->geom.pos = 800 - (cf_gcc->geom.size);
-	     cf_gc->clients = evas_list_append(cf_gc->clients, cf_gcc);
-
-	     cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
-	     cf_gcc->name = evas_stringshare_add("start");
-	     cf_gcc->id = evas_stringshare_add("default");
-	     cf_gcc->geom.res = 800;
-	     cf_gcc->geom.size = 32;
-	     cf_gcc->geom.pos = 0;
-	     cf_gc->clients = evas_list_append(cf_gc->clients, cf_gcc);
-	  }
-	
-	  {
-	     E_Config_Module *em;
-
-	     em = E_NEW(E_Config_Module, 1);
-	     em->name = evas_stringshare_add("start");
-	     em->enabled = 1;
-	     e_config->modules = evas_list_append(e_config->modules, em);
-	     em = E_NEW(E_Config_Module, 1);
-	     em->name = evas_stringshare_add("ibar");
-	     em->enabled = 1;
-	     e_config->modules = evas_list_append(e_config->modules, em);
-	     em = E_NEW(E_Config_Module, 1);
-	     em->name = evas_stringshare_add("ibox");
-	     em->enabled = 0;
-	     e_config->modules = evas_list_append(e_config->modules, em);
-	     em = E_NEW(E_Config_Module, 1);
-	     em->name = evas_stringshare_add("dropshadow");
-	     em->enabled = 1;
-	     e_config->modules = evas_list_append(e_config->modules, em);
-	     em = E_NEW(E_Config_Module, 1);
-	     em->name = evas_stringshare_add("clock");
-	     em->enabled = 1;
-	     e_config->modules = evas_list_append(e_config->modules, em);
-	     em = E_NEW(E_Config_Module, 1);
-	     em->name = evas_stringshare_add("battery");
-	     em->enabled = 1;
-	     e_config->modules = evas_list_append(e_config->modules, em);
-	     em = E_NEW(E_Config_Module, 1);
-	     em->name = evas_stringshare_add("cpufreq");
-	     em->enabled = 1;
-	     e_config->modules = evas_list_append(e_config->modules, em);
-	     em = E_NEW(E_Config_Module, 1);
-	     em->name = evas_stringshare_add("temperature");
-	     em->enabled = 1;
-	     e_config->modules = evas_list_append(e_config->modules, em);
-	     em = E_NEW(E_Config_Module, 1);
-	     em->name = evas_stringshare_add("pager");
-	     em->enabled = 1;
-	     e_config->modules = evas_list_append(e_config->modules, em);
-	  }
-	  {
-	     E_Font_Fallback* eff;
-	     
-	     eff = E_NEW(E_Font_Fallback, 1);
-	     eff->name = evas_stringshare_add("New-Sung");
-	     e_config->font_fallbacks = evas_list_append(e_config->font_fallbacks, 
-							 eff);
-
-	     eff = E_NEW(E_Font_Fallback, 1);
-	     eff->name = evas_stringshare_add("Kochi-Gothic");
-	     e_config->font_fallbacks = evas_list_append(e_config->font_fallbacks, 
-							 eff);
-	     
-	     eff = E_NEW(E_Font_Fallback, 1);
-	     eff->name = evas_stringshare_add("Baekmuk-Dotum");
-	     e_config->font_fallbacks = evas_list_append(e_config->font_fallbacks, 
-							 eff);
-
-	  }
-	  { 
-	     E_Font_Default* efd;
-	     
-             efd = E_NEW(E_Font_Default, 1);
-	     efd->text_class = evas_stringshare_add("default");
-	     efd->font = evas_stringshare_add("Vera");
-	     efd->size = 10;
-             e_config->font_defaults = evas_list_append(e_config->font_defaults, efd); 
-	
-             efd = E_NEW(E_Font_Default, 1);
-	     efd->text_class = evas_stringshare_add("title_bar");
-	     efd->font = evas_stringshare_add("Vera");
-	     efd->size = 10;
-             e_config->font_defaults = evas_list_append(e_config->font_defaults, efd); 
-	
-	  }
-	  {
-	     E_Config_Theme *et;
-	     
-	     et = E_NEW(E_Config_Theme, 1);
-	     et->category = evas_stringshare_add("theme");
-	     et->file = evas_stringshare_add("default.edj");
-	     e_config->themes = evas_list_append(e_config->themes, et);
-	  }
-	  {
-	     E_Config_Binding_Mouse *eb;
-	     
-	     eb = E_NEW(E_Config_Binding_Mouse, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->button = 1;
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("window_move");
-	     eb->params = NULL;
-	     e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Mouse, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->button = 2;
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("window_resize");
-	     eb->params = NULL;
-	     e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Mouse, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->button = 3;
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("window_menu");
-	     eb->params = NULL;
-	     e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Mouse, 1);
-	     eb->context = E_BINDING_CONTEXT_ZONE;
-	     eb->button = 1;
-	     eb->modifiers = 0;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("menu_show");
-	     eb->params = evas_stringshare_add("main");
-	     e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Mouse, 1);
-	     eb->context = E_BINDING_CONTEXT_ZONE;
-	     eb->button = 2;
-	     eb->modifiers = 0;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("menu_show");
-	     eb->params = evas_stringshare_add("clients");
-	     e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Mouse, 1);
-	     eb->context = E_BINDING_CONTEXT_ZONE;
-	     eb->button = 3;
-	     eb->modifiers = 0;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("menu_show");
-	     eb->params = evas_stringshare_add("favorites");
-	     e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
-/*	     
-	     eb = E_NEW(E_Config_Binding_Mouse, 1);
-	     eb->context = E_BINDING_CONTEXT_CONTAINER;
-	     eb->button = 1;
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("edit_mode");
-	     eb->params = NULL;
-	     e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
-*/
-	  }
-	  {
-	     E_Config_Binding_Key *eb;
-	     
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("Left");
-	     eb->modifiers = E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_flip_by");
-	     eb->params = evas_stringshare_add("-1 0");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-	     
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("Right");
-	     eb->modifiers = E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_flip_by");
-	     eb->params = evas_stringshare_add("1 0");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("Up");
-	     eb->modifiers = E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_flip_by");
-	     eb->params = evas_stringshare_add("0 -1");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("Down");
-	     eb->modifiers = E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_flip_by");
-	     eb->params = evas_stringshare_add("0 1");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("Up");
-	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("window_raise");
-	     eb->params = NULL;
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("Down");
-	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("window_lower");
-	     eb->params = NULL;
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("x");
-	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("window_close");
-	     eb->params = NULL;
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("k");
-	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("window_kill");
-	     eb->params = NULL;
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("w");
-	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("window_menu");
-	     eb->params = NULL;
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("s");
-	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("window_sticky_toggle");
-	     eb->params = NULL;
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("i");
-	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("window_iconic_toggle");
-	     eb->params = NULL;
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("f");
-	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("window_maximized_toggle");
-	     eb->params = NULL;
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW( E_Config_Binding_Key, 1 );
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("F10");
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add( "window_maximized_toggle" );
-	     eb->params = evas_stringshare_add( "vertical" );
-	     e_config->key_bindings = evas_list_append( e_config->key_bindings, eb );
-
-	     eb = E_NEW( E_Config_Binding_Key, 1 );
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("F10");
-	     eb->modifiers = E_BINDING_MODIFIER_CTRL;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add( "window_maximized_toggle" );
-	     eb->params = evas_stringshare_add( "horizontal" );
-	     e_config->key_bindings = evas_list_append( e_config->key_bindings, eb );
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("r");
-	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("window_shaded_toggle");
-	     eb->params = NULL;
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("Left");
-	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_linear_flip_by");
-	     eb->params = evas_stringshare_add("-1");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("Right");
-	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_linear_flip_by");
-	     eb->params = evas_stringshare_add("1");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("F1");
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_linear_flip_to");
-	     eb->params = evas_stringshare_add("0");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("F2");
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_linear_flip_to");
-	     eb->params = evas_stringshare_add("1");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("F3");
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_linear_flip_to");
-	     eb->params = evas_stringshare_add("2");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("F4");
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_linear_flip_to");
-	     eb->params = evas_stringshare_add("3");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("F5");
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_linear_flip_to");
-	     eb->params = evas_stringshare_add("4");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("F6");
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_linear_flip_to");
-	     eb->params = evas_stringshare_add("5");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("F7");
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_linear_flip_to");
-	     eb->params = evas_stringshare_add("6");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("F8");
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_linear_flip_to");
-	     eb->params = evas_stringshare_add("7");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("F9");
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_linear_flip_to");
-	     eb->params = evas_stringshare_add("8");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("F10");
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_linear_flip_to");
-	     eb->params = evas_stringshare_add("9");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("F11");
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_linear_flip_to");
-	     eb->params = evas_stringshare_add("10");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("F12");
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_linear_flip_to");
-	     eb->params = evas_stringshare_add("11");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("m");
-	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("menu_show");
-	     eb->params = evas_stringshare_add("main");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("a");
-	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("menu_show");
-	     eb->params = evas_stringshare_add("favorites");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("Menu");
-	     eb->modifiers = 0;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("menu_show");
-	     eb->params = evas_stringshare_add("main");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("Menu");
-	     eb->modifiers = E_BINDING_MODIFIER_CTRL;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("menu_show");
-	     eb->params = evas_stringshare_add("clients");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("Menu");
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("menu_show");
-	     eb->params = evas_stringshare_add("favorites");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("Insert");
-	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("exec");
-	     eb->params = evas_stringshare_add("Eterm");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("Tab");
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("winlist");
-	     eb->params = evas_stringshare_add("next");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-	     
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("Tab");
-	     eb->modifiers = E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("winlist");
-	     eb->params = evas_stringshare_add("prev");
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-	     
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("g");
-	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("edit_mode_toggle");
-	     eb->params = NULL;
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-	     
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("End");
-	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("restart");
-	     eb->params = NULL;
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-	     
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("Delete");
-	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("exit");
-	     eb->params = NULL;
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-	     
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("Escape");
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("exebuf");
-	     eb->params = NULL;
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Key, 1);
-	     eb->context = E_BINDING_CONTEXT_ANY;
-	     eb->key = evas_stringshare_add("l");
-	     eb->modifiers = E_BINDING_MODIFIER_ALT | E_BINDING_MODIFIER_CTRL;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_lock");
-	     eb->params = NULL;
-	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
-	     
-   /* need to support fullscreen anyway for this - ie netwm and the border
-    * system need to handle this as well as possibly using xrandr/xvidmode
-    */
-   /* ALT Return      - fullscreen window */
-	  }
-	  {
-	     E_Config_Binding_Signal *eb;
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,down,1,double");
-	     eb->source= evas_stringshare_add("title");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_shaded_toggle");
-	     eb->params = evas_stringshare_add("up");
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,down,2");
-	     eb->source = evas_stringshare_add("title");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_shaded_toggle");
-	     eb->params = evas_stringshare_add("up");
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,wheel,?,1");
-	     eb->source = evas_stringshare_add("title");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_shaded");
-	     eb->params = evas_stringshare_add("0 up");
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,wheel,?,-1");
-	     eb->source = evas_stringshare_add("title");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_shaded");
-	     eb->params = evas_stringshare_add("1 up");
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,clicked,3");
-	     eb->source = evas_stringshare_add("title");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_menu");
-	     eb->params = NULL;
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-	     
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,clicked,?");
-	     eb->source = evas_stringshare_add("icon");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_menu");
-	     eb->params = NULL;
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,clicked,[12]");
-	     eb->source = evas_stringshare_add("close");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_close");
-	     eb->params = NULL;
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,clicked,3");
-	     eb->source = evas_stringshare_add("close");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_kill");
-	     eb->params = NULL;
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,clicked,1");
-	     eb->source = evas_stringshare_add("maximize");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_maximized_toggle");
-	     eb->params = NULL;
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,clicked,2");
-	     eb->source = evas_stringshare_add("maximize");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_maximized_toggle");
-	     eb->params = evas_stringshare_add("smart");
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,clicked,3");
-	     eb->source = evas_stringshare_add("maximize");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_maximized_toggle");
-	     eb->params = evas_stringshare_add("expand");
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,clicked,?");
-	     eb->source = evas_stringshare_add("minimize");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_iconic_toggle");
-	     eb->params = NULL;
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,down,1");
-	     eb->source = evas_stringshare_add("icon");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_drag_icon");
-	     eb->params = NULL;
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,down,1");
-	     eb->source = evas_stringshare_add("title");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_move");
-	     eb->params = NULL;
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,up,1");
-	     eb->source = evas_stringshare_add("title");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_move");
-	     eb->params = evas_stringshare_add("end");
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,down,1");
-	     eb->source = evas_stringshare_add("resize_tl");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_resize");
-	     eb->params = evas_stringshare_add("tl");
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,down,1");
-	     eb->source = evas_stringshare_add("resize_t");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_resize");
-	     eb->params = evas_stringshare_add("t");
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,down,1");
-	     eb->source = evas_stringshare_add("resize_tr");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_resize");
-	     eb->params = evas_stringshare_add("tr");
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,down,1");
-	     eb->source = evas_stringshare_add("resize_r");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_resize");
-	     eb->params = evas_stringshare_add("r");
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,down,1");
-	     eb->source = evas_stringshare_add("resize_br");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_resize");
-	     eb->params = evas_stringshare_add("br");
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,down,1");
-	     eb->source = evas_stringshare_add("resize_b");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_resize");
-	     eb->params = evas_stringshare_add("b");
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,down,1");
-	     eb->source = evas_stringshare_add("resize_bl");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_resize");
-	     eb->params = evas_stringshare_add("bl");
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,down,1");
-	     eb->source = evas_stringshare_add("resize_l");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_resize");
-	     eb->params = evas_stringshare_add("l");
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,up,1");
-	     eb->source = evas_stringshare_add("resize_*");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_resize");
-	     eb->params = evas_stringshare_add("end");
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,down,3");
-	     eb->source = evas_stringshare_add("resize_*");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_move");
-	     eb->params = NULL;
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Signal, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->signal = evas_stringshare_add("mouse,up,3");
-	     eb->source = evas_stringshare_add("resize_*");
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("window_move");
-	     eb->params = evas_stringshare_add("end");
-	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
-	  }
-	  {
-	     E_Config_Binding_Wheel *eb;
-
-	     eb = E_NEW(E_Config_Binding_Wheel, 1);
-	     eb->context = E_BINDING_CONTEXT_CONTAINER;
-	     eb->direction = 0;
-	     eb->z = -1;
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("desk_linear_flip_by");
-	     eb->params = evas_stringshare_add("-1");
-	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Wheel, 1);
-	     eb->context = E_BINDING_CONTEXT_CONTAINER;
-	     eb->direction = 0;
-	     eb->z = 1;
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("desk_linear_flip_by");
-	     eb->params = evas_stringshare_add("1");
-	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Wheel, 1);
-	     eb->context = E_BINDING_CONTEXT_CONTAINER;
-	     eb->direction = 1;
-	     eb->z = 1;
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("desk_linear_flip_by");
-	     eb->params = evas_stringshare_add("1");
-	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Wheel, 1);
-	     eb->context = E_BINDING_CONTEXT_POPUP;
-	     eb->direction = 0;
-	     eb->z = -1;
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("desk_linear_flip_by");
-	     eb->params = evas_stringshare_add("-1");
-	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Wheel, 1);
-	     eb->context = E_BINDING_CONTEXT_POPUP;
-	     eb->direction = 1;
-	     eb->z = -1;
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("desk_linear_flip_by");
-	     eb->params = evas_stringshare_add("-1");
-	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Wheel, 1);
-	     eb->context = E_BINDING_CONTEXT_POPUP;
-	     eb->direction = 0;
-	     eb->z = 1;
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("desk_linear_flip_by");
-	     eb->params = evas_stringshare_add("1");
-	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Wheel, 1);
-	     eb->context = E_BINDING_CONTEXT_POPUP;
-	     eb->direction = 1;
-	     eb->z = 1;
-	     eb->modifiers = E_BINDING_MODIFIER_NONE;
-	     eb->any_mod = 1;
-	     eb->action = evas_stringshare_add("desk_linear_flip_by");
-	     eb->params = evas_stringshare_add("1");
-	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Wheel, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->direction = 0;
-	     eb->z = -1;
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_linear_flip_by");
-	     eb->params = evas_stringshare_add("-1");
-	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Wheel, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->direction = 1;
-	     eb->z = -1;
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_linear_flip_by");
-	     eb->params = evas_stringshare_add("-1");
-	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Wheel, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->direction = 0;
-	     eb->z = 1;
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_linear_flip_by");
-	     eb->params = evas_stringshare_add("1");
-	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding_Wheel, 1);
-	     eb->context = E_BINDING_CONTEXT_BORDER;
-	     eb->direction = 1;
-	     eb->z = 1;
-	     eb->modifiers = E_BINDING_MODIFIER_ALT;
-	     eb->any_mod = 0;
-	     eb->action = evas_stringshare_add("desk_linear_flip_by");
-	     eb->params = evas_stringshare_add("1");
-	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
-	  }
-	e_config_save_queue();
+	e_config->config_version = (E_CONFIG_FILE_EPOCH << 16);
      }
-//   e_config->evas_engine_default = E_EVAS_ENGINE_XRENDER_X11;
-//   e_config->evas_engine_container = E_EVAS_ENGINE_GL_X11;
+#define IFCFG(v) \
+   if ((e_config->config_version & 0xffff) < (v)) { \
+      e_config->config_version = (e_config->config_version & 0xffff0000) | (v)
+#define IFCFGEND }
+   IFCFG(0x008d);
+   e_config->show_splash = 1;
+   e_config->desktop_default_background = NULL;
+   e_config->desktop_default_name = evas_stringshare_add("Desktop %i, %i");
+   e_config->menus_scroll_speed = 1000.0;
+   e_config->menus_fast_mouse_move_threshhold = 300.0;
+   e_config->menus_click_drag_timeout = DEF_MENUCLICK;
+   e_config->border_shade_animate = 1;
+   e_config->border_shade_transition = E_TRANSITION_DECELERATE;
+   e_config->border_shade_speed = 3000.0;
+   e_config->framerate = 30.0;
+   e_config->image_cache = 4096;
+   e_config->font_cache = 512;
+   e_config->edje_cache = 32;
+   e_config->edje_collection_cache = 64;
+   e_config->cache_flush_interval = 60.0;
+   e_config->zone_desks_x_count = 4;
+   e_config->zone_desks_y_count = 1;
+   e_config->use_virtual_roots = 0;
+   e_config->use_edge_flip = 1;
+   e_config->edge_flip_timeout = 0.25;
+   e_config->evas_engine_default = E_EVAS_ENGINE_SOFTWARE_X11;
+   e_config->evas_engine_container = E_EVAS_ENGINE_DEFAULT;
+   e_config->evas_engine_init = E_EVAS_ENGINE_DEFAULT;
+   e_config->evas_engine_menus = E_EVAS_ENGINE_DEFAULT;
+   e_config->evas_engine_borders = E_EVAS_ENGINE_DEFAULT;
+   e_config->evas_engine_errors = E_EVAS_ENGINE_DEFAULT;
+   e_config->evas_engine_popups = E_EVAS_ENGINE_DEFAULT;
+   e_config->evas_engine_drag = E_EVAS_ENGINE_DEFAULT;
+   e_config->evas_engine_win = E_EVAS_ENGINE_DEFAULT;
+   e_config->evas_engine_zone = E_EVAS_ENGINE_DEFAULT;
+   e_config->language = NULL;
+   e_config->window_placement_policy = E_WINDOW_PLACEMENT_SMART;
+   e_config->focus_policy = E_FOCUS_SLOPPY;
+   e_config->focus_setting = E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED;
+   e_config->pass_click_on = 1;
+   e_config->always_click_to_raise = 0;
+   e_config->always_click_to_focus = 0;
+   e_config->use_auto_raise = 0;
+   e_config->auto_raise_delay = 0.5;
+   e_config->use_resist = 1;
+   e_config->drag_resist = 16;
+   e_config->desk_resist = 32;
+   e_config->window_resist = 12;
+   e_config->gadget_resist = 32;
+   e_config->winlist_warp_while_selecting = 1;
+   e_config->winlist_warp_at_end = 1;
+   e_config->winlist_warp_speed = 0.1;
+   e_config->winlist_scroll_animate = 1;
+   e_config->winlist_scroll_speed = 0.1;
+   e_config->winlist_list_show_iconified = 1;
+   e_config->winlist_list_show_other_desk_windows = 0;
+   e_config->winlist_list_show_other_screen_windows = 0;
+   e_config->winlist_list_uncover_while_selecting = 0;
+   e_config->winlist_list_jump_desk_while_selecting = 0;
+   e_config->winlist_list_focus_while_selecting = 1;
+   e_config->winlist_list_raise_while_selecting = 1;
+   e_config->winlist_pos_align_x = 0.5;
+   e_config->winlist_pos_align_y = 0.5;
+   e_config->winlist_pos_size_w = 0.5;
+   e_config->winlist_pos_size_h = 0.5;
+   e_config->winlist_pos_min_w = 0;
+   e_config->winlist_pos_min_h = 0;
+   e_config->winlist_pos_max_w = 320;
+   e_config->winlist_pos_max_h = 320;
+   e_config->maximize_policy = E_MAXIMIZE_FULLSCREEN;
+   e_config->allow_shading = 0;
+   e_config->kill_if_close_not_possible = 1;
+   e_config->kill_process = 1;
+   e_config->kill_timer_wait = 10.0;
+   e_config->ping_clients = 1;
+   e_config->ping_clients_wait = 10.0;
+   e_config->transition_start = NULL;
+   e_config->transition_desk = evas_stringshare_add("vswipe");
+   e_config->transition_change = evas_stringshare_add("crossfade");
+   e_config->move_info_follows = 1;
+   e_config->resize_info_follows = 1;
+   e_config->move_info_visible = 1;
+   e_config->resize_info_visible = 1;
+   e_config->focus_last_focused_per_desktop = 1;
+   e_config->focus_revert_on_hide_or_close = 1;
+   e_config->use_e_cursor = 1;
+   e_config->cursor_size = 32;
+   e_config->menu_autoscroll_margin = 0;
+   e_config->menu_autoscroll_cursor_margin = 1;
+   e_config->transient.move = 1;
+   e_config->transient.resize = 0;
+   e_config->transient.raise = 1;
+   e_config->transient.lower = 1;
+   e_config->transient.layer = 1;
+   e_config->transient.desktop = 1;
+   e_config->transient.iconify = 1;
+   e_config->modal_windows = 1;
+   e_config->menu_eap_name_show = 1;
+   e_config->menu_eap_generic_show = 1;
+   e_config->menu_eap_comment_show = 0;
+   e_config->fullscreen_policy = E_FULLSCREEN_RESIZE;
+   e_config->input_method = NULL;	
+   e_config->exebuf_max_exe_list = 20;
+   e_config->exebuf_max_eap_list = 20;
+   e_config->exebuf_scroll_animate = 1;
+   e_config->exebuf_scroll_speed = 0.1;
+   e_config->exebuf_pos_align_x = 0.5;
+   e_config->exebuf_pos_align_y = 0.5;
+   e_config->exebuf_pos_size_w = 0.75;
+   e_config->exebuf_pos_size_h = 0.25;
+   e_config->exebuf_pos_min_w = 200;
+   e_config->exebuf_pos_min_h = 160;
+   e_config->exebuf_pos_max_w = 400;
+   e_config->exebuf_pos_max_h = 320;
+   e_config->color_classes = NULL;
+   e_config->use_app_icon = 0;
+   e_config->cfgdlg_auto_apply = 0;
+   e_config->cfgdlg_default_mode = 0;
+   e_config->gadcons = NULL;
+   e_config->font_hinting = 0;
+   
+   e_config->desklock_personal_passwd = NULL;
+   e_config->desklock_background = NULL;
+   e_config->desklock_login_box_zone = -1;
+   e_config->desklock_autolock = 0;
+   e_config->desklock_use_timeout = 0;
+   e_config->desklock_timeout = 300.0;
+   e_config->desklock_disable_screensaver = 0;
+   
+   e_config->display_res_restore = 0;
+   e_config->display_res_width = 0;
+   e_config->display_res_height = 0;
+   e_config->display_res_hz = 0;
+   
+     {
+	E_Config_Module *em;
 
-// TESTING OPTIONS
-/*
-	e_config->winlist_list_show_iconified = 1;
-	e_config->winlist_list_show_other_desk_windows = 1;
-	e_config->winlist_list_show_other_screen_windows = 1;
-	e_config->winlist_list_uncover_while_selecting = 1;
-	e_config->winlist_list_jump_desk_while_selecting = 1;
-*/   
+#define CFG_MODULE(_name, _enabled) \
+   em = E_NEW(E_Config_Module, 1); \
+   em->name = evas_stringshare_add(_name); \
+   em->enabled = _enabled; \
+   e_config->modules = evas_list_append(e_config->modules, em)
+
+	CFG_MODULE("start", 1);
+	CFG_MODULE("ibar", 1);
+	CFG_MODULE("ibox", 0);
+	CFG_MODULE("dropshadow", 1);
+	CFG_MODULE("clock", 1);
+	CFG_MODULE("battery", 1);
+	CFG_MODULE("cpufreq", 1);
+	CFG_MODULE("temperature", 1);
+	CFG_MODULE("pager", 1);
+     }
+     {
+	E_Font_Fallback* eff;
+	
+#define CFG_FONTFALLBACK(_name) \
+   eff = E_NEW(E_Font_Fallback, 1); \
+   eff->name = evas_stringshare_add(_name); \
+   e_config->font_fallbacks = evas_list_append(e_config->font_fallbacks, eff)
+	
+	CFG_FONTFALLBACK("New-Sung");
+	CFG_FONTFALLBACK("Kochi-Gothic");
+	CFG_FONTFALLBACK("Baekmuk-Dotum");
+     }
+     { 
+	E_Font_Default* efd;
+	
+#define CFG_FONTDEFAULT(_tclass, _name, _size) \
+   efd = E_NEW(E_Font_Default, 1); \
+   efd->text_class = evas_stringshare_add(_tclass); \
+   efd->font = evas_stringshare_add(_name); \
+   efd->size = _size; \
+   e_config->font_defaults = evas_list_append(e_config->font_defaults, efd)
+	
+	CFG_FONTDEFAULT("default", "Vera", 10);
+	CFG_FONTDEFAULT("title_bar", "Vera", 10);
+     }
+     {
+	E_Config_Theme *et;
+	
+	et = E_NEW(E_Config_Theme, 1);
+	et->category = evas_stringshare_add("theme");
+	et->file = evas_stringshare_add("default.edj");
+	e_config->themes = evas_list_append(e_config->themes, et);
+     }
+     {
+	E_Config_Binding_Mouse *eb;
+
+#define CFG_MOUSEBIND(_context, _button, _modifiers, _anymod, _action, _params) \
+   eb = E_NEW(E_Config_Binding_Mouse, 1); \
+   eb->context = _context; \
+   eb->button = _button; \
+   eb->modifiers = _modifiers; \
+   eb->any_mod = _anymod; \
+   eb->action = _action == NULL ? NULL : evas_stringshare_add(_action); \
+   eb->params = _params == NULL ? NULL : evas_stringshare_add(_params); \
+   e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb)
+	
+	CFG_MOUSEBIND(E_BINDING_CONTEXT_BORDER, 1,
+		      E_BINDING_MODIFIER_ALT, 0, 
+		      "window_move", NULL);
+	CFG_MOUSEBIND(E_BINDING_CONTEXT_BORDER, 2,
+		      E_BINDING_MODIFIER_ALT, 0, 
+		      "window_resize", NULL);
+	CFG_MOUSEBIND(E_BINDING_CONTEXT_BORDER, 3,
+		      E_BINDING_MODIFIER_ALT, 0, 
+		      "window_menu", NULL);
+	CFG_MOUSEBIND(E_BINDING_CONTEXT_ZONE, 1,
+		      0, 0, 
+		      "menu_show", "main");
+	CFG_MOUSEBIND(E_BINDING_CONTEXT_ZONE, 2,
+		      0, 0, 
+		      "menu_show", "clients");
+	CFG_MOUSEBIND(E_BINDING_CONTEXT_ZONE, 3,
+		      0, 0, 
+		      "menu_show", "favorites");
+     }
+     {
+	E_Config_Binding_Key *eb;
+
+#define CFG_KEYBIND(_context, _key, _modifiers, _anymod, _action, _params) \
+   eb = E_NEW(E_Config_Binding_Key, 1); \
+   eb->context = _context; \
+   eb->key = evas_stringshare_add(_key); \
+   eb->modifiers = _modifiers; \
+   eb->any_mod = _anymod; \
+   eb->action = _action == NULL ? NULL : evas_stringshare_add(_action); \
+   eb->params = _params == NULL ? NULL : evas_stringshare_add(_params); \
+   e_config->key_bindings = evas_list_append(e_config->key_bindings, eb)
+
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Left",
+		    E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT, 0,
+		    "desk_flip_by", "-1 0");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Right",
+		    E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT, 0,
+		    "desk_flip_by", "1 0");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Up",
+		    E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT, 0,
+		    "desk_flip_by", "0 -1");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Down",
+		    E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT, 0,
+		    "desk_flip_by", "0 1");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Up",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		    "window_raise", NULL);
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Down",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		    "window_lower", NULL);
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "x",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		    "window_close", NULL);
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "k",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		    "window_kill", NULL);
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "w",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		    "window_menu", NULL);
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "s",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		    "window_sticky_toggle", NULL);
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "i",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		    "window_iconic_toggle", NULL);
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "f",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		    "window_maximized_toggle", NULL);
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F10",
+		    E_BINDING_MODIFIER_ALT, 0,
+		    "window_maximized_toggle", "vertical");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F10",
+		    E_BINDING_MODIFIER_CTRL, 0,
+		    "window_maximized_toggle", "horizontal");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "r",
+		    E_BINDING_MODIFIER_CTRL, 0,
+		    "window_shaded_toggle", NULL);
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Left",
+		    E_BINDING_MODIFIER_CTRL, 0,
+		    "desk_linear_flip_by", "-1");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Right",
+		    E_BINDING_MODIFIER_CTRL, 0,
+		    "desk_linear_flip_by", "1");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F1",
+		    E_BINDING_MODIFIER_CTRL, 0,
+		    "desk_linear_flip_to", "0");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F2",
+		    E_BINDING_MODIFIER_CTRL, 0,
+		    "desk_linear_flip_to", "1");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F3",
+		    E_BINDING_MODIFIER_CTRL, 0,
+		    "desk_linear_flip_to", "2");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F4",
+		    E_BINDING_MODIFIER_CTRL, 0,
+		    "desk_linear_flip_to", "3");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F5",
+		    E_BINDING_MODIFIER_CTRL, 0,
+		    "desk_linear_flip_to", "4");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F6",
+		    E_BINDING_MODIFIER_CTRL, 0,
+		    "desk_linear_flip_to", "5");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F7",
+		    E_BINDING_MODIFIER_CTRL, 0,
+		    "desk_linear_flip_to", "6");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F8",
+		    E_BINDING_MODIFIER_CTRL, 0,
+		    "desk_linear_flip_to", "7");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F9",
+		    E_BINDING_MODIFIER_CTRL, 0,
+		    "desk_linear_flip_to", "8");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F10",
+		    E_BINDING_MODIFIER_CTRL, 0,
+		    "desk_linear_flip_to", "9");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F11",
+		    E_BINDING_MODIFIER_CTRL, 0,
+		    "desk_linear_flip_to", "10");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F12",
+		    E_BINDING_MODIFIER_CTRL, 0,
+		    "desk_linear_flip_to", "11");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "m",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		    "menu_show", "main");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "a",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		    "menu_show", "favorites");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Menu",
+		    0, 0,
+		    "menu_show", "main");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Menu",
+		    E_BINDING_MODIFIER_CTRL, 0,
+		    "menu_show", "clients");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Menu",
+		    E_BINDING_MODIFIER_ALT, 0,
+		    "menu_show", "favorites");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Insert",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		    "exec", "Eterm");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Tab",
+		    E_BINDING_MODIFIER_ALT, 0,
+		    "winlist", "next");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Tab",
+		    E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT, 0,
+		    "winlist", "prev");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "g",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		    "edit_mode_toggle", NULL);
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "End",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		    "restart", NULL);
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Delete",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		    "exit", NULL);
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Escape",
+		    E_BINDING_MODIFIER_ALT, 0,
+		    "exebuf", NULL);
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "l",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		    "desk_lock", NULL);
+     }
+     {
+	E_Config_Binding_Signal *eb;
+
+#define CFG_SIGNALBIND(_context, _signal, _source, _modifiers, _anymod, _action, _params) \
+   eb = E_NEW(E_Config_Binding_Signal, 1); \
+   eb->context = _context; \
+   eb->signal = _signal == NULL ? NULL : evas_stringshare_add(_signal); \
+   eb->source = _source == NULL ? NULL : evas_stringshare_add(_source); \
+   eb->modifiers = _modifiers; \
+   eb->any_mod = _anymod; \
+   eb->action = _action == NULL ? NULL : evas_stringshare_add(_action); \
+   eb->params = _params == NULL ? NULL : evas_stringshare_add(_params); \
+   e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb)
+   
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1,double", "title",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_shaded_toggle", "up");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,2", "title",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_shaded_toggle", "up");		       
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,wheel,?,1", "title",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_shaded", "0 up");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,wheel,?,-1", "title",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_shaded", "1 up");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,3", "title",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_menu", NULL);
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,?", "icon",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_menu", NULL);
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,[12]", "close",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_close", NULL);
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,3", "close",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_kill", NULL);
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,1", "maximize",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_maximized_toggle", NULL);
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,2", "maximize",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_maximized_toggle", "smart");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,3", "maximize",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_maximized_toggle", "expand");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,?", "minimize",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_iconic_toggle", NULL);
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", "icon",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_drag_icon", NULL);
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", "title",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_move", NULL);
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,up,1", "title",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_move", "end");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", "resize_tl",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_resize", "tl");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", "resize_t",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_resize", "t");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", "resize_tr",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_resize", "tr");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", "resize_r",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_resize", "r");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", "resize_br",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_resize", "br");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", "resize_b",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_resize", "b");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", "resize_bl",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_resize", "bl");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", "resize_l",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_resize", "l");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,up,1", "resize_*",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_resize", "end");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,3", "resize_*",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_move", NULL);
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,up,3", "resize_*",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_move", "end");
+     }
+     {
+	E_Config_Binding_Wheel *eb;
+
+#define CFG_WHEELBIND(_context, _direction, _z, _modifiers, _anymod, _action, _params) \
+   eb = E_NEW(E_Config_Binding_Wheel, 1); \
+   eb->context = _context; \
+   eb->direction = _direction; \
+   eb->z = _z; \
+   eb->modifiers = _modifiers; \
+   eb->any_mod = _anymod; \
+   eb->action = _action == NULL ? NULL : evas_stringshare_add(_action); \
+   eb->params = _params == NULL ? NULL : evas_stringshare_add(_params); \
+   e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb)
+
+	CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 0, -1,
+		      E_BINDING_MODIFIER_NONE, 1,
+		      "desk_linear_flip_by", "-1");
+	CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 1, -1,
+		      E_BINDING_MODIFIER_NONE, 1,
+		      "desk_linear_flip_by", "-1");
+	CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 0, 1,
+		      E_BINDING_MODIFIER_NONE, 1,
+		      "desk_linear_flip_by", "1");
+	CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 1, 1,
+		      E_BINDING_MODIFIER_NONE, 1,
+		      "desk_linear_flip_by", "1");
+	CFG_WHEELBIND(E_BINDING_CONTEXT_POPUP, 0, -1,
+		      E_BINDING_MODIFIER_NONE, 1,
+		      "desk_linear_flip_by", "-1");
+	CFG_WHEELBIND(E_BINDING_CONTEXT_POPUP, 1, -1,
+		      E_BINDING_MODIFIER_NONE, 1,
+		      "desk_linear_flip_by", "-1");
+	CFG_WHEELBIND(E_BINDING_CONTEXT_POPUP, 0, 1,
+		      E_BINDING_MODIFIER_NONE, 1,
+		      "desk_linear_flip_by", "1");
+	CFG_WHEELBIND(E_BINDING_CONTEXT_POPUP, 1, 1,
+		      E_BINDING_MODIFIER_NONE, 1,
+		      "desk_linear_flip_by", "1");
+	CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 0, -1,
+		      E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_by", "-1");
+	CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 1, -1,
+		      E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_by", "-1");
+	CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 0, 1,
+		      E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_by", "1");
+	CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 1, 1,
+		      E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_by", "1");
+	CFG_WHEELBIND(E_BINDING_CONTEXT_BORDER, 0, -1,
+		      E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_by", "-1");
+	CFG_WHEELBIND(E_BINDING_CONTEXT_BORDER, 1, -1,
+		      E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_by", "-1");
+	CFG_WHEELBIND(E_BINDING_CONTEXT_BORDER, 0, 1,
+		      E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_by", "1");
+	CFG_WHEELBIND(E_BINDING_CONTEXT_BORDER, 1, 1,
+		      E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_by", "1");
+     }
+#if 1 // this is liable to change
+     {
+	E_Config_Shelf *cf_es;
+	E_Config_Shelf_Config *cf_escf;
+	
+	cf_es = E_NEW(E_Config_Shelf, 1);
+	cf_es->name = evas_stringshare_add("shelf");
+	cf_es->container = 0;
+	cf_es->zone = 0;
+	cf_es->popup = 1;
+	cf_es->layer = 200;
+	e_config->shelves = evas_list_append(e_config->shelves, cf_es);
+	
+	cf_escf = E_NEW(E_Config_Shelf_Config, 1);
+	cf_escf->res.w = 800;
+	cf_escf->res.h = 600;
+	cf_escf->x = 0;
+	cf_escf->y = 0;
+	cf_escf->w = 800;
+	cf_escf->h = 32;
+	cf_escf->orient = E_GADCON_ORIENT_TOP;
+	cf_escf->style = evas_stringshare_add("default");
+	cf_es->configs = evas_list_append(cf_es->configs, cf_escf);
+     }
+     {
+	E_Config_Gadcon *cf_gc;
+	E_Config_Gadcon_Client *cf_gcc;
+	
+	cf_gc = E_NEW(E_Config_Gadcon, 1);
+	cf_gc->name = evas_stringshare_add("shelf");
+	cf_gc->id = evas_stringshare_add("0");
+	e_config->gadcons = evas_list_append(e_config->gadcons, cf_gc);
+	
+	cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
+	cf_gcc->name = evas_stringshare_add("ibar");
+	cf_gcc->id = evas_stringshare_add("default");
+	cf_gcc->geom.res = 800;
+	cf_gcc->geom.size = 200;
+	cf_gcc->geom.pos = 400 - (cf_gcc->geom.size / 2);
+	cf_gc->clients = evas_list_append(cf_gc->clients, cf_gcc);
+	
+	cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
+	cf_gcc->name = evas_stringshare_add("clock");
+	cf_gcc->id = evas_stringshare_add("default");
+	cf_gcc->geom.res = 800;
+	cf_gcc->geom.size = 32;
+	cf_gcc->geom.pos = 800 - (cf_gcc->geom.size);
+	cf_gc->clients = evas_list_append(cf_gc->clients, cf_gcc);
+	
+	cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
+	cf_gcc->name = evas_stringshare_add("start");
+	cf_gcc->id = evas_stringshare_add("default");
+	cf_gcc->geom.res = 800;
+	cf_gcc->geom.size = 32;
+	cf_gcc->geom.pos = 0;
+	cf_gc->clients = evas_list_append(cf_gc->clients, cf_gcc);
+     }
+#endif
+   IFCFGEND;
+   
+#if 0 /* example of new config */
+   IFCFG(0x008e); /* the version # where this value(s) was introduced */
+   e_config->new_value = 10; /* set the value(s) */
+   IFCFGEND;
+#endif
+   
    E_CONFIG_LIMIT(e_config->menus_scroll_speed, 1.0, 20000.0);
    E_CONFIG_LIMIT(e_config->show_splash, 0, 1);
    E_CONFIG_LIMIT(e_config->menus_fast_mouse_move_threshhold, 1.0, 2000.0);
@@ -1701,6 +1169,8 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->display_res_width, 1, 8192);
    E_CONFIG_LIMIT(e_config->display_res_height, 1, 8192);
    E_CONFIG_LIMIT(e_config->display_res_hz, 0, 250);
+   
+   e_config_save_queue();
    
    return 1;
 }

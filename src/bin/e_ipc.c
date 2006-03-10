@@ -1,5 +1,6 @@
 #include "e.h"
 
+#ifdef USE_IPC  
 /* local subsystem functions */
 static int _e_ipc_cb_client_add(void *data, int type, void *event);
 static int _e_ipc_cb_client_del(void *data, int type, void *event);
@@ -7,11 +8,13 @@ static int _e_ipc_cb_client_data(void *data, int type, void *event);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server = NULL;
+#endif
 
 /* externally accessible functions */
 EAPI int
 e_ipc_init(void)
 {
+#ifdef USE_IPC  
    char buf[1024];
    char *disp;
    
@@ -25,20 +28,24 @@ e_ipc_init(void)
    ecore_event_handler_add(ECORE_IPC_EVENT_CLIENT_DATA, _e_ipc_cb_client_data, NULL);
 
    e_ipc_codec_init();
+#endif   
    return 1;
 }
 
 EAPI void
 e_ipc_shutdown(void)
 {
+#ifdef USE_IPC  
    e_ipc_codec_shutdown();
    if (_e_ipc_server)
      {
 	ecore_ipc_server_del(_e_ipc_server);
 	_e_ipc_server = NULL;
      }
+#endif   
 }
 
+#ifdef USE_IPC  
 /* local subsystem globals */
 static int
 _e_ipc_cb_client_add(void *data __UNUSED__, int type __UNUSED__, void *event)
@@ -79,4 +86,4 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
      }
    return 1;
 }  
-
+#endif

@@ -3,6 +3,7 @@
  */
 #ifdef E_TYPEDEFS
 
+#ifdef USE_IPC
 #include      "e_ipc_handlers_list.h"
 
 typedef enum _E_Ipc_Domain
@@ -16,6 +17,7 @@ typedef enum _E_Ipc_Domain
 } E_Ipc_Domain;
 
 typedef int E_Ipc_Op;
+#endif
 
 #else
 #ifndef E_IPC_H

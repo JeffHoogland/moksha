@@ -6,6 +6,8 @@
 
 #include "config.h"
 
+#define USE_IPC
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

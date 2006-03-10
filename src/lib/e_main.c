@@ -23,6 +23,7 @@
 #include "E_Lib.h"
 #include "e.h"
 
+#ifdef USE_IPC
 #include "e_ipc_codec.c"
 
 typedef struct _Opt Opt;
@@ -635,4 +636,4 @@ _e_cb_dir_list_free(void *data __UNUSED__, void *ev)
     free(e);
 }
 
-
+#endif

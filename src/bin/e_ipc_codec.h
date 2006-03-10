@@ -3,6 +3,7 @@
  */
 #ifdef E_TYPEDEFS
 
+#ifdef USE_IPC
 typedef struct _E_Ipc_Int              E_Ipc_Int;
 typedef struct _E_Ipc_Double           E_Ipc_Double;
 typedef struct _E_Ipc_2Int             E_Ipc_2Int;
@@ -18,11 +19,13 @@ typedef struct _E_Ipc_5Int_2Str	       E_Ipc_5Int_2Str;
 typedef struct _E_Ipc_3Int_4Str	       E_Ipc_3Int_4Str;
 typedef struct _E_Ipc_3Int_3Str	       E_Ipc_3Int_3Str;
 typedef struct _E_Ipc_Str_4Int	       E_Ipc_Str_4Int;
+#endif
 
 #else
 #ifndef E_IPC_CODEC_H
 #define E_IPC_CODEC_H
 
+#ifdef USE_IPC
 struct _E_Ipc_Int
 {
    int val;
@@ -149,5 +152,7 @@ EAPI int      e_ipc_codec_str_4int_dec(char *data, int bytes, E_Ipc_Str_4Int **d
 EAPI void    *e_ipc_codec_str_4int_enc(const char *str1, int val1, int val2, int val3, int val4, int *size_ret);
 EAPI int      e_ipc_codec_str_4int_list_dec(char *data, int bytes, Evas_List **dest);
 EAPI void    *e_ipc_codec_str_4int_list_enc(Evas_List *list, int *size_ret);
+#endif
+
 #endif
 #endif

@@ -3,6 +3,8 @@
  */
 #include "e.h"
 
+#ifdef USE_IPC
+
 typedef struct _Opt Opt;
 
 struct _Opt
@@ -34,9 +36,12 @@ static const char *display_name = NULL;
 static int reply_count = 0;
 static int reply_expect = 0;
 
+#endif
+
 int
 main(int argc, char **argv)
 {
+#ifdef USE_IPC
    int i;
    char *s, buf[1024];
    
@@ -121,11 +126,13 @@ main(int argc, char **argv)
    _e_ipc_shutdown();
    ecore_ipc_shutdown();
    ecore_shutdown();
+#endif
    
    /* just return 0 to keep the compiler quiet */
    return 0;
 }
 
+#ifdef USE_IPC
 /* local subsystem functions */
 static int
 _e_cb_signal_exit(void *data, int ev_type, void *ev)
@@ -265,5 +272,4 @@ _e_help(void)
 	printf("%s\n", opt->desc);
      }
 }
-
-
+#endif
