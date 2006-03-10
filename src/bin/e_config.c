@@ -782,7 +782,7 @@ e_config_init(void)
 		    E_BINDING_MODIFIER_CTRL, 0,
 		    "window_maximized_toggle", "horizontal");
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "r",
-		    E_BINDING_MODIFIER_CTRL, 0,
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
 		    "window_shaded_toggle", NULL);
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Left",
 		    E_BINDING_MODIFIER_CTRL, 0,
