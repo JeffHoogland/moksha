@@ -841,7 +841,7 @@ _e_keybinding_action_ilist_cb_change(void *data, Evas_Object *obj)
 
   label = strdup(e_widget_ilist_selected_label_get(obj));
   for (acn = 0; strcasecmp(label, actions_predefined_names[acn].action_name == NULL ? "" :
-				 actions_predefined_names[acn].action_name) != 0; acn++ );
+			   actions_predefined_names[acn].action_name) != 0; acn++ );
 
   for (l = cfdata->key_bindings; l; l = l->next)
     {
