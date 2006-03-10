@@ -22,9 +22,21 @@ e_canvas_add(Ecore_Evas *ee)
    evas_font_cache_set(e, e_config->font_cache * 1024);
    e_path_evas_append(path_fonts, e);
    if (e_config->font_hinting == 0)
-     evas_font_hinting_set(e, EVAS_FONT_HINTING_BYTECODE);
+     {
+	if (evas_font_hinting_can_hint(e, EVAS_FONT_HINTING_BYTECODE))
+	  evas_font_hinting_set(e, EVAS_FONT_HINTING_BYTECODE);
+	else if (evas_font_hinting_can_hint(e, EVAS_FONT_HINTING_AUTO))
+	  evas_font_hinting_set(e, EVAS_FONT_HINTING_AUTO);
+	else
+	  evas_font_hinting_set(e, EVAS_FONT_HINTING_NONE);
+     }
    else if (e_config->font_hinting == 1)
-     evas_font_hinting_set(e, EVAS_FONT_HINTING_AUTO);
+     {
+	if (evas_font_hinting_can_hint(e, EVAS_FONT_HINTING_AUTO))
+	  evas_font_hinting_set(e, EVAS_FONT_HINTING_AUTO);
+	else
+	  evas_font_hinting_set(e, EVAS_FONT_HINTING_NONE);
+     }
    else if (e_config->font_hinting == 2)
      evas_font_hinting_set(e, EVAS_FONT_HINTING_NONE);
    
