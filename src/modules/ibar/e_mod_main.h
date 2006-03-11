@@ -15,7 +15,7 @@ typedef struct _IBar_Icon   IBar_Icon;
 
 struct _Config
 {
-   char         *appdir;
+   const char   *appdir;
    int           follower;
    double        follow_speed;
    double        autoscroll_speed;
