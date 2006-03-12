@@ -116,7 +116,9 @@ static void
 _e_wid_do(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   
+ 
+   if (e_widget_disabled_get(obj)) return;
+
    wd = e_widget_data_get(obj);
    if ((wd->group) && (wd->group->valptr))
      {
