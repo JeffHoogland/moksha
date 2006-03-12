@@ -8,6 +8,8 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: ghost windows happen if windows close when on another desktop or if
+  windows are very short-lived
 * BUG: k3b has minimization issues when burning cd's (it tries to unminimize
   its window and this doesn't work)
 * BUG: openoffice 2 when ddisplaying a presentation with xinerama (multiple
