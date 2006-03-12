@@ -91,6 +91,7 @@ _surebox_text_fill(SureBox *sb)
 {
    char buf[4096];
    
+   if (!sb->dia) return;
    snprintf(buf, sizeof(buf),
 	    _("Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not.<br>"
 	      "If you do not press a button the old resolution of<br>"
@@ -120,6 +121,7 @@ _surebox_timer_cb(void *data)
 	e_config_save_queue();
 	sb->timer = NULL;
 	e_object_del(E_OBJECT(sb->dia));
+	sb->dia = NULL;
 	return 0;
      }
    return 1;
