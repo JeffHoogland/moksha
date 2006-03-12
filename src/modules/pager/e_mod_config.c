@@ -11,7 +11,6 @@ struct _E_Config_Dialog_Data
    int name_pos;
    int show_popup;
    double popup_speed;
-   int allow_overlap;
 };
 
 struct _Cfg_File_Data 
@@ -64,7 +63,6 @@ _fill_data(Pager *p, E_Config_Dialog_Data *cfdata)
    
    cfdata->show_popup = p->conf->popup;
    cfdata->popup_speed = p->conf->popup_speed;
-   cfdata->allow_overlap = p->conf->allow_overlap;
 }
 
 static void *
@@ -111,11 +109,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Extras"), 0);
-   ob = e_widget_check_add(evas, _("Allow windows to overlap this gadget"), &(cfdata->allow_overlap));
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-
    /* Not Supported Yet ??
    ob = e_widget_radio_add(evas, _("Left"), PAGER_DESKNAME_LEFT, rg);
    e_widget_framelist_object_append(of, ob);
@@ -137,11 +130,6 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    p->conf->deskname_pos = cfdata->name_pos;
    if (!cfdata->show_name) p->conf->deskname_pos = PAGER_DESKNAME_NONE;
    
-   if (cfdata->allow_overlap && !p->conf->allow_overlap)
-     p->conf->allow_overlap = 1;
-   else if (!cfdata->allow_overlap && p->conf->allow_overlap)
-     p->conf->allow_overlap = 0;
-
    e_config_save_queue();
    
    _pager_cb_config_updated(p);
@@ -184,11 +172,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);   
 
-   of = e_widget_framelist_add(evas, _("Extras"), 0);
-   ob = e_widget_check_add(evas, _("Allow windows to overlap this gadget"), &(cfdata->allow_overlap));
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-
    return o;
 }
 
@@ -205,11 +188,6 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (!cfdata->show_name) p->conf->deskname_pos = PAGER_DESKNAME_NONE;
    p->conf->popup_speed = cfdata->popup_speed;
    
-   if (cfdata->allow_overlap && !p->conf->allow_overlap)
-     p->conf->allow_overlap = 1;
-   else if (!cfdata->allow_overlap && p->conf->allow_overlap)
-     p->conf->allow_overlap = 0;
-
    e_border_button_bindings_grab_all();
    e_config_save_queue();
 

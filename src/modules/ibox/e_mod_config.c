@@ -12,7 +12,6 @@ struct _E_Config_Dialog_Data
    int iconsize;
    double follow_speed;
    double autoscroll_speed;
-   int allow_overlap;
 };
 
 struct _Cfg_File_Data
@@ -58,7 +57,6 @@ _fill_data(IBox *ib, E_Config_Dialog_Data *cfdata)
    cfdata->iconsize = ib->conf->iconsize;
    cfdata->follow_speed = ib->conf->follow_speed;
    cfdata->autoscroll_speed = ib->conf->autoscroll_speed;
-   cfdata->allow_overlap = ib->conf->allow_overlap;
 }
 
 static void *
@@ -97,9 +95,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Auto Fit Icons"), &(cfdata->autofit));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
-
-   ob = e_widget_check_add(evas, _("Allow windows to overlap this gadget"), &(cfdata->allow_overlap));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
    return o;
 }
 
@@ -127,11 +122,6 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
 	ib->conf->width = IBOX_WIDTH_FIXED;
      }
-
-   if (cfdata->allow_overlap && !ib->conf->allow_overlap)
-     ib->conf->allow_overlap = 1;
-   else if (!cfdata->allow_overlap && ib->conf->allow_overlap)
-     ib->conf->allow_overlap = 0;
 
    e_border_button_bindings_grab_all();
    e_config_save_queue();
@@ -171,11 +161,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_label_add(evas, _("Autoscroll Speed:"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.2f px/s"), 0.0, 1.0, 0.01, 0,  &(cfdata->autoscroll_speed), NULL,200);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-
-   of = e_widget_framelist_add(evas, _("Extras"), 0);
-   ob = e_widget_check_add(evas, _("Allow windows to overlap this gadget"), &(cfdata->allow_overlap));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
@@ -220,11 +205,6 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	ib->conf->autoscroll_speed = cfdata->autoscroll_speed;
      }
 
-   if (cfdata->allow_overlap && !ib->conf->allow_overlap)
-     ib->conf->allow_overlap = 1;
-   else if (!cfdata->allow_overlap && ib->conf->allow_overlap)
-     ib->conf->allow_overlap = 0;
-   
    e_border_button_bindings_grab_all();
    e_config_save_queue();
 

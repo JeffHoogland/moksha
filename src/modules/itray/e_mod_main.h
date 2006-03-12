@@ -18,7 +18,6 @@ struct _Config
    int           rowsize;
    int           width;
    Evas_List    *boxes;
-   int           allow_overlap;
 };
 
 struct _Config_Box

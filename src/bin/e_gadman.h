@@ -83,6 +83,8 @@ struct _E_Gadman_Client
    Evas_Coord           minw, minh, maxw, maxh;
    unsigned char        use_autow : 1;
    unsigned char        use_autoh : 1;
+   unsigned char        allow_overlap : 1;
+   unsigned char        always_on_top : 1;
    Evas_Coord           autow, autoh;
    double               ax, ay;
    double               mina, maxa;

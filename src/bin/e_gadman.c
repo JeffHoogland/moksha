@@ -23,6 +23,7 @@ struct _Gadman_Client_Config
    int edge;
    int zone;
    int use_autow, use_autoh;
+   int allow_overlap, always_on_top;
    struct {
       int w, h;
       Evas_List *others;
@@ -74,6 +75,8 @@ static void _e_gadman_cb_full_height(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_gadman_cb_auto_height(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_gadman_cb_center_vert(void *data, E_Menu *m, E_Menu_Item *mi);
 
+static void _e_gadman_cb_allow_overlap(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_gadman_cb_always_on_top(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_gadman_cb_end_edit_mode(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static void _e_gadman_config_free(Gadman_Client_Config *cf);
@@ -104,6 +107,8 @@ e_gadman_init(void)
    E_CONFIG_VAL(D, T, zone, INT);
    E_CONFIG_VAL(D, T, use_autow, INT);
    E_CONFIG_VAL(D, T, use_autoh, INT);
+   E_CONFIG_VAL(D, T, allow_overlap, INT);
+   E_CONFIG_VAL(D, T, always_on_top, INT);
    E_CONFIG_VAL(D, T, res.w, INT);
    E_CONFIG_VAL(D, T, res.h, INT);
    E_CONFIG_LIST(D, T, res.others, gadman_config_edd);
@@ -328,6 +333,12 @@ e_gadman_client_load(E_Gadman_Client *gmc)
 	gmc->edge = cf->edge;
 	gmc->use_autow = cf->use_autow;
 	gmc->use_autoh = cf->use_autoh;
+	gmc->allow_overlap = cf->allow_overlap;
+	if (gmc->allow_overlap)
+	  gmc->policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
+	gmc->always_on_top = cf->always_on_top;
+	if (gmc->always_on_top)
+	  gmc->policy |= E_GADMAN_POLICY_ALWAYS_ON_TOP;
 	zone = e_container_zone_number_get(gmc->zone->container, cf->zone);
 	if (zone) gmc->zone = zone;
 	if (gmc->use_autow)
@@ -729,6 +740,29 @@ e_gadman_client_menu_new(E_Gadman_Client *gmc)
 	mi = e_menu_item_new(m);
 	e_menu_item_separator_set(mi, 1);
      }
+
+   /* user configurable policy flags */
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Allow Overlap"));
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, gmc->allow_overlap);
+   s = e_path_find(path_icons, "default.edj"),
+   e_menu_item_icon_edje_set(mi, s, "allow_overlap");
+   if (s) evas_stringshare_del(s);
+   e_menu_item_callback_set(mi, _e_gadman_cb_allow_overlap, gmc);
+/* Not used yet
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Always On Top"));
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, gmc->always_on_top);
+   s = e_path_find(path_icons, "default.edj"),
+   e_menu_item_icon_edje_set(mi, s, "always_on_top");
+   if (s) evas_stringshare_del(s);
+   e_menu_item_callback_set(mi, _e_gadman_cb_always_on_top, gmc);
+*/
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("End Edit Mode"));
    e_menu_item_callback_set(mi, _e_gadman_cb_end_edit_mode, gmc);
@@ -1983,6 +2017,44 @@ _e_gadman_cb_center_vert(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
+_e_gadman_cb_allow_overlap(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Gadman_Client *gmc;
+
+   gmc = data;
+   if (e_menu_item_toggle_get(mi))
+     {
+	gmc->allow_overlap = 1;
+	gmc->policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
+     }
+   else
+     {
+	gmc->allow_overlap = 0;
+	gmc->policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
+     }
+   e_gadman_client_save(gmc);
+}
+
+static void
+_e_gadman_cb_always_on_top(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Gadman_Client *gmc;
+
+   gmc = data;
+   if (e_menu_item_toggle_get(mi))
+     {
+	gmc->allow_overlap = 1;
+	gmc->policy |= E_GADMAN_POLICY_ALWAYS_ON_TOP;
+     }
+   else
+     {
+	gmc->allow_overlap = 0;
+	gmc->policy &= ~E_GADMAN_POLICY_ALWAYS_ON_TOP;
+     }
+   e_gadman_client_save(gmc);
+}
+
+static void
 _e_gadman_cb_end_edit_mode(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Gadman_Client *gmc;
@@ -2022,4 +2094,6 @@ _e_gadman_client_geom_store(E_Gadman_Client *gmc)
    cf->zone = gmc->zone->num;
    cf->use_autow = gmc->use_autow;
    cf->use_autoh = gmc->use_autoh;
+   cf->allow_overlap = gmc->allow_overlap;
+   cf->always_on_top = gmc->always_on_top;
 }

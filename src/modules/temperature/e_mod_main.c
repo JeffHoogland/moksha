@@ -25,8 +25,6 @@ static void      _temperature_face_free(void *data, E_Gadget_Face *face);
 
 static void      _temperature_face_level_set(E_Gadget_Face *face, double level);
 
-static void	_temperature_cb_update_policy(void *data);
-
 static E_Config_DD *conf_edd;
 static E_Config_DD *conf_face_edd;
 
@@ -166,7 +164,6 @@ _temperature_new()
    E_CONFIG_LIST(D, T, faces, conf_face_edd);
    E_CONFIG_VAL(D, T, sensor_name, STR);
    E_CONFIG_VAL(D, T, units, INT);
-   E_CONFIG_VAL(D, T, allow_overlap, INT);
 
    e->conf = e_config_domain_load("module.temperature", conf_edd);
    if (!e->conf)
@@ -177,13 +174,11 @@ _temperature_new()
 	e->conf->high = 80;
 	e->conf->sensor_name = "temp1";
 	e->conf->units = CELCIUS;
-	e->conf->allow_overlap = 0;
      }
    E_CONFIG_LIMIT(e->conf->poll_time, 0.5, 1000.0);
    E_CONFIG_LIMIT(e->conf->low, 0, 100);
    E_CONFIG_LIMIT(e->conf->high, 0, 220);
    E_CONFIG_LIMIT(e->conf->units, CELCIUS, FAHRENHEIT);
-   E_CONFIG_LIMIT(e->conf->allow_overlap, 0, 1);
 
    e->have_temp = -1;
 
@@ -209,11 +204,6 @@ void _temperature_face_init(void *data, E_Gadget_Face *face)
 	    E_GADMAN_POLICY_VMOVE |
 	    E_GADMAN_POLICY_HSIZE |
 	    E_GADMAN_POLICY_VSIZE;
-
-   if (e->conf->allow_overlap == 0)
-     policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
-   else
-     policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
 
    e_gadman_client_policy_set(face->gmc, policy);
 
@@ -451,34 +441,6 @@ _temperature_face_cb_config_updated(Temperature *temp)
    /* Call all funcs needed to handle update */
    ecore_timer_del(temp->temperature_check_timer);
    temp->temperature_check_timer = ecore_timer_add(temp->conf->poll_time, _temperature_cb_check, temp->gad);
-   _temperature_cb_update_policy(temp);
    
 }
 
-void
-_temperature_cb_update_policy(void *data)
-{
-  Temperature *temp;
-  E_Gadget_Face *face;
-  Evas_List *l;
-  E_Gadman_Policy policy;
-  E_Gadget *gad;
-
-  temp = data;
-  if (!temp) return;
-  gad = temp->gad;
-  if (!gad) return;
-
-  for (l = gad->faces; l; l = l->next)
-    {
-      face = l->data;
-      policy = face->gmc->policy;
-
-      if (temp->conf->allow_overlap == 0)
-	policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
-      else
-	policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
-
-      e_gadman_client_policy_set(face->gmc, policy);
-    }
-}

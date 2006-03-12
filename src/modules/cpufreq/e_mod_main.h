@@ -23,7 +23,6 @@ struct _Status
 struct _Config
 {
    double poll_time;
-   int	  allow_overlap;
    Evas_List *faces;
 
    int   restore_governor;

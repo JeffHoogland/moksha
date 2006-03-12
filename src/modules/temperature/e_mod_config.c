@@ -30,8 +30,6 @@ struct _E_Config_Dialog_Data
    int high_method;
    int high_temp;
 
-   int allow_overlap;
-
    int sensor;
 };
 
@@ -112,8 +110,6 @@ _fill_data(Temperature *t, E_Config_Dialog_Data *cfdata)
      cfdata->sensor = 1;
    else if (!strcmp(t->conf->sensor_name, "temp3")) 
      cfdata->sensor = 2;
-
-   cfdata->allow_overlap = t->conf->allow_overlap;
 }
 
 static void *
@@ -215,11 +211,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	e_widget_list_object_append(o, of, 1, 1, 0.5);
      }
 
-   of = e_widget_framelist_add(evas, _("Extras"), 0);
-   ob = e_widget_check_add(evas, _("Allow windows to overlap this gadget"), &(cfdata->allow_overlap));
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-
    return o;
 }
 
@@ -247,11 +238,6 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	t->conf->low = cfdata->low_method;
 	t->conf->high = cfdata->high_method;
      }
-
-   if (cfdata->allow_overlap && !t->conf->allow_overlap)
-     t->conf->allow_overlap = 1;
-   else if (!cfdata->allow_overlap && t->conf->allow_overlap)
-     t->conf->allow_overlap = 0;
 
    e_border_button_bindings_grab_all();
    e_config_save_queue();
@@ -365,11 +351,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 	e_widget_list_object_append(o, of, 1, 1, 0.5);
      }  
 
-   of = e_widget_framelist_add(evas, _("Extras"), 0);
-   ob = e_widget_check_add(evas, _("Allow windows to overlap this gadget"), &(cfdata->allow_overlap));
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-
    return o;
 }
 
@@ -420,11 +401,6 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	break;
      }
    
-   if (cfdata->allow_overlap && !t->conf->allow_overlap)
-     t->conf->allow_overlap = 1;
-   else if (!cfdata->allow_overlap && t->conf->allow_overlap)
-     t->conf->allow_overlap = 0;
-
    e_border_button_bindings_grab_all();
    e_config_save_queue();
    

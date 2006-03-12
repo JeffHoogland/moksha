@@ -33,7 +33,6 @@ struct _Config
    /* Show popup? */
    unsigned int popup;
 
-   int allow_overlap;
 };
 
 struct _Config_Face

@@ -10,7 +10,6 @@ struct _E_Config_Dialog_Data
    int show_alert;   
    double poll_time;   
    int alarm_time;
-   int allow_overlap;
 };
 
 struct _Cfg_File_Data 
@@ -55,7 +54,6 @@ _fill_data(Battery *b, E_Config_Dialog_Data *cfdata)
      cfdata->show_alert = 1;
    else 
      cfdata->show_alert = 0;
-   cfdata->allow_overlap = b->conf->allow_overlap;
 }
 
 static void *
@@ -90,11 +88,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_check_add(evas, _("Show alert when battery is low"), &(cfdata->show_alert));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-
-   of = e_widget_framelist_add(evas, _("Extras"), 0);
-   ob = e_widget_check_add(evas, _("Allow windows to overlap this gadget"), &(cfdata->allow_overlap));
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
    return o;
 }
 
@@ -106,11 +99,6 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    b = cfd->data;
    e_border_button_bindings_ungrab_all();
    b->conf->poll_time = 10.0;   
-
-   if (cfdata->allow_overlap && !b->conf->allow_overlap)
-     b->conf->allow_overlap = 1;
-   else if (!cfdata->allow_overlap && b->conf->allow_overlap)
-     b->conf->allow_overlap = 0;
 
    e_border_button_bindings_grab_all();
    e_config_save_queue();
@@ -144,11 +132,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_frametable_object_append(of, ob, 0, 5, 1, 1, 1, 0, 1, 0);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-
-   of = e_widget_framelist_add(evas, _("Extras"), 0);
-   ob = e_widget_check_add(evas, _("Allow windows to overlap this gadget"), &(cfdata->allow_overlap));
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
    return o;
 }
 
@@ -166,11 +149,6 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    else 
      b->conf->alarm = 0;
 
-   if (cfdata->allow_overlap && !b->conf->allow_overlap)
-     b->conf->allow_overlap = 1;
-   else if (!cfdata->allow_overlap && b->conf->allow_overlap)
-     b->conf->allow_overlap = 0;
-   
    e_border_button_bindings_grab_all();
    e_config_save_queue();
    

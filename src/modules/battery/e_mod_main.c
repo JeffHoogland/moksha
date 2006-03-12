@@ -64,8 +64,6 @@ static char         *_battery_string_get(char *buf);
 
 static void          _battery_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
 
-static void	    _battery_face_cb_update_policy(void *data);
-
 static E_Config_DD *conf_edd;
 static E_Config_DD *conf_face_edd;
 
@@ -191,7 +189,6 @@ _battery_new()
 #define D conf_edd
    E_CONFIG_VAL(D, T, poll_time, DOUBLE);
    E_CONFIG_VAL(D, T, alarm, INT);
-   E_CONFIG_VAL(D, T, allow_overlap, INT);
    E_CONFIG_LIST(D, T, faces, conf_face_edd);
 
    e->conf = e_config_domain_load("module.battery", conf_edd);
@@ -200,11 +197,9 @@ _battery_new()
        e->conf = E_NEW(Config, 1);
        e->conf->poll_time = 30.0;
        e->conf->alarm = 30;
-       e->conf->allow_overlap = 0;
      }
    E_CONFIG_LIMIT(e->conf->poll_time, 0.5, 1000.0);
    E_CONFIG_LIMIT(e->conf->alarm, 0, 60);
-   E_CONFIG_LIMIT(e->conf->allow_overlap, 0, 1);
 
    _battery_config_menu_new(e);
 
@@ -340,10 +335,6 @@ _battery_face_new(Battery *bat, E_Container *con)
 	    E_GADMAN_POLICY_VMOVE | 
 	    E_GADMAN_POLICY_HSIZE |
 	    E_GADMAN_POLICY_VSIZE;
-   if (bat->conf->allow_overlap == 0)
-     policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
-   else
-     policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
    e_gadman_client_policy_set(ef->gmc, policy);
    e_gadman_client_min_size_set(ef->gmc, 4, 4);
    e_gadman_client_max_size_set(ef->gmc, 128, 128);
@@ -1645,31 +1636,8 @@ _battery_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
 void 
 _battery_face_cb_config_updated(Battery *bat) 
 {
-   /* Call all functions needed to update battery */
-   _battery_face_cb_update_policy((void*)bat);
-   
    /* Update Poll Time */
    ecore_timer_del(bat->battery_check_timer);
    bat->battery_check_timer = ecore_timer_add(bat->conf->poll_time, _battery_cb_check, bat);   
 }
 
-static void _battery_face_cb_update_policy(void *data)
-{
-  Battery     *bat;
-  Battery_Face *bf;
-  Evas_List   *l;
-  E_Gadman_Policy policy;
-
-  bat = data;
-  for (l = bat->faces; l; l = l->next)
-    {
-      bf = l->data;
-      policy = bf->gmc->policy;
-
-      if (bat->conf->allow_overlap ==0)
-        policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
-      else
-        policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
-      e_gadman_client_policy_set(bf->gmc , policy);
-    }
-}

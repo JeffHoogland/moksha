@@ -10,7 +10,6 @@ struct _E_Config_Dialog_Data
    int autofit;
    int follower;
    int iconsize;
-   int allow_overlap;
    double follow_speed;
    double autoscroll_speed;
 };
@@ -56,7 +55,6 @@ _fill_data(IBar *ib, E_Config_Dialog_Data *cfdata)
    cfdata->autofit = (ib->conf->width == IBAR_WIDTH_AUTO);
    cfdata->follower = ib->conf->follower;
    cfdata->iconsize = ib->conf->iconsize;   
-   cfdata->allow_overlap = ib->conf->allow_overlap;
    cfdata->follow_speed = ib->conf->follow_speed;
    cfdata->autoscroll_speed = ib->conf->autoscroll_speed;
 }
@@ -94,7 +92,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_check_add(evas, _("Auto Fit Icons"), &(cfdata->autofit));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
 
-   ob = e_widget_check_add(evas, _("Allow windows to overlap this gadget"), &(cfdata->allow_overlap));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    return o;
 }
@@ -115,11 +112,6 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	ib->conf->follower = 0;
      }
 
-   if (cfdata->allow_overlap && !ib->conf->allow_overlap)
-     ib->conf->allow_overlap = 1;
-   else if (!cfdata->allow_overlap && ib->conf->allow_overlap)
-     ib->conf->allow_overlap = 0;
- 
    if ((cfdata->autofit) && (ib->conf->width == IBAR_WIDTH_FIXED)) 
      {
 	ib->conf->width = IBAR_WIDTH_AUTO;
@@ -167,7 +159,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    /* allow overlap checkbox */
    of = e_widget_framelist_add(evas, _("Extras"), 0);
-   ob = e_widget_check_add(evas, _("Allow windows to overlap this gadget"), &(cfdata->allow_overlap));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    return o;
@@ -189,12 +180,6 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	ib->conf->follower = 0;
      }
 
-   /* allow overlap check box */
-   if (cfdata->allow_overlap && !ib->conf->allow_overlap)
-     ib->conf->allow_overlap = 1;
-   else if (!cfdata->allow_overlap && ib->conf->allow_overlap)
-     ib->conf->allow_overlap = 0;
-   
    if ((cfdata->autofit) && (ib->conf->width == IBAR_WIDTH_FIXED)) 
      {
 	ib->conf->width = IBAR_WIDTH_AUTO;

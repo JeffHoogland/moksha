@@ -19,7 +19,6 @@ struct _Config
    int           follower;
    double        autoscroll_speed;
    int           iconsize;
-   int		 allow_overlap;
    int           width;
    Evas_List    *boxes;
 };

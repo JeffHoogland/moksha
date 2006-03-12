@@ -25,7 +25,6 @@ static void     _cpufreq_menu_medium(void *data, E_Menu *m, E_Menu_Item *mi);
 static void     _cpufreq_menu_normal(void *data, E_Menu *m, E_Menu_Item *mi);
 static void     _cpufreq_menu_slow(void *data, E_Menu *m, E_Menu_Item *mi);
 static void     _cpufreq_menu_very_slow(void *data, E_Menu *m, E_Menu_Item *mi);
-static void	_cpufreq_menu_cb_allow_overlap(void *data, E_Menu *m, E_Menu_Item *mi);
 static void     _cpufreq_menu_restore_governor(void *data, E_Menu *m, E_Menu_Item *mi);
 static void     _cpufreq_menu_governor(void *data, E_Menu *m, E_Menu_Item *mi);
 static void     _cpufreq_menu_frequency(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -50,8 +49,6 @@ static void          _cpufreq_face_update_available(Cpufreq_Face *face);
 static void          _cpufreq_face_update_current(Cpufreq_Face *face);
 static void          _cpufreq_face_cb_set_frequency(void *data, Evas_Object *o, const char *emission, const char *source);
 static void          _cpufreq_face_cb_set_governor(void *data, Evas_Object *o, const char *emission, const char *source);
-
-static void	_cpufreq_cb_update_policy(Cpufreq *e);
 
 static E_Config_DD *conf_edd;
 static E_Config_DD *conf_face_edd;
@@ -144,7 +141,6 @@ _cpufreq_new(E_Module *module)
 #define T Config
 #define D conf_edd
    E_CONFIG_VAL(D, T, poll_time, DOUBLE);
-   E_CONFIG_VAL(D, T, allow_overlap, INT);
    E_CONFIG_LIST(D, T, faces, conf_face_edd);
    E_CONFIG_VAL(D, T, restore_governor, INT);
    E_CONFIG_VAL(D, T, governor, STR);
@@ -156,10 +152,8 @@ _cpufreq_new(E_Module *module)
 	e->conf->poll_time = 2.0;
 	e->conf->restore_governor = 0;
 	e->conf->governor = NULL;
-	e->conf->allow_overlap = 0;
      }
    E_CONFIG_LIMIT(e->conf->poll_time, 0.5, 60.0);
-   E_CONFIG_LIMIT(e->conf->allow_overlap, 0, 1);
 #ifdef __FreeBSD__	
    /* does e_module_dir_get(module) work correctly in linux???  - yes it does... what's wrong in bsd? */
    snprintf(buf, sizeof(buf), "%s/%s/cpufreq/freqset", e_module_dir_get(module), MODULE_ARCH);
@@ -214,13 +208,6 @@ _cpufreq_new(E_Module *module)
 		    }
 
 		  _cpufreq_face_menu_new(ef);
-
-		  /* Add 'Allow Overlap' option */
-		  mi = e_menu_item_new(ef->menu);
-		  e_menu_item_label_set(mi, _("Allow Overlap"));
-		  e_menu_item_check_set(mi, 1);
-		  e_menu_item_toggle_set(mi, e->conf->allow_overlap);
-		  e_menu_item_callback_set(mi, _cpufreq_menu_cb_allow_overlap, e);
 
 		  /* Add poll time menu to this face */
 		  mi = e_menu_item_new(ef->menu);
@@ -409,38 +396,6 @@ _cpufreq_menu_very_slow(void *data, E_Menu *m, E_Menu_Item *mi)
    e_config_save_queue();
 }
 
-static void _cpufreq_cb_update_policy(Cpufreq *e)
-{
-  Cpufreq_Face     *cf;
-  Evas_List        *l;
-  E_Gadman_Policy   policy;
-
-  for (l = e->faces; l; l = l->next)
-    {
-      cf = l->data;
-      policy = cf->gmc->policy;
-
-      if (e->conf->allow_overlap == 0)
-	policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
-      else
-	policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
-
-      e_gadman_client_policy_set(cf->gmc, policy);
-    }
-}
-
-static void _cpufreq_menu_cb_allow_overlap(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-  Cpufreq *e;
-
-  e = data;
-  e->conf->allow_overlap = e_menu_item_toggle_get(mi);
-  _cpufreq_cb_update_policy(e);
-  e_config_save_queue();
-}
-
-
-
 static void
 _cpufreq_menu_restore_governor(void *data, E_Menu *m, E_Menu_Item *mi)
 {
@@ -586,12 +541,6 @@ _cpufreq_config_menu_new(Cpufreq *e)
      }
 
    mn = e_menu_new();
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Allow Overlap"));
-   e_menu_item_check_set(mi, 1);
-   e_menu_item_toggle_set(mi, e->conf->allow_overlap);
-   e_menu_item_callback_set(mi, _cpufreq_menu_cb_allow_overlap, e);
    
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Set Poll Time"));
@@ -948,11 +897,6 @@ _cpufreq_face_new(E_Container *con, Cpufreq *owner)
            E_GADMAN_POLICY_VMOVE     |
            E_GADMAN_POLICY_HSIZE     |
            E_GADMAN_POLICY_VSIZE;
-
-   if (owner->conf->allow_overlap == 0)
-     policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
-   else
-     policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
 
    e_gadman_client_policy_set(ef->gmc, policy);
    e_gadman_client_min_size_set(ef->gmc, 4, 4);

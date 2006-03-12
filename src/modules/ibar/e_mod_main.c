@@ -222,7 +222,6 @@ _ibar_new()
    E_CONFIG_VAL(D, T, autoscroll_speed, DOUBLE);
    E_CONFIG_VAL(D, T, iconsize, INT);
    E_CONFIG_VAL(D, T, width, INT);
-   E_CONFIG_VAL(D, T, allow_overlap, INT);
    E_CONFIG_LIST(D, T, bars, conf_bar_edd);
 
    ib->conf = e_config_domain_load("module.ibar", conf_edd);
@@ -234,14 +233,12 @@ _ibar_new()
 	ib->conf->follow_speed = 0.9;
 	ib->conf->autoscroll_speed = 0.95;
 	ib->conf->iconsize = 24;
-	ib->conf->allow_overlap = 0;
 	ib->conf->width = IBAR_WIDTH_AUTO;
      }
    E_CONFIG_LIMIT(ib->conf->follow_speed, 0.01, 1.0);
    E_CONFIG_LIMIT(ib->conf->autoscroll_speed, 0.01, 1.0);
    E_CONFIG_LIMIT(ib->conf->iconsize, 2, 400);
    E_CONFIG_LIMIT(ib->conf->width, -2, -1);
-   E_CONFIG_LIMIT(ib->conf->allow_overlap, 0, 1);
 
    _ibar_config_menu_new(ib);
 
@@ -586,11 +583,6 @@ _ibar_bar_new(IBar *ib, E_Container *con)
    policy = E_GADMAN_POLICY_EDGES | E_GADMAN_POLICY_HMOVE | E_GADMAN_POLICY_VMOVE;
    if (ibb->ibar->conf->width == IBAR_WIDTH_FIXED)
      policy |= E_GADMAN_POLICY_HSIZE;
-
-   if (ibb->ibar->conf->allow_overlap == 0)
-     policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
-   else
-     policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
 
    e_gadman_client_policy_set(ibb->gmc, policy);
    e_gadman_client_min_size_set(ibb->gmc, 8, 8);
@@ -1019,11 +1011,6 @@ _ibar_bar_edge_change(IBar_Bar *ibb, int edge)
    e_box_align_set(ibb->box_object, 0.5, 0.5);
 
    policy = E_GADMAN_POLICY_EDGES | E_GADMAN_POLICY_HMOVE | E_GADMAN_POLICY_VMOVE;
-   if (ibb->ibar->conf->allow_overlap == 0)
-     policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
-   else
-     policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
-
    if ((edge == E_GADMAN_EDGE_BOTTOM) ||
        (edge == E_GADMAN_EDGE_TOP))
      {
@@ -1067,11 +1054,6 @@ _ibar_bar_update_policy(IBar_Bar *ibb)
    E_Gadman_Policy policy;
 
    policy = E_GADMAN_POLICY_EDGES | E_GADMAN_POLICY_HMOVE | E_GADMAN_POLICY_VMOVE;
-
-   if (ibb->ibar->conf->allow_overlap == 0)
-     policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
-   else
-     policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
 
    if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_BOTTOM) ||
        (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_TOP))

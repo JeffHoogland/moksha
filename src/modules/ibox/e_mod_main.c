@@ -203,7 +203,6 @@ _ibox_new()
    E_CONFIG_VAL(D, T, autoscroll_speed, DOUBLE);
    E_CONFIG_VAL(D, T, iconsize, INT);
    E_CONFIG_VAL(D, T, width, INT);
-   E_CONFIG_VAL(D, T, allow_overlap, INT);
    E_CONFIG_LIST(D, T, boxes, conf_box_edd);
 
    ib->conf = e_config_domain_load("module.ibox", conf_edd);
@@ -215,13 +214,11 @@ _ibox_new()
 	ib->conf->autoscroll_speed = 0.95;
 	ib->conf->iconsize = 24;
 	ib->conf->width = IBOX_WIDTH_AUTO;
-	ib->conf->allow_overlap = 0;
      }
    E_CONFIG_LIMIT(ib->conf->follow_speed, 0.01, 1.0);
    E_CONFIG_LIMIT(ib->conf->autoscroll_speed, 0.01, 1.0);
    E_CONFIG_LIMIT(ib->conf->iconsize, 2, 400);
    E_CONFIG_LIMIT(ib->conf->width, -2, -1);
-   E_CONFIG_LIMIT(ib->conf->allow_overlap, 0, 1);
 
    _ibox_config_menu_new(ib);
 
@@ -401,11 +398,6 @@ _ibox_box_new(IBox *ib, E_Container *con)
    if (ibb->ibox->conf->width == IBOX_WIDTH_FIXED)
      policy |= E_GADMAN_POLICY_VSIZE;
 
-   if (ibb->ibox->conf->allow_overlap == 0)
-     policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
-   else
-     policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
-   
    e_gadman_client_policy_set(ibb->gmc, policy);
    e_gadman_client_min_size_set(ibb->gmc, 8, 8);
    e_gadman_client_max_size_set(ibb->gmc, 3200, 3200);
@@ -723,11 +715,6 @@ _ibox_box_edge_change(IBox_Box *ibb, int edge)
 
    policy = E_GADMAN_POLICY_EDGES | E_GADMAN_POLICY_HMOVE | E_GADMAN_POLICY_VMOVE;
 
-   if (ibb->ibox->conf->allow_overlap == 0)
-     policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
-   else
-     policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
-
    if ((edge == E_GADMAN_EDGE_BOTTOM) ||
        (edge == E_GADMAN_EDGE_TOP))
      {
@@ -771,11 +758,6 @@ _ibox_box_update_policy(IBox_Box *ibb)
    E_Gadman_Policy policy;
 
    policy = E_GADMAN_POLICY_EDGES | E_GADMAN_POLICY_HMOVE | E_GADMAN_POLICY_VMOVE;
-
-   if (ibb->ibox->conf->allow_overlap == 0)
-     policy &= ~E_GADMAN_POLICY_ALLOW_OVERLAP;
-   else
-     policy |= E_GADMAN_POLICY_ALLOW_OVERLAP;
 
    if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_BOTTOM) ||
        (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_TOP))
