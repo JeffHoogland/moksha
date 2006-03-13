@@ -673,6 +673,9 @@ _e_box_smart_del(Evas_Object *obj)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
+   /* FIXME: this gets into an infinite loop when changin basic->advanced on
+    * ibar config dialog
+    */
    while (sd->items)
      {
 	Evas_Object *child;
