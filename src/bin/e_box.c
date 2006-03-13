@@ -419,13 +419,16 @@ _e_box_smart_reconfigure(E_Smart_Data *sd)
 	
 	obj = l->data;
 	bi = evas_object_data_get(obj, "e_box_data");
-	if (sd->horizontal)
+	if (bi)
 	  {
-	     if (bi->expand_w) expand++;
-	  }
-	else
-	  {
-	     if (bi->expand_h) expand++;
+	     if (sd->horizontal)
+	       {
+		  if (bi->expand_w) expand++;
+	       }
+	     else
+	       {
+		  if (bi->expand_h) expand++;
+	       }
 	  }
      }
    if (expand == 0)
@@ -452,96 +455,99 @@ _e_box_smart_reconfigure(E_Smart_Data *sd)
 	
 	obj = l->data;
 	bi = evas_object_data_get(obj, "e_box_data");
-	if (sd->horizontal)
+	if (bi)
 	  {
-	     if (sd->homogenous)
+	     if (sd->horizontal)
 	       {
-		  Evas_Coord ww, hh, ow, oh;
-		  
-		  ww = (w / (Evas_Coord)count);
-		  hh = h;
-		  ow = bi->min.w;
-		  if (bi->fill_w) ow = ww;
-		  if ((bi->max.w >= 0) && (bi->max.w < ow)) ow = bi->max.w;
-		  oh = bi->min.h;
-		  if (bi->fill_h) oh = hh;
-		  if ((bi->max.h >= 0) && (bi->max.h < oh)) oh = bi->max.h;
-		  evas_object_move(obj, 
-				   xx + (Evas_Coord)(((double)(ww - ow)) * bi->align.x),
-				   yy + (Evas_Coord)(((double)(hh - oh)) * bi->align.y));
-		  evas_object_resize(obj, ow, oh);
-		  xx += ww;
+		  if (sd->homogenous)
+		    {
+		       Evas_Coord ww, hh, ow, oh;
+		       
+		       ww = (w / (Evas_Coord)count);
+		       hh = h;
+		       ow = bi->min.w;
+		       if (bi->fill_w) ow = ww;
+		       if ((bi->max.w >= 0) && (bi->max.w < ow)) ow = bi->max.w;
+		       oh = bi->min.h;
+		       if (bi->fill_h) oh = hh;
+		       if ((bi->max.h >= 0) && (bi->max.h < oh)) oh = bi->max.h;
+		       evas_object_move(obj, 
+					xx + (Evas_Coord)(((double)(ww - ow)) * bi->align.x),
+					yy + (Evas_Coord)(((double)(hh - oh)) * bi->align.y));
+		       evas_object_resize(obj, ow, oh);
+		       xx += ww;
+		    }
+		  else
+		    {
+		       Evas_Coord ww, hh, ow, oh;
+		       
+		       ww = bi->min.w;
+		       if ((expand > 0) && (bi->expand_w))
+			 {
+			    if (expand == 1) ow = wdif;
+			    else ow = (w - minw) / expand;
+			    wdif -= ow;
+			    ww += ow;
+			 }
+		       hh = h;
+		       ow = bi->min.w;
+		       if (bi->fill_w) ow = ww;
+		       if ((bi->max.w >= 0) && (bi->max.w < ow)) ow = bi->max.w;
+		       oh = bi->min.h;
+		       if (bi->fill_h) oh = hh;
+		       if ((bi->max.h >= 0) && (bi->max.h < oh)) oh = bi->max.h;
+		       evas_object_move(obj, 
+					xx + (Evas_Coord)(((double)(ww - ow)) * bi->align.x),
+					yy + (Evas_Coord)(((double)(hh - oh)) * bi->align.y));
+		       evas_object_resize(obj, ow, oh);
+		       xx += ww;
+		    }
 	       }
 	     else
 	       {
-		  Evas_Coord ww, hh, ow, oh;
-		  
-		  ww = bi->min.w;
-		  if ((expand > 0) && (bi->expand_w))
+		  if (sd->homogenous)
 		    {
-		       if (expand == 1) ow = wdif;
-		       else ow = (w - minw) / expand;
-		       wdif -= ow;
-		       ww += ow;
+		       Evas_Coord ww, hh, ow, oh;
+		       
+		       ww = w;
+		       hh = (h / (Evas_Coord)count);
+		       ow = bi->min.w;
+		       if (bi->expand_w) ow = ww;
+		       if ((bi->max.w >= 0) && (bi->max.w < ow)) ow = bi->max.w;
+		       oh = bi->min.h;
+		       if (bi->expand_h) oh = hh;
+		       if ((bi->max.h >= 0) && (bi->max.h < oh)) oh = bi->max.h;
+		       evas_object_move(obj, 
+					xx + (Evas_Coord)(((double)(ww - ow)) * bi->align.x),
+					yy + (Evas_Coord)(((double)(hh - oh)) * bi->align.y));
+		       evas_object_resize(obj, ow, oh);
+		       yy += hh;
 		    }
-		  hh = h;
-		  ow = bi->min.w;
-		  if (bi->fill_w) ow = ww;
-		  if ((bi->max.w >= 0) && (bi->max.w < ow)) ow = bi->max.w;
-		  oh = bi->min.h;
-		  if (bi->fill_h) oh = hh;
-		  if ((bi->max.h >= 0) && (bi->max.h < oh)) oh = bi->max.h;
-		  evas_object_move(obj, 
-				   xx + (Evas_Coord)(((double)(ww - ow)) * bi->align.x),
-				   yy + (Evas_Coord)(((double)(hh - oh)) * bi->align.y));
-		  evas_object_resize(obj, ow, oh);
-		  xx += ww;
-	       }
-	  }
-	else
-	  {
-	     if (sd->homogenous)
-	       {
-		  Evas_Coord ww, hh, ow, oh;
-		  
-		  ww = w;
-		  hh = (h / (Evas_Coord)count);
-		  ow = bi->min.w;
-		  if (bi->expand_w) ow = ww;
-		  if ((bi->max.w >= 0) && (bi->max.w < ow)) ow = bi->max.w;
-		  oh = bi->min.h;
-		  if (bi->expand_h) oh = hh;
-		  if ((bi->max.h >= 0) && (bi->max.h < oh)) oh = bi->max.h;
-		  evas_object_move(obj, 
-				   xx + (Evas_Coord)(((double)(ww - ow)) * bi->align.x),
-				   yy + (Evas_Coord)(((double)(hh - oh)) * bi->align.y));
-		  evas_object_resize(obj, ow, oh);
-		  yy += hh;
-	       }
-	     else
-	       {
-		  Evas_Coord ww, hh, ow, oh;
-		  
-		  ww = w;
-		  hh = bi->min.h;
-		  if ((expand > 0) && (bi->expand_h))
+		  else
 		    {
-		       if (expand == 1) oh = hdif;
-		       else oh = (h - minh) / expand;
-		       hdif -= oh;
-		       hh += oh;
+		       Evas_Coord ww, hh, ow, oh;
+		       
+		       ww = w;
+		       hh = bi->min.h;
+		       if ((expand > 0) && (bi->expand_h))
+			 {
+			    if (expand == 1) oh = hdif;
+			    else oh = (h - minh) / expand;
+			    hdif -= oh;
+			    hh += oh;
+			 }
+		       ow = bi->min.w;
+		       if (bi->expand_w) ow = ww;
+		       if ((bi->max.w >= 0) && (bi->max.w < ow)) ow = bi->max.w;
+		       oh = bi->min.h;
+		       if (bi->expand_h) oh = hh;
+		       if ((bi->max.h >= 0) && (bi->max.h < oh)) oh = bi->max.h;
+		       evas_object_move(obj, 
+					xx + (Evas_Coord)(((double)(ww - ow)) * bi->align.x),
+					yy + (Evas_Coord)(((double)(hh - oh)) * bi->align.y));
+		       evas_object_resize(obj, ow, oh);
+		       yy += hh;
 		    }
-		  ow = bi->min.w;
-		  if (bi->expand_w) ow = ww;
-		  if ((bi->max.w >= 0) && (bi->max.w < ow)) ow = bi->max.w;
-		  oh = bi->min.h;
-		  if (bi->expand_h) oh = hh;
-		  if ((bi->max.h >= 0) && (bi->max.h < oh)) oh = bi->max.h;
-		  evas_object_move(obj, 
-				   xx + (Evas_Coord)(((double)(ww - ow)) * bi->align.x),
-				   yy + (Evas_Coord)(((double)(hh - oh)) * bi->align.y));
-		  evas_object_resize(obj, ow, oh);
-		  yy += hh;
 	       }
 	  }
      }
@@ -569,15 +575,18 @@ _e_box_smart_extents_calcuate(E_Smart_Data *sd)
 	     
 	     obj = l->data;
 	     bi = evas_object_data_get(obj, "e_box_data");	
-	     if (sd->horizontal)
+	     if (bi)
 	       {
-		  if (minh < bi->min.h) minh = bi->min.h;
-		  if (minw < bi->min.w) minw = bi->min.w;
-	       }
-	     else
-	       {
-		  if (minw < bi->min.w) minw = bi->min.w;
-		  if (minh < bi->min.h) minh = bi->min.h;
+		  if (sd->horizontal)
+		    {
+		       if (minh < bi->min.h) minh = bi->min.h;
+		       if (minw < bi->min.w) minw = bi->min.w;
+		    }
+		  else
+		    {
+		       if (minw < bi->min.w) minw = bi->min.w;
+		       if (minh < bi->min.h) minh = bi->min.h;
+		    }
 	       }
 	  }
 	if (sd->horizontal)
@@ -597,16 +606,19 @@ _e_box_smart_extents_calcuate(E_Smart_Data *sd)
 	     Evas_Object *obj;
 	     
 	     obj = l->data;
-	     bi = evas_object_data_get(obj, "e_box_data");	
-	     if (sd->horizontal)
+	     bi = evas_object_data_get(obj, "e_box_data");
+	     if (bi)
 	       {
-		  if (minh < bi->min.h) minh = bi->min.h;
-		  minw += bi->min.w;
-	       }
-	     else
-	       {
-		  if (minw < bi->min.w) minw = bi->min.w;
-		  minh += bi->min.h;
+		  if (sd->horizontal)
+		    {
+		       if (minh < bi->min.h) minh = bi->min.h;
+		       minw += bi->min.w;
+		    }
+		  else
+		    {
+		       if (minw < bi->min.w) minw = bi->min.w;
+		       minh += bi->min.h;
+		    }
 	       }
 	  }
      }
