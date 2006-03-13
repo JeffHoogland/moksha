@@ -16,6 +16,8 @@ static char *_e_intl_orig_lc_all = NULL;
 static char *_e_intl_orig_lang = NULL;
 static char *_e_intl_language = NULL;
 
+static char *_e_intl_language_alias = NULL;
+
 static char *_e_intl_orig_xmodifiers = NULL;
 static char *_e_intl_orig_qt_im_module = NULL; 
 static char *_e_intl_orig_gtk_im_module = NULL;
@@ -41,13 +43,13 @@ static Evas_List 	*_e_intl_language_dir_scan(const char *dir);
 static int 		 _e_intl_language_list_find(Evas_List *language_list, char *language);
 
 /* Locale Validation and Discovery */
-static char		*_e_intl_locale_alias_get(char *language); 
 static Evas_Hash	*_e_intl_locale_alias_hash_get(void);
+static char		*_e_intl_locale_alias_get(const char * language);
 static Evas_List	*_e_intl_locale_system_locales_get(void);
 static Evas_List	*_e_intl_locale_search_order_get(char *locale);
 static int		 _e_intl_locale_validate(char *locale);
 static void 		 _e_intl_locale_hash_free(Evas_Hash *language_hash);
-Evas_Bool 		 _e_intl_locale_hash_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata);
+static Evas_Bool 	 _e_intl_locale_hash_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata);
 
 /* Input Method Configuration and Management */
 static int 		 _e_intl_cb_exit(void *data, int type, void *event);
@@ -128,6 +130,7 @@ e_intl_post_shutdown(void)
    e_intl_input_method_set(NULL);
    
    e_intl_language_set(NULL);
+   E_FREE(_e_intl_language_alias);
    
    E_EXE_STOP(_e_intl_input_method_exec);
    return 1;
@@ -145,10 +148,8 @@ e_intl_post_shutdown(void)
 EAPI void
 e_intl_language_set(const char *lang)
 {
-   char *alias_locale;
    int set_envars;
-   
-   if (_e_intl_language) free(_e_intl_language);
+    
    set_envars = 1;
    /* NULL lang means set everything back to the original environment 
     * defaults 
@@ -167,18 +168,21 @@ e_intl_language_set(const char *lang)
 	
 	set_envars = 0;
      }
-    
+ 
+   E_FREE(_e_intl_language_alias);
+   _e_intl_language_alias = _e_intl_locale_alias_get(lang);  
+   E_FREE(_e_intl_language);
+   
    if (lang)
      _e_intl_language = strdup(lang);
    else
      _e_intl_language = NULL;
 
-   alias_locale = _e_intl_locale_alias_get(_e_intl_language);
-   if (!_e_intl_locale_validate(alias_locale))
+   if (!_e_intl_locale_validate(_e_intl_language_alias))
      {
 	fprintf(stderr, "The locale '%s' cannot be found on your "
 	       "system. Please install this locale or try "
-               "something else.\n", alias_locale);
+               "something else.\n", _e_intl_language_alias);
      }
    else
      {
@@ -196,15 +200,15 @@ e_intl_language_set(const char *lang)
 	  {
              char *locale_path;
              
-             locale_path = _e_intl_language_path_find(alias_locale);
+             locale_path = _e_intl_language_path_find(_e_intl_language_alias);
              if (locale_path == NULL)
 	       {
 		  char * match_lang;
 
-		  match_lang = e_intl_locale_canonic_get(alias_locale, E_LOC_LANG);
+		  match_lang = e_intl_locale_canonic_get(_e_intl_language_alias, E_LOC_LANG);
 		  
 		  /* If locale is C or some form of en don't report an error */
-		  if ( match_lang == NULL && strcmp (alias_locale, "C") )
+		  if ( match_lang == NULL && strcmp (_e_intl_language_alias, "C") )
 		    {
 		       fprintf(stderr, "The locale you have chosen '%s' "
 			     "appears to be an alias, however, it can not be "
@@ -213,7 +217,7 @@ e_intl_language_set(const char *lang)
 			     "which can resolve this alias.\n"
 			     "\n"
 			     "Enlightenment will not be translated.\n", 
-			     alias_locale);
+			     _e_intl_language_alias);
 		    }
 		  else if ( match_lang != NULL && strcmp(match_lang, "en") ) 
 		    {
@@ -222,7 +226,7 @@ e_intl_language_set(const char *lang)
 			     "your 'messages' path.\n"
 			     "\n"
 			     "Enlightenment will not be translated.\n", 
-			     alias_locale);
+			     _e_intl_language_alias);
 		    }
 		  E_FREE(match_lang);
 	       }
@@ -235,13 +239,18 @@ e_intl_language_set(const char *lang)
                } 
 	  }
      }
-   free(alias_locale);
 }
 
 EAPI const char *
 e_intl_language_get(void)
 {
    return _e_intl_language;
+}
+
+EAPI const char	*
+e_intl_language_alias_get(void)
+{
+   return _e_intl_language_alias;
 }
 
 EAPI Evas_List *
@@ -466,7 +475,7 @@ _e_intl_locale_hash_free(Evas_Hash *locale_hash)
    evas_hash_free(locale_hash);
 }
 
-Evas_Bool
+static Evas_Bool
 _e_intl_locale_hash_free_cb(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    free(data);
@@ -593,19 +602,19 @@ _e_intl_language_dir_scan(const char *dir)
  * is no alias. 
  */
 static char *
-_e_intl_locale_alias_get(char *language)
+_e_intl_locale_alias_get(const char *language)
 {
    Evas_Hash *alias_hash;
    char *canonic;
    char *alias;
-    
+   
    if (language == NULL || !strncmp(language, "POSIX", strlen("POSIX")))
      return strdup("C");
    
    canonic = e_intl_locale_canonic_get(language, E_LOC_ALL );
    
    alias_hash = _e_intl_locale_alias_hash_get();
-   if (alias_hash == NULL) 
+   if (alias_hash == NULL) /* No alias file available */
      {
 	if (canonic == NULL)
 	  return strdup(language);
@@ -613,25 +622,23 @@ _e_intl_locale_alias_get(char *language)
 	  return canonic;
      }
 
-   if (canonic == NULL) /* not not a locale */
+   if (canonic == NULL) /* Should be an alias */
      {
 	char *lower_language;
 	int i;
 	
-	lower_language = (char *) malloc(strlen(language) + 1);
+	lower_language = malloc(strlen(language) + 1);
 	for (i = 0; i < strlen(language); i++)
 	     lower_language[i] = tolower(language[i]);
 	lower_language[i] = 0;     
 	
-	alias = (char *) evas_hash_find(alias_hash, lower_language);
+	alias = evas_hash_find(alias_hash, lower_language);
 	free(lower_language);
      }
-   else
+   else /* check for alias */
      {
-	alias = (char *) evas_hash_find(alias_hash, canonic);
+	alias = evas_hash_find(alias_hash, canonic);
      }
-   
-   _e_intl_locale_hash_free(alias_hash);
    
    if (alias) 
      {
@@ -646,6 +653,8 @@ _e_intl_locale_alias_get(char *language)
      {
 	alias = strdup(language);
      }
+  
+   _e_intl_locale_hash_free(alias_hash);
    
    return alias;
 }
@@ -702,7 +711,7 @@ _e_intl_locale_alias_hash_get(void)
  * the returned string needs to be freed
  */
 EAPI char *
-e_intl_locale_canonic_get(char *locale, int ret_mask)
+e_intl_locale_canonic_get(const char *locale, int ret_mask)
 {
    char *clean_locale;
    int   clean_e_intl_locale_size;

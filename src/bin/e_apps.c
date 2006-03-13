@@ -988,14 +988,17 @@ e_app_fields_fill(E_App *a, const char *path)
 {
    Eet_File *ef;
    char *str, *v;
-   char *lang;
+   const char *lang;
    int size;
    
    /* get our current language */
-   lang = getenv("LANG");
+   lang = e_intl_language_alias_get();
+   
    /* if its "C" its the default - so drop it */
-   if ((lang) && (!strcmp(lang, "C")))
-     lang = NULL;
+   if (!strcmp(lang, "C"))
+     {
+	lang = NULL;
+     }
    if (!path) path = a->path;
    ef = eet_open(path, EET_FILE_MODE_READ);
    if (!ef) return;
@@ -1074,7 +1077,7 @@ e_app_fields_save(E_App *a)
 {
    Eet_File *ef;
    char buf[PATH_MAX];
-   char *lang;
+   const char *lang;
    unsigned char tmp[1];
    int img;
 
@@ -1089,10 +1092,13 @@ e_app_fields_save(E_App *a)
      img = 1;
 
    /* get our current language */
-   lang = getenv("LANG");
+   lang = e_intl_language_alias_get();
+
    /* if its "C" its the default - so drop it */
-   if ((lang) && (!strcmp(lang, "C")))
-     lang = NULL;
+   if (!strcmp(lang, "C"))
+     {
+	lang = NULL;
+     }
 
    ef = eet_open(a->path, EET_FILE_MODE_READ_WRITE);
    if (!ef) return;
