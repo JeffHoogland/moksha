@@ -35,7 +35,7 @@ _config_ibar_module(E_Container *con, IBar *ibar)
    E_Config_Dialog_View *v;
 
    v = E_NEW(E_Config_Dialog_View, 1);
-
+   
    /* Dialog Methods */
    v->create_cfdata = _create_data;
    v->free_cfdata = _free_data;
@@ -54,7 +54,7 @@ _fill_data(IBar *ib, E_Config_Dialog_Data *cfdata)
 {
    cfdata->autofit = (ib->conf->width == IBAR_WIDTH_AUTO);
    cfdata->follower = ib->conf->follower;
-   cfdata->iconsize = ib->conf->iconsize;   
+   cfdata->iconsize = ib->conf->iconsize;
    cfdata->follow_speed = ib->conf->follow_speed;
    cfdata->autoscroll_speed = ib->conf->autoscroll_speed;
 }
@@ -74,10 +74,10 @@ _create_data(E_Config_Dialog *cfd)
 static void 
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   IBar *ibar;
-
-   ibar = cfd->data;
-   ibar->config_dialog = NULL;
+   IBar *ib;
+   
+   ib = cfd->data;
+   ib->config_dialog = NULL;
    free(cfdata);
 }
 
@@ -85,13 +85,15 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *ob;
+   IBar *ib;
+   
+   ib = cfd->data;
+   _fill_data(ib, cfdata);
 
    o = e_widget_list_add(evas, 0, 0);
    ob = e_widget_check_add(evas, _("Show Follower"), &(cfdata->follower));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Auto Fit Icons"), &(cfdata->autofit));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
-
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    return o;
 }
@@ -111,7 +113,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
 	ib->conf->follower = 0;
      }
-
+   
    if ((cfdata->autofit) && (ib->conf->width == IBAR_WIDTH_FIXED)) 
      {
 	ib->conf->width = IBAR_WIDTH_AUTO;
@@ -120,6 +122,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
 	ib->conf->width = IBAR_WIDTH_FIXED;
      }
+
    e_border_button_bindings_grab_all();
    e_config_save_queue();
 
@@ -131,6 +134,10 @@ static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob;
+   IBar *ib;
+   
+   ib = cfd->data;
+   _fill_data(ib, cfdata);
 
    o = e_widget_list_add(evas, 0, 0);
    
@@ -157,10 +164,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   /* allow overlap checkbox */
-   of = e_widget_framelist_add(evas, _("Extras"), 0);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
    return o;
 }
 
@@ -179,7 +182,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
 	ib->conf->follower = 0;
      }
-
+   
    if ((cfdata->autofit) && (ib->conf->width == IBAR_WIDTH_FIXED)) 
      {
 	ib->conf->width = IBAR_WIDTH_AUTO;
@@ -201,7 +204,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
 	ib->conf->autoscroll_speed = cfdata->autoscroll_speed;
      }
-   
+
    e_border_button_bindings_grab_all();
    e_config_save_queue();
 
