@@ -686,10 +686,12 @@ main(int argc, char **argv)
    /* Store current selected desktops */
    _e_main_desk_save();
 
+#if 0 /* disabled due to segv's on shutdown/restart - not everyone will see them */
    /* unroll our stack of shutdown functions with exit code of 0 */
    _e_main_shutdown(0);
    
    e_intl_shutdown();
+#endif
    
    /* if we were flagged to restart, then  restart. */
    if (restart)
