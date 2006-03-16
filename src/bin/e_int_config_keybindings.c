@@ -97,8 +97,8 @@ const ACTION actions_predefined_names[ ] = {
 						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
   {"Switch To Right Desktop", "desk_linear_flip_by", "1", _DEFAULT_ACTION,
 						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Flip Desktop Linearly", "desk_linear_flip_by", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
-  
+  {"Flip Desktop Linearly...", "desk_linear_flip_by", NULL, _NONDEFAULT_ACTION,
+							    EDIT_RESTRICT_ACTION },
   {"Switch To Desktop 0", "desk_linear_flip_to", "0", _DEFAULT_ACTION,
 						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
   {"Switch To Desktop 1", "desk_linear_flip_to", "1", _DEFAULT_ACTION,
@@ -123,11 +123,13 @@ const ACTION actions_predefined_names[ ] = {
 						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
   {"Switch To Desktop 11", "desk_linear_flip_to", "11", _DEFAULT_ACTION,
 						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Switch To Desktop", "desk_linear_flip_to", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
+  {"Switch To Desktop...", "desk_linear_flip_to", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
 
   {"Run Command", "exebuf", NULL, _DEFAULT_ACTION, EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Exit \'E\'", "exit", NULL, _DEFAULT_ACTION, EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Restart \'E\'", "restart", NULL, _DEFAULT_ACTION, EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
+  {"Exit Enlightenment", "exit", NULL,
+				 _DEFAULT_ACTION, EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
+  {"Restart Enlightenment", "restart", NULL,
+				    _DEFAULT_ACTION, EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
 
   {"Show Main Menu", "menu_show", "main", _DEFAULT_ACTION,
 					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
@@ -135,7 +137,7 @@ const ACTION actions_predefined_names[ ] = {
 					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
   {"Show Clients Menu", "menu_show", "clients", _DEFAULT_ACTION,
 					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Menu Show", "menu_show", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
+  {"Show Menu...", "menu_show", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
 
   {"Desktop Lock", "desk_lock", NULL, _DEFAULT_ACTION, 
 				      EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },

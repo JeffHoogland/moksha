@@ -1069,6 +1069,143 @@ msgstr ""
 msgid "Configuration Upgraded"
 msgstr "Настройки Изменились"
 
+#: src/bin/e_int_config_keybindings.c:340 src/bin/e_configure.c:76
+#, fuzzy
+msgid "Key Binding Settings"
+msgstr "Настройки Горячих Клавиш"
+
+#: src/bin/e_int_config_keybindings.c:9
+msgid "Assign Key Binding..."
+msgstr "Присвоить..."
+
+#: src/bin/e_int_config_keybindings.c:11
+msgid "Action"
+msgstr "Действие"
+
+#: src/bin/e_int_config_keybindings.c:12
+msgid "<None>"
+msgstr "<Пусто>"
+
+#: src/bin/e_int_config_keybindings.c:13
+msgid "Please press key sequence,<br>or <hilight>Escape</hilight> to abort"
+msgstr "Пожалуйста нажмите последовательность клавиш,<br>или <hilight>Escape</hilight> для выхода"
+
+#: src/bin/e_int_config_keybindings.c:85
+msgid "Flip Desktop Left"
+msgstr "Переключить Рабочий Стол На Лево"
+
+#: src/bin/e_int_config_keybindings.c:86
+msgid "Flip Desktop Right"
+msgstr "Переключить Рабочий Стол На Право"
+
+#: src/bin/e_int_config_keybindings.c:87
+msgid "Flip Desktop Up"
+msgstr "Переключить Рабочий Стол Вверх"
+
+#: src/bin/e_int_config_keybindings.c:88
+msgid "Flip Desktop Down"
+msgstr "Переключить Рабочий Стол Вниз"
+
+#: src/bin/e_int_config_keybindings.c:89
+
+#: src/bin/e_int_config_keybindings.c:90
+
+#: src/bin/e_int_config_keybindings.c:91
+msgid "Switch To Left Desktop"
+msgstr "Переключить На Следующий Рабочий Стол С Лева"
+
+#: src/bin/e_int_config_keybindings.c:92
+msgid "Switch To Right Desktop"
+msgstr "Переключить На Следующий Рабочий Стол С Права"
+
+#: src/bin/e_int_config_keybindings.c:93
+msgid "Flip Desktop Linearly..."
+msgstr "Переключить Рабочий Стол Линейно..."
+
+#: src/bin/e_int_config_keybindings.c:94
+msgid "Switch To Desktop 0"
+msgstr "Переключить на Рабочий Стол 0"
+
+#: src/bin/e_int_config_keybindings.c:95
+msgid "Switch To Desktop 1"
+msgstr "Переключить на Рабочий Стол 1"
+
+#: src/bin/e_int_config_keybindings.c:96
+msgid "Switch To Desktop 2"
+msgstr "Переключить на Рабочий Стол 2"
+
+#: src/bin/e_int_config_keybindings.c:97
+msgid "Switch To Desktop 3"
+msgstr "Переключить на Рабочий Стол 3"
+
+#: src/bin/e_int_config_keybindings.c:98
+msgid "Switch To Desktop 4"
+msgstr "Переключить на Рабочий Стол 4"
+
+#: src/bin/e_int_config_keybindings.c:99
+msgid "Switch To Desktop 5"
+msgstr "Переключить на Рабочий Стол 6"
+
+#: src/bin/e_int_config_keybindings.c:100
+msgid "Switch To Desktop 6"
+msgstr "Переключить на Рабочий Стол 6"
+
+#: src/bin/e_int_config_keybindings.c:101
+msgid "Switch To Desktop 7"
+msgstr "Переключить на Рабочий Стол 7"
+
+#: src/bin/e_int_config_keybindings.c:102
+msgid "Switch To Desktop 8"
+msgstr "Переключить на Рабочий Стол 8"
+
+#: src/bin/e_int_config_keybindings.c:103
+msgid "Switch To Desktop 9"
+msgstr "Переключить на Рабочий Стол 9"
+
+#: src/bin/e_int_config_keybindings.c:104
+msgid "Switch To Desktop 10"
+msgstr "Переключить на Рабочий Стол 10"
+
+#: src/bin/e_int_config_keybindings.c:105
+msgid "Switch To Desktop 11"
+msgstr "Переключить на Рабочий Стол 11"
+
+#: src/bin/e_int_config_keybindings.c:106
+msgid "Switch To Desktop..."
+msgstr "Переключить на Рабочий Стол..."
+
+#: src/bin/e_int_config_keybindings.c:134
+msgid "Show Main Menu"
+msgstr "Показать Основное Меню"
+
+#: src/bin/e_int_config_keybindings.c:135
+msgid "Show Favorites Menu"
+msgstr "Показать Меню \"Любимые Приложения\""
+
+#: src/bin/e_int_config_keybindings.c:136
+msgid "Show Clients Menu"
+msgstr "Показать Клиентское Меню"
+
+#: src/bin/e_int_config_keybindings.c:138
+msgid "Show Menu..."
+msgstr "Показать Меню..."
+
+#: src/bin/e_int_config_keybindings.c:139
+msgid "Desktop Lock"
+msgstr "Закрыть Рабочий Стол"
+
+#: src/bin/e_int_config_keybindings.c:145
+msgid "Toggle Edit Mode"
+msgstr "Включить Режим Редактирования"
+
+#: src/bin/e_int_config_keybindings.c:148
+msgid "Window List - Next Window"
+msgstr "Список Окон - Следующее Окно"
+
+#: src/bin/e_int_config_keybindings.c:150
+msgid "Window List - Previous Window"
+msgstr "Список Окон - Предыдущее Окно"
+
 #: src/bin/e_int_config_menus.c:39 src/bin/e_int_config_menus.c:92
 #: src/bin/e_int_config_menus.c:145 src/bin/e_configure.c:73
 #, fuzzy

@@ -305,7 +305,10 @@ _e_desklock_cb_key_down(void *data, int type, void *event)
    else if (!strcmp(ev->keysymbol, "KP_Enter"))
      {
 	// here we have to go to auth
-	if (!strcmp(edd->passwd, e_config->desklock_personal_passwd))
+	if ((e_config->desklock_personal_passwd) &&
+	    (!strcmp(edd->passwd == NULL ? "" : edd->passwd,
+		     e_config->desklock_personal_passwd == NULL ? "" :
+			    e_config->desklock_personal_passwd)))
 	  {
 	     e_desklock_hide();
 	     return 1;
@@ -320,7 +323,9 @@ _e_desklock_cb_key_down(void *data, int type, void *event)
      {
 	// here we have to go to auth
 	if ((e_config->desklock_personal_passwd) &&
-	    (!strcmp(edd->passwd, e_config->desklock_personal_passwd)))
+	    (!strcmp(edd->passwd == NULL ? "" : edd->passwd,
+		     e_config->desklock_personal_passwd == NULL ? "" :
+			    e_config->desklock_personal_passwd)))
 	  {
 	     e_desklock_hide();
 	     return 1;
