@@ -113,7 +113,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_table_object_append(ot, il, 0, 0, 1, 2, 1, 1, 1, 1);
 
    /* Add import Button */
-   o = e_widget_button_add(evas, _("Select Another Image..."), NULL, _bg_config_dialog_cb_import, cfd, NULL);
+   o = e_widget_button_add(evas, _("Select Another Image"), NULL, _bg_config_dialog_cb_import, cfd, NULL);
    e_widget_table_object_append(ot, o, 0, 2, 1, 1, 1, 0, 0, 0);
    
    e_widget_table_object_append(ot, im, 1, 0, 1, 2, 1, 1, 1, 1);
