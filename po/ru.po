@@ -1112,11 +1112,11 @@ msgstr "Переключить Рабочий Стол Вниз"
 
 #: src/bin/e_int_config_keybindings.c:91
 msgid "Switch To Left Desktop"
-msgstr "Переключить На Следующий Рабочий Стол С Лева"
+msgstr "Переключить На Следующий Рабочий Стол Слева"
 
 #: src/bin/e_int_config_keybindings.c:92
 msgid "Switch To Right Desktop"
-msgstr "Переключить На Следующий Рабочий Стол С Права"
+msgstr "Переключить На Следующий Рабочий Стол Справа"
 
 #: src/bin/e_int_config_keybindings.c:93
 msgid "Flip Desktop Linearly..."
@@ -1224,6 +1224,227 @@ msgstr "Показывать Комментарий"
 #, fuzzy
 msgid "Show Generic In Menu"
 msgstr "Показывать Общую Информацию"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:153
+#, fuzzy
+msgid "Window Move To Next Desktop"
+msgstr "Переместить Окно На Следующий Рабочий Стол"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:155
+#, fuzzy
+msgid "Window Move To Previous Desktop"
+msgstr "Переместить Окно На Предыдущий Рабочий Стол"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:157
+#, fuzzy
+msgid "Window Move By Desktop..."
+msgstr "Сместить Окно На Число Рабочих Столов..."
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:159
+#, fuzzy
+msgid "Window Move To Desktop 0"
+msgstr "Переместить Окно На Рабочий Стол 0"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:161
+#, fuzzy
+msgid "Window Move To Desktop 1"
+msgstr "Переместить Окно На Рабочий Стол 1"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:163
+#, fuzzy
+msgid "Window Move To Desktop 2"
+msgstr "Переместить Окно На Рабочий Стол 2"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:165
+#, fuzzy
+msgid "Window Move To Desktop 3"
+msgstr "Переместить Окно На Рабочий Стол 3"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:167
+#, fuzzy
+msgid "Window Move To Desktop 4"
+msgstr "Переместить Окно На Рабочий Стол 4"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:169
+#, fuzzy
+msgid "Window Move To Desktop 5"
+msgstr "Переместить Окно На Рабочий Стол 5"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:171
+#, fuzzy
+msgid "Window Move To Desktop 6"
+msgstr "Переместить Окно На Рабочий Стол 6"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:173
+#, fuzzy
+msgid "Window Move To Desktop 7"
+msgstr "Переместить Окно На Рабочий Стол 7"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:175
+#, fuzzy
+msgid "Window Move To Desktop 8"
+msgstr "Переместить Окно На Рабочий Стол 8"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:177
+#, fuzzy
+msgid "Window Move To Desktop 9"
+msgstr "Переместить Окно На Рабочий Стол 9"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:179
+#, fuzzy
+msgid "Window Move To Desktop 10"
+msgstr "Переместить Окно На Рабочий Стол 10"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:181
+#, fuzzy
+msgid "Window Move To Desktop 11"
+msgstr "Переместить Окно На Рабочий Стол 11"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:183
+#, fuzzy
+msgid "Window Move To Desktop..."
+msgstr "Переместить Окно На Рабочий Стол..."
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:185
+#, fuzzy
+msgid "Window Maximize"
+msgstr "Увеличить Окно"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:186
+#, fuzzy
+msgid "Window Maximize Vertically"
+msgstr "Увеличить Окно Вертикально"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:188
+#, fuzzy
+msgid "Window Maximize Horizontally"
+msgstr "Увеличить Окно Горизонтально"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:190
+#, fuzzy
+msgid "Window Iconic Mode Toggle"
+msgstr "Минимизировать Окно"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:192
+#, fuzzy
+msgid "Window Shaded Up Mode Toggle"
+msgstr "Свернуть Окно Вверх"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:194
+#, fuzzy
+msgid "Window Shaded Down Mode Toggle"
+msgstr "Свернуть Окно Вниз"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:196
+#, fuzzy
+msgid "Window Shaded Left Mode Toggle"
+msgstr "Свернуть Окно На Лево"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:198
+#, fuzzy
+msgid "Window Shaded Right Mode Toggle"
+msgstr "Свернуть Окно На Право"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:200
+#, fuzzy
+msgid "Window Sticky Mode Toggle"
+msgstr "Включить Режим Окна \"Sticky\""
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:203
+#, fuzzy
+msgid "Window Lower"
+msgstr "Опустить Окно"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:205
+#, fuzzy
+msgid "Window Raise"
+msgstr "Поднять Окно"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:207
+#, fuzzy
+msgid "Window Close"
+msgstr "Закрыть Окно"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:209
+#, fuzzy
+msgid "Window Kill"
+msgstr "Убить Окно"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:211
+#, fuzzy
+msgid "Window Menu"
+msgstr "Меню Окна"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:214
+#, fuzzy
+msgid "Window Move..."
+msgstr "Переместить Окно..."
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:215
+#, fuzzy
+msgid "Window Move To..."
+msgstr "Переместить Окно К Заданной Позиции..."
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:216
+#, fuzzy
+msgid "Window Move By..."
+msgstr "Переместить Окно На Заданное Смещение..."
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:217
+#, fuzzy
+msgid "Window Resize To..."
+msgstr "Изменить Размер Окна На Заданный..."
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:218
+#, fuzzy
+msgid "Window Resize By..."
+msgstr "Изменить Размер Окна На..."
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:219
+#, fuzzy
+msgid "Window Drag Icon"
+msgstr "Перетянуть Иконку Окна"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:221
+#, fuzzy
+msgid "Application"
+msgstr "Приложение"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:221
+#, fuzzy
+msgid "User Defined Actions..."
+msgstr "Установленные Пользователем Действия..."
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:635
+#, fuzzy
+msgid "Key Bindings"
+msgstr "Горячие Клавиши"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:651
+#, fuzzy
+msgid "Add Key Binding"
+msgstr "Добавить"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:660
+#, fuzzy
+msgid "Delete Key Binding"
+msgstr "Удалить"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:671
+#, fuzzy
+msgid "Binding Context"
+msgstr "Контекст"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:671
+#, fuzzy
+msgid "Key Binding"
+msgstr "Настройки ГК"
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:760
+#, fuzzy
+msgid "Params"
+msgstr "Параметры"
+
 
 #: src/bin/e_int_config_menus.c:154
 #, fuzzy
