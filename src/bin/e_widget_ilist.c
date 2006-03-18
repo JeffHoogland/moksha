@@ -65,7 +65,6 @@ EAPI void
 e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, void (*func) (void *data), void *data, char *val)
 {
    E_Widget_Data *wd;
-   Evas_Coord mw, mh, vw, vh, w, h;
    E_Widget_Callback *wcb;
    
    wd = e_widget_data_get(obj);
@@ -76,21 +75,6 @@ e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, void (*f
    wd->callbacks = evas_list_append(wd->callbacks, wcb);
    e_ilist_append(wd->o_ilist, icon, label, _e_wid_cb_item_sel, _e_wid_cb_item_hilight, wd, wcb);
    if (icon) evas_object_show(icon);
-   e_ilist_min_size_get(wd->o_ilist, &mw, &mh);
-   evas_object_resize(wd->o_ilist, mw, mh);
-   e_scrollframe_child_viewport_size_get(wd->o_scrollframe, &vw, &vh);
-   evas_object_geometry_get(wd->o_scrollframe, NULL, NULL, &w, &h);
-   if (mw > vw)
-     {
-	Evas_Coord wmw, wmh;
-	
-	e_widget_min_size_get(obj, &wmw, &wmh);
-	e_widget_min_size_set(obj, mw + (w - vw), wmh);
-     }
-   else if (mw < vw)
-     {
-	evas_object_resize(wd->o_ilist, vw,mh);
-     }
 }
 
 EAPI void
@@ -133,9 +117,25 @@ EAPI void
 e_widget_ilist_go(Evas_Object *obj)
 {
    E_Widget_Data *wd;
+   Evas_Coord mw, mh, vw, vh, w, h;
    
    wd = e_widget_data_get(obj);
    wd->o_widget = obj;
+   e_ilist_min_size_get(wd->o_ilist, &mw, &mh);
+   evas_object_resize(wd->o_ilist, mw, mh);
+   e_scrollframe_child_viewport_size_get(wd->o_scrollframe, &vw, &vh);
+   evas_object_geometry_get(wd->o_scrollframe, NULL, NULL, &w, &h);
+   if (mw > vw)
+     {
+	Evas_Coord wmw, wmh;
+	
+	e_widget_min_size_get(obj, &wmw, &wmh);
+	e_widget_min_size_set(obj, mw + (w - vw), wmh);
+     }
+   else if (mw < vw)
+     {
+	evas_object_resize(wd->o_ilist, vw,mh);
+     }
 }
 
 EAPI void
