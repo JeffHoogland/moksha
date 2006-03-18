@@ -3,20 +3,12 @@
 #include "e_mod_config.h"
 #include "config.h"
 
-typedef struct _Cfg_File_Data Cfg_File_Data;
-
 struct _E_Config_Dialog_Data
 {
    int show_name;
    int name_pos;
    int show_popup;
    double popup_speed;
-};
-
-struct _Cfg_File_Data 
-{
-   E_Config_Dialog *cfd;
-   char *file;
 };
 
 /* Protos */
@@ -128,7 +120,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    p->conf->popup = cfdata->show_popup;
    
    p->conf->deskname_pos = cfdata->name_pos;
-   if (!cfdata->show_name) p->conf->deskname_pos = PAGER_DESKNAME_NONE;
+   if (!cfdata->show_name) 
+     p->conf->deskname_pos = PAGER_DESKNAME_NONE;
    
    e_config_save_queue();
    
@@ -185,7 +178,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    p->conf->popup = cfdata->show_popup;
    
    p->conf->deskname_pos = cfdata->name_pos;
-   if (!cfdata->show_name) p->conf->deskname_pos = PAGER_DESKNAME_NONE;
+   if (!cfdata->show_name) 
+     p->conf->deskname_pos = PAGER_DESKNAME_NONE;
    p->conf->popup_speed = cfdata->popup_speed;
    
    e_border_button_bindings_grab_all();

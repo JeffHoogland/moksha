@@ -3,8 +3,6 @@
 #include "e_mod_config.h"
 #include "config.h"
 
-typedef struct _Cfg_File_Data Cfg_File_Data;
-
 struct _E_Config_Dialog_Data
 {
    int quality;
@@ -12,12 +10,6 @@ struct _E_Config_Dialog_Data
    int shadow_x;
    int darkness;
    double shadow_darkness;
-};
-
-struct _Cfg_File_Data 
-{
-   E_Config_Dialog *cfd;
-   char *file;
 };
 
 /* Protos */
@@ -50,47 +42,27 @@ _fill_data(Dropshadow *ds, E_Config_Dialog_Data *cfdata)
    cfdata->blur_size = ds->conf->blur_size;
    cfdata->shadow_x = ds->conf->shadow_x;
    if (cfdata->shadow_x >= 32) 
-     {
-	cfdata->shadow_x = 32;
-     }
+     cfdata->shadow_x = 32;
    else if ((cfdata->shadow_x < 32) && (cfdata->shadow_x >= 16)) 
-     {
-	cfdata->shadow_x = 16;
-     }
+     cfdata->shadow_x = 16;
    else if ((cfdata->shadow_x < 16) && (cfdata->shadow_x >= 8)) 
-     {
-	cfdata->shadow_x = 8;
-     }
+     cfdata->shadow_x = 8;
    else if ((cfdata->shadow_x < 8) && (cfdata->shadow_x >= 4)) 
-     {
-	cfdata->shadow_x = 4;
-     }
+     cfdata->shadow_x = 4;
    else if ((cfdata->shadow_x < 4) && (cfdata->shadow_x >= 2))
-     {
-	cfdata->shadow_x = 2;	
-     }
+     cfdata->shadow_x = 2;	
    else if ((cfdata->shadow_x < 2) && (cfdata->shadow_x >= 0))
-     {
-	cfdata->shadow_x = 0;	
-     }   
+     cfdata->shadow_x = 0;	
    
    cfdata->shadow_darkness = ds->conf->shadow_darkness;
    if (cfdata->shadow_darkness == 1.0) 
-     {
-	cfdata->darkness = 0;
-     }
+     cfdata->darkness = 0;
    else if (cfdata->shadow_darkness == 0.75) 
-     {
-	cfdata->darkness = 1;
-     }
+     cfdata->darkness = 1;
    else if (cfdata->shadow_darkness == 0.5) 
-     {
-	cfdata->darkness = 2;
-     }
+     cfdata->darkness = 2;
    else if (cfdata->shadow_darkness == 0.25) 
-     {
-	cfdata->darkness = 3;
-     }   
+     cfdata->darkness = 3;
 }
 
 static void *
