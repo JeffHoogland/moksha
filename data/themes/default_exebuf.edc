@@ -279,7 +279,7 @@ group {
 	       size: 16;
 	       align: 0.0 0.5;
 	       min: 1 1;
-	       text_class: "exebuf_text";
+	       text_class: "exebuf_command";
 	    }
 	 }
       }

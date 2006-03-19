@@ -185,6 +185,7 @@ group {
 	       size: 10;
 	       min:  0 1;
 	       align: 0.5 0.0;
+               text_class: "winlist_title";	       
 	    }
 	 }
       }
@@ -232,6 +233,7 @@ group {
 	       size: 10;
 	       min:  0 1;
 	       align: 0.0 0.5;
+               text_class: "winlist_title";	       
 	    }
 	 }
       }
@@ -534,6 +536,7 @@ group {
 	       min:      0 1;
 	       align:    0.0 0.5;
 	       text_class: "menu_item";
+               text_class: "winlist_title";	       
 	    }
 	 }
       }

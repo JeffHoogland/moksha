@@ -410,6 +410,7 @@ group {
 	       size:     16;
 	       min:      1 1;
 	       align:    0.5 0.5;
+               text_class: "about_title";	       
 	    }
 	 }
       }
@@ -440,6 +441,7 @@ group {
 	       size:     12;
 	       min:      1 1;
 	       align:    0.5 0.5;
+               text_class: "about_version";	       
 	    }
 	 }
       }
@@ -523,6 +525,7 @@ group {
 	       size:     10;
 	       min:      1 1;
 	       align:    0.5 0.5;
+               text_class: "button_text";	       
 	    }
 	 }
       }

@@ -285,6 +285,7 @@ group {
 	       align:    0.5 0.5;
 	       elipsis:  0.0;
 	       min: 1 1;
+               text_class: "fileman_typebuf";
 	    }	    
 	 }
 	 description {
@@ -1196,6 +1197,7 @@ group {
 		  min:      0 1;
 		  align:    0.5 1.0;
 		  elipsis:  0.0;
+		  text_class: "fileman_icon";		  
 	       }
 	    }
 	 }	 
@@ -1462,6 +1464,7 @@ group {
 	       //min:      1 1;
 	       align:    0.5 1.0;
 	       elipsis:  0.0;
+               text_class: "fileman_icon";	       
 	    }
 	 }	 
       }

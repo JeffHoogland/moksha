@@ -137,6 +137,7 @@ group {
 	       size:     7;
 	       min:      1 1;
 	       align:    1.0 0.0;
+	       text_class: "battery";
 	    }
 	 }
       }
@@ -165,6 +166,7 @@ group {
 	       size:     7;
 	       min:      1 1;
 	       align:    1.0 0.0;
+               text_class: "battery";
 	    }
 	 }
       }

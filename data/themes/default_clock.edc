@@ -694,6 +694,7 @@ group {
 	       size:     15;
 	       fit:      0 1;
 	       align:    0.5 0.5;
+               text_class: "clock";	       
 	    }
 	 }
 	 description {

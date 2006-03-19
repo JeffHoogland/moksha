@@ -176,6 +176,7 @@ group {
 	       size:     10;
 	       min:      1 1;
 	       align:    0.0 0.5;
+               text_class: "tlist";	       
 	    }
 	 }
       }
@@ -648,6 +649,7 @@ group {
 	       size:     10;
 	       min:      1 1;
 	       align:    0.0 0.5;
+               text_class: "tlist";	       
 	    }
 	 }
       }

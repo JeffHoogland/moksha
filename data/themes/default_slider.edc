@@ -117,6 +117,7 @@ group {
 	       size:     10;
 	       min:      1 1;
 	       align:    0.5 0.5;
+               text_class: "slider";	       
 	    }
 	 }
       }
@@ -479,6 +480,7 @@ group {
 	       size:     10;
 	       min:      1 1;
 	       align:    0.5 0.5;
+               text_class: "slider";	       
 	    }
 	 }
       }

@@ -120,6 +120,7 @@ group {
 	       size: 12;
 	       min:  1 1;
 	       align: 0.5 0.5;
+               text_class: "pager_title";	       
 	    }
 	 }
       }
@@ -212,6 +213,7 @@ group {
 	       size: 8;
 	       min: 1 1;
 	       align: 0.5 0.5;
+               text_class: "pager_desktop_name";	       
 	    }
 	 }
 	 description {
