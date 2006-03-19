@@ -1041,7 +1041,7 @@ e_config_init(void)
 	cf_escf->x = 0;
 	cf_escf->y = 0;
 	cf_escf->w = 800;
-	cf_escf->h = 32;
+	cf_escf->h = 40;
 	cf_escf->orient = E_GADCON_ORIENT_TOP;
 	cf_escf->style = evas_stringshare_add("default");
 	cf_es->configs = evas_list_append(cf_es->configs, cf_escf);

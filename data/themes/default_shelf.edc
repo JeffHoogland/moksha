@@ -1,10 +1,22 @@
 images {
-   image: "e17_menu_bg.png" COMP;
-   image: "e17_menu_bg_border.png" COMP;
+   image: "e17_shelf1.png" COMP;
+   image: "e17_shelf2.png" COMP;
+   image: "e17_shelf3.png" COMP;
+   image: "e17_shelf4.png" COMP;
+   image: "e17_shelf5.png" COMP;
+   image: "e17_shelf6.png" COMP;
+   image: "e17_shelf_bg1.png" COMP;
+   image: "e17_shelf_bg2.png" COMP;
+   image: "e17_shelf_sh1.png" COMP;
+   image: "e17_shelf_sh2.png" COMP;
 }
 
 group {
    name: "shelf/default/base";
+   data {
+      // this tells e the border is shaped
+      item: "shaped" "1";
+   }
    parts {
       part {
 	 name:          "base";
@@ -14,12 +26,13 @@ group {
 	    state:    "default" 0.0;
 	    rel1 {
 	       relative: 0.0  1.0;
-	       offset:   1    0;
-	       to_y:     "base2";
+	       offset:   0    0;
+	       to:       "base2";
 	    }
 	    rel2 {
+	       to_x:       "base2";
 	       relative: 1.0  1.0;
-	       offset:   -2   -2;
+	       offset:   -1   -2;
 	    }
 	    color: 221 221 221 255;
 	 }
@@ -29,21 +42,23 @@ group {
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
-	    max:      99999 48;
-	    align:    0.5   0.0;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   1    1;
+	       offset:   32   0;
 	    }
 	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -2   -2;
+	       relative: 1.0  0.0;
+	       offset:   -33   19;
 	    }
 	    image {
-	       normal: "e17_menu_bg.png";
+	       normal: "e17_shelf_bg1.png";
 	    }
 	    fill {
 	       smooth: 0;
+               size {
+                  relative: 1.0 0;
+                  offset: 0 20;
+	       }
 	    }
 	 }
       }
@@ -52,18 +67,19 @@ group {
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
+	    max:      99999 20;
 	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0    0;
+	       to_x: "base2";
+	       relative: 0.0  1.0;
+	       offset:   0   -1;
 	    }
 	    rel2 {
+	       to_x: "base2";
 	       relative: 1.0  1.0;
 	       offset:   -1   -1;
 	    }
 	    image {
-	       normal: "e17_menu_bg_border.png";
-	       border: 1 1 1 1;
-	       middle: 0;
+	       normal: "e17_shelf_bg2.png";
 	    }
 	    fill {
 	       smooth: 0;
@@ -78,97 +94,156 @@ group {
 	    state:    "default" 0.0;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   2    2;
+	       offset:   32   2;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -3   -3;
+	       offset:   -33   -3;
 	    }
 	 }
       }
       part {
-	 name:          "drag";
-	 mouse_events:  1;
-	 type:          RECT;
+	 name:          "sh1";
+	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       relative: 0.0  1.0;
-	       offset:   5    -5;
+	       to_x: "base2";
+	       relative: 0.0  0.0;
+	       offset:   0    0;
 	    }
 	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -6   -3;
+	       to_x: "base2";
+	       relative: 0.0  1.0;
+	       offset:   9   -1;
 	    }
-	    color: 0 255 0 100;
+	    image {
+	       normal: "e17_shelf_sh1.png";
+	    }
+	 }
+      }
+      part {
+	 name:          "sh2";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       to_x: "base2";
+	       relative: 1.0  0.0;
+	       offset:   -10  0;
+	    }
+	    rel2 {
+	       to_x: "base2";
+	       relative: 1.0  1.0;
+	       offset:   -1  -1;
+	    }
+	    image {
+	       normal: "e17_shelf_sh2.png";
+	    }
 	 }
       }
       part {
 	 name:          "resize_l";
-	 mouse_events:  1;
-	 type:          RECT;
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   2    2;
+	       offset:   0  0;
+	    }
+	    rel2 {
+	       relative: 0.0  0.0;
+	       offset:   31  9;
+	    }
+	    image {
+	       normal: "e17_shelf1.png";
+	    }
+	 }
+      }
+      part {
+	 name:          "drag1";
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   0  10;
 	    }
 	    rel2 {
 	       relative: 0.0  1.0;
-	       offset:   4    -6;
+	       offset:   31  -11;
 	    }
-	    color: 0 0 255 100;
+	    image {
+	       normal: "e17_shelf2.png";
+	       border: 4 4 4 4;
+	    }
+	 }
+      }
+      part {
+	 name:          "resize_b1";
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  1.0;
+	       offset:   0  -10;
+	    }
+	    rel2 {
+	       relative: 0.0  1.0;
+	       offset:   31  -1;
+	    }
+	    image {
+	       normal: "e17_shelf3.png";
+	    }
 	 }
       }
       part {
 	 name:          "resize_r";
-	 mouse_events:  1;
-	 type:          RECT;
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
 	       relative: 1.0  0.0;
-	       offset:   -5   2;
+	       offset:   -32  0;
 	    }
 	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -3   -6;
+	       relative: 1.0  0.0;
+	       offset:   -1  9;
 	    }
-	    color: 0 0 255 100;
+	    image {
+	       normal: "e17_shelf4.png";
+	    }
 	 }
       }
       part {
-	 name:          "resize_b";
-	 mouse_events:  1;
-	 type:          RECT;
+	 name:          "drag2";
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       relative: 0.0  1.0;
-	       offset:   2    -5;
+	       relative: 1.0  0.0;
+	       offset:   -32  10;
 	    }
 	    rel2 {
-	       relative: 0.0  1.0;
-	       offset:   4    -3;
+	       relative: 1.0  1.0;
+	       offset:   -1  -11;
 	    }
-	    color: 255 0 0 100;
+	    image {
+	       normal: "e17_shelf5.png";
+	       border: 4 4 4 4;
+	    }
 	 }
       }
       part {
 	 name:          "resize_b2";
-	 mouse_events:  1;
-	 type:          RECT;
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
 	       relative: 1.0  1.0;
-	       offset:   -5    -5;
+	       offset:   -32  -10;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -3   -3;
+	       offset:   -1  -1;
 	    }
-	    color: 255 0 0 100;
+	    image {
+	       normal: "e17_shelf6.png";
+	    }
 	 }
       }
    }

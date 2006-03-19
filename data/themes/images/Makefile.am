@@ -417,4 +417,14 @@ e17_entry_cursor.png \
 e17_border1b.png \
 e17_border3b.png \
 e17_border5b.png \
-e17_border7b.png
+e17_border7b.png \
+e17_shelf1.png \
+e17_shelf2.png \
+e17_shelf3.png \
+e17_shelf4.png \
+e17_shelf5.png \
+e17_shelf6.png \
+e17_shelf_bg1.png \
+e17_shelf_bg2.png \
+e17_shelf_sh1.png \
+e17_shelf_sh2.png
