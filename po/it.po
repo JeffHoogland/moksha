@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-03-12 19:39+0100\n"
-"PO-Revision-Date: 2006-03-11 18:56+0100\n"
+"POT-Creation-Date: 2006-03-19 10:46+0100\n"
+"PO-Revision-Date: 2006-03-19 11:15+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@inwind.it>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -380,11 +380,11 @@ msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
 msgstr ""
 "Enlightenment non ha potuto fare il fork di un processo figlio:<br><br>%s<br>"
 
-#: src/bin/e_apps.c:1907
+#: src/bin/e_apps.c:1913
 msgid "Application run error"
 msgstr "Errore d'esecuzione dell'applicazione"
 
-#: src/bin/e_apps.c:1909
+#: src/bin/e_apps.c:1915
 #, c-format
 msgid ""
 "Enlightenment was unable to run the application:<br><br>%s<br><br>The "
@@ -393,7 +393,7 @@ msgstr ""
 "Enlightenment non ha potuto avviare l'applicazione:<br><br>%"
 "s<br><br>L'applicazione non è partita"
 
-#: src/bin/e_apps.c:1917 src/bin/e_int_border_remember.c:246
+#: src/bin/e_apps.c:1923 src/bin/e_int_border_remember.c:246
 #: src/bin/e_int_border_remember.c:326 src/bin/e_int_border_remember.c:368
 #: src/bin/e_config_dialog.c:149 src/bin/e_fileman_smart.c:907
 #: src/bin/e_module.c:417 src/bin/e_file_dialog.c:66 src/bin/e_error.c:196
@@ -410,28 +410,28 @@ msgstr "Configurazione di Enlightenment"
 
 #: src/bin/e_configure.c:66 src/bin/e_int_config_background.c:55
 msgid "Background Settings"
-msgstr "Impostazioni dello sfondo"
+msgstr "Sfondo del desktop"
 
 #: src/bin/e_configure.c:68 src/bin/e_int_config_modules.c:63
 msgid "Module Settings"
-msgstr "Impostazioni dei moduli"
+msgstr "Gestione moduli"
 
 #: src/bin/e_configure.c:69 src/bin/e_int_config_cfgdialogs.c:34
 msgid "Config Dialog Settings"
-msgstr "Impostazioni delle finestre di configurazione"
+msgstr "Finestre di configurazione"
 
 #: src/bin/e_configure.c:70 src/bin/e_int_config_cursor.c:33
 #: src/bin/e_int_config_cursor.c:95 src/bin/e_int_config_cursor.c:146
 msgid "Cursor Settings"
-msgstr "Impostazioni del puntatore"
+msgstr "Puntatore del mouse"
 
 #: src/bin/e_configure.c:71 src/bin/e_int_config_desks.c:43
 msgid "Desktop Settings"
-msgstr "Impostazioni dei desktop"
+msgstr "Desktop virtuali"
 
 #: src/bin/e_configure.c:72 src/bin/e_int_config_desklock.c:131
 msgid "Desktop Lock Settings"
-msgstr "Impostazioni del blocco del desktop"
+msgstr "Blocco del desktop"
 
 #: src/bin/e_configure.c:73 src/bin/e_int_config_display.c:172
 msgid "Display Settings"
@@ -439,40 +439,40 @@ msgstr "Impostazioni dello schermo"
 
 #: src/bin/e_configure.c:74 src/bin/e_int_config_focus.c:47
 msgid "Focus Settings"
-msgstr "Impostazioni del fuoco"
+msgstr "Fuoco delle finestre"
 
 #: src/bin/e_configure.c:75
 msgid "Font Display Hinting"
-msgstr "Impostazioni della visualizzazione dei font"
+msgstr "Visualizzazione dei font"
 
 #: src/bin/e_configure.c:76 src/bin/e_int_config_keybindings.c:340
 msgid "Key Binding Settings"
-msgstr "Impostazioni delle associazioni di tasti"
+msgstr "Scorciatoie di tastiera"
 
 #: src/bin/e_configure.c:78 src/bin/e_int_config_performance.c:37
 msgid "Performance Settings"
-msgstr "Impostazioni delle prestazioni"
+msgstr "Regolazione prestazioni"
 
 #: src/bin/e_configure.c:79
 msgid "Run Command Settings"
-msgstr "Impostazioni di \"Esegui comando\""
+msgstr "Finestra di \"Esegui comando\""
 
 #: src/bin/e_configure.c:80 src/bin/e_int_config_startup.c:26
 #: src/bin/e_int_config_startup.c:70
 msgid "Startup Settings"
-msgstr "Impostazioni dell'avvio"
+msgstr "Avvio di Enlightenment"
 
 #: src/bin/e_configure.c:81 src/bin/e_int_config_winlist.c:51
 msgid "Window List Settings"
-msgstr "Impostazioni della lista finestre"
+msgstr "Commutatore finestre (alt+tab)"
 
 #: src/bin/e_configure.c:82
 msgid "Window Display Settings"
-msgstr "Impostazioni della visualizzazione delle finestre"
+msgstr "Comportamento finestre"
 
 #: src/bin/e_configure.c:83
 msgid "Window Manipulation Settings"
-msgstr "Impostazioni della manipolazione delle finestre"
+msgstr "Manipolazione finestre"
 
 #: src/bin/e_configure.c:89 src/bin/e_config_dialog.c:158
 #: src/bin/e_int_border_menu.c:348
@@ -493,7 +493,7 @@ msgstr "Sulla finestra più recente sotto il mouse"
 
 #: src/bin/e_int_config_focus.c:173
 msgid "Focus"
-msgstr "Fuoco"
+msgstr "Cambio del fuoco"
 
 #: src/bin/e_int_config_focus.c:175
 msgid "Click to focus"
@@ -583,11 +583,7 @@ msgstr "Configura"
 msgid "About"
 msgstr "Informazioni su..."
 
-#: src/bin/e_int_config_background.c:116
-msgid "Select Another Image..."
-msgstr "Aggiungi immagine"
-
-#: src/bin/e_int_config_background.c:179
+#: src/bin/e_int_config_background.c:116 src/bin/e_int_config_background.c:179
 msgid "Select Another Image"
 msgstr "Aggiungi immagine"
 
@@ -609,7 +605,7 @@ msgstr "Tutti i desktop"
 
 #: src/bin/e_int_config_hinting.c:37
 msgid "Font Hinting Settings"
-msgstr "Impostazioni della visualizzazione dei font"
+msgstr "Visualizzazione dei font"
 
 #: src/bin/e_int_config_hinting.c:93
 msgid "Bytecode Hinting"
@@ -1039,11 +1035,11 @@ msgstr "X sostiene che non vi è root window e schermi %i!\n"
 msgid "Disable this splash screen in the future?"
 msgstr "Disabilitare questo splash screen nel futuro?"
 
-#: src/bin/e_intl.c:344
+#: src/bin/e_intl.c:353
 msgid "Input Method Error"
 msgstr "Errore del metodo di input"
 
-#: src/bin/e_intl.c:345
+#: src/bin/e_intl.c:354
 msgid ""
 "Error starting the input method executable<br><br>please make sure that your "
 "input<br>method configuration is correct and<br>that your "
@@ -1876,7 +1872,7 @@ msgstr "Salta al desktop della finestra selezionata"
 
 #: src/bin/e_int_config_winlist.c:145 src/bin/e_int_config_winlist.c:219
 msgid "Warp Settings"
-msgstr "Impostazioni invio puntatore"
+msgstr "Invio puntatore"
 
 #: src/bin/e_int_config_winlist.c:146 src/bin/e_int_config_winlist.c:220
 msgid "Warp At End"
@@ -1885,7 +1881,7 @@ msgstr "Invia solo alla fine"
 #: src/bin/e_int_config_winlist.c:150 src/bin/e_int_config_winlist.c:228
 #: src/bin/e_int_config_exebuf.c:111 src/bin/e_int_config_exebuf.c:157
 msgid "Scroll Settings"
-msgstr "Impostazioni dello scorrimento"
+msgstr "Scorrimento"
 
 #: src/bin/e_int_config_winlist.c:151 src/bin/e_int_config_winlist.c:229
 #: src/bin/e_int_config_exebuf.c:112 src/bin/e_int_config_exebuf.c:158
@@ -1910,7 +1906,7 @@ msgstr "Velocità scorrimento"
 
 #: src/bin/e_int_config_winlist.c:237 src/bin/e_int_config_exebuf.c:166
 msgid "Position Settings"
-msgstr "Impostazioni della posizione"
+msgstr "Posizione"
 
 #: src/bin/e_int_config_winlist.c:238 src/bin/e_int_config_exebuf.c:167
 msgid "X-Axis Alignment"
@@ -1922,7 +1918,7 @@ msgstr "Allineamento all'asse Y"
 
 #: src/bin/e_int_config_winlist.c:248 src/bin/e_int_config_exebuf.c:177
 msgid "Size Settings"
-msgstr "Impostazioni delle dimensioni"
+msgstr "Dimensioni"
 
 #: src/bin/e_int_config_winlist.c:249 src/bin/e_int_config_exebuf.c:178
 msgid "Minimum Width"
@@ -2317,7 +2313,7 @@ msgstr "Seleziona una finestra"
 
 #: src/bin/e_int_config_exebuf.c:42
 msgid "Exebuf Settings"
-msgstr "Impostazioni di Exebuf"
+msgstr "Configurazione finestra di \"Exebuf\""
 
 #: src/bin/e_int_config_exebuf.c:101 src/bin/e_int_config_exebuf.c:147
 msgid "Maximum Number Of Matched Eaps To List"
@@ -2367,7 +2363,7 @@ msgstr "Tempo prima che lo screensaver parta"
 
 #: src/bin/e_int_config_desklock.c:358
 msgid "Login Box Settings"
-msgstr "Impostazioni della finestra di login"
+msgstr "Finestra di login"
 
 #: src/bin/e_int_config_desklock.c:362
 msgid "Show On All Screen Zones"
@@ -2385,56 +2381,52 @@ msgstr "Mostra sulla zona :"
 msgid "IBar Configuration"
 msgstr "Configurazione modulo IBar"
 
-#: src/modules/ibar/e_mod_config.c:90 src/modules/ibox/e_mod_config.c:94
+#: src/modules/ibar/e_mod_config.c:94 src/modules/ibox/e_mod_config.c:94
 msgid "Show Follower"
 msgstr "Mostra accompagnatore"
 
-#: src/modules/ibar/e_mod_config.c:92 src/modules/ibox/e_mod_config.c:96
+#: src/modules/ibar/e_mod_config.c:96 src/modules/ibox/e_mod_config.c:96
 msgid "Auto Fit Icons"
 msgstr "Larghezza automatica"
 
-#: src/modules/ibar/e_mod_config.c:137 src/modules/ibox/e_mod_config.c:144
+#: src/modules/ibar/e_mod_config.c:144 src/modules/ibox/e_mod_config.c:144
 msgid "Follower"
 msgstr "Accompagnatore"
 
-#: src/modules/ibar/e_mod_config.c:138 src/modules/ibox/e_mod_config.c:145
+#: src/modules/ibar/e_mod_config.c:145 src/modules/ibox/e_mod_config.c:145
 msgid "Visible"
 msgstr "Visibile"
 
-#: src/modules/ibar/e_mod_config.c:140 src/modules/ibox/e_mod_config.c:147
+#: src/modules/ibar/e_mod_config.c:147 src/modules/ibox/e_mod_config.c:147
 msgid "Follow Speed"
 msgstr "Velocità accompagnatore"
 
-#: src/modules/ibar/e_mod_config.c:142 src/modules/ibar/e_mod_config.c:156
+#: src/modules/ibar/e_mod_config.c:149 src/modules/ibar/e_mod_config.c:163
 #: src/modules/ibox/e_mod_config.c:149 src/modules/ibox/e_mod_config.c:163
 #, c-format
 msgid "%1.2f px/s"
 msgstr "%1.2f px/s"
 
-#: src/modules/ibar/e_mod_config.c:146 src/modules/ibox/e_mod_config.c:153
+#: src/modules/ibar/e_mod_config.c:153 src/modules/ibox/e_mod_config.c:153
 msgid "Icon Size"
 msgstr "Dimensione delle icone"
 
-#: src/modules/ibar/e_mod_config.c:147 src/modules/ibox/e_mod_config.c:154
+#: src/modules/ibar/e_mod_config.c:154 src/modules/ibox/e_mod_config.c:154
 #, c-format
 msgid "%3.0f pixels"
 msgstr "%3.0f pixel"
 
-#: src/modules/ibar/e_mod_config.c:151 src/modules/ibox/e_mod_config.c:158
+#: src/modules/ibar/e_mod_config.c:158 src/modules/ibox/e_mod_config.c:158
 msgid "Width"
 msgstr "Larghezza"
 
-#: src/modules/ibar/e_mod_config.c:152 src/modules/ibox/e_mod_config.c:159
+#: src/modules/ibar/e_mod_config.c:159 src/modules/ibox/e_mod_config.c:159
 msgid "Auto Fit"
 msgstr "Larghezza automatica"
 
-#: src/modules/ibar/e_mod_config.c:154 src/modules/ibox/e_mod_config.c:161
+#: src/modules/ibar/e_mod_config.c:161 src/modules/ibox/e_mod_config.c:161
 msgid "Autoscroll Speed:"
 msgstr "Velocità autoscorrimento"
-
-#: src/modules/ibar/e_mod_config.c:161
-msgid "Extras"
-msgstr "Extra"
 
 #: src/modules/ibar/e_mod_main.c:163
 msgid "Enlightenment IBar Module"
@@ -2650,7 +2642,7 @@ msgstr "Mostra nome del desktop"
 
 #: src/modules/pager/e_mod_config.c:104 src/modules/pager/e_mod_config.c:153
 msgid "Desktop Name Position"
-msgstr "Posizione nome del desktop"
+msgstr "Nome del desktop"
 
 #: src/modules/pager/e_mod_config.c:106 src/modules/pager/e_mod_config.c:155
 msgid "Top"
