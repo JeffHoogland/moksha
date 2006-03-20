@@ -12,13 +12,7 @@ VeraMoIt.ttf \
 VeraMono.ttf \
 VeraSe.ttf \
 VeraSeBd.ttf \
-baekmuk.COPYING \
-dotum.ttf \
 fonts.alias \
-fonts.dir \
-kochi-gothic.ttf \
-kochi.COPYING \
-fireflysung.ttf \
-fireflysung.COPYING
+fonts.dir
 
 EXTRA_DIST = $(files_DATA)

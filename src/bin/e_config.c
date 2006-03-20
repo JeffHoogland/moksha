@@ -669,9 +669,9 @@ e_config_init(void)
    eff->name = evas_stringshare_add(_name); \
    e_config->font_fallbacks = evas_list_append(e_config->font_fallbacks, eff)
 	
-	CFG_FONTFALLBACK("New-Sung");
-	CFG_FONTFALLBACK("Kochi-Gothic");
-	CFG_FONTFALLBACK("Baekmuk-Dotum");
+//	CFG_FONTFALLBACK("New-Sung");
+//	CFG_FONTFALLBACK("Kochi-Gothic");
+//	CFG_FONTFALLBACK("Baekmuk-Dotum");
      }
      { 
 	E_Font_Default* efd;
