@@ -979,12 +979,38 @@ _e_zone_cb_desk_show(void *data, int type, void *event)
 static void
 _e_zone_update_flip(E_Zone *zone)
 {
-   
-   if ((e_config->use_edge_flip) &&
-       /* if we have more than 1 zone - disable */
-       (evas_list_count(zone->container->zones) == 1))
+   if (e_config->use_edge_flip)
      {
-	if (E_ZONE_FLIP_LEFT(zone))
+	/* if we have only 1 row we can flip up/down even if we have xinerama */
+	int one_row = 1;
+	int one_col = 1;
+
+	if (evas_list_count(zone->container->zones) > 1)
+	  {
+	     Evas_List *zones;
+	     E_Zone *next_zone;
+	     int x, y;
+
+	     zones = zone->container->zones;
+	     next_zone = (E_Zone *) evas_list_data(zones);
+	     x = next_zone->x;
+	     y = next_zone->y;
+	     zones = evas_list_next(zones);
+	     
+	     while (zones)
+	       {
+		  next_zone = (E_Zone *) evas_list_data(zones);
+
+		  if (next_zone->x != x)
+		    one_col = 0;
+		  if (next_zone->y != y)
+		    one_row = 0;
+
+		  zones = evas_list_next(zones);
+	       }
+	  }
+
+	if (one_col && E_ZONE_FLIP_LEFT(zone))
 	  {
 	     ecore_x_window_show(zone->flip.left);
 	     e_container_window_raise(zone->container, zone->flip.left, 999);
@@ -992,7 +1018,7 @@ _e_zone_update_flip(E_Zone *zone)
 	else
 	  ecore_x_window_hide(zone->flip.left);
 	
-	if (E_ZONE_FLIP_RIGHT(zone))
+	if (one_col && E_ZONE_FLIP_RIGHT(zone))
 	  {
 	     ecore_x_window_show(zone->flip.right);
 	     e_container_window_raise(zone->container, zone->flip.right, 999);
@@ -1000,7 +1026,7 @@ _e_zone_update_flip(E_Zone *zone)
 	else
 	  ecore_x_window_hide(zone->flip.right);
 	
-	if (E_ZONE_FLIP_UP(zone))
+	if (one_row && E_ZONE_FLIP_UP(zone))
 	  {
 	     ecore_x_window_show(zone->flip.top);
 	     e_container_window_raise(zone->container, zone->flip.top, 999);
@@ -1008,7 +1034,7 @@ _e_zone_update_flip(E_Zone *zone)
 	else
 	  ecore_x_window_hide(zone->flip.top);
 	
-	if (E_ZONE_FLIP_DOWN(zone))
+	if (one_row && E_ZONE_FLIP_DOWN(zone))
 	  {
 	     ecore_x_window_show(zone->flip.bottom);
 	     e_container_window_raise(zone->container, zone->flip.bottom, 999);
