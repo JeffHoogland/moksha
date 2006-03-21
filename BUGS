@@ -109,3 +109,29 @@ dj2 yea screen #0 and screen #1
 
 NB: in multihead if the mouse exits a screen during move or resize - either
 disallow it (warp back to previous position ) or limit resize/move
+
+
+
+
+From: Daniel Kasak <dkasak@nusconsulting.com.au>
+To: enlightenment-devel@lists.sourceforge.net
+Subject: [E-devel] Crasher ... switch to an app that's closing
+Date: Mon, 20 Mar 2006 11:07:12 +1100
+Sender: enlightenment-devel-admin@lists.sourceforge.net
+
+Hi all.
+
+I have a sort-of reproducible bug.
+If you try to switch to an app which is in the process of shutting down, 
+and you do it at *just* the right moment, Enlightenment-0.17 will crash.
+I've done this only about 3 times over probably more than a year of usage.
+
+This particular time, I hit the 'close' button on a vmware-player 
+window. When this app gets the close signal, it actually minimises 
+itself, and then proceeds to shutdown ( which includes saving the 
+current VM state, which takes a while, hence the minimising first ). 
+After hitting close, I went to switch to another app by middle-clicking 
+on the desktop, but I missed the other app, and hit vmware-player 
+accidentally. Then everything came down in a heap :)
+
+Sorry I don't have any debugging info.
