@@ -1143,6 +1143,7 @@ _e_keybinding_keybind_cb_del_keybinding(void *data, void *data2)
 
   _e_keybinding_update_binding_list(cfdata);
   e_widget_ilist_selected_set(cfdata->gui.binding_ilist, cfdata->cur_eckb_kb_sel);
+  e_widget_ilist_go(cfdata->gui.binding_ilist);
 
   _e_keybinding_update_keybinding_button(cfdata);
   _e_keybinding_update_add_delete_buttons(cfdata);
@@ -1338,6 +1339,7 @@ _e_keybinding_update_binding_list(E_Config_Dialog_Data *cfdata)
   _e_keybinding_update_binding_ilist_cur_selection_icon(cfdata);
 
   e_widget_ilist_selected_set(cfdata->gui.binding_ilist, cfdata->cur_eckb_kb_sel);
+  e_widget_ilist_go(cfdata->gui.binding_ilist);
 }
 
 static void
@@ -1376,6 +1378,7 @@ _e_keybinding_keybind_cb_add_keybinding(void *data, void *data2)
 
   _e_keybinding_update_binding_list(cfdata);
   e_widget_ilist_selected_set(cfdata->gui.binding_ilist, cfdata->cur_eckb_kb_sel);
+  e_widget_ilist_go(cfdata->gui.binding_ilist);
 
   _e_keybinding_update_keybinding_button(cfdata);
   _e_keybinding_update_add_delete_buttons(cfdata);
