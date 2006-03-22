@@ -379,7 +379,7 @@ _e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data
    
    /*- icon info -*/
    
-   o = e_widget_frametable_add(evas, _("Icon"), 0);
+   o = e_widget_frametable_add(evas, _("File"), 0);
       
    e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Icon Class")),
 				0, 0, 1, 1,
