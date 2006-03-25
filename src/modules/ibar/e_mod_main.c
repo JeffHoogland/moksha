@@ -1646,17 +1646,17 @@ _ibar_bar_cb_drop(void *data, const char *type, void *event)
      {
 	/* Add new eapp before this icon */
 	if (app)
-	  e_app_prepend_relative(app, ic->app);
+	  e_app_list_prepend_relative(app, ic->app);
 	else if (l)
-	  e_app_files_prepend_relative(l, ic->app);
+	  e_app_files_list_prepend_relative(l, ic->app);
      }
    else
      {
 	/* Add at the end */
 	if (app)
-	  e_app_append(app, ibb->ibar->apps);
+	  e_app_list_append(app, ibb->ibar->apps);
 	else if (l)
-	  e_app_files_append(l, ibb->ibar->apps);
+	  e_app_files_list_append(l, ibb->ibar->apps);
      }
 }
 

@@ -481,6 +481,127 @@ e_app_running_get(E_App *a)
    return 0;
 }
 
+static void
+_e_app_list_prepend_relative(E_App *add, E_App *before, E_App *parent)
+{
+   FILE *f;
+   char buf[PATH_MAX];
+   Evas_List *l;
+   
+   if ((!add) || (!parent)) return;
+   snprintf(buf, sizeof(buf), "%s/.order", parent->path);
+   f = fopen(buf, "wb");
+   if (!f) return;
+
+   for (l = parent->subapps; l; l = l->next)
+     {
+	E_App *a;
+
+	a = l->data;
+	if (a == before) fprintf(f, "%s\n", ecore_file_get_file(add->path));
+	fprintf(f, "%s\n", ecore_file_get_file(a->path));
+     }
+   if (before == NULL) fprintf(f, "%s\n", ecore_file_get_file(add->path));
+   fclose(f);
+}
+
+static void
+_e_app_files_list_prepend_relative(Evas_List *files, E_App *before, E_App *parent)
+{
+   FILE *f;
+   char buf[PATH_MAX];
+   Evas_List *l, *l2;
+   
+   if ((!files) || (!parent)) return;
+   snprintf(buf, sizeof(buf), "%s/.order", parent->path);
+   f = fopen(buf, "wb");
+   if (!f) return;
+
+   for (l = parent->subapps; l; l = l->next)
+     {
+	E_App *a;
+
+	a = l->data;
+	if (a == before)
+	  {
+	     /* Add the new files */
+	     for (l2 = files; l2; l2 = l2->next)
+	       {
+		  char *file;
+		  
+		  file = l2->data;
+		  fprintf(f, "%s\n", ecore_file_get_file(file));
+	       }
+	  }
+	fprintf(f, "%s\n", ecore_file_get_file(a->path));
+     }
+   if (before == NULL)
+     {
+	/* Add the new files */
+	for (l2 = files; l2; l2 = l2->next)
+	  {
+	     char *file;
+	     
+	     file = l2->data;
+	     fprintf(f, "%s\n", ecore_file_get_file(file));
+	  }
+     }
+   fclose(f);
+}
+
+static void
+_e_app_files_download(Evas_List *files)
+{
+   Evas_List *l;
+   
+   for (l = files; l; l = l->next)
+     {
+	char *file;
+	char buf[PATH_MAX];
+	
+	file = l->data;
+	if (!_e_app_is_eapp(file)) continue;
+        snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all,
+		 ecore_file_get_file(file));
+	if (!ecore_file_download(file, buf, NULL, NULL)) continue;
+     }
+}
+
+EAPI void
+e_app_list_prepend_relative(E_App *add, E_App *before)
+{
+   if ((!add) || (!before)) return;
+   if (!before->parent) return;
+   _e_app_list_prepend_relative(add, before, before->parent);
+}
+
+EAPI void
+e_app_list_append(E_App *add, E_App *parent)
+{
+   if ((!add) || (!parent)) return;
+   _e_app_list_prepend_relative(add, NULL, parent);
+}
+
+EAPI void
+e_app_files_list_prepend_relative(Evas_List *files, E_App *before)
+{
+   _e_app_files_download(files);
+   /* Force rescan of all subdir */
+   _e_app_subdir_rescan(_e_apps_all);
+   /* Change .order file */
+   _e_app_files_list_prepend_relative(files, before, before->parent);
+}
+
+EAPI void
+e_app_files_list_append(Evas_List *files, E_App *parent)
+{
+   _e_app_files_download(files);
+   /* Force rescan of all subdir */
+   _e_app_subdir_rescan(_e_apps_all);
+   /* Change .order file */
+   _e_app_files_list_prepend_relative(files, NULL, parent);
+}
+
 EAPI void
 e_app_prepend_relative(E_App *add, E_App *before)
 {
@@ -543,19 +664,7 @@ e_app_files_prepend_relative(Evas_List *files, E_App *before)
    if (!before) return;
    if (!before->parent) return;
 
-   for (l = files; l; l = l->next)
-     {
-	char *file;
-	char buf[PATH_MAX];
-
-	file = l->data;
-	if (!_e_app_is_eapp(file)) continue;
-	/* FIXME: If we are downloading something from net, we must
-	 * attach a callback and wait for the download to finish */
-	snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all,
-				   ecore_file_get_file(file));
-	if (!ecore_file_download(file, buf, NULL, NULL)) continue;
-     }
+   _e_app_files_download(files);
    /* Force rescan of all subdir */
    _e_app_subdir_rescan(_e_apps_all);
    /* Change .order file */
@@ -599,19 +708,7 @@ e_app_files_append(Evas_List *files, E_App *parent)
    if (!parent) return;
    subapps = parent->subapps;
 
-   for (l = files; l; l = l->next)
-     {
-	char *file;
-	char buf[PATH_MAX];
-
-	file = l->data;
-	if (!_e_app_is_eapp(file)) continue;
-	/* FIXME: If we are downloading something from net, we must
-	 * attach a callback and wait for the download to finish */
-	snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all,
-				   ecore_file_get_file(file));
-	if (!ecore_file_download(file, buf, NULL, NULL)) continue;
-     }
+   _e_app_files_download(files);
    /* Force rescan of all subdir */
    _e_app_subdir_rescan(_e_apps_all);
    /* Change .order file */

@@ -100,6 +100,10 @@ EAPI void        e_app_subdir_scan                       (E_App *a, int scan_sub
 EAPI int         e_app_exec                              (E_App *a, int launch_id);
 EAPI int         e_app_starting_get                      (E_App *a);
 EAPI int         e_app_running_get                       (E_App *a);
+EAPI void        e_app_list_prepend_relative             (E_App *add, E_App *before);
+EAPI void        e_app_list_append                       (E_App *add, E_App *parent);
+EAPI void        e_app_files_list_prepend_relative       (Evas_List *files, E_App *before);
+EAPI void        e_app_files_list_append                 (Evas_List *files, E_App *parent);
 EAPI void        e_app_prepend_relative                  (E_App *add, E_App *before);
 EAPI void        e_app_append                            (E_App *add, E_App *parent);
 EAPI void        e_app_files_prepend_relative            (Evas_List *files, E_App *before);
