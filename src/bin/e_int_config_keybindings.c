@@ -1,5 +1,11 @@
 #include "e.h"
 
+/* FIXME: this dialog needs to keep up with the actions in actions.c - this
+ * isnt' easily "automatic - should probably add this info to actions.c so
+ *  this can list an existing set of actions and extra ones are added from
+ * a list automatically retrieved from actions.c
+ */
+
 #define ACTION_LIST_ICON_W  24
 #define ACTION_LIST_ICON_H  24
 
