@@ -25,6 +25,14 @@ struct _E_Shelf
    const char          *name;
    const char          *style;
    E_Config_Shelf      *cfg;
+   struct {
+      int               x, y;
+      struct {
+	 int            x, y;
+      } pos;
+      int               move;
+      int               resize;
+   } moveresize;
 };
 
 EAPI int              e_shelf_init(void);
