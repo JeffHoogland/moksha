@@ -8,6 +8,7 @@
 
 EAPI Evas_Object *e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, char **value);
 EAPI void e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, void (*func) (void *data), void *data, char *val);
+EAPI void e_widget_ilist_header_append(Evas_Object *obj, Evas_Object *icon, char *label);
 EAPI void e_widget_ilist_selected_set(Evas_Object *obj, int n);
 EAPI void e_widget_ilist_selector_set(Evas_Object *obj, int selector);
 EAPI void e_widget_ilist_go(Evas_Object *obj);

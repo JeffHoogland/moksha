@@ -935,3 +935,78 @@ group {
       }
    }
 }
+
+group {
+   name: "widgets/ilist_header";
+   parts {
+      part {
+	 name: "base";
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    color: 64 64 64 255;
+	    image {
+	       normal: "e17_ilist_bg0.png";
+	       border: 3 3 3 3;
+	    }
+	 }
+      }
+      part {
+	 name:          "icon_swallow";
+	 type:          SWALLOW;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    align:    0.0 0.5;
+	    aspect:   1.0 1.0;
+	    aspect_preference: VERTICAL;
+//	    fixed:    1 1;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   4    4;
+	    }
+	    rel2 {
+	       relative: 0.0  1.0;
+	       offset:   4   -5;
+	    }
+	 }
+      }
+      part {
+	 name:           "label";
+	 type:           TEXT;
+	 effect:         SOFT_SHADOW;
+	 mouse_events:   0;
+	 description {
+	    state: "default" 0.0;
+	    min:      16 16;
+	    rel1 {
+	       to_x:     "icon_swallow";
+	       relative: 1.0  0.0;
+	       offset:   16 4;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -5 -5;
+	    }
+	    color: 255 255 255 255;
+	    color2: 0 0 0 64;
+	    text {
+	       text:     "Item Label";
+	       font:     "Edje-Vera-Bold";
+	       size:     16;
+	       min:      1 1;
+	       align:    0.0 0.5;
+	       text_class: "ilist_item";	       
+	    }
+	 }
+      }
+      part {
+	 name:           "event";
+	 type:           RECT;
+	 description {
+	    state: "default" 0.0;
+	    color: 0 0 0 0;
+	 }
+      }
+   }
+}

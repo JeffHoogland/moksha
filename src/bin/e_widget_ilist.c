@@ -73,7 +73,17 @@ e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, void (*f
    wcb->data = data;
    if (val) wcb->value = strdup(val);
    wd->callbacks = evas_list_append(wd->callbacks, wcb);
-   e_ilist_append(wd->o_ilist, icon, label, _e_wid_cb_item_sel, _e_wid_cb_item_hilight, wd, wcb);
+   e_ilist_append(wd->o_ilist, icon, label, 0, _e_wid_cb_item_sel, _e_wid_cb_item_hilight, wd, wcb);
+   if (icon) evas_object_show(icon);
+}
+
+EAPI void
+e_widget_ilist_header_append(Evas_Object *obj, Evas_Object *icon, char *label)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   e_ilist_append(wd->o_ilist, icon, label, 1, NULL, NULL, NULL, NULL);
    if (icon) evas_object_show(icon);
 }
 

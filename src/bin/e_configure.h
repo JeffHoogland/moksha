@@ -24,6 +24,7 @@ struct _E_Configure
 
 EAPI E_Configure *e_configure_show(E_Container *con);
 EAPI void         e_configure_standard_item_add(E_Configure *eco, char *icon, char *label, E_Config_Dialog *(*func) (E_Container *con));
+EAPI void         e_configure_header_item_add(E_Configure *eco, char *icon, char *label);
     
 #endif
 #endif

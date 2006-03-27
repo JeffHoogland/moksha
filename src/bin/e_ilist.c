@@ -30,6 +30,7 @@ struct _E_Smart_Item
    void         (*func_hilight) (void *data, void *data2);
    void          *data;
    void          *data2;
+   unsigned char  header : 1;
 };
 
 /* local subsystem functions */
@@ -92,7 +93,7 @@ e_ilist_icon_size_set(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 }
 
 EAPI void
-e_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, void (*func) (void *data, void *data2), void (*func_hilight) (void *data, void *data2), void *data, void *data2)
+e_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, int header, void (*func) (void *data, void *data2), void (*func_hilight) (void *data, void *data2), void *data, void *data2)
 {
    E_Smart_Item *si;
    Evas_Coord mw = 0, mh = 0;
@@ -101,12 +102,15 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, void (*func) (v
    si = E_NEW(E_Smart_Item, 1);
    si->sd = sd;
    si->base_obj = edje_object_add(evas_object_evas_get(sd->smart_obj));
-
-   if (evas_list_count(sd->items) & 0x1)
-      e_theme_edje_object_set(si->base_obj, "base/theme/widgets",
+   
+   if (header)
+     e_theme_edje_object_set(si->base_obj, "base/theme/widgets",
+			     "widgets/ilist_header");
+   else if (evas_list_count(sd->items) & 0x1)
+     e_theme_edje_object_set(si->base_obj, "base/theme/widgets",
 			     "widgets/ilist_odd");
    else
-      e_theme_edje_object_set(si->base_obj, "base/theme/widgets",
+     e_theme_edje_object_set(si->base_obj, "base/theme/widgets",
 			     "widgets/ilist");
    edje_object_part_text_set(si->base_obj, "label", label);
    si->icon_obj = icon;
@@ -120,6 +124,7 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, void (*func) (v
    si->func_hilight = func_hilight;
    si->data = data;
    si->data2 = data2;
+   si->header = header;
    sd->items = evas_list_append(sd->items, si);
    edje_object_size_min_calc(si->base_obj, &mw, &mh);
    e_box_pack_end(sd->box_obj, si->base_obj);
@@ -364,17 +369,41 @@ _e_smart_event_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ev = event_info;
    if (!strcmp(ev->keyname, "Up"))
      {
-	int n;
-	
-	n = e_ilist_selected_get(sd->smart_obj);
-	e_ilist_selected_set(sd->smart_obj, n - 1);
+	int n, ns;
+	E_Smart_Item *si;
+	   
+	ns = e_ilist_selected_get(sd->smart_obj);
+	do
+	  {
+	     n = e_ilist_selected_get(sd->smart_obj);
+	     if (n == 0)
+	       {
+		  e_ilist_selected_set(sd->smart_obj, ns);
+		  break;
+	       }
+	     e_ilist_selected_set(sd->smart_obj, n - 1);
+	     si = evas_list_nth(sd->items, sd->selected);
+	  }
+	while ((si) && (si->header));
      }
    else if (!strcmp(ev->keyname, "Down"))
      {
-	int n;
+	int n, ns;
+        E_Smart_Item *si;
 	
-	n = e_ilist_selected_get(sd->smart_obj);
-	e_ilist_selected_set(sd->smart_obj, n + 1);
+	ns = e_ilist_selected_get(sd->smart_obj);
+	do
+	  {
+	     n = e_ilist_selected_get(sd->smart_obj);
+	     if (n == (evas_list_count(sd->items) - 1))
+	       {
+		  e_ilist_selected_set(sd->smart_obj, ns);
+		  break;
+	       }
+	     e_ilist_selected_set(sd->smart_obj, n + 1);
+	     si = evas_list_nth(sd->items, sd->selected);
+	  }
+	while ((si) && (si->header));
      }
    else if ((!strcmp(ev->keyname, "Return")) ||
 	    (!strcmp(ev->keyname, "space")))

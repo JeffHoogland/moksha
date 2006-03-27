@@ -443,39 +443,43 @@ _e_test_internal(E_Container *con)
    e_theme_edje_object_set(o4, "base/theme/borders",
 			   "widgets/border/default/border");
    e_livethumb_thumb_set(o3, o4);
-   e_ilist_append(o, o3, "Item 1", _e_test_sel, NULL, NULL);
+   e_ilist_append(o, o3, "Item 1", 0, _e_test_sel, NULL, NULL, NULL);
    
    o3 = e_icon_add(dia->win->evas);
    e_icon_file_set(o3, "/home/raster/C/stuff/icons/palette.png");
-   e_ilist_append(o, o3, "Item 2 (Some really long text goes here for testing)", _e_test_sel, NULL, NULL);
+   e_ilist_append(o, o3, "Item 2 (Some really long text goes here for testing)", 0, _e_test_sel, NULL, NULL, NULL);
    
    o3 = e_icon_add(dia->win->evas);
    e_icon_file_set(o3, "/home/raster/C/stuff/icons/mozilla.png");
-   e_ilist_append(o, o3, "Item 3 (Medium length)", _e_test_sel, NULL, NULL);
+   e_ilist_append(o, o3, "Item 3 (Medium length)", 0, _e_test_sel, NULL, NULL, NULL);
    
    o3 = e_icon_add(dia->win->evas);
    e_icon_file_set(o3, "/home/raster/C/stuff/icons/trash_open.png");
-   e_ilist_append(o, o3, "Item POOP", _e_test_sel, NULL, NULL);
+   e_ilist_append(o, o3, "Item POOP", 0, _e_test_sel, NULL, NULL, NULL);
 
    o3 = e_icon_add(dia->win->evas);
    e_icon_file_set(o3, "/home/raster/C/stuff/icons/watch.png");
-   e_ilist_append(o, o3, "Item BLING BLING", _e_test_sel, NULL, NULL);
+   e_ilist_append(o, o3, "Item BLING BLING", 0, _e_test_sel, NULL, NULL, NULL);
 
    o3 = e_icon_add(dia->win->evas);
    e_icon_file_set(o3, "/home/raster/C/stuff/icons/quake3.png");
-   e_ilist_append(o, o3, "Sukebelinth", _e_test_sel, NULL, NULL);
+   e_ilist_append(o, o3, "Sukebelinth", 0, _e_test_sel, NULL, NULL, NULL);
 
    o3 = e_icon_add(dia->win->evas);
    e_icon_file_set(o3, "/home/raster/C/stuff/icons/opera6.png");
-   e_ilist_append(o, o3, "Panties", _e_test_sel, NULL, NULL);
+   e_ilist_append(o, o3, "A header", 1, NULL, NULL, NULL, NULL);
+   
+   o3 = e_icon_add(dia->win->evas);
+   e_icon_file_set(o3, "/home/raster/C/stuff/icons/opera6.png");
+   e_ilist_append(o, o3, "Panties", 0, _e_test_sel, NULL, NULL, NULL);
 
    o3 = e_icon_add(dia->win->evas);
    e_icon_file_set(o3, "/home/raster/C/stuff/icons/drawer_open.png");
-   e_ilist_append(o, o3, "Flimbert the cagey", _e_test_sel, NULL, NULL);
+   e_ilist_append(o, o3, "Flimbert the cagey", 0, _e_test_sel, NULL, NULL, NULL);
 
    o3 = e_icon_add(dia->win->evas);
    e_icon_file_set(o3, "/home/raster/C/stuff/icons/cd.png");
-   e_ilist_append(o, o3, "Norbert", _e_test_sel, NULL, NULL);
+   e_ilist_append(o, o3, "Norbert", 0, _e_test_sel, NULL, NULL, NULL);
    
    e_ilist_min_size_get(o, &mw, &mh);
    evas_object_resize(o, mw, mh);

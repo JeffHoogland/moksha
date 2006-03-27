@@ -63,24 +63,35 @@ e_configure_show(E_Container *con)
    edje_object_part_text_set(eco->edje, "title", _("Configuration Panel"));
 
    /* add items here */
+   e_configure_header_item_add(eco, "enlightenment/appearance", _("Appearance"));
    e_configure_standard_item_add(eco, "enlightenment/desktops", _("Background Settings"), e_int_config_background);
    e_configure_standard_item_add(eco, "enlightenment/themes", _("Theme Selector"), e_int_config_theme);   
-   e_configure_standard_item_add(eco, "enlightenment/modules", _("Module Settings"), e_int_config_modules);
-   e_configure_standard_item_add(eco, "enlightenment/configuration", _("Config Dialog Settings"), e_int_config_cfgdialogs);
-   e_configure_standard_item_add(eco, "enlightenment/mouse", _("Cursor Settings"), e_int_config_cursor);
-   e_configure_standard_item_add(eco, "enlightenment/desktops", _("Desktop Settings"), e_int_config_desks);
-   e_configure_standard_item_add(eco, "enlightenment/desktops", _("Desktop Lock Settings"), e_int_config_desklock);
-   e_configure_standard_item_add(eco, "enlightenment/desktops", _("Display Settings"), e_int_config_display);
-   e_configure_standard_item_add(eco, "enlightenment/e", _("Focus Settings"), e_int_config_focus);
    e_configure_standard_item_add(eco, "enlightenment/e", _("Font Display Hinting"), e_int_config_hinting);
+   e_configure_standard_item_add(eco, "enlightenment/mouse", _("Cursor Settings"), e_int_config_cursor);
+   e_configure_standard_item_add(eco, "enlightenment/windows", _("Window Display Settings"), e_int_config_window_display);
+   
+   e_configure_header_item_add(eco, "enlightenment/extensions", _("Extensions"));
+   e_configure_standard_item_add(eco, "enlightenment/modules", _("Module Settings"), e_int_config_modules);
+   
+   e_configure_header_item_add(eco, "enlightenment/screen_setup", _("Screen"));
+   e_configure_standard_item_add(eco, "enlightenment/desktops", _("Desktop Settings"), e_int_config_desks);
+   e_configure_standard_item_add(eco, "enlightenment/desktops", _("Display Settings"), e_int_config_display);
+   e_configure_standard_item_add(eco, "enlightenment/desktops", _("Desktop Lock Settings"), e_int_config_desklock);
+   
+   e_configure_header_item_add(eco, "enlightenment/behavior", _("Behavior"));
+   e_configure_standard_item_add(eco, "enlightenment/e", _("Focus Settings"), e_int_config_focus);
    e_configure_standard_item_add(eco, "enlightenment/e", _("Key Binding Settings"), e_int_config_keybindings);
    e_configure_standard_item_add(eco, "enlightenment/favorites", _("Menu Settings"), e_int_config_menus);
+   
+   e_configure_header_item_add(eco, "enlightenment/misc", _("Miscellaneous"));
    e_configure_standard_item_add(eco, "enlightenment/configuration", _("Performance Settings"), e_int_config_performance);
-   e_configure_standard_item_add(eco, "enlightenment/run", _("Run Command Settings"), e_int_config_exebuf);
+   e_configure_standard_item_add(eco, "enlightenment/configuration", _("Config Dialog Settings"), e_int_config_cfgdialogs);
+   
+   e_configure_header_item_add(eco, "enlightenment/advanced", _("Advanced"));
    e_configure_standard_item_add(eco, "enlightenment/run", _("Startup Settings"), e_int_config_startup);
    e_configure_standard_item_add(eco, "enlightenment/windows", _("Window List Settings"), e_int_config_winlist);
-   e_configure_standard_item_add(eco, "enlightenment/windows", _("Window Display Settings"), e_int_config_window_display);
    e_configure_standard_item_add(eco, "enlightenment/windows", _("Window Manipulation Settings"), e_int_config_window_manipulation);
+   e_configure_standard_item_add(eco, "enlightenment/run", _("Run Command Settings"), e_int_config_exebuf);
    
    /* FIXME: we should have a way for modules to hook in here and add their
     * own entries
@@ -120,6 +131,16 @@ e_configure_standard_item_add(E_Configure *eco, char *icon, char *label, E_Confi
    ecocb->func = func;
    eco->cblist = evas_list_append(eco->cblist, ecocb);
    e_widget_ilist_append(eco->ilist, o, label, _e_configure_cb_standard, ecocb, NULL);
+}
+
+EAPI void
+e_configure_header_item_add(E_Configure *eco, char *icon, char *label)
+{
+   Evas_Object *o;
+   
+   o = edje_object_add(eco->evas);
+   e_util_edje_icon_set(o, icon);
+   e_widget_ilist_header_append(eco->ilist, o, label);
 }
 
 /* local subsystem functions */
