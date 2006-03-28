@@ -784,14 +784,12 @@ e_config_init(void)
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "r",
 		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
 		    "window_shaded_toggle", NULL);
-/* These fuck with other bindings like firefox, irssi, bitchx etc...
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Left",
-		    E_BINDING_MODIFIER_ALT, 0,
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
 		    "desk_linear_flip_by", "-1");
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Right",
-		    E_BINDING_MODIFIER_ALT, 0,
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
 		    "desk_linear_flip_by", "1");
-*/ 
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F1",
 		    E_BINDING_MODIFIER_ALT, 0,
 		    "desk_linear_flip_to", "0");
