@@ -98,11 +98,12 @@ const ACTION actions_predefined_names[ ] = {
 					       EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
   {"Flip Desktop By", "desk_flip_by", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
   {"Flip Desktop To", "desk_flip_to", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
-
+/* These fuck with a lot of bindings like firefox, irssi, bitchx etc...
   {"Switch To Left Desktop", "desk_linear_flip_by", "-1", _DEFAULT_ACTION,
 						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
   {"Switch To Right Desktop", "desk_linear_flip_by", "1", _DEFAULT_ACTION,
 						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
+*/ 
   {"Flip Desktop Linearly...", "desk_linear_flip_by", NULL, _NONDEFAULT_ACTION,
 							    EDIT_RESTRICT_ACTION },
   {"Switch To Desktop 0", "desk_linear_flip_to", "0", _DEFAULT_ACTION,
