@@ -8,10 +8,10 @@ styles
 {
    style {
       name: "error_style";
-      base: "font=Edje-Vera font_size=10 align=left color=#000 style=shadow shadow_color=#ffffff80 wrap=word";
+      base: "font=Edje-Vera font_size=10 text_class=tb_plain align=left color=#000 style=shadow shadow_color=#ffffff80 wrap=word";
       
       tag:  "br" "\n";
-      tag:  "hilight" "+ font=Edje-Vera-Bold style=glow color=#fff glow2_color=#fe87 glow_color=#fa14";
+      tag:  "hilight" "+ font=Edje-Vera-Bold text_class=tb_light style=glow color=#fff glow2_color=#fe87 glow_color=#fa14";
    }
 }
 

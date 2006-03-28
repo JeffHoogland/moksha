@@ -19,11 +19,11 @@ styles
 {
    style {
       name: "about_style";
-      base: "font=Edje-Vera font_size=10 align=center color=#000 style=shadow shadow_color=#ffffff80 wrap=word";
+      base: "font=Edje-Vera font_size=10 text_class=tb_plain align=center color=#000 style=shadow shadow_color=#ffffff80 wrap=word";
       
       tag:  "br" "\n";
-      tag:  "hilight" "+ font=Edje-Vera-Bold style=glow color=#fff glow2_color=#fe87 glow_color=#fa14";
-      tag:  "title" "+ font_size=12 font=Edje-Vera-Bold style=soft_shadow color=#fff shadow_color=#00000020";
+      tag:  "hilight" "+ font=Edje-Vera-Bold text_class=tb_light style=glow color=#fff glow2_color=#fe87 glow_color=#fa14";
+      tag:  "title" "+ font_size=12 font=Edje-Vera-Bold text_class=tb_big style=soft_shadow color=#fff shadow_color=#00000020";
       tag:  "/title" "- \n \n";
    }
 }
