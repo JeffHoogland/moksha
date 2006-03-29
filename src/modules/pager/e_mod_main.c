@@ -1931,68 +1931,6 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
 	     pw->drag.in_pager = 0;
 	  }
      }
-
-#if 0
-     {
-//	printf("DRAG: %d\n", pw);
-	if ((pw->drag.x == -1) && (pw->drag.y == -1))
-	  {
-	     pw->drag.x = ev->cur.output.x;
-	     pw->drag.y = ev->cur.output.y;
-	  }
-	else
-	  {
-	     int dx, dy;
-
-	     dx = pw->drag.x - ev->cur.output.x;
-	     dy = pw->drag.y - ev->cur.output.y;
-	     if (((dx * dx) + (dy * dy)) >
-		   (e_config->drag_resist * e_config->drag_resist))
-	       {
-		  /* start drag! */
-
-		  if (pw->window_object)
-		    {
-		       E_Drag *drag;
-		       Evas_Object *o, *oo;
-		       Evas_Coord x, y, w, h;
-		       const char *file, *part;
-		       const char *drag_types[] = { "enlightenment/pager_win" };
-
-		       evas_object_geometry_get(pw->window_object,
-						&x, &y, &w, &h);
-
-		       drag = e_drag_new(pw->desk->face->zone->container, x, y,
-					 drag_types, 1, pw, -1,
-					 _pager_window_cb_drag_finished);
-
-		       o = edje_object_add(drag->evas);
-		       edje_object_file_get(pw->window_object, &file, &part);
-		       edje_object_file_set(o, file, part);
-		       oo = o;
-
-		       o = edje_object_add(drag->evas);
-		       edje_object_file_get(pw->icon_object, &file, &part);
-		       edje_object_file_set(o, file, part);
-		       edje_object_part_swallow(oo, "icon", o);
-
-		       e_drag_object_set(drag, oo);
-
-		       e_drag_resize(drag, w, h);
-		       e_drag_start(drag, pw->drag.x, pw->drag.y);
-
-		       /* this prevents the desk from switching on drags */
-		       pw->drag.from_face = pw->desk->face;
-		       pw->drag.from_face->dragging = 1;
-		       evas_event_feed_mouse_up(pw->desk->face->evas, 1,
-			     EVAS_BUTTON_NONE, ecore_time_get(), NULL);
-		    }
-		  pw->drag.start = 0;
-
-	       }
-	  }
-     }
-#endif
 }
 
 static void
