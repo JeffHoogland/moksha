@@ -103,6 +103,28 @@ e_layout_virtual_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 }
 
 EAPI void
+e_layout_coord_canvas_to_virtual(Evas_Object *obj, Evas_Coord cx, Evas_Coord cy, Evas_Coord *vx, Evas_Coord *vy)
+{
+   E_Smart_Data *sd;
+
+   sd = evas_object_smart_data_get(obj);
+
+   if (vx) *vx = (cx - sd->x) * ((double)(sd->vw) / sd->w);
+   if (vy) *vy = (cy - sd->y) * ((double)(sd->vh) / sd->h);
+}
+
+EAPI void
+e_layout_coord_virtual_to_canvas(Evas_Object *obj, Evas_Coord vx, Evas_Coord vy, Evas_Coord *cx, Evas_Coord *cy)
+{
+   E_Smart_Data *sd;
+
+   sd = evas_object_smart_data_get(obj);
+
+   if (cx) *cx = vx * ((double)(sd->w) / sd->vw) + sd->x;
+   if (cy) *cy = vy * ((double)(sd->h) / sd->vh) + sd->y;
+}
+
+EAPI void
 e_layout_pack(Evas_Object *obj, Evas_Object *child)
 {
    E_Smart_Data *sd;
@@ -207,6 +229,20 @@ e_layout_child_raise_above(Evas_Object *obj, Evas_Object *above)
 	evas_object_stack_above(obj, above);
 	li->sd->items = evas_list_append_relative(li->sd->items, obj, above);
      }
+}
+
+EAPI void
+e_layout_child_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h)
+{
+   E_Layout_Item *li;
+
+   li = evas_object_data_get(obj, "e_layout_data");
+   if (!li) return;
+   
+   if (x) *x = li->x;
+   if (y) *y = li->y;
+   if (w) *w = li->w;
+   if (h) *h = li->h;
 }
 
 EAPI void

@@ -9,6 +9,7 @@ struct _E_Config_Dialog_Data
    int name_pos;
    int show_popup;
    double popup_speed;
+   int drag_resist;
 };
 
 /* Protos */
@@ -55,6 +56,7 @@ _fill_data(Pager *p, E_Config_Dialog_Data *cfdata)
    
    cfdata->show_popup = p->conf->popup;
    cfdata->popup_speed = p->conf->popup_speed;
+   cfdata->drag_resist = p->conf->drag_resist;
 }
 
 static void *
@@ -141,6 +143,10 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Show Desktop Name"), &(cfdata->show_name));
    e_widget_framelist_object_append(of, ob);
+   ob = e_widget_label_add(evas, _("Resistance to Dragging Windows:"));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(evas, 1, 0, _("%.0f px"), 0.0, 10.0, 1.0, 0, NULL, &(cfdata->drag_resist), 200);
+   e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Desktop Name Position"), 0);   
@@ -181,6 +187,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (!cfdata->show_name) 
      p->conf->deskname_pos = PAGER_DESKNAME_NONE;
    p->conf->popup_speed = cfdata->popup_speed;
+   p->conf->drag_resist = cfdata->drag_resist;
    
    e_border_button_bindings_grab_all();
    e_config_save_queue();

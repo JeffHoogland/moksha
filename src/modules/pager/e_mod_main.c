@@ -34,6 +34,7 @@ static void        _pager_window_move(Pager_Face *face, Pager_Win *pw);
 static Pager_Win  *_pager_face_border_find(Pager_Face *face, E_Border *border);
 static Pager_Win  *_pager_desk_border_find(Pager_Desk *pd, E_Border *border);
 static Pager_Desk *_pager_face_desk_find(Pager_Face *face, E_Desk *desk);
+static Pager_Desk *_pager_face_desk_at_coord(Pager_Face *face, Evas_Coord x, Evas_Coord y);
 static void        _pager_face_desk_select(Pager_Desk *pd);
 static void        _pager_popup_free(Pager_Popup *pp);
 
@@ -223,6 +224,7 @@ _pager_new(void)
    E_CONFIG_VAL(D, T, deskname_pos, UINT);
    E_CONFIG_VAL(D, T, popup_speed, DOUBLE);
    E_CONFIG_VAL(D, T, popup, UINT);
+   E_CONFIG_VAL(D, T, drag_resist, UINT);
 
    pager->conf = e_config_domain_load("module.pager", _conf_edd);
 
@@ -232,6 +234,7 @@ _pager_new(void)
 	pager->conf->deskname_pos = PAGER_DESKNAME_NONE;
 	pager->conf->popup_speed = 1.0;
 	pager->conf->popup = 1;
+	pager->conf->drag_resist = 3;
      }
    E_CONFIG_LIMIT(pager->conf->deskname_pos, PAGER_DESKNAME_NONE, PAGER_DESKNAME_RIGHT);
    E_CONFIG_LIMIT(pager->conf->popup_speed, 0.1, 10.0);
@@ -826,6 +829,29 @@ _pager_face_desk_find(Pager_Face *face, E_Desk *desk)
 
 	pd = l->data;
 	if (pd->desk == desk) return pd;
+     }
+   return NULL;
+}
+
+/**
+ * Return Pager_Desk at canvas coord x, y
+ */
+static Pager_Desk *
+_pager_face_desk_at_coord(Pager_Face *face, Evas_Coord x, Evas_Coord y)
+{
+   Evas_List *l;
+
+   for (l = face->desks; l; l = l->next)
+     {
+	Pager_Desk *pd;
+	Evas_Coord dx, dy, dw, dh;
+
+	pd = l->data;
+	evas_object_geometry_get(pd->desk_object, &dx, &dy, &dw, &dh);
+	if (E_INSIDE(x, y, dx, dy, dw, dh))
+	  {
+	     return pd;
+	  }
      }
    return NULL;
 }
@@ -1784,9 +1810,16 @@ _pager_window_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_i
    /* make this configurable */
    if (ev->button == 1)
      {
+	Evas_Coord ox, oy;
+
+	evas_object_geometry_get(pw->window_object, &ox, &oy, NULL, NULL);
+	pw->drag.in_pager = 1;
+
+	pw->drag.x = ev->canvas.x;
+	pw->drag.y = ev->canvas.y;
+	pw->drag.dx = ox - ev->canvas.x;
+	pw->drag.dy = oy - ev->canvas.y;
 	pw->drag.start = 1;
-	pw->drag.x = -1;
-	pw->drag.y = -1;
      }
 }
 
@@ -1800,7 +1833,9 @@ _pager_window_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_inf
    pw = data;
    if (!pw) return;
 
+   pw->drag.in_pager = 0;
    pw->drag.start = 0;
+   pw->desk->face->dragging = 0;
 }
 
 static void
@@ -1813,9 +1848,92 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
    pw = data;
 
    if (!pw) return;
+
+   /* prevent drag for a few pixels */
    if (pw->drag.start)
      {
-#if 1
+	Evas_Coord dx, dy;
+	unsigned int resist = 0;
+
+	dx = pw->drag.x - ev->cur.output.x;
+	dy = pw->drag.y - ev->cur.output.y;
+	if (pw->desk && pw->desk->face && pw->desk->face->pager) 
+	  resist = pw->desk->face->pager->conf->drag_resist;
+	
+	if (((dx * dx) + (dy * dy)) <= (resist * resist)) return;
+
+	pw->desk->face->dragging = 1;
+	pw->drag.start = 0;
+     }
+
+   /* dragging this win around inside the pager */
+   if (pw->drag.in_pager)
+     {
+	Evas_Coord mx, my, vx, vy;
+	Pager_Desk *desk;
+
+	/* m for mouse */
+	mx = ev->cur.canvas.x;
+	my = ev->cur.canvas.y;
+
+	/* find desk at pointer */
+	desk = _pager_face_desk_at_coord(pw->desk->face, mx, my);
+
+	if (desk)
+	  {
+	   e_layout_coord_canvas_to_virtual(desk->layout_object, mx + pw->drag.dx, my + pw->drag.dy, &vx, &vy);
+
+	   if (desk != pw->desk) e_border_desk_set(pw->border, desk->desk);
+	   e_border_move(pw->border, vx + desk->desk->zone->x, vy + desk->desk->zone->y);
+	  }
+	else
+	  {
+	     /* not over a desk, start dnd drag */
+	     if (pw->window_object)
+	       {
+		  E_Drag *drag;
+		  Evas_Object *o, *oo;
+		  Evas_Coord x, y, w, h;
+		  const char *file, *part;
+		  const char *drag_types[] = { "enlightenment/pager_win" };
+
+		  evas_object_geometry_get(pw->window_object,
+			&x, &y, &w, &h);
+
+		  /* XXX this relies on screen and canvas coords matching. is this a valid assumption? */
+		  drag = e_drag_new(pw->desk->face->zone->container, x, y,
+				    drag_types, 1, pw, -1,
+				    _pager_window_cb_drag_finished);
+
+		  
+		  o = edje_object_add(drag->evas);
+		  edje_object_file_get(pw->window_object, &file, &part);
+		  edje_object_file_set(o, file, part);
+
+		  oo = o;
+
+		  o = edje_object_add(drag->evas);
+		  edje_object_file_get(pw->icon_object, &file, &part);
+		  edje_object_file_set(o, file, part);
+		  edje_object_part_swallow(oo, "icon", o);
+
+		  e_drag_object_set(drag, oo);
+
+		  e_drag_resize(drag, w, h);
+		  e_drag_start(drag, x - pw->drag.dx, y - pw->drag.dy);
+
+		  /* this prevents the desk from switching on drags */
+		  pw->drag.from_face = pw->desk->face;
+		  pw->drag.from_face->dragging = 1;
+		  evas_event_feed_mouse_up(pw->desk->face->evas, 1,
+			EVAS_BUTTON_NONE, ecore_time_get(), NULL);
+	       }
+	     pw->drag.in_pager = 0;
+	  }
+     }
+
+#if 0
+     {
 //	printf("DRAG: %d\n", pw);
 	if ((pw->drag.x == -1) && (pw->drag.y == -1))
 	  {
@@ -1873,9 +1991,8 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
 
 	       }
 	  }
-
-#endif
      }
+#endif
 }
 
 static void
@@ -1885,7 +2002,55 @@ _pager_window_cb_drag_finished(E_Drag *drag, int dropped)
 
    pw = drag->data;
 
-   if (pw && pw->desk && pw->desk->face)
+   if (!pw) return;
+
+   if (!dropped)
+     {
+	/* wasn't dropped (on pager). move it to position of mouse on screen */
+	int x, y, dx, dy;
+	E_Container *cont;
+	E_Zone *zone;
+	E_Desk *desk;
+
+	cont = e_container_current_get(e_manager_current_get());
+	zone = e_zone_current_get(cont);
+	desk = e_desk_current_get(zone);
+
+	e_border_zone_set(pw->border, zone);
+	e_border_desk_set(pw->border, desk);
+
+	ecore_x_pointer_last_xy_get(&x, &y);
+	x = x + zone->x;
+	y = y + zone->y;
+
+	dx = (pw->border->w / 2);
+	dy = (pw->border->h / 2);
+
+	/* offset so that center of window is on mouse, but keep within desk bounds */
+	if (dx < x)
+	  {
+	     x -= dx;
+	     if ((pw->border->w < zone->w) && (x + pw->border->w > zone->x + zone->w))
+	       {
+		  x -= x + pw->border->w - (zone->x + zone->w);
+	       }
+	  }
+	else x = 0;
+
+	if (dy < y)
+	  {
+	     y -= dy;
+	     if ((pw->border->h < zone->h) && (y + pw->border->h > zone->y + zone->h))
+	       {
+		  y -= y + pw->border->h - (zone->y + zone->h);
+	       }
+	  }
+	else y = 0;
+
+	e_border_move(pw->border, x, y);
+	
+     }
+   if (pw && pw->drag.from_face)
      {
 	pw->drag.from_face->dragging = 0;
      }
@@ -2011,48 +2176,60 @@ _pager_face_cb_drop(void *data, const char *type, void *event_info)
 {
    E_Event_Dnd_Drop *ev;
    Pager_Face *face;
-   E_Desk *desk;
+   Pager_Desk *desk;
    E_Border *bd;
    Evas_List *l;
-   int x, y;
-   double w, h;
+   int dx = 0, dy = 0;
 
    ev = event_info;
    face = data;
 
-   w = (face->fw - (face->inset.l + face->inset.r)) / (double) face->xnum;
-   h = (face->fh - (face->inset.t + face->inset.b)) / (double) face->ynum;
-
-   x = (ev->x - (face->fx + face->inset.l)) / w;
-   y = (ev->y - (face->fy + face->inset.t)) / h;
-
-   desk = e_desk_at_xy_get(face->zone, x, y);
-
-
-   if (!strcmp(type, "enlightenment/pager_win"))
+   /* XXX convert screen -> evas coords? */ 
+   desk = _pager_face_desk_at_coord(face, ev->x, ev->y);
+   if (desk)
      {
-	bd = ((Pager_Win *)(ev->data))->border;
-     }
-   else if (!strcmp(type, "enlightenment/border"))
-     {
-	bd = ev->data;
-     }
-   else
-     {
-	return;
+	if (!strcmp(type, "enlightenment/pager_win"))
+	  {
+	     Pager_Win *pw;
+	     pw = (Pager_Win *)(ev->data);
+	     if (pw)
+	       {
+		  bd = pw->border;
+		  dx = pw->drag.dx;
+		  dy = pw->drag.dy;
+	       }
+	  }
+	else if (!strcmp(type, "enlightenment/border"))
+	  {
+	     Evas_Coord wx, wy, wx2, wy2;
+	     bd = ev->data;
+	     e_layout_coord_virtual_to_canvas(desk->layout_object, bd->x, bd->y, &wx, &wy);
+	     e_layout_coord_virtual_to_canvas(desk->layout_object, bd->x + bd->w, bd->y + bd->h, &wx2, &wy2);
+	     dx = (wx - wx2) / 2;
+	     dy = (wy - wy2) / 2;
+	  }
+	else
+	  {
+	     return;
+	  }
+
+	if ((bd) && (desk))
+	  {
+	     Evas_Coord nx, ny;
+	     e_border_desk_set(bd, desk->desk);
+	     e_layout_coord_canvas_to_virtual(desk->layout_object, ev->x + dx, ev->y + dy, &nx, &ny);
+
+	     e_border_move(bd, nx + desk->desk->zone->x, ny + desk->desk->zone->y);
+	  }
+
      }
 
-   if ((bd) && (desk))
-     {
-	e_border_desk_set(bd, desk);
-     }
-
-   for (l = face->desks; l; l = l->next)
-     {
-	Pager_Desk *pd;
-	pd = l->data;
-	edje_object_signal_emit(pd->desk_object, "drag", "out");
-     }
+     for (l = face->desks; l; l = l->next)
+       {
+	  Pager_Desk *pd;
+	  pd = l->data;
+	  edje_object_signal_emit(pd->desk_object, "drag", "out");
+       }
 }
 
 static void

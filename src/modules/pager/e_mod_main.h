@@ -33,6 +33,7 @@ struct _Config
    /* Show popup? */
    unsigned int popup;
 
+   unsigned int drag_resist;
 };
 
 struct _Config_Face
@@ -130,7 +131,10 @@ struct _Pager_Win
    struct {
 	Pager_Face *from_face;
 	unsigned char start : 1;
+	unsigned char in_pager : 1;
+	unsigned char dnd : 1;
 	int x, y;
+	int dx, dy;
    } drag;
 };
 

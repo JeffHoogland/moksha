@@ -713,7 +713,6 @@ group {
    parts {
       part {
 	 name:          "overlay";
-	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
