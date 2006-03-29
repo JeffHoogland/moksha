@@ -7488,3 +7488,17 @@ break;
    END_INT
 #endif
 #undef HDL
+/****************************************************************************/
+#define HDL E_IPC_OP_DESKTOP_LOCK
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-lock-desktop", 0, "Locks the desktop", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   GENERIC(HDL);
+   e_desklock_show();
+   END_GENERIC();
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
