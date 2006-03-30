@@ -35,8 +35,6 @@ Some of the things (in very short form) that need to be done to E17...
   its iconified.
 * BUG: dnd to ibar is broken if u did an icon that isn't IN the ibar yet
   (from a window border) to either the very start or end of the ibar.
-* BUG: dnd from konqueror on zone 0 to another konq on zone 1 with xinerama (2
-  zones) causes segv
 * BUG: in general fullscreen needs work, cleaning and testing. dont allow
   desktop switches for the desk a fullscreened window is on, nor allow windows
   to be raised above the fs win etc. ie the app must seem to be entirely fs for
