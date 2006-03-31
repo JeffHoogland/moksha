@@ -48,10 +48,10 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
  * defaults for e to work.
  */
 #define E_CONFIG_FILE_EPOCH      0x0000
-/* incriment this whenever a new set of configvalues are added but the users
+/* increment this whenever a new set of configvalues are added but the users
  * config doesn't need top be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x008d
+#define E_CONFIG_FILE_GENERATION 0x008e
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT      0
@@ -217,6 +217,9 @@ struct _E_Config
 
    char	      *desklock_personal_passwd; // GUI
    char	      *desklock_background; // GUI
+#ifdef HAVE_PAM
+   int	      desklock_auth_method; // GUI
+#endif
    int	      desklock_login_box_zone; // GUI
    int        desklock_autolock; // GUI
    int        desklock_use_timeout; // GUI

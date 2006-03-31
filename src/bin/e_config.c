@@ -460,6 +460,9 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, font_hinting, INT);
    E_CONFIG_VAL(D, T, desklock_personal_passwd, STR);
    E_CONFIG_VAL(D, T, desklock_background, STR);
+#ifdef HAVE_PAM
+   E_CONFIG_VAL(D, T, desklock_auth_method, INT);
+#endif
    E_CONFIG_VAL(D, T, desklock_login_box_zone, INT);
    E_CONFIG_VAL(D, T, desklock_autolock, INT);
    E_CONFIG_VAL(D, T, desklock_use_timeout, INT);
@@ -631,6 +634,9 @@ e_config_init(void)
    
    e_config->desklock_personal_passwd = NULL;
    e_config->desklock_background = NULL;
+#ifdef HAVE_PAM
+   e_config->desklock_auth_method = 0;
+#endif
    e_config->desklock_login_box_zone = -1;
    e_config->desklock_autolock = 0;
    e_config->desklock_use_timeout = 0;

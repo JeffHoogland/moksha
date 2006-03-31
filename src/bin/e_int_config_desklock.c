@@ -42,6 +42,13 @@ static void _e_desklock_cb_lb_show_on_current_screen(void *data, Evas_Object *ob
 static void _e_desklock_cb_lb_show_on_specific_screen(void *data, Evas_Object *obj,
 						      const char *emission, const char *source);
 
+#ifdef HAVE_PAM
+static void _e_desklock_cb_syswide_auth_method(void *data, Evas_Object *obj,
+					       const char *emission, const char *source);
+static void _e_desklock_cb_personilized_auth_method(void *data, Evas_Object *obj,
+						    const char *emission, const char *source);
+#endif
+
 /*******************************************************************************************/
 
 struct _E_Config_Dialog_Data
@@ -63,10 +70,16 @@ struct _E_Config_Dialog_Data
    char *cur_bg; // local variable;
    Evas *evas; // local variable
    Evas_Object *preview_image; // local variable
+
+#ifdef HAVE_PAM
+   int auth_method;
+#endif
    
    struct {
-      Evas_Object	*passwd_field;
+      Evas_Object *passwd_field;
       Evas_Object *bg_list;
+
+      Evas_Object *show_passwd_check;
       
       struct {
 	 Evas_Object *show_all_screens;
@@ -174,6 +187,10 @@ _fill_desklock_data(E_Config_Dialog_Data *cfdata)
      cfdata->cur_bg = strdup(DEF_DESKLOCK_BACKGROUND);
    else
      cfdata->cur_bg = strdup(e_config->desklock_background);
+
+#ifdef HAVE_PAM
+   cfdata->auth_method = e_config->desklock_auth_method;
+#endif
    
    //vertical_lb_align = e_config->desklock_login
 }
@@ -215,6 +232,9 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->desklock_autolock = cfdata->autolock;
    e_config->desklock_use_timeout = cfdata->use_timeout;
    e_config->desklock_timeout = cfdata->timeout;
+#ifdef HAVE_PAM
+   e_config->desklock_auth_method = cfdata->auth_method;
+#endif
    if (e_config->desklock_use_timeout)
      {
 	ecore_x_screensaver_timeout_set(e_config->desklock_timeout);
@@ -228,20 +248,56 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    Evas_Object *o, *of, *ob;
    E_Widget_Check_Data *wd;
+   E_Widget_Radio_Data *rwd;
+
+#ifdef HAVE_PAM
+   E_Radio_Group  *rg_auth;
+   Evas_Object	  *oc;
+#endif
    
    //_fill_desklock_data(cfdata);
    
    o = e_widget_list_add(evas, 0, 0);
+
+#ifdef HAVE_PAM
+   of = e_widget_framelist_add(evas, _("Authentication Method"), 0);
+   {
+     rg_auth = e_widget_radio_group_new((int*)(&cfdata->auth_method));
+     oc = e_widget_radio_add(evas, _("System wide authentication"), 0, rg_auth);
+     e_widget_framelist_object_append(of, oc);
+
+     rwd = e_widget_data_get(oc);
+     edje_object_signal_callback_add(rwd->o_radio, "toggle_on", "",
+				     _e_desklock_cb_syswide_auth_method, cfdata);
+
+     oc = e_widget_radio_add(evas, _("Personilized password"), 1, rg_auth);
+     e_widget_framelist_object_append(of,oc);
+
+     rwd = e_widget_data_get(oc);
+     edje_object_signal_callback_add(rwd->o_radio, "toggle_on", "",
+				     _e_desklock_cb_personilized_auth_method, cfdata);
+   }
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+#endif
    
    of = e_widget_framelist_add(evas, _("Personalized Password:"), 0);
    
    cfdata->gui.passwd_field = ob = e_widget_entry_add(evas, &(cfdata->desklock_passwd));
+#ifdef HAVE_PAM
+   if (cfdata->auth_method == 0)
+     e_widget_disabled_set(ob, 1);
+#endif
    _e_desklock_passwd_cb_change(cfdata, ob);
    e_widget_entry_on_change_callback_set(ob, _e_desklock_passwd_cb_change, cfdata);
    e_widget_min_size_set(ob, 200, 25);
    e_widget_framelist_object_append(of, ob);
    
    ob = e_widget_check_add(evas, _("Show Password"), &(cfdata->show_password));
+   cfdata->gui.show_passwd_check = ob;
+#ifdef HAVE_PAM
+   if (cfdata->auth_method == 0)
+     e_widget_disabled_set(ob, 1);
+#endif
    e_widget_framelist_object_append(of, ob);
    
    wd = (E_Widget_Check_Data*)e_widget_data_get(ob);
@@ -283,6 +339,13 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    if (!cfdata) return 0;
    
+   if (cfdata->desklock_passwd_cp)
+     {
+	if (e_config->desklock_personal_passwd)
+	  evas_stringshare_del(e_config->desklock_personal_passwd);
+     }
+   e_config->desklock_personal_passwd = (char *)evas_stringshare_add(cfdata->desklock_passwd_cp);
+
    if (cfdata->cur_bg)
      {
 	if (e_config->desklock_background)
@@ -303,6 +366,14 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->desklock_autolock = cfdata->autolock;
    e_config->desklock_use_timeout = cfdata->use_timeout;
    e_config->desklock_timeout = cfdata->timeout;
+#ifdef HAVE_PAM
+   e_config->desklock_auth_method = cfdata->auth_method;
+#endif
+
+   if (e_config->desklock_use_timeout)
+     {
+	ecore_x_screensaver_timeout_set(e_config->desklock_timeout);
+     }
    
    e_config_save_queue();
    return 1;
@@ -314,12 +385,15 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
   Evas_Object *o, *of, *of1, *ob;
   E_Widget_Radio_Data *wd;
 
-   /* FIXME: this dialog is broken. advanced options should ALSO INCLUDE basic options */
   E_Radio_Group *rg, *rg_bkg;
-  Evas_Object *ot;
+  Evas_Object *ot, *ol;
 
-  //_fill_desklock_data(cfdata);
-  
+#ifdef HAVE_PAM
+  E_Radio_Group *rg_auth;
+  Evas_Object	*oc;
+  E_Widget_Check_Data *cwd;
+#endif
+
   cfdata->evas = evas;
 
   ot = e_widget_table_add(evas, 0);
@@ -327,7 +401,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
     Evas_Object *ot1;
     /* start: bkg list */
     cfdata->gui.bg_list = e_widget_ilist_add(evas, BG_LIST_ICON_SIZE_W,
-					     BG_LIST_ICON_SIZE_H, &(cfdata->cur_bg));
+      				       BG_LIST_ICON_SIZE_H, &(cfdata->cur_bg));
     {
       e_widget_ilist_selector_set(cfdata->gui.bg_list, 1);
       e_widget_min_size_set(cfdata->gui.bg_list, 180, 200);
@@ -355,41 +429,120 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
     if (1 || _e_desklock_zone_num_get() > 1)
       {
-	of = e_widget_framelist_add(evas, _("Login Box Settings"), 0);
-	{
-	  rg = e_widget_radio_group_new((int *)(&(cfdata->login_box_zone)));
+        of = e_widget_framelist_add(evas, _("Login Box Settings"), 0);
+        {
+          rg = e_widget_radio_group_new((int *)(&(cfdata->login_box_zone)));
 
-	  ob = e_widget_radio_add(evas, _("Show On All Screen Zones"), LOGINBOX_SHOW_ALL_SCREENS,
-				  rg);
-	  cfdata->gui.loginbox_obj.show_all_screens = ob;
-	  if (cfdata->zone_count == 1) e_widget_disabled_set(ob, 1);
-	  e_widget_framelist_object_append(of, ob);
+          ob = e_widget_radio_add(evas, _("Show On All Screen Zones"), LOGINBOX_SHOW_ALL_SCREENS,
+      			    rg);
+          cfdata->gui.loginbox_obj.show_all_screens = ob;
+          if (cfdata->zone_count == 1) e_widget_disabled_set(ob, 1);
+          e_widget_framelist_object_append(of, ob);
 
-	  ob = e_widget_radio_add(evas, _("Show On Current Screen Zone"),
-				  LOGINBOX_SHOW_CURRENT_SCREENS, rg);
-	  cfdata->gui.loginbox_obj.show_current_screen = ob;
-	  if (cfdata->zone_count == 1) e_widget_disabled_set(ob, 1);
-	  e_widget_framelist_object_append(of, ob);
+          ob = e_widget_radio_add(evas, _("Show On Current Screen Zone"),
+      			    LOGINBOX_SHOW_CURRENT_SCREENS, rg);
+          cfdata->gui.loginbox_obj.show_current_screen = ob;
+          if (cfdata->zone_count == 1) e_widget_disabled_set(ob, 1);
+          e_widget_framelist_object_append(of, ob);
 
-	  ob = e_widget_radio_add(evas, _("Show On Screen Zone :"), LOGINBOX_SHOW_SPECIFIC_SCREEN,
-				  rg);
-	  cfdata->gui.loginbox_obj.show_specific_screen = ob;
-	  if (cfdata->zone_count == 1) e_widget_disabled_set(ob, 1);
-	  e_widget_framelist_object_append(of, ob);
+          ob = e_widget_radio_add(evas, _("Show On Screen Zone :"), LOGINBOX_SHOW_SPECIFIC_SCREEN,
+      			    rg);
+          cfdata->gui.loginbox_obj.show_specific_screen = ob;
+          if (cfdata->zone_count == 1) e_widget_disabled_set(ob, 1);
+          e_widget_framelist_object_append(of, ob);
 
-	  ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 0.0, (double)(cfdata->zone_count - 1),
-				   1.0, 0, NULL, &(cfdata->specific_lb_zone), 100);
-	  cfdata->gui.loginbox_obj.screen_slider = ob;
-	  if (cfdata->zone_count == 1 ||
-	      cfdata->login_box_zone == LOGINBOX_SHOW_ALL_SCREENS)
-	    {
-	      e_widget_disabled_set(ob, 1);
-	    }
-	  e_widget_framelist_object_append(of, ob);
-	}
-	e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
+          ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 0.0, (double)(cfdata->zone_count - 1),
+      			     1.0, 0, NULL, &(cfdata->specific_lb_zone), 100);
+          cfdata->gui.loginbox_obj.screen_slider = ob;
+          if (cfdata->zone_count == 1 || cfdata->login_box_zone == LOGINBOX_SHOW_ALL_SCREENS)
+	    e_widget_disabled_set(ob, 1);
+          e_widget_framelist_object_append(of, ob);
+        }
+        e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
       }
     /* end: login box options */
+
+#ifdef HAVE_PAM
+      of = e_widget_framelist_add(evas, _("Authentication Method"), 0);
+      {
+        rg_auth = e_widget_radio_group_new((int*)(&cfdata->auth_method));
+        oc = e_widget_radio_add(evas, _("System wide authentication"), 0, rg_auth);
+        e_widget_framelist_object_append(of, oc);
+
+        wd = e_widget_data_get(oc);
+        edje_object_signal_callback_add(wd->o_radio, "toggle_on", "",
+       				 _e_desklock_cb_syswide_auth_method, cfdata);
+
+        oc = e_widget_radio_add(evas, _("Personilized password"), 1, rg_auth);
+        e_widget_framelist_object_append(of,oc);
+
+        wd = e_widget_data_get(oc);
+        edje_object_signal_callback_add(wd->o_radio, "toggle_on", "",
+       				 _e_desklock_cb_personilized_auth_method, cfdata);
+      }
+      e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
+#endif
+
+      of = e_widget_framelist_add(evas, _("Personalized Password:"), 0);
+      {
+	cfdata->gui.passwd_field = ob = e_widget_entry_add(evas, &(cfdata->desklock_passwd));
+#ifdef HAVE_PAM
+	if (cfdata->auth_method == 0)
+	  e_widget_disabled_set(ob, 1);
+#endif
+
+	_e_desklock_passwd_cb_change(cfdata, ob);
+	e_widget_entry_on_change_callback_set(ob, _e_desklock_passwd_cb_change, cfdata);
+	e_widget_min_size_set(ob, 200, 25);
+	e_widget_framelist_object_append(of, ob);
+     
+	ob = e_widget_check_add(evas, _("Show Password"), &(cfdata->show_password));
+	cfdata->gui.show_passwd_check = ob;
+
+#ifdef HAVE_PAM
+	if (cfdata->auth_method == 0)
+	  e_widget_disabled_set(ob, 1);
+#endif
+	e_widget_framelist_object_append(of, ob);
+     
+	cwd = (E_Widget_Check_Data*)e_widget_data_get(ob);
+	edje_object_signal_callback_add(cwd->o_check,"toggle_on", "",
+					_e_desklock_cb_show_passwd, cfdata);
+	edje_object_signal_callback_add(cwd->o_check,"toggle_off", "",
+					_e_desklock_cb_show_passwd, cfdata);
+      }
+#ifdef HAVE_PAM
+      e_widget_table_object_append(ot, of, 0, 3, 1, 1, 1, 1, 1, 1);
+#else
+      e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
+#endif
+
+      of = e_widget_framelist_add(evas, _("Automatic Locking"), 0);
+      {
+	e_widget_disabled_set(of, !ecore_x_screensaver_event_available_get());
+   
+	ob = e_widget_check_add(evas, _("Lock when the Screensaver starts"), &(cfdata->autolock));
+	e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
+	e_widget_framelist_object_append(of, ob);
+
+	ob = e_widget_check_add(evas, _("Set the screensaver timeout"), &(cfdata->use_timeout));
+	e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
+	e_widget_framelist_object_append(of, ob);
+   
+	ob = e_widget_label_add(evas, _("Time until screensaver starts"));
+	e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
+	e_widget_framelist_object_append(of, ob);
+	ob = e_widget_slider_add(evas, 1, 0, _("%1.0f seconds"),
+				 1.0, 600.0,
+				 1.0, 0, &(cfdata->timeout), NULL,
+				 200);
+	e_widget_framelist_object_append(of, ob);
+      }
+#ifdef HAVE_PAM
+      e_widget_table_object_append(ot, of, 1, 2, 1, 2 ,1 ,1 ,1 ,1);
+#else
+      e_widget_table_object_append(ot, of, 1, 2, 1, 1 ,1 ,1 ,1 ,1);
+#endif
   }
 
   /* register callbacks for the radios in login box options
@@ -723,6 +876,33 @@ _e_desklock_cb_lb_show_on_specific_screen(void *data, Evas_Object *obj, const ch
   e_slider_value_set(wd->o_slider, cfdata->specific_lb_zone_backup);
   cfdata->specific_lb_zone = cfdata->specific_lb_zone_backup;
 
-  //e_widget_disabled_set(wd->o_widget, 1);
+  e_widget_disabled_set(wd->o_widget, 0);
 }
 
+#ifdef HAVE_PAM
+static void
+_e_desklock_cb_syswide_auth_method(void *data, Evas_Object *obj, const char *emission,
+				   const char *source)
+{
+  E_Widget_Entry_Data *ewd;
+  E_Widget_Check_Data *cwd;
+  E_Config_Dialog_Data *cfdata;
+
+  if (!(cfdata = data)) return;
+
+  e_widget_disabled_set(cfdata->gui.passwd_field, 1);
+  e_widget_disabled_set(cfdata->gui.show_passwd_check, 1);
+}
+
+static void
+_e_desklock_cb_personilized_auth_method(void *data, Evas_Object *obj, const char *emission,
+					const char *source)
+{
+  E_Config_Dialog_Data *cfdata;
+
+  if (!(cfdata = data)) return;
+
+  e_widget_disabled_set(cfdata->gui.passwd_field, 0);
+  e_widget_disabled_set(cfdata->gui.show_passwd_check, 0);
+}
+#endif

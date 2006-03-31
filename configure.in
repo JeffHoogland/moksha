@@ -37,6 +37,12 @@ fi
 				
 AC_SUBST(fnmatch_libs)
 
+have_pam=no
+AC_CHECK_HEADERS(security/pam_appl.h, [
+    LIBS="$LIBS -lpam"
+    have_pam=yes
+  AC_DEFINE(HAVE_PAM, 1, [PAM Authentication Support])])
+
 # Setting have_valgrind to "no" seems pointless, but we just need to
 # put something in as the 4th parameter, so configure doesn't abort
 # when valgrind.pc isn't found.
