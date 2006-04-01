@@ -260,7 +260,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_list_add(evas, 0, 0);
 
 #ifdef HAVE_PAM
-   of = e_widget_framelist_add(evas, _("Password type"), 0);
+   of = e_widget_framelist_add(evas, _("Password Type"), 0);
    {
      rg_auth = e_widget_radio_group_new((int*)(&cfdata->auth_method));
      oc = e_widget_radio_add(evas, _("Use my login password"), 0, rg_auth);
@@ -461,7 +461,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
     /* end: login box options */
 
 #ifdef HAVE_PAM
-      of = e_widget_framelist_add(evas, _("Password type"), 0);
+      of = e_widget_framelist_add(evas, _("Password Type"), 0);
       {
         rg_auth = e_widget_radio_group_new((int*)(&cfdata->auth_method));
         oc = e_widget_radio_add(evas, _("Use my login password"), 0, rg_auth);
