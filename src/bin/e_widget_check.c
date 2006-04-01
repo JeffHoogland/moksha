@@ -59,6 +59,35 @@ e_widget_check_add(Evas *evas, char *label, int *val)
    return obj;
 }
 
+EAPI void
+e_widget_check_checked_set(Evas_Object *check, int checked)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(check);
+   if (wd->valptr)
+     *(wd->valptr) = checked;
+   if (checked)
+     edje_object_signal_emit(wd->o_check, "toggle_on", "");
+   else
+     edje_object_signal_emit(wd->o_check, "toggle_off", "");
+} 
+
+EAPI int
+e_widget_check_checked_get(Evas_Object *check)
+{
+   E_Widget_Data *wd;
+   int ret;
+
+   wd = e_widget_data_get(check);
+   if (wd->valptr)
+     ret = *(wd->valptr);
+   else 
+     ret = -1;
+   
+   return ret;
+}
+
 static void
 _e_wid_del_hook(Evas_Object *obj)
 {

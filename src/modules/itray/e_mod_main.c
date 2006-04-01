@@ -479,6 +479,7 @@ _itray_box_frame_resize(ITray_Box *itb)
 	  w = h = TRAY_ICON_SIZE + itb->box_inset.l + itb->box_inset.r;
 	else 
 	  {
+	     if (itb->tray->rows > 0) itb->tray->rows = 1;
 	     icons_per_row = (itb->tray->icons + 
 		   (itb->tray->icons % itb->tray->rows)) / itb->tray->rows;
 	     w = (icons_per_row * TRAY_ICON_SIZE)

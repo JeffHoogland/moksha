@@ -61,6 +61,91 @@ e_widget_slider_add(Evas *evas, int horiz, int rev, char *fmt, double min, doubl
    return obj;
 }
 
+/**  
+ * Set the double value for the slider. This will also move the slider to
+ * the correct position and update the text indecator. Will not do anything
+ * if the slider was not created with a double value.
+ *  
+ * @param slider pointer to the slider to be modified
+ * @param dval the double value to set the slider to
+ * @return 1 if value set, return 0 if value not set
+ */
+EAPI int
+e_widget_slider_value_double_set(Evas_Object *slider, double dval)
+{
+   E_Widget_Data *wd;   
+
+   wd = e_widget_data_get(slider);
+   if (!wd->dval) return 0;
+   *(wd->dval) = dval;
+   e_slider_value_set(wd->o_slider, dval);
+   return 1;   
+}
+
+/**  
+ * Set the integer value for the slider. This will also move the slider to
+ * the correct position and update the text indecator. Will not do anything
+ * if the slider was not created with an integer value. 
+ *  
+ * @param slider pointer to the slider to be modified
+ * @param int the integer value to set the slider to
+ * @return 1 if value set, return 0 if value not set
+ */
+EAPI int
+e_widget_slider_value_int_set(Evas_Object *slider, int ival)
+{
+   E_Widget_Data *wd;   
+
+   wd = e_widget_data_get(slider);
+   if (!wd->ival) return 0;
+   *(wd->ival) = ival;
+   e_slider_value_set(wd->o_slider, ival);
+   return 1; 
+}
+
+/**  
+ * Get the double value for the slider. The value of dval is undefined
+ * if the slider was not created with a double value.
+ *  
+ * @param slider pointer to the slider to be queried
+ * @param dval the pointer to the double value to be set with the value of the slider
+ * @return 1 if value returned, return 0 if value not returned
+ */
+EAPI int
+e_widget_slider_value_double_get(Evas_Object *slider, double *dval)
+{
+   E_Widget_Data *wd;   
+
+   wd = e_widget_data_get(slider);
+   if (!wd->dval) return 0;
+   if (!dval) return 0;
+
+   *dval = *(wd->dval);
+   return 1;   
+}
+
+/**  
+ * Get the integer value for the slider. The value of ival is undefined
+ * if the slider was not created with an integer value.
+ *  
+ * @param slider pointer to the slider to be queried
+ * @param ival the pointer to the integer value to be set with the value of the slider
+ * @return 1 if value returned, return 0 if value not returned
+ */
+EAPI int
+e_widget_slider_value_int_get(Evas_Object *slider, int *ival)
+{
+   E_Widget_Data *wd;   
+
+   wd = e_widget_data_get(slider);
+   if (!wd->ival) return 0;
+   if (!ival) return 0;
+   
+   *ival = *(wd->ival);
+   return 1; 
+}
+
+/* Private functions */
 static void
 _e_wid_del_hook(Evas_Object *obj)
 {

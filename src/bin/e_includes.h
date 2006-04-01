@@ -107,6 +107,7 @@
 #include "e_int_config_menus.h"
 #include "e_int_config_keybindings.h"
 #include "e_int_config_cursor.h"
+#include "e_int_config_fonts.h"
 #include "e_int_config_startup.h"
 #include "e_int_config_performance.h"
 #include "e_int_config_winlist.h"

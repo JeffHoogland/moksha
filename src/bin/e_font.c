@@ -279,6 +279,10 @@ e_font_default_list(void)
    return e_config->font_defaults;
 }
 
+/* return the default font name with fallbacks, font size is returned
+ * in size_ret. This function is needed when all hell breaks loose and
+ * we need a font name and size.
+ */
 EAPI const char *
 e_font_default_string_get(const char *text_class, int *size_ret)
 {

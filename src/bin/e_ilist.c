@@ -93,7 +93,7 @@ e_ilist_icon_size_set(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 }
 
 EAPI void
-e_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, int header, void (*func) (void *data, void *data2), void (*func_hilight) (void *data, void *data2), void *data, void *data2)
+e_ilist_append(Evas_Object *obj, Evas_Object *icon, const char *label, int header, void (*func) (void *data, void *data2), void (*func_hilight) (void *data, void *data2), void *data, void *data2)
 {
    E_Smart_Item *si;
    Evas_Coord mw = 0, mh = 0;
@@ -267,7 +267,7 @@ e_ilist_remove_num(Evas_Object *obj, int n)
 }
 
 EAPI void
-e_ilist_remove_label(Evas_Object *obj, char *label)
+e_ilist_remove_label(Evas_Object *obj, const char *label)
 {
    E_Smart_Item *si;
    Evas_List *l;

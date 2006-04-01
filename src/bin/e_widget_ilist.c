@@ -62,7 +62,7 @@ e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, char **value)
 }
 
 EAPI void
-e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, void (*func) (void *data), void *data, char *val)
+e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, const char *label, void (*func) (void *data), void *data, char *val)
 {
    E_Widget_Data *wd;
    E_Widget_Callback *wcb;
@@ -78,7 +78,7 @@ e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, void (*f
 }
 
 EAPI void
-e_widget_ilist_header_append(Evas_Object *obj, Evas_Object *icon, char *label)
+e_widget_ilist_header_append(Evas_Object *obj, Evas_Object *icon, const char *label)
 {
    E_Widget_Data *wd;
    
@@ -158,7 +158,7 @@ e_widget_ilist_remove_num(Evas_Object *obj, int n)
 }
 
 EAPI void
-e_widget_ilist_remove_label(Evas_Object *obj, char *label)
+e_widget_ilist_remove_label(Evas_Object *obj, const char *label)
 {
    E_Widget_Data *wd;
    

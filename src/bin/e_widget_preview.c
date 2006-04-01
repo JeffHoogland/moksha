@@ -51,7 +51,7 @@ e_widget_preview_add(Evas *evas, int minw, int minh)
 }
 
 EAPI int
-e_widget_preview_file_set(Evas_Object *obj, char *file, char *key)
+e_widget_preview_file_set(Evas_Object *obj, const char *file, const char *key)
 {
    E_Widget_Data *wd;
    
@@ -65,7 +65,7 @@ e_widget_preview_file_set(Evas_Object *obj, char *file, char *key)
 }
 
 EAPI int
-e_widget_preview_edje_set(Evas_Object *obj, char *file, char *group)
+e_widget_preview_edje_set(Evas_Object *obj, const char *file, const char *group)
 {
    E_Widget_Data *wd;
    int ret;

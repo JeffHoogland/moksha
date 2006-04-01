@@ -7,6 +7,10 @@
 #define E_WIDGET_SLIDER_H
 
 EAPI Evas_Object *e_widget_slider_add(Evas *evas, int horiz, int rev, char *fmt, double min, double max, double step, int count, double *dval, int *ival, Evas_Coord size);
-    
+EAPI int e_widget_slider_value_double_set(Evas_Object *slider, double dval);
+EAPI int e_widget_slider_value_int_set(Evas_Object *slider, int ival);
+EAPI int e_widget_slider_value_double_get(Evas_Object *slider, double *dval);
+EAPI int e_widget_slider_value_int_get(Evas_Object *slider, int *ival);
+
 #endif
 #endif

@@ -85,7 +85,7 @@ typedef struct
   char  *action_params;
   int	def_action;
   int	restrictions;
-}ACTION;
+} ACTION;
 
 const ACTION actions_predefined_names[ ] = {
   {"Flip Desktop Left", "desk_flip_by", "-1 0", _DEFAULT_ACTION,

@@ -149,13 +149,18 @@ e_widget_entry_on_change_callback_set(Evas_Object *obj, void (*func) (void *data
    wd->on_change_data = data;
 }
 
-#if 0
 void             
 e_widget_entry_text_set(Evas_Object *entry, const char *text)
 {
-   e_entry_text_set(entry, text);     
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(entry);
+   e_entry_text_set(wd->o_entry, text);     
+   E_FREE(*(wd->valptr));  
+   *(wd->valptr) = strdup(text);
 }
 
+#if 0
 const char *
 e_widget_entry_text_get(Evas_Object *entry)
 {
