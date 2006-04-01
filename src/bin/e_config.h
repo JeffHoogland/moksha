@@ -217,9 +217,7 @@ struct _E_Config
 
    char	      *desklock_personal_passwd; // GUI
    char	      *desklock_background; // GUI
-#ifdef HAVE_PAM
    int	      desklock_auth_method; // GUI
-#endif
    int	      desklock_login_box_zone; // GUI
    int        desklock_autolock; // GUI
    int        desklock_use_timeout; // GUI
