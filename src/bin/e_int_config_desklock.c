@@ -388,11 +388,9 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
   E_Radio_Group *rg, *rg_bkg;
   Evas_Object *ot, *ol;
 
-#ifdef HAVE_PAM
   E_Radio_Group *rg_auth;
   Evas_Object	*oc;
   E_Widget_Check_Data *cwd;
-#endif
 
   cfdata->evas = evas;
 
