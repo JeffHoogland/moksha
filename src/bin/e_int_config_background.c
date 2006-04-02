@@ -109,7 +109,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    im = cfd->data;
 
    /* e_widget_focus_set(il, 1); */
-   e_widget_ilist_go(il);
    e_widget_table_object_append(ot, il, 0, 0, 1, 2, 1, 1, 1, 1);
 
    /* Add import Button */
@@ -396,6 +395,7 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
    if (bg_dirs) e_path_dir_list_free(bg_dirs);
    free(c);
    cfd->data = im;
+   e_widget_ilist_go(il);
    if (selnum >= 0)
      e_widget_ilist_selected_set(il, selnum);
 }
