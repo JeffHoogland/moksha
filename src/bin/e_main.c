@@ -88,6 +88,11 @@ main(int argc, char **argv)
    sigemptyset(&action.sa_mask);
    sigaction(SIGBUS, &action, NULL);
 
+   action.sa_sigaction = e_sigabrt_act;
+   action.sa_flags = SA_ONSTACK | SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
+   sigemptyset(&action.sa_mask);
+   sigaction(SIGABRT, &action, NULL);
+
    /* FIXME: this is the init code for letting e be relocatable. right now
     * its not used - so i want to see if it can reliably determine its exe
     * prefix

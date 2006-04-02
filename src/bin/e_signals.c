@@ -143,3 +143,28 @@ e_sigbus_act(int x, siginfo_t *info, void *data)
 		"etc.");
    exit(-11);
 }
+
+EAPI void
+e_sigabrt_act(int x, siginfo_t *info, void *data)
+{
+   write(2, "**** ABORT ****\n", 21);
+   ecore_x_pointer_ungrab();
+   ecore_x_keyboard_ungrab();
+   ecore_x_ungrab();
+   ecore_x_sync();
+   e_alert_show("This is very bad. Enlightenment has recieved an abort.\n"
+		"This could be for many reasons - accessing memory not in\n"
+		"its available address space or unable to be paged in.\n"
+		"\n"
+		"You can gdb attach to this process now to try debug it\n"
+		"or you could exit, or just hit restart to try and get\n"
+		"your desktop back the way it was. This may not always\n"
+		"work perfectly, but it is the best we can do for now.\n"
+		"\n"
+		"Please help us debug this by compiling Enlightenment and\n"
+		"all its dependency libraries with gdb debugging enabled\n"
+		"and gdb attach to E when this happens and try figure out\n"
+		"what's going on and set us gdb backtraces, variable dumps\n"
+		"etc.");
+   exit(-11);
+}

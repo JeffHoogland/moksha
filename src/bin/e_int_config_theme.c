@@ -151,20 +151,19 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      {
 	Ecore_List *themes;
 	char *themefile;
-	E_Path_Dir *ep;
+	E_Path_Dir *d;
 	int detected;
 	
-	ep = l->data;
-
-	if (!ecore_file_is_dir(ep->dir)) continue;
-	themes = ecore_file_ls(ep->dir);
+	d = l->data;
+	if (!ecore_file_is_dir(d->dir)) continue;
+	themes = ecore_file_ls(d->dir);
 	if (!themes) continue;
 	
 	detected = 0;
 	homedir = e_user_homedir_get();
 	if (homedir)
 	  {
-	     if (!strncmp(ep->dir, homedir, strlen(homedir)))
+	     if (!strncmp(d->dir, homedir, strlen(homedir)))
 	       {
 		  e_widget_ilist_header_append(il, NULL, _("Personal"));
 		  i++;
@@ -174,7 +173,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	  }
 	if (!detected)
 	  {
-	     if (!strncmp(ep->dir, e_prefix_data_get(), strlen(e_prefix_data_get())))
+	     if (!strncmp(d->dir, e_prefix_data_get(), strlen(e_prefix_data_get())))
 	       {
 		  e_widget_ilist_header_append(il, NULL, _("System"));
 		  i++;
@@ -190,7 +189,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	
 	while ((themefile = ecore_list_next(themes)))
 	  {
-	     snprintf(fulltheme, sizeof(fulltheme), "%s/%s", ep->dir, themefile);
+	     snprintf(fulltheme, sizeof(fulltheme), "%s/%s", d->dir, themefile);
 	     if (ecore_file_is_dir(fulltheme)) continue;
 	     
 	     /* minimum theme requirements */

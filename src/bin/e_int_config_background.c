@@ -279,6 +279,8 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
    Evas *evasbuf;
    const char *f;
    char *c;
+   int selnum = -1;
+   int i = 0;
 
    if (!il) return;
    
@@ -289,6 +291,10 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
    eebuf = ecore_evas_buffer_new(1, 1);
    evasbuf = ecore_evas_get(eebuf);
    o = edje_object_add(evasbuf);
+   
+   e_widget_ilist_header_append(il, NULL, _("Theme"));
+   i++;
+   
    f = e_theme_edje_file_get("base/theme/backgrounds", "desktop/background");
    c = strdup(f);
    if (edje_object_file_set(o, f, "desktop/background"))
@@ -301,9 +307,9 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
 	  ic = e_thumb_evas_object_get(c, cfd->dia->win->evas, 48, 48, 1);
 
 	e_widget_ilist_append(il, ic, "Theme Background", _ilist_cb_bg_selected, cfd, "");
+	if (!e_config->desktop_default_background) selnum = i;
+	i++;
      }
-   if (!e_config->desktop_default_background)
-     e_widget_ilist_selected_set(il, 0);
    
    im = e_widget_preview_add(cfd->dia->win->evas, 320, 240);
    e_widget_preview_edje_set(im, f, "desktop/background");
@@ -319,52 +325,79 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
    for (bg = bg_dirs; bg; bg = bg->next)
      {
 	E_Path_Dir *d;
-
+        int detected;
+	char *bg_file;
+	Ecore_List *bgs;
+	char *homedir;
+	
 	d = bg->data;
-	if (ecore_file_is_dir(d->dir))
+	if (!ecore_file_is_dir(d->dir)) continue;
+	bgs = ecore_file_ls(d->dir);
+	if (!bgs) continue;
+	
+	detected = 0;
+	homedir = e_user_homedir_get();
+	if (homedir)
 	  {
-	     char *bg_file;
-	     Ecore_List *bgs;
-	     int i = 1;
-
-	     bgs = ecore_file_ls(d->dir);
-	     if (!bgs) continue;
-	     while ((bg_file = ecore_list_next(bgs)))
+	     if (!strncmp(d->dir, homedir, strlen(homedir)))
 	       {
-		  char full_path[4096];
-
-		  snprintf(full_path, sizeof(full_path), "%s/%s", d->dir, bg_file);
-		  if (ecore_file_is_dir(full_path)) continue;
-		  if (!e_util_edje_collection_exists(full_path, "desktop/background")) continue;
-
-		  if (!e_thumb_exists(full_path))
-		    ic = e_thumb_generate_begin(full_path, 48, 48, evas, &ic, NULL, NULL);
-		  else
-		    ic = e_thumb_evas_object_get(full_path, evas, 48, 48, 1);
-
-		  e_widget_ilist_append(il, ic, ecore_file_strip_ext(bg_file), _ilist_cb_bg_selected, cfd, full_path);
-		  if ((e_config->desktop_default_background) &&
-		      (!strcmp(e_config->desktop_default_background, full_path)))
-		    {
-		       e_widget_ilist_selected_set(il, i);
-		       
-		       evas_object_del(im);
-		       im = e_widget_preview_add(cfd->dia->win->evas, 320, 240);
-		       e_widget_preview_edje_set(im, e_config->desktop_default_background, "desktop/background");
-//		       im = e_widget_preview_add_from_object(cfd->dia->win->evas, o, 320, 240);
-//		       e_widget_preview_object_set(im, e_thumb_evas_object_get(full_path, cfd->dia->win->evas, 320, 240, 1));
-		    }
+		  e_widget_ilist_header_append(il, NULL, _("Personal"));
 		  i++;
+		  detected = 1;
 	       }
-	     free(bg_file);
-	     ecore_list_destroy(bgs);
+	     free(homedir);
 	  }
-	free(d);
+	if (!detected)
+	  {
+	     if (!strncmp(d->dir, e_prefix_data_get(), strlen(e_prefix_data_get())))
+	       {
+		  e_widget_ilist_header_append(il, NULL, _("System"));
+		  i++;
+		  detected = 1;
+	       }
+	  }
+	if (!detected)
+	  {
+	     e_widget_ilist_header_append(il, NULL, _("Other"));
+	     i++;
+	     detected = 1;
+	  }
+	while ((bg_file = ecore_list_next(bgs)))
+	  {
+	     char full_path[4096];
+	     
+	     snprintf(full_path, sizeof(full_path), "%s/%s", d->dir, bg_file);
+	     if (ecore_file_is_dir(full_path)) continue;
+	     if (!e_util_edje_collection_exists(full_path, "desktop/background")) continue;
+	     
+	     if (!e_thumb_exists(full_path))
+	       ic = e_thumb_generate_begin(full_path, 48, 48, evas, &ic, NULL, NULL);
+	     else
+	       ic = e_thumb_evas_object_get(full_path, evas, 48, 48, 1);
+	     
+	     e_widget_ilist_append(il, ic, ecore_file_strip_ext(bg_file), _ilist_cb_bg_selected, cfd, full_path);
+	     if ((e_config->desktop_default_background) &&
+		 (!strcmp(e_config->desktop_default_background, full_path)))
+	       {
+		  selnum = i;
+		  
+		  evas_object_del(im);
+		  im = e_widget_preview_add(cfd->dia->win->evas, 320, 240);
+		  e_widget_preview_edje_set(im, e_config->desktop_default_background, "desktop/background");
+		  // im = e_widget_preview_add_from_object(cfd->dia->win->evas, o, 320, 240);
+		  // e_widget_preview_object_set(im, e_thumb_evas_object_get(full_path, cfd->dia->win->evas, 320, 240, 1));
+	       }
+	     i++;
+	  }
+	free(bg_file);
+	ecore_list_destroy(bgs);
      }
    evas_list_free(bg);
-   evas_list_free(bg_dirs);
+   if (bg_dirs) e_path_dir_list_free(bg_dirs);
    free(c);
    cfd->data = im;
+   if (selnum >= 0)
+     e_widget_ilist_selected_set(il, selnum);
 }
 
 void
