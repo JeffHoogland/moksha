@@ -8,6 +8,7 @@ static void _e_gadcon_client_free(E_Gadcon_Client *gcc);
 
 static void _e_gadcon_client_save(E_Gadcon_Client *gcc);
 
+static void _e_gadcon_cb_size_request(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_gadcon_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_gadcon_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_gadcon_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info);
@@ -138,10 +139,23 @@ e_gadcon_swallowed_new(const char *name, char *id, Evas_Object *obj, char *swall
    gc->orient = E_GADCON_ORIENT_HORIZ;
    gc->evas = evas_object_evas_get(obj);
    gc->o_container = e_gadcon_layout_add(gc->evas);
+   evas_object_smart_callback_add(gc->o_container, "size_request",
+				  _e_gadcon_cb_size_request, gc);
    evas_object_show(gc->o_container);
-   edje_object_part_swallow(gc->edje.o_parent, gc->edje.swallow_name, gc->o_container);
+   edje_object_part_swallow(gc->edje.o_parent, gc->edje.swallow_name,
+			    gc->o_container);
    gadcons = evas_list_append(gadcons, gc);
    return gc;
+}
+
+EAPI void
+e_gadcon_size_request_callback_set(E_Gadcon *gc, void (*func) (void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h), void *data)
+{
+   E_OBJECT_CHECK(gc);
+   E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
+   
+   gc->resize_request.func = func;
+   gc->resize_request.data = data;
 }
 
 EAPI void
@@ -561,6 +575,27 @@ _e_gadcon_client_save(E_Gadcon_Client *gcc)
 }
 
 static void
+_e_gadcon_cb_size_request(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   E_Gadcon *gc;
+   
+   gc = data;
+   if (gc->resize_request.func)
+     {
+	Evas_Coord w, h;
+	
+	e_gadcon_layout_min_size_get(gc->o_container, &w, &h);
+	if (gc->edje.o_parent)
+	  {
+	     edje_extern_object_min_size_set(gc->o_container, w, h);
+	     edje_object_part_swallow(gc->edje.o_parent, gc->edje.swallow_name,
+				      gc->o_container);
+	  }
+	gc->resize_request.func(gc->resize_request.data, gc, w, h);
+     }
+}
+
+static void
 _e_gadcon_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
@@ -801,6 +836,7 @@ struct _E_Smart_Data
    unsigned char    redo_config : 1;
    Evas_List       *items;
    int              frozen;
+   Evas_Coord       minw, minh;
 }; 
 
 struct _E_Gadcon_Layout_Item
@@ -1170,7 +1206,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 {
    Evas_Coord x, y, w, h, xx, yy;
    Evas_List *l, *l2;
-   int min, cur;
+   int min, mino, cur;
    int count, expand;
    Evas_List *list_s = NULL, *list_m = NULL, *list_e = NULL, *list = NULL;
 
@@ -1187,6 +1223,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
    h = sd->h;
 
    min = 0;
+   mino = 0;
    cur = 0;
    for (l = sd->items; l; l = l->next)
      {
@@ -1197,9 +1234,15 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
 	cur += bi->ask.size;
         if (sd->horizontal)
-	  min += bi->min.w;
+	  {
+	     min += bi->min.w;
+	     if (bi->min.h > mino) mino = bi->min.h;
+	  }
 	else
-	  min += bi->min.h;
+	  {
+	     min += bi->min.h;
+	     if (bi->min.w > mino) mino = bi->min.w;
+	  }
 	bi->ask.size2 = bi->ask.size;
 	if ((bi->aspect.w > 0) && (bi->aspect.h > 0))
 	  {
@@ -1608,6 +1651,24 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
      {
 	_e_gadcon_layout_smart_reconfigure(sd);
 	sd->redo_config = 0;
+     }
+   if (sd->horizontal)
+     {
+	if ((sd->minw < min) || (sd->minh < mino))
+	  {
+	     sd->minw = min;
+	     sd->minh = mino;
+	     evas_object_smart_callback_call(sd->obj, "size_requeset", NULL);
+	  }
+     }
+   else
+     {
+	if ((sd->minh < min) || (sd->minw < mino))
+	  {
+	     sd->minw = mino;
+	     sd->minh = min;
+	     evas_object_smart_callback_call(sd->obj, "size_requeset", NULL);
+	  }
      }
 }
 
