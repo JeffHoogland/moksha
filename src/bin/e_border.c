@@ -1702,7 +1702,7 @@ e_border_unmaximize_vh(E_Border *bd, E_Maximize max)
 		bd->maximized = E_MAXIMIZE_NONE;
 	        e_hints_window_maximized_set(bd, 0);
 
-	        e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
+	        e_border_move_resize(bd, bd->x, bd->saved.y, bd->w, bd->saved.h);
 	        bd->saved.x = bd->saved.y = bd->saved.w = bd->saved.h = 0;
 	        e_hints_window_size_unset(bd);
 
@@ -1717,7 +1717,7 @@ e_border_unmaximize_vh(E_Border *bd, E_Maximize max)
 	     bd->maximized = E_MAXIMIZE_NONE;
 	     e_hints_window_maximized_set(bd, 0);
 
-	     e_border_move_resize( bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
+	     e_border_move_resize(bd, bd->saved.x, bd->y, bd->saved.w, bd->h);
 	     bd->saved.x = bd->saved.y = bd->saved.w = bd->saved.h = 0;
 	     e_hints_window_size_unset(bd);
 
