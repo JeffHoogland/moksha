@@ -34,7 +34,9 @@ clean:
 	dh_testdir
 	rm -f build-stamp configure-stamp
 
+	-mv debian/changelog debian/changelog.saved
 	-$(MAKE) distclean
+	-mv debian/changelog.saved debian/changelog
 
 	dh_clean
 
