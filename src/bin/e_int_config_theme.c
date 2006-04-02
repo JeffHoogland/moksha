@@ -159,11 +159,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 		  snprintf(buf, sizeof(buf), "%s/.e/e/themes", homedir);
 		  free(homedir);
 	       }
+	     else
+	       continue;
 	  }
 	else if (j == 1)
-	  {
-	     snprintf(buf, sizeof(buf), "%s/data/themes", e_prefix_data_get());
-	  }
+	  snprintf(buf, sizeof(buf), "%s/data/themes", e_prefix_data_get());
 	if (!ecore_file_is_dir(buf)) continue;
 	themes = ecore_file_ls(buf);
 	if (!themes) continue;
@@ -180,11 +180,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	
 	while ((themefile = ecore_list_next(themes)))
 	  {
-	     printf("%s\n", themefile);
 	     snprintf(fulltheme, sizeof(fulltheme), "%s/%s", buf, themefile);
 	     if (ecore_file_is_dir(fulltheme)) continue;
 	     
-	     printf("%s\n", fulltheme);
 	     /* minimum theme requirements */
 	     if (edje_object_file_set(o2, fulltheme, "desktop/background"))
 	       {
@@ -204,7 +202,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 		  cb_data->file = strdup(fulltheme);
 		  cb_data->theme = strdup(themefile);
 		  
-		  printf("append %s %p\n", noext, o3);
 		  e_widget_ilist_append(il, o3, noext,
 					_e_config_theme_cb_standard, cb_data,
 					themefile);
