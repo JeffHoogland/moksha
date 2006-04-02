@@ -123,12 +123,15 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for a basic dialog */
-   Evas_Object *o, *fr, *im = NULL;
+   Evas_Object *o, *o2, *fr, *im = NULL;
    Evas_Object *il;
    char buf[4096];
    char *homedir;
    Evas_Object *theme;
    char fulltheme[PATH_MAX];
+   int i = 0, j, selnum = -1;
+   Ecore_Evas *eebuf;
+   Evas *evasbuf;
    
    theme = edje_object_add(evas);
    
@@ -138,81 +141,90 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_table_add(evas, 0);
    
    il = e_widget_ilist_add(evas, 48, 48, &(cfdata->theme));
-   homedir = e_user_homedir_get();
-   if (homedir)
-     {
-	snprintf(buf, sizeof(buf), "%s/.e/e/themes", homedir);
-	free(homedir);
-     }
 
-   if (ecore_file_is_dir(buf))
+   eebuf = ecore_evas_buffer_new(1, 1);
+   evasbuf = ecore_evas_get(eebuf);
+   o2 = edje_object_add(evasbuf);
+		  
+   for (j = 0; j < 2; j++)
      {
 	Ecore_List *themes;
-	
-	themes = ecore_file_ls(buf);
-	if (themes)
+	char *themefile;
+	     
+	if (j == 0)
 	  {
-	     /* add default theme */
-	     ecore_list_prepend(themes, strdup("default.edj"));
-	     ecore_list_goto_first(themes);
-	     
-	     Evas_Object *o;
-	     Ecore_Evas *eebuf;
-	     Evas *evasbuf;
-	     int i = 0;
-	     char *themefile;
-	     
-	     eebuf = ecore_evas_buffer_new(1, 1);
-	     evasbuf = ecore_evas_get(eebuf);
-	     o = edje_object_add(evasbuf);
-		  
-	     while ((themefile = ecore_list_next(themes)))
+	     homedir = e_user_homedir_get();
+	     if (homedir)
 	       {
-		  if (!strcmp(themefile, "default.edj"))
-		    snprintf(fulltheme, sizeof(fulltheme), PACKAGE_DATA_DIR"/data/themes/default.edj");
-		  else
-		    snprintf(fulltheme, sizeof(fulltheme), "%s/%s", buf, themefile);
-		  if (ecore_file_is_dir(fulltheme))
-		    continue;
-		  
-		  /* minimum theme requirements */
-		  if (edje_object_file_set(o, fulltheme, "desktop/background"))
-		    {
-		       Evas_Object *o = NULL;
-		       char *noext;
-		       E_Cfg_Theme_Data *cb_data;
-
-		       if (!e_thumb_exists(fulltheme))
-			 o = e_thumb_generate_begin(fulltheme, 48, 48, cfd->dia->win->evas, &o, NULL, NULL);
-		       else
-			 o = e_thumb_evas_object_get(fulltheme, cfd->dia->win->evas, 48, 48, 1);
-
-		       noext = ecore_file_strip_ext(themefile);
-		       
-		       cb_data = E_NEW(E_Cfg_Theme_Data, 1);
-		       cb_data->cfd = cfd;
-		       cb_data->file = strdup(fulltheme);
-		       cb_data->theme = strdup(themefile);
-		       
-		       e_widget_ilist_append(il, o, noext, _e_config_theme_cb_standard, cb_data, themefile);
-		       if (!(strcmp(themefile, cfdata->current_theme)))
-			 {
-			    e_widget_ilist_selected_set(il, i);
-			    im = e_widget_preview_add(evas, 320, 240);
-			    e_widget_preview_edje_set(im, fulltheme, "desktop/background");
-//			    im = e_widget_image_add_from_object(evas, theme, 320, 240);
-//			    e_widget_image_object_set(im, e_thumb_evas_object_get(fulltheme, evas, 320, 240, 1));
-			 }
-		       free(noext);
-		       i++;
-		    }
+		  snprintf(buf, sizeof(buf), "%s/.e/e/themes", homedir);
+		  free(homedir);
 	       }
-	     free(themefile);
-	     evas_object_del(o);
-	     ecore_evas_free(eebuf);
-	     ecore_list_destroy(themes);
 	  }
+	else if (j == 1)
+	  {
+	     snprintf(buf, sizeof(buf), "%s/data/themes", e_prefix_data_get());
+	  }
+	if (!ecore_file_is_dir(buf)) continue;
+	themes = ecore_file_ls(buf);
+	if (!themes) continue;
+	if (j == 0)
+	  {
+	     e_widget_ilist_header_append(il, NULL, _("Personal"));
+	     i++;
+	  }
+	else if (j == 1)
+	  {
+	     e_widget_ilist_header_append(il, NULL, _("System"));
+	     i++;
+	  }
+	
+	while ((themefile = ecore_list_next(themes)))
+	  {
+	     printf("%s\n", themefile);
+	     snprintf(fulltheme, sizeof(fulltheme), "%s/%s", buf, themefile);
+	     if (ecore_file_is_dir(fulltheme)) continue;
+	     
+	     printf("%s\n", fulltheme);
+	     /* minimum theme requirements */
+	     if (edje_object_file_set(o2, fulltheme, "desktop/background"))
+	       {
+		  Evas_Object *o3 = NULL;
+		  char *noext;
+		  E_Cfg_Theme_Data *cb_data;
+		  
+		  if (!e_thumb_exists(fulltheme))
+		    o3 = e_thumb_generate_begin(fulltheme, 48, 48, cfd->dia->win->evas, &o, NULL, NULL);
+		  else
+		    o3 = e_thumb_evas_object_get(fulltheme, cfd->dia->win->evas, 48, 48, 1);
+		  
+		  noext = ecore_file_strip_ext(themefile);
+		  
+		  cb_data = E_NEW(E_Cfg_Theme_Data, 1);
+		  cb_data->cfd = cfd;
+		  cb_data->file = strdup(fulltheme);
+		  cb_data->theme = strdup(themefile);
+		  
+		  printf("append %s %p\n", noext, o3);
+		  e_widget_ilist_append(il, o3, noext,
+					_e_config_theme_cb_standard, cb_data,
+					themefile);
+		  if (!(strcmp(themefile, cfdata->current_theme)))
+		    {
+		       selnum = i;
+		       im = e_widget_preview_add(evas, 320, 240);
+		       e_widget_preview_edje_set(im, fulltheme, "desktop/background");
+		       // im = e_widget_image_add_from_object(evas, theme, 320, 240);
+		       // e_widget_image_object_set(im, e_thumb_evas_object_get(fulltheme, evas, 320, 240, 1));
+		    }
+		  free(noext);
+		  i++;
+	       }
+	  }
+	free(themefile);
+	ecore_list_destroy(themes);
      }
+   evas_object_del(o2);
+   ecore_evas_free(eebuf);
 
    e_widget_ilist_go(il);   
    e_widget_min_size_set(il, 180, 40);
@@ -229,6 +241,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfd->data = im;
    
    e_widget_table_object_append(o, im, 1, 0, 1, 2, 1, 1, 1, 1);   
+
+   if (selnum >= 0) e_widget_ilist_selected_set(il, selnum);
    
    return o;
 }
