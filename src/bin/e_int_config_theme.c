@@ -125,13 +125,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    /* generate the core widget layout for a basic dialog */
    Evas_Object *o, *o2, *fr, *im = NULL;
    Evas_Object *il;
-   char buf[4096];
    char *homedir;
    Evas_Object *theme;
    char fulltheme[PATH_MAX];
-   int i = 0, j, selnum = -1;
+   int i = 0, selnum = -1;
    Ecore_Evas *eebuf;
    Evas *evasbuf;
+   Evas_List *l, *paths;
    
    theme = edje_object_add(evas);
    
@@ -145,42 +145,52 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    eebuf = ecore_evas_buffer_new(1, 1);
    evasbuf = ecore_evas_get(eebuf);
    o2 = edje_object_add(evasbuf);
-		  
-   for (j = 0; j < 2; j++)
+
+   paths = e_path_dir_list_get(path_themes);
+   for (l = paths; l; l = l->next)
      {
 	Ecore_List *themes;
 	char *themefile;
-	     
-	if (j == 0)
-	  {
-	     homedir = e_user_homedir_get();
-	     if (homedir)
-	       {
-		  snprintf(buf, sizeof(buf), "%s/.e/e/themes", homedir);
-		  free(homedir);
-	       }
-	     else
-	       continue;
-	  }
-	else if (j == 1)
-	  snprintf(buf, sizeof(buf), "%s/data/themes", e_prefix_data_get());
-	if (!ecore_file_is_dir(buf)) continue;
-	themes = ecore_file_ls(buf);
+	E_Path_Dir *ep;
+	int detected;
+	
+	ep = l->data;
+
+	if (!ecore_file_is_dir(ep->dir)) continue;
+	themes = ecore_file_ls(ep->dir);
 	if (!themes) continue;
-	if (j == 0)
+	
+	detected = 0;
+	homedir = e_user_homedir_get();
+	if (homedir)
 	  {
-	     e_widget_ilist_header_append(il, NULL, _("Personal"));
-	     i++;
+	     if (!strncmp(ep->dir, homedir, strlen(homedir)))
+	       {
+		  e_widget_ilist_header_append(il, NULL, _("Personal"));
+		  i++;
+		  detected = 1;
+	       }
+	     free(homedir);
 	  }
-	else if (j == 1)
+	if (!detected)
 	  {
-	     e_widget_ilist_header_append(il, NULL, _("System"));
+	     if (!strncmp(ep->dir, e_prefix_data_get(), strlen(e_prefix_data_get())))
+	       {
+		  e_widget_ilist_header_append(il, NULL, _("System"));
+		  i++;
+		  detected = 1;
+	       }
+	  }
+	if (!detected)
+	  {
+	     e_widget_ilist_header_append(il, NULL, _("Other"));
 	     i++;
+	     detected = 1;
 	  }
 	
 	while ((themefile = ecore_list_next(themes)))
 	  {
-	     snprintf(fulltheme, sizeof(fulltheme), "%s/%s", buf, themefile);
+	     snprintf(fulltheme, sizeof(fulltheme), "%s/%s", ep->dir, themefile);
 	     if (ecore_file_is_dir(fulltheme)) continue;
 	     
 	     /* minimum theme requirements */
@@ -220,6 +230,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	free(themefile);
 	ecore_list_destroy(themes);
      }
+   if (paths) e_path_dir_list_free(paths);
    evas_object_del(o2);
    ecore_evas_free(eebuf);
 
