@@ -42,10 +42,32 @@ struct _CFText_Class
 };
 
 const E_Text_Class_Pair text_class_predefined_names[ ] = {
-       { "title_bar",	"Border Title Bar"},
-       { "menu_item",	"Menu Item"},
-       { "ilist_item",	"Menu List"},
-       { "tb_plain",	"Text Block Plain Text"},
+       { "title_bar",	    "Title Bar"},
+       { "menu_item",	    "Menu Item"},
+       { "ilist_item",	    "List Item"},
+       { "ilist_header",    "List Header"},
+       { "tb_plain",	    "Textblock Plain"},
+       { "tb_light",        "Textblock Light"},
+       { "tb_big",          "Textblock Big"},
+       { "frame",           "Frame"},
+       { "label",           "Label"},
+       { "button",   	    "Buttons"},
+       { "radio_button",    "Radio Buttons"},
+       { "check_button",    "Check Buttons"},
+       { "move_text",       "Move Text"},
+       { "resize_text",     "Resize Text"},
+       { "tlist",           "Text List Item"},
+       { "winlist_title",   "Winlist Title"},
+       { "configure",       "Configure Heading"},
+       { "about_title",     "About Title"},
+       { "about_version",   "About Version"},
+       { "button_text",     "About Text"},
+       { "desklock_title",  "Desklock Title"},
+       { "desklock_passwd", "Desklock Password"},
+       { "dialog_error",    "Dialog Error"},
+       { "exebuf_command",  "Exebuf Command"},
+       { "fileman_typebuf", "EFM Typebuf"},
+       { "fileman_icon",    "EFM Icon"},
        { NULL,		NULL}
 };
      
@@ -302,22 +324,22 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    /* Create Hinting Widgets */
-   of = e_widget_framelist_add(evas, _("Font Display Hinting"), 0);
+   of = e_widget_framelist_add(evas, _("Hinting"), 0);
    e_widget_framelist_content_align_set(of, 0.5, 0.5);
    rg = e_widget_radio_group_new(&(cfdata->hinting));
    
    option_enable = evas_font_hinting_can_hint(evas, EVAS_FONT_HINTING_BYTECODE);
-   ob = e_widget_radio_add(evas, _("Bytecode Hinting"), 0, rg);
+   ob = e_widget_radio_add(evas, _("Bytecode"), 0, rg);
    e_widget_disabled_set(ob, !option_enable);
    e_widget_framelist_object_append(of, ob);
 
    option_enable = evas_font_hinting_can_hint(evas, EVAS_FONT_HINTING_AUTO);
-   ob = e_widget_radio_add(evas, _("Automatic Hinting"), 1, rg);
+   ob = e_widget_radio_add(evas, _("Automatic"), 1, rg);
    e_widget_disabled_set(ob, !option_enable);
    e_widget_framelist_object_append(of, ob);
 
    option_enable = evas_font_hinting_can_hint(evas, EVAS_FONT_HINTING_NONE);
-   ob = e_widget_radio_add(evas, _("No Hinting"), 2, rg);
+   ob = e_widget_radio_add(evas, _("None"), 2, rg);
    e_widget_disabled_set(ob, !option_enable);
    e_widget_framelist_object_append(of, ob);
     

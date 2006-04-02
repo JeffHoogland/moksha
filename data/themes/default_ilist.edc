@@ -649,7 +649,7 @@ group {
 	       size:     10;
 	       min:      1 1;
 	       align:    0.0 0.5;
-               text_class: "ilist_label";
+               text_class: "ilist_item";
 	    }
 	 }
       }
@@ -996,7 +996,7 @@ group {
 	       size:     16;
 	       min:      1 1;
 	       align:    0.0 0.5;
-	       text_class: "ilist_item";	       
+	       text_class: "ilist_header";
 	    }
 	 }
       }
