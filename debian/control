@@ -2,7 +2,7 @@ Source: enlightenment
 Section: x11
 Priority: optional
 Maintainer: Blake Barnett <shadoi@soulmachine.net>
-Build-Depends: libevas-dev, libecore-dev, libeet-dev, libedje-dev, edje0-bin, libembryo0-dev xlibs-dev, automake1.7 | automaken, libtool, debhelper (>= 4.0)
+Build-Depends: libevas0-dev, libecore0-dev, libeet0-dev, libedje0-dev, edje0-bin, libembryo0-dev, xlibs-dev, automake1.7 | automaken, libtool, debhelper (>= 4.0)
 Standards-Version: 3.5.7.0
 
 Package: enlightenment
@@ -10,7 +10,7 @@ Architecture: any
 Section: x11
 Recommends: libevas0-engine-xrender
 Suggests: entrance
-Depends: ${shlibs:Depends}, libe, enlightenment-data (>= 0.16.999), libevas, libecore, libeet, libembryo, embryo-bin, edje-bin, libedje, libevas0-loader-eet libevas0-loader-jpeg libevas0-loader-png, libevas0-saver-eet, libevas0-saver-jpeg, libevas0-saver-png, libevas0-engine-buffer, libevas0-engine-software-x11
+Depends: ${shlibs:Depends}, libe, enlightenment-data (>= 0.16.999), libevas0, libecore0, libeet0, libembryo0, embryo0-bin, edje0-bin, libedje0, libevas0-loader-eet, libevas0-loader-jpeg, libevas0-loader-png, libevas0-saver-eet, libevas0-saver-jpeg, libevas0-saver-png, libevas0-engine-buffer, libevas0-engine-software-x11
 Description: Enlightenment themes, etc.
  Enlightenment is an advanced window manager for X11. Unique
  features include: a fully animated background, nice drop shadows
@@ -40,7 +40,7 @@ Package: libe-dev
 Architecture: any
 Section: devel
 Architecture: any
-Depends: libc6-dev | libc-dev, libevas-dev, libecore-dev, libeet-dev, libembryo-dev, libedje-dev, xlibs-dev, automake1.7 | automaken, libtool, debhelper (>= 4.0)
+Depends: libc6-dev | libc-dev, libevas0-dev, libecore0-dev, libeet0-dev, libembryo0-dev, libedje0-dev
 Conflicts: libenlightenment-dev
 Description: Enlightenment headers, static libraries and documentation
  Headers, static libraries and documentation for enlightenment.
