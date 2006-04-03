@@ -200,7 +200,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 		  E_Cfg_Theme_Data *cb_data;
 		  
 		  if (!e_thumb_exists(fulltheme))
-		    o3 = e_thumb_generate_begin(fulltheme, 48, 48, cfd->dia->win->evas, &o, NULL, NULL);
+		    o3 = e_thumb_generate_begin(fulltheme, 48, 48, cfd->dia->win->evas, &o3, NULL, NULL);
 		  else
 		    o3 = e_thumb_evas_object_get(fulltheme, cfd->dia->win->evas, 48, 48, 1);
 		  

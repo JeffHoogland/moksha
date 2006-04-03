@@ -5,10 +5,7 @@
 
 static void _e_shelf_free(E_Shelf *es);
 static void _e_shelf_config_port(E_Config_Shelf_Config *cf1, E_Config_Shelf_Config *cf2);
-static void _e_shelf_cb_signal_all(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_shelf_cb_signal_move_start(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_shelf_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_shelf_cb_signal_move_stop(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 
 static Evas_List *shelves = NULL;
 static int shelf_id = 0;
@@ -133,6 +130,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 	es->ee = zone->container->bg_ecore_evas;
 	es->evas = zone->container->bg_evas;
      }
+//   es->fit_along = 1;
    es->layer = layer;
    es->zone = zone;
    es->style = evas_stringshare_add(style);
@@ -155,19 +153,11 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 	evas_object_layer_set(es->o_base, layer);
      }
 
-   edje_object_signal_callback_add(es->o_base, "*", "*",
-				   _e_shelf_cb_signal_all, es);
-   edje_object_signal_callback_add(es->o_base, "mouse,down,1", "drag*",
-				   _e_shelf_cb_signal_move_start, es);
-   edje_object_signal_callback_add(es->o_base, "mouse,move", "drag*",
-				   _e_shelf_cb_signal_move_go, es);
-   edje_object_signal_callback_add(es->o_base, "mouse,up,1", "drag*", 
-				   _e_shelf_cb_signal_move_stop, es);
-   
-   
    snprintf(buf, sizeof(buf), "%i", shelf_id);
    shelf_id++;
    es->gadcon = e_gadcon_swallowed_new(es->name, buf, es->o_base, "items");
+   e_gadcon_size_request_callback_set(es->gadcon, _e_shelf_gadcon_size_request,
+				      es);
    e_gadcon_orient(es->gadcon, E_GADCON_ORIENT_TOP);
    e_gadcon_zone_set(es->gadcon, zone);
    e_gadcon_ecore_evas_set(es->gadcon, es->ee);
@@ -419,60 +409,56 @@ _e_shelf_config_port(E_Config_Shelf_Config *cf1, E_Config_Shelf_Config *cf2)
 }
 
 static void
-_e_shelf_cb_signal_all(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h)
 {
    E_Shelf *es;
+   Evas_Coord nx, ny, nw, nh;
    
    es = data;
-   printf("SIG: %s %s\n", emission, source);
-}
-
-static void
-_e_shelf_cb_signal_move_start(void *data, Evas_Object *obj, const char *emission, const char *source)
-{
-   E_Shelf *es;
-   
-   es = data;
-   printf("MV start\n");
-   es->moveresize.pos.x = es->x;
-   es->moveresize.pos.y = es->y;
-   es->moveresize.move = 1;
-   ecore_x_pointer_last_xy_get(&(es->moveresize.x), &(es->moveresize.y));
-}
-
-static void
-_e_shelf_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, const char *source)
-{
-   E_Shelf *es;
-   int x, y;
-   
-   es = data;
-   if (es->moveresize.move)
+   nx = es->x;
+   ny = es->y;
+   nw = es->w;
+   nh = es->h;
+   edje_object_size_min_calc(es->o_base, &nw, &nh);
+	printf("new w, h = %i %i\n", nw, nh);
+   switch (gc->orient)
      {
-	int x, y, nx, ny, nw, nh;
-	
-	printf("MV go\n");
-	ecore_x_pointer_last_xy_get(&x, &y);
-	nx = x = es->moveresize.pos.x + (x - es->moveresize.x);
-	ny = y = es->moveresize.pos.y + (y - es->moveresize.y);
-	e_resist_container_border_position(es->zone->container,
-					   NULL,
-					   es->x, es->y, es->w, es->h,
-					   x, y, es->w, es->h,
-					   &nx, &ny, &nw, &nh);
-	e_shelf_move(es, nx, ny);
+      case E_GADCON_ORIENT_FLOAT:
+	break;
+      case E_GADCON_ORIENT_HORIZ:
+	break;
+      case E_GADCON_ORIENT_VERT:
+	break;
+      case E_GADCON_ORIENT_LEFT:
+	break;
+      case E_GADCON_ORIENT_RIGHT:
+	break;
+      case E_GADCON_ORIENT_TOP:
+	if (!es->fit_along) nw = es->w;
+	if (!es->fit_size) nh = es->h;
+	if (nw > es->zone->w) nw = es->zone->w;
+	if (nh > es->zone->h) nh = es->zone->h;
+	if (nw != es->w) nx = es->x + ((es->w - es->w) / 2);
+	ny = 0;
+	break;
+      case E_GADCON_ORIENT_BOTTOM:
+	if (!es->fit_along) nw = es->w;
+	if (!es->fit_size) nh = es->h;
+	if (nw > es->zone->w) nw = es->zone->w;
+	if (nh > es->zone->h) nh = es->zone->h;
+	if (nw != es->w) nx = es->x + ((es->w - es->w) / 2);
+	ny = es->zone->h - nh;
+	break;
+      case E_GADCON_ORIENT_CORNER_TL:
+	break;
+      case E_GADCON_ORIENT_CORNER_TR:
+	break;
+      case E_GADCON_ORIENT_CORNER_BL:
+	break;
+      case E_GADCON_ORIENT_CORNER_BR:
+	break;
+      default:
+	break;
      }
-}
-
-static void
-_e_shelf_cb_signal_move_stop(void *data, Evas_Object *obj, const char *emission, const char *source)
-{
-   E_Shelf *es;
-   
-   es = data;
-   if (es->moveresize.move)
-     {
-	printf("MV stop\n");
-	es->moveresize.move = 0;
-     }
+   e_shelf_move_resize(es, nx, ny, nw, nh);
 }

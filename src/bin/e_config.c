@@ -113,6 +113,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, h, INT);
    E_CONFIG_VAL(D, T, orient, INT);
    E_CONFIG_VAL(D, T, style, STR);
+   E_CONFIG_VAL(D, T, fit_along, UCHAR);
+   E_CONFIG_VAL(D, T, fit_size, UCHAR);
    
    _e_config_shelf_edd = E_CONFIG_DD_NEW("E_Config_Shelf", E_Config_Shelf);
 #undef T
@@ -1045,6 +1047,8 @@ e_config_init(void)
 	cf_escf->w = 800;
 	cf_escf->h = 40;
 	cf_escf->orient = E_GADCON_ORIENT_TOP;
+	cf_escf->fit_along = 1;
+	cf_escf->fit_size = 0;
 	cf_escf->style = evas_stringshare_add("default");
 	cf_es->configs = evas_list_append(cf_es->configs, cf_escf);
      }

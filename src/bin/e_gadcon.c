@@ -72,6 +72,12 @@ __test2(E_Gadcon_Client *gcc)
    evas_object_del(gcc->o_base);
 }
 
+static void
+__test3(E_Gadcon_Client *gcc)
+{
+   e_gadcon_client_min_size_set(gcc, 80, 20);
+}
+
 /* externally accessible functions */
 EAPI int
 e_gadcon_init(void)
@@ -84,7 +90,7 @@ e_gadcon_init(void)
 	     GADCON_CLIENT_CLASS_VERSION,
 	       "ibar",
 	       {
-		  __test, __test2, NULL
+		  __test, __test2, __test3
 	       }
 	  };
 	e_gadcon_provider_register(&cc);
@@ -585,12 +591,14 @@ _e_gadcon_cb_size_request(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	Evas_Coord w, h;
 	
 	e_gadcon_layout_min_size_get(gc->o_container, &w, &h);
+	/* FIXME: this needs to be controlled */
 	if (gc->edje.o_parent)
 	  {
 	     edje_extern_object_min_size_set(gc->o_container, w, h);
 	     edje_object_part_swallow(gc->edje.o_parent, gc->edje.swallow_name,
 				      gc->o_container);
 	  }
+	printf("new minh/h\n");
 	gc->resize_request.func(gc->resize_request.data, gc, w, h);
      }
 }
@@ -1658,7 +1666,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	  {
 	     sd->minw = min;
 	     sd->minh = mino;
-	     evas_object_smart_callback_call(sd->obj, "size_requeset", NULL);
+	     evas_object_smart_callback_call(sd->obj, "size_request", NULL);
 	  }
      }
    else
@@ -1667,7 +1675,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	  {
 	     sd->minw = mino;
 	     sd->minh = min;
-	     evas_object_smart_callback_call(sd->obj, "size_requeset", NULL);
+	     evas_object_smart_callback_call(sd->obj, "size_request", NULL);
 	  }
      }
 }

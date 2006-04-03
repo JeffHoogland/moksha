@@ -335,6 +335,8 @@ struct _E_Config_Shelf_Config
    int x, y, w, h;
    int orient;
    const char *style;
+   unsigned char fit_along;
+   unsigned char fit_size;
 };
 
 EAPI int        e_config_init(void);
