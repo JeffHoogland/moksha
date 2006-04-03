@@ -10,7 +10,7 @@ Architecture: any
 Section: x11
 Recommends: libevas0-engine-xrender
 Suggests: entrance
-Depends: ${shlibs:Depends}, libe, enlightenment-data (>= 0.16.999), libevas0, libecore0, libeet0, libembryo0, embryo0-bin, edje0-bin, libedje0, libevas0-loader-eet, libevas0-loader-jpeg, libevas0-loader-png, libevas0-saver-eet, libevas0-saver-jpeg, libevas0-saver-png, libevas0-engine-buffer, libevas0-engine-software-x11
+Depends: ${shlibs:Depends}, libe, enlightenment-data (>= 0.16.999), libevas0, libecore0, libecore0-con, libecore0-evas, libecore0-file, libecore0-ipc, libecore0-job, libecore0-txt, libecore0-x, libeet0, libembryo0, embryo0-bin, edje0-bin, libedje0, libevas0-loader-eet, libevas0-loader-jpeg, libevas0-loader-png, libevas0-saver-eet, libevas0-saver-jpeg, libevas0-saver-png, libevas0-engine-buffer, libevas0-engine-software-x11
 Description: Enlightenment themes, etc.
  Enlightenment is an advanced window manager for X11. Unique
  features include: a fully animated background, nice drop shadows
