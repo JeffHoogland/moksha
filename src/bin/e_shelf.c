@@ -130,7 +130,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 	es->ee = zone->container->bg_ecore_evas;
 	es->evas = zone->container->bg_evas;
      }
-//   es->fit_along = 1;
+   es->fit_along = 1;
    es->layer = layer;
    es->zone = zone;
    es->style = evas_stringshare_add(style);
@@ -159,6 +159,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    e_gadcon_size_request_callback_set(es->gadcon, _e_shelf_gadcon_size_request,
 				      es);
    e_gadcon_orient(es->gadcon, E_GADCON_ORIENT_TOP);
+   edje_object_signal_emit(es->o_base, "set_orientation", "top");
    e_gadcon_zone_set(es->gadcon, zone);
    e_gadcon_ecore_evas_set(es->gadcon, es->ee);
    
@@ -353,6 +354,44 @@ e_shelf_orient(E_Shelf *es, E_Gadcon_Orient orient)
    E_OBJECT_CHECK(es);
    E_OBJECT_TYPE_CHECK(es, E_GADMAN_SHELF_TYPE);
    e_gadcon_orient(es->gadcon, orient);
+   switch (es->gadcon->orient)
+     {
+      case E_GADCON_ORIENT_FLOAT:
+	edje_object_signal_emit(es->o_base, "set_orientation", "float");
+	break;
+      case E_GADCON_ORIENT_HORIZ:
+	edje_object_signal_emit(es->o_base, "set_orientation", "horizontal");
+	break;
+      case E_GADCON_ORIENT_VERT:
+	edje_object_signal_emit(es->o_base, "set_orientation", "vertical");
+	break;
+      case E_GADCON_ORIENT_LEFT:
+	edje_object_signal_emit(es->o_base, "set_orientation", "left");
+	break;
+      case E_GADCON_ORIENT_RIGHT:
+	edje_object_signal_emit(es->o_base, "set_orientation", "right");
+	break;
+      case E_GADCON_ORIENT_TOP:
+	edje_object_signal_emit(es->o_base, "set_orientation", "top");
+	break;
+      case E_GADCON_ORIENT_BOTTOM:
+	edje_object_signal_emit(es->o_base, "set_orientation", "bottom");
+	break;
+      case E_GADCON_ORIENT_CORNER_TL:
+	edje_object_signal_emit(es->o_base, "set_orientation", "top_left");
+	break;
+      case E_GADCON_ORIENT_CORNER_TR:
+	edje_object_signal_emit(es->o_base, "set_orientation", "top_right");
+	break;
+      case E_GADCON_ORIENT_CORNER_BL:
+	edje_object_signal_emit(es->o_base, "set_orientation", "bottom_left");
+	break;
+      case E_GADCON_ORIENT_CORNER_BR:
+	edje_object_signal_emit(es->o_base, "set_orientation", "bottom_right");
+	break;
+      default:
+	break;
+     }
 }
 
 /* local subsystem functions */
@@ -412,15 +451,51 @@ static void
 _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h)
 {
    E_Shelf *es;
-   Evas_Coord nx, ny, nw, nh;
+   Evas_Coord nx, ny, nw, nh, ww, hh;
    
    es = data;
    nx = es->x;
    ny = es->y;
    nw = es->w;
    nh = es->h;
+   ww = hh = 0;
+   printf("req min = %i %i\n", w, h);
+   evas_object_geometry_get(gc->o_container, NULL, NULL, &ww, &hh);
+   switch (gc->orient)
+     {
+      case E_GADCON_ORIENT_FLOAT:
+	break;
+      case E_GADCON_ORIENT_HORIZ:
+	break;
+      case E_GADCON_ORIENT_VERT:
+	break;
+      case E_GADCON_ORIENT_LEFT:
+	break;
+      case E_GADCON_ORIENT_RIGHT:
+	break;
+      case E_GADCON_ORIENT_TOP:
+	if (!es->fit_along) w = ww;
+	if (!es->fit_size) h = hh;
+	break;
+      case E_GADCON_ORIENT_BOTTOM:
+	if (!es->fit_along) w = ww;
+	if (!es->fit_size) h = hh;
+	break;
+      case E_GADCON_ORIENT_CORNER_TL:
+	break;
+      case E_GADCON_ORIENT_CORNER_TR:
+	break;
+      case E_GADCON_ORIENT_CORNER_BL:
+	break;
+      case E_GADCON_ORIENT_CORNER_BR:
+	break;
+      default:
+	break;
+     }
+   printf("adj min = %i %i\n", w, h);
+   e_gadcon_swallowed_min_size_set(gc, w, h);
    edje_object_size_min_calc(es->o_base, &nw, &nh);
-	printf("new w, h = %i %i\n", nw, nh);
+   printf("new w, h = %i %i\n", nw, nh);
    switch (gc->orient)
      {
       case E_GADCON_ORIENT_FLOAT:
@@ -438,7 +513,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	if (!es->fit_size) nh = es->h;
 	if (nw > es->zone->w) nw = es->zone->w;
 	if (nh > es->zone->h) nh = es->zone->h;
-	if (nw != es->w) nx = es->x + ((es->w - es->w) / 2);
+	if (nw != es->w) nx = es->x + ((es->w - nw) / 2);
 	ny = 0;
 	break;
       case E_GADCON_ORIENT_BOTTOM:
@@ -446,7 +521,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	if (!es->fit_size) nh = es->h;
 	if (nw > es->zone->w) nw = es->zone->w;
 	if (nh > es->zone->h) nh = es->zone->h;
-	if (nw != es->w) nx = es->x + ((es->w - es->w) / 2);
+	if (nw != es->w) nx = es->x + ((es->w - nw) / 2);
 	ny = es->zone->h - nh;
 	break;
       case E_GADCON_ORIENT_CORNER_TL:

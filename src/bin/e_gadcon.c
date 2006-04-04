@@ -75,7 +75,13 @@ __test2(E_Gadcon_Client *gcc)
 static void
 __test3(E_Gadcon_Client *gcc)
 {
-   e_gadcon_client_min_size_set(gcc, 80, 20);
+   e_gadcon_client_min_size_set(gcc, 200, 20);
+}
+
+static void
+__test4(E_Gadcon_Client *gcc)
+{
+   e_gadcon_client_min_size_set(gcc, 32, 20);
 }
 
 /* externally accessible functions */
@@ -101,7 +107,7 @@ e_gadcon_init(void)
 	     GADCON_CLIENT_CLASS_VERSION,
 	       "clock",
 	       {
-		  __test, __test2, NULL
+		  __test, __test2, __test4
 	       }
 	  };
 	e_gadcon_provider_register(&cc);
@@ -152,6 +158,17 @@ e_gadcon_swallowed_new(const char *name, char *id, Evas_Object *obj, char *swall
 			    gc->o_container);
    gadcons = evas_list_append(gadcons, gc);
    return gc;
+}
+
+EAPI void
+e_gadcon_swallowed_min_size_set(E_Gadcon *gc, Evas_Coord w, Evas_Coord h)
+{
+   if (gc->edje.o_parent)
+     {
+	edje_extern_object_min_size_set(gc->o_container, w, h);
+	edje_object_part_swallow(gc->edje.o_parent, gc->edje.swallow_name,
+				 gc->o_container);
+     }
 }
 
 EAPI void
@@ -591,14 +608,6 @@ _e_gadcon_cb_size_request(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	Evas_Coord w, h;
 	
 	e_gadcon_layout_min_size_get(gc->o_container, &w, &h);
-	/* FIXME: this needs to be controlled */
-	if (gc->edje.o_parent)
-	  {
-	     edje_extern_object_min_size_set(gc->o_container, w, h);
-	     edje_object_part_swallow(gc->edje.o_parent, gc->edje.swallow_name,
-				      gc->o_container);
-	  }
-	printf("new minh/h\n");
 	gc->resize_request.func(gc->resize_request.data, gc, w, h);
      }
 }

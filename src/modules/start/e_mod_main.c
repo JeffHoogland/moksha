@@ -85,6 +85,7 @@ _gc_orient(E_Gadcon_Client *gcc)
    
    inst = gcc->data;
    printf("OREINT to %i\n", gcc->gadcon->orient);
+   e_gadcon_client_min_size_set(gcc, 20, 20);
 }
 /**/
 /***************************************************************************/

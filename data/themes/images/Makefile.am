@@ -427,4 +427,6 @@ e17_shelf6.png \
 e17_shelf_bg1.png \
 e17_shelf_bg2.png \
 e17_shelf_sh1.png \
-e17_shelf_sh2.png
+e17_shelf_sh2.png \
+e17_shelf_bg_h.png \
+e17_shelf_sh_h.png
