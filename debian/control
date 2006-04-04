@@ -20,7 +20,7 @@ Description: Enlightenment themes, etc.
 Package: enlightenment-data
 Architecture: any
 Section: x11
-Depends: enlightenment (= ${Source-Version})
+Depends: enlightenment (= ${Source-Version}), ttf-bitstream-vera
 Conflicts: enlightenment-data (< 0.16.999)
 Description: Enlightenment themes, etc.
  Enlightenment is an advanced window manager for X11. Unique
