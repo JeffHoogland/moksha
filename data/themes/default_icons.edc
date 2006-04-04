@@ -29,6 +29,9 @@ images {
    image: "e17_pager_window.png" COMP;
    
    image: "e17_icon_right_arrow.png" COMP;
+   image: "e17_icon_up_arrow.png" COMP;
+   image: "e17_icon_down_arrow.png" COMP;
+   
    image: "e17_pointer.png" COMP;      
 }
 
@@ -506,6 +509,40 @@ group {
 	    max:      10 12;
 	    image {
 	       normal: "e17_icon_right_arrow.png";
+	    }
+	 }
+      }
+   }
+}
+group {
+   name: "icons/widget/up_arrow";
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   0.83333333333 0.83333333333;
+	    max:      12 10;
+	    image {
+	       normal: "e17_icon_up_arrow.png";
+	    }
+	 }
+      }
+   }
+}
+group {
+   name: "icons/widget/down_arrow";
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   0.83333333333 0.83333333333;
+	    max:      12 10;
+	    image {
+	       normal: "e17_icon_down_arrow.png";
 	    }
 	 }
       }

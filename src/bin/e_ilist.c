@@ -296,6 +296,29 @@ e_ilist_remove_label(Evas_Object *obj, const char *label)
      }
 }
 
+EAPI const char *
+e_ilist_nth_label_get(Evas_Object *obj, int n)
+{ 
+   E_Smart_Item *si;
+   
+   API_ENTRY return NULL;
+   if (!sd->items) return NULL;
+   si = evas_list_nth(sd->items, n);
+   if (si) return edje_object_part_text_get(si->base_obj, "label");
+   return NULL;
+}
+
+EAPI void
+e_ilist_nth_label_set(Evas_Object *obj, int n, const char *label)
+{ 
+   E_Smart_Item *si;
+   
+   API_ENTRY return;
+   if (!sd->items) return;
+   si = evas_list_nth(sd->items, n);
+   if (si) edje_object_part_text_set(si->base_obj, "label", label);
+}
+
 EAPI int
 e_ilist_count(Evas_Object *obj)
 {

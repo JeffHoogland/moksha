@@ -166,6 +166,24 @@ e_widget_ilist_remove_label(Evas_Object *obj, const char *label)
    e_ilist_remove_label(wd->o_ilist, label);
 }
 
+EAPI const char *
+e_widget_ilist_nth_label_get(Evas_Object *obj, int n)
+{
+    E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   return e_ilist_nth_label_get(wd->o_ilist, n);
+}
+
+EAPI void
+e_widget_ilist_nth_label_set(Evas_Object *obj, int n, const char *label)
+{
+    E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   e_ilist_nth_label_set(wd->o_ilist, n, label);
+}
+
 EAPI int
 e_widget_ilist_count(Evas_Object *obj)
 {
@@ -179,8 +197,9 @@ EAPI void
 e_widget_ilist_clear(Evas_Object *obj) 
 {
    E_Widget_Data *wd;
+/*
    int mw, mh, vw, vh, w, h;
-   
+ */ 
    wd = e_widget_data_get(obj);
    e_ilist_clear(wd->o_ilist);
 
