@@ -36,7 +36,6 @@ typedef struct _E_Config_Desktop_Name       E_Config_Desktop_Name;
 typedef struct _E_Config_Gadcon             E_Config_Gadcon;
 typedef struct _E_Config_Gadcon_Client      E_Config_Gadcon_Client;
 typedef struct _E_Config_Shelf              E_Config_Shelf;
-typedef struct _E_Config_Shelf_Config       E_Config_Shelf_Config;
 
 typedef Eet_Data_Descriptor                 E_Config_DD;
 
@@ -316,6 +315,8 @@ struct _E_Config_Gadcon_Client
    struct {
       int pos, size, res;
    } geom;
+   const char   *style;
+   unsigned char autoscroll;
 };
 
 struct _E_Config_Shelf
@@ -324,19 +325,11 @@ struct _E_Config_Shelf
    int container, zone;
    int layer;
    unsigned char popup;
-   Evas_List *configs;
-};
-
-struct _E_Config_Shelf_Config
-{
-   struct {
-      int w, h;
-   } res;
-   int x, y, w, h;
    int orient;
-   const char *style;
    unsigned char fit_along;
    unsigned char fit_size;
+   const char *style;
+   int size;
 };
 
 EAPI int        e_config_init(void);

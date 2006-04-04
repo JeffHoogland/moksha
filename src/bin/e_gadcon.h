@@ -62,6 +62,10 @@ struct _E_Gadcon
       void (*func) (void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
       void *data;
    } resize_request;
+   struct {
+      Evas_Object *(*func) (void *data, E_Gadcon_Client *gcc, const char *style);
+      void *data;
+   } frame_request;
 };
 
 #define GADCON_CLIENT_CLASS_VERSION 1
@@ -70,7 +74,7 @@ struct _E_Gadcon_Client_Class
    int   version;
    char *name;
    struct {
-      E_Gadcon_Client *(*init)     (E_Gadcon *gc, char *name, char *id);
+      E_Gadcon_Client *(*init)     (E_Gadcon *gc, char *name, char *id, char *style);
       void             (*shutdown) (E_Gadcon_Client *gcc);
       void             (*orient)   (E_Gadcon_Client *gcc);
    } func;
@@ -83,6 +87,7 @@ struct _E_Gadcon_Client
    char                  *name;
    char                  *id;
    Evas_Object           *o_base;
+   Evas_Object           *o_frame;
    Evas_Object           *o_control;
    Evas_Object           *o_event;
    E_Gadcon_Client_Class  client_class;
@@ -102,6 +107,7 @@ EAPI void             e_gadcon_provider_unregister(E_Gadcon_Client_Class *cc);
 EAPI E_Gadcon        *e_gadcon_swallowed_new(const char *name, char *id, Evas_Object *obj, char *swallow_name);
 EAPI void             e_gadcon_swallowed_min_size_set(E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 EAPI void             e_gadcon_size_request_callback_set(E_Gadcon *gc, void (*func) (void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h), void *data);
+EAPI void             e_gadcon_frame_request_callback_set(E_Gadcon *gc, Evas_Object *(*func) (void *data, E_Gadcon_Client *gcc, const char *style), void *data);
 EAPI void             e_gadcon_layout_policy_set(E_Gadcon *gc, E_Gadcon_Layout_Policy layout_policy);
 EAPI void             e_gadcon_populate(E_Gadcon *gc);
 EAPI void             e_gadcon_orient(E_Gadcon *gc, E_Gadcon_Orient orient);
@@ -114,7 +120,7 @@ EAPI E_Zone          *e_gadcon_zone_get(E_Gadcon *gc);
 EAPI void             e_gadcon_ecore_evas_set(E_Gadcon *gc, Ecore_Evas *ee);
 EAPI int              e_gadcon_canvas_zone_geometry_get(E_Gadcon *gc, int *x, int *y, int *w, int *h);
     
-EAPI E_Gadcon_Client *e_gadcon_client_new(E_Gadcon *gc, char *name, char *id, Evas_Object *base_obj);
+EAPI E_Gadcon_Client *e_gadcon_client_new(E_Gadcon *gc, char *name, char *id, char *style, Evas_Object *base_obj);
 EAPI void             e_gadcon_client_size_request(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h);
 EAPI void             e_gadcon_client_min_size_set(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h);
 EAPI void             e_gadcon_client_aspect_set(E_Gadcon_Client *gcc, int w, int h);

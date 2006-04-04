@@ -4,8 +4,9 @@
 #include "e.h"
 
 static void _e_shelf_free(E_Shelf *es);
-static void _e_shelf_config_port(E_Config_Shelf_Config *cf1, E_Config_Shelf_Config *cf2);
+static void _e_shelf_position_calc(E_Shelf *es);
 static void _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
+static Evas_Object *_e_shelf_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *style);
 
 static Evas_List *shelves = NULL;
 static int shelf_id = 0;
@@ -38,7 +39,6 @@ e_shelf_config_init(void)
    for (l = e_config->shelves; l; l = l->next)
      {
 	E_Config_Shelf *cf_es;
-	E_Config_Shelf_Config *cf_escf, *cf_escf2;
 	E_Zone *zone;
 	int closeness;
 	
@@ -46,60 +46,17 @@ e_shelf_config_init(void)
 	zone = e_util_container_zone_number_get(cf_es->container, cf_es->zone);
 	if (zone)
 	  {
-	     cf_escf2 = NULL;
-	     closeness = 0x7fffffff;
-	     for (l2 = cf_es->configs; l2; l2 = l2->next)
+	     E_Shelf *es;
+	     
+	     es = e_shelf_zone_new(zone, cf_es->name, cf_es->style,
+				   cf_es->popup, cf_es->layer);
+	     if (es)
 	       {
-		  cf_escf = l2->data;
-		  if ((cf_escf->res.w == zone->w) &&
-		      (cf_escf->res.h == zone->h))
-		    {
-		       cf_escf2 = cf_escf;
-		       closeness = 0;
-		       break;
-		    }
-		  else
-		    {
-		       int difx, dify;
-		       
-		       difx = cf_escf->res.w - zone->w;
-		       if (difx < 0) difx = -difx;
-		       dify = cf_escf->res.h - zone->h;
-		       if (dify < 0) dify = -dify;
-		       difx = difx * dify;
-		       if (difx < closeness)
-			 {
-			    closeness = difx;
-			    cf_escf2 = cf_escf;
-			 }
-		    }
-	       }
-	     if ((closeness != 0) && (cf_escf2))
-	       {
-		  cf_escf = E_NEW(E_Config_Shelf_Config, 1);
-		  cf_escf->res.w = zone->w;
-		  cf_escf->res.h = zone->h;
-		  cf_escf->orient = cf_escf2->orient;
-		  cf_escf->style = evas_stringshare_add(cf_escf2->style);
-		  _e_shelf_config_port(cf_escf2, cf_escf);
-		  cf_escf2 = cf_escf;
-		  e_config_save_queue();
-	       }
-	     if (cf_escf2)
-	       {
-		  E_Shelf *es;
-		  
-		  es = e_shelf_zone_new(zone, cf_es->name, cf_escf2->style,
-					cf_es->popup, cf_es->layer);
-		  if (es)
-		    {
-		       es->cfg = cf_es;
-		       e_shelf_move_resize(es, cf_escf2->x, cf_escf2->y,
-					   cf_escf2->w, cf_escf2->h);
-		       e_shelf_orient(es, cf_escf2->orient);
-		       e_shelf_populate(es);
-		       e_shelf_show(es);
-		    }
+		  es->cfg = cf_es;
+		  e_shelf_orient(es, cf_es->orient);
+		  _e_shelf_position_calc(es);
+		  e_shelf_populate(es);
+		  e_shelf_show(es);
 	       }
 	  }
      }
@@ -156,8 +113,12 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    snprintf(buf, sizeof(buf), "%i", shelf_id);
    shelf_id++;
    es->gadcon = e_gadcon_swallowed_new(es->name, buf, es->o_base, "items");
-   e_gadcon_size_request_callback_set(es->gadcon, _e_shelf_gadcon_size_request,
+   e_gadcon_size_request_callback_set(es->gadcon,
+				      _e_shelf_gadcon_size_request,
 				      es);
+   e_gadcon_frame_request_callback_set(es->gadcon,
+				       _e_shelf_gadcon_frame_request,
+				       es);
    e_gadcon_orient(es->gadcon, E_GADCON_ORIENT_TOP);
    edje_object_signal_emit(es->o_base, "set_orientation", "top");
    e_gadcon_zone_set(es->gadcon, zone);
@@ -266,42 +227,13 @@ e_shelf_save(E_Shelf *es)
    E_OBJECT_TYPE_CHECK(es, E_GADMAN_SHELF_TYPE);
    if (es->cfg)
      {
-	Evas_List *l;
-	E_Config_Shelf_Config *cf_escf = NULL;
-	
-	for (l = es->cfg->configs; l; l = l->next)
-	  {
-	     cf_escf = l->data;
-	     if ((cf_escf->res.w == es->zone->w) &&
-		 (cf_escf->res.h == es->zone->h))
-	       break;
-	     cf_escf = NULL;
-	  }
-	if (!cf_escf)
-	  {
-             cf_escf = E_NEW(E_Config_Shelf_Config, 1);
-	     if (cf_escf)
-	       {
-		  cf_escf->res.w = es->zone->w;
-		  cf_escf->res.h = es->zone->h;
-		  es->cfg->configs = evas_list_append(es->cfg->configs, cf_escf);
-	       }
-	  }
-	if (cf_escf)
-	  {
-	     cf_escf->x = es->x;
-	     cf_escf->y = es->y;
-	     cf_escf->w = es->w;
-	     cf_escf->h = es->h;
-	     cf_escf->orient = es->gadcon->orient;
-	     if (cf_escf->style) evas_stringshare_del(cf_escf->style);
-	     cf_escf->style = evas_stringshare_add(es->style);
-	  }
+	es->cfg->orient = es->gadcon->orient;
+	if (es->cfg->style) evas_stringshare_del(es->cfg->style);
+	es->cfg->style = evas_stringshare_add(es->style);
      }
    else
      {
 	E_Config_Shelf *cf_es;
-	E_Config_Shelf_Config *cf_escf = NULL;
 	
 	cf_es = E_NEW(E_Config_Shelf, 1);
 	cf_es->name = evas_stringshare_add(es->name);
@@ -310,18 +242,11 @@ e_shelf_save(E_Shelf *es)
 	if (es->popup) cf_es->popup = 1;
 	cf_es->layer = es->layer;
 	e_config->shelves = evas_list_append(e_config->shelves, cf_es);
+	cf_es->orient = es->gadcon->orient;
+	cf_es->style = evas_stringshare_add(es->style);
+	cf_es->fit_along = es->fit_along;
+	cf_es->fit_size = es->fit_size;
 	es->cfg = cf_es;
-	
-	cf_escf = E_NEW(E_Config_Shelf_Config, 1);
-	cf_escf->res.w = es->zone->w;
-	cf_escf->res.h = es->zone->h;
-	cf_escf->x = es->x;
-	cf_escf->y = es->y;
-	cf_escf->w = es->w;
-	cf_escf->h = es->h;
-	cf_escf->orient = es->gadcon->orient;
-	cf_escf->style = evas_stringshare_add(es->style);
-	cf_es->configs = evas_list_append(cf_es->configs, cf_escf);
      }
    e_config_save_queue();
 }
@@ -335,15 +260,7 @@ e_shelf_unsave(E_Shelf *es)
      {
 	e_config->shelves = evas_list_remove(e_config->shelves, es->cfg);
 	evas_stringshare_del(es->cfg->name);
-	while (es->cfg->configs)
-	  {
-	     E_Config_Shelf_Config *cf_escf;
-	     
-	     cf_escf = es->cfg->configs->data;
-	     if (cf_escf->style) evas_stringshare_del(cf_escf->style);
-	     free(cf_escf);
-	     es->cfg->configs = evas_list_remove_list(es->cfg->configs, es->cfg->configs);
-	  }
+	if (es->cfg->style) evas_stringshare_del(es->cfg->style);
 	free(es->cfg);
      }
 }
@@ -408,43 +325,54 @@ _e_shelf_free(E_Shelf *es)
 }
 
 static void
-_e_shelf_config_port(E_Config_Shelf_Config *cf1, E_Config_Shelf_Config *cf2)
+_e_shelf_position_calc(E_Shelf *es)
 {
-   int px[4], py[4];
-   int i;
+   E_Gadcon_Orient orient = E_GADCON_ORIENT_FLOAT;
+   int size = 40;
    
-   /* 
-    * We have 4 corners. figure out what gravity zone (3x3 grid) they are in
-    * then lock them in relative to the edge or middle of that zone and re
-    * calculate it all then.
-    */
-   px[0] = cf1->x;
-   px[1] = cf1->x + cf1->w - 1;
-   px[2] = cf1->x;
-   px[3] = cf1->x + cf1->w - 1;
-   py[0] = cf1->y;
-   py[1] = cf1->y;
-   py[2] = cf1->y + cf1->h - 1;
-   py[3] = cf1->y + cf1->h - 1;
-   for (i = 0; i < 4; i++)
+   if (es->cfg)
      {
-	if (px[i] < (cf1->res.w / 3))
-	  px[i] = px[i];
-	else if (px[i] > ((2 * cf1->res.w) / 3))
-	  px[i] = (cf2->res.w) + (px[i] - cf1->res.w);
-	else
-	  px[i] = (cf2->res.w / 2) + (px[i] - (cf1->res.w / 2));
-	if (py[i] < (cf1->res.h / 3))
-	  py[i] = py[i];
-	else if (py[i] > ((2 * cf1->res.h) / 3))
-	  py[i] = (cf2->res.h) + (py[i] - cf1->res.h);
-	else
-	  py[i] = (cf2->res.h / 2) + (py[i] - (cf1->res.h / 2));
+	orient = es->cfg->orient;
+	size = es->cfg->size;
      }
-   cf2->x = px[0];
-   cf2->y = py[0];
-   cf2->w = px[3] - px[0] + 1;
-   cf2->h = py[3] = py[0] + 1;
+   else
+     orient = es->gadcon->orient;
+   switch (orient)
+     {
+      case E_GADCON_ORIENT_FLOAT:
+	break;
+      case E_GADCON_ORIENT_HORIZ:
+	break;
+      case E_GADCON_ORIENT_VERT:
+	break;
+      case E_GADCON_ORIENT_LEFT:
+	break;
+      case E_GADCON_ORIENT_RIGHT:
+	break;
+      case E_GADCON_ORIENT_TOP:
+	if (!es->fit_along) es->w = es->zone->w;
+	if (!es->fit_size) es->h = size;
+	es->x = (es->zone->w - es->w) / 2;
+	es->y = 0;
+	break;
+      case E_GADCON_ORIENT_BOTTOM:
+	if (!es->fit_along) es->w = es->zone->w;
+	if (!es->fit_size) es->h = size;
+	es->x = (es->zone->w - es->w) / 2;
+	es->y = es->zone->h - es->h;
+	break;
+      case E_GADCON_ORIENT_CORNER_TL:
+	break;
+      case E_GADCON_ORIENT_CORNER_TR:
+	break;
+      case E_GADCON_ORIENT_CORNER_BL:
+	break;
+      case E_GADCON_ORIENT_CORNER_BR:
+	break;
+      default:
+	break;
+     }
+   e_shelf_move_resize(es, es->x, es->y, es->w, es->h);
 }
 
 static void
@@ -536,4 +464,22 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	break;
      }
    e_shelf_move_resize(es, nx, ny, nw, nh);
+}
+
+static Evas_Object *
+_e_shelf_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *style)
+{
+   E_Shelf *es;
+   Evas_Object *o;
+   char buf[4096];
+   
+   es = data;
+   o = edje_object_add(gcc->gadcon->evas);
+   snprintf(buf, sizeof(buf), "shelf/%s/%s", es->style, style);
+   if (!e_theme_edje_object_set(o, "base/theme/shelf", buf))
+     {
+	evas_object_del(o);
+	return NULL;
+     }
+   return o;
 }

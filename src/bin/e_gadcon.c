@@ -8,7 +8,7 @@ static void _e_gadcon_client_free(E_Gadcon_Client *gcc);
 
 static void _e_gadcon_client_save(E_Gadcon_Client *gcc);
 
-static void _e_gadcon_cb_size_request(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_gadcon_cb_size_request(void *data, Evas_Object *obj, void *event_info);
 static void _e_gadcon_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_gadcon_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_gadcon_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info);
@@ -51,17 +51,17 @@ static Evas_Hash *providers = NULL;
 static Evas_List *gadcons = NULL;
    
 static E_Gadcon_Client *
-__test(E_Gadcon *gc, char *name, char *id)
+__test(E_Gadcon *gc, char *name, char *id, char *style)
 {
    Evas_Object *o;
    E_Gadcon_Client *gcc;
    
-   printf("create gadcon client \"%s\" \"%s\" for \"%s\" \"%s\"\n",
-	  name, id, 
+   printf("create gadcon client \"%s\" \"%s\" \"%s\" for \"%s\" \"%s\"\n",
+	  name, id, style,
 	  gc->name, gc->id);
    o = evas_object_rectangle_add(gc->evas);
    evas_object_color_set(o, rand() & 0xff, rand() & 0xff, rand() & 0xff, 150);
-   gcc = e_gadcon_client_new(gc, name, id, o);
+   gcc = e_gadcon_client_new(gc, name, id, style, o);
    gcc->data = NULL; // this is where a module would hook private data
    return gcc;
 }
@@ -182,6 +182,16 @@ e_gadcon_size_request_callback_set(E_Gadcon *gc, void (*func) (void *data, E_Gad
 }
 
 EAPI void
+e_gadcon_frame_request_callback_set(E_Gadcon *gc, Evas_Object *(*func) (void *data, E_Gadcon_Client *gcc, const char *style), void *data)
+{
+   E_OBJECT_CHECK(gc);
+   E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
+   
+   gc->frame_request.func = func;
+   gc->frame_request.data = data;
+}
+
+EAPI void
 e_gadcon_layout_policy_set(E_Gadcon *gc, E_Gadcon_Layout_Policy layout_policy)
 {
    E_OBJECT_CHECK(gc);
@@ -227,17 +237,24 @@ e_gadcon_populate(E_Gadcon *gc)
 	       {
 		  E_Gadcon_Client *gcc;
 		  
-		  gcc = cc->func.init(gc, cf_gcc->name, cf_gcc->id);
+		  gcc = cc->func.init(gc, cf_gcc->name, cf_gcc->id,
+				      cf_gcc->style);
 		  if (gcc)
 		    {
 		       gcc->client_class = *cc;
 		       gcc->config.pos = cf_gcc->geom.pos;
 		       gcc->config.size = cf_gcc->geom.size;
 		       gcc->config.res = cf_gcc->geom.res;
-		       e_gadcon_layout_pack_options_set(gcc->o_base,
-							gcc->config.pos, 
-							gcc->config.size,
-							gcc->config.res);
+		       if (gcc->o_frame)
+			 e_gadcon_layout_pack_options_set(gcc->o_frame,
+							  gcc->config.pos, 
+							  gcc->config.size,
+							  gcc->config.res);
+		       else
+			 e_gadcon_layout_pack_options_set(gcc->o_base,
+							  gcc->config.pos, 
+							  gcc->config.size,
+							  gcc->config.res);
 		       if (gcc->client_class.func.orient)
 			 gcc->client_class.func.orient(gcc);
 		    }
@@ -372,7 +389,7 @@ e_gadcon_canvas_zone_geometry_get(E_Gadcon *gc, int *x, int *y, int *w, int *h)
 }
 
 EAPI E_Gadcon_Client *
-e_gadcon_client_new(E_Gadcon *gc, char *name, char *id, Evas_Object *base_obj)
+e_gadcon_client_new(E_Gadcon *gc, char *name, char *id, char *style, Evas_Object *base_obj)
 {
    E_Gadcon_Client *gcc;
    
@@ -385,7 +402,20 @@ e_gadcon_client_new(E_Gadcon *gc, char *name, char *id, Evas_Object *base_obj)
    gcc->name = evas_stringshare_add(name);
    gcc->id = evas_stringshare_add(id);
    gc->clients = evas_list_append(gc->clients, gcc);
-   e_gadcon_layout_pack(gc->o_container, gcc->o_base);
+   if ((gc->frame_request.func) && (style))
+     {
+	gcc->o_frame = gc->frame_request.func(gc->frame_request.data, gcc,
+					      style);
+	if (gcc->o_frame)
+	  {
+	     edje_object_part_swallow(gcc->o_frame, "items", gcc->o_base);
+	     evas_object_show(gcc->o_frame);
+	  }
+     }
+   if (gcc->o_frame)
+     e_gadcon_layout_pack(gc->o_container, gcc->o_frame);
+   else
+     e_gadcon_layout_pack(gc->o_container, gcc->o_base);
    evas_object_show(gcc->o_base);
    return gcc;
 }
@@ -402,7 +432,10 @@ e_gadcon_client_edit_begin(E_Gadcon_Client *gcc)
    
    gcc->o_control = edje_object_add(gcc->gadcon->evas);
    evas_object_layer_set(gcc->o_control, 100);
-   evas_object_geometry_get(gcc->o_base, &x, &y, &w, &h);
+   if (gcc->o_frame)
+     evas_object_geometry_get(gcc->o_frame, &x, &y, &w, &h);
+   else
+     evas_object_geometry_get(gcc->o_base, &x, &y, &w, &h);
    evas_object_move(gcc->o_control, x, y);
    evas_object_resize(gcc->o_control, w, h);
    e_theme_edje_object_set(gcc->o_control, "base/theme/gadman",
@@ -467,6 +500,10 @@ e_gadcon_client_edit_end(E_Gadcon_Client *gcc)
 {
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
+   
+   evas_object_event_callback_del(gcc->o_base, EVAS_CALLBACK_MOVE, _e_gadcon_cb_move);
+   evas_object_event_callback_del(gcc->o_base, EVAS_CALLBACK_RESIZE, _e_gadcon_cb_resize);
+   
    if (gcc->moving)
      {
 	gcc->moving = 0;
@@ -488,12 +525,18 @@ e_gadcon_client_size_request(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h)
       case E_GADCON_ORIENT_HORIZ:
       case E_GADCON_ORIENT_TOP:
       case E_GADCON_ORIENT_BOTTOM:
-	e_gadcon_layout_pack_size_set(gcc->o_base, w);
+	if (gcc->o_frame)
+	  e_gadcon_layout_pack_size_set(gcc->o_frame, w);
+	else
+	  e_gadcon_layout_pack_size_set(gcc->o_base, w);
 	break;
       case E_GADCON_ORIENT_VERT:
       case E_GADCON_ORIENT_LEFT:
       case E_GADCON_ORIENT_RIGHT:
-	e_gadcon_layout_pack_size_set(gcc->o_base, h);
+	if (gcc->o_frame)
+	  e_gadcon_layout_pack_size_set(gcc->o_frame, h);
+	else
+	  e_gadcon_layout_pack_size_set(gcc->o_base, h);
 	break;
       case E_GADCON_ORIENT_FLOAT:
       case E_GADCON_ORIENT_CORNER_TL:
@@ -510,7 +553,10 @@ e_gadcon_client_min_size_set(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h)
 {
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
-   e_gadcon_layout_pack_min_size_set(gcc->o_base, w, h);
+   if (gcc->o_frame)
+     e_gadcon_layout_pack_min_size_set(gcc->o_frame, w, h);
+   else
+     e_gadcon_layout_pack_min_size_set(gcc->o_base, w, h);
 }
 
 EAPI void
@@ -518,7 +564,10 @@ e_gadcon_client_aspect_set(E_Gadcon_Client *gcc, int w, int h)
 {
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
-   e_gadcon_layout_pack_aspect_set(gcc->o_base, w, h);
+   if (gcc->o_frame)
+     e_gadcon_layout_pack_aspect_set(gcc->o_frame, w, h);
+   else
+     e_gadcon_layout_pack_aspect_set(gcc->o_base, w, h);
 }
 
 /* local subsystem functions */
@@ -536,7 +585,9 @@ _e_gadcon_free(E_Gadcon *gc)
 static void
 _e_gadcon_client_free(E_Gadcon_Client *gcc)
 {
+   e_gadcon_client_edit_end(gcc);
    gcc->gadcon->clients = evas_list_remove(gcc->gadcon->clients, gcc);
+   if (gcc->o_frame) evas_object_del(gcc->o_frame);
    evas_stringshare_del(gcc->name);
    evas_stringshare_del(gcc->id);
    free(gcc);
@@ -598,7 +649,7 @@ _e_gadcon_client_save(E_Gadcon_Client *gcc)
 }
 
 static void
-_e_gadcon_cb_size_request(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_gadcon_cb_size_request(void *data, Evas_Object *obj, void *event_info)
 {
    E_Gadcon *gc;
    
@@ -722,7 +773,10 @@ _e_gadcon_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
    evas_object_geometry_get(gcc->o_base, NULL, NULL, &w, &h);
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
      {
-	e_gadcon_layout_pack_request_set(gcc->o_base, gcc->sx + x, w);
+	if (gcc->o_frame)
+	  e_gadcon_layout_pack_request_set(gcc->o_frame, gcc->sx + x, w);
+	else
+	  e_gadcon_layout_pack_request_set(gcc->o_base, gcc->sx + x, w);
 	gcc->config.pos = gcc->sx + x;
 	gcc->config.size = w;
 	evas_object_geometry_get(gcc->gadcon->o_container, NULL, NULL, &w, &h);
@@ -730,7 +784,10 @@ _e_gadcon_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
      }
    else
      {
-	e_gadcon_layout_pack_request_set(gcc->o_base, gcc->sy + y, h);
+	if (gcc->o_frame)
+	  e_gadcon_layout_pack_request_set(gcc->o_frame, gcc->sy + y, h);
+	else
+	  e_gadcon_layout_pack_request_set(gcc->o_base, gcc->sy + y, h);
 	gcc->config.pos = gcc->sy + y;
 	gcc->config.size = h;
 	evas_object_geometry_get(gcc->gadcon->o_container, NULL, NULL, &w, &h);
@@ -947,12 +1004,17 @@ static void
 e_gadcon_layout_min_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 {
    E_Smart_Data *sd;
+/*   
    Evas_List *l;
    Evas_Coord tw = 0, th = 0;
+ */
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-   
+
+   if (w) *w = sd->minw;
+   if (h) *h = sd->minh;
+/*   
    for (l = sd->items; l; l = l->next)
      {
 	E_Gadcon_Layout_Item *bi;
@@ -973,6 +1035,7 @@ e_gadcon_layout_min_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
      }
    if (w) *w = tw;
    if (h) *h = th;
+ */
 }
 
 static void
@@ -1266,10 +1329,14 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	     if (sd->horizontal)
 	       {
 		  bi->ask.size2 = (h * bi->aspect.w) / bi->aspect.h;
+		  if (bi->ask.size2 > bi->min.w)
+		    min += (bi->ask.size2 - bi->min.w);
 	       }
 	     else 
 	       {
 		  bi->ask.size2 = (w * bi->aspect.h) / bi->aspect.w;
+		  if (bi->ask.size2 > bi->min.h)
+		    min += (bi->ask.size2 - bi->min.h);
 	       }
 	  }
      }

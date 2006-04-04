@@ -27,6 +27,7 @@ struct _E_Shelf
    E_Config_Shelf      *cfg;
    unsigned char        fit_along : 1;
    unsigned char        fit_size : 1;
+   int                  size;
 };
 
 EAPI int              e_shelf_init(void);

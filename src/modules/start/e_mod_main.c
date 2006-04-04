@@ -7,7 +7,7 @@
 /***************************************************************************/
 /**/
 /* gadcon requirements */
-static E_Gadcon_Client *_gc_init(E_Gadcon *gc, char *name, char *id);
+static E_Gadcon_Client *_gc_init(E_Gadcon *gc, char *name, char *id, char *style);
 static void _gc_shutdown(E_Gadcon_Client *gcc);
 static void _gc_orient(E_Gadcon_Client *gcc);
 /* and actually define the gadcon class that this module provides (just 1) */
@@ -39,7 +39,7 @@ static void _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *e
 static void _menu_cb_post(void *data, E_Menu *m);
 
 static E_Gadcon_Client *
-_gc_init(E_Gadcon *gc, char *name, char *id)
+_gc_init(E_Gadcon *gc, char *name, char *id, char *style)
 {
    Evas_Object *o;
    E_Gadcon_Client *gcc;
@@ -52,7 +52,7 @@ _gc_init(E_Gadcon *gc, char *name, char *id)
    e_theme_edje_object_set(o, "base/theme/modules/start", "modules/start/main");
    edje_object_signal_emit(o, "passive", "");
    
-   gcc = e_gadcon_client_new(gc, name, id, o);
+   gcc = e_gadcon_client_new(gc, name, id, style, o);
    gcc->data = inst;
    
    inst->gcc = gcc;
@@ -85,6 +85,7 @@ _gc_orient(E_Gadcon_Client *gcc)
    
    inst = gcc->data;
    printf("OREINT to %i\n", gcc->gadcon->orient);
+   e_gadcon_client_aspect_set(gcc, 20, 20);
    e_gadcon_client_min_size_set(gcc, 20, 20);
 }
 /**/
