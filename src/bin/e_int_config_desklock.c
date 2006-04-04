@@ -270,7 +270,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      edje_object_signal_callback_add(rwd->o_radio, "toggle_on", "",
 				     _e_desklock_cb_syswide_auth_method, cfdata);
 
-     oc = e_widget_radio_add(evas, _("Personilized password"), 1, rg_auth);
+     oc = e_widget_radio_add(evas, _("Personalized password"), 1, rg_auth);
      e_widget_framelist_object_append(of,oc);
 
      rwd = e_widget_data_get(oc);
@@ -292,7 +292,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_min_size_set(ob, 200, 25);
    e_widget_framelist_object_append(of, ob);
    
-   ob = e_widget_check_add(evas, _("Show Password"), &(cfdata->show_password));
+   ob = e_widget_check_add(evas, _("Show password"), &(cfdata->show_password));
    cfdata->gui.show_passwd_check = ob;
 #ifdef HAVE_PAM
    if (cfdata->auth_method == 0)
@@ -308,14 +308,14 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("Automatic Locking"), 0);
    e_widget_disabled_set(of, !ecore_x_screensaver_event_available_get());
    
-   ob = e_widget_check_add(evas, _("Lock when the Screensaver starts"), &(cfdata->autolock));
-   e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
-   e_widget_framelist_object_append(of, ob);
-
-   ob = e_widget_check_add(evas, _("Set the screensaver timeout"), &(cfdata->use_timeout));
+   ob = e_widget_check_add(evas, _("Enable screensaver"), &(cfdata->use_timeout));
    e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
    e_widget_framelist_object_append(of, ob);
    
+   ob = e_widget_check_add(evas, _("Lock when the screensaver starts"), &(cfdata->autolock));
+   e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
+   e_widget_framelist_object_append(of, ob);
+
    ob = e_widget_label_add(evas, _("Time until screensaver starts"));
    e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
    e_widget_framelist_object_append(of, ob);
@@ -431,19 +431,19 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
         {
           rg = e_widget_radio_group_new((int *)(&(cfdata->login_box_zone)));
 
-          ob = e_widget_radio_add(evas, _("Show On All Screen Zones"), LOGINBOX_SHOW_ALL_SCREENS,
+          ob = e_widget_radio_add(evas, _("Show on all screen zones"), LOGINBOX_SHOW_ALL_SCREENS,
       			    rg);
           cfdata->gui.loginbox_obj.show_all_screens = ob;
           if (cfdata->zone_count == 1) e_widget_disabled_set(ob, 1);
           e_widget_framelist_object_append(of, ob);
 
-          ob = e_widget_radio_add(evas, _("Show On Current Screen Zone"),
+          ob = e_widget_radio_add(evas, _("Show on current screen zone"),
       			    LOGINBOX_SHOW_CURRENT_SCREENS, rg);
           cfdata->gui.loginbox_obj.show_current_screen = ob;
           if (cfdata->zone_count == 1) e_widget_disabled_set(ob, 1);
           e_widget_framelist_object_append(of, ob);
 
-          ob = e_widget_radio_add(evas, _("Show On Screen Zone :"), LOGINBOX_SHOW_SPECIFIC_SCREEN,
+          ob = e_widget_radio_add(evas, _("Show on screen zone #:"), LOGINBOX_SHOW_SPECIFIC_SCREEN,
       			    rg);
           cfdata->gui.loginbox_obj.show_specific_screen = ob;
           if (cfdata->zone_count == 1) e_widget_disabled_set(ob, 1);
@@ -471,7 +471,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
         edje_object_signal_callback_add(wd->o_radio, "toggle_on", "",
        				 _e_desklock_cb_syswide_auth_method, cfdata);
 
-        oc = e_widget_radio_add(evas, _("Personilized password"), 1, rg_auth);
+        oc = e_widget_radio_add(evas, _("Personalized password"), 1, rg_auth);
         e_widget_framelist_object_append(of,oc);
 
         wd = e_widget_data_get(oc);
@@ -494,7 +494,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 	e_widget_min_size_set(ob, 200, 25);
 	e_widget_framelist_object_append(of, ob);
      
-	ob = e_widget_check_add(evas, _("Show Password"), &(cfdata->show_password));
+	ob = e_widget_check_add(evas, _("Show password"), &(cfdata->show_password));
 	cfdata->gui.show_passwd_check = ob;
 
 #ifdef HAVE_PAM
@@ -519,14 +519,14 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
       {
 	e_widget_disabled_set(of, !ecore_x_screensaver_event_available_get());
    
-	ob = e_widget_check_add(evas, _("Lock when the Screensaver starts"), &(cfdata->autolock));
-	e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
-	e_widget_framelist_object_append(of, ob);
-
-	ob = e_widget_check_add(evas, _("Set the screensaver timeout"), &(cfdata->use_timeout));
+	ob = e_widget_check_add(evas, _("Enable screensaver"), &(cfdata->use_timeout));
 	e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
 	e_widget_framelist_object_append(of, ob);
    
+	ob = e_widget_check_add(evas, _("Lock when the screensaver starts"), &(cfdata->autolock));
+	e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
+	e_widget_framelist_object_append(of, ob);
+
 	ob = e_widget_label_add(evas, _("Time until screensaver starts"));
 	e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
 	e_widget_framelist_object_append(of, ob);
