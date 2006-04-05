@@ -22,7 +22,11 @@ typedef enum _E_Gadcon_Orient
      E_GADCON_ORIENT_CORNER_TL,
      E_GADCON_ORIENT_CORNER_TR,
      E_GADCON_ORIENT_CORNER_BL,
-     E_GADCON_ORIENT_CORNER_BR
+     E_GADCON_ORIENT_CORNER_BR,
+     E_GADCON_ORIENT_CORNER_LT,
+     E_GADCON_ORIENT_CORNER_RT,
+     E_GADCON_ORIENT_CORNER_LB,
+     E_GADCON_ORIENT_CORNER_RB
 } E_Gadcon_Orient;
 
 typedef struct _E_Gadcon              E_Gadcon;
@@ -95,6 +99,9 @@ struct _E_Gadcon_Client
    struct {
       int                 pos, size, res;
    } config;
+   struct {
+      Evas_Coord          w, h;
+   } pad;
    
    unsigned char          moving : 1;
    Evas_Coord             dx, dy, sx, sy;

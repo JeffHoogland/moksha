@@ -45,6 +45,7 @@ static void e_gadcon_layout_pack_request_set(Evas_Object *obj, int pos, int size
 static void e_gadcon_layout_pack_options_set(Evas_Object *obj, int pos, int size, int res);
 static void e_gadcon_layout_pack_min_size_set(Evas_Object *obj, int w, int h);
 static void e_gadcon_layout_pack_aspect_set(Evas_Object *obj, int w, int h);
+static void e_gadcon_layout_pack_aspect_pad_set(Evas_Object *obj, int w, int h);
 static void e_gadcon_layout_unpack(Evas_Object *obj);
 
 static Evas_Hash *providers = NULL;
@@ -408,6 +409,8 @@ e_gadcon_client_new(E_Gadcon *gc, char *name, char *id, char *style, Evas_Object
 					      style);
 	if (gcc->o_frame)
 	  {
+	     edje_object_size_min_calc(gcc->o_frame,
+				       &(gcc->pad.w), &(gcc->pad.h));
 	     edje_object_part_swallow(gcc->o_frame, "items", gcc->o_base);
 	     evas_object_show(gcc->o_frame);
 	  }
@@ -488,8 +491,16 @@ e_gadcon_client_edit_begin(E_Gadcon_Client *gcc)
    evas_object_event_callback_add(gcc->o_event, EVAS_CALLBACK_MOUSE_IN, _e_gadcon_cb_mouse_in, gcc);
    evas_object_event_callback_add(gcc->o_event, EVAS_CALLBACK_MOUSE_OUT, _e_gadcon_cb_mouse_out, gcc);
 
-   evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_MOVE, _e_gadcon_cb_move, gcc);
-   evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_RESIZE, _e_gadcon_cb_resize, gcc);
+   if (gcc->o_frame)
+     {
+	evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_MOVE, _e_gadcon_cb_move, gcc);
+	evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_RESIZE, _e_gadcon_cb_resize, gcc);
+     }
+   else
+     {
+	evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_MOVE, _e_gadcon_cb_move, gcc);
+	evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_RESIZE, _e_gadcon_cb_resize, gcc);
+     }
    
    evas_object_show(gcc->o_event);
    evas_object_show(gcc->o_control);
@@ -501,8 +512,16 @@ e_gadcon_client_edit_end(E_Gadcon_Client *gcc)
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
    
-   evas_object_event_callback_del(gcc->o_base, EVAS_CALLBACK_MOVE, _e_gadcon_cb_move);
-   evas_object_event_callback_del(gcc->o_base, EVAS_CALLBACK_RESIZE, _e_gadcon_cb_resize);
+   if (gcc->o_frame)
+     {
+	evas_object_event_callback_del(gcc->o_frame, EVAS_CALLBACK_MOVE, _e_gadcon_cb_move);
+	evas_object_event_callback_del(gcc->o_frame, EVAS_CALLBACK_RESIZE, _e_gadcon_cb_resize);
+     }
+   else
+     {
+	evas_object_event_callback_del(gcc->o_base, EVAS_CALLBACK_MOVE, _e_gadcon_cb_move);
+	evas_object_event_callback_del(gcc->o_base, EVAS_CALLBACK_RESIZE, _e_gadcon_cb_resize);
+     }
    
    if (gcc->moving)
      {
@@ -526,7 +545,7 @@ e_gadcon_client_size_request(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h)
       case E_GADCON_ORIENT_TOP:
       case E_GADCON_ORIENT_BOTTOM:
 	if (gcc->o_frame)
-	  e_gadcon_layout_pack_size_set(gcc->o_frame, w);
+	  e_gadcon_layout_pack_size_set(gcc->o_frame, w + gcc->pad.w);
 	else
 	  e_gadcon_layout_pack_size_set(gcc->o_base, w);
 	break;
@@ -534,7 +553,7 @@ e_gadcon_client_size_request(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h)
       case E_GADCON_ORIENT_LEFT:
       case E_GADCON_ORIENT_RIGHT:
 	if (gcc->o_frame)
-	  e_gadcon_layout_pack_size_set(gcc->o_frame, h);
+	  e_gadcon_layout_pack_size_set(gcc->o_frame, h + gcc->pad.h);
 	else
 	  e_gadcon_layout_pack_size_set(gcc->o_base, h);
 	break;
@@ -543,6 +562,10 @@ e_gadcon_client_size_request(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h)
       case E_GADCON_ORIENT_CORNER_TR:
       case E_GADCON_ORIENT_CORNER_BL:
       case E_GADCON_ORIENT_CORNER_BR:
+      case E_GADCON_ORIENT_CORNER_LT:
+      case E_GADCON_ORIENT_CORNER_RT:
+      case E_GADCON_ORIENT_CORNER_LB:
+      case E_GADCON_ORIENT_CORNER_RB:
       default:
 	break;
      }
@@ -554,7 +577,7 @@ e_gadcon_client_min_size_set(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h)
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
    if (gcc->o_frame)
-     e_gadcon_layout_pack_min_size_set(gcc->o_frame, w, h);
+     e_gadcon_layout_pack_min_size_set(gcc->o_frame, w + gcc->pad.w, h + gcc->pad.h);
    else
      e_gadcon_layout_pack_min_size_set(gcc->o_base, w, h);
 }
@@ -565,7 +588,10 @@ e_gadcon_client_aspect_set(E_Gadcon_Client *gcc, int w, int h)
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
    if (gcc->o_frame)
-     e_gadcon_layout_pack_aspect_set(gcc->o_frame, w, h);
+     {
+	e_gadcon_layout_pack_aspect_pad_set(gcc->o_frame, gcc->pad.w, gcc->pad.h);
+	e_gadcon_layout_pack_aspect_set(gcc->o_frame, w, h);
+     }
    else
      e_gadcon_layout_pack_aspect_set(gcc->o_base, w, h);
 }
@@ -673,6 +699,7 @@ _e_gadcon_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_in
    ev = event_info;
    if (ev->button == 3)
      {
+	printf("THREE!\n");
      }
 }
 
@@ -770,7 +797,10 @@ _e_gadcon_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
    evas_pointer_canvas_xy_get(gcc->gadcon->evas, &x, &y);
    x = x - gcc->dx;
    y = y - gcc->dy;
-   evas_object_geometry_get(gcc->o_base, NULL, NULL, &w, &h);
+   if (gcc->o_frame)
+     evas_object_geometry_get(gcc->o_frame, NULL, NULL, &w, &h);
+   else
+     evas_object_geometry_get(gcc->o_base, NULL, NULL, &w, &h);
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
      {
 	if (gcc->o_frame)
@@ -922,7 +952,7 @@ struct _E_Gadcon_Layout_Item
    int              hookp;
    struct {
       int           w, h;
-   } min, aspect;
+   } min, aspect, aspect_pad;
    Evas_Coord       x, y, w, h;
    Evas_Object     *obj;
    unsigned char    can_move : 1;
@@ -1188,6 +1218,17 @@ e_gadcon_layout_pack_aspect_set(Evas_Object *obj, int w, int h)
 }
 
 static void
+e_gadcon_layout_pack_aspect_pad_set(Evas_Object *obj, int w, int h)
+{
+   E_Gadcon_Layout_Item *bi;
+   
+   bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+   if (!bi) return;
+   bi->aspect_pad.w = w;
+   bi->aspect_pad.h = h;
+}
+
+static void
 e_gadcon_layout_unpack(Evas_Object *obj)
 {
    E_Gadcon_Layout_Item *bi;
@@ -1328,13 +1369,15 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	  {
 	     if (sd->horizontal)
 	       {
-		  bi->ask.size2 = (h * bi->aspect.w) / bi->aspect.h;
+		  bi->ask.size2 = (((h - bi->aspect_pad.h) * bi->aspect.w) / 
+				   bi->aspect.h) + bi->aspect_pad.w;
 		  if (bi->ask.size2 > bi->min.w)
 		    min += (bi->ask.size2 - bi->min.w);
 	       }
 	     else 
 	       {
-		  bi->ask.size2 = (w * bi->aspect.h) / bi->aspect.w;
+		  bi->ask.size2 = (((w - bi->aspect_pad.w) * bi->aspect.h) / 
+				   bi->aspect.w) + bi->aspect_pad.h;
 		  if (bi->ask.size2 > bi->min.h)
 		    min += (bi->ask.size2 - bi->min.h);
 	       }
