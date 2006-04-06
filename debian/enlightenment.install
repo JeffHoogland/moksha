@@ -3,6 +3,7 @@ usr/bin/enlightenment_eapp
 usr/bin/enlightenment_eapp_cache_gen
 usr/bin/enlightenment_imc
 usr/bin/enlightenment_remote
+usr/bin/enlightenment_start
 usr/share/enlightenment/doc/*
 usr/lib/enlightenment/modules/*
 usr/lib/enlightenment/preload/*
