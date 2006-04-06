@@ -97,6 +97,7 @@
 #include "e_livethumb.h"
 #include "e_int_border_border.h"
 #include "e_widget_ilist.h"
+#include "e_widget_config_list.h"
 #include "e_slider.h"
 #include "e_widget_slider.h"
 #include "e_int_config_window_manipulation.h"

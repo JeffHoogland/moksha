@@ -7,7 +7,7 @@
 
 /* externally accessible functions */
 EAPI Evas_Object *
-e_widget_label_add(Evas *evas, char *label)
+e_widget_label_add(Evas *evas, const char *label)
 {
    Evas_Object *obj, *o;
    Evas_Coord mw, mh;

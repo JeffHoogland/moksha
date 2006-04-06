@@ -6,7 +6,7 @@
 #ifndef E_WIDGET_LABEL_H
 #define E_WIDGET_LABEL_H
 
-EAPI Evas_Object *e_widget_label_add(Evas *evas, char *label);
+EAPI Evas_Object *e_widget_label_add(Evas *evas, const char *label);
 
 #endif
 #endif

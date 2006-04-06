@@ -14,13 +14,7 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Co
 static void _ilist_font_cb_change(void *data, Evas_Object *obj);
 static void _enabled_font_cb_change(void *data, Evas_Object *obj);
 
-static void _ilist_fallback_cb_change(void *data, Evas_Object *obj);
 static void _enabled_fallback_cb_change(void *data, Evas_Object *obj);
-static void _button_fallback_cb_add(void *data, void *obj);
-static void _button_fallback_cb_remove(void *data, void *obj);
-static void _button_fallback_cb_up(void *data, void *obj);
-static void _button_fallback_cb_down(void *data, void *obj);
-static void _list_select_num(E_Config_Dialog_Data *cfdata, int indx);
 
 struct _E_Text_Class_Pair
 {
@@ -80,7 +74,6 @@ struct _E_Config_Dialog_Data
    int		 cur_index;
    
    /* Font Fallbacks */
-   char		*cur_fallback;
    int		 cur_fallbacks_enabled;
    
    /* Font Hinting */
@@ -97,12 +90,6 @@ struct _E_Config_Dialog_Data
 
 	/* Font Fallbacks */
 	Evas_Object *fallback_list; /* Selecting a list entry starts edit*/
-	
-	Evas_Object *fallback;	/* Text Entry */
-	Evas_Object *fallback_up; /* Move selected list entry up */
-	Evas_Object *fallback_down; /* Move selected list entry down */
-	Evas_Object *fallback_add; /* create and select a new list entry */
-	Evas_Object *fallback_remove; /* remove the selected entry */
      }
    gui;
 };
@@ -249,10 +236,10 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    
    if (cfdata->cur_fallbacks_enabled)
      {
-	for (i = 0; i < e_widget_ilist_count(cfdata->gui.fallback_list); i++)
+	for (i = 0; i < e_widget_config_list_count(cfdata->gui.fallback_list); i++)
 	  {
 	     const char *fallback;
-	     fallback = e_widget_ilist_nth_label_get(cfdata->gui.fallback_list, i);
+	     fallback = e_widget_config_list_nth_get(cfdata->gui.fallback_list, i);
 	     if (fallback != NULL && strlen(fallback) > 0)
 	       e_font_fallback_append(fallback);
 	  }
@@ -369,88 +356,35 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
    /* Create Fallbacks Widgets */
-   option_enable = (e_font_fallback_list() != NULL);
-   of = e_widget_frametable_add(evas, _("Font Fallbacks"), 1);
+   of = e_widget_framelist_add(evas, _("Font Fallbacks"), 0);
+   e_widget_framelist_content_align_set(of, 0.5, 0.5);
 
-   ob = e_widget_button_add(evas, _("Move Up"), "widget/up_arrow", _button_fallback_cb_up, cfdata, NULL);
-   cfdata->gui.fallback_up = ob;
-   e_widget_disabled_set(ob, 1);
-   e_widget_frametable_object_append(	of, 
-					ob, 
-					1, 0, 1, 1,
-					1, 1, 1, 1);
+   ob = e_widget_config_list_add(evas, e_widget_entry_add, _("Fallback Name"));
+   cfdata->gui.fallback_list = ob;
+   e_widget_framelist_object_append(of, ob);
    
-   
-   ob = e_widget_button_add(evas, _("Move Down"), "widget/down_arrow", _button_fallback_cb_down, cfdata, NULL); 
-   cfdata->gui.fallback_down = ob;
-   e_widget_disabled_set(ob, 1);
-   e_widget_frametable_object_append(	of, 
-					ob, 
-					1, 3, 1, 1,
-					1, 1, 1, 1);
-   
-   
-   cfdata->gui.fallback_list = e_widget_ilist_add(evas, 16, 16, NULL);
-   e_widget_disabled_set(cfdata->gui.fallback_list, !option_enable);
-   e_widget_min_size_set(cfdata->gui.fallback_list, 100, 100);
-   e_widget_on_change_hook_set(cfdata->gui.fallback_list, _ilist_fallback_cb_change, cfdata);
    /* Fill In Ilist */
+   option_enable = 0;
    for (i = 0; i < evas_list_count(e_font_fallback_list()); i++)
      {
 	E_Font_Fallback *eff;
 	
 	eff = evas_list_nth(e_font_fallback_list(), i);
-	e_widget_ilist_append(cfdata->gui.fallback_list, NULL, eff->name, NULL, NULL, NULL);
+	e_widget_config_list_append(ob, eff->name);
+	option_enable = 1;
      }
-   e_widget_ilist_go(cfdata->gui.fallback_list);
-   e_widget_frametable_object_append(	of, 
-					cfdata->gui.fallback_list, 
-					2, /* Col Start*/
-					0, /* Row Start */
-					1, /* Col Span*/
-					4, /* Row Span*/
-					1, 1, 1, 1);
-  
-   ob = e_widget_label_add(evas, _("Fallback Name"));
-   e_widget_frametable_object_append(	of, 
-					ob, 
-					0, 0, 1, 1,
-					1, 1, 1, 1); 
    
-   cfdata->gui.fallback = e_widget_entry_add(evas, &(cfdata->cur_fallback));
-   e_widget_disabled_set(cfdata->gui.fallback, !option_enable);
-   e_widget_min_size_set(cfdata->gui.fallback, 100, 25);
-   e_widget_frametable_object_append(of, cfdata->gui.fallback, 
-					0, 1, 1, 1, 
-					1, 1, 1, 1);
-
-   cfdata->gui.fallback_add = e_widget_button_add(evas, _("Add"), NULL, _button_fallback_cb_add, cfdata, NULL); 
-   e_widget_disabled_set(cfdata->gui.fallback_add, !option_enable);
-   e_widget_frametable_object_append(	of, 
-					cfdata->gui.fallback_add, 
-					1, 1, 1, 1,
-					1, 1, 1, 1);
-   
-   cfdata->gui.fallback_remove = e_widget_button_add(evas, _("Remove"), NULL, _button_fallback_cb_remove, cfdata, NULL); 
-   e_widget_disabled_set(cfdata->gui.fallback_remove, !option_enable);
-   e_widget_frametable_object_append(	of, 
-					cfdata->gui.fallback_remove , 
-					1, 2, 1, 1,
-					1, 1, 1, 1);
-    	   
    ob = e_widget_check_add(evas, _("Enable Fallbacks"), &(cfdata->cur_fallbacks_enabled));
-   e_widget_frametable_object_append(of, ob, 
+   e_widget_config_list_object_append(	cfdata->gui.fallback_list, 
+					ob, 
 					0, 3, 1, 1, 
 					1, 1, 1, 1);
+   e_widget_on_change_hook_set(ob, _enabled_fallback_cb_change, cfdata);
    e_widget_check_checked_set(ob, option_enable);
-   e_widget_on_change_hook_set(ob, _enabled_fallback_cb_change, cfdata); 
-  
-   if (e_widget_ilist_count(cfdata->gui.fallback_list) > 0)
-     {
-	e_widget_ilist_selected_set(cfdata->gui.fallback_list, 0);
-     } 
+   e_widget_change(ob);
    
    e_widget_list_object_append(o, of, 1, 1, 0.5);
+   
    return o;
 }
 
@@ -511,171 +445,13 @@ _enabled_font_cb_change(void *data, Evas_Object *obj)
 }
 
 /* Private Font Fallback Functions */
-static void _ilist_fallback_cb_change(void *data, Evas_Object *obj)
-{
-   int indx;
-   E_Config_Dialog_Data *cfdata;
-   
-   cfdata = data;
-   if (!cfdata) return;
-
-   indx = e_widget_ilist_selected_get(cfdata->gui.fallback_list);
-   _list_select_num(cfdata, indx);
-}
 static void _enabled_fallback_cb_change(void *data, Evas_Object *obj)
 {
    E_Config_Dialog_Data *cfdata;
    
    cfdata = data;
    if (!cfdata) return;
-   
-   if (cfdata->cur_fallbacks_enabled)
-     {
-	e_widget_disabled_set(cfdata->gui.fallback_list, 0);	
-	e_widget_disabled_set(cfdata->gui.fallback_add, 0);
-	e_widget_disabled_set(cfdata->gui.fallback, 0);
-     }
-   else
-     {
-	_list_select_num(cfdata, -1);
-	e_widget_disabled_set(cfdata->gui.fallback_list, 1);
-	e_widget_disabled_set(cfdata->gui.fallback, 1);
-	e_widget_disabled_set(cfdata->gui.fallback_add, 1);
-     }
-}
-static void _button_fallback_cb_add(void *data, void *obj)
-{
-   E_Config_Dialog_Data *cfdata;
-   
-   cfdata = data;
-   if (!cfdata) return;
-
-   if (cfdata->cur_fallback && strlen(cfdata->cur_fallback) > 0)
-     {
-	int count;
-	int i;	
-	
-	/* If it already esists just select the existing one */
-	for (i = 0; i < e_widget_ilist_count(cfdata->gui.fallback_list); i++)
-	  {
-	     const char *fallback;
-	     fallback = e_widget_ilist_nth_label_get(cfdata->gui.fallback_list, i);
-	     if (  fallback != NULL && 
-		   strlen(fallback) > 0 && 
-		   !strcmp(fallback, cfdata->cur_fallback) )
-	       {
-		  e_widget_ilist_selected_set(cfdata->gui.fallback_list, i);
-		  return;
-	       }
-	  }
-	
-	e_widget_ilist_append(cfdata->gui.fallback_list, NULL, cfdata->cur_fallback, NULL, NULL, NULL);
-	e_widget_ilist_go(cfdata->gui.fallback_list);
-	count = e_widget_ilist_count(cfdata->gui.fallback_list);
-	e_widget_ilist_selected_set(cfdata->gui.fallback_list, count - 1);
-	
-	e_widget_entry_text_set(cfdata->gui.fallback, "");	     
-     }
+  
+   e_widget_disabled_set(cfdata->gui.fallback_list, !cfdata->cur_fallbacks_enabled); 
 }
 
-static void _button_fallback_cb_remove(void *data, void *obj)
-{
-   int indx;
-   int count;
-   E_Config_Dialog_Data *cfdata;
-   
-   cfdata = data;
-   if (!cfdata) return;
-
-   indx = e_widget_ilist_selected_get(cfdata->gui.fallback_list);
-   count = e_widget_ilist_count(cfdata->gui.fallback_list);
-   
-   e_widget_ilist_remove_num(cfdata->gui.fallback_list, indx);
-
-   e_widget_ilist_go(cfdata->gui.fallback_list);	
-   e_widget_ilist_selected_set(cfdata->gui.fallback_list, indx);
-   if (count == 1)
-     {
-	_list_select_num(cfdata, -1);
-     }   
-}
-static void _button_fallback_cb_up(void *data, void *obj)
-{
-   E_Config_Dialog_Data *cfdata;
-   int idx_sel;
-   const char *label_sel;
-   const char *label_rep;
-   
-   cfdata = data;
-   if (!cfdata) return;
-
-   idx_sel = e_widget_ilist_selected_get(cfdata->gui.fallback_list);
-
-   label_sel = e_widget_ilist_nth_label_get(cfdata->gui.fallback_list, idx_sel);
-   label_rep = e_widget_ilist_nth_label_get(cfdata->gui.fallback_list, idx_sel - 1);
-
-   e_widget_ilist_nth_label_set(cfdata->gui.fallback_list, idx_sel - 1, label_sel);
-   e_widget_ilist_nth_label_set(cfdata->gui.fallback_list, idx_sel, label_rep);
-
-   e_widget_ilist_selected_set(cfdata->gui.fallback_list, idx_sel - 1);
-}
-static void _button_fallback_cb_down(void *data, void *obj)
-{
-   E_Config_Dialog_Data *cfdata;
-   int idx_sel;
-   const char *label_sel;
-   const char *label_rep;
-   
-   cfdata = data;
-   if (!cfdata) return;
-
-   idx_sel = e_widget_ilist_selected_get(cfdata->gui.fallback_list);
-
-   label_sel = e_widget_ilist_nth_label_get(cfdata->gui.fallback_list, idx_sel);
-   label_rep = e_widget_ilist_nth_label_get(cfdata->gui.fallback_list, idx_sel + 1);
-
-   e_widget_ilist_nth_label_set(cfdata->gui.fallback_list, idx_sel + 1, label_sel);
-   e_widget_ilist_nth_label_set(cfdata->gui.fallback_list, idx_sel, label_rep);
-
-   e_widget_ilist_selected_set(cfdata->gui.fallback_list, idx_sel + 1);
-}
-
-static void _list_select_num(E_Config_Dialog_Data *cfdata, int indx)
-{
-   int count;
-
-   /* Disable selecting the list while we are disabled */
-   if (indx >= 0 && !cfdata->cur_fallbacks_enabled) return;
-
-   count = e_widget_ilist_count(cfdata->gui.fallback_list);
- 
-   if (count == 0 || indx < 0)
-     {
-	e_widget_disabled_set(cfdata->gui.fallback_remove, 1);
-     }
-   else 
-     {
-	e_widget_disabled_set(cfdata->gui.fallback_remove, 0);
-     }
-   
-   if (count == 1 || indx < 0)
-     {
-	e_widget_disabled_set(cfdata->gui.fallback_up, 1);
-	e_widget_disabled_set(cfdata->gui.fallback_down, 1);
-     }
-   else if (indx == 0)
-     {
-	e_widget_disabled_set(cfdata->gui.fallback_up, 1);
-	e_widget_disabled_set(cfdata->gui.fallback_down, 0);
-     }
-   else if (indx + 1 == count)
-     {
-	e_widget_disabled_set(cfdata->gui.fallback_up, 0);
-	e_widget_disabled_set(cfdata->gui.fallback_down, 1);
-     }
-   else
-     {
-	e_widget_disabled_set(cfdata->gui.fallback_up, 0);
-	e_widget_disabled_set(cfdata->gui.fallback_down, 0);
-     } 
-}

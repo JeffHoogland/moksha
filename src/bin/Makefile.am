@@ -119,6 +119,7 @@ e_livethumb.h \
 e_int_border_border.h \
 e_widget_ilist.h \
 e_widget_tlist.h \
+e_widget_config_list.h \
 e_slider.h \
 e_widget_slider.h \
 e_int_config_window_manipulation.h \
@@ -249,6 +250,7 @@ e_livethumb.c \
 e_int_border_border.c \
 e_widget_ilist.c \
 e_widget_tlist.c \
+e_widget_config_list.c \
 e_slider.c \
 e_widget_slider.c \
 e_int_config_window_manipulation.c \
