@@ -4,6 +4,12 @@ usr/bin/enlightenment_eapp_cache_gen
 usr/bin/enlightenment_imc
 usr/bin/enlightenment_remote
 usr/bin/enlightenment_start
-usr/share/enlightenment/doc/*
 usr/lib/enlightenment/modules/*
 usr/lib/enlightenment/preload/*
+usr/share/enlightenment/doc/*
+usr/share/enlightenment/data/input_methods/*
+usr/share/enlightenment/data/fonts/*
+usr/share/enlightenment/data/images/*
+usr/share/enlightenment/data/other/*
+usr/share/locale
+usr/share/xsessions
