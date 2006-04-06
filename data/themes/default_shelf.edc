@@ -40,6 +40,7 @@ group {
       part {
 	 name:          "base";
 	 clip_to:       "base_clip";
+	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {

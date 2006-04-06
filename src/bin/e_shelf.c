@@ -85,6 +85,10 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    es->layer = layer;
    es->zone = zone;
    es->style = evas_stringshare_add(style);
+
+   es->o_event = evas_object_rectangle_add(es->evas);
+   evas_object_color_set(es->o_event, 0, 0, 0, 0);
+   evas_object_resize(es->o_event, es->w, es->h);
    
    es->o_base = edje_object_add(es->evas);
    es->name = evas_stringshare_add(name);
@@ -95,12 +99,15 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 			     "shelf/default/base");
    if (es->popup)
      {
+	evas_object_show(es->o_event);
 	evas_object_show(es->o_base);
 	e_popup_edje_bg_object_set(es->popup, es->o_base);
      }
    else
      {
+	evas_object_move(es->o_event, es->zone->x + es->x, es->zone->y + es->y);
 	evas_object_move(es->o_base, es->zone->x + es->x, es->zone->y + es->y);
+	evas_object_layer_set(es->o_event, layer);
 	evas_object_layer_set(es->o_base, layer);
      }
 
@@ -139,7 +146,10 @@ e_shelf_show(E_Shelf *es)
    if (es->popup)
      e_popup_show(es->popup);
    else
-     evas_object_show(es->o_base);
+     {
+	evas_object_show(es->o_event);
+	evas_object_show(es->o_base);
+     }
 }
 
 EAPI void
@@ -150,7 +160,10 @@ e_shelf_hide(E_Shelf *es)
    if (es->popup)
      e_popup_hide(es->popup);
    else
-     evas_object_hide(es->o_base);
+     {
+	evas_object_hide(es->o_event);
+	evas_object_hide(es->o_base);
+     }
 }
 
 EAPI void
@@ -163,7 +176,10 @@ e_shelf_move(E_Shelf *es, int x, int y)
    if (es->popup)
      e_popup_move(es->popup, es->x, es->y);
    else
-     evas_object_move(es->o_base, es->zone->x + es->x, es->zone->y + es->y);
+     {
+	evas_object_move(es->o_event, es->zone->x + es->x, es->zone->y + es->y);
+	evas_object_move(es->o_base, es->zone->x + es->x, es->zone->y + es->y);
+     }
 }
 
 EAPI void
@@ -174,12 +190,9 @@ e_shelf_resize(E_Shelf *es, int w, int h)
    es->w = w;
    es->h = h;
    if (es->popup)
-     {
-	e_popup_resize(es->popup, es->w, es->h);
-	evas_object_resize(es->o_base, es->w, es->h);
-     }
-   else
-     evas_object_resize(es->o_base, es->w, es->h);
+     e_popup_resize(es->popup, es->w, es->h);
+   evas_object_resize(es->o_event, es->w, es->h);
+   evas_object_resize(es->o_base, es->w, es->h);
 }
 
 EAPI void
@@ -192,15 +205,14 @@ e_shelf_move_resize(E_Shelf *es, int x, int y, int w, int h)
    es->w = w;
    es->h = h;
    if (es->popup)
-     {
-	e_popup_move_resize(es->popup, es->x, es->y, es->w, es->h);
-	evas_object_resize(es->o_base, es->w, es->h);
-     }
+     e_popup_move_resize(es->popup, es->x, es->y, es->w, es->h);
    else
      {
+	evas_object_move(es->o_event, es->zone->x + es->x, es->zone->y + es->y);
 	evas_object_move(es->o_base, es->zone->x + es->x, es->zone->y + es->y);
-	evas_object_resize(es->o_base, es->w, es->h);
      }
+   evas_object_resize(es->o_event, es->w, es->h);
+   evas_object_resize(es->o_base, es->w, es->h);
 }
 
 EAPI void
@@ -212,7 +224,10 @@ e_shelf_layer_set(E_Shelf *es, int layer)
    if (es->popup)
      e_popup_layer_set(es->popup, es->layer);
    else
-     evas_object_layer_set(es->o_base, es->layer);
+     {
+	evas_object_layer_set(es->o_event, es->layer);
+	evas_object_layer_set(es->o_base, es->layer);
+     }
 }
 
 EAPI void
@@ -279,6 +294,7 @@ _e_shelf_free(E_Shelf *es)
    e_object_del(E_OBJECT(es->gadcon));
    evas_stringshare_del(es->name);
    evas_stringshare_del(es->style);
+   evas_object_del(es->o_event);
    evas_object_del(es->o_base);
    if (es->popup) e_object_del(E_OBJECT(es->popup));
    free(es);

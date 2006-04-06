@@ -19,6 +19,7 @@ struct _E_Shelf
    E_Popup             *popup; /* NULL if its within an existing canvas */
    E_Zone              *zone; 
    Evas_Object         *o_base;
+   Evas_Object         *o_event;
    Ecore_Evas          *ee;
    Evas                *evas;
    E_Gadcon            *gadcon;

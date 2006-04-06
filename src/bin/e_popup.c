@@ -308,6 +308,7 @@ _e_popup_cb_mouse_down(void *data, int type, void *event)
 	if (ev->double_click) flags |= EVAS_BUTTON_DOUBLE_CLICK;
 	if (ev->triple_click) flags |= EVAS_BUTTON_TRIPLE_CLICK;
 	evas_event_feed_mouse_down(pop->evas, ev->button, flags, ev->time, NULL);
+	return 0;
      }
    return 1;
 }
@@ -325,6 +326,7 @@ _e_popup_cb_mouse_up(void *data, int type, void *event)
 	evas_event_feed_mouse_up(pop->evas, ev->button, EVAS_BUTTON_NONE, ev->time, NULL);
 	e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_POPUP,
 					 E_OBJECT(pop), ev);
+	return 0;
      }
    return 1;
 }
@@ -342,6 +344,7 @@ _e_popup_cb_mouse_wheel(void *data, int type, void *event)
 	e_bindings_wheel_event_handle(E_BINDING_CONTEXT_POPUP,
 				      E_OBJECT(pop), ev);
 	evas_event_feed_mouse_wheel(pop->evas, ev->direction, ev->z, ev->time, NULL);
+	return 0;
      }
    return 1;
 }

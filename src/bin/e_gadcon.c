@@ -699,7 +699,7 @@ _e_gadcon_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_in
    ev = event_info;
    if (ev->button == 3)
      {
-	printf("THREE!\n");
+	printf("THREE! %p\n", gcc);
      }
 }
 

@@ -272,7 +272,7 @@ main(int argc, char **argv)
    _e_main_shutdown_push(ecore_shutdown);
    
    _e_cacheburst++;
-//   eet_cacheburst(_e_cacheburst);
+/* eet_cacheburst(_e_cacheburst); */
    ecore_timer_add(5.0, _e_main_cb_eet_cacheburst_end, NULL);
    
     /* init the file system */
@@ -327,7 +327,7 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_xinerama_shutdown);
    
-//   ecore_x_grab();
+/* ecore_x_grab(); */
    
    ecore_x_io_error_handler_set(_e_main_cb_x_fatal, NULL);
 
@@ -635,7 +635,7 @@ main(int argc, char **argv)
        e_error_message_show(_("Enlightenment cannot set up its desk locking system."));
        _e_main_shutdown(-1);
      }
-   //_e_main_shutdown_push(e_desklock_shutdown);
+/* _e_main_shutdown_push(e_desklock_shutdown); */
 
    if (ipc_failed)
      e_error_dialog_show(_("Enlightenment IPC setup error!"),
@@ -653,7 +653,7 @@ main(int argc, char **argv)
 
    e_managers_keys_grab();
    
-//   ecore_x_ungrab();
+/* ecore_x_ungrab(); */
    
    e_init_title_set(_("Enlightenment"));
    e_init_version_set(VERSION);
@@ -777,7 +777,7 @@ _e_main_shutdown(int errorcode)
 static int
 _e_main_x_shutdown(void)
 {
-//   ecore_x_ungrab();
+/* ecore_x_ungrab(); */
    ecore_x_focus_reset();
    ecore_x_events_allow_all();
 
@@ -1210,19 +1210,17 @@ _e_main_cb_idler_before(void *data __UNUSED__)
 	  }
      }
    _e_cacheburst--;
-//   eet_cacheburst(_e_cacheburst);
+/* eet_cacheburst(_e_cacheburst); */
    edje_thaw();
-//   printf("IN to idle... %3.3f\n", ecore_time_get());
    return 1;
 }
 
 static int
 _e_main_cb_idler_after(void *data __UNUSED__)
 {
-//   printf("OUT of idle... %3.3f\n", ecore_time_get());
    edje_freeze();
    _e_cacheburst++;
-//   eet_cacheburst(_e_cacheburst);
+/* eet_cacheburst(_e_cacheburst); */
    return 1;
 }
 
@@ -1230,7 +1228,7 @@ static int
 _e_main_cb_eet_cacheburst_end(void *data __UNUSED__)
 {
    _e_cacheburst--;
-//   eet_cacheburst(_e_cacheburst);
+/* eet_cacheburst(_e_cacheburst); */
    return 0;
 }
 
