@@ -563,7 +563,7 @@ _e_app_files_download(Evas_List *files)
 	if (!_e_app_is_eapp(file)) continue;
         snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all,
 		 ecore_file_get_file(file));
-	if (!ecore_file_download(file, buf, NULL, NULL)) continue;
+	if (!ecore_file_download(file, buf, NULL, NULL, NULL)) continue;
      }
 }
 
