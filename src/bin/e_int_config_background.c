@@ -466,6 +466,7 @@ _bg_file_added(void *data, Ecore_File_Monitor *monitor, Ecore_File_Event event, 
    Evas *evas;
    Evas_Object *il, *ic;
    char *file;
+   char *noext;
    
    cfdata = data;
    if (!cfdata) return;
@@ -490,7 +491,11 @@ _bg_file_added(void *data, Ecore_File_Monitor *monitor, Ecore_File_Event event, 
 	     e_widget_ilist_append(il, ic, ecore_file_strip_ext(file), _ilist_cb_bg_selected, cfd, (char *)path);
 	  }
      }
-   free(file);
+   else if (event == ECORE_FILE_EVENT_DELETED_FILE) 
+     {
+	noext = ecore_file_strip_ext(file);
+	e_widget_ilist_remove_label(il, noext);
+     }
 }
 
 static int
