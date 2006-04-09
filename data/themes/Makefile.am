@@ -34,7 +34,6 @@ default_transitions.edc \
 default_dialog.edc \
 default_icons.edc \
 default_pointer.edc \
-default_randr.edc \
 default_configure.edc \
 default_about.edc \
 default_theme_about.edc \

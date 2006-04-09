@@ -42,7 +42,6 @@ collections {
 #include "default_dialog.edc"
 #include "default_configure.edc"
 #include "default_icons.edc"
-#include "default_randr.edc"
 #include "default_pointer.edc"
 #include "default_about.edc"
 #include "default_theme_about.edc"
