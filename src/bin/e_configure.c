@@ -95,7 +95,8 @@ e_configure_show(E_Container *con)
    e_configure_standard_item_add(eco, "enlightenment/windows", _("Window List Settings"), e_int_config_winlist);
    e_configure_standard_item_add(eco, "enlightenment/windows", _("Window Manipulation Settings"), e_int_config_window_manipulation);
    e_configure_standard_item_add(eco, "enlightenment/run", _("Run Command Settings"), e_int_config_exebuf);
-   
+   e_configure_standard_item_add(eco, "enlightenment/e", _("Search Paths"), e_int_config_paths); 
+
    /* FIXME: we should have a way for modules to hook in here and add their
     * own entries
     */

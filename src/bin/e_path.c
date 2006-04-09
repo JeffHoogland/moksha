@@ -249,6 +249,20 @@ e_path_user_path_remove(E_Path *ep, const char *path)
      }
 }
 
+EAPI void
+e_path_user_path_clear(E_Path *ep)
+{	
+   while (*(ep->user_dir_list))
+     {
+	E_Path_Dir *epd;
+	epd = (*(ep->user_dir_list))->data;
+	*(ep->user_dir_list) = evas_list_remove_list(*(ep->user_dir_list), *(ep->user_dir_list));
+	evas_stringshare_del(epd->dir);
+	free(epd);     
+     }
+   _e_path_cache_free(ep);
+}
+
 EAPI const char *
 e_path_find(E_Path *ep, const char *file)
 {

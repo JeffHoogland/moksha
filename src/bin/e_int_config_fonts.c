@@ -359,7 +359,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("Font Fallbacks"), 0);
    e_widget_framelist_content_align_set(of, 0.5, 0.5);
 
-   ob = e_widget_config_list_add(evas, e_widget_entry_add, _("Fallback Name"));
+   ob = e_widget_config_list_add(evas, e_widget_entry_add, _("Fallback Name"), 1);
    cfdata->gui.fallback_list = ob;
    e_widget_framelist_object_append(of, ob);
    

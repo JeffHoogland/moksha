@@ -38,7 +38,7 @@ struct _E_Widget_Data
 
 /* Externally accessible functions */
 EAPI Evas_Object *
-e_widget_config_list_add(Evas *evas, Evas_Object* (*func_entry_add) (Evas *evas, char **val), const char *label)
+e_widget_config_list_add(Evas *evas, Evas_Object* (*func_entry_add) (Evas *evas, char **val), const char *label, int listspan)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
@@ -72,7 +72,7 @@ e_widget_config_list_add(Evas *evas, Evas_Object* (*func_entry_add) (Evas *evas,
 					1, 1, 1, 1);
    
    
-   o = e_widget_ilist_add(evas, 16, 16, NULL);
+   o = e_widget_ilist_add(evas, 0, 0, NULL);
    wd->gui.list = o;
    e_widget_disabled_set(o, 1);
    e_widget_min_size_set(o, 100, 100);
@@ -80,7 +80,7 @@ e_widget_config_list_add(Evas *evas, Evas_Object* (*func_entry_add) (Evas *evas,
    e_widget_ilist_go(o);
    e_widget_table_object_append(	wd->gui.table, 
 					o, 
-					2, 0, 1, 4,
+					2, 0, listspan, 4,
 					1, 1, 1, 1);
   
    o = e_widget_label_add(evas, label);
@@ -128,6 +128,16 @@ e_widget_config_list_count(Evas_Object *obj)
  
    wd = e_widget_data_get(obj);
    return e_widget_ilist_count(wd->gui.list);   
+}
+
+EAPI void
+e_widget_config_list_clear(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+ 
+   wd = e_widget_data_get(obj);
+   e_widget_ilist_clear(wd->gui.list); 
+   _list_select_num(wd, -1); 
 }
 
 EAPI const char *
@@ -330,7 +340,7 @@ _e_wid_disable_hook(Evas_Object *obj)
    if (!wd) return;
    
    wd->cur_enabled = !e_widget_disabled_get(obj);
-   
+  
    if (wd->cur_enabled)
      {
 	e_widget_disabled_set(wd->gui.list, 0);	

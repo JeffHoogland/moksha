@@ -130,3 +130,4 @@
 #include "e_shelf.h"
 #include "e_tlist.h"
 #include "e_widget_preview.h"
+#include "e_int_config_paths.h"

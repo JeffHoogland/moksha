@@ -3,7 +3,7 @@
  */
 /* NOTE:
  * 
- * This is a very SPECIAL file. This servers as a kind of "auto code generator"
+ * This is a very SPECIAL file. This serves as a kind of "auto code generator"
  * to handle the encoder, decoder etc. aspects of ipc requests. the aim here
  * is to make writing support for a new opcode simple and compact. It intends
  * to centralize the handling into 1 spot, instead of having ti spread around
