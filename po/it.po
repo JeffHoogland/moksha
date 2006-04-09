@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-04-01 14:47+0200\n"
-"PO-Revision-Date: 2006-04-01 14:56+0200\n"
+"POT-Creation-Date: 2006-04-08 18:15+0200\n"
+"PO-Revision-Date: 2006-04-08 18:24+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@inwind.it>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -274,6 +274,18 @@ msgstr "(Inutilizzato)"
 #: src/bin/e_int_config_theme.c:47 src/bin/e_configure.c:68
 msgid "Theme Selector"
 msgstr "Selettore temi"
+
+#: src/bin/e_int_config_theme.c:168 src/bin/e_int_config_background.c:343
+msgid "Personal"
+msgstr "Personali"
+
+#: src/bin/e_int_config_theme.c:178 src/bin/e_int_config_background.c:353
+msgid "System"
+msgstr "Dal sistema"
+
+#: src/bin/e_int_config_theme.c:185 src/bin/e_int_config_background.c:360
+msgid "Other"
+msgstr "Altro"
 
 #: src/bin/e_apps_error.c:54
 msgid "Application Execution Error"
@@ -607,70 +619,98 @@ msgstr "Configura"
 msgid "About"
 msgstr "Informazioni su..."
 
-#: src/bin/e_int_config_background.c:116 src/bin/e_int_config_background.c:179
+#: src/bin/e_int_config_background.c:115 src/bin/e_int_config_background.c:178
 msgid "Select Another Image"
 msgstr "Aggiungi immagine"
 
-#: src/bin/e_int_config_background.c:185
+#: src/bin/e_int_config_background.c:184
 msgid "Set Background For"
 msgstr "Imposta sfondo per"
 
-#: src/bin/e_int_config_background.c:188
+#: src/bin/e_int_config_background.c:187
 msgid "Default Desktop"
 msgstr "Desktop predefinito"
 
-#: src/bin/e_int_config_background.c:190
+#: src/bin/e_int_config_background.c:189
 msgid "This Desktop"
 msgstr "Questo desktop"
 
-#: src/bin/e_int_config_background.c:192
+#: src/bin/e_int_config_background.c:191
 msgid "All Desktops"
 msgstr "Tutti i desktop"
 
-#: src/bin/e_int_config_fonts.c:95
+#: src/bin/e_int_config_background.c:294
+msgid "Theme"
+msgstr "Dal tema"
+
+#: src/bin/e_int_config_fonts.c:110
 msgid "Font Settings"
 msgstr "Impostazioni dei font"
 
-#: src/bin/e_int_config_fonts.c:237
+#: src/bin/e_int_config_fonts.c:269
 msgid "Font Class Configuration"
 msgstr "Configurazione classe Font"
 
-#: src/bin/e_int_config_fonts.c:269
+#: src/bin/e_int_config_fonts.c:301
 msgid "Font"
 msgstr "Font"
 
-#: src/bin/e_int_config_fonts.c:282
+#: src/bin/e_int_config_fonts.c:314
 msgid "Font Size"
 msgstr "Dimensione"
 
-#: src/bin/e_int_config_fonts.c:288
+#: src/bin/e_int_config_fonts.c:320
 #, c-format
 msgid "%2.1f pixels"
 msgstr "%2.1f pixel"
 
-#: src/bin/e_int_config_fonts.c:295
+#: src/bin/e_int_config_fonts.c:327
 msgid "Enable Font Class"
 msgstr "Abilita classe Font"
 
-#: src/bin/e_int_config_fonts.c:305
-msgid "Font Display Hinting"
-msgstr "Visualizzazione dei font"
+#: src/bin/e_int_config_fonts.c:337
+msgid "Hinting"
+msgstr "Hinting (ottimizzazione)"
 
-#: src/bin/e_int_config_fonts.c:310 src/bin/e_int_config_hinting.c:93
-msgid "Bytecode Hinting"
-msgstr "Ottimizzazione bytecode"
+#: src/bin/e_int_config_fonts.c:342
+msgid "Bytecode"
+msgstr "Bytecode"
 
-#: src/bin/e_int_config_fonts.c:315 src/bin/e_int_config_hinting.c:98
-msgid "Automatic Hinting"
-msgstr "Ottimizzazione automatica"
+#: src/bin/e_int_config_fonts.c:347 src/modules/cpufreq/e_mod_main.c:500
+msgid "Automatic"
+msgstr "Automatico"
 
-#: src/bin/e_int_config_fonts.c:320 src/bin/e_int_config_hinting.c:103
-msgid "No Hinting"
-msgstr "Nessuna ottimizzazione"
+#: src/bin/e_int_config_fonts.c:352 src/bin/e_int_config_keybindings.c:725
+msgid "None"
+msgstr "Nessuno"
+
+#: src/bin/e_int_config_fonts.c:359
+msgid "Font Fallbacks"
+msgstr "Alternative dei font"
+
+#: src/bin/e_int_config_fonts.c:362
+msgid "Fallback Name"
+msgstr "Nome alternativa"
+
+#: src/bin/e_int_config_fonts.c:377
+msgid "Enable Fallbacks"
+msgstr "Abilita alternative"
 
 #: src/bin/e_int_config_hinting.c:37
 msgid "Font Hinting Settings"
 msgstr "Visualizzazione dei font"
+
+#: src/bin/e_int_config_hinting.c:93
+msgid "Bytecode Hinting"
+msgstr "Ottimizzazione bytecode"
+
+#: src/bin/e_int_config_hinting.c:98
+msgid "Automatic Hinting"
+msgstr "Ottimizzazione automatica"
+
+#: src/bin/e_int_config_hinting.c:103
+msgid "No Hinting"
+msgstr "Nessuna ottimizzazione"
 
 #: src/bin/e_int_border_remember.c:70
 msgid "Window Remember"
@@ -1098,7 +1138,7 @@ msgstr ""
 "che la configurazione<br>del metodo di input sia giusta e "
 "che<br>l'eseguibile di configurazione sia nel<br>proprio PATH<br>"
 
-#: src/bin/e_main.c:194
+#: src/bin/e_main.c:199
 #, c-format
 msgid ""
 "Options:\n"
@@ -1143,7 +1183,7 @@ msgstr ""
 "\t-psychotic\n"
 "\t\tSii psicotico.\n"
 
-#: src/bin/e_main.c:263
+#: src/bin/e_main.c:268
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -1151,7 +1191,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare Ecore!\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:276
+#: src/bin/e_main.c:281
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -1159,7 +1199,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare il sistema File.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:287
+#: src/bin/e_main.c:292
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -1167,7 +1207,7 @@ msgstr ""
 "Enlightenment non riesce a configurare un gestore di segnali d'uscita.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:293
+#: src/bin/e_main.c:298
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -1175,7 +1215,7 @@ msgstr ""
 "Enlightenment non riesce a configurare un gestore di segnali HUP.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:304
+#: src/bin/e_main.c:309
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -1183,7 +1223,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare la connessione a X.\n"
 "Avete impostato la variabile DISPLAY?"
 
-#: src/bin/e_main.c:312
+#: src/bin/e_main.c:317
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -1192,7 +1232,7 @@ msgstr ""
 "di allarme d'emergenza.\n"
 "Avete impostato la variabile DISPLAY?"
 
-#: src/bin/e_main.c:319
+#: src/bin/e_main.c:324
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -1200,7 +1240,7 @@ msgstr ""
 "Enlightenment non riesce a configurare xinerama.\n"
 "Questo non dovrebbe accadere."
 
-#: src/bin/e_main.c:335
+#: src/bin/e_main.c:340
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -1208,7 +1248,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare il sistema di connessioni\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:343
+#: src/bin/e_main.c:348
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -1216,7 +1256,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare il sistema IPC.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:351
+#: src/bin/e_main.c:356
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -1224,7 +1264,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare il sistema Evas.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:357
+#: src/bin/e_main.c:362
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -1234,7 +1274,7 @@ msgstr ""
 "software X11 in Evas. Controllate le vostre installazioni di Evas e\n"
 "Ecore e il loro supporto per il motore di rendering software X11."
 
-#: src/bin/e_main.c:364
+#: src/bin/e_main.c:369
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -1244,7 +1284,7 @@ msgstr ""
 "software Buffer in Evas. Controllate le vostre installazioni di Evas e\n"
 "Ecore e il loro supporto per il motore di rendering software Buffer."
 
-#: src/bin/e_main.c:377
+#: src/bin/e_main.c:382
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -1253,7 +1293,7 @@ msgstr ""
 "buffer. Controllare che Evas abbia il supporto per il motore di\n"
 "rendering software Buffer.\n"
 
-#: src/bin/e_main.c:387
+#: src/bin/e_main.c:392
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
@@ -1261,7 +1301,7 @@ msgstr ""
 "Enlightenment ha riscontrato che Evas non può caricare file PNG.\n"
 "Controllare che Evas abbia il supporto per il loader PNG.\n"
 
-#: src/bin/e_main.c:396
+#: src/bin/e_main.c:401
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
@@ -1269,7 +1309,7 @@ msgstr ""
 "Enlightenment ha riscontrato che Evas non può caricare file JPEG.\n"
 "Controllare che Evas abbia il supporto per il loader JPEG.\n"
 
-#: src/bin/e_main.c:405
+#: src/bin/e_main.c:410
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
@@ -1277,17 +1317,17 @@ msgstr ""
 "Enlightenment ha riscontrato che Evas non può caricare file EET.\n"
 "Controllare che Evas abbia il supporto per il loader EET.\n"
 
-#: src/bin/e_main.c:417
+#: src/bin/e_main.c:422
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di thumbnailing (anteprime).\n"
 
-#: src/bin/e_main.c:426
+#: src/bin/e_main.c:431
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment non riesce ad inizializzare il File manager.\n"
 
-#: src/bin/e_main.c:437
+#: src/bin/e_main.c:442
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -1295,13 +1335,13 @@ msgstr ""
 "Enlightenment non riesce a creare directory nella vostra home.\n"
 "Forse non avete home directory, o il disco è pieno?"
 
-#: src/bin/e_main.c:445
+#: src/bin/e_main.c:450
 msgid "Enlightenment cannot set up its config system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di configurazione."
 
-#: src/bin/e_main.c:452
+#: src/bin/e_main.c:457
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -1309,43 +1349,43 @@ msgstr ""
 "Enlightenment non riesce a configurare i percorsi per la\n"
 "ricerca dei file. Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:460
+#: src/bin/e_main.c:465
 msgid "Enlightenment cannot set up its intl system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di intl (internazionalizzazione)."
 
-#: src/bin/e_main.c:467
+#: src/bin/e_main.c:472
 msgid "Enlightenment cannot set up its actions system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di azioni."
 
-#: src/bin/e_main.c:474
+#: src/bin/e_main.c:479
 msgid "Enlightenment cannot set up its bindings system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di binding (associazioni)."
 
-#: src/bin/e_main.c:481
+#: src/bin/e_main.c:486
 msgid "Enlightenment cannot set up its popup system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di popup."
 
-#: src/bin/e_main.c:492
+#: src/bin/e_main.c:497
 msgid "Enlightenment cannot set up its font system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di font."
 
-#: src/bin/e_main.c:502
+#: src/bin/e_main.c:507
 msgid "Enlightenment cannot set up its theme system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di temi."
 
-#: src/bin/e_main.c:511
+#: src/bin/e_main.c:516
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -1353,7 +1393,7 @@ msgstr ""
 "Enlightenment non riesce a configurare la schermata d'avvio.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:520
+#: src/bin/e_main.c:525
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -1362,19 +1402,19 @@ msgstr ""
 "da parte di Enlightenment è fallita. Forse c'è un altro window\n"
 "manager in esecuzione?\n"
 
-#: src/bin/e_main.c:527
+#: src/bin/e_main.c:532
 msgid "Enlightenment cannot set up its app system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di applicazioni."
 
-#: src/bin/e_main.c:534
+#: src/bin/e_main.c:539
 msgid "Enlightenment cannot setup remember settings."
 msgstr ""
 "Enlightenment non riesce a configurare le\n"
 "impostazioni da ricordare."
 
-#: src/bin/e_main.c:550
+#: src/bin/e_main.c:555
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an existing copy of Enlightenment.\n"
@@ -1395,71 +1435,71 @@ msgstr ""
 "simbolico da ~/.ecore a /tmp/mia_directory/ecore dove è\n"
 "possibile creare dei socket."
 
-#: src/bin/e_main.c:566
+#: src/bin/e_main.c:571
 msgid "Enlightenment cannot set up its msg system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di messaggi."
 
-#: src/bin/e_main.c:573
+#: src/bin/e_main.c:578
 msgid "Enlightenment cannot set up its dnd system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di 'drag & drop'."
 
-#: src/bin/e_main.c:580
+#: src/bin/e_main.c:585
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di gestione dell'input catturato."
 
-#: src/bin/e_main.c:587
+#: src/bin/e_main.c:592
 msgid "Enlightenment cannot set up its module system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di moduli."
 
-#: src/bin/e_main.c:594
+#: src/bin/e_main.c:599
 msgid "Enlightenment cannot set up its window list system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di window list (lista finestre)."
 
-#: src/bin/e_main.c:601
+#: src/bin/e_main.c:606
 msgid "Enlightenment cannot set up its color class system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di classi di colori."
 
-#: src/bin/e_main.c:608
+#: src/bin/e_main.c:613
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di controllo dei gadget."
 
-#: src/bin/e_main.c:615
+#: src/bin/e_main.c:620
 msgid "Enlightenment cannot set up its shelf system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema shelf (supporto)."
 
-#: src/bin/e_main.c:622
+#: src/bin/e_main.c:627
 msgid "Enlightenment cannot set up its exebuf system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema exebuf (riga di comando)."
 
-#: src/bin/e_main.c:630
+#: src/bin/e_main.c:635
 msgid "Enlightenment cannot set up its desk locking system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di blocco del desktop."
 
-#: src/bin/e_main.c:636
+#: src/bin/e_main.c:641
 msgid "Enlightenment IPC setup error!"
 msgstr "Errore impostazione IPC di Enlightenment"
 
-#: src/bin/e_main.c:637
+#: src/bin/e_main.c:642
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an existing copy of Enlightenment.\n"
@@ -1473,11 +1513,11 @@ msgstr ""
 "su questo display, altrimenti provate a cancellare tutti i file\n"
 "in ~/.ecore/enlightenment-* e riavviatelo."
 
-#: src/bin/e_main.c:653 src/bin/e_about.c:51
+#: src/bin/e_main.c:658 src/bin/e_about.c:51
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
-#: src/bin/e_main.c:655
+#: src/bin/e_main.c:660
 msgid "Enlightenment Starting. Please wait."
 msgstr "Avvio di Enlightenment. Attendere prego."
 
@@ -1709,7 +1749,7 @@ msgstr ""
 "Avete chiesto di uscire da Enlightenment.<br><br>Siete sicuri di voler "
 "uscire?"
 
-#: src/bin/e_config.c:483
+#: src/bin/e_config.c:474
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -1729,7 +1769,7 @@ msgstr ""
 "funzionalità.<br>Adesso è possibile riconfigurare le cose a proprio "
 "piacimento.<br>Ci scusiamo per il disagio.<br>"
 
-#: src/bin/e_config.c:497
+#: src/bin/e_config.c:488
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very<br>strange. "
 "This should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -1744,7 +1784,7 @@ msgstr ""
 "male, quindi la vostra configurazione è<br>stata ripristinata a scopo "
 "precauzionale ai valori predefiniti. Ci<br>scusiamo per l'inconveniente.<br>"
 
-#: src/bin/e_config.c:1756
+#: src/bin/e_config.c:1750
 msgid "Configuration Upgraded"
 msgstr "Aggiornamento configurazione"
 
@@ -2064,10 +2104,6 @@ msgstr "Lista finestre"
 msgid "Popup"
 msgstr "Popup"
 
-#: src/bin/e_int_config_keybindings.c:725
-msgid "None"
-msgstr "Nessuno"
-
 #: src/bin/e_int_config_keybindings.c:731
 msgid "Unknown"
 msgstr "Sconosciuto"
@@ -2174,11 +2210,11 @@ msgstr ""
 "auguriamo che vi piacerà usare questo software tanto quanto a noi è piaciuto "
 "scriverlo.<br><br>Questo software viene fornito così-com'è senza alcuna "
 "garanzia esplicita o implicita. Questo software è regolato dalle condizioni "
-"di licenza, quindi si prega di leggere i file di licenza COPYING e "
-"COPYING-PLAIN installati sul sistema.<br><br>Enlightenment è sotto "
-"<hilight>PIENO SVILUPPO</hilight> e non è stabile. Molte funzionalità sono "
-"incomplete o ancora inesistenti e possono presentare molti difetti. Siete "
-"stati <hilight>AVVERTITI!</hilight>"
+"di licenza, quindi si prega di leggere i file di licenza COPYING e COPYING-"
+"PLAIN installati sul sistema.<br><br>Enlightenment è sotto <hilight>PIENO "
+"SVILUPPO</hilight> e non è stabile. Molte funzionalità sono incomplete o "
+"ancora inesistenti e possono presentare molti difetti. Siete stati "
+"<hilight>AVVERTITI!</hilight>"
 
 #: src/bin/e_about.c:81
 msgid "<title>The Team</title>"
@@ -2365,6 +2401,22 @@ msgstr "%1.0f collezioni"
 msgid "Select a window"
 msgstr "Seleziona una finestra"
 
+#: src/bin/e_widget_config_list.c:57
+msgid "Move Up"
+msgstr "Sposta sù"
+
+#: src/bin/e_widget_config_list.c:66
+msgid "Move Down"
+msgstr "Sposta giù"
+
+#: src/bin/e_widget_config_list.c:101
+msgid "Add"
+msgstr "Aggiungi"
+
+#: src/bin/e_widget_config_list.c:109
+msgid "Remove"
+msgstr "Elimina"
+
 #: src/bin/e_int_config_exebuf.c:42
 msgid "Exebuf Settings"
 msgstr "Configurazione finestra di \"Exebuf\""
@@ -2400,15 +2452,15 @@ msgid "Use my login password"
 msgstr "Usa la mia password di login"
 
 #: src/bin/e_int_config_desklock.c:273 src/bin/e_int_config_desklock.c:474
-msgid "Personilized password"
-msgstr "Password personalizzata:"
+msgid "Personalized password"
+msgstr "Password personalizzata"
 
 #: src/bin/e_int_config_desklock.c:283 src/bin/e_int_config_desklock.c:484
 msgid "Personalized Password:"
 msgstr "Password personalizzata:"
 
 #: src/bin/e_int_config_desklock.c:295 src/bin/e_int_config_desklock.c:497
-msgid "Show Password"
+msgid "Show password"
 msgstr "Mostra password"
 
 #: src/bin/e_int_config_desklock.c:308 src/bin/e_int_config_desklock.c:518
@@ -2416,12 +2468,12 @@ msgid "Automatic Locking"
 msgstr "Blocco automatico"
 
 #: src/bin/e_int_config_desklock.c:311 src/bin/e_int_config_desklock.c:522
-msgid "Lock when the Screensaver starts"
-msgstr "Blocca all'avvio dello screensaver"
+msgid "Enable screensaver"
+msgstr "Abilita screensaver"
 
 #: src/bin/e_int_config_desklock.c:315 src/bin/e_int_config_desklock.c:526
-msgid "Set the screensaver timeout"
-msgstr "Imposta timeout dello screensaver"
+msgid "Lock when the screensaver starts"
+msgstr "Blocca all'avvio dello screensaver"
 
 #: src/bin/e_int_config_desklock.c:319 src/bin/e_int_config_desklock.c:530
 msgid "Time until screensaver starts"
@@ -2432,16 +2484,16 @@ msgid "Login Box Settings"
 msgstr "Finestra di login"
 
 #: src/bin/e_int_config_desklock.c:434
-msgid "Show On All Screen Zones"
+msgid "Show on all screen zones"
 msgstr "Mostra su tutte le zone"
 
 #: src/bin/e_int_config_desklock.c:440
-msgid "Show On Current Screen Zone"
+msgid "Show on current screen zone"
 msgstr "Mostra sulla zona corrente"
 
 #: src/bin/e_int_config_desklock.c:446
-msgid "Show On Screen Zone :"
-msgstr "Mostra sulla zona :"
+msgid "Show on screen zone #:"
+msgstr "Mostra sulla zona #:"
 
 #: src/modules/ibar/e_mod_config.c:40
 msgid "IBar Configuration"
@@ -2606,10 +2658,6 @@ msgstr "Controllo molto lento (30 sec)"
 msgid "Manual"
 msgstr "Manuale"
 
-#: src/modules/cpufreq/e_mod_main.c:500
-msgid "Automatic"
-msgstr "Automatico"
-
 #: src/modules/cpufreq/e_mod_main.c:502
 msgid "Lower Power Automatic"
 msgstr "Minimo Consumo Automatico"
@@ -2758,11 +2806,11 @@ msgstr "Correggi aspetto (mantieni altezza)"
 msgid "Fix Aspect (Keep Width)"
 msgstr "Correggi aspetto (mantieni larghezza)"
 
-#: src/modules/start/e_mod_main.c:214
+#: src/modules/start/e_mod_main.c:216
 msgid "Enlightenment Start Module"
 msgstr "Modulo Start di Enlightenment"
 
-#: src/modules/start/e_mod_main.c:215
+#: src/modules/start/e_mod_main.c:217
 msgid "Experimental Button module for E17"
 msgstr "Modulo sperimentale per un pulsante d'avvio menu per E17"
 
