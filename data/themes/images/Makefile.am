@@ -71,6 +71,8 @@ e17_ibar_lamp_exec_r.png \
 e17_ibar_lamp_exec_u.png \
 e17_ibar_over_h.png \
 e17_ibar_over_v.png \
+e17_icon_down_arrow.png \
+e17_icon_up_arrow.png \
 e17_clock_bg.png \
 e17_clock_fg.png \
 e17_clock_hour_00.png \
