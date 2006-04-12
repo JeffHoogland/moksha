@@ -1,3 +1,3 @@
-usr/bin/enlightenment-config
-usr/include/*.h
-usr/include/enlightenment/*.h
+debian/tmp/usr/bin/enlightenment-config
+debian/tmp/usr/include/*.h
+debian/tmp/usr/include/enlightenment/*.h

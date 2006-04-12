@@ -1,3 +1,2 @@
-usr/share/enlightenment/data/icons/*.edj
-usr/share/enlightenment/data/themes/*.edj
-usr/share/enlightenment/data/init/*.edj
+debian/tmp/usr/share/enlightenment/data/themes/*.edj
+debian/tmp/usr/share/enlightenment/data/init/*.edj

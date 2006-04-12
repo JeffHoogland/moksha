@@ -2,15 +2,15 @@ Source: enlightenment
 Section: x11
 Priority: optional
 Maintainer: E17 Debian Team <debian@edevelop.org>
-Build-Depends: libevas0-dev, libecore0-dev, libeet0-dev, libedje0-dev, edje0-bin, libembryo0-dev, xlibs-dev, automake1.7 | automaken, libtool, debhelper (>= 4.0)
-Standards-Version: 3.5.7.0
+Build-Depends: libevas-dev, libecore-dev, libeet-dev, libedje-dev, edje-bin, libembryo-dev, xlibs-dev, automake1.7 | automaken, libtool, debhelper (>= 4.0)
+Standards-Version: 3.6.2.2
 
 Package: enlightenment
 Architecture: any
 Section: x11
-Recommends: libevas0-engine-xrender
+Recommends: libevas-engine-xrender
 Suggests: entrance
-Depends: ${shlibs:Depends}, libe, enlightenment-data (>= 0.16.999), libevas0, libecore0, libecore0-con, libecore0-evas, libecore0-file, libecore0-ipc, libecore0-job, libecore0-txt, libecore0-x, libeet0, libembryo0, embryo0-bin, edje0-bin, libedje0, libevas0-loader-eet, libevas0-loader-jpeg, libevas0-loader-png, libevas0-saver-eet, libevas0-saver-jpeg, libevas0-saver-png, libevas0-engine-buffer, libevas0-engine-software-x11
+Depends: ${shlibs:Depends}, libe, enlightenment-data (>= 0.16.999), libevas, libecore, libecore-con, libecore-evas, libecore-file, libecore-ipc, libecore-job, libecore-txt, libecore-x, libeet, libembryo, embryo-bin, edje-bin, libedje, libevas-loader-eet, libevas-loader-jpeg, libevas-loader-png, libevas-saver-eet, libevas-saver-jpeg, libevas-saver-png, libevas-engine-buffer, libevas-engine-software-x11
 Description: Enlightenment themes, etc.
  Enlightenment is an advanced window manager for X11. Unique
  features include: a fully animated background, nice drop shadows
@@ -40,7 +40,7 @@ Package: libe-dev
 Architecture: any
 Section: devel
 Architecture: any
-Depends: libc6-dev | libc-dev, libevas0-dev, libecore0-dev, libeet0-dev, libembryo0-dev, libedje0-dev
+Depends: libc6-dev | libc-dev, libevas-dev, libecore-dev, libeet-dev, libembryo-dev, libedje-dev
 Conflicts: libenlightenment-dev
 Description: Enlightenment headers, static libraries and documentation
  Headers, static libraries and documentation for enlightenment.
