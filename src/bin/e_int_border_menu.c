@@ -11,8 +11,8 @@ static void _e_border_menu_cb_close(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_iconify(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_kill(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_maximize(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_border_menu_cb_maximize_verticaly(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_border_menu_cb_maximize_horizontaly(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_maximize_vertically(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_maximize_horizontally(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -101,28 +101,28 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
        			"widgets/border/default/maximize");
 
      mi = e_menu_item_new(m);
-     e_menu_item_label_set(mi, _("Maximized verticaly"));
+     e_menu_item_label_set(mi, _("Maximized vertically"));
      e_menu_item_check_set(mi, 1);
      //e_menu_item_toggle_set(mi, (bd->maximized ? 1 : 0));
      e_menu_item_toggle_set( mi, ( ( (bd->maximized &&
 				      bd->maximized == E_MAXIMIZE_VERTICAL &&
 				      bd->maximized != E_MAXIMIZE_HORIZONTAL) ||
 				     __fullmaximization ) ? 1 : 0 ));
-     e_menu_item_callback_set(mi, _e_border_menu_cb_maximize_verticaly, bd);
+     e_menu_item_callback_set(mi, _e_border_menu_cb_maximize_vertically, bd);
      e_menu_item_icon_edje_set(mi,
        			(char *)e_theme_edje_file_get("base/theme/borders",
        						      "widgets/border/default/maximize"),
        			"widgets/border/default/maximize");
 
      mi = e_menu_item_new(m);
-     e_menu_item_label_set(mi, _("Maximized horizontaly"));
+     e_menu_item_label_set(mi, _("Maximized horizontally"));
      e_menu_item_check_set(mi, 1);
      //e_menu_item_toggle_set(mi, (bd->maximized ? 1 : 0));
      e_menu_item_toggle_set( mi, ( ( (bd->maximized &&
 				      bd->maximized != E_MAXIMIZE_VERTICAL &&
 				      bd->maximized == E_MAXIMIZE_HORIZONTAL) ||
 				     __fullmaximization ) ? 1 : 0 ));
-     e_menu_item_callback_set(mi, _e_border_menu_cb_maximize_horizontaly, bd);
+     e_menu_item_callback_set(mi, _e_border_menu_cb_maximize_horizontally, bd);
      e_menu_item_icon_edje_set(mi,
 				(char *)e_theme_edje_file_get("base/theme/borders",
 							      "widgets/border/default/maximize"),
@@ -222,7 +222,7 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
        			"widgets/border/default/maximize");
 
      mi = e_menu_item_new(m);
-     e_menu_item_label_set(mi, _("Maximized verticaly"));
+     e_menu_item_label_set(mi, _("Maximized vertically"));
      e_menu_item_check_set(mi, 1);
      e_menu_item_toggle_set(mi, (bd->maximized ? 1 : 0));
      e_menu_item_callback_set(mi, _e_border_menu_cb_maximize, bd);
@@ -232,7 +232,7 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
        			"widgets/border/default/maximize");
 
      mi = e_menu_item_new(m);
-     e_menu_item_label_set(mi, _("Maximized horizontaly"));
+     e_menu_item_label_set(mi, _("Maximized horizontally"));
      e_menu_item_check_set(mi, 1);
      e_menu_item_toggle_set(mi, (bd->maximized ? 1 : 0));
      e_menu_item_callback_set(mi, _e_border_menu_cb_maximize, bd);
@@ -479,9 +479,9 @@ _e_border_menu_cb_maximize(void *data, E_Menu *m, E_Menu_Item *mi)
 	else e_border_maximize(bd, e_config->maximize_policy);
      }
 }
-/*** sndev : menu_cb_miximize_verticaly callback **************/
+/*** sndev : menu_cb_miximize_vertically callback **************/
 static void
-_e_border_menu_cb_maximize_verticaly(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_maximize_vertically(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
 
@@ -493,9 +493,9 @@ _e_border_menu_cb_maximize_verticaly(void *data, E_Menu *m, E_Menu_Item *mi)
 	else e_border_maximize(bd, E_MAXIMIZE_VERTICAL );
      }
 }
-/*** sndev : menu_cb_miximize_verticaly callback **************/
+/*** sndev : menu_cb_miximize_vertically callback **************/
 static void
-_e_border_menu_cb_maximize_horizontaly(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_maximize_horizontally(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
 
