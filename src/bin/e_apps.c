@@ -2198,8 +2198,11 @@ _e_app_cache_new(E_App_Cache *ac, const char *path, int scan_subdirs)
 	if ((ac2->is_dir) && (scan_subdirs))
 	  {
 	     a2 = e_app_new(buf, scan_subdirs);
-	     a2->parent = a;
-	     a->subapps = evas_list_append(a->subapps, a2);
+	     if (a2) 
+	       {
+	          a2->parent = a;
+		  a->subapps = evas_list_append(a->subapps, a2);
+	       }
 	  }
 	else
 	  {
