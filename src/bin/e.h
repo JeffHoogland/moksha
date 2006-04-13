@@ -29,6 +29,7 @@
 #include <locale.h>
 #include <libintl.h>
 #include <errno.h>
+#include <signal.h>
 
 #ifdef HAVE_ALLOCA_H
 #include <alloca.h>
@@ -40,7 +41,6 @@
 
 #ifdef OBJECT_PARANOIA_CHECK
 #include <execinfo.h>
-#include <signal.h>
 #include <setjmp.h>
 #endif
 
