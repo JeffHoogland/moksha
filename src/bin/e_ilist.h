@@ -22,6 +22,9 @@ EAPI void         e_ilist_remove_num            (Evas_Object *obj, int n);
 EAPI void         e_ilist_remove_label          (Evas_Object *obj, const char *label);
 EAPI const char  *e_ilist_nth_label_get		(Evas_Object *obj, int n);
 EAPI void	  e_ilist_nth_label_set		(Evas_Object *obj, int n, const char *label);
+EAPI void	  e_ilist_nth_icon_set		(Evas_Object *obj, int n, Evas_Object *icon);
+EAPI Evas_Object *e_ilist_nth_icon_get		(Evas_Object *obj, int n);
+EAPI Evas_Object *e_ilist_selected_icon_get	(Evas_Object *obj);
 EAPI int          e_ilist_count                 (Evas_Object *obj);
 EAPI void         e_ilist_clear                 (Evas_Object *obj);
 

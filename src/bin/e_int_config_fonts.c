@@ -20,40 +20,6 @@ static void _update_font_class_ilist_icon(void *data);
 
 static void _enabled_fallback_cb_change(void *data, Evas_Object *obj);
 
-typedef struct _E_Smart_Item	    E_Smart_Item;
-typedef struct _E_Smart_Data	    E_Smart_Data;
-typedef struct _E_Widget_IList_Data E_Widget_IList_Data;
-
-struct _E_Widget_IList_Data
-{
-   Evas_Object *o_widget, *o_scrollframe, *o_ilist;
-   Evas_List *callbacks;
-   char **value;
-};
-
-struct _E_Smart_Data
-{ 
-   Evas_Coord   x, y, w, h;
-   
-   Evas_Object   *smart_obj;
-   Evas_Object   *box_obj;
-   Evas_List     *items;
-   int            selected;
-   Evas_Coord     icon_w, icon_h;
-   unsigned char  selector : 1;
-};
-
-struct _E_Smart_Item
-{
-   E_Smart_Data  *sd;
-   Evas_Object   *base_obj;
-   Evas_Object   *icon_obj;
-   void         (*func) (void *data, void *data2);
-   void         (*func_hilight) (void *data, void *data2);
-   void          *data;
-   void          *data2;
-};
-
 struct _E_Text_Class_Pair
 {
    const char	*class_name;
@@ -102,6 +68,7 @@ const E_Text_Class_Pair text_class_predefined_names[ ] = {
 struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
+   Evas *evas;
 
    /* Text Classes */
    Evas_List	*text_classes;
@@ -301,6 +268,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    int i;
 
    cfdata->cur_index = -1;
+   cfdata->evas = evas;
    o = e_widget_list_add(evas, 0, 0);
   
    /* Create Font Class Widgets */ 
@@ -318,11 +286,15 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	tc = evas_list_nth(cfdata->text_classes, i);
 	if (tc)
 	  {
-	     ic = edje_object_add(evas);
 	     if (tc->enabled)
-	       e_util_edje_icon_set(ic, ILIST_ICON_WITH_DEFINED_FONT);
+	       {
+		  ic = edje_object_add(evas);
+		  e_util_edje_icon_set(ic, ILIST_ICON_WITH_DEFINED_FONT);
+	       }
 	     else
-	       e_util_edje_icon_set(ic, "");
+	       {
+		  ic = NULL;
+	       }
 	     e_widget_ilist_append(cfdata->gui.class_list, ic, tc->class_description, NULL, NULL, NULL);
 	  }
      }
@@ -467,21 +439,27 @@ static void
 _enabled_font_cb_change(void *data, Evas_Object *obj)
 {
    E_Config_Dialog_Data *cfdata;
+   Evas_Object *icon;
+   int n;
+   
    cfdata = data;   
    if (!cfdata) return;
    
+   n = e_widget_ilist_selected_get(cfdata->gui.class_list);
    if (cfdata->cur_enabled)
      {
 	e_widget_disabled_set(cfdata->gui.font, 0);
 	e_widget_disabled_set(cfdata->gui.size, 0);
+	icon = edje_object_add(cfdata->evas);
+	e_util_edje_icon_set(icon, ILIST_ICON_WITH_DEFINED_FONT);
      }
    else
      {
 	e_widget_disabled_set(cfdata->gui.font, 1);
 	e_widget_disabled_set(cfdata->gui.size, 1);
+	icon = NULL;
      }
-
-   _update_font_class_ilist_icon(cfdata);
+   e_widget_ilist_nth_icon_set(cfdata->gui.class_list, n, icon);
 }
 
 /* Private Font Fallback Functions */
@@ -493,52 +471,5 @@ static void _enabled_fallback_cb_change(void *data, Evas_Object *obj)
    if (!cfdata) return;
   
    e_widget_disabled_set(cfdata->gui.fallback_list, !cfdata->cur_fallbacks_enabled); 
-}
-
-/* Just to have nice icon change in fontclass list */
-static void _update_font_class_ilist_icon(void *data)
-{
-  E_Smart_Item *si;
-  E_Smart_Data *sd;
-  E_Widget_IList_Data *wd;
-  Evas_Object *obj;
-
-  E_Config_Dialog_Data *cfdata;
-
-  if (!(cfdata = data))
-    return;
-
-  if (!(wd = e_widget_data_get(cfdata->gui.class_list)))
-      return;
-
-  obj = wd->o_ilist;
-
-  sd = evas_object_smart_data_get(obj);
-
-  if ((!obj) || (!sd) ||
-      (evas_object_type_get(obj) && strcmp(evas_object_type_get(obj), "e_ilist")))
-    return;
-
-  si = evas_list_nth(sd->items, sd->selected);
-  if (si)
-    {
-      edje_object_part_unswallow(si->base_obj, si->icon_obj);
-      evas_object_hide(si->icon_obj);
-      if (cfdata->cur_enabled)
-	{
-	  if (si->icon_obj == NULL)
-	    si->icon_obj = edje_object_add(evas_object_evas_get(sd->smart_obj));
-	  e_util_edje_icon_set(si->icon_obj, ILIST_ICON_WITH_DEFINED_FONT);
-	}
-      else
-	si->icon_obj = NULL;
-
-      if (si->icon_obj)
-	{
-	  edje_extern_object_min_size_set(si->icon_obj, sd->icon_w, sd->icon_h);
-	  edje_object_part_swallow(si->base_obj, "icon_swallow", si->icon_obj);
-	  evas_object_show(si->icon_obj);
-	}
-    }
 }
 

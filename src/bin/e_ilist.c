@@ -187,6 +187,18 @@ e_ilist_selected_label_get(Evas_Object *obj)
    return NULL;
 }
 
+EAPI Evas_Object *
+e_ilist_selected_icon_get(Evas_Object *obj)
+{
+   E_Smart_Item *si;
+   
+   API_ENTRY return NULL;
+   if (!sd->items) return NULL;
+   si = evas_list_nth(sd->items, sd->selected);
+   if (si) return si->icon_obj;
+   return NULL;
+}
+
 EAPI void *
 e_ilist_selected_data_get(Evas_Object *obj)
 {
@@ -317,6 +329,45 @@ e_ilist_nth_label_set(Evas_Object *obj, int n, const char *label)
    if (!sd->items) return;
    si = evas_list_nth(sd->items, n);
    if (si) edje_object_part_text_set(si->base_obj, "label", label);
+}
+
+EAPI Evas_Object *
+e_ilist_nth_icon_get(Evas_Object *obj, int n)
+{ 
+   E_Smart_Item *si;
+   
+   API_ENTRY return NULL;
+   if (!sd->items) return NULL;
+   si = evas_list_nth(sd->items, n);
+   if (si) return si->icon_obj;
+   return NULL;
+}
+
+EAPI void
+e_ilist_nth_icon_set(Evas_Object *obj, int n, Evas_Object *icon)
+{ 
+   E_Smart_Item *si;
+   
+   API_ENTRY return;
+   if (!sd->items) return;
+   si = evas_list_nth(sd->items, n);
+   if (si) 
+     { 
+	if (si->icon_obj) 
+	  {
+	     edje_object_part_unswallow(si->base_obj, si->icon_obj);
+	     evas_object_hide(si->icon_obj);
+	     evas_object_del(si->icon_obj);
+	  }
+
+	si->icon_obj = icon;
+	if (si->icon_obj)
+	  {
+	     edje_extern_object_min_size_set(si->icon_obj, sd->icon_w, sd->icon_h);
+	     edje_object_part_swallow(si->base_obj, "icon_swallow", si->icon_obj);
+	     evas_object_show(si->icon_obj);
+	  }
+     }
 }
 
 EAPI int

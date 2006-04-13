@@ -184,6 +184,33 @@ e_widget_ilist_nth_label_set(Evas_Object *obj, int n, const char *label)
    e_ilist_nth_label_set(wd->o_ilist, n, label);
 }
 
+EAPI void
+e_widget_ilist_nth_icon_set(Evas_Object *obj, int n, Evas_Object *icon)
+{
+    E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   e_ilist_nth_icon_set(wd->o_ilist, n, icon);
+}
+
+EAPI Evas_Object *
+e_widget_ilist_nth_icon_get(Evas_Object *obj, int n)
+{
+    E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   return e_ilist_nth_icon_get(wd->o_ilist, n);
+}
+
+EAPI Evas_Object *
+e_widget_ilist_selected_icon_get(Evas_Object *obj)
+{
+    E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   return e_ilist_selected_icon_get(wd->o_ilist);
+}
+
 EAPI int
 e_widget_ilist_count(Evas_Object *obj)
 {
