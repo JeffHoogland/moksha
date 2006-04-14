@@ -40,7 +40,7 @@ Package: libe-dev
 Architecture: any
 Section: devel
 Architecture: any
-Depends: libc6-dev | libc-dev, libevas-dev, libecore-dev, libeet-dev, libembryo-dev, libedje-dev
+Depends: libevas-dev, libecore-dev, libeet-dev, libembryo-dev, libedje-dev
 Conflicts: libenlightenment-dev
 Description: Enlightenment headers, static libraries and documentation
  Headers, static libraries and documentation for enlightenment.
