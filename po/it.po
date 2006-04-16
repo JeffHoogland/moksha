@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-04-08 18:15+0200\n"
-"PO-Revision-Date: 2006-04-08 18:24+0200\n"
+"POT-Creation-Date: 2006-04-15 19:14+0200\n"
+"PO-Revision-Date: 2006-04-15 19:18+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@inwind.it>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -380,7 +380,7 @@ msgstr "Dati dell'output"
 msgid "There was no output."
 msgstr "Non ci sono output."
 
-#: src/bin/e_apps.c:444 src/bin/e_zone.c:607 src/bin/e_fileman_file.c:312
+#: src/bin/e_apps.c:444 src/bin/e_zone.c:621 src/bin/e_fileman_file.c:312
 #: src/bin/e_fileman_file.c:363 src/bin/e_utils.c:229
 #: src/bin/e_fileman_mime.c:393
 msgid "Run Error"
@@ -510,7 +510,11 @@ msgstr "Manipolazione finestre"
 msgid "Run Command Settings"
 msgstr "Finestra di \"Esegui comando\""
 
-#: src/bin/e_configure.c:103 src/bin/e_config_dialog.c:158
+#: src/bin/e_configure.c:98
+msgid "Search Paths"
+msgstr "Percorsi di ricerca"
+
+#: src/bin/e_configure.c:104 src/bin/e_config_dialog.c:158
 #: src/bin/e_int_border_menu.c:348
 msgid "Close"
 msgstr "Chiudi"
@@ -643,56 +647,56 @@ msgstr "Tutti i desktop"
 msgid "Theme"
 msgstr "Dal tema"
 
-#: src/bin/e_int_config_fonts.c:110
+#: src/bin/e_int_config_fonts.c:115
 msgid "Font Settings"
 msgstr "Impostazioni dei font"
 
-#: src/bin/e_int_config_fonts.c:269
+#: src/bin/e_int_config_fonts.c:275
 msgid "Font Class Configuration"
 msgstr "Configurazione classe Font"
 
-#: src/bin/e_int_config_fonts.c:301
+#: src/bin/e_int_config_fonts.c:311
 msgid "Font"
 msgstr "Font"
 
-#: src/bin/e_int_config_fonts.c:314
+#: src/bin/e_int_config_fonts.c:324
 msgid "Font Size"
 msgstr "Dimensione"
 
-#: src/bin/e_int_config_fonts.c:320
+#: src/bin/e_int_config_fonts.c:330
 #, c-format
 msgid "%2.1f pixels"
 msgstr "%2.1f pixel"
 
-#: src/bin/e_int_config_fonts.c:327
+#: src/bin/e_int_config_fonts.c:337
 msgid "Enable Font Class"
 msgstr "Abilita classe Font"
 
-#: src/bin/e_int_config_fonts.c:337
+#: src/bin/e_int_config_fonts.c:347
 msgid "Hinting"
 msgstr "Hinting (ottimizzazione)"
 
-#: src/bin/e_int_config_fonts.c:342
+#: src/bin/e_int_config_fonts.c:352
 msgid "Bytecode"
 msgstr "Bytecode"
 
-#: src/bin/e_int_config_fonts.c:347 src/modules/cpufreq/e_mod_main.c:500
+#: src/bin/e_int_config_fonts.c:357 src/modules/cpufreq/e_mod_main.c:500
 msgid "Automatic"
 msgstr "Automatico"
 
-#: src/bin/e_int_config_fonts.c:352 src/bin/e_int_config_keybindings.c:725
+#: src/bin/e_int_config_fonts.c:362 src/bin/e_int_config_keybindings.c:725
 msgid "None"
 msgstr "Nessuno"
 
-#: src/bin/e_int_config_fonts.c:359
+#: src/bin/e_int_config_fonts.c:369
 msgid "Font Fallbacks"
 msgstr "Alternative dei font"
 
-#: src/bin/e_int_config_fonts.c:362
+#: src/bin/e_int_config_fonts.c:372
 msgid "Fallback Name"
 msgstr "Nome alternativa"
 
-#: src/bin/e_int_config_fonts.c:377
+#: src/bin/e_int_config_fonts.c:387
 msgid "Enable Fallbacks"
 msgstr "Abilita alternative"
 
@@ -1646,11 +1650,11 @@ msgid "Maximized"
 msgstr "Massimizzata"
 
 #: src/bin/e_int_border_menu.c:104
-msgid "Maximized verticaly"
+msgid "Maximized vertically"
 msgstr "Massimizzata verticalmente"
 
 #: src/bin/e_int_border_menu.c:118
-msgid "Maximized horizontaly"
+msgid "Maximized horizontally"
 msgstr "Massimizzata orizzontalmente"
 
 #: src/bin/e_int_border_menu.c:147
@@ -1718,7 +1722,27 @@ msgstr "Dimensione del puntatore"
 msgid "%1.0f pixels"
 msgstr "%1.0f pixel"
 
-#: src/bin/e_zone.c:608 src/bin/e_fileman_file.c:313
+#: src/bin/e_int_config_paths.c:61
+msgid "Search Path Configuration"
+msgstr "Percorsi di ricerca"
+
+#: src/bin/e_int_config_paths.c:135
+msgid "E Paths"
+msgstr "Percorsi di E"
+
+#: src/bin/e_int_config_paths.c:156
+msgid "Default Directories"
+msgstr "Directory predefinite"
+
+#: src/bin/e_int_config_paths.c:163
+msgid "User Defined Directories"
+msgstr "Directory definite dall'utente"
+
+#: src/bin/e_int_config_paths.c:165
+msgid "New Directory"
+msgstr "Nuova directory"
+
+#: src/bin/e_zone.c:622 src/bin/e_fileman_file.c:313
 #: src/bin/e_fileman_file.c:364 src/bin/e_fileman_mime.c:394
 #, c-format
 msgid ""
