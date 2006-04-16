@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-04-08 22:03+0900\n"
-"PO-Revision-Date: 2006-04-09 09:20+0900\n"
+"POT-Creation-Date: 2006-04-15 21:29+0900\n"
+"PO-Revision-Date: 2006-04-15 23:05+0900\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -236,7 +236,7 @@ msgstr "基本設定"
 msgid "Apply"
 msgstr "適用"
 
-#: src/bin/e_config_dialog.c:158 src/bin/e_configure.c:103
+#: src/bin/e_config_dialog.c:158 src/bin/e_configure.c:104
 #: src/bin/e_int_border_menu.c:348
 msgid "Close"
 msgstr "閉じる"
@@ -357,6 +357,10 @@ msgstr "ウィンドウ動作の設定"
 #: src/bin/e_configure.c:97
 msgid "Run Command Settings"
 msgstr "コマンド実行の設定"
+
+#: src/bin/e_configure.c:98
+msgid "Search Paths"
+msgstr "検索パスの設定"
 
 #: src/bin/e_container.c:118
 #, c-format
@@ -864,12 +868,12 @@ msgstr "最大化"
 
 #
 #: src/bin/e_int_border_menu.c:104
-msgid "Maximized verticaly"
+msgid "Maximized vertically"
 msgstr "垂直に最大化"
 
 #
 #: src/bin/e_int_border_menu.c:118
-msgid "Maximized horizontaly"
+msgid "Maximized horizontally"
 msgstr "水平に最大化"
 
 #: src/bin/e_int_border_menu.c:147
@@ -1446,57 +1450,57 @@ msgstr ""
 msgid "Revert focus when hiding or closing a window"
 msgstr "ウィンドウが隠れたり閉じられたらフォーカスを戻す"
 
-#: src/bin/e_int_config_fonts.c:110
+#: src/bin/e_int_config_fonts.c:115
 msgid "Font Settings"
 msgstr "フォントの設定"
 
-#: src/bin/e_int_config_fonts.c:269
+#: src/bin/e_int_config_fonts.c:275
 msgid "Font Class Configuration"
 msgstr "フォントクラスの設定"
 
-#: src/bin/e_int_config_fonts.c:301
+#: src/bin/e_int_config_fonts.c:311
 msgid "Font"
 msgstr "フォント"
 
 #
-#: src/bin/e_int_config_fonts.c:314
+#: src/bin/e_int_config_fonts.c:324
 msgid "Font Size"
 msgstr "フォントサイズ"
 
-#: src/bin/e_int_config_fonts.c:320
+#: src/bin/e_int_config_fonts.c:330
 #, c-format
 msgid "%2.1f pixels"
 msgstr "%2.1f ピクセル"
 
-#: src/bin/e_int_config_fonts.c:327
+#: src/bin/e_int_config_fonts.c:337
 msgid "Enable Font Class"
 msgstr "フォントクラスを有効にする"
 
-#: src/bin/e_int_config_fonts.c:337
+#: src/bin/e_int_config_fonts.c:347
 msgid "Hinting"
 msgstr "ヒンティング"
 
-#: src/bin/e_int_config_fonts.c:342
+#: src/bin/e_int_config_fonts.c:352
 msgid "Bytecode"
 msgstr "バイトコード"
 
-#: src/bin/e_int_config_fonts.c:347 src/modules/cpufreq/e_mod_main.c:500
+#: src/bin/e_int_config_fonts.c:357 src/modules/cpufreq/e_mod_main.c:500
 msgid "Automatic"
 msgstr "自動"
 
-#: src/bin/e_int_config_fonts.c:352 src/bin/e_int_config_keybindings.c:725
+#: src/bin/e_int_config_fonts.c:362 src/bin/e_int_config_keybindings.c:725
 msgid "None"
 msgstr "無し"
 
-#: src/bin/e_int_config_fonts.c:359
+#: src/bin/e_int_config_fonts.c:369
 msgid "Font Fallbacks"
 msgstr "代替フォントと順序"
 
-#: src/bin/e_int_config_fonts.c:362
+#: src/bin/e_int_config_fonts.c:372
 msgid "Fallback Name"
 msgstr "代替フォント名"
 
-#: src/bin/e_int_config_fonts.c:377
+#: src/bin/e_int_config_fonts.c:387
 msgid "Enable Fallbacks"
 msgstr "代替フォントを有効にする"
 
@@ -2522,6 +2526,26 @@ msgstr "追加"
 #: src/bin/e_widget_config_list.c:109
 msgid "Remove"
 msgstr "削除"
+
+#: src/bin/e_int_config_paths.c:61
+msgid "Search Path Configuration"
+msgstr "検索パスの設定"
+
+#: src/bin/e_int_config_paths.c:135
+msgid "E Paths"
+msgstr "E のパス"
+
+#: src/bin/e_int_config_paths.c:156
+msgid "Default Directories"
+msgstr "デフォルトのディレクトリ"
+
+#: src/bin/e_int_config_paths.c:163
+msgid "User Defined Directories"
+msgstr "ユーザー定義ディレクトリ"
+
+#: src/bin/e_int_config_paths.c:165
+msgid "New Directory"
+msgstr "新しいディレクトリ"
 
 #: src/modules/battery/e_mod_config.c:36
 msgid "Battery Configuration"
