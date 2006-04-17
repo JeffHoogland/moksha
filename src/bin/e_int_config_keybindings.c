@@ -1371,7 +1371,7 @@ _e_keybinding_keybind_cb_add_keybinding(void *data, void *data2)
     return;
 
   bk->context = E_BINDING_CONTEXT_ANY;
-  bk->key = strdup("");
+  bk->key = evas_stringshare_add("");
   bk->modifiers = E_BINDING_MODIFIER_NONE;
   bk->action = actions_predefined_names[cfdata->cur_eckb->acn].action_cmd == NULL ? 
      evas_stringshare_add("") :
@@ -1482,90 +1482,90 @@ _e_keybinding_keybind_shortcut_wnd_hide(E_Config_Dialog_Data *cfdata)
 static int
 _e_keybinding_cb_shortcut_key_down(void *data, int type, void *event)
 {
-  E_Config_Binding_Key	*bk;
-  E_Config_Dialog_Data *cfdata = data;
-  Ecore_X_Event_Key_Down  *ev = event;
-
-  if (ev->win != cfdata->locals.keybind_win) return 1;
-
-  if (!strcmp(ev->keysymbol, "Escape") &&
-      !(ev->modifiers & ECORE_X_MODIFIER_SHIFT) &&
-      !(ev->modifiers & ECORE_X_MODIFIER_CTRL) &&
-      !(ev->modifiers & ECORE_X_MODIFIER_ALT) &&
-      !(ev->modifiers & ECORE_X_MODIFIER_WIN))
-  {
-    _e_keybinding_keybind_shortcut_wnd_hide(cfdata);
-  }
-  else
-    {
-
-      if (!strcmp(ev->keysymbol, "Control_L") || !strcmp(ev->keysymbol, "Control_R") ||
-	  !strcmp(ev->keysymbol, "Shift_L") || !strcmp(ev->keysymbol, "Shift_R") ||
-	  !strcmp(ev->keysymbol, "Alt_L") || !strcmp(ev->keysymbol, "Alt_R") ||
-	  !strcmp(ev->keysymbol, "Super_L") || !strcmp(ev->keysymbol, "Super_R"))
-	;
-      else
-	{
-	  if (cfdata && cfdata->cur_eckb && cfdata->cur_eckb_kb_sel >= 0 &&
-	      cfdata->cur_eckb->bk_list)
-	    {
-	      Evas_List *l, *l2;
-
-	      E_Config_KeyBind *eckb;
-	      E_Config_Binding_Key *bk_tmp;
-
-	      int found = 0;
-	      int mod = E_BINDING_MODIFIER_NONE;
-
-	      if (ev->modifiers & ECORE_X_MODIFIER_SHIFT)
-		mod |= E_BINDING_MODIFIER_SHIFT;
-	      if (ev->modifiers & ECORE_X_MODIFIER_CTRL)
-		mod |= E_BINDING_MODIFIER_CTRL;
-	      if (ev->modifiers & ECORE_X_MODIFIER_ALT)
-		mod |= E_BINDING_MODIFIER_ALT;
-	      if (ev->modifiers & ECORE_X_MODIFIER_WIN)
-		mod |= E_BINDING_MODIFIER_WIN;
-
-	      for (l = cfdata->key_bindings; l && !found; l = l->next)
-		{
-		  eckb = l->data;
-		  for (l2 = eckb->bk_list; l2 && !found; l2 = l2->next)
+   E_Config_Binding_Key	*bk;
+   E_Config_Dialog_Data *cfdata = data;
+   Ecore_X_Event_Key_Down  *ev = event;
+   
+   if (ev->win != cfdata->locals.keybind_win) return 1;
+   
+   if (!strcmp(ev->keyname, "Escape") &&
+       !(ev->modifiers & ECORE_X_MODIFIER_SHIFT) &&
+       !(ev->modifiers & ECORE_X_MODIFIER_CTRL) &&
+       !(ev->modifiers & ECORE_X_MODIFIER_ALT) &&
+       !(ev->modifiers & ECORE_X_MODIFIER_WIN))
+     {
+	_e_keybinding_keybind_shortcut_wnd_hide(cfdata);
+     }
+   else
+     {
+	printf("'%s' '%s' '%s'\n", ev->keyname, ev->keysymbol, ev->key_compose);
+	if (!strcmp(ev->keyname, "Control_L") || !strcmp(ev->keyname, "Control_R") ||
+	    !strcmp(ev->keyname, "Shift_L") || !strcmp(ev->keyname, "Shift_R") ||
+	    !strcmp(ev->keyname, "Alt_L") || !strcmp(ev->keyname, "Alt_R") ||
+	    !strcmp(ev->keyname, "Super_L") || !strcmp(ev->keyname, "Super_R"))
+	  ;
+	else
+	  {
+	     if (cfdata && cfdata->cur_eckb && cfdata->cur_eckb_kb_sel >= 0 &&
+		 cfdata->cur_eckb->bk_list)
+	       {
+		  Evas_List *l, *l2;
+		  
+		  E_Config_KeyBind *eckb;
+		  E_Config_Binding_Key *bk_tmp;
+		  
+		  int found = 0;
+		  int mod = E_BINDING_MODIFIER_NONE;
+		  
+		  if (ev->modifiers & ECORE_X_MODIFIER_SHIFT)
+		    mod |= E_BINDING_MODIFIER_SHIFT;
+		  if (ev->modifiers & ECORE_X_MODIFIER_CTRL)
+		    mod |= E_BINDING_MODIFIER_CTRL;
+		  if (ev->modifiers & ECORE_X_MODIFIER_ALT)
+		    mod |= E_BINDING_MODIFIER_ALT;
+		  if (ev->modifiers & ECORE_X_MODIFIER_WIN)
+		    mod |= E_BINDING_MODIFIER_WIN;
+		  
+		  for (l = cfdata->key_bindings; l && !found; l = l->next)
 		    {
-		      bk_tmp = l2->data;
-
-		      if (bk_tmp->modifiers == mod && !strcmp(ev->keysymbol, bk_tmp->key))
-			found = 1;
+		       eckb = l->data;
+		       for (l2 = eckb->bk_list; l2 && !found; l2 = l2->next)
+			 {
+			    bk_tmp = l2->data;
+			    
+			    if (bk_tmp->modifiers == mod && !strcmp(ev->keyname, bk_tmp->key))
+			      found = 1;
+			 }
 		    }
-		}
-
-	      if (!found)
-		{
-		  bk = evas_list_nth(cfdata->cur_eckb->bk_list, cfdata->cur_eckb_kb_sel);
-		  bk->modifiers = E_BINDING_MODIFIER_NONE;
-
-		  bk->modifiers = mod;
-
-		  if (bk->key)
-		    evas_stringshare_del(bk->key);
-		  bk->key = evas_stringshare_add(ev->keysymbol);
-
-		  _e_keybinding_update_binding_list(cfdata);
-		}
-	      else
-		{
-		  e_util_dialog_show(_("Binding Key Error"), 
-				     _("The binding key sequence, that you choose,"
-					" is already used.<br>Please choose another binding key"
-					" sequence."));
-		}
-	      _e_keybinding_keybind_shortcut_wnd_hide(cfdata);
-	    }
-	}
-    }
-  return 1;
+		  
+		  if (!found)
+		    {
+		       bk = evas_list_nth(cfdata->cur_eckb->bk_list, cfdata->cur_eckb_kb_sel);
+		       bk->modifiers = E_BINDING_MODIFIER_NONE;
+		       
+		       bk->modifiers = mod;
+		       
+		       if (bk->key)
+			 evas_stringshare_del(bk->key);
+		       bk->key = evas_stringshare_add(ev->keyname);
+		       
+		       _e_keybinding_update_binding_list(cfdata);
+		    }
+		  else
+		    {
+		       e_util_dialog_show(_("Binding Key Error"), 
+					  _("The binding key sequence, that you choose,"
+					    " is already used.<br>Please choose another binding key"
+					    " sequence."));
+		    }
+		  _e_keybinding_keybind_shortcut_wnd_hide(cfdata);
+	       }
+	  }
+     }
+   return 1;
 }
 static int
 _e_keybinding_cb_mouse_handler_dumb(void *data, int type, void *event)
 {
-  return 1;
+   return 1;
 }
