@@ -1,4 +1,3 @@
-
 #ifdef E_TYPEDEFS
 #else
 #ifndef E_DESKLOCK_H

@@ -1,5 +1,4 @@
 #include "e.h"
-
 #ifdef HAVE_PAM
 # include <security/pam_appl.h>
 # include <pwd.h>
@@ -9,34 +8,12 @@
 #define ELOCK_POPUP_LAYER 10000
 #define PASSWD_LEN 256
 
-/**************************** Pam support *******************************/
-
-#ifdef HAVE_PAM
-struct _Desklock_Auth
-{
-   struct {
-      struct pam_conv conv;
-      pam_handle_t    *handle;
-   } pam;
-   
-   char user[PATH_MAX];
-   char passwd[PATH_MAX];
-};
-
-static int _e_desklock_cb_exit(void *data, int type, void *event);
-static int _desklock_auth(const char *passwd);
-static int _desklock_pam_init(struct _Desklock_Auth *da);
-static int _desklock_auth_pam_conv(int num_msg, const struct pam_message **msg, struct pam_response **resp, void *appdata_ptr);
-static char *_desklock_auth_get_current_user(void);
-static char *_desklock_auth_get_current_host(void);
-
-static Ecore_Event_Handler *_e_desklock_exit_handler = NULL;
-static pid_t _e_desklock_child_pid = -1;
-#endif
-
 /**************************** private data ******************************/
 typedef struct _E_Desklock_Data		E_Desklock_Data;
 typedef struct _E_Desklock_Popup_Data	E_Desklock_Popup_Data;
+#ifdef HAVE_PAM
+typedef struct _E_Desklock_Auth         E_Desklock_Auth;
+#endif
 
 struct _E_Desklock_Popup_Data
 {
@@ -53,9 +30,25 @@ struct _E_Desklock_Data
    Ecore_X_Window  elock_grab_break_wnd;
    char		  passwd[PASSWD_LEN];
 };
+#ifdef HAVE_PAM
+struct _E_Desklock_Auth
+{
+   struct {
+      struct pam_conv conv;
+      pam_handle_t    *handle;
+   } pam;
+   
+   char user[PATH_MAX];
+   char passwd[PATH_MAX];
+};
+#endif
 
-static	E_Desklock_Data	*edd = NULL;
-static	E_Zone		*last_active_zone = NULL;
+static	E_Desklock_Data	   *edd = NULL;
+static	E_Zone		   *last_active_zone = NULL;
+#ifdef HAVE_PAM
+static Ecore_Event_Handler *_e_desklock_exit_handler = NULL;
+static pid_t                _e_desklock_child_pid = -1;
+#endif
 
 /***********************************************************************/
 
@@ -71,6 +64,35 @@ static void _e_desklock_delete();
 static int  _e_desklock_zone_num_get();
 
 static int _e_desklock_check_auth();
+
+#ifdef HAVE_PAM
+static int _e_desklock_cb_exit(void *data, int type, void *event);
+static int _desklock_auth(const char *passwd);
+static int _desklock_pam_init(E_Desklock_Auth *da);
+static int _desklock_auth_pam_conv(int num_msg, const struct pam_message **msg, struct pam_response **resp, void *appdata_ptr);
+static char *_desklock_auth_get_current_user(void);
+static char *_desklock_auth_get_current_host(void);
+#endif
+
+EAPI int
+e_desklock_init(void)
+{
+   if (e_config->desklock_disable_screensaver)
+     ecore_x_screensaver_timeout_set(0);
+   else
+     {
+	if (e_config->desklock_use_timeout)
+	  ecore_x_screensaver_timeout_set(e_config->desklock_timeout);
+     }
+   return 1;
+}
+
+EAPI int
+e_desklock_shutdown(void)
+{
+   e_desklock_hide();
+   return 1;
+}
 
 EAPI int
 e_desklock_show(void)
@@ -408,26 +430,6 @@ _e_desklock_cb_mouse_move(void *data, int type, void *event)
    return 1;
 }
 
-EAPI int
-e_desklock_init(void)
-{
-   if (e_config->desklock_disable_screensaver)
-     ecore_x_screensaver_timeout_set(0);
-   else
-     {
-	if (e_config->desklock_use_timeout)
-	  ecore_x_screensaver_timeout_set(e_config->desklock_timeout);
-     }
-   return 1;
-}
-
-EAPI int
-e_desklock_shutdown(void)
-{
-   e_desklock_hide();
-   return 1;
-}
-
 static void
 _e_desklock_passwd_update()
 {
@@ -507,12 +509,13 @@ _e_desklock_check_auth()
      return _desklock_auth(edd->passwd);
    else if (e_config->desklock_auth_method == 1)
      {
-#endif // HAVE_PAM
+#endif
 	if ((e_config->desklock_personal_passwd) &&
 	    (!strcmp(edd->passwd == NULL ? "" : edd->passwd,
 		     e_config->desklock_personal_passwd == NULL ? "" :
 		     e_config->desklock_personal_passwd)))
 	  {
+	     /* password ok */
 	     memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
 	     e_desklock_hide();
 	     return 1;
@@ -579,7 +582,7 @@ _desklock_auth(const char *passwd)
      {
 	/* child */
 	int pamerr;
-	struct _Desklock_Auth da;
+	E_Desklock_Auth da;
 	
 	strncpy(da.user, _desklock_auth_get_current_user(), PATH_MAX);
 	strncpy(da.passwd, passwd, PATH_MAX);
@@ -609,7 +612,7 @@ _desklock_auth_get_current_user(void)
 }
 
 static int
-_desklock_pam_init(struct _Desklock_Auth *da)
+_desklock_pam_init(E_Desklock_Auth *da)
 {
    int pamerr;
    
@@ -638,7 +641,7 @@ static int
 _desklock_auth_pam_conv(int num_msg, const struct pam_message **msg, struct pam_response **resp, void *appdata_ptr)
 {
    int replies = 0;
-   struct _Desklock_Auth *da = (struct _Desklock_Auth *)appdata_ptr;
+   E_Desklock_Auth *da = (E_Desklock_Auth *)appdata_ptr;
    struct pam_response *reply = NULL;
    
    reply = (struct pam_response *)malloc(sizeof(struct pam_response) *num_msg);
