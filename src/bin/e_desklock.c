@@ -1,9 +1,9 @@
 #include "e.h"
 
 #ifdef HAVE_PAM
-  #include <security/pam_appl.h>
-  #include <pwd.h>
-  #include <limits.h>
+# include <security/pam_appl.h>
+# include <pwd.h>
+# include <limits.h>
 #endif
 
 #define ELOCK_POPUP_LAYER 10000
@@ -14,22 +14,24 @@
 #ifdef HAVE_PAM
 struct _Desklock_Auth
 {
-  struct 
-  {
-    struct pam_conv conv;
-    pam_handle_t    *handle;
-  } pam;
-
-  char user[PATH_MAX];
-  char passwd[PATH_MAX];
+   struct {
+      struct pam_conv conv;
+      pam_handle_t    *handle;
+   } pam;
+   
+   char user[PATH_MAX];
+   char passwd[PATH_MAX];
 };
 
+static int _e_desklock_cb_exit(void *data, int type, void *event);
 static int _desklock_auth(const char *passwd);
 static int _desklock_pam_init(struct _Desklock_Auth *da);
-static int _desklock_auth_pam_conv(int num_msg, const struct pam_message **msg,
-				   struct pam_response **resp, void *appdata_ptr);
-static char *_desklock_auth_get_current_user();
-static char *_desklock_auth_get_current_host();
+static int _desklock_auth_pam_conv(int num_msg, const struct pam_message **msg, struct pam_response **resp, void *appdata_ptr);
+static char *_desklock_auth_get_current_user(void);
+static char *_desklock_auth_get_current_host(void);
+
+static Ecore_Event_Handler *_e_desklock_exit_handler = NULL;
+static pid_t _e_desklock_child_pid = -1;
 #endif
 
 /**************************** private data ******************************/
@@ -62,7 +64,6 @@ static int _e_desklock_cb_mouse_down(void *data, int type, void *event);
 static int _e_desklock_cb_mouse_up(void *data, int type, void *event);
 static int _e_desklock_cb_mouse_wheel(void *data, int type, void *event);
 static int _e_desklock_cb_mouse_move(void *data, int type, void *event);
-//static int _e_desklock_idler(void *data);
 
 static void _e_desklock_passwd_update();
 static void _e_desklock_backspace();
@@ -84,7 +85,7 @@ e_desklock_show(void)
    if (edd) return 0;
    
 #ifdef HAVE_PAM
-   if (e_config->desklock_auth_method == 1 )
+   if (e_config->desklock_auth_method == 1)
      {
 #endif
        if (!e_config->desklock_personal_passwd)
@@ -238,16 +239,16 @@ e_desklock_show(void)
 		       edje_object_size_min_calc(edp->login_box, &mw, &mh);
 		       evas_object_move(edp->login_box, (int)((zone->w - mw)/2),
 						    (int)((zone->h - mh)/2));
-
+		       
 		       if (total_zone_num > 1)
-		       {
-			 if (e_config->desklock_login_box_zone == -1)
-			   evas_object_show(edp->login_box);
-			 else if(e_config->desklock_login_box_zone == -2 && zone == current_zone)
-			   evas_object_show(edp->login_box);
-			 else if(e_config->desklock_login_box_zone == zone_counter )
-			   evas_object_show(edp->login_box);
-		       }
+			 {
+			    if (e_config->desklock_login_box_zone == -1)
+			      evas_object_show(edp->login_box);
+			    else if(e_config->desklock_login_box_zone == -2 && zone == current_zone)
+			      evas_object_show(edp->login_box);
+			    else if(e_config->desklock_login_box_zone == zone_counter )
+			      evas_object_show(edp->login_box);
+			 }
 		       else
 			 evas_object_show(edp->login_box);
 		       /**/
@@ -284,8 +285,6 @@ e_desklock_show(void)
 				      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
 							      _e_desklock_cb_mouse_move,
 							      NULL));
-   //elock_wnd_idler = ecore_idler_add(_e_desklock_idler, NULL);
-   
    _e_desklock_passwd_update();
    return 1;
 }
@@ -341,35 +340,9 @@ _e_desklock_cb_key_down(void *data, int type, void *event)
    if (!strcmp(ev->keysymbol, "Escape"))
     ;
    else if (!strcmp(ev->keysymbol, "KP_Enter"))
-     {
-	// here we have to go to auth
-        if (_e_desklock_check_auth())
-	  {
-	    memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
-	    e_desklock_hide();
-	    return 1;
-	  }
-	else
-	  ; // report about invalid password
-	
-	memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
-	_e_desklock_passwd_update();
-     }
+     _e_desklock_check_auth();
    else if (!strcmp(ev->keysymbol, "Return"))
-     {
-	// here we have to go to auth
-        if (_e_desklock_check_auth())
-	  {
-	    memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
-	    e_desklock_hide();
-	    return 1;
-	  }
-	else
-	  ; // report about invalid password
-	
-	memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
-	_e_desklock_passwd_update();
-     }
+     _e_desklock_check_auth();
    else if (!strcmp(ev->keysymbol, "BackSpace"))
      _e_desklock_backspace();
    else if (!strcmp(ev->keysymbol, "Delete"))
@@ -395,45 +368,43 @@ _e_desklock_cb_mouse_down(void *data, int type, void *event)
 {
    return 1;
 }
+
 static int
 _e_desklock_cb_mouse_up(void *data, int type, void *event)
 {
    return 1;
 }
+
 static int
 _e_desklock_cb_mouse_wheel(void *data, int type, void *event)
 {
    return 1;
 }
+
 static int
 _e_desklock_cb_mouse_move(void *data, int type, void *event)
 {
-  E_Desklock_Popup_Data	*edp;
-  E_Zone *current_zone;
-  Evas_List *l;
-
-  current_zone = e_zone_current_get(e_container_current_get(e_manager_current_get()));
-
-  if (current_zone == last_active_zone)
-    return 1;
-
-  for (l = edd->elock_wnd_list; l; l = l->next)
-    {
-      edp = l->data;
-
-      if (!edp) continue;
-
-      if (edp->popup_wnd->zone == last_active_zone)
-	evas_object_hide(edp->login_box);
-      else if (edp->popup_wnd->zone == current_zone)
-	evas_object_show(edp->login_box);
-    }
-  last_active_zone = current_zone;
-  return 1;
-}
-static int
-_e_desklock_idler(void *data)
-{
+   E_Desklock_Popup_Data	*edp;
+   E_Zone *current_zone;
+   Evas_List *l;
+   
+   current_zone = e_zone_current_get(e_container_current_get(e_manager_current_get()));
+   
+   if (current_zone == last_active_zone)
+     return 1;
+   
+   for (l = edd->elock_wnd_list; l; l = l->next)
+     {
+	edp = l->data;
+	
+	if (!edp) continue;
+	
+	if (edp->popup_wnd->zone == last_active_zone)
+	  evas_object_hide(edp->login_box);
+	else if (edp->popup_wnd->zone == current_zone)
+	  evas_object_show(edp->login_box);
+     }
+   last_active_zone = current_zone;
    return 1;
 }
 
@@ -502,154 +473,208 @@ _e_desklock_backspace()
 static void
 _e_desklock_delete()
 {
-  _e_desklock_backspace();
+   _e_desklock_backspace();
 }
 
 static int
 _e_desklock_zone_num_get()
 {
-  int num;
-  Evas_List *l, *l2;
-
-  num = 0;
-  for (l = e_manager_list(); l; l = l->next)
-    {
-      E_Manager *man = l->data;
-
-      for (l2 = man->containers; l2; l2 = l2->next)
-	{
-	  E_Container *con = l2->data;
-
-	  num += evas_list_count(con->zones);
-	}
-    }
-
-  return num;
+   int num;
+   Evas_List *l, *l2;
+   
+   num = 0;
+   for (l = e_manager_list(); l; l = l->next)
+     {
+	E_Manager *man = l->data;
+	
+	for (l2 = man->containers; l2; l2 = l2->next)
+	  {
+	     E_Container *con = l2->data;
+	     
+	     num += evas_list_count(con->zones);
+	  }
+     }
+   
+   return num;
 }
 
-static int _e_desklock_check_auth()
+static int
+_e_desklock_check_auth()
 {
-  if (!edd) return 0;
+   if (!edd) return 0;
 #ifdef HAVE_PAM
-  if (e_config->desklock_auth_method == 0)
-  {
-    return _desklock_auth(edd->passwd);
-  }
-  else if (e_config->desklock_auth_method == 1)
-  {
+   if (e_config->desklock_auth_method == 0)
+     return _desklock_auth(edd->passwd);
+   else if (e_config->desklock_auth_method == 1)
+     {
 #endif // HAVE_PAM
-    if ((e_config->desklock_personal_passwd) &&
-	(!strcmp(edd->passwd == NULL ? "" : edd->passwd,
-		 e_config->desklock_personal_passwd == NULL ? "" :
-			e_config->desklock_personal_passwd)))
-      {
-	 return 1;
-      }
+	if ((e_config->desklock_personal_passwd) &&
+	    (!strcmp(edd->passwd == NULL ? "" : edd->passwd,
+		     e_config->desklock_personal_passwd == NULL ? "" :
+		     e_config->desklock_personal_passwd)))
+	  {
+	     memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
+	     e_desklock_hide();
+	     return 1;
+	  }
 #ifdef HAVE_PAM
-  }
+     }
 #endif
-
-  return 0;
+   /* passowrd is definitely wrong */
+   memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
+   _e_desklock_passwd_update();
+   return 0;
 }
 
 #ifdef HAVE_PAM
-static int _desklock_auth(const char *passwd)
+static int
+_e_desklock_cb_exit(void *data, int type, void *event)
 {
-  int pamerr;
-  struct _Desklock_Auth da;
-
-  strncpy(da.user, _desklock_auth_get_current_user(), PATH_MAX);
-  strncpy(da.passwd, passwd, PATH_MAX);
-  da.pam.handle = NULL;
-  da.pam.conv.conv = NULL;
-  da.pam.conv.appdata_ptr = NULL;
-
-  if (!_desklock_pam_init(&da))
-    return 0;
-
-  pamerr = pam_authenticate(da.pam.handle, 0);
-
-  pam_end(da.pam.handle, pamerr);
-  memset(da.passwd, 0 , sizeof(da.passwd));
-
-  return pamerr == PAM_SUCCESS ? 1 : 0;
+   Ecore_Exe_Event_Del *ev;
+   
+   ev = event;
+   if (ev->pid == _e_desklock_child_pid)
+     {
+	_e_desklock_child_pid = -1;
+	/* ok */
+	if (ev->exit_code == 0)
+	  {
+	     memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
+	     e_desklock_hide();
+	  }
+	/* error */
+	else if (ev->exit_code < 128)
+	  {
+	     memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
+	     e_desklock_hide();
+	     e_util_dialog_show(_("Authentication System Error"),
+				_("Authentication via PAM had errors setting up the<br>"
+				  "authentication session. The error code was <hilight>%i</hilight>.<br>"
+				  "This is bad and should not be happening. Please report this bug.")
+				, ev->exit_code);
+	  }
+	/* failed auth */
+	else
+	  {
+	     memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
+	     _e_desklock_passwd_update();
+	  }
+	ecore_event_handler_del(_e_desklock_exit_handler);
+	_e_desklock_exit_handler = NULL;
+     }
+   return 1;
+}
+    
+static int
+_desklock_auth(const char *passwd)
+{
+   if ((_e_desklock_child_pid = fork()))
+     {
+	/* parent */
+	_e_desklock_exit_handler = 
+	  ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_desklock_cb_exit, 
+				  NULL);
+     }
+   else
+     {
+	/* child */
+	int pamerr;
+	struct _Desklock_Auth da;
+	
+	strncpy(da.user, _desklock_auth_get_current_user(), PATH_MAX);
+	strncpy(da.passwd, passwd, PATH_MAX);
+	da.pam.handle = NULL;
+	da.pam.conv.conv = NULL;
+	da.pam.conv.appdata_ptr = NULL;
+	
+	pamerr = _desklock_pam_init(&da);
+	if (pamerr != PAM_SUCCESS) exit(pamerr);
+	pamerr = pam_authenticate(da.pam.handle, 0);
+	pam_end(da.pam.handle, pamerr);
+	memset(da.passwd, 0, sizeof(da.passwd));
+	if (pamerr == PAM_SUCCESS) exit(0);
+	exit(-1);
+     }
 }
 
-static char *_desklock_auth_get_current_user()
+static char *
+_desklock_auth_get_current_user(void)
 {
-  char *user;
-  struct passwd *pwent = NULL;
+   char *user;
+   struct passwd *pwent = NULL;
 
-  pwent = getpwuid(getuid());
-  user = strdup(pwent->pw_name);
-  return user;
+   pwent = getpwuid(getuid());
+   user = strdup(pwent->pw_name);
+   return user;
 }
 
-static int _desklock_pam_init(struct _Desklock_Auth *da)
+static int
+_desklock_pam_init(struct _Desklock_Auth *da)
 {
-  int pamerr;
-
-  if (!da) return 0;
-
-  da->pam.conv.conv = _desklock_auth_pam_conv;
-  da->pam.conv.appdata_ptr = da;
-  da->pam.handle = NULL;
-
-  if ((pamerr = pam_start("system-auth", da->user, &(da->pam.conv),
-			  &(da->pam.handle))) != PAM_SUCCESS)
-    return 0;
-
-  if ((pamerr = pam_set_item(da->pam.handle, PAM_USER,
-			     _desklock_auth_get_current_user())) != PAM_SUCCESS)
-    return 0;
-
-  if ((pamerr = pam_set_item(da->pam.handle, PAM_RHOST,
-			     _desklock_auth_get_current_host())) != PAM_SUCCESS)
-    return 0;
-
-  return 1;
+   int pamerr;
+   
+   if (!da) return -1;
+   
+   da->pam.conv.conv = _desklock_auth_pam_conv;
+   da->pam.conv.appdata_ptr = da;
+   da->pam.handle = NULL;
+   
+   if ((pamerr = pam_start("system-auth", da->user, &(da->pam.conv),
+			   &(da->pam.handle))) != PAM_SUCCESS)
+     return pamerr;
+   
+   if ((pamerr = pam_set_item(da->pam.handle, PAM_USER,
+			      _desklock_auth_get_current_user())) != PAM_SUCCESS)
+     return pamerr;
+   
+   if ((pamerr = pam_set_item(da->pam.handle, PAM_RHOST,
+			      _desklock_auth_get_current_host())) != PAM_SUCCESS)
+     return pamerr;
+   
+   return 0;
 }
 
-static int _desklock_auth_pam_conv(int num_msg, const struct pam_message **msg,
-				   struct pam_response **resp, void *appdata_ptr)
+static int
+_desklock_auth_pam_conv(int num_msg, const struct pam_message **msg, struct pam_response **resp, void *appdata_ptr)
 {
-  int replies = 0;
-  struct _Desklock_Auth *da = (struct _Desklock_Auth *)appdata_ptr;
-  struct pam_response *reply = NULL;
-
-  reply = (struct pam_response *)malloc(sizeof(struct pam_response) *num_msg);
-
-  if (!reply)
-    return PAM_CONV_ERR;
-
-  for (replies = 0; replies < num_msg; replies++)
-    {
-      switch (msg[replies]->msg_style)
-	{
-	  case PAM_PROMPT_ECHO_ON:
-	    reply[replies].resp_retcode = PAM_SUCCESS;
-	    reply[replies].resp = (char *)strdup(da->user);
-	    break;
-	  case PAM_PROMPT_ECHO_OFF:
-	    reply[replies].resp_retcode = PAM_SUCCESS;
-	    reply[replies].resp = (char *)strdup(da->passwd);
-	    break;
-	  case PAM_ERROR_MSG:
-	  case PAM_TEXT_INFO:
-	    reply[replies].resp_retcode = PAM_SUCCESS;
-	    reply[replies].resp = NULL;
-	    break;
-	  default:
-	    free(reply);
-	    return PAM_CONV_ERR;
-	}
-    }
-  *resp = reply;
-  return PAM_SUCCESS;
+   int replies = 0;
+   struct _Desklock_Auth *da = (struct _Desklock_Auth *)appdata_ptr;
+   struct pam_response *reply = NULL;
+   
+   reply = (struct pam_response *)malloc(sizeof(struct pam_response) *num_msg);
+   
+   if (!reply)
+     return PAM_CONV_ERR;
+   
+   for (replies = 0; replies < num_msg; replies++)
+     {
+	switch (msg[replies]->msg_style)
+	  {
+	   case PAM_PROMPT_ECHO_ON:
+	     reply[replies].resp_retcode = PAM_SUCCESS;
+	     reply[replies].resp = (char *)strdup(da->user);
+	     break;
+	   case PAM_PROMPT_ECHO_OFF:
+	     reply[replies].resp_retcode = PAM_SUCCESS;
+	     reply[replies].resp = (char *)strdup(da->passwd);
+	     break;
+	   case PAM_ERROR_MSG:
+	   case PAM_TEXT_INFO:
+	     reply[replies].resp_retcode = PAM_SUCCESS;
+	     reply[replies].resp = NULL;
+	     break;
+	   default:
+	     free(reply);
+	     return PAM_CONV_ERR;
+	  }
+     }
+   *resp = reply;
+   return PAM_SUCCESS;
 }
 
-static char *_desklock_auth_get_current_host()
+static char *
+_desklock_auth_get_current_host(void)
 {
-  return strdup("localhost");
+   return strdup("localhost");
 }
 #endif
