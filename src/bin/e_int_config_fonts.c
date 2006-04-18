@@ -144,16 +144,20 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	     
 	     if (!strcmp(tc->class_name, efd->text_class))
 	       {
-		tc->font = evas_stringshare_add(efd->font);
-		tc->size = efd->size;
-		tc->enabled = 1;
+		  if (efd->font)
+		    tc->font = evas_stringshare_add(efd->font);
+		  else
+		    tc->font = evas_stringshare_add("");
+
+		  tc->size = efd->size;
+		  tc->enabled = 1;
 	       }
 	  }
 
 	if (!tc->enabled)
 	  {
 	     efd = e_font_default_get(tc->class_name); 
-	     if (efd)
+	     if (efd && efd->font)
 	       {
 		  tc->font = evas_stringshare_add(efd->font);
 		  tc->size = efd->size;
