@@ -3,7 +3,6 @@
  */
 #include "e.h"
 #include "e_mod_main.h"
-#include "e_mod_config.h"
 
 #ifdef __FreeBSD__
 # include <sys/types.h>
@@ -14,7 +13,6 @@
 # endif
 # include <stdio.h>
 #endif
-
 #ifdef HAVE_CFBASE_H
 #include <CFBase.h>
 #include <CFNumber.h>
@@ -25,445 +23,172 @@
 #include <ps/IOPowerSources.h>
 #endif
 
-/* TODO List:
- *
- * which options should be in main menu, and which in face menu?
- */
-
-/* module private routines */
-static Battery      *_battery_new();
-static void          _battery_shutdown(Battery *e);
-static void          _battery_config_menu_new(Battery *e);
-static int           _battery_cb_check(void *data);
-static Status       *_battery_linux_acpi_check(Battery *ef);
-static Status       *_battery_linux_apm_check(Battery *ef);
-/* linux on powerbook */
-static Status       *_battery_linux_powerbook_check(Battery *ef);
-/* Should these be  #ifdef'd ?  */
-#ifdef __FreeBSD__
-static Status       *_battery_bsd_acpi_check(Battery *ef);
-static Status       *_battery_bsd_apm_check(Battery *ef);
-#endif
-
-#ifdef HAVE_CFBASE_H
-static Status       *_battery_darwin_check(Battery *ef);
-#endif
-
-static Battery_Face *_battery_face_new(Battery *bat, E_Container *con);
-static void          _battery_face_free(Battery_Face *ef);
-static void          _battery_face_menu_new(Battery_Face *face);
-static void          _battery_face_enable(Battery_Face *face);
-static void          _battery_face_disable(Battery_Face *face);
-static void          _battery_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
-static void          _battery_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void          _battery_face_level_set(Battery_Face *ef, double level);
-static void          _battery_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
-
-static int           _battery_int_get(char *buf);
-static char         *_battery_string_get(char *buf);
-
-static void          _battery_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
-
-static E_Config_DD *conf_edd;
-static E_Config_DD *conf_face_edd;
-
-static int battery_count;
-
-/* public module routines. all modules must have these */
-EAPI E_Module_Api e_modapi = 
+/***************************************************************************/
+/**/
+/* gadcon requirements */
+static E_Gadcon_Client *_gc_init(E_Gadcon *gc, char *name, char *id, char *style);
+static void _gc_shutdown(E_Gadcon_Client *gcc);
+static void _gc_orient(E_Gadcon_Client *gcc);
+/* and actually define the gadcon class that this module provides (just 1) */
+static const E_Gadcon_Client_Class _gadcon_class =
 {
-   E_MODULE_API_VERSION,
-   "Battery"
+   GADCON_CLIENT_CLASS_VERSION,
+     "battery",
+     {
+	_gc_init, _gc_shutdown, _gc_orient
+     }
+};
+/**/
+/***************************************************************************/
+
+/***************************************************************************/
+/**/
+/* actual module specifics */
+
+typedef struct _Instance Instance;
+
+struct _Instance
+{
+   E_Gadcon_Client *gcc;
+   Evas_Object     *o_battery;
 };
 
-EAPI void *
-e_modapi_init(E_Module *m)
-{
-   Battery *e;
+static void _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _menu_cb_post(void *data, E_Menu *m);
+static Status *_battery_linux_acpi_check(void);
+static Status *_battery_linux_apm_check(void);
+static Status *_battery_linux_powerbook_check(void);
+#ifdef __FreeBSD__
+static Status *_battery_bsd_acpi_check(void);
+static Status *_battery_bsd_apm_check(void);
+#endif
+#ifdef HAVE_CFBASE_H
+static Status *_battery_darwin_check(void);
+#endif
+static void _battery_face_level_set(Instance *inst, double level);
+static int _battery_int_get(char *buf);
+static char *_battery_string_get(char *buf);
+static int _battery_cb_check(void *data);
+static void _battery_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
 
-   /* actually init battery */
-   e = _battery_new();
-   m->config_menu = e->config_menu;
-   return e;
-}
+static E_Config_DD *conf_edd = NULL;
 
-EAPI int
-e_modapi_shutdown(E_Module *m)
-{
-   Battery *e;
-   if (m->config_menu)
-     m->config_menu = NULL;
+Config *battery_config = NULL;
 
-   e = m->data;
-   if (e) 
-     {
-	if (e->config_dialog) 
-	  {
-	     e_object_del(E_OBJECT(e->config_dialog));
-	     e->config_dialog = NULL;
-	  }
-	_battery_shutdown(e);
-     }
-   return 1;
-}
-
-EAPI int
-e_modapi_save(E_Module *m)
-{
-   Battery *e;
-
-   e = m->data;
-   e_config_domain_save("module.battery", conf_edd, e->conf);
-   return 1;
-}
-
-EAPI int
-e_modapi_info(E_Module *m)
-{
-   char buf[4096];
-
-   snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(m));
-   m->icon_file = strdup(buf);
-   return 1;
-}
-
-EAPI int
-e_modapi_about(E_Module *m)
-{
-   e_module_dialog_show(_("Enlightenment Battery Module"),
-		       _("A basic battery meter that uses either"
-		 	 "<hilight>ACPI</hilight> or <hilight>APM</hilight><br>"
-			 "on Linux to monitor your battery and AC power adaptor<br>"
-			 "status. This will work under Linux and FreeBSD and is only<br>"
-			 "as accurate as your BIOS or kernel drivers."));
-   return 1;
-}
-
-EAPI int
-e_modapi_config(E_Module *m)
-{
-   Battery *e;
-   Evas_List *l;
-
-   e = m->data;
-   if (!e) return 0;
-   if (!e->faces) return 0;
-   for (l = e->faces; l; l = l->next) 
-     {
-	Battery_Face *face;
-	face = l->data;
-	if (!face) return 0;
-	if (face->con == e_container_current_get(e_manager_current_get())) 
-	  {     
-	     _config_battery_module(face->con, face->battery);
-	     break;
-	  }
-     }   
-   return 1;
-}
-
-/* module private routines */
-static Battery *
-_battery_new()
-{
-   Battery *e;
-   Evas_List *managers, *l, *l2, *cl;
-
-   E_Menu_Item *mi;
-
-   battery_count = 0;
-   e = E_NEW(Battery, 1);
-   if (!e) return NULL;
-
-   conf_face_edd = E_CONFIG_DD_NEW("Battery_Config_Face", Config_Face);
-#undef T
-#undef D
-#define T Config_Face
-#define D conf_face_edd
-   E_CONFIG_VAL(D, T, enabled, UCHAR);
-
-   conf_edd = E_CONFIG_DD_NEW("Battery_Config", Config);
-#undef T
-#undef D
-#define T Config
-#define D conf_edd
-   E_CONFIG_VAL(D, T, poll_time, DOUBLE);
-   E_CONFIG_VAL(D, T, alarm, INT);
-   E_CONFIG_LIST(D, T, faces, conf_face_edd);
-
-   e->conf = e_config_domain_load("module.battery", conf_edd);
-   if (!e->conf)
-     {
-       e->conf = E_NEW(Config, 1);
-       e->conf->poll_time = 30.0;
-       e->conf->alarm = 30;
-     }
-   E_CONFIG_LIMIT(e->conf->poll_time, 0.5, 1000.0);
-   E_CONFIG_LIMIT(e->conf->alarm, 0, 60);
-
-   _battery_config_menu_new(e);
-
-   e->battery_check_mode = CHECK_NONE;
-   e->battery_prev_drain = 1;
-   e->battery_prev_ac = -1;
-   e->battery_prev_battery = -1;
-   e->battery_check_timer = ecore_timer_add(e->conf->poll_time, _battery_cb_check, e);
-
-   managers = e_manager_list();
-   cl = e->conf->faces;
-   for (l = managers; l; l = l->next)
-     {
-	E_Manager *man;
-
-	man = l->data;
-	for (l2 = man->containers; l2; l2 = l2->next)
-	  {
-	     E_Container *con;
-	     Battery_Face *ef;
-
-	     con = l2->data;
-	     ef = _battery_face_new(e, con);
-	     if (ef)
-	       {
-		  ef->battery = e;
-		  e->faces = evas_list_append(e->faces, ef);
-
-		  /* Config */
-		  if (!cl)
-		    {
-		       ef->conf = E_NEW(Config_Face, 1);
-		       ef->conf->enabled = 1;
-		       e->conf->faces = evas_list_append(e->conf->faces, ef->conf);
-		    }
-		  else
-		    {
-		       ef->conf = cl->data;
-		       cl = cl->next;
-		    }
-
-		  /* Menu */
-		  /* This menu must be initialized after conf */
-		  _battery_face_menu_new(ef);
-
-		  /* Add main menu to face menu */
-		  mi = e_menu_item_new(e->config_menu);
-		  e_menu_item_label_set(mi, _("Configuration"));
-                  e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
-		  e_menu_item_callback_set(mi, _battery_face_cb_menu_configure, ef);
-
-		  mi = e_menu_item_new(e->config_menu);
-		  e_menu_item_label_set(mi, con->name);
-		  e_menu_item_submenu_set(mi, ef->menu);
-
-		  /* Setup */
-		  if (!ef->conf->enabled)
-		    _battery_face_disable(ef);
-	       }
-	  }
-     }
-
-   _battery_cb_check(e);
-
-   return e;
-}
-
-static void
-_battery_shutdown(Battery *e)
-{
-   Evas_List *l;
-
-   E_CONFIG_DD_FREE(conf_edd);
-   E_CONFIG_DD_FREE(conf_face_edd);
-
-   for (l = e->faces; l; l = l->next)
-     _battery_face_free(l->data);
-   evas_list_free(e->faces);
-
-   e_object_del(E_OBJECT(e->config_menu));
-
-   ecore_timer_del(e->battery_check_timer);
-
-   evas_list_free(e->conf->faces);
-   free(e->conf);
-   free(e);
-}
-
-static void
-_battery_config_menu_new(Battery *e)
-{
-   E_Menu *mn;
-
-   /* Alarm */
-   mn = e_menu_new();
-   e->config_menu = mn;
-}
-
-static Battery_Face *
-_battery_face_new(Battery *bat, E_Container *con)
+static E_Gadcon_Client *
+_gc_init(E_Gadcon *gc, char *name, char *id, char *style)
 {
    Evas_Object *o;
-   Battery_Face *ef;
-   E_Gadman_Policy  policy;
-
-   ef = E_NEW(Battery_Face, 1);
-   if (!ef) return NULL;
-
-   ef->con = con;
-   e_object_ref(E_OBJECT(con));
-
-   evas_event_freeze(con->bg_evas);
-   o = edje_object_add(con->bg_evas);
-   ef->bat_object = o;
-
+   E_Gadcon_Client *gcc;
+   Instance *inst;
+   
+   inst = E_NEW(Instance, 1);
+   
+   o = edje_object_add(gc->evas);
    e_theme_edje_object_set(o, "base/theme/modules/battery",
 			   "modules/battery/main");
-   evas_object_show(o);
-
-   o = evas_object_rectangle_add(con->bg_evas);
-   ef->event_object = o;
-   evas_object_layer_set(o, 2);
-   evas_object_repeat_events_set(o, 1);
-   evas_object_color_set(o, 0, 0, 0, 0);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _battery_face_cb_mouse_down, ef);
-   evas_object_show(o);
-
-   ef->gmc = e_gadman_client_new(con->gadman);
-   e_gadman_client_domain_set(ef->gmc, "module.battery", battery_count++);
-
-   policy = E_GADMAN_POLICY_ANYWHERE | 
-	    E_GADMAN_POLICY_HMOVE | 
-	    E_GADMAN_POLICY_VMOVE | 
-	    E_GADMAN_POLICY_HSIZE |
-	    E_GADMAN_POLICY_VSIZE;
-   e_gadman_client_policy_set(ef->gmc, policy);
-   e_gadman_client_min_size_set(ef->gmc, 4, 4);
-   e_gadman_client_max_size_set(ef->gmc, 128, 128);
-   e_gadman_client_auto_size_set(ef->gmc, 40, 40);
-   e_gadman_client_align_set(ef->gmc, 1.0, 1.0);
-   e_gadman_client_resize(ef->gmc, 40, 40);
-   e_gadman_client_change_func_set(ef->gmc, _battery_face_cb_gmc_change, ef);
-   e_gadman_client_load(ef->gmc);
-   evas_event_thaw(con->bg_evas);
-
-   return ef;
-}
-
-static void
-_battery_face_free(Battery_Face *ef)
-{
-   e_object_unref(E_OBJECT(ef->con));
-   e_object_del(E_OBJECT(ef->gmc));
-   e_object_del(E_OBJECT(ef->menu));
-   evas_object_del(ef->bat_object);
-   evas_object_del(ef->event_object);
-
-   free(ef->conf);
-   free(ef);
-   battery_count--;
-}
-
-static void
-_battery_face_menu_new(Battery_Face *face)
-{
-   E_Menu *mn;
-   E_Menu_Item *mi;
-
-   mn = e_menu_new();
-   face->menu = mn;
-
-   /* Config */
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Configuration"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");   
-   e_menu_item_callback_set(mi, _battery_face_cb_menu_configure, face);
    
-   /* Edit */
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Edit Mode"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/gadgets");   
-   e_menu_item_callback_set(mi, _battery_face_cb_menu_edit, face);
+   gcc = e_gadcon_client_new(gc, name, id, style, o);
+   gcc->data = inst;
+   
+   inst->gcc = gcc;
+   inst->o_battery = o;   
+   
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
+				  _button_cb_mouse_down, inst);
+   battery_config->instances = evas_list_append(battery_config->instances, inst);
+   battery_config->battery_check_mode = CHECK_NONE;
+   battery_config->battery_prev_drain = 1;
+   battery_config->battery_prev_ac = -1;
+   battery_config->battery_prev_battery = -1;
+   _battery_cb_check(NULL);
+   return gcc;
 }
 
 static void
-_battery_face_enable(Battery_Face *face)
+_gc_shutdown(E_Gadcon_Client *gcc)
 {
-   face->conf->enabled = 1;
-   evas_object_show(face->bat_object);
-   evas_object_show(face->event_object);
-   e_config_save_queue();
+   Instance *inst;
+   
+   inst = gcc->data;
+   battery_config->instances = evas_list_remove(battery_config->instances, inst);
+   evas_object_del(inst->o_battery);
+   free(inst);
 }
 
 static void
-_battery_face_disable(Battery_Face *face)
+_gc_orient(E_Gadcon_Client *gcc)
 {
-   face->conf->enabled = 0;
-   evas_object_hide(face->bat_object);
-   evas_object_hide(face->event_object);
-   e_config_save_queue();
+   Instance *inst;
+   
+   inst = gcc->data;
+   e_gadcon_client_aspect_set(gcc, 16, 16);
+   e_gadcon_client_min_size_set(gcc, 16, 16);
 }
+/**/
+/***************************************************************************/
 
+/***************************************************************************/
+/**/
 static void
-_battery_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change)
+_button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   Battery_Face *ef;
-   Evas_Coord x, y, w, h;
-
-   ef = data;
-   switch (change)
-     {
-      case E_GADMAN_CHANGE_MOVE_RESIZE:
-	 e_gadman_client_geometry_get(ef->gmc, &x, &y, &w, &h);
-	 evas_object_move(ef->bat_object, x, y);
-	 evas_object_move(ef->event_object, x, y);
-	 evas_object_resize(ef->bat_object, w, h);
-	 evas_object_resize(ef->event_object, w, h);
-	 break;
-      case E_GADMAN_CHANGE_RAISE:
-	 evas_object_raise(ef->bat_object);
-	 evas_object_raise(ef->event_object);
-	 break;
-      case E_GADMAN_CHANGE_EDGE:
-      case E_GADMAN_CHANGE_ZONE:
-	 /* FIXME
-	  * Must we do something here?
-	  */
-	 break;
-     }
-}
-
-static void
-_battery_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
+   Instance *inst;
    Evas_Event_Mouse_Down *ev;
-   Battery_Face *ef;
-
+   
+   inst = data;
    ev = event_info;
-   ef = data;
-   if (ev->button == 3)
+   if ((ev->button == 3) && (!battery_config->menu))
      {
-	e_menu_activate_mouse(ef->menu, e_zone_current_get(ef->con),
-			      ev->output.x, ev->output.y, 1, 1,
+	E_Menu *mn;
+	E_Menu_Item *mi;
+	int cx, cy, cw, ch;
+	
+	mn = e_menu_new();
+	e_menu_post_deactivate_callback_set(mn, _menu_cb_post, inst);
+	battery_config->menu = mn;
+
+	mi = e_menu_item_new(mn);
+	e_menu_item_label_set(mi, _("Configuration"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");   
+	e_menu_item_callback_set(mi, _battery_face_cb_menu_configure, NULL);
+	
+	e_gadcon_client_util_menu_items_append(inst->gcc, mn, 0);
+	
+	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
+					  &cx, &cy, &cw, &ch);
+	e_menu_activate_mouse(mn,
+			      e_util_zone_current_get(e_manager_current_get()),
+			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
-	e_util_container_fake_mouse_up_all_later(ef->con);
+	evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
+				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
+}
+
+static void
+_menu_cb_post(void *data, E_Menu *m)
+{
+   if (!battery_config->menu) return;
+   e_object_del(E_OBJECT(battery_config->menu));
+   battery_config->menu = NULL;
 }
 
 static int
 _battery_cb_check(void *data)
 {
-   Battery *ef;
-   Battery_Face *face;
-   Evas_List *l;
+   Instance *inst;
    Status *ret = NULL;
-
-   ef = data;
+   Evas_List *l;
 #ifdef __FreeBSD__
    int acline;
    size_t len;
    int apm_fd = -1;
    int acline_mib[3] = {-1};
-   
-   if (ef->battery_check_mode == 0)
+#endif
+
+#ifdef __FreeBSD__
+   if (battery_config->battery_check_mode == 0)
      {
       	len = sizeof(acline);
       	if (sysctlbyname("hw.acpi.acline", &acline, &len, NULL, 0) == 0) 
@@ -482,177 +207,153 @@ _battery_cb_check(void *data)
    switch (ef->battery_check_mode)
      {
       case CHECK_ACPI:
-	ret = _battery_bsd_acpi_check(ef);
+	ret = _battery_bsd_acpi_check();
 	break;
       case CHECK_APM:
-	ret = _battery_bsd_apm_check(ef);
+	ret = _battery_bsd_apm_check();
 	break;
       default:
 	break;
      }
 #elif defined(HAVE_CFBASE_H) /* OS X */
-   ret = _battery_darwin_check(ef);
+   ret = _battery_darwin_check();
 #else
-   if (ef->battery_check_mode == 0)
+   if (battery_config->battery_check_mode == 0)
      {
 	if (ecore_file_is_dir("/proc/acpi"))
-	  ef->battery_check_mode = CHECK_ACPI;
+	  battery_config->battery_check_mode = CHECK_ACPI;
 	else if (ecore_file_exists("/proc/apm"))
-	  ef->battery_check_mode = CHECK_APM;
+	  battery_config->battery_check_mode = CHECK_APM;
 	else if (ecore_file_is_dir("/proc/pmu"))
-	  ef->battery_check_mode = CHECK_PMU;
+	  battery_config->battery_check_mode = CHECK_PMU;
      }
-   switch (ef->battery_check_mode)
+   switch (battery_config->battery_check_mode)
      {
       case CHECK_ACPI:
-	ret = _battery_linux_acpi_check(ef);
+	ret = _battery_linux_acpi_check();
 	break;
       case CHECK_APM:
-	ret = _battery_linux_apm_check(ef);
+	ret = _battery_linux_apm_check();
 	break;
       case CHECK_PMU:
-	ret = _battery_linux_powerbook_check(ef);
+	ret = _battery_linux_powerbook_check();
 	break;
       default:
 	break;
      }
 #endif
-   if (ret)
+   for (l = battery_config->instances; l; l = l->next)
      {
-	if (ret->has_battery)
+	Instance *inst;
+	
+	inst = l->data;
+	if (ret)
 	  {
-	     if (ret->state == BATTERY_STATE_CHARGING)
+	     if (ret->has_battery)
 	       {
-		  for (l = ef->faces; l; l = l->next)
+		  if (ret->state == BATTERY_STATE_CHARGING)
 		    {
-		       face = l->data;
-		       if (ef->battery_prev_ac != 1)
-			 edje_object_signal_emit(face->bat_object, "charge", "");
-		       edje_object_signal_emit(face->bat_object, "pulsestop", "");
-		       edje_object_part_text_set(face->bat_object, "reading", ret->reading);
-		       edje_object_part_text_set(face->bat_object, "time", ret->time);
-		       _battery_face_level_set(face, ret->level);
-
+		       if (battery_config->battery_prev_ac != 1)
+			 edje_object_signal_emit(inst->o_battery, "charge", "");
+		       edje_object_signal_emit(inst->o_battery, "pulsestop", "");
+		       edje_object_part_text_set(inst->o_battery, "reading", ret->reading);
+		       edje_object_part_text_set(inst->o_battery, "time", ret->time);
+		       _battery_face_level_set(inst, ret->level);
+		       battery_config->battery_prev_ac = 1;
 		    }
-		  ef->battery_prev_ac = 1;
-	       }
-	     else if (ret->state == BATTERY_STATE_DISCHARGING)
-	       {
-		  for (l = ef->faces; l; l = l->next)
+		  else if (ret->state == BATTERY_STATE_DISCHARGING)
 		    {
-		       face = l->data;
-		       if (ef->battery_prev_ac != 0)
-			 edje_object_signal_emit(face->bat_object, "discharge", "");
+		       if (battery_config->battery_prev_ac != 0)
+			 edje_object_signal_emit(inst->o_battery, "discharge", "");
 		       if (ret->alarm)
 			 {
-			    if (!ef->alarm_triggered)
+			    if (!battery_config->alarm_triggered)
 			      {
 				 E_Dialog *dia;
-
+				 
 				 dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
 				 if (!dia) return 0;
 				 e_dialog_title_set(dia, "Enlightenment Battery Module");
 				 e_dialog_icon_set(dia, "enlightenment/e", 64);
-				 e_dialog_text_set(dia, _("Battery Running Low<br>"
-							  "Your battery is running low.<br>"
-							  "You may wish to switch to an AC source."));
+				 e_dialog_text_set(dia,
+						   _("Battery Running Low<br>"
+						     "Your battery is running low.<br>"
+						     "You may wish to switch to an AC source."));
 				 e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
 				 e_win_centered_set(dia->win, 1);
 				 e_dialog_show(dia);
 			      }
-			    edje_object_signal_emit(face->bat_object, "pulse", "");
+			    edje_object_signal_emit(inst->o_battery, "pulse", "");
 			 }
-		       edje_object_part_text_set(face->bat_object, "reading", ret->reading);
-		       edje_object_part_text_set(face->bat_object, "time", ret->time);
-		       _battery_face_level_set(face, ret->level);
-
+		       edje_object_part_text_set(inst->o_battery, "reading", ret->reading);
+		       edje_object_part_text_set(inst->o_battery, "time", ret->time);
+		       _battery_face_level_set(inst, ret->level);
+		       battery_config->battery_prev_ac = 0;
+		       if (ret->alarm)
+			 battery_config->alarm_triggered = 1;
 		    }
-		  ef->battery_prev_ac = 0;
-		  if (ret->alarm)
-		    ef->alarm_triggered = 1;
+		  else
+		    {
+		       /* ret->state == BATTERY_STATE_NONE */
+		       if (battery_config->battery_prev_ac != 1)
+			 edje_object_signal_emit(inst->o_battery, "charge", "");
+		       if (battery_config->battery_prev_battery == 0)
+			 edje_object_signal_emit(inst->o_battery, "charge", "");
+		       edje_object_part_text_set(inst->o_battery, "reading", ret->reading);
+		       edje_object_part_text_set(inst->o_battery, "time", ret->time);
+		       _battery_face_level_set(inst, ret->level);
+		       battery_config->battery_prev_ac = 1;
+		       battery_config->battery_prev_battery = 1;
+		    }
 	       }
 	     else
 	       {
-		  /* ret->state == BATTERY_STATE_NONE */
-		  for (l = ef->faces; l; l = l->next)
-		    {
-		       face = l->data;
-		       if (ef->battery_prev_ac != 1)
-			 edje_object_signal_emit(face->bat_object, "charge", "");
-		       if (ef->battery_prev_battery == 0)
-			 edje_object_signal_emit(face->bat_object, "charge", "");
-		       edje_object_part_text_set(face->bat_object, "reading", ret->reading);
-		       edje_object_part_text_set(face->bat_object, "time", ret->time);
-		       _battery_face_level_set(face, ret->level);
-
-		    }
-		  ef->battery_prev_ac = 1;
-		  ef->battery_prev_battery = 1;
+		  /* Hasn't battery */
+		  if (battery_config->battery_prev_battery != 0)
+		    edje_object_signal_emit(inst->o_battery, "unknown", "");
+		  edje_object_part_text_set(inst->o_battery, "reading", ret->reading);
+		  edje_object_part_text_set(inst->o_battery, "time", ret->time);
+		  _battery_face_level_set(inst, ret->level);
+		  battery_config->battery_prev_battery = 0;
 	       }
+	     free(ret->reading);
+	     free(ret->time);
+	     free(ret);
 	  }
 	else
 	  {
-	     /* Hasn't battery */
-	     for (l = ef->faces; l; l = l->next)
-	       {
-		  face = l->data;
-		  if (ef->battery_prev_battery != 0)
-		    edje_object_signal_emit(face->bat_object, "unknown", "");
-		  edje_object_part_text_set(face->bat_object, "reading", ret->reading);
-		  edje_object_part_text_set(face->bat_object, "time", ret->time);
-		  _battery_face_level_set(face, ret->level);
-
-	       }
-	     ef->battery_prev_battery = 0;
+	     /* Error reading status */
+	     if (battery_config->battery_prev_battery != -2)
+	       edje_object_signal_emit(inst->o_battery, "unknown", "");
+	     edje_object_part_text_set(inst->o_battery, "reading", _("NO INFO"));
+	     edje_object_part_text_set(inst->o_battery, "time", "--:--");
+	     _battery_face_level_set(inst, (double)(rand() & 0xff) / 255.0);
+	     battery_config->battery_prev_battery = -2;
+	     battery_config->battery_check_mode = CHECK_NONE;
 	  }
-	free(ret->reading);
-	free(ret->time);
-	free(ret);
-     }
-   else
-     {
-	/* Error reading status */
-	for (l = ef->faces; l; l = l->next)
-	  {
-	     face = l->data;
-
-	     if (ef->battery_prev_battery != -2)
-	       edje_object_signal_emit(face->bat_object, "unknown", "");
-	     edje_object_part_text_set(face->bat_object, "reading", _("NO INFO"));
-	     edje_object_part_text_set(face->bat_object, "time", "--:--");
-	     _battery_face_level_set(face, (double)(rand() & 0xff) / 255.0);
-	  }
-	ef->battery_prev_battery = -2;
-	ef->battery_check_mode = CHECK_NONE;
      }
    return 1;
 }
 
 static Status *
-_battery_linux_acpi_check(Battery *ef)
+_battery_linux_acpi_check(void)
 {
    Ecore_List *bats;
    char buf[4096], buf2[4096];
    char *name;
-
    int bat_max = 0;
    int bat_filled = 0;
    int bat_level = 0;
    int bat_drain = 1;
-
    int bat_val = 0;
-
    int discharging = 0;
    int charging = 0;
    int battery = 0;
-
    int design_cap_unknown = 0;
    int last_full_unknown = 0;
    int rate_unknown = 0;
    int level_unknown = 0;
-
    int hours, minutes;
-
    Status *stat;
 
    stat = E_NEW(Status, 1);
@@ -767,9 +468,9 @@ _battery_linux_acpi_check(Battery *ef)
 	ecore_list_destroy(bats);
      }
 
-   if (ef->battery_prev_drain < 1) ef->battery_prev_drain = 1;
-   if (bat_drain < 1) bat_drain = ef->battery_prev_drain;
-   ef->battery_prev_drain = bat_drain;
+   if (battery_config->battery_prev_drain < 1) battery_config->battery_prev_drain = 1;
+   if (bat_drain < 1) bat_drain = battery_config->battery_prev_drain;
+   battery_config->battery_prev_drain = bat_drain;
 
    if (bat_filled > 0) bat_val = (100 * bat_level) / bat_filled;
    else bat_val = 100;
@@ -799,19 +500,19 @@ _battery_linux_acpi_check(Battery *ef)
      }
    else if ((charging) || (discharging))
      {
-	ef->battery_prev_battery = 1;
+	battery_config->battery_prev_battery = 1;
 	stat->has_battery = 1;
         if (charging)
           {
 	     stat->state = BATTERY_STATE_CHARGING;
-	     ef->alarm_triggered = 0;
+	     battery_config->alarm_triggered = 0;
           }
 	else if (discharging)
 	  {
 	     stat->state = BATTERY_STATE_DISCHARGING;
 	     if (stat->level < 0.1)
 	       {
-		  if (((hours * 60) + minutes) <= ef->conf->alarm)
+		  if (((hours * 60) + minutes) <= battery_config->alarm)
 		    stat->alarm = 1;
 	       }
 	  }
@@ -849,7 +550,7 @@ _battery_linux_acpi_check(Battery *ef)
 }
 
 static Status *
-_battery_linux_apm_check(Battery *ef)
+_battery_linux_apm_check(void)
 {
    FILE *f;
    char s[256], s1[32], s2[32], s3[32], buf[4096];
@@ -888,7 +589,7 @@ _battery_linux_apm_check(Battery *ef)
      }
    
    
-   ef->battery_prev_battery = 1;
+   battery_config->battery_prev_battery = 1;
    stat->has_battery = 1;
    if (bat_val >= 0)
      {
@@ -936,7 +637,7 @@ _battery_linux_apm_check(Battery *ef)
 	stat->time = strdup(buf);
 	if (stat->level < 0.1)
 	  {
-	     if (((hours * 60) + minutes) <= ef->conf->alarm)
+	     if (((hours * 60) + minutes) <= battery_config->alarm)
 	       stat->alarm = 1;
 	  }
      }
@@ -981,7 +682,7 @@ axtoi(char *arg)
 }
 
 static Status *
-_battery_linux_powerbook_check(Battery *ef)
+_battery_linux_powerbook_check(void)
 {
    Ecore_List *bats;
    char buf[4096], buf2[4096];
@@ -1116,14 +817,14 @@ _battery_linux_powerbook_check(Battery *ef)
         if (charging)
           {
 	     stat->state = BATTERY_STATE_CHARGING;
-	     ef->alarm_triggered = 0;
+	     battery_config->alarm_triggered = 0;
           }
 	else if (discharging)
 	  {
 	     stat->state = BATTERY_STATE_DISCHARGING;
 	     if (stat->level < 0.1)
 	       {
-		  if (((hours * 60) + minutes) <= ef->conf->alarm)
+		  if (((hours * 60) + minutes) <= battery_config->alarm)
 		    stat->alarm = 1;
 	       }
 	  }
@@ -1151,7 +852,7 @@ _battery_linux_powerbook_check(Battery *ef)
 
 #ifdef __FreeBSD__
 static Status *
-_battery_bsd_acpi_check(Battery *ef)
+_battery_bsd_acpi_check(void)
 {
    /* Assumes only a single battery - I don't know how multiple batts 
     * are represented in sysctl */
@@ -1225,13 +926,13 @@ _battery_bsd_acpi_check(Battery *ef)
       /* ERROR */
       batteries = 1;     
    
-   if (ef->battery_prev_drain < 1)  
-     ef->battery_prev_drain = 1;
+   if (battery_config->battery_prev_drain < 1)  
+     battery_config->battery_prev_drain = 1;
    
    if (bat_drain < 1) 
-     bat_drain = ef->battery_prev_drain;
+     bat_drain = battery_config->battery_prev_drain;
    
-   ef->battery_prev_drain = bat_drain;
+   battery_config->battery_prev_drain = bat_drain;
 
    /*if (bat_filled > 0) 
      bat_val = (100 * bat_level) / bat_filled;
@@ -1267,19 +968,19 @@ _battery_bsd_acpi_check(Battery *ef)
    else if ((state == BATTERY_STATE_CHARGING) || 
 	    (state == BATTERY_STATE_DISCHARGING)) 
      {
-	ef->battery_prev_battery = 1;
+	battery_config->battery_prev_battery = 1;
 	stat->has_battery = 1;
         if (state == BATTERY_STATE_CHARGING)
           {
 	     stat->state = BATTERY_STATE_CHARGING;
-	     ef->alarm_triggered = 0;
+	     battery_config->alarm_triggered = 0;
           }
 	else if (state == BATTERY_STATE_DISCHARGING)
 	  {
 	     stat->state = BATTERY_STATE_DISCHARGING;
 	     if (stat->level < 0.1) /* Why this if condition */
 	       {
-		  if (((hours * 60) + minutes) <= ef->conf->alarm)
+		  if (((hours * 60) + minutes) <= battery_config->alarm)
 		    stat->alarm = 1;
 	       }
 	  }
@@ -1317,7 +1018,7 @@ _battery_bsd_acpi_check(Battery *ef)
 }
 
 static Status *
-_battery_bsd_apm_check(Battery *ef)
+_battery_bsd_apm_check(void)
 {
 #ifdef __i386__
    int  ac_stat, bat_stat, bat_val, time_val;
@@ -1358,7 +1059,7 @@ _battery_bsd_apm_check(Battery *ef)
      }
    
    
-   ef->battery_prev_battery = 1;
+   battery_config->battery_prev_battery = 1;
    stat->has_battery = 1;
 
    if (ac_stat) /* Wallpowered */
@@ -1402,7 +1103,7 @@ _battery_bsd_apm_check(Battery *ef)
 
 	if (stat->level < 0.1) /* Why this if condition? */
 	  {
-	     if (((hours * 60) + minutes) <= ef->conf->alarm)
+	     if (((hours * 60) + minutes) <= battery_config->alarm)
 	       stat->alarm = 1;
 	  }
      }
@@ -1419,7 +1120,7 @@ _battery_bsd_apm_check(Battery *ef)
  * There is a good chance this will work with a UPS as well as a battery.
  */
 static Status *
-_battery_darwin_check(Battery *ef)
+_battery_darwin_check(void)
 {
    const void *values;
    int device_num;
@@ -1496,7 +1197,7 @@ _battery_darwin_check(Battery *ef)
    /*
     * A battery was found so move along based on that assumption.
     */
-   ef->battery_prev_battery = 1;
+   battery_config->battery_prev_battery = 1;
    stat->has_battery = 1;
 
    /*
@@ -1540,7 +1241,7 @@ _battery_darwin_check(Battery *ef)
 	/*
 	 * Check if an alarm should be raised.
 	 */
-	if (currentval <= ef->conf->alarm)
+	if (currentval <= battery_config->alarm)
 	  stat->alarm = 1;
      }
    else
@@ -1574,23 +1275,14 @@ _battery_darwin_check(Battery *ef)
 #endif
 
 static void
-_battery_face_level_set(Battery_Face *ef, double level)
+_battery_face_level_set(Instance *inst, double level)
 {
    Edje_Message_Float msg;
 
    if (level < 0.0) level = 0.0;
    else if (level > 1.0) level = 1.0;
    msg.val = level;
-   edje_object_message_send(ef->bat_object, EDJE_MESSAGE_FLOAT, 1, &msg);
-}
-
-static void
-_battery_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Battery_Face *face;
-
-   face = data;
-   e_gadman_mode_set(face->gmc->gadman, E_GADMAN_MODE_EDIT);
+   edje_object_message_send(inst->o_battery, EDJE_MESSAGE_FLOAT, 1, &msg);
 }
 
 static int
@@ -1626,18 +1318,113 @@ _battery_string_get(char *buf)
 static void 
 _battery_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi) 
 {
-   Battery_Face *face;
-   
-   face = data;
-   if (!face) return;
-   _config_battery_module(face->con, face->battery);
+   if (!battery_config) return;
+   if (battery_config->config_dialog) return;
+   _config_battery_module();
 }
 
-void 
-_battery_face_cb_config_updated(Battery *bat) 
+void
+_battery_config_updated(void)
 {
-   /* Update Poll Time */
-   ecore_timer_del(bat->battery_check_timer);
-   bat->battery_check_timer = ecore_timer_add(bat->conf->poll_time, _battery_cb_check, bat);   
+   if (!battery_config) return;
+   ecore_timer_del(battery_config->battery_check_timer);
+   battery_config->battery_check_timer = ecore_timer_add(battery_config->poll_time,
+						 _battery_cb_check, NULL);
+   _battery_cb_check(NULL);
 }
 
+/***************************************************************************/
+/**/
+/* module setup */
+EAPI E_Module_Api e_modapi = 
+{
+   E_MODULE_API_VERSION,
+     "Battery"
+};
+
+EAPI void *
+e_modapi_init(E_Module *m)
+{
+   conf_edd = E_CONFIG_DD_NEW("Battery_Config", Config);
+#undef T
+#undef D
+#define T Config
+#define D conf_edd
+   E_CONFIG_VAL(D, T, poll_time, DOUBLE);
+   E_CONFIG_VAL(D, T, alarm, INT);
+
+   battery_config = e_config_domain_load("module.battery", conf_edd);
+   if (!battery_config)
+     {
+       battery_config = E_NEW(Config, 1);
+       battery_config->poll_time = 30.0;
+       battery_config->alarm = 30;
+     }
+   E_CONFIG_LIMIT(battery_config->poll_time, 0.5, 1000.0);
+   E_CONFIG_LIMIT(battery_config->alarm, 0, 60);
+   
+   battery_config->battery_check_mode = CHECK_NONE;
+   battery_config->battery_prev_drain = 1;
+   battery_config->battery_prev_ac = -1;
+   battery_config->battery_prev_battery = -1;
+   battery_config->battery_check_timer = ecore_timer_add(battery_config->poll_time,
+						 _battery_cb_check, NULL);
+   e_gadcon_provider_register(&_gadcon_class);
+   return 1;
+}
+
+EAPI int
+e_modapi_shutdown(E_Module *m)
+{
+   e_gadcon_provider_unregister(&_gadcon_class);
+   
+   if (battery_config->config_dialog)
+     e_object_del(E_OBJECT(battery_config->config_dialog));
+   if (battery_config->battery_check_timer)
+     ecore_timer_del(battery_config->battery_check_timer);
+   if (battery_config->menu) e_object_del(E_OBJECT(battery_config->menu));
+   free(battery_config);
+   battery_config = NULL;
+   E_CONFIG_DD_FREE(conf_edd);
+   return 1;
+}
+
+EAPI int
+e_modapi_save(E_Module *m)
+{
+   e_config_domain_save("module.battery", conf_edd, battery_config);
+   return 1;
+}
+
+EAPI int
+e_modapi_info(E_Module *m)
+{
+   char buf[4096];
+
+   snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(m));
+   m->icon_file = strdup(buf);
+   return 1;
+}
+
+EAPI int
+e_modapi_about(E_Module *m)
+{
+   e_module_dialog_show(_("Enlightenment Battery Module"),
+		       _("A basic battery meter that uses either"
+		 	 "<hilight>ACPI</hilight> or <hilight>APM</hilight><br>"
+			 "on Linux to monitor your battery and AC power adaptor<br>"
+			 "status. This will work under Linux and FreeBSD and is only<br>"
+			 "as accurate as your BIOS or kernel drivers."));
+   return 1;
+}
+
+EAPI int
+e_modapi_config(E_Module *m)
+{
+   if (!battery_config) return 0;
+   if (battery_config->config_dialog) return 0;
+   _config_battery_module();
+   return 1;
+}
+/**/
+/***************************************************************************/

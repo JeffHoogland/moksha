@@ -207,6 +207,21 @@ e_popup_idler_before(void)
 		       orects = pop->shape_rects;
 		       for (i = 0; i < num; i++)
 			 {
+			    if (rects[i].x < 0)
+			      {
+				 rects[i].width -= rects[i].x;
+				 rects[i].x = 0;
+			      }
+			    if ((rects[i].x + rects[i].width) > pop->w)
+			      rects[i].width = rects[i].width - rects[i].x;
+			    if (rects[i].y < 0)
+			      {
+				 rects[i].height -= rects[i].y;
+				 rects[i].y = 0;
+			      }
+			    if ((rects[i].y + rects[i].height) > pop->h)
+			      rects[i].height = rects[i].height - rects[i].y;
+			    
 			    if ((orects[i].x != rects[i].x) ||
 				(orects[i].y != rects[i].y) ||
 				(orects[i].width != rects[i].width) ||
@@ -216,7 +231,7 @@ e_popup_idler_before(void)
 				 break;
 			      }
 			 }
-		       changed = 0;
+//		       changed = 0;
 		    }
 		  if (changed)
 		    {

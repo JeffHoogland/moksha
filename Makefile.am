@@ -11,7 +11,7 @@ bin_SCRIPTS = enlightenment-config
 EXTRA_DIST = README AUTHORS COPYING COPYING-PLAIN enlightenment.spec \
 	     debian/changelog debian/changelog.in debian/copyright \
 	     debian/rules debian/enlightenment.install \
-	     debian/enlightenment.docs debian/enlightenment-data.install \
+	     debian/enlightenment.docs \
 	     debian/libe.install debian/libe-dev.install debian/control \
 	     enlightenment.spec.in
 

@@ -64,6 +64,83 @@ _e_place_cb_sort_cmp(const void *v1, const void *v2)
    return (*((int *)v1)) - (*((int *)v2));
 }
 
+static int
+_e_place_coverage_border_add(E_Zone *zone, Evas_List *skiplist, int ar, int x, int y, int w, int h)
+{
+   Evas_List *ll;
+   E_Border_List *bl;
+   E_Border *bd;
+   int x2, y2, w2, h2;
+   int ok;
+   int iw, ih;
+   int x0, x00, y0, y00;
+   
+   bl = e_container_border_list_first(zone->container);
+   while ((bd = e_container_border_list_next(bl)))
+     {
+	ok = 1;
+	x2 = (bd->x - zone->x); y2 = (bd->y - zone->y); w2 = bd->w; h2 = bd->h;
+	for (ll = skiplist; ll; ll = ll->next)
+	  {
+	     if (ll->data == bd)
+	       {
+		  ok = 0;
+		  break;
+	       }
+	  }
+	if ((ok) && (bd->visible) && E_INTERSECTS(x, y, w, h, x2, y2, w2, h2))
+	  {
+	     x0 = x;
+	     if (x < x2) x0 = x2;
+	     x00 = (x + w);
+	     if ((x2 + w2) < (x + w)) x00 = (x2 + w2);
+	     y0 = y;
+	     if (y < y2) y0 = y2;
+	     y00 = (y + h);
+	     if ((y2 + h2) < (y + h)) y00 = (y2 + h2);
+	     iw = x00 - x0;
+	     ih = y00 - y0;
+	     ar += (iw * ih);
+	  }
+     }
+   e_container_border_list_free(bl);
+   return ar;
+}
+
+static int
+_e_place_coverage_shelf_add(E_Zone *zone, int ar, int x, int y, int w, int h)
+{
+   Evas_List *l;
+   E_Shelf *es;
+   int x2, y2, w2, h2;
+   int ok;
+   int iw, ih;
+   int x0, x00, y0, y00;
+   
+   for (l = e_shelf_list(); l; l = l->next)
+     {
+	
+	es = l->data;
+	if (es->zone != zone) continue;
+	x2 = es->x; y2 = es->y; w2 = es->w; h2 = es->h;
+	if (E_INTERSECTS(x, y, w, h, x2, y2, w2, h2))
+	  {
+	     x0 = x;
+	     if (x < x2) x0 = x2;
+	     x00 = (x + w);
+	     if ((x2 + w2) < (x + w)) x00 = (x2 + w2);
+	     y0 = y;
+	     if (y < y2) y0 = y2;
+	     y00 = (y + h);
+	     if ((y2 + h2) < (y + h)) y00 = (y2 + h2);
+	     iw = x00 - x0;
+	     ih = y00 - y0;
+	     ar += (iw * ih) * 100; /* 100 == 100 times more unlikely for overlap than a normal window */
+	  }
+     }
+   return ar;
+}
+
 EAPI int
 e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w, int h, int *rx, int *ry)
 {
@@ -90,59 +167,9 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 
    x -= zone->x;
    y -= zone->y;
+   zw = zone->w;
+   zh = zone->h;
       
-   if (e_config->window_placement_policy == E_WINDOW_PLACEMENT_ANTIGADGET)
-     {
-      Evas_List *l;
-      int cx1, cx2, cy1, cy2;
-
-      cx1 = zone->x;
-      cy1 = zone->y;
-      cx2 = zone->x + zone->w;
-      cy2 = zone->y + zone->h;
-   
-      /* Find the smallest box */
-      for (l = zone->container->gadman->clients; l; l = l->next)
-        {
-           E_Gadman_Client *gmc;
-	   double ax, ay;
-
-	   gmc = l->data;
-	   if ((gmc->zone != zone)) continue;
-
-	   ax = gmc->ax;
-	   ay = gmc->ay;
-
-	   if (((ax == 0.0) || (ax == 1.0)) &&
-	       ((ay == 0.0) || (ay == 1.0)))
-	     {
-	        /* corner gadget */
-	        /* Fake removal from one alignment :) */
-	        if (gmc->w > gmc->h)
-	          ax = 0.5;
-	        else
-	          ay = 0.5;
-	     }
-
-	   if ((ax == 0.0) && (gmc->x + gmc->w) > cx1)
-	     cx1 = (gmc->x + gmc->w);
-	   else if ((ax == 1.0) && (gmc->x < cx2))
-	     cx2 = gmc->x;
-	   else if ((ay == 0.0) && ((gmc->y + gmc->h) > cy1))
-	     cy1 = (gmc->y + gmc->h);
-	   else if ((ay == 1.0) && (gmc->y < cy2))
-	     cy2 = gmc->y;
-        }
-
-
-      zw = cx2 - cx1;
-      zh = cy2 - cy1;
-     }
-   else
-     {
-	     zw = zone->w;
-	     zh = zone->h;
-     }
    u_x = calloc(zw + 1, sizeof(char));
    u_y = calloc(zh + 1, sizeof(char));
    
@@ -150,7 +177,135 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
    a_x[1] = zw;
    a_y[0] = 0;
    a_y[1] = zh;
-
+   
+   if (e_config->window_placement_policy == E_WINDOW_PLACEMENT_ANTIGADGET)
+     {
+	Evas_List *l;
+	
+	for (l = zone->container->gadman->clients; l; l = l->next)
+	  {
+	     E_Gadman_Client *gmc;
+	     int bx, by, bw, bh;
+	     
+	     gmc = l->data;
+	     if ((gmc->zone != zone)) continue;
+	     
+	     bx = gmc->x;
+	     by = gmc->y;
+	     bw = gmc->w;
+	     bh = gmc->h;
+	     if (E_INTERSECTS(bx, by, bw, bh, 0, 0, zw, zh))
+	       {
+		  if ((bx > 0) && (bx <= zw) && (!u_x[bx]))
+		    {
+		       a_w++;
+		       if (a_w > a_alloc_w)
+			 {
+			    a_alloc_w += 32;
+			    E_REALLOC(a_x, int, a_alloc_w);
+			 }
+		       a_x[a_w - 1] = bx;
+		       u_x[bx] = 1;
+		    }
+		  if (((bx + bw) > 0) && ((bx + bw) <= zw) && (!u_x[bx + bw]))
+		    {
+		       a_w++;
+		       if (a_w > a_alloc_w)
+			 {
+			    a_alloc_w += 32;
+			    E_REALLOC(a_x, int, a_alloc_w);
+			 }
+		       a_x[a_w - 1] = bx + bw;
+		       u_x[bx + bw] = 1;
+		    }
+		  if ((by > 0) && (by <= zh) && (!u_y[by]))
+		    {
+		       a_h++;
+		       if (a_h > a_alloc_h)
+			 {
+			    a_alloc_h += 32;
+			    E_REALLOC(a_y, int, a_alloc_h);
+			 }
+		       a_y[a_h - 1] = by;
+		       u_y[by] = 1;
+		    }
+		  if (((by + bh) > 0) && ((by + bh) <= zh) && (!u_y[by + bh]))
+		    {
+		       a_h++;
+		       if (a_h > a_alloc_h)
+			 {
+			    a_alloc_h += 32;
+			    E_REALLOC(a_y, int, a_alloc_h);
+			 }
+		       a_y[a_h - 1] = by + bh;
+		       u_y[by + bh] = 1;
+		    }
+	       }
+	  }
+	for (l = e_shelf_list(); l; l = l->next)
+	  {
+	     E_Shelf *es;
+	     
+	     es = l->data;
+	     if (es->zone == zone)
+	       {
+		  int bx, by, bw, bh;
+		  
+		  bx = es->x;
+		  by = es->y;
+		  bw = es->w;
+		  bh = es->h;
+		  if (E_INTERSECTS(bx, by, bw, bh, 0, 0, zw, zh))
+		    {
+		       if ((bx > 0) && (bx <= zw) && (!u_x[bx]))
+			 {
+			    a_w++;
+			    if (a_w > a_alloc_w)
+			      {
+				 a_alloc_w += 32;
+				 E_REALLOC(a_x, int, a_alloc_w);
+			      }
+			    a_x[a_w - 1] = bx;
+			    u_x[bx] = 1;
+			 }
+		       if (((bx + bw) > 0) && ((bx + bw) <= zw) && (!u_x[bx + bw]))
+			 {
+			    a_w++;
+			    if (a_w > a_alloc_w)
+			      {
+				 a_alloc_w += 32;
+				 E_REALLOC(a_x, int, a_alloc_w);
+			      }
+			    a_x[a_w - 1] = bx + bw;
+			    u_x[bx + bw] = 1;
+			 }
+		       if ((by > 0) && (by <= zh) && (!u_y[by]))
+			 {
+			    a_h++;
+			    if (a_h > a_alloc_h)
+			      {
+				 a_alloc_h += 32;
+				 E_REALLOC(a_y, int, a_alloc_h);
+			      }
+			    a_y[a_h - 1] = by;
+			    u_y[by] = 1;
+			 }
+		       if (((by + bh) > 0) && ((by + bh) <= zh) && (!u_y[by + bh]))
+			 {
+			    a_h++;
+			    if (a_h > a_alloc_h)
+			      {
+				 a_alloc_h += 32;
+				 E_REALLOC(a_y, int, a_alloc_h);
+			      }
+			    a_y[a_h - 1] = by + bh;
+			    u_y[by + bh] = 1;
+			 }
+		    }
+	       }
+	  }
+     }
+   
    bl = e_container_border_list_first(zone->container);
    while ((bd = e_container_border_list_next(bl)))
      {
@@ -240,252 +395,72 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 		  {
 		     int ar = 0;
 
-		     bl = e_container_border_list_first(zone->container);
-		     while ((bd = e_container_border_list_next(bl)))
-		       {
-			  int x1, y1, w1, h1, x2, y2, w2, h2;
-			  int ok;
-			  
-			  ok = 1;
-			  x1 = a_x[i];
-			  y1 = a_y[j];
-			  w1 = w;
-			  h1 = h;
-			  x2 = (bd->x - zone->x);
-			  y2 = (bd->y - zone->y);
-			  w2 = bd->w;
-			  h2 = bd->h;
-			  for (ll = skiplist; ll; ll = ll->next)
-			    {
-			       if (ll->data == bd)
-				 {
-				    ok = 0;
-				    break;
-				 }
-			    }
-			  if ((ok) && (bd->visible) &&
-			      E_INTERSECTS(x1, y1, w1, h1, x2, y2, w2, h2))
-			    {
-			       int                 iw, ih;
-			       int                 x0, x00, y0, y00;
-
-			       x0 = x1;
-			       if (x1 < x2)
-				  x0 = x2;
-			       x00 = (x1 + w1);
-			       if ((x2 + w2) < (x1 + w1))
-				  x00 = (x2 + w2);
-
-			       y0 = y1;
-			       if (y1 < y2)
-				  y0 = y2;
-			       y00 = (y1 + h1);
-			       if ((y2 + h2) < (y1 + h1))
-				  y00 = (y2 + h2);
-
-			       iw = x00 - x0;
-			       ih = y00 - y0;
-			       ar += (iw * ih);
-			    }
-		       }
-		     e_container_border_list_free(bl);
-
+		     ar = _e_place_coverage_border_add(zone, skiplist, ar,
+						       a_x[i], a_y[j],
+						       w, h);
+		     ar = _e_place_coverage_shelf_add(zone, ar,
+						      a_x[i], a_y[j],
+						      w, h);
 		     if (ar < area)
 		       {
 			  area = ar;
 			  *rx = a_x[i];
 			  *ry = a_y[j];
-			  if (ar == 0)
-			     goto done;
+			  if (ar == 0) goto done;
 		       }
 		  }
 		if ((a_x[i + 1] - w > 0) && (a_y[j] < (zh - h)))
 		  {
 		     int ar = 0;
 
-		     bl = e_container_border_list_first(zone->container);
-		     while ((bd = e_container_border_list_next(bl)))
-		       {
-			  int x1, y1, w1, h1, x2, y2, w2, h2;
-			  int ok;
-			  
-			  ok = 1;
-			  x1 = a_x[i + 1] - w;
-			  y1 = a_y[j];
-			  w1 = w;
-			  h1 = h;
-			  x2 = (bd->x - zone->x);
-			  y2 = (bd->y - zone->y);
-			  w2 = bd->w;
-			  h2 = bd->h;
-			  for (ll = skiplist; ll; ll = ll->next)
-			    {
-			       if (ll->data == bd)
-				 {
-				    ok = 0;
-				    break;
-				 }
-			    }
-			  if ((ok) && (bd->visible) &&
-			      E_INTERSECTS(x1, y1, w1, h1, x2, y2, w2, h2))
-			    {
-			       int                 iw, ih;
-			       int                 x0, x00, y0, y00;
-
-			       x0 = x1;
-			       if (x1 < x2)
-				  x0 = x2;
-			       x00 = (x1 + w1);
-			       if ((x2 + w2) < (x1 + w1))
-				  x00 = (x2 + w2);
-
-			       y0 = y1;
-			       if (y1 < y2)
-				  y0 = y2;
-			       y00 = (y1 + h1);
-			       if ((y2 + h2) < (y1 + h1))
-				  y00 = (y2 + h2);
-
-			       iw = x00 - x0;
-			       ih = y00 - y0;
-			       ar += (iw * ih);
-			    }
-		       }
-		     e_container_border_list_free(bl);
-
+		     ar = _e_place_coverage_border_add(zone, skiplist, ar,
+						       a_x[i + 1] - w, a_y[j],
+						       w, h);
+		     ar = _e_place_coverage_shelf_add(zone, ar,
+						      a_x[i + 1] - w, a_y[j],
+						      w, h);
 		     if (ar < area)
 		       {
 			  area = ar;
 			  *rx = a_x[i + 1] - w;
 			  *ry = a_y[j];
-			  if (ar == 0)
-			     goto done;
+			  if (ar == 0) goto done;
 		       }
 		  }
 		if ((a_x[i + 1] - w > 0) && (a_y[j + 1] - h > 0))
 		  {
 		     int ar = 0;
 
-		     bl = e_container_border_list_first(zone->container);
-		     while ((bd = e_container_border_list_next(bl)))
-		       {
-			  int x1, y1, w1, h1, x2, y2, w2, h2;
-			  int ok;
-			  
-			  ok = 1;
-			  x1 = a_x[i + 1] - w;
-			  y1 = a_y[j + 1] - h;
-			  w1 = w;
-			  h1 = h;
-			  x2 = (bd->x - zone->x);
-			  y2 = (bd->y - zone->y);
-			  w2 = bd->w;
-			  h2 = bd->h;
-			  for (ll = skiplist; ll; ll = ll->next)
-			    {
-			       if (ll->data == bd)
-				 {
-				    ok = 0;
-				    break;
-				 }
-			    }
-			  if ((ok) && (bd->visible) &&
-			      E_INTERSECTS(x1, y1, w1, h1, x2, y2, w2, h2))
-			    {
-			       int                 iw, ih;
-			       int                 x0, x00, y0, y00;
-
-			       x0 = x1;
-			       if (x1 < x2)
-				  x0 = x2;
-			       x00 = (x1 + w1);
-			       if ((x2 + w2) < (x1 + w1))
-				  x00 = (x2 + w2);
-
-			       y0 = y1;
-			       if (y1 < y2)
-				  y0 = y2;
-			       y00 = (y1 + h1);
-			       if ((y2 + h2) < (y1 + h1))
-				  y00 = (y2 + h2);
-
-			       iw = x00 - x0;
-			       ih = y00 - y0;
-			       ar += (iw * ih);
-			    }
-		       }
-		     e_container_border_list_free(bl);
-
+		     ar = _e_place_coverage_border_add(zone, skiplist, ar,
+						       a_x[i + 1] - w, a_y[j + 1] - h,
+						       w, h);
+		     ar = _e_place_coverage_shelf_add(zone, ar,
+						      a_x[i + 1] - w, a_y[j + 1] - h,
+						      w, h);
 		     if (ar < area)
 		       {
 			  area = ar;
 			  *rx = a_x[i + 1] - w;
 			  *ry = a_y[j + 1] - h;
-			  if (ar == 0)
-			     goto done;
+			  if (ar == 0) goto done;
 		       }
 		  }
 		if ((a_x[i] < (zw - w)) && (a_y[j + 1] - h > 0))
 		  {
 		     int ar = 0;
 
-		     bl = e_container_border_list_first(zone->container);
-		     while ((bd = e_container_border_list_next(bl)))
-		       {
-			  int x1, y1, w1, h1, x2, y2, w2, h2;
-			  int ok;
-			  
-			  ok = 1;
-			  x1 = a_x[i];
-			  y1 = a_y[j + 1] - h;
-			  w1 = w;
-			  h1 = h;
-			  x2 = (bd->x - zone->x);
-			  y2 = (bd->y - zone->y);
-			  w2 = bd->w;
-			  h2 = bd->h;
-			  for (ll = skiplist; ll; ll = ll->next)
-			    {
-			       if (ll->data == bd)
-				 {
-				    ok = 0;
-				    break;
-				 }
-			    }
-			  if ((ok) && (bd->visible) &&
-			      E_INTERSECTS(x1, y1, w1, h1, x2, y2, w2, h2))
-			    {
-			       int                 iw, ih;
-			       int                 x0, x00, y0, y00;
-
-			       x0 = x1;
-			       if (x1 < x2)
-				  x0 = x2;
-			       x00 = (x1 + w1);
-			       if ((x2 + w2) < (x1 + w1))
-				  x00 = (x2 + w2);
-
-			       y0 = y1;
-			       if (y1 < y2)
-				  y0 = y2;
-			       y00 = (y1 + h1);
-			       if ((y2 + h2) < (y1 + h1))
-				  y00 = (y2 + h2);
-
-			       iw = x00 - x0;
-			       ih = y00 - y0;
-			       ar += (iw * ih);
-			    }
-		       }
-		     e_container_border_list_free(bl);
-
+		     ar = _e_place_coverage_border_add(zone, skiplist, ar,
+						       a_x[i], a_y[j + 1] - h,
+						       w, h);
+		     ar = _e_place_coverage_shelf_add(zone, ar,
+						      a_x[i], a_y[j + 1] - h,
+						      w, h);
 		     if (ar < area)
 		       {
 			  area = ar;
 			  *rx = a_x[i];
 			  *ry = a_y[j + 1] - h;
-			  if (ar == 0)
-			     goto done;
+			  if (ar == 0) goto done;
 		       }
 		  }
 	     }

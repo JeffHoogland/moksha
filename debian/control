@@ -2,7 +2,7 @@ Source: enlightenment
 Section: x11
 Priority: optional
 Maintainer: E17 Debian Team <debian@edevelop.org>
-Build-Depends: libevas-dev, libecore-dev, libeet-dev, libedje-dev, edje-bin, libembryo-dev, xlibs-dev, automake1.7 | automaken, libtool, debhelper (>= 4.0)
+Build-Depends: libevas-dev, libecore-dev, libeet-dev, libedje-dev, edje-bin, libembryo-dev, libx11-dev, x-dev, libxext-dev, automake1.7 | automaken, libtool, debhelper (>= 4.0)
 Standards-Version: 3.6.2.2
 
 Package: enlightenment
@@ -10,23 +10,12 @@ Architecture: any
 Section: x11
 Recommends: libevas-engine-xrender
 Suggests: entrance
-Depends: ${shlibs:Depends}, libe, enlightenment-data (>= 0.16.999), libevas, libecore, libecore-con, libecore-evas, libecore-file, libecore-ipc, libecore-job, libecore-txt, libecore-x, libeet, libembryo, embryo-bin, edje-bin, libedje, libevas-loader-eet, libevas-loader-jpeg, libevas-loader-png, libevas-saver-eet, libevas-saver-jpeg, libevas-saver-png, libevas-engine-buffer, libevas-engine-software-x11
+Depends: ${shlibs:Depends}, libe, libevas, libecore, libecore-con, libecore-evas, libecore-file, libecore-ipc, libecore-job, libecore-txt, libecore-x, libeet, libembryo, embryo-bin, edje-bin, libedje, libevas-loader-eet, libevas-loader-jpeg, libevas-loader-png, libevas-saver-eet, libevas-saver-jpeg, libevas-saver-png, libevas-engine-buffer, libevas-engine-software-x11
 Description: Enlightenment themes, etc.
  Enlightenment is an advanced window manager for X11. Unique
  features include: a fully animated background, nice drop shadows
  around windows, backed by an extremely clean and optimized
  foundation of APIs.
-
-Package: enlightenment-data
-Architecture: any
-Section: x11
-Depends: enlightenment (= ${Source-Version})
-Conflicts: enlightenment-data (< 0.16.999)
-Description: Enlightenment themes, etc.
- Enlightenment is an advanced window manager for X11. Unique
- features include: a fully animated background, nice drop shadows
- around windows, a unique application launcher module (ibar).  All
- backed by an extremely clean and optimized foundation of APIs.
 
 Package: libe
 Section: libs

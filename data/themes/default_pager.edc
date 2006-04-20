@@ -151,10 +151,64 @@ group {
 	 }
       }
       part {
-	 name:          "pager";
+	 name:          "background";
 	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       to:       "overlay";
+	    }
+	    rel2 {
+	       to:       "overlay";
+	    }
+	    image {
+	       normal: "e17_ibar_bg_h.png";
+	       border: 6 6 6 6;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+      }
+      part {
+	 name:          "items_clip";
+	 type:          RECT;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       to:       "background";
+	       offset:   4    4;
+	    }
+	    rel2 {
+	       to:       "background";
+	       offset:   -5    -5;
+	    }
+	    color: 255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "pager";
 	 type:          SWALLOW;
-         description {
+	 mouse_events:  0;
+	 clip_to:       "items_clip";
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       to: "overlay";
+	       offset:   4    4;
+	    }
+	    rel2 {
+	       to: "overlay";
+	       offset:   -5    -5;
+	    }
+	    color: 0 0 0 0;
+	 }
+      }
+      part {
+	 name:          "overlay";
+	 mouse_events:  0;
+	 description {
 	    state:    "default" 0.0;
 	    rel1 {
 	       to_y: "title_overlay";
@@ -165,7 +219,14 @@ group {
 	       relative: 1.0   1.0;
 	       offset:   -17    -17;
 	    }
-	    color: 0 0 0 0;
+	    image {
+	       normal: "e17_ibar_over_h.png";
+	       border: 13 13 13 13;
+	       middle: 0;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
 	 }
       }
    }
@@ -377,7 +438,8 @@ group {
       }
       part {
 	 name:          "overlay";
-	 mouse_events:  0;
+	 repeat_events: 1;
+//	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {

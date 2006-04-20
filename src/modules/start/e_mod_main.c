@@ -45,7 +45,6 @@ _gc_init(E_Gadcon *gc, char *name, char *id, char *style)
    E_Gadcon_Client *gcc;
    Instance *inst;
    
-   printf("CREATE START GADCON %s %s\n", name, id);
    inst = E_NEW(Instance, 1);
    
    o = edje_object_add(gc->evas);
@@ -59,13 +58,10 @@ _gc_init(E_Gadcon *gc, char *name, char *id, char *style)
    inst->o_button = o;
    inst->main_menu = NULL;
    
+   e_gadcon_client_util_menu_attach(gcc);
+   
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
 				  _button_cb_mouse_down, inst);
-   /* FIXME: add callback to resize - and based off one dimension, request
-    * another to be the same */
-   e_gadcon_client_size_request(gcc, 32, 32);
-   e_gadcon_client_min_size_set(gcc, 16, 16);
-   e_gadcon_client_aspect_set(gcc, 1, 1);
    return gcc;
 }
     
@@ -75,6 +71,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    Instance *inst;
    
    inst = gcc->data;
+   evas_object_del(inst->o_button);
    free(inst);
 }
     
@@ -84,9 +81,8 @@ _gc_orient(E_Gadcon_Client *gcc)
    Instance *inst;
    
    inst = gcc->data;
-   printf("OREINT to %i\n", gcc->gadcon->orient);
-   e_gadcon_client_aspect_set(gcc, 20, 20);
-   e_gadcon_client_min_size_set(gcc, 20, 20);
+   e_gadcon_client_aspect_set(gcc, 16, 16);
+   e_gadcon_client_min_size_set(gcc, 16, 16);
 }
 /**/
 /***************************************************************************/
@@ -105,15 +101,12 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
      {
 	Evas_Coord x, y, w, h;
 	int cx, cy, cw, ch;
-	E_Zone *zone;
 	
 	evas_object_geometry_get(inst->o_button, &x, &y, &w, &h); 
-	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy, &cw, &ch);
+	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
+					  &cx, &cy, &cw, &ch);
 	x += cx;
 	y += cy;
-	zone = e_gadcon_zone_get(inst->gcc->gadcon);
-	if (!zone)
-	  zone = e_util_zone_current_get(e_manager_current_get());
 	if (!inst->main_menu)
 	  inst->main_menu = e_int_menus_main_new();
 	if (inst->main_menu)
@@ -152,7 +145,8 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 				   x, y, w, h,
 				   dir, ev->timestamp);
 	     edje_object_signal_emit(inst->o_button, "active", "");
-	     evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button, EVAS_BUTTON_NONE, ev->timestamp, NULL);
+	     evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
+				      EVAS_BUTTON_NONE, ev->timestamp, NULL);
 	  }
      }
 }
@@ -184,7 +178,7 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    e_gadcon_provider_register(&_gadcon_class);
-   return NULL;
+   return 1;
 }
 
 EAPI int
@@ -216,12 +210,6 @@ e_modapi_about(E_Module *m)
    e_module_dialog_show(_("Enlightenment Start Module"),
 			_("Experimental Button module for E17"));
    return 1;
-}
-
-int
-e_modapi_config(E_Module *m)
-{
-   return 0;
 }
 /**/
 /***************************************************************************/

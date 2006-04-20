@@ -34,6 +34,7 @@ struct _E_Shelf
 EAPI int              e_shelf_init(void);
 EAPI int              e_shelf_shutdown(void);
 EAPI void             e_shelf_config_init(void);
+EAPI Evas_List       *e_shelf_list(void);
 EAPI E_Shelf         *e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, int layer);
 EAPI void             e_shelf_populate(E_Shelf *es);
 EAPI void             e_shelf_show(E_Shelf *es);

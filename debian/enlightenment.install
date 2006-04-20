@@ -21,9 +21,5 @@ debian/tmp/usr/lib/enlightenment/modules/start/*.png
 debian/tmp/usr/lib/enlightenment/modules/temperature/*/*.so
 debian/tmp/usr/lib/enlightenment/modules/temperature/*.png
 debian/tmp/usr/share/enlightenment
-debian/tmp/usr/share/enlightenment
-debian/tmp/usr/share/enlightenment
-debian/tmp/usr/share/enlightenment
-debian/tmp/usr/share/enlightenment
 debian/tmp/usr/share/locale
 debian/tmp/usr/share/xsessions

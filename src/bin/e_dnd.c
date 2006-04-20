@@ -3,6 +3,11 @@
  */
 #include "e.h"
 
+/* FIXME: broken when drop areas intersect 
+ * (sub window has drop area on top of lower window or desktop - 
+ * also shutdown is broken (walking list and deleting from the list as u go 
+ * in this code is broken)
+ */
 /*
  * TODO:
  * - Let an internal drag work with several types.

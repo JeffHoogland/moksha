@@ -6,6 +6,7 @@
 static void _e_shelf_free(E_Shelf *es);
 static const char *_e_shelf_orient_string_get(E_Shelf *es);
 static void _e_shelf_position_calc(E_Shelf *es);
+static void _e_shelf_gadcon_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 static void _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 static Evas_Object *_e_shelf_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *style);
 
@@ -47,6 +48,8 @@ e_shelf_config_init(void)
 	     if (es)
 	       {
 		  es->cfg = cf_es;
+		  es->fit_along = cf_es->fit_along;
+		  es->fit_size = cf_es->fit_size;
 		  e_shelf_orient(es, cf_es->orient);
 		  _e_shelf_position_calc(es);
 		  e_shelf_populate(es);
@@ -54,6 +57,12 @@ e_shelf_config_init(void)
 	       }
 	  }
      }
+}
+
+EAPI Evas_List *
+e_shelf_list(void)
+{
+   return shelves;
 }
 
 EAPI E_Shelf *
@@ -114,6 +123,9 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    snprintf(buf, sizeof(buf), "%i", shelf_id);
    shelf_id++;
    es->gadcon = e_gadcon_swallowed_new(es->name, buf, es->o_base, "items");
+   e_gadcon_min_size_request_callback_set(es->gadcon,
+					  _e_shelf_gadcon_min_size_request,
+					  es);
    e_gadcon_size_request_callback_set(es->gadcon,
 				      _e_shelf_gadcon_size_request,
 				      es);
@@ -466,6 +478,12 @@ _e_shelf_position_calc(E_Shelf *es)
 }
 
 static void
+_e_shelf_gadcon_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h)
+{
+   return;
+}
+
+static void
 _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h)
 {
    E_Shelf *es;
@@ -477,7 +495,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
    nw = es->w;
    nh = es->h;
    ww = hh = 0;
-   printf("req min = %i %i\n", w, h);
+   printf("req = %i %i\n", w, h);
    evas_object_geometry_get(gc->o_container, NULL, NULL, &ww, &hh);
    switch (gc->orient)
      {
@@ -537,7 +555,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	if (!es->fit_size) nw = es->w;
 	if (nw > es->zone->w) nw = es->zone->w;
 	if (nh > es->zone->h) nh = es->zone->h;
-	if (nh != es->h) ny = es->y + ((es->h - nh) / 2);
+	if (nh != es->h) ny = (es->zone->h - nh) / 2;
 	nx = 0;
 	break;
       case E_GADCON_ORIENT_RIGHT:
@@ -545,7 +563,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	if (!es->fit_size) nw = es->w;
 	if (nw > es->zone->w) nw = es->zone->w;
 	if (nh > es->zone->h) nh = es->zone->h;
-	if (nh != es->h) ny = es->y + ((es->h - nh) / 2);
+	if (nh != es->h) ny = (es->zone->h - nh) / 2;
 	nx = es->zone->w - nw;
 	break;
       case E_GADCON_ORIENT_TOP:
@@ -553,7 +571,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	if (!es->fit_size) nh = es->h;
 	if (nw > es->zone->w) nw = es->zone->w;
 	if (nh > es->zone->h) nh = es->zone->h;
-	if (nw != es->w) nx = es->x + ((es->w - nw) / 2);
+	if (nw != es->w) nx = (es->zone->w - nw) / 2;
 	ny = 0;
 	break;
       case E_GADCON_ORIENT_BOTTOM:
@@ -561,7 +579,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	if (!es->fit_size) nh = es->h;
 	if (nw > es->zone->w) nw = es->zone->w;
 	if (nh > es->zone->h) nh = es->zone->h;
-	if (nw != es->w) nx = es->x + ((es->w - nw) / 2);
+	if (nw != es->w) nx = (es->zone->w - nw) / 2;
 	ny = es->zone->h - nh;
 	break;
       case E_GADCON_ORIENT_CORNER_TL:

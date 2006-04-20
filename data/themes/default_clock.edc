@@ -1,8 +1,6 @@
 images {
    image: "e17_clock_bg.png" COMP;
    image: "e17_clock_fg.png" COMP;
-   image: "e17_ibar_over_h.png" COMP;
-   image: "e17_ibar_bg_h.png" COMP;
    image: "e17_clock_seconds_00.png" COMP;
    image: "e17_clock_seconds_01.png" COMP;
    image: "e17_clock_seconds_02.png" COMP;
@@ -189,24 +187,10 @@ group {
    script {
       public clock_cb(val) {
 	 new buf[11];
-	 new digitalVal[15];
-	 new hourStr[4], minuteStr[4], secondStr[4];
 	 new year, month, day, yearday, weekday, hour, minute;
 	 new Float:second;
 	 new v;
-	 new isAfternoon;
-	 new digiBuf[2];
-	 new digitalStyle;
-	 new DIGITAL_STYLE_NONE, DIGITAL_STYLE_NORMAL, DIGITAL_STYLE_24HOUR;
-
-	 DIGITAL_STYLE_NONE = 0;
-	 DIGITAL_STYLE_NORMAL = 1;
-	 DIGITAL_STYLE_24HOUR = 2;
-
-	 get_text(PART:"digitalStyle", digiBuf, 2);
-
-	 digitalStyle = atoi(digiBuf);
-
+	 
 	 date(year, month, day, yearday, weekday, hour, minute, second);
 	 v = round(second);
 #if E17_PROFILE != HIRES_PDA && E17_PROFILE != LOWRES_PDA && E17_PROFILE != MEDIUMRES_PDA
@@ -216,7 +200,6 @@ group {
 #endif
 #if E17_PROFILE != HIRES_PDA && E17_PROFILE != LOWRES_PDA && E17_PROFILE != MEDIUMRES_PDA
 	 buf[0] = 0;
-	 digitalVal[0] = 0;
 	 if (v < 10) {snprintf(buf, 10, "0%i", v);}
 	 else        {snprintf(buf, 10, "%i", v);}
 	 set_state(PART:"seconds", buf, 0.0);
@@ -232,59 +215,6 @@ group {
 	 if (v < 10) {snprintf(buf, 10, "0%i", v);}
 	 else        {snprintf(buf, 10, "%i", v);}
 	 set_state(PART:"hour", buf, 0.0);
-
-
-	 buf[0] = 0;
-	 v = round(second);
-	 if (v < 10) {snprintf(buf, 10, "0%i", v);}
-	 else        {snprintf(buf, 10, "%i", v);}
-	 snprintf(secondStr, 3, "%s", buf);
-
-	 buf[0] = 0;
-	 if (minute < 10) {snprintf(buf, 10, "0%i", minute);}
-	 else             {snprintf(buf, 10, "%i", minute);}
-	 snprintf(minuteStr, 3, "%s", buf);
-
-	 buf[0] = 0;
-	 isAfternoon = 0;
-	 v = hour;
-	 if (hour >= 12 && hour < 24) { isAfternoon = 1; }
-	 if (digitalStyle == DIGITAL_STYLE_NORMAL) {
-	    v = (v % 12);
-	    if (v == 0) { v = 12; }
-	 }
-	 if (digitalStyle == DIGITAL_STYLE_24HOUR && v < 10) {
-	    snprintf(buf, 10, "0%i", v);
-	 } else {
-	    snprintf(buf, 10, "%i", v);
-	 }
-	 snprintf(hourStr, 3, "%s", buf);
-
-	 buf[0] = 0;
-
-	 if (isAfternoon == 1) {
-	    snprintf(buf, 10, "PM");
-	 } else {
-	    snprintf(buf, 10, "AM");
-	 }
-
-	 if (digitalStyle != DIGITAL_STYLE_NONE) {
-	    if (digitalStyle == DIGITAL_STYLE_NORMAL) {
-	       snprintf(digitalVal, 14, "%s:%s:%s %s", hourStr, minuteStr, secondStr, buf);
-	    } else if (digitalStyle == DIGITAL_STYLE_24HOUR) {
-	       snprintf(digitalVal, 14, " %s:%s:%s ", hourStr, minuteStr, secondStr);
-	    }
-
-	    set_text(PART:"digital", digitalVal);
-	    set_state(PART:"digital", "digital", 0.0);
-	    set_state(PART:"digital_bg", "digital", 0.0);
-	    set_state(PART:"digital_bg_overlay", "digital", 0.0);
-	 } else {
-	    set_text(PART:"digital", "");
-	    set_state(PART:"digital", "hidden", 0.0);
-	    set_state(PART:"digital_bg", "hidden", 0.0);
-	    set_state(PART:"digital_bg_overlay", "hidden", 0.0);
-	 }
       }
    }
    parts {
@@ -310,10 +240,10 @@ group {
 	    state: "default" 0.0;
 	    aspect: 1.0 1.0;
 	    rel1 {
-	       relative: 0.1 0.1;
+	       relative: 0.05 0.05;
 	    }
 	    rel2 {
-	       relative: 0.9 0.9;
+	       relative: 0.95 0.95;
 	    }
 	    image {
 	       normal: "e17_clock_"IND"_00.png";
@@ -403,10 +333,10 @@ group {
 	    state: "default" 0.0;
 	    aspect: 1.0 1.0;
 	    rel1 {
-	       relative: 0.1 0.1;
+	       relative: 0.05 0.05;
 	    }
 	    rel2 {
-	       relative: 0.9 0.9;
+	       relative: 0.95 0.95;
 	    }
 	    image {
 	       normal: "e17_clock_"IND"_00.png";
@@ -495,10 +425,10 @@ group {
 	    state: "default" 0.0;
 	    aspect: 1.0 1.0;
 	    rel1 {
-	       relative: 0.2 0.2;
+	       relative: 0.1 0.1;
 	    }
 	    rel2 {
-	       relative: 0.8 0.8;
+	       relative: 0.9 0.9;
 	    }
 	    image {
 	       normal: "e17_clock_"IND"_00.png";
@@ -590,124 +520,6 @@ group {
 	    image {
 	       normal: "e17_clock_fg.png";
 	    }
-	 }
-      }
-      part {
-	 name:          "digital_bg_area";
-	 type:		"RECT";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    min:      16 16;
-	    rel1 {
-	       relative: 0.0 0.8;
-	    }
-	    rel2 {
-	       relative: 1.0 1.0;
-	    }
-	    visible: 0;
-	 }
-      }
-      part {
-	 name:          "digital_bg_overlay";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    rel1 {
-	       to: "digital_bg_area";
-	       relative: 0.0 0.0;
-	    }
-	    rel2 {
-	       to: "digital_bg_area";
-	       relative: 1.0 1.0;
-	    }
-	    image {
-	       normal: "e17_ibar_over_h.png";
-	       border: 13 13 13 13;
-	    }
-	    fill {
-	       smooth: 0;
-	    }
-	    color: 255 255 255 192;
-	 }
-	 description {
-	    state: "hidden" 0.0;
-	    visible: 0;
-	    image {
-	       normal: "e17_ibar_over_h.png";
-	       border: 13 13 13 13;
-	       middle: 0;
-	    }
-	 }
-      }
-      part {
-	 name:          "digital_bg";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    rel1 {
-	       to: "digital_bg_area";
-	       relative: 0.0 0.0;
-	    }
-	    rel2 {
-	       to: "digital_bg_area";
-	       relative: 1.0 1.0;
-	    }
-	    image {
-	       normal: "e17_ibar_bg_h.png";
-	       border: 6 6 6 6;
-	    }
-	    fill {
-	       smooth: 0;
-	    }
-	    color: 255 255 255 128;
-	 }
-	 description {
-	    state: "hidden" 0.0;
-	    visible: 0;
-	    image {
-	       normal: "e17_ibar_bg_h.png";
-	       border: 6 6 6 6;
-	       middle: 0;
-	    }
-	 }
-      }
-      part {
-	 name:           "digital";
-	 type:           TEXT;
-	 effect:         SOFT_SHADOW;
-	 description {
-	    state: "default" 0.0;
-	    rel1 {
-	       to: "digital_bg_area";
-	       offset: 3 4;
-	    }
-	    rel2 {
-	       to: "digital_bg_area";
-	       offset: -2 -2;
-	    }
-	    color: 255 255 255 255;
-	    color3: 0 0 0 32;
-	    text {
-	       text:     "00:00:00 AM";
-	       font:     "Edje-Vera";
-	       size:     15;
-	       fit:      0 1;
-	       align:    0.5 0.5;
-               text_class: "clock";	       
-	    }
-	 }
-	 description {
-	    state: "hidden" 0.0;
-	    visible: 0;
-	 }
-      }
-      part {
-	 name:           "digitalStyle";
-	 type:           TEXT;
-	 description {
-	    state: "hidden" 0.0;
-	    visible: 0;
 	 }
       }
    }

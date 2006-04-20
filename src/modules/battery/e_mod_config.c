@@ -1,7 +1,5 @@
 #include "e.h"
 #include "e_mod_main.h"
-#include "e_mod_config.h"
-#include "config.h"
 
 struct _E_Config_Dialog_Data
 {
@@ -19,7 +17,7 @@ static Evas_Object   *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas,
 static int           _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 
 void
-_config_battery_module(E_Container *con, Battery *bat) 
+_config_battery_module(void) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
@@ -33,15 +31,18 @@ _config_battery_module(E_Container *con, Battery *bat)
    v->advanced.apply_cfdata = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
    
-   cfd = e_config_dialog_new(con, _("Battery Configuration"), NULL, 0, v, bat);
-   bat->config_dialog = cfd;
+   cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()), 
+			     _("Battery Monitor Configuration"), 
+			     NULL, 0, v, NULL);
+   battery_config->config_dialog = cfd;
 }
 
 static void
-_fill_data(Battery *b, E_Config_Dialog_Data *cfdata) 
+_fill_data(E_Config_Dialog_Data *cfdata) 
 {
-   cfdata->alarm_time = b->conf->alarm;
-   cfdata->poll_time = b->conf->poll_time;
+   if (!battery_config) return;
+   cfdata->alarm_time = battery_config->alarm;
+   cfdata->poll_time = battery_config->poll_time;
    if (cfdata->alarm_time > 0) 
      cfdata->show_alert = 1;
    else 
@@ -52,21 +53,17 @@ static void *
 _create_data(E_Config_Dialog *cfd) 
 {
    E_Config_Dialog_Data *cfdata;
-   Battery *b;
    
-   b = cfd->data;
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
-   _fill_data(b, cfdata);
+   _fill_data(cfdata);
    return cfdata;
 }
 
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   Battery *b;
-   
-   b = cfd->data;
-   b->config_dialog = NULL;
+   if (!battery_config) return;
+   battery_config->config_dialog = NULL;
    free(cfdata);
 }
 
@@ -86,16 +83,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 static int 
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   Battery *b;
-   
-   b = cfd->data;
-   e_border_button_bindings_ungrab_all();
-   b->conf->poll_time = 10.0;   
-
-   e_border_button_bindings_grab_all();
+   if (!battery_config) return;
+   if (cfdata->show_alert) 
+     battery_config->alarm = cfdata->alarm_time;
+   else 
+     battery_config->alarm = 0;
+   _battery_config_updated();
    e_config_save_queue();
-   
-   _battery_face_cb_config_updated(b);
    return 1;
 }
 
@@ -130,20 +124,14 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 static int 
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   Battery *b;
-   
-   b = cfd->data;
-   e_border_button_bindings_ungrab_all();
-   
-   b->conf->poll_time = cfdata->poll_time;
+   if (!battery_config) return;
+   battery_config->poll_time = cfdata->poll_time;
    if (cfdata->show_alert) 
-     b->conf->alarm = cfdata->alarm_time;
+     battery_config->alarm = cfdata->alarm_time;
    else 
-     b->conf->alarm = 0;
-
-   e_border_button_bindings_grab_all();
+     battery_config->alarm = 0;
+   _battery_config_updated();
    e_config_save_queue();
-   
-   _battery_face_cb_config_updated(b);
    return 1;
 }
+

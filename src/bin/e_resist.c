@@ -92,6 +92,17 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
 	gmc = l->data;
 	OBSTACLE(gmc->x, gmc->y, gmc->w, gmc->h, e_config->gadget_resist);
      }
+   for (l = e_shelf_list(); l; l = l->next)
+     {
+	E_Shelf *es;
+
+	es = l->data;
+	if (es->zone->container == con)
+	  {
+	     OBSTACLE(es->x + es->zone->x, es->y + es->zone->y, es->w, es->h,
+		      e_config->gadget_resist);
+	  }
+     }
    if (rects)
      {
 	_e_resist_rects(rects,
@@ -141,17 +152,22 @@ e_resist_container_gadman_position(E_Container *con, Evas_List *skiplist,
 	  }
 	if (ok)
 	  {
-	     r = E_NEW(E_Resist_Rect, 1);
-
-	     r->x = gmc->x;
-	     r->y = gmc->y;
-	     r->w = gmc->w;
-	     r->h = gmc->h;
-	     r->v1 = e_config->gadget_resist;
-	     rects = evas_list_append(rects, r);
+	     OBSTACLE(gmc->x, gmc->y, gmc->w, gmc->h, e_config->gadget_resist);
 	  }
      }
 
+   for (l = e_shelf_list(); l; l = l->next)
+     {
+	E_Shelf *es;
+
+	es = l->data;
+	if (es->zone->container == con)
+	  {
+	     OBSTACLE(es->x + es->zone->x, es->y + es->zone->y, es->w, es->h,
+		      e_config->gadget_resist);
+	  }
+     }
+   
    if (rects)
      {
 	_e_resist_rects(rects,

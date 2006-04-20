@@ -676,7 +676,8 @@ main(int argc, char **argv)
    e_test();
 
    /* FIXME: for testing only */
-//   e_shelf_config_init();
+//   
+   e_shelf_config_init();
    
    /* no longer starting up */
    starting = 0;

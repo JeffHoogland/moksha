@@ -91,6 +91,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, geom.res, INT);
    E_CONFIG_VAL(D, T, style, STR);
    E_CONFIG_VAL(D, T, autoscroll, UCHAR);
+   E_CONFIG_VAL(D, T, resizable, UCHAR);
    
    _e_config_gadcon_edd = E_CONFIG_DD_NEW("E_Config_Gadcon", E_Config_Gadcon);
 #undef T
@@ -1016,71 +1017,111 @@ e_config_init(void)
 		      "desk_linear_flip_by", "1");
      }
    IFCFGEND;
-   /* yes - this causes a small leak - i know. it is for testing temporarily x*/
+   IFCFG(0x0093); /* the version # where this value(s) was introduced */
+   /* FIXME: wipe previous shelves and gadcons - remove this eventually */
    e_config->shelves = NULL;
    e_config->gadcons = NULL;
-//   IFCFG(0x008e); /* the version # where this value(s) was introduced */
-#if 1 // this is liable to change
      {
 	E_Config_Shelf *cf_es;
 	
-	cf_es = E_NEW(E_Config_Shelf, 1);
-	cf_es->name = evas_stringshare_add("shelf");
-	cf_es->container = 0;
-	cf_es->zone = 0;
-	cf_es->popup = 1;
-	cf_es->layer = 200;
-	cf_es->orient = E_GADCON_ORIENT_TOP;
-	cf_es->fit_along = 1;
-	cf_es->fit_size = 0;
-	cf_es->style = evas_stringshare_add("default");
-	cf_es->size = 40;
-	e_config->shelves = evas_list_append(e_config->shelves, cf_es);
+#define CFG_SHELF(_name, _con, _zone, _pop, _lay, _orient, _fita, _fits, _style, _size) \
+   cf_es = E_NEW(E_Config_Shelf, 1); \
+   cf_es->name = evas_stringshare_add(_name); \
+   cf_es->container = _con; \
+   cf_es->zone = _zone; \
+   cf_es->popup = _pop; \
+   cf_es->layer = _lay; \
+   cf_es->orient = _orient; \
+   cf_es->fit_along = _fita; \
+   cf_es->fit_size = _fits; \
+   cf_es->style = evas_stringshare_add(_style); \
+   cf_es->size = _size; \
+   e_config->shelves = evas_list_append(e_config->shelves, cf_es)
+	/* shelves for 4 zones on head 0 by default */
+	CFG_SHELF("shelf", 0, 0,
+		  1, 200, E_GADCON_ORIENT_BOTTOM,
+		  1, 0, "default", 40);
+	CFG_SHELF("shelf", 0, 1,
+		  1, 200, E_GADCON_ORIENT_BOTTOM,
+		  1, 0, "default", 40);
+	CFG_SHELF("shelf", 0, 2,
+		  1, 200, E_GADCON_ORIENT_BOTTOM,
+		  1, 0, "default", 40);
+	CFG_SHELF("shelf", 0, 3,
+		  1, 200, E_GADCON_ORIENT_BOTTOM,
+		  1, 0, "default", 40);
+	/* shelves for heada 1, 2, and 3 by default */
+	CFG_SHELF("shelf", 1, 0,
+		  1, 200, E_GADCON_ORIENT_BOTTOM,
+		  1, 0, "default", 40);
+	CFG_SHELF("shelf", 2, 0,
+		  1, 200, E_GADCON_ORIENT_BOTTOM,
+		  1, 0, "default", 40);
+	CFG_SHELF("shelf", 3, 0,
+		  1, 200, E_GADCON_ORIENT_BOTTOM,
+		  1, 0, "default", 40);
      }
      {
 	E_Config_Gadcon *cf_gc;
 	E_Config_Gadcon_Client *cf_gcc;
+
+#define CFG_GADCON(_name, _id) \
+   cf_gc = E_NEW(E_Config_Gadcon, 1);\
+   cf_gc->name = evas_stringshare_add(_name); \
+   cf_gc->id = evas_stringshare_add(_id); \
+   e_config->gadcons = evas_list_append(e_config->gadcons, cf_gc)
+#define CFG_GADCON_CLIENT(_name, _id, _res, _size, _pos, _style, _autoscr, _resizable) \
+   cf_gcc = E_NEW(E_Config_Gadcon_Client, 1); \
+   cf_gcc->name = evas_stringshare_add(_name); \
+   cf_gcc->id = evas_stringshare_add(_id); \
+   cf_gcc->geom.res = _res; \
+   cf_gcc->geom.size = _size; \
+   cf_gcc->geom.pos = _pos; \
+   if (_style) cf_gcc->style = evas_stringshare_add(_style); \
+   else cf_gcc->style = NULL; \
+   cf_gcc->autoscroll = _autoscr; \
+   cf_gcc->resizable = _resizable; \
+   cf_gc->clients = evas_list_append(cf_gc->clients, cf_gcc)
+
+	/* the default shelf on the default head/zone */
+	CFG_GADCON("shelf", "0");
+	CFG_GADCON_CLIENT("start", "default", 800, 32,
+			  0, NULL, 0, 0);
+	CFG_GADCON_CLIENT("pager", "default", 800, 120,
+			  32, "inset", 0, 0);
+	CFG_GADCON_CLIENT("ibar", "default", 800, 200,
+			  400 - (16 / 2), "inset", 1, 0);
+	CFG_GADCON_CLIENT("temperature", "default", 800, 32,
+			  800 - (4 * 32), NULL, 0, 0);
+	CFG_GADCON_CLIENT("cpufreq", "default", 800, 32,
+			  800 - (3 * 32), NULL, 0, 0);
+	CFG_GADCON_CLIENT("battery", "default", 800, 32,
+			  800 - (2 * 32), NULL, 0, 0);
+	CFG_GADCON_CLIENT("clock", "default", 800, 32,
+			  800 - (1 * 32), NULL, 0, 0);
+	/* additional shelves for up to 3 more heads by default */
+	CFG_GADCON("shelf", "1");
+	CFG_GADCON_CLIENT("pager", "default2", 800, 120,
+			  0, "inset", 0, 0);
+	CFG_GADCON_CLIENT("ibar", "default2", 800, 16,
+			  400 - (16 / 2), "inset", 1, 0);
 	
-	cf_gc = E_NEW(E_Config_Gadcon, 1);
-	cf_gc->name = evas_stringshare_add("shelf");
-	cf_gc->id = evas_stringshare_add("0");
-	e_config->gadcons = evas_list_append(e_config->gadcons, cf_gc);
+	CFG_GADCON("shelf", "2");
+	CFG_GADCON_CLIENT("pager", "default3", 800, 120,
+			  0, "inset", 0, 0);
+	CFG_GADCON_CLIENT("ibar", "default2", 800, 16,
+			  400 - (16 / 2), "inset", 1, 0);
 	
-	cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
-	cf_gcc->name = evas_stringshare_add("ibar");
-	cf_gcc->id = evas_stringshare_add("default");
-	cf_gcc->geom.res = 800;
-	cf_gcc->geom.size = 200;
-	cf_gcc->geom.pos = 400 - (cf_gcc->geom.size / 2);
-	cf_gcc->style = evas_stringshare_add("inset");
-	cf_gcc->autoscroll = 0;
-	cf_gc->clients = evas_list_append(cf_gc->clients, cf_gcc);
-	
-	cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
-	cf_gcc->name = evas_stringshare_add("clock");
-	cf_gcc->id = evas_stringshare_add("default");
-	cf_gcc->geom.res = 800;
-	cf_gcc->geom.size = 32;
-	cf_gcc->geom.pos = 800 - (cf_gcc->geom.size);
-	cf_gcc->style = NULL;
-	cf_gcc->autoscroll = 0;
-	cf_gc->clients = evas_list_append(cf_gc->clients, cf_gcc);
-	
-	cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
-	cf_gcc->name = evas_stringshare_add("start");
-	cf_gcc->id = evas_stringshare_add("default");
-	cf_gcc->geom.res = 800;
-	cf_gcc->geom.size = 32;
-	cf_gcc->geom.pos = 0;
-	cf_gcc->style = NULL;
-	cf_gcc->autoscroll = 0;
-	cf_gc->clients = evas_list_append(cf_gc->clients, cf_gcc);
+	CFG_GADCON("shelf", "3");
+	CFG_GADCON_CLIENT("pager", "default4", 800, 120,
+			  0, "inset", 0, 0);
+	CFG_GADCON_CLIENT("ibar", "default2", 800, 16,
+			  400 - (16 / 2), "inset", 1, 0);
      }
-#endif
-//   IFCFGEND;
+   IFCFGEND;
    
 #if 0 /* example of new config */
-   IFCFG(0x008e); /* the version # where this value(s) was introduced */
+   IFCFG(0x0090); /* the version # where this value(s) was introduced */
    e_config->new_value = 10; /* set the value(s) */
    IFCFGEND;
 #endif

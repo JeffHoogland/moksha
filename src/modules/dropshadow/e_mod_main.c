@@ -694,7 +694,7 @@ static void
 _ds_shadow_resize(Shadow *sh, int w, int h)
 {
    unsigned char toosmall = 0;
-   
+
    _ds_shadow_obj_init(sh);
    if ((w < ((sh->ds->conf->blur_size * 2) + 2)) ||
        (h < ((sh->ds->conf->blur_size * 2) + 2)))

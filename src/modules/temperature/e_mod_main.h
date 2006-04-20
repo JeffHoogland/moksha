@@ -5,9 +5,6 @@
 #define E_MOD_MAIN_H
 
 typedef struct _Config           Config;
-typedef struct _Config_Face      Config_Face;
-typedef struct _Temperature      Temperature;
-typedef struct _Temperature_Face Temperature_Face;
 	
 typedef enum _Unit
 {
@@ -17,32 +14,17 @@ typedef enum _Unit
 
 struct _Config
 {
-   double poll_time;
-   int low, high;
-   Evas_List *faces;
-   char *sensor_name;
-   Unit units;
-};
-
-struct _Config_Face
-{
-   unsigned char enabled;
-};
-
-struct _Temperature
-{
-   Config           *conf;
-   Ecore_Timer      *temperature_check_timer;
-   E_Config_Dialog  *config_dialog;
+   /* saved * loaded config values */
+   double           poll_time;
+   int              low, high;
+   char            *sensor_name;
+   Unit             units;
+   /* just config state */
+   E_Config_Dialog *config_dialog;
+   Evas_List       *instances;
+   E_Menu          *menu;
+   Ecore_Timer     *temperature_check_timer;
    unsigned char    have_temp;
-   E_Gadget	    *gad;
-};
-
-struct _Temperature_Face
-{
-   Temperature *temp;
-   Config_Face *conf;
-
 };
 
 EAPI extern E_Module_Api e_modapi;
@@ -54,6 +36,9 @@ EAPI int   e_modapi_info     (E_Module *m);
 EAPI int   e_modapi_about    (E_Module *m);
 EAPI int   e_modapi_config   (E_Module *m);
 
-void	_temperature_face_cb_config_updated(Temperature *temp);
+void _config_temperature_module(void);
+void _temperature_face_cb_config_updated(void);
+extern Config *temperature_config;
+
 
 #endif

@@ -50,7 +50,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
 /* increment this whenever a new set of configvalues are added but the users
  * config doesn't need top be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x008e
+#define E_CONFIG_FILE_GENERATION 0x0093
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT      0
@@ -317,6 +317,7 @@ struct _E_Config_Gadcon_Client
    } geom;
    const char   *style;
    unsigned char autoscroll;
+   unsigned char resizable;
 };
 
 struct _E_Config_Shelf
