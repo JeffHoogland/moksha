@@ -11,9 +11,11 @@ Vendor: %{?_vendorinfo:%{_vendorinfo}}%{!?_vendorinfo:The Enlightenment Project 
 Distribution: %{?_distribution:%{_distribution}}%{!?_distribution:%{_vendor}}
 Prefix: %{_prefix}
 #BuildSuggests: xorg-x11-devel
-BuildRequires: XFree86-devel
-BuildRequires: evas-devel edje-devel ecore-devel eet-devel
-Requires: evas edje ecore eet evas-module_loader_eet evas-module_saver_eet evas-module_loader_png evas-module_saver_png evas-module_loader_jpeg evas-module_saver_jpeg evas-module_engine_software_x11 evas-module_engine_buffer
+#BuildRequires: XFree86-devel
+#BuildRequires: evas-devel edje-devel ecore-devel eet-devel
+Requires: evas edje edje-bin ecore eet embryo embryo-bin 
+Requires: evas-module_loader_eet evas-module_saver_eet evas-module_loader_png evas-module_saver_png evas-module_loader_jpeg evas-module_saver_jpeg evas-module_engine_software_x11 evas-module_engine_buffer
+Requires: ecore-con ecore-ipc ecore-evas ecore-file ecore-job ecore-text ecore-x
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
 %description
@@ -23,8 +25,8 @@ Enlightenment is a window manager.
 Summary: Development headers for Enlightenment. 
 Group: User Interface/Desktops
 Requires: %{name} = %{version}
-Requires: XFree86-devel eet-devel
-Requires: evas-devel edje-devel ecore-devel
+#Requires: XFree86-devel eet-devel
+Requires: evas-devel edje-devel ecore-devel eet-devel embryo-devel
 
 %description devel
 Development headers for Enlightenment.
@@ -39,6 +41,8 @@ Development headers for Enlightenment.
 %install
 %{__make} %{?mflags_install} DESTDIR=$RPM_BUILD_ROOT install
 test -x `which doxygen` && sh gendoc || :
+rm -f `find $RPM_BUILD_ROOT/usr/lib/enlightenment -name "*.a" -print`
+rm -f `find $RPM_BUILD_ROOT/usr/lib/enlightenment -name "*.la" -print`
 
 %clean
 test "x$RPM_BUILD_ROOT" != "x/" && rm -rf $RPM_BUILD_ROOT
@@ -52,19 +56,40 @@ test "x$RPM_BUILD_ROOT" != "x/" && rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-, root, root)
 %doc AUTHORS COPYING COPYING-PLAIN README
-%{_bindir}/*
-%{_libdir}/libe.so.*
-%{_libdir}/%{name}
+%{_bindir}/enlightenment
+%{_bindir}/enlightenment_*
+%{_libdir}/lib*.so.*
+%{_libdir}/%{name}/preload/*.so
+%{_libdir}/%{name}/modules/battery/*/*.so
+%{_libdir}/%{name}/modules/battery/*.png
+%{_libdir}/%{name}/modules/clock/*/*.so
+%{_libdir}/%{name}/modules/clock/*.png
+%{_libdir}/%{name}/modules/cpufreq/*/*.so
+%{_libdir}/%{name}/modules/cpufreq/*.png
+%{_libdir}/%{name}/modules/cpufreq/*/freqset
+%{_libdir}/%{name}/modules/dropshadow/*/*.so
+%{_libdir}/%{name}/modules/dropshadow/*.png
+%{_libdir}/%{name}/modules/ibar/*/*.so
+%{_libdir}/%{name}/modules/ibar/*.png
+%{_libdir}/%{name}/modules/ibox/*/*.so
+%{_libdir}/%{name}/modules/ibox/*.png
+%{_libdir}/%{name}/modules/pager/*/*.so
+%{_libdir}/%{name}/modules/pager/*.png
+%{_libdir}/%{name}/modules/start/*/*.so
+%{_libdir}/%{name}/modules/start/*.png
+%{_libdir}/%{name}/modules/temperature/*/*.so
+%{_libdir}/%{name}/modules/temperature/*.png
 %{_datadir}/%{name}
 %{_datadir}/locale/*
 %{_datadir}/xsessions/%{name}.desktop
 
 %files devel
 %defattr(-, root, root)
+%{_bindir}/enlightenment-config
 %{_includedir}/enlightenment/*.h
 %{_includedir}/E_Lib.h
-%{_libdir}/libe.a
-%{_libdir}/libe.la
-%{_libdir}/libe.so
+%{_libdir}/*.a
+%{_libdir}/*.la
+%{_libdir}/*.so
 
 %changelog
