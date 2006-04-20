@@ -953,6 +953,7 @@ _e_gadcon_client_free(E_Gadcon_Client *gcc)
 {
    if (gcc->menu)
      {
+        e_menu_post_deactivate_callback_set(gcc->menu, NULL, NULL);
 	e_object_del(E_OBJECT(gcc->menu));
 	gcc->menu = NULL;
      }
