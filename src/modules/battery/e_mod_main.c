@@ -195,13 +195,13 @@ _battery_cb_check(void *data)
       	  {
 	     len = 3;
 	     if (sysctlnametomib("hw.acpi.acline", acline_mib, &len) == 0)
-      	        ef->battery_check_mode = CHECK_ACPI; 
+      	        battery_config->battery_check_mode = CHECK_ACPI; 
 	  }
 	else
 	  {
 	     apm_fd = open("/dev/apm", O_RDONLY); 
 	     if (apm_fd != -1)
-	       ef->battery_check_mode = CHECK_APM;
+	       battery_config->battery_check_mode = CHECK_APM;
 	  }
      }
    switch (ef->battery_check_mode)
