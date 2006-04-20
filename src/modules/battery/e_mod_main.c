@@ -204,7 +204,7 @@ _battery_cb_check(void *data)
 	       battery_config->battery_check_mode = CHECK_APM;
 	  }
      }
-   switch (ef->battery_check_mode)
+   switch (battery_config->battery_check_mode)
      {
       case CHECK_ACPI:
 	ret = _battery_bsd_acpi_check();
