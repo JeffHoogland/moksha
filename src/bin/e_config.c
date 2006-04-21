@@ -1103,19 +1103,19 @@ e_config_init(void)
 	CFG_GADCON("shelf", "1");
 	CFG_GADCON_CLIENT("pager", "default2", 800, 120,
 			  0, "inset", 0, 0);
-	CFG_GADCON_CLIENT("ibar", "default2", 800, 16,
+	CFG_GADCON_CLIENT("ibar", "default2", 800, 200,
 			  400 - (16 / 2), "inset", 1, 0);
 	
 	CFG_GADCON("shelf", "2");
 	CFG_GADCON_CLIENT("pager", "default3", 800, 120,
 			  0, "inset", 0, 0);
-	CFG_GADCON_CLIENT("ibar", "default2", 800, 16,
+	CFG_GADCON_CLIENT("ibar", "default2", 800, 200,
 			  400 - (16 / 2), "inset", 1, 0);
 	
 	CFG_GADCON("shelf", "3");
 	CFG_GADCON_CLIENT("pager", "default4", 800, 120,
 			  0, "inset", 0, 0);
-	CFG_GADCON_CLIENT("ibar", "default2", 800, 16,
+	CFG_GADCON_CLIENT("ibar", "default2", 800, 200,
 			  400 - (16 / 2), "inset", 1, 0);
      }
    IFCFGEND;
