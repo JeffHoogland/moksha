@@ -1746,7 +1746,12 @@ e_modapi_shutdown(E_Module *module)
 	pager_config->handlers = evas_list_remove_list(pager_config->handlers, pager_config->handlers);
      }
    
-   if (pager_config->menu) e_object_del(E_OBJECT(pager_config->menu));
+   if (pager_config->menu)
+     {
+	e_menu_post_deactivate_callback_set(pager_config->menu, NULL, NULL);
+	e_object_del(E_OBJECT(pager_config->menu));
+	pager_config->menu = NULL;
+     }
    free(pager_config);
    pager_config = NULL;
    E_CONFIG_DD_FREE(conf_edd);

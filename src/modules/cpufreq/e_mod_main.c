@@ -874,11 +874,30 @@ e_modapi_shutdown(E_Module *module)
    
    if (cpufreq_config->frequency_check_timer)
      ecore_timer_del(cpufreq_config->frequency_check_timer);
-   if (cpufreq_config->menu) e_object_del(E_OBJECT(cpufreq_config->menu));
-   if (cpufreq_config->menu_poll) e_object_del(E_OBJECT(cpufreq_config->menu_poll));
-   if (cpufreq_config->menu_governor) e_object_del(E_OBJECT(cpufreq_config->menu_governor));
-   if (cpufreq_config->menu_frequency) e_object_del(E_OBJECT(cpufreq_config->menu_frequency));
-   if (cpufreq_config->status) _cpufreq_status_free(cpufreq_config->status);
+   if (cpufreq_config->menu)
+     {
+	e_menu_post_deactivate_callback_set(cpufreq_config->menu, NULL, NULL);
+	e_object_del(E_OBJECT(cpufreq_config->menu));
+	cpufreq_config->menu = NULL;
+     }
+   if (cpufreq_config->menu_poll)
+     {
+	e_menu_post_deactivate_callback_set(cpufreq_config->menu_poll, NULL, NULL);
+	e_object_del(E_OBJECT(cpufreq_config->menu_poll));
+	cpufreq_config->menu_poll = NULL;
+     }
+   if (cpufreq_config->menu_governor)
+     {
+	e_menu_post_deactivate_callback_set(cpufreq_config->menu_governor, NULL, NULL);
+	e_object_del(E_OBJECT(cpufreq_config->menu_governor));
+	cpufreq_config->menu_governor = NULL;
+     }
+   if (cpufreq_config->menu_frequency)
+     {
+	e_menu_post_deactivate_callback_set(cpufreq_config->menu_frequency, NULL, NULL);
+	e_object_del(E_OBJECT(cpufreq_config->menu_frequency));
+	cpufreq_config->menu_frequency = NULL;
+     }
    if (cpufreq_config->governor)
      evas_stringshare_del(cpufreq_config->governor);
    free(cpufreq_config);

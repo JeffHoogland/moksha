@@ -71,6 +71,12 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    Instance *inst;
    
    inst = gcc->data;
+   if (inst->main_menu)
+     {
+	e_menu_post_deactivate_callback_set(inst->main_menu, NULL, NULL);
+	e_object_del(E_OBJECT(inst->main_menu));
+	inst->main_menu = NULL;
+     }
    evas_object_del(inst->o_button);
    free(inst);
 }

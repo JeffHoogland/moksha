@@ -1382,7 +1382,12 @@ e_modapi_shutdown(E_Module *m)
      e_object_del(E_OBJECT(battery_config->config_dialog));
    if (battery_config->battery_check_timer)
      ecore_timer_del(battery_config->battery_check_timer);
-   if (battery_config->menu) e_object_del(E_OBJECT(battery_config->menu));
+   if (battery_config->menu)
+     {
+        e_menu_post_deactivate_callback_set(battery_config->menu, NULL, NULL);
+	e_object_del(E_OBJECT(battery_config->menu));
+	battery_config->menu = NULL;
+     }
    free(battery_config);
    battery_config = NULL;
    E_CONFIG_DD_FREE(conf_edd);

@@ -455,6 +455,7 @@ _ibar_icon_free(IBar_Icon *ic)
 
    if (ibar_config->menu)
      {
+	e_menu_post_deactivate_callback_set(ibar_config->menu, NULL, NULL);
 	e_object_del(E_OBJECT(ibar_config->menu));
 	ibar_config->menu = NULL;
      }
@@ -1157,7 +1158,12 @@ e_modapi_shutdown(E_Module *module)
 	ecore_event_handler_del(ibar_config->handlers->data);
 	ibar_config->handlers = evas_list_remove_list(ibar_config->handlers, ibar_config->handlers);
      }
-   if (ibar_config->menu) e_object_del(E_OBJECT(ibar_config->menu));
+   if (ibar_config->menu)
+     {
+	e_menu_post_deactivate_callback_set(ibar_config->menu, NULL, NULL);
+	e_object_del(E_OBJECT(ibar_config->menu));
+	ibar_config->menu = NULL;
+     }
    while (ibar_config->items)
      {
 	Config_Item *ci;

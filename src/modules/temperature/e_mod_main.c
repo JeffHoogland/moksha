@@ -35,8 +35,8 @@ typedef struct _Instance Instance;
 
 struct _Instance
 {
-      E_Gadcon_Client *gcc;
-      Evas_Object     *o_temp;
+   E_Gadcon_Client *gcc;
+   Evas_Object     *o_temp;
 };
 
 static void _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -396,6 +396,12 @@ e_modapi_shutdown(E_Module *m)
    
    if (temperature_config->config_dialog) 
      e_object_del(E_OBJECT(temperature_config->config_dialog));
+   if (temperature_config->menu)
+     {
+	e_menu_post_deactivate_callback_set(temperature_config->menu , NULL, NULL);
+	e_object_del(E_OBJECT(temperature_config->menu));
+	temperature_config->menu = NULL;
+     }
    if (temperature_config->temperature_check_timer)
      ecore_timer_del(temperature_config->temperature_check_timer);
    if (temperature_config->sensor_name)
