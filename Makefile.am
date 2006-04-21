@@ -8,12 +8,16 @@ MAINTAINERCLEANFILES = Makefile.in aclocal.m4 config.guess \
 
 bin_SCRIPTS = enlightenment-config
 
-EXTRA_DIST = README AUTHORS COPYING COPYING-PLAIN enlightenment.spec \
-	     debian/changelog debian/changelog.in debian/copyright \
-	     debian/rules debian/enlightenment.install \
+EXTRA_DIST = README AUTHORS COPYING COPYING-PLAIN \
+             enlightenment.spec.in enlightenment.spec \
+	     debian/changelog \
+	     debian/changelog.in \
+	     debian/control \
+	     debian/copyright \
+	     debian/enlightenment.install \
+	     debian/enlightenment-dev.install \
 	     debian/enlightenment.docs \
-	     debian/libe.install debian/libe-dev.install debian/control \
-	     enlightenment.spec.in
+	     debian/rules
 
 filesdir = $(datadir)/enlightenment/
 files_DATA = AUTHORS COPYING 

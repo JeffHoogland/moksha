@@ -2,5 +2,5 @@ enlightenment (@VERSION@-1) unstable; urgency=low
 
   * a CVS snapshot release.
 
- -- Blake Barnett <shadoi@soulmachine.net>  Fri, 25 Mar 2005 15:09:23 -0700
+ -- E17 Debian Team <debian@edevelop.org>  Fri, 25 Mar 2005 15:09:23 -0700
 
