@@ -184,7 +184,8 @@ _gc_orient(E_Gadcon_Client *gcc)
       case E_GADCON_ORIENT_CORNER_TR:
       case E_GADCON_ORIENT_CORNER_BL:
       case E_GADCON_ORIENT_CORNER_BR:
-	e_gadcon_client_aspect_set(gcc, evas_list_count(inst->ibar->icons), 1);
+	_ibar_orient_set(inst->ibar, 1);
+	e_gadcon_client_aspect_set(gcc, evas_list_count(inst->ibar->icons) * 16, 16);
 	break;
       case E_GADCON_ORIENT_VERT:
       case E_GADCON_ORIENT_LEFT:
@@ -193,13 +194,14 @@ _gc_orient(E_Gadcon_Client *gcc)
       case E_GADCON_ORIENT_CORNER_RT:
       case E_GADCON_ORIENT_CORNER_LB:
       case E_GADCON_ORIENT_CORNER_RB:
-	e_gadcon_client_aspect_set(gcc, 1, evas_list_count(inst->ibar->icons));
+	_ibar_orient_set(inst->ibar, 0);
+	e_gadcon_client_aspect_set(gcc, 16, evas_list_count(inst->ibar->icons) * 16);
 	break;
       default:
 	break;
      }
    if (evas_list_count(inst->ibar->icons) < 1)
-     e_gadcon_client_aspect_set(gcc, 1, 1);
+     e_gadcon_client_aspect_set(gcc, 16, 16);
    e_gadcon_client_min_size_set(gcc, 16, 16);
 }
 /**/
@@ -294,11 +296,13 @@ _ibar_resize_handle(IBar *b)
    Evas_Coord w, h;
    
    evas_object_geometry_get(b->o_box, NULL, NULL, &w, &h);
+   printf("BOX %ix%i\n", w, h);
    if (e_box_orientation_get(b->o_box))
      w = h;
    else
      h = w;
    e_box_freeze(b->o_box);
+   printf("RESIZNE %i %i\n", w, h);
    for (l = b->icons; l; l = l->next)
      {
 	ic = l->data;

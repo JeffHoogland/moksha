@@ -5,10 +5,13 @@
 
 static void _e_shelf_free(E_Shelf *es);
 static const char *_e_shelf_orient_string_get(E_Shelf *es);
-static void _e_shelf_position_calc(E_Shelf *es);
 static void _e_shelf_gadcon_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 static void _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 static Evas_Object *_e_shelf_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *style);
+static void _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static void _e_shelf_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static void _e_shelf_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static void _e_shelf_cb_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 
 static Evas_List *shelves = NULL;
 static int shelf_id = 0;
@@ -35,7 +38,6 @@ e_shelf_config_init(void)
      {
 	E_Config_Shelf *cf_es;
 	E_Zone *zone;
-	int closeness;
 	
 	cf_es = l->data;
 	zone = e_util_container_zone_number_get(cf_es->container, cf_es->zone);
@@ -44,14 +46,14 @@ e_shelf_config_init(void)
 	     E_Shelf *es;
 	     
 	     es = e_shelf_zone_new(zone, cf_es->name, cf_es->style,
-				   cf_es->popup, cf_es->layer);
+				   cf_es->popup, cf_es->layer, -1);
 	     if (es)
 	       {
 		  es->cfg = cf_es;
 		  es->fit_along = cf_es->fit_along;
 		  es->fit_size = cf_es->fit_size;
 		  e_shelf_orient(es, cf_es->orient);
-		  _e_shelf_position_calc(es);
+		  e_shelf_position_calc(es);
 		  e_shelf_populate(es);
 		  e_shelf_show(es);
 	       }
@@ -66,7 +68,7 @@ e_shelf_list(void)
 }
 
 EAPI E_Shelf *
-e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, int layer)
+e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, int layer, int id)
 {
    E_Shelf *es;
    char buf[1024];
@@ -99,6 +101,11 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    evas_object_color_set(es->o_event, 0, 0, 0, 0);
    evas_object_resize(es->o_event, es->w, es->h);
    
+   evas_object_event_callback_add(es->o_event, EVAS_CALLBACK_MOUSE_DOWN, _e_shelf_cb_mouse_down, es);
+   evas_object_event_callback_add(es->o_event, EVAS_CALLBACK_MOUSE_UP, _e_shelf_cb_mouse_up, es);
+   evas_object_event_callback_add(es->o_event, EVAS_CALLBACK_MOUSE_IN, _e_shelf_cb_mouse_in, es);
+   evas_object_event_callback_add(es->o_event, EVAS_CALLBACK_MOUSE_OUT, _e_shelf_cb_mouse_out, es);
+   
    es->o_base = edje_object_add(es->evas);
    es->name = evas_stringshare_add(name);
    snprintf(buf, sizeof(buf), "shelf/%s/base", es->style);
@@ -119,9 +126,14 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 	evas_object_layer_set(es->o_event, layer);
 	evas_object_layer_set(es->o_base, layer);
      }
-
-   snprintf(buf, sizeof(buf), "%i", shelf_id);
-   shelf_id++;
+   if (id < 0)
+     {
+	es->id = shelf_id;
+	shelf_id++;
+     }
+   else
+     es->id = id;
+   snprintf(buf, sizeof(buf), "%i", es->id);
    es->gadcon = e_gadcon_swallowed_new(es->name, buf, es->o_base, "items");
    e_gadcon_min_size_request_callback_set(es->gadcon,
 					  _e_shelf_gadcon_min_size_request,
@@ -292,86 +304,15 @@ e_shelf_orient(E_Shelf *es, E_Gadcon_Orient orient)
 {
    E_OBJECT_CHECK(es);
    E_OBJECT_TYPE_CHECK(es, E_GADMAN_SHELF_TYPE);
+   
    e_gadcon_orient(es->gadcon, orient);
    edje_object_signal_emit(es->o_base, "set_orientation",
 			   _e_shelf_orient_string_get(es));
    edje_object_message_signal_process(es->o_base);
 }
 
-/* local subsystem functions */
-static void
-_e_shelf_free(E_Shelf *es)
-{
-   shelves = evas_list_remove(shelves, es);
-   e_object_del(E_OBJECT(es->gadcon));
-   evas_stringshare_del(es->name);
-   evas_stringshare_del(es->style);
-   evas_object_del(es->o_event);
-   evas_object_del(es->o_base);
-   if (es->popup) e_object_del(E_OBJECT(es->popup));
-   free(es);
-}
-
-static const char *
-_e_shelf_orient_string_get(E_Shelf *es)
-{
-   const char *sig = "";
-   
-   switch (es->gadcon->orient)
-     {
-      case E_GADCON_ORIENT_FLOAT:
-	sig = "float";
-	break;
-      case E_GADCON_ORIENT_HORIZ:
-	sig = "horizontal";
-	break;
-      case E_GADCON_ORIENT_VERT:
-	sig = "vertical";
-	break;
-      case E_GADCON_ORIENT_LEFT:
-	sig = "left";
-	break;
-      case E_GADCON_ORIENT_RIGHT:
-	sig = "right";
-	break;
-      case E_GADCON_ORIENT_TOP:
-	sig = "top";
-	break;
-      case E_GADCON_ORIENT_BOTTOM:
-	sig = "bottom";
-	break;
-      case E_GADCON_ORIENT_CORNER_TL:
-	sig = "top_left";
-	break;
-      case E_GADCON_ORIENT_CORNER_TR:
-	sig = "top_right";
-	break;
-      case E_GADCON_ORIENT_CORNER_BL:
-	sig = "bottom_left";
-	break;
-      case E_GADCON_ORIENT_CORNER_BR:
-	sig = "bottom_right";
-	break;
-      case E_GADCON_ORIENT_CORNER_LT:
-	sig = "left_top";
-	break;
-      case E_GADCON_ORIENT_CORNER_RT:
-	sig = "right_top";
-	break;
-      case E_GADCON_ORIENT_CORNER_LB:
-	sig = "left_bottom";
-	break;
-      case E_GADCON_ORIENT_CORNER_RB:
-	sig = "right_bottom";
-	break;
-      default:
-	break;
-     }
-   return sig;
-}
-
-static void
-_e_shelf_position_calc(E_Shelf *es)
+EAPI void
+e_shelf_position_calc(E_Shelf *es)
 {
    E_Gadcon_Orient orient = E_GADCON_ORIENT_FLOAT;
    int size = 40;
@@ -475,6 +416,79 @@ _e_shelf_position_calc(E_Shelf *es)
 	break;
      }
    e_shelf_move_resize(es, es->x, es->y, es->w, es->h);
+}
+
+/* local subsystem functions */
+static void
+_e_shelf_free(E_Shelf *es)
+{
+   if (es->config_dialog) e_object_del(E_OBJECT(es->config_dialog));
+   shelves = evas_list_remove(shelves, es);
+   e_object_del(E_OBJECT(es->gadcon));
+   evas_stringshare_del(es->name);
+   evas_stringshare_del(es->style);
+   evas_object_del(es->o_event);
+   evas_object_del(es->o_base);
+   if (es->popup) e_object_del(E_OBJECT(es->popup));
+   free(es);
+}
+
+static const char *
+_e_shelf_orient_string_get(E_Shelf *es)
+{
+   const char *sig = "";
+   
+   switch (es->gadcon->orient)
+     {
+      case E_GADCON_ORIENT_FLOAT:
+	sig = "float";
+	break;
+      case E_GADCON_ORIENT_HORIZ:
+	sig = "horizontal";
+	break;
+      case E_GADCON_ORIENT_VERT:
+	sig = "vertical";
+	break;
+      case E_GADCON_ORIENT_LEFT:
+	sig = "left";
+	break;
+      case E_GADCON_ORIENT_RIGHT:
+	sig = "right";
+	break;
+      case E_GADCON_ORIENT_TOP:
+	sig = "top";
+	break;
+      case E_GADCON_ORIENT_BOTTOM:
+	sig = "bottom";
+	break;
+      case E_GADCON_ORIENT_CORNER_TL:
+	sig = "top_left";
+	break;
+      case E_GADCON_ORIENT_CORNER_TR:
+	sig = "top_right";
+	break;
+      case E_GADCON_ORIENT_CORNER_BL:
+	sig = "bottom_left";
+	break;
+      case E_GADCON_ORIENT_CORNER_BR:
+	sig = "bottom_right";
+	break;
+      case E_GADCON_ORIENT_CORNER_LT:
+	sig = "left_top";
+	break;
+      case E_GADCON_ORIENT_CORNER_RT:
+	sig = "right_top";
+	break;
+      case E_GADCON_ORIENT_CORNER_LB:
+	sig = "left_bottom";
+	break;
+      case E_GADCON_ORIENT_CORNER_RB:
+	sig = "right_bottom";
+	break;
+      default:
+	break;
+     }
+   return sig;
 }
 
 static void
@@ -595,7 +609,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	if (!es->fit_size) nh = es->h;
 	if (nw > es->zone->w) nw = es->zone->w;
 	if (nh > es->zone->h) nh = es->zone->h;
-	if (nw != es->w) nx = es->zone->w - es->w;
+	nx = es->zone->w - nw;
 	ny = 0;
 	break;
       case E_GADCON_ORIENT_CORNER_BL:
@@ -611,7 +625,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	if (!es->fit_size) nh = es->h;
 	if (nw > es->zone->w) nw = es->zone->w;
 	if (nh > es->zone->h) nh = es->zone->h;
-	if (nw != es->w) nx = es->zone->w - es->w;
+	nx = es->zone->w - nw;
 	ny = es->zone->h - nh;
 	break;
       case E_GADCON_ORIENT_CORNER_LT:
@@ -671,4 +685,50 @@ _e_shelf_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *styl
 			   _e_shelf_orient_string_get(es));
    edje_object_message_signal_process(o);
    return o;
+}
+
+static void
+_e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Mouse_Down *ev;
+   E_Shelf *es;
+   
+   es = data;
+   ev = event_info;
+   if (ev->button == 3)
+     {
+	if (!es->config_dialog) e_int_shelf_config(es);
+     }
+}
+
+static void
+_e_shelf_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Mouse_Up *ev;
+   E_Shelf *es;
+   
+   es = data;
+   ev = event_info;
+}
+
+static void
+_e_shelf_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Mouse_In *ev;
+   E_Shelf *es;
+   
+   es = data;
+   ev = event_info;
+   edje_object_signal_emit(es->o_base, "active", "");
+}
+
+static void
+_e_shelf_cb_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Mouse_Out *ev;
+   E_Shelf *es;
+   
+   es = data;
+   ev = event_info;
+   edje_object_signal_emit(es->o_base, "inactive", "");
 }

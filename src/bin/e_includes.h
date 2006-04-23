@@ -132,3 +132,4 @@
 #include "e_widget_tlist.h"
 #include "e_widget_preview.h"
 #include "e_int_config_paths.h"
+#include "e_int_shelf_config.h"

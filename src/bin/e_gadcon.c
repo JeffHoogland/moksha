@@ -319,43 +319,46 @@ EAPI void
 e_gadcon_orient(E_Gadcon *gc, E_Gadcon_Orient orient)
 {
    Evas_List *l;
+   int horiz = 0;
    
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    if (gc->orient == orient) return;
    gc->orient = orient;
    e_gadcon_layout_freeze(gc->o_container);
+   switch (gc->orient)
+     {
+      case E_GADCON_ORIENT_FLOAT:
+      case E_GADCON_ORIENT_HORIZ:
+      case E_GADCON_ORIENT_TOP:
+      case E_GADCON_ORIENT_BOTTOM:
+      case E_GADCON_ORIENT_CORNER_TL:
+      case E_GADCON_ORIENT_CORNER_TR:
+      case E_GADCON_ORIENT_CORNER_BL:
+      case E_GADCON_ORIENT_CORNER_BR:
+	horiz = 1;
+	break;
+      case E_GADCON_ORIENT_VERT:
+      case E_GADCON_ORIENT_LEFT:
+      case E_GADCON_ORIENT_RIGHT:
+      case E_GADCON_ORIENT_CORNER_LT:
+      case E_GADCON_ORIENT_CORNER_RT:
+      case E_GADCON_ORIENT_CORNER_LB:
+      case E_GADCON_ORIENT_CORNER_RB:
+	horiz = 0;
+	break;
+      default:
+	break;
+     }
+   e_gadcon_layout_orientation_set(gc->o_container, horiz);
    for (l = gc->clients; l; l = l->next)
      {
 	E_Gadcon_Client *gcc;
 	
 	gcc = l->data;
+	e_box_orientation_set(gcc->o_box, horiz);
 	if (gcc->client_class->func.orient)
 	  gcc->client_class->func.orient(gcc);
-	switch (gcc->gadcon->orient)
-	  {
-	   case E_GADCON_ORIENT_FLOAT:
-	   case E_GADCON_ORIENT_HORIZ:
-	   case E_GADCON_ORIENT_TOP:
-	   case E_GADCON_ORIENT_BOTTOM:
-	   case E_GADCON_ORIENT_CORNER_TL:
-	   case E_GADCON_ORIENT_CORNER_TR:
-	   case E_GADCON_ORIENT_CORNER_BL:
-	   case E_GADCON_ORIENT_CORNER_BR:
-	     e_box_orientation_set(gcc->o_box, 1);
-	     break;
-	   case E_GADCON_ORIENT_VERT:
-	   case E_GADCON_ORIENT_LEFT:
-	   case E_GADCON_ORIENT_RIGHT:
-	   case E_GADCON_ORIENT_CORNER_LT:
-	   case E_GADCON_ORIENT_CORNER_RT:
-	   case E_GADCON_ORIENT_CORNER_LB:
-	   case E_GADCON_ORIENT_CORNER_RB:
-	     e_box_orientation_set(gcc->o_box, 0);
-	     break;
-	   default:
-	     break;
-	  }
      }
    e_gadcon_layout_thaw(gc->o_container);
 }
@@ -720,6 +723,7 @@ e_gadcon_client_aspect_set(E_Gadcon_Client *gcc, int w, int h)
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
    gcc->aspect.w = w;
    gcc->aspect.h = h;
+   printf("ASPECt: %i %i\n", w, h);
    if ((!gcc->autoscroll) && (!gcc->resizable))
      {
 	if (gcc->o_frame)
@@ -1873,7 +1877,8 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
    
    x = sd->x; y = sd->y; w = sd->w; h = sd->h;
    min = mino = cur = 0;
-   
+
+   printf("HORIZ: %i\n", sd->horizontal);
    for (l = sd->items; l; l = l->next)
      {
 	E_Gadcon_Layout_Item *bi;
@@ -2000,6 +2005,61 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
      }
    else
      {
+	if (cur <= h)
+	  {
+	     /* all is fine - it should all fit */
+	  }
+	else
+	  {
+	     int sub, give, num, given, i;
+	     
+	     sub = cur - h; /* we need to find "sub" extra pixels */
+	     if (min <= h)
+	       {
+		  printf("blum\n");
+		  for (l = sd->items; l; l = l->next)
+		    {
+		       E_Gadcon_Layout_Item *bi;
+		       Evas_Object *obj;
+		       
+		       obj = l->data;
+		       bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+		       give = bi->ask.size - bi->min.h; // how much give does this have?
+		       if (give < sub) give = sub;
+		       bi->ask.size2 = bi->ask.size - give;
+		       sub -= give;
+		       printf("GIVE: %i\n", give);
+		       if (sub <= 0) break;
+		    }
+	       }
+	     else
+	       { /* EEK - all items just cant fit at their minimum! what do we do? */
+		  printf("EEK - nofit!\n");
+		  num = 0;
+		  num = evas_list_count(sd->items);
+		  give = min - h; // how much give total below minw we need
+		  given = 0;
+		  for (l = sd->items; l; l = l->next)
+		    {
+		       E_Gadcon_Layout_Item *bi;
+		       Evas_Object *obj;
+		       
+		       obj = l->data;
+		       bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+		       bi->ask.size2 = bi->min.h;
+		       if (!l->next)
+			 {
+			    bi->ask.size2 -= (give - given);
+			 }
+		       else
+			 {
+			    i = (give + (num / 2)) / num;
+			    given -= i;
+			    bi->ask.size2 -= i;
+			 }
+		    }
+	       }
+	  }
      }
    
    for (l = sd->items; l; l = l->next)
@@ -2094,7 +2154,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 		  bi->hookp = bi->ask.res / 2;
 	       }
 	     if (bi->y < 0) bi->y = 0;
-	     else if ((bi->y + bi->h) > h) bi->y = h - bi->y;
+	     else if ((bi->y + bi->h) > h) bi->y = h - bi->h;
 	  }
      }
    list_s = evas_list_sort(list_s, evas_list_count(list_s), _e_gadcon_sort_cb);
@@ -2115,10 +2175,21 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	     
 	     obj = l2->data;
 	     bi2 = evas_object_data_get(obj, "e_gadcon_layout_data");
-	     if (E_SPANS_COMMON(bi->x, bi->w, bi2->x, bi2->w))
+	     if (sd->horizontal)
 	       {
-		  bi->x = bi2->x + bi2->w;
-		  goto again1;
+		  if (E_SPANS_COMMON(bi->x, bi->w, bi2->x, bi2->w))
+		    {
+		       bi->x = bi2->x + bi2->w;
+		       goto again1;
+		    }
+	       }
+	     else
+	       {
+		  if (E_SPANS_COMMON(bi->y, bi->h, bi2->y, bi2->h))
+		    {
+		       bi->y = bi2->y + bi2->h;
+		       goto again1;
+		    }
 	       }
 	  }
      }
@@ -2136,13 +2207,27 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	     
 	     obj = l2->data;
 	     bi2 = evas_object_data_get(obj, "e_gadcon_layout_data");
-	     if (E_SPANS_COMMON(bi->x, bi->w, bi2->x, bi2->w))
+             if (sd->horizontal)
 	       {
-		  if ((bi2->x + (bi2->w / 2)) < (w / 2))
-		    bi->x = bi2->x - bi->w;
-		  else
-		    bi->x = bi2->x + bi2->w;
-		  goto again2;
+		  if (E_SPANS_COMMON(bi->x, bi->w, bi2->x, bi2->w))
+		    {
+		       if ((bi2->x + (bi2->w / 2)) < (w / 2))
+			 bi->x = bi2->x - bi->w;
+		       else
+			 bi->x = bi2->x + bi2->w;
+		       goto again2;
+		    }
+	       }
+	     else
+	       {
+		  if (E_SPANS_COMMON(bi->y, bi->h, bi2->y, bi2->h))
+		    {
+		       if ((bi2->y + (bi2->h / 2)) < (h / 2))
+			 bi->y = bi2->y - bi->h;
+		       else
+			 bi->y = bi2->y + bi2->h;
+		       goto again2;
+		    }
 	       }
 	  }
      }
@@ -2160,10 +2245,21 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	     
 	     obj = l2->data;
 	     bi2 = evas_object_data_get(obj, "e_gadcon_layout_data");
-	     if (E_SPANS_COMMON(bi->x, bi->w, bi2->x, bi2->w))
+             if (sd->horizontal)
 	       {
-		  bi->x = bi2->x - bi->w;
-		  goto again3;
+		  if (E_SPANS_COMMON(bi->x, bi->w, bi2->x, bi2->w))
+		    {
+		       bi->x = bi2->x - bi->w;
+		       goto again3;
+		    }
+	       }
+	     else
+	       {
+		  if (E_SPANS_COMMON(bi->y, bi->h, bi2->y, bi2->h))
+		    {
+		       bi->y = bi2->y - bi->h;
+		       goto again3;
+		    }
 	       }
 	  }
      }
@@ -2175,20 +2271,42 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	obj = l->data;
 	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
 	bi->can_move = 1;
-	if (!l->prev)
+	if (sd->horizontal)
 	  {
-	     if (bi->x <= 0)
+	     if (!l->prev)
 	       {
-		  bi->x = 0;
-		  bi->can_move = 0;
+		  if (bi->x <= 0)
+		    {
+		       bi->x = 0;
+		       bi->can_move = 0;
+		    }
+	       }
+	     if (!l->next)
+	       {
+		  if ((bi->x + bi->w) >= w)
+		    {
+		       bi->x = w - bi->w;
+		       bi->can_move = 0;
+		    }
 	       }
 	  }
-	if (!l->next)
+	else
 	  {
-	     if ((bi->x + bi->w) >= w)
+	     if (!l->prev)
 	       {
-		  bi->x = w - bi->w;
-		  bi->can_move = 0;
+		  if (bi->y <= 0)
+		    {
+		       bi->y = 0;
+		       bi->can_move = 0;
+		    }
+	       }
+	     if (!l->next)
+	       {
+		  if ((bi->y + bi->h) >= h)
+		    {
+		       bi->y = h - bi->h;
+		       bi->can_move = 0;
+		    }
 	       }
 	  }
      }
@@ -2311,6 +2429,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
    evas_list_free(list_e);
    evas_list_free(list);
    
+   printf("-------------------v\n");
    for (l = sd->items; l; l = l->next)
      {
 	E_Gadcon_Layout_Item *bi;
@@ -2330,9 +2449,13 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	     xx = x + ((w - bi->w) / 2);
 	     yy = y + bi->y;
 	  }
+	printf("%p -> %i,%i [%i,%i], %ix%i\n",
+	       obj, 
+	       xx, yy, bi->x, bi->y, bi->w, bi->h);
 	evas_object_move(obj, xx, yy);
 	evas_object_resize(obj, bi->w, bi->h);
      }
+   printf("-------------------^\n");
    sd->doing_config = 0;
    if (sd->redo_config)
      {

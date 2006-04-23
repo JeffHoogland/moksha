@@ -14,6 +14,7 @@ typedef struct _E_Shelf E_Shelf;
 struct _E_Shelf
 {
    E_Object             e_obj_inherit;
+   int                  id;
    int                  x, y, w, h;
    int                  layer;
    E_Popup             *popup; /* NULL if its within an existing canvas */
@@ -29,13 +30,14 @@ struct _E_Shelf
    unsigned char        fit_along : 1;
    unsigned char        fit_size : 1;
    int                  size;
+   E_Config_Dialog     *config_dialog;
 };
 
 EAPI int              e_shelf_init(void);
 EAPI int              e_shelf_shutdown(void);
 EAPI void             e_shelf_config_init(void);
 EAPI Evas_List       *e_shelf_list(void);
-EAPI E_Shelf         *e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, int layer);
+EAPI E_Shelf         *e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, int layer, int id);
 EAPI void             e_shelf_populate(E_Shelf *es);
 EAPI void             e_shelf_show(E_Shelf *es);
 EAPI void             e_shelf_hide(E_Shelf *es);
@@ -46,6 +48,7 @@ EAPI void             e_shelf_layer_set(E_Shelf *es, int layer);
 EAPI void             e_shelf_save(E_Shelf *es);
 EAPI void             e_shelf_unsave(E_Shelf *es);
 EAPI void             e_shelf_orient(E_Shelf *es, E_Gadcon_Orient orient);
-    
+EAPI void             e_shelf_position_calc(E_Shelf *es);
+
 #endif
 #endif

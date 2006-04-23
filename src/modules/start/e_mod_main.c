@@ -137,11 +137,33 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 		case E_GADCON_ORIENT_RIGHT:
 		  dir = E_MENU_POP_DIRECTION_LEFT;
 		  break;
-		case E_GADCON_ORIENT_FLOAT:
 		case E_GADCON_ORIENT_CORNER_TL:
+		  dir = E_MENU_POP_DIRECTION_DOWN;
+		  break;
 		case E_GADCON_ORIENT_CORNER_TR:
+		  dir = E_MENU_POP_DIRECTION_DOWN;
+		  break;
 		case E_GADCON_ORIENT_CORNER_BL:
+		  dir = E_MENU_POP_DIRECTION_UP;
+		  break;
 		case E_GADCON_ORIENT_CORNER_BR:
+		  dir = E_MENU_POP_DIRECTION_UP;
+		  break;
+		case E_GADCON_ORIENT_CORNER_LT:
+		  dir = E_MENU_POP_DIRECTION_RIGHT;
+		  break;
+		case E_GADCON_ORIENT_CORNER_RT:
+		  dir = E_MENU_POP_DIRECTION_LEFT;
+		  break;
+		case E_GADCON_ORIENT_CORNER_LB:
+		  dir = E_MENU_POP_DIRECTION_RIGHT;
+		  break;
+		case E_GADCON_ORIENT_CORNER_RB:
+		  dir = E_MENU_POP_DIRECTION_LEFT;
+		  break;
+		case E_GADCON_ORIENT_FLOAT:
+		case E_GADCON_ORIENT_HORIZ:
+		case E_GADCON_ORIENT_VERT:
 		default:
 		  dir = E_MENU_POP_DIRECTION_AUTO;
 		  break;

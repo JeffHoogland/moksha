@@ -39,46 +39,81 @@ group {
       }
       part {
 	 name:          "base";
-	 clip_to:       "base_clip";
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
-	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0   -6;
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   0;
-	    }
 	    image {
 	       normal: "e17_shelf_bg_h.png";
 	       border: 19 19 9 9;
+	    }
+	    fill {
+	       origin {
+		  offset: 0 -6;
+	       }
+	       size {
+		  offset: 0 6;
+	       }
+	    }
+	 }
+	 description {
+	    state:    "top_left" 0.0;
+	    inherit:  "default" 0.0;
+	    fill {
+	       origin {
+		  offset: -16 -6;
+	       }
+	       size {
+		  offset: 16 6;
+	       }
+	    }
+	 }
+	 description {
+	    state:    "top_right" 0.0;
+	    inherit:  "default" 0.0;
+	    fill {
+	       origin {
+		  offset: 0 -6;
+	       }
+	       size {
+		  offset: 16 6;
+	       }
 	    }
 	 }
 	 description {
 	    state:    "bottom" 0.0;
-	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0   0;
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   7;
-	    }
-	    image {
-	       normal: "e17_shelf_bg_h.png";
-	       border: 19 19 9 9;
+	    inherit:  "default" 0.0;
+	    fill {
+	       origin {
+		  offset: 0 0;
+	       }
+	       size {
+		  offset: 0 6;
+	       }
 	    }
 	 }
-      }
-      part {
-	 name:          "base_clip";
-	 type:          RECT;
-	 mouse_events:  0;
 	 description {
-	    state:    "default" 0.0;
-	    color:    255 255 255 255;
+	    state:    "bottom_left" 0.0;
+            inherit:  "default" 0.0;
+	    fill {
+	       origin {
+		  offset: -16 0;
+	       }
+	       size {
+		  offset: 16 6;
+	       }
+	    }
+	 }
+	 description {
+	    state:    "bottom_right" 0.0;
+            inherit:  "default" 0.0;
+	    fill {
+	       origin {
+		  offset: 0 0;
+	       }
+	       size {
+		  offset: 16 6;
+	       }
+	    }
 	 }
       }
       part {
@@ -96,6 +131,61 @@ group {
 	       offset:   -19   -3;
 	    }
 	 }
+	 description {
+	    state:    "top_left" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   2    2;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -19   -3;
+	    }
+	 }
+	 description {
+	    state:    "top_right" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   18   2;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -3   -3;
+	    }
+	 }
+	 description {
+	    state:    "bottom" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   18   2;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -19   -3;
+	    }
+	 }
+	 description {
+	    state:    "bottom_left" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   2   2;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -19   -3;
+	    }
+	 }
+	 description {
+	    state:    "bottom_right" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   18   2;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -3   -3;
+	    }
+	 }
       }
    }
    programs {
@@ -105,13 +195,47 @@ group {
 	 source:  "top";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "base";
+	 target:  "items";
       }
       program {
 	 name:    "orient2";
 	 signal:  "set_orientation";
+	 source:  "top_left";
+	 action:  STATE_SET "top_left" 0.0;
+	 target:  "base";
+	 target:  "items";
+      }
+      program {
+	 name:    "orient3";
+	 signal:  "set_orientation";
+	 source:  "top_right";
+	 action:  STATE_SET "top_right" 0.0;
+	 target:  "base";
+	 target:  "items";
+      }
+      program {
+	 name:    "orient4";
+	 signal:  "set_orientation";
 	 source:  "bottom";
 	 action:  STATE_SET "bottom" 0.0;
 	 target:  "base";
+	 target:  "items";
+      }
+      program {
+	 name:    "orient5";
+	 signal:  "set_orientation";
+	 source:  "bottom_left";
+	 action:  STATE_SET "bottom_left" 0.0;
+	 target:  "base";
+	 target:  "items";
+      }
+      program {
+	 name:    "orient6";
+	 signal:  "set_orientation";
+	 source:  "bottom_right";
+	 action:  STATE_SET "bottom_right" 0.0;
+	 target:  "base";
+	 target:  "items";
       }
    }
 }

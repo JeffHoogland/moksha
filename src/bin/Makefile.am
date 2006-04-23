@@ -151,7 +151,8 @@ e_stolen.h \
 e_gadcon.h \
 e_shelf.h \
 e_widget_preview.h \
-e_int_config_paths.h
+e_int_config_paths.h \
+e_int_shelf_config.h
 
 enlightenment_src = \
 e_user.c \
@@ -284,6 +285,7 @@ e_gadcon.c \
 e_shelf.c \
 e_widget_preview.c \
 e_int_config_paths.c \
+e_int_shelf_config.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \
