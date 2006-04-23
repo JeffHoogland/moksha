@@ -822,12 +822,12 @@ _e_int_menus_gadgets_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    gm = data;
    if (e_menu_item_toggle_get(mi))
      {
-	e_gadcon_all_edit_begin();
+//	e_gadcon_all_edit_begin();
 	e_gadman_mode_set(gm, E_GADMAN_MODE_EDIT);
      }
    else
      {
-	e_gadcon_all_edit_end();
+//	e_gadcon_all_edit_end();
 	e_gadman_mode_set(gm, E_GADMAN_MODE_NORMAL);
      }
 }

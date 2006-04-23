@@ -70,6 +70,8 @@ struct _E_Gadcon
       Evas_Object *(*func) (void *data, E_Gadcon_Client *gcc, const char *style);
       void *data;
    } frame_request;
+   
+   unsigned char       editing : 1;
 };
 
 #define GADCON_CLIENT_CLASS_VERSION 1

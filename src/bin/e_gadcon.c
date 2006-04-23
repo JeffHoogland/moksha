@@ -196,11 +196,9 @@ e_gadcon_populate(E_Gadcon *gc)
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    ok = 0;
    e_gadcon_layout_freeze(gc->o_container);
-   printf("e_config->gadcons = %p\n", e_config->gadcons);
    for (l = e_config->gadcons; l; l = l->next)
      {
 	cf_gc = l->data;
-	printf("%s == %s, %s == %s\n", cf_gc->name, gc->name, cf_gc->id, gc->id);
 	if ((!strcmp(cf_gc->name, gc->name)) &&
 	    (!strcmp(cf_gc->id, gc->id)))
 	  {
@@ -371,6 +369,7 @@ e_gadcon_edit_begin(E_Gadcon *gc)
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    e_gadcon_layout_freeze(gc->o_container);
+   gc->editing = 1;
    for (l = gc->clients; l; l = l->next)
      {
 	E_Gadcon_Client *gcc;
@@ -389,6 +388,7 @@ e_gadcon_edit_end(E_Gadcon *gc)
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    e_gadcon_layout_freeze(gc->o_container);
+   gc->editing = 0;
    for (l = gc->clients; l; l = l->next)
      {
 	E_Gadcon_Client *gcc;
@@ -723,7 +723,6 @@ e_gadcon_client_aspect_set(E_Gadcon_Client *gcc, int w, int h)
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
    gcc->aspect.w = w;
    gcc->aspect.h = h;
-   printf("ASPECt: %i %i\n", w, h);
    if ((!gcc->autoscroll) && (!gcc->resizable))
      {
 	if (gcc->o_frame)
@@ -856,6 +855,18 @@ _e_gadcon_client_cb_menu_resizable(void *data, E_Menu *m, E_Menu_Item *mi)
    e_gadcon_populate(gc);
 }
 
+static void
+_e_gadcon_client_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Gadcon_Client *gcc;
+   
+   gcc = data;
+   if (gcc->o_control)
+     e_gadcon_client_edit_end(gcc);
+   else
+     e_gadcon_client_edit_begin(gcc);
+}
+
 EAPI void
 e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int flags)
 {
@@ -884,6 +895,14 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int f
    e_menu_item_check_set(mi, 1);
    if (gcc->resizable) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_resizable, gcc);
+
+   mi = e_menu_item_new(menu);
+   if (gcc->o_control)
+     e_menu_item_label_set(mi, _("Stop editing"));
+   else
+     e_menu_item_label_set(mi, _("Begin editing"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/edit");
+   e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_edit, gcc);
 }
 
 static void 
@@ -1196,7 +1215,27 @@ _e_gadcon_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_in
    ev = event_info;
    if (ev->button == 3)
      {
-	printf("THREE! %p\n", gcc);
+	E_Menu *mn;
+	E_Menu_Item *mi;
+	int cx, cy, cw, ch;
+
+	mn = e_menu_new();
+	e_menu_post_deactivate_callback_set(mn, _e_gadcon_client_cb_menu_post,
+					    gcc);
+	gcc->menu = mn;
+	
+	mi = e_menu_item_new(mn);
+	e_menu_item_label_set(mi, _("Stop editing"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/edit");
+	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_edit, gcc);
+	
+	e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &cx, &cy, &cw, &ch);
+	e_menu_activate_mouse(mn,
+			      e_util_zone_current_get(e_manager_current_get()),
+			      cx + ev->output.x, cy + ev->output.y, 1, 1,
+			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
+	evas_event_feed_mouse_up(gcc->gadcon->evas, ev->button,
+				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
 }
 
@@ -1878,7 +1917,6 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
    x = sd->x; y = sd->y; w = sd->w; h = sd->h;
    min = mino = cur = 0;
 
-   printf("HORIZ: %i\n", sd->horizontal);
    for (l = sd->items; l; l = l->next)
      {
 	E_Gadcon_Layout_Item *bi;
@@ -1943,8 +1981,6 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	  }
      }
    
-   printf("CUR = %i | %i %i\n", cur, min, mino);
-   
    if (sd->horizontal)
      {
 	if (cur <= w)
@@ -1958,7 +1994,6 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	     sub = cur - w; /* we need to find "sub" extra pixels */
 	     if (min <= w)
 	       {
-		  printf("blum\n");
 		  for (l = sd->items; l; l = l->next)
 		    {
 		       E_Gadcon_Layout_Item *bi;
@@ -1970,13 +2005,11 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 		       if (give < sub) give = sub;
 		       bi->ask.size2 = bi->ask.size - give;
 		       sub -= give;
-		       printf("GIVE: %i\n", give);
 		       if (sub <= 0) break;
 		    }
 	       }
 	     else
 	       { /* EEK - all items just cant fit at their minimum! what do we do? */
-		  printf("EEK - nofit!\n");
 		  num = 0;
 		  num = evas_list_count(sd->items);
 		  give = min - w; // how much give total below minw we need
@@ -2016,7 +2049,6 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	     sub = cur - h; /* we need to find "sub" extra pixels */
 	     if (min <= h)
 	       {
-		  printf("blum\n");
 		  for (l = sd->items; l; l = l->next)
 		    {
 		       E_Gadcon_Layout_Item *bi;
@@ -2028,13 +2060,11 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 		       if (give < sub) give = sub;
 		       bi->ask.size2 = bi->ask.size - give;
 		       sub -= give;
-		       printf("GIVE: %i\n", give);
 		       if (sub <= 0) break;
 		    }
 	       }
 	     else
 	       { /* EEK - all items just cant fit at their minimum! what do we do? */
-		  printf("EEK - nofit!\n");
 		  num = 0;
 		  num = evas_list_count(sd->items);
 		  give = min - h; // how much give total below minw we need
@@ -2429,7 +2459,6 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
    evas_list_free(list_e);
    evas_list_free(list);
    
-   printf("-------------------v\n");
    for (l = sd->items; l; l = l->next)
      {
 	E_Gadcon_Layout_Item *bi;
@@ -2449,13 +2478,9 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	     xx = x + ((w - bi->w) / 2);
 	     yy = y + bi->y;
 	  }
-	printf("%p -> %i,%i [%i,%i], %ix%i\n",
-	       obj, 
-	       xx, yy, bi->x, bi->y, bi->w, bi->h);
 	evas_object_move(obj, xx, yy);
 	evas_object_resize(obj, bi->w, bi->h);
      }
-   printf("-------------------^\n");
    sd->doing_config = 0;
    if (sd->redo_config)
      {

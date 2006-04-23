@@ -31,6 +31,7 @@ struct _E_Shelf
    unsigned char        fit_size : 1;
    int                  size;
    E_Config_Dialog     *config_dialog;
+   E_Menu              *menu;
 };
 
 EAPI int              e_shelf_init(void);

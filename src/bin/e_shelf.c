@@ -422,6 +422,12 @@ e_shelf_position_calc(E_Shelf *es)
 static void
 _e_shelf_free(E_Shelf *es)
 {
+   if (es->menu)
+     {
+	e_menu_post_deactivate_callback_set(es->menu, NULL, NULL);
+	e_object_del(E_OBJECT(es->menu));
+	es->menu = NULL;
+     }
    if (es->config_dialog) e_object_del(E_OBJECT(es->config_dialog));
    shelves = evas_list_remove(shelves, es);
    e_object_del(E_OBJECT(es->gadcon));
@@ -509,7 +515,6 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
    nw = es->w;
    nh = es->h;
    ww = hh = 0;
-   printf("req = %i %i\n", w, h);
    evas_object_geometry_get(gc->o_container, NULL, NULL, &ww, &hh);
    switch (gc->orient)
      {
@@ -537,10 +542,8 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
       default:
 	break;
      }
-   printf("adj min = %i %i\n", w, h);
    e_gadcon_swallowed_min_size_set(gc, w, h);
    edje_object_size_min_calc(es->o_base, &nw, &nh);
-   printf("new w, h = %i %i\n", nw, nh);
    switch (gc->orient)
      {
       case E_GADCON_ORIENT_FLOAT:
@@ -688,6 +691,38 @@ _e_shelf_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *styl
 }
 
 static void
+_e_shelf_cb_menu_config(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Shelf *es;
+   
+   es = data;
+   if (!es->config_dialog) e_int_shelf_config(es);
+}
+
+static void
+_e_shelf_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Shelf *es;
+   
+   es = data;
+   if (es->gadcon->editing)
+     e_gadcon_edit_end(es->gadcon);
+   else
+     e_gadcon_edit_begin(es->gadcon);
+}
+
+static void
+_e_shelf_cb_menu_post(void *data, E_Menu *m)
+{
+   E_Shelf *es;
+   
+   es = data;
+   if (!es->menu) return;
+   e_object_del(E_OBJECT(es->menu));
+   es->menu = NULL;
+}
+
+static void
 _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
@@ -697,7 +732,34 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_inf
    ev = event_info;
    if (ev->button == 3)
      {
-	if (!es->config_dialog) e_int_shelf_config(es);
+        E_Menu *mn;
+	E_Menu_Item *mi;
+	int cx, cy, cw, ch;
+	
+	mn = e_menu_new();
+	e_menu_post_deactivate_callback_set(mn, _e_shelf_cb_menu_post, es);
+	es->menu = mn;
+	
+	mi = e_menu_item_new(mn);
+	e_menu_item_label_set(mi, _("Configuration"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/config");
+	e_menu_item_callback_set(mi, _e_shelf_cb_menu_config, es);
+
+	mi = e_menu_item_new(mn);
+	if (es->gadcon->editing)
+	  e_menu_item_label_set(mi, _("Stop editing items"));
+	else
+	  e_menu_item_label_set(mi, _("Begin editing items"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/edit");
+	e_menu_item_callback_set(mi, _e_shelf_cb_menu_edit, es);
+	
+	e_gadcon_canvas_zone_geometry_get(es->gadcon, &cx, &cy, &cw, &ch);
+	e_menu_activate_mouse(mn,
+			      e_util_zone_current_get(e_manager_current_get()),
+			      cx + ev->output.x, cy + ev->output.y, 1, 1,
+			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
+	evas_event_feed_mouse_up(es->gadcon->evas, ev->button,
+				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
 }
 
