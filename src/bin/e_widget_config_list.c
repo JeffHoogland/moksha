@@ -328,6 +328,7 @@ _e_wid_del_hook(Evas_Object *obj)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   E_FREE(wd->cur_entry);
    free(wd);
 }
 

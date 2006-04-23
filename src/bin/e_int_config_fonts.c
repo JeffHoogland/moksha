@@ -16,7 +16,6 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Co
 
 static void _ilist_font_cb_change(void *data, Evas_Object *obj);
 static void _enabled_font_cb_change(void *data, Evas_Object *obj);
-static void _update_font_class_ilist_icon(void *data);
 
 static void _enabled_fallback_cb_change(void *data, Evas_Object *obj);
 
@@ -36,21 +35,14 @@ struct _CFText_Class
 };
 
 const E_Text_Class_Pair text_class_predefined_names[ ] = {
+       {  NULL,		    "Window Manager Classes"},
        { "title_bar",	    "Title Bar"},
        { "menu_item",	    "Menu Item"},
-       { "ilist_item",	    "List Item"},
-       { "ilist_header",    "List Header"},
        { "tb_plain",	    "Textblock Plain"},
        { "tb_light",        "Textblock Light"},
        { "tb_big",          "Textblock Big"},
-       { "frame",           "Frame"},
-       { "label",           "Label"},
-       { "button",   	    "Buttons"},
-       { "radio_button",    "Radio Buttons"},
-       { "check_button",    "Check Buttons"},
        { "move_text",       "Move Text"},
        { "resize_text",     "Resize Text"},
-       { "tlist",           "Text List Item"},
        { "winlist_title",   "Winlist Title"},
        { "configure",       "Configure Heading"},
        { "about_title",     "About Title"},
@@ -60,9 +52,31 @@ const E_Text_Class_Pair text_class_predefined_names[ ] = {
        { "desklock_passwd", "Desklock Password"},
        { "dialog_error",    "Dialog Error"},
        { "exebuf_command",  "Exebuf Command"},
+       
+       {  NULL,		    "Widget Classes"},
+       { "frame",           "Frame"},
+       { "label",           "Label"},
+       { "button",   	    "Buttons"},
+       { "slider",	    "Slider"},
+       { "radio_button",    "Radio Buttons"},
+       { "check_button",    "Check Buttons"},
+       { "tlist",           "Text List Item"},
+       { "ilist_item",	    "List Item"},
+       { "ilist_header",    "List Header"},
+     
+       {  NULL,		    "EFM Classes"},
        { "fileman_typebuf", "EFM Typebuf"},
        { "fileman_icon",    "EFM Icon"},
-       { NULL,		NULL}
+       
+       {  NULL,		    "Module Classes"},
+       { "module_small",    "Small"},
+       { "module_normal",   "Normal"},
+       { "module_large",    "Large"},
+       { "module_small_s",  "Small Styled"},
+       { "module_normal_s", "Normal Styled"},
+       { "module_large_s",  "Large Styled"},
+       
+       { NULL, NULL}
 };
      
 struct _E_Config_Dialog_Data
@@ -128,46 +142,52 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    font_list = e_font_default_list();
    
    /* Fill out the font list */
-   for (i = 0; text_class_predefined_names[i].class_name; i++ )
+   for (i = 0; text_class_predefined_names[i].class_description; i++ )
      {
-	tc = E_NEW(CFText_Class, 1);
-	
+	tc = E_NEW(CFText_Class, 1);	
 	tc->class_name = text_class_predefined_names[i].class_name;
 	tc->class_description = _(text_class_predefined_names[i].class_description);
 	tc->font = NULL;
 	tc->size = 0;
 	tc->enabled = 0;
-	
-	for (next = font_list; next ; next = next->next)
+		
+	if (text_class_predefined_names[i].class_name)
 	  {
-	     efd = next->data;
+	     for (next = font_list; next ; next = next->next)
+	       {
+		  efd = next->data;
+		  
+		  if (!strcmp(tc->class_name, efd->text_class))
+		    {
+		       if (efd->font)
+			 tc->font = evas_stringshare_add(efd->font);
+		       else
+			 tc->font = evas_stringshare_add("");
+		       
+		       tc->size = efd->size;
+		       tc->enabled = 1;
+		    }
+	       }
 	     
-	     if (!strcmp(tc->class_name, efd->text_class))
+	     if (!tc->enabled)
 	       {
-		  if (efd->font)
-		    tc->font = evas_stringshare_add(efd->font);
-		  else
-		    tc->font = evas_stringshare_add("");
-
-		  tc->size = efd->size;
-		  tc->enabled = 1;
+		  efd = e_font_default_get(tc->class_name); 
+		  if (efd)
+		    { 
+		       if (efd->font)
+			 tc->font = evas_stringshare_add(efd->font);
+		       else
+			 tc->font = evas_stringshare_add("");
+		       
+		       tc->size = efd->size;
+		    }
+		  else 
+		    {
+		       tc->font = evas_stringshare_add("");
+		    }
 	       }
 	  }
-
-	if (!tc->enabled)
-	  {
-	     efd = e_font_default_get(tc->class_name); 
-	     if (efd && efd->font)
-	       {
-		  tc->font = evas_stringshare_add(efd->font);
-		  tc->size = efd->size;
-	       }
-	     else 
-	       {
-		  tc->font = evas_stringshare_add("");
-	       }
-	  }
-
+	
 	/* Append the class */
 	cfdata->text_classes = evas_list_append(cfdata->text_classes, tc);
      }
@@ -202,10 +222,11 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
         tc = l->data;
         cfdata->text_classes = evas_list_remove_list(cfdata->text_classes, l);
-        evas_stringshare_del(tc->font);
+        if (tc->font) evas_stringshare_del(tc->font);
         E_FREE(tc);
      }
    
+   E_FREE(cfdata->cur_font);
    free(cfdata);
 }
 
@@ -230,6 +251,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
 	tc = next->data;
 
+	if (!tc->class_name) continue;
+	
 	if (tc->enabled && tc->font) 
 	  {
 	     e_font_default_set(tc->class_name, tc->font, tc->size);
@@ -268,8 +291,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
+   Evas_List *next;
    int option_enable;
-   int i;
 
    cfdata->cur_index = -1;
    cfdata->evas = evas;
@@ -282,24 +305,31 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_on_change_hook_set(cfdata->gui.class_list, _ilist_font_cb_change, cfdata);
 
    /* Fill In Ilist */
-   for (i = 0; i < evas_list_count(cfdata->text_classes); i++)
+   for (next = cfdata->text_classes; next; next = next->next)
      {
 	CFText_Class *tc;
 	Evas_Object *ic;
 	
-	tc = evas_list_nth(cfdata->text_classes, i);
+	tc = next->data;
 	if (tc)
 	  {
-	     if (tc->enabled)
+	     if (tc->class_name)
 	       {
-		  ic = edje_object_add(evas);
-		  e_util_edje_icon_set(ic, ILIST_ICON_WITH_DEFINED_FONT);
+		  if (tc->enabled)
+		    {
+		       ic = edje_object_add(evas);
+		       e_util_edje_icon_set(ic, ILIST_ICON_WITH_DEFINED_FONT);
+		    }
+		  else
+		    {
+		       ic = NULL;
+		    }
+		  e_widget_ilist_append(cfdata->gui.class_list, ic, tc->class_description, NULL, NULL, NULL);
 	       }
 	     else
 	       {
-		  ic = NULL;
+		  e_widget_ilist_header_append(cfdata->gui.class_list, NULL, tc->class_description);
 	       }
-	     e_widget_ilist_append(cfdata->gui.class_list, ic, tc->class_description, NULL, NULL, NULL);
 	  }
      }
 
@@ -379,11 +409,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    /* Fill In Ilist */
    option_enable = 0;
-   for (i = 0; i < evas_list_count(e_font_fallback_list()); i++)
+   for (next = e_font_fallback_list(); next; next = next->next)
      {
 	E_Font_Fallback *eff;
 	
-	eff = evas_list_nth(e_font_fallback_list(), i);
+	eff = next->data;
 	e_widget_config_list_append(ob, eff->name);
 	option_enable = 1;
      }
