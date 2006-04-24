@@ -163,11 +163,11 @@ group {
 	    aspect_preference: VERTICAL;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   1 1;
+	       offset:   5 3;
 	    }
 	    rel2 {
-	       relative: 0.0  1.0;
-	       offset:   -1 -1;
+	       relative: 1.0  1.0;
+	       offset:   -6 -1;
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
@@ -192,11 +192,11 @@ group {
 	    aspect_preference: VERTICAL;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   1 0;
+	       offset:   5 3;
 	    }
 	    rel2 {
-	       relative: 0.0  1.0;
-	       offset:   -1 -1;
+	       relative: 1.0  1.0;
+	       offset:   -6 -1;
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
@@ -636,11 +636,11 @@ group {
 	    aspect_preference: VERTICAL;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   1 1;
+	       offset:   5 3;
 	    }
 	    rel2 {
-	       relative: 0.0  1.0;
-	       offset:   -1 -1;
+	       relative: 1.0  1.0;
+	       offset:   -6 -1;
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
@@ -665,11 +665,11 @@ group {
 	    aspect_preference: VERTICAL;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   1 0;
+	       offset:   5 3;
 	    }
 	    rel2 {
-	       relative: 0.0  1.0;
-	       offset:   -1 -1;
+	       relative: 1.0  1.0;
+	       offset:   -6 -1;
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
