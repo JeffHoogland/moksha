@@ -52,6 +52,9 @@ const E_Text_Class_Pair text_class_predefined_names[ ] = {
        { "desklock_passwd", "Desklock Password"},
        { "dialog_error",    "Dialog Error"},
        { "exebuf_command",  "Exebuf Command"},
+       { "init_title",      "Splash Title"},
+       { "init_text",       "Splash Text"},
+       { "init_version",    "Splash Version"},
        
        {  NULL,		    "Widget"},
        { "frame",           "Frame"},

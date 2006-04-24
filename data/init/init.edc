@@ -564,6 +564,7 @@ collections {
 		  size: TSIZE;
 		  min:  1 1;
 		  align: 0.5 0.5;
+		  text_class: "init_title";
 	       }
 	    }
 	 }
@@ -590,6 +591,7 @@ collections {
 		  size: VSIZE;
 		  min:  1 1;
 		  align: 0.0 0.0;
+		  text_class: "init_version";
 	       }
 	    }
 	 }
@@ -619,6 +621,7 @@ collections {
 		  size: SSIZE;
 		  min:  1 1;
 		  align: 0.5 0.5;
+		  text_class: "init_text"; 
 	       }
 	    }
 	 }
@@ -646,6 +649,7 @@ collections {
 		  size: SSIZE;
 		  min:   1 1;
 		  align: 0.0 0.5;
+		  text_class: "init_text";
 	       }
 	    }
 	 }
