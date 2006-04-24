@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-04-15 21:29+0900\n"
-"PO-Revision-Date: 2006-04-15 23:05+0900\n"
+"POT-Creation-Date: 2006-04-24 17:51+0900\n"
+"PO-Revision-Date: 2006-04-24 22:28+0900\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -61,7 +61,7 @@ msgstr "いいえ"
 
 #: src/bin/e_apps.c:444 src/bin/e_fileman_file.c:312
 #: src/bin/e_fileman_file.c:363 src/bin/e_fileman_mime.c:393
-#: src/bin/e_utils.c:229 src/bin/e_zone.c:607
+#: src/bin/e_utils.c:229 src/bin/e_zone.c:621
 msgid "Run Error"
 msgstr "実行エラー"
 
@@ -89,9 +89,9 @@ msgstr ""
 #: src/bin/e_fileman_smart.c:907 src/bin/e_int_border_remember.c:246
 #: src/bin/e_int_border_remember.c:326 src/bin/e_int_border_remember.c:368
 #: src/bin/e_int_config_background_import.c:202 src/bin/e_module.c:417
-#: src/bin/e_utils.c:524 src/modules/battery/e_mod_main.c:559
-#: src/modules/cpufreq/e_mod_main.c:305 src/modules/cpufreq/e_mod_main.c:333
-#: src/modules/ibar/e_mod_main.c:1619
+#: src/bin/e_utils.c:524 src/modules/battery/e_mod_main.c:282
+#: src/modules/cpufreq/e_mod_main.c:312 src/modules/cpufreq/e_mod_main.c:339
+#: src/modules/cpufreq/e_mod_main.c:358 src/modules/ibar/e_mod_main.c:1054
 msgid "OK"
 msgstr "了解"
 
@@ -189,7 +189,7 @@ msgstr "出力データ"
 msgid "There was no output."
 msgstr "出力はありませんでした"
 
-#: src/bin/e_config.c:474
+#: src/bin/e_config.c:475
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -206,7 +206,7 @@ msgstr ""
 "いデフォルト設定<br>を追加すれば更新されます. これで好きなように設定できます."
 "ちょっと面倒ですが, <br>よろしくお願いします.<br>"
 
-#: src/bin/e_config.c:488
+#: src/bin/e_config.c:489
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very<br>strange. "
 "This should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -220,7 +220,7 @@ msgstr ""
 "<br>これではまずいので, 念のためデフォルトの設定に置き換えました.<br>ご不便を"
 "おかけしますが, よろしくお願いします.<br>"
 
-#: src/bin/e_config.c:1750
+#: src/bin/e_config.c:1791
 msgid "Configuration Upgraded"
 msgstr "設定をアップグレードしました"
 
@@ -367,11 +367,11 @@ msgstr "検索パスの設定"
 msgid "Container %d"
 msgstr "コンテナ %d"
 
-#: src/bin/e_desklock.c:149
+#: src/bin/e_desklock.c:172
 msgid "Lock Failed"
 msgstr "ロックに失敗しました."
 
-#: src/bin/e_desklock.c:150
+#: src/bin/e_desklock.c:173
 msgid ""
 "Locking the desktop failed because some application<br>has grabbed either "
 "they keyboard or the mouse or both<br>and their grab is unable to be broken."
@@ -379,9 +379,24 @@ msgstr ""
 "キーボードかマウス、あるいはその両方を掴んで離さないアプリケーションがあるた"
 "め,デスクトップをロックできませんでした."
 
-#: src/bin/e_desklock.c:236
+#: src/bin/e_desklock.c:259
 msgid "Please enter your unlock password"
 msgstr "ロック解除用パスワードを入力して下さい"
+
+#: src/bin/e_desklock.c:553
+msgid "Authentication System Error"
+msgstr "認証システムエラー"
+
+#: src/bin/e_desklock.c:554
+#, c-format
+msgid ""
+"Authentication via PAM had errors setting up the<br>authentication session. "
+"The error code was <hilight>%i</hilight>.<br>This is bad and should not be "
+"happening. Please report this bug."
+msgstr ""
+"認証セッションを確立する際に PAM を使った認証でエラーが起きました.<br>"
+"エラーコードは <hilight>%i</hilight> です.<br>"
+"まずいですね. 起きてはいけないことです. これはぜひバグ報告して下さい."
 
 #
 #: src/bin/e_eap_editor.c:85 src/bin/e_int_menus.c:627
@@ -493,7 +508,7 @@ msgid "Cancel"
 msgstr "取消"
 
 #: src/bin/e_fileman_file.c:313 src/bin/e_fileman_file.c:364
-#: src/bin/e_fileman_mime.c:394 src/bin/e_zone.c:608
+#: src/bin/e_fileman_mime.c:394 src/bin/e_zone.c:622
 #, c-format
 msgid ""
 "Enlightenment was unable to fork a child process:\n"
@@ -671,21 +686,38 @@ msgstr "名前を変える"
 msgid "Delete"
 msgstr "削除する"
 
+#: src/bin/e_gadcon.c:879
+msgid "Inset appearance"
+msgstr "中にはめ込む"
+
+#: src/bin/e_gadcon.c:886
+msgid "Automatically scroll contents"
+msgstr "自動的にスクロールする"
+
+#: src/bin/e_gadcon.c:893
+msgid "Able to be resized"
+msgstr "大きさを変える"
+
+#
+#: src/bin/e_gadcon.c:901 src/bin/e_gadcon.c:1228
+msgid "Stop editing"
+msgstr "編集を終了する"
+
+#
+#: src/bin/e_gadcon.c:903
+msgid "Begin editing"
+msgstr "編集を始める"
+
 #: src/bin/e_gadget.c:209 src/bin/e_int_menus.c:163 src/bin/e_module.c:490
-#: src/modules/battery/e_mod_main.c:250 src/modules/battery/e_mod_main.c:376
-#: src/modules/clock/e_mod_main.c:189 src/modules/clock/e_mod_main.c:360
-#: src/modules/ibar/e_mod_main.c:296 src/modules/ibar/e_mod_main.c:655
-#: src/modules/ibox/e_mod_main.c:259 src/modules/ibox/e_mod_main.c:466
-#: src/modules/itray/e_mod_main.c:417 src/modules/pager/e_mod_main.c:410
-#: src/modules/pager/e_mod_main.c:550
+#: src/bin/e_shelf.c:744 src/modules/battery/e_mod_main.c:152
+#: src/modules/ibar/e_mod_main.c:752 src/modules/ibox/e_mod_main.c:259
+#: src/modules/ibox/e_mod_main.c:466 src/modules/itray/e_mod_main.c:417
+#: src/modules/pager/e_mod_main.c:617 src/modules/temperature/e_mod_main.c:123
 msgid "Configuration"
 msgstr "設定"
 
 #: src/bin/e_gadget.c:215 src/bin/e_int_menus.c:806
-#: src/modules/battery/e_mod_main.c:382 src/modules/clock/e_mod_main.c:366
-#: src/modules/cpufreq/e_mod_main.c:943 src/modules/ibar/e_mod_main.c:661
 #: src/modules/ibox/e_mod_main.c:472 src/modules/itray/e_mod_main.c:423
-#: src/modules/pager/e_mod_main.c:555
 msgid "Edit Mode"
 msgstr "編集モード"
 
@@ -742,7 +774,7 @@ msgstr "今後この開始シーケンスをスキップする"
 msgid "Window Border Selection"
 msgstr "ウィンドウボーダーの選択"
 
-#: src/bin/e_int_border_border.c:198
+#: src/bin/e_int_border_border.c:197
 msgid "Remember this Border for this window next time it appears"
 msgstr "このボーダーを記憶して, 次回このウィンドウが現れた時に適用する"
 
@@ -788,12 +820,13 @@ msgid "Position"
 msgstr "位置"
 
 #: src/bin/e_int_border_locks.c:321 src/bin/e_int_border_locks.c:340
-#: src/bin/e_int_border_remember.c:495
+#: src/bin/e_int_border_remember.c:495 src/bin/e_int_shelf_config.c:180
 msgid "Size"
 msgstr "サイズ"
 
 #: src/bin/e_int_border_locks.c:323 src/bin/e_int_border_locks.c:342
 #: src/bin/e_int_border_menu.c:175 src/bin/e_int_border_remember.c:497
+#: src/bin/e_int_shelf_config.c:170
 msgid "Stacking"
 msgstr "積み重ね順"
 
@@ -854,7 +887,7 @@ msgstr "以上のロックを記憶する"
 msgid "Always On Top"
 msgstr "常に一番上に"
 
-#: src/bin/e_int_border_menu.c:57 src/modules/temperature/e_mod_config.c:156
+#: src/bin/e_int_border_menu.c:57 src/modules/temperature/e_mod_config.c:150
 msgid "Normal"
 msgstr "普通"
 
@@ -1137,8 +1170,7 @@ msgstr "画像をタイル上に配置する"
 #: src/bin/e_int_config_exebuf.c:100 src/bin/e_int_config_exebuf.c:146
 #: src/bin/e_int_config_performance.c:86
 #: src/bin/e_int_config_performance.c:120 src/bin/e_int_config_winlist.c:123
-#: src/modules/clock/e_mod_config.c:71 src/modules/pager/e_mod_config.c:91
-#: src/modules/pager/e_mod_config.c:141
+#: src/modules/pager/e_mod_config.c:74
 msgid "General Settings"
 msgstr "一般の設定"
 
@@ -1450,57 +1482,57 @@ msgstr ""
 msgid "Revert focus when hiding or closing a window"
 msgstr "ウィンドウが隠れたり閉じられたらフォーカスを戻す"
 
-#: src/bin/e_int_config_fonts.c:115
+#: src/bin/e_int_config_fonts.c:129
 msgid "Font Settings"
 msgstr "フォントの設定"
 
-#: src/bin/e_int_config_fonts.c:275
+#: src/bin/e_int_config_fonts.c:302
 msgid "Font Class Configuration"
 msgstr "フォントクラスの設定"
 
-#: src/bin/e_int_config_fonts.c:311
+#: src/bin/e_int_config_fonts.c:345
 msgid "Font"
 msgstr "フォント"
 
 #
-#: src/bin/e_int_config_fonts.c:324
+#: src/bin/e_int_config_fonts.c:358
 msgid "Font Size"
 msgstr "フォントサイズ"
 
-#: src/bin/e_int_config_fonts.c:330
+#: src/bin/e_int_config_fonts.c:364
 #, c-format
 msgid "%2.1f pixels"
 msgstr "%2.1f ピクセル"
 
-#: src/bin/e_int_config_fonts.c:337
+#: src/bin/e_int_config_fonts.c:371
 msgid "Enable Font Class"
 msgstr "フォントクラスを有効にする"
 
-#: src/bin/e_int_config_fonts.c:347
+#: src/bin/e_int_config_fonts.c:381
 msgid "Hinting"
 msgstr "ヒンティング"
 
-#: src/bin/e_int_config_fonts.c:352
+#: src/bin/e_int_config_fonts.c:386
 msgid "Bytecode"
 msgstr "バイトコード"
 
-#: src/bin/e_int_config_fonts.c:357 src/modules/cpufreq/e_mod_main.c:500
+#: src/bin/e_int_config_fonts.c:391 src/modules/cpufreq/e_mod_main.c:192
 msgid "Automatic"
 msgstr "自動"
 
-#: src/bin/e_int_config_fonts.c:362 src/bin/e_int_config_keybindings.c:725
+#: src/bin/e_int_config_fonts.c:396 src/bin/e_int_config_keybindings.c:725
 msgid "None"
 msgstr "無し"
 
-#: src/bin/e_int_config_fonts.c:369
+#: src/bin/e_int_config_fonts.c:403
 msgid "Font Fallbacks"
 msgstr "代替フォントと順序"
 
-#: src/bin/e_int_config_fonts.c:372
+#: src/bin/e_int_config_fonts.c:406
 msgid "Fallback Name"
 msgstr "代替フォント名"
 
-#: src/bin/e_int_config_fonts.c:387
+#: src/bin/e_int_config_fonts.c:421
 msgid "Enable Fallbacks"
 msgstr "代替フォントを有効にする"
 
@@ -2488,6 +2520,14 @@ msgstr "情報..."
 msgid "Would you like to unload this module?<br>"
 msgstr "このモジュールをアンロードしますか？<br>"
 
+#: src/bin/e_shelf.c:750
+msgid "Stop editing items"
+msgstr "個別編集を終了する"
+
+#: src/bin/e_shelf.c:752
+msgid "Begin editing items"
+msgstr "個別編集を始める"
+
 #: src/bin/e_startup.c:68
 #, c-format
 msgid "Starting %s"
@@ -2547,47 +2587,175 @@ msgstr "ユーザー定義ディレクトリ"
 msgid "New Directory"
 msgstr "新しいディレクトリ"
 
-#: src/modules/battery/e_mod_config.c:36
-msgid "Battery Configuration"
-msgstr "バッテリの設定"
+#: src/bin/e_int_shelf_config.c:52
+msgid "BLAH"
+msgstr ""
 
-#: src/modules/battery/e_mod_config.c:79
+#: src/bin/e_int_shelf_config.c:172
+msgid "Below Everything"
+msgstr "常に一番下"
+
+#: src/bin/e_int_shelf_config.c:174
+msgid "Below Windows"
+msgstr "ウィンドウの下"
+
+#: src/bin/e_int_shelf_config.c:176
+msgid "Above Everything"
+msgstr "常に一番上"
+
+#: src/bin/e_int_shelf_config.c:181
+msgid "Shrink length fit contents"
+msgstr "内容に合わせて長さを縮める"
+
+#: src/bin/e_int_shelf_config.c:183
+msgid "Expand width to fit contents"
+msgstr "内容に合わせて幅を広げる"
+
+#: src/bin/e_int_shelf_config.c:185
+msgid "Shelf Size"
+msgstr "シェルフの大きさ"
+
+#: src/bin/e_int_shelf_config.c:187 src/modules/ibox/e_mod_config.c:130
+#, c-format
+msgid "%3.0f pixels"
+msgstr "%3.0f ピクセル"
+
+#: src/bin/e_int_shelf_config.c:191
+msgid "Layout"
+msgstr "配置"
+
+#: src/bin/e_int_shelf_config.c:193
+msgid "Left"
+msgstr "左中央(縦)"
+
+#: src/bin/e_int_shelf_config.c:195
+msgid "Right"
+msgstr "右中央(縦)"
+
+#: src/bin/e_int_shelf_config.c:197
+msgid "Top"
+msgstr "上中央(横)"
+
+#: src/bin/e_int_shelf_config.c:199
+msgid "Bottom"
+msgstr "下中央(横)"
+
+#: src/bin/e_int_shelf_config.c:201
+msgid "Top Left"
+msgstr "左上(横)"
+
+#: src/bin/e_int_shelf_config.c:203
+msgid "Top Right"
+msgstr "右上(横)"
+
+#: src/bin/e_int_shelf_config.c:205
+msgid "Bottom Left"
+msgstr "左下(横)"
+
+#: src/bin/e_int_shelf_config.c:207
+msgid "Bottom Right"
+msgstr "右下(横)"
+
+#: src/bin/e_int_shelf_config.c:209
+msgid "Left Top"
+msgstr "左上(縦)"
+
+#: src/bin/e_int_shelf_config.c:211
+msgid "Right Top"
+msgstr "右上(縦)"
+
+#: src/bin/e_int_shelf_config.c:213
+msgid "Left Bottom"
+msgstr "左下(縦)"
+
+#: src/bin/e_int_shelf_config.c:215
+msgid "Right Bottom"
+msgstr "右下(縦)"
+
+#: src/modules/battery/e_mod_config.c:35
+msgid "Battery Monitor Configuration"
+msgstr "バッテリモニターの設定"
+
+#: src/modules/battery/e_mod_config.c:76
 msgid "Basic Settings"
 msgstr "基本設定"
 
-#: src/modules/battery/e_mod_config.c:80
-#: src/modules/battery/e_mod_config.c:117
+#: src/modules/battery/e_mod_config.c:77
+#: src/modules/battery/e_mod_config.c:111
 msgid "Show alert when battery is low"
 msgstr "バッテリ容量の低下時に警告を表示する"
 
-#: src/modules/battery/e_mod_config.c:109
+#: src/modules/battery/e_mod_config.c:103
 msgid "Advanced Settings"
 msgstr "詳細設定"
 
-#: src/modules/battery/e_mod_config.c:111
+#: src/modules/battery/e_mod_config.c:105
 msgid "Check battery every:"
 msgstr "バッテリの監視間隔"
 
-#: src/modules/battery/e_mod_config.c:114 src/modules/pager/e_mod_config.c:170
-#: src/modules/temperature/e_mod_config.c:311
+#: src/modules/battery/e_mod_config.c:108 src/modules/pager/e_mod_config.c:108
+#: src/modules/temperature/e_mod_config.c:292
 #, c-format
 msgid "%1.1f seconds"
 msgstr "%1.1f 秒"
 
-#: src/modules/battery/e_mod_config.c:120
+#: src/modules/battery/e_mod_config.c:114
 msgid "Alert when battery is down to:"
 msgstr "警告を出すバッテリの残容量"
 
-#: src/modules/battery/e_mod_config.c:123
+#: src/modules/battery/e_mod_config.c:117
 #, c-format
 msgid "%1.0f minutes"
 msgstr "%1.0f 分"
 
-#: src/modules/battery/e_mod_main.c:133
+#: src/modules/battery/e_mod_main.c:279
+msgid ""
+"Battery Running Low<br>Your battery is running low.<br>You may wish to "
+"switch to an AC source."
+msgstr ""
+"バッテリ容量低下<br>使用中のバッテリが切れかけています. <br>AC 電源に切り替え"
+"た方がいいかもしれません."
+
+#: src/modules/battery/e_mod_main.c:328
+msgid "NO INFO"
+msgstr "情報無し"
+
+#: src/modules/battery/e_mod_main.c:497 src/modules/battery/e_mod_main.c:810
+#: src/modules/battery/e_mod_main.c:964
+msgid "NO BAT"
+msgstr "バッテリ無し"
+
+#: src/modules/battery/e_mod_main.c:521 src/modules/battery/e_mod_main.c:989
+msgid "BAD DRIVER"
+msgstr "ドライバが変"
+
+#: src/modules/battery/e_mod_main.c:545 src/modules/battery/e_mod_main.c:846
+#: src/modules/battery/e_mod_main.c:1013
+msgid "FULL"
+msgstr "満タン"
+
+#: src/modules/battery/e_mod_main.c:606 src/modules/battery/e_mod_main.c:1074
+msgid "High"
+msgstr "高"
+
+#: src/modules/battery/e_mod_main.c:610 src/modules/battery/e_mod_main.c:1078
+msgid "Low"
+msgstr "低"
+
+#: src/modules/battery/e_mod_main.c:614 src/modules/battery/e_mod_main.c:1082
+msgid "Danger"
+msgstr "危険"
+
+#: src/modules/battery/e_mod_main.c:618 src/modules/battery/e_mod_main.c:1086
+#: src/modules/battery/e_mod_main.c:1253
+msgid "Charging"
+msgstr "充電中"
+
+#: src/modules/battery/e_mod_main.c:1417
 msgid "Enlightenment Battery Module"
 msgstr "Enlightenment バッテリモジュール"
 
-#: src/modules/battery/e_mod_main.c:134
+#: src/modules/battery/e_mod_main.c:1418
 msgid ""
 "A basic battery meter that uses either<hilight>ACPI</hilight> or "
 "<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
@@ -2599,167 +2767,113 @@ msgstr ""
 "します. <br>このモジュールは Linux と FreeBSD で動作しますが, <br>精度は, 使"
 "用している BIOS やカーネルドライバと同程度です."
 
-#: src/modules/battery/e_mod_main.c:556
-msgid ""
-"Battery Running Low<br>Your battery is running low.<br>You may wish to "
-"switch to an AC source."
-msgstr ""
-"バッテリ容量低下<br>使用中のバッテリが切れかけています. <br>AC 電源に切り替え"
-"た方がいいかもしれません."
-
-#: src/modules/battery/e_mod_main.c:621
-msgid "NO INFO"
-msgstr "情報無し"
-
-#: src/modules/battery/e_mod_main.c:796 src/modules/battery/e_mod_main.c:1109
-#: src/modules/battery/e_mod_main.c:1263
-msgid "NO BAT"
-msgstr "バッテリ無し"
-
-#: src/modules/battery/e_mod_main.c:820 src/modules/battery/e_mod_main.c:1288
-msgid "BAD DRIVER"
-msgstr "ドライバが変"
-
-#: src/modules/battery/e_mod_main.c:844 src/modules/battery/e_mod_main.c:1145
-#: src/modules/battery/e_mod_main.c:1312
-msgid "FULL"
-msgstr "満タン"
-
-#: src/modules/battery/e_mod_main.c:905 src/modules/battery/e_mod_main.c:1373
-msgid "High"
-msgstr "高"
-
-#: src/modules/battery/e_mod_main.c:909 src/modules/battery/e_mod_main.c:1377
-msgid "Low"
-msgstr "低"
-
-#: src/modules/battery/e_mod_main.c:913 src/modules/battery/e_mod_main.c:1381
-msgid "Danger"
-msgstr "危険"
-
-#: src/modules/battery/e_mod_main.c:917 src/modules/battery/e_mod_main.c:1385
-#: src/modules/battery/e_mod_main.c:1552
-msgid "Charging"
-msgstr "充電中"
-
-#: src/modules/clock/e_mod_config.c:32
-msgid "Clock Configuration"
-msgstr "時計の設定"
-
-#: src/modules/clock/e_mod_config.c:73
-msgid "No Digital Display"
-msgstr "デジタル表示無し"
-
-#
-#: src/modules/clock/e_mod_config.c:75
-msgid "12 Hour Display"
-msgstr "12 時間表示"
-
-#: src/modules/clock/e_mod_config.c:77
-msgid "24 Hour Display"
-msgstr "24 時間表示"
-
-#: src/modules/clock/e_mod_main.c:95
+#: src/modules/clock/e_mod_main.c:132
 msgid "Enlightenment Clock Module"
 msgstr "Enlightenment 時計モジュール"
 
-#: src/modules/clock/e_mod_main.c:96
+#: src/modules/clock/e_mod_main.c:133
 msgid "A simple module to give E17 a clock."
 msgstr "E17 用のシンプルな時計モジュールです."
 
-#: src/modules/cpufreq/e_mod_main.c:113
+#: src/modules/cpufreq/e_mod_main.c:147
+msgid "Fast (0.5 sec)"
+msgstr "0.5 秒ごと"
+
+#: src/modules/cpufreq/e_mod_main.c:154
+msgid "Medium (1 sec)"
+msgstr "1 秒ごと"
+
+#: src/modules/cpufreq/e_mod_main.c:161
+msgid "Normal (2 sec)"
+msgstr "2 秒ごと"
+
+#: src/modules/cpufreq/e_mod_main.c:168
+msgid "Slow (5 sec)"
+msgstr "5 秒ごと"
+
+#: src/modules/cpufreq/e_mod_main.c:175
+msgid "Very Slow (30 sec)"
+msgstr "30 秒ごと"
+
+#: src/modules/cpufreq/e_mod_main.c:190
+msgid "Manual"
+msgstr "手動"
+
+#: src/modules/cpufreq/e_mod_main.c:194
+msgid "Lower Power Automatic"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:196
+msgid "Minimum Speed"
+msgstr "最低速度"
+
+#: src/modules/cpufreq/e_mod_main.c:198
+msgid "Maximum Speed"
+msgstr "最高速度"
+
+#: src/modules/cpufreq/e_mod_main.c:221
+#, c-format
+msgid "%i MHz"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:223
+#, c-format
+msgid "%i.%i GHz"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:241
+msgid "Time Between Updates"
+msgstr "更新間隔"
+
+#: src/modules/cpufreq/e_mod_main.c:247
+msgid "Restore CPU Power Policy"
+msgstr "CPU パワーポリシーを復帰する"
+
+#: src/modules/cpufreq/e_mod_main.c:253
+msgid "Set CPU Power Policy"
+msgstr "CPU パワーポリシーを設定する"
+
+#: src/modules/cpufreq/e_mod_main.c:260
+msgid "Set CPU Speed"
+msgstr "CPU 速度を設定する"
+
+#: src/modules/cpufreq/e_mod_main.c:309
+msgid ""
+"There was an error trying to set the<br>cpu frequency governor via the "
+"module's<br>setfreq utility."
+msgstr ""
+"このモジュールの setfreq ユーティリティを使った CPU 周波数ガバナーの設定で"
+"<br>エラーが起きました."
+
+#: src/modules/cpufreq/e_mod_main.c:335
+msgid ""
+"Your kernel does not support setting the<br>CPU frequency at all. You may be "
+"missing<br>Kernel modules or features, or your CPU<br>simply does not "
+"support this feature."
+msgstr ""
+"このカーネルでは CPU 周波数がまったく設定できません.<br>"
+"カーネルのモジュールや機能で必要なものが欠けているのかもしれません.<br>"
+"さもなければお使いの CPU でこの機能がサポートされていないだけです."
+
+#: src/modules/cpufreq/e_mod_main.c:355
+msgid ""
+"There was an error trying to set the<br>cpu frequency setting via the "
+"module's<br>setfreq utility."
+msgstr ""
+"このモジュールの setfreq ユーティリティを使った CPU 周波数設定で<br>エラーが"
+"起きました."
+
+#: src/modules/cpufreq/e_mod_main.c:929
 msgid "CPU Frequency Controller Module"
 msgstr "CPU 周波数コントローラモジュール"
 
-#: src/modules/cpufreq/e_mod_main.c:114
+#: src/modules/cpufreq/e_mod_main.c:930
 msgid ""
 "A simple module to control the frequency of the system CPU.<br>This is "
 "especially useful to save power on laptops."
 msgstr ""
 "システム CPU の周波数を制御する簡単なモジュールです. <br>省電源でラップトップ"
 "を使う場合にとりわけ便利です."
-
-#: src/modules/cpufreq/e_mod_main.c:214 src/modules/cpufreq/e_mod_main.c:546
-msgid "Set Poll Time"
-msgstr "監視間隔"
-
-#: src/modules/cpufreq/e_mod_main.c:220
-msgid "Restore Controller on Startup"
-msgstr "起動時にコントローラを復帰する"
-
-#: src/modules/cpufreq/e_mod_main.c:227 src/modules/cpufreq/e_mod_main.c:558
-msgid "Set Controller"
-msgstr "コントローラを設定する"
-
-#: src/modules/cpufreq/e_mod_main.c:235 src/modules/cpufreq/e_mod_main.c:565
-msgid "Set Speed"
-msgstr "速度を設定する"
-
-#: src/modules/cpufreq/e_mod_main.c:303
-msgid ""
-"There was an error trying to set the cpu frequency<br>governor via the "
-"module's setfreq utility."
-msgstr ""
-"このモジュールの setfreq ユーティリティを使った CPU 周波数ガバナーの設定で"
-"<br>エラーが起きました."
-
-#: src/modules/cpufreq/e_mod_main.c:331
-msgid ""
-"There was an error trying to set the cpu frequency<br>setting via the "
-"module's setfreq utility."
-msgstr ""
-"このモジュールの setfreq ユーティリティを使った CPU 周波数設定で<br>エラーが"
-"起きました."
-
-#: src/modules/cpufreq/e_mod_main.c:454
-msgid "Check Fast (0.5 sec)"
-msgstr "0.5 秒ごと"
-
-#: src/modules/cpufreq/e_mod_main.c:461
-msgid "Check Medium (1 sec)"
-msgstr "1 秒ごと"
-
-#: src/modules/cpufreq/e_mod_main.c:468
-msgid "Check Normal (2 sec)"
-msgstr "2 秒ごと"
-
-#: src/modules/cpufreq/e_mod_main.c:475
-msgid "Check Slow (5 sec)"
-msgstr "5 秒ごと"
-
-#: src/modules/cpufreq/e_mod_main.c:482
-msgid "Check Very Slow (30 sec)"
-msgstr "30 秒ごと"
-
-#: src/modules/cpufreq/e_mod_main.c:498
-msgid "Manual"
-msgstr "手動"
-
-#: src/modules/cpufreq/e_mod_main.c:502
-msgid "Lower Power Automatic"
-msgstr ""
-
-#: src/modules/cpufreq/e_mod_main.c:504
-msgid "Minimum Speed"
-msgstr "最低速度"
-
-#: src/modules/cpufreq/e_mod_main.c:506
-msgid "Maximum Speed"
-msgstr "最高速度"
-
-#: src/modules/cpufreq/e_mod_main.c:528
-#, c-format
-msgid "%i MHz"
-msgstr ""
-
-#: src/modules/cpufreq/e_mod_main.c:531
-#, c-format
-msgid "%i.%i GHz"
-msgstr ""
-
-#: src/modules/cpufreq/e_mod_main.c:552
-msgid "Restore Governor on Startup"
-msgstr "起動時にガバナー復帰"
 
 #: src/modules/dropshadow/e_mod_config.c:34
 msgid "Dropshadow Configuration"
@@ -2865,66 +2979,39 @@ msgstr ""
 "モジュールです. 特別な X サーバーの拡張機能も要りませんし, ハードウェアの<br>"
 "アクセラレーションも不要です."
 
-#: src/modules/ibar/e_mod_config.c:40
+#: src/modules/ibar/e_mod_config.c:38
 msgid "IBar Configuration"
 msgstr "IBar の設定"
 
-#: src/modules/ibar/e_mod_config.c:82 src/modules/ibox/e_mod_config.c:82
-msgid "Show Follower"
-msgstr "追跡ランプを表示する"
+#: src/modules/ibar/e_mod_config.c:79
+msgid "Selected Bar Source"
+msgstr "選択したのは"
 
-#
-#: src/modules/ibar/e_mod_config.c:84 src/modules/ibox/e_mod_config.c:84
-msgid "Auto Fit Icons"
-msgstr "アイコンの自動調整"
+#: src/modules/ibar/e_mod_main.c:739
+msgid "Change Icon Properties"
+msgstr "アイコンのプロパティを変える"
 
-#: src/modules/ibar/e_mod_config.c:120 src/modules/ibox/e_mod_config.c:120
-msgid "Follower"
-msgstr "追跡ランプ"
+#: src/modules/ibar/e_mod_main.c:744
+msgid "Remove Icon"
+msgstr "アイコンを削除する"
 
-#: src/modules/ibar/e_mod_config.c:121 src/modules/ibox/e_mod_config.c:121
-msgid "Visible"
-msgstr "表示する"
+#: src/modules/ibar/e_mod_main.c:1047
+msgid "Cannot add icon"
+msgstr "アイコンが追加できません"
 
-#
-#: src/modules/ibar/e_mod_config.c:123 src/modules/ibox/e_mod_config.c:123
-msgid "Follow Speed"
-msgstr "追跡速度"
+#: src/modules/ibar/e_mod_main.c:1049
+msgid ""
+"You tried to drop an icon of an application that<br>does not have a matching "
+"application file.<br><br>The icon cannot be added to IBar."
+msgstr ""
+"アイコンをドロップしようとしましたが, そのアプリケーションに対応するプログラ"
+"ムファイルがありません. <br><br>そのアイコンは IBar に追加できません."
 
-#: src/modules/ibar/e_mod_config.c:125 src/modules/ibar/e_mod_config.c:139
-#: src/modules/ibox/e_mod_config.c:125 src/modules/ibox/e_mod_config.c:139
-#, c-format
-msgid "%1.2f px/s"
-msgstr "%1.2f ピクセル/秒"
-
-#
-#: src/modules/ibar/e_mod_config.c:129 src/modules/ibox/e_mod_config.c:129
-msgid "Icon Size"
-msgstr "アイコンサイズ"
-
-#: src/modules/ibar/e_mod_config.c:130 src/modules/ibox/e_mod_config.c:130
-#, c-format
-msgid "%3.0f pixels"
-msgstr "%3.0f ピクセル"
-
-#: src/modules/ibar/e_mod_config.c:134 src/modules/ibox/e_mod_config.c:134
-msgid "Width"
-msgstr "幅"
-
-#
-#: src/modules/ibar/e_mod_config.c:135 src/modules/ibox/e_mod_config.c:135
-msgid "Auto Fit"
-msgstr "アイコンの自動調整"
-
-#: src/modules/ibar/e_mod_config.c:137 src/modules/ibox/e_mod_config.c:137
-msgid "Autoscroll Speed:"
-msgstr "自動スクロール速度"
-
-#: src/modules/ibar/e_mod_main.c:163
+#: src/modules/ibar/e_mod_main.c:1223
 msgid "Enlightenment IBar Module"
 msgstr "Enlightenment IBar モジュール"
 
-#: src/modules/ibar/e_mod_main.c:164
+#: src/modules/ibar/e_mod_main.c:1224
 msgid ""
 "This is the IBar Application Launcher bar module for Enlightenment.<br>It is "
 "a first example module and is being used to flesh out several<br>interfaces "
@@ -2937,21 +3024,54 @@ msgstr ""
 "開発の真最中ですから<hilight>よく壊れる</hilight>でしょうし, 良くなるにつれて"
 "変化していくと思います."
 
-#: src/modules/ibar/e_mod_main.c:1612
-msgid "Cannot add icon"
-msgstr "アイコンが追加できません"
-
-#: src/modules/ibar/e_mod_main.c:1614
-msgid ""
-"You tried to drop an icon of an application that<br>does not have a matching "
-"application file.<br><br>The icon cannot be added to IBar."
-msgstr ""
-"アイコンをドロップしようとしましたが, そのアプリケーションに対応するプログラ"
-"ムファイルがありません. <br><br>そのアイコンは IBar に追加できません."
-
 #: src/modules/ibox/e_mod_config.c:40
 msgid "IBox Configuration"
 msgstr "IBox の設定"
+
+#: src/modules/ibox/e_mod_config.c:82
+msgid "Show Follower"
+msgstr "追跡ランプを表示する"
+
+#
+#: src/modules/ibox/e_mod_config.c:84
+msgid "Auto Fit Icons"
+msgstr "アイコンの自動調整"
+
+#: src/modules/ibox/e_mod_config.c:120
+msgid "Follower"
+msgstr "追跡ランプ"
+
+#: src/modules/ibox/e_mod_config.c:121
+msgid "Visible"
+msgstr "表示する"
+
+#
+#: src/modules/ibox/e_mod_config.c:123
+msgid "Follow Speed"
+msgstr "追跡速度"
+
+#: src/modules/ibox/e_mod_config.c:125 src/modules/ibox/e_mod_config.c:139
+#, c-format
+msgid "%1.2f px/s"
+msgstr "%1.2f ピクセル/秒"
+
+#
+#: src/modules/ibox/e_mod_config.c:129
+msgid "Icon Size"
+msgstr "アイコンサイズ"
+
+#: src/modules/ibox/e_mod_config.c:134
+msgid "Width"
+msgstr "幅"
+
+#
+#: src/modules/ibox/e_mod_config.c:135
+msgid "Auto Fit"
+msgstr "アイコンの自動調整"
+
+#: src/modules/ibox/e_mod_config.c:137
+msgid "Autoscroll Speed:"
+msgstr "自動スクロール速度"
 
 #: src/modules/ibox/e_mod_main.c:148
 msgid "Enlightenment IBox Module"
@@ -2993,198 +3113,174 @@ msgid ""
 "will appear."
 msgstr ""
 
-#: src/modules/pager/e_mod_config.c:38
+#: src/modules/pager/e_mod_config.c:35
 msgid "Pager Configuration"
 msgstr "ページャーの設定"
 
-#: src/modules/pager/e_mod_config.c:92 src/modules/pager/e_mod_config.c:142
+#: src/modules/pager/e_mod_config.c:75 src/modules/pager/e_mod_config.c:104
 msgid "Show Popup"
 msgstr "ポップアップを表示する"
 
-#: src/modules/pager/e_mod_config.c:94 src/modules/pager/e_mod_config.c:144
-msgid "Show Desktop Name"
-msgstr "デスクトップ名を表示する"
-
-#: src/modules/pager/e_mod_config.c:98 src/modules/pager/e_mod_config.c:152
-msgid "Desktop Name Position"
-msgstr "デスクトップ名の表示位置"
-
-#: src/modules/pager/e_mod_config.c:100 src/modules/pager/e_mod_config.c:154
-msgid "Top"
-msgstr "上に"
-
-#: src/modules/pager/e_mod_config.c:102 src/modules/pager/e_mod_config.c:156
-msgid "Bottom"
-msgstr "下に"
-
-#: src/modules/pager/e_mod_config.c:146
+#: src/modules/pager/e_mod_config.c:98
 msgid "Resistance to Dragging Windows:"
 msgstr "ウィンドウのドラッグ抵抗値"
 
-#: src/modules/pager/e_mod_config.c:148
+#: src/modules/pager/e_mod_config.c:99
 #, c-format
 msgid "%.0f px"
 msgstr "%.0f ピクセル"
 
-#: src/modules/pager/e_mod_config.c:167
+#: src/modules/pager/e_mod_config.c:103
 msgid "Popup Settings"
 msgstr "ポップアップの設定"
 
-#: src/modules/pager/e_mod_config.c:168
+#: src/modules/pager/e_mod_config.c:106
 msgid "Popup Speed"
 msgstr "ポップアップの速度"
 
-#: src/modules/pager/e_mod_main.c:158
+#: src/modules/pager/e_mod_main.c:1781
 msgid "Enlightenment Pager Module"
 msgstr "Enlightenment ページャモジュール"
 
-#: src/modules/pager/e_mod_main.c:159
+#: src/modules/pager/e_mod_main.c:1782
 msgid "A pager module to navigate virtual desktops."
 msgstr "仮想デスクトップを切替えるためのページャモジュールです."
 
-#: src/modules/pager/e_mod_main.c:415 src/modules/pager/e_mod_main.c:560
-msgid "Fix Aspect (Keep Height)"
-msgstr "幅を調整する(高さはそのまま)"
-
-#: src/modules/pager/e_mod_main.c:419 src/modules/pager/e_mod_main.c:564
-msgid "Fix Aspect (Keep Width)"
-msgstr "高さを調整する(幅はそのまま)"
-
-#: src/modules/start/e_mod_main.c:216
+#: src/modules/start/e_mod_main.c:238
 msgid "Enlightenment Start Module"
 msgstr "Enlightenment スタート モジュール"
 
-#: src/modules/start/e_mod_main.c:217
+#: src/modules/start/e_mod_main.c:239
 msgid "Experimental Button module for E17"
 msgstr "試験的な E17 用ボタンモジュールです."
 
 #
-#: src/modules/temperature/e_mod_config.c:59
+#: src/modules/temperature/e_mod_config.c:58
 msgid "Temperature Configuration"
 msgstr "温度計の設定"
 
 #
-#: src/modules/temperature/e_mod_config.c:144
-#: src/modules/temperature/e_mod_config.c:260
+#: src/modules/temperature/e_mod_config.c:138
+#: src/modules/temperature/e_mod_config.c:241
 msgid "Display Units"
 msgstr "表示単位"
 
-#: src/modules/temperature/e_mod_config.c:146
-#: src/modules/temperature/e_mod_config.c:262
+#: src/modules/temperature/e_mod_config.c:140
+#: src/modules/temperature/e_mod_config.c:243
 msgid "Celsius"
 msgstr "セ氏"
 
-#: src/modules/temperature/e_mod_config.c:148
-#: src/modules/temperature/e_mod_config.c:264
+#: src/modules/temperature/e_mod_config.c:142
+#: src/modules/temperature/e_mod_config.c:245
 msgid "Fahrenheit"
 msgstr "カ氏"
 
-#: src/modules/temperature/e_mod_config.c:152
-#: src/modules/temperature/e_mod_config.c:310
+#: src/modules/temperature/e_mod_config.c:146
+#: src/modules/temperature/e_mod_config.c:291
 msgid "Check Interval"
 msgstr "監視間隔"
 
-#: src/modules/temperature/e_mod_config.c:154
+#: src/modules/temperature/e_mod_config.c:148
 msgid "Fast"
 msgstr "速い"
 
-#: src/modules/temperature/e_mod_config.c:158
+#: src/modules/temperature/e_mod_config.c:152
 msgid "Slow"
 msgstr "遅い"
 
-#: src/modules/temperature/e_mod_config.c:160
+#: src/modules/temperature/e_mod_config.c:154
 msgid "Very Slow"
 msgstr "とても遅い"
 
-#: src/modules/temperature/e_mod_config.c:167
-#: src/modules/temperature/e_mod_config.c:191
-#: src/modules/temperature/e_mod_config.c:331
-#: src/modules/temperature/e_mod_config.c:343
+#: src/modules/temperature/e_mod_config.c:161
+#: src/modules/temperature/e_mod_config.c:185
+#: src/modules/temperature/e_mod_config.c:312
+#: src/modules/temperature/e_mod_config.c:324
 msgid "High Temperature"
 msgstr "高温"
 
-#: src/modules/temperature/e_mod_config.c:170
+#: src/modules/temperature/e_mod_config.c:164
 msgid "200 F"
 msgstr ""
 
-#: src/modules/temperature/e_mod_config.c:172
+#: src/modules/temperature/e_mod_config.c:166
 msgid "150 F"
 msgstr ""
 
-#: src/modules/temperature/e_mod_config.c:174
-#: src/modules/temperature/e_mod_config.c:183
+#: src/modules/temperature/e_mod_config.c:168
+#: src/modules/temperature/e_mod_config.c:177
 msgid "110 F"
 msgstr ""
 
-#: src/modules/temperature/e_mod_config.c:178
-#: src/modules/temperature/e_mod_config.c:202
-#: src/modules/temperature/e_mod_config.c:336
-#: src/modules/temperature/e_mod_config.c:348
+#: src/modules/temperature/e_mod_config.c:172
+#: src/modules/temperature/e_mod_config.c:196
+#: src/modules/temperature/e_mod_config.c:317
+#: src/modules/temperature/e_mod_config.c:329
 msgid "Low Temperature"
 msgstr "低温"
 
-#: src/modules/temperature/e_mod_config.c:181
+#: src/modules/temperature/e_mod_config.c:175
 msgid "130 F"
 msgstr ""
 
-#: src/modules/temperature/e_mod_config.c:185
+#: src/modules/temperature/e_mod_config.c:179
 msgid "90 F"
 msgstr ""
 
-#: src/modules/temperature/e_mod_config.c:194
+#: src/modules/temperature/e_mod_config.c:188
 msgid "93 C"
 msgstr ""
 
-#: src/modules/temperature/e_mod_config.c:196
+#: src/modules/temperature/e_mod_config.c:190
 msgid "65 C"
 msgstr ""
 
-#: src/modules/temperature/e_mod_config.c:198
-#: src/modules/temperature/e_mod_config.c:207
+#: src/modules/temperature/e_mod_config.c:192
+#: src/modules/temperature/e_mod_config.c:201
 msgid "43 C"
 msgstr ""
 
-#: src/modules/temperature/e_mod_config.c:205
+#: src/modules/temperature/e_mod_config.c:199
 msgid "55 C"
 msgstr ""
 
-#: src/modules/temperature/e_mod_config.c:209
+#: src/modules/temperature/e_mod_config.c:203
 msgid "32 C"
 msgstr ""
 
-#: src/modules/temperature/e_mod_config.c:292
+#: src/modules/temperature/e_mod_config.c:273
 msgid "Sensors"
 msgstr "センサー"
 
-#: src/modules/temperature/e_mod_config.c:294
+#: src/modules/temperature/e_mod_config.c:275
 msgid "Temp 1"
 msgstr ""
 
-#: src/modules/temperature/e_mod_config.c:296
+#: src/modules/temperature/e_mod_config.c:277
 msgid "Temp 2"
 msgstr ""
 
-#: src/modules/temperature/e_mod_config.c:298
+#: src/modules/temperature/e_mod_config.c:279
 msgid "Temp 3"
 msgstr ""
 
-#: src/modules/temperature/e_mod_config.c:332
-#: src/modules/temperature/e_mod_config.c:337
+#: src/modules/temperature/e_mod_config.c:313
+#: src/modules/temperature/e_mod_config.c:318
 #, c-format
 msgid "%1.0f F"
 msgstr ""
 
-#: src/modules/temperature/e_mod_config.c:344
-#: src/modules/temperature/e_mod_config.c:349
+#: src/modules/temperature/e_mod_config.c:325
+#: src/modules/temperature/e_mod_config.c:330
 #, c-format
 msgid "%1.0f C"
 msgstr ""
 
-#: src/modules/temperature/e_mod_main.c:116
+#: src/modules/temperature/e_mod_main.c:435
 msgid "Enlightenment Temperature Module"
 msgstr "Enlightenment 温度計モジュール"
 
-#: src/modules/temperature/e_mod_main.c:117
+#: src/modules/temperature/e_mod_main.c:436
 msgid ""
 "A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux."
 "<br>It is especially useful for modern Laptops with high speed<br>CPUs that "
@@ -3192,6 +3288,58 @@ msgid ""
 msgstr ""
 "Linux の <hilight>ACPI 温度センサー</hilight>を読みとるモジュールです. <br>大"
 "量に発熱する最近の高速ラップトップでは特に便利です."
+
+#~ msgid "Clock Configuration"
+#~ msgstr "時計の設定"
+
+#~ msgid "No Digital Display"
+#~ msgstr "デジタル表示無し"
+
+#
+#~ msgid "12 Hour Display"
+#~ msgstr "12 時間表示"
+
+#~ msgid "24 Hour Display"
+#~ msgstr "24 時間表示"
+
+#~ msgid "Set Poll Time"
+#~ msgstr "監視間隔"
+
+#~ msgid "Restore Controller on Startup"
+#~ msgstr "起動時にコントローラを復帰する"
+
+#~ msgid "Set Controller"
+#~ msgstr "コントローラを設定する"
+
+#~ msgid "Check Fast (0.5 sec)"
+#~ msgstr "0.5 秒ごと"
+
+#~ msgid "Check Medium (1 sec)"
+#~ msgstr "1 秒ごと"
+
+#~ msgid "Check Normal (2 sec)"
+#~ msgstr "2 秒ごと"
+
+#~ msgid "Check Slow (5 sec)"
+#~ msgstr "5 秒ごと"
+
+#~ msgid "Check Very Slow (30 sec)"
+#~ msgstr "30 秒ごと"
+
+#~ msgid "Restore Governor on Startup"
+#~ msgstr "起動時にガバナー復帰"
+
+#~ msgid "Show Desktop Name"
+#~ msgstr "デスクトップ名を表示する"
+
+#~ msgid "Desktop Name Position"
+#~ msgstr "デスクトップ名の表示位置"
+
+#~ msgid "Fix Aspect (Keep Height)"
+#~ msgstr "幅を調整する(高さはそのまま)"
+
+#~ msgid "Fix Aspect (Keep Width)"
+#~ msgstr "高さを調整する(幅はそのまま)"
 
 #~ msgid "Set the screensaver timeout"
 #~ msgstr "一定時間経過後スクリーンセーバーを起動する"
@@ -3400,21 +3548,6 @@ msgstr ""
 
 #~ msgid "Unit"
 #~ msgstr "単位"
-
-#~ msgid "Fast (1 sec)"
-#~ msgstr "1 秒ごと"
-
-#~ msgid "Medium (5 sec)"
-#~ msgstr "5 秒ごと"
-
-#~ msgid "Normal (10 sec)"
-#~ msgstr "10 秒ごと"
-
-#~ msgid "Slow (30 sec)"
-#~ msgstr "30 秒ごと"
-
-#~ msgid "Very Slow (60 sec)"
-#~ msgstr "60 秒ごと"
 
 #~ msgid "Set Alarm"
 #~ msgstr "アラーム設定"
