@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-04-15 19:14+0200\n"
-"PO-Revision-Date: 2006-04-15 19:18+0200\n"
+"POT-Creation-Date: 2006-04-23 19:23+0200\n"
+"PO-Revision-Date: 2006-04-23 19:51+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@inwind.it>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -122,12 +122,13 @@ msgid "Position"
 msgstr "Posizione"
 
 #: src/bin/e_int_border_locks.c:321 src/bin/e_int_border_locks.c:340
-#: src/bin/e_int_border_remember.c:495
+#: src/bin/e_int_border_remember.c:495 src/bin/e_int_shelf_config.c:180
 msgid "Size"
 msgstr "Dimensione"
 
 #: src/bin/e_int_border_locks.c:323 src/bin/e_int_border_locks.c:342
 #: src/bin/e_int_border_remember.c:497 src/bin/e_int_border_menu.c:175
+#: src/bin/e_int_shelf_config.c:170
 msgid "Stacking"
 msgstr "Livello"
 
@@ -209,13 +210,12 @@ msgstr "Informazioni su Enlightenment"
 msgid "About This Theme"
 msgstr "Informazioni su questo tema"
 
-#: src/bin/e_int_menus.c:163 src/bin/e_module.c:490 src/bin/e_gadget.c:209
-#: src/modules/ibar/e_mod_main.c:296 src/modules/ibar/e_mod_main.c:655
+#: src/bin/e_int_menus.c:163 src/bin/e_module.c:490 src/bin/e_shelf.c:744
+#: src/bin/e_gadget.c:209 src/modules/ibar/e_mod_main.c:752
 #: src/modules/ibox/e_mod_main.c:259 src/modules/ibox/e_mod_main.c:466
-#: src/modules/clock/e_mod_main.c:189 src/modules/clock/e_mod_main.c:360
-#: src/modules/itray/e_mod_main.c:417 src/modules/pager/e_mod_main.c:410
-#: src/modules/pager/e_mod_main.c:550 src/modules/battery/e_mod_main.c:250
-#: src/modules/battery/e_mod_main.c:376
+#: src/modules/itray/e_mod_main.c:417 src/modules/pager/e_mod_main.c:617
+#: src/modules/temperature/e_mod_main.c:123
+#: src/modules/battery/e_mod_main.c:152
 msgid "Configuration"
 msgstr "Configurazione"
 
@@ -260,10 +260,7 @@ msgid "Cleanup Windows"
 msgstr "Ordina Finestre"
 
 #: src/bin/e_int_menus.c:806 src/bin/e_gadget.c:215
-#: src/modules/ibar/e_mod_main.c:661 src/modules/ibox/e_mod_main.c:472
-#: src/modules/cpufreq/e_mod_main.c:943 src/modules/clock/e_mod_main.c:366
-#: src/modules/itray/e_mod_main.c:423 src/modules/pager/e_mod_main.c:555
-#: src/modules/battery/e_mod_main.c:382
+#: src/modules/ibox/e_mod_main.c:472 src/modules/itray/e_mod_main.c:423
 msgid "Edit Mode"
 msgstr "Modalità modifica"
 
@@ -410,9 +407,9 @@ msgstr ""
 #: src/bin/e_config_dialog.c:149 src/bin/e_fileman_smart.c:907
 #: src/bin/e_module.c:417 src/bin/e_file_dialog.c:66 src/bin/e_error.c:196
 #: src/bin/e_error.c:205 src/bin/e_int_config_background_import.c:202
-#: src/bin/e_utils.c:524 src/modules/ibar/e_mod_main.c:1619
-#: src/modules/cpufreq/e_mod_main.c:305 src/modules/cpufreq/e_mod_main.c:333
-#: src/modules/battery/e_mod_main.c:559
+#: src/bin/e_utils.c:524 src/modules/ibar/e_mod_main.c:1054
+#: src/modules/cpufreq/e_mod_main.c:312 src/modules/cpufreq/e_mod_main.c:339
+#: src/modules/cpufreq/e_mod_main.c:358 src/modules/battery/e_mod_main.c:282
 msgid "OK"
 msgstr "OK"
 
@@ -647,56 +644,56 @@ msgstr "Tutti i desktop"
 msgid "Theme"
 msgstr "Dal tema"
 
-#: src/bin/e_int_config_fonts.c:115
+#: src/bin/e_int_config_fonts.c:129
 msgid "Font Settings"
 msgstr "Impostazioni dei font"
 
-#: src/bin/e_int_config_fonts.c:275
+#: src/bin/e_int_config_fonts.c:302
 msgid "Font Class Configuration"
 msgstr "Configurazione classe Font"
 
-#: src/bin/e_int_config_fonts.c:311
+#: src/bin/e_int_config_fonts.c:345
 msgid "Font"
 msgstr "Font"
 
-#: src/bin/e_int_config_fonts.c:324
+#: src/bin/e_int_config_fonts.c:358
 msgid "Font Size"
 msgstr "Dimensione"
 
-#: src/bin/e_int_config_fonts.c:330
+#: src/bin/e_int_config_fonts.c:364
 #, c-format
 msgid "%2.1f pixels"
 msgstr "%2.1f pixel"
 
-#: src/bin/e_int_config_fonts.c:337
+#: src/bin/e_int_config_fonts.c:371
 msgid "Enable Font Class"
 msgstr "Abilita classe Font"
 
-#: src/bin/e_int_config_fonts.c:347
+#: src/bin/e_int_config_fonts.c:381
 msgid "Hinting"
 msgstr "Hinting (ottimizzazione)"
 
-#: src/bin/e_int_config_fonts.c:352
+#: src/bin/e_int_config_fonts.c:386
 msgid "Bytecode"
 msgstr "Bytecode"
 
-#: src/bin/e_int_config_fonts.c:357 src/modules/cpufreq/e_mod_main.c:500
+#: src/bin/e_int_config_fonts.c:391 src/modules/cpufreq/e_mod_main.c:192
 msgid "Automatic"
 msgstr "Automatico"
 
-#: src/bin/e_int_config_fonts.c:362 src/bin/e_int_config_keybindings.c:725
+#: src/bin/e_int_config_fonts.c:396 src/bin/e_int_config_keybindings.c:725
 msgid "None"
 msgstr "Nessuno"
 
-#: src/bin/e_int_config_fonts.c:369
+#: src/bin/e_int_config_fonts.c:403
 msgid "Font Fallbacks"
 msgstr "Alternative dei font"
 
-#: src/bin/e_int_config_fonts.c:372
+#: src/bin/e_int_config_fonts.c:406
 msgid "Fallback Name"
 msgstr "Nome alternativa"
 
-#: src/bin/e_int_config_fonts.c:387
+#: src/bin/e_int_config_fonts.c:421
 msgid "Enable Fallbacks"
 msgstr "Abilita alternative"
 
@@ -1485,7 +1482,7 @@ msgstr ""
 msgid "Enlightenment cannot set up its shelf system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
-"sistema shelf (supporto)."
+"sistema shelf (pannello portamoduli)."
 
 #: src/bin/e_main.c:627
 msgid "Enlightenment cannot set up its exebuf system."
@@ -1533,15 +1530,15 @@ msgstr "Mostra splash screen all'avvio"
 msgid "Window Border Selection"
 msgstr "Selezione bordo della finestra"
 
-#: src/bin/e_int_border_border.c:198
+#: src/bin/e_int_border_border.c:197
 msgid "Remember this Border for this window next time it appears"
 msgstr "Ricorda questo bordo alla prossima apertura della finestra"
 
-#: src/bin/e_desklock.c:149
+#: src/bin/e_desklock.c:172
 msgid "Lock Failed"
 msgstr "Blocco non riuscito"
 
-#: src/bin/e_desklock.c:150
+#: src/bin/e_desklock.c:173
 msgid ""
 "Locking the desktop failed because some application<br>has grabbed either "
 "they keyboard or the mouse or both<br>and their grab is unable to be broken."
@@ -1550,9 +1547,24 @@ msgstr ""
 "impossessata della tastiera e/o del<br>mouse e Enlightenment non può "
 "riappropiarsene."
 
-#: src/bin/e_desklock.c:236
+#: src/bin/e_desklock.c:259
 msgid "Please enter your unlock password"
 msgstr "Inserire la password di sblocco"
+
+#: src/bin/e_desklock.c:553
+msgid "Authentication System Error"
+msgstr "Errore del sistema di autenticazione"
+
+#: src/bin/e_desklock.c:554
+#, c-format
+msgid ""
+"Authentication via PAM had errors setting up the<br>authentication session. "
+"The error code was <hilight>%i</hilight>.<br>This is bad and should not be "
+"happening. Please report this bug."
+msgstr ""
+"L'autenticazione attraverso PAM ha fallito l'impostazione<br>della sessione "
+"di autenticazione. Il codice d'errore è <hilight>%i</hilight>.<br>Questo "
+"è male e non dovrebbe succedere.<br>Si prega di riportare questo bug."
 
 #: src/bin/e_module.c:108
 #, c-format
@@ -1628,6 +1640,14 @@ msgstr "Icone"
 msgid "Cancel"
 msgstr "Annulla"
 
+#: src/bin/e_shelf.c:750
+msgid "Stop editing items"
+msgstr "Fine modifica oggetti"
+
+#: src/bin/e_shelf.c:752
+msgid "Begin editing items"
+msgstr "Inizio modifica oggetti"
+
 #: src/bin/e_startup.c:68
 #, c-format
 msgid "Starting %s"
@@ -1637,7 +1657,7 @@ msgstr "Avvio di %s"
 msgid "Always On Top"
 msgstr "Sempre sulle altre"
 
-#: src/bin/e_int_border_menu.c:57 src/modules/temperature/e_mod_config.c:156
+#: src/bin/e_int_border_menu.c:57 src/modules/temperature/e_mod_config.c:150
 msgid "Normal"
 msgstr "Normale"
 
@@ -1773,7 +1793,7 @@ msgstr ""
 "Avete chiesto di uscire da Enlightenment.<br><br>Siete sicuri di voler "
 "uscire?"
 
-#: src/bin/e_config.c:474
+#: src/bin/e_config.c:475
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -1793,7 +1813,7 @@ msgstr ""
 "funzionalità.<br>Adesso è possibile riconfigurare le cose a proprio "
 "piacimento.<br>Ci scusiamo per il disagio.<br>"
 
-#: src/bin/e_config.c:488
+#: src/bin/e_config.c:489
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very<br>strange. "
 "This should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -1808,7 +1828,7 @@ msgstr ""
 "male, quindi la vostra configurazione è<br>stata ripristinata a scopo "
 "precauzionale ai valori predefiniti. Ci<br>scusiamo per l'inconveniente.<br>"
 
-#: src/bin/e_config.c:1750
+#: src/bin/e_config.c:1791
 msgid "Configuration Upgraded"
 msgstr "Aggiornamento configurazione"
 
@@ -1910,8 +1930,7 @@ msgstr "Ripristina questa risoluzione al login"
 #: src/bin/e_int_config_cfgdialogs.c:78 src/bin/e_int_config_cfgdialogs.c:104
 #: src/bin/e_int_config_winlist.c:123 src/bin/e_int_config_performance.c:86
 #: src/bin/e_int_config_performance.c:120 src/bin/e_int_config_exebuf.c:100
-#: src/bin/e_int_config_exebuf.c:146 src/modules/clock/e_mod_config.c:71
-#: src/modules/pager/e_mod_config.c:91 src/modules/pager/e_mod_config.c:141
+#: src/bin/e_int_config_exebuf.c:146 src/modules/pager/e_mod_config.c:74
 msgid "General Settings"
 msgstr "Impostazioni generali"
 
@@ -2060,6 +2079,26 @@ msgstr "Larghezza massima"
 #: src/bin/e_int_config_winlist.c:261 src/bin/e_int_config_exebuf.c:190
 msgid "Maximum Height"
 msgstr "Altezza massima"
+
+#: src/bin/e_gadcon.c:879
+msgid "Inset appearance"
+msgstr "Aspetto incassato"
+
+#: src/bin/e_gadcon.c:886
+msgid "Automatically scroll contents"
+msgstr "Scorri automaticamente contenuto"
+
+#: src/bin/e_gadcon.c:893
+msgid "Able to be resized"
+msgstr "Ridimensionabile"
+
+#: src/bin/e_gadcon.c:901 src/bin/e_gadcon.c:1228
+msgid "Stop editing"
+msgstr "Fine modifica"
+
+#: src/bin/e_gadcon.c:903
+msgid "Begin editing"
+msgstr "Inizio modifica"
 
 #: src/bin/e_int_config_keybindings.c:15
 msgid "Assign Key Binding..."
@@ -2467,6 +2506,91 @@ msgstr ""
 "<br>Questo significa che Enlightenment non uscirà finche queste "
 "finestre<br>non saranno chiuse o avranno il blocco Perpetua disabilitato.<br>"
 
+#: src/bin/e_int_shelf_config.c:52
+msgid "BLAH"
+msgstr "Pannello portamoduli"
+
+#: src/bin/e_int_shelf_config.c:172
+msgid "Below Everything"
+msgstr "Al di sotto di tutto"
+
+#: src/bin/e_int_shelf_config.c:174
+msgid "Below Windows"
+msgstr "Al di sotto delle finestre"
+
+#: src/bin/e_int_shelf_config.c:176
+msgid "Above Everything"
+msgstr "Al di sopra di tutto"
+
+#: src/bin/e_int_shelf_config.c:181
+msgid "Shrink length fit contents"
+msgstr "Riduci lunghezza per adattare al contenuto"
+
+#: src/bin/e_int_shelf_config.c:183
+msgid "Expand width to fit contents"
+msgstr "Espandi larghezza per adattare al contenuto"
+
+#: src/bin/e_int_shelf_config.c:185
+msgid "Shelf Size"
+msgstr "Larghezza del pannello"
+
+#: src/bin/e_int_shelf_config.c:187 src/modules/ibox/e_mod_config.c:130
+#, c-format
+msgid "%3.0f pixels"
+msgstr "%3.0f pixel"
+
+#: src/bin/e_int_shelf_config.c:191
+msgid "Layout"
+msgstr "Posizione"
+
+#: src/bin/e_int_shelf_config.c:193
+msgid "Left"
+msgstr "A sinistra"
+
+#: src/bin/e_int_shelf_config.c:195
+msgid "Right"
+msgstr "A destra"
+
+#: src/bin/e_int_shelf_config.c:197
+msgid "Top"
+msgstr "In alto"
+
+#: src/bin/e_int_shelf_config.c:199
+msgid "Bottom"
+msgstr "In basso"
+
+#: src/bin/e_int_shelf_config.c:201
+msgid "Top Left"
+msgstr "In alto a sinistra"
+
+#: src/bin/e_int_shelf_config.c:203
+msgid "Top Right"
+msgstr "In alto a destra"
+
+#: src/bin/e_int_shelf_config.c:205
+msgid "Bottom Left"
+msgstr "In basso a sinistra"
+
+#: src/bin/e_int_shelf_config.c:207
+msgid "Bottom Right"
+msgstr "In basso a destra"
+
+#: src/bin/e_int_shelf_config.c:209
+msgid "Left Top"
+msgstr "A sinistra in alto"
+
+#: src/bin/e_int_shelf_config.c:211
+msgid "Right Top"
+msgstr "A destra in alto"
+
+#: src/bin/e_int_shelf_config.c:213
+msgid "Left Bottom"
+msgstr "A sinistra in basso"
+
+#: src/bin/e_int_shelf_config.c:215
+msgid "Right Bottom"
+msgstr "A destra in basso"
+
 #: src/bin/e_int_config_desklock.c:263 src/bin/e_int_config_desklock.c:464
 msgid "Password Type"
 msgstr "Tipo di password"
@@ -2519,62 +2643,39 @@ msgstr "Mostra sulla zona corrente"
 msgid "Show on screen zone #:"
 msgstr "Mostra sulla zona #:"
 
-#: src/modules/ibar/e_mod_config.c:40
+#: src/modules/ibar/e_mod_config.c:38
 msgid "IBar Configuration"
 msgstr "Configurazione modulo IBar"
 
-#: src/modules/ibar/e_mod_config.c:82 src/modules/ibox/e_mod_config.c:82
-msgid "Show Follower"
-msgstr "Mostra accompagnatore"
+#: src/modules/ibar/e_mod_config.c:79
+msgid "Selected Bar Source"
+msgstr "Fonte delle icone"
 
-#: src/modules/ibar/e_mod_config.c:84 src/modules/ibox/e_mod_config.c:84
-msgid "Auto Fit Icons"
-msgstr "Larghezza automatica"
+#: src/modules/ibar/e_mod_main.c:739
+msgid "Change Icon Properties"
+msgstr "Cambia proprietà dell'icona"
 
-#: src/modules/ibar/e_mod_config.c:120 src/modules/ibox/e_mod_config.c:120
-msgid "Follower"
-msgstr "Accompagnatore"
+#: src/modules/ibar/e_mod_main.c:744
+msgid "Remove Icon"
+msgstr "Elimina icona"
 
-#: src/modules/ibar/e_mod_config.c:121 src/modules/ibox/e_mod_config.c:121
-msgid "Visible"
-msgstr "Visibile"
+#: src/modules/ibar/e_mod_main.c:1047
+msgid "Cannot add icon"
+msgstr "Impossibile aggiungere icona"
 
-#: src/modules/ibar/e_mod_config.c:123 src/modules/ibox/e_mod_config.c:123
-msgid "Follow Speed"
-msgstr "Velocità accompagnatore"
+#: src/modules/ibar/e_mod_main.c:1049
+msgid ""
+"You tried to drop an icon of an application that<br>does not have a matching "
+"application file.<br><br>The icon cannot be added to IBar."
+msgstr ""
+"Avete tentato di inserire l'icona di un'applicazione<br>che non ha un file "
+"corrispondente.<br><br>L'icona non può essere inserita in IBar."
 
-#: src/modules/ibar/e_mod_config.c:125 src/modules/ibar/e_mod_config.c:139
-#: src/modules/ibox/e_mod_config.c:125 src/modules/ibox/e_mod_config.c:139
-#, c-format
-msgid "%1.2f px/s"
-msgstr "%1.2f px/s"
-
-#: src/modules/ibar/e_mod_config.c:129 src/modules/ibox/e_mod_config.c:129
-msgid "Icon Size"
-msgstr "Dimensione delle icone"
-
-#: src/modules/ibar/e_mod_config.c:130 src/modules/ibox/e_mod_config.c:130
-#, c-format
-msgid "%3.0f pixels"
-msgstr "%3.0f pixel"
-
-#: src/modules/ibar/e_mod_config.c:134 src/modules/ibox/e_mod_config.c:134
-msgid "Width"
-msgstr "Larghezza"
-
-#: src/modules/ibar/e_mod_config.c:135 src/modules/ibox/e_mod_config.c:135
-msgid "Auto Fit"
-msgstr "Larghezza automatica"
-
-#: src/modules/ibar/e_mod_config.c:137 src/modules/ibox/e_mod_config.c:137
-msgid "Autoscroll Speed:"
-msgstr "Velocità autoscorrimento"
-
-#: src/modules/ibar/e_mod_main.c:163
+#: src/modules/ibar/e_mod_main.c:1223
 msgid "Enlightenment IBar Module"
 msgstr "Modulo IBar di Enlightenment"
 
-#: src/modules/ibar/e_mod_main.c:164
+#: src/modules/ibar/e_mod_main.c:1224
 msgid ""
 "This is the IBar Application Launcher bar module for Enlightenment.<br>It is "
 "a first example module and is being used to flesh out several<br>interfaces "
@@ -2586,21 +2687,50 @@ msgstr ""
 "varie interfacce in Enlightenment 0.17.0. È sotto pieno<br>sviluppo, quindi "
 "aspettatevi che <hilight>crashi spesso</hilight> e cambi nel tempo."
 
-#: src/modules/ibar/e_mod_main.c:1612
-msgid "Cannot add icon"
-msgstr "Impossibile aggiungere icona"
-
-#: src/modules/ibar/e_mod_main.c:1614
-msgid ""
-"You tried to drop an icon of an application that<br>does not have a matching "
-"application file.<br><br>The icon cannot be added to IBar."
-msgstr ""
-"Avete tentato di inserire l'icona di un'applicazione<br>che non ha un file "
-"corrispondente.<br><br>L'icona non può essere inserita in IBar."
-
 #: src/modules/ibox/e_mod_config.c:40
 msgid "IBox Configuration"
 msgstr "Configurazione modulo IBox"
+
+#: src/modules/ibox/e_mod_config.c:82
+msgid "Show Follower"
+msgstr "Mostra accompagnatore"
+
+#: src/modules/ibox/e_mod_config.c:84
+msgid "Auto Fit Icons"
+msgstr "Larghezza automatica"
+
+#: src/modules/ibox/e_mod_config.c:120
+msgid "Follower"
+msgstr "Accompagnatore"
+
+#: src/modules/ibox/e_mod_config.c:121
+msgid "Visible"
+msgstr "Visibile"
+
+#: src/modules/ibox/e_mod_config.c:123
+msgid "Follow Speed"
+msgstr "Velocità accompagnatore"
+
+#: src/modules/ibox/e_mod_config.c:125 src/modules/ibox/e_mod_config.c:139
+#, c-format
+msgid "%1.2f px/s"
+msgstr "%1.2f px/s"
+
+#: src/modules/ibox/e_mod_config.c:129
+msgid "Icon Size"
+msgstr "Dimensione delle icone"
+
+#: src/modules/ibox/e_mod_config.c:134
+msgid "Width"
+msgstr "Larghezza"
+
+#: src/modules/ibox/e_mod_config.c:135
+msgid "Auto Fit"
+msgstr "Larghezza automatica"
+
+#: src/modules/ibox/e_mod_config.c:137
+msgid "Autoscroll Speed:"
+msgstr "Velocità autoscorrimento"
 
 #: src/modules/ibox/e_mod_main.c:148
 msgid "Enlightenment IBox Module"
@@ -2614,11 +2744,99 @@ msgstr ""
 "Questo è il modulo applicazioni iconificate IBox per Enlightenment.<br>Esso "
 "conterrà le applicazioni minimizzate"
 
-#: src/modules/cpufreq/e_mod_main.c:113
+#: src/modules/cpufreq/e_mod_main.c:147
+msgid "Fast (0.5 sec)"
+msgstr "Veloce (0.5 sec)"
+
+#: src/modules/cpufreq/e_mod_main.c:154
+msgid "Medium (1 sec)"
+msgstr "Medio (1 sec)"
+
+#: src/modules/cpufreq/e_mod_main.c:161
+msgid "Normal (2 sec)"
+msgstr "Normale (2 sec)"
+
+#: src/modules/cpufreq/e_mod_main.c:168
+msgid "Slow (5 sec)"
+msgstr "Lento (5 sec)"
+
+#: src/modules/cpufreq/e_mod_main.c:175
+msgid "Very Slow (30 sec)"
+msgstr "Molto lento (30 sec)"
+
+#: src/modules/cpufreq/e_mod_main.c:190
+msgid "Manual"
+msgstr "Manuale"
+
+#: src/modules/cpufreq/e_mod_main.c:194
+msgid "Lower Power Automatic"
+msgstr "Minimo Consumo Automatico"
+
+#: src/modules/cpufreq/e_mod_main.c:196
+msgid "Minimum Speed"
+msgstr "Minima velocità"
+
+#: src/modules/cpufreq/e_mod_main.c:198
+msgid "Maximum Speed"
+msgstr "Massima velocità"
+
+#: src/modules/cpufreq/e_mod_main.c:221
+#, c-format
+msgid "%i MHz"
+msgstr "%i MHz"
+
+#: src/modules/cpufreq/e_mod_main.c:223
+#, c-format
+msgid "%i.%i GHz"
+msgstr "%i.%i GHz"
+
+#: src/modules/cpufreq/e_mod_main.c:241
+msgid "Time Between Updates"
+msgstr "Intervallo tra aggiornamenti"
+
+#: src/modules/cpufreq/e_mod_main.c:247
+msgid "Restore CPU Power Policy"
+msgstr "Ripristina regole energia CPU"
+
+#: src/modules/cpufreq/e_mod_main.c:253
+msgid "Set CPU Power Policy"
+msgstr "Imposta regole energia CPU"
+
+#: src/modules/cpufreq/e_mod_main.c:260
+msgid "Set CPU Speed"
+msgstr "Imposta velocità CPU"
+
+#: src/modules/cpufreq/e_mod_main.c:309
+msgid ""
+"There was an error trying to set the<br>cpu frequency governor via the "
+"module's<br>setfreq utility."
+msgstr ""
+"C'è stato un errore nell'impostazione del governor<br>della frequenza della "
+"cpu attraverso l'utilità <br>setfreq del modulo."
+
+#: src/modules/cpufreq/e_mod_main.c:335
+msgid ""
+"Your kernel does not support setting the<br>CPU frequency at all. You may be "
+"missing<br>Kernel modules or features, or your CPU<br>simply does not "
+"support this feature."
+msgstr ""
+"Il vostro kernel non supporta affatto l'impostazione<br>della frequenza della "
+"CPU. Probabilmente mancano<br>funzionalità o moduli del kernel, o più "
+"semplicemente<br>la vostra CPU non supporta questa funzionalità."
+
+#: src/modules/cpufreq/e_mod_main.c:355
+msgid ""
+"There was an error trying to set the<br>cpu frequency setting via the "
+"module's<br>setfreq utility."
+msgstr ""
+"C'è stato un errore nell'impostazione dei parametri<br>della frequenza della "
+"cpu attraverso l'utilità<br>setfreq del modulo."
+
+#: src/modules/cpufreq/e_mod_main.c:929
 msgid "CPU Frequency Controller Module"
 msgstr "Modulo controllo frequenza CPU"
 
-#: src/modules/cpufreq/e_mod_main.c:114
+#: src/modules/cpufreq/e_mod_main.c:930
 msgid ""
 "A simple module to control the frequency of the system CPU.<br>This is "
 "especially useful to save power on laptops."
@@ -2626,109 +2844,11 @@ msgstr ""
 "Un semplice modulo per controllare la frequenza della CPU.<br>Questo è utile "
 "specialmente per il risparmio energetico<br>sui portatili."
 
-#: src/modules/cpufreq/e_mod_main.c:214 src/modules/cpufreq/e_mod_main.c:546
-msgid "Set Poll Time"
-msgstr "Tempo di campionamento"
-
-#: src/modules/cpufreq/e_mod_main.c:220
-msgid "Restore Controller on Startup"
-msgstr "Ripristina controller all'avvio"
-
-#: src/modules/cpufreq/e_mod_main.c:227 src/modules/cpufreq/e_mod_main.c:558
-msgid "Set Controller"
-msgstr "Controller"
-
-#: src/modules/cpufreq/e_mod_main.c:235 src/modules/cpufreq/e_mod_main.c:565
-msgid "Set Speed"
-msgstr "Velocità"
-
-#: src/modules/cpufreq/e_mod_main.c:303
-msgid ""
-"There was an error trying to set the cpu frequency<br>governor via the "
-"module's setfreq utility."
-msgstr ""
-"C'è stato un errore nell'impostazione del governor<br>della frequenza della "
-"cpu attraverso l'utilità <br>setfreq del modulo."
-
-#: src/modules/cpufreq/e_mod_main.c:331
-msgid ""
-"There was an error trying to set the cpu frequency<br>setting via the "
-"module's setfreq utility."
-msgstr ""
-"C'è stato un errore nell'impostazione dei parametri<br>della frequenza della "
-"cpu attraverso l'utilità<br>setfreq del modulo."
-
-#: src/modules/cpufreq/e_mod_main.c:454
-msgid "Check Fast (0.5 sec)"
-msgstr "Controllo veloce (0.5 sec)"
-
-#: src/modules/cpufreq/e_mod_main.c:461
-msgid "Check Medium (1 sec)"
-msgstr "Controllo medio (1 sec)"
-
-#: src/modules/cpufreq/e_mod_main.c:468
-msgid "Check Normal (2 sec)"
-msgstr "Controllo normale (2 sec)"
-
-#: src/modules/cpufreq/e_mod_main.c:475
-msgid "Check Slow (5 sec)"
-msgstr "Controllo lento (5 sec)"
-
-#: src/modules/cpufreq/e_mod_main.c:482
-msgid "Check Very Slow (30 sec)"
-msgstr "Controllo molto lento (30 sec)"
-
-#: src/modules/cpufreq/e_mod_main.c:498
-msgid "Manual"
-msgstr "Manuale"
-
-#: src/modules/cpufreq/e_mod_main.c:502
-msgid "Lower Power Automatic"
-msgstr "Minimo Consumo Automatico"
-
-#: src/modules/cpufreq/e_mod_main.c:504
-msgid "Minimum Speed"
-msgstr "Minima velocità"
-
-#: src/modules/cpufreq/e_mod_main.c:506
-msgid "Maximum Speed"
-msgstr "Massima velocità"
-
-#: src/modules/cpufreq/e_mod_main.c:528
-#, c-format
-msgid "%i MHz"
-msgstr "%i MHz"
-
-#: src/modules/cpufreq/e_mod_main.c:531
-#, c-format
-msgid "%i.%i GHz"
-msgstr "%i.%i GHz"
-
-#: src/modules/cpufreq/e_mod_main.c:552
-msgid "Restore Governor on Startup"
-msgstr "Ripristina governor all'avvio"
-
-#: src/modules/clock/e_mod_config.c:32
-msgid "Clock Configuration"
-msgstr "Configurazione modulo Clock"
-
-#: src/modules/clock/e_mod_config.c:73
-msgid "No Digital Display"
-msgstr "Nessun display"
-
-#: src/modules/clock/e_mod_config.c:75
-msgid "12 Hour Display"
-msgstr "Display digitale 12 ore"
-
-#: src/modules/clock/e_mod_config.c:77
-msgid "24 Hour Display"
-msgstr "Display digitale 24 ore"
-
-#: src/modules/clock/e_mod_main.c:95
+#: src/modules/clock/e_mod_main.c:132
 msgid "Enlightenment Clock Module"
 msgstr "Modulo Clock di Enlightenment"
 
-#: src/modules/clock/e_mod_main.c:96
+#: src/modules/clock/e_mod_main.c:133
 msgid "A simple module to give E17 a clock."
 msgstr "Un semplice modulo per dare un orologio a E17."
 
@@ -2766,203 +2886,179 @@ msgstr ""
 "arrangiato. Non usatelo a meno<br>che non dobbiate necessariamente, e se lo "
 "fate tenete presente che<br>potreste avere problemi."
 
-#: src/modules/pager/e_mod_config.c:38
+#: src/modules/pager/e_mod_config.c:35
 msgid "Pager Configuration"
 msgstr "Configurazione modulo Pager"
 
-#: src/modules/pager/e_mod_config.c:92 src/modules/pager/e_mod_config.c:142
+#: src/modules/pager/e_mod_config.c:75 src/modules/pager/e_mod_config.c:104
 msgid "Show Popup"
 msgstr "Mostra popup"
 
-#: src/modules/pager/e_mod_config.c:94 src/modules/pager/e_mod_config.c:144
-msgid "Show Desktop Name"
-msgstr "Mostra nome del desktop"
-
-#: src/modules/pager/e_mod_config.c:98 src/modules/pager/e_mod_config.c:152
-msgid "Desktop Name Position"
-msgstr "Nome del desktop"
-
-#: src/modules/pager/e_mod_config.c:100 src/modules/pager/e_mod_config.c:154
-msgid "Top"
-msgstr "In cima"
-
-#: src/modules/pager/e_mod_config.c:102 src/modules/pager/e_mod_config.c:156
-msgid "Bottom"
-msgstr "In fondo"
-
-#: src/modules/pager/e_mod_config.c:146
+#: src/modules/pager/e_mod_config.c:98
 msgid "Resistance to Dragging Windows:"
 msgstr "Resistenza trascinamento finestre:"
 
-#: src/modules/pager/e_mod_config.c:148
+#: src/modules/pager/e_mod_config.c:99
 #, c-format
 msgid "%.0f px"
 msgstr "%.0f px"
 
-#: src/modules/pager/e_mod_config.c:167
+#: src/modules/pager/e_mod_config.c:103
 msgid "Popup Settings"
 msgstr "Impostazioni del popup"
 
-#: src/modules/pager/e_mod_config.c:168
+#: src/modules/pager/e_mod_config.c:106
 msgid "Popup Speed"
 msgstr "Velocità del popup"
 
-#: src/modules/pager/e_mod_config.c:170
-#: src/modules/temperature/e_mod_config.c:311
-#: src/modules/battery/e_mod_config.c:114
+#: src/modules/pager/e_mod_config.c:108
+#: src/modules/temperature/e_mod_config.c:292
+#: src/modules/battery/e_mod_config.c:108
 #, c-format
 msgid "%1.1f seconds"
 msgstr "%1.1f secondi"
 
-#: src/modules/pager/e_mod_main.c:158
+#: src/modules/pager/e_mod_main.c:1781
 msgid "Enlightenment Pager Module"
 msgstr "Modulo Pager di Enlightenment"
 
-#: src/modules/pager/e_mod_main.c:159
+#: src/modules/pager/e_mod_main.c:1782
 msgid "A pager module to navigate virtual desktops."
 msgstr "Un modulo per navigare i desktop virtuali."
 
-#: src/modules/pager/e_mod_main.c:415 src/modules/pager/e_mod_main.c:560
-msgid "Fix Aspect (Keep Height)"
-msgstr "Correggi aspetto (mantieni altezza)"
-
-#: src/modules/pager/e_mod_main.c:419 src/modules/pager/e_mod_main.c:564
-msgid "Fix Aspect (Keep Width)"
-msgstr "Correggi aspetto (mantieni larghezza)"
-
-#: src/modules/start/e_mod_main.c:216
+#: src/modules/start/e_mod_main.c:238
 msgid "Enlightenment Start Module"
 msgstr "Modulo Start di Enlightenment"
 
-#: src/modules/start/e_mod_main.c:217
+#: src/modules/start/e_mod_main.c:239
 msgid "Experimental Button module for E17"
 msgstr "Modulo sperimentale per un pulsante d'avvio menu per E17"
 
-#: src/modules/temperature/e_mod_config.c:59
+#: src/modules/temperature/e_mod_config.c:58
 msgid "Temperature Configuration"
 msgstr "Configurazione modulo Temperature"
 
-#: src/modules/temperature/e_mod_config.c:144
-#: src/modules/temperature/e_mod_config.c:260
+#: src/modules/temperature/e_mod_config.c:138
+#: src/modules/temperature/e_mod_config.c:241
 msgid "Display Units"
 msgstr "Unità di misura"
 
-#: src/modules/temperature/e_mod_config.c:146
-#: src/modules/temperature/e_mod_config.c:262
+#: src/modules/temperature/e_mod_config.c:140
+#: src/modules/temperature/e_mod_config.c:243
 msgid "Celsius"
 msgstr "Centigradi"
 
-#: src/modules/temperature/e_mod_config.c:148
-#: src/modules/temperature/e_mod_config.c:264
+#: src/modules/temperature/e_mod_config.c:142
+#: src/modules/temperature/e_mod_config.c:245
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: src/modules/temperature/e_mod_config.c:152
-#: src/modules/temperature/e_mod_config.c:310
+#: src/modules/temperature/e_mod_config.c:146
+#: src/modules/temperature/e_mod_config.c:291
 msgid "Check Interval"
 msgstr "Frequenza di campionamento"
 
-#: src/modules/temperature/e_mod_config.c:154
+#: src/modules/temperature/e_mod_config.c:148
 msgid "Fast"
 msgstr "Veloce"
 
-#: src/modules/temperature/e_mod_config.c:158
+#: src/modules/temperature/e_mod_config.c:152
 msgid "Slow"
 msgstr "Lento"
 
-#: src/modules/temperature/e_mod_config.c:160
+#: src/modules/temperature/e_mod_config.c:154
 msgid "Very Slow"
 msgstr "Molto lento"
 
-#: src/modules/temperature/e_mod_config.c:167
-#: src/modules/temperature/e_mod_config.c:191
-#: src/modules/temperature/e_mod_config.c:331
-#: src/modules/temperature/e_mod_config.c:343
+#: src/modules/temperature/e_mod_config.c:161
+#: src/modules/temperature/e_mod_config.c:185
+#: src/modules/temperature/e_mod_config.c:312
+#: src/modules/temperature/e_mod_config.c:324
 msgid "High Temperature"
 msgstr "Alta temperatura"
 
-#: src/modules/temperature/e_mod_config.c:170
+#: src/modules/temperature/e_mod_config.c:164
 msgid "200 F"
 msgstr "200 F"
 
-#: src/modules/temperature/e_mod_config.c:172
+#: src/modules/temperature/e_mod_config.c:166
 msgid "150 F"
 msgstr "150 F"
 
-#: src/modules/temperature/e_mod_config.c:174
-#: src/modules/temperature/e_mod_config.c:183
+#: src/modules/temperature/e_mod_config.c:168
+#: src/modules/temperature/e_mod_config.c:177
 msgid "110 F"
 msgstr "110 F"
 
-#: src/modules/temperature/e_mod_config.c:178
-#: src/modules/temperature/e_mod_config.c:202
-#: src/modules/temperature/e_mod_config.c:336
-#: src/modules/temperature/e_mod_config.c:348
+#: src/modules/temperature/e_mod_config.c:172
+#: src/modules/temperature/e_mod_config.c:196
+#: src/modules/temperature/e_mod_config.c:317
+#: src/modules/temperature/e_mod_config.c:329
 msgid "Low Temperature"
 msgstr "Bassa temperatura"
 
-#: src/modules/temperature/e_mod_config.c:181
+#: src/modules/temperature/e_mod_config.c:175
 msgid "130 F"
 msgstr "130 F"
 
-#: src/modules/temperature/e_mod_config.c:185
+#: src/modules/temperature/e_mod_config.c:179
 msgid "90 F"
 msgstr "90 F"
 
-#: src/modules/temperature/e_mod_config.c:194
+#: src/modules/temperature/e_mod_config.c:188
 msgid "93 C"
 msgstr "93 C"
 
-#: src/modules/temperature/e_mod_config.c:196
+#: src/modules/temperature/e_mod_config.c:190
 msgid "65 C"
 msgstr "65 C"
 
-#: src/modules/temperature/e_mod_config.c:198
-#: src/modules/temperature/e_mod_config.c:207
+#: src/modules/temperature/e_mod_config.c:192
+#: src/modules/temperature/e_mod_config.c:201
 msgid "43 C"
 msgstr "43 C"
 
-#: src/modules/temperature/e_mod_config.c:205
+#: src/modules/temperature/e_mod_config.c:199
 msgid "55 C"
 msgstr "55 C"
 
-#: src/modules/temperature/e_mod_config.c:209
+#: src/modules/temperature/e_mod_config.c:203
 msgid "32 C"
 msgstr "32 C"
 
-#: src/modules/temperature/e_mod_config.c:292
+#: src/modules/temperature/e_mod_config.c:273
 msgid "Sensors"
 msgstr "Sensori"
 
-#: src/modules/temperature/e_mod_config.c:294
+#: src/modules/temperature/e_mod_config.c:275
 msgid "Temp 1"
 msgstr "Temp 1"
 
-#: src/modules/temperature/e_mod_config.c:296
+#: src/modules/temperature/e_mod_config.c:277
 msgid "Temp 2"
 msgstr "Temp 2"
 
-#: src/modules/temperature/e_mod_config.c:298
+#: src/modules/temperature/e_mod_config.c:279
 msgid "Temp 3"
 msgstr "Temp 3"
 
-#: src/modules/temperature/e_mod_config.c:332
-#: src/modules/temperature/e_mod_config.c:337
+#: src/modules/temperature/e_mod_config.c:313
+#: src/modules/temperature/e_mod_config.c:318
 #, c-format
 msgid "%1.0f F"
 msgstr "%1.0f F"
 
-#: src/modules/temperature/e_mod_config.c:344
-#: src/modules/temperature/e_mod_config.c:349
+#: src/modules/temperature/e_mod_config.c:325
+#: src/modules/temperature/e_mod_config.c:330
 #, c-format
 msgid "%1.0f C"
 msgstr "%1.0f C"
 
-#: src/modules/temperature/e_mod_main.c:116
+#: src/modules/temperature/e_mod_main.c:435
 msgid "Enlightenment Temperature Module"
 msgstr "Modulo Temperature di Enlightenment"
 
-#: src/modules/temperature/e_mod_main.c:117
+#: src/modules/temperature/e_mod_main.c:436
 msgid ""
 "A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux."
 "<br>It is especially useful for modern Laptops with high speed<br>CPUs that "
@@ -3075,41 +3171,84 @@ msgstr ""
 "sfondo del desktop - senza il bisogno di<br>speciali estensioni del server X "
 "o accelerazioni hardware."
 
-#: src/modules/battery/e_mod_config.c:36
-msgid "Battery Configuration"
+#: src/modules/battery/e_mod_config.c:35
+msgid "Battery Monitor Configuration"
 msgstr "Configurazione modulo Battery"
 
-#: src/modules/battery/e_mod_config.c:79
+#: src/modules/battery/e_mod_config.c:76
 msgid "Basic Settings"
 msgstr "Impostazioni di base"
 
-#: src/modules/battery/e_mod_config.c:80
-#: src/modules/battery/e_mod_config.c:117
+#: src/modules/battery/e_mod_config.c:77
+#: src/modules/battery/e_mod_config.c:111
 msgid "Show alert when battery is low"
 msgstr "Allarme se il livello batteria è basso"
 
-#: src/modules/battery/e_mod_config.c:109
+#: src/modules/battery/e_mod_config.c:103
 msgid "Advanced Settings"
 msgstr "Impostazioni avanzate"
 
-#: src/modules/battery/e_mod_config.c:111
+#: src/modules/battery/e_mod_config.c:105
 msgid "Check battery every:"
 msgstr "Controlla batteria ogni:"
 
-#: src/modules/battery/e_mod_config.c:120
+#: src/modules/battery/e_mod_config.c:114
 msgid "Alert when battery is down to:"
 msgstr "Allarme se l'autonomia della batteria è:"
 
-#: src/modules/battery/e_mod_config.c:123
+#: src/modules/battery/e_mod_config.c:117
 #, c-format
 msgid "%1.0f minutes"
 msgstr "%1.0f minuti"
 
-#: src/modules/battery/e_mod_main.c:133
+#: src/modules/battery/e_mod_main.c:279
+msgid ""
+"Battery Running Low<br>Your battery is running low.<br>You may wish to "
+"switch to an AC source."
+msgstr ""
+"Batteria esaurita<br>La vostra batteria si sta esaurendo.<br>Vogliate "
+"passare ad una alimentazione di rete."
+
+#: src/modules/battery/e_mod_main.c:328
+msgid "NO INFO"
+msgstr "NESSUNA INFORMAZIONE"
+
+#: src/modules/battery/e_mod_main.c:497 src/modules/battery/e_mod_main.c:810
+#: src/modules/battery/e_mod_main.c:964
+msgid "NO BAT"
+msgstr "NESSUNA BATTERIA"
+
+#: src/modules/battery/e_mod_main.c:521 src/modules/battery/e_mod_main.c:989
+msgid "BAD DRIVER"
+msgstr "DRIVER SBAGLIATO"
+
+#: src/modules/battery/e_mod_main.c:545 src/modules/battery/e_mod_main.c:846
+#: src/modules/battery/e_mod_main.c:1013
+msgid "FULL"
+msgstr "CARICA"
+
+#: src/modules/battery/e_mod_main.c:606 src/modules/battery/e_mod_main.c:1074
+msgid "High"
+msgstr "Alta"
+
+#: src/modules/battery/e_mod_main.c:610 src/modules/battery/e_mod_main.c:1078
+msgid "Low"
+msgstr "Bassa"
+
+#: src/modules/battery/e_mod_main.c:614 src/modules/battery/e_mod_main.c:1082
+msgid "Danger"
+msgstr "Pericolo"
+
+#: src/modules/battery/e_mod_main.c:618 src/modules/battery/e_mod_main.c:1086
+#: src/modules/battery/e_mod_main.c:1253
+msgid "Charging"
+msgstr "In carica"
+
+#: src/modules/battery/e_mod_main.c:1417
 msgid "Enlightenment Battery Module"
 msgstr "Modulo Battery di Enlightenment"
 
-#: src/modules/battery/e_mod_main.c:134
+#: src/modules/battery/e_mod_main.c:1418
 msgid ""
 "A basic battery meter that uses either<hilight>ACPI</hilight> or "
 "<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
@@ -3120,46 +3259,3 @@ msgstr ""
 "hilight><br>che <hilight>APM</hilight> su Linux per monitorare lo stato "
 "della batteria<br>e dell'alimentatore AC. Questo funzionerà sotto Linux<br>e "
 "FreeBSD, e la sua precisione dipende dal BIOS o dai<br>driver del kernel."
-
-#: src/modules/battery/e_mod_main.c:556
-msgid ""
-"Battery Running Low<br>Your battery is running low.<br>You may wish to "
-"switch to an AC source."
-msgstr ""
-"Batteria esaurita<br>La vostra batteria si sta esaurendo.<br>Vogliate "
-"passare ad una alimentazione di rete."
-
-#: src/modules/battery/e_mod_main.c:621
-msgid "NO INFO"
-msgstr "NESSUNA INFORMAZIONE"
-
-#: src/modules/battery/e_mod_main.c:796 src/modules/battery/e_mod_main.c:1109
-#: src/modules/battery/e_mod_main.c:1263
-msgid "NO BAT"
-msgstr "NESSUNA BATTERIA"
-
-#: src/modules/battery/e_mod_main.c:820 src/modules/battery/e_mod_main.c:1288
-msgid "BAD DRIVER"
-msgstr "DRIVER SBAGLIATO"
-
-#: src/modules/battery/e_mod_main.c:844 src/modules/battery/e_mod_main.c:1145
-#: src/modules/battery/e_mod_main.c:1312
-msgid "FULL"
-msgstr "CARICA"
-
-#: src/modules/battery/e_mod_main.c:905 src/modules/battery/e_mod_main.c:1373
-msgid "High"
-msgstr "Alta"
-
-#: src/modules/battery/e_mod_main.c:909 src/modules/battery/e_mod_main.c:1377
-msgid "Low"
-msgstr "Bassa"
-
-#: src/modules/battery/e_mod_main.c:913 src/modules/battery/e_mod_main.c:1381
-msgid "Danger"
-msgstr "Pericolo"
-
-#: src/modules/battery/e_mod_main.c:917 src/modules/battery/e_mod_main.c:1385
-#: src/modules/battery/e_mod_main.c:1552
-msgid "Charging"
-msgstr "In carica"
