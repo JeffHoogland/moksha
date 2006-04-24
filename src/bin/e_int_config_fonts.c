@@ -35,7 +35,7 @@ struct _CFText_Class
 };
 
 const E_Text_Class_Pair text_class_predefined_names[ ] = {
-       {  NULL,		    "Window Manager Classes"},
+       {  NULL,		    "Window Manager"},
        { "title_bar",	    "Title Bar"},
        { "menu_item",	    "Menu Item"},
        { "tb_plain",	    "Textblock Plain"},
@@ -53,7 +53,7 @@ const E_Text_Class_Pair text_class_predefined_names[ ] = {
        { "dialog_error",    "Dialog Error"},
        { "exebuf_command",  "Exebuf Command"},
        
-       {  NULL,		    "Widget Classes"},
+       {  NULL,		    "Widget"},
        { "frame",           "Frame"},
        { "label",           "Label"},
        { "button",   	    "Buttons"},
@@ -64,11 +64,11 @@ const E_Text_Class_Pair text_class_predefined_names[ ] = {
        { "ilist_item",	    "List Item"},
        { "ilist_header",    "List Header"},
      
-       {  NULL,		    "EFM Classes"},
-       { "fileman_typebuf", "EFM Typebuf"},
-       { "fileman_icon",    "EFM Icon"},
+       {  NULL,		    "EFM"},
+       { "fileman_typebuf", "Typebuf"},
+       { "fileman_icon",    "Icon"},
        
-       {  NULL,		    "Module Classes"},
+       {  NULL,		    "Module"},
        { "module_small",    "Small"},
        { "module_normal",   "Normal"},
        { "module_large",    "Large"},
