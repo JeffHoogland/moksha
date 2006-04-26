@@ -8,40 +8,40 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: eap edityor doesnt handle spaces in file paths for the .eap
+* BUG: eap editor doesn't handle spaces in file paths for the .eap
 * BUG: ghost windows happen if windows close when on another desktop or if
   windows are very short-lived
-* BUG: k3b has minimization issues when burning cd's (it tries to unminimize
+* BUG: k3b has minimization issues when burning cds (it tries to unminimize
   its window and this doesn't work)
-* BUG: openoffice 2 when ddisplaying a presentation with xinerama (multiple
+* BUG: openoffice 2 when displaying a presentation with xinerama (multiple
   zones) weird things happen (the presentation doesnt display - it seemingly
   attaches to the 2nd zone, not the first), crashes have been reported too.
-* BUG: dnd icon from window that has no .eap defining its ocon to ibar and the
-  ibar icon ends up blank (cant build .eap freom ARGB pixels)
+* BUG: dnd icon from window that has no .eap defining its icon to ibar and the
+  ibar icon ends up blank (can't build .eap from ARGB pixels)
 * BUG: edge flip for desktops still active if turned off when dragging a window
   off the desktop - either a separate config value (recommended) or turn it
   off for window dragging too
 * BUG: desktop settings is missing preview
 * BUG: modules need to destroy config dialogs on shutdown (otherwise - segv!)
 * BUG: IBAR follower speed and autoscroll speed are not pixels / sec (they are
-  recursive multiplication values). should invert gui valus and display as a
+  recursive multiplication values). should invert gui values and display as a
   factor, not px/sec
 * BUG: changing border from shaped to not shaped produces shadow bugs
 * BUG: xdaliclock -transparent doesnt use shaped border (not handling shape
   change later)
-* BUG: if a user selects a border the border should not just shange based on
+* BUG: if a user selects a border the border should not just change based on
   properties. if user selects a border in border selector, then lock border
 * BUG: if you iconify a window and while iconified the window unmaps
-  (rhythmbox does this a lot apparently) e doesnt realise and still thinks
-  its iconified.
-* BUG: dnd to ibar is broken if u did an icon that isn't IN the ibar yet
+  (rhythmbox does this a lot apparently) e doesnt realize and still thinks
+  it's iconified.
+* BUG: dnd to ibar is broken if you did an icon that isn't IN the ibar yet
   (from a window border) to either the very start or end of the ibar.
 * BUG: in general fullscreen needs work, cleaning and testing. dont allow
   desktop switches for the desk a fullscreened window is on, nor allow windows
   to be raised above the fs win etc. ie the app must seem to be entirely fs for
   that zone.
 * BUG: if you have 2 zones and you fill up zone 2 (right) mostly and then run
-  a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the
+  a big xev (xev -g 1280x1024) that won't fit it gets placed offscreen to the
   right of zone 2
 * BUG: Hiding the label of e_widget_slider causes the slider line to disappear
 ]]]
@@ -52,30 +52,30 @@ Some of the things (in very short form) that need to be done to E17...
 -------------------------------------------------------------------------------
 
 * when gadgets expand they should expand in a way to not overlap if possible
-* implement thees maximise/fullscreen modes:
+* implement these maximise/fullscreen modes:
   Which of these should be different modes, and which should be options for
   a mode? i think they all should be distinct actions of their own bound
   to a key, button etc. which one of these the maximize button on a window
   will execute should be a configuration value though :)
   1. fullscreen (no border - resizes to default screen res). window is locked,
-     no mouse bindings work. any focus change out of thsi window will go out of
-     fullscreen  mode
+     no mouse bindings work. any focus change out of this window will go out of
+     fullscreen mode
   2. zoom (changes screen res to match window, or closest res thats bigger
      than the window, centers it - no borders/title etc). window is locked, no
-     mouse bindings work. any focus change out of thsi window will go out of
-     zoom  mode
-  3. maximise (only title is displayed - program fills the rest of the screen)
+     mouse bindings work. any focus change out of this window will go out of
+     zoom mode
+  3. maximize (only title is displayed - program fills the rest of the screen)
      disable resize, shade, move etc. in this mode. iconify is ok.
-  4. maximise2 (maximise window up to the edge of panels, gadgets etc. -
-     disable all resizing and moving just like 1, 2 nd 3 (maybe make border
+  4. maximize2 (maximize window up to the edge of panels, gadgets etc. -
+     disable all resizing and moving just like 1, 2 and 3 (maybe make border
      thinner to indicate this). disable stuff like 3.
   5. expand (just resize window to fill the same space as 4. - but it still can
       be shaded, resized, moved etc.)
   6. fill (expand to the nearest window edge or screen edge)
-  for 5 and 6 u want to able to do this independently for width and height as
+  for 5 and 6 you want to able to do this independently for width and height as
   well as for both at once. for 1. & 2. if window max size (or aspect
   adjusted size) is smaller that screen max size, fill in space in between
-  with black. for 3. we want to fill the inbewteen space with some theme
+  with black. for 3. we want to fill the in bewteen space with some theme
   defined image data
 * actions to make current zone different (warp mouse to there)
 * actions to make the current container different
@@ -90,7 +90,7 @@ Some of the things (in very short form) that need to be done to E17...
 * add a "taskbar" module
 * add cpu load module
 * add a way to access "all" apps app dir
-* dnd from pager to other pagers/ to desktop/ibox etc.
+* dnd from pager to other pagers/to desktop/ibox etc.
 * ibar should enable user to select different dirs to view per bar and allow
   new bars to be created or bars to be deleted
 * ibar need to support label pop-ups
