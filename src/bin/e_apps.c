@@ -2260,7 +2260,7 @@ _e_app_cache_new(E_App_Cache *ac, const char *path, int scan_subdirs)
 	sc->cache = ac;
 	sc->app = a;
 	sc->files = e_app_dir_file_list_get(a);
-	sc->timer = ecore_timer_add(0.001, _e_app_cb_scan_cache_timer, sc);
+	sc->timer = ecore_timer_add(0.500, _e_app_cb_scan_cache_timer, sc);
 	e_object_ref(E_OBJECT(sc->app));
      }
    else
