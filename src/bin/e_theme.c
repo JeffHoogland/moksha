@@ -25,6 +25,7 @@ static Evas_Hash *group_cache = NULL;
 static Evas_List *categories = NULL;
 static Evas_List *transitions = NULL;
 static Evas_List *borders = NULL;
+static Evas_List *shelfs = NULL;
 
 /* externally accessible functions */
 
@@ -51,6 +52,7 @@ e_theme_init(void)
    /* Find transitions */
    transitions = _e_theme_collection_items_find("base/theme/transitions", "transitions");
    borders = _e_theme_collection_items_find("base/theme/borders", "widgets/border");
+   shelfs = _e_theme_collection_items_find("base/theme/shelf", "shelf");
 
    return 1;
 }
@@ -117,6 +119,11 @@ e_theme_shutdown(void)
      {
 	evas_stringshare_del(borders->data);
 	borders = evas_list_remove_list(borders, borders);
+     }
+   while (shelfs)
+     {
+	evas_stringshare_del(shelfs->data);
+	shelfs = evas_list_remove_list(shelfs, shelfs);
      }
    return 1;
 }
@@ -421,6 +428,25 @@ EAPI Evas_List *
 e_theme_border_list(void)
 {
    return borders;
+}
+
+EAPI int
+e_theme_shelf_find(const char *shelf)
+{
+   Evas_List *l;
+
+   for (l = shelfs; l; l = l->next)
+     {
+	if (!strcmp(shelf, l->data))
+	  return 1;
+     }
+   return 0;
+}
+
+EAPI Evas_List *
+e_theme_shelf_list(void)
+{
+   return shelfs;
 }
 
 /* local subsystem functions */

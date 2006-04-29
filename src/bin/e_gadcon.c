@@ -484,9 +484,9 @@ e_gadcon_client_new(E_Gadcon *gc, char *name, char *id, char *style, Evas_Object
      {
 	gcc->o_frame = gc->frame_request.func(gc->frame_request.data, gcc,
 					      style);
+	gcc->style = evas_stringshare_add(style);
 	if (gcc->o_frame)
 	  {
-	     gcc->inset = 1;
 	     edje_object_size_min_calc(gcc->o_frame,
 				       &(gcc->pad.w), &(gcc->pad.h));
 	     gcc->o_box = e_box_add(gcc->gadcon->evas);
@@ -811,15 +811,30 @@ e_gadcon_client_resizable_set(E_Gadcon_Client *gcc, int resizable)
 }
 
 static void
-_e_gadcon_client_cb_menu_inset(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_gadcon_client_cb_menu_style_plain(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Gadcon_Client *gcc;
    E_Gadcon *gc;
    
    gcc = data;
    gc = gcc->gadcon;
-   if (gcc->inset) gcc->inset = 0;
-   else gcc->inset = 1;
+   if (gcc->style) evas_stringshare_del(gcc->style);
+   gcc->style = NULL;
+   _e_gadcon_client_save(gcc);
+   e_gadcon_unpopulate(gc);
+   e_gadcon_populate(gc);
+}
+
+static void
+_e_gadcon_client_cb_menu_style_inset(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Gadcon_Client *gcc;
+   E_Gadcon *gc;
+   
+   gcc = data;
+   gc = gcc->gadcon;
+   if (gcc->style) evas_stringshare_del(gcc->style);
+   gcc->style = evas_stringshare_add("inset");
    _e_gadcon_client_save(gcc);
    e_gadcon_unpopulate(gc);
    e_gadcon_populate(gc);
@@ -870,17 +885,38 @@ _e_gadcon_client_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 EAPI void
 e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int flags)
 {
+   E_Menu *mn;
    E_Menu_Item *mi;
    
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
    
+   mn = e_menu_new();
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Plain"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/plain");
+   e_menu_item_radio_group_set(mi, 1);
+   e_menu_item_radio_set(mi, 1);
+   if (!gcc->style) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_style_plain, gcc);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Inset"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/plain");
+   e_menu_item_radio_group_set(mi, 1);
+   e_menu_item_radio_set(mi, 1);
+   if ((gcc->style) && (!strcmp(gcc->style, "inset")))
+     e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_style_inset, gcc);
+   
+   /***/
+   
    mi = e_menu_item_new(menu);
-   e_menu_item_label_set(mi, _("Inset appearance"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/inset");
-   e_menu_item_check_set(mi, 1);
-   if (gcc->o_frame) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_inset, gcc);
+   e_menu_item_label_set(mi, _("Appearance"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/appearance");
+   e_menu_item_submenu_set(mi, mn);
+   e_object_del(E_OBJECT(mn));
    
    mi = e_menu_item_new(menu);
    e_menu_item_label_set(mi, _("Automatically scroll contents"));
@@ -989,6 +1025,7 @@ _e_gadcon_client_free(E_Gadcon_Client *gcc)
    evas_stringshare_del(gcc->id);
    if (gcc->scroll_timer) ecore_timer_del(gcc->scroll_timer);
    if (gcc->scroll_animator) ecore_animator_del(gcc->scroll_animator);
+   if (gcc->style) evas_stringshare_del(gcc->style);
    free(gcc);
 }
 
@@ -1136,8 +1173,8 @@ _e_gadcon_client_save(E_Gadcon_Client *gcc)
 		       cf_gcc->autoscroll = gcc->autoscroll;
 		       if (cf_gcc->style) evas_stringshare_del(cf_gcc->style);
 		       cf_gcc->style = NULL;
-		       if (gcc->inset)
-			 cf_gcc->style = evas_stringshare_add("inset");
+		       if (gcc->style)
+			 cf_gcc->style = evas_stringshare_add(gcc->style);
 		       cf_gcc->resizable = gcc->resizable;
 		       ok++;
 		       break;
@@ -1165,8 +1202,8 @@ _e_gadcon_client_save(E_Gadcon_Client *gcc)
 	cf_gcc->autoscroll = gcc->autoscroll;
 	if (cf_gcc->style) evas_stringshare_del(cf_gcc->style);
 	cf_gcc->style = NULL;
-	if (gcc->inset)
-	  cf_gcc->style = evas_stringshare_add("inset");
+	if (gcc->style)
+	  cf_gcc->style = evas_stringshare_add(gcc->style);
 	cf_gcc->resizable = gcc->resizable;
 	cf_gc->clients = evas_list_append(cf_gc->clients, cf_gcc);
 	ok++;

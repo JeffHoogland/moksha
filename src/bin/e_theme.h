@@ -24,6 +24,8 @@ EAPI int        e_theme_transition_find(const char *transition);
 EAPI Evas_List *e_theme_transition_list(void);
 EAPI int        e_theme_border_find(const char *border);
 EAPI Evas_List *e_theme_border_list(void);
+EAPI int        e_theme_shelf_find(const char *shelf);
+EAPI Evas_List *e_theme_shelf_list(void);
     
 #endif
 #endif

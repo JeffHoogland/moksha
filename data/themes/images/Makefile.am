@@ -421,4 +421,6 @@ e17_border3b.png \
 e17_border5b.png \
 e17_border7b.png \
 e17_shelf_bg_h.png \
-e17_shelf_bg_v.png
+e17_shelf_bg_v.png \
+e17_shelf_bg2_h.png \
+e17_shelf_bg2_v.png

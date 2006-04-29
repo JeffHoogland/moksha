@@ -105,14 +105,14 @@ struct _E_Gadcon_Client
    struct {
       Evas_Coord          w, h;
    } pad, min, aspect;
-   unsigned char          inset : 1;
-   unsigned char          autoscroll : 1;
-   unsigned char          resizable : 1;
    Ecore_Timer           *scroll_timer;
    Ecore_Animator        *scroll_animator;
    double                 scroll_pos;
    double                 scroll_wanted;
    E_Menu                *menu;
+   char                  *style;
+   unsigned char          autoscroll : 1;
+   unsigned char          resizable : 1;
    
    unsigned char          moving : 1;
    unsigned char          resizing : 1;

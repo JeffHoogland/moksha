@@ -4,7 +4,7 @@
 #include "e.h"
 
 /* PROTOTYPES - same all the time */
-//typedef struct _CFBorder CFBorder;
+typedef struct _CFStyle CFStyle;
 
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -22,13 +22,14 @@ struct _E_Config_Dialog_Data
    int fit_size;
    int size;
    int layering;
+   Evas_List *cfslist;
 };
 
-//struct _CFBorder
-//{
-//   E_Config_Dialog_Data     *cfdata;
-//   const char *bordername;
-//};
+struct _CFStyle
+{
+   E_Config_Dialog_Data *cfdata;
+   const char *style;
+};
 
 /* a nice easy setup function that does the dirty work */
 EAPI void
@@ -101,6 +102,11 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    /* Free the cfdata */
    cfdata->es->config_dialog = NULL;
    if (cfdata->style) free(cfdata->style);
+   while (cfdata->cfslist)
+     {
+	E_FREE(cfdata->cfslist->data);
+	cfdata->cfslist = evas_list_remove_list(cfdata->cfslist, cfdata->cfslist);
+     }
    free(cfdata);
 }
 
@@ -138,7 +144,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    zone = cfdata->es->zone;
    id = cfdata->es->id;
    cfdata->es->config_dialog = NULL;
-   e_object_del(cfdata->es);
+   e_object_del(E_OBJECT(cfdata->es));
    cfdata->es = e_shelf_zone_new(zone, cfdata->escfg->name, 
 				 cfdata->escfg->style,
 				 cfdata->escfg->popup,
@@ -160,12 +166,17 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for a basic dialog */
-   Evas_Object *o, *of, *ob;
+   Evas_Object *o, *o2, *of, *ob, *oi, *oj;
    E_Radio_Group *rg;
+   Evas_Coord wmw, wmh;
+   Evas_List *styles, *l;
    int sel, n;
-
+   CFStyle *cfs;
+   
    /* FIXME: this is just raw config now - it needs UI improvments */
-   o = e_widget_list_add(evas, 0, 0);
+   o = e_widget_list_add(evas, 1, 1);
+     
+   o2 = e_widget_list_add(evas, 0, 0);
    
    of = e_widget_framelist_add(evas, _("Stacking"), 0);
    rg = e_widget_radio_group_new(&(cfdata->layering));
@@ -175,7 +186,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Above Everything"), 2, rg);
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o2, of, 1, 1, 0.5);
    
    of = e_widget_framelist_add(evas, _("Size"), 0);
    ob = e_widget_check_add(evas, _("Shrink length fit contents"), &(cfdata->fit_along));
@@ -186,7 +197,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%3.0f pixels"), 4, 200, 4, 0, NULL, &(cfdata->size), 200);
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o2, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Layout"), 0);
    rg = e_widget_radio_group_new(&(cfdata->orient));
@@ -214,7 +225,41 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Right Bottom"), E_GADCON_ORIENT_CORNER_RB, rg);
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o2, of, 1, 1, 0.5);
+   
+   e_widget_list_object_append(o, o2, 1, 1, 0.5);
+   
+   oi = e_widget_ilist_add(evas, 128, 20, &(cfdata->style));
+   
+   sel = 0;
+   styles = e_theme_shelf_list();
+
+   for (n = 0, l = styles; l; l = l->next, n++)
+     {
+	char buf[4096];
+	
+	cfs = E_NEW(CFStyle, 1);
+	cfs->cfdata = cfdata;
+	cfs->style = "default";
+	cfdata->cfslist = evas_list_append(cfdata->cfslist, cfs);
+	ob = e_livethumb_add(evas);
+	e_livethumb_vsize_set(ob, 256, 40);
+	oj = edje_object_add(e_livethumb_evas_get(ob));
+	snprintf(buf, sizeof(buf), "shelf/%s/base",
+		 (char *)l->data);
+	e_theme_edje_object_set(oj, "base/theme/shelf", buf);
+	e_livethumb_thumb_set(ob, oj);
+	e_widget_ilist_append(oi, ob, (char *)l->data, NULL, NULL, l->data);
+	if (!strcmp(cfdata->es->style, (char *)l->data))
+	  sel = n;
+     }
+   e_widget_min_size_get(oi, &wmw, &wmh);
+   e_widget_min_size_set(oi, wmw, 250);
+   
+   e_widget_ilist_go(oi);
+   e_widget_ilist_selected_set(oi, sel);
+   
+   e_widget_list_object_append(o, oi, 1, 1, 0.5);
    
    return o;
 }
