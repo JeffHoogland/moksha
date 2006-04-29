@@ -205,6 +205,7 @@ e_popup_idler_before(void)
 		       int i;
 		       
 		       orects = pop->shape_rects;
+		       changed = 0;
 		       for (i = 0; i < num; i++)
 			 {
 			    if (rects[i].x < 0)
@@ -231,7 +232,6 @@ e_popup_idler_before(void)
 				 break;
 			      }
 			 }
-//		       changed = 0;
 		    }
 		  if (changed)
 		    {
