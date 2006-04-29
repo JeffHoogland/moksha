@@ -573,6 +573,7 @@ _cpufreq_status_check_current(Status *s)
 #else
    s->active = 0;
    
+   _cpufreq_status_check_available(s);
    f = fopen("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq", "r");
    if (f)
      {
