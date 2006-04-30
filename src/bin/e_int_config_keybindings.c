@@ -12,7 +12,7 @@
 #define BINDING_LIST_ICON_W 16
 #define BINDING_LIST_ICON_H 16
 
-#define BTN_ASSIGN_KEYBINDING_TEXT _("Assign Key Binding...")
+#define BTN_ASSIGN_KEYBINDING_TEXT _("Assign Key Binding…")
 
 #define TEXT_ACTION _("Action")
 #define TEXT_NONE_ACTION_KEY _("<None>")
@@ -98,13 +98,13 @@ const ACTION actions_predefined_names[ ] = {
 					       EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
   {"Flip Desktop By", "desk_flip_by", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
   {"Flip Desktop To", "desk_flip_to", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
-/* These fuck with a lot of bindings like firefox, irssi, bitchx etc...
+/* These fuck with a lot of bindings like firefox, irssi, bitchx etc…
   {"Switch To Left Desktop", "desk_linear_flip_by", "-1", _DEFAULT_ACTION,
 						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
   {"Switch To Right Desktop", "desk_linear_flip_by", "1", _DEFAULT_ACTION,
 						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
 */ 
-  {"Flip Desktop Linearly...", "desk_linear_flip_by", NULL, _NONDEFAULT_ACTION,
+  {"Flip Desktop Linearly…", "desk_linear_flip_by", NULL, _NONDEFAULT_ACTION,
 							    EDIT_RESTRICT_ACTION },
   {"Switch To Desktop 0", "desk_linear_flip_to", "0", _DEFAULT_ACTION,
 						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
@@ -130,7 +130,7 @@ const ACTION actions_predefined_names[ ] = {
 						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
   {"Switch To Desktop 11", "desk_linear_flip_to", "11", _DEFAULT_ACTION,
 						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Switch To Desktop...", "desk_linear_flip_to", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
+  {"Switch To Desktop…", "desk_linear_flip_to", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
 
   {"Run Command", "exebuf", NULL, _DEFAULT_ACTION, EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
   {"Exit Enlightenment", "exit", NULL,
@@ -144,7 +144,7 @@ const ACTION actions_predefined_names[ ] = {
 					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
   {"Show Clients Menu", "menu_show", "clients", _DEFAULT_ACTION,
 					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Show Menu...", "menu_show", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
+  {"Show Menu…", "menu_show", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
 
   {"Desktop Lock", "desk_lock", NULL, _DEFAULT_ACTION, 
 				      EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
@@ -161,7 +161,7 @@ const ACTION actions_predefined_names[ ] = {
 					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
   {"Window Move To Previous Desktop", "window_desk_move_by", "-1 0", _DEFAULT_ACTION,
 					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Move By Desktop...", "window_desk_move_by", NULL, _DEFAULT_ACTION,
+  {"Window Move By Desktop…", "window_desk_move_by", NULL, _DEFAULT_ACTION,
 							     EDIT_RESTRICT_ACTION },
   {"Window Move To Desktop 0", "window_desk_move_to", "0", _DEFAULT_ACTION,
 					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
@@ -187,7 +187,7 @@ const ACTION actions_predefined_names[ ] = {
 					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
   {"Window Move To Desktop 11", "window_desk_move_to", "11", _DEFAULT_ACTION,
 					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Move To Desktop...", "window_desk_move_to", NULL, _NONDEFAULT_ACTION,
+  {"Window Move To Desktop…", "window_desk_move_to", NULL, _NONDEFAULT_ACTION,
 							  EDIT_RESTRICT_ACTION },
   {"Window Maximize", "window_maximized_toggle", NULL, _DEFAULT_ACTION, EDIT_RESTRICT_ACTION },
   {"Window Maximize Vertically", "window_maximized_toggle", "vertical", _DEFAULT_ACTION,
@@ -218,15 +218,15 @@ const ACTION actions_predefined_names[ ] = {
   {"Window Menu", "window_menu", NULL, _DEFAULT_ACTION,
 					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
 
-  {"Window Move...", "window_move", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
-  {"Window Move To...", "window_move_to", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
-  {"Window Move By...", "window_move_by", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
-  {"Window Resize To...", "window_resize", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
-  {"Window Resize By...", "window_resize_by", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
+  {"Window Move…", "window_move", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
+  {"Window Move To…", "window_move_to", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
+  {"Window Move By…", "window_move_by", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
+  {"Window Resize To…", "window_resize", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
+  {"Window Resize By…", "window_resize_by", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
   {"Window Drag Icon", "window_drag_icon", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
 
   {"Application", "app", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
-  {"User Defined Actions...", "exec", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
+  {"User Defined Actions…", "exec", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
 //  {"Unknown Action", NULL, NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_NONE },
   {NULL, NULL, NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_NONE }
 };

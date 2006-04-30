@@ -45,7 +45,7 @@ static void _e_desklock_cb_lb_show_on_specific_screen(void *data, Evas_Object *o
 #ifdef HAVE_PAM
 static void _e_desklock_cb_syswide_auth_method(void *data, Evas_Object *obj,
 					       const char *emission, const char *source);
-static void _e_desklock_cb_personilized_auth_method(void *data, Evas_Object *obj,
+static void _e_desklock_cb_personalized_auth_method(void *data, Evas_Object *obj,
 						    const char *emission, const char *source);
 #endif
 
@@ -275,7 +275,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
      rwd = e_widget_data_get(oc);
      edje_object_signal_callback_add(rwd->o_radio, "toggle_on", "",
-				     _e_desklock_cb_personilized_auth_method, cfdata);
+				     _e_desklock_cb_personalized_auth_method, cfdata);
    }
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 #endif
@@ -476,7 +476,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
         wd = e_widget_data_get(oc);
         edje_object_signal_callback_add(wd->o_radio, "toggle_on", "",
-       				 _e_desklock_cb_personilized_auth_method, cfdata);
+       				 _e_desklock_cb_personalized_auth_method, cfdata);
       }
       e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
 #endif
@@ -893,7 +893,7 @@ _e_desklock_cb_syswide_auth_method(void *data, Evas_Object *obj, const char *emi
 }
 
 static void
-_e_desklock_cb_personilized_auth_method(void *data, Evas_Object *obj, const char *emission,
+_e_desklock_cb_personalized_auth_method(void *data, Evas_Object *obj, const char *emission,
 					const char *source)
 {
   E_Config_Dialog_Data *cfdata;

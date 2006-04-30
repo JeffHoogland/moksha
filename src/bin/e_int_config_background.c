@@ -276,6 +276,9 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
    Evas_List *bg_dirs, *bg;
    Ecore_Evas *eebuf;
    Evas *evasbuf;
+   E_Manager *man;
+   Ecore_X_Screen_Size size;
+   
    const char *f;
    char *c;
    int selnum = -1;
@@ -310,7 +313,9 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
 	i++;
      }
    
-   im = e_widget_preview_add(cfd->dia->win->evas, 320, 240);
+   man = e_manager_current_get();
+   size = ecore_x_randr_current_screen_size_get(man->root);
+   im = e_widget_preview_add(cfd->dia->win->evas, 320, 320 * size.height / size.width);
    e_widget_preview_edje_set(im, f, "desktop/background");
    evas_object_del(bg_obj);
 //   im = e_widget_preview_add_from_object(cfd->dia->win->evas, bg_obj, 320, 240);

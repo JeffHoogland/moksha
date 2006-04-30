@@ -441,45 +441,92 @@ _e_smart_event_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    
    sd = data;
    ev = event_info;
-   if (!strcmp(ev->keyname, "Up"))
+   if ((!strcmp(ev->keyname, "Up")) ||
+       (!strcmp(ev->keyname, "KP_Up")))
      {
 	int n, ns;
 	E_Smart_Item *si;
 	   
 	ns = e_ilist_selected_get(sd->smart_obj);
+	n = ns;
 	do
 	  {
-	     n = e_ilist_selected_get(sd->smart_obj);
 	     if (n == 0)
 	       {
-		  e_ilist_selected_set(sd->smart_obj, ns);
+		  n = ns;
 		  break;
 	       }
-	     e_ilist_selected_set(sd->smart_obj, n - 1);
-	     si = evas_list_nth(sd->items, sd->selected);
+	     -- n;
+	     si = evas_list_nth(sd->items, n);
 	  }
 	while ((si) && (si->header));
+	if (n != ns) e_ilist_selected_set(sd->smart_obj, n);
      }
-   else if (!strcmp(ev->keyname, "Down"))
+   else if ((!strcmp(ev->keyname, "Down")) ||
+	    (!strcmp(ev->keyname, "KP_Down")))
      {
 	int n, ns;
         E_Smart_Item *si;
 	
 	ns = e_ilist_selected_get(sd->smart_obj);
+	n = ns;
 	do
 	  {
-	     n = e_ilist_selected_get(sd->smart_obj);
 	     if (n == (evas_list_count(sd->items) - 1))
 	       {
-		  e_ilist_selected_set(sd->smart_obj, ns);
+		  n = ns;
 		  break;
 	       }
-	     e_ilist_selected_set(sd->smart_obj, n + 1);
-	     si = evas_list_nth(sd->items, sd->selected);
+	     ++ n;
+	     si = evas_list_nth(sd->items, n);
 	  }
 	while ((si) && (si->header));
+	if (n != ns) e_ilist_selected_set(sd->smart_obj, n);
+     }
+   else if ((!strcmp(ev->keyname, "Home")) ||
+	    (!strcmp(ev->keyname, "KP_Home")))
+     {
+	int n, ns;
+	E_Smart_Item *si;
+	
+	ns = e_ilist_selected_get(sd->smart_obj);
+	n = -1;
+	do
+	  {
+	     if (n == (evas_list_count(sd->items) - 1))
+	       {
+		  n = ns;
+		  break;
+	       }
+	     ++ n;
+	     si = evas_list_nth(sd->items, n);
+	  }
+	while ((si) && (si->header));
+	if (n != ns) e_ilist_selected_set(sd->smart_obj, n);
+     }
+   else if ((!strcmp(ev->keyname, "End")) ||
+	    (!strcmp(ev->keyname, "KP_End")))
+     {
+	int n, ns;
+	E_Smart_Item *si;
+	
+	ns = e_ilist_selected_get(sd->smart_obj);
+	n = evas_list_count(sd->items);
+	do
+	  {
+	     if (n == 0)
+	       {
+		  n = ns;
+		  break;
+	       }
+	     -- n;
+	     si = evas_list_nth(sd->items, n);
+	  }
+	while ((si) && (si->header));
+	if (n != ns) e_ilist_selected_set(sd->smart_obj, n);
      }
    else if ((!strcmp(ev->keyname, "Return")) ||
+	    (!strcmp(ev->keyname, "KP_Enter")) ||
 	    (!strcmp(ev->keyname, "space")))
      {
 	E_Smart_Item *si;

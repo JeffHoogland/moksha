@@ -375,7 +375,9 @@ _e_smart_event_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    sd = data;
    ev = event_info;
    if ((!strcmp(ev->keyname, "Up")) ||
-       (!strcmp(ev->keyname, "Left")))
+       (!strcmp(ev->keyname, "KP_Up")) ||
+       (!strcmp(ev->keyname, "Left")) ||
+       (!strcmp(ev->keyname, "KP_Left")))
      {
 	if (sd->step_count > 0)
 	  {
@@ -388,7 +390,9 @@ _e_smart_event_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	  edje_object_part_drag_step(sd->edje_obj, "slider", -sd->step_size, -sd->step_size);
      }
    else if ((!strcmp(ev->keyname, "Down")) ||
-	    (!strcmp(ev->keyname, "Right")))
+	    (!strcmp(ev->keyname, "KP_Down")) ||
+	    (!strcmp(ev->keyname, "Right")) ||
+	    (!strcmp(ev->keyname, "KP_Right")))
      {
 	if (sd->step_count > 0)
 	  {
@@ -399,6 +403,16 @@ _e_smart_event_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	  }
 	else
 	  edje_object_part_drag_step(sd->edje_obj, "slider", sd->step_size, sd->step_size);
+     }
+   else if ((!strcmp(ev->keyname, "Home")) ||
+	    (!strcmp(ev->keyname, "KP_Home")))
+     {
+	edje_object_part_drag_value_set(sd->edje_obj, "slider", 0., 0.);
+     }
+   else if ((!strcmp(ev->keyname, "End")) ||
+	    (!strcmp(ev->keyname, "KP_End")))
+     {
+	edje_object_part_drag_value_set(sd->edje_obj, "slider", 1., 1.);
      }
 }
 

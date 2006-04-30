@@ -178,22 +178,22 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    of = e_widget_framelist_add(evas, _("Stacking"), 0);
    rg = e_widget_radio_group_new(&(cfdata->layering));
-   ob = e_widget_radio_add(evas, _("Below Everything"), 0, rg);
+   ob = e_widget_radio_add(evas, _("Above Everything"), 2, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Below Windows"), 1, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Above Everything"), 2, rg);
+   ob = e_widget_radio_add(evas, _("Below Everything"), 0, rg);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o2, of, 1, 1, 0.5);
    
    of = e_widget_framelist_add(evas, _("Size"), 0);
    ob = e_widget_check_add(evas, _("Shrink length fit contents"), &(cfdata->fit_along));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Expand width to fit contents"), &(cfdata->fit_size));
-   e_widget_framelist_object_append(of, ob);
+//   ob = e_widget_check_add(evas, _("Expand width to fit contents"), &(cfdata->fit_size));
+//   e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Shelf Size"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%3.0f pixels"), 4, 200, 4, 0, NULL, &(cfdata->size), 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%3.0f pixels"), 4, 120, 4, 0, NULL, &(cfdata->size), 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o2, of, 1, 1, 0.5);
 

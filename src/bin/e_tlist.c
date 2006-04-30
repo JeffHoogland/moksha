@@ -293,6 +293,22 @@ e_tlist_count(Evas_Object * obj)
    return evas_list_count(sd->items);
 }
 
+EAPI void
+e_tlist_clear(Evas_Object *obj) 
+{
+   INTERNAL_ENTRY;
+   while (sd->items)
+     {
+	E_Smart_Item *si;
+
+	si = sd->items->data;
+	sd->items = evas_list_remove_list(sd->items, sd->items);
+	evas_object_del(si->base_obj);
+	free(si);
+     }
+   sd->selected = -1;
+}
+
 /* local subsystem functions */
 static void
 _e_tlist_append(Evas_Object * obj, char *label,

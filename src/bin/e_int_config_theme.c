@@ -132,6 +132,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    Ecore_Evas *eebuf;
    Evas *evasbuf;
    Evas_List *l, *paths;
+   E_Manager *man;
+   Ecore_X_Screen_Size size;
    
    theme = edje_object_add(evas);
    
@@ -145,6 +147,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    eebuf = ecore_evas_buffer_new(1, 1);
    evasbuf = ecore_evas_get(eebuf);
    o2 = edje_object_add(evasbuf);
+
+   man = e_manager_current_get();
+   size = ecore_x_randr_current_screen_size_get(man->root);
 
    paths = e_path_dir_list_get(path_themes);
    for (l = paths; l; l = l->next)
@@ -217,7 +222,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 		  if (!(strcmp(themefile, cfdata->current_theme)))
 		    {
 		       selnum = i;
-		       im = e_widget_preview_add(evas, 320, 240);
+		       im = e_widget_preview_add(evas, 320, 320 * size.height / size.width);
 		       e_widget_preview_edje_set(im, fulltheme, "desktop/background");
 		       // im = e_widget_image_add_from_object(evas, theme, 320, 240);
 		       // e_widget_image_object_set(im, e_thumb_evas_object_get(fulltheme, evas, 320, 240, 1));
@@ -239,7 +244,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    if (im == NULL)
      {
 	snprintf(fulltheme, sizeof(fulltheme), PACKAGE_DATA_DIR"/data/themes/default.edj");
-	im = e_widget_preview_add(evas, 320, 240);
+	im = e_widget_preview_add(evas, 320, 320 * size.height / size.width);
 	e_widget_preview_edje_set(im, fulltheme, "desktop/background");
 //	theme = e_thumb_generate_begin(fulltheme, 320, 240, evas, &theme, NULL, NULL);
 //	im = e_widget_image_add_from_object(evas, theme, 320, 240);

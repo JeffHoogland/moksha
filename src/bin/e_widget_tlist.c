@@ -194,6 +194,15 @@ _e_widget_tlist_append(Evas_Object * obj, char *label,
       evas_object_resize(wd->o_tlist, vw, mh);
 }
 
+EAPI void
+e_widget_tlist_clear(Evas_Object *obj) 
+{
+   E_Widget_Data *wd;
+
+   wd = e_widget_data_get(obj);
+   e_tlist_clear(wd->o_tlist);
+}
+
 static void
 _e_wid_del_hook(Evas_Object * obj)
 {

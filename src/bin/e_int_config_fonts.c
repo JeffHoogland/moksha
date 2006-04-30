@@ -381,7 +381,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    /* Create Hinting Widgets */
-   of = e_widget_framelist_add(evas, _("Hinting"), 0);
+   of = e_widget_framelist_add(evas, _("Hinting"), 1);
    e_widget_framelist_content_align_set(of, 0.5, 0.5);
    rg = e_widget_radio_group_new(&(cfdata->hinting));
    

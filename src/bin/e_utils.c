@@ -205,7 +205,7 @@ e_util_head_exec(int head, const char *cmd)
    p2 = strrchr(penv_display, '.');
    if ((p1) && (p2) && (p2 > p1)) /* "blah:x.y" */
      {
-	/* yes it could overflow... but who will voerflow DISPLAY eh? why? to
+	/* yes it could overflow... but who will overflow DISPLAY eh? why? to
 	 * "exploit" your own applications running as you?
 	 */
 	strcpy(buf, penv_display);
