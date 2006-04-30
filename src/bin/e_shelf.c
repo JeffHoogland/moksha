@@ -128,7 +128,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
      }
    if (id < 0)
      {
-	es->id = shelf_id;
+	es->id = evas_list_count(shelves);
 	shelf_id++;
      }
    else

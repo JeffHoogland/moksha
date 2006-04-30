@@ -4,8 +4,6 @@
 #include "e.h"
 
 /* PROTOTYPES - same all the time */
-typedef struct _CFStyle CFStyle;
-
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -22,13 +20,6 @@ struct _E_Config_Dialog_Data
    int fit_size;
    int size;
    int layering;
-   Evas_List *cfslist;
-};
-
-struct _CFStyle
-{
-   E_Config_Dialog_Data *cfdata;
-   const char *style;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -102,11 +93,6 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    /* Free the cfdata */
    cfdata->es->config_dialog = NULL;
    if (cfdata->style) free(cfdata->style);
-   while (cfdata->cfslist)
-     {
-	E_FREE(cfdata->cfslist->data);
-	cfdata->cfslist = evas_list_remove_list(cfdata->cfslist, cfdata->cfslist);
-     }
    free(cfdata);
 }
 
@@ -169,7 +155,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    Evas_Coord wmw, wmh;
    Evas_List *styles, *l;
    int sel, n;
-   CFStyle *cfs;
    
    /* FIXME: this is just raw config now - it needs UI improvments */
    o = e_widget_list_add(evas, 0, 1);
@@ -236,15 +221,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      {
 	char buf[4096];
 	
-	cfs = E_NEW(CFStyle, 1);
-	cfs->cfdata = cfdata;
-	cfs->style = "default";
-	cfdata->cfslist = evas_list_append(cfdata->cfslist, cfs);
 	ob = e_livethumb_add(evas);
 	e_livethumb_vsize_set(ob, 256, 40);
 	oj = edje_object_add(e_livethumb_evas_get(ob));
-	snprintf(buf, sizeof(buf), "shelf/%s/base",
-		 (char *)l->data);
+	snprintf(buf, sizeof(buf), "shelf/%s/base", (char *)l->data);
 	e_theme_edje_object_set(oj, "base/theme/shelf", buf);
 	e_livethumb_thumb_set(ob, oj);
 	e_widget_ilist_append(oi, ob, (char *)l->data, NULL, NULL, l->data);

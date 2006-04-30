@@ -4,7 +4,6 @@
 #include "e.h"
 
 /* PROTOTYPES - same all the time */
-typedef struct _CFBorder CFBorder;
 
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -17,13 +16,6 @@ struct _E_Config_Dialog_Data
    E_Border *border;
    char *bordername;
    int remember_border;
-   Evas_List *cfblist;
-};
-
-struct _CFBorder
-{
-   E_Config_Dialog_Data     *cfdata;
-   const char *bordername;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -81,11 +73,6 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    /* Free the cfdata */
    cfdata->border->border_border_dialog = NULL;
    E_FREE(cfdata->bordername);
-   while (cfdata->cfblist)
-     {
-	E_FREE(cfdata->cfblist->data);
-	cfdata->cfblist = evas_list_remove_list(cfdata->cfblist, cfdata->cfblist);
-     }
    free(cfdata);
 }
 
@@ -146,7 +133,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    Evas_Coord wmw, wmh;
    Evas_List *borders, *l;
    int sel, n;
-   CFBorder *cfb;
    
    o = e_widget_list_add(evas, 0, 0);
    
@@ -155,10 +141,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    sel = 0;
    borders = e_theme_border_list();
 
-   cfb = E_NEW(CFBorder, 1);
-   cfb->cfdata = cfdata;
-   cfb->bordername = "borderless";
-   cfdata->cfblist = evas_list_append(cfdata->cfblist, cfb);
    orect = evas_object_rectangle_add(evas);
    evas_object_color_set(orect, 0, 0, 0, 128);
    e_widget_ilist_append(oi, orect, "borderless", NULL, NULL, "borderless");
@@ -167,15 +149,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      {
 	char buf[4096];
 	
-	cfb = E_NEW(CFBorder, 1);
-	cfb->cfdata = cfdata;
-	cfb->bordername = l->data;
-	cfdata->cfblist = evas_list_append(cfdata->cfblist, cfb);
 	ob = e_livethumb_add(evas);
 	e_livethumb_vsize_set(ob, 160, 96);
 	oj = edje_object_add(e_livethumb_evas_get(ob));
-        snprintf(buf, sizeof(buf), "widgets/border/%s/border",
-		 (char *)l->data);
+        snprintf(buf, sizeof(buf), "widgets/border/%s/border", (char *)l->data);
 	e_theme_edje_object_set(oj, "base/theme/borders", buf);
 	e_livethumb_thumb_set(ob, oj);
 	orect = evas_object_rectangle_add(e_livethumb_evas_get(ob));
