@@ -96,7 +96,6 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   e_border_button_bindings_ungrab_all();
    e_config->winlist_list_show_iconified = cfdata->list_show_iconified;
    e_config->winlist_list_show_other_desk_windows = cfdata->list_show_other_desk_windows;
    e_config->winlist_list_show_other_screen_windows = cfdata->list_show_other_screen_windows;
@@ -107,7 +106,6 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->winlist_scroll_animate = cfdata->scroll_animate;
    e_config->winlist_list_focus_while_selecting = cfdata->list_focus_while_selecting;
    e_config->winlist_list_raise_while_selecting = cfdata->list_raise_while_selecting;
-   e_border_button_bindings_grab_all();
    e_config_save_queue();
    
    return 1;
@@ -158,7 +156,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   e_border_button_bindings_ungrab_all();
    e_config->winlist_list_show_iconified = cfdata->list_show_iconified;
    e_config->winlist_list_show_other_desk_windows = cfdata->list_show_other_desk_windows;
    e_config->winlist_list_show_other_screen_windows = cfdata->list_show_other_screen_windows;
@@ -177,7 +174,6 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->winlist_pos_min_h = cfdata->pos_min_h;
    e_config->winlist_pos_max_w = cfdata->pos_max_w;
    e_config->winlist_pos_max_h = cfdata->pos_max_h;
-   e_border_button_bindings_grab_all();
    e_config_save_queue();
 
    return 1;

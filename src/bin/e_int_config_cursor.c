@@ -64,9 +64,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    
    if (e_config->use_e_cursor != cfdata->use_e_cursor) changed = 1;
    
-   e_border_button_bindings_ungrab_all();
    e_config->use_e_cursor = cfdata->use_e_cursor;
-   e_border_button_bindings_grab_all();
    e_config_save_queue();
    
    if (changed) 
@@ -112,13 +110,11 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (e_config->use_e_cursor != cfdata->use_e_cursor) changed = 1;
    if (e_config->cursor_size != cfdata->cursor_size) changed = 1;
    
-   e_border_button_bindings_ungrab_all();
    e_config->use_e_cursor = cfdata->use_e_cursor;
    if (cfdata->cursor_size <= 0) cfdata->cursor_size = 1;
    e_config->cursor_size = cfdata->cursor_size;
-   
-   e_border_button_bindings_grab_all();
    e_config_save_queue();
+   
    if (changed) 
      {
 	Evas_List *l;

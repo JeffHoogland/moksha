@@ -81,11 +81,9 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   e_border_button_bindings_ungrab_all();
    e_config->exebuf_max_exe_list = cfdata->max_exe_list;
    e_config->exebuf_max_eap_list = cfdata->max_eap_list;
    e_config->exebuf_scroll_animate = cfdata->scroll_animate;
-   e_border_button_bindings_grab_all();
    e_config_save_queue();
    return 1;
 }
@@ -118,7 +116,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   e_border_button_bindings_ungrab_all();
    e_config->exebuf_max_exe_list = cfdata->max_exe_list;
    e_config->exebuf_max_eap_list = cfdata->max_eap_list;   
    e_config->exebuf_scroll_animate = cfdata->scroll_animate;   
@@ -129,7 +126,6 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->exebuf_pos_min_h = cfdata->pos_min_h;
    e_config->exebuf_pos_max_w = cfdata->pos_max_w;
    e_config->exebuf_pos_max_h = cfdata->pos_max_h;
-   e_border_button_bindings_grab_all();
    e_config_save_queue();
 
    return 1;

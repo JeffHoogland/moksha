@@ -122,8 +122,6 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    cfdata->escfg->fit_size = cfdata->fit_size;
    cfdata->escfg->size = cfdata->size;
    
-   printf("%i %i %i\n", cfdata->fit_along, cfdata->fit_size, cfdata->size);
-   
    if (cfdata->escfg->style) evas_stringshare_del(cfdata->escfg->style);
    cfdata->escfg->style = evas_stringshare_add(cfdata->style);
    if (cfdata->layering == 0)
@@ -174,7 +172,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    CFStyle *cfs;
    
    /* FIXME: this is just raw config now - it needs UI improvments */
-   o = e_widget_list_add(evas, 1, 1);
+   o = e_widget_list_add(evas, 0, 1);
      
    o2 = e_widget_list_add(evas, 0, 0);
    

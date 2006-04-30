@@ -68,10 +68,8 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {   
-   e_border_button_bindings_ungrab_all();
    if (cfdata->framerate <= 0.0) cfdata->framerate = 1.0;
    e_config->framerate = cfdata->framerate;
-   e_border_button_bindings_grab_all();
    e_config_save_queue();
    return 1;
 }
@@ -97,7 +95,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   e_border_button_bindings_ungrab_all();
    if (cfdata->framerate <= 0.0) cfdata->framerate = 1.0;
    e_config->framerate = cfdata->framerate;
    e_config->cache_flush_interval = cfdata->cache_flush_interval;   
@@ -105,7 +102,6 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->image_cache = (cfdata->image_cache * 1024);
    e_config->edje_cache = cfdata->edje_cache;
    e_config->edje_collection_cache = cfdata->edje_collection_cache;
-   e_border_button_bindings_grab_all();
    e_config_save_queue();
    return 1;
 }

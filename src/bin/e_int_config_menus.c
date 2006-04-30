@@ -72,11 +72,9 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int 
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   e_border_button_bindings_ungrab_all();
    e_config->menu_eap_name_show = cfdata->menu_eap_name_show;
    e_config->menu_eap_generic_show = cfdata->menu_eap_generic_show;
    e_config->menu_eap_comment_show = cfdata->menu_eap_comment_show;
-   e_border_button_bindings_grab_all();
    e_config_save_queue();
    return 1;
 }
@@ -101,7 +99,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 static int 
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   e_border_button_bindings_ungrab_all();
    e_config->menu_eap_name_show = cfdata->menu_eap_name_show;
    e_config->menu_eap_generic_show = cfdata->menu_eap_generic_show;
    e_config->menu_eap_comment_show = cfdata->menu_eap_comment_show;
@@ -119,7 +116,6 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->menus_click_drag_timeout = cfdata->menus_click_drag_timeout;
    e_config->menu_autoscroll_margin = cfdata->menu_autoscroll_margin;
    e_config->menu_autoscroll_cursor_margin = cfdata->menu_autoscroll_cursor_margin;
-   e_border_button_bindings_grab_all();
    e_config_save_queue();
    return 1;
 }
