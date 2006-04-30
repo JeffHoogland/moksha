@@ -8,8 +8,6 @@
  * - use e_path to search for available fonts
  */
 
-static Evas_List *_e_font_font_dir_available_get (Evas_List * available_fonts, const char *font_dir);
-
 static char _fn_buf[1024];
 
 EAPI int
@@ -91,34 +89,49 @@ e_font_apply(void)
 EAPI Evas_List *
 e_font_available_list(void)
 {
-   Evas_List *dir_list;
-   Evas_List *next;
-   Evas_List *available;   
-
-   dir_list = e_path_dir_list_get(path_fonts);
-   available = NULL;
-   for ( next = dir_list; next; next = next->next)
-     {
-        E_Path_Dir *epd = next->data;
-	available = _e_font_font_dir_available_get(available, epd->dir);
-     }
+   Evas_List *evas_fonts;
+   Evas_List *e_fonts;
+   Evas_List *l;
+   E_Manager *man;
+   E_Container *con;
    
-   e_path_dir_list_free(dir_list);
-   return available;
+   man = e_manager_current_get();
+   if (!man) return NULL;
+   con = e_container_current_get(man);
+   if (!con) con = e_container_number_get(man, 0);
+   if (!con) return NULL;
+
+   evas_fonts = evas_font_available_list(con->bg_evas);
+
+   e_fonts = NULL;
+   for (l = evas_fonts; l; l = l->next)
+     {
+	E_Font_Available *efa;
+	const char *evas_font;
+	
+	efa = E_NEW(E_Font_Available, 1);
+	evas_font = l->data;
+	efa->name = evas_stringshare_add(evas_font);
+	e_fonts = evas_list_append(e_fonts, efa);
+     }	
+
+   evas_font_available_list_free(con->bg_evas, evas_fonts);
+
+   return e_fonts;
 }
 
 EAPI void
 e_font_available_list_free(Evas_List *available)
 {
    E_Font_Available *efa;
-   
+    
    while (available)
-     {
+     {	
 	efa = available->data;
 	available = evas_list_remove_list(available, available);
 	if (efa->name) evas_stringshare_del(efa->name);
-	E_FREE(efa);	
-     }
+	E_FREE(efa);
+    }
 }
 
 EAPI void
@@ -330,43 +343,3 @@ e_font_default_string_get(const char *text_class, int *size_ret)
    return _fn_buf;
 }
 
-static Evas_List *
-_e_font_font_dir_available_get(Evas_List *available_fonts, const char *font_dir)
-{
-   char buf[4096];
-   FILE *f;
-   
-   snprintf(buf, sizeof(buf), "%s/fonts.alias", font_dir);
-   f = fopen(buf, "r");
-   if (f)
-     {
-	char fname[4096], fdef[4096];
-	Evas_List *next;
-	
-	/* read font alias lines */
-	while (fscanf(f, "%4090s %[^\n]\n", fname, fdef) == 2)
-	  {
-	     E_Font_Available *efa;
-	     
-	     /* skip comments */
-	     if ((fdef[0] == '!') || (fdef[0] == '#'))
-	       continue;
-	     
-	     /* skip duplicates */
-	     
-	     for (next = available_fonts; next; next = evas_list_next(next))
-	       {
-	       	  efa = (E_Font_Available *)evas_list_data(next);
-	       
-		  if (!strcmp(efa->name, fname))
-		    continue;		  
-	       }
-	        
-	     efa = malloc(sizeof(E_Font_Available));
-	     efa->name = evas_stringshare_add(fname);
-	     available_fonts = evas_list_append(available_fonts, efa);
-	  }
-	fclose (f);
-     }
-   return available_fonts;
-}

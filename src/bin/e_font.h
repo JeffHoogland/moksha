@@ -5,7 +5,7 @@
 
 typedef struct _E_Font_Default E_Font_Default;
 typedef struct _E_Font_Fallback E_Font_Fallback;
-typedef struct _E_Font_Fallback E_Font_Available;
+typedef struct _E_Font_Available E_Font_Available;
 
 #else
 #ifndef E_FONT_H
