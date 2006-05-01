@@ -15,7 +15,7 @@ Prefix: %{_prefix}
 #BuildRequires: evas-devel edje-devel ecore-devel eet-devel
 Requires: evas edje edje-bin ecore eet embryo embryo-bin 
 Requires: evas-module_loader_eet evas-module_saver_eet evas-module_loader_png evas-module_saver_png evas-module_loader_jpeg evas-module_saver_jpeg evas-module_engine_software_x11 evas-module_engine_buffer
-Requires: ecore-con ecore-ipc ecore-evas ecore-file ecore-job ecore-text ecore-x
+Requires: ecore-con ecore-ipc ecore-evas ecore-file ecore-job ecore-txt ecore-x
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
 %description
