@@ -312,8 +312,8 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
      }
    
    im = e_widget_preview_add(cfd->dia->win->evas, 320, 
-			     (320 * cfd->dia->win->border->zone->w) / 
-			     cfd->dia->win->border->zone->h);
+			     (320 * e_zone_current_get(cfd->dia->win->container)->h) /
+			     e_zone_current_get(cfd->dia->win->container)->w);
    e_widget_preview_edje_set(im, f, "desktop/background");
    evas_object_del(bg_obj);
 //   im = e_widget_preview_add_from_object(cfd->dia->win->evas, bg_obj, 320, 240);

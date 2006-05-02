@@ -218,8 +218,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 		    {
 		       selnum = i;
 		       im = e_widget_preview_add(evas, 320, 
-						 (320 * cfd->dia->win->border->zone->w) /
-						 cfd->dia->win->border->zone->h);
+						 (320 * e_zone_current_get(cfd->dia->win->container)->h) /
+						 e_zone_current_get(cfd->dia->win->container)->w);
 		       e_widget_preview_edje_set(im, fulltheme, "desktop/background");
 		       // im = e_widget_image_add_from_object(evas, theme, 320, 240);
 		       // e_widget_image_object_set(im, e_thumb_evas_object_get(fulltheme, evas, 320, 240, 1));
@@ -242,8 +242,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      {
 	snprintf(fulltheme, sizeof(fulltheme), PACKAGE_DATA_DIR"/data/themes/default.edj");
 	im = e_widget_preview_add(evas, 320, 
-				  (320 * cfd->dia->win->border->zone->w) /
-				  cfd->dia->win->border->zone->h);
+				  (320 * e_zone_current_get(cfd->dia->win->container)->h) /
+				  e_zone_current_get(cfd->dia->win->container)->w);
 	e_widget_preview_edje_set(im, fulltheme, "desktop/background");
 //	theme = e_thumb_generate_begin(fulltheme, 320, 240, evas, &theme, NULL, NULL);
 //	im = e_widget_image_add_from_object(evas, theme, 320, 240);
