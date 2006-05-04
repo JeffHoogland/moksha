@@ -1023,6 +1023,7 @@ _e_intl_imc_dir_scan(const char *dir)
 		    {
 		       imcs = evas_list_append(imcs, imc);
 		    }
+		  eet_close(imc_file);
 	       }
 	  }
 	ecore_list_destroy(files);
