@@ -51,7 +51,6 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
-* when gadgets expand they should expand in a way to not overlap if possible
 * implement these maximise/fullscreen modes:
   Which of these should be different modes, and which should be options for
   a mode? i think they all should be distinct actions of their own bound
@@ -78,21 +77,16 @@ Some of the things (in very short form) that need to be done to E17...
   with black. for 3. we want to fill the in bewteen space with some theme
   defined image data
 * actions to make current zone different (warp mouse to there)
-* actions to make the current container different
 * titlebar/border expansion/gadget panel for modules to put window widgets in
 * language packs: need to have a tool to load/setup a language pack (which
   means .mo compiled files from a .po, an optional font and a config file that
   specifies the locale and font) and then install the font(s) either as a user
   or superuser, and the .mo in the system or a user locales dir.
-* gadget containers (shelves?) using popups as well as in-line in a canvas
 * finish off icccm support
 * finish complete netwm support
 * add a "taskbar" module
 * add cpu load module
 * add a way to access "all" apps app dir
-* dnd from pager to other pagers/to desktop/ibox etc.
-* ibar should enable user to select different dirs to view per bar and allow
-  new bars to be created or bars to be deleted
 * ibar need to support label pop-ups
 * ibar should support subdirs with pop-up icons...
 * add setup/install wizard to seed eap files etc. etc.
@@ -102,6 +96,11 @@ Some of the things (in very short form) that need to be done to E17...
 * gui config dialogs for all config
 * make it possible to disable border buttons/actions (tell theme what is
   disabled)
+* shelves need to handle container resize (res change)
+* shelves need to support gadcon "contents" config
+* shelf gui config is ugly and badly arranged
+* pager should be able to be configured to control more than the current zone
+  (select which zone they control)
 ]]]
 
 [[[
@@ -111,18 +110,13 @@ Some of the things (in very short form) that need to be done to E17...
 
 * EAP cache files can be hit and miss and have problems. move things to be
   explicit reloads.
-* need to match EAPI on all fn's as well as thier prototypes
 * winlist should support place for window "screenshot" in list as well as
   app icon
 * winlist could divide windows up into blocks - sub-lists within a container
   per desktop (with stick windows considered to live on the "current" desk
   when winlist starts)
 * make it easy for modules to hook into ipc and extend it for themselves
-* gadman needs some changes to virtualise the canvas/container the gadget
-  ends up in (eg in popups or border)
 * module api needs to move label and icon to data file (.eap file?), not api
-* ibar lamp needs short timer on mouse out for hide before hiding (and del
-  the time on mouse in)
 * allow object paranoia to be a runtime option too
 ]]]
 
@@ -135,9 +129,7 @@ Some of the things (in very short form) that need to be done to E17...
 * option to NOT raise on focus in click to focus
 * switch to desktop of a new window if it opens on another desktop than the
   current one
-* add key input focus control for desktop modules
 * emit signal to submenu entries if they have a submenu shown for them or not
-* screensaver/lock module
 * tip/hint/suggestion dialog
 * add tooltips
 * add locale and encoding fields to eapp files (to launch eapp in that
@@ -145,12 +137,8 @@ Some of the things (in very short form) that need to be done to E17...
 * add input method selector stuff to eapp - same as locale
 * setup configs for gnome and kde (as options) if they are installed (eg
   run gnome-settings-daemon).
-* check evas has eet support early on.
 * check engine can work on a given screen before using it
-* pagers should be able to be configured to control more than the current zone
-  (select which zone they control)
 * non opaque move/resize
-* maybe add systray module/support?
 * add "osd" subsystem for things like volume controls on keybboards, etc.
   that overlay the screen
 * file icons on the desktop (people ask for it) - xdnd for these
