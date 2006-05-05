@@ -111,6 +111,7 @@ static int _pager_cb_event_border_icon_change(void *data, int type, void *event)
 static int _pager_cb_event_zone_desk_count_set(void *data, int type, void *event);
 static int _pager_cb_event_desk_show(void *data, int type, void *event);
 static int _pager_cb_event_desk_name_change(void *data, int type, void *event);
+static int _pager_cb_event_container_resize(void *data, int type, void *event);
 static void _pager_window_cb_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _pager_window_cb_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _pager_window_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -1205,6 +1206,33 @@ _pager_cb_event_desk_name_change(void *data, int type, void *event)
    return 1;
 }
 
+static int
+_pager_cb_event_container_resize(void *data, int type, void *event)
+{
+   E_Event_Container_Resize *ev;
+   Evas_List *l, *l2;
+
+   ev = event;
+   for (l = pager_config->instances; l; l = l->next)
+     {
+	Instance *inst;
+	
+	inst = l->data;
+	if (inst->pager->zone->container != ev->container) continue;
+	for (l2 = inst->pager->desks; l2; l2 = l2->next)
+	  {
+	     Pager_Desk *pd;
+	     
+	     pd = l2->data;
+	     e_layout_virtual_size_set(pd->o_layout, 
+				       pd->desk->zone->w,
+				       pd->desk->zone->h);
+	  }
+	_gc_orient(inst->gcc);
+     }
+   return 1;
+}
+
 static void
 _pager_window_cb_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
@@ -1728,6 +1756,9 @@ e_modapi_init(E_Module *module)
    pager_config->handlers = evas_list_append
      (pager_config->handlers, ecore_event_handler_add
       (E_EVENT_DESK_NAME_CHANGE, _pager_cb_event_desk_name_change, NULL));
+   pager_config->handlers = evas_list_append
+     (pager_config->handlers, ecore_event_handler_add
+      (E_EVENT_CONTAINER_RESIZE, _pager_cb_event_container_resize, NULL));
    
    e_gadcon_provider_register(&_gadcon_class);
    return 1;

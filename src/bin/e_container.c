@@ -1164,13 +1164,11 @@ _e_container_resize_handle(E_Container *con)
 	     zone = e_container_zone_number_get(con, scr->screen);
 	     if (zone)
 	       {
-		  e_zone_move(zone, scr->x, scr->y);
-		  e_zone_resize(zone, scr->w, scr->h);
+		  e_zone_move_resize(zone, scr->x, scr->y, scr->w, scr->h);
+		  e_shelf_zone_move_resize_handle(zone);	
 	       }
 	     else
-	       {
-		  zone = e_zone_new(con, scr->screen, scr->x, scr->y, scr->w, scr->h);
-	       }
+	       zone = e_zone_new(con, scr->screen, scr->x, scr->y, scr->w, scr->h);
 	     /* FIXME: what if a zone exists for a screen that doesn't exist?
 	      *        not sure this will ever happen...
 	      */
@@ -1181,8 +1179,8 @@ _e_container_resize_handle(E_Container *con)
 	E_Zone *zone;
 	
 	zone = e_container_zone_number_get(con, 0);
-	e_zone_move(zone, 0, 0);
-	e_zone_resize(zone, con->w, con->h);
+	e_zone_move_resize(zone, 0, 0, con->w, con->h);
+	e_shelf_zone_move_resize_handle(zone);	
      }
    
    e_gadman_container_resize(con->gadman);

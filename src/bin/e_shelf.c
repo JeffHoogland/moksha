@@ -155,6 +155,19 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 }
 
 EAPI void
+e_shelf_zone_move_resize_handle(E_Zone *zone)
+{
+   Evas_List *l;
+   E_Shelf *es;
+   
+   for (l = shelves; l; l = l->next)
+     {
+	es = l->data;
+	if (es->zone == zone) e_shelf_position_calc(es);
+     }
+}
+
+EAPI void
 e_shelf_populate(E_Shelf *es)
 {
    E_OBJECT_CHECK(es);

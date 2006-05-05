@@ -96,11 +96,12 @@ Some of the things (in very short form) that need to be done to E17...
 * gui config dialogs for all config
 * make it possible to disable border buttons/actions (tell theme what is
   disabled)
-* shelves need to handle container resize (res change)
 * shelves need to support gadcon "contents" config
 * shelf gui config is ugly and badly arranged
 * pager should be able to be configured to control more than the current zone
   (select which zone they control)
+* ibar maybe should move bar dirs to subdirectories in "bar" to limit scope
+* ibar should support creating and deleting bar dirs
 ]]]
 
 [[[
