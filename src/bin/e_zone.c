@@ -156,6 +156,7 @@ e_zone_move(E_Zone *zone, int x, int y)
    evas_object_move(zone->bg_object, x, y);
    evas_object_move(zone->bg_event_object, x, y);
    evas_object_move(zone->bg_clip_object, x, y);
+   
    ecore_x_window_move_resize(zone->flip.left, zone->x, zone->y, 1, zone->h);
    ecore_x_window_move_resize(zone->flip.right, zone->x + zone->w - 1, zone->y, 1, zone->h);
    ecore_x_window_move_resize(zone->flip.top, zone->x + 1, zone->y, zone->w - 2, 1);
@@ -201,6 +202,11 @@ e_zone_move_resize(E_Zone *zone, int x, int y, int w, int h)
    evas_object_resize(zone->bg_object, w, h);
    evas_object_resize(zone->bg_event_object, w, h);
    evas_object_resize(zone->bg_clip_object, w, h);
+   
+   ecore_x_window_move_resize(zone->flip.left, zone->x, zone->y, 1, zone->h);
+   ecore_x_window_move_resize(zone->flip.right, zone->x + zone->w - 1, zone->y, 1, zone->h);
+   ecore_x_window_move_resize(zone->flip.top, zone->x + 1, zone->y, zone->w - 2, 1);
+   ecore_x_window_move_resize(zone->flip.bottom, zone->x + 1, zone->y + zone->h - 1, zone->w - 2, 1);
 } 
 
 EAPI void
