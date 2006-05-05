@@ -12,19 +12,12 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Co
 /* Actual config data we will be playing with whil the dialog is active */
 struct _E_Config_Dialog_Data
 {
-   E_Shelf *es;
-   E_Config_Shelf *escfg;
-   char *style;
-   int orient;
-   int fit_along;
-   int fit_size;
-   int size;
-   int layering;
+   E_Gadcon *gc;
 };
 
 /* a nice easy setup function that does the dirty work */
 EAPI void
-e_int_shelf_config(E_Shelf *es)
+e_int_gadcon_config(E_Gadcon *gc)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
@@ -40,9 +33,9 @@ e_int_shelf_config(E_Shelf *es)
 	v->override_auto_apply = 1;
 	
 	/* create config diaolg for bd object/data */
-	cfd = e_config_dialog_new(es->zone->container, 
-				  _("Shelf Configuration"), NULL, 0, v, es);
-	es->config_dialog = cfd;
+	cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()),
+				  _("Contents Settings"), NULL, 0, v, gc);
+//	gc->config_dialog = cfd;
      }
 }
 
@@ -50,6 +43,7 @@ e_int_shelf_config(E_Shelf *es)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
+/*   
    if (cfdata->escfg->style)
      cfdata->style = strdup(cfdata->escfg->style);
    else
@@ -69,6 +63,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      cfdata->layering = 2;
    else
      cfdata->layering = 2;
+ */
 }
 
 static void *
@@ -81,8 +76,7 @@ _create_data(E_Config_Dialog *cfd)
    E_Config_Dialog_Data *cfdata;
    
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
-   cfdata->es = cfd->data;
-   cfdata->escfg = cfdata->es->cfg;
+   cfdata->gc = cfd->data;
    _fill_data(cfdata);
    return cfdata;
 }
@@ -91,8 +85,8 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    /* Free the cfdata */
-   cfdata->es->config_dialog = NULL;
-   if (cfdata->style) free(cfdata->style);
+//   cfdata->gc->config_dialog = NULL;
+//   if (cfdata->style) free(cfdata->style);
    free(cfdata);
 }
 
@@ -100,6 +94,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
+/*   
    E_Zone *zone;
    int id;
    
@@ -141,7 +136,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_shelf_populate(cfdata->es);
    e_shelf_show(cfdata->es);
    e_config_save_queue();
-   cfdata->es->config_dialog = cfd;
+ */
+//   cfdata->gc->config_dialog = cfd;
    return 1; /* Apply was OK */
 }
 
@@ -158,7 +154,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    /* FIXME: this is just raw config now - it needs UI improvments */
    o = e_widget_list_add(evas, 0, 1);
-     
+
+/*   
    o2 = e_widget_list_add(evas, 0, 0);
    
    of = e_widget_framelist_add(evas, _("Stacking"), 0);
@@ -172,10 +169,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(o2, of, 1, 1, 0.5);
    
    of = e_widget_framelist_add(evas, _("Size"), 0);
-   ob = e_widget_check_add(evas, _("Srink to Content Size"), &(cfdata->fit_along));
+   ob = e_widget_check_add(evas, _("Shrink length fit contents"), &(cfdata->fit_along));
    e_widget_framelist_object_append(of, ob);
-//   ob = e_widget_check_add(evas, _("Expand width to fit contents"), &(cfdata->fit_size));
-//   e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Shelf Size"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%3.0f pixels"), 4, 120, 4, 0, NULL, &(cfdata->size), 200);
@@ -238,6 +233,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_ilist_selected_set(oi, sel);
    
    e_widget_list_object_append(o, oi, 1, 1, 0.5);
-   
+*/   
    return o;
 }

@@ -134,3 +134,4 @@
 #include "e_int_config_paths.h"
 #include "e_int_shelf_config.h"
 #include "e_int_config_shelf.h"
+#include "e_int_gadcon_config.h"
