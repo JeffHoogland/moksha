@@ -71,6 +71,7 @@ struct _E_Gadcon
       void *data;
    } frame_request;
    
+   E_Config_Dialog    *config_dialog;
    unsigned char       editing : 1;
 };
 

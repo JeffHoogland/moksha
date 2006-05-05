@@ -1004,6 +1004,7 @@ _e_gadcon_free(E_Gadcon *gc)
    evas_stringshare_del(gc->name);
    evas_stringshare_del(gc->id);
    evas_stringshare_del(gc->edje.swallow_name);
+   if (gc->config_dialog) e_object_del(E_OBJECT(gc->config_dialog));
    free(gc);
 }
 

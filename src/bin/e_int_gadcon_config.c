@@ -35,7 +35,7 @@ e_int_gadcon_config(E_Gadcon *gc)
 	/* create config diaolg for bd object/data */
 	cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()),
 				  _("Contents Settings"), NULL, 0, v, gc);
-//	gc->config_dialog = cfd;
+	gc->config_dialog = cfd;
      }
 }
 
@@ -85,7 +85,7 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    /* Free the cfdata */
-//   cfdata->gc->config_dialog = NULL;
+   cfdata->gc->config_dialog = NULL;
 //   if (cfdata->style) free(cfdata->style);
    free(cfdata);
 }
@@ -137,7 +137,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_shelf_show(cfdata->es);
    e_config_save_queue();
  */
-//   cfdata->gc->config_dialog = cfd;
+   cfdata->gc->config_dialog = cfd;
    return 1; /* Apply was OK */
 }
 

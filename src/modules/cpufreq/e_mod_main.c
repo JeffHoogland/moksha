@@ -198,10 +198,9 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 		    e_menu_item_label_set(mi, _("Maximum Speed"));
 		  e_menu_item_radio_set(mi, 1);
 		  e_menu_item_radio_group_set(mi, 1);
-		  e_object_data_set(E_OBJECT(mi), l->data);
 		  if (!strcmp(cpufreq_config->status->cur_governor, l->data))
 		    e_menu_item_toggle_set(mi, 1);
-		  e_menu_item_callback_set(mi, _cpufreq_menu_governor, NULL);
+		  e_menu_item_callback_set(mi, _cpufreq_menu_governor, l->data);
 	       }
 	  }
 
@@ -226,10 +225,9 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 		  e_menu_item_label_set(mi, buf);
 		  e_menu_item_radio_set(mi, 1);
 		  e_menu_item_radio_group_set(mi, 1);
-		  e_object_data_set(E_OBJECT(mi), l->data);
 		  if (cpufreq_config->status->cur_frequency == frequency)
 		    e_menu_item_toggle_set(mi, 1);
-		  e_menu_item_callback_set(mi, _cpufreq_menu_frequency, NULL);
+		  e_menu_item_callback_set(mi, _cpufreq_menu_frequency, l->data);
 	       }
 	  }
 	
@@ -367,7 +365,8 @@ _cpufreq_cb_check(void *data)
    Instance *inst;
    Evas_List *l;
    int active;
-   
+
+   if (cpufreq_config->menu_poll) return 1;
    active = cpufreq_config->status->active;
    if (_cpufreq_status_check_current(cpufreq_config->status))
      {
@@ -787,7 +786,7 @@ _cpufreq_menu_governor(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    char *governor;
 
-   governor = e_object_data_get(E_OBJECT(mi));
+   governor = data;
    if (governor)
      {
 	_cpufreq_set_governor(governor);
@@ -802,11 +801,8 @@ _cpufreq_menu_frequency(void * data, E_Menu *m, E_Menu_Item *mi)
 {
    int frequency;
    
-   frequency = (int)e_object_data_get(E_OBJECT(mi));
-   if (frequency > 0)
-     {
-	_cpufreq_set_frequency(frequency);
-     }
+   frequency = (int)data;
+   if (frequency > 0) _cpufreq_set_frequency(frequency);
 }
 
 /***************************************************************************/
