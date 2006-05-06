@@ -79,6 +79,19 @@ e_widget_radio_add(Evas *evas, char *label, int valnum, E_Radio_Group *group)
    
    return obj;
 }
+EAPI void
+e_widget_radio_toggle_set(Evas_Object *obj, int toggle)
+{
+   E_Widget_Data  *wd;
+
+   wd = e_widget_data_get(obj);
+   if (!wd) return;
+
+   if (toggle)
+     edje_object_signal_emit(wd->o_radio, "toggle_on", "");
+   else
+     edje_object_signal_emit(wd->o_radio, "toggle_off", "");
+}
 
 static void
 _e_wid_del_hook(Evas_Object *obj)

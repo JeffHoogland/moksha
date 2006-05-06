@@ -71,6 +71,15 @@ e_widget_button_add(Evas *evas, const char *label, const char *icon, void (*func
    return obj;
 }
 
+EAPI void
+e_widget_button_label_set(Evas_Object *obj, const char *label)
+{
+   E_Widget_Data *wd;
+
+   wd = e_widget_data_get(obj);
+   edje_object_part_text_set(wd->o_button, "label", label);
+}
+
 static void
 _e_wid_del_hook(Evas_Object *obj)
 {

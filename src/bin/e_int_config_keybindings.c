@@ -1,11 +1,5 @@
 #include "e.h"
 
-/* FIXME: this dialog needs to keep up with the actions in actions.c - this
- * isnt' easily "automatic - should probably add this info to actions.c so
- *  this can list an existing set of actions and extra ones are added from
- * a list automatically retrieved from actions.c
- */
-
 #define ACTION_LIST_ICON_W  24
 #define ACTION_LIST_ICON_H  24
 
@@ -22,12 +16,8 @@
 #define ILIST_ICON_WITH_KEYBIND	    "enlightenment/e"
 #define ILIST_ICON_WITHOUT_KEYBIND  ""
 
-#define	_DEFAULT_ACTION	0
-#define _NONDEFAULT_ACTION  1
-
-#define EDIT_RESTRICT_NONE  (0 << 0)
-#define EDIT_RESTRICT_ACTION (1 << 0)
-#define EDIT_RESTRICT_PARAMS (1 << 1)
+#define AG_UNSORTED _("Unsorted")
+#define AG_AN_UNKNOWN _("Unknown")
 
 #define E_BINDING_CONTEXT_NUMBER  10
 
@@ -44,7 +34,7 @@ static void	    _e_keybinding_binding_ilist_cb_change(void *data, Evas_Object *o
 static void	    _e_keybinding_default_keybinding_settings(E_Config_Dialog_Data *cfdata);
 
 static void	    _e_keybinding_keybind_cb_del_keybinding(void *data, void *data2);
-static int	    _e_keybinding_keybind_delete_keybinding(E_Config_Dialog_Data *cfdata);
+static void	    _e_keybinding_keybind_delete_keybinding(E_Config_Dialog_Data *cfdata);
 
 static void	    _e_keybinding_keybind_cb_add_keybinding(void *data, void *data2);
 
@@ -67,242 +57,40 @@ static int	    _e_keybinding_cb_shortcut_key_down(void *data, int type, void *ev
 static int	    _e_keybinding_cb_mouse_handler_dumb(void *data, int type, void *event);
 
 static int	    _e_keybinding_keybind_cb_auto_apply(E_Config_Dialog_Data *cfdata);
+
+
+static void _fill_data(E_Config_Dialog_Data *cfdata);
+static int  _action_group_list_sort_cb(void *e1, void *e2);
+static int  _action_group_actions_list_sort_cb(void *e1, void *e2);
 /*******************************************************************************************/
 
-typedef struct _E_Config_KeyBind	  E_Config_KeyBind;
-typedef struct _E_Widget_IList_Data	  E_Widget_IList_Data;
-typedef struct _E_Widget_Radio_Data	  E_Widget_Radio_Data;
-typedef struct _E_Widget_Button_Data	  E_Widget_Button_Data;
-typedef struct _E_Widget_Entry_Data	  E_Widget_Entry_Data;
-
-typedef struct _E_Smart_Item		  E_Smart_Item;
-typedef struct _E_Smart_Data		  E_Smart_Data;
-
-typedef struct
+typedef struct _action2
 {
-  char  *action_name;
-  char  *action_cmd;
-  char  *action_params;
+  const char  *action_name;
+  const char  *action_cmd;
+  const char  *action_params;
   int	def_action;
   int	restrictions;
-} ACTION;
+  Evas_List   *key_bindings;
+} ACTION2;
 
-const ACTION actions_predefined_names[ ] = {
-  {"Flip Desktop Left", "desk_flip_by", "-1 0", _DEFAULT_ACTION,
-						EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Flip Desktop Right", "desk_flip_by", "1 0", _DEFAULT_ACTION,
-						EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Flip Desktop Up", "desk_flip_by", "0 -1", _DEFAULT_ACTION,
-					      EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Flip Desktop Down", "desk_flip_by", "0 1", _DEFAULT_ACTION,
-					       EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Flip Desktop By", "desk_flip_by", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
-  {"Flip Desktop To", "desk_flip_to", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
-/* These fuck with a lot of bindings like firefox, irssi, bitchx etc…
-  {"Switch To Left Desktop", "desk_linear_flip_by", "-1", _DEFAULT_ACTION,
-						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Switch To Right Desktop", "desk_linear_flip_by", "1", _DEFAULT_ACTION,
-						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-*/ 
-  {"Flip Desktop Linearly…", "desk_linear_flip_by", NULL, _NONDEFAULT_ACTION,
-							    EDIT_RESTRICT_ACTION },
-  {"Switch To Desktop 0", "desk_linear_flip_to", "0", _DEFAULT_ACTION,
-						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Switch To Desktop 1", "desk_linear_flip_to", "1", _DEFAULT_ACTION,
-						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Switch To Desktop 2", "desk_linear_flip_to", "2", _DEFAULT_ACTION,
-						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Switch To Desktop 3", "desk_linear_flip_to", "3", _DEFAULT_ACTION,
-						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Switch To Desktop 4", "desk_linear_flip_to", "4", _DEFAULT_ACTION,
-						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Switch To Desktop 5", "desk_linear_flip_to", "5", _DEFAULT_ACTION,
-						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Switch To Desktop 6", "desk_linear_flip_to", "6", _DEFAULT_ACTION,
-						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Switch To Desktop 7", "desk_linear_flip_to", "7", _DEFAULT_ACTION,
-						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Switch To Desktop 8", "desk_linear_flip_to", "8", _DEFAULT_ACTION,
-						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Switch To Desktop 9", "desk_linear_flip_to", "9", _DEFAULT_ACTION,
-						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Switch To Desktop 10", "desk_linear_flip_to", "10", _DEFAULT_ACTION,
-						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Switch To Desktop 11", "desk_linear_flip_to", "11", _DEFAULT_ACTION,
-						    EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Switch To Desktop…", "desk_linear_flip_to", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
-
-  {"Run Command", "exebuf", NULL, _DEFAULT_ACTION, EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Exit Enlightenment", "exit", NULL,
-				 _DEFAULT_ACTION, EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Restart Enlightenment", "restart", NULL,
-				    _DEFAULT_ACTION, EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-
-  {"Show Main Menu", "menu_show", "main", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Show Favorites Menu", "menu_show", "favorites", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Show Clients Menu", "menu_show", "clients", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Show Menu…", "menu_show", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
-
-  {"Desktop Lock", "desk_lock", NULL, _DEFAULT_ACTION, 
-				      EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-
-  {"Toggle Edit Mode", "edit_mode_toggle", NULL, _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-
-  {"Window List - Next Window", "winlist", "next", _DEFAULT_ACTION, 
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window List - Previous Window", "winlist", "prev", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-
-  {"Window Move To Next Desktop", "window_desk_move_by", "1 0", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Move To Previous Desktop", "window_desk_move_by", "-1 0", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Move By Desktop…", "window_desk_move_by", NULL, _DEFAULT_ACTION,
-							     EDIT_RESTRICT_ACTION },
-  {"Window Move To Desktop 0", "window_desk_move_to", "0", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Move To Desktop 1", "window_desk_move_to", "1", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Move To Desktop 2", "window_desk_move_to", "2", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Move To Desktop 3", "window_desk_move_to", "3", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Move To Desktop 4", "window_desk_move_to", "4", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Move To Desktop 5", "window_desk_move_to", "5", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Move To Desktop 6", "window_desk_move_to", "6", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Move To Desktop 7", "window_desk_move_to", "7", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Move To Desktop 8", "window_desk_move_to", "8", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Move To Desktop 9", "window_desk_move_to", "9", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Move To Desktop 10", "window_desk_move_to", "10", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Move To Desktop 11", "window_desk_move_to", "11", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Move To Desktop…", "window_desk_move_to", NULL, _NONDEFAULT_ACTION,
-							  EDIT_RESTRICT_ACTION },
-  {"Window Maximize", "window_maximized_toggle", NULL, _DEFAULT_ACTION, EDIT_RESTRICT_ACTION },
-  {"Window Maximize Vertically", "window_maximized_toggle", "vertical", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Maximize Horizontally", "window_maximized_toggle", "horizontal", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Iconic Mode Toggle", "window_iconic_toggle", NULL, _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Shaded Up Mode Toggle", "window_shaded_toggle", "up", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Shaded Down Mode Toggle", "window_shaded_toggle", "down", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Shaded Left Mode Toggle", "window_shaded_toggle", "left", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Shaded Right Mode Toggle", "window_shaded_toggle", "right", _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Sticky Mode Toggle", "window_sticky_toggle", NULL, _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-
-  {"Window Lower", "window_lower", NULL, _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Raise", "window_raise", NULL, _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Close", "window_close", NULL, _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Kill", "window_kill", NULL, _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-  {"Window Menu", "window_menu", NULL, _DEFAULT_ACTION,
-					  EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS },
-
-  {"Window Move…", "window_move", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
-  {"Window Move To…", "window_move_to", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
-  {"Window Move By…", "window_move_by", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
-  {"Window Resize To…", "window_resize", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
-  {"Window Resize By…", "window_resize_by", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
-  {"Window Drag Icon", "window_drag_icon", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
-
-  {"Application", "app", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
-  {"User Defined Actions…", "exec", NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_ACTION },
-//  {"Unknown Action", NULL, NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_NONE },
-  {NULL, NULL, NULL, _NONDEFAULT_ACTION, EDIT_RESTRICT_NONE }
-};
-
-struct _E_Smart_Data
-{ 
-   Evas_Coord   x, y, w, h;
-   
-   Evas_Object   *smart_obj;
-   Evas_Object   *box_obj;
-   Evas_List     *items;
-   int            selected;
-   Evas_Coord     icon_w, icon_h;
-   unsigned char  selector : 1;
-};
-
-struct _E_Smart_Item
+typedef struct _action_group
 {
-   E_Smart_Data  *sd;
-   Evas_Object   *base_obj;
-   Evas_Object   *icon_obj;
-   void         (*func) (void *data, void *data2);
-   void         (*func_hilight) (void *data, void *data2);
-   void          *data;
-   void          *data2;
-};
-
-struct _E_Widget_IList_Data
-{
-   Evas_Object *o_widget, *o_scrollframe, *o_ilist;
-   Evas_List *callbacks;
-   char **value;
-};
-
-struct _E_Widget_Radio_Data
-{
-   E_Radio_Group *group;
-   Evas_Object *o_radio;
-   int valnum;
-};
-
-struct _E_Widget_Button_Data
-{
-   Evas_Object *o_button;
-   Evas_Object *o_icon;
-   void (*func) (void *data, void *data2);
-   void *data;
-   void *data2;   
-};
-
-struct _E_Widget_Entry_Data
-{
-   Evas_Object *o_entry;
-   Evas_Object *obj;
-   char **valptr;
-   void (*on_change_func) (void *data, Evas_Object *obj);
-   void  *on_change_data;
-};
-
-struct _E_Config_KeyBind
-{
-  int acn;
-  Evas_List *bk_list;
-};
+   const char  *action_group;
+   Evas_List   *actions; // Here ACTION2 structure is used.
+} ACTION_GROUP;
 
 struct _E_Config_Dialog_Data
 {
   E_Config_Dialog *cfd;
-  Evas_List *key_bindings;
 
-  int cur_eckb_kb_sel;
-  E_Config_KeyBind  *cur_eckb;
+  ACTION_GROUP *current_actg;
+  ACTION2      *current_act;
+  int	       current_act_selector;
+
   Evas	*evas;
 
   int binding_context;
-  char *key_bind;
   char *key_action;
   char *key_params;
 
@@ -329,6 +117,172 @@ struct _E_Config_Dialog_Data
   int changed;
 };
 
+/*******************************************************************************/
+
+
+Evas_List   *action_group_list=NULL;
+
+int e_int_config_keybindings_register_action_predef_name(const char *action_group,
+							 const char *action_name,
+							 const char *action_cmd,
+							 const char *action_params,
+							 act_restrict_t restrictions,
+							 int flag)
+{
+   ACTION_GROUP	  *actg = NULL;
+   ACTION2	  *act = NULL;
+   Evas_List	  *ll;
+
+   if (!action_group || !action_name)
+     return 0;
+
+   for (ll = action_group_list; ll; ll = ll->next)
+     {
+	actg = ll->data;
+
+	if (!strcmp(actg->action_group, action_group))
+	  break;
+	actg = NULL;
+     }
+
+   if (actg == NULL)
+     {
+	actg = E_NEW(ACTION_GROUP, 1);
+	if (!actg)
+	  return 0;
+
+	actg->action_group = evas_stringshare_add(action_group);
+	actg->actions = NULL;
+
+	action_group_list = evas_list_append(action_group_list, actg);
+
+	action_group_list = evas_list_sort(action_group_list, evas_list_count(action_group_list),
+					   _action_group_list_sort_cb);
+     }
+
+   for (ll = actg->actions; ll; ll = ll->next)
+     {
+	act = ll->data;
+	if (!strcmp(act->action_name, action_name))
+	  break;
+	act = NULL;
+     }
+
+   if (act)
+     return 1;
+
+
+   act = E_NEW(ACTION2, 1);
+   if (!act)
+     return 0;
+   act->action_name    = action_name == NULL ? NULL : evas_stringshare_add(action_name);
+   act->action_cmd     = action_cmd == NULL ? NULL : evas_stringshare_add(action_cmd);
+   act->action_params  = action_params == NULL ? NULL : evas_stringshare_add(action_params);
+   act->restrictions   = restrictions;
+   act->def_action     = flag;
+   act->key_bindings   = NULL;
+
+   actg->actions = evas_list_append(actg->actions, act);
+#if 0
+   actg->actions = evas_list_sort(actg->actions, evas_list_count(actg->actions),
+				  _action_group_actions_list_sort_cb);
+#endif
+
+   return 1;
+}
+
+int e_int_config_keybindings_unregister_action_predef_name(const char *action_group,
+							   const char *action_name)
+{
+   ACTION_GROUP	  *actg;
+   ACTION2	  *act;
+   Evas_List *l, *l2, *l3;
+
+   for (l = action_group_list; l; l = l->next)
+     {
+	actg = l->data;
+	if (!strcmp(actg->action_group, action_group))
+	  {
+	     for (l2 = actg->actions; l2; l2 = l2->next)
+	       {
+		  act = l2->data;
+		  if (!strcmp(act->action_name, action_name))
+		    {
+		       actg->actions = evas_list_remove(actg->actions, l2);
+
+		       if (act->action_name) evas_stringshare_del(act->action_name);
+		       if (act->action_cmd) evas_stringshare_del(act->action_cmd);
+		       if (act->action_params) evas_stringshare_del(act->action_params);
+
+		       for (l3 = act->key_bindings; l3; l3 = l3->next)
+			 {
+			    E_Config_Binding_Key   *eb = l3->data;
+			    if (eb->key) evas_stringshare_del(eb->key);
+			    if (eb->action) evas_stringshare_del(eb->action);
+			    if (eb->params) evas_stringshare_del(eb->params);
+			    E_FREE(eb);
+			 }
+
+		       E_FREE(act);
+		       break;
+		    }
+	       }
+
+	     if (evas_list_count(actg->actions) == 0)
+	       {
+		  action_group_list = evas_list_remove(action_group_list, l);
+		  if (actg->action_group) evas_stringshare_del(actg->action_group);
+		  E_FREE(actg);
+	       }
+	     break;
+	  }
+     }
+
+   return 1;
+}
+
+void e_int_config_keybindings_unregister_all_action_predef_names()
+{
+   ACTION_GROUP	  *actg;
+   ACTION2	  *act;
+   Evas_List	  *l, *l2, *l3;
+
+   while (action_group_list)
+     {
+	actg = action_group_list->data;
+
+	while (actg->actions)
+	  {
+	     act = actg->actions->data;
+
+	     if (act->action_name) evas_stringshare_del(act->action_name);
+	     if (act->action_cmd) evas_stringshare_del(act->action_cmd);
+	     if (act->action_params) evas_stringshare_del(act->action_params);
+
+	     for (l3 = act->key_bindings; l3; l3 = l3->next) 
+	       { 
+		  E_Config_Binding_Key   *eb = l3->data;
+		  if (eb->key) evas_stringshare_del(eb->key);
+		  if (eb->action) evas_stringshare_del(eb->action);
+		  if (eb->params) evas_stringshare_del(eb->params);
+		  E_FREE(eb); 
+	       }
+
+	     E_FREE(act);
+
+	     actg->actions = evas_list_remove_list(actg->actions, actg->actions);
+	  }
+
+	if (actg->action_group) evas_stringshare_del(actg->action_group);
+	E_FREE(actg);
+
+	action_group_list = evas_list_remove_list(action_group_list, action_group_list);
+     }
+
+   action_group_list = NULL;
+}
+/*******************************************************************************/
+
 
 EAPI E_Config_Dialog *
 e_int_config_keybindings(E_Container *con)
@@ -349,116 +303,121 @@ e_int_config_keybindings(E_Container *con)
 }
 
 static void
-_fill_keybindings_data(E_Config_Dialog_Data *cfdata)
+_fill_data(E_Config_Dialog_Data *cfdata)
 {
-  int i, j;
-  E_Config_KeyBind  *eckb;
-  E_Config_Binding_Key	*bk, *t;
+   E_Config_Binding_Key	*eb, *t;
+   Evas_List   *l, *l2, *l3;
+   ACTION_GROUP	  *actg;
+   ACTION2	  *act;
+   int done;
 
-  for( i = 0; actions_predefined_names[i].action_name; i++ )
-    {
-      eckb = E_NEW(E_Config_KeyBind, 1);
-      if(!eckb)
-	continue;
+   e_int_config_keybindings_register_action_predef_name(AG_UNSORTED, AG_AN_UNKNOWN,
+						        NULL, NULL, 
+						        EDIT_RESTRICT_NONE, 1);
 
-      eckb->acn = i;
+   for (l = e_config->key_bindings; l; l = l->next)
+     { 
+	int found;
+	t = l->data;
 
-      eckb->bk_list = NULL;
-      cfdata->key_bindings = evas_list_append(cfdata->key_bindings, eckb);
-      eckb = NULL;
-    }
+	found = 0;
+	for (l2 = action_group_list; l2 && !found; l2 = l2->next)
+	  {
+	     actg = l2->data;
 
-  for (i = 0; i < evas_list_count(e_config->key_bindings); i++)
-    {
-      t = evas_list_nth(e_config->key_bindings, i);
+	     /* here we are looking for actions with params */
+	     for (l3 = actg->actions; l3 && !found; l3 = l3->next)
+	       {
+		  act = l3->data;
 
-      bk = NULL;
-      for (j = 0; j < evas_list_count(cfdata->key_bindings); j++)
-	{
-	  eckb = evas_list_nth(cfdata->key_bindings, j);
+		  if ((!act->action_cmd || !act->action_cmd[0]) && (t->action && t->action[0]) ||
+		      (!t->action || !t->action[0]) && (act->action_cmd && act->action_cmd[0]))
+			continue;
 
-	  if (t->params == NULL)
-	    {
-	      // should I check if actions_pre... has a non-NULL params ?
-	      if (strcasecmp(actions_predefined_names[eckb->acn].action_cmd == NULL ? "" :
-			     actions_predefined_names[eckb->acn].action_cmd, t->action) == 0)
-		{
-		  // here we found a first occurience of such action;
-		  bk = E_NEW(E_Config_Binding_Key, 1);
-		  if (!bk)
+		  if (t->params && t->params[0]) // here we have that action has params
+		    {
+		       if (!act->action_params || !act->action_params[0])
+			 continue;
+
+		       if (strcmp(!act->action_cmd ? "" : act->action_cmd,
+				  !t->action ? "" : t->action) == 0 &&
+			   strcmp(act->action_params, t->params) == 0)
+			 {
+			    eb = E_NEW(E_Config_Binding_Key, 1);
+			    if (!eb) continue;
+
+			    eb->context = t->context;
+			    eb->modifiers = t->modifiers;
+			    eb->key = (!t->key) ? evas_stringshare_add("") :
+						evas_stringshare_add(t->key);
+			    eb->action = (!t->action) ? NULL : evas_stringshare_add(t->action);
+			    eb->params = (!t->params) ? NULL : evas_stringshare_add(t->params);
+			    eb->any_mod = t->any_mod;
+
+			    act->key_bindings = evas_list_append(act->key_bindings, eb);
+
+			    found = 1;
+			 }
+		    }
+	       }
+
+	     /* here we are looking for actions without parmas and for unsorted actions */
+	     for (l3 = actg->actions; l3 && !found; l3 = l3->next)
+	       {
+		  act = l3->data;
+
+		  if (act->action_params && act->action_params[0])
 		    continue;
 
-		  bk->context = t->context;
-		  bk->key = evas_stringshare_add(t->key);
-		  bk->modifiers = t->modifiers;
-		  bk->any_mod = t->any_mod;
-		  bk->action = t->action == NULL ? 
-		     NULL : evas_stringshare_add(t->action);
-		  bk->params = t->params == NULL ? 
-		     NULL : evas_stringshare_add(t->params);
+		  if (!strcmp(actg->action_group, AG_UNSORTED) &&
+		      !strcmp(act->action_name, AG_AN_UNKNOWN))
+		    {
+		       eb = E_NEW(E_Config_Binding_Key, 1);
+		       if (!eb) continue;
 
-		  eckb->bk_list = evas_list_append(eckb->bk_list, bk);
-		  break;
-		}
-	    }
-	  else if (t->action != NULL && t->params != NULL)
-	    {
-	      if (strcasecmp(actions_predefined_names[eckb->acn].action_cmd == NULL ? 
-			     "" : actions_predefined_names[eckb->acn].action_cmd, 
-			     t->action) == 0 &&
-		  strcasecmp(actions_predefined_names[eckb->acn].action_params == NULL ? 
-			     "" : actions_predefined_names[eckb->acn].action_params,
-			     t->params) == 0)
-		{
-		  bk = E_NEW(E_Config_Binding_Key, 1);
-		  if (!bk)
-		    continue;
+		       eb->context = t->context;
+		       eb->modifiers = t->modifiers;
+		       eb->key = t->key == NULL ? evas_stringshare_add("") :
+						  evas_stringshare_add(t->key);
+		       eb->action = t->action == NULL ? NULL : evas_stringshare_add(t->action);
+		       eb->params = t->params == NULL ? NULL : evas_stringshare_add(t->params);
+		       eb->any_mod = t->any_mod;
 
-		  bk->context = t->context;
-		  bk->key = evas_stringshare_add(t->key);
-		  bk->modifiers = t->modifiers;
-		  bk->any_mod = t->any_mod;
-		  bk->action = t->action == NULL ? 
-		     NULL : evas_stringshare_add(t->action);
-		  bk->params = t->params == NULL ? 
-		     NULL : evas_stringshare_add(t->params);
+		       act->key_bindings = evas_list_append(act->key_bindings, eb);
+		       found = 1;
+		       break;
+		    }
 
-		  eckb->bk_list = evas_list_append(eckb->bk_list, bk);
-		  break;
-		}
-	    }
+		  if ((!act->action_cmd || !act->action_cmd[0]) && (t->action && t->action[0]) ||
+		      (!t->action || !t->action[0]) && (act->action_cmd && act->action_cmd[0]))
+			continue;
 
-	  if (!bk && actions_predefined_names[eckb->acn].def_action == _NONDEFAULT_ACTION)
-	    {
-	      if (strcasecmp(actions_predefined_names[eckb->acn].action_cmd == NULL ? 
-			     "" : actions_predefined_names[eckb->acn].action_cmd, 
-			     t->action) == 0 )
-		{
-		  bk = E_NEW(E_Config_Binding_Key, 1);
-		  if (!bk)
-		    continue;
+		  if (strcmp(!act->action_cmd ? "" : act->action_cmd,
+			    !t->action ? "" : t->action) == 0)
+		    {
+		       eb = E_NEW(E_Config_Binding_Key, 1);
+		       if (!eb) continue;
 
-		  bk->context = t->context;
-		  bk->key = evas_stringshare_add(t->key);
-		  bk->modifiers = t->modifiers;
-		  bk->any_mod = t->any_mod;
-		  bk->action = t->action == NULL ? 
-		     NULL : evas_stringshare_add(t->action);
-		  bk->params = t->params == NULL ? 
-		     NULL : evas_stringshare_add(t->params);
+		       eb->context = t->context;
+		       eb->modifiers = t->modifiers;
+		       eb->key = (!t->key) ? evas_stringshare_add("") :
+				     evas_stringshare_add(t->key);
+		       eb->action = (!t->action) ? NULL : evas_stringshare_add(t->action);
+		       eb->params = (!t->params) ? NULL : evas_stringshare_add(t->params);
+		       eb->any_mod = t->any_mod;
 
-		  eckb->bk_list = evas_list_append(eckb->bk_list, bk);
-		  break;
-		}
-	    }// if (!bk ...)
-	}
-    }
+		       act->key_bindings = evas_list_append(act->key_bindings, eb);
+
+		       found = 1;
+		    }
+	       }
+	  }
+     }
   cfdata->locals.keybind_win = 0;
   cfdata->locals.handlers = NULL;
   cfdata->locals.dia = NULL;
   cfdata->changed = 0;
 }
-
 static void *
 _create_data(E_Config_Dialog *cfd)
 {
@@ -467,11 +426,10 @@ _create_data(E_Config_Dialog *cfd)
   cfdata = E_NEW(E_Config_Dialog_Data, 1);
   
   cfdata->binding_context = -1;//E_BINDING_CONTEXT_ANY;
-  cfdata->key_bind = strdup("");
   cfdata->key_action = strdup("");
   cfdata->key_params = strdup("");
 
-  _fill_keybindings_data(cfdata);
+  _fill_data(cfdata);
   cfdata->cfd = cfd;
 
   return cfdata;
@@ -480,119 +438,98 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-  unsigned int i, j;
-  unsigned int size, size2;
-  E_Config_KeyBind  *eckb;
-  E_Config_Binding_Key *bk;
+   Evas_List   *l, *l2;
+   E_FREE(cfdata->key_action);
+   E_FREE(cfdata->key_params);
 
+   for (l = action_group_list; l; l = l->next)
+     {
+	ACTION_GROUP *actg = l->data;
+	for (l2 = actg->actions; l2; l2 = l2->next)
+	  {
+	     ACTION2 *act = l2->data;
+	     while (act->key_bindings)
+	       {
+		  E_Config_Binding_Key *eb = act->key_bindings->data;
 
-  E_FREE(cfdata->key_bind);
-  E_FREE(cfdata->key_action);
-  E_FREE(cfdata->key_params);
-
-
-  size = evas_list_count(cfdata->key_bindings);
-  for (i = 0; i < size; i++)
-    {
-      eckb = evas_list_nth(cfdata->key_bindings, i);
-      if (eckb)
-	{
-	  size2 = evas_list_count(eckb->bk_list);
-	  for (j = 0; j < size2; j++)
-	    {
-	      bk = evas_list_nth(eckb->bk_list, j);
-	      if (bk)
-		{
-		  if (bk->key) evas_stringshare_del(bk->key);
-		  if (bk->action) evas_stringshare_del(bk->action);
-		  if (bk->params) evas_stringshare_del(bk->params);
-		  E_FREE(bk);
-		}
-	    }
-	  evas_list_free(eckb->bk_list);
-	  E_FREE(eckb);
-	}
-    }
-  evas_list_free(cfdata->key_bindings);
-  free(cfdata);
+		  if (eb)
+		    {
+		       if (eb->key) evas_stringshare_del(eb->key);
+		       if (eb->action) evas_stringshare_del(eb->action);
+		       if (eb->params) evas_stringshare_del(eb->params);
+		       E_FREE(eb);
+		    }
+		  act->key_bindings = evas_list_remove_list(act->key_bindings, act->key_bindings);
+	       }
+	  }
+     }
+   free(cfdata);
 }
 
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-  E_Config_KeyBind  *eckb;
-  E_Config_Binding_Key	*bk, *bk2;
-  size_t size, size2;
-  unsigned int i, j;
+   Evas_List *l, *l2, *l3;
+   if (!cfdata) return 0;
 
-  //we should call for autoapply here, since this prevents a bug, when only one
-  //NEW keybinding is made and apply/ok button is pressed. Thus, this keybinding does
-  //not lost.
-  if (cfdata->cur_eckb)
-    if (_e_keybinding_keybind_cb_auto_apply(cfdata) != 0)
-      {
-	//TODO: message box which should ask if we really should proceed.
-	//If yes, then the current 'empty' binding will be deleted
-	//_keybind_delete_keybinding(cfdata);
-      }
+   if (cfdata->current_actg && cfdata->current_act)
+     if (_e_keybinding_keybind_cb_auto_apply(cfdata) != 1)
+       { 
+	  //TODO: message box which should ask if we really should proceed.
+	  //If yes, then the current 'empty' binding will be deleted
+	  //_keybind_delete_keybinding(cfdata);
+       }
 
-  // here the removing of the old keybindings goes
-  e_managers_keys_ungrab();
-  while (e_config->key_bindings)
-    {
-       E_Config_Binding_Key *eb;
-       
-       eb = e_config->key_bindings->data;
+   e_managers_keys_ungrab();
+   while(e_config->key_bindings)
+     {
+	E_Config_Binding_Key  *eb;
 
-       e_bindings_key_del(eb->context, eb->key, eb->modifiers, eb->any_mod,
-			  eb->action, eb->params);
-
-       e_config->key_bindings  = evas_list_remove_list(e_config->key_bindings,
+	eb = e_config->key_bindings->data;
+	e_bindings_key_del(eb->context, eb->key, eb->modifiers, eb->any_mod,
+			   eb->action, eb->params);
+	e_config->key_bindings = evas_list_remove_list(e_config->key_bindings,
 						       e_config->key_bindings);
-       if (eb->key) evas_stringshare_del(eb->key);
-       if (eb->action) evas_stringshare_del(eb->action);
-       if (eb->params) evas_stringshare_del(eb->params);
-       E_FREE(eb);
-    }
+	if (eb->key) evas_stringshare_del(eb->key);
+	if (eb->action) evas_stringshare_del(eb->action);
+	if (eb->params) evas_stringshare_del(eb->params);
+	E_FREE(eb);
+     }
 
-  // here the adding of new keybinds are going.
-  size = evas_list_count(cfdata->key_bindings);
-  for (i = 0; i < size; i++)
-    {
-      eckb = evas_list_nth(cfdata->key_bindings, i);
-      if (eckb)
-	{
-	  size2 = evas_list_count(eckb->bk_list);
-	  for (j = 0; j < size2; j++)
-	    {
-	      bk = evas_list_nth(eckb->bk_list, j);
-	      if (bk && bk->key && strlen(bk->key) > 0)
-		{
-		  bk2 = E_NEW(E_Config_Binding_Key, 1);
-		  if (bk2)
-		    {
-		      bk2->context = bk->context;
-		      bk2->key = evas_stringshare_add(bk->key);
-		      bk2->modifiers = bk->modifiers;
-		      bk2->any_mod = bk->any_mod;
-		      bk2->action = bk->action == NULL ? NULL : 
-							 (char *)evas_stringshare_add(bk->action);
-		      bk2->params = bk->params == NULL ? NULL : 
-							 (char *)evas_stringshare_add(bk->params);
-		      e_config->key_bindings = evas_list_append(e_config->key_bindings, bk2);
-		      e_bindings_key_add(bk->context, bk->key, bk->modifiers, bk->any_mod,
-					 bk->action, bk->params);
-		    }
-		}
-	    }
-	}
-    }
-  e_managers_keys_grab();
-  e_config_save_queue();
-  cfdata->changed = 0;
-  return 1;
+   for (l = action_group_list; l; l = l->next)
+     {
+	ACTION_GROUP *actg = l->data;
+	for (l2 = actg->actions; l2; l2 = l2->next)
+	  {
+	     ACTION2 *act = l2->data;
+	     for (l3 = act->key_bindings; l3; l3 = l3->next)
+	       {
+		  E_Config_Binding_Key *eb, *eb2;
+		  eb = l3->data;
+		  if (!eb || !eb->key || !eb->key[0]) continue;
+
+		  eb2 = E_NEW(E_Config_Binding_Key, 1);
+		  if (!eb2) continue;
+
+		  eb2->context = eb->context;
+		  eb2->key = evas_stringshare_add(eb->key);
+		  eb2->modifiers = eb->modifiers;
+		  eb2->any_mod = eb->any_mod;
+		  eb2->action = !eb->action || !eb->action[0] ? NULL :
+							        evas_stringshare_add(eb->action);
+		  eb2->params = !eb->params || !eb->params[0] ? NULL :
+							        evas_stringshare_add(eb->params);
+		  e_config->key_bindings = evas_list_append(e_config->key_bindings, eb2);
+		  e_bindings_key_add(eb->context, eb->key, eb->modifiers, eb->any_mod,
+				     eb->action, eb->params);
+	       }
+	  }
+     }
+   e_managers_keys_grab();
+   e_config_save_queue();
+   cfdata->changed = 0;
+   return 1;
 }
-
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
@@ -603,7 +540,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
   int mw, mh;
 
   cfdata->evas = evas;
-  //_fill_keybindings_data(cfdata);
 
   ot = e_widget_table_add(evas, 0);
   {
@@ -612,11 +548,35 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
       cfdata->gui.action_ilist = e_widget_ilist_add(evas, ACTION_LIST_ICON_W,
 						    ACTION_LIST_ICON_H, NULL); 
       {
-	Evas_List *l;
+	Evas_List *l, *l2;
+	ACTION_GROUP *actg = NULL;
+	ACTION2	     *act = NULL;
+
 	e_widget_on_change_hook_set(cfdata->gui.action_ilist, _e_keybinding_action_ilist_cb_change,
 				    cfdata);
 
-	for (l = cfdata->key_bindings; l; l = l->next)
+	for (l = action_group_list; l; l = l->next)
+	  {
+	     //TODO:possible: do not show Unsorted:Unknow group if there are no unsorted actions.
+	     actg = l->data;
+	     e_widget_ilist_header_append(cfdata->gui.action_ilist, NULL, actg->action_group);
+
+	     for (l2 = actg->actions; l2; l2 = l2->next)
+	       {
+		  Evas_Object *ic = NULL;
+		  act = l2->data;
+
+		  ic = edje_object_add(evas);
+		  if (evas_list_count(act->key_bindings)) 
+		    e_util_edje_icon_set(ic, ILIST_ICON_WITH_KEYBIND);
+		  else
+		    e_util_edje_icon_set(ic, ILIST_ICON_WITHOUT_KEYBIND);
+
+		  e_widget_ilist_append(cfdata->gui.action_ilist, ic,
+				        act->action_name, NULL, NULL, NULL);
+	       }
+	  }
+	/*for (l = cfdata->key_bindings; l; l = l->next)
 	  {
 	    Evas_Object *ic;
 	    E_Config_KeyBind *eckb;
@@ -631,7 +591,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	    e_widget_ilist_append(cfdata->gui.action_ilist, ic,
 				  _(actions_predefined_names[eckb->acn].action_name),
 				  NULL, NULL, NULL);
-	  }
+	  }*/
 	e_widget_min_size_set(cfdata->gui.action_ilist, 250, 330);
 	e_widget_ilist_go(cfdata->gui.action_ilist);
       }
@@ -792,95 +752,100 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 static void
 _e_keybinding_binding_ilist_cb_change(void *data, Evas_Object *obj)
 {
-  int indx;
-  E_Config_Dialog_Data *cfdata;
-  E_Config_Binding_Key *bk;
+   E_Config_Dialog_Data *cfdata;
+   int indx;
 
-  cfdata = data;
-  if (!cfdata) return;
+   if (!(cfdata = data)) return;
 
-  if (cfdata->cur_eckb)
-    if (_e_keybinding_keybind_cb_auto_apply(cfdata) != 0)
-      {
-	//TODO: message box which should ask if we really should proceed.
-	//If yes, then the current 'empty' binding will be deleted
-	//_keybind_delete_keybinding(cfdata);
-      }
+   if (cfdata->current_actg && cfdata->current_act)
+     if (_e_keybinding_keybind_cb_auto_apply(cfdata) != 1)
+       {
+	  //TODO: message box which should ask if we really should proceed.
+	  //If yes, then the current 'empty' binding will be deleted
+	  //_keybind_delete_keybinding(cfdata);
+       }
 
-  indx = e_widget_ilist_selected_get(cfdata->gui.binding_ilist);
-  if (indx < 0 || indx >= e_widget_ilist_count(cfdata->gui.binding_ilist))
-  {
-    return;
-  }
+   if (!cfdata->current_actg && !cfdata->current_act)
+     return;
 
-  cfdata->cur_eckb_kb_sel = indx;
+   indx = e_widget_ilist_selected_get(cfdata->gui.binding_ilist);
+   if (indx < 0 || indx >= e_widget_ilist_count(cfdata->gui.binding_ilist))
+     return;
 
-  if (cfdata->cur_eckb)
-  {
-    _e_keybinding_update_context_radios(cfdata);
-    _e_keybinding_update_action_param_entries(cfdata);
-    _e_keybinding_update_keybinding_button(cfdata);
-    _e_keybinding_update_add_delete_buttons(cfdata);
-  }
+   cfdata->current_act_selector = indx;
+
+   _e_keybinding_update_context_radios(cfdata);
+   _e_keybinding_update_action_param_entries(cfdata);
+   _e_keybinding_update_keybinding_button(cfdata);
+   _e_keybinding_update_add_delete_buttons(cfdata);
+
 }
 static void
 _e_keybinding_action_ilist_cb_change(void *data, Evas_Object *obj)
 {
-  int acn;
-  E_Config_Dialog_Data *cfdata;
-  E_Config_KeyBind     *eckb;
-  Evas_List *l;
-  char *label;
+   E_Config_Dialog_Data *cfdata;
+   Evas_List   *l, *l2;
+   ACTION_GROUP	  *actg = NULL;
+   ACTION2	  *act = NULL;
+   char *label;
+   int done;
 
-  cfdata = data;
+   cfdata = data;
 
-  if (!cfdata) return;
+   if (!cfdata) return;
 
+   if (cfdata->current_actg)
+     if (_e_keybinding_keybind_cb_auto_apply(cfdata) != 1)
+       {
+	  //TODO: message box which should ask if we really should proceed.
+	  //If yes, then the current 'empty' binding will be deleted
+	  //_keybind_delete_keybinding(cfdata);
+       }
+   _e_keybinding_default_keybinding_settings(cfdata);
 
-  if (cfdata->cur_eckb)
-    if (_e_keybinding_keybind_cb_auto_apply(cfdata) != 0)
-      {
-	//TODO: message box which should ask if we really should proceed.
-	//If yes, then the current 'empty' binding will be deleted
-	//_keybind_delete_keybinding(cfdata);
-      }
-  _e_keybinding_default_keybinding_settings(cfdata);
+   label = strdup(e_widget_ilist_selected_label_get(obj));
 
-  label = strdup(e_widget_ilist_selected_label_get(obj));
-  for (acn = 0; strcasecmp(label, _(actions_predefined_names[acn].action_name) == NULL ? "" :
-			   _(actions_predefined_names[acn].action_name)) != 0; acn++ );
+   done = 0;
+   for (l = action_group_list; l && !done; l = l->next)
+     {
+	actg = l->data;
 
-  for (l = cfdata->key_bindings; l; l = l->next)
-    {
-      eckb = l->data;
-      if (eckb->acn == acn)
-	break;
-      eckb = NULL;
-    }
+	for (l2 = actg->actions; l2 && !done; l2 = l2->next)
+	  {
+	     act = l2->data;
 
-  cfdata->cur_eckb = eckb;
-  if (evas_list_count(cfdata->cur_eckb->bk_list))
-    cfdata->cur_eckb_kb_sel = 0;
+	     if (!strcmp(act->action_name, label))
+	       {
+		  cfdata->current_actg = actg;
+		  cfdata->current_act  = act;
+		  done = 1;
+	       }
+	  }
+     }
 
-  _e_keybinding_update_binding_list(cfdata);
-  _e_keybinding_update_add_delete_buttons(cfdata);
+   _e_keybinding_update_binding_list(cfdata);
+   //FIXME:is this is really needed ?
+   _e_keybinding_update_add_delete_buttons(cfdata);
 
-  /*if (cfdata->changed == 0)
-    {*/
-      //e_dialog_button_disable_num_set(cfdata->cfd->dia, 0, 1);
-      //e_dialog_button_disable_num_set(cfdata->cfd->dia, 1, 1);
-    //}
+   _e_keybinding_update_action_ilist_cur_selection_icon(cfdata);
+
+#if 0
+   if (cfdata->changed == 0)
+     {
+	e_dialog_button_disable_num_set(cfdata->cfd->dia, 0, 1);
+	e_dialog_button_disable_num_set(cfdata->cfd->dia, 1, 1);
+     }
+#endif
 }
-
 static void
 _e_keybinding_default_keybinding_settings(E_Config_Dialog_Data *cfdata)
 {
   if (!cfdata) return;
 
-  cfdata->cur_eckb = NULL;
-  cfdata->cur_eckb_kb_sel = -1;
-  E_FREE(cfdata->key_bind);
-  cfdata->key_bind = strdup("");
+  cfdata->current_actg		 = NULL;
+  cfdata->current_act		 = NULL;
+  cfdata->current_act_selector	 = -1;
+
   E_FREE(cfdata->key_action);
   cfdata->key_action = strdup("");
   E_FREE(cfdata->key_params);
@@ -900,90 +865,58 @@ _e_keybinding_update_add_delete_buttons(E_Config_Dialog_Data *cfdata)
   e_widget_disabled_set(cfdata->gui.btn_add, 1);
   e_widget_disabled_set(cfdata->gui.btn_del, 1);
 
-  if (!cfdata->cur_eckb) return;
+  if (!cfdata->current_actg && !cfdata->current_act) return;
 
   e_widget_disabled_set(cfdata->gui.btn_add, 0);
 
-  if (cfdata->cur_eckb_kb_sel >= 0)
+  if (cfdata->current_act_selector >= 0)
     e_widget_disabled_set(cfdata->gui.btn_del, 0);
 }
 
 static void
 _e_keybinding_update_keybinding_button(E_Config_Dialog_Data *cfdata)
 {
-  char *b;
-  E_Config_Binding_Key *bk;
-  E_Widget_Button_Data	*wd;
+   E_Config_Binding_Key	*eb;
 
-  if (cfdata == NULL) return;
+   if (!cfdata) return;
 
-  wd = e_widget_data_get(cfdata->gui.btn_keybind);
+   if ((!cfdata->current_actg && !cfdata->current_act) || cfdata->current_act_selector < 0)
+     {
+	e_widget_disabled_set(cfdata->gui.btn_keybind, 1);
+	e_widget_button_label_set(cfdata->gui.btn_keybind, BTN_ASSIGN_KEYBINDING_TEXT);
+     }
+   else
+     {
+	eb = evas_list_nth(cfdata->current_act->key_bindings, cfdata->current_act_selector);
 
-  if (cfdata->cur_eckb == NULL || cfdata->cur_eckb_kb_sel < 0)
-    {
-      e_widget_disabled_set(cfdata->gui.btn_keybind, 1);
-      edje_object_part_text_set(wd->o_button, "label", BTN_ASSIGN_KEYBINDING_TEXT);
-
-      E_FREE(cfdata->key_bind);
-      cfdata->key_bind = strdup("");
-    }
-  else
-    {
-      bk = evas_list_nth(cfdata->cur_eckb->bk_list, cfdata->cur_eckb_kb_sel);
-      
-      E_FREE(cfdata->key_bind);
-      cfdata->key_bind = strdup(bk->key);
-
-      e_widget_disabled_set(cfdata->gui.btn_keybind, 0);
-      if (bk && bk->key && bk->key[0])
-	{
-	  b = _e_keybinding_get_keybinding_text(bk);
-	  edje_object_part_text_set(wd->o_button, "label", b);
-	  free(b);
-	}
-      else
-	edje_object_part_text_set(wd->o_button, "label", BTN_ASSIGN_KEYBINDING_TEXT);
-    }
+	e_widget_disabled_set(cfdata->gui.btn_keybind, 0);
+	if (eb && eb->key && eb->key[0])
+	  {
+	     char *b = _e_keybinding_get_keybinding_text(eb);
+	     e_widget_button_label_set(cfdata->gui.btn_keybind, b);
+	     free(b);
+	  }
+	else
+	  e_widget_button_label_set(cfdata->gui.btn_keybind, BTN_ASSIGN_KEYBINDING_TEXT);
+     }
 }
-
-
 static void
 _e_keybinding_update_context_radios(E_Config_Dialog_Data *cfdata)
 {
-  E_Widget_Radio_Data	*wd;
-  E_Config_Binding_Key	*bk;
+  E_Config_Binding_Key	*eb;
 
-  if (cfdata == NULL) return;
+  if (!cfdata) return;
 
-  wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_NONE]);
-  edje_object_signal_emit(wd->o_radio, "toggle_off", "");
-
-  wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_UNKNOWN]);
-  edje_object_signal_emit(wd->o_radio, "toggle_off", "");
-
-  wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_BORDER]);
-  edje_object_signal_emit(wd->o_radio, "toggle_off", "");
-
-  wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_ZONE]);
-  edje_object_signal_emit(wd->o_radio, "toggle_off", "");
-
-  wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_CONTAINER]);
-  edje_object_signal_emit(wd->o_radio, "toggle_off", "");
-
-  wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_MANAGER]);
-  edje_object_signal_emit(wd->o_radio, "toggle_off", "");
-
-  wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_MENU]);
-  edje_object_signal_emit(wd->o_radio, "toggle_off", "");
-
-  wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_WINLIST]);
-  edje_object_signal_emit(wd->o_radio, "toggle_off", "");
-
-  wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_POPUP]);
-  edje_object_signal_emit(wd->o_radio, "toggle_off", "");
-
-  wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_ANY]);
-  edje_object_signal_emit(wd->o_radio, "toggle_off", "");
+  e_widget_radio_toggle_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_NONE], 0);
+  e_widget_radio_toggle_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_UNKNOWN], 0);
+  e_widget_radio_toggle_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_BORDER], 0);
+  e_widget_radio_toggle_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_ZONE], 0);
+  e_widget_radio_toggle_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_CONTAINER], 0);
+  e_widget_radio_toggle_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_MANAGER], 0);
+  e_widget_radio_toggle_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_MENU], 0);
+  e_widget_radio_toggle_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_WINLIST], 0);
+  e_widget_radio_toggle_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_POPUP], 0);
+  e_widget_radio_toggle_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_ANY], 0);
 
   e_widget_disabled_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_NONE], 1);
   e_widget_disabled_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_UNKNOWN], 1);
@@ -996,7 +929,7 @@ _e_keybinding_update_context_radios(E_Config_Dialog_Data *cfdata)
   e_widget_disabled_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_POPUP], 1);
   e_widget_disabled_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_ANY], 1);
 
-  if (cfdata->cur_eckb_kb_sel < 0) return;
+  if (cfdata->current_act_selector < 0) return;
 
   e_widget_disabled_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_NONE], 0);
   e_widget_disabled_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_UNKNOWN], 0);
@@ -1009,258 +942,193 @@ _e_keybinding_update_context_radios(E_Config_Dialog_Data *cfdata)
   e_widget_disabled_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_POPUP], 0);
   e_widget_disabled_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_ANY], 0);
 
-  if ((bk = evas_list_nth(cfdata->cur_eckb->bk_list, cfdata->cur_eckb_kb_sel)) == NULL )
+  if ((eb = evas_list_nth(cfdata->current_act->key_bindings, cfdata->current_act_selector)) == NULL)
     return;
 
-  if (bk->context == E_BINDING_CONTEXT_NONE)
+  if (eb->context == E_BINDING_CONTEXT_NONE)
     {
       cfdata->binding_context = E_BINDING_CONTEXT_NONE;
-      wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_NONE]);
-      edje_object_signal_emit(wd->o_radio, "toggle_on", "");
+      e_widget_radio_toggle_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_NONE], 1);
     }
 
-  if (bk->context == E_BINDING_CONTEXT_UNKNOWN)
+  if (eb->context == E_BINDING_CONTEXT_UNKNOWN)
     {
       cfdata->binding_context = E_BINDING_CONTEXT_UNKNOWN;
-      wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_UNKNOWN]);
-      edje_object_signal_emit(wd->o_radio, "toggle_on", "");
+      e_widget_radio_toggle_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_UNKNOWN], 1);
     }
 
-  if (bk->context == E_BINDING_CONTEXT_BORDER)
+  if (eb->context == E_BINDING_CONTEXT_BORDER)
     {
       cfdata->binding_context = E_BINDING_CONTEXT_BORDER;
-      wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_BORDER]);
-      edje_object_signal_emit(wd->o_radio, "toggle_on", "");
+      e_widget_radio_toggle_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_BORDER], 1);
     }
 
-  if (bk->context == E_BINDING_CONTEXT_ZONE)
+  if (eb->context == E_BINDING_CONTEXT_ZONE)
     {
       cfdata->binding_context = E_BINDING_CONTEXT_ZONE;
-      wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_ZONE]);
-      edje_object_signal_emit(wd->o_radio, "toggle_on", "");
+      e_widget_radio_toggle_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_ZONE], 1);
     }
 
-  if (bk->context == E_BINDING_CONTEXT_CONTAINER)
+  if (eb->context == E_BINDING_CONTEXT_CONTAINER)
     {
       cfdata->binding_context = E_BINDING_CONTEXT_CONTAINER;
-      wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_CONTAINER]);
-      edje_object_signal_emit(wd->o_radio, "toggle_on", "");
+      e_widget_radio_toggle_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_CONTAINER], 1);
     }
 
-  if (bk->context == E_BINDING_CONTEXT_MANAGER)
+  if (eb->context == E_BINDING_CONTEXT_MANAGER)
     {
       cfdata->binding_context = E_BINDING_CONTEXT_MANAGER;
-      wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_MANAGER]);
-      edje_object_signal_emit(wd->o_radio, "toggle_on", "");
+      e_widget_radio_toggle_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_MANAGER], 1);
     }
 
-  if (bk->context == E_BINDING_CONTEXT_MENU)
+  if (eb->context == E_BINDING_CONTEXT_MENU)
     {
       cfdata->binding_context = E_BINDING_CONTEXT_MENU;
-      wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_MENU]);
-      edje_object_signal_emit(wd->o_radio, "toggle_on", "");
+      e_widget_radio_toggle_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_MENU], 1);
     }
 
-  if (bk->context == E_BINDING_CONTEXT_WINLIST)
+  if (eb->context == E_BINDING_CONTEXT_WINLIST)
     {
       cfdata->binding_context = E_BINDING_CONTEXT_WINLIST;
-      wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_WINLIST]);
-      edje_object_signal_emit(wd->o_radio, "toggle_on", "");
+      e_widget_radio_toggle_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_WINLIST], 1);
     }
 
-  if (bk->context == E_BINDING_CONTEXT_POPUP)
+  if (eb->context == E_BINDING_CONTEXT_POPUP)
     {
       cfdata->binding_context = E_BINDING_CONTEXT_POPUP;
-      wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_POPUP]);
-      edje_object_signal_emit(wd->o_radio, "toggle_on", "");
+      e_widget_radio_toggle_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_POPUP], 1);
     }
 
-  if (bk->context == E_BINDING_CONTEXT_ANY)
+  if (eb->context == E_BINDING_CONTEXT_ANY)
     {
       cfdata->binding_context = E_BINDING_CONTEXT_ANY;
-      wd = e_widget_data_get(cfdata->gui.bind_context[E_BINDING_CONTEXT_ANY]);
-      edje_object_signal_emit(wd->o_radio, "toggle_on", "");
+      e_widget_radio_toggle_set(cfdata->gui.bind_context[E_BINDING_CONTEXT_ANY], 1);
     }
 }
 
 static void
 _e_keybinding_update_action_param_entries(E_Config_Dialog_Data *cfdata)
 {
-  E_Widget_Entry_Data *wd;
-  E_Config_Binding_Key	*bk;
+  E_Config_Binding_Key	*eb;
 
-  if (cfdata == NULL) return;
+  if (!cfdata) return;
 
-  wd = e_widget_data_get(cfdata->gui.key_action);
-  e_entry_text_set(wd->o_entry, "");
-
-  wd = e_widget_data_get(cfdata->gui.key_params);
-  e_entry_text_set(wd->o_entry, "");
+  e_widget_entry_text_set(cfdata->gui.key_action, "");
+  e_widget_entry_text_set(cfdata->gui.key_params, "");
 
   e_widget_disabled_set(cfdata->gui.key_action, 1);
   e_widget_disabled_set(cfdata->gui.key_params, 1);
 
-  if (cfdata->cur_eckb == NULL) return;
-  if (cfdata->cur_eckb->bk_list == NULL) return;
-
-  if ((bk = evas_list_nth(cfdata->cur_eckb->bk_list, cfdata->cur_eckb_kb_sel)) == NULL)
+  if ((!cfdata->current_actg && !cfdata->current_act)) return;
+  if (!(eb = evas_list_nth(cfdata->current_act->key_bindings, cfdata->current_act_selector)))
     return;
 
-  if (cfdata->key_action != NULL)
-    E_FREE(cfdata->key_action);
-  cfdata->key_action = bk->action == NULL ? NULL : strdup(bk->action);
+  if (cfdata->key_action) E_FREE(cfdata->key_action);
+  cfdata->key_action = eb->action == NULL ? NULL : strdup(eb->action);
 
-  if (bk->action)
-    {
+  if (eb->action) e_widget_entry_text_set(cfdata->gui.key_action, eb->action);
 
-      wd = e_widget_data_get(cfdata->gui.key_action);
-      e_entry_text_set(wd->o_entry, bk->action);
-    }
+  if (cfdata->key_params) E_FREE(cfdata->key_params);
+  cfdata->key_params = eb->params == NULL ? NULL : strdup(eb->params);
 
-  if (cfdata->key_params != NULL)
-    E_FREE(cfdata->key_params);
-  cfdata->key_params = bk->params == NULL ? NULL : strdup(bk->params);
+  if (eb->params) e_widget_entry_text_set(cfdata->gui.key_params, eb->params);
 
-  if (bk->params)
-    {
-
-      wd = e_widget_data_get(cfdata->gui.key_params);
-      e_entry_text_set(wd->o_entry, bk->params);
-    }
-
-  if (!(actions_predefined_names[cfdata->cur_eckb->acn].restrictions & EDIT_RESTRICT_ACTION))
+  if (!(cfdata->current_act->restrictions & EDIT_RESTRICT_ACTION))
     e_widget_disabled_set(cfdata->gui.key_action, 0);
 
-  if (!(actions_predefined_names[cfdata->cur_eckb->acn].restrictions & EDIT_RESTRICT_PARAMS))
+  if (!(cfdata->current_act->restrictions & EDIT_RESTRICT_PARAMS))
     e_widget_disabled_set(cfdata->gui.key_params, 0);
 }
 
 static void
 _e_keybinding_keybind_cb_del_keybinding(void *data, void *data2)
 {
-  E_Config_Dialog_Data	*cfdata;
+   E_Config_Dialog_Data *cfdata = data;
 
-  cfdata = data;
+   if (!cfdata) return;
+   if (!cfdata->current_actg && !cfdata->current_act && cfdata->current_act_selector < 0)
+     return;
 
-  if (cfdata == NULL) return;
-  if (cfdata->cur_eckb == NULL || cfdata->cur_eckb_kb_sel < 0)return;
+   _e_keybinding_keybind_delete_keybinding(cfdata);
 
-  if (_e_keybinding_keybind_delete_keybinding(cfdata) != 0)
-    return;
+   _e_keybinding_update_binding_list(cfdata);
+   e_widget_ilist_selected_set(cfdata->gui.binding_ilist, cfdata->current_act_selector);
+   e_widget_ilist_go(cfdata->gui.binding_ilist);
 
-  _e_keybinding_update_binding_list(cfdata);
-  e_widget_ilist_selected_set(cfdata->gui.binding_ilist, cfdata->cur_eckb_kb_sel);
-  e_widget_ilist_go(cfdata->gui.binding_ilist);
+   //FIXME: is these really needed ? check what is going on when an Item from list is selected.
+   _e_keybinding_update_keybinding_button(cfdata);
+   _e_keybinding_update_add_delete_buttons(cfdata);
+   _e_keybinding_update_context_radios(cfdata);
+   _e_keybinding_update_action_param_entries(cfdata);
 
-  _e_keybinding_update_keybinding_button(cfdata);
-  _e_keybinding_update_add_delete_buttons(cfdata);
-  _e_keybinding_update_context_radios(cfdata);
-  _e_keybinding_update_action_param_entries(cfdata);
-
-  // nice iface features //
-  _e_keybinding_update_action_ilist_cur_selection_icon(cfdata);
-  _e_keybinding_update_binding_ilist_cur_selection_icon(cfdata);
+   // nice iface features //
+   _e_keybinding_update_action_ilist_cur_selection_icon(cfdata);
+   _e_keybinding_update_binding_ilist_cur_selection_icon(cfdata);
 
   //cfdata->changed = 1;
 }
-
-/* deletes an entry e from kb_list and returns a new list
- * without that entry.
- * On error returns NULL
- */
-static int
+static void
 _e_keybinding_keybind_delete_keybinding(E_Config_Dialog_Data *cfdata)
 {
-  int i;
-  unsigned int kb_list_size;
-  E_Config_Binding_Key *bk_del;
+   E_Config_Binding_Key	*eb;
 
-  Evas_List  *new_kb_list, *bk_del_list;
+   if (!cfdata) return;
+   if (!cfdata->current_actg && !cfdata->current_act && cfdata->current_act_selector < 0)
+     return;
 
-  if (!cfdata || !cfdata->cur_eckb || !cfdata->cur_eckb->bk_list ||
-      cfdata->cur_eckb_kb_sel < 0)
-    return -1;
+   eb = evas_list_nth(cfdata->current_act->key_bindings, cfdata->current_act_selector);
+   cfdata->current_act->key_bindings = evas_list_remove(cfdata->current_act->key_bindings, eb);
 
-  new_kb_list = NULL;
+   if (!evas_list_count(cfdata->current_act->key_bindings))
+     {
+	evas_list_free(cfdata->current_act->key_bindings);
+	cfdata->current_act->key_bindings = NULL;
+     }
+   if (eb->key) evas_stringshare_del(eb->key);
+   if (eb->action) evas_stringshare_del(eb->action);
+   if (eb->params) evas_stringshare_del(eb->params);
+   E_FREE(eb);
 
-  bk_del = evas_list_nth(cfdata->cur_eckb->bk_list, cfdata->cur_eckb_kb_sel);
-  cfdata->cur_eckb->bk_list = evas_list_remove(cfdata->cur_eckb->bk_list, bk_del);
-
-  if (!evas_list_count(cfdata->cur_eckb->bk_list))
-    {
-      evas_list_free(cfdata->cur_eckb->bk_list);
-      cfdata->cur_eckb->bk_list = NULL;
-    }
-
-  if (bk_del->key) evas_stringshare_del(bk_del->key);
-  if (bk_del->action) evas_stringshare_del(bk_del->action);
-  if (bk_del->params) evas_stringshare_del(bk_del->params);
-  bk_del->key = bk_del->action = bk_del->params = NULL;
-  E_FREE(bk_del);
-
-  if (cfdata->cur_eckb_kb_sel >= evas_list_count(cfdata->cur_eckb->bk_list))
-    cfdata->cur_eckb_kb_sel = evas_list_count(cfdata->cur_eckb->bk_list) - 1;
-
-  return 0;
+   if (cfdata->current_act_selector >= evas_list_count(cfdata->current_act->key_bindings))
+     cfdata->current_act_selector = evas_list_count(cfdata->current_act->key_bindings) - 1;
 }
 static void
 _e_keybinding_update_binding_ilist_cur_selection_icon(E_Config_Dialog_Data *cfdata)
 {
   return;
 }
+
 static void
 _e_keybinding_update_action_ilist_cur_selection_icon(E_Config_Dialog_Data *cfdata)
 {
-  E_Smart_Item *si;
-  E_Smart_Data *sd;
-  E_Widget_IList_Data *wd;
-  Evas_Object *obj;
+   Evas_Object *icon;
+   if (!cfdata || !cfdata->current_act) return;
 
-  if (!cfdata) return;
-  if (!cfdata->cur_eckb) return;
 
-  wd = e_widget_data_get(cfdata->gui.action_ilist);
+   if (evas_list_count(cfdata->current_act->key_bindings) > 1)
+     {
+	icon = edje_object_add(cfdata->evas);
+	e_util_edje_icon_set(icon, ILIST_ICON_WITH_KEYBIND);
+     }
+   else if(evas_list_count(cfdata->current_act->key_bindings) == 1)
+     { 
+	E_Config_Binding_Key  *eb;
+	eb = evas_list_nth(cfdata->current_act->key_bindings, cfdata->current_act_selector);
 
-  obj = wd->o_ilist;
-  
-  sd = evas_object_smart_data_get(obj);
-  if ((!obj) || (!sd) || 
-      (evas_object_type_get(obj) && strcmp(evas_object_type_get(obj), "e_ilist")))
-    return;
-
-  si = evas_list_nth(sd->items, sd->selected);
-  if (si)
-    {
-      edje_object_part_unswallow(si->base_obj, si->icon_obj);
-      evas_object_hide(si->icon_obj);
-      if (evas_list_count(cfdata->cur_eckb->bk_list) > 1)
-	{
-	  if (si->icon_obj == NULL) si->icon_obj = edje_object_add(cfdata->evas);
-	  e_util_edje_icon_set(si->icon_obj, ILIST_ICON_WITH_KEYBIND);
-	}
-      else if (evas_list_count(cfdata->cur_eckb->bk_list) == 1)
-	{
-	  if (cfdata->key_bind && strlen(cfdata->key_bind) > 0)
-	    {
-	      if (si->icon_obj == NULL) si->icon_obj = edje_object_add(cfdata->evas);
-	      e_util_edje_icon_set(si->icon_obj, ILIST_ICON_WITH_KEYBIND);
-	    }
-	  else
-	    si->icon_obj = NULL;
-	    //e_util_edje_icon_set(si->icon_obj, ILIST_ICON_WITHOUT_KEYBIND);
-	}
-      else
-	si->icon_obj = NULL;
-	//e_util_edje_icon_set(si->icon_obj, ILIST_ICON_WITHOUT_KEYBIND);
-      
-      if (si->icon_obj)
-	{
-	  edje_extern_object_min_size_set(si->icon_obj, sd->icon_w, sd->icon_h);
-	  edje_object_part_swallow(si->base_obj, "icon_swallow", si->icon_obj);
-	  evas_object_show(si->icon_obj);
-	}
-    }
+	if (eb && eb->key && eb->key[0])
+	  {
+	     icon = edje_object_add(cfdata->evas);
+	     e_util_edje_icon_set(icon, ILIST_ICON_WITH_KEYBIND);
+	  }
+	else
+	  icon = NULL;
+     }
+   else
+     icon = NULL;
+   e_widget_ilist_nth_icon_set(cfdata->gui.action_ilist,
+			       e_widget_ilist_selected_get(cfdata->gui.action_ilist), icon);
 }
+
 static char *
 _e_keybinding_get_keybinding_text(E_Config_Binding_Key *bk)
 {
@@ -1315,112 +1183,106 @@ _e_keybinding_get_keybinding_text(E_Config_Binding_Key *bk)
 static void
 _e_keybinding_update_binding_list(E_Config_Dialog_Data *cfdata)
 {
-  int i;
-  Evas_List *l;
-  char buf[1024];
+   int i;
+   char buf[4096];
+   Evas_List   *l;
 
-  if (!cfdata || !cfdata->cur_eckb) return;
+   if (!cfdata || (!cfdata->current_actg && !cfdata->current_act)) return;
 
-  e_widget_ilist_clear(cfdata->gui.binding_ilist);
+   e_widget_ilist_clear(cfdata->gui.binding_ilist);
 
-  for (l = cfdata->cur_eckb->bk_list, i = 0; l; l = l->next)
-    {
-      char *b;
-      E_Config_Binding_Key *bk = l->data;
-      if (!bk) continue;
+   for (l = cfdata->current_act->key_bindings, i = 0; l; l = l->next, i++)
+     {
+	char *b;
+	E_Config_Binding_Key  *eb = l->data;
 
-      b = _e_keybinding_get_keybinding_text(bk);
-      snprintf(buf, sizeof(buf), "%s %d : %s", TEXT_ACTION, i, b);
-      free(b);
-      e_widget_ilist_append(cfdata->gui.binding_ilist, NULL, buf, NULL, NULL, NULL);
-      i++;
-    }
+	if (!eb) continue;
 
-  _e_keybinding_update_keybinding_button(cfdata);
-  _e_keybinding_update_add_delete_buttons(cfdata);
-  _e_keybinding_update_context_radios(cfdata);
-  _e_keybinding_update_action_param_entries(cfdata);
+	b = _e_keybinding_get_keybinding_text(eb);
+	snprintf(buf, sizeof(buf), "%s %d : %s", TEXT_ACTION, i, b);
+	free(b);
+	e_widget_ilist_append(cfdata->gui.binding_ilist, NULL, buf, NULL, NULL, NULL);
+     }
+   //FIXME: is these really needed ? Should the last two rows be there ?
+   _e_keybinding_update_keybinding_button(cfdata);
+   _e_keybinding_update_add_delete_buttons(cfdata);
+   _e_keybinding_update_context_radios(cfdata);
+   _e_keybinding_update_action_param_entries(cfdata);
 
-  // nice iface features //
-  _e_keybinding_update_action_ilist_cur_selection_icon(cfdata);
-  _e_keybinding_update_binding_ilist_cur_selection_icon(cfdata);
+   _e_keybinding_update_action_ilist_cur_selection_icon(cfdata);
+   _e_keybinding_update_binding_ilist_cur_selection_icon(cfdata);
 
-  e_widget_ilist_selected_set(cfdata->gui.binding_ilist, cfdata->cur_eckb_kb_sel);
-  e_widget_ilist_go(cfdata->gui.binding_ilist);
+   e_widget_ilist_selected_set(cfdata->gui.binding_ilist, cfdata->current_act_selector);
+   e_widget_ilist_go(cfdata->gui.binding_ilist);
 }
 
 static void
 _e_keybinding_keybind_cb_add_keybinding(void *data, void *data2)
 {
-  E_Config_Dialog_Data	*cfdata;
-  E_Config_Binding_Key	*bk;
+   E_Config_Binding_Key	*eb;
+   E_Config_Dialog_Data *cfdata = data;
 
-  cfdata = data;
+   if (!cfdata) return;
+   if (!cfdata->current_actg && !cfdata->current_act) return;
 
-  if (cfdata == NULL) return;
+   if (_e_keybinding_keybind_cb_auto_apply(cfdata) != 1)
+     {
+	//TODO: message box, that a keybinding cannot be added
+	//until the current is assigned.
+     }
 
-  if (_e_keybinding_keybind_cb_auto_apply(cfdata) != 0)
-    {
-      //TODO: message box, that a keybinding cannot be added
-      //until the current is assigned.
-      return;
-    }
+   eb = E_NEW(E_Config_Binding_Key, 1);
+   if (!eb) return;
 
-  bk = E_NEW(E_Config_Binding_Key, 1);
-  if (!bk)
-    return;
+   eb->context = E_BINDING_CONTEXT_ANY;
+   eb->key     = evas_stringshare_add("");
+   eb->modifiers = E_BINDING_MODIFIER_NONE;
+   eb->action = !cfdata->current_act->action_cmd ? evas_stringshare_add("") :
+			      evas_stringshare_add(cfdata->current_act->action_cmd);
+   eb->params = !cfdata->current_act->action_params ? evas_stringshare_add("") :
+			      evas_stringshare_add(cfdata->current_act->action_params);
 
-  bk->context = E_BINDING_CONTEXT_ANY;
-  bk->key = evas_stringshare_add("");
-  bk->modifiers = E_BINDING_MODIFIER_NONE;
-  bk->action = actions_predefined_names[cfdata->cur_eckb->acn].action_cmd == NULL ? 
-     evas_stringshare_add("") :
-     evas_stringshare_add(actions_predefined_names[cfdata->cur_eckb->acn].action_cmd);
-  bk->params = actions_predefined_names[cfdata->cur_eckb->acn].action_params == NULL ? 
-     evas_stringshare_add("") :
-     evas_stringshare_add(actions_predefined_names[cfdata->cur_eckb->acn].action_params);
+   cfdata->current_act->key_bindings = evas_list_append(cfdata->current_act->key_bindings, eb);
+   cfdata->current_act_selector = evas_list_count(cfdata->current_act->key_bindings) - 1;
 
-  cfdata->cur_eckb->bk_list = evas_list_append(cfdata->cur_eckb->bk_list, bk);
-  cfdata->cur_eckb_kb_sel = evas_list_count(cfdata->cur_eckb->bk_list) - 1;
+   _e_keybinding_update_binding_list(cfdata);
 
-  _e_keybinding_update_binding_list(cfdata);
-  e_widget_ilist_selected_set(cfdata->gui.binding_ilist, cfdata->cur_eckb_kb_sel);
-  e_widget_ilist_go(cfdata->gui.binding_ilist);
+   e_widget_ilist_selected_set(cfdata->gui.binding_ilist, cfdata->current_act_selector);
+   e_widget_ilist_go(cfdata->gui.binding_ilist);
 
-  _e_keybinding_update_keybinding_button(cfdata);
-  _e_keybinding_update_add_delete_buttons(cfdata);
-  _e_keybinding_update_context_radios(cfdata);
-  _e_keybinding_update_action_param_entries(cfdata);
+   //FIXME: is these really needed ?
+   _e_keybinding_update_keybinding_button(cfdata);
+   _e_keybinding_update_add_delete_buttons(cfdata);
+   _e_keybinding_update_context_radios(cfdata);
+   _e_keybinding_update_action_param_entries(cfdata);
 
-  // nice iface features //
-  _e_keybinding_update_action_ilist_cur_selection_icon(cfdata);
-  _e_keybinding_update_binding_ilist_cur_selection_icon(cfdata);
+   // nice iface features //
+   _e_keybinding_update_action_ilist_cur_selection_icon(cfdata);
+   _e_keybinding_update_binding_ilist_cur_selection_icon(cfdata);
 }
-static int 
+
+static int
 _e_keybinding_keybind_cb_auto_apply(E_Config_Dialog_Data *cfdata)
 {
-  E_Config_Binding_Key	*bk;
-  if (!cfdata || !cfdata->cur_eckb)
-    return -1;
+   E_Config_Binding_Key	*eb;
 
-  if (cfdata->cur_eckb_kb_sel < 0) return 0;
+   if (!cfdata) return 0;
+   if ((!cfdata->current_actg && !cfdata->current_act) ||
+       cfdata->current_act_selector < 0) return 1;
 
-  bk = evas_list_nth(cfdata->cur_eckb->bk_list, cfdata->cur_eckb_kb_sel);
-  if (bk == NULL)
-    return -1;
+   eb = evas_list_nth(cfdata->current_act->key_bindings, cfdata->current_act_selector);
+   if (!eb) return 0;
 
-  bk->context = cfdata->binding_context;
-  if (bk->key) evas_stringshare_del(bk->key);
-  bk->key = evas_stringshare_add(cfdata->key_bind);
+   eb->context = cfdata->binding_context;
+   eb->any_mod = 0;
+   if (eb->action) evas_stringshare_del(eb->action);
+   eb->action = (!cfdata->key_action || !cfdata->key_action[0]) ? NULL :
+	        evas_stringshare_add(cfdata->key_action);
 
-  bk->any_mod = 0;
-  if (bk->action) evas_stringshare_del(bk->action);
-  bk->action = (cfdata->key_action == NULL || strlen(cfdata->key_action) == 0) ? NULL :
-	       evas_stringshare_add(cfdata->key_action);
-  if (bk->params) evas_stringshare_del(bk->params);
-  bk->params = (cfdata->key_params == NULL || strlen(cfdata->key_params) == 0) ? NULL :
-	       evas_stringshare_add(cfdata->key_params);
-  return 0;
+   if (eb->params) evas_stringshare_del(eb->params);
+   eb->params = (!cfdata->key_params || !cfdata->key_params[0]) ? NULL :
+	        evas_stringshare_add(cfdata->key_params);
+   return 1;
 }
 
 static void
@@ -1482,9 +1344,9 @@ _e_keybinding_keybind_shortcut_wnd_hide(E_Config_Dialog_Data *cfdata)
 static int
 _e_keybinding_cb_shortcut_key_down(void *data, int type, void *event)
 {
-   E_Config_Binding_Key	*bk;
-   E_Config_Dialog_Data *cfdata = data;
-   Ecore_X_Event_Key_Down  *ev = event;
+   E_Config_Binding_Key	   *eb;
+   E_Config_Dialog_Data	   *cfdata  = data;
+   Ecore_X_Event_Key_Down  *ev	    = event;
    
    if (ev->win != cfdata->locals.keybind_win) return 1;
    
@@ -1506,17 +1368,13 @@ _e_keybinding_cb_shortcut_key_down(void *data, int type, void *event)
 	  ;
 	else
 	  {
-	     if (cfdata && cfdata->cur_eckb && cfdata->cur_eckb_kb_sel >= 0 &&
-		 cfdata->cur_eckb->bk_list)
+	     if (cfdata && (cfdata->current_actg && cfdata->current_act) &&
+	         cfdata->current_act_selector >= 0)
 	       {
-		  Evas_List *l, *l2;
-		  
-		  E_Config_KeyBind *eckb;
-		  E_Config_Binding_Key *bk_tmp;
-		  
-		  int found = 0;
+		  Evas_List   *l, *l2, *l3;
+		  int found;
 		  int mod = E_BINDING_MODIFIER_NONE;
-		  
+
 		  if (ev->modifiers & ECORE_X_MODIFIER_SHIFT)
 		    mod |= E_BINDING_MODIFIER_SHIFT;
 		  if (ev->modifiers & ECORE_X_MODIFIER_CTRL)
@@ -1525,41 +1383,41 @@ _e_keybinding_cb_shortcut_key_down(void *data, int type, void *event)
 		    mod |= E_BINDING_MODIFIER_ALT;
 		  if (ev->modifiers & ECORE_X_MODIFIER_WIN)
 		    mod |= E_BINDING_MODIFIER_WIN;
-		  
-		  for (l = cfdata->key_bindings; l && !found; l = l->next)
+
+		  found = 0;
+		  for (l = action_group_list; l && !found; l = l->next)
 		    {
-		       eckb = l->data;
-		       for (l2 = eckb->bk_list; l2 && !found; l2 = l2->next)
+		       ACTION_GROUP *actg = l->data;
+		       for (l2 = actg->actions; l2 && !found; l2 = l2->next)
 			 {
-			    bk_tmp = l2->data;
-			    
-			    if (bk_tmp->modifiers == mod && !strcmp(ev->keyname, bk_tmp->key))
-			      found = 1;
+			    ACTION2 *act = l2->data;
+			    for (l3 = act->key_bindings; l3 && !found; l3 = l3->next)
+			      {
+				 eb = l3->data;
+				 if (eb->modifiers == mod && !strcmp(ev->keyname, eb->key))
+				   found = 1;
+			      }
 			 }
 		    }
-		  
+
 		  if (!found)
 		    {
-		       bk = evas_list_nth(cfdata->cur_eckb->bk_list, cfdata->cur_eckb_kb_sel);
-		       bk->modifiers = E_BINDING_MODIFIER_NONE;
-		       
-		       bk->modifiers = mod;
-		       
-		       if (bk->key)
-			 evas_stringshare_del(bk->key);
-		       bk->key = evas_stringshare_add(ev->keyname);
-		       
+		       eb = evas_list_nth(cfdata->current_act->key_bindings,
+					  cfdata->current_act_selector);
+		       eb->modifiers = mod;
+		       if (eb->key) evas_stringshare_del(eb->key);
+		       eb->key = evas_stringshare_add(ev->keyname);
+
 		       _e_keybinding_update_binding_list(cfdata);
 		    }
 		  else
-		    {
-		       e_util_dialog_show(_("Binding Key Error"), 
-					  _("The binding key sequence, that you choose,"
-					    " is already used.<br>Please choose another binding key"
-					    " sequence."));
-		    }
-		  _e_keybinding_keybind_shortcut_wnd_hide(cfdata);
+		    e_util_dialog_show(_("Binding Key Error"), 
+				       _("The binding key sequence, that you choose,"
+					 " is already used.<br>Please choose another binding key"
+					 " sequence."));
+
 	       }
+	       _e_keybinding_keybind_shortcut_wnd_hide(cfdata);
 	  }
      }
    return 1;
@@ -1568,4 +1426,32 @@ static int
 _e_keybinding_cb_mouse_handler_dumb(void *data, int type, void *event)
 {
    return 1;
+}
+
+/*******************/
+static int  _action_group_list_sort_cb(void *e1, void *e2)
+{
+   ACTION_GROUP	  *actg1 = e1;
+   ACTION_GROUP	  *actg2 = e2;
+
+   if (!e1) return 1;
+   if (!e2) return -1;
+
+   if (!strcmp(actg1->action_group, AG_UNSORTED)) return 1;
+   if (!strcmp(actg2->action_group, AG_UNSORTED)) return -1;
+
+   return strcmp(actg1->action_group, actg2->action_group);
+}
+static int  _action_group_actions_list_sort_cb(void *e1, void *e2)
+{
+   ACTION2  *act1 = e1;
+   ACTION2  *act2 = e2;
+
+   if (!e1) return 1;
+   if (!e2) return -1;
+
+   if (!strcmp(act1->action_name, AG_AN_UNKNOWN)) return 1;
+   if (!strcmp(act2->action_name, AG_AN_UNKNOWN)) return -1;
+
+   return strcmp(act1->action_name, act2->action_name);
 }

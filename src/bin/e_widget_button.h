@@ -7,6 +7,7 @@
 #define E_WIDGET_BUTTON_H
 
 EAPI Evas_Object *e_widget_button_add(Evas *evas, const char *label, const char *icon, void (*func) (void *data, void *data2), void *data, void *data2);
+EAPI void e_widget_button_label_set(Evas_Object *obj, const char *label);
 
 #endif
 #endif

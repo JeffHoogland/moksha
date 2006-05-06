@@ -1378,84 +1378,268 @@ e_actions_init(void)
    ACT_END(window_move);
    ACT_END_MOUSE(window_move);
    
+   /* window_resize */
    ACT_GO(window_resize);
    ACT_GO_MOUSE(window_resize);
    ACT_GO_SIGNAL(window_resize);
    ACT_END(window_resize);
    ACT_END_MOUSE(window_resize);
   
+   /* window_menu */
    ACT_GO(window_menu);
+   e_register_action_predef_name(_("Menu"), _("Window Menu"), "window_menu", NULL,
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    ACT_GO_MOUSE(window_menu);
    ACT_GO_KEY(window_menu);
 
+   /* window_raise */
    ACT_GO(window_raise);
+   e_register_action_predef_name(_("Window : Actions"), _("Raise"), "window_raise",
+				 NULL, EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
 
+   /* window_lower */
    ACT_GO(window_lower);
+   e_register_action_predef_name(_("Window : Actions"), _("Lower"), "window_lower",
+				 NULL, EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    
+   /* window_close */
    ACT_GO(window_close);
+   e_register_action_predef_name(_("Window : Actions"), _("Close"), "window_close",
+				 NULL, EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
 
+   /* window_kill */
    ACT_GO(window_kill);
+   e_register_action_predef_name(_("Window : Actions"), _("Kill"), "window_kill",
+				 NULL, EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    
+   /* window_sticky_toggle */
    ACT_GO(window_sticky_toggle);
+   e_register_action_predef_name(_("Window : State"), _("Sticky Mode Toggle"),
+				 "window_sticky_toggle", NULL,
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    
    ACT_GO(window_sticky);
    
+   /* window_iconic_toggle */
    ACT_GO(window_iconic_toggle);
+   e_register_action_predef_name(_("Window : State"), _("Iconic Mode Toggle"),
+				 "window_iconic_toggle", NULL,
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    
    ACT_GO(window_iconic);
    
+   /* window_maximized_toggle */
    ACT_GO(window_maximized_toggle);
+   e_register_action_predef_name(_("Window : State"), _("Maximize"), "window_maximized_toggle",
+				 NULL, EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : State"), _("Maximize Vertically"),
+				 "window_maximized_toggle", "vertical",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : State"), _("Maximize Horizontally"),
+				 "window_maximized_toggle", "horizontal",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : State"), _("Maximize Fullscreen"),
+				 "window_maximized_toggle", "fullscreen",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : State"), _("Maximize Mode \"Smart\""),
+				 "window_maximized_toggle", "smart",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : State"), _("Maximize Mode \"Expand\""),
+				 "window_maximized_toggle", "expand",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : State"), _("Maximize Mode \"Fill\""),
+				 "window_maximized_toggle", "fill",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
 
    ACT_GO(window_maximized);
    
+   /* window_shaded_toggle */
    ACT_GO(window_shaded_toggle);
+   e_register_action_predef_name(_("Window : State"), _("Shade Up Mode Toggle"), 
+				 "window_shaded_toggle", "up",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : State"), _("Shade Down Mode Toggle"), 
+				 "window_shaded_toggle", "down",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : State"), _("Shade Left Mode Toggle"), 
+				 "window_shaded_toggle", "Left",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : State"), _("Shade Right Mode Toggle"), 
+				 "window_shaded_toggle", "Left",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    
    ACT_GO(window_shaded);
    
+   /* desk_flip_by */
    ACT_GO(desk_flip_by);
+   e_register_action_predef_name(_("Desktop"), _("Flip Desktop Left"), "desk_flip_by", "-1 0",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Desktop"), _("Flip Desktop Right"), "desk_flip_by", "1 0",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Desktop"), _("Flip Desktop Up"), "desk_flip_by", "0 -1",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Desktop"), _("Flip Desktop Down"), "desk_flip_by", "0 1",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Desktop"), _("Flip Desktop By…"),
+				 "desk_flip_by", NULL, EDIT_RESTRICT_ACTION, 0);
 
+   /* desk_linear_flip_to */
    ACT_GO(desk_flip_to);
+   e_register_action_predef_name(_("Desktop"), _("Flip Desktop To…"),
+				 "desk_flip_to", NULL, EDIT_RESTRICT_ACTION, 0);
 
+   /* desk_linear_flip_by */
    ACT_GO(desk_linear_flip_by);
+   e_register_action_predef_name(_("Desktop"), _("Flip Desktop Linearly…"),
+				 "desk_linear_flip_by", NULL, EDIT_RESTRICT_ACTION, 0);
    
+   /* desk_linear_flip_to */
    ACT_GO(desk_linear_flip_to);
+   e_register_action_predef_name(_("Desktop"), _("Switch To Desktop 0"), "desk_linear_flip_to",
+				 "0", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Desktop"), _("Switch To Desktop 1"), "desk_linear_flip_to",
+				 "1", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Desktop"), _("Switch To Desktop 2"), "desk_linear_flip_to",
+				 "2", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Desktop"), _("Switch To Desktop 3"), "desk_linear_flip_to",
+				 "3", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Desktop"), _("Switch To Desktop 4"), "desk_linear_flip_to",
+				 "4", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Desktop"), _("Switch To Desktop 5"), "desk_linear_flip_to",
+				 "5", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Desktop"), _("Switch To Desktop 6"), "desk_linear_flip_to",
+				 "6", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Desktop"), _("Switch To Desktop 7"), "desk_linear_flip_to",
+				 "7", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Desktop"), _("Switch To Desktop 8"), "desk_linear_flip_to",
+				 "8", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Desktop"), _("Switch To Desktop 9"), "desk_linear_flip_to",
+				 "9", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Desktop"), _("Switch To Desktop 10"), "desk_linear_flip_to",
+				 "10", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Desktop"), _("Switch To Desktop 11"), "desk_linear_flip_to",
+				 "11", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Desktop"), _("Switch To Desktop…"),
+				 "desk_linear_flip_to", NULL, EDIT_RESTRICT_ACTION, 0);
 
+   /* window_move_to */
    ACT_GO(window_move_to);
-
+   e_register_action_predef_name(_("Window : Actions"), "Move To…", "window_move_to", NULL,
+				 EDIT_RESTRICT_ACTION, 0);
+   /* window_move_by */
    ACT_GO(window_move_by);
+   e_register_action_predef_name(_("Window : Actions"), "Move By…", "window_move_by", NULL,
+				 EDIT_RESTRICT_ACTION, 0);
 
+   /* window_resize_by */
    ACT_GO(window_resize_by);
+   e_register_action_predef_name(_("Window : Actions"), "Resize By…", "window_resize_by", NULL,
+				 EDIT_RESTRICT_ACTION, 0);
    
+   /* window_drag_icon */
    ACT_GO(window_drag_icon);
+   e_register_action_predef_name(_("Window : Actions"), "Drag Icon…", "window_drag_icon", NULL,
+				 EDIT_RESTRICT_ACTION, 0);
 
+   /* window_desk_move_by */
    ACT_GO(window_desk_move_by);
+   e_register_action_predef_name(_("Window : Moving"), _("To Next Desktop"), "window_desk_move_by",
+				 "1 0", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : Moving"), _("To Previous Desktop"),
+				 "window_desk_move_by", "-1 0",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : Moving"), _("By Desktop #…"), "window_desk_move_by",
+				 NULL, EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   /* window_desk_move_to */
    ACT_GO(window_desk_move_to);
+   e_register_action_predef_name(_("Window : Moving"), _("To Desktop 0"), "window_desk_move_to",
+				 "0", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : Moving"), _("To Desktop 1"), "window_desk_move_to",
+				 "1", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : Moving"), _("To Desktop 2"), "window_desk_move_to",
+				 "2", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : Moving"), _("To Desktop 3"), "window_desk_move_to",
+				 "3", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : Moving"), _("To Desktop 4"), "window_desk_move_to",
+				 "4", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : Moving"), _("To Desktop 5"), "window_desk_move_to",
+				 "5", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : Moving"), _("To Desktop 6"), "window_desk_move_to",
+				 "6", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : Moving"), _("To Desktop 7"), "window_desk_move_to",
+				 "7", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : Moving"), _("To Desktop 8"), "window_desk_move_to",
+				 "8", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : Moving"), _("To Desktop 9"), "window_desk_move_to",
+				 "9", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : Moving"), _("To Desktop 10"), "window_desk_move_to",
+				 "10", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : Moving"), _("To Desktop 11"), "window_desk_move_to",
+				 "11", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : Moving"), _("To Desktop…"), "window_desk_move_to",
+				 NULL, EDIT_RESTRICT_ACTION, 0);
 
+   /* menu_show */
    ACT_GO(menu_show);
+   e_register_action_predef_name(_("Menu"), _("Show Main Menu"), "menu_show", "main",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Menu"), _("Show Favorites Menu"), "menu_show", "favorites",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Menu"), _("Show Clients Menu"), "menu_show", "clients",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Menu"), _("Show Menu…"), "menu_show", "clients",
+				 EDIT_RESTRICT_ACTION, 0);
    ACT_GO_MOUSE(menu_show);
    ACT_GO_KEY(menu_show);
 
+   /* exec */
    ACT_GO(exec);
+   e_register_action_predef_name(_("Enlightenment"), _("User Defined Actions"), "exec", NULL,
+				 EDIT_RESTRICT_ACTION, 0);
 
+   /* app */
    ACT_GO(app);
+   e_register_action_predef_name(_("Enlightenment"), _("Application"), "app", NULL,
+				 EDIT_RESTRICT_ACTION, 0);
    
+   /* winlist */
    ACT_GO(winlist);
+   e_register_action_predef_name(_("Window : List"), _("Next Window"), "winlist", "next",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : List"), _("Previous Window"), "winlist", "prev",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    ACT_GO_MOUSE(winlist);
    ACT_GO_KEY(winlist);
    
    ACT_GO(edit_mode);
    ACT_END(edit_mode);
    
+   /* edit_mode */
    ACT_GO(edit_mode_toggle);
+   e_register_action_predef_name(_("Gadgets"), _("Toggle Edit Mode"), "edit_mode_toggle", NULL,
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
 
+   /* restart */
    ACT_GO(restart);
+   e_register_action_predef_name(_("Enlightenment"), _("Restart"), "restart", NULL,
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+				 
+   /* exit */
    ACT_GO(exit);
+   e_register_action_predef_name(_("Enlightenment"), _("Exit"), "exit", NULL,
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
 
    ACT_GO(pointer_resize_push);
    ACT_GO(pointer_resize_pop);
    
+   /* exebuf */
    ACT_GO(exebuf);
+   e_register_action_predef_name(_("Enlightenment"), _("Run Command"), "exebuf", NULL,
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   /* desk_lock */
    ACT_GO(desk_lock);
+   e_register_action_predef_name(_("Desktop"), _("Desktop Lock"), "desk_lock", NULL,
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    
    return 1;
 }
@@ -1463,6 +1647,7 @@ e_actions_init(void)
 EAPI int
 e_actions_shutdown(void)
 {
+   e_unregister_all_action_predef_names();
    action_names = evas_list_free(action_names);
    while (actions)
      {
@@ -1492,6 +1677,16 @@ e_action_add(const char *name)
 	action_names = evas_list_append(action_names, name);
      }
    return act;
+}
+
+EAPI void
+e_action_del(const char *name)
+{
+   E_Action *act;
+
+   act = evas_hash_find(actions, name);
+   if (act)
+     _e_action_free(act);
 }
 
 EAPI E_Action *

@@ -33,6 +33,8 @@ EAPI int         e_actions_shutdown(void);
 
 EAPI Evas_List  *e_action_name_list(void);
 EAPI E_Action   *e_action_add(const char *name);
+/* e_action_del allows, for example, modules to define their own actions dynamically. */
+EAPI void	e_action_del(const char *name);
 EAPI E_Action   *e_action_find(const char *name);
     
 #endif
