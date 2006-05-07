@@ -124,6 +124,7 @@ EAPI int              e_gadcon_init(void);
 EAPI int              e_gadcon_shutdown(void);
 EAPI void             e_gadcon_provider_register(E_Gadcon_Client_Class *cc);
 EAPI void             e_gadcon_provider_unregister(E_Gadcon_Client_Class *cc);
+EAPI Evas_List       *e_gadcon_provider_list(void);
 EAPI E_Gadcon        *e_gadcon_swallowed_new(const char *name, char *id, Evas_Object *obj, char *swallow_name);
 EAPI void             e_gadcon_swallowed_min_size_set(E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 EAPI void             e_gadcon_min_size_request_callback_set(E_Gadcon *gc, void (*func) (void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h), void *data);

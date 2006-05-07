@@ -49,6 +49,7 @@ static void e_gadcon_layout_pack_aspect_pad_set(Evas_Object *obj, int w, int h);
 static void e_gadcon_layout_unpack(Evas_Object *obj);
 
 static Evas_Hash *providers = NULL;
+static Evas_List *providers_list = NULL;
 static Evas_List *gadcons = NULL;
 
 /* externally accessible functions */
@@ -71,6 +72,7 @@ e_gadcon_provider_register(E_Gadcon_Client_Class *cc)
    E_Gadcon *gc;
    
    providers = evas_hash_direct_add(providers, cc->name, cc);
+   providers_list = evas_list_append(providers_list, cc);
    for (l = gadcons; l; l = l->next)
      {
 	gc = l->data;
@@ -102,6 +104,13 @@ e_gadcon_provider_unregister(E_Gadcon_Client_Class *cc)
 	e_object_del(E_OBJECT(gcc));
      }
    providers = evas_hash_del(providers, cc->name, cc);
+   providers_list = evas_list_remove(providers_list, cc);
+}
+
+EAPI Evas_List *
+e_gadcon_provider_list(void)
+{
+   return providers_list;
 }
 
 EAPI E_Gadcon *
@@ -213,6 +222,7 @@ e_gadcon_populate(E_Gadcon *gc)
 	     E_Gadcon_Client_Class *cc;
 	     
 	     cf_gcc = l->data;
+	     if (!cf_gcc->name) continue;
 	     cc = evas_hash_find(providers, cf_gcc->name);
 	     if (cc)
 	       {

@@ -145,6 +145,14 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    return 1; /* Apply was OK */
 }
 
+static void
+_cb_configure(void *data, void *data2)
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   e_int_gadcon_config(cfdata->es->gadcon);
+}
+    
 /**--GUI--**/
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
@@ -212,6 +220,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    e_widget_list_object_append(o, o2, 1, 1, 0.5);
    
+   o2 = e_widget_list_add(evas, 0, 0);
+   
+   of = e_widget_framelist_add(evas, _("Styles"), 0);
+   
    oi = e_widget_ilist_add(evas, 128, 20, &(cfdata->style));
    
    sel = 0;
@@ -237,7 +249,14 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_ilist_go(oi);
    e_widget_ilist_selected_set(oi, sel);
    
-   e_widget_list_object_append(o, oi, 1, 1, 0.5);
+   e_widget_framelist_object_append(of, oi);
+   
+   e_widget_list_object_append(o2, of, 0, 0, 0.5);
+   
+   ob = e_widget_button_add(evas, _("Configure Contents..."), "widget/config", _cb_configure, cfdata, NULL);
+   e_widget_list_object_append(o2, ob, 0, 0, 0.5);
+   
+   e_widget_list_object_append(o, o2, 0, 0, 0.0);
    
    return o;
 }

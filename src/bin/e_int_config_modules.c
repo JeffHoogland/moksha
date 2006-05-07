@@ -250,8 +250,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    Evas_Object *o, *of, *ob, *ot, *ilist, *mt;
    E_Radio_Group *rg;
    E_Module *m;
+   Evas_List *l;
    char buf[4096];
-   int i;
 
    o = e_widget_list_add(evas, 1, 0);
    ot = e_widget_table_add(evas, 1);
@@ -262,12 +262,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_on_change_hook_set(ilist, _ilist_cb_change, cfdata);
 
    cfdata->state = -1;
-   for (i = 0; i < evas_list_count(cfdata->modules); i++)
+   for (l = cfdata->modules; l; l = l->next)
      {
 	CFModule *cm;
 	Evas_Object *oc;
 	
-	cm = evas_list_nth(cfdata->modules, i);
+	cm = l->data;
 	if (cm)
 	  {
 	     cm->state = MOD_UNLOADED;
