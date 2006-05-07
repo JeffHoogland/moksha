@@ -51,31 +51,6 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
-* implement these maximise/fullscreen modes:
-  Which of these should be different modes, and which should be options for
-  a mode? i think they all should be distinct actions of their own bound
-  to a key, button etc. which one of these the maximize button on a window
-  will execute should be a configuration value though :)
-  1. fullscreen (no border - resizes to default screen res). window is locked,
-     no mouse bindings work. any focus change out of this window will go out of
-     fullscreen mode
-  2. zoom (changes screen res to match window, or closest res thats bigger
-     than the window, centers it - no borders/title etc). window is locked, no
-     mouse bindings work. any focus change out of this window will go out of
-     zoom mode
-  3. maximize (only title is displayed - program fills the rest of the screen)
-     disable resize, shade, move etc. in this mode. iconify is ok.
-  4. maximize2 (maximize window up to the edge of panels, gadgets etc. -
-     disable all resizing and moving just like 1, 2 and 3 (maybe make border
-     thinner to indicate this). disable stuff like 3.
-  5. expand (just resize window to fill the same space as 4. - but it still can
-      be shaded, resized, moved etc.)
-  6. fill (expand to the nearest window edge or screen edge)
-  for 5 and 6 you want to able to do this independently for width and height as
-  well as for both at once. for 1. & 2. if window max size (or aspect
-  adjusted size) is smaller that screen max size, fill in space in between
-  with black. for 3. we want to fill the in bewteen space with some theme
-  defined image data
 * actions to make current zone different (warp mouse to there)
 * titlebar/border expansion/gadget panel for modules to put window widgets in
 * language packs: need to have a tool to load/setup a language pack (which
@@ -96,7 +71,7 @@ Some of the things (in very short form) that need to be done to E17...
 * gui config dialogs for all config
 * make it possible to disable border buttons/actions (tell theme what is
   disabled)
-* shelves need to support gadcon "contents" config
+* maximize doesnt account for shelves
 * shelf gui config is ugly and badly arranged
 * pager should be able to be configured to control more than the current zone
   (select which zone they control)
@@ -143,6 +118,10 @@ Some of the things (in very short form) that need to be done to E17...
 * add "osd" subsystem for things like volume controls on keybboards, etc.
   that overlay the screen
 * file icons on the desktop (people ask for it) - xdnd for these
+* a "togglelist" widget (a scrollable list of items where u toggle
+  each of them on or off - much like ilist, but with a checkbox)
+* "disable this gadget" menu option on gadcon clients
+* improve drag/resize of gadget items
 ]]]
 
 [[[
