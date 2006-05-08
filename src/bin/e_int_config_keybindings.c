@@ -84,7 +84,6 @@ struct _E_Config_Dialog_Data
 {
   E_Config_Dialog *cfd;
 
-  ACTION_GROUP *current_actg;
   ACTION2      *current_act;
   int	       current_act_selector;
 
@@ -208,21 +207,24 @@ int e_int_config_keybindings_unregister_action_predef_name(const char *action_gr
 		  act = l2->data;
 		  if (!strcmp(act->action_name, action_name))
 		    {
-		       actg->actions = evas_list_remove(actg->actions, l2);
+		       actg->actions = evas_list_remove_list(actg->actions, l2);
 
 		       if (act->action_name) evas_stringshare_del(act->action_name);
 		       if (act->action_cmd) evas_stringshare_del(act->action_cmd);
 		       if (act->action_params) evas_stringshare_del(act->action_params);
 
-		       for (l3 = act->key_bindings; l3; l3 = l3->next)
+		       while (act->key_bindings)
 			 {
-			    E_Config_Binding_Key   *eb = l3->data;
+			    E_Config_Binding_Key *eb = act->key_bindings->data;
 			    if (eb->key) evas_stringshare_del(eb->key);
 			    if (eb->action) evas_stringshare_del(eb->action);
 			    if (eb->params) evas_stringshare_del(eb->params);
 			    E_FREE(eb);
-			 }
 
+			    act->key_bindings = evas_list_remove_list(act->key_bindings,
+								      act->key_bindings);
+
+			 }
 		       E_FREE(act);
 		       break;
 		    }
@@ -230,7 +232,7 @@ int e_int_config_keybindings_unregister_action_predef_name(const char *action_gr
 
 	     if (evas_list_count(actg->actions) == 0)
 	       {
-		  action_group_list = evas_list_remove(action_group_list, l);
+		  action_group_list = evas_list_remove_list(action_group_list, l);
 		  if (actg->action_group) evas_stringshare_del(actg->action_group);
 		  E_FREE(actg);
 	       }
@@ -259,14 +261,25 @@ void e_int_config_keybindings_unregister_all_action_predef_names()
 	     if (act->action_cmd) evas_stringshare_del(act->action_cmd);
 	     if (act->action_params) evas_stringshare_del(act->action_params);
 
-	     for (l3 = act->key_bindings; l3; l3 = l3->next) 
+	     while (act->key_bindings) 
+	       { 
+		  E_Config_Binding_Key *eb = act->key_bindings->data;
+		  if (eb->key) evas_stringshare_del(eb->key);
+		  if (eb->action) evas_stringshare_del(eb->action);
+		  if (eb->params) evas_stringshare_del(eb->params);
+		  E_FREE(eb);
+
+		  act->key_bindings = evas_list_remove_list(act->key_bindings,
+							    act->key_bindings);
+	       }
+	     /*for (l3 = act->key_bindings; l3; l3 = l3->next) 
 	       { 
 		  E_Config_Binding_Key   *eb = l3->data;
 		  if (eb->key) evas_stringshare_del(eb->key);
 		  if (eb->action) evas_stringshare_del(eb->action);
 		  if (eb->params) evas_stringshare_del(eb->params);
 		  E_FREE(eb); 
-	       }
+	       }*/
 
 	     E_FREE(act);
 
@@ -472,7 +485,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    Evas_List *l, *l2, *l3;
    if (!cfdata) return 0;
 
-   if (cfdata->current_actg && cfdata->current_act)
+   if (cfdata->current_act)
      if (_e_keybinding_keybind_cb_auto_apply(cfdata) != 1)
        { 
 	  //TODO: message box which should ask if we really should proceed.
@@ -757,7 +770,7 @@ _e_keybinding_binding_ilist_cb_change(void *data, Evas_Object *obj)
 
    if (!(cfdata = data)) return;
 
-   if (cfdata->current_actg && cfdata->current_act)
+   if (cfdata->current_act)
      if (_e_keybinding_keybind_cb_auto_apply(cfdata) != 1)
        {
 	  //TODO: message box which should ask if we really should proceed.
@@ -765,7 +778,7 @@ _e_keybinding_binding_ilist_cb_change(void *data, Evas_Object *obj)
 	  //_keybind_delete_keybinding(cfdata);
        }
 
-   if (!cfdata->current_actg && !cfdata->current_act)
+   if (!cfdata->current_act)
      return;
 
    indx = e_widget_ilist_selected_get(cfdata->gui.binding_ilist);
@@ -794,7 +807,7 @@ _e_keybinding_action_ilist_cb_change(void *data, Evas_Object *obj)
 
    if (!cfdata) return;
 
-   if (cfdata->current_actg)
+   if (cfdata->current_act)
      if (_e_keybinding_keybind_cb_auto_apply(cfdata) != 1)
        {
 	  //TODO: message box which should ask if we really should proceed.
@@ -816,7 +829,6 @@ _e_keybinding_action_ilist_cb_change(void *data, Evas_Object *obj)
 
 	     if (!strcmp(act->action_name, label))
 	       {
-		  cfdata->current_actg = actg;
 		  cfdata->current_act  = act;
 		  done = 1;
 	       }
@@ -824,9 +836,7 @@ _e_keybinding_action_ilist_cb_change(void *data, Evas_Object *obj)
      }
 
    _e_keybinding_update_binding_list(cfdata);
-   //FIXME:is this is really needed ?
    _e_keybinding_update_add_delete_buttons(cfdata);
-
    _e_keybinding_update_action_ilist_cur_selection_icon(cfdata);
 
 #if 0
@@ -842,10 +852,10 @@ _e_keybinding_default_keybinding_settings(E_Config_Dialog_Data *cfdata)
 {
   if (!cfdata) return;
 
-  cfdata->current_actg		 = NULL;
   cfdata->current_act		 = NULL;
   cfdata->current_act_selector	 = -1;
 
+  cfdata->binding_context = -1;
   E_FREE(cfdata->key_action);
   cfdata->key_action = strdup("");
   E_FREE(cfdata->key_params);
@@ -865,7 +875,7 @@ _e_keybinding_update_add_delete_buttons(E_Config_Dialog_Data *cfdata)
   e_widget_disabled_set(cfdata->gui.btn_add, 1);
   e_widget_disabled_set(cfdata->gui.btn_del, 1);
 
-  if (!cfdata->current_actg && !cfdata->current_act) return;
+  if (!cfdata->current_act) return;
 
   e_widget_disabled_set(cfdata->gui.btn_add, 0);
 
@@ -880,7 +890,7 @@ _e_keybinding_update_keybinding_button(E_Config_Dialog_Data *cfdata)
 
    if (!cfdata) return;
 
-   if ((!cfdata->current_actg && !cfdata->current_act) || cfdata->current_act_selector < 0)
+   if (!cfdata->current_act || cfdata->current_act_selector < 0)
      {
 	e_widget_disabled_set(cfdata->gui.btn_keybind, 1);
 	e_widget_button_label_set(cfdata->gui.btn_keybind, BTN_ASSIGN_KEYBINDING_TEXT);
@@ -1019,7 +1029,7 @@ _e_keybinding_update_action_param_entries(E_Config_Dialog_Data *cfdata)
   e_widget_disabled_set(cfdata->gui.key_action, 1);
   e_widget_disabled_set(cfdata->gui.key_params, 1);
 
-  if ((!cfdata->current_actg && !cfdata->current_act)) return;
+  if (!cfdata->current_act) return;
   if (!(eb = evas_list_nth(cfdata->current_act->key_bindings, cfdata->current_act_selector)))
     return;
 
@@ -1046,7 +1056,7 @@ _e_keybinding_keybind_cb_del_keybinding(void *data, void *data2)
    E_Config_Dialog_Data *cfdata = data;
 
    if (!cfdata) return;
-   if (!cfdata->current_actg && !cfdata->current_act && cfdata->current_act_selector < 0)
+   if (!cfdata->current_act && cfdata->current_act_selector < 0)
      return;
 
    _e_keybinding_keybind_delete_keybinding(cfdata);
@@ -1055,7 +1065,6 @@ _e_keybinding_keybind_cb_del_keybinding(void *data, void *data2)
    e_widget_ilist_selected_set(cfdata->gui.binding_ilist, cfdata->current_act_selector);
    e_widget_ilist_go(cfdata->gui.binding_ilist);
 
-   //FIXME: is these really needed ? check what is going on when an Item from list is selected.
    _e_keybinding_update_keybinding_button(cfdata);
    _e_keybinding_update_add_delete_buttons(cfdata);
    _e_keybinding_update_context_radios(cfdata);
@@ -1073,7 +1082,7 @@ _e_keybinding_keybind_delete_keybinding(E_Config_Dialog_Data *cfdata)
    E_Config_Binding_Key	*eb;
 
    if (!cfdata) return;
-   if (!cfdata->current_actg && !cfdata->current_act && cfdata->current_act_selector < 0)
+   if (!cfdata->current_act && cfdata->current_act_selector < 0)
      return;
 
    eb = evas_list_nth(cfdata->current_act->key_bindings, cfdata->current_act_selector);
@@ -1187,7 +1196,7 @@ _e_keybinding_update_binding_list(E_Config_Dialog_Data *cfdata)
    char buf[4096];
    Evas_List   *l;
 
-   if (!cfdata || (!cfdata->current_actg && !cfdata->current_act)) return;
+   if (!cfdata || !cfdata->current_act) return;
 
    e_widget_ilist_clear(cfdata->gui.binding_ilist);
 
@@ -1203,7 +1212,6 @@ _e_keybinding_update_binding_list(E_Config_Dialog_Data *cfdata)
 	free(b);
 	e_widget_ilist_append(cfdata->gui.binding_ilist, NULL, buf, NULL, NULL, NULL);
      }
-   //FIXME: is these really needed ? Should the last two rows be there ?
    _e_keybinding_update_keybinding_button(cfdata);
    _e_keybinding_update_add_delete_buttons(cfdata);
    _e_keybinding_update_context_radios(cfdata);
@@ -1223,7 +1231,7 @@ _e_keybinding_keybind_cb_add_keybinding(void *data, void *data2)
    E_Config_Dialog_Data *cfdata = data;
 
    if (!cfdata) return;
-   if (!cfdata->current_actg && !cfdata->current_act) return;
+   if (!cfdata->current_act) return;
 
    if (_e_keybinding_keybind_cb_auto_apply(cfdata) != 1)
      {
@@ -1250,7 +1258,6 @@ _e_keybinding_keybind_cb_add_keybinding(void *data, void *data2)
    e_widget_ilist_selected_set(cfdata->gui.binding_ilist, cfdata->current_act_selector);
    e_widget_ilist_go(cfdata->gui.binding_ilist);
 
-   //FIXME: is these really needed ?
    _e_keybinding_update_keybinding_button(cfdata);
    _e_keybinding_update_add_delete_buttons(cfdata);
    _e_keybinding_update_context_radios(cfdata);
@@ -1267,8 +1274,7 @@ _e_keybinding_keybind_cb_auto_apply(E_Config_Dialog_Data *cfdata)
    E_Config_Binding_Key	*eb;
 
    if (!cfdata) return 0;
-   if ((!cfdata->current_actg && !cfdata->current_act) ||
-       cfdata->current_act_selector < 0) return 1;
+   if (!cfdata->current_act || cfdata->current_act_selector < 0) return 1;
 
    eb = evas_list_nth(cfdata->current_act->key_bindings, cfdata->current_act_selector);
    if (!eb) return 0;
@@ -1368,8 +1374,7 @@ _e_keybinding_cb_shortcut_key_down(void *data, int type, void *event)
 	  ;
 	else
 	  {
-	     if (cfdata && (cfdata->current_actg && cfdata->current_act) &&
-	         cfdata->current_act_selector >= 0)
+	     if (cfdata && cfdata->current_act && cfdata->current_act_selector >= 0)
 	       {
 		  Evas_List   *l, *l2, *l3;
 		  int found;
