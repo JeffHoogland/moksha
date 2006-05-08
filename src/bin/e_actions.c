@@ -368,64 +368,64 @@ ACT_FN_GO(window_maximized_toggle)
 	
 	bd = (E_Border *)obj;
 	/*if (bd->maximized) e_border_unmaximize(bd);*/
-	if( bd->maximized != E_MAXIMIZE_NONE &&
-	    bd->maximized != E_MAXIMIZE_VERTICAL &&
-	    bd->maximized != E_MAXIMIZE_HORIZONTAL )
-	{
-	  if( !params )
-	    e_border_unmaximize(bd);
-	  else
+	if ((bd->maximized != E_MAXIMIZE_NONE) &&
+	    (bd->maximized != E_MAXIMIZE_VERTICAL) &&
+	    (bd->maximized != E_MAXIMIZE_HORIZONTAL))
 	  {
-	    if( !strcmp( params, "vertical"))
-	      e_border_unmaximize_vh(bd, E_MAXIMIZE_VERTICAL );
-	    else if( !strcmp( params, "horizontal"))
-	      e_border_unmaximize_vh(bd, E_MAXIMIZE_HORIZONTAL );
-	    else
-	      e_border_unmaximize(bd);
+	     if (!params)
+	       e_border_unmaximize(bd);
+	     else
+	       {
+		  if (!strcmp(params, "vertical"))
+		    e_border_unmaximize_vh(bd, E_MAXIMIZE_VERTICAL);
+		  else if  (!strcmp(params, "horizontal"))
+		    e_border_unmaximize_vh(bd, E_MAXIMIZE_HORIZONTAL);
+		  else
+		    e_border_unmaximize(bd);
+	       }
 	  }
-	}
 	else
-	{
-	  if( !bd->maximized )
 	  {
-	    if (!params)
-	      e_border_maximize(bd, e_config->maximize_policy);
-	    else
-	    {
-	      if (!strcmp(params, "fullscreen")) e_border_maximize(bd, E_MAXIMIZE_FULLSCREEN);
-	      else if (!strcmp(params, "smart")) e_border_maximize(bd, E_MAXIMIZE_SMART);
-	      else if (!strcmp(params, "expand")) e_border_maximize(bd, E_MAXIMIZE_EXPAND);
-	      else if (!strcmp(params, "fill")) e_border_maximize(bd, E_MAXIMIZE_FILL);
-	      else if (!strcmp(params, "vertical")) e_border_maximize(bd, E_MAXIMIZE_VERTICAL);
-	      else if (!strcmp(params, "horizontal")) e_border_maximize(bd, E_MAXIMIZE_HORIZONTAL);
-	      else e_border_maximize(bd, e_config->maximize_policy);
-	    }
+	     if (!bd->maximized)
+	       {
+		  if (!params)
+		    e_border_maximize(bd, e_config->maximize_policy);
+		  else
+		    {
+		       if (!strcmp(params, "fullscreen")) e_border_maximize(bd, E_MAXIMIZE_FULLSCREEN);
+		       else if (!strcmp(params, "smart")) e_border_maximize(bd, E_MAXIMIZE_SMART);
+		       else if (!strcmp(params, "expand")) e_border_maximize(bd, E_MAXIMIZE_EXPAND);
+		       else if (!strcmp(params, "fill")) e_border_maximize(bd, E_MAXIMIZE_FILL);
+		       else if (!strcmp(params, "vertical")) e_border_maximize(bd, E_MAXIMIZE_VERTICAL);
+		       else if (!strcmp(params, "horizontal")) e_border_maximize(bd, E_MAXIMIZE_HORIZONTAL);
+		       else e_border_maximize(bd, e_config->maximize_policy);
+		    }
+	       }
+	     else
+	       {
+		  if (!params)
+		    e_border_maximize( bd, e_config->maximize_policy);
+		  else
+		    {
+		       if (!strcmp(params, "vertical"))
+			 {
+			    if (bd->maximized == E_MAXIMIZE_VERTICAL)
+			      e_border_unmaximize_vh(bd, E_MAXIMIZE_VERTICAL);
+			    else
+			      e_border_maximize(bd, E_MAXIMIZE_VERTICAL);
+			 }
+		       else if (!strcmp(params, "horizontal"))
+			 {
+			    if (bd->maximized == E_MAXIMIZE_HORIZONTAL)
+			      e_border_unmaximize_vh(bd, E_MAXIMIZE_HORIZONTAL);
+			    else
+			      e_border_maximize(bd, E_MAXIMIZE_HORIZONTAL);
+			 }
+		       else
+			 e_border_maximize(bd, e_config->maximize_policy);
+		    }
+	       }
 	  }
-	  else
-	  {
-	    if( !params )
-	      e_border_maximize( bd, e_config->maximize_policy );
-	    else
-	    {
-	      if( !strcmp(params, "vertical") )
-	      {
-		if( bd->maximized == E_MAXIMIZE_VERTICAL )
-		  e_border_unmaximize_vh(bd, E_MAXIMIZE_VERTICAL );
-		else
-		  e_border_maximize(bd, E_MAXIMIZE_VERTICAL );
-	      }
-	      else if( !strcmp(params, "horizontal") )
-	      {
-		if( bd->maximized == E_MAXIMIZE_HORIZONTAL )
-		  e_border_unmaximize_vh(bd, E_MAXIMIZE_HORIZONTAL );
-		else
-		  e_border_maximize(bd, E_MAXIMIZE_HORIZONTAL );
-	      }
-	      else
-		e_border_maximize(bd, e_config->maximize_policy);
-	    }
-	  }
-	}
      }
 }
 /***************************************************************************/
