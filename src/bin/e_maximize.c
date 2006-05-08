@@ -140,7 +140,6 @@ e_maximize_border_gadman_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
 
 	es = l->data;
 	if (es->zone != bd->zone) continue;
-	printf("OBS: %i %i %ix%i\n", es->x, es->y, es->w, es->h);
 	OBSTACLE(es->x, es->y, es->x + es->w, es->y + es->h);
      }
    if (rects)
