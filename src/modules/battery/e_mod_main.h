@@ -18,6 +18,7 @@ struct _Config
    double           poll_time;
    int              alarm;
    /* just config state */
+   E_Module        *module;
    E_Config_Dialog *config_dialog;
    Evas_List       *instances;
    E_Menu          *menu;

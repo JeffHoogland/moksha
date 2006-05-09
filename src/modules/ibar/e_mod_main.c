@@ -10,13 +10,15 @@
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, char *name, char *id, char *style);
 static void _gc_shutdown(E_Gadcon_Client *gcc);
 static void _gc_orient(E_Gadcon_Client *gcc);
+static char *_gc_label(void);
+static Evas_Object *_gc_icon(Evas *evas);
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
 {
    GADCON_CLIENT_CLASS_VERSION,
      "ibar",
      {
-	_gc_init, _gc_shutdown, _gc_orient
+	_gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon
      }
 };
 /**/
@@ -204,13 +206,31 @@ _gc_orient(E_Gadcon_Client *gcc)
      e_gadcon_client_aspect_set(gcc, 16, 16);
    e_gadcon_client_min_size_set(gcc, 16, 16);
 }
+
+static char *
+_gc_label(void)
+{
+   return _("IBar");
+}
+
+static Evas_Object *
+_gc_icon(Evas *evas)
+{
+   Evas_Object *o;
+   char buf[4096];
+   
+   o = edje_object_add(evas);
+   snprintf(buf, sizeof(buf), "%s/module.eap",
+	    e_module_dir_get(ibar_config->module));
+   edje_object_file_set(o, buf, "icon");
+   return o;
+}
 /**/
 /***************************************************************************/
 
 /***************************************************************************/
 /**/
 
-// FIXME: ibar specific calls here
 static IBar *
 _ibar_new(Evas *evas, char *dir)
 {
@@ -296,13 +316,11 @@ _ibar_resize_handle(IBar *b)
    Evas_Coord w, h;
    
    evas_object_geometry_get(b->o_box, NULL, NULL, &w, &h);
-   printf("BOX %ix%i\n", w, h);
    if (e_box_orientation_get(b->o_box))
      w = h;
    else
      h = w;
    e_box_freeze(b->o_box);
-   printf("RESIZNE %i %i\n", w, h);
    for (l = b->icons; l; l = l->next)
      {
 	ic = l->data;
@@ -513,7 +531,6 @@ _ibar_cb_app_change(void *data, E_App *a, E_App_Change ch)
    switch (ch)
      {
       case E_APP_ADD:
-	printf("ADD! %3.4f\n", ecore_time_get());
 	if (e_app_is_parent(b->apps, a))
 	  {
 	     E_App *a2, *a_before = NULL;
@@ -554,7 +571,6 @@ _ibar_cb_app_change(void *data, E_App *a, E_App_Change ch)
 	  }
 	break;
       case E_APP_DEL:
-	printf("DEL! %3.4f\n", ecore_time_get());
 	if (e_app_is_parent(b->apps, a))
 	  {
 	     IBar_Icon *ic;
@@ -570,7 +586,6 @@ _ibar_cb_app_change(void *data, E_App *a, E_App_Change ch)
 	  }
 	break;
       case E_APP_CHANGE:
-	printf("CHANGE! %3.4f\n", ecore_time_get());
 	if (e_app_is_parent(b->apps, a))
 	  {
 	     IBar_Icon *ic;
@@ -586,7 +601,6 @@ _ibar_cb_app_change(void *data, E_App *a, E_App_Change ch)
 	  }
 	break;
       case E_APP_ORDER:
-	printf("ORDER! %3.4f\n", ecore_time_get());
 	if (a == b->apps)
 	  {
 	     _ibar_empty(b);
@@ -1114,7 +1128,7 @@ EAPI E_Module_Api e_modapi =
 };
 
 EAPI void *
-e_modapi_init(E_Module *module)
+e_modapi_init(E_Module *m)
 {
    conf_item_edd = E_CONFIG_DD_NEW("IBar_Config_Item", Config_Item);
 #undef T
@@ -1146,12 +1160,14 @@ e_modapi_init(E_Module *module)
 	ibar_config->items = evas_list_append(ibar_config->items, ci);
      }
    
+   ibar_config->module = m;
+   
    e_gadcon_provider_register(&_gadcon_class);
    return 1;
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *module)
+e_modapi_shutdown(E_Module *m)
 {
    e_gadcon_provider_unregister(&_gadcon_class);
    
@@ -1186,7 +1202,7 @@ e_modapi_shutdown(E_Module *module)
 }
 
 EAPI int
-e_modapi_save(E_Module *module)
+e_modapi_save(E_Module *m)
 {
    Evas_List *l, *l2;
    
@@ -1208,17 +1224,17 @@ e_modapi_save(E_Module *module)
 }
 
 EAPI int
-e_modapi_info(E_Module *module)
+e_modapi_info(E_Module *m)
 {
    char buf[4096];
    
-   snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(module));
-   module->icon_file = strdup(buf);
+   snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(m));
+   m->icon_file = strdup(buf);
    return 1;
 }
 
 EAPI int
-e_modapi_about(E_Module *module)
+e_modapi_about(E_Module *m)
 {
    e_module_dialog_show(_("Enlightenment IBar Module"),
 			_("This is the IBar Application Launcher bar module for Enlightenment.<br>"

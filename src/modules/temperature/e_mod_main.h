@@ -20,6 +20,7 @@ struct _Config
    char            *sensor_name;
    Unit             units;
    /* just config state */
+   E_Module        *module;
    E_Config_Dialog *config_dialog;
    Evas_List       *instances;
    E_Menu          *menu;

@@ -23,7 +23,7 @@ EXTRA_DIST = $(files_DATA)
 # the module .so file
 INCLUDES               = -I. \
                          -I$(top_srcdir) \
-                         -I$(top_srcdir)/$(MODULE) \
+                         -I$(top_srcdir)/src/modules/$(MODULE) \
                          -I$(top_srcdir)/src/bin \
                          -I$(top_srcdir)/src/lib \
                          -I$(top_srcdir)/src/modules \

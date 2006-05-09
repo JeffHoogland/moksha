@@ -4,6 +4,7 @@ MODULE = ibar
 # data files for the module
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)
 files_DATA = \
+module.eap \
 module_icon.png
 
 EXTRA_DIST = $(files_DATA)
@@ -11,10 +12,9 @@ EXTRA_DIST = $(files_DATA)
 # the module .so file
 INCLUDES               = -I. \
                          -I$(top_srcdir) \
-                         -I$(top_srcdir)$(MODULE) \
+                         -I$(top_srcdir)/src/modules/$(MODULE) \
                          -I$(top_srcdir)/src/bin \
                          -I$(top_srcdir)/src/lib \
-                         -I$(top_srcdir)/src/modules \
                          @e_cflags@
 pkgdir                 = $(libdir)/enlightenment/modules/$(MODULE)/$(MODULE_ARCH)
 pkg_LTLIBRARIES        = module.la

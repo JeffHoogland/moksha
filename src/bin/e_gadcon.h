@@ -79,11 +79,15 @@ struct _E_Gadcon
 struct _E_Gadcon_Client_Class
 {
    int   version;
+   /* All members below are part of version 1 */
    char *name;
    struct {
       E_Gadcon_Client *(*init)     (E_Gadcon *gc, char *name, char *id, char *style);
       void             (*shutdown) (E_Gadcon_Client *gcc);
       void             (*orient)   (E_Gadcon_Client *gcc);
+      char            *(*label)    (void);
+      Evas_Object     *(*icon)     (Evas *evas);
+      /* All members below are part of version 2 */
    } func;
 };
 

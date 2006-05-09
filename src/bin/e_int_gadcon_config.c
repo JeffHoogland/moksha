@@ -187,10 +187,16 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    for (l = e_gadcon_provider_list(); l; l = l->next)
      {
 	E_Gadcon_Client_Class *cc;
+	char *label;
+	Evas_Object *icon;
 	
 	cc = l->data;
-	/* FIXME: need icon */
-	e_widget_ilist_append(oi, NULL, cc->name, _cb_select, cfdata, cc->name);
+	icon = NULL;
+	label = NULL;
+	if (cc->func.label) label = cc->func.label();
+	if (!label) label = cc->name;
+	if (cc->func.icon) icon = cc->func.icon(evas);
+	e_widget_ilist_append(oi, icon, label, _cb_select, cfdata, cc->name);
      }
    
    e_widget_ilist_go(oi);

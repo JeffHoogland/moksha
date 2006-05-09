@@ -15,13 +15,15 @@
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, char *name, char *id, char *style);
 static void _gc_shutdown(E_Gadcon_Client *gcc);
 static void _gc_orient(E_Gadcon_Client *gcc);
+static char *_gc_label(void);
+static Evas_Object *_gc_icon(Evas *evas);
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
 {
    GADCON_CLIENT_CLASS_VERSION,
      "temperature",
      {
-	_gc_init, _gc_shutdown, _gc_orient
+        _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon
      }
 };
 /**/
@@ -95,6 +97,25 @@ _gc_orient(E_Gadcon_Client *gcc)
    inst = gcc->data;
    e_gadcon_client_aspect_set(gcc, 16, 16);
    e_gadcon_client_min_size_set(gcc, 16, 16);
+}
+   
+static char *
+_gc_label(void)
+{
+   return _("Temperature");
+}
+
+static Evas_Object *
+_gc_icon(Evas *evas)
+{
+   Evas_Object *o;
+   char buf[4096];
+   
+   o = edje_object_add(evas);
+   snprintf(buf, sizeof(buf), "%s/module.eap",
+	    e_module_dir_get(temperature_config->module));
+   edje_object_file_set(o, buf, "icon");
+   return o;
 }
 /**/
 /***************************************************************************/
@@ -385,6 +406,9 @@ e_modapi_init(E_Module *m)
    temperature_config->temperature_check_timer = 
      ecore_timer_add(temperature_config->poll_time, _temperature_cb_check, 
 		     NULL);
+   
+   temperature_config->module = m;
+   
    e_gadcon_provider_register(&_gadcon_class);
    return 1;
 }

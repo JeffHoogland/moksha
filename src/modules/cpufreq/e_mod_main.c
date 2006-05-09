@@ -15,13 +15,15 @@
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, char *name, char *id, char *style);
 static void _gc_shutdown(E_Gadcon_Client *gcc);
 static void _gc_orient(E_Gadcon_Client *gcc);
+static char *_gc_label(void);
+static Evas_Object *_gc_icon(Evas *evas);
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
 {
    GADCON_CLIENT_CLASS_VERSION,
      "cpufreq",
      {
-	_gc_init, _gc_shutdown, _gc_orient
+	_gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon
      }
 };
 /**/
@@ -118,6 +120,25 @@ _gc_orient(E_Gadcon_Client *gcc)
    inst = gcc->data;
    e_gadcon_client_aspect_set(gcc, 16, 16);
    e_gadcon_client_min_size_set(gcc, 16, 16);
+}
+
+static char *
+_gc_label(void)
+{
+   return _("Cpufreq");
+}
+
+static Evas_Object *
+_gc_icon(Evas *evas)
+{
+   Evas_Object *o;
+   char buf[4096];
+   
+   o = edje_object_add(evas);
+   snprintf(buf, sizeof(buf), "%s/module.eap",
+	    e_module_dir_get(cpufreq_config->module));
+   edje_object_file_set(o, buf, "icon");
+   return o;
 }
 /**/
 /***************************************************************************/
@@ -815,7 +836,7 @@ EAPI E_Module_Api e_modapi =
 };
 
 EAPI void *
-e_modapi_init(E_Module *module)
+e_modapi_init(E_Module *m)
 {
    char buf[4096];
    Evas_List *l;
@@ -840,7 +861,7 @@ e_modapi_init(E_Module *module)
    E_CONFIG_LIMIT(cpufreq_config->poll_time, 0.5, 60.0);
    
    snprintf(buf, sizeof(buf), "%s/%s/freqset",
-	    e_module_dir_get(module), MODULE_ARCH);
+	    e_module_dir_get(m), MODULE_ARCH);
    cpufreq_config->set_exe_path = strdup(buf);
    cpufreq_config->frequency_check_timer = ecore_timer_add(cpufreq_config->poll_time,
 						   _cpufreq_cb_check, NULL);
@@ -859,13 +880,15 @@ e_modapi_init(E_Module *module)
 	       }
 	  }
      }
+
+   cpufreq_config->module = m;
    
    e_gadcon_provider_register(&_gadcon_class);
    return 1;
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *module)
+e_modapi_shutdown(E_Module *m)
 {
    e_gadcon_provider_unregister(&_gadcon_class);
    
@@ -904,24 +927,24 @@ e_modapi_shutdown(E_Module *module)
 }
 
 EAPI int
-e_modapi_save(E_Module *module)
+e_modapi_save(E_Module *m)
 {
    e_config_domain_save("module.cpufreq", conf_edd, cpufreq_config);
    return 1;
 }
 
 EAPI int
-e_modapi_info(E_Module *module)
+e_modapi_info(E_Module *m)
 {
    char buf[4096];
    
-   snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(module));
-   module->icon_file = strdup(buf);
+   snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(m));
+   m->icon_file = strdup(buf);
    return 1;
 }
 
 EAPI int
-e_modapi_about(E_Module *module)
+e_modapi_about(E_Module *m)
 {
    e_module_dialog_show(_("CPU Frequency Controller Module"), 
 			_("A simple module to control the frequency of the system CPU.<br>"
