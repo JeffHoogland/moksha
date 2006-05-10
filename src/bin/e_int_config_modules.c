@@ -3,9 +3,8 @@
  */
 #include "e.h"
 
-#define MOD_ENABLED 0
-#define MOD_LOADED 1
-#define MOD_UNLOADED 2
+#define MOD_UNLOADED 0
+#define MOD_ENABLED 1
 
 typedef struct _CFModule CFModule;
 
