@@ -52,15 +52,13 @@ Some of the things (in very short form) that need to be done to E17...
 * add cpu load module
 * add a way to access "all" apps app dir
 * add setup/install wizard to seed eap files etc. etc.
-* support text and color classes
+* support color classes
 * add clientinfo pane/popdown for borders
 * make xrandr support get rotation and store it
 * gui config dialogs for all config
 * make it possible to disable border buttons/actions (tell theme what is
   disabled)
 * shelf gui config is ugly and badly arranged
-* pager should be able to be configured to control more than the current zone
-  (select which zone they control)
 * ibar should support creating and deleting bar dirs
 ]]]
 
@@ -107,6 +105,8 @@ Some of the things (in very short form) that need to be done to E17...
   each of them on or off - much like ilist, but with a checkbox)
 * "disable this gadget" menu option on gadcon clients
 * improve drag/resize of gadget items
+* pager should be able to be configured to control more than the current zone
+  (select which zone they control)
 ]]]
 
 [[[

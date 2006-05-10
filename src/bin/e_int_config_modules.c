@@ -8,7 +8,6 @@
 #define MOD_UNLOADED 2
 
 typedef struct _CFModule CFModule;
-typedef struct _E_Widget_Data E_Widget_Data;
 
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -19,13 +18,6 @@ static void _ilist_cb_change(void *data, Evas_Object *obj);
 static int _sort_modules(void *data1, void *data2);
 static void _module_configure(void *data, void *data2);
 static void _module_about(void *data, void *data2);
-
-struct _E_Widget_Data
-{
-   E_Radio_Group *group;
-   Evas_Object *o_radio;
-   int valnum;
-};
 
 struct _CFModule
 {
@@ -42,7 +34,7 @@ struct _E_Config_Dialog_Data
    struct
      {
 	Evas_Object *configure, *about;
-	Evas_Object *enabled, *loaded, *unloaded, *list;
+	Evas_Object *enabled, *unloaded, *list;
      }
    gui;
 };
@@ -212,17 +204,6 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 			 }
 		       cm->state = MOD_ENABLED;
 		       break;
-		     case MOD_LOADED:
-		       if (m->enabled) 
-			 {
-			    e_module_save(m);
-			    e_module_disable(m);
-			 }
-		       if (m->func.about)
-			 e_widget_disabled_set(cfdata->gui.about, 0);
-		       
-		       cm->state = MOD_LOADED;
-		       break;
 		     case MOD_UNLOADED:
 		       if (m)
 			 {
@@ -274,7 +255,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	     m = e_module_find(cm->name);
 	     if (m)
 	       {
-		  cm->state = MOD_LOADED;
 		  if (m->enabled) cm->state = MOD_ENABLED;
 	       }
 	     /* This Fails if module author names icon something else */
@@ -299,12 +279,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_disabled_set(ob, 1);
    e_widget_table_object_append(mt, ob, 0, 0, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_radio_add(evas, _("Loaded"), MOD_LOADED, rg);
-   cfdata->gui.loaded = ob;
-   e_widget_disabled_set(ob, 1);
-   e_widget_table_object_append(mt, ob, 0, 1, 1, 1, 1, 0, 1, 0);
-
-   ob = e_widget_radio_add(evas, _("Unloaded"), MOD_UNLOADED, rg);
+   ob = e_widget_radio_add(evas, _("Disabled"), MOD_UNLOADED, rg);
    cfdata->gui.unloaded = ob;
    e_widget_disabled_set(ob, 1);
    e_widget_table_object_append(mt, ob, 0, 2, 1, 1, 1, 0, 1, 0);
@@ -334,7 +309,6 @@ static void
 _ilist_cb_change(void *data, Evas_Object *obj)
 {
    E_Module *m;
-   E_Widget_Data *wd;
    E_Config_Dialog_Data *cfdata;
    const char *v;
    int i;
@@ -351,33 +325,16 @@ _ilist_cb_change(void *data, Evas_Object *obj)
 	  {
 	     cfdata->state = cm->state;
 	     e_widget_disabled_set(cfdata->gui.enabled, 0);
-	     e_widget_disabled_set(cfdata->gui.loaded, 0);
 	     e_widget_disabled_set(cfdata->gui.unloaded, 0);
 	     switch (cm->state)
 	       {
 		case MOD_ENABLED:
-		  wd = e_widget_data_get(cfdata->gui.enabled);
-		  edje_object_signal_emit(wd->o_radio, "toggle_on", "");
-		  wd = e_widget_data_get(cfdata->gui.loaded);
-		  edje_object_signal_emit(wd->o_radio, "toggle_off", "");
-		  wd = e_widget_data_get(cfdata->gui.unloaded);
-		  edje_object_signal_emit(wd->o_radio, "toggle_off", "");
-		  break;
-		case MOD_LOADED:
-		  wd = e_widget_data_get(cfdata->gui.enabled);
-		  edje_object_signal_emit(wd->o_radio, "toggle_off", "");
-		  wd = e_widget_data_get(cfdata->gui.loaded);
-		  edje_object_signal_emit(wd->o_radio, "toggle_on", "");
-		  wd = e_widget_data_get(cfdata->gui.unloaded);
-		  edje_object_signal_emit(wd->o_radio, "toggle_off", "");
+		  e_widget_radio_toggle_set(cfdata->gui.enabled, 1);
+		  e_widget_radio_toggle_set(cfdata->gui.unloaded, 0);
 		  break;
 		case MOD_UNLOADED:
-		  wd = e_widget_data_get(cfdata->gui.enabled);
-		  edje_object_signal_emit(wd->o_radio, "toggle_off", "");
-		  wd = e_widget_data_get(cfdata->gui.loaded);
-		  edje_object_signal_emit(wd->o_radio, "toggle_off", "");
-		  wd = e_widget_data_get(cfdata->gui.unloaded);
-		  edje_object_signal_emit(wd->o_radio, "toggle_on", "");
+		  e_widget_radio_toggle_set(cfdata->gui.unloaded, 1);
+		  e_widget_radio_toggle_set(cfdata->gui.enabled, 0);
 		  break;
 	       }
 	     e_widget_disabled_set(cfdata->gui.about, 1);
