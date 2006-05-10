@@ -1198,15 +1198,41 @@ _e_container_resize_handle(E_Container *con)
 
 	     bd = l->data;
 
-	     if (bd->w > bd->zone->w)
-	       e_border_resize(bd, bd->zone->w, bd->h);
-	     if ((bd->x + bd->w) > (bd->zone->x + bd->zone->w))
-	       e_border_move(bd, bd->zone->x + bd->zone->w - bd->w, bd->y);
-
-	     if (bd->h > bd->zone->h)
-	       e_border_resize(bd, bd->w, bd->zone->h);
-	     if ((bd->y + bd->h) > (bd->zone->y + bd->zone->h))
-	       e_border_move(bd, bd->x, bd->zone->y + bd->zone->h - bd->h);
+	     if (bd->saved.w > bd->zone->w)
+	       bd->saved.w = bd->zone->w;
+	     if ((bd->saved.x + bd->saved.w) > (bd->zone->x + bd->zone->w))
+	       bd->saved.x = bd->zone->x + bd->zone->w - bd->saved.w;
+	     
+	     if (bd->saved.h > bd->zone->h)
+	       bd->saved.h = bd->zone->h;
+	     if ((bd->saved.y + bd->saved.h) > (bd->zone->y + bd->zone->h))
+	       bd->saved.y = bd->zone->y + bd->zone->h - bd->saved.h;
+		  
+	     if (bd->fullscreen)
+	       {
+		  e_border_unfullscreen(bd);
+		  e_border_fullscreen(bd, e_config->fullscreen_policy);
+	       }
+	     else if (bd->maximized != E_MAXIMIZE_NONE)
+	       {
+		  E_Maximize max;
+		  
+		  max = bd->maximized;
+		  e_border_unmaximize(bd);
+		  e_border_maximize(bd, max);
+	       }
+	     else
+	       {
+		  if (bd->w > bd->zone->w)
+		    e_border_resize(bd, bd->zone->w, bd->h);
+		  if ((bd->x + bd->w) > (bd->zone->x + bd->zone->w))
+		    e_border_move(bd, bd->zone->x + bd->zone->w - bd->w, bd->y);
+		  
+		  if (bd->h > bd->zone->h)
+		    e_border_resize(bd, bd->w, bd->zone->h);
+		  if ((bd->y + bd->h) > (bd->zone->y + bd->zone->h))
+		    e_border_move(bd, bd->x, bd->zone->y + bd->zone->h - bd->h);
+	       }
 	  }
      }
 #endif

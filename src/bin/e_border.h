@@ -380,8 +380,8 @@ struct _E_Border
    } changes;
 
    struct {
-	unsigned char start : 1;
-	int x, y;
+      unsigned char start : 1;
+      int x, y;
    } drag;
 
    unsigned int layer;

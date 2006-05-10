@@ -53,14 +53,17 @@ _surebox_dialog_cb_delete(E_Win *win)
 {
    E_Dialog *dia;
    SureBox *sb;
+   E_Config_Dialog *cfd;
    
    dia = win->data;
    sb = dia->data;
    sb->cfdata->surebox = NULL;
+   cfd = sb->cfdata->cfd;
    if (sb->timer) ecore_timer_del(sb->timer);
    sb->timer = NULL;
    free(sb);
    e_object_del(E_OBJECT(dia));
+   e_object_unref(E_OBJECT(cfd));
 }
 
 static void
@@ -165,6 +168,7 @@ _surebox_new(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_win_centered_set(sb->dia->win, 1);
    e_win_sticky_set(sb->dia->win, 1);
    e_dialog_show(sb->dia);
+   e_object_ref(E_OBJECT(cfd));
 }
 
 
@@ -211,7 +215,7 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    if (cfdata->surebox)
-     e_object_del(E_OBJECT(cfdata->surebox->dia));
+     _surebox_dialog_cb_delete(cfdata->surebox->dia->win);
    free(cfdata);
 }
 
