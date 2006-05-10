@@ -7,6 +7,7 @@
 struct _E_Config_Dialog_Data
 {
    char *dir;
+   int   show_label;
 };
 
 /* Protos */
@@ -46,6 +47,7 @@ _fill_data(Config_Item *ci, E_Config_Dialog_Data *cfdata)
      cfdata->dir = strdup(ci->dir);
    else
      cfdata->dir = strdup("");
+   cfdata->show_label = ci->show_label;
 }
 
 static void *
@@ -71,19 +73,21 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *of, *ol;
+   Evas_Object *o, *of, *ol, *ob;
    Ecore_List *dirs;
    char *home, buf[4096], *file;
    int selnum = -1;
    
-   o = e_widget_framelist_add(evas, _("Selected Bar Source"), 0);
+   o = e_widget_list_add(evas, 0, 0);
+   
+   of = e_widget_framelist_add(evas, _("Selected Bar Source"), 0);
    
    ol = e_widget_tlist_add(evas, &(cfdata->dir));
-   e_widget_min_size_set(ol, 160, 200);
-   e_widget_framelist_object_append(o, ol);
+   e_widget_min_size_set(ol, 160, 160);
+   e_widget_framelist_object_append(of, ol);
 
    home = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/applications", home);
+   snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar", home);
    dirs = ecore_file_ls(buf);
    
    if (dirs)
@@ -94,7 +98,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	while ((file = ecore_list_next(dirs)))
 	  {
 	     if (file[0] == '.') continue;
-	     snprintf(buf, sizeof(buf), "%s/.e/e/applications/%s", home, file);
+	     snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s", home, file);
 	     if (ecore_file_is_dir(buf))
 	       {
 		  e_widget_tlist_append(ol, file, NULL, NULL, file);
@@ -109,6 +113,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_tlist_go(ol);
    if (selnum >= 0)
      e_widget_tlist_selected_set(ol, selnum);
+   
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   
+   ob = e_widget_check_add(evas, _("Show Icon Label"), &(cfdata->show_label));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   
    return o;
 }
 
@@ -121,6 +131,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (ci->dir) evas_stringshare_del(ci->dir);
    ci->dir = NULL;
    if (cfdata->dir) ci->dir = evas_stringshare_add(cfdata->dir);
+   ci->show_label = cfdata->show_label;
    _ibar_config_update();
    e_config_save_queue();
    return 1;

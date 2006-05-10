@@ -53,6 +53,7 @@ struct _IBar
    int             drop_before;
    E_App          *apps;
    Evas_List      *icons;
+   int             show_label;
 };
 
 struct _IBar_Icon
@@ -126,9 +127,10 @@ _gc_init(E_Gadcon *gc, char *name, char *id, char *style)
    inst = E_NEW(Instance, 1);
 
    ci = _ibar_config_item_get(id);
-   if (!ci->dir) ci->dir = evas_stringshare_add("bar");
+   if (!ci->dir) ci->dir = evas_stringshare_add("default");
    inst->dir = evas_stringshare_add(ci->dir);
    b = _ibar_new(gc->evas, ci->dir);
+   b->show_label = ci->show_label;
    b->inst = inst;
    inst->ibar = b;
    o = b->o_box;
@@ -249,7 +251,7 @@ _ibar_new(Evas *evas, char *dir)
 	homedir = e_user_homedir_get();
 	if (homedir)
 	  {
-	     snprintf(buf, sizeof(buf), "%s/.e/e/applications/%s", homedir, dir);
+	     snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s", homedir, dir);
 	     free(homedir);
 	  }
      }
@@ -281,6 +283,7 @@ _ibar_fill(IBar *b)
    Evas_List *l;
    E_App *a;
 
+   if (!b->apps) return;
    for (l = b->apps->subapps; l; l = l->next)
      {
 	a = l->data;
@@ -360,6 +363,7 @@ _ibar_config_item_get(char *id)
      }
    ci = E_NEW(Config_Item, 1);
    ci->id = evas_stringshare_add(id);
+   ci->show_label = 1;
    ibar_config->items = evas_list_append(ibar_config->items, ci);
    return ci;
 }
@@ -403,6 +407,7 @@ _ibar_config_update(void)
 	     _ibar_resize_handle(inst->ibar);
 	     _gc_orient(inst->gcc);
 	  }
+	inst->ibar->show_label = ci->show_label;
      }
 }
 
@@ -450,6 +455,7 @@ _ibar_icon_new(IBar *b, E_App *a)
    ic->o_holder = edje_object_add(evas_object_evas_get(b->o_box));
    e_theme_edje_object_set(ic->o_holder, "base/theme/modules/ibar",
 			   "modules/ibar/icon");
+   edje_object_part_text_set(ic->o_holder, "label", a->name);
    evas_object_event_callback_add(ic->o_holder, EVAS_CALLBACK_MOUSE_IN,  _ibar_cb_icon_mouse_in,  ic);
    evas_object_event_callback_add(ic->o_holder, EVAS_CALLBACK_MOUSE_OUT, _ibar_cb_icon_mouse_out, ic);
    evas_object_event_callback_add(ic->o_holder, EVAS_CALLBACK_MOUSE_DOWN, _ibar_cb_icon_mouse_down, ic);
@@ -462,6 +468,7 @@ _ibar_icon_new(IBar *b, E_App *a)
    ic->o_holder2 = edje_object_add(evas_object_evas_get(b->o_box));
    e_theme_edje_object_set(ic->o_holder2, "base/theme/modules/ibar",
 			   "modules/ibar/icon_overlay");
+   edje_object_part_text_set(ic->o_holder2, "label", a->name);
    evas_object_layer_set(ic->o_holder2, 9999);
    evas_object_pass_events_set(ic->o_holder2, 1);
    evas_object_show(ic->o_holder2);
@@ -710,6 +717,8 @@ _ibar_cb_icon_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ev = event_info;
    ic = data;
    _ibar_icon_signal_emit(ic, "active", "");
+   if (ic->ibar->show_label)
+     _ibar_icon_signal_emit(ic, "label_active", "");
 }
 
 static void
@@ -721,6 +730,8 @@ _ibar_cb_icon_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ev = event_info;
    ic = data;
    _ibar_icon_signal_emit(ic, "passive", "");
+   if (ic->ibar->show_label)
+     _ibar_icon_signal_emit(ic, "label_passive", "");
 }
 
 static void
@@ -1137,6 +1148,7 @@ e_modapi_init(E_Module *m)
 #define D conf_item_edd
    E_CONFIG_VAL(D, T, id, STR);
    E_CONFIG_VAL(D, T, dir, STR);
+   E_CONFIG_VAL(D, T, show_label, INT);
    
    conf_edd = E_CONFIG_DD_NEW("IBar_Config", Config);
 #undef T
@@ -1155,7 +1167,8 @@ e_modapi_init(E_Module *m)
 	
 	ci = E_NEW(Config_Item, 1);
 	ci->id = evas_stringshare_add("0");
-	ci->dir = evas_stringshare_add("bar");
+	ci->dir = evas_stringshare_add("default");
+	ci->show_label = 1;
 	
 	ibar_config->items = evas_list_append(ibar_config->items, ci);
      }

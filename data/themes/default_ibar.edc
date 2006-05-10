@@ -194,6 +194,32 @@ group {
 	    color: 0 0 0 0;
 	 }
       }
+      part {      
+	 name: "label";
+	 type: TEXT;
+	 effect: SOFT_SHADOW;                  
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    align: 0.5 0.5;
+	    color: 255 255 255 0;
+	    color3: 0 0 0 0;
+	    text {
+	       text: "Icon Name";
+	       font: "Edje-Vera-Bold";
+	       size: 10;
+	       min:  1 1;
+	       align: 0.5 0.5;
+	       text_class: "module_normal";
+	    }
+	 }
+	 description {
+	    state: "visible" 0.0;
+	    inherit: "default" 0.0;
+	    color: 255 255 255 255;
+	    color3: 0 0 0 42;
+	 }
+      }
    }
    programs {
       program {
@@ -203,6 +229,14 @@ group {
 	 action:  STATE_SET "visible" 0.0;
 	 target:  "background";
 	 after:   "go_active2";
+      }
+      program {
+	 name:    "go_activeB";
+	 signal:  "label_active";
+	 source:  "";
+	 action:  STATE_SET "visible" 0.0;
+	 transition: SINUSOIDAL 1.0;
+	 target:  "label";
       }
       program {
 	 name:    "go_active2";
@@ -221,6 +255,14 @@ group {
 	 target:  "go_active";
 	 target:  "go_active2";
 	 after:   "go_passive2";
+      }
+      program {
+	 name:    "go_passiveB";
+	 signal:  "label_passive";
+	 source:  "";
+	 action:  STATE_SET "default" 0.0;
+	 transition: SINUSOIDAL 2.0;
+	 target:  "label";
       }
       program {
 	 name:    "go_passive2";

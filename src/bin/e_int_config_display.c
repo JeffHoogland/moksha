@@ -242,23 +242,36 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    man = e_manager_current_get();
    sizes = ecore_x_randr_screen_sizes_get(man->root, &n);
-   for (i = 0; i < n; i++) 
+   if (!sizes)
      {
-	if ((sizes[i].width == w) && 
-	    (sizes[i].height == h))
+	e_util_dialog_show(_("Missing Features"),
+			   _("Your X Display Server is missing support for<br>"
+			     "The <hilight>XRandr</hilight> (X Resize and Rotate) extension.<br>"
+			     "You cannot change screen resolutions without<br>"
+			     "The support of this extension. It could also be<br>"
+			     "That at the time <hilight>ecore</hilight> was built there<br>"
+			     "was no XRandr support detected."));
+     }
+   else
+     {
+	for (i = 0; i < n; i++) 
 	  {
-	     size = sizes[i];
-	     int k, rr;
-	     rates = ecore_x_randr_screen_refresh_rates_get(man->root, i, &rr);
-	     for (k = 0; k < rr; k++) 
+	     if ((sizes[i].width == w) && 
+		 (sizes[i].height == h))
 	       {
-		  if (rates[k].rate == r) 
+		  size = sizes[i];
+		  int k, rr;
+		  rates = ecore_x_randr_screen_refresh_rates_get(man->root, i, &rr);
+		  for (k = 0; k < rr; k++) 
 		    {
-		       rate = rates[k];
-		       break;
-		    }  
+		       if (rates[k].rate == r) 
+			 {
+			    rate = rates[k];
+			    break;
+			 }  
+		    }
+		  break;
 	       }
-	     break;
 	  }
      }
    

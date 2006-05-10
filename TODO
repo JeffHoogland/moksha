@@ -52,7 +52,6 @@ Some of the things (in very short form) that need to be done to E17...
 -------------------------------------------------------------------------------
 
 * actions to make current zone different (warp mouse to there)
-* titlebar/border expansion/gadget panel for modules to put window widgets in
 * language packs: need to have a tool to load/setup a language pack (which
   means .mo compiled files from a .po, an optional font and a config file that
   specifies the locale and font) and then install the font(s) either as a user
@@ -62,8 +61,6 @@ Some of the things (in very short form) that need to be done to E17...
 * add a "taskbar" module
 * add cpu load module
 * add a way to access "all" apps app dir
-* ibar need to support label pop-ups
-* ibar should support subdirs with pop-up icons...
 * add setup/install wizard to seed eap files etc. etc.
 * support text and color classes
 * add clientinfo pane/popdown for borders
@@ -72,11 +69,8 @@ Some of the things (in very short form) that need to be done to E17...
 * make it possible to disable border buttons/actions (tell theme what is
   disabled)
 * shelf gui config is ugly and badly arranged
-* shelf needs a way to register a menu item appender for right click menu for
-  gadcon items
 * pager should be able to be configured to control more than the current zone
   (select which zone they control)
-* ibar maybe should move bar dirs to subdirectories in "bar" to limit scope
 * ibar should support creating and deleting bar dirs
 ]]]
 

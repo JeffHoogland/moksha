@@ -806,6 +806,7 @@ _e_main_dirs_init(void)
 	"%s/.e/e/applications/all",
 	"%s/.e/e/applications/favorite",
 	"%s/.e/e/applications/bar",
+	"%s/.e/e/applications/bar/default",
 	"%s/.e/e/applications/startup",
 	"%s/.e/e/applications/restart",
 	"%s/.e/e/applications/trash",
@@ -835,7 +836,7 @@ _e_main_dirs_init(void)
    /* err dont just disable it - replace it with a proper wizard tool */
    /* outside e's main source to populate these directories from gnome/kde */
    /* app menu data etc. */
-   snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/.order", homedir);
+   snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/default/.order", homedir);
    if (!ecore_file_exists(buf))
      {
 	snprintf(buf, sizeof(buf), 
