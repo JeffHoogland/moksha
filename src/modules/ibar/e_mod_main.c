@@ -271,7 +271,7 @@ _ibar_free(IBar *b)
    evas_object_del(b->o_box);
    if (b->o_drop) evas_object_del(b->o_drop);
    if (b->o_drop_over) evas_object_del(b->o_drop_over);
-   e_object_unref(E_OBJECT(b->apps));
+   if (b->apps) e_object_unref(E_OBJECT(b->apps));
    e_app_change_callback_del(_ibar_cb_app_change, b);
    free(b);
 }
@@ -387,7 +387,8 @@ _ibar_config_update(void)
 	     evas_stringshare_del(inst->dir);
 	     inst->dir = evas_stringshare_add(ci->dir);
 	     _ibar_empty(inst->ibar);
-	     e_object_unref(E_OBJECT(inst->ibar->apps));
+	     if (inst->ibar->apps)
+	       e_object_unref(E_OBJECT(inst->ibar->apps));
 	     if (inst->dir[0] != '/')
 	       {
 		  char *homedir;
@@ -395,7 +396,7 @@ _ibar_config_update(void)
 		  homedir = e_user_homedir_get();
 		  if (homedir)
 		    {
-		       snprintf(buf, sizeof(buf), "%s/.e/e/applications/%s", homedir, inst->dir);
+		       snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s", homedir, inst->dir);
 		       free(homedir);
 		    }
 	       }
@@ -535,6 +536,7 @@ _ibar_cb_app_change(void *data, E_App *a, E_App_Change ch)
    IBar *b;
 
    b = data;
+   if (!b->apps) return;
    switch (ch)
      {
       case E_APP_ADD:
@@ -1115,10 +1117,13 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
    else
      {
 	atend:
-	if (app)
-	  e_app_list_append(app, inst->ibar->apps);
-	else if (l)
-	  e_app_files_list_append(l, inst->ibar->apps);
+	if (inst->ibar->apps)
+	  {
+	     if (app)
+	       e_app_list_append(app, inst->ibar->apps);
+	     else if (l)
+	       e_app_files_list_append(l, inst->ibar->apps);
+	  }
      }
    
    evas_object_del(inst->ibar->o_drop);
