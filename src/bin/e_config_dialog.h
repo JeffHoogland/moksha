@@ -47,6 +47,7 @@ struct _E_Config_Dialog
    void                        *data;
    int                          cfg_changed;
    int                          hide_buttons;
+   Ecore_Timer                 *auto_apply_timer;
 };
 
 EAPI E_Config_Dialog *e_config_dialog_new(E_Container *con, const char *title, const char *icon, int icon_size, E_Config_Dialog_View *view, void *data);

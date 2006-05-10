@@ -6,6 +6,7 @@
 /* local subsystem functions */
 static void _e_config_dialog_free(E_Config_Dialog *cfd);
 static void _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type);
+static int  _e_config_dialog_cb_auto_apply_timer(void *data);
 static void _e_config_dialog_cb_dialog_del(void *obj);
 static void _e_config_dialog_cb_ok(void *data, E_Dialog *dia);
 static void _e_config_dialog_cb_apply(void *data, E_Dialog *dia);
@@ -76,6 +77,7 @@ e_config_dialog_new(E_Container *con, const char *title, const char *icon, int i
 static void
 _e_config_dialog_free(E_Config_Dialog *cfd)
 {
+   if (cfd->auto_apply_timer) _e_config_dialog_cb_auto_apply_timer(cfd);
    if (cfd->title) evas_stringshare_del(cfd->title);
    if (cfd->icon) evas_stringshare_del(cfd->icon);
    if (cfd->cfdata)
@@ -186,6 +188,29 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
      }
 }
 
+static int
+_e_config_dialog_cb_auto_apply_timer(void *data)
+{
+   E_Config_Dialog *cfd;
+
+   cfd = data;
+   
+   if (cfd->auto_apply_timer) ecore_timer_del(cfd->auto_apply_timer);
+   cfd->auto_apply_timer = NULL;
+   
+   if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
+     {
+	if (cfd->view->basic.apply_cfdata)
+	  cfd->view->basic.apply_cfdata(cfd, cfd->cfdata);
+     }
+   else
+     {
+	if (cfd->view->advanced.apply_cfdata)
+	  cfd->view->advanced.apply_cfdata(cfd, cfd->cfdata);
+     }
+   return 0;
+}
+
 static void
 _e_config_dialog_cb_dialog_del(void *obj)
 {
@@ -194,6 +219,7 @@ _e_config_dialog_cb_dialog_del(void *obj)
 
    dia = obj;
    cfd = dia->data;
+   if (cfd->auto_apply_timer) _e_config_dialog_cb_auto_apply_timer(cfd);
    cfd->dia = NULL;
    e_object_del(E_OBJECT(cfd));
 }
@@ -249,6 +275,7 @@ _e_config_dialog_cb_advanced(void *data, void *data2)
    E_Config_Dialog *cfd;
    
    cfd = data;
+   if (cfd->auto_apply_timer) _e_config_dialog_cb_auto_apply_timer(cfd);
    _e_config_dialog_go(cfd, E_CONFIG_DIALOG_CFDATA_TYPE_ADVANCED);
 }
 
@@ -258,6 +285,7 @@ _e_config_dialog_cb_basic(void *data, void *data2)
    E_Config_Dialog *cfd;
    
    cfd = data;
+   if (cfd->auto_apply_timer) _e_config_dialog_cb_auto_apply_timer(cfd);
    _e_config_dialog_go(cfd, E_CONFIG_DIALOG_CFDATA_TYPE_BASIC);
 }
 
@@ -276,16 +304,8 @@ _e_config_dialog_cb_changed(void *data, Evas_Object *obj)
       }
    else
      {
-	if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
-	  {
-	     if (cfd->view->basic.apply_cfdata)
-	       ok = cfd->view->basic.apply_cfdata(cfd, cfd->cfdata);
-	  }
-	else
-	  {
-	     if (cfd->view->advanced.apply_cfdata)
-	       ok = cfd->view->advanced.apply_cfdata(cfd, cfd->cfdata);
-	  }
+	if (cfd->auto_apply_timer) ecore_timer_del(cfd->auto_apply_timer);
+	cfd->auto_apply_timer = ecore_timer_add(0.5, _e_config_dialog_cb_auto_apply_timer, cfd);
      }   
 }
 
@@ -296,6 +316,7 @@ _e_config_dialog_cb_close(void *data, E_Dialog *dia)
    int ok = 1;
 
    cfd = dia->data;
+   if (cfd->auto_apply_timer) _e_config_dialog_cb_auto_apply_timer(cfd);
    if (cfd->view->close_cfdata)
       ok = cfd->view->close_cfdata(cfd, cfd->cfdata);
 
