@@ -202,6 +202,14 @@ group {
 	 description {
 	    state: "default" 0.0;
 	    align: 0.5 0.5;
+	    rel1 {
+               relative: 0.0  1.0;
+	       offset:   0    -1;
+	    }
+	    rel2 {
+               relative: 1.0  1.0;
+	       offset:   -1    -1;
+	    }
 	    color: 255 255 255 0;
 	    color3: 0 0 0 0;
 	    text {
@@ -216,6 +224,14 @@ group {
 	 description {
 	    state: "visible" 0.0;
 	    inherit: "default" 0.0;
+	    rel1 {
+               relative: 0.0  0.0;
+	       offset:   0    0;
+	    }
+	    rel2 {
+               relative: 1.0  1.0;
+	       offset:   -1    -1;
+	    }
 	    color: 255 255 255 255;
 	    color3: 0 0 0 42;
 	 }
@@ -235,7 +251,7 @@ group {
 	 signal:  "label_active";
 	 source:  "";
 	 action:  STATE_SET "visible" 0.0;
-	 transition: SINUSOIDAL 1.0;
+	 transition: SINUSOIDAL 0.5;
 	 target:  "label";
       }
       program {
@@ -261,7 +277,7 @@ group {
 	 signal:  "label_passive";
 	 source:  "";
 	 action:  STATE_SET "default" 0.0;
-	 transition: SINUSOIDAL 2.0;
+	 transition: SINUSOIDAL 1.0;
 	 target:  "label";
       }
       program {
