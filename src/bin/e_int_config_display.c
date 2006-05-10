@@ -242,36 +242,23 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    man = e_manager_current_get();
    sizes = ecore_x_randr_screen_sizes_get(man->root, &n);
-   if (!sizes)
+   for (i = 0; i < n; i++) 
      {
-	e_util_dialog_show(_("Missing Features"),
-			   _("Your X Display Server is missing support for<br>"
-			     "The <hilight>XRandr</hilight> (X Resize and Rotate) extension.<br>"
-			     "You cannot change screen resolutions without<br>"
-			     "The support of this extension. It could also be<br>"
-			     "That at the time <hilight>ecore</hilight> was built there<br>"
-			     "was no XRandr support detected."));
-     }
-   else
-     {
-	for (i = 0; i < n; i++) 
+	if ((sizes[i].width == w) && 
+	    (sizes[i].height == h))
 	  {
-	     if ((sizes[i].width == w) && 
-		 (sizes[i].height == h))
+	     size = sizes[i];
+	     int k, rr;
+	     rates = ecore_x_randr_screen_refresh_rates_get(man->root, i, &rr);
+	     for (k = 0; k < rr; k++) 
 	       {
-		  size = sizes[i];
-		  int k, rr;
-		  rates = ecore_x_randr_screen_refresh_rates_get(man->root, i, &rr);
-		  for (k = 0; k < rr; k++) 
+		  if (rates[k].rate == r) 
 		    {
-		       if (rates[k].rate == r) 
-			 {
-			    rate = rates[k];
-			    break;
-			 }  
-		    }
-		  break;
+		       rate = rates[k];
+		       break;
+		    }  
 	       }
+	     break;
 	  }
      }
    
@@ -324,10 +311,51 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    sizes = ecore_x_randr_screen_sizes_get(man->root, &s);
    size = ecore_x_randr_current_screen_size_get(man->root);
    
-   if (sizes) 
-     {	
+   if (!sizes)
+     {
+	e_util_dialog_show(_("Missing Features"),
+			   _("Your X Display Server is missing support for<br>"
+			     "The <hilight>XRandr</hilight> (X Resize and Rotate) extension.<br>"
+			     "You cannot change screen resolutions without<br>"
+			     "The support of this extension. It could also be<br>"
+			     "That at the time <hilight>ecore</hilight> was built there<br>"
+			     "was no XRandr support detected."));
+     }
+   else
+     {
 	char buf[16];
-
+	int *sortindex;
+	int sorted = 0, tmp;
+	
+	sortindex = alloca(s * sizeof(int));
+	for (i = 0; i < s; i++) 
+	  sortindex[i] = i;
+	/* quick & dirty bubblesort */
+	while (!sorted)
+	  {
+	     sorted = 1;
+	     for (i = 0; i < (s - 1); i++)
+	       {
+		  if (sizes[sortindex[i]].width > sizes[sortindex[i + 1]].width)
+		    {
+		       sorted = 0;
+		       tmp = sortindex[i];
+		       sortindex[i] = sortindex[i + 1];
+		       sortindex[i + 1] = tmp;
+		    }
+		  else if (sizes[sortindex[i]].width == sizes[sortindex[i + 1]].width)
+		    {
+		       if (sizes[sortindex[i]].height > sizes[sortindex[i + 1]].height)
+			 {
+			    sorted = 0;
+			    tmp = sortindex[i];
+			    sortindex[i] = sortindex[i + 1];
+			    sortindex[i + 1] = tmp;
+			 }
+		    }
+	       }
+	  }
+	
 	for (i = 0; i < s; i++) 
 	  {
 	     Resolution *res;
@@ -335,16 +363,18 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	     res = E_NEW(Resolution, 1);
 	     if (!res) continue;
 	     	     
-	     res->size = sizes[i];
-	     res->size_id = i;
+	     res->size = sizes[sortindex[i]];
+	     res->size_id = sortindex[i];
 	     res->rates = ecore_x_randr_screen_refresh_rates_get(man->root, res->size_id, &r);
 	     	     
-	     snprintf(buf, sizeof(buf), "%dx%d", sizes[i].width, sizes[i].height);
-	     e_widget_ilist_append(ol, NULL, buf, _ilist_item_change, res, NULL);	     
+	     snprintf(buf, sizeof(buf), "%ix%i", 
+		      sizes[sortindex[i]].width, sizes[sortindex[i]].height);
+	     e_widget_ilist_append(ol, NULL, buf, _ilist_item_change, res, NULL);
 
-	     if ((res->size.width == size.width) && (res->size.height == size.height)) 
+	     if ((res->size.width == size.width) &&
+		 (res->size.height == size.height)) 
 	       { 	     
-		  e_widget_ilist_selected_set(ol, i);
+		  e_widget_ilist_selected_set(ol, sortindex[i]);
 		  _load_rates(res);	     		  
 	       }
 	  }	
