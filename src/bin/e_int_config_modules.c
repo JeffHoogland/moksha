@@ -257,7 +257,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ot = e_widget_table_add(evas, 1);
    
    of = e_widget_framelist_add(evas, _("Modules"), 1);
-   ilist = e_widget_ilist_add(evas, 16, 16, NULL);
+   ilist = e_widget_ilist_add(evas, 24, 24, NULL);
    cfdata->gui.list = ilist;
    e_widget_on_change_hook_set(ilist, _ilist_cb_change, cfdata);
 
