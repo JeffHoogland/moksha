@@ -228,8 +228,10 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    
    sel_res = (char *)e_widget_ilist_selected_label_get(res_list);
    sel_rate = (char *)e_widget_ilist_selected_label_get(rate_list);
-   sscanf(sel_res, "%dx%d", &w, &h);
-   sscanf(sel_rate, "%d Hz", &r);
+   if (!sel_res) return 0;
+   if (!sel_rate) return 0;
+   sscanf(sel_res, "%ix%i", &w, &h);
+   sscanf(sel_rate, "%i Hz", &r);
       
    e_config->display_res_width = cfdata->orig_size.width;
    e_config->display_res_height = cfdata->orig_size.height;
@@ -374,7 +376,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	     if ((res->size.width == size.width) &&
 		 (res->size.height == size.height)) 
 	       { 	     
-		  e_widget_ilist_selected_set(ol, sortindex[i]);
+		  e_widget_ilist_selected_set(ol, i);
 		  _load_rates(res);	     		  
 	       }
 	  }	
@@ -405,13 +407,13 @@ _load_rates(void *data)
    e_widget_ilist_clear(rate_list);
    
    for (k = 0; k < r; k++) 
-     {	
-
-	snprintf(buf, sizeof(buf), "%d Hz", rts[k].rate);
+     {
+	snprintf(buf, sizeof(buf), "%i Hz", rts[k].rate);
 	e_widget_ilist_append(rate_list, NULL, buf, NULL, NULL, NULL);
 	if (rt.rate == rts[k].rate) 
 	  e_widget_ilist_selected_set(rate_list, k);
      }   
+   e_widget_ilist_selected_set(rate_list, 0);
 }
 
 static void

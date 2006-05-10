@@ -1141,7 +1141,7 @@ _e_container_resize_handle(E_Container *con)
 {
    E_Event_Container_Resize *ev;
    Evas_List *l, *screens;
-#if 0
+#if 1
    int i;
 #endif
    
@@ -1186,7 +1186,7 @@ _e_container_resize_handle(E_Container *con)
    e_gadman_container_resize(con->gadman);
    e_object_ref(E_OBJECT(con));
    ecore_event_add(E_EVENT_CONTAINER_RESIZE, ev, _e_container_event_container_resize_free, NULL);
-#if 0
+#if 1
    /* FIXME: This is wrong, we should only move/resize to save things from
     * disappearing!
     */
