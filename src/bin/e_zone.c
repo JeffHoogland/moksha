@@ -270,6 +270,7 @@ e_zone_flip_coords_handle(E_Zone *zone, int x, int y)
    E_OBJECT_CHECK(zone);
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    
+   if (!e_config->use_edge_flip) return;
    if ((y == 0) && E_ZONE_FLIP_UP(zone))
      {
 	/* top */
