@@ -6,7 +6,7 @@
 #define BINDING_LIST_ICON_W 16
 #define BINDING_LIST_ICON_H 16
 
-#define BTN_ASSIGN_KEYBINDING_TEXT _("Assign Key Binding…")
+#define BTN_ASSIGN_KEYBINDING_TEXT _("Assign Key Binding...")
 
 #define TEXT_ACTION _("Action")
 #define TEXT_NONE_ACTION_KEY _("<None>")

@@ -1480,17 +1480,17 @@ e_actions_init(void)
 				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    e_register_action_predef_name(_("Desktop"), _("Flip Desktop Down"), "desk_flip_by", "0 1",
 				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
-   e_register_action_predef_name(_("Desktop"), _("Flip Desktop By…"),
+   e_register_action_predef_name(_("Desktop"), _("Flip Desktop By..."),
 				 "desk_flip_by", NULL, EDIT_RESTRICT_ACTION, 0);
 
    /* desk_linear_flip_to */
    ACT_GO(desk_flip_to);
-   e_register_action_predef_name(_("Desktop"), _("Flip Desktop To…"),
+   e_register_action_predef_name(_("Desktop"), _("Flip Desktop To..."),
 				 "desk_flip_to", NULL, EDIT_RESTRICT_ACTION, 0);
 
    /* desk_linear_flip_by */
    ACT_GO(desk_linear_flip_by);
-   e_register_action_predef_name(_("Desktop"), _("Flip Desktop Linearly…"),
+   e_register_action_predef_name(_("Desktop"), _("Flip Desktop Linearly..."),
 				 "desk_linear_flip_by", NULL, EDIT_RESTRICT_ACTION, 0);
    
    /* desk_linear_flip_to */
@@ -1519,26 +1519,26 @@ e_actions_init(void)
 				 "10", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    e_register_action_predef_name(_("Desktop"), _("Switch To Desktop 11"), "desk_linear_flip_to",
 				 "11", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
-   e_register_action_predef_name(_("Desktop"), _("Switch To Desktop…"),
+   e_register_action_predef_name(_("Desktop"), _("Switch To Desktop..."),
 				 "desk_linear_flip_to", NULL, EDIT_RESTRICT_ACTION, 0);
 
    /* window_move_to */
    ACT_GO(window_move_to);
-   e_register_action_predef_name(_("Window : Actions"), "Move To…", "window_move_to", NULL,
+   e_register_action_predef_name(_("Window : Actions"), "Move To...", "window_move_to", NULL,
 				 EDIT_RESTRICT_ACTION, 0);
    /* window_move_by */
    ACT_GO(window_move_by);
-   e_register_action_predef_name(_("Window : Actions"), "Move By…", "window_move_by", NULL,
+   e_register_action_predef_name(_("Window : Actions"), "Move By...", "window_move_by", NULL,
 				 EDIT_RESTRICT_ACTION, 0);
 
    /* window_resize_by */
    ACT_GO(window_resize_by);
-   e_register_action_predef_name(_("Window : Actions"), "Resize By…", "window_resize_by", NULL,
+   e_register_action_predef_name(_("Window : Actions"), "Resize By...", "window_resize_by", NULL,
 				 EDIT_RESTRICT_ACTION, 0);
    
    /* window_drag_icon */
    ACT_GO(window_drag_icon);
-   e_register_action_predef_name(_("Window : Actions"), "Drag Icon…", "window_drag_icon", NULL,
+   e_register_action_predef_name(_("Window : Actions"), "Drag Icon...", "window_drag_icon", NULL,
 				 EDIT_RESTRICT_ACTION, 0);
 
    /* window_desk_move_by */
@@ -1548,7 +1548,7 @@ e_actions_init(void)
    e_register_action_predef_name(_("Window : Moving"), _("To Previous Desktop"),
 				 "window_desk_move_by", "-1 0",
 				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
-   e_register_action_predef_name(_("Window : Moving"), _("By Desktop #…"), "window_desk_move_by",
+   e_register_action_predef_name(_("Window : Moving"), _("By Desktop #..."), "window_desk_move_by",
 				 NULL, EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    /* window_desk_move_to */
    ACT_GO(window_desk_move_to);
@@ -1576,7 +1576,7 @@ e_actions_init(void)
 				 "10", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    e_register_action_predef_name(_("Window : Moving"), _("To Desktop 11"), "window_desk_move_to",
 				 "11", EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
-   e_register_action_predef_name(_("Window : Moving"), _("To Desktop…"), "window_desk_move_to",
+   e_register_action_predef_name(_("Window : Moving"), _("To Desktop..."), "window_desk_move_to",
 				 NULL, EDIT_RESTRICT_ACTION, 0);
 
    /* menu_show */
@@ -1587,7 +1587,7 @@ e_actions_init(void)
 				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    e_register_action_predef_name(_("Menu"), _("Show Clients Menu"), "menu_show", "clients",
 				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
-   e_register_action_predef_name(_("Menu"), _("Show Menu…"), "menu_show", "clients",
+   e_register_action_predef_name(_("Menu"), _("Show Menu..."), "menu_show", "clients",
 				 EDIT_RESTRICT_ACTION, 0);
    ACT_GO_MOUSE(menu_show);
    ACT_GO_KEY(menu_show);
