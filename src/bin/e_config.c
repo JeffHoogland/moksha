@@ -12,13 +12,13 @@
 EAPI E_Config *e_config = NULL;
 
 /* local subsystem functions */
-static void _e_config_save_cb(void *data);
+static int  _e_config_save_cb(void *data);
 static void _e_config_free(void);
 static int  _e_config_cb_timer(void *data);
 
 /* local subsystem globals */
 static int _e_config_save_block = 0;
-static Ecore_Job *_e_config_save_job = NULL;
+static Ecore_Timer *_e_config_save_timer = NULL;
 static char *_e_config_profile = NULL;
 
 static E_Config_DD *_e_config_edd = NULL;
@@ -1263,10 +1263,10 @@ e_config_descriptor_new(const char *name, int size)
 EAPI int
 e_config_save(void)
 {
-   if (_e_config_save_job)
+   if (_e_config_save_timer)
      {
-	ecore_job_del(_e_config_save_job);
-	_e_config_save_job = NULL;
+	ecore_timer_del(_e_config_save_timer);
+	_e_config_save_timer = NULL;
      }
    _e_config_save_cb(NULL);
    return e_config_domain_save("e", _e_config_edd, e_config);
@@ -1275,10 +1275,10 @@ e_config_save(void)
 EAPI void
 e_config_save_flush(void)
 {
-   if (_e_config_save_job)
+   if (_e_config_save_timer)
      {
-	ecore_job_del(_e_config_save_job);
-	_e_config_save_job = NULL;
+	ecore_timer_del(_e_config_save_timer);
+	_e_config_save_timer = NULL;
 	_e_config_save_cb(NULL);
      }
 }
@@ -1286,8 +1286,8 @@ e_config_save_flush(void)
 EAPI void
 e_config_save_queue(void)
 {
-   if (_e_config_save_job) ecore_job_del(_e_config_save_job);
-   _e_config_save_job = ecore_job_add(_e_config_save_cb, NULL);
+   if (_e_config_save_timer) ecore_timer_del(_e_config_save_timer);
+   _e_config_save_timer = ecore_timer_add(0.25, _e_config_save_cb, NULL);
 }
 
 EAPI char *
@@ -1575,13 +1575,14 @@ e_config_binding_wheel_match(E_Config_Binding_Wheel *eb_in)
 }
 
 /* local subsystem functions */
-static void
+static int
 _e_config_save_cb(void *data)
 {
    e_config_profile_save();
    e_module_save_all();
    e_config_domain_save("e", _e_config_edd, e_config);
-   _e_config_save_job = NULL;
+   _e_config_save_timer = NULL;
+   return 0;
 }
 
 static void
