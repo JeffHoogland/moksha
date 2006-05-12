@@ -75,8 +75,8 @@ struct _E_Config
 {
    int         config_version;
    int         show_splash; //GUI
-   const char *desktop_default_background;
-   Evas_List  *desktop_backgrounds;
+   const char *desktop_default_background; // GUI
+   Evas_List  *desktop_backgrounds; // GUI
    const char *desktop_default_name;
    Evas_List  *desktop_names;
    double      menus_scroll_speed; // GUI
@@ -107,24 +107,24 @@ struct _E_Config
    int         evas_engine_win;
    int         evas_engine_zone;
    const char *language;
-   Evas_List  *modules;
-   Evas_List  *font_fallbacks;
-   Evas_List  *font_defaults;
-   Evas_List  *themes;
+   Evas_List  *modules; // GUI
+   Evas_List  *font_fallbacks; // GUI
+   Evas_List  *font_defaults; // GUI
+   Evas_List  *themes; // GUI
    Evas_List  *mouse_bindings;
    Evas_List  *key_bindings; // GUI
    Evas_List  *signal_bindings;
    Evas_List  *wheel_bindings;
-   Evas_List  *path_append_data;
-   Evas_List  *path_append_images;
-   Evas_List  *path_append_fonts;
-   Evas_List  *path_append_themes;
-   Evas_List  *path_append_init;
-   Evas_List  *path_append_icons;
-   Evas_List  *path_append_modules;
-   Evas_List  *path_append_backgrounds;
-   Evas_List  *path_append_input_methods;
-   Evas_List  *path_append_messages;
+   Evas_List  *path_append_data; // GUI
+   Evas_List  *path_append_images; // GUI
+   Evas_List  *path_append_fonts; // GUI
+   Evas_List  *path_append_themes; // GUI
+   Evas_List  *path_append_init; // GUI
+   Evas_List  *path_append_icons; // GUI
+   Evas_List  *path_append_modules; // GUI
+   Evas_List  *path_append_backgrounds; // GUI
+   Evas_List  *path_append_input_methods; // GUI
+   Evas_List  *path_append_messages; // GUI
    int         window_placement_policy; // GUI
    int         focus_policy; // GUI
    int         focus_setting; // GUI

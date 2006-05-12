@@ -54,7 +54,6 @@ Some of the things (in very short form) that need to be done to E17...
 * add setup/install wizard to seed eap files etc. etc.
 * support color classes
 * add clientinfo pane/popdown for borders
-* make xrandr support get rotation and store it
 * gui config dialogs for all config
 * make it possible to disable border buttons/actions (tell theme what is
   disabled)
