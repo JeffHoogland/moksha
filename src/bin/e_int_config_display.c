@@ -44,6 +44,10 @@ struct _E_Config_Dialog_Data
    Ecore_X_Screen_Size orig_size;
    Ecore_X_Screen_Refresh_Rate orig_rate;
    int restore;
+   int can_rotate;
+   int can_flip;
+   Ecore_X_Randr_Rotation rotation;
+   Ecore_X_Randr_Rotation flip;
    
    SureBox *surebox;
 };
@@ -186,7 +190,6 @@ e_int_config_display(E_Container *con)
    v->override_auto_apply = 1;
    
    cfd = e_config_dialog_new(con, _("Display Settings"), NULL, 0, v, NULL);
-   e_dialog_resizable_set(cfd->dia, 1);
    return cfd;
 }
 
@@ -194,11 +197,29 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
    E_Manager *man;
+   Ecore_X_Randr_Rotation rots;
    
    man = e_manager_current_get();
    cfdata->orig_size = ecore_x_randr_current_screen_size_get(man->root);   
    cfdata->orig_rate = ecore_x_randr_current_screen_refresh_rate_get(man->root);
    cfdata->restore = e_config->display_res_restore;
+
+   rots = ecore_x_randr_screen_rotations_get(man->root);
+   if (rots)
+     {
+	cfdata->rotation = ecore_x_randr_screen_rotation_get(man->root);
+	if ((rots & (ECORE_X_RANDR_FLIP_X | ECORE_X_RANDR_FLIP_Y)))
+	  cfdata->can_flip = 1;
+	cfdata->flip = cfdata->rotation &
+	  (ECORE_X_RANDR_FLIP_X | ECORE_X_RANDR_FLIP_Y);
+	
+	if ((rots & (ECORE_X_RANDR_ROT_0 | ECORE_X_RANDR_ROT_90 |
+		     ECORE_X_RANDR_ROT_180 | ECORE_X_RANDR_ROT_270)))
+	  cfdata->can_rotate = 1;
+	cfdata->rotation = cfdata->rotation & 
+	  (ECORE_X_RANDR_ROT_0 | ECORE_X_RANDR_ROT_90 |
+	   ECORE_X_RANDR_ROT_180 | ECORE_X_RANDR_ROT_270);
+     }
 }
 
 static void *
@@ -241,43 +262,54 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->display_res_height = cfdata->orig_size.height;
    e_config->display_res_hz = cfdata->orig_rate.rate;
    
-   if ((cfdata->orig_size.width == w) && 
-       (cfdata->orig_size.height == h) &&
-       (cfdata->orig_rate.rate == r))
-     goto saveonly;
-
    man = e_manager_current_get();
-   sizes = ecore_x_randr_screen_sizes_get(man->root, &n);
-   for (i = 0; i < n; i++) 
+   
+   if (!((cfdata->orig_size.width == w) && (cfdata->orig_size.height == h) &&
+	 (cfdata->orig_rate.rate == r)))
      {
-	if ((sizes[i].width == w) && 
-	    (sizes[i].height == h))
+	sizes = ecore_x_randr_screen_sizes_get(man->root, &n);
+	for (i = 0; i < n; i++) 
 	  {
-	     size = sizes[i];
-	     int k, rr;
-	     rates = ecore_x_randr_screen_refresh_rates_get(man->root, i, &rr);
-	     for (k = 0; k < rr; k++) 
+	     if ((sizes[i].width == w) && 
+		 (sizes[i].height == h))
 	       {
-		  if (rates[k].rate == r) 
+		  size = sizes[i];
+		  int k, rr;
+		  rates = ecore_x_randr_screen_refresh_rates_get(man->root, i, &rr);
+		  for (k = 0; k < rr; k++) 
 		    {
-		       rate = rates[k];
-		       break;
-		    }  
+		       if (rates[k].rate == r) 
+			 {
+			    rate = rates[k];
+			    break;
+			 }  
+		    }
+		  break;
 	       }
-	     break;
 	  }
+	
+	e_config->display_res_width = size.width;
+	e_config->display_res_height = size.height;
+	e_config->display_res_hz = rate.rate;
+	ecore_x_randr_screen_refresh_rate_set(man->root, size, rate);
+	_surebox_new(cfd, cfdata);
+	cfdata->orig_size = size;
+	cfdata->orig_rate = rate;
      }
    
-   e_config->display_res_width = size.width;
-   e_config->display_res_height = size.height;
-   e_config->display_res_hz = rate.rate;
-   ecore_x_randr_screen_refresh_rate_set(man->root, size, rate);
-   _surebox_new(cfd, cfdata);
+   if ((cfdata->can_rotate) || (cfdata->can_flip))
+     {
+	Ecore_X_Randr_Rotation rot;
+	
+	rot = ecore_x_randr_screen_rotation_get(man->root);
+	if (rot != cfdata->rotation | cfdata->flip)
+	  ecore_x_randr_screen_rotation_set(man->root,
+					    cfdata->rotation | cfdata->flip);
+	e_config->display_res_rotation = cfdata->rotation | cfdata->flip;
+     }
+   else
+     e_config->display_res_rotation = 0;
    
-   cfdata->orig_size = size;
-   cfdata->orig_rate = rate;
-   
-   saveonly:
    e_config->display_res_restore = cfdata->restore;
    e_config_save_queue();
    
@@ -287,22 +319,24 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_Object *o, *of, *ol, *rl, *ob;
+   Evas_Object *o, *of, *ol, *rl, *ob, *o2;
+   E_Radio_Group *rg;
    E_Manager *man;
    Ecore_X_Screen_Size *sizes;
    Ecore_X_Screen_Size size;
-   Ecore_X_Randr_Rotation rots, rot;
    int i, r, s;
    
    _fill_data(cfdata);
    
-   o = e_widget_list_add(evas, 0, 0);
+   o = e_widget_list_add(evas, 0, 1);
+   
+   o2 = e_widget_list_add(evas, 0, 0);
    
    of = e_widget_framelist_add(evas, _("Resolution"), 0);   
    ol = e_widget_ilist_add(evas, 32, 32, NULL);
    e_widget_min_size_set(ol, 140, 120);   
    e_widget_framelist_object_append(of, ol);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o2, of, 1, 1, 0.5);
 
    res_list = ol;
    
@@ -310,7 +344,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    rl = e_widget_ilist_add(evas, 8, 8, NULL);
    e_widget_min_size_set(rl, 140, 90);   
    e_widget_framelist_object_append(of, rl);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);   
+   e_widget_list_object_append(o2, of, 1, 1, 0.5);   
    
    rate_list = rl;
    
@@ -388,30 +422,51 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      }
    
    ob = e_widget_check_add(evas, _("Restore this resolution on login"), &(cfdata->restore));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   
+   e_widget_list_object_append(o2, ob, 1, 1, 0.5);
+
    e_widget_ilist_go(ol);
    e_widget_ilist_go(rl);
+
+   e_widget_list_object_append(o, o2, 1, 1, 0.5);
    
-   rots = ecore_x_randr_screen_rotations_get(man->root);
-   rot = ecore_x_randr_screen_rotation_get(man->root);
-   if (!rots)
+   if ((cfdata->can_rotate) || (cfdata->can_flip))
+     o2 = e_widget_list_add(evas, 0, 0);
+   
+   if (cfdata->can_rotate)
      {
-	printf("no randr support\n");
+	of = e_widget_framelist_add(evas, _("Rotation"), 0);
+	
+	rg = e_widget_radio_group_new(&(cfdata->rotation));
+	
+	ob = e_widget_radio_add(evas, _("Normal"), ECORE_X_RANDR_ROT_0, rg);
+        e_widget_framelist_object_append(of, ob);
+	ob = e_widget_radio_add(evas, _("To the left"), ECORE_X_RANDR_ROT_90, rg);
+        e_widget_framelist_object_append(of, ob);
+	ob = e_widget_radio_add(evas, _("Turned around"), ECORE_X_RANDR_ROT_180, rg);
+        e_widget_framelist_object_append(of, ob);
+	ob = e_widget_radio_add(evas, _("To the right"), ECORE_X_RANDR_ROT_270, rg);
+        e_widget_framelist_object_append(of, ob);
+	
+	e_widget_list_object_append(o2, of, 0, 0, 0.5);
      }
-   if (rot & ECORE_X_RANDR_ROT_0) printf("rot: 0deg\n");
-   if (rot & ECORE_X_RANDR_ROT_90) printf("rot: 90deg\n");
-   if (rot & ECORE_X_RANDR_ROT_180) printf("rot: 180deg\n");
-   if (rot & ECORE_X_RANDR_ROT_270) printf("rot: 270deg\n");
-   if (rot & ECORE_X_RANDR_FLIP_X) printf("rot: flip x\n");
-   if (rot & ECORE_X_RANDR_FLIP_Y) printf("rot: flip y\n");
-   printf("---\n", rot);
-   if (rots & ECORE_X_RANDR_ROT_0) printf("support: 0deg\n");
-   if (rots & ECORE_X_RANDR_ROT_90) printf("support: 90deg\n");
-   if (rots & ECORE_X_RANDR_ROT_180) printf("support: 180deg\n");
-   if (rots & ECORE_X_RANDR_ROT_270) printf("support: 270deg\n");
-   if (rots & ECORE_X_RANDR_FLIP_X) printf("support: flip x\n");
-   if (rots & ECORE_X_RANDR_FLIP_Y) printf("support: flip y\n");
+
+   if (cfdata->can_flip)
+     {
+	of = e_widget_framelist_add(evas, _("Mirroring"), 0);
+	
+	rg = e_widget_radio_group_new(&(cfdata->flip));
+	
+	ob = e_widget_radio_add(evas, _("Horizontally"), ECORE_X_RANDR_FLIP_X, rg);
+        e_widget_framelist_object_append(of, ob);
+	ob = e_widget_radio_add(evas, _("Vertically"), ECORE_X_RANDR_FLIP_Y, rg);
+        e_widget_framelist_object_append(of, ob);
+	
+	e_widget_list_object_append(o2, of, 0, 0, 0.5);
+     }
+   
+   if ((cfdata->can_rotate) || (cfdata->can_flip))
+     e_widget_list_object_append(o, o2, 0, 0, 0.0);
+   
    return o;
 }
 

@@ -463,6 +463,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, display_res_width, INT);
    E_CONFIG_VAL(D, T, display_res_height, INT);
    E_CONFIG_VAL(D, T, display_res_hz, INT);
+   E_CONFIG_VAL(D, T, display_res_rotation, INT);
    
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -635,6 +636,7 @@ e_config_init(void)
    e_config->display_res_width = 0;
    e_config->display_res_height = 0;
    e_config->display_res_hz = 0;
+   e_config->display_res_rotation = 0;
    
      {
 	E_Config_Module *em;
@@ -1207,6 +1209,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->display_res_width, 1, 8192);
    E_CONFIG_LIMIT(e_config->display_res_height, 1, 8192);
    E_CONFIG_LIMIT(e_config->display_res_hz, 0, 250);
+   E_CONFIG_LIMIT(e_config->display_res_rotation, 0, 0xff);
    
    e_config_save_queue();
    

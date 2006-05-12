@@ -210,8 +210,8 @@ struct _E_Config
    int         use_app_icon; // GUI
    int         cfgdlg_auto_apply; // GUI
    int         cfgdlg_default_mode; // GUI   
-   Evas_List  *gadcons;
-   Evas_List  *shelves;
+   Evas_List  *gadcons; // GUI
+   Evas_List  *shelves; // GUI
    int         font_hinting; // GUI
 
    char	      *desklock_personal_passwd; // GUI
@@ -221,12 +221,13 @@ struct _E_Config
    int        desklock_autolock; // GUI
    int        desklock_use_timeout; // GUI
    double     desklock_timeout; // GUI
-   int        desklock_disable_screensaver;
+   int        desklock_disable_screensaver; // GUI
 
-   int        display_res_restore;
-   int        display_res_width;
-   int        display_res_height;
-   int        display_res_hz;
+   int        display_res_restore; // GUI
+   int        display_res_width; // GUI
+   int        display_res_height; // GUI
+   int        display_res_hz; // GUI
+   int        display_res_rotation; // GUI
 };
 
 struct _E_Config_Module

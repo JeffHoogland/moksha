@@ -128,6 +128,9 @@ e_manager_new(Ecore_X_Window root, int num)
 	size.height = e_config->display_res_height;
 	rate.rate = e_config->display_res_hz;
 	ecore_x_randr_screen_refresh_rate_set(man->root, size, rate);
+	if (e_config->display_res_rotation)
+	  ecore_x_randr_screen_rotation_set(man->root,
+					    e_config->display_res_rotation);
      }
    
    h = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHOW_REQUEST, _e_manager_cb_window_show_request, man);
