@@ -589,22 +589,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 				        act->action_name, NULL, NULL, NULL);
 	       }
 	  }
-	/*for (l = cfdata->key_bindings; l; l = l->next)
-	  {
-	    Evas_Object *ic;
-	    E_Config_KeyBind *eckb;
-
-	    eckb = l->data;
-	    ic = edje_object_add(evas);
-	    if (eckb && eckb->bk_list)
-	      e_util_edje_icon_set(ic, ILIST_ICON_WITH_KEYBIND);
-	    else
-	      e_util_edje_icon_set(ic, ILIST_ICON_WITHOUT_KEYBIND);
-
-	    e_widget_ilist_append(cfdata->gui.action_ilist, ic,
-				  _(actions_predefined_names[eckb->acn].action_name),
-				  NULL, NULL, NULL);
-	  }*/
 	e_widget_min_size_set(cfdata->gui.action_ilist, 250, 330);
 	e_widget_ilist_go(cfdata->gui.action_ilist);
       }
@@ -1062,8 +1046,8 @@ _e_keybinding_keybind_cb_del_keybinding(void *data, void *data2)
    _e_keybinding_keybind_delete_keybinding(cfdata);
 
    _e_keybinding_update_binding_list(cfdata);
-   e_widget_ilist_selected_set(cfdata->gui.binding_ilist, cfdata->current_act_selector);
    e_widget_ilist_go(cfdata->gui.binding_ilist);
+   e_widget_ilist_selected_set(cfdata->gui.binding_ilist, cfdata->current_act_selector);
 
    _e_keybinding_update_keybinding_button(cfdata);
    _e_keybinding_update_add_delete_buttons(cfdata);
@@ -1220,8 +1204,8 @@ _e_keybinding_update_binding_list(E_Config_Dialog_Data *cfdata)
    _e_keybinding_update_action_ilist_cur_selection_icon(cfdata);
    _e_keybinding_update_binding_ilist_cur_selection_icon(cfdata);
 
-   e_widget_ilist_selected_set(cfdata->gui.binding_ilist, cfdata->current_act_selector);
    e_widget_ilist_go(cfdata->gui.binding_ilist);
+   e_widget_ilist_selected_set(cfdata->gui.binding_ilist, cfdata->current_act_selector);
 }
 
 static void
