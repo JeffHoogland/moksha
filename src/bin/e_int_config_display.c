@@ -291,6 +291,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    E_Manager *man;
    Ecore_X_Screen_Size *sizes;
    Ecore_X_Screen_Size size;
+   Ecore_X_Randr_Rotation rots, rot;
    int i, r, s;
    
    _fill_data(cfdata);
@@ -391,6 +392,26 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    e_widget_ilist_go(ol);
    e_widget_ilist_go(rl);
+   
+   rots = ecore_x_randr_screen_rotations_get(man->root);
+   rot = ecore_x_randr_screen_rotation_get(man->root);
+   if (!rots)
+     {
+	printf("no randr support\n");
+     }
+   if (rot & ECORE_X_RANDR_ROT_0) printf("rot: 0deg\n");
+   if (rot & ECORE_X_RANDR_ROT_90) printf("rot: 90deg\n");
+   if (rot & ECORE_X_RANDR_ROT_180) printf("rot: 180deg\n");
+   if (rot & ECORE_X_RANDR_ROT_270) printf("rot: 270deg\n");
+   if (rot & ECORE_X_RANDR_FLIP_X) printf("rot: flip x\n");
+   if (rot & ECORE_X_RANDR_FLIP_Y) printf("rot: flip y\n");
+   printf("---\n", rot);
+   if (rots & ECORE_X_RANDR_ROT_0) printf("support: 0deg\n");
+   if (rots & ECORE_X_RANDR_ROT_90) printf("support: 90deg\n");
+   if (rots & ECORE_X_RANDR_ROT_180) printf("support: 180deg\n");
+   if (rots & ECORE_X_RANDR_ROT_270) printf("support: 270deg\n");
+   if (rots & ECORE_X_RANDR_FLIP_X) printf("support: flip x\n");
+   if (rots & ECORE_X_RANDR_FLIP_Y) printf("support: flip y\n");
    return o;
 }
 
