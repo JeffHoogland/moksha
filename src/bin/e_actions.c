@@ -857,6 +857,75 @@ ACT_FN_GO(desk_linear_flip_to)
      }
 }
 
+/***************************************************************************/
+ACT_FN_GO(screen_send_to)
+{
+   E_Zone *zone;
+
+   zone = _e_actions_zone_get(obj);
+   if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
+   if (zone)
+     {
+	if (params)
+	  {
+	     int scr = 0;
+	
+	     if (sscanf(params, "%i", &scr) == 1)
+	       {
+		  E_Zone *zone2;
+		  
+		  if (evas_list_count(e_manager_list()) > 1)
+		    zone2 = e_container_zone_number_get(scr, 0);
+		  else
+		    zone2 = e_container_zone_number_get(0, scr);
+		  if ((zone2) && (zone != zone2))
+		    ecore_x_pointer_warp(zone2->container->win,
+					 zone2->x + (zone->w / 2),
+					 zone2->y + (zone->h / 2));
+	       }
+	  }
+     }
+}
+
+ACT_FN_GO(screen_send_by)
+{
+   E_Zone *zone;
+
+   zone = _e_actions_zone_get(obj);
+   if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
+   if (zone)
+     {
+	if (params)
+	  {
+	     int scr = 0;
+	
+	     if (sscanf(params, "%i", &scr) == 1)
+	       {
+		  E_Zone *zone2;
+		  
+		  if (evas_list_count(e_manager_list()) > 1)
+		    {
+		       scr += zone->container->num;
+		       if (scr >= zone->container->num) scr -= zone->container->num;
+		       else if (scr < 0) scr += zone->container->num;
+		       zone2 = e_container_zone_number_get(scr, 0);
+		    }
+		  else
+		    {
+		       scr += zone->num;
+		       if (scr >= zone->num) scr -= zone->num;
+		       else if (scr < 0) scr += zone->num;
+		       zone2 = e_container_zone_number_get(0, scr);
+		    }
+		  if ((zone2) && (zone != zone2))
+		    ecore_x_pointer_warp(zone2->container->win,
+					 zone2->x + (zone->w / 2),
+					 zone2->y + (zone->h / 2));
+	       }
+	  }
+     }
+}
+
 #define ZONE_DESK_ACTION(con_num, zone_num, zone, act) \
 E_Zone *zone; \
 if ((con_num < 0) || (zone_num < 0)) { \
@@ -1522,6 +1591,23 @@ e_actions_init(void)
    e_register_action_predef_name(_("Desktop"), _("Switch To Desktop..."),
 				 "desk_linear_flip_to", NULL, EDIT_RESTRICT_ACTION, 0);
 
+   /* screen_send_to */
+   ACT_GO(screen_send_to);
+   e_register_action_predef_name(_("Screen"), _("Send Mouse To Screen 0"), "screen_send_to",
+				 "0", EDIT_RESTRICT_ACTION, 0);
+   e_register_action_predef_name(_("Screen"), _("Send Mouse To Screen 1"), "screen_send_to",
+				 "1", EDIT_RESTRICT_ACTION, 0);
+   e_register_action_predef_name(_("Screen"), _("Send Mouse To Screen..."), "screen_send_to",
+				 NULL, EDIT_RESTRICT_ACTION, 0);
+   /* screen_send_by */
+   ACT_GO(screen_send_by);
+   e_register_action_predef_name(_("Screen"), _("Send Mouse Forward 1 Screen"), "screen_send_by",
+				 "1", EDIT_RESTRICT_ACTION, 0);
+   e_register_action_predef_name(_("Screen"), _("Send Mouse Back 1 Screen"), "screen_send_by",
+				 "-1", EDIT_RESTRICT_ACTION, 0);
+   e_register_action_predef_name(_("Screen"), _("Send Mouse Forward/Back Screens..."), "screen_send_by",
+				 NULL, EDIT_RESTRICT_ACTION, 0);
+   
    /* window_move_to */
    ACT_GO(window_move_to);
    e_register_action_predef_name(_("Window : Actions"), "Move To...", "window_move_to", NULL,
