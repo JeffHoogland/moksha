@@ -8,7 +8,6 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: eap editor doesn't handle spaces in file paths for the .eap
 * BUG: ghost windows happen if windows close when on another desktop or if
   windows are very short-lived
 * BUG: k3b has minimization issues when burning cds (it tries to unminimize

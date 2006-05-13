@@ -1419,7 +1419,7 @@ e_app_icon_add(Evas *evas, E_App *a)
 static int
 _e_app_new_save(E_App *a)
 {
-   static char tmpn[1024];
+   static char tmpn[4096];
    int fd = 0, ret = 0;
    char cmd[2048];  
    char ipart[512];
@@ -1446,20 +1446,13 @@ _e_app_new_save(E_App *a)
      }
    
    i = 0;
-   
    if (a->image)
      {
 	start = strchr(a->image, '/');
-	end = strrchr(a->image ,'/');
+	end = strrchr(a->image, '/');
 
-	if (start == end)
-	  {
-	     imgdir = strdup("/");;
-	  }
-	else if ((!start) || (!end))
-	  {
-	     imgdir = strdup("");
-	  }
+	if (start == end) imgdir = strdup("/");
+	else if ((!start) || (!end)) imgdir = strdup("");
 	else
 	  {
 	     imgdir = malloc((end - start + 1));
@@ -1473,24 +1466,27 @@ _e_app_new_save(E_App *a)
 
    if (imgdir)
      {
-	snprintf(ipart, sizeof(ipart), "-id %s", imgdir);
+	snprintf(ipart, sizeof(ipart), "-id %s",
+		 e_util_filename_escape(imgdir));
 	free(imgdir);
      }
-   else ipart[0] = '\0';
+   else ipart[0] = 0;
    
    if (a->image)
      {
-	if (a->width <= 0)
-	  a->width = EAP_MIN_WIDTH;
-	if (a->height <= 0)
-	  a->height = EAP_MIN_HEIGHT;
-	fprintf(out, EAP_EDC_TMPL, a->image, a->width, a->height, a->image);
+	if (a->width <= 0) a->width = EAP_MIN_WIDTH;
+	if (a->height <= 0) a->height = EAP_MIN_HEIGHT;
+	fprintf(out, EAP_EDC_TMPL, 
+		e_util_filename_escape(ecore_file_get_file(a->image)), 
+		a->width, a->height, 
+		e_util_filename_escape(ecore_file_get_file(a->image)));
      }
    else
      fprintf(out, EAP_EDC_TMPL_EMPTY);
    fclose(out);
    
-   snprintf(cmd, sizeof(cmd), "edje_cc -v %s %s %s", ipart, tmpn, a->path);
+   snprintf(cmd, sizeof(cmd), "edje_cc -v %s %s %s", ipart, tmpn, 
+	    e_util_filename_escape(a->path));
    ret = system(cmd);
    
    if (ret < 0)
@@ -1500,7 +1496,7 @@ _e_app_new_save(E_App *a)
 	return 0;
      }
    
-   unlink(tmpn);
+   ecore_file_unlink(tmpn);
    return 1;   
 }
 

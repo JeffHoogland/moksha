@@ -527,6 +527,38 @@ e_util_dialog_internal(const char *title, const char *txt)
    e_dialog_show(dia);
 }
 
+EAPI const char *
+e_util_filename_escape(const char *filename)
+{
+   char *p, *q;
+   static char buf[4096];
+   
+   p = filename;
+   q = buf;
+   while (*p)
+     {
+	if ((q - buf) > 4090) return NULL;
+	if (
+	    (*p == ' ') || (*p == '\t') || (*p == '\n') ||
+	    (*p == '\\') || (*p == '\'') || (*p == '\"') ||
+	    (*p == ';') || (*p == '!') || (*p == '#') ||
+	    (*p == '$') || (*p == '%') || (*p == '&') ||
+	    (*p == '*') || (*p == '(') || (*p == ')') ||
+	    (*p == '[') || (*p == ']') || (*p == '{') ||
+	    (*p == '}') || (*p == '|') || (*p == '<') ||
+	    (*p == '>') || (*p == '?')
+	    )
+	  {
+	     *q = '\\';
+	     q++;
+	  }
+	*q = *p;
+	q++;
+	p++;
+     }
+   return buf;
+}
+
 /* local subsystem functions */
 static void
 _e_util_container_fake_mouse_up_cb(void *data)
