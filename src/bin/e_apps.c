@@ -306,20 +306,27 @@ EAPI E_App *
 e_app_empty_new(const char *path)
 {
    E_App *a;
-   char buf[4096];
    
    a = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
    a->image = NULL;
-   if ((_e_apps_all) && (_e_apps_all->path))
-     {
-	snprintf(buf, sizeof(buf), "%s/_new_app_%1.1f.eap", 
-		 _e_apps_all->path, ecore_time_get());
-	a->parent = _e_apps_all;
-	_e_apps_all->subapps = evas_list_append(_e_apps_all->subapps, a);
-	path = buf;
-     }
    if (path) a->path = evas_stringshare_add(path);   
-   return a;      
+   else
+     {   
+	if ((_e_apps_all) && (_e_apps_all->path))
+	  {
+	     char buf[4096];
+	     
+	     snprintf(buf, sizeof(buf), "%s/_new_app_%1.1f.eap", 
+		      _e_apps_all->path, ecore_time_get());
+	     a->parent = _e_apps_all;
+	     _e_apps_all->subapps = evas_list_append(_e_apps_all->subapps, a);
+	     a->path = evas_stringshare_add(buf);
+	     _e_apps = evas_hash_add(_e_apps, a->path, a);
+             _e_apps_list = evas_list_prepend(_e_apps_list, a);
+	     _e_app_change(a, E_APP_ADD);
+	  }
+     }
+   return a;
 }
 
 EAPI void
@@ -1187,9 +1194,7 @@ e_app_fields_save(E_App *a)
    unsigned char tmp[1];
    int img;
 
-   if (!a->path) return;
-
-   if (!ecore_file_exists(a->path))
+   if ((!a->path) || (!ecore_file_exists(a->path)))
      {
 	_e_app_new_save(a);
 	img = 0;
@@ -1201,10 +1206,7 @@ e_app_fields_save(E_App *a)
    lang = e_intl_language_alias_get();
 
    /* if its "C" its the default - so drop it */
-   if (!strcmp(lang, "C"))
-     {
-	lang = NULL;
-     }
+   if (!strcmp(lang, "C")) lang = NULL;
 
    ef = eet_open(a->path, EET_FILE_MODE_READ_WRITE);
    if (!ef) return;
@@ -1290,8 +1292,12 @@ e_app_fields_save(E_App *a)
 	     eet_data_image_write(ef, "images/0", (void *)data, a->width, a->height, alpha, 1, 0, 0);
 	  }
      }
-
    eet_close(ef);
+   if (a->parent)
+     {
+	_e_app_change(a->parent, E_APP_CHANGE);
+	_e_app_subdir_rescan(a->parent);
+     }
 }
 
 EAPI void
@@ -1427,8 +1433,7 @@ _e_app_new_save(E_App *a)
    char *start, *end, *imgdir = NULL;
    int i;   
       
-   if (!a->path) return 0;      
-   
+   if (!a->path) return 0;
    strcpy(tmpn, "/tmp/eapp_edit_cc.edc-tmp-XXXXXX");
    fd = mkstemp(tmpn);
    if (fd < 0)

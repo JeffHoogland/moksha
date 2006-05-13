@@ -556,6 +556,7 @@ e_util_filename_escape(const char *filename)
 	q++;
 	p++;
      }
+   *q = 0;
    return buf;
 }
 
