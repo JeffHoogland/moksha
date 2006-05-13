@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-05-08 11:06+0900\n"
+"POT-Creation-Date: 2006-05-12 20:22+0900\n"
 "PO-Revision-Date: 2006-05-08 16:30+0900\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,18 +52,18 @@ msgid ""
 msgstr "Enlightenment を終了しようとしています.<br><br>本当に終了しますか."
 
 #: src/bin/e_actions.c:1289 src/bin/e_fileman_smart.c:1000
-#: src/bin/e_int_config_display.c:160 src/bin/e_module.c:566
+#: src/bin/e_int_config_display.c:163 src/bin/e_module.c:566
 msgid "Yes"
 msgstr "はい"
 
 #: src/bin/e_actions.c:1291 src/bin/e_fileman_smart.c:1001
-#: src/bin/e_int_config_display.c:161 src/bin/e_module.c:567
+#: src/bin/e_int_config_display.c:164 src/bin/e_module.c:567
 msgid "No"
 msgstr "いいえ"
 
 #: src/bin/e_actions.c:1390 src/bin/e_actions.c:1584 src/bin/e_actions.c:1586
 #: src/bin/e_actions.c:1588 src/bin/e_actions.c:1590
-#: src/bin/e_int_config_keybindings.c:669
+#: src/bin/e_int_config_keybindings.c:682
 msgid "Menu"
 msgstr "メニュー"
 
@@ -86,7 +86,7 @@ msgstr "上げる"
 msgid "Lower"
 msgstr "下げる"
 
-#: src/bin/e_actions.c:1407 src/bin/e_config_dialog.c:158
+#: src/bin/e_actions.c:1407 src/bin/e_config_dialog.c:160
 #: src/bin/e_configure.c:105 src/bin/e_int_border_menu.c:348
 msgid "Close"
 msgstr "閉じる"
@@ -189,15 +189,15 @@ msgid "Flip Desktop Down"
 msgstr "下のデスクトップへ移動する"
 
 #: src/bin/e_actions.c:1483
-msgid "Flip Desktop By…"
+msgid "Flip Desktop By..."
 msgstr "デスクトップを指定分移動する"
 
 #: src/bin/e_actions.c:1488
-msgid "Flip Desktop To…"
+msgid "Flip Desktop To..."
 msgstr "指定のデスクトップへ移動する"
 
 #: src/bin/e_actions.c:1493
-msgid "Flip Desktop Linearly…"
+msgid "Flip Desktop Linearly..."
 msgstr "デスクトップを順に移動する"
 
 #: src/bin/e_actions.c:1498
@@ -249,8 +249,8 @@ msgid "Switch To Desktop 11"
 msgstr "デスクトップ 11 に切り替える"
 
 #: src/bin/e_actions.c:1522
-msgid "Switch To Desktop…"
-msgstr "指定のデスクトップへ切り替える"
+msgid "Switch To Desktop..."
+msgstr "指定のデスクトップに切り替える"
 
 #: src/bin/e_actions.c:1546 src/bin/e_actions.c:1548 src/bin/e_actions.c:1551
 #: src/bin/e_actions.c:1555 src/bin/e_actions.c:1557 src/bin/e_actions.c:1559
@@ -270,7 +270,7 @@ msgid "To Previous Desktop"
 msgstr "前のデスクトップへ"
 
 #: src/bin/e_actions.c:1551
-msgid "By Desktop #…"
+msgid "By Desktop #..."
 msgstr "指定分のデスクトップを移動"
 
 #: src/bin/e_actions.c:1555
@@ -322,7 +322,7 @@ msgid "To Desktop 11"
 msgstr "デスクトップ 11 へ"
 
 #: src/bin/e_actions.c:1579
-msgid "To Desktop…"
+msgid "To Desktop..."
 msgstr "指定のデスクトップへ"
 
 #: src/bin/e_actions.c:1584
@@ -338,7 +338,7 @@ msgid "Show Clients Menu"
 msgstr "クライアントメニューを表示する"
 
 #: src/bin/e_actions.c:1590
-msgid "Show Menu…"
+msgid "Show Menu..."
 msgstr "指定のメニューを表示する"
 
 #: src/bin/e_actions.c:1597
@@ -387,7 +387,7 @@ msgstr "デスクトップロック"
 
 #: src/bin/e_apps.c:444 src/bin/e_fileman_file.c:312
 #: src/bin/e_fileman_file.c:363 src/bin/e_fileman_mime.c:393
-#: src/bin/e_utils.c:229 src/bin/e_zone.c:627
+#: src/bin/e_utils.c:229 src/bin/e_zone.c:628
 msgid "Run Error"
 msgstr "実行エラー"
 
@@ -410,14 +410,14 @@ msgstr ""
 "Enlightenment で以下のアプリケーションが実行できませんでした.<br><br>%"
 "s<br><br>起動に失敗しました."
 
-#: src/bin/e_apps.c:2020 src/bin/e_config_dialog.c:149 src/bin/e_error.c:196
+#: src/bin/e_apps.c:2020 src/bin/e_config_dialog.c:151 src/bin/e_error.c:196
 #: src/bin/e_error.c:205 src/bin/e_file_dialog.c:66
 #: src/bin/e_fileman_smart.c:907 src/bin/e_int_border_remember.c:246
 #: src/bin/e_int_border_remember.c:326 src/bin/e_int_border_remember.c:368
 #: src/bin/e_int_config_background_import.c:202 src/bin/e_module.c:417
-#: src/bin/e_utils.c:524 src/modules/battery/e_mod_main.c:282
-#: src/modules/cpufreq/e_mod_main.c:310 src/modules/cpufreq/e_mod_main.c:337
-#: src/modules/cpufreq/e_mod_main.c:356 src/modules/ibar/e_mod_main.c:1054
+#: src/bin/e_utils.c:524 src/modules/battery/e_mod_main.c:303
+#: src/modules/cpufreq/e_mod_main.c:331 src/modules/cpufreq/e_mod_main.c:358
+#: src/modules/cpufreq/e_mod_main.c:377 src/modules/ibar/e_mod_main.c:1165
 msgid "OK"
 msgstr "了解"
 
@@ -546,19 +546,19 @@ msgstr ""
 "<br>これではまずいので, 念のためデフォルトの設定に置き換えました.<br>ご不便を"
 "おかけしますが, よろしくお願いします.<br>"
 
-#: src/bin/e_config.c:1791
+#: src/bin/e_config.c:1792
 msgid "Configuration Upgraded"
 msgstr "設定をアップグレードしました"
 
-#: src/bin/e_config_dialog.c:120 src/bin/e_configure.c:94
+#: src/bin/e_config_dialog.c:122 src/bin/e_configure.c:94
 msgid "Advanced"
 msgstr "詳細設定"
 
-#: src/bin/e_config_dialog.c:135
+#: src/bin/e_config_dialog.c:137
 msgid "Basic"
 msgstr "基本設定"
 
-#: src/bin/e_config_dialog.c:150
+#: src/bin/e_config_dialog.c:152
 msgid "Apply"
 msgstr "適用"
 
@@ -602,7 +602,7 @@ msgstr "シェルフ"
 msgid "Extensions"
 msgstr "拡張機能"
 
-#: src/bin/e_configure.c:78 src/bin/e_int_config_modules.c:259
+#: src/bin/e_configure.c:78 src/bin/e_int_config_modules.c:239
 msgid "Modules"
 msgstr "モジュール"
 
@@ -630,7 +630,7 @@ msgstr "動作"
 msgid "Window Focus"
 msgstr "ウィンドウフォーカス"
 
-#: src/bin/e_configure.c:87 src/bin/e_int_config_keybindings.c:602
+#: src/bin/e_configure.c:87 src/bin/e_int_config_keybindings.c:615
 msgid "Key Bindings"
 msgstr "キーバインド"
 
@@ -800,7 +800,7 @@ msgid "Cancel"
 msgstr "取消"
 
 #: src/bin/e_fileman_file.c:313 src/bin/e_fileman_file.c:364
-#: src/bin/e_fileman_mime.c:394 src/bin/e_zone.c:628
+#: src/bin/e_fileman_mime.c:394 src/bin/e_zone.c:629
 #, c-format
 msgid ""
 "Enlightenment was unable to fork a child process:\n"
@@ -1002,10 +1002,11 @@ msgid "Begin editing"
 msgstr "編集を始める"
 
 #: src/bin/e_gadget.c:209 src/bin/e_int_menus.c:163 src/bin/e_module.c:490
-#: src/bin/e_shelf.c:757 src/modules/battery/e_mod_main.c:152
-#: src/modules/ibar/e_mod_main.c:752 src/modules/ibox/e_mod_main.c:259
-#: src/modules/ibox/e_mod_main.c:466 src/modules/itray/e_mod_main.c:417
-#: src/modules/pager/e_mod_main.c:618 src/modules/temperature/e_mod_main.c:123
+#: src/bin/e_shelf.c:767 src/modules/battery/e_mod_main.c:173
+#: src/modules/ibar/e_mod_main.c:302 src/modules/ibar/e_mod_main.c:863
+#: src/modules/ibox/e_mod_main.c:259 src/modules/ibox/e_mod_main.c:466
+#: src/modules/itray/e_mod_main.c:417 src/modules/pager/e_mod_main.c:639
+#: src/modules/temperature/e_mod_main.c:144
 msgid "Configuration"
 msgstr "設定"
 
@@ -1585,7 +1586,7 @@ msgstr "マウスが画面の端に達してからデスクトップが切り替
 msgid "%1.1f sec"
 msgstr "%1.1f 秒"
 
-#: src/bin/e_int_config_display.c:98
+#: src/bin/e_int_config_display.c:101
 #, c-format
 msgid ""
 "Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
@@ -1596,7 +1597,7 @@ msgstr ""
 "て下さい.<br>ボタンを押さない場合は,<br>元の解像度 %dx%d とリフレッシュレー"
 "ト %d Hz<br>にあと %d 秒で復帰します."
 
-#: src/bin/e_int_config_display.c:107
+#: src/bin/e_int_config_display.c:110
 #, c-format
 msgid ""
 "Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
@@ -1607,23 +1608,41 @@ msgstr ""
 "て下さい.<br>ボタンを押さない場合は,<br>元の解像度 %dx%d とリフレッシュレー"
 "ト %d Hz<br>に <hilight>ただちに</hilight> 復帰します."
 
-#: src/bin/e_int_config_display.c:157
+#: src/bin/e_int_config_display.c:160
 msgid "Resolution change"
 msgstr "解像度の変更"
 
-#: src/bin/e_int_config_display.c:184
+#: src/bin/e_int_config_display.c:188
 msgid "Display Settings"
 msgstr "ディスプレイの設定"
 
-#: src/bin/e_int_config_display.c:294
+#: src/bin/e_int_config_display.c:300
 msgid "Resolution"
 msgstr "解像度"
 
-#: src/bin/e_int_config_display.c:302
+#: src/bin/e_int_config_display.c:308
 msgid "Refresh Rate"
 msgstr "リフレッシュレート"
 
-#: src/bin/e_int_config_display.c:340
+#: src/bin/e_int_config_display.c:322
+msgid "Missing Features"
+msgstr "機能が不足しています"
+
+#: src/bin/e_int_config_display.c:323
+msgid ""
+"Your X Display Server is missing support for<br>The <hilight>XRandr</"
+"hilight> (X Resize and Rotate) extension.<br>You cannot change screen "
+"resolutions without<br>The support of this extension. It could also "
+"be<br>That at the time <hilight>ecore</hilight> was built there<br>was no "
+"XRandr support detected."
+msgstr ""
+"お使いの X ディスプレイサーバーには <hilight>XRandr</hilight><br>"
+"(X・リサイズ・アンド・ローテート) 拡張機能が不足しています.<br>"
+"この拡張機能が使えないと画面の解像度は変更できません.<br>"
+"<hilight>ecore</hilight> の構築時に, XRandr サポートが検出されなかった<br>"
+"ということも考えられます."
+
+#: src/bin/e_int_config_display.c:389
 msgid "Restore this resolution on login"
 msgstr "ログイン時に解像度復帰"
 
@@ -1814,11 +1833,11 @@ msgstr "ヒンティング"
 msgid "Bytecode"
 msgstr "バイトコード"
 
-#: src/bin/e_int_config_fonts.c:394 src/modules/cpufreq/e_mod_main.c:192
+#: src/bin/e_int_config_fonts.c:394 src/modules/cpufreq/e_mod_main.c:213
 msgid "Automatic"
 msgstr "自動"
 
-#: src/bin/e_int_config_fonts.c:399 src/bin/e_int_config_keybindings.c:685
+#: src/bin/e_int_config_fonts.c:399 src/bin/e_int_config_keybindings.c:698
 msgid "None"
 msgstr "無し"
 
@@ -1851,12 +1870,12 @@ msgid "No Hinting"
 msgstr "ヒンティングしない"
 
 #: src/bin/e_int_config_keybindings.c:9
-msgid "Assign Key Binding…"
+msgid "Assign Key Binding..."
 msgstr "キーバインドを割り当てる..."
 
 #: src/bin/e_int_config_keybindings.c:11
-#: src/bin/e_int_config_keybindings.c:546
-#: src/bin/e_int_config_keybindings.c:716
+#: src/bin/e_int_config_keybindings.c:559
+#: src/bin/e_int_config_keybindings.c:729
 msgid "Action"
 msgstr "アクション"
 
@@ -1875,94 +1894,94 @@ msgid "Unsorted"
 msgstr "その他"
 
 #: src/bin/e_int_config_keybindings.c:20
-#: src/bin/e_int_config_keybindings.c:691
+#: src/bin/e_int_config_keybindings.c:704
 msgid "Unknown"
 msgstr "不明"
 
-#: src/bin/e_int_config_keybindings.c:301
+#: src/bin/e_int_config_keybindings.c:314
 msgid "Key Binding Settings"
 msgstr "キーバインドの設定"
 
-#: src/bin/e_int_config_keybindings.c:618
+#: src/bin/e_int_config_keybindings.c:631
 msgid "Add Key Binding"
 msgstr "キーバインドを追加する"
 
-#: src/bin/e_int_config_keybindings.c:627
+#: src/bin/e_int_config_keybindings.c:640
 msgid "Delete Key Binding"
 msgstr "キーバインドを削除する"
 
-#: src/bin/e_int_config_keybindings.c:638
+#: src/bin/e_int_config_keybindings.c:651
 msgid "Binding Context"
 msgstr "カテゴリー"
 
-#: src/bin/e_int_config_keybindings.c:643
+#: src/bin/e_int_config_keybindings.c:656
 msgid "Any"
 msgstr "無指定"
 
-#: src/bin/e_int_config_keybindings.c:648
+#: src/bin/e_int_config_keybindings.c:661
 msgid "Border"
 msgstr "ボーダー"
 
-#: src/bin/e_int_config_keybindings.c:653
+#: src/bin/e_int_config_keybindings.c:666
 msgid "Zone"
 msgstr "ゾーン"
 
-#: src/bin/e_int_config_keybindings.c:659
+#: src/bin/e_int_config_keybindings.c:672
 msgid "Container"
 msgstr "コンテナ"
 
-#: src/bin/e_int_config_keybindings.c:664
+#: src/bin/e_int_config_keybindings.c:677
 msgid "Manager"
 msgstr "マネージャ"
 
-#: src/bin/e_int_config_keybindings.c:675
+#: src/bin/e_int_config_keybindings.c:688
 msgid "Win List"
 msgstr "ウィンドウリスト"
 
-#: src/bin/e_int_config_keybindings.c:680
+#: src/bin/e_int_config_keybindings.c:693
 msgid "Popup"
 msgstr "ポップアップ"
 
-#: src/bin/e_int_config_keybindings.c:699
-#: src/bin/e_int_config_keybindings.c:701
+#: src/bin/e_int_config_keybindings.c:712
+#: src/bin/e_int_config_keybindings.c:714
 msgid "Key Binding"
 msgstr "バインドするキー"
 
-#: src/bin/e_int_config_keybindings.c:704
-#: src/bin/e_int_config_keybindings.c:719
-#: src/bin/e_int_config_keybindings.c:730
+#: src/bin/e_int_config_keybindings.c:717
+#: src/bin/e_int_config_keybindings.c:732
+#: src/bin/e_int_config_keybindings.c:743
 msgid ":"
 msgstr ""
 
-#: src/bin/e_int_config_keybindings.c:727
+#: src/bin/e_int_config_keybindings.c:740
 msgid "Params"
 msgstr "パラメータ:"
 
-#: src/bin/e_int_config_keybindings.c:1140
+#: src/bin/e_int_config_keybindings.c:1149
 msgid "CTRL"
 msgstr ""
 
-#: src/bin/e_int_config_keybindings.c:1146
+#: src/bin/e_int_config_keybindings.c:1155
 msgid "ALT"
 msgstr ""
 
-#: src/bin/e_int_config_keybindings.c:1153
+#: src/bin/e_int_config_keybindings.c:1162
 msgid "SHIFT"
 msgstr ""
 
-#: src/bin/e_int_config_keybindings.c:1160
+#: src/bin/e_int_config_keybindings.c:1169
 msgid "WIN"
 msgstr ""
 
-#: src/bin/e_int_config_keybindings.c:1297
+#: src/bin/e_int_config_keybindings.c:1303
 msgid "Binding Key Sequence"
 msgstr "バインドするキーシーケンス"
 
-#: src/bin/e_int_config_keybindings.c:1414
+#: src/bin/e_int_config_keybindings.c:1419
 msgid "Binding Key Error"
 msgstr "キーシーケンスのバインドエラー"
 
-#: src/bin/e_int_config_keybindings.c:1415
+#: src/bin/e_int_config_keybindings.c:1420
 msgid ""
 "The binding key sequence, that you choose, is already used.<br>Please choose "
 "another binding key sequence."
@@ -2039,36 +2058,32 @@ msgstr "クリック/ドラッグのタイムアウト"
 msgid "%2.1f seconds"
 msgstr "%2.1f 秒"
 
-#: src/bin/e_int_config_modules.c:63
+#: src/bin/e_int_config_modules.c:54
 msgid "Module Settings"
 msgstr "モジュールの設定"
 
-#: src/bin/e_int_config_modules.c:292
+#: src/bin/e_int_config_modules.c:271
 msgid "Module State"
 msgstr "モジュールの状態"
 
-#: src/bin/e_int_config_modules.c:297 src/bin/e_module.c:479
-#: src/bin/e_int_gadcon_config.c:209
+#: src/bin/e_int_config_modules.c:276 src/bin/e_module.c:479
+#: src/bin/e_int_gadcon_config.c:215
 msgid "Enabled"
 msgstr "有効"
 
-#: src/bin/e_int_config_modules.c:302
-msgid "Loaded"
-msgstr "ロード"
+#: src/bin/e_int_config_modules.c:281 src/bin/e_int_gadcon_config.c:219
+msgid "Disabled"
+msgstr "無効"
 
-#: src/bin/e_int_config_modules.c:307
-msgid "Unloaded"
-msgstr "アンロード"
-
-#: src/bin/e_int_config_modules.c:315
+#: src/bin/e_int_config_modules.c:289
 msgid "Module Actions"
 msgstr "モジュールの動作"
 
-#: src/bin/e_int_config_modules.c:316
+#: src/bin/e_int_config_modules.c:290
 msgid "Configure"
 msgstr "設定"
 
-#: src/bin/e_int_config_modules.c:320
+#: src/bin/e_int_config_modules.c:294
 msgid "About"
 msgstr "情報"
 
@@ -2811,13 +2826,17 @@ msgstr "情報..."
 msgid "Would you like to unload this module?<br>"
 msgstr "このモジュールをアンロードしますか？<br>"
 
-#: src/bin/e_shelf.c:763
+#: src/bin/e_shelf.c:773
 msgid "Stop editing items"
 msgstr "個別編集を終了する"
 
-#: src/bin/e_shelf.c:765
+#: src/bin/e_shelf.c:775
 msgid "Begin editing items"
 msgstr "個別編集を始める"
+
+#: src/bin/e_shelf.c:780
+msgid "Configure Contents"
+msgstr "シェルフの中身を設定する..."
 
 #: src/bin/e_startup.c:68
 #, c-format
@@ -2987,13 +3006,9 @@ msgstr "中身の設定"
 msgid "Available Items"
 msgstr "使えるアイテム"
 
-#: src/bin/e_int_gadcon_config.c:206
+#: src/bin/e_int_gadcon_config.c:212
 msgid "Status"
 msgstr "状態"
-
-#: src/bin/e_int_gadcon_config.c:213
-msgid "Disabled"
-msgstr "無効"
 
 #: src/modules/battery/e_mod_config.c:35
 msgid "Battery Monitor Configuration"
@@ -3031,7 +3046,12 @@ msgstr "警告を出すバッテリの残容量"
 msgid "%1.0f minutes"
 msgstr "%1.0f 分"
 
-#: src/modules/battery/e_mod_main.c:279
+#
+#: src/modules/battery/e_mod_main.c:134
+msgid "Battery"
+msgstr "バッテリ"
+
+#: src/modules/battery/e_mod_main.c:300
 msgid ""
 "Battery Running Low<br>Your battery is running low.<br>You may wish to "
 "switch to an AC source."
@@ -3039,46 +3059,46 @@ msgstr ""
 "バッテリ容量低下<br>使用中のバッテリが切れかけています. <br>AC 電源に切り替え"
 "た方がいいかもしれません."
 
-#: src/modules/battery/e_mod_main.c:328
+#: src/modules/battery/e_mod_main.c:349
 msgid "NO INFO"
 msgstr "情報無し"
 
-#: src/modules/battery/e_mod_main.c:497 src/modules/battery/e_mod_main.c:810
-#: src/modules/battery/e_mod_main.c:964
+#: src/modules/battery/e_mod_main.c:518 src/modules/battery/e_mod_main.c:831
+#: src/modules/battery/e_mod_main.c:985
 msgid "NO BAT"
 msgstr "バッテリ無し"
 
-#: src/modules/battery/e_mod_main.c:521 src/modules/battery/e_mod_main.c:989
+#: src/modules/battery/e_mod_main.c:542 src/modules/battery/e_mod_main.c:1010
 msgid "BAD DRIVER"
 msgstr "ドライバが変"
 
-#: src/modules/battery/e_mod_main.c:545 src/modules/battery/e_mod_main.c:846
-#: src/modules/battery/e_mod_main.c:1013
+#: src/modules/battery/e_mod_main.c:566 src/modules/battery/e_mod_main.c:867
+#: src/modules/battery/e_mod_main.c:1034
 msgid "FULL"
 msgstr "満タン"
 
-#: src/modules/battery/e_mod_main.c:606 src/modules/battery/e_mod_main.c:1074
+#: src/modules/battery/e_mod_main.c:627 src/modules/battery/e_mod_main.c:1095
 msgid "High"
 msgstr "高"
 
-#: src/modules/battery/e_mod_main.c:610 src/modules/battery/e_mod_main.c:1078
+#: src/modules/battery/e_mod_main.c:631 src/modules/battery/e_mod_main.c:1099
 msgid "Low"
 msgstr "低"
 
-#: src/modules/battery/e_mod_main.c:614 src/modules/battery/e_mod_main.c:1082
+#: src/modules/battery/e_mod_main.c:635 src/modules/battery/e_mod_main.c:1103
 msgid "Danger"
 msgstr "危険"
 
-#: src/modules/battery/e_mod_main.c:618 src/modules/battery/e_mod_main.c:1086
-#: src/modules/battery/e_mod_main.c:1253
+#: src/modules/battery/e_mod_main.c:639 src/modules/battery/e_mod_main.c:1107
+#: src/modules/battery/e_mod_main.c:1274
 msgid "Charging"
 msgstr "充電中"
 
-#: src/modules/battery/e_mod_main.c:1417
+#: src/modules/battery/e_mod_main.c:1440
 msgid "Enlightenment Battery Module"
 msgstr "Enlightenment バッテリモジュール"
 
-#: src/modules/battery/e_mod_main.c:1418
+#: src/modules/battery/e_mod_main.c:1441
 msgid ""
 "A basic battery meter that uses either<hilight>ACPI</hilight> or "
 "<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
@@ -3090,77 +3110,85 @@ msgstr ""
 "します. <br>このモジュールは Linux と FreeBSD で動作しますが, <br>精度は, 使"
 "用している BIOS やカーネルドライバと同程度です."
 
-#: src/modules/clock/e_mod_main.c:132
+#: src/modules/clock/e_mod_main.c:89
+msgid "Clock"
+msgstr "時計"
+
+#: src/modules/clock/e_mod_main.c:159
 msgid "Enlightenment Clock Module"
 msgstr "Enlightenment 時計モジュール"
 
-#: src/modules/clock/e_mod_main.c:133
+#: src/modules/clock/e_mod_main.c:160
 msgid "A simple module to give E17 a clock."
 msgstr "E17 用のシンプルな時計モジュールです."
 
-#: src/modules/cpufreq/e_mod_main.c:147
+#: src/modules/cpufreq/e_mod_main.c:128
+msgid "Cpufreq"
+msgstr "Cpufreq"
+
+#: src/modules/cpufreq/e_mod_main.c:168
 msgid "Fast (0.5 sec)"
 msgstr "0.5 秒ごと"
 
-#: src/modules/cpufreq/e_mod_main.c:154
+#: src/modules/cpufreq/e_mod_main.c:175
 msgid "Medium (1 sec)"
 msgstr "1 秒ごと"
 
-#: src/modules/cpufreq/e_mod_main.c:161
+#: src/modules/cpufreq/e_mod_main.c:182
 msgid "Normal (2 sec)"
 msgstr "2 秒ごと"
 
-#: src/modules/cpufreq/e_mod_main.c:168
+#: src/modules/cpufreq/e_mod_main.c:189
 msgid "Slow (5 sec)"
 msgstr "5 秒ごと"
 
-#: src/modules/cpufreq/e_mod_main.c:175
+#: src/modules/cpufreq/e_mod_main.c:196
 msgid "Very Slow (30 sec)"
 msgstr "30 秒ごと"
 
-#: src/modules/cpufreq/e_mod_main.c:190
+#: src/modules/cpufreq/e_mod_main.c:211
 msgid "Manual"
 msgstr "手動"
 
-#: src/modules/cpufreq/e_mod_main.c:194
+#: src/modules/cpufreq/e_mod_main.c:215
 msgid "Lower Power Automatic"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:196
+#: src/modules/cpufreq/e_mod_main.c:217
 msgid "Minimum Speed"
 msgstr "最低速度"
 
-#: src/modules/cpufreq/e_mod_main.c:198
+#: src/modules/cpufreq/e_mod_main.c:219
 msgid "Maximum Speed"
 msgstr "最高速度"
 
-#: src/modules/cpufreq/e_mod_main.c:220
+#: src/modules/cpufreq/e_mod_main.c:241
 #, c-format
 msgid "%i MHz"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:222
+#: src/modules/cpufreq/e_mod_main.c:243
 #, c-format
 msgid "%i.%i GHz"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:239
+#: src/modules/cpufreq/e_mod_main.c:260
 msgid "Time Between Updates"
 msgstr "更新間隔"
 
-#: src/modules/cpufreq/e_mod_main.c:245
+#: src/modules/cpufreq/e_mod_main.c:266
 msgid "Restore CPU Power Policy"
 msgstr "CPU パワーポリシーを復帰する"
 
-#: src/modules/cpufreq/e_mod_main.c:251
+#: src/modules/cpufreq/e_mod_main.c:272
 msgid "Set CPU Power Policy"
 msgstr "CPU パワーポリシーを設定する"
 
-#: src/modules/cpufreq/e_mod_main.c:258
+#: src/modules/cpufreq/e_mod_main.c:279
 msgid "Set CPU Speed"
 msgstr "CPU 速度を設定する"
 
-#: src/modules/cpufreq/e_mod_main.c:307
+#: src/modules/cpufreq/e_mod_main.c:328
 msgid ""
 "There was an error trying to set the<br>cpu frequency governor via the "
 "module's<br>setfreq utility."
@@ -3168,7 +3196,7 @@ msgstr ""
 "このモジュールの setfreq ユーティリティを使った CPU 周波数ガバナーの設定で"
 "<br>エラーが起きました."
 
-#: src/modules/cpufreq/e_mod_main.c:333
+#: src/modules/cpufreq/e_mod_main.c:354
 msgid ""
 "Your kernel does not support setting the<br>CPU frequency at all. You may be "
 "missing<br>Kernel modules or features, or your CPU<br>simply does not "
@@ -3178,7 +3206,7 @@ msgstr ""
 "や機能で必要なものが欠けているのかもしれません.<br>さもなければお使いの CPU "
 "でこの機能がサポートされていないだけです."
 
-#: src/modules/cpufreq/e_mod_main.c:353
+#: src/modules/cpufreq/e_mod_main.c:374
 msgid ""
 "There was an error trying to set the<br>cpu frequency setting via the "
 "module's<br>setfreq utility."
@@ -3186,11 +3214,11 @@ msgstr ""
 "このモジュールの setfreq ユーティリティを使った CPU 周波数設定で<br>エラーが"
 "起きました."
 
-#: src/modules/cpufreq/e_mod_main.c:926
+#: src/modules/cpufreq/e_mod_main.c:949
 msgid "CPU Frequency Controller Module"
 msgstr "CPU 周波数コントローラモジュール"
 
-#: src/modules/cpufreq/e_mod_main.c:927
+#: src/modules/cpufreq/e_mod_main.c:950
 msgid ""
 "A simple module to control the frequency of the system CPU.<br>This is "
 "especially useful to save power on laptops."
@@ -3302,27 +3330,35 @@ msgstr ""
 "モジュールです. 特別な X サーバーの拡張機能も要りませんし, ハードウェアの<br>"
 "アクセラレーションも不要です."
 
-#: src/modules/ibar/e_mod_config.c:38
+#: src/modules/ibar/e_mod_config.c:39
 msgid "IBar Configuration"
 msgstr "IBar の設定"
 
-#: src/modules/ibar/e_mod_config.c:79
+#: src/modules/ibar/e_mod_config.c:83
 msgid "Selected Bar Source"
 msgstr "選択したのは"
 
-#: src/modules/ibar/e_mod_main.c:739
+#: src/modules/ibar/e_mod_config.c:119
+msgid "Show Icon Label"
+msgstr "アイコンのラベルを表示する"
+
+#: src/modules/ibar/e_mod_main.c:218
+msgid "IBar"
+msgstr "IBar"
+
+#: src/modules/ibar/e_mod_main.c:850
 msgid "Change Icon Properties"
 msgstr "アイコンのプロパティを変える"
 
-#: src/modules/ibar/e_mod_main.c:744
+#: src/modules/ibar/e_mod_main.c:855
 msgid "Remove Icon"
 msgstr "アイコンを削除する"
 
-#: src/modules/ibar/e_mod_main.c:1047
+#: src/modules/ibar/e_mod_main.c:1158
 msgid "Cannot add icon"
 msgstr "アイコンが追加できません"
 
-#: src/modules/ibar/e_mod_main.c:1049
+#: src/modules/ibar/e_mod_main.c:1160
 msgid ""
 "You tried to drop an icon of an application that<br>does not have a matching "
 "application file.<br><br>The icon cannot be added to IBar."
@@ -3330,11 +3366,11 @@ msgstr ""
 "アイコンをドロップしようとしましたが, そのアプリケーションに対応するプログラ"
 "ムファイルがありません. <br><br>そのアイコンは IBar に追加できません."
 
-#: src/modules/ibar/e_mod_main.c:1223
+#: src/modules/ibar/e_mod_main.c:1341
 msgid "Enlightenment IBar Module"
 msgstr "Enlightenment IBar モジュール"
 
-#: src/modules/ibar/e_mod_main.c:1224
+#: src/modules/ibar/e_mod_main.c:1342
 msgid ""
 "This is the IBar Application Launcher bar module for Enlightenment.<br>It is "
 "a first example module and is being used to flesh out several<br>interfaces "
@@ -3457,19 +3493,27 @@ msgstr "ポップアップの設定"
 msgid "Popup Speed"
 msgstr "ポップアップの速度"
 
-#: src/modules/pager/e_mod_main.c:1812
+#: src/modules/pager/e_mod_main.c:224
+msgid "Pager"
+msgstr "ページャ"
+
+#: src/modules/pager/e_mod_main.c:1835
 msgid "Enlightenment Pager Module"
 msgstr "Enlightenment ページャモジュール"
 
-#: src/modules/pager/e_mod_main.c:1813
+#: src/modules/pager/e_mod_main.c:1836
 msgid "A pager module to navigate virtual desktops."
 msgstr "仮想デスクトップを切替えるためのページャモジュールです."
 
-#: src/modules/start/e_mod_main.c:238
+#: src/modules/start/e_mod_main.c:101
+msgid "Start"
+msgstr ""
+
+#: src/modules/start/e_mod_main.c:265
 msgid "Enlightenment Start Module"
 msgstr "Enlightenment スタート モジュール"
 
-#: src/modules/start/e_mod_main.c:239
+#: src/modules/start/e_mod_main.c:266
 msgid "Experimental Button module for E17"
 msgstr "試験的な E17 用ボタンモジュールです."
 
@@ -3595,11 +3639,15 @@ msgstr ""
 msgid "%1.0f C"
 msgstr ""
 
-#: src/modules/temperature/e_mod_main.c:435
+#: src/modules/temperature/e_mod_main.c:105
+msgid "Temperature"
+msgstr "温度計"
+
+#: src/modules/temperature/e_mod_main.c:459
 msgid "Enlightenment Temperature Module"
 msgstr "Enlightenment 温度計モジュール"
 
-#: src/modules/temperature/e_mod_main.c:436
+#: src/modules/temperature/e_mod_main.c:460
 msgid ""
 "A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux."
 "<br>It is especially useful for modern Laptops with high speed<br>CPUs that "
@@ -3607,6 +3655,18 @@ msgid ""
 msgstr ""
 "Linux の <hilight>ACPI 温度センサー</hilight>を読みとるモジュールです. <br>大"
 "量に発熱する最近の高速ラップトップでは特に便利です."
+
+#~ msgid "Switch To Desktop…"
+#~ msgstr "指定のデスクトップへ切り替える"
+
+#~ msgid "To Desktop…"
+#~ msgstr "指定のデスクトップへ"
+
+#~ msgid "Loaded"
+#~ msgstr "ロード"
+
+#~ msgid "Unloaded"
+#~ msgstr "アンロード"
 
 #~ msgid "Shrink length fit contents"
 #~ msgstr "内容に合わせて長さを縮める"
@@ -3837,10 +3897,6 @@ msgstr ""
 #~ msgstr "仮想デスクトップを横に狭める"
 
 #
-#~ msgid "Battery Module"
-#~ msgstr "バッテリ"
-
-#
 #~ msgid "10 Mins"
 #~ msgstr "10 分"
 
@@ -4002,12 +4058,6 @@ msgstr ""
 #~ "e_util_eapp_edit がインストールされていること, \n"
 #~ "およびそれが PATH 上にあることを確認して下さい\n"
 
-#~ msgid "Clock"
-#~ msgstr "時計"
-
-#~ msgid "Cpufreq"
-#~ msgstr "Cpufreq"
-
 #~ msgid "Enlightenment Cpufreq Module"
 #~ msgstr "Enlightenment Cpufreq モジュール"
 
@@ -4016,9 +4066,3 @@ msgstr ""
 
 #~ msgid "Dropshadow"
 #~ msgstr "ドロップシャドウ"
-
-#~ msgid "IBar"
-#~ msgstr "IBar"
-
-#~ msgid "Pager"
-#~ msgstr "ページャ"
