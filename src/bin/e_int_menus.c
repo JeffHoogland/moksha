@@ -624,7 +624,7 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    e_menu_item_separator_set(mi, 1);
    
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Eap Editor"));
+   e_menu_item_label_set(mi, _("Create a new Application"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/e");
    e_menu_item_callback_set(mi, _e_int_menus_eapedit_item_cb, NULL);   
 

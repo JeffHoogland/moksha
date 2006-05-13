@@ -306,9 +306,18 @@ EAPI E_App *
 e_app_empty_new(const char *path)
 {
    E_App *a;
+   char buf[4096];
    
    a = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
    a->image = NULL;
+   if ((_e_apps_all) && (_e_apps_all->path))
+     {
+	snprintf(buf, sizeof(buf), "%s/_new_app_%1.1f.eap", 
+		 _e_apps_all->path, ecore_time_get());
+	a->parent = _e_apps_all;
+	_e_apps_all->subapps = evas_list_append(_e_apps_all->subapps, a);
+	path = buf;
+     }
    if (path) a->path = evas_stringshare_add(path);   
    return a;      
 }
