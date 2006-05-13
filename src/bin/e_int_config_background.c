@@ -306,7 +306,7 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
 	else
 	  ic = e_thumb_evas_object_get(c, cfd->dia->win->evas, 48, 48, 1);
 
-	e_widget_ilist_append(il, ic, "Theme Background", _ilist_cb_bg_selected, cfd, "");
+	e_widget_ilist_append(il, ic, _("Theme Background"), _ilist_cb_bg_selected, cfd, "");
 	if (!e_config->desktop_default_background) selnum = i;
 	i++;
      }
@@ -316,8 +316,6 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
 			     e_zone_current_get(cfd->dia->win->container)->w);
    e_widget_preview_edje_set(im, f, "desktop/background");
    evas_object_del(bg_obj);
-//   im = e_widget_preview_add_from_object(cfd->dia->win->evas, bg_obj, 320, 240);
-//   e_widget_preview_object_set(im, e_thumb_evas_object_get(c, cfd->dia->win->evas, 320, 240, 1));
 
    evas_object_del(o);
    ecore_evas_free(eebuf);
@@ -384,10 +382,10 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
 		  selnum = i;
 		  
 		  evas_object_del(im);
-		  im = e_widget_preview_add(cfd->dia->win->evas, 320, 240);
+		  im = e_widget_preview_add(cfd->dia->win->evas, 320, 
+					    (320 * e_zone_current_get(cfd->dia->win->container)->h) /
+					    e_zone_current_get(cfd->dia->win->container)->w);
 		  e_widget_preview_edje_set(im, e_config->desktop_default_background, "desktop/background");
-		  // im = e_widget_preview_add_from_object(cfd->dia->win->evas, o, 320, 240);
-		  // e_widget_preview_object_set(im, e_thumb_evas_object_get(full_path, cfd->dia->win->evas, 320, 240, 1));
 	       }
 	     i++;
 	  }
@@ -420,12 +418,10 @@ _ilist_cb_bg_selected(void *data)
 	
 	theme = e_theme_edje_file_get("base/theme/backgrounds", "desktop/background");
 	e_widget_preview_edje_set(cfd->data, theme, "desktop/background");
-//	e_widget_preview_object_set(cfd->data, e_thumb_evas_object_get(strdup(theme), evas, 320, 240, 1));
      }
    else
      {
 	e_widget_preview_edje_set(cfd->data, cfdata->bg, "desktop/background");
-//	e_widget_preview_object_set(cfd->data, e_thumb_evas_object_get(cfdata->bg, evas, 320, 240, 1));
      }
 
    if (cfdata->current_bg)

@@ -8,7 +8,8 @@
 #define BG_LIST_ICON_SIZE_H 32
 
 #define BG_PREVIEW_W 280
-#define BG_PREVIEW_H 200
+#define BG_PREVIEW_H ((BG_PREVIEW_W * e_zone_current_get(cfd->dia->win->container)->h) / \
+		     e_zone_current_get(cfd->dia->win->container)->w)
 
 #define DEF_DESKLOCK_BACKGROUND	"theme_desklock_background"
 #define DEF_THEME_BACKGROUND	"theme_background"
@@ -53,6 +54,8 @@ static void _e_desklock_cb_personalized_auth_method(void *data, Evas_Object *obj
 
 struct _E_Config_Dialog_Data
 {
+   E_Config_Dialog *cfd;
+   
    char *desklock_passwd;
    char *desklock_passwd_cp;
    int show_password; // local
@@ -203,6 +206,7 @@ _create_data(E_Config_Dialog *cfd)
   cfdata = E_NEW(E_Config_Dialog_Data, 1);
   cfdata->desklock_passwd = strdup("");
   cfdata->desklock_passwd_cp = strdup("");
+  cfdata->cfd = cfd;
 
   _fill_desklock_data(cfdata);
 
@@ -654,6 +658,7 @@ _e_desklock_zone_num_get()
 static void
 _load_bgs(E_Config_Dialog_Data *cfdata)
 {
+  E_Config_Dialog *cfd;
   Evas_Object *o, *ic, *im;
   Ecore_Evas *eebuf;
   Evas *evasbuf;
@@ -664,6 +669,7 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
   if (!cfdata || !cfdata->gui.bg_list)
     return;
 
+  cfd = cfdata->cfd;
   eebuf = ecore_evas_buffer_new(1, 1);
   evasbuf = ecore_evas_get(eebuf);
 
@@ -680,7 +686,7 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
       else
 	ic = e_thumb_evas_object_get(c, cfdata->evas, BG_LIST_ICON_SIZE_W, BG_LIST_ICON_SIZE_H, 1);
 
-      e_widget_ilist_append(cfdata->gui.bg_list, ic, "Theme DeskLock Background",
+      e_widget_ilist_append(cfdata->gui.bg_list, ic, _("Theme DeskLock Background"),
 			    _ibg_list_cb_bg_selected, cfdata, DEF_DESKLOCK_BACKGROUND);
     }
 
@@ -690,9 +696,6 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
 
    im = e_widget_preview_add(cfdata->evas, BG_PREVIEW_W, BG_PREVIEW_H);
    e_widget_preview_edje_set(im, c, "desktop/background");
-//   im = e_widget_image_add_from_object(cfdata->evas, bg_obj, BG_PREVIEW_W, BG_PREVIEW_H);
-//   e_widget_image_object_set(im, e_thumb_evas_object_get(c, cfdata->evas, BG_PREVIEW_W,
-//							 BG_PREVIEW_H, 1));
 
   evas_object_del(o);
   ecore_evas_free(eebuf);
@@ -716,7 +719,7 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
       else
 	ic = e_thumb_evas_object_get(c, cfdata->evas, BG_LIST_ICON_SIZE_W, BG_LIST_ICON_SIZE_H, 1);
 
-      e_widget_ilist_append(cfdata->gui.bg_list, ic, "Theme Background", _ibg_list_cb_bg_selected,
+      e_widget_ilist_append(cfdata->gui.bg_list, ic, _("Theme Background"), _ibg_list_cb_bg_selected,
 			    cfdata, DEF_THEME_BACKGROUND);
     }
 
@@ -726,9 +729,6 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
        e_widget_ilist_selected_set(cfdata->gui.bg_list, 1);
        im = e_widget_preview_add(cfdata->evas, BG_PREVIEW_W, BG_PREVIEW_H);
        e_widget_preview_edje_set(im, c, "desktop/background");
-//      im = e_widget_image_add_from_object(cfdata->evas, bg_obj, BG_PREVIEW_W, BG_PREVIEW_H);
-//      e_widget_image_object_set(im, e_thumb_evas_object_get(c, cfdata->evas, BG_PREVIEW_W,
-//							    BG_PREVIEW_H, 1));
     }
 
   evas_object_del(o);
@@ -774,10 +774,6 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
 		   evas_object_del(im);
 		   im = e_widget_preview_add(cfdata->evas, BG_PREVIEW_W, BG_PREVIEW_H);
 		   e_widget_preview_edje_set(im, full_path, "desktop/background");
-//		  im = e_widget_image_add_from_object(cfdata->evas, o, BG_PREVIEW_W, BG_PREVIEW_H);
-//		  e_widget_image_object_set(im, e_thumb_evas_object_get(full_path, cfdata->evas,
-//									BG_PREVIEW_W, BG_PREVIEW_H,
-//									1));
 		}
 	      i++;
 	    }
@@ -807,9 +803,6 @@ _ibg_list_cb_bg_selected(void *data)
 	     
 	     theme = e_theme_edje_file_get("base/theme/desklock", "desklock/background");
 	     e_widget_preview_edje_set(cfdata->preview_image, theme, "desktop/background");
-//	   e_widget_image_object_set(cfdata->preview_image, 
-//				    e_thumb_evas_object_get(strdup(theme), cfdata->evas,
-//							    BG_PREVIEW_W, BG_PREVIEW_H, 1));
 	  }
 	else if (strcmp(cfdata->cur_bg, DEF_THEME_BACKGROUND) == 0)
 	  {
@@ -817,16 +810,10 @@ _ibg_list_cb_bg_selected(void *data)
 	     
 	     theme = e_theme_edje_file_get("base/theme/backgrounds", "desktop/background");
 	     e_widget_preview_edje_set(cfdata->preview_image, theme, "desktop/background");
-//	   e_widget_image_object_set(cfdata->preview_image, 
-//				     e_thumb_evas_object_get(strdup(theme), cfdata->evas,
-//							     BG_PREVIEW_W, BG_PREVIEW_H, 1));
 	  }
 	else
 	  {
 	     e_widget_preview_edje_set(cfdata->preview_image, cfdata->cur_bg, "desktop/background");
-//	    e_widget_image_object_set(cfdata->preview_image,
-//				      e_thumb_evas_object_get(cfdata->cur_bg, cfdata->evas,
-//							      BG_PREVIEW_W, BG_PREVIEW_H, 1));
 	  }
      }
    else
@@ -835,9 +822,6 @@ _ibg_list_cb_bg_selected(void *data)
 	
 	theme = e_theme_edje_file_get("base/theme/desklock", "desklock/background");
 	e_widget_preview_edje_set(cfdata->preview_image, theme, "desktop/background");
-//	e_widget_image_object_set(cfdata->preview_image, 
-//				  e_thumb_evas_object_get(strdup(theme), cfdata->evas,
-//							  BG_PREVIEW_W, BG_PREVIEW_H, 1));
      }
 }
 

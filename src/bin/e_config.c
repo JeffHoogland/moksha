@@ -509,7 +509,7 @@ e_config_init(void)
    IFCFG(0x008d);
    e_config->show_splash = 1;
    e_config->desktop_default_background = NULL;
-   e_config->desktop_default_name = evas_stringshare_add("Desktop %i, %i");
+   e_config->desktop_default_name = evas_stringshare_add(_("Desktop %i, %i"));
    e_config->menus_scroll_speed = 1000.0;
    e_config->menus_fast_mouse_move_threshhold = 300.0;
    e_config->menus_click_drag_timeout = DEF_MENUCLICK;
