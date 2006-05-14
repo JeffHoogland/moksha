@@ -1210,13 +1210,13 @@ e_app_fields_save(E_App *a)
    unsigned char tmp[1];
    int img;
 
-   if ((!a->path) || (!ecore_file_exists(a->path)))
-     {
+//   if ((!a->path) || (!ecore_file_exists(a->path)))
+//     {
 	_e_app_new_save(a);
-	img = 0;
-     }
-   else
-     img = 1;
+//	img = 0;
+//     }
+//   else
+//     img = 1;
 
    /* get our current language */
    lang = e_intl_language_alias_get();
@@ -1276,6 +1276,7 @@ e_app_fields_save(E_App *a)
      tmp[0] = 0;   
    eet_write(ef, "app/info/wait_exit", tmp, 1, 0);
 
+   /*
    if ((a->image) && (img))
      {
 	int alpha;
@@ -1298,7 +1299,6 @@ e_app_fields_save(E_App *a)
 	  a->height = EAP_MIN_HEIGHT;	
 	if ((iw > 0) && (ih > 0))
 	  {
-	     /* we need to change the sizes */
 	     ecore_evas_resize(buf, a->width, a->height);
 	     evas_object_image_fill_set(im, 0, 0, a->width, a->height);
 	     evas_object_resize(im, a->height, a->width);
@@ -1308,6 +1308,7 @@ e_app_fields_save(E_App *a)
 	     eet_data_image_write(ef, "images/0", (void *)data, a->width, a->height, alpha, 1, 0, 0);
 	  }
      }
+    */
    eet_close(ef);
    if (a->parent)
      {

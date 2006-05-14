@@ -526,6 +526,8 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_App *a;
    E_Border *bd;
+   char *bname = NULL, *bclass = NULL;
+   
    
    bd = data;
    a = bd->app;
@@ -534,13 +536,18 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 	a = e_app_empty_new(NULL);
 	if (a)
 	  {
-	     if (bd->client.icccm.name) a->win_name = evas_stringshare_add(bd->client.icccm.name);
-	     if (bd->client.icccm.class) a->win_class = evas_stringshare_add(bd->client.icccm.class);
+	     bname = bd->client.icccm.name;
+	     if ((bname) && (strlen(bname) < 1)) bname = NULL;
+	     bclass = bd->client.icccm.class;
+	     if ((bclass) && (strlen(bclass) < 1)) bclass = NULL;
+	     
+	     if (bname) a->win_name = evas_stringshare_add(bname);
+	     if (bclass) a->win_class = evas_stringshare_add(bclass);
 	     if (bd->client.icccm.window_role)
 	       a->win_role = evas_stringshare_add(bd->client.icccm.window_role);
-	     if (bd->client.icccm.class) a->icon_class = evas_stringshare_add(bd->client.icccm.class);
-	     if (bd->client.icccm.class) a->name = evas_stringshare_add(bd->client.icccm.class);
-	     if (bd->client.icccm.name) a->exe = evas_stringshare_add(bd->client.icccm.name);
+	     if (bclass) a->icon_class = evas_stringshare_add(bclass);
+	     if (bclass) a->name = evas_stringshare_add(bclass);
+	     if (bname) a->exe = evas_stringshare_add(bname);
 	     if (bd->client.netwm.startup_id > 0)
 	       a->startup_notify = 1;
 	     bd->app = a;
@@ -552,6 +559,19 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
      e_eap_edit_show(m->zone->container, a->orig);
    else
      e_eap_edit_show(m->zone->container, a);
+   if ((!bname) && (!bclass))
+     {
+	e_util_dialog_show(_("Incomplete Window Properties"),
+			   _("The window you are creating an icon for<br>"
+			     "does not contain window name and class<br>"
+			     "properties, so the needed properties for<br>"
+			     "the icon so that it will be used for this<br>"
+			     "window cannot be guessed. You will need to<br>"
+			     "use the window title instead. This will only<br>"
+			     "work if the window title is the same at<br>"
+			     "the time the window starts up, and does not<br>"
+			     "change."));
+     }
 }
 
 static void
