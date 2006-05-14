@@ -735,6 +735,15 @@ _e_shelf_cb_menu_contents(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
+_e_shelf_cb_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Shelf *es;
+   
+   es = data;
+   e_object_del(E_OBJECT(es));
+}
+
+static void
 _e_shelf_cb_menu_post(void *data, E_Menu *m)
 {
    E_Shelf *es;
@@ -764,7 +773,7 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_inf
 	es->menu = mn;
 	
 	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, _("Configuration"));
+	e_menu_item_label_set(mi, _("Shelf Configuration"));
 	e_util_menu_item_edje_icon_set(mi, "enlightenment/config");
 	e_menu_item_callback_set(mi, _e_shelf_cb_menu_config, es);
 
@@ -780,6 +789,11 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_inf
 	e_menu_item_label_set(mi, _("Configure Contents"));
 	e_util_menu_item_edje_icon_set(mi, "enlightenment/config");
 	e_menu_item_callback_set(mi, _e_shelf_cb_menu_contents, es);
+
+	mi = e_menu_item_new(mn);
+	e_menu_item_label_set(mi, _("Delete this Shelf"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/delete");
+	e_menu_item_callback_set(mi, _e_shelf_cb_menu_delete, es);
 
 	e_gadcon_canvas_zone_geometry_get(es->gadcon, &cx, &cy, &cw, &ch);
 	e_menu_activate_mouse(mn,

@@ -27,7 +27,6 @@ struct _E_App_Edit_CFData
    char *wtitle;
    char *wrole;
    char *iclass;
-   char *path;
    int   startup_notify;
    int   wait_exit;
    /*- common -*/
@@ -103,7 +102,6 @@ _e_eap_edit_fill_data(E_App_Edit_CFData *cfdata)
    IFDUP(cfdata->editor->eap->win_title, cfdata->wtitle);
    IFDUP(cfdata->editor->eap->win_role, cfdata->wrole);
    IFDUP(cfdata->editor->eap->icon_class, cfdata->iclass);   
-   IFDUP(cfdata->editor->eap->path, cfdata->path);
    cfdata->startup_notify = cfdata->editor->eap->startup_notify;
    cfdata->wait_exit = cfdata->editor->eap->wait_exit;
 }
@@ -136,7 +134,6 @@ _e_eap_edit_free_data(E_Config_Dialog *cfd, void *data)
    E_FREE(cfdata->wtitle);
    E_FREE(cfdata->wrole);
    E_FREE(cfdata->iclass);   
-   E_FREE(cfdata->path);
    E_FREE(cfdata->image);
    e_object_unref(E_OBJECT(cfdata->editor->eap));
    E_FREE(cfdata->editor);
@@ -153,8 +150,6 @@ _e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, void *data)
    cfdata = data;
    editor = cfdata->editor;
    eap = editor->eap;
-   
-   if (!(cfdata->path)) return 0;
    
    if (eap->name) evas_stringshare_del(eap->name);
    if (eap->exe) evas_stringshare_del(eap->exe);
@@ -188,8 +183,6 @@ _e_eap_edit_advanced_apply_data(E_Config_Dialog *cfd, void *data)
    editor = cfdata->editor;
    eap = editor->eap;
    
-   if (!(cfdata->path)) return 0;
-   
    if (eap->name) evas_stringshare_del(eap->name);
    if (eap->exe) evas_stringshare_del(eap->exe);
    if (eap->image) evas_stringshare_del(eap->image);
@@ -201,7 +194,6 @@ _e_eap_edit_advanced_apply_data(E_Config_Dialog *cfd, void *data)
    if (eap->win_title) evas_stringshare_del(eap->win_title);
    if (eap->win_role) evas_stringshare_del(eap->win_role);
    if (eap->icon_class) evas_stringshare_del(eap->icon_class);
-   if (eap->path) evas_stringshare_del(eap->path);
    
    if (cfdata->startup_notify) eap->startup_notify = 1;   
    else eap->startup_notify = 0;
@@ -219,7 +211,6 @@ _e_eap_edit_advanced_apply_data(E_Config_Dialog *cfd, void *data)
    if (cfdata->wtitle) eap->win_title = evas_stringshare_add(cfdata->wtitle);
    if (cfdata->wrole) eap->win_role = evas_stringshare_add(cfdata->wrole);
    if (cfdata->iclass) eap->icon_class = evas_stringshare_add(cfdata->iclass);
-   if (cfdata->path) eap->path = evas_stringshare_add(cfdata->path);
 
    /* FIXME: hardcoded until the eap editor provides fields to change it */
    eap->width = 128;
@@ -364,7 +355,7 @@ _e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data
    e_widget_table_object_append(ol, o, 0, 2, 1, 1, 1 ,1, 1, 1);
    
    /*- icon info -*/
-   o = e_widget_frametable_add(evas, _("File"), 0);
+   o = e_widget_frametable_add(evas, _("Icon Theme"), 0);
       
    e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Icon Class")),
 				     0, 0, 1, 1,
@@ -375,12 +366,7 @@ _e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data
    e_widget_frametable_object_append(o, entry,
 				     1, 0, 1, 1,
 				     1, 1, 1, 1);
-   e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Path")),
-				     0, 1, 1, 1,
-				     1, 1, 1, 1);
-   e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(cfdata->path)),
-				     1, 1, 1, 1,
-				     1, 1, 1, 1);   
+   
    e_widget_table_object_append(ol, o, 1, 1, 1, 1, 1 ,1, 1, 1);
    
    
