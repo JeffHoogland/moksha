@@ -759,7 +759,12 @@ _ibar_cb_menu_icon_properties(void *data, E_Menu *m, E_Menu_Item *mi)
    IBar_Icon *ic;
    
    ic = data;
-   /* FIXME: - show eap editor on the ic->app */
+   if (ic->app->orig)
+     e_eap_edit_show(ic->ibar->inst->gcc->gadcon->zone->container,
+		     ic->app->orig);
+   else
+     e_eap_edit_show(ic->ibar->inst->gcc->gadcon->zone->container,
+		     ic->app);
 }
 
 static void

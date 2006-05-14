@@ -170,8 +170,9 @@ _e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, void *data)
    /* FIXME: hardcoded until the eap editor provides fields to change it */
    eap->width = 128;
    eap->height = 128;   
-   
-   e_app_fields_save(eap);
+
+   if ((eap->name) && (eap->exe))
+     e_app_fields_save(eap);
    
    return 1;
 }
@@ -224,7 +225,8 @@ _e_eap_edit_advanced_apply_data(E_Config_Dialog *cfd, void *data)
    eap->width = 128;
    eap->height = 128;
    
-   e_app_fields_save(eap);
+   if ((eap->name) && (eap->exe))
+     e_app_fields_save(eap);
    return 1;
 }
 

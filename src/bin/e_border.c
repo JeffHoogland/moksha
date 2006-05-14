@@ -6571,20 +6571,36 @@ static void
 _e_border_app_change(void *data, E_App *app, E_App_Change change)
 {
    Evas_List *l;
-   
-   for (l = borders; l; l = l->next)
+
+   switch (change)
      {
-	E_Border *bd;
-
-	bd = l->data;
-	if (e_app_equals(bd->app, app))
+      case E_APP_ADD:
+      case E_APP_DEL:
+      case E_APP_CHANGE:
+	for (l = borders; l; l = l->next)
 	  {
-	     e_object_unref(E_OBJECT(bd->app));
-	     bd->app = NULL;
-
-	     bd->changes.icon = 1;
-	     bd->changed = 1;
+	     E_Border *bd;
+	     
+	     bd = l->data;
+//	     if (e_app_equals(bd->app, app))
+	       {
+		  if (bd->app)
+		    {
+		       e_object_unref(E_OBJECT(bd->app));
+		       bd->app = NULL;
+		    }
+		  
+		  bd->changes.icon = 1;
+		  bd->changed = 1;
+	       }
 	  }
+	break;
+      case E_APP_EXEC:
+      case E_APP_READY:
+      case E_APP_READY_EXPIRE:
+      case E_APP_EXIT:
+      default:
+	break;
      }
 }
 

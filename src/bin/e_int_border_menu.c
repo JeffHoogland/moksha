@@ -566,10 +566,15 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 	     if (bd->client.icccm.name) a->exe = evas_stringshare_add(bd->client.icccm.name);
 	     if (bd->client.netwm.startup_id > 0)
 	       a->startup_notify = 1;
+	     bd->app = a;
+	     e_object_ref(E_OBJECT(bd->app));
 	  }
      }
    if (!a) return;
-   e_eap_edit_show(m->zone->container, a);
+   if (a->orig)
+     e_eap_edit_show(m->zone->container, a->orig);
+   else
+     e_eap_edit_show(m->zone->container, a);
 }
 
 static void

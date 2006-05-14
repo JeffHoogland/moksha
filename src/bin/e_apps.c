@@ -444,6 +444,7 @@ e_app_exec(E_App *a, int launch_id)
 {
    Ecore_Exe *exe;
    E_App_Instance *inst;
+   Evas_List *l;
    
    E_OBJECT_CHECK_RETURN(a, 0);
    E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, 0);
@@ -476,6 +477,13 @@ e_app_exec(E_App *a, int launch_id)
 //   e_object_ref(E_OBJECT(a));
    _e_apps_start_pending = evas_list_append(_e_apps_start_pending, a);
    if (a->startup_notify) a->starting = 1;
+   for (l = a->references; l; l = l->next)
+     {
+	E_App *a2;
+	
+	a2 = l->data;
+	_e_app_change(a2, E_APP_EXEC);
+     }
    _e_app_change(a, E_APP_EXEC);
    return 1;
 }
@@ -759,13 +767,13 @@ e_app_files_append(Evas_List *files, E_App *parent)
 EAPI void
 e_app_remove(E_App *a)
 {
+   Evas_List *l;
    char buf[PATH_MAX];
 
    if (!a) return;
    if (!a->parent) return;
 
    a->parent->subapps = evas_list_remove(a->parent->subapps, a);
-
    /* Check if this app is in a repository or in the parents dir */
    snprintf(buf, sizeof(buf), "%s/%s", a->parent->path, ecore_file_get_file(a->path));
    if (ecore_file_exists(buf))
@@ -777,8 +785,16 @@ e_app_remove(E_App *a)
 	a->path = evas_stringshare_add(buf);
      }
    _e_app_save_order(a->parent);
+   for (l = a->references; l; l = l->next)
+     {
+	E_App *a2;
+	
+	a2 = l->data;
+	e_app_remove(a2);
+     }
    _e_app_change(a, E_APP_DEL);
    a->parent = NULL;
+   e_object_unref(E_OBJECT(a));
 }
 
 EAPI void
@@ -1295,7 +1311,17 @@ e_app_fields_save(E_App *a)
    eet_close(ef);
    if (a->parent)
      {
+	Evas_List *l;
+	
 	_e_app_change(a->parent, E_APP_CHANGE);
+	_e_app_change(a, E_APP_CHANGE);
+	for (l = a->references; l; l = l->next)
+	  {
+	     E_App *a2;
+	     
+	     a2 = l->data;
+	     if (_e_app_copy(a2, a)) _e_app_change(a2, E_APP_CHANGE);
+	  }
 	_e_app_subdir_rescan(a->parent);
      }
 }
@@ -1565,8 +1591,13 @@ _e_app_free(E_App *a)
 	  }
 	/* If this is an original, it wont be deleted until all references
 	 * are gone */
-	if (a->references)
+	while (a->references)
 	  {
+	     E_App *a2;
+	     
+	     a2 = a->references->data;
+	     a2->orig = NULL;
+	     a->references = evas_list_remove_list(a->references, a->references);
 	     printf("BUG: An original eapp shouldn't have any references when freed! %d\n", evas_list_count(a->references));
 	  }
 
@@ -1603,16 +1634,19 @@ _e_app_change(E_App *a, E_App_Change ch)
 {
    Evas_List *l;
 
+   if (ch == E_APP_DEL)
+     printf("APP_DEL %s\n", a->path);
+   if (ch == E_APP_CHANGE)
+     printf("APP_CHANGE %s\n", a->path);
+   if (ch == E_APP_ADD)
+     printf("APP_ADD %s\n", a->path);
    _e_apps_callbacks_walking = 1;
    for (l = _e_apps_change_callbacks; l; l = l->next)
      {
 	E_App_Callback *cb;
 	
 	cb = l->data;
-	if (!cb->delete_me)
-	  {
-	     cb->func(cb->data, a, ch);
-	  }
+	if (!cb->delete_me) cb->func(cb->data, a, ch);
      }
    _e_apps_callbacks_walking = 0;
    if (_e_apps_callbacks_delete_me)
@@ -1641,6 +1675,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 {
    E_App     *app;
    char      *file;
+   Evas_List *l;
    
    app = data;
    if ((!app) || (app->deleted))
@@ -1675,6 +1710,13 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	     e_app_fields_empty(app);
 	     e_app_fields_fill(app, path);
 	     _e_app_change(app, E_APP_CHANGE);
+	     for (l = app->references; l; l = l->next)
+	       {
+		  E_App *a2;
+		  
+		  a2 = l->data;
+		  if (_e_app_copy(a2, app)) _e_app_change(a2, E_APP_CHANGE);
+	       }
 	  }
 	else if (event == ECORE_FILE_EVENT_DELETED_FILE)
 	  {
@@ -1720,7 +1762,6 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 		  else
 		    {
 		       _e_app_change(a, E_APP_CHANGE);
-
 		       for (l = a->references; l; l = l->next)
 			 {
 			    E_App *a2;
@@ -1996,6 +2037,7 @@ _e_apps_cb_exit(void *data, int type, void *event)
    Ecore_Exe_Event_Del *ev;
    E_App_Instance *ai;
    E_App *a;
+   Evas_List *l;
 
    ev = event;
    if (!ev->exe) return 1;
@@ -2049,6 +2091,13 @@ _e_apps_cb_exit(void *data, int type, void *event)
    free(ai);
    a->instances = evas_list_remove(a->instances, ai);
    _e_apps_start_pending = evas_list_remove(_e_apps_start_pending, a);
+   for (l = a->references; l; l = l->next)
+     {
+	E_App *a2;
+	
+	a2 = l->data;
+	_e_app_change(a2, E_APP_EXIT);
+     }
    _e_app_change(a, E_APP_EXIT);
    return 1;
 }
@@ -2085,6 +2134,13 @@ _e_app_cb_event_border_add(void *data, int type, void *event)
    while (removes)
      {
 	a = removes->data;
+	for (l = a->references; l; l = l->next)
+	  {
+	     E_App *a2;
+	     
+	     a2 = l->data;
+	     _e_app_change(a2, E_APP_READY);
+	  }
         _e_app_change(a, E_APP_READY);
 	_e_apps_start_pending = evas_list_remove(_e_apps_start_pending, a);
         e_object_unref(E_OBJECT(a));
@@ -2098,11 +2154,19 @@ _e_app_cb_expire_timer(void *data)
 {
    E_App_Instance *inst;
    E_App *a;
+   Evas_List *l;
    
    inst = data;
    a = inst->app;
    _e_apps_start_pending = evas_list_remove(_e_apps_start_pending, a);
    inst->expire_timer = NULL;
+   for (l = a->references; l; l = l->next)
+     {
+	E_App *a2;
+	
+	a2 = l->data;
+	_e_app_change(a2, E_APP_READY_EXPIRE);
+     }
    _e_app_change(a, E_APP_READY_EXPIRE);
    return 0;
 }

@@ -52,7 +52,6 @@ struct _E_App
 
    Evas_List          *references; /* If this app is in a main repository, this would
 				      be a list to other eapp pointing to this */
-
    Ecore_File_Monitor *monitor; /* Check for changes and files */
    
    unsigned char       startup_notify : 1; /* disable while starting etc. */
