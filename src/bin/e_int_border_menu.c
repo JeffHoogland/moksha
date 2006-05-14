@@ -529,32 +529,9 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
    
    bd = data;
    a = bd->app;
-   if ((!a) && (bd->client.icccm.class))
+   if (!a)
      {
-	static char buf[PATH_MAX];
-	char *name, *homedir, *p;
-	int instance;
-
-	name = alloca(strlen(bd->client.icccm.class) + 1);
-	strcpy(name, bd->client.icccm.class);
-	p = name;
-	while (*p)
-	  {
-	     if (*p == ' ') *p = '_';
-	     else if (*p == '/') *p = '_';
-	     else if (*p == '.') *p = '_';
-	     p++;
-	  }
-	homedir = e_user_homedir_get();
-	snprintf(buf, sizeof(buf), "%s/.e/e/applications/all/%s.eap", homedir, name);
-	instance = 0;
-	while (ecore_file_exists(buf))
-	  {
-	     snprintf(buf, sizeof(buf), "%s/.e/e/applications/all/%s-%i.eap", homedir, name, instance);
-	     instance++;
-	  }
-	free(homedir);
-	a = e_app_empty_new(buf);
+	a = e_app_empty_new(NULL);
 	if (a)
 	  {
 	     if (bd->client.icccm.name) a->win_name = evas_stringshare_add(bd->client.icccm.name);
