@@ -737,10 +737,18 @@ _e_shelf_cb_menu_contents(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_shelf_cb_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi)
 {
+   E_Config_Shelf *cfg;
    E_Shelf *es;
    
    es = data;
+   cfg = es->cfg;
    e_object_del(E_OBJECT(es));
+   e_config->shelves = evas_list_remove(e_config->shelves, cfg);
+   if (cfg->name) evas_stringshare_del(cfg->name);
+   if (cfg->style) evas_stringshare_del(cfg->style);
+   E_FREE(cfg);
+
+   e_config_save_queue();
 }
 
 static void
