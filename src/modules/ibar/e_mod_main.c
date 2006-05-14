@@ -538,7 +538,6 @@ _ibar_icon_new(IBar *b, E_App *a)
    ic->o_holder = edje_object_add(evas_object_evas_get(b->o_box));
    e_theme_edje_object_set(ic->o_holder, "base/theme/modules/ibar",
 			   "modules/ibar/icon");
-   edje_object_part_text_set(ic->o_holder, "label", a->name);
    evas_object_event_callback_add(ic->o_holder, EVAS_CALLBACK_MOUSE_IN,  _ibar_cb_icon_mouse_in,  ic);
    evas_object_event_callback_add(ic->o_holder, EVAS_CALLBACK_MOUSE_OUT, _ibar_cb_icon_mouse_out, ic);
    evas_object_event_callback_add(ic->o_holder, EVAS_CALLBACK_MOUSE_DOWN, _ibar_cb_icon_mouse_down, ic);
@@ -551,7 +550,6 @@ _ibar_icon_new(IBar *b, E_App *a)
    ic->o_holder2 = edje_object_add(evas_object_evas_get(b->o_box));
    e_theme_edje_object_set(ic->o_holder2, "base/theme/modules/ibar",
 			   "modules/ibar/icon_overlay");
-   edje_object_part_text_set(ic->o_holder2, "label", a->name);
    evas_object_layer_set(ic->o_holder2, 9999);
    evas_object_pass_events_set(ic->o_holder2, 1);
    evas_object_show(ic->o_holder2);
@@ -593,6 +591,9 @@ _ibar_icon_fill(IBar_Icon *ic)
    edje_object_part_swallow(ic->o_holder2, "item", ic->o_icon2);
    evas_object_pass_events_set(ic->o_icon2, 1);
    evas_object_show(ic->o_icon2);
+   
+   edje_object_part_text_set(ic->o_holder, "label", ic->app->name);
+   edje_object_part_text_set(ic->o_holder2, "label", ic->app->name);
 }
 
 static void
