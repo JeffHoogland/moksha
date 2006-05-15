@@ -1149,7 +1149,7 @@ _e_main_cb_x_fatal(void *data __UNUSED__)
    e_error_gui_set(0);
    e_error_message_show("Lost X connection.");
    ecore_main_loop_quit();
-   _e_main_shutdown(-1);
+//   _e_main_shutdown(-1);
 }
 
 static int
