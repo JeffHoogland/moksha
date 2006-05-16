@@ -396,7 +396,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, winlist_pos_max_w, INT); /**/
    E_CONFIG_VAL(D, T, winlist_pos_max_h, INT); /**/
    E_CONFIG_VAL(D, T, maximize_policy, INT); /**/
-   E_CONFIG_VAL(D, T, allow_shading, INT); /**/
+   E_CONFIG_VAL(D, T, allow_manip, INT); /**/
    E_CONFIG_VAL(D, T, kill_if_close_not_possible, INT); /**/
    E_CONFIG_VAL(D, T, kill_process, INT); /**/
    E_CONFIG_VAL(D, T, kill_timer_wait, DOUBLE); /**/
@@ -572,7 +572,7 @@ e_config_init(void)
    e_config->winlist_pos_max_w = 320;
    e_config->winlist_pos_max_h = 320;
    e_config->maximize_policy = E_MAXIMIZE_FULLSCREEN;
-   e_config->allow_shading = 0;
+   e_config->allow_manip = 0;
    e_config->kill_if_close_not_possible = 1;
    e_config->kill_process = 1;
    e_config->kill_timer_wait = 10.0;
@@ -1177,7 +1177,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->winlist_pos_max_w, 8, 4000);
    E_CONFIG_LIMIT(e_config->winlist_pos_max_h, 8, 4000);
    E_CONFIG_LIMIT(e_config->maximize_policy, E_MAXIMIZE_FULLSCREEN, E_MAXIMIZE_FILL);
-   E_CONFIG_LIMIT(e_config->allow_shading, 0, 1);
+   E_CONFIG_LIMIT(e_config->allow_manip, 0, 1);
    E_CONFIG_LIMIT(e_config->kill_if_close_not_possible, 0, 1);
    E_CONFIG_LIMIT(e_config->kill_process, 0, 1);
    E_CONFIG_LIMIT(e_config->kill_timer_wait, 0.0, 120.0);

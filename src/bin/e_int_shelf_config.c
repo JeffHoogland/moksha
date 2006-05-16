@@ -182,7 +182,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(o2, of, 1, 1, 0.5);
    
    of = e_widget_framelist_add(evas, _("Size"), 0);
-   ob = e_widget_check_add(evas, _("Srink to Content Size"), &(cfdata->fit_along));
+   ob = e_widget_check_add(evas, _("Shrink to Content Size"), &(cfdata->fit_along));
    e_widget_framelist_object_append(of, ob);
 //   ob = e_widget_check_add(evas, _("Expand width to fit contents"), &(cfdata->fit_size));
 //   e_widget_framelist_object_append(of, ob);

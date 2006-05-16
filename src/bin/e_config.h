@@ -159,7 +159,7 @@ struct _E_Config
    int         winlist_pos_max_w; // GUI
    int         winlist_pos_max_h; // GUI
    int         maximize_policy; // GUI
-   int         allow_shading; // GUI
+   int         allow_manip; // GUI
    int         kill_if_close_not_possible;
    int         kill_process;
    double      kill_timer_wait;

@@ -23,7 +23,7 @@ struct _E_Config_Dialog_Data
    int desk_resist;
    int window_resist;
    int gadget_resist;
-   int allow_shading;
+   int allow_manip;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -60,7 +60,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->maximize_policy = e_config->maximize_policy;
    if (cfdata->maximize_policy == E_MAXIMIZE_NONE)
      cfdata->maximize_policy = E_MAXIMIZE_FULLSCREEN;
-   cfdata->allow_shading = e_config->allow_shading;
+   cfdata->allow_manip = e_config->allow_manip;
 }
 
 static void *
@@ -107,7 +107,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->window_resist = cfdata->window_resist;
    e_config->gadget_resist = cfdata->gadget_resist;
    e_config->maximize_policy = cfdata->maximize_policy;
-   e_config->allow_shading = cfdata->allow_shading;
+   e_config->allow_manip = cfdata->allow_manip;
    e_config_save_queue();
    return 1; /* Apply was OK */
 }
@@ -189,7 +189,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Fill available space"), E_MAXIMIZE_FILL, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Allow shading/resizing"), &(cfdata->allow_shading));
+   ob = e_widget_check_add(evas, _("Allow window manipulation"), &(cfdata->allow_manip));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 

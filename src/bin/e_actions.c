@@ -1381,7 +1381,8 @@ ACT_FN_GO(pointer_resize_push)
 	E_Border *bd;
 	bd = (E_Border *)obj;
 	if ((bd->lock_user_size) || (bd->shaded) || (bd->shading) ||
-	    (bd->fullscreen) || (bd->maximized == E_MAXIMIZE_FULLSCREEN))
+	    (bd->fullscreen) || 
+		((bd->maximized == E_MAXIMIZE_FULLSCREEN)) && (!e_config->allow_manip))
 	  return;
 	if (bd->zone)
 	  man = bd->zone->container->manager;
@@ -1401,7 +1402,8 @@ ACT_FN_GO(pointer_resize_pop)
 	E_Border *bd;
 	bd = (E_Border *)obj;
 	if ((bd->lock_user_size) || (bd->shaded) || (bd->shading) ||
-	    (bd->fullscreen) || (bd->maximized == E_MAXIMIZE_FULLSCREEN))
+	    (bd->fullscreen) || 
+		((bd->maximized == E_MAXIMIZE_FULLSCREEN) && (!e_config->allow_manip)))
 	  return;
 	if (bd->zone)
 	  man = (E_Manager *)bd->zone->container->manager;

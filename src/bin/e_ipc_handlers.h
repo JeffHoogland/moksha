@@ -2449,13 +2449,13 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_MAXIMIZE_MANIPULATION_SET
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-maximize-manipulation-set", 1, "Allow shading/resizing, 1 for enabled 0 for disabled", 0, HDL)
+   OP("-maximize-manipulation-set", 1, "Allow manipulation, 1 for enabled 0 for disabled", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_INT(atoi(params[0]), HDL);
 #elif (TYPE == E_WM_IN)
    START_INT(policy, HDL);
-   e_config->allow_shading = policy;
-   E_CONFIG_LIMIT(e_config->allow_shading, 0, 1);
+   e_config->allow_manip = policy;
+   E_CONFIG_LIMIT(e_config->allow_manip, 0, 1);
    SAVE;
    END_INT;
 #elif (TYPE == E_REMOTE_IN)
@@ -2465,11 +2465,11 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_MAXIMIZE_MANIPULATION_GET
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-maximize-manipulation-get", 0, "Get shading/resizing, 1 for enabled 0 for disabled", 1, HDL)
+   OP("-maximize-manipulation-get", 0, "Get manipulation, 1 for enabled 0 for disabled", 1, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
-   SEND_INT(e_config->allow_shading, E_IPC_OP_MAXIMIZE_MANIPULATION_GET_REPLY, HDL);
+   SEND_INT(e_config->allow_manip, E_IPC_OP_MAXIMIZE_MANIPULATION_GET_REPLY, HDL);
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
