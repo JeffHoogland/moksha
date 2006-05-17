@@ -212,9 +212,11 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	cfdata->flip = cfdata->rotation &
 	  (ECORE_X_RANDR_FLIP_X | ECORE_X_RANDR_FLIP_Y);
 	
-	cfdata->can_rotate = rots & (ECORE_X_RANDR_ROT_0 | ECORE_X_RANDR_ROT_90 |
-				     ECORE_X_RANDR_ROT_180 | ECORE_X_RANDR_ROT_270);
-	cfdata->rotation = cfdata->rotation & 
+	cfdata->can_rotate = 
+	  rots & (ECORE_X_RANDR_ROT_0 | ECORE_X_RANDR_ROT_90 |
+		  ECORE_X_RANDR_ROT_180 | ECORE_X_RANDR_ROT_270);
+	cfdata->rotation = 
+	  cfdata->rotation & 
 	  (ECORE_X_RANDR_ROT_0 | ECORE_X_RANDR_ROT_90 |
 	   ECORE_X_RANDR_ROT_180 | ECORE_X_RANDR_ROT_270);
      }
@@ -438,16 +440,16 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	
 	ob = e_widget_radio_add(evas, _("Normal"), ECORE_X_RANDR_ROT_0, rg);
         e_widget_framelist_object_append(of, ob);
-	if (!(cfdata->can_rotate) & ECORE_X_RANDR_ROT_0) e_widget_disabled_set(ob, 1);
+	if (!(cfdata->can_rotate & ECORE_X_RANDR_ROT_0)) e_widget_disabled_set(ob, 1);
 	ob = e_widget_radio_add(evas, _("To the left"), ECORE_X_RANDR_ROT_90, rg);
         e_widget_framelist_object_append(of, ob);
-	if (!(cfdata->can_rotate) & ECORE_X_RANDR_ROT_90) e_widget_disabled_set(ob, 1);
+	if (!(cfdata->can_rotate & ECORE_X_RANDR_ROT_90)) e_widget_disabled_set(ob, 1);
 	ob = e_widget_radio_add(evas, _("Turned around"), ECORE_X_RANDR_ROT_180, rg);
         e_widget_framelist_object_append(of, ob);
-	if (!(cfdata->can_rotate) & ECORE_X_RANDR_ROT_180) e_widget_disabled_set(ob, 1);
+	if (!(cfdata->can_rotate & ECORE_X_RANDR_ROT_180)) e_widget_disabled_set(ob, 1);
 	ob = e_widget_radio_add(evas, _("To the right"), ECORE_X_RANDR_ROT_270, rg);
         e_widget_framelist_object_append(of, ob);
-	if (!(cfdata->can_rotate) & ECORE_X_RANDR_ROT_270) e_widget_disabled_set(ob, 1);
+	if (!(cfdata->can_rotate & ECORE_X_RANDR_ROT_270)) e_widget_disabled_set(ob, 1);
 	
 	e_widget_list_object_append(o2, of, 0, 0, 0.5);
      }
@@ -460,10 +462,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	
 	ob = e_widget_radio_add(evas, _("Horizontally"), ECORE_X_RANDR_FLIP_X, rg);
         e_widget_framelist_object_append(of, ob);
-	if (!(cfdata->can_rotate) & ECORE_X_RANDR_FLIP_X) e_widget_disabled_set(ob, 1);
+	if (!(cfdata->can_rotate & ECORE_X_RANDR_FLIP_X)) e_widget_disabled_set(ob, 1);
 	ob = e_widget_radio_add(evas, _("Vertically"), ECORE_X_RANDR_FLIP_Y, rg);
         e_widget_framelist_object_append(of, ob);
-	if (!(cfdata->can_rotate) & ECORE_X_RANDR_FLIP_Y) e_widget_disabled_set(ob, 1);
+	if (!(cfdata->can_rotate & ECORE_X_RANDR_FLIP_Y)) e_widget_disabled_set(ob, 1);
 	
 	e_widget_list_object_append(o2, of, 0, 0, 0.5);
      }
