@@ -896,6 +896,8 @@ _ibox_inst_cb_drop(void *data, const char *type, void *event_info)
 	if (!bd) return;
      }
    
+   if (!bd->iconic) e_border_iconify(bd);
+   
    ic2 = inst->ibox->ic_drop_before;
    if (ic2)
      {
