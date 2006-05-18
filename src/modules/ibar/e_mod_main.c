@@ -40,7 +40,7 @@ struct _Instance
    IBar            *ibar;
    E_Drop_Handler  *drop_handler;
    Ecore_Timer     *drop_recalc_timer;
-   char            *dir;
+   const char            *dir;
 };
 
 struct _IBar
@@ -73,7 +73,7 @@ struct _IBar_Icon
    } drag;
 };
 
-static IBar *_ibar_new(Evas *evas, char *dir);
+static IBar *_ibar_new(Evas *evas, const char *dir);
 static void _ibar_free(IBar *b);
 static void _ibar_cb_empty_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _ibar_empty_handle(IBar *b);
@@ -238,7 +238,7 @@ _gc_icon(Evas *evas)
 /**/
 
 static IBar *
-_ibar_new(Evas *evas, char *dir)
+_ibar_new(Evas *evas, const char *dir)
 {
    IBar *b;
    char buf[4096];
@@ -1324,11 +1324,9 @@ e_modapi_save(E_Module *m)
    for (l = ibar_config->instances; l; l = l->next)
      {
 	Instance *inst;
-	int found;
 	Config_Item *ci;
 	
 	inst = l->data;
-	found = 0;
 	ci = _ibar_config_item_get(inst->gcc->id);
 	if (ci->dir) evas_stringshare_del(ci->dir);
 	/* FIXME: path should be recorded from setup */

@@ -21,8 +21,8 @@ struct _Config
 
 struct _Config_Item
 {
-   char *id;
-   char *dir;
+   const char *id;
+   const char *dir;
    int show_label;
 };
 
