@@ -649,7 +649,7 @@ e_config_init(void)
 
 	CFG_MODULE("start", 1);
 	CFG_MODULE("ibar", 1);
-	CFG_MODULE("ibox", 0);
+	CFG_MODULE("ibox", 1);
 	CFG_MODULE("dropshadow", 1);
 	CFG_MODULE("clock", 1);
 	CFG_MODULE("battery", 1);
@@ -1094,31 +1094,33 @@ e_config_init(void)
 	CFG_GADCON_CLIENT("ibar", "default", 800, 200,
 			  400 - (16 / 2), "inset", 1, 0);
 	CFG_GADCON_CLIENT("temperature", "default", 800, 32,
-			  800 - (4 * 32), NULL, 0, 0);
+			  800 - (5 * 32), NULL, 0, 0);
 	CFG_GADCON_CLIENT("cpufreq", "default", 800, 32,
-			  800 - (3 * 32), NULL, 0, 0);
+			  800 - (4 * 32), NULL, 0, 0);
 	CFG_GADCON_CLIENT("battery", "default", 800, 32,
-			  800 - (2 * 32), NULL, 0, 0);
+			  800 - (3 * 32), NULL, 0, 0);
 	CFG_GADCON_CLIENT("clock", "default", 800, 32,
-			  800 - (1 * 32), NULL, 0, 0);
+			  800 - (2 * 32), NULL, 0, 0);
+	CFG_GADCON_CLIENT("ibox", "default", 800, 200,
+			  400 - (1 * 32), "inset", 1, 0);
 	/* additional shelves for up to 3 more heads by default */
 	CFG_GADCON("shelf", "1");
 	CFG_GADCON_CLIENT("pager", "default2", 800, 120,
 			  0, "inset", 0, 0);
-	CFG_GADCON_CLIENT("ibar", "default2", 800, 200,
-			  400 - (16 / 2), "inset", 1, 0);
+	CFG_GADCON_CLIENT("ibox", "default", 800, 200,
+			  400 - (1 * 32), "inset", 1, 0);
 	
 	CFG_GADCON("shelf", "2");
 	CFG_GADCON_CLIENT("pager", "default3", 800, 120,
 			  0, "inset", 0, 0);
-	CFG_GADCON_CLIENT("ibar", "default2", 800, 200,
-			  400 - (16 / 2), "inset", 1, 0);
+	CFG_GADCON_CLIENT("ibox", "default", 800, 200,
+			  400 - (1 * 32), "inset", 1, 0);
 	
 	CFG_GADCON("shelf", "3");
 	CFG_GADCON_CLIENT("pager", "default4", 800, 120,
 			  0, "inset", 0, 0);
-	CFG_GADCON_CLIENT("ibar", "default2", 800, 200,
-			  400 - (16 / 2), "inset", 1, 0);
+	CFG_GADCON_CLIENT("ibox", "default", 800, 200,
+			  400 - (1 * 32), "inset", 1, 0);
      }
    IFCFGEND;
    

@@ -1,260 +1,9 @@
 images {
-   image: "e17_ibar_bg_h.png" COMP;
-   image: "e17_ibar_bg_v.png" COMP;
-   image: "e17_ibar_lamp_d.png" COMP;
-   image: "e17_ibar_lamp_l.png" COMP;
-   image: "e17_ibar_lamp_r.png" COMP;
-   image: "e17_ibar_lamp_u.png" COMP;
-   image: "e17_ibar_over_h.png" COMP;
-   image: "e17_ibar_over_v.png" COMP;
-}
-group {
-   name: "modules/ibox/main";
-   data {
-      //	 item: "item_list", "item item2 item3";
-   }
-   script {
-      public orient;
-   }
-   parts {
-      part {
-	 name:          "background";
-	 mouse_events:  1;
-	 description {
-	    state:    "default" 0.0;
-	    rel1 {
-	       to:       "overlay";
-	    }
-	    rel2 {
-	       to:       "overlay";
-	    }
-	    image {
-	       normal: "e17_ibar_bg_h.png";
-	       border: 6 6 6 6;
-	    }
-	    fill {
-	       smooth: 0;
-	    }
-	 }
-	 description {
-	    state:    "vert" 0.0;
-	    inherit:  "default" 0.0;
-	 }
-      }
-      part {
-	 name:          "items_clip";
-	 type:          RECT;
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    rel1 {
-	       to:       "background";
-	       offset:   4    4;
-	    }
-	    rel2 {
-	       to:       "background";
-	       offset:   -5    -5;
-	    }
-	    color: 255 255 255 255;
-	 }
-      }
-      part {
-	 name:          "items";
-	 type:          SWALLOW;
-	 mouse_events:  0;
-	 clip_to:       "items_clip";
-	 description {
-	    state:    "default" 0.0;
-	    rel1 {
-	       offset:   4    4;
-	    }
-	    rel2 {
-	       offset:   -5    -5;
-	    }
-	    color: 0 0 0 0;
-	 }
-	 description {
-	    state:    "top" 0.0;
-	    inherit:  "default" 0.0;
-	 }
-	 description {
-	    state:    "left" 0.0;
-	    inherit:  "default" 0.0;
-	 }
-	 description {
-	    state:    "right" 0.0;
-	    inherit:  "default" 0.0;
-	 }
-      }
-      part {
-	 name:          "overlay";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    image {
-	       normal: "e17_ibar_over_h.png";
-	       border: 13 13 13 13;
-	       middle: 0;
-	    }
-	    fill {
-	       smooth: 0;
-	    }
-	 }
-	 description {
-	    state:    "top" 0.0;
-	    inherit:  "default" 0.0;
-	 }
-	 description {
-	    state:    "left" 0.0;
-	    inherit:  "default" 0.0;
-	 }
-	 description {
-	    state:    "right" 0.0;
-	    inherit:  "default" 0.0;
-	 }
-      }
-      part {
-	 name:          "inn";
-	 type:          RECT;
-	 repeat_events: 1;
-	 description {
-	    state:    "default" 0.0;
-	    color: 0 0 0 0;
-	 }
-      }
-   }
-   programs {
-      program {
-	 name:    "orient";
-	 signal:  "set_orientation";
-	 source:  "*";
-	 script {
-	    // sig, src
-	    if (!strcmp(src, "left")) {
-	       set_int(orient, 0);
-	       set_state(PART:"background", "vert", 0.0);
-	       set_state(PART:"overlay", "left", 0.0);
-	       set_state(PART:"items", "left", 0.0);
-	    }
-	    else if (!strcmp(src, "right")) {
-	       set_int(orient, 1);
-	       set_state(PART:"background", "vert", 0.0);
-	       set_state(PART:"overlay", "right", 0.0);
-	       set_state(PART:"items", "right", 0.0);
-	    }
-	    else if (!strcmp(src, "top")) {
-	       set_int(orient, 2);
-	       set_state(PART:"background", "default", 0.0);
-	       set_state(PART:"overlay", "top", 0.0);
-	       set_state(PART:"items", "top", 0.0);
-	    }
-	    else if (!strcmp(src, "bottom")) {
-	       set_int(orient, 3);
-	       set_state(PART:"background", "default", 0.0);
-	       set_state(PART:"overlay", "default", 0.0);
-	       set_state(PART:"items", "default", 0.0);
-	    }
-	 }
-      }
-   }
-}
-
-group {
-   name: "modules/ibox/follower";
-   min: 56 56;
-   data {
-      //	 item: "item_list", "item item2 item3";
-   }
-   parts {
-      part {
-	 name:          "top";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0   -14;
-	    }
-	    rel2 {
-	       relative: 1.0  0.0;
-	       offset:   -1   26;
-	    }
-	    image {
-	       normal: "e17_ibar_lamp_d.png";
-	    }
-	 }
-	 description {
-	    state:    "top" 0.0;
-	    rel1 {
-	       relative: 0.0  1.0;
-	       offset:   0   -26;
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   14;
-	    }
-	    image {
-	       normal: "e17_ibar_lamp_u.png";
-	    }
-	 }
-	 description {
-	    state:    "right" 0.0;
-	    rel1 {
-	       relative: 0.0 0.0;
-	       offset:   -14 0;
-	    }
-	    rel2 {
-	       relative: 0.0 1.0;
-	       offset:   26 -1;
-	    }
-	    image {
-	       normal: "e17_ibar_lamp_r.png";
-	    }
-	 }
-	 description {
-	    state:    "left" 0.0;
-	    rel1 {
-	       relative: 1.0 0.0;
-	       offset:   -26  0;
-	    }
-	    rel2 {
-	       relative: 1.0 1.0;
-	       offset:   14  -1;
-	    }
-	    image {
-	       normal: "e17_ibar_lamp_l.png";
-	    }
-	 }
-      }
-      program {
-	 name:    "orient";
-	 signal:  "set_orientation";
-	 source:  "bottom";
-	 action:  STATE_SET "default" 0.0;
-	 target:  "top";
-      }
-      program {
-	 name:    "orient2";
-	 signal:  "set_orientation";
-	 source:  "top";
-	 action:  STATE_SET "top" 0.0;
-	 target:  "top";
-      }
-      program {
-	 name:    "orient3";
-	 signal:  "set_orientation";
-	 source:  "left";
-	 action:  STATE_SET "left" 0.0;
-	 target:  "top";
-      }
-      program {
-	 name:    "orient4";
-	 signal:  "set_orientation";
-	 source:  "right";
-	 action:  STATE_SET "right" 0.0;
-	 target:  "top";
-      }
-   }
+   image: "e17_ibar_arrow_d.png" COMP;
+   image: "e17_ibar_arrow_l.png" COMP;
+   image: "e17_ibar_arrow_r.png" COMP;
+   image: "e17_ibar_arrow_u.png" COMP;
+   image: "e17_pager_desk.png" COMP;
 }
 
 group {
@@ -265,21 +14,98 @@ group {
    }
    parts {
       part {
+	 name:          "item_clip";
+	 type:          RECT;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    color: 255 255 255 255;
+	 }
+	 description {
+	    state:    "faded" 0.0;
+	    color: 255 255 255 64;
+	 }
+      }
+      part {
 	 name:          "item";
 	 type:          SWALLOW;
 	 mouse_events:  0;
+	 clip_to:       "item_clip";
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   4   4;
+	       offset:   2   2;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -5   -5;
+	       offset:   -3   -3;
 	    }
 	    color: 0 0 0 0;
 	 }
+	 description {
+	    state:    "bigger" 0.0;
+	    inherit:  "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   0   0;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
+	    }
+	 }
+      }
+      part {
+	 name:          "over";
+	 type:          RECT;
+	 repeat_events: 0;
+	 description {
+	    state:    "default" 0.0;
+	    color: 0 0 0 0;
+	 }
+      }
+   }
+   programs {
+      program {
+	 name:    "hover_in";
+	 signal:  "mouse,in";
+	 source:  "over";
+	 action:  STATE_SET "bigger" 0.0;
+         transition: LINEAR 0.1;
+	 target:  "item";
+      }
+      program {
+	 name:    "hover_out";
+	 signal:  "mouse,out";
+	 source:  "over";
+	 action:  STATE_SET "default" 0.0;
+         transition: LINEAR 0.2;
+	 target:  "item";
+      }
+      program {
+	 name:    "exec_start";
+	 signal:  "start";
+	 source:  "";
+	 action:  STATE_SET "faded" 0.0;
+         transition: LINEAR 0.5;
+	 target:  "item_clip";
+      }
+      program {
+	 name:    "exec_exec";
+	 signal:  "exec";
+	 source:  "";
+	 action:  STATE_SET "faded" 0.0;
+         transition: LINEAR 0.5;
+	 target:  "item_clip";
+	 after:   "exec_stop";
+      }
+      program {
+	 name:    "exec_stop";
+	 signal:  "stop";
+	 source:  "";
+	 action:  STATE_SET "default" 0.0;
+	 target:  "item_clip";
       }
    }
 }
@@ -296,14 +122,6 @@ group {
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
-	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   4    4;
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -5   -5;
-	    }
 	    color: 255 255 255 0;
 	 }
       }
@@ -313,42 +131,48 @@ group {
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
+	    visible: 0;
 	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0    0;
 	       to:       "base";
 	    }
 	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   -1;
 	       to:       "base";
 	    }
 	    color: 255 255 255 0;
 	 }
 	 description {
 	    state:    "visible" 0.0;
+	    visible: 1;
 	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0    0;
 	       to:       "base";
 	    }
 	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   -1;
 	       to:       "base";
 	    }
 	    color: 255 255 255 255;
 	 }
 	 description {
 	    state:    "hidden" 0.0;
+	    visible: 1;
 	    rel1 {
 	       relative: -0.5  -0.5;
-	       offset:   0    0;
 	       to:       "base";
 	    }
 	    rel2 {
 	       relative: 1.5  1.5;
-	       offset:   -1   -1;
+	       to:       "base";
+	    }
+	    color: 255 255 255 0;
+	 }
+	 description {
+	    state:    "huge" 0.0;
+	    visible: 1;
+	    rel1 {
+	       relative: -2.0  -2.0;
+	       to:       "base";
+	    }
+	    rel2 {
+	       relative: 3.0  3.0;
 	       to:       "base";
 	    }
 	    color: 255 255 255 0;
@@ -362,16 +186,54 @@ group {
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0    0;
 	       to:       "background";
 	    }
 	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   -1;
 	       to:       "background";
 	    }
 	    color: 0 0 0 0;
+	 }
+      }
+      part {      
+	 name: "label";
+	 type: TEXT;
+	 effect: SOFT_SHADOW;                  
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    align: 0.5 0.5;
+	    rel1 {
+               relative: 0.0  1.0;
+	       offset:   0    -1;
+	    }
+	    rel2 {
+               relative: 1.0  1.0;
+	       offset:   -1    -1;
+	    }
+	    color: 255 255 255 0;
+	    color3: 0 0 0 0;
+	    text {
+	       text: "Icon Name";
+	       font: "Edje-Vera-Bold";
+	       size: 10;
+	       min:  1 1;
+	       align: 0.5 0.5;
+	       text_class: "module_normal";
+	    }
+	 }
+	 description {
+	    state: "visible" 0.0;
+	    inherit: "default" 0.0;
+	    rel1 {
+               relative: 0.0  0.0;
+	       offset:   0    0;
+	    }
+	    rel2 {
+               relative: 1.0  1.0;
+	       offset:   -1    -1;
+	    }
+	    color: 255 255 255 255;
+	    color3: 0 0 0 42;
 	 }
       }
    }
@@ -383,6 +245,14 @@ group {
 	 action:  STATE_SET "visible" 0.0;
 	 target:  "background";
 	 after:   "go_active2";
+      }
+      program {
+	 name:    "go_activeB";
+	 signal:  "label_active";
+	 source:  "";
+	 action:  STATE_SET "visible" 0.0;
+	 transition: SINUSOIDAL 0.5;
+	 target:  "label";
       }
       program {
 	 name:    "go_active2";
@@ -403,11 +273,803 @@ group {
 	 after:   "go_passive2";
       }
       program {
+	 name:    "go_passiveB";
+	 signal:  "label_passive";
+	 source:  "";
+	 action:  STATE_SET "default" 0.0;
+	 transition: SINUSOIDAL 1.0;
+	 target:  "label";
+      }
+      program {
 	 name:    "go_passive2";
 	 signal:  "";
 	 source:  "";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "background";
+      }
+      program {
+	 name:    "go_big";
+	 action:  STATE_SET "visible" 0.0;
+	 target:  "background";
+	 after:   "go_big2";
+      }
+      program {
+	 name:    "go_big2";
+	 action:  STATE_SET "huge" 0.0;
+	 transition: LINEAR 0.5;
+	 target:  "background";
+      }
+      program {
+	 name:    "exec_start";
+	 signal:  "start";
+	 source:  "";
+	 action:  ACTION_STOP;
+	 target:  "go_active";
+	 target:  "go_active2";
+	 target:  "go_passive";
+	 target:  "go_passive2";
+	 target:  "go_big";
+	 target:  "go_big2";
+	 after:   "go_big";
+      }
+      program {
+	 name:    "exec_exec";
+	 signal:  "exec";
+	 source:  "";
+	 after:   "exec_start";
+      }
+      program {
+	 name:    "exec_stop";
+	 signal:  "stop";
+	 source:  "";
+//	 action:  SIGNAL_EMIT "active" 0.0;
+      }
+   }
+}
+
+group {
+   name: "modules/ibox/drop";
+   parts {
+      part {
+	 name:          "bg";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    image {
+	       normal: "e17_pager_desk.png";
+               border: 2 2 2 2;
+	       middle: 0;
+	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "modules/ibox/drop_overlay";
+   parts {
+      part {
+	 name:          "l1";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    align:    1.0 0.5;
+	    min:      21 20;
+	    max:      21 20;
+	    visible:  0;
+	    color:    255 255 255 0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   -1    0;
+	    }
+	    rel2 {
+	       relative: 0.0  1.0;
+	       offset:   -1   -1;
+	    }
+	    image {
+	       normal: "e17_ibar_arrow_r.png";
+	    }
+	 }
+	 description {
+	    state:    "default2" 0.0;
+	    inherit:  "default" 0.0;
+	    visible:  1;
+	    color:    255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "l2";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    align:    1.0 0.5;
+	    min:      21 20;
+	    max:      21 20;
+	    visible:  0;
+	    color:    255 255 255 0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   -1    0;
+	       to: "l1";
+	    }
+	    rel2 {
+	       relative: 0.0  1.0;
+	       offset:   -1   -1;
+	       to: "l1";
+	    }
+	    image {
+	       normal: "e17_ibar_arrow_r.png";
+	    }
+	 }
+	 description {
+	    state:    "default2" 0.0;
+	    inherit:  "default" 0.0;
+	    visible:  1;
+	    color:    255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "l3";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    align:    1.0 0.5;
+	    min:      21 20;
+	    max:      21 20;
+	    visible:  0;
+	    color:    255 255 255 0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   -1    0;
+	       to: "l2";
+	    }
+	    rel2 {
+	       relative: 0.0  1.0;
+	       offset:   -1   -1;
+	       to: "l2";
+	    }
+	    image {
+	       normal: "e17_ibar_arrow_r.png";
+	    }
+	 }
+	 description {
+	    state:    "default2" 0.0;
+	    inherit:  "default" 0.0;
+	    visible:  1;
+	    color:    255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "l4";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    align:    1.0 0.5;
+	    min:      21 20;
+	    max:      21 20;
+	    visible:  0;
+	    color:    255 255 255 0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   -1    0;
+	       to: "l3";
+	    }
+	    rel2 {
+	       relative: 0.0  1.0;
+	       offset:   -1   -1;
+	       to: "l3";
+	    }
+	    image {
+	       normal: "e17_ibar_arrow_r.png";
+	    }
+	 }
+	 description {
+	    state:    "default2" 0.0;
+	    inherit:  "default" 0.0;
+	    visible:  1;
+	    color:    255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "r1";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    align:    0.0 0.5;
+	    min:      21 20;
+	    max:      21 20;
+	    visible:  0;
+	    color:    255 255 255 0;
+	    rel1 {
+	       relative: 1.0  0.0;
+	       offset:   0    0;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   0    -1;
+	    }
+	    image {
+	       normal: "e17_ibar_arrow_l.png";
+	    }
+	 }
+	 description {
+	    state:    "default2" 0.0;
+	    inherit:  "default" 0.0;
+	    visible:  1;
+	    color:    255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "r2";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    align:    0.0 0.5;
+	    min:      21 20;
+	    max:      21 20;
+	    visible:  0;
+	    color:    255 255 255 0;
+	    rel1 {
+	       relative: 1.0  0.0;
+	       offset:   0    0;
+	       to: "r1";
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   0    -1;
+	       to: "r1";
+	    }
+	    image {
+	       normal: "e17_ibar_arrow_l.png";
+	    }
+	 }
+	 description {
+	    state:    "default2" 0.0;
+	    inherit:  "default" 0.0;
+	    visible:  1;
+	    color:    255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "r3";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    align:    0.0 0.5;
+	    min:      21 20;
+	    max:      21 20;
+	    visible:  0;
+	    color:    255 255 255 0;
+	    rel1 {
+	       relative: 1.0  0.0;
+	       offset:   0    0;
+	       to: "r2";
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   0    -1;
+	       to: "r2";
+	    }
+	    image {
+	       normal: "e17_ibar_arrow_l.png";
+	    }
+	 }
+	 description {
+	    state:    "default2" 0.0;
+	    inherit:  "default" 0.0;
+	    visible:  1;
+	    color:    255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "r4";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    align:    0.0 0.5;
+	    min:      21 20;
+	    max:      21 20;
+	    visible:  0;
+	    color:    255 255 255 0;
+	    rel1 {
+	       relative: 1.0  0.0;
+	       offset:   0    0;
+	       to: "r3";
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   0    -1;
+	       to: "r3";
+	    }
+	    image {
+	       normal: "e17_ibar_arrow_l.png";
+	    }
+	 }
+	 description {
+	    state:    "default2" 0.0;
+	    inherit:  "default" 0.0;
+	    visible:  1;
+	    color:    255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "t1";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    align:    0.5 1.0;
+	    min:      29 21;
+	    max:      29 21;
+	    visible:  0;
+	    color:    255 255 255 0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   0    -1;
+	    }
+	    rel2 {
+	       relative: 1.0  0.0;
+	       offset:   -1   -1;
+	    }
+	    image {
+	       normal: "e17_ibar_arrow_d.png";
+	    }
+	 }
+	 description {
+	    state:    "default2" 0.0;
+	    inherit:  "default" 0.0;
+	    visible:  1;
+	    color:    255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "t2";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    align:    0.5 1.0;
+	    min:      29 21;
+	    max:      29 21;
+	    visible:  0;
+	    color:    255 255 255 0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   0    -1;
+	       to: "t1";
+	    }
+	    rel2 {
+	       relative: 1.0  0.0;
+	       offset:   -1   -1;
+	       to: "t1";
+	    }
+	    image {
+	       normal: "e17_ibar_arrow_d.png";
+	    }
+	 }
+	 description {
+	    state:    "default2" 0.0;
+	    inherit:  "default" 0.0;
+	    visible:  1;
+	    color:    255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "t3";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    align:    0.5 1.0;
+	    min:      29 21;
+	    max:      29 21;
+	    visible:  0;
+	    color:    255 255 255 0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   0    -1;
+	       to: "t2";
+	    }
+	    rel2 {
+	       relative: 1.0  0.0;
+	       offset:   -1   -1;
+	       to: "t2";
+	    }
+	    image {
+	       normal: "e17_ibar_arrow_d.png";
+	    }
+	 }
+	 description {
+	    state:    "default2" 0.0;
+	    inherit:  "default" 0.0;
+	    visible:  1;
+	    color:    255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "t4";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    align:    0.5 1.0;
+	    min:      29 21;
+	    max:      29 21;
+	    visible:  0;
+	    color:    255 255 255 0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   0    -1;
+	       to: "t3";
+	    }
+	    rel2 {
+	       relative: 1.0  0.0;
+	       offset:   -1   -1;
+	       to: "t3";
+	    }
+	    image {
+	       normal: "e17_ibar_arrow_d.png";
+	    }
+	 }
+	 description {
+	    state:    "default2" 0.0;
+	    inherit:  "default" 0.0;
+	    visible:  1;
+	    color:    255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "b1";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    align:    0.5 0.0;
+	    min:      29 21;
+	    max:      29 21;
+	    visible:  0;
+	    color:    255 255 255 0;
+	    rel1 {
+	       relative: 0.0  1.0;
+	       offset:   0    0;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   0;
+	    }
+	    image {
+	       normal: "e17_ibar_arrow_u.png";
+	    }
+	 }
+	 description {
+	    state:    "default2" 0.0;
+	    inherit:  "default" 0.0;
+	    visible:  1;
+	    color:    255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "b2";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    align:    0.5 0.0;
+	    min:      29 21;
+	    max:      29 21;
+	    visible:  0;
+	    color:    255 255 255 0;
+	    rel1 {
+	       relative: 0.0  1.0;
+	       offset:   0    0;
+	       to: "b1";
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   0;
+	       to: "b1";
+	    }
+	    image {
+	       normal: "e17_ibar_arrow_u.png";
+	    }
+	 }
+	 description {
+	    state:    "default2" 0.0;
+	    inherit:  "default" 0.0;
+	    visible:  1;
+	    color:    255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "b3";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    align:    0.5 0.0;
+	    min:      29 21;
+	    max:      29 21;
+	    visible:  0;
+	    color:    255 255 255 0;
+	    rel1 {
+	       relative: 0.0  1.0;
+	       offset:   0    0;
+	       to: "b2";
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   0;
+	       to: "b2";
+	    }
+	    image {
+	       normal: "e17_ibar_arrow_u.png";
+	    }
+	 }
+	 description {
+	    state:    "default2" 0.0;
+	    inherit:  "default" 0.0;
+	    visible:  1;
+	    color:    255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "b4";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    align:    0.5 0.0;
+	    min:      29 21;
+	    max:      29 21;
+	    visible:  0;
+	    color:    255 255 255 0;
+	    rel1 {
+	       relative: 0.0  1.0;
+	       offset:   0    0;
+	       to: "b3";
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   0;
+	       to: "b3";
+	    }
+	    image {
+	       normal: "e17_ibar_arrow_u.png";
+	    }
+	 }
+	 description {
+	    state:    "default2" 0.0;
+	    inherit:  "default" 0.0;
+	    visible:  1;
+	    color:    255 255 255 255;
+	 }
+      }
+   }
+   programs {
+      program {
+	 name: "go";
+	 signal: "show";
+	 source: "";
+	 after: "l1a";
+	 after: "r1a";
+	 after: "t1a";
+	 after: "b1a";
+      }
+      program {
+	 name:    "l1a";
+	 action:  STATE_SET "default2" 0.0;
+	 transition: SINUSOIDAL 0.25;
+	 target:  "l4";
+	 after:   "l1b";
+	 after:   "l2a";
+      }
+      program {
+	 name:    "l1b";
+	 action:  STATE_SET "default" 0.0;
+	 transition: DECELERATE 0.75;
+	 target:  "l4";
+      }
+      program {
+	 name:    "l2a";
+	 action:  STATE_SET "default2" 0.0;
+	 transition: SINUSOIDAL 0.25;
+	 target:  "l3";
+	 after:   "l2b";
+	 after:   "l3a";
+      }
+      program {
+	 name:    "l2b";
+	 action:  STATE_SET "default" 0.0;
+	 transition: DECELERATE 0.75;
+	 target:  "l3";
+      }
+      program {
+	 name:    "l3a";
+	 action:  STATE_SET "default2" 0.0;
+	 transition: SINUSOIDAL 0.25;
+	 target:  "l2";
+	 after:   "l3b";
+	 after:   "l4a";
+      }
+      program {
+	 name:    "l3b";
+	 action:  STATE_SET "default" 0.0;
+	 transition: DECELERATE 0.75;
+	 target:  "l2";
+      }
+      program {
+	 name:    "l4a";
+	 action:  STATE_SET "default2" 0.0;
+	 transition: SINUSOIDAL 0.25;
+	 target:  "l1";
+	 after:   "l4b";
+	 after:   "l1a";
+      }
+      program {
+	 name:    "l4b";
+	 action:  STATE_SET "default" 0.0;
+	 transition: DECELERATE 0.75;
+	 target:  "l1";
+      }
+      program {
+	 name:    "r1a";
+	 action:  STATE_SET "default2" 0.0;
+	 transition: SINUSOIDAL 0.25;
+	 target:  "r4";
+	 after:   "r1b";
+	 after:   "r2a";
+      }
+      program {
+	 name:    "r1b";
+	 action:  STATE_SET "default" 0.0;
+	 transition: DECELERATE 0.75;
+	 target:  "r4";
+      }
+      program {
+	 name:    "r2a";
+	 action:  STATE_SET "default2" 0.0;
+	 transition: SINUSOIDAL 0.25;
+	 target:  "r3";
+	 after:   "r2b";
+	 after:   "r3a";
+      }
+      program {
+	 name:    "r2b";
+	 action:  STATE_SET "default" 0.0;
+	 transition: DECELERATE 0.75;
+	 target:  "r3";
+      }
+      program {
+	 name:    "r3a";
+	 action:  STATE_SET "default2" 0.0;
+	 transition: SINUSOIDAL 0.25;
+	 target:  "r2";
+	 after:   "r3b";
+	 after:   "r4a";
+      }
+      program {
+	 name:    "r3b";
+	 action:  STATE_SET "default" 0.0;
+	 transition: DECELERATE 0.75;
+	 target:  "r2";
+      }
+      program {
+	 name:    "r4a";
+	 action:  STATE_SET "default2" 0.0;
+	 transition: SINUSOIDAL 0.25;
+	 target:  "r1";
+	 after:   "r4b";
+	 after:   "r1a";
+      }
+      program {
+	 name:    "r4b";
+	 action:  STATE_SET "default" 0.0;
+	 transition: DECELERATE 0.75;
+	 target:  "r1";
+      }
+      program {
+	 name:    "t1a";
+	 action:  STATE_SET "default2" 0.0;
+	 transition: SINUSOIDAL 0.25;
+	 target:  "t4";
+	 after:   "t1b";
+	 after:   "t2a";
+      }
+      program {
+	 name:    "t1b";
+	 action:  STATE_SET "default" 0.0;
+	 transition: DECELERATE 0.75;
+	 target:  "t4";
+      }
+      program {
+	 name:    "t2a";
+	 action:  STATE_SET "default2" 0.0;
+	 transition: SINUSOIDAL 0.25;
+	 target:  "t3";
+	 after:   "t2b";
+	 after:   "t3a";
+      }
+      program {
+	 name:    "t2b";
+	 action:  STATE_SET "default" 0.0;
+	 transition: DECELERATE 0.75;
+	 target:  "t3";
+      }
+      program {
+	 name:    "t3a";
+	 action:  STATE_SET "default2" 0.0;
+	 transition: SINUSOIDAL 0.25;
+	 target:  "t2";
+	 after:   "t3b";
+	 after:   "t4a";
+      }
+      program {
+	 name:    "t3b";
+	 action:  STATE_SET "default" 0.0;
+	 transition: DECELERATE 0.75;
+	 target:  "t2";
+      }
+      program {
+	 name:    "t4a";
+	 action:  STATE_SET "default2" 0.0;
+	 transition: SINUSOIDAL 0.25;
+	 target:  "t1";
+	 after:   "t4b";
+	 after:   "t1a";
+      }
+      program {
+	 name:    "t4b";
+	 action:  STATE_SET "default" 0.0;
+	 transition: DECELERATE 0.75;
+	 target:  "t1";
+      }
+      program {
+	 name:    "b1a";
+	 action:  STATE_SET "default2" 0.0;
+	 transition: SINUSOIDAL 0.25;
+	 target:  "b4";
+	 after:   "b1b";
+	 after:   "b2a";
+      }
+      program {
+	 name:    "b1b";
+	 action:  STATE_SET "default" 0.0;
+	 transition: DECELERATE 0.75;
+	 target:  "b4";
+      }
+      program {
+	 name:    "b2a";
+	 action:  STATE_SET "default2" 0.0;
+	 transition: SINUSOIDAL 0.25;
+	 target:  "b3";
+	 after:   "b2b";
+	 after:   "b3a";
+      }
+      program {
+	 name:    "b2b";
+	 action:  STATE_SET "default" 0.0;
+	 transition: DECELERATE 0.75;
+	 target:  "b3";
+      }
+      program {
+	 name:    "b3a";
+	 action:  STATE_SET "default2" 0.0;
+	 transition: SINUSOIDAL 0.25;
+	 target:  "b2";
+	 after:   "b3b";
+	 after:   "b4a";
+      }
+      program {
+	 name:    "b3b";
+	 action:  STATE_SET "default" 0.0;
+	 transition: DECELERATE 0.75;
+	 target:  "b2";
+      }
+      program {
+	 name:    "b4a";
+	 action:  STATE_SET "default2" 0.0;
+	 transition: SINUSOIDAL 0.25;
+	 target:  "b1";
+	 after:   "b4b";
+	 after:   "b1a";
+      }
+      program {
+	 name:    "b4b";
+	 action:  STATE_SET "default" 0.0;
+	 transition: DECELERATE 0.75;
+	 target:  "b1";
       }
    }
 }

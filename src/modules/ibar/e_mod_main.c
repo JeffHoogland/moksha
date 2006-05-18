@@ -89,6 +89,7 @@ static IBar_Icon *_ibar_icon_new(IBar *b, E_App *a);
 static void _ibar_icon_free(IBar_Icon *ic);
 static void _ibar_icon_fill(IBar_Icon *ic);
 static void _ibar_icon_empty(IBar_Icon *ic);
+static void _ibar_icon_signal_emit(IBar_Icon *ic, char *sig, char *src);
 static void _ibar_cb_app_change(void *data, E_App *a, E_App_Change ch);
 static int _ibar_cb_timer_drop_recalc(void *data);
 static void _ibar_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -599,18 +600,23 @@ _ibar_icon_fill(IBar_Icon *ic)
 static void
 _ibar_icon_empty(IBar_Icon *ic)
 {
-   evas_object_del(ic->o_icon);
-   evas_object_del(ic->o_icon2);
+   if (ic->o_icon) evas_object_del(ic->o_icon);
+   if (ic->o_icon2) evas_object_del(ic->o_icon2);
    ic->o_icon = NULL;
+   ic->o_icon2 = NULL;
 }
 
 static void
 _ibar_icon_signal_emit(IBar_Icon *ic, char *sig, char *src)
 {
-   edje_object_signal_emit(ic->o_holder, sig, src);
-   edje_object_signal_emit(ic->o_icon, sig, src);
-   edje_object_signal_emit(ic->o_holder2, sig, src);
-   edje_object_signal_emit(ic->o_icon2, sig, src);
+   if (ic->o_holder)
+     edje_object_signal_emit(ic->o_holder, sig, src);
+   if (ic->o_icon)
+     edje_object_signal_emit(ic->o_icon, sig, src);
+   if (ic->o_holder2)
+     edje_object_signal_emit(ic->o_holder2, sig, src);
+   if (ic->o_icon2)
+     edje_object_signal_emit(ic->o_icon2, sig, src);
 }
 
 static void
@@ -1220,6 +1226,7 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
    inst->ibar->o_drop = NULL;
    evas_object_del(inst->ibar->o_drop_over);
    inst->ibar->o_drop_over = NULL;
+   _ibar_empty_handle(inst->ibar);
    _ibar_resize_handle(inst->ibar);
    _gc_orient(inst->gcc);
 }

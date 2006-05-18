@@ -1569,6 +1569,7 @@ _pager_inst_cb_drop(void *data, const char *type, void *event_info)
 	  {
 	     Evas_Coord nx, ny;
 	     
+	     if (bd->iconic) e_border_uniconify(bd);
 	     e_border_desk_set(bd, pd->desk);
 	     if ((!pw) || ((pw) && (!pw->drag.no_place)))
 	       {
