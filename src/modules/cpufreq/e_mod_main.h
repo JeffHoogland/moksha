@@ -19,7 +19,7 @@ struct _Config
    /* saved * loaded config values */
    double       poll_time;
    int          restore_governor;
-   char        *governor;
+   const char        *governor;
    /* just config state */
    E_Module    *module;
    Evas_List   *instances;
