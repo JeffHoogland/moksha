@@ -781,7 +781,7 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_inf
 	es->menu = mn;
 	
 	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, _("Shelf Configuration"));
+	e_menu_item_label_set(mi, _("Shelf Location and Appearance Settings"));
 	e_util_menu_item_edje_icon_set(mi, "enlightenment/config");
 	e_menu_item_callback_set(mi, _e_shelf_cb_menu_config, es);
 
