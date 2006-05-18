@@ -1319,7 +1319,7 @@ e_modapi_shutdown(E_Module *m)
 EAPI int
 e_modapi_save(E_Module *m)
 {
-   Evas_List *l, *l2;
+   Evas_List *l;
    
    for (l = ibar_config->instances; l; l = l->next)
      {
