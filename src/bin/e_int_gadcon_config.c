@@ -77,10 +77,11 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   Evas_List *l;
-   E_Config_Gadcon *cf_gc;
-   E_Config_Gadcon_Client *cf_gcc;
-   int ok = 0;
+   Evas_List *l, *l2;
+   E_Config_Gadcon *cf_gc, *cf_gc2;
+   E_Config_Gadcon_Client *cf_gcc, *cf_gcc2;
+   int i, ok = 0;
+   char buf[256];
 
    cfdata->gc->config_dialog = cfd;
    for (l = e_config->gadcons; l; l = l->next)
@@ -113,9 +114,31 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     return 1; /* Apply was OK */
 	  }
      }
+   snprintf(buf, sizeof(buf), "default");
+   for (i = 0; ; i++)
+     {
+	ok = 1;
+	for (l = e_config->gadcons; l; l = l->next)
+	  {
+	     cf_gc2 = l->data;
+	     for (l2 = cf_gc2->clients; l2; l2 = l2->next)
+	       {
+		  cf_gcc2 = l2->data;
+		  if ((!cf_gcc2->name) || (!cf_gcc2->id)) continue;
+		  if ((!strcmp(cf_gcc2->name, cfdata->cname)) && (!strcmp(cf_gcc2->id, buf)))
+		    {
+		       ok = 0;
+		       break;
+		    }
+	       }
+	     if (!ok) break;
+	  }
+	if (ok) break;
+	snprintf(buf, sizeof(buf), "other-%i", ok);
+     }
    cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
    cf_gcc->name = evas_stringshare_add(cfdata->cname);
-   cf_gcc->id = evas_stringshare_add("default");
+   cf_gcc->id = evas_stringshare_add(buf);
    cf_gcc->geom.res = 800;
    cf_gcc->geom.size = 80;
    cf_gcc->geom.pos = cf_gcc->geom.res - cf_gcc->geom.size;

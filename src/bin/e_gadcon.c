@@ -1004,6 +1004,23 @@ e_gadcon_client_util_menu_attach(E_Gadcon_Client *gcc)
      evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_MOUSE_DOWN, _e_gadcon_client_cb_mouse_down, gcc);
 }
 
+EAPI E_Gadcon_Client *
+e_gadcon_client_find(E_Gadcon *gc, char *name, char *id)
+{
+   Evas_List *l;
+   
+   for (l = gc->clients; l; l = l->next)
+     {
+	E_Gadcon_Client *gcc;
+	
+	gcc = l->data;
+	if ((gcc->name) && (gcc->id) && 
+	    (!strcmp(name, gcc->name)) && (!strcmp(id, gcc->id)))
+	  return gcc;
+     }
+   return NULL;
+}
+
 /* local subsystem functions */
 static void
 _e_gadcon_free(E_Gadcon *gc)
@@ -1167,7 +1184,9 @@ _e_gadcon_client_save(E_Gadcon_Client *gcc)
    for (l = e_config->gadcons; l; l = l->next)
      {
 	cf_gc = l->data;
-	if ((!strcmp(cf_gc->name, gcc->gadcon->name)) &&
+	if ((cf_gc->name) && (gcc->gadcon->name) &&
+	    (cf_gc->id) && (gcc->gadcon->id) &&
+	    (!strcmp(cf_gc->name, gcc->gadcon->name)) &&
 	    (!strcmp(cf_gc->id, gcc->gadcon->id)))
 	  {
 	     ok++;
@@ -1175,7 +1194,9 @@ _e_gadcon_client_save(E_Gadcon_Client *gcc)
 	       {
 		  cf_gcc = l2->data;
 		  
-		  if ((!strcmp(cf_gcc->name, gcc->name)) &&
+		  if ((cf_gcc->name) && (gcc->name) &&
+		      (cf_gcc->id) && (gcc->id) &&
+		      (!strcmp(cf_gcc->name, gcc->name)) &&
 		      (!strcmp(cf_gcc->id, gcc->id)))
 		    {
 		       cf_gcc->geom.pos = gcc->config.pos;

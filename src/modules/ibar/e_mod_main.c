@@ -150,7 +150,7 @@ _gc_init(E_Gadcon *gc, char *name, char *id, char *style)
      e_drop_handler_add(inst,
 			_ibar_inst_cb_enter, _ibar_inst_cb_move,
 			_ibar_inst_cb_leave, _ibar_inst_cb_drop,
-			drop, 3, cx + x, cy + y, w, h);
+			drop, 3, cx + x, cy + y, w,  h);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOVE,
 				  _ibar_cb_obj_moveresize, inst);
    evas_object_event_callback_add(o, EVAS_CALLBACK_RESIZE,

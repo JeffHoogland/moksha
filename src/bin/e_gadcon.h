@@ -160,5 +160,7 @@ EAPI void             e_gadcon_client_resizable_set(E_Gadcon_Client *gcc, int re
 EAPI void             e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int flags);
 EAPI void             e_gadcon_client_util_menu_attach(E_Gadcon_Client *gcc);
 
+EAPI E_Gadcon_Client *e_gadcon_client_find(E_Gadcon *gc, char *name, char *id);
+    
 #endif
 #endif
