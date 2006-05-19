@@ -254,6 +254,17 @@ e_gadcon_populate(E_Gadcon *gc)
 	       }
 	  }
      }
+   else
+     {
+	cf_gc = E_NEW(E_Config_Gadcon, 1);
+	if (cf_gc)
+	  {
+	     cf_gc->name = evas_stringshare_add(gc->name);
+	     cf_gc->id = evas_stringshare_add(gc->id);
+	     e_config->gadcons = evas_list_append(e_config->gadcons, cf_gc);
+	     e_config_save_queue();
+	  }
+     }
    e_gadcon_layout_thaw(gc->o_container);
 }
 

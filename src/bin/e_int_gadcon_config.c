@@ -162,6 +162,8 @@ _cb_select(void *data)
    int ok = 0, enabled = 0;
    
    cfdata = data;
+   e_widget_disabled_set(cfdata->o_enabled, 0);
+   e_widget_disabled_set(cfdata->o_disabled, 0);
    for (l = e_config->gadcons; l; l = l->next)
      {
 	cf_gc = l->data;
@@ -183,8 +185,6 @@ _cb_select(void *data)
 	     break;
 	  }
      }
-   e_widget_disabled_set(cfdata->o_enabled, 0);
-   e_widget_disabled_set(cfdata->o_disabled, 0);
    e_widget_radio_toggle_set(cfdata->o_enabled, enabled);
    e_widget_radio_toggle_set(cfdata->o_disabled, 1 - enabled);
 }
