@@ -118,6 +118,16 @@ typedef	union {
 			      : "=m" (mem) \
 			      : /* nothing */ )
 
+#define	mmx_a2r(op, mem, reg) \
+	__asm__ __volatile__ (#op " %0, %%" #reg \
+			      : /* nothing */ \
+			      : "m" (mem))
+
+#define	mmx_r2a(op, reg, mem) \
+	__asm__ __volatile__ (#op " %%" #reg ", %0" \
+			      : "=m" (mem) \
+			      : /* nothing */ )
+
 #define	mmx_r2r(op, regs, regd) \
 	__asm__ __volatile__ (#op " %" #regs ", %" #regd)
 
@@ -125,10 +135,10 @@ typedef	union {
 	__asm__ __volatile__ ("movq %0, %%mm0\n\t" \
 			      #op " %1, %%mm0\n\t" \
 			      "movq %%mm0, %0" \
-			      : "=m" (memd) \
-			      : "m" (mems))
+			      : "=X" (memd) \
+			      : "X" (mems))
 
-/*	1x64 MOVe Quadword
+/*	1x64 MOVE Quadword
 	(this is both a load and a store...
 	 in fact, it is the only way to store)
 */
@@ -138,24 +148,24 @@ typedef	union {
 #define	movq(vars, vard) \
 	__asm__ __volatile__ ("movq %1, %%mm0\n\t" \
 			      "movq %%mm0, %0" \
-			      : "=m" (vard) \
-			      : "m" (vars))
+			      : "=X" (vard) \
+			      : "X" (vars))
 #define	movntq_r2m(reg, var)   mmx_r2m(movntq, reg, var)
 
 
-/*	1x32 MOVe Doubleword
+/*	1x32 MOVE Doubleword
 	(like movq, this is both load and store...
 	 but is most useful for moving things between
 	 mmx registers and ordinary registers)
 */
-#define	movd_m2r(var, reg)	mmx_m2r(movd, var, reg)
-#define	movd_r2m(reg, var)	mmx_r2m(movd, reg, var)
+#define	movd_m2r(var, reg)	mmx_a2r(movd, var, reg)
+#define	movd_r2m(reg, var)	mmx_r2a(movd, reg, var)
 #define	movd_r2r(regs, regd)	mmx_r2r(movd, regs, regd)
 #define	movd(vars, vard) \
 	__asm__ __volatile__ ("movd %1, %%mm0\n\t" \
 			      "movd %%mm0, %0" \
-			      : "=m" (vard) \
-			      : "m" (vars))
+			      : "=X" (vard) \
+			      : "X" (vars))
 
 
 /*	2x32, 4x16, and 8x8 Parallel ADDs
@@ -511,6 +521,50 @@ typedef	union {
 		: "q" (dst), "r" (src) \
 		: "memory",  "st");
 
+#define MOVE_32DWORDS_SSE2(src,dst) \
+	   __asm__ ( \
+		"movdqu (%1), %%xmm0 \n" \
+		"movdqu 0x10(%1), %%xmm1 \n" \
+	 	"movdqu 0x20(%1), %%xmm2 \n" \
+		"movdqu 0x30(%1), %%xmm3 \n" \
+		"movdqu 0x40(%1), %%xmm4 \n" \
+		"movdqu 0x50(%1), %%xmm5 \n" \
+		"movdqu 0x60(%1), %%xmm6 \n" \
+		"movdqu 0x70(%1), %%xmm7 \n" \
+		"movntdq %%xmm0, (%0) \n" \
+		"movntdq %%xmm1, 0x10(%0) \n" \
+		"movntdq %%xmm2, 0x20(%0) \n" \
+		"movntdq %%xmm3, 0x30(%0) \n" \
+		"movntdq %%xmm4, 0x40(%0) \n" \
+		"movntdq %%xmm5, 0x50(%0) \n" \
+		"movntdq %%xmm6, 0x60(%0) \n" \
+		"movntdq %%xmm7, 0x70(%0) \n" \
+		: \
+		: "q" (dst), "r" (src) \
+		: "memory",  "st");
+
+#define MOVE_32DWORDS_ALIGNED_SSE2(src,dst) \
+	   __asm__ ( \
+		"movdqa (%1), %%xmm0 \n" \
+		"movdqa 0x10(%1), %%xmm1 \n" \
+	 	"movdqa 0x20(%1), %%xmm2 \n" \
+		"movdqa 0x30(%1), %%xmm3 \n" \
+		"movdqa 0x40(%1), %%xmm4 \n" \
+		"movdqa 0x50(%1), %%xmm5 \n" \
+		"movdqa 0x60(%1), %%xmm6 \n" \
+		"movdqa 0x70(%1), %%xmm7 \n" \
+		"movntdq %%xmm0, (%0) \n" \
+		"movntdq %%xmm1, 0x10(%0) \n" \
+		"movntdq %%xmm2, 0x20(%0) \n" \
+		"movntdq %%xmm3, 0x30(%0) \n" \
+		"movntdq %%xmm4, 0x40(%0) \n" \
+		"movntdq %%xmm5, 0x50(%0) \n" \
+		"movntdq %%xmm6, 0x60(%0) \n" \
+		"movntdq %%xmm7, 0x70(%0) \n" \
+		: \
+		: "q" (dst), "r" (src) \
+		: "memory",  "st");
+
 /*	Empty MMx State
 	(used to clean-up when going from mmx to float use
 	 of the registers that are shared by both; note that
@@ -530,43 +584,43 @@ typedef	union {
 
 #ifdef __amd64
 #define have_cpuid(cpuid_ret) \
-	 __asm__ __volatile__ ( \
-				  ".align 32               \n" \
-				  "  pushq %%rbx           \n" \
-				  "  pushfq                \n" \
-				  "  popq %%rax            \n" \
-				  "  movq %%rax, %%rbx     \n" \
-				  "  xorq $0x200000, %%rax \n" \
-				  "  pushq %%rax           \n" \
-				  "  popfq                 \n" \
-				  "  pushfq                \n" \
-				  "  popq %%rax            \n" \
-				  "  cmpq %%rax, %%rbx     \n" \
-				  "  je 1f                 \n" \
-				  "  movl $1, %0           \n" \
-				  "  jmp 2f                \n" \
-				  "1:                      \n" \
-				  "  movl $0, %0           \n" \
-				  "2:                      \n" \
-				  "  popq %%rbx            \n" \
-				  : "=m" (cpuid_ret)           \
-				  );
+         __asm__ __volatile__ ( \
+                                  ".align 32               \n" \
+                                  "  pushq %%rbx           \n" \
+                                  "  pushfq                \n" \
+                                  "  popq %%rax            \n" \
+                                  "  movq %%rax, %%rbx     \n" \
+                                  "  xorq $0x200000, %%rax \n" \
+                                  "  pushq %%rax           \n" \
+                                  "  popfq                 \n" \
+                                  "  pushfq                \n" \
+                                  "  popq %%rax            \n" \
+                                  "  cmpq %%rax, %%rbx     \n" \
+                                  "  je 1f                 \n" \
+                                  "  movl $1, %0           \n" \
+                                  "  jmp 2f                \n" \
+                                  "1:                      \n" \
+                                  "  movl $0, %0           \n" \
+                                  "2:                      \n" \
+                                  "  popq %%rbx            \n" \
+				   : "=m" (cpuid_ret)           \
+                                  );
 
 #define get_cpuid(cpuid_ret) \
-	 __asm__ __volatile__ ( \
-				  ".align 32               \n" \
-				  "  pushq %%rax           \n" \
-				  "  movl $1, %%eax        \n" \
-				  "  cpuid                 \n" \
-				  "  test $0x00800000, %%edx\n" \
-				  "1:                      \n" \
-				  "  movl %%edx, %0        \n" \
-				  "  jmp 2f                \n" \
-				  "2:                      \n" \
-				  "  movl $0, %0           \n" \
-				  "  popq %%rax            \n" \
-				  : "=m" (cpuid_ret)           \
-				  );
+         __asm__ __volatile__ ( \
+                                  ".align 32               \n" \
+                                  "  pushq %%rax           \n" \
+                                  "  movl $1, %%eax        \n" \
+                                  "  cpuid                 \n" \
+                                  "  test $0x00800000, %%edx\n" \
+                                  "1:                      \n" \
+                                  "  movl %%edx, %0        \n" \
+                                  "  jmp 2f                \n" \
+                                  "2:                      \n" \
+                                  "  movl $0, %0           \n" \
+                                  "  popq %%rax            \n" \
+				   : "=m" (cpuid_ret)           \
+                                  );
 #else
 #define have_cpuid(cpuid_ret) \
 	 __asm__ __volatile__ ( \
@@ -607,8 +661,6 @@ typedef	union {
 				  : "=m" (cpuid_ret)           \
 				  );
 #endif
-
-/* P3 instructions - need to figure how to detect? */
 #define prefetch(var) \
 	__asm__ __volatile__ ( \
 				 "prefetchnta (%0) \n" \
@@ -638,7 +690,43 @@ typedef	union {
 				 "pshufw $" #imm ", %" #r1 ", %" #r2 " \n" \
 				 );
 
+#define pshufhw(r1, r2, imm) \
+	__asm__ __volatile__ ( \
+				 "pshufhw $" #imm ", %" #r1 ", %" #r2 " \n" \
+				 );
+
+#define pshuflw(r1, r2, imm) \
+	__asm__ __volatile__ ( \
+				 "pshuflw $" #imm ", %" #r1 ", %" #r2 " \n" \
+				 );
+#define pshufd(r1, r2, imm) \
+	__asm__ __volatile__ ( \
+				 "pshufd $" #imm ", %" #r1 ", %" #r2 " \n" \
+				 );
+
+/*	1x238 MOVE Doouble Quadword
+	(this is both a load and a store...
+	 in fact, it is the only way to store)
+*/
+#define	movdqu_m2r(var, reg)	mmx_m2r(movdqu, var, reg)
+#define	movdqu_r2m(reg, var)	mmx_r2m(movdqu, reg, var)
+#define	movdqu_r2r(regs, regd)	mmx_r2r(movdqu, regs, regd)
+#define	movdqu(vars, vard) \
+	__asm__ __volatile__ ("movdqu %1, %%xmm0\n\t" \
+			      "movdqu %%xmm0, %0" \
+			      : "=X" (vard) \
+			      : "X" (vars))
+#define	movdqa_m2r(var, reg)	mmx_m2r(movdqa, var, reg)
+#define	movdqa_r2m(reg, var)	mmx_r2m(movdqa, reg, var)
+#define	movdqa_r2r(regs, regd)	mmx_r2r(movdqa, regs, regd)
+#define	movdqa(vars, vard) \
+	__asm__ __volatile__ ("movdqa %1, %%xmm0\n\t" \
+			      "movdqa %%xmm0, %0" \
+			      : "=X" (vard) \
+			      : "X" (vars))
+#define	movntdq_r2m(reg, var)   mmx_r2m(movntdq, reg, var)
+
+
 /* end additions */
 
 #endif
-

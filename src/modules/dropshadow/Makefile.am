@@ -4,6 +4,7 @@ MODULE = dropshadow
 # data files for the module
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)
 files_DATA = \
+module.eap \
 module_icon.png \
 menu_icon_close.png \
 menu_icon_dark.png \
