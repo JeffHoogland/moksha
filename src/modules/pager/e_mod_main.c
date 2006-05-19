@@ -1333,6 +1333,9 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
 
    ev = event_info;
    pw = data;
+   
+   printf("MOV %i %i!\n", ev->cur.output.x, ev->cur.output.y);
+   
    if (!pw) return;
    /* prevent drag for a few pixels */
    if (pw->drag.start)

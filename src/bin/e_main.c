@@ -148,6 +148,10 @@ main(int argc, char **argv)
    if (getenv("DESKTOP_STARTUP_ID")) e_util_env_set("DESKTOP_STARTUP_ID", NULL);
    
    e_util_env_set("RESTART", "1");
+   
+   /* envrionment varabiles so you know E is running/launched you */
+   e_util_env_set("PANTS", "ON");
+   e_util_env_set("DESKTOP", "Enlightenment-0.17.0");
 
    e_intl_init();
    
