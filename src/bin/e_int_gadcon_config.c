@@ -229,6 +229,7 @@ _cb_add_instance(void *data, void *data2)
    cfdata = data;
 
    snprintf(buf, sizeof(buf), "default");
+   //FIXME: I DO NOT LIKE THIS LOOP. IT CAN NOT END. FOR EXAMPLE IBAR ON SHELF 0
    for (i = 0; ; i++)
      {
 	ok = 1;
