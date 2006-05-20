@@ -678,6 +678,7 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
   f1 = e_theme_edje_file_get("base/theme/desklock", "desklock/background");
   c = strdup(f1);
 
+  e_widget_ilist_header_append(cfdata->gui.bg_list, NULL, ("Theme Backgrounds"));
   if (edje_object_file_set(o, f1, "desklock/background"))
     {
       if (!e_thumb_exists(c))
@@ -686,7 +687,8 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
       else
 	ic = e_thumb_evas_object_get(c, cfdata->evas, BG_LIST_ICON_SIZE_W, BG_LIST_ICON_SIZE_H, 1);
 
-      e_widget_ilist_append(cfdata->gui.bg_list, ic, _("Theme DeskLock Background"),
+
+      e_widget_ilist_append(cfdata->gui.bg_list, ic, _("Theme Desklock Background"),
 			    _ibg_list_cb_bg_selected, cfdata, DEF_DESKLOCK_BACKGROUND);
     }
 
@@ -734,7 +736,8 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
   evas_object_del(o);
   ecore_evas_free(eebuf);
   free(c);
-
+ 
+  e_widget_ilist_header_append(cfdata->gui.bg_list, NULL, _("Personal"));
   bg_dirs = e_path_dir_list_get(path_backgrounds);
   for (bg = bg_dirs; bg; bg = bg->next)
     {
