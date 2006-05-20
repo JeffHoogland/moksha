@@ -15,6 +15,7 @@ EAPI E_Config *e_config = NULL;
 static int  _e_config_save_cb(void *data);
 static void _e_config_free(void);
 static int  _e_config_cb_timer(void *data);
+static void _e_config_eet_close_handle(Eet_File *ef, char *file);
 
 /* local subsystem globals */
 static int _e_config_save_block = 0;
@@ -1451,7 +1452,7 @@ e_config_profile_save(void)
      {
 	ok = eet_write(ef, "config", _e_config_profile, 
 		       strlen(_e_config_profile), 0);
-	eet_close(ef);
+	_e_config_eet_close_handle(ef, buf);
      }
    return ok;
 }
@@ -1477,7 +1478,7 @@ e_config_domain_save(char *domain, E_Config_DD *edd, void *data)
    if (ef)
      {
 	ok = eet_data_write(ef, edd, "config", data, 1);
-	eet_close(ef);
+	_e_config_eet_close_handle(ef, buf);
      }
    return ok;
 }
@@ -1797,4 +1798,82 @@ _e_config_cb_timer(void *data)
    e_util_dialog_show(_("Configuration Upgraded"),
 		      data);
    return 0;
+}
+
+static void
+_e_config_eet_close_handle(Eet_File *ef, char *file)
+{
+   Eet_Error err;
+   char *erstr = NULL;
+   
+   err = eet_close(ef);
+   switch (err)
+     {
+      case EET_ERROR_WRITE_ERROR:
+	erstr = _("An error occured while saving Enlightenment's<br>"
+		  "configuration to disk. The error could not be<br>"
+		  "deterimined.<br>"
+		  "<br>"
+		  "The file where the error occured was:<br>"
+		  "%s<br>"
+		  "<br>"
+		  "This file has been deleted to avoid corrupt data.<br>"
+		  );
+	break;
+      case EET_ERROR_WRITE_ERROR_FILE_TOO_BIG:
+	erstr = _("Enlightenment's configuration files are too big<br>"
+		  "for the file system they are being saved to.<br>"
+		  "This error is very strange as the files should<br>"
+		  "be extremely small. Please check the settings<br>"
+		  "for your home directory.<br>"
+		  "<br>"
+		  "The file where the error occured was:<br>"
+		  "%s<br>"
+		  "<br>"
+		  "This file has been deleted to avoid corrupt data.<br>"
+		  );
+	break;
+      case EET_ERROR_WRITE_ERROR_IO_ERROR:
+	erstr = _("An output error occured when writing the configuration<br>"
+		  "files for Enlightenment. Your disk is having troubles<br>"
+		  "and possibly needs replacement.<br>"
+		  "<br>"
+		  "The file where the error occured was:<br>"
+		  "%s<br>"
+		  "<br>"
+		  "This file has been deleted to avoid corrupt data.<br>"
+		  );
+	break;
+      case EET_ERROR_WRITE_ERROR_OUT_OF_SPACE:
+	erstr = _("Enlightenment cannot write its configuration file<br>"
+		  "because it ran out of space to write the file.<br>"
+		  "You have either run out of disk space or have<br>"
+		  "gone over your quota limit.<br>"
+		  "<br>"
+		  "The file where the error occured was:<br>"
+		  "%s<br>"
+		  "<br>"
+		  "This file has been deleted to avoid corrupt data.<br>"
+		  );
+	break;
+      case EET_ERROR_WRITE_ERROR_FILE_CLOSED:
+	erstr = _("Enlightenment unexpectedly had the configuration file<br>"
+		  "it was writing closed on it. This is very unusual.<br>"
+		  "<br>"
+		  "The file where the error occured was:<br>"
+		  "%s<br>"
+		  "<br>"
+		  "This file has been deleted to avoid corrupt data.<br>"
+		  );
+	break;
+      default:
+	break;
+     }
+   if (erstr)
+     {
+	/* delete any partially-written file */
+	ecore_file_unlink(file);
+	e_util_dialog_show(_("Enlightenment Configration Write Problems"),
+			   erstr, file);
+     }
 }
