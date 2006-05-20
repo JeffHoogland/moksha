@@ -225,11 +225,13 @@ _cb_add_instance(void *data, void *data2)
    E_Config_Gadcon *cf_gc;
    E_Config_Gadcon_Client *cf_gcc;
    Evas_List *l, *l2;
+   char *label;
+   Evas_Object *icon;
+   E_Gadcon_Client_Class *cc;
 
    cfdata = data;
 
    snprintf(buf, sizeof(buf), "default");
-   //FIXME: I DO NOT LIKE THIS LOOP. IT CAN NOT END. FOR EXAMPLE IBAR ON SHELF 0
    for (i = 0; ; i++)
      {
 	ok = 1;
@@ -243,13 +245,13 @@ _cb_add_instance(void *data, void *data2)
 		  if ((!strcmp(cf_gcc->name, cfdata->cname)) && (!strcmp(cf_gcc->id, buf)))
 		    {
 		       ok = 0;
-		       break;
+		       goto done;
 		    }
 	       }
-	     if (!ok) break;
 	  }
 	if (ok) break;
-	snprintf(buf, sizeof(buf), "other-%i", ok);
+	done:
+	snprintf(buf, sizeof(buf), "other-%i", i);
      }
 
    cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
@@ -264,8 +266,25 @@ _cb_add_instance(void *data, void *data2)
 
    cfdata->cf_gcc = evas_list_append(cfdata->cf_gcc, cf_gcc);
 
-   e_widget_ilist_append(cfdata->o_instances, NULL, cf_gcc->name, _cb_select_client_instance,
-			 cfdata, (char *)cf_gcc->name);
+   cc = NULL;
+   for (l = e_gadcon_provider_list(); l; l = l->next)
+     {
+	cc = l->data;
+	if ((cc->name) && (!strcmp(cc->name, cf_gcc->name))) break;
+	cc = NULL;
+     }
+   icon = NULL;
+   label = NULL;
+   if (cc)
+     {
+	if (cc->func.label) label = cc->func.label();
+	if (!label) label = cc->name;
+	if (cc->func.icon) 
+	  icon = cc->func.icon(evas_object_evas_get(cfdata->o_instances));
+     }
+   e_widget_ilist_append(cfdata->o_instances, icon, label, 
+			 _cb_select_client_instance, cfdata,
+			 (char *)cf_gcc->name);
    e_widget_ilist_go(cfdata->o_instances);
    e_widget_ilist_selected_set(cfdata->o_instances,
 			       e_widget_ilist_count(cfdata->o_instances) - 1);
@@ -277,7 +296,7 @@ _cb_remove_instance(void *data, void *data2)
    int i;
    E_Config_Dialog_Data *cfdata;
    E_Config_Gadcon_Client *cf_gcc;
-   Evas_List   *l;
+   Evas_List *l, *l2;
 
    cfdata = data;
    i = e_widget_ilist_selected_get(cfdata->o_instances);
@@ -295,8 +314,27 @@ _cb_remove_instance(void *data, void *data2)
    e_widget_ilist_clear(cfdata->o_instances);
    for (l = cfdata->cf_gcc; l; l = l->next)
      {
+	E_Gadcon_Client_Class *cc;
+	char *label;
+	Evas_Object *icon;
+	
 	cf_gcc = l->data;
-	e_widget_ilist_append(cfdata->o_instances, NULL, cf_gcc->name, _cb_select_client_instance,
+	cc = NULL;
+	for (l2 = e_gadcon_provider_list(); l2; l2 = l2->next)
+	  {
+	     cc = l2->data;
+	     if ((cc->name) && (!strcmp(cc->name, cf_gcc->name))) break;
+	     cc = NULL;
+	  }
+	if (cc)
+	  {
+	     if (cc->func.label) label = cc->func.label();
+	     if (!label) label = cc->name;
+	     if (cc->func.icon) 
+	       icon = cc->func.icon(evas_object_evas_get(cfdata->o_instances));
+	  }
+	e_widget_ilist_append(cfdata->o_instances, icon, label,
+			      _cb_select_client_instance,
 			      cfdata, (char *)cf_gcc->name);
      }
    e_widget_ilist_go(cfdata->o_instances);
@@ -315,16 +353,16 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for a basic dialog */
-   Evas_Object *o, *o2, *of, *oft, *ob, *oi;
+   Evas_Object *o, *o2, *of, *ob, *oi;
    Evas_Coord wmw, wmh;
-   Evas_List *l;
+   Evas_List *l, *l2;
    E_Config_Gadcon_Client *cf_gcc;
    //int ok;
 
    /* FIXME: this is just raw config now - it needs UI improvments */
    o = e_widget_list_add(evas, 0, 1);
 
-   of = e_widget_framelist_add(evas, _("Available Items"), 0);
+   of = e_widget_framelist_add(evas, _("Available Gadgets"), 0);
 
    oi = e_widget_ilist_add(evas, 24, 24, &(cfdata->cname));
 
@@ -350,16 +388,41 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    e_widget_framelist_object_append(of, oi);
 
+   ob = e_widget_button_add(evas, _("Add Gadget"), NULL, _cb_add_instance, cfdata, NULL);
+   e_widget_framelist_object_append(of, ob);
+//   e_widget_frametable_object_append(oft, ob, 0, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_disabled_set(ob, 1);
+   cfdata->o_add = ob;
+
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   oft = e_widget_frametable_add(evas, _("Selected Items"), 0);
+   of = e_widget_framelist_add(evas, _("Selected"), 0);
 
    oi = e_widget_ilist_add(evas, 24, 24, &(cfdata->ciname));
 
    for (l = cfdata->cf_gcc; l; l = l->next)
      {
+	E_Gadcon_Client_Class *cc;
+	char *label;
+	Evas_Object *icon;
+	
 	cf_gcc = l->data;
-	e_widget_ilist_append(oi, NULL, cf_gcc->name, _cb_select_client_instance,
+	cc = NULL;
+	for (l2 = e_gadcon_provider_list(); l2; l2 = l2->next)
+	  {
+	     cc = l2->data;
+	     if ((cc->name) && (!strcmp(cc->name, cf_gcc->name))) break;
+	     cc = NULL;
+	  }
+	if (cc)
+	  {
+	     if (cc->func.label) label = cc->func.label();
+	     if (!label) label = cc->name;
+	     if (cc->func.icon) 
+	       icon = cc->func.icon(evas);
+	  }
+	e_widget_ilist_append(oi, icon, label,
+			      _cb_select_client_instance,
 			      cfdata, (char *)cf_gcc->name);
      }
 
@@ -367,24 +430,17 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    e_widget_min_size_get(oi, &wmw, &wmh);
    if (wmw < 200) wmw = 200;
-   if (wmh < 190) wmh = 190;
-   e_widget_min_size_set(oi, wmw, wmh);
+   e_widget_min_size_set(oi, wmw, 250);
 
-   e_widget_frametable_object_append(oft, oi, 0, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_framelist_object_append(of, oi);
    cfdata->o_instances = oi;
 
-   ob = e_widget_button_add(evas, _("Add Instance"), NULL, _cb_add_instance, cfdata, NULL);
-   e_widget_frametable_object_append(oft, ob, 0, 1, 1, 1, 1, 1, 1, 1);
-   e_widget_disabled_set(ob, 1);
-   cfdata->o_add = ob;
-
-   ob = e_widget_button_add(evas, _("Remove Instance"), NULL, _cb_remove_instance, cfdata, NULL);
-   e_widget_frametable_object_append(oft, ob, 0, 2, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_button_add(evas, _("Remove Gadget"), NULL, _cb_remove_instance, cfdata, NULL);
+   e_widget_framelist_object_append(of, ob);
    e_widget_disabled_set(ob, 1);
    cfdata->o_remove = ob;
-
-
-   e_widget_list_object_append(o, oft, 1, 1, 0.5);
+   
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    return o;
 }
@@ -445,13 +501,13 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 		  if ((!strcmp(cf_gcc2->name, cfdata->cname)) && (!strcmp(cf_gcc2->id, buf)))
 		    {
 		       ok = 0;
-		       break;
+		       goto done;
 		    }
 	       }
-	     if (!ok) break;
 	  }
 	if (ok) break;
-	snprintf(buf, sizeof(buf), "other-%i", ok);
+	done:
+	snprintf(buf, sizeof(buf), "other-%i", i);
      }
    cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
    cf_gcc->name = evas_stringshare_add(cfdata->cname);
