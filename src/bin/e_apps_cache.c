@@ -163,13 +163,16 @@ e_app_cache_save(E_App_Cache *ac, const char *path)
    Eet_File *ef;
    char buf[4096];
    int ret;
+   Eet_Error err;
    
    if ((!ac) || (!path)) return 0;
    snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", path);
    ef = eet_open(buf, EET_FILE_MODE_WRITE);
    if (!ef) return 0;
    ret = eet_data_write(ef, _e_app_cache_edd, "cache", ac, 1);
-   eet_close(ef);
+   err = eet_close(ef);
+   if (err != EET_ERROR_NONE)
+     ecore_file_unlink(buf);
    return ret;
 }
 
