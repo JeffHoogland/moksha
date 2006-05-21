@@ -181,6 +181,38 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o2, of, 1, 1, 0.5);
    
+   of = e_widget_frametable_add(evas, _("Layout"), 1);
+   rg = e_widget_radio_group_new(&(cfdata->orient));
+   ob = e_widget_radio_icon_add(evas, _("Left"), "enlightenment/e", 32, 32, E_GADCON_ORIENT_LEFT, rg);
+   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_icon_add(evas, _("Right"), "enlightenment/e", 32, 32, E_GADCON_ORIENT_RIGHT, rg);
+   e_widget_frametable_object_append(of, ob, 4, 2, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_icon_add(evas, _("Top"), "enlightenment/e", 32, 32, E_GADCON_ORIENT_TOP, rg);
+   e_widget_frametable_object_append(of, ob, 2, 0, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_icon_add(evas, _("Bottom"), "enlightenment/e", 32, 32, E_GADCON_ORIENT_BOTTOM, rg);
+   e_widget_frametable_object_append(of, ob, 2, 4, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_icon_add(evas, _("Corner"), "enlightenment/e", 32, 32, E_GADCON_ORIENT_CORNER_TL, rg);
+   e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_icon_add(evas, _("Corner"), "enlightenment/e", 32, 32, E_GADCON_ORIENT_CORNER_TR, rg);
+   e_widget_frametable_object_append(of, ob, 3, 0, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_icon_add(evas, _("Corner"), "enlightenment/e", 32, 32, E_GADCON_ORIENT_CORNER_BL, rg);
+   e_widget_frametable_object_append(of, ob, 1, 4, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_icon_add(evas, _("Corner"), "enlightenment/e", 32, 32, E_GADCON_ORIENT_CORNER_BR, rg);
+   e_widget_frametable_object_append(of, ob, 3, 4, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_icon_add(evas, _("Corner"), "enlightenment/e", 32, 32, E_GADCON_ORIENT_CORNER_LT, rg);
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_icon_add(evas, _("Corner"), "enlightenment/e", 32, 32, E_GADCON_ORIENT_CORNER_RT, rg);
+   e_widget_frametable_object_append(of, ob, 4, 1, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_icon_add(evas, _("Corner"), "enlightenment/e", 32, 32, E_GADCON_ORIENT_CORNER_LB, rg);
+   e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_icon_add(evas, _("Corner"), "enlightenment/e", 32, 32, E_GADCON_ORIENT_CORNER_RB, rg);
+   e_widget_frametable_object_append(of, ob, 4, 3, 1, 1, 1, 1, 1, 1);
+   e_widget_list_object_append(o2, of, 1, 1, 0.5);
+   
+   e_widget_list_object_append(o, o2, 1, 1, 0.5);
+   
+   o2 = e_widget_list_add(evas, 0, 0);
+   
    of = e_widget_framelist_add(evas, _("Size"), 0);
    ob = e_widget_check_add(evas, _("Shrink to Content Size"), &(cfdata->fit_along));
    e_widget_framelist_object_append(of, ob);
@@ -188,42 +220,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 //   e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Shelf Size"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%3.0f pixels"), 4, 120, 4, 0, NULL, &(cfdata->size), 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%3.0f pixels"), 4, 120, 4, 0, NULL, &(cfdata->size), 100);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o2, of, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Layout"), 0);
-   rg = e_widget_radio_group_new(&(cfdata->orient));
-   ob = e_widget_radio_add(evas, _("Left"), E_GADCON_ORIENT_LEFT, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Right"), E_GADCON_ORIENT_RIGHT, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Top"), E_GADCON_ORIENT_TOP, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Bottom"), E_GADCON_ORIENT_BOTTOM, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Top Left"), E_GADCON_ORIENT_CORNER_TL, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Top Right"), E_GADCON_ORIENT_CORNER_TR, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Bottom Left"), E_GADCON_ORIENT_CORNER_BL, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Bottom Right"), E_GADCON_ORIENT_CORNER_BR, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Left Top"), E_GADCON_ORIENT_CORNER_LT, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Right Top"), E_GADCON_ORIENT_CORNER_RT, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Left Bottom"), E_GADCON_ORIENT_CORNER_LB, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Right Bottom"), E_GADCON_ORIENT_CORNER_RB, rg);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o2, of, 1, 1, 0.5);
-   
-   e_widget_list_object_append(o, o2, 1, 1, 0.5);
-   
-   o2 = e_widget_list_add(evas, 0, 0);
-   
    of = e_widget_framelist_add(evas, _("Styles"), 0);
    
    oi = e_widget_ilist_add(evas, 128, 20, &(cfdata->style));
@@ -246,7 +246,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	  sel = n;
      }
    e_widget_min_size_get(oi, &wmw, &wmh);
-   e_widget_min_size_set(oi, wmw, 250);
+   e_widget_min_size_set(oi, wmw, 150);
    
    e_widget_ilist_go(oi);
    e_widget_ilist_selected_set(oi, sel);

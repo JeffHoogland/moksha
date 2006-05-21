@@ -572,7 +572,7 @@ e_config_init(void)
    e_config->winlist_pos_min_h = 0;
    e_config->winlist_pos_max_w = 320;
    e_config->winlist_pos_max_h = 320;
-   e_config->maximize_policy = E_MAXIMIZE_FULLSCREEN;
+   e_config->maximize_policy = E_MAXIMIZE_SMART;
    e_config->allow_manip = 0;
    e_config->kill_if_close_not_possible = 1;
    e_config->kill_process = 1;
