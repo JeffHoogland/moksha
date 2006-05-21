@@ -84,6 +84,9 @@ Some of the things (in very short form) that need to be done to E17...
   "NICE TO HAVE" FEATURES
 -------------------------------------------------------------------------------
 
+* ibox should have options "Show from this desktop", "Show from all desktops",
+  "show from zones", "show from this zone", etc. Similarly to those, that are 
+  in winlist.
 * winlist and exebuf can let the mouse select items
 * option to NOT raise on focus in click to focus
 * switch to desktop of a new window if it opens on another desktop than the
