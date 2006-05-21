@@ -315,7 +315,7 @@ _cb_remove_instance(void *data, void *data2)
    for (l = cfdata->cf_gcc; l; l = l->next)
      {
 	E_Gadcon_Client_Class *cc;
-	char *label;
+	char *label = NULL;
 	Evas_Object *icon;
 	
 	cf_gcc = l->data;
@@ -408,6 +408,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	
 	cf_gcc = l->data;
 	cc = NULL;
+	label = NULL;
 	for (l2 = e_gadcon_provider_list(); l2; l2 = l2->next)
 	  {
 	     cc = l2->data;
