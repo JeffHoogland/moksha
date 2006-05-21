@@ -93,8 +93,13 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
 	
 	e_widget_ilist_append(cfdata->ilist, ob, buf, _cb_list, cfdata, NULL);
      }
+
    e_widget_min_size_get(cfdata->ilist, &wmw, &wmh);
-   e_widget_min_size_set(cfdata->ilist, wmw, 250);
+   if (evas_list_count(l) > 0) 
+     e_widget_min_size_set(cfdata->ilist, wmw, 250);
+    else 
+     e_widget_min_size_set(cfdata->ilist, 165, 250);	
+   
    e_widget_ilist_go(cfdata->ilist);
    e_widget_ilist_selected_set(cfdata->ilist, n);
 }
