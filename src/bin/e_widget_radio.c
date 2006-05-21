@@ -106,6 +106,12 @@ e_widget_radio_icon_add(Evas *evas, char *label, char *icon, int icon_w, int ico
    edje_object_signal_callback_add(o, "toggled", "*", _e_wid_signal_cb1, obj);
    edje_object_part_text_set(o, "label", label);
    evas_object_show(o);
+
+   if (label)
+     {
+	edje_object_signal_emit(o, "label_visible", "");
+	edje_object_message_signal_process(o);
+     }
    
    if (icon)
      {

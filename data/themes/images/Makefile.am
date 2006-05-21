@@ -423,4 +423,17 @@ e17_border7b.png \
 e17_shelf_bg_h.png \
 e17_shelf_bg_v.png \
 e17_shelf_bg2_h.png \
-e17_shelf_bg2_v.png
+e17_shelf_bg2_v.png \
+e17_shelf_bottom_left.png \
+e17_shelf_bottom.png \
+e17_shelf_bottom_right.png \
+e17_shelf_left_bottom.png \
+e17_shelf_left.png \
+e17_shelf_left_top.png \
+e17_shelf_right_bottom.png \
+e17_shelf_right.png \
+e17_shelf_right_top.png \
+e17_shelf_top_left.png \
+e17_shelf_top.png \
+e17_shelf_top_right.png
+
