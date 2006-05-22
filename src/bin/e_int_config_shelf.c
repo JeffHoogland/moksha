@@ -9,6 +9,7 @@ struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
    Evas_Object *ilist;
+   E_Dialog *confirm_dialog;
 };
 
 EAPI E_Config_Dialog *
@@ -140,29 +141,79 @@ _cb_add(void *data, void *data2)
    e_config_save_queue();
    
    _ilist_fill(cfdata);
+   e_widget_ilist_selected_set(cfdata->ilist, e_widget_ilist_count(cfdata->ilist) - 1);
+}
+
+static void
+_cb_confirm_dialog_no(void *data, E_Dialog *dia)
+{
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = data;
+   e_object_del(E_OBJECT(cfdata->confirm_dialog));
+   cfdata->confirm_dialog = NULL;
+}
+static void
+_cb_confirm_dialog_yes(void *data, E_Dialog *dia)
+{
+   E_Shelf *es;
+   E_Config_Shelf *cfg;
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = data;
+   es = evas_list_nth(e_shelf_list(), e_widget_ilist_selected_get(cfdata->ilist));
+   if (es)
+     {
+	cfg = es->cfg;
+	e_object_del(E_OBJECT(es));
+
+	e_config->shelves = evas_list_remove(e_config->shelves, cfg);
+	if (cfg->name) evas_stringshare_del(cfg->name);
+	if (cfg->style) evas_stringshare_del(cfg->style);
+	E_FREE(cfg);
+	e_config_save_queue();
+
+	_ilist_fill(cfdata);
+     }
+
+   e_object_del(E_OBJECT(cfdata->confirm_dialog));
+   cfdata->confirm_dialog = NULL;
+}
+static void
+_cb_confirm_dialog_delete(E_Win *win)
+{
+   E_Config_Dialog_Data *cfdata;
+   cfdata = ((E_Dialog *)win->data)->data;
+   _cb_confirm_dialog_no(cfdata, cfdata->confirm_dialog);
 }
 
 static void
 _cb_del(void *data, void *data2)
 {
+   char buf[4096];
    E_Config_Dialog_Data *cfdata;
-   E_Shelf *es;
-   E_Config_Shelf *cfg;
-   
+
    cfdata = data;
-   es = evas_list_nth(e_shelf_list(), e_widget_ilist_selected_get(cfdata->ilist));
-   if (!es) return;
-   cfg = es->cfg;
-   e_object_del(E_OBJECT(es));
-   
-   e_config->shelves = evas_list_remove(e_config->shelves, cfg);
-   if (cfg->name) evas_stringshare_del(cfg->name);
-   if (cfg->style) evas_stringshare_del(cfg->style);
-   E_FREE(cfg);
-   
-   e_config_save_queue();
-   
-   _ilist_fill(cfdata);
+   if (cfdata->confirm_dialog) e_object_del(E_OBJECT(cfdata->confirm_dialog));
+   cfdata->confirm_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()));
+   if (!cfdata->confirm_dialog) return;
+   cfdata->confirm_dialog->data = cfdata;
+   e_win_delete_callback_set(cfdata->confirm_dialog->win, _cb_confirm_dialog_delete);
+   e_dialog_title_set(cfdata->confirm_dialog, _("Are you sure you want to delete this shelf?"));
+
+   snprintf(buf, sizeof(buf), _("You requested to delete \"%s\".<br>"
+			      "<br>"
+			      "Are you sure you want to delete this shelf?"),
+			      e_widget_ilist_selected_label_get(cfdata->ilist));
+
+   e_dialog_text_set(cfdata->confirm_dialog, buf);
+   e_dialog_icon_set(cfdata->confirm_dialog, "enlightenment/exit", 64);
+   e_dialog_button_add(cfdata->confirm_dialog, _("Yes"), NULL, _cb_confirm_dialog_yes, cfdata);
+   e_dialog_button_add(cfdata->confirm_dialog, _("No"), NULL, _cb_confirm_dialog_no, cfdata);
+
+   e_dialog_button_focus_num(cfdata->confirm_dialog, 1);
+   e_win_centered_set(cfdata->confirm_dialog->win, 1);
+   e_dialog_show(cfdata->confirm_dialog);
 }
 
 static void
