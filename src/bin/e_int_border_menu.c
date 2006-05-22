@@ -531,16 +531,17 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
    
    bd = data;
    a = bd->app;
+   
+   bname = bd->client.icccm.name;
+   if ((bname) && (strlen(bname) < 1)) bname = NULL;
+   bclass = bd->client.icccm.class;
+   if ((bclass) && (strlen(bclass) < 1)) bclass = NULL;
+	     
    if (!a)
      {
 	a = e_app_empty_new(NULL);
 	if (a)
 	  {
-	     bname = bd->client.icccm.name;
-	     if ((bname) && (strlen(bname) < 1)) bname = NULL;
-	     bclass = bd->client.icccm.class;
-	     if ((bclass) && (strlen(bclass) < 1)) bclass = NULL;
-	     
 	     if (bname) a->win_name = evas_stringshare_add(bname);
 	     if (bclass) a->win_class = evas_stringshare_add(bclass);
 	     if (bd->client.icccm.window_role)
