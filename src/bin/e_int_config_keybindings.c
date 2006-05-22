@@ -34,7 +34,7 @@ static void	    _e_keybinding_binding_ilist_cb_change(void *data, Evas_Object *o
 static void	    _e_keybinding_default_keybinding_settings(E_Config_Dialog_Data *cfdata);
 
 static void	    _e_keybinding_keybind_cb_del_keybinding(void *data, void *data2);
-static void	    _e_keybinding_keybind_delete_keybinding(E_Config_Dialog_Data *cfdata);
+//static void	    _e_keybinding_keybind_delete_keybinding(E_Config_Dialog_Data *cfdata);
 
 static void	    _e_keybinding_keybind_cb_add_keybinding(void *data, void *data2);
 
@@ -105,6 +105,8 @@ struct _E_Config_Dialog_Data
       Evas_Object *bind_context[E_BINDING_CONTEXT_NUMBER];
       Evas_Object *key_action;
       Evas_Object *key_params;
+
+      E_Dialog	  *confirm_dialog;
     } gui;
 
   struct {
@@ -1035,15 +1037,24 @@ _e_keybinding_update_action_param_entries(E_Config_Dialog_Data *cfdata)
 }
 
 static void
-_e_keybinding_keybind_cb_del_keybinding(void *data, void *data2)
+_e_keybinding_cb_confirm_dialog_yes(void *data)
 {
-   E_Config_Dialog_Data *cfdata = data;
+   E_Config_Binding_Key	*eb;
+   E_Config_Dialog_Data *cfdata;
 
-   if (!cfdata) return;
-   if (!cfdata->current_act && cfdata->current_act_selector < 0)
-     return;
+   if (!(cfdata = data))
+   if ((!cfdata->current_act) && (cfdata->current_act_selector < 0)) return;
 
-   _e_keybinding_keybind_delete_keybinding(cfdata);
+   eb = evas_list_nth(cfdata->current_act->key_bindings, cfdata->current_act_selector);
+   cfdata->current_act->key_bindings = evas_list_remove(cfdata->current_act->key_bindings, eb);
+
+   if (eb->key) evas_stringshare_del(eb->key);
+   if (eb->action) evas_stringshare_del(eb->action);
+   if (eb->params) evas_stringshare_del(eb->params);
+   E_FREE(eb);
+
+   if (cfdata->current_act_selector >= evas_list_count(cfdata->current_act->key_bindings))
+     cfdata->current_act_selector = evas_list_count(cfdata->current_act->key_bindings) - 1;
 
    _e_keybinding_update_binding_list(cfdata);
    e_widget_ilist_go(cfdata->gui.binding_ilist);
@@ -1060,30 +1071,23 @@ _e_keybinding_keybind_cb_del_keybinding(void *data, void *data2)
 
   //cfdata->changed = 1;
 }
+
 static void
-_e_keybinding_keybind_delete_keybinding(E_Config_Dialog_Data *cfdata)
+_e_keybinding_keybind_cb_del_keybinding(void *data, void *data2)
 {
-   E_Config_Binding_Key	*eb;
+   char buf[4096];
+   E_Config_Dialog_Data *cfdata = data;
 
    if (!cfdata) return;
-   if (!cfdata->current_act && cfdata->current_act_selector < 0)
-     return;
 
-   eb = evas_list_nth(cfdata->current_act->key_bindings, cfdata->current_act_selector);
-   cfdata->current_act->key_bindings = evas_list_remove(cfdata->current_act->key_bindings, eb);
+   snprintf(buf, sizeof(buf), _("You requested to delte \"%s\" keybinding.<br>"
+				"<br>"
+				"Are you sure you want to delete it?"),
+	    e_widget_ilist_selected_label_get(cfdata->gui.binding_ilist));
 
-   if (!evas_list_count(cfdata->current_act->key_bindings))
-     {
-	evas_list_free(cfdata->current_act->key_bindings);
-	cfdata->current_act->key_bindings = NULL;
-     }
-   if (eb->key) evas_stringshare_del(eb->key);
-   if (eb->action) evas_stringshare_del(eb->action);
-   if (eb->params) evas_stringshare_del(eb->params);
-   E_FREE(eb);
+   e_confirm_dialog_show(_("Delete?"), "enlightenment/exit", buf, NULL, NULL,
+			 _e_keybinding_cb_confirm_dialog_yes, NULL, cfdata, NULL);
 
-   if (cfdata->current_act_selector >= evas_list_count(cfdata->current_act->key_bindings))
-     cfdata->current_act_selector = evas_list_count(cfdata->current_act->key_bindings) - 1;
 }
 static void
 _e_keybinding_update_binding_ilist_cur_selection_icon(E_Config_Dialog_Data *cfdata)

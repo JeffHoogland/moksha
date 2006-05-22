@@ -67,6 +67,8 @@ static void _e_border_event_border_zone_set_free(void *data, void *ev);
 static void _e_border_event_border_desk_set_free(void *data, void *ev);
 static void _e_border_event_border_stack_free(void *data, void *ev);
 static void _e_border_event_border_icon_change_free(void *data, void *ev);
+static void _e_border_event_border_focus_in_free(void *data, void *ev);
+static void _e_border_event_border_focus_out_free(void *data, void *ev);
 static void _e_border_event_border_resize_free(void *data, void *ev);
 static void _e_border_event_border_move_free(void *data, void *ev);
 static void _e_border_event_border_show_free(void *data, void *ev);
@@ -127,6 +129,8 @@ EAPI int E_EVENT_BORDER_STICK = 0;
 EAPI int E_EVENT_BORDER_UNSTICK = 0;
 EAPI int E_EVENT_BORDER_STACK = 0;
 EAPI int E_EVENT_BORDER_ICON_CHANGE = 0;
+EAPI int E_EVENT_BORDER_FOCUS_IN = 0;
+EAPI int E_EVENT_BORDER_FOCUS_OUT = 0;
 
 #define GRAV_SET(bd, grav) \
 ecore_x_window_gravity_set(bd->bg_win, grav); \
@@ -177,6 +181,8 @@ e_border_init(void)
    E_EVENT_BORDER_UNSTICK = ecore_event_type_new();
    E_EVENT_BORDER_STACK = ecore_event_type_new();
    E_EVENT_BORDER_ICON_CHANGE = ecore_event_type_new();
+   E_EVENT_BORDER_FOCUS_IN = ecore_event_type_new();
+   E_EVENT_BORDER_FOCUS_OUT = ecore_event_type_new();
 
    return 1;
 }
@@ -1280,13 +1286,31 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 #endif
    if (bd->focused)
      {
+	E_Event_Border_Focus_In	 *ev;
+
 	focused = bd;
 	//printf("set focused to %p\n", focused);
+	
+	ev = calloc(1, sizeof(E_Event_Border_Focus_In));
+	ev->border = bd;
+	e_object_ref(E_OBJECT(bd));
+
+	ecore_event_add(E_EVENT_BORDER_FOCUS_IN, ev,
+			_e_border_event_border_focus_in_free, NULL);
      }
    else if ((!bd->focused) && (focused == bd))
      {
+	E_Event_Border_Focus_Out *ev;
+
 	focused = NULL;
 	//printf("set focused to %p\n", focused);
+	
+	ev = calloc(1, sizeof(E_Event_Border_Focus_Out));
+	ev->border = bd;
+	e_object_ref(E_OBJECT(bd));
+
+	ecore_event_add(E_EVENT_BORDER_FOCUS_OUT, ev,
+			_e_border_event_border_focus_out_free, NULL);
      }
 }
 
@@ -6307,6 +6331,26 @@ _e_border_event_border_icon_change_free(void *data, void *ev)
 
    e = ev;
 //   e_object_breadcrumb_del(E_OBJECT(e->border), "border_icon_change_event");
+   e_object_unref(E_OBJECT(e->border));
+   free(e);
+}
+
+static void
+_e_border_event_border_focus_in_free(void *data, void *ev)
+{
+   E_Event_Border_Focus_In *e;
+
+   e = ev;
+   e_object_unref(E_OBJECT(e->border));
+   free(e);
+}
+
+static void
+_e_border_event_border_focus_out_free(void *data, void *ev)
+{
+   E_Event_Border_Focus_Out *e;
+
+   e = ev;
    e_object_unref(E_OBJECT(e->border));
    free(e);
 }
