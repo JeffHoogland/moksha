@@ -1213,6 +1213,9 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->display_res_height, 1, 8192);
    E_CONFIG_LIMIT(e_config->display_res_hz, 0, 250);
    E_CONFIG_LIMIT(e_config->display_res_rotation, 0, 0xff);
+
+   /* FIXME: disabled auto apply because it causes problems */
+   e_config->cfgdlg_auto_apply = 0;
    
    e_config_save_queue();
    
