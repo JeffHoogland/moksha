@@ -99,11 +99,15 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
 	e_config->move_info_visible = 1;
 	e_config->resize_info_visible = 1;
+	cfdata->move_info_visible = 1;
+	cfdata->resize_info_visible = 1;
      }
    else
      {
 	e_config->move_info_visible = 0;
 	e_config->resize_info_visible = 0;
+	cfdata->move_info_visible = 0;
+	cfdata->resize_info_visible = 0;
      }
    e_config->window_placement_policy = cfdata->window_placement_policy;
    e_config->border_shade_animate = cfdata->animate_shading;
@@ -167,6 +171,17 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    Evas_Object *o, *ob, *of;
    E_Radio_Group *rg;
    
+   if (cfdata->move_resize_info)
+     {
+	cfdata->move_info_visible = 1;
+	cfdata->resize_info_visible = 1;
+     }
+   else
+     {
+	cfdata->move_info_visible = 0;
+	cfdata->resize_info_visible = 0;
+     }
+
    o = e_widget_list_add(evas, 0, 0);
    
    of = e_widget_framelist_add(evas, _("Window Move Geometry"), 0);
