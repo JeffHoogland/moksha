@@ -27,8 +27,8 @@ e_int_config_cfgdialogs(E_Container *con)
    v->free_cfdata = _free_data;
    v->basic.apply_cfdata = _basic_apply_data;
    v->basic.create_widgets = _basic_create_widgets;
-   v->advanced.apply_cfdata = _advanced_apply_data;
-   v->advanced.create_widgets = _advanced_create_widgets;
+   v->advanced.apply_cfdata = NULL;
+   v->advanced.create_widgets = NULL;
    v->override_auto_apply = 1;
    
    cfd = e_config_dialog_new(con, _("Config Dialog Settings"), NULL, 0, v, NULL);
