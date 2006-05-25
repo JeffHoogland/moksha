@@ -5,6 +5,7 @@
 #define E_MOD_MAIN_H
 
 typedef struct _Config      Config;
+typedef struct _Config_Item Config_Item;
 
 struct _Config
 {
@@ -13,6 +14,14 @@ struct _Config
    Evas_List       *instances;
    E_Menu          *menu;
    Evas_List       *handlers;
+   Evas_List       *items;
+   E_Config_Dialog *config_dialog;
+};
+
+struct _Config_Item 
+{
+   const char *id;
+   int show_label;
 };
 
 EAPI extern E_Module_Api e_modapi;
@@ -22,5 +31,9 @@ EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
 EAPI int   e_modapi_info     (E_Module *m);
 EAPI int   e_modapi_about    (E_Module *m);
+
+void _ibox_config_update(void);
+void _config_ibox_module(Config_Item *ci);
+extern Config *ibox_config;
 
 #endif

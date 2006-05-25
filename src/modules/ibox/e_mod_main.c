@@ -92,6 +92,7 @@ static IBox *_ibox_zone_find(E_Zone *zone);
 static int _ibox_cb_timer_drop_recalc(void *data);
 static void _ibox_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _ibox_cb_menu_post(void *data, E_Menu *m);
+static void _ibox_cb_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _ibox_cb_icon_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _ibox_cb_icon_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _ibox_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -110,7 +111,10 @@ static int _ibox_cb_event_border_iconify(void *data, int type, void *event);
 static int _ibox_cb_event_border_uniconify(void *data, int type, void *event);
 static int _ibox_cb_event_border_icon_change(void *data, int type, void *event);
 static int _ibox_cb_event_border_zone_set(void *data, int type, void *event);
+static Config_Item *_ibox_config_item_get(const char *id);
 
+static E_Config_DD *conf_edd = NULL;
+static E_Config_DD *conf_item_edd = NULL;
 
 Config *ibox_config = NULL;
 
@@ -125,11 +129,14 @@ _gc_init(E_Gadcon *gc, char *name, char *id, char *style)
    int cx, cy, cw, ch;
    const char *drop[] = { "enlightenment/border" };
    Evas_List *l;
+   Config_Item *ci;
    
    inst = E_NEW(Instance, 1);
 
+   ci = _ibox_config_item_get(id);
+   
    b = _ibox_new(gc->evas, gc->zone);
-   b->show_label = 1;
+   b->show_label = ci->show_label;
    b->inst = inst;
    inst->ibox = b;
    o = b->o_box;
@@ -235,7 +242,6 @@ static IBox *
 _ibox_new(Evas *evas, E_Zone *zone)
 {
    IBox *b;
-   char buf[4096];
    
    b = E_NEW(IBox, 1);
    b->o_box = e_box_add(evas);
@@ -276,6 +282,14 @@ _ibox_cb_empty_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	e_menu_post_deactivate_callback_set(mn, _ibox_cb_menu_post, NULL);
 	ibox_config->menu = mn;
 
+	mi = e_menu_item_new(mn);
+	e_menu_item_label_set(mi, _("Configuration"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
+	e_menu_item_callback_set(mi, _ibox_cb_menu_configuration, b);
+
+	mi = e_menu_item_new(mn);
+	e_menu_item_separator_set(mi, 1);
+	
 	e_gadcon_client_util_menu_items_append(b->inst->gcc, mn, 0);
 	
 	e_gadcon_canvas_zone_geometry_get(b->inst->gcc->gadcon,
@@ -628,6 +642,13 @@ _ibox_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 	ibox_config->menu = mn;
 
 	/* FIXME: other icon options go here too */
+	mi = e_menu_item_new(mn);
+	e_menu_item_label_set(mi, _("Configuration"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
+	e_menu_item_callback_set(mi, _ibox_cb_menu_configuration, ic->ibox);
+
+	mi = e_menu_item_new(mn);
+	e_menu_item_separator_set(mi, 1);
 	
 	e_gadcon_client_util_menu_items_append(ic->ibox->inst->gcc, mn, 0);
 	
@@ -1068,6 +1089,51 @@ _ibox_cb_event_border_zone_set(void *data, int type, void *event)
    return 1;
 }
 
+static Config_Item *
+_ibox_config_item_get(const char *id) 
+{
+   Evas_List *l;
+   Config_Item *ci;
+   
+   for (l = ibox_config->items; l; l = l->next) 
+     {
+	ci = l->data;
+	if ((ci->id) && (!strcmp(ci->id, id)))
+	  return ci;
+     }
+   ci = E_NEW(Config_Item, 1);
+   ci->id = evas_stringshare_add(id);
+   ci->show_label = 0;
+   ibox_config->items = evas_list_append(ibox_config->items, ci);
+   return ci;
+}
+
+void
+_ibox_config_update(void) 
+{
+   Evas_List *l;
+   for (l = ibox_config->instances; l; l = l->next) 
+     {
+	Instance *inst;
+	Config_Item *ci;
+   
+	inst = l->data;
+	ci = _ibox_config_item_get(inst->gcc->id);
+	inst->ibox->show_label = ci->show_label;
+     }
+}
+
+static void
+_ibox_cb_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi) 
+{
+   IBox *b;
+   Config_Item *ci;
+   
+   b = data;
+   ci = _ibox_config_item_get(b->inst->gcc->id);
+   _config_ibox_module(ci);
+}
+
 /***************************************************************************/
 /**/
 /* module setup */
@@ -1080,7 +1146,33 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   ibox_config = E_NEW(Config, 1);
+   conf_item_edd = E_CONFIG_DD_NEW("IBox_Config_Item", Config_Item);
+   #undef T
+   #undef D
+   #define T Config_Item
+   #define D conf_item_edd
+   E_CONFIG_VAL(D, T, id, STR);
+   E_CONFIG_VAL(D, T, show_label, INT);
+   
+   conf_edd = E_CONFIG_DD_NEW("IBox_Config", Config);
+   #undef T
+   #undef D
+   #define T Config
+   #define D conf_edd
+   E_CONFIG_LIST(D, T, items, conf_item_edd);
+   
+   ibox_config = e_config_domain_load("module.ibox", conf_edd);
+   if (!ibox_config) 
+     {
+	Config_Item *ci;
+
+	ibox_config = E_NEW(Config, 1);
+	
+	ci = E_NEW(Config_Item, 1);
+	ci->id = evas_stringshare_add("0");
+	ci->show_label = 0;
+	ibox_config->items = evas_list_append(ibox_config->items, ci);
+     }
    
    ibox_config->module = m;
    
@@ -1128,6 +1220,9 @@ EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    e_gadcon_provider_unregister(&_gadcon_class);
+
+   if (ibox_config->config_dialog)
+     e_object_del(E_OBJECT(ibox_config->config_dialog));
    
    while (ibox_config->handlers)
      {
@@ -1140,14 +1235,28 @@ e_modapi_shutdown(E_Module *m)
 	e_object_del(E_OBJECT(ibox_config->menu));
 	ibox_config->menu = NULL;
      }
+   while (ibox_config->items) 
+     {
+	Config_Item *ci;
+	
+	ci = ibox_config->items->data;
+	ibox_config->items = evas_list_remove_list(ibox_config->items, ibox_config->items);
+	if (ci->id)
+	  evas_stringshare_del(ci->id);
+	free(ci);
+     }
+   
    free(ibox_config);
    ibox_config = NULL;
+   E_CONFIG_DD_FREE(conf_item_edd);
+   E_CONFIG_DD_FREE(conf_edd);
    return 1;
 }
 
 EAPI int
 e_modapi_save(E_Module *m)
 {
+   e_config_domain_save("module.ibox", conf_edd, ibox_config);
    return 1;
 }
 
