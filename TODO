@@ -57,7 +57,6 @@ Some of the things (in very short form) that need to be done to E17...
   disabled)
 * shelf gui config is ugly and badly arranged
 * ibar should support creating and deleting bar dirs
-* ibox labels need to be optional
 * ibar labels need to be selected (name, generic, etc.)
 ]]]
 
