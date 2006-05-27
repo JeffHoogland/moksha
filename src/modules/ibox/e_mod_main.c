@@ -672,7 +672,10 @@ _ibox_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ev = event_info;
    ic = data;
    if ((ev->button == 1) && (!ic->drag.dnd))
-     e_border_uniconify(ic->border);
+     { 
+	e_border_uniconify(ic->border);
+	e_border_focus_set(ic->border, 1, 1);
+     }
 }
 
 static void
