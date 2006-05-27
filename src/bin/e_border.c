@@ -1291,12 +1291,17 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	focused = bd;
 	//printf("set focused to %p\n", focused);
 	
-	ev = calloc(1, sizeof(E_Event_Border_Focus_In));
-	ev->border = bd;
-	e_object_ref(E_OBJECT(bd));
-
-	ecore_event_add(E_EVENT_BORDER_FOCUS_IN, ev,
-			_e_border_event_border_focus_in_free, NULL);
+	if (focus && set)
+	  { 
+	     // Let send the focus event iff the focus is set explicitly,
+	     // not via callback
+	     ev = calloc(1, sizeof(E_Event_Border_Focus_In)); 
+	     ev->border = bd; 
+	     e_object_ref(E_OBJECT(bd)); 
+	     
+	     ecore_event_add(E_EVENT_BORDER_FOCUS_IN, ev,
+			     _e_border_event_border_focus_in_free, NULL);
+	  }
      }
    else if ((!bd->focused) && (focused == bd))
      {
@@ -1304,13 +1309,18 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 
 	focused = NULL;
 	//printf("set focused to %p\n", focused);
-	
-	ev = calloc(1, sizeof(E_Event_Border_Focus_Out));
-	ev->border = bd;
-	e_object_ref(E_OBJECT(bd));
 
-	ecore_event_add(E_EVENT_BORDER_FOCUS_OUT, ev,
-			_e_border_event_border_focus_out_free, NULL);
+	if (set)
+	  { 
+	     // Let send the focus event iff the focus is set explicitly,
+	     // not via callback
+	     ev = calloc(1, sizeof(E_Event_Border_Focus_Out)); 
+	     ev->border = bd; 
+	     e_object_ref(E_OBJECT(bd));
+
+	     ecore_event_add(E_EVENT_BORDER_FOCUS_OUT, ev,
+			     _e_border_event_border_focus_out_free, NULL);
+	  }
      }
 }
 

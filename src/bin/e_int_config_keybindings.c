@@ -311,7 +311,7 @@ e_int_config_keybindings(E_Container *con)
   v->free_cfdata = _free_data;
   v->basic.apply_cfdata = _basic_apply_data;
   v->basic.create_widgets = _basic_create_widgets;
-  //v->override_auto_apply = 1;
+  v->override_auto_apply = 1;
 
   cfd = e_config_dialog_new(con, _("Key Binding Settings"), NULL, 0, v, NULL);
   return cfd;
