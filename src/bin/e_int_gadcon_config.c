@@ -422,9 +422,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	     if (cc->func.icon) 
 	       icon = cc->func.icon(evas);
 	  }
-	e_widget_ilist_append(oi, icon, label,
-			      _cb_select_client_instance,
-			      cfdata, (char *)cf_gcc->name);
+	if (label)
+	   e_widget_ilist_append(oi, icon, label, _cb_select_client_instance,
+				 cfdata, (char *)cf_gcc->name);
      }
 
    e_widget_ilist_go(oi);
