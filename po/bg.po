@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-05-14 16:23+0300\n"
-"PO-Revision-Date: 2006-05-15 10:44+0300\n"
+"PO-Revision-Date: 2006-05-28 18:46+0300\n"
 "Last-Translator: Viktor Kojouharov <vkojouharov@abv.bg>\n"
 "Language-Team: English <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,6 @@ msgid "Enlightenment"
 msgstr "Enlightenment"
 
 #: src/bin/e_about.c:56
-#, fuzzy
 msgid ""
 "Copyright &copy; 1999-2006, by the Enlightenment Development Team.<br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
@@ -37,13 +36,12 @@ msgid ""
 "is not stable. Many features are incomplete or even non-existant yet and may "
 "have many bugs. You have been <hilight>WARNED!</hilight>"
 msgstr ""
-"Авторски права &copy; 1999-2005, Екип за разработка на Enlightenment."
-"<br><br>Надяваме се, че ви харесва програмата, колкото на нас ни хареса да я "
-"пишем.<br><br>Програмата се предлага без никаква гаранция. Програмата се "
-"обуславя на лицензионните условия, описани в файловете COPYING и COPYING-"
+"&copy Всички права запазени; 1999-2006, Екипът  на Enlightenment."
+"<br><br>Надяваме се, че използването на средата ще ви хареса колкото на нас ни харесва да я "
+"пишем.<br><br>Този софтуер се предлага без никаква гаранция."
+"Обуславя се на лицензионните условия, описани в файловете COPYING и COPYING-"
 "PLAIN, които са инсталирани на вашата система. <br><br>Enlightenment е под "
-"<hilight>СИЛНА РАЗРАБОТКА</hilight> и не е стабилна. Много от екстрите са "
-"непълниили още не съществуват, и има много грешки. Бяхте "
+"<hilight>УСИЛЕНА РАЗРАБОТКА</hilight> и не е стабилна среда. Много от възможностите й не са готови или все още не съществуват, и има много грешки. Бяхте "
 "<hilight>ПРЕДУПРЕДЕНИ!</hilight>"
 
 #: src/bin/e_about.c:81
@@ -493,14 +491,14 @@ msgid "%s was interrupted by an Uninterruptable Kill Signal"
 msgstr "%s е прекъсната от сигнал Uninterruptable Kill"
 
 #: src/bin/e_apps_error.c:101
-#, fuzzy, c-format
+#, c-format
 msgid "%s was interrupted by a Segmentation Fault"
-msgstr "%s е прекъсната от Segmentation Fault"
+msgstr "%s е прекъсната от сигнал Segmentation Fault"
 
 #: src/bin/e_apps_error.c:104
-#, fuzzy, c-format
+#, c-format
 msgid "%s was interrupted by a Broken Pipe"
-msgstr "%s е прекъсната от Broken Pipe"
+msgstr "%s е прекъсната от сигнал Broken Pipe"
 
 #: src/bin/e_apps_error.c:108
 #, c-format
@@ -616,7 +614,7 @@ msgstr "Фон"
 
 #: src/bin/e_configure.c:68 src/bin/e_int_config_background.c:295
 msgid "Theme"
-msgstr "Теми"
+msgstr "Тема"
 
 #: src/bin/e_configure.c:69
 msgid "Fonts"
@@ -636,7 +634,7 @@ msgstr "Рафтове"
 
 #: src/bin/e_configure.c:77
 msgid "Extensions"
-msgstr "Модули"
+msgstr "Разширения"
 
 #: src/bin/e_configure.c:78 src/bin/e_int_config_modules.c:239
 msgid "Modules"
@@ -652,7 +650,7 @@ msgstr "Разделителна способност"
 
 #: src/bin/e_configure.c:83
 msgid "Screen Lock"
-msgstr "Заключване"
+msgstr "Заключване на екрана"
 
 #: src/bin/e_configure.c:85
 msgid "Behavior"
@@ -684,7 +682,7 @@ msgstr "Конфигурационни диалози"
 
 #: src/bin/e_configure.c:95
 msgid "Startup"
-msgstr "Начало"
+msgstr "Настройки при зареждане"
 
 #: src/bin/e_configure.c:96
 msgid "Window List"
@@ -734,7 +732,7 @@ msgstr ""
 
 #: src/bin/e_eap_editor.c:85
 msgid "Eap Editor"
-msgstr "Eap редактор"
+msgstr "Редактрор на Eap файлове"
 
 #: src/bin/e_eap_editor.c:240
 msgid "Icon"
@@ -749,9 +747,8 @@ msgid "App name"
 msgstr "Име на програмата"
 
 #: src/bin/e_eap_editor.c:278
-#, fuzzy
 msgid "Executable"
-msgstr "Изпълнимо"
+msgstr "Изпълним файл"
 
 #: src/bin/e_eap_editor.c:304 src/bin/e_fileman_smart.c:1217
 msgid "General"
@@ -799,7 +796,7 @@ msgstr "Разни"
 
 #: src/bin/e_eap_editor.c:375
 msgid "Startup Notify"
-msgstr "Пусково известие"
+msgstr "Известие при стартиране"
 
 #: src/bin/e_eap_editor.c:378
 msgid "Wait Exit"
@@ -815,7 +812,7 @@ msgstr "Места"
 
 #: src/bin/e_file_dialog.c:53
 msgid "Home"
-msgstr "Дом"
+msgstr "Домашна папка"
 
 #: src/bin/e_file_dialog.c:55
 msgid "Icons"
@@ -828,15 +825,14 @@ msgstr "Отказ"
 #: src/bin/e_fileman_file.c:313 src/bin/e_fileman_file.c:364
 #: src/bin/e_fileman_mime.c:394 src/bin/e_zone.c:629
 #: src/bin/e_zone.custom.c:612
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Enlightenment was unable to fork a child process:\n"
 "\n"
 "%s\n"
 "\n"
-msgstr ""
-"Enlightenment не е могъл да създаде\n"
-"отделен дъщерен процес:\n"
+msgstr "Enlightenment не е могъл да създаде дъщерен процес:\n"
+"\n"
 "%s\n"
 "\n"
 
@@ -847,7 +843,7 @@ msgstr "Грешка"
 #: src/bin/e_fileman_smart.c:910
 #, c-format
 msgid "Could not delete  <br><b>%s</b>"
-msgstr "Изтриването не е изпълнено··<br><b>%s</b>"
+msgstr "Не може да изтрие  ··<br><b>%s</b>"
 
 #: src/bin/e_fileman_smart.c:1003
 msgid "Confirm"
@@ -895,7 +891,7 @@ msgstr "Потребителски настройки"
 
 #: src/bin/e_fileman_smart.c:1308
 msgid "File Info:"
-msgstr "Инфо за файла:"
+msgstr "Информация за файла:"
 
 #: src/bin/e_fileman_smart.c:1309
 msgid "Owner:"
@@ -1505,7 +1501,7 @@ msgstr "Тип на паролата"
 
 #: src/bin/e_int_config_desklock.c:270 src/bin/e_int_config_desklock.c:471
 msgid "Use my login password"
-msgstr "Използване на входящата ми парола"
+msgstr "Използване на системната парола"
 
 #: src/bin/e_int_config_desklock.c:277 src/bin/e_int_config_desklock.c:478
 msgid "Personalized password"
@@ -1513,7 +1509,7 @@ msgstr "Лична парола"
 
 #: src/bin/e_int_config_desklock.c:287 src/bin/e_int_config_desklock.c:488
 msgid "Personalized Password:"
-msgstr "Лична парола"
+msgstr "Лична Парола"
 
 #: src/bin/e_int_config_desklock.c:299 src/bin/e_int_config_desklock.c:501
 msgid "Show password"
@@ -1524,14 +1520,12 @@ msgid "Automatic Locking"
 msgstr "Автоматично заключване"
 
 #: src/bin/e_int_config_desklock.c:315 src/bin/e_int_config_desklock.c:526
-#, fuzzy
 msgid "Enable screensaver"
-msgstr "Включване на Screensaver"
+msgstr "Включване на предпазител на екрана"
 
 #: src/bin/e_int_config_desklock.c:319 src/bin/e_int_config_desklock.c:530
-#, fuzzy
 msgid "Lock when the screensaver starts"
-msgstr "Заключване при стартиране на Screensaver"
+msgstr "Заключване при стартиране на предпазител на екрана"
 
 #: src/bin/e_int_config_desklock.c:323 src/bin/e_int_config_desklock.c:534
 msgid "Time until screensaver starts"
@@ -1647,7 +1641,7 @@ msgid ""
 "resolutions without<br>The support of this extension. It could also "
 "be<br>That at the time <hilight>ecore</hilight> was built there<br>was no "
 "XRandr support detected."
-msgstr ""
+msgstr "X сървърът на машината Ви няма поддръжка за<br><hilight>Xrandr</hilight> (X Преоразмеряване и ротация) допълнението. Не можете да променяте разделителната способност на екрана си без <br> поддръжката на това допълнение. Също така е възможно <br> когато сте инсталирали библиотеката <hilight>ecore</hilight> да не е била засечена поддръжка на Xrandr."
 
 #: src/bin/e_int_config_display.c:422
 msgid "Restore this resolution on login"
@@ -1683,7 +1677,7 @@ msgstr "Вертикално"
 
 #: src/bin/e_int_config_exebuf.c:42
 msgid "Exebuf Settings"
-msgstr "Настройки на Exebuf"
+msgstr "Настройки на Стартиране на програма"
 
 #: src/bin/e_int_config_exebuf.c:99 src/bin/e_int_config_exebuf.c:143
 msgid "Maximum Number Of Matched Eaps To List"
@@ -1917,7 +1911,7 @@ msgstr "Списък с прозорци"
 
 #: src/bin/e_int_config_keybindings.c:677
 msgid "Popup"
-msgstr ""
+msgstr "Изкачащо поле"
 
 #: src/bin/e_int_config_keybindings.c:682 src/bin/e_int_config_fonts.c:399
 msgid "None"
@@ -1932,7 +1926,7 @@ msgstr "Бързи клавиши"
 #: src/bin/e_int_config_keybindings.c:716
 #: src/bin/e_int_config_keybindings.c:727
 msgid ":"
-msgstr ""
+msgstr ":"
 
 #: src/bin/e_int_config_keybindings.c:724
 msgid "Params"
@@ -1940,19 +1934,19 @@ msgstr "Параметри"
 
 #: src/bin/e_int_config_keybindings.c:1133
 msgid "CTRL"
-msgstr ""
+msgstr "CTRL"
 
 #: src/bin/e_int_config_keybindings.c:1139
 msgid "ALT"
-msgstr ""
+msgstr "ALT"
 
 #: src/bin/e_int_config_keybindings.c:1146
 msgid "SHIFT"
-msgstr ""
+msgstr "SHIFT"
 
 #: src/bin/e_int_config_keybindings.c:1153
 msgid "WIN"
-msgstr ""
+msgstr "WIN"
 
 #: src/bin/e_int_config_keybindings.c:1287
 msgid "Binding Key Sequence"
@@ -2284,9 +2278,8 @@ msgid "Resistance to desktop gadgets:"
 msgstr "Съпротивление със модулите:"
 
 #: src/bin/e_int_config_window_manipulation.c:192
-#, fuzzy
 msgid "Allow window manipulation"
-msgstr "Манипулации на прозорци"
+msgstr "Разрешава манипулиране на прозорци"
 
 #: src/bin/e_int_config_winlist.c:51
 msgid "Window List Settings"
@@ -2582,13 +2575,12 @@ msgstr ""
 "е компилиран с JPEG модула.\n"
 
 #: src/bin/e_main.c:410
-#, fuzzy
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
 msgstr ""
 "Evas не може да зарежда EET файлове. Проверете дали Evas\n"
-"е компилиран с EET модула.\n"
+"е компилиран с поддръжка на EET.\n"
 
 #: src/bin/e_main.c:422
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
@@ -2631,9 +2623,8 @@ msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment не може да настрои системата си за обвързване"
 
 #: src/bin/e_main.c:486
-#, fuzzy
 msgid "Enlightenment cannot set up its popup system."
-msgstr "Enlightenment не може да настрои системата си за popups."
+msgstr "Enlightenment не може да настрои системата си за изкачащи полета."
 
 #: src/bin/e_main.c:497
 msgid "Enlightenment cannot set up its font system."
@@ -2710,14 +2701,12 @@ msgid "Enlightenment cannot set up its window list system."
 msgstr "Enlightenment не може да настрои списъкът с прозорци."
 
 #: src/bin/e_main.c:606
-#, fuzzy
 msgid "Enlightenment cannot set up its color class system."
-msgstr "Enlightenment не може да настрои системата си за действия"
+msgstr "Enlightenment не може да настрои системата си за класове на цветовете."
 
 #: src/bin/e_main.c:613
-#, fuzzy
 msgid "Enlightenment cannot set up its gadget control system."
-msgstr "Enlightenment не може да настрои системата си за шрифтове"
+msgstr "Enlightenment не може да настрои системата си за контролиране на джунджурийки."
 
 #: src/bin/e_main.c:620
 msgid "Enlightenment cannot set up its shelf system."
@@ -2768,7 +2757,7 @@ msgid "Error loading Module"
 msgstr "Грешка при зареждане на модул"
 
 #: src/bin/e_module.c:119 src/bin/e_module.c:145
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "There was an error loading module named: %s<br>The full path to this module "
 "is:<br>%s<br>The error reported was:<br>%s<br>"
@@ -2778,6 +2767,7 @@ msgstr ""
 "%s\n"
 "Съобщената грешка е:\n"
 "%s"
+""
 
 #: src/bin/e_module.c:150
 msgid "Module does not contain all needed functions"
@@ -2814,7 +2804,7 @@ msgstr "Искате ли да изключите този модул?<br>"
 
 #: src/bin/e_shelf.c:784 src/bin/e_int_shelf_config.c:44
 msgid "Shelf Configuration"
-msgstr "Конфигурация на рафтове"
+msgstr "Конфигурациране на рафта"
 
 #: src/bin/e_shelf.c:790
 msgid "Stop editing items"
@@ -2835,7 +2825,7 @@ msgstr "Изтриване на този рафт"
 #: src/bin/e_startup.c:68
 #, c-format
 msgid "Starting %s"
-msgstr "Пуска се %s"
+msgstr "Стартиране на %s"
 
 #: src/bin/e_utils.c:274
 msgid "Cannot exit - immortal windows."
@@ -2996,7 +2986,7 @@ msgstr "Горе вдясно"
 
 #: src/bin/e_int_shelf_config.c:209
 msgid "Bottom Left"
-msgstr "Долу в ляви"
+msgstr "Долу в лявo"
 
 #: src/bin/e_int_shelf_config.c:211
 msgid "Bottom Right"
@@ -3043,18 +3033,17 @@ msgid "Contents Settings"
 msgstr "Настройки на съдържанията"
 
 #: src/bin/e_int_gadcon_config.c:183
-#, fuzzy
 msgid "Available Items"
 msgstr "Налични предмети"
+""
 
 #: src/bin/e_int_gadcon_config.c:212
 msgid "Status"
 msgstr "Състояние"
 
 #: src/modules/battery/e_mod_config.c:35
-#, fuzzy
 msgid "Battery Monitor Configuration"
-msgstr "Конфигурация на Батерия"
+msgstr "Конфигурация на модул Батерия"
 
 #: src/modules/battery/e_mod_config.c:76
 msgid "Basic Settings"
@@ -3093,13 +3082,12 @@ msgid "Battery"
 msgstr "Батерия"
 
 #: src/modules/battery/e_mod_main.c:300
-#, fuzzy
 msgid ""
 "Battery Running Low<br>Your battery is running low.<br>You may wish to "
 "switch to an AC source."
 msgstr ""
-"Батерията ви привършва.\n"
-"Препоръчва се да минете на ток."
+"Слаба батерия<br> Батерията ви привършва.<br>"
+"Препоръчва се да преминете към друг електрически източник."
 
 #: src/modules/battery/e_mod_main.c:349
 msgid "NO INFO"
@@ -3141,17 +3129,16 @@ msgid "Enlightenment Battery Module"
 msgstr "Модул за батерия на Enlightenment"
 
 #: src/modules/battery/e_mod_main.c:1441
-#, fuzzy
 msgid ""
 "A basic battery meter that uses either<hilight>ACPI</hilight> or "
 "<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
 "adaptor<br>status. This will work under Linux and FreeBSD and is only<br>as "
 "accurate as your BIOS or kernel drivers."
 msgstr ""
-"Прост измервач за батерии, който използва ACPI или APM,\n"
-"в Линукс за да наблюдава положението на батерията и\n"
-"АС захравнащ адаптор. Модула работи само под Линукс и FreeBSD и е\n"
-"точен колкото BIOS-а ви и вашите драйвери."
+"Прост модул за наблюдение на батероята който използва ACPI или APM,\n"
+"в Linux за да наблюдава положението на батерията и\n"
+"АС захравнащ адаптор. Модула работи само под Linux и FreeBSD и е\n"
+"точен колкото вашият BIOS или драйверите на ядрото Ви."
 
 #: src/modules/clock/e_mod_main.c:89
 msgid "Clock"
@@ -3166,9 +3153,9 @@ msgid "A simple module to give E17 a clock."
 msgstr "Прост модул за часовник в E17"
 
 #: src/modules/cpufreq/e_mod_main.c:128
-#, fuzzy
 msgid "Cpufreq"
 msgstr "Процесорна честота"
+""
 
 #: src/modules/cpufreq/e_mod_main.c:168
 msgid "Fast (0.5 sec)"
@@ -3246,7 +3233,7 @@ msgid ""
 "Your kernel does not support setting the<br>CPU frequency at all. You may be "
 "missing<br>Kernel modules or features, or your CPU<br>simply does not "
 "support this feature."
-msgstr ""
+msgstr "Ядрото на системата Ви не поддържа наблюдение на честотата на процесора. Може би липсват <br> модули или възможности на ядрото, или просто процесора Ви не поддържа тази възможност."
 
 #: src/modules/cpufreq/e_mod_main.c:374
 #, fuzzy
@@ -3262,13 +3249,12 @@ msgid "CPU Frequency Controller Module"
 msgstr "Модул за контролиране на процесорна честота"
 
 #: src/modules/cpufreq/e_mod_main.c:950
-#, fuzzy
 msgid ""
 "A simple module to control the frequency of the system CPU.<br>This is "
 "especially useful to save power on laptops."
 msgstr ""
-"Прост модул за контролиране на честотата на процесора.Функцията е полезна за "
-"пестене на енергията на лаптопи."
+"Прост модул за наблюдение на процесорната честота.Функцията е полезна за "
+"пестене на енергията при лаптопи."
 
 #: src/modules/dropshadow/e_mod_config.c:34
 msgid "Dropshadow Configuration"
@@ -3364,14 +3350,13 @@ msgid "Enlightenment Dropshadow Module"
 msgstr "Модул за сенки на Enlightenment"
 
 #: src/modules/dropshadow/e_mod_main.c:168
-#, fuzzy
 msgid ""
 "This is the dropshadow module that allows dropshadows to be cast<br>on the "
 "desktop background - without special X-Server extensions<br>or hardware "
 "acceleration."
 msgstr ""
-"Това е модул за сенки, който позволява прозорци да хвърлят сенки\n"
-"върху фона - без това да използва специялни разширения на Х\n"
+"Това е модул за хвърлена сянка, който позволява прозорците да хвърлят сенки\n"
+"върху фона - без това да използва специялни разширения на Х сървъра\n"
 "или хардуерно ускорение."
 
 #: src/modules/ibar/e_mod_config.c:39
@@ -3515,7 +3500,7 @@ msgstr "Pager Конфигурация"
 
 #: src/modules/pager/e_mod_config.c:75 src/modules/pager/e_mod_config.c:104
 msgid "Show Popup"
-msgstr ""
+msgstr "Показва изкачащо поле"
 
 #: src/modules/pager/e_mod_config.c:98
 msgid "Resistance to Dragging Windows:"
@@ -3528,12 +3513,11 @@ msgstr "%.0f·пиксела"
 
 #: src/modules/pager/e_mod_config.c:103
 msgid "Popup Settings"
-msgstr ""
+msgstr "Настройки на изкачащото поле"
 
 #: src/modules/pager/e_mod_config.c:106
-#, fuzzy
 msgid "Popup Speed"
-msgstr "Бързина на Popups"
+msgstr "Бързина на изкачащите полета"
 
 #: src/modules/pager/e_mod_main.c:224
 msgid "Pager"
@@ -3548,9 +3532,8 @@ msgid "A pager module to navigate virtual desktops."
 msgstr "Модул за pager с който се сменят виртуалните полета."
 
 #: src/modules/start/e_mod_main.c:101
-#, fuzzy
 msgid "Start"
-msgstr "Начало"
+msgstr "Старт"
 
 #: src/modules/start/e_mod_main.c:265
 msgid "Enlightenment Start Module"
