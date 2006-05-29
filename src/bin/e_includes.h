@@ -136,3 +136,4 @@
 #include "e_int_config_shelf.h"
 #include "e_int_gadcon_config.h"
 #include "e_confirm_dialog.h"
+#include "e_int_border_prop.h"

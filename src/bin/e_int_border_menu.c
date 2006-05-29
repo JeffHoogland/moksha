@@ -15,6 +15,7 @@ static void _e_border_menu_cb_maximize_vertically(void *data, E_Menu *m, E_Menu_
 static void _e_border_menu_cb_maximize_horizontally(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_prop(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_normal(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -318,6 +319,13 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Window Properties"));
+   e_menu_item_callback_set(mi, _e_border_menu_cb_prop, bd);
+   
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+
    if ((!bd->lock_close) && (!bd->internal))
      {
 	mi = e_menu_item_new(m);
@@ -573,6 +581,15 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 			     "the time the window starts up, and does not<br>"
 			     "change."));
      }
+}
+
+static void
+_e_border_menu_cb_prop(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Border *bd;
+   
+   bd = data;
+   e_int_border_prop(bd);
 }
 
 static void
