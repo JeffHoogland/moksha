@@ -1,4 +1,4 @@
-7MAINTAINERCLEANFILES = Makefile.in
+MAINTAINERCLEANFILES = Makefile.in
 INCLUDES = -I$(top_srcdir) \
 	   -I$(top_srcdir)/src/bin \
 	   -I$(top_srcdir)/src/lib \
