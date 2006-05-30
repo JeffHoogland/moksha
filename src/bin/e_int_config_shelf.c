@@ -144,49 +144,6 @@ _cb_add(void *data, void *data2)
    e_widget_ilist_selected_set(cfdata->ilist, e_widget_ilist_count(cfdata->ilist) - 1);
 }
 
-/*static void
-_cb_confirm_dialog_no(void *data, E_Dialog *dia)
-{
-   E_Config_Dialog_Data *cfdata;
-
-   cfdata = data;
-   e_object_del(E_OBJECT(cfdata->confirm_dialog));
-   cfdata->confirm_dialog = NULL;
-}
-static void
-_cb_confirm_dialog_yes(void *data, E_Dialog *dia)
-{
-   E_Shelf *es;
-   E_Config_Shelf *cfg;
-   E_Config_Dialog_Data *cfdata;
-
-   cfdata = data;
-   es = evas_list_nth(e_shelf_list(), e_widget_ilist_selected_get(cfdata->ilist));
-   if (es)
-     {
-	cfg = es->cfg;
-	e_object_del(E_OBJECT(es));
-
-	e_config->shelves = evas_list_remove(e_config->shelves, cfg);
-	if (cfg->name) evas_stringshare_del(cfg->name);
-	if (cfg->style) evas_stringshare_del(cfg->style);
-	E_FREE(cfg);
-	e_config_save_queue();
-
-	_ilist_fill(cfdata);
-     }
-
-   e_object_del(E_OBJECT(cfdata->confirm_dialog));
-   cfdata->confirm_dialog = NULL;
-}
-static void
-_cb_confirm_dialog_delete(E_Win *win)
-{
-   E_Config_Dialog_Data *cfdata;
-   cfdata = ((E_Dialog *)win->data)->data;
-   _cb_confirm_dialog_no(cfdata, cfdata->confirm_dialog);
-}*/
-
 static void
 _cb_confirm_dialog_yes(void *data)
 {
@@ -235,7 +192,7 @@ _cb_config(void *data, void *data2)
    cfdata = data;
    es = evas_list_nth(e_shelf_list(), e_widget_ilist_selected_get(cfdata->ilist));
    if (!es) return;
-   e_int_shelf_config(es);
+   if (!es->config_dialog) e_int_shelf_config(es);
 }
 
 static Evas_Object *
