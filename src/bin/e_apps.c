@@ -802,7 +802,7 @@ e_app_change_callback_add(void (*func) (void *data, E_App *a, E_App_Change ch), 
 {
    E_App_Callback *cb;
    
-   cb = calloc(1, sizeof(E_App_Callback));
+   cb = E_NEW(E_App_Callback, 1);
    cb->func = func;
    cb->data = data;
    _e_apps_change_callbacks = evas_list_append(_e_apps_change_callbacks, cb);
@@ -1859,7 +1859,7 @@ _e_app_subdir_rescan(E_App *app)
 		  if (a2)
 		    {
 		       a2->parent = app;
-		       ch = calloc(1, sizeof(E_App_Change_Info));
+		       ch = E_NEW(E_App_Change_Info, 1);
 		       ch->app = a2;
 		       ch->change = E_APP_ADD;
 		       e_object_ref(E_OBJECT(ch->app));
@@ -1888,7 +1888,7 @@ _e_app_subdir_rescan(E_App *app)
 				 if (_e_app_copy(a3, a2))
 				   {
 				      a3->parent = app;
-				      ch = calloc(1, sizeof(E_App_Change_Info));
+				      ch = E_NEW(E_App_Change_Info, 1);
 				      ch->app = a3;
 				      ch->change = E_APP_ADD;
 				      e_object_ref(E_OBJECT(ch->app));
@@ -1922,7 +1922,7 @@ _e_app_subdir_rescan(E_App *app)
 	if (a2)
 	  {
 	     a2->deleted = 1;
-	     ch = calloc(1, sizeof(E_App_Change_Info));
+	     ch = E_NEW(E_App_Change_Info, 1);
 	     ch->app = a2;
 	     ch->change = E_APP_DEL;
 	     /* We don't need to ref this,
@@ -1935,7 +1935,7 @@ _e_app_subdir_rescan(E_App *app)
    /* FIXME: We only need to tell about order changes if there are! */
    evas_list_free(app->subapps);
    app->subapps = subapps;
-   ch = calloc(1, sizeof(E_App_Change_Info));
+   ch = E_NEW(E_App_Change_Info, 1);
    ch->app = app;
    ch->change = E_APP_ORDER;
    e_object_ref(E_OBJECT(ch->app));
@@ -2328,7 +2328,7 @@ _e_app_cache_new(E_App_Cache *ac, const char *path, int scan_subdirs)
 	  }
      }
 
-   sc = calloc(1, sizeof(E_App_Scan_Cache));
+   sc = E_NEW(E_App_Scan_Cache, 1);
    if (sc)
      {
 	sc->path = evas_stringshare_add(path);
