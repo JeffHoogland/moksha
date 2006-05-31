@@ -875,9 +875,9 @@ ACT_FN_GO(screen_send_to)
 		  E_Zone *zone2;
 		  
 		  if (evas_list_count(e_manager_list()) > 1)
-		    zone2 = e_container_zone_number_get(scr, 0);
+		    zone2 = e_util_container_zone_number_get(scr, 0);
 		  else
-		    zone2 = e_container_zone_number_get(0, scr);
+		    zone2 = e_util_container_zone_number_get(0, scr);
 		  if ((zone2) && (zone != zone2))
 		    ecore_x_pointer_warp(zone2->container->win,
 					 zone2->x + (zone->w / 2),
@@ -908,14 +908,14 @@ ACT_FN_GO(screen_send_by)
 		       scr += zone->container->num;
 		       if (scr >= zone->container->num) scr -= zone->container->num;
 		       else if (scr < 0) scr += zone->container->num;
-		       zone2 = e_container_zone_number_get(scr, 0);
+		       zone2 = e_util_container_zone_number_get(scr, 0);
 		    }
 		  else
 		    {
 		       scr += zone->num;
 		       if (scr >= zone->num) scr -= zone->num;
 		       else if (scr < 0) scr += zone->num;
-		       zone2 = e_container_zone_number_get(0, scr);
+		       zone2 = e_util_container_zone_number_get(0, scr);
 		    }
 		  if ((zone2) && (zone != zone2))
 		    ecore_x_pointer_warp(zone2->container->win,
