@@ -7,13 +7,13 @@
 /***************************************************************************/
 /**/
 /* gadcon requirements */
-static E_Gadcon_Client *_gc_init(E_Gadcon *gc, char *name, char *id, char *style);
+static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
 static void _gc_shutdown(E_Gadcon_Client *gcc);
 static void _gc_orient(E_Gadcon_Client *gcc);
 static char *_gc_label(void);
 static Evas_Object *_gc_icon(Evas *evas);
 /* and actually define the gadcon class that this module provides (just 1) */
-static E_Gadcon_Client_Class _gadcon_class =
+static const E_Gadcon_Client_Class _gadcon_class =
 {
    GADCON_CLIENT_CLASS_VERSION,
      "ibar",
@@ -82,7 +82,7 @@ static void _ibar_empty(IBar *b);
 static void _ibar_orient_set(IBar *b, int horizontal);
 static void _ibar_resize_handle(IBar *b);
 static void _ibar_instance_drop_zone_recalc(Instance *inst);
-static Config_Item *_ibar_config_item_get(char *id);
+static Config_Item *_ibar_config_item_get(const char *id);
 static IBar_Icon *_ibar_icon_find(IBar *b, E_App *a);
 static IBar_Icon *_ibar_icon_at_coord(IBar *b, Evas_Coord x, Evas_Coord y);
 static IBar_Icon *_ibar_icon_new(IBar *b, E_App *a);
@@ -116,7 +116,7 @@ static E_Config_DD *conf_item_edd = NULL;
 Config *ibar_config = NULL;
 
 static E_Gadcon_Client *
-_gc_init(E_Gadcon *gc, char *name, char *id, char *style)
+_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 {
    IBar *b;
    Evas_Object *o;
@@ -432,7 +432,7 @@ _ibar_instance_drop_zone_recalc(Instance *inst)
 }  
 
 static Config_Item *
-_ibar_config_item_get(char *id)
+_ibar_config_item_get(const char *id)
 {
    Evas_List *l;
    Config_Item *ci;
