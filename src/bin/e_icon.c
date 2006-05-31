@@ -93,13 +93,13 @@ EAPI const char *
 e_icon_file_get(Evas_Object *obj)
 {
    E_Smart_Data *sd;
-   char *file;
+   const char *file;
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return NULL;
    if (!strcmp(evas_object_type_get(sd->obj), "edje"))
      {
-	edje_object_file_get(sd->obj, (const char **)&file, NULL);
+	edje_object_file_get(sd->obj, &file, NULL);
 	return file;
      }
    evas_object_image_file_get(sd->obj, &file, NULL);
