@@ -13,7 +13,7 @@ static void _gc_orient(E_Gadcon_Client *gcc);
 static char *_gc_label(void);
 static Evas_Object *_gc_icon(Evas *evas);
 /* and actually define the gadcon class that this module provides (just 1) */
-static const E_Gadcon_Client_Class _gadcon_class =
+static E_Gadcon_Client_Class _gadcon_class =
 {
    GADCON_CLIENT_CLASS_VERSION,
      "ibar",
@@ -125,7 +125,6 @@ _gc_init(E_Gadcon *gc, char *name, char *id, char *style)
    Evas_Coord x, y, w, h;
    int cx, cy, cw, ch;
    const char *drop[] = { "enlightenment/eapp", "enlightenment/border", "text/uri-list" };
-   Evas_List *l;
    Config_Item *ci;
    
    inst = E_NEW(Instance, 1);
@@ -562,8 +561,6 @@ _ibar_icon_new(IBar *b, E_App *a)
 static void
 _ibar_icon_free(IBar_Icon *ic)
 {
-   Evas_Object *o;
-
    if (ibar_config->menu)
      {
 	e_menu_post_deactivate_callback_set(ibar_config->menu, NULL, NULL);
@@ -1278,7 +1275,7 @@ e_modapi_init(E_Module *m)
    ibar_config->module = m;
    
    e_gadcon_provider_register(&_gadcon_class);
-   return 1;
+   return ibar_config;
 }
 
 EAPI int
