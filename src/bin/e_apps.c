@@ -33,7 +33,7 @@ struct _E_App_Callback
 
 struct _E_App_Scan_Cache
 {
-   char          *path;
+   const char    *path;
    E_App_Cache   *cache;
    E_App         *app;
    Ecore_List    *files;

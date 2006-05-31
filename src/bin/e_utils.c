@@ -530,7 +530,8 @@ e_util_dialog_internal(const char *title, const char *txt)
 EAPI const char *
 e_util_filename_escape(const char *filename)
 {
-   char *p, *q;
+   const char *p;
+   char *q;
    static char buf[4096];
    
    p = filename;

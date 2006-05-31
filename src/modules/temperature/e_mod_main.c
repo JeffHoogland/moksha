@@ -12,7 +12,7 @@
 /***************************************************************************/
 /**/
 /* gadcon requirements */
-static E_Gadcon_Client *_gc_init(E_Gadcon *gc, char *name, char *id, char *style);
+static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
 static void _gc_shutdown(E_Gadcon_Client *gcc);
 static void _gc_orient(E_Gadcon_Client *gcc);
 static char *_gc_label(void);
@@ -52,7 +52,7 @@ static E_Config_DD *conf_edd = NULL;
 Config *temperature_config = NULL;
 
 static E_Gadcon_Client *
-_gc_init(E_Gadcon *gc, char *name, char *id, char *style)
+_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 {
    Evas_Object *o;
    E_Gadcon_Client *gcc;
@@ -217,7 +217,7 @@ _temperature_cb_check(void *data)
 	     therms = ecore_file_ls("/sys/bus/i2c/devices");
 	     if (therms)
 	       {
-		  char *name, *sensor;
+		  const char *name, *sensor;
 
 		  sensor = temperature_config->sensor_name;
 		  if (!sensor) sensor = "temp1";

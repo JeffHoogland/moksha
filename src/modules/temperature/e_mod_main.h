@@ -17,7 +17,7 @@ struct _Config
    /* saved * loaded config values */
    double           poll_time;
    int              low, high;
-   char            *sensor_name;
+   const char      *sensor_name;
    Unit             units;
    /* just config state */
    E_Module        *module;
