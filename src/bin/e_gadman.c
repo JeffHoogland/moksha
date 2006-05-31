@@ -515,8 +515,6 @@ e_gadman_client_padding_set(E_Gadman_Client *gmc, int l, int r, int t, int b)
 EAPI void
 e_gadman_client_auto_size_set(E_Gadman_Client *gmc, Evas_Coord autow, Evas_Coord autoh)
 {
-   Evas_List *l;
-   
    E_OBJECT_CHECK(gmc);
    E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
    gmc->autow = autow;

@@ -488,7 +488,7 @@ e_gadcon_canvas_zone_geometry_get(E_Gadcon *gc, int *x, int *y, int *w, int *h)
 }
 
 EAPI E_Gadcon_Client *
-e_gadcon_client_new(E_Gadcon *gc, char *name, char *id, char *style, Evas_Object *base_obj)
+e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id, const char *style, Evas_Object *base_obj)
 {
    E_Gadcon_Client *gcc;
    

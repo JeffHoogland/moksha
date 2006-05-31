@@ -113,7 +113,6 @@ _e_place_coverage_shelf_add(E_Zone *zone, int ar, int x, int y, int w, int h)
    Evas_List *l;
    E_Shelf *es;
    int x2, y2, w2, h2;
-   int ok;
    int iw, ih;
    int x0, x00, y0, y00;
    
