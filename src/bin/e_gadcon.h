@@ -44,14 +44,14 @@ struct _E_Gadcon
 {
    E_Object             e_obj_inherit;
 
-   char                *name;
-   char                *id;
+   const char          *name;
+   const char          *id;
    
    E_Gadcon_Layout_Policy layout_policy;
    
    struct {
       Evas_Object      *o_parent;
-      char             *swallow_name;
+      const char       *swallow_name;
    } edje;
    Ecore_Evas          *ecore_evas;
    E_Zone              *zone;
@@ -82,7 +82,7 @@ struct _E_Gadcon_Client_Class
    /* All members below are part of version 1 */
    char *name;
    struct {
-      E_Gadcon_Client *(*init)     (E_Gadcon *gc, char *name, char *id, char *style);
+      E_Gadcon_Client *(*init)     (E_Gadcon *gc, const char *name, const char *id, const char *style);
       void             (*shutdown) (E_Gadcon_Client *gcc);
       void             (*orient)   (E_Gadcon_Client *gcc);
       char            *(*label)    (void);
@@ -95,14 +95,14 @@ struct _E_Gadcon_Client
 {
    E_Object               e_obj_inherit;
    E_Gadcon              *gadcon;
-   char                  *name;
-   char                  *id;
+   const char            *name;
+   const char            *id;
    Evas_Object           *o_base;
    Evas_Object           *o_box;
    Evas_Object           *o_frame;
    Evas_Object           *o_control;
    Evas_Object           *o_event;
-   E_Gadcon_Client_Class *client_class;
+   const E_Gadcon_Client_Class *client_class;
    void                  *data;
    struct {
       int                 pos, size, res;
@@ -115,7 +115,7 @@ struct _E_Gadcon_Client
    double                 scroll_pos;
    double                 scroll_wanted;
    E_Menu                *menu;
-   char                  *style;
+   const char            *style;
    unsigned char          autoscroll : 1;
    unsigned char          resizable : 1;
    
@@ -126,8 +126,8 @@ struct _E_Gadcon_Client
 
 EAPI int              e_gadcon_init(void);
 EAPI int              e_gadcon_shutdown(void);
-EAPI void             e_gadcon_provider_register(E_Gadcon_Client_Class *cc);
-EAPI void             e_gadcon_provider_unregister(E_Gadcon_Client_Class *cc);
+EAPI void             e_gadcon_provider_register(const E_Gadcon_Client_Class *cc);
+EAPI void             e_gadcon_provider_unregister(const E_Gadcon_Client_Class *cc);
 EAPI Evas_List       *e_gadcon_provider_list(void);
 EAPI E_Gadcon        *e_gadcon_swallowed_new(const char *name, char *id, Evas_Object *obj, char *swallow_name);
 EAPI void             e_gadcon_swallowed_min_size_set(E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
@@ -137,7 +137,7 @@ EAPI void             e_gadcon_frame_request_callback_set(E_Gadcon *gc, Evas_Obj
 EAPI void             e_gadcon_layout_policy_set(E_Gadcon *gc, E_Gadcon_Layout_Policy layout_policy);
 EAPI void             e_gadcon_populate(E_Gadcon *gc);
 EAPI void             e_gadcon_unpopulate(E_Gadcon *gc);
-EAPI void             e_gadcon_populate_class(E_Gadcon *gc, E_Gadcon_Client_Class *cc);
+EAPI void             e_gadcon_populate_class(E_Gadcon *gc, const E_Gadcon_Client_Class *cc);
 EAPI void             e_gadcon_orient(E_Gadcon *gc, E_Gadcon_Orient orient);
 EAPI void             e_gadcon_edit_begin(E_Gadcon *gc);
 EAPI void             e_gadcon_edit_end(E_Gadcon *gc);

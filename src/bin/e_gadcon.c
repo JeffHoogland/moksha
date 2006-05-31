@@ -66,7 +66,7 @@ e_gadcon_shutdown(void)
 }
 
 EAPI void
-e_gadcon_provider_register(E_Gadcon_Client_Class *cc)
+e_gadcon_provider_register(const E_Gadcon_Client_Class *cc)
 {
    Evas_List *l;
    E_Gadcon *gc;
@@ -81,7 +81,7 @@ e_gadcon_provider_register(E_Gadcon_Client_Class *cc)
 }
 
 EAPI void
-e_gadcon_provider_unregister(E_Gadcon_Client_Class *cc)
+e_gadcon_provider_unregister(const E_Gadcon_Client_Class *cc)
 {
    Evas_List *l, *ll, *dlist = NULL;
    E_Gadcon *gc;
@@ -277,7 +277,7 @@ e_gadcon_unpopulate(E_Gadcon *gc)
 }
 
 EAPI void
-e_gadcon_populate_class(E_Gadcon *gc, E_Gadcon_Client_Class *cc)
+e_gadcon_populate_class(E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
 {
    Evas_List *l;
    int ok;
@@ -1722,7 +1722,6 @@ static void
 e_gadcon_layout_asked_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 {
    E_Smart_Data *sd;
-   Evas_List *l;
    Evas_Coord tw = 0, th = 0;
    
    sd = evas_object_smart_data_get(obj);
@@ -1984,7 +1983,6 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
    Evas_Coord x, y, w, h, xx, yy;
    Evas_List *l, *l2;
    int min, mino, cur;
-   int count, expand;
    Evas_List *list_s = NULL, *list_m = NULL, *list_e = NULL, *list = NULL;
 
    if (sd->frozen) return;
