@@ -1382,7 +1382,7 @@ ACT_FN_GO(pointer_resize_push)
 	bd = (E_Border *)obj;
 	if ((bd->lock_user_size) || (bd->shaded) || (bd->shading) ||
 	    (bd->fullscreen) || 
-		((bd->maximized == E_MAXIMIZE_FULLSCREEN)) && (!e_config->allow_manip))
+		((bd->maximized == E_MAXIMIZE_FULLSCREEN) && (!e_config->allow_manip)))
 	  return;
 	if (bd->zone)
 	  man = bd->zone->container->manager;
