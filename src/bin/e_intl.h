@@ -6,6 +6,11 @@
 #define _(str) gettext(str)
 #define d_(str, dom) dgettext(PACKAGE dom, str)
 
+/* This macro is used to just mark string for translation, this is useful
+ * for string lists which are not dynamically allocated 
+ */
+#define N_(str) (str)
+
 typedef struct _E_Input_Method_Config E_Input_Method_Config;
 typedef struct _E_Language_Pack E_Language_Pack;
 

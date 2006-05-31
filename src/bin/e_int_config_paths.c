@@ -67,25 +67,25 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 {
    cfdata->paths_available = E_NEW(E_Path_Pair, 11);
    cfdata->paths_available[0].path =			path_data;
-   cfdata->paths_available[0].path_description =	"Data";
+   cfdata->paths_available[0].path_description =	_("Data");
    cfdata->paths_available[1].path =			path_images;
-   cfdata->paths_available[1].path_description =	"Images";
+   cfdata->paths_available[1].path_description =	_("Images");
    cfdata->paths_available[2].path =			path_fonts;
-   cfdata->paths_available[2].path_description =	"Fonts";
+   cfdata->paths_available[2].path_description =	_("Fonts");
    cfdata->paths_available[3].path =			path_themes;
-   cfdata->paths_available[3].path_description =	"Themes";
+   cfdata->paths_available[3].path_description =	_("Themes");
    cfdata->paths_available[4].path =			path_init;
-   cfdata->paths_available[4].path_description =	"Init";
+   cfdata->paths_available[4].path_description =	_("Init");
    cfdata->paths_available[5].path =			path_icons;
-   cfdata->paths_available[5].path_description =	"Icons";
+   cfdata->paths_available[5].path_description =	_("Icons");
    cfdata->paths_available[6].path =			path_modules;
-   cfdata->paths_available[6].path_description =	"Modules";
+   cfdata->paths_available[6].path_description =	_("Modules");
    cfdata->paths_available[7].path =			path_backgrounds;
-   cfdata->paths_available[7].path_description =	"Backgrounds";
+   cfdata->paths_available[7].path_description =	_("Backgrounds");
    cfdata->paths_available[8].path =			path_input_methods;
-   cfdata->paths_available[8].path_description =	"Input Methods";
+   cfdata->paths_available[8].path_description =	_("Input Methods");
    cfdata->paths_available[9].path =			path_messages;
-   cfdata->paths_available[9].path_description =	"Messages";
+   cfdata->paths_available[9].path_description =	_("Messages");
    cfdata->paths_available[10].path =			 NULL;
    cfdata->paths_available[10].path_description =	 NULL;
    
@@ -146,7 +146,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	pcd->path = cfdata->paths_available[i].path;
 	pcd->cfdata = cfdata;
 	cfdata->pcd_list = evas_list_append(cfdata->pcd_list, pcd);
-	e_widget_ilist_append(ob, NULL, _(cfdata->paths_available[i].path_description), _ilist_path_cb_change, pcd, NULL);
+	e_widget_ilist_append(ob, NULL, cfdata->paths_available[i].path_description, _ilist_path_cb_change, pcd, NULL);
      }
 
    e_widget_ilist_go(ob);

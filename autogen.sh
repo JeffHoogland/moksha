@@ -19,7 +19,7 @@ xgettext \
 --copyright-holder="Enlightenment development team" \
 --foreign-user \
 --msgid-bugs-address="enlightenment-devel@lists.sourceforge.net" \
--k -k_ -kd_ \
+-k -k_ -kd_ -kN_ \
 --from-code=UTF-8 \
 -o enlightenment.pot \
 `find . -name "*.[ch]" -print` || exit 1
