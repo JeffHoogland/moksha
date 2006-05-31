@@ -59,7 +59,7 @@ e_widget_config_list_add(Evas *evas, Evas_Object* (*func_entry_add) (Evas *evas,
    e_widget_disabled_set(o, 1);
    e_widget_table_object_append(	wd->gui.table, 
 					o, 
-					1, 0, 1, 1,
+					2, 0, 1, 1,
 					1, 1, 1, 1);
    
    
@@ -68,7 +68,7 @@ e_widget_config_list_add(Evas *evas, Evas_Object* (*func_entry_add) (Evas *evas,
    e_widget_disabled_set(o, 1);
    e_widget_table_object_append(	wd->gui.table, 
 					o, 
-					1, 3, 1, 1,
+					2, 3, 1, 1,
 					1, 1, 1, 1);
    
    
@@ -80,13 +80,13 @@ e_widget_config_list_add(Evas *evas, Evas_Object* (*func_entry_add) (Evas *evas,
    e_widget_ilist_go(o);
    e_widget_table_object_append(	wd->gui.table, 
 					o, 
-					2, 0, listspan, 4,
+					3, 0, listspan, 4,
 					1, 1, 1, 1);
   
    o = e_widget_label_add(evas, label);
    e_widget_table_object_append(	wd->gui.table, 
 					o, 
-					0, 0, 1, 1,
+					0, 0, 2, 1,
 					1, 1, 1, 1); 
    
    o = func_entry_add(evas, &(wd->cur_entry));
@@ -95,7 +95,7 @@ e_widget_config_list_add(Evas *evas, Evas_Object* (*func_entry_add) (Evas *evas,
    e_widget_min_size_set(o, 100, 25);
    e_widget_table_object_append(	wd->gui.table,
 					o, 
-					0, 1, 1, 1, 
+					0, 1, 2, 1, 
 					1, 1, 1, 1);
 
    o = e_widget_button_add(evas, _("Add"), NULL, _button_cb_add, wd, obj); 
@@ -103,7 +103,7 @@ e_widget_config_list_add(Evas *evas, Evas_Object* (*func_entry_add) (Evas *evas,
    e_widget_disabled_set(o, 1);
    e_widget_table_object_append(	wd->gui.table, 
 					o, 
-					1, 1, 1, 1,
+					2, 1, 1, 1,
 					1, 1, 1, 1);
    
    o = e_widget_button_add(evas, _("Remove"), NULL, _button_cb_remove, wd, obj);
@@ -111,7 +111,7 @@ e_widget_config_list_add(Evas *evas, Evas_Object* (*func_entry_add) (Evas *evas,
    e_widget_disabled_set(o, 1);
    e_widget_table_object_append(	wd->gui.table, 
 					o, 
-					1, 2, 1, 1,
+					2, 2, 1, 1,
 					1, 1, 1, 1);
  
    e_widget_min_size_get(wd->gui.table, &mw, &mh);
