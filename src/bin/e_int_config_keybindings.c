@@ -197,7 +197,7 @@ int e_int_config_keybindings_unregister_action_predef_name(const char *action_gr
 {
    ACTION_GROUP	  *actg;
    ACTION2	  *act;
-   Evas_List *l, *l2, *l3;
+   Evas_List *l, *l2;
 
    for (l = action_group_list; l; l = l->next)
      {
@@ -249,7 +249,6 @@ void e_int_config_keybindings_unregister_all_action_predef_names()
 {
    ACTION_GROUP	  *actg;
    ACTION2	  *act;
-   Evas_List	  *l, *l2, *l3;
 
    while (action_group_list)
      {
@@ -324,7 +323,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    Evas_List   *l, *l2, *l3;
    ACTION_GROUP	  *actg;
    ACTION2	  *act;
-   int done;
 
    e_int_config_keybindings_register_action_predef_name(AG_UNSORTED, AG_AN_UNKNOWN,
 						        NULL, NULL, 
@@ -345,8 +343,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	       {
 		  act = l3->data;
 
-		  if ((!act->action_cmd || !act->action_cmd[0]) && (t->action && t->action[0]) ||
-		      (!t->action || !t->action[0]) && (act->action_cmd && act->action_cmd[0]))
+		  if (((!act->action_cmd || !act->action_cmd[0]) && (t->action && t->action[0])) ||
+		      ((!t->action || !t->action[0]) && (act->action_cmd && act->action_cmd[0])))
 			continue;
 
 		  if (t->params && t->params[0]) // here we have that action has params
@@ -403,8 +401,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 		       break;
 		    }
 
-		  if ((!act->action_cmd || !act->action_cmd[0]) && (t->action && t->action[0]) ||
-		      (!t->action || !t->action[0]) && (act->action_cmd && act->action_cmd[0]))
+		  if (((!act->action_cmd || !act->action_cmd[0]) && (t->action && t->action[0])) ||
+		      ((!t->action || !t->action[0]) && (act->action_cmd && act->action_cmd[0])))
 			continue;
 
 		  if (strcmp(!act->action_cmd ? "" : act->action_cmd,
@@ -548,11 +546,9 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-  int i;
   Evas_Object *ot;
   Evas_Object *ob, *of;
   E_Radio_Group *rg;
-  int mw, mh;
 
   cfdata->evas = evas;
 

@@ -122,7 +122,6 @@ _cb_add(void *data, void *data2)
    ////
      {
 	E_Config_Shelf *cfg;
-	E_Shelf *es;
 	
 	cfg = E_NEW(E_Config_Shelf, 1);
 	cfg->name = evas_stringshare_add("shelf");

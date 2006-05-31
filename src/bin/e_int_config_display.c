@@ -173,6 +173,7 @@ _surebox_new(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_win_sticky_set(sb->dia->win, 1);
    e_dialog_show(sb->dia);
    e_object_ref(E_OBJECT(cfd));
+   return sb;
 }
 
 
@@ -302,7 +303,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	Ecore_X_Randr_Rotation rot;
 	
 	rot = ecore_x_randr_screen_rotation_get(man->root);
-	if (rot != cfdata->rotation | cfdata->flip)
+	if (rot != (cfdata->rotation | cfdata->flip))
 	  ecore_x_randr_screen_rotation_set(man->root,
 					    cfdata->rotation | cfdata->flip);
 	e_config->display_res_rotation = cfdata->rotation | cfdata->flip;

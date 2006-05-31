@@ -252,7 +252,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    Evas_Object *o, *of, *ob;
    E_Widget_Check_Data *wd;
-   E_Widget_Radio_Data *rwd;
 
 #ifdef HAVE_PAM
    E_Radio_Group  *rg_auth;
@@ -386,21 +385,18 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-  Evas_Object *o, *of, *of1, *ob;
+  Evas_Object *of, *ob;
   E_Widget_Radio_Data *wd;
 
-  E_Radio_Group *rg, *rg_bkg;
-  Evas_Object *ot, *ol;
+  E_Radio_Group *rg;
+  Evas_Object *ot;
 
-  E_Radio_Group *rg_auth;
-  Evas_Object	*oc;
   E_Widget_Check_Data *cwd;
 
   cfdata->evas = evas;
 
   ot = e_widget_table_add(evas, 0);
   {
-    Evas_Object *ot1;
     /* start: bkg list */
     cfdata->gui.bg_list = e_widget_ilist_add(evas, BG_LIST_ICON_SIZE_W,
       				       BG_LIST_ICON_SIZE_H, &(cfdata->cur_bg));
@@ -576,7 +572,7 @@ _e_desklock_passwd_cb_change(void *data, Evas_Object *obj)
 {
   E_Widget_Entry_Data *wd;
   E_Config_Dialog_Data	*cfdata;
-  char *buf, *ptr;
+  char *ptr;
   int i;
 
   cfdata = data;
@@ -627,7 +623,6 @@ static void
 _e_desklock_cb_show_passwd(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
   E_Config_Dialog_Data *cfdata;
-  E_Widget_Entry_Data *wd;
 
   cfdata = data;
   _e_desklock_passwd_cb_change(cfdata, cfdata->gui.passwd_field);

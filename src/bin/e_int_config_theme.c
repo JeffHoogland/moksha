@@ -123,7 +123,7 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for a basic dialog */
-   Evas_Object *o, *o2, *fr, *im = NULL;
+   Evas_Object *o, *o2, *im = NULL;
    Evas_Object *il;
    char *homedir;
    Evas_Object *theme;

@@ -1,7 +1,6 @@
 #include "e.h"
 
 typedef struct _E_App_Edit E_App_Edit;
-typedef struct _E_App_Edit_CFData E_App_Edit_CFData;
 
 struct _E_App_Edit
 {      
@@ -11,10 +10,10 @@ struct _E_App_Edit
    Evas_Object *img_widget;
    int          img_set;
    
-   E_App_Edit_CFData *cfdata;
+   E_Config_Dialog_Data *cfdata;
 };
 
-struct _E_App_Edit_CFData
+struct _E_Config_Dialog_Data
 {
    /*- BASIC -*/
    char *name;
@@ -36,13 +35,13 @@ struct _E_App_Edit_CFData
 
 /* local subsystem functions */
 
-static void           _e_eap_edit_fill_data(E_App_Edit_CFData *cdfata);
+static void           _e_eap_edit_fill_data(E_Config_Dialog_Data *cdfata);
 static void          *_e_eap_edit_create_data(E_Config_Dialog *cfd);
-static void           _e_eap_edit_free_data(E_Config_Dialog *cfd, void *data);
-static int            _e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, void *data);
-static int            _e_eap_edit_advanced_apply_data(E_Config_Dialog *cfd, void *data);
-static Evas_Object   *_e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data);
-static Evas_Object   *_e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data);
+static void           _e_eap_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data);
+static int            _e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data);
+static int            _e_eap_edit_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data);
+static Evas_Object   *_e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *data);
+static Evas_Object   *_e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *data);
 static void           _e_eap_edit_select_cb(Evas_Object *obj, char *file, void *data);
 static void           _e_eap_edit_hilite_cb(Evas_Object *obj, char *file, void *data);
 
@@ -89,7 +88,7 @@ e_eap_edit_show(E_Container *con, E_App *a)
 /* local subsystem functions */
 
 static void 
-_e_eap_edit_fill_data(E_App_Edit_CFData *cfdata)
+_e_eap_edit_fill_data(E_Config_Dialog_Data *cfdata)
 {
    /*- BASIC -*/
    IFDUP(cfdata->editor->eap->name, cfdata->name);
@@ -109,9 +108,9 @@ _e_eap_edit_fill_data(E_App_Edit_CFData *cfdata)
 static void *
 _e_eap_edit_create_data(E_Config_Dialog *cfd)
 {
-   E_App_Edit_CFData *cfdata;
+   E_Config_Dialog_Data *cfdata;
    
-   cfdata = E_NEW(E_App_Edit_CFData, 1);
+   cfdata = E_NEW(E_Config_Dialog_Data, 1);
    if (!cfdata) return NULL;
    cfdata->editor = cfd->data;
    cfdata->image = NULL;
@@ -120,47 +119,42 @@ _e_eap_edit_create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_e_eap_edit_free_data(E_Config_Dialog *cfd, void *data)
+_e_eap_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data)
 {
-   E_App_Edit_CFData *cfdata;
-   
-   cfdata = data;
-   E_FREE(cfdata->name);
-   E_FREE(cfdata->exe);
-   E_FREE(cfdata->generic);
-   E_FREE(cfdata->comment);
-   E_FREE(cfdata->wname);
-   E_FREE(cfdata->wclass);
-   E_FREE(cfdata->wtitle);
-   E_FREE(cfdata->wrole);
-   E_FREE(cfdata->iclass);   
-   E_FREE(cfdata->image);
-   e_object_unref(E_OBJECT(cfdata->editor->eap));
-   E_FREE(cfdata->editor);
+   E_FREE(data->name);
+   E_FREE(data->exe);
+   E_FREE(data->generic);
+   E_FREE(data->comment);
+   E_FREE(data->wname);
+   E_FREE(data->wclass);
+   E_FREE(data->wtitle);
+   E_FREE(data->wrole);
+   E_FREE(data->iclass);   
+   E_FREE(data->image);
+   e_object_unref(E_OBJECT(data->editor->eap));
+   E_FREE(data->editor);
    free(data);
 }
 
 static int
-_e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, void *data)
+_e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data)
 {
    E_App_Edit *editor;
    E_App *eap;
-   E_App_Edit_CFData *cfdata;
    
-   cfdata = data;
-   editor = cfdata->editor;
+   editor = data->editor;
    eap = editor->eap;
    
    if (eap->name) evas_stringshare_del(eap->name);
    if (eap->exe) evas_stringshare_del(eap->exe);
    if (eap->image) evas_stringshare_del(eap->image);
    
-   if (cfdata->name) eap->name = evas_stringshare_add(cfdata->name);
-   if (cfdata->exe) eap->exe = evas_stringshare_add(cfdata->exe);
-   if (cfdata->image) eap->image = evas_stringshare_add(cfdata->image);
+   if (data->name) eap->name = evas_stringshare_add(data->name);
+   if (data->exe) eap->exe = evas_stringshare_add(data->exe);
+   if (data->image) eap->image = evas_stringshare_add(data->image);
    
-   eap->startup_notify = cfdata->startup_notify;
-   eap->wait_exit = cfdata->wait_exit;
+   eap->startup_notify = data->startup_notify;
+   eap->wait_exit = data->wait_exit;
    
    /* FIXME: hardcoded until the eap editor provides fields to change it */
    eap->width = 128;
@@ -173,14 +167,12 @@ _e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, void *data)
 }
 
 static int
-_e_eap_edit_advanced_apply_data(E_Config_Dialog *cfd, void *data)
+_e_eap_edit_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data)
 {
    E_App_Edit *editor;
    E_App *eap;
-   E_App_Edit_CFData *cfdata;
    
-   cfdata = data;
-   editor = cfdata->editor;
+   editor = data->editor;
    eap = editor->eap;
    
    if (eap->name) evas_stringshare_del(eap->name);
@@ -195,22 +187,22 @@ _e_eap_edit_advanced_apply_data(E_Config_Dialog *cfd, void *data)
    if (eap->win_role) evas_stringshare_del(eap->win_role);
    if (eap->icon_class) evas_stringshare_del(eap->icon_class);
    
-   if (cfdata->startup_notify) eap->startup_notify = 1;   
+   if (data->startup_notify) eap->startup_notify = 1;   
    else eap->startup_notify = 0;
-   if (cfdata->wait_exit) eap->wait_exit = 1;
+   if (data->wait_exit) eap->wait_exit = 1;
    else eap->wait_exit = 0;
    
-   if (cfdata->name) eap->name = evas_stringshare_add(cfdata->name);
-   if (cfdata->exe) eap->exe = evas_stringshare_add(cfdata->exe);
-   if (cfdata->image) eap->image = evas_stringshare_add(cfdata->image);
+   if (data->name) eap->name = evas_stringshare_add(data->name);
+   if (data->exe) eap->exe = evas_stringshare_add(data->exe);
+   if (data->image) eap->image = evas_stringshare_add(data->image);
    
-   if (cfdata->generic) eap->generic = evas_stringshare_add(cfdata->generic);
-   if (cfdata->comment) eap->comment = evas_stringshare_add(cfdata->comment);
-   if (cfdata->wname) eap->win_name = evas_stringshare_add(cfdata->wname);
-   if (cfdata->wclass) eap->win_class = evas_stringshare_add(cfdata->wclass);
-   if (cfdata->wtitle) eap->win_title = evas_stringshare_add(cfdata->wtitle);
-   if (cfdata->wrole) eap->win_role = evas_stringshare_add(cfdata->wrole);
-   if (cfdata->iclass) eap->icon_class = evas_stringshare_add(cfdata->iclass);
+   if (data->generic) eap->generic = evas_stringshare_add(data->generic);
+   if (data->comment) eap->comment = evas_stringshare_add(data->comment);
+   if (data->wname) eap->win_name = evas_stringshare_add(data->wname);
+   if (data->wclass) eap->win_class = evas_stringshare_add(data->wclass);
+   if (data->wtitle) eap->win_title = evas_stringshare_add(data->wtitle);
+   if (data->wrole) eap->win_role = evas_stringshare_add(data->wrole);
+   if (data->iclass) eap->icon_class = evas_stringshare_add(data->iclass);
 
    /* FIXME: hardcoded until the eap editor provides fields to change it */
    eap->width = 128;
@@ -223,16 +215,14 @@ _e_eap_edit_advanced_apply_data(E_Config_Dialog *cfd, void *data)
 
 
 static Evas_Object *
-_e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data)
+_e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *data)
 {
-   E_App_Edit_CFData *cfdata;
    E_App_Edit *editor;
    E_App *eap;
    Evas_Object *ol, *o;
    Evas_Object *entry;   
    
-   cfdata = data;
-   editor = cfdata->editor;
+   editor = data->editor;
    eap = editor->eap;
    
    ol = e_widget_table_add(evas, 0);
@@ -251,12 +241,12 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data)
    else if (editor->img_set)
      {
         editor->img = e_icon_add(evas);
-	e_icon_file_set(editor->img, cfdata->image);
+	e_icon_file_set(editor->img, data->image);
 	e_icon_fill_inside_set(editor->img, 1);	
      }
    
    editor->img_widget = e_widget_iconsel_add(evas, editor->img, 48, 48, 
-					     &(cfdata->image));
+					     &(data->image));
    e_widget_iconsel_select_callback_add(editor->img_widget, _e_eap_edit_select_cb, editor);
    e_widget_iconsel_hilite_callback_add(editor->img_widget, _e_eap_edit_hilite_cb, editor);
    e_widget_frametable_object_append(o, editor->img_widget,
@@ -270,7 +260,7 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data)
 				     0, 0, 1, 1,
 				     1, 1, 1, 1);
    
-   entry = e_widget_entry_add(evas, &(cfdata->name));
+   entry = e_widget_entry_add(evas, &(data->name));
    e_widget_min_size_set(entry, 100, 1);
    e_widget_frametable_object_append(o, entry,
 				     1, 0, 1, 1,
@@ -278,7 +268,7 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data)
    e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Executable")),
 				     0, 1, 1, 1,
 				     1, 1, 1, 1);
-   e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(cfdata->exe)),
+   e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(data->exe)),
 				     1, 1, 1, 1,
 				     1, 1, 1, 1);   
    e_widget_table_object_append(ol, o, 1, 0, 1, 1, 1 ,1, 1, 1);
@@ -287,16 +277,14 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data)
 }
 
 static Evas_Object *
-_e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data)
+_e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *data)
 {
-   E_App_Edit_CFData *cfdata;
    E_App_Edit *editor;
    E_App *eap;
    Evas_Object *ol, *o;
    Evas_Object *entry;   
    
-   cfdata = data;
-   editor = cfdata->editor;
+   editor = data->editor;
    eap = editor->eap;
    
    ol = _e_eap_edit_basic_create_widgets(cfd, evas, data);
@@ -308,7 +296,7 @@ _e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data
 				     0, 0, 1, 1,
 				     1, 1, 1, 1);
    
-   entry = e_widget_entry_add(evas, &(cfdata->generic));
+   entry = e_widget_entry_add(evas, &(data->generic));
    e_widget_min_size_set(entry, 100, 1);   
    e_widget_frametable_object_append(o, entry,
 				     1, 0, 1, 1,
@@ -316,7 +304,7 @@ _e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data
    e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Comment")),
 				     0, 1, 1, 1,
 				     1, 1, 1, 1);
-   e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(cfdata->comment)),
+   e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(data->comment)),
 				     1, 1, 1, 1,
 				     1, 1, 1, 1);
    e_widget_table_object_append(ol, o, 0, 1, 1, 1, 1 ,1, 1, 1);
@@ -329,7 +317,7 @@ _e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data
 				     0, 0, 1, 1,
 				     1, 1, 1, 1);
    
-   entry = e_widget_entry_add(evas, &(cfdata->wname));
+   entry = e_widget_entry_add(evas, &(data->wname));
    e_widget_min_size_set(entry, 100, 1);      
    e_widget_frametable_object_append(o, entry,
 				     1, 0, 1, 1,
@@ -337,19 +325,19 @@ _e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data
    e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Window Class")),
 				     0, 1, 1, 1,
 				     1, 1, 1, 1);
-   e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(cfdata->wclass)),
+   e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(data->wclass)),
 				     1, 1, 1, 1,
 				     1, 1, 1, 1);
    e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Window Title")),
 				     0, 2, 1, 1,
 				     1, 1, 1, 1);
-   e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(cfdata->wtitle)),
+   e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(data->wtitle)),
 				     1, 2, 1, 1,
 				     1, 1, 1, 1);
    e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Window Role")),
 				     0, 3, 1, 1,
 				     1, 1, 1, 1);
-   e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(cfdata->wrole)),
+   e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(data->wrole)),
 				     1, 3, 1, 1,
 				     1, 1, 1, 1);
    e_widget_table_object_append(ol, o, 0, 2, 1, 1, 1 ,1, 1, 1);
@@ -361,7 +349,7 @@ _e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data
 				     0, 0, 1, 1,
 				     1, 1, 1, 1);
    
-   entry = e_widget_entry_add(evas, &(cfdata->iclass));
+   entry = e_widget_entry_add(evas, &(data->iclass));
    e_widget_min_size_set(entry, 100, 1);   
    e_widget_frametable_object_append(o, entry,
 				     1, 0, 1, 1,
@@ -372,10 +360,10 @@ _e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data
    
    /*- misc info -*/
    o = e_widget_frametable_add(evas, _("Misc"), 0);     
-   e_widget_frametable_object_append(o, e_widget_check_add(evas, _("Startup Notify"), &(cfdata->startup_notify)),
+   e_widget_frametable_object_append(o, e_widget_check_add(evas, _("Startup Notify"), &(data->startup_notify)),
 				     0, 0, 1, 1,
 				     1, 1, 1, 1);
-   e_widget_frametable_object_append(o, e_widget_check_add(evas, _("Wait Exit"), &(cfdata->wait_exit)),
+   e_widget_frametable_object_append(o, e_widget_check_add(evas, _("Wait Exit"), &(data->wait_exit)),
 				     0, 1, 1, 1,
 				     1, 1, 1, 1);
    e_widget_table_object_append(ol, o, 1, 2, 1, 1, 1 ,1, 1, 1);

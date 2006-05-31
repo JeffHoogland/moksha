@@ -293,8 +293,7 @@ static void
 _e_config_dialog_cb_changed(void *data, Evas_Object *obj)
 {
    E_Config_Dialog *cfd;
-   int ok = 0;
-   
+ 
    cfd = data;
    if (!cfd->hide_buttons)
       {

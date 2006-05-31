@@ -110,7 +110,6 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   Evas_List *l;
    /* Free the cfdata */
    cfdata->gc->config_dialog = NULL;
 
@@ -219,7 +218,7 @@ _cb_select_client_instance(void *data)
 static void
 _cb_add_instance(void *data, void *data2)
 {
-   char buf[256], buf2[256];
+   char buf[256];
    int i, ok;
    E_Config_Dialog_Data *cfdata;
    E_Config_Gadcon *cf_gc;
@@ -353,7 +352,7 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for a basic dialog */
-   Evas_Object *o, *o2, *of, *ob, *oi;
+   Evas_Object *o, *of, *ob, *oi;
    Evas_Coord wmw, wmh;
    Evas_List *l, *l2;
    E_Config_Gadcon_Client *cf_gcc;

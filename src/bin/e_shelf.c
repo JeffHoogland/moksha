@@ -32,7 +32,7 @@ e_shelf_shutdown(void)
 EAPI void
 e_shelf_config_init(void)
 {
-   Evas_List *l, *l2;
+   Evas_List *l;
    
    for (l = e_config->shelves; l; l = l->next)
      {
