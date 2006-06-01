@@ -30,6 +30,7 @@ struct _E_Config_Dialog_Data
    E_Config_Dialog *cfd;
    Evas_List *modules;
    int state;
+   char *modname;
    struct
      {
 	Evas_Object *configure, *about;
@@ -58,34 +59,32 @@ e_int_config_modules(E_Container *con)
 static void
 _module_configure(void *data, void *data2)
 {
-   Evas_Object *obj;
+   E_Config_Dialog_Data *cfdata;
    E_Module *m;
    const char *v;
 
-   obj = data;
-   v = e_widget_ilist_selected_label_get(obj);
-   m = e_module_find(v);
+   cfdata = data;
+   if (!cfdata->modname) return;
+   m = e_module_find(cfdata->modname);
    if (m)
      {
-	if (m->func.config)
-	  m->func.config(m);
+	if (m->func.config) m->func.config(m);
      }
 }
 
 static void
 _module_about(void *data, void *data2)
 {
-   Evas_Object *obj;
+   E_Config_Dialog_Data *cfdata;
    E_Module *m;
    const char *v;
 
-   obj = data;
-   v = e_widget_ilist_selected_label_get(obj);
-   m = e_module_find(v);
+   cfdata = data;
+   if (!cfdata->modname) return;
+   m = e_module_find(cfdata->modname);
    if (m)
      {
-	if (m->func.about)
-	  m->func.about(m);
+	if (m->func.about) m->func.about(m);
      }
 }
 
@@ -161,6 +160,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         free(m->path);
         E_FREE(m);
      }
+   E_FREE(cfdata->modname);
    free(cfdata);
 }
 
@@ -237,7 +237,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ot = e_widget_table_add(evas, 1);
    
    of = e_widget_framelist_add(evas, _("Modules"), 1);
-   ilist = e_widget_ilist_add(evas, 24, 24, NULL);
+   ilist = e_widget_ilist_add(evas, 24, 24, &(cfdata->modname));
    cfdata->gui.list = ilist;
    e_widget_on_change_hook_set(ilist, _ilist_cb_change, cfdata);
 
@@ -265,7 +265,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	       {
 		  oc = edje_object_add(evas);
 		  edje_object_file_set(oc, buf, "icon");
-		  e_widget_ilist_append(ilist, oc, a->name, NULL, NULL, NULL);
+		  e_widget_ilist_append(ilist, oc, a->name, NULL, NULL, cm->name);
 		  e_object_unref(E_OBJECT(a));
 	       }
 	  }
@@ -294,11 +294,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_table_object_append(ot, of, 2, 0, 2, 2, 1, 1, 1, 1);
 
    of = e_widget_framelist_add(evas, _("Module Actions"), 0);   
-   ob = e_widget_button_add(evas, _("Configure"), NULL, _module_configure, ilist, NULL);
+   ob = e_widget_button_add(evas, _("Configure"), NULL, _module_configure, cfdata, NULL);
    cfdata->gui.configure = ob;
    e_widget_framelist_object_append(of, ob);
 
-   ob = e_widget_button_add(evas, _("About"), NULL, _module_about, ilist, NULL);
+   ob = e_widget_button_add(evas, _("About"), NULL, _module_about, cfdata, NULL);
    cfdata->gui.about = ob;
    e_widget_framelist_object_append(of, ob);
 
@@ -316,17 +316,18 @@ _ilist_cb_change(void *data, Evas_Object *obj)
 {
    E_Module *m;
    E_Config_Dialog_Data *cfdata;
+   Evas_List *l;
    const char *v;
-   int i;
 
    cfdata = data;
    
-   v = e_widget_ilist_selected_label_get(obj);
-   for (i = 0; i < evas_list_count(cfdata->modules); i++)
+   v = cfdata->modname;
+   if (!v) return;
+   for (l = cfdata->modules; l; l = l->next)
      {
 	CFModule *cm;
 
-	cm = evas_list_nth(cfdata->modules, i);
+	cm = l->data;
 	if ((cm) && (!strcmp(cm->name, v)))
 	  {
 	     cfdata->state = cm->state;
@@ -350,9 +351,8 @@ _ilist_cb_change(void *data, Evas_Object *obj)
 	       {
 		  if (m->func.about)
 		    e_widget_disabled_set(cfdata->gui.about, 0);
-
 		  if (m->enabled && m->func.config) 
-		    e_widget_disabled_set(cfdata->gui.configure, 0);		       
+		    e_widget_disabled_set(cfdata->gui.configure, 0);
 	       }
 	     break;
 	  }

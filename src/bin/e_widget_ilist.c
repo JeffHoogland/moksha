@@ -308,7 +308,6 @@ _e_wid_cb_item_sel(void *data, void *data2)
    e_scrollframe_child_region_show(wd->o_scrollframe, x, y, w, h);
    if (wd->o_widget)
      {
-	e_widget_change(wd->o_widget);
 	if (wd->value)
 	  {
 	     if (*(wd->value)) free(*(wd->value));
@@ -318,6 +317,7 @@ _e_wid_cb_item_sel(void *data, void *data2)
 	       *(wd->value) = NULL;
 	  }
 	if (wcb->func) wcb->func(wcb->data);
+	e_widget_change(wd->o_widget);
      }
 }
 
