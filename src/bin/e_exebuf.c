@@ -747,7 +747,7 @@ _e_exebuf_matches_update(void)
    int i, max;
    
    _e_exebuf_matches_clear();
-   if (strlen(cmd_buf) == 0) return;
+   if (!cmd_buf[0]) return;
    
    snprintf(buf, sizeof(buf), "*%s*", cmd_buf);
    list = e_app_name_glob_list(buf);
