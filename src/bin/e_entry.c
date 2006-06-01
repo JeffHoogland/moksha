@@ -128,10 +128,10 @@ e_editable_text_insert(Evas_Object *object, const char *text)
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
-   if ((!text) || ((strlen(text) <= 1) && (*text < 0x20)))
+   if ((!text) || ((strlen(text) <= 1) && (text[0] < 0x20)))
      return;
 
-   printf("Insert: \"%s\", %c\n", text, *text);
+   printf("Insert: \"%s\"\n", text);
    cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
 
    if (sd->cursor_at_the_end)
@@ -489,7 +489,6 @@ e_entry_unfocus(Evas_Object *entry)
    
    edje_object_signal_emit(sd->edje_object, "focus_out", "");
 }
-   
 
 /**************************
  *
@@ -613,6 +612,7 @@ _e_editable_text_cursor_visibility_update(Evas_Object *object)
 }
 
 /* Make the cursor blink */
+// FIXME: cursor should not be a rect - shoudl be an edje. timers not needed then
 static int
 _e_editable_text_cursor_timer_cb(void *data)
 {
@@ -667,6 +667,7 @@ _e_editable_text_smart_add(Evas_Object *object)
    e_editable_text_style_use_count++;
    evas_object_smart_member_add(sd->text_object, object);
 
+   // FIXME: cursor should not be a rect - shoudl be an edje.
    sd->clip = evas_object_rectangle_add(evas);
    evas_object_clip_set(sd->text_object, sd->clip);
    evas_object_smart_member_add(sd->clip, object);
@@ -773,35 +774,45 @@ _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event)
 
    obj = sd->entry_object;
 
-   if (strcmp(key_event->keyname, "BackSpace") == 0)
+   if ((!strcmp(key_event->keyname, "BackSpace")) ||
+       ((key_event->string) && (strlen(key_event->string) == 1) &&
+	(key_event->string[0] == 0x8)))
      {
 	e_editable_text_delete_char_before(obj);
-	if(sd->change_func)
+	if (sd->change_func)
 	  sd->change_func(sd->change_data, obj, "");
      }
-   else if (strcmp(key_event->keyname, "Delete") == 0)
+   else if ((!strcmp(key_event->keyname, "Delete")) ||
+	    ((key_event->string) && (strlen(key_event->string) == 1) &&
+	     (key_event->string[0] == 0x4)))
      {
 	e_editable_text_delete_char_after(obj);
-	if(sd->change_func)
+	if (sd->change_func)
 	  sd->change_func(sd->change_data, obj, "");
      }
-   else if (strcmp(key_event->keyname, "Left") == 0)
+   else if (!strcmp(key_event->keyname, "Left"))
      e_editable_text_cursor_move_left(obj);
-   else if (strcmp(key_event->keyname, "Right") == 0)
+   else if (!strcmp(key_event->keyname, "Right"))
      e_editable_text_cursor_move_right(obj);
-   else if (strcmp(key_event->keyname, "Home") == 0)
+   else if ((!strcmp(key_event->keyname, "Home")) ||
+	    ((key_event->string) && (strlen(key_event->string) == 1) &&
+	     (key_event->string[0] == 0x1)))
      e_editable_text_cursor_move_at_start(obj);
-   else if (strcmp(key_event->keyname, "End") == 0)
+   else if ((!strcmp(key_event->keyname, "End")) ||
+	    ((key_event->string) && (strlen(key_event->string) == 1) &&
+	     (key_event->string[0] == 0x5)))
      e_editable_text_cursor_move_at_end(obj);
    else
      {	
 	e_editable_text_insert(obj, key_event->string);
-	
-	if(key_event->string && strcmp(key_event->keyname, "Escape"))
+	if ((key_event->string) && (strcmp(key_event->keyname, "Escape")))
 	  {
-	     if(*(key_event->string) >= 32 && *(key_event->string) <= 126)
-	       if(sd->change_func)
-		 sd->change_func(sd->change_data, obj, (char *)key_event->string);
+	     if (*(key_event->string) >= 0x20)
+	       {
+		  if (sd->change_func)
+		    sd->change_func(sd->change_data, obj,
+				    (char *)key_event->string);
+	       }
 	  }
      }
 }
@@ -917,4 +928,3 @@ _e_entry_smart_hide(Evas_Object *object)
 
    evas_object_hide(sd->edje_object);
 }
-

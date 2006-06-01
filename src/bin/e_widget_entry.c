@@ -139,16 +139,6 @@ e_widget_entry_add(Evas *evas, char **val)
    return obj;         
 }
 
-EAPI void
-e_widget_entry_on_change_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj), void *data)
-{
-   E_Widget_Data *wd;
-   
-   wd = e_widget_data_get(obj);
-   wd->on_change_func = func;
-   wd->on_change_data = data;
-}
-
 void             
 e_widget_entry_text_set(Evas_Object *entry, const char *text)
 {
@@ -160,64 +150,22 @@ e_widget_entry_text_set(Evas_Object *entry, const char *text)
    *(wd->valptr) = strdup(text);
 }
 
-#if 0
-const char *
-e_widget_entry_text_get(Evas_Object *entry)
+EAPI void
+e_widget_entry_on_change_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj), void *data)
 {
-   return e_entry_text_get(entry);
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   wd->on_change_func = func;
+   wd->on_change_data = data;
 }
 
-void
-e_widget_entry_text_insert(Evas_Object *entry, const char *text)
+EAPI void
+e_widget_entry_password_set(Evas_Object *obj, int pw)
 {
-   e_entry_text_insert(entry, text);
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+// FIXME: need password mode for entry.   
+//   e_entry_password_set(wd->o_entry, pw);
 }
-
-void
-e_widget_entry_delete_char_before(Evas_Object *entry)
-{
-   e_entry_delete_char_before(entry);
-}
-
-void
-e_widget_entry_delete_char_after(Evas_Object *entry)
-{
-   e_entry_delete_char_after(entry);     
-}
-
-void
-e_widget_entry_cursor_move_at_start(Evas_Object *entry)
-{
-   e_entry_cursor_move_at_start(entry);     
-}
-
-void
-e_widget_entry_cursor_move_at_end(Evas_Object *entry)
-{
-   e_entry_cursor_move_at_end(entry);     
-}
-
-void
-e_widget_entry_cursor_move_left(Evas_Object *entry)
-{
-   e_entry_cursor_move_left(entry);
-}
-
-void
-e_widget_entry_cursor_move_right(Evas_Object *entry)
-{
-   e_entry_cursor_move_right(entry);
-}
-
-void
-e_widget_entry_cursor_show(Evas_Object *entry)
-{
-   e_entry_cursor_show(entry);
-}
-
-void
-e_widget_entry_cursor_hide(Evas_Object *entry)
-{
-   e_entry_cursor_hide(entry);
-}
-#endif

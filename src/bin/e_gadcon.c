@@ -291,7 +291,9 @@ e_gadcon_populate_class(E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
    for (l = e_config->gadcons; l; l = l->next)
      {
 	cf_gc = l->data;
-	if ((!strcmp(cf_gc->name, gc->name)) &&
+	if ((cf_gc->name) && (gc->name) &&
+	    (cf_gc->id) && (gc->id) &&
+	    (!strcmp(cf_gc->name, gc->name)) &&
 	    (!strcmp(cf_gc->id, gc->id)))
 	  {
 	     ok = 1;
@@ -303,7 +305,8 @@ e_gadcon_populate_class(E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
         for (l = cf_gc->clients; l; l = l->next)
 	  {
 	     cf_gcc = l->data;
-	     if (!strcmp(cf_gcc->name, cc->name))
+	     if ((cf_gcc->name) && (cc->name) && 
+		 (!strcmp(cf_gcc->name, cc->name)))
 	       {
 		  E_Gadcon_Client *gcc;
 		  

@@ -7,18 +7,9 @@
 #define E_WIDGET_ENTRY_H
 
 EAPI Evas_Object     *e_widget_entry_add(Evas *evas, char **val);
-EAPI void             e_widget_entry_text_set (Evas_Object *entry, const char *text);
-EAPI const char      *e_editable_text_text_get(Evas_Object *entry);
+EAPI void             e_widget_entry_text_set(Evas_Object *entry, const char *text);
 EAPI void             e_widget_entry_text_insert (Evas_Object *entry, const char *text);
-EAPI void             e_widget_entry_delete_char_before(Evas_Object *entry);
-EAPI void             e_widget_entry_delete_char_after(Evas_Object *entry);
-EAPI void             e_widget_entry_cursor_move_at_start(Evas_Object *entry);
-EAPI void             e_widget_entry_cursor_move_at_end(Evas_Object *entry);
-EAPI void             e_widget_entry_cursor_move_left(Evas_Object *entry);
-EAPI void             e_widget_entry_cursor_move_right(Evas_Object *entry);
-EAPI void             e_widget_entry_cursor_show(Evas_Object *entry);
-EAPI void             e_widget_entry_cursor_hide(Evas_Object *entry);
 EAPI void             e_widget_entry_on_change_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj), void *data);
-
+EAPI void             e_widget_entry_password_set(Evas_Object *obj, int pw);
 #endif
 #endif
