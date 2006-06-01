@@ -157,6 +157,14 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
    *ry = y;
    return 1;
 #endif
+
+   if ((w <= 0) || (h <= 0))
+     {
+	printf("EEEK! trying to place 0x0 window!!!!\n");
+	*rx = x;
+	*ry = y;
+	return 1;
+     }
    
    /* FIXME: this NEEDS optimizing */
    a_w = 2;
@@ -468,6 +476,12 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
  done:
    E_FREE(a_x);
    E_FREE(a_y);
+   
+   if ((*rx + w) > zone->w) *rx = zone->w - w;
+   if (*rx < 0) *rx = 0;
+   if ((*ry + h) > zone->h) *ry = zone->h - h;
+   if (*ry < 0) *ry = 0;
+   
    *rx += zone->x;
    *ry += zone->y;
    return 1;

@@ -55,7 +55,7 @@ Some of the things (in very short form) that need to be done to E17...
 * gui config dialogs for all config
 * make it possible to disable border buttons/actions (tell theme what is
   disabled)
-* shelf gui config is ugly and badly arranged
+* shelf gui config needs a basic mode that is simpler.
 * ibar should support creating and deleting bar dirs
 * ibar labels need to be selected (name, generic, etc.)
 ]]]
