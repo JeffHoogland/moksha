@@ -275,7 +275,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	  {
 	     const char *fallback;
 	     fallback = e_widget_config_list_nth_get(cfdata->gui.fallback_list, i);
-	     if (fallback != NULL && strlen(fallback) > 0)
+	     if ((fallback) && (fallback[0]))
 	       e_font_fallback_append(fallback);
 	  }
      }

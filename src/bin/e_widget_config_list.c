@@ -195,7 +195,7 @@ static void _button_cb_add(void *data, void *obj)
    if (!o) return;
    if (!wd) return;
 
-   if (wd->cur_entry && strlen(wd->cur_entry) > 0)
+   if ((wd->cur_entry) && (wd->cur_entry[0]))
      {
 	int i;	
 	
@@ -204,9 +204,7 @@ static void _button_cb_add(void *data, void *obj)
 	  {
 	     const char *label;
 	     label = e_widget_ilist_nth_label_get(wd->gui.list, i);
-	     if (  label != NULL && 
-		   strlen(label) > 0 && 
-		   !strcmp(label, wd->cur_entry) )
+	     if ((label) && (!strcmp(label, wd->cur_entry)))
 	       {
 		  e_widget_ilist_selected_set(wd->gui.list, i);
 		  return;
