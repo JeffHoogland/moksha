@@ -15,11 +15,9 @@ struct _E_Config_Dialog_Data
    E_Gadcon *gc;
    char *cname;
    char *ciname;
-   int enabled;
-   Evas_Object *o_enabled, *o_disabled;
    Evas_Object *o_add, *o_remove, *o_instances;
 
-   Evas_List *cf_gcc;
+   E_Config_Gadcon *cf_gc;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -50,45 +48,21 @@ e_int_gadcon_config(E_Gadcon *gc)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
-   int ok;
-   E_Config_Gadcon   *cf_gc;
-   E_Config_Gadcon_Client *cf_gcc, *cf_gcc2;
    Evas_List *l;
 
    cfdata->cname = NULL;
    cfdata->ciname = NULL;
-   cfdata->cf_gcc = NULL;
+   cfdata->cf_gc = NULL;
 
-   ok = 0;
    for (l = e_config->gadcons; l; l = l->next)
      {
-	cf_gc = l->data;
-	if ((!strcmp(cf_gc->name, cfdata->gc->name)) &&
-	    (!strcmp(cf_gc->id, cfdata->gc->id)))
+	cfdata->cf_gc = l->data;
+	if ((!strcmp(cfdata->cf_gc->name, cfdata->gc->name)) &&
+	    (!strcmp(cfdata->cf_gc->id, cfdata->gc->id)))
 	  {
-	     ok = 1;
 	     break;
 	  }
-     }
-   if (ok)
-     {
-	for (l = cf_gc->clients; l; l = l->next)
-	  {
-	     cf_gcc = l->data;
-	     if (!cf_gcc->name) continue;
-
-	     cf_gcc2 = E_NEW(E_Config_Gadcon_Client, 1);
-	     cf_gcc2->name = evas_stringshare_add(cf_gcc->name);
-	     cf_gcc2->id = evas_stringshare_add(cf_gcc->id);
-	     cf_gcc2->geom.res = cf_gcc->geom.res;
-	     cf_gcc2->geom.size = cf_gcc->geom.size;
-	     cf_gcc2->geom.pos = cf_gcc->geom.pos;
-	     cf_gcc2->style = !cf_gcc->style ? NULL : evas_stringshare_add(cf_gcc->style);
-	     cf_gcc2->autoscroll = cf_gcc->autoscroll;
-	     cf_gcc2->resizable = cf_gcc->resizable;
-
-	     cfdata->cf_gcc = evas_list_append(cfdata->cf_gcc, cf_gcc2);
-	  }
+	cfdata->cf_gc = NULL;
      }
 }
 
@@ -113,19 +87,6 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    /* Free the cfdata */
    cfdata->gc->config_dialog = NULL;
 
-   while (cfdata->cf_gcc)
-     {
-	E_Config_Gadcon_Client *cf_gcc = cfdata->cf_gcc->data;
-
-	if (cf_gcc->name) evas_stringshare_del(cf_gcc->name);
-	if (cf_gcc->id) evas_stringshare_del(cf_gcc->id);
-	if (cf_gcc->style) evas_stringshare_del(cf_gcc->style);
-	free(cf_gcc);
-
-	cfdata->cf_gcc = evas_list_remove_list(cfdata->cf_gcc, cfdata->cf_gcc);
-     }
-
-
    if (cfdata->cname) free(cfdata->cname);
    if (cfdata->ciname) free(cfdata->ciname);
    free(cfdata);
@@ -135,61 +96,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   int ok = 0;
-   E_Config_Gadcon *cf_gc;
-   E_Config_Gadcon_Client *cf_gcc;
-   Evas_List *l;
-
-   Evas_List *new_clients = NULL;
-
-
-   for (l = e_config->gadcons; l; l = l->next)
-     {
-	cf_gc = l->data;
-	if ((!strcmp(cf_gc->name, cfdata->gc->name)) &&
-	    (!strcmp(cf_gc->id, cfdata->gc->id)))
-	  {
-	     ok = 1;
-	     break;
-	  }
-     }
-   if (!ok) return 1;
-
-   //FIXME: some how the settings of the gadcon should be updated before
-   //saving it.
-   while (cf_gc->clients)
-     {
-	cf_gcc = cf_gc->clients->data;
-
-	if (!cf_gcc->name) 
-	  new_clients = evas_list_append(new_clients, cf_gcc);
-	else
-	  { 
-	     if (cf_gcc->name) evas_stringshare_del(cf_gcc->name); 
-	     if (cf_gcc->id) evas_stringshare_del(cf_gcc->id); 
-	     if (cf_gcc->style) evas_stringshare_del(cf_gcc->style); 
-	     free(cf_gcc);
-	  } 
-	cf_gc->clients = evas_list_remove_list(cf_gc->clients, cf_gc->clients);
-     }
-   cf_gc->clients = new_clients;
-
-   for (l = cfdata->cf_gcc; l; l = l->next)
-     {
-	E_Config_Gadcon_Client *cf_gcc2 = l->data;
-
-	cf_gcc = E_NEW(E_Config_Gadcon_Client, 1); 
-	cf_gcc->name	   = evas_stringshare_add(cf_gcc2->name);
-	cf_gcc->id	   = evas_stringshare_add(cf_gcc2->id);
-	cf_gcc->geom.res   = cf_gcc2->geom.res;
-	cf_gcc->geom.size  = cf_gcc2->geom.size;
-	cf_gcc->geom.pos   = cf_gcc2->geom.pos;
-	cf_gcc->style	   = !cf_gcc2->style ? NULL : evas_stringshare_add(cf_gcc2->style);
-	cf_gcc->autoscroll = cf_gcc2->autoscroll;
-	cf_gcc->resizable  = cf_gcc2->resizable;
-
-	cf_gc->clients = evas_list_append(cf_gc->clients, cf_gcc);
-     }
+   if (!cfdata->cf_gc) return 1;
 
    e_gadcon_unpopulate(cfdata->gc);
    e_gadcon_populate(cfdata->gc);
@@ -263,7 +170,7 @@ _cb_add_instance(void *data, void *data2)
    cf_gcc->autoscroll = 0;
    cf_gcc->resizable = 0;
 
-   cfdata->cf_gcc = evas_list_append(cfdata->cf_gcc, cf_gcc);
+   cfdata->cf_gc->clients = evas_list_append(cfdata->cf_gc->clients, cf_gcc);
 
    cc = NULL;
    for (l = e_gadcon_provider_list(); l; l = l->next)
@@ -281,6 +188,7 @@ _cb_add_instance(void *data, void *data2)
 	if (cc->func.icon) 
 	  icon = cc->func.icon(evas_object_evas_get(cfdata->o_instances));
      }
+   if (!label) label = "";
    e_widget_ilist_append(cfdata->o_instances, icon, label, 
 			 _cb_select_client_instance, cfdata,
 			 (char *)cf_gcc->name);
@@ -297,10 +205,11 @@ _cb_remove_instance(void *data, void *data2)
    E_Config_Gadcon_Client *cf_gcc;
    Evas_List *l, *l2;
 
+
    cfdata = data;
    i = e_widget_ilist_selected_get(cfdata->o_instances);
 
-   l = evas_list_nth_list(cfdata->cf_gcc, i);
+   l = evas_list_nth_list(cfdata->cf_gc->clients, i);
    cf_gcc = l->data;
 
    if (cf_gcc->name) evas_stringshare_del(cf_gcc->name);
@@ -308,10 +217,10 @@ _cb_remove_instance(void *data, void *data2)
    if (cf_gcc->style) evas_stringshare_del(cf_gcc->style);
    free(cf_gcc);
 
-   cfdata->cf_gcc = evas_list_remove_list(cfdata->cf_gcc, l);
-
+   cfdata->cf_gc->clients = evas_list_remove_list(cfdata->cf_gc->clients, l);
+   
    e_widget_ilist_clear(cfdata->o_instances);
-   for (l = cfdata->cf_gcc; l; l = l->next)
+   for (l = cfdata->cf_gc->clients; l; l = l->next)
      {
 	E_Gadcon_Client_Class *cc;
 	char *label = NULL;
@@ -332,6 +241,7 @@ _cb_remove_instance(void *data, void *data2)
 	     if (cc->func.icon) 
 	       icon = cc->func.icon(evas_object_evas_get(cfdata->o_instances));
 	  }
+	if (!label) label = "";
 	e_widget_ilist_append(cfdata->o_instances, icon, label,
 			      _cb_select_client_instance,
 			      cfdata, (char *)cf_gcc->name);
@@ -356,7 +266,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    Evas_Coord wmw, wmh;
    Evas_List *l, *l2;
    E_Config_Gadcon_Client *cf_gcc;
-   //int ok;
 
    /* FIXME: this is just raw config now - it needs UI improvments */
    o = e_widget_list_add(evas, 0, 1);
@@ -389,7 +298,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    ob = e_widget_button_add(evas, _("Add Gadget"), NULL, _cb_add_instance, cfdata, NULL);
    e_widget_framelist_object_append(of, ob);
-//   e_widget_frametable_object_append(oft, ob, 0, 1, 1, 1, 1, 1, 1, 1);
    e_widget_disabled_set(ob, 1);
    cfdata->o_add = ob;
 
@@ -399,12 +307,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    oi = e_widget_ilist_add(evas, 24, 24, &(cfdata->ciname));
 
-   for (l = cfdata->cf_gcc; l; l = l->next)
+   for (l = cfdata->cf_gc->clients; l; l = l->next)
      {
 	E_Gadcon_Client_Class *cc;
 	char *label;
 	Evas_Object *icon;
-	
+
 	cf_gcc = l->data;
 	cc = NULL;
 	label = NULL;
@@ -418,12 +326,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	  {
 	     if (cc->func.label) label = cc->func.label();
 	     if (!label) label = cc->name;
-	     if (cc->func.icon) 
+	     if (cc->func.icon)
 	       icon = cc->func.icon(evas);
 	  }
 	if (label)
-	   e_widget_ilist_append(oi, icon, label, _cb_select_client_instance,
-				 cfdata, (char *)cf_gcc->name);
+	  e_widget_ilist_append(oi, icon, label, _cb_select_client_instance,
+			        cfdata, (char *)cf_gcc->name);
      }
 
    e_widget_ilist_go(oi);
