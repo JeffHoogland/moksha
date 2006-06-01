@@ -250,17 +250,24 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	cm = l->data;
 	if (cm)
 	  {
+	     E_App *a;
+	     
 	     cm->state = MOD_UNLOADED;
 	     m = e_module_find(cm->name);
 	     if (m)
 	       {
 		  if (m->enabled) cm->state = MOD_ENABLED;
 	       }
-	     /* This Fails if module author names icon something else */
-	     snprintf(buf, sizeof(buf), "%s/module_icon.png", cm->path);
-	     oc = e_icon_add(evas);
-	     e_icon_file_set(oc, buf);
-	     e_widget_ilist_append(ilist, oc, cm->name, NULL, NULL, NULL);
+	     snprintf(buf, sizeof(buf), "%s/module.eap", cm->path);
+	     
+	     a = e_app_new(buf, 0);
+	     if (a)
+	       {
+		  oc = edje_object_add(evas);
+		  edje_object_file_set(oc, buf, "icon");
+		  e_widget_ilist_append(ilist, oc, a->name, NULL, NULL, NULL);
+		  e_object_unref(E_OBJECT(a));
+	       }
 	  }
      }
 

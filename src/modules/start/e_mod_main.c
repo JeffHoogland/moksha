@@ -250,16 +250,6 @@ e_modapi_save(E_Module *m)
 }
 
 EAPI int
-e_modapi_info(E_Module *m)
-{
-   char buf[4096];
-   
-   snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(m));
-   m->icon_file = strdup(buf);
-   return 1;
-}
-
-EAPI int
 e_modapi_about(E_Module *m)
 {
    e_module_dialog_show(_("Enlightenment Start Module"),
@@ -268,3 +258,4 @@ e_modapi_about(E_Module *m)
 }
 /**/
 /***************************************************************************/
+

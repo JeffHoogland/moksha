@@ -3,17 +3,6 @@
  */
 #include "e.h"
 
-/* TODO List:
- * 
- * * fix a lot of parts of e17's code to use e_object_del NOT e_object_unref.
- *   there is a subtle difference. unref means u had a reference and you stop
- *   referencing the object - thats ALL. if you created it and now literally
- *   want to destroy it - del is the way to go. there is a separate handler for
- *   this so on del it can go and clean up objects that may reference this one
- *   etc.
- * 
- */
-
 /* yes - i know. glibc specific... but i like being able to do my own */
 /* backtraces! NB: you need CFLAGS="-rdynamic -g" LDFLAGS="-rdynamic -g" */
 #ifdef OBJECT_PARANOIA_CHECK

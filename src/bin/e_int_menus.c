@@ -11,9 +11,7 @@ struct _Main_Data
    E_Menu *apps;
    E_Menu *desktops;
    E_Menu *clients;
-//   E_Menu *modules;
    E_Menu *gadgets;
-//   E_Menu *themes;
    E_Menu *config;
    E_Menu *lost_clients;
 };
@@ -46,12 +44,10 @@ static void _e_int_menus_desktops_pre_cb     (void *data, E_Menu *m);
 static void _e_int_menus_desktops_item_cb    (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_gadgets_pre_cb      (void *data, E_Menu *m);
 static void _e_int_menus_gadgets_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_themes_pre_cb       (void *data, E_Menu *m);
-static void _e_int_menus_themes_edit_mode_cb (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_themes_about        (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_lost_clients_pre_cb      (void *data, E_Menu *m);
-static void _e_int_menus_lost_clients_free_hook   (void *obj);
-static void _e_int_menus_lost_clients_item_cb     (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_lost_clients_pre_cb   (void *data, E_Menu *m);
+static void _e_int_menus_lost_clients_free_hook(void *obj);
+static void _e_int_menus_lost_clients_item_cb  (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_augmentation_add    (E_Menu *m, Evas_List *augmentation);
 static void _e_int_menus_augmentation_del    (E_Menu *m, Evas_List *augmentation);
 
@@ -90,20 +86,6 @@ e_int_menus_main_new(void)
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
-/* Modules menu MUST go. it's inconsistsent with the dialog - it displays only
- * loaded modules, dialog displays everything so u can load and unload etc.
- * it's BAD to have 2 UI's and each be inconsistent with the other. use the
- * dialog. this code will go soon.
- */
-   /*
-   subm = e_module_menu_new();
-   dat->modules = subm;
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Modules"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/modules");
-   e_menu_item_submenu_set(mi, subm);
-    */
-   
    subm = e_int_menus_desktops_new();
    dat->desktops = subm;
    mi = e_menu_item_new(m);
@@ -132,18 +114,6 @@ e_int_menus_main_new(void)
    e_util_menu_item_edje_icon_set(mi, "enlightenment/gadgets");
    e_menu_item_submenu_set(mi, subm);
 
-/* We have a config dialog for this - this menu was a hack nayway to start
- * with
- */
-/*   
-   subm = e_int_menus_themes_new();
-   dat->themes = subm;
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Themes"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/themes");
-   e_menu_item_submenu_set(mi, subm);   
- */
-   
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
@@ -253,18 +223,6 @@ e_int_menus_gadgets_new(void)
    return m;
 }
 
-/*
-EAPI E_Menu *
-e_int_menus_themes_new(void)
-{
-   E_Menu *m;
-
-   m = e_menu_new();
-   e_menu_pre_activate_callback_set(m, _e_int_menus_themes_pre_cb, NULL);
-   return m;
-}
-*/
-
 EAPI E_Menu *
 e_int_menus_lost_clients_new(void)
 {
@@ -355,11 +313,9 @@ _e_int_menus_main_del_hook(void *obj)
    if (dat)
      {
 	e_object_del(E_OBJECT(dat->apps));
-//	e_object_del(E_OBJECT(dat->modules));
 	e_object_del(E_OBJECT(dat->desktops));
 	e_object_del(E_OBJECT(dat->clients));
 	e_object_del(E_OBJECT(dat->gadgets));
-//	e_object_del(E_OBJECT(dat->themes));	
 	e_object_del(E_OBJECT(dat->config));
 	e_object_del(E_OBJECT(dat->lost_clients));
 	free(dat);
@@ -831,135 +787,6 @@ _e_int_menus_gadgets_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 	e_gadman_mode_set(gm, E_GADMAN_MODE_NORMAL);
      }
 }
-
-/* FIXME:
- * 
- * Remove this later, keep for fast theme switching now.
- */
-/*
-static void
-_e_int_menus_themes_pre_cb(void *data, E_Menu *m)
-{
-   E_Menu_Item *mi;
-   E_Menu *root;
-
-   e_menu_pre_activate_callback_set(m, NULL, NULL);
-   root = e_menu_root_get(m);
-   
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("About This Theme"));   
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/theme");
-   e_menu_item_callback_set(mi, _e_int_menus_themes_about, NULL);
-
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-   
-   if ((root) && (root->zone))
-     {
-	char buf[4096];
-	char *homedir;
-	
-	homedir = e_user_homedir_get();
-	if (homedir)
-	  {
-	     snprintf(buf, sizeof(buf), "%s/.e/e/themes", homedir);
-	     free(homedir);
-	  }
-	
-	if (ecore_file_is_dir(buf))
-	  {
-	     Ecore_List *themes;
-	     
-	     themes = ecore_file_ls(buf);
-	     if (themes)
-	       {
-		  char *theme, *deftheme = NULL;
-		  char fulltheme[PATH_MAX];
-		  Evas_Object *o;
-		  Ecore_Evas *eebuf;
-		  Evas *evasbuf;
-		  Evas_List *l;
-	  
-		  for (l = e_config->themes; l; l = l->next)
-		    {
-		       E_Config_Theme *et;
-		       
-		       et = l->data;
-		       if (!strcmp(et->category, "theme")) deftheme = et->file;
-		    }		  		  
-
-		  mi = e_menu_item_new(m);
-		  e_menu_item_radio_set(mi, 1);
-		  e_menu_item_radio_group_set(mi, 1);
-		  if (((deftheme) && (!strcmp("default", deftheme))) || 
-		      (!deftheme))
-		    e_menu_item_toggle_set(mi, 1);
-		  e_menu_item_label_set(mi, "default");
-		  e_menu_item_callback_set(mi, _e_int_menus_themes_edit_mode_cb, NULL);
-		  
-		  eebuf = ecore_evas_buffer_new(1, 1);
-		  evasbuf = ecore_evas_get(eebuf);
-		  o = edje_object_add(evasbuf);
-		  
-		  while ((theme = ecore_list_next(themes)))
-		    {
-		       snprintf(fulltheme, sizeof(fulltheme), "%s/%s", buf, theme);
-		       if (ecore_file_is_dir(fulltheme)) continue;
-		       
-		       if(edje_object_file_set(o, fulltheme, "widgets/border/default/border"))
-			 {
-			    mi = e_menu_item_new(m);
-			    e_menu_item_radio_set(mi, 1);
-			    e_menu_item_radio_group_set(mi, 1);
-			    if (deftheme)
-			      {			  
-				 if (!strcmp(theme, deftheme))
-				   e_menu_item_toggle_set(mi, 1);
-			      }			    
-			    e_menu_item_label_set(mi, theme);
-			    e_menu_item_callback_set(mi, _e_int_menus_themes_edit_mode_cb, NULL);
-			 }
-		    }
-		  
-		  evas_object_del(o);
-		  ecore_evas_free(eebuf);
-		  ecore_list_destroy(themes);
-	       }
-	  }
-     }
-}
-
-static void
-_e_int_menus_themes_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Config_Theme *et;
-   Evas_List *l;
-   E_Action *a;
-	
-   for (l = e_config->themes; l; l = l->next)
-     {
-	et = l->data;
-	if (!strcmp(et->category, "theme"))
-	  {
-	     e_config->themes = evas_list_remove_list(e_config->themes, l);
-	     evas_stringshare_del(et->category);
-	     evas_stringshare_del(et->file);
-	     E_FREE(et);
-	     break;
-	  }
-     }
-
-   et = E_NEW(E_Config_Theme, 1);
-   et->category = evas_stringshare_add("theme");
-   et->file = evas_stringshare_add(mi->label);
-   e_config->themes = evas_list_append(e_config->themes, et);
-   
-   e_config_save_queue();
-
-   a = e_action_find("restart");
-   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
-}
-*/
 		       
 static void
 _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)

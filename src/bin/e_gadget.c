@@ -264,7 +264,6 @@ _e_gadget_free(E_Gadget *gad)
    }
    
    evas_list_free(gad->faces);
-   gad->module->config_menu = NULL;
    e_object_unref(E_OBJECT(gad->module));
    if (gad->name) evas_stringshare_del(gad->name);
    free(gad);

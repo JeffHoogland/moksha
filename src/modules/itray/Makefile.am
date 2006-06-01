@@ -3,8 +3,7 @@ MODULE = itray
 
 # data files for the module
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)
-files_DATA = \
-module_icon.png
+files_DATA =
 
 EXTRA_DIST = $(files_DATA)
 

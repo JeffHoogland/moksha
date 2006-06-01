@@ -6,14 +6,11 @@
 /* Object safety/debugging checks */
 /* */
 /* OBJECT_PARANOIA_CHECK is paranoid and checkes pointers and traps segv's */
-/* incase they dont work... very paranoid and slow. NB for backtrace to */
+/* in case they dont work... very paranoid and slow. NB for backtrace to */
 /* work you need gcc, glibc and you need to compile with compile options of */
 /* -g -rdynamic and link with them too */
 /* OBJECT_CHECK is a simple null pointer and magic number check with no */
 /* debug output */
-
-/* #define OBJECT_PARANOIA_CHECK */
-/* #define OBJECT_CHECK */
 
 #ifndef __GLIBC__
 # ifdef OBJECT_PARANOIA_CHECK

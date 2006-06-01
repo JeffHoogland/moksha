@@ -130,16 +130,19 @@ e_module_new(const char *name)
    m->func.init = dlsym(m->handle, "e_modapi_init");
    m->func.shutdown = dlsym(m->handle, "e_modapi_shutdown");
    m->func.save = dlsym(m->handle, "e_modapi_save");
-   m->func.info = dlsym(m->handle, "e_modapi_info");
    m->func.about = dlsym(m->handle, "e_modapi_about");
    m->func.config = dlsym(m->handle, "e_modapi_config");
 
    if ((!m->func.init) ||
        (!m->func.shutdown) ||
        (!m->func.save) ||
-       (!m->func.info) ||
        (!m->func.about) ||
-       (!m->api)
+       (!m->api) ||
+       
+       // this is to more forcibly catch old/bad modules. will go - eventually,
+       // but for now is a good check to have
+       (dlsym(m->handle, "e_modapi_info"))
+       
        )
      {
 	snprintf(body, sizeof(body), _("There was an error loading module named: %s<br>"
@@ -153,7 +156,6 @@ e_module_new(const char *name)
 	m->func.init = NULL;
 	m->func.shutdown = NULL;
 	m->func.save = NULL;
-	m->func.info = NULL;
 	m->func.about = NULL;
 	m->func.config = NULL;
 
@@ -176,7 +178,6 @@ e_module_new(const char *name)
 	m->func.init = NULL;
 	m->func.shutdown = NULL;
 	m->func.save = NULL;
-	m->func.info = NULL;
 	m->func.about = NULL;
 	m->func.config = NULL;
 	dlclose(m->handle);
@@ -205,8 +206,6 @@ init_done:
 	       }
 	  }
      }
-   if (m->func.info)
-     m->func.info(m);
    for (l = e_config->modules; l; l = l->next)
      {
 	E_Config_Module *em;
@@ -356,53 +355,6 @@ e_module_list(void)
    return _e_modules;
 }
 
-EAPI E_Menu *
-e_module_menu_new(void)
-{
-   E_Menu *m, *subm;
-   E_Menu_Item *mi;
-   Evas_List *l;
-   Module_Menu_Data *dat;
-   int mod_count = 0;
-   
-   dat = calloc(1, sizeof(Module_Menu_Data));
-   m = e_menu_new();
-   e_object_data_set(E_OBJECT(m), dat);
-   e_object_free_attach_func_set(E_OBJECT(m), _e_module_menu_free);
-   for (l = _e_modules; l; l = l->next)
-     {
-	E_Module *mod;
-	
-	mod = l->data;
-	mi = e_menu_item_new(m);
-	if ((mod->api) && (mod->api->name))
-	  e_menu_item_label_set(mi, mod->api->name);
-	else e_menu_item_label_set(mi, mod->name);
-	if (mod->edje_icon_file)
-	  {
-	     if (mod->edje_icon_key)
-	       e_menu_item_icon_edje_set(mi, mod->edje_icon_file, mod->edje_icon_key);
-	     else
-	       e_menu_item_icon_edje_set(mi, mod->edje_icon_file, "icon");
-	  }
-	else if (mod->icon_file)
-	  e_menu_item_icon_file_set(mi, mod->icon_file);
-	subm = _e_module_control_menu_new(mod);
-	if (subm)
-	  {
-	     e_menu_item_submenu_set(mi, subm);
-	     dat->submenus = evas_list_append(dat->submenus, subm);
-	  }
-	++mod_count;
-     }
-   if (mod_count == 0)
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("(No Loaded Modules)"));
-     }
-   return m;
-}
-
 EAPI void
 e_module_dialog_show(const char *title, const char *body)
 {
@@ -455,9 +407,6 @@ _e_module_free(E_Module *m)
    if (m->dir) evas_stringshare_del(m->dir);
    if (m->handle) dlclose(m->handle);
    _e_modules = evas_list_remove(_e_modules, m);
-   if (m->icon_file) free(m->icon_file);
-   if (m->edje_icon_file) free(m->edje_icon_file);
-   if (m->edje_icon_key) free(m->edje_icon_key);
    free(m);
 }
 
