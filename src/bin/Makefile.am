@@ -156,7 +156,8 @@ e_int_shelf_config.h \
 e_int_config_shelf.h \
 e_int_gadcon_config.h \
 e_confirm_dialog.h \
-e_int_border_prop.h
+e_int_border_prop.h \
+e_entry_dialog.h
 
 enlightenment_src = \
 e_user.c \
@@ -294,6 +295,7 @@ e_int_config_shelf.c \
 e_int_gadcon_config.c \
 e_confirm_dialog.c \
 e_int_border_prop.c \
+e_entry_dialog.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \
