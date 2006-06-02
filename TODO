@@ -57,8 +57,6 @@ Some of the things (in very short form) that need to be done to E17...
   disabled)
 * shelf gui config needs a basic mode that is simpler and current becomes
   "advanced" mode.
-* ibar should support creating and deleting bar dirs
-* ibar labels need to be selected (name, generic, etc.)
 ]]]
 
 [[[
