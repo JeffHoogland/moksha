@@ -213,7 +213,7 @@ group {
 	    color: 255 255 255 0;
 	    color3: 0 0 0 0;
 	    text {
-	       text: "Icon Name";
+	       text: "";
 	       font: "Edje-Vera-Bold";
 	       size: 10;
 	       min:  1 1;
