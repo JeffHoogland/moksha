@@ -31,12 +31,10 @@ struct _E_Config_Dialog_Data
    Evas_List *modules;
    int state;
    char *modname;
-   struct
-     {
-	Evas_Object *configure, *about;
-	Evas_Object *enabled, *unloaded, *list;
-     }
-   gui;
+   struct {
+      Evas_Object *configure, *about;
+      Evas_Object *enabled, *unloaded, *list;
+   } gui;
 };
 
 EAPI E_Config_Dialog *
@@ -171,7 +169,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    const char *v;
    int i;
 
-   v = e_widget_ilist_selected_label_get(cfdata->gui.list);
+   v = cfdata->modname;
+   if (!v) return 0;
    for (i = 0; i < evas_list_count(cfdata->modules); i++)
      {
 	CFModule *cm;
@@ -320,7 +319,6 @@ _ilist_cb_change(void *data, Evas_Object *obj)
    const char *v;
 
    cfdata = data;
-   
    v = cfdata->modname;
    if (!v) return;
    for (l = cfdata->modules; l; l = l->next)
