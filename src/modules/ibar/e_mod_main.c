@@ -55,6 +55,7 @@ struct _IBar
    E_App          *apps;
    Evas_List      *icons;
    int             show_label;
+   int             eap_label;
 };
 
 struct _IBar_Icon
@@ -134,6 +135,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst->dir = evas_stringshare_add(ci->dir);
    b = _ibar_new(gc->evas, ci->dir);
    b->show_label = ci->show_label;
+   b->eap_label = ci->eap_label;
    b->inst = inst;
    inst->ibar = b;
    o = b->o_box;
@@ -446,6 +448,7 @@ _ibar_config_item_get(const char *id)
    ci = E_NEW(Config_Item, 1);
    ci->id = evas_stringshare_add(id);
    ci->show_label = 1;
+   ci->eap_label = 0;
    ibar_config->items = evas_list_append(ibar_config->items, ci);
    return ci;
 }
@@ -454,6 +457,7 @@ void
 _ibar_config_update(void)
 {
    Evas_List *l;
+   Evas_List *i;
    
    for (l = ibar_config->instances; l; l = l->next)
      {
@@ -491,6 +495,29 @@ _ibar_config_update(void)
 	     _gc_orient(inst->gcc);
 	  }
 	inst->ibar->show_label = ci->show_label;
+	inst->ibar->eap_label = ci->eap_label;
+
+	for (i = inst->ibar->icons; i; i = i->next) 
+	  {
+	     IBar_Icon *ic;
+	     
+	     ic = i->data;
+	     switch (ci->eap_label) 
+	       {
+		case 0:
+		  edje_object_part_text_set(ic->o_holder, "label", ic->app->name);
+		  edje_object_part_text_set(ic->o_holder2, "label", ic->app->name);
+		  break;
+		case 1:
+		  edje_object_part_text_set(ic->o_holder, "label", ic->app->comment);
+		  edje_object_part_text_set(ic->o_holder2, "label", ic->app->comment);
+		  break;
+		case 2:
+		  edje_object_part_text_set(ic->o_holder, "label", ic->app->generic);
+		  edje_object_part_text_set(ic->o_holder2, "label", ic->app->generic);
+		  break;
+	       }
+	  }
      }
 }
 
@@ -590,8 +617,21 @@ _ibar_icon_fill(IBar_Icon *ic)
    evas_object_pass_events_set(ic->o_icon2, 1);
    evas_object_show(ic->o_icon2);
    
-   edje_object_part_text_set(ic->o_holder, "label", ic->app->name);
-   edje_object_part_text_set(ic->o_holder2, "label", ic->app->name);
+   switch (ic->ibar->eap_label) 
+     {
+      case 0: /* Eap Name */
+	edje_object_part_text_set(ic->o_holder, "label", ic->app->name);
+	edje_object_part_text_set(ic->o_holder2, "label", ic->app->name);
+	break;
+      case 1: /* Eap Comment */
+	edje_object_part_text_set(ic->o_holder, "label", ic->app->comment);
+	edje_object_part_text_set(ic->o_holder2, "label", ic->app->comment);
+	break;	
+      case 2: /* Eap Generic */
+	edje_object_part_text_set(ic->o_holder, "label", ic->app->generic);
+	edje_object_part_text_set(ic->o_holder2, "label", ic->app->generic);
+	break;	
+     }
 }
 
 static void
@@ -1248,6 +1288,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, id, STR);
    E_CONFIG_VAL(D, T, dir, STR);
    E_CONFIG_VAL(D, T, show_label, INT);
+   E_CONFIG_VAL(D, T, eap_label, INT);
    
    conf_edd = E_CONFIG_DD_NEW("IBar_Config", Config);
 #undef T
@@ -1268,7 +1309,7 @@ e_modapi_init(E_Module *m)
 	ci->id = evas_stringshare_add("0");
 	ci->dir = evas_stringshare_add("default");
 	ci->show_label = 1;
-	
+	ci->eap_label = 0;
 	ibar_config->items = evas_list_append(ibar_config->items, ci);
      }
    
