@@ -15,13 +15,15 @@ struct _Config
    E_Menu          *menu;
    Evas_List       *handlers;
    Evas_List       *items;
-   E_Config_Dialog *config_dialog;
+   Evas_List	   *config_dialog;//E_Config_Dialog *;
 };
 
 struct _Config_Item 
 {
    const char *id;
    int show_label;
+   int show_zone;
+   int show_desk;
 };
 
 EAPI extern E_Module_Api e_modapi;

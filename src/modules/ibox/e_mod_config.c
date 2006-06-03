@@ -7,6 +7,15 @@
 struct _E_Config_Dialog_Data
 {
    int   show_label;
+
+   int	 zone_policy;
+   int	 desk_policy;
+
+   struct
+     {
+	Evas_Object *o_desk_show_all;
+	Evas_Object *o_desk_show_active;
+     } gui;
 };
 
 /* Protos */
@@ -14,6 +23,11 @@ static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+
+static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+
+static void _cb_zone_policy_change(void *data, Evas_Object *obj);
 
 void 
 _config_ibox_module(Config_Item *ci)
@@ -34,13 +48,15 @@ _config_ibox_module(Config_Item *ci)
    /* Create The Dialog */
    cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()),
 			     _("IBox Configuration"), NULL, 0, v, ci);
-   ibox_config->config_dialog = cfd;
+   ibox_config->config_dialog = evas_list_append(ibox_config->config_dialog, cfd);
 }
 
 static void 
 _fill_data(Config_Item *ci, E_Config_Dialog_Data *cfdata)
 {
    cfdata->show_label = ci->show_label;
+   cfdata->zone_policy = ci->show_zone;
+   cfdata->desk_policy = ci->show_desk;
 }
 
 static void *
@@ -58,32 +74,110 @@ _create_data(E_Config_Dialog *cfd)
 static void 
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   ibox_config->config_dialog = NULL;
+   ibox_config->config_dialog = evas_list_remove(ibox_config->config_dialog, cfd);
    free(cfdata);
 }
 
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *of, *ob;
-   
+   E_Radio_Group *rg;
+   Evas_Object *o, *ol, *of, *ob;
+
+   Evas_List *l, *l2;
+   int zone_count;
+   char buf[256];
+
    o = e_widget_list_add(evas, 0, 0);
+
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
    ob = e_widget_check_add(evas, _("Show Icon Label"), &(cfdata->show_label));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
+
+   of = e_widget_framelist_add(evas, _("Zone"), 0);
+
+   zone_count = 0;
+   for (l = e_manager_list(); l; l = l->next)
+     {
+	E_Manager *man;
+	man = l->data;
+
+	for (l2 = man->containers; l2; l2 = l2->next)
+	  {
+	     E_Container *con;
+
+	     con = l2->data;
+	     zone_count += evas_list_count(con->zones);
+	  }
+     }
+
+   if (zone_count <= 1) cfdata->zone_policy = 1;
+
+   rg = e_widget_radio_group_new((int *)&(cfdata->zone_policy));
+   ob = e_widget_radio_add(evas, _("Show windows from all zones"), 0, rg);
+   e_widget_on_change_hook_set(ob, _cb_zone_policy_change, cfdata);
+   e_widget_framelist_object_append(of, ob);
+   if (zone_count <= 1) e_widget_disabled_set(ob, 1);
+
+   ob = e_widget_radio_add(evas, _("Show windows from current zone"), 1, rg);
+   e_widget_on_change_hook_set(ob, _cb_zone_policy_change, cfdata);
+   e_widget_framelist_object_append(of, ob);
+
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+
+   of = e_widget_framelist_add(evas, _("Desktop"), 0);
+
+   rg = e_widget_radio_group_new((int *)&(cfdata->desk_policy));
+   ob = e_widget_radio_add(evas, _("Show windows from all desktops"), 0, rg);
+   e_widget_framelist_object_append(of, ob);
+   if (cfdata->zone_policy == 0) e_widget_disabled_set(ob, 1);
+   cfdata->gui.o_desk_show_all = ob;
+
+   ob = e_widget_radio_add(evas, _("Show windows from active desktop"), 1, rg);
+   e_widget_framelist_object_append(of, ob);
+   if (cfdata->zone_policy == 0) e_widget_disabled_set(ob, 1);
+   cfdata->gui.o_desk_show_active = ob;
+
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+
    return o;
 }
 
-static int 
+static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    Config_Item *ci;
    
    ci = cfd->data;
    ci->show_label = cfdata->show_label;
+
+   ci->show_zone = cfdata->zone_policy;
+   ci->show_desk = cfdata->desk_policy;
+
    _ibox_config_update();
    e_config_save_queue();
    return 1;
+}
+
+
+/****** callbacks **********/
+
+static void
+_cb_zone_policy_change(void *data, Evas_Object *obj)
+{
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = data;
+
+   if (cfdata->zone_policy == 0)
+     {
+	e_widget_disabled_set(cfdata->gui.o_desk_show_all, 1);
+	e_widget_disabled_set(cfdata->gui.o_desk_show_active, 1);
+     }
+   else
+     {
+	e_widget_disabled_set(cfdata->gui.o_desk_show_all, 0);
+	e_widget_disabled_set(cfdata->gui.o_desk_show_active, 0);
+     }
 }

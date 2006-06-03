@@ -82,9 +82,6 @@ Some of the things (in very short form) that need to be done to E17...
 
 * option to allow flipping desktops to wrap at virtual desktop grid edges
 * window menu with raise/lower for windows (obviously missing currently)
-* ibox should have options "Show from this desktop", "Show from all desktops",
-  "show from zones", "show from this zone", etc. Similarly to those, that are 
-  in winlist.
 * winlist and exebuf can let the mouse select items
 * option to NOT raise on focus in click to focus
 * switch to desktop of a new window if it opens on another desktop than the

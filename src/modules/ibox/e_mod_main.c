@@ -53,6 +53,8 @@ struct _IBox
    int             drop_before;
    Evas_List      *icons;
    int             show_label;
+   int		   show_zone;
+   int		   show_desk;
    E_Zone          *zone;
 };
 
@@ -88,7 +90,8 @@ static void _ibox_icon_free(IBox_Icon *ic);
 static void _ibox_icon_fill(IBox_Icon *ic);
 static void _ibox_icon_empty(IBox_Icon *ic);
 static void _ibox_icon_signal_emit(IBox_Icon *ic, char *sig, char *src);
-static IBox *_ibox_zone_find(E_Zone *zone);
+//static IBox *_ibox_zone_find(E_Zone *zone);
+static Evas_List *_ibox_zone_find(E_Zone *zone);
 static int _ibox_cb_timer_drop_recalc(void *data);
 static void _ibox_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _ibox_cb_menu_post(void *data, E_Menu *m);
@@ -111,6 +114,7 @@ static int _ibox_cb_event_border_iconify(void *data, int type, void *event);
 static int _ibox_cb_event_border_uniconify(void *data, int type, void *event);
 static int _ibox_cb_event_border_icon_change(void *data, int type, void *event);
 static int _ibox_cb_event_border_zone_set(void *data, int type, void *event);
+static int _ibox_cb_event_desk_show(void *data, int type, void *event);
 static Config_Item *_ibox_config_item_get(const char *id);
 
 static E_Config_DD *conf_edd = NULL;
@@ -137,6 +141,10 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    
    b = _ibox_new(gc->evas, gc->zone);
    b->show_label = ci->show_label;
+   b->show_zone = ci->show_zone;
+   b->show_desk = ci->show_desk;
+   _ibox_fill(b);
+
    b->inst = inst;
    inst->ibox = b;
    o = b->o_box;
@@ -249,7 +257,6 @@ _ibox_new(Evas *evas, E_Zone *zone)
    e_box_orientation_set(b->o_box, 1);
    e_box_align_set(b->o_box, 0.5, 0.5);
    b->zone = zone;
-   _ibox_fill(b);
    return b;
 }
 
@@ -344,15 +351,34 @@ _ibox_fill(IBox *b)
    IBox_Icon *ic;
    E_Border_List *bl;
    E_Border *bd;
+   int ok;
    
    bl = e_container_border_list_first(b->zone->container);
    while ((bd = e_container_border_list_next(bl)))
      {
-	if ((bd->zone == b->zone) && (bd->iconic))
+	ok = 0;
+	if ((b->show_zone == 0) && (bd->iconic))
 	  {
+	     ok = 1;
+	  }
+	else if((b->show_zone == 1) && (bd->iconic))
+	  { 
+	     if ((b->show_desk == 0) && (bd->zone == b->zone))
+	       {
+		  ok = 1;
+	       }
+	     else if((b->show_desk == 1) && (bd->zone == b->zone) &&
+		     (bd->desk == e_desk_current_get(b->zone)))
+	       {
+		  ok = 1;
+	       }
+	  }
+
+	if (ok)
+	  { 
 	     ic = _ibox_icon_new(b, bd);
-	     b->icons = evas_list_append(b->icons, ic);
-	     e_box_pack_end(b->o_box, ic->o_holder);
+	     b->icons = evas_list_append(b->icons, ic); 
+	     e_box_pack_end(b->o_box, ic->o_holder); 
 	  }
      }
    
@@ -547,19 +573,29 @@ _ibox_icon_signal_emit(IBox_Icon *ic, char *sig, char *src)
      edje_object_signal_emit(ic->o_icon2, sig, src);
 }
 
-static IBox *
+static Evas_List *
 _ibox_zone_find(E_Zone *zone)
 {
+   Evas_List *ibox = NULL;
    Evas_List *l;
-   
+
    for (l = ibox_config->instances; l; l = l->next)
      {
 	Instance *inst;
+	Config_Item *ci;
 
 	inst = l->data;
-	if (inst->ibox->zone == zone) return inst->ibox;
+	ci = _ibox_config_item_get(inst->gcc->id);
+	if (!ci) continue;
+
+	if (ci->show_zone == 0)
+	  ibox = evas_list_append(ibox, inst->ibox);
+	else if (ci->show_zone == 1)
+	  { 
+	     if (inst->ibox->zone == zone) ibox = evas_list_append(ibox, inst->ibox);
+	  }
      }
-   return NULL;
+   return ibox;
 }
 
 static int
@@ -971,6 +1007,7 @@ _ibox_inst_cb_drop(void *data, const char *type, void *event_info)
 static int
 _ibox_cb_event_border_add(void *data, int type, void *event)
 {
+   int ok;
    E_Event_Border_Add *ev;
    IBox *b;
    IBox_Icon *ic;
@@ -979,16 +1016,23 @@ _ibox_cb_event_border_add(void *data, int type, void *event)
    /* add if iconic */
    if (ev->border->iconic)
      {
-	b = _ibox_zone_find(ev->border->zone);
-	if (!b) return 1;
-	if (_ibox_icon_find(b, ev->border)) return 1;
-	ic = _ibox_icon_new(b, ev->border);
-	if (!ic) return 1;
-	b->icons = evas_list_append(b->icons, ic);
-	e_box_pack_end(b->o_box, ic->o_holder);
-	_ibox_empty_handle(b);
-	_ibox_resize_handle(b);
-	_gc_orient(b->inst->gcc);
+	Evas_List *l, *ibox;
+	ibox = _ibox_zone_find(ev->border->zone);
+	for (l = ibox; l; l = l->next)
+	  { 
+	     b = l->data; 
+	     if (_ibox_icon_find(b, ev->border)) continue;
+	     ic = _ibox_icon_new(b, ev->border); 
+	     if (!ic) continue; 
+	     b->icons = evas_list_append(b->icons, ic); 
+	     e_box_pack_end(b->o_box, ic->o_holder); 
+	     _ibox_empty_handle(b); 
+	     _ibox_resize_handle(b); 
+	     _gc_orient(b->inst->gcc);
+	  }
+
+	while (ibox)
+	  ibox = evas_list_remove_list(ibox, ibox);
      }
    return 1;
 }
@@ -999,18 +1043,25 @@ _ibox_cb_event_border_remove(void *data, int type, void *event)
    E_Event_Border_Remove *ev;
    IBox *b;
    IBox_Icon *ic;
+   Evas_List *l, *ibox;
    
    ev = event;
    /* find icon and remove if there */
-   b = _ibox_zone_find(ev->border->zone);
-   if (!b) return 1;
-   ic = _ibox_icon_find(b, ev->border);
-   if (!ic) return 1;
-   _ibox_icon_free(ic);
-   b->icons = evas_list_remove(b->icons, ic);
-   _ibox_empty_handle(b);
-   _ibox_resize_handle(b);
-   _gc_orient(b->inst->gcc);
+   ibox = _ibox_zone_find(ev->border->zone);
+   for (l = ibox; l; l = l->next)
+     { 
+	b = l->data;
+	ic = _ibox_icon_find(b, ev->border); 
+	if (!ic) continue; 
+	_ibox_icon_free(ic); 
+	b->icons = evas_list_remove(b->icons, ic); 
+	_ibox_empty_handle(b); 
+	_ibox_resize_handle(b); 
+	_gc_orient(b->inst->gcc); 
+     }
+   while (ibox)
+     ibox = evas_list_remove_list(ibox, ibox);
+
    return 1;
 }
 
@@ -1020,20 +1071,27 @@ _ibox_cb_event_border_iconify(void *data, int type, void *event)
    E_Event_Border_Iconify *ev;
    IBox *b;
    IBox_Icon *ic;
+   Evas_List *l, *ibox;
    
    ev = event;
    /* add icon for ibox for right zone */
    /* do some sort of anim when iconifying */
-   b = _ibox_zone_find(ev->border->zone);
-   if (!b) return 1;
-   if (_ibox_icon_find(b, ev->border)) return 1;
-   ic = _ibox_icon_new(b, ev->border);
-   if (!ic) return 1;
-   b->icons = evas_list_append(b->icons, ic);
-   e_box_pack_end(b->o_box, ic->o_holder);
-   _ibox_empty_handle(b);
-   _ibox_resize_handle(b);
-   _gc_orient(b->inst->gcc);
+   ibox = _ibox_zone_find(ev->border->zone);
+   for (l = ibox; l; l = l->next)
+     { 
+	b = l->data; 
+	if (_ibox_icon_find(b, ev->border)) continue; 
+	ic = _ibox_icon_new(b, ev->border); 
+	if (!ic) continue; 
+	b->icons = evas_list_append(b->icons, ic); 
+	e_box_pack_end(b->o_box, ic->o_holder); 
+	_ibox_empty_handle(b); 
+	_ibox_resize_handle(b); 
+	_gc_orient(b->inst->gcc);
+     }
+
+   while (ibox)
+     ibox = evas_list_remove_list(ibox, ibox);
    return 1;
 }
 
@@ -1043,19 +1101,27 @@ _ibox_cb_event_border_uniconify(void *data, int type, void *event)
    E_Event_Border_Uniconify *ev;
    IBox *b;
    IBox_Icon *ic;
+   Evas_List *l, *ibox;
    
    ev = event;
    /* del icon for ibox for right zone */
    /* do some sort of anim when uniconifying */
-   b = _ibox_zone_find(ev->border->zone);
-   if (!b) return 1;
-   ic = _ibox_icon_find(b, ev->border);
-   if (!ic) return 1;
-   _ibox_icon_free(ic);
-   b->icons = evas_list_remove(b->icons, ic);
-   _ibox_empty_handle(b);
-   _ibox_resize_handle(b);
-   _gc_orient(b->inst->gcc);
+   ibox = _ibox_zone_find(ev->border->zone);
+   for (l = ibox; l; l = l->next)
+     { 
+	b = l->data; 
+	ic = _ibox_icon_find(b, ev->border); 
+	if (!ic) continue; 
+	_ibox_icon_free(ic); 
+	b->icons = evas_list_remove(b->icons, ic); 
+	_ibox_empty_handle(b); 
+	_ibox_resize_handle(b); 
+	_gc_orient(b->inst->gcc);
+     }
+
+   while (ibox)
+     ibox = evas_list_remove_list(ibox, ibox);
+
    return 1;
 }
 
@@ -1065,15 +1131,23 @@ _ibox_cb_event_border_icon_change(void *data, int type, void *event)
    E_Event_Border_Icon_Change *ev;
    IBox *b;
    IBox_Icon *ic;
+   Evas_List *l, *ibox;
    
    ev = event;
    /* update icon */
-   b = _ibox_zone_find(ev->border->zone);
-   if (!b) return 1;
-   ic = _ibox_icon_find(b, ev->border);
-   if (!ic) return 1;
-   _ibox_icon_empty(ic);
-   _ibox_icon_fill(ic);
+   ibox = _ibox_zone_find(ev->border->zone);
+   for (l = ibox; l; l = l->next)
+     {
+	b = l->data; 
+	ic = _ibox_icon_find(b, ev->border); 
+	if (!ic) continue; 
+	_ibox_icon_empty(ic); 
+	_ibox_icon_fill(ic);
+     }
+
+   while (ibox)
+     ibox = evas_list_remove_list(ibox, ibox);
+
    return 1;
 }
 
@@ -1092,6 +1166,30 @@ _ibox_cb_event_border_zone_set(void *data, int type, void *event)
    return 1;
 }
 
+static int _ibox_cb_event_desk_show(void *data, int type, void *event)
+{
+   E_Event_Desk_Show *ev;
+   IBox *b;
+   Evas_List *l, *ibox;
+
+   ev = event;
+   /* delete all wins from ibox and add only for current desk */
+   ibox = _ibox_zone_find(ev->desk->zone);
+   for (l = ibox; l; l = l->next)
+     {
+	b = l->data;
+	_ibox_empty(b);
+	_ibox_fill(b);
+	_ibox_resize_handle(b); 
+	_gc_orient(b->inst->gcc);
+     }
+
+   while (ibox)
+     ibox = evas_list_remove_list(ibox, ibox);
+
+   return 1;
+}
+
 static Config_Item *
 _ibox_config_item_get(const char *id) 
 {
@@ -1107,6 +1205,8 @@ _ibox_config_item_get(const char *id)
    ci = E_NEW(Config_Item, 1);
    ci->id = evas_stringshare_add(id);
    ci->show_label = 0;
+   ci->show_zone = 1;
+   ci->show_desk = 0;
    ibox_config->items = evas_list_append(ibox_config->items, ci);
    return ci;
 }
@@ -1123,6 +1223,13 @@ _ibox_config_update(void)
 	inst = l->data;
 	ci = _ibox_config_item_get(inst->gcc->id);
 	inst->ibox->show_label = ci->show_label;
+	inst->ibox->show_zone = ci->show_zone;
+	inst->ibox->show_desk = ci->show_desk;
+
+	_ibox_empty(inst->ibox);
+	_ibox_fill(inst->ibox);
+	_ibox_resize_handle(inst->ibox); 
+	_gc_orient(inst->gcc);
      }
 }
 
@@ -1131,10 +1238,23 @@ _ibox_cb_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    IBox *b;
    Config_Item *ci;
+   int ok = 1;
+   Evas_List *l;
    
    b = data;
    ci = _ibox_config_item_get(b->inst->gcc->id);
-   _config_ibox_module(ci);
+   for (l = ibox_config->config_dialog; l; l = l->next)
+     {
+	E_Config_Dialog *cfd;
+
+	cfd = l->data;
+	if (cfd->data == ci)
+	  {
+	     ok = 0;
+	     break;
+	  }
+     }
+   if (ok) _config_ibox_module(ci);
 }
 
 /***************************************************************************/
@@ -1156,6 +1276,8 @@ e_modapi_init(E_Module *m)
    #define D conf_item_edd
    E_CONFIG_VAL(D, T, id, STR);
    E_CONFIG_VAL(D, T, show_label, INT);
+   E_CONFIG_VAL(D, T, show_zone, INT);
+   E_CONFIG_VAL(D, T, show_desk, INT);
    
    conf_edd = E_CONFIG_DD_NEW("IBox_Config", Config);
    #undef T
@@ -1174,6 +1296,8 @@ e_modapi_init(E_Module *m)
 	ci = E_NEW(Config_Item, 1);
 	ci->id = evas_stringshare_add("0");
 	ci->show_label = 0;
+	ci->show_zone = 1;
+	ci->show_desk = 0;
 	ibox_config->items = evas_list_append(ibox_config->items, ci);
      }
    
@@ -1197,6 +1321,9 @@ e_modapi_init(E_Module *m)
    ibox_config->handlers = evas_list_append
      (ibox_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_ZONE_SET, _ibox_cb_event_border_zone_set, NULL));
+   ibox_config->handlers = evas_list_append
+     (ibox_config->handlers, ecore_event_handler_add
+      (E_EVENT_DESK_SHOW, _ibox_cb_event_desk_show, NULL));
    
 /* FIXME: add these later for things taskbar-like functionality   
    ibox_config->handlers = evas_list_append
@@ -1224,14 +1351,18 @@ e_modapi_shutdown(E_Module *m)
 {
    e_gadcon_provider_unregister(&_gadcon_class);
 
-   if (ibox_config->config_dialog)
-     e_object_del(E_OBJECT(ibox_config->config_dialog));
-   
    while (ibox_config->handlers)
      {
 	ecore_event_handler_del(ibox_config->handlers->data);
 	ibox_config->handlers = evas_list_remove_list(ibox_config->handlers, ibox_config->handlers);
      }
+
+   while (ibox_config->config_dialog)
+     /* there is no need to eves_list_remove_list. It is done implicitly in
+      * dialog _free_data function
+      */
+     e_object_del(E_OBJECT(ibox_config->config_dialog->data));
+
    if (ibox_config->menu)
      {
 	e_menu_post_deactivate_callback_set(ibox_config->menu, NULL, NULL);
