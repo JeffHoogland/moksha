@@ -294,6 +294,7 @@ struct _E_Border
    unsigned int    shading : 1;
    unsigned int    shaded : 1;
    unsigned int    iconic : 1;
+   unsigned int    deskshow : 1;
    unsigned int    sticky : 1;
    unsigned int    shaped : 1;
    unsigned int    need_shape_merge : 1;

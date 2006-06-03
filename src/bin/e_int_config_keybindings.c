@@ -1076,7 +1076,7 @@ _e_keybinding_keybind_cb_del_keybinding(void *data, void *data2)
 
    if (!cfdata) return;
 
-   snprintf(buf, sizeof(buf), _("You requested to delte \"%s\" keybinding.<br>"
+   snprintf(buf, sizeof(buf), _("You requested to delete \"%s\" keybinding.<br>"
 				"<br>"
 				"Are you sure you want to delete it?"),
 	    e_widget_ilist_selected_label_get(cfdata->gui.binding_ilist));

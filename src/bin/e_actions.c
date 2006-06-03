@@ -1315,7 +1315,43 @@ ACT_FN_GO(edit_mode_toggle)
    else
      e_gadman_mode_set(((E_Container *)obj)->gadman, E_GADMAN_MODE_NORMAL);
 }
+/***************************************************************************/
 
+/***************************************************************************/
+ACT_FN_GO(zone_deskshow_toggle)
+{
+   E_Border *bd;
+   E_Border_List *bl;
+   E_Zone *zone;
+
+   zone = _e_actions_zone_get(obj);
+   if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
+   if (zone)
+     {
+	bl = e_container_border_list_first(zone->container);
+	while ((bd = e_container_border_list_next(bl))) 
+	  {
+	     if (bd->desk == e_desk_current_get(bd->zone))
+	       {
+		  if (zone->deskshow_toggle)
+		    {
+		       if (bd->deskshow) e_border_uniconify(bd);
+		       bd->deskshow = 0;
+		    }
+		  else
+		    {
+		       if (bd->iconic) continue;
+		       if (bd->client.netwm.state.skip_taskbar) continue;
+		       if (bd->user_skip_winlist) continue;
+		       e_border_iconify(bd);
+		       bd->deskshow = 1;
+		    }
+	       }
+	  }
+	zone->deskshow_toggle = zone->deskshow_toggle ? 0 : 1;
+	e_container_border_list_free(bl);
+     }
+}
 /***************************************************************************/
 
 static void
@@ -1553,6 +1589,12 @@ e_actions_init(void)
 				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    e_register_action_predef_name(_("Desktop"), _("Flip Desktop By..."),
 				 "desk_flip_by", NULL, EDIT_RESTRICT_ACTION, 0);
+
+   /* zone_deskshow_toggle */
+   ACT_GO(zone_deskshow_toggle);
+   e_register_action_predef_name(_("Desktop"), _("Show the desktop"), 
+				 "zone_deskshow_toggle", NULL, 
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
 
    /* desk_linear_flip_to */
    ACT_GO(desk_flip_to);
