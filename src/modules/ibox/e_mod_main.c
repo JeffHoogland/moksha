@@ -55,6 +55,7 @@ struct _IBox
    int             show_label;
    int		   show_zone;
    int		   show_desk;
+   int             icon_label;
    E_Zone          *zone;
 };
 
@@ -143,6 +144,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    b->show_label = ci->show_label;
    b->show_zone = ci->show_zone;
    b->show_desk = ci->show_desk;
+   b->icon_label = ci->icon_label;
    _ibox_fill(b);
 
    b->inst = inst;
@@ -541,11 +543,23 @@ _ibox_icon_fill(IBox_Icon *ic)
    evas_object_show(ic->o_icon2);
    
    /* FIXME: preferences for icon name */
-   label = ic->border->client.netwm.icon_name;
-   if (!label) label = ic->border->client.icccm.icon_name;
-   if (!label) label = ic->border->client.icccm.class;
-   if (!label) label = ic->border->client.netwm.name;
-   if (!label) label = ic->border->client.icccm.title;
+   switch (ic->ibox->icon_label) 
+     {
+      case 0:
+	label = ic->border->client.netwm.name;
+	break;
+      case 1:
+	label = ic->border->client.icccm.title;
+	break;
+      case 2:
+	label = ic->border->client.icccm.class;
+	break;
+      case 3:
+	label = ic->border->client.netwm.icon_name;
+	if (!label) label = ic->border->client.icccm.icon_name;
+	break;
+     }
+   
    if (!label) label = "?";
    edje_object_part_text_set(ic->o_holder, "label", label);
    edje_object_part_text_set(ic->o_holder2, "label", label);
@@ -1207,6 +1221,7 @@ _ibox_config_item_get(const char *id)
    ci->show_label = 0;
    ci->show_zone = 1;
    ci->show_desk = 0;
+   ci->icon_label = 0;
    ibox_config->items = evas_list_append(ibox_config->items, ci);
    return ci;
 }
@@ -1225,7 +1240,8 @@ _ibox_config_update(void)
 	inst->ibox->show_label = ci->show_label;
 	inst->ibox->show_zone = ci->show_zone;
 	inst->ibox->show_desk = ci->show_desk;
-
+	inst->ibox->icon_label = ci->icon_label;
+	
 	_ibox_empty(inst->ibox);
 	_ibox_fill(inst->ibox);
 	_ibox_resize_handle(inst->ibox); 
@@ -1278,6 +1294,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, show_label, INT);
    E_CONFIG_VAL(D, T, show_zone, INT);
    E_CONFIG_VAL(D, T, show_desk, INT);
+   E_CONFIG_VAL(D, T, icon_label, INT);
    
    conf_edd = E_CONFIG_DD_NEW("IBox_Config", Config);
    #undef T
@@ -1298,6 +1315,7 @@ e_modapi_init(E_Module *m)
 	ci->show_label = 0;
 	ci->show_zone = 1;
 	ci->show_desk = 0;
+	ci->icon_label = 0;
 	ibox_config->items = evas_list_append(ibox_config->items, ci);
      }
    

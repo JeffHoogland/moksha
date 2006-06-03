@@ -7,10 +7,9 @@
 struct _E_Config_Dialog_Data
 {
    int   show_label;
-
    int	 zone_policy;
    int	 desk_policy;
-
+   int   icon_label;
    struct
      {
 	Evas_Object *o_desk_show_all;
@@ -57,6 +56,7 @@ _fill_data(Config_Item *ci, E_Config_Dialog_Data *cfdata)
    cfdata->show_label = ci->show_label;
    cfdata->zone_policy = ci->show_zone;
    cfdata->desk_policy = ci->show_desk;
+   cfdata->icon_label = ci->icon_label;
 }
 
 static void *
@@ -93,6 +93,16 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
    ob = e_widget_check_add(evas, _("Show Icon Label"), &(cfdata->show_label));
    e_widget_framelist_object_append(of, ob);
+   rg = e_widget_radio_group_new(&(cfdata->icon_label));
+   ob = e_widget_radio_add(evas, _("Display Name"), 0, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Display Title"), 1, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Display Class"), 2, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Display Icon Name"), 3, rg);
+   e_widget_framelist_object_append(of, ob);
+   
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Zone"), 0);
@@ -151,7 +161,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    
    ci = cfd->data;
    ci->show_label = cfdata->show_label;
-
+   ci->icon_label = cfdata->icon_label;
    ci->show_zone = cfdata->zone_policy;
    ci->show_desk = cfdata->desk_policy;
 
