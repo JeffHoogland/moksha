@@ -542,7 +542,6 @@ _ibox_icon_fill(IBox_Icon *ic)
    evas_object_pass_events_set(ic->o_icon2, 1);
    evas_object_show(ic->o_icon2);
    
-   /* FIXME: preferences for icon name */
    switch (ic->ibox->icon_label) 
      {
       case 0:
