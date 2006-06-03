@@ -25,6 +25,8 @@ static void _e_border_menu_cb_fullscreen(void *data, E_Menu *m, E_Menu_Item *mi)
 static void _e_border_menu_cb_skip_winlist(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_sendto(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_raise(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_lower(void *data, E_Menu *m, E_Menu_Item *mi);
 
 EAPI void
 e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_Time timestamp)
@@ -337,6 +339,31 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 				  "widgets/border/default/kill");
 	mi = e_menu_item_new(m);
 	e_menu_item_separator_set(mi, 1);
+     }
+
+   /* Only allow to change layer for windows in "normal" layers */
+
+   if ((!bd->lock_user_stacking) && (!bd->internal) &&
+       ((bd->layer == 50) || (bd->layer == 100) || (bd->layer == 150)))
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Raise"));
+	e_menu_item_callback_set(mi, _e_border_menu_cb_raise, bd);
+	e_menu_item_icon_edje_set(mi,
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/stack_on_top"),
+				  "widgets/border/default/stack_on_top");
+
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Lower"));
+	e_menu_item_callback_set(mi, _e_border_menu_cb_lower, bd);
+	e_menu_item_icon_edje_set(mi,
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/stack_on_top"),
+				  "widgets/border/default/stack_below");
+	mi = e_menu_item_new(m);
+	e_menu_item_separator_set(mi, 1);
+	
      }
    
    if ((!bd->lock_user_iconify) && (!bd->fullscreen))
@@ -739,3 +766,30 @@ _e_border_menu_cb_sendto(void *data, E_Menu *m, E_Menu_Item *mi)
 	e_border_desk_set(bd, desk);
      }
 }
+
+static void 
+_e_border_menu_cb_raise(void *data, E_Menu *m, E_Menu_Item *mi) 
+{
+   E_Border *bd;
+
+   bd = data;
+   if ((!bd->lock_user_stacking) && (!bd->internal) &&
+       ((bd->layer == 50) || (bd->layer == 100) || (bd->layer == 150)))
+     {
+	e_border_raise(bd);
+     }   
+}
+
+static void 
+_e_border_menu_cb_lower(void *data, E_Menu *m, E_Menu_Item *mi) 
+{
+   E_Border *bd;
+
+   bd = data;
+   if ((!bd->lock_user_stacking) && (!bd->internal) &&
+       ((bd->layer == 50) || (bd->layer == 100) || (bd->layer == 150)))
+     {
+	e_border_lower(bd);
+     }   
+}
+
