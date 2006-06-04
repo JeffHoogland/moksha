@@ -276,6 +276,7 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
    Evas_List *bg_dirs, *bg;
    Ecore_Evas *eebuf;
    Evas *evasbuf;
+   char *homedir;
    
    const char *f;
    char *c;
@@ -283,6 +284,8 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
    int i = 0;
 
    if (!il) return;
+
+   homedir = e_user_homedir_get();
    
    evas = evas_object_evas_get(il);
    bg_obj = edje_object_add(cfd->dia->win->evas);
@@ -328,7 +331,6 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
         int detected;
 	char *bg_file;
 	Ecore_List *bgs;
-	char *homedir;
 	
 	d = bg->data;
 	if (!ecore_file_is_dir(d->dir)) continue;
@@ -336,7 +338,6 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
 	if (!bgs) continue;
 	
 	detected = 0;
-	homedir = e_user_homedir_get();
 	if (homedir)
 	  {
 	     if (!strncmp(d->dir, homedir, strlen(homedir)))
