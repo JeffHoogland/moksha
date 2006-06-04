@@ -12,6 +12,9 @@ struct _E_Config_Dialog_Data
    int   eap_label;
    
    Evas_Object *tlist;
+   Evas_Object *radio_name;
+   Evas_Object *radio_comment;
+   Evas_Object *radio_generic;
 };
 
 /* Protos */
@@ -24,6 +27,7 @@ static void _cb_del(void *data, void *data2);
 static void _cb_entry_ok(char *text, void *data);
 static void _cb_confirm_dialog_yes(void *data);
 static void _load_tlist(E_Config_Dialog_Data *cfdata);
+static void _show_label_cb_change(void *data, Evas_Object *obj);
 
 void 
 _config_ibar_module(Config_Item *ci)
@@ -87,31 +91,41 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_list_add(evas, 0, 0);
    
    of = e_widget_frametable_add(evas, _("Selected Bar Source"), 0);
-
    ol = e_widget_tlist_add(evas, &(cfdata->dir));
    cfdata->tlist = ol;
    _load_tlist(cfdata);
-   e_widget_min_size_set(ol, 160, 160);
-   e_widget_frametable_object_append(of, ol, 0, 0, 1, 2, 1, 0, 1, 0);
-
+   e_widget_min_size_set(ol, 140, 140);
+//   e_widget_framelist_object_append(of, ol);
+   
+   e_widget_frametable_object_append(of, ol, 0, 0, 1, 2, 1, 1, 1, 0);
+   
+   ot = e_widget_table_add(evas, 0);
    ob = e_widget_button_add(evas, _("Add"), "widget/add", _cb_add, cfdata, NULL);
-   e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 0);
+   e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 1, 1, 0);
    ob = e_widget_button_add(evas, _("Delete"), "widget/del", _cb_del, cfdata, NULL);
-   e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 0);
-
-   e_widget_list_object_append(o, of, 1, 1, 0.5);   
-
+   e_widget_table_object_append(ot, ob, 0, 1, 1, 1, 1, 1, 1, 0);
+   e_widget_frametable_object_append(of, ot, 1, 0, 1, 1, 1, 1, 1, 0);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   
    of = e_widget_framelist_add(evas, _("Icon Labels"), 0);
    ob = e_widget_check_add(evas, _("Show Icon Label"), &(cfdata->show_label));
+   e_widget_on_change_hook_set(ob, _show_label_cb_change, cfdata);
    e_widget_framelist_object_append(of, ob);  
    
    rg = e_widget_radio_group_new(&(cfdata->eap_label));
-   ob = e_widget_radio_add(evas, _("Display Eap Name"), 0, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Display Eap Comment"), 1, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Display Eap Generic"), 2, rg);
-   e_widget_framelist_object_append(of, ob);     
+
+   cfdata->radio_name = e_widget_radio_add(evas, _("Display Eap Name"), 0, rg);
+   e_widget_framelist_object_append(of, cfdata->radio_name);
+   if (!cfdata->show_label) e_widget_disabled_set(cfdata->radio_name, 1);
+
+   cfdata->radio_comment = e_widget_radio_add(evas, _("Display Eap Comment"), 1, rg);
+   e_widget_framelist_object_append(of, cfdata->radio_comment);
+   if (!cfdata->show_label) e_widget_disabled_set(cfdata->radio_comment, 1);
+   
+   cfdata->radio_generic = e_widget_radio_add(evas, _("Display Eap Generic"), 2, rg);
+   e_widget_framelist_object_append(of, cfdata->radio_generic);
+   if (!cfdata->show_label) e_widget_disabled_set(cfdata->radio_generic, 1);
+   
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    return o;
@@ -240,4 +254,17 @@ _load_tlist(E_Config_Dialog_Data *cfdata)
    e_widget_tlist_go(cfdata->tlist);
    if (selnum >= 0)
      e_widget_tlist_selected_set(cfdata->tlist, selnum);   
+}
+
+static void 
+_show_label_cb_change(void *data, Evas_Object *obj) 
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data;
+   if (!cfdata) return;
+   
+   e_widget_disabled_set(cfdata->radio_name, !cfdata->show_label);
+   e_widget_disabled_set(cfdata->radio_comment, !cfdata->show_label);
+   e_widget_disabled_set(cfdata->radio_generic, !cfdata->show_label);   
 }
