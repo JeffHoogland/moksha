@@ -346,7 +346,6 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
 		  i++;
 		  detected = 1;
 	       }
-	     free(homedir);
 	  }
 	if (!detected)
 	  {
@@ -400,6 +399,8 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
    e_widget_ilist_go(il);
    if (selnum >= 0)
      e_widget_ilist_selected_set(il, selnum);
+   
+   free(homedir);   
 }
 
 void
