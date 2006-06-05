@@ -160,7 +160,7 @@ _e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data)
    eap->width = 128;
    eap->height = 128;   
 
-   if ((eap->name) && (eap->exe))
+   if ((eap->name) && (eap->exe)) 
      e_app_fields_save(eap);
    
    return 1;

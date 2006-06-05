@@ -562,7 +562,7 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
    E_App *a;
    E_Border *bd;
    char *bname = NULL, *bclass = NULL;
-   
+   char path[4096];
    
    bd = data;
    a = bd->app;
@@ -574,9 +574,16 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 	     
    if (!a)
      {
-	a = e_app_empty_new(NULL);
-	if (a)
+	if (bname) 
 	  {
+	     snprintf(path, sizeof(path), "%s/.e/e/applications/all/%s.eap", getenv("HOME"), bname);
+	     a = e_app_empty_new(path);
+	  }
+	else
+	  a = e_app_empty_new(NULL);
+
+	if (a)
+	  {	     
 	     if (bname) a->win_name = evas_stringshare_add(bname);
 	     if (bclass) a->win_class = evas_stringshare_add(bclass);
 	     if (bd->client.icccm.window_role)
