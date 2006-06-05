@@ -315,7 +315,7 @@ e_config_init(void)
    /**/ /* == already configurable via ipc */
    E_CONFIG_VAL(D, T, config_version, INT); /**/
    E_CONFIG_VAL(D, T, show_splash, INT); /**/
-   E_CONFIG_VAL(D, T, init_default_theme, STR);
+   E_CONFIG_VAL(D, T, init_default_theme, STR); /**/
    E_CONFIG_VAL(D, T, desktop_default_background, STR); /**/
    E_CONFIG_VAL(D, T, desktop_default_name, STR); /**/
    E_CONFIG_LIST(D, T, desktop_backgrounds, _e_config_desktop_bg_edd); /**/
@@ -451,7 +451,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, cfgdlg_default_mode, INT); /**/
    E_CONFIG_LIST(D, T, gadcons, _e_config_gadcon_edd);
    E_CONFIG_LIST(D, T, shelves, _e_config_shelf_edd);
-   E_CONFIG_VAL(D, T, font_hinting, INT);
+   E_CONFIG_VAL(D, T, font_hinting, INT); /**/
    E_CONFIG_VAL(D, T, desklock_personal_passwd, STR);
    E_CONFIG_VAL(D, T, desklock_background, STR);
    E_CONFIG_VAL(D, T, desklock_auth_method, INT);
@@ -460,7 +460,6 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, desklock_use_timeout, INT);
    E_CONFIG_VAL(D, T, desklock_timeout, DOUBLE);
    E_CONFIG_VAL(D, T, desklock_disable_screensaver, INT);
-
    E_CONFIG_VAL(D, T, display_res_restore, INT);
    E_CONFIG_VAL(D, T, display_res_width, INT);
    E_CONFIG_VAL(D, T, display_res_height, INT);

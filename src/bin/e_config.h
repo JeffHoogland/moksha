@@ -75,7 +75,7 @@ struct _E_Config
 {
    int         config_version;
    int         show_splash; //GUI
-   const char *init_default_theme;
+   const char *init_default_theme; // GUI
    const char *desktop_default_background; // GUI
    Evas_List  *desktop_backgrounds; // GUI
    const char *desktop_default_name;

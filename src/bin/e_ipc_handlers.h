@@ -945,6 +945,7 @@ break;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
+
 /****************************************************************************/
 #define HDL E_IPC_EAP_EDIT_START
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -970,6 +971,7 @@ break;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
+
 /****************************************************************************/
 #define HDL E_IPC_OP_MODULE_LOAD
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -1413,11 +1415,6 @@ break;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
- 
-
-
-
-
 
 /****************************************************************************/
 #define HDL E_IPC_OP_RESTART
@@ -1433,6 +1430,7 @@ break;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
+
 /****************************************************************************/
 #define HDL E_IPC_OP_SHUTDOWN
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -1537,9 +1535,6 @@ break;
    END_STRING(s);
 #endif
 #undef HDL
-
-
-
 
 /****************************************************************************/
 #define HDL E_IPC_OP_DIRS_LIST
@@ -1738,7 +1733,6 @@ break;
 #endif
 #undef HDL
 
-
 /****************************************************************************/
 #define HDL E_IPC_OP_MENUS_SCROLL_SPEED_SET
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -1778,7 +1772,6 @@ break;
    END_DOUBLE;
 #endif
 #undef HDL
-
    
 /****************************************************************************/
 #define HDL E_IPC_OP_FOCUS_POLICY_SET
@@ -2243,7 +2236,7 @@ break;
 #endif
 #undef HDL
 
-   /****************************************************************************/
+/****************************************************************************/
 #define HDL E_IPC_OP_BORDER_SHADE_TRANSITION_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-border-shade-transition-set", 1, "Set the shading animation algorithm (0, 1, 2 or 3)", 0, HDL)
@@ -2487,7 +2480,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_BINDING_MOUSE_LIST 
 #if (TYPE == E_REMOTE_OPTIONS)
    /* e_remote define command line args */
@@ -2509,7 +2501,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_BINDING_MOUSE_LIST_REPLY
 #if (TYPE == E_REMOTE_OPTIONS)
 #elif (TYPE == E_REMOTE_OUT)
@@ -2606,7 +2597,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_BINDING_MOUSE_ADD
 #if (TYPE == E_REMOTE_OPTIONS)
    /* e_remote define command line args */
@@ -2712,7 +2702,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_BINDING_MOUSE_DEL
 #if (TYPE == E_REMOTE_OPTIONS)
    /* e_remote define command line args */
@@ -2815,7 +2804,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_BINDING_KEY_LIST 
 #if (TYPE == E_REMOTE_OPTIONS)
    /* e_remote define command line args */
@@ -2838,7 +2826,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_BINDING_KEY_LIST_REPLY
 #if (TYPE == E_REMOTE_OPTIONS)
 #elif (TYPE == E_REMOTE_OUT)
@@ -2937,7 +2924,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_BINDING_KEY_ADD
 #if (TYPE == E_REMOTE_OPTIONS)
    /* e_remote define command line args */
@@ -3042,7 +3028,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_BINDING_KEY_DEL
 #if (TYPE == E_REMOTE_OPTIONS)
    /* e_remote define command line args */
@@ -3345,7 +3330,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_USE_RESIST_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-use-resist-set", 1, "Set resist policy, 1 for enabled 0 for disabled", 0, HDL)
@@ -3386,7 +3370,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_DRAG_RESIST_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-drag-resist-set", 1, "Set drag resist threshold (0-100)", 0, HDL)
@@ -3427,7 +3410,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_DESK_RESIST_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-desk-resist-set", 1, "Set desktop resist threshold (0-100)", 0, HDL)
@@ -3468,7 +3450,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_WINDOW_RESIST_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-window-resist-set", 1, "Set window resist threshold (0-100)", 0, HDL)
@@ -3509,7 +3490,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_GADGET_RESIST_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-gadget-resist-set", 1, "Set gadget resist threshold (0-100)", 0, HDL)
@@ -3656,7 +3636,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_WINLIST_WARP_AT_END_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-winlist-warp-at-end-set", 1, "Set winlist (alt+tab) warp at end policy", 0, HDL)
@@ -3737,7 +3716,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_WINLIST_SCROLL_ANIMATE_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-winlist-scroll-animate-set", 1, "Set winlist (alt+tab) scroll animate policy", 0, HDL)
@@ -3818,7 +3796,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_WINLIST_LIST_SHOW_ICONIFIED_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-winlist-list-show-iconified-set", 1, "Set whether winlist (alt+tab) will show iconfied windows", 0, HDL)
@@ -3859,7 +3836,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_WINLIST_LIST_SHOW_OTHER_DESK_WINDOWS_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-winlist-list-show-other-desk-windows-set", 1, "Set whether winlist (alt+tab) will show other desk windows", 0, HDL)
@@ -3900,7 +3876,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_WINLIST_LIST_SHOW_OTHER_SCREEN_WINDOWS_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-winlist-list-show-other-screen-windows-set", 1, "Set winlist (alt+tab) show other screen windows policy", 0, HDL)
@@ -3941,7 +3916,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_WINLIST_LIST_UNCOVER_WHILE_SELECTING_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-winlist-list-uncover-while-selecting-set", 1, "Set whether winlist (alt+tab) will show iconified windows while selecting", 0, HDL)
@@ -3982,7 +3956,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_WINLIST_LIST_JUMP_DESK_WHILE_SELECTING_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-winlist-list-jump-desk-while-selecting-set", 1, "Set winlist (alt+tab) jump desk while selecting policy", 0, HDL)
@@ -4021,7 +3994,6 @@ break;
    END_INT;
 #endif
 #undef HDL
-
 
 /****************************************************************************/
 #define HDL E_IPC_OP_WINLIST_POS_ALIGN_X_SET
@@ -4184,7 +4156,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_WINLIST_POS_MIN_W_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-winlist-pos-min-w-set", 1, "Set winlist (alt+tab) minimum width", 0, HDL)
@@ -4225,7 +4196,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_WINLIST_POS_MIN_H_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-winlist-pos-min-h-set", 1, "Set winlist (alt+tab) minimum height", 0, HDL)
@@ -4266,7 +4236,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_WINLIST_POS_MAX_W_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-winlist-pos-max-w-set", 1, "Set winlist (alt+tab) maximum width", 0, HDL)
@@ -4307,7 +4276,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_WINLIST_POS_MAX_H_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-winlist-pos-max-h-set", 1, "Set winlist (alt+tab) maximum height", 0, HDL)
@@ -4348,7 +4316,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_KILL_IF_CLOSE_NOT_POSSIBLE_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-kill-if-close-not-possible-set", 1, "Set whether E should kill an application if it can not close", 0, HDL)
@@ -4389,7 +4356,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_KILL_PROCESS_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-kill-process-set", 1, "Set whether E should kill the process directly or through x", 0, HDL)
@@ -4469,9 +4435,7 @@ break;
 #endif
 #undef HDL
 
-
 /****************************************************************************/
-
 #define HDL E_IPC_OP_PING_CLIENTS_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-ping-clients-set", 1, "Set whether E should ping clients", 0, HDL)
@@ -4823,7 +4787,6 @@ break;
 #undef HDL
      
 /****************************************************************************/
-
 #define HDL E_IPC_OP_THEME_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-theme-set", 2, "Set theme category (OPT1) and edje file (OPT2)", 0, HDL)
@@ -4900,7 +4863,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_MOVE_INFO_FOLLOWS_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-move-info-follows-set", 1, "Set whether the move dialog should follow the client window", 0, HDL)
@@ -4941,7 +4903,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_RESIZE_INFO_FOLLOWS_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-resize-info-follows-set", 1, "Set whether the resize dialog should follow the client window", 0, HDL)
@@ -4982,7 +4943,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_MOVE_INFO_VISIBLE_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-move-info-visible-set", 1, "Set whether the move dialog should be visible", 0, HDL)
@@ -5023,7 +4983,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_RESIZE_INFO_VISIBLE_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-resize-info-visible-set", 1, "Set whether the resize dialog should be visible", 0, HDL)
@@ -5063,8 +5022,7 @@ break;
 #endif
 #undef HDL
 
-/****************************************************************************/
-   
+/****************************************************************************/   
 #define HDL E_IPC_OP_FOCUS_LAST_FOCUSED_PER_DESKTOP_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-focus-last-focused-per-desktop-set", 1, "Set whether E should remember focused windows when switching desks", 0, HDL)
@@ -5105,7 +5063,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_FOCUS_REVERT_ON_HIDE_OR_CLOSE_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-focus-revert-on-hide-or-close-set", 1, "Set whether E will focus the last focused window when you hide or close a focused window", 0, HDL)
@@ -5293,7 +5250,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_CURSOR_SIZE_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-cursor-size-set", 1, "Set the E cursor size", 0, HDL)
@@ -5335,7 +5291,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_USE_E_CURSOR_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-use-e-cursor-set", 1, "Set whether E's cursor should be used", 0, HDL)
@@ -5384,7 +5339,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_MENU_AUTOSCROLL_MARGIN_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-menu-autoscroll-margin-set", 1, "Set the distance from the edge of the screen the menu will autoscroll to", 0, HDL)
@@ -5930,7 +5884,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_BINDING_SIGNAL_LIST 
 #if (TYPE == E_REMOTE_OPTIONS)
    /* e_remote define command line args */
@@ -5953,7 +5906,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_BINDING_SIGNAL_LIST_REPLY
 #if (TYPE == E_REMOTE_OPTIONS)
 #elif (TYPE == E_REMOTE_OUT)
@@ -6056,7 +6008,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_BINDING_SIGNAL_ADD
 #if (TYPE == E_REMOTE_OPTIONS)
    /* e_remote define command line args */
@@ -6163,7 +6114,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_BINDING_SIGNAL_DEL
 #if (TYPE == E_REMOTE_OPTIONS)
    /* e_remote define command line args */
@@ -6268,7 +6218,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_BINDING_WHEEL_LIST 
 #if (TYPE == E_REMOTE_OPTIONS)
    /* e_remote define command line args */
@@ -6291,7 +6240,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_BINDING_WHEEL_LIST_REPLY
 #if (TYPE == E_REMOTE_OPTIONS)
 #elif (TYPE == E_REMOTE_OUT)
@@ -6390,7 +6338,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_BINDING_WHEEL_ADD
 #if (TYPE == E_REMOTE_OPTIONS)
    /* e_remote define command line args */
@@ -6497,7 +6444,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_BINDING_WHEEL_DEL
 #if (TYPE == E_REMOTE_OPTIONS)
    /* e_remote define command line args */
@@ -6600,7 +6546,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_WINLIST_LIST_FOCUS_WHILE_SELECTING_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-winlist-list-focus-while-selecting-set", 1, "Set winlist (alt+tab) focus while selecting policy", 0, HDL)
@@ -6640,9 +6585,7 @@ break;
 #endif
 #undef HDL
 
-
 /****************************************************************************/
-
 #define HDL E_IPC_OP_WINLIST_LIST_RAISE_WHILE_SELECTING_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-winlist-list-raise-while-selecting-set", 1, "Set winlist (alt+tab) raise while selecting policy", 0, HDL)
@@ -7075,7 +7018,6 @@ break;
 #endif
 #undef HDL
 
-
 /****************************************************************************/
 #define HDL E_IPC_OP_MENU_EAP_NAME_SHOW_SET
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -7247,6 +7189,7 @@ break;
    END_INT
 #endif
 #undef HDL
+
 /****************************************************************************/
 #define HDL E_IPC_OP_COLOR_CLASS_COLOR_SET
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -7261,6 +7204,7 @@ break;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
+
 /****************************************************************************/
 #define HDL E_IPC_OP_COLOR_CLASS_COLOR2_SET
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -7275,6 +7219,7 @@ break;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
+
 /****************************************************************************/
 #define HDL E_IPC_OP_COLOR_CLASS_COLOR3_SET
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -7289,6 +7234,7 @@ break;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
+
 /****************************************************************************/
 #define HDL E_IPC_OP_COLOR_CLASS_COLOR_LIST
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -7306,6 +7252,7 @@ break;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
+
 /****************************************************************************/
 #define HDL E_IPC_OP_COLOR_CLASS_COLOR2_LIST
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -7323,6 +7270,7 @@ break;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
+
 /****************************************************************************/
 #define HDL E_IPC_OP_COLOR_CLASS_COLOR3_LIST
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -7340,6 +7288,7 @@ break;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
+
 /****************************************************************************/
 #define HDL E_IPC_OP_COLOR_CLASS_DEL
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -7384,6 +7333,7 @@ break;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
+
 /****************************************************************************/
 #define HDL E_IPC_OP_COLOR_CLASS_LIST_REPLY
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -7401,6 +7351,7 @@ break;
    END_GENERIC();
 #endif
 #undef HDL
+
 /****************************************************************************/
 #define HDL E_IPC_OP_CFGDLG_AUTO_APPLY_SET
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -7416,6 +7367,7 @@ break;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
+
 /****************************************************************************/
 #define HDL E_IPC_OP_CFGDLG_AUTO_APPLY_GET
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -7435,10 +7387,14 @@ break;
 #elif (TYPE == E_WM_IN)
 #elif (TYPE == E_REMOTE_IN)
    START_INT(policy, HDL);
-   printf("REPLY: POLICY=%d\n", policy);
+   if (policy == 0) 
+     printf("REPLY: Disabled\n");
+   if (policy == 1) 
+     printf("REPLY: Enabled\n");
    END_INT;
 #endif
 #undef HDL
+
 /****************************************************************************/
 #define HDL E_IPC_OP_CFGDLG_DEFAULT_MODE_SET
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -7463,6 +7419,7 @@ break;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
+
 /****************************************************************************/
 #define HDL E_IPC_OP_CFGDLG_DEFAULT_MODE_GET
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -7474,6 +7431,7 @@ break;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
+
 /****************************************************************************/
 #define HDL E_IPC_OP_CFGDLG_DEFAULT_MODE_GET_REPLY
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -7488,6 +7446,7 @@ break;
    END_INT
 #endif
 #undef HDL
+
 /****************************************************************************/
 #define HDL E_IPC_OP_DESKTOP_LOCK
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -7502,3 +7461,102 @@ break;
 #endif
 #undef HDL
 
+/****************************************************************************/
+#define HDL E_IPC_OP_INIT_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-init-set", 1, "Set edje file (OPT1) to use for init screen", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING(params[0], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING(s, HDL);
+   if (e_config->init_default_theme) evas_stringshare_del(e_config->init_default_theme);
+   e_config->init_default_theme = NULL;
+   if (s) 
+     {
+	const char *i;
+	const char *f;
+	f = ecore_file_get_file(s);
+	i = e_path_find(path_init, f);
+	if (!e_util_edje_collection_exists(i, "init/splash")) 
+	  {
+	     printf("The edje file you selected does not contain any init information.\n");
+	     exit(-1);
+	  }
+	if (f) e_config->init_default_theme = evas_stringshare_add(f);
+     }
+  SAVE;
+  END_STRING(s);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_INIT_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-init-get", 0, "Get the current edje file for init screen", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_STRING(e_config->init_default_theme, E_IPC_OP_INIT_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+     
+/****************************************************************************/
+#define HDL E_IPC_OP_INIT_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   STRING(s, HDL);
+   if (s) printf("REPLY: \"%s\"\n", s);
+   else printf("REPLY: \"\"\n");
+   END_STRING(s);
+#elif (TYPE == E_LIB_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FONT_HINTING_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-font-hinting-set", 1, "Set font hinting method to use, 0 = Bytecode, 1 = Auto, 2 = None", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(policy, HDL);
+   e_config->font_hinting = policy;
+   E_CONFIG_LIMIT(e_config->font_hinting, 0, 2);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FONT_HINTING_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-font-hinting-get", 0, "Get font hinting method", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->font_hinting, E_IPC_OP_FONT_HINTING_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FONT_HINTING_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(policy, HDL);
+   if (policy == 0) 
+     printf("REPLY: Bytecode\n");
+   else if (policy == 1) 
+     printf("REPLY: Auto\n");
+   else if (policy == 2) 
+     printf("REPLY: None\n"); 
+   END_INT;
+#endif
+#undef HDL
