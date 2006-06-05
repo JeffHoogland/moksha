@@ -156,13 +156,10 @@ _load_inits(E_Config_Dialog *cfd, Evas_Object *il)
      {
 	Evas_Object *ic = NULL;
 
-	ic = edje_object_add(evas);
-	e_util_edje_icon_set(ic, "enlightenment/run");
-	
-	/*
-	ic = e_widget_preview_add(evas, 48, 48);
-	e_widget_preview_edje_set(ic, s, "init/splash");
-	*/
+	if (!e_thumb_exists(c)) 
+	  ic = e_thumb_generate_begin(c, 48, 48, cfd->dia->win->evas, &ic, NULL, NULL);
+	else 
+	  ic = e_thumb_evas_object_get(c, cfd->dia->win->evas, 48, 48, 1);
 	
 	e_widget_ilist_append(il, ic, _("Theme Init"), _ilist_cb_init_selected, cfd, "");
 	if (!e_config->init_default_theme)
@@ -229,26 +226,10 @@ _load_inits(E_Config_Dialog *cfd, Evas_Object *il)
 	     if (ecore_file_is_dir(full_path)) continue;
 	     if (!e_util_edje_collection_exists(full_path, "init/splash")) continue;
 
-	     ic = edje_object_add(evas);
-	     e_util_edje_icon_set(ic, "enlightenment/run");
-	     
-	     /*
-	      * Using live previews for icons in list here
-	      * really drains resources. */
-	     
-	     /*
-	     ic = e_widget_preview_add(evas, 48, 48);
-	     e_widget_preview_edje_set(ic, full_path, "init/splash");
-	     */
-	     
-	     /* e_thumb_generate cannot handle init splash yet */ 
-
-	     /*
-	     if (!e_thumb_exists(full_path))
-	       ic = e_thumb_generate_begin(full_path, 48, 48, evas, &ic, NULL, NULL);
-	     else
-	       ic = e_thumb_evas_object_get(full_path, evas, 48, 48, 1);
-	     */
+	     if (!e_thumb_exists(c)) 
+	       ic = e_thumb_generate_begin(full_path, 48, 48, cfd->dia->win->evas, &ic, NULL, NULL);
+	     else 
+	       ic = e_thumb_evas_object_get(full_path, cfd->dia->win->evas, 48, 48, 1);
 	     
 	     e_widget_ilist_append(il, ic, ecore_file_strip_ext(init_file), _ilist_cb_init_selected, cfd, full_path);
 	     
