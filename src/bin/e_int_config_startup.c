@@ -126,7 +126,7 @@ static void
 _load_inits(E_Config_Dialog *cfd, Evas_Object *il) 
 {
    Evas *evas;
-   Evas_Object *ic, *im, *o, *init_obj;
+   Evas_Object *im, *o, *init_obj;
    Evas_List *init_dirs, *init;
    Ecore_Evas *eebuf;
    Evas *evasbuf;
@@ -141,44 +141,15 @@ _load_inits(E_Config_Dialog *cfd, Evas_Object *il)
    homedir = e_user_homedir_get();
    
    evas = evas_object_evas_get(il);
-   init_obj = edje_object_add(cfd->dia->win->evas);
    eebuf = ecore_evas_buffer_new(1, 1);
    evasbuf = ecore_evas_get(eebuf);
-   o = edje_object_add(evasbuf);
-
-   e_widget_ilist_header_append(il, NULL, _("Theme"));
-   i++;
    
-   /* Load the init */   
-   s = e_path_find(path_init, "init.edj");
-   c = strdup(s);
-   if (edje_object_file_set(o, s, "init/splash")) 
-     {
-	Evas_Object *ic = NULL;
-
-	if (!e_thumb_exists(c)) 
-	  ic = e_thumb_generate_begin(c, 48, 48, cfd->dia->win->evas, &ic, NULL, NULL);
-	else 
-	  ic = e_thumb_evas_object_get(c, cfd->dia->win->evas, 48, 48, 1);
-	
-	e_widget_ilist_append(il, ic, _("Theme Init"), _ilist_cb_init_selected, cfd, "");
-	if (!e_config->init_default_theme)
-	  selnum = i;
-		
-	i++;
-     }
    im = e_widget_preview_add(cfd->dia->win->evas, 320, 
 			     (320 * e_zone_current_get(cfd->dia->win->container)->h) /
 			     e_zone_current_get(cfd->dia->win->container)->w);
 
-   e_widget_preview_edje_set(im, s, "init/splash");
-   evas_object_del(init_obj);
    
-   evas_object_del(o);
-   ecore_evas_free(eebuf);
-   if (s) evas_stringshare_del(s);
-   
-   /* Load other inits */
+   /* Load inits */
    init_dirs = e_path_dir_list_get(path_init);
    for (init = init_dirs; init; init = init->next) 
      {
@@ -220,6 +191,7 @@ _load_inits(E_Config_Dialog *cfd, Evas_Object *il)
 
 	while ((init_file = ecore_list_next(inits))) 
 	  {
+	     Evas_Object *ic = NULL;
 	     char full_path[4096];
 	     
 	     snprintf(full_path, sizeof(full_path), "%s/%s", d->dir, init_file);
