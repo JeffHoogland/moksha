@@ -481,6 +481,7 @@ _bg_file_added(void *data, Ecore_File_Monitor *monitor, Ecore_File_Event event, 
    evas = e_win_evas_get(cfd->dia->win);
    
    file = (char *)ecore_file_get_file((char *)path);
+   noext = ecore_file_strip_ext(file);
    if (event == ECORE_FILE_EVENT_CREATED_FILE) 
      {
 	if (e_util_edje_collection_exists((char *)path, "desktop/background")) 
@@ -489,14 +490,11 @@ _bg_file_added(void *data, Ecore_File_Monitor *monitor, Ecore_File_Event event, 
 	       ic = e_thumb_generate_begin((char *)path, 48, 48, evas, &ic, NULL, NULL);
 	     else
 	       ic = e_thumb_evas_object_get((char *)path, evas, 48, 48, 1);
-	     e_widget_ilist_append(il, ic, ecore_file_strip_ext(file), _ilist_cb_bg_selected, cfd, (char *)path);
+	     e_widget_ilist_append(il, ic, noext, _ilist_cb_bg_selected, cfd, (char *)path);
 	  }
      }
    else if (event == ECORE_FILE_EVENT_DELETED_FILE) 
-     {
-	noext = ecore_file_strip_ext(file);
-	e_widget_ilist_remove_label(il, noext);
-     }
+     e_widget_ilist_remove_label(il, noext);
 }
 
 static int
