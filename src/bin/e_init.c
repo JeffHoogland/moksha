@@ -67,8 +67,10 @@ e_init_init(void)
 	     /* first screen */
 	     if (l == screens)
 	       {
-		  /* FIXME: "init.edj" needs to come from config */
-		  s = e_path_find(path_init, "init.edj"),
+		  if (!e_config->init_default_theme)
+		    s = e_path_find(path_init, "init.edj");
+		  else
+		    s = e_path_find(path_init, e_config->init_default_theme);
 		  edje_object_file_set(o, s, "init/splash");
 		  if (s) evas_stringshare_del(s);
 		  _e_init_object = o;
@@ -76,8 +78,10 @@ e_init_init(void)
 	     /* other screens */
 	     else
 	       {
-		  /* FIXME: "init.edj" needs to come from config */
-		  s = e_path_find(path_init, "init.edj"),
+		  if (!e_config->init_default_theme)
+		    s = e_path_find(path_init, "init.edj");
+		  else 
+		    s = e_path_find(path_init, e_config->init_default_theme);
 		  edje_object_file_set(o, s, "init/extra_screen");
 		  if (s) evas_stringshare_del(s);
 	       }
@@ -89,8 +93,10 @@ e_init_init(void)
    else
      {
 	o = edje_object_add(_e_init_evas);
-	/* FIXME: "init.edj" needs to come from config */
-	s = e_path_find(path_init, "init.edj"),
+	if (!e_config->init_default_theme)
+	  s = e_path_find(path_init, "init.edj");
+	else 
+	  s = e_path_find(path_init, e_config->init_default_theme);
 	edje_object_file_set(o, s, "init/splash");
 	if (s) evas_stringshare_del(s);
 	_e_init_object = o;

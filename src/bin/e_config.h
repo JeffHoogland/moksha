@@ -47,10 +47,10 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
  * defaults for e to work.
  */
 #define E_CONFIG_FILE_EPOCH      0x0000
-/* increment this whenever a new set of configvalues are added but the users
+/* increment this whenever a new set of config values are added but the users
  * config doesn't need top be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0093
+#define E_CONFIG_FILE_GENERATION 0x0094
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT      0
@@ -75,6 +75,7 @@ struct _E_Config
 {
    int         config_version;
    int         show_splash; //GUI
+   const char *init_default_theme;
    const char *desktop_default_background; // GUI
    Evas_List  *desktop_backgrounds; // GUI
    const char *desktop_default_name;

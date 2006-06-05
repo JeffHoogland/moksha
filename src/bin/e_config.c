@@ -315,6 +315,7 @@ e_config_init(void)
    /**/ /* == already configurable via ipc */
    E_CONFIG_VAL(D, T, config_version, INT); /**/
    E_CONFIG_VAL(D, T, show_splash, INT); /**/
+   E_CONFIG_VAL(D, T, init_default_theme, STR);
    E_CONFIG_VAL(D, T, desktop_default_background, STR); /**/
    E_CONFIG_VAL(D, T, desktop_default_name, STR); /**/
    E_CONFIG_LIST(D, T, desktop_backgrounds, _e_config_desktop_bg_edd); /**/
@@ -509,6 +510,7 @@ e_config_init(void)
 #define IFCFGEND }
    IFCFG(0x008d);
    e_config->show_splash = 1;
+   e_config->init_default_theme = NULL;
    e_config->desktop_default_background = NULL;
    e_config->desktop_default_name = evas_stringshare_add(_("Desktop %i, %i"));
    e_config->menus_scroll_speed = 1000.0;
@@ -1784,6 +1786,7 @@ _e_config_free(void)
 	     if (cc->name) evas_stringshare_del(cc->name);
 	     E_FREE(cc);
 	  }
+	if (e_config->init_default_theme) evas_stringshare_del(e_config->init_default_theme);
 	if (e_config->desktop_default_background) evas_stringshare_del(e_config->desktop_default_background);
 	if (e_config->desktop_default_name) evas_stringshare_del(e_config->desktop_default_name);
 	if (e_config->language) evas_stringshare_del(e_config->language);
