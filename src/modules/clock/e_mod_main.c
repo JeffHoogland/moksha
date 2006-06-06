@@ -119,7 +119,7 @@ EAPI E_Module_Api e_modapi =
      "Clock"
 };
 
-EAPI int
+EAPI void *
 e_modapi_init(E_Module *m)
 {
    clock_module = m;

@@ -225,7 +225,7 @@ EAPI E_Module_Api e_modapi =
      "Start"
 };
 
-EAPI int
+EAPI void *
 e_modapi_init(E_Module *m)
 {
    start_module = m;

@@ -835,7 +835,7 @@ EAPI E_Module_Api e_modapi =
      "Cpufreq"
 };
 
-EAPI int
+EAPI void *
 e_modapi_init(E_Module *m)
 {
    char buf[4096];

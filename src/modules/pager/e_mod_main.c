@@ -1707,7 +1707,7 @@ EAPI E_Module_Api e_modapi =
      "Pager"
 };
 
-EAPI int
+EAPI void *
 e_modapi_init(E_Module *m)
 {
    conf_edd = E_CONFIG_DD_NEW("Pager_Config", Config);
