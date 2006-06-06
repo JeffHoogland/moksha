@@ -1363,7 +1363,7 @@ EAPI E_Module_Api e_modapi =
      "Battery"
 };
 
-EAPI int
+EAPI void *
 e_modapi_init(E_Module *m)
 {
    conf_edd = E_CONFIG_DD_NEW("Battery_Config", Config);
