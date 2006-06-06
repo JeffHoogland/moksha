@@ -1277,7 +1277,7 @@ EAPI E_Module_Api e_modapi =
      "IBar"
 };
 
-EAPI int
+EAPI void *
 e_modapi_init(E_Module *m)
 {
    conf_item_edd = E_CONFIG_DD_NEW("IBar_Config_Item", Config_Item);
