@@ -133,7 +133,6 @@ _load_inits(E_Config_Dialog *cfd, Evas_Object *il)
    int i = 0;
    int selnum = -1;
    const char *s;
-   char *c;
    char *homedir;
    
    if (!il) return;
@@ -147,7 +146,6 @@ _load_inits(E_Config_Dialog *cfd, Evas_Object *il)
    im = e_widget_preview_add(cfd->dia->win->evas, 320, 
 			     (320 * e_zone_current_get(cfd->dia->win->container)->h) /
 			     e_zone_current_get(cfd->dia->win->container)->w);
-
    
    /* Load inits */
    init_dirs = e_path_dir_list_get(path_init);
@@ -198,7 +196,7 @@ _load_inits(E_Config_Dialog *cfd, Evas_Object *il)
 	     if (ecore_file_is_dir(full_path)) continue;
 	     if (!e_util_edje_collection_exists(full_path, "init/splash")) continue;
 
-	     if (!e_thumb_exists(c)) 
+	     if (!e_thumb_exists(full_path)) 
 	       ic = e_thumb_generate_begin(full_path, 48, 48, cfd->dia->win->evas, &ic, NULL, NULL);
 	     else 
 	       ic = e_thumb_evas_object_get(full_path, cfd->dia->win->evas, 48, 48, 1);
@@ -224,7 +222,6 @@ _load_inits(E_Config_Dialog *cfd, Evas_Object *il)
      }
    evas_list_free(init);
    if (init_dirs) e_path_dir_list_free(init_dirs);
-   free(c);
    cfd->data = im;
    e_widget_ilist_go(il);
    if (selnum >= 0) 
