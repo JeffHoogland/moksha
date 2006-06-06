@@ -1277,7 +1277,7 @@ EAPI E_Module_Api e_modapi =
      "IBar"
 };
 
-EAPI void *
+EAPI int
 e_modapi_init(E_Module *m)
 {
    conf_item_edd = E_CONFIG_DD_NEW("IBar_Config_Item", Config_Item);
@@ -1316,7 +1316,7 @@ e_modapi_init(E_Module *m)
    ibar_config->module = m;
    
    e_gadcon_provider_register(&_gadcon_class);
-   return ibar_config;
+   return 1;
 }
 
 EAPI int
