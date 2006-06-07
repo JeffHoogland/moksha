@@ -103,12 +103,16 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    else if (p > TEMP_HIGH_MID) 
      cfdata->high_method = TEMP_HIGH_HIGH;
    
-   if (!strcmp(temperature_config->sensor_name, "temp1")) 
-     cfdata->sensor = 0;
-   else if (!strcmp(temperature_config->sensor_name, "temp2")) 
-     cfdata->sensor = 1;
-   else if (!strcmp(temperature_config->sensor_name, "temp3")) 
-     cfdata->sensor = 2;
+   cfdata->sensor = 0;
+   if (temperature_config->sensor_name)
+     {
+	if (!strcmp(temperature_config->sensor_name, "temp1")) 
+	  cfdata->sensor = 0;
+	else if (!strcmp(temperature_config->sensor_name, "temp2")) 
+	  cfdata->sensor = 1;
+	else if (!strcmp(temperature_config->sensor_name, "temp3")) 
+	  cfdata->sensor = 2;
+     }
 }
 
 static void *
