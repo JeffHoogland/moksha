@@ -57,7 +57,8 @@ static void      _e_app_cache_copy         (E_App_Cache *ac, E_App *a);
 static int       _e_app_cb_scan_cache_timer(void *data);
 static E_App    *_e_app_cache_new          (E_App_Cache *ac, const char *path, int scan_subdirs);
 static int       _e_app_exe_valid_get      (const char *exe);
-static char      *_e_app_localized_val_get (Eet_File *ef, const char *lang, const char *field, int *size);
+static char     *_e_app_localized_val_get (Eet_File *ef, const char *lang, const char *field, int *size);
+static void      _e_app_print(const char *path, Ecore_File_Event event);
 
 /* local subsystem globals */
 static Evas_Hash   *_e_apps = NULL;
@@ -1689,6 +1690,10 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
    if (!app->scanned)
      return;
 
+#if 0
+   _e_app_print(path, event);
+#endif
+
    file = (char *)ecore_file_get_file((char *)path);
    if (!strcmp(file, ".order"))
      {
@@ -2348,4 +2353,33 @@ _e_app_exe_valid_get(const char *exe)
 {
    if ((!exe) || (!exe[0])) return 0;
    return 1;
+}
+
+static void
+_e_app_print(const char *path, Ecore_File_Event event)
+{
+   switch (event)
+     {
+      case ECORE_FILE_EVENT_NONE:
+	 printf("E_App none: %s\n", path);
+	 break;
+      case ECORE_FILE_EVENT_CREATED_FILE:
+	 printf("E_App created file: %s\n", path);
+	 break;
+      case ECORE_FILE_EVENT_CREATED_DIRECTORY:
+	 printf("E_App created directory: %s\n", path);
+	 break;
+      case ECORE_FILE_EVENT_DELETED_FILE:
+	 printf("E_App deleted file: %s\n", path);
+	 break;
+      case ECORE_FILE_EVENT_DELETED_DIRECTORY:
+	 printf("E_App deleted directory: %s\n", path);
+	 break;
+      case ECORE_FILE_EVENT_DELETED_SELF:
+	 printf("E_App deleted self: %s\n", path);
+	 break;
+      case ECORE_FILE_EVENT_MODIFIED:
+	 printf("E_App modified: %s\n", path);
+	 break;
+     }
 }
