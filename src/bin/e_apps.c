@@ -1692,9 +1692,9 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
    file = (char *)ecore_file_get_file((char *)path);
    if (!strcmp(file, ".order"))
      {
-	if ((event == ECORE_FILE_EVENT_CREATED_FILE)
-	    || (event == ECORE_FILE_EVENT_DELETED_FILE)
-	    || (event == ECORE_FILE_EVENT_MODIFIED))
+	if ((event == ECORE_FILE_EVENT_CREATED_FILE) ||
+	    (event == ECORE_FILE_EVENT_DELETED_FILE) ||
+	    (event == ECORE_FILE_EVENT_MODIFIED))
 	  {
 	     _e_app_subdir_rescan(app);
 	  }
@@ -1705,8 +1705,8 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
      }
    else if (!strcmp(file, ".directory.eap"))
      {
-	if ((event == ECORE_FILE_EVENT_CREATED_FILE)
-	    || (event == ECORE_FILE_EVENT_MODIFIED))
+	if ((event == ECORE_FILE_EVENT_CREATED_FILE) ||
+	    (event == ECORE_FILE_EVENT_MODIFIED))
 	  {
 	     e_app_fields_empty(app);
 	     e_app_fields_fill(app, path);
@@ -1775,8 +1775,8 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 		    }
 	       }
 	  }
-	else if ((event == ECORE_FILE_EVENT_CREATED_FILE)
-		 || (event == ECORE_FILE_EVENT_CREATED_DIRECTORY))
+	else if ((event == ECORE_FILE_EVENT_CREATED_FILE) ||
+		 (event == ECORE_FILE_EVENT_CREATED_DIRECTORY))
 	  {
 	     /* FIXME: Check if someone wants a reference to this
 	      * app */
