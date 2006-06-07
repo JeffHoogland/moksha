@@ -17,10 +17,11 @@ struct _E_Config_Dialog_Data
    /*- BASIC -*/
    int x;
    int y;
-   int flip;
+//   int flip;
    /*- ADVANCED -*/
    int use_edge_flip;
    double edge_flip_timeout;
+   int flip_wrap;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -52,6 +53,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->y = e_config->zone_desks_y_count;
    cfdata->use_edge_flip = e_config->use_edge_flip;
    cfdata->edge_flip_timeout = e_config->edge_flip_timeout;   
+   cfdata->flip_wrap = e_config->desk_flip_wrap;
 }
 
 static void *
@@ -131,6 +133,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    e_config->use_edge_flip = cfdata->use_edge_flip;
    e_config->edge_flip_timeout = cfdata->edge_flip_timeout;
+   e_config->desk_flip_wrap = cfdata->flip_wrap;
 
    e_zone_update_flip_all();
    e_config_save_queue();
@@ -190,6 +193,9 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.1f sec"), 0.0, 2.0, 0.05, 0, &(cfdata->edge_flip_timeout), NULL, 200);
    e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Wrap desktops around when flipping"), &(cfdata->flip_wrap));
+   e_widget_framelist_object_append(of, ob);
+   
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
    return o;

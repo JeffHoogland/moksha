@@ -15,18 +15,25 @@ static void _e_remember_free(E_Remember *rem);
 /* externally accessible functions */
 
 EAPI int
-e_remember_init(void)
+e_remember_init(E_Startup_Mode mode)
 {
    Evas_List *l;
+   int after_restart = 0;
    
-   for (l = e_config->remembers; l; l = l->next)
+   if (mode == E_STARTUP_START)
      {
-	E_Remember *rem;
-	
-	rem = l->data;
-	if ((rem->apply & E_REMEMBER_APPLY_RUN) && 
-	    (rem->prop.command))
-	  e_util_head_exec(rem->prop.head, rem->prop.command);
+	for (l = e_config->remembers; l; l = l->next)
+	  {
+	     E_Remember *rem;
+	     
+	     rem = l->data;
+	     if ((rem->apply & E_REMEMBER_APPLY_RUN) && 
+		 (rem->prop.command))
+	       {
+		  printf("REMEMBER CMD: \"%s\"\n", rem->prop.command);
+		  e_util_head_exec(rem->prop.head, rem->prop.command);
+	       }
+	  }
      }
    return 1;
 }
@@ -235,9 +242,44 @@ e_remember_update(E_Remember *rem, E_Border *bd)
    rem->prop.zone = bd->zone->num;
    
    rem->prop.head = bd->zone->container->manager->num;
-/* FIXME: e17 doesn't fetch WM_COMMAND property yet
-   if (rem->prop.command) evas_stringshare_del(rem->prop.command);
- */
+   
+   if ((bd->client.icccm.command.argc > 0) &&
+       (bd->client.icccm.command.argv))
+     {
+	char buf[4096];
+	int i, j, k;
+	
+	buf[0] = 0;
+	k = 0;
+	for (i = 0; i < bd->client.icccm.command.argc; i++)
+	  {
+	     for (j = 0; bd->client.icccm.command.argv[i][j]; j++)
+	       {
+		  if (k >= (sizeof(buf) - 10))
+		    {
+		       buf[k] = 0;
+		       goto done;
+		    }
+		  if ((bd->client.icccm.command.argv == ' ') ||
+		      (bd->client.icccm.command.argv == '\t') ||
+		      (bd->client.icccm.command.argv == '\\') ||
+		      (bd->client.icccm.command.argv == '\"') ||
+		      (bd->client.icccm.command.argv == '\'') ||
+		      (bd->client.icccm.command.argv == '$') ||
+		      (bd->client.icccm.command.argv == '%'))
+		    {
+		       buf[k] = '\\';
+		       k++;
+		    }
+		  buf[k] = bd->client.icccm.command.argv[i][j];
+		  k++;
+	       }
+	  }
+	buf[k] = 0;
+	done:
+	rem->prop.command = evas_stringshare_add(buf);
+     }
+   
    
    e_config_save_queue();
 }

@@ -263,8 +263,10 @@ e_desk_last_focused_focus(E_Desk *desk)
      {
 	bd = l->data;
 	if ((!bd->iconic) && (bd->visible) &&
-	    (((bd->desk == desk) ||
-	      ((bd->sticky) && (bd->zone == desk->zone)))))
+	    (((bd->desk == desk)
+// Don't focus sticky windows as last focused win	       
+//	       || ((bd->sticky) && (bd->zone == desk->zone))
+	       )))
 	  {
 	     /* this was the window last focused in this desktop */
 	     e_border_focus_set(bd, 1, 1);

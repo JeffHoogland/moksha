@@ -57,6 +57,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    for (l = e_config->gadcons; l; l = l->next)
      {
 	cfdata->cf_gc = l->data;
+        if ((!cfdata->cf_gc->name) || (!cfdata->cf_gc->id) ||
+	    (!cfdata->gc->name) || (!cfdata->gc->id)) continue;
 	if ((!strcmp(cfdata->cf_gc->name, cfdata->gc->name)) &&
 	    (!strcmp(cfdata->cf_gc->id, cfdata->gc->id)))
 	  {

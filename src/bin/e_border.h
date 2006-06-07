@@ -150,6 +150,7 @@ struct _E_Border
       unsigned char shaped : 1;
       unsigned char argb : 1;
       
+      /* ICCCM */
       struct {
 	 char *title;
 	 char *name;
@@ -178,6 +179,10 @@ struct _E_Border
 	 unsigned char delete_request : 1;
 	 unsigned char request_pos : 1;
 	 struct {
+	    int argc;
+	    char **argv;
+	 } command;
+	 struct {
 	    unsigned char title : 1;
 	    unsigned char name_class : 1;
 	    unsigned char icon_name : 1;
@@ -189,8 +194,11 @@ struct _E_Border
 	    unsigned char client_leader : 1;
 	    unsigned char window_role : 1;
 	    unsigned char state : 1;
+	    unsigned char command : 1;
 	 } fetch;
       } icccm;
+
+      /* MWM */
       struct {
 	 Ecore_X_MWM_Hint_Func func;
 	 Ecore_X_MWM_Hint_Decor decor;
@@ -201,14 +209,16 @@ struct _E_Border
 	    unsigned char hints : 1;
 	 } fetch;
       } mwm;
+
+     /* NetWM */
       struct {
-	 pid_t pid;
-	 unsigned int desktop;
-	 char *name;
-	 char *icon_name;
+	 pid_t         pid;
+	 unsigned int  desktop;
+	 char         *name;
+	 char         *icon_name;
 	 Ecore_X_Icon *icons;
-	 int num_icons;
-	 unsigned int user_time;
+	 int           num_icons;
+	 unsigned int  user_time;
 	 struct {
 	    int left;
 	    int right;
@@ -246,6 +256,20 @@ struct _E_Border
 	    unsigned char fullscreen : 1;
 	    E_Stacking    stacking;
 	 } state;
+
+	 /* NetWM Window allowed actions */
+         struct {
+            unsigned char move : 1;
+            unsigned char resize : 1;
+            unsigned char minimize : 1;
+            unsigned char shade : 1;
+            unsigned char stick : 1;
+            unsigned char maximized_h : 1;
+            unsigned char maximized_v : 1;
+            unsigned char fullscreen : 1;
+            unsigned char change_desktop : 1;
+            unsigned char close : 1;
+         } action;
 
 	 Ecore_X_Window_Type type;
 	 int startup_id;

@@ -528,6 +528,8 @@ _e_app_list_prepend_relative(E_App *add, E_App *before, E_App *parent)
      }
    if (before == NULL) fprintf(f, "%s\n", ecore_file_get_file(add->path));
    fclose(f);
+   snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", parent->path);
+   ecore_file_unlink(buf);
 }
 
 static void
@@ -572,6 +574,8 @@ _e_app_files_list_prepend_relative(Evas_List *files, E_App *before, E_App *paren
 	  }
      }
    fclose(f);
+   snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", parent->path);
+   ecore_file_unlink(buf);
 }
 
 static void
@@ -589,6 +593,8 @@ _e_app_files_download(Evas_List *files)
         snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all,
 		 ecore_file_get_file(file));
 	if (!ecore_file_download(file, buf, NULL, NULL, NULL)) continue;
+	snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", _e_apps_path_all);
+	ecore_file_unlink(buf);
      }
 }
 
@@ -722,6 +728,8 @@ e_app_files_prepend_relative(Evas_List *files, E_App *before)
 	     fprintf(f, "%s\n", ecore_file_get_file(a->path));
 	  }
 	fclose(f);
+	snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", before->parent->path);
+	ecore_file_unlink(buf);
      }
 }
 
@@ -762,6 +770,8 @@ e_app_files_append(Evas_List *files, E_App *parent)
 	     fprintf(f, "%s\n", ecore_file_get_file(file));
 	  }
 	fclose(f);
+	snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", parent->path);
+	ecore_file_unlink(buf);
      }
 }
 
@@ -793,6 +803,8 @@ e_app_remove(E_App *a)
 	a2 = l->data;
 	e_app_remove(a2);
      }
+   snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", a->parent->path);
+   ecore_file_unlink(buf);
    _e_app_change(a, E_APP_DEL);
    a->parent = NULL;
    e_object_unref(E_OBJECT(a));
@@ -879,41 +891,51 @@ EAPI E_App *
 e_app_window_name_class_title_role_find(const char *name, const char *class,
 					const char *title, const char *role)
 {
-   Evas_List *l;
+   Evas_List *l, *l_match = NULL;
+   int ok, match = 0;
+   E_App *a, *a_match = NULL;
    
    if ((!name) && (!class) && (!title) && (!role))
      return NULL;
 
    for (l = _e_apps_list; l; l = l->next)
      {
-	E_App *a;
-	int ok;
-	
 	a = l->data;
 	ok = 0;
 	if ((a->win_name) || (a->win_class) || (a->win_title) || (a->win_role))
 	  {
-	     if ((!a->win_name) ||
-		 ((a->win_name) && (name) && (e_util_glob_match(name, a->win_name))))
-	       ok++;
-	     if ((!a->win_class) ||
-		 ((a->win_class) && (class) && (e_util_glob_match(class, a->win_class))))
-	       ok++;
-	     if ((!a->win_title) ||
+	     if ((a->win_name) && (a->win_class) && (name) && (class))
+	       {
+		  if ((e_util_glob_match(name, a->win_name)) &&
+		      (e_util_glob_match(class, a->win_class)))
+		    ok += 2;
+	       }
+	     else if ((a->win_class) && (class))
+	       {
+		  if (e_util_glob_match(class, a->win_class))
+		    ok += 2;
+	       }
+	     
+	     if (//(!a->win_title) ||
 		 ((a->win_title) && (title) && (e_util_glob_match(title, a->win_title))))
 	       ok++;
-	     if ((!a->win_role) ||
+	     if (//(!a->win_role) ||
 		 ((a->win_role) && (role) && (e_util_glob_match(role, a->win_role))))
 	       ok++;
 	  }
-	if (ok >= 4)
+	if (ok > match)
 	  {
-	     _e_apps_list = evas_list_remove_list(_e_apps_list, l);
-	     _e_apps_list = evas_list_prepend(_e_apps_list, a);
-	     return a;
+	     match = ok;
+	     a_match = a;
+	     l_match = l;
 	  }
      }
-   return NULL;
+   if ((a_match) && (l_match))
+     {
+	_e_apps_list = evas_list_remove_list(_e_apps_list, l);
+	_e_apps_list = evas_list_prepend(_e_apps_list, a_match);
+     }
+   return a_match;
 }
 
 EAPI E_App *
@@ -1315,6 +1337,8 @@ e_app_fields_save(E_App *a)
      {
 	Evas_List *l;
 	
+	snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", a->parent->path);
+	ecore_file_unlink(buf);
 	_e_app_change(a->parent, E_APP_CHANGE);
 	_e_app_change(a, E_APP_CHANGE);
 	for (l = a->references; l; l = l->next)
@@ -1529,6 +1553,13 @@ _e_app_new_save(E_App *a)
 	return 0;
      }
    
+   if (a->parent)
+     {
+	char buf[PATH_MAX];
+	
+	snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", a->parent->path);
+	ecore_file_unlink(buf);
+     }
    ecore_file_unlink(tmpn);
    return 1;   
 }
@@ -2035,6 +2066,13 @@ _e_app_save_order(E_App *app)
 	fprintf(f, "%s\n", ecore_file_get_file(a->path));
      }
    fclose(f);
+   if (app->parent)
+     {
+	char buf[PATH_MAX];
+	
+	snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", app    ->parent->path);
+	ecore_file_unlink(buf);
+     }
 }
 
 static int

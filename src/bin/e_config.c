@@ -466,6 +466,10 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, display_res_hz, INT);
    E_CONFIG_VAL(D, T, display_res_rotation, INT);
    
+   E_CONFIG_VAL(D, T, border_raise_on_mouse_action, INT);
+   E_CONFIG_VAL(D, T, border_raise_on_focus, INT);
+   E_CONFIG_VAL(D, T, desk_flip_wrap, INT);
+   
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
      {
@@ -863,6 +867,9 @@ e_config_init(void)
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "l",
 		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
 		    "desk_lock", NULL);
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "d",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		    "zone_deskshow_toggle", NULL);
      }
      {
 	E_Config_Binding_Signal *eb;
@@ -1126,6 +1133,12 @@ e_config_init(void)
      }
    IFCFGEND;
    
+   IFCFG(0x0094); /* the version # where this value(s) was introduced */
+   e_config->border_raise_on_mouse_action = 1;
+   e_config->border_raise_on_focus = 1;
+   e_config->desk_flip_wrap = 0;
+   IFCFGEND;
+   
 #if 0 /* example of new config */
    IFCFG(0x0090); /* the version # where this value(s) was introduced */
    e_config->new_value = 10; /* set the value(s) */
@@ -1214,7 +1227,10 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->display_res_height, 1, 8192);
    E_CONFIG_LIMIT(e_config->display_res_hz, 0, 250);
    E_CONFIG_LIMIT(e_config->display_res_rotation, 0, 0xff);
-
+   E_CONFIG_LIMIT(e_config->border_raise_on_mouse_action, 0, 1);
+   E_CONFIG_LIMIT(e_config->border_raise_on_focus, 0, 1);
+   E_CONFIG_LIMIT(e_config->desk_flip_wrap, 0, 1);
+   
    /* FIXME: disabled auto apply because it causes problems */
    e_config->cfgdlg_auto_apply = 0;
    

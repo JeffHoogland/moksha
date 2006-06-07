@@ -25,6 +25,8 @@ struct _E_Config_Dialog_Data
    int window_resist;
    int gadget_resist;
    int allow_manip;
+   int border_raise_on_mouse_action;
+   int border_raise_on_focus;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -65,6 +67,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    if (!cfdata->maximize_direction)
      cfdata->maximize_direction = E_MAXIMIZE_BOTH;
    cfdata->allow_manip = e_config->allow_manip;
+   cfdata->border_raise_on_mouse_action = e_config->border_raise_on_mouse_action;
+   cfdata->border_raise_on_focus = e_config->border_raise_on_focus;
 }
 
 static void *
@@ -113,6 +117,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->gadget_resist = cfdata->gadget_resist;
    e_config->maximize_policy = cfdata->maximize_policy | cfdata->maximize_direction;
    e_config->allow_manip = cfdata->allow_manip;
+   e_config->border_raise_on_mouse_action = cfdata->border_raise_on_mouse_action;
+   e_config->border_raise_on_focus = cfdata->border_raise_on_focus;
    e_config_save_queue();
    return 1; /* Apply was OK */
 }
@@ -208,5 +214,12 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
+   of = e_widget_framelist_add(evas, _("Raise Window"), 0);
+   ob = e_widget_check_add(evas, _("Raise when starting to move or resize"), &(cfdata->border_raise_on_mouse_action));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Raise when clicking to focus"), &(cfdata->border_raise_on_focus));
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   
    return o;
 }

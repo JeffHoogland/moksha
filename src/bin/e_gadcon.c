@@ -906,6 +906,51 @@ _e_gadcon_client_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
      e_gadcon_client_edit_begin(gcc);
 }
 
+static void
+_e_gadcon_client_cb_menu_remove(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Gadcon_Client *gcc;
+   E_Config_Gadcon *cf_gc;
+   Evas_List *l;
+   
+   gcc = data;
+   for (l = e_config->gadcons; l; l = l->next)
+     {
+	cf_gc = l->data;
+	if ((!cf_gc->name) || (!cf_gc->id) ||
+	    (!gcc->gadcon->name) || (!gcc->gadcon->id)) continue;
+	if ((!strcmp(cf_gc->name, gcc->gadcon->name)) &&
+	    (!strcmp(cf_gc->id, gcc->gadcon->id)))
+	  {
+	     for (l = cf_gc->clients; l; l = l->next)
+	       {
+		  E_Config_Gadcon_Client *cf_gcc;
+		  
+		  cf_gcc = l->data;
+		  if ((!cf_gcc->name) || (!cf_gcc->id) || (!gcc->name) ||
+		      (!gcc->id)) continue;
+		  if ((!strcmp(cf_gcc->name, gcc->name)) &&
+		      (!strcmp(cf_gcc->id, gcc->id)))
+		    {
+		       E_Gadcon *gc;
+		       
+		       gc = gcc->gadcon;
+		       if (cf_gcc->name) evas_stringshare_del(cf_gcc->name);
+		       if (cf_gcc->id) evas_stringshare_del(cf_gcc->id);
+		       if (cf_gcc->style) evas_stringshare_del(cf_gcc->style);
+		       free(cf_gcc);
+		       cf_gc->clients = evas_list_remove_list(cf_gc->clients, l);
+		       e_gadcon_unpopulate(gc);
+		       e_gadcon_populate(gc);
+		       e_config_save_queue();
+		       return;
+		    }
+	       }
+	     break;
+	  }
+     }
+}
+
 EAPI void
 e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int flags)
 {
@@ -963,6 +1008,14 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int f
      e_menu_item_label_set(mi, _("Begin editing"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/edit");
    e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_edit, gcc);
+   
+   mi = e_menu_item_new(menu);
+   e_menu_item_separator_set(mi, 1);
+   
+   mi = e_menu_item_new(menu);
+   e_menu_item_label_set(mi, _("Remove this gadget"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/remove");
+   e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_remove, gcc);
 }
 
 static void 

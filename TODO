@@ -8,6 +8,11 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: change exe name in basic mode in eap editor and icon vanishes (don't
+  extract existing icon and write out to tmp .png while rebuilding).
+* BUG: resolution (xrandr) changes seem to screw the shelf up a bit.
+* BUG: openoffice2's impress presentation fullscreen has sizing and
+  configuration issues.
 * BUG: ghost windows happen if windows close when on another desktop or if
   windows are very short-lived
 * BUG: k3b has minimization issues when burning cds (it tries to unminimize
@@ -40,6 +45,19 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
+* on xrandr screen res change e moves and resizes windows to fit in the new
+  resolution. this is good and bad. if some other app temporarily changes
+  res this means everything gets squeezed. we need a "temporary resize due to
+  res change" geometry state for apps where they get resized to a new pos/size
+  and the old size/pos stored. on a move or resize etc. by a user this old
+  geom is freed, but on a res change, e takes the old geom, if there, and
+  tries to use it (then limiting geom to the new screen res as it cuurently
+  does) otherwise it creates a new saved geom for the cur geom before
+  limiting it. maximized windows are reset to their old size/pos then
+  re-maximized too. old szie from unmaximize needs to have this check too
+  on unmaximize as do fullscreen windows. NB: what if app moves/resizes
+  itself during this - i assume for now all bets are off with prior geometry
+  then.
 * language packs: need to have a tool to load/setup a language pack (which
   means .mo compiled files from a .po, an optional font and a config file that
   specifies the locale and font) and then install the font(s) either as a user
@@ -78,20 +96,17 @@ Some of the things (in very short form) that need to be done to E17...
   "NICE TO HAVE" FEATURES
 -------------------------------------------------------------------------------
 
-* option to allow flipping desktops to wrap at virtual desktop grid edges
 * winlist and exebuf can let the mouse select items
-* option to NOT raise on focus in click to focus
 * switch to desktop of a new window if it opens on another desktop than the
-  current one
+  current one (optional too)
 * emit signal to submenu entries if they have a submenu shown for them or not
 * setup configs for gnome and kde (as options) if they are installed (eg
   run gnome-settings-daemon).
-* check engine can work on a given screen before using it
+* check evas engine can work on a given screen before using it
 * non opaque move/resize
 * add "osd" subsystem for things like volume controls on keybboards, etc.
   that overlay the screen
 * file icons on the desktop (people ask for it) - xdnd for these
-* "disable this gadget" menu option on gadcon clients
 * improve drag/resize of gadget items
 * pager should be able to be configured to control more than the current zone
   (select which zone they control)

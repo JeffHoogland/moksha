@@ -43,7 +43,10 @@ e_focus_event_mouse_in(E_Border* bd)
 	if (e_config->auto_raise_delay == 0.0)
 	  {
 	     if (!bd->lock_user_stacking)
-	       e_border_raise(bd);
+	       {
+		  if (e_config->border_raise_on_focus)
+		    e_border_raise(bd);
+	       }
 	  }
 	else
 	  bd->raise_timer = ecore_timer_add(e_config->auto_raise_delay, _e_focus_raise_timer, bd);
@@ -82,12 +85,18 @@ e_focus_event_mouse_down(E_Border* bd)
 	if (!bd->lock_focus_out)
 	  e_border_focus_set(bd, 1, 1);
 	if (!bd->lock_user_stacking)
-	  e_border_raise(bd);
+	  {
+	     if (e_config->border_raise_on_focus)
+	       e_border_raise(bd);
+	  }
      }
    else if (e_config->always_click_to_raise)
      {
 	if (!bd->lock_user_stacking)
-	  e_border_raise(bd);
+	  {
+	     if (e_config->border_raise_on_focus)
+	       e_border_raise(bd);
+	  }
      }
    else if (e_config->always_click_to_focus)
      {
@@ -194,8 +203,7 @@ _e_focus_raise_timer(void* data)
    E_Border *bd;
    
    bd = data;
-   if (!bd->lock_user_stacking)
-     e_border_raise(bd);
+   if (!bd->lock_user_stacking) e_border_raise(bd);
    bd->raise_timer = NULL;
    return 0;
 }

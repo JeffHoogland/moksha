@@ -298,6 +298,16 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
    bd->client.netwm.state.skip_pager = 0;
    bd->client.netwm.state.fullscreen = 0;
    bd->client.netwm.state.stacking = E_STACKING_NONE;
+   bd->client.netwm.action.move = 0;
+   bd->client.netwm.action.resize = 0;
+   bd->client.netwm.action.minimize = 0;
+   bd->client.netwm.action.shade = 0;
+   bd->client.netwm.action.stick = 0;
+   bd->client.netwm.action.maximized_h = 0;
+   bd->client.netwm.action.maximized_v = 0;
+   bd->client.netwm.action.fullscreen = 0;
+   bd->client.netwm.action.change_desktop = 0;
+   bd->client.netwm.action.close = 0;
    bd->client.netwm.type = ECORE_X_WINDOW_TYPE_UNKNOWN;
 
      {
@@ -305,6 +315,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
 	Ecore_X_Atom *atoms;
 	
 	atoms = ecore_x_window_prop_list(bd->client.win, &at_num);
+	bd->client.icccm.fetch.command = 1;
 	if (atoms)
 	  {
 	     /* icccm */
@@ -2919,6 +2930,14 @@ _e_border_free(E_Border *bd)
    if (bd->client.icccm.icon_name) free(bd->client.icccm.icon_name);
    if (bd->client.icccm.machine) free(bd->client.icccm.machine);
    if (bd->client.icccm.window_role) free(bd->client.icccm.window_role);
+   if ((bd->client.icccm.command.argc > 0) && (bd->client.icccm.command.argv))
+     {
+	int i;
+	
+	for (i = 0; i < bd->client.icccm.command.argc; i++)
+	  free(bd->client.icccm.command.argv[i]);
+	free(bd->client.icccm.command.argv);
+     }
    if (bd->client.netwm.name) free(bd->client.netwm.name);
    if (bd->client.netwm.icon_name) free(bd->client.netwm.icon_name);
    e_object_del(E_OBJECT(bd->shape));
@@ -4500,6 +4519,11 @@ _e_border_eval(E_Border *bd)
    int change_urgent = 0;
    
    /* fetch any info queued to be fetched */
+   if (bd->client.icccm.fetch.client_leader)
+     {
+	bd->client.icccm.client_leader = ecore_x_icccm_client_leader_get(bd->client.win);
+	bd->client.icccm.fetch.client_leader = 0;
+     }
    if (bd->client.icccm.fetch.title)
      {
 	if (bd->client.icccm.title) free(bd->client.icccm.title);
@@ -4553,78 +4577,6 @@ _e_border_eval(E_Border *bd)
 	  bd->changes.icon = 1;
 	bd->client.icccm.fetch.name_class = 0;
      }
-   if (bd->client.icccm.fetch.icon_name)
-     {
-	if (bd->client.icccm.icon_name) free(bd->client.icccm.icon_name);
-	bd->client.icccm.icon_name = ecore_x_icccm_icon_name_get(bd->client.win);
-
-	bd->client.icccm.fetch.icon_name = 0;
-     }
-   if (bd->client.netwm.fetch.icon_name)
-     {
-	if (bd->client.netwm.icon_name) free(bd->client.netwm.icon_name);
-	ecore_x_netwm_icon_name_get(bd->client.win, &bd->client.netwm.icon_name);
-
-	bd->client.netwm.fetch.icon_name = 0;
-     }
-   if (bd->client.netwm.fetch.icon)
-     {
-	if (bd->client.netwm.icons)
-	  {
-	     int i;
-	     for (i = 0; i < bd->client.netwm.num_icons; i++)
-	       free(bd->client.netwm.icons[i].data);
-	     free(bd->client.netwm.icons);
-	  }
-	if (!ecore_x_netwm_icons_get(bd->client.win,
-				     &bd->client.netwm.icons, &bd->client.netwm.num_icons))
-	  {
-	     printf("ERROR: Fetch icon from client\n");
-	     bd->client.netwm.icons = NULL;
-	     bd->client.netwm.num_icons = 0;
-	  }
-	else
-	  bd->changes.icon = 1;
-	bd->client.netwm.fetch.icon = 0;
-     }
-   if (bd->client.netwm.fetch.user_time)
-     {
-	ecore_x_netwm_user_time_get(bd->client.win, &bd->client.netwm.user_time);
-
-	bd->client.netwm.fetch.user_time = 0;
-     }
-   if (bd->client.netwm.fetch.strut)
-     {
-	if (!ecore_x_netwm_strut_partial_get(bd->client.win,
-					     &bd->client.netwm.strut.left,
-					     &bd->client.netwm.strut.right,
-					     &bd->client.netwm.strut.top,
-					     &bd->client.netwm.strut.bottom,
-					     &bd->client.netwm.strut.left_start_y,
-					     &bd->client.netwm.strut.left_end_y,
-					     &bd->client.netwm.strut.right_start_y,
-					     &bd->client.netwm.strut.right_end_y,
-					     &bd->client.netwm.strut.top_start_x,
-					     &bd->client.netwm.strut.top_end_x,
-					     &bd->client.netwm.strut.bottom_start_x,
-					     &bd->client.netwm.strut.bottom_end_x))
-	  {
-	     ecore_x_netwm_strut_get(bd->client.win,
-				     &bd->client.netwm.strut.left, &bd->client.netwm.strut.right,
-				     &bd->client.netwm.strut.top, &bd->client.netwm.strut.bottom);
-
-	     bd->client.netwm.strut.left_start_y = 0;
-	     bd->client.netwm.strut.left_end_y = 0;
-	     bd->client.netwm.strut.right_start_y = 0;
-	     bd->client.netwm.strut.right_end_y = 0;
-	     bd->client.netwm.strut.top_start_x = 0;
-	     bd->client.netwm.strut.top_end_x = 0;
-	     bd->client.netwm.strut.bottom_start_x = 0;
-	     bd->client.netwm.strut.bottom_end_x = 0;
-	  }
-
-	bd->client.netwm.fetch.strut = 0;
-     }
    if (bd->client.icccm.fetch.state)
      {
 	bd->client.icccm.state = ecore_x_icccm_state_get(bd->client.win);
@@ -4676,7 +4628,32 @@ _e_border_eval(E_Border *bd)
      {
 	if (bd->client.icccm.machine) free(bd->client.icccm.machine);
 	bd->client.icccm.machine = ecore_x_icccm_client_machine_get(bd->client.win);
+	if ((bd->client.icccm.client_leader) &&
+	    (!bd->client.icccm.machine))
+	  ecore_x_icccm_client_machine_get(bd->client.icccm.client_leader);
 	bd->client.icccm.fetch.machine = 0;
+     }
+   if (bd->client.icccm.fetch.command)
+     {
+	if ((bd->client.icccm.command.argc > 0) && (bd->client.icccm.command.argv))
+	  {
+	     int i;
+	     
+	     for (i = 0; i < bd->client.icccm.command.argc; i++)
+	       free(bd->client.icccm.command.argv[i]);
+	     free(bd->client.icccm.command.argv);
+	  }
+	bd->client.icccm.command.argc = 0;
+	bd->client.icccm.command.argv = NULL;
+	ecore_x_icccm_command_get(bd->client.win,
+				  &(bd->client.icccm.command.argc),
+				  &(bd->client.icccm.command.argv));
+	if ((bd->client.icccm.client_leader) &&
+	    (!bd->client.icccm.command.argv))
+	  ecore_x_icccm_command_get(bd->client.icccm.client_leader,
+				    &(bd->client.icccm.command.argc),
+				    &(bd->client.icccm.command.argv));
+	bd->client.icccm.fetch.command = 0;
      }
    if (bd->client.icccm.fetch.hints)
      {
@@ -4789,15 +4766,83 @@ _e_border_eval(E_Border *bd)
 	bd->client.icccm.transient_for = ecore_x_icccm_transient_for_get(bd->client.win);
 	bd->client.icccm.fetch.transient_for = 0;
      }
-   if (bd->client.icccm.fetch.client_leader)
-     {
-	bd->client.icccm.client_leader = ecore_x_icccm_client_leader_get(bd->client.win);
-	bd->client.icccm.fetch.client_leader = 0;
-     }
    if (bd->client.icccm.fetch.window_role)
      {
 	bd->client.icccm.window_role = ecore_x_icccm_window_role_get(bd->client.win);
 	bd->client.icccm.fetch.window_role = 0;
+     }
+   if (bd->client.icccm.fetch.icon_name)
+     {
+	if (bd->client.icccm.icon_name) free(bd->client.icccm.icon_name);
+	bd->client.icccm.icon_name = ecore_x_icccm_icon_name_get(bd->client.win);
+
+	bd->client.icccm.fetch.icon_name = 0;
+     }
+   if (bd->client.netwm.fetch.icon_name)
+     {
+	if (bd->client.netwm.icon_name) free(bd->client.netwm.icon_name);
+	ecore_x_netwm_icon_name_get(bd->client.win, &bd->client.netwm.icon_name);
+
+	bd->client.netwm.fetch.icon_name = 0;
+     }
+   if (bd->client.netwm.fetch.icon)
+     {
+	if (bd->client.netwm.icons)
+	  {
+	     int i;
+	     
+	     for (i = 0; i < bd->client.netwm.num_icons; i++)
+	       free(bd->client.netwm.icons[i].data);
+	     free(bd->client.netwm.icons);
+	  }
+	if (!ecore_x_netwm_icons_get(bd->client.win,
+				     &bd->client.netwm.icons, &bd->client.netwm.num_icons))
+	  {
+	     printf("ERROR: Fetch icon from client\n");
+	     bd->client.netwm.icons = NULL;
+	     bd->client.netwm.num_icons = 0;
+	  }
+	else
+	  bd->changes.icon = 1;
+	bd->client.netwm.fetch.icon = 0;
+     }
+   if (bd->client.netwm.fetch.user_time)
+     {
+	ecore_x_netwm_user_time_get(bd->client.win, &bd->client.netwm.user_time);
+
+	bd->client.netwm.fetch.user_time = 0;
+     }
+   if (bd->client.netwm.fetch.strut)
+     {
+	if (!ecore_x_netwm_strut_partial_get(bd->client.win,
+					     &bd->client.netwm.strut.left,
+					     &bd->client.netwm.strut.right,
+					     &bd->client.netwm.strut.top,
+					     &bd->client.netwm.strut.bottom,
+					     &bd->client.netwm.strut.left_start_y,
+					     &bd->client.netwm.strut.left_end_y,
+					     &bd->client.netwm.strut.right_start_y,
+					     &bd->client.netwm.strut.right_end_y,
+					     &bd->client.netwm.strut.top_start_x,
+					     &bd->client.netwm.strut.top_end_x,
+					     &bd->client.netwm.strut.bottom_start_x,
+					     &bd->client.netwm.strut.bottom_end_x))
+	  {
+	     ecore_x_netwm_strut_get(bd->client.win,
+				     &bd->client.netwm.strut.left, &bd->client.netwm.strut.right,
+				     &bd->client.netwm.strut.top, &bd->client.netwm.strut.bottom);
+
+	     bd->client.netwm.strut.left_start_y = 0;
+	     bd->client.netwm.strut.left_end_y = 0;
+	     bd->client.netwm.strut.right_start_y = 0;
+	     bd->client.netwm.strut.right_end_y = 0;
+	     bd->client.netwm.strut.top_start_x = 0;
+	     bd->client.netwm.strut.top_end_x = 0;
+	     bd->client.netwm.strut.bottom_start_x = 0;
+	     bd->client.netwm.strut.bottom_end_x = 0;
+	  }
+
+	bd->client.netwm.fetch.strut = 0;
      }
    if (bd->changes.shape)
      {
@@ -5825,7 +5870,8 @@ _e_border_eval(E_Border *bd)
 	     grabbed = 1;
 	     e_object_ref(E_OBJECT(bd->cur_mouse_action));
 	     bd->cur_mouse_action->func.go(E_OBJECT(bd), NULL); 
-	     e_border_raise(bd);
+	     if (e_config->border_raise_on_mouse_action)
+	       e_border_raise(bd);
 	     e_border_focus_set(bd, 1, 1);
 	  }
 	bd->changes.visible = 0;
@@ -6361,7 +6407,10 @@ _e_border_resize_begin(E_Border *bd)
    int w, h;
 
    if (!bd->lock_user_stacking)
-     e_border_raise(bd);
+     {
+	if (e_config->border_raise_on_mouse_action)
+	  e_border_raise(bd);
+     }
    if ((bd->shaded) || (bd->shading) ||
        (((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN) && (!e_config->allow_manip)) ||
        (bd->fullscreen) || (bd->lock_user_size))
@@ -6463,7 +6512,10 @@ static int
 _e_border_move_begin(E_Border *bd)
 {
    if (!bd->lock_user_stacking)
-     e_border_raise(bd);
+     {
+	if (e_config->border_raise_on_mouse_action)
+	  e_border_raise(bd);
+     }
    if ((((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN) && (!e_config->allow_manip)) ||
        (bd->fullscreen) || (bd->lock_user_location))
      return 0;

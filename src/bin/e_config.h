@@ -229,6 +229,9 @@ struct _E_Config
    int        display_res_height; // GUI
    int        display_res_hz; // GUI
    int        display_res_rotation; // GUI
+   int        border_raise_on_mouse_action; // GUI
+   int        border_raise_on_focus; // GUI
+   int        desk_flip_wrap; // GUI
 };
 
 struct _E_Config_Module

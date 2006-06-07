@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
-	<TITLE>Enlightenment Developer Documentation</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.1.3  (Linux)">
-	<META NAME="CREATED" CONTENT="20041227;10170000">
-	<META NAME="CHANGED" CONTENT="20041227;10253900">
-	<STYLE>
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
+  <title>Enlightenment Developer Documentation</title>
+  <meta name="GENERATOR" content="OpenOffice.org 1.1.3  (Linux)">
+  <meta name="CREATED" content="20041227;10170000">
+  <meta name="CHANGED" content="20041227;10253900">
+  <style>
 	<!--
 		@page { size: 8.5in 11in }
 		TD P.western { font-size: 8pt }
@@ -20,44 +20,52 @@
 		A.sdendnotesym-western { font-size: 8pt }
 		A.sdendnotesym-cjk { font-family: "Bitstream Vera Sans"; font-size: 8pt }
 	-->
-	</STYLE>
-</HEAD>
-<BODY LANG="en-US" DIR="LTR">
-<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0 STYLE="page-break-before: always">
-	<COL WIDTH=256*>
-	<TR>
-		<TD WIDTH=100% VALIGN=TOP>
-			<P CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0in"><IMG SRC="enlightenment.png" NAME="Graphic1" ALIGN=LEFT WIDTH=320 HEIGHT=320 BORDER=0><FONT FACE="Bitstream Vera Sans"><FONT SIZE=5><B>Enlightenment</B></FONT></FONT></P>
-			<P CLASS="western" STYLE="margin-bottom: 0in"><BR>
-			</P>
-			<P CLASS="western" ALIGN=CENTER STYLE="margin-bottom: 0in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 6pt">Version
-			0.17.0 </FONT></FONT>
-			</P>
-			<P CLASS="western" STYLE="margin-bottom: 0in"><BR>
-			</P>
-			<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>What
-			is Enlightenment?</B> </FONT></FONT>
-			</P>
-			<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">Enlightenment
-			is a Window Manager for X11. This is the latest incarnation of
-			code of the Enlightenment window manager (often referred to in
-			short as WM). This WM is built on the EFL (Enlightenment
-			Foundation Libraries) that have been worked on very hard over the
-			last few years. These libraries provide a sound base on which to
-			build the WM and related tools, utilities, and applications.</FONT></FONT></P>
-			<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">Right
-			now if you are just a &quot;user&quot; this code is NOT for you.
-			You're on your own. If you are a developer wanting to work on the
-			code - read on. But first we should take a break for some
-			history... </FONT></FONT>
-			</P>
-		</TD>
-	</TR>
-</TABLE>
-<HR>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>A
-Brief History of Time... err Enlightenment</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">In
+	</style>
+</head>
+<body dir="ltr" lang="en-US">
+<table style="page-break-before: always;" border="0" cellpadding="0"
+ cellspacing="0" width="100%">
+  <col width="256*"> <tbody>
+    <tr>
+      <td valign="top" width="100%">
+      <p class="western" style="margin-bottom: 0in;" align="center"><img
+ src="enlightenment.png" name="Graphic1" align="left" border="0"
+ height="320" width="320"><font face="Bitstream Vera Sans"><font
+ size="5"><b>Enlightenment</b></font></font></p>
+      <p class="western" style="margin-bottom: 0in;"><br>
+      </p>
+      <p class="western" style="margin-bottom: 0in;" align="center"><font
+ style="font-size: 6pt; font-family: sans-serif;">Version
+0.17.0</font><big><big><big><font face="Bitstream Vera Sans"><font
+ style="font-size: 6pt;" size="1"><big><big><big><big> </big></big></big></big></font></font>
+      </big></big></big></p>
+      <p class="western" style="margin-bottom: 0in;"><br>
+      </p>
+      <p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>What is Enlightenment?</b> </font> </p>
+      <p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;">Enlightenment is a Window
+Manager for X11. This is the latest incarnation of code of the
+Enlightenment window manager (often referred to in short as WM). This
+WM is built on the EFL (Enlightenment Foundation Libraries) that have
+been worked on very hard over the last few years. These libraries
+provide a sound base on which to build the WM and related tools,
+utilities, and applications.</font></p>
+      <p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;">Right now if you are just a
+"user" this code is NOT for you. You're on your own. If you are a
+developer wanting to work on the code - read on. But first we should
+take a break for some history... </font> </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<hr style="font-family: sans-serif;">
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>A
+Brief History of Time... err Enlightenment</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">In
 the past E has undergone 1 major rewrite since release DR
 (Development Release) 0.1. This rewrite occurred for DR 0.14). DR
 0.17 heralds another major rewrite. We have to be honest here. The
@@ -76,8 +84,9 @@ and we are proud enough to probably say it's some of the better API's
 and code of any available in the world or used in any application or
 WM. It's not the best, but it's pretty good. In doing this rewrite
 and split, we aim to not make those mistakes again that happened
-before DR 0.17.0.</FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">With
+before DR 0.17.0.</font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">With
 Enlightenment and EFL's massive break-up into smaller sized chunks,
 many users will complain about “how hard it is to install”
 because there are so many libraries and inter-dependencies to handle.
@@ -95,64 +104,72 @@ existing infrastructures - or extend them cleanly as needed. Just
 because an infrastructure or system doesn't provide an accessor or
 way of doing something does NOT mean you can't or chouldn't add it.
 Choose a clean “correct” implementation over a nasty hack, all
-the time. You get the idea. Now, on to the style guide.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Enlightenment
-Stylin' straight from the top of ma dome</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">Firstly
+the time. You get the idea. Now, on to the style guide.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>Enlightenment
+Stylin' straight from the top of ma dome</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">Firstly
 comes naming. All functions are name spaced. The EFL libraries begin
 with library_something_something. It is object oriented naming so you
 will have system_subsystem_subsystem_object_verb() as a name. For
 example: e_config_load() or e_border_move() etc. All functions are
-all lower-case with underscores between &quot;words&quot;. All
+all lower-case with underscores between "words". All
 functions that are accessed outside a file must have a prototype in
 the file's header. All files have their code file (e_file.c) and a
-header (e_file.h). The main &quot;master&quot; header (e.h) includes
+header (e_file.h). The main "master" header (e.h) includes
 all the smaller ones. All functions within that file are the same
 name as the file. i.e. e_frog.c contains functions called
 e_frog_something(). All internal functions only used within that file
 should be declared as static and should begin with an underscore.
-i.e. _e_frog_something(). All &quot;local&quot; globals (global to
+i.e. _e_frog_something(). All "local" globals (global to
 that file only) should be declared static and beginning with _e_frog
 just like functions. All static local functions should be at the end
 of the file. All static function prototypes should be first at the
 top of each file. All static local variables should come next, then
-followed by the accessible functions. Any system that has &quot;state&quot;
+followed by the accessible functions. Any system that has "state"
 should have an init and shutdown function. The init and shutdown
 functions should be called from e_main.c during startup and shutdown
 of the WM. It is encouraged that even systems that do not have state
 have an init and shutdown call pair, just in case in future they will
-gain state internally.</FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">Any
+gain state internally.</font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">Any
 system that returns objects (allocated structures) should probably
 use the E_Object system as a parent. See examples on its use in the
 code. E_Object provides a simple object wrapper with reference
 counting, object pointer and type checking and safety that should,
 runtime, trap a lot of potential problems and let the programmer know
 about them. Use the object type checking macros for checking if an
-object passed into a function as a parameter is a valid object.</FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">Keep
+object passed into a function as a parameter is a valid object.</font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">Keep
 to the indentation and spacing style thats there - it makes it easier
-to read if all the code matches. All functions called as &quot;callbacks&quot;
-should be called _e_system_cb_something. The &quot;cb&quot; denotes
+to read if all the code matches. All functions called as "callbacks"
+should be called _e_system_cb_something. The "cb" denotes
 that that function may get called by other code, maybe unpredictably,
 at any time in response to an event, timer, or something mostly out
 of the control of the program itself. Functions such as the free
 function for an object aren't the same kind of callback, since they
-are predictable and controllable, so they do not get &quot;cb&quot;
-in their name.</FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">So
+are predictable and controllable, so they do not get "cb"
+in their name.</font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">So
 that's the quick rundown on basic coding style. More will likely be
-added to this list, but the best way to put it all is &quot;look at
-what's there and follow the same style&quot;.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Tree
-Layout</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">The
+added to this list, but the best way to put it all is "look at
+what's there and follow the same style".</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>Tree
+Layout</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">The
 E17 source tree is well structured, with a location for everything.
 In the top-level directory you will find a src directory that is the
 master directory for all the C source code for the WM and components.
 You will also find a doc and data directories. The doc directory
-contains all documentation (this document for example).</FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">The
+contains all documentation (this document for example).</font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">The
 data directory contains all cross-platform data needed for the WM to
 run as well as a basic default theme that it also needs to run.
 Currently the default theme is not complete at all and is no
@@ -161,8 +178,9 @@ only just enough to make it work and demonstrate an example of how to
 make a theme. There is also other data used for things like low-level
 error dialogs (used for example if the theme doesn't work) as well as
 a default font and other system data such as data for the splash
-screen displayed while Enlightenment starts up.</FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">The
+screen displayed while Enlightenment starts up.</font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">The
 src directory contains 3 main repositories of code. They are bin, lib
 and modules. The bin directory contains all the source code for the
 WM itself and any primary executables it uses during execution. The
@@ -175,10 +193,12 @@ Enlightenment too, so if a feature isn't used it doesn't have to use
 any resources at all. Each module lives in its own subdirectory with
 the code and special module specific data like images, Edje .eet
 files etc. that are specific to that module. See further on for more
-information on modules.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Design
-Ethos</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">As
+information on modules.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>Design
+Ethos</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">As
 for design, Enlightenment doesn't strictly follow a conservative WM
 design. It does some things quite differently, with the aim of
 providing more features with simpler internal design to achieve more
@@ -198,9 +218,11 @@ seamlessly and all in sync by using window gravity and resizing of
 the virtual root container. It also allows the WM to simulate
 different resolutions very easily since it can control the virtual
 root window, which is not normally possible to do with the real root
-window.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Managers</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">Managers
+window.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>Managers</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">Managers
 are the basic unit of window management. One Manager object is
 created per root window to manage. For more people, even if they run
 Xinerama across multiple screens, there is only 1 root window, and
@@ -214,9 +236,11 @@ client gets to perform them, thus enabling it to be a WM. A Manager
 object actually creates a window the size of the root window it
 manages and covers the root window up completely. Each Manager object
 may contain 1 or more Container objects which in-turn create their
-own child windows of the Manager window.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Containers</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">Container
+own child windows of the Manager window.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>Containers</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">Container
 objects create their own windows to CONTAIN managed window frames,
 the desktop window (the desktop background is actually just a big
 window that is always kept below all frame windows that contains a
@@ -234,8 +258,9 @@ using an EDJE object for the background, the desktop wallpaper can be
 animated, react to events and input, scale intelligently (not just
 “stretch” or “tile”), where the desktop wallpaper designer
 can specify what elements of the wallpaper scale, align, where and
-how, if they tile, overlay, underlay each other, and how.</FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">Currently
+how, if they tile, overlay, underlay each other, and how.</font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">Currently
 the Container only responds to configuration change events to change
 the background, which needs to be a path to an Edje .eet file that
 contains a Edje group of the key “desktop/background”. It will
@@ -251,22 +276,27 @@ convert into a Edje .eet file, which now retains the scaling, tiling
 and other preferences the user selected within the file. The user can
 now give this file to others and it will retain the same information,
 without them needing to know if the wallpaper needs to tile as a
-pattern, stretch etc.</FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">The
+pattern, stretch etc.</font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">The
 desktop canvas is also shared by many modules that may display things
 like battery meters, cpu load, launcher bars, drop shadows etc. on
 the desktop background. The desktop canvas lets this be a bit more
 organized than it would be with a “free for all” drawing to the
-root window under more conservative WM's.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Borders</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">Borders
+root window under more conservative WM's.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>Borders</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">Borders
 are the frame outside an application window that is controlled by the
 WM and that holds the application window within, and allows users to
 move, resize, shade, lower, close and otherwise control windows. This
 is currently buggy and not very useful and needs work in combination
-with the Manager system.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Menus</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">Enlightenment
+with the Manager system.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>Menus</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">Enlightenment
 has its own Menu widget code to allow for highly themable menus that
 match your WM's theme. These menus are intended to act as ways to
 launch programs, select actions to perform with context sensitive
@@ -277,9 +307,11 @@ let the user navigate with the keyboard, mouse wheel or mouse. It
 currently needs work to support shaped menu windows, be able to add,
 delete and modify menu items while the item is still realized, and a
 set of other things listed in the TODO list at the top of the
-e_menu.c source file.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Modules</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">Modules
+e_menu.c source file.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>Modules</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">Modules
 are a new and powerful way to extend E17 by being able to load and
 execute code during runtime that may be shipped with E17 or even
 developed after installation as enhancements and additions. This
@@ -289,10 +321,12 @@ loaded etc. It is possible to have “dormant” modules that are
 loaded but not enabled. They will use memory and resources for the
 module entry and the binary executable code loaded into memory, but
 nothing else. An enabled module will also use resources for objects,
-images, etc. etc.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Dropshadow
-Module</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">This
+images, etc. etc.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>Dropshadow
+Module</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">This
 module demonstrates the Container shape system allowing a module to
 monitor obscuring shapes in a container. This lets the module, in
 this case, draw soft shadows under these obscuring shapes. It is a
@@ -301,10 +335,12 @@ visible elements on the screen you can click on or control directly
 with the mouse or keyboard. It could do with some optimization work
 with the blur algorithm, like clipping out the obscuring shape
 entirely from the blurring algorithm, and perhaps finding a way of
-blurring using a Gaussian blur that is faster.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>IBar
-Module</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">The
+blurring using a Gaussian blur that is faster.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>IBar
+Module</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">The
 IBar module is a template for doing a “launcher panel” in E17. It
 allows the user to manage a list of frequently used applications to
 go into the IBar's panel. It is an attempt to unify the configuration
@@ -317,8 +353,9 @@ in the list. It uses the Application interface to fetch a list of
 applications and monitor this list for changes on disk. The IBar also
 allows itself to be resized and dragged around the edges of the
 screen, set to fill a edge, auto-size to fit its contents, or be a
-fixed size.</FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">It
+fixed size.</font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">It
 needs work to be done on auto hide and auto show, so on an auto show
 it could signal other parts of E17, for example, to slide all windows
 out of the way, or other such features. It needs work to display
@@ -326,15 +363,19 @@ application names, descriptions and other such information as well.
 It also needs to support the icon size changing on the fly as well as
 saving and loading its configuration, On of the largest pieces of
 work is to support subdirectories in the bar's application list. How
-best to do this is still up in the air. For now this isn't supported.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Test
-Module</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">This
+best to do this is still up in the air. For now this isn't supported.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>Test
+Module</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">This
 is just a test module for playing with new module features. It will
 not make its way into a final E17 release, but can be used as a bare
-skeleton for building a new module.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Applications</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">This
+skeleton for building a new module.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>Applications</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">This
 subsystem is responsible for being able to list applications held in
 E17 specific application directories. This system can inform other
 parts of E17 and modules of changes, such as an application being
@@ -342,8 +383,9 @@ deleted or added, its name or icon changed, the order of applications
 in a directory changing, an application being executed or displaying
 its window, or finishing execution. It can share the application
 lists between multiple systems to save RAM and CPU and I/O in loading
-them multiple times.</FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">It
+them multiple times.</font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">It
 may be of surprise to find E17 is not loading the XML, .desktop
 entries etc. etc. than KDE and GNOME use. In all honesty that system
 is a little overcomplicated and hard to keep up with. It also is not
@@ -354,9 +396,11 @@ fully scalable and animated icons as well, with excellent compression
 abilities. The intent is to have external tools that can import and
 create such files FROM existing system databases of applications and
 monitor these for changes, reflecting those changes in Enlightenments
-application directories.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>IPC</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">IPC
+application directories.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>IPC</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">IPC
 (inter process communication) is provided in E17 as a mechanism for
 another application to send commands and requests to Enlightenment
 and receive responses with information. This mechanism is intended to
@@ -365,69 +409,89 @@ things via a communications channel built into the WM. E17 uses the
 Ecore IPC system to do this. So far it support no commands at all,
 but will accept clients connecting. Many commands need to be
 implemented here, such as being able to ask E17 to load or unload a
-module, change background, change focus mode, theme, restart etc.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Objects</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">This
+module, change background, change focus mode, theme, restart etc.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>Objects</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">This
 provides a basic Object Oriented handling system for E17. Any major
 “object” in E17 should use this system for handling reference
 counting, destruction and creation of objects, as it provides safety
 mechanisms to check if an object has accidentally been destroyed and
 still has a pointer to it, keep references on objects intact etc.
 This should be used as much as possible, as well as the macros it
-provides for checking on entry points into subsystem functions etc.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Pointers</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">This
+provides for checking on entry points into subsystem functions etc.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>Pointers</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">This
 subsystem handles setting of X mouse cursors in an abstract fashion.
 In theory E just looks at a cursor as RGBA pixel data. In future
 Ecore will be expanded to be able to set full color cursors in X as
 well as monochrome versions of them. Currently it is very simplistic
-loading a fixed PNG as a cursor. This needs to be improved.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Box</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">This
+loading a fixed PNG as a cursor. This needs to be improved.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>Box</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">This
 is a basic Evas Smart Object that acts as a horizontal or vertical
 box layout container. It needs more features for layout, like better
 non homogeneous layout. This is a handy object that is sued by menus
-and the IBar module for starters.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Icons</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">This
+and the IBar module for starters.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>Icons</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">This
 is an Evas Smart Object that creates a icon display object That
 handles scaling the icon sensibly within the object bounds, so the
 application doesn't have to handle trying to retain aspect ratio for
 the object. This is a simple smart object and indicative of possibly
-more in future to go into E17's code to save time and effort.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Paths</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">This
+more in future to go into E17's code to save time and effort.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>Paths</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">This
 helps E17 find files in a list of paths/directories. There isn't a
 lot to say about this except that it works and may need some minimal
-expansion in future.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>User
-Information</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">This
+expansion in future.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>User
+Information</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">This
 returns information about a user such as their home directory. This
-will expand in future.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Virtual
-and Multiple Desktops</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">This
-is not implemented yet.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Error
-Dialogs</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">This
+will expand in future.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>Virtual
+and Multiple Desktops</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">This
+is not implemented yet.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>Error
+Dialogs</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">This
 displays very basic error dialogs right now, either as text in the
 console if E17 isn't ready to run graphically yet, or as text in a
 graphical dialog box. This needs to be made more robust, so it can
 display errors if it cannot find the font and images for the basic
 error dialog. It should also be expanded to support fully themed
 dialogs if the theme loads properly and properly supports theming of
-dialogs, so dialogs look good.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Initialization
-Splash Screen</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">This
+dialogs, so dialogs look good.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>Initialization
+Splash Screen</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">This
 keeps the user amused while E17 starts up and launches all programs.
 For now it is artificially fixed to stay up for 4 seconds so you can
 enjoy its radiant splendor, as E17 starts so quickly you'd never see
-it, but in future it will stay up until the WM is all ready to go.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Configuration</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">Loading
+it, but in future it will stay up until the WM is all ready to go.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>Configuration</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">Loading
 and saving configuration is a big task. E17 uses EET directly as its
 underlying layer for saving and loading configuration. The E17 Config
 system simply loads all the initial configuration values, and saves
@@ -438,18 +502,22 @@ listener (the number of listeners needs to be reduced), so maybe
 loading config values in sections/groups and deferring a reload in a
 Ecore Job would limit the reloading effects. Also declaring config
 values and how to load and declare them is required. Maybe a big
-table with default values, min, max, step, descriptions etc.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>File
-Operations</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">Files
+table with default values, min, max, step, descriptions etc.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>File
+Operations</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">Files
 need to be accessed, listed, found, examined as part of E17 running.
 This file has simplified, easy-to-use functions for doing anything
 related to files. This file will expand over time as more file
-operations are needed.</FONT></FONT></P>
-<P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Miscellaneous
-Utilities</B></FONT></FONT></P>
-<P CLASS="western" STYLE="margin-left: 0.79in"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">Things
+operations are needed.</font></p>
+<p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>Miscellaneous
+Utilities</b></font></p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;"><font
+ style="font-size: 8pt;">Things
 that are useful in many places but do not have enough scope to have a
-file of their own go into this file.</FONT></FONT></P>
-</BODY>
-</HTML>
+file of their own go into this file.</font></p>
+</body>
+</html>

@@ -21,10 +21,10 @@ static void _e_zone_update_flip(E_Zone *zone);
 EAPI int E_EVENT_ZONE_DESK_COUNT_SET = 0;
 EAPI int E_EVENT_POINTER_WARP = 0;
 
-#define E_ZONE_FLIP_UP(zone) ((zone)->desk_y_current > 0)
-#define E_ZONE_FLIP_RIGHT(zone) (((zone)->desk_x_current + 1) < (zone)->desk_x_count)
-#define E_ZONE_FLIP_DOWN(zone) (((zone)->desk_y_current + 1) < (zone)->desk_y_count)
-#define E_ZONE_FLIP_LEFT(zone) ((zone)->desk_x_current > 0)
+#define E_ZONE_FLIP_LEFT(zone)  ((e_config->desk_flip_wrap && ((zone)->desk_x_count > 1)) || ((zone)->desk_x_current > 0))
+#define E_ZONE_FLIP_RIGHT(zone) ((e_config->desk_flip_wrap && ((zone)->desk_x_count > 1)) || (((zone)->desk_x_current + 1) < (zone)->desk_x_count))
+#define E_ZONE_FLIP_UP(zone)    ((e_config->desk_flip_wrap && ((zone)->desk_y_count > 1)) || ((zone)->desk_y_current > 0))
+#define E_ZONE_FLIP_DOWN(zone)  ((e_config->desk_flip_wrap && ((zone)->desk_y_count > 1)) || (((zone)->desk_y_current + 1) < (zone)->desk_y_count))
 
 static int startup_id = 0;
 
@@ -472,11 +472,21 @@ e_zone_desk_flip_to(E_Zone *zone, int x, int y)
    
    E_OBJECT_CHECK(zone);
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
-   
-   if (x < 0) x = 0;
-   else if (x >= zone->desk_x_count) x = zone->desk_x_count - 1;
-   if (y < 0) y = 0;
-   else if (y >= zone->desk_y_count) y = zone->desk_y_count - 1;
+
+   if (e_config->desk_flip_wrap)
+     {
+	x = x % zone->desk_x_count;
+	y = y % zone->desk_y_count;
+	if (x < 0) x += zone->desk_x_count;
+	if (y < 0) y += zone->desk_y_count;
+     }
+   else
+     {
+	if (x < 0) x = 0;
+	else if (x >= zone->desk_x_count) x = zone->desk_x_count - 1;
+	if (y < 0) y = 0;
+	else if (y >= zone->desk_y_count) y = zone->desk_y_count - 1;
+     }
    desk = e_desk_at_xy_get(zone, x, y);
    if (desk) e_desk_show(desk);
 }
@@ -503,10 +513,8 @@ e_zone_desk_linear_flip_to(E_Zone *zone, int x)
    E_OBJECT_CHECK(zone);
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    
-   if (x < 0) return;
    y = x / zone->desk_x_count;
    x = x - (y * zone->desk_x_count);
-   if (y >= zone->desk_y_count) return;
    e_zone_desk_flip_to(zone, x, y);
 }
 
@@ -927,53 +935,37 @@ _e_zone_cb_timer(void *data)
       case E_DIRECTION_UP:
 	if (E_ZONE_FLIP_UP(zone))
 	   {
-	      current = e_desk_at_xy_get(zone, zone->desk_x_current, zone->desk_y_current - 1);
-	      if (current)
-		{
-		   e_desk_show(current);
-		   ecore_x_pointer_warp(zone->container->win, x, zone->h - 2);
-		   ev->curr.x = x;
-		   ev->curr.y = zone->h - 2;
-		}
+	     e_zone_desk_flip_by(zone, 0, -1);
+	      ecore_x_pointer_warp(zone->container->win, x, zone->h - 2);
+	      ev->curr.x = x;
+	      ev->curr.y = zone->h - 2;
 	   }
 	break;
       case E_DIRECTION_RIGHT:
 	if (E_ZONE_FLIP_RIGHT(zone))
 	  {
-	     current = e_desk_at_xy_get(zone, zone->desk_x_current + 1, zone->desk_y_current);
-	     if (current)
-	       {
-		  e_desk_show(current);
-		  ecore_x_pointer_warp(zone->container->win, 2, y);
-		  ev->curr.y = y;
-		  ev->curr.x = 2;
-	       }
+	     e_zone_desk_flip_by(zone, 1, 0);
+	     ecore_x_pointer_warp(zone->container->win, 2, y);
+	     ev->curr.y = y;
+	     ev->curr.x = 2;
 	  }
 	break;
       case E_DIRECTION_DOWN:
 	if (E_ZONE_FLIP_DOWN(zone))
 	  {
-	     current = e_desk_at_xy_get(zone, zone->desk_x_current, zone->desk_y_current + 1);
-	     if (current)
-	       {
-		  e_desk_show(current);
-		  ecore_x_pointer_warp(zone->container->win, x, 2);
-		  ev->curr.x = x;
-		  ev->curr.y = 2;
-	       }
+	     e_zone_desk_flip_by(zone, 0, 1);
+	     ecore_x_pointer_warp(zone->container->win, x, 2);
+	     ev->curr.x = x;
+	     ev->curr.y = 2;
 	  }
 	break;
       case E_DIRECTION_LEFT:
 	if (E_ZONE_FLIP_LEFT(zone))
 	  {
-	     current = e_desk_at_xy_get(zone, zone->desk_x_current - 1, zone->desk_y_current);
-	     if (current)
-	       {
-		  e_desk_show(current);
-		  ecore_x_pointer_warp(zone->container->win, zone->w - 2, y);
-		  ev->curr.y = y;
-		  ev->curr.x = zone->w - 2;
-	       }
+	     e_zone_desk_flip_by(zone, -1, 0);
+	     ecore_x_pointer_warp(zone->container->win, zone->w - 2, y);
+	     ev->curr.y = y;
+	     ev->curr.x = zone->w - 2;
 	  }
 	break;
      }

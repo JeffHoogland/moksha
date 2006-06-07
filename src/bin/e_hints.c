@@ -430,7 +430,15 @@ e_hints_window_init(E_Border *bd)
    /* It's ok not to have fetch flag, should only be set on startup
     * and not changed. */
    if (!ecore_x_netwm_pid_get(bd->client.win, &bd->client.netwm.pid))
-     bd->client.netwm.pid = -1;
+     {
+        if (bd->client.icccm.client_leader)
+	  {
+	     if (!ecore_x_netwm_pid_get(bd->client.icccm.client_leader, &bd->client.netwm.pid))
+	       bd->client.netwm.pid = -1;
+	  }
+	else
+	  bd->client.netwm.pid = -1;
+     }
 
    if (bd->client.netwm.state.sticky)
      {
@@ -553,6 +561,36 @@ e_hints_window_state_set(E_Border *bd)
 	 break;
      }
    ecore_x_netwm_window_state_set(bd->client.win, state, num);
+}
+
+EAPI void
+e_hints_allowed_action_set(E_Border *bd)
+{
+   Ecore_X_Action action[10];
+   int num = 0;
+
+   if (bd->client.netwm.action.move)
+     action[num++] = ECORE_X_ACTION_MOVE;
+   if (bd->client.netwm.action.resize)
+     action[num++] = ECORE_X_ACTION_RESIZE;
+   if (bd->client.netwm.action.minimize)
+     action[num++] = ECORE_X_ACTION_MINIMIZE;
+   if (bd->client.netwm.action.shade)
+     action[num++] = ECORE_X_ACTION_SHADE;
+   if (bd->client.netwm.action.stick)
+     action[num++] = ECORE_X_ACTION_STICK;
+   if (bd->client.netwm.action.maximized_h)
+     action[num++] = ECORE_X_ACTION_MAXIMIZE_HORZ;
+   if (bd->client.netwm.action.maximized_v)
+     action[num++] = ECORE_X_ACTION_MAXIMIZE_VERT;
+   if (bd->client.netwm.action.fullscreen)
+     action[num++] = ECORE_X_ACTION_FULLSCREEN;
+   if (bd->client.netwm.action.change_desktop)
+     action[num++] = ECORE_X_ACTION_CHANGE_DESKTOP;
+   if (bd->client.netwm.action.close)
+     action[num++] = ECORE_X_ACTION_CLOSE;
+
+   ecore_x_netwm_allowed_action_set(bd->client.win, action, num);
 }
 
 EAPI void
@@ -876,6 +914,98 @@ e_hints_window_state_get(E_Border *bd)
 	free(state);
      }
 }
+
+EAPI void
+e_hints_allowed_action_update(E_Border *bd, Ecore_X_Action action)
+{
+   switch (action)
+     {
+      case ECORE_X_ACTION_MOVE:
+	 break;
+      case ECORE_X_ACTION_RESIZE:
+	 break;
+      case ECORE_X_ACTION_MINIMIZE:
+	 break;
+      case ECORE_X_ACTION_SHADE:
+	 break;
+      case ECORE_X_ACTION_STICK:
+	 break;
+      case ECORE_X_ACTION_MAXIMIZE_HORZ:
+	 break;
+      case ECORE_X_ACTION_MAXIMIZE_VERT:
+	 break;
+      case ECORE_X_ACTION_FULLSCREEN:
+	 break;
+      case ECORE_X_ACTION_CHANGE_DESKTOP:
+	 break;
+      case ECORE_X_ACTION_CLOSE:
+	 break;
+     }
+}
+
+EAPI void
+e_hints_allowed_action_get(E_Border *bd)
+{
+   Ecore_X_Action *action;
+   unsigned int    i;
+   unsigned int    num;
+
+   bd->client.netwm.action.move = 0;
+   bd->client.netwm.action.resize = 0;
+   bd->client.netwm.action.minimize = 0;
+   bd->client.netwm.action.shade = 0;
+   bd->client.netwm.action.stick = 0;
+   bd->client.netwm.action.maximized_h = 0;
+   bd->client.netwm.action.maximized_v = 0;
+   bd->client.netwm.action.fullscreen = 0;
+   bd->client.netwm.action.change_desktop = 0;
+   bd->client.netwm.action.close = 0;
+
+   ecore_x_netwm_allowed_action_get(bd->client.win, &action, &num);
+   if (action)
+     {
+	for (i = 0; i < num; i++)
+	  {
+	     switch (action[i])
+	       {
+		case ECORE_X_ACTION_MOVE:
+		  bd->client.netwm.action.move = 1;
+		  break;
+		case ECORE_X_ACTION_RESIZE:
+		  bd->client.netwm.action.resize = 1;
+		  break;
+		case ECORE_X_ACTION_MINIMIZE:
+		  bd->client.netwm.action.minimize = 1;
+		  break;
+		case ECORE_X_ACTION_SHADE:
+		  bd->client.netwm.action.shade = 1;
+		  break;
+		case ECORE_X_ACTION_STICK:
+		  bd->client.netwm.action.stick = 1;
+		  break;
+		case ECORE_X_ACTION_MAXIMIZE_HORZ:
+		  bd->client.netwm.action.maximized_h = 1;
+		  break;
+		case ECORE_X_ACTION_MAXIMIZE_VERT:
+		  bd->client.netwm.action.maximized_v = 1;
+		  break;
+		case ECORE_X_ACTION_FULLSCREEN:
+		  bd->client.netwm.action.fullscreen = 1;
+		  break;
+		case ECORE_X_ACTION_CHANGE_DESKTOP:
+		  bd->client.netwm.action.change_desktop = 1;
+		  break;
+		case ECORE_X_ACTION_CLOSE:
+		  bd->client.netwm.action.close = 1;
+		  break;
+	       }
+	  }
+	free(action);
+     }
+}
+
+
+
 
 EAPI void
 e_hints_window_visible_set(E_Border *bd)

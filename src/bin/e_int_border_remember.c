@@ -42,7 +42,7 @@ struct _E_Config_Dialog_Data
       int apply_shade;
       int apply_zone;
       int apply_skip_winlist;
-      int apply_run; // unused atm
+      int apply_run;
    } remember;
 };
 
@@ -292,7 +292,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	 (cfdata->remember.apply_locks) || (cfdata->remember.apply_layer) ||
 	 (cfdata->remember.apply_border) || (cfdata->remember.apply_sticky) ||
 	 (cfdata->remember.apply_desktop) || (cfdata->remember.apply_shade) ||
-	 (cfdata->remember.apply_zone) || (cfdata->remember.apply_skip_winlist)))
+	 (cfdata->remember.apply_zone) || (cfdata->remember.apply_skip_winlist) ||
+	 (cfdata->remember.apply_run)))
      {
 	if (cfdata->border->remember)
 	  {
@@ -486,9 +487,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   ob = e_widget_check_add(evas, _("Match only one window"), &(cfdata->remember.apply_first_only));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   
    of = e_widget_frametable_add(evas, _("Properties to remember"), 0);
    ob = e_widget_check_add(evas, _("Position"), &(cfdata->remember.apply_pos));
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
@@ -512,5 +510,14 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_frametable_object_append(of, ob, 1, 4, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
+   ob = e_widget_check_add(evas, _("Match only one window"), &(cfdata->remember.apply_first_only));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+
+   if (cfdata->border->client.icccm.command.argv)
+     {
+	ob = e_widget_check_add(evas, _("Start this program on login"), &(cfdata->remember.apply_run));
+	e_widget_list_object_append(o, ob, 1, 1, 0.5);
+     }
+  
    return o;
 }

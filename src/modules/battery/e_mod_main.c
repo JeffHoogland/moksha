@@ -337,9 +337,6 @@ _battery_cb_check(void *data)
 		  _battery_face_level_set(inst, ret->level);
 		  battery_config->battery_prev_battery = 0;
 	       }
-	     free(ret->reading);
-	     free(ret->time);
-	     free(ret);
 	  }
 	else
 	  {
@@ -352,6 +349,12 @@ _battery_cb_check(void *data)
 	     battery_config->battery_prev_battery = -2;
 	     battery_config->battery_check_mode = CHECK_NONE;
 	  }
+     }
+   if (ret)
+     {
+	free(ret->reading);
+	free(ret->time);
+	free(ret);
      }
    return 1;
 }

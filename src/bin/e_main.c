@@ -538,7 +538,7 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_app_shutdown);
    /* do remember stuff */
-   if (!e_remember_init())
+   if (!e_remember_init(after_restart ? E_STARTUP_RESTART: E_STARTUP_START))
      {
 	e_error_message_show(_("Enlightenment cannot setup remember settings."));
 	_e_main_shutdown(-1);

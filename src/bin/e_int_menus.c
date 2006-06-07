@@ -25,6 +25,7 @@ static int  _e_int_menus_main_run_defer_cb   (void *data);
 static void _e_int_menus_main_run            (void *data, E_Menu *m, E_Menu_Item*mi);
 static int  _e_int_menus_main_lock_defer_cb  (void *data);
 static void _e_int_menus_main_lock           (void *data, E_Menu *m, E_Menu_Item*mi);
+static void _e_int_menus_main_lock_showhide  (void *data, E_Menu *m, E_Menu_Item*mi);
 static void _e_int_menus_main_restart        (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_exit           (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_apps_scan           (E_Menu *m);
@@ -376,6 +377,15 @@ _e_int_menus_main_lock(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
+_e_int_menus_main_showhide(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Action *act;
+   
+   act = e_action_find("zone_deskshow_toggle");
+   if (act) act->func.go(m->zone, NULL);
+}
+
+static void
 _e_int_menus_main_fm(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Fileman *fileman;
@@ -519,6 +529,11 @@ _e_int_menus_desktops_pre_cb(void *data, E_Menu *m)
    e_menu_item_label_set(mi, _("Lock Screen"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/lock");
    e_menu_item_callback_set(mi, _e_int_menus_main_lock, NULL);
+   
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Show/Hide All Windows"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/showhide");
+   e_menu_item_callback_set(mi, _e_int_menus_main_showhide, NULL);
    
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
