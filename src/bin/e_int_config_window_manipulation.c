@@ -19,6 +19,7 @@ struct _E_Config_Dialog_Data
    int use_resist;
    int maximize_policy;
    /*- ADVANCED -*/
+   int maximize_direction;
    double auto_raise_delay;
    int desk_resist;
    int window_resist;
@@ -57,9 +58,12 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->desk_resist = e_config->desk_resist;
    cfdata->window_resist = e_config->window_resist;
    cfdata->gadget_resist = e_config->gadget_resist;
-   cfdata->maximize_policy = e_config->maximize_policy;
+   cfdata->maximize_policy = (e_config->maximize_policy & E_MAXIMIZE_TYPE);
    if (cfdata->maximize_policy == E_MAXIMIZE_NONE)
      cfdata->maximize_policy = E_MAXIMIZE_FULLSCREEN;
+   cfdata->maximize_direction = (e_config->maximize_policy & E_MAXIMIZE_DIRECTION);
+   if (!cfdata->maximize_direction)
+     cfdata->maximize_direction = E_MAXIMIZE_BOTH;
    cfdata->allow_manip = e_config->allow_manip;
 }
 
@@ -91,7 +95,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    /* Actually take our cfdata settings and apply them in real life */
    e_config->use_auto_raise = cfdata->use_auto_raise;
    e_config->use_resist = cfdata->use_resist;
-   e_config->maximize_policy = cfdata->maximize_policy;
+   e_config->maximize_policy &= ~E_MAXIMIZE_TYPE;
+   e_config->maximize_policy &= cfdata->maximize_policy;
    e_config_save_queue();
    return 1; /* Apply was OK */
 }
@@ -106,7 +111,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->desk_resist = cfdata->desk_resist;
    e_config->window_resist = cfdata->window_resist;
    e_config->gadget_resist = cfdata->gadget_resist;
-   e_config->maximize_policy = cfdata->maximize_policy;
+   e_config->maximize_policy = cfdata->maximize_policy | cfdata->maximize_direction;
    e_config->allow_manip = cfdata->allow_manip;
    e_config_save_queue();
    return 1; /* Apply was OK */
@@ -178,7 +183,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_slider_add(evas, 1, 0, _("%2.0f pixels"), 0, 64.0, 1.0, 0, NULL, &(cfdata->gadget_resist), 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
+ 
    of = e_widget_framelist_add(evas, _("Maximize Policy"), 0);
    rg = e_widget_radio_group_new(&(cfdata->maximize_policy));
    ob = e_widget_radio_add(evas, _("Fullscreen"), E_MAXIMIZE_FULLSCREEN, rg);
@@ -189,8 +194,18 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Fill available space"), E_MAXIMIZE_FILL, rg);
    e_widget_framelist_object_append(of, ob);
+
+   rg = e_widget_radio_group_new(&(cfdata->maximize_direction));
+   ob = e_widget_radio_add(evas, _("Both directions"), E_MAXIMIZE_BOTH, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Horizontal"), E_MAXIMIZE_HORIZONTAL, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Vertical"), E_MAXIMIZE_VERTICAL, rg);
+   e_widget_framelist_object_append(of, ob);
+
    ob = e_widget_check_add(evas, _("Allow window manipulation"), &(cfdata->allow_manip));
    e_widget_framelist_object_append(of, ob);
+
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    return o;

@@ -199,7 +199,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    /* generate the core widget layout for a basic dialog */
    Evas_Object *o, *of, *ob, *oi, *oj;
-   E_Radio_Group *rg;
    Evas_Coord wmw, wmh;
    Evas_List *styles, *l;
    int sel, n;

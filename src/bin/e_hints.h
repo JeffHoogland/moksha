@@ -35,7 +35,7 @@ EAPI void e_hints_window_size_unset(E_Border *bd);
 EAPI int  e_hints_window_size_get(E_Border *bd);
 
 EAPI void e_hints_window_shaded_set(E_Border *bd, int on);
-EAPI void e_hints_window_maximized_set(E_Border *bd, int on);
+EAPI void e_hints_window_maximized_set(E_Border *bd, int horizontal, int vertical);
 EAPI void e_hints_window_fullscreen_set(E_Border *bd, int on);
 EAPI void e_hints_window_sticky_set(E_Border *bd, int on);
 EAPI void e_hints_window_stacking_set(E_Border *bd, E_Stacking stacking);

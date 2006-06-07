@@ -126,13 +126,12 @@ static void
 _load_inits(E_Config_Dialog *cfd, Evas_Object *il) 
 {
    Evas *evas;
-   Evas_Object *im, *o, *init_obj;
+   Evas_Object *im;
    Evas_List *init_dirs, *init;
    Ecore_Evas *eebuf;
    Evas *evasbuf;
    int i = 0;
    int selnum = -1;
-   const char *s;
    char *homedir;
    
    if (!il) return;

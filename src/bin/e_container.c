@@ -1218,7 +1218,7 @@ _e_container_resize_handle(E_Container *con)
 		  E_Maximize max;
 		  
 		  max = bd->maximized;
-		  e_border_unmaximize(bd);
+		  e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
 		  e_border_maximize(bd, max);
 	       }
 	     else

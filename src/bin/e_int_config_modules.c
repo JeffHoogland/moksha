@@ -59,7 +59,6 @@ _module_configure(void *data, void *data2)
 {
    E_Config_Dialog_Data *cfdata;
    E_Module *m;
-   const char *v;
 
    cfdata = data;
    if (!cfdata->modname) return;
@@ -75,7 +74,6 @@ _module_about(void *data, void *data2)
 {
    E_Config_Dialog_Data *cfdata;
    E_Module *m;
-   const char *v;
 
    cfdata = data;
    if (!cfdata->modname) return;

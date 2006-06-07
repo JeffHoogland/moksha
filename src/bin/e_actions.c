@@ -367,63 +367,60 @@ ACT_FN_GO(window_maximized_toggle)
 	E_Border *bd;
 	
 	bd = (E_Border *)obj;
-	/*if (bd->maximized) e_border_unmaximize(bd);*/
-	if ((bd->maximized != E_MAXIMIZE_NONE) &&
-	    (bd->maximized != E_MAXIMIZE_VERTICAL) &&
-	    (bd->maximized != E_MAXIMIZE_HORIZONTAL))
+	if ((bd->maximized & E_MAXIMIZE_TYPE) != E_MAXIMIZE_NONE)
 	  {
 	     if (!params)
-	       e_border_unmaximize(bd);
+	       e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
 	     else
 	       {
-		  if (!strcmp(params, "vertical"))
-		    e_border_unmaximize_vh(bd, E_MAXIMIZE_VERTICAL);
-		  else if  (!strcmp(params, "horizontal"))
-		    e_border_unmaximize_vh(bd, E_MAXIMIZE_HORIZONTAL);
+		  char s1[11], s2[11];
+
+		  /* FIXME: Move this to a parser func which returns an E_Maximize */
+		  if (sscanf(params, "%20s %20s", s1, s2) == 2)
+		    {
+		       if (!strcmp(s2, "vertical"))
+			 e_border_unmaximize(bd, E_MAXIMIZE_VERTICAL);
+		       else if (!strcmp(s2, "horizontal"))
+			 e_border_unmaximize(bd, E_MAXIMIZE_HORIZONTAL);
+		       else
+			 e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
+		    }
 		  else
-		    e_border_unmaximize(bd);
+		    e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
 	       }
 	  }
 	else
 	  {
-	     if (!bd->maximized)
-	       {
-		  if (!params)
-		    e_border_maximize(bd, e_config->maximize_policy);
-		  else
-		    {
-		       if (!strcmp(params, "fullscreen")) e_border_maximize(bd, E_MAXIMIZE_FULLSCREEN);
-		       else if (!strcmp(params, "smart")) e_border_maximize(bd, E_MAXIMIZE_SMART);
-		       else if (!strcmp(params, "expand")) e_border_maximize(bd, E_MAXIMIZE_EXPAND);
-		       else if (!strcmp(params, "fill")) e_border_maximize(bd, E_MAXIMIZE_FILL);
-		       else if (!strcmp(params, "vertical")) e_border_maximize(bd, E_MAXIMIZE_VERTICAL);
-		       else if (!strcmp(params, "horizontal")) e_border_maximize(bd, E_MAXIMIZE_HORIZONTAL);
-		       else e_border_maximize(bd, e_config->maximize_policy);
-		    }
-	       }
+	     if (!params)
+	       e_border_maximize(bd, e_config->maximize_policy);
 	     else
 	       {
-		  if (!params)
-		    e_border_maximize( bd, e_config->maximize_policy);
-		  else
+		  char s1[32], s2[32];
+		  E_Maximize max;
+		  int ret;
+
+		  /* FIXME: Move this to a parser func which returns an E_Maximize */
+		  max = (e_config->maximize_policy & E_MAXIMIZE_DIRECTION);
+		  ret = sscanf(params, "%20s %20s", s1, s2);
+		  if (ret == 2)
 		    {
-		       if (!strcmp(params, "vertical"))
-			 {
-			    if (bd->maximized == E_MAXIMIZE_VERTICAL)
-			      e_border_unmaximize_vh(bd, E_MAXIMIZE_VERTICAL);
-			    else
-			      e_border_maximize(bd, E_MAXIMIZE_VERTICAL);
-			 }
-		       else if (!strcmp(params, "horizontal"))
-			 {
-			    if (bd->maximized == E_MAXIMIZE_HORIZONTAL)
-			      e_border_unmaximize_vh(bd, E_MAXIMIZE_HORIZONTAL);
-			    else
-			      e_border_maximize(bd, E_MAXIMIZE_HORIZONTAL);
-			 }
+		       if (!strcmp(s2, "horizontal"))
+			 max = E_MAXIMIZE_HORIZONTAL;
+		       else if (!strcmp(s2, "vertical"))
+			 max = E_MAXIMIZE_VERTICAL;
 		       else
-			 e_border_maximize(bd, e_config->maximize_policy);
+			 max = E_MAXIMIZE_BOTH;
 		    }
+		  if (ret > 0)
+		    {
+		       if (!strcmp(s1, "fullscreen")) e_border_maximize(bd, E_MAXIMIZE_FULLSCREEN | max);
+		       else if (!strcmp(s1, "smart")) e_border_maximize(bd, E_MAXIMIZE_SMART | max);
+		       else if (!strcmp(s1, "expand")) e_border_maximize(bd, E_MAXIMIZE_EXPAND | max);
+		       else if (!strcmp(s1, "fill")) e_border_maximize(bd, E_MAXIMIZE_FILL | max);
+		       else e_border_maximize(bd, (e_config->maximize_policy & E_MAXIMIZE_TYPE) | max);
+		    }
+		  else
+		    e_border_maximize(bd, e_config->maximize_policy);
 	       }
 	  }
      }
@@ -445,20 +442,33 @@ ACT_FN_GO(window_maximized)
 	bd = (E_Border *)obj;
 	if (params)
 	  {
-	     int v;
-	     char buf[32];
+	     E_Maximize max;
+	     int v, ret;
+	     char s1[32], s2[32];
 	     
-	     if (sscanf(params, "%i %20s", &v, buf) == 2)
+	     max = (e_config->maximize_policy & E_MAXIMIZE_DIRECTION);
+	     ret = sscanf(params, "%i %20s %20s", &v, s1, s2);
+	     if (ret == 3)
+	       {
+		  if (!strcmp(s2, "horizontal"))
+		    max = E_MAXIMIZE_HORIZONTAL;
+		  else if (!strcmp(s2, "vertical"))
+		    max = E_MAXIMIZE_VERTICAL;
+		  else
+		    max = E_MAXIMIZE_BOTH;
+	       }
+	     if (ret > 1);
 	       {
 		  if (v == 1)
 		    {
-		       if (!strcmp(buf, "fullscreen")) e_border_maximize(bd, E_MAXIMIZE_FULLSCREEN);
-		       else if (!strcmp(buf, "smart")) e_border_maximize(bd, E_MAXIMIZE_SMART);
-		       else if (!strcmp(buf, "expand")) e_border_maximize(bd, E_MAXIMIZE_EXPAND);
-		       else if (!strcmp(buf, "fill")) e_border_maximize(bd, E_MAXIMIZE_FILL);
+		       if (!strcmp(s1, "fullscreen")) e_border_maximize(bd, E_MAXIMIZE_FULLSCREEN | max);
+		       else if (!strcmp(s1, "smart")) e_border_maximize(bd, E_MAXIMIZE_SMART | max);
+		       else if (!strcmp(s1, "expand")) e_border_maximize(bd, E_MAXIMIZE_EXPAND | max);
+		       else if (!strcmp(s1, "fill")) e_border_maximize(bd, E_MAXIMIZE_FILL | max);
+		       else e_border_maximize(bd, (e_config->maximize_policy & E_MAXIMIZE_TYPE) | max);
 		    }
 		  else if (v == 0)
-		    e_border_unmaximize(bd);
+		    e_border_unmaximize(bd, max);
 	       }
 	  }
      }

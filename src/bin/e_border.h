@@ -43,13 +43,16 @@ typedef enum _E_Focus_Setting
 
 typedef enum _E_Maximize
 {
-   E_MAXIMIZE_NONE,
-   E_MAXIMIZE_FULLSCREEN,
-   E_MAXIMIZE_SMART,
-   E_MAXIMIZE_EXPAND,
-   E_MAXIMIZE_FILL,
-   E_MAXIMIZE_VERTICAL,
-   E_MAXIMIZE_HORIZONTAL
+   E_MAXIMIZE_NONE       = 0x00000000,
+   E_MAXIMIZE_FULLSCREEN = 0x00000001,
+   E_MAXIMIZE_SMART      = 0x00000002,
+   E_MAXIMIZE_EXPAND     = 0x00000003,
+   E_MAXIMIZE_FILL       = 0x00000004,
+   E_MAXIMIZE_TYPE       = 0x0000000f,
+   E_MAXIMIZE_VERTICAL   = 0x00000010,
+   E_MAXIMIZE_HORIZONTAL = 0x00000020,
+   E_MAXIMIZE_BOTH       = 0x00000030,
+   E_MAXIMIZE_DIRECTION  = 0x000000f0
 } E_Maximize;
 
 typedef enum _E_Fullscreen
@@ -523,8 +526,7 @@ EAPI void      e_border_focus_set(E_Border *bd, int focus, int set);
 EAPI void      e_border_shade(E_Border *bd, E_Direction dir);
 EAPI void      e_border_unshade(E_Border *bd, E_Direction dir);
 EAPI void      e_border_maximize(E_Border *bd, E_Maximize max);
-EAPI void      e_border_unmaximize(E_Border *bd);
-EAPI void      e_border_unmaximize_vh(E_Border *bd, E_Maximize max);
+EAPI void      e_border_unmaximize(E_Border *bd, E_Maximize max);
 EAPI void      e_border_fullscreen(E_Border *bd, E_Fullscreen policy);
 EAPI void      e_border_unfullscreen(E_Border *bd);
 EAPI void      e_border_iconify(E_Border *bd);

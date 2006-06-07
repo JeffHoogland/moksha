@@ -454,7 +454,27 @@ e_hints_window_init(E_Border *bd)
 	     e_border_maximize(bd, e_config->maximize_policy);
 	  }
 	else
-	  e_hints_window_maximized_set(bd, 0);
+	  e_hints_window_maximized_set(bd, 0, 0);
+     }
+   else if (bd->client.netwm.state.maximized_h)
+     {
+	if (!bd->lock_client_maximize)
+	  {
+	     e_hints_window_size_get(bd);
+	     e_border_maximize(bd, (e_config->maximize_policy & E_MAXIMIZE_TYPE) | E_MAXIMIZE_HORIZONTAL);
+	  }
+	else
+	  e_hints_window_maximized_set(bd, 0, 0);
+     }
+   else if (bd->client.netwm.state.maximized_v)
+     {
+	if (!bd->lock_client_maximize)
+	  {
+	     e_hints_window_size_get(bd);
+	     e_border_maximize(bd, (e_config->maximize_policy & E_MAXIMIZE_TYPE) | E_MAXIMIZE_VERTICAL);
+	  }
+	else
+	  e_hints_window_maximized_set(bd, 0, 0);
      }
    if (bd->client.netwm.state.fullscreen)
      {
@@ -607,82 +627,42 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	 break;
       case ECORE_X_WINDOW_STATE_MAXIMIZED_VERT:
 	 if (bd->lock_client_maximize) return;
-	 /* We might end up in a state where maximized_h or maximized_v is
-	  * set. This doesn't matter, because E only checks if both are
-	  * set for maximization.
-	  */
-	 changed = 0;
 	 switch (action)
 	   {
 	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-	       if (bd->client.netwm.state.maximized_v)
-		 {
-		    bd->client.netwm.state.maximized_v = 0;
-		    changed = 1;
-		 }
+	       if (bd->maximized & E_MAXIMIZE_VERTICAL)
+		 e_border_unmaximize(bd, E_MAXIMIZE_VERTICAL);
 	       break;
 	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
-	       if (!bd->client.netwm.state.maximized_v)
-		 {
-		    bd->client.netwm.state.maximized_v = 1;
-		    changed = 1;
-		 }
+	       if (!(bd->maximized & E_MAXIMIZE_VERTICAL))
+		 e_border_maximize(bd, (e_config->maximize_policy & E_MAXIMIZE_TYPE) | E_MAXIMIZE_VERTICAL);
 	       break;
 	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
-	       bd->client.netwm.state.maximized_v = !bd->client.netwm.state.maximized_v;
-	       changed = 1;
+	       if (bd->maximized & E_MAXIMIZE_VERTICAL)
+		 e_border_unmaximize(bd, E_MAXIMIZE_VERTICAL);
+	       else
+		 e_border_maximize(bd, (e_config->maximize_policy & E_MAXIMIZE_TYPE) | E_MAXIMIZE_VERTICAL);
 	       break;
-	   }
-	 if (changed)
-	   {
-	      bd->client.netwm.update.state = 1;
-	      bd->changed = 1;
-	      if ((bd->client.netwm.state.maximized_v) &&
-		  (bd->client.netwm.state.maximized_h))
-		e_border_maximize(bd, e_config->maximize_policy);
-	      else if ((!bd->client.netwm.state.maximized_v) &&
-		       (!bd->client.netwm.state.maximized_h))
-		e_border_unmaximize(bd);
 	   }
 	 break;
       case ECORE_X_WINDOW_STATE_MAXIMIZED_HORZ:
 	 if (bd->lock_client_maximize) return;
-	 /* We might end up in a state where maximized_h or maximized_v is
-	  * set. This doesn't matter, because E only checks if both are
-	  * set for maximization.
-	  */
-	 changed = 0;
 	 switch (action)
 	   {
 	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-	       if (bd->client.netwm.state.maximized_h)
-		 {
-		    bd->client.netwm.state.maximized_h = 0;
-		    changed = 1;
-		 }
+	       if (bd->maximized & E_MAXIMIZE_HORIZONTAL)
+		 e_border_unmaximize(bd, E_MAXIMIZE_HORIZONTAL);
 	       break;
 	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
-	       if (!bd->client.netwm.state.maximized_h)
-		 {
-		    bd->client.netwm.state.maximized_h = 1;
-		    changed = 1;
-		 }
+	       if (!(bd->maximized & E_MAXIMIZE_HORIZONTAL))
+		 e_border_maximize(bd, (e_config->maximize_policy & E_MAXIMIZE_TYPE) | E_MAXIMIZE_HORIZONTAL);
 	       break;
 	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
-	       bd->client.netwm.state.maximized_h = !bd->client.netwm.state.maximized_h;
-	       changed = 1;
+	       if (bd->maximized & E_MAXIMIZE_HORIZONTAL)
+		 e_border_unmaximize(bd, E_MAXIMIZE_HORIZONTAL);
+	       else
+		 e_border_maximize(bd, (e_config->maximize_policy & E_MAXIMIZE_TYPE) | E_MAXIMIZE_HORIZONTAL);
 	       break;
-	   }
-	 if (changed)
-	   {
-	      bd->client.netwm.update.state = 1;
-	      bd->changed = 1;
-	      if ((bd->client.netwm.state.maximized_v) &&
-		  (bd->client.netwm.state.maximized_h))
-		e_border_maximize(bd, e_config->maximize_policy);
-	      else if ((!bd->client.netwm.state.maximized_v) &&
-		       (!bd->client.netwm.state.maximized_h))
-		e_border_unmaximize(bd);
 	   }
 	 break;
       case ECORE_X_WINDOW_STATE_SHADED:
@@ -1022,85 +1002,33 @@ e_hints_window_size_get(E_Border *bd)
 }
 
 EAPI void
-e_hints_window_maximized_set(E_Border *bd, int on)
+e_hints_window_maximized_set(E_Border *bd, int horizontal, int vertical)
 {
 
-  if( on )
-  {
-    if( bd->maximized == E_MAXIMIZE_VERTICAL )
-    {
-      if( !bd->client.netwm.state.maximized_v )
-      {
-	bd->client.netwm.update.state = 1;
-	bd->client.netwm.state.maximized_v = 1;
-	bd->changed = 1;
-      }
-    }
-    else if( bd->maximized == E_MAXIMIZE_HORIZONTAL )
-    {
-      if( !bd->client.netwm.state.maximized_h )
-      {
+   if ((horizontal) && (!bd->client.netwm.state.maximized_h))
+     {
 	bd->client.netwm.update.state = 1;
 	bd->client.netwm.state.maximized_h = 1;
 	bd->changed = 1;
-      }
-    }
-    else
-    {
-      if( !bd->client.netwm.state.maximized_v )
-      {
+     }
+   else if ((!horizontal) && (bd->client.netwm.state.maximized_h))
+     {
 	bd->client.netwm.update.state = 1;
-	bd->client.netwm.state.maximized_v = 1;
+	bd->client.netwm.state.maximized_h = 0;
 	bd->changed = 1;
-      }
-      if( !bd->client.netwm.state.maximized_h )
-      {
-	bd->client.netwm.update.state = 1;
-	bd->client.netwm.state.maximized_h = 1;
-	bd->changed = 1;
-      }
-    }
-  }
-  else
-  {
-    if( bd->client.netwm.state.maximized_v )
-    {
-      bd->client.netwm.update.state = 1;
-      bd->client.netwm.state.maximized_v = 0;
-      bd->changed = 1;
-    }
-    if( bd->client.netwm.state.maximized_h )
-    {
-      bd->client.netwm.update.state = 1;
-      bd->client.netwm.state.maximized_h = 0;
-      bd->changed = 1;
-    }
-  }
-
-   /*if ((!bd->client.netwm.state.maximized_v) && (on))
+     }
+   if ((vertical) && (!bd->client.netwm.state.maximized_v))
      {
 	bd->client.netwm.update.state = 1;
 	bd->client.netwm.state.maximized_v = 1;
 	bd->changed = 1;
      }
-   else if ((bd->client.netwm.state.maximized_v) && (!on))
+   else if ((!vertical) && (bd->client.netwm.state.maximized_v))
      {
 	bd->client.netwm.update.state = 1;
 	bd->client.netwm.state.maximized_v = 0;
 	bd->changed = 1;
      }
-   if ((!bd->client.netwm.state.maximized_h) && (on))
-     {
-	bd->client.netwm.update.state = 1;
-	bd->client.netwm.state.maximized_h = 1;
-	bd->changed = 1;
-     }
-   else if ((bd->client.netwm.state.maximized_h) && (!on))
-     {
-	bd->client.netwm.update.state = 1;
-	bd->client.netwm.state.maximized_h = 0;
-	bd->changed = 1;
-     }*/
 }
 
 EAPI void
