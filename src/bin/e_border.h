@@ -300,6 +300,7 @@ struct _E_Border
    unsigned int    need_shape_merge : 1;
    unsigned int    need_shape_export : 1;
    unsigned int    fullscreen : 1;
+   unsigned int    need_fullscreen : 1;
    unsigned int    want_fullscreen : 1;
    unsigned int    already_unparented : 1;
    unsigned int    need_reparent : 1;

@@ -1771,6 +1771,7 @@ e_border_unmaximize(E_Border *bd)
    if (bd->maximized)
      {
 //	printf("UNMAXIMIZE!!\n");
+	bd->need_maximize = 0;
 	e_hints_window_maximized_set(bd, 0);
 
 	switch (bd->maximized)
@@ -1836,6 +1837,11 @@ e_border_fullscreen(E_Border *bd, E_Fullscreen policy)
    if ((bd->shaded) || (bd->shading)) return;
    if (bd->maximized)
      e_border_unmaximize(bd);
+   if (bd->new_client)
+     {
+	bd->need_fullscreen = 1;
+	return;
+     }
    if (!bd->fullscreen)
      {
 #if 0
@@ -1938,6 +1944,7 @@ e_border_unfullscreen(E_Border *bd)
      {
 //	printf("UNFULLSCREEEN!\n");
 	bd->fullscreen = 0;
+	bd->need_fullscreen = 0;
 	bd->client_inset.l = bd->client_inset.sl;
 	bd->client_inset.r = bd->client_inset.sr;
 	bd->client_inset.t = bd->client_inset.st;
@@ -5957,6 +5964,12 @@ _e_border_eval(E_Border *bd)
      {
 	e_border_maximize(bd, e_config->maximize_policy);
 	bd->need_maximize = 0;
+     }
+ 
+   if (bd->need_fullscreen)
+     {
+	e_border_fullscreen(bd, e_config->fullscreen_policy);
+	bd->need_fullscreen = 0;
      }
  
    if (bd->remember)
