@@ -131,7 +131,6 @@ e_editable_text_insert(Evas_Object *object, const char *text)
    if ((!text) || ((strlen(text) <= 1) && (text[0] < 0x20)))
      return;
 
-   printf("Insert: \"%s\"\n", text);
    cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
 
    if (sd->cursor_at_the_end)
