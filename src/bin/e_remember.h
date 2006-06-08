@@ -87,7 +87,7 @@ struct _E_Remember
       int           zone;
       
       int           head;
-      char         *command;
+      const char   *command;
    } prop;
 };
 
