@@ -681,7 +681,6 @@ static void
 _e_desklock_passwd_cb_change(void *data, Evas_Object *obj)
 {
    E_Config_Dialog_Data	*cfdata;
-   char *ptr;
    int i;
    
    cfdata = data;
