@@ -18,8 +18,7 @@ EAPI int
 e_remember_init(E_Startup_Mode mode)
 {
    Evas_List *l;
-   int after_restart = 0;
-   
+ 
    if (mode == E_STARTUP_START)
      {
 	for (l = e_config->remembers; l; l = l->next)
@@ -260,13 +259,13 @@ e_remember_update(E_Remember *rem, E_Border *bd)
 		       buf[k] = 0;
 		       goto done;
 		    }
-		  if ((bd->client.icccm.command.argv == ' ') ||
-		      (bd->client.icccm.command.argv == '\t') ||
-		      (bd->client.icccm.command.argv == '\\') ||
-		      (bd->client.icccm.command.argv == '\"') ||
-		      (bd->client.icccm.command.argv == '\'') ||
-		      (bd->client.icccm.command.argv == '$') ||
-		      (bd->client.icccm.command.argv == '%'))
+		  if ((bd->client.icccm.command.argv[i][j] == ' ') ||
+		      (bd->client.icccm.command.argv[i][j] == '\t') ||
+		      (bd->client.icccm.command.argv[i][j] == '\\') ||
+		      (bd->client.icccm.command.argv[i][j] == '\"') ||
+		      (bd->client.icccm.command.argv[i][j] == '\'') ||
+		      (bd->client.icccm.command.argv[i][j] == '$') ||
+		      (bd->client.icccm.command.argv[i][j] == '%'))
 		    {
 		       buf[k] = '\\';
 		       k++;
