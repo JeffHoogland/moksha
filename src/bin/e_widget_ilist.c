@@ -245,6 +245,15 @@ e_widget_ilist_clear(Evas_Object *obj)
     */
 }
 
+EAPI int 
+e_widget_ilist_nth_is_header(Evas_Object *obj, int n) 
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   return e_ilist_nth_is_header(wd->o_ilist, n);
+}
+
 static void
 _e_wid_del_hook(Evas_Object *obj)
 {

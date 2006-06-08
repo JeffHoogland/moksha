@@ -23,6 +23,7 @@ EAPI Evas_Object *e_widget_ilist_nth_icon_get(Evas_Object *obj, int n);
 EAPI Evas_Object *e_widget_ilist_selected_icon_get(Evas_Object *obj);
 EAPI int e_widget_ilist_count(Evas_Object *obj);
 EAPI void e_widget_ilist_clear(Evas_Object *obj);
+EAPI int e_widget_ilist_nth_is_header(Evas_Object *obj, int n);
 
 #endif
 #endif

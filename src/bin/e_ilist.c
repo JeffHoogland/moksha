@@ -394,6 +394,18 @@ e_ilist_clear(Evas_Object *obj)
    sd->selected = -1;
 }
 
+EAPI int
+e_ilist_nth_is_header(Evas_Object *obj, int n) 
+{
+   E_Smart_Item *si;
+
+   API_ENTRY return 0;
+   if (!sd->items) return 0;
+   si = evas_list_nth(sd->items, n);
+   if (si) return si->header;
+   return 0;
+}
+
 /* local subsystem functions */
 static void 
 _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
