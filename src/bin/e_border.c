@@ -1541,7 +1541,6 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	printf("BUG: Maximize call without direction!\n");
 	return;
      }
-   printf("%d %d\n", max & E_MAXIMIZE_HORIZONTAL, max & E_MAXIMIZE_VERTICAL);
 
    if ((bd->shaded) || (bd->shading)) return;
    if (bd->fullscreen)
