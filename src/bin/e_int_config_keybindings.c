@@ -52,7 +52,6 @@ static void	    _e_keybinding_update_action_ilist_cur_selection_icon(E_Config_Di
 
 static char	    *_e_keybinding_get_keybinding_text(E_Config_Binding_Key *bk);
 
-static void	    _e_keybinding_shortcut_wnd_hide(E_Config_Dialog_Data *cfdata);
 static int	    _e_keybinding_cb_shortcut_key_down(void *data, int type, void *event);
 static int	    _e_keybinding_cb_mouse_handler_dumb(void *data, int type, void *event);
 
