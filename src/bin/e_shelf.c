@@ -171,7 +171,7 @@ EAPI void
 e_shelf_populate(E_Shelf *es)
 {
    E_OBJECT_CHECK(es);
-   E_OBJECT_TYPE_CHECK(es, E_GADMAN_SHELF_TYPE);
+   E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
    e_gadcon_populate(es->gadcon);
 }
 
@@ -179,7 +179,7 @@ EAPI void
 e_shelf_show(E_Shelf *es)
 {
    E_OBJECT_CHECK(es);
-   E_OBJECT_TYPE_CHECK(es, E_GADMAN_SHELF_TYPE);
+   E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
    if (es->popup)
      e_popup_show(es->popup);
    else
@@ -193,7 +193,7 @@ EAPI void
 e_shelf_hide(E_Shelf *es)
 {
    E_OBJECT_CHECK(es);
-   E_OBJECT_TYPE_CHECK(es, E_GADMAN_SHELF_TYPE);
+   E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
    if (es->popup)
      e_popup_hide(es->popup);
    else
@@ -207,7 +207,7 @@ EAPI void
 e_shelf_move(E_Shelf *es, int x, int y)
 {
    E_OBJECT_CHECK(es);
-   E_OBJECT_TYPE_CHECK(es, E_GADMAN_SHELF_TYPE);
+   E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
    es->x = x;
    es->y = y;
    if (es->popup)
@@ -223,7 +223,7 @@ EAPI void
 e_shelf_resize(E_Shelf *es, int w, int h)
 {
    E_OBJECT_CHECK(es);
-   E_OBJECT_TYPE_CHECK(es, E_GADMAN_SHELF_TYPE);
+   E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
    es->w = w;
    es->h = h;
    if (es->popup)
@@ -236,7 +236,7 @@ EAPI void
 e_shelf_move_resize(E_Shelf *es, int x, int y, int w, int h)
 {
    E_OBJECT_CHECK(es);
-   E_OBJECT_TYPE_CHECK(es, E_GADMAN_SHELF_TYPE);
+   E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
    es->x = x;
    es->y = y;
    es->w = w;
@@ -256,7 +256,7 @@ EAPI void
 e_shelf_layer_set(E_Shelf *es, int layer)
 {
    E_OBJECT_CHECK(es);
-   E_OBJECT_TYPE_CHECK(es, E_GADMAN_SHELF_TYPE);
+   E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
    es->layer = layer;
    if (es->popup)
      e_popup_layer_set(es->popup, es->layer);
@@ -271,7 +271,7 @@ EAPI void
 e_shelf_save(E_Shelf *es)
 {
    E_OBJECT_CHECK(es);
-   E_OBJECT_TYPE_CHECK(es, E_GADMAN_SHELF_TYPE);
+   E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
    if (es->cfg)
      {
 	es->cfg->orient = es->gadcon->orient;
@@ -302,7 +302,7 @@ EAPI void
 e_shelf_unsave(E_Shelf *es)
 {
    E_OBJECT_CHECK(es);
-   E_OBJECT_TYPE_CHECK(es, E_GADMAN_SHELF_TYPE);
+   E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
    if (es->cfg)
      {
 	e_config->shelves = evas_list_remove(e_config->shelves, es->cfg);
@@ -316,7 +316,7 @@ EAPI void
 e_shelf_orient(E_Shelf *es, E_Gadcon_Orient orient)
 {
    E_OBJECT_CHECK(es);
-   E_OBJECT_TYPE_CHECK(es, E_GADMAN_SHELF_TYPE);
+   E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
    
    e_gadcon_orient(es->gadcon, orient);
    edje_object_signal_emit(es->o_base, "set_orientation",
