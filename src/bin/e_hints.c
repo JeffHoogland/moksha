@@ -609,8 +609,6 @@ EAPI void
 e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 			    Ecore_X_Window_State_Action action)
 {
-   int changed;
-
    switch (state)
      {
       case ECORE_X_WINDOW_STATE_ICONIFIED:
