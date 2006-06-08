@@ -598,6 +598,7 @@ _desklock_auth(const char *passwd)
 	if (pamerr == PAM_SUCCESS) exit(0);
 	exit(-1);
      }
+   return 1;
 }
 
 static char *
