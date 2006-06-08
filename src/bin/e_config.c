@@ -921,6 +921,9 @@ e_config_init(void)
 	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,?", "minimize",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_iconic_toggle", NULL);
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,?", "shade",
+		       E_BINDING_MODIFIER_NONE, 1,
+		       "window_shaded_toggle", "up");
 	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", "icon",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_drag_icon", NULL);
