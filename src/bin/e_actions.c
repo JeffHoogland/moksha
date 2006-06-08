@@ -1550,10 +1550,10 @@ e_actions_init(void)
    e_register_action_predef_name(_("Window : State"), _("Maximize"), "window_maximized_toggle",
 				 NULL, EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    e_register_action_predef_name(_("Window : State"), _("Maximize Vertically"),
-				 "window_maximized_toggle", "vertical",
+				 "window_maximized_toggle", "default vertical",
 				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    e_register_action_predef_name(_("Window : State"), _("Maximize Horizontally"),
-				 "window_maximized_toggle", "horizontal",
+				 "window_maximized_toggle", "default horizontal",
 				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    e_register_action_predef_name(_("Window : State"), _("Maximize Fullscreen"),
 				 "window_maximized_toggle", "fullscreen",
