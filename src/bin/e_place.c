@@ -493,7 +493,7 @@ e_place_zone_cursor(E_Zone *zone, int x, int y, int w, int h, int it, int *rx, i
    int cursor_x = 0, cursor_y = 0;
    int zone_right, zone_bottom;
 
-   E_OBJECT_CHECK(zone);
+   E_OBJECT_CHECK_RETURN(zone, 0);
 
    ecore_x_pointer_xy_get(zone->container->win, &cursor_x, &cursor_y);
    *rx = cursor_x - (w >> 1);
