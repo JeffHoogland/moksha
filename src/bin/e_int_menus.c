@@ -25,7 +25,6 @@ static int  _e_int_menus_main_run_defer_cb   (void *data);
 static void _e_int_menus_main_run            (void *data, E_Menu *m, E_Menu_Item*mi);
 static int  _e_int_menus_main_lock_defer_cb  (void *data);
 static void _e_int_menus_main_lock           (void *data, E_Menu *m, E_Menu_Item*mi);
-static void _e_int_menus_main_lock_showhide  (void *data, E_Menu *m, E_Menu_Item*mi);
 static void _e_int_menus_main_restart        (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_exit           (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_apps_scan           (E_Menu *m);
@@ -382,7 +381,7 @@ _e_int_menus_main_showhide(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Action *act;
    
    act = e_action_find("zone_deskshow_toggle");
-   if (act) act->func.go(m->zone, NULL);
+   if (act) act->func.go(E_OBJECT(m->zone), NULL);
 }
 
 static void
