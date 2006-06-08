@@ -536,7 +536,7 @@ e_menu_item_num_get(E_Menu_Item *mi)
    int i;
    
    E_OBJECT_CHECK_RETURN(mi, -1);
-   E_OBJECT_CHECK_RETURN(m->menu, -1);
+   E_OBJECT_CHECK_RETURN(mi->menu, -1);
    E_OBJECT_TYPE_CHECK_RETURN(mi, E_MENU_TYPE, -1);
    for (i = 0, l = mi->menu->items; l; l = l->next, i++)
      {
