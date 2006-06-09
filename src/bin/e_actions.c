@@ -379,9 +379,19 @@ ACT_FN_GO(window_maximized_toggle)
 		  if (sscanf(params, "%20s %20s", s1, s2) == 2)
 		    {
 		       if (!strcmp(s2, "vertical"))
-			 e_border_unmaximize(bd, E_MAXIMIZE_VERTICAL);
+			 { 
+			    if (bd->maximized & E_MAXIMIZE_VERTICAL)
+			       e_border_unmaximize(bd, E_MAXIMIZE_VERTICAL);
+			    else
+			      goto maximize;
+			 }
 		       else if (!strcmp(s2, "horizontal"))
-			 e_border_unmaximize(bd, E_MAXIMIZE_HORIZONTAL);
+			 { 
+			    if (bd->maximized & E_MAXIMIZE_HORIZONTAL) 
+			      e_border_unmaximize(bd, E_MAXIMIZE_HORIZONTAL);
+			    else
+			      goto maximize;
+			 }
 		       else
 			 e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
 		    }
@@ -390,7 +400,8 @@ ACT_FN_GO(window_maximized_toggle)
 	       }
 	  }
 	else
-	  {
+	  { 
+	     maximize:
 	     if (!params)
 	       e_border_maximize(bd, e_config->maximize_policy);
 	     else

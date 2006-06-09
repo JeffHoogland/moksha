@@ -99,8 +99,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    /* Actually take our cfdata settings and apply them in real life */
    e_config->use_auto_raise = cfdata->use_auto_raise;
    e_config->use_resist = cfdata->use_resist;
-   e_config->maximize_policy &= ~E_MAXIMIZE_TYPE;
-   e_config->maximize_policy &= cfdata->maximize_policy;
+   //e_config->maximize_policy &= ~E_MAXIMIZE_TYPE;
+   e_config->maximize_policy = cfdata->maximize_policy | cfdata->maximize_direction;
    e_config_save_queue();
    return 1; /* Apply was OK */
 }

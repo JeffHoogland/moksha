@@ -543,7 +543,7 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
 			      _ibg_list_cb_bg_selected, cfdata, DEF_DESKLOCK_BACKGROUND);
      }
    
-   if ((e_config->desklock_background) &&
+   if ((!e_config->desklock_background) ||
        (!strcmp(e_config->desklock_background, DEF_DESKLOCK_BACKGROUND)))
      e_widget_ilist_selected_set(cfdata->gui.bg_list, 1);
    
