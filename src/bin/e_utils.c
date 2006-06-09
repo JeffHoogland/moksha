@@ -130,6 +130,8 @@ e_util_app_installed(char *app)
 EAPI int
 e_util_glob_match(const char *str, const char *glob)
 {
+   if (!str || !glob)
+     return 0;
    if (glob[0] == 0)
      {
 	if (str[0] == 0) return 1;
