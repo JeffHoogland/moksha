@@ -417,6 +417,9 @@ _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
    
    si = data;
    ev = event_info;
+
+   if (si->header) return;
+
    for (i = 0, l = si->sd->items; l; l = l->next, i++)
      {
 	if (l->data == si)
@@ -435,6 +438,9 @@ _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    
    si = data;
    ev = event_info;
+
+   if (si->header) return;
+
    if (si->sd->selector)
      {
 	si = evas_list_nth(si->sd->items, si->sd->selected);
