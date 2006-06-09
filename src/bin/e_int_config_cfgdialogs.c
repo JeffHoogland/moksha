@@ -61,7 +61,10 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   e_config->cfgdlg_auto_apply = cfdata->auto_apply;
+   /* Auto Apply is disabled in E for now */
+   /* (e_config->cfgdlg_auto_apply = cfdata->auto_apply; */
+
+   e_config->cfgdlg_default_mode = cfdata->default_mode;
    e_config_save_queue();
    return 1;
 }
@@ -93,8 +96,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
 static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
-{   
-   e_config->cfgdlg_auto_apply = cfdata->auto_apply;
+{
+   /* Auto Apply is disabled in E for now */
+   /* (e_config->cfgdlg_auto_apply = cfdata->auto_apply; */
+
    e_config->cfgdlg_default_mode = cfdata->default_mode;
    e_config_save_queue();
    return 1;
