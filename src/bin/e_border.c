@@ -4596,30 +4596,24 @@ _e_border_eval(E_Border *bd)
    if (bd->client.netwm.fetch.type)
      {
 	e_hints_window_type_get(bd);
-	if (((!bd->lock_border) || (!bd->client.border.name)) && (!bd->shaded))
+	if ((!bd->lock_border) || (!bd->client.border.name))
 	  {
-	     if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DESKTOP)
+	     if (bd->client.border.name) evas_stringshare_del(bd->client.border.name);
+	     bd->client.border.name = NULL;
+	     bd->client.border.changed = 1;
+	  }
+	if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK)
+	  {
+	     /* TODO: Make this user options */
+	     if (!bd->client.netwm.state.skip_pager)
 	       {
-		  if (bd->client.border.name) evas_stringshare_del(bd->client.border.name);
-		  bd->client.border.name = evas_stringshare_add("borderless");
-		  bd->client.border.changed = 1;
+		  bd->client.netwm.state.skip_pager = 1;
+		  bd->client.netwm.update.state = 1;
 	       }
-	     else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK)
+	     if (!bd->client.netwm.state.skip_taskbar)
 	       {
-		  if (bd->client.border.name) evas_stringshare_del(bd->client.border.name);
-		  bd->client.border.name = evas_stringshare_add("borderless");
-		  bd->client.border.changed = 1;
-		  
-		  if (!bd->client.netwm.state.skip_pager)
-		    {
-		       bd->client.netwm.state.skip_pager = 1;
-		       bd->client.netwm.update.state = 1;
-		    }
-		  if (!bd->client.netwm.state.skip_taskbar)
-		    {
-		       bd->client.netwm.state.skip_taskbar = 1;
-		       bd->client.netwm.update.state = 1;
-		    }
+		  bd->client.netwm.state.skip_taskbar = 1;
+		  bd->client.netwm.update.state = 1;
 	       }
 	  }
 
@@ -4908,15 +4902,11 @@ _e_border_eval(E_Border *bd)
 	  }
 	if (bd->client.mwm.borderless != pb)
 	  {
-	     if (((!bd->lock_border) || (!bd->client.border.name))
-		 && (!bd->shaded))
+	     if ((!bd->lock_border) || (!bd->client.border.name))
 	       {
 		  if (bd->client.border.name)
 		    evas_stringshare_del(bd->client.border.name);
-		  if (bd->client.mwm.borderless)
-		    bd->client.border.name = evas_stringshare_add("borderless");
-		  else
-		    bd->client.border.name = evas_stringshare_add("default");
+		  bd->client.border.name = NULL;
 		  bd->client.border.changed = 1;
 	       }
 	  }
@@ -4939,38 +4929,11 @@ _e_border_eval(E_Border *bd)
 //	e_object_breadcrumb_add(E_OBJECT(bd), "border_add_event");
 	ecore_event_add(E_EVENT_BORDER_ADD, ev, _e_border_event_border_add_free, NULL);
 
-	if (((!bd->lock_border) || (!bd->client.border.name))
-	    && (!bd->shaded))
+	if ((!bd->lock_border) || (!bd->client.border.name))
 	  {
 	     if (bd->client.border.name)
 	       evas_stringshare_del(bd->client.border.name);
-	     if (bd->client.mwm.borderless)
-	       bd->client.border.name = evas_stringshare_add("borderless");
-	     else if (((bd->client.icccm.transient_for != 0) ||
-		       (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)) &&
-		      (bd->client.icccm.min_w == bd->client.icccm.max_w) &&
-		      (bd->client.icccm.min_h == bd->client.icccm.max_h))
-	       bd->client.border.name = evas_stringshare_add("noresize_dialog");
-	     else if ((bd->client.icccm.min_w == bd->client.icccm.max_w) &&
-		      (bd->client.icccm.min_h == bd->client.icccm.max_h))
-	       bd->client.border.name = evas_stringshare_add("noresize");
-	     else if (bd->client.shaped)
-	       bd->client.border.name = evas_stringshare_add("shaped");
-	     else if ((!bd->client.icccm.accepts_focus) &&
-		      (!bd->client.icccm.take_focus))
-	       bd->client.border.name = evas_stringshare_add("nofocus");
-	     else if (bd->client.icccm.urgent)
-	       bd->client.border.name = evas_stringshare_add("urgent");
-	     else if ((bd->client.icccm.transient_for != 0) ||
-		      (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG))
-	       bd->client.border.name = evas_stringshare_add("dialog");
-	     else if (bd->client.netwm.state.modal)
-	       bd->client.border.name = evas_stringshare_add("modal");
-	     else if ((bd->client.netwm.state.skip_taskbar) ||
-		      (bd->client.netwm.state.skip_pager))
-	       bd->client.border.name = evas_stringshare_add("skipped");
-	     else
-	       bd->client.border.name = evas_stringshare_add("default");
+	     bd->client.border.name = NULL;
 	     bd->client.border.changed = 1;
 	  }
 	if (!bd->remember)
@@ -5089,7 +5052,7 @@ _e_border_eval(E_Border *bd)
 	  }
      }
    
-   if (bd->client.border.changed)
+   if ((bd->client.border.changed) && (!bd->shaded))
      {
 	Evas_Object *o;
 	char buf[4096];
@@ -5098,7 +5061,35 @@ _e_border_eval(E_Border *bd)
 	int ok;
 	
 	if (!bd->client.border.name)
-	  bd->client.border.name = evas_stringshare_add("default");
+	  {
+	     if (bd->client.mwm.borderless)
+	       bd->client.border.name = evas_stringshare_add("borderless");
+	     else if (((bd->client.icccm.transient_for != 0) ||
+		       (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)) &&
+		      (bd->client.icccm.min_w == bd->client.icccm.max_w) &&
+		      (bd->client.icccm.min_h == bd->client.icccm.max_h))
+	       bd->client.border.name = evas_stringshare_add("noresize_dialog");
+	     else if ((bd->client.icccm.min_w == bd->client.icccm.max_w) &&
+		      (bd->client.icccm.min_h == bd->client.icccm.max_h))
+	       bd->client.border.name = evas_stringshare_add("noresize");
+	     else if (bd->client.shaped)
+	       bd->client.border.name = evas_stringshare_add("shaped");
+	     else if ((!bd->client.icccm.accepts_focus) &&
+		      (!bd->client.icccm.take_focus))
+	       bd->client.border.name = evas_stringshare_add("nofocus");
+	     else if (bd->client.icccm.urgent)
+	       bd->client.border.name = evas_stringshare_add("urgent");
+	     else if ((bd->client.icccm.transient_for != 0) ||
+		      (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG))
+	       bd->client.border.name = evas_stringshare_add("dialog");
+	     else if (bd->client.netwm.state.modal)
+	       bd->client.border.name = evas_stringshare_add("modal");
+	     else if ((bd->client.netwm.state.skip_taskbar) ||
+		      (bd->client.netwm.state.skip_pager))
+	       bd->client.border.name = evas_stringshare_add("skipped");
+	     else
+	       bd->client.border.name = evas_stringshare_add("default");
+	  }
 	if (bd->bg_object)
 	  {
 	     bd->w -= (bd->client_inset.l + bd->client_inset.r);
