@@ -1551,6 +1551,8 @@ e_border_maximize(E_Border *bd, E_Maximize max)
    if (bd->new_client)
      {
 	bd->need_maximize = 1;
+	bd->maximized &= ~E_MAXIMIZE_TYPE;
+	bd->maximized |= max;
 	return;
      }
 
@@ -5958,7 +5960,10 @@ _e_border_eval(E_Border *bd)
 
    if (bd->need_maximize)
      {
-	e_border_maximize(bd, e_config->maximize_policy);
+	E_Maximize max;
+	max = bd->maximized;
+	bd->maximized = E_MAXIMIZE_NONE;
+	e_border_maximize(bd, max);
 	bd->need_maximize = 0;
      }
  
