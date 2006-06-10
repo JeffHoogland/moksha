@@ -4915,6 +4915,14 @@ _e_border_eval(E_Border *bd)
    if (bd->client.netwm.update.state)
      {
 	e_hints_window_state_set(bd);
+	/* Some stats might change the border, like modal */
+	if ((!bd->lock_border) || (!bd->client.border.name))
+	  {
+	     if (bd->client.border.name)
+	       evas_stringshare_del(bd->client.border.name);
+	     bd->client.border.name = NULL;
+	     bd->client.border.changed = 1;
+	  }
 	bd->client.netwm.update.state = 0;
      }
 
