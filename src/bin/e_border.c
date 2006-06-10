@@ -4522,7 +4522,33 @@ _e_border_eval(E_Border *bd)
    /* fetch any info queued to be fetched */
    if (bd->client.icccm.fetch.client_leader)
      {
+	/* TODO: What do to if the client leader isn't mapped yet? */
+	E_Border *bd_leader = NULL;
+
 	bd->client.icccm.client_leader = ecore_x_icccm_client_leader_get(bd->client.win);
+	if (bd->client.icccm.client_leader)
+	  bd_leader = e_border_find_by_client_window(bd->client.icccm.client_leader);
+	if (bd->leader)
+	  {
+	     if (bd->leader != bd_leader)
+	       {
+		  bd->leader->group = evas_list_remove(bd->leader->group, bd);
+		  if (bd->leader->modal == bd) bd->leader->modal = NULL;
+		  bd->leader = NULL;
+	       }
+	     else
+	       bd_leader = NULL;
+	  }
+	/* If this border is the leader of the group, don't register itself */
+	if ((bd_leader) && (bd_leader != bd))
+	  {
+	     bd_leader->group = evas_list_append(bd_leader->group, bd);
+	     bd->leader = bd_leader;
+	     /* Only set the window modal to the leader it there is no parent */
+	     if ((e_config->modal_windows) && (bd->client.netwm.state.modal) &&
+		 ((!bd->parent) || (bd->parent->modal != bd)))
+	       bd->leader->modal = bd;
+	  }
 	bd->client.icccm.fetch.client_leader = 0;
      }
    if (bd->client.icccm.fetch.title)
@@ -4758,7 +4784,32 @@ _e_border_eval(E_Border *bd)
      }
    if (bd->client.icccm.fetch.transient_for)
      {
+	/* TODO: What do to if the transient for isn't mapped yet? */
+	E_Border *bd_parent = NULL;
+
 	bd->client.icccm.transient_for = ecore_x_icccm_transient_for_get(bd->client.win);
+	if (bd->client.icccm.transient_for)
+	  bd_parent = e_border_find_by_client_window(bd->client.icccm.transient_for);
+	/* If we already have a parent, remove it */
+	if (bd->parent)
+	  {
+	     if (bd_parent != bd->parent)
+	       {
+		  bd->parent->transients = evas_list_remove(bd->parent->transients, bd);
+		  if (bd->parent->modal == bd) bd->parent->modal = NULL;
+		  bd->parent = NULL;
+	       }
+	     else
+	       bd_parent = NULL;
+	  }
+	if ((bd_parent) && (bd_parent != bd))
+	  {
+	     bd_parent->transients = evas_list_append(bd_parent->transients, bd);
+	     bd->parent = bd_parent;
+	     e_border_layer_set(bd, bd->parent->layer);
+	     if ((e_config->modal_windows) && (bd->client.netwm.state.modal))
+	       bd->parent->modal = bd;
+	  }
 	bd->client.icccm.fetch.transient_for = 0;
      }
    if (bd->client.icccm.fetch.window_role)
@@ -4922,6 +4973,16 @@ _e_border_eval(E_Border *bd)
 	       evas_stringshare_del(bd->client.border.name);
 	     bd->client.border.name = NULL;
 	     bd->client.border.changed = 1;
+	  }
+	if (bd->parent)
+	  {
+	     if ((e_config->modal_windows) && (bd->client.netwm.state.modal))
+	       bd->parent->modal = bd;
+	  }
+	else if (bd->leader)
+	  {
+	     if ((e_config->modal_windows) && (bd->client.netwm.state.modal))
+	       bd->leader->modal = bd;
 	  }
 	bd->client.netwm.update.state = 0;
      }
@@ -5237,34 +5298,6 @@ _e_border_eval(E_Border *bd)
    
    if (bd->new_client)
      {
-	if (bd->client.icccm.transient_for)
-	  {
-	     E_Border *bd_parent;
-
-	     bd_parent = e_border_find_by_client_window(bd->client.icccm.transient_for);
-	     if ((bd_parent) && (bd_parent != bd))
-	       {
-		  bd_parent->transients = evas_list_append(bd_parent->transients, bd);
-		  bd->parent = bd_parent;
-		  e_border_layer_set(bd, bd->parent->layer);
-		  if ((e_config->modal_windows) && (bd->client.netwm.state.modal))
-		    bd->parent->modal = bd;
-	       }
-	  }
-	if (bd->client.icccm.client_leader)
-	  {
-	     E_Border *bd_leader;
-
-	     bd_leader = e_border_find_by_client_window(bd->client.icccm.client_leader);
-	     /* If this border is the leader of the group, don't register itself */
-	     if ((bd_leader) && (bd_leader != bd))
-	       {
-		  bd_leader->group = evas_list_append(bd_leader->group, bd);
-		  bd->leader = bd_leader;
-		  if ((e_config->modal_windows) && (bd->client.netwm.state.modal))
-		    bd->leader->modal = bd;
-	       }
-	  }
 //	printf("##- NEW CLIENT SETUP 0x%x\n", bd->client.win);
 	if (bd->re_manage)
 	  {
