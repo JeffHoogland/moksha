@@ -41,9 +41,11 @@
 # include <memcheck.h>
 #endif
 
+#ifdef __GLIBC__
 #ifdef OBJECT_PARANOIA_CHECK
 #include <execinfo.h>
 #include <setjmp.h>
+#endif
 #endif
 
 #include <Evas.h>
