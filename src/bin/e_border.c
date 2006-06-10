@@ -4551,6 +4551,18 @@ _e_border_eval(E_Border *bd)
 		  bd->leader->modal = bd;
 		  if (bd->leader->focused)
 		    e_border_focus_set(bd, 1, 1);
+		  else
+		    {
+		       Evas_List *l;
+		       for (l = bd->leader->group; l; l = l->next)
+			 {
+			    E_Border *child;
+
+			    child = l->data;
+			    if ((child != bd) && (child->focused))
+			      e_border_focus_set(bd, 1, 1);
+			 }
+		    }
 	       }
 	  }
 	bd->client.icccm.fetch.client_leader = 0;
@@ -4998,6 +5010,18 @@ _e_border_eval(E_Border *bd)
 		  bd->leader->modal = bd;
 		  if (bd->leader->focused)
 		    e_border_focus_set(bd, 1, 1);
+		  else
+		    {
+		       Evas_List *l;
+		       for (l = bd->leader->group; l; l = l->next)
+			 {
+			    E_Border *child;
+
+			    child = l->data;
+			    if ((child != bd) && (child->focused))
+			      e_border_focus_set(bd, 1, 1);
+			 }
+		    }
 	       }
 	  }
 	bd->client.netwm.update.state = 0;
