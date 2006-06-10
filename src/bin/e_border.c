@@ -4547,7 +4547,11 @@ _e_border_eval(E_Border *bd)
 	     /* Only set the window modal to the leader it there is no parent */
 	     if ((e_config->modal_windows) && (bd->client.netwm.state.modal) &&
 		 ((!bd->parent) || (bd->parent->modal != bd)))
-	       bd->leader->modal = bd;
+	       {
+		  bd->leader->modal = bd;
+		  if (bd->leader->focused)
+		    e_border_focus_set(bd, 1, 1);
+	       }
 	  }
 	bd->client.icccm.fetch.client_leader = 0;
      }
@@ -4808,7 +4812,11 @@ _e_border_eval(E_Border *bd)
 	     bd->parent = bd_parent;
 	     e_border_layer_set(bd, bd->parent->layer);
 	     if ((e_config->modal_windows) && (bd->client.netwm.state.modal))
-	       bd->parent->modal = bd;
+	       {
+		  bd->parent->modal = bd;
+	       }
+	     if (bd->parent->focused)
+	       e_border_focus_set(bd, 1, 1);
 	  }
 	bd->client.icccm.fetch.transient_for = 0;
      }
@@ -4977,12 +4985,20 @@ _e_border_eval(E_Border *bd)
 	if (bd->parent)
 	  {
 	     if ((e_config->modal_windows) && (bd->client.netwm.state.modal))
-	       bd->parent->modal = bd;
+	       {
+		  bd->parent->modal = bd;
+		  if (bd->parent->focused)
+		    e_border_focus_set(bd, 1, 1);
+	       }
 	  }
 	else if (bd->leader)
 	  {
 	     if ((e_config->modal_windows) && (bd->client.netwm.state.modal))
-	       bd->leader->modal = bd;
+	       {
+		  bd->leader->modal = bd;
+		  if (bd->leader->focused)
+		    e_border_focus_set(bd, 1, 1);
+	       }
 	  }
 	bd->client.netwm.update.state = 0;
      }
