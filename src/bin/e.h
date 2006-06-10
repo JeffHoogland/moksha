@@ -7,8 +7,10 @@
 #include "config.h"
 
 #define USE_IPC
+/*
 #define OBJECT_PARANOIA_CHECK
 #define OBJECT_CHECK
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
