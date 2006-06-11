@@ -59,6 +59,8 @@ static E_App    *_e_app_cache_new          (E_App_Cache *ac, const char *path, i
 static int       _e_app_exe_valid_get      (const char *exe);
 static char     *_e_app_localized_val_get (Eet_File *ef, const char *lang, const char *field, int *size);
 static void      _e_app_print(const char *path, Ecore_File_Event event);
+static void      _e_app_check_order(const char *file);
+static int       _e_app_order_contains(E_App *a, const char *file);
 
 /* local subsystem globals */
 static Evas_Hash   *_e_apps = NULL;
@@ -1814,9 +1816,11 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	else if ((event == ECORE_FILE_EVENT_CREATED_FILE) ||
 		 (event == ECORE_FILE_EVENT_CREATED_DIRECTORY))
 	  {
-	     /* FIXME: Check if someone wants a reference to this
-	      * app */
 	     _e_app_subdir_rescan(app);
+	     /* If this is the all app, check if someone wants to reference this app */
+	     if (app == _e_apps_all)
+	       _e_app_check_order(file);
+
 	  }
 	else if (event == ECORE_FILE_EVENT_DELETED_FILE)
 	  {
@@ -2420,4 +2424,58 @@ _e_app_print(const char *path, Ecore_File_Event event)
 	 printf("E_App modified: %s\n", path);
 	 break;
      }
+}
+
+static void
+_e_app_check_order(const char *file)
+{
+   Evas_List *l;
+
+   for (l = _e_apps_list; l; l = l->next)
+     {
+	E_App *a;
+
+	a = l->data;
+	if (a->monitor)
+	  {
+	     /* This is a directory */
+	     if (_e_app_order_contains(a, file))
+	       _e_app_subdir_rescan(a);
+	  }
+     }
+}
+
+static int
+_e_app_order_contains(E_App *a, const char *file)
+{
+   char buf[4096];
+   int ret = 0;
+   FILE *f;
+
+   snprintf(buf, sizeof(buf), "%s/.order", a->path);
+   if (!ecore_file_exists(buf)) return 0;
+   f = fopen(buf, "rb");
+   if (!f) return 0;
+
+   while (fgets(buf, sizeof(buf), f))
+     {
+	int len;
+
+	len = strlen(buf);
+	if (len > 0)
+	  {
+	     if (buf[len - 1] == '\n')
+	       {
+		  buf[len - 1] = 0;
+		  len--;
+	       }
+	     if (!strcmp(buf, file))
+	       {
+		  ret = 1;
+		  break;
+	       }
+	  }
+     }
+   fclose(f);
+   return ret;
 }
