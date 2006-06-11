@@ -25,6 +25,7 @@ static void _e_maximize_border_rects_fill(E_Border *bd, Evas_List *list, int *x1
 EAPI void
 e_maximize_border_gadman_fit(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
 {
+   printf("e_maximize_border_gadman_fit()\n");
    return e_maximize_border_gadman_fill(bd, x1, y1, x2, y2);
 }
 
@@ -35,6 +36,7 @@ e_maximize_border_dock_fit(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
    E_Border *bd2;
    int cx1, cx2, cy1, cy2;
 
+   printf("e_maximize_border_dock_fit()\n");
    cx1 = bd->zone->x;
    if (x1) cx1 = *x1;
    
@@ -126,6 +128,7 @@ e_maximize_border_gadman_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
    Evas_List *l, *rects = NULL;
    E_Maximize_Rect *r;
 
+   printf("e_maximize_border_gadman_fill()\n");
    for (l = bd->zone->container->gadman->clients; l; l = l->next)
      {
 	E_Gadman_Client *gmc;
@@ -159,6 +162,7 @@ e_maximize_border_border_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
    E_Maximize_Rect *r;
    E_Border *bd2;
 
+   printf("e_maximize_border_border_fill()\n");
    bl = e_container_border_list_first(bd->zone->container);
    while ((bd2 = e_container_border_list_next(bl)))
      {

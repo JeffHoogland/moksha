@@ -39,7 +39,7 @@ while test $# -gt 0; do
       echo @VERSION@
       ;;
     --cflags)
-      includes="-I@includedir@ -I@includedir@/enlightenment"
+      includes="-I@prefix@/include -I@prefix@/include/enlightenment"
       echo $includes @e_cflags@
       ;;
     --libs)
@@ -51,7 +51,7 @@ while test $# -gt 0; do
       echo $dir
       ;;
     --config-apps-dir)
-      dir="@datadir@/@PACKAGE@/config-apps"
+      dir="@prefix@/share/@PACKAGE@/config-apps"
       echo $dir
       ;;
     *)

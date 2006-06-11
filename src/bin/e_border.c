@@ -1536,11 +1536,7 @@ e_border_maximize(E_Border *bd, E_Maximize max)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
-   if (!(max & E_MAXIMIZE_DIRECTION))
-     {
-	printf("BUG: Maximize call without direction!\n");
-	return;
-     }
+   if (!(max & E_MAXIMIZE_DIRECTION)) max |= E_MAXIMIZE_BOTH;
 
    if ((bd->shaded) || (bd->shading)) return;
    if (bd->fullscreen)

@@ -128,17 +128,12 @@ else
 fi
 
 dnl Set PACKAGE_DATA_DIR in config.h.
-if test "x${datadir}" = 'x${prefix}/share'; then
-  if test "x${prefix}" = "xNONE"; then
+if test "x${prefix}" = "xNONE"; then
     AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${ac_default_prefix}/share/${PACKAGE}", "Package installed data destination")
     AC_DEFINE_UNQUOTED(LOCALE_DIR, "${ac_default_prefix}/share/locale", "Locale directory")
-  else
+else
     AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${prefix}/share/${PACKAGE}", "Package installed data destination")
     AC_DEFINE_UNQUOTED(LOCALE_DIR, "${prefix}/share/locale", "Locale directory")
-  fi
-else
-  AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${datadir}/${PACKAGE}", "Package installed data destination")
-  AC_DEFINE_UNQUOTED(LOCALE_DIR, "${datadir}/locale", "Locale directory")
 fi
 
 x_dir=""
