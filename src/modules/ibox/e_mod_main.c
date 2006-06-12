@@ -1191,10 +1191,13 @@ static int _ibox_cb_event_desk_show(void *data, int type, void *event)
    for (l = ibox; l; l = l->next)
      {
 	b = l->data;
-	_ibox_empty(b);
-	_ibox_fill(b);
-	_ibox_resize_handle(b); 
-	_gc_orient(b->inst->gcc);
+	if (b->show_desk)
+	  {
+	     _ibox_empty(b);
+	     _ibox_fill(b);
+	     _ibox_resize_handle(b); 
+	     _gc_orient(b->inst->gcc);
+	  }
      }
 
    while (ibox)
