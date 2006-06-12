@@ -5167,7 +5167,7 @@ _e_border_eval(E_Border *bd)
 	
 	if (!bd->client.border.name)
 	  {
-	     if (bd->client.mwm.borderless)
+	     if ((bd->client.mwm.borderless) || (bd->borderless))
 	       bd->client.border.name = evas_stringshare_add("borderless");
 	     else if (((bd->client.icccm.transient_for != 0) ||
 		       (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)) &&

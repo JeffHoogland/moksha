@@ -8,7 +8,6 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: set a window to borderless - maximize it, and it gets its border back.
 * BUG: change exe name in basic mode in eap editor and icon vanishes (don't
   extract existing icon and write out to tmp .png while rebuilding).
 * BUG: resolution (xrandr) changes seem to screw the shelf up a bit.

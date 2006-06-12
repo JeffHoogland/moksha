@@ -647,14 +647,19 @@ _e_border_menu_cb_borderless(void *data, E_Menu *m, E_Menu_Item *mi)
    bd = data;
    if (!bd) return;
    
-   if ((!bd->lock_border) && (!bd->shaded))
+   if (!bd->lock_border)
      {
 	if (bd->client.border.name) evas_stringshare_del(bd->client.border.name);
 	toggle = e_menu_item_toggle_get(mi);
+	if (bd->client.border.name)
+	  {
+	     evas_stringshare_del(bd->client.border.name);
+	     bd->client.border.name = NULL;
+	  }
 	if (toggle)
-	  bd->client.border.name = evas_stringshare_add("borderless");
+	  bd->borderless = 1;
 	else
-	  bd->client.border.name = evas_stringshare_add("default");
+	  bd->borderless = 0;
 	bd->client.border.changed = 1;
 	bd->changed = 1;
      }
