@@ -934,7 +934,7 @@ e_app_window_name_class_title_role_find(const char *name, const char *class,
      }
    if ((a_match) && (l_match))
      {
-	_e_apps_list = evas_list_remove_list(_e_apps_list, l);
+	_e_apps_list = evas_list_remove_list(_e_apps_list, l_match);
 	_e_apps_list = evas_list_prepend(_e_apps_list, a_match);
      }
    return a_match;
