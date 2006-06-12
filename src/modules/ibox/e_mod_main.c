@@ -1179,7 +1179,8 @@ _ibox_cb_event_border_zone_set(void *data, int type, void *event)
    return 1;
 }
 
-static int _ibox_cb_event_desk_show(void *data, int type, void *event)
+static int 
+_ibox_cb_event_desk_show(void *data, int type, void *event)
 {
    E_Event_Desk_Show *ev;
    IBox *b;
