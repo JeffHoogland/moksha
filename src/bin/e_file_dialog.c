@@ -5,12 +5,15 @@
  * buttons, and a "Places" frame where the user can add his favorite places.
  * When the user selects a file, it will trigger a callback.
  */ 
-
+	
 static void _e_file_dialog_button1_click(void *data, E_Dialog *dia);
 static void _e_file_dialog_button2_click(void *data, E_Dialog *dia);    
 static void _e_file_dialog_free(E_File_Dialog *dia);
 static void _e_file_dialog_file_select_cb(Evas_Object *obj, char *file, void *data);
 static void _e_file_dialog_file_hilite_cb(Evas_Object *obj, char *file, void *data);
+static void _cb_icons(void *data, void *data2);
+static void _cb_home(void *data, void *data2);
+static void _cb_desktop(void *data, void *data2);
 
 EAPI E_File_Dialog *
 e_file_dialog_new(E_Container *con)
@@ -44,20 +47,21 @@ e_file_dialog_new(E_Container *con)
    dia->select_func = NULL;
    dia->hilite_func = NULL;   
    dia->select_data = NULL;
-   evas = dia->dia->win->evas;
+   evas = dia->dia->win->evas;   
+	 
+   fm = e_widget_fileman_add(evas, &(dia->file));
+   e_widget_fileman_select_callback_add(fm, _e_file_dialog_file_select_cb, dia);
+   e_widget_fileman_hilite_callback_add(fm, _e_file_dialog_file_hilite_cb, dia);
    
    ol = e_widget_list_add(evas, 0, 1);
    
    list = e_widget_framelist_add(evas, _("Places"), 0);
    e_widget_framelist_content_align_set(list, 0.5, 0.0);
-   e_widget_framelist_object_append(list, e_widget_button_add(evas, _("Home"), "fileman/home", NULL, NULL, NULL));
-   e_widget_framelist_object_append(list, e_widget_button_add(evas, _("Desktop"), "fileman/desktop", NULL, NULL, NULL));
-   e_widget_framelist_object_append(list, e_widget_button_add(evas, _("Icons"), "fileman/folder", NULL, NULL, NULL));
+   e_widget_framelist_object_append(list, e_widget_button_add(evas, _("Home"), "fileman/home", _cb_home, fm, NULL));
+   e_widget_framelist_object_append(list, e_widget_button_add(evas, _("Desktop"), "fileman/desktop", _cb_desktop, fm, NULL));
+   e_widget_framelist_object_append(list, e_widget_button_add(evas, _("Icons"), "fileman/folder", _cb_icons, fm, NULL));
    e_widget_list_object_append(ol, list, 1, 0, 0.0);
-   
-   fm = e_widget_fileman_add(evas, &(dia->file));
-   e_widget_fileman_select_callback_add(fm, _e_file_dialog_file_select_cb, dia);
-   e_widget_fileman_hilite_callback_add(fm, _e_file_dialog_file_hilite_cb, dia);
+
    e_widget_list_object_append(ol, fm, 1, 1, 0.0);
    
    e_widget_min_size_get(ol, &w, &h);
@@ -146,4 +150,37 @@ _e_file_dialog_free(E_File_Dialog *dia)
    e_object_unref(E_OBJECT(dia->dia));
    E_FREE(dia->file);
    //free(dia);
+}
+
+static void
+_cb_icons(void *data, void *data2)
+{
+	Evas_Object *obj;
+	char path[PATH_MAX];
+	
+	obj = data;
+	snprintf(path, PATH_MAX, "%s/.icons", e_user_homedir_get());
+	e_widget_fileman_dir_set(obj, path);
+}
+
+static void
+_cb_desktop(void *data, void *data2)
+{
+	Evas_Object *obj;
+	char path[PATH_MAX];
+	
+	obj = data;
+	snprintf(path, PATH_MAX, "%s/Desktop", e_user_homedir_get());
+	e_widget_fileman_dir_set(obj, path);
+}
+
+static void
+_cb_home(void *data, void *data2)
+{
+	Evas_Object *obj;
+	char path[PATH_MAX];
+	
+	obj = data;
+	snprintf(path, PATH_MAX, "%s", e_user_homedir_get());
+	e_widget_fileman_dir_set(obj, path);
 }

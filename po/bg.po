@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-06-10 18:11+0300\n"
-"PO-Revision-Date: 2006-06-11 11:35+0300\n"
+"POT-Creation-Date: 2006-06-11 14:01+0300\n"
+"PO-Revision-Date: 2006-06-12 10:07+0300\n"
 "Last-Translator: Viktor Kojouharov <vkojouharov@abv.bg>\n"
 "Language-Team: English <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1299,8 +1299,8 @@ msgid "Borderless"
 msgstr "Без рамка"
 
 #: src/bin/e_int_border_menu.c:228
-#: src/bin/e_int_config_window_manipulation.c:145
-#: src/bin/e_int_config_window_manipulation.c:195
+#: src/bin/e_int_config_window_manipulation.c:144
+#: src/bin/e_int_config_window_manipulation.c:194
 msgid "Fullscreen"
 msgstr "Цял екран"
 
@@ -1689,7 +1689,7 @@ msgid "Time the mouse is at the edge before flipping:"
 msgstr "Отнетото време на ръба, преди прелистване:"
 
 #: src/bin/e_int_config_desks.c:194
-#: src/bin/e_int_config_window_manipulation.c:172
+#: src/bin/e_int_config_window_manipulation.c:171
 #, c-format
 msgid "%1.1f sec"
 msgstr "%1.1f·сек"
@@ -2085,15 +2085,15 @@ msgstr "Голям"
 
 #: src/bin/e_int_config_fonts.c:78
 msgid "Small Styled"
-msgstr "Малък (стилизирано)"
+msgstr "Малък (стилизиран)"
 
 #: src/bin/e_int_config_fonts.c:79
 msgid "Normal Styled"
-msgstr "Нормален (стилизирано)"
+msgstr "Нормален (стилизиран)"
 
 #: src/bin/e_int_config_fonts.c:80
 msgid "Large Styled"
-msgstr "Голям (стилизирано)"
+msgstr "Голям (стилизиран)"
 
 #: src/bin/e_int_config_fonts.c:132
 msgid "Font Settings"
@@ -2319,9 +2319,9 @@ msgid "Autoscroll Margin"
 msgstr "Полета при автоплъзгане"
 
 #: src/bin/e_int_config_menus.c:141 src/bin/e_int_config_menus.c:145
-#: src/bin/e_int_config_window_manipulation.c:181
-#: src/bin/e_int_config_window_manipulation.c:185
-#: src/bin/e_int_config_window_manipulation.c:189
+#: src/bin/e_int_config_window_manipulation.c:180
+#: src/bin/e_int_config_window_manipulation.c:184
+#: src/bin/e_int_config_window_manipulation.c:188
 #, c-format
 msgid "%2.0f pixels"
 msgstr "%2.0f·пиксели"
@@ -2331,7 +2331,7 @@ msgid "Autoscroll Cursor Margin"
 msgstr "Полета на показалеца при автоплъзгане"
 
 #: src/bin/e_int_config_menus.c:149
-#: src/bin/e_int_config_window_manipulation.c:136
+#: src/bin/e_int_config_window_manipulation.c:135
 msgid "Miscellaneous Options"
 msgstr "Други настройки"
 
@@ -2625,89 +2625,89 @@ msgstr "Рамка"
 msgid "Use application provided icon instead"
 msgstr "Използване на икони, добити от програмата"
 
-#: src/bin/e_int_config_window_manipulation.c:137
-#: src/bin/e_int_config_window_manipulation.c:168
+#: src/bin/e_int_config_window_manipulation.c:136
+#: src/bin/e_int_config_window_manipulation.c:167
 msgid "Automatically raise windows on mouse over"
 msgstr "Автоматично повдигане на прозорецът под показалеца"
 
-#: src/bin/e_int_config_window_manipulation.c:139
+#: src/bin/e_int_config_window_manipulation.c:138
 msgid "When moving or resizing windows, resist at the boundaries"
 msgstr ""
 "При движение/оразмеряване на прозорци, да се съпротивляват при границите"
 
-#: src/bin/e_int_config_window_manipulation.c:143
-#: src/bin/e_int_config_window_manipulation.c:193
+#: src/bin/e_int_config_window_manipulation.c:142
+#: src/bin/e_int_config_window_manipulation.c:192
 msgid "Maximize Policy"
 msgstr "Политика на уголемяване"
 
-#: src/bin/e_int_config_window_manipulation.c:147
-#: src/bin/e_int_config_window_manipulation.c:197
+#: src/bin/e_int_config_window_manipulation.c:146
+#: src/bin/e_int_config_window_manipulation.c:196
 msgid "Smart expansion"
 msgstr "Умно уголемяване"
 
-#: src/bin/e_int_config_window_manipulation.c:149
-#: src/bin/e_int_config_window_manipulation.c:199
+#: src/bin/e_int_config_window_manipulation.c:148
+#: src/bin/e_int_config_window_manipulation.c:198
 msgid "Expand the window"
 msgstr "Разширяване на прозорци"
 
-#: src/bin/e_int_config_window_manipulation.c:151
-#: src/bin/e_int_config_window_manipulation.c:201
+#: src/bin/e_int_config_window_manipulation.c:150
+#: src/bin/e_int_config_window_manipulation.c:200
 msgid "Fill available space"
 msgstr "Запълване на свободното място"
 
-#: src/bin/e_int_config_window_manipulation.c:167
+#: src/bin/e_int_config_window_manipulation.c:166
 msgid "Autoraise"
 msgstr "Автоматично повдигане"
 
-#: src/bin/e_int_config_window_manipulation.c:170
+#: src/bin/e_int_config_window_manipulation.c:169
 msgid "Delay before raising:"
 msgstr "Забавяне преди повдигането:"
 
-#: src/bin/e_int_config_window_manipulation.c:176
+#: src/bin/e_int_config_window_manipulation.c:175
 msgid "Resistance"
 msgstr "Съпротивление"
 
-#: src/bin/e_int_config_window_manipulation.c:177
+#: src/bin/e_int_config_window_manipulation.c:176
 msgid "Resist moving or resizing a window over an obstacle"
 msgstr "Съпротивление при мърдане или оразмеряване на прозореца над пречки"
 
-#: src/bin/e_int_config_window_manipulation.c:179
+#: src/bin/e_int_config_window_manipulation.c:178
 msgid "Resistance between windows:"
 msgstr "Съпротивление между прозорци:"
 
-#: src/bin/e_int_config_window_manipulation.c:183
+#: src/bin/e_int_config_window_manipulation.c:182
 msgid "Resistance at the edge of the screen:"
 msgstr "Съпротивление при ръбовете на екрана:"
 
-#: src/bin/e_int_config_window_manipulation.c:187
+#: src/bin/e_int_config_window_manipulation.c:186
 msgid "Resistance to desktop gadgets:"
 msgstr "Съпротивление със модулите:"
 
-#: src/bin/e_int_config_window_manipulation.c:205
+#: src/bin/e_int_config_window_manipulation.c:204
 msgid "Both directions"
 msgstr "В двете посоки"
 
-#: src/bin/e_int_config_window_manipulation.c:207
+#: src/bin/e_int_config_window_manipulation.c:206
 msgid "Horizontal"
 msgstr "Хоризонтално"
 
-#: src/bin/e_int_config_window_manipulation.c:209
+#: src/bin/e_int_config_window_manipulation.c:208
 msgid "Vertical"
 msgstr "Вертикално"
 
-#: src/bin/e_int_config_window_manipulation.c:212
+#: src/bin/e_int_config_window_manipulation.c:211
 msgid "Allow window manipulation"
 msgstr "Разрешава манипулиране на прозорци"
 
-#: src/bin/e_int_config_window_manipulation.c:217
+#: src/bin/e_int_config_window_manipulation.c:216
 msgid "Raise Window"
 msgstr "Повдигане на прозореца"
 
-#: src/bin/e_int_config_window_manipulation.c:218
+#: src/bin/e_int_config_window_manipulation.c:217
 msgid "Raise when starting to move or resize"
 msgstr "Повдигане при задвижване или оразмеряване"
 
-#: src/bin/e_int_config_window_manipulation.c:220
+#: src/bin/e_int_config_window_manipulation.c:219
 msgid "Raise when clicking to focus"
 msgstr "Повдигане при щракване за фокус"
 
@@ -3045,13 +3045,12 @@ msgstr ""
 "Ecore и проверете дали те поддържат Software Buffer възпроизвеждане."
 
 #: src/bin/e_main.c:386
-#, fuzzy
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
 msgstr ""
-"Evas не може да зарежда JPEG файлове. Проверете дали Evas\n"
-"е компилиран с JPEG модула.\n"
+"Evas не може да създаде буферни платна. Проверете дали Evas\n"
+"има поддръжка за Software Buffer engine.\n"
 
 #: src/bin/e_main.c:396
 msgid ""
@@ -3154,7 +3153,6 @@ msgid "Enlightenment cannot setup remember settings."
 msgstr "Enlightenment не може да настрои настройките за запомняне"
 
 #: src/bin/e_main.c:559
-#, fuzzy
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an existing copy of Enlightenment.\n"
@@ -3221,7 +3219,6 @@ msgid "Enlightenment IPC setup error!"
 msgstr "IPC грешка в настройките на Enlightenment"
 
 #: src/bin/e_main.c:646
-#, fuzzy
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an existing copy of Enlightenment.\n"
@@ -3269,16 +3266,12 @@ msgid "Module does not contain all needed functions"
 msgstr "Модулът не съдържа всички нужни функции"
 
 #: src/bin/e_module.c:169
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
 "module API version of: %i.<br>The module API advertized by Enlightenment is: "
 "%i.<br>"
 msgstr ""
-"Грешка при стартиране на модул : старт\n"
-"Минималната нужна версия на модулно API е : %i.\n"
-"Версията, използвана от Enlightenment е: %i.\n"
-"Прекратяване на модула."
 
 #: src/bin/e_module.c:174
 #, c-format
@@ -3329,15 +3322,14 @@ msgid "Cannot exit - immortal windows."
 msgstr "Няма изход - безсмъртен прозорец."
 
 #: src/bin/e_utils.c:277
-#, fuzzy
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
 "means<br>that Enlightenment will not allow itself to exit until these "
 "windows have<br>been closed or have the lifespan lock removed.<br>"
 msgstr ""
-"Има прозорци със заключен Живот. Това означава, че Е не може да<br>бъде "
-"спрано, докато тези прозорци не бъдат затворени, или не се "
-"отключи<br>опцията им за Живот.<br>"
+"Има прозорци със забранен изход. Това означава, че Е не може да<br>бъде "
+"спрян, докато тези прозорци не бъдат затворени, или не се "
+"премахне<br>забраната им за изход."
 
 #: src/bin/e_widget_config_list.c:57
 msgid "Move Up"
@@ -3533,12 +3525,11 @@ msgid "Set CPU Speed"
 msgstr "Бързина на процесора"
 
 #: src/modules/cpufreq/e_mod_main.c:328
-#, fuzzy
 msgid ""
 "There was an error trying to set the<br>cpu frequency governor via the "
 "module's<br>setfreq utility."
 msgstr ""
-"Имало е грешка при опита за настройка на регулатора\n"
+"Имало е грешка при опита за настройка на регулатора<br>"
 "на честота през модула"
 
 #: src/modules/cpufreq/e_mod_main.c:354
@@ -3750,17 +3741,16 @@ msgid "Enlightenment IBar Module"
 msgstr "Модул IBar на Enlightenment"
 
 #: src/modules/ibar/e_mod_main.c:1381
-#, fuzzy
 msgid ""
 "This is the IBar Application Launcher bar module for Enlightenment.<br>It is "
 "a first example module and is being used to flesh out several<br>interfaces "
 "in Enlightenment 0.17.0. It is under heavy development,<br>so expect it to "
 "<hilight>break often</hilight> and change as it improves."
 msgstr ""
-"Това е IBar, стартера на програми за Enlightenment.\n"
-"Това е първи екземплярен модул и се използва за тестване на\n"
-"множество интерфейси в Enlightenment 0.17.0. Все още се разработва,\n"
-"затова очаквайте да се чупи и да се променя за да стане по-добра."
+"Това е IBar, стартера на програми за Enlightenment.<br>"
+"Това е първи екземплярен модул и се използва за тестване на<br>"
+"множество интерфейси в Enlightenment 0.17.0. Все още се разработва,<br>"
+"затова очаквайте да се <hilight>чупи</hilight> и да се променя за да стане по-добра."
 
 #: src/modules/ibox/e_mod_config.c:49
 msgid "IBox Configuration"

@@ -90,6 +90,14 @@ e_file_selector_callback_add(Evas_Object *obj, void (*func) (Evas_Object *obj, c
    sd->func_data = data;
 }
 
+EAPI void
+e_file_selector_dir_set(Evas_Object *obj, const char *dir)
+{
+	API_ENTRY return;
+
+	e_fm_dir_set(sd->files, dir);
+}
+
 static void
 _e_file_selector_scroll_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 {

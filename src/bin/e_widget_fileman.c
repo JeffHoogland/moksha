@@ -134,3 +134,12 @@ e_widget_fileman_hilite_callback_add(Evas_Object *obj, void (*func) (Evas_Object
    wd->hilite_func = func;
    wd->hilite_data = data;
 }
+
+EAPI void
+e_widget_fileman_dir_set(Evas_Object *obj, const char *dir)
+{
+	E_Widget_Data *wd;
+	
+	wd = e_widget_data_get(obj);
+	e_file_selector_dir_set(wd->o_fm, dir);
+}
