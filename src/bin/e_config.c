@@ -870,6 +870,24 @@ e_config_init(void)
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "d",
 		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
 		    "zone_deskshow_toggle", NULL);
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Left",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_SHIFT, 0,
+		    "screen_send_by", "-1");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Right",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_SHIFT, 0,
+		    "screen_send_by", "1");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F1",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_SHIFT, 0,
+		    "screen_send_to", "0");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F2",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_SHIFT, 0,
+		    "screen_send_to", "1");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F3",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_SHIFT, 0,
+		    "screen_send_to", "2");
+	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F4",
+		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_SHIFT, 0,
+		    "screen_send_to", "3");
      }
      {
 	E_Config_Binding_Signal *eb;

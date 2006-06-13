@@ -895,14 +895,16 @@ ACT_FN_GO(screen_send_to)
 	       {
 		  E_Zone *zone2;
 		  
+		  while (scr >= zone->container->num) scr -= zone->container->num;
+		  while (scr < 0) scr += zone->container->num;
 		  if (evas_list_count(e_manager_list()) > 1)
 		    zone2 = e_util_container_zone_number_get(scr, 0);
 		  else
 		    zone2 = e_util_container_zone_number_get(0, scr);
 		  if ((zone2) && (zone != zone2))
 		    ecore_x_pointer_warp(zone2->container->win,
-					 zone2->x + (zone->w / 2),
-					 zone2->y + (zone->h / 2));
+					 zone2->x + (zone2->w / 2),
+					 zone2->y + (zone2->h / 2));
 	       }
 	  }
      }
@@ -927,21 +929,21 @@ ACT_FN_GO(screen_send_by)
 		  if (evas_list_count(e_manager_list()) > 1)
 		    {
 		       scr += zone->container->num;
-		       if (scr >= zone->container->num) scr -= zone->container->num;
-		       else if (scr < 0) scr += zone->container->num;
+		       while (scr >= zone->container->num) scr -= zone->container->num;
+		       while (scr < 0) scr += zone->container->num;
 		       zone2 = e_util_container_zone_number_get(scr, 0);
 		    }
 		  else
 		    {
 		       scr += zone->num;
-		       if (scr >= zone->num) scr -= zone->num;
-		       else if (scr < 0) scr += zone->num;
+		       while (scr >= zone->num) scr -= zone->num;
+		       while (scr < 0) scr += zone->num;
 		       zone2 = e_util_container_zone_number_get(0, scr);
 		    }
 		  if ((zone2) && (zone != zone2))
 		    ecore_x_pointer_warp(zone2->container->win,
-					 zone2->x + (zone->w / 2),
-					 zone2->y + (zone->h / 2));
+					 zone2->x + (zone2->w / 2),
+					 zone2->y + (zone2->h / 2));
 	       }
 	  }
      }
@@ -1594,6 +1596,9 @@ e_actions_init(void)
 				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    e_register_action_predef_name(_("Window : State"), _("Shade Right Mode Toggle"), 
 				 "window_shaded_toggle", "Left",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Window : State"), _("Shade Mode Toggle"), 
+				 "window_shaded_toggle", NULL,
 				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    
    ACT_GO(window_shaded);
