@@ -529,7 +529,7 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
    f1 = e_theme_edje_file_get("base/theme/desklock", "desklock/background");
    c = strdup(f1);
    
-   e_widget_ilist_header_append(cfdata->gui.bg_list, NULL, ("Theme Backgrounds"));
+   e_widget_ilist_header_append(cfdata->gui.bg_list, NULL, _("Theme Backgrounds"));
    if (edje_object_file_set(o, f1, "desklock/background"))
      {
 	if (!e_thumb_exists(c))
