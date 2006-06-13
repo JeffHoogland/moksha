@@ -572,7 +572,7 @@ _e_thumb_generate(void)
 	t = thumb_files->data;
 	if (!e_thumb_exists(t->path))
 	  e_thumb_create(t->path, t->w, t->h);
-	eet_cacheburst(0);
+	eet_clearcache();
 	exit(0);
      }   
 }
