@@ -52,6 +52,10 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
+* shelf config dialog needs to have basic modce be simple recipies like "on
+  desktop", "at the top" "panel" etc.
+* right click menu on gadgets needs to include gadcon and shelf menu
+* middle mouse on gadgets as a quick move/resize thing?
 * on xrandr screen res change e moves and resizes windows to fit in the new
   resolution. this is good and bad. if some other app temporarily changes
   res this means everything gets squeezed. we need a "temporary resize due to
