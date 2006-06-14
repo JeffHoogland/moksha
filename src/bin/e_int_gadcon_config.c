@@ -6,7 +6,6 @@
 /* PROTOTYPES - same all the time */
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 /* Actual config data we will be playing with whil the dialog is active */
@@ -33,7 +32,7 @@ e_int_gadcon_config(E_Gadcon *gc)
 	/* methods */
 	v->create_cfdata           = _create_data;
 	v->free_cfdata             = _free_data;
-	v->basic.apply_cfdata      = _basic_apply_data;
+	v->basic.apply_cfdata      = NULL; //_basic_apply_data;
 	v->basic.create_widgets    = _basic_create_widgets;
 	v->override_auto_apply = 1;
 	
@@ -92,18 +91,6 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->cname) free(cfdata->cname);
    if (cfdata->ciname) free(cfdata->ciname);
    free(cfdata);
-}
-
-/**--APPLY--**/
-static int
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
-{
-   if (!cfdata->cf_gc) return 1;
-
-   e_gadcon_unpopulate(cfdata->gc);
-   e_gadcon_populate(cfdata->gc);
-   e_config_save_queue();
-   return 1;
 }
 
 static void
@@ -197,6 +184,10 @@ _cb_add_instance(void *data, void *data2)
    e_widget_ilist_go(cfdata->o_instances);
    e_widget_ilist_selected_set(cfdata->o_instances,
 			       e_widget_ilist_count(cfdata->o_instances) - 1);
+
+   e_gadcon_unpopulate(cfdata->gc);
+   e_gadcon_populate(cfdata->gc);
+   e_config_save_queue();
 }
 
 static void
@@ -257,6 +248,9 @@ _cb_remove_instance(void *data, void *data2)
      e_widget_disabled_set(cfdata->o_remove, 1);
    else
      e_widget_ilist_selected_set(cfdata->o_instances, i);
+   e_gadcon_unpopulate(cfdata->gc);
+   e_gadcon_populate(cfdata->gc);
+   e_config_save_queue();
 }
 
 /**--GUI--**/
