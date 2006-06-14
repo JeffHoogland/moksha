@@ -8,6 +8,9 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: if mouse is already grabbed when exebuf or winlist are activated - all
+  shit hits the fan after that (box can't be dismissed, keyboard grab fails
+  etc. etc.)
 * BUG: set any specific border type and when you maximize the border changes
   to default (unless its borderless)
 * BUG: change exe name in basic mode in eap editor and icon vanishes (don't
