@@ -8,6 +8,8 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: menu for gadgets while up and if it changes apearance will segv because
+  its reference to the gcc is wrong as the gcc was destroyed and re-created
 * BUG: if mouse is already grabbed when exebuf or winlist are activated - all
   shit hits the fan after that (box can't be dismissed, keyboard grab fails
   etc. etc.)
