@@ -29,8 +29,6 @@ Some of the things (in very short form) that need to be done to E17...
 * BUG: openoffice 2 when displaying a presentation with xinerama (multiple
   zones) weird things happen (the presentation doesnt display - it seemingly
   attaches to the 2nd zone, not the first), crashes have been reported too.
-* BUG: dnd icon from window that has no .eap defining its icon to ibar and the
-  ibar icon ends up blank (can't build .eap from ARGB pixels)
 * BUG: modules need to destroy config dialogs on shutdown (otherwise - segv!)
 * BUG: xdaliclock -transparent doesnt use shaped border (not handling shape
   change later)
@@ -47,6 +45,7 @@ Some of the things (in very short form) that need to be done to E17...
   a big xev (xev -g 1280x1024) that won't fit it gets placed offscreen to the
   right of zone 2
 * BUG: Hiding the label of e_widget_slider causes the slider line to disappear
+* BUG: Window locks should be honored by the pager (e.g. Lock me from changing position)
 ]]]
 
 [[[
@@ -89,6 +88,8 @@ Some of the things (in very short form) that need to be done to E17...
 * gui config dialogs for all config
 * make it possible to disable border buttons/actions (tell theme what is
   disabled)
+* Window Border Icon > "Create Icon" needs to copy the ARGB icon data (into a temp file?) and use that as the default icon.
+* Dragging a non-eap icon from a border to the ibar should automatically create the icon and add that (instead of warning the user that this can't be done)
 ]]]
 
 [[[
