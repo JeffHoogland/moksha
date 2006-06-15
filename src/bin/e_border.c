@@ -4830,6 +4830,7 @@ _e_border_eval(E_Border *bd)
      }
    if (bd->client.icccm.fetch.window_role)
      {
+	if (bd->client.icccm.window_role) free(bd->client.icccm.window_role);
 	bd->client.icccm.window_role = ecore_x_icccm_window_role_get(bd->client.win);
 	bd->client.icccm.fetch.window_role = 0;
      }
