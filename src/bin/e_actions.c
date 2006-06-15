@@ -571,6 +571,36 @@ ACT_FN_GO(window_shaded)
 }
 
 /***************************************************************************/
+ACT_FN_GO(window_borderless_toggle)
+{
+   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (obj->type != E_BORDER_TYPE)
+     {
+	obj = E_OBJECT(e_border_focused_get());
+	if (!obj) return;
+     }
+   if (!((E_Border *)obj)->lock_border)
+     {
+	E_Border *bd;
+
+	bd = (E_Border *)obj;
+	if ((bd->client.border.name))
+	  {
+	     evas_stringshare_del(bd->client.border.name);
+	     bd->client.border.name = NULL;
+	  }
+	if (bd->borderless)
+	  bd->borderless = 0;
+	else
+	  bd->borderless = 1;
+
+	bd->client.border.changed = 1;
+	bd->changed = 1;
+     }
+}
+
+/***************************************************************************/
 ACT_FN_GO(window_move_by)
 {
    if (!obj) obj = E_OBJECT(e_border_focused_get());
@@ -1602,6 +1632,12 @@ e_actions_init(void)
 				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    
    ACT_GO(window_shaded);
+   
+   /* window_borderless_toggle */
+   ACT_GO(window_borderless_toggle);
+   e_register_action_predef_name(_("Window : State"), _("Toggle Borderless State"), 
+				 "window_borderless_toggle", NULL,
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    
    /* desk_flip_by */
    ACT_GO(desk_flip_by);
