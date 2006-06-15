@@ -54,6 +54,10 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
+* if we want to do icons on the desktop - and as part of efm, i am thinking
+  that we have little choice but to implement a .desktop file loader. this
+  is not to hard - it's the xml jungle of the system menus that is sucky. the
+  real problems are where to find the icons for the .desktop files.
 * shelf config dialog needs to have basic modce be simple recipies like "on
   desktop", "at the top" "panel" etc.
 * right click menu on gadgets needs to include gadcon and shelf menu
