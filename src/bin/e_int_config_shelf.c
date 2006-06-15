@@ -72,6 +72,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
 {
    Evas_List *l;
    E_Shelf *es;
+   E_Config_Shelf *escfg;
    char buf[256];
    const char *label;
    Evas_Object *ob;
@@ -83,6 +84,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
    for (l = e_shelf_list(); l; l = l->next)
      {
 	es = l->data;
+        escfg = es->cfg;
 	
 	label = es->name;
 	if (!label) label = "";
@@ -90,7 +92,49 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
 	
 	/* FIXME: proper icon */
 	ob = edje_object_add(evas_object_evas_get(cfdata->ilist));
-	e_util_edje_icon_set(ob, "enlightenment/e");
+
+        switch(escfg->orient)
+          {
+          case E_GADCON_ORIENT_LEFT:
+             e_util_edje_icon_set(ob, "enlightenment/shelf_position_left");
+             break;
+          case E_GADCON_ORIENT_RIGHT:
+             e_util_edje_icon_set(ob, "enlightenment/shelf_position_right");
+             break;
+          case E_GADCON_ORIENT_TOP:
+             e_util_edje_icon_set(ob, "enlightenment/shelf_position_top");
+             break;
+          case E_GADCON_ORIENT_BOTTOM:
+             e_util_edje_icon_set(ob, "enlightenment/shelf_position_bottom");
+             break;
+          case E_GADCON_ORIENT_CORNER_TL:
+             e_util_edje_icon_set(ob, "enlightenment/shelf_position_top_left");
+             break;
+          case E_GADCON_ORIENT_CORNER_TR:
+             e_util_edje_icon_set(ob, "enlightenment/shelf_position_top_right");
+             break;
+          case E_GADCON_ORIENT_CORNER_BL:
+             e_util_edje_icon_set(ob, "enlightenment/shelf_position_bottom_left");
+             break;
+          case E_GADCON_ORIENT_CORNER_BR:
+             e_util_edje_icon_set(ob, "enlightenment/shelf_position_bottom_right");
+             break;
+          case E_GADCON_ORIENT_CORNER_LT:
+             e_util_edje_icon_set(ob, "enlightenment/shelf_position_left_top");
+             break;
+          case E_GADCON_ORIENT_CORNER_RT:
+             e_util_edje_icon_set(ob, "enlightenment/shelf_position_right_top");
+             break;
+          case E_GADCON_ORIENT_CORNER_LB:
+             e_util_edje_icon_set(ob, "enlightenment/shelf_position_left_bottom");
+             break;
+          case E_GADCON_ORIENT_CORNER_RB:
+             e_util_edje_icon_set(ob, "enlightenment/shelf_position_right_bottom");
+             break;
+          default:
+             e_util_edje_icon_set(ob, "enlightenment/e");
+             break;
+          }
 	
 	e_widget_ilist_append(cfdata->ilist, ob, buf, _cb_list, cfdata, NULL);
      }
@@ -202,7 +246,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_list_add(evas, 0, 1);
    
    of = e_widget_framelist_add(evas, _("Configured Shelves"), 0);
-   oi = e_widget_ilist_add(evas, 80, 60, NULL);
+   oi = e_widget_ilist_add(evas, 24, 24, NULL);
    e_widget_ilist_selector_set(oi, 1);
    cfdata->ilist = oi;
 

@@ -719,7 +719,7 @@ _e_shelf_menu_append(E_Shelf *es, E_Menu *mn)
    E_Menu_Item *mi;
    
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Shelf Location and Appearance Settings"));
+   e_menu_item_label_set(mi, _("Shelf Configuration"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/config");
    e_menu_item_callback_set(mi, _e_shelf_cb_menu_config, es);
    
