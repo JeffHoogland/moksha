@@ -1371,10 +1371,17 @@ _e_gadcon_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_in
 					    gcc);
 	gcc->menu = mn;
 	
-	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, _("Stop editing"));
-	e_util_menu_item_edje_icon_set(mi, "enlightenment/edit");
-	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_edit, gcc);
+	if (gcc->gadcon->menu_attach.func)
+	  {
+	     gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, mn);
+	  }
+	else
+	  {
+	     mi = e_menu_item_new(mn);
+	     e_menu_item_label_set(mi, _("Stop editing"));
+	     e_util_menu_item_edje_icon_set(mi, "enlightenment/edit");
+	     e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_edit, gcc);
+	  }
 	
 	e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &cx, &cy, &cw, &ch);
 	e_menu_activate_mouse(mn,
