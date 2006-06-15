@@ -77,7 +77,6 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
    const char *label;
    Evas_Object *ob;
    int n;
-   Evas_Coord wmw, wmh;
    
    n = e_widget_ilist_selected_get(cfdata->ilist);
    e_widget_ilist_clear(cfdata->ilist);
@@ -138,13 +137,8 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
 	
 	e_widget_ilist_append(cfdata->ilist, ob, buf, _cb_list, cfdata, NULL);
      }
-
-   e_widget_min_size_get(cfdata->ilist, &wmw, &wmh);
-   if (evas_list_count(l) > 0) 
-     e_widget_min_size_set(cfdata->ilist, wmw, 250);
-    else 
-     e_widget_min_size_set(cfdata->ilist, 165, 250);	
    
+   e_widget_min_size_set(cfdata->ilist, 155, 250);
    e_widget_ilist_go(cfdata->ilist);
    e_widget_ilist_selected_set(cfdata->ilist, n);
 }
@@ -251,7 +245,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->ilist = oi;
 
    _ilist_fill(cfdata);
-   
+   e_widget_min_size_set(oi, 155, 250);
    e_widget_framelist_object_append(of, oi);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
@@ -266,6 +260,5 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    e_widget_list_object_append(o, ol, 1, 1, 0.0);
    
-
    return o;
 }
