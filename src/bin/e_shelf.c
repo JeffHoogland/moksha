@@ -8,6 +8,13 @@ static const char *_e_shelf_orient_string_get(E_Shelf *es);
 static void _e_shelf_gadcon_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 static void _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 static Evas_Object *_e_shelf_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *style);
+static void _e_shelf_cb_menu_config(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_shelf_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_shelf_cb_menu_contents(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_shelf_cb_confirm_dialog_yes(void *data);
+static void _e_shelf_cb_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_shelf_menu_append(E_Shelf *es, E_Menu *mn);
+static void _e_shelf_cb_menu_items_append(void *data, E_Menu *mn);
 static void _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_shelf_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_shelf_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info);
@@ -149,6 +156,9 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    edje_object_message_signal_process(es->o_base);
    e_gadcon_zone_set(es->gadcon, zone);
    e_gadcon_ecore_evas_set(es->gadcon, es->ee);
+   e_gadcon_util_menu_attach_func_set(es->gadcon,
+				      _e_shelf_cb_menu_items_append,
+				      es);
    
    shelves = evas_list_append(shelves, es);
    return es;
@@ -704,6 +714,44 @@ _e_shelf_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *styl
 }
 
 static void
+_e_shelf_menu_append(E_Shelf *es, E_Menu *mn)
+{
+   E_Menu_Item *mi;
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Shelf Location and Appearance Settings"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/config");
+   e_menu_item_callback_set(mi, _e_shelf_cb_menu_config, es);
+   
+   mi = e_menu_item_new(mn);
+   if (es->gadcon->editing)
+     e_menu_item_label_set(mi, _("Stop Moving/Resizing Items"));
+   else
+     e_menu_item_label_set(mi, _("Begin Moving/Resizing Items"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/edit");
+   e_menu_item_callback_set(mi, _e_shelf_cb_menu_edit, es);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Configure Shelf Contents"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/config");
+   e_menu_item_callback_set(mi, _e_shelf_cb_menu_contents, es);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Delete this Shelf"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/delete");
+   e_menu_item_callback_set(mi, _e_shelf_cb_menu_delete, es);
+}
+
+static void
+_e_shelf_cb_menu_items_append(void *data, E_Menu *mn)
+{
+   E_Shelf *es;
+   
+   es = data;
+   _e_shelf_menu_append(es, mn);
+}
+
+static void
 _e_shelf_cb_menu_config(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Shelf *es;
@@ -784,36 +832,14 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_inf
    if (ev->button == 3)
      {
         E_Menu *mn;
-	E_Menu_Item *mi;
 	int cx, cy, cw, ch;
 	
 	mn = e_menu_new();
 	e_menu_post_deactivate_callback_set(mn, _e_shelf_cb_menu_post, es);
 	es->menu = mn;
+
+	_e_shelf_menu_append(es, mn);
 	
-	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, _("Shelf Location and Appearance Settings"));
-	e_util_menu_item_edje_icon_set(mi, "enlightenment/config");
-	e_menu_item_callback_set(mi, _e_shelf_cb_menu_config, es);
-
-	mi = e_menu_item_new(mn);
-	if (es->gadcon->editing)
-	  e_menu_item_label_set(mi, _("Stop Moving/Resizing Items"));
-	else
-	  e_menu_item_label_set(mi, _("Begin Moving/Resizing Items"));
-	e_util_menu_item_edje_icon_set(mi, "enlightenment/edit");
-	e_menu_item_callback_set(mi, _e_shelf_cb_menu_edit, es);
-	
-	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, _("Configure Shelf Contents"));
-	e_util_menu_item_edje_icon_set(mi, "enlightenment/config");
-	e_menu_item_callback_set(mi, _e_shelf_cb_menu_contents, es);
-
-	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, _("Delete this Shelf"));
-	e_util_menu_item_edje_icon_set(mi, "enlightenment/delete");
-	e_menu_item_callback_set(mi, _e_shelf_cb_menu_delete, es);
-
 	e_gadcon_canvas_zone_geometry_get(es->gadcon, &cx, &cy, &cw, &ch);
 	e_menu_activate_mouse(mn,
 			      e_util_zone_current_get(e_manager_current_get()),

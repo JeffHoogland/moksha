@@ -70,6 +70,10 @@ struct _E_Gadcon
       Evas_Object *(*func) (void *data, E_Gadcon_Client *gcc, const char *style);
       void *data;
    } frame_request;
+   struct {
+      void (*func) (void *data, E_Menu *menu);
+      void *data;
+   } menu_attach;
    
    E_Config_Dialog    *config_dialog;
    unsigned char       editing : 1;
@@ -147,7 +151,8 @@ EAPI void             e_gadcon_zone_set(E_Gadcon *gc, E_Zone *zone);
 EAPI E_Zone          *e_gadcon_zone_get(E_Gadcon *gc);
 EAPI void             e_gadcon_ecore_evas_set(E_Gadcon *gc, Ecore_Evas *ee);
 EAPI int              e_gadcon_canvas_zone_geometry_get(E_Gadcon *gc, int *x, int *y, int *w, int *h);
-    
+EAPI void             e_gadcon_util_menu_attach_func_set(E_Gadcon *gc, void (*func) (void *data, E_Menu *menu), void *data);
+
 EAPI E_Gadcon_Client *e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id, const char *style, Evas_Object *base_obj);
 EAPI void             e_gadcon_client_edit_begin(E_Gadcon_Client *gcc);
 EAPI void             e_gadcon_client_edit_end(E_Gadcon_Client *gcc);

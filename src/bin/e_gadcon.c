@@ -490,6 +490,17 @@ e_gadcon_canvas_zone_geometry_get(E_Gadcon *gc, int *x, int *y, int *w, int *h)
    return 1;
 }
 
+EAPI void
+e_gadcon_util_menu_attach_func_set(E_Gadcon *gc, 
+				   void (*func) (void *data, E_Menu *menu),
+				   void *data)
+{
+   E_OBJECT_CHECK(gc);
+   E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
+   gc->menu_attach.func = func;
+   gc->menu_attach.data = data;
+}
+							 
 EAPI E_Gadcon_Client *
 e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id, const char *style, Evas_Object *base_obj)
 {
@@ -1002,20 +1013,20 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int f
    e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_resizable, gcc);
 
    mi = e_menu_item_new(menu);
-   if (gcc->o_control)
-     e_menu_item_label_set(mi, _("Stop editing"));
-   else
-     e_menu_item_label_set(mi, _("Begin editing"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/edit");
-   e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_edit, gcc);
-   
-   mi = e_menu_item_new(menu);
    e_menu_item_separator_set(mi, 1);
    
    mi = e_menu_item_new(menu);
    e_menu_item_label_set(mi, _("Remove this gadget"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/remove");
    e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_remove, gcc);
+
+   if (gcc->gadcon->menu_attach.func)
+     {
+	mi = e_menu_item_new(menu);
+	e_menu_item_separator_set(mi, 1);
+	
+	gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, menu);
+     }
 }
 
 static void 
