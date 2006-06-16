@@ -12,10 +12,13 @@
 #define e_unregister_all_action_predef_names \
    e_int_config_keybindings_unregister_all_action_predef_names
 
-typedef enum{EDIT_RESTRICT_NONE = (0 << 0), // allows to edit action and params in config dialog
-	     EDIT_RESTRICT_ACTION = (1 << 0), // denies to edit action in config dialog
-	     EDIT_RESTRICT_PARAMS = (1 << 1) // denies to edit params in config dialog
-	    }act_restrict_t;
+typedef enum
+{
+   EDIT_RESTRICT_NONE = (0 << 0), // allows to edit action and params in config dialog
+   EDIT_RESTRICT_ACTION = (1 << 0), // denies to edit action in config dialog
+   EDIT_RESTRICT_PARAMS = (1 << 1) // denies to edit params in config dialog
+}
+E_Keybindings_Restrict;
 
 EAPI E_Config_Dialog *e_int_config_keybindings(E_Container *con);
 
@@ -23,7 +26,7 @@ int e_int_config_keybindings_register_action_predef_name(const char *action_grou
 							 const char *action_name,
 							 const char *action_cmd,
 							 const char *action_params,
-							 act_restrict_t restrictions,
+							 E_Keybindings_Restrict restrictions,
 							 int flag);
 
 int e_int_config_keybindings_unregister_action_predef_name(const char *action_group,

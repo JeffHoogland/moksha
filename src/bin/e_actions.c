@@ -1786,12 +1786,12 @@ e_actions_init(void)
 
    /* exec */
    ACT_GO(exec);
-   e_register_action_predef_name(_("Enlightenment"), _("User Defined Actions"), "exec", NULL,
+   e_register_action_predef_name(_("Launch"), _("Defined Command"), "exec", NULL,
 				 EDIT_RESTRICT_ACTION, 0);
 
    /* app */
    ACT_GO(app);
-   e_register_action_predef_name(_("Enlightenment"), _("Application"), "app", NULL,
+   e_register_action_predef_name(_("Launch"), _("Application"), "app", NULL,
 				 EDIT_RESTRICT_ACTION, 0);
    
    /* winlist */
@@ -1826,7 +1826,7 @@ e_actions_init(void)
    
    /* exebuf */
    ACT_GO(exebuf);
-   e_register_action_predef_name(_("Enlightenment"), _("Run Command"), "exebuf", NULL,
+   e_register_action_predef_name(_("Launch"), _("Run Command Dialog"), "exebuf", NULL,
 				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    /* desk_lock */
    ACT_GO(desk_lock);

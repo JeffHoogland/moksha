@@ -65,12 +65,12 @@ static int  _action_group_actions_list_sort_cb(void *e1, void *e2);
 
 typedef struct _action2
 {
-  const char  *action_name;
-  const char  *action_cmd;
-  const char  *action_params;
-  int	def_action;
-  int	restrictions;
-  Evas_List   *key_bindings;
+   const char  *action_name;
+   const char  *action_cmd;
+   const char  *action_params;
+   int	def_action;
+   int	restrictions;
+   Evas_List   *key_bindings;
 } ACTION2;
 
 typedef struct _action_group
@@ -126,7 +126,7 @@ int e_int_config_keybindings_register_action_predef_name(const char *action_grou
 							 const char *action_name,
 							 const char *action_cmd,
 							 const char *action_params,
-							 act_restrict_t restrictions,
+							 E_Keybindings_Restrict restrictions,
 							 int flag)
 {
    ACTION_GROUP	  *actg = NULL;
@@ -175,7 +175,8 @@ int e_int_config_keybindings_register_action_predef_name(const char *action_grou
    act = E_NEW(ACTION2, 1);
    if (!act)
      return 0;
-   act->action_name    = action_name == NULL ? NULL : evas_stringshare_add(action_name);
+   
+   act->action_name    = evas_stringshare_add(action_name);
    act->action_cmd     = action_cmd == NULL ? NULL : evas_stringshare_add(action_cmd);
    act->action_params  = action_params == NULL ? NULL : evas_stringshare_add(action_params);
    act->restrictions   = restrictions;
@@ -425,26 +426,26 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	       }
 	  }
      }
-  cfdata->locals.keybind_win = 0;
-  cfdata->locals.handlers = NULL;
-  cfdata->locals.dia = NULL;
-  cfdata->changed = 0;
+   cfdata->locals.keybind_win = 0;
+   cfdata->locals.handlers = NULL;
+   cfdata->locals.dia = NULL;
+   cfdata->changed = 0;
 }
 static void *
 _create_data(E_Config_Dialog *cfd)
 {
-  E_Config_Dialog_Data *cfdata;
-
-  cfdata = E_NEW(E_Config_Dialog_Data, 1);
-  
-  cfdata->binding_context = -1;//E_BINDING_CONTEXT_ANY;
-  cfdata->key_action = strdup("");
-  cfdata->key_params = strdup("");
-
-  _fill_data(cfdata);
-  cfdata->cfd = cfd;
-
-  return cfdata;
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   
+   cfdata->binding_context = -1;//E_BINDING_CONTEXT_ANY;
+   cfdata->key_action = strdup("");
+   cfdata->key_params = strdup("");
+   
+   _fill_data(cfdata);
+   cfdata->cfd = cfd;
+   
+   return cfdata;
 }
 
 static void
