@@ -46,7 +46,6 @@ struct _E_Config_Dialog_Data
       int urgent;
       int delete_request;
       int request_pos;
-      
    } icccm;
 };
 
@@ -59,20 +58,20 @@ e_int_border_prop(E_Border *bd)
    
    v = E_NEW(E_Config_Dialog_View, 1);
    if (v)
-      {
-         /* methods */
-         v->create_cfdata           = _create_data;
-         v->free_cfdata             = _free_data;
-         v->basic.apply_cfdata      = NULL;
-         v->basic.create_widgets    = _basic_create_widgets;
-         v->advanced.apply_cfdata   = NULL;
-         v->advanced.create_widgets = NULL;
-	 v->override_auto_apply = 1;
-	 
-         /* create config dialog for bd object/data */
-         cfd = e_config_dialog_new(bd->zone->container, 
-				   _("Window Properties"), NULL, 0, v, bd);
-      }
+     {
+	/* methods */
+	v->create_cfdata           = _create_data;
+	v->free_cfdata             = _free_data;
+	v->basic.apply_cfdata      = NULL;
+	v->basic.create_widgets    = _basic_create_widgets;
+	v->advanced.apply_cfdata   = NULL;
+	v->advanced.create_widgets = NULL;
+	v->override_auto_apply = 1;
+	
+	/* create config dialog for bd object/data */
+	cfd = e_config_dialog_new(bd->zone->container, 
+				  _("Window Properties"), NULL, 0, v, bd);
+     }
 }
 
 /**--CREATE--**/

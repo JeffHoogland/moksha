@@ -45,7 +45,8 @@ Some of the things (in very short form) that need to be done to E17...
   a big xev (xev -g 1280x1024) that won't fit it gets placed offscreen to the
   right of zone 2
 * BUG: Hiding the label of e_widget_slider causes the slider line to disappear
-* BUG: Window locks should be honored by the pager (e.g. Lock me from changing position)
+* BUG: Window locks should be honored by the pager (e.g. Lock me from
+  changing position)
 ]]]
 
 [[[
@@ -88,8 +89,11 @@ Some of the things (in very short form) that need to be done to E17...
 * gui config dialogs for all config
 * make it possible to disable border buttons/actions (tell theme what is
   disabled)
-* Window Border Icon > "Create Icon" needs to copy the ARGB icon data (into a temp file?) and use that as the default icon.
-* Dragging a non-eap icon from a border to the ibar should automatically create the icon and add that (instead of warning the user that this can't be done)
+* Window Border Icon > "Create Icon" needs to copy the ARGB icon data (into a 
+  temp file?) and use that as the default icon.
+* Dragging a non-eap icon from a border to the ibar should automatically
+  create the icon and add that (instead of warning the user that this can't be
+  done)
 ]]]
 
 [[[
