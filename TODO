@@ -58,8 +58,6 @@ Some of the things (in very short form) that need to be done to E17...
   that we have little choice but to implement a .desktop file loader. this
   is not to hard - it's the xml jungle of the system menus that is sucky. the
   real problems are where to find the icons for the .desktop files.
-* shelf config dialog needs to have basic modce be simple recipies like "on
-  desktop", "at the top" "panel" etc.
 * middle mouse on gadgets as a quick move/resize thing?
 * on xrandr screen res change e moves and resizes windows to fit in the new
   resolution. this is good and bad. if some other app temporarily changes

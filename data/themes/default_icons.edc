@@ -46,6 +46,12 @@ images {
    image: "e17_shelf_top_left.png" COMP;
    image: "e17_shelf_top.png" COMP;
    image: "e17_shelf_top_right.png" COMP;
+   image: "e17_shelf_bottom_desk.png" COMP;
+   image: "e17_shelf_custom.png" COMP;
+   image: "e17_shelf_dock.png" COMP;
+   image: "e17_shelf_menu_bar.png" COMP;
+   image: "e17_shelf_panel.png" COMP;
+   image: "e17_shelf_top_desk.png" COMP;
 }
 
 group {
@@ -791,6 +797,114 @@ group {
 	    max:      24 24;
 	    image {
 	       normal: "e17_shelf_right_bottom.png";
+	    }
+	 }
+      }
+   }
+}
+group {
+   name: "icons/enlightenment/shelf_bottom_desk";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      24 24;
+	    image {
+	       normal: "e17_shelf_bottom_desk.png";
+	    }
+	 }
+      }
+   }
+}
+group {
+   name: "icons/enlightenment/shelf_custom";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      24 24;
+	    image {
+	       normal: "e17_shelf_custom.png";
+	    }
+	 }
+      }
+   }
+}
+group {
+   name: "icons/enlightenment/shelf_dock";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      24 24;
+	    image {
+	       normal: "e17_shelf_dock.png";
+	    }
+	 }
+      }
+   }
+}
+group {
+   name: "icons/enlightenment/shelf_menu_bar";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      24 24;
+	    image {
+	       normal: "e17_shelf_menu_bar.png";
+	    }
+	 }
+      }
+   }
+}
+group {
+   name: "icons/enlightenment/shelf_panel";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      24 24;
+	    image {
+	       normal: "e17_shelf_panel.png";
+	    }
+	 }
+      }
+   }
+}
+group {
+   name: "icons/enlightenment/shelf_top_desk";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      24 24;
+	    image {
+	       normal: "e17_shelf_top_desk.png";
 	    }
 	 }
       }

@@ -435,5 +435,11 @@ e17_shelf_right.png \
 e17_shelf_right_top.png \
 e17_shelf_top_left.png \
 e17_shelf_top.png \
-e17_shelf_top_right.png
-
+e17_shelf_top_right.png \
+e17_shelf_bottom_desk.png \
+e17_shelf_custom.png \
+e17_shelf_dock.png \
+e17_shelf_menu_bar.png \
+e17_shelf_panel.png \
+e17_shelf_top_desk.png
+		  
