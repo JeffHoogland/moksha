@@ -22,7 +22,7 @@ e_int_config_shelf(E_Container *con)
    
    v->create_cfdata = _create_data;
    v->free_cfdata = _free_data;
-   v->basic.apply_cfdata = _basic_apply_data;
+   v->basic.apply_cfdata = NULL;
    v->basic.create_widgets = _basic_create_widgets;
    v->advanced.apply_cfdata = NULL;
    v->advanced.create_widgets = NULL;
