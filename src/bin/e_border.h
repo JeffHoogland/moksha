@@ -381,6 +381,14 @@ struct _E_Border
    } saved;
 
    struct {
+      unsigned char valid : 1;
+      int x, y, w, h;
+      struct {
+	 int x, y, w, h;
+      } saved;
+   } pre_res_change;
+   
+   struct {
       double start;
       double val;
       int x, y;
@@ -534,6 +542,9 @@ EAPI E_Border *e_border_new(E_Container *con, Ecore_X_Window win, int first_map,
 EAPI void      e_border_free(E_Border *bd);
 EAPI void      e_border_ref(E_Border *bd);
 EAPI void      e_border_unref(E_Border *bd);
+EAPI void      e_border_res_change_geometry_save(E_Border *bd);
+EAPI void      e_border_res_change_geometry_restore(E_Border *bd);
+    
 EAPI void      e_border_zone_set(E_Border *bd, E_Zone *zone);
 EAPI void      e_border_desk_set(E_Border *bd, E_Desk *desk);
 EAPI void      e_border_show(E_Border *bd);

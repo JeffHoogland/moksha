@@ -1141,17 +1141,14 @@ _e_container_resize_handle(E_Container *con)
 {
    E_Event_Container_Resize *ev;
    Evas_List *l, *screens;
-#if 1
    int i;
-#endif
    
    ev = calloc(1, sizeof(E_Event_Container_Resize));
    ev->container = con;
+   e_object_ref(E_OBJECT(con));
    
    e_gadman_all_save(con->gadman);
-
    e_xinerama_update();
-   
    screens = (Evas_List *)e_xinerama_screens_get();
    if (screens)
      {
@@ -1169,9 +1166,12 @@ _e_container_resize_handle(E_Container *con)
 	       }
 	     else
 	       zone = e_zone_new(con, scr->screen, scr->x, scr->y, scr->w, scr->h);
-	     /* FIXME: what if a zone exists for a screen that doesn't exist?
-	      *        not sure this will ever happen...
-	      */
+	  }
+	if (evas_list_count(con->zones) != evas_list_count(screens))
+	  {
+	     /* xinerama screens where deleted! eek! */
+	     /* FIXME: handle deletion of a zone! */
+	     printf("FIXME: handle deletion of xinerama screens\n");
 	  }
      }
    else
@@ -1184,12 +1184,9 @@ _e_container_resize_handle(E_Container *con)
      }
    
    e_gadman_container_resize(con->gadman);
-   e_object_ref(E_OBJECT(con));
+   
    ecore_event_add(E_EVENT_CONTAINER_RESIZE, ev, _e_container_event_container_resize_free, NULL);
-#if 1
-   /* FIXME: This is wrong, we should only move/resize to save things from
-    * disappearing!
-    */
+   
    for (i = 0; i < 7; i++)
      {
 	for (l = con->layers[i].clients; l; l = l->next)
@@ -1197,45 +1194,10 @@ _e_container_resize_handle(E_Container *con)
 	     E_Border *bd;
 
 	     bd = l->data;
-
-	     if (bd->saved.w > bd->zone->w)
-	       bd->saved.w = bd->zone->w;
-	     if ((bd->saved.x + bd->saved.w) > (bd->zone->x + bd->zone->w))
-	       bd->saved.x = bd->zone->x + bd->zone->w - bd->saved.w;
-	     
-	     if (bd->saved.h > bd->zone->h)
-	       bd->saved.h = bd->zone->h;
-	     if ((bd->saved.y + bd->saved.h) > (bd->zone->y + bd->zone->h))
-	       bd->saved.y = bd->zone->y + bd->zone->h - bd->saved.h;
-		  
-	     if (bd->fullscreen)
-	       {
-		  e_border_unfullscreen(bd);
-		  e_border_fullscreen(bd, e_config->fullscreen_policy);
-	       }
-	     else if (bd->maximized != E_MAXIMIZE_NONE)
-	       {
-		  E_Maximize max;
-		  
-		  max = bd->maximized;
-		  e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
-		  e_border_maximize(bd, max);
-	       }
-	     else
-	       {
-		  if (bd->w > bd->zone->w)
-		    e_border_resize(bd, bd->zone->w, bd->h);
-		  if ((bd->x + bd->w) > (bd->zone->x + bd->zone->w))
-		    e_border_move(bd, bd->zone->x + bd->zone->w - bd->w, bd->y);
-		  
-		  if (bd->h > bd->zone->h)
-		    e_border_resize(bd, bd->w, bd->zone->h);
-		  if ((bd->y + bd->h) > (bd->zone->y + bd->zone->h))
-		    e_border_move(bd, bd->x, bd->zone->y + bd->zone->h - bd->h);
-	       }
+	     e_border_res_change_geometry_save(bd);
+	     e_border_res_change_geometry_restore(bd);
 	  }
      }
-#endif
 }
 
 static void

@@ -59,19 +59,6 @@ Some of the things (in very short form) that need to be done to E17...
   is not to hard - it's the xml jungle of the system menus that is sucky. the
   real problems are where to find the icons for the .desktop files.
 * middle mouse on gadgets as a quick move/resize thing?
-* on xrandr screen res change e moves and resizes windows to fit in the new
-  resolution. this is good and bad. if some other app temporarily changes
-  res this means everything gets squeezed. we need a "temporary resize due to
-  res change" geometry state for apps where they get resized to a new pos/size
-  and the old size/pos stored. on a move or resize etc. by a user this old
-  geom is freed, but on a res change, e takes the old geom, if there, and
-  tries to use it (then limiting geom to the new screen res as it cuurently
-  does) otherwise it creates a new saved geom for the cur geom before
-  limiting it. maximized windows are reset to their old size/pos then
-  re-maximized too. old szie from unmaximize needs to have this check too
-  on unmaximize as do fullscreen windows. NB: what if app moves/resizes
-  itself during this - i assume for now all bets are off with prior geometry
-  then.
 * language packs: need to have a tool to load/setup a language pack (which
   means .mo compiled files from a .po, an optional font and a config file that
   specifies the locale and font) and then install the font(s) either as a user
