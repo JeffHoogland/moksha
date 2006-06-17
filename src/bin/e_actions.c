@@ -923,14 +923,20 @@ ACT_FN_GO(screen_send_to)
 	
 	     if (sscanf(params, "%i", &scr) == 1)
 	       {
-		  E_Zone *zone2;
+		  E_Zone *zone2 = NULL;
 		  
-		  while (scr >= zone->container->num) scr -= zone->container->num;
-		  while (scr < 0) scr += zone->container->num;
-		  if (evas_list_count(e_manager_list()) > 1)
-		    zone2 = e_util_container_zone_number_get(scr, 0);
+                  if (evas_list_count(e_manager_list()) > 1)
+		    {
+		       scr = scr % evas_list_count(e_manager_list());
+		       if (scr < 0) scr += evas_list_count(e_manager_list());
+		       zone2 = e_util_container_zone_number_get(scr, 0);
+		    }
 		  else
-		    zone2 = e_util_container_zone_number_get(0, scr);
+		    {
+		       scr = scr % evas_list_count(zone->container->zones);
+		       if (scr < 0) scr += evas_list_count(zone->container->zones);
+		       zone2 = e_util_container_zone_number_get(0, scr);
+		    }
 		  if ((zone2) && (zone != zone2))
 		    ecore_x_pointer_warp(zone2->container->win,
 					 zone2->x + (zone2->w / 2),
@@ -954,20 +960,20 @@ ACT_FN_GO(screen_send_by)
 	
 	     if (sscanf(params, "%i", &scr) == 1)
 	       {
-		  E_Zone *zone2;
+		  E_Zone *zone2 = NULL;
 		  
-		  if (evas_list_count(e_manager_list()) > 1)
+                  if (evas_list_count(e_manager_list()) > 1)
 		    {
 		       scr += zone->container->num;
-		       while (scr >= zone->container->num) scr -= zone->container->num;
-		       while (scr < 0) scr += zone->container->num;
+		       scr = scr % evas_list_count(e_manager_list());
+		       if (scr < 0) scr += evas_list_count(e_manager_list());
 		       zone2 = e_util_container_zone_number_get(scr, 0);
 		    }
 		  else
 		    {
-		       scr += zone->num;
-		       while (scr >= zone->num) scr -= zone->num;
-		       while (scr < 0) scr += zone->num;
+                       scr += zone->num;
+		       scr = scr % evas_list_count(zone->container->zones);
+		       if (scr < 0) scr += evas_list_count(zone->container->zones);
 		       zone2 = e_util_container_zone_number_get(0, scr);
 		    }
 		  if ((zone2) && (zone != zone2))
