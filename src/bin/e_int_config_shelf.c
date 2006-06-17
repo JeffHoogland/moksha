@@ -2,7 +2,6 @@
 
 static void        *_create_data(E_Config_Dialog *cfd);
 static void        _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int         _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 struct _E_Config_Dialog_Data 
@@ -22,10 +21,7 @@ e_int_config_shelf(E_Container *con)
    
    v->create_cfdata = _create_data;
    v->free_cfdata = _free_data;
-   v->basic.apply_cfdata = NULL;
    v->basic.create_widgets = _basic_create_widgets;
-   v->advanced.apply_cfdata = NULL;
-   v->advanced.create_widgets = NULL;
    
    cfd = e_config_dialog_new(con, _("Shelf Settings"), NULL, 0, v, NULL);
    return cfd;
@@ -51,12 +47,6 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    free(cfdata);
-}
-
-static int
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
-{
-   return 1;
 }
 
 static void
