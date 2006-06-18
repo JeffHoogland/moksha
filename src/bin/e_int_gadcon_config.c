@@ -315,7 +315,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	for (l2 = e_gadcon_provider_list(); l2; l2 = l2->next)
 	  {
 	     cc = l2->data;
-	     if ((cc->name) && (!strcmp(cc->name, cf_gcc->name))) break;
+	     if ((cc->name) && (cf_gcc->name) &&
+		 (!strcmp(cc->name, cf_gcc->name))) break;
 	     cc = NULL;
 	  }
 	if (cc)
