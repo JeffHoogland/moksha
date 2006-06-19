@@ -101,18 +101,18 @@ struct _E_Border
    E_Object             e_obj_inherit;
 
    struct {
-	struct {
-	     int x, y, w, h;
-	     int mx, my;
-	} current, last_down[3], last_up[3];
+      struct {
+	 int x, y, w, h;
+	 int mx, my;
+      } current, last_down[3], last_up[3];
    } mouse;
-
+   
    struct {
-	struct {
-	     int x, y, w, h;
-	     int mx, my;
-	     int button;
-	} down;
+      struct {
+	 int x, y, w, h;
+	 int mx, my;
+	 int button;
+      } down;
    } moveinfo;
 
    Ecore_X_Window  win;
