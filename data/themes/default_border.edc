@@ -4797,38 +4797,69 @@ group {
    }
    parts {      
       part {
-	 name:           "pixel";
+	 name:           "pixel1";
 	 type:           RECT;
 	 description {
 	    state: "default" 0.0;
-	    visible: 1;
 	    rel1 {
 	       relative: 0.0 0.0;
 	       offset:   0   0;
 	    }
 	    rel2 {
-	       relative: 1.0 1.0;
-	       offset:   -1  -1;
+	       relative: 1.0 0.0;
+	       offset:   -1  0;
 	    }
-	    color: 0 0 0 255;	    
+	    color: 0 0 0 255;
 	 }
-      }            
+      }
       part {
-	 name:           "whole";
+	 name:           "pixel2";
 	 type:           RECT;
 	 description {
 	    state: "default" 0.0;
-	    visible: 0;
 	    rel1 {
-	       relative: 0.0 0.0;
-	       offset:   0   0;
+	       relative: 0.0 1.0;
+	       offset:   0   -1;
 	    }
 	    rel2 {
 	       relative: 1.0 1.0;
 	       offset:   -1  -1;
 	    }
+	    color: 0 0 0 255;
 	 }
-      }      
+      }
+      part {
+	 name:           "pixel3";
+	 type:           RECT;
+	 description {
+	    state: "default" 0.0;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:   0   1;
+	    }
+	    rel2 {
+	       relative: 0.0 1.0;
+	       offset:   0  -2;
+	    }
+	    color: 0 0 0 255;
+	 }
+      }
+      part {
+	 name:           "pixel4";
+	 type:           RECT;
+	 description {
+	    state: "default" 0.0;
+	    rel1 {
+	       relative: 1.0 0.0;
+	       offset:   -1  1;
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -1  -2;
+	    }
+	    color: 0 0 0 255;
+	 }
+      }
       part {
 	 name:          "client";
 	 type:          SWALLOW;
@@ -4837,13 +4868,10 @@ group {
 	    rel1 {
 	       relative: 0.0  0.0;
 	       offset:   1    1;
-	       to:     "pixel";
-
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
 	       offset:   -2   -2;
-	       to: "pixel";
 	    }
 	 }
       }

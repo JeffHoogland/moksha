@@ -20,12 +20,10 @@ Some of the things (in very short form) that need to be done to E17...
 * BUG: change exe name in basic mode in eap editor and icon vanishes (don't
   extract existing icon and write out to tmp .png while rebuilding).
 * BUG: resolution (xrandr) changes seem to screw the shelf up a bit.
-* BUG: openoffice2's impress presentation fullscreen has sizing and
-  configuration issues.
 * BUG: ghost windows happen if windows close when on another desktop or if
   windows are very short-lived
-* BUG: k3b has minimization issues when burning cds (it tries to unminimize
-  its window and this doesn't work)
+* BUG: openoffice 2's impress presentation fullscreen has sizing and
+  configuration issues.
 * BUG: openoffice 2 when displaying a presentation with xinerama (multiple
   zones) weird things happen (the presentation doesnt display - it seemingly
   attaches to the 2nd zone, not the first), crashes have been reported too.

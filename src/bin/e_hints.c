@@ -1040,10 +1040,10 @@ e_hints_window_iconic_set(E_Border *bd)
 EAPI void
 e_hints_window_hidden_set(E_Border *bd)
 {
-   if (bd->client.icccm.state != ECORE_X_WINDOW_STATE_HINT_ICONIC)
+   if (bd->client.icccm.state != ECORE_X_WINDOW_STATE_HINT_WITHDRAWN)
      {
-	ecore_x_icccm_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HINT_ICONIC);
-	bd->client.icccm.state = ECORE_X_WINDOW_STATE_HINT_ICONIC;
+	ecore_x_icccm_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HINT_WITHDRAWN);
+	bd->client.icccm.state = ECORE_X_WINDOW_STATE_HINT_WITHDRAWN;
      }
    if (bd->client.netwm.state.hidden)
      {

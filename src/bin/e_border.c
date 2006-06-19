@@ -703,10 +703,7 @@ e_border_hide(E_Border *bd, int manage)
      }
 
    e_container_shape_hide(bd->shape);
-   /* FIXME: If the client unmaps itself, the border should be
-    * withdrawn, not iconic */
-   if (!bd->iconic)
-     e_hints_window_hidden_set(bd);
+   if (!bd->iconic) e_hints_window_hidden_set(bd);
 
    bd->visible = 0;
    bd->changes.visible = 1;
