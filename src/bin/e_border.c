@@ -1680,11 +1680,6 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 		  bd->client_inset.r = 1000 - (cx + cw);
 		  bd->client_inset.t = cy;
 		  bd->client_inset.b = 1000 - (cy + ch);
-		  printf("SET inset %i %i %i %i\n",
-			 bd->client_inset.l,
-			 bd->client_inset.r,
-			 bd->client_inset.t,
-			 bd->client_inset.b);
 		  ecore_x_netwm_frame_size_set(bd->client.win,
 					       bd->client_inset.l, bd->client_inset.r,
 					       bd->client_inset.t, bd->client_inset.b);
@@ -1808,7 +1803,6 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 		  evas_object_resize(bd->bg_object, 1000, 1000);
 		  edje_object_calc_force(bd->bg_object);
 		  edje_object_part_geometry_get(bd->bg_object, "client", &cx, &cy, &cw, &ch);
-		  printf("SET inset 2\n");
 		  bd->client_inset.l = cx;
 		  bd->client_inset.r = 1000 - (cx + cw);
 		  bd->client_inset.t = cy;
@@ -1913,7 +1907,6 @@ e_border_fullscreen(E_Border *bd, E_Fullscreen policy)
 	bd->client_inset.sr = bd->client_inset.r;
 	bd->client_inset.st = bd->client_inset.t;
 	bd->client_inset.sb = bd->client_inset.b;
-	printf("SET inset 3 (going fullscreen)\n");
 	bd->client_inset.l = 0;
 	bd->client_inset.r = 0;
 	bd->client_inset.t = 0;
@@ -2002,7 +1995,6 @@ e_border_unfullscreen(E_Border *bd)
 //	printf("UNFULLSCREEEN!\n");
 	bd->fullscreen = 0;
 	bd->need_fullscreen = 0;
-	printf("SET inset 4 (unfullscreen)\n");
 	bd->client_inset.l = bd->client_inset.sl;
 	bd->client_inset.r = bd->client_inset.sr;
 	bd->client_inset.t = bd->client_inset.st;
@@ -2663,7 +2655,6 @@ e_border_frame_recalc(E_Border *bd)
    evas_object_resize(bd->bg_object, 1000, 1000);
    edje_object_calc_force(bd->bg_object);
    edje_object_part_geometry_get(bd->bg_object, "client", &cx, &cy, &cw, &ch);
-   printf("SET inset 5\n");
    bd->client_inset.l = cx;
    bd->client_inset.r = 1000 - (cx + cw);
    bd->client_inset.t = cy;
@@ -4738,7 +4729,6 @@ _e_border_eval(E_Border *bd)
 	  {
 	     if (bd->client.border.name) evas_stringshare_del(bd->client.border.name);
 	     bd->client.border.name = NULL;
-	     printf("bd change 1\n");
 	     bd->client.border.changed = 1;
 	  }
 	if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK)
@@ -5076,7 +5066,6 @@ _e_border_eval(E_Border *bd)
 		  if (bd->client.border.name)
 		    evas_stringshare_del(bd->client.border.name);
 		  bd->client.border.name = NULL;
-		  printf("bd change 2\n");
 		  bd->client.border.changed = 1;
 	       }
 	  }
@@ -5093,7 +5082,6 @@ _e_border_eval(E_Border *bd)
 	     if (bd->client.border.name)
 	       evas_stringshare_del(bd->client.border.name);
 	     bd->client.border.name = NULL;
-	     printf("bd change 3\n");
 	     bd->client.border.changed = 1;
 	  }
 	if (bd->parent)
@@ -5145,7 +5133,6 @@ _e_border_eval(E_Border *bd)
 	     if (bd->client.border.name)
 	       evas_stringshare_del(bd->client.border.name);
 	     bd->client.border.name = NULL;
-	     printf("bd change 4\n");
 	     bd->client.border.changed = 1;
 	  }
 	if (!bd->remember)
@@ -5218,7 +5205,6 @@ _e_border_eval(E_Border *bd)
 		  bd->client.border.name = NULL;
 		  if (rem->prop.border)
 		    bd->client.border.name = evas_stringshare_add(rem->prop.border);
-		  printf("bd change 5\n");
 		  bd->client.border.changed = 1;
 	       }
 	     if (rem->apply & E_REMEMBER_APPLY_STICKY)
@@ -5274,7 +5260,6 @@ _e_border_eval(E_Border *bd)
 	int l, r, t, b;
 	int ok;
 	
-	printf("bd changed!\n");
 	if (!bd->client.border.name)
 	  {
 	     if ((bd->client.mwm.borderless) || (bd->borderless))
@@ -5309,7 +5294,6 @@ _e_border_eval(E_Border *bd)
 	  {
 	     bd->w -= (bd->client_inset.l + bd->client_inset.r);
 	     bd->h -= (bd->client_inset.t + bd->client_inset.b);
-	     printf("SET inset 6\n");
 	     bd->client_inset.l = 0;
 	     bd->client_inset.r = 0;
 	     bd->client_inset.t = 0;
@@ -5381,7 +5365,6 @@ _e_border_eval(E_Border *bd)
 	     t = 0;
 	     b = 0;
 	  }
-	printf("SET inset 7\n");
 	bd->client_inset.l = l;
 	bd->client_inset.r = r;
 	bd->client_inset.t = t;
