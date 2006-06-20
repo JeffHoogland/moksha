@@ -21,7 +21,6 @@ Some of the things (in very short form) that need to be done to E17...
 * BUG: openoffice 2 when displaying a presentation with xinerama (multiple
   zones) weird things happen (the presentation doesnt display - it seemingly
   attaches to the 2nd zone, not the first), crashes have been reported too.
-* BUG: modules need to destroy config dialogs on shutdown (otherwise - segv!)
 * BUG: xdaliclock -transparent doesnt use shaped border (not handling shape
   change later)
 * BUG: if a user selects a border the border should not just change based on
@@ -29,10 +28,6 @@ Some of the things (in very short form) that need to be done to E17...
 * BUG: if you iconify a window and while iconified the window unmaps
   (rhythmbox does this a lot apparently) e doesnt realize and still thinks
   it's iconified.
-* BUG: in general fullscreen needs work, cleaning and testing. dont allow
-  desktop switches for the desk a fullscreened window is on, nor allow windows
-  to be raised above the fs win etc. ie the app must seem to be entirely fs for
-  that zone.
 * BUG: if you have 2 zones and you fill up zone 2 (right) mostly and then run
   a big xev (xev -g 1280x1024) that won't fit it gets placed offscreen to the
   right of zone 2
