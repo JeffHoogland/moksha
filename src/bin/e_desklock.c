@@ -583,19 +583,29 @@ _desklock_auth(const char *passwd)
 	/* child */
 	int pamerr;
 	E_Desklock_Auth da;
-	
-	strncpy(da.user, _desklock_auth_get_current_user(), PATH_MAX);
+        char *current_user;
+
+	strncpy(da.user, current_user, PATH_MAX);
 	strncpy(da.passwd, passwd, PATH_MAX);
 	da.pam.handle = NULL;
 	da.pam.conv.conv = NULL;
 	da.pam.conv.appdata_ptr = NULL;
 	
 	pamerr = _desklock_pam_init(&da);
-	if (pamerr != PAM_SUCCESS) exit(pamerr);
+	if (pamerr != PAM_SUCCESS) 
+	  {
+	    free(current_user);
+	    exit(pamerr);
+	  }
 	pamerr = pam_authenticate(da.pam.handle, 0);
 	pam_end(da.pam.handle, pamerr);
 	memset(da.passwd, 0, sizeof(da.passwd));
-	if (pamerr == PAM_SUCCESS) exit(0);
+	if (pamerr == PAM_SUCCESS)
+	  {
+	    free(current_user);
+	    exit(0);
+	  }
+	free(current_user);
 	exit(-1);
      }
    return 1;
@@ -616,6 +626,8 @@ static int
 _desklock_pam_init(E_Desklock_Auth *da)
 {
    int pamerr;
+   char *current_host;
+   char *current_user;
    
    if (!da) return -1;
    
@@ -626,15 +638,27 @@ _desklock_pam_init(E_Desklock_Auth *da)
    if ((pamerr = pam_start("system-auth", da->user, &(da->pam.conv),
 			   &(da->pam.handle))) != PAM_SUCCESS)
      return pamerr;
-   
+
+   current_user = _desklock_auth_get_current_user();
+
    if ((pamerr = pam_set_item(da->pam.handle, PAM_USER,
-			      _desklock_auth_get_current_user())) != PAM_SUCCESS)
-     return pamerr;
+			      current_user)) != PAM_SUCCESS)
+     {
+       free(current_user);
+       return pamerr;
+     }
    
+   current_host = _desklock_auth_get_current_host();
    if ((pamerr = pam_set_item(da->pam.handle, PAM_RHOST,
-			      _desklock_auth_get_current_host())) != PAM_SUCCESS)
-     return pamerr;
+			      current_host)) != PAM_SUCCESS)
+     {
+       free(current_user);
+       free(current_host);
+       return pamerr;
+     }
    
+   free(current_user);
+   free(current_host);
    return 0;
 }
 

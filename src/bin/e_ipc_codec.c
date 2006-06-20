@@ -155,10 +155,14 @@ e_ipc_codec_shutdown(void)
    E_CONFIG_DD_FREE(_e_ipc_2str_int_list_edd);
    E_CONFIG_DD_FREE(_e_ipc_4int_2str_edd);
    E_CONFIG_DD_FREE(_e_ipc_4int_2str_list_edd);
+   E_CONFIG_DD_FREE(_e_ipc_5int_2str_edd);
+   E_CONFIG_DD_FREE(_e_ipc_5int_2str_list_edd);
    E_CONFIG_DD_FREE(_e_ipc_3int_4str_edd);
    E_CONFIG_DD_FREE(_e_ipc_3int_4str_list_edd);
    E_CONFIG_DD_FREE(_e_ipc_3int_3str_edd);
    E_CONFIG_DD_FREE(_e_ipc_3int_3str_list_edd);
+   E_CONFIG_DD_FREE(_e_ipc_str_4int_edd);
+   E_CONFIG_DD_FREE(_e_ipc_str_4int_list_edd);
 }
 
 EAPI int
