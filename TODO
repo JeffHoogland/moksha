@@ -12,18 +12,12 @@ Some of the things (in very short form) that need to be done to E17...
   doesn't have any effect.
 * BUG: menu for gadgets while up and if it changes apearance will segv because
   its reference to the gcc is wrong as the gcc was destroyed and re-created
-* BUG: if mouse is already grabbed when exebuf or winlist are activated - all
-  shit hits the fan after that (box can't be dismissed, keyboard grab fails
-  etc. etc.)
 * BUG: set any specific border type and when you maximize the border changes
   to default (unless its borderless)
 * BUG: change exe name in basic mode in eap editor and icon vanishes (don't
   extract existing icon and write out to tmp .png while rebuilding).
-* BUG: resolution (xrandr) changes seem to screw the shelf up a bit.
 * BUG: ghost windows happen if windows close when on another desktop or if
   windows are very short-lived
-* BUG: openoffice 2's impress presentation fullscreen has sizing and
-  configuration issues.
 * BUG: openoffice 2 when displaying a presentation with xinerama (multiple
   zones) weird things happen (the presentation doesnt display - it seemingly
   attaches to the 2nd zone, not the first), crashes have been reported too.

@@ -1667,7 +1667,12 @@ _e_menu_activate_internal(E_Menu *m, E_Zone *zone)
 					       zone->x, zone->y,
 					       zone->w, zone->h);
 	ecore_x_window_show(_e_menu_win);
-	e_grabinput_get(_e_menu_win, 1, _e_menu_win);
+	if (!e_grabinput_get(_e_menu_win, 1, _e_menu_win))
+	  {
+	     ecore_x_window_del(_e_menu_win);
+	     _e_menu_win = 0;
+	     return;
+	  }
      }
    if ((m->zone) && (m->zone->container != zone->container))
      {
@@ -1691,16 +1696,16 @@ _e_menu_activate_internal(E_Menu *m, E_Zone *zone)
      }
    /* the foreign menu items */
    cat = evas_hash_find(_e_menu_categories, m->category);
-   if(cat)
-   {
-	for(l = cat->callbacks; l; l = l->next)
-	{
-		E_Menu_Category_Callback *cb;
-
-		cb = l->data;
-		if(cb->create)   cb->create(m, cat->data, cb->data);
-	}
-   }
+   if (cat)
+     {
+	for (l = cat->callbacks; l; l = l->next)
+	  {
+	     E_Menu_Category_Callback *cb;
+	     
+	     cb = l->data;
+	     if (cb->create) cb->create(m, cat->data, cb->data);
+	  }
+     }
    m->cur.visible = 1;
    m->zone = zone;
 }

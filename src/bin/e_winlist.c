@@ -86,7 +86,12 @@ e_winlist_show(E_Zone *zone)
 
    input_window = ecore_x_window_input_new(zone->container->win, 0, 0, 1, 1);
    ecore_x_window_show(input_window);
-   e_grabinput_get(input_window, 0, input_window);
+   if (!e_grabinput_get(input_window, 0, input_window))
+     {
+	ecore_x_window_del(input_window);
+	input_window = 0;
+	return 0;
+     }
 
    w = (double)zone->w * e_config->winlist_pos_size_w;
    if (w > e_config->winlist_pos_max_w) w = e_config->winlist_pos_max_w;
