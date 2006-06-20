@@ -1,35 +1,3 @@
-
-From: Matias Grana <matiasg@dm.uba.ar>
-To: Enlightenment users list <enlightenment-users@lists.sourceforge.net>
-Subject: [e-users] bug in e17?
-Date: Fri, 4 Nov 2005 16:41:49 -0300
-Sender: enlightenment-users-admin@lists.sourceforge.net
-
-hi;
-I think I've found a bug, which I can reproduce as follows:
-
-open konqueror (maybe other kde applications work too, i don't know).
-open a web page on it.
-open the 'print...'  dialog
-tell it to print it to a file
-click on the folder icon, to browse for the file to print it to
-select a file and press save
-click AGAIN on the folder icon.
-
-The browser opens, but it does as an iconized window.
-
-I just recompiled code from cvs to be sure it wasn't fixed. If I can be
-of more help on this, tell me so.
-
-Matias
-
-
-
-
-
-
-
-
 From: Kim Woelders <kim@woelders.dk>
 To: enlightenment-devel@lists.sourceforge.net
 Subject: Re: [E-devel] Re: bugs with iconification/deiconification in e17.
