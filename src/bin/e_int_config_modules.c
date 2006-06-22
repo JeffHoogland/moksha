@@ -216,7 +216,6 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 			      e_widget_disabled_set(cfdata->gui.about, 1);
 			    e_module_disable(m);
 			    e_object_del(E_OBJECT(m));
-			    e_config_save_queue();
 			    cm->state = MOD_UNLOADED;			    
 			 }
 		       break;
