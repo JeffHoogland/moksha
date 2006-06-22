@@ -1176,6 +1176,7 @@ _e_main_cb_signal_hup(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __
 static int
 _e_main_cb_x_flusher(void *data __UNUSED__)
 {
+   eet_clearcache();
    ecore_x_flush();
    return 1;
 }
