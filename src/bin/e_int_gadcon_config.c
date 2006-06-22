@@ -125,7 +125,7 @@ _cb_add_instance(void *data, void *data2)
 	     cf_gc = l->data;
 	     for (l2 = cf_gc->clients; l2; l2 = l2->next)
 	       {
-		  cf_gcc = l->data;
+		  cf_gcc = l2->data;
 		  if ((!cf_gcc->name) || (!cf_gcc->id)) continue;
 		  if ((!strcmp(cf_gcc->name, cfdata->cname)) && 
 		      (!strcmp(cf_gcc->id, buf)))
