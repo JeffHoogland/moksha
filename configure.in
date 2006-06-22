@@ -5,7 +5,7 @@ AC_INIT(configure.in)
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 AC_ISC_POSIX
-AM_INIT_AUTOMAKE(enlightenment, 0.16.999.027)
+AM_INIT_AUTOMAKE(enlightenment, 0.16.999.028)
 AM_CONFIG_HEADER(config.h)
 
 AC_C_BIGENDIAN
@@ -129,11 +129,11 @@ fi
 
 dnl Set PACKAGE_DATA_DIR in config.h.
 if test "x${prefix}" = "xNONE"; then
-    AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${ac_default_prefix}/share/${PACKAGE}", "Package installed data destination")
-    AC_DEFINE_UNQUOTED(LOCALE_DIR, "${ac_default_prefix}/share/locale", "Locale directory")
+  AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${ac_default_prefix}/share/${PACKAGE}", "Package installed data destination")
+  AC_DEFINE_UNQUOTED(LOCALE_DIR, "${ac_default_prefix}/share/locale", "Locale directory")
 else
-    AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${prefix}/share/${PACKAGE}", "Package installed data destination")
-    AC_DEFINE_UNQUOTED(LOCALE_DIR, "${prefix}/share/locale", "Locale directory")
+  AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${prefix}/share/${PACKAGE}", "Package installed data destination")
+  AC_DEFINE_UNQUOTED(LOCALE_DIR, "${prefix}/share/locale", "Locale directory")
 fi
 
 x_dir=""
