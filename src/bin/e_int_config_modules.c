@@ -190,15 +190,22 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 		  switch (cfdata->state)
 		    {
 		     case MOD_ENABLED:
-		       if (!m->enabled) e_module_enable(m);
+		       if (!m->enabled) 
+			 {
+			    if (!e_module_enable(m)) 
+			      {
+				 cm->state = MOD_UNLOADED;
+				 break;
+			      }
+			 }
 		       if (m->enabled) 
 			 {	 
 			    if (m->func.config)
 			      e_widget_disabled_set(cfdata->gui.configure, 0);
 			    if (m->func.about)
 			      e_widget_disabled_set(cfdata->gui.about, 0);
+			    cm->state = MOD_ENABLED;
 			 }
-		       cm->state = MOD_ENABLED;
 		       break;
 		     case MOD_UNLOADED:
 		       if (m)
@@ -210,8 +217,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 			    e_module_disable(m);
 			    e_object_del(E_OBJECT(m));
 			    e_config_save_queue();
+			    cm->state = MOD_UNLOADED;			    
 			 }
-		       cm->state = MOD_UNLOADED;
 		       break;
 		    }
 	       }
