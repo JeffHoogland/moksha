@@ -803,7 +803,7 @@ _e_shelf_cb_confirm_dialog_yes(void *data)
 static void
 _e_shelf_cb_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   e_confirm_dialog_show(_("Are you sure you want to delete this shelf?"), "enlightenment/exit",
+   e_confirm_dialog_show(_("Are you sure you want to delete this shelf?"), "enlightenment/e",
 			 _("You requested to delete this shelf.<br>"
 			      "<br>"
 			      "Are you sure you want to delete it?"), NULL, NULL,
