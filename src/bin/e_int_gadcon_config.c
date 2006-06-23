@@ -268,8 +268,6 @@ _load_available_gadgets(void *data)
 	e_widget_ilist_append(oi, icon, label, _cb_select_client, cfdata, cc->name);
      }
    e_widget_ilist_go(oi);
-   
-   if (l) evas_list_free(l);
 }
 
 static void 
@@ -314,7 +312,4 @@ _load_selected_gadgets(void *data)
      }
 
    e_widget_ilist_go(oi);   
-
-   if (l) evas_list_free(l);
-   if (l2) evas_list_free(l2);
 }
