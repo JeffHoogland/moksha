@@ -10,6 +10,16 @@ of its own (recommended) like:
 
 You will, as usual need to add the subsequent bin dir to your $PATH etc.
 
+PREREQUISITES:
+
+The following Enlightenment Foundation Libraries are required by e17:
+  * eet
+  * evas
+  * ecore
+  * embryo
+  * edje
+
+
 NOTES:
 
 * do NOT use -mfpmath=sse in CFLAGS - we are not sure, but it may have bugds
