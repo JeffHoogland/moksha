@@ -578,6 +578,24 @@ _e_int_menus_eapedit_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
+_e_int_menus_background_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   e_int_config_background(m->zone->container);
+}
+
+static void
+_e_int_menus_theme_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   e_int_config_theme(m->zone->container);
+}
+
+static void
+_e_int_menus_module_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   e_int_config_modules(m->zone->container);
+}
+
+static void
 _e_int_menus_config_pre_cb(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
@@ -589,6 +607,21 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    e_menu_item_label_set(mi, _("Configuration Panel"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
    e_menu_item_callback_set(mi, _e_int_menus_config_item_cb, NULL);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Background"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/desktops");
+   e_menu_item_callback_set(mi, _e_int_menus_background_item_cb, NULL);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Theme"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/themes");
+   e_menu_item_callback_set(mi, _e_int_menus_theme_item_cb, NULL);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Modules"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/modules");
+   e_menu_item_callback_set(mi, _e_int_menus_module_item_cb, NULL);
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
