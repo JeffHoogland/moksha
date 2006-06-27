@@ -217,21 +217,21 @@ struct _E_Config
 
    char	      *desklock_personal_passwd; // GUI
    char	      *desklock_background; // GUI
-   int	      desklock_auth_method; // GUI
-   int	      desklock_login_box_zone; // GUI
-   int        desklock_autolock; // GUI
-   int        desklock_use_timeout; // GUI
-   double     desklock_timeout; // GUI
-   int        desklock_disable_screensaver; // GUI
+   int	       desklock_auth_method; // GUI
+   int	       desklock_login_box_zone; // GUI
+   int         desklock_autolock; // GUI
+   int         desklock_use_timeout; // GUI
+   double      desklock_timeout; // GUI
+   int         desklock_disable_screensaver; // GUI
 
-   int        display_res_restore; // GUI
-   int        display_res_width; // GUI
-   int        display_res_height; // GUI
-   int        display_res_hz; // GUI
-   int        display_res_rotation; // GUI
-   int        border_raise_on_mouse_action; // GUI
-   int        border_raise_on_focus; // GUI
-   int        desk_flip_wrap; // GUI
+   int         display_res_restore; // GUI
+   int         display_res_width; // GUI
+   int         display_res_height; // GUI
+   int         display_res_hz; // GUI
+   int         display_res_rotation; // GUI
+   int         border_raise_on_mouse_action; // GUI
+   int         border_raise_on_focus; // GUI
+   int         desk_flip_wrap; // GUI
 };
 
 struct _E_Config_Module
@@ -327,15 +327,15 @@ struct _E_Config_Gadcon_Client
 
 struct _E_Config_Shelf
 {
-   const char *name;
-   int container, zone;
-   int layer;
+   const char   *name;
+   int           container, zone;
+   int           layer;
    unsigned char popup;
-   int orient;
+   int           orient;
    unsigned char fit_along;
    unsigned char fit_size;
-   const char *style;
-   int size;
+   const char   *style;
+   int           size;
 };
 
 EAPI int        e_config_init(void);
