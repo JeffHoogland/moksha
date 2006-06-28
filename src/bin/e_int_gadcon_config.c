@@ -310,6 +310,5 @@ _load_selected_gadgets(void *data)
 	       }
 	  }
      }
-
    e_widget_ilist_go(oi);   
 }
