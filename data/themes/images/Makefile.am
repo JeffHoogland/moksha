@@ -309,8 +309,7 @@ e17_icon_power_button_glow_0.png \
 e17_icon_reset_button_0.png \
 e17_icon_reset_button_glow_0.png \
 e17_icon_run.png \
-e17_icon_theme_0.png \
-e17_icon_theme_glow_0.png \
+e17_icon_theme.png \
 e17_icon_windows.png \
 e17_icon_lost_windows.png \
 e17_pointer.png \

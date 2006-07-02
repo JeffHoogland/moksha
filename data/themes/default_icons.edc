@@ -8,8 +8,7 @@ images {
    image: "e17_icon_reset_button_0.png" LOSSY 90;
    image: "e17_icon_reset_button_glow_0.png" LOSSY 90;
    
-   image: "e17_icon_theme_0.png" LOSSY 90;
-   image: "e17_icon_theme_glow_0.png" LOSSY 90;   
+   image: "e17_icon_theme.png" LOSSY 90;
 
    image: "e17_icon_windows.png" LOSSY 90;
 	
@@ -249,51 +248,9 @@ group {
 	    aspect:   1.0 1.0;
 	    max:      64 64;
 	    image {
-	       normal: "e17_icon_theme_0.png";
+	       normal: "e17_icon_theme.png";
 	    }
 	 }
-      }
-      part {
-	 name:          "theme_button_glow";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    visible:   0;
-	    rel1 {
-	       to:       "theme_button";
-	    }
-	    rel2 {
-	       to:       "theme_button";
-	    }
-	    color:       255 255 255 0;
-	    image {
-	       normal: "e17_icon_theme_glow_0.png";
-	    }
-	 }
-	 description {
-	    state:    "hilited" 0.0;
-	    inherit:  "default"  0.0;
-	    visible:   1;
-	    color:     255 255 255 255;
-	 }
-      }
-   }
-   programs {
-      program {	 
-	 name:       "theme_button_in";
-	 signal:     "active";
-	 source:     "";
-	 action:     STATE_SET "hilited" 0.0;
-	 transition: LINEAR 0.5;
-	 target:     "theme_button_glow";
-      }
-      program {
-	 name:       "theme_button_out";
-	 signal:     "passive";
-	 source:     "";
-	 action:     STATE_SET "default" 0.0;
-	 transition: LINEAR 0.5;
-	 target:     "theme_button_glow";
       }
    }
 }   
