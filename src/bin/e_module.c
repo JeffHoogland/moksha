@@ -362,24 +362,25 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
    E_Dialog *dia;
    E_Border *bd;
    char eap[4096];
-   
-   if (!m) return;
 
-   snprintf(eap, sizeof(eap), "%s/module.eap", e_module_dir_get(m));
-   
    dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
    if (!dia) return;
 
    e_dialog_title_set(dia, title);
-   _e_module_dialog_icon_set(dia, eap);
+   if (m)
+     _e_module_dialog_icon_set(dia, eap);
+   else
+     e_dialog_icon_set(dia, "enlightenment/modules", 64);
+   
    e_dialog_text_set(dia, body);
    e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
    e_dialog_button_focus_num(dia, 0);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
-   if (!eap) return;
+   if (!m) return;
    bd = dia->win->border;
    if (!bd) return;
+   snprintf(eap, sizeof(eap), "%s/module.eap", e_module_dir_get(m));
    bd->module_eap = evas_stringshare_add(eap);
 }
 
