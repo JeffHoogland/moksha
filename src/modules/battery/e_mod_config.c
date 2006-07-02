@@ -83,7 +83,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 static int 
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   if (!battery_config) return;
+   if (!battery_config) return 0;
    if (cfdata->show_alert) 
      battery_config->alarm = cfdata->alarm_time;
    else 
@@ -124,7 +124,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 static int 
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   if (!battery_config) return;
+   if (!battery_config) return 0;
    battery_config->poll_time = cfdata->poll_time;
    if (cfdata->show_alert) 
      battery_config->alarm = cfdata->alarm_time;
