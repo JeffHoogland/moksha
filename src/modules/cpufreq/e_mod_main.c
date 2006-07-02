@@ -936,7 +936,7 @@ e_modapi_save(E_Module *m)
 EAPI int
 e_modapi_about(E_Module *m)
 {
-   e_module_dialog_show(_("CPU Frequency Controller Module"), 
+   e_module_dialog_show(m, _("CPU Frequency Controller Module"), 
 			_("A simple module to control the frequency of the system CPU.<br>"
 			  "This is especially useful to save power on laptops."));
    return 1;

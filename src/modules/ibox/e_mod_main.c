@@ -1418,7 +1418,7 @@ e_modapi_save(E_Module *m)
 EAPI int
 e_modapi_about(E_Module *m)
 {
-   e_module_dialog_show(_("Enlightenment IBox Module"),
+   e_module_dialog_show(m, _("Enlightenment IBox Module"),
 			_("This is the IBox Iconified Application module for Enlightenment.<br>"
 			  "It will hold minimized applications"));
    return 1;

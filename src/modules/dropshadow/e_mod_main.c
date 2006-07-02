@@ -154,7 +154,7 @@ e_modapi_save(E_Module *m)
 EAPI int
 e_modapi_about(E_Module *m)
 {
-   e_module_dialog_show(_("Enlightenment Dropshadow Module"),
+   e_module_dialog_show(m, _("Enlightenment Dropshadow Module"),
 			_("This is the dropshadow module that allows dropshadows to be cast<br>"
 			  "on the desktop background - without special X-Server extensions<br>"
 			  "or hardware acceleration."));

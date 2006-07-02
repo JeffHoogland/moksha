@@ -135,7 +135,8 @@ struct _E_Border
    Evas_Object    *icon_object;
    Ecore_X_Window  event_win;
    const char     *internal_icon;
-   
+   const char     *module_eap;
+
    struct {
       Ecore_X_Window shell_win;
       Ecore_X_Window win;

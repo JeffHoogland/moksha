@@ -146,7 +146,7 @@ e_modapi_save(E_Module *m)
 EAPI int
 e_modapi_about(E_Module *m)
 {
-   e_module_dialog_show(_("Enlightenment Clock Module"),
+   e_module_dialog_show(m, _("Enlightenment Clock Module"),
 			_("A simple module to give E17 a clock."));
    return 1;
 }

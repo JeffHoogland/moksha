@@ -252,7 +252,7 @@ e_modapi_save(E_Module *m)
 EAPI int
 e_modapi_about(E_Module *m)
 {
-   e_module_dialog_show(_("Enlightenment Start Module"),
+   e_module_dialog_show(m, _("Enlightenment Start Module"),
 			_("Experimental Button module for E17"));
    return 1;
 }

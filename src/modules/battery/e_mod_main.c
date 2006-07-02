@@ -1430,7 +1430,7 @@ e_modapi_save(E_Module *m)
 EAPI int
 e_modapi_about(E_Module *m)
 {
-   e_module_dialog_show(_("Enlightenment Battery Module"),
+   e_module_dialog_show(m, _("Enlightenment Battery Module"),
 		       _("A basic battery meter that uses either"
 		 	 "<hilight>ACPI</hilight> or <hilight>APM</hilight><br>"
 			 "on Linux to monitor your battery and AC power adaptor<br>"

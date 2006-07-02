@@ -26,6 +26,7 @@ static void _e_module_control_menu_configuration(void *data, E_Menu *m, E_Menu_I
 static void _e_module_control_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_module_dialog_disable_show(const char *title, const char *body, E_Module *m);
 static void _e_module_cb_dialog_disable(void *data, E_Dialog *dia);
+static void _e_module_dialog_icon_set(E_Dialog *dia, const char *icon);
 
 /* local subsystem globals */
 static Evas_List *_e_modules = NULL;
@@ -356,20 +357,30 @@ e_module_list(void)
 }
 
 EAPI void
-e_module_dialog_show(const char *title, const char *body)
+e_module_dialog_show(E_Module *m, const char *title, const char *body)
 {
    E_Dialog *dia;
+   E_Border *bd;
+   char eap[4096];
+   
+   if (!m) return;
 
+   snprintf(eap, sizeof(eap), "%s/module.eap", e_module_dir_get(m));
+   
    dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
    if (!dia) return;
 
    e_dialog_title_set(dia, title);
-   e_dialog_icon_set(dia, "enlightenment/modules", 64);
+   _e_module_dialog_icon_set(dia, eap);
    e_dialog_text_set(dia, body);
    e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
    e_dialog_button_focus_num(dia, 0);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
+   if (!eap) return;
+   bd = dia->win->border;
+   if (!bd) return;
+   bd->module_eap = evas_stringshare_add(eap);
 }
 
 /* local subsystem functions */
@@ -421,7 +432,7 @@ _e_module_control_menu_new(E_Module *mod)
    m = e_menu_new();
    
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("About…"));
+   e_menu_item_label_set(mi, _("About..."));
    e_menu_item_callback_set(mi, _e_module_control_menu_about, mod);
    
    mi = e_menu_item_new(m);
@@ -528,4 +539,18 @@ _e_module_cb_dialog_disable(void *data, E_Dialog *dia)
    e_object_del(E_OBJECT(m));
    e_object_del(E_OBJECT(dia));
    e_config_save_queue();
+}
+
+static void 
+_e_module_dialog_icon_set(E_Dialog *dia, const char *icon) 
+{
+   /* These should never happen, but just in case */
+   if (!dia) return;
+   if (!icon) return;
+   
+   dia->icon_object = edje_object_add(e_win_evas_get(dia->win));
+   edje_object_file_set(dia->icon_object, icon, "icon");
+   edje_extern_object_min_size_set(dia->icon_object, 64, 64);
+   edje_object_part_swallow(dia->bg_object, "icon_swallow", dia->icon_object);
+   evas_object_show(dia->icon_object);
 }

@@ -1377,7 +1377,7 @@ e_modapi_save(E_Module *m)
 EAPI int
 e_modapi_about(E_Module *m)
 {
-   e_module_dialog_show(_("Enlightenment IBar Module"),
+   e_module_dialog_show(m, _("Enlightenment IBar Module"),
 			_("This is the IBar Application Launcher bar module for Enlightenment.<br>"
 			  "It is a first example module and is being used to flesh out several<br>"
 			  "interfaces in Enlightenment 0.17.0. It is under heavy development,<br>"

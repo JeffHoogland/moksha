@@ -158,7 +158,7 @@ e_modapi_info(E_Module *m)
 EAPI int
 e_modapi_about(E_Module *m)
 {
-   e_module_dialog_show(_("Enlightenment ITray Module"),
+   e_module_dialog_show(m, _("Enlightenment ITray Module"),
 			_("This is the ITray system tray module for Enlightenment.<br>"
 			  "It will hold system tray icons.<br>"
 			  "Beware that this can be buggy due to many systray providing<br>"

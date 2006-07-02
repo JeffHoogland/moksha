@@ -446,7 +446,7 @@ e_modapi_save(E_Module *m)
 EAPI int
 e_modapi_about(E_Module *m)
 {
-   e_module_dialog_show(_("Enlightenment Temperature Module"),
+   e_module_dialog_show(m, _("Enlightenment Temperature Module"),
 			_("A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux.<br>"
 			  "It is especially useful for modern Laptops with high speed<br>"
 			  "CPUs that generate a lot of heat."));
