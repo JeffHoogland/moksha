@@ -52,7 +52,7 @@ e_int_config_background(E_Container *con)
    v->advanced.create_widgets = _advanced_create_widgets;
    v->close_cfdata            = _bg_dialog_close;
    v->override_auto_apply = 1;
-   cfd = e_config_dialog_new(con, _("Wallpaper Settings"), NULL, 0, v, NULL);
+   cfd = e_config_dialog_new(con, _("Wallpaper Settings"), "enlightenment/background", 0, v, NULL);
    return cfd;
 }
 
@@ -102,7 +102,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->il = il;
    
    e_widget_ilist_selector_set(il, 1);
-   e_widget_min_size_set(il, 180, 40);
+   e_widget_min_size_set(il, 160, 40);
 
    /* Load Bgs */
    _load_bgs(cfd, il);
@@ -164,7 +164,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    il = e_widget_ilist_add(evas, 48, 48, &(cfdata->bg));
    cfdata->il = il;
    e_widget_ilist_selector_set(il, 1);
-   e_widget_min_size_set(il, 180, 40);
+   e_widget_min_size_set(il, 160, 40);
 
    /* Load Bgs */
    _load_bgs(cfd, il);

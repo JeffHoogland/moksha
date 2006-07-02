@@ -37,6 +37,7 @@ EAPI int       e_dialog_button_disable_num_get (E_Dialog *dia, int button);
 EAPI void      e_dialog_title_set              (E_Dialog *dia, const char *title);
 EAPI void      e_dialog_text_set               (E_Dialog *dia, const char *text);
 EAPI void      e_dialog_icon_set               (E_Dialog *dia, const char *icon, Evas_Coord size);
+EAPI void      e_dialog_border_icon_set        (E_Dialog *dia, const char *icon);
 EAPI void      e_dialog_content_set            (E_Dialog *dia, Evas_Object *obj, Evas_Coord minw, Evas_Coord minh);
 EAPI void      e_dialog_resizable_set          (E_Dialog *dia, int resizable);
 EAPI void      e_dialog_show                   (E_Dialog *dia);

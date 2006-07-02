@@ -113,8 +113,9 @@ e_configure_show(E_Container *con)
    evas_object_show(eco->ilist);
    evas_object_show(eco->close);
    evas_object_show(eco->edje);
-   
+
    e_win_show(eco->win);
+   eco->win->border->internal_icon = evas_stringshare_add("enlightenment/configuration");
 
    e_widget_focus_set(eco->ilist, 1);
    e_widget_ilist_go(eco->ilist);

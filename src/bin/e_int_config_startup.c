@@ -32,7 +32,7 @@ e_int_config_startup(E_Container *con)
    v->basic.apply_cfdata = _basic_apply_data;
    v->basic.create_widgets = _basic_create_widgets;
    
-   cfd = e_config_dialog_new(con, _("Startup Settings"), NULL, 0, v, NULL);
+   cfd = e_config_dialog_new(con, _("Startup Settings"), "enlightenment/startup", 0, v, NULL);
    return cfd;
 }
 

@@ -190,7 +190,7 @@ e_int_config_display(E_Container *con)
    v->basic.create_widgets = _basic_create_widgets;
    v->override_auto_apply = 1;
    
-   cfd = e_config_dialog_new(con, _("Display Settings"), NULL, 0, v, NULL);
+   cfd = e_config_dialog_new(con, _("Display Settings"), "enlightenment/screen_resolution", 0, v, NULL);
    return cfd;
 }
 

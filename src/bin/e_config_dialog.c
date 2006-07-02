@@ -107,8 +107,6 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    cfd->dia->data = cfd;
    e_object_del_attach_func_set(E_OBJECT(cfd->dia), _e_config_dialog_cb_dialog_del);
    e_dialog_title_set(cfd->dia, cfd->title);
-   if (cfd->icon) e_dialog_icon_set(cfd->dia, cfd->icon, cfd->icon_size);
-   
    if (!cfd->cfdata) cfd->cfdata = cfd->view->create_cfdata(cfd);
    
    if (type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
@@ -162,12 +160,14 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
      {
 	e_win_centered_set(cfd->dia->win, 1);
 	e_dialog_show(cfd->dia);
+	if (cfd->icon) e_dialog_border_icon_set(cfd->dia, cfd->icon);
      }
    else
      {
 	int x, y;
 
 	e_dialog_show(cfd->dia);
+	if (cfd->icon) e_dialog_border_icon_set(cfd->dia, cfd->icon);
 	x = pdia->win->border->x + ((pdia->win->w - cfd->dia->win->w) / 2);
 	y = pdia->win->border->y + ((pdia->win->h - cfd->dia->win->h) / 2);
 	if (x < 0) x = 0;

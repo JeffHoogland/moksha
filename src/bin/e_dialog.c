@@ -151,6 +151,18 @@ e_dialog_icon_set(E_Dialog *dia, const char *icon, Evas_Coord size)
    evas_object_show(dia->icon_object);
 }
 
+EAPI void 
+e_dialog_border_icon_set(E_Dialog *dia, const char *icon) 
+{
+   E_Border *border;
+
+   if (!icon) return;
+   
+   border = dia->win->border;
+   if (!border) return;
+   border->internal_icon = evas_stringshare_add(icon);
+}
+
 EAPI void
 e_dialog_content_set(E_Dialog *dia, Evas_Object *obj, Evas_Coord minw, Evas_Coord minh)
 {

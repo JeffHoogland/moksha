@@ -36,7 +36,7 @@ e_int_config_menus(E_Container *con)
    v->advanced.apply_cfdata = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
    
-   cfd = e_config_dialog_new(con, _("Menu Settings"), NULL, 0, v, NULL);
+   cfd = e_config_dialog_new(con, _("Menu Settings"), "enlightenment/menus", 0, v, NULL);
    return cfd;
 }
 

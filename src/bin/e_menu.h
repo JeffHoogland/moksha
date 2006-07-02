@@ -98,7 +98,7 @@ struct _E_Menu_Item
    Evas_Object   *icon_object;
    Evas_Object   *label_object;
    Evas_Object   *submenu_object;
-   
+
    Evas_Object   *event_object;
    
    int            label_w, label_h;

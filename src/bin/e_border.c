@@ -2448,7 +2448,11 @@ e_border_icon_add(E_Border *bd, Evas *evas)
    if (bd->internal)
      {
 	o = edje_object_add(evas);
-	e_util_edje_icon_set(o, "enlightenment/e");
+	if (!bd->internal_icon) 
+	  e_util_edje_icon_set(o, "enlightenment/e");
+	else
+	  if (!e_util_edje_icon_set(o, bd->internal_icon))
+	    e_util_edje_icon_set(o, "enlightenment/e");	    
 	return o;
      }
    if (e_config->use_app_icon)
@@ -3026,6 +3030,7 @@ _e_border_free(E_Border *bd)
    if (bd->client.netwm.name) free(bd->client.netwm.name);
    if (bd->client.netwm.icon_name) free(bd->client.netwm.icon_name);
    e_object_del(E_OBJECT(bd->shape));
+   if (bd->internal_icon) evas_stringshare_del(bd->internal_icon);
    if (bd->icon_object) evas_object_del(bd->icon_object);
    evas_object_del(bd->bg_object);
    e_canvas_del(bd->bg_ecore_evas);

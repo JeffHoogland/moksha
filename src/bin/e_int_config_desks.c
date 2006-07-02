@@ -41,7 +41,7 @@ e_int_config_desks(E_Container *con)
    v->advanced.apply_cfdata   = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
    /* create config diaolg for NULL object/data */
-   cfd = e_config_dialog_new(con, _("Desktop Settings"), NULL, 0, v, NULL);
+   cfd = e_config_dialog_new(con, _("Desktop Settings"), "enlightenment/desktops", 0, v, NULL);
    return cfd;
 }
 

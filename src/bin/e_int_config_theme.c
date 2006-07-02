@@ -44,7 +44,7 @@ e_int_config_theme(E_Container *con)
    v->override_auto_apply = 1;
    
    /* create config diaolg for NULL object/data */
-   cfd = e_config_dialog_new(con, _("Theme Selector"), NULL, 0, v, NULL);
+   cfd = e_config_dialog_new(con, _("Theme Selector"), "enlightenment/themes", 0, v, NULL);
    return cfd;
 }
 
