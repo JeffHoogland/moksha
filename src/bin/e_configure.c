@@ -64,42 +64,41 @@ e_configure_show(E_Container *con)
 
    /* add items here */
    e_configure_header_item_add(eco, "enlightenment/appearance", _("Appearance"));
-   e_configure_standard_item_add(eco, "enlightenment/desktops", _("Background"), e_int_config_background);
+   e_configure_standard_item_add(eco, "enlightenment/background", _("Wallpaper"), e_int_config_background);
    e_configure_standard_item_add(eco, "enlightenment/themes", _("Theme"), e_int_config_theme);   
-   e_configure_standard_item_add(eco, "enlightenment/e", _("Fonts"), e_int_config_fonts);
-/* 
-   e_configure_standard_item_add(eco, "enlightenment/e", _("Font Display Hinting"), e_int_config_hinting);
-*/
+   e_configure_standard_item_add(eco, "enlightenment/fonts", _("Fonts"), e_int_config_fonts);
    e_configure_standard_item_add(eco, "enlightenment/mouse", _("Mouse Cursor"), e_int_config_cursor);
    e_configure_standard_item_add(eco, "enlightenment/windows", _("Window Display"), e_int_config_window_display);
    e_configure_standard_item_add(eco, "enlightenment/shelf", _("Shelves"), e_int_config_shelf); 
    
-   e_configure_header_item_add(eco, "enlightenment/extensions", _("Extensions"));
-   e_configure_standard_item_add(eco, "enlightenment/modules", _("Modules"), e_int_config_modules);
-   
    e_configure_header_item_add(eco, "enlightenment/screen_setup", _("Screen"));
    e_configure_standard_item_add(eco, "enlightenment/desktops", _("Virtual Desktops"), e_int_config_desks);
-   e_configure_standard_item_add(eco, "enlightenment/desktops", _("Screen Resolution"), e_int_config_display);
-   e_configure_standard_item_add(eco, "enlightenment/desktops", _("Screen Lock"), e_int_config_desklock);
+   e_configure_standard_item_add(eco, "enlightenment/screen_resolution", _("Screen Resolution"), e_int_config_display);
+   e_configure_standard_item_add(eco, "enlightenment/desklock", _("Screen Lock"), e_int_config_desklock);
    
    e_configure_header_item_add(eco, "enlightenment/behavior", _("Behavior"));
-   e_configure_standard_item_add(eco, "enlightenment/e", _("Window Focus"), e_int_config_focus);
-   e_configure_standard_item_add(eco, "enlightenment/e", _("Key Bindings"), e_int_config_keybindings);
-   e_configure_standard_item_add(eco, "enlightenment/favorites", _("Menus"), e_int_config_menus);
+   e_configure_standard_item_add(eco, "enlightenment/focus", _("Window Focus"), e_int_config_focus);
+   e_configure_standard_item_add(eco, "enlightenment/keys", _("Key Bindings"), e_int_config_keybindings);
+   e_configure_standard_item_add(eco, "enlightenment/menus", _("Menus"), e_int_config_menus);
    
    e_configure_header_item_add(eco, "enlightenment/misc", _("Miscellaneous"));
-   e_configure_standard_item_add(eco, "enlightenment/configuration", _("Performance"), e_int_config_performance);
+   e_configure_standard_item_add(eco, "enlightenment/performance", _("Performance"), e_int_config_performance);
    e_configure_standard_item_add(eco, "enlightenment/configuration", _("Configuration Dialogs"), e_int_config_cfgdialogs);
    
    e_configure_header_item_add(eco, "enlightenment/advanced", _("Advanced"));
-   e_configure_standard_item_add(eco, "enlightenment/run", _("Startup"), e_int_config_startup);
-   e_configure_standard_item_add(eco, "enlightenment/windows", _("Window List"), e_int_config_winlist);
-   e_configure_standard_item_add(eco, "enlightenment/windows", _("Window Manipulation"), e_int_config_window_manipulation);
+   e_configure_standard_item_add(eco, "enlightenment/startup", _("Startup"), e_int_config_startup);
+   e_configure_standard_item_add(eco, "enlightenment/winlist", _("Window List"), e_int_config_winlist);
+   e_configure_standard_item_add(eco, "enlightenment/window_manipulation", _("Window Manipulation"), e_int_config_window_manipulation);
    e_configure_standard_item_add(eco, "enlightenment/run", _("Run Command"), e_int_config_exebuf);
-   e_configure_standard_item_add(eco, "enlightenment/e", _("Search Directories"), e_int_config_paths); 
+   e_configure_standard_item_add(eco, "enlightenment/directories", _("Search Directories"), e_int_config_paths); 
 
+   e_configure_header_item_add(eco, "enlightenment/extensions", _("Extensions"));
+   e_configure_standard_item_add(eco, "enlightenment/modules", _("Modules"), e_int_config_modules);
+   
    /* FIXME: we should have a way for modules to hook in here and add their
     * own entries
+    * 
+    * e_configure_header_item_add(eco, "enlightenment/extension_config", _("Extension Configuration"));
     */
    
    eco->close = e_widget_button_add(eco->evas, _("Close"), NULL, _e_configure_cb_close, eco, NULL);

@@ -609,8 +609,8 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    e_menu_item_callback_set(mi, _e_int_menus_config_item_cb, NULL);
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Background"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/desktops");
+   e_menu_item_label_set(mi, _("Wallpaper"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/background");
    e_menu_item_callback_set(mi, _e_int_menus_background_item_cb, NULL);
 
    mi = e_menu_item_new(m);

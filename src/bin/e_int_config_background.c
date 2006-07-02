@@ -52,7 +52,7 @@ e_int_config_background(E_Container *con)
    v->advanced.create_widgets = _advanced_create_widgets;
    v->close_cfdata            = _bg_dialog_close;
    v->override_auto_apply = 1;
-   cfd = e_config_dialog_new(con, _("Background Settings"), NULL, 0, v, NULL);
+   cfd = e_config_dialog_new(con, _("Wallpaper Settings"), NULL, 0, v, NULL);
    return cfd;
 }
 
@@ -181,7 +181,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_table_object_append(ot, im, 1, 0, 1, 2, 1, 1, 1, 1);
 
    rg = e_widget_radio_group_new(&(cfdata->bg_method));
-   of = e_widget_framelist_add(evas, _("Set Background For"), 0);
+   of = e_widget_framelist_add(evas, _("Set Wallpaper For"), 0);
    e_widget_min_size_set(of, 200, 160);
 
    oc = e_widget_radio_add(evas, _("Default Desktop"), BG_SET_DEFAULT_DESK, rg);
@@ -309,7 +309,7 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
 	else
 	  ic = e_thumb_evas_object_get(c, cfd->dia->win->evas, 48, 48, 1);
 
-	e_widget_ilist_append(il, ic, _("Theme Background"), _ilist_cb_bg_selected, cfd, "");
+	e_widget_ilist_append(il, ic, _("Theme Wallpaper"), _ilist_cb_bg_selected, cfd, "");
 	if (!e_config->desktop_default_background) selnum = i;
 	i++;
      }

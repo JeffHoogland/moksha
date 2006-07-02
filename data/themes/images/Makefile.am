@@ -371,6 +371,7 @@ e17_icon_fileman_gz.png \
 e17_icon_fileman_zip.png \
 e17_icon_fileman_home.png \
 e17_icon_fileman_desktop.png \
+e17_icon_font.png \
 e17_button_detail_paste.png \
 e17_button_detail_arrange_name.png \
 e17_button_detail_properties.png \

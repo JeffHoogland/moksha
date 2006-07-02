@@ -26,6 +26,9 @@ images {
    image: "e17_icon_configuration.png" LOSSY 90;
    image: "e17_icon_run.png" LOSSY 90;
 
+   image: "e17_icon_font.png" LOSSY 90;
+   image: "e17_icon_background.png" LOSSY 90;
+
    image: "e17_pager_window.png" COMP;
    
    image: "e17_icon_right_arrow.png" COMP;
@@ -580,6 +583,42 @@ group {
 	    max:      64 64;
 	    image {
 	       normal: "e17_pointer.png";
+	    }
+	 }
+      }
+   }
+}
+group {
+   name: "icons/enlightenment/fonts";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_font.png";
+	    }
+	 }
+      }
+   }
+}
+group {
+   name: "icons/enlightenment/background";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_background.png";
 	    }
 	 }
       }
