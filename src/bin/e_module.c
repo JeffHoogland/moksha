@@ -367,8 +367,11 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
    if (!dia) return;
 
    e_dialog_title_set(dia, title);
-   if (m)
-     _e_module_dialog_icon_set(dia, eap);
+   if (m) 
+     {
+	snprintf(eap, sizeof(eap), "%s/module.eap", e_module_dir_get(m));     
+	_e_module_dialog_icon_set(dia, eap);
+     }
    else
      e_dialog_icon_set(dia, "enlightenment/modules", 64);
    
@@ -380,7 +383,6 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
    if (!m) return;
    bd = dia->win->border;
    if (!bd) return;
-   snprintf(eap, sizeof(eap), "%s/module.eap", e_module_dir_get(m));
    bd->module_eap = evas_stringshare_add(eap);
 }
 
