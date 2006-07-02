@@ -198,7 +198,7 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
    E_Manager *man;
-   Ecore_X_Randr_Rotation rots;
+   int rots;
    
    man = e_manager_current_get();
    cfdata->orig_size = ecore_x_randr_current_screen_size_get(man->root);   
@@ -245,7 +245,7 @@ static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    char *sel_res, *sel_rate;
-   int w, h, r, i, n;
+   int w, h, r, i, n, k, rr;
    Ecore_X_Screen_Size *sizes;
    Ecore_X_Screen_Size size;
    Ecore_X_Screen_Refresh_Rate *rates;   
@@ -275,7 +275,6 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 		 (sizes[i].height == h))
 	       {
 		  size = sizes[i];
-		  int k, rr;
 		  rates = ecore_x_randr_screen_refresh_rates_get(man->root, i, &rr);
 		  for (k = 0; k < rr; k++) 
 		    {
@@ -297,13 +296,15 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	cfdata->orig_size = size;
 	cfdata->orig_rate = rate;
      }
-   
+
    if ((cfdata->can_rotate) || (cfdata->can_flip))
      {
-	Ecore_X_Randr_Rotation rot;
+	int rot;
 	
 	rot = ecore_x_randr_screen_rotation_get(man->root);
-	if (rot != (cfdata->rotation | cfdata->flip))
+// FIXME: a bug in x where it returns that the current rotation is still
+// normal (none) when it isn't. so just blindly ask for a new rot anyway.
+//	if (rot != (cfdata->rotation | cfdata->flip))
 	  ecore_x_randr_screen_rotation_set(man->root,
 					    cfdata->rotation | cfdata->flip);
 	e_config->display_res_rotation = cfdata->rotation | cfdata->flip;
