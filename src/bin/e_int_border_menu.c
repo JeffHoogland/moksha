@@ -706,9 +706,11 @@ _e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Menu *subm;
    E_Menu_Item *submi;
    E_Border *bd;
+   E_Desk *desk_cur;
    int i;
 
    bd = data;
+   desk_cur = e_desk_current_get(bd->zone);
 
    subm = e_menu_new();
    e_object_data_set(E_OBJECT(subm), bd);
@@ -721,6 +723,9 @@ _e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 	desk = bd->zone->desks[i];
 	submi = e_menu_item_new(subm);
 	e_menu_item_label_set(submi, desk->name);
+        e_menu_item_radio_set(submi, 1);
+        e_menu_item_radio_group_set(submi, 2);
+        e_menu_item_toggle_set(submi, (desk_cur == desk ? 1 : 0));
 	e_menu_item_callback_set(submi, _e_border_menu_cb_sendto, desk);
      }
 }

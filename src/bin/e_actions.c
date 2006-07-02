@@ -353,6 +353,67 @@ ACT_FN_GO(window_iconic)
 }
 
 /***************************************************************************/
+ACT_FN_GO(window_fullscreen_toggle)
+{
+   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (obj->type != E_BORDER_TYPE)
+     {
+	obj = E_OBJECT(e_border_focused_get());
+	if (!obj) return;
+     }
+   if (!((E_Border *)obj)->lock_user_fullscreen)
+     {
+	E_Border *bd;
+	bd = (E_Border *)obj;
+	if (bd->fullscreen)
+	  e_border_unfullscreen(bd);
+	else if (params == 0 || *params == '\0')
+	  e_border_fullscreen(bd, e_config->fullscreen_policy);
+	else if (! strcmp(params, "resize"))
+	  e_border_fullscreen(bd, E_FULLSCREEN_RESIZE);
+	else if (! strcmp(params, "zoom"))
+	  e_border_fullscreen(bd, E_FULLSCREEN_ZOOM);
+     }
+}
+
+/***************************************************************************/
+ACT_FN_GO(window_fullscreen)
+{
+   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (obj->type != E_BORDER_TYPE)
+     {
+	obj = E_OBJECT(e_border_focused_get());
+	if (!obj) return;
+     }
+   if (!((E_Border *)obj)->lock_user_fullscreen)
+     {
+	E_Border *bd;
+	bd = (E_Border *)obj;
+	if (params)
+	  {
+	     int v;
+	     char buf[32];
+	     if (sscanf(params, "%i %20s", &v, buf) == 2)
+	       {
+		  if (v == 1)
+		    {
+		      if (buf == 0 || *buf == '\0')
+			e_border_fullscreen(bd, e_config->fullscreen_policy);
+		      else if (! strcmp(buf, "resize"))
+			e_border_fullscreen(bd, E_FULLSCREEN_RESIZE);
+		      else if (! strcmp(buf, "zoom"))
+			e_border_fullscreen(bd, E_FULLSCREEN_ZOOM);
+		    }
+		  else if (v == 0)
+		    e_border_unfullscreen(bd);
+	       }
+	  }
+     }
+}
+
+/***************************************************************************/
 ACT_FN_GO(window_maximized_toggle)
 {
    if (!obj) obj = E_OBJECT(e_border_focused_get());
@@ -1594,6 +1655,14 @@ e_actions_init(void)
    
    ACT_GO(window_iconic);
    
+   /* window_fullscreen_toggle */
+   ACT_GO(window_fullscreen_toggle);
+   e_register_action_predef_name(_("Window : State"), _("Fullscreen Mode Toggle"),
+				 "window_fullscreen_toggle", NULL,
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+
+   ACT_GO(window_fullscreen);
+
    /* window_maximized_toggle */
    ACT_GO(window_maximized_toggle);
    e_register_action_predef_name(_("Window : State"), _("Maximize"), "window_maximized_toggle",
