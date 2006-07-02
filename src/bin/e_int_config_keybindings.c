@@ -6,12 +6,12 @@
 #define BINDING_LIST_ICON_W 16
 #define BINDING_LIST_ICON_H 16
 
-#define BTN_ASSIGN_KEYBINDING_TEXT _("Assign Key Binding...")
+#define BTN_ASSIGN_KEYBINDING_TEXT _("Choose a Key")
 
 #define TEXT_ACTION _("Action")
 #define TEXT_NONE_ACTION_KEY _("<None>")
-#define TEXT_PRESS_KEY_SEQUENCE _("Please press key sequence,<br>or <hilight>Escape"\
-				  "</hilight> to abort")
+#define TEXT_PRESS_KEY_SEQUENCE _("Please press key sequence,<br>" \
+				  "or <hilight>Escape</hilight> to abort")
 
 #define ILIST_ICON_WITH_KEYBIND	    "enlightenment/e"
 #define ILIST_ICON_WITHOUT_KEYBIND  ""
@@ -602,7 +602,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 						     BINDING_LIST_ICON_H, NULL);
       e_widget_on_change_hook_set(cfdata->gui.binding_ilist, _e_keybinding_binding_ilist_cb_change,
 				  cfdata);
-      e_widget_min_size_set(cfdata->gui.binding_ilist, 250, 100);
+      e_widget_min_size_set(cfdata->gui.binding_ilist, 250, 200);
       e_widget_ilist_go(cfdata->gui.binding_ilist);
       e_widget_framelist_object_append(of, cfdata->gui.binding_ilist);
       /****************/
@@ -610,7 +610,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
       ot1 = e_widget_table_add(evas, 0);
       {
 	/* add keybinding button */
-	cfdata->gui.btn_add = e_widget_button_add(evas, _("Add Key Binding"), NULL,
+	cfdata->gui.btn_add = e_widget_button_add(evas, _("Add Key"), NULL,
 						  _e_keybinding_keybind_cb_add_keybinding, cfdata,
 						  NULL);
 	e_widget_disabled_set(cfdata->gui.btn_add, 1);
@@ -619,7 +619,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	/****************/
 
 	/* delete keybinding button */
-	cfdata->gui.btn_del = e_widget_button_add(evas, _("Delete Key Binding"), NULL,
+	cfdata->gui.btn_del = e_widget_button_add(evas, _("Remove Key"), NULL,
 						  _e_keybinding_keybind_cb_del_keybinding, cfdata,
 						  NULL);
 	e_widget_disabled_set(cfdata->gui.btn_del, 1);
@@ -629,6 +629,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
       }
       e_widget_framelist_object_append(of, ot1);
 
+#if 0       
       /* context options */
       ot1 = e_widget_frametable_add(evas, _("Binding Context"), 0);
       {
@@ -689,11 +690,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	e_widget_frametable_object_append(ot1, ob, 3, 0, 1, 1, 1, 1, 1, 1);
       }
       e_widget_framelist_object_append(of, ot1);
-
+#endif
+       
       /* key action */
-      ot1 = e_widget_frametable_add(evas, _("Key Binding"), 0);
+      ot1 = e_widget_frametable_add(evas, _("Key & Action"), 0);
       {
-	ob = e_widget_label_add(evas, _("Key Binding"));
+	ob = e_widget_label_add(evas, _("Binding"));
 	e_widget_frametable_object_append(ot1, ob, 0, 0, 1, 1, 1, 1, 1, 1);
 
 	ob = e_widget_label_add(evas, _(":"));
@@ -719,7 +721,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	e_widget_min_size_set(cfdata->gui.key_action, 180, 25);
 	e_widget_frametable_object_append(ot1, cfdata->gui.key_action, 2, 1, 1, 1, 1, 1, 1, 1);
 
-	ob = e_widget_label_add(evas, _("Params"));
+	ob = e_widget_label_add(evas, _("Parameters"));
 	e_widget_frametable_object_append(ot1, ob, 0, 2, 1, 1, 1, 1, 1, 1);
 
 	ob = e_widget_label_add(evas, _(":"));
