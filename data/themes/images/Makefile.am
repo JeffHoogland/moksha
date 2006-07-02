@@ -371,6 +371,12 @@ e17_icon_fileman_zip.png \
 e17_icon_fileman_home.png \
 e17_icon_fileman_desktop.png \
 e17_icon_font.png \
+e17_icon_screen_around.png \
+e17_icon_screen_hflip.png \
+e17_icon_screen_left.png \
+e17_icon_screen_normal.png \
+e17_icon_screen_right.png \
+e17_icon_screen_vflip.png \
 e17_button_detail_paste.png \
 e17_button_detail_arrange_name.png \
 e17_button_detail_properties.png \
@@ -442,4 +448,3 @@ e17_shelf_dock.png \
 e17_shelf_menu_bar.png \
 e17_shelf_panel.png \
 e17_shelf_top_desk.png
-		  

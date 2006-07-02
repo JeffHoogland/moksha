@@ -54,6 +54,13 @@ images {
    image: "e17_shelf_menu_bar.png" COMP;
    image: "e17_shelf_panel.png" COMP;
    image: "e17_shelf_top_desk.png" COMP;
+   
+   image: "e17_icon_screen_around.png" COMP;
+   image: "e17_icon_screen_hflip.png" COMP;
+   image: "e17_icon_screen_left.png" COMP;
+   image: "e17_icon_screen_normal.png" COMP;
+   image: "e17_icon_screen_right.png" COMP;
+   image: "e17_icon_screen_vflip.png" COMP;
 }
 
 group {
@@ -582,6 +589,132 @@ group {
    }
 }
 group {
+   name: "icons/enlightenment/screen_normal";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      24 24;
+	    image {
+	       normal: "e17_icon_screen_normal.png";
+	    }
+	 }
+      }
+   }
+}
+group {
+   name: "icons/enlightenment/screen_normal";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      24 24;
+	    image {
+	       normal: "e17_icon_screen_normal.png";
+	    }
+	 }
+      }
+   }
+}
+group {
+   name: "icons/enlightenment/screen_around";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      24 24;
+	    image {
+	       normal: "e17_icon_screen_around.png";
+	    }
+	 }
+      }
+   }
+}
+group {
+   name: "icons/enlightenment/screen_left";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      24 24;
+	    image {
+	       normal: "e17_icon_screen_left.png";
+	    }
+	 }
+      }
+   }
+}
+group {
+   name: "icons/enlightenment/screen_right";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      24 24;
+	    image {
+	       normal: "e17_icon_screen_right.png";
+	    }
+	 }
+      }
+   }
+}
+group {
+   name: "icons/enlightenment/screen_vflip";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      24 24;
+	    image {
+	       normal: "e17_icon_screen_vflip.png";
+	    }
+	 }
+      }
+   }
+}
+group {
+   name: "icons/enlightenment/screen_hflip";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      24 24;
+	    image {
+	       normal: "e17_icon_screen_hflip.png";
+	    }
+	 }
+      }
+   }
+}
+group {
    name: "icons/enlightenment/shelf_position_bottom";
    max:  24 24;
    parts {
@@ -599,7 +732,6 @@ group {
       }
    }
 }
-///
 group {
    name: "icons/enlightenment/shelf_position_bottom_left";
    max:  24 24;
