@@ -370,6 +370,7 @@ e17_icon_fileman_gz.png \
 e17_icon_fileman_zip.png \
 e17_icon_fileman_home.png \
 e17_icon_fileman_desktop.png \
+e17_icon_background.png \
 e17_icon_font.png \
 e17_icon_screen_around.png \
 e17_icon_screen_hflip.png \
