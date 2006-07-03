@@ -7,7 +7,7 @@
 /* Personally I hate having to define this twice, but Tileing needs a fill */
 #define IMG_EDC_TMPL_TILE \
 "images {\n" \
-"  image: \"%s\" COMP;\n" \
+"  image: \"%s\" LOSSY 90;\n" \
 "}\n" \
 "collections {\n" \
 "  group {\n" \
@@ -46,7 +46,7 @@
 
 #define IMG_EDC_TMPL \
 "images {\n" \
-"  image: \"%s\" COMP;\n" \
+"  image: \"%s\" LOSSY 90;\n" \
 "}\n" \
 "collections {\n" \
 "  group {\n" \
