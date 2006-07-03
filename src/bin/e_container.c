@@ -509,7 +509,15 @@ e_container_shape_rects_set(E_Container_Shape *es, Ecore_X_Rectangle *rects, int
 	evas_list_free(es->shape);
 	es->shape = NULL;
      }
-   if (rects)
+   if ((rects) && (num == 1) &&
+       (rects[0].x == 0) &&
+       (rects[0].y == 0) &&
+       (rects[0].width == es->w) &&
+       (rects[0].height == es->h))
+     {
+	/* do nothing */
+     }
+   else if (rects)
      {
 	for (i = 0; i < num; i++)
 	  {
