@@ -33,7 +33,8 @@ _config_ibox_module(Config_Item *ci)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-
+   char buf[4096];
+   
    v = E_NEW(E_Config_Dialog_View, 1);
 
    /* Dialog Methods */
@@ -45,8 +46,9 @@ _config_ibox_module(Config_Item *ci)
    v->advanced.create_widgets = NULL;
    
    /* Create The Dialog */
+   snprintf(buf, sizeof(buf), "%s/module.eap", e_module_dir_get(ibox_config->module));
    cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()),
-			     _("IBox Configuration"), NULL, 0, v, ci);
+			     _("IBox Configuration"), buf, 0, v, ci);
    ibox_config->config_dialog = evas_list_append(ibox_config->config_dialog, cfd);
 }
 

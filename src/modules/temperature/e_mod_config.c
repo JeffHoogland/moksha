@@ -44,6 +44,7 @@ _config_temperature_module(void)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
+   char buf[4096];
    
    v = E_NEW(E_Config_Dialog_View, 1);
    
@@ -53,9 +54,10 @@ _config_temperature_module(void)
    v->basic.create_widgets = _basic_create_widgets;
    v->advanced.apply_cfdata = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
-   
+
+   snprintf(buf, sizeof(buf), "%s/module.eap", e_module_dir_get(temperature_config->module));
    cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()), 
-			     _("Temperature Configuration"), NULL, 0, v, NULL);
+			     _("Temperature Configuration"), buf, 0, v, NULL);
    temperature_config->config_dialog = cfd;
 }
 

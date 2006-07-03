@@ -2448,17 +2448,20 @@ e_border_icon_add(E_Border *bd, Evas *evas)
    if (bd->internal)
      {
 	o = edje_object_add(evas);
-	if ((!bd->internal_icon) && (!bd->module_eap)) 
+	if (!bd->internal_icon) 
 	  e_util_edje_icon_set(o, "enlightenment/e");
-	else if (bd->internal_icon) 
+	else
 	  {
-	     if (!e_util_edje_icon_set(o, bd->internal_icon))
-	       e_util_edje_icon_set(o, "enlightenment/e");
-	  }
-	else if (bd->module_eap) 
-	  {
-	     if (!edje_object_file_set(o, bd->module_eap, "icon"))
-	       e_util_edje_icon_set(o, "enlightenment/e");	       
+	     if (!strcmp(bd->internal_icon + strlen(bd->internal_icon) - 4, ".eap")) 
+	       {
+		  if (!edje_object_file_set(o, bd->internal_icon, "icon"))
+		    e_util_edje_icon_set(o, "enlightenment/e");	       
+	       }
+	     else 
+	       {
+		  if (!e_util_edje_icon_set(o, bd->internal_icon))
+		    e_util_edje_icon_set(o, "enlightenment/e"); 
+	       }
 	  }
 	return o;
      }
@@ -3037,7 +3040,6 @@ _e_border_free(E_Border *bd)
    if (bd->client.netwm.name) free(bd->client.netwm.name);
    if (bd->client.netwm.icon_name) free(bd->client.netwm.icon_name);
    e_object_del(E_OBJECT(bd->shape));
-   if (bd->module_eap) evas_stringshare_del(bd->module_eap);
    if (bd->internal_icon) evas_stringshare_del(bd->internal_icon);
    if (bd->icon_object) evas_object_del(bd->icon_object);
    evas_object_del(bd->bg_object);

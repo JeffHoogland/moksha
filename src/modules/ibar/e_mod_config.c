@@ -34,7 +34,8 @@ _config_ibar_module(Config_Item *ci)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-
+   char buf[4096];
+   
    v = E_NEW(E_Config_Dialog_View, 1);
 
    /* Dialog Methods */
@@ -44,10 +45,11 @@ _config_ibar_module(Config_Item *ci)
    v->basic.create_widgets = _basic_create_widgets;
    v->advanced.apply_cfdata = NULL;
    v->advanced.create_widgets = NULL;
-   
+
+   snprintf(buf, sizeof(buf), "%s/module.eap", e_module_dir_get(ibar_config->module));
    /* Create The Dialog */
    cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()),
-			     _("IBar Configuration"), NULL, 0, v, ci);
+			     _("IBar Configuration"), buf, 0, v, ci);
    ibar_config->config_dialog = cfd;
 }
 

@@ -383,7 +383,7 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
    if (!m) return;
    bd = dia->win->border;
    if (!bd) return;
-   bd->module_eap = evas_stringshare_add(eap);
+   bd->internal_icon = evas_stringshare_add(eap);
 }
 
 /* local subsystem functions */
@@ -505,9 +505,8 @@ _e_module_control_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
 	e_module_disable(mod);
      }
    else if ((!mod->enabled) && (enabled))
-     {
-	e_module_enable(mod);
-     }
+     e_module_enable(mod);
+   
    e_menu_item_toggle_set(mi, e_module_enabled_get(mod));
 }
 
