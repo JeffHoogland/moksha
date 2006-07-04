@@ -43,44 +43,15 @@ main(int argc, char **argv)
 {
 #ifdef USE_IPC
    int i;
-   char *s, buf[1024];
-   
-   /* fix up DISPLAY to be :N.0 if no .screen is in it */
-   s = getenv("DISPLAY");
-   if (s)
-     {
-	char *p;
-	
-	p = strrchr(s, ':');
-	if (!p)
-	  {
-	     snprintf(buf, sizeof(buf), "DISPLAY=%s:0.0", s);
-	     putenv(strdup(buf));
-	  }
-	else
-	  {
-	     p = strrchr(p, '.');
-	     if (!p)
-	       {
-		  snprintf(buf, sizeof(buf), "DISPLAY=%s.0", s);
-		  putenv(strdup(buf));
-	       }
-	  }
-     }
    
    /* handle some command-line parameters */
    display_name = (const char *)getenv("DISPLAY");
    for (i = 1; i < argc; i++)
      {
-	if ((!strcmp(argv[i], "-display")) && (i < (argc - 1)))
-	  {
-	     i++;
-	     display_name = argv[i];
-	  }
-	else if ((!strcmp(argv[i], "-h")) ||
-		 (!strcmp(argv[i], "-help")) ||
-		 (!strcmp(argv[i], "--h")) ||
-		 (!strcmp(argv[i], "--help")))
+	if ((!strcmp(argv[i], "-h")) ||
+	    (!strcmp(argv[i], "-help")) ||
+	    (!strcmp(argv[i], "--h")) ||
+	    (!strcmp(argv[i], "--help")))
 	  {
 	     _e_help();
 	     exit(0);
@@ -145,15 +116,18 @@ _e_cb_signal_exit(void *data, int ev_type, void *ev)
 static int
 _e_ipc_init(void)
 {
-   char buf[1024];
-   char *disp;
+   char *sdir;
    
-   disp = (char *)display_name;
-   if (!disp) disp = ":0";
-   snprintf(buf, sizeof(buf), "enlightenment-(%s)", disp);
-   _e_ipc_server = ecore_ipc_server_connect(ECORE_IPC_LOCAL_USER, buf, 0, NULL);
-   /* FIXME: we shoudl also try the generic ":0" if the display is ":0.0" */
-   /* similar... */
+   sdir = getenv("E_IPC_SOCKET");
+   if (!sdir)
+     {
+	printf("The E_IPC_SOCKET environment variable is not set. This is\n"
+	       "exported by Enlightenment to all processes it launches.\n"
+	       "This environment variable must be set and must point to\n"
+	       "Enlightenment's IPC socket file (minus port number).\n");
+	return 0;
+     }
+   _e_ipc_server = ecore_ipc_server_connect(ECORE_IPC_LOCAL_SYSTEM, sdir, 0, NULL);
    if (!_e_ipc_server) return 0;
    
    ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_ADD, _e_ipc_cb_server_add, NULL);
@@ -260,7 +234,6 @@ _e_help(void)
    printf("  -help This help\n");
    printf("  --help This help\n");
    printf("  --h This help\n");
-   printf("  -display OPT1 Connect to E running on display 'OPT1'\n");
    for (j = 0; j < (int)(sizeof(opts) / sizeof(Opt)); j++)
      {
 	Opt *opt;

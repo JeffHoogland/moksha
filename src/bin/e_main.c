@@ -554,19 +554,7 @@ main(int argc, char **argv)
    e_error_gui_set(1);
    
    /* setup e ipc service */
-   if (!_e_main_ipc_init())
-     {
-	e_error_message_show(_("Enlightenment cannot set up the IPC socket.\n"
-			       "It likely is already in use by an existing copy of Enlightenment.\n"
-			       "Double check to see if Enlightenment is not already on this display,\n"
-			       "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
-			       "and try running again.\n"
-			       "\n"
-			       "If you use AFS then maybe you might want to make a symlink from\n"
-			       "~/.ecore to /tmp/my_directory/ecore where sockets can be made."));
-	ipc_failed = 1;
-     }
-   else
+   if (_e_main_ipc_init())
      _e_main_shutdown_push(_e_main_ipc_shutdown);
 
    /* setup generic msg handling etc */
@@ -641,14 +629,6 @@ main(int argc, char **argv)
      }
 /* _e_main_shutdown_push(e_desklock_shutdown); */
 
-   if (ipc_failed)
-     e_error_dialog_show(_("Enlightenment IPC setup error!"),
-			 _("Enlightenment cannot set up the IPC socket.\n"
-			   "It likely is already in use by an existing copy of Enlightenment.\n"
-			   "Double check to see if Enlightenment is not already on this display,\n"
-			   "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
-			   "and try running again."));
-   
    /* add in a handler that just before we go idle we flush x */
    _e_main_idle_enterer_flusher = ecore_idle_enterer_add(_e_main_cb_x_flusher, NULL);
       
@@ -1132,11 +1112,7 @@ _e_main_path_shutdown(void)
 static int
 _e_main_ipc_init(void)
 {
-   if (!e_ipc_init())
-     {
-	e_error_message_show("Cannot init IPC subsystem!\n");
-	return 0;
-     }
+   if (!e_ipc_init()) return 0;
    return 1;
 }
 
