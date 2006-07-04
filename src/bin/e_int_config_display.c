@@ -336,7 +336,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    of = e_widget_framelist_add(evas, _("Resolution"), 0);   
    ol = e_widget_ilist_add(evas, 24, 24, NULL);
-   e_widget_min_size_set(ol, 120, 240);   
+   e_widget_min_size_set(ol, 160, 240);
    e_widget_framelist_object_append(of, ol);
    e_widget_list_object_append(o2, of, 1, 1, 0.5);
 
