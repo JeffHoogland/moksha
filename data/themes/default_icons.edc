@@ -27,14 +27,13 @@ images {
 
    image: "e17_icon_font.png" LOSSY 90;
    image: "e17_icon_background.png" LOSSY 90;
+   image: "e17_icon_mouse.png" LOSSY 90;
 
    image: "e17_pager_window.png" COMP;
    
    image: "e17_icon_right_arrow.png" COMP;
    image: "e17_icon_up_arrow.png" COMP;
    image: "e17_icon_down_arrow.png" COMP;
-   
-   image: "e17_pointer.png" COMP;
    
    image: "e17_shelf_bottom_left.png" COMP;
    image: "e17_shelf_bottom.png" COMP;
@@ -546,7 +545,7 @@ group {
 	    aspect:   1.0 1.0;
 	    max:      64 64;
 	    image {
-	       normal: "e17_pointer.png";
+	       normal: "e17_icon_mouse.png";
 	    }
 	 }
       }

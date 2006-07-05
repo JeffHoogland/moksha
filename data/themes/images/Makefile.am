@@ -378,6 +378,7 @@ e17_icon_screen_left.png \
 e17_icon_screen_normal.png \
 e17_icon_screen_right.png \
 e17_icon_screen_vflip.png \
+e17_icon_mouse.png \
 e17_button_detail_paste.png \
 e17_button_detail_arrange_name.png \
 e17_button_detail_properties.png \
