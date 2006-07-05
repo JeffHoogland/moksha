@@ -17,11 +17,11 @@
 
 /* local subsystem globals */
 static Display     *dd = NULL;
-static char        *title = NULL, *str1 = NULL, *str2 = NULL, *str3 = NULL;
+static char        *title = NULL, *str1 = NULL, *str2 = NULL;
 static Font         font = 0;
 static XFontStruct *fs = NULL;
 static GC           gc = 0;
-static Window       win = 0, b1 = 0, b2 = 0, b3 = 0;
+static Window       win = 0, b1 = 0, b2 = 0;
 static int          ww = 600, hh = 440;   
 
 /* externally accessible functions */
@@ -40,9 +40,8 @@ e_alert_init(const char *disp)
    /* dont i18n this - i dont want gettext doing anything as this is called 
       from a segv */
    title = "Enlightenment Error";
-   str1 = "(F1) Ignore";
-   str2 = "(F2) Restart";
-   str3 = "(F3) Exit";
+   str1 = "(F1) Restart";
+   str2 = "(F2) Exit";
    
    wid = DisplayWidth(dd, DefaultScreen(dd));
    hih = DisplayHeight(dd, DefaultScreen(dd));
@@ -60,11 +59,8 @@ e_alert_init(const char *disp)
 		      InputOutput, CopyFromParent, mask, &att);
    b2 = XCreateWindow(dd, win, -100, -100, 1, 1, 0, CopyFromParent,
 		      InputOutput, CopyFromParent, mask, &att);
-   b3 = XCreateWindow(dd, win, -100, -100, 1, 1, 0, CopyFromParent,
-		      InputOutput, CopyFromParent, mask, &att);
    XMapWindow(dd, b1);
    XMapWindow(dd, b2);
-   XMapWindow(dd, b3);
 
    gc = XCreateGC(dd, win, 0, &gcv);
    XSetForeground(dd, gc, att.border_pixel);
@@ -83,7 +79,6 @@ e_alert_shutdown(void)
    title = NULL;
    str1 = NULL;
    str2 = NULL;
-   str3 = NULL;
    dd = NULL;
    font = 0;
    fs = NULL;
@@ -111,19 +106,16 @@ e_alert_show(const char *text)
      }
    
    fh = fs->ascent + fs->descent;
-   mh = ((ww - 20) / 3) - 20;
+   mh = ((ww - 20) / 2) - 20;
 
    /* fixed size... */
-   w = 5 + (((ww - 20 - mh) * 0) / 4);
+   w = 20;
    XMoveResizeWindow(dd, b1, w, hh - 15 - fh, mh + 10, fh + 10);
    XSelectInput(dd, b1, ButtonPressMask | ButtonReleaseMask | ExposureMask);
-   w = 5 + (((ww - 20 - mh) * 1) / 2);
+   w = ww - 20 - mh;
    XMoveResizeWindow(dd, b2, w, hh - 15 - fh, mh + 10, fh + 10);
    XSelectInput(dd, b2, ButtonPressMask | ButtonReleaseMask | ExposureMask);
-   w = 5 + (((ww - 20 - mh) * 2) / 2);
-   XMoveResizeWindow(dd, b3, w, hh - 15 - fh, mh + 10, fh + 10);
-   XSelectInput(dd, b3, ButtonPressMask | ButtonReleaseMask | ExposureMask);
-   
+
    XMapWindow(dd, win);
    XGrabPointer(dd, win, True, ButtonPressMask | ButtonReleaseMask,
 		GrabModeAsync, GrabModeAsync, None, None, CurrentTime);
@@ -137,7 +129,7 @@ e_alert_show(const char *text)
 	XNextEvent(dd, &ev);
 	switch (ev.type)
 	  {
-	  case KeyPress:
+	   case KeyPress:
 	     key = XKeysymToKeycode(dd, XStringToKeysym("F1"));
 	     if (key == ev.xkey.keycode)
 	       {
@@ -150,26 +142,16 @@ e_alert_show(const char *text)
 		  button = 2;
 		  break;
 	       }
-	     key = XKeysymToKeycode(dd, XStringToKeysym("F3"));
-	     if (key == ev.xkey.keycode)
-	       {
-		  button = 3;
-		  break;
-	       }
 	     break;
-
-	  case ButtonPress:
+	   case ButtonPress:
 	     if (ev.xbutton.window == b1)
 	       button = 1;
 	     else if (ev.xbutton.window == b2)
 	       button = 2;
-	     else if (ev.xbutton.window == b3)
-	       button = 3;
 	     break;
-
-	  case Expose:
+	   case Expose:
 	     while (XCheckTypedWindowEvent(dd, ev.xexpose.window, Expose, &ev));
-
+	     
 	     /* outline */
 	     XDrawRectangle(dd, win, gc, 0, 0, ww - 1, hh - 1);
 	     
@@ -200,10 +182,6 @@ e_alert_show(const char *text)
 	     XDrawRectangle(dd, b2, gc, 0, 0, mh - 1, fh + 10 - 1);
 	     XDrawString(dd, b2, gc, 5 + ((mh - fw) / 2), 5 + fs->ascent, str2, strlen(str2));
 	     
-	     fw = XTextWidth(fs, str3, strlen(str3));
-	     XDrawRectangle(dd, b3, gc, 0, 0, mh - 1, fh + 10 - 1);
-	     XDrawString(dd, b3, gc, 5 + ((mh - fw) / 2), 5 + fs->ascent, str3, strlen(str3));
-	     
 	     XSync(dd, False);
 	     break;
 
@@ -216,15 +194,13 @@ e_alert_show(const char *text)
    
    switch (button)
      {
-     case 1:
-	break;
-     case 2:
+      case 1:
 	ecore_app_restart();
 	break;
-     case 3:
+      case 2:
 	exit(-11);
 	break;
-     default:
+      default:
 	break;
      }
 }
