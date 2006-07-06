@@ -66,6 +66,9 @@ e_thumb_shutdown(void)
 	event_handlers = evas_list_remove_list(event_handlers, event_handlers);
      }
    evas_list_free(thumb_files);
+
+   if (pid != -1)
+     kill(pid, SIGTERM);
    
    return 1;
 }
@@ -587,7 +590,11 @@ _e_thumb_cb_exe_exit(void *data, int type, void *event)
    
    ev = event;
    if (ev->pid != pid) return 1;
-   if (!thumb_files) return 1;
+   if (!thumb_files)
+     {
+        pid = -1;
+        return 1;
+     }
    
    t = thumb_files->data;
    thumb_files = evas_list_remove_list(thumb_files, thumb_files);
