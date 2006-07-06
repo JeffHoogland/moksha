@@ -78,6 +78,7 @@ Some of the things (in very short form) that need to be done to E17...
   CLEANUPS
 -------------------------------------------------------------------------------
 
+* e_thumb needs a redo - maybe exec a helper exe and ipc to/from.
 * border menu has dangerous close atr the bottom. if the widnwo is too far
   down then close is right next to the mouse - danger! move somewhere less
   dangerous.
