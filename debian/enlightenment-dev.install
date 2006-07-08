@@ -1,6 +1,2 @@
 debian/tmp/usr/bin/enlightenment-config
-debian/tmp/usr/lib/*.so
-debian/tmp/usr/lib/*.la
-debian/tmp/usr/lib/*.a
-debian/tmp/usr/include/*.h
 debian/tmp/usr/include/enlightenment/*.h

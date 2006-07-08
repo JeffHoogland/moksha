@@ -58,7 +58,6 @@ test "x$RPM_BUILD_ROOT" != "x/" && rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS COPYING COPYING-PLAIN README
 %{_bindir}/enlightenment
 %{_bindir}/enlightenment_*
-%{_libdir}/lib*.so.*
 %{_libdir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/locale/*
@@ -68,9 +67,6 @@ test "x$RPM_BUILD_ROOT" != "x/" && rm -rf $RPM_BUILD_ROOT
 %defattr(-, root, root)
 %{_bindir}/enlightenment-config
 %{_includedir}/enlightenment/*.h
-%{_includedir}/E_Lib.h
-%{_libdir}/*.a
-%{_libdir}/*.la
-%{_libdir}/*.so
 
 %changelog
+6~
