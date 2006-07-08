@@ -23,6 +23,8 @@ static void _e_thumb_hash_add(int objid, Evas_Object *obj);
 static void _e_thumb_hash_del(int objid);
 static Evas_Object *_e_thumb_hash_find(int objid);
 static void _e_thumb_thumbnailers_kill(void);
+static void _e_thumb_thumbnailers_kill_cancel(void);
+static int _e_thumb_cb_kill(void *data);
 static int _e_thumb_cb_exe_event_del(void *data, int type, void *event);
 
 /* local subsystem globals */
@@ -34,6 +36,7 @@ static Evas_Hash *_thumbs = NULL;
 static int _pending = 0;
 static int _num_thumbnailers = 2;
 static Ecore_Event_Handler *_exe_del_handler = NULL;
+static Ecore_Timer *_kill_timer = NULL;
 
 /* externally accessible functions */
 EAPI int
@@ -48,8 +51,21 @@ e_thumb_init(void)
 EAPI int
 e_thumb_shutdown(void)
 {
+   _e_thumb_thumbnailers_kill_cancel();
+   _e_thumb_cb_kill(NULL);
    ecore_event_handler_del(_exe_del_handler);
    _exe_del_handler = NULL;
+   _thumbnailers = evas_list_free(_thumbnailers);
+   while (_thumbnailers_exe)
+     {
+	ecore_exe_free(_thumbnailers_exe->data);
+	_thumbnailers_exe = evas_list_remove_list(_thumbnailers_exe, _thumbnailers_exe);
+     }
+   _thumb_queue = evas_list_free(_thumb_queue);
+   _objid = 0;
+   evas_hash_free(_thumbs);
+   _thumbs = NULL;
+   _pending = 0;
    return 1;
 }
 
@@ -128,10 +144,12 @@ e_thumb_icon_begin(Evas_Object *obj)
 	eth2->queued = 0;
 	eth2->busy = 1;
 	_pending++;
+	if (_pending == 1) _e_thumb_thumbnailers_kill_cancel();
 	_e_thumb_gen_begin(eth2->objid, eth2->file, eth2->key, eth2->w, eth2->h);
      }
    eth->busy = 1;
    _pending++;
+   if (_pending == 1) _e_thumb_thumbnailers_kill_cancel();
    _e_thumb_gen_begin(eth->objid, eth->file, eth->key, eth->w, eth->h);
 }
 
@@ -195,6 +213,7 @@ e_thumb_client_data(Ecore_Ipc_Event_Client_Data *e)
 	     eth->queued = 0;
 	     eth->busy = 1;
 	     _pending++;
+	     if (_pending == 1) _e_thumb_thumbnailers_kill_cancel();
 	     _e_thumb_gen_begin(eth->objid, eth->file, eth->key, eth->w, eth->h);
 	  }
      }
@@ -297,10 +316,26 @@ _e_thumb_hash_find(int objid)
 static void
 _e_thumb_thumbnailers_kill(void)
 {
+   if (_kill_timer) ecore_timer_del(_kill_timer);
+   _kill_timer = ecore_timer_add(1.0, _e_thumb_cb_kill, NULL);
+}
+
+static void
+_e_thumb_thumbnailers_kill_cancel(void)
+{
+   if (_kill_timer) ecore_timer_del(_kill_timer);
+   _kill_timer = NULL;
+}
+
+static int
+_e_thumb_cb_kill(void *data)
+{
    Evas_List *l;
    
    for (l = _thumbnailers_exe; l; l = l->next)
      ecore_exe_terminate(l->data);
+   _kill_timer = NULL;
+   return 0;
 }
 
 static int
