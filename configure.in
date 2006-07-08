@@ -282,7 +282,6 @@ AC_OUTPUT([
 Makefile
 enlightenment.spec
 src/Makefile
-src/lib/Makefile
 src/bin/Makefile
 src/modules/Makefile
 src/modules/ibar/Makefile
@@ -294,7 +293,6 @@ src/modules/temperature/Makefile
 src/modules/cpufreq/Makefile
 src/modules/ibox/Makefile
 src/modules/start/Makefile
-src/preload/Makefile
 data/Makefile
 data/fonts/Makefile
 data/images/Makefile
