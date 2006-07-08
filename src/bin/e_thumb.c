@@ -144,7 +144,11 @@ e_thumb_icon_end(Evas_Object *obj)
    if (!eth) return;
    if (eth->queued) _thumb_queue = evas_list_remove(_thumb_queue, eth);
    eth->queued = 0;
-   if (eth->busy) _e_thumb_gen_end(eth->objid);
+   if (eth->busy)
+     {
+	printf("REQ DEL %s\n", eth->file);
+	_e_thumb_gen_end(eth->objid);
+     }
    eth->busy = 0;
    _pending--;
    if (_pending == 0) _e_thumb_thumbnailers_kill();

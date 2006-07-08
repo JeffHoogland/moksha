@@ -146,28 +146,30 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
    
    e = event;
    if (e->major != 5) return 1;
-   if (!e->data) return 1;
    switch (e->minor)
      {
       case 1:
-	/* begin thumb */
-	/* don't check stuff. since this connects TO e17 it is connecting */
-	/* TO a trusted process that WILL send this message properly */
-	/* formatted. if the thumbnailer dies anyway - it's not a big loss */
-	/* but it is a sign of a bug in e formattign messages maybe */
-	file = e->data;
-	key = file + strlen(file) + 1;
-	if (!key[0]) key = NULL;
-	eth = calloc(1, sizeof(E_Thumb));
-	if (eth)
+	if (e->data)
 	  {
-	     eth->objid = e->ref;
-	     eth->w = e->ref_to;
-	     eth->h = e->response;
-	     eth->file = strdup(file);
-	     if (key) eth->key = strdup(key);
-	     _thumblist = evas_list_append(_thumblist, eth);
-	     if (!_timer) _timer = ecore_timer_add(0.001, _e_cb_timer, NULL);
+	     /* begin thumb */
+	     /* don't check stuff. since this connects TO e17 it is connecting */
+	     /* TO a trusted process that WILL send this message properly */
+	     /* formatted. if the thumbnailer dies anyway - it's not a big loss */
+	     /* but it is a sign of a bug in e formattign messages maybe */
+	     file = e->data;
+	     key = file + strlen(file) + 1;
+	     if (!key[0]) key = NULL;
+	     eth = calloc(1, sizeof(E_Thumb));
+	     if (eth)
+	       {
+		  eth->objid = e->ref;
+		  eth->w = e->ref_to;
+		  eth->h = e->response;
+		  eth->file = strdup(file);
+		  if (key) eth->key = strdup(key);
+		  _thumblist = evas_list_append(_thumblist, eth);
+		  if (!_timer) _timer = ecore_timer_add(0.001, _e_cb_timer, NULL);
+	       }
 	  }
 	break;
       case 2:
