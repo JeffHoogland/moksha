@@ -282,6 +282,7 @@ _e_thumb_hash_del(int objid)
    
    snprintf(buf, sizeof(buf), "%i", objid);
    _thumbs = evas_hash_del(_thumbs, buf, NULL);
+   if (!_thumbs) _objid = 0;
 }
 
 static Evas_Object *

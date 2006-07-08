@@ -211,7 +211,7 @@ _e_cb_timer(void *data)
 	if (eth->file) free(eth->file);
 	if (eth->key) free(eth->key);
 	free(eth);
-	if (_thumblist) _timer = ecore_timer_add(0.001, _e_cb_timer, NULL);
+	if (_thumblist) _timer = ecore_timer_add(0.00001, _e_cb_timer, NULL);
 	else _timer = NULL;
      }
    else
