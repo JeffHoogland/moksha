@@ -10,8 +10,6 @@ Some of the things (in very short form) that need to be done to E17...
 
 * BUG: if app asks for borderless in properties - borderless toggle in menu
   doesn't have any effect.
-* BUG: menu for gadgets while up and if it changes apearance will segv because
-  its reference to the gcc is wrong as the gcc was destroyed and re-created
 * BUG: set any specific border type and when you maximize the border changes
   to default (unless its borderless)
 * BUG: change exe name in basic mode in eap editor and icon vanishes (don't
