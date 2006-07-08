@@ -195,11 +195,12 @@ _load_inits(E_Config_Dialog *cfd, Evas_Object *il)
 	     if (ecore_file_is_dir(full_path)) continue;
 	     if (!e_util_edje_collection_exists(full_path, "init/splash")) continue;
 
-	     if (!e_thumb_exists(full_path)) 
-	       ic = e_thumb_generate_begin(full_path, 48, 48, cfd->dia->win->evas, &ic, NULL, NULL);
-	     else 
-	       ic = e_thumb_evas_object_get(full_path, cfd->dia->win->evas, 48, 48, 1);
-	     
+	     ic = e_thumb_icon_add(cfd->dia->win->evas);
+	     e_thumb_icon_file_set(ic, full_path, "desktop/background");
+	     e_thumb_icon_size_set(ic, 64,
+				    (64 * e_zone_current_get(cfd->dia->win->container)->h) /
+				    e_zone_current_get(cfd->dia->win->container)->w);
+	     e_thumb_icon_begin(ic);
 	     e_widget_ilist_append(il, ic, ecore_file_strip_ext(init_file), _ilist_cb_init_selected, cfd, full_path);
 	     
 	     if ((e_config->init_default_theme) && 

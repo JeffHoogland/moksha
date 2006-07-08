@@ -14,7 +14,8 @@ enlightenment_remote \
 enlightenment_eapp \
 enlightenment_eapp_cache_gen \
 enlightenment_imc \
-enlightenment_start
+enlightenment_start \
+enlightenment_thumb
 
 ENLIGHTENMENTHEADERS = \
 e.h \
@@ -334,6 +335,11 @@ enlightenment_start_SOURCES = \
 e_start_main.c
 
 enlightenment_start_LDFLAGS = 
+
+enlightenment_thumb_SOURCES = \
+e_thumb_main.c
+
+enlightenment_thumb_LDFLAGS = @e_libs@ @dlopen_libs@
 
 installed_headersdir = $(prefix)/include/enlightenment
 installed_headers_DATA = $(ENLIGHTENMENTHEADERS)

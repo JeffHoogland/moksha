@@ -1788,7 +1788,7 @@ _e_menu_submenu_activate(E_Menu_Item *mi)
 static void
 _e_menu_submenu_deactivate(E_Menu_Item *mi)
 {
-   if (mi->menu->active) return;
+   if (!mi->menu->active) return;
    if (mi->submenu_post_cb.func)
      mi->submenu_post_cb.func(mi->submenu_post_cb.data, mi->menu, mi);
 }

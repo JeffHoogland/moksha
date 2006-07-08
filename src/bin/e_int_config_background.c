@@ -304,11 +304,12 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
      {
 	Evas_Object *ic = NULL;
 
-	if (!e_thumb_exists(c))
-	  ic = e_thumb_generate_begin(c, 48, 48, cfd->dia->win->evas, &ic, NULL, NULL);
-	else
-	  ic = e_thumb_evas_object_get(c, cfd->dia->win->evas, 48, 48, 1);
-
+	ic = e_thumb_icon_add(cfd->dia->win->evas);
+	e_thumb_icon_file_set(ic, f, "desktop/background");
+	e_thumb_icon_size_set(ic, 64,
+			       (64 * e_zone_current_get(cfd->dia->win->container)->h) /
+			       e_zone_current_get(cfd->dia->win->container)->w);
+	e_thumb_icon_begin(ic);
 	e_widget_ilist_append(il, ic, _("Theme Wallpaper"), _ilist_cb_bg_selected, cfd, "");
 	if (!e_config->desktop_default_background) selnum = i;
 	i++;
@@ -370,11 +371,12 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
 	     if (ecore_file_is_dir(full_path)) continue;
 	     if (!e_util_edje_collection_exists(full_path, "desktop/background")) continue;
 	     
-	     if (!e_thumb_exists(full_path))
-	       ic = e_thumb_generate_begin(full_path, 48, 48, evas, &ic, NULL, NULL);
-	     else
-	       ic = e_thumb_evas_object_get(full_path, evas, 48, 48, 1);
-	     
+	     ic = e_thumb_icon_add(cfd->dia->win->evas);
+	     e_thumb_icon_file_set(ic, full_path, "desktop/background");
+	     e_thumb_icon_size_set(ic, 64,
+				    (64 * e_zone_current_get(cfd->dia->win->container)->h) /
+				    e_zone_current_get(cfd->dia->win->container)->w);
+	     e_thumb_icon_begin(ic);
 	     e_widget_ilist_append(il, ic, ecore_file_strip_ext(bg_file), _ilist_cb_bg_selected, cfd, full_path);
 	     if ((e_config->desktop_default_background) &&
 		 (!strcmp(e_config->desktop_default_background, full_path)))
@@ -486,10 +488,12 @@ _bg_file_added(void *data, Ecore_File_Monitor *monitor, Ecore_File_Event event, 
      {
 	if (e_util_edje_collection_exists((char *)path, "desktop/background")) 
 	  {
-	     if (!e_thumb_exists((char *)path))
-	       ic = e_thumb_generate_begin((char *)path, 48, 48, evas, &ic, NULL, NULL);
-	     else
-	       ic = e_thumb_evas_object_get((char *)path, evas, 48, 48, 1);
+	     ic = e_thumb_icon_add(cfd->dia->win->evas);
+	     e_thumb_icon_file_set(ic, path, "desktop/background");
+	     e_thumb_icon_size_set(ic, 64,
+				    (64 * e_zone_current_get(cfd->dia->win->container)->h) /
+				    e_zone_current_get(cfd->dia->win->container)->w);
+	     e_thumb_icon_begin(ic);
 	     e_widget_ilist_append(il, ic, noext, _ilist_cb_bg_selected, cfd, (char *)path);
 	  }
      }

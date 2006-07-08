@@ -1,631 +1,317 @@
 /*
-* vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
-*/
-
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include "e.h"
 
-#ifdef EFM_DEBUG
-# define D(x)  do {printf(__FILE__ ":%d:  ", __LINE__); printf x; fflush(stdout);} while (0)
-#else
-# define D(x)  ((void) 0)
-#endif
+typedef struct _E_Thumb E_Thumb;
 
-typedef struct _E_Thumb_Item E_Thumb_Item;
-
-static char       *_e_thumb_file_id(char *file);
-static void        _e_thumb_generate(void);
-static int         _e_thumb_cb_exe_exit(void *data, int type, void *event);
-
-static char       *thumb_path = NULL;
-static Evas_List  *thumb_files = NULL;
-static Evas_List  *event_handlers = NULL;
-static pid_t       pid = -1;
-
-struct _E_Thumb_Item
+struct _E_Thumb
 {
-   char           path[PATH_MAX];
-   Evas_Object   *obj;
-   Evas          *evas;
-   Evas_Coord     w, h;
-   void (*cb)(Evas_Object *obj, void *data);
-   void  *data;
+   int   objid;
+   int   w, h;
+   char *file;
+   char *key;
+   unsigned char queued : 1;
+   unsigned char busy : 1;
 };
 
+/* local subsystem functions */
+static void _e_thumb_gen_begin(int objid, char *file, char *key, int w, int h);
+static void _e_thumb_gen_end(int objid);
+static void _e_thumb_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_thumb_hash_add(int objid, Evas_Object *obj);
+static void _e_thumb_hash_del(int objid);
+static Evas_Object *_e_thumb_hash_find(int objid);
+static void _e_thumb_thumbnailers_kill(void);
+static int _e_thumb_cb_exe_event_del(void *data, int type, void *event);
+
+/* local subsystem globals */
+static Evas_List *_thumbnailers = NULL;
+static Evas_List *_thumbnailers_exe = NULL;
+static Evas_List *_thumb_queue = NULL;
+static int _objid = 0;
+static Evas_Hash *_thumbs = NULL;
+static int _pending = 0;
+static int _num_thumbnailers = 2;
+static Ecore_Event_Handler *_exe_del_handler = NULL;
+
+/* externally accessible functions */
 EAPI int
 e_thumb_init(void)
 {
-   char *homedir;
-   char  path[PATH_MAX];
-   
-   homedir = e_user_homedir_get();
-   if (homedir)
-     {
-	snprintf(path, sizeof(path), "%s/.e/e/fileman/thumbnails", homedir);
-	if (!ecore_file_exists(path))
-	  ecore_file_mkpath(path);
-	thumb_path = strdup(path);
-	free(homedir);
-     }
-   else return 0;
-   
-   event_handlers = 
-     evas_list_append(event_handlers,
-		      ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
-					      _e_thumb_cb_exe_exit,
-					      NULL));      
+   _exe_del_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
+					      _e_thumb_cb_exe_event_del,
+					      NULL);
    return 1;
 }
 
 EAPI int
 e_thumb_shutdown(void)
 {
-   E_FREE(thumb_path);
-   while (event_handlers)     
-     {   
-	ecore_event_handler_del(event_handlers->data);
-	event_handlers = evas_list_remove_list(event_handlers, event_handlers);
-     }
-   evas_list_free(thumb_files);
-
-   if (pid != -1)
-     kill(pid, SIGTERM);
-   
+   ecore_event_handler_del(_exe_del_handler);
+   _exe_del_handler = NULL;
    return 1;
 }
 
-/* return dir where thumbs are saved */
-EAPI const char *
-e_thumb_dir_get(void)
-{
-   return thumb_path;
-}
-
-/* queue an image for thumbnailing or return the thumb if it exists */
 EAPI Evas_Object *
-e_thumb_generate_begin(char *path, Evas_Coord w, Evas_Coord h, Evas *evas, Evas_Object **tmp, void (*cb)(Evas_Object *obj, void *data), void *data)
+e_thumb_icon_add(Evas *evas)
 {
-   E_Thumb_Item *t;
+   Evas_Object *obj;
+   E_Thumb *eth;
+   char buf[32];
    
-   if(!ecore_file_exists(path)) return *tmp;   
-   if (e_thumb_exists(path))
-     {
-	evas_object_del(*tmp);
-	*tmp = e_thumb_evas_object_get(path, evas, w, h, 1);
-	return *tmp;
-     }
-   
-   t = E_NEW(E_Thumb_Item, 1);
-   t->w = w;
-   t->h = h;
-   t->evas = evas;
-   t->cb = cb;
-   t->data = data;
-   *tmp = e_icon_add(evas);
-   t->obj = *tmp;
-   snprintf(t->path, sizeof(t->path), "%s", path);
-   thumb_files = evas_list_append(thumb_files, t);
-   if (pid == -1) _e_thumb_generate();
-   
-   return *tmp;   
+   obj = e_icon_add(evas);
+   _objid++;
+   eth = E_NEW(E_Thumb, 1);
+   eth->objid = _objid;
+   eth->w = 64;
+   eth->h = 64;
+   evas_object_data_set(obj, "e_thumbdata", eth);
+   evas_object_event_callback_add(obj, EVAS_CALLBACK_FREE,
+				  _e_thumb_del_hook, NULL);
+   _e_thumb_hash_add(eth->objid, obj);
+   return obj;
 }
 
-/* delete an image from the thumb queue */
 EAPI void
-e_thumb_generate_end(char *path)
+e_thumb_icon_file_set(Evas_Object *obj, char *file, char *key)
+{
+   E_Thumb *eth;
+   
+   eth = evas_object_data_get(obj, "e_thumbdata");
+   if (!eth) return;
+   E_FREE(eth->file);
+   E_FREE(eth->key);
+   if (file) eth->file = strdup(file);
+   if (key) eth->key = strdup(key);
+}
+
+EAPI void
+e_thumb_icon_size_set(Evas_Object *obj, int w, int h)
+{
+   E_Thumb *eth;
+   
+   eth = evas_object_data_get(obj, "e_thumbdata");
+   if (!eth) return;
+   if ((w < 1) || (h <1)) return;
+   eth->w = w;
+   eth->h = h;
+}
+
+EAPI void
+e_thumb_icon_begin(Evas_Object *obj)
+{
+   E_Thumb *eth, *eth2;
+   char buf[4096];
+   
+   eth = evas_object_data_get(obj, "e_thumbdata");
+   if (!eth) return;
+   if (!eth->file) return;
+   if (!_thumbnailers)
+     {
+	while (evas_list_count(_thumbnailers_exe) < _num_thumbnailers)
+	  {
+	     Ecore_Exe *exe;
+	     
+	     snprintf(buf, sizeof(buf), "%s/enlightenment_thumb", e_prefix_bin_get());
+	     exe = ecore_exe_run(buf, NULL);
+	     _thumbnailers_exe = evas_list_append(_thumbnailers_exe, exe);
+	  }
+	_thumb_queue = evas_list_append(_thumb_queue, eth);
+	eth->queued = 1;
+	return;
+     }
+   while (_thumb_queue)
+     {
+	eth2 = _thumb_queue->data;
+	_thumb_queue = evas_list_remove_list(_thumb_queue, _thumb_queue);
+	eth2->queued = 0;
+	eth2->busy = 1;
+	_pending++;
+	_e_thumb_gen_begin(eth2->objid, eth2->file, eth2->key, eth2->w, eth2->h);
+     }
+   eth->busy = 1;
+   _pending++;
+   _e_thumb_gen_begin(eth->objid, eth->file, eth->key, eth->w, eth->h);
+}
+
+EAPI void
+e_thumb_icon_end(Evas_Object *obj)
+{
+   E_Thumb *eth;
+   
+   eth = evas_object_data_get(obj, "e_thumbdata");
+   if (!eth) return;
+   if (eth->queued) _thumb_queue = evas_list_remove(_thumb_queue, eth);
+   eth->queued = 0;
+   if (eth->busy) _e_thumb_gen_end(eth->objid);
+   eth->busy = 0;
+   _pending--;
+   if (_pending == 0) _e_thumb_thumbnailers_kill();
+}
+
+EAPI void
+e_thumb_client_data(Ecore_Ipc_Event_Client_Data *e)
+{
+   int objid;
+   char *icon;
+   E_Thumb *eth;
+   Evas_Object *obj;
+   
+   if (!evas_list_find(_thumbnailers, e->client))
+     _thumbnailers = evas_list_prepend(_thumbnailers, e->client);
+   if (e->minor == 2)
+     {
+	objid = e->ref;
+	icon = e->data;
+	if ((icon) && (e->size > 1) && (icon[e->size - 1] == 0))
+	  {
+	     obj = _e_thumb_hash_find(objid);
+	     if (obj)
+	       {
+		  eth = evas_object_data_get(obj, "e_thumbdata");
+		  if (eth)
+		    {
+		       eth->busy = 0;
+		       _pending--;
+		       if (_pending == 0) _e_thumb_thumbnailers_kill();
+		       e_icon_file_key_set(obj, icon, "/thumbnail/data");
+		       evas_object_smart_callback_call(obj, "e_thumb_gen", NULL);
+		    }
+	       }
+	  }
+     }
+   if (e->minor == 1)
+     {
+	/* hello message */
+	while (_thumb_queue)
+	  {
+	     eth = _thumb_queue->data;
+	     _thumb_queue = evas_list_remove_list(_thumb_queue, _thumb_queue);
+	     eth->queued = 0;
+	     eth->busy = 1;
+	     _pending++;
+	     _e_thumb_gen_begin(eth->objid, eth->file, eth->key, eth->w, eth->h);
+	  }
+     }
+}
+
+EAPI void
+e_thumb_client_del(Ecore_Ipc_Event_Client_Del *e)
+{
+   if (!evas_list_find(_thumbnailers, e->client)) return;
+   _thumbnailers = evas_list_remove(_thumbnailers, e->client);
+}
+
+/* local subsystem functions */
+static void
+_e_thumb_gen_begin(int objid, char *file, char *key, int w, int h)
+{
+   char *buf;
+   int l1, l2;
+   Ecore_Ipc_Client *cli;
+
+   /* send thumb req */
+   l1 = strlen(file);
+   l2 = 0;
+   if (key) l2 = strlen(key);
+   buf = alloca(l1 + 1 + l2 + 1);
+   strcpy(buf, file);
+   if (key) strcpy(buf + l1 + 1, key);
+   else buf[l1 + 1] = 0;
+   cli = _thumbnailers->data;
+   if (!cli) return;
+   _thumbnailers = evas_list_remove_list(_thumbnailers, _thumbnailers);
+   _thumbnailers = evas_list_append(_thumbnailers, cli);
+   ecore_ipc_client_send(cli, E_IPC_DOMAIN_THUMB, 1, objid, w, h, buf, l1 + 1 + l2 + 1);
+}
+
+static void
+_e_thumb_gen_end(int objid)
 {
    Evas_List *l;
-   E_Thumb_Item *t;
+   Ecore_Ipc_Client *cli;
    
-   for(l = thumb_files; l; l = l->next)
+   /* send thumb cancel */
+   for (l = _thumbnailers; l; l = l->next)
      {
-	t = l->data;
-	if(!strcmp(path, t->path))
-	   {
-	      thumb_files = evas_list_remove_list(thumb_files, l);
-	      break;
-	   }
+	cli = l->data;
+	ecore_ipc_client_send(cli, E_IPC_DOMAIN_THUMB, 2, objid, 0, 0, NULL, 0);
      }
 }
 
-/* return hashed path of thumb */
-EAPI char *
-e_thumb_file_get(char *file)
-{
-   char *id;
-   char thumb[PATH_MAX];
-   
-   id = _e_thumb_file_id(file);   
-   if (!id) return NULL;
-   snprintf(thumb, sizeof(thumb), "%s/%s", thumb_path, id);
-   free(id);
-   return strdup(thumb);   
-}
-
-/* return the width and height of a thumb, if from_eet is set, then we
- * assume that the file being passed is the thumb's eet
- */
-EAPI void
-e_thumb_geometry_get(char *file, int *w, int *h, int from_eet)
-{
-   Eet_File *ef;   
-   
-   if(!from_eet)
-     {
-	char *eet_file;
-	
-	eet_file = _e_thumb_file_id(file);
-	if(!eet_file)
-	  {
-	     if(w) *w = -1;
-	     if(h) *h = -1;
-	     return;
-	  }
-	ef = eet_open(eet_file, EET_FILE_MODE_READ);
-	if (!ef)
-	  {
-	     eet_close(ef);	     
-	     if(w) *w = -1;
-	     if(h) *h = -1;
-	     return;
-	  }
-     }
-   else
-     {
-	ef = eet_open(file, EET_FILE_MODE_READ);
-	if (!ef)
-	  {
-	     eet_close(ef);	     
-	     if(w) *w = -1;
-	     if(h) *h = -1;
-	     return;
-	  }
-     }
-   if(!eet_data_image_header_read(ef, "/thumbnail/data", w, h, NULL, NULL,
-				  NULL, NULL))
-     {
-	eet_close(ef);	
-	if(w) *w = -1;
-	if(h) *h = -1;
-	return;
-     }      
-   eet_close(ef);
-}
-
-/* return true if the saved thumb exists OR if its an eap */
-EAPI int
-e_thumb_exists(char *file)
-{
-   char *thumb;
-   char *ext;
-
-   ext = strrchr(file, '.');
-   if ((ext) && (!strcasecmp(ext, ".eap")))
-     return 1;
-
-   thumb = e_thumb_file_get(file);
-   if ((thumb) && (ecore_file_exists(thumb)))
-     {
-	free(thumb);
-	return 1;
-     }
-   return 0;
-}
-
-EAPI int *
-_e_thumb_image_create(char *file, Evas_Coord w, Evas_Coord h, int *ww, int *hh, int *alpha, Evas_Object **im, Ecore_Evas **buf)
-{
-   Evas *evasbuf;
-   int iw, ih;
-   
-   *buf = ecore_evas_buffer_new(1, 1);
-   evasbuf = ecore_evas_get(*buf);
-   *im = evas_object_image_add(evasbuf);
-   evas_object_image_file_set(*im, file, NULL);
-   iw = 0; ih = 0;
-   evas_object_image_size_get(*im, &iw, &ih);
-   *alpha = evas_object_image_alpha_get(*im);
-   if ((iw > 0) && (ih > 0))
-     {
-	*ww = w;
-	*hh = (w * ih) / iw;
-	if (*hh > h)
-	  {
-	     *hh = h;
-	     *ww = (h * iw) / ih;
-	  }
-	ecore_evas_resize(*buf, *ww, *hh);
-	evas_object_image_fill_set(*im, 0, 0, *ww, *hh);
-	evas_object_resize(*im, *ww, *hh);
-	evas_object_move(*im, 0, 0);
-	evas_object_show(*im);
-
-	return (int *)ecore_evas_buffer_pixels_get(*buf);
-     }
-   return NULL;
-}
-
-/* thumbnail an e17 background and return pixel data */
-const int *
-_e_thumb_ebg_create(char *file, Evas_Coord w, Evas_Coord h, int *ww, int *hh, int *alpha, Evas_Object **im, Ecore_Evas **buf)
-{
-   Evas *evasbuf;   
-   Evas_Object *wallpaper;
-   const int *pixels;   
-
-   *ww = 640;
-   *hh = 480;
-   *alpha = 0;   
-   
-   w = 640;
-   h = 480;
-   
-   *buf = ecore_evas_buffer_new(w, h);
-   evasbuf = ecore_evas_get(*buf);
-   
-   wallpaper = edje_object_add(evasbuf);
-
-   edje_object_file_set(wallpaper, file, "desktop/background");
-      
-   /* wallpaper */
-   evas_object_move(wallpaper, 0, 0);
-   evas_object_resize(wallpaper, w, h);   
-      
-   evas_object_show(wallpaper);
-   
-   pixels = ecore_evas_buffer_pixels_get(*buf);
-   
-   evas_object_del(wallpaper);   
-   return pixels;
-}
-
-/* thumbnail an e17 theme and return pixel data */
-const int *
-_e_thumb_etheme_create(char *file, Evas_Coord w, Evas_Coord h, int *ww, int *hh, int *alpha, Evas_Object **im, Ecore_Evas **buf)
-{
-   Evas *evasbuf;   
-   Evas_Object *wallpaper, *window, *clock, *start, **pager, *init;
-   const int *pixels;   
-   int is_init;
-   
-   *ww = 640;
-   *hh = 480;
-   *alpha = 0;   
-   
-   w = 640;
-   h = 480;
-   
-   *buf = ecore_evas_buffer_new(w, h);
-   evasbuf = ecore_evas_get(*buf);
-
-   is_init = e_util_edje_collection_exists(file, "init/splash");
-   if (is_init) 
-     {
-	init = edje_object_add(evasbuf);
-	edje_object_file_set(init, file, "init/splash");
-	evas_object_move(init, 0, 0);
-	evas_object_resize(init, w, h);   	
-	evas_object_show(init);
-	pixels = ecore_evas_buffer_pixels_get(*buf);	
-	evas_object_del(init);	
-     }
-   else 
-     {
-	wallpaper = edje_object_add(evasbuf);
-	window    = edje_object_add(evasbuf);
-	clock     = edje_object_add(evasbuf);
-	start     = edje_object_add(evasbuf);
-	pager     = E_NEW(Evas_Object*, 3);
-	pager[0]  = edje_object_add(evasbuf);
-	pager[1]  = edje_object_add(evasbuf);
-	pager[2]  = edje_object_add(evasbuf);
-
-	edje_object_file_set(wallpaper, file, "desktop/background");   
-	edje_object_file_set(window,	file, "widgets/border/default/border");
-	edje_object_file_set(clock, file, "modules/clock/main");   
-	edje_object_file_set(clock, file, "modules/clock/main");   
-	edje_object_file_set(start, file, "modules/start/main");   
-	edje_object_file_set(pager[0], file, "modules/pager/main");
-	edje_object_file_set(pager[1], file, "modules/pager/desk");
-	edje_object_file_set(pager[2], file, "modules/pager/window");   
-	edje_object_part_text_set(window, "title_text", file);   
-	edje_object_part_swallow(pager[0], "items", pager[1]);
-	edje_object_part_swallow(pager[1], "items", pager[2]);
-   
-	/* wallpaper */
-	evas_object_move(wallpaper, 0, 0);
-	evas_object_resize(wallpaper, w, h);   
-	/* main window */
-	evas_object_move(window, (w * 0.1), (h * 0.05));
-	evas_object_resize(window, w * 0.8, h * 0.75);   
-	/* clock */
-	evas_object_move(clock, (w * 0.9), (h * 0.9));
-	evas_object_resize(clock, w * 0.1, h * 0.1);
-	/* start */
-	evas_object_move(start, 0.1, (h * 0.9));
-	evas_object_resize(start, w * 0.1, h * 0.1);   
-	/* pager */
-	evas_object_move(pager[0], (w * 0.3), (h * 0.9));
-	evas_object_resize(pager[0], w * 0.1, h * 0.1);
-      
-	evas_object_show(wallpaper);
-	evas_object_show(window);
-	evas_object_show(clock);
-	evas_object_show(start);
-	evas_object_show(pager[0]);
-	evas_object_show(pager[1]);
-	evas_object_show(pager[2]);
-
-	pixels = ecore_evas_buffer_pixels_get(*buf);
-	
-	evas_object_del(wallpaper);
-	evas_object_del(window);
-	evas_object_del(clock);
-	evas_object_del(start);
-	evas_object_del(pager[0]);
-	evas_object_del(pager[1]);
-	evas_object_del(pager[2]);   
-	free(pager);
-     }
-
-   return pixels;
-}
-
-/* create and save a thumb to disk */
-EAPI int
-e_thumb_create(char *file, Evas_Coord w, Evas_Coord h)
-{
-   Eet_File *ef;
-   char *thumbpath, *ext;
-   Evas_Object *im = NULL;
-   const int *data;
-   int size, ww, hh;
-   Ecore_Evas *buf;
-   int alpha;
-   
-   ext = strrchr(file, '.');
-   if ((ext) && (!strcasecmp(ext, ".eap")))
-     return 1;
-   
-   thumbpath = e_thumb_file_get(file);
-   if (!thumbpath)
-     return -1;
-   
-   if (ext)
-     {
-	if (!strcasecmp(ext, ".edj"))
-	  {
-	     /* for now, this function does both the bg and theme previews */
-	     data = _e_thumb_etheme_create(file, w, h, &ww, &hh, &alpha, &im, &buf);
-	  }
-	else
-	  data = _e_thumb_image_create(file, w, h, &ww, &hh, &alpha, &im, &buf);	 
-     }
-   else
-     data = _e_thumb_image_create(file, w, h, &ww, &hh, &alpha, &im, &buf);
-   
-   if (data)
-     {
-	ef = eet_open(thumbpath, EET_FILE_MODE_WRITE);
-	if (!ef)
-	  {
-	     free(thumbpath);
-	     if (im) evas_object_del(im);
-	     ecore_evas_free(buf);
-	     return -1;
-	  }
-	free(thumbpath);
-
-	eet_write(ef, "/thumbnail/orig_path", file, strlen(file), 1);
-	if ((size = eet_data_image_write(ef, "/thumbnail/data",
-					 (void *)data, ww, hh, alpha,
-					 0, 91, 1)) <= 0)
-	  {
-	     if (im) evas_object_del(im);
-	     ecore_evas_free(buf);
-	     eet_close(ef);
-	     return -1;
-	  }
-	eet_close(ef);
-     }
-   if (im) evas_object_del(im);
-   ecore_evas_free(buf);
-   return 1;
-}
-
-/* get evas object containing image of the thumb */
-EAPI Evas_Object *
-e_thumb_evas_object_get(char *file, Evas *evas, Evas_Coord width, Evas_Coord height, int shrink)
-{
-   Eet_File *ef;
-   char *thumb, *ext;
-   Evas_Object *im = NULL;
-
-#define DEF_THUMB_RETURN im = evas_object_rectangle_add(evas); \
-	       evas_object_color_set(im, 255, 255, 255, 255); \
-	       evas_object_resize(im, width, height); \
-	       return im 
-   
-   D(("e_thumb_evas_object_get: (%s)\n", file));
-     
-   /* eap thumbnailer */
-   ext = strrchr(file, '.');
-   if (ext)
-     {
-	if (!strcasecmp(ext, ".eap"))
-	  {
-	     E_App *app;
-
-	     D(("e_thumb_evas_object_get: eap found\n"));
-	     app = e_app_new(file, 0);
-	     D(("e_thumb_evas_object_get: eap loaded\n"));
-	     if (!app)	     
-	       { 
-		  D(("e_thumb_evas_object_get: invalid eap\n"));
-		  DEF_THUMB_RETURN;
-	       }
-	     else
-	       {
-		  D(("e_thumb_evas_object_get: creating eap thumb\n"));
-		  im = e_icon_add(evas);
-		  e_icon_file_edje_set(im, file, "icon");
-		  e_object_unref(E_OBJECT(app));	       
-		  D(("e_thumb_evas_object_get: returning eap thumb\n"));
-		  return im;
-	       }
-	  }
-     }
-     
-   /* saved thumb */
-   /* TODO: add ability to fetch thumbs from freedesktop dirs */
-   if (!e_thumb_exists(file))
-     {
-	if (!e_thumb_create(file, width, height))
-	  {
-	     DEF_THUMB_RETURN;
-	  }
-     }
-   
-   thumb = e_thumb_file_get(file);
-   if (!thumb)
-     {
-	DEF_THUMB_RETURN;
-     }
-   
-   ef = eet_open(thumb, EET_FILE_MODE_READ);
-   if (!ef)
-     {
-	eet_close(ef);
-	free(thumb);
-	DEF_THUMB_RETURN;
-     }
-   
-   im = e_icon_add(evas);
-   e_icon_file_key_set(im, thumb, "/thumbnail/data");
-   if (shrink)
-     {
-	Evas_Coord sw, sh;
-	
-	e_icon_size_get(im, &sw, &sh);
-	evas_object_resize(im, sw, sh);
-     }
-   e_icon_fill_inside_set(im, 1);
-   free(thumb);
-   eet_close(ef);
-   return im;
-}
-
-/* return hash for a file */
-static char *
-_e_thumb_file_id(char *file)
-{
-   char                s[256], *sp;
-   const char         *chmap =
-     "0123456789abcdef"
-     "ghijklmnopqrstuv"
-     "wxyz`~!@#$%^&*()"
-     "[];',.{}<>?-=_+|";
-   unsigned int        id[4], i;
-   struct stat         st;
-
-   if (stat(file, &st) < 0)
-     return NULL;
-   
-   id[0] = st.st_ino;
-   id[1] = st.st_dev;
-   id[2] = (st.st_size & 0xffffffff);
-   id[3] = (st.st_mtime & 0xffffffff);
-
-   sp = s;
-   for (i = 0; i < 4; i++)
-     {
-	unsigned int t, tt;
-	int j;
-
-	t = id[i];
-	j = 32;
-	while (j > 0)
-	  {
-	     tt = t & ((1 << 6) - 1);
-	     *sp = chmap[tt];
-	     t >>= 6;
-	     j -= 6;
-	     sp++;
-	  }
-     }
-   *sp = 0;
-   return strdup(s);
-}
-
-/* generate a thumb from the list of queued thumbs */
 static void
-_e_thumb_generate(void)
+_e_thumb_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   E_Thumb_Item *t;
+   E_Thumb *eth;
    
-   if ((!thumb_files) || (pid != -1)) return;
-   pid = fork();
-   if (pid == 0)
+   eth = evas_object_data_get(obj, "e_thumbdata");
+   if (!eth) return;
+   evas_object_data_del(obj, "e_thumbdata");
+   _e_thumb_hash_del(eth->objid);
+   if (eth->busy)
      {
-	/* reset signal handlers for the child */
-	signal(SIGSEGV, SIG_DFL);
-	signal(SIGILL, SIG_DFL);
-	signal(SIGFPE, SIG_DFL);
-	signal(SIGBUS, SIG_DFL);
-	
-	t = thumb_files->data;
-	if (!e_thumb_exists(t->path))
-	  e_thumb_create(t->path, t->w, t->h);
-	eet_clearcache();
-	exit(0);
-     }   
+	_e_thumb_gen_end(eth->objid);
+	_pending--;
+	if (_pending == 0) _e_thumb_thumbnailers_kill();
+     }
+   if (eth->queued)
+     _thumb_queue = evas_list_remove(_thumb_queue, eth);
+   E_FREE(eth->file);
+   E_FREE(eth->key);
+   free(eth);
 }
 
-/* called when a thumb is generated */
+static void
+_e_thumb_hash_add(int objid, Evas_Object *obj)
+{
+   char buf[32];
+   
+   snprintf(buf, sizeof(buf), "%i", objid);
+   _thumbs = evas_hash_add(_thumbs, buf, obj);
+}
+
+static void
+_e_thumb_hash_del(int objid)
+{
+   char buf[32];
+   
+   snprintf(buf, sizeof(buf), "%i", objid);
+   _thumbs = evas_hash_del(_thumbs, buf, NULL);
+}
+
+static Evas_Object *
+_e_thumb_hash_find(int objid)
+{
+   char buf[32];
+   
+   snprintf(buf, sizeof(buf), "%i", objid);
+   return evas_hash_find(_thumbs, buf);
+}
+
+static void
+_e_thumb_thumbnailers_kill(void)
+{
+   Evas_List *l;
+   
+   for (l = _thumbnailers_exe; l; l = l->next)
+     ecore_exe_terminate(l->data);
+}
+
 static int
-_e_thumb_cb_exe_exit(void *data, int type, void *event)
+_e_thumb_cb_exe_event_del(void *data, int type, void *event)
 {
    Ecore_Exe_Event_Del *ev;
-   E_Thumb_Item         *t;
-   char                 *ext;
+   Evas_List *l;
    
    ev = event;
-   if (ev->pid != pid) return 1;
-   if (!thumb_files)
+   for (l = _thumbnailers_exe; l; l = l->next)
      {
-        pid = -1;
-        return 1;
-     }
-   
-   t = thumb_files->data;
-   thumb_files = evas_list_remove_list(thumb_files, thumb_files);
-   
-   ext = strrchr(t->path, '.');
-   if ((ext) && (strcasecmp(ext, ".eap")))
-     ext = NULL;
-   
-   if ((ext) || (ecore_file_exists(t->path)))
-     {
-	Evas_Coord w, h;
-	Evas_Object *tmp;
-	void *data;
-	
-	tmp = e_thumb_evas_object_get(t->path,
-				      t->evas,
-				      t->w,
-				      t->h,
-				      1);
-	if (tmp && t)
+	if (l->data == ev->exe)
 	  {
-	     data = e_icon_data_get(tmp, &w, &h);
-	     e_icon_data_set(t->obj, data, w, h);
-	     evas_object_del(tmp);
-	     if(t->cb)
-	       t->cb(t->obj, t->data);
-	     free(t);
+	     _thumbnailers_exe = evas_list_remove_list(_thumbnailers_exe, l);
+	     break;
 	  }
      }
-   
-   pid = -1;
-   _e_thumb_generate();
    return 1;
 }

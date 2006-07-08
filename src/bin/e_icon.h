@@ -10,7 +10,7 @@ EAPI Evas_Object *e_icon_add              (Evas *evas);
 EAPI void         e_icon_file_set         (Evas_Object *obj, const char *file);
 EAPI void         e_icon_file_key_set     (Evas_Object *obj, const char *file, const char *key);
 EAPI void         e_icon_file_edje_set    (Evas_Object *obj, const char *file, const char *part);
-EAPI void         e_icon_object_set(Evas_Object *obj, Evas_Object *o);    
+EAPI void         e_icon_object_set       (Evas_Object *obj, Evas_Object *o);    
 EAPI const char  *e_icon_file_get         (Evas_Object *obj);
 EAPI void         e_icon_smooth_scale_set (Evas_Object *obj, int smooth);
 EAPI int          e_icon_smooth_scale_get (Evas_Object *obj);

@@ -532,13 +532,12 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_header_append(cfdata->gui.bg_list, NULL, _("Theme Backgrounds"));
    if (edje_object_file_set(o, f1, "desklock/background"))
      {
-	if (!e_thumb_exists(c))
-	  ic = e_thumb_generate_begin(c, BG_LIST_ICON_SIZE_W, BG_LIST_ICON_SIZE_H,
-				      cfdata->evas, &ic, NULL, NULL);
-	else
-	  ic = e_thumb_evas_object_get(c, cfdata->evas, BG_LIST_ICON_SIZE_W,
-				       BG_LIST_ICON_SIZE_H, 1);
-
+        ic = e_thumb_icon_add(cfd->dia->win->evas);
+	e_thumb_icon_file_set(ic, (char *)f1, "desktop/background");
+	e_thumb_icon_size_set(ic, 64,
+			       (64 * e_zone_current_get(cfd->dia->win->container)->h) /
+			       e_zone_current_get(cfd->dia->win->container)->w);
+	e_thumb_icon_begin(ic);
 	e_widget_ilist_append(cfdata->gui.bg_list, ic, _("Theme Desklock Background"),
 			      _ibg_list_cb_bg_selected, cfdata, DEF_DESKLOCK_BACKGROUND);
      }
@@ -565,13 +564,12 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
    ic = NULL;
    if (edje_object_file_set(o, f, "desktop/background"))
      {
-	if (!e_thumb_exists(c))
-	  ic = e_thumb_generate_begin(c, BG_LIST_ICON_SIZE_W, BG_LIST_ICON_SIZE_H,
-				      cfdata->evas, &ic, NULL, NULL);
-	else
-	  ic = e_thumb_evas_object_get(c, cfdata->evas, BG_LIST_ICON_SIZE_W,
-				       BG_LIST_ICON_SIZE_H, 1);
-	
+        ic = e_thumb_icon_add(cfd->dia->win->evas);
+	e_thumb_icon_file_set(ic, (char *)f, "desktop/background");
+	e_thumb_icon_size_set(ic, 64,
+			       (64 * e_zone_current_get(cfd->dia->win->container)->h) /
+			       e_zone_current_get(cfd->dia->win->container)->w);
+	e_thumb_icon_begin(ic);
 	e_widget_ilist_append(cfdata->gui.bg_list, ic, _("Theme Background"),
 			      _ibg_list_cb_bg_selected, cfdata, DEF_THEME_BACKGROUND);
      }
@@ -612,13 +610,12 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
 		  if (ecore_file_is_dir(full_path)) continue;
 		  if (!e_util_edje_collection_exists(full_path, "desktop/background")) continue;
 		  
-		  if (!e_thumb_exists(full_path))
-		    ic = e_thumb_generate_begin(full_path, BG_LIST_ICON_SIZE_W, BG_LIST_ICON_SIZE_H,
-						cfdata->evas, &ic, NULL, NULL);
-		  else
-		    ic = e_thumb_evas_object_get(full_path, cfdata->evas, BG_LIST_ICON_SIZE_W,
-						 BG_LIST_ICON_SIZE_H, 1);
-		  
+		  ic = e_thumb_icon_add(cfd->dia->win->evas);
+		  e_thumb_icon_file_set(ic, full_path, "desktop/background");
+		  e_thumb_icon_size_set(ic, 64,
+					 (64 * e_zone_current_get(cfd->dia->win->container)->h) /
+					 e_zone_current_get(cfd->dia->win->container)->w);
+		  e_thumb_icon_begin(ic);
 		  e_widget_ilist_append(cfdata->gui.bg_list, ic, ecore_file_strip_ext(bg_file),
 					_ibg_list_cb_bg_selected, cfdata, full_path);
 		  

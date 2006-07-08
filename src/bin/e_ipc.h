@@ -13,6 +13,7 @@ typedef enum _E_Ipc_Domain
    E_IPC_DOMAIN_REQUEST,
    E_IPC_DOMAIN_REPLY,
    E_IPC_DOMAIN_EVENT,
+   E_IPC_DOMAIN_THUMB,
    E_IPC_DOMAIN_LAST
 } E_Ipc_Domain;
 

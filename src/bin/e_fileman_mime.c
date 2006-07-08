@@ -610,8 +610,7 @@ _e_fm_mime_action_internal_folder_open(E_Fm_Smart_Data *sd)
    E_Fm_File *file;
 
    file = sd->operation.files->data;
-   e_fm_dir_set(sd->object, file->path);
-
+   if (file) e_fm_dir_set(sd->object, file->path);
 }
 
 static void 
@@ -621,8 +620,11 @@ _e_fm_mime_action_internal_folder_open_other(E_Fm_Smart_Data *sd)
    E_Fm_File *file;
 
    file = sd->operation.files->data;
-   fileman = e_fileman_new_to_dir(e_container_current_get(e_manager_current_get()), file->path);
-   e_fileman_show(fileman);
+   if (file)
+     {
+	fileman = e_fileman_new_to_dir(e_container_current_get(e_manager_current_get()), file->path);
+	e_fileman_show(fileman);
+     }
 }
 static void 
 _e_fm_mime_action_internal_copy_to(E_Fm_Smart_Data *sd)
@@ -637,14 +639,15 @@ _e_fm_mime_action_internal_move_to(E_Fm_Smart_Data *sd)
 
 /* thumbnail functions */
 /***********************/
-Evas_Object * _e_fm_mime_thumbnail_evas(char *path, Evas_Coord w, Evas_Coord h, Evas *evas, Evas_Object **tmp, void (*cb)(Evas_Object *obj, void *data), void *data)
+Evas_Object *
+_e_fm_mime_thumbnail_evas(char *path, Evas_Coord w, Evas_Coord h, Evas *evas, Evas_Object **tmp, void (*cb)(Evas_Object *obj, void *data), void *data)
 {
    Evas_Object *r;
 
-   r = e_thumb_generate_begin(path, w,
-         h, evas, tmp, cb,
-         data);
-
+   r = e_thumb_icon_add(evas);
+   e_thumb_icon_file_set(r, path, NULL);
+   e_thumb_icon_size_set(r, w, h);
+   e_thumb_icon_begin(r);
    return r;
 }
 

@@ -10,14 +10,15 @@
 
 EAPI int                   e_thumb_init(void);
 EAPI int                   e_thumb_shutdown(void);
-EAPI const char           *e_thumb_dir_get(void);
-EAPI char                 *e_thumb_file_get(char *file);
-EAPI void                  e_thumb_geometry_get(char *file, int *w, int *h, int from_eet);    
-EAPI int                   e_thumb_exists(char *file);
-EAPI int                   e_thumb_create(char *file, Evas_Coord w, Evas_Coord h);
-EAPI Evas_Object          *e_thumb_evas_object_get(char *file, Evas *evas, Evas_Coord width, Evas_Coord height, int shrink);
-EAPI Evas_Object          *e_thumb_generate_begin(char *path, Evas_Coord w, Evas_Coord h, Evas *evas, Evas_Object **tmp, void (*cb)(Evas_Object *obj, void *data), void *data);
-EAPI void                  e_thumb_generate_end(char *path);
-    
+
+EAPI Evas_Object          *e_thumb_icon_add(Evas *evas);
+EAPI void                  e_thumb_icon_file_set(Evas_Object *obj, char *file, char *key);
+EAPI void                  e_thumb_icon_size_set(Evas_Object *obj, int w, int h);
+EAPI void                  e_thumb_icon_begin(Evas_Object *obj);
+EAPI void                  e_thumb_icon_end(Evas_Object *obj);
+
+EAPI void                  e_thumb_client_data(Ecore_Ipc_Event_Client_Data *e);
+EAPI void                  e_thumb_client_del(Ecore_Ipc_Event_Client_Del *e);
+
 #endif
 #endif

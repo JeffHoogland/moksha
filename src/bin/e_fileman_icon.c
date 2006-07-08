@@ -12,7 +12,6 @@ struct _E_Smart_Data
    Evas            *evas;
    Evas_Object     *obj;
 
-   char            *thumb_path;
    char            *saved_title;
 
    Evas_Object     *event_object;
@@ -137,50 +136,32 @@ e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-   if(!sd->file)
-     e_object_ref(E_OBJECT(file));
+   if (!sd->file) e_object_ref(E_OBJECT(file));
    sd->file = file;
    file->icon_object = obj;
 
-   /* FIXME fix this */
    if (sd->file->mime->thumbnail)
      {
-	sd->thumb_path = e_thumb_file_get(sd->file->path);
-	if (e_thumb_exists(sd->file->path))
-	  {
-	     sd->thumb_object = e_thumb_evas_object_get(sd->file->path,
-							sd->evas,
-							sd->iw,
-							sd->ih,
-							1);
-	     //	     evas_object_geometry_get(sd->thumb_object, NULL, NULL, &icon_w, &icon_h);
-	     //	     sd->iw = icon_w;
-	     //	     sd->ih = icon_h;
-	     sd->image_object = edje_object_add(sd->evas);
-	     e_theme_edje_object_set(sd->image_object, "base/theme/fileman",
-				     "fileman/icon_thumb");
-	     edje_extern_object_min_size_set(sd->thumb_object, sd->iw, sd->ih);
-	     edje_extern_object_max_size_set(sd->thumb_object, sd->iw, sd->ih);
-	     edje_object_part_swallow(sd->image_object, "icon_swallow",
-				      sd->thumb_object);
-	     edje_object_size_min_calc(sd->image_object, &icon_w, &icon_h);
-	     sd->iw = icon_w;
-	     sd->ih = icon_h;
-	     edje_extern_object_min_size_set(sd->image_object, icon_w, icon_h);
-	     edje_extern_object_max_size_set(sd->image_object, icon_w, icon_h);
-	     edje_object_part_swallow(sd->icon_object, "icon_swallow",
-				      sd->image_object);
-	  }
-	else
-	  {
-	     sd->thumb_object = sd->file->mime->thumbnail(sd->file->path, sd->iw,
-						       sd->ih, sd->evas,
-						       &sd->thumb_object,
-						       _e_fm_icon_thumb_generate_cb,
-						       sd);
-
-	     _e_fm_icon_icon_mime_get(sd);
-	  }
+	/* FIXME: should use smart callback to change icon when thumb done */
+	sd->thumb_object = e_thumb_icon_add(sd->evas);
+	e_thumb_icon_file_set(sd->thumb_object, sd->file->path, NULL);
+	e_thumb_icon_size_set(sd->thumb_object, 64, 64);
+	e_thumb_icon_begin(sd->thumb_object);
+	evas_object_show(sd->thumb_object);
+	sd->image_object = edje_object_add(sd->evas);
+	e_theme_edje_object_set(sd->image_object, "base/theme/fileman",
+				"fileman/icon_thumb");
+	edje_extern_object_min_size_set(sd->thumb_object, sd->iw, sd->ih);
+	edje_extern_object_max_size_set(sd->thumb_object, sd->iw, sd->ih);
+	edje_object_part_swallow(sd->image_object, "icon_swallow",
+				 sd->thumb_object);
+	edje_object_size_min_calc(sd->image_object, &icon_w, &icon_h);
+	sd->iw = icon_w;
+	sd->ih = icon_h;
+	edje_extern_object_min_size_set(sd->image_object, icon_w, icon_h);
+	edje_extern_object_max_size_set(sd->image_object, icon_w, icon_h);
+	edje_object_part_swallow(sd->icon_object, "icon_swallow",
+				 sd->image_object);
      }
    else
      {
@@ -511,49 +492,6 @@ _e_fm_icon_icon_mime_get(E_Smart_Data *sd)
    edje_extern_object_max_size_set(sd->image_object, sd->iw, sd->ih);
    edje_object_part_swallow(sd->icon_object, "icon_swallow",
 			    sd->image_object);
-}
-
-
-
-void
-_e_fm_icon_thumb_generate_cb(Evas_Object *obj, void *data)
-{
-   E_Smart_Data         *sd;
-
-   sd = data;
-
-   /* FIXME fix this */
-#if 0
-   if (e_fm_file_has_mime(sd->file,".eap") || (ecore_file_exists(sd->thumb_path)))
-     {
-	Evas_Coord icon_w, icon_h;
-
-	if (sd->image_object) evas_object_del(sd->image_object);
-
-	sd->thumb_object = e_thumb_evas_object_get(sd->file->path,
-						   sd->evas,
-						   sd->iw,
-						   sd->ih,
-						   1);
-
-	sd->image_object = edje_object_add(sd->evas);
-	e_theme_edje_object_set(sd->image_object, "base/theme/fileman",
-				"fileman/icon_thumb");
-        evas_object_show(sd->image_object);
-	evas_object_show(sd->thumb_object);
-	edje_extern_object_min_size_set(sd->thumb_object, sd->iw, sd->ih);
-	edje_extern_object_max_size_set(sd->thumb_object, sd->iw, sd->ih);
-	edje_object_part_swallow(sd->image_object, "icon_swallow",
-				 sd->thumb_object);
-	edje_object_size_min_calc(sd->image_object, &icon_w, &icon_h);
-	sd->iw = icon_w;
-	sd->ih = icon_h;
-	edje_extern_object_min_size_set(sd->image_object, icon_w, icon_h);
-	edje_extern_object_max_size_set(sd->image_object, icon_w, icon_h);
-	edje_object_part_swallow(sd->icon_object, "icon_swallow",
-				 sd->image_object);
-     }
-#endif
 }
 
 static void

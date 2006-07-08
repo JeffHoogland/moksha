@@ -104,7 +104,6 @@ _e_config_theme_cb_standard(void *data)
    
    d = data;
    e_widget_preview_edje_set(d->cfd->data, d->file, "desktop/background");
-//   e_widget_image_object_set(d->cfd->data, e_thumb_evas_object_get(d->file, d->cfd->dia->win->evas, 160, 120, 1));
    
    cfdata = d->cfd->cfdata;
    if (cfdata->current_theme) 
@@ -199,10 +198,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 		  char *noext;
 		  E_Cfg_Theme_Data *cb_data;
 		  
-		  if (!e_thumb_exists(fulltheme))
-		    o3 = e_thumb_generate_begin(fulltheme, 48, 48, cfd->dia->win->evas, &o3, NULL, NULL);
-		  else
-		    o3 = e_thumb_evas_object_get(fulltheme, cfd->dia->win->evas, 48, 48, 1);
+		  o3 = e_thumb_icon_add(cfd->dia->win->evas);
+		  e_thumb_icon_file_set(o3, fulltheme, "desktop/background");
+		  e_thumb_icon_size_set(o3, 64,
+					 (64 * e_zone_current_get(cfd->dia->win->container)->h) /
+					 e_zone_current_get(cfd->dia->win->container)->w);
+		  e_thumb_icon_begin(o3);
 		  
 		  noext = ecore_file_strip_ext(themefile);
 		  
@@ -221,8 +222,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 						 (320 * e_zone_current_get(cfd->dia->win->container)->h) /
 						 e_zone_current_get(cfd->dia->win->container)->w);
 		       e_widget_preview_edje_set(im, fulltheme, "desktop/background");
-		       // im = e_widget_image_add_from_object(evas, theme, 320, 240);
-		       // e_widget_image_object_set(im, e_thumb_evas_object_get(fulltheme, evas, 320, 240, 1));
 		    }
 		  free(noext);
 		  i++;
@@ -245,9 +244,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 				  (320 * e_zone_current_get(cfd->dia->win->container)->h) /
 				  e_zone_current_get(cfd->dia->win->container)->w);
 	e_widget_preview_edje_set(im, fulltheme, "desktop/background");
-//	theme = e_thumb_generate_begin(fulltheme, 320, 240, evas, &theme, NULL, NULL);
-//	im = e_widget_image_add_from_object(evas, theme, 320, 240);
-//	e_widget_image_object_set(im, e_thumb_evas_object_get(fulltheme, evas, 320, 240, 1));
      }
    cfd->data = im;
    

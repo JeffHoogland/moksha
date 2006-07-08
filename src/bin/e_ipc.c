@@ -116,6 +116,7 @@ _e_ipc_cb_client_del(void *data __UNUSED__, int type __UNUSED__, void *event)
    e = event;
    if (ecore_ipc_client_server_get(e->client) != _e_ipc_server) return 1;
    /* delete client sruct */
+   e_thumb_client_del(e);
    ecore_ipc_client_del(e->client);
    return 1;
 }
@@ -127,11 +128,24 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
    
    e = event;
    if (ecore_ipc_client_server_get(e->client) != _e_ipc_server) return 1;
-   switch (e->minor)
+   switch (e->major)
      {
+      case E_IPC_DOMAIN_SETUP:
+      case E_IPC_DOMAIN_REQUEST:
+      case E_IPC_DOMAIN_REPLY:
+      case E_IPC_DOMAIN_EVENT:
+	switch (e->minor)
+	  {
 #define TYPE  E_WM_IN
-#include      "e_ipc_handlers.h"
+#include "e_ipc_handlers.h"
 #undef TYPE	
+	   default:
+	     break;
+	  }
+	break;
+      case E_IPC_DOMAIN_THUMB:
+	e_thumb_client_data(e);
+	break;
       default:
 	break;
      }

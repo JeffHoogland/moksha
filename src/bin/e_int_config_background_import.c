@@ -255,16 +255,18 @@ _bg_edj_gen(Evas *evas, char *filename, int method)
    int w, h;
    const char *file;
    char buff[4096], cmd[4096];
-   char ipart[512];
+   char ipart[4096];
    char *imgdir = NULL;
-   static char tmpn[1024];
+   static char tmpn[4096];
    FILE *out = NULL;
    Ecore_Exe *x;
    
    if (!filename) return;
    file = ecore_file_get_file(filename);
    
-   snprintf(buff, sizeof(buff), "%s/.e/e/backgrounds/%s.edj", e_user_homedir_get(), ecore_file_strip_ext(file));
+   snprintf(buff, sizeof(buff), "%s/.e/e/backgrounds/%s.edj", 
+	    e_user_homedir_get(), 
+	    ecore_file_strip_ext(file));
    strcpy(tmpn, "/tmp/e_bgdlg_new.edc-tmp-XXXXXX");
    fd = mkstemp(tmpn);
    if (fd < 0) 
@@ -309,7 +311,10 @@ _bg_edj_gen(Evas *evas, char *filename, int method)
 
    fclose(out);
 
-   snprintf(cmd, sizeof(cmd), "edje_cc -v %s %s %s", ipart, tmpn, buff);
+   snprintf(cmd, sizeof(cmd), "edje_cc -v %s %s %s", 
+	    ipart, 
+	    tmpn, 
+	    e_util_filename_escape(buff));
 
    _edj_exe_exit_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _edj_exe_exit_cb, NULL);
    x = ecore_exe_run(cmd, tmpn);   

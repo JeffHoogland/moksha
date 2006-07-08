@@ -501,7 +501,6 @@ e_fm_icon_destroy(Evas_Object *obj, void *data)
    E_Fm_Icon *icon;
 
    icon = data;
-   e_thumb_generate_end(icon->file->path);
    evas_object_del(icon->icon_obj);
    icon->state.visible = 0;
 }
