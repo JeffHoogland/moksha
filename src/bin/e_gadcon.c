@@ -271,9 +271,21 @@ e_gadcon_populate(E_Gadcon *gc)
 EAPI void
 e_gadcon_unpopulate(E_Gadcon *gc)
 {
+   E_Gadcon_Client *gcc;
+   
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
-   while (gc->clients) e_object_del(E_OBJECT(gc->clients->data));
+   while (gc->clients) 
+     {
+	gcc = gc->clients->data;
+	if (gcc->menu) 
+	  {
+	     e_menu_post_deactivate_callback_set(gcc->menu, NULL, NULL);
+	     e_object_del(E_OBJECT(gcc->menu));
+	     gcc->menu = NULL;
+	  }
+	e_object_del(E_OBJECT(gc->clients->data));
+     }
 }
 
 EAPI void
