@@ -222,7 +222,7 @@ _e_cb_timer(void *data)
 static void
 _e_thumb_generate(E_Thumb *eth)
 {
-   char buf[4096], *id, *td, *ext = NULL;
+   char buf[4096], dbuf[4096], *id, *td, *ext = NULL;
    Evas *evas = NULL, *evas_im = NULL;
    Ecore_Evas *ee = NULL, *ee_im = NULL;
    Evas_Object *im = NULL, *edje = NULL;
@@ -242,9 +242,7 @@ _e_thumb_generate(E_Thumb *eth)
      }
    td[3] = 0;
    
-   snprintf(buf, sizeof(buf), "%s/%s", _thumbdir, td);
-   ecore_file_mkdir(buf);
-   
+   snprintf(dbuf, sizeof(dbuf), "%s/%s", _thumbdir, td);
    snprintf(buf, sizeof(buf), "%s/%s/%s.thm", _thumbdir, td, id + 3);
    free(id);
    free(td);
@@ -253,6 +251,8 @@ _e_thumb_generate(E_Thumb *eth)
    mtime_thumb = ecore_file_mod_time(buf);
    if (mtime_thumb <= mtime_orig)
      {
+	ecore_file_mkdir(dbuf);
+   
 	edje_file_cache_set(0);
 	edje_collection_cache_set(0);
 	ee = ecore_evas_buffer_new(1, 1);
