@@ -137,3 +137,5 @@
 #include "e_int_gadcon_config.h"
 #include "e_confirm_dialog.h"
 #include "e_int_border_prop.h"
+#include "e_entry_dialog.h"
+#include "e_fm.h"

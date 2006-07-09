@@ -430,11 +430,12 @@ main(int argc, char **argv)
    
    
    /* init the enlightenment file manager */
-   if (!e_fm_icon_init() || !e_fm_init())
+   if (!e_fm_icon_init() || !e_fm_init() || !e_fm2_init())
     {
        e_error_message_show(_("Enlightenment cannot initialize the File manager.\n"));
        _e_main_shutdown(-1);
     }
+   _e_main_shutdown_push(e_fm2_shutdown);
    _e_main_shutdown_push(e_fm_shutdown);
    _e_main_shutdown_push(e_fm_icon_shutdown);
    

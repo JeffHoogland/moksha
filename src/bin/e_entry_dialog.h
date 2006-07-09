@@ -15,10 +15,10 @@
  * @data - the pointer passed to func
 */
 
-EAPI e_entry_dialog_show(const char *title, const char *icon, const char *text, 
-		    const char *button_text, const char *button2_text, 
-		    void (*func)(char *text, void *data), 
-		    void (*func2)(void *data), void *data);
+EAPI void e_entry_dialog_show(const char *title, const char *icon, const char *text, 
+			      const char *button_text, const char *button2_text, 
+			      void (*func)(char *text, void *data), 
+			      void (*func2)(void *data), void *data);
 
 #endif
 #endif
