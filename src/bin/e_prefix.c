@@ -418,11 +418,7 @@ _e_prefix_try_argv(char *argv0)
 {
    char *path, *p, *cp, *s;
    int len, lenexe;
-#ifdef PATH_MAX
-   char buf[PATH_MAX], buf2[PATH_MAX], buf3[PATH_MAX];
-#else
    char buf[4096], buf2[4096], buf3[4096];
-#endif	
    
    /* 1. is argv0 abs path? */
    if (argv0[0] == '/')
