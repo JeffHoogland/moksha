@@ -585,6 +585,7 @@ _desklock_auth(const char *passwd)
 	E_Desklock_Auth da;
         char *current_user;
 
+	current_user = _desklock_auth_get_current_user();
 	strncpy(da.user, current_user, PATH_MAX);
 	strncpy(da.passwd, passwd, PATH_MAX);
 	da.pam.handle = NULL;

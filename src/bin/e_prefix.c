@@ -329,7 +329,9 @@ _e_prefix_share_hunt(void)
 	return 1;
      }
    /* fail. everything failed */
+#ifdef PREFIX_CACHE_FILE
    free(home);
+#endif	
    return 0;
 }
 
