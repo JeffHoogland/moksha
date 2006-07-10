@@ -243,7 +243,8 @@ _e_thumb_generate(E_Thumb *eth)
    td[3] = 0;
    
    snprintf(dbuf, sizeof(dbuf), "%s/%s", _thumbdir, td);
-   snprintf(buf, sizeof(buf), "%s/%s/%s.thm", _thumbdir, td, id + 3);
+   snprintf(buf, sizeof(buf), "%s/%s/%s-%ix%i.thm", 
+	    _thumbdir, td, id + 3, eth->w, eth->h);
    free(id);
    free(td);
    
