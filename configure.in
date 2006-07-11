@@ -73,38 +73,6 @@ MODULE_ARCH="$host_os-$host_cpu"
 AC_SUBST(MODULE_ARCH)
 AC_DEFINE_UNQUOTED(MODULE_ARCH, "$MODULE_ARCH", "Module architecture")
 
-if test "x${bindir}" = 'x${exec_prefix}/bin'; then
-  if test "x${exec_prefix}" = "xNONE"; then
-    if test "x${prefix}" = "xNONE"; then
-      bindir="${ac_default_prefix}/bin";
-    else
-      bindir="${prefix}/bin";
-    fi
-  else
-    if test "x${prefix}" = "xNONE"; then
-      bindir="${ac_default_prefix}/bin";
-    else
-      bindir="${prefix}/bin";
-    fi
-  fi
-fi
-
-if test "x${libdir}" = 'x${exec_prefix}/lib'; then
-  if test "x${exec_prefix}" = "xNONE"; then
-    if test "x${prefix}" = "xNONE"; then
-      libdir="${ac_default_prefix}/lib";
-    else
-      libdir="${prefix}/lib";
-    fi
-  else
-    if test "x${prefix}" = "xNONE"; then
-      libdir="${ac_default_prefix}/lib";
-    else
-      libdir="${prefix}/lib";
-    fi
-  fi
-fi
-
 dnl Set PACKAGE_BIN_DIR in config.h.
 if test "x${bindir}" = 'xNONE'; then
   if test "x${prefix}" = "xNONE"; then
