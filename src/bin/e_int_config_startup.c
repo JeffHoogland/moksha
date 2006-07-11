@@ -77,12 +77,17 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (e_config->init_default_theme)
      evas_stringshare_del(e_config->init_default_theme);
 
-   if (!cfdata->init_default_theme[0])
-     e_config->init_default_theme = NULL;
-   else 
+   if (cfdata->init_default_theme)
      {
-	const char *f = ecore_file_get_file(cfdata->init_default_theme);
-	e_config->init_default_theme = evas_stringshare_add(f);
+	if (!cfdata->init_default_theme[0])
+	  e_config->init_default_theme = NULL;
+	else 
+	  {
+	     const char *f;
+	     
+	     f = ecore_file_get_file(cfdata->init_default_theme);
+	     e_config->init_default_theme = evas_stringshare_add(f);
+	  }
      }
    
    e_config_save_queue();
@@ -196,7 +201,7 @@ _load_inits(E_Config_Dialog *cfd, Evas_Object *il)
 	     if (!e_util_edje_collection_exists(full_path, "init/splash")) continue;
 
 	     ic = e_thumb_icon_add(cfd->dia->win->evas);
-	     e_thumb_icon_file_set(ic, full_path, "desktop/background");
+	     e_thumb_icon_file_set(ic, full_path, "init/splash");
 	     e_thumb_icon_size_set(ic, 64,
 				    (64 * e_zone_current_get(cfd->dia->win->container)->h) /
 				    e_zone_current_get(cfd->dia->win->container)->w);
