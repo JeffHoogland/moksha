@@ -6,7 +6,11 @@ INCLUDES = -I$(top_srcdir) \
 	   @x_cflags@ \
 	   @cf_cflags@ \
 	   @VALGRIND_CFLAGS@ \
-	   @EDJE_DEF@
+	   @EDJE_DEF@ \
+	   -DPACKAGE_BIN_DIR=\"@PACKAGE_BIN_DIR@\" \
+	   -DPACKAGE_LIB_DIR=\"@PACKAGE_LIB_DIR@\" \
+	   -DPACKAGE_DATA_DIR=\"@PACKAGE_DATA_DIR@\" \
+	   -DLOCALE_DIR=\"@LOCALE_DIR@\"
 
 bin_PROGRAMS = \
 enlightenment \

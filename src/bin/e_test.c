@@ -584,6 +584,29 @@ _e_test_internal(E_Container *con)
    
    evas_object_focus_set(o, 1);
 }
+#elif 0
+static void
+_e_test_internal(E_Container *con)
+{
+   E_Dialog *dia;
+   Evas_Object *o;
+   Evas_Coord mw, mh;
+   
+   dia = e_dialog_new(con);
+   e_dialog_title_set(dia, "A Test Dialog");
+   
+   o = e_fm2_add(dia->win->evas);
+   e_fm2_path_set(o, "~/", "/");
+   evas_object_show(o);
+   
+   e_dialog_content_set(dia, o, 480, 320);
+   
+   e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
+   
+   evas_object_focus_set(o, 1);
+}
 #else
 static void
 _e_test_internal(E_Container *con)

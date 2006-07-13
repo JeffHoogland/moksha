@@ -73,36 +73,37 @@ MODULE_ARCH="$host_os-$host_cpu"
 AC_SUBST(MODULE_ARCH)
 AC_DEFINE_UNQUOTED(MODULE_ARCH, "$MODULE_ARCH", "Module architecture")
 
-dnl Set PACKAGE_BIN_DIR in config.h.
 if test "x${bindir}" = 'xNONE'; then
   if test "x${prefix}" = "xNONE"; then
-    AC_DEFINE_UNQUOTED(PACKAGE_BIN_DIR, "${ac_default_prefix}/bin", "Package installed binaries destination")
+    PACKAGE_BIN_DIR="${ac_default_prefix}/bin"
   else
-    AC_DEFINE_UNQUOTED(PACKAGE_BIN_DIR, "${prefix}/bin", "Package installed binaries destination")
+    PACKAGE_BIN_DIR="${prefix}/bin"
   fi
 else
-  AC_DEFINE_UNQUOTED(PACKAGE_BIN_DIR, "${bindir}", "Package installed binaries destination")
+  PACKAGE_BIN_DIR="${bindir}"
 fi
+AC_SUBST(PACKAGE_BIN_DIR)
 
-dnl Set PACKAGE_LIB_DIR in config.h.
 if test "x${libdir}" = 'xNONE'; then
   if test "x${prefix}" = "xNONE"; then
-    AC_DEFINE_UNQUOTED(PACKAGE_LIB_DIR, "${ac_default_prefix}/lib", "Package installed libraries destination")
+    PACKAGE_LIB_DIR="${ac_default_prefix}/lib"
   else
-    AC_DEFINE_UNQUOTED(PACKAGE_LIB_DIR, "${prefix}/lib", "Package installed libraries destination")
+    PACKAGE_LIB_DIR="${prefix}/lib"
   fi
 else
-  AC_DEFINE_UNQUOTED(PACKAGE_LIB_DIR, "${libdir}", "Package installed libraries destination")
+  PACKAGE_LIB_DIR="${libdir}"
 fi
+AC_SUBST(PACKAGE_LIB_DIR)
 
-dnl Set PACKAGE_DATA_DIR in config.h.
 if test "x${prefix}" = "xNONE"; then
-  AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${ac_default_prefix}/share/${PACKAGE}", "Package installed data destination")
-  AC_DEFINE_UNQUOTED(LOCALE_DIR, "${ac_default_prefix}/share/locale", "Locale directory")
+  PACKAGE_DATA_DIR="${ac_default_prefix}/share/${PACKAGE}"
+  LOCALE_DIR="${ac_default_prefix}/share/locale"
 else
-  AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${prefix}/share/${PACKAGE}", "Package installed data destination")
-  AC_DEFINE_UNQUOTED(LOCALE_DIR, "${prefix}/share/locale", "Locale directory")
+  PACKAGE_DATA_DIR="${prefix}/share/${PACKAGE}"
+  LOCALE_DIR="${prefix}/share/locale"
 fi
+AC_SUBST(PACKAGE_DATA_DIR)
+AC_SUBST(LOCALE_DIR)
 
 x_dir=""
 x_cflags=""
