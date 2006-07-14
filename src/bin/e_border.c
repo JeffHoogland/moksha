@@ -1691,8 +1691,14 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	     x1 = bd->zone->x + (bd->zone->w - w) / 2;
 	     /* center y-direction */
 	     y1 = bd->zone->y + (bd->zone->h - h) / 2;
-	     e_border_move_resize(bd, x1, y1, w, h);
-	     /* FULLSCREEN doesn't work with VERTICAL/HORIZONTAL */
+
+	     if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTH)
+	       e_border_move_resize(bd, x1, y1, w, h);
+	     else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
+	       e_border_move_resize(bd, bd->x, y1, bd->w, h);
+	     else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
+	       e_border_move_resize(bd, x1, bd->y, w, bd->h);
+
 	     max |= E_MAXIMIZE_BOTH;
 	     break;
 	   case E_MAXIMIZE_SMART:
