@@ -211,6 +211,10 @@ e_fm2_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    if (!sd) return; // safety
    if (!evas_object_type_get(obj)) return; // safety
    if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+   if (x > (sd->max.w - sd->w)) x = sd->max.w - sd->w;
+   if (x < 0) x = 0;
+   if (y > (sd->max.h - sd->h)) y = sd->max.h - sd->h;
+   if (y < 0) y = 0;
    if ((sd->pos.x == x) && (sd->pos.y == y)) return;
    sd->pos.x = x;
    sd->pos.y = y;
