@@ -589,21 +589,27 @@ static void
 _e_test_internal(E_Container *con)
 {
    E_Dialog *dia;
-   Evas_Object *o;
-   Evas_Coord mw, mh;
+   Evas_Object *o, *o2;
    
    dia = e_dialog_new(con);
    e_dialog_title_set(dia, "A Test Dialog");
    
    o = e_fm2_add(dia->win->evas);
-   e_fm2_path_set(o, "~/", "/");
+   e_fm2_path_set(o, NULL, "/dev");
    evas_object_show(o);
    
-   e_dialog_content_set(dia, o, 480, 320);
+   o2 = e_scrollframe_add(dia->win->evas);
+   evas_object_show(o2);
+   e_scrollframe_extern_pan_set(o2, o, 
+				e_fm2_pan_set, e_fm2_pan_get,
+				e_fm2_pan_max_get, e_fm2_pan_child_size_get);
+   e_dialog_content_set(dia, o2, 64, 64);
    
    e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
+   e_dialog_resizable_set(dia, 1);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
+   e_win_resize(dia->win, 400, 300); 
    
    evas_object_focus_set(o, 1);
 }

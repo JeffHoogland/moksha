@@ -7,8 +7,8 @@
 
 typedef enum _E_Fm2_View_Mode
 {
-   E_FM_VIEW_MODE_ICONS,
-   E_FM_VIEW_MODE_LIST
+   E_FM2_VIEW_MODE_ICONS,
+   E_FM2_VIEW_MODE_LIST
 } E_Fm2_View_Mode;
 
 #else
@@ -20,6 +20,12 @@ EAPI int                   e_fm2_shutdown(void);
 EAPI Evas_Object          *e_fm2_add(Evas *evas);
 EAPI void                  e_fm2_path_set(Evas_Object *obj, char *dev, char *path);
 EAPI void                  e_fm2_path_get(Evas_Object *obj, char **dev, char **path);
-    
+
+EAPI void                  e_fm2_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
+EAPI void                  e_fm2_pan_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
+EAPI void                  e_fm2_pan_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
+EAPI void                  e_fm2_pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h);
+
+
 #endif
 #endif

@@ -8,8 +8,15 @@ EAPI char *
 e_user_homedir_get(void)
 {
    char *homedir;
+   int len;
    
    homedir = getenv("HOME");
    if (!homedir) return strdup("/tmp");
+   len = strlen(homedir);
+   while ((len > 1) && (homedir[len - 1] == '/'))
+     {
+	homedir[len - 1] = 0;
+	len--;
+     }
    return strdup(homedir);
 }
