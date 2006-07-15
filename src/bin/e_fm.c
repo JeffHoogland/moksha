@@ -36,6 +36,7 @@ struct _E_Fm2_Smart_Data
    Ecore_Job        *resize_job;
    DIR              *dir;
    unsigned char     no_case_sort : 1;
+   unsigned char     iconlist_changed : 1;
 //   unsigned char     no_dnd : 1;
 //   unsigned char     single_select : 1;
 //   unsigned char     single_click : 1;
@@ -56,11 +57,15 @@ struct _E_Fm2_Icon
    E_Fm2_Region     *region;
    Evas_Coord        x, y, w, h;
    Evas_Object      *obj;
+   int               saved_x, saved_y;
+   int               saved_rel;
    char             *file;
    char             *mime;
    unsigned char     realized : 1;
    unsigned char     selected : 1;
    unsigned char     thumb : 1;
+   unsigned char     saved_pos : 1;
+   unsigned char     odd : 1;
 //   unsigned char     single_click : 1;
 };
 
@@ -171,6 +176,8 @@ e_fm2_path_set(Evas_Object *obj, char *dev, char *path)
     * icons and we realize/unrealize whole regions at once when that region 
     * becomes visible - this saves of object  count and memory */
    sd->regions.member_max = 128;
+   sd->view_mode = E_FM2_VIEW_MODE_LIST;
+//   sd->view_mode = E_FM2_VIEW_MODE_ICONS;
    
    _e_fm2_scan_stop(obj);
    _e_fm2_queue_free(obj);
@@ -332,6 +339,7 @@ _e_fm2_file_add(Evas_Object *obj, char *file)
    /* create icon obj and append to unsorted list */
    ic = _e_fm2_icon_new(sd, file);
    sd->queue = evas_list_append(sd->queue, ic);
+   sd->iconlist_changed = 1;
 }
 
 static void
@@ -343,6 +351,7 @@ _e_fm2_file_del(Evas_Object *obj, char *file)
    if (!sd) return;
    /* find icon of file and remove from unsorted or main list */
    /* FIXME: find and remove */
+   sd->iconlist_changed = 1;
 }
 
 static void
@@ -511,27 +520,20 @@ _e_fm2_regions_populate(Evas_Object *obj)
 	if ((!ic->region->realized) && (ic->realized))
 	  _e_fm2_icon_unrealize(ic);
      }
-   printf("pop\n");
    _e_fm2_obj_icons_place(sd);
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(obj));
 }
 
 static void
-_e_fm2_icons_place(Evas_Object *obj)
+_e_fm2_icons_place_icons(E_Fm2_Smart_Data *sd)
 {
-   E_Fm2_Smart_Data *sd;
    Evas_List *l;
    E_Fm2_Icon *ic;
    Evas_Coord x, y, rh;
-   
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
-   /* take the icon list and find a location for them */
+
    x = 0; y = 0;
    rh = 0;
-   sd->max.w = 0;
-   sd->max.h = 0;
    for (l = sd->icons; l; l = l->next)
      {
 	ic = l->data;
@@ -548,6 +550,157 @@ _e_fm2_icons_place(Evas_Object *obj)
 	if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
 	if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
      }
+}
+
+static void
+_e_fm2_icons_place_grid_icons(E_Fm2_Smart_Data *sd)
+{
+   Evas_List *l;
+   E_Fm2_Icon *ic;
+   Evas_Coord x, y, gw, gh;
+
+   gw = 0; gh = 0;
+   for (l = sd->icons; l; l = l->next)
+     {
+	ic = l->data;
+	if (ic->w > gw) gw = ic->w;
+	if (ic->h > gh) gh = ic->h;
+     }
+   x = 0; y = 0;
+   for (l = sd->icons; l; l = l->next)
+     {
+	ic = l->data;
+	if ((x > 0) && ((x + ic->w) > sd->w))
+	  {
+	     x = 0;
+	     y += gh;
+	  }
+	ic->x = x + (gw - ic->w);
+	ic->y = y + (gh - ic->h);
+	x += gw;
+	if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
+	if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
+     }
+}
+
+static void
+_e_fm2_icons_place_custom_icons(E_Fm2_Smart_Data *sd)
+{
+   Evas_List *l;
+   E_Fm2_Icon *ic;
+
+   for (l = sd->icons; l; l = l->next)
+     {
+	ic = l->data;
+
+	if (!ic->saved_pos)
+	  {
+	     /* FIXME: place using smart place fn */
+	  }
+	
+	if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
+	if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
+     }
+}
+
+static void
+_e_fm2_icons_place_custom_grid_icons(E_Fm2_Smart_Data *sd)
+{
+   Evas_List *l;
+   E_Fm2_Icon *ic;
+
+   for (l = sd->icons; l; l = l->next)
+     {
+	ic = l->data;
+	
+	if (!ic->saved_pos)
+	  {
+	     /* FIXME: place using grid fn */
+	  }
+	
+	if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
+	if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
+     }
+}
+
+static void
+_e_fm2_icons_place_custom_smart_grid_icons(E_Fm2_Smart_Data *sd)
+{
+   Evas_List *l;
+   E_Fm2_Icon *ic;
+
+   for (l = sd->icons; l; l = l->next)
+     {
+	ic = l->data;
+	
+	if (!ic->saved_pos)
+	  {
+	     /* FIXME: place using smart grid fn */
+	  }
+	
+	if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
+	if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
+     }
+}
+
+static void
+_e_fm2_icons_place_list(E_Fm2_Smart_Data *sd)
+{
+   Evas_List *l;
+   E_Fm2_Icon *ic;
+   Evas_Coord x, y;
+   int i;
+
+   x = y = 0;
+   for (i = 0, l = sd->icons; l; l = l->next, i++)
+     {
+	ic = l->data;
+	
+	/* FIXME: place in vertical list */
+	ic->x = x;
+	ic->y = y;
+	ic->w = sd->w;
+	y += ic->h;
+	ic->odd = (i & 0x01);
+	if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
+	if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
+     }
+}
+
+static void
+_e_fm2_icons_place(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   /* take the icon list and find a location for them */
+   sd->max.w = 0;
+   sd->max.h = 0;
+   switch (sd->view_mode)
+     {
+      case E_FM2_VIEW_MODE_ICONS:
+	_e_fm2_icons_place_icons(sd);
+	break;
+      case E_FM2_VIEW_MODE_GRID_ICONS:
+	_e_fm2_icons_place_grid_icons(sd);
+	break;
+      case E_FM2_VIEW_MODE_CUSTOM_ICONS:
+	_e_fm2_icons_place_custom_icons(sd);
+	break;
+      case E_FM2_VIEW_MODE_CUSTOM_GRID_ICONS:
+	_e_fm2_icons_place_custom_smart_grid_icons(sd);
+	break;
+      case E_FM2_VIEW_MODE_CUSTOM_SMART_GRID_ICONS:
+	_e_fm2_icons_place_custom_smart_grid_icons(sd);
+	break;
+      case E_FM2_VIEW_MODE_LIST:
+	_e_fm2_icons_place_list(sd);
+	break;
+      default:
+	break;
+     }
+   /* tell our parent scrollview - if any, that we have changed */
    evas_object_smart_callback_call(sd->obj, "changed", NULL);
 }
 
@@ -602,9 +755,36 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, char *file)
    ic = E_NEW(E_Fm2_Icon, 1);
    ic->sd = sd;
    ic->file = strdup(file);
-   ic->w = 64;
-   ic->h = 64;
-   printf("FM: IC+ %s\n", ic->file);
+   /* FIXME: have many icon size policies. fixed, max, auto-calc etc. */
+   switch (sd->view_mode)
+     {
+      case E_FM2_VIEW_MODE_ICONS:
+	ic->w = 64;
+	ic->h = 64;
+	break;
+      case E_FM2_VIEW_MODE_GRID_ICONS:
+	ic->w = 64;
+	ic->h = 64;
+	break;
+      case E_FM2_VIEW_MODE_CUSTOM_ICONS:
+	ic->w = 64;
+	ic->h = 64;
+	break;
+      case E_FM2_VIEW_MODE_CUSTOM_GRID_ICONS:
+	ic->w = 64;
+	ic->h = 64;
+	break;
+      case E_FM2_VIEW_MODE_CUSTOM_SMART_GRID_ICONS:
+	ic->w = 64;
+	ic->h = 64;
+	break;
+      case E_FM2_VIEW_MODE_LIST:
+	ic->w = sd->w;
+	ic->h = 24;
+	break;
+      default:
+	break;
+     }
    return ic;
 }
 
@@ -627,14 +807,27 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
    ic->obj = edje_object_add(evas_object_evas_get(ic->sd->obj));
    edje_object_freeze(ic->obj);
    evas_object_smart_member_add(ic->obj, ic->sd->obj);
-   e_theme_edje_object_set(ic->obj, "base/theme/fileman",
-			   "fileman/icon_normal");
+   if (ic->sd->view_mode == E_FM2_VIEW_MODE_LIST)
+     {
+	if (ic->odd)
+	  e_theme_edje_object_set(ic->obj, "base/theme/widgets",
+				  "widgets/ilist_odd");
+	else
+	  e_theme_edje_object_set(ic->obj, "base/theme/widgets",
+				  "widgets/ilist");
+	edje_object_part_text_set(ic->obj, "label", ic->file);
+     }
+   else
+     {
+	e_theme_edje_object_set(ic->obj, "base/theme/fileman",
+				"fileman/icon_normal");
+	edje_object_part_text_set(ic->obj, "icon_title", ic->file);
+     }
    evas_object_clip_set(ic->obj, ic->sd->clip);
    evas_object_move(ic->obj,
 		    ic->sd->x + ic->x - ic->sd->pos.x,
 		    ic->sd->y + ic->y - ic->sd->pos.y);
    evas_object_resize(ic->obj, ic->w, ic->h);
-   edje_object_part_text_set(ic->obj, "icon_title", ic->file);
    edje_object_thaw(ic->obj);
    evas_event_thaw(evas_object_evas_get(ic->sd->obj));
    evas_object_show(ic->obj);
@@ -754,17 +947,48 @@ static void
 _e_fm2_cb_resize_job(void *data)
 {
    E_Fm2_Smart_Data *sd;
+   Evas_List *l;
+   E_Fm2_Icon *ic;
    
    sd = evas_object_smart_data_get(data);
    if (!sd) return;
    sd->resize_job = NULL;
    evas_event_freeze(evas_object_evas_get(sd->obj));
    edje_freeze();
-   _e_fm2_regions_free(sd->obj);
-   _e_fm2_icons_place(sd->obj);
-   _e_fm2_regions_populate(sd->obj);
+   switch (sd->view_mode)
+     {
+      case E_FM2_VIEW_MODE_ICONS:
+	_e_fm2_regions_free(sd->obj);
+	_e_fm2_icons_place(sd->obj);
+	_e_fm2_regions_populate(sd->obj);
+	break;
+      case E_FM2_VIEW_MODE_GRID_ICONS:
+	_e_fm2_regions_free(sd->obj);
+	_e_fm2_icons_place(sd->obj);
+	_e_fm2_regions_populate(sd->obj);
+	break;
+      case E_FM2_VIEW_MODE_CUSTOM_ICONS:
+	break;
+      case E_FM2_VIEW_MODE_CUSTOM_GRID_ICONS:
+	break;
+      case E_FM2_VIEW_MODE_CUSTOM_SMART_GRID_ICONS:
+	break;
+      case E_FM2_VIEW_MODE_LIST:
+	if (sd->iconlist_changed)
+	  {
+	     for (l = sd->icons; l; l = l->next)
+	       _e_fm2_icon_unrealize(ic);
+	  }
+        _e_fm2_regions_free(sd->obj);
+	_e_fm2_icons_place(sd->obj);
+        _e_fm2_regions_populate(sd->obj);
+	break;
+      default:
+	break;
+     }
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(sd->obj));
+   sd->iconlist_changed = 0;
 }
 
 static int
@@ -844,16 +1068,6 @@ _e_fm2_cb_scan_timer(void *data)
    _e_fm2_queue_process(data);
    if (!sd->scan_idler)
      {
-	Evas_List *l;
-	
-	/* we finished scanning! */
-	for (l = sd->icons; l; l = l->next)
-	  {
-	     E_Fm2_Icon *ic;
-	     
-	     ic = l->data;
-	     printf("FM: IC: %i %i, %s\n", ic->x, ic->y, ic->file);
-	  }
 	sd->scan_timer = NULL;
 	return 0;
      }
@@ -879,9 +1093,12 @@ _e_fm2_obj_icons_place(E_Fm2_Smart_Data *sd)
 	       {
 		  ic = ll->data;
 		  if (ic->realized)
-		    evas_object_move(ic->obj, 
-				     sd->x + ic->x - sd->pos.x, 
-				     sd->y + ic->y - sd->pos.y);
+		    {
+		       evas_object_move(ic->obj, 
+					sd->x + ic->x - sd->pos.x, 
+					sd->y + ic->y - sd->pos.y);
+		       evas_object_resize(ic->obj, ic->w, ic->h);
+		    }
 	       }
 	  }
      }
@@ -942,7 +1159,6 @@ _e_fm2_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    sd->x = x;
    sd->y = y;
    evas_object_move(sd->clip, x, y);
-   printf("mov\n");
    _e_fm2_obj_icons_place(sd);
 }
 
