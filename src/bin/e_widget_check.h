@@ -9,6 +9,7 @@
 EAPI Evas_Object *e_widget_check_add(Evas *evas, char *label, int *val);
 EAPI void	  e_widget_check_checked_set(Evas_Object *check, int checked);
 EAPI int	  e_widget_check_checked_get(Evas_Object *check);
+EAPI Evas_Object *e_widget_check_icon_add(Evas *evas, char *label, char *icon, int icon_w, int icon_h, int *val);
 
 #endif
 #endif
