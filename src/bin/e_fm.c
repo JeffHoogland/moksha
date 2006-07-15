@@ -462,6 +462,7 @@ _e_fm2_regions_populate(Evas_Object *obj)
    /* take the icon list and split into regions */
    rg = NULL;
    evas_event_freeze(evas_object_evas_get(obj));
+   edje_freeze();
    for (l = sd->icons; l; l = l->next)
      {
 	ic = l->data;
@@ -512,6 +513,7 @@ _e_fm2_regions_populate(Evas_Object *obj)
      }
    printf("pop\n");
    _e_fm2_obj_icons_place(sd);
+   edje_thaw();
    evas_event_thaw(evas_object_evas_get(obj));
 }
 
@@ -575,6 +577,7 @@ _e_fm2_regions_eval(Evas_Object *obj)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    evas_event_freeze(evas_object_evas_get(obj));
+   edje_freeze();
    for (l = sd->regions.list; l; l = l->next)
      {
 	rg = l->data;
@@ -584,6 +587,7 @@ _e_fm2_regions_eval(Evas_Object *obj)
 	else
 	  _e_fm2_region_unrealize(rg);
      }
+   edje_thaw();
    evas_event_thaw(evas_object_evas_get(obj));
 }
 
@@ -621,8 +625,8 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
    ic->realized = 1;
    evas_event_freeze(evas_object_evas_get(ic->sd->obj));
    ic->obj = edje_object_add(evas_object_evas_get(ic->sd->obj));
-   evas_object_smart_member_add(ic->obj, ic->sd->obj);
    edje_object_freeze(ic->obj);
+   evas_object_smart_member_add(ic->obj, ic->sd->obj);
    e_theme_edje_object_set(ic->obj, "base/theme/fileman",
 			   "fileman/icon_normal");
    evas_object_clip_set(ic->obj, ic->sd->clip);
@@ -694,7 +698,9 @@ _e_fm2_region_realize(E_Fm2_Region *rg)
    /* actually create evas objects etc. */
    rg->realized = 1;
    printf("REG %p REALIZE\n", rg);
+   edje_freeze();
    for (l = rg->list; l; l = l->next) _e_fm2_icon_realize(l->data);
+   edje_thaw();
 }
 
 static void
@@ -706,7 +712,9 @@ _e_fm2_region_unrealize(E_Fm2_Region *rg)
    /* delete evas objects */
    rg->realized = 0;
    printf("REG %p UNREALIZE\n", rg);
+   edje_freeze();
    for (l = rg->list; l; l = l->next) _e_fm2_icon_unrealize(l->data);
+   edje_thaw();
 }
 
 static int
@@ -735,8 +743,10 @@ _e_fm2_cb_scroll_job(void *data)
    sd->scroll_job = NULL;
    printf("DO scroll!\n");
    evas_event_freeze(evas_object_evas_get(sd->obj));
+   edje_freeze();
    _e_fm2_regions_eval(sd->obj);
    _e_fm2_obj_icons_place(sd);
+   edje_thaw();
    evas_event_thaw(evas_object_evas_get(sd->obj));
 }
 
@@ -749,9 +759,11 @@ _e_fm2_cb_resize_job(void *data)
    if (!sd) return;
    sd->resize_job = NULL;
    evas_event_freeze(evas_object_evas_get(sd->obj));
+   edje_freeze();
    _e_fm2_regions_free(sd->obj);
    _e_fm2_icons_place(sd->obj);
    _e_fm2_regions_populate(sd->obj);
+   edje_thaw();
    evas_event_thaw(evas_object_evas_get(sd->obj));
 }
 
@@ -857,6 +869,7 @@ _e_fm2_obj_icons_place(E_Fm2_Smart_Data *sd)
    E_Fm2_Icon *ic;
 
    evas_event_freeze(evas_object_evas_get(sd->obj));
+   edje_freeze();
    for (l = sd->regions.list; l; l = l->next)
      {
 	rg = l->data;
@@ -872,6 +885,7 @@ _e_fm2_obj_icons_place(E_Fm2_Smart_Data *sd)
 	       }
 	  }
      }
+   edje_thaw();
    evas_event_thaw(evas_object_evas_get(sd->obj));
 }
 
