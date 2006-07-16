@@ -48,8 +48,8 @@ struct _E_Fm2_Smart_Data
    unsigned char     dirs_last : 1;
    unsigned char     single_select : 1;
    unsigned char     windows_multi_select_modifiers : 1;
-//   unsigned char     no_dnd : 1;
-//   unsigned char     single_click : 1;
+   unsigned char     open_dirs_in_place : 1;
+   unsigned char     selector_mode : 1;
 };
 
 struct _E_Fm2_Region
@@ -76,7 +76,6 @@ struct _E_Fm2_Icon
    unsigned char     last_selected : 1;
    unsigned char     saved_pos : 1;
    unsigned char     odd : 1;
-//   unsigned char     single_click : 1;
 };
 
 static char *_e_fm2_dev_path_map(char *dev, char *path);
@@ -190,17 +189,14 @@ e_fm2_path_set(Evas_Object *obj, char *dev, char *path)
    if (!evas_object_type_get(obj)) return; // safety
    if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
 
-   /* we split up files into regions. each region can have a maximum of 128 
-    * icons and we realize/unrealize whole regions at once when that region 
-    * becomes visible - this saves of object  count and memory */
-   sd->regions.member_max = 32;
 //   sd->view_mode = E_FM2_VIEW_MODE_ICONS;
    sd->view_mode = E_FM2_VIEW_MODE_LIST;
+   sd->regions.member_max = 32;
    sd->icon.w = 64;
    sd->icon.h = 64;
-   sd->icon.list_w = 24;
-   sd->icon.list_h = 24;
-   sd->icon.fixed_w = 0;
+   sd->icon.list_w = 64;
+   sd->icon.list_h = 64;
+   sd->icon.fixed_w = 1;
    sd->icon.fixed_h = 1;
    sd->no_case_sort = 1;
    sd->show_extension = 0;
@@ -208,6 +204,8 @@ e_fm2_path_set(Evas_Object *obj, char *dev, char *path)
    sd->dirs_last = 1;
    sd->single_select = 0;
    sd->windows_multi_select_modifiers = 0;
+   sd->open_dirs_in_place = 0;
+   sd->selector_mode = 0;
    
    _e_fm2_scan_stop(obj);
    _e_fm2_queue_free(obj);
@@ -219,7 +217,6 @@ e_fm2_path_set(Evas_Object *obj, char *dev, char *path)
    if (dev) sd->dev = strdup(dev);
    sd->path = strdup(path);
    sd->realpath = _e_fm2_dev_path_map(sd->dev, sd->path);
-   // FIXME: begin dir scan/build
    printf("FM: %s\n", sd->realpath);
    _e_fm2_scan_start(obj);
 }
@@ -238,6 +235,118 @@ e_fm2_path_get(Evas_Object *obj, char **dev, char **path)
    if (dev) *dev = sd->dev;
    if (path) *path = sd->path;
 }
+
+/*
+EAPI char *
+e_fm2_parent_get(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+}
+
+EAPI void
+e_fm2_view_mode_set(Evas_Object *obj, E_Fm2_View_Mode view_mode)
+{
+   E_Fm2_Smart_Data *sd;
+
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+}
+
+EAPI void
+e_fm2_icon_size_set(Evas_Object *obj, int w, int h, int fixed_w, int fixed_h)
+{
+   E_Fm2_Smart_Data *sd;
+
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+}
+
+EAPI void
+e_fm2_list_size_set(Evas_Object *obj, int w, int h, int fixed_w, int fixed_h)
+{
+   E_Fm2_Smart_Data *sd;
+
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+}
+
+EAPI void
+e_fm2_no_case_sort_set(Evas_Object *obj, int no_case_sort)
+{
+   E_Fm2_Smart_Data *sd;
+
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+}
+
+EAPI void
+e_fm2_show_extension_set(Evas_Object *obj, int show_ext)
+{
+   E_Fm2_Smart_Data *sd;
+
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+}
+
+EAPI void
+e_fm2_dirs_first_last_set(Evas_Object *obj, int dirs_first, int dirs_last)
+{
+   E_Fm2_Smart_Data *sd;
+
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+}
+
+EAPI void
+e_fm2_multi_mode_set(Evas_Object *obj, int windows_multi_modifier)
+{
+   E_Fm2_Smart_Data *sd;
+
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+}
+
+EAPI void
+e_fm2_open_dirs_in_place_set(Evas_Object *obj, int open_in_place)
+{
+   E_Fm2_Smart_Data *sd;
+
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+}
+
+EAPI void
+e_fm2_selector_mode_set(Evas_Object *obj, int selector_mode)
+{
+   E_Fm2_Smart_Data *sd;
+
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+}
+*/
 
 EAPI void
 e_fm2_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
@@ -700,6 +809,11 @@ _e_fm2_icons_place_list(E_Fm2_Smart_Data *sd)
 	ic->odd = (i & 0x01);
 	if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
 	if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
+     }
+   for (i = 0, l = sd->icons; l; l = l->next, i++)
+     {
+	ic = l->data;
+	ic->w = sd->max.w;
      }
 }
 
@@ -1178,7 +1292,23 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
    
    ic = data;
    ev = event_info;
-   if (ev->button == 1)
+   if ((ev->button == 1) &&(ev->flags & EVAS_BUTTON_TRIPLE_CLICK))
+     {
+     }
+   else if ((ev->button == 1) &&(ev->flags & EVAS_BUTTON_DOUBLE_CLICK))
+     {
+	/* if its a directory && open dirs in-place is set then change the dir
+	 * to be the dir + file */
+	/* if its in file selector mode then signal that a selection has
+	 * taken place and dont do anything more */
+	
+	/* do the below per selected file */
+	/* if its a directory and open dirs in-place is not set, then 
+	 * signal owner that a new dir should be opened */
+	/* if its a normal file - do what the mime type says to do with
+	 * that file type */
+     }
+   else if (ev->button == 1)
      {
 	if (ic->sd->windows_multi_select_modifiers)
 	  {
@@ -1201,7 +1331,7 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	  }
 	if (range_sel)
 	  {
-	     /* find last selected - if any, and seletc all icons between */
+	     /* find last selected - if any, and select all icons between */
 	     for (l = ic->sd->icons; l; l = l->next)
 	       {
 		  ic2 = l->data;
@@ -1251,10 +1381,13 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 		  ic2->last_selected = 0;
 	       }
 	  }
-	if ((!range_sel) && (ic->selected))
+	if ((multi_sel) && (ic->selected))
 	  _e_fm2_icon_deselect(ic);
 	else
 	  _e_fm2_icon_select(ic);
+     }
+   else if (ev->button == 3)
+     {
      }
 }
     
