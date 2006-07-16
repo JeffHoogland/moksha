@@ -8,6 +8,11 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: make window sitcky. send window to another desktop - get ghost window.
+  should 1. make any such operation in the pager or menu useless and do
+  nothng if the window is sticky and 2. remove the send window to menu if it
+  is sticky and in the pager disallow dragging out of the pager desktop if
+  the window is sticky.
 * BUG: if app asks for borderless in properties - borderless toggle in menu
   doesn't have any effect.
 * BUG: set any specific border type and when you maximize the border changes
