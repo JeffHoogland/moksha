@@ -595,7 +595,7 @@ _e_test_internal(E_Container *con)
    e_dialog_title_set(dia, "A Test Dialog");
    
    o = e_fm2_add(dia->win->evas);
-   e_fm2_path_set(o, NULL, "/dev");
+   e_fm2_path_set(o, "~/", "/pix/bg");
    evas_object_show(o);
    
    o2 = e_scrollframe_add(dia->win->evas);

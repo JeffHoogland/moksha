@@ -19,6 +19,12 @@ struct _E_Fm2_Smart_Data
    char             *realpath;
    E_Fm2_View_Mode   view_mode;
    struct {
+      int            w, h;
+      int            list_w, list_h;
+      unsigned char  fixed_w : 1;
+      unsigned char  fixed_h : 1;
+   } icon;
+   struct {
       Evas_Coord     w, h;
    } max;
    struct {
@@ -37,10 +43,13 @@ struct _E_Fm2_Smart_Data
    DIR              *dir;
    unsigned char     no_case_sort : 1;
    unsigned char     iconlist_changed : 1;
+   unsigned char     show_extension : 1;
+   unsigned char     dirs_first : 1;
+   unsigned char     dirs_last : 1;
+   unsigned char     single_select : 1;
+   unsigned char     windows_multi_select_modifiers : 1;
 //   unsigned char     no_dnd : 1;
-//   unsigned char     single_select : 1;
 //   unsigned char     single_click : 1;
-//   unsigned char     show_ext : 1;
 };
 
 struct _E_Fm2_Region
@@ -55,15 +64,16 @@ struct _E_Fm2_Icon
 {
    E_Fm2_Smart_Data *sd;
    E_Fm2_Region     *region;
-   Evas_Coord        x, y, w, h;
-   Evas_Object      *obj;
+   Evas_Coord        x, y, w, h, min_w, min_h;
+   Evas_Object      *obj, *obj_icon;
    int               saved_x, saved_y;
    int               saved_rel;
    char             *file;
    char             *mime;
+   struct stat       st;
    unsigned char     realized : 1;
    unsigned char     selected : 1;
-   unsigned char     thumb : 1;
+   unsigned char     last_selected : 1;
    unsigned char     saved_pos : 1;
    unsigned char     odd : 1;
 //   unsigned char     single_click : 1;
@@ -87,6 +97,10 @@ static void _e_fm2_icon_free(E_Fm2_Icon *ic);
 static void _e_fm2_icon_realize(E_Fm2_Icon *ic);
 static void _e_fm2_icon_unrealize(E_Fm2_Icon *ic);
 static int _e_fm2_icon_visible(E_Fm2_Icon *ic);
+static void _e_fm2_icon_label_set(E_Fm2_Icon *ic, Evas_Object *obj);
+static void _e_fm2_icon_icon_set(E_Fm2_Icon *ic);
+static void _e_fm2_icon_select(E_Fm2_Icon *ic);
+static void _e_fm2_icon_deselect(E_Fm2_Icon *ic);
 
 static E_Fm2_Region *_e_fm2_region_new(E_Fm2_Smart_Data *sd);
 static void _e_fm2_region_free(E_Fm2_Region *rg);
@@ -94,6 +108,10 @@ static void _e_fm2_region_realize(E_Fm2_Region *rg);
 static void _e_fm2_region_unrealize(E_Fm2_Region *rg);
 static int _e_fm2_region_visible(E_Fm2_Region *rg);
 
+static void _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_fm2_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_fm2_cb_icon_thumb_gen(void *data, Evas_Object *obj, void *event_info);
 static void _e_fm2_cb_scroll_job(void *data);
 static void _e_fm2_cb_resize_job(void *data);
 static int _e_fm2_cb_icon_sort(void *data1, void *data2);
@@ -175,9 +193,21 @@ e_fm2_path_set(Evas_Object *obj, char *dev, char *path)
    /* we split up files into regions. each region can have a maximum of 128 
     * icons and we realize/unrealize whole regions at once when that region 
     * becomes visible - this saves of object  count and memory */
-   sd->regions.member_max = 128;
-   sd->view_mode = E_FM2_VIEW_MODE_LIST;
+   sd->regions.member_max = 32;
 //   sd->view_mode = E_FM2_VIEW_MODE_ICONS;
+   sd->view_mode = E_FM2_VIEW_MODE_LIST;
+   sd->icon.w = 64;
+   sd->icon.h = 64;
+   sd->icon.list_w = 24;
+   sd->icon.list_h = 24;
+   sd->icon.fixed_w = 0;
+   sd->icon.fixed_h = 1;
+   sd->no_case_sort = 1;
+   sd->show_extension = 0;
+   sd->dirs_first = 1;
+   sd->dirs_last = 1;
+   sd->single_select = 0;
+   sd->windows_multi_select_modifiers = 0;
    
    _e_fm2_scan_stop(obj);
    _e_fm2_queue_free(obj);
@@ -338,8 +368,11 @@ _e_fm2_file_add(Evas_Object *obj, char *file)
    if (!sd) return;
    /* create icon obj and append to unsorted list */
    ic = _e_fm2_icon_new(sd, file);
-   sd->queue = evas_list_append(sd->queue, ic);
-   sd->iconlist_changed = 1;
+   if (ic)
+     {
+	sd->queue = evas_list_append(sd->queue, ic);
+	sd->iconlist_changed = 1;
+     }
 }
 
 static void
@@ -659,7 +692,10 @@ _e_fm2_icons_place_list(E_Fm2_Smart_Data *sd)
 	/* FIXME: place in vertical list */
 	ic->x = x;
 	ic->y = y;
-	ic->w = sd->w;
+	if (sd->w > ic->min_w)
+	  ic->w = sd->w;
+	else
+	  ic->w = ic->min_w;
 	y += ic->h;
 	ic->odd = (i & 0x01);
 	if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
@@ -750,37 +786,81 @@ static E_Fm2_Icon *
 _e_fm2_icon_new(E_Fm2_Smart_Data *sd, char *file)
 {
    E_Fm2_Icon *ic;
+   Evas_Coord mw = 0, mh = 0;
+   Evas_Object *obj, *obj2;
+   char buf[4096];
    
    /* create icon */
    ic = E_NEW(E_Fm2_Icon, 1);
+   snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, file);
+   if (stat(buf, &(ic->st)) == -1)
+     {
+	free(ic);
+	return NULL;
+     }
    ic->sd = sd;
    ic->file = strdup(file);
    /* FIXME: have many icon size policies. fixed, max, auto-calc etc. */
    switch (sd->view_mode)
      {
       case E_FM2_VIEW_MODE_ICONS:
-	ic->w = 64;
-	ic->h = 64;
-	break;
       case E_FM2_VIEW_MODE_GRID_ICONS:
-	ic->w = 64;
-	ic->h = 64;
-	break;
       case E_FM2_VIEW_MODE_CUSTOM_ICONS:
-	ic->w = 64;
-	ic->h = 64;
-	break;
       case E_FM2_VIEW_MODE_CUSTOM_GRID_ICONS:
-	ic->w = 64;
-	ic->h = 64;
-	break;
       case E_FM2_VIEW_MODE_CUSTOM_SMART_GRID_ICONS:
-	ic->w = 64;
-	ic->h = 64;
+	/* FIXME: need to define icon edjes. here goes:
+	 * 
+	 * fileman/icon/fixed
+	 * fileman/icon/variable
+	 * fileman/list/fixed
+	 * fileman/list/variable
+	 * fileman/list_odd/fixed
+	 * fileman/list_odd/variable
+	 * 
+	 * and now list other things i will need
+	 * 
+	 * fileman/background
+	 * fileman/selection
+	 * fileman/scrollframe
+	 *
+	 */
+	if ((!sd->icon.fixed_w) || (!sd->icon.fixed_h))
+	  {
+	     obj = edje_object_add(evas_object_evas_get(sd->obj));
+	     e_theme_edje_object_set(obj, "base/theme/fileman",
+				     "fileman/icon/variable");
+	     edje_object_part_text_set(obj, "label", ic->file);
+	     edje_object_size_min_calc(obj, &mw, &mh);
+	     evas_object_del(obj);
+	  }
+	if (sd->icon.fixed_w) ic->w = sd->icon.w;
+	if (sd->icon.fixed_h) ic->h = sd->icon.h;
+	ic->min_w = mw;
+	ic->min_h = mh;
 	break;
       case E_FM2_VIEW_MODE_LIST:
-	ic->w = sd->w;
-	ic->h = 24;
+	  {
+             obj = edje_object_add(evas_object_evas_get(sd->obj));
+	     if (sd->icon.fixed_w)
+	       e_theme_edje_object_set(obj, "base/theme/fileman",
+				       "fileman/list/fixed");
+	     else
+	       e_theme_edje_object_set(obj, "base/theme/fileman",
+				       "fileman/list/variable");
+	     _e_fm2_icon_label_set(ic, obj);
+	     obj2 = evas_object_rectangle_add(evas_object_evas_get(sd->obj));
+	     edje_extern_object_min_size_set(obj2, sd->icon.list_w, sd->icon.list_h);
+	     edje_extern_object_max_size_set(obj2, sd->icon.list_w, sd->icon.list_h);
+	     edje_object_part_swallow(obj, "icon_swallow", obj2);
+	     edje_object_size_min_calc(obj, &mw, &mh);
+	     evas_object_del(obj2);
+	     evas_object_del(obj);
+	  }
+	if (mw < sd->w) ic->w = sd->w;
+	else ic->w = mw;
+	ic->h = mh;
+	ic->min_w = mw;
+	ic->min_h = mh;
 	break;
       default:
 	break;
@@ -807,15 +887,29 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
    ic->obj = edje_object_add(evas_object_evas_get(ic->sd->obj));
    edje_object_freeze(ic->obj);
    evas_object_smart_member_add(ic->obj, ic->sd->obj);
+   /* FIXME: this is currently a hack just to get a display working - go back
+    * and do proper icon stuff later */
    if (ic->sd->view_mode == E_FM2_VIEW_MODE_LIST)
      {
-	if (ic->odd)
-	  e_theme_edje_object_set(ic->obj, "base/theme/widgets",
-				  "widgets/ilist_odd");
+        if (ic->sd->icon.fixed_w)
+	  {
+	     if (ic->odd)
+	       e_theme_edje_object_set(ic->obj, "base/theme/widgets",
+				       "fileman/list_odd/fixed");
+	     else
+	       e_theme_edje_object_set(ic->obj, "base/theme/widgets",
+				       "fileman/list/fixed");
+	  }
 	else
-	  e_theme_edje_object_set(ic->obj, "base/theme/widgets",
-				  "widgets/ilist");
-	edje_object_part_text_set(ic->obj, "label", ic->file);
+	  {
+	     if (ic->odd)
+	       e_theme_edje_object_set(ic->obj, "base/theme/widgets",
+				       "fileman/list_odd/variable");
+	     else
+	       e_theme_edje_object_set(ic->obj, "base/theme/widgets",
+				       "fileman/list/variable");
+	  }
+	_e_fm2_icon_label_set(ic, ic->obj);
      }
    else
      {
@@ -828,9 +922,23 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
 		    ic->sd->x + ic->x - ic->sd->pos.x,
 		    ic->sd->y + ic->y - ic->sd->pos.y);
    evas_object_resize(ic->obj, ic->w, ic->h);
+
+   evas_object_event_callback_add(ic->obj, EVAS_CALLBACK_MOUSE_DOWN, _e_fm2_cb_icon_mouse_down, ic);
+   evas_object_event_callback_add(ic->obj, EVAS_CALLBACK_MOUSE_UP, _e_fm2_cb_icon_mouse_up, ic);
+   evas_object_event_callback_add(ic->obj, EVAS_CALLBACK_MOUSE_MOVE, _e_fm2_cb_icon_mouse_move, ic);
+   
+   _e_fm2_icon_icon_set(ic);
+   
    edje_object_thaw(ic->obj);
    evas_event_thaw(evas_object_evas_get(ic->sd->obj));
    evas_object_show(ic->obj);
+
+   if (ic->selected)
+     {
+	/* FIXME: need new signal to INSTANTLY activate - no anim */
+	edje_object_signal_emit(ic->obj, "active", "");
+	edje_object_signal_emit(ic->obj_icon, "active", "");
+     }
 }
 
 static void
@@ -841,6 +949,8 @@ _e_fm2_icon_unrealize(E_Fm2_Icon *ic)
    ic->realized = 0;
    evas_object_del(ic->obj);
    ic->obj = NULL;
+   evas_object_del(ic->obj_icon);
+   ic->obj_icon = NULL;
 }
 
 static int
@@ -855,6 +965,138 @@ _e_fm2_icon_visible(E_Fm2_Icon *ic)
        )
      return 1;
    return 0;
+}
+
+static void
+_e_fm2_icon_label_set(E_Fm2_Icon *ic, Evas_Object *obj)
+{
+   char buf[4096], *p;
+   int len;
+   
+   if (ic->sd->show_extension)
+     edje_object_part_text_set(obj, "label", ic->file);
+   else
+     {
+	/* remove extension. handle double extensions like .tar.gz too
+	 * also be fuzzy - up to 4 chars of extn is ok - eg .html but 5 or
+	 * more is considered part of the name
+	 */
+	strncpy(buf, ic->file, sizeof(buf) - 2);
+	buf[sizeof(buf) - 1] = 0;
+	
+	len = strlen(buf);
+	p = strrchr(buf, '.');
+	if ((p) && ((len - (p - buf)) < 6))
+	  {
+	     *p = 0;
+	
+	     len = strlen(buf);
+	     p = strrchr(buf, '.');
+	     if ((p) && ((len - (p - buf)) < 6)) *p = 0;
+	  }
+	edje_object_part_text_set(obj, "label", buf);
+     }
+}
+
+static void
+_e_fm2_icon_icon_set(E_Fm2_Icon *ic)
+{
+   char buf[4096];
+   
+   if (!ic->realized) return;
+   /* FIXME: use mimetype - for now just using extension glob */
+   if (S_ISDIR(ic->st.st_mode))
+     {
+	ic->obj_icon = edje_object_add(evas_object_evas_get(ic->sd->obj));
+	e_theme_edje_object_set(ic->obj_icon, "base/theme/fileman",
+				"icons/fileman/folder");
+	edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
+	evas_object_show(ic->obj_icon);
+     }
+   else
+     {
+	if (
+	    (e_util_glob_case_match(ic->file, "*.jpg")) ||
+	    (e_util_glob_case_match(ic->file, "*.jpeg")) ||
+	    (e_util_glob_case_match(ic->file, "*.jfif")) ||
+	    (e_util_glob_case_match(ic->file, "*.jpe")) ||
+	    (e_util_glob_case_match(ic->file, "*.png")) ||
+	    (e_util_glob_case_match(ic->file, "*.gif")) ||
+	    (e_util_glob_case_match(ic->file, "*.tif")) ||
+	    (e_util_glob_case_match(ic->file, "*.tiff"))
+	    )
+	  {
+	     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->file);
+	     ic->obj_icon = e_thumb_icon_add(evas_object_evas_get(ic->sd->obj));
+	     e_thumb_icon_file_set(ic->obj_icon, buf, NULL);
+	     e_thumb_icon_size_set(ic->obj_icon, 64, 64);
+	     evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
+	     e_thumb_icon_begin(ic->obj_icon);
+	     edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
+	     evas_object_show(ic->obj_icon);
+	  }
+	else if (
+		 (e_util_glob_case_match(ic->file, "*.edj"))
+		 )
+	  {
+	     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->file);
+	     ic->obj_icon = e_thumb_icon_add(evas_object_evas_get(ic->sd->obj));
+	     e_thumb_icon_file_set(ic->obj_icon, buf, "desktop/background");
+	     e_thumb_icon_size_set(ic->obj_icon, 64, 64);
+	     evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
+	     e_thumb_icon_begin(ic->obj_icon);
+	     edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
+	     evas_object_show(ic->obj_icon);
+	  }
+	else if (
+		 (e_util_glob_case_match(ic->file, "*.eap"))
+		 )
+	  {
+	     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->file);
+	     ic->obj_icon = e_thumb_icon_add(evas_object_evas_get(ic->sd->obj));
+	     e_thumb_icon_file_set(ic->obj_icon, buf, "icon");
+	     e_thumb_icon_size_set(ic->obj_icon, 64, 64);
+	     evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
+	     e_thumb_icon_begin(ic->obj_icon);
+	     edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
+	     evas_object_show(ic->obj_icon);
+	  }
+	else
+	  {
+	     ic->obj_icon = edje_object_add(evas_object_evas_get(ic->sd->obj));
+	     e_theme_edje_object_set(ic->obj_icon, "base/theme/fileman",
+				     "icons/fileman/file");
+	     edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
+	     evas_object_show(ic->obj_icon);
+	  }
+     }
+}
+
+static void
+_e_fm2_icon_select(E_Fm2_Icon *ic)
+{
+   if (ic->selected) return;
+   ic->selected = 1;
+   ic->last_selected = 1;
+   if (ic->realized)
+     {
+	edje_object_signal_emit(ic->obj, "active", "");
+	edje_object_signal_emit(ic->obj_icon, "active", "");
+	evas_object_raise(ic->obj);
+     }
+}
+
+static void
+_e_fm2_icon_deselect(E_Fm2_Icon *ic)
+{
+   if (!ic->selected) return;
+   ic->selected = 0;
+   ic->last_selected = 0;
+   if (ic->realized)
+     {
+	edje_object_signal_emit(ic->obj, "passive", "");
+	edje_object_signal_emit(ic->obj_icon, "passive", "");
+     }
 }
 
 /**************************/
@@ -927,6 +1169,125 @@ _e_fm2_region_visible(E_Fm2_Region *rg)
 /**************************/
 
 static void
+_e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Mouse_Down *ev;
+   E_Fm2_Icon *ic, *ic2;
+   int multi_sel = 0, range_sel = 0, seen = 0;
+   Evas_List *l;
+   
+   ic = data;
+   ev = event_info;
+   if (ev->button == 1)
+     {
+	if (ic->sd->windows_multi_select_modifiers)
+	  {
+	     if (evas_key_modifier_is_set(ev->modifiers, "Shift"))
+	       range_sel = 1;
+	     else if (evas_key_modifier_is_set(ev->modifiers, "Control"))
+	       multi_sel = 1;
+	  }
+	else
+	  {
+	     if (evas_key_modifier_is_set(ev->modifiers, "Control"))
+	       range_sel = 1;
+	     else if (evas_key_modifier_is_set(ev->modifiers, "Shift"))
+	       multi_sel = 1;
+	  }
+	if (ic->sd->single_select)
+	  {
+	     multi_sel = 0;
+	     range_sel = 0;
+	  }
+	if (range_sel)
+	  {
+	     /* find last selected - if any, and seletc all icons between */
+	     for (l = ic->sd->icons; l; l = l->next)
+	       {
+		  ic2 = l->data;
+		  if (ic2 == ic) seen = 1;
+		  if (ic2->last_selected)
+		    {
+		       ic2->last_selected = 0;
+		       if (seen)
+			 {
+			    for (; (l) && (l->data != ic); l = l->prev)
+			      {
+				 ic2 = l->data;
+				 _e_fm2_icon_select(ic2);
+				 ic2->last_selected = 0;
+			      }
+			 }
+		       else
+			 {
+			    for (; (l) && (l->data != ic); l = l->next)
+			      {
+				 ic2 = l->data;
+				 _e_fm2_icon_select(ic2);
+				 ic2->last_selected = 0;
+			      }
+			 }
+		       break;
+		    }
+	       }
+	  }
+	else if (!multi_sel)
+	  {
+	     /* desel others */
+	     for (l = ic->sd->icons; l; l = l->next)
+	       {
+		  ic2 = l->data;
+		  if (ic2 != ic)
+		    {
+		       if (ic2->selected) _e_fm2_icon_deselect(ic2);
+		    }
+	       }
+	  }
+	else
+	  {
+	     for (l = ic->sd->icons; l; l = l->next)
+	       {
+		  ic2 = l->data;
+		  ic2->last_selected = 0;
+	       }
+	  }
+	if ((!range_sel) && (ic->selected))
+	  _e_fm2_icon_deselect(ic);
+	else
+	  _e_fm2_icon_select(ic);
+     }
+}
+    
+static void
+_e_fm2_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Mouse_Up *ev;
+   E_Fm2_Icon *ic;
+   
+   ic = data;
+   ev = event_info;
+}
+    
+static void
+_e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Mouse_Move *ev;
+   E_Fm2_Icon *ic;
+   
+   ic = data;
+   ev = event_info;
+}
+    
+static void
+_e_fm2_cb_icon_thumb_gen(void *data, Evas_Object *obj, void *event_info)
+{
+   E_Fm2_Icon *ic;
+   
+   ic = data;
+   edje_object_signal_emit(ic->obj, "thumb", "gen");
+}
+    
+static void
 _e_fm2_cb_scroll_job(void *data)
 {
    E_Fm2_Smart_Data *sd;
@@ -948,7 +1309,6 @@ _e_fm2_cb_resize_job(void *data)
 {
    E_Fm2_Smart_Data *sd;
    Evas_List *l;
-   E_Fm2_Icon *ic;
    
    sd = evas_object_smart_data_get(data);
    if (!sd) return;
@@ -968,16 +1328,22 @@ _e_fm2_cb_resize_job(void *data)
 	_e_fm2_regions_populate(sd->obj);
 	break;
       case E_FM2_VIEW_MODE_CUSTOM_ICONS:
+	_e_fm2_regions_eval(sd->obj);
+	_e_fm2_obj_icons_place(sd);
 	break;
       case E_FM2_VIEW_MODE_CUSTOM_GRID_ICONS:
+	_e_fm2_regions_eval(sd->obj);
+	_e_fm2_obj_icons_place(sd);
 	break;
       case E_FM2_VIEW_MODE_CUSTOM_SMART_GRID_ICONS:
+	_e_fm2_regions_eval(sd->obj);
+	_e_fm2_obj_icons_place(sd);
 	break;
       case E_FM2_VIEW_MODE_LIST:
 	if (sd->iconlist_changed)
 	  {
 	     for (l = sd->icons; l; l = l->next)
-	       _e_fm2_icon_unrealize(ic);
+	       _e_fm2_icon_unrealize(l->data);
 	  }
         _e_fm2_regions_free(sd->obj);
 	_e_fm2_icons_place(sd->obj);
@@ -998,6 +1364,22 @@ _e_fm2_cb_icon_sort(void *data1, void *data2)
    
    ic1 = data1;
    ic2 = data2;
+   if (ic1->sd->dirs_last)
+     {
+	if ((S_ISDIR(ic1->st.st_mode)) != (S_ISDIR(ic2->st.st_mode)))
+	  {
+	     if (S_ISDIR(ic1->st.st_mode)) return -1;
+	     else return 1;
+	  }
+     }
+   else if (ic1->sd->dirs_first)
+     {
+	if ((S_ISDIR(ic1->st.st_mode)) != (S_ISDIR(ic2->st.st_mode)))
+	  {
+	     if (S_ISDIR(ic1->st.st_mode)) return 1;
+	     else return -1;
+	  }
+     }
    if (ic1->sd->no_case_sort)
      {
 	char buf1[4096], buf2[4096], *p;
