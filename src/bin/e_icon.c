@@ -318,6 +318,7 @@ _e_icon_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
+   if ((sd->x == x) && (sd->y == y)) return;
    sd->x = x;
    sd->y = y;
    _e_icon_smart_reconfigure(sd);
@@ -330,6 +331,7 @@ _e_icon_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
+   if ((sd->w == w) && (sd->h == h)) return;
    sd->w = w;
    sd->h = h;
    _e_icon_smart_reconfigure(sd);

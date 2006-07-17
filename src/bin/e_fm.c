@@ -185,13 +185,13 @@ e_fm2_path_set(Evas_Object *obj, char *dev, char *path)
    if (sd->config) _e_fm2_config_free(sd->config);
    sd->config = E_NEW(E_Fm2_Config, 1);
    if (!sd->config) return;
-//   sd->config->view.mode = E_FM2_VIEW_MODE_ICONS;
-   sd->config->view.mode = E_FM2_VIEW_MODE_LIST;
+   sd->config->view.mode = E_FM2_VIEW_MODE_ICONS;
+//   sd->config->view.mode = E_FM2_VIEW_MODE_LIST;
    sd->config->icon.icon.w = 64;
    sd->config->icon.icon.h = 64;
    sd->config->icon.list.w = 24;
    sd->config->icon.list.h = 24;
-   sd->config->icon.fixed.w = 1;
+   sd->config->icon.fixed.w = 0;
    sd->config->icon.fixed.h = 1;
    sd->config->list.sort.no_case = 1;
    sd->config->icon.extension.show = 0;
@@ -881,10 +881,12 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, char *file)
 	     obj = edje_object_add(evas_object_evas_get(sd->obj));
 	     e_theme_edje_object_set(obj, "base/theme/fileman",
 				     "fileman/icon/variable");
-	     edje_object_part_text_set(obj, "label", ic->file);
+	     _e_fm2_icon_label_set(ic, obj);
 	     edje_object_size_min_calc(obj, &mw, &mh);
 	     evas_object_del(obj);
 	  }
+	ic->w = mw;
+	ic->h = mh;
 	if (sd->config->icon.fixed.w) ic->w = sd->config->icon.icon.w;
 	if (sd->config->icon.fixed.h) ic->h = sd->config->icon.icon.h;
 	ic->min_w = mw;
@@ -961,14 +963,17 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
 	       e_theme_edje_object_set(ic->obj, "base/theme/widgets",
 				       "fileman/list/variable");
 	  }
-	_e_fm2_icon_label_set(ic, ic->obj);
      }
    else
      {
-	e_theme_edje_object_set(ic->obj, "base/theme/fileman",
-				"fileman/icon_normal");
-	edje_object_part_text_set(ic->obj, "icon_title", ic->file);
+        if (ic->sd->config->icon.fixed.w)
+	  e_theme_edje_object_set(ic->obj, "base/theme/fileman",
+				  "fileman/icon/fixed");
+	else
+	  e_theme_edje_object_set(ic->obj, "base/theme/fileman",
+				  "fileman/icon/variable");
      }
+   _e_fm2_icon_label_set(ic, ic->obj);
    evas_object_clip_set(ic->obj, ic->sd->clip);
    evas_object_move(ic->obj,
 		    ic->sd->x + ic->x - ic->sd->pos.x,

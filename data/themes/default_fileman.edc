@@ -1871,6 +1871,225 @@ group {
    }
 }
 
+group {
+   name: "fileman/icon/fixed";
+   parts {
+      part {      
+	 name:          "icon_overlay";
+	 mouse_events:  0;
+	 description {
+	    state:      "default" 0.0;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:   0 0;
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -1 -1;
+	    }
+	    image {
+	       normal: "e17_button.png";
+	       border: 8 8 8 8;
+	    }
+	    color: 255 255 255 0;	       
+	 }
+	 description {
+	    state: "active" 0.0;
+	    inherit: "default" 0.0;
+	    color: 255 255 255 255;
+	 }
+      }      	 
+      part {
+	 name:          "icon_swallow";
+	 type:          SWALLOW;
+	 mouse_events:  0;
+	 description {
+	    state: "default" 0.0;
+	    aspect: 1.0 1.0;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset: 4 4;
+	    }
+	    rel2 {
+	       to_y: "label";
+	       relative: 1.0 0.0;
+	       offset: -5 -2;
+	    }
+	 }
+      }
+      part {
+	 name:          "label";
+	 type:          TEXT;
+	 effect:        SHADOW;
+	 mouse_events:  0;
+	 description {
+	    state: "default" 0.0;
+	    align: 0.5 1.0;
+	    fixed: 0 1;
+	    rel1 {
+	       relative: 0.0 1.0;
+	       offset:   4 -5;
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -5 -5;
+	    }
+	    color: 0 0 0 255;
+	    color3: 255 255 255 128;
+	    text {
+	       text:     "No Title";
+	       size:     10;
+	       font:     "Edje-Vera";
+	       min:      0 1;
+	       align:    0.5 1.0;
+	       elipsis:  0.0;
+	       text_class: "fileman_icon";		  
+	    }
+	 }
+      }	 
+      part {
+	 name:          "icon_event";
+	 type:          RECT;
+	 mouse_events:  1;
+	 description {
+	    state:      "default" 0.0;
+	    color:      0 0 0 0;
+	 }
+      }         
+   }
+   programs {
+      program {
+	 name:   "active"; 
+	 signal: "active"; 
+	 source: ""; 
+	 action: STATE_SET "active" 0.0;
+	 target: "label"; 
+	 target: "icon_overlay";
+      } 
+      program { 
+	 name:   "passive";
+	 signal: "passive"; 
+	 source: ""; 
+	 action: STATE_SET "default" 0.0;
+	 transition: LINEAR 0.2;	 
+	 target: "label";
+         target: "icon_overlay";	 
+      }      
+   }   
+}
+
+group {
+   name: "fileman/icon/variable";
+   parts {
+      part {      
+	 name:          "icon_overlay";
+	 mouse_events:  0;
+	 description {
+	    state:      "default" 0.0;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:   0 0;
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -1 -1;
+	    }
+	    image {
+	       normal: "e17_button.png";
+	       border: 8 8 8 8;
+	    }
+	    color: 255 255 255 0;	       
+	 }
+	 description {
+	    state: "active" 0.0;
+	    inherit: "default" 0.0;
+	    color: 255 255 255 255;
+	 }
+      }      	 
+      part {
+	 name:          "icon_swallow";
+	 type:          SWALLOW;
+	 mouse_events:  0;
+	 description {
+	    state: "default" 0.0;
+	    aspect: 1.0 1.0;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset: 4 4;
+	    }
+	    rel2 {
+	       to_y: "label";
+	       relative: 1.0 0.0;
+	       offset: -5 -2;
+	    }
+	 }
+      }
+      part {
+	 name:          "label";
+	 type:          TEXT;
+	 effect:        SHADOW;
+	 mouse_events:  0;
+	 description {
+	    state: "default" 0.0;
+	    align: 0.5 1.0;
+	    fixed: 0 1;
+	    rel1 {
+	       relative: 0.0 1.0;
+	       offset:   4 -5;
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -5 -5;
+	    }
+	    color: 0 0 0 255;
+	    color3: 255 255 255 128;
+	    text {
+	       text:     "No Title";
+	       size:     10;
+	       font:     "Edje-Vera";
+	       min:      1 1;
+	       align:    0.5 1.0;
+	       elipsis:  0.0;
+	       text_class: "fileman_icon";		  
+	    }
+	 }
+      }	 
+      part {
+	 name:          "icon_event";
+	 type:          RECT;
+	 mouse_events:  1;
+	 description {
+	    state:      "default" 0.0;
+	    color:      0 0 0 0;
+	 }
+      }         
+   }
+   programs {
+      program {
+	 name:   "active"; 
+	 signal: "active"; 
+	 source: ""; 
+	 action: STATE_SET "active" 0.0;
+	 target: "label"; 
+	 target: "icon_overlay";
+      } 
+      program { 
+	 name:   "passive";
+	 signal: "passive"; 
+	 source: ""; 
+	 action: STATE_SET "default" 0.0;
+	 transition: LINEAR 0.2;	 
+	 target: "label";
+         target: "icon_overlay";	 
+      }      
+   }   
+}
+
+
+
+
+
+
 #define FULL_SIZE_FILEMAN_BUTTON(TYPE) \
 group { \
    name:  "fileman/button/"TYPE; \
