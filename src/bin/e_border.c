@@ -3010,6 +3010,7 @@ _e_border_free(E_Border *bd)
 	free(bd->client.netwm.icons);
      }
    if (bd->client.border.name) evas_stringshare_del(bd->client.border.name);
+   if (bd->bordername) evas_stringshare_del(bd->bordername);
    if (bd->client.icccm.title) free(bd->client.icccm.title);
    if (bd->client.icccm.name) free(bd->client.icccm.name);
    if (bd->client.icccm.class) free(bd->client.icccm.class);
@@ -5263,10 +5264,10 @@ _e_border_eval(E_Border *bd)
 	
 	if (!bd->client.border.name)
 	  {
-	     if (bd->bordername)
-	       bd->client.border.name = evas_stringshare_add(bd->bordername);
-	     else if (bd->fullscreen)
+	     if (bd->fullscreen)
 	       bd->client.border.name = evas_stringshare_add("borderless");
+	     else if (bd->bordername)
+	       bd->client.border.name = evas_stringshare_add(bd->bordername);
 	     else if ((bd->client.mwm.borderless) || (bd->borderless))
 	       bd->client.border.name = evas_stringshare_add("borderless");
 	     else if (((bd->client.icccm.transient_for != 0) ||
