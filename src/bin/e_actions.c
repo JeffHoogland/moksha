@@ -634,13 +634,8 @@ ACT_FN_GO(window_shaded)
 /***************************************************************************/
 ACT_FN_GO(window_borderless_toggle)
 {
-   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if ((!obj) || (obj->type != E_BORDER_TYPE)) obj = E_OBJECT(e_border_focused_get());
    if (!obj) return;
-   if (obj->type != E_BORDER_TYPE)
-     {
-	obj = E_OBJECT(e_border_focused_get());
-	if (!obj) return;
-     }
    if (!((E_Border *)obj)->lock_border)
      {
 	E_Border *bd;
