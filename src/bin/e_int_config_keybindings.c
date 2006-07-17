@@ -13,7 +13,7 @@
 #define TEXT_PRESS_KEY_SEQUENCE _("Please press key sequence,<br>" \
 				  "or <hilight>Escape</hilight> to abort")
 
-#define ILIST_ICON_WITH_KEYBIND	    "enlightenment/e"
+#define ILIST_ICON_WITH_KEYBIND	    "enlightenment/keys"
 #define ILIST_ICON_WITHOUT_KEYBIND  ""
 
 #define AG_UNSORTED _("Unsorted")
