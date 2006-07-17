@@ -8,6 +8,7 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: match this window only doesnt fall back to other unused remembers
 * BUG: make window sitcky. send window to another desktop - get ghost window.
   should 1. make any such operation in the pager or menu useless and do
   nothng if the window is sticky and 2. remove the send window to menu if it

@@ -15,15 +15,75 @@ typedef enum _E_Fm2_View_Mode
    E_FM2_VIEW_MODE_LIST /* vertical fileselector list */
 } E_Fm2_View_Mode;
 
+typedef struct _E_Fm2_Config E_Fm2_Config;
+
 #else
 #ifndef E_FM_H
 #define E_FM_H
+
+struct _E_Fm2_Config
+{
+   /* general view mode */
+   struct {
+      E_Fm2_View_Mode mode;
+      unsigned char   open_dirs_in_place;
+      unsigned char   selector;
+   } view;
+   /* display of icons */
+   struct {
+      struct {
+	 int           w, h;
+      } icon;
+      struct {
+	 int           w, h;
+      } list;
+      struct {
+	 unsigned char w;
+	 unsigned char h;
+      } fixed;
+      struct {
+	 unsigned char show;
+      } extension;
+   } icon;
+   /* how to sort files */
+   struct {
+      struct {
+	 unsigned char    no_case;
+	 struct {
+	    unsigned char first;
+	    unsigned char last;
+	 } dirs;
+      } sort;
+   } list;
+   /* control how you can select files */
+   struct {
+      unsigned char    single;
+      unsigned char    windows_modifiers;
+   } selection;
+   /* the background - if any, and how to handle it */
+   /* FIXME: not implemented yet */
+   struct {
+      char            *background;
+      char            *frame;
+      char            *icons;
+      unsigned char    fixed;
+   } theme;
+   /* used internally only - used to save to disk only and laod from disk */
+   /* FIXME: not implemented yet */
+   struct {
+      int              x, y, w, h;
+      struct {
+	 int           w, h;
+      } res;
+      int              screen;
+   } geometry;
+};
 
 EAPI int                   e_fm2_init(void);
 EAPI int                   e_fm2_shutdown(void);
 EAPI Evas_Object          *e_fm2_add(Evas *evas);
 EAPI void                  e_fm2_path_set(Evas_Object *obj, char *dev, char *path);
-EAPI void                  e_fm2_path_get(Evas_Object *obj, char **dev, char **path);
+EAPI void                  e_fm2_path_get(Evas_Object *obj, const char **dev, const char **path);
 
 EAPI void                  e_fm2_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
 EAPI void                  e_fm2_pan_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
