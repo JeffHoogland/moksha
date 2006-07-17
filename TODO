@@ -16,8 +16,6 @@ Some of the things (in very short form) that need to be done to E17...
   the window is sticky.
 * BUG: if app asks for borderless in properties - borderless toggle in menu
   doesn't have any effect.
-* BUG: set any specific border type and when you maximize the border changes
-  to default (unless its borderless)
 * BUG: change exe name in basic mode in eap editor and icon vanishes (don't
   extract existing icon and write out to tmp .png while rebuilding).
 * BUG: ghost windows happen if windows close when on another desktop or if
