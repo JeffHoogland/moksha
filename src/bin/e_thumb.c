@@ -74,8 +74,7 @@ e_thumb_icon_add(Evas *evas)
 {
    Evas_Object *obj;
    E_Thumb *eth;
-   char buf[32];
-   
+
    obj = e_icon_add(evas);
    _objid++;
    eth = E_NEW(E_Thumb, 1);

@@ -46,7 +46,6 @@ static Ecore_Idle_Enterer *_e_main_idle_enterer_flusher = NULL;
 int
 main(int argc, char **argv)
 {
-   int ipc_failed = 0;
    int i;
    int nostartup = 0;
    int after_restart = 0; 

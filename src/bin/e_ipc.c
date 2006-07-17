@@ -38,8 +38,8 @@ e_ipc_init(void)
 	  {
 	     if ((st.st_uid == 
 		  getuid()) &&
-		 ((st.st_mode & S_IFDIR|S_IRWXU|S_IRWXG|S_IRWXO) == 
-		  S_IRWXU|S_IFDIR))
+		 ((st.st_mode & (S_IFDIR|S_IRWXU|S_IRWXG|S_IRWXO)) == 
+		  (S_IRWXU|S_IFDIR)))
 	       {
 	       }
 	     else
