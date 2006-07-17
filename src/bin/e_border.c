@@ -5202,11 +5202,14 @@ _e_border_eval(E_Border *bd)
 	       }
 	     if (rem->apply & E_REMEMBER_APPLY_BORDER)
 	       {
-		  if (bd->client.border.name) evas_stringshare_del(bd->client.border.name);
-		  bd->client.border.name = NULL;
 		  if (rem->prop.border)
-		    bd->client.border.name = evas_stringshare_add(rem->prop.border);
-		  bd->client.border.changed = 1;
+		    {
+		       if (bd->client.border.name) evas_stringshare_del(bd->client.border.name);
+		       bd->client.border.name = NULL;
+		       if (bd->bordername) evas_stringshare_del(bd->bordername);
+		       bd->bordername = evas_stringshare_add(rem->prop.border);
+		       bd->client.border.changed = 1;
+		    }
 	       }
 	     if (rem->apply & E_REMEMBER_APPLY_STICKY)
 	       {
@@ -5263,7 +5266,9 @@ _e_border_eval(E_Border *bd)
 	
 	if (!bd->client.border.name)
 	  {
-	     if (bd->fullscreen)
+	     if (bd->bordername)
+	       bd->client.border.name = evas_stringshare_add(bd->bordername);
+	     else if (bd->fullscreen)
 	       bd->client.border.name = evas_stringshare_add("borderless");
 	     else if ((bd->client.mwm.borderless) || (bd->borderless))
 	       bd->client.border.name = evas_stringshare_add("borderless");
