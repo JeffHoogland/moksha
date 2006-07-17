@@ -124,7 +124,6 @@ struct _E_Border
 
    struct {
       int          l, r, t, b;
-      int          sl, sr, st, sb;
    } client_inset;
 
    Ecore_Evas     *bg_ecore_evas;

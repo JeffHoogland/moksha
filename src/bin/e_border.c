@@ -1906,10 +1906,6 @@ e_border_fullscreen(E_Border *bd, E_Fullscreen policy)
 	bd->saved.h = bd->h;
 	e_hints_window_size_set(bd);
 
-	bd->client_inset.sl = bd->client_inset.l;
-	bd->client_inset.sr = bd->client_inset.r;
-	bd->client_inset.st = bd->client_inset.t;
-	bd->client_inset.sb = bd->client_inset.b;
 	bd->client_inset.l = 0;
 	bd->client_inset.r = 0;
 	bd->client_inset.t = 0;
@@ -1918,17 +1914,6 @@ e_border_fullscreen(E_Border *bd, E_Fullscreen policy)
 	/* e_zone_fullscreen_set(bd->zone, 1); */
 
 	e_border_layer_set(bd, 200);
-#if 0
-	x = bd->zone->x;
-	y = bd->zone->y;
-	w = bd->zone->w;
-	h = bd->zone->h;
-	e_border_resize_limit(bd, &w, &h);
-	/* center */
-	x = x + (bd->zone->w - w) / 2;
-	y = y + (bd->zone->h - h) / 2;
-	e_border_move_resize(bd, x, y, w, h);
-#endif
 	if ((evas_list_count(bd->zone->container->zones) > 1) || (policy == E_FULLSCREEN_RESIZE))
 	  {
 	     e_border_move_resize(bd, bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h);
@@ -1976,13 +1961,14 @@ e_border_fullscreen(E_Border *bd, E_Fullscreen policy)
 	     else
 	       e_border_move_resize(bd, bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h);
 	  }
-	ecore_evas_hide(bd->bg_ecore_evas);
-
 	bd->fullscreen = 1;
 
 	e_hints_window_fullscreen_set(bd, 1);
 	e_hints_window_size_unset(bd);
-	edje_object_signal_emit(bd->bg_object, "fullscreen", "");
+	if (bd->client.border.name)
+	  evas_stringshare_del(bd->client.border.name);
+	bd->client.border.name = NULL;
+	bd->client.border.changed = 1;
      }
 }
 
@@ -1998,10 +1984,6 @@ e_border_unfullscreen(E_Border *bd)
 //	printf("UNFULLSCREEEN!\n");
 	bd->fullscreen = 0;
 	bd->need_fullscreen = 0;
-	bd->client_inset.l = bd->client_inset.sl;
-	bd->client_inset.r = bd->client_inset.sr;
-	bd->client_inset.t = bd->client_inset.st;
-	bd->client_inset.b = bd->client_inset.sb;
 
 	/* e_zone_fullscreen_set(bd->zone, 0); */
 
@@ -2012,13 +1994,15 @@ e_border_unfullscreen(E_Border *bd)
 	     screen_size.height = -1;
 	  }
 	e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
-	ecore_evas_show(bd->bg_ecore_evas);
 
 	/* FIXME: Find right layer */
 	e_border_layer_set(bd, 100);
 
 	e_hints_window_fullscreen_set(bd, 0);
-	edje_object_signal_emit(bd->bg_object, "unfullscreen", "");
+	if (bd->client.border.name)
+	  evas_stringshare_del(bd->client.border.name);
+	bd->client.border.name = NULL;
+	bd->client.border.changed = 1;
      }
 }
 
@@ -5094,7 +5078,6 @@ _e_border_eval(E_Border *bd)
 	e_hints_window_state_set(bd);
 	/* Some stats might change the border, like modal */
 	if (((!bd->lock_border) || (!bd->client.border.name)) &&
-	    (!bd->fullscreen) &&
 	    (!(((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN))))
 	  {
 	     if (bd->client.border.name)
@@ -5269,7 +5252,7 @@ _e_border_eval(E_Border *bd)
 	  }
      }
    
-   if ((bd->client.border.changed) && (!bd->shaded) && (!bd->fullscreen) &&
+   if ((bd->client.border.changed) && (!bd->shaded) &&
        (!(((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN))))
      {
 	Evas_Object *o;
@@ -5280,7 +5263,9 @@ _e_border_eval(E_Border *bd)
 	
 	if (!bd->client.border.name)
 	  {
-	     if ((bd->client.mwm.borderless) || (bd->borderless))
+	     if (bd->fullscreen)
+	       bd->client.border.name = evas_stringshare_add("borderless");
+	     else if ((bd->client.mwm.borderless) || (bd->borderless))
 	       bd->client.border.name = evas_stringshare_add("borderless");
 	     else if (((bd->client.icccm.transient_for != 0) ||
 		       (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)) &&
@@ -5409,8 +5394,6 @@ _e_border_eval(E_Border *bd)
 	       edje_object_signal_emit(bd->bg_object, "maximize,fullscreen", "");
 	     else if ((bd->maximized & E_MAXIMIZE_TYPE) != E_MAXIMIZE_NONE)
 	       edje_object_signal_emit(bd->bg_object, "maximize", "");
-	     if (bd->fullscreen)
-	       edje_object_signal_emit(bd->bg_object, "fullscreen", "");
 	     if (bd->hung)
 	       edje_object_signal_emit(bd->bg_object, "hung", "");
 	     if (bd->client.icccm.urgent)
