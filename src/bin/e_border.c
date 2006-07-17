@@ -1895,15 +1895,12 @@ e_border_fullscreen(E_Border *bd, E_Fullscreen policy)
      }
    if (!bd->fullscreen)
      {
-#if 0
-	int x, y, w, h;
-#endif
 	bd->pre_res_change.valid = 0;
 	
 	bd->saved.x = bd->x;
 	bd->saved.y = bd->y;
-	bd->saved.w = bd->w;
-	bd->saved.h = bd->h;
+	bd->saved.w = bd->client.w;
+	bd->saved.h = bd->client.h;
 	e_hints_window_size_set(bd);
 
 	bd->client_inset.l = 0;
