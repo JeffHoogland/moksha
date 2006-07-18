@@ -381,6 +381,7 @@ e17_icon_screen_vflip.png \
 e17_icon_mouse.png \
 e17_icon_keys.png \
 e17_icon_desklock.png \
+e17_icon_shelf.png \
 e17_button_detail_paste.png \
 e17_button_detail_arrange_name.png \
 e17_button_detail_properties.png \
