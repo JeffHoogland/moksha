@@ -1962,10 +1962,8 @@ e_border_fullscreen(E_Border *bd, E_Fullscreen policy)
 
 	e_hints_window_fullscreen_set(bd, 1);
 	e_hints_window_size_unset(bd);
-	if (bd->client.border.name)
-	  evas_stringshare_del(bd->client.border.name);
-	bd->client.border.name = NULL;
 	bd->client.border.changed = 1;
+	bd->changed = 1;
      }
 }
 
@@ -1996,10 +1994,8 @@ e_border_unfullscreen(E_Border *bd)
 	e_border_layer_set(bd, 100);
 
 	e_hints_window_fullscreen_set(bd, 0);
-	if (bd->client.border.name)
-	  evas_stringshare_del(bd->client.border.name);
-	bd->client.border.name = NULL;
 	bd->client.border.changed = 1;
+	bd->changed = 1;
      }
 }
 
@@ -4727,8 +4723,6 @@ _e_border_eval(E_Border *bd)
 	e_hints_window_type_get(bd);
 	if ((!bd->lock_border) || (!bd->client.border.name))
 	  {
-	     if (bd->client.border.name) evas_stringshare_del(bd->client.border.name);
-	     bd->client.border.name = NULL;
 	     bd->client.border.changed = 1;
 	  }
 	if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK)
@@ -5063,9 +5057,6 @@ _e_border_eval(E_Border *bd)
 	  {
 	     if ((!bd->lock_border) || (!bd->client.border.name))
 	       {
-		  if (bd->client.border.name)
-		    evas_stringshare_del(bd->client.border.name);
-		  bd->client.border.name = NULL;
 		  bd->client.border.changed = 1;
 	       }
 	  }
@@ -5078,9 +5069,6 @@ _e_border_eval(E_Border *bd)
 	if (((!bd->lock_border) || (!bd->client.border.name)) &&
 	    (!(((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN))))
 	  {
-	     if (bd->client.border.name)
-	       evas_stringshare_del(bd->client.border.name);
-	     bd->client.border.name = NULL;
 	     bd->client.border.changed = 1;
 	  }
 	if (bd->parent)
@@ -5129,9 +5117,6 @@ _e_border_eval(E_Border *bd)
 
 	if ((!bd->lock_border) || (!bd->client.border.name))
 	  {
-	     if (bd->client.border.name)
-	       evas_stringshare_del(bd->client.border.name);
-	     bd->client.border.name = NULL;
 	     bd->client.border.changed = 1;
 	  }
 	if (!bd->remember)
@@ -5202,8 +5187,6 @@ _e_border_eval(E_Border *bd)
 	       {
 		  if (rem->prop.border)
 		    {
-		       if (bd->client.border.name) evas_stringshare_del(bd->client.border.name);
-		       bd->client.border.name = NULL;
 		       if (bd->bordername) evas_stringshare_del(bd->bordername);
 		       bd->bordername = evas_stringshare_add(rem->prop.border);
 		       bd->client.border.changed = 1;
@@ -5258,76 +5241,89 @@ _e_border_eval(E_Border *bd)
      {
 	Evas_Object *o;
 	char buf[4096];
+	const char *bordername;
 	Evas_Coord cx, cy, cw, ch;
 	int l, r, t, b;
 	int ok;
-	
-	if (!bd->client.border.name)
+
+	if (bd->fullscreen)
+	  bordername = "borderless";
+	else if (bd->bordername)
+	  bordername = bd->bordername;
+	else if ((bd->client.mwm.borderless) || (bd->borderless))
+	  bordername = "borderless";
+	else if (((bd->client.icccm.transient_for != 0) ||
+		  (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)) &&
+		 (bd->client.icccm.min_w == bd->client.icccm.max_w) &&
+		 (bd->client.icccm.min_h == bd->client.icccm.max_h))
+	  bordername = "noresize_dialog";
+	else if ((bd->client.icccm.min_w == bd->client.icccm.max_w) &&
+		 (bd->client.icccm.min_h == bd->client.icccm.max_h))
+	  bordername = "noresize";
+	else if (bd->client.shaped)
+	  bordername = "shaped";
+	else if ((!bd->client.icccm.accepts_focus) &&
+		 (!bd->client.icccm.take_focus))
+	  bordername = "nofocus";
+	else if (bd->client.icccm.urgent)
+	  bordername = "urgent";
+	else if ((bd->client.icccm.transient_for != 0) ||
+		 (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG))
+	  bordername = "dialog";
+	else if (bd->client.netwm.state.modal)
+	  bordername = "modal";
+	else if ((bd->client.netwm.state.skip_taskbar) ||
+		 (bd->client.netwm.state.skip_pager))
+	  bordername = "skipped";
+	else
+	  bordername = "default";
+
+	if ((!bd->client.border.name) || (strcmp(bd->client.border.name, bordername)))
 	  {
-	     if (bd->fullscreen)
-	       bd->client.border.name = evas_stringshare_add("borderless");
-	     else if (bd->bordername)
-	       bd->client.border.name = evas_stringshare_add(bd->bordername);
-	     else if ((bd->client.mwm.borderless) || (bd->borderless))
-	       bd->client.border.name = evas_stringshare_add("borderless");
-	     else if (((bd->client.icccm.transient_for != 0) ||
-		       (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)) &&
-		      (bd->client.icccm.min_w == bd->client.icccm.max_w) &&
-		      (bd->client.icccm.min_h == bd->client.icccm.max_h))
-	       bd->client.border.name = evas_stringshare_add("noresize_dialog");
-	     else if ((bd->client.icccm.min_w == bd->client.icccm.max_w) &&
-		      (bd->client.icccm.min_h == bd->client.icccm.max_h))
-	       bd->client.border.name = evas_stringshare_add("noresize");
-	     else if (bd->client.shaped)
-	       bd->client.border.name = evas_stringshare_add("shaped");
-	     else if ((!bd->client.icccm.accepts_focus) &&
-		      (!bd->client.icccm.take_focus))
-	       bd->client.border.name = evas_stringshare_add("nofocus");
-	     else if (bd->client.icccm.urgent)
-	       bd->client.border.name = evas_stringshare_add("urgent");
-	     else if ((bd->client.icccm.transient_for != 0) ||
-		      (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG))
-	       bd->client.border.name = evas_stringshare_add("dialog");
-	     else if (bd->client.netwm.state.modal)
-	       bd->client.border.name = evas_stringshare_add("modal");
-	     else if ((bd->client.netwm.state.skip_taskbar) ||
-		      (bd->client.netwm.state.skip_pager))
-	       bd->client.border.name = evas_stringshare_add("skipped");
-	     else
-	       bd->client.border.name = evas_stringshare_add("default");
-	  }
-	if (bd->bg_object)
-	  {
-	     bd->w -= (bd->client_inset.l + bd->client_inset.r);
-	     bd->h -= (bd->client_inset.t + bd->client_inset.b);
-	     bd->client_inset.l = 0;
-	     bd->client_inset.r = 0;
-	     bd->client_inset.t = 0;
-	     bd->client_inset.b = 0;
-	     bd->changes.size = 1;
-	     evas_object_del(bd->bg_object);
-	  }
-        o = edje_object_add(bd->bg_evas);
-	snprintf(buf, sizeof(buf), "widgets/border/%s/border",
-		 bd->client.border.name);
-	ok = e_theme_edje_object_set(o, "base/theme/borders", buf);
-	if ((!ok) && (strcmp(bd->client.border.name, "borderless")))
-	  ok = e_theme_edje_object_set(o, "base/theme/borders",
-				       "widgets/border/default/border");
-	if (ok)
-	  {
-	     const char *shape_option;
-	     
-	     bd->bg_object = o;
-	     shape_option = edje_object_data_get(o, "shaped");
-	     if (shape_option)
+	     if (bd->client.border.name) evas_stringshare_del(bd->client.border.name);
+	     bd->client.border.name = evas_stringshare_add(bordername);
+
+	     if (bd->bg_object)
 	       {
-		  if (!strcmp(shape_option, "1"))
+		  bd->w -= (bd->client_inset.l + bd->client_inset.r);
+		  bd->h -= (bd->client_inset.t + bd->client_inset.b);
+		  bd->client_inset.l = 0;
+		  bd->client_inset.r = 0;
+		  bd->client_inset.t = 0;
+		  bd->client_inset.b = 0;
+		  bd->changes.size = 1;
+		  evas_object_del(bd->bg_object);
+	       }
+	     o = edje_object_add(bd->bg_evas);
+	     snprintf(buf, sizeof(buf), "widgets/border/%s/border",
+		      bd->client.border.name);
+	     ok = e_theme_edje_object_set(o, "base/theme/borders", buf);
+	     if ((!ok) && (strcmp(bd->client.border.name, "borderless")))
+	       ok = e_theme_edje_object_set(o, "base/theme/borders",
+					    "widgets/border/default/border");
+	     if (ok)
+	       {
+		  const char *shape_option;
+
+		  bd->bg_object = o;
+		  shape_option = edje_object_data_get(o, "shaped");
+		  if (shape_option)
 		    {
-		       if (!bd->shaped)
+		       if (!strcmp(shape_option, "1"))
 			 {
-			    bd->shaped = 1;
-			    ecore_evas_shaped_set(bd->bg_ecore_evas, bd->shaped);
+			    if (!bd->shaped)
+			      {
+				 bd->shaped = 1;
+				 ecore_evas_shaped_set(bd->bg_ecore_evas, bd->shaped);
+			      }
+			 }
+		       else
+			 {
+			    if (bd->shaped)
+			      {
+				 bd->shaped = 0;
+				 ecore_evas_shaped_set(bd->bg_ecore_evas, bd->shaped);
+			      }
 			 }
 		    }
 		  else
@@ -5338,73 +5334,65 @@ _e_border_eval(E_Border *bd)
 			    ecore_evas_shaped_set(bd->bg_ecore_evas, bd->shaped);
 			 }
 		    }
+
+		  if (bd->client.netwm.name)
+		    edje_object_part_text_set(o, "title_text",
+					      bd->client.netwm.name);
+		  else if (bd->client.icccm.title)
+		    edje_object_part_text_set(o, "title_text",
+					      bd->client.icccm.title);
+		  evas_object_resize(o, 1000, 1000);
+		  edje_object_calc_force(o);
+		  edje_object_part_geometry_get(o, "client", &cx, &cy, &cw, &ch);
+		  l = cx;
+		  r = 1000 - (cx + cw);
+		  t = cy;
+		  b = 1000 - (cy + ch);
 	       }
 	     else
 	       {
-		  if (bd->shaped)
-		    {
-		       bd->shaped = 0;
-		       ecore_evas_shaped_set(bd->bg_ecore_evas, bd->shaped);
-		    }
+		  evas_object_del(o);
+		  bd->bg_object = NULL;
+		  l = 0;
+		  r = 0;
+		  t = 0;
+		  b = 0;
 	       }
-	     
-	     if (bd->client.netwm.name)
-	       edje_object_part_text_set(o, "title_text",
-					 bd->client.netwm.name);
-	     else if (bd->client.icccm.title)
-	       edje_object_part_text_set(o, "title_text",
-					 bd->client.icccm.title);
-	     evas_object_resize(o, 1000, 1000);
-	     edje_object_calc_force(o);
-	     edje_object_part_geometry_get(o, "client", &cx, &cy, &cw, &ch);
-	     l = cx;
-	     r = 1000 - (cx + cw);
-	     t = cy;
-	     b = 1000 - (cy + ch);
-	  }
-	else
-	  {
-	     evas_object_del(o);
-	     bd->bg_object = NULL;
-	     l = 0;
-	     r = 0;
-	     t = 0;
-	     b = 0;
-	  }
-	bd->client_inset.l = l;
-	bd->client_inset.r = r;
-	bd->client_inset.t = t;
-	bd->client_inset.b = b;
-	ecore_x_netwm_frame_size_set(bd->client.win, l, r, t, b);
-	ecore_x_e_frame_size_set(bd->client.win, l, r, t, b);
-	bd->w += (bd->client_inset.l + bd->client_inset.r);
-	bd->h += (bd->client_inset.t + bd->client_inset.b);
-	bd->changes.size = 1;
-	ecore_x_window_move(bd->client.shell_win, l, t);
-	if (bd->bg_object)
-	  {
-	     edje_object_signal_callback_add(bd->bg_object, "*", "*",
-					     _e_border_cb_signal_bind, bd);
-	     if (bd->focused)
+	     bd->client_inset.l = l;
+	     bd->client_inset.r = r;
+	     bd->client_inset.t = t;
+	     bd->client_inset.b = b;
+	     ecore_x_netwm_frame_size_set(bd->client.win, l, r, t, b);
+	     ecore_x_e_frame_size_set(bd->client.win, l, r, t, b);
+	     bd->w += (bd->client_inset.l + bd->client_inset.r);
+	     bd->h += (bd->client_inset.t + bd->client_inset.b);
+	     bd->changes.size = 1;
+	     ecore_x_window_move(bd->client.shell_win, l, t);
+	     if (bd->bg_object)
 	       {
-		  edje_object_signal_emit(bd->bg_object, "active", "");
-		  if (bd->icon_object)
-		    edje_object_signal_emit(bd->icon_object, "active", "");
+		  edje_object_signal_callback_add(bd->bg_object, "*", "*",
+						  _e_border_cb_signal_bind, bd);
+		  if (bd->focused)
+		    {
+		       edje_object_signal_emit(bd->bg_object, "active", "");
+		       if (bd->icon_object)
+			 edje_object_signal_emit(bd->icon_object, "active", "");
+		    }
+		  if (bd->shaded)
+		    edje_object_signal_emit(bd->bg_object, "shaded", "");
+		  if ((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN)
+		    edje_object_signal_emit(bd->bg_object, "maximize,fullscreen", "");
+		  else if ((bd->maximized & E_MAXIMIZE_TYPE) != E_MAXIMIZE_NONE)
+		    edje_object_signal_emit(bd->bg_object, "maximize", "");
+		  if (bd->hung)
+		    edje_object_signal_emit(bd->bg_object, "hung", "");
+		  if (bd->client.icccm.urgent)
+		    edje_object_signal_emit(bd->bg_object, "urgent", "");
+
+		  evas_object_move(bd->bg_object, 0, 0);
+		  evas_object_resize(bd->bg_object, bd->w, bd->h);
+		  evas_object_show(bd->bg_object);
 	       }
-	     if (bd->shaded)
-	       edje_object_signal_emit(bd->bg_object, "shaded", "");
-	     if ((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN)
-	       edje_object_signal_emit(bd->bg_object, "maximize,fullscreen", "");
-	     else if ((bd->maximized & E_MAXIMIZE_TYPE) != E_MAXIMIZE_NONE)
-	       edje_object_signal_emit(bd->bg_object, "maximize", "");
-	     if (bd->hung)
-	       edje_object_signal_emit(bd->bg_object, "hung", "");
-	     if (bd->client.icccm.urgent)
-	       edje_object_signal_emit(bd->bg_object, "urgent", "");
-	     
-	     evas_object_move(bd->bg_object, 0, 0);
-	     evas_object_resize(bd->bg_object, bd->w, bd->h);
-	     evas_object_show(bd->bg_object);
 	  }
 	bd->client.border.changed = 0;
 	

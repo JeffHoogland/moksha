@@ -641,11 +641,6 @@ ACT_FN_GO(window_borderless_toggle)
 	E_Border *bd;
 
 	bd = (E_Border *)obj;
-	if ((bd->client.border.name))
-	  {
-	     evas_stringshare_del(bd->client.border.name);
-	     bd->client.border.name = NULL;
-	  }
 	if (bd->borderless)
 	  bd->borderless = 0;
 	else

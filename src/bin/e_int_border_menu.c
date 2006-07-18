@@ -653,11 +653,6 @@ _e_border_menu_cb_borderless(void *data, E_Menu *m, E_Menu_Item *mi)
    if (!bd->lock_border)
      {
 	toggle = e_menu_item_toggle_get(mi);
-	if (bd->client.border.name)
-	  {
-	     evas_stringshare_del(bd->client.border.name);
-	     bd->client.border.name = NULL;
-	  }
 	if (toggle)
 	  bd->borderless = 1;
 	else

@@ -115,8 +115,6 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      }
    if ((!cfdata->border->lock_border) && (!cfdata->border->shaded))
      {  
-	if (cfdata->border->client.border.name) evas_stringshare_del(cfdata->border->client.border.name);
-	cfdata->border->client.border.name = NULL;
 	if (cfdata->border->bordername) evas_stringshare_del(cfdata->border->bordername);
 	cfdata->border->bordername = evas_stringshare_add(cfdata->bordername);
 	cfdata->border->client.border.changed = 1;
