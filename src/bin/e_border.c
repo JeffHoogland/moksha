@@ -3215,7 +3215,8 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
 	return 1;
      }
    /* Don't delete hidden or iconified windows */
-   if ((bd->iconic) || (!bd->visible) || (bd->await_hide_event > 0))
+   if ((bd->iconic) || ((!bd->visible) && (!bd->new_client)) || 
+       (bd->await_hide_event > 0))
      {
 	if (bd->await_hide_event > 0)
 	  bd->await_hide_event--;
