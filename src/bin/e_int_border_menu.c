@@ -531,9 +531,9 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
    a = bd->app;
    
    bname = bd->client.icccm.name;
-   if ((bname) && (strlen(bname) < 1)) bname = NULL;
+   if ((bname) && (bname[0] == 0)) bname = NULL;
    bclass = bd->client.icccm.class;
-   if ((bclass) && (strlen(bclass) < 1)) bclass = NULL;
+   if ((bclass) && (bclass[0] == 0)) bclass = NULL;
 	     
    if (!a)
      {
