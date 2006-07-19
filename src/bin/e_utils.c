@@ -564,7 +564,7 @@ e_util_filename_escape(const char *filename)
 }
 
 EAPI int
-e_util_save_icon(Ecore_X_Icon *icon, const char *filename)
+e_util_icon_save(Ecore_X_Icon *icon, const char *filename)
 {
    Ecore_Evas  *ee;
    Evas        *evas;
@@ -587,6 +587,7 @@ e_util_save_icon(Ecore_X_Icon *icon, const char *filename)
    evas_object_resize(im, icon->width, icon->height);
    evas_object_image_size_set(im, icon->width, icon->height);
    evas_object_image_data_copy_set(im, icon->data);
+   evas_object_image_alpha_set(im, 1);
    evas_object_show(im);
    ret = evas_object_image_save(im, filename, NULL, NULL);
    evas_object_del(im);

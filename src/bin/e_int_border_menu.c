@@ -556,6 +556,26 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 	     if (bname) a->exe = evas_stringshare_add(bname);
 	     if (bd->client.netwm.startup_id > 0)
 	       a->startup_notify = 1;
+	     if (bd->client.netwm.icons)
+	       {
+		  /* FIXME: Find the icon with the best size */
+		  const char *tmp;
+
+		  tmp = getenv("TMPDIR");
+		  if (!tmp) tmp = getenv("TMP");
+		  if (!tmp) tmp = "/tmp";
+		  snprintf(path, sizeof(path), "%s/%s-%.6f.jpg", tmp, bname, ecore_time_get());
+		  if (e_util_icon_save(&(bd->client.netwm.icons[0]), path))
+		    {
+		       a->image = evas_stringshare_add(path);
+		       a->width = bd->client.netwm.icons[0].width;
+		       a->height = bd->client.netwm.icons[0].height;
+		    }
+		  else
+		    {
+		       fprintf(stderr, "Could not save file from ARGB: %s\n", path);
+		    }
+	       }
 	     bd->app = a;
 	     e_object_ref(E_OBJECT(bd->app));
 	  }

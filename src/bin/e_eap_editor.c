@@ -30,6 +30,8 @@ struct _E_Config_Dialog_Data
    int   wait_exit;
    /*- common -*/
    char *image;
+   int   width;
+   int   height;
    E_App_Edit *editor;
 };
 
@@ -103,6 +105,11 @@ _e_eap_edit_fill_data(E_Config_Dialog_Data *cfdata)
    IFDUP(cfdata->editor->eap->icon_class, cfdata->iclass);   
    cfdata->startup_notify = cfdata->editor->eap->startup_notify;
    cfdata->wait_exit = cfdata->editor->eap->wait_exit;
+   /*- COMMON -*/
+   IFDUP(cfdata->editor->eap->image, cfdata->image);   
+   cfdata->height = cfdata->editor->eap->height;
+   cfdata->width = cfdata->editor->eap->width;
+   if (cfdata->image) cfdata->editor->img_set = 1;
 }
 
 static void *
@@ -157,8 +164,10 @@ _e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data)
    eap->wait_exit = data->wait_exit;
    
    /* FIXME: hardcoded until the eap editor provides fields to change it */
-   eap->width = 128;
-   eap->height = 128;   
+   if (data->width) eap->width = data->width;
+   else eap->width = 128;
+   if (data->height) eap->height = data->height;
+   else eap->height = 128;   
 
    if ((eap->name) && (eap->exe)) 
      e_app_fields_save(eap);
@@ -205,9 +214,11 @@ _e_eap_edit_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data
    if (data->iclass) eap->icon_class = evas_stringshare_add(data->iclass);
 
    /* FIXME: hardcoded until the eap editor provides fields to change it */
-   eap->width = 128;
-   eap->height = 128;
-   
+   if (data->width) eap->width = data->width;
+   else eap->width = 128;
+   if (data->height) eap->height = data->height;
+   else eap->height = 128;   
+
    if ((eap->name) && (eap->exe))
      e_app_fields_save(eap);
    return 1;
