@@ -40,6 +40,7 @@ EAPI E_Border    *e_util_desk_border_below(E_Border *bd);
 EAPI int          e_util_edje_collection_exists(const char *file, const char *coll);
 EAPI void         e_util_dialog_internal(const char *title, const char *txt);
 EAPI const char  *e_util_filename_escape(const char *filename);
+EAPI int          e_util_save_icon(Ecore_X_Icon *icon, const char *filename);
 
 #endif
 #endif

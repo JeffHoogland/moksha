@@ -563,6 +563,37 @@ e_util_filename_escape(const char *filename)
    return buf;
 }
 
+EAPI int
+e_util_save_icon(Ecore_X_Icon *icon, const char *filename)
+{
+   Ecore_Evas  *ee;
+   Evas        *evas;
+   Evas_Object *im;
+   int          ret;
+
+   ee = ecore_evas_buffer_new(icon->width, icon->height);
+   if (!ee) return 0;
+   evas = ecore_evas_get(ee);
+   evas_image_cache_set(evas, 0);
+   evas_font_cache_set(evas, 0);
+
+   im = evas_object_image_add(evas);
+   if (!im)
+     {
+	ecore_evas_free(ee);
+	return 0;
+     }
+   evas_object_move(im, 0, 0);
+   evas_object_resize(im, icon->width, icon->height);
+   evas_object_image_size_set(im, icon->width, icon->height);
+   evas_object_image_data_copy_set(im, icon->data);
+   evas_object_show(im);
+   ret = evas_object_image_save(im, filename, NULL, NULL);
+   evas_object_del(im);
+   ecore_evas_free(ee);
+   return ret;
+}
+
 /* local subsystem functions */
 static void
 _e_util_container_fake_mouse_up_cb(void *data)
