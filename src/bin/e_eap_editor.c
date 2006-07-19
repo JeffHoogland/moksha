@@ -52,11 +52,6 @@ static void           _e_eap_edit_hilite_cb(Evas_Object *obj, char *file, void *
 
 #define IFDUP(src, dst) if (src) dst = strdup(src); else dst = NULL
 
-/* FIXME: this eap editor is half-done. first advanced mode needs to ALSO
- * cover basic config - image saving is broken, makign new icons is broken
- * along with e_apps.c etc. all in all - this is not usable.
- */
-
 /* externally accessible functions */
 
 EAPI void
