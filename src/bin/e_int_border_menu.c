@@ -567,7 +567,7 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 		  tmp = getenv("TMPDIR");
 		  if (!tmp) tmp = getenv("TMP");
 		  if (!tmp) tmp = "/tmp";
-		  snprintf(path, sizeof(path), "%s/%s-%.6f.jpg", tmp, bname, ecore_time_get());
+		  snprintf(path, sizeof(path), "%s/%s-%.6f.png", tmp, bname, ecore_time_get());
 		  if (e_util_icon_save(&(bd->client.netwm.icons[0]), path))
 		    {
 		       a->image = evas_stringshare_add(path);
