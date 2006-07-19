@@ -78,7 +78,7 @@ Some of the things (in very short form) that need to be done to E17...
 
 * If a user has set a border type on a window, don't bother to check for
   changes.
-* border menu has dangerous close atr the bottom. if the widnwo is too far
+* border menu has dangerous close at the bottom. If the window is too far
   down then close is right next to the mouse - danger! move somewhere less
   dangerous.
 * keybindings dialog doesn't conform its formatting or datatype naming to
