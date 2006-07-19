@@ -558,7 +558,10 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 	       a->startup_notify = 1;
 	     if (bd->client.netwm.icons)
 	       {
-		  /* FIXME: Find the icon with the best size */
+		  /* FIXME
+		   * - Find the icon with the best size
+		   * - Should use mkstemp
+		   */
 		  const char *tmp;
 
 		  tmp = getenv("TMPDIR");
