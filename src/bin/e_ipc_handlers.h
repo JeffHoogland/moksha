@@ -955,16 +955,16 @@ break;
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
    E_App *a;
-   if(ecore_file_exists(s))
+   if (ecore_file_exists(s))
      {
 	a = e_app_new(s, 0);
-	if(a)
+	if (a)
 	  e_eap_edit_show(e_container_current_get(e_manager_current_get()), a);
      }
    else
     {
        a = e_app_empty_new(s);
-       if(a)
+       if (a)
 	 e_eap_edit_show(e_container_current_get(e_manager_current_get()), a);
     }
    END_STRING(s);
