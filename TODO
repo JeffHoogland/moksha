@@ -25,8 +25,6 @@ Some of the things (in very short form) that need to be done to E17...
   attaches to the 2nd zone, not the first), crashes have been reported too.
 * BUG: xdaliclock -transparent doesnt use shaped border (not handling shape
   change later)
-* BUG: if a user selects a border the border should not just change based on
-  properties. if user selects a border in border selector, then lock border
 * BUG: if you iconify a window and while iconified the window unmaps
   (rhythmbox does this a lot apparently) e doesnt realize and still thinks
   it's iconified.
