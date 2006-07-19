@@ -586,24 +586,55 @@ _e_test_internal(E_Container *con)
 }
 #elif 0
 static void
+_e_test_cb_button(void *data1, void *data2)
+{
+   e_fm2_parent_go(data1);
+}
+
+static void
+_e_test_cb_changed(void *data, Evas_Object *obj, void *event_info)
+{
+   if (!e_fm2_has_parent_get(obj)) e_widget_disabled_set(data, 1);
+   else e_widget_disabled_set(data, 0);
+}
+    
+static void
+_e_test_cb_selected(void *data, Evas_Object *obj, void *event_info)
+{
+   printf("SELECTED!\n");
+}
+    
+static void
 _e_test_internal(E_Container *con)
 {
    E_Dialog *dia;
-   Evas_Object *o, *o2;
+   Evas_Object *o, *o2, *o3;
    
    dia = e_dialog_new(con);
    e_dialog_title_set(dia, "A Test Dialog");
-   
+
    o = e_fm2_add(dia->win->evas);
    e_fm2_path_set(o, "~/", "/pix/bg");
-   evas_object_show(o);
    
+   o3 = e_widget_list_add(dia->win->evas, 0, 0);
+
+   o2 = e_widget_button_add(dia->win->evas, "Up a directory", NULL,
+			   _e_test_cb_button, o, NULL);
+   evas_object_show(o2);
+   e_widget_list_object_append(o3, o2, 1, 0, 0.5);
+
+   evas_object_smart_callback_add(o, "changed", _e_test_cb_changed, o2);
+   evas_object_smart_callback_add(o, "selected", _e_test_cb_selected, NULL);
+   
+   evas_object_show(o);
    o2 = e_scrollframe_add(dia->win->evas);
    evas_object_show(o2);
    e_scrollframe_extern_pan_set(o2, o, 
 				e_fm2_pan_set, e_fm2_pan_get,
 				e_fm2_pan_max_get, e_fm2_pan_child_size_get);
-   e_dialog_content_set(dia, o2, 64, 64);
+   e_widget_list_object_append(o3, o2, 1, 1, 0.5);
+
+   e_dialog_content_set(dia, o3, 128, 128);
    
    e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
    e_dialog_resizable_set(dia, 1);

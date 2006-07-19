@@ -46,6 +46,7 @@ e_widget_list_object_append(Evas_Object *obj, Evas_Object *sobj, int fill, int e
    wd = e_widget_data_get(obj);
    
    e_box_pack_end(wd->o_box, sobj);
+   mw = mh = 0;
    e_widget_min_size_get(sobj, &mw, &mh);
    if (e_box_orientation_get(wd->o_box) == 1)
      e_box_pack_options_set(sobj,

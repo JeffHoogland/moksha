@@ -185,22 +185,28 @@ e_fm2_path_set(Evas_Object *obj, char *dev, char *path)
    if (sd->config) _e_fm2_config_free(sd->config);
    sd->config = E_NEW(E_Fm2_Config, 1);
    if (!sd->config) return;
-   sd->config->view.mode = E_FM2_VIEW_MODE_ICONS;
-//   sd->config->view.mode = E_FM2_VIEW_MODE_LIST;
+//   sd->config->view.mode = E_FM2_VIEW_MODE_ICONS;
+   sd->config->view.mode = E_FM2_VIEW_MODE_LIST;
+   sd->config->view.open_dirs_in_place = 1;
+   sd->config->view.selector = 1;
+   sd->config->view.single_click = 0;
+   sd->config->view.no_subdir_jump = 0;
    sd->config->icon.icon.w = 64;
    sd->config->icon.icon.h = 64;
    sd->config->icon.list.w = 24;
    sd->config->icon.list.h = 24;
-   sd->config->icon.fixed.w = 0;
+   sd->config->icon.fixed.w = 1;
    sd->config->icon.fixed.h = 1;
-   sd->config->list.sort.no_case = 1;
    sd->config->icon.extension.show = 0;
+   sd->config->list.sort.no_case = 1;
    sd->config->list.sort.dirs.first = 1;
    sd->config->list.sort.dirs.last = 1;
    sd->config->selection.single = 0;
    sd->config->selection.windows_modifiers = 0;
-   sd->config->view.open_dirs_in_place = 0;
-   sd->config->view.selector = 0;
+   sd->config->theme.background = NULL;
+   sd->config->theme.frame = NULL;
+   sd->config->theme.icons = NULL;
+   sd->config->theme.fixed = 0;
    
    _e_fm2_scan_stop(obj);
    _e_fm2_queue_free(obj);
@@ -215,6 +221,7 @@ e_fm2_path_set(Evas_Object *obj, char *dev, char *path)
    sd->realpath = _e_fm2_dev_path_map(sd->dev, sd->path);
    printf("FM: %s\n", sd->realpath);
    _e_fm2_scan_start(obj);
+   evas_object_smart_callback_call(obj, "changed", NULL);
 }
 
 EAPI void
@@ -232,29 +239,41 @@ e_fm2_path_get(Evas_Object *obj, const char **dev, const char **path)
    if (path) *path = sd->path;
 }
 
-/*
-EAPI int
-e_fm2_parent_go(Evas_Object *obj)
-{
-   E_Fm2_Smart_Data *sd;
-
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return; // safety
-   if (!evas_object_type_get(obj)) return; // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
-}
-
 EAPI int
 e_fm2_has_parent_get(Evas_Object *obj)
 {
    E_Fm2_Smart_Data *sd;
 
    sd = evas_object_smart_data_get(obj);
+   if (!sd) return 0; // safety
+   if (!evas_object_type_get(obj)) return 0; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return 0; // safety
+   if (!sd->path) return 0;
+   if ((sd->path[0] == 0) || (!strcmp(sd->path, "/"))) return 0;
+   return 1;
+}
+
+EAPI void
+e_fm2_parent_go(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   char *path, *dev = NULL, *p;
+
+   sd = evas_object_smart_data_get(obj);
    if (!sd) return; // safety
    if (!evas_object_type_get(obj)) return; // safety
    if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+   if (!sd->path) return;
+   path = strdup(sd->path);
+   if (sd->dev) dev = strdup(sd->dev);
+   p = strrchr(path, '/');
+   if (p) *p = 0;
+   e_fm2_path_set(obj, dev, path);
+   E_FREE(dev);
+   E_FREE(path);
 }
 
+/*
 EAPI void
 e_fm2_config_set(Evas_Object *obj, E_Fm2_Config *cfg)
 {
@@ -1242,6 +1261,23 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
      {
 	/* if its a directory && open dirs in-place is set then change the dir
 	 * to be the dir + file */
+	if ((S_ISDIR(ic->st.st_mode)) && 
+	    (ic->sd->config->view.open_dirs_in_place) &&
+	    (!ic->sd->config->view.no_subdir_jump) &&
+	    (!ic->sd->config->view.single_click)
+	    )
+	  {
+	     char buf[4096], *dev = NULL;
+	     
+	     if (ic->sd->dev) dev = strdup(ic->sd->dev);
+	     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->path, ic->file);
+	     e_fm2_path_set(ic->sd->obj, dev, buf);
+	     E_FREE(dev);
+	  }
+	else
+	  {
+	     evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
+	  }
 	/* if its in file selector mode then signal that a selection has
 	 * taken place and dont do anything more */
 	
@@ -1328,6 +1364,12 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	  _e_fm2_icon_deselect(ic);
 	else
 	  _e_fm2_icon_select(ic);
+	if (!(S_ISDIR(ic->st.st_mode)) && 
+	    (ic->sd->config->view.single_click)
+	    )
+	  {
+	     evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
+	  }
      }
    else if (ev->button == 3)
      {
