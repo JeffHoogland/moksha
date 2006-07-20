@@ -1726,6 +1726,8 @@ static void
 e_gadcon_layout_orientation_set(Evas_Object *obj, int horizontal)
 {
    E_Smart_Data *sd;
+
+   if (!obj) return;
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
@@ -1739,6 +1741,8 @@ static int
 e_gadcon_layout_orientation_get(Evas_Object *obj)
 {
    E_Smart_Data *sd;
+
+   if (!obj) return;
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
@@ -1749,6 +1753,8 @@ static void
 e_gadcon_layout_freeze(Evas_Object *obj)
 {
    E_Smart_Data *sd;
+
+   if (!obj) return;
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
@@ -1759,6 +1765,8 @@ static void
 e_gadcon_layout_thaw(Evas_Object *obj)
 {
    E_Smart_Data *sd;
+
+   if (!obj) return;
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
@@ -1774,6 +1782,7 @@ e_gadcon_layout_min_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
    Evas_List *l;
    Evas_Coord tw = 0, th = 0;
  */
+   if (!obj) return;
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
@@ -1809,6 +1818,8 @@ e_gadcon_layout_asked_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 {
    E_Smart_Data *sd;
    Evas_Coord tw = 0, th = 0;
+
+   if (!obj) return;
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
@@ -1842,6 +1853,8 @@ static int
 e_gadcon_layout_pack(Evas_Object *obj, Evas_Object *child)
 {
    E_Smart_Data *sd;
+
+   if (!obj) return 0;
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
@@ -1856,6 +1869,8 @@ e_gadcon_layout_pack_size_set(Evas_Object *obj, int size)
 {
    E_Gadcon_Layout_Item *bi;
    int xx;
+
+   if (!obj) return;
    
    bi = evas_object_data_get(obj, "e_gadcon_layout_data");
    if (!bi) return;
@@ -1906,6 +1921,8 @@ static void
 e_gadcon_layout_pack_request_set(Evas_Object *obj, int pos, int size)
 {
    E_Gadcon_Layout_Item *bi;
+
+   if (!obj) return;
    
    bi = evas_object_data_get(obj, "e_gadcon_layout_data");
    if (!bi) return;
@@ -1925,6 +1942,8 @@ static void
 e_gadcon_layout_pack_options_set(Evas_Object *obj, int pos, int size, int res)
 {
    E_Gadcon_Layout_Item *bi;
+
+   if (!obj) return;
    
    bi = evas_object_data_get(obj, "e_gadcon_layout_data");
    if (!bi) return;
@@ -1938,6 +1957,8 @@ static void
 e_gadcon_layout_pack_min_size_set(Evas_Object *obj, int w, int h)
 {
    E_Gadcon_Layout_Item *bi;
+
+   if (!obj) return;
    
    bi = evas_object_data_get(obj, "e_gadcon_layout_data");
    if (!bi) return;
@@ -1950,6 +1971,8 @@ static void
 e_gadcon_layout_pack_aspect_set(Evas_Object *obj, int w, int h)
 {
    E_Gadcon_Layout_Item *bi;
+
+   if (!obj) return;
    
    bi = evas_object_data_get(obj, "e_gadcon_layout_data");
    if (!bi) return;
@@ -1962,6 +1985,8 @@ static void
 e_gadcon_layout_pack_aspect_pad_set(Evas_Object *obj, int w, int h)
 {
    E_Gadcon_Layout_Item *bi;
+
+   if (!obj) return;
    
    bi = evas_object_data_get(obj, "e_gadcon_layout_data");
    if (!bi) return;
@@ -1974,6 +1999,8 @@ e_gadcon_layout_unpack(Evas_Object *obj)
 {
    E_Gadcon_Layout_Item *bi;
    E_Smart_Data *sd;
+
+   if (!obj) return;
    
    bi = evas_object_data_get(obj, "e_gadcon_layout_data");
    if (!bi) return;
@@ -1989,6 +2016,8 @@ static E_Gadcon_Layout_Item *
 _e_gadcon_layout_smart_adopt(E_Smart_Data *sd, Evas_Object *obj)
 {
    E_Gadcon_Layout_Item *bi;
+
+   if (!obj) return NULL;
    
    bi = calloc(1, sizeof(E_Gadcon_Layout_Item));
    if (!bi) return NULL;
@@ -2010,6 +2039,8 @@ static void
 _e_gadcon_layout_smart_disown(Evas_Object *obj)
 {
    E_Gadcon_Layout_Item *bi;
+
+   if (!obj) return;
    
    bi = evas_object_data_get(obj, "e_gadcon_layout_data");
    if (!bi) return;
@@ -2030,6 +2061,8 @@ _e_gadcon_layout_smart_disown(Evas_Object *obj)
 static void
 _e_gadcon_layout_smart_item_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
+   if (!obj) return;
+
    e_gadcon_layout_unpack(obj);
 }
 
@@ -2088,6 +2121,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	
 	obj = l->data;
 	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+	if (!bi) continue;
 	bi->ask.size2 = bi->ask.size;
 	if ((bi->aspect.w > 0) && (bi->aspect.h > 0))
 	  {
@@ -2165,6 +2199,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 		       
 		       obj = l->data;
 		       bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+		       if (!bi) continue;
 		       give = bi->ask.size - bi->min.w; // how much give does this have?
 		       if (give < sub) give = sub;
 		       bi->ask.size2 = bi->ask.size - give;
@@ -2185,6 +2220,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 		       
 		       obj = l->data;
 		       bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+		       if (!bi) continue;
 		       bi->ask.size2 = bi->min.w;
 		       if (!l->next)
 			 {
@@ -2220,6 +2256,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 		       
 		       obj = l->data;
 		       bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+		       if (!bi) continue;
 		       give = bi->ask.size - bi->min.h; // how much give does this have?
 		       if (give < sub) give = sub;
 		       bi->ask.size2 = bi->ask.size - give;
@@ -2240,6 +2277,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 		       
 		       obj = l->data;
 		       bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+		       if (!bi) continue;
 		       bi->ask.size2 = bi->min.h;
 		       if (!l->next)
 			 {
@@ -2263,6 +2301,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	
 	obj = l->data;
 	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+	if (!bi) continue;
 	list = evas_list_append(list, obj);
 	if (sd->horizontal)
 	  {
@@ -2362,6 +2401,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	
 	obj = l->data;
 	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+	if (!bi) continue;
 	again1:
 	for (l2 = l->prev; l2; l2 = l2->prev)
 	  {
@@ -2369,6 +2409,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	     
 	     obj = l2->data;
 	     bi2 = evas_object_data_get(obj, "e_gadcon_layout_data");
+	     if (!bi2) continue;
 	     if (sd->horizontal)
 	       {
 		  if (E_SPANS_COMMON(bi->x, bi->w, bi2->x, bi2->w))
@@ -2394,6 +2435,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	
 	obj = l->data;
 	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+	if (!bi) continue;
 	again2:
 	for (l2 = l->prev; l2; l2 = l2->prev)
 	  {
@@ -2401,6 +2443,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	     
 	     obj = l2->data;
 	     bi2 = evas_object_data_get(obj, "e_gadcon_layout_data");
+	     if (!bi2) continue;
              if (sd->horizontal)
 	       {
 		  if (E_SPANS_COMMON(bi->x, bi->w, bi2->x, bi2->w))
@@ -2432,6 +2475,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	
 	obj = l->data;
 	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+	if (!bi) continue;
 	again3:
 	for (l2 = l->prev; l2; l2 = l2->prev)
 	  {
@@ -2439,6 +2483,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	     
 	     obj = l2->data;
 	     bi2 = evas_object_data_get(obj, "e_gadcon_layout_data");
+	     if (!bi2) continue;
              if (sd->horizontal)
 	       {
 		  if (E_SPANS_COMMON(bi->x, bi->w, bi2->x, bi2->w))
@@ -2464,6 +2509,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	
 	obj = l->data;
 	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+	if (!bi) continue;
 	bi->can_move = 1;
 	if (sd->horizontal)
 	  {
@@ -2521,6 +2567,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 		  
 		  obj = l->data;
 		  bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+		  if (!bi) continue;
 		  if (bi->can_move)
 		    {
 		       for (l2 = l->next; l2; l2 = l2->next)
@@ -2529,6 +2576,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 			    
 			    obj = l2->data;
 			    bi2 = evas_object_data_get(obj, "e_gadcon_layout_data");
+			    if (!bi2) continue;
 			    if (E_SPANS_COMMON(bi->x, bi->w, bi2->x, bi2->w))
 			      {
 				 bi->x = bi2->x - bi->w;
@@ -2544,6 +2592,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 			    
 			    obj = l2->data;
 			    bi2 = evas_object_data_get(obj, "e_gadcon_layout_data");
+			    if (!bi2) continue;
 			    if (E_SPANS_COMMON(bi->x, bi->w, bi2->x, bi2->w))
 			      {
 				 bi->x = bi2->x + bi2->w;
@@ -2579,6 +2628,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 		  
 		  obj = l->data;
 		  bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+		  if (!bi) continue;
 		  if (bi->can_move)
 		    {
 		       for (l2 = l->next; l2; l2 = l2->next)
@@ -2587,6 +2637,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 			    
 			    obj = l2->data;
 			    bi2 = evas_object_data_get(obj, "e_gadcon_layout_data");
+			    if (!bi2) continue;
 			    if (E_SPANS_COMMON(bi->y, bi->h, bi2->y, bi2->h))
 			      {
 				 bi->y = bi2->y - bi->h;
@@ -2602,6 +2653,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 			    
 			    obj = l2->data;
 			    bi2 = evas_object_data_get(obj, "e_gadcon_layout_data");
+			    if (!bi2) continue;
 			    if (E_SPANS_COMMON(bi->y, bi->h, bi2->y, bi2->h))
 			      {
 				 bi->y = bi2->y + bi2->h;
@@ -2630,6 +2682,7 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	
 	obj = l->data;
 	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+	if (!bi) continue;
 	if (sd->horizontal)
 	  {
 	     bi->h = h;
@@ -2702,6 +2755,8 @@ static void
 _e_gadcon_layout_smart_add(Evas_Object *obj)
 {
    E_Smart_Data *sd;
+
+   if (!obj) return;
    
    sd = calloc(1, sizeof(E_Smart_Data));
    if (!sd) return;
@@ -2723,6 +2778,8 @@ static void
 _e_gadcon_layout_smart_del(Evas_Object *obj)
 {
    E_Smart_Data *sd;
+
+   if (!obj) return;
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
@@ -2741,6 +2798,8 @@ static void
 _e_gadcon_layout_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 {
    E_Smart_Data *sd;
+
+   if (!obj) return;
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
@@ -2767,6 +2826,8 @@ static void
 _e_gadcon_layout_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 {
    E_Smart_Data *sd;
+
+   if (!obj) return;
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
@@ -2780,6 +2841,8 @@ static void
 _e_gadcon_layout_smart_show(Evas_Object *obj)
 {
    E_Smart_Data *sd;
+
+   if (!obj) return;
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
@@ -2790,6 +2853,8 @@ static void
 _e_gadcon_layout_smart_hide(Evas_Object *obj)
 {
    E_Smart_Data *sd;
+
+   if (!obj) return;
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
@@ -2800,6 +2865,8 @@ static void
 _e_gadcon_layout_smart_color_set(Evas_Object *obj, int r, int g, int b, int a)
 {
    E_Smart_Data *sd;
+
+   if (!obj) return;
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;   
@@ -2810,6 +2877,8 @@ static void
 _e_gadcon_layout_smart_clip_set(Evas_Object *obj, Evas_Object *clip)
 {
    E_Smart_Data *sd;
+
+   if (!obj) return;
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
@@ -2820,6 +2889,8 @@ static void
 _e_gadcon_layout_smart_clip_unset(Evas_Object *obj)
 {
    E_Smart_Data *sd;
+
+   if (!obj) return;
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
