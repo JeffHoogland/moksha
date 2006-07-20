@@ -199,7 +199,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    Evas_Object *o, *of, *ob, *oi;
    Evas_Coord wmw, wmh;
-   Evas_List *l, *l2;
 
    o = e_widget_list_add(evas, 0, 1);
 

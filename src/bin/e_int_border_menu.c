@@ -573,6 +573,7 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 		       a->image = evas_stringshare_add(path);
 		       a->width = bd->client.netwm.icons[0].width;
 		       a->height = bd->client.netwm.icons[0].height;
+		       a->tmpfile = 1;
 		    }
 		  else
 		    {

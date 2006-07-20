@@ -136,6 +136,8 @@ _e_eap_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data)
    E_FREE(data->wrole);
    E_FREE(data->iclass);
    E_FREE(data->image);
+   if (data->editor->eap->tmpfile) ecore_file_unlink(data->editor->eap->image);
+   data->editor->eap->tmpfile = 0;
    if (data->editor->eap->image) evas_stringshare_del(data->editor->eap->image);
    data->editor->eap->width = 0;
    data->editor->eap->height = 0;

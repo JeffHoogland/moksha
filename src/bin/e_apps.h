@@ -62,9 +62,11 @@ struct _E_App
 
    unsigned char       deleted : 1; /* this app's file is deleted from disk */
    
+   /* used for eap edit */
    const char         *image; /* used when we're saving a image into the eap */
    int                 width; /* used for saving eap's image width in edje */
    int                 height; /* used for saving eap's image height in edje */
+   unsigned char       tmpfile : 1;
 };
 
 struct _E_App_Instance
