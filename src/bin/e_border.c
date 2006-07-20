@@ -638,7 +638,7 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
    e_object_ref(E_OBJECT(desk));
    ecore_event_add(E_EVENT_BORDER_DESK_SET, ev, _e_border_event_border_desk_set_free, NULL);
 
-   if (bd->desk->visible)
+   if ((bd->desk->visible) || (bd->sticky))
      e_border_show(bd);
    else
      e_border_hide(bd, 1);
@@ -2093,6 +2093,20 @@ e_border_stick(E_Border *bd)
    e_hints_window_sticky_set(bd, 1);
    e_border_show(bd);
 
+   if (e_config->transient.desktop)
+     {
+	Evas_List *l;
+	for (l = bd->transients; l; l = l->next)
+	  {
+	     E_Border *child;
+
+	     child = l->data;
+	     child->sticky = 1;
+	     e_hints_window_sticky_set(child, 1);
+	     e_border_show(child);
+	  }
+     }
+
    ev = E_NEW(E_Event_Border_Stick, 1);
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
@@ -2112,6 +2126,19 @@ e_border_unstick(E_Border *bd)
 //   printf("UNSTICK!\n");
    bd->sticky = 0;
    e_hints_window_sticky_set(bd, 0);
+
+   if (e_config->transient.desktop)
+     {
+	Evas_List *l;
+	for (l = bd->transients; l; l = l->next)
+	  {
+	     E_Border *child;
+
+	     child = l->data;
+	     child->sticky = 0;
+	     e_hints_window_sticky_set(child, 0);
+	  }
+     }
 
    ev = E_NEW(E_Event_Border_Unstick, 1);
    ev->border = bd;
