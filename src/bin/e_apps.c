@@ -313,21 +313,13 @@ e_app_empty_new(const char *path)
    a = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
    a->image = NULL;
    if (path) a->path = evas_stringshare_add(path);   
-   else
-     {   
-	if ((_e_apps_all) && (_e_apps_all->path))
-	  {
-	     char buf[4096];
-	     
-	     snprintf(buf, sizeof(buf), "%s/_new_app_%1.1f.eap", 
-		      _e_apps_all->path, ecore_time_get());
-	     a->parent = _e_apps_all;
-	     _e_apps_all->subapps = evas_list_append(_e_apps_all->subapps, a);
-	     a->path = evas_stringshare_add(buf);
-	     _e_apps = evas_hash_add(_e_apps, a->path, a);
-             _e_apps_list = evas_list_prepend(_e_apps_list, a);
-	     _e_app_change(a, E_APP_ADD);
-	  }
+   else if ((_e_apps_all) && (_e_apps_all->path))
+     {
+	char buf[4096];
+
+	snprintf(buf, sizeof(buf), "%s/_new_app_%1.1f.eap", 
+		 _e_apps_all->path, ecore_time_get());
+	a->path = evas_stringshare_add(buf);
      }
    return a;
 }
