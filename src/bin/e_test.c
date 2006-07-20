@@ -614,7 +614,8 @@ _e_test_internal(E_Container *con)
    e_dialog_title_set(dia, "A Test Dialog");
 
    o = e_fm2_add(dia->win->evas);
-   e_fm2_path_set(o, "~/", "/pix/bg");
+//   e_fm2_path_set(o, "~/", "/pix/bg");
+   e_fm2_path_set(o, "~/", "/.e/e/fileman/favorites");
    
    o3 = e_widget_list_add(dia->win->evas, 0, 0);
 

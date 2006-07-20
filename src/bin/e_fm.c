@@ -59,12 +59,18 @@ struct _E_Fm2_Icon
    int               saved_rel;
    const char       *file;
    const char       *mime;
+   const char       *label;
+   const char       *comment;
+   const char       *generic;
+   const char       *icon;
+   const char       *link;
    struct stat       st;
    unsigned char     realized : 1;
    unsigned char     selected : 1;
    unsigned char     last_selected : 1;
    unsigned char     saved_pos : 1;
    unsigned char     odd : 1;
+   unsigned char     mount : 1;
 };
 
 static const char *_e_fm2_dev_path_map(const char *dev, const char *path);
@@ -90,6 +96,7 @@ static void _e_fm2_icon_label_set(E_Fm2_Icon *ic, Evas_Object *obj);
 static void _e_fm2_icon_icon_set(E_Fm2_Icon *ic);
 static void _e_fm2_icon_select(E_Fm2_Icon *ic);
 static void _e_fm2_icon_deselect(E_Fm2_Icon *ic);
+static int _e_fm2_icon_desktop_load(E_Fm2_Icon *ic);
 
 static E_Fm2_Region *_e_fm2_region_new(E_Fm2_Smart_Data *sd);
 static void _e_fm2_region_free(E_Fm2_Region *rg);
@@ -859,7 +866,7 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, char *file)
    E_Fm2_Icon *ic;
    Evas_Coord mw = 0, mh = 0;
    Evas_Object *obj, *obj2;
-   char buf[4096];
+   char buf[4096], buf2[4096];
    
    /* create icon */
    ic = E_NEW(E_Fm2_Icon, 1);
@@ -871,8 +878,11 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, char *file)
      }
    ic->sd = sd;
    ic->file = evas_stringshare_add(file);
-   /* FIXME: have many icon size policies. fixed, max, auto-calc etc. */
-   switch (sd->config->view.mode)
+   if (readlink(buf, buf2, sizeof(buf2) - 1) == 0)
+     ic->link = evas_stringshare_add(buf2);
+   if (e_util_glob_case_match(ic->file, "*.desktop"))
+     _e_fm2_icon_desktop_load(ic);
+    switch (sd->config->view.mode)
      {
       case E_FM2_VIEW_MODE_ICONS:
       case E_FM2_VIEW_MODE_GRID_ICONS:
@@ -947,6 +957,12 @@ _e_fm2_icon_free(E_Fm2_Icon *ic)
    /* free icon, object data etc. etc. */
    _e_fm2_icon_unrealize(ic);
    if (ic->file) evas_stringshare_del(ic->file);
+   if (ic->mime) evas_stringshare_del(ic->mime);
+   if (ic->label) evas_stringshare_del(ic->label);
+   if (ic->comment) evas_stringshare_del(ic->comment);
+   if (ic->generic) evas_stringshare_del(ic->generic);
+   if (ic->icon) evas_stringshare_del(ic->icon);
+   if (ic->link) evas_stringshare_del(ic->link);
    free(ic);
 }
 
@@ -1048,7 +1064,12 @@ _e_fm2_icon_label_set(E_Fm2_Icon *ic, Evas_Object *obj)
 {
    char buf[4096], *p;
    int len;
-   
+
+   if (ic->label)
+     {
+	edje_object_part_text_set(obj, "label", ic->label);
+	return;
+     }
    if (ic->sd->config->icon.extension.show)
      edje_object_part_text_set(obj, "label", ic->file);
    else
@@ -1080,7 +1101,29 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
    char buf[4096];
    
    if (!ic->realized) return;
-   /* FIXME: use mimetype - for now just using extension glob */
+   if (ic->icon)
+     {
+	/* custom icon */
+	/* FIXME:
+	 * if ic->icon == blah then use theme icon
+	 * if ic->icon == blah/blah2 then use theme icon
+	 * if ic->icon == /blah/blah2.xxx then use full path
+	 * if ic->icon == blah.xxx then use relative path to icon dirs
+	 * if ic->icon == blah/blah2.xxx then use relative path to icon dirs
+	 */
+	/* theme icon */
+	ic->obj_icon = edje_object_add(evas_object_evas_get(ic->sd->obj));
+        e_util_edje_icon_set(ic->obj_icon, ic->icon);
+        edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
+	evas_object_show(ic->obj_icon);
+	return;
+     }
+   if (ic->mime)
+     {
+	/* use mime type to select icon */
+	return;
+     }
+   /* fallback */
    if (S_ISDIR(ic->st.st_mode))
      {
 	ic->obj_icon = edje_object_add(evas_object_evas_get(ic->sd->obj));
@@ -1173,6 +1216,106 @@ _e_fm2_icon_deselect(E_Fm2_Icon *ic)
 	edje_object_signal_emit(ic->obj, "passive", "");
 	edje_object_signal_emit(ic->obj_icon, "passive", "");
      }
+}
+
+static const char *
+_e_fm2_icon_desktop_url_eval(const char *val)
+{
+   char *path, *p, buf[4096], *pd, *e1, *e2;
+   
+   if (strlen(val) < 6) return NULL;
+   if (strncmp(val, "file:", 5)) return NULL;
+   path = val + 5;
+   buf[0] = 0;
+   p = path;
+   pd = buf;
+   e1 = e2 = NULL;
+   /* FIXME: evaluate any shell vars - eg:
+    * $XX/blah/$HOME/blah2/$A$B
+    */
+   while (*p)
+     {
+/*	
+	if (*p == '$')
+	  {
+	     if (e1)
+	       {
+		  e2 = p;
+		  
+		  e1 = NULL;
+		  e2 = NULL;
+	       }
+	     else
+	       e1 = p + 1;
+	  }
+	else if (e1)
+	  {
+	     if (!(isalnum(*p) || (*p == '_')))
+	       {
+		  e2 = p;
+		  
+		  e1 = NULL;
+		  e2 = NULL;
+	       }
+	  }
+ */
+	*pd = *p;
+	p++;
+	pd++;
+     }
+   *pd = 0;
+   return evas_stringshare_add(buf);
+}
+
+static int
+_e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
+{
+   char buf[4096], key[256], val[4096];
+   FILE *f;
+   
+   snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->file);
+   f = fopen(buf, "rb");
+   if (!f) return 0;
+   if (!fgets(buf, sizeof(buf), f)) goto error;
+   if (strcmp(buf, "[Desktop Entry]\n")) goto error;
+   while (fscanf(f, "%255[^=]=%4095[^\n]\n", key, val) == 2)
+     {
+	printf("%s=%s\n", key, val);
+	if      (!strcmp(key, "Name")) ic->label = evas_stringshare_add(val);
+	else if (!strcmp(key, "Comment")) ic->comment = evas_stringshare_add(val);
+	else if (!strcmp(key, "Generic")) ic->generic = evas_stringshare_add(val);
+	else if (!strcmp(key, "Icon")) ic->icon = evas_stringshare_add(val);
+	else if (!strcmp(key, "Type"))
+	  {
+	     if (!strcmp(val, "Mount")) ic->mount = 1;
+	     else if (!strcmp(val, "Link"))
+	       {
+	       }
+	     else
+	       goto error;
+	  }
+	else if (!strcmp(key, "File"))
+	  ic->link = _e_fm2_icon_desktop_url_eval(val);
+	else if (!strcmp(key, "URL"))
+	  ic->link = _e_fm2_icon_desktop_url_eval(val);
+	else if (!strcmp(key, "Path"))
+	  ic->link = _e_fm2_icon_desktop_url_eval(val);
+     }
+   fclose(f);
+   return 1;
+   error:
+   if (ic->label) evas_stringshare_del(ic->label);
+   if (ic->comment) evas_stringshare_del(ic->comment);
+   if (ic->generic) evas_stringshare_del(ic->generic);
+   if (ic->icon) evas_stringshare_del(ic->icon);
+   if (ic->link) evas_stringshare_del(ic->link);
+   ic->label = NULL;
+   ic->comment = NULL;
+   ic->generic = NULL;
+   ic->icon = NULL;
+   ic->link = NULL;
+   fclose(f);
+   return 0;
 }
 
 /**************************/
