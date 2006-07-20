@@ -19,9 +19,9 @@ static void _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, voi
 static void _e_shelf_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_shelf_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_shelf_cb_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static int  _e_shelf_cb_id_sort(void *data1, void *data2);
 
 static Evas_List *shelves = NULL;
-static int shelf_id = 0;
 
 /* externally accessible functions */
 EAPI int
@@ -41,6 +41,14 @@ e_shelf_config_init(void)
 {
    Evas_List *l;
    
+   while (shelves)
+     {
+	E_Shelf *es;
+
+	es = shelves->data;
+	e_object_del(E_OBJECT(es));
+     }
+
    for (l = e_config->shelves; l; l = l->next)
      {
 	E_Config_Shelf *cf_es;
@@ -133,13 +141,11 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 	evas_object_layer_set(es->o_event, layer);
 	evas_object_layer_set(es->o_base, layer);
      }
-   if (id < 0)
-     {
-	es->id = evas_list_count(shelves);
-	shelf_id++;
-     }
+   if (id <= 0)
+     es->id = evas_list_count(shelves);
    else
      es->id = id;
+
    snprintf(buf, sizeof(buf), "%i", es->id);
    es->gadcon = e_gadcon_swallowed_new(es->name, buf, es->o_base, "items");
    e_gadcon_min_size_request_callback_set(es->gadcon,
@@ -161,6 +167,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 				      es);
    
    shelves = evas_list_append(shelves, es);
+   shelves = evas_list_sort(shelves, -1, _e_shelf_cb_id_sort);
    return es;
 }
 
@@ -880,4 +887,14 @@ _e_shelf_cb_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info
    es = data;
    ev = event_info;
    edje_object_signal_emit(es->o_base, "inactive", "");
+}
+
+static int
+_e_shelf_cb_id_sort(void *data1, void *data2)
+{
+   E_Shelf *es1, *es2;
+
+   es1 = data1;
+   es2 = data2;
+   return (es1->id) > (es2->id);
 }

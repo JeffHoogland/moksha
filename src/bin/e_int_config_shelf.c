@@ -137,33 +137,21 @@ static void
 _cb_add(void *data, void *data2)
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *shelves;
-   
-   cfdata = data;
-   while ((shelves = e_shelf_list()))
-     {
-	E_Shelf *es;
-	
-	es = shelves->data;
-	e_object_del(E_OBJECT(es));
-     }
-   ////
-     {
-	E_Config_Shelf *cfg;
-	
-	cfg = E_NEW(E_Config_Shelf, 1);
-	cfg->name = evas_stringshare_add("shelf");
-	cfg->container = cfdata->cfd->con->num;
-	cfg->zone = cfdata->cfd->dia->win->border->zone->num;
-	cfg->popup = 1;
-	cfg->layer = 200;
-	cfg->orient = E_GADCON_ORIENT_CORNER_BR;
-	cfg->fit_along = 1;
-	cfg->fit_size = 0;
-	cfg->style = evas_stringshare_add("default");
-	cfg->size = 40;
-	e_config->shelves = evas_list_append(e_config->shelves, cfg);
-     }
+   E_Config_Shelf *cfg;
+
+   cfg = E_NEW(E_Config_Shelf, 1);
+   cfg->name = evas_stringshare_add("shelf");
+   cfg->container = cfdata->cfd->con->num;
+   cfg->zone = cfdata->cfd->dia->win->border->zone->num;
+   cfg->popup = 1;
+   cfg->layer = 200;
+   cfg->orient = E_GADCON_ORIENT_CORNER_BR;
+   cfg->fit_along = 1;
+   cfg->fit_size = 0;
+   cfg->style = evas_stringshare_add("default");
+   cfg->size = 40;
+   e_config->shelves = evas_list_append(e_config->shelves, cfg);
+
    e_shelf_config_init();
    e_config_save_queue();
    
