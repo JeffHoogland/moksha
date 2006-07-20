@@ -147,17 +147,21 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 			     (char *)e_theme_edje_file_get("base/theme/borders",
 							   "widgets/border/default/borders"),
 			     "widgets/border/default/borders");
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
 
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Send to Desktop"));
-   e_menu_item_submenu_pre_callback_set(mi, _e_border_menu_cb_sendto_pre, bd);
-   e_menu_item_icon_edje_set(mi,
-			     (char *)e_theme_edje_file_get("base/theme/borders",
-							   "widgets/border/default/sendto"),
-			     "widgets/border/default/sendto");
-   
+   if (!bd->sticky)
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_separator_set(mi, 1);
+
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Send to Desktop"));
+	e_menu_item_submenu_pre_callback_set(mi, _e_border_menu_cb_sendto_pre, bd);
+	e_menu_item_icon_edje_set(mi,
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/sendto"),
+				  "widgets/border/default/sendto");
+     }
+
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
    
