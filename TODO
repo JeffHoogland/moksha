@@ -8,6 +8,9 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: Shelf configuration dialog is confused. Added two shelves with a clean
+  config, and there is no connection between which shelf is selected for config
+  and which shelf is changed.
 * BUG: match this window only doesnt fall back to other unused remembers
 * BUG: make window sticky. send window to another desktop - get ghost window.
   should 1. make any such operation in the pager or menu useless and do
