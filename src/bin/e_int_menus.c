@@ -380,7 +380,7 @@ _e_int_menus_main_showhide(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Action *act;
    
-   act = e_action_find("zone_deskshow_toggle");
+   act = e_action_find("desk_deskshow_toggle");
    if (act) act->func.go(E_OBJECT(m->zone), NULL);
 }
 

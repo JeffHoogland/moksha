@@ -26,7 +26,6 @@ struct _E_Zone
    unsigned int         num;
    E_Container         *container;
    int                  fullscreen;
-   unsigned int         deskshow_toggle : 1;
 
    Evas_Object         *bg_object;
    Evas_Object         *bg_event_object;

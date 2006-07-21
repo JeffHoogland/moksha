@@ -1428,22 +1428,24 @@ ACT_FN_GO(edit_mode_toggle)
 /***************************************************************************/
 
 /***************************************************************************/
-ACT_FN_GO(zone_deskshow_toggle)
+ACT_FN_GO(desk_deskshow_toggle)
 {
    E_Border *bd;
    E_Border_List *bl;
    E_Zone *zone;
+   E_Desk *desk;
 
    zone = _e_actions_zone_get(obj);
    if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
    if (zone)
      {
+	desk = e_desk_current_get(zone);
 	bl = e_container_border_list_first(zone->container);
 	while ((bd = e_container_border_list_next(bl))) 
 	  {
-	     if (bd->desk == e_desk_current_get(bd->zone))
+	     if (bd->desk == desk)
 	       {
-		  if (zone->deskshow_toggle)
+		  if (desk->deskshow_toggle)
 		    {
 		       if (bd->deskshow) e_border_uniconify(bd);
 		       bd->deskshow = 0;
@@ -1458,7 +1460,7 @@ ACT_FN_GO(zone_deskshow_toggle)
 		    }
 	       }
 	  }
-	zone->deskshow_toggle = zone->deskshow_toggle ? 0 : 1;
+	desk->deskshow_toggle = desk->deskshow_toggle ? 0 : 1;
 	e_container_border_list_free(bl);
      }
 }
@@ -1717,10 +1719,10 @@ e_actions_init(void)
    e_register_action_predef_name(_("Desktop"), _("Flip Desktop By..."),
 				 "desk_flip_by", NULL, EDIT_RESTRICT_ACTION, 0);
 
-   /* zone_deskshow_toggle */
-   ACT_GO(zone_deskshow_toggle);
+   /* desk_deskshow_toggle */
+   ACT_GO(desk_deskshow_toggle);
    e_register_action_predef_name(_("Desktop"), _("Show The Desktop"),
-				 "zone_deskshow_toggle", NULL, 
+				 "desk_deskshow_toggle", NULL, 
 				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    
    /* desk_linear_flip_to */

@@ -21,6 +21,7 @@ struct _E_Desk
    const char          *name;
    int                  x, y;
    char                 visible : 1;
+   unsigned int         deskshow_toggle : 1;
 
    Evas_Object         *bg_object;
 };

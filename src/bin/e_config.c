@@ -869,7 +869,7 @@ e_config_init(void)
 		    "desk_lock", NULL);
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "d",
 		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		    "zone_deskshow_toggle", NULL);
+		    "desk_deskshow_toggle", NULL);
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Left",
 		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_SHIFT, 0,
 		    "screen_send_by", "-1");
