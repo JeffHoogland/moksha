@@ -53,7 +53,7 @@ EAPI void
 e_widget_frametable_object_append(Evas_Object *obj, Evas_Object *sobj, int col, int row, int colspan, int rowspan, int fill_w, int fill_h, int expand_w, int expand_h)
 {
    E_Widget_Data *wd;
-   Evas_Coord mw, mh;
+   Evas_Coord mw = 0, mh = 0;
    
    wd = e_widget_data_get(obj);
    

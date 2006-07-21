@@ -518,6 +518,69 @@ _e_table_smart_reconfigure(E_Smart_Data *sd)
 			 }
 		    }
 	       }
+	     
+	     ex = 0;
+	     for (i = 0; i < sd->size.cols; i++) { if (colsx[i]) ex++; }
+	     tot = 0;
+	     for (i = 0; i < sd->size.cols; i++) tot += cols[i];
+	     dif = w - tot;
+	     if ((ex > 0) && (dif > 0))
+	       {
+		  int exl;
+		  
+		  left = dif;
+		  exl = ex;
+		  for (i = 0; i < sd->size.cols; i++)
+		    {
+		       if (colsx[i])
+			 {
+			    if (exl == 1)
+			      {
+				 cols[i] += left;
+				 exl--;
+				 left = 0;
+			      }
+			    else
+			      {			 
+				 cols[i] += dif / ex;
+				 exl--;
+				 left -= dif / ex;
+			      }
+			 }
+		    }
+	       }
+	     
+	     ex = 0;
+	     for (i = 0; i < sd->size.rows; i++) { if (rowsx[i]) ex++; }
+	     tot = 0;
+	     for (i = 0; i < sd->size.rows; i++) tot += rows[i];
+	     dif = h - tot;
+	     if ((ex > 0) && (dif > 0))
+	       {
+		  int exl;
+		  
+		  left = dif;
+		  exl = ex;
+		  for (i = 0; i < sd->size.rows; i++)
+		    {
+		       if (rowsx[i])
+			 {
+			    if (exl == 1)
+			      {
+				 rows[i] += left;
+				 exl--;
+				 left = 0;
+			      }
+			    else
+			      {			 
+				 rows[i] += dif / ex;
+				 exl--;
+				 left -= dif / ex;
+			      }
+			 }
+		    }
+	       }
+	     
 	     for (l = sd->items; l; l = l->next)
 	       {
 		  E_Table_Item *ti;
@@ -537,10 +600,10 @@ _e_table_smart_reconfigure(E_Smart_Data *sd)
 		  for (i = ti->row; i < (ti->row + ti->rowspan); i++) hh += rows[i];
 
 		  ow = ti->min.w;
-		  if (ti->expand_w) ow = ww;
+		  if (ti->fill_w) ow = ww;
 		  if ((ti->max.w >= 0) && (ti->max.w < ow)) ow = ti->max.w;
 		  oh = ti->min.h;
-		  if (ti->expand_h) oh = hh;
+		  if (ti->fill_h) oh = hh;
 		  if ((ti->max.h >= 0) && (ti->max.h < oh)) oh = ti->max.h;
 		  evas_object_move(obj, 
 				   xx + (Evas_Coord)(((double)(ww - ow)) * ti->align.x),

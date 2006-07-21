@@ -19,7 +19,7 @@ e_widget_framelist_add(Evas *evas, char *label, int horiz)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
-   Evas_Coord mw, mh;
+   Evas_Coord mw = 0, mh = 0;
    
    obj = e_widget_add(evas);
    
@@ -54,7 +54,7 @@ EAPI void
 e_widget_framelist_object_append(Evas_Object *obj, Evas_Object *sobj)
 {
    E_Widget_Data *wd;
-   Evas_Coord mw, mh;
+   Evas_Coord mw = 0, mh = 0;
    
    wd = e_widget_data_get(obj);
    

@@ -163,7 +163,8 @@ e_int_gadcon_config.h \
 e_confirm_dialog.h \
 e_int_border_prop.h \
 e_entry_dialog.h \
-e_fm.h
+e_fm.h \
+e_widget_scrollframe.h
 
 enlightenment_src = \
 e_user.c \
@@ -303,6 +304,7 @@ e_confirm_dialog.c \
 e_int_border_prop.c \
 e_entry_dialog.c \
 e_fm.c \
+e_widget_scrollframe.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \

@@ -599,6 +599,12 @@ _e_test_cb_changed(void *data, Evas_Object *obj, void *event_info)
 }
     
 static void
+_e_test_cb_favorites_selected(void *data, Evas_Object *obj, void *event_info)
+{
+   printf("FAV CHANGED\n");
+}
+    
+static void
 _e_test_cb_selected(void *data, Evas_Object *obj, void *event_info)
 {
    printf("SELECTED!\n");
@@ -608,42 +614,61 @@ static void
 _e_test_internal(E_Container *con)
 {
    E_Dialog *dia;
-   Evas_Object *o, *o2, *o3;
+   Evas_Object *ofm, *ofm2, *of, *ob, *ot;
+   Evas_Coord mw, mh;
+   E_Fm2_Config fmc;
    
    dia = e_dialog_new(con);
    e_dialog_title_set(dia, "A Test Dialog");
 
-   o = e_fm2_add(dia->win->evas);
-//   e_fm2_path_set(o, "~/", "/pix/bg");
-   e_fm2_path_set(o, "~/", "/.e/e/fileman/favorites");
-   
-   o3 = e_widget_list_add(dia->win->evas, 0, 0);
+   /* a table for layout */
+   ot = e_widget_table_add(dia->win->evas, 0);
 
-   o2 = e_widget_button_add(dia->win->evas, "Up a directory", NULL,
-			   _e_test_cb_button, o, NULL);
-   evas_object_show(o2);
-   e_widget_list_object_append(o3, o2, 1, 0, 0.5);
-
-   evas_object_smart_callback_add(o, "changed", _e_test_cb_changed, o2);
-   evas_object_smart_callback_add(o, "selected", _e_test_cb_selected, NULL);
+   /* actual files */
+   ofm = e_fm2_add(dia->win->evas);
+   /* FIXME: set config */
+   e_fm2_path_set(ofm, "~/", "/pix/bg");
+   ob = e_widget_button_add(dia->win->evas, "Up a directory", NULL,
+			   _e_test_cb_button, ofm, NULL);
+   e_widget_table_object_append(ot, ob, 1, 0, 1, 1, 0, 0, 1, 0);
+   evas_object_show(ob);
+   evas_object_smart_callback_add(ofm, "changed", _e_test_cb_changed, ob);
+   evas_object_smart_callback_add(ofm, "selected", _e_test_cb_selected, NULL);
+   of = e_widget_scrollframe_pan_add(dia->win->evas, ofm,
+				     e_fm2_pan_set, e_fm2_pan_get,
+				     e_fm2_pan_max_get, e_fm2_pan_child_size_get);
+   e_widget_min_size_set(of, 128, 128);
+   e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
+   evas_object_show(ofm);
+   evas_object_show(of);
    
-   evas_object_show(o);
-   o2 = e_scrollframe_add(dia->win->evas);
-   evas_object_show(o2);
-   e_scrollframe_extern_pan_set(o2, o, 
-				e_fm2_pan_set, e_fm2_pan_get,
-				e_fm2_pan_max_get, e_fm2_pan_child_size_get);
-   e_widget_list_object_append(o3, o2, 1, 1, 0.5);
+   ofm2 = ofm;
 
-   e_dialog_content_set(dia, o3, 128, 128);
+   /* shortcut list */
+   ofm = e_fm2_add(dia->win->evas);
+   /* FIXME: set config */
+   e_fm2_path_set(ofm, "~/", "/.e/e/fileman/favorites");
+   evas_object_smart_callback_add(ofm, "selected", _e_test_cb_favorites_selected, ofm2);
+   of = e_widget_scrollframe_pan_add(dia->win->evas, ofm,
+				     e_fm2_pan_set, e_fm2_pan_get,
+				     e_fm2_pan_max_get, e_fm2_pan_child_size_get);
+   e_widget_min_size_set(of, 128, 128);
+   e_widget_table_object_append(ot, of, 0, 1, 1, 1, 0, 1, 0, 1);
+   evas_object_show(ofm);
+   evas_object_show(of);
    
+   /* show and pack table */
+   evas_object_show(ot);
+   e_widget_min_size_get(ot, &mw, &mh);
+   e_dialog_content_set(dia, ot, mw, mh);
+   
+   /* buttons at the bottom */
    e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
    e_dialog_resizable_set(dia, 1);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
    e_win_resize(dia->win, 400, 300); 
    
-   evas_object_focus_set(o, 1);
 }
 #else
 static void
