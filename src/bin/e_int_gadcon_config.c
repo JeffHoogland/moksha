@@ -253,6 +253,7 @@ _load_available_gadgets(void *data)
    evas = evas_object_evas_get(oi);
    
    e_widget_ilist_clear(oi);
+   e_widget_ilist_go(oi);
    
    for (l = e_gadcon_provider_list(); l; l = l->next)
      {
@@ -284,7 +285,9 @@ _load_selected_gadgets(void *data)
 
    oi = cfdata->o_instances;
    evas = evas_object_evas_get(oi);
+
    e_widget_ilist_clear(oi);
+   e_widget_ilist_go(oi);
    
    for (l = cfdata->cf_gc->clients; l; l = l->next)
      {
