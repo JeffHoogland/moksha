@@ -175,8 +175,6 @@ _cb_remove_instance(void *data, void *data2)
    i = e_widget_ilist_selected_get(cfdata->o_instances);
    l = evas_list_nth_list(cfdata->cf_gc->clients, i);
    cf_gcc = l->data;
-
-   printf("Remove Client Name: %s\n", cf_gcc->name);
    
    if (cf_gcc->name) evas_stringshare_del(cf_gcc->name);
    if (cf_gcc->id) evas_stringshare_del(cf_gcc->id);
