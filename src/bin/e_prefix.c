@@ -37,33 +37,28 @@ e_prefix_determine(char *argv0)
      {
 	_prefix_path = strdup(getenv("E_PREFIX"));
 	if (getenv("E_BIN_DIR"))
-	  _prefix_path_bin = strdup(getenv("E_BIN_DIR"));
+	  snprintf(buf, sizeof(buf), "%s/bin", getenv("E_BIN_DIR"));
 	else
-	  {
-	     snprintf(buf, sizeof(buf), "%s/bin", _prefix_path);
-	     _prefix_path_bin = strdup(buf);
-	  }
+	  snprintf(buf, sizeof(buf), "%s/bin", _prefix_path);
+	_prefix_path_bin = strdup(buf);
+
 	if (getenv("E_LIB_DIR"))
-	  _prefix_path_bin = strdup(getenv("E_LIB_DIR"));
+	  snprintf(buf, sizeof(buf), "%s/lib", getenv("E_LIB_DIR"));
 	else
-	  {
-	     snprintf(buf, sizeof(buf), "%s/lib", _prefix_path);
-	     _prefix_path_lib = strdup(buf);
-	  }
+	  snprintf(buf, sizeof(buf), "%s/lib", _prefix_path);
+	_prefix_path_lib = strdup(buf);
+	
 	if (getenv("E_DATA_DIR"))
-	  _prefix_path_data = strdup(getenv("E_DATA_DIR"));
+	  snprintf(buf, sizeof(buf), "%s/"SHARE_D, getenv("E_DATA_DIR"));
 	else
-	  {
-	     snprintf(buf, sizeof(buf), "%s/"SHARE_D, _prefix_path);
-	     _prefix_path_data = strdup(buf);
-	  }
+	  snprintf(buf, sizeof(buf), "%s/"SHARE_D, _prefix_path);
+	_prefix_path_data = strdup(buf);
+	
 	if (getenv("E_LOCALE_DIR"))
-	  _prefix_path_locale = strdup(getenv("E_LOCALE_DIR"));
+	  snprintf(buf, sizeof(buf), "%s/"LOCALE_D, getenv("E_LOCALE_DIR"));
 	else
-	  {
-	     snprintf(buf, sizeof(buf), "%s/"LOCALE_D, _prefix_path);
-	     _prefix_path_locale = strdup(buf);
-	  }
+	  snprintf(buf, sizeof(buf), "%s/"LOCALE_D, _prefix_path);
+	_prefix_path_data = strdup(buf);
 	return 1;
      }
    /* no env var - examine process and possible argv0 */
