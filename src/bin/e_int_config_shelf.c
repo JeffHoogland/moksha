@@ -139,6 +139,8 @@ _cb_add(void *data, void *data2)
    E_Config_Dialog_Data *cfdata;
    E_Config_Shelf *cfg;
 
+   cfdata = data;
+
    cfg = E_NEW(E_Config_Shelf, 1);
    cfg->name = evas_stringshare_add("shelf");
    cfg->container = cfdata->cfd->con->num;
