@@ -69,4 +69,3 @@ test "x$RPM_BUILD_ROOT" != "x/" && rm -rf $RPM_BUILD_ROOT
 %{_includedir}/enlightenment/*.h
 
 %changelog
-6~
