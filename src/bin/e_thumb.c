@@ -121,6 +121,7 @@ e_thumb_icon_begin(Evas_Object *obj)
    
    eth = evas_object_data_get(obj, "e_thumbdata");
    if (!eth) return;
+   if (eth->busy) return;
    if (!eth->file) return;
    if (!_thumbnailers)
      {
@@ -161,11 +162,7 @@ e_thumb_icon_end(Evas_Object *obj)
    if (!eth) return;
    if (eth->queued) _thumb_queue = evas_list_remove(_thumb_queue, eth);
    eth->queued = 0;
-   if (eth->busy)
-     {
-	printf("REQ DEL %s\n", eth->file);
-	_e_thumb_gen_end(eth->objid);
-     }
+   if (eth->busy) _e_thumb_gen_end(eth->objid);
    eth->busy = 0;
    _pending--;
    if (_pending == 0) _e_thumb_thumbnailers_kill();
@@ -223,6 +220,7 @@ e_thumb_client_del(Ecore_Ipc_Event_Client_Del *e)
 {
    if (!evas_list_find(_thumbnailers, e->client)) return;
    _thumbnailers = evas_list_remove(_thumbnailers, e->client);
+   if ((!_thumbs) && (!_thumbnailers)) _objid = 0;
 }
 
 /* local subsystem functions */
@@ -300,7 +298,7 @@ _e_thumb_hash_del(int objid)
    
    snprintf(buf, sizeof(buf), "%i", objid);
    _thumbs = evas_hash_del(_thumbs, buf, NULL);
-   if (!_thumbs) _objid = 0;
+   if ((!_thumbs) && (!_thumbnailers)) _objid = 0;
 }
 
 static Evas_Object *

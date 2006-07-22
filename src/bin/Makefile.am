@@ -164,7 +164,8 @@ e_confirm_dialog.h \
 e_int_border_prop.h \
 e_entry_dialog.h \
 e_fm.h \
-e_widget_scrollframe.h
+e_widget_scrollframe.h \
+e_sha1.h
 
 enlightenment_src = \
 e_user.c \
@@ -305,6 +306,7 @@ e_int_border_prop.c \
 e_entry_dialog.c \
 e_fm.c \
 e_widget_scrollframe.c \
+e_sha1.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \
@@ -345,7 +347,9 @@ e_start_main.c
 enlightenment_start_LDFLAGS = 
 
 enlightenment_thumb_SOURCES = \
-e_thumb_main.c
+e_thumb_main.c \
+e_sha1.c \
+e_sha1.h
 
 enlightenment_thumb_LDFLAGS = @e_libs@ @dlopen_libs@
 

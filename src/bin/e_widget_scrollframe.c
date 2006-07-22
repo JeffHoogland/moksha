@@ -42,6 +42,33 @@ e_widget_scrollframe_pan_add(Evas *evas, Evas_Object *pan, void (*pan_set) (Evas
    return obj;
 }
 
+EAPI void
+e_widget_scrollframe_child_pos_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
+{
+   E_Widget_Data *wd;
+
+   wd = e_widget_data_get(obj);
+   e_scrollframe_child_pos_set(wd->o_scrollframe, x, y);
+}
+
+EAPI void
+e_widget_scrollframe_child_pos_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
+{
+   E_Widget_Data *wd;
+
+   wd = e_widget_data_get(obj);
+   e_scrollframe_child_pos_get(wd->o_scrollframe, x, y);
+}
+
+EAPI void
+e_widget_scrollframe_child_region_show(Evas_Object *obj, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h)
+{
+   E_Widget_Data *wd;
+
+   wd = e_widget_data_get(obj);
+   e_scrollframe_child_region_show(wd->o_scrollframe, x, y, w, h);
+}
+
 /* Private functions */
 static void
 _e_wid_del_hook(Evas_Object *obj)

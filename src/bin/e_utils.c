@@ -595,6 +595,77 @@ e_util_icon_save(Ecore_X_Icon *icon, const char *filename)
    return ret;
 }
 
+EAPI char *
+e_util_shell_env_path_eval(char *path)
+{
+   /* evaluate things like:
+    * $HOME/bling -> /home/user/bling
+    * $HOME/bin/$HOSTNAME/blah -> /home/user/bin/localhost/blah
+    * etc. etc.
+    */
+   char buf[4096], *pd, *p, *v1, *v2, *s, *v, *vp;
+   int esc = 0, invar = 0;
+
+   for (p = path, pd = buf; (pd < (buf + sizeof(buf) - 1)); p++)
+     {
+	if (invar)
+	  {
+	     if (!((isalnum(*p)) || (*p == '_')))
+	       {
+		  v2 = p;
+		  invar = 0;
+		  if ((v2 - v1) > 1)
+		    {
+		       s = alloca(v2 - v1);
+		       strncpy(s, v1 + 1, v2 - v1 - 1);
+		       s[v2 - v1 - 1] = 0;
+		       v = getenv(s);
+		       if (v)
+			 {
+			    vp = v;
+			    while ((*vp) && (pd < (buf + sizeof(buf) - 1)))
+			      {
+				 *pd = *vp;
+				 vp++;
+				 pd++;
+			      }
+			 }
+		    }
+		  if (pd < (buf + sizeof(buf) - 1))
+		    {
+		       *pd = *p;
+		       pd++;
+		    }
+	       }
+	  }
+	else
+	  {
+	     if (esc)
+	       {
+		  *pd = *p;
+		  pd++;
+	       }
+	     else
+	       {
+		  if (*p == '\\') esc = 1;
+		  else if (*p == '$')
+		    {
+		       invar = 1;
+		       v1 = p;
+		    }
+		  else
+		    {
+		       *pd = *p;
+		       pd++;
+		    }
+	       }
+	  }
+	if (*p == 0) break;
+     }
+   *pd = 0;
+   return strdup(buf);
+}
+
 /* local subsystem functions */
 static void
 _e_util_container_fake_mouse_up_cb(void *data)

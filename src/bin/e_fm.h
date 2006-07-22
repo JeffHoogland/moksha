@@ -15,7 +15,8 @@ typedef enum _E_Fm2_View_Mode
    E_FM2_VIEW_MODE_LIST /* vertical fileselector list */
 } E_Fm2_View_Mode;
 
-typedef struct _E_Fm2_Config E_Fm2_Config;
+typedef struct _E_Fm2_Config    E_Fm2_Config;
+typedef struct _E_Fm2_Icon_Info E_Fm2_Icon_Info;
 
 #else
 #ifndef E_FM_H
@@ -81,13 +82,31 @@ struct _E_Fm2_Config
    } geometry;
 };
 
+struct _E_Fm2_Icon_Info
+{
+   const char       *file;
+   const char       *mime;
+   const char       *label;
+   const char       *comment;
+   const char       *generic;
+   const char       *icon;
+   const char       *link;
+   struct stat       statinfo;
+   unsigned char     mount : 1;
+};
+
 EAPI int                   e_fm2_init(void);
 EAPI int                   e_fm2_shutdown(void);
 EAPI Evas_Object          *e_fm2_add(Evas *evas);
 EAPI void                  e_fm2_path_set(Evas_Object *obj, char *dev, char *path);
 EAPI void                  e_fm2_path_get(Evas_Object *obj, const char **dev, const char **path);
+EAPI const char           *e_fm2_real_path_get(Evas_Object *obj);
 EAPI int                   e_fm2_has_parent_get(Evas_Object *obj);
 EAPI void                  e_fm2_parent_go(Evas_Object *obj);
+EAPI void                  e_fm2_config_set(Evas_Object *obj, E_Fm2_Config *cfg);
+EAPI E_Fm2_Config         *e_fm2_config_get(Evas_Object *obj);
+EAPI Evas_List            *e_fm2_selected_list_get(Evas_Object *obj);
+EAPI Evas_List            *e_fm2_all_list_get(Evas_Object *obj);
     
 EAPI void                  e_fm2_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
 EAPI void                  e_fm2_pan_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);

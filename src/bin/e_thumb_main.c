@@ -12,6 +12,7 @@
 #include <Evas.h>
 #include <Eet.h>
 #include <Edje.h>
+#include "e_sha1.h"
 
 typedef struct _E_Thumb E_Thumb;
 
@@ -29,6 +30,7 @@ static int _e_ipc_cb_server_add(void *data, int type, void *event);
 static int _e_ipc_cb_server_del(void *data, int type, void *event);
 static int _e_ipc_cb_server_data(void *data, int type, void *event);
 static int _e_cb_timer(void *data);
+static int _e_thumb_valid(E_Thumb *eth);
 static void _e_thumb_generate(E_Thumb *eth);
 static char *_e_thumb_file_id(char *file, char *key);
 
@@ -43,7 +45,8 @@ int
 main(int argc, char **argv)
 {
    int i;
-   
+
+   nice(20);
    for (i = 1; i < argc; i++)
      {
 	if ((!strcmp(argv[i], "-h")) ||
@@ -168,7 +171,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		  eth->file = strdup(file);
 		  if (key) eth->key = strdup(key);
 		  _thumblist = evas_list_append(_thumblist, eth);
-		  if (!_timer) _timer = ecore_timer_add(0.001, _e_cb_timer, NULL);
+		  if (!_timer) _timer = ecore_timer_add(0.000001, _e_cb_timer, NULL);
 	       }
 	  }
 	break;
@@ -201,21 +204,73 @@ static int
 _e_cb_timer(void *data)
 {
    E_Thumb *eth;
+   Evas_List *del_list = NULL, *l;
 
    /* take thumb at head of list */
    if (_thumblist)
      {
-	eth = _thumblist->data;
-	_thumblist = evas_list_remove_list(_thumblist, _thumblist);
-	_e_thumb_generate(eth);
-	if (eth->file) free(eth->file);
-	if (eth->key) free(eth->key);
-	free(eth);
-	if (_thumblist) _timer = ecore_timer_add(0.00001, _e_cb_timer, NULL);
+	for (l = _thumblist; l; l = l->next)
+	  {
+	     eth = l->data;
+	     if (_e_thumb_valid(eth))
+	       del_list = evas_list_append(del_list, eth);
+	  }
+	while (del_list)
+	  {
+	     eth = del_list->data;
+	     del_list = evas_list_remove_list(del_list, del_list);
+	     _thumblist = evas_list_remove(_thumblist, eth);
+	     if (eth->file) free(eth->file);
+	     if (eth->key) free(eth->key);
+	     free(eth);
+	  }
+	if (_thumblist)
+	  {
+	     eth = _thumblist->data;
+	     _thumblist = evas_list_remove_list(_thumblist, _thumblist);
+	     _e_thumb_generate(eth);
+	     if (eth->file) free(eth->file);
+	     if (eth->key) free(eth->key);
+	     free(eth);
+	  }
+	if (_thumblist) _timer = ecore_timer_add(0.000001, _e_cb_timer, NULL);
 	else _timer = NULL;
      }
    else
      _timer = NULL;
+   return 0;
+}
+
+static int
+_e_thumb_valid(E_Thumb *eth)
+{
+   char buf[4096], dbuf[4096], *id, *td;
+   time_t mtime_orig, mtime_thumb;
+
+   id = _e_thumb_file_id(eth->file, eth->key);
+   if (!id) return;
+   
+   td = strdup(id);
+   if (!td)
+     {
+	free(id);
+	return;
+     }
+   td[2] = 0;
+   
+   snprintf(dbuf, sizeof(dbuf), "%s/%s", _thumbdir, td);
+   snprintf(buf, sizeof(buf), "%s/%s/%s-%ix%i.thm", 
+	    _thumbdir, td, id + 2, eth->w, eth->h);
+   free(id);
+   free(td);
+   
+   mtime_orig = ecore_file_mod_time(eth->file);
+   mtime_thumb = ecore_file_mod_time(buf);
+   if (mtime_thumb > mtime_orig)
+     {
+	ecore_ipc_server_send(_e_ipc_server, 5, 2, eth->objid, 0, 0, buf, strlen(buf) + 1);
+	return 1;
+     }
    return 0;
 }
 
@@ -240,11 +295,11 @@ _e_thumb_generate(E_Thumb *eth)
 	free(id);
 	return;
      }
-   td[3] = 0;
+   td[2] = 0;
    
    snprintf(dbuf, sizeof(dbuf), "%s/%s", _thumbdir, td);
    snprintf(buf, sizeof(buf), "%s/%s/%s-%ix%i.thm", 
-	    _thumbdir, td, id + 3, eth->w, eth->h);
+	    _thumbdir, td, id + 2, eth->w, eth->h);
    free(id);
    free(td);
    
@@ -336,56 +391,36 @@ _e_thumb_generate(E_Thumb *eth)
    ecore_ipc_server_send(_e_ipc_server, 5, 2, eth->objid, 0, 0, buf, strlen(buf) + 1);
 }
 
+/* FIXME: should use md5 or sha1 sum of the path */
 static char *
 _e_thumb_file_id(char *file, char *key)
 {
-   char s[512], *sp;
-   const char *chmap =
-     "0123456789abcdef"
-     "ghijklmnopqrstuv";
-   unsigned int id[8], i, t, tt;
-   int j;
-   
-   for (i = 0; i < 8; i++) id[i] = 0x55555555;
-   
-   j = 0;
-   sp = file;
-   while (*sp)
+   char s[64];
+   const char *chmap = "0123456789abcdef";
+   unsigned char *buf, id[20];
+   int i, len, lenf;
+
+   len = 0;
+   lenf = strlen(file);
+   len += lenf;
+   len++;
+   if (key)
      {
-	i = ((int)*sp) & 0x7;
-	id[i] ^= ((int)*sp) << j;
-	j++;
-	if (j == 25) j = 0;
-	sp++;
+	key += strlen(key);
+	len++;
      }
+   buf = alloca(len);
+
+   strcpy(buf, file);
+   if (key) strcpy(buf + lenf + 1, key);
+
+   e_sha1_sum(buf, len, id);
    
-   sp = key;
-   if (sp)
+   for (i = 0; i < 20; i++)
      {
-	while (*sp)
-	  {
-	     i = ((int)*sp) & 0x7;
-	     id[i] ^= ((int)*sp) << j;
-	     j++;
-	     if (j == 25) j = 0;
-	     sp++;
-	  }
+	s[(i * 2) + 0] = chmap[(id[i] >> 4) & 0xf];
+	s[(i * 2) + 1] = chmap[(id[i]     ) & 0xf];
      }
-     
-   sp = s;
-   for (i = 0; i < 8; i++)
-     {
-	t = id[i];
-	j = 32;
-	while (j > 0)
-	  {
-	     tt = t & ((1 << 5) - 1);
-	     *sp = chmap[tt];
-	     t >>= 5;
-	     j -= 5;
-	     sp++;
-	  }
-     }
-   *sp = 0;
+   s[(i * 2)] = 0;
    return strdup(s);
 }

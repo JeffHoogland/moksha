@@ -140,3 +140,4 @@
 #include "e_entry_dialog.h"
 #include "e_fm.h"
 #include "e_widget_scrollframe.h"
+#include "e_sha1.h"

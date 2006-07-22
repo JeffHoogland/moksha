@@ -601,7 +601,54 @@ _e_test_cb_changed(void *data, Evas_Object *obj, void *event_info)
 static void
 _e_test_cb_favorites_selected(void *data, Evas_Object *obj, void *event_info)
 {
-   printf("FAV CHANGED\n");
+   Evas_List *selected;
+   E_Fm2_Icon_Info *ici;
+   
+   printf("FAV SELECTED\n");
+   selected = e_fm2_selected_list_get(obj);
+   if (!selected) return;
+   ici = selected->data;
+   if ((ici->link) && (ici->mount))
+     e_fm2_path_set(data, (char *)ici->link, "/");
+   else if (ici->link)
+     e_fm2_path_set(data, NULL, (char *)ici->link);
+// FIXME: this should happen on the scrollframe not the fm obj   
+//   e_widget_scrollframe_child_pos_set(data, 0, 0);
+   evas_list_free(selected);
+}
+    
+static void
+_e_test_cb_favorites_files_changed(void *data, Evas_Object *obj, void *event_info)
+{
+   Evas_List *icons, *l;
+   E_Fm2_Icon_Info *ici;
+   const char *realpath;
+   char *p1, *p2;
+   
+   printf("FAV LIST CHANGE!\n");
+   icons = e_fm2_all_list_get(obj);
+   if (!icons) return;
+   realpath = e_fm2_real_path_get(data);
+   p1 = ecore_file_realpath(realpath);
+   if (!p1) goto done;
+   for (l = icons; l; l = l->next)
+     {
+	ici = l->data;
+	if (ici->link)
+	  {
+	     p2 = ecore_file_realpath(ici->link);
+	     if (!strcmp(p1, p2))
+	       {
+		  e_fm2_select_set(obj, ici->file);
+		  E_FREE(p2);
+		  goto done;
+	       }
+	     E_FREE(p2);
+	  }
+     }
+   done:
+   E_FREE(p1);
+   evas_list_free(icons);
 }
     
 static void
@@ -626,8 +673,26 @@ _e_test_internal(E_Container *con)
 
    /* actual files */
    ofm = e_fm2_add(dia->win->evas);
-   /* FIXME: set config */
-   e_fm2_path_set(ofm, "~/", "/pix/bg");
+   
+   memset(&fmc, 0, sizeof(E_Fm2_Config));
+   fmc.view.mode = E_FM2_VIEW_MODE_LIST;
+   fmc.view.open_dirs_in_place = 1;
+   fmc.view.selector = 1;
+   fmc.view.single_click = 0;
+   fmc.view.no_subdir_jump = 0;
+   fmc.icon.list.w = 24;
+   fmc.icon.list.h = 24;
+   fmc.icon.fixed.w = 1;
+   fmc.icon.fixed.h = 1;
+   fmc.icon.extension.show = 0;
+   fmc.list.sort.no_case = 1;
+   fmc.list.sort.dirs.first = 1;
+   fmc.list.sort.dirs.last = 0;
+   fmc.selection.single = 1;
+   fmc.selection.windows_modifiers = 0;
+   e_fm2_config_set(ofm, &fmc);
+   
+   e_fm2_path_set(ofm, "~/", "/");
    ob = e_widget_button_add(dia->win->evas, "Up a directory", NULL,
 			   _e_test_cb_button, ofm, NULL);
    e_widget_table_object_append(ot, ob, 1, 0, 1, 1, 0, 0, 1, 0);
@@ -646,8 +711,27 @@ _e_test_internal(E_Container *con)
 
    /* shortcut list */
    ofm = e_fm2_add(dia->win->evas);
-   /* FIXME: set config */
-   e_fm2_path_set(ofm, "~/", "/.e/e/fileman/favorites");
+
+   memset(&fmc, 0, sizeof(E_Fm2_Config));
+   fmc.view.mode = E_FM2_VIEW_MODE_LIST;
+   fmc.view.open_dirs_in_place = 1;
+   fmc.view.selector = 1;
+   fmc.view.single_click = 1;
+   fmc.view.no_subdir_jump = 1;
+   fmc.icon.list.w = 24;
+   fmc.icon.list.h = 24;
+   fmc.icon.fixed.w = 1;
+   fmc.icon.fixed.h = 1;
+   fmc.icon.extension.show = 0;
+   fmc.list.sort.no_case = 1;
+   fmc.list.sort.dirs.first = 0;
+   fmc.list.sort.dirs.last = 0;
+   fmc.selection.single = 1;
+   fmc.selection.windows_modifiers = 0;
+   e_fm2_config_set(ofm, &fmc);
+   
+   e_fm2_path_set(ofm, "favorites", "/");
+   evas_object_smart_callback_add(ofm, "files_changed", _e_test_cb_favorites_files_changed, ofm2);
    evas_object_smart_callback_add(ofm, "selected", _e_test_cb_favorites_selected, ofm2);
    of = e_widget_scrollframe_pan_add(dia->win->evas, ofm,
 				     e_fm2_pan_set, e_fm2_pan_get,
