@@ -1430,38 +1430,13 @@ ACT_FN_GO(edit_mode_toggle)
 /***************************************************************************/
 ACT_FN_GO(desk_deskshow_toggle)
 {
-   E_Border *bd;
-   E_Border_List *bl;
    E_Zone *zone;
-   E_Desk *desk;
 
    zone = _e_actions_zone_get(obj);
    if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
    if (zone)
      {
-	desk = e_desk_current_get(zone);
-	bl = e_container_border_list_first(zone->container);
-	while ((bd = e_container_border_list_next(bl))) 
-	  {
-	     if (bd->desk == desk)
-	       {
-		  if (desk->deskshow_toggle)
-		    {
-		       if (bd->deskshow) e_border_uniconify(bd);
-		       bd->deskshow = 0;
-		    }
-		  else
-		    {
-		       if (bd->iconic) continue;
-		       if (bd->client.netwm.state.skip_taskbar) continue;
-		       if (bd->user_skip_winlist) continue;
-		       e_border_iconify(bd);
-		       bd->deskshow = 1;
-		    }
-	       }
-	  }
-	desk->deskshow_toggle = desk->deskshow_toggle ? 0 : 1;
-	e_container_border_list_free(bl);
+	e_desk_deskshow(zone);
      }
 }
 /***************************************************************************/

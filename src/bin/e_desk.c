@@ -10,15 +10,18 @@
 
 static void _e_desk_free(E_Desk *desk);
 static void _e_border_event_desk_show_free(void *data, void *ev);
+static void _e_border_event_desk_deskshow_free(void *data, void *ev);
 static void _e_border_event_desk_name_change_free(void *data, void *ev);
 
 EAPI int E_EVENT_DESK_SHOW = 0;
+EAPI int E_EVENT_DESK_DESKSHOW = 0;
 EAPI int E_EVENT_DESK_NAME_CHANGE = 0;
 
 EAPI int
 e_desk_init(void)
 {
    E_EVENT_DESK_SHOW = ecore_event_type_new();
+   E_EVENT_DESK_DESKSHOW = ecore_event_type_new();
    E_EVENT_DESK_NAME_CHANGE = ecore_event_type_new();
    return 1;
 }
@@ -254,6 +257,47 @@ e_desk_show(E_Desk *desk)
 }
 
 EAPI void
+e_desk_deskshow(E_Zone *zone)
+{
+   E_Border *bd;
+   E_Border_List *bl;
+   E_Desk *desk;
+   E_Event_Desk_Show *ev;
+
+   E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
+
+   desk = e_desk_current_get(zone);
+   bl = e_container_border_list_first(zone->container);
+   while ((bd = e_container_border_list_next(bl))) 
+     {
+	if (bd->desk == desk)
+	  {
+	     if (desk->deskshow_toggle)
+	       {
+		  if (bd->deskshow) e_border_uniconify(bd);
+		  bd->deskshow = 0;
+	       }
+	     else
+	       {
+		  if (bd->iconic) continue;
+		  if (bd->client.netwm.state.skip_taskbar) continue;
+		  if (bd->user_skip_winlist) continue;
+		  e_border_iconify(bd);
+		  bd->deskshow = 1;
+	       }
+	  }
+     }
+   desk->deskshow_toggle = desk->deskshow_toggle ? 0 : 1;
+   e_container_border_list_free(bl);
+   ev = E_NEW(E_Event_Desk_Show, 1);
+   ev->desk = desk;
+   e_object_ref(E_OBJECT(desk));
+   ecore_event_add(E_EVENT_DESK_DESKSHOW, ev, 
+	 _e_border_event_desk_deskshow_free, NULL);
+}
+
+EAPI void
 e_desk_last_focused_focus(E_Desk *desk)
 {
    Evas_List *l;
@@ -408,6 +452,16 @@ _e_desk_free(E_Desk *desk)
 
 static void
 _e_border_event_desk_show_free(void *data, void *event)
+{
+   E_Event_Desk_Show *ev;
+
+   ev = event;
+   e_object_unref(E_OBJECT(ev->desk));
+   free(ev);
+}
+
+static void
+_e_border_event_desk_deskshow_free(void *data, void *event)
 {
    E_Event_Desk_Show *ev;
 
