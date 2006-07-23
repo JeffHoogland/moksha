@@ -165,7 +165,8 @@ e_int_border_prop.h \
 e_entry_dialog.h \
 e_fm.h \
 e_widget_scrollframe.h \
-e_sha1.h
+e_sha1.h \
+e_widget_fsel.h
 
 enlightenment_src = \
 e_user.c \
@@ -307,6 +308,7 @@ e_entry_dialog.c \
 e_fm.c \
 e_widget_scrollframe.c \
 e_sha1.c \
+e_widget_fsel.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \

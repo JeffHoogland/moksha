@@ -30,6 +30,8 @@ struct _E_Entry_Smart_Data
    Evas_Object *entry_object;
    Evas_Object *edje_object;
    
+   Evas_Coord minw, minh;
+   
    void (*change_func) (void *data, Evas_Object *entry, char *key);
    void  *change_data;   
 };
@@ -315,6 +317,12 @@ e_editable_text_cursor_hide(Evas_Object *object)
    _e_editable_text_cursor_visibility_update(object);
 }
 
+EAPI void
+e_editable_text_min_size_get(Evas_Object *object, Evas_Coord *mw, Evas_Coord *mh)
+{
+   
+}
+
 EAPI Evas_Object *
 e_entry_add(Evas *evas)
 {
@@ -489,6 +497,17 @@ e_entry_unfocus(Evas_Object *entry)
    edje_object_signal_emit(sd->edje_object, "focus_out", "");
 }
 
+EAPI void
+e_entry_min_size_get(Evas_Object *entry, Evas_Coord *mw, Evas_Coord *mh)
+{
+   E_Entry_Smart_Data *sd;
+   
+   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
+     return;
+   if (mw) *mw = sd->minw;
+   if (mh) *mh = sd->minh;
+}
+
 /**************************
  *
  * Private functions
@@ -521,6 +540,7 @@ _e_editable_text_size_update(Evas_Object *object)
 
    evas_object_textblock_size_native_get(sd->text_object, &w, &h);
    evas_object_resize(sd->text_object, w, h);
+   evas_object_resize(object, w, h);
 }
 
 /* Updates the cursor position: to be called when the cursor or the object are moved */
@@ -541,7 +561,7 @@ _e_editable_text_cursor_position_update(Evas_Object *object)
    if (_e_editable_text_is_empty(object))
      {
 	evas_object_move(sd->cursor_object, tx, ty);
-	evas_object_resize(sd->cursor_object, 1, oh);
+	evas_object_resize(sd->cursor_object, 1, th);
 	return;
      }
    else if (sd->cursor_at_the_end)
@@ -709,7 +729,8 @@ _e_editable_text_smart_del(Evas_Object *object)
 }
 
 /* Called when the object is moved */
-static void _e_editable_text_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y)
+static void
+_e_editable_text_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y)
 {
    E_Editable_Text_Smart_Data *sd;
 
@@ -844,7 +865,8 @@ _e_entry_smart_add(Evas_Object *object)
 {
    Evas *evas;
    E_Entry_Smart_Data *sd;
-
+   Evas_Coord w = 0, h = 0;
+   
    if ((!object) || !(evas = evas_object_evas_get(object)))
      return;
 
@@ -854,19 +876,22 @@ _e_entry_smart_add(Evas_Object *object)
    sd->change_func = NULL;
    sd->change_data = NULL;
    
-   sd->entry_object = e_editable_text_add(evas);
-   evas_object_smart_member_add(sd->entry_object, object);
-
+   evas_object_smart_data_set(object, sd);
 
    sd->edje_object = edje_object_add(evas);
    e_theme_edje_object_set(sd->edje_object, "base/theme/widgets",
 			   "widgets/entry");
-
-   edje_object_part_swallow(sd->edje_object, "text_area", sd->entry_object);
    evas_object_smart_member_add(sd->edje_object, object);
 
-   evas_object_smart_data_set(object, sd);
-
+   sd->entry_object = e_editable_text_add(evas);
+   e_editable_text_text_set(sd->entry_object, " ");
+   evas_object_geometry_get(sd->entry_object, NULL, NULL, &w, &h);
+   edje_extern_object_min_size_set(sd->entry_object, w, h);
+   edje_object_part_swallow(sd->edje_object, "text_area", sd->entry_object);
+   edje_object_size_min_calc(sd->edje_object, &w, &h);
+   sd->minw = w;
+   sd->minh = h;
+   
    evas_object_event_callback_add(object, EVAS_CALLBACK_KEY_DOWN, _e_entry_key_down_cb, NULL);
 }
 
@@ -899,11 +924,14 @@ static void
 _e_entry_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h)
 {
    E_Entry_Smart_Data *sd;
+   Evas_Coord x, y;
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
-   evas_object_resize(sd->edje_object, w, h);
+   evas_object_geometry_get(object, &x, &y, NULL, NULL);
+   evas_object_move(sd->edje_object, x, y + ((h - sd->minh) / 2));
+   evas_object_resize(sd->edje_object, w, sd->minh);
 }
 
 static void

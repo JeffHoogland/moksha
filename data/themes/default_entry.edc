@@ -11,14 +11,6 @@ group {
          name: "entry";
          description {
             state: "default" 0.0;
-            rel1 {
-               relative: 0.0 0.5;
-               offset: 0 -9;
-            }
-            rel2 {
-               relative: 1.0 0.5;
-               offset: -1 8;
-            }
             image {
                normal: "entry.png";
                border: 8 8 8 8;
@@ -38,14 +30,6 @@ group {
             state: "default" 0.0;
             visible: 0;
             color: 255 255 255 0;
-            rel1 {
-               relative: 0.0 0.5;
-               offset: 0 -9;
-            }
-            rel2 {
-               relative: 1.0 0.5;
-               offset: -1 8;
-            }
             image {
                normal: "entry_focus.png";
                border: 8 8 8 8;
@@ -70,7 +54,7 @@ group {
             }
             rel2 {
                relative: 1.0 1.0;
-               offset: -5 -3;
+               offset: -5 -4;
                to: "entry";
             }
          }

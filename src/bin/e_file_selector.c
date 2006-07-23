@@ -3,6 +3,9 @@
  */
 #include "e.h"
 
+/* FIXME: this code is destined for death - replaced by e_fm.c that already can
+ * do this stuff */
+
 /*- DESCRIPTION -*/
 /* This is a list of files in a scrollbable container. When a file is selected
  * this object will return the file name.

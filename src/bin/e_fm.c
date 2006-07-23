@@ -511,7 +511,15 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
    /* maybe make part of the device mappings config? */
    /* FIXME: add code for finding nfs shares, smb shares etc. */
    /* maybe make part of the device mappings config? */
-   
+
+   /* strip out excess multiple slashes */
+   s = buf;
+   while (*s)
+     {
+	if ((s[0] == '/') && (s[1] == '/')) strcpy(s, s + 1);
+	s++;
+     }
+   /* strip out slashes at the end - unless its just "/" */
    len = strlen(buf);
    while ((len > 1) && (buf[len - 1] == '/'))
      {
@@ -1583,6 +1591,7 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	  _e_fm2_icon_deselect(ic);
 	else
 	  _e_fm2_icon_select(ic);
+	evas_object_smart_callback_call(ic->sd->obj, "selection_change", NULL);
 	if ((!(S_ISDIR(ic->info.statinfo.st_mode)) ||
 	     (ic->sd->config->view.no_subdir_jump)) &&
 	    (ic->sd->config->view.single_click)

@@ -47,7 +47,7 @@ EAPI void         e_entry_cursor_hide(Evas_Object *object);
 EAPI void         e_entry_change_handler_set(Evas_Object *object, void (*func)(void *data, Evas_Object *entry, char *key), void *data);
 EAPI void         e_entry_focus(Evas_Object *object);
 EAPI void         e_entry_unfocus(Evas_Object *object);
-EAPI void         e_entry_password_set(Evas_Object *object, int pw);
+EAPI void         e_entry_min_size_get(Evas_Object *object, Evas_Coord *mw, Evas_Coord *mh);
 
 #endif
 #endif

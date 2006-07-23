@@ -121,10 +121,8 @@ e_widget_entry_add(Evas *evas, char **val)
    
    o = e_entry_add(evas);
    wd->o_entry = o;
-   e_theme_edje_object_set(o, "base/theme/widgets",
-			   "widgets/entry");
    evas_object_show(o);
-   edje_object_size_min_calc(o, &mw, &mh);
+   e_entry_min_size_get(o, &mw, &mh);
    e_widget_min_size_set(obj, mw, mh);
    
    if (*(wd->valptr))     
