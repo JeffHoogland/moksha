@@ -46,7 +46,8 @@ main(int argc, char **argv)
 {
    int i;
 
-   nice(20);
+/* FIXME: make this configurable */
+//   nice(20);
    for (i = 1; i < argc; i++)
      {
 	if ((!strcmp(argv[i], "-h")) ||
