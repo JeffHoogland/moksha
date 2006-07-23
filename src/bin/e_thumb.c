@@ -13,6 +13,7 @@ struct _E_Thumb
    char *key;
    unsigned char queued : 1;
    unsigned char busy : 1;
+   unsigned char done : 1;
 };
 
 /* local subsystem functions */
@@ -123,6 +124,7 @@ e_thumb_icon_begin(Evas_Object *obj)
    if (!eth) return;
    if (eth->queued) return;
    if (eth->busy) return;
+   if (eth->done) return;
    if (!eth->file) return;
    if (!_thumbnailers)
      {
@@ -199,6 +201,7 @@ e_thumb_client_data(Ecore_Ipc_Event_Client_Data *e)
 		    {
 		       eth->busy = 0;
 		       _pending--;
+		       eth->done = 1;
 		       if (_pending == 0) _e_thumb_thumbnailers_kill();
 		       e_icon_file_key_set(obj, icon, "/thumbnail/data");
 		       evas_object_smart_callback_call(obj, "e_thumb_gen", NULL);

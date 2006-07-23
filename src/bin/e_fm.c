@@ -1181,7 +1181,8 @@ _e_fm2_icon_label_set(E_Fm2_Icon *ic, Evas_Object *obj)
 	edje_object_part_text_set(obj, "label", ic->info.label);
 	return;
      }
-   if (ic->sd->config->icon.extension.show)
+   if ((ic->sd->config->icon.extension.show) ||
+       (S_ISDIR(ic->info.statinfo.st_mode)))
      edje_object_part_text_set(obj, "label", ic->info.file);
    else
      {
@@ -1631,7 +1632,24 @@ _e_fm2_cb_icon_thumb_gen(void *data, Evas_Object *obj, void *event_info)
    E_Fm2_Icon *ic;
    
    ic = data;
-   edje_object_signal_emit(ic->obj, "thumb", "gen");
+   if (ic->realized)
+     {
+	Evas_Coord w = 0, h = 0;
+	int have_alpha;
+	
+	e_icon_size_get(ic->obj_icon, &w, &h);
+	have_alpha = e_icon_alpha_get(ic->obj_icon);
+	if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
+	  {
+	     edje_extern_object_aspect_set(ic->obj_icon, 
+					   EDJE_ASPECT_CONTROL_BOTH, w, h);
+	  }
+	edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
+	if (have_alpha)
+	  edje_object_signal_emit(ic->obj, "thumb", "gen_alpha");
+	else
+	  edje_object_signal_emit(ic->obj, "thumb", "gen");
+     }
 }
     
 static void
