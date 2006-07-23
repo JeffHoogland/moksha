@@ -79,7 +79,7 @@
 
 static Ecore_Event_Handler *_edj_exe_exit_handler = NULL;
 
-static void         _efm_hilite_cb             (Evas_Object *obj, char *file, void *data);
+static void         _efm_cb_selchange(void *data, Evas_Object *obj);
 static void         _bg_edj_gen                (Evas *evas, char *filename, int method);
 static int          _edj_exe_exit_cb           (void *data, int type, void *event);
 
@@ -100,6 +100,7 @@ struct _Bg_Import_Window
    Evas_Object *box_obj;
    Evas_Object *event_obj;
    Evas_Object *content_obj;
+   Evas_Object *fsel_obj;
    
    Evas_Object *ok_obj;
    Evas_Object *close_obj;
@@ -160,7 +161,7 @@ e_int_config_background_import(E_Config_Dialog *parent)
    e_widget_on_focus_hook_set(o, _import_cb_wid_on_focus, import);
    import->box_obj = o;
    edje_object_part_swallow(import->bg_obj, "buttons_swallow", o);
-   
+
    o = evas_object_rectangle_add(evas);
    import->event_obj = o;
    mask = 0;
@@ -179,8 +180,11 @@ e_int_config_background_import(E_Config_Dialog *parent)
    o = e_widget_list_add(evas, 0, 0);   
    import->content_obj = o;
 
-   ofm = e_widget_fileman_add(evas, (&(cfdata->file)));
-   e_widget_fileman_hilite_callback_add(ofm, _efm_hilite_cb, import);
+   ofm = e_widget_fsel_add(evas, "~/", "/", NULL, NULL,
+			   _efm_cb_selchange, import,
+			   _efm_cb_selchange, import
+			   );
+   import->fsel_obj = ofm;
    e_widget_list_object_append(o, ofm, 1, 1, 0.5);
 
    of = e_widget_frametable_add(evas, _("Options"), 0);
@@ -192,7 +196,7 @@ e_int_config_background_import(E_Config_Dialog *parent)
    ord = e_widget_radio_add(evas, _("Tile Image"), E_BG_TILE, rg);
    e_widget_frametable_object_append(of, ord, 0, 2, 1, 1, 1, 0, 1, 0);
    
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o, of, 0, 0, 0.5);
    
    e_widget_min_size_get(o, &w, &h);
    edje_extern_object_min_size_set(o, w, h);
@@ -200,7 +204,6 @@ e_int_config_background_import(E_Config_Dialog *parent)
    evas_object_show(o);
    
    import->ok_obj = e_widget_button_add(evas, _("OK"), NULL, _import_cb_ok, win, cfdata);
-   e_widget_disabled_set(import->ok_obj, 1);
    e_widget_list_object_append(import->box_obj, import->ok_obj, 1, 0, 0.5);
 
    import->close_obj = e_widget_button_add(evas, _("Cancel"), NULL, _import_cb_close, win, NULL);
@@ -214,8 +217,8 @@ e_int_config_background_import(E_Config_Dialog *parent)
    edje_object_part_swallow(import->bg_obj, "buttons_swallow", o);
    
    edje_object_size_min_calc(import->bg_obj, &w, &h);
-   evas_object_resize(import->bg_obj, w, h);
-   e_win_resize(win, w, h);
+   evas_object_resize(import->bg_obj, w + 64, h + 128);
+   e_win_resize(win, w + 64, h + 128);
    e_win_size_min_set(win, w, h);
    e_win_size_max_set(win, 99999, 99999);
    e_win_show(win);
@@ -228,23 +231,15 @@ e_int_config_background_import(E_Config_Dialog *parent)
 }
 
 static void 
-_efm_hilite_cb(Evas_Object *obj, char *file, void *data) 
+_efm_cb_selchange(void *data, Evas_Object *obj)
 {
-   E_Fm_File *f;
    Bg_Import_Window *import;
-   
-   f = e_fm_file_new(file);
-   if (!f) return;
+   const char *path;
    
    import = data;
-   if (!import) return;
-   
-   if (e_fm_file_is_image(f)) 
-     e_widget_disabled_set(import->ok_obj, 0);
-   else 
-     e_widget_disabled_set(import->ok_obj, 1);	
-   
-   free(f);
+   path = e_widget_fsel_selection_path_get(import->fsel_obj);
+   E_FREE(import->cfdata->file);
+   if (path) import->cfdata->file = strdup(path);
 }
 
 static void 
@@ -378,33 +373,20 @@ _import_cb_ok(void *data, void *data2)
    E_Fm_File *f;
    Evas *evas;
    E_Win *win;
-   E_Config_Dialog_Data *cfdata;
    Bg_Import_Window *import;
+   const char *path;
    
    win = data;   
    import = win->data;
-   cfdata = data2;
 
-   if (!cfdata->file[0]) 
+   path = e_widget_fsel_selection_path_get(import->fsel_obj);
+   E_FREE(import->cfdata->file);
+   if (path) import->cfdata->file = strdup(path);
+   if (import->cfdata->file)
      {
-	if (import) e_widget_disabled_set(import->ok_obj, 1);
-	return;
+	evas = e_win_evas_get(win);
+	_bg_edj_gen(evas, import->cfdata->file, import->cfdata->method);
      }
-   
-
-   f = e_fm_file_new(cfdata->file);
-   if (!f) return;
-   if (!e_fm_file_is_image(f)) 
-     { 
-	if (import) e_widget_disabled_set(import->ok_obj, 1);
-	return;
-     }
-   
-   free(f);
-
-   evas = e_win_evas_get(win);
-   _bg_edj_gen(evas, cfdata->file, cfdata->method);
-   if (import) e_widget_disabled_set(import->ok_obj, 1);
 }
 
 static void 

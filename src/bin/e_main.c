@@ -830,6 +830,17 @@ _e_main_dirs_init(void)
 		 homedir);
 	system(buf);
      }
+   /* FIXME: THIS is to get people started - shoudl be in a wizard */
+   snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites", homedir);
+   if (!ecore_file_exists(buf))
+     {
+	snprintf(buf, sizeof(buf), 
+		 "gzip -d -c < %s/data/other/efm_favorites.tar.gz | "
+		 "(cd %s/.e/e/ ; tar -xf -)", 
+		 e_prefix_data_get(),
+		 homedir);
+	system(buf);
+     }
    free(homedir);
 
    return 1;

@@ -3,12 +3,13 @@
  */
 #ifdef E_TYPEDEFS
 #else
-#ifndef E_WIDGET_FRAMELIST_H
-#define E_WIDGET_FRAMELIST_H
+#ifndef E_WIDGET_FSEL_H
+#define E_WIDGET_FSEL_H
 
-EAPI Evas_Object *e_widget_framelist_add(Evas *evas, char *label, int horiz);
-EAPI void e_widget_framelist_object_append(Evas_Object *obj, Evas_Object *sobj);
-EAPI void e_widget_framelist_content_align_set(Evas_Object *obj, double halign, double valign);
-
+EAPI Evas_Object *e_widget_fsel_add(Evas *evas, char *dev, char *path, char *selected, char *filter,
+				    void (*sel_func) (void *data, Evas_Object *obj), void *sel_data,
+				    void (*chg_func) (void *data, Evas_Object *obj), void *chg_data);
+EAPI const char *e_widget_fsel_selection_path_get(Evas_Object *obj);
+    
 #endif
 #endif

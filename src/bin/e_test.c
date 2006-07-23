@@ -756,9 +756,16 @@ _e_test_internal(E_Container *con)
 }
 #elif 0
 static void
-_e_test_cb_selected(void *data, Evas_Object *obj, void *event_info)
+_e_test_cb_changed(void *data, Evas_Object *obj)
 {
-   printf("SELECTED!\n");
+   printf("CHANGED \"%s\"\n", e_widget_fsel_selection_path_get(obj));
+}
+    
+static void
+_e_test_cb_selected(void *data, Evas_Object *obj)
+{
+   printf("SELECTED \"%s\"\n", e_widget_fsel_selection_path_get(obj));
+   e_object_del(E_OBJECT(data));
 }
     
 static void
@@ -771,7 +778,9 @@ _e_test_internal(E_Container *con)
    dia = e_dialog_new(con);
    e_dialog_title_set(dia, "A Test Dialog");
 
-   o = e_widget_fsel_add(dia->win->evas, "~/", "/", NULL, NULL);
+   o = e_widget_fsel_add(dia->win->evas, "~/", "/", NULL, NULL, 
+			 _e_test_cb_selected, dia,
+			 _e_test_cb_changed, dia);
    evas_object_show(o);
    e_widget_min_size_get(o, &mw, &mh);
    e_dialog_content_set(dia, o, mw, mh);
