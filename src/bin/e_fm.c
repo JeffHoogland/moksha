@@ -185,7 +185,7 @@ e_fm2_path_set(Evas_Object *obj, char *dev, char *path)
    if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
 
    /* internal config for now - don't see a pont making this configurable */
-   sd->regions.member_max = 32;
+   sd->regions.member_max = 64;
 
    if (!sd->config)
      {
