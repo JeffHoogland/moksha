@@ -39,7 +39,6 @@ _create_data(E_Config_Dialog *cfd)
    
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->cfd = cfd;
-   _fill_data(cfdata);
    return cfdata;
 }
 
@@ -47,14 +46,6 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    free(cfdata);
-}
-
-static void
-_cb_list(void *data)
-{
-   E_Config_Dialog_Data *cfdata;
-   
-   cfdata = data;
 }
 
 static void
@@ -70,6 +61,8 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
    
    n = e_widget_ilist_selected_get(cfdata->ilist);
    e_widget_ilist_clear(cfdata->ilist);
+   e_widget_ilist_go(cfdata->ilist);
+   
    for (l = e_shelf_list(); l; l = l->next)
      {
 	es = l->data;
@@ -78,6 +71,8 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
 	label = es->name;
 	if (!label) label = "";
 	snprintf(buf, sizeof(buf), "%s #%i", label, es->id);
+
+	printf("\n\n\nBuf: %s\n", buf);
 	
 	/* FIXME: proper icon */
 	ob = edje_object_add(evas_object_evas_get(cfdata->ilist));
@@ -125,7 +120,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
              break;
           }
 	
-	e_widget_ilist_append(cfdata->ilist, ob, buf, _cb_list, cfdata, NULL);
+	e_widget_ilist_append(cfdata->ilist, ob, buf, NULL, NULL, NULL);
      }
    
    e_widget_min_size_set(cfdata->ilist, 155, 250);
@@ -167,9 +162,13 @@ _cb_confirm_dialog_yes(void *data)
    E_Shelf *es;
    E_Config_Shelf *cfg;
    E_Config_Dialog_Data *cfdata;
-
+   char *dummy;
+   int i;
+   
    cfdata = data;
-   es = evas_list_nth(e_shelf_list(), e_widget_ilist_selected_get(cfdata->ilist));
+   sscanf(e_widget_ilist_selected_label_get(cfdata->ilist), "%s #%i", &dummy, &i);
+
+   es = evas_list_nth(e_shelf_list(), i);
    if (es)
      {
 	cfg = es->cfg;
@@ -205,9 +204,13 @@ _cb_config(void *data, void *data2)
 {
    E_Config_Dialog_Data *cfdata;
    E_Shelf *es;
+   char *dummy;
+   int i;
    
    cfdata = data;
-   es = evas_list_nth(e_shelf_list(), e_widget_ilist_selected_get(cfdata->ilist));
+   sscanf(e_widget_ilist_selected_label_get(cfdata->ilist), "%s #%i", &dummy, &i);
+
+   es = evas_list_nth(e_shelf_list(), i);
    if (!es) return;
    if (!es->config_dialog) e_int_shelf_config(es);
 }
