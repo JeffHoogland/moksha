@@ -121,6 +121,7 @@ e_thumb_icon_begin(Evas_Object *obj)
    
    eth = evas_object_data_get(obj, "e_thumbdata");
    if (!eth) return;
+   if (eth->queued) return;
    if (eth->busy) return;
    if (!eth->file) return;
    if (!_thumbnailers)
@@ -160,12 +161,18 @@ e_thumb_icon_end(Evas_Object *obj)
    
    eth = evas_object_data_get(obj, "e_thumbdata");
    if (!eth) return;
-   if (eth->queued) _thumb_queue = evas_list_remove(_thumb_queue, eth);
-   eth->queued = 0;
-   if (eth->busy) _e_thumb_gen_end(eth->objid);
-   eth->busy = 0;
-   _pending--;
-   if (_pending == 0) _e_thumb_thumbnailers_kill();
+   if (eth->queued)
+     {
+	_thumb_queue = evas_list_remove(_thumb_queue, eth);
+	eth->queued = 0;
+     }
+   if (eth->busy)
+     {
+	_e_thumb_gen_end(eth->objid);
+	eth->busy = 0;
+	_pending--;
+	if (_pending == 0) _e_thumb_thumbnailers_kill();
+     }
 }
 
 EAPI void
@@ -272,6 +279,7 @@ _e_thumb_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if (eth->busy)
      {
 	_e_thumb_gen_end(eth->objid);
+	eth->busy = 0;
 	_pending--;
 	if (_pending == 0) _e_thumb_thumbnailers_kill();
      }
