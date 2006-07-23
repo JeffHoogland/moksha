@@ -27,11 +27,6 @@ e_int_config_shelf(E_Container *con)
    return cfd;
 }
 
-static void
-_fill_data(E_Config_Dialog_Data *cfdata) 
-{
-}
-
 static void *
 _create_data(E_Config_Dialog *cfd) 
 {
@@ -71,8 +66,6 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
 	label = es->name;
 	if (!label) label = "";
 	snprintf(buf, sizeof(buf), "%s #%i", label, es->id);
-
-	printf("\n\n\nBuf: %s\n", buf);
 	
 	/* FIXME: proper icon */
 	ob = edje_object_add(evas_object_evas_get(cfdata->ilist));
