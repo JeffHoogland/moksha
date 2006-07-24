@@ -3,6 +3,8 @@
  */
 #include "e.h"
 
+#define OVERCLIP 128
+
 /* FIXME: this is NOT complete. dnd doesnt work. only list view works.
  * in icon view it needs to be much better about placement of icons and
  * being able to save/load icon placement. it doesn't support backgrounds or
@@ -1161,10 +1163,10 @@ _e_fm2_icon_visible(E_Fm2_Icon *ic)
 {
    /* return if the icon is visible */
    if (
-       ((ic->x - ic->sd->pos.x) < (ic->sd->w)) &&
-       ((ic->x + ic->w - ic->sd->pos.x) > 0) &&
-       ((ic->y - ic->sd->pos.y) < (ic->sd->h)) &&
-       ((ic->y + ic->h - ic->sd->pos.y) > 0)
+       ((ic->x - ic->sd->pos.x) < (ic->sd->w + OVERCLIP)) &&
+       ((ic->x + ic->w - ic->sd->pos.x) > (-OVERCLIP)) &&
+       ((ic->y - ic->sd->pos.y) < (ic->sd->h + OVERCLIP)) &&
+       ((ic->y + ic->h - ic->sd->pos.y) > (-OVERCLIP))
        )
      return 1;
    return 0;
@@ -1461,10 +1463,10 @@ _e_fm2_region_visible(E_Fm2_Region *rg)
 {
    /* return if the icon is visible */
    if (
-       ((rg->x - rg->sd->pos.x) < (rg->sd->w)) &&
-       ((rg->x + rg->w - rg->sd->pos.x) > 0) &&
-       ((rg->y - rg->sd->pos.y) < (rg->sd->h)) &&
-       ((rg->y + rg->h - rg->sd->pos.y) > 0)
+       ((rg->x - rg->sd->pos.x) < (rg->sd->w + OVERCLIP)) &&
+       ((rg->x + rg->w - rg->sd->pos.x) > (-OVERCLIP)) &&
+       ((rg->y - rg->sd->pos.y) < (rg->sd->h + OVERCLIP)) &&
+       ((rg->y + rg->h - rg->sd->pos.y) > (-OVERCLIP))
        )
      return 1;
    return 0;
@@ -1870,8 +1872,8 @@ _e_fm2_smart_add(Evas_Object *obj)
    sd->obj = obj;
    sd->clip = evas_object_rectangle_add(evas_object_evas_get(obj));
    evas_object_smart_member_add(sd->clip, obj);
-   evas_object_move(sd->clip, sd->x, sd->y);
-   evas_object_resize(sd->clip, sd->w, sd->h);
+   evas_object_move(sd->clip, sd->x - OVERCLIP, sd->y - OVERCLIP);
+   evas_object_resize(sd->clip, sd->w + (OVERCLIP * 2), sd->h + (OVERCLIP * 2));
    evas_object_color_set(sd->clip, 255, 255, 255, 255);
    evas_object_smart_data_set(obj, sd);
    evas_object_move(obj, 0, 0);
@@ -1912,7 +1914,7 @@ _e_fm2_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    if ((sd->x == x) && (sd->y == y)) return;
    sd->x = x;
    sd->y = y;
-   evas_object_move(sd->clip, x, y);
+   evas_object_move(sd->clip, sd->x - OVERCLIP, sd->y - OVERCLIP);
    _e_fm2_obj_icons_place(sd);
 }
 
@@ -1929,7 +1931,7 @@ _e_fm2_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    if (h != sd->h) hch = 1;
    sd->w = w;
    sd->h = h;
-   evas_object_resize(sd->clip, w, h);
+   evas_object_resize(sd->clip, sd->w + (OVERCLIP * 2), sd->h + (OVERCLIP * 2));
 
    /* for automatic layout - do this - NB; we could put this on a timer delay */
    if (wch)
