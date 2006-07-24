@@ -94,6 +94,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
    char buf[256];
    
    if (!cfdata) return;
+   if (!cfdata->o_list) return;
    
    evas = evas_object_evas_get(cfdata->o_list);
    
@@ -115,7 +116,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
 	label = es->name;
 	if (!label) label = "shelf";
 	snprintf(buf, sizeof(buf), "%s #%i", label, es->id);
-
+	
 	ob = edje_object_add(evas);
         switch(es->cfg->orient)
           {
@@ -246,14 +247,14 @@ _cb_dialog_yes(void *data)
    E_Config_Dialog_Data *cfdata;
    E_Shelf *es;
    char *dummy;
-   const char *tmp;
+   char tmp[4096];
    int i;
    
    cfdata = data;
    if (!cfdata) return;
    if (!cfdata->cur_shelf) return;
 
-   tmp = strdup(cfdata->cur_shelf);
+   snprintf(tmp, sizeof(tmp), "%s", cfdata->cur_shelf);
    sscanf(tmp, "%s #%i", dummy, &i);
    es = evas_list_nth(e_shelf_list(), i);
    if (!es) return;
@@ -271,16 +272,16 @@ _cb_config(void *data, void *data2)
    E_Config_Dialog_Data *cfdata;
    E_Shelf *es;
    char *dummy;
-   const char *tmp;
+   char tmp[4096];
    int i;
    
    cfdata = data;
    if (!cfdata) return;
    if (!cfdata->cur_shelf) return;
    
-   tmp = strdup(cfdata->cur_shelf);
+   snprintf(tmp, sizeof(tmp), "%s", cfdata->cur_shelf);
    sscanf(tmp, "%s #%i", dummy, &i);
-   es = evas_list_nth(e_shelf_list(), i);
+   es = evas_list_nth(e_shelf_list(), e_widget_ilist_selected_get(cfdata->o_list));
    if (!es) return;
    if (!es->config_dialog) e_int_shelf_config(es);
 }
