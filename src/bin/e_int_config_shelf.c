@@ -103,6 +103,8 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
    
    e_widget_ilist_clear(cfdata->o_list);
    e_widget_ilist_go(cfdata->o_list);
+
+   e_shelf_config_init();
    
    for (l = e_shelf_list(); l; l = l->next) 
      {
@@ -246,17 +248,12 @@ _cb_dialog_yes(void *data)
 {
    E_Config_Dialog_Data *cfdata;
    E_Shelf *es;
-   char *dummy;
-   char tmp[4096];
-   int i;
+   E_Config_Shelf *cfg;
    
    cfdata = data;
    if (!cfdata) return;
-   if (!cfdata->cur_shelf) return;
 
-   snprintf(tmp, sizeof(tmp), "%s", cfdata->cur_shelf);
-   sscanf(tmp, "%s #%i", dummy, &i);
-   es = evas_list_nth(e_shelf_list(), i);
+   es = evas_list_nth(e_shelf_list(), e_widget_ilist_selected_get(cfdata->o_list));
    if (!es) return;
 
    e_shelf_unsave(es);
@@ -271,16 +268,10 @@ _cb_config(void *data, void *data2)
 {
    E_Config_Dialog_Data *cfdata;
    E_Shelf *es;
-   char *dummy;
-   char tmp[4096];
-   int i;
    
    cfdata = data;
    if (!cfdata) return;
-   if (!cfdata->cur_shelf) return;
    
-   snprintf(tmp, sizeof(tmp), "%s", cfdata->cur_shelf);
-   sscanf(tmp, "%s #%i", dummy, &i);
    es = evas_list_nth(e_shelf_list(), e_widget_ilist_selected_get(cfdata->o_list));
    if (!es) return;
    if (!es->config_dialog) e_int_shelf_config(es);
