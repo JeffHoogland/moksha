@@ -38,7 +38,9 @@ Some of the things (in very short form) that need to be done to E17...
   buttons. it should be a pair of checkboxes to turn that flip bit on or
   off etc. etc.
 * BUG: Shelf Configuration is b0rked. With a fresh e_config and 2 shelves, 
-  changing Style for shelf 0 makes ibar go blank (no icons).
+  changing Style for shelf 0 makes ibar go blank (no icons). Trying to
+  delete an existing shelf causes E to segfault. (Seems related to
+  confirm_dialog but valgrind and gdb cannot identify the issue)
 ]]]
 
 [[[
