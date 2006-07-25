@@ -292,10 +292,22 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 				  (char *)e_theme_edje_file_get("base/theme/borders",
 								"widgets/border/default/kill"),
 				  "widgets/border/default/kill");
-	mi = e_menu_item_new(m);
-	e_menu_item_separator_set(mi, 1);
      }
 
+   if (!bd->lock_close)
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Close"));
+	e_menu_item_callback_set(mi, _e_border_menu_cb_close, bd);
+	e_menu_item_icon_edje_set(mi, 
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/close"), 
+				  "widgets/border/default/close");
+     }
+
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+   
    /* Only allow to change layer for windows in "normal" layers */
 
    if ((!bd->lock_user_stacking) && (!bd->internal) &&
@@ -332,17 +344,6 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 				  "widgets/border/default/minimize");
      }
    
-   if (!bd->lock_close)
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Close"));
-	e_menu_item_callback_set(mi, _e_border_menu_cb_close, bd);
-	e_menu_item_icon_edje_set(mi, 
-				  (char *)e_theme_edje_file_get("base/theme/borders",
-								"widgets/border/default/close"), 
-				  "widgets/border/default/close");
-     }
-
    if (key)
      e_menu_activate_key(m, bd->zone, x, y, 1, 1,
 			 E_MENU_POP_DIRECTION_DOWN);
