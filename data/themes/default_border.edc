@@ -239,6 +239,7 @@ images {
    image: "e17_button_detail_stack_below.png" COMP;
    image: "e17_button_detail_stack_normal.png" COMP;
    image: "e17_button_detail_stack_on_top.png" COMP;
+   image: "e17_button_detail_properties.png" COMP;
    image: "e17_mini_button.png" COMP;
    image: "e17_mini_button_shadow1.png" COMP;
    image: "e17_mini_button_shadow2.png" COMP;
@@ -4896,4 +4897,4 @@ FULL_SIZE_BORDER_BUTTON("stacking")
 FULL_SIZE_BORDER_BUTTON("stack_on_top")
 FULL_SIZE_BORDER_BUTTON("stack_normal")
 FULL_SIZE_BORDER_BUTTON("stack_below")
-
+FULL_SIZE_BORDER_BUTTON("properties")
