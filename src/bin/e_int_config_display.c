@@ -214,6 +214,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	cfdata->can_flip = rots & (ECORE_X_RANDR_FLIP_X | ECORE_X_RANDR_FLIP_Y);
 	cfdata->flip = cfdata->rotation &
 	  (ECORE_X_RANDR_FLIP_X | ECORE_X_RANDR_FLIP_Y);
+
 	if (cfdata->rotation & (ECORE_X_RANDR_FLIP_X))
 	  cfdata->flip_x = 1;
 	if (cfdata->rotation & (ECORE_X_RANDR_FLIP_Y))
@@ -307,15 +308,12 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
 	int rot;
 
-	if ((cfdata->flip_x) && (cfdata->flip_y))
-	  cfdata->flip = cfdata->rotation & 
-	  (ECORE_X_RANDR_FLIP_X | ECORE_X_RANDR_FLIP_Y);
-	else if (cfdata->flip_x)
-	  cfdata->flip = cfdata->rotation & (ECORE_X_RANDR_FLIP_X);
-	else if (cfdata->flip_y)
-	  cfdata->flip = cfdata->rotation & (ECORE_X_RANDR_FLIP_Y);
-	  
-	  
+	cfdata->flip = cfdata->rotation;	
+	if (cfdata->flip_x)
+	  cfdata->flip = cfdata->flip | ECORE_X_RANDR_FLIP_X;
+	if (cfdata->flip_y)
+	  cfdata->flip = cfdata->flip | ECORE_X_RANDR_FLIP_Y;
+	
 	rot = ecore_x_randr_screen_rotation_get(man->root);
 // FIXME: a bug in x where it returns that the current rotation is still
 // normal (none) when it isn't. so just blindly ask for a new rot anyway.
@@ -351,7 +349,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    of = e_widget_framelist_add(evas, _("Resolution"), 0);   
    ol = e_widget_ilist_add(evas, 24, 24, NULL);
-   e_widget_min_size_set(ol, 170, 240);
+   e_widget_min_size_set(ol, 170, 215);
    e_widget_framelist_object_append(of, ol);
    e_widget_list_object_append(o2, of, 1, 1, 0.5);
 
@@ -481,7 +479,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
         e_widget_framelist_object_append(of, ob);
 	if (!(cfdata->can_rotate & ECORE_X_RANDR_FLIP_Y)) e_widget_disabled_set(ob, 1);
 	
-	e_widget_list_object_append(o2, of, 0, 0, 0.5);
+	e_widget_list_object_append(o2, of, 1, 1, 0.5);
      }
    
    e_widget_list_object_append(o, o2, 0, 0, 0.0);
