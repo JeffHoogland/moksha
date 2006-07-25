@@ -1364,7 +1364,7 @@ e_modapi_init(E_Module *m)
       (E_EVENT_BORDER_STICK, _ibox_cb_event_border_zone_set, NULL));
  */
    e_gadcon_provider_register(&_gadcon_class);
-   return 1;
+   return m;
 }
 
 EAPI int
