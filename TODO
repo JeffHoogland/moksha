@@ -33,9 +33,6 @@ Some of the things (in very short form) that need to be done to E17...
 * BUG: Hiding the label of e_widget_slider causes the slider line to disappear
 * BUG: Window locks should be honored by the pager (e.g. Lock me from
   changing position)
-* BUG: in screen resolution change dialog the flip config is a pair of raidio
-  buttons. it should be a pair of checkboxes to turn that flip bit on or
-  off etc. etc.
 * BUG: Shelf Configuration is b0rked. With a fresh e_config and 2 shelves, 
   changing Style for shelf 0 makes ibar go blank (no icons).
 ]]]
