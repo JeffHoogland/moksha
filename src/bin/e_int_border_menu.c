@@ -279,6 +279,10 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Window Properties"));
    e_menu_item_callback_set(mi, _e_border_menu_cb_prop, bd);
+   e_menu_item_icon_edje_set(mi,
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/properties"),
+				  "widgets/border/default/properties");
    
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
