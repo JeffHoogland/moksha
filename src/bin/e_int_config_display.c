@@ -48,7 +48,9 @@ struct _E_Config_Dialog_Data
    int can_flip;
    int rotation;
    int flip;
-   
+   int flip_x;
+   int flip_y;
+
    SureBox *surebox;
 };
 
@@ -212,6 +214,10 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	cfdata->can_flip = rots & (ECORE_X_RANDR_FLIP_X | ECORE_X_RANDR_FLIP_Y);
 	cfdata->flip = cfdata->rotation &
 	  (ECORE_X_RANDR_FLIP_X | ECORE_X_RANDR_FLIP_Y);
+	if (cfdata->rotation & (ECORE_X_RANDR_FLIP_X))
+	  cfdata->flip_x = 1;
+	if (cfdata->rotation & (ECORE_X_RANDR_FLIP_Y))
+	  cfdata->flip_y = 1;
 	
 	cfdata->can_rotate = 
 	  rots & (ECORE_X_RANDR_ROT_0 | ECORE_X_RANDR_ROT_90 |
@@ -300,7 +306,16 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if ((cfdata->can_rotate) || (cfdata->can_flip))
      {
 	int rot;
-	
+
+	if ((cfdata->flip_x) && (cfdata->flip_y))
+	  cfdata->flip = cfdata->rotation & 
+	  (ECORE_X_RANDR_FLIP_X | ECORE_X_RANDR_FLIP_Y);
+	else if (cfdata->flip_x)
+	  cfdata->flip = cfdata->rotation & (ECORE_X_RANDR_FLIP_X);
+	else if (cfdata->flip_y)
+	  cfdata->flip = cfdata->rotation & (ECORE_X_RANDR_FLIP_Y);
+	  
+	  
 	rot = ecore_x_randr_screen_rotation_get(man->root);
 // FIXME: a bug in x where it returns that the current rotation is still
 // normal (none) when it isn't. so just blindly ask for a new rot anyway.
@@ -432,9 +447,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    e_widget_ilist_go(ol);
    e_widget_ilist_go(rl);
-
-//   if ((cfdata->can_rotate) || (cfdata->can_flip))
-//     o2 = e_widget_list_add(evas, 0, 0);
    
    if (cfdata->can_rotate)
      {
@@ -460,22 +472,18 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    if (cfdata->can_flip)
      {
-	/* FIXME: flipping is a checkbox - not radio group! */
 	of = e_widget_framelist_add(evas, _("Mirroring"), 0);
 	
-	rg = e_widget_radio_group_new(&(cfdata->flip));
-	
-	ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/screen_hflip", 24, 24, ECORE_X_RANDR_FLIP_X, rg);
+	ob = e_widget_check_icon_add(evas, NULL, "enlightenment/screen_hflip", 24, 24, &(cfdata->flip_x));
         e_widget_framelist_object_append(of, ob);
 	if (!(cfdata->can_rotate & ECORE_X_RANDR_FLIP_X)) e_widget_disabled_set(ob, 1);
-	ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/screen_vflip", 24, 24, ECORE_X_RANDR_FLIP_Y, rg);
+	ob = e_widget_check_icon_add(evas, NULL, "enlightenment/screen_vflip", 24, 24, &(cfdata->flip_y));
         e_widget_framelist_object_append(of, ob);
 	if (!(cfdata->can_rotate & ECORE_X_RANDR_FLIP_Y)) e_widget_disabled_set(ob, 1);
 	
 	e_widget_list_object_append(o2, of, 0, 0, 0.5);
      }
    
-//   if ((cfdata->can_rotate) || (cfdata->can_flip))
    e_widget_list_object_append(o, o2, 0, 0, 0.0);
    
    return o;
