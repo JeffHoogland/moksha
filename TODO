@@ -10,10 +10,9 @@ Some of the things (in very short form) that need to be done to E17...
 
 * BUG: match this window only doesnt fall back to other unused remembers
 * BUG: make window sticky. send window to another desktop - get ghost window.
-  should 1. make any such operation in the pager or menu useless and do
-  nothing if the window is sticky and 2. remove the send window to menu if it
-  is sticky and in the pager disallow dragging out of the pager desktop if
-  the window is sticky.
+  should 1. make any such operation in the pager useless and do
+  nothing if the window is sticky and 2. in the pager disallow dragging 
+  out of the pager desktop if the window is sticky.
 * BUG: if app asks for borderless in properties - borderless toggle in menu
   doesn't have any effect.
 * BUG: change exe name in basic mode in eap editor and icon vanishes (don't
