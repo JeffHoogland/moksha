@@ -103,8 +103,6 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
    
    e_widget_ilist_clear(cfdata->o_list);
    e_widget_ilist_go(cfdata->o_list);
-
-   e_shelf_config_init();
    
    for (l = e_shelf_list(); l; l = l->next) 
      {
@@ -199,7 +197,7 @@ _cb_add(void *data, void *data2)
    E_Config_Shelf *cfg;
    E_Container *con;
    E_Zone *zone;
-
+   
    cfdata = data;
    if (!cfdata) return;
    
@@ -218,9 +216,9 @@ _cb_add(void *data, void *data2)
    cfg->style = evas_stringshare_add("default");
    cfg->size = 40;
    e_config->shelves = evas_list_append(e_config->shelves, cfg);
+   e_config_save_queue();
 
    e_shelf_config_init();
-   e_config_save_queue();
    
    _ilist_fill(cfdata);
 }
