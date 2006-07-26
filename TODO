@@ -8,6 +8,9 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: e_entry/editable widget is pretty borken in sizing, clipping, initial
+  state and i think is also now causing segv's (not sure yet), but it needs
+  a complete going over if not a rewrite. :(
 * BUG: match this window only doesnt fall back to other unused remembers
 * BUG: make window sticky. send window to another desktop - get ghost window.
   should 1. make any such operation in the pager useless and do
