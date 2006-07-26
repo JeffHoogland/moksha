@@ -364,7 +364,7 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, path_append_icons, _e_config_path_append_edd); /**/
    E_CONFIG_LIST(D, T, path_append_modules, _e_config_path_append_edd); /**/
    E_CONFIG_LIST(D, T, path_append_backgrounds, _e_config_path_append_edd); /**/
-   E_CONFIG_VAL(D, T, window_placement_policy, INT);
+   E_CONFIG_VAL(D, T, window_placement_policy, INT); /**/
    E_CONFIG_VAL(D, T, focus_policy, INT); /**/
    E_CONFIG_VAL(D, T, focus_setting, INT); /**/
    E_CONFIG_VAL(D, T, pass_click_on, INT); /**/
