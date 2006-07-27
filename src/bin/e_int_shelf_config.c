@@ -226,7 +226,6 @@ static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    E_Zone *zone;
-   Evas_List *l;
    int id;
    int restart = 0;
 
