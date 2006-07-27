@@ -274,6 +274,7 @@ e_shelf_layer_set(E_Shelf *es, int layer)
 {
    E_OBJECT_CHECK(es);
    E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
+
    es->layer = layer;
    if (es->popup)
      e_popup_layer_set(es->popup, es->layer);
@@ -446,6 +447,58 @@ e_shelf_position_calc(E_Shelf *es)
 	break;
      }
    e_shelf_move_resize(es, es->x, es->y, es->w, es->h);
+}
+
+EAPI void 
+e_shelf_style_set(E_Shelf *es, const char *style) 
+{
+   char buf[1024];
+   
+   E_OBJECT_CHECK(es);
+   E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
+
+   if (!es->o_base) return;
+
+   if (es->style)
+     evas_stringshare_del(es->style);
+   es->style = evas_stringshare_add(style);
+   
+   if (style)
+     snprintf(buf, sizeof(buf), "shelf/%s/base", style);
+   else
+     snprintf(buf, sizeof(buf), "shelf/%s/base", "default");
+     
+   if (!e_theme_edje_object_set(es->o_base, "base/theme/shelf", buf))
+     e_theme_edje_object_set(es->o_base, "base/theme/shelf", 
+			     "shelf/default/base");
+}
+
+EAPI void 
+e_shelf_popup_set(E_Shelf *es, int popup) 
+{
+   E_OBJECT_CHECK(es);
+   E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
+
+   if (!es->cfg) return;
+   if (es->popup)
+     e_object_del(E_OBJECT(es->popup));
+   if (popup) 
+     {
+	es->popup = e_popup_new(es->zone, es->x, es->y, es->w, es->h);
+	e_popup_layer_set(es->popup, es->cfg->layer);
+	es->ee = es->popup->ecore_evas;
+	es->evas = es->popup->evas;
+	evas_object_show(es->o_event);
+	evas_object_show(es->o_base);
+	e_popup_edje_bg_object_set(es->popup, es->o_base);
+     }
+   else 
+     {
+	evas_object_move(es->o_event, es->zone->x + es->x, es->zone->y + es->y);
+	evas_object_move(es->o_base, es->zone->x + es->x, es->zone->y + es->y);
+	evas_object_layer_set(es->o_event, es->cfg->layer);
+	evas_object_layer_set(es->o_base, es->cfg->layer);
+     }
 }
 
 /* local subsystem functions */
