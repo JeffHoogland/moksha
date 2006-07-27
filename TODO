@@ -68,6 +68,11 @@ Some of the things (in very short form) that need to be done to E17...
 * Dragging a non-eap icon from a border to the ibar should automatically
   create the icon and add that (instead of warning the user that this can't be
   done)
+* new fm code doesn't indicate it is still scanning a dir - needs to
+* new fm code relays-out a dir every time the queue is processed - maybe try
+  to speed this up
+* new fm code's file scannign isnt insanely fast - icon size calcs etc. speed
+  up for special cases like list view?
 ]]]
 
 [[[
