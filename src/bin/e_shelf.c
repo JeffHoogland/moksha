@@ -141,7 +141,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 	evas_object_layer_set(es->o_event, layer);
 	evas_object_layer_set(es->o_base, layer);
      }
-   if (id <= 0)
+   if (id < 0)
      es->id = evas_list_count(shelves);
    else
      es->id = id;
