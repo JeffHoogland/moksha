@@ -1362,6 +1362,8 @@ _e_keybinding_cb_shortcut_key_down(void *data, int type, void *event)
 	  {
 	     if (cfdata && cfdata->current_act && cfdata->current_act_selector >= 0)
 	       {
+                  ACTION_GROUP *actg;
+                  ACTION2 *act;
 		  Evas_List   *l, *l2, *l3;
 		  int found;
 		  int mod = E_BINDING_MODIFIER_NONE;
@@ -1378,10 +1380,10 @@ _e_keybinding_cb_shortcut_key_down(void *data, int type, void *event)
 		  found = 0;
 		  for (l = action_group_list; l && !found; l = l->next)
 		    {
-		       ACTION_GROUP *actg = l->data;
+                       actg = l->data;
 		       for (l2 = actg->actions; l2 && !found; l2 = l2->next)
 			 {
-			    ACTION2 *act = l2->data;
+                            act = l2->data;
 			    for (l3 = act->key_bindings; l3 && !found; l3 = l3->next)
 			      {
 				 eb = l3->data;
@@ -1402,10 +1404,18 @@ _e_keybinding_cb_shortcut_key_down(void *data, int type, void *event)
 		       _e_keybinding_update_binding_list(cfdata);
 		    }
 		  else
-		    e_util_dialog_show(_("Binding Key Error"), 
-				       _("The binding key sequence, that you choose,"
-					 " is already used.<br>Please choose another binding key"
-					 " sequence."));
+                    {
+                       char buf[4096];
+
+                       snprintf(buf, sizeof(buf),
+                                _("The binding key sequence, that you choose,"
+                                  " is already used by<br>"
+                                  "<hilight>%s</hilight> action.<br>"
+                                  "Please choose another binding key"
+                                  " sequence."),
+                                act->action_name);
+                       e_util_dialog_show(_("Binding Key Error"), buf);
+                    }
 
 	       }
 	       _e_keybinding_keybind_shortcut_wnd_hide(cfdata);
