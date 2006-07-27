@@ -51,6 +51,8 @@ EAPI void             e_shelf_save(E_Shelf *es);
 EAPI void             e_shelf_unsave(E_Shelf *es);
 EAPI void             e_shelf_orient(E_Shelf *es, E_Gadcon_Orient orient);
 EAPI void             e_shelf_position_calc(E_Shelf *es);
+EAPI void             e_shelf_style_set(E_Shelf *es, const char *style);
+EAPI void             e_shelf_popup_set(E_Shelf *es, int popup);
 
 #endif
 #endif
