@@ -226,48 +226,108 @@ static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    E_Zone *zone;
+   Evas_List *l;
    int id;
+   int restart = 0;
+
+   /* Only change style is we need to */
+   if (!cfdata->escfg->style) 
+     {
+	cfdata->escfg->style = evas_stringshare_add(cfdata->style);
+	e_shelf_style_set(cfdata->es, cfdata->style);
+     }
+   else if ((cfdata->escfg->style) && 
+	    (strcmp(cfdata->escfg->style, cfdata->style))) 
+     {
+	if (cfdata->escfg->style) evas_stringshare_del(cfdata->escfg->style);
+	cfdata->escfg->style = evas_stringshare_add(cfdata->style);
+	e_shelf_style_set(cfdata->es, cfdata->style);
+     }
+
+   /* Only Change Orient if we need to */
+   if (cfdata->escfg->orient != cfdata->orient) 
+     {
+	cfdata->escfg->orient = cfdata->orient;
+	e_shelf_orient(cfdata->es, cfdata->orient);
+	e_shelf_position_calc(cfdata->es);
+     }
+
+   /* Only Change fit along if we need to */
+   if (cfdata->escfg->fit_along != cfdata->fit_along) 
+     {
+	cfdata->escfg->fit_along = cfdata->fit_along;
+	cfdata->es->fit_along = cfdata->fit_along;
+	restart = 1;
+     }
+
+   /* Only Change fit size if we need to */
+   if (cfdata->escfg->fit_size != cfdata->fit_size) 
+     {
+	/* Not sure if this will need a restart or not */
+	cfdata->escfg->fit_size = cfdata->fit_size;
+	cfdata->es->fit_size = cfdata->fit_size;
+	restart = 1;
+     }
    
-   cfdata->escfg->orient = cfdata->orient;
-   cfdata->escfg->fit_along = cfdata->fit_along;
-   cfdata->escfg->fit_size = cfdata->fit_size;
-   cfdata->escfg->size = cfdata->size;
-   
-   if (cfdata->escfg->style) evas_stringshare_del(cfdata->escfg->style);
-   cfdata->escfg->style = evas_stringshare_add(cfdata->style);
+   /* Only Change size if we need to */
+   if (cfdata->escfg->size != cfdata->size) 
+     {	
+	cfdata->escfg->size = cfdata->size;
+	cfdata->es->size = cfdata->size;
+	restart = 1;
+     }
+            
    if (cfdata->layering == 0)
      {
-	cfdata->escfg->popup = 0;
-	cfdata->escfg->layer = 1;
+	if ((cfdata->escfg->popup != 0) || (cfdata->escfg->layer != 1)) 
+	  {
+	     restart = 1;	
+	     cfdata->escfg->popup = 0;
+	     cfdata->escfg->layer = 1;
+	  }
      }
    else if (cfdata->layering == 1)
      {
-	cfdata->escfg->popup = 1;
-	cfdata->escfg->layer = 0;
+	if ((cfdata->escfg->popup != 1) || (cfdata->escfg->layer != 0)) 
+	  {
+	     restart = 1;
+	     cfdata->escfg->popup = 1;
+	     cfdata->escfg->layer = 0;
+	  }
      }
    else if (cfdata->layering == 2)
      {
-	cfdata->escfg->popup = 1;
-	cfdata->escfg->layer = 200;
+	if ((cfdata->escfg->popup != 1) || (cfdata->escfg->layer != 200)) 
+	  {
+	     restart = 1;
+	     cfdata->escfg->popup = 1;
+	     cfdata->escfg->layer = 200;
+	  }
      }
-   zone = cfdata->es->zone;
-   id = cfdata->es->id;
-   cfdata->es->config_dialog = NULL;
-   e_object_del(E_OBJECT(cfdata->es));
-   cfdata->es = e_shelf_zone_new(zone, cfdata->escfg->name, 
-				 cfdata->escfg->style,
-				 cfdata->escfg->popup,
-				 cfdata->escfg->layer, id);
-   cfdata->es->cfg = cfdata->escfg;
-   cfdata->es->fit_along = cfdata->escfg->fit_along;
-   cfdata->es->fit_size = cfdata->escfg->fit_size;
-   e_shelf_orient(cfdata->es, cfdata->escfg->orient);
-   e_shelf_position_calc(cfdata->es);
-   e_shelf_populate(cfdata->es);
-   e_shelf_show(cfdata->es);
-   e_config_save_queue();
+
+   if (restart) 
+     {
+	zone = cfdata->es->zone;
+	id = cfdata->es->id;
+	cfdata->es->config_dialog = NULL;
+	e_object_del(E_OBJECT(cfdata->es));
+	
+	cfdata->es = e_shelf_zone_new(zone, cfdata->escfg->name, 
+				      cfdata->escfg->style,
+				      cfdata->escfg->popup,
+				      cfdata->escfg->layer, id);
+	cfdata->es->cfg = cfdata->escfg;
+	cfdata->es->fit_along = cfdata->escfg->fit_along;
+	cfdata->es->fit_size = cfdata->escfg->fit_size;
+	e_shelf_orient(cfdata->es, cfdata->escfg->orient);
+	e_shelf_position_calc(cfdata->es);
+	e_shelf_populate(cfdata->es);
+	e_shelf_show(cfdata->es);
+     }
+
+   e_config_save_queue();   
    cfdata->es->config_dialog = cfd;
-   return 1; /* Apply was OK */   
+   return 1; /* Apply was OK */
 }
 
 static void
