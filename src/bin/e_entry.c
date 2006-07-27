@@ -886,6 +886,7 @@ _e_entry_smart_add(Evas_Object *object)
    sd->entry_object = e_editable_text_add(evas);
    e_editable_text_text_set(sd->entry_object, " ");
    evas_object_geometry_get(sd->entry_object, NULL, NULL, &w, &h);
+   e_editable_text_text_set(sd->entry_object, NULL);
    edje_extern_object_min_size_set(sd->entry_object, w, h);
    edje_object_part_swallow(sd->edje_object, "text_area", sd->entry_object);
    edje_object_size_min_calc(sd->edje_object, &w, &h);

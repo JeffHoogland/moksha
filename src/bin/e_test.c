@@ -778,7 +778,7 @@ _e_test_internal(E_Container *con)
    dia = e_dialog_new(con);
    e_dialog_title_set(dia, "A Test Dialog");
 
-   o = e_widget_fsel_add(dia->win->evas, "~/", "/", NULL, NULL, 
+   o = e_widget_fsel_add(dia->win->evas, "~/", "/tst", NULL, NULL, 
 			 _e_test_cb_selected, dia,
 			 _e_test_cb_changed, dia);
    evas_object_show(o);

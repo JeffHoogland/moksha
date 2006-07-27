@@ -26,7 +26,7 @@ struct _E_Fm2_Smart_Data
    
    struct {
       Evas_Coord     w, h;
-   } max;
+   } max, pmax;
    struct {
       Evas_Coord     x, y;
    } pos;
@@ -615,21 +615,58 @@ static void
 _e_fm2_queue_process(Evas_Object *obj)
 {
    E_Fm2_Smart_Data *sd;
+   E_Fm2_Icon *ic, *ic2;
+   Evas_List *l;
+   int added = 0;
+   double t;
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
+   if (!sd->queue) return;
+/*   double tt = ecore_time_get(); */
+/*   int queued = evas_list_count(sd->queue); */
    /* take unsorted and insert into the icon list - reprocess regions */
+   t = ecore_time_get();
+   /* pre-sort the queue - this will speed up insertion sort as we can
+    * make some assumptions */
+   sd->queue = evas_list_sort(sd->queue, evas_list_count(sd->queue), _e_fm2_cb_icon_sort);
+   l = sd->icons;
    while (sd->queue)
      {
-	E_Fm2_Icon *ic;
-
+	
 	ic = sd->queue->data;
-	sd->icons = evas_list_append(sd->icons, ic);
-	/* insertion sort - better than qsort for the way we are doing
-	 * things - incrimentally scan and sort as we go */
 	sd->queue = evas_list_remove_list(sd->queue, sd->queue);
+	/* insertion sort - better than qsort for the way we are doing
+	 * things - incrimentally scan and sort as we go as we now know
+	 * that the queue files are in order, we speed up insertions to
+	 * a worst case of O(n) where n is the # of files in the list
+	 * so far
+	 */
+	for (; l; l = l->next)
+	  {
+	     ic2 = l->data;
+	     if (_e_fm2_cb_icon_sort(ic, ic2) < 0)
+	       {
+		  sd->icons = evas_list_prepend_relative_list(sd->icons, ic, l);
+		  break;
+	       }
+	  }
+	if (!l)
+	  sd->icons = evas_list_append(sd->icons, ic);
+	added++;
+	/* every 5 additions - check to see if we have spent too long adding */
+	if ((added % 5) == 0)
+	  {
+	     /* if we spent more than 1/10th of a second inserting - give up
+	      * for now */
+	     if ((ecore_time_get() - t) > 0.05) break;
+	  }
      }
-   sd->icons = evas_list_sort(sd->icons, evas_list_count(sd->icons), _e_fm2_cb_icon_sort);
+/*   printf("FM: SORT %1.3f (%i files) (%i queued, %i added)\n",
+	  ecore_time_get() - tt, evas_list_count(sd->icons), queued, added);
+ */
+   /* FIXME: this could get a lot faster - avoid it or something. scan
+    speed goes from 200-250 files/sec to 80 or so in my tests */
    if (sd->resize_job) ecore_job_del(sd->resize_job);
    sd->resize_job = ecore_job_add(_e_fm2_cb_resize_job, obj);
    evas_object_smart_callback_call(sd->obj, "files_changed", NULL);
@@ -1264,7 +1301,8 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	     e_thumb_icon_file_set(ic->obj_icon, buf, NULL);
 	     e_thumb_icon_size_set(ic->obj_icon, 64, 64);
 	     evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
-	     if (_e_fm2_icon_visible(ic)) e_thumb_icon_begin(ic->obj_icon);
+	     if ((_e_fm2_icon_visible(ic)) && (!ic->sd->scan_idler))
+	       e_thumb_icon_begin(ic->obj_icon);
 	     edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
 	     evas_object_show(ic->obj_icon);
 	  }
@@ -1277,7 +1315,8 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	     e_thumb_icon_file_set(ic->obj_icon, buf, "desktop/background");
 	     e_thumb_icon_size_set(ic->obj_icon, 64, 64);
 	     evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
-	     if (_e_fm2_icon_visible(ic)) e_thumb_icon_begin(ic->obj_icon);
+	     if ((_e_fm2_icon_visible(ic)) && (!ic->sd->scan_idler))
+	       e_thumb_icon_begin(ic->obj_icon);
 	     edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
 	     evas_object_show(ic->obj_icon);
 	  }
@@ -1290,7 +1329,8 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	     e_thumb_icon_file_set(ic->obj_icon, buf, "icon");
 	     e_thumb_icon_size_set(ic->obj_icon, 64, 64);
 	     evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
-	     if (_e_fm2_icon_visible(ic)) e_thumb_icon_begin(ic->obj_icon);
+	     if ((_e_fm2_icon_visible(ic)) && (!ic->sd->scan_idler))
+	       e_thumb_icon_begin(ic->obj_icon);
 	     edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
 	     evas_object_show(ic->obj_icon);
 	  }
@@ -1816,7 +1856,7 @@ _e_fm2_cb_scan_timer(void *data)
    sd = evas_object_smart_data_get(data);
    if (!sd) return 0;
    _e_fm2_queue_process(data);
-   if (!sd->scan_idler)
+   if ((!sd->queue) && (!sd->scan_idler))
      {
 	sd->scan_timer = NULL;
 	return 0;
@@ -1848,7 +1888,7 @@ _e_fm2_obj_icons_place(E_Fm2_Smart_Data *sd)
 					sd->x + ic->x - sd->pos.x, 
 					sd->y + ic->y - sd->pos.y);
 		       evas_object_resize(ic->obj, ic->w, ic->h);
-		       if (_e_fm2_icon_visible(ic))
+		       if ((_e_fm2_icon_visible(ic)) && (!ic->sd->scan_idler))
 			 e_thumb_icon_begin(ic->obj_icon);
 		       else
 			 e_thumb_icon_end(ic->obj_icon);
