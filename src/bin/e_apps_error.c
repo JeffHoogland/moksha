@@ -16,7 +16,7 @@ static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdat
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void         _dialog_resize(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static Evas_Object *_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *lines);
+static Evas_Object *_dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *lines);
 static void         _dialog_save_cb(void *data, void *data2);
 
 EAPI void
