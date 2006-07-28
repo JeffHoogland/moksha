@@ -249,13 +249,13 @@ _e_thumb_valid(E_Thumb *eth)
    time_t mtime_orig, mtime_thumb;
 
    id = _e_thumb_file_id(eth->file, eth->key);
-   if (!id) return;
+   if (!id) return 0;
    
    td = strdup(id);
    if (!td)
      {
 	free(id);
-	return;
+	return 0;
      }
    td[2] = 0;
    
