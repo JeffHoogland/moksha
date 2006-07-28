@@ -595,16 +595,16 @@ _desklock_auth(const char *passwd)
 	pamerr = _desklock_pam_init(&da);
 	if (pamerr != PAM_SUCCESS) 
 	  {
-	    free(current_user);
-	    exit(pamerr);
+	     free(current_user);
+	     exit(pamerr);
 	  }
 	pamerr = pam_authenticate(da.pam.handle, 0);
 	pam_end(da.pam.handle, pamerr);
 	memset(da.passwd, 0, sizeof(da.passwd));
 	if (pamerr == PAM_SUCCESS)
 	  {
-	    free(current_user);
-	    exit(0);
+	     free(current_user);
+	     exit(0);
 	  }
 	free(current_user);
 	exit(-1);
