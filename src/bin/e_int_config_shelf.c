@@ -26,16 +26,13 @@ e_int_config_shelf(E_Container *con)
    E_Config_Dialog_View *v;
    
    v = E_NEW(E_Config_Dialog_View, 1);
-   if (v) 
-     {
-	v->create_cfdata = _create_data;
-	v->free_cfdata = _free_data;
-	v->basic.create_widgets = _basic_create_widgets;
-	
-	cfd = e_config_dialog_new(con, _("Shelf Settings"), "enlightenment/shelf", 0, v, NULL);
-	return cfd;
-     }
-   return NULL;
+   if (!v) return NULL; 
+   v->create_cfdata = _create_data;
+   v->free_cfdata = _free_data;
+   v->basic.create_widgets = _basic_create_widgets;
+
+   cfd = e_config_dialog_new(con, _("Shelf Settings"), "enlightenment/shelf", 0, v, NULL);
+   return cfd;
 }
 
 static void *
