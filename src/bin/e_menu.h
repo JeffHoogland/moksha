@@ -171,6 +171,7 @@ EAPI E_Menu_Item *e_menu_item_nth(E_Menu *m, int n);
 EAPI int          e_menu_item_num_get(E_Menu_Item *mi);
 EAPI void         e_menu_item_icon_file_set(E_Menu_Item *mi, const char *icon);
 EAPI void         e_menu_item_icon_edje_set(E_Menu_Item *mi, const char *icon, const char *key);
+EAPI void         e_menu_item_icon_object_set(E_Menu_Item *mi, Evas_Object *obj);
 EAPI void         e_menu_item_label_set(E_Menu_Item *mi, const char *label);
 EAPI void         e_menu_item_submenu_set(E_Menu_Item *mi, E_Menu *sub);
 EAPI void         e_menu_item_separator_set(E_Menu_Item *mi, int sep);

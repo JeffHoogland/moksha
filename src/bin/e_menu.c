@@ -584,6 +584,19 @@ e_menu_item_icon_edje_set(E_Menu_Item *mi, const char *icon, const char *key)
    mi->menu->changed = 1;
 }
 
+EAPI void      
+e_menu_item_icon_object_set(E_Menu_Item *mi, Evas_Object *obj)
+{
+   E_OBJECT_CHECK(mi);
+   E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
+   if (((mi->icon_object) && (obj) && (mi->icon_object == obj)) ||
+       ((!mi->icon_object) && (!obj)))
+     return;
+   mi->icon_object = obj;
+   mi->changed = 1;
+   mi->menu->changed = 1;
+}
+
 EAPI void
 e_menu_item_label_set(E_Menu_Item *mi, const char *label)
 {
@@ -1167,7 +1180,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     evas_object_pass_events_set(o, 1);
 	     e_box_pack_end(mi->container_object, o);
 	  }
-	if (mi->icon)
+	if (mi->icon || mi->icon_object)
 	  {
 	     int icon_w, icon_h;
 	     
@@ -1181,24 +1194,36 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     else
 	       evas_object_del(o);
 	     
-	     if (!mi->icon_key)
+	     if (mi->icon_object)
 	       {
 		  o = e_icon_add(mi->menu->evas);
-		  mi->icon_object = o;
-		  e_icon_file_set(o, mi->icon);
+		  e_icon_object_set(o, mi->icon_object);
 		  e_icon_fill_inside_set(o, 1);
-		  e_icon_size_get(mi->icon_object, &icon_w, &icon_h);
-	       }
-	     else
-	       {
-		  Evas_Coord iww, ihh;
-		  
-		  o = edje_object_add(mi->menu->evas);
+		  e_icon_size_get(o, &icon_w, &icon_h);
+
 		  mi->icon_object = o;
-		  edje_object_file_set(o, mi->icon, mi->icon_key);
-		  edje_object_size_max_get(o, &iww, &ihh);
-		  icon_w = iww;
-		  icon_h = ihh;
+	       }
+	     else if (mi->icon)
+	       {
+		  if (!mi->icon_key)
+		    {
+		       o = e_icon_add(mi->menu->evas);
+		       mi->icon_object = o;
+		       e_icon_file_set(o, mi->icon);
+		       e_icon_fill_inside_set(o, 1);
+		       e_icon_size_get(mi->icon_object, &icon_w, &icon_h);
+		    }
+		  else
+		    {
+		       Evas_Coord iww, ihh;
+
+		       o = edje_object_add(mi->menu->evas);
+		       mi->icon_object = o;
+		       edje_object_file_set(o, mi->icon, mi->icon_key);
+		       edje_object_size_max_get(o, &iww, &ihh);
+		       icon_w = iww;
+		       icon_h = ihh;
+		    }
 	       }
 	     evas_object_pass_events_set(o, 1);
 	     evas_object_show(o);
@@ -1220,6 +1245,9 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	       }
 	     else
 	       {
+		  int icon_w, icon_h;
+	     
+		  o = edje_object_add(mi->menu->evas);
 		  e_icon_size_get(mi->icon_object, &icon_w, &icon_h);
 		  mi->icon_w = icon_w;
 		  mi->icon_h = icon_h;
@@ -1401,6 +1429,7 @@ _e_menu_items_layout_update(E_Menu *m)
 	mi = l->data;
 	
 	if (mi->icon) icons_on = 1;
+	if (mi->icon_object) icons_on = 1;
 	if (mi->label) labels_on = 1;
 	if (mi->submenu) submenus_on = 1;
 	if (mi->check) toggles_on = 1;
