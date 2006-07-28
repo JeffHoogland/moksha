@@ -36,6 +36,9 @@ Some of the things (in very short form) that need to be done to E17...
 * BUG: Hiding the label of e_widget_slider causes the slider line to disappear
 * BUG: Window locks should be honored by the pager (e.g. Lock me from
   changing position)
+* BUG: If the window is resized manually when it is maximized, the maximize state
+  has to be droped to non-maximized. Otherwise on E restart window gets maximized
+  again
 ]]]
 
 [[[
