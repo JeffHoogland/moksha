@@ -370,7 +370,6 @@ _import_cb_close(void *data, void *data2)
 static void 
 _import_cb_ok(void *data, void *data2) 
 {
-   E_Fm_File *f;
    Evas *evas;
    E_Win *win;
    Bg_Import_Window *import;

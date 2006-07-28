@@ -548,7 +548,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
   Evas_Object *ot;
   Evas_Object *ob, *of;
-  E_Radio_Group *rg;
 
   cfdata->evas = evas;
 
