@@ -1375,7 +1375,8 @@ _e_fm2_icon_deselect(E_Fm2_Icon *ic)
 static const char *
 _e_fm2_icon_desktop_url_eval(const char *val)
 {
-   char *path, *p, *s;
+   const char *s;
+   char *path, *p;
    
    if (strlen(val) < 6) return NULL;
    if (strncmp(val, "file:", 5)) return NULL;

@@ -66,9 +66,9 @@ struct _E_Fm2_Config
    /* the background - if any, and how to handle it */
    /* FIXME: not implemented yet */
    struct {
-      char            *background;
-      char            *frame;
-      char            *icons;
+      const char      *background;
+      const char      *frame;
+      const char      *icons;
       unsigned char    fixed;
    } theme;
    /* used internally only - used to save to disk only and laod from disk */
