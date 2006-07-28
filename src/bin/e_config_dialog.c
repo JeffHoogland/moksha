@@ -154,7 +154,6 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 	     e_dialog_button_disable_num_set(cfd->dia, 1, 1);
 	  }
      }
-   /* FIXME: This wont catch the window border close button, but that is probably not cancelable. */
    e_dialog_button_add(cfd->dia, _("Close"), NULL, _e_config_dialog_cb_close, cfd);
    if (!pdia)
      {
