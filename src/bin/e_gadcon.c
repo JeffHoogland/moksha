@@ -1742,7 +1742,7 @@ e_gadcon_layout_orientation_get(Evas_Object *obj)
 {
    E_Smart_Data *sd;
 
-   if (!obj) return;
+   if (!obj) return 0;
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
