@@ -35,6 +35,7 @@ e_int_config_shelf(E_Container *con)
 	cfd = e_config_dialog_new(con, _("Shelf Settings"), "enlightenment/shelf", 0, v, NULL);
 	return cfd;
      }
+   return NULL;
 }
 
 static void *
@@ -246,7 +247,6 @@ _cb_dialog_yes(void *data)
 {
    E_Config_Dialog_Data *cfdata;
    E_Shelf *es;
-   E_Config_Shelf *cfg;
    
    cfdata = data;
    if (!cfdata) return;
