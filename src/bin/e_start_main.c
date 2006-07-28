@@ -6,7 +6,6 @@
 
 static void env_set(const char *var, const char *val);
 static int prefix_determine(char *argv0);
-static const char *prefix_get(void);
 
 static void
 env_set(const char *var, const char *val)
@@ -94,12 +93,6 @@ prefix_determine(char *argv0)
    _exe_path = NULL;
    _prefix_fallbacks();
    return 0;
-}
-
-static const char *
-prefix_get(void)
-{
-   return _prefix_path;
 }
 
 static int

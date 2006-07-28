@@ -19,7 +19,6 @@ e_widget_scrollframe_pan_add(Evas *evas, Evas_Object *pan, void (*pan_set) (Evas
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
-   Evas_Coord mw, mh;
    
    obj = e_widget_add(evas);
    
