@@ -114,6 +114,7 @@ _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj, void *event_inf
    E_Widget_Data *wd;
    Evas_List *selected;
    E_Fm2_Icon_Info *ici;
+   const char *realpath;
    char buf[4096];
    
    wd = data;
@@ -121,8 +122,16 @@ _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj, void *event_inf
    if (!selected) return;
    ici = selected->data;
    E_FREE(wd->path);
-   snprintf(buf, sizeof(buf), "%s/%s",
-	    e_fm2_real_path_get(wd->o_files_fm), ici->file);
+   realpath = e_fm2_real_path_get(wd->o_files_fm);
+   if (!strcmp(realpath, "/"))
+     {
+	snprintf(buf, sizeof(buf), "/%s", ici->file);
+     }
+   else
+     {
+	snprintf(buf, sizeof(buf), "%s/%s",
+		 realpath, ici->file);
+     }
    wd->path = strdup(buf);
    e_widget_entry_text_set(wd->o_entry, ici->file);
    evas_list_free(selected);
