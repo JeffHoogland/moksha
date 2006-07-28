@@ -13,6 +13,8 @@
  * - clean up the add app functions. To much similar code.
  */
 
+#define DEBUG 0
+
 /* local subsystem functions */
 typedef struct _E_App_Change_Info E_App_Change_Info;
 typedef struct _E_App_Callback    E_App_Callback;
@@ -58,7 +60,9 @@ static int       _e_app_cb_scan_cache_timer(void *data);
 static E_App    *_e_app_cache_new          (E_App_Cache *ac, const char *path, int scan_subdirs);
 static int       _e_app_exe_valid_get      (const char *exe);
 static char     *_e_app_localized_val_get (Eet_File *ef, const char *lang, const char *field, int *size);
+#if DEBUG
 static void      _e_app_print(const char *path, Ecore_File_Event event);
+#endif
 static void      _e_app_check_order(const char *file);
 static int       _e_app_order_contains(E_App *a, const char *file);
 
@@ -1225,7 +1229,7 @@ e_app_fields_save(E_App *a)
    char buf[PATH_MAX];
    const char *lang;
    unsigned char tmp[1];
-   int img;
+//   int img;
 
 //   if ((!a->path) || (!ecore_file_exists(a->path)))
 //     {
@@ -1715,7 +1719,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
    if (!app->scanned)
      return;
 
-#if 0
+#if DEBUG
    _e_app_print(path, event);
 #endif
 
@@ -2389,6 +2393,7 @@ _e_app_exe_valid_get(const char *exe)
    return 1;
 }
 
+#if DEBUG
 static void
 _e_app_print(const char *path, Ecore_File_Event event)
 {
@@ -2417,6 +2422,7 @@ _e_app_print(const char *path, Ecore_File_Event event)
 	 break;
      }
 }
+#endif
 
 static void
 _e_app_check_order(const char *file)
