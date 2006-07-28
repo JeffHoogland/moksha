@@ -12,7 +12,7 @@ EAPI int                   e_thumb_init(void);
 EAPI int                   e_thumb_shutdown(void);
 
 EAPI Evas_Object          *e_thumb_icon_add(Evas *evas);
-EAPI void                  e_thumb_icon_file_set(Evas_Object *obj, char *file, char *key);
+EAPI void                  e_thumb_icon_file_set(Evas_Object *obj, const char *file, const char *key);
 EAPI void                  e_thumb_icon_size_set(Evas_Object *obj, int w, int h);
 EAPI void                  e_thumb_icon_begin(Evas_Object *obj);
 EAPI void                  e_thumb_icon_end(Evas_Object *obj);

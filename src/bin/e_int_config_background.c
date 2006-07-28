@@ -279,7 +279,6 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
    char *homedir;
    
    const char *f;
-   char *c;
    int selnum = -1;
    int i = 0;
 
@@ -299,7 +298,6 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
    i++;
    
    f = e_theme_edje_file_get("base/theme/backgrounds", "desktop/background");
-   c = strdup(f);
    if (edje_object_file_set(o, f, "desktop/background"))
      {
 	Evas_Object *ic = NULL;
@@ -396,7 +394,6 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
      }
    evas_list_free(bg);
    if (bg_dirs) e_path_dir_list_free(bg_dirs);
-   free(c);
    cfd->data = im;
    e_widget_ilist_go(il);
    if (selnum >= 0)

@@ -9,15 +9,15 @@ struct _E_Thumb
 {
    int   objid;
    int   w, h;
-   char *file;
-   char *key;
+   const char *file;
+   const char *key;
    unsigned char queued : 1;
    unsigned char busy : 1;
    unsigned char done : 1;
 };
 
 /* local subsystem functions */
-static void _e_thumb_gen_begin(int objid, char *file, char *key, int w, int h);
+static void _e_thumb_gen_begin(int objid, const char *file, const char *key, int w, int h);
 static void _e_thumb_gen_end(int objid);
 static void _e_thumb_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_thumb_hash_add(int objid, Evas_Object *obj);
@@ -90,16 +90,18 @@ e_thumb_icon_add(Evas *evas)
 }
 
 EAPI void
-e_thumb_icon_file_set(Evas_Object *obj, char *file, char *key)
+e_thumb_icon_file_set(Evas_Object *obj, const char *file, const char *key)
 {
    E_Thumb *eth;
    
    eth = evas_object_data_get(obj, "e_thumbdata");
    if (!eth) return;
-   E_FREE(eth->file);
-   E_FREE(eth->key);
-   if (file) eth->file = strdup(file);
-   if (key) eth->key = strdup(key);
+   if (eth->file) evas_stringshare_del(eth->file);
+   eth->file = NULL;
+   if (eth->key) evas_stringshare_del(eth->key);
+   eth->key = NULL;
+   if (file) eth->file = evas_stringshare_add(file);
+   if (key) eth->key = evas_stringshare_add(key);
 }
 
 EAPI void
@@ -235,7 +237,7 @@ e_thumb_client_del(Ecore_Ipc_Event_Client_Del *e)
 
 /* local subsystem functions */
 static void
-_e_thumb_gen_begin(int objid, char *file, char *key, int w, int h)
+_e_thumb_gen_begin(int objid, const char *file, const char *key, int w, int h)
 {
    char *buf;
    int l1, l2;
@@ -288,8 +290,8 @@ _e_thumb_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info)
      }
    if (eth->queued)
      _thumb_queue = evas_list_remove(_thumb_queue, eth);
-   E_FREE(eth->file);
-   E_FREE(eth->key);
+   if (eth->file) evas_stringshare_del(eth->file);
+   if (eth->key) evas_stringshare_del(eth->key);
    free(eth);
 }
 
