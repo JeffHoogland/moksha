@@ -80,6 +80,20 @@ e_widget_button_label_set(Evas_Object *obj, const char *label)
    edje_object_part_text_set(wd->o_button, "label", label);
 }
 
+EAPI void
+e_widget_button_icon_set(Evas_Object *obj, Evas_Object *icon)
+{
+   E_Widget_Data *wd;
+
+   wd = e_widget_data_get(obj);
+   wd->o_icon = icon;
+   edje_object_part_swallow(wd->o_button, "icon_swallow", icon);
+   edje_object_signal_emit(wd->o_button, "icon_visible", "");
+   edje_object_message_signal_process(wd->o_button);
+   evas_object_show(icon);
+   e_widget_sub_object_add(obj, icon);
+}
+
 static void
 _e_wid_del_hook(Evas_Object *obj)
 {

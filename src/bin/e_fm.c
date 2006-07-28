@@ -1525,10 +1525,10 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
    
    ic = data;
    ev = event_info;
-   if ((ev->button == 1) &&(ev->flags & EVAS_BUTTON_TRIPLE_CLICK))
+   if ((ev->button == 1) && (ev->flags & EVAS_BUTTON_TRIPLE_CLICK))
      {
      }
-   else if ((ev->button == 1) &&(ev->flags & EVAS_BUTTON_DOUBLE_CLICK))
+   else if ((ev->button == 1) && (ev->flags & EVAS_BUTTON_DOUBLE_CLICK))
      {
 	/* if its a directory && open dirs in-place is set then change the dir
 	 * to be the dir + file */

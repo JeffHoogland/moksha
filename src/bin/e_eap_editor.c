@@ -8,12 +8,13 @@ typedef struct _E_App_Edit E_App_Edit;
 struct _E_App_Edit
 {
    E_App       *eap;
+   Evas        *evas;
 
    Evas_Object *img;
    Evas_Object *img_widget;
    int          img_set;
 
-   E_Config_Dialog_Data *cfdata;
+   E_Config_Dialog *cfd;
 };
 
 struct _E_Config_Dialog_Data
@@ -47,8 +48,12 @@ static int            _e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, E_Confi
 static int            _e_eap_edit_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data);
 static Evas_Object   *_e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *data);
 static Evas_Object   *_e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *data);
-static void           _e_eap_edit_select_cb(Evas_Object *obj, char *file, void *data);
-static void           _e_eap_edit_hilite_cb(Evas_Object *obj, char *file, void *data);
+static void           _e_eap_editor_cb_icon_select(void *data1, void *data2);
+static void           _e_eap_edit_select_cb(void *data, Evas_Object *obj);
+static void           _e_eap_edit_change_cb(void *data, Evas_Object *obj);
+static void           _e_eap_edit_cb_icon_select_del(void *obj);
+static void           _e_eap_edit_cb_icon_select_ok(void *data, E_Dialog *dia);
+static void           _e_eap_edit_cb_icon_select_cancel(void *data, E_Dialog *dia);
 
 #define IFDUP(src, dst) if (src) dst = strdup(src); else dst = NULL
 
@@ -57,7 +62,6 @@ static void           _e_eap_edit_hilite_cb(Evas_Object *obj, char *file, void *
 EAPI void
 e_eap_edit_show(E_Container *con, E_App *a)
 {
-   E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    E_App_Edit *editor;
 
@@ -65,24 +69,26 @@ e_eap_edit_show(E_Container *con, E_App *a)
 
    editor = E_NEW(E_App_Edit, 1);
    if (!editor) return;
+   v = E_NEW(E_Config_Dialog_View, 1);
+   if (!v)
+     {
+	free(editor);
+	return;
+     }
 
-   editor->eap = a;
    editor->img = NULL;
+   editor->eap = a;
    e_object_ref(E_OBJECT(editor->eap));
 
-   v = E_NEW(E_Config_Dialog_View, 1);
-   if (v)
-     {
-	/* methods */
-	v->create_cfdata           = _e_eap_edit_create_data;
-	v->free_cfdata             = _e_eap_edit_free_data;
-	v->basic.apply_cfdata      = _e_eap_edit_basic_apply_data;
-	v->basic.create_widgets    = _e_eap_edit_basic_create_widgets;
-	v->advanced.apply_cfdata   = _e_eap_edit_advanced_apply_data;
-	v->advanced.create_widgets = _e_eap_edit_advanced_create_widgets;
-	/* create config diaolg for NULL object/data */
-	cfd = e_config_dialog_new(con, _("Eap Editor"), NULL, 0, v, editor);
-     }
+   /* methods */
+   v->create_cfdata           = _e_eap_edit_create_data;
+   v->free_cfdata             = _e_eap_edit_free_data;
+   v->basic.apply_cfdata      = _e_eap_edit_basic_apply_data;
+   v->basic.create_widgets    = _e_eap_edit_basic_create_widgets;
+   v->advanced.apply_cfdata   = _e_eap_edit_advanced_apply_data;
+   v->advanced.create_widgets = _e_eap_edit_advanced_create_widgets;
+   /* create config diaolg for NULL object/data */
+   editor->cfd = e_config_dialog_new(con, _("Eap Editor"), NULL, 0, v, editor);
 }
 
 /* local subsystem functions */
@@ -242,6 +248,7 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dial
    Evas_Object *entry;
 
    editor = data->editor;
+   editor->evas = evas;
    eap = editor->eap;
 
    ol = e_widget_table_add(evas, 0);
@@ -251,7 +258,7 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dial
    if ((editor->img_set) && (data->image))
      {
 	if (editor->img) evas_object_del(editor->img);
-        editor->img = e_icon_add(evas);
+	editor->img = e_icon_add(evas);
 	e_icon_file_set(editor->img, data->image);
 	e_icon_fill_inside_set(editor->img, 1);
      }
@@ -266,10 +273,10 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dial
      }
 
    if (editor->img_widget) evas_object_del(editor->img_widget);
-   editor->img_widget = e_widget_iconsel_add(evas, editor->img, 48, 48,
-					     &(data->image));
-   e_widget_iconsel_select_callback_add(editor->img_widget, _e_eap_edit_select_cb, editor);
-   e_widget_iconsel_hilite_callback_add(editor->img_widget, _e_eap_edit_hilite_cb, editor);
+   editor->img_widget = e_widget_button_add(evas, "", NULL,
+					    _e_eap_editor_cb_icon_select, data, NULL);
+   e_widget_button_icon_set(editor->img_widget, editor->img);
+   e_widget_min_size_set(editor->img_widget, 48, 48);
    e_widget_frametable_object_append(o, editor->img_widget,
 				     0, 0, 1, 1,
 				     1, 1, 1, 1);
@@ -392,22 +399,102 @@ _e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_D
    return ol;
 }
 
-void
-_e_eap_edit_select_cb(Evas_Object *obj, char *file, void *data)
+static void
+_e_eap_editor_cb_icon_select(void *data1, void *data2)
 {
-   E_App_Edit *editor;
+   /* FIXME: Only one icon selection dialog! */
+   E_Config_Dialog_Data *cfdata;
+   E_Dialog *dia;
+   Evas_Object *o;
+   Evas_Coord mw, mh;
 
-   editor = data;
-   editor->img_set = 1;
-   printf("selected: %s\n", file);
+   cfdata = data1;
+   dia = e_dialog_new(cfdata->editor->cfd->con);
+   if (!dia) return;
+   e_dialog_title_set(dia, _("Select An Icon"));
+   dia->data = cfdata;
+   e_object_del_attach_func_set(E_OBJECT(dia), _e_eap_edit_cb_icon_select_del);
+
+   o = e_widget_fsel_add(dia->win->evas, "~/", "/", NULL, NULL,
+			 _e_eap_edit_select_cb, cfdata,
+			 _e_eap_edit_change_cb, cfdata);
+   evas_object_show(o);
+   e_widget_min_size_get(o, &mw, &mh);
+   e_dialog_content_set(dia, o, mw, mh);
+
+   /* buttons at the bottom */
+   e_dialog_button_add(dia, "OK", NULL, _e_eap_edit_cb_icon_select_ok, cfdata);
+   e_dialog_button_add(dia, "Cancel", NULL, _e_eap_edit_cb_icon_select_cancel, cfdata);
+   e_dialog_resizable_set(dia, 1);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
+   e_win_resize(dia->win, 400, 300);
 }
 
-void
-_e_eap_edit_hilite_cb(Evas_Object *obj, char *file, void *data)
+static void
+_e_eap_edit_select_cb(void *data, Evas_Object *obj)
 {
-   E_App_Edit *editor;
+   E_Config_Dialog_Data *cfdata;
 
-   editor = data;
-   editor->img_set = 1;
-   printf("hilited: %s\n", file);
+   cfdata = data;
+}
+
+static void
+_e_eap_edit_change_cb(void *data, Evas_Object *obj)
+{
+   E_Config_Dialog_Data *cfdata;
+   const char *file;
+
+   cfdata = data;
+   file = e_widget_fsel_selection_path_get(obj);
+
+   E_FREE(cfdata->image);
+   if (file) cfdata->image = strdup(file);
+}
+
+static void
+_e_eap_edit_cb_icon_select_del(void *obj)
+{
+   E_Dialog *dia;
+   E_Config_Dialog_Data *cfdata;
+
+   dia = obj;
+   cfdata = dia->data;
+   cfdata->editor->img_set = 0;
+   e_widget_focused_object_clear(cfdata->editor->img_widget);
+}
+
+static void
+_e_eap_edit_cb_icon_select_ok(void *data, E_Dialog *dia)
+{
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = data;
+   if (cfdata->image)
+     {
+	cfdata->editor->img_set = 1;
+	if (cfdata->editor->img) evas_object_del(cfdata->editor->img);
+	cfdata->editor->img = e_icon_add(cfdata->editor->evas);
+	e_icon_file_set(cfdata->editor->img, cfdata->image);
+	e_icon_fill_inside_set(cfdata->editor->img, 1);
+	e_widget_button_icon_set(cfdata->editor->img_widget, cfdata->editor->img);
+     }
+   else
+     cfdata->editor->img_set = 0;
+
+   e_widget_focused_object_clear(cfdata->editor->img_widget);
+   e_object_del_attach_func_set(E_OBJECT(dia), NULL);
+   e_object_del(E_OBJECT(dia));
+}
+
+static void
+_e_eap_edit_cb_icon_select_cancel(void *data, E_Dialog *dia)
+{
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = data;
+   cfdata->editor->img_set = 0;
+   e_widget_focused_object_clear(cfdata->editor->img_widget);
+   e_object_del_attach_func_set(E_OBJECT(dia), NULL);
+   e_object_del(E_OBJECT(dia));
 }
