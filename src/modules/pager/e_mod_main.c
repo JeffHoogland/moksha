@@ -1286,6 +1286,7 @@ _pager_window_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_i
    ev = event_info;
    pw = data;
    if (!pw) return;
+   if (pw->border->lock_user_location) return;
    /* FIXME: make this configurable */
    if ((ev->button == 1) || (ev->button == 2))
      {
