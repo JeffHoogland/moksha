@@ -754,7 +754,7 @@ _e_test_internal(E_Container *con)
    e_win_resize(dia->win, 400, 300); 
    
 }
-#elif 1
+#elif 0
 static void
 _e_test_cb_changed(void *data, Evas_Object *obj)
 {

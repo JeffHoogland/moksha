@@ -46,6 +46,8 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
+* fm2 (new efm) needs some visual theme indicator while it is still scanning
+  ans sorting dir entries and icons so you know it's busy.
 * if we want to do icons on the desktop - and as part of efm, i am thinking
   that we have little choice but to implement a .desktop file loader. this
   is not to hard - it's the xml jungle of the system menus that is sucky. the
@@ -83,6 +85,8 @@ Some of the things (in very short form) that need to be done to E17...
   CLEANUPS
 -------------------------------------------------------------------------------
 
+* deskclock's pam profile should be configurable as system-auth doesn't
+  always work - maybe have some auto-detect and scan of pam files :)
 * If a user has set a border type on a window, don't bother to check for
   changes.
 * keybindings dialog doesn't conform its formatting or datatype naming to
