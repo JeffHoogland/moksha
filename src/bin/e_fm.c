@@ -474,7 +474,7 @@ e_fm2_pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 static const char *
 _e_fm2_dev_path_map(const char *dev, const char *path)
 {
-   char buf[4096] = "", *s;
+   char buf[4096] = "", *s, *ss;
    int len;
    
    /* map a device name to a mount point/path on the os (and append path) */
@@ -529,7 +529,16 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
    s = buf;
    while (*s)
      {
-	if ((s[0] == '/') && (s[1] == '/')) strcpy(s, s + 1);
+	if ((s[0] == '/') && (s[1] == '/'))
+	  {
+	     ss = s;
+	     do
+	       {
+		  ss[0] = ss[1];
+		  ss++;
+	       }
+	     while (*ss);
+	  }
 	s++;
      }
    /* strip out slashes at the end - unless its just "/" */
