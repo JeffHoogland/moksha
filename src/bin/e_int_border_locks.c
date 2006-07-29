@@ -147,41 +147,38 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
+   int flag;
    /* Actually take our cfdata settings and apply them in real life */
    
-   if (cfdata->do_what_i_say)
-     {
-	cfdata->border->lock_client_location = 1;
-	cfdata->border->lock_client_size = 1;
-	cfdata->border->lock_client_stacking = 1;
-	cfdata->border->lock_client_iconify = 1;
-	cfdata->border->lock_client_desk = 0;
-	cfdata->border->lock_client_sticky = 1;
-	cfdata->border->lock_client_shade = 1;
-	cfdata->border->lock_client_maximize = 1;
-	cfdata->border->lock_client_fullscreen = 1;
-     }
-   if (cfdata->protect_from_me)
-     {
-	cfdata->border->lock_user_location = 1;
-	cfdata->border->lock_user_size = 1;
-	cfdata->border->lock_user_stacking = 1;
-	cfdata->border->lock_user_iconify = 1;
-	cfdata->border->lock_user_desk = 0;
-	cfdata->border->lock_user_sticky = 1;
-	cfdata->border->lock_user_shade = 1;
-	cfdata->border->lock_user_maximize = 1;
-	cfdata->border->lock_user_fullscreen = 1;
-     }
-   if (cfdata->important_window)
-     {
-	cfdata->border->lock_close = 1;
-	cfdata->border->lock_life = 1;
-     }
-   if (cfdata->keep_my_border)
-     {
-	cfdata->border->lock_border = 1;
-     }
+   flag = cfdata->do_what_i_say;
+   cfdata->border->lock_client_location = flag;
+   cfdata->border->lock_client_size = flag;
+   cfdata->border->lock_client_stacking = flag;
+   cfdata->border->lock_client_iconify = flag;
+   cfdata->border->lock_client_desk = 0;
+   cfdata->border->lock_client_sticky = flag;
+   cfdata->border->lock_client_shade = flag;
+   cfdata->border->lock_client_maximize = flag;
+   cfdata->border->lock_client_fullscreen = flag;
+
+   flag = cfdata->protect_from_me;
+   cfdata->border->lock_user_location = flag;
+   cfdata->border->lock_user_size = flag;
+   cfdata->border->lock_user_stacking = flag;
+   cfdata->border->lock_user_iconify = flag;
+   cfdata->border->lock_user_desk = 0;
+   cfdata->border->lock_user_sticky = flag;
+   cfdata->border->lock_user_shade = flag;
+   cfdata->border->lock_user_maximize = flag;
+   cfdata->border->lock_user_fullscreen = flag;
+
+   flag = cfdata->important_window;
+   cfdata->border->lock_close = flag;
+   cfdata->border->lock_life = flag;
+   
+   flag = cfdata->keep_my_border;
+   cfdata->border->lock_border = flag;
+   
    /* FIXME: need to check if the remember stuff will actually work or not
     * (see e_int_border_remember.c where it checks and warns) */
    if (cfdata->remember_locks)
