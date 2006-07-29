@@ -6657,6 +6657,12 @@ _e_border_resize_end(E_Border *bd)
      }
    e_resize_end();
    resize = NULL;
+   
+   /* If this border was maximized, we need to unset Maximized state or
+    * on restart, E still thinks it's maximized */
+   if (bd->maximized != E_MAXIMIZE_NONE) 
+	e_hints_window_maximized_set(bd, bd->maximized & E_MAXIMIZE_NONE,
+				     bd->maximized & E_MAXIMIZE_NONE);
    return 1;
 }
 
