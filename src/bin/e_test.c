@@ -754,11 +754,11 @@ _e_test_internal(E_Container *con)
    e_win_resize(dia->win, 400, 300); 
    
 }
-#elif 0
+#elif 1
 static void
 _e_test_cb_changed(void *data, Evas_Object *obj)
 {
-   printf("CHANGED \"%s\"\n", e_widget_fsel_selection_path_get(obj));
+//   printf("CHANGED \"%s\"\n", e_widget_fsel_selection_path_get(obj));
 }
     
 static void

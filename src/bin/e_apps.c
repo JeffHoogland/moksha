@@ -2255,7 +2255,7 @@ _e_app_cb_scan_cache_timer(void *data)
 	ecore_timer_del(sc->timer);
 	evas_stringshare_del(sc->path);
 	free(sc);
-	printf("Cache scan finish.\n");
+//	printf("Cache scan finish.\n");
 	return 0;
      }
    snprintf(buf, sizeof(buf), "%s/%s", sc->path, s);

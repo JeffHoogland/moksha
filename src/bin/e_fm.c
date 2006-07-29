@@ -39,12 +39,20 @@ struct _E_Fm2_Smart_Data
    Evas_List        *queue;
    Ecore_Idler      *scan_idler;
    Ecore_Timer      *scan_timer;
+   Ecore_Timer      *sort_idler;
    Ecore_Job        *scroll_job;
    Ecore_Job        *resize_job;
    DIR              *dir;
    unsigned char     iconlist_changed : 1;
 
    E_Fm2_Config     *config;
+
+   struct {
+      Evas_Object      *obj, *obj2;
+      Evas_List        *last_insert;
+      Evas_List        **list_index;
+      int              iter;
+   } tmp;
 };
 
 struct _E_Fm2_Region
@@ -94,6 +102,7 @@ static void _e_fm2_icon_unrealize(E_Fm2_Icon *ic);
 static int _e_fm2_icon_visible(E_Fm2_Icon *ic);
 static void _e_fm2_icon_label_set(E_Fm2_Icon *ic, Evas_Object *obj);
 static void _e_fm2_icon_icon_set(E_Fm2_Icon *ic);
+static void _e_fm2_icon_thumb(E_Fm2_Icon *ic);
 static void _e_fm2_icon_select(E_Fm2_Icon *ic);
 static void _e_fm2_icon_deselect(E_Fm2_Icon *ic);
 static int _e_fm2_icon_desktop_load(E_Fm2_Icon *ic);
@@ -113,6 +122,7 @@ static void _e_fm2_cb_resize_job(void *data);
 static int _e_fm2_cb_icon_sort(void *data1, void *data2);
 static int _e_fm2_cb_scan_idler(void *data);
 static int _e_fm2_cb_scan_timer(void *data);
+static int _e_fm2_cb_sort_idler(void *data);
 
 static void _e_fm2_obj_icons_place(E_Fm2_Smart_Data *sd);
 
@@ -229,7 +239,8 @@ e_fm2_path_set(Evas_Object *obj, char *dev, char *path)
    sd->path = evas_stringshare_add(path);
    sd->realpath = _e_fm2_dev_path_map(sd->dev, sd->path);
    _e_fm2_scan_start(obj);
-   evas_object_smart_callback_call(obj, "changed", NULL);
+   evas_object_smart_callback_call(obj, "dir_changed", NULL);
+   sd->tmp.iter = 0;
 }
 
 EAPI void
@@ -535,7 +546,8 @@ static void
 _e_fm2_file_add(Evas_Object *obj, char *file)
 {
    E_Fm2_Smart_Data *sd;
-   E_Fm2_Icon *ic;
+   E_Fm2_Icon *ic, *ic2;
+   Evas_List *l;
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
@@ -543,7 +555,18 @@ _e_fm2_file_add(Evas_Object *obj, char *file)
    ic = _e_fm2_icon_new(sd, file);
    if (ic)
      {
-	sd->queue = evas_list_append(sd->queue, ic);
+	/* insertion sort it here to spread the sort load into idle time */
+	for (l = sd->queue; l; l = l->next)
+	  {
+	     ic2 = l->data;
+	     if (_e_fm2_cb_icon_sort(ic, ic2) < 0)
+	       {
+		  sd->queue = evas_list_prepend_relative_list(sd->queue, ic, l);
+		  break;
+	       }
+	  }
+	if (!l) sd->queue = evas_list_append(sd->queue, ic);
+	sd->tmp.last_insert = NULL;
 	sd->iconlist_changed = 1;
      }
 }
@@ -598,6 +621,16 @@ _e_fm2_scan_stop(Evas_Object *obj)
 	closedir(sd->dir);
 	sd->dir = NULL;
      }
+   if (sd->tmp.obj)
+     {
+	evas_object_del(sd->tmp.obj);
+	sd->tmp.obj = NULL;
+     }
+   if (sd->tmp.obj2)
+     {
+	evas_object_del(sd->tmp.obj2);
+	sd->tmp.obj2 = NULL;
+     }
    if (sd->scan_idler)
      {
 	ecore_idler_del(sd->scan_idler);
@@ -608,6 +641,12 @@ _e_fm2_scan_stop(Evas_Object *obj)
 	ecore_timer_del(sd->scan_timer);
 	sd->scan_timer = NULL;
      }
+   if (sd->sort_idler)
+     {
+	ecore_idler_del(sd->sort_idler);
+	sd->sort_idler = NULL;
+     }
+   E_FREE(sd->tmp.list_index);
    _e_fm2_queue_free(obj);
 }
 
@@ -616,21 +655,56 @@ _e_fm2_queue_process(Evas_Object *obj)
 {
    E_Fm2_Smart_Data *sd;
    E_Fm2_Icon *ic, *ic2;
-   Evas_List *l;
-   int added = 0;
+   Evas_List *l, **ll;
+   int added = 0, i, p0, p1, n, v;
    double t;
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if (!sd->queue) return;
-/*   double tt = ecore_time_get(); */
-/*   int queued = evas_list_count(sd->queue); */
+//   double tt = ecore_time_get();
+//   int queued = evas_list_count(sd->queue);
    /* take unsorted and insert into the icon list - reprocess regions */
    t = ecore_time_get();
-   /* pre-sort the queue - this will speed up insertion sort as we can
-    * make some assumptions */
-   sd->queue = evas_list_sort(sd->queue, evas_list_count(sd->queue), _e_fm2_cb_icon_sort);
-   l = sd->icons;
+   if (!sd->tmp.last_insert)
+     {
+#if 1
+	n = evas_list_count(sd->icons);
+	E_FREE(sd->tmp.list_index);
+	if (n > 0)
+	  sd->tmp.list_index = malloc(n * sizeof(Evas_List *));
+	if (sd->tmp.list_index)
+	  {
+	     ll = sd->tmp.list_index;
+	     for (l = sd->icons; l; l = l->next)
+	       {
+		  *ll = l;
+		  ll++;
+	       }
+	     /* binary search first queue */
+	     ic = sd->queue->data;
+	     p0 = 0; p1 = n;
+	     i = (p0 + p1) / 2;
+	     ll = sd->tmp.list_index;
+	     do
+	       {
+		  ic2 = ll[i]->data;
+		  v = _e_fm2_cb_icon_sort(ic, ic2);
+		  if (v < 0) /* ic should go before ic2 */
+		    p1 = i;
+		  else /* ic should go at or after ic2 */
+		    p0 = i;
+		  i = (p0 + p1) / 2;
+		  l = ll[i];
+	       }
+	     while ((p1 - p0) > 1);
+	  }
+	else
+#endif	  
+	  l = sd->icons;
+     }
+   else
+     l = sd->tmp.last_insert;
    while (sd->queue)
      {
 	
@@ -648,28 +722,29 @@ _e_fm2_queue_process(Evas_Object *obj)
 	     if (_e_fm2_cb_icon_sort(ic, ic2) < 0)
 	       {
 		  sd->icons = evas_list_prepend_relative_list(sd->icons, ic, l);
+		  sd->tmp.last_insert = l;
 		  break;
 	       }
 	  }
 	if (!l)
-	  sd->icons = evas_list_append(sd->icons, ic);
-	added++;
-	/* every 5 additions - check to see if we have spent too long adding */
-	if ((added % 5) == 0)
 	  {
-	     /* if we spent more than 1/10th of a second inserting - give up
-	      * for now */
-	     if ((ecore_time_get() - t) > 0.05) break;
+	     sd->icons = evas_list_append(sd->icons, ic);
+	     sd->tmp.last_insert = evas_list_last(sd->icons);
 	  }
+	added++;
+	/* if we spent more than 1/20th of a second inserting - give up
+	 * for now */
+	if ((ecore_time_get() - t) > 0.05) break;
      }
-/*   printf("FM: SORT %1.3f (%i files) (%i queued, %i added)\n",
-	  ecore_time_get() - tt, evas_list_count(sd->icons), queued, added);
- */
+//   printf("FM: SORT %1.3f (%i files) (%i queued, %i added) [%i iter]\n",
+//	  ecore_time_get() - tt, evas_list_count(sd->icons), queued, 
+//	  added, sd->tmp.iter);
    /* FIXME: this could get a lot faster - avoid it or something. scan
-    speed goes from 200-250 files/sec to 80 or so in my tests */
+    speed goes from 200-250 files/0.2 sec to 80 or so in my tests */
    if (sd->resize_job) ecore_job_del(sd->resize_job);
    sd->resize_job = ecore_job_add(_e_fm2_cb_resize_job, obj);
-   evas_object_smart_callback_call(sd->obj, "files_changed", NULL);
+   evas_object_smart_callback_call(sd->obj, "changed", NULL);
+   sd->tmp.iter++;
 }
 
 static void
@@ -969,6 +1044,8 @@ _e_fm2_icons_free(Evas_Object *obj)
 	_e_fm2_icon_free(sd->icons->data);
         sd->icons = evas_list_remove_list(sd->icons, sd->icons);
      }
+   sd->tmp.last_insert = NULL;
+   E_FREE(sd->tmp.list_index);
 }
 
 static void
@@ -1030,9 +1107,11 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, char *file)
 	ic->info.link = evas_stringshare_add(lnk);
 	free(lnk);
      }
+   evas_event_freeze(evas_object_evas_get(sd->obj));
+   edje_freeze();
    if (e_util_glob_case_match(ic->info.file, "*.desktop"))
      _e_fm2_icon_desktop_load(ic);
-    switch (sd->config->view.mode)
+   switch (sd->config->view.mode)
      {
       case E_FM2_VIEW_MODE_ICONS:
       case E_FM2_VIEW_MODE_GRID_ICONS:
@@ -1057,12 +1136,16 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, char *file)
 	 */
 	if ((!sd->config->icon.fixed.w) || (!sd->config->icon.fixed.h))
 	  {
-	     obj = edje_object_add(evas_object_evas_get(sd->obj));
-	     e_theme_edje_object_set(obj, "base/theme/fileman",
-				     "fileman/icon/variable");
+	     obj = sd->tmp.obj;
+	     if (!obj)
+	       {
+		  obj = edje_object_add(evas_object_evas_get(sd->obj));
+		  e_theme_edje_object_set(obj, "base/theme/fileman",
+					  "fileman/icon/variable");
+                  sd->tmp.obj = obj;
+	       }
 	     _e_fm2_icon_label_set(ic, obj);
 	     edje_object_size_min_calc(obj, &mw, &mh);
-	     evas_object_del(obj);
 	  }
 	ic->w = mw;
 	ic->h = mh;
@@ -1073,21 +1156,29 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, char *file)
 	break;
       case E_FM2_VIEW_MODE_LIST:
 	  {
-             obj = edje_object_add(evas_object_evas_get(sd->obj));
-	     if (sd->config->icon.fixed.w)
-	       e_theme_edje_object_set(obj, "base/theme/fileman",
-				       "fileman/list/fixed");
-	     else
-	       e_theme_edje_object_set(obj, "base/theme/fileman",
-				       "fileman/list/variable");
+	     obj = sd->tmp.obj;
+	     if (!obj)
+	       {
+		  obj = edje_object_add(evas_object_evas_get(sd->obj));
+		  if (sd->config->icon.fixed.w)
+		    e_theme_edje_object_set(obj, "base/theme/fileman",
+					    "fileman/list/fixed");
+		  else
+		    e_theme_edje_object_set(obj, "base/theme/fileman",
+					    "fileman/list/variable");
+		  sd->tmp.obj = obj;
+	       }
 	     _e_fm2_icon_label_set(ic, obj);
-	     obj2 = evas_object_rectangle_add(evas_object_evas_get(sd->obj));
+	     obj2 = sd->tmp.obj2;
+	     if (!obj2)
+	       {
+		  obj2 = evas_object_rectangle_add(evas_object_evas_get(sd->obj));
+		  sd->tmp.obj2 = obj2;
+	       }
 	     edje_extern_object_min_size_set(obj2, sd->config->icon.list.w, sd->config->icon.list.h);
 	     edje_extern_object_max_size_set(obj2, sd->config->icon.list.w, sd->config->icon.list.h);
 	     edje_object_part_swallow(obj, "icon_swallow", obj2);
 	     edje_object_size_min_calc(obj, &mw, &mh);
-	     evas_object_del(obj2);
-	     evas_object_del(obj);
 	  }
 	if (mw < sd->w) ic->w = sd->w;
 	else ic->w = mw;
@@ -1098,6 +1189,8 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, char *file)
       default:
 	break;
      }
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(obj));
    return ic;
 }
 
@@ -1301,8 +1394,7 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	     e_thumb_icon_file_set(ic->obj_icon, buf, NULL);
 	     e_thumb_icon_size_set(ic->obj_icon, 64, 64);
 	     evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
-	     if ((_e_fm2_icon_visible(ic)) && (!ic->sd->scan_idler))
-	       e_thumb_icon_begin(ic->obj_icon);
+	     _e_fm2_icon_thumb(ic);
 	     edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
 	     evas_object_show(ic->obj_icon);
 	  }
@@ -1315,8 +1407,7 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	     e_thumb_icon_file_set(ic->obj_icon, buf, "desktop/background");
 	     e_thumb_icon_size_set(ic->obj_icon, 64, 64);
 	     evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
-	     if ((_e_fm2_icon_visible(ic)) && (!ic->sd->scan_idler))
-	       e_thumb_icon_begin(ic->obj_icon);
+	     _e_fm2_icon_thumb(ic);
 	     edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
 	     evas_object_show(ic->obj_icon);
 	  }
@@ -1329,8 +1420,7 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	     e_thumb_icon_file_set(ic->obj_icon, buf, "icon");
 	     e_thumb_icon_size_set(ic->obj_icon, 64, 64);
 	     evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
-	     if ((_e_fm2_icon_visible(ic)) && (!ic->sd->scan_idler))
-	       e_thumb_icon_begin(ic->obj_icon);
+	     _e_fm2_icon_thumb(ic);
 	     edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
 	     evas_object_show(ic->obj_icon);
 	  }
@@ -1343,6 +1433,16 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	     evas_object_show(ic->obj_icon);
 	  }
      }
+}
+
+static void
+_e_fm2_icon_thumb(E_Fm2_Icon *ic)
+{
+   if ((_e_fm2_icon_visible(ic)) && 
+       (!ic->sd->queue) && 
+       (!ic->sd->sort_idler) &&
+       (!ic->sd->scan_idler))
+     e_thumb_icon_begin(ic->obj_icon);
 }
 
 static void
@@ -1857,9 +1957,30 @@ _e_fm2_cb_scan_timer(void *data)
    sd = evas_object_smart_data_get(data);
    if (!sd) return 0;
    _e_fm2_queue_process(data);
-   if ((!sd->queue) && (!sd->scan_idler))
+   sd->scan_timer = NULL;
+   if ((!sd->queue) && (!sd->scan_idler)) return 0;
+   if (sd->scan_idler)
+     sd->scan_timer = ecore_timer_add(0.2, _e_fm2_cb_scan_timer, sd->obj);
+   else
      {
-	sd->scan_timer = NULL;
+	if (!sd->sort_idler)
+	  sd->sort_idler = ecore_idler_add(_e_fm2_cb_sort_idler, data);
+     }
+   return 0;
+}
+
+static int
+_e_fm2_cb_sort_idler(void *data)
+{
+   E_Fm2_Smart_Data *sd;
+
+   sd = evas_object_smart_data_get(data);
+   if (!sd) return 0;
+   _e_fm2_queue_process(data);
+   if (!sd->queue)
+     {
+	sd->sort_idler = NULL;
+	_e_fm2_scan_stop(data);
 	return 0;
      }
    return 1;
@@ -1889,10 +2010,7 @@ _e_fm2_obj_icons_place(E_Fm2_Smart_Data *sd)
 					sd->x + ic->x - sd->pos.x, 
 					sd->y + ic->y - sd->pos.y);
 		       evas_object_resize(ic->obj, ic->w, ic->h);
-		       if ((_e_fm2_icon_visible(ic)) && (!ic->sd->scan_idler))
-			 e_thumb_icon_begin(ic->obj_icon);
-		       else
-			 e_thumb_icon_end(ic->obj_icon);
+		       _e_fm2_icon_thumb(ic);
 		    }
 	       }
 	  }
