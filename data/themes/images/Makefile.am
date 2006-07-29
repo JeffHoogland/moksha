@@ -452,4 +452,14 @@ e17_shelf_custom.png \
 e17_shelf_dock.png \
 e17_shelf_menu_bar.png \
 e17_shelf_panel.png \
-e17_shelf_top_desk.png
+e17_shelf_top_desk.png \
+e17_busy-1.png \
+e17_busy-2.png \
+e17_busy-3.png \
+e17_busy-4.png \
+e17_busy-5.png \
+e17_busy-6.png \
+e17_busy-7.png \
+e17_busy-8.png \
+e17_busy-9.png
+

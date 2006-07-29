@@ -20,6 +20,7 @@ struct _E_Fm2_Smart_Data
    Evas_Coord        x, y, w, h;
    Evas_Object      *obj;
    Evas_Object      *clip;
+   Evas_Object      *overlay;
    const char       *dev;
    const char       *path;
    const char       *realpath;
@@ -613,8 +614,10 @@ _e_fm2_scan_start(Evas_Object *obj)
     * to fill
     */
    /* if i add the above pre-scan and it doesnt finish - continue here */
+   if ((sd->scan_idler) || (sd->scan_timer)) return;
    sd->scan_idler = ecore_idler_add(_e_fm2_cb_scan_idler, obj);
    sd->scan_timer = ecore_timer_add(0.2, _e_fm2_cb_scan_timer, obj);
+   edje_object_signal_emit(sd->overlay, "busy", "start");
 }
 
 static void
@@ -624,6 +627,8 @@ _e_fm2_scan_stop(Evas_Object *obj)
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
+   if (sd->dir)
+     edje_object_signal_emit(sd->overlay, "busy", "stop");
    /* stop the scan idler, the sort timer and free the queue */
    if (sd->dir)
      {
@@ -667,6 +672,7 @@ _e_fm2_queue_process(Evas_Object *obj)
    Evas_List *l, **ll;
    int added = 0, i, p0, p1, n, v;
    double t;
+   char buf[4096];
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
@@ -748,6 +754,8 @@ _e_fm2_queue_process(Evas_Object *obj)
 //   printf("FM: SORT %1.3f (%i files) (%i queued, %i added) [%i iter]\n",
 //	  ecore_time_get() - tt, evas_list_count(sd->icons), queued, 
 //	  added, sd->tmp.iter);
+   snprintf(buf, sizeof(buf), _("%i Files"), evas_list_count(sd->icons));
+   edje_object_part_text_set(sd->overlay, "busy_label", buf);
    /* FIXME: this could get a lot faster - avoid it or something. scan
     speed goes from 200-250 files/0.2 sec to 80 or so in my tests */
    if (sd->resize_job) ecore_job_del(sd->resize_job);
@@ -1228,6 +1236,7 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
    ic->obj = edje_object_add(evas_object_evas_get(ic->sd->obj));
    edje_object_freeze(ic->obj);
    evas_object_smart_member_add(ic->obj, ic->sd->obj);
+   evas_object_stack_below(ic->obj, ic->sd->overlay);
    /* FIXME: this is currently a hack just to get a display working - go back
     * and do proper icon stuff later */
    if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
@@ -1464,7 +1473,7 @@ _e_fm2_icon_select(E_Fm2_Icon *ic)
      {
 	edje_object_signal_emit(ic->obj, "active", "");
 	edje_object_signal_emit(ic->obj_icon, "active", "");
-	evas_object_raise(ic->obj);
+	evas_object_stack_below(ic->obj, ic->sd->overlay);
      }
 }
 
@@ -1944,17 +1953,14 @@ _e_fm2_cb_scan_idler(void *data)
    return 1;
    
    endscan:
-   if (sd->dir)
-     {
-	closedir(sd->dir);
-	sd->dir = NULL;
-     }
    sd->scan_idler = NULL;
    if (sd->scan_timer)
      {
 	ecore_timer_del(sd->scan_timer);
 	sd->scan_timer = ecore_timer_add(0.0001, _e_fm2_cb_scan_timer, sd->obj);
      }
+   else
+     _e_fm2_scan_stop(data);
    return 0;
 }
 
@@ -1967,7 +1973,11 @@ _e_fm2_cb_scan_timer(void *data)
    if (!sd) return 0;
    _e_fm2_queue_process(data);
    sd->scan_timer = NULL;
-   if ((!sd->queue) && (!sd->scan_idler)) return 0;
+   if ((!sd->queue) && (!sd->scan_idler))
+     {
+	_e_fm2_scan_stop(data);
+	return 0;
+     }
    if (sd->scan_idler)
      sd->scan_timer = ecore_timer_add(0.2, _e_fm2_cb_scan_timer, sd->obj);
    else
@@ -2040,9 +2050,15 @@ _e_fm2_smart_add(Evas_Object *obj)
    sd->obj = obj;
    sd->clip = evas_object_rectangle_add(evas_object_evas_get(obj));
    evas_object_smart_member_add(sd->clip, obj);
-   evas_object_move(sd->clip, sd->x - OVERCLIP, sd->y - OVERCLIP);
-   evas_object_resize(sd->clip, sd->w + (OVERCLIP * 2), sd->h + (OVERCLIP * 2));
    evas_object_color_set(sd->clip, 255, 255, 255, 255);
+   
+   sd->overlay = edje_object_add(evas_object_evas_get(obj));
+   evas_object_clip_set(sd->overlay, sd->clip);
+   e_theme_edje_object_set(sd->overlay, "base/theme/fileman",
+			   "fileman/overlay");
+   evas_object_smart_member_add(sd->overlay, obj);
+   evas_object_show(sd->overlay);
+   
    evas_object_smart_data_set(obj, sd);
    evas_object_move(obj, 0, 0);
    evas_object_resize(obj, 0, 0);
@@ -2068,6 +2084,7 @@ _e_fm2_smart_del(Evas_Object *obj)
    sd->dev = sd->path = sd->realpath = NULL;
    if (sd->config) _e_fm2_config_free(sd->config);
    
+   evas_object_del(sd->overlay);
    evas_object_del(sd->clip);
    free(sd);
 }
@@ -2082,6 +2099,7 @@ _e_fm2_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    if ((sd->x == x) && (sd->y == y)) return;
    sd->x = x;
    sd->y = y;
+   evas_object_move(sd->overlay, sd->x, sd->y);
    evas_object_move(sd->clip, sd->x - OVERCLIP, sd->y - OVERCLIP);
    _e_fm2_obj_icons_place(sd);
 }
@@ -2099,6 +2117,7 @@ _e_fm2_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    if (h != sd->h) hch = 1;
    sd->w = w;
    sd->h = h;
+   evas_object_resize(sd->overlay, sd->w, sd->h);
    evas_object_resize(sd->clip, sd->w + (OVERCLIP * 2), sd->h + (OVERCLIP * 2));
 
    /* for automatic layout - do this - NB; we could put this on a timer delay */
