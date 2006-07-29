@@ -383,6 +383,7 @@ _ibox_fill(IBox *b)
 	     e_box_pack_end(b->o_box, ic->o_holder); 
 	  }
      }
+   e_container_border_list_free(bl);
    
    _ibox_empty_handle(b);
    _ibox_resize_handle(b);

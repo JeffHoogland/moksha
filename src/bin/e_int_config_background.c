@@ -94,7 +94,7 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *ot, *il, *im;
-   char path[4096];
+   char path[4096], *homedir;
    
    ot = e_widget_table_add(evas, 0);
    il = e_widget_ilist_add(evas, 48, 48, &(cfdata->bg));
@@ -122,9 +122,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	ecore_file_monitor_del(_bg_file_monitor);
 	_bg_file_monitor = NULL;
      }
-      
-   snprintf(path, sizeof(path), "%s/.e/e/backgrounds", e_user_homedir_get());
-   _bg_file_monitor = ecore_file_monitor_add(path, _bg_file_added, cfdata);
+   homedir = e_user_homedir_get();
+   if (homedir)
+     {
+	snprintf(path, sizeof(path), "%s/.e/e/backgrounds", homedir);
+	free(homedir);
+	_bg_file_monitor = ecore_file_monitor_add(path, _bg_file_added, cfdata);
+     }
    return ot;
 }
 
@@ -363,7 +367,7 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
 	  }
 	while ((bg_file = ecore_list_next(bgs)))
 	  {
-	     char full_path[4096];
+	     char full_path[4096], *fl;
 	     
 	     snprintf(full_path, sizeof(full_path), "%s/%s", d->dir, bg_file);
 	     if (ecore_file_is_dir(full_path)) continue;
@@ -375,7 +379,9 @@ _load_bgs(E_Config_Dialog *cfd, Evas_Object *il)
 				    (64 * e_zone_current_get(cfd->dia->win->container)->h) /
 				    e_zone_current_get(cfd->dia->win->container)->w);
 	     e_thumb_icon_begin(ic);
-	     e_widget_ilist_append(il, ic, ecore_file_strip_ext(bg_file), _ilist_cb_bg_selected, cfd, full_path);
+	     fl = ecore_file_strip_ext(bg_file);
+	     e_widget_ilist_append(il, ic, fl, _ilist_cb_bg_selected, cfd, full_path);
+	     E_FREE(fl);
 	     if ((e_config->desktop_default_background) &&
 		 (!strcmp(e_config->desktop_default_background, full_path)))
 	       {
