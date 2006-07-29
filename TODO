@@ -11,7 +11,7 @@ Some of the things (in very short form) that need to be done to E17...
 * BUG: e_entry/editable widget is pretty borken in sizing, clipping, initial
   state and i think is also now causing segv's (not sure yet), but it needs
   a complete going over if not a rewrite. :(
-* BUG: match this window only doesnt fall back to other unused remembers
+* BUG: "match this window only" doesnt fall back to other unused remembers
 * BUG: make window sticky. send window to another desktop - get ghost window.
   should 1. make any such operation in the pager useless and do
   nothing if the window is sticky and 2. in the pager disallow dragging 
@@ -43,8 +43,19 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
-* fm2 (new efm) needs some visual theme indicator while it is still scanning
-  ans sorting dir entries and icons so you know it's busy.
+* fm2 needs to have right mouse menu on files for rename and delete
+* fsel needs "add" button for favorites to add whataver directory is selected
+  if any dir is selected (create symlink)
+* fsel needs to clear the entry when entering a new dir
+* fm2 needs to use /etc/mime.types and determine file mime type
+* fm2 needs to handle personal mime types file (what is the file?)
+* mime detection might be a separate e_mime thing i guess
+* fm2 .desktop parser needs to handle i18n
+* fm2 needs a mime filter
+* fm2 needs to have a mime & filetype -> icon mapping
+* fsel needs to display the current dir (for better context) somewhere
+* eap editor is broken - segv in advanced mode
+* use .desktop files and move eap editor to edit them etc. etc. instead to fix
 * if we want to do icons on the desktop - and as part of efm, i am thinking
   that we have little choice but to implement a .desktop file loader. this
   is not to hard - it's the xml jungle of the system menus that is sucky. the
@@ -61,7 +72,7 @@ Some of the things (in very short form) that need to be done to E17...
 * add a way to access "all" apps app dir (and dnd from it into ibar etc.)
 * add setup/install wizard to seed eap files etc. etc.
 * support color classes (gui config  etc. etc.)
-* add clientinfo pane/popdown for borders
+* finish clientinfo dialog for borders (netwm props etc. etc.)
 * gui config dialogs for all config
 * make it possible to disable border buttons/actions (tell theme what is
   disabled)
@@ -82,6 +93,23 @@ Some of the things (in very short form) that need to be done to E17...
   CLEANUPS
 -------------------------------------------------------------------------------
 
+* wallpaper dialog needs a "for this screen only" option of containers or
+  zones > 1 :)
+* wallpaper dialog needs to probably use fm2 for list of bg's (use 2 fm views
+  one for system, one for personal).
+* bg import dialog and code needs a big workover - needs a few more options on
+  import like quality (lossy low, medium, high, perfect), when scaling do you
+  stretch, scale retaining aspect within the screen or extend beyond screen
+  boundaries (so nothing is left blank) etc.
+* bg needs a gradient dialog that can take a set of pre-drawn png's and edc
+  recipies and use colored rects and overlayed png's recolored with color
+  options to create vertical, horizontal, radial etc. gradients quickly and
+  save to an edc
+* fsel could do with an optional preview pane for selected file (bigger icon,
+  file info (permissions, modification date etc.)
+* clientinfo dialog could be nicer - then again it is an obsucre thing.
+* desklock needs to sha1 the user password with one-way encryption and never
+  display it
 * deskclock's pam profile should be configurable as system-auth doesn't
   always work - maybe have some auto-detect and scan of pam files :)
 * If a user has set a border type on a window, don't bother to check for
@@ -112,6 +140,8 @@ Some of the things (in very short form) that need to be done to E17...
   "NICE TO HAVE" FEATURES
 -------------------------------------------------------------------------------
 
+* full fm2 support as an icon fm needs work - beyond fsel needs and for icons
+  on the desktop etc. etc.
 * winlist and exebuf can let the mouse select items
 * switch to desktop of a new window if it opens on another desktop than the
   current one (optional too)
