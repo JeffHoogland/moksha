@@ -49,9 +49,11 @@ main(int argc, char **argv)
    int i;
    int nostartup = 0;
    int after_restart = 0; 
+   int safe_mode = 0;
    char buf[PATH_MAX];
    char *s;
    struct sigaction action;
+   double t, tstart;
    /* trap deadly bug signals and allow some form of sane recovery */
    /* or ability to gdb attach and debug at this point - better than your */
    /* wm/desktop vanishing and not knowing what happened */
@@ -92,6 +94,22 @@ main(int argc, char **argv)
    sigemptyset(&action.sa_mask);
    sigaction(SIGABRT, &action, NULL);
 
+   t = ecore_time_get();
+   s = getenv("START_TIME");
+   if ((s) && (getenv("CRASHED")))
+     {
+	tstart = atof(s);
+	if ((t - tstart) < 5.0)
+	  {
+	     safe_mode = 1;
+	  }
+     }
+   e_util_env_set("CRASHED", NULL);
+   
+   tstart = t;
+   snprintf(buf, sizeof(buf), "%1.1f", tstart);
+   e_util_env_set("START_TIME", buf);
+   
    /* FIXME: this is the init code for letting e be relocatable. right now
     * its not used - so i want to see if it can reliably determine its exe
     * prefix
@@ -296,7 +314,7 @@ main(int argc, char **argv)
 			       "Perhaps you are out of memory?"));
 	_e_main_shutdown(-1);
      }
-   if(!ecore_event_handler_add(ECORE_EVENT_SIGNAL_HUP, _e_main_cb_signal_hup, NULL))
+   if (!ecore_event_handler_add(ECORE_EVENT_SIGNAL_HUP, _e_main_cb_signal_hup, NULL))
      {
 	e_error_message_show(_("Enlightenment cannot set up a HUP signal handler.\n"
 			       "Perhaps you are out of memory?"));
@@ -314,7 +332,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(_e_main_x_shutdown);
-   /* init x */
+   /* init white box of death alert */
    if (!e_alert_init(NULL))
      {
 	e_error_message_show(_("Enlightenment cannot initialize its emergency alert system.\n"
@@ -374,6 +392,7 @@ main(int argc, char **argv)
 			       "Ecore and check they support the Software Buffer rendering engine."));
 	_e_main_shutdown(-1);
      }
+   
      {
 	Ecore_Evas *ee;
 	Evas_Object *im;
@@ -599,6 +618,21 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_color_class_shutdown);
+   /* load modules */
+   if (!safe_mode)
+     e_module_all_load();
+   else
+     {
+	e_int_config_modules(e_container_current_get(e_manager_current_get()));
+	e_error_message_show
+	  (_("Enlightenment crashed early on start and has<br>"
+	     "been restarted. All modules have been disabled<br>"
+	     "and will not be loaded to help remove any problem<br>"
+	     "modules from your configuration. The module<br>"
+	     "configuration dialog should let you select your<br>"
+	     "modules again."));
+	e_config_save_queue();
+     }
    /* setup gadcon */
    if (!e_gadcon_init())
      {

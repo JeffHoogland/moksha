@@ -35,6 +35,33 @@ static Evas_List *_e_modules = NULL;
 EAPI int
 e_module_init(void)
 {
+   return 1;
+}
+
+EAPI int
+e_module_shutdown(void)
+{
+   Evas_List *l, *tmp;
+
+#ifdef HAVE_VALGRIND
+   /* do a leak check now before we dlclose() all those plugins, cause
+    * that means we won't get a decent backtrace to leaks in there
+    */
+   VALGRIND_DO_LEAK_CHECK
+#endif
+
+   for (l = _e_modules; l;)
+     {
+	tmp = l;
+	l = l->next;
+	e_object_del(E_OBJECT(tmp->data));
+     }
+   return 1;
+}
+
+EAPI void
+e_module_all_load(void)
+{
    Evas_List *pl = NULL, *l;
    
    for (l = e_config->modules; l;)
@@ -59,29 +86,6 @@ e_module_init(void)
 	     e_config_save_queue();
 	  }
      }
-   
-   return 1;
-}
-
-EAPI int
-e_module_shutdown(void)
-{
-   Evas_List *l, *tmp;
-
-#ifdef HAVE_VALGRIND
-   /* do a leak check now before we dlclose() all those plugins, cause
-    * that means we won't get a decent backtrace to leaks in there
-    */
-   VALGRIND_DO_LEAK_CHECK
-#endif
-
-   for (l = _e_modules; l;)
-     {
-	tmp = l;
-	l = l->next;
-	e_object_del(E_OBJECT(tmp->data));
-     }
-   return 1;
 }
 
 EAPI E_Module *
