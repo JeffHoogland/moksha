@@ -166,7 +166,8 @@ e_entry_dialog.h \
 e_fm.h \
 e_widget_scrollframe.h \
 e_sha1.h \
-e_widget_fsel.h
+e_widget_fsel.h \
+e_fm_mime.h
 
 enlightenment_src = \
 e_user.c \
@@ -309,6 +310,7 @@ e_fm.c \
 e_widget_scrollframe.c \
 e_sha1.c \
 e_widget_fsel.c \
+e_fm_mime.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \

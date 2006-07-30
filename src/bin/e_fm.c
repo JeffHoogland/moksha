@@ -1107,6 +1107,7 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, char *file)
    Evas_Coord mw = 0, mh = 0;
    Evas_Object *obj, *obj2;
    char buf[4096], *lnk;
+   const char *mime;
    
    /* create icon */
    ic = E_NEW(E_Fm2_Icon, 1);
@@ -1124,10 +1125,17 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, char *file)
 	ic->info.link = evas_stringshare_add(lnk);
 	free(lnk);
      }
-   evas_event_freeze(evas_object_evas_get(sd->obj));
-   edje_freeze();
+   
+   if (!ic->info.mime)
+     {
+	mime = e_fm_mime_filename_get(ic->info.file);
+	if (mime) ic->info.mime = evas_stringshare_add(mime);
+     }
+   
    if (e_util_glob_case_match(ic->info.file, "*.desktop"))
      _e_fm2_icon_desktop_load(ic);
+   evas_event_freeze(evas_object_evas_get(sd->obj));
+   edje_freeze();
    switch (sd->config->view.mode)
      {
       case E_FM2_VIEW_MODE_ICONS:
@@ -1360,7 +1368,7 @@ _e_fm2_icon_label_set(E_Fm2_Icon *ic, Evas_Object *obj)
 static void
 _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 {
-   char buf[4096];
+   char buf[4096], *p;
    
    if (!ic->realized) return;
    if (ic->info.icon)
@@ -1383,6 +1391,39 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
    if (ic->info.mime)
      {
 	/* use mime type to select icon */
+	if (
+	    (!strcmp(ic->info.mime, "image/jpeg")) ||
+	    (!strcmp(ic->info.mime, "image/png")) ||
+	    (!strcmp(ic->info.mime, "image/gif")) ||
+	    (!strcmp(ic->info.mime, "image/tiff"))
+	    )
+	  {
+	     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
+	     ic->obj_icon = e_thumb_icon_add(evas_object_evas_get(ic->sd->obj));
+	     e_thumb_icon_file_set(ic->obj_icon, buf, NULL);
+	     e_thumb_icon_size_set(ic->obj_icon, 64, 48);
+	     evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
+	     _e_fm2_icon_thumb(ic);
+	     edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
+	     evas_object_show(ic->obj_icon);
+	  }
+	else
+	  {
+	     /* fixme: quick hack to get some icons - need to have a proper
+	      * mime -> icon mapping users can edit
+	      */
+	     p = strchr(ic->info.mime, '/');
+	     if (p) p++;
+	     else p = ic->info.mime;
+	     snprintf(buf, sizeof(buf), "icons/fileman/%s", p);
+	     ic->obj_icon = edje_object_add(evas_object_evas_get(ic->sd->obj));
+	     if (!e_theme_edje_object_set(ic->obj_icon, "base/theme/fileman",
+					  buf))
+	       e_theme_edje_object_set(ic->obj_icon, "base/theme/fileman",
+				       "icons/fileman/file");
+	     edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
+	     evas_object_show(ic->obj_icon);
+	  }
 	return;
      }
    /* fallback */
@@ -1397,28 +1438,8 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
    else
      {
 	if (
-	    (e_util_glob_case_match(ic->info.file, "*.jpg")) ||
-	    (e_util_glob_case_match(ic->info.file, "*.jpeg")) ||
-	    (e_util_glob_case_match(ic->info.file, "*.jfif")) ||
-	    (e_util_glob_case_match(ic->info.file, "*.jpe")) ||
-	    (e_util_glob_case_match(ic->info.file, "*.png")) ||
-	    (e_util_glob_case_match(ic->info.file, "*.gif")) ||
-	    (e_util_glob_case_match(ic->info.file, "*.tif")) ||
-	    (e_util_glob_case_match(ic->info.file, "*.tiff"))
+	    (e_util_glob_case_match(ic->info.file, "*.edj"))
 	    )
-	  {
-	     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
-	     ic->obj_icon = e_thumb_icon_add(evas_object_evas_get(ic->sd->obj));
-	     e_thumb_icon_file_set(ic->obj_icon, buf, NULL);
-	     e_thumb_icon_size_set(ic->obj_icon, 64, 64);
-	     evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
-	     _e_fm2_icon_thumb(ic);
-	     edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
-	     evas_object_show(ic->obj_icon);
-	  }
-	else if (
-		 (e_util_glob_case_match(ic->info.file, "*.edj"))
-		 )
 	  {
 	     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 	     ic->obj_icon = e_thumb_icon_add(evas_object_evas_get(ic->sd->obj));

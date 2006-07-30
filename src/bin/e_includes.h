@@ -143,3 +143,4 @@
 #include "e_sha1.h"
 #include "e_widget_framelist.h"
 #include "e_widget_fsel.h"
+#include "e_fm_mime.h"
