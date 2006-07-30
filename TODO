@@ -45,9 +45,6 @@ Some of the things (in very short form) that need to be done to E17...
 * fsel needs "add" button for favorites to add whataver directory is selected
   if any dir is selected (create symlink)
 * fsel needs to clear the entry when entering a new dir
-* fm2 needs to use /etc/mime.types and determine file mime type
-* fm2 needs to handle personal mime types file (what is the file?)
-* mime detection might be a separate e_mime thing i guess
 * fm2 .desktop parser needs to handle i18n
 * fm2 needs a mime filter
 * fm2 needs to have a mime & filetype -> icon mapping
