@@ -88,6 +88,8 @@ Some of the things (in very short form) that need to be done to E17...
   CLEANUPS
 -------------------------------------------------------------------------------
 
+* wallpaper dialog needs to display backgrounds in all of the background path
+  locations.  Currently it is only searching ~/.e/e/backgrounds
 * wallpaper dialog needs a "for this screen only" option of containers or
   zones > 1 :)
 * wallpaper dialog needs to probably use fm2 for list of bg's (use 2 fm views
