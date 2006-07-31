@@ -255,6 +255,12 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dial
 
    o = e_widget_frametable_add(evas, _("Icon"), 0);
 
+   if (editor->img)
+     {
+	evas_object_del(editor->img);
+	editor->img = NULL;
+     }
+   
    if ((editor->img_set) && (data->image))
      {
 	if (editor->img) evas_object_del(editor->img);
