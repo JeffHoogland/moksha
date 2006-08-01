@@ -1552,15 +1552,22 @@ break;
      
    E_Path_Dir *p;
    if (s) {
-      dat = evas_list_append(dat, strdup(s));
+      dat = evas_list_append(dat, evas_stringshare_add(s));
       FOR(dir_list) { p = l->data;
-	 dat = evas_list_append(dat, p->dir);
+	 dat = evas_list_append(dat, evas_stringshare_add(p->dir));
       }
    }
 
    ENCODE(dat, e_ipc_codec_str_list_enc);
    SEND_DATA(E_IPC_OP_DIRS_LIST_REPLY);
-   evas_list_free(dat);
+   while (dat)
+     {
+	const char *dir;
+	
+	dir = dat->data;
+	evas_stringshare_del(dir);
+	dat = evas_list_remove_list(dat, dat);	
+     }
    e_path_dir_list_free(dir_list);
    END_STRING(s)
 #elif (TYPE == E_REMOTE_IN)
