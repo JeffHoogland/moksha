@@ -107,8 +107,10 @@ Some of the things (in very short form) that need to be done to E17...
 * clientinfo dialog could be nicer - then again it is an obsucre thing.
 * desklock needs to sha1 the user password with one-way encryption and never
   display it
-* deskclock's pam profile should be configurable as system-auth doesn't
-  always work - maybe have some auto-detect and scan of pam files :)
+* desklock's pam profile should be configurable as system-auth doesn't
+  always work - maybe have some auto-detect and scan of pam files and steal
+  others like "xscreensaver" or "kscreensaver" that will be perfect for our
+  job - fall back to system-auth if nothing useful is found :)
 * If a user has set a border type on a window, don't bother to check for
   changes.
 * keybindings dialog doesn't conform its formatting or datatype naming to

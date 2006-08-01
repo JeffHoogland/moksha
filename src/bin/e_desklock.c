@@ -433,18 +433,14 @@ _e_desklock_cb_mouse_move(void *data, int type, void *event)
 static void
 _e_desklock_passwd_update()
 {
-   int ii;
-   char passwd_hidden[PASSWD_LEN * 3]="";
+   char passwd_hidden[PASSWD_LEN] = "", *p, *pp;
    E_Desklock_Popup_Data	*edp;
    Evas_List *l;
    
    if (!edd) return;
    
-   for (ii = 0; ii < strlen(edd->passwd); ii ++)
-     {
-	passwd_hidden[ii] = '*';
-	passwd_hidden[ii+1] = 0;
-     }
+   for (p = edd->passwd, pp = passwd_hidden; *p; p++, pp++) *pp = '*';
+   *pp = 0;
    
    for (l = edd->elock_wnd_list; l; l = l->next)
      {
@@ -456,9 +452,9 @@ _e_desklock_passwd_update()
 static void
 _e_desklock_backspace()
 {
-  int len, val, pos;
-
-  if (!edd) return;
+   int len, val, pos;
+   
+   if (!edd) return;
    
    len = strlen(edd->passwd);
    if (len > 0)
@@ -516,6 +512,7 @@ _e_desklock_check_auth()
 		     e_config->desklock_personal_passwd)))
 	  {
 	     /* password ok */
+	     /* security - null out passwd string once we are done with it */
 	     memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
 	     e_desklock_hide();
 	     return 1;
@@ -542,12 +539,14 @@ _e_desklock_cb_exit(void *data, int type, void *event)
 	/* ok */
 	if (ev->exit_code == 0)
 	  {
+	     /* security - null out passwd string once we are done with it */
 	     memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
 	     e_desklock_hide();
 	  }
 	/* error */
 	else if (ev->exit_code < 128)
 	  {
+	     /* security - null out passwd string once we are done with it */
 	     memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
 	     e_desklock_hide();
 	     e_util_dialog_show(_("Authentication System Error"),
@@ -559,6 +558,7 @@ _e_desklock_cb_exit(void *data, int type, void *event)
 	/* failed auth */
 	else
 	  {
+	     /* security - null out passwd string once we are done with it */
 	     memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
 	     _e_desklock_passwd_update();
 	  }
@@ -583,11 +583,18 @@ _desklock_auth(const char *passwd)
 	/* child */
 	int pamerr;
 	E_Desklock_Auth da;
-        char *current_user;
+        char *current_user, *p;
 
 	current_user = _desklock_auth_get_current_user();
 	strncpy(da.user, current_user, PATH_MAX);
 	strncpy(da.passwd, passwd, PATH_MAX);
+	/* security - null out passwd string once we are done with it */
+	for (p = (char *)passwd; *p; p++);
+	while (p >= passwd)
+	  {
+	     *p = 0;
+	     p--;
+	  }
 	da.pam.handle = NULL;
 	da.pam.conv.conv = NULL;
 	da.pam.conv.appdata_ptr = NULL;
@@ -600,6 +607,7 @@ _desklock_auth(const char *passwd)
 	  }
 	pamerr = pam_authenticate(da.pam.handle, 0);
 	pam_end(da.pam.handle, pamerr);
+	/* security - null out passwd string once we are done with it */
 	memset(da.passwd, 0, sizeof(da.passwd));
 	if (pamerr == PAM_SUCCESS)
 	  {
