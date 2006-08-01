@@ -40,10 +40,9 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
    cfdata->show_splash = e_config->show_splash;
+   cfdata->init_default_theme = NULL;
    if (e_config->init_default_theme)
      cfdata->init_default_theme = strdup(e_config->init_default_theme);
-   else
-     cfdata->init_default_theme = NULL;
 }
 
 static void *
@@ -66,8 +65,11 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	ecore_file_monitor_del(_init_file_monitor);
 	_init_file_monitor = NULL;
      }
-   if (cfdata->init_default_theme) free(cfdata->init_default_theme);
-   free(cfdata);
+
+   if (cfdata->init_default_theme) 
+     E_FREE(cfdata->init_default_theme);
+   
+   E_FREE(cfdata);
 }
 
 static int
@@ -99,6 +101,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    Evas_Object *ot, *ob, *il, *im;
    char path[4096];
+   char *homedir;
    
    ot = e_widget_table_add(evas, 0);
    il = e_widget_ilist_add(evas, 48, 48, &(cfdata->init_default_theme));
@@ -112,29 +115,30 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_table_object_append(ot, il, 0, 0, 1, 2, 1, 1, 1, 1);
    e_widget_table_object_append(ot, im, 1, 0, 1, 2, 1, 1, 1, 1);
 
-   ob = e_widget_check_add(evas, _("Show Splash Screen At Boot"), &(cfdata->show_splash));
-   e_widget_table_object_append(ot, ob, 0, 3, 2, 1, 1, 0, 0, 0);
+   ob = e_widget_check_add(evas, _("Show Splash Screen At Boot"), 
+			   &(cfdata->show_splash));
+   e_widget_table_object_append(ot, ob, 1, 3, 1, 1, 1, 0, 0, 0);
    
    if (_init_file_monitor) 
      {
 	ecore_file_monitor_del(_init_file_monitor);
 	_init_file_monitor = NULL;
      }
-   
-   snprintf(path, sizeof(path), "%s/.e/e/init", e_user_homedir_get());
+
+   homedir = e_user_homedir_get();
+   snprintf(path, sizeof(path), "%s/.e/e/init", homedir);
+   E_FREE(homedir);
+
    _init_file_monitor = ecore_file_monitor_add(path, _init_file_added, cfdata);
-   
    return ot;
 }
 
 static void
 _load_inits(E_Config_Dialog *cfd, Evas_Object *il) 
 {
-   Evas *evas;
+   E_Zone *zone;
    Evas_Object *im;
    Evas_List *init_dirs, *init;
-   Ecore_Evas *eebuf;
-   Evas *evasbuf;
    int i = 0;
    int selnum = -1;
    char *homedir;
@@ -142,14 +146,9 @@ _load_inits(E_Config_Dialog *cfd, Evas_Object *il)
    if (!il) return;
 
    homedir = e_user_homedir_get();
-   
-   evas = evas_object_evas_get(il);
-   eebuf = ecore_evas_buffer_new(1, 1);
-   evasbuf = ecore_evas_get(eebuf);
-   
+   zone = e_zone_current_get(cfd->dia->win->container);
    im = e_widget_preview_add(cfd->dia->win->evas, 320, 
-			     (320 * e_zone_current_get(cfd->dia->win->container)->h) /
-			     e_zone_current_get(cfd->dia->win->container)->w);
+			     (320 * zone->h) / zone->w);
    
    /* Load inits */
    init_dirs = e_path_dir_list_get(path_init);
@@ -162,6 +161,7 @@ _load_inits(E_Config_Dialog *cfd, Evas_Object *il)
 	
 	d = init->data;
 	if (!ecore_file_is_dir(d->dir)) continue;
+
 	inits = ecore_file_ls(d->dir);
 	if (!inits) continue;
 	
@@ -177,7 +177,8 @@ _load_inits(E_Config_Dialog *cfd, Evas_Object *il)
 	  }
 	if (!detected) 
 	  {
-	     if (!strncmp(d->dir, e_prefix_data_get(), strlen(e_prefix_data_get())))
+	     if (!strncmp(d->dir, e_prefix_data_get(), 
+			  strlen(e_prefix_data_get())))
 	       {
 		  e_widget_ilist_header_append(il, NULL, _("System"));
 		  i++;
@@ -196,43 +197,41 @@ _load_inits(E_Config_Dialog *cfd, Evas_Object *il)
 	     Evas_Object *ic = NULL;
 	     char full_path[4096];
 	     
-	     snprintf(full_path, sizeof(full_path), "%s/%s", d->dir, init_file);
+	     snprintf(full_path, sizeof(full_path), "%s/%s", d->dir, 
+		      init_file);
 	     if (ecore_file_is_dir(full_path)) continue;
-	     if (!e_util_edje_collection_exists(full_path, "init/splash")) continue;
+	     if (!e_util_edje_collection_exists(full_path, "init/splash")) 
+	       continue;
 
 	     ic = e_thumb_icon_add(cfd->dia->win->evas);
 	     e_thumb_icon_file_set(ic, full_path, "init/splash");
-	     e_thumb_icon_size_set(ic, 64,
-				    (64 * e_zone_current_get(cfd->dia->win->container)->h) /
-				    e_zone_current_get(cfd->dia->win->container)->w);
+	     e_thumb_icon_size_set(ic, 64, (64 * zone->h) / zone->w);
 	     e_thumb_icon_begin(ic);
-	     e_widget_ilist_append(il, ic, ecore_file_strip_ext(init_file), _ilist_cb_init_selected, cfd, full_path);
+	     e_widget_ilist_append(il, ic, ecore_file_strip_ext(init_file), 
+				   _ilist_cb_init_selected, cfd, full_path);
 	     
 	     if ((e_config->init_default_theme) && 
 		 (!strcmp(e_config->init_default_theme, init_file))) 
 	       {
-		  E_Zone *z;
-		  
-		  z = e_zone_current_get(cfd->dia->win->container);
-		  
 		  selnum = i;
 		  evas_object_del(im);
-		  im = e_widget_preview_add(cfd->dia->win->evas, 320, (320 * z->h) / z->w);
+		  im = e_widget_preview_add(cfd->dia->win->evas, 320, 
+					    (320 * zone->h) / zone->w);
 		  e_widget_preview_edje_set(im, full_path, "init/splash");
 	       }
 	     i++;
 	  }
-	free(init_file);
+	E_FREE(init_file);
 	ecore_list_destroy(inits);
      }
+   E_FREE(homedir);
+   cfd->data = im;
+
    evas_list_free(init);
    if (init_dirs) e_path_dir_list_free(init_dirs);
-   cfd->data = im;
+
    e_widget_ilist_go(il);
-   if (selnum >= 0) 
-     e_widget_ilist_selected_set(il, selnum);
-   
-   free(homedir);
+   if (selnum >= 0) e_widget_ilist_selected_set(il, selnum);
 }
 
 void
@@ -240,19 +239,19 @@ _ilist_cb_init_selected(void *data)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_Data *cfdata;
-   Evas *evas;
-   const char *init;
-   const char *f;
+   const char *init, *f;
    
    cfd = data;
-   cfdata = cfd->cfdata;
-   evas = cfd->dia->win->evas;
+   if (!cfd) return;
 
+   cfdata = cfd->cfdata;
+   if (!cfdata) return;
+   
    if (!cfdata->init_default_theme[0])
      init = e_path_find(path_init, "init.edj");
    else 
      {
-	f = ecore_file_get_file(cfd->cfdata->init_default_theme);
+	f = ecore_file_get_file(cfdata->init_default_theme);
 	init = e_path_find(path_init, f);
      }
    e_widget_preview_edje_set(cfd->data, init, "init/splash");
@@ -263,7 +262,6 @@ _init_file_added(void *data, Ecore_File_Monitor *monitor, Ecore_File_Event event
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_Data *cfdata;
-   Evas *evas;
    Evas_Object *il, *ic;
    char *file, *noext;
    
@@ -276,8 +274,6 @@ _init_file_added(void *data, Ecore_File_Monitor *monitor, Ecore_File_Event event
    cfd = cfdata->cfd;
    if (!cfd) return;
    
-   evas = e_win_evas_get(cfd->dia->win);
-   
    file = (char *)ecore_file_get_file((char *)path);
    noext = ecore_file_strip_ext(file);
    
@@ -285,9 +281,13 @@ _init_file_added(void *data, Ecore_File_Monitor *monitor, Ecore_File_Event event
      {
 	if (e_util_edje_collection_exists((char *)path, "init/splash")) 
 	  {
+	     Evas *evas;
+
+	     evas = e_win_evas_get(cfd->dia->win);
 	     ic = edje_object_add(evas);
 	     e_util_edje_icon_set(ic, "enlightenment/run");
-	     e_widget_ilist_append(il, ic, noext, _ilist_cb_init_selected, cfd, (char *)path);
+	     e_widget_ilist_append(il, ic, noext, _ilist_cb_init_selected, 
+				   cfd, (char *)path);
 	  }
      }
    else if (event == ECORE_FILE_EVENT_DELETED_FILE)
