@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-07-16 21:10+0900\n"
-"PO-Revision-Date: 2006-07-17 09:46+0900\n"
+"POT-Creation-Date: 2006-07-30 23:16+0900\n"
+"PO-Revision-Date: 2006-07-31 10:23+0900\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,8 +20,8 @@ msgstr ""
 msgid "About Enlightenment"
 msgstr "Enlightenment について"
 
-#: src/bin/e_about.c:51 src/bin/e_actions.c:1891 src/bin/e_actions.c:1896
-#: src/bin/e_main.c:643
+#: src/bin/e_about.c:51 src/bin/e_actions.c:1858 src/bin/e_actions.c:1863
+#: src/bin/e_main.c:642
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
@@ -41,421 +41,421 @@ msgstr ""
 msgid "<title>The Team</title>"
 msgstr ""
 
-#: src/bin/e_actions.c:1507
+#: src/bin/e_actions.c:1474
 msgid "Are you sure you want to exit?"
 msgstr "本当に終了しますか"
 
-#: src/bin/e_actions.c:1509
+#: src/bin/e_actions.c:1476
 msgid ""
 "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
 msgstr "Enlightenment を終了しようとしています.<br><br>本当に終了しますか."
 
-#: src/bin/e_actions.c:1514 src/bin/e_fileman_smart.c:999
-#: src/bin/e_int_config_display.c:167 src/bin/e_module.c:528
+#: src/bin/e_actions.c:1481 src/bin/e_fileman_smart.c:999
+#: src/bin/e_int_config_display.c:169 src/bin/e_module.c:528
 #: src/bin/e_confirm_dialog.c:61
 msgid "Yes"
 msgstr "はい"
 
-#: src/bin/e_actions.c:1516 src/bin/e_fileman_smart.c:1000
-#: src/bin/e_int_config_display.c:168 src/bin/e_module.c:529
+#: src/bin/e_actions.c:1483 src/bin/e_fileman_smart.c:1000
+#: src/bin/e_int_config_display.c:170 src/bin/e_module.c:529
 #: src/bin/e_confirm_dialog.c:62
 msgid "No"
 msgstr "いいえ"
 
-#: src/bin/e_actions.c:1617 src/bin/e_actions.c:1851 src/bin/e_actions.c:1853
-#: src/bin/e_actions.c:1855 src/bin/e_actions.c:1857
-#: src/bin/e_int_config_keybindings.c:665
+#: src/bin/e_actions.c:1584 src/bin/e_actions.c:1818 src/bin/e_actions.c:1820
+#: src/bin/e_actions.c:1822 src/bin/e_actions.c:1824
+#: src/bin/e_int_config_keybindings.c:664
 msgid "Menu"
 msgstr "メニュー"
 
 #
-#: src/bin/e_actions.c:1617
+#: src/bin/e_actions.c:1584
 msgid "Window Menu"
 msgstr "ウィンドウメニュー"
 
-#: src/bin/e_actions.c:1624 src/bin/e_actions.c:1629 src/bin/e_actions.c:1634
-#: src/bin/e_actions.c:1639 src/bin/e_actions.c:1794 src/bin/e_actions.c:1798
-#: src/bin/e_actions.c:1803 src/bin/e_actions.c:1808
+#: src/bin/e_actions.c:1591 src/bin/e_actions.c:1596 src/bin/e_actions.c:1601
+#: src/bin/e_actions.c:1606 src/bin/e_actions.c:1761 src/bin/e_actions.c:1765
+#: src/bin/e_actions.c:1770 src/bin/e_actions.c:1775
 msgid "Window : Actions"
 msgstr "ウィンドウ: 動作"
 
-#: src/bin/e_actions.c:1624 src/bin/e_int_border_menu.c:301
+#: src/bin/e_actions.c:1591 src/bin/e_int_border_menu.c:336
 msgid "Raise"
 msgstr "上げる"
 
-#: src/bin/e_actions.c:1629 src/bin/e_int_border_menu.c:309
+#: src/bin/e_actions.c:1596 src/bin/e_int_border_menu.c:344
 msgid "Lower"
 msgstr "下げる"
 
-#: src/bin/e_actions.c:1634 src/bin/e_config_dialog.c:158
-#: src/bin/e_configure.c:104 src/bin/e_int_border_menu.c:334
+#: src/bin/e_actions.c:1601 src/bin/e_config_dialog.c:157
+#: src/bin/e_configure.c:104 src/bin/e_int_border_menu.c:319
 msgid "Close"
 msgstr "閉じる"
 
-#: src/bin/e_actions.c:1639 src/bin/e_int_border_menu.c:285
+#: src/bin/e_actions.c:1606 src/bin/e_int_border_menu.c:308
 msgid "Kill"
 msgstr "強制終了"
 
 #
-#: src/bin/e_actions.c:1644 src/bin/e_actions.c:1652 src/bin/e_actions.c:1660
-#: src/bin/e_actions.c:1668 src/bin/e_actions.c:1670 src/bin/e_actions.c:1673
-#: src/bin/e_actions.c:1676 src/bin/e_actions.c:1679 src/bin/e_actions.c:1682
-#: src/bin/e_actions.c:1685 src/bin/e_actions.c:1693 src/bin/e_actions.c:1696
-#: src/bin/e_actions.c:1699 src/bin/e_actions.c:1702 src/bin/e_actions.c:1705
-#: src/bin/e_actions.c:1713
+#: src/bin/e_actions.c:1611 src/bin/e_actions.c:1619 src/bin/e_actions.c:1627
+#: src/bin/e_actions.c:1635 src/bin/e_actions.c:1637 src/bin/e_actions.c:1640
+#: src/bin/e_actions.c:1643 src/bin/e_actions.c:1646 src/bin/e_actions.c:1649
+#: src/bin/e_actions.c:1652 src/bin/e_actions.c:1660 src/bin/e_actions.c:1663
+#: src/bin/e_actions.c:1666 src/bin/e_actions.c:1669 src/bin/e_actions.c:1672
+#: src/bin/e_actions.c:1680
 msgid "Window : State"
 msgstr "ウィンドウ: 状態"
 
-#: src/bin/e_actions.c:1644
+#: src/bin/e_actions.c:1611
 msgid "Sticky Mode Toggle"
 msgstr "常時表示モード反転"
 
-#: src/bin/e_actions.c:1652
+#: src/bin/e_actions.c:1619
 msgid "Iconic Mode Toggle"
 msgstr "アイコンモード反転"
 
-#: src/bin/e_actions.c:1660
+#: src/bin/e_actions.c:1627
 msgid "Fullscreen Mode Toggle"
 msgstr "全画面モード反転"
 
-#: src/bin/e_actions.c:1668 src/bin/e_int_border_menu.c:92
-#: src/bin/e_int_border_menu.c:177
+#: src/bin/e_actions.c:1635 src/bin/e_int_border_menu.c:93
+#: src/bin/e_int_border_menu.c:196
 msgid "Maximize"
 msgstr "最大化"
 
 #
-#: src/bin/e_actions.c:1670
+#: src/bin/e_actions.c:1637
 msgid "Maximize Vertically"
 msgstr "垂直に最大化"
 
 #
-#: src/bin/e_actions.c:1673
+#: src/bin/e_actions.c:1640
 msgid "Maximize Horizontally"
 msgstr "水平に最大化"
 
-#: src/bin/e_actions.c:1676
+#: src/bin/e_actions.c:1643
 msgid "Maximize Fullscreen"
 msgstr "全面表示"
 
 #
-#: src/bin/e_actions.c:1679
+#: src/bin/e_actions.c:1646
 msgid "Maximize Mode \"Smart\""
 msgstr "最大化モード \"賢く\""
 
-#: src/bin/e_actions.c:1682
+#: src/bin/e_actions.c:1649
 msgid "Maximize Mode \"Expand\""
 msgstr "最大化モード \"拡大\""
 
 #
-#: src/bin/e_actions.c:1685
+#: src/bin/e_actions.c:1652
 msgid "Maximize Mode \"Fill\""
 msgstr "最大化モード \"空きまで"
 
-#: src/bin/e_actions.c:1693
+#: src/bin/e_actions.c:1660
 msgid "Shade Up Mode Toggle"
 msgstr "上方シェード反転"
 
-#: src/bin/e_actions.c:1696
+#: src/bin/e_actions.c:1663
 msgid "Shade Down Mode Toggle"
 msgstr "下方シェード反転"
 
-#: src/bin/e_actions.c:1699
+#: src/bin/e_actions.c:1666
 msgid "Shade Left Mode Toggle"
 msgstr "左方シェード反転"
 
-#: src/bin/e_actions.c:1702
+#: src/bin/e_actions.c:1669
 msgid "Shade Right Mode Toggle"
 msgstr "右方シェード反転"
 
-#: src/bin/e_actions.c:1705
+#: src/bin/e_actions.c:1672
 msgid "Shade Mode Toggle"
 msgstr "シェード状態反転"
 
-#: src/bin/e_actions.c:1713
+#: src/bin/e_actions.c:1680
 msgid "Toggle Borderless State"
 msgstr "ボーダー無し状態反転"
 
 #
-#: src/bin/e_actions.c:1719 src/bin/e_actions.c:1721 src/bin/e_actions.c:1723
-#: src/bin/e_actions.c:1725 src/bin/e_actions.c:1727 src/bin/e_actions.c:1732
-#: src/bin/e_actions.c:1738 src/bin/e_actions.c:1743 src/bin/e_actions.c:1748
-#: src/bin/e_actions.c:1750 src/bin/e_actions.c:1752 src/bin/e_actions.c:1754
-#: src/bin/e_actions.c:1756 src/bin/e_actions.c:1758 src/bin/e_actions.c:1760
-#: src/bin/e_actions.c:1762 src/bin/e_actions.c:1764 src/bin/e_actions.c:1766
-#: src/bin/e_actions.c:1768 src/bin/e_actions.c:1770 src/bin/e_actions.c:1772
-#: src/bin/e_actions.c:1908 src/bin/e_file_dialog.c:61
+#: src/bin/e_actions.c:1686 src/bin/e_actions.c:1688 src/bin/e_actions.c:1690
+#: src/bin/e_actions.c:1692 src/bin/e_actions.c:1694 src/bin/e_actions.c:1699
+#: src/bin/e_actions.c:1705 src/bin/e_actions.c:1710 src/bin/e_actions.c:1715
+#: src/bin/e_actions.c:1717 src/bin/e_actions.c:1719 src/bin/e_actions.c:1721
+#: src/bin/e_actions.c:1723 src/bin/e_actions.c:1725 src/bin/e_actions.c:1727
+#: src/bin/e_actions.c:1729 src/bin/e_actions.c:1731 src/bin/e_actions.c:1733
+#: src/bin/e_actions.c:1735 src/bin/e_actions.c:1737 src/bin/e_actions.c:1739
+#: src/bin/e_actions.c:1875 src/bin/e_file_dialog.c:61
 #: src/modules/ibox/e_mod_config.c:141
 msgid "Desktop"
 msgstr "デスクトップ"
 
-#: src/bin/e_actions.c:1719
+#: src/bin/e_actions.c:1686
 msgid "Flip Desktop Left"
 msgstr "左のデスクトップへ移動する"
 
-#: src/bin/e_actions.c:1721
+#: src/bin/e_actions.c:1688
 msgid "Flip Desktop Right"
 msgstr "右のデスクトップへ移動する"
 
-#: src/bin/e_actions.c:1723
+#: src/bin/e_actions.c:1690
 msgid "Flip Desktop Up"
 msgstr "上のデスクトップへ移動する"
 
-#: src/bin/e_actions.c:1725
+#: src/bin/e_actions.c:1692
 msgid "Flip Desktop Down"
 msgstr "下のデスクトップへ移動する"
 
-#: src/bin/e_actions.c:1727
+#: src/bin/e_actions.c:1694
 msgid "Flip Desktop By..."
 msgstr "デスクトップを指定分移動する"
 
-#: src/bin/e_actions.c:1732
+#: src/bin/e_actions.c:1699
 msgid "Show The Desktop"
 msgstr "デスクトップ背景を出す"
 
-#: src/bin/e_actions.c:1738
+#: src/bin/e_actions.c:1705
 msgid "Flip Desktop To..."
 msgstr "指定のデスクトップへ移動する"
 
-#: src/bin/e_actions.c:1743
+#: src/bin/e_actions.c:1710
 msgid "Flip Desktop Linearly..."
 msgstr "デスクトップを順に移動する"
 
-#: src/bin/e_actions.c:1748
+#: src/bin/e_actions.c:1715
 msgid "Switch To Desktop 0"
 msgstr "デスクトップ 0 に切り替える"
 
-#: src/bin/e_actions.c:1750
+#: src/bin/e_actions.c:1717
 msgid "Switch To Desktop 1"
 msgstr "デスクトップ 1 に切り替える"
 
-#: src/bin/e_actions.c:1752
+#: src/bin/e_actions.c:1719
 msgid "Switch To Desktop 2"
 msgstr "デスクトップ 2 に切り替える"
 
-#: src/bin/e_actions.c:1754
+#: src/bin/e_actions.c:1721
 msgid "Switch To Desktop 3"
 msgstr "デスクトップ 3 に切り替える"
 
-#: src/bin/e_actions.c:1756
+#: src/bin/e_actions.c:1723
 msgid "Switch To Desktop 4"
 msgstr "デスクトップ 4 に切り替える"
 
-#: src/bin/e_actions.c:1758
+#: src/bin/e_actions.c:1725
 msgid "Switch To Desktop 5"
 msgstr "デスクトップ 5 に切り替える"
 
-#: src/bin/e_actions.c:1760
+#: src/bin/e_actions.c:1727
 msgid "Switch To Desktop 6"
 msgstr "デスクトップ 6 に切り替える"
 
-#: src/bin/e_actions.c:1762
+#: src/bin/e_actions.c:1729
 msgid "Switch To Desktop 7"
 msgstr "デスクトップ 7 に切り替える"
 
-#: src/bin/e_actions.c:1764
+#: src/bin/e_actions.c:1731
 msgid "Switch To Desktop 8"
 msgstr "デスクトップ 8 に切り替える"
 
-#: src/bin/e_actions.c:1766
+#: src/bin/e_actions.c:1733
 msgid "Switch To Desktop 9"
 msgstr "デスクトップ 9 に切り替える"
 
-#: src/bin/e_actions.c:1768
+#: src/bin/e_actions.c:1735
 msgid "Switch To Desktop 10"
 msgstr "デスクトップ 10 に切り替える"
 
-#: src/bin/e_actions.c:1770
+#: src/bin/e_actions.c:1737
 msgid "Switch To Desktop 11"
 msgstr "デスクトップ 11 に切り替える"
 
-#: src/bin/e_actions.c:1772
+#: src/bin/e_actions.c:1739
 msgid "Switch To Desktop..."
 msgstr "指定のデスクトップに切り替える"
 
-#: src/bin/e_actions.c:1777 src/bin/e_actions.c:1779 src/bin/e_actions.c:1781
-#: src/bin/e_actions.c:1785 src/bin/e_actions.c:1787 src/bin/e_actions.c:1789
+#: src/bin/e_actions.c:1744 src/bin/e_actions.c:1746 src/bin/e_actions.c:1748
+#: src/bin/e_actions.c:1752 src/bin/e_actions.c:1754 src/bin/e_actions.c:1756
 #: src/bin/e_configure.c:74
 msgid "Screen"
 msgstr "画面"
 
-#: src/bin/e_actions.c:1777
+#: src/bin/e_actions.c:1744
 msgid "Send Mouse To Screen 0"
 msgstr "マウスをスクリーン 0 へ移す"
 
-#: src/bin/e_actions.c:1779
+#: src/bin/e_actions.c:1746
 msgid "Send Mouse To Screen 1"
 msgstr "マウスをスクリーン 1 へ移す"
 
-#: src/bin/e_actions.c:1781
+#: src/bin/e_actions.c:1748
 msgid "Send Mouse To Screen..."
 msgstr "マウスを指定のスクリーンへ移す"
 
-#: src/bin/e_actions.c:1785
+#: src/bin/e_actions.c:1752
 msgid "Send Mouse Forward 1 Screen"
 msgstr "マウスを次のスクリーンへ移す"
 
-#: src/bin/e_actions.c:1787
+#: src/bin/e_actions.c:1754
 msgid "Send Mouse Back 1 Screen"
 msgstr "マウスを前のスクリーンへ戻す"
 
-#: src/bin/e_actions.c:1789
+#: src/bin/e_actions.c:1756
 msgid "Send Mouse Forward/Back Screens..."
 msgstr "マウスを指定のスクリーン分だけ前後に移す"
 
-#: src/bin/e_actions.c:1813 src/bin/e_actions.c:1815 src/bin/e_actions.c:1818
-#: src/bin/e_actions.c:1822 src/bin/e_actions.c:1824 src/bin/e_actions.c:1826
-#: src/bin/e_actions.c:1828 src/bin/e_actions.c:1830 src/bin/e_actions.c:1832
-#: src/bin/e_actions.c:1834 src/bin/e_actions.c:1836 src/bin/e_actions.c:1838
-#: src/bin/e_actions.c:1840 src/bin/e_actions.c:1842 src/bin/e_actions.c:1844
-#: src/bin/e_actions.c:1846
+#: src/bin/e_actions.c:1780 src/bin/e_actions.c:1782 src/bin/e_actions.c:1785
+#: src/bin/e_actions.c:1789 src/bin/e_actions.c:1791 src/bin/e_actions.c:1793
+#: src/bin/e_actions.c:1795 src/bin/e_actions.c:1797 src/bin/e_actions.c:1799
+#: src/bin/e_actions.c:1801 src/bin/e_actions.c:1803 src/bin/e_actions.c:1805
+#: src/bin/e_actions.c:1807 src/bin/e_actions.c:1809 src/bin/e_actions.c:1811
+#: src/bin/e_actions.c:1813
 msgid "Window : Moving"
 msgstr "ウィンドウ: 移動"
 
-#: src/bin/e_actions.c:1813
+#: src/bin/e_actions.c:1780
 msgid "To Next Desktop"
 msgstr "次のデスクトップへ"
 
-#: src/bin/e_actions.c:1815
+#: src/bin/e_actions.c:1782
 msgid "To Previous Desktop"
 msgstr "前のデスクトップへ"
 
-#: src/bin/e_actions.c:1818
+#: src/bin/e_actions.c:1785
 msgid "By Desktop #..."
 msgstr "指定分のデスクトップを移動"
 
-#: src/bin/e_actions.c:1822
+#: src/bin/e_actions.c:1789
 msgid "To Desktop 0"
 msgstr "デスクトップ 0 へ"
 
-#: src/bin/e_actions.c:1824
+#: src/bin/e_actions.c:1791
 msgid "To Desktop 1"
 msgstr "デスクトップ 1 へ"
 
-#: src/bin/e_actions.c:1826
+#: src/bin/e_actions.c:1793
 msgid "To Desktop 2"
 msgstr "デスクトップ 2 へ"
 
-#: src/bin/e_actions.c:1828
+#: src/bin/e_actions.c:1795
 msgid "To Desktop 3"
 msgstr "デスクトップ 3 へ"
 
-#: src/bin/e_actions.c:1830
+#: src/bin/e_actions.c:1797
 msgid "To Desktop 4"
 msgstr "デスクトップ 4 へ"
 
-#: src/bin/e_actions.c:1832
+#: src/bin/e_actions.c:1799
 msgid "To Desktop 5"
 msgstr "デスクトップ 5 へ"
 
-#: src/bin/e_actions.c:1834
+#: src/bin/e_actions.c:1801
 msgid "To Desktop 6"
 msgstr "デスクトップ 6 へ"
 
-#: src/bin/e_actions.c:1836
+#: src/bin/e_actions.c:1803
 msgid "To Desktop 7"
 msgstr "デスクトップ 7 へ"
 
-#: src/bin/e_actions.c:1838
+#: src/bin/e_actions.c:1805
 msgid "To Desktop 8"
 msgstr "デスクトップ 8 へ"
 
-#: src/bin/e_actions.c:1840
+#: src/bin/e_actions.c:1807
 msgid "To Desktop 9"
 msgstr "デスクトップ 9 へ"
 
-#: src/bin/e_actions.c:1842
+#: src/bin/e_actions.c:1809
 msgid "To Desktop 10"
 msgstr "デスクトップ 10 へ"
 
-#: src/bin/e_actions.c:1844
+#: src/bin/e_actions.c:1811
 msgid "To Desktop 11"
 msgstr "デスクトップ 11 へ"
 
-#: src/bin/e_actions.c:1846
+#: src/bin/e_actions.c:1813
 msgid "To Desktop..."
 msgstr "指定のデスクトップへ"
 
-#: src/bin/e_actions.c:1851
+#: src/bin/e_actions.c:1818
 msgid "Show Main Menu"
 msgstr "メインメニューを表示する"
 
-#: src/bin/e_actions.c:1853
+#: src/bin/e_actions.c:1820
 msgid "Show Favorites Menu"
 msgstr "お気に入りメニューを表示する"
 
-#: src/bin/e_actions.c:1855
+#: src/bin/e_actions.c:1822
 msgid "Show Clients Menu"
 msgstr "クライアントメニューを表示する"
 
-#: src/bin/e_actions.c:1857
+#: src/bin/e_actions.c:1824
 msgid "Show Menu..."
 msgstr "指定のメニューを表示する"
 
-#: src/bin/e_actions.c:1864 src/bin/e_actions.c:1869 src/bin/e_actions.c:1904
+#: src/bin/e_actions.c:1831 src/bin/e_actions.c:1836 src/bin/e_actions.c:1871
 msgid "Launch"
 msgstr "コマンドの実行"
 
-#: src/bin/e_actions.c:1864
+#: src/bin/e_actions.c:1831
 msgid "Defined Command"
 msgstr "定義済みコマンド"
 
-#: src/bin/e_actions.c:1869
+#: src/bin/e_actions.c:1836
 msgid "Application"
 msgstr "アプリケーション"
 
-#: src/bin/e_actions.c:1874 src/bin/e_actions.c:1876
+#: src/bin/e_actions.c:1841 src/bin/e_actions.c:1843
 msgid "Window : List"
 msgstr "ウィンドウ: ウィンドウリスト"
 
-#: src/bin/e_actions.c:1874
+#: src/bin/e_actions.c:1841
 msgid "Next Window"
 msgstr "次のウィンドウ"
 
-#: src/bin/e_actions.c:1876
+#: src/bin/e_actions.c:1843
 msgid "Previous Window"
 msgstr "前のウィンドウ"
 
-#: src/bin/e_actions.c:1886 src/bin/e_int_menus.c:113
+#: src/bin/e_actions.c:1853 src/bin/e_int_menus.c:113
 msgid "Gadgets"
 msgstr "ガジェット"
 
-#: src/bin/e_actions.c:1886
+#: src/bin/e_actions.c:1853
 msgid "Toggle Edit Mode"
 msgstr "編集モード反転"
 
-#: src/bin/e_actions.c:1891
+#: src/bin/e_actions.c:1858
 msgid "Restart"
 msgstr "再起動"
 
-#: src/bin/e_actions.c:1896
+#: src/bin/e_actions.c:1863
 msgid "Exit"
 msgstr "終了"
 
-#: src/bin/e_actions.c:1904
+#: src/bin/e_actions.c:1871
 msgid "Run Command Dialog"
 msgstr "コマンド実行ダイアログ"
 
-#: src/bin/e_actions.c:1908
+#: src/bin/e_actions.c:1875
 msgid "Desktop Lock"
 msgstr "デスクトップロック"
 
-#: src/bin/e_apps.c:464 src/bin/e_fileman_file.c:312
+#: src/bin/e_apps.c:460 src/bin/e_fileman_file.c:312
 #: src/bin/e_fileman_file.c:363 src/bin/e_fileman_mime.c:393
 #: src/bin/e_utils.c:231 src/bin/e_zone.c:636
 msgid "Run Error"
 msgstr "実行エラー"
 
-#: src/bin/e_apps.c:465 src/bin/e_utils.c:232
+#: src/bin/e_apps.c:461 src/bin/e_utils.c:232
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
 msgstr ""
 "Enlightenment で以下の子プロセスが fork できませんでした.<br><br>%s<br>"
 
-#: src/bin/e_apps.c:2110
+#: src/bin/e_apps.c:2106
 msgid "Application run error"
 msgstr "アプリケーション実行エラー"
 
-#: src/bin/e_apps.c:2112
+#: src/bin/e_apps.c:2108
 #, c-format
 msgid ""
 "Enlightenment was unable to run the application:<br><br>%s<br><br>The "
@@ -464,11 +464,11 @@ msgstr ""
 "Enlightenment で以下のアプリケーションが実行できませんでした.<br><br>%"
 "s<br><br>起動に失敗しました."
 
-#: src/bin/e_apps.c:2120 src/bin/e_config_dialog.c:149 src/bin/e_error.c:196
+#: src/bin/e_apps.c:2116 src/bin/e_config_dialog.c:149 src/bin/e_error.c:196
 #: src/bin/e_error.c:205 src/bin/e_file_dialog.c:70
 #: src/bin/e_fileman_smart.c:906 src/bin/e_int_border_remember.c:246
 #: src/bin/e_int_border_remember.c:327 src/bin/e_int_border_remember.c:369
-#: src/bin/e_int_config_background_import.c:202 src/bin/e_module.c:379
+#: src/bin/e_int_config_background_import.c:206 src/bin/e_module.c:379
 #: src/bin/e_utils.c:526 src/modules/battery/e_mod_main.c:303
 #: src/modules/cpufreq/e_mod_main.c:331 src/modules/cpufreq/e_mod_main.c:358
 #: src/modules/cpufreq/e_mod_main.c:377 src/modules/ibar/e_mod_main.c:1214
@@ -706,7 +706,7 @@ msgstr "外観"
 msgid "Wallpaper"
 msgstr "壁紙"
 
-#: src/bin/e_configure.c:68 src/bin/e_int_config_background.c:298
+#: src/bin/e_configure.c:68 src/bin/e_int_config_background.c:301
 #: src/bin/e_int_menus.c:617
 msgid "Theme"
 msgstr "テーマ"
@@ -747,7 +747,7 @@ msgstr "動作"
 msgid "Window Focus"
 msgstr "ウィンドウフォーカス"
 
-#: src/bin/e_configure.c:81 src/bin/e_int_config_keybindings.c:597
+#: src/bin/e_configure.c:81 src/bin/e_int_config_keybindings.c:596
 msgid "Key Bindings"
 msgstr "キーバインド"
 
@@ -832,78 +832,82 @@ msgstr ""
 "コードは <hilight>%i</hilight> です.<br>これはまずいですね. 起きてはいけない"
 "ことです. ぜひバグ報告して下さい."
 
-#: src/bin/e_eap_editor.c:84
+#: src/bin/e_eap_editor.c:91
 msgid "Eap Editor"
 msgstr "アプリケーションの登録(EAPエディタ)"
 
 #
-#: src/bin/e_eap_editor.c:230 src/bin/e_int_config_fonts.c:72
+#: src/bin/e_eap_editor.c:256 src/bin/e_int_config_fonts.c:72
 msgid "Icon"
 msgstr "アイコン"
 
-#: src/bin/e_eap_editor.c:258
+#: src/bin/e_eap_editor.c:286
 msgid "Basic Info"
 msgstr "基本情報"
 
-#: src/bin/e_eap_editor.c:259
+#: src/bin/e_eap_editor.c:287
 msgid "App name"
 msgstr "アプリケーション名"
 
-#: src/bin/e_eap_editor.c:268
+#: src/bin/e_eap_editor.c:296
 msgid "Executable"
 msgstr "実行ファイル名"
 
-#: src/bin/e_eap_editor.c:292 src/bin/e_fileman_smart.c:1216
+#: src/bin/e_eap_editor.c:320 src/bin/e_fileman_smart.c:1216
 msgid "General"
 msgstr "一般"
 
-#: src/bin/e_eap_editor.c:295
+#: src/bin/e_eap_editor.c:323
 msgid "Generic Info"
 msgstr "一般情報"
 
-#: src/bin/e_eap_editor.c:304
+#: src/bin/e_eap_editor.c:332
 msgid "Comment"
 msgstr "注釈"
 
-#: src/bin/e_eap_editor.c:314
+#: src/bin/e_eap_editor.c:342
 msgid "Window"
 msgstr "ウィンドウ"
 
-#: src/bin/e_eap_editor.c:316
+#: src/bin/e_eap_editor.c:344
 msgid "Window Name"
 msgstr "ウィンドウ名"
 
-#: src/bin/e_eap_editor.c:325
+#: src/bin/e_eap_editor.c:353
 msgid "Window Class"
 msgstr "ウィンドウクラス"
 
-#: src/bin/e_eap_editor.c:331
+#: src/bin/e_eap_editor.c:359
 msgid "Window Title"
 msgstr "ウィンドウタイトル"
 
-#: src/bin/e_eap_editor.c:337 src/bin/e_int_border_remember.c:470
+#: src/bin/e_eap_editor.c:365 src/bin/e_int_border_remember.c:470
 msgid "Window Role"
 msgstr "ウィンドウの役割"
 
-#: src/bin/e_eap_editor.c:346
+#: src/bin/e_eap_editor.c:374
 msgid "Icon Theme"
 msgstr "アイコンのテーマ"
 
-#: src/bin/e_eap_editor.c:348
+#: src/bin/e_eap_editor.c:376
 msgid "Icon Class"
 msgstr "アイコンクラス"
 
-#: src/bin/e_eap_editor.c:362
+#: src/bin/e_eap_editor.c:390
 msgid "Misc"
 msgstr "その他"
 
-#: src/bin/e_eap_editor.c:363
+#: src/bin/e_eap_editor.c:391
 msgid "Startup Notify"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:366
+#: src/bin/e_eap_editor.c:394
 msgid "Wait Exit"
 msgstr ""
+
+#: src/bin/e_eap_editor.c:414
+msgid "Select An Icon"
+msgstr "アイコンを選択する"
 
 #: src/bin/e_error.c:352
 msgid "Enlightenment: Error!"
@@ -921,7 +925,7 @@ msgstr "ホーム"
 msgid "Icons"
 msgstr "アイコン"
 
-#: src/bin/e_file_dialog.c:71 src/bin/e_int_config_background_import.c:206
+#: src/bin/e_file_dialog.c:71 src/bin/e_int_config_background_import.c:209
 #: src/bin/e_entry_dialog.c:71
 msgid "Cancel"
 msgstr "取消"
@@ -1083,7 +1087,7 @@ msgstr "名前だけ"
 msgid "Details"
 msgstr "詳細"
 
-#: src/bin/e_fileman_smart.c:2024 src/bin/e_int_config_display.c:352
+#: src/bin/e_fileman_smart.c:2024 src/bin/e_int_config_display.c:365
 msgid "Refresh"
 msgstr "更新"
 
@@ -1099,7 +1103,7 @@ msgstr "カット"
 msgid "Rename"
 msgstr "名前変更"
 
-#: src/bin/e_fileman_smart.c:3938 src/bin/e_int_config_shelf.c:246
+#: src/bin/e_fileman_smart.c:3938 src/bin/e_int_config_shelf.c:70
 #: src/modules/ibar/e_mod_config.c:107
 msgid "Delete"
 msgstr "削除"
@@ -1131,7 +1135,7 @@ msgstr "編集を終了する"
 #: src/bin/e_gadget.c:209 src/bin/e_int_menus.c:133 src/bin/e_module.c:453
 #: src/modules/battery/e_mod_main.c:173 src/modules/ibar/e_mod_main.c:304
 #: src/modules/ibar/e_mod_main.c:912 src/modules/ibox/e_mod_main.c:295
-#: src/modules/ibox/e_mod_main.c:695 src/modules/itray/e_mod_main.c:417
+#: src/modules/ibox/e_mod_main.c:696 src/modules/itray/e_mod_main.c:417
 #: src/modules/pager/e_mod_main.c:640 src/modules/temperature/e_mod_main.c:144
 msgid "Configuration"
 msgstr "設定"
@@ -1198,187 +1202,191 @@ msgstr "ウィンドウボーダーの選択"
 msgid "Remember this Border for this window next time it appears"
 msgstr "このボーダーを記憶して, 次回このウィンドウが現れた時に適用する"
 
-#: src/bin/e_int_border_locks.c:67 src/bin/e_int_border_menu.c:130
+#: src/bin/e_int_border_locks.c:67 src/bin/e_int_border_menu.c:145
 msgid "Window Locks"
 msgstr "ウィンドウロック"
 
 #
-#: src/bin/e_int_border_locks.c:295
+#: src/bin/e_int_border_locks.c:292
 msgid "Generic Locks"
 msgstr "一般的なロック"
 
-#: src/bin/e_int_border_locks.c:296
+#: src/bin/e_int_border_locks.c:293
 msgid "Lock the Window so it does only what I tell it to"
 msgstr ""
 "このウィンドウのプログラムで勝手にウィンドウの状態が変更されないようにする"
 
-#: src/bin/e_int_border_locks.c:298
+#: src/bin/e_int_border_locks.c:295
 msgid "Protect this window from me accidentally changing it"
 msgstr "状態が誤って変更されないようにこのウィンドウを保護する"
 
-#: src/bin/e_int_border_locks.c:300
+#: src/bin/e_int_border_locks.c:297
 msgid ""
 "Protect this window from being accidentally closed because it is important"
 msgstr "重要なウィンドウなので誤って閉じられないようにこのウィンドウを保護する"
 
-#: src/bin/e_int_border_locks.c:302
+#: src/bin/e_int_border_locks.c:299
 msgid "Do not allow the border to change on this window"
 msgstr "このウィンドウのボーダーの変更を禁止する"
 
-#: src/bin/e_int_border_locks.c:305
+#: src/bin/e_int_border_locks.c:302
 msgid "Remember these Locks for this window next time it appears"
 msgstr "以上のロックを記憶して, 次回このウィンドウが現れた時に適用する"
 
-#: src/bin/e_int_border_locks.c:318
+#: src/bin/e_int_border_locks.c:315
 msgid "Lock program changing:"
 msgstr "プログラムに対して以下の変更を禁止する"
 
-#: src/bin/e_int_border_locks.c:319 src/bin/e_int_border_locks.c:338
+#: src/bin/e_int_border_locks.c:316 src/bin/e_int_border_locks.c:335
 #: src/bin/e_int_border_remember.c:491
 msgid "Position"
 msgstr "位置"
 
-#: src/bin/e_int_border_locks.c:321 src/bin/e_int_border_locks.c:340
-#: src/bin/e_int_border_remember.c:493 src/bin/e_int_shelf_config.c:311
-#: src/bin/e_int_shelf_config.c:390
+#: src/bin/e_int_border_locks.c:318 src/bin/e_int_border_locks.c:337
+#: src/bin/e_int_border_remember.c:493 src/bin/e_int_shelf_config.c:370
+#: src/bin/e_int_shelf_config.c:449
 msgid "Size"
 msgstr "サイズ"
 
-#: src/bin/e_int_border_locks.c:323 src/bin/e_int_border_locks.c:342
-#: src/bin/e_int_border_menu.c:165 src/bin/e_int_border_remember.c:495
-#: src/bin/e_int_shelf_config.c:348
+#: src/bin/e_int_border_locks.c:320 src/bin/e_int_border_locks.c:339
+#: src/bin/e_int_border_menu.c:184 src/bin/e_int_border_remember.c:495
+#: src/bin/e_int_shelf_config.c:407
 msgid "Stacking"
 msgstr "積み重ね順"
 
-#: src/bin/e_int_border_locks.c:325 src/bin/e_int_border_locks.c:344
+#: src/bin/e_int_border_locks.c:322 src/bin/e_int_border_locks.c:341
 msgid "Iconified state"
 msgstr "アイコン化"
 
 #
-#: src/bin/e_int_border_locks.c:327 src/bin/e_int_border_locks.c:346
+#: src/bin/e_int_border_locks.c:324 src/bin/e_int_border_locks.c:343
 #: src/bin/e_int_border_remember.c:501
 msgid "Stickiness"
 msgstr "常時表示"
 
 #
-#: src/bin/e_int_border_locks.c:329 src/bin/e_int_border_locks.c:348
+#: src/bin/e_int_border_locks.c:326 src/bin/e_int_border_locks.c:345
 #: src/bin/e_int_border_remember.c:505
 msgid "Shaded state"
 msgstr "シェード"
 
 #
-#: src/bin/e_int_border_locks.c:331 src/bin/e_int_border_locks.c:350
+#: src/bin/e_int_border_locks.c:328 src/bin/e_int_border_locks.c:347
 msgid "Maximized state"
 msgstr "最大化"
 
 #
-#: src/bin/e_int_border_locks.c:333 src/bin/e_int_border_locks.c:352
+#: src/bin/e_int_border_locks.c:330 src/bin/e_int_border_locks.c:349
 msgid "Fullscreen state"
 msgstr "全面表示"
 
-#: src/bin/e_int_border_locks.c:337
+#: src/bin/e_int_border_locks.c:334
 msgid "Lock me from changing:"
 msgstr "ユーザーに対して以下の変更を禁止する"
 
 #
-#: src/bin/e_int_border_locks.c:354 src/bin/e_int_border_remember.c:499
+#: src/bin/e_int_border_locks.c:351 src/bin/e_int_border_remember.c:499
 msgid "Border style"
 msgstr "ボーダースタイル"
 
-#: src/bin/e_int_border_locks.c:358
+#: src/bin/e_int_border_locks.c:355
 msgid "Stop me from:"
 msgstr "ユーザーに対して以下の操作を禁止する"
 
 #
-#: src/bin/e_int_border_locks.c:359
+#: src/bin/e_int_border_locks.c:356
 msgid "Closing the window"
 msgstr "ウィンドウを閉じる"
 
-#: src/bin/e_int_border_locks.c:361
+#: src/bin/e_int_border_locks.c:358
 msgid "Exiting my login with this window open"
 msgstr "このウィンドウを開いたままログインを終了する"
 
 #
-#: src/bin/e_int_border_locks.c:365
+#: src/bin/e_int_border_locks.c:362
 msgid "Remember these Locks"
 msgstr "以上のロックを記憶する"
 
-#: src/bin/e_int_border_menu.c:49
+#: src/bin/e_int_border_menu.c:50
 msgid "Always On Top"
 msgstr "常に一番上に"
 
-#: src/bin/e_int_border_menu.c:60 src/bin/e_int_config_fonts.c:76
+#: src/bin/e_int_border_menu.c:61 src/bin/e_int_config_fonts.c:76
 #: src/modules/temperature/e_mod_config.c:156
 msgid "Normal"
 msgstr "普通"
 
-#: src/bin/e_int_border_menu.c:71
+#: src/bin/e_int_border_menu.c:72
 msgid "Always Below"
 msgstr "常に一番下に"
 
-#: src/bin/e_int_border_menu.c:102
+#: src/bin/e_int_border_menu.c:104
 msgid "Maximize vertically"
 msgstr "垂直に最大化"
 
-#: src/bin/e_int_border_menu.c:112
+#: src/bin/e_int_border_menu.c:115
 msgid "Maximize horizontally"
 msgstr "水平に最大化"
 
-#: src/bin/e_int_border_menu.c:137
+#: src/bin/e_int_border_menu.c:126
+msgid "Unmaximize"
+msgstr "元に戻す"
+
+#: src/bin/e_int_border_menu.c:152
 msgid "Remember"
 msgstr "記憶"
 
-#: src/bin/e_int_border_menu.c:144
+#: src/bin/e_int_border_menu.c:159
 msgid "Borders"
 msgstr "ボーダー"
 
-#: src/bin/e_int_border_menu.c:154
+#: src/bin/e_int_border_menu.c:172
 msgid "Send to Desktop"
 msgstr "他のデスクトップへ移す"
 
-#: src/bin/e_int_border_menu.c:189
+#: src/bin/e_int_border_menu.c:208
 msgid "Shaded"
 msgstr "シェード"
 
-#: src/bin/e_int_border_menu.c:202
+#: src/bin/e_int_border_menu.c:221
 msgid "Sticky"
 msgstr "常時表示"
 
-#: src/bin/e_int_border_menu.c:215
+#: src/bin/e_int_border_menu.c:234
 msgid "Borderless"
 msgstr "ボーダー無し"
 
-#: src/bin/e_int_border_menu.c:228
+#: src/bin/e_int_border_menu.c:247
 #: src/bin/e_int_config_window_manipulation.c:144
 #: src/bin/e_int_config_window_manipulation.c:194
 msgid "Fullscreen"
 msgstr "全面表示"
 
-#: src/bin/e_int_border_menu.c:242
+#: src/bin/e_int_border_menu.c:261
 msgid "Skip Window List"
 msgstr "ウィンドウリストをスキップする"
 
-#: src/bin/e_int_border_menu.c:260
+#: src/bin/e_int_border_menu.c:279
 msgid "Edit Icon"
 msgstr "アイコン編集"
 
-#: src/bin/e_int_border_menu.c:267
+#: src/bin/e_int_border_menu.c:286
 msgid "Create Icon"
 msgstr "アイコン作成"
 
-#: src/bin/e_int_border_menu.c:276 src/bin/e_int_border_prop.c:73
+#: src/bin/e_int_border_menu.c:295 src/bin/e_int_border_prop.c:73
 msgid "Window Properties"
 msgstr "ウィンドウプロパティ"
 
-#: src/bin/e_int_border_menu.c:323
+#: src/bin/e_int_border_menu.c:358
 msgid "Iconify"
 msgstr "アイコン化"
 
-#: src/bin/e_int_border_menu.c:570
+#: src/bin/e_int_border_menu.c:611
 msgid "Incomplete Window Properties"
 msgstr "ウィンドウプロパティが不完全です"
 
-#: src/bin/e_int_border_menu.c:571
+#: src/bin/e_int_border_menu.c:612
 msgid ""
 "The window you are creating an icon for<br>does not contain window name and "
 "class<br>properties, so the needed properties for<br>the icon so that it "
@@ -1536,62 +1544,62 @@ msgstr "ログイン時にこのプログラムを実行する"
 msgid "Wallpaper Settings"
 msgstr "壁紙の設定"
 
-#: src/bin/e_int_config_background.c:115 src/bin/e_int_config_background.c:178
+#: src/bin/e_int_config_background.c:115 src/bin/e_int_config_background.c:182
 msgid "Select Another Image"
 msgstr "他の画像を取り込む"
 
-#: src/bin/e_int_config_background.c:184
+#: src/bin/e_int_config_background.c:188
 msgid "Set Wallpaper For"
 msgstr "壁紙の設定場所"
 
-#: src/bin/e_int_config_background.c:187
+#: src/bin/e_int_config_background.c:191
 msgid "Default Desktop"
 msgstr "デフォルトのデスクトップ"
 
-#: src/bin/e_int_config_background.c:189
+#: src/bin/e_int_config_background.c:193
 msgid "This Desktop"
 msgstr "このデスクトップ"
 
-#: src/bin/e_int_config_background.c:191
+#: src/bin/e_int_config_background.c:195
 msgid "All Desktops"
 msgstr "全デスクトップ"
 
-#: src/bin/e_int_config_background.c:313
+#: src/bin/e_int_config_background.c:315
 msgid "Theme Wallpaper"
 msgstr "テーマの壁紙"
 
-#: src/bin/e_int_config_background.c:346 src/bin/e_int_config_desklock.c:590
+#: src/bin/e_int_config_background.c:348 src/bin/e_int_config_desklock.c:590
 #: src/bin/e_int_config_startup.c:173 src/bin/e_int_config_theme.c:167
 msgid "Personal"
 msgstr "ユーザー"
 
-#: src/bin/e_int_config_background.c:355 src/bin/e_int_config_startup.c:182
+#: src/bin/e_int_config_background.c:357 src/bin/e_int_config_startup.c:182
 #: src/bin/e_int_config_theme.c:177
 msgid "System"
 msgstr "システム"
 
-#: src/bin/e_int_config_background.c:362 src/bin/e_int_config_startup.c:189
+#: src/bin/e_int_config_background.c:364 src/bin/e_int_config_startup.c:189
 #: src/bin/e_int_config_theme.c:184
 msgid "Other"
 msgstr "その他"
 
-#: src/bin/e_int_config_background_import.c:147
+#: src/bin/e_int_config_background_import.c:148
 msgid "Import An Image"
 msgstr "画像をインポートする"
 
-#: src/bin/e_int_config_background_import.c:186
+#: src/bin/e_int_config_background_import.c:190
 msgid "Options"
 msgstr "オプション"
 
-#: src/bin/e_int_config_background_import.c:188
+#: src/bin/e_int_config_background_import.c:192
 msgid "Center Image"
 msgstr "画像を中央に配置する"
 
-#: src/bin/e_int_config_background_import.c:190
+#: src/bin/e_int_config_background_import.c:194
 msgid "Scale Image"
 msgstr "画像の大きさを調整する"
 
-#: src/bin/e_int_config_background_import.c:192
+#: src/bin/e_int_config_background_import.c:196
 msgid "Tile Image"
 msgstr "画像をタイル上に配置する"
 
@@ -1747,7 +1755,7 @@ msgstr "%1.1f 秒"
 msgid "Wrap desktops around when flipping"
 msgstr "デスクトップの上下左右をつなげる"
 
-#: src/bin/e_int_config_display.c:105
+#: src/bin/e_int_config_display.c:107
 #, c-format
 msgid ""
 "Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
@@ -1758,7 +1766,7 @@ msgstr ""
 "て下さい.<br>ボタンを押さない場合は,<br>元の解像度 %dx%d とリフレッシュレー"
 "ト %d Hz<br>にあと %d 秒で復帰します."
 
-#: src/bin/e_int_config_display.c:114
+#: src/bin/e_int_config_display.c:116
 #, c-format
 msgid ""
 "Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
@@ -1769,27 +1777,27 @@ msgstr ""
 "て下さい.<br>ボタンを押さない場合は,<br>元の解像度 %dx%d とリフレッシュレー"
 "ト %d Hz<br>に <hilight>ただちに</hilight> 復帰します."
 
-#: src/bin/e_int_config_display.c:164
+#: src/bin/e_int_config_display.c:166
 msgid "Resolution change"
 msgstr "解像度の変更"
 
-#: src/bin/e_int_config_display.c:193
+#: src/bin/e_int_config_display.c:195
 msgid "Display Settings"
 msgstr "ディスプレイの設定"
 
-#: src/bin/e_int_config_display.c:337
+#: src/bin/e_int_config_display.c:350
 msgid "Resolution"
 msgstr "解像度"
 
-#: src/bin/e_int_config_display.c:345
+#: src/bin/e_int_config_display.c:358
 msgid "Restore on login"
 msgstr "ログイン時に解像度復帰"
 
-#: src/bin/e_int_config_display.c:366
+#: src/bin/e_int_config_display.c:379
 msgid "Missing Features"
 msgstr "機能が不足しています"
 
-#: src/bin/e_int_config_display.c:367
+#: src/bin/e_int_config_display.c:380
 msgid ""
 "Your X Display Server is missing support for<br>The <hilight>XRandr</"
 "hilight> (X Resize and Rotate) extension.<br>You cannot change screen "
@@ -1802,11 +1810,11 @@ msgstr ""
 "画面の解像度は変更できません.<br><hilight>ecore</hilight> の構築時に, XRandr "
 "サポートが検出されなかった<br>ということも考えられます."
 
-#: src/bin/e_int_config_display.c:441
+#: src/bin/e_int_config_display.c:451
 msgid "Rotation"
 msgstr "回転"
 
-#: src/bin/e_int_config_display.c:464
+#: src/bin/e_int_config_display.c:473
 msgid "Mirroring"
 msgstr "反転"
 
@@ -2103,11 +2111,11 @@ msgstr ""
 msgid "Module"
 msgstr "モジュール"
 
-#: src/bin/e_int_config_fonts.c:75 src/bin/e_int_shelf_config.c:315
+#: src/bin/e_int_config_fonts.c:75 src/bin/e_int_shelf_config.c:374
 msgid "Small"
 msgstr "小"
 
-#: src/bin/e_int_config_fonts.c:77 src/bin/e_int_shelf_config.c:319
+#: src/bin/e_int_config_fonts.c:77 src/bin/e_int_shelf_config.c:378
 msgid "Large"
 msgstr "大"
 
@@ -2160,7 +2168,7 @@ msgstr "バイトコード"
 msgid "Automatic"
 msgstr "自動"
 
-#: src/bin/e_int_config_fonts.c:399 src/bin/e_int_config_keybindings.c:681
+#: src/bin/e_int_config_fonts.c:399 src/bin/e_int_config_keybindings.c:680
 msgid "None"
 msgstr "無し"
 
@@ -2197,8 +2205,8 @@ msgid "Choose a Key"
 msgstr "キーを指定する"
 
 #: src/bin/e_int_config_keybindings.c:11
-#: src/bin/e_int_config_keybindings.c:557
-#: src/bin/e_int_config_keybindings.c:713
+#: src/bin/e_int_config_keybindings.c:556
+#: src/bin/e_int_config_keybindings.c:712
 msgid "Action"
 msgstr "アクション"
 
@@ -2217,7 +2225,7 @@ msgid "Unsorted"
 msgstr "その他"
 
 #: src/bin/e_int_config_keybindings.c:20
-#: src/bin/e_int_config_keybindings.c:687
+#: src/bin/e_int_config_keybindings.c:686
 msgid "Unknown"
 msgstr "不明"
 
@@ -2225,65 +2233,65 @@ msgstr "不明"
 msgid "Key Binding Settings"
 msgstr "キーバインドの設定"
 
-#: src/bin/e_int_config_keybindings.c:613
+#: src/bin/e_int_config_keybindings.c:612
 msgid "Add Key"
 msgstr "キーバインド追加"
 
-#: src/bin/e_int_config_keybindings.c:622
+#: src/bin/e_int_config_keybindings.c:621
 msgid "Remove Key"
 msgstr "キーバインド削除"
 
-#: src/bin/e_int_config_keybindings.c:634
+#: src/bin/e_int_config_keybindings.c:633
 msgid "Binding Context"
 msgstr "カテゴリー"
 
-#: src/bin/e_int_config_keybindings.c:639
+#: src/bin/e_int_config_keybindings.c:638
 msgid "Any"
 msgstr "無指定"
 
-#: src/bin/e_int_config_keybindings.c:644
+#: src/bin/e_int_config_keybindings.c:643
 msgid "Border"
 msgstr "ボーダー"
 
-#: src/bin/e_int_config_keybindings.c:649 src/modules/ibox/e_mod_config.c:110
+#: src/bin/e_int_config_keybindings.c:648 src/modules/ibox/e_mod_config.c:110
 msgid "Zone"
 msgstr "ゾーン"
 
-#: src/bin/e_int_config_keybindings.c:655
+#: src/bin/e_int_config_keybindings.c:654
 msgid "Container"
 msgstr "コンテナ"
 
-#: src/bin/e_int_config_keybindings.c:660
+#: src/bin/e_int_config_keybindings.c:659
 msgid "Manager"
 msgstr "マネージャ"
 
-#: src/bin/e_int_config_keybindings.c:671
+#: src/bin/e_int_config_keybindings.c:670
 msgid "Win List"
 msgstr "ウィンドウリスト"
 
-#: src/bin/e_int_config_keybindings.c:676
+#: src/bin/e_int_config_keybindings.c:675
 msgid "Popup"
 msgstr "ポップアップ"
 
-#: src/bin/e_int_config_keybindings.c:696
+#: src/bin/e_int_config_keybindings.c:695
 msgid "Key & Action"
 msgstr "バインドするアクション"
 
-#: src/bin/e_int_config_keybindings.c:698
+#: src/bin/e_int_config_keybindings.c:697
 msgid "Binding"
 msgstr "バインドするキー"
 
-#: src/bin/e_int_config_keybindings.c:701
-#: src/bin/e_int_config_keybindings.c:716
-#: src/bin/e_int_config_keybindings.c:727
+#: src/bin/e_int_config_keybindings.c:700
+#: src/bin/e_int_config_keybindings.c:715
+#: src/bin/e_int_config_keybindings.c:726
 msgid ":"
 msgstr ""
 
-#: src/bin/e_int_config_keybindings.c:724
+#: src/bin/e_int_config_keybindings.c:723
 msgid "Parameters"
 msgstr "パラメータ"
 
-#: src/bin/e_int_config_keybindings.c:1081
+#: src/bin/e_int_config_keybindings.c:1080
 #, c-format
 msgid ""
 "You requested to delete \"%s\" keybinding.<br><br>Are you sure you want to "
@@ -2291,41 +2299,43 @@ msgid ""
 msgstr ""
 "キーバインド \"%s\" を削除しようとしています.<br><br>本当に削除しますか."
 
-#: src/bin/e_int_config_keybindings.c:1086
+#: src/bin/e_int_config_keybindings.c:1085
 msgid "Delete?"
 msgstr "削除しますか"
 
-#: src/bin/e_int_config_keybindings.c:1135
+#: src/bin/e_int_config_keybindings.c:1134
 msgid "CTRL"
 msgstr ""
 
-#: src/bin/e_int_config_keybindings.c:1141
+#: src/bin/e_int_config_keybindings.c:1140
 msgid "ALT"
 msgstr ""
 
-#: src/bin/e_int_config_keybindings.c:1148
+#: src/bin/e_int_config_keybindings.c:1147
 msgid "SHIFT"
 msgstr ""
 
-#: src/bin/e_int_config_keybindings.c:1155
+#: src/bin/e_int_config_keybindings.c:1154
 msgid "WIN"
 msgstr ""
 
-#: src/bin/e_int_config_keybindings.c:1289
+#: src/bin/e_int_config_keybindings.c:1288
 msgid "Binding Key Sequence"
 msgstr "バインドするキーシーケンス"
 
-#: src/bin/e_int_config_keybindings.c:1405
+#: src/bin/e_int_config_keybindings.c:1410
+#, c-format
+msgid ""
+"The binding key sequence, that you choose, is already used by<br><hilight>%"
+"s</hilight> action.<br>Please choose another binding key sequence."
+msgstr ""
+"そのキーシーケンスはすでに以下のアクションで使われています.<br>"
+"<hilight>%s</hilight> <br>"
+"他のキーシーケンスを選んで下さい."
+
+#: src/bin/e_int_config_keybindings.c:1416
 msgid "Binding Key Error"
 msgstr "キーシーケンスのバインドエラー"
-
-#: src/bin/e_int_config_keybindings.c:1406
-msgid ""
-"The binding key sequence, that you choose, is already used.<br>Please choose "
-"another binding key sequence."
-msgstr ""
-"バインドするそのキーシーケンスはすでに使われています.<br>他のキーシーケンスを"
-"選んで下さい."
 
 #: src/bin/e_int_config_menus.c:39 src/bin/e_int_config_menus.c:88
 #: src/bin/e_int_config_menus.c:129
@@ -2416,7 +2426,7 @@ msgstr "無効"
 msgid "Module Actions"
 msgstr "モジュールについて"
 
-#: src/bin/e_int_config_modules.c:300
+#: src/bin/e_int_config_modules.c:300 src/bin/e_int_config_shelf.c:72
 msgid "Configure"
 msgstr "設定"
 
@@ -2826,7 +2836,7 @@ msgstr ""
 "ただちに以下の結果を確認して下さい:\n"
 "%s/enlightenment-%s\n"
 
-#: src/bin/e_main.c:203
+#: src/bin/e_main.c:202
 #, c-format
 msgid ""
 "Options:\n"
@@ -2870,7 +2880,7 @@ msgstr ""
 "\t-psychotic\n"
 "\t\t精神病様にしてて\n"
 
-#: src/bin/e_main.c:272
+#: src/bin/e_main.c:271
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -2878,7 +2888,7 @@ msgstr ""
 "Enlightenment で Ecore が初期化できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:285
+#: src/bin/e_main.c:284
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -2886,7 +2896,7 @@ msgstr ""
 "Enlightenment でファイルシステムが初期化できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:296
+#: src/bin/e_main.c:295
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2894,7 +2904,7 @@ msgstr ""
 "Enlightenment で終了シグナルハンドラーが準備できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:302
+#: src/bin/e_main.c:301
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2902,7 +2912,7 @@ msgstr ""
 "Enlightenment で HUP シグナルハンドラーが準備できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:313
+#: src/bin/e_main.c:312
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -2910,7 +2920,7 @@ msgstr ""
 "Enlightenment で X との接続が初期化できません.\n"
 "環境変数 DISPLAY の定義を確認してください."
 
-#: src/bin/e_main.c:321
+#: src/bin/e_main.c:320
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -2918,7 +2928,7 @@ msgstr ""
 "Enlightenment で緊急アラートシステムが初期化できません.\n"
 "環境変数 DISPLAY の定義を確認してください."
 
-#: src/bin/e_main.c:328
+#: src/bin/e_main.c:327
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -2926,7 +2936,7 @@ msgstr ""
 "Enlightenment で xinerama のラッピングが設定できません.\n"
 "そんなばかな..."
 
-#: src/bin/e_main.c:344
+#: src/bin/e_main.c:343
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -2934,7 +2944,7 @@ msgstr ""
 "Enlightenment で接続システムが初期化できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:352
+#: src/bin/e_main.c:351
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -2942,7 +2952,7 @@ msgstr ""
 "Enlightenment で IPC システムが初期化できません.\n"
 "メモリー不足かも知れません."
 
-#: src/bin/e_main.c:360
+#: src/bin/e_main.c:359
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -2950,7 +2960,7 @@ msgstr ""
 "Enlightenment で Evas システムが初期化できません.\n"
 "メモリー不足かも知れません."
 
-#: src/bin/e_main.c:366
+#: src/bin/e_main.c:365
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2961,7 +2971,7 @@ msgstr ""
 "ア\n"
 "x11 レンダリングエンジンがサポートされていることも確認してください."
 
-#: src/bin/e_main.c:373
+#: src/bin/e_main.c:372
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2973,7 +2983,7 @@ msgstr ""
 "ア\n"
 "バッファレンダリングエンジンがサポートされていることを確認してください."
 
-#: src/bin/e_main.c:386
+#: src/bin/e_main.c:385
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -2981,7 +2991,7 @@ msgstr ""
 "evas でバッファキャンバスが作成できません. evas にソフトウェアバッファ\n"
 "エンジンがサポートされていることを確認して下さい.\n"
 
-#: src/bin/e_main.c:396
+#: src/bin/e_main.c:395
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
@@ -2989,7 +2999,7 @@ msgstr ""
 "evas で PNG ファイルがロードできません. evas で PNG ローダーがサポート\n"
 "されていることを確認して下さい.\n"
 
-#: src/bin/e_main.c:405
+#: src/bin/e_main.c:404
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
@@ -2997,7 +3007,7 @@ msgstr ""
 "evas で JPEG ファイルがロードできません. evas で JPEG ローダーがサポート\n"
 "されていることを確認して下さい.\n"
 
-#: src/bin/e_main.c:414
+#: src/bin/e_main.c:413
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
@@ -3006,16 +3016,16 @@ msgstr ""
 "されていることを確認して下さい.\n"
 
 #
-#: src/bin/e_main.c:426
+#: src/bin/e_main.c:425
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "Enlightenment でサムネイル処理システムが初期化できません.\n"
 
 #
-#: src/bin/e_main.c:435
+#: src/bin/e_main.c:434
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment でファイルマネージャが初期化できません.\n"
 
-#: src/bin/e_main.c:447
+#: src/bin/e_main.c:446
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -3023,11 +3033,11 @@ msgstr ""
 "Enlightenment ではあなたのホームディレクトリにディレクトリが作成できません.\n"
 "ホームディレクトリはちゃんとありますか, ディスクが一杯になっていませんか."
 
-#: src/bin/e_main.c:455
+#: src/bin/e_main.c:454
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment で設定処理システムが初期化できません."
 
-#: src/bin/e_main.c:462
+#: src/bin/e_main.c:461
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -3035,31 +3045,31 @@ msgstr ""
 "Enlightenment でファイル検索用のパスが設定できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:470
+#: src/bin/e_main.c:469
 msgid "Enlightenment cannot set up its intl system."
 msgstr "Enlightenment で国際化システムが準備できません."
 
-#: src/bin/e_main.c:477
+#: src/bin/e_main.c:476
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Enlightenment でアクションシステムが準備できません."
 
-#: src/bin/e_main.c:484
+#: src/bin/e_main.c:483
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment でバインディングシステムが準備できません."
 
-#: src/bin/e_main.c:491
+#: src/bin/e_main.c:490
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Enlightenment でポップアップシステムが準備できません."
 
-#: src/bin/e_main.c:502
+#: src/bin/e_main.c:501
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment でフォントシステムが準備できません."
 
-#: src/bin/e_main.c:512
+#: src/bin/e_main.c:511
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Enlightenment でテーマシステムが準備できません."
 
-#: src/bin/e_main.c:521
+#: src/bin/e_main.c:520
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -3067,7 +3077,7 @@ msgstr ""
 "Enlightenment で初期スクリーンが準備できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:530
+#: src/bin/e_main.c:529
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -3075,55 +3085,55 @@ msgstr ""
 "Enlightenment でこのシステムのすべての画面に対するウィンドウ管理が\n"
 "準備できませんでした. 別のウィンドウマネージャが動いているかもしれません.\n"
 
-#: src/bin/e_main.c:537
+#: src/bin/e_main.c:536
 msgid "Enlightenment cannot set up its app system."
 msgstr "Enlightenment でアプリケーションシステムが準備できません."
 
-#: src/bin/e_main.c:544
+#: src/bin/e_main.c:543
 msgid "Enlightenment cannot setup remember settings."
 msgstr "Enlightenment で記憶機能の設定が準備できません."
 
-#: src/bin/e_main.c:564
+#: src/bin/e_main.c:563
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Enlightenment で msg システムが準備できません."
 
-#: src/bin/e_main.c:571
+#: src/bin/e_main.c:570
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment で dnd システムが準備できません."
 
-#: src/bin/e_main.c:578
+#: src/bin/e_main.c:577
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr "Enlightenment で入力グラブ処理システムが準備できません."
 
-#: src/bin/e_main.c:585
+#: src/bin/e_main.c:584
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment でモジュールシステムが準備できません."
 
-#: src/bin/e_main.c:592
+#: src/bin/e_main.c:591
 msgid "Enlightenment cannot set up its window list system."
 msgstr "Enlightenment でウィンドウリストシステムが準備できません."
 
-#: src/bin/e_main.c:599
+#: src/bin/e_main.c:598
 msgid "Enlightenment cannot set up its color class system."
 msgstr "Enlightenment でカラークラスシステムが準備できません."
 
-#: src/bin/e_main.c:606
+#: src/bin/e_main.c:605
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr "Enlightenment でガジェット管理システムが準備できません."
 
-#: src/bin/e_main.c:613
+#: src/bin/e_main.c:612
 msgid "Enlightenment cannot set up its shelf system."
 msgstr "Enlightenment でシェルフシステムが準備できません."
 
-#: src/bin/e_main.c:620
+#: src/bin/e_main.c:619
 msgid "Enlightenment cannot set up its exebuf system."
 msgstr "Enlightenment で exebuf システムが準備できません."
 
-#: src/bin/e_main.c:628
+#: src/bin/e_main.c:627
 msgid "Enlightenment cannot set up its desk locking system."
 msgstr "Enlightenment で デスクロッキングシステムが準備できません."
 
-#: src/bin/e_main.c:645
+#: src/bin/e_main.c:644
 msgid "Enlightenment Starting. Please wait."
 msgstr "Enlightenment を起動しています. しばらくお待ちください."
 
@@ -3177,31 +3187,31 @@ msgstr "情報"
 msgid "Would you like to unload this module?<br>"
 msgstr "このモジュールをアンロードしますか？<br>"
 
-#: src/bin/e_shelf.c:722 src/bin/e_int_shelf_config.c:59
+#: src/bin/e_shelf.c:782 src/bin/e_int_shelf_config.c:59
 msgid "Shelf Configuration"
 msgstr "シェルフの設定"
 
-#: src/bin/e_shelf.c:728
+#: src/bin/e_shelf.c:788
 msgid "Stop Moving/Resizing Items"
 msgstr "搭載ガジェットの位置と大きさの変更を終了する"
 
-#: src/bin/e_shelf.c:730
+#: src/bin/e_shelf.c:790
 msgid "Begin Moving/Resizing Items"
 msgstr "搭載ガジェットの位置と大きさの変更を始める"
 
-#: src/bin/e_shelf.c:735
+#: src/bin/e_shelf.c:795
 msgid "Configure Shelf Contents"
 msgstr "シェルフの中身を設定する..."
 
-#: src/bin/e_shelf.c:740
+#: src/bin/e_shelf.c:800
 msgid "Delete this Shelf"
 msgstr "このシェルフを削除する"
 
-#: src/bin/e_shelf.c:806 src/bin/e_int_config_shelf.c:209
+#: src/bin/e_shelf.c:866 src/bin/e_int_config_shelf.c:238
 msgid "Are you sure you want to delete this shelf?"
 msgstr "このシェルフを本当に削除しますか."
 
-#: src/bin/e_shelf.c:807
+#: src/bin/e_shelf.c:867
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
@@ -3230,6 +3240,11 @@ msgstr ""
 msgid "Select a window"
 msgstr "ウィンドウの選択"
 
+#: src/bin/e_fm.c:757
+#, c-format
+msgid "%i Files"
+msgstr "ファイル数 %i"
+
 #: src/bin/e_widget_config_list.c:57
 msgid "Move Up"
 msgstr "上へ"
@@ -3238,7 +3253,7 @@ msgstr "上へ"
 msgid "Move Down"
 msgstr "下へ"
 
-#: src/bin/e_widget_config_list.c:101 src/bin/e_int_config_shelf.c:244
+#: src/bin/e_widget_config_list.c:101 src/bin/e_int_config_shelf.c:68
 #: src/modules/ibar/e_mod_config.c:105
 msgid "Add"
 msgstr "追加"
@@ -3295,60 +3310,64 @@ msgstr "ユーザー定義ディレクトリ"
 msgid "New Directory"
 msgstr "新しいディレクトリ"
 
-#: src/bin/e_int_shelf_config.c:295 src/bin/e_int_shelf_config.c:358
+#: src/bin/e_int_shelf_config.c:354 src/bin/e_int_shelf_config.c:417
 msgid "Layout"
 msgstr "配置"
 
-#: src/bin/e_int_shelf_config.c:313
+#: src/bin/e_int_shelf_config.c:372
 msgid "Tiny"
 msgstr "とても小さい"
 
-#: src/bin/e_int_shelf_config.c:317 src/modules/dropshadow/e_mod_config.c:119
+#: src/bin/e_int_shelf_config.c:376 src/modules/dropshadow/e_mod_config.c:119
 msgid "Medium"
 msgstr "普通"
 
-#: src/bin/e_int_shelf_config.c:321
+#: src/bin/e_int_shelf_config.c:380
 msgid "Huge"
 msgstr "極めて大きい"
 
-#: src/bin/e_int_shelf_config.c:327 src/bin/e_int_shelf_config.c:432
+#: src/bin/e_int_shelf_config.c:386 src/bin/e_int_shelf_config.c:491
 msgid "Configure Contents..."
 msgstr "中身を設定する..."
 
-#: src/bin/e_int_shelf_config.c:350
+#: src/bin/e_int_shelf_config.c:409
 msgid "Above Everything"
 msgstr "常に一番上"
 
-#: src/bin/e_int_shelf_config.c:352
+#: src/bin/e_int_shelf_config.c:411
 msgid "Below Windows"
 msgstr "ウィンドウの下"
 
-#: src/bin/e_int_shelf_config.c:354
+#: src/bin/e_int_shelf_config.c:413
 msgid "Below Everything"
 msgstr "常に一番下"
 
-#: src/bin/e_int_shelf_config.c:391
+#: src/bin/e_int_shelf_config.c:450
 msgid "Shrink to Content Size"
 msgstr "中身の大きさに合わせて縮小する"
 
-#: src/bin/e_int_shelf_config.c:395
+#: src/bin/e_int_shelf_config.c:454
 msgid "Shelf Size"
 msgstr "シェルフの大きさ"
 
-#: src/bin/e_int_shelf_config.c:397
+#: src/bin/e_int_shelf_config.c:456
 #, c-format
 msgid "%3.0f pixels"
 msgstr "%3.0f ピクセル"
 
-#: src/bin/e_int_shelf_config.c:401
+#: src/bin/e_int_shelf_config.c:460
 msgid "Styles"
 msgstr "スタイル"
 
-#: src/bin/e_int_config_shelf.c:26
+#: src/bin/e_int_config_shelf.c:34
 msgid "Shelf Settings"
 msgstr "シェルフの設定"
 
-#: src/bin/e_int_config_shelf.c:204
+#: src/bin/e_int_config_shelf.c:60
+msgid "Configured Shelves"
+msgstr "利用可能なシェルフ"
+
+#: src/bin/e_int_config_shelf.c:234
 #, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
@@ -3356,31 +3375,23 @@ msgid ""
 msgstr ""
 "\"%s\" を削除しようとしています.<br><br>本当にこのシェルフを削除しますか."
 
-#: src/bin/e_int_config_shelf.c:232
-msgid "Configured Shelves"
-msgstr "利用可能なシェルフ"
-
-#: src/bin/e_int_config_shelf.c:248
-msgid "Configure..."
-msgstr "設定..."
-
 #: src/bin/e_int_gadcon_config.c:40
 msgid "Shelf Contents"
 msgstr "シェルフの中身の設定"
 
-#: src/bin/e_int_gadcon_config.c:206
+#: src/bin/e_int_gadcon_config.c:203
 msgid "Available Gadgets"
 msgstr "使えるガジェット"
 
-#: src/bin/e_int_gadcon_config.c:216
+#: src/bin/e_int_gadcon_config.c:213
 msgid "Add Gadget"
 msgstr "ガジェットを追加する"
 
-#: src/bin/e_int_gadcon_config.c:223
+#: src/bin/e_int_gadcon_config.c:220
 msgid "Selected Gadgets"
 msgstr "使用中のガジェット"
 
-#: src/bin/e_int_gadcon_config.c:232
+#: src/bin/e_int_gadcon_config.c:229
 msgid "Remove Gadget"
 msgstr "ガジェットを削除する"
 
@@ -3483,6 +3494,10 @@ msgstr ""
 #: src/bin/e_entry_dialog.c:70
 msgid "Ok"
 msgstr "了解"
+
+#: src/bin/e_widget_fsel.c:188
+msgid "Go up a Directory"
+msgstr "上のディレクトリへ移動"
 
 #: src/modules/battery/e_mod_config.c:37
 msgid "Battery Monitor Configuration"
@@ -3893,11 +3908,11 @@ msgstr ""
 msgid "IBox"
 msgstr ""
 
-#: src/modules/ibox/e_mod_main.c:1421
+#: src/modules/ibox/e_mod_main.c:1422
 msgid "Enlightenment IBox Module"
 msgstr "Enlightenment IBox モジュール"
 
-#: src/modules/ibox/e_mod_main.c:1422
+#: src/modules/ibox/e_mod_main.c:1423
 msgid ""
 "This is the IBox Iconified Application module for Enlightenment.<br>It will "
 "hold minimized applications"
@@ -3997,11 +4012,11 @@ msgstr "ポップアップの速度"
 msgid "Pager"
 msgstr "ページャ"
 
-#: src/modules/pager/e_mod_main.c:1828
+#: src/modules/pager/e_mod_main.c:1829
 msgid "Enlightenment Pager Module"
 msgstr "Enlightenment ページャモジュール"
 
-#: src/modules/pager/e_mod_main.c:1829
+#: src/modules/pager/e_mod_main.c:1830
 msgid "A pager module to navigate virtual desktops."
 msgstr "仮想デスクトップを切替えるためのページャモジュールです."
 
@@ -4156,6 +4171,9 @@ msgstr ""
 "Linux の <hilight>ACPI 温度センサー</hilight>を読みとるモジュールです. <br>大"
 "量に発熱する最近の高速ラップトップでは特に便利です."
 
+#~ msgid "Configure..."
+#~ msgstr "設定..."
+
 #~ msgid ""
 #~ "Enlightenment cannot set up the IPC socket.\n"
 #~ "It likely is already in use by an existing copy of Enlightenment.\n"
@@ -4292,9 +4310,6 @@ msgstr ""
 
 #~ msgid "Right Bottom"
 #~ msgstr "右下(縦)"
-
-#~ msgid "File"
-#~ msgstr "ファイル"
 
 #~ msgid "Path"
 #~ msgstr "パス"
