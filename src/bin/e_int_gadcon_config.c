@@ -159,8 +159,6 @@ _cb_add_instance(void *data, void *data2)
    _load_selected_gadgets(cfdata);
    e_widget_ilist_selected_set(cfdata->o_instances,
 			       e_widget_ilist_count(cfdata->o_instances) - 1);
-   
-   e_widget_disabled_set(cfdata->o_add, 1);
 }
 
 static void
@@ -185,8 +183,16 @@ _cb_remove_instance(void *data, void *data2)
 
    _load_selected_gadgets(cfdata);
 
-   e_widget_disabled_set(cfdata->o_remove, 1);
-   
+   if (i >= evas_list_count(cfdata->cf_gc->clients)) 
+     i = evas_list_count(cfdata->cf_gc->clients) - 1;
+
+   if (i < 0) 
+     e_widget_disabled_set(cfdata->o_remove, 1);
+   else
+     { 
+	e_widget_ilist_selected_set(cfdata->o_instances, i); 
+	e_widget_disabled_set(cfdata->o_remove, 0);
+     }
    e_gadcon_unpopulate(cfdata->gc);
    e_gadcon_populate(cfdata->gc);
    e_config_save_queue();
