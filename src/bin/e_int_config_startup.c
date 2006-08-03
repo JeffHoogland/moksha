@@ -66,9 +66,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	_init_file_monitor = NULL;
      }
 
-   if (cfdata->init_default_theme) 
-     E_FREE(cfdata->init_default_theme);
-   
+   E_FREE(cfdata->init_default_theme);
    E_FREE(cfdata);
 }
 
