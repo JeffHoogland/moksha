@@ -613,6 +613,8 @@ e_border_zone_set(E_Border *bd, E_Zone *zone)
    ecore_event_add(E_EVENT_BORDER_ZONE_SET, ev, _e_border_event_border_zone_set_free, NULL);
 
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_ZONE, &bd->zone->num, 1);
+   if (bd->remember)
+     e_remember_update(bd->remember, bd);
 }
 
 EAPI void
@@ -654,6 +656,8 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
 	     e_border_desk_set(child, bd->desk);
 	  }
      }
+   if (bd->remember)
+     e_remember_update(bd->remember, bd);
 }
 
 EAPI void
@@ -1044,6 +1048,8 @@ e_border_raise(E_Border *bd)
      }
 
    ecore_event_add(E_EVENT_BORDER_STACK, ev, _e_border_event_border_stack_free, NULL);
+   if (bd->remember)
+     e_remember_update(bd->remember, bd);
 }
 
 EAPI void
@@ -1129,6 +1135,8 @@ e_border_lower(E_Border *bd)
      }
 
    ecore_event_add(E_EVENT_BORDER_STACK, ev, _e_border_event_border_stack_free, NULL);
+   if (bd->remember)
+     e_remember_update(bd->remember, bd);
 }
 
 EAPI void
@@ -1183,6 +1191,8 @@ e_border_stack_above(E_Border *bd, E_Border *above)
      }
 
    ecore_event_add(E_EVENT_BORDER_STACK, ev, _e_border_event_border_stack_free, NULL);
+   if (bd->remember)
+     e_remember_update(bd->remember, bd);
 }
 
 EAPI void
@@ -1237,6 +1247,8 @@ e_border_stack_below(E_Border *bd, E_Border *below)
      }
 
    ecore_event_add(E_EVENT_BORDER_STACK, ev, _e_border_event_border_stack_free, NULL);
+   if (bd->remember)
+     e_remember_update(bd->remember, bd);
 }
 
 EAPI void
@@ -1505,6 +1517,8 @@ e_border_shade(E_Border *bd, E_Direction dir)
 	  }
 
      }
+   if (bd->remember)
+     e_remember_update(bd->remember, bd);
 }
 
 EAPI void
@@ -1612,6 +1626,8 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 	  }
 
      }
+   if (bd->remember)
+     e_remember_update(bd->remember, bd);
 }
 
 EAPI void
@@ -1757,6 +1773,8 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	                             bd->maximized & E_MAXIMIZE_VERTICAL);
 	
      }
+   if (bd->remember)
+     e_remember_update(bd->remember, bd);
 }
 
 EAPI void
@@ -1877,6 +1895,8 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 	if (signal)
 	  edje_object_signal_emit(bd->bg_object, "unmaximize", "");
      }
+   if (bd->remember)
+     e_remember_update(bd->remember, bd);
 }
 
 EAPI void
@@ -1965,6 +1985,8 @@ e_border_fullscreen(E_Border *bd, E_Fullscreen policy)
 	bd->client.border.changed = 1;
 	bd->changed = 1;
      }
+   if (bd->remember)
+     e_remember_update(bd->remember, bd);
 }
 
 EAPI void
@@ -1997,6 +2019,8 @@ e_border_unfullscreen(E_Border *bd)
 	bd->client.border.changed = 1;
 	bd->changed = 1;
      }
+   if (bd->remember)
+     e_remember_update(bd->remember, bd);
 }
 
 EAPI void
@@ -2036,6 +2060,8 @@ e_border_iconify(E_Border *bd)
 	     e_border_iconify(child);
 	  }
      }
+   if (bd->remember)
+     e_remember_update(bd->remember, bd);
 }
 
 EAPI void
@@ -2078,6 +2104,8 @@ e_border_uniconify(E_Border *bd)
 	     e_border_uniconify(child);
 	  }
      }
+   if (bd->remember)
+     e_remember_update(bd->remember, bd);
 }
 
 EAPI void
@@ -2112,6 +2140,8 @@ e_border_stick(E_Border *bd)
    e_object_ref(E_OBJECT(bd));
 //   e_object_breadcrumb_add(E_OBJECT(bd), "border_stick_event");
    ecore_event_add(E_EVENT_BORDER_STICK, ev, _e_border_event_border_stick_free, NULL);
+   if (bd->remember)
+     e_remember_update(bd->remember, bd);
 }
 
 EAPI void
@@ -2147,6 +2177,8 @@ e_border_unstick(E_Border *bd)
    ecore_event_add(E_EVENT_BORDER_UNSTICK, ev, _e_border_event_border_unstick_free, NULL);
 
    e_border_desk_set(bd, e_desk_current_get(bd->zone));
+   if (bd->remember)
+     e_remember_update(bd->remember, bd);
 }
 
 EAPI E_Border *
@@ -4629,6 +4661,7 @@ static void
 _e_border_eval(E_Border *bd)
 {
    int change_urgent = 0;
+   int rem_change = 0;
    
    /* fetch any info queued to be fetched */
    if (bd->client.icccm.fetch.client_leader)
@@ -4677,6 +4710,7 @@ _e_border_eval(E_Border *bd)
 	       }
 	  }
 	bd->client.icccm.fetch.client_leader = 0;
+	rem_change = 1;
      }
    if (bd->client.icccm.fetch.title)
      {
@@ -4689,6 +4723,7 @@ _e_border_eval(E_Border *bd)
 	     edje_object_part_text_set(bd->bg_object, "title_text",
 				       bd->client.icccm.title);
 	  }
+	rem_change = 1;
      }
    if (bd->client.netwm.fetch.name)
      {
@@ -4701,6 +4736,7 @@ _e_border_eval(E_Border *bd)
 	     edje_object_part_text_set(bd->bg_object, "title_text",
 				       bd->client.netwm.name);
 	  }
+	rem_change = 1;
      }
    if (bd->client.icccm.fetch.name_class)
      {
@@ -4730,21 +4766,25 @@ _e_border_eval(E_Border *bd)
 	if (nc_change)
 	  bd->changes.icon = 1;
 	bd->client.icccm.fetch.name_class = 0;
+	rem_change = 1;
      }
    if (bd->client.icccm.fetch.state)
      {
 	bd->client.icccm.state = ecore_x_icccm_state_get(bd->client.win);
 	bd->client.icccm.fetch.state = 0;
+	rem_change = 1;
      }
    if (bd->client.netwm.fetch.state)
      {
 	e_hints_window_state_get(bd);
 	bd->client.netwm.fetch.state = 0;
+	rem_change = 1;
      }
    if (bd->client.e.fetch.state)
      {
 	e_hints_window_e_state_get(bd);
 	bd->client.e.fetch.state = 0;
+	rem_change = 1;
      }
    if (bd->client.netwm.fetch.type)
      {
@@ -4778,6 +4818,7 @@ _e_border_eval(E_Border *bd)
 	    (!bd->client.icccm.machine))
 	  ecore_x_icccm_client_machine_get(bd->client.icccm.client_leader);
 	bd->client.icccm.fetch.machine = 0;
+	rem_change = 1;
      }
    if (bd->client.icccm.fetch.command)
      {
@@ -4800,6 +4841,7 @@ _e_border_eval(E_Border *bd)
 				    &(bd->client.icccm.command.argc),
 				    &(bd->client.icccm.command.argv));
 	bd->client.icccm.fetch.command = 0;
+	rem_change = 1;
      }
    if (bd->client.icccm.fetch.hints)
      {
@@ -4827,6 +4869,7 @@ _e_border_eval(E_Border *bd)
 	       e_border_iconify(bd);
 	  }
 	bd->client.icccm.fetch.hints = 0;
+	rem_change = 1;
      }
    if (bd->client.icccm.fetch.size_pos_hints)
      {
@@ -4871,6 +4914,7 @@ _e_border_eval(E_Border *bd)
 #endif
 
 	bd->client.icccm.fetch.size_pos_hints = 0;
+	rem_change = 1;
      }
    if (bd->client.icccm.fetch.protocol)
      {
@@ -4940,12 +4984,14 @@ _e_border_eval(E_Border *bd)
 	       e_border_focus_set(bd, 1, 1);
 	  }
 	bd->client.icccm.fetch.transient_for = 0;
+	rem_change = 1;
      }
    if (bd->client.icccm.fetch.window_role)
      {
 	if (bd->client.icccm.window_role) free(bd->client.icccm.window_role);
 	bd->client.icccm.window_role = ecore_x_icccm_window_role_get(bd->client.win);
 	bd->client.icccm.fetch.window_role = 0;
+	rem_change = 1;
      }
    if (bd->client.icccm.fetch.icon_name)
      {
@@ -4953,6 +4999,7 @@ _e_border_eval(E_Border *bd)
 	bd->client.icccm.icon_name = ecore_x_icccm_icon_name_get(bd->client.win);
 
 	bd->client.icccm.fetch.icon_name = 0;
+	rem_change = 1;
      }
    if (bd->client.netwm.fetch.icon_name)
      {
@@ -4960,6 +5007,7 @@ _e_border_eval(E_Border *bd)
 	ecore_x_netwm_icon_name_get(bd->client.win, &bd->client.netwm.icon_name);
 
 	bd->client.netwm.fetch.icon_name = 0;
+	rem_change = 1;
      }
    if (bd->client.netwm.fetch.icon)
      {
@@ -5089,6 +5137,7 @@ _e_border_eval(E_Border *bd)
 	       }
 	  }
 	bd->client.mwm.fetch.hints = 0;
+	rem_change = 1;
      }
    if (bd->client.netwm.update.state)
      {
@@ -5639,6 +5688,7 @@ _e_border_eval(E_Border *bd)
 	if (bd->shaded)
 	  ecore_x_window_raise(bd->client.shell_win);
 	bd->changes.shading = 0;
+	rem_change = 1;
      }
    if ((bd->changes.shaded) && (bd->changes.pos) && (bd->changes.size))
      {
@@ -5647,6 +5697,7 @@ _e_border_eval(E_Border *bd)
 	else
 	  ecore_x_window_raise(bd->client.shell_win);
 	bd->changes.shaded = 0;
+	rem_change = 1;
      }
    else if ((bd->changes.shaded) && (bd->changes.pos))
      {
@@ -5656,6 +5707,7 @@ _e_border_eval(E_Border *bd)
 	  ecore_x_window_raise(bd->client.shell_win);
 	bd->changes.size = 1;
 	bd->changes.shaded = 0;
+	rem_change = 1;
      }
    else if ((bd->changes.shaded) && (bd->changes.size))
      {
@@ -5664,6 +5716,7 @@ _e_border_eval(E_Border *bd)
 	else
 	  ecore_x_window_raise(bd->client.shell_win);
 	bd->changes.shaded = 0;
+	rem_change = 1;
      }
    else if (bd->changes.shaded)
      {
@@ -5673,6 +5726,7 @@ _e_border_eval(E_Border *bd)
 	  ecore_x_window_raise(bd->client.shell_win);
 	bd->changes.size = 1;
 	bd->changes.shaded = 0;
+	rem_change = 1;
      }
 
    if ((bd->changes.pos) && (bd->changes.size))
@@ -5763,6 +5817,7 @@ _e_border_eval(E_Border *bd)
 	  }
 	bd->changes.pos = 0;
 	bd->changes.size = 0;
+	rem_change = 1;
     }
    else if (bd->changes.pos)
      {
@@ -5773,6 +5828,7 @@ _e_border_eval(E_Border *bd)
 	ecore_x_window_move(bd->win, bd->x, bd->y);
 	e_container_shape_move(bd->shape, bd->x, bd->y);
 	bd->changes.pos = 0;
+	rem_change = 1;
      }
    else if (bd->changes.size)
      {
@@ -5859,12 +5915,14 @@ _e_border_eval(E_Border *bd)
 	     e_container_shape_resize(bd->shape, bd->w, bd->h);
 	  }
 	bd->changes.size = 0;
+	rem_change = 1;
      }
 
    if (bd->changes.reset_gravity)
      {
 	GRAV_SET(bd, ECORE_X_GRAVITY_NW);
 	bd->changes.reset_gravity = 0;
+	rem_change = 1;
      }
    
    if (bd->need_shape_merge)
@@ -6059,6 +6117,7 @@ _e_border_eval(E_Border *bd)
 	     e_border_focus_set(bd, 1, 1);
 	  }
 	bd->changes.visible = 0;
+	rem_change = 1;
      }
 
    if (bd->changes.icon)
@@ -6156,7 +6215,7 @@ _e_border_eval(E_Border *bd)
 	bd->need_fullscreen = 0;
      }
  
-   if (bd->remember)
+   if ((bd->remember) && (rem_change))
      e_remember_update(bd->remember, bd);
 }
 
