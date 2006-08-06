@@ -160,9 +160,10 @@ _e_fm_mime_glob_remove(const char *glob)
 	     evas_stringshare_del(mime->glob);
 	     evas_stringshare_del(mime->mime);
 	     free(mime);
-	     return;
+	     return 1;
 	  }
      }
+   return 0;
 }
 
 static void
@@ -264,7 +265,7 @@ _e_fm_mime_shared_mimeinfo_globs_load(char *file)
 	while ((*p != 0) && (*p != '\n'))
 	  {
 	     *pp = *p;
-	     *pp++;
+	     pp++;
 	     p++;
 	  }
 	*pp = 0;
