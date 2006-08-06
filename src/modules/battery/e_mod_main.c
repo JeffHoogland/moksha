@@ -198,7 +198,6 @@ _menu_cb_post(void *data, E_Menu *m)
 static int
 _battery_cb_check(void *data)
 {
-   Instance *inst;
    Status *ret = NULL;
    Evas_List *l;
 #ifdef __FreeBSD__

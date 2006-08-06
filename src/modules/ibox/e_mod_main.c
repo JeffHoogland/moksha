@@ -133,7 +133,6 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    Evas_Coord x, y, w, h;
    int cx, cy, cw, ch;
    const char *drop[] = { "enlightenment/border" };
-   Evas_List *l;
    Config_Item *ci;
    
    inst = E_NEW(Instance, 1);
@@ -512,8 +511,6 @@ _ibox_icon_new(IBox *b, E_Border *bd)
 static void
 _ibox_icon_free(IBox_Icon *ic)
 {
-   Evas_Object *o;
-
    if (ibox_config->menu)
      {
 	e_menu_post_deactivate_callback_set(ibox_config->menu, NULL, NULL);
@@ -1021,7 +1018,6 @@ _ibox_inst_cb_drop(void *data, const char *type, void *event_info)
 static int
 _ibox_cb_event_border_add(void *data, int type, void *event)
 {
-   int ok;
    E_Event_Border_Add *ev;
    IBox *b;
    IBox_Icon *ic;
@@ -1169,9 +1165,7 @@ static int
 _ibox_cb_event_border_zone_set(void *data, int type, void *event)
 {
    E_Event_Border_Zone_Set *ev;
-   IBox *b;
-   IBox_Icon *ic;
-   
+
    ev = event;
    /* delete from current zone ibox, add to new one */
    if (ev->border->iconic)

@@ -84,11 +84,10 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    E_Radio_Group *rg;
-   Evas_Object *o, *ol, *of, *ob;
+   Evas_Object *o, *of, *ob;
 
    Evas_List *l, *l2;
    int zone_count;
-   char buf[256];
 
    o = e_widget_list_add(evas, 0, 0);
 
