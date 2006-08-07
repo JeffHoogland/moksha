@@ -580,7 +580,7 @@ _e_int_menus_eapedit_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_int_menus_background_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   e_int_config_background(m->zone->container);
+   e_int_config_wallpaper(m->zone->container);
 }
 
 static void

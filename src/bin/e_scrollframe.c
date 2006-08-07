@@ -42,6 +42,7 @@ struct _E_Smart_Data
 /* local subsystem functions */
 static void _e_smart_child_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_smart_pan_changed_hook(void *data, Evas_Object *obj, void *event_info);
+static void _e_smart_pan_pan_changed_hook(void *data, Evas_Object *obj, void *event_info);
 static void _e_smart_event_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_smart_event_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_smart_edje_drag_v(void *data, Evas_Object *obj, const char *emission, const char *source);
@@ -96,6 +97,7 @@ e_scrollframe_child_set(Evas_Object *obj, Evas_Object *child)
 	o = e_pan_add(evas_object_evas_get(obj));
 	sd->pan_obj = o;
 	evas_object_smart_callback_add(o, "changed", _e_smart_pan_changed_hook, sd);
+	evas_object_smart_callback_add(o, "changed", _e_smart_pan_pan_changed_hook, sd);
 	evas_object_show(o);
 	edje_object_part_swallow(sd->edje_obj, "item", o);
      }
@@ -153,6 +155,7 @@ e_scrollframe_extern_pan_set(Evas_Object *obj, Evas_Object *pan,
    sd->pan_func.child_size_get = pan_child_size_get;
    sd->extern_pan = 1;
    evas_object_smart_callback_add(sd->pan_obj, "changed", _e_smart_pan_changed_hook, sd);
+   evas_object_smart_callback_add(sd->pan_obj, "pan_changed", _e_smart_pan_pan_changed_hook, sd);
    edje_object_part_swallow(sd->edje_obj, "item", sd->pan_obj);
    evas_object_show(sd->pan_obj);
 }
@@ -334,6 +337,17 @@ _e_smart_pan_changed_hook(void *data, Evas_Object *obj, void *event_info)
 	sd->child.h = h;
 	_e_smart_scrollbar_size_adjust(sd);
      }
+}
+
+static void
+_e_smart_pan_pan_changed_hook(void *data, Evas_Object *obj, void *event_info)
+{
+   Evas_Coord x, y;
+   E_Smart_Data *sd;
+   
+   sd = data;
+   sd->pan_func.get(sd->pan_obj, &x, &y);
+   e_scrollframe_child_pos_set(sd->smart_obj, x, y);
 }
 
 static void

@@ -12,10 +12,6 @@ Some of the things (in very short form) that need to be done to E17...
   state and i think is also now causing segv's (not sure yet), but it needs
   a complete going over if not a rewrite. :(
 * BUG: "match this window only" doesnt fall back to other unused remembers
-* BUG: make window sticky. send window to another desktop - get ghost window.
-  should 1. make any such operation in the pager useless and do
-  nothing if the window is sticky and 2. in the pager disallow dragging 
-  out of the pager desktop if the window is sticky.
 * BUG: if app asks for borderless in properties - borderless toggle in menu
   doesn't have any effect.
 * BUG: change exe name in basic mode in eap editor and icon vanishes (don't
@@ -76,7 +72,6 @@ Some of the things (in very short form) that need to be done to E17...
 * Dragging a non-eap icon from a border to the ibar should automatically
   create the icon and add that (instead of warning the user that this can't be
   done)
-* new fm code doesn't indicate it is still scanning a dir - needs to
 * new fm code relays-out a dir every time the queue is processed - maybe try
   to speed this up
 * new fm code's file scannign isnt insanely fast - icon size calcs etc. speed
@@ -88,12 +83,6 @@ Some of the things (in very short form) that need to be done to E17...
   CLEANUPS
 -------------------------------------------------------------------------------
 
-* wallpaper dialog needs to display backgrounds in all of the background path
-  locations.  Currently it is only searching ~/.e/e/backgrounds
-* wallpaper dialog needs a "for this screen only" option of containers or
-  zones > 1 :)
-* wallpaper dialog needs to probably use fm2 for list of bg's (use 2 fm views
-  one for system, one for personal).
 * bg import dialog and code needs a big workover - needs a few more options on
   import like quality (lossy low, medium, high, perfect), when scaling do you
   stretch, scale retaining aspect within the screen or extend beyond screen

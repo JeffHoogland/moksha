@@ -32,8 +32,10 @@ _e_wid_fsel_button_up(void *data1, void *data2)
    E_Widget_Data *wd;
    
    wd = data1;
-   e_fm2_parent_go(wd->o_files_fm);
-   e_widget_scrollframe_child_pos_set(wd->o_files_frame, 0, 0);
+   if (wd->o_files_fm)
+     e_fm2_parent_go(wd->o_files_fm);
+   if (wd->o_files_frame)
+     e_widget_scrollframe_child_pos_set(wd->o_files_frame, 0, 0);
 }
 
 static void
@@ -46,6 +48,8 @@ _e_wid_fsel_favorites_files_changed(void *data, Evas_Object *obj, void *event_in
    char *p1, *p2;
    
    wd = data;
+   if (!wd->o_favorites_fm) return;
+   if (!wd->o_files_fm) return;
    icons = e_fm2_all_list_get(wd->o_favorites_fm);
    if (!icons) return;
    realpath = e_fm2_real_path_get(wd->o_files_fm);
@@ -82,6 +86,8 @@ _e_wid_fsel_favorites_selected(void *data, Evas_Object *obj, void *event_info)
    E_Fm2_Icon_Info *ici;
    
    wd = data;
+   if (!wd->o_favorites_fm) return;
+   if (!wd->o_files_frame) return;
    selected = e_fm2_selected_list_get(wd->o_favorites_fm);
    if (!selected) return;
    ici = selected->data;
@@ -99,11 +105,19 @@ _e_wid_fsel_files_changed(void *data, Evas_Object *obj, void *event_info)
    E_Widget_Data *wd;
    
    wd = data;
+   if (!wd->o_files_fm) return;
    if (!e_fm2_has_parent_get(wd->o_files_fm))
-     e_widget_disabled_set(wd->o_up_button, 1);
+     {
+	if (wd->o_up_button)
+	  e_widget_disabled_set(wd->o_up_button, 1);
+     }
    else
-     e_widget_disabled_set(wd->o_up_button, 0);
-   e_widget_scrollframe_child_pos_set(wd->o_files_frame, 0, 0);
+     {
+	if (wd->o_up_button)
+	  e_widget_disabled_set(wd->o_up_button, 0);
+     }
+   if (wd->o_files_frame)
+     e_widget_scrollframe_child_pos_set(wd->o_files_frame, 0, 0);
    E_FREE(wd->path);
    if (wd->chg_func) wd->chg_func(wd->chg_data, wd->obj);
 }
@@ -118,6 +132,7 @@ _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj, void *event_inf
    char buf[4096];
    
    wd = data;
+   if (!wd->o_files_fm) return;
    selected = e_fm2_selected_list_get(wd->o_files_fm);
    if (!selected) return;
    ici = selected->data;
@@ -185,7 +200,7 @@ e_widget_fsel_add(Evas *evas, char *dev, char *path, char *selected, char *filte
    wd->o_table2 = o;
    e_widget_sub_object_add(obj, o);
    
-   o = e_widget_button_add(evas, _("Go up a Directory"), NULL,
+   o = e_widget_button_add(evas, _("Go up a Directory"), "widget/up_dir",
 			   _e_wid_fsel_button_up, wd, NULL);
    wd->o_up_button = o;
    e_widget_sub_object_add(obj, o);
@@ -211,11 +226,11 @@ e_widget_fsel_add(Evas *evas, char *dev, char *path, char *selected, char *filte
    fmc.selection.single = 1;
    fmc.selection.windows_modifiers = 0;
    e_fm2_config_set(o, &fmc);
-   e_fm2_path_set(o, "favorites", "/");
-   evas_object_smart_callback_add(o, "files_changed", 
+   evas_object_smart_callback_add(o, "changed", 
 				  _e_wid_fsel_favorites_files_changed, wd);
    evas_object_smart_callback_add(o, "selected", 
 				  _e_wid_fsel_favorites_selected, wd);
+   e_fm2_path_set(o, "favorites", "/");
    
    o = e_widget_scrollframe_pan_add(evas, wd->o_favorites_fm,
 				    e_fm2_pan_set, 
@@ -247,13 +262,13 @@ e_widget_fsel_add(Evas *evas, char *dev, char *path, char *selected, char *filte
    fmc.selection.single = 1;
    fmc.selection.windows_modifiers = 0;
    e_fm2_config_set(o, &fmc);
-   e_fm2_path_set(o, dev, path);
    evas_object_smart_callback_add(o, "dir_changed", 
 				  _e_wid_fsel_files_changed, wd);
    evas_object_smart_callback_add(o, "selection_change", 
 				  _e_wid_fsel_files_selection_change, wd);
    evas_object_smart_callback_add(o, "selected", 
 				  _e_wid_fsel_files_selected, wd);
+   e_fm2_path_set(o, dev, path);
    
    o = e_widget_scrollframe_pan_add(evas, wd->o_files_fm,
 				    e_fm2_pan_set,
@@ -293,6 +308,7 @@ e_widget_fsel_selection_path_get(Evas_Object *obj)
 {
    E_Widget_Data *wd;
 
+   if (!obj) return NULL;
    wd = e_widget_data_get(obj);
    return wd->path;
 }

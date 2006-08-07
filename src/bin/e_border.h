@@ -89,6 +89,7 @@ typedef struct _E_Event_Border_Stack         E_Event_Border_Stack;
 typedef struct _E_Event_Border_Icon_Change   E_Event_Border_Icon_Change;
 typedef struct _E_Event_Border_Focus_In	     E_Event_Border_Focus_In;
 typedef struct _E_Event_Border_Focus_Out     E_Event_Border_Focus_Out;
+typedef struct _E_Event_Border_Property      E_Event_Border_Property;
 
 #else
 #ifndef E_BORDER_H
@@ -535,6 +536,11 @@ struct _E_Event_Border_Focus_Out
    E_Border *border;
 };
 
+struct _E_Event_Border_Property
+{
+   E_Border *border;
+};
+
 
 EAPI int       e_border_init(void);
 EAPI int       e_border_shutdown(void);
@@ -628,6 +634,7 @@ extern EAPI int E_EVENT_BORDER_STACK;
 extern EAPI int E_EVENT_BORDER_ICON_CHANGE;
 extern EAPI int E_EVENT_BORDER_FOCUS_IN;
 extern EAPI int E_EVENT_BORDER_FOCUS_OUT;
+extern EAPI int E_EVENT_BORDER_PROPERTY;
 
 #endif
 #endif

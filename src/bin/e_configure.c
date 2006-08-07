@@ -64,7 +64,8 @@ e_configure_show(E_Container *con)
 
    /* add items here */
    e_configure_header_item_add(eco, "enlightenment/appearance", _("Appearance"));
-   e_configure_standard_item_add(eco, "enlightenment/background", _("Wallpaper"), e_int_config_background);
+//   e_configure_standard_item_add(eco, "enlightenment/background", _("Wallpaper"), e_int_config_background);
+   e_configure_standard_item_add(eco, "enlightenment/background", _("Wallpaper"), e_int_config_wallpaper);
    e_configure_standard_item_add(eco, "enlightenment/themes", _("Theme"), e_int_config_theme);   
    e_configure_standard_item_add(eco, "enlightenment/fonts", _("Fonts"), e_int_config_fonts);
    e_configure_standard_item_add(eco, "enlightenment/mouse", _("Mouse Cursor"), e_int_config_cursor);

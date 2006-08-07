@@ -108,7 +108,7 @@ e_editable_text_text_set(Evas_Object *object, const char *text)
 {
    E_Editable_Text_Smart_Data *sd;
 
-   if ((!object) || (!text) || !(sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
    evas_object_textblock_text_markup_set(sd->text_object, text);

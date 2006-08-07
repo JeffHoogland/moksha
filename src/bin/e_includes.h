@@ -144,3 +144,5 @@
 #include "e_widget_framelist.h"
 #include "e_widget_fsel.h"
 #include "e_fm_mime.h"
+#include "e_int_config_wallpaper.h"
+#include "e_int_config_wallpaper_import.h"

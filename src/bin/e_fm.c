@@ -397,9 +397,32 @@ e_fm2_select_set(Evas_Object *obj, char *file, int select)
 	  }
 	else
 	  {
-	     if (ic->sd->config->view.single_click)
+	     if (ic->sd->config->selection.single)
 	       _e_fm2_icon_deselect(ic);
 	     ic->last_selected = 0;
+	  }
+     }
+}
+
+EAPI void
+e_fm2_file_show(Evas_Object *obj, char *file)
+{
+   E_Fm2_Smart_Data *sd;
+   Evas_List *l;
+   E_Fm2_Icon *ic;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+   for (l = sd->icons; l; l = l->next)
+     {
+	ic = l->data;
+	if (!strcmp(ic->info.file, file))
+	  {
+	     e_fm2_pan_set(obj, ic->x, ic->y);
+	     evas_object_smart_callback_call(obj, "pan_changed", NULL);
+	     return;
 	  }
      }
 }
@@ -1401,7 +1424,7 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 	     ic->obj_icon = e_thumb_icon_add(evas_object_evas_get(ic->sd->obj));
 	     e_thumb_icon_file_set(ic->obj_icon, buf, NULL);
-	     e_thumb_icon_size_set(ic->obj_icon, 64, 48);
+	     e_thumb_icon_size_set(ic->obj_icon, 64, 64);
 	     evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
 	     _e_fm2_icon_thumb(ic);
 	     edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
@@ -1444,7 +1467,7 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 	     ic->obj_icon = e_thumb_icon_add(evas_object_evas_get(ic->sd->obj));
 	     e_thumb_icon_file_set(ic->obj_icon, buf, "desktop/background");
-	     e_thumb_icon_size_set(ic->obj_icon, 64, 64);
+	     e_thumb_icon_size_set(ic->obj_icon, 64, 48);
 	     evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
 	     _e_fm2_icon_thumb(ic);
 	     edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);

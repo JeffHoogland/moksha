@@ -108,6 +108,7 @@ EAPI E_Fm2_Config         *e_fm2_config_get(Evas_Object *obj);
 EAPI Evas_List            *e_fm2_selected_list_get(Evas_Object *obj);
 EAPI Evas_List            *e_fm2_all_list_get(Evas_Object *obj);
 EAPI void                  e_fm2_select_set(Evas_Object *obj, char *file, int select);
+EAPI void                  e_fm2_file_show(Evas_Object *obj, char *file);
     
 EAPI void                  e_fm2_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
 EAPI void                  e_fm2_pan_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);

@@ -77,6 +77,7 @@ static void _e_border_event_border_iconify_free(void *data, void *ev);
 static void _e_border_event_border_uniconify_free(void *data, void *ev);
 static void _e_border_event_border_stick_free(void *data, void *ev);
 static void _e_border_event_border_unstick_free(void *data, void *ev);
+static void _e_border_event_border_property_free(void *data, void *ev);
 
 static void _e_border_zone_update(E_Border *bd);
 
@@ -131,6 +132,7 @@ EAPI int E_EVENT_BORDER_STACK = 0;
 EAPI int E_EVENT_BORDER_ICON_CHANGE = 0;
 EAPI int E_EVENT_BORDER_FOCUS_IN = 0;
 EAPI int E_EVENT_BORDER_FOCUS_OUT = 0;
+EAPI int E_EVENT_BORDER_PROPERTY = 0;
 
 #define GRAV_SET(bd, grav) \
 ecore_x_window_gravity_set(bd->bg_win, grav); \
@@ -183,6 +185,7 @@ e_border_init(void)
    E_EVENT_BORDER_ICON_CHANGE = ecore_event_type_new();
    E_EVENT_BORDER_FOCUS_IN = ecore_event_type_new();
    E_EVENT_BORDER_FOCUS_OUT = ecore_event_type_new();
+   E_EVENT_BORDER_PROPERTY = ecore_event_type_new();
 
    return 1;
 }
@@ -3726,6 +3729,7 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
      {
 	printf("ECORE_X_ATOM_NET_WM_SYNC_REQUEST_COUNTER\n");
      }
+
    return 1;
 }
 
@@ -4660,6 +4664,7 @@ _e_border_cb_grab_replay(void *data, int type, void *event)
 static void
 _e_border_eval(E_Border *bd)
 {
+   E_Event_Border_Property *event;
    int change_urgent = 0;
    int rem_change = 0;
    
@@ -6217,6 +6222,12 @@ _e_border_eval(E_Border *bd)
  
    if ((bd->remember) && (rem_change))
      e_remember_update(bd->remember, bd);
+
+
+   event = calloc(1, sizeof(E_Event_Border_Property));
+   event->border = bd;
+   e_object_ref(E_OBJECT(bd));
+   ecore_event_add(E_EVENT_BORDER_PROPERTY, event, _e_border_event_border_property_free, NULL);
 }
 
 static void
@@ -6615,6 +6626,16 @@ static void
 _e_border_event_border_focus_out_free(void *data, void *ev)
 {
    E_Event_Border_Focus_Out *e;
+
+   e = ev;
+   e_object_unref(E_OBJECT(e->border));
+   free(e);
+}
+
+static void
+_e_border_event_border_property_free(void *data, void *ev)
+{
+   E_Event_Border_Property *e;
 
    e = ev;
    e_object_unref(E_OBJECT(e->border));

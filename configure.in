@@ -273,6 +273,7 @@ data/themes/images/Makefile
 data/other/Makefile
 data/xsession/Makefile
 data/xsession/enlightenment.desktop
+data/backgrounds/Makefile
 doc/Makefile
 po/Makefile
 intl/Makefile

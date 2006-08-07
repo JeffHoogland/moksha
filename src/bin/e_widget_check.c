@@ -191,6 +191,7 @@ _e_wid_do(Evas_Object *obj)
 	     edje_object_signal_emit(wd->o_check, "toggle_off", "");
 	  }
      }
+   evas_object_smart_callback_call(obj, "changed", NULL);
 }
 
 static void

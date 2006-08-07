@@ -167,7 +167,9 @@ e_fm.h \
 e_widget_scrollframe.h \
 e_sha1.h \
 e_widget_fsel.h \
-e_fm_mime.h
+e_fm_mime.h \
+e_int_config_wallpaper.h \
+e_int_config_wallpaper_import.h
 
 enlightenment_src = \
 e_user.c \
@@ -311,6 +313,8 @@ e_widget_scrollframe.c \
 e_sha1.c \
 e_widget_fsel.c \
 e_fm_mime.c \
+e_int_config_wallpaper.c \
+e_int_config_wallpaper_import.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \
