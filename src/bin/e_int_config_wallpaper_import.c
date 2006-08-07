@@ -5,6 +5,7 @@
 #define IMPORT_STRETCH 0
 #define IMPORT_TILE 1
 #define IMPORT_CENTER 2
+/* FIXME handle these 2 */
 #define IMPORT_SCALE_ASPECT_IN 3
 #define IMPORT_SCALE_ASPECT_OUT 4
 
@@ -123,6 +124,7 @@ static void _import_cb_ok(void *data, void *data2);
 static void _import_cb_wid_on_focus(void *data, Evas_Object *obj);
 static void _import_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event);
 
+/* FIXME: save previous dev/dir and restore it to browse that dir */
 EAPI E_Win *
 e_int_config_wallpaper_import(E_Config_Dialog *parent)
 {
@@ -266,6 +268,8 @@ _import_cb_sel_change(void *data, Evas_Object *obj)
    path = e_widget_fsel_selection_path_get(import->fsel_obj);
    E_FREE(import->cfdata->file);
    if (path) import->cfdata->file = strdup(path);
+   /* FIXME: based on selection - disable or enable the scale options ie .edj files
+    * do not use the options */
 }
 
 static void 
@@ -356,7 +360,7 @@ _import_cb_edje_cc_exit(void *data, int type, void *event)
    import = data;
    if (ev->exe != import->exe) return 1;
    
-   /* FIXME - error code */
+   /* FIXME - error code - handle */
    
    e_int_config_wallpaper_update(import->parent, import->fdest);
 
