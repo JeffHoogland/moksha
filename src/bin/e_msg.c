@@ -14,8 +14,8 @@ struct _E_Msg_Handler
 
 struct _E_Msg_Event
 {
-   const char *name;
-   const char *info;
+   char *name;
+   char *info;
    int   val;
    E_Object *obj;
 };
@@ -53,13 +53,27 @@ e_msg_shutdown(void)
 EAPI void
 e_msg_send(const char *name, const char *info, int val, E_Object *obj)
 {
+   unsigned int size, pos, name_len, info_len;
    E_Msg_Event *ev;
    
-   ev = calloc(1, sizeof(E_Msg_Event));
-   /* FIXME: probably better todup the strings but merge with a single
-    * malloc for the event struct */
-   if (name) ev->name = evas_stringshare_add(name);
-   if (info) ev->info = evas_stringshare_add(info);
+   name_len = info_len = size = 0;
+   size = sizeof(E_Msg_Event);
+   if (name) name_len = strlen(name) + 1;
+   if (info) info_len = strlen(info) + 1;
+   ev = malloc(size + name_len + info_len);
+   if (!ev) return;
+   pos = size;
+   if (name)
+     {
+       	ev->name = ((char *)ev) + pos;
+	pos += name_len;
+	strcpy(ev->name, name);
+     }
+   if (info)
+     {
+       	ev->info = ((char *)ev) + pos;
+	strcpy(ev->info, info);
+     }
    ev->val = val;
    ev->obj = obj;
    if (ev->obj) e_object_ref(ev->obj);
@@ -130,7 +144,5 @@ _e_msg_event_free(void *data, void *ev)
    E_Msg_Event *e;
 
    e = ev;
-   if (e->name) evas_stringshare_del(e->name);
-   if (e->info) evas_stringshare_del(e->info);
    if (e->obj) e_object_unref(e->obj);
 }
