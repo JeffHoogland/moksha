@@ -64,6 +64,7 @@
 /* local subsystem functions */
 static void _e_action_free(E_Action *act);
 static Evas_Bool _e_actions_cb_free(Evas_Hash *hash, const char *key, void *data, void *fdata);
+static E_Maximize _e_actions_maximize_parse(const char *maximize);
 
 static E_Dialog *exit_dialog = NULL;
 
@@ -434,27 +435,23 @@ ACT_FN_GO(window_maximized_toggle)
 	       e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
 	     else
 	       {
-		  char s1[11], s2[11];
+		  E_Maximize max;
 
-		  /* FIXME: Move this to a parser func which returns an E_Maximize */
-		  if (sscanf(params, "%20s %20s", s1, s2) == 2)
+		  max = _e_actions_maximize_parse(params);
+		  max &= E_MAXIMIZE_DIRECTION;
+		  if (max == E_MAXIMIZE_VERTICAL)
 		    {
-		       if (!strcmp(s2, "vertical"))
-			 { 
-			    if (bd->maximized & E_MAXIMIZE_VERTICAL)
-			       e_border_unmaximize(bd, E_MAXIMIZE_VERTICAL);
-			    else
-			      goto maximize;
-			 }
-		       else if (!strcmp(s2, "horizontal"))
-			 { 
-			    if (bd->maximized & E_MAXIMIZE_HORIZONTAL) 
-			      e_border_unmaximize(bd, E_MAXIMIZE_HORIZONTAL);
-			    else
-			      goto maximize;
-			 }
+		       if (bd->maximized & E_MAXIMIZE_VERTICAL)
+			 e_border_unmaximize(bd, E_MAXIMIZE_VERTICAL);
 		       else
-			 e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
+			 goto maximize;
+		    }
+		  else if (max == E_MAXIMIZE_HORIZONTAL)
+		    { 
+		       if (bd->maximized & E_MAXIMIZE_HORIZONTAL) 
+			 e_border_unmaximize(bd, E_MAXIMIZE_HORIZONTAL);
+		       else
+			 goto maximize;
 		    }
 		  else
 		    e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
@@ -462,38 +459,8 @@ ACT_FN_GO(window_maximized_toggle)
 	  }
 	else
 	  { 
-	     maximize:
-	     if (!params)
-	       e_border_maximize(bd, e_config->maximize_policy);
-	     else
-	       {
-		  char s1[32], s2[32];
-		  E_Maximize max;
-		  int ret;
-
-		  /* FIXME: Move this to a parser func which returns an E_Maximize */
-		  max = (e_config->maximize_policy & E_MAXIMIZE_DIRECTION);
-		  ret = sscanf(params, "%20s %20s", s1, s2);
-		  if (ret == 2)
-		    {
-		       if (!strcmp(s2, "horizontal"))
-			 max = E_MAXIMIZE_HORIZONTAL;
-		       else if (!strcmp(s2, "vertical"))
-			 max = E_MAXIMIZE_VERTICAL;
-		       else
-			 max = E_MAXIMIZE_BOTH;
-		    }
-		  if (ret > 0)
-		    {
-		       if (!strcmp(s1, "fullscreen")) e_border_maximize(bd, E_MAXIMIZE_FULLSCREEN | max);
-		       else if (!strcmp(s1, "smart")) e_border_maximize(bd, E_MAXIMIZE_SMART | max);
-		       else if (!strcmp(s1, "expand")) e_border_maximize(bd, E_MAXIMIZE_EXPAND | max);
-		       else if (!strcmp(s1, "fill")) e_border_maximize(bd, E_MAXIMIZE_FILL | max);
-		       else e_border_maximize(bd, (e_config->maximize_policy & E_MAXIMIZE_TYPE) | max);
-		    }
-		  else
-		    e_border_maximize(bd, e_config->maximize_policy);
-	       }
+maximize:
+	     e_border_maximize(bd, _e_actions_maximize_parse(params));
 	  }
      }
 }
@@ -1948,4 +1915,32 @@ _e_actions_cb_free(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
 {
    e_object_del(E_OBJECT(data));
    return 0;
+}
+
+static E_Maximize
+_e_actions_maximize_parse(const char *params)
+{
+   E_Maximize max = 0;
+   int ret;
+   char s1[32], s2[32];
+
+   if (!params) return e_config->maximize_policy;
+   ret = sscanf(params, "%20s %20s", s1, s2);
+   if (ret == 2)
+     {
+	if      (!strcmp(s2, "horizontal")) max = E_MAXIMIZE_HORIZONTAL;
+	else if (!strcmp(s2, "vertical"))   max = E_MAXIMIZE_VERTICAL;
+	else                                max = E_MAXIMIZE_BOTH;
+     }
+   if (ret >= 1)
+     {
+	if      (!strcmp(s1, "fullscreen")) max |= E_MAXIMIZE_FULLSCREEN;
+	else if (!strcmp(s1, "smart"))      max |= E_MAXIMIZE_SMART;
+	else if (!strcmp(s1, "expand"))     max |= E_MAXIMIZE_EXPAND;
+	else if (!strcmp(s1, "fill"))       max |= E_MAXIMIZE_FILL;
+	else                                max |= (e_config->maximize_policy & E_MAXIMIZE_TYPE);
+     }
+   else
+     max = e_config->maximize_policy;
+   return max;
 }
