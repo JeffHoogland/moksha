@@ -51,11 +51,12 @@ e_maximize_border_dock_fit(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
    while ((bd2 = e_container_border_list_next(bl)))
      {
 	enum {
-	   TOP,
+	     NONE,
+	     TOP,
 	     RIGHT,
 	     BOTTOM,
 	     LEFT
-	} edge = TOP;
+	} edge = NONE;
 	
 	if ((bd2->zone != bd->zone) || (bd2 == bd) ||
 	    (bd2->client.netwm.type != ECORE_X_WINDOW_TYPE_DOCK))
@@ -69,14 +70,14 @@ e_maximize_border_dock_fit(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
 	       {
 		  if (bd2->y == bd2->zone->y)
 		    edge = TOP;
-		  else if ((bd2->x + bd2->h) == (bd2->zone->x + bd2->zone->h))
+		  else if ((bd2->y + bd2->h) == (bd2->zone->y + bd2->zone->h))
 		    edge = BOTTOM;
 	       }
 	     else
 	       {
 		  if ((bd2->x + bd2->w) == (bd2->zone->x + bd2->zone->w))
 		    edge = RIGHT;
-		  else if ((bd2->y == bd2->zone->y))
+		  else if (bd2->x == bd2->zone->x)
 		    edge = LEFT;
 	       }
 	  }
@@ -84,12 +85,12 @@ e_maximize_border_dock_fit(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
 	  {
 	     if (bd2->y == bd2->zone->y)
 	       edge = TOP;
+	     else if ((bd2->y + bd2->h) == (bd2->zone->y + bd2->zone->h))
+	       edge = BOTTOM;
+	     else if (bd2->x == bd2->zone->x)
+	       edge = LEFT;
 	     else if ((bd2->x + bd2->w) == (bd2->zone->x + bd2->zone->w))
 	       edge = RIGHT;
-	     else if ((bd2->x + bd2->h) == (bd2->zone->x + bd2->zone->h))
-	       edge = BOTTOM;
-	     else if ((bd2->y == bd2->zone->y))
-	       edge = LEFT;
 	  }
 
 	switch (edge)
@@ -109,6 +110,9 @@ e_maximize_border_dock_fit(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
 	   case LEFT:
 	      if ((bd2->x + bd2->w) > cx1)
 		cx1 = (bd2->x + bd2->w);
+	      break;
+	   case NONE:
+	      printf("Crazy people. Dock isn't at the edge.\n");
 	      break;
 	  }
      }
