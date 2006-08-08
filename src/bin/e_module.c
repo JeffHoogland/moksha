@@ -407,11 +407,6 @@ _e_module_free(E_Module *m)
 	     e_config->modules = evas_list_remove(e_config->modules, em);
 	     if (em->name) evas_stringshare_del(em->name);
 	     E_FREE(em);
-	     /* FIXME
-	      * This is crap, a job is added, but doesn't run because
-	      * main loop has quit!
-	     e_config_save_queue();
-	     */
 	     break;
 	  }
      }
