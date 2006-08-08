@@ -50,6 +50,7 @@ struct _E_Container
    Evas_List           *shape_change_cb;
    Evas_List           *zones;
 
+   unsigned int clients;
    struct {
       Ecore_X_Window win;
       Evas_List *clients;

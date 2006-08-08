@@ -564,14 +564,7 @@ e_container_shape_solid_rect_get(E_Container_Shape *es, int *x, int *y, int *w, 
 EAPI int
 e_container_borders_count(E_Container *con)
 {
-   /* FIXME: This could be stored and not calculated */
-   int num, i;
-
-   num = 0;
-   for (i = 0; i < num; i++)
-     num += evas_list_count(con->layers[i].clients);
-
-   return num;
+   return con->clients;
 }
 
 EAPI void
@@ -586,6 +579,7 @@ e_container_border_add(E_Border *bd)
    else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
    else pos = 5;
 
+   bd->zone->container->clients++;
    bd->zone->container->layers[pos].clients =
       evas_list_append(bd->zone->container->layers[pos].clients, bd);
 }
@@ -597,6 +591,7 @@ e_container_border_remove(E_Border *bd)
 
    /* FIXME: Could revert to old behaviour, ->layer is consistent
     * with pos now. */
+   bd->zone->container->clients--;
    for (i = 0; i < 7; i++)
      {
 	bd->zone->container->layers[i].clients =
