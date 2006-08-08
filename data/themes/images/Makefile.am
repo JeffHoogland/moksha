@@ -461,5 +461,7 @@ e17_busy-5.png \
 e17_busy-6.png \
 e17_busy-7.png \
 e17_busy-8.png \
-e17_busy-9.png
-
+e17_busy-9.png \
+e17_wallpaper_center.png \
+e17_wallpaper_screen.png \
+e17_wallpaper_center_flat.png

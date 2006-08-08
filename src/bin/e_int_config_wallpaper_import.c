@@ -1,86 +1,10 @@
 #include "e.h"
 
-/* FIXME: redo this... */
-
 #define IMPORT_STRETCH 0
 #define IMPORT_TILE 1
 #define IMPORT_CENTER 2
-/* FIXME handle these 2 */
 #define IMPORT_SCALE_ASPECT_IN 3
 #define IMPORT_SCALE_ASPECT_OUT 4
-
-/* Personally I hate having to define this twice, but Tileing needs a fill */
-#define IMG_EDC_TMPL_TILE \
-"images {\n" \
-"  image: \"%s\" LOSSY 90;\n" \
-"}\n" \
-"collections {\n" \
-"  group {\n" \
-"    name: \"desktop/background\";\n" \
-"    max: %d %d;\n" \
-"    parts {\n" \
-"      part {\n" \
-"        name: \"background_image\";\n" \
-"        type: IMAGE;\n" \
-"        mouse_events: 0;\n" \
-"        description {\n" \
-"          state: \"default\" 0.0;\n" \
-"          visible: 1;\n" \
-"          rel1 {\n" \
-"            relative: 0.0 0.0;\n" \
-"            offset: 0 0;\n" \
-"          }\n" \
-"          rel2 {\n" \
-"            relative: 1.0 1.0;\n" \
-"            offset: -1 -1;\n" \
-"          }\n" \
-"          image {\n" \
-"            normal: \"%s\";\n" \
-"          }\n" \
-"          fill {\n" \
-"            size {\n" \
-"              relative: 0.0 0.0;\n" \
-"              offset: %d %d;\n" \
-"            }\n" \
-"          }\n" \
-"        }\n" \
-"      }\n" \
-"    }\n" \
-"  }\n" \
-"}\n"
-
-#define IMG_EDC_TMPL \
-"images {\n" \
-"  image: \"%s\" LOSSY 90;\n" \
-"}\n" \
-"collections {\n" \
-"  group {\n" \
-"    name: \"desktop/background\";\n" \
-"    max: %d %d;\n" \
-"    parts {\n" \
-"      part {\n" \
-"        name: \"background_image\";\n" \
-"        type: IMAGE;\n" \
-"        mouse_events: 0;\n" \
-"        description {\n" \
-"          state: \"default\" 0.0;\n" \
-"          visible: 1;\n" \
-"          rel1 {\n" \
-"            relative: 0.0 0.0;\n" \
-"            offset: 0 0;\n" \
-"          }\n" \
-"          rel2 {\n" \
-"            relative: 1.0 1.0;\n" \
-"            offset: -1 -1;\n" \
-"          }\n" \
-"          image {\n" \
-"            normal: \"%s\";\n" \
-"          }\n" \
-"        }\n" \
-"      }\n" \
-"    }\n" \
-"  }\n" \
-"}\n"
 
 typedef struct _Import Import;
 
@@ -110,6 +34,8 @@ struct _E_Config_Dialog_Data
 {
    char *file;   
    int method;
+   int perfect;
+   double quality;
 };
 
 static Ecore_Event_Handler *_import_edje_cc_exit_handler = NULL;
@@ -131,7 +57,7 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    Evas *evas;
    E_Win *win;
    Import *import;
-   Evas_Object *o, *of, *ofm, *ord;
+   Evas_Object *o, *of, *ofm, *ord, *ot;
    E_Radio_Group *rg;
    Evas_Coord w, h;
    E_Config_Dialog_Data *cfdata;
@@ -148,7 +74,9 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
      }
    
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
-   cfdata->method = 0;
+   cfdata->method = IMPORT_STRETCH;
+   cfdata->perfect = 0;
+   cfdata->quality = 90.0;
    import->cfdata = cfdata;
    import->win = win;
    
@@ -198,16 +126,30 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    import->fsel_obj = ofm;
    e_widget_list_object_append(o, ofm, 1, 1, 0.5);
 
-   of = e_widget_frametable_add(evas, _("Options"), 0);
-   rg = e_widget_radio_group_new(&cfdata->method);
-   ord = e_widget_radio_add(evas, _("Center Image"), IMPORT_CENTER, rg);
-   e_widget_frametable_object_append(of, ord, 0, 0, 1, 1, 1, 0, 1, 0);
-   ord = e_widget_radio_add(evas, _("Scale Image"), IMPORT_STRETCH, rg);
-   e_widget_frametable_object_append(of, ord, 0, 1, 1, 1, 1, 0, 1, 0);
-   ord = e_widget_radio_add(evas, _("Tile Image"), IMPORT_TILE, rg);
-   e_widget_frametable_object_append(of, ord, 0, 2, 1, 1, 1, 0, 1, 0);
+   ot = e_widget_table_add(evas, 0);
    
-   e_widget_list_object_append(o, of, 0, 0, 0.5);
+   of = e_widget_frametable_add(evas, _("Fill and Stretch Options"), 1);
+   rg = e_widget_radio_group_new(&cfdata->method);
+   ord = e_widget_radio_icon_add(evas, _("Stretch"), "enlightenment/wallpaper_stretch", 24, 24, IMPORT_STRETCH, rg);
+   e_widget_frametable_object_append(of, ord, 0, 0, 1, 1, 1, 0, 1, 0);
+   ord = e_widget_radio_icon_add(evas, _("Center"), "enlightenment/wallpaper_center", 24, 24, IMPORT_CENTER, rg);
+   e_widget_frametable_object_append(of, ord, 1, 0, 1, 1, 1, 0, 1, 0);
+   ord = e_widget_radio_icon_add(evas, _("Tile"), "enlightenment/wallpaper_tile", 24, 24, IMPORT_TILE, rg);
+   e_widget_frametable_object_append(of, ord, 2, 0, 1, 1, 1, 0, 1, 0);
+   ord = e_widget_radio_icon_add(evas, _("Within"), "enlightenment/wallpaper_scale_aspect_in", 24, 24, IMPORT_SCALE_ASPECT_IN, rg);
+   e_widget_frametable_object_append(of, ord, 3, 0, 1, 1, 1, 0, 1, 0);
+   ord = e_widget_radio_icon_add(evas, _("Fill"), "enlightenment/wallpaper_scale_aspect_out", 24, 24, IMPORT_SCALE_ASPECT_OUT, rg);
+   e_widget_frametable_object_append(of, ord, 4, 0, 1, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 0);
+   
+   of = e_widget_frametable_add(evas, _("File Quality"), 0);
+   ord = e_widget_slider_add(evas, 1, 0, _("%3.0f%%"), 0.0, 100.0, 1.0, 0, &(cfdata->quality), NULL, 150);
+   e_widget_frametable_object_append(of, ord, 0, 0, 1, 1, 1, 0, 1, 0);
+   ord = e_widget_check_add(evas, _("Perfect"), &(cfdata->perfect));
+   e_widget_frametable_object_append(of, ord, 1, 0, 1, 1, 0, 0, 0, 0);
+   e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 0);
+   
+   e_widget_list_object_append(o, ot, 0, 0, 0.5);
    
    e_widget_min_size_get(o, &w, &h);
    edje_extern_object_min_size_set(o, w, h);
@@ -228,8 +170,8 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    edje_object_part_swallow(import->bg_obj, "buttons_swallow", o);
    
    edje_object_size_min_calc(import->bg_obj, &w, &h);
-   evas_object_resize(import->bg_obj, w + 64, h + 128);
-   e_win_resize(win, w + 64, h + 128);
+   evas_object_resize(import->bg_obj, w, h + 128);
+   e_win_resize(win, w, h + 128);
    e_win_size_min_set(win, w, h);
    e_win_size_max_set(win, 99999, 99999);
    e_win_show(win);
@@ -280,7 +222,7 @@ _import_edj_gen(Import *import)
    int fd;
    int w = 0, h = 0;
    const char *file;
-   char buf[4096], cmd[4096], tmpn[4096], ipart[4096];
+   char buf[4096], cmd[4096], tmpn[4096], ipart[4096], enc[128];
    char *imgdir = NULL, *homedir, *fstrip;
    FILE *f;
    
@@ -326,19 +268,85 @@ _import_edj_gen(Import *import)
    evas_object_image_size_get(img, &w, &h);
    evas_object_del(img);   
    
+   fstrip = strdup(e_util_filename_escape(file));
+   if (import->cfdata->perfect)
+     snprintf(enc, sizeof(enc), "COMP");
+   else
+     snprintf(enc, sizeof(enc), "LOSSY %1.0f", import->cfdata->quality);
    switch (import->cfdata->method) 
      {
-      case IMPORT_CENTER:
-	fprintf(f, IMG_EDC_TMPL, file, w, h, file);
+      case IMPORT_STRETCH:
+	fprintf(f, 
+		"images { image: \"%s\" %s; }\n"
+		"collections {\n"
+		"group { name: \"desktop/background\";\n"
+		"max: %i %i;\n"
+		"parts { part { name: \"bg\"; mouse_events: 0;\n"
+		"description { state: \"default\" 0.0;\n"
+		"image { normal: \"%s\"; }\n"
+		"} } } } }\n"
+		, fstrip, enc, w, h, fstrip);
 	break;
       case IMPORT_TILE:
-	fprintf(f, IMG_EDC_TMPL_TILE, file, w, h, file, w, h);
+	fprintf(f, 
+		"images { image: \"%s\" %s; }\n"
+		"collections {\n"
+		"group { name: \"desktop/background\";\n"
+		"max: %i %i;\n"
+		"parts { part { name: \"bg\"; mouse_events: 0;\n"
+		"description { state: \"default\" 0.0;\n"
+		"image { normal: \"%s\"; }\n"
+		"fill { size {\n"
+		"relative: 0.0 0.0;\n"
+		"offset: %i %i;\n"
+		"} } } } } } }\n"
+		, fstrip, enc, w, h, fstrip, w, h);
 	break;
-      case IMPORT_STRETCH:
-	fprintf(f, IMG_EDC_TMPL, file, w, h, file);
+      case IMPORT_CENTER:
+	fprintf(f, 
+		"images { image: \"%s\" %s; }\n"
+		"collections {\n"
+		"group { name: \"desktop/background\";\n"
+		"max: %i %i;\n"
+		"parts { part { name: \"bg\"; mouse_events: 0;\n"
+		"description { state: \"default\" 0.0;\n"
+		"min: %i %i; max: %i %i\n"
+		"image { normal: \"%s\"; }\n"
+		"} } } } }\n"
+		, fstrip, enc, w, h, w, h, w, h, fstrip);
+	break;
+      case IMPORT_SCALE_ASPECT_IN:
+	fprintf(f, 
+		"images { image: \"%s\" %s; }\n"
+		"collections {\n"
+		"group { name: \"desktop/background\";\n"
+		"max: %i %i;\n"
+		"parts { part { name: \"bg\"; mouse_events: 0;\n"
+		"description { state: \"default\" 0.0;\n"
+		"aspect: %1.9f %1.9f; aspect_preference: BOTH;\n"
+		"image { normal: \"%s\"; }\n"
+		"} } } } }\n"
+		, fstrip, enc, w, h, (double)w / (double)h, (double)w / (double)h, fstrip);
+	break;
+      case IMPORT_SCALE_ASPECT_OUT:
+	fprintf(f, 
+		"images { image: \"%s\" %s; }\n"
+		"collections {\n"
+		"group { name: \"desktop/background\";\n"
+		"max: %i %i;\n"
+		"parts { part { name: \"bg\"; mouse_events: 0;\n"
+		"description { state: \"default\" 0.0;\n"
+		"aspect: %1.9f %1.9f; aspect_preference: NONE;\n"
+		"image { normal: \"%s\"; }\n"
+		"} } } } }\n"
+		, fstrip, enc, w, h, (double)w / (double)h, (double)w / (double)h, fstrip);
+	break;
+      default:
+	/* won't happen */
 	break;
      }
-
+   free(fstrip);
+   
    fclose(f);
 
    snprintf(cmd, sizeof(cmd), "edje_cc -v %s %s %s", 

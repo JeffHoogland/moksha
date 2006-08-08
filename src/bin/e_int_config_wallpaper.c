@@ -507,7 +507,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_table_object_append(ot, ol, 2, 0, 1, 1, 1, 1, 1, 1);
    
    il = e_widget_list_add(evas, 0, 0);
-   o = e_widget_check_add(evas, _("Theme Wallpaper"), &cfdata->use_theme_bg);
+   o = e_widget_check_add(evas, _("Use Theme Wallpaper"), &cfdata->use_theme_bg);
    cfdata->o_theme_bg = o;
    evas_object_smart_callback_add(o, "changed",
 				  _cb_theme_wallpaper, cfdata);
@@ -677,7 +677,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_table_object_append(ot, ol, 2, 0, 1, 1, 1, 1, 1, 1);
    
    il = e_widget_list_add(evas, 0, 0);
-   o = e_widget_check_add(evas, _("Theme Wallpaper"), &cfdata->use_theme_bg);
+   o = e_widget_check_add(evas, _("Use Theme Wallpaper"), &cfdata->use_theme_bg);
    cfdata->o_theme_bg = o;
    evas_object_smart_callback_add(o, "changed",
 				  _cb_theme_wallpaper, cfdata);

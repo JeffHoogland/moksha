@@ -63,6 +63,10 @@ images {
    image: "e17_icon_screen_normal.png" COMP;
    image: "e17_icon_screen_right.png" COMP;
    image: "e17_icon_screen_vflip.png" COMP;
+
+   image: "e17_wallpaper_center.png" COMP;
+   image: "e17_wallpaper_screen.png" COMP;
+   image: "e17_wallpaper_center_flat.png" COMP;
 }
 
 group {
@@ -1106,6 +1110,206 @@ group {
 	    max:      24 24;
 	    image {
 	       normal: "e17_shelf_top_desk.png";
+	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "icons/enlightenment/wallpaper_stretch";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "bg";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       to: "screen";
+	    }
+	    rel2 {
+	       to: "screen";
+	    }
+	    image {
+	       normal: "e17_wallpaper_center_flat.png";
+	       border: 5 5 5 5;
+	    }
+	 }
+      }
+      part {
+	 name:          "screen";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect: 1.0 1.0;
+	    aspect_preference: BOTH;
+	    image {
+	       normal: "e17_wallpaper_screen.png";
+	       border: 2 2 2 2;
+	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "icons/enlightenment/wallpaper_tile";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "bg";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       to: "screen";
+	    }
+	    rel2 {
+	       to: "screen";
+	    }
+	    image {
+	       normal: "e17_wallpaper_center_flat.png";
+	       border: 5 5 5 5;
+	    }
+	    fill {
+	       size {
+		  relative: 0.33 0.33;
+	       }
+	    }
+	 }
+      }
+      part {
+	 name:          "screen";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect: 1.0 1.0;
+	    aspect_preference: BOTH;
+	    image {
+	       normal: "e17_wallpaper_screen.png";
+	       border: 2 2 2 2;
+	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "icons/enlightenment/wallpaper_center";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "bg";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       to: "screen";
+	    }
+	    rel2 {
+	       to: "screen";
+	    }
+	    rel1 {
+	       relative: 0.125 0.125;
+	    }
+	    rel2 {
+	       relative: 0.875 0.875;
+	    }
+	    image {
+	       normal: "e17_wallpaper_center.png";
+	       border: 5 5 5 5;
+	    }
+	 }
+      }
+      part {
+	 name:          "screen";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect: 1.0 1.0;
+	    aspect_preference: BOTH;
+	    image {
+	       normal: "e17_wallpaper_screen.png";
+	       border: 2 2 2 2;
+	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "icons/enlightenment/wallpaper_scale_aspect_in";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "bg";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect: 1.5 1.5;
+	    aspect_preference: BOTH;
+	    rel1 {
+	       to: "screen";
+	    }
+	    rel2 {
+	       to: "screen";
+	    }
+	    image {
+	       normal: "e17_wallpaper_center.png";
+	       border: 5 5 5 5;
+	    }
+	 }
+      }
+      part {
+	 name:          "screen";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect: 1.0 1.0;
+	    aspect_preference: BOTH;
+	    image {
+	       normal: "e17_wallpaper_screen.png";
+	       border: 2 2 2 2;
+	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "icons/enlightenment/wallpaper_scale_aspect_out";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "bg";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect: 1.5 1.5;
+	    aspect_preference: NONE;
+	    rel1 {
+	       to: "screen";
+	    }
+	    rel2 {
+	       to: "screen";
+	    }
+	    image {
+	       normal: "e17_wallpaper_center.png";
+	       border: 5 5 5 5;
+	    }
+	 }
+      }
+      part {
+	 name:          "screen";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect: 1.0 1.0;
+	    aspect_preference: BOTH;
+	    image {
+	       normal: "e17_wallpaper_screen.png";
+	       border: 2 2 2 2;
 	    }
 	 }
       }
