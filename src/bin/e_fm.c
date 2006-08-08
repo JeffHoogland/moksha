@@ -685,6 +685,7 @@ _e_fm2_scan_stop(Evas_Object *obj)
      }
    E_FREE(sd->tmp.list_index);
    _e_fm2_queue_free(obj);
+   _e_fm2_obj_icons_place(sd);
 }
 
 static void

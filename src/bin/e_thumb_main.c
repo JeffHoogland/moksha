@@ -210,6 +210,7 @@ _e_cb_timer(void *data)
    /* take thumb at head of list */
    if (_thumblist)
      {
+/*	
 	for (l = _thumblist; l; l = l->next)
 	  {
 	     eth = l->data;
@@ -225,6 +226,7 @@ _e_cb_timer(void *data)
 	     if (eth->key) free(eth->key);
 	     free(eth);
 	  }
+ */
 	if (_thumblist)
 	  {
 	     eth = _thumblist->data;
