@@ -8,6 +8,9 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: i spotted a segv (glibc abort in malloc) in the forked child that does
+  pam checks - the child needs to disable segv checking etc. and i should
+  double check desklock's memory stuff.
 * BUG: e_entry/editable widget is pretty borken in sizing, clipping, initial
   state and i think is also now causing segv's (not sure yet), but it needs
   a complete going over if not a rewrite. :(
