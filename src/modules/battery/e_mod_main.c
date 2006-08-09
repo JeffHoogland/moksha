@@ -38,7 +38,8 @@ static const E_Gadcon_Client_Class _gadcon_class =
      "battery",
      {
         _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon
-     }
+     },
+   E_GADCON_CLIENT_STYLE_PLAIN
 };
 /**/
 /***************************************************************************/
