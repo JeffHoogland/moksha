@@ -86,6 +86,8 @@ static Evas_Bool _e_menu_categories_free_cb(Evas_Hash *hash, const char *key, vo
 /* local subsystem globals */
 static Ecore_X_Window       _e_menu_win                 = 0;
 static Evas_List           *_e_active_menus             = NULL;
+static E_Menu              *_e_active_menu              = NULL;
+static E_Menu_Item         *_e_active_menu_item         = NULL;
 /*static Evas_Hash	   *_e_menu_category_items	= NULL;*/
 static Evas_Hash	   *_e_menu_categories		= NULL;
 static Ecore_X_Time         _e_menu_activate_time       = 0;
@@ -143,6 +145,7 @@ e_menu_shutdown(void)
 	e_object_unref(E_OBJECT(m));
      }
    _e_active_menus = NULL;
+   _e_active_menu = NULL;
    if (_e_menu_categories)
      {
 	evas_hash_foreach(_e_menu_categories, _e_menu_categories_free_cb, NULL);
@@ -500,7 +503,7 @@ e_menu_root_get(E_Menu *m)
    E_OBJECT_CHECK_RETURN(m, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(m, E_MENU_TYPE, NULL);
    ret = m;
-   while (ret->parent_item && ret->parent_item->menu)
+   while ((ret->parent_item) && (ret->parent_item->menu))
      {
 	ret = ret->parent_item->menu;
      }
@@ -772,7 +775,7 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
    E_OBJECT_CHECK(mi);
    E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    if (mi->separator) return;
-   if (active)
+   if ((active) && (!mi->active))
      {
 	E_Menu_Item *pmi;
 	
@@ -780,6 +783,8 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
 	if (mi == pmi) return;
 	if (pmi) e_menu_item_active_set(pmi, 0);
 	mi->active = 1;
+	_e_active_menu = mi->menu;
+	_e_active_menu_item = mi;
 	if (mi->bg_object)
 	  edje_object_signal_emit(mi->bg_object, "active", "");
 	if (mi->icon_bg_object)
@@ -795,9 +800,11 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
 	edje_object_signal_emit(mi->menu->bg_object, "active", "");
 	_e_menu_submenu_activate(mi);
      }
-   else
+   else if ((!active) && (mi->active))
      {
 	mi->active = 0;
+	_e_active_menu = NULL;
+	_e_active_menu_item = NULL;
 	if (mi->bg_object)
 	  edje_object_signal_emit(mi->bg_object, "passive", "");
 	if (mi->icon_bg_object)
@@ -998,18 +1005,19 @@ _e_menu_free(E_Menu *m)
    Evas_List *l, *tmp;
    E_Menu_Category *cat;
    
+   if (m == _e_active_menu) _e_active_menu = NULL;
    /* the foreign menu items */
    cat = evas_hash_find(_e_menu_categories, m->category);
-   if(cat)
-   {
-	for(l = cat->callbacks; l; l = l->next)
-	{
-		E_Menu_Category_Callback *cb;
+   if (cat)
+     {
+	for (l = cat->callbacks; l; l = l->next)
+	  {
+	     E_Menu_Category_Callback *cb;
 
-		cb = l->data;
-		if(cb->free)   cb->free(cb->data);
-	}
-   }
+	     cb = l->data;
+	     if (cb->free) cb->free(cb->data);
+	  }
+     }
    _e_menu_unrealize(m);
    E_FREE(m->shape_rects);
    m->shape_rects_num = 0;
@@ -1033,6 +1041,7 @@ _e_menu_free(E_Menu *m)
 static void
 _e_menu_item_free(E_Menu_Item *mi)
 {
+   if (mi == _e_active_menu_item) _e_active_menu_item = NULL;
    if (mi->submenu)
      {
 	mi->submenu->parent_item = NULL;
@@ -1838,31 +1847,19 @@ _e_menu_reposition(E_Menu *m)
 static int
 _e_menu_active_call(void)
 {
-   Evas_List *l, *ll;
+   E_Menu_Item *mi;
 
-   /* FIXME: inefficient. should track current menu and active item */
-   for (l = _e_active_menus; l; l = l->next)
+   mi = _e_menu_item_active_get();
+   if (mi)
      {
-	E_Menu *m;
-	
-	m = l->data;
-	for (ll = m->items; ll; ll = ll->next)
-	  {
-	     E_Menu_Item *mi;
-	     
-	     mi = ll->data;
-	     if (mi->active)
-	       {
-		  if (mi->submenu) return 0;
-		  if (mi->check)
-		    e_menu_item_toggle_set(mi, !mi->toggle);
-		  if ((mi->radio) && (!e_menu_item_toggle_get(mi)))
-		    e_menu_item_toggle_set(mi, 1);
-		  if (mi->cb.func)
-		    mi->cb.func(mi->cb.data, m, mi);
-		  return 1;
-	       }
-	  }
+	if (mi->submenu) return 0;
+	if (mi->check)
+	  e_menu_item_toggle_set(mi, !mi->toggle);
+	if ((mi->radio) && (!e_menu_item_toggle_get(mi)))
+	  e_menu_item_toggle_set(mi, 1);
+	if (mi->cb.func)
+	  mi->cb.func(mi->cb.data, mi->menu, mi);
+	return 1;
      }
    return -1;
 }
@@ -1872,7 +1869,7 @@ _e_menu_item_activate_next(void)
 {
    E_Menu *m;
 
-   /* FIXME: inefficient. should track current menu and active item */
+   /* FIXME: inefficient. should track active item */
    m = _e_menu_active_get();
    if (m)
      {
@@ -1931,7 +1928,7 @@ _e_menu_item_activate_previous(void)
 {
    E_Menu *m;
 
-   /* FIXME: inefficient. should track current menu and active item */
+   /* FIXME: inefficient. should track active item */
    m = _e_menu_active_get();
    if (m)
      {
@@ -1992,7 +1989,6 @@ _e_menu_item_activate_first(void)
    Evas_List *ll;
    E_Menu_Item *mi;
 
-   /* FIXME: inefficient. should track current menu and active item */
    m = _e_menu_active_get();
    if (m)
      {
@@ -2018,7 +2014,6 @@ _e_menu_item_activate_last(void)
    Evas_List *ll;
    E_Menu_Item *mi;
 
-   /* FIXME: inefficient. should track current menu and active item */
    m = _e_menu_active_get();
    if (m)
      {
@@ -2182,45 +2177,13 @@ _e_menu_activate_nth(int n)
 static E_Menu *
 _e_menu_active_get(void)
 {
-   Evas_List *l, *ll;
-
-   /* FIXME: inefficient. should track current menu and active item */
-   for (l = _e_active_menus; l; l = l->next)
-     {
-	E_Menu *m;
-	
-	m = l->data;
-	for (ll = m->items; ll; ll = ll->next)
-	  {
-	     E_Menu_Item *mi;
-	     
-	     mi = ll->data;
-	     if (mi->active) return m;
-	  }
-     }
-   return NULL;
+   return _e_active_menu;
 }
 
 static E_Menu_Item *
 _e_menu_item_active_get(void)
 {
-   Evas_List *l, *ll;
-
-   /* FIXME: inefficient. should track current menu and active item */
-   for (l = _e_active_menus; l; l = l->next)
-     {
-	E_Menu *m;
-	
-	m = l->data;
-	for (ll = m->items; ll; ll = ll->next)
-	  {
-	     E_Menu_Item *mi;
-	     
-	     mi = ll->data;
-	     if (mi->active) return mi;
-	  }
-     }
-   return NULL;
+   return _e_active_menu_item;
 }
 
 static int
