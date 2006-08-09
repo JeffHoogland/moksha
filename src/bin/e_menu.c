@@ -86,7 +86,6 @@ static Evas_Bool _e_menu_categories_free_cb(Evas_Hash *hash, const char *key, vo
 /* local subsystem globals */
 static Ecore_X_Window       _e_menu_win                 = 0;
 static Evas_List           *_e_active_menus             = NULL;
-static E_Menu              *_e_active_menu              = NULL;
 static E_Menu_Item         *_e_active_menu_item         = NULL;
 /*static Evas_Hash	   *_e_menu_category_items	= NULL;*/
 static Evas_Hash	   *_e_menu_categories		= NULL;
@@ -145,7 +144,6 @@ e_menu_shutdown(void)
 	e_object_unref(E_OBJECT(m));
      }
    _e_active_menus = NULL;
-   _e_active_menu = NULL;
    if (_e_menu_categories)
      {
 	evas_hash_foreach(_e_menu_categories, _e_menu_categories_free_cb, NULL);
@@ -783,7 +781,6 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
 	if (mi == pmi) return;
 	if (pmi) e_menu_item_active_set(pmi, 0);
 	mi->active = 1;
-	_e_active_menu = mi->menu;
 	_e_active_menu_item = mi;
 	if (mi->bg_object)
 	  edje_object_signal_emit(mi->bg_object, "active", "");
@@ -803,7 +800,6 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
    else if ((!active) && (mi->active))
      {
 	mi->active = 0;
-	_e_active_menu = NULL;
 	_e_active_menu_item = NULL;
 	if (mi->bg_object)
 	  edje_object_signal_emit(mi->bg_object, "passive", "");
@@ -1005,7 +1001,6 @@ _e_menu_free(E_Menu *m)
    Evas_List *l, *tmp;
    E_Menu_Category *cat;
    
-   if (m == _e_active_menu) _e_active_menu = NULL;
    /* the foreign menu items */
    cat = evas_hash_find(_e_menu_categories, m->category);
    if (cat)
@@ -2177,7 +2172,8 @@ _e_menu_activate_nth(int n)
 static E_Menu *
 _e_menu_active_get(void)
 {
-   return _e_active_menu;
+   if (_e_active_menu_item) return _e_active_menu_item->menu;
+   return NULL;
 }
 
 static E_Menu_Item *
