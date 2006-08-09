@@ -104,9 +104,6 @@ Some of the things (in very short form) that need to be done to E17...
 * need to do a massive theme spec overhaul. need to namespace signals, special
   named parts that are needed, specific what is NEEDED froma  theme, what is
   optional (in terms of parts, groups and signals). etc.
-* when adding some gadgets like pager, ibox, ibar - they default to "plain"
-  instead of inset. there should be a way for a gagdet to hint a default
-  preferred look.
 * default config for shelf is screwy and needs fixing - related to gadcon
   layout algorithm though.
 * ipc is a mess. overgrown. hard to work with. what to do? remove?
