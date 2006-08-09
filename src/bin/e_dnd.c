@@ -296,8 +296,11 @@ e_drag_xdnd_start(E_Drag *drag, int x, int y)
 					drag->container->x, drag->container->y,
 					drag->container->w, drag->container->h);
    ecore_x_window_show(_drag_win);
-   ecore_x_pointer_confine_grab(_drag_win);
-   ecore_x_keyboard_grab(_drag_win);
+   if (!e_grabinput_get(_drag_win, 1, _drag_win))
+     {
+	ecore_x_window_del(_drag_win);
+	return 0;
+     }
 
    drag->type = E_DRAG_XDND;
 
