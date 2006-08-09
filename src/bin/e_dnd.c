@@ -553,8 +553,7 @@ _e_drag_end(int x, int y)
 
    _e_drag_hide(_drag_current);
 
-   ecore_x_pointer_ungrab();
-   ecore_x_keyboard_ungrab();
+   e_grabinput_release(_drag_win, _drag_win);
    if (_drag_current->type == E_DRAG_XDND)
      {
 	e_object_del(E_OBJECT(_drag_current));
