@@ -66,6 +66,7 @@ e_int_menus_main_new(void)
    
    dat = calloc(1, sizeof(Main_Data));
    m = e_menu_new();
+   e_menu_title_set(m, _("Main"));
    dat->menu = m;
    e_object_data_set(E_OBJECT(m), dat);   
    e_object_del_attach_func_set(E_OBJECT(m), _e_int_menus_main_del_hook);

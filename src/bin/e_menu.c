@@ -379,7 +379,6 @@ e_menu_title_set(E_Menu *m, char *title)
 {
    E_OBJECT_CHECK(m);
    E_OBJECT_TYPE_CHECK(m, E_MENU_TYPE);
-   /* FIXME: support menu titles */
    if ((m->header.title) && (title) && (!strcmp(m->header.title, title)))
      return;
    if (m->header.title)
@@ -1379,6 +1378,12 @@ _e_menu_realize(E_Menu *m)
 		  m->shaped = 1;
 	       }
 	  }
+     }
+   if (m->header.title)
+     {
+	edje_object_part_text_set(o, "title", m->header.title);
+	edje_object_signal_emit(o, "title,on", "");
+	edje_object_message_signal_process(o);
      }
    evas_object_show(o);
 
