@@ -228,14 +228,14 @@ e_gadcon_populate(E_Gadcon *gc)
 	       {
 		  E_Gadcon_Client *gcc;
 		  
-		  if(!cf_gcc->style)
+		  if (!cf_gcc->style)
 		    {
 		       gcc = cc->func.init(gc, cf_gcc->name, cf_gcc->id,
-			     cc->default_style);
+					   cc->default_style);
 		    }
 		  else
 		    gcc = cc->func.init(gc, cf_gcc->name, cf_gcc->id,
-				      cf_gcc->style);
+					cf_gcc->style);
 
 		  if (gcc)
 		    {
