@@ -80,28 +80,9 @@ group {
 	 }
       }
       part {
-	 name:          "title_bg";
-	 description {
-	    state:    "default" 0.0;
-	    rel1 {
-	       to:       "title_overlay";
-	    }
-	    rel2 {
-	       to:       "title_overlay";
-	    }
-	    image {
-	       normal: "e17_ibar_bg_h.png";
-	       border: 6 6 6 6;
-	    }
-	    fill {
-	       smooth: 0;
-	    }
-	 }
-      }
-      part {
 	 name:          "title";
 	 type:          TEXT;
-	 effect:        SHADOW;
+         effect: SOFT_SHADOW;
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
@@ -115,54 +96,33 @@ group {
 	       relative: 1.0  0.0;
 	       offset:   -1   0;
 	    }
-	    color: 0 0 0 255;
-	    color3: 255 255 255 128;
+            color: 255 255 255 255;
+            color3: 0 0 0 42;
 	    text {
-	       text:     "Menu Label";
+	       text:     "Menu Title";
 	       font:     "Edje-Vera-Bold";
-	       size:     12;
-	       min:      1 0;
-	       align:    0.5 0.7;
+	       size:     10;
+	       min:      0 0;
+	       align:    0.5 0.0;
 	       text_class: "menu_title";
+	       elipsis: 0.0;
 	    }
 	 }
 	 description {
 	    state:    "active" 0.0;
 	    inherit:  "default" 0.0;
 	    visible:  1;
+	    align:    0.5 0.0;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   0    0;
+	       offset:   0    4;
 	    }
 	    rel2 {
 	       relative: 1.0  0.0;
-	       offset:   -1   26;
+	       offset:   -1   4;
 	    }
-	 }
-      }
-      part {
-	 name:          "title_overlay";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    align:    0.5 1.0;
-	    rel1 {
-	       relative: 0.0 0.0;
-	       offset:  16   0;
-	       to_y: "title";
-	    }
-	    rel2 {
-	       relative: 1.0 1.0;
-	       offset:  -17  0;
-	       to_y: "title";
-	    }
-	    image {
-	       normal: "e17_ibar_over_h.png";
-	       border: 13 13 13 13;
-	       middle: 0;
-	    }
-	    fill {
-	       smooth: 0;
+	    text {
+	       min:      1 1;
 	    }
 	 }
       }
