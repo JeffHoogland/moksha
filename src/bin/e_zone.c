@@ -269,30 +269,56 @@ e_zone_flip_coords_handle(E_Zone *zone, int x, int y)
 {
    E_OBJECT_CHECK(zone);
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
+   int one_row = 1;
+   int one_col = 1;
    
    if (!e_config->use_edge_flip) return;
-   if ((y == 0) && E_ZONE_FLIP_UP(zone))
+   /* if we have only 1 row we can flip up/down even if we have xinerama */
+   if (evas_list_count(zone->container->zones) > 1)
+     {
+	Evas_List *zones;
+	E_Zone *next_zone;
+	int cx, cy;
+	
+	zones = zone->container->zones;
+	next_zone = (E_Zone *) evas_list_data(zones);
+	cx = next_zone->x;
+	cy = next_zone->y;
+	zones = evas_list_next(zones);
+	while (zones)
+	  {
+	     next_zone = (E_Zone *)zones->data;
+	     if (next_zone->x != cx) one_col = 0;
+	     if (next_zone->y != cy) one_row = 0;
+	     zones = zones->next;
+	  }
+     }
+   if (evas_list_count(zone->container->manager->containers) > 1)
+     goto noflip;
+   if (!E_INSIDE(x, y, zone->x, zone->y, zone->w, zone->h))
+     goto noflip;
+   if ((one_row) && (y == 0) && E_ZONE_FLIP_UP(zone))
      {
 	/* top */
 	if (!zone->flip.timer)
 	  zone->flip.timer = ecore_timer_add(e_config->edge_flip_timeout, _e_zone_cb_timer, zone);
 	zone->flip.direction = E_DIRECTION_UP;
      }
-   else if ((x == (zone->w - 1)) && E_ZONE_FLIP_RIGHT(zone))
+   else if ((one_col) && (x == (zone->w - 1)) && E_ZONE_FLIP_RIGHT(zone))
      {
 	/* right */
 	if (!zone->flip.timer)
 	  zone->flip.timer = ecore_timer_add(e_config->edge_flip_timeout, _e_zone_cb_timer, zone);
 	zone->flip.direction = E_DIRECTION_RIGHT;
      }
-   else if ((y == (zone->h - 1)) && E_ZONE_FLIP_DOWN(zone))
+   else if ((one_row) && (y == (zone->h - 1)) && E_ZONE_FLIP_DOWN(zone))
      {
 	/* bottom */
 	if (!zone->flip.timer)
 	  zone->flip.timer = ecore_timer_add(e_config->edge_flip_timeout, _e_zone_cb_timer, zone);
 	zone->flip.direction = E_DIRECTION_DOWN;
      }
-   else if ((x == 0) && E_ZONE_FLIP_LEFT(zone))
+   else if ((one_col) && (x == 0) && E_ZONE_FLIP_LEFT(zone))
      {
 	/* left */
 	if (!zone->flip.timer)
@@ -301,6 +327,7 @@ e_zone_flip_coords_handle(E_Zone *zone, int x, int y)
      }
    else
      {
+	noflip:
 	/* in zone */
 	if (zone->flip.timer)
 	  ecore_timer_del(zone->flip.timer);
@@ -935,7 +962,7 @@ _e_zone_cb_timer(void *data)
       case E_DIRECTION_UP:
 	if (E_ZONE_FLIP_UP(zone))
 	   {
-	     e_zone_desk_flip_by(zone, 0, -1);
+	      e_zone_desk_flip_by(zone, 0, -1);
 	      ecore_x_pointer_warp(zone->container->win, x, zone->h - 2);
 	      ev->curr.x = x;
 	      ev->curr.y = zone->h - 2;
@@ -1014,18 +1041,18 @@ _e_zone_update_flip(E_Zone *zone)
 	     x = next_zone->x;
 	     y = next_zone->y;
 	     zones = evas_list_next(zones);
-	     
 	     while (zones)
 	       {
-		  next_zone = (E_Zone *) evas_list_data(zones);
-
-		  if (next_zone->x != x)
-		    one_col = 0;
-		  if (next_zone->y != y)
-		    one_row = 0;
-
-		  zones = evas_list_next(zones);
+		  next_zone = (E_Zone *)zones->data;
+		  if (next_zone->x != x) one_col = 0;
+		  if (next_zone->y != y) one_row = 0;
+		  zones = zones->next;
 	       }
+	  }
+	if (evas_list_count(zone->container->manager->containers) > 1)
+	  {
+	     one_col = 0;
+	     one_row = 0;
 	  }
 
 	if (one_col && E_ZONE_FLIP_LEFT(zone))
