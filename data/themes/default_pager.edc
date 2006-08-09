@@ -647,6 +647,7 @@ group {
 	    align:       1.0 1.0;
 	    max:         24  24;
 	    aspect:      1.0 1.0;
+	    aspect_preference: BOTH;
 	    rel1 {
 	       offset:   1   5;
 	    }

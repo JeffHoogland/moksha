@@ -262,6 +262,7 @@ group {
 	    state:    "default" 0.0;
 	    align:    0.5 0.5;
 	    aspect:   1.0 1.0;
+	    aspect_preference: BOTH;
 	    visible:  0;
 	    rel1 {
 	       to: "icon0";
@@ -936,6 +937,7 @@ group {
 	    state:    "default" 0.0;
 	    align:    0.5 0.5;
 	    aspect:   1.0 1.0;
+	    aspect_preference: BOTH;
 	    visible:  0;
 	    rel1 {
 	       to: "icon0";
@@ -2284,6 +2286,7 @@ group {
 	    state:    "default" 0.0;
 	    align:    0.5 0.5;
 	    aspect:   1.0 1.0;
+	    aspect_preference: BOTH;
 	    visible:  0;
 	    rel1 {
 	       to: "icon0";
@@ -2743,6 +2746,7 @@ group {
 	 description {
 	    state: "default" 0.0;
 	    aspect: 1.0 1.0;
+	    aspect_preference: BOTH;
 	    rel1 {
 	       relative: 0.0 0.0;
 	       offset: 4 4;
@@ -2850,6 +2854,7 @@ group {
 	 description {
 	    state: "default" 0.0;
 	    aspect: 1.0 1.0;
+	    aspect_preference: BOTH;
 	    rel1 {
 	       relative: 0.0 0.0;
 	       offset: 4 4;
@@ -2934,6 +2939,7 @@ group {
 	    max: 32 32;
 	    aspect: 1.0 1.0;
 	    align: 1.0 1.0;
+	    aspect_preference: BOTH;
 	    rel1 {
 	       relative: 0.0 0.0;
 	       offset:   8 8;
@@ -3093,6 +3099,7 @@ group { \
 	 description { \
 	    state:    "default" 0.0; \
 	    aspect:   1.0 1.0; \
+	    aspect_preference: BOTH; \
             align: 0.5 0.0; \
 	    image { \
 	       normal: "e17_icon_fileman_"TYPE".png"; \
@@ -3136,6 +3143,7 @@ group { \
 	    state:    "default" 0.0; \
       	    align: 0.5 0.0; \
 	    aspect:   1.0 1.0; \
+	    aspect_preference: BOTH; \
 	    image { \
 	       normal: "e17_icon_fileman_"TYPE".png"; \
 	    } \
@@ -3144,6 +3152,7 @@ group { \
 	    state:    "clicked" 0.0; \
 	    align: 0.5 0.0; \
 	    aspect:   1.0 1.0; \
+	    aspect_preference: BOTH; \
 	    image { \
 	       normal: "e17_icon_fileman_"TYPE"_clicked.png"; \
 	    } \
@@ -3448,6 +3457,7 @@ group {
          {
             state: "default" 0.0;
 	    aspect: 1.0 1.0;
+	    aspect_preference: BOTH;
             color: 255 255 255 64;
             rel1 {
                relative: 0 0;
@@ -4205,6 +4215,7 @@ group {
 	       state: "default" 0.0;
 	       visible: 1;
 	       aspect: 1.0 1.0;
+	       aspect_preference: BOTH;
 	       color:  0 0 0 0;
 	       rel1 {
 		  relative: 0.0 0.0;

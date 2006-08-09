@@ -90,6 +90,7 @@ group {
 	 description {
 	    state: "default" 0.0;
 	    aspect: 1.0 1.0;
+	    aspect_preference: BOTH;
 	    rel1 {
 	       to: "title_bar";
 	       offset: 0 0;

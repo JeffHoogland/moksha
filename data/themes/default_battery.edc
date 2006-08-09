@@ -31,6 +31,7 @@ group {
 	 description {
 	    state: "default" 0.0;
 	    aspect: 0.669291339 0.669291339;
+	    aspect_preference: BOTH;
 	    align: 0.0 0.5;
 	    max: 85 127;
 	    rel1 {
@@ -120,6 +121,7 @@ group {
 	 description {
 	    state: "default" 0.0;
 	    aspect: 0.975609756 0.975609756;
+	    aspect_preference: BOTH;
 	    align: 1.0 1.0;
 	    max: 40 41;
 	    visible: 0;

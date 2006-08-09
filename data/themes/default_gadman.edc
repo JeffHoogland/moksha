@@ -67,6 +67,7 @@ group {
 	    state: "default" 0.0;
 	    max: 18 18;
 	    aspect: 1.0 1.0;
+	    aspect_preference: BOTH;
 	    image {
 	       normal: "e17_gadman_indicator.png";
 	    }
