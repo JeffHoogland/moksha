@@ -4,9 +4,7 @@
 #include "e.h"
 
 /* FIXME: broken when drop areas intersect 
- * (sub window has drop area on top of lower window or desktop - 
- * also shutdown is broken (walking list and deleting from the list as u go 
- * in this code is broken)
+ * (sub window has drop area on top of lower window or desktop)
  */
 /*
  * TODO:
@@ -124,16 +122,13 @@ e_dnd_shutdown(void)
 {
    Evas_List *l;
 
-   for (l = _drag_list; l;)
+   while (_drag_list)
      {
 	E_Drag *drag;
 
-	drag = l->data;
-	l = l->next;
+	drag = _drag_list->data;
 	e_object_del(E_OBJECT(drag));
      }
-   evas_list_free(_drag_list);
-   _drag_list = NULL;
 
    for (l = _event_handlers; l; l = l->next)
      {
