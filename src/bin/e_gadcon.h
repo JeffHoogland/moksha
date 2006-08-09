@@ -29,6 +29,9 @@ typedef enum _E_Gadcon_Orient
      E_GADCON_ORIENT_CORNER_RB
 } E_Gadcon_Orient;
 
+#define E_GADCON_CLIENT_STYLE_PLAIN "plain"
+#define E_GADCON_CLIENT_STYLE_INSET "inset"
+
 typedef struct _E_Gadcon              E_Gadcon;
 typedef struct _E_Gadcon_Client       E_Gadcon_Client;
 typedef struct _E_Gadcon_Client_Class E_Gadcon_Client_Class;
@@ -93,6 +96,7 @@ struct _E_Gadcon_Client_Class
       Evas_Object     *(*icon)     (Evas *evas);
       /* All members below are part of version 2 */
    } func;
+   char *default_style;
 };
 
 struct _E_Gadcon_Client

@@ -228,8 +228,15 @@ e_gadcon_populate(E_Gadcon *gc)
 	       {
 		  E_Gadcon_Client *gcc;
 		  
-		  gcc = cc->func.init(gc, cf_gcc->name, cf_gcc->id,
+		  if(!cf_gcc->style)
+		    {
+		       gcc = cc->func.init(gc, cf_gcc->name, cf_gcc->id,
+			     cc->default_style);
+		    }
+		  else
+		    gcc = cc->func.init(gc, cf_gcc->name, cf_gcc->id,
 				      cf_gcc->style);
+
 		  if (gcc)
 		    {
 		       gcc->client_class = cc;
@@ -866,7 +873,7 @@ _e_gadcon_client_cb_menu_style_plain(void *data, E_Menu *m, E_Menu_Item *mi)
    gcc = data;
    gc = gcc->gadcon;
    if (gcc->style) evas_stringshare_del(gcc->style);
-   gcc->style = NULL;
+   gcc->style = evas_stringshare_add(E_GADCON_CLIENT_STYLE_PLAIN);
    _e_gadcon_client_save(gcc);
    e_gadcon_unpopulate(gc);
    e_gadcon_populate(gc);
@@ -881,7 +888,7 @@ _e_gadcon_client_cb_menu_style_inset(void *data, E_Menu *m, E_Menu_Item *mi)
    gcc = data;
    gc = gcc->gadcon;
    if (gcc->style) evas_stringshare_del(gcc->style);
-   gcc->style = evas_stringshare_add("inset");
+   gcc->style = evas_stringshare_add(E_GADCON_CLIENT_STYLE_INSET);
    _e_gadcon_client_save(gcc);
    e_gadcon_unpopulate(gc);
    e_gadcon_populate(gc);
@@ -990,7 +997,8 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int f
    e_util_menu_item_edje_icon_set(mi, "enlightenment/plain");
    e_menu_item_radio_group_set(mi, 1);
    e_menu_item_radio_set(mi, 1);
-   if (!gcc->style) e_menu_item_toggle_set(mi, 1);
+   if ((gcc->style) && (!strcmp(gcc->style, E_GADCON_CLIENT_STYLE_PLAIN)))
+     e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_style_plain, gcc);
    
    mi = e_menu_item_new(mn);
@@ -998,7 +1006,7 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int f
    e_util_menu_item_edje_icon_set(mi, "enlightenment/plain");
    e_menu_item_radio_group_set(mi, 1);
    e_menu_item_radio_set(mi, 1);
-   if ((gcc->style) && (!strcmp(gcc->style, "inset")))
+   if ((gcc->style) && (!strcmp(gcc->style, E_GADCON_CLIENT_STYLE_INSET)))
      e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_style_inset, gcc);
    
