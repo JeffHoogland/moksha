@@ -951,6 +951,11 @@ _e_zone_cb_timer(void *data)
    if (!ev) return 0;
 
    zone = data;
+   if (zone != e_zone_current_get(zone->container))
+     {
+	zone->flip.timer = NULL;
+	return 0;
+     }
 
    ecore_x_pointer_xy_get(zone->container->win, &x, &y);
    ev->prev.x = x;
