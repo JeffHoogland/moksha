@@ -466,7 +466,6 @@ _e_drag_move(E_Drag *drag, int x, int y)
    
    if (((drag->x + drag->dx) == x) && ((drag->y + drag->dy) == y)) return;
 
-   //FIXME: I think the timer needs to be cleaned up by passing (-1, -1) someplace
    zone = e_container_zone_at_point_get(drag->container, x, y);
    if (zone) e_zone_flip_coords_handle(zone, x, y);
    
@@ -547,11 +546,15 @@ _e_drag_update(int x, int y)
 static void
 _e_drag_end(int x, int y)
 {
+   E_Zone *zone;
    Evas_List *l;
    E_Event_Dnd_Drop *ev;
    const char *type = NULL;
 
    if (!_drag_current) return;
+   zone = e_container_zone_at_point_get(_drag_current->container, x, y);
+   /* Pass -1, -1, so that it is possible to drop at the edge. */
+   if (zone) e_zone_flip_coords_handle(zone, -1, -1);
 
    _e_drag_hide(_drag_current);
 
