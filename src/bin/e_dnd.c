@@ -159,6 +159,9 @@ e_drag_new(E_Container *container, int x, int y,
    drag->ecore_evas = e_canvas_new(e_config->evas_engine_drag, drag->container->win,
 				   drag->x, drag->y, drag->w, drag->h, 1, 1,
 				   &(drag->evas_win), NULL);
+   /* avoid excess exposes when shaped - set damage avoid to 1 */
+   ecore_evas_avoid_damage_set(drag->ecore_evas, 1);
+
    e_canvas_add(drag->ecore_evas);
    drag->shape = e_container_shape_add(drag->container);
    e_container_shape_move(drag->shape, drag->x, drag->y);
