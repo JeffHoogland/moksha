@@ -126,6 +126,7 @@ EAPI E_Drop_Handler *e_drop_handler_add(void *data,
 					int x, int y, int w, int h);
 EAPI void e_drop_handler_geometry_set(E_Drop_Handler *handler, int x, int y, int w, int h);
 EAPI void e_drop_handler_del(E_Drop_Handler *handler);
+EAPI int  e_drop_xdnd_register_set(Ecore_X_Window win, int reg);
 
 #endif
 #endif

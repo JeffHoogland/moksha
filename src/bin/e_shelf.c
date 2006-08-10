@@ -98,12 +98,14 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    if (popup)
      {
 	es->popup = e_popup_new(zone, es->x, es->y, es->w, es->h);
+	e_drop_xdnd_register_set(es->popup->evas_win, 1);
 	e_popup_layer_set(es->popup, layer);
 	es->ee = es->popup->ecore_evas;
 	es->evas = es->popup->evas;
      }
    else
      {
+	e_drop_xdnd_register_set(zone->container->bg_win, 1);
 	es->ee = zone->container->bg_ecore_evas;
 	es->evas = zone->container->bg_evas;
      }
@@ -480,11 +482,11 @@ e_shelf_popup_set(E_Shelf *es, int popup)
    E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
 
    if (!es->cfg) return;
-   if (es->popup)
-     e_object_del(E_OBJECT(es->popup));
+   if (es->popup) e_object_del(E_OBJECT(es->popup));
    if (popup) 
      {
 	es->popup = e_popup_new(es->zone, es->x, es->y, es->w, es->h);
+	e_drop_xdnd_register_set(es->popup->evas_win, 1);
 	e_popup_layer_set(es->popup, es->cfg->layer);
 	es->ee = es->popup->ecore_evas;
 	es->evas = es->popup->evas;
@@ -518,7 +520,11 @@ _e_shelf_free(E_Shelf *es)
    evas_stringshare_del(es->style);
    evas_object_del(es->o_event);
    evas_object_del(es->o_base);
-   if (es->popup) e_object_del(E_OBJECT(es->popup));
+   if (es->popup)
+     {
+	e_drop_xdnd_register_set(es->popup->evas_win, 0);
+	e_object_del(E_OBJECT(es->popup));
+     }
    free(es);
 }
 
