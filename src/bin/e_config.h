@@ -95,7 +95,7 @@ struct _E_Config
    int         zone_desks_x_count; // GUI
    int         zone_desks_y_count; // GUI
    int         use_virtual_roots;
-   int	       edge_flip_dragging;
+   int         edge_flip_dragging; // GUI
    int         edge_flip_moving; // GUI
    double      edge_flip_timeout; // GUI
    int         evas_engine_default;
@@ -216,10 +216,10 @@ struct _E_Config
    Evas_List  *shelves; // GUI
    int         font_hinting; // GUI
 
-   char	      *desklock_personal_passwd; // GUI
-   char	      *desklock_background; // GUI
-   int	       desklock_auth_method; // GUI
-   int	       desklock_login_box_zone; // GUI
+   char       *desklock_personal_passwd; // GUI
+   char       *desklock_background; // GUI
+   int         desklock_auth_method; // GUI
+   int         desklock_login_box_zone; // GUI
    int         desklock_autolock; // GUI
    int         desklock_use_timeout; // GUI
    double      desklock_timeout; // GUI
@@ -309,21 +309,21 @@ struct _E_Config_Desktop_Name
 
 struct _E_Config_Gadcon
 {
-   const char	 *name;
-   const char	 *id;
-   Evas_List	 *clients;
+   const char *name;
+   const char *id;
+   Evas_List  *clients;
 };
 
 struct _E_Config_Gadcon_Client
 {
-   const char	 *name;
-   const char	 *id;
+   const char    *name;
+   const char    *id;
    struct {
       int pos, size, res;
    } geom;
-   const char   *style;
-   unsigned char autoscroll;
-   unsigned char resizable;
+   const char    *style;
+   unsigned char  autoscroll;
+   unsigned char  resizable;
 };
 
 struct _E_Config_Shelf
