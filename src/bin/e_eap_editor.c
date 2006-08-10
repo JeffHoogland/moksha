@@ -453,9 +453,10 @@ _e_eap_edit_change_cb(void *data, Evas_Object *obj)
 
    cfdata = data;
    file = e_widget_fsel_selection_path_get(obj);
+   if (!file) return;
 
    E_FREE(cfdata->image);
-   if (file) cfdata->image = strdup(file);
+   cfdata->image = strdup(file);
 }
 
 static void
