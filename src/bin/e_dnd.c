@@ -5,6 +5,8 @@
 
 /* FIXME: broken when drop areas intersect 
  * (sub window has drop area on top of lower window or desktop)
+ * 
+ * When moving from one zone to another, the flip timer in the previous zone must be reset.
  */
 /*
  * TODO:
