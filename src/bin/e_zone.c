@@ -272,7 +272,7 @@ e_zone_flip_coords_handle(E_Zone *zone, int x, int y)
    int one_row = 1;
    int one_col = 1;
    
-   if (!e_config->use_edge_flip) return;
+   if (!e_config->edge_flip_dragging) return;
    /* if we have only 1 row we can flip up/down even if we have xinerama */
    if (evas_list_count(zone->container->zones) > 1)
      {
@@ -1024,7 +1024,7 @@ _e_zone_cb_desk_show(void *data, int type, void *event)
 static void
 _e_zone_update_flip(E_Zone *zone)
 {
-   if (e_config->use_edge_flip)
+   if (e_config->edge_flip_moving)
      {
 	/* if we have only 1 row we can flip up/down even if we have xinerama */
 	int one_row = 1;

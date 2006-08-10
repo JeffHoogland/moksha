@@ -462,7 +462,14 @@ _e_drag_hide(E_Drag *drag)
 static void
 _e_drag_move(E_Drag *drag, int x, int y)
 {
+   E_Zone *zone;
+   
    if (((drag->x + drag->dx) == x) && ((drag->y + drag->dy) == y)) return;
+
+   //FIXME: I think the timer needs to be cleaned up by passing (-1, -1) someplace
+   zone = e_container_zone_at_point_get(drag->container, x, y);
+   if (zone) e_zone_flip_coords_handle(zone, x, y);
+   
    drag->x = x - drag->dx;
    drag->y = y - drag->dy;
    ecore_evas_move(drag->ecore_evas,

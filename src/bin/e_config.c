@@ -335,7 +335,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, zone_desks_x_count, INT); /**/
    E_CONFIG_VAL(D, T, zone_desks_y_count, INT); /**/
    E_CONFIG_VAL(D, T, use_virtual_roots, INT); /* should not make this a config option (for now) */
-   E_CONFIG_VAL(D, T, use_edge_flip, INT); /**/
+   E_CONFIG_VAL(D, T, edge_flip_dragging, INT); /**/
+   E_CONFIG_VAL(D, T, edge_flip_moving, INT); /**/
    E_CONFIG_VAL(D, T, edge_flip_timeout, DOUBLE); /**/
    E_CONFIG_VAL(D, T, evas_engine_default, INT); /**/
    E_CONFIG_VAL(D, T, evas_engine_container, INT); /**/
@@ -531,7 +532,8 @@ e_config_init(void)
    e_config->zone_desks_x_count = 4;
    e_config->zone_desks_y_count = 1;
    e_config->use_virtual_roots = 0;
-   e_config->use_edge_flip = 1;
+   e_config->edge_flip_dragging = 1;
+   e_config->edge_flip_moving = 1;
    e_config->edge_flip_timeout = 0.25;
    e_config->evas_engine_default = E_EVAS_ENGINE_SOFTWARE_X11;
    e_config->evas_engine_container = E_EVAS_ENGINE_DEFAULT;
@@ -1181,7 +1183,8 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->cache_flush_interval, 0.0, 600.0);
    E_CONFIG_LIMIT(e_config->zone_desks_x_count, 1, 64);
    E_CONFIG_LIMIT(e_config->zone_desks_y_count, 1, 64);
-   E_CONFIG_LIMIT(e_config->use_edge_flip, 0, 1);
+   E_CONFIG_LIMIT(e_config->edge_flip_dragging, 0, 1);
+   E_CONFIG_LIMIT(e_config->edge_flip_moving, 0, 1);
    E_CONFIG_LIMIT(e_config->edge_flip_timeout, 0.0, 2.0);
    E_CONFIG_LIMIT(e_config->window_placement_policy, E_WINDOW_PLACEMENT_SMART, E_WINDOW_PLACEMENT_MANUAL);
    E_CONFIG_LIMIT(e_config->focus_policy, 0, 2);
