@@ -245,8 +245,7 @@ e_zone_current_get(E_Container *con)
 	     E_Zone *zone;
 	     
 	     zone = l->data;
-	     if (E_INTERSECTS(x, y, 1, 1,
-			      zone->x, zone->y, zone->w, zone->h))
+	     if (E_INSIDE(x, y, zone->x, zone->y, zone->w, zone->h))
 	       return zone;
 	  }
      }

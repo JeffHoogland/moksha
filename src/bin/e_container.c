@@ -337,8 +337,7 @@ e_container_zone_at_point_get(E_Container *con, int x, int y)
 	E_Zone *zone;
 	
 	zone = l->data;
-	if ((E_SPANS_COMMON(zone->x, zone->w, x, 1)) &&
-	    (E_SPANS_COMMON(zone->y, zone->h, y, 1)))
+	if (E_INSIDE(x, y, zone->x, zone->y, zone->w, zone->h))
 	  return zone;
      }
    return NULL;
