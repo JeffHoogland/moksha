@@ -2,34 +2,112 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 #include "e.h"
-    
 
 typedef struct _E_Widget_Data E_Widget_Data;
 struct _E_Widget_Data
 {
    Evas_Object *o_entry;
-   Evas_Object *obj;
-   char **valptr;
-   void (*on_change_func) (void *data, Evas_Object *obj);
-   void  *on_change_data;
+   char **text_location;
 };
 
+/* local subsystem functions */
 static void _e_wid_del_hook(Evas_Object *obj);
 static void _e_wid_focus_hook(Evas_Object *obj);
 static void _e_wid_disable_hook(Evas_Object *obj);
-static void _e_wid_on_change_hook(void *data, Evas_Object *obj);    
-//static void _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _e_wid_text_change(void *data, Evas_Object *entry, char *key);
-    
-/* local subsystem functions */
+static void _e_wid_changed_cb(void *data, Evas_Object *obj, void *event_info);
 
+/* externally accessible functions */
+
+/**
+ * Creates a new entry widget
+ *
+ * @param evas the evas where to add the new entry widget
+ * @param text_location the location where to store the text of the entry.
+ * The current value will be used to initialize the entry
+ * @return Returns the new entry widget
+ */
+EAPI Evas_Object *
+e_widget_entry_add(Evas *evas, char **text_location)
+{   
+   Evas_Object *obj, *o;
+   E_Widget_Data *wd;
+   Evas_Coord minw, minh;
+   
+   obj = e_widget_add(evas);
+
+   e_widget_del_hook_set(obj, _e_wid_del_hook);
+   e_widget_focus_hook_set(obj, _e_wid_focus_hook);
+   e_widget_disable_hook_set(obj, _e_wid_disable_hook);
+   
+   wd = calloc(1, sizeof(E_Widget_Data));
+   e_widget_data_set(obj, wd);
+   wd->text_location = text_location;
+   
+   o = e_entry_add(evas);
+   wd->o_entry = o;
+   evas_object_show(o);
+   e_widget_sub_object_add(obj, o);
+   e_widget_resize_object_set(obj, o);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_focus_steal, obj);
+   
+   if ((text_location) && (*text_location))
+     e_entry_text_set(o, *text_location);
+   
+   e_entry_min_size_get(o, &minw, &minh);
+   e_widget_min_size_set(obj, minw, minh);
+
+   evas_object_smart_callback_add(o, "changed", _e_wid_changed_cb, obj);
+   
+   return obj;
+}
+
+/**
+ * Sets the text of the entry widget
+ *
+ * @param entry an entry widget
+ * @param text the text to set
+ */
+EAPI void     
+e_widget_entry_text_set(Evas_Object *entry, const char *text)
+{
+   E_Widget_Data *wd;
+
+   if (!(entry) || (!(wd = e_widget_data_get(entry))))
+      return;
+   e_entry_text_set(wd->o_entry, text);
+}
+
+/**
+ * Gets the text of the entry widget
+ *
+ * @param entry an entry widget
+ * @return Returns the text of the entry widget
+ */
+EAPI const char *     
+e_widget_entry_text_get(Evas_Object *entry)
+{
+   E_Widget_Data *wd;
+
+   if (!(entry) || (!(wd = e_widget_data_get(entry))))
+      return NULL;
+   return e_entry_text_get(wd->o_entry);
+}
+
+/* TODO, TODOC */
+EAPI void
+e_widget_entry_password_set(Evas_Object *obj, int password)
+{
+}
+
+/* Private functions */
 static void
 _e_wid_del_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   
-   wd = e_widget_data_get(obj);
+
+   if (!(obj) || (!(wd = e_widget_data_get(obj))))
+      return;
    free(wd);
 }
 
@@ -37,33 +115,28 @@ static void
 _e_wid_focus_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
+
+   if (!(obj) || (!(wd = e_widget_data_get(obj))))
+      return;
    
-   wd = e_widget_data_get(obj);
    if (e_widget_focus_get(obj))
-     {
-	e_entry_focus(wd->o_entry);
-	evas_object_focus_set(wd->o_entry, 1);
-	e_entry_cursor_move_at_end(wd->o_entry);
-	e_entry_cursor_show(wd->o_entry);
-     }
+     e_entry_focus(wd->o_entry);
    else
-     {
-	e_entry_unfocus(wd->o_entry);
-	evas_object_focus_set(wd->o_entry, 0);
-	e_entry_cursor_hide(wd->o_entry);
-     }
+     e_entry_unfocus(wd->o_entry);
 }
 
 static void
 _e_wid_disable_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
+
+   if (!(obj) || (!(wd = e_widget_data_get(obj))))
+      return;
    
-   wd = e_widget_data_get(obj);
    if (e_widget_disabled_get(obj))
-     edje_object_signal_emit(wd->o_entry, "disabled", "");
+     e_entry_disable(wd->o_entry);
    else
-     edje_object_signal_emit(wd->o_entry, "enabled", "");
+     e_entry_enable(wd->o_entry);
 }
 
 static void
@@ -73,97 +146,21 @@ _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
-_e_wid_on_change_hook(void *data, Evas_Object *obj)
+_e_wid_changed_cb(void *data, Evas_Object *obj, void *event_info)
 {
-   E_Widget_Data *wd;
-   
-   wd = e_widget_data_get(obj);
-   if(wd->on_change_func)
-     wd->on_change_func(wd->on_change_data, obj);
-}
-
-static void
-_e_wid_text_change(void *data, Evas_Object *entry, char *key)
-{
+   Evas_Object *entry;
    E_Widget_Data *wd;
    const char *text;
-   
-   wd = data;         
-   E_FREE(*(wd->valptr));
-   text = e_entry_text_get(wd->o_entry);
-   if (!text)
-     *(wd->valptr) = strdup("");
-   else
-     *(wd->valptr) = strdup(text);
-   e_widget_change(wd->obj);   
-}
 
-/* externally accessible functions */
-EAPI Evas_Object *
-e_widget_entry_add(Evas *evas, char **val)
-{   
-   Evas_Object *obj, *o;
-   E_Widget_Data *wd;
-   Evas_Coord mw, mh;
+   if (!(entry = data) || (!(wd = e_widget_data_get(entry))))
+      return;
    
-   obj = e_widget_add(evas);
-
-   e_widget_on_change_hook_set(obj, _e_wid_on_change_hook, NULL);
-   e_widget_del_hook_set(obj, _e_wid_del_hook);
-   e_widget_focus_hook_set(obj, _e_wid_focus_hook);
-   e_widget_disable_hook_set(obj, _e_wid_disable_hook);
-   wd = calloc(1, sizeof(E_Widget_Data));
-   wd->valptr = val;
-   wd->obj = obj;
-   wd->on_change_func = NULL;
-   wd->on_change_data = NULL;
-   e_widget_data_set(obj, wd);
+   if (wd->text_location)
+     {
+        text = e_widget_entry_text_get(entry);
+        free(*wd->text_location);
+        *wd->text_location = text ? strdup(text) : NULL;
+     }
    
-   o = e_entry_add(evas);
-   wd->o_entry = o;
-   evas_object_show(o);
-   e_entry_min_size_get(o, &mw, &mh);
-   e_widget_min_size_set(obj, mw, mh);
-   
-   if (*(wd->valptr))     
-     e_entry_text_set(wd->o_entry, *(wd->valptr));
-   
-   e_widget_sub_object_add(obj, o);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_focus_steal, obj);
-   e_widget_resize_object_set(obj, o);
-
-   e_entry_change_handler_set(wd->o_entry, _e_wid_text_change, wd);
-   
-   return obj;         
-}
-
-void             
-e_widget_entry_text_set(Evas_Object *entry, const char *text)
-{
-   E_Widget_Data *wd;
-   
-   wd = e_widget_data_get(entry);
-   e_entry_text_set(wd->o_entry, text);     
-   E_FREE(*(wd->valptr));  
-   *(wd->valptr) = strdup(text);
-}
-
-EAPI void
-e_widget_entry_on_change_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj), void *data)
-{
-   E_Widget_Data *wd;
-   
-   wd = e_widget_data_get(obj);
-   wd->on_change_func = func;
-   wd->on_change_data = data;
-}
-
-EAPI void
-e_widget_entry_password_set(Evas_Object *obj, int pw)
-{
-   E_Widget_Data *wd;
-   
-   wd = e_widget_data_get(obj);
-// FIXME: need password mode for entry.   
-//   e_entry_password_set(wd->o_entry, pw);
+   e_widget_change(data);
 }

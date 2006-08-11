@@ -3,956 +3,474 @@
  */
 #include "e.h"
 
-/*
- * TODO:
- * - implement missing _e_entry_smart_*, very easy
- * - free / delete properly
- * - implement focus and interact with theme
- */
-
-typedef struct _E_Editable_Text_Smart_Data E_Editable_Text_Smart_Data;
-typedef struct _E_Entry_Smart_Data         E_Entry_Smart_Data;
-
-struct _E_Editable_Text_Smart_Data
-{
-   Evas_Object *clip;
-   Evas_Object *text_object;
-   Evas_Object *cursor_object;
-   Evas_Object *edje_object;
-   Ecore_Timer *cursor_timer;
-
-   Evas_Bool cursor_at_the_end;
-   Evas_Bool show_cursor;   
-};
+typedef struct _E_Entry_Smart_Data E_Entry_Smart_Data;
 
 struct _E_Entry_Smart_Data
 {
    Evas_Object *entry_object;
-   Evas_Object *edje_object;
+   Evas_Object *editable_object;
    
-   Evas_Coord minw, minh;
-   
-   void (*change_func) (void *data, Evas_Object *entry, char *key);
-   void  *change_data;   
+   int enabled;
+   int focused;
+   float valign;
+   int min_width;
+   int height;
 };
 
-static Evas_Bool _e_editable_text_is_empty(Evas_Object *object);
-static void      _e_editable_text_cursor_position_update(Evas_Object *object);
-static void      _e_editable_text_cursor_visibility_update(Evas_Object *object);
-static int       _e_editable_text_cursor_timer_cb(void *data);
-static void      _e_editable_text_size_update(Evas_Object *object);
+/* local subsystem functions */
+static void _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
-static void      _e_editable_text_smart_add(Evas_Object *object);
-static void      _e_editable_text_smart_del(Evas_Object *object);
-static void      _e_editable_text_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y);
-static void      _e_editable_text_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h);
-static void      _e_editable_text_smart_show(Evas_Object *object);
-static void      _e_editable_text_smart_hide(Evas_Object *object);
+static void _e_entry_smart_add(Evas_Object *object);
+static void _e_entry_smart_del(Evas_Object *object);
+static void _e_entry_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y);
+static void _e_entry_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h);
+static void _e_entry_smart_show(Evas_Object *object);
+static void _e_entry_smart_hide(Evas_Object *object);
+static void _e_entry_color_set(Evas_Object *object, int r, int g, int b, int a);
+static void _e_entry_clip_set(Evas_Object *object, Evas_Object *clip);
+static void _e_entry_clip_unset(Evas_Object *object);
 
-static void      _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event);
+/* local subsystem globals */
+static Evas_Smart *_e_entry_smart = NULL;
+static int _e_entry_smart_use = 0;
 
-static void      _e_entry_smart_add(Evas_Object *object);
-static void      _e_entry_smart_del(Evas_Object *object);
-static void      _e_entry_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y);
-static void      _e_entry_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h);
-static void      _e_entry_smart_show(Evas_Object *object);
-static void      _e_entry_smart_hide(Evas_Object *object);
 
-static Evas_Smart           *e_editable_text_smart = NULL;
-static Evas_Textblock_Style *e_editable_text_style = NULL;
-static int                   e_editable_text_style_use_count = 0;
-
-static Evas_Smart           *e_entry_smart = NULL;
-
-EAPI Evas_Object *
-e_editable_text_add(Evas *evas)
-{
-   if (!e_editable_text_smart)
-     {
-	e_editable_text_smart = evas_smart_new("e_editable_entry",
-					       _e_editable_text_smart_add, /* add */
-					       _e_editable_text_smart_del, /* del */
-					       NULL, NULL, NULL, NULL, NULL,
-					       _e_editable_text_smart_move, /* move */
-					       _e_editable_text_smart_resize, /* resize */
-					       _e_editable_text_smart_show, /* show */
-					       _e_editable_text_smart_hide, /* hide */
-					       NULL, /* color_set */
-					       NULL, /* clip_set */
-					       NULL, /* clip_unset */
-					       NULL); /* data*/
-     }
-   return evas_object_smart_add(evas, e_editable_text_smart);
-}
-
-EAPI const char*
-e_editable_text_text_get(Evas_Object *object)
-{
-   E_Editable_Text_Smart_Data *sd;
-   Evas_Textblock_Cursor *cursor;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return "";
-
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
-   return evas_textblock_cursor_node_text_get(cursor);
-}
+/* externally accessible functions */
 
 /**
- * @brief Sets the text of the object
- * @param object an editable text object
- * @param text the text to set
+ * Creates a new entry object. An entry is a field where the user can type
+ * single-line text.
+ * Use the "changed" smart callback to know when the content of the entry is
+ * changed
+ *
+ * @param evas the evas where the entry object should be added
+ * @return Returns the new entry object
  */
-EAPI void
-e_editable_text_text_set(Evas_Object *object, const char *text)
-{
-   E_Editable_Text_Smart_Data *sd;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
-
-   evas_object_textblock_text_markup_set(sd->text_object, text);
-   sd->cursor_at_the_end = 1;
-   _e_editable_text_size_update(object);
-   _e_editable_text_cursor_position_update(object);
-}
-
-/**
- * @brief Inserts text at the cursor position of the object
- * @param object an editable text object
- * @param text the text to insert
- */
-EAPI void
-e_editable_text_insert(Evas_Object *object, const char *text)
-{
-   E_Editable_Text_Smart_Data *sd;
-   Evas_Textblock_Cursor *cursor;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
-   if ((!text) || ((strlen(text) <= 1) && (text[0] < 0x20)))
-     return;
-
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
-
-   if (sd->cursor_at_the_end)
-     evas_textblock_cursor_text_append(cursor, text);
-   else
-     evas_textblock_cursor_text_prepend(cursor, text);
-   _e_editable_text_size_update(object);
-   _e_editable_text_cursor_position_update(object);
-}
-
-/**
- * @brief Deletes the char placed before the cursor
- * @param object an editable text object
- */
-EAPI void
-e_editable_text_delete_char_before(Evas_Object *object)
-{
-   E_Editable_Text_Smart_Data *sd;
-   Evas_Textblock_Cursor *cursor;
-
-   if ((!object) ||
-       (!(sd = evas_object_smart_data_get(object))) ||
-       (_e_editable_text_is_empty(object)))
-     return;
-
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
-
-   if ((sd->cursor_at_the_end) || (evas_textblock_cursor_char_prev(cursor)))
-     evas_textblock_cursor_char_delete(cursor);
-
-   _e_editable_text_size_update(object);
-   _e_editable_text_cursor_position_update(object);
-}
-
-/**
- * @brief Deletes the char placed after the cursor
- * @param object an editable text object
- */
-EAPI void
-e_editable_text_delete_char_after(Evas_Object *object)
-{
-   E_Editable_Text_Smart_Data *sd;
-   Evas_Textblock_Cursor *cursor;
-
-   if ((!object) ||
-       (!(sd = evas_object_smart_data_get(object))) ||
-       (_e_editable_text_is_empty(object)))
-     return;
-
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
-
-   if (!sd->cursor_at_the_end)
-     {
-	if (!evas_textblock_cursor_char_next(cursor))
-	  sd->cursor_at_the_end = 1;
-	else
-	  evas_textblock_cursor_char_prev(cursor);
-	evas_textblock_cursor_char_delete(cursor);
-     }
-
-   _e_editable_text_size_update(object);
-   _e_editable_text_cursor_position_update(object);
-}
-
-/**
- * @brief Moves the cursor of the editable text object at the start of the text
- * @param object an editable text object
- */
-EAPI void
-e_editable_text_cursor_move_at_start(Evas_Object *object)
-{
-   E_Editable_Text_Smart_Data *sd;
-   Evas_Textblock_Cursor *cursor;
-
-   if ((!object) ||
-       (!(sd = evas_object_smart_data_get(object))) ||
-       (_e_editable_text_is_empty(object)))
-     return;
-
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
-   sd->cursor_at_the_end = 0;
-   evas_textblock_cursor_char_first(cursor);
-
-   _e_editable_text_cursor_position_update(object);
-}
-
-/**
- * @brief Moves the cursor of the editable text object at the end of the text
- * @param object an editable text object
- */
-EAPI void
-e_editable_text_cursor_move_at_end(Evas_Object *object)
-{
-   E_Editable_Text_Smart_Data *sd;
-   Evas_Textblock_Cursor *cursor;
-
-   if ((!object) ||
-       (!(sd = evas_object_smart_data_get(object))) ||
-       (_e_editable_text_is_empty(object)))
-     return;
-
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
-   sd->cursor_at_the_end = 1;
-   evas_textblock_cursor_char_last(cursor);
-
-   _e_editable_text_cursor_position_update(object);
-}
-
-/**
- * @brief Moves the cursor of the editable text object to the left
- * @param object an editable text object
- */
-EAPI void
-e_editable_text_cursor_move_left(Evas_Object *object)
-{
-   E_Editable_Text_Smart_Data *sd;
-   Evas_Textblock_Cursor *cursor;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
-
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
-   if (sd->cursor_at_the_end)
-     sd->cursor_at_the_end = 0;
-   else
-     evas_textblock_cursor_char_prev(cursor);
-
-   _e_editable_text_size_update(object);
-   _e_editable_text_cursor_position_update(object);
-}
-
-/**
- * @brief Moves the cursor of the editable text object to the right
- * @param object an editable text object
- */
-EAPI void
-e_editable_text_cursor_move_right(Evas_Object *object)
-{
-   E_Editable_Text_Smart_Data *sd;
-   Evas_Textblock_Cursor *cursor;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
-
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
-   if (!evas_textblock_cursor_char_next(cursor))
-     sd->cursor_at_the_end = 1;
-
-   _e_editable_text_size_update(object);
-   _e_editable_text_cursor_position_update(object);
-}
-
-/**
- * @brief Shows the cursor of the editable text object
- * @param object the editable text object
- */
-EAPI void
-e_editable_text_cursor_show(Evas_Object *object)
-{
-   E_Editable_Text_Smart_Data *sd;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
-
-   sd->show_cursor = 1;
-   _e_editable_text_cursor_visibility_update(object);
-}
-
-/**
- * @brief Hides the cursor of the editable text object
- * @param object the editable text object
- */
-EAPI void
-e_editable_text_cursor_hide(Evas_Object *object)
-{
-   E_Editable_Text_Smart_Data *sd;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
-
-   sd->show_cursor = 0;
-   _e_editable_text_cursor_visibility_update(object);
-}
-
-EAPI void
-e_editable_text_min_size_get(Evas_Object *object, Evas_Coord *mw, Evas_Coord *mh)
-{
-   
-}
-
 EAPI Evas_Object *
 e_entry_add(Evas *evas)
 {
-   if(!e_entry_smart)
-     e_entry_smart = evas_smart_new("e_entry",
+   if (!_e_entry_smart)
+     {
+        _e_entry_smart = evas_smart_new("e_entry",
 				    _e_entry_smart_add, /* add */
 				    _e_entry_smart_del, /* del */
-				    NULL, NULL, NULL, NULL, NULL,
+				    NULL, NULL, NULL, NULL, NULL, /* stacking */
 				    _e_entry_smart_move, /* move */
 				    _e_entry_smart_resize, /* resize */
 				    _e_entry_smart_show, /* show */
 				    _e_entry_smart_hide, /* hide */
-				    NULL, /* color_set */
-				    NULL, /* clip_set */
-				    NULL, /* clip_unset */
-				    NULL); /* data*/   
-   return evas_object_smart_add(evas, e_entry_smart);
+				    _e_entry_color_set, /* color_set */
+				    _e_entry_clip_set, /* clip_set */
+				    _e_entry_clip_unset, /* clip_unset */
+				    NULL); /* data*/
+        _e_entry_smart_use = 0;
+     }
+   
+   _e_entry_smart_use++;
+   return evas_object_smart_add(evas, _e_entry_smart);
 }
 
-EAPI void
-e_entry_change_handler_set(Evas_Object *object, void (*func)(void *data, Evas_Object *entry, char *key), void *data)
-{
-   E_Entry_Smart_Data *sd;
-   
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
-   
-   sd->change_func = func;
-   sd->change_data = data;
-}
-
+/**
+ * Sets the text of the entry object
+ *
+ * @param entry an entry object
+ * @param text the text to set
+ */
 EAPI void
 e_entry_text_set(Evas_Object *entry, const char *text)
 {
    E_Entry_Smart_Data *sd;
-
-   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
+   
+   if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
-
-   e_editable_text_text_set(sd->entry_object, text);
+   
+   e_editable_text_set(sd->editable_object, text);
+   evas_object_smart_callback_call(entry, "changed", NULL);
 }
 
-EAPI const char*
+/**
+ * Gets the text of the entry object
+ *
+ * @param entry an entry object
+ * @return Returns the text of the entry object
+ */
+EAPI const char *
 e_entry_text_get(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
-
-   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
-     return "";
-
-   return e_editable_text_text_get(sd->entry_object);
+   
+   if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
+     return NULL;
+   return e_editable_text_get(sd->editable_object);
 }
 
+/**
+ * Clears the entry object
+ *
+ * @param entry an entry object
+ */
 EAPI void
-e_entry_text_insert(Evas_Object *entry, const char *text)
+e_entry_clear(Evas_Object *entry)
+{
+   e_entry_text_set(entry, "");
+}
+
+/**
+ * Gets the minimum size of the entry object
+ *
+ * @param entry an entry object
+ * @param minw the location where to store the minimun width of the entry
+ * @param minh the location where to store the minimun height of the entry
+ */
+EAPI void
+e_entry_min_size_get(Evas_Object *entry, Evas_Coord *minw, Evas_Coord *minh)
 {
    E_Entry_Smart_Data *sd;
-
-   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
+   
+   if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
-
-   e_editable_text_insert(sd->entry_object, text);
+   
+   if (minw)   *minw = sd->min_width;
+   if (minh)   *minh = sd->height;
 }
 
-EAPI void
-e_entry_delete_char_before(Evas_Object *entry)
-{
-   E_Entry_Smart_Data *sd;
-
-   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
-     return;
-
-   e_editable_text_delete_char_before(sd->entry_object);
-}
-
-EAPI void
-e_entry_delete_char_after(Evas_Object *entry)
-{
-   E_Entry_Smart_Data *sd;
-
-   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
-     return;
-
-   e_editable_text_delete_char_after(sd->entry_object);
-}
-
-EAPI void
-e_entry_cursor_move_at_start(Evas_Object *entry)
-{
-   E_Entry_Smart_Data *sd;
-
-   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
-     return;
-
-   e_editable_text_cursor_move_at_start(sd->entry_object);
-}
-
-EAPI void
-e_entry_cursor_move_at_end(Evas_Object *entry)
-{
-   E_Entry_Smart_Data *sd;
-
-   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
-     return;
-
-   e_editable_text_cursor_move_at_end(sd->entry_object);
-}
-
-EAPI void
-e_entry_cursor_move_left(Evas_Object *entry)
-{
-   E_Entry_Smart_Data *sd;
-
-   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
-     return;
-
-   e_editable_text_cursor_move_left(sd->entry_object);
-}
-
-EAPI void
-e_entry_cursor_move_right(Evas_Object *entry)
-{
-   E_Entry_Smart_Data *sd;
-
-   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
-     return;
-
-   e_editable_text_cursor_move_right(sd->entry_object);
-}
-
-EAPI void
-e_entry_cursor_show(Evas_Object *entry)
-{
-   E_Entry_Smart_Data *sd;
-
-   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
-     return;
-
-   e_editable_text_cursor_show(sd->entry_object);
-}
-
-EAPI void
-e_entry_cursor_hide(Evas_Object *entry)
-{
-   E_Entry_Smart_Data *sd;
-
-   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
-     return;
-
-   e_editable_text_cursor_hide(sd->entry_object);
-}
-
+/**
+ * Focuses the entry object. It will receives keyboard events and the user could
+ * then type some text (the entry should also be enabled. The cursor and the
+ * selection will be shown
+ *
+ * @param entry the entry to focus
+ */
 EAPI void
 e_entry_focus(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
    
-   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
+   if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
+   if (sd->focused)
+      return;
    
-   edje_object_signal_emit(sd->edje_object, "focus_in", "");
+   evas_object_focus_set(entry, 1);
+   edje_object_signal_emit(sd->entry_object, "focus_in", "");
+   if (sd->enabled)
+      e_editable_cursor_show(sd->editable_object);
+   e_editable_selection_show(sd->editable_object);
+   e_editable_cursor_move_to_end(sd->editable_object);
+   e_editable_selection_move_to_end(sd->editable_object);
+   sd->focused = 1;
 }
 
+/**
+ * Unfocuses the entry object. It will no longer receives keyboard events so
+ * the user could no longer type some text. The cursor and the selection will
+ * be hidden
+ *
+ * @param entry the entry object to unfocus
+ */
 EAPI void
 e_entry_unfocus(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
    
-   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
+   if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
-   
-   edje_object_signal_emit(sd->edje_object, "focus_out", "");
-}
-
-EAPI void
-e_entry_min_size_get(Evas_Object *entry, Evas_Coord *mw, Evas_Coord *mh)
-{
-   E_Entry_Smart_Data *sd;
-   
-   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
-     return;
-   if (mw) *mw = sd->minw;
-   if (mh) *mh = sd->minh;
-}
-
-/**************************
- *
- * Private functions
- *
- **************************/
-
-/* Returns 1 if the text of the editable object is empty */
-static Evas_Bool
-_e_editable_text_is_empty(Evas_Object *object)
-{
-   E_Editable_Text_Smart_Data *sd;
-   Evas_Textblock_Cursor *cursor;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return 1;
-
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
-   return (evas_textblock_cursor_node_text_length_get(cursor) <= 0);
-}
-
-/* Updates the size of the text object: to be called when the text of the object is changed */
-static void
-_e_editable_text_size_update(Evas_Object *object)
-{
-   E_Editable_Text_Smart_Data *sd;
-   int w, h;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
-
-   evas_object_textblock_size_native_get(sd->text_object, &w, &h);
-   evas_object_resize(sd->text_object, w, h);
-   evas_object_resize(object, w, h);
-}
-
-/* Updates the cursor position: to be called when the cursor or the object are moved */
-static void
-_e_editable_text_cursor_position_update(Evas_Object *object)
-{
-   E_Editable_Text_Smart_Data *sd;
-   Evas_Textblock_Cursor *cursor;
-   Evas_Coord tx, ty, tw, th, cx, cy, cw, ch, ox, oy, ow, oh;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
-
-   evas_object_geometry_get(sd->text_object, &tx, &ty, &tw, &th);
-   evas_object_geometry_get(object, &ox, &oy, &ow, &oh);
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
-
-   if (_e_editable_text_is_empty(object))
-     {
-	evas_object_move(sd->cursor_object, tx, ty);
-	evas_object_resize(sd->cursor_object, 1, th);
-	return;
-     }
-   else if (sd->cursor_at_the_end)
-     {
-	evas_textblock_cursor_char_last(cursor);
-	evas_textblock_cursor_char_geometry_get(cursor, &cx, &cy, &cw, &ch);
-	cx += tx + cw;
-     }
-   else
-     {
-	evas_textblock_cursor_char_geometry_get(cursor, &cx, &cy, &cw, &ch);
-	cx += tx;
-     }
-
-   /* TODO: fix */
-   if ((cx < ox + 20) && (cx - tx > 20))
-     {
-	evas_object_move(sd->text_object, tx + ox + 20 - cx, ty);
-	cx = ox + 20;
-     }
-   else if (cx < ox)
-     {	
-	evas_object_move(sd->text_object, tx + ox - cx, ty);
-	cx = ox;
-     }
-   else if ((cx > ox + ow - 20) && (tw - (cx - tx) > 20))
-     {
-	evas_object_move(sd->text_object, tx - cx + ox + ow - 20, ty);
-	cx = ox + ow - 20;
-     }
-   else if (cx > ox + ow)
-     {
-	evas_object_move(sd->text_object, tx - cx + ox + ow, ty);
-	cx = ox + ow;
-     }
-
-   evas_object_move(sd->cursor_object, cx, ty + cy);
-   evas_object_resize(sd->cursor_object, 1, ch);   
-}
-
-/* Updates the visibility state of the cursor */
-static void
-_e_editable_text_cursor_visibility_update(Evas_Object *object)
-{
-   E_Editable_Text_Smart_Data *sd;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
+   if (!sd->focused)
       return;
-
-   if (!sd->show_cursor)
-     {
-	if (sd->cursor_timer)
-	  {
-	     ecore_timer_del(sd->cursor_timer);
-	     sd->cursor_timer = NULL;
-	  }
-	evas_object_hide(sd->cursor_object);
-     }
-   else
-     {
-	if (!sd->cursor_timer)
-	  {
-	     sd->cursor_timer = ecore_timer_add(0.75, _e_editable_text_cursor_timer_cb, object);
-	     evas_object_show(sd->cursor_object);
-	  }
-     }
+   
+   evas_object_focus_set(entry, 0);
+   edje_object_signal_emit(sd->entry_object, "focus_out", "");
+   e_editable_cursor_hide(sd->editable_object);
+   e_editable_selection_hide(sd->editable_object);
+   sd->focused = 0;
 }
 
-/* Make the cursor blink */
-// FIXME: cursor should not be a rect - shoudl be an edje. timers not needed then
-static int
-_e_editable_text_cursor_timer_cb(void *data)
-{
-   Evas_Object *object;
-   E_Editable_Text_Smart_Data *sd;
-
-   object = data;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return 1;
-
-   if (evas_object_visible_get(sd->cursor_object))
-     {
-	evas_object_hide(sd->cursor_object);
-	ecore_timer_interval_set(sd->cursor_timer, 0.25);
-     }
-   else
-     {
-	evas_object_show(sd->cursor_object);
-	ecore_timer_interval_set(sd->cursor_timer, 0.75);
-     }
-
-   return 1;
-}
-
-/* Called when the object is created */
-static void
-_e_editable_text_smart_add(Evas_Object *object)
-{
-   Evas *evas;
-   E_Editable_Text_Smart_Data *sd;
-   Evas_Textblock_Cursor *cursor;
-
-   if ((!object) || !(evas = evas_object_evas_get(object)))
-     return;
-
-   if (!e_editable_text_style)
-     {
-	e_editable_text_style = evas_textblock_style_new();
-	evas_textblock_style_set(e_editable_text_style, "DEFAULT='font=Vera font_size=10 align=left color=#000000 wrap=word'");
-	e_editable_text_style_use_count = 0;
-     }
-
-   sd = malloc(sizeof(E_Editable_Text_Smart_Data));
-   if (!sd) return;
-   sd->show_cursor = 0;
-   sd->cursor_at_the_end = 1;
-   sd->cursor_timer = NULL;
-
-   sd->text_object = evas_object_textblock_add(evas);
-   evas_object_textblock_style_set(sd->text_object, e_editable_text_style);
-   e_editable_text_style_use_count++;
-   evas_object_smart_member_add(sd->text_object, object);
-
-   // FIXME: cursor should not be a rect - shoudl be an edje.
-   sd->clip = evas_object_rectangle_add(evas);
-   evas_object_clip_set(sd->text_object, sd->clip);
-   evas_object_smart_member_add(sd->clip, object);
-
-   sd->cursor_object = evas_object_rectangle_add(evas);
-   evas_object_color_set(sd->cursor_object, 0, 0, 0, 255);
-   evas_object_smart_member_add(sd->cursor_object, object);
-
-   evas_object_smart_data_set(object, sd);
-
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
-   evas_textblock_cursor_node_first(cursor);
-
-   evas_font_path_append (evas, PACKAGE_DATA_DIR"/data/fonts");
-}
-
-/* Called when the object is deleted */
-static void
-_e_editable_text_smart_del(Evas_Object *object)
-{
-   E_Editable_Text_Smart_Data *sd;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
-
-   if (sd->cursor_timer)
-     ecore_timer_del(sd->cursor_timer);
-   evas_object_del(sd->text_object);
-
-   evas_object_del(sd->clip);
-   evas_object_del(sd->cursor_object);
-   free(sd);
-
-   e_editable_text_style_use_count--;
-   if ((e_editable_text_style_use_count <= 0) && (e_editable_text_style))
-     {
-	evas_textblock_style_free(e_editable_text_style);
-	e_editable_text_style = NULL;
-     }
-}
-
-/* Called when the object is moved */
-static void
-_e_editable_text_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y)
-{
-   E_Editable_Text_Smart_Data *sd;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
-
-   evas_object_move(sd->clip, x, y);
-   evas_object_move(sd->text_object, x, y);
-   _e_editable_text_cursor_position_update(object);
-}
-
-/* Called when the object is resized */
-static void
-_e_editable_text_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h)
-{
-   E_Editable_Text_Smart_Data *sd;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
-
-   evas_object_resize(sd->clip, w, h);
-}
-
-/* Called when the object is shown */
-static void
-_e_editable_text_smart_show(Evas_Object *object)
-{
-   E_Editable_Text_Smart_Data *sd;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
-
-   evas_object_show(sd->text_object);
-   evas_object_show(sd->clip);
-   _e_editable_text_cursor_visibility_update(object);
-}
-
-/* Called when the object is hidden */
-static void
-_e_editable_text_smart_hide(Evas_Object *object)
-{
-   E_Editable_Text_Smart_Data *sd;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
-
-   evas_object_hide(sd->cursor_object);
-   evas_object_hide(sd->text_object);
-   evas_object_hide(sd->clip);
-}
-
-/* Called when the user presses a key */
-static void
-_e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event)
+/**
+ * Enables the entry object: the user will be able to type text
+ *
+ * @param entry the entry object to enable
+ */
+EAPI void
+e_entry_enable(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
-   Evas_Event_Key_Down *key_event = event;
-
-   if ((!obj) || !(sd = evas_object_smart_data_get(obj)))
+   
+   if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
-
-   obj = sd->entry_object;
-
-   if ((!strcmp(key_event->keyname, "BackSpace")) ||
-       ((key_event->string) && (strlen(key_event->string) == 1) &&
-	(key_event->string[0] == 0x8)))
-     {
-	e_editable_text_delete_char_before(obj);
-	if (sd->change_func)
-	  sd->change_func(sd->change_data, obj, "");
-     }
-   else if ((!strcmp(key_event->keyname, "Delete")) ||
-	    ((key_event->string) && (strlen(key_event->string) == 1) &&
-	     (key_event->string[0] == 0x4)))
-     {
-	e_editable_text_delete_char_after(obj);
-	if (sd->change_func)
-	  sd->change_func(sd->change_data, obj, "");
-     }
-   else if (!strcmp(key_event->keyname, "Left"))
-     e_editable_text_cursor_move_left(obj);
-   else if (!strcmp(key_event->keyname, "Right"))
-     e_editable_text_cursor_move_right(obj);
-   else if ((!strcmp(key_event->keyname, "Home")) ||
-	    ((key_event->string) && (strlen(key_event->string) == 1) &&
-	     (key_event->string[0] == 0x1)))
-     e_editable_text_cursor_move_at_start(obj);
-   else if ((!strcmp(key_event->keyname, "End")) ||
-	    ((key_event->string) && (strlen(key_event->string) == 1) &&
-	     (key_event->string[0] == 0x5)))
-     e_editable_text_cursor_move_at_end(obj);
-   else
-     {	
-	e_editable_text_insert(obj, key_event->string);
-	if ((key_event->string) && (strcmp(key_event->keyname, "Escape")))
-	  {
-	     if (*(key_event->string) >= 0x20)
-	       {
-		  if (sd->change_func)
-		    sd->change_func(sd->change_data, obj,
-				    (char *)key_event->string);
-	       }
-	  }
-     }
+   if (sd->enabled)
+      return;
+   
+   edje_object_signal_emit(entry, "enabled", "");
+   if (sd->focused)
+      e_editable_cursor_show(sd->editable_object);
+   sd->enabled = 1;
+   
 }
 
-/* Called when the entry is focused */
-/* we need to make this work, move then to e_entry_...? fuck it, am too sleepy */
-static void
-_e_editable_text_focus_cb(Evas_Object *object)
+
+/**
+ * Disables the entry object: the user won't be able to type anymore. Selection
+ * will still be possible (to copy the text)
+ *
+ * @param entry the entry object to disable
+ */
+EAPI void
+e_entry_disable(Evas_Object *entry)
 {
-   if (!object)
+   E_Entry_Smart_Data *sd;
+   
+   if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
-
-   e_editable_text_cursor_show(object);
+   if (!sd->enabled)
+      return;
+   
+   edje_object_signal_emit(entry, "disabled", "");
+   e_editable_cursor_hide(sd->editable_object);
+   sd->enabled = 0;
 }
 
-/* Called when the entry is unfocused */
-/* we need to make this work */
+
+/* Private functions */
+
+/* Called when a key has been pressed by the user */
 static void
-_e_editable_text_unfocus_cb(Evas_Object *object)
+_e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   if (!object)
+   E_Entry_Smart_Data *sd;
+   Evas_Object *editable;
+   Evas_Event_Key_Down *event;
+   int cursor_pos, selection_pos;
+   int start_pos, end_pos;
+   int selecting;
+   int changed = 0;
+   
+   if ((!obj) || (!(sd = evas_object_smart_data_get(obj))))
+     return;
+   if (!(event = event_info) || !(event->keyname))
      return;
 
-   //e_editable_text_object_cursor_hide(object);
-   //e_editable_text_object_cursor_move_at_start(object);
+   editable = sd->editable_object;
+   cursor_pos = e_editable_cursor_pos_get(editable);
+   selection_pos = e_editable_selection_pos_get(editable);
+   start_pos = (cursor_pos <= selection_pos) ? cursor_pos : selection_pos;
+   end_pos = (cursor_pos >= selection_pos) ? cursor_pos : selection_pos;
+   selecting = (start_pos != end_pos);
+   
+   /* TODO: CTRL + A, X, C, V */
+   
+   if (!sd->enabled)
+     return;
+   
+   /* Move the cursor/selection to the left */
+   if (strcmp(event->key, "Left") == 0)
+     {
+        if (evas_key_modifier_is_set(event->modifiers, "Shift"))
+          e_editable_cursor_move_left(editable);
+        else if (selecting)
+          {
+             if (cursor_pos < selection_pos)
+               e_editable_selection_pos_set(editable, cursor_pos);
+             else
+               e_editable_cursor_pos_set(editable, selection_pos);
+          }
+        else
+          {
+             e_editable_cursor_move_left(editable);
+             e_editable_selection_pos_set(editable,
+                                          e_editable_cursor_pos_get(editable));
+          }
+     }
+   /* Move the cursor/selection to the right */
+   else if (strcmp(event->key, "Right") == 0)
+     {
+        if (evas_key_modifier_is_set(event->modifiers, "Shift"))
+          e_editable_cursor_move_right(editable);
+        else if (selecting)
+          {
+             if (cursor_pos > selection_pos)
+               e_editable_selection_pos_set(editable, cursor_pos);
+             else
+               e_editable_cursor_pos_set(editable, selection_pos);
+          }
+        else
+          {
+             e_editable_cursor_move_right(editable);
+             e_editable_selection_pos_set(editable,
+                                          e_editable_cursor_pos_get(editable));
+          }
+     }
+   /* Move the cursor/selection to the start of the entry */
+   else if ((strcmp(event->keyname, "Home") == 0) ||
+	   ((event->string) && (strlen(event->string) == 1) &&
+	    (event->string[0] == 0x1)))
+     {
+        e_editable_cursor_move_to_start(editable);
+        if (!evas_key_modifier_is_set(event->modifiers, "Shift"))
+          e_editable_selection_pos_set(editable,
+                                       e_editable_cursor_pos_get(editable));
+     }
+   /* Move the cursor/selection to the end of the entry */
+   else if ((strcmp(event->keyname, "End") == 0) ||
+	   ((event->string) && (strlen(event->string) == 1) &&
+	    (event->string[0] == 0x5)))
+     {
+        e_editable_cursor_move_to_end(editable);
+        if (!evas_key_modifier_is_set(event->modifiers, "Shift"))
+          e_editable_selection_pos_set(editable,
+                                       e_editable_cursor_pos_get(editable));
+     }
+   /* Remove the previous character */
+   else if ((strcmp(event->keyname, "BackSpace") == 0) ||
+           ((event->string) && (strlen(event->string) == 1) &&
+            (event->string[0] == 0x8)))
+     {
+        if (selecting)
+          changed = e_editable_delete(editable, start_pos, end_pos);
+        else
+          changed = e_editable_delete(editable, cursor_pos - 1, cursor_pos);
+     }
+   /* Remove the next character */
+   else if ((!strcmp(event->keyname, "Delete")) ||
+	    ((event->string) && (strlen(event->string) == 1) &&
+	     (event->string[0] == 0x4)))
+     {
+        if (selecting)
+          changed = e_editable_delete(editable, start_pos, end_pos);
+        else
+          changed = e_editable_delete(editable, cursor_pos, cursor_pos + 1);
+     }
+   /* Otherwise, we insert the corresponding character */
+   else if ((event->string) &&
+          ((strlen(event->string) != 1) || (event->string[0] >= 0x20)))
+     {
+        if (selecting)
+          changed = e_editable_delete(editable, start_pos, end_pos);
+        changed |= e_editable_insert(editable, start_pos, event->string);
+     }
+   
+   if (changed)
+     evas_object_smart_callback_call(obj, "changed", NULL);
 }
 
-static void
-_e_entry_smart_add(Evas_Object *object)
+/* Editable object's smart methods */
+
+static void _e_entry_smart_add(Evas_Object *object)
 {
    Evas *evas;
    E_Entry_Smart_Data *sd;
-   Evas_Coord w = 0, h = 0;
+   Evas_Object *o;
+   int cw, ch;
    
    if ((!object) || !(evas = evas_object_evas_get(object)))
      return;
 
    sd = malloc(sizeof(E_Entry_Smart_Data));
-   if (!sd) return;
-
-   sd->change_func = NULL;
-   sd->change_data = NULL;
+   if (!sd)
+     return;
    
    evas_object_smart_data_set(object, sd);
-
-   sd->edje_object = edje_object_add(evas);
-   e_theme_edje_object_set(sd->edje_object, "base/theme/widgets",
-			   "widgets/entry");
-   evas_object_smart_member_add(sd->edje_object, object);
-
-   sd->entry_object = e_editable_text_add(evas);
-   e_editable_text_text_set(sd->entry_object, " ");
-   evas_object_geometry_get(sd->entry_object, NULL, NULL, &w, &h);
-   e_editable_text_text_set(sd->entry_object, NULL);
-   edje_extern_object_min_size_set(sd->entry_object, w, h);
-   edje_object_part_swallow(sd->edje_object, "text_area", sd->entry_object);
-   edje_object_size_min_calc(sd->edje_object, &w, &h);
-   sd->minw = w;
-   sd->minh = h;
    
-   evas_object_event_callback_add(object, EVAS_CALLBACK_KEY_DOWN, _e_entry_key_down_cb, NULL);
+   sd->enabled = 1;
+   sd->focused = 0;
+   sd->valign = 0.5;
+   
+   o = edje_object_add(evas);
+   sd->entry_object = o;
+   e_theme_edje_object_set(o, "base/theme/widgets", "widgets/entry");
+   evas_object_smart_member_add(o, object);
+   
+   o = e_editable_add(evas);
+   sd->editable_object = o;
+   e_editable_cursor_hide(o);
+   e_editable_char_size_get(o, &cw, &ch);
+   edje_extern_object_min_size_set(o, cw, ch);
+   edje_object_part_swallow(sd->entry_object, "text_area", o);
+   edje_object_size_min_calc(sd->entry_object, &sd->min_width, &sd->height);
+   evas_object_show(o);
+   
+   evas_object_event_callback_add(object, EVAS_CALLBACK_KEY_DOWN,
+                                  _e_entry_key_down_cb, NULL);
 }
 
-static void
-_e_entry_smart_del(Evas_Object *object)
+static void _e_entry_smart_del(Evas_Object *object)
 {
    E_Entry_Smart_Data *sd;
-
+   
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
-
+   
+   evas_object_del(sd->editable_object);
    evas_object_del(sd->entry_object);
-   evas_object_del(sd->edje_object);
-   E_FREE(sd);
 }
 
-static void
-_e_entry_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y)
+static void _e_entry_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y)
 {
    E_Entry_Smart_Data *sd;
-
+   Evas_Coord prev_x, prev_y;
+   Evas_Coord ox, oy;
+   
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
-      
-   evas_object_move(sd->edje_object, x, y);
-   e_entry_cursor_move_at_start(object);
+   
+   evas_object_geometry_get(object, &prev_x, &prev_y, NULL, NULL);
+   evas_object_geometry_get(sd->entry_object, &ox, &oy, NULL, NULL);
+   evas_object_move(sd->entry_object, ox + (x - prev_x), oy + (y - prev_y));
 }
 
-static void
-_e_entry_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h)
+static void _e_entry_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h)
 {
    E_Entry_Smart_Data *sd;
    Evas_Coord x, y;
-
+   
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
-
+   
    evas_object_geometry_get(object, &x, &y, NULL, NULL);
-   evas_object_move(sd->edje_object, x, y + ((h - sd->minh) / 2));
-   evas_object_resize(sd->edje_object, w, sd->minh);
+   evas_object_move(sd->entry_object, x, y + ((h - sd->height) * sd->valign));
+   evas_object_resize(sd->entry_object, w, sd->height);
 }
 
-static void
-_e_entry_smart_show(Evas_Object *object)
+static void _e_entry_smart_show(Evas_Object *object)
 {
    E_Entry_Smart_Data *sd;
-
+   
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
-
-   evas_object_show(sd->edje_object);
+   evas_object_show(sd->entry_object);
 }
 
-static void
-_e_entry_smart_hide(Evas_Object *object)
+static void _e_entry_smart_hide(Evas_Object *object)
 {
    E_Entry_Smart_Data *sd;
-
+   
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
+   evas_object_hide(sd->entry_object);
+}
 
-   evas_object_hide(sd->edje_object);
+static void _e_entry_color_set(Evas_Object *object, int r, int g, int b, int a)
+{
+   E_Entry_Smart_Data *sd;
+   
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
+     return;
+   evas_object_color_set(sd->entry_object, r, g, b, a);
+}
+
+static void _e_entry_clip_set(Evas_Object *object, Evas_Object *clip)
+{
+   E_Entry_Smart_Data *sd;
+   
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
+     return;
+   evas_object_clip_set(sd->entry_object, clip);
+}
+
+static void _e_entry_clip_unset(Evas_Object *object)
+{
+   E_Entry_Smart_Data *sd;
+   
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
+     return;
+   evas_object_clip_unset(sd->entry_object);
 }

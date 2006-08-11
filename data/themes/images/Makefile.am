@@ -326,7 +326,6 @@ e17_about_sky5.png \
 e17_about_sky_overlay.png \
 focus.png \
 entry.png \
-entry_focus.png \
 e17_scrollbar_hdrag_thumb.png \
 e17_scrollbar_vdrag_thumb.png \
 e17_fileman_bg.png \

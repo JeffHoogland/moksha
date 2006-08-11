@@ -237,7 +237,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    if (cfdata->auth_method == 0) e_widget_disabled_set(ob, 1);
 #endif
    _e_desklock_passwd_cb_change(cfdata, ob);
-   e_widget_entry_on_change_callback_set(ob, _e_desklock_passwd_cb_change, cfdata);
+   e_widget_on_change_hook_set(ob, _e_desklock_passwd_cb_change, cfdata);
    e_widget_min_size_set(ob, 200, 25);
    e_widget_framelist_object_append(of, ob);
    
@@ -424,7 +424,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 #endif
    
    _e_desklock_passwd_cb_change(cfdata, ob);
-   e_widget_entry_on_change_callback_set(ob, _e_desklock_passwd_cb_change, cfdata);
+   e_widget_on_change_hook_set(ob, _e_desklock_passwd_cb_change, cfdata);
    e_widget_min_size_set(ob, 200, 25);
    e_widget_framelist_object_append(of, ob);
    

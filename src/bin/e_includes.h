@@ -17,6 +17,7 @@
 #include "e_menu.h"
 #include "e_icon.h"
 #include "e_box.h"
+#include "e_editable.h"
 #include "e_entry.h"
 #include "e_init.h"
 #include "e_int_menus.h"

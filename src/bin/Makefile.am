@@ -85,6 +85,7 @@ e_dialog.h \
 e_about.h \
 e_theme_about.h \
 e_apps_cache.h \
+e_editable.h \
 e_entry.h \
 e_fileman.h \
 e_fileman_smart.h \
@@ -228,6 +229,7 @@ e_dialog.c \
 e_about.c \
 e_theme_about.c \
 e_apps_cache.c \
+e_editable.c \
 e_entry.c \
 e_fileman.c \
 e_fileman_smart.c \
