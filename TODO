@@ -35,6 +35,8 @@ Some of the things (in very short form) that need to be done to E17...
 -------------------------------------------------------------------------------
 
 * fm2 needs to have right mouse menu on files for rename and delete
+* wallpaper select needs to see if target .edj name exists - if so - find
+  a new target name
 * fsel needs "add" button for favorites to add whataver directory is selected
   if any dir is selected (create symlink)
 * fsel needs to clear the entry when entering a new dir
