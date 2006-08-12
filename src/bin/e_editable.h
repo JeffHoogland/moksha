@@ -7,8 +7,10 @@
 #define E_EDITABLE_H
 
 EAPI Evas_Object *e_editable_add                     (Evas *evas);
+EAPI void         e_editable_theme_set               (Evas_Object *editable, const char *category, const char *group);
 EAPI void         e_editable_password_set            (Evas_Object *editable, int password_mode);
 EAPI int          e_editable_password_get            (Evas_Object *editable);
+
 EAPI void         e_editable_text_set                (Evas_Object *editable, const char *text);
 EAPI const char  *e_editable_text_get                (Evas_Object *editable);
 EAPI char        *e_editable_text_range_get          (Evas_Object *editable, int start, int end);
@@ -38,6 +40,7 @@ EAPI void         e_editable_selection_hide          (Evas_Object *editable);
 EAPI void         e_editable_selectable_set          (Evas_Object *editable, int selectable);
 EAPI int          e_editable_selectable_get          (Evas_Object *editable);
 
+EAPI int          e_editable_pos_get_from_coords     (Evas_Object *editable, Evas_Coord x, Evas_Coord y);
 EAPI void         e_editable_char_size_get           (Evas_Object *editable, int *w, int *h);
 
 #endif

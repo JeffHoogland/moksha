@@ -25,7 +25,6 @@ struct _E_Editable_Smart_Data
    int cursor_pos;
    int cursor_visible;
    int selection_pos;
-   int selection_dragging;
    int selection_visible;
    int selectable;
    int password_mode;
@@ -38,6 +37,9 @@ struct _E_Editable_Smart_Data
    char *font;
    int font_size;
    Evas_Text_Style_Type font_style;
+   int cursor_width;
+   int selection_on_fg;
+   
    int average_char_w;
    int average_char_h;
 };
@@ -48,13 +50,8 @@ static int _e_editable_text_delete(Evas_Object *editable, int start, int end);
 static void _e_editable_cursor_update(Evas_Object *editable);
 static void _e_editable_selection_update(Evas_Object *editable);
 static void _e_editable_text_update(Evas_Object *editable);
-static void _e_editable_text_position_update(Evas_Object *editable);
-static int _e_editable_cursor_pos_get_from_coords(Evas_Object *editable, Evas_Coord canvas_x, Evas_Coord canvas_y);
-
+static void _e_editable_text_position_update(Evas_Object *editable, Evas_Coord real_w);
 static int _e_editable_cursor_timer_cb(void *data);
-static void _e_editable_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _e_editable_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _e_editable_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
 static void _e_editable_smart_add(Evas_Object *object);
 static void _e_editable_smart_del(Evas_Object *object);
@@ -102,6 +99,61 @@ e_editable_add(Evas *evas)
    
    _e_editable_smart_use++;
    return evas_object_smart_add(evas, _e_editable_smart);
+}
+
+/**
+ * Sets the theme group to be used by the editable object.
+ * This function has to be called, or the cursor and the selection won't be
+ * visible.
+ *
+ * @param editable an editable object
+ * @param category the theme category to use for the editable object
+ * @param group the theme group to use for the editable object
+ */
+EAPI void
+e_editable_theme_set(Evas_Object *editable, const char *category, const char *group)
+{
+   E_Editable_Smart_Data *sd;
+   char *obj_group;
+   const char *data;
+   
+   if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
+     return;
+   if ((!category) || (!group))
+     return;
+   
+   /* Gets the theme for the cursor */
+   obj_group = malloc(strlen(group) + strlen("/cursor") + 1);
+   sprintf(obj_group, "%s/cursor", group);
+   e_theme_edje_object_set(sd->cursor_object, category, obj_group);
+   free(obj_group);
+   
+   edje_object_size_min_get(sd->cursor_object, &sd->cursor_width, NULL);
+   if (sd->cursor_width < 1)
+     sd->cursor_width = 1;
+   
+   
+   /* Gets the theme for the selection */
+   obj_group = malloc(strlen(group) + strlen("/selection") + 1);
+   sprintf(obj_group, "%s/selection", group);
+   e_theme_edje_object_set(sd->selection_object, category, obj_group);
+   free(obj_group);
+   
+   data = edje_object_data_get(sd->selection_object, "on_foreground");
+   if ((data) && (strcmp(data, "1") == 0))
+     {
+        sd->selection_on_fg = 1;
+        evas_object_stack_above(sd->selection_object, sd->text_object);
+     }
+   else
+     {
+        sd->selection_on_fg = 0;
+        evas_object_stack_below(sd->selection_object, sd->text_object);
+     }
+   
+   /* TODO: font */
+   
+   _e_editable_cursor_update(editable);
 }
 
 /**
@@ -172,8 +224,8 @@ e_editable_text_set(Evas_Object *editable, const char *text)
         sd->allocated_length = E_EDITABLE_BLOCK_SIZE;
      }
    
-   sd->cursor_pos = 0;
-   sd->selection_pos = 0;
+   sd->cursor_pos = sd->unicode_length;
+   sd->selection_pos = sd->unicode_length;
    _e_editable_cursor_update(editable);
 }
 
@@ -281,7 +333,7 @@ e_editable_insert(Evas_Object *editable, int pos, const char *text)
    if (sd->selection_pos >= pos)
      e_editable_selection_pos_set(editable, sd->selection_pos + unicode_length);
    
-   _e_editable_text_position_update(editable);
+   _e_editable_text_position_update(editable, -1);
    return 1;
 }
 
@@ -317,7 +369,7 @@ e_editable_delete(Evas_Object *editable, int start, int end)
    else if (sd->selection_pos > start)
      e_editable_selection_pos_set(editable, start);
    
-   _e_editable_text_position_update(editable);
+   _e_editable_text_position_update(editable, -1);
    return 1;
 }
 
@@ -689,6 +741,57 @@ e_editable_selectable_get(Evas_Object *editable)
 }
 
 /**
+ * Gets the cursor position at the coords ( @a x, @a y ). It's used to know
+ * where to place the cursor or the selection bound on mouse evevents.
+ *
+ * @param editable an editable object
+ * @param x the x coord, relative to the editable object
+ * @param y the y coord, relative to the editable object
+ * @return Returns the position where to place the cursor according to the
+ * given coords, or -1 on failure
+ */
+EAPI int
+e_editable_pos_get_from_coords(Evas_Object *editable, Evas_Coord x, Evas_Coord y)
+{
+   E_Editable_Smart_Data *sd;
+   Evas_Coord ox, oy;
+   Evas_Coord tx, ty, tw, th;
+   Evas_Coord cx, cw;
+   Evas_Coord canvas_x, canvas_y;
+   int pos;
+   
+   if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
+     return -1;
+   
+   evas_object_geometry_get(editable, &ox, &oy, NULL, NULL);
+   evas_object_geometry_get(sd->text_object, &tx, &ty, &tw, &th);
+   canvas_x = ox + x;
+   canvas_y = oy + y;
+   
+   if ((canvas_y < ty) || (canvas_x < tx))
+      pos = 0;
+   else if ((canvas_y > (ty + th)) || (canvas_x > (tx + tw)))
+      pos = sd->unicode_length;
+   else
+     {
+        pos = evas_object_text_char_coords_get(sd->text_object,
+                                               canvas_x - tx, canvas_y - ty,
+                                               &cx, NULL, &cw, NULL);
+        if (pos >= 0)
+          {
+             if ((canvas_x - tx) > (cx + (cw / 2)))
+               pos++;
+             if (pos > sd->unicode_length)
+               pos = sd->unicode_length;
+          }
+        else
+          pos = -1;
+     }
+   
+   return pos;
+}
+
+/**
  * A utility function to get the average size of a character written inside
  * the editable object
  *
@@ -874,7 +977,7 @@ _e_editable_cursor_update(Evas_Object *editable)
    }
    
    _e_editable_selection_update(editable);
-   _e_editable_text_position_update(editable);
+   _e_editable_text_position_update(editable, -1);
 }
 
 /* Updates the selection of the editable object */
@@ -962,7 +1065,7 @@ _e_editable_text_update(Evas_Object *editable)
 /* Updates the position of the text object according to the position of the
  * cursor (we make sure the cursor is visible) */
 static void
-_e_editable_text_position_update(Evas_Object *editable)
+_e_editable_text_position_update(Evas_Object *editable, Evas_Coord real_w)
 {
    E_Editable_Smart_Data *sd;
    Evas_Coord ox, oy, ow;
@@ -975,6 +1078,8 @@ _e_editable_text_position_update(Evas_Object *editable)
      return;
    
    evas_object_geometry_get(editable, &ox, &oy, &ow, NULL);
+   if (real_w >= 0)
+      ow = real_w;
    evas_object_geometry_get(sd->text_object, &tx, &ty, &tw, NULL);
    evas_object_geometry_get(sd->cursor_object, &cx, &cy, &cw, NULL);
    evas_object_geometry_get(sd->selection_object, &sx, &sy, NULL, NULL);
@@ -1002,44 +1107,6 @@ _e_editable_text_position_update(Evas_Object *editable)
    }
 }
 
-/* Returns the position where to place the cursor according to the given coords
- * Returns -1 on failure */
-static int
-_e_editable_cursor_pos_get_from_coords(Evas_Object *editable, Evas_Coord canvas_x, Evas_Coord canvas_y)
-{
-   E_Editable_Smart_Data *sd;
-   Evas_Coord tx, ty, tw, th;
-   Evas_Coord cx, cw;
-   int pos;
-   
-   if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
-     return -1;
-   
-   evas_object_geometry_get(sd->text_object, &tx, &ty, &tw, &th);
-   
-   if ((canvas_y < ty) || (canvas_x < tx))
-      pos = 0;
-   else if ((canvas_y > (ty + th)) || (canvas_x > (tx + tw)))
-      pos = sd->unicode_length;
-   else
-     {
-        pos = evas_object_text_char_coords_get(sd->text_object,
-                                               canvas_x - tx, canvas_y - ty,
-                                               &cx, NULL, &cw, NULL);
-        if (pos >= 0)
-          {
-             if ((canvas_x - tx) > (cx + (cw / 2)))
-               pos++;
-             if (pos > sd->unicode_length)
-               pos = sd->unicode_length;
-          }
-        else
-          pos = -1;
-     }
-   
-   return pos;
-}
-
 /* Shows/hides the cursor on regular interval */
 static int
 _e_editable_cursor_timer_cb(void *data)
@@ -1062,72 +1129,6 @@ _e_editable_cursor_timer_cb(void *data)
      }
    
    return 1;
-}
-
-/* Called when the editable object is pressed by the mouse */
-static void
-_e_editable_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-   Evas_Object *editable;
-   E_Editable_Smart_Data *sd;
-   Evas_Event_Mouse_Down *event;
-   Evas_Coord ty, th;
-   int pos;
-   
-   if ((!(editable = obj)) || (!(sd = evas_object_smart_data_get(editable))))
-     return;
-   if (!(event = event_info))
-     return;
-   
-   evas_object_geometry_get(sd->text_object, NULL, &ty, NULL, &th);
-   if ((event->canvas.y < ty) || (event->canvas.y > (ty + th)))
-     return;
-   
-   pos = _e_editable_cursor_pos_get_from_coords(editable, event->canvas.x,
-                                                event->canvas.y);
-   if (pos >= 0)
-     {
-        e_editable_cursor_pos_set(editable, pos);
-        if (!evas_key_modifier_is_set(event->modifiers, "Shift"))
-          e_editable_selection_pos_set(editable, pos);
-        
-        sd->selection_dragging = 1;
-     }
-}
-
-/* Called when the editable object is released by the mouse */
-static void
-_e_editable_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-   E_Editable_Smart_Data *sd;
-   
-   if ((!obj) || (!(sd = evas_object_smart_data_get(obj))))
-     return;
-   sd->selection_dragging = 0;
-}
-
-/* Called when the mouse moves over the editable object */
-static void
-_e_editable_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-   Evas_Object *editable;
-   E_Editable_Smart_Data *sd;
-   Evas_Event_Mouse_Move *event;
-   int pos;
-   
-   if ((!(editable = obj)) || (!(sd = evas_object_smart_data_get(editable))))
-     return;
-   if (!(event = event_info))
-     return;
-   
-   if (sd->selection_dragging)
-     {
-        pos = _e_editable_cursor_pos_get_from_coords(editable,
-                                                     event->cur.canvas.x,
-                                                     event->cur.canvas.y);
-        if (pos >= 0)
-          e_editable_cursor_pos_set(editable, pos);
-     }
 }
 
 /* Editable object's smart methods */
@@ -1157,6 +1158,8 @@ _e_editable_smart_add(Evas_Object *object)
    sd->font = strdup("Vera");
    sd->font_size = 10;
    sd->font_style = EVAS_TEXT_STYLE_PLAIN;
+   sd->cursor_width = 1;
+   sd->selection_on_fg = 0;
    sd->average_char_w = 0;
    sd->average_char_h = 0;
    
@@ -1164,7 +1167,6 @@ _e_editable_smart_add(Evas_Object *object)
    sd->cursor_pos = 0;
    sd->cursor_visible = 1;
    sd->selection_pos = 0;
-   sd->selection_dragging = 0;
    sd->selection_visible = 1;
    sd->selectable = 1;
    sd->password_mode = 0;
@@ -1184,26 +1186,15 @@ _e_editable_smart_add(Evas_Object *object)
    evas_object_clip_set(sd->text_object, sd->clip_object);
    evas_object_smart_member_add(sd->text_object, object);
    
-   sd->cursor_object = evas_object_rectangle_add(evas);
-   /* TODO: themability (and use edje for this?) ! */
-   evas_object_color_set(sd->cursor_object, 0, 0, 0, 255);
-   evas_object_clip_set(sd->cursor_object, sd->clip_object);
-   evas_object_smart_member_add(sd->cursor_object, object);
-   
-   sd->selection_object = evas_object_rectangle_add(evas);
-   /* TODO: themability (stackint too) ! */
-   evas_object_color_set(sd->selection_object, 245, 205, 109, 102);
+   sd->selection_object = edje_object_add(evas);
    evas_object_clip_set(sd->selection_object, sd->clip_object);
    evas_object_smart_member_add(sd->selection_object, object);
    
-   _e_editable_cursor_update(object);
+   sd->cursor_object = edje_object_add(evas);
+   evas_object_clip_set(sd->cursor_object, sd->clip_object);
+   evas_object_smart_member_add(sd->cursor_object, object);
    
-   evas_object_event_callback_add(object, EVAS_CALLBACK_MOUSE_DOWN,
-                                  _e_editable_mouse_down_cb, NULL);
-   evas_object_event_callback_add(object, EVAS_CALLBACK_MOUSE_UP,
-                                  _e_editable_mouse_up_cb, NULL);
-   evas_object_event_callback_add(object, EVAS_CALLBACK_MOUSE_MOVE,
-                                  _e_editable_mouse_move_cb, NULL);
+   _e_editable_cursor_update(object);
 }
 
 /* Deletes the editable */
@@ -1272,6 +1263,7 @@ _e_editable_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h)
    
    evas_object_resize(sd->clip_object, w, h);
    evas_object_resize(sd->event_object, w, h);
+   _e_editable_text_position_update(object, w);
 }
 
 /* Shows the editable object */

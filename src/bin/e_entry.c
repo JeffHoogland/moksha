@@ -12,6 +12,7 @@ struct _E_Entry_Smart_Data
    
    int enabled;
    int focused;
+   int selection_dragging;
    float valign;
    int min_width;
    int height;
@@ -19,6 +20,9 @@ struct _E_Entry_Smart_Data
 
 /* local subsystem functions */
 static void _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_entry_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_entry_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
 static void _e_entry_smart_add(Evas_Object *object);
 static void _e_entry_smart_del(Evas_Object *object);
@@ -191,8 +195,6 @@ e_entry_focus(Evas_Object *entry)
    if (sd->enabled)
       e_editable_cursor_show(sd->editable_object);
    e_editable_selection_show(sd->editable_object);
-   e_editable_cursor_move_to_end(sd->editable_object);
-   e_editable_selection_move_to_end(sd->editable_object);
    sd->focused = 1;
 }
 
@@ -215,6 +217,8 @@ e_entry_unfocus(Evas_Object *entry)
    
    evas_object_focus_set(entry, 0);
    edje_object_signal_emit(sd->entry_object, "focus_out", "");
+   e_editable_cursor_move_to_end(sd->editable_object);
+   e_editable_selection_move_to_end(sd->editable_object);
    e_editable_cursor_hide(sd->editable_object);
    e_editable_selection_hide(sd->editable_object);
    sd->focused = 0;
@@ -387,6 +391,70 @@ _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
      evas_object_smart_callback_call(obj, "changed", NULL);
 }
 
+/* Called when the entry object is pressed by the mouse */
+static void
+_e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   E_Entry_Smart_Data *sd;
+   Evas_Event_Mouse_Down *event;
+   Evas_Coord ox, oy;
+   int pos;
+   
+   if ((!obj) || (!(sd = evas_object_smart_data_get(obj))))
+     return;
+   if (!(event = event_info))
+      return;
+   
+   evas_object_geometry_get(sd->editable_object, &ox, &oy, NULL, NULL);
+   pos = e_editable_pos_get_from_coords(sd->editable_object,
+                                        event->canvas.x - ox,
+                                        event->canvas.y - oy);
+   if (pos >= 0)
+     {
+        e_editable_cursor_pos_set(sd->editable_object, pos);
+        if (!evas_key_modifier_is_set(event->modifiers, "Shift"))
+          e_editable_selection_pos_set(sd->editable_object, pos);
+        
+        sd->selection_dragging = 1;
+     }
+}
+
+/* Called when the entry object is released by the mouse */
+static void
+_e_entry_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   E_Entry_Smart_Data *sd;
+   
+   if ((!obj) || (!(sd = evas_object_smart_data_get(obj))))
+     return;
+   sd->selection_dragging = 0;
+}
+
+/* Called when the mouse moves over the entry object */
+static void
+_e_entry_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   E_Entry_Smart_Data *sd;
+   Evas_Event_Mouse_Move *event;
+   Evas_Coord ox, oy;
+   int pos;
+   
+   if ((!obj) || (!(sd = evas_object_smart_data_get(obj))))
+     return;
+   if (!(event = event_info))
+      return;
+   
+   if (sd->selection_dragging)
+     {
+        evas_object_geometry_get(sd->editable_object, &ox, &oy, NULL, NULL);
+        pos = e_editable_pos_get_from_coords(sd->editable_object,
+                                             event->cur.canvas.x - ox,
+                                             event->cur.canvas.y - oy);
+        if (pos >= 0)
+          e_editable_cursor_pos_set(sd->editable_object, pos);
+     }
+}
+
 /* Editable object's smart methods */
 
 static void _e_entry_smart_add(Evas_Object *object)
@@ -407,6 +475,7 @@ static void _e_entry_smart_add(Evas_Object *object)
    
    sd->enabled = 1;
    sd->focused = 0;
+   sd->selection_dragging = 0;
    sd->valign = 0.5;
    
    o = edje_object_add(evas);
@@ -416,6 +485,7 @@ static void _e_entry_smart_add(Evas_Object *object)
    
    o = e_editable_add(evas);
    sd->editable_object = o;
+   e_editable_theme_set(o, "base/theme/widgets", "widgets/entry");
    e_editable_cursor_hide(o);
    e_editable_char_size_get(o, &cw, &ch);
    edje_extern_object_min_size_set(o, cw, ch);
@@ -425,6 +495,12 @@ static void _e_entry_smart_add(Evas_Object *object)
    
    evas_object_event_callback_add(object, EVAS_CALLBACK_KEY_DOWN,
                                   _e_entry_key_down_cb, NULL);
+   evas_object_event_callback_add(object, EVAS_CALLBACK_MOUSE_DOWN,
+                                  _e_entry_mouse_down_cb, NULL);
+   evas_object_event_callback_add(object, EVAS_CALLBACK_MOUSE_UP,
+                                  _e_entry_mouse_up_cb, NULL);
+   evas_object_event_callback_add(object, EVAS_CALLBACK_MOUSE_MOVE,
+                                  _e_entry_mouse_move_cb, NULL);
 }
 
 static void _e_entry_smart_del(Evas_Object *object)
