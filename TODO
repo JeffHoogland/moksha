@@ -34,9 +34,6 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
-* fm2 needs to have right mouse menu on files for rename and delete
-* wallpaper select needs to see if target .edj name exists - if so - find
-  a new target name
 * fsel needs "add" button for favorites to add whataver directory is selected
   if any dir is selected (create symlink)
 * fsel needs to clear the entry when entering a new dir
@@ -71,9 +68,9 @@ Some of the things (in very short form) that need to be done to E17...
 * Dragging a non-eap icon from a border to the ibar should automatically
   create the icon and add that (instead of warning the user that this can't be
   done)
-* new fm code relays-out a dir every time the queue is processed - maybe try
+* new fm code re-lays-out a dir every time the queue is processed - maybe try
   to speed this up
-* new fm code's file scannign isnt insanely fast - icon size calcs etc. speed
+* new fm code's file scanning isn't insanely fast - icon size calcs etc. speed
   up for special cases like list view?
 ]]]
 
@@ -82,10 +79,6 @@ Some of the things (in very short form) that need to be done to E17...
   CLEANUPS
 -------------------------------------------------------------------------------
 
-* bg import dialog and code needs a big workover - needs a few more options on
-  import like quality (lossy low, medium, high, perfect), when scaling do you
-  stretch, scale retaining aspect within the screen or extend beyond screen
-  boundaries (so nothing is left blank) etc.
 * bg needs a gradient dialog that can take a set of pre-drawn png's and edc
   recipies and use colored rects and overlayed png's recolored with color
   options to create vertical, horizontal, radial etc. gradients quickly and

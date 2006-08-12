@@ -42,6 +42,7 @@ group {
       part {
 	 name: "sld_runner";
 	 mouse_events: 0;
+	 clip_to: "clip";
 	 description {
 	    state: "default" 0.0;
 	    max: 2 99999;
@@ -63,6 +64,7 @@ group {
       part {      
 	 name:          "label_under";
 	 mouse_events:  0;
+	 clip_to: "clip";
 	 description {
 	    state:    "default" 0.0;
 	    visible:  0;
@@ -95,6 +97,7 @@ group {
 	 name:           "label";
 	 type:           TEXT;
 	 mouse_events:   0;
+	 clip_to: "clip";
 	 description {
 	    state:    "default" 0.0;
 	    visible:  0;
@@ -124,6 +127,7 @@ group {
       part {
 	 name:          "label_over";
 	 mouse_events:  0;
+	 clip_to: "clip";
 	 description {
 	    state:    "default" 0.0;
 	    visible:  0;
@@ -257,6 +261,7 @@ group {
       part {
 	 name: "slider_glow";
 	 mouse_events: 0;
+	 clip_to: "clip";
 	 description {
 	    state: "default" 0.0;
 	    min: 32 32;
@@ -276,6 +281,33 @@ group {
 	    state: "visible" 0.0;
 	    inherit: "default" 0.0;
 	    color: 255 255 255 255;
+	 }
+      }
+      part {
+	 name: "clip";
+	 type: RECT;
+	 description {
+	    state: "default" 0.0;
+	 }
+	 description {
+	    state: "disabled" 0.0;
+	    inherit: "default" 0.0;
+	    color: 255 255 255 128;
+	 }
+      }
+      part {
+	 name: "catch";
+	 type: RECT;
+	 mouse_events: 1;
+	 description {
+	    state: "default" 0.0;
+	    visible: 0;
+	    color: 0 0 0 0;
+	 }
+	 description {
+	    state: "disabled" 0.0;
+	    inherit: "default" 0.0;
+	    visible: 1;
 	 }
       }
    }
@@ -368,6 +400,22 @@ group {
 	 target: "label";
 	 target: "label_over";
       }
+      program {
+	 name: "disable";
+	 signal: "disabled";
+	 source: "";
+	 action: STATE_SET "disabled" 0.0;
+	 target: "clip";
+	 target: "catch";
+      }
+      program {
+	 name: "enable";
+	 signal: "enabled";
+	 source: "";
+	 action: STATE_SET "default" 0.0;
+	 target: "clip";
+	 target: "catch";
+      }
    }
 }
 
@@ -404,6 +452,7 @@ group {
       part {
 	 name: "sld_runner";
 	 mouse_events: 0;
+	 clip_to: "clip";
 	 description {
 	    state: "default" 0.0;
 	    max: 99999 2;
@@ -425,6 +474,7 @@ group {
       part {      
 	 name:          "label_under";
 	 mouse_events:  0;
+	 clip_to: "clip";
 	 description {
 	    state:    "default" 0.0;
 	    visible:  0;
@@ -457,6 +507,7 @@ group {
 	 name:           "label";
 	 type:           TEXT;
 	 mouse_events:   0;
+	 clip_to: "clip";
 	 description {
 	    state:    "default" 0.0;
 	    visible:  0;
@@ -487,6 +538,7 @@ group {
       part {
 	 name:          "label_over";
 	 mouse_events:  0;
+	 clip_to: "clip";
 	 description {
 	    state:    "default" 0.0;
 	    visible:  0;
@@ -572,6 +624,7 @@ group {
       part {
 	 name: "slider_img";
 	 mouse_events: 0;
+	 clip_to: "clip";
 	 description {
 	    state: "default" 0.0;
 	    min: 32 32;
@@ -639,6 +692,33 @@ group {
 	    state: "visible" 0.0;
 	    inherit: "default" 0.0;
 	    color: 255 255 255 255;
+	 }
+      }
+      part {
+	 name: "clip";
+	 type: RECT;
+	 description {
+	    state: "default" 0.0;
+	 }
+	 description {
+	    state: "disabled" 0.0;
+	    inherit: "default" 0.0;
+	    color: 255 255 255 128;
+	 }
+      }
+      part {
+	 name: "catch";
+	 type: RECT;
+	 mouse_events: 1;
+	 description {
+	    state: "default" 0.0;
+	    visible: 0;
+	    color: 0 0 0 0;
+	 }
+	 description {
+	    state: "disabled" 0.0;
+	    inherit: "default" 0.0;
+	    visible: 1;
 	 }
       }
    }
@@ -730,6 +810,22 @@ group {
 	 target: "label_under";
 	 target: "label";
 	 target: "label_over";
+      }
+      program {
+	 name: "disable";
+	 signal: "disabled";
+	 source: "";
+	 action: STATE_SET "disabled" 0.0;
+	 target: "clip";
+	 target: "catch";
+      }
+      program {
+	 name: "enable";
+	 signal: "enabled";
+	 source: "";
+	 action: STATE_SET "default" 0.0;
+	 target: "clip";
+	 target: "catch";
       }
    }
 }

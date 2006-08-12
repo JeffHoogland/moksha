@@ -10,6 +10,7 @@ struct _E_Widget_Data
 };
 
 static void _e_wid_del_hook(Evas_Object *obj);
+static void _e_wid_disable_hook(Evas_Object *obj);
 
 /* local subsystem functions */
 
@@ -24,6 +25,7 @@ e_widget_framelist_add(Evas *evas, char *label, int horiz)
    obj = e_widget_add(evas);
    
    e_widget_del_hook_set(obj, _e_wid_del_hook);
+   e_widget_disable_hook_set(obj, _e_wid_disable_hook);
    wd = calloc(1, sizeof(E_Widget_Data));
    e_widget_data_set(obj, wd);
    
@@ -93,4 +95,16 @@ _e_wid_del_hook(Evas_Object *obj)
    
    wd = e_widget_data_get(obj);
    free(wd);
+}
+
+static void
+_e_wid_disable_hook(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   if (e_widget_disabled_get(obj))
+     edje_object_signal_emit(wd->o_frame, "disabled", "");
+   else
+     edje_object_signal_emit(wd->o_frame, "enabled", "");
 }

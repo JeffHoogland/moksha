@@ -15,6 +15,7 @@ static void _e_wid_del_hook(Evas_Object *obj);
 static void _e_wid_focus_hook(Evas_Object *obj);
 static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_wid_cb_changed(void *data, Evas_Object *obj, void *event_info);
+static void _e_wid_disable_hook(Evas_Object *obj);
 
 /* externally accessible functions */
 EAPI Evas_Object *
@@ -28,6 +29,7 @@ e_widget_slider_add(Evas *evas, int horiz, int rev, char *fmt, double min, doubl
    
    e_widget_del_hook_set(obj, _e_wid_del_hook);
    e_widget_focus_hook_set(obj, _e_wid_focus_hook);
+   e_widget_disable_hook_set(obj, _e_wid_disable_hook);
    wd = calloc(1, sizeof(E_Widget_Data));
    e_widget_data_set(obj, wd);
    wd->o_widget = obj;
@@ -188,4 +190,18 @@ _e_wid_cb_changed(void *data, Evas_Object *obj, void *event_info)
    if (wd->dval) *(wd->dval) = e_slider_value_get(wd->o_slider);
    else if (wd->ival) *(wd->ival) = e_slider_value_get(wd->o_slider);
    e_widget_change(wd->o_widget);
+}
+
+static void
+_e_wid_disable_hook(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   if (e_widget_disabled_get(obj))
+     edje_object_signal_emit(e_slider_edje_object_get(wd->o_slider),
+			     "disabled", "");
+   else
+     edje_object_signal_emit(e_slider_edje_object_get(wd->o_slider),
+			     "enabled", "");
 }

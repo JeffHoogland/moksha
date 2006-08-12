@@ -4663,10 +4663,12 @@ _e_border_cb_grab_replay(void *data, int type, void *event)
 
 static void
 _e_border_eval(E_Border *bd)
-{
+{	
    E_Event_Border_Property *event;
    int change_urgent = 0;
    int rem_change = 0;
+   int send_event = 1;
+   
    
    /* fetch any info queued to be fetched */
    if (bd->client.icccm.fetch.client_leader)
@@ -5834,6 +5836,7 @@ _e_border_eval(E_Border *bd)
 	e_container_shape_move(bd->shape, bd->x, bd->y);
 	bd->changes.pos = 0;
 	rem_change = 1;
+	send_event = 0;
      }
    else if (bd->changes.size)
      {
@@ -6223,11 +6226,13 @@ _e_border_eval(E_Border *bd)
    if ((bd->remember) && (rem_change))
      e_remember_update(bd->remember, bd);
 
-
-   event = calloc(1, sizeof(E_Event_Border_Property));
-   event->border = bd;
-   e_object_ref(E_OBJECT(bd));
-   ecore_event_add(E_EVENT_BORDER_PROPERTY, event, _e_border_event_border_property_free, NULL);
+   if(send_event)
+   {
+   	event = calloc(1, sizeof(E_Event_Border_Property));
+   	event->border = bd;
+   	e_object_ref(E_OBJECT(bd));
+   	ecore_event_add(E_EVENT_BORDER_PROPERTY, event, _e_border_event_border_property_free, NULL);
+   }
 }
 
 static void

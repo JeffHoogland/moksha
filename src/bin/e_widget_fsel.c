@@ -255,7 +255,7 @@ e_widget_fsel_add(Evas *evas, char *dev, char *path, char *selected, char *filte
    fmc.icon.list.h = 24;
    fmc.icon.fixed.w = 1;
    fmc.icon.fixed.h = 1;
-   fmc.icon.extension.show = 0;
+   fmc.icon.extension.show = 1;
    fmc.list.sort.no_case = 1;
    fmc.list.sort.dirs.first = 1;
    fmc.list.sort.dirs.last = 0;

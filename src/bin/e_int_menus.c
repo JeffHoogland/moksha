@@ -32,7 +32,6 @@ static void _e_int_menus_apps_start          (void *data, E_Menu *m);
 static void _e_int_menus_apps_del_hook       (void *obj);
 static void _e_int_menus_apps_free_hook      (void *obj);
 static void _e_int_menus_apps_run            (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_main_fm(void *data, E_Menu *m, E_Menu_Item *mi);  
 static void _e_int_menus_config_pre_cb       (void *data, E_Menu *m);
 static void _e_int_menus_config_free_hook    (void *obj);
 static void _e_int_menus_config_item_cb      (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -386,15 +385,6 @@ _e_int_menus_main_showhide(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_int_menus_main_fm(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Fileman *fileman;
-   
-   fileman = e_fileman_new (m->zone->container);
-   e_fileman_show (fileman);
-}
-
-static void
 _e_int_menus_main_restart(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Action *a;
@@ -632,14 +622,6 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    e_util_menu_item_edje_icon_set(mi, "enlightenment/e");
    e_menu_item_callback_set(mi, _e_int_menus_eapedit_item_cb, NULL);   
 
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-   
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Test Filemanager"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/fileman");
-   e_menu_item_callback_set(mi, _e_int_menus_main_fm, NULL);   
-      
    l = evas_hash_find(_e_int_menus_augmentation, "config");
    if (l)
      {
