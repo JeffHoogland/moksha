@@ -43,6 +43,7 @@ struct _E_Fm2_Smart_Data
    Ecore_Timer      *sort_idler;
    Ecore_Job        *scroll_job;
    Ecore_Job        *resize_job;
+   Ecore_Job        *refresh_job;
    DIR              *dir;
    unsigned char     iconlist_changed : 1;
 
@@ -150,6 +151,7 @@ static void _e_fm2_file_delete(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_file_delete_delete_cb(void *obj);
 static void _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog);
 static void _e_fm2_file_delete_no_cb(void *data, E_Dialog *dialog);
+static void _e_fm2_refresh_job_cb(void *data);
 
 static char *_meta_path = NULL;
 static Evas_Smart *_e_fm2_smart = NULL;
@@ -719,6 +721,7 @@ _e_fm2_scan_stop(Evas_Object *obj)
 	ecore_idler_del(sd->sort_idler);
 	sd->sort_idler = NULL;
      }
+   
    E_FREE(sd->tmp.list_index);
    _e_fm2_queue_free(obj);
    _e_fm2_obj_icons_place(sd);
@@ -2184,6 +2187,7 @@ _e_fm2_smart_del(Evas_Object *obj)
    _e_fm2_icons_free(obj);
    if (sd->scroll_job) ecore_job_del(sd->scroll_job);
    if (sd->resize_job) ecore_job_del(sd->resize_job);
+   if (sd->refresh_job) ecore_job_del(sd->refresh_job);
    if (sd->dev) evas_stringshare_del(sd->dev);
    if (sd->path) evas_stringshare_del(sd->path);
    if (sd->realpath) evas_stringshare_del(sd->realpath);
@@ -2430,7 +2434,8 @@ _e_fm2_file_rename_yes_cb(char *text, void *data)
 	     e_dialog_show(dialog);
 	     return;
 	  }
-	e_fm2_refresh(ic->sd->obj);
+	if (ic->sd->refresh_job) ecore_job_del(ic->sd->refresh_job);
+	ic->sd->refresh_job = ecore_job_add(_e_fm2_refresh_job_cb, ic->sd->obj);
      }
 }
 
@@ -2523,7 +2528,8 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
 	return;
      }
    e_object_del(E_OBJECT(dialog));
-   e_fm2_refresh(ic->sd->obj);
+   if (ic->sd->refresh_job) ecore_job_del(ic->sd->refresh_job);
+   ic->sd->refresh_job = ecore_job_add(_e_fm2_refresh_job_cb, ic->sd->obj);
 }
 
 static void
@@ -2534,4 +2540,15 @@ _e_fm2_file_delete_no_cb(void *data, E_Dialog *dialog)
    ic = data;
    ic->dialog = NULL;
    e_object_del(E_OBJECT(dialog));
+}
+
+static void
+_e_fm2_refresh_job_cb(void *data)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(data);
+   if (!sd) return;
+   e_fm2_refresh(data);
+   sd->refresh_job = NULL;
 }
