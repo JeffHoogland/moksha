@@ -70,27 +70,27 @@ main(int argc, char **argv)
 #endif
    
    action.sa_sigaction = e_sigseg_act;
-   action.sa_flags = SA_ONSTACK | SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
+   action.sa_flags = SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
    sigemptyset(&action.sa_mask);
    sigaction(SIGSEGV, &action, NULL);
 
    action.sa_sigaction = e_sigill_act;
-   action.sa_flags = SA_ONSTACK | SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
+   action.sa_flags = SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
    sigemptyset(&action.sa_mask);
    sigaction(SIGILL, &action, NULL);
 
    action.sa_sigaction = e_sigfpe_act;
-   action.sa_flags = SA_ONSTACK | SA_NODEFER | SA_RESETHAND | SA_SIGINFO; 
+   action.sa_flags = SA_NODEFER | SA_RESETHAND | SA_SIGINFO; 
    sigemptyset(&action.sa_mask);
    sigaction(SIGFPE, &action, NULL);
 
    action.sa_sigaction = e_sigbus_act;
-   action.sa_flags = SA_ONSTACK | SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
+   action.sa_flags = SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
    sigemptyset(&action.sa_mask);
    sigaction(SIGBUS, &action, NULL);
 
    action.sa_sigaction = e_sigabrt_act;
-   action.sa_flags = SA_ONSTACK | SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
+   action.sa_flags = SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
    sigemptyset(&action.sa_mask);
    sigaction(SIGABRT, &action, NULL);
 
