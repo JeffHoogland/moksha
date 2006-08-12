@@ -75,3 +75,33 @@ group {
       }
    }
 }
+group {
+   name: "widgets/entry/cursor";
+   min: 1 0;
+   parts {
+      part {
+         name: "cursor";
+         type: RECT;
+         description {
+            state: "default" 0.0;
+            color: 0 0 0 255;
+         }
+      }
+   }
+}
+group {
+   name: "widgets/entry/selection";
+   data {
+      item: "on_foreground" "1";
+   }
+   parts {
+      part {
+         name: "selection";
+         type: RECT;
+         description {
+            state: "default" 0.0;
+            color: 245 205 109 102;
+         }
+      }
+   }
+}
