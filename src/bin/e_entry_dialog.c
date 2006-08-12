@@ -65,6 +65,7 @@ static void
 _e_entry_dialog_free(E_Entry_Dialog *ed)
 {
    e_object_del(E_OBJECT(ed->dia));
+   if (ed->text) free(ed->text);
    free(ed);
 }
     

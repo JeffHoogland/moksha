@@ -5825,6 +5825,7 @@ _e_border_eval(E_Border *bd)
 	bd->changes.pos = 0;
 	bd->changes.size = 0;
 	rem_change = 1;
+	send_event = 0;
     }
    else if (bd->changes.pos)
      {
@@ -5924,6 +5925,7 @@ _e_border_eval(E_Border *bd)
 	  }
 	bd->changes.size = 0;
 	rem_change = 1;
+	send_event = 0;
      }
 
    if (bd->changes.reset_gravity)
@@ -6226,13 +6228,13 @@ _e_border_eval(E_Border *bd)
    if ((bd->remember) && (rem_change))
      e_remember_update(bd->remember, bd);
 
-   if(send_event)
-   {
-   	event = calloc(1, sizeof(E_Event_Border_Property));
-   	event->border = bd;
-   	e_object_ref(E_OBJECT(bd));
-   	ecore_event_add(E_EVENT_BORDER_PROPERTY, event, _e_border_event_border_property_free, NULL);
-   }
+   if (send_event)
+     {
+	event = calloc(1, sizeof(E_Event_Border_Property));
+	event->border = bd;
+	e_object_ref(E_OBJECT(bd));
+	ecore_event_add(E_EVENT_BORDER_PROPERTY, event, _e_border_event_border_property_free, NULL);
+     }
 }
 
 static void
