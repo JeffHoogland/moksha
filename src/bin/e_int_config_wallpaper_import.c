@@ -62,6 +62,8 @@ static void _import_cb_wid_on_focus(void *data, Evas_Object *obj);
 static void _import_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event);
 
 /* FIXME: save previous dev/dir and restore it to browse that dir */
+/* FIXME: rememebr size and maybe location? */
+
 EAPI E_Win *
 e_int_config_wallpaper_import(E_Config_Dialog *parent)
 {
@@ -190,8 +192,8 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    edje_object_part_swallow(import->bg_obj, "buttons_swallow", o);
    
    edje_object_size_min_calc(import->bg_obj, &w, &h);
-   evas_object_resize(import->bg_obj, w, h + 128);
-   e_win_resize(win, w, h + 128);
+   evas_object_resize(import->bg_obj, w, h + 64);
+   e_win_resize(win, w, h + 64);
    e_win_size_min_set(win, w, h);
    e_win_size_max_set(win, 99999, 99999);
    e_win_show(win);
