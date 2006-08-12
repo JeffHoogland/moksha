@@ -521,10 +521,10 @@ _deferred_noxrandr_error(void *data)
 {
    e_util_dialog_show(_("Missing Features"),
 		      _("Your X Display Server is missing support for<br>"
-			"The <hilight>XRandr</hilight> (X Resize and Rotate) extension.<br>"
+			"the <hilight>XRandr</hilight> (X Resize and Rotate) extension.<br>"
 			"You cannot change screen resolutions without<br>"
-			"The support of this extension. It could also be<br>"
-			"That at the time <hilight>ecore</hilight> was built there<br>"
+			"the support of this extension. It could also be<br>"
+			"that at the time <hilight>ecore</hilight> was built, there<br>"
 			"was no XRandr support detected."));
    return 0;
 }
