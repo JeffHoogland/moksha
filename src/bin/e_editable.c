@@ -28,6 +28,7 @@ struct _E_Editable_Smart_Data
    int selection_dragging;
    int selection_visible;
    int selectable;
+   int password_mode;
    
    char *text;
    int char_length;
@@ -46,6 +47,7 @@ static int _e_editable_text_insert(Evas_Object *editable, int pos, const char *t
 static int _e_editable_text_delete(Evas_Object *editable, int start, int end);
 static void _e_editable_cursor_update(Evas_Object *editable);
 static void _e_editable_selection_update(Evas_Object *editable);
+static void _e_editable_text_update(Evas_Object *editable);
 static void _e_editable_text_position_update(Evas_Object *editable);
 static int _e_editable_cursor_pos_get_from_coords(Evas_Object *editable, Evas_Coord canvas_x, Evas_Coord canvas_y);
 
@@ -100,6 +102,45 @@ e_editable_add(Evas *evas)
    
    _e_editable_smart_use++;
    return evas_object_smart_add(evas, _e_editable_smart);
+}
+
+/**
+ * Sets whether or not the editable object is in password mode. In password
+ * mode, the editable object displays '*' instead of the characters
+ *
+ * @param editable an editable object
+ * @param password_mode 1 to turn on the password mode of the editable object,
+ * 0 to turn it off
+ */
+EAPI void
+e_editable_password_set(Evas_Object *editable, int password_mode)
+{
+   E_Editable_Smart_Data *sd;
+   
+   if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
+     return;
+   if (sd->password_mode == password_mode)
+     return;
+   
+   sd->password_mode = password_mode;
+   _e_editable_text_update(editable);
+   _e_editable_cursor_update(editable);
+}
+
+/**
+ * Gets whether or not the editable is in password mode
+ *
+ * @param editable an editable object
+ * @return Returns 1 if the editable object is in the password mode, 0 otherwise
+ */
+EAPI int
+e_editable_password_get(Evas_Object *editable)
+{
+   E_Editable_Smart_Data *sd;
+   
+   if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
+     return 0;
+   return sd->password_mode;
 }
 
 /**
@@ -197,12 +238,12 @@ e_editable_text_range_get(Evas_Object *editable, int start, int end)
 }
 
 /**
- * Gets the unicode length of the text of the entry. The unicode length is not
- * always the length returned by strlen() since a UTF-8 char can take several
- * bytes
+ * Gets the unicode length of the text of the editable object. The unicode
+ * length is not always the length returned by strlen() since a UTF-8 char can
+ * take several bytes
  *
  * @param editable an editable object
- * @return Returns the unicode length of the text of the entry
+ * @return Returns the unicode length of the text of the editable object
  */
 EAPI int
 e_editable_text_length_get(Evas_Object *editable)
@@ -693,8 +734,7 @@ e_editable_char_size_get(Evas_Object *editable, int *w, int *h)
 /* Private functions */
 
 /* A utility function to insert some text inside the editable object.
- * It doesn't update the position of the cursor, nor the selection...
- */
+ * It doesn't update the position of the cursor, nor the selection... */
 static int
 _e_editable_text_insert(Evas_Object *editable, int pos, const char *text)
 {
@@ -745,14 +785,13 @@ _e_editable_text_insert(Evas_Object *editable, int pos, const char *text)
    strncpy(&sd->text[index], text, char_length);
    sd->text[sd->char_length] = '\0';
    
-   evas_object_text_text_set(sd->text_object, sd->text);
+   _e_editable_text_update(editable);
    
    return unicode_length;
 }
 
 /* A utility function to delete a range of text from the editable object.
- * It doesn't update the position of the cursor, nor the selection...
- */
+ * It doesn't update the position of the cursor, nor the selection... */
 static int
 _e_editable_text_delete(Evas_Object *editable, int start, int end)
 {
@@ -785,14 +824,13 @@ _e_editable_text_delete(Evas_Object *editable, int start, int end)
    sd->unicode_length -= (end - start);
    sd->text[sd->char_length] = '\0';
    
-   evas_object_text_text_set(sd->text_object, sd->text);
+   _e_editable_text_update(editable);
    
    return end - start;
 }
 
 /* Updates the position of the cursor
- * It also updates automatically the text position and the selection
- */
+ * It also updates automatically the text position and the selection */
 static void
 _e_editable_cursor_update(Evas_Object *editable)
 {
@@ -895,7 +933,34 @@ _e_editable_selection_update(Evas_Object *editable)
      }
 }
 
-/* Updates the position of the text according to the position of the cursor */
+/* Updates the text of the text object of the editable object 
+ * (it fills it with '*' if the editable is in password mode)
+ * It does not update the position of the text */
+static void
+_e_editable_text_update(Evas_Object *editable)
+{
+   E_Editable_Smart_Data *sd;
+   
+   if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
+     return;
+   
+   if (sd->password_mode)
+     {
+        char *text;
+        
+        text = malloc((sd->unicode_length + 1) * sizeof(char));
+        memset(text, '*', sd->unicode_length * sizeof(char));
+        text[sd->unicode_length] = '\0';
+        evas_object_text_text_set(sd->text_object, text);
+        free(text);
+     }
+   else
+     evas_object_text_text_set(sd->text_object, sd->text ? sd->text : "");
+   
+}
+
+/* Updates the position of the text object according to the position of the
+ * cursor (we make sure the cursor is visible) */
 static void
 _e_editable_text_position_update(Evas_Object *editable)
 {
@@ -938,8 +1003,7 @@ _e_editable_text_position_update(Evas_Object *editable)
 }
 
 /* Returns the position where to place the cursor according to the given coords
- * Returns -1 on failure
- */
+ * Returns -1 on failure */
 static int
 _e_editable_cursor_pos_get_from_coords(Evas_Object *editable, Evas_Coord canvas_x, Evas_Coord canvas_y)
 {
@@ -1103,6 +1167,7 @@ _e_editable_smart_add(Evas_Object *object)
    sd->selection_dragging = 0;
    sd->selection_visible = 1;
    sd->selectable = 1;
+   sd->password_mode = 0;
 
    sd->clip_object = evas_object_rectangle_add(evas);
    evas_object_smart_member_add(sd->clip_object, object);

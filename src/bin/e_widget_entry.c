@@ -17,6 +17,7 @@ static void _e_wid_disable_hook(Evas_Object *obj);
 static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_wid_changed_cb(void *data, Evas_Object *obj, void *event_info);
 
+
 /* externally accessible functions */
 
 /**
@@ -94,13 +95,44 @@ e_widget_entry_text_get(Evas_Object *entry)
    return e_entry_text_get(wd->o_entry);
 }
 
-/* TODO, TODOC */
+/**
+ * Sets whether or not the entry widget is in password mode. In password mode,
+ * the entry displays '*' instead of the characters
+ *
+ * @param entry an entry widget
+ * @param password_mode 1 to turn on password mode, 0 to turn it off
+ */
 EAPI void
-e_widget_entry_password_set(Evas_Object *obj, int password)
+e_widget_entry_password_set(Evas_Object *entry, int password_mode)
 {
+   E_Widget_Data *wd;
+
+   if (!(entry) || (!(wd = e_widget_data_get(entry))))
+      return;
+   e_entry_password_set(wd->o_entry, password_mode);
 }
 
+/**
+ * Gets the editable object of the entry widget. It will allow you to have
+ * better control on the text, the cursor or the selection of the entry with
+ * the e_editable_*() functions.
+ *
+ * @param entry an entry widget
+ * @return Returns the editable object of the entry widget
+ */
+EAPI Evas_Object *
+e_widget_entry_editable_object_get(Evas_Object *entry)
+{
+   E_Widget_Data *wd;
+
+   if (!(entry) || (!(wd = e_widget_data_get(entry))))
+      return NULL;
+   return e_entry_editable_object_get(wd->o_entry);
+}
+
+
 /* Private functions */
+
 static void
 _e_wid_del_hook(Evas_Object *obj)
 {

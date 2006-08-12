@@ -116,6 +116,41 @@ e_entry_clear(Evas_Object *entry)
 }
 
 /**
+ * Gets the editable object used by the entry object. It will allow you to have
+ * better control on the text, the cursor or the selection of the entry with
+ * the e_editable_*() functions.
+ *
+ * @param entry an entry object
+ * @return Returns the editable object used by the entry object
+ */
+EAPI Evas_Object *
+e_entry_editable_object_get(Evas_Object *entry)
+{
+   E_Entry_Smart_Data *sd;
+   
+   if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
+     return NULL;
+   return sd->editable_object;
+}
+
+/**
+ * Sets whether or not the entry object is in password mode. In password mode,
+ * the entry displays '*' instead of the characters
+ *
+ * @param entry an entry object
+ * @param password_mode 1 to turn on password mode, 0 to turn it off
+ */
+EAPI void
+e_entry_password_set(Evas_Object *entry, int password_mode)
+{
+   E_Entry_Smart_Data *sd;
+   
+   if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
+     return;
+   e_editable_password_set(sd->editable_object, password_mode);
+}
+
+/**
  * Gets the minimum size of the entry object
  *
  * @param entry an entry object

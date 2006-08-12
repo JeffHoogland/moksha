@@ -32,7 +32,6 @@ static int  _e_desklock_zone_num_get(void);
 static void _load_bgs(E_Config_Dialog_Data *cfdata);
 static void _ibg_list_cb_bg_selected(void *data);
 
-static void _e_desklock_passwd_cb_change(void *data, Evas_Object *obj);
 static void _e_desklock_cb_show_passwd(void *data, Evas_Object *obj);
 static void _e_desklock_cb_lb_show_change(void *data, Evas_Object *obj);
 #ifdef HAVE_PAM
@@ -236,8 +235,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 #ifdef HAVE_PAM
    if (cfdata->auth_method == 0) e_widget_disabled_set(ob, 1);
 #endif
-   _e_desklock_passwd_cb_change(cfdata, ob);
-   e_widget_on_change_hook_set(ob, _e_desklock_passwd_cb_change, cfdata);
+   
+   e_widget_entry_password_set(ob, !cfdata->show_password);
    e_widget_min_size_set(ob, 200, 25);
    e_widget_framelist_object_append(of, ob);
    
@@ -423,8 +422,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    if (cfdata->auth_method == 0) e_widget_disabled_set(ob, 1);
 #endif
    
-   _e_desklock_passwd_cb_change(cfdata, ob);
-   e_widget_on_change_hook_set(ob, _e_desklock_passwd_cb_change, cfdata);
+   e_widget_entry_password_set(ob, !cfdata->show_password);
    e_widget_min_size_set(ob, 200, 25);
    e_widget_framelist_object_append(of, ob);
    
@@ -481,7 +479,7 @@ _e_desklock_cb_show_passwd(void *data, Evas_Object *obj)
    E_Config_Dialog_Data *cfdata;
    
    cfdata = data;
-   _e_desklock_passwd_cb_change(cfdata, cfdata->gui.passwd_field);
+   e_widget_entry_password_set(cfdata->gui.passwd_field, !cfdata->show_password);
 }
 
 static int
@@ -672,55 +670,6 @@ _ibg_list_cb_bg_selected(void *data)
 	theme = e_theme_edje_file_get("base/theme/desklock", "desklock/background");
 	e_widget_preview_edje_set(cfdata->preview_image, theme, "desklock/background");
      }
-}
-
-static void
-_e_desklock_passwd_cb_change(void *data, Evas_Object *obj)
-{
-   E_Config_Dialog_Data	*cfdata;
-   int i;
-   
-   cfdata = data;
-   
-   // here goes the hack to have e_widget_entry look like
-   // password entry. However, I think, this should be implemented
-   // at least on the e_widget_entry level. The best would be
-   // e_entry.
-   if (!cfdata->desklock_passwd[0])
-     {
-	E_FREE(cfdata->desklock_passwd_cp);
-	cfdata->desklock_passwd_cp = strdup("");
-	return;
-     }
-   
-   if (strlen(cfdata->desklock_passwd) > strlen(cfdata->desklock_passwd_cp))
-     {
-	for (i = 0; i < strlen(cfdata->desklock_passwd_cp); i++)
-	  cfdata->desklock_passwd[i] = cfdata->desklock_passwd_cp[i];
-	E_FREE(cfdata->desklock_passwd_cp);
-	cfdata->desklock_passwd_cp = strdup(cfdata->desklock_passwd);
-     }
-   else if (strlen(cfdata->desklock_passwd) < strlen(cfdata->desklock_passwd_cp))
-     {
-	cfdata->desklock_passwd_cp[strlen(cfdata->desklock_passwd)] = 0;
-	E_FREE(cfdata->desklock_passwd);
-	cfdata->desklock_passwd = strdup(cfdata->desklock_passwd_cp);
-     }
-   else
-     {
-	E_FREE(cfdata->desklock_passwd);
-	cfdata->desklock_passwd = strdup(cfdata->desklock_passwd_cp);
-     }
-   
-   if (cfdata->show_password)
-     {
-	e_widget_entry_text_set(obj, cfdata->desklock_passwd);
-	return;
-     }
-  
-// FIXME: this is a hack. disable. see e_widget_entry.c for doing this right.   
-//   for (ptr = cfdata->desklock_passwd; *ptr; ptr++) *ptr = '*';
-//   e_widget_entry_text_set(obj, cfdata->desklock_passwd);
 }
 
 static void

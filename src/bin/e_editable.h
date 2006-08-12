@@ -7,6 +7,8 @@
 #define E_EDITABLE_H
 
 EAPI Evas_Object *e_editable_add                     (Evas *evas);
+EAPI void         e_editable_password_set            (Evas_Object *editable, int password_mode);
+EAPI int          e_editable_password_get            (Evas_Object *editable);
 EAPI void         e_editable_text_set                (Evas_Object *editable, const char *text);
 EAPI const char  *e_editable_text_get                (Evas_Object *editable);
 EAPI char        *e_editable_text_range_get          (Evas_Object *editable, int start, int end);
