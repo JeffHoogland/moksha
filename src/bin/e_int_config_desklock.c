@@ -213,6 +213,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    //_fill_desklock_data(cfdata);
    o = e_widget_list_add(evas, 0, 0);
 
+/*   
 #ifdef HAVE_PAM
    of = e_widget_framelist_add(evas, _("Password Type"), 0);
    
@@ -249,6 +250,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    
    e_widget_list_object_append(o, of, 1, 1, 0.5);
+*/
    
    of = e_widget_framelist_add(evas, _("Automatic Locking"), 0);
    e_widget_disabled_set(of, !ecore_x_screensaver_event_available_get());
@@ -399,7 +401,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 	e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
      }
    /* end: login box options */
-   
+
+   /*
 #ifdef HAVE_PAM
    of = e_widget_framelist_add(evas, _("Password Type"), 0);
    
@@ -439,6 +442,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 #else
    e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
 #endif
+   */
    
    of = e_widget_framelist_add(evas, _("Automatic Locking"), 0);
    

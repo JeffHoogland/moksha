@@ -12,6 +12,7 @@ static int          _basic_apply_data        (E_Config_Dialog *cfd, E_Config_Dia
 static Evas_Object *_basic_create_widgets    (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void         _load_rates              (void *data);
 static void         _ilist_item_change       (void *data);
+static int          _deferred_noxrandr_error (void *data);
 
 Evas_Object *rate_list = NULL;
 Evas_Object *res_list = NULL;
@@ -374,15 +375,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    sizes = ecore_x_randr_screen_sizes_get(man->root, &s);
    size = ecore_x_randr_current_screen_size_get(man->root);
    
-   if (!sizes)
+   if ((!sizes) || (s == 0))
      {
-	e_util_dialog_show(_("Missing Features"),
-			   _("Your X Display Server is missing support for<br>"
-			     "The <hilight>XRandr</hilight> (X Resize and Rotate) extension.<br>"
-			     "You cannot change screen resolutions without<br>"
-			     "The support of this extension. It could also be<br>"
-			     "That at the time <hilight>ecore</hilight> was built there<br>"
-			     "was no XRandr support detected."));
+	ecore_timer_add(0.5, _deferred_noxrandr_error, NULL);
      }
    else
      {
@@ -442,6 +437,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	       }
 	  }	
      }
+   
+   if (sizes) free(sizes);
    
    e_widget_ilist_go(ol);
    e_widget_ilist_go(rl);
@@ -517,4 +514,17 @@ static void
 _ilist_item_change(void *data) 
 {
    _load_rates(data);
+}
+
+static int
+_deferred_noxrandr_error(void *data)
+{
+   e_util_dialog_show(_("Missing Features"),
+		      _("Your X Display Server is missing support for<br>"
+			"The <hilight>XRandr</hilight> (X Resize and Rotate) extension.<br>"
+			"You cannot change screen resolutions without<br>"
+			"The support of this extension. It could also be<br>"
+			"That at the time <hilight>ecore</hilight> was built there<br>"
+			"was no XRandr support detected."));
+   return 0;
 }

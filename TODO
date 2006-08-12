@@ -8,9 +8,6 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: i spotted a segv (glibc abort in malloc) in the forked child that does
-  pam checks - the child needs to disable segv checking etc. and i should
-  double check desklock's memory stuff.
 * BUG: e_entry/editable widget is pretty borken in sizing, clipping, initial
   state and i think is also now causing segv's (not sure yet), but it needs
   a complete going over if not a rewrite. :(
@@ -86,12 +83,8 @@ Some of the things (in very short form) that need to be done to E17...
 * fsel could do with an optional preview pane for selected file (bigger icon,
   file info (permissions, modification date etc.)
 * clientinfo dialog could be nicer - then again it is an obsucre thing.
-* desklock needs to sha1 the user password with one-way encryption and never
-  display it
 * desklock's pam profile should be configurable as system-auth doesn't
-  always work - maybe have some auto-detect and scan of pam files and steal
-  others like "xscreensaver" or "kscreensaver" that will be perfect for our
-  job - fall back to system-auth if nothing useful is found :)
+  always work and the fallback checks might not work either.
 * If a user has set a border type on a window, don't bother to check for
   changes.
 * keybindings dialog doesn't conform its formatting or datatype naming to

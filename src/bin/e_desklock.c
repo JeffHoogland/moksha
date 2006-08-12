@@ -584,7 +584,17 @@ _desklock_auth(const char *passwd)
 	int pamerr;
 	E_Desklock_Auth da;
         char *current_user, *p;
-
+	struct sigaction action;
+	
+	action.sa_sigaction = SIG_DFL;
+	action.sa_flags = SA_ONSTACK | SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
+	sigemptyset(&action.sa_mask);
+	sigaction(SIGSEGV, &action, NULL);
+	sigaction(SIGILL, &action, NULL);
+	sigaction(SIGFPE, &action, NULL);
+	sigaction(SIGBUS, &action, NULL);
+	sigaction(SIGABRT, &action, NULL);
+	
 	current_user = _desklock_auth_get_current_user();
 	strncpy(da.user, current_user, PATH_MAX);
 	strncpy(da.passwd, passwd, PATH_MAX);
@@ -635,6 +645,7 @@ static int
 _desklock_pam_init(E_Desklock_Auth *da)
 {
    int pamerr;
+   const char *pam_prof;
    char *current_host;
    char *current_user;
    
@@ -643,8 +654,14 @@ _desklock_pam_init(E_Desklock_Auth *da)
    da->pam.conv.conv = _desklock_auth_pam_conv;
    da->pam.conv.appdata_ptr = da;
    da->pam.handle = NULL;
+
+   /* try other pam profiles - and system-auth is a fallback */
+   pam_prof = "system-auth";
+   if (ecore_file_exists("/etc/pam.d/enlightenment")) pam_prof = "enlightenment";
+   if (ecore_file_exists("/etc/pam.d/xscreensaver")) pam_prof = "xscreensaver";
+   if (ecore_file_exists("/etc/pam.d/kscreensaver")) pam_prof = "kscreensaver";
    
-   if ((pamerr = pam_start("system-auth", da->user, &(da->pam.conv),
+   if ((pamerr = pam_start(pam_prof, da->user, &(da->pam.conv),
 			   &(da->pam.handle))) != PAM_SUCCESS)
      return pamerr;
 

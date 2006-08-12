@@ -1257,6 +1257,11 @@ e_config_init(void)
    
    /* FIXME: disabled auto apply because it causes problems */
    e_config->cfgdlg_auto_apply = 0;
+   /* FIXME: desklock personalized password id disabled for security reasons */
+   e_config->desklock_auth_method = 0;
+   if (e_config->desklock_personal_passwd)
+     evas_stringshare_del(e_config->desklock_personal_passwd);
+   e_config->desklock_personal_passwd = NULL;
    
    e_config_save_queue();
    
