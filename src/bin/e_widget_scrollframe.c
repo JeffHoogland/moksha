@@ -44,7 +44,7 @@ e_widget_scrollframe_simple_add(Evas *evas, Evas_Object *child)
    evas_object_event_callback_add(wd->o_scrollframe, EVAS_CALLBACK_RESIZE, 
 				  _e_wid_cb_scrollframe_resize, wd->o_child);
 
-   return wd->o_scrollframe;
+   return obj;
 }
 
 EAPI Evas_Object *

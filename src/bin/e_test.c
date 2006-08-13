@@ -780,7 +780,7 @@ _e_test_internal(E_Container *con)
 
    o = e_widget_fsel_add(dia->win->evas, "~/", "/tst", NULL, NULL, 
 			 _e_test_cb_selected, dia,
-			 _e_test_cb_changed, dia);
+			 _e_test_cb_changed, dia, 0);
    evas_object_show(o);
    e_widget_min_size_get(o, &mw, &mh);
    e_dialog_content_set(dia, o, mw, mh);
