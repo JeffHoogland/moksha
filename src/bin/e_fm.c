@@ -20,6 +20,7 @@ struct _E_Fm2_Smart_Data
    Evas_Coord        x, y, w, h;
    Evas_Object      *obj;
    Evas_Object      *clip;
+   Evas_Object      *underlay;
    Evas_Object      *overlay;
    const char       *dev;
    const char       *path;
@@ -45,6 +46,8 @@ struct _E_Fm2_Smart_Data
    Ecore_Job        *resize_job;
    Ecore_Job        *refresh_job;
    DIR              *dir;
+   E_Menu           *menu;
+   E_Entry_Dialog   *entry_dialog;
    unsigned char     iconlist_changed : 1;
 
    E_Fm2_Config     *config;
@@ -122,6 +125,9 @@ static void _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, voi
 static void _e_fm2_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_fm2_cb_icon_thumb_gen(void *data, Evas_Object *obj, void *event_info);
+static void _e_fm2_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_fm2_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_fm2_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_fm2_cb_scroll_job(void *data);
 static void _e_fm2_cb_resize_job(void *data);
 static int _e_fm2_cb_icon_sort(void *data1, void *data2);
@@ -141,8 +147,15 @@ static void _e_fm2_smart_color_set(Evas_Object *obj, int r, int g, int b, int a)
 static void _e_fm2_smart_clip_set(Evas_Object *obj, Evas_Object * clip);
 static void _e_fm2_smart_clip_unset(Evas_Object *obj);
 
-static void _e_fm2_menu_action_display(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp);
+static void _e_fm2_menu(Evas_Object *obj, unsigned int timestamp);
 static void _e_fm2_menu_post_cb(void *data, E_Menu *m);
+static void _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp);
+static void _e_fm2_icon_menu_post_cb(void *data, E_Menu *m);
+static void _e_fm2_refresh(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_new_directory(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_new_directory_delete_cb(void *obj);
+static void _e_fm2_new_directory_yes_cb(char *text, void *data);
+static void _e_fm2_new_directory_no_cb(char *text, void *data);
 static void _e_fm2_file_rename(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_file_rename_delete_cb(void *obj);
 static void _e_fm2_file_rename_yes_cb(char *text, void *data);
@@ -1493,7 +1506,7 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	      */
 	     p = strchr(ic->info.mime, '/');
 	     if (p) p++;
-	     else p = ic->info.mime;
+	     else p = (char *)ic->info.mime;
 	     snprintf(buf, sizeof(buf), "icons/fileman/%s", p);
 	     ic->obj_icon = edje_object_add(evas_object_evas_get(ic->sd->obj));
 	     if (!e_theme_edje_object_set(ic->obj_icon, "base/theme/fileman",
@@ -1743,10 +1756,7 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
    
    ic = data;
    ev = event_info;
-   if ((ev->button == 1) && (ev->flags & EVAS_BUTTON_TRIPLE_CLICK))
-     {
-     }
-   else if ((ev->button == 1) && (ev->flags & EVAS_BUTTON_DOUBLE_CLICK))
+   if ((ev->button == 1) && (ev->flags & EVAS_BUTTON_DOUBLE_CLICK))
      {
 	/* if its a directory && open dirs in-place is set then change the dir
 	 * to be the dir + file */
@@ -1867,10 +1877,11 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	char buf[4096];
 	
 	snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
-	if (ecore_file_can_write(buf))
+	if ((ecore_file_can_write(buf)) ||
+	    (ecore_file_can_write(ic->sd->realpath)))
 	  {
-	     _e_fm2_menu_action_display(ic, obj, ev->timestamp);
-	     evas_event_feed_mouse_up(evas_object_evas_get(obj), ev->button,
+	     _e_fm2_icon_menu(ic, ic->sd->obj, ev->timestamp);
+	     evas_event_feed_mouse_up(evas_object_evas_get(ic->sd->obj), ev->button,
 				      EVAS_BUTTON_NONE, ev->timestamp, NULL);
 	  }
      }
@@ -1920,6 +1931,42 @@ _e_fm2_cb_icon_thumb_gen(void *data, Evas_Object *obj, void *event_info)
 	else
 	  edje_object_signal_emit(ic->obj, "thumb", "gen");
      }
+}
+    
+static void
+_e_fm2_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Mouse_Down *ev;
+   E_Fm2_Smart_Data *sd;
+   
+   sd = data;
+   ev = event_info;
+   if (ev->button == 3)
+     {
+	_e_fm2_menu(sd->obj, ev->timestamp);
+	evas_event_feed_mouse_up(evas_object_evas_get(sd->obj), ev->button,
+				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
+     }
+}
+    
+static void
+_e_fm2_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Mouse_Up *ev;
+   E_Fm2_Smart_Data *sd;
+   
+   sd = data;
+   ev = event_info;
+}
+
+static void
+_e_fm2_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Mouse_Move *ev;
+   E_Fm2_Smart_Data *sd;
+   
+   sd = data;
+   ev = event_info;
 }
     
 static void
@@ -2161,6 +2208,16 @@ _e_fm2_smart_add(Evas_Object *obj)
    evas_object_smart_member_add(sd->clip, obj);
    evas_object_color_set(sd->clip, 255, 255, 255, 255);
    
+   sd->underlay = evas_object_rectangle_add(evas_object_evas_get(obj));
+   evas_object_clip_set(sd->underlay, sd->clip);
+   evas_object_smart_member_add(sd->underlay, obj);
+   evas_object_color_set(sd->underlay, 0, 0, 0, 0);
+   evas_object_show(sd->underlay);
+
+   evas_object_event_callback_add(sd->underlay, EVAS_CALLBACK_MOUSE_DOWN, _e_fm2_cb_mouse_down, sd);
+   evas_object_event_callback_add(sd->underlay, EVAS_CALLBACK_MOUSE_UP, _e_fm2_cb_mouse_up, sd);
+   evas_object_event_callback_add(sd->underlay, EVAS_CALLBACK_MOUSE_MOVE, _e_fm2_cb_mouse_move, sd);
+   
    sd->overlay = edje_object_add(evas_object_evas_get(obj));
    evas_object_clip_set(sd->overlay, sd->clip);
    e_theme_edje_object_set(sd->overlay, "base/theme/fileman",
@@ -2185,6 +2242,17 @@ _e_fm2_smart_del(Evas_Object *obj)
    _e_fm2_queue_free(obj);
    _e_fm2_regions_free(obj);
    _e_fm2_icons_free(obj);
+   if (sd->menu)
+     {
+	e_menu_post_deactivate_callback_set(sd->menu, NULL, NULL);
+	e_object_del(E_OBJECT(sd->menu));
+	sd->menu = NULL;
+     }
+   if (sd->entry_dialog)
+     {
+	e_object_del(E_OBJECT(sd->entry_dialog));
+	sd->entry_dialog = NULL;
+     }
    if (sd->scroll_job) ecore_job_del(sd->scroll_job);
    if (sd->resize_job) ecore_job_del(sd->resize_job);
    if (sd->refresh_job) ecore_job_del(sd->refresh_job);
@@ -2194,6 +2262,7 @@ _e_fm2_smart_del(Evas_Object *obj)
    sd->dev = sd->path = sd->realpath = NULL;
    if (sd->config) _e_fm2_config_free(sd->config);
    
+   evas_object_del(sd->underlay);
    evas_object_del(sd->overlay);
    evas_object_del(sd->clip);
    free(sd);
@@ -2209,6 +2278,7 @@ _e_fm2_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    if ((sd->x == x) && (sd->y == y)) return;
    sd->x = x;
    sd->y = y;
+   evas_object_move(sd->underlay, sd->x, sd->y);
    evas_object_move(sd->overlay, sd->x, sd->y);
    evas_object_move(sd->clip, sd->x - OVERCLIP, sd->y - OVERCLIP);
    _e_fm2_obj_icons_place(sd);
@@ -2227,6 +2297,7 @@ _e_fm2_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    if (h != sd->h) hch = 1;
    sd->w = w;
    sd->h = h;
+   evas_object_resize(sd->underlay, sd->w, sd->h);
    evas_object_resize(sd->overlay, sd->w, sd->h);
    evas_object_resize(sd->clip, sd->w + (OVERCLIP * 2), sd->h + (OVERCLIP * 2));
 
@@ -2294,7 +2365,81 @@ _e_fm2_smart_clip_unset(Evas_Object *obj)
 }
 
 static void
-_e_fm2_menu_action_display(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
+_e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
+{
+   E_Fm2_Smart_Data *sd;
+   E_Menu *mn;
+   E_Menu_Item *mi;
+   E_Manager *man;
+   E_Container *con;
+   E_Zone *zone;
+   int x, y;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+
+   mn = e_menu_new();
+   e_menu_category_set(mn, "fileman/action");
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Refresh View"));
+   e_menu_item_icon_edje_set(mi,
+			     (char *)e_theme_edje_file_get("base/theme/fileman",
+							   "fileman/button/refresh"),
+			     "fileman/button/refresh");
+   e_menu_item_callback_set(mi, _e_fm2_refresh, sd);
+
+   if (ecore_file_can_write(sd->realpath))
+     {
+	mi = e_menu_item_new(mn);
+	e_menu_item_separator_set(mi, 1);
+	
+	mi = e_menu_item_new(mn);
+	e_menu_item_label_set(mi, _("New Directory"));
+	e_menu_item_icon_edje_set(mi,
+				  (char *)e_theme_edje_file_get("base/theme/fileman",
+								"fileman/button/new_dir"),
+				  "fileman/button/new_dir");
+	e_menu_item_callback_set(mi, _e_fm2_new_directory, sd);
+     }
+   
+   man = e_manager_current_get();
+   if (!man)
+     {
+	e_object_del(E_OBJECT(mn));
+	return;
+     }
+   con = e_container_current_get(man);
+   if (!con)
+     {
+	e_object_del(E_OBJECT(mn));
+	return;
+     }
+   ecore_x_pointer_xy_get(con->win, &x, &y);
+   zone = e_util_zone_current_get(man);
+   if (!zone)
+     {
+	e_object_del(E_OBJECT(mn));
+	return;
+     }
+   sd->menu = mn;
+   e_menu_post_deactivate_callback_set(mn, _e_fm2_menu_post_cb, sd);
+   e_menu_activate_mouse(mn, zone, 
+			 x, y, 1, 1, 
+			 E_MENU_POP_DIRECTION_DOWN, timestamp);
+}
+
+static void
+_e_fm2_menu_post_cb(void *data, E_Menu *m)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = data;
+   sd->menu = NULL;
+}
+
+static void
+_e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 {
    E_Fm2_Smart_Data *sd;
    E_Menu *mn;
@@ -2308,6 +2453,28 @@ _e_fm2_menu_action_display(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timest
 
    mn = e_menu_new();
    e_menu_category_set(mn, "fileman/action");
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Refresh View"));
+   e_menu_item_icon_edje_set(mi,
+			     (char *)e_theme_edje_file_get("base/theme/fileman",
+							   "fileman/button/refresh"),
+			     "fileman/button/refresh");
+   e_menu_item_callback_set(mi, _e_fm2_refresh, ic->sd);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_separator_set(mi, 1);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("New Directory"));
+   e_menu_item_icon_edje_set(mi,
+			     (char *)e_theme_edje_file_get("base/theme/fileman",
+							   "fileman/button/new_dir"),
+			     "fileman/button/new_dir");
+   e_menu_item_callback_set(mi, _e_fm2_new_directory, ic->sd);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_separator_set(mi, 1);
    
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Delete"));
@@ -2345,21 +2512,114 @@ _e_fm2_menu_action_display(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timest
 	return;
      }
    ic->menu = mn;
-   e_menu_post_deactivate_callback_set(mn, _e_fm2_menu_post_cb, ic);
+   e_menu_post_deactivate_callback_set(mn, _e_fm2_icon_menu_post_cb, ic);
    e_menu_activate_mouse(mn, zone, 
 			 x, y, 1, 1, 
 			 E_MENU_POP_DIRECTION_DOWN, timestamp);
 }
 
 static void
-_e_fm2_menu_post_cb(void *data, E_Menu *m)
+_e_fm2_icon_menu_post_cb(void *data, E_Menu *m)
 {
    E_Fm2_Icon *ic;
    
    ic = data;
    ic->menu = NULL;
 }
-    
+
+static void
+_e_fm2_refresh(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = data;
+   if (sd->refresh_job) ecore_job_del(sd->refresh_job);
+   sd->refresh_job = ecore_job_add(_e_fm2_refresh_job_cb, sd->obj);
+}
+
+static void
+_e_fm2_new_directory(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd;
+   E_Manager *man;
+   E_Container *con;
+   
+   sd = data;
+   if (sd->entry_dialog) return;
+   
+   man = e_manager_current_get();
+   if (!man) return;
+   con = e_container_current_get(man);
+   if (!con) return;
+   
+   sd->entry_dialog = e_entry_dialog_show(_("Create a new Directory"), "enlightenment/e",
+					  _("New Directory Name:"),
+					  "", NULL, NULL, 
+					  _e_fm2_new_directory_yes_cb, 
+					  _e_fm2_new_directory_no_cb, sd);
+   E_OBJECT(sd->entry_dialog)->data = sd;
+   e_object_del_attach_func_set(E_OBJECT(sd->entry_dialog), _e_fm2_new_directory_delete_cb);
+}
+
+static void
+_e_fm2_new_directory_delete_cb(void *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = E_OBJECT(obj)->data;
+   sd->entry_dialog = NULL;
+}
+
+static void
+_e_fm2_new_directory_yes_cb(char *text, void *data)
+{
+   E_Fm2_Smart_Data *sd;
+   E_Dialog *dialog;
+   E_Manager *man;
+   E_Container *con;
+   char buf[PATH_MAX];
+   char error[PATH_MAX + 256];
+   
+   sd = data;
+   sd->entry_dialog = NULL;
+   if ((text) && (text[0]))
+     {
+	snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, text);
+
+	if (!ecore_file_mkdir(buf))
+	  {
+	     man = e_manager_current_get();
+	     if (!man) return;
+	     con = e_container_current_get(man);
+	     if (!con) return;
+	     
+	     dialog = e_dialog_new(con);
+	     e_dialog_button_add(dialog, _("OK"), NULL, NULL, NULL);
+	     e_dialog_button_focus_num(dialog, 1);
+	     e_dialog_title_set(dialog, _("Error"));
+	     snprintf(error, PATH_MAX + 256,
+		      _("Could not create directory:<br>"
+			"<hilight>%s</hilight>"),
+		      text);
+	     e_dialog_text_set(dialog, error);
+	     e_win_centered_set(dialog->win, 1);
+	     e_dialog_show(dialog);
+	     return;
+	  }
+	if (sd->refresh_job) ecore_job_del(sd->refresh_job);
+	sd->refresh_job = ecore_job_add(_e_fm2_refresh_job_cb, sd->obj);
+     }
+}
+
+static void
+_e_fm2_new_directory_no_cb(char *text, void *data)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = data;
+   sd->entry_dialog = NULL;
+}
+
 static void
 _e_fm2_file_rename(void *data, E_Menu *m, E_Menu_Item *mi)
 {
@@ -2378,7 +2638,7 @@ _e_fm2_file_rename(void *data, E_Menu *m, E_Menu_Item *mi)
    if (!con) return;
    
    snprintf(text, PATH_MAX + 256,
-	    _("Rename %s to"),
+	    _("Rename %s to:"),
 	    ic->info.file);
    ic->entry_dialog = e_entry_dialog_show(_("Rename File"), "enlightenment/e",
 					  text, ic->info.file, NULL, NULL, 
@@ -2409,7 +2669,7 @@ _e_fm2_file_rename_yes_cb(char *text, void *data)
    char error[PATH_MAX + 256];
    
    ic = data;
-   ic->dialog = NULL;
+   ic->entry_dialog = NULL;
    if ((text) && (strcmp(text, ic->info.file)))
      {
 	snprintf(newpath, PATH_MAX, "%s/%s", ic->sd->realpath, text);
@@ -2427,7 +2687,7 @@ _e_fm2_file_rename_yes_cb(char *text, void *data)
 	     e_dialog_button_focus_num(dialog, 1);
 	     e_dialog_title_set(dialog, _("Error"));
 	     snprintf(error, PATH_MAX + 256,
-		      _("Could not rename from <b>%s</b> to <b>%s</b>"),
+		      _("Could not rename from <hilight>%s</hilight> to <hilight>%s</hilight>"),
 		      ic->info.file, text);
 	     e_dialog_text_set(dialog, error);
 	     e_win_centered_set(dialog->win, 1);
@@ -2445,7 +2705,7 @@ _e_fm2_file_rename_no_cb(char *text, void *data)
    E_Fm2_Icon *ic;
    
    ic = data;
-   ic->dialog = NULL;
+   ic->entry_dialog = NULL;
 }
 
 static void
@@ -2474,8 +2734,8 @@ _e_fm2_file_delete(void *data, E_Menu *m, E_Menu_Item *mi)
    e_dialog_title_set(dialog, _("Confirm Delete"));
    snprintf(text, PATH_MAX + 256, 
 	    _("Are you sure you want to delete <br>"
-	      "<b>%s/%s</b> ?"),
-	    ic->sd->realpath, ic->info.file);
+	      "<hilight>%s</hilight> ?"),
+	    ic->info.file);
    e_dialog_text_set(dialog, text);
    e_win_centered_set(dialog->win, 1);
    e_dialog_show(dialog);
@@ -2504,7 +2764,8 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
    ic->dialog = NULL;
    
    snprintf(path, PATH_MAX, "%s/%s", ic->sd->realpath, ic->info.file);
-   
+
+   /* FIXME: recursive rm might block - need to get smart */
    if (!(ecore_file_recursive_rm(path)))
      {
 	char text[PATH_MAX + 256];
@@ -2520,7 +2781,8 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
 	e_dialog_button_focus_num(dialog, 1);
 	e_dialog_title_set(dialog, _("Error"));
 	snprintf(text, PATH_MAX + 256,
-		 _("Could not delete <br><b>%s</b>"), path);
+		 _("Could not delete <br>"
+		   "<hilight>%s</hilight>"), path);
 	e_dialog_text_set(dialog, text);
 	e_win_centered_set(dialog->win, 1);
 	e_dialog_show(dialog);
