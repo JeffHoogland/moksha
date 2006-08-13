@@ -27,7 +27,6 @@ struct _Import
    Evas_Object *fill_tile_obj;
    Evas_Object *fill_within_obj;
    Evas_Object *fill_fill_obj;
-   Evas_Object *perfect_obj;
    Evas_Object *quality_obj;
    Evas_Object *frame_fill_obj;
    Evas_Object *frame_quality_obj;
@@ -44,8 +43,7 @@ struct _E_Config_Dialog_Data
 {
    char *file;   
    int method;
-   int perfect;
-   double quality;
+   int quality;
 };
 
 static Ecore_Event_Handler *_import_edje_cc_exit_handler = NULL;
@@ -88,8 +86,7 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->method = IMPORT_STRETCH;
-   cfdata->perfect = 0;
-   cfdata->quality = 90.0;
+   cfdata->quality = 90;
    import->cfdata = cfdata;
    import->win = win;
    
@@ -163,12 +160,9 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    
    of = e_widget_frametable_add(evas, _("File Quality"), 0);
    import->frame_quality_obj = of;
-   ord = e_widget_slider_add(evas, 1, 0, _("%3.0f%%"), 0.0, 100.0, 1.0, 0, &(cfdata->quality), NULL, 150);
+   ord = e_widget_slider_add(evas, 1, 0, _("%3.0f%%"), 0.0, 100.0, 1.0, 0, NULL, &(cfdata->quality), 150);
    import->quality_obj = ord;
    e_widget_frametable_object_append(of, ord, 0, 0, 1, 1, 1, 0, 1, 0);
-   ord = e_widget_check_add(evas, _("Perfect"), &(cfdata->perfect));
-   import->perfect_obj = ord;
-   e_widget_frametable_object_append(of, ord, 1, 0, 1, 1, 0, 0, 0, 0);
    e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 0);
    
    e_widget_list_object_append(o, ot, 0, 0, 0.5);
@@ -232,7 +226,6 @@ _import_opt_disabled_set(Import *import, int disabled)
    e_widget_disabled_set(import->fill_tile_obj, disabled);
    e_widget_disabled_set(import->fill_within_obj, disabled);
    e_widget_disabled_set(import->fill_fill_obj, disabled);
-   e_widget_disabled_set(import->perfect_obj, disabled);
    e_widget_disabled_set(import->quality_obj, disabled);
    e_widget_disabled_set(import->frame_fill_obj, disabled);
    e_widget_disabled_set(import->frame_quality_obj, disabled);
@@ -315,10 +308,10 @@ _import_edj_gen(Import *import)
    evas_object_del(img);   
    
    fstrip = strdup(e_util_filename_escape(file));
-   if (import->cfdata->perfect)
+   if (import->cfdata->quality == 100)
      snprintf(enc, sizeof(enc), "COMP");
    else
-     snprintf(enc, sizeof(enc), "LOSSY %1.0f", import->cfdata->quality);
+     snprintf(enc, sizeof(enc), "LOSSY %i", import->cfdata->quality);
    switch (import->cfdata->method) 
      {
       case IMPORT_STRETCH:

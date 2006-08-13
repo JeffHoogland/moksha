@@ -11,7 +11,7 @@ struct _Main_Data
    E_Menu *apps;
    E_Menu *desktops;
    E_Menu *clients;
-   E_Menu *gadgets;
+//   E_Menu *gadgets;
    E_Menu *config;
    E_Menu *lost_clients;
 };
@@ -41,8 +41,8 @@ static void _e_int_menus_clients_item_cb     (void *data, E_Menu *m, E_Menu_Item
 static void _e_int_menus_clients_cleanup_cb  (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_desktops_pre_cb     (void *data, E_Menu *m);
 static void _e_int_menus_desktops_item_cb    (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_gadgets_pre_cb      (void *data, E_Menu *m);
-static void _e_int_menus_gadgets_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+//static void _e_int_menus_gadgets_pre_cb      (void *data, E_Menu *m);
+//static void _e_int_menus_gadgets_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_themes_about        (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_lost_clients_pre_cb   (void *data, E_Menu *m);
 static void _e_int_menus_lost_clients_free_hook(void *obj);
@@ -106,14 +106,16 @@ e_int_menus_main_new(void)
    e_menu_item_label_set(mi, _("Lost Windows"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/lost_windows");
    e_menu_item_submenu_set(mi, subm);
-  
+
+/*   
    subm = e_int_menus_gadgets_new();
    dat->gadgets = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Gadgets"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/gadgets");
    e_menu_item_submenu_set(mi, subm);
-
+*/
+   
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
@@ -212,7 +214,7 @@ e_int_menus_clients_new(void)
    e_menu_pre_activate_callback_set(m, _e_int_menus_clients_pre_cb, NULL);
    return m;
 }
-
+/*
 EAPI E_Menu *
 e_int_menus_gadgets_new(void)
 {
@@ -222,7 +224,7 @@ e_int_menus_gadgets_new(void)
    e_menu_pre_activate_callback_set(m, _e_int_menus_gadgets_pre_cb, NULL);
    return m;
 }
-
+*/
 EAPI E_Menu *
 e_int_menus_lost_clients_new(void)
 {
@@ -315,7 +317,7 @@ _e_int_menus_main_del_hook(void *obj)
 	e_object_del(E_OBJECT(dat->apps));
 	e_object_del(E_OBJECT(dat->desktops));
 	e_object_del(E_OBJECT(dat->clients));
-	e_object_del(E_OBJECT(dat->gadgets));
+//	e_object_del(E_OBJECT(dat->gadgets));
 	e_object_del(E_OBJECT(dat->config));
 	e_object_del(E_OBJECT(dat->lost_clients));
 	free(dat);
@@ -772,7 +774,7 @@ _e_int_menus_clients_cleanup_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    zone = data;
    e_place_zone_region_smart_cleanup(zone);
 }
-
+/*
 static void
 _e_int_menus_gadgets_pre_cb(void *data, E_Menu *m)
 {
@@ -817,7 +819,7 @@ _e_int_menus_gadgets_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 	e_gadman_mode_set(gm, E_GADMAN_MODE_NORMAL);
      }
 }
-		       
+*/		       
 static void
 _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
 {
