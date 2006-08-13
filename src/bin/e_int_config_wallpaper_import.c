@@ -357,7 +357,7 @@ _import_edj_gen(Import *import)
 		"} }\n"
 		"part { name: \"bg\"; mouse_events: 0;\n"
 		"description { state: \"default\" 0.0;\n"
-		"min: %i %i; max: %i %i\n"
+		"min: %i %i; max: %i %i;\n"
 		"image { normal: \"%s\"; }\n"
 		"} } } } }\n"
 		, fstrip, enc, w, h, cr, cg, cb, ca, w, h, w, h, fstrip);
