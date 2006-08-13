@@ -385,13 +385,17 @@ e_widget_fsel_add(Evas *evas, char *dev, char *path, char *selected, char *filte
    
   if (preview)
     {
-	e_widget_frametable_object_append(wd->o_preview_frame, wd->o_preview_preview_table,
-                                0, 0, 1, 1, 1, 1, 1, 1);
-        e_widget_frametable_object_append(wd->o_preview_frame, wd->o_preview_table,
-                                0, 1, 1, 1, 1, 1, 1, 1);
-        e_widget_table_object_append(wd->o_table2, wd->o_preview_frame,
-                                2, 1, 1, 1, 1, 1, 1, 1);
+	e_widget_frametable_object_append(wd->o_preview_frame, 
+					  wd->o_preview_preview_table,
+					  0, 0, 1, 1, 1, 1, 1, 1);
+        e_widget_frametable_object_append(wd->o_preview_frame, 
+					  wd->o_preview_table,
+					  0, 1, 1, 1, 1, 1, 1, 1);
+        e_widget_table_object_append(wd->o_table2, 
+				     wd->o_preview_frame,
+                                     2, 1, 1, 1, 1, 1, 1, 1);
     }
+
    e_widget_table_object_append(wd->o_table, wd->o_table2,
                                 0, 0, 1, 1, 1, 1, 1, 1);
    e_widget_table_object_append(wd->o_table, wd->o_entry,
@@ -467,15 +471,18 @@ _e_wid_file_size_get(off_t st_size)
    char size[1024];
 
    dsize = (double)st_size;
-   if (dsize < 1024) snprintf(size, 1024, "%'.0f B", dsize);
+   if (dsize < 1024) 
+      snprintf(size, 1024, "%'.0f B", dsize);
    else
      {
        dsize /= 1024.0;
-       if (dsize < 1024) snprintf(size, 1024, "%'.0f KB", dsize);
+       if (dsize < 1024) 
+          snprintf(size, 1024, "%'.0f KB", dsize);
        else
          {
            dsize /= 1024.0;
-           if (dsize < 1024) snprintf(size, 1024, "%'.0f MB", dsize);
+           if (dsize < 1024) 
+              snprintf(size, 1024, "%'.0f MB", dsize);
            else
              {
                dsize /= 1024.0;
@@ -492,12 +499,15 @@ _e_wid_file_user_get(uid_t st_uid)
    char name[PATH_MAX];
    struct passwd *pwd;
 
-   if (getuid() == st_uid) snprintf(name, PATH_MAX, "You");
+   if (getuid() == st_uid) 
+      snprintf(name, PATH_MAX, "You");
    else
      {
        pwd = getpwuid(st_uid);
-       if (pwd) snprintf(name, PATH_MAX, "%s", pwd->pw_name);
-       else snprintf(name, PATH_MAX, "%-8d", (int)st_uid);
+       if (pwd) 
+          snprintf(name, PATH_MAX, "%s", pwd->pw_name);
+       else 
+          snprintf(name, PATH_MAX, "%-8d", (int)st_uid);
      }
    return strdup(name);
 }
@@ -518,12 +528,17 @@ _e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t st_gid)
    int other_write = 0;
    int i;
 
-   if (getuid() == st_uid) owner = 1;
-   if (getgid() == st_gid) group = 1;   
+   if (getuid() == st_uid) 
+      owner = 1;
+   if (getgid() == st_gid) 
+      group = 1;   
 
    perm = (char *)malloc(sizeof(char) * 10);
-   for (i = 0; i < 9; i++) perm[i] = '-';
+
+   for (i = 0; i < 9; i++) 
+      perm[i] = '-';
    perm[9] = '\0';
+
    if ((S_IRUSR & st_mode) == S_IRUSR) 
      {
         perm[0] = 'r';
@@ -534,7 +549,8 @@ _e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t st_gid)
         perm[1] = 'w';
         user_write = 1;
      }
-   if ((S_IXUSR & st_mode) == S_IXUSR) perm[2] = 'x';
+   if ((S_IXUSR & st_mode) == S_IXUSR) 
+      perm[2] = 'x';
 
    if ((S_IRGRP & st_mode) == S_IRGRP) 
      {
@@ -546,7 +562,8 @@ _e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t st_gid)
         perm[4] = 'w';
         group_write = 1;
      }
-   if ((S_IXGRP & st_mode) == S_IXGRP) perm[5] = 'x';
+   if ((S_IXGRP & st_mode) == S_IXGRP) 
+      perm[5] = 'x';
    
    if ((S_IROTH & st_mode) == S_IROTH)
      {
@@ -558,34 +575,40 @@ _e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t st_gid)
         perm[6] = 'w';
         other_write = 1;
      }
-   if ((S_IXOTH & st_mode) == S_IXOTH) perm[8] = 'x';
+   if ((S_IXOTH & st_mode) == S_IXOTH) 
+      perm[8] = 'x';
 
    if (owner)
      {
-        if ((!user_read) && (!user_write)) snprintf(perms, PATH_MAX,
-	  				"Protected");
-        else if ((user_read) && (!user_write)) snprintf(perms, PATH_MAX,
-					"Read Only");
-        else if ((user_read) && (user_write)) access = 1;
+        if ((!user_read) && (!user_write)) 
+           snprintf(perms, PATH_MAX, "Protected");
+        else if ((user_read) && (!user_write)) 
+           snprintf(perms, PATH_MAX, "Read Only");
+        else if ((user_read) && (user_write)) 
+           access = 1;
      }
    else if (group)
      {
-        if ((!group_read) && (!group_write)) snprintf(perms, PATH_MAX,
-                                        "Forbidden");
-        else if ((group_read) && (!group_write)) snprintf(perms, PATH_MAX,
-                                        "Read Only");
-        else if ((group_read) && (group_write)) access = 1;
+        if ((!group_read) && (!group_write)) 
+           snprintf(perms, PATH_MAX, "Forbidden");
+        else if ((group_read) && (!group_write)) 
+           snprintf(perms, PATH_MAX, "Read Only");
+        else if ((group_read) && (group_write)) 
+           access = 1;
      }
    else if ((!owner) && (!group))
      {
-        if ((!other_read) && (!other_write)) snprintf(perms, PATH_MAX,
-                                        "Forbidden");
-        else if ((other_read) && (!other_write)) snprintf(perms, PATH_MAX,
-                                        "Read Only");
-        else if ((other_read) && (other_write)) access = 1;
+        if ((!other_read) && (!other_write)) 
+           snprintf(perms, PATH_MAX, "Forbidden");
+        else if ((other_read) && (!other_write)) 
+           snprintf(perms, PATH_MAX, "Read Only");
+        else if ((other_read) && (other_write)) 
+           access = 1;
      }
-   if (!access) return strdup(perms);
-   else return strdup("Read-Write");
+   if (!access) 
+      return strdup(perms);
+   else 
+      return strdup("Read-Write");
 }
 
 static char * 
@@ -598,19 +621,25 @@ _e_wid_file_time_get(time_t st_modtime)
 
    ltime = time(NULL);
    diff = difftime(ltime, st_modtime);
-   if (diff <= 60) snprintf(modtime, PATH_MAX, "Under a minute ago");
-   if (diff > 60) snprintf(modtime, PATH_MAX, "%d minutes ago", ((int)diff/60));
-   if (diff >= 3600) snprintf(modtime, PATH_MAX, "%d hours ago", ((int)diff/3600));
-   if (diff >= 86400) snprintf(modtime, PATH_MAX, "%d days ago", ((int)diff/86400));
-   if (diff >= 604800) snprintf(modtime, PATH_MAX, "%d weeks ago", 
-							((int)diff/604800));
-   if (diff >= 2592000) snprintf(modtime, PATH_MAX, "%d months ago", 
-							((int)diff/2592000));
-   if (diff >= 31526000) snprintf(modtime, PATH_MAX, "%d years ago", 
-							((int)diff/31526000));
+   if (diff <= 60) 
+      snprintf(modtime, PATH_MAX, "Under a minute ago");
+   if (diff > 60) 
+      snprintf(modtime, PATH_MAX, "%d minutes ago", ((int)diff/60));
+   if (diff >= 3600) 
+      snprintf(modtime, PATH_MAX, "%d hours ago", ((int)diff/3600));
+   if (diff >= 86400) 
+      snprintf(modtime, PATH_MAX, "%d days ago", ((int)diff/86400));
+   if (diff >= 604800) 
+      snprintf(modtime, PATH_MAX, "%d weeks ago", ((int)diff/604800));
+   if (diff >= 2592000) 
+      snprintf(modtime, PATH_MAX, "%d months ago", ((int)diff/2592000));
+   if (diff >= 31526000) 
+      snprintf(modtime, PATH_MAX, "%d years ago", ((int)diff/31526000));
  
-   if (modtime) motime = strdup(modtime);
-   else motime = strdup("unknown");
+   if (modtime) 
+      motime = strdup(modtime);
+   else 
+      motime = strdup("unknown");
    return motime;
 }
 
