@@ -1874,16 +1874,9 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
      }
    else if (ev->button == 3)
      {
-	char buf[4096];
-	
-	snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
-	if ((ecore_file_can_write(buf)) ||
-	    (ecore_file_can_write(ic->sd->realpath)))
-	  {
-	     _e_fm2_icon_menu(ic, ic->sd->obj, ev->timestamp);
-	     evas_event_feed_mouse_up(evas_object_evas_get(ic->sd->obj), ev->button,
-				      EVAS_BUTTON_NONE, ev->timestamp, NULL);
-	  }
+	_e_fm2_icon_menu(ic, ic->sd->obj, ev->timestamp);
+	evas_event_feed_mouse_up(evas_object_evas_get(ic->sd->obj), ev->button,
+				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
 }
     
@@ -2448,6 +2441,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
    E_Container *con;
    E_Zone *zone;
    int x, y;
+   char buf[4096];
    
    sd = ic->sd;
 
@@ -2462,35 +2456,43 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 			     "fileman/button/refresh");
    e_menu_item_callback_set(mi, _e_fm2_refresh, ic->sd);
 
-   mi = e_menu_item_new(mn);
-   e_menu_item_separator_set(mi, 1);
+   if (ecore_file_can_write(sd->realpath))
+     {
+	mi = e_menu_item_new(mn);
+	e_menu_item_separator_set(mi, 1);
    
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("New Directory"));
-   e_menu_item_icon_edje_set(mi,
-			     (char *)e_theme_edje_file_get("base/theme/fileman",
-							   "fileman/button/new_dir"),
-			     "fileman/button/new_dir");
-   e_menu_item_callback_set(mi, _e_fm2_new_directory, ic->sd);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_separator_set(mi, 1);
+	mi = e_menu_item_new(mn);
+	e_menu_item_label_set(mi, _("New Directory"));
+	e_menu_item_icon_edje_set(mi,
+				  (char *)e_theme_edje_file_get("base/theme/fileman",
+								"fileman/button/new_dir"),
+				  "fileman/button/new_dir");
+	e_menu_item_callback_set(mi, _e_fm2_new_directory, ic->sd);
+	
+     }
    
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Delete"));
-   e_menu_item_icon_edje_set(mi,
-			     (char *)e_theme_edje_file_get("base/theme/fileman",
-							   "fileman/button/delete"),
-			     "fileman/button/delete");
-   e_menu_item_callback_set(mi, _e_fm2_file_delete, ic);
-   
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Rename"));
-   e_menu_item_icon_edje_set(mi,
-			     (char *)e_theme_edje_file_get("base/theme/fileman",
-							   "fileman/button/rename"),
-			     "fileman/button/rename");
-   e_menu_item_callback_set(mi, _e_fm2_file_rename, ic);
+   snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, ic->info.file);
+   if (ecore_file_can_write(buf))
+     {
+	mi = e_menu_item_new(mn);
+	e_menu_item_separator_set(mi, 1);
+	
+	mi = e_menu_item_new(mn);
+	e_menu_item_label_set(mi, _("Delete"));
+	e_menu_item_icon_edje_set(mi,
+				  (char *)e_theme_edje_file_get("base/theme/fileman",
+								"fileman/button/delete"),
+				  "fileman/button/delete");
+	e_menu_item_callback_set(mi, _e_fm2_file_delete, ic);
+	
+	mi = e_menu_item_new(mn);
+	e_menu_item_label_set(mi, _("Rename"));
+	e_menu_item_icon_edje_set(mi,
+				  (char *)e_theme_edje_file_get("base/theme/fileman",
+								"fileman/button/rename"),
+				  "fileman/button/rename");
+	e_menu_item_callback_set(mi, _e_fm2_file_rename, ic);
+     }
    
    man = e_manager_current_get();
    if (!man)
