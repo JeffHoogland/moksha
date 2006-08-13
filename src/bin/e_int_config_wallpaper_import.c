@@ -258,6 +258,7 @@ _import_edj_gen(Import *import)
    const char *file;
    char buf[4096], cmd[4096], tmpn[4096], ipart[4096], enc[128];
    char *imgdir = NULL, *homedir, *fstrip;
+   int cr = 255, cg = 255, cb = 255, ca = 255;
    FILE *f;
    
    evas = e_win_evas_get(import->win);
@@ -320,7 +321,8 @@ _import_edj_gen(Import *import)
 		"collections {\n"
 		"group { name: \"desktop/background\";\n"
 		"max: %i %i;\n"
-		"parts { part { name: \"bg\"; mouse_events: 0;\n"
+		"parts {\n"
+		"part { name: \"bg\"; mouse_events: 0;\n"
 		"description { state: \"default\" 0.0;\n"
 		"image { normal: \"%s\"; }\n"
 		"} } } } }\n"
@@ -332,7 +334,8 @@ _import_edj_gen(Import *import)
 		"collections {\n"
 		"group { name: \"desktop/background\";\n"
 		"max: %i %i;\n"
-		"parts { part { name: \"bg\"; mouse_events: 0;\n"
+		"parts {\n"
+		"part { name: \"bg\"; mouse_events: 0;\n"
 		"description { state: \"default\" 0.0;\n"
 		"image { normal: \"%s\"; }\n"
 		"fill { size {\n"
@@ -347,12 +350,17 @@ _import_edj_gen(Import *import)
 		"collections {\n"
 		"group { name: \"desktop/background\";\n"
 		"max: %i %i;\n"
-		"parts { part { name: \"bg\"; mouse_events: 0;\n"
+		"parts {\n"
+		"part { name: \"col\"; type: RECT; mouse_events: 0;\n"
+		"description { state: \"default\" 0.0;\n"
+		"color: %i %i %i %i;\n"
+		"} }\n"
+		"part { name: \"bg\"; mouse_events: 0;\n"
 		"description { state: \"default\" 0.0;\n"
 		"min: %i %i; max: %i %i\n"
 		"image { normal: \"%s\"; }\n"
 		"} } } } }\n"
-		, fstrip, enc, w, h, w, h, w, h, fstrip);
+		, fstrip, enc, w, h, cr, cg, cb, ca, w, h, w, h, fstrip);
 	break;
       case IMPORT_SCALE_ASPECT_IN:
 	fprintf(f, 
@@ -360,12 +368,17 @@ _import_edj_gen(Import *import)
 		"collections {\n"
 		"group { name: \"desktop/background\";\n"
 		"max: %i %i;\n"
-		"parts { part { name: \"bg\"; mouse_events: 0;\n"
+		"parts {\n"
+		"part { name: \"col\"; type: RECT; mouse_events: 0;\n"
+		"description { state: \"default\" 0.0;\n"
+		"color: %i %i %i %i;\n"
+		"} }\n"
+		"part { name: \"bg\"; mouse_events: 0;\n"
 		"description { state: \"default\" 0.0;\n"
 		"aspect: %1.9f %1.9f; aspect_preference: BOTH;\n"
 		"image { normal: \"%s\"; }\n"
 		"} } } } }\n"
-		, fstrip, enc, w, h, (double)w / (double)h, (double)w / (double)h, fstrip);
+		, fstrip, enc, w, h, cr, cg, cb, ca, (double)w / (double)h, (double)w / (double)h, fstrip);
 	break;
       case IMPORT_SCALE_ASPECT_OUT:
 	fprintf(f, 
@@ -373,7 +386,8 @@ _import_edj_gen(Import *import)
 		"collections {\n"
 		"group { name: \"desktop/background\";\n"
 		"max: %i %i;\n"
-		"parts { part { name: \"bg\"; mouse_events: 0;\n"
+		"parts {\n"
+		"part { name: \"bg\"; mouse_events: 0;\n"
 		"description { state: \"default\" 0.0;\n"
 		"aspect: %1.9f %1.9f; aspect_preference: NONE;\n"
 		"image { normal: \"%s\"; }\n"
