@@ -10,13 +10,17 @@ struct _E_Widget_Data
    Evas_Object *o_table;
    Evas_Object *o_table2;
    Evas_Object *o_preview_table;
+   Evas_Object *o_preview_preview_table;
+   Evas_Object *o_preview_frame;
    Evas_Object *o_preview_scroll;
-   Evas_Object *o_preview_name;
    Evas_Object *o_preview_size;
+   Evas_Object *o_preview_size_entry;
    Evas_Object *o_preview_owner;
-   Evas_Object *o_preview_group;
+   Evas_Object *o_preview_owner_entry;
    Evas_Object *o_preview_perms;
+   Evas_Object *o_preview_perms_entry;
    Evas_Object *o_preview_time;
+   Evas_Object *o_preview_time_entry;
    Evas_Object *o_preview_preview;
    Evas_Object *o_up_button;
    Evas_Object *o_favorites_frame;
@@ -25,6 +29,10 @@ struct _E_Widget_Data
    Evas_Object *o_files_fm;
    Evas_Object *o_entry;
    char *entry_text;
+   char *preview_size_text;
+   char *preview_owner_text;
+   char *preview_perms_text;
+   char *preview_time_text;
    char *path;
    void (*sel_func) (void *data, Evas_Object *obj);
    void *sel_data;
@@ -35,8 +43,7 @@ struct _E_Widget_Data
 static void _e_wid_fsel_preview_file(E_Widget_Data *wd);
 static char *_e_wid_file_size_get(off_t st_size);
 static char *_e_wid_file_user_get(uid_t st_uid);
-static char *_e_wid_file_group_get(gid_t st_gid);
-static char *_e_wid_file_perms_get(mode_t st_mode, uid_t st_uid);
+static char *_e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t gid);
 static char *_e_wid_file_time_get(time_t st_modtime);
 static void _e_wid_del_hook(Evas_Object *obj);
 
@@ -222,6 +229,82 @@ e_widget_fsel_add(Evas *evas, char *dev, char *path, char *selected, char *filte
    e_widget_sub_object_add(obj, o);
    e_widget_table_object_append(wd->o_table2, o, 1, 0, 1, 1, 0, 0, 1, 0);
 
+   if (preview)
+     {
+        o = e_widget_frametable_add(evas, "Preview", 0);
+        wd->o_preview_frame = o;
+        e_widget_sub_object_add(obj, o);
+
+        o = e_widget_table_add(evas, 0);
+        wd->o_preview_preview_table = o;
+        e_widget_sub_object_add(obj, o);
+
+        o = e_widget_table_add(evas, 0);
+        wd->o_preview_table = o;
+        e_widget_sub_object_add(obj, o);
+
+        o = e_widget_preview_add(evas, 64, 64);
+        wd->o_preview_preview = o;
+        e_widget_sub_object_add(obj, o);
+        e_widget_table_object_append(wd->o_preview_preview_table,
+                                     wd->o_preview_preview,
+                                     0, 0, 1, 1, 1, 1, 1, 1);
+
+        o = e_widget_label_add(evas, "Size:");
+        wd->o_preview_size = o;
+        e_widget_sub_object_add(obj, o);
+        e_widget_table_object_append(wd->o_preview_table, wd->o_preview_size,
+                                     0, 0, 1, 1, 1, 1, 1, 1);
+
+        o = e_widget_entry_add(evas, &(wd->preview_size_text));
+        wd->o_preview_size_entry = o;
+        e_widget_sub_object_add(obj, o);
+        e_widget_min_size_set(o, 100, 15);
+        e_widget_table_object_append(wd->o_preview_table,
+                        wd->o_preview_size_entry, 1, 0, 1, 1, 1, 1, 1, 1);
+
+        o = e_widget_label_add(evas, "Owner:");
+        wd->o_preview_owner = o;
+        e_widget_sub_object_add(obj, o);
+        e_widget_table_object_append(wd->o_preview_table, wd->o_preview_owner,
+                                     0, 1, 1, 1, 1, 1, 1, 1);
+
+        o = e_widget_entry_add(evas, &(wd->preview_owner_text));
+        wd->o_preview_owner_entry = o;
+        e_widget_sub_object_add(obj, o);
+        e_widget_min_size_set(o, 100, 15);
+        e_widget_table_object_append(wd->o_preview_table,
+                        wd->o_preview_owner_entry, 1, 1, 1, 1, 1, 1, 1, 1);
+
+        o = e_widget_label_add(evas, "Permissions:");
+        wd->o_preview_perms = o;
+        e_widget_sub_object_add(obj, o);
+        e_widget_table_object_append(wd->o_preview_table, wd->o_preview_perms,
+                                     0, 2, 1, 1, 1, 1, 1, 1);
+
+        o = e_widget_entry_add(evas, &(wd->preview_perms_text));
+        wd->o_preview_perms_entry = o;
+        e_widget_sub_object_add(obj, o);
+        e_widget_min_size_set(o, 100, 15);
+        e_widget_table_object_append(wd->o_preview_table,
+                        wd->o_preview_perms_entry, 1, 2, 1, 1, 1, 1, 1, 1);
+
+        o = e_widget_label_add(evas, "Modified:");
+        wd->o_preview_time = o;
+        e_widget_sub_object_add(obj, o);
+        e_widget_table_object_append(wd->o_preview_table, wd->o_preview_time,
+                                     0, 3, 1, 1, 1, 1, 1, 1);
+
+        o = e_widget_entry_add(evas, &(wd->preview_time_text));
+        wd->o_preview_time_entry = o;
+        e_widget_sub_object_add(obj, o); 
+        e_widget_min_size_set(o, 100, 15);
+        e_widget_table_object_append(wd->o_preview_table,
+                        wd->o_preview_time_entry, 1, 3, 1, 1, 1, 1, 1, 1);
+
+     }
+
+
    o = e_fm2_add(evas);
    wd->o_favorites_fm = o;
    e_widget_sub_object_add(obj, o);
@@ -300,61 +383,15 @@ e_widget_fsel_add(Evas *evas, char *dev, char *path, char *selected, char *filte
    wd->o_entry = o;
    e_widget_sub_object_add(obj, o);
    
-   if (preview)
-     {
-        o = e_widget_table_add(evas, 0);
-        wd->o_preview_table = o;
-        e_widget_sub_object_add(obj, o);
-        e_widget_min_size_set(o, 128, 128);
-        e_widget_resize_object_set(obj, o);
-
-        o = e_widget_preview_add(evas, 64, 64);
-        wd->o_preview_preview = o;
-        e_widget_sub_object_add(obj, o);
-        e_widget_resize_object_set(obj, o);
-        e_widget_table_object_append(wd->o_preview_table, 
-				     wd->o_preview_preview,
-				     0, 0, 1, 1, 1, 1, 1, 1);
-	o = e_widget_label_add(evas, "Name:");
-        wd->o_preview_name = o;
-        e_widget_sub_object_add(obj, o);
-        e_widget_resize_object_set(obj, o);
-        e_widget_table_object_append(wd->o_preview_table, wd->o_preview_name,
-                                     0, 1, 1, 1, 1, 1, 1, 1);
-        o = e_widget_label_add(evas, "Size:");
-        wd->o_preview_size = o;
-        e_widget_sub_object_add(obj, o);
-        e_widget_resize_object_set(obj, o);
-        e_widget_table_object_append(wd->o_preview_table, wd->o_preview_size,
-                                     0, 2, 1, 1, 1, 1, 1, 1);
-        o = e_widget_label_add(evas, "Owner:");
-        wd->o_preview_owner = o;
-        e_widget_sub_object_add(obj, o);
-        e_widget_resize_object_set(obj, o);
-        e_widget_table_object_append(wd->o_preview_table, wd->o_preview_owner,
-                                     0, 3, 1, 1, 1, 1, 1, 1);
-        o = e_widget_label_add(evas, "Group:");
-        wd->o_preview_group = o;
-        e_widget_sub_object_add(obj, o);
-        e_widget_resize_object_set(obj, o);
-        e_widget_table_object_append(wd->o_preview_table, wd->o_preview_group,
-                                     0, 4, 1, 1, 1, 1, 1, 1);
-        o = e_widget_label_add(evas, "Permissions:");
-        wd->o_preview_perms = o;
-        e_widget_sub_object_add(obj, o);
-        e_widget_resize_object_set(obj, o);
-        e_widget_table_object_append(wd->o_preview_table, wd->o_preview_perms,
-                                     0, 5, 1, 1, 1, 1, 1, 1);
-        o = e_widget_label_add(evas, "Last Modification:");
-        wd->o_preview_time = o;
-        e_widget_sub_object_add(obj, o);
-        e_widget_resize_object_set(obj, o);
-        e_widget_table_object_append(wd->o_preview_table, wd->o_preview_time,
-                                     0, 6, 1, 1, 1, 1, 1, 1);
-
-        e_widget_table_object_append(wd->o_table2, wd->o_preview_table,
-                                     2, 1, 1, 1, 1, 1, 1, 1);
-     }
+  if (preview)
+    {
+	e_widget_frametable_object_append(wd->o_preview_frame, wd->o_preview_preview_table,
+                                0, 0, 1, 1, 1, 1, 1, 1);
+        e_widget_frametable_object_append(wd->o_preview_frame, wd->o_preview_table,
+                                0, 1, 1, 1, 1, 1, 1, 1);
+        e_widget_table_object_append(wd->o_table2, wd->o_preview_frame,
+                                2, 1, 1, 1, 1, 1, 1, 1);
+    }
    e_widget_table_object_append(wd->o_table, wd->o_table2,
                                 0, 0, 1, 1, 1, 1, 1, 1);
    e_widget_table_object_append(wd->o_table, wd->o_entry,
@@ -372,14 +409,18 @@ e_widget_fsel_add(Evas *evas, char *dev, char *path, char *selected, char *filte
    if (preview)
      {
         evas_object_show(wd->o_preview_preview);
-        evas_object_show(wd->o_preview_name);
+        evas_object_show(wd->o_preview_preview_table);
         evas_object_show(wd->o_preview_size);
+        evas_object_show(wd->o_preview_size_entry);
         evas_object_show(wd->o_preview_owner);
-        evas_object_show(wd->o_preview_group);
+        evas_object_show(wd->o_preview_owner_entry);
         evas_object_show(wd->o_preview_perms);
+        evas_object_show(wd->o_preview_perms_entry);
         evas_object_show(wd->o_preview_time);
+        evas_object_show(wd->o_preview_time_entry);
         evas_object_show(wd->o_preview_table);
-     }
+        evas_object_show(wd->o_preview_frame);
+      }
    evas_object_show(wd->o_table2);
    evas_object_show(wd->o_table);
    return obj;
@@ -388,26 +429,25 @@ e_widget_fsel_add(Evas *evas, char *dev, char *path, char *selected, char *filte
 static void
 _e_wid_fsel_preview_file(E_Widget_Data *wd)
 {
-   char *name, size[PATH_MAX], owner[PATH_MAX], group[PATH_MAX];
-   char perms[PATH_MAX], time[PATH_MAX];
+   char *size, *owner, *perms, *time;
    struct stat st;
  
    stat(wd->path, &st);
-   name = strrchr(wd->path, '/')+1;
-   snprintf(size, PATH_MAX, "Size: %s", _e_wid_file_size_get(st.st_size));
-   snprintf(owner, PATH_MAX, "Owner: %s", _e_wid_file_user_get(st.st_uid));
-   snprintf(group, PATH_MAX, "Group: %s", _e_wid_file_group_get(st.st_gid));
-   snprintf(perms, PATH_MAX, "Permissions: %s", 
-				_e_wid_file_perms_get(st.st_mode, st.st_uid));
-   snprintf(time, PATH_MAX, "Last Modification: %s", 
-				 _e_wid_file_time_get(st.st_mtime));
 
-   e_widget_label_text_set(wd->o_preview_name, name);
-   e_widget_label_text_set(wd->o_preview_size, size);
-   e_widget_label_text_set(wd->o_preview_owner, owner);
-   e_widget_label_text_set(wd->o_preview_group, group);
-   e_widget_label_text_set(wd->o_preview_perms, perms);
-   e_widget_label_text_set(wd->o_preview_time, time);
+   size =  _e_wid_file_size_get(st.st_size);
+   owner = _e_wid_file_user_get(st.st_uid);
+   perms = _e_wid_file_perms_get(st.st_mode, st.st_uid, st.st_gid);
+   time = _e_wid_file_time_get(st.st_mtime);
+
+   e_widget_entry_text_set(wd->o_preview_size_entry, size);
+   e_widget_entry_text_set(wd->o_preview_owner_entry, owner);
+   e_widget_entry_text_set(wd->o_preview_perms_entry, perms);
+   e_widget_entry_text_set(wd->o_preview_time_entry, time);
+
+   free(size);
+   free(owner);
+   free(perms);
+   free(time);
 }
 
 EAPI const char *
@@ -463,80 +503,89 @@ _e_wid_file_user_get(uid_t st_uid)
 }
 
 static char *
-_e_wid_file_group_get(gid_t st_gid)
-{
-   char name[PATH_MAX];
-   struct group *grp;
-
-   grp = getgrgid(st_gid);
-   if (grp) snprintf(name, PATH_MAX, "%s", grp->gr_name);
-   else snprintf(name, PATH_MAX, "%-8d", (int)st_gid);
-
-   return strdup(name);
-}
-
-static char *
-_e_wid_file_perms_get(mode_t st_mode, uid_t st_uid)
+_e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t st_gid)
 {
    char *perm;
    char perms[PATH_MAX];
+   int access = 0;
    int owner = 0;
-   int read = 0;
-   int write = 0;
-   int execute = 0;
+   int group = 0;
+   int user_read = 0;
+   int user_write = 0;
+   int group_read = 0;
+   int group_write = 0;
+   int other_read = 0;
+   int other_write = 0;
    int i;
 
    if (getuid() == st_uid) owner = 1;
+   if (getgid() == st_gid) group = 1;   
+
+   perm = (char *)malloc(sizeof(char) * 10);
+   for (i = 0; i < 9; i++) perm[i] = '-';
+   perm[9] = '\0';
+   if ((S_IRUSR & st_mode) == S_IRUSR) 
+     {
+        perm[0] = 'r';
+        user_read = 1;
+     }
+   if ((S_IWUSR & st_mode) == S_IWUSR) 
+     {
+        perm[1] = 'w';
+        user_write = 1;
+     }
+   if ((S_IXUSR & st_mode) == S_IXUSR) perm[2] = 'x';
+
+   if ((S_IRGRP & st_mode) == S_IRGRP) 
+     {
+	perm[3] = 'r';
+        group_read = 1;
+     }
+   if ((S_IWGRP & st_mode) == S_IWGRP) 
+     {	
+        perm[4] = 'w';
+        group_write = 1;
+     }
+   if ((S_IXGRP & st_mode) == S_IXGRP) perm[5] = 'x';
+   
+   if ((S_IROTH & st_mode) == S_IROTH)
+     {
+        perm[5] = 'r';
+        other_read = 1;
+     }
+   if ((S_IWOTH & st_mode) == S_IWOTH)
+     {
+        perm[6] = 'w';
+        other_write = 1;
+     }
+   if ((S_IXOTH & st_mode) == S_IXOTH) perm[8] = 'x';
 
    if (owner)
      {
-       perm = (char *)malloc(sizeof(char) * 10);
-      for (i = 0; i < 9; i++) perm[i] = '-';
-      perm[9] = '\0';
-
-      if ((S_IRUSR & st_mode) == S_IRUSR) 
-        {
-           perm[0] = 'r';
-           read = 1;
-        }
-      if ((S_IWUSR & st_mode) == S_IWUSR) 
-        {
-           perm[1] = 'w';
-           write = 1;
-        }
-      if ((S_IXUSR & st_mode) == S_IXUSR) 
-        {
-           perm[2] = 'x';
-           execute = 1;
-        }
-      if ((S_IRGRP & st_mode) == S_IRGRP) perm[3] = 'r';
-      if ((S_IWGRP & st_mode) == S_IWGRP) perm[4] = 'w';
-      if ((S_IXGRP & st_mode) == S_IXGRP) perm[5] = 'x';
-
-      if ((S_IROTH & st_mode) == S_IROTH) perm[6] = 'r';
-      if ((S_IWOTH & st_mode) == S_IWOTH) perm[7] = 'w';
-      if ((S_IXOTH & st_mode) == S_IXOTH) perm[8] = 'x';
-
-      if (read && write && execute) snprintf(perms, PATH_MAX, 
-					"You have full access");
-      else if (!read && !write && !execute) snprintf(perms, PATH_MAX,
-					"You do not have access");
-      else if (read && !write && !execute) snprintf(perms, PATH_MAX,
-					"You can read");
-      else if (!read && write && !execute) snprintf(perms, PATH_MAX,
-					"You can write");
-      else if (!read && !write && execute) snprintf(perms, PATH_MAX,
-					"You can execute");
-      else if (read && write && !execute) snprintf(perms, PATH_MAX,
-					"You can read and write");
-      else if (read && !write && execute) snprintf(perms, PATH_MAX,
-					"You can read and execute");
-      else if (!read && write && execute) snprintf(perms, PATH_MAX,
-    					"You can write and execute");
+        if ((!user_read) && (!user_write)) snprintf(perms, PATH_MAX,
+	  				"Protected");
+        else if ((user_read) && (!user_write)) snprintf(perms, PATH_MAX,
+					"Read Only");
+        else if ((user_read) && (user_write)) access = 1;
      }
-   else snprintf(perms, PATH_MAX, "You are not the owner");
-
-   return strdup(perms);
+   else if (group)
+     {
+        if ((!group_read) && (!group_write)) snprintf(perms, PATH_MAX,
+                                        "Forbidden");
+        else if ((group_read) && (!group_write)) snprintf(perms, PATH_MAX,
+                                        "Read Only");
+        else if ((group_read) && (group_write)) access = 1;
+     }
+   else if ((!owner) && (!group))
+     {
+        if ((!other_read) && (!other_write)) snprintf(perms, PATH_MAX,
+                                        "Forbidden");
+        else if ((other_read) && (!other_write)) snprintf(perms, PATH_MAX,
+                                        "Read Only");
+        else if ((other_read) && (other_write)) access = 1;
+     }
+   if (!access) return strdup(perms);
+   else return strdup("Read-Write");
 }
 
 static char * 
