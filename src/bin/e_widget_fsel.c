@@ -437,7 +437,7 @@ _e_wid_fsel_preview_file(E_Widget_Data *wd)
    size =  _e_wid_file_size_get(st.st_size);
    owner = _e_wid_file_user_get(st.st_uid);
    perms = _e_wid_file_perms_get(st.st_mode, st.st_uid, st.st_gid);
-   time = _e_wid_file_time_get(st.st_mtime);
+   time = _e_wid_file_time_get(st.st_mtime); 
 
    e_widget_entry_text_set(wd->o_preview_size_entry, size);
    e_widget_entry_text_set(wd->o_preview_owner_entry, owner);
@@ -591,11 +591,27 @@ _e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t st_gid)
 static char * 
 _e_wid_file_time_get(time_t st_modtime)
 {
-   char *time;
-   time = ctime(&st_modtime);
-   if (time) time = strdup(time);
-   else time = strdup("unknown");
-   return time;
+   float diff;
+   time_t ltime;
+   char modtime[PATH_MAX];
+   char *motime;   
+
+   ltime = time(NULL);
+   diff = difftime(ltime, st_modtime);
+   if (diff <= 60) snprintf(modtime, PATH_MAX, "Under a minute ago");
+   if (diff > 60) snprintf(modtime, PATH_MAX, "%d minutes ago", ((int)diff/60));
+   if (diff >= 3600) snprintf(modtime, PATH_MAX, "%d hours ago", ((int)diff/3600));
+   if (diff >= 86400) snprintf(modtime, PATH_MAX, "%d days ago", ((int)diff/86400));
+   if (diff >= 604800) snprintf(modtime, PATH_MAX, "%d weeks ago", 
+							((int)diff/604800));
+   if (diff >= 2592000) snprintf(modtime, PATH_MAX, "%d months ago", 
+							((int)diff/2592000));
+   if (diff >= 31526000) snprintf(modtime, PATH_MAX, "%d years ago", 
+							((int)diff/31526000));
+ 
+   if (modtime) motime = strdup(modtime);
+   else motime = strdup("unknown");
+   return motime;
 }
 
 static void
