@@ -6,6 +6,7 @@
 typedef struct _E_Widget_Data E_Widget_Data;
 struct _E_Widget_Data
 {
+   Evas_Object *obj;
    Evas_List *sliders;
    Evas_List *entries;
    Evas_Object *spectrum, *vert, *current;
@@ -136,12 +137,14 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
      }
 
    wd->changing = 0;
+
+   e_widget_change(wd->obj);
 }
 
 Evas_Object *
-e_widget_csel_add(Evas *evas)
+e_widget_csel_add(Evas *evas, E_Color *color)
 {
-   Evas_Object *o;
+   Evas_Object *obj, *o;
    Evas_Object *frame, *table;
    Evas_Coord mw, mh;
    E_Color*cv;
@@ -150,16 +153,20 @@ e_widget_csel_add(Evas *evas)
    char *labels[6] = { "R", "G", "B", "H", "S", "V" };
    E_Widget_Data *wd;
 
-   table = e_widget_table_add(evas, 0);
-
-   frame = e_widget_frametable_add(evas, "colors", 0);
+   obj = e_widget_add(evas);
+   
    wd = calloc(1, sizeof(E_Widget_Data));
    wd->mode = 1;
-   grp = e_widget_radio_group_new(&wd->mode);
+   wd->cv = color;
+   wd->obj = obj;
 
-   // all sliders update a single color value struct
-   cv = calloc(1, sizeof(E_Color));
-   wd->cv = cv;
+   table = e_widget_table_add(evas, 0);
+   e_widget_sub_object_add(obj, table);
+   e_widget_resize_object_set(obj, table);
+
+   frame = e_widget_frametable_add(evas, "colors", 0);
+   e_widget_sub_object_add(obj, frame);
+   grp = e_widget_radio_group_new(&wd->mode);
 
    cv->r = 20; cv->g = 120; cv->b = 79;
    cv->a = 255;
@@ -193,16 +200,19 @@ e_widget_csel_add(Evas *evas)
 	  }
 
 	o = e_widget_radio_add(evas, labels[i], i, grp);
+	e_widget_sub_object_add(obj, o);
 	e_widget_on_change_hook_set(o, _e_wid_cb_radio_changed, wd);
 	e_widget_frametable_object_append(frame, o, 0, i, 1, 1, 1, 1, 0, 0);
 
 	o = e_widget_cslider_add(evas, i, cv, 0, 0);
+	e_widget_sub_object_add(obj, o);
 	evas_object_show(o);
 	wd->sliders = evas_list_append(wd->sliders, o);
 	e_widget_on_change_hook_set(o, _e_wid_cb_color_changed, wd);
 	e_widget_frametable_object_append(frame, o, 1, i, 1, 1, 1, 1, 1, 0);
 
 	o = e_widget_entry_add(evas, &(wd->values[i]));
+	e_widget_sub_object_add(obj, o);
 	evas_object_show(o);
 	wd->entries = evas_list_append(wd->entries, o);
 	e_widget_frametable_object_append(frame, o, 2, i, 1, 1, 1, 1, 1, 1);
@@ -211,12 +221,14 @@ e_widget_csel_add(Evas *evas)
      }
 
    o = e_widget_spectrum_add(evas, wd->mode, cv);
+   e_widget_sub_object_add(obj, o);
    evas_object_show(o);
    e_widget_on_change_hook_set(o, _e_wid_cb_color_changed, wd);
    wd->spectrum = o;
    e_widget_table_object_append(table, o, 1, 1, 1, 1, 1, 1, 1, 1);
 
    o = e_widget_cslider_add(evas, wd->mode, cv, 1, 1);
+   e_widget_sub_object_add(obj, o);
    e_widget_on_change_hook_set(o, _e_wid_cb_color_changed, wd);
    evas_object_show(o);
    wd->vert = o;

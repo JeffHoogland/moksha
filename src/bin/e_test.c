@@ -794,17 +794,30 @@ _e_test_internal(E_Container *con)
    
 }
 #elif 0
+
+static void
+_e_test_cb_change(void *data, Evas_Object *obj)
+{
+   E_Color *c = data;
+   printf("Current color: %d, %d, %d\n", c->r, c->g, c->b);
+}
+
 static void
 _e_test_internal(E_Container *con)
 {
    E_Dialog *dia;
    Evas_Object *o;
    Evas_Coord mw, mh;
+   E_Color *color;
 
    dia = e_dialog_new(con);
    e_dialog_title_set(dia, "Test Color Selector");
-   o = e_widget_csel_add(dia->win->evas);
+
+   color = calloc(1, sizeof(E_Color));
+
+   o = e_widget_csel_add(dia->win->evas, color);
    evas_object_show(o);
+   e_widget_on_change_hook_set(o, _e_test_cb_change, color);
    e_widget_min_size_get(o, &mw, &mh);
    e_dialog_content_set(dia, o, mw, mh);
 

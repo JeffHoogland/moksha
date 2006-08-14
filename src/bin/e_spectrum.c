@@ -14,7 +14,7 @@ struct _E_Spectrum
   E_Color_Component mode; 
 
   E_Color *cv;
-  int draw_queued;
+  Ecore_Job *draw_timer;
 };
 
 static int _e_spectrum_redraw(void *d);
@@ -36,8 +36,6 @@ _e_spectrum_smart_add(Evas_Object *o)
   evas_object_image_size_set(sp->o_spectrum, sp->iw, sp->ih);
   evas_object_image_alpha_set(sp->o_spectrum, 1);
 
-  ecore_idler_add(_e_spectrum_redraw, sp);
-
   evas_object_smart_member_add(sp->o_spectrum, o);
 }
 
@@ -52,6 +50,8 @@ _e_spectrum_smart_del(Evas_Object *o)
   evas_object_del(sp->o_spectrum);
   evas_object_del(sp->o_event);
   evas_object_del(sp->o_cursor);
+
+  if (sp->draw_timer) ecore_timer_del(sp->draw_timer);
 }
 
 static void
@@ -257,7 +257,6 @@ _e_spectrum_redraw(void *d)
   int r, g, b;
   float vx, vy, vz;
 
-  if (!sp->draw_queued) return 1;
   data = evas_object_image_data_get(sp->o_spectrum, 1);
   if (!data) return;
 
@@ -297,8 +296,8 @@ _e_spectrum_redraw(void *d)
 
   evas_object_image_data_set(sp->o_spectrum, data);
   evas_object_image_data_update_add(sp->o_spectrum, 0, 0, sp->iw, sp->ih);
-  sp->draw_queued = 0;
-  return 1;
+  sp->draw_timer = NULL;
+  return 0;
 }
 
 static void
@@ -306,7 +305,8 @@ _e_spectrum_update(E_Spectrum *sp)
 {
   if (!sp || !sp->cv) return;
 
-  sp->draw_queued = 1;
+  if (sp->draw_timer) ecore_timer_del(sp->draw_timer);
+  sp->draw_timer = ecore_timer_add(.001, _e_spectrum_redraw, sp);
 }
 
 Evas_Object *
