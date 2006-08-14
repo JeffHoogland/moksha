@@ -167,6 +167,11 @@ e_widget_scrollframe.h \
 e_sha1.h \
 e_widget_fsel.h \
 e_fm_mime.h \
+e_color.h \
+e_spectrum.h \
+e_widget_spectrum.h \
+e_widget_cslider.h \
+e_widget_csel.h \
 e_int_config_wallpaper.h \
 e_int_config_wallpaper_import.h
 
@@ -311,6 +316,11 @@ e_widget_scrollframe.c \
 e_sha1.c \
 e_widget_fsel.c \
 e_fm_mime.c \
+e_color.c \
+e_spectrum.c \
+e_widget_spectrum.c \
+e_widget_cslider.c \
+e_widget_csel.c \
 e_int_config_wallpaper.c \
 e_int_config_wallpaper_import.c \
 $(ENLIGHTENMENTHEADERS)

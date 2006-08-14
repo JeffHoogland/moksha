@@ -331,7 +331,7 @@ _e_test_internal(E_Container *con)
    e_dialog_title_set(dia, "A Test Dialog");
    
    o = e_icon_add(dia->win->evas);
-   e_icon_file_set(o, "/home/raster/t.png");
+   e_icon_file_set(o, "/home/rephorm/scroll.png");
    evas_object_resize(o, 1024, 768);
    evas_object_focus_set(o, 1);
    evas_object_show(o);
@@ -793,6 +793,29 @@ _e_test_internal(E_Container *con)
    e_win_resize(dia->win, 400, 300); 
    
 }
+#elif 0
+static void
+_e_test_internal(E_Container *con)
+{
+   E_Dialog *dia;
+   Evas_Object *o;
+   Evas_Coord mw, mh;
+
+   dia = e_dialog_new(con);
+   e_dialog_title_set(dia, "Test Color Selector");
+   o = e_widget_csel_add(dia->win->evas);
+   evas_object_show(o);
+   e_widget_min_size_get(o, &mw, &mh);
+   e_dialog_content_set(dia, o, mw, mh);
+
+   /* buttons at the bottom */
+   e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
+   e_dialog_resizable_set(dia, 1);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
+   e_win_resize(dia->win, 460, 230); 
+}
+
 #else
 static void
 _e_test_internal(E_Container *con)

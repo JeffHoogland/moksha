@@ -145,3 +145,8 @@
 #include "e_fm_mime.h"
 #include "e_int_config_wallpaper.h"
 #include "e_int_config_wallpaper_import.h"
+#include "e_color.h"
+#include "e_spectrum.h"
+#include "e_widget_spectrum.h"
+#include "e_widget_cslider.h"
+#include "e_widget_csel.h"
