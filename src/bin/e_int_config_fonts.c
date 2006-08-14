@@ -131,7 +131,7 @@ e_int_config_fonts(E_Container *con)
    
    cfd = e_config_dialog_new(con,
 			     _("Font Settings"),
-			    "E", "_config_fonts_dialog",
+			     "E", "_config_fonts_dialog",
 			     "enlightenment/fonts", 0, v, NULL);
    return cfd;
 }

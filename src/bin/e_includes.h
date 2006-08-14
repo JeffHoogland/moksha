@@ -115,7 +115,6 @@
 #include "e_int_config_desklock.h"
 #include "e_int_config_exebuf.h"
 #include "e_int_config_cfgdialogs.h"
-#include "e_int_config_hinting.h"
 #include "e_deskpreview.h"
 #include "e_exebuf.h"
 #include "e_desklock.h"
