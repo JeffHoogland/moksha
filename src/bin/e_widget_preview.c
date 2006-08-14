@@ -10,7 +10,7 @@ struct _E_Widget_Data
 };
 
 static void _e_wid_del_hook(Evas_Object *obj);
-
+static void _e_wid_preview_thumb_gen(void *data, Evas_Object *obj, void *event_info);
 /* local subsystem functions */
 
 /* externally accessible functions */
@@ -56,12 +56,47 @@ e_widget_preview_file_set(Evas_Object *obj, const char *file, const char *key)
    E_Widget_Data *wd;
    
    wd = e_widget_data_get(obj);
-   if (wd->o_thumb) evas_object_del(wd->o_thumb);
+   
+   if (wd->o_thumb) 
+      evas_object_del(wd->o_thumb);
+
    wd->o_thumb = e_icon_add(e_livethumb_evas_get(wd->img));
    e_icon_file_key_set(wd->o_thumb, file, key);
    evas_object_show(wd->o_thumb);
    e_livethumb_thumb_set(wd->img, wd->o_thumb);
    return 1;
+}
+
+EAPI int
+e_widget_preview_thumb_set(Evas_Object *obj, const char *file, const char *key, int w, int h)
+{
+   E_Widget_Data *wd;
+
+   wd = e_widget_data_get(obj);
+
+   if (wd->img)
+      evas_object_del(wd->img);
+
+   wd->img = e_thumb_icon_add(evas_object_evas_get(obj));
+   e_thumb_icon_file_set(wd->img, file, key);
+   e_thumb_icon_size_set(wd->img, w, h);
+   e_thumb_icon_begin(wd->img);
+   evas_object_smart_callback_add(wd->img, "e_thumb_gen", _e_wid_preview_thumb_gen, wd);
+   
+   edje_object_part_swallow(wd->o_frame, "item", wd->img);
+   evas_object_show(wd->img);
+   return 1;
+}
+
+static void
+_e_wid_preview_thumb_gen(void *data, Evas_Object *obj, void *event_info)
+{
+   Evas_Coord w, h;
+   E_Widget_Data *wd;
+   wd = data;
+
+   e_icon_size_get(wd->img, &w, &h);
+   evas_object_resize(wd->o_frame, w, h);
 }
 
 EAPI int

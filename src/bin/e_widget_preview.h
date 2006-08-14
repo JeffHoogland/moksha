@@ -8,6 +8,7 @@
 
 EAPI Evas_Object     *e_widget_preview_add(Evas *evas, int minw, int minh);
 EAPI int              e_widget_preview_file_set(Evas_Object *obj, const char *file, const char *key);
+EAPI int	      e_widget_preview_thumb_set(Evas_Object *obj, const char *file, const char *key, int w, int h);
 EAPI int              e_widget_preview_edje_set(Evas_Object *obj, const char *file, const char *group);
     
 #endif

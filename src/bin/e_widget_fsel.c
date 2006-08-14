@@ -450,6 +450,7 @@ e_widget_fsel_selection_path_get(Evas_Object *obj)
 static void
 _e_wid_fsel_preview_file(E_Widget_Data *wd)
 {
+   Evas_Coord mw = 0, mh = 0;
    char *size, *owner, *perms, *time;
    struct stat st;
  
@@ -459,7 +460,16 @@ _e_wid_fsel_preview_file(E_Widget_Data *wd)
    owner = _e_wid_file_user_get(st.st_uid);
    perms = _e_wid_file_perms_get(st.st_mode, st.st_uid, st.st_gid);
    time = _e_wid_file_time_get(st.st_mtime); 
-
+   
+   e_widget_preview_thumb_set(wd->o_preview_preview, wd->path, "background", 120, 120);
+   
+   /*e_table_unpack(wd->o_preview_preview);
+   e_table_pack(wd->o_preview_preview_table, wd->o_preview_preview, 0, 0, 1, 1);
+   e_widget_min_size_get(wd->o_preview_preview, &mw, &mh);
+   e_table_pack_options_set(wd->o_preview_preview, 1, 1, 1, 1, 0.5, 0.5, mw, mh, 99999, 99999);
+   e_table_min_size_get(wd->o_preview_preview_table, &mw, &mh);
+   e_widget_min_size_set(wd->o_preview_preview_table, mw, mh);*/
+   
    e_widget_entry_text_set(wd->o_preview_size_entry, size);
    e_widget_entry_text_set(wd->o_preview_owner_entry, owner);
    e_widget_entry_text_set(wd->o_preview_perms_entry, perms);

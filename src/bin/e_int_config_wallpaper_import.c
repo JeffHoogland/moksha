@@ -138,7 +138,7 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
      }
    ofm = e_widget_fsel_add(evas, fdev, fpath, NULL, NULL,
 			   _import_cb_sel_selected, import,
-			   _import_cb_sel_change, import, 0
+			   _import_cb_sel_change, import, 1
 			   );
    import->fsel_obj = ofm;
    e_widget_list_object_append(o, ofm, 1, 1, 0.5);
