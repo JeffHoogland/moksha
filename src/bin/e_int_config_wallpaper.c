@@ -46,7 +46,10 @@ e_int_config_wallpaper(E_Container *con)
    v->advanced.apply_cfdata   = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
    v->override_auto_apply = 1;
-   cfd = e_config_dialog_new(con, _("Wallpaper Settings"), "enlightenment/background", 0, v, NULL);
+   cfd = e_config_dialog_new(con,
+			     _("Wallpaper Settings"),
+			     "E", "_config_wallpaper_dialog",
+			     "enlightenment/background", 0, v, NULL);
    return cfd;
 }
 

@@ -155,7 +155,7 @@ _surebox_new(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    SureBox *sb;
    
    sb = E_NEW(SureBox, 1);
-   sb->dia = e_dialog_new(cfd->con);
+   sb->dia = e_dialog_new(cfd->con, "E", "_display_res_sure_dialog");
    sb->timer = ecore_timer_add(1.0, _surebox_timer_cb, sb);
    sb->iterations = 15;
    sb->orig_size = cfdata->orig_size;
@@ -193,7 +193,10 @@ e_int_config_display(E_Container *con)
    v->basic.create_widgets = _basic_create_widgets;
    v->override_auto_apply = 1;
    
-   cfd = e_config_dialog_new(con, _("Display Settings"), "enlightenment/screen_resolution", 0, v, NULL);
+   cfd = e_config_dialog_new(con,
+			     _("Display Settings"),
+			    "E", "_config_display_dialog",
+			     "enlightenment/screen_resolution", 0, v, NULL);
    return cfd;
 }
 

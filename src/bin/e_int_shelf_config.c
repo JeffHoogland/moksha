@@ -56,7 +56,9 @@ e_int_shelf_config(E_Shelf *es)
 	
 	/* create config diaolg for bd object/data */
 	cfd = e_config_dialog_new(es->zone->container, 
-				  _("Shelf Configuration"), NULL, 0, v, es);
+				  _("Shelf Configuration"),
+				  "E", "_shelf_config_dialog",
+				  NULL, 0, v, es);
 	es->config_dialog = cfd;
      }
 }

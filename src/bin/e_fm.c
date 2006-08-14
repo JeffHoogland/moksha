@@ -2595,7 +2595,7 @@ _e_fm2_new_directory_yes_cb(char *text, void *data)
 	     con = e_container_current_get(man);
 	     if (!con) return;
 	     
-	     dialog = e_dialog_new(con);
+	     dialog = e_dialog_new(con, "E", "_fm_new_dir_error_dialog");
 	     e_dialog_button_add(dialog, _("OK"), NULL, NULL, NULL);
 	     e_dialog_button_focus_num(dialog, 1);
 	     e_dialog_title_set(dialog, _("Error"));
@@ -2684,7 +2684,7 @@ _e_fm2_file_rename_yes_cb(char *text, void *data)
 	     con = e_container_current_get(man);
 	     if (!con) return;
 	     
-	     dialog = e_dialog_new(con);
+	     dialog = e_dialog_new(con, "E", "_fm_file_rename_error_dialog");
 	     e_dialog_button_add(dialog, _("OK"), NULL, NULL, NULL);
 	     e_dialog_button_focus_num(dialog, 1);
 	     e_dialog_title_set(dialog, _("Error"));
@@ -2726,7 +2726,7 @@ _e_fm2_file_delete(void *data, E_Menu *m, E_Menu_Item *mi)
    
    ic = data;
    if (ic->dialog) return;
-   dialog = e_dialog_new(con);
+   dialog = e_dialog_new(con, "E", "_fm_file_delete_dialog");
    ic->dialog = dialog;
    E_OBJECT(dialog)->data = ic;
    e_object_del_attach_func_set(E_OBJECT(dialog), _e_fm2_file_delete_delete_cb);
@@ -2778,7 +2778,7 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
 	if (!con) return;
 	
 	e_object_del(E_OBJECT(dialog));
-	dialog = e_dialog_new(con);
+	dialog = e_dialog_new(con, "E", "_fm_file_delete_error_dialog");
 	e_dialog_button_add(dialog, _("OK"), NULL, NULL, NULL);
 	e_dialog_button_focus_num(dialog, 1);
 	e_dialog_title_set(dialog, _("Error"));

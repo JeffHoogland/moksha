@@ -31,7 +31,10 @@ e_int_config_cfgdialogs(E_Container *con)
    v->advanced.create_widgets = NULL;
    v->override_auto_apply = 1;
    
-   cfd = e_config_dialog_new(con, _("Config Dialog Settings"), "enlightenment/configuration", 0, v, NULL);
+   cfd = e_config_dialog_new(con,
+			     _("Config Dialog Settings"),
+			     "E", "_config_config_dialog_dialog",
+			     "enlightenment/configuration", 0, v, NULL);
    return cfd;
 }
 

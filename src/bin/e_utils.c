@@ -518,7 +518,7 @@ e_util_dialog_internal(const char *title, const char *txt)
 {
    E_Dialog *dia;
    
-   dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
+   dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_error_dialog");
    if (!dia) return;
    e_dialog_title_set(dia, title);
    e_dialog_text_set(dia, txt);

@@ -1435,7 +1435,7 @@ _e_actions_cb_exit_dialog_delete(E_Win *win)
 ACT_FN_GO(exit)
 {
    if (exit_dialog) e_object_del(E_OBJECT(exit_dialog));
-   exit_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()));
+   exit_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_exit_dialog");
    if (!exit_dialog) return;
    e_win_delete_callback_set(exit_dialog->win, _e_actions_cb_exit_dialog_delete);
    e_dialog_title_set(exit_dialog, _("Are you sure you want to exit?"));

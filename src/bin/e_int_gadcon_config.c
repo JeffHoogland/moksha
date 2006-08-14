@@ -37,7 +37,9 @@ e_int_gadcon_config(E_Gadcon *gc)
 	v->override_auto_apply = 1;
 	
 	cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()),
-				  _("Shelf Contents"), NULL, 0, v, gc);
+				  _("Shelf Contents"),
+				  "E", "_gadcon_config_dialog",
+				  NULL, 0, v, gc);
 	gc->config_dialog = cfd;
      }
 }

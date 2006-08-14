@@ -33,8 +33,9 @@ _config_battery_module(void)
    v->advanced.create_widgets = _advanced_create_widgets;
 
    snprintf(buf, sizeof(buf), "%s/module.eap", e_module_dir_get(battery_config->module));
-   cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()), 
+   cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()),
 			     _("Battery Monitor Configuration"), 
+			     "E", "_e_mod_battery_config_dialog",
 			     buf, 0, v, NULL);
    battery_config->config_dialog = cfd;
 }

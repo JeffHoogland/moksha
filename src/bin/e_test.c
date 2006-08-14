@@ -296,7 +296,7 @@ _e_test_internal(E_Container *con)
 {
    E_Dialog *dia;
    
-   dia = e_dialog_new(con);
+   dia = e_dialog_new(con, "E", "_test");
    e_object_del_attach_func_set(E_OBJECT(dia), _e_test_dialog_del);
    e_dialog_title_set(dia, "A Test Dialog");
    e_dialog_text_set(dia, "A Test Dialog<br>And another line<br><hilight>Hilighted Text</hilight>");
@@ -327,7 +327,7 @@ _e_test_internal(E_Container *con)
    E_Dialog *dia;
    Evas_Object *o, *o2, *o3;
    
-   dia = e_dialog_new(con);
+   dia = e_dialog_new(con, "E", "_test");
    e_dialog_title_set(dia, "A Test Dialog");
    
    o = e_icon_add(dia->win->evas);
@@ -431,7 +431,7 @@ _e_test_internal(E_Container *con)
    Evas_Coord mw, mh, vw, vh;
    Evas_Object *o, *o2, *o3, *o4;
    
-   dia = e_dialog_new(con);
+   dia = e_dialog_new(con, "E", "_test");
    e_dialog_title_set(dia, "A Test Dialog");
    
    o = e_ilist_add(dia->win->evas);
@@ -518,7 +518,7 @@ _e_test_internal(E_Container *con)
    Evas_Object *o;
    Evas_Coord mw, mh;
    
-   dia = e_dialog_new(con);
+   dia = e_dialog_new(con, "E", "_test");
    e_dialog_title_set(dia, "A Test Dialog");
    
    o = e_slider_add(dia->win->evas);
@@ -546,7 +546,7 @@ _e_test_internal(E_Container *con)
    Evas_Object *o;
    Evas_Coord mw, mh;
    
-   dia = e_dialog_new(con);
+   dia = e_dialog_new(con, "E", "_test");
    e_dialog_title_set(dia, "A Test Dialog");
    
    o = e_widget_textblock_add(dia->win->evas);
@@ -665,7 +665,7 @@ _e_test_internal(E_Container *con)
    Evas_Coord mw, mh;
    E_Fm2_Config fmc;
    
-   dia = e_dialog_new(con);
+   dia = e_dialog_new(con, "E", "_test");
    e_dialog_title_set(dia, "A Test Dialog");
 
    /* a table for layout */
@@ -775,7 +775,7 @@ _e_test_internal(E_Container *con)
    Evas_Object *o;
    Evas_Coord mw, mh;
    
-   dia = e_dialog_new(con);
+   dia = e_dialog_new(con, "E", "_test");
    e_dialog_title_set(dia, "A Test Dialog");
 
    o = e_widget_fsel_add(dia->win->evas, "~/", "/tst", NULL, NULL, 
@@ -810,7 +810,7 @@ _e_test_internal(E_Container *con)
    Evas_Coord mw, mh;
    E_Color *color;
 
-   dia = e_dialog_new(con);
+   dia = e_dialog_new(con, "E", "_test");
    e_dialog_title_set(dia, "Test Color Selector");
 
    color = calloc(1, sizeof(E_Color));

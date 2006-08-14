@@ -66,8 +66,10 @@ e_int_border_remember(E_Border *bd)
 	 v->override_auto_apply = 1;
 	 
          /* create config dialog for bd object/data */
-         cfd = e_config_dialog_new(bd->zone->container, 
-			     _("Window Remember"), NULL, 0, v, bd);
+         cfd = e_config_dialog_new(bd->zone->container,
+				   _("Window Remember"),
+				   "E", "_border_remember_dialog",
+				   NULL, 0, v, bd);
          bd->border_remember_dialog = cfd;
       }
 }
@@ -225,7 +227,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	  {
 	     E_Dialog *dia;
 	     
-	     dia = e_dialog_new(cfd->con);
+	     dia = e_dialog_new(cfd->con, "E", "_border_remember_error_multi_dialog");
 	     e_dialog_title_set(dia, _("Window properties are not a unique match"));
 	     e_dialog_text_set
 	       (dia,
@@ -314,7 +316,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
 	E_Dialog *dia;
 	
-	dia = e_dialog_new(cfd->con);
+	dia = e_dialog_new(cfd->con, "E", "_border_remember_error_noprop_dialog");
 	e_dialog_title_set(dia, _("No match properties set"));
 	e_dialog_text_set
 	  (dia,
@@ -344,7 +346,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	  {
 	     E_Dialog *dia;
 	     
-	     dia = e_dialog_new(cfd->con);
+	     dia = e_dialog_new(cfd->con, "E", "_border_remember_error_no_remember_dialog");
 	     e_dialog_title_set(dia, _("No match properties set"));
 	     e_dialog_text_set
 	       (dia,

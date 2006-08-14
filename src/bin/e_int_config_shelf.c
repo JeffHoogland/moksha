@@ -31,7 +31,10 @@ e_int_config_shelf(E_Container *con)
    v->free_cfdata = _free_data;
    v->basic.create_widgets = _basic_create_widgets;
 
-   cfd = e_config_dialog_new(con, _("Shelf Settings"), "enlightenment/shelf", 0, v, NULL);
+   cfd = e_config_dialog_new(con,
+			     _("Shelf Settings"),
+			    "E", "_config_shelf_dialog",
+			     "enlightenment/shelf", 0, v, NULL);
    return cfd;
 }
 

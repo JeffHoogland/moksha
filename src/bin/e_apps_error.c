@@ -34,7 +34,9 @@ e_app_error_dialog(E_Container *con, E_App_Autopsy *app)
 	v->advanced.create_widgets = _advanced_create_widgets;
 
 	/* Create The Dialog */
-	cfd = e_config_dialog_new(con, _("Application Execution Error"), NULL, 0, v, app);
+	cfd = e_config_dialog_new(con, _("Application Execution Error"), 
+				  "E", "_app_exec_error_exit_dialog",
+				  NULL, 0, v, app);
 	app->error_dialog = cfd;
      }
 }

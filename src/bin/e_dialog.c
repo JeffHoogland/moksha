@@ -16,7 +16,7 @@ static void _e_dialog_cb_wid_on_focus(void *data, Evas_Object *obj);
 /* externally accessible functions */
 
 EAPI E_Dialog *
-e_dialog_new(E_Container *con)
+e_dialog_new(E_Container *con, const char *name, const char *class)
 {
    E_Dialog *dia;
    E_Manager *man;
@@ -43,7 +43,7 @@ e_dialog_new(E_Container *con)
    e_win_resize_callback_set(dia->win, _e_dialog_cb_resize);
    dia->win->data = dia;
    e_win_dialog_set(dia->win, 1);
-   e_win_name_class_set(dia->win, "E", "_dialog");
+   e_win_name_class_set(dia->win, name, class);
    o = edje_object_add(e_win_evas_get(dia->win));
    dia->bg_object = o;
    e_theme_edje_object_set(o, "base/theme/dialog",

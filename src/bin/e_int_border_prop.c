@@ -69,8 +69,10 @@ e_int_border_prop(E_Border *bd)
 	v->override_auto_apply = 1;
 	
 	/* create config dialog for bd object/data */
-	cfd = e_config_dialog_new(bd->zone->container, 
-				  _("Window Properties"), NULL, 0, v, bd);
+	cfd = e_config_dialog_new(bd->zone->container,
+				  _("Window Properties"),
+				  "E", "_border_properties_dialog",
+				  NULL, 0, v, bd);
      }
 }
 

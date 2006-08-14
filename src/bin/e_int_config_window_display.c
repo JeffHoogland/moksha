@@ -47,7 +47,10 @@ e_int_config_window_display(E_Container *con)
    v->advanced.apply_cfdata   = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
    /* create config diaolg for NULL object/data */
-   cfd = e_config_dialog_new(con, _("Window Display"), "enlightenment/windows", 0, v, NULL);
+   cfd = e_config_dialog_new(con,
+			     _("Window Display"),
+			     "E", "_config_window_display_dialog",
+			     "enlightenment/windows", 0, v, NULL);
    return cfd;
 }
 

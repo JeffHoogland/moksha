@@ -312,7 +312,10 @@ e_int_config_keybindings(E_Container *con)
   v->basic.create_widgets = _basic_create_widgets;
   v->override_auto_apply = 1;
 
-  cfd = e_config_dialog_new(con, _("Key Binding Settings"), "enlightenment/keys", 0, v, NULL);
+  cfd = e_config_dialog_new(con,
+			    _("Key Binding Settings"),
+			    "E", "_config_keybindings_dialog",
+			    "enlightenment/keys", 0, v, NULL);
   return cfd;
 }
 
@@ -1283,7 +1286,7 @@ _e_keybinding_keybind_cb_new_shortcut(void *data, void *data2)
 
   if (!cfdata || cfdata->locals.keybind_win != 0) return;
 
-  cfdata->locals.dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
+  cfdata->locals.dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_keybind_getkey_dialog");
   if (!cfdata->locals.dia) return;
   e_dialog_title_set(cfdata->locals.dia, _("Binding Key Sequence"));
   e_dialog_icon_set(cfdata->locals.dia, "enlightenment/e", 64);

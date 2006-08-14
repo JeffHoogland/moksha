@@ -48,7 +48,10 @@ e_int_config_winlist(E_Container *con)
    v->advanced.apply_cfdata = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
    
-   cfd = e_config_dialog_new(con, _("Window List Settings"), "enlightenment/winlist", 0, v, NULL);
+   cfd = e_config_dialog_new(con,
+			     _("Window List Settings"),
+			     "E", "_config_winlist_dialog",
+			     "enlightenment/winlist", 0, v, NULL);
    return cfd;
 }
 

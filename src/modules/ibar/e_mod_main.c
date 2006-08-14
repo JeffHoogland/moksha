@@ -1204,7 +1204,7 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
 	  {
 	     E_Dialog *dia;
 
-	     dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
+	     dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_e_mod_ibar_error_icon_add_dialog");
 	     e_dialog_title_set(dia, _("Cannot add icon"));
 	     e_dialog_text_set(dia,
 			       _("You tried to drop an icon of an application that<br>"

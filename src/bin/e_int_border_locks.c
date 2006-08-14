@@ -63,8 +63,10 @@ e_int_border_locks(E_Border *bd)
          v->advanced.create_widgets = _advanced_create_widgets;
 	 v->override_auto_apply = 1;
          /* create config diaolg for bd object/data */
-         cfd = e_config_dialog_new(bd->zone->container, 
-			     _("Window Locks"), NULL, 0, v, bd);
+         cfd = e_config_dialog_new(bd->zone->container,
+				   _("Window Locks"),
+				   "E", "_border_locks_dialog",
+				   NULL, 0, v, bd);
          bd->border_locks_dialog = cfd;
       }
 }

@@ -292,7 +292,7 @@ _battery_cb_check(void *data)
 			      {
 				 E_Dialog *dia;
 				 
-				 dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
+				 dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_e_mod_battery_low_dialog");
 				 if (!dia) return 0;
 				 e_dialog_title_set(dia, "Enlightenment Battery Module");
 				 e_dialog_icon_set(dia, "enlightenment/e", 64);

@@ -902,7 +902,7 @@ _e_fm_file_delete(E_Fm_Icon *icon)
 	E_Dialog *dia;
 	char text[PATH_MAX + 256];
 
-	dia = e_dialog_new(icon->sd->win->container);
+	dia = e_dialog_new(icon->sd->win->container, "E", "_file_delete_error_dialog");
 	e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
 	e_dialog_button_focus_num(dia, 1);
 	e_dialog_title_set(dia, _("Error"));
@@ -992,7 +992,7 @@ _e_fm_file_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi)
 
    icon = data;
 
-   dia = e_dialog_new(icon->sd->win->container);
+   dia = e_dialog_new(icon->sd->win->container, "E", "_file_delete_dialog");
    e_dialog_button_add(dia, _("Yes"), NULL, _e_fm_file_delete_yes_cb, icon);
    e_dialog_button_add(dia, _("No"), NULL, NULL, NULL);
    e_dialog_button_focus_num(dia, 1);
@@ -1377,7 +1377,10 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
          v->advanced.apply_cfdata   = _e_fm_icon_prop_advanced_apply_data;
          v->advanced.create_widgets = _e_fm_icon_prop_advanced_create_widgets;
          /* create config diaolg for NULL object/data */
-         cfd = e_config_dialog_new(icon->sd->win->container, _("Properties"), NULL, 0, v, icon);
+         cfd = e_config_dialog_new(icon->sd->win->container,
+				   _("Properties"),
+				   "E", "_fileman_file_properties",
+				   NULL, 0, v, icon);
       }
 }
 

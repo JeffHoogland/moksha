@@ -322,7 +322,7 @@ _cpufreq_set_governor(const char *governor)
      {
 	E_Dialog *dia;
 
-	dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
+	dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_e_mod_cpufreq_error_setfreq");
 	if (!dia) return;
 	e_dialog_title_set(dia, "Enlightenment Cpufreq Module");
 	e_dialog_icon_set(dia, "enlightenment/e", 64);
@@ -348,7 +348,7 @@ _cpufreq_set_frequency(int frequency)
      {
 	E_Dialog *dia;
 
-	dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
+	dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_e_mod_cpufreq_error_setfreq");
 	if (!dia) return;
 	e_dialog_title_set(dia, "Enlightenment Cpufreq Module");
 	e_dialog_icon_set(dia, "enlightenment/e", 64);
@@ -368,7 +368,7 @@ _cpufreq_set_frequency(int frequency)
      {
 	E_Dialog *dia;
 
-	dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
+	dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_e_mod_cpufreq_error_setfreq");
 	if (!dia) return;
 	e_dialog_title_set(dia, "Enlightenment Cpufreq Module");
 	e_dialog_icon_set(dia, "enlightenment/e", 64);

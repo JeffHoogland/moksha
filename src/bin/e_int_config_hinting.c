@@ -3,6 +3,7 @@
  */
 #include "e.h"
 
+/* FIXME: FIXME: this code is dead - part of font dialog */
 /* PROTOTYPES - same all the time */
 
 static void *_create_data(E_Config_Dialog *cfd);
@@ -34,7 +35,10 @@ e_int_config_hinting(E_Container *con)
    v->advanced.apply_cfdata   = NULL;
    v->advanced.create_widgets = NULL;
    /* create config diaolg for NULL object/data */
-   cfd = e_config_dialog_new(con, _("Font Hinting Settings"), NULL, 0, v, NULL);
+   cfd = e_config_dialog_new(con,
+			     _("Font Hinting Settings"),
+			    "E", "_config_hinting_dialog",
+			     NULL, 0, v, NULL);
    return cfd;
 }
 

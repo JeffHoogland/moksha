@@ -39,7 +39,10 @@ e_int_config_exebuf(E_Container *con)
    v->basic.create_widgets = _basic_create_widgets;
    v->advanced.apply_cfdata = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
-   cfd = e_config_dialog_new(con, _("Exebuf Settings"), "enlightenment/run", 0, v, NULL);
+   cfd = e_config_dialog_new(con,
+			     _("Run Command Settings"),
+			    "E", "_config_exebuf_dialog",
+			     "enlightenment/run", 0, v, NULL);
    return cfd;
 }
 

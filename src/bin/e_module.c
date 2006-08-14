@@ -367,7 +367,7 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
    E_Border *bd;
    char eap[4096];
 
-   dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
+   dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_module_dialog");
    if (!dia) return;
 
    e_dialog_title_set(dia, title);
@@ -515,7 +515,7 @@ _e_module_dialog_disable_show(const char *title, const char *body, E_Module *m)
    E_Dialog *dia;
    char buf[4096];
 
-   dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
+   dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_module_unload_dialog");
    if (!dia) return;
 
    snprintf(buf, sizeof(buf), "%s<br>%s", body,

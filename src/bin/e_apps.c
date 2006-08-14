@@ -2098,7 +2098,7 @@ _e_apps_cb_exit(void *data, int type, void *event)
      {
 	E_Dialog *dia;
 	
-	dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
+	dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_app_run_error_dialog");
 	if (dia)
 	  {
 	     char buf[4096];

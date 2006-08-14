@@ -35,7 +35,7 @@ e_file_dialog_new(E_Container *con)
    
    dia = E_OBJECT_ALLOC(E_File_Dialog, E_FILE_DIALOG_TYPE, _e_file_dialog_free);
    if(!dia) return NULL;
-   dia->dia = e_dialog_new(con);
+   dia->dia = e_dialog_new(con, "E", "_file_dialog");
    if(!dia->dia)
      {
 	free(dia);

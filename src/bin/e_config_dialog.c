@@ -20,7 +20,7 @@ static void _e_config_dialog_cb_close(void *data, E_Dialog *dia);
 /* externally accessible functions */
 
 EAPI E_Config_Dialog *
-e_config_dialog_new(E_Container *con, const char *title, const char *icon, int icon_size, E_Config_Dialog_View *view, void *data)
+e_config_dialog_new(E_Container *con, const char *title, const char *name, const char *class, const char *icon, int icon_size, E_Config_Dialog_View *view, void *data)
 {
    E_Config_Dialog *cfd;
    
@@ -28,6 +28,8 @@ e_config_dialog_new(E_Container *con, const char *title, const char *icon, int i
    cfd->view = view;
    cfd->con = con;
    cfd->title = evas_stringshare_add(title);
+   cfd->name = evas_stringshare_add(name);
+   cfd->class = evas_stringshare_add(class);
    if (icon)
      {
 	cfd->icon = evas_stringshare_add(icon);
@@ -79,6 +81,8 @@ _e_config_dialog_free(E_Config_Dialog *cfd)
 {
    if (cfd->auto_apply_timer) _e_config_dialog_cb_auto_apply_timer(cfd);
    if (cfd->title) evas_stringshare_del(cfd->title);
+   if (cfd->name) evas_stringshare_del(cfd->name);
+   if (cfd->class) evas_stringshare_del(cfd->class);
    if (cfd->icon) evas_stringshare_del(cfd->icon);
    if (cfd->cfdata)
      {
@@ -101,9 +105,15 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    E_Dialog *pdia;
    Evas_Object *o, *ob;
    Evas_Coord mw = 0, mh = 0;
+   char buf[256];
    
    pdia = cfd->dia;
-   cfd->dia = e_dialog_new(cfd->con);
+   /* FIXME: get name/class form new call and use here */
+   if (type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
+     snprintf(buf, sizeof(buf), "%s...%s", cfd->class, "BASIC");
+   else
+     snprintf(buf, sizeof(buf), "%s...%s", cfd->class, "ADVANCED");
+   cfd->dia = e_dialog_new(cfd->con, cfd->name, buf);
    cfd->dia->data = cfd;
    e_object_del_attach_func_set(E_OBJECT(cfd->dia), _e_config_dialog_cb_dialog_del);
    e_dialog_title_set(cfd->dia, cfd->title);

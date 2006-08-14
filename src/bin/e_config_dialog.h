@@ -42,6 +42,8 @@ struct _E_Config_Dialog
    E_Container                 *con;
    const char                  *title;
    const char                  *icon;
+   const char                  *name;
+   const char                  *class;
    int                          icon_size;
    E_Dialog                    *dia;
    void                        *data;
@@ -50,7 +52,7 @@ struct _E_Config_Dialog
    Ecore_Timer                 *auto_apply_timer;
 };
 
-EAPI E_Config_Dialog *e_config_dialog_new(E_Container *con, const char *title, const char *icon, int icon_size, E_Config_Dialog_View *view, void *data);
+EAPI E_Config_Dialog *e_config_dialog_new(E_Container *con, const char *title, const char *name, const char *class, const char *icon, int icon_size, E_Config_Dialog_View *view, void *data);
 
 #endif
 #endif

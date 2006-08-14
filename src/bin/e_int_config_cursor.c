@@ -30,7 +30,10 @@ e_int_config_cursor(E_Container *con)
    v->advanced.apply_cfdata = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
    
-   cfd = e_config_dialog_new(con, _("Cursor Settings"), "enlightenment/mouse", 0, v, NULL);
+   cfd = e_config_dialog_new(con,
+			     _("Cursor Settings"),
+			     "E", "_config_cursor_dialog",
+			     "enlightenment/mouse", 0, v, NULL);
    return cfd;
 }
 

@@ -88,7 +88,10 @@ e_eap_edit_show(E_Container *con, E_App *a)
    v->advanced.apply_cfdata   = _e_eap_edit_advanced_apply_data;
    v->advanced.create_widgets = _e_eap_edit_advanced_create_widgets;
    /* create config diaolg for NULL object/data */
-   editor->cfd = e_config_dialog_new(con, _("Eap Editor"), NULL, 0, v, editor);
+   editor->cfd = e_config_dialog_new(con,
+				     _("Eap Editor"), 
+				     "E", "_eap_editor_dialog",
+				     NULL, 0, v, editor);
 }
 
 /* local subsystem functions */
@@ -415,7 +418,7 @@ _e_eap_editor_cb_icon_select(void *data1, void *data2)
    Evas_Coord mw, mh;
 
    cfdata = data1;
-   dia = e_dialog_new(cfdata->editor->cfd->con);
+   dia = e_dialog_new(cfdata->editor->cfd->con, "E", "_eap_icon_select_dialog");
    if (!dia) return;
    e_dialog_title_set(dia, _("Select An Icon"));
    dia->data = cfdata;

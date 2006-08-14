@@ -36,8 +36,10 @@ e_int_border_border(E_Border *bd)
 	 v->override_auto_apply = 1;
 	 
          /* create config diaolg for bd object/data */
-         cfd = e_config_dialog_new(bd->zone->container, 
-			     _("Window Border Selection"), NULL, 0, v, bd);
+         cfd = e_config_dialog_new(bd->zone->container,
+				   _("Window Border Selection"), 
+				   "E", "_border_sel_dialog",
+				   NULL, 0, v, bd);
          bd->border_border_dialog = cfd;
       }
 }
