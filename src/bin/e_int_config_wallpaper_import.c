@@ -49,7 +49,9 @@ struct _E_Config_Dialog_Data
 static Ecore_Event_Handler *_import_edje_cc_exit_handler = NULL;
 
 static void _import_opt_disabled_set(Import *import, int disabled);
+static void _import_cb_sel_selected(void *data, Evas_Object *obj);
 static void _import_cb_sel_change(void *data, Evas_Object *obj);
+static void _import_path_save(Import *import);
 static void _import_edj_gen(Import *import);
 static int _import_cb_edje_cc_exit(void *data, int type, void *event);
 static void _import_cb_delete(E_Win *win);
@@ -58,9 +60,6 @@ static void _import_cb_close(void *data, void *data2);
 static void _import_cb_ok(void *data, void *data2);
 static void _import_cb_wid_on_focus(void *data, Evas_Object *obj);
 static void _import_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event);
-
-/* FIXME: save previous dev/dir and restore it to browse that dir */
-/* FIXME: rememebr size and maybe location? */
 
 EAPI E_Win *
 e_int_config_wallpaper_import(E_Config_Dialog *parent)
@@ -73,6 +72,7 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    Evas_Coord w, h;
    E_Config_Dialog_Data *cfdata;
    Evas_Modifier_Mask mask;
+   char *fdev, *fpath;
    
    import = E_NEW(Import, 1);
    if (!import) return NULL;
@@ -98,7 +98,7 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    e_win_delete_callback_set(win, _import_cb_delete);
    e_win_resize_callback_set(win, _import_cb_resize);
    e_win_dialog_set(win, 1);
-   e_win_name_class_set(win, "E", "_dialog");
+   e_win_name_class_set(win, "E", "_wallpaper_import_dialog");
 
    o = edje_object_add(evas);
    import->bg_obj = o;
@@ -129,8 +129,15 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    o = e_widget_list_add(evas, 0, 0);   
    import->content_obj = o;
 
-   ofm = e_widget_fsel_add(evas, "~/", "/", NULL, NULL,
-			   _import_cb_sel_change, import,
+   fdev = e_config->wallpaper_import_last_dev;
+   fpath = e_config->wallpaper_import_last_path;
+   if ((!fdev) && (!fpath))
+     {
+	fdev = "~/";
+	fpath = "/";
+     }
+   ofm = e_widget_fsel_add(evas, fdev, fpath, NULL, NULL,
+			   _import_cb_sel_selected, import,
 			   _import_cb_sel_change, import, 0
 			   );
    import->fsel_obj = ofm;
@@ -207,6 +214,7 @@ e_int_config_wallpaper_del(E_Win *win)
    Import *import;
    
    import = win->data;
+   _import_path_save(import);
    if (import->exe_handler) ecore_event_handler_del(import->exe_handler);
    import->exe_handler = NULL;
    if (import->tmpf) unlink(import->tmpf);
@@ -232,6 +240,15 @@ _import_opt_disabled_set(Import *import, int disabled)
 }
 
 static void 
+_import_cb_sel_selected(void *data, Evas_Object *obj)
+{
+   Import *import;
+   
+   import = data;
+   _import_cb_ok(import->win, NULL);
+}
+
+static void 
 _import_cb_sel_change(void *data, Evas_Object *obj)
 {
    Import *import;
@@ -246,6 +263,24 @@ _import_cb_sel_change(void *data, Evas_Object *obj)
      _import_opt_disabled_set(import, 1);
    else
      _import_opt_disabled_set(import, 0);
+}
+
+static void
+_import_path_save(Import *import)
+{
+   const char *fdev = NULL, *fpath = NULL;
+   
+   e_widget_fsel_path_get(import->fsel_obj, &fdev, &fpath);
+   if ((fdev) || (fpath))
+     {
+	if (e_config->wallpaper_import_last_dev) evas_stringshare_del(e_config->wallpaper_import_last_dev);
+	if (fdev) e_config->wallpaper_import_last_dev = (char *)evas_stringshare_add(fdev);
+	else e_config->wallpaper_import_last_dev = NULL;
+	if (e_config->wallpaper_import_last_path) evas_stringshare_del(e_config->wallpaper_import_last_path);
+	if (fpath) e_config->wallpaper_import_last_path = (char *)evas_stringshare_add(fpath);
+	else e_config->wallpaper_import_last_path = NULL;
+	e_config_save_queue();
+     }
 }
 
 static void 
@@ -291,7 +326,7 @@ _import_edj_gen(Import *import)
    f = fopen(tmpn, "w");
    if (!f) 
      {
-	printf("Cannot open %s for writting\n", tmpn);
+	printf("Cannot open %s for writing\n", tmpn);
 	return;
      }
    

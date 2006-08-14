@@ -470,6 +470,9 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, border_raise_on_mouse_action, INT);
    E_CONFIG_VAL(D, T, border_raise_on_focus, INT);
    E_CONFIG_VAL(D, T, desk_flip_wrap, INT);
+
+   E_CONFIG_VAL(D, T, wallpaper_import_last_dev, STR);
+   E_CONFIG_VAL(D, T, wallpaper_import_last_path, STR);
    
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -1160,6 +1163,13 @@ e_config_init(void)
    e_config->border_raise_on_mouse_action = 1;
    e_config->border_raise_on_focus = 1;
    e_config->desk_flip_wrap = 0;
+   e_config->wallpaper_import_last_dev = NULL;
+   e_config->wallpaper_import_last_path = NULL;
+   IFCFGEND;
+   
+   IFCFG(0x0096); /* the version # where this value(s) was introduced */
+   e_config->wallpaper_import_last_dev = evas_stringshare_add("~/");
+   e_config->wallpaper_import_last_path = evas_stringshare_add("/");
    IFCFGEND;
    
 #if 0 /* example of new config */

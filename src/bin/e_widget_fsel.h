@@ -10,6 +10,7 @@ EAPI Evas_Object *e_widget_fsel_add(Evas *evas, char *dev, char *path, char *sel
 				    void (*sel_func) (void *data, Evas_Object *obj), void *sel_data,
 				    void (*chg_func) (void *data, Evas_Object *obj), void *chg_data, int preview);
 EAPI const char *e_widget_fsel_selection_path_get(Evas_Object *obj);
+EAPI void e_widget_fsel_path_get(Evas_Object *obj, const char **dev, const char **path);
     
 #endif
 #endif

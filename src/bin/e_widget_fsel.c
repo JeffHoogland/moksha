@@ -189,9 +189,6 @@ _e_wid_fsel_files_selected(void *data, Evas_Object *obj, void *event_info)
 }
 
 /* externally accessible functions */
-/* FIXME: callback only exists for double-clicking and selecting. need to add
- * one for when the selection changes as well
- */
 EAPI Evas_Object *
 e_widget_fsel_add(Evas *evas, char *dev, char *path, char *selected, char *filter, 
 		  void (*sel_func) (void *data, Evas_Object *obj), void *sel_data,
@@ -430,6 +427,26 @@ e_widget_fsel_add(Evas *evas, char *dev, char *path, char *selected, char *filte
    return obj;
 }
 
+EAPI void
+e_widget_fsel_path_get(Evas_Object *obj, const char **dev, const char **path)
+{
+   E_Widget_Data *wd;
+
+   if (!obj) return;
+   wd = e_widget_data_get(obj);
+   return e_fm2_path_get(wd->o_files_fm, dev, path);
+}
+
+EAPI const char *
+e_widget_fsel_selection_path_get(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+
+   if (!obj) return NULL;
+   wd = e_widget_data_get(obj);
+   return wd->path;
+}
+
 static void
 _e_wid_fsel_preview_file(E_Widget_Data *wd)
 {
@@ -452,16 +469,6 @@ _e_wid_fsel_preview_file(E_Widget_Data *wd)
    free(owner);
    free(perms);
    free(time);
-}
-
-EAPI const char *
-e_widget_fsel_selection_path_get(Evas_Object *obj)
-{
-   E_Widget_Data *wd;
-
-   if (!obj) return NULL;
-   wd = e_widget_data_get(obj);
-   return wd->path;
 }
 
 static char *

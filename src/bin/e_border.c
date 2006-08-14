@@ -5651,7 +5651,10 @@ _e_border_eval(E_Border *bd)
      	/* Recreate state */
 	e_hints_window_init(bd);
 	
-        if (bd->client.e.state.centered)
+        if ((bd->client.e.state.centered) && 
+	    ((!bd->remember) ||
+	     ((bd->remember) && 
+	      (!(bd->remember->apply & E_REMEMBER_APPLY_POS)))))
 	  {
 	     bd->x = bd->zone->x + (bd->zone->w - bd->w) / 2;
 	     bd->y = bd->zone->y + (bd->zone->h - bd->h) / 2;
