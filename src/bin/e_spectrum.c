@@ -14,7 +14,7 @@ struct _E_Spectrum
   E_Color_Component mode; 
 
   E_Color *cv;
-  Ecore_Job *draw_timer;
+  Ecore_Timer *draw_timer;
 };
 
 static int _e_spectrum_redraw(void *d);
