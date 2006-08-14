@@ -38,6 +38,7 @@ struct _E_App
    const char         *exe; /* command to execute, NULL if directory */
    
    const char         *path; /* path to .eet containing icons etc. etc. */
+//   const char         *icon_path; /* path to icon file, in case it is different from path. */
 
    const char         *win_name; /* window name */
    const char         *win_class; /* window class */

@@ -390,7 +390,10 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 
 	     a2 = NULL;
 
-	     snprintf(buf, sizeof(buf), "%s/%s", a->path, s);
+	     if (s[0] == '/')
+		snprintf(buf, sizeof(buf), "%s", s);
+	     else
+	        snprintf(buf, sizeof(buf), "%s/%s", a->path, s);
 	     if (ecore_file_exists(buf))
 	       {
 		  a2 = e_app_new(buf, scan_subdirs);
@@ -408,7 +411,10 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 		  pl = _e_apps_repositories;
 		  while ((!a2) && (pl))
 		    {
-		       snprintf(buf, sizeof(buf), "%s/%s", (char *)pl->data, s);
+	               if (s[0] == '/')
+		          snprintf(buf, sizeof(buf), "%s", s);
+	               else
+		          snprintf(buf, sizeof(buf), "%s/%s", (char *)pl->data, s);
 		       a2 = e_app_new(buf, scan_subdirs);
 		       pl = pl->next;
 		    }
@@ -588,6 +594,7 @@ _e_app_files_download(Evas_List *files)
 	
 	file = l->data;
 	if (!_e_app_is_eapp(file)) continue;
+// FIXME: onefang, check this for full path compliance.
         snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all,
 		 ecore_file_get_file(file));
 	if (!ecore_file_download(file, buf, NULL, NULL, NULL)) continue;
@@ -647,6 +654,7 @@ e_app_prepend_relative(E_App *add, E_App *before)
    if (!strncmp(add->path, _e_apps_path_trash, strlen(_e_apps_path_trash)))
      {
 	/* Move to all */
+// FIXME: onefang, check this for full path compliance.
 	snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all, ecore_file_get_file(add->path));
 	if (ecore_file_exists(buf))
 	  snprintf(buf, sizeof(buf), "%s/%s", before->parent->path, ecore_file_get_file(add->path));
@@ -673,6 +681,7 @@ e_app_append(E_App *add, E_App *parent)
    if (!strncmp(add->path, _e_apps_path_trash, strlen(_e_apps_path_trash)))
      {
 	/* Move to all */
+// FIXME: onefang, check this for full path compliance.
 	snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all, ecore_file_get_file(add->path));
 	if (ecore_file_exists(buf))
 	  snprintf(buf, sizeof(buf), "%s/%s", parent->path, ecore_file_get_file(add->path));
@@ -784,6 +793,7 @@ e_app_remove(E_App *a)
 
    a->parent->subapps = evas_list_remove(a->parent->subapps, a);
    /* Check if this app is in a repository or in the parents dir */
+// FIXME: onefang, check this for full path compliance.
    snprintf(buf, sizeof(buf), "%s/%s", a->parent->path, ecore_file_get_file(a->path));
    if (ecore_file_exists(buf))
      {
@@ -1130,15 +1140,11 @@ e_app_comment_glob_list(const char *comment)
 }
 
 
-
-
-
 EAPI void
 e_app_fields_fill(E_App *a, const char *path)
 {
-   Eet_File *ef;
    char *str, *v;
-   const char *lang;
+   const char *lang, *ext;
    int size;
    
    /* get our current language */
@@ -1150,50 +1156,86 @@ e_app_fields_fill(E_App *a, const char *path)
 	lang = NULL;
      }
    if (!path) path = a->path;
-   ef = eet_open(path, EET_FILE_MODE_READ);
-   if (!ef) return;
 
-#define STORE(member) \
+   ext = strchr(path, '.');
+   if ((ext) && (strcmp(ext, ".desktop") == 0))
+   {   /* It's a .desktop file. */
+      Ecore_Desktop *desktop;
+
+      desktop = ecore_desktop_get(path, lang);
+      if (!desktop) return;
+      if (desktop)
+        {
+	   if (desktop->name)  a->name = evas_stringshare_add(desktop->name);
+	   if (desktop->generic)  a->generic = evas_stringshare_add(desktop->generic);
+	   if (desktop->comment)  a->comment = evas_stringshare_add(desktop->comment);
+
+	   if (desktop->exec)  a->exe = evas_stringshare_add(desktop->exec);
+	   if (desktop->icon_class)  a->icon_class = evas_stringshare_add(desktop->icon_class);
+	   if (desktop->window_class)  a->win_class = evas_stringshare_add(desktop->window_class);
+	   if (desktop->startup)
+              a->startup_notify = *(desktop->startup);
+
+//	   if (desktop->icon_path)  a->icon_path = evas_stringshare_add(desktop->icon_path);
+//	   if (desktop->type)  a->type = evas_stringshare_add(desktop->type);
+//	   if (desktop->categories)  a->categories = evas_stringshare_add(desktop->categories);
+      }
+   }
+   else
+   {   /* Must be an .eap file. */
+      Eet_File *ef;
+
+/* FIXME: This entire process seems inefficient, each of the strings gets duped then freed three times.
+ * On the other hand, raster wants .eaps to go away, so no big deal.  B-)
+ */
+
+#define STORE_N_FREE(member) \
    if (v) \
-     { \
-	str = alloca(size + 1); \
-	memcpy(str, v, size); \
-	str[size] = 0; \
-	a->member = evas_stringshare_add(str); \
-	free(v); \
-     }
-   v = _e_app_localized_val_get(ef, lang, "app/info/name", &size);
-   STORE(name);
-   v = _e_app_localized_val_get(ef, lang, "app/info/generic", &size);
-   STORE(generic);
-   v = _e_app_localized_val_get(ef, lang, "app/info/comment", &size);
-   STORE(comment);
+      { \
+         str = alloca(size + 1); \
+	 memcpy(str, (v), size); \
+	 str[size] = 0; \
+	 a->member = evas_stringshare_add(str); \
+	 free(v); \
+      }
 
-   v = eet_read(ef, "app/info/exe", &size);
-   STORE(exe);
-   v = eet_read(ef, "app/icon/class", &size);
-   STORE(icon_class);
-   v = eet_read(ef, "app/window/name", &size);
-   STORE(win_name);
-   v = eet_read(ef, "app/window/class", &size);
-   STORE(win_class);
-   v = eet_read(ef, "app/window/title", &size);
-   STORE(win_title);
-   v = eet_read(ef, "app/window/role", &size);
-   STORE(win_role);
-   v = eet_read(ef, "app/info/startup_notify", &size);
-   if (v)
-     {
-	a->startup_notify = *v;
-	free(v);
-     }
-   v = eet_read(ef, "app/info/wait_exit", &size);
-   if (v)
-     {
-	a->wait_exit = *v;
-	free(v);
-     }
-   eet_close(ef);
+      ef = eet_open(path, EET_FILE_MODE_READ);
+      if (!ef) return;
+
+      v = _e_app_localized_val_get(ef, lang, "app/info/name", &size);
+      STORE_N_FREE(name);
+      v = _e_app_localized_val_get(ef, lang, "app/info/generic", &size);
+      STORE_N_FREE(generic);
+      v = _e_app_localized_val_get(ef, lang, "app/info/comment", &size);
+      STORE_N_FREE(comment);
+
+      v = eet_read(ef, "app/info/exe", &size);
+      STORE_N_FREE(exe);
+      v = eet_read(ef, "app/icon/class", &size);
+      STORE_N_FREE(icon_class);
+      v = eet_read(ef, "app/window/name", &size);
+      STORE_N_FREE(win_name);
+      v = eet_read(ef, "app/window/class", &size);
+      STORE_N_FREE(win_class);
+      v = eet_read(ef, "app/window/title", &size);
+      STORE_N_FREE(win_title);
+      v = eet_read(ef, "app/window/role", &size);
+      STORE_N_FREE(win_role);
+      v = eet_read(ef, "app/info/startup_notify", &size);
+      if (v)
+        {
+	   a->startup_notify = *v;
+	   free(v);
+        }
+      v = eet_read(ef, "app/info/wait_exit", &size);
+      if (v)
+        {
+	   a->wait_exit = *v;
+	   free(v);
+        }
+      eet_close(ef);
+   }
+
 }
 
 static char *
@@ -1432,7 +1474,7 @@ e_app_dir_file_list_get(E_App *a)
 	ecore_list_goto_first(files);
 	while ((file = ecore_list_next(files)))
 	  {
-	     if (file[0] != '.')
+	     if (ecore_file_get_file(file)[0] != '.')
 	       ecore_list_append(files2, strdup(file));
 	  }
 	ecore_list_destroy(files);
@@ -1655,7 +1697,7 @@ _e_app_subapp_file_find(E_App *a, const char *file)
 	
 	a2 = l->data;
 	if ((a2->deleted) || ((a2->orig) && (a2->orig->deleted))) continue;
-	if (!strcmp(ecore_file_get_file(a2->path), file)) return a2;
+	if (!strcmp(ecore_file_get_file(a2->path), ecore_file_get_file(file))) return a2;
      }
    return NULL;
 }
@@ -1890,7 +1932,10 @@ _e_app_subdir_rescan(E_App *app)
 	     else
 	       {
 		  /* If we still haven't found it, it is new! */
-		  snprintf(buf, sizeof(buf), "%s/%s", app->path, s);
+		  if (s[0] == '/')
+		     snprintf(buf, sizeof(buf), "%s", s);
+		  else
+		     snprintf(buf, sizeof(buf), "%s/%s", app->path, s);
 		  a2 = e_app_new(buf, 1);
 		  if (a2)
 		    {
@@ -1912,7 +1957,10 @@ _e_app_subdir_rescan(E_App *app)
 		       pl = _e_apps_repositories;
 		       while ((!a2) && (pl))
 			 {
-			    snprintf(buf, sizeof(buf), "%s/%s", (char *)pl->data, s);
+		            if (s[0] == '/')
+		               snprintf(buf, sizeof(buf), "%s", s);
+		            else
+			       snprintf(buf, sizeof(buf), "%s/%s", (char *)pl->data, s);
 			    a2 = e_app_new(buf, 1);
 			    pl = pl->next;
 			 }
@@ -2005,7 +2053,7 @@ _e_app_is_eapp(const char *path)
      return 0;
 
    p++;
-   if ((strcasecmp(p, "eap")))
+   if ((strcasecmp(p, "eap")) && (strcasecmp(p, "desktop")))
      return 0;
 
    return 1;
@@ -2258,7 +2306,10 @@ _e_app_cb_scan_cache_timer(void *data)
 //	printf("Cache scan finish.\n");
 	return 0;
      }
-   snprintf(buf, sizeof(buf), "%s/%s", sc->path, s);
+   if (s[0] == '/')
+      snprintf(buf, sizeof(buf), "%s", s);
+   else
+      snprintf(buf, sizeof(buf), "%s/%s", sc->path, s);
    is_dir = ecore_file_is_dir(buf);
    if (_e_app_is_eapp(s) || is_dir)
      {
@@ -2312,7 +2363,10 @@ _e_app_cache_new(E_App_Cache *ac, const char *path, int scan_subdirs)
 	E_App *a2;
 	
 	ac2 = l->data;
-	snprintf(buf, sizeof(buf), "%s/%s", path, ac2->file);
+	if (ac2->file[0] == '/')
+	   snprintf(buf, sizeof(buf), "%s", ac2->file);
+	else
+	   snprintf(buf, sizeof(buf), "%s/%s", path, ac2->file);
 	if ((ac2->is_dir) && (scan_subdirs))
 	  {
 	     a2 = e_app_new(buf, scan_subdirs);
@@ -2347,7 +2401,10 @@ _e_app_cache_new(E_App_Cache *ac, const char *path, int scan_subdirs)
 		  a2 = NULL;
 		  while ((!a2) && (pl))
 		    {
-		       snprintf(buf, sizeof(buf), "%s/%s", (char *)pl->data, ac2->file);
+	               if (ac2->file[0] == '/')
+	                  snprintf(buf, sizeof(buf), "%s", ac2->file);
+	               else
+		          snprintf(buf, sizeof(buf), "%s/%s", (char *)pl->data, ac2->file);
 		       a2 = e_app_new(buf, scan_subdirs);
 		       pl = pl->next;
 		    }

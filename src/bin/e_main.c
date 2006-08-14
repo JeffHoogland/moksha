@@ -371,6 +371,16 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(ecore_ipc_shutdown);
+
+   /* init FDO desktop */
+   if (!ecore_desktop_init())
+     {
+	e_error_message_show(_("Enlightenment cannot initialize the FDO desktop system.\n"
+			       "Perhaps you are out of memory?"));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(ecore_desktop_shutdown);
+
    /* init the evas wrapper */
    if (!ecore_evas_init())
      { 
