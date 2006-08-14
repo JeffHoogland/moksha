@@ -14,7 +14,10 @@ struct _E_Spectrum
   E_Color_Component mode; 
 
   E_Color *cv;
+  int draw_queued;
 };
+
+static int _e_spectrum_redraw(void *d);
 
 static void
 _e_spectrum_smart_add(Evas_Object *o)
@@ -32,6 +35,8 @@ _e_spectrum_smart_add(Evas_Object *o)
   sp->iw = sp->ih = 255;
   evas_object_image_size_set(sp->o_spectrum, sp->iw, sp->ih);
   evas_object_image_alpha_set(sp->o_spectrum, 1);
+
+  ecore_idler_add(_e_spectrum_redraw, sp);
 
   evas_object_smart_member_add(sp->o_spectrum, o);
 }
@@ -243,16 +248,16 @@ _e_spectrum_2d_color_at(E_Spectrum *sp, int x, int y, int *r, int *g, int *b)
   if (b) *b = bb;
 }
 
-void
-_e_spectrum_update(E_Spectrum *sp)
+static int
+_e_spectrum_redraw(void *d)
 {
+  E_Spectrum *sp = d;
+  int *data;
   int i, j;
   int r, g, b;
-  int *data;
   float vx, vy, vz;
-  if (!sp || !sp->cv) return;
 
-  //printf("UPDATE SPECTRUM\n");
+  if (!sp->draw_queued) return 1;
   data = evas_object_image_data_get(sp->o_spectrum, 1);
   if (!data) return;
 
@@ -292,8 +297,17 @@ _e_spectrum_update(E_Spectrum *sp)
 
   evas_object_image_data_set(sp->o_spectrum, data);
   evas_object_image_data_update_add(sp->o_spectrum, 0, 0, sp->iw, sp->ih);
+  sp->draw_queued = 0;
+  return 1;
 }
 
+static void
+_e_spectrum_update(E_Spectrum *sp)
+{
+  if (!sp || !sp->cv) return;
+
+  sp->draw_queued = 1;
+}
 
 Evas_Object *
 e_spectrum_add(Evas *e)
