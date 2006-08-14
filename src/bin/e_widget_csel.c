@@ -168,10 +168,6 @@ e_widget_csel_add(Evas *evas, E_Color *color)
    e_widget_sub_object_add(obj, frame);
    grp = e_widget_radio_group_new(&wd->mode);
 
-   cv->r = 20; cv->g = 120; cv->b = 79;
-   cv->a = 255;
-   e_color_update_rgb(cv);
-
    wd->values = calloc(E_COLOR_COMPONENT_MAX, sizeof(char *));
 
    for(i = 0; i < E_COLOR_COMPONENT_MAX; i++)
@@ -236,7 +232,7 @@ e_widget_csel_add(Evas *evas, E_Color *color)
 
    e_widget_table_object_append(table, frame, 3, 1, 1, 1, 1, 1, 1, 1);
 
-   return table;
+   return obj;
 }
 
 

@@ -814,6 +814,7 @@ _e_test_internal(E_Container *con)
    e_dialog_title_set(dia, "Test Color Selector");
 
    color = calloc(1, sizeof(E_Color));
+   color->a = 255;
 
    o = e_widget_csel_add(dia->win->evas, color);
    evas_object_show(o);

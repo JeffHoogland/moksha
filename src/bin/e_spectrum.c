@@ -258,7 +258,11 @@ _e_spectrum_redraw(void *d)
   float vx, vy, vz;
 
   data = evas_object_image_data_get(sp->o_spectrum, 1);
-  if (!data) return;
+  if (!data) 
+  {
+    sp->draw_timer = NULL;
+    return 0;
+  }
 
   switch(sp->mode)
   {
