@@ -15,7 +15,7 @@ EAPI E_Config *e_config = NULL;
 static int  _e_config_save_cb(void *data);
 static void _e_config_free(void);
 static int  _e_config_cb_timer(void *data);
-static void _e_config_eet_close_handle(Eet_File *ef, char *file);
+static int  _e_config_eet_close_handle(Eet_File *ef, char *file);
 
 /* local subsystem globals */
 static int _e_config_save_block = 0;
@@ -1496,7 +1496,7 @@ EAPI int
 e_config_profile_save(void)
 {
    Eet_File *ef;
-   char buf[4096];
+   char buf[4096], buf2[4096];
    char *homedir;
    int ok = 0;
 
@@ -1504,14 +1504,18 @@ e_config_profile_save(void)
    homedir = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/config/profile.cfg",
 	    homedir);
+   snprintf(buf2, sizeof(buf2), "%s.tmp", buf);
    free(homedir);
 
-   ef = eet_open(buf, EET_FILE_MODE_WRITE);
+   ef = eet_open(buf2, EET_FILE_MODE_WRITE);
    if (ef)
      {
 	ok = eet_write(ef, "config", _e_config_profile, 
 		       strlen(_e_config_profile), 0);
-	_e_config_eet_close_handle(ef, buf);
+	if (_e_config_eet_close_handle(ef, buf2))
+	  ecore_file_mv(buf2, buf);
+	else
+	  ecore_file_unlink(buf2);
      }
    return ok;
 }
@@ -1520,7 +1524,7 @@ EAPI int
 e_config_domain_save(char *domain, E_Config_DD *edd, void *data)
 {
    Eet_File *ef;
-   char buf[4096];
+   char buf[4096], buf2[4096];
    char *homedir;
    int ok = 0;
 
@@ -1532,12 +1536,16 @@ e_config_domain_save(char *domain, E_Config_DD *edd, void *data)
    ecore_file_mkpath(buf);
    snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/%s.cfg", 
 	    homedir, _e_config_profile, domain);
+   snprintf(buf2, sizeof(buf2), "%s.tmp", buf);
    E_FREE(homedir);
    ef = eet_open(buf, EET_FILE_MODE_WRITE);
    if (ef)
      {
 	ok = eet_data_write(ef, edd, "config", data, 1);
-	_e_config_eet_close_handle(ef, buf);
+	if (_e_config_eet_close_handle(ef, buf2))
+	  ecore_file_mv(buf2, buf);
+	else
+	  ecore_file_unlink(buf2);
      }
    return ok;
 }
@@ -1860,7 +1868,7 @@ _e_config_cb_timer(void *data)
    return 0;
 }
 
-static void
+static int
 _e_config_eet_close_handle(Eet_File *ef, char *file)
 {
    Eet_Error err;
@@ -1935,5 +1943,7 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
 	ecore_file_unlink(file);
 	e_util_dialog_show(_("Enlightenment Configration Write Problems"),
 			   erstr, file);
+	return 0;
      }
+   return 1;
 }

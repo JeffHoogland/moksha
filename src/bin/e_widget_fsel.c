@@ -172,7 +172,7 @@ _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj, void *event_inf
      }
    wd->path = strdup(buf);
    if (wd->preview)
-      _e_wid_fsel_preview_file(wd);
+     _e_wid_fsel_preview_file(wd);
    e_widget_entry_text_set(wd->o_entry, ici->file);
    evas_list_free(selected);
    if (wd->chg_func) wd->chg_func(wd->chg_data, wd->obj);
@@ -194,7 +194,8 @@ _e_wid_fsel_files_selected(void *data, Evas_Object *obj, void *event_info)
 EAPI Evas_Object *
 e_widget_fsel_add(Evas *evas, char *dev, char *path, char *selected, char *filter, 
 		  void (*sel_func) (void *data, Evas_Object *obj), void *sel_data,
-		  void (*chg_func) (void *data, Evas_Object *obj), void *chg_data, int preview)
+		  void (*chg_func) (void *data, Evas_Object *obj), void *chg_data,
+		  int preview)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
