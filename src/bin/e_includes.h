@@ -148,4 +148,5 @@
 #include "e_spectrum.h"
 #include "e_widget_spectrum.h"
 #include "e_widget_cslider.h"
+#include "e_widget_color_well.h"
 #include "e_widget_csel.h"

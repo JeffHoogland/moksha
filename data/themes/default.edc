@@ -64,5 +64,6 @@ collections {
 #include "default_preview.edc"
 #include "default_cslider.edc"
 #include "default_spectrum.edc"
+#include "default_color_well.edc"
 }
 

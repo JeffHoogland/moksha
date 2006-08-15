@@ -9,7 +9,7 @@ struct _E_Widget_Data
    Evas_Object *obj;
    Evas_List *sliders;
    Evas_List *entries;
-   Evas_Object *spectrum, *vert, *current;
+   Evas_Object *spectrum, *vert, *well;
    E_Color *cv;
    char **values;
    int mode;
@@ -96,7 +96,7 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
 	  }
      }
 
-   // and update the sepctrum
+   // update the spectrum
    if (o != wd->spectrum && changed != -1)
      {
 	if (wd->mode == changed ||
@@ -106,6 +106,8 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
 	else
 	  e_widget_spectrum_update(wd->spectrum, 0);
      }
+
+   e_widget_color_well_update(wd->well);
 
    // now update the text fields to show current values
    for(l = wd->entries, i = 0; l; l = l->next, i++)
@@ -124,7 +126,7 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
 	      snprintf(buf, 10, "%i", wd->cv->b);
 	      break;
 	   case E_COLOR_COMPONENT_H:
-	      snprintf(buf, 10, "%.2f", wd->cv->h);
+	      snprintf(buf, 10, "%.0f", wd->cv->h);
 	      break;
 	   case E_COLOR_COMPONENT_S:
 	      snprintf(buf, 10, "%.2f", wd->cv->s);
@@ -231,6 +233,13 @@ e_widget_csel_add(Evas *evas, E_Color *color)
    e_widget_table_object_append(table, o, 2, 1, 1, 1, 1, 1, 0, 1);
 
    e_widget_table_object_append(table, frame, 3, 1, 1, 1, 1, 1, 1, 1);
+
+   o = e_widget_color_well_add(evas, cv);
+   e_widget_sub_object_add(obj, o);
+   evas_object_show(o);
+   wd->well = o;
+   e_widget_table_object_append(table, o, 3, 2, 1, 1, 1, 1, 1, 1);
+
 
    return obj;
 }

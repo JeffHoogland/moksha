@@ -66,14 +66,13 @@ e_widget_spectrum_add(Evas *evas, E_Color_Component mode, E_Color *cv)
    evas_object_intercept_resize_callback_add(o, _e_wid_resize, wd);
    evas_object_intercept_move_callback_add(o, _e_wid_move, wd);
 
-
    o = e_spectrum_add(evas);
    e_spectrum_color_value_set(o, cv);
    e_spectrum_mode_set(o, mode);
    e_widget_sub_object_add(obj, o);
    evas_object_show(o);
    wd->o_spectrum = o;
-   edje_object_part_swallow(wd->o_edje, "spectrum", o);
+   edje_object_part_swallow(wd->o_edje, "content", o);
    edje_extern_object_min_size_set(o, 100, 100);
 
    o = evas_object_rectangle_add(evas);

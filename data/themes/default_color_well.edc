@@ -1,12 +1,16 @@
+images {
+  image: "e17_well_overlay.png" COMP;
+}
+
 group {
-  name: "widgets/cslider";
+  name: "widgets/color_well";
   parts {
       part {
 	 name:          "background";
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
-            min: 50 20;
+            min: 50 50;
 	    rel1 {
 	       to:       "overlay";
 	    }
@@ -21,11 +25,6 @@ group {
 	       smooth: 0;
 	    }
 	 }
-         description {
-            state: "vertical" 0.0;
-            inherit: "default" 0.0;
-            min: 20 50;
-         }
       }
       part {
 	 name:          "content_clip";
@@ -60,49 +59,6 @@ group {
 	    color: 0 0 0 0;
 	 }
       }
-    part {
-      name: "cursor";
-      type: RECT;
-      clip_to:       "content_clip";
-      dragable {
-        confine: "content";
-        x: 1 1 0;
-        y: -1 1 0;
-      }
-      description {
-        state: "default" 0.0;
-        min: 1 16;
-        max: 1 9999;
-        fixed: 1 1;
-        rel1 {
-          to: "content";
-          relative: 0.5 0;
-          offset: 0 0;
-        }
-        rel2 {
-          to: "content";
-          relative: 0.5 1;
-          offset: 0 -1;
-        }
-      }
-      description {
-        state: "vertical" 0.0;
-        min: 16 1;
-        max: 9999 1;
-        fixed: 1 1;
-        rel1 {
-          to: "content";
-          relative: 0 0.5 ;
-          offset: 0 0;
-        }
-        rel2 {
-          to: "content";
-          relative: 1 0.5;
-          offset: -1 0;
-        }
-      }
-    }
-
       part {
 	 name:          "overlay";
 	 mouse_events:  0;
@@ -119,15 +75,5 @@ group {
 	 }
       }
 
-  }
-  programs {
-    program {
-      name: "go_vertical";
-      signal: "e,direction,v";
-      source: "";
-      action: STATE_SET "vertical" 0.0;
-      target: "cursor";
-      target: "background";
-    } 
   }
 }

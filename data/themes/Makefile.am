@@ -55,7 +55,8 @@ default_textblock.edc \
 default_shelf.edc \
 default_preview.edc \
 default_cslider.edc \
-default_spectrum.edc
+default_spectrum.edc \
+default_color_well.edc
 
 default.edj: Makefile $(EXTRA_DIST)
 	$(EDJE_CC) $(EDJE_FLAGS) \

@@ -823,11 +823,12 @@ _e_test_internal(E_Container *con)
    e_dialog_content_set(dia, o, mw, mh);
 
    /* buttons at the bottom */
+   e_dialog_button_add(dia, "Cancel", NULL, NULL, NULL);
    e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
    e_dialog_resizable_set(dia, 1);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
-   e_win_resize(dia->win, 460, 230); 
+   e_win_resize(dia->win, 460, 260); 
 }
 
 #else
