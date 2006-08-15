@@ -38,6 +38,7 @@ struct _E_Widget_Data
    void *sel_data;
    void (*chg_func) (void *data, Evas_Object *obj);
    void *chg_data;
+   int preview;
 };
 
 static void _e_wid_fsel_preview_file(E_Widget_Data *wd);
@@ -170,7 +171,7 @@ _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj, void *event_inf
 		 realpath, ici->file);
      }
    wd->path = strdup(buf);
-   if (preview)
+   if (wd->preview)
       _e_wid_fsel_preview_file(wd);
    e_widget_entry_text_set(wd->o_entry, ici->file);
    evas_list_free(selected);
@@ -211,6 +212,7 @@ e_widget_fsel_add(Evas *evas, char *dev, char *path, char *selected, char *filte
    wd->sel_data = sel_data;
    wd->chg_func = chg_func;
    wd->chg_data = chg_data;
+   wd->preview = preview;
    
    o = e_widget_table_add(evas, 0);
    wd->o_table = o;
