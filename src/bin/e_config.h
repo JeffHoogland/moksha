@@ -234,8 +234,8 @@ struct _E_Config
    int         border_raise_on_focus; // GUI
    int         desk_flip_wrap; // GUI
    
-   char       *wallpaper_import_last_dev; // INTERNAL
-   char       *wallpaper_import_last_path; // INTERNAL
+   const char *wallpaper_import_last_dev; // INTERNAL
+   const char *wallpaper_import_last_path; // INTERNAL
 };
 
 struct _E_Config_Module
