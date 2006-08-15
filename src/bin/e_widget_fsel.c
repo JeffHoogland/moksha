@@ -170,7 +170,8 @@ _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj, void *event_inf
 		 realpath, ici->file);
      }
    wd->path = strdup(buf);
-   _e_wid_fsel_preview_file(wd);
+   if (preview)
+      _e_wid_fsel_preview_file(wd);
    e_widget_entry_text_set(wd->o_entry, ici->file);
    evas_list_free(selected);
    if (wd->chg_func) wd->chg_func(wd->chg_data, wd->obj);
