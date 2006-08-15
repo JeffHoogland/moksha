@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-07-29 12:21+0200\n"
-"PO-Revision-Date: 2006-07-29 12:29+0200\n"
+"POT-Creation-Date: 2006-08-06 10:01+0200\n"
+"PO-Revision-Date: 2006-08-06 10:12+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@inwind.it>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -122,95 +122,95 @@ msgstr "%2.1f secondi"
 msgid "Window Locks"
 msgstr "Blocchi finestre"
 
-#: src/bin/e_int_border_locks.c:295
+#: src/bin/e_int_border_locks.c:292
 msgid "Generic Locks"
 msgstr "Blocchi generici"
 
-#: src/bin/e_int_border_locks.c:296
+#: src/bin/e_int_border_locks.c:293
 msgid "Lock the Window so it does only what I tell it to"
 msgstr "Impedisci al programma di manipolare questa finestra"
 
-#: src/bin/e_int_border_locks.c:298
+#: src/bin/e_int_border_locks.c:295
 msgid "Protect this window from me accidentally changing it"
 msgstr "Proteggi questa finestra da modifiche accidentali"
 
-#: src/bin/e_int_border_locks.c:300
+#: src/bin/e_int_border_locks.c:297
 msgid ""
 "Protect this window from being accidentally closed because it is important"
 msgstr "Proteggi questa finestra dalla chiusura accidentale"
 
-#: src/bin/e_int_border_locks.c:302
+#: src/bin/e_int_border_locks.c:299
 msgid "Do not allow the border to change on this window"
 msgstr "Non consentire modifiche ai bordi su questa finestra"
 
-#: src/bin/e_int_border_locks.c:305
+#: src/bin/e_int_border_locks.c:302
 msgid "Remember these Locks for this window next time it appears"
 msgstr "Ricorda questi blocchi alla prossima apertura della finestra"
 
-#: src/bin/e_int_border_locks.c:318
+#: src/bin/e_int_border_locks.c:315
 msgid "Lock program changing:"
 msgstr "Impedisci al programma di cambiarne:"
 
-#: src/bin/e_int_border_locks.c:319 src/bin/e_int_border_locks.c:338
+#: src/bin/e_int_border_locks.c:316 src/bin/e_int_border_locks.c:335
 #: src/bin/e_int_border_remember.c:491
 msgid "Position"
 msgstr "Posizione"
 
-#: src/bin/e_int_border_locks.c:321 src/bin/e_int_border_locks.c:340
+#: src/bin/e_int_border_locks.c:318 src/bin/e_int_border_locks.c:337
 #: src/bin/e_int_border_remember.c:493 src/bin/e_int_shelf_config.c:370
 #: src/bin/e_int_shelf_config.c:449
 msgid "Size"
 msgstr "Dimensione"
 
-#: src/bin/e_int_border_locks.c:323 src/bin/e_int_border_locks.c:342
+#: src/bin/e_int_border_locks.c:320 src/bin/e_int_border_locks.c:339
 #: src/bin/e_int_border_remember.c:495 src/bin/e_int_border_menu.c:184
 #: src/bin/e_int_shelf_config.c:407
 msgid "Stacking"
 msgstr "Livello"
 
-#: src/bin/e_int_border_locks.c:325 src/bin/e_int_border_locks.c:344
+#: src/bin/e_int_border_locks.c:322 src/bin/e_int_border_locks.c:341
 msgid "Iconified state"
 msgstr "Stato di iconificata"
 
-#: src/bin/e_int_border_locks.c:327 src/bin/e_int_border_locks.c:346
+#: src/bin/e_int_border_locks.c:324 src/bin/e_int_border_locks.c:343
 #: src/bin/e_int_border_remember.c:501
 msgid "Stickiness"
 msgstr "Stato di appiccicata"
 
-#: src/bin/e_int_border_locks.c:329 src/bin/e_int_border_locks.c:348
+#: src/bin/e_int_border_locks.c:326 src/bin/e_int_border_locks.c:345
 #: src/bin/e_int_border_remember.c:505
 msgid "Shaded state"
 msgstr "Stato di contratta"
 
-#: src/bin/e_int_border_locks.c:331 src/bin/e_int_border_locks.c:350
+#: src/bin/e_int_border_locks.c:328 src/bin/e_int_border_locks.c:347
 msgid "Maximized state"
 msgstr "Stato di massimizzata"
 
-#: src/bin/e_int_border_locks.c:333 src/bin/e_int_border_locks.c:352
+#: src/bin/e_int_border_locks.c:330 src/bin/e_int_border_locks.c:349
 msgid "Fullscreen state"
 msgstr "Stato a tutto schermo"
 
-#: src/bin/e_int_border_locks.c:337
+#: src/bin/e_int_border_locks.c:334
 msgid "Lock me from changing:"
 msgstr "Impedisci all'utente di cambiarne:"
 
-#: src/bin/e_int_border_locks.c:354 src/bin/e_int_border_remember.c:499
+#: src/bin/e_int_border_locks.c:351 src/bin/e_int_border_remember.c:499
 msgid "Border style"
 msgstr "Stile di bordo"
 
-#: src/bin/e_int_border_locks.c:358
+#: src/bin/e_int_border_locks.c:355
 msgid "Stop me from:"
 msgstr "Impedisci all'utente di:"
 
-#: src/bin/e_int_border_locks.c:359
+#: src/bin/e_int_border_locks.c:356
 msgid "Closing the window"
 msgstr "Chiudere la finestra"
 
-#: src/bin/e_int_border_locks.c:361
+#: src/bin/e_int_border_locks.c:358
 msgid "Exiting my login with this window open"
 msgstr "Uscire dalla sessione con questa finestra aperta"
 
-#: src/bin/e_int_border_locks.c:365
+#: src/bin/e_int_border_locks.c:362
 msgid "Remember these Locks"
 msgstr "Ricorda questi blocchi"
 
@@ -218,19 +218,19 @@ msgstr "Ricorda questi blocchi"
 msgid "Shelf Contents"
 msgstr "Contenuti della barra"
 
-#: src/bin/e_int_gadcon_config.c:203
+#: src/bin/e_int_gadcon_config.c:209
 msgid "Available Gadgets"
 msgstr "Gadget disponibili"
 
-#: src/bin/e_int_gadcon_config.c:213
+#: src/bin/e_int_gadcon_config.c:219
 msgid "Add Gadget"
 msgstr "Aggiungi gadget"
 
-#: src/bin/e_int_gadcon_config.c:220
+#: src/bin/e_int_gadcon_config.c:226
 msgid "Selected Gadgets"
 msgstr "Gadget selezionati"
 
-#: src/bin/e_int_gadcon_config.c:229
+#: src/bin/e_int_gadcon_config.c:235
 msgid "Remove Gadget"
 msgstr "Elimina gadget"
 
@@ -295,9 +295,9 @@ msgstr "Informazioni su Enlightenment"
 msgid "About This Theme"
 msgstr "Informazioni su questo tema"
 
-#: src/bin/e_int_menus.c:133 src/bin/e_module.c:453 src/bin/e_gadget.c:209
+#: src/bin/e_int_menus.c:133 src/bin/e_module.c:457 src/bin/e_gadget.c:209
 #: src/modules/ibar/e_mod_main.c:304 src/modules/ibar/e_mod_main.c:912
-#: src/modules/ibox/e_mod_main.c:295 src/modules/ibox/e_mod_main.c:696
+#: src/modules/ibox/e_mod_main.c:294 src/modules/ibox/e_mod_main.c:693
 #: src/modules/itray/e_mod_main.c:417 src/modules/pager/e_mod_main.c:640
 #: src/modules/temperature/e_mod_main.c:144
 #: src/modules/battery/e_mod_main.c:173
@@ -338,7 +338,7 @@ msgid "Theme"
 msgstr "Tema"
 
 #: src/bin/e_int_menus.c:622 src/bin/e_configure.c:96
-#: src/bin/e_int_config_modules.c:242 src/bin/e_int_config_paths.c:82
+#: src/bin/e_int_config_modules.c:242 src/bin/e_int_config_paths.c:84
 msgid "Modules"
 msgstr "Moduli"
 
@@ -376,17 +376,17 @@ msgid "Theme Selector"
 msgstr "Selettore temi"
 
 #: src/bin/e_int_config_theme.c:167 src/bin/e_int_config_background.c:348
-#: src/bin/e_int_config_startup.c:173 src/bin/e_int_config_desklock.c:590
+#: src/bin/e_int_config_startup.c:171 src/bin/e_int_config_desklock.c:590
 msgid "Personal"
 msgstr "Personali"
 
 #: src/bin/e_int_config_theme.c:177 src/bin/e_int_config_background.c:357
-#: src/bin/e_int_config_startup.c:182
+#: src/bin/e_int_config_startup.c:181
 msgid "System"
 msgstr "Dal sistema"
 
 #: src/bin/e_int_config_theme.c:184 src/bin/e_int_config_background.c:364
-#: src/bin/e_int_config_startup.c:189
+#: src/bin/e_int_config_startup.c:188
 msgid "Other"
 msgstr "Altro"
 
@@ -511,11 +511,11 @@ msgstr ""
 #: src/bin/e_apps.c:2116 src/bin/e_int_border_remember.c:246
 #: src/bin/e_int_border_remember.c:327 src/bin/e_int_border_remember.c:369
 #: src/bin/e_config_dialog.c:149 src/bin/e_fileman_smart.c:906
-#: src/bin/e_module.c:379 src/bin/e_file_dialog.c:70 src/bin/e_error.c:196
+#: src/bin/e_module.c:383 src/bin/e_file_dialog.c:70 src/bin/e_error.c:196
 #: src/bin/e_error.c:205 src/bin/e_int_config_background_import.c:206
 #: src/bin/e_utils.c:526 src/modules/ibar/e_mod_main.c:1214
 #: src/modules/cpufreq/e_mod_main.c:331 src/modules/cpufreq/e_mod_main.c:358
-#: src/modules/cpufreq/e_mod_main.c:377 src/modules/battery/e_mod_main.c:303
+#: src/modules/cpufreq/e_mod_main.c:377 src/modules/battery/e_mod_main.c:302
 msgid "OK"
 msgstr "OK"
 
@@ -527,7 +527,7 @@ msgstr "Configurazione di Enlightenment"
 msgid "Appearance"
 msgstr "Aspetto"
 
-#: src/bin/e_configure.c:69 src/bin/e_int_config_paths.c:74
+#: src/bin/e_configure.c:69 src/bin/e_int_config_paths.c:76
 msgid "Fonts"
 msgstr "Font"
 
@@ -702,7 +702,7 @@ msgstr "Gestione moduli"
 msgid "Module State"
 msgstr "Stato del modulo"
 
-#: src/bin/e_int_config_modules.c:286 src/bin/e_module.c:442
+#: src/bin/e_int_config_modules.c:286 src/bin/e_module.c:446
 msgid "Enabled"
 msgstr "Abilitato"
 
@@ -926,7 +926,7 @@ msgstr "Nome e classe"
 msgid "Title"
 msgstr "Titolo"
 
-#: src/bin/e_int_border_remember.c:470 src/bin/e_eap_editor.c:365
+#: src/bin/e_int_border_remember.c:470 src/bin/e_eap_editor.c:371
 msgid "Window Role"
 msgstr "Ruolo"
 
@@ -1076,13 +1076,13 @@ msgstr "Errore"
 msgid "Could not delete  <br><b>%s</b>"
 msgstr "Impossibile cancellare <br><b>%s</b>"
 
-#: src/bin/e_fileman_smart.c:999 src/bin/e_module.c:528
+#: src/bin/e_fileman_smart.c:999 src/bin/e_module.c:532
 #: src/bin/e_confirm_dialog.c:61 src/bin/e_actions.c:1481
 #: src/bin/e_int_config_display.c:169
 msgid "Yes"
 msgstr "Sì"
 
-#: src/bin/e_fileman_smart.c:1000 src/bin/e_module.c:529
+#: src/bin/e_fileman_smart.c:1000 src/bin/e_module.c:533
 #: src/bin/e_confirm_dialog.c:62 src/bin/e_actions.c:1483
 #: src/bin/e_int_config_display.c:170
 msgid "No"
@@ -1097,7 +1097,7 @@ msgstr "Conferma"
 msgid " Are you sure you want to delete <br><b>%s</b> ?"
 msgstr "Siete sicuri di voler cancellare <br><b>%s</b> ?"
 
-#: src/bin/e_fileman_smart.c:1216 src/bin/e_eap_editor.c:320
+#: src/bin/e_fileman_smart.c:1216 src/bin/e_eap_editor.c:326
 msgid "General"
 msgstr "Generale"
 
@@ -1263,7 +1263,7 @@ msgstr ""
 "che la configurazione<br>del metodo di input sia giusta e "
 "che<br>l'eseguibile di configurazione sia nel<br>proprio PATH<br>"
 
-#: src/bin/e_main.c:202
+#: src/bin/e_main.c:220
 #, c-format
 msgid ""
 "Options:\n"
@@ -1308,7 +1308,7 @@ msgstr ""
 "\t-psychotic\n"
 "\t\tSii psicotico.\n"
 
-#: src/bin/e_main.c:271
+#: src/bin/e_main.c:289
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -1316,7 +1316,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare Ecore!\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:284
+#: src/bin/e_main.c:302
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -1324,7 +1324,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare il sistema File.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:295
+#: src/bin/e_main.c:313
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -1332,7 +1332,7 @@ msgstr ""
 "Enlightenment non riesce a configurare un gestore di segnali d'uscita.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:301
+#: src/bin/e_main.c:319
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -1340,7 +1340,7 @@ msgstr ""
 "Enlightenment non riesce a configurare un gestore di segnali HUP.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:312
+#: src/bin/e_main.c:330
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -1348,7 +1348,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare la connessione a X.\n"
 "Avete impostato la variabile DISPLAY?"
 
-#: src/bin/e_main.c:320
+#: src/bin/e_main.c:338
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -1357,7 +1357,7 @@ msgstr ""
 "di allarme d'emergenza.\n"
 "Avete impostato la variabile DISPLAY?"
 
-#: src/bin/e_main.c:327
+#: src/bin/e_main.c:345
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -1365,7 +1365,7 @@ msgstr ""
 "Enlightenment non riesce a configurare xinerama.\n"
 "Questo non dovrebbe accadere."
 
-#: src/bin/e_main.c:343
+#: src/bin/e_main.c:361
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -1373,7 +1373,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare il sistema di connessioni\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:351
+#: src/bin/e_main.c:369
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -1381,7 +1381,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare il sistema IPC.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:359
+#: src/bin/e_main.c:377
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -1389,7 +1389,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare il sistema Evas.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:365
+#: src/bin/e_main.c:383
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -1399,7 +1399,7 @@ msgstr ""
 "software X11 in Evas. Controllate le vostre installazioni di Evas e\n"
 "Ecore e il loro supporto per il motore di rendering software X11."
 
-#: src/bin/e_main.c:372
+#: src/bin/e_main.c:390
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -1409,7 +1409,7 @@ msgstr ""
 "software Buffer in Evas. Controllate le vostre installazioni di Evas e\n"
 "Ecore e il loro supporto per il motore di rendering software Buffer."
 
-#: src/bin/e_main.c:385
+#: src/bin/e_main.c:404
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -1418,7 +1418,7 @@ msgstr ""
 "buffer. Controllare che Evas abbia il supporto per il motore di\n"
 "rendering software Buffer.\n"
 
-#: src/bin/e_main.c:395
+#: src/bin/e_main.c:414
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
@@ -1426,7 +1426,7 @@ msgstr ""
 "Enlightenment ha riscontrato che Evas non può caricare file PNG.\n"
 "Controllare che Evas abbia il supporto per il loader PNG.\n"
 
-#: src/bin/e_main.c:404
+#: src/bin/e_main.c:423
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
@@ -1434,7 +1434,7 @@ msgstr ""
 "Enlightenment ha riscontrato che Evas non può caricare file JPEG.\n"
 "Controllare che Evas abbia il supporto per il loader JPEG.\n"
 
-#: src/bin/e_main.c:413
+#: src/bin/e_main.c:432
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
@@ -1442,17 +1442,17 @@ msgstr ""
 "Enlightenment ha riscontrato che Evas non può caricare file EET.\n"
 "Controllare che Evas abbia il supporto per il loader EET.\n"
 
-#: src/bin/e_main.c:425
+#: src/bin/e_main.c:444
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di thumbnailing (anteprime).\n"
 
-#: src/bin/e_main.c:434
+#: src/bin/e_main.c:453
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment non riesce ad inizializzare il File manager.\n"
 
-#: src/bin/e_main.c:446
+#: src/bin/e_main.c:465
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -1460,13 +1460,13 @@ msgstr ""
 "Enlightenment non riesce a creare directory nella vostra home.\n"
 "Forse non avete home directory, o il disco è pieno?"
 
-#: src/bin/e_main.c:454
+#: src/bin/e_main.c:473
 msgid "Enlightenment cannot set up its config system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di configurazione."
 
-#: src/bin/e_main.c:461
+#: src/bin/e_main.c:480
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -1474,43 +1474,43 @@ msgstr ""
 "Enlightenment non riesce a configurare i percorsi per la\n"
 "ricerca dei file. Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:469
+#: src/bin/e_main.c:488
 msgid "Enlightenment cannot set up its intl system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di intl (internazionalizzazione)."
 
-#: src/bin/e_main.c:476
+#: src/bin/e_main.c:495
 msgid "Enlightenment cannot set up its actions system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di azioni."
 
-#: src/bin/e_main.c:483
+#: src/bin/e_main.c:502
 msgid "Enlightenment cannot set up its bindings system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di binding (associazioni)."
 
-#: src/bin/e_main.c:490
+#: src/bin/e_main.c:509
 msgid "Enlightenment cannot set up its popup system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di popup."
 
-#: src/bin/e_main.c:501
+#: src/bin/e_main.c:520
 msgid "Enlightenment cannot set up its font system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di font."
 
-#: src/bin/e_main.c:511
+#: src/bin/e_main.c:530
 msgid "Enlightenment cannot set up its theme system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di temi."
 
-#: src/bin/e_main.c:520
+#: src/bin/e_main.c:539
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -1518,7 +1518,7 @@ msgstr ""
 "Enlightenment non riesce a configurare la schermata d'avvio.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:529
+#: src/bin/e_main.c:548
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -1527,84 +1527,97 @@ msgstr ""
 "da parte di Enlightenment è fallita. Forse c'è un altro window\n"
 "manager in esecuzione?\n"
 
-#: src/bin/e_main.c:536
+#: src/bin/e_main.c:555
 msgid "Enlightenment cannot set up its app system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di applicazioni."
 
-#: src/bin/e_main.c:543
+#: src/bin/e_main.c:562
 msgid "Enlightenment cannot setup remember settings."
 msgstr ""
 "Enlightenment non riesce a configurare le\n"
 "impostazioni da ricordare."
 
-#: src/bin/e_main.c:563
+#: src/bin/e_main.c:582
 msgid "Enlightenment cannot set up its msg system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di messaggi."
 
-#: src/bin/e_main.c:570
+#: src/bin/e_main.c:589
 msgid "Enlightenment cannot set up its dnd system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di 'drag & drop'."
 
-#: src/bin/e_main.c:577
+#: src/bin/e_main.c:596
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di gestione dell'input catturato."
 
-#: src/bin/e_main.c:584
+#: src/bin/e_main.c:603
 msgid "Enlightenment cannot set up its module system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di moduli."
 
-#: src/bin/e_main.c:591
+#: src/bin/e_main.c:610
 msgid "Enlightenment cannot set up its window list system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di window list (lista finestre)."
 
-#: src/bin/e_main.c:598
+#: src/bin/e_main.c:617
 msgid "Enlightenment cannot set up its color class system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di classi di colori."
 
-#: src/bin/e_main.c:605
+#: src/bin/e_main.c:628
+msgid ""
+"Enlightenment crashed early on start and has<br>been restarted. All modules "
+"have been disabled<br>and will not be loaded to help remove any "
+"problem<br>modules from your configuration. The module<br>configuration "
+"dialog should let you select your<br>modules again."
+msgstr ""
+"Enlightenment è andato subito in crash ed è<br>stato riavviato. Tutti i "
+"moduli sono stati<br>disabilitati e non verranno caricati in modo<br>da "
+"poter eliminare problemi coi moduli dalla<br>propria configurazione. La "
+"finestra di configurazione<br>dei moduli dovrebbe permettervi di selezionare"
+"<br>nuovamente i vostri moduli."
+
+#: src/bin/e_main.c:639
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di controllo dei gadget."
 
-#: src/bin/e_main.c:612
+#: src/bin/e_main.c:646
 msgid "Enlightenment cannot set up its shelf system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di barre portamoduli."
 
-#: src/bin/e_main.c:619
+#: src/bin/e_main.c:653
 msgid "Enlightenment cannot set up its exebuf system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema exebuf (riga di comando)."
 
-#: src/bin/e_main.c:627
+#: src/bin/e_main.c:661
 msgid "Enlightenment cannot set up its desk locking system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di blocco del desktop."
 
-#: src/bin/e_main.c:642 src/bin/e_actions.c:1858 src/bin/e_actions.c:1863
+#: src/bin/e_main.c:676 src/bin/e_actions.c:1858 src/bin/e_actions.c:1863
 #: src/bin/e_about.c:51
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
-#: src/bin/e_main.c:644
+#: src/bin/e_main.c:678
 msgid "Enlightenment Starting. Please wait."
 msgstr "Avvio di Enlightenment. Attendere prego."
 
@@ -1612,7 +1625,7 @@ msgstr "Avvio di Enlightenment. Attendere prego."
 msgid "Startup Settings"
 msgstr "Avvio di Enlightenment"
 
-#: src/bin/e_int_config_startup.c:115
+#: src/bin/e_int_config_startup.c:116
 msgid "Show Splash Screen At Boot"
 msgstr "Mostra splash screen all'avvio"
 
@@ -1641,11 +1654,11 @@ msgstr ""
 msgid "Please enter your unlock password"
 msgstr "Inserire la password di sblocco"
 
-#: src/bin/e_desklock.c:553
+#: src/bin/e_desklock.c:552
 msgid "Authentication System Error"
 msgstr "Errore del sistema di autenticazione"
 
-#: src/bin/e_desklock.c:554
+#: src/bin/e_desklock.c:553
 #, c-format
 msgid ""
 "Authentication via PAM had errors setting up the<br>authentication session. "
@@ -1656,7 +1669,7 @@ msgstr ""
 "di autenticazione. Il codice d'errore è <hilight>%i</hilight>.<br>Questo è "
 "male e non dovrebbe succedere.<br>Si prega di riportare questo bug."
 
-#: src/bin/e_module.c:109
+#: src/bin/e_module.c:113
 #, c-format
 msgid ""
 "There was an error loading module named: %s<br>No module named %s could be "
@@ -1665,11 +1678,11 @@ msgstr ""
 "C'è stato un errore nel caricamento del modulo: %s<br>Non ho potuto trovare "
 "nessun modulo di nome %s nelle<br>directory di ricerca dei moduli.<br>"
 
-#: src/bin/e_module.c:113 src/bin/e_module.c:126 src/bin/e_module.c:155
+#: src/bin/e_module.c:117 src/bin/e_module.c:130 src/bin/e_module.c:159
 msgid "Error loading Module"
 msgstr "Errore nel caricamento del modulo"
 
-#: src/bin/e_module.c:120 src/bin/e_module.c:149
+#: src/bin/e_module.c:124 src/bin/e_module.c:153
 #, c-format
 msgid ""
 "There was an error loading module named: %s<br>The full path to this module "
@@ -1678,11 +1691,11 @@ msgstr ""
 "C'è stato un errore nel caricamento del modulo: %s<br>Il percorso completo "
 "del modulo è:<br>%s<br>L'errore riportato è stato:<br>%s<br>"
 
-#: src/bin/e_module.c:154
+#: src/bin/e_module.c:158
 msgid "Module does not contain all needed functions"
 msgstr "Il modulo non contiene tutte le funzioni necessarie"
 
-#: src/bin/e_module.c:170
+#: src/bin/e_module.c:174
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -1693,16 +1706,16 @@ msgstr ""
 "richiede una versione minima dell'API dei moduli di: %i.<br>L'API dei moduli "
 "dichiarata da Enlightenment è: %i.<br>"
 
-#: src/bin/e_module.c:175
+#: src/bin/e_module.c:179
 #, c-format
 msgid "Enlightenment %s Module"
 msgstr "Modulo %s di Enlightenment"
 
-#: src/bin/e_module.c:438
+#: src/bin/e_module.c:442
 msgid "About..."
 msgstr "Informazioni su..."
 
-#: src/bin/e_module.c:523
+#: src/bin/e_module.c:527
 msgid "Would you like to unload this module?<br>"
 msgstr "Volete disattivare questo modulo?<br>"
 
@@ -1722,11 +1735,11 @@ msgstr "Home"
 #: src/bin/e_actions.c:1725 src/bin/e_actions.c:1727 src/bin/e_actions.c:1729
 #: src/bin/e_actions.c:1731 src/bin/e_actions.c:1733 src/bin/e_actions.c:1735
 #: src/bin/e_actions.c:1737 src/bin/e_actions.c:1739 src/bin/e_actions.c:1875
-#: src/modules/ibox/e_mod_config.c:141
+#: src/modules/ibox/e_mod_config.c:140
 msgid "Desktop"
 msgstr "Desktop"
 
-#: src/bin/e_file_dialog.c:62 src/bin/e_int_config_paths.c:80
+#: src/bin/e_file_dialog.c:62 src/bin/e_int_config_paths.c:82
 msgid "Icons"
 msgstr "Icone"
 
@@ -1771,6 +1784,11 @@ msgstr ""
 #, c-format
 msgid "Starting %s"
 msgstr "Avvio di %s"
+
+#: src/bin/e_fm.c:757
+#, c-format
+msgid "%i Files"
+msgstr "%i File"
 
 #: src/bin/e_int_border_menu.c:50
 msgid "Always On Top"
@@ -1898,51 +1916,51 @@ msgstr "Dimensione del puntatore"
 msgid "%1.0f pixels"
 msgstr "%1.0f pixel"
 
-#: src/bin/e_int_config_paths.c:61
+#: src/bin/e_int_config_paths.c:63
 msgid "Search Path Configuration"
 msgstr "Percorsi di ricerca"
 
-#: src/bin/e_int_config_paths.c:70
+#: src/bin/e_int_config_paths.c:72
 msgid "Data"
 msgstr "Dati"
 
-#: src/bin/e_int_config_paths.c:72
+#: src/bin/e_int_config_paths.c:74
 msgid "Images"
 msgstr "Immagini"
 
-#: src/bin/e_int_config_paths.c:76
+#: src/bin/e_int_config_paths.c:78
 msgid "Themes"
 msgstr "Temi"
 
-#: src/bin/e_int_config_paths.c:78
+#: src/bin/e_int_config_paths.c:80
 msgid "Init"
 msgstr "Inizializzazione"
 
-#: src/bin/e_int_config_paths.c:84
+#: src/bin/e_int_config_paths.c:86
 msgid "Backgrounds"
 msgstr "Sfondi"
 
-#: src/bin/e_int_config_paths.c:86
+#: src/bin/e_int_config_paths.c:88
 msgid "Input Methods"
 msgstr "Metodi di input"
 
-#: src/bin/e_int_config_paths.c:88
+#: src/bin/e_int_config_paths.c:90
 msgid "Messages"
 msgstr "Messaggi"
 
-#: src/bin/e_int_config_paths.c:135
+#: src/bin/e_int_config_paths.c:175
 msgid "E Paths"
 msgstr "Percorsi di E"
 
-#: src/bin/e_int_config_paths.c:156
+#: src/bin/e_int_config_paths.c:196
 msgid "Default Directories"
 msgstr "Directory predefinite"
 
-#: src/bin/e_int_config_paths.c:163
+#: src/bin/e_int_config_paths.c:203
 msgid "User Defined Directories"
 msgstr "Directory definite dall'utente"
 
-#: src/bin/e_int_config_paths.c:165
+#: src/bin/e_int_config_paths.c:205
 msgid "New Directory"
 msgstr "Nuova directory"
 
@@ -2527,63 +2545,63 @@ msgstr "Editor di file eap"
 msgid "Icon"
 msgstr "Icona"
 
-#: src/bin/e_eap_editor.c:286
+#: src/bin/e_eap_editor.c:292
 msgid "Basic Info"
 msgstr "Informazioni di base"
 
-#: src/bin/e_eap_editor.c:287
+#: src/bin/e_eap_editor.c:293
 msgid "App name"
 msgstr "Nome"
 
-#: src/bin/e_eap_editor.c:296
+#: src/bin/e_eap_editor.c:302
 msgid "Executable"
 msgstr "Eseguibile"
 
-#: src/bin/e_eap_editor.c:323
+#: src/bin/e_eap_editor.c:329
 msgid "Generic Info"
 msgstr "Descrizione"
 
-#: src/bin/e_eap_editor.c:332
+#: src/bin/e_eap_editor.c:338
 msgid "Comment"
 msgstr "Commento"
 
-#: src/bin/e_eap_editor.c:342
+#: src/bin/e_eap_editor.c:348
 msgid "Window"
 msgstr "Finestra"
 
-#: src/bin/e_eap_editor.c:344
+#: src/bin/e_eap_editor.c:350
 msgid "Window Name"
 msgstr "Nome"
 
-#: src/bin/e_eap_editor.c:353
+#: src/bin/e_eap_editor.c:359
 msgid "Window Class"
 msgstr "Classe"
 
-#: src/bin/e_eap_editor.c:359
+#: src/bin/e_eap_editor.c:365
 msgid "Window Title"
 msgstr "Titolo"
 
-#: src/bin/e_eap_editor.c:374
+#: src/bin/e_eap_editor.c:380
 msgid "Icon Theme"
 msgstr "Tema icona"
 
-#: src/bin/e_eap_editor.c:376
+#: src/bin/e_eap_editor.c:382
 msgid "Icon Class"
 msgstr "Classe icona"
 
-#: src/bin/e_eap_editor.c:390
+#: src/bin/e_eap_editor.c:396
 msgid "Misc"
 msgstr "Varie"
 
-#: src/bin/e_eap_editor.c:391
+#: src/bin/e_eap_editor.c:397
 msgid "Startup Notify"
 msgstr "Notifica avvio"
 
-#: src/bin/e_eap_editor.c:394
+#: src/bin/e_eap_editor.c:400
 msgid "Wait Exit"
 msgstr "Attesa uscita"
 
-#: src/bin/e_eap_editor.c:414
+#: src/bin/e_eap_editor.c:420
 msgid "Select An Icon"
 msgstr "Seleziona un'icona"
 
@@ -2693,8 +2711,8 @@ msgstr "Commutatore finestre (alt+tab)"
 
 #: src/bin/e_int_config_winlist.c:121 src/bin/e_int_config_performance.c:84
 #: src/bin/e_int_config_performance.c:116 src/bin/e_int_config_exebuf.c:98
-#: src/bin/e_int_config_exebuf.c:142 src/modules/ibox/e_mod_config.c:95
-#: src/modules/pager/e_mod_config.c:76
+#: src/bin/e_int_config_exebuf.c:142 src/modules/ibox/e_mod_config.c:94
+#: src/modules/pager/e_mod_config.c:75
 msgid "General Settings"
 msgstr "Impostazioni generali"
 
@@ -2884,7 +2902,7 @@ msgstr "Qualunque"
 msgid "Border"
 msgstr "Bordo"
 
-#: src/bin/e_int_config_keybindings.c:648 src/modules/ibox/e_mod_config.c:110
+#: src/bin/e_int_config_keybindings.c:648 src/modules/ibox/e_mod_config.c:109
 msgid "Zone"
 msgstr "Zona"
 
@@ -2960,7 +2978,9 @@ msgstr "Combinazione di tasti"
 msgid ""
 "The binding key sequence, that you choose, is already used by<br><hilight>%"
 "s</hilight> action.<br>Please choose another binding key sequence."
-msgstr "La combinazione di tasti che avete scelto è già usata<br>dall'azione <hilight>%s</hilight>.<br>Si prega di scegliere una combinazione diversa."
+msgstr ""
+"La combinazione di tasti che avete scelto è già usata<br>dall'azione "
+"<hilight>%s</hilight>.<br>Si prega di scegliere una combinazione diversa."
 
 #: src/bin/e_int_config_keybindings.c:1416
 msgid "Binding Key Error"
@@ -3399,7 +3419,7 @@ msgstr "Fonte delle icone"
 msgid "Icon Labels"
 msgstr "Etichette icone"
 
-#: src/modules/ibar/e_mod_config.c:113 src/modules/ibox/e_mod_config.c:96
+#: src/modules/ibar/e_mod_config.c:113 src/modules/ibox/e_mod_config.c:95
 msgid "Show Icon Label"
 msgstr "Mostra etichette icone"
 
@@ -3480,47 +3500,47 @@ msgstr ""
 msgid "IBox Configuration"
 msgstr "Configurazione modulo IBox"
 
-#: src/modules/ibox/e_mod_config.c:99
+#: src/modules/ibox/e_mod_config.c:98
 msgid "Display Name"
 msgstr "Mostra nome"
 
-#: src/modules/ibox/e_mod_config.c:101
+#: src/modules/ibox/e_mod_config.c:100
 msgid "Display Title"
 msgstr "Mostra titolo"
 
-#: src/modules/ibox/e_mod_config.c:103
+#: src/modules/ibox/e_mod_config.c:102
 msgid "Display Class"
 msgstr "Mostra classe"
 
-#: src/modules/ibox/e_mod_config.c:105
+#: src/modules/ibox/e_mod_config.c:104
 msgid "Display Icon Name"
 msgstr "Mostra nome icona"
 
-#: src/modules/ibox/e_mod_config.c:130
+#: src/modules/ibox/e_mod_config.c:129
 msgid "Show windows from all zones"
 msgstr "Mostra finestre di tutte le zone"
 
-#: src/modules/ibox/e_mod_config.c:135
+#: src/modules/ibox/e_mod_config.c:134
 msgid "Show windows from current zone"
 msgstr "Mostra finestre della zona attuale"
 
-#: src/modules/ibox/e_mod_config.c:144
+#: src/modules/ibox/e_mod_config.c:143
 msgid "Show windows from all desktops"
 msgstr "Mostra finestre di tutti i desktop"
 
-#: src/modules/ibox/e_mod_config.c:149
+#: src/modules/ibox/e_mod_config.c:148
 msgid "Show windows from active desktop"
 msgstr "Mostra finestre del desktop attivo"
 
-#: src/modules/ibox/e_mod_main.c:230
+#: src/modules/ibox/e_mod_main.c:229
 msgid "IBox"
 msgstr "IBox"
 
-#: src/modules/ibox/e_mod_main.c:1422
+#: src/modules/ibox/e_mod_main.c:1416
 msgid "Enlightenment IBox Module"
 msgstr "Modulo IBox di Enlightenment"
 
-#: src/modules/ibox/e_mod_main.c:1423
+#: src/modules/ibox/e_mod_main.c:1417
 msgid ""
 "This is the IBox Iconified Application module for Enlightenment.<br>It will "
 "hold minimized applications"
@@ -3682,28 +3702,28 @@ msgstr ""
 msgid "Pager Configuration"
 msgstr "Configurazione modulo Pager"
 
-#: src/modules/pager/e_mod_config.c:77 src/modules/pager/e_mod_config.c:106
+#: src/modules/pager/e_mod_config.c:76 src/modules/pager/e_mod_config.c:104
 msgid "Show Popup"
 msgstr "Mostra popup"
 
-#: src/modules/pager/e_mod_config.c:100
+#: src/modules/pager/e_mod_config.c:98
 msgid "Resistance to Dragging Windows:"
 msgstr "Resistenza trascinamento finestre:"
 
-#: src/modules/pager/e_mod_config.c:101
+#: src/modules/pager/e_mod_config.c:99
 #, c-format
 msgid "%.0f px"
 msgstr "%.0f px"
 
-#: src/modules/pager/e_mod_config.c:105
+#: src/modules/pager/e_mod_config.c:103
 msgid "Popup Settings"
 msgstr "Impostazioni del popup"
 
-#: src/modules/pager/e_mod_config.c:108
+#: src/modules/pager/e_mod_config.c:106
 msgid "Popup Speed"
 msgstr "Velocità del popup"
 
-#: src/modules/pager/e_mod_config.c:110
+#: src/modules/pager/e_mod_config.c:108
 #: src/modules/temperature/e_mod_config.c:298
 #: src/modules/battery/e_mod_config.c:110
 #, c-format
@@ -3714,11 +3734,11 @@ msgstr "%1.1f secondi"
 msgid "Pager"
 msgstr "Pager"
 
-#: src/modules/pager/e_mod_main.c:1828
+#: src/modules/pager/e_mod_main.c:1829
 msgid "Enlightenment Pager Module"
 msgstr "Modulo Pager di Enlightenment"
 
-#: src/modules/pager/e_mod_main.c:1829
+#: src/modules/pager/e_mod_main.c:1830
 msgid "A pager module to navigate virtual desktops."
 msgstr "Un modulo per navigare i desktop virtuali."
 
@@ -4005,7 +4025,7 @@ msgstr "%1.0f minuti"
 msgid "Battery"
 msgstr "Battery"
 
-#: src/modules/battery/e_mod_main.c:300
+#: src/modules/battery/e_mod_main.c:299
 msgid ""
 "Battery Running Low<br>Your battery is running low.<br>You may wish to "
 "switch to an AC source."
@@ -4013,46 +4033,46 @@ msgstr ""
 "Batteria esaurita<br>La vostra batteria si sta esaurendo.<br>Vogliate "
 "passare ad una alimentazione di rete."
 
-#: src/modules/battery/e_mod_main.c:346
+#: src/modules/battery/e_mod_main.c:345
 msgid "NO INFO"
 msgstr "NESSUNA INFORMAZIONE"
 
-#: src/modules/battery/e_mod_main.c:521 src/modules/battery/e_mod_main.c:834
-#: src/modules/battery/e_mod_main.c:988
+#: src/modules/battery/e_mod_main.c:520 src/modules/battery/e_mod_main.c:833
+#: src/modules/battery/e_mod_main.c:987
 msgid "NO BAT"
 msgstr "NESSUNA BATTERIA"
 
-#: src/modules/battery/e_mod_main.c:545 src/modules/battery/e_mod_main.c:1013
+#: src/modules/battery/e_mod_main.c:544 src/modules/battery/e_mod_main.c:1012
 msgid "BAD DRIVER"
 msgstr "DRIVER SBAGLIATO"
 
-#: src/modules/battery/e_mod_main.c:569 src/modules/battery/e_mod_main.c:870
-#: src/modules/battery/e_mod_main.c:1037
+#: src/modules/battery/e_mod_main.c:568 src/modules/battery/e_mod_main.c:869
+#: src/modules/battery/e_mod_main.c:1036
 msgid "FULL"
 msgstr "CARICA"
 
-#: src/modules/battery/e_mod_main.c:630 src/modules/battery/e_mod_main.c:1098
+#: src/modules/battery/e_mod_main.c:629 src/modules/battery/e_mod_main.c:1097
 msgid "High"
 msgstr "Alta"
 
-#: src/modules/battery/e_mod_main.c:634 src/modules/battery/e_mod_main.c:1102
+#: src/modules/battery/e_mod_main.c:633 src/modules/battery/e_mod_main.c:1101
 msgid "Low"
 msgstr "Bassa"
 
-#: src/modules/battery/e_mod_main.c:638 src/modules/battery/e_mod_main.c:1106
+#: src/modules/battery/e_mod_main.c:637 src/modules/battery/e_mod_main.c:1105
 msgid "Danger"
 msgstr "Pericolo"
 
-#: src/modules/battery/e_mod_main.c:642 src/modules/battery/e_mod_main.c:1110
-#: src/modules/battery/e_mod_main.c:1277
+#: src/modules/battery/e_mod_main.c:641 src/modules/battery/e_mod_main.c:1109
+#: src/modules/battery/e_mod_main.c:1276
 msgid "Charging"
 msgstr "In carica"
 
-#: src/modules/battery/e_mod_main.c:1433
+#: src/modules/battery/e_mod_main.c:1432
 msgid "Enlightenment Battery Module"
 msgstr "Modulo Battery di Enlightenment"
 
-#: src/modules/battery/e_mod_main.c:1434
+#: src/modules/battery/e_mod_main.c:1433
 msgid ""
 "A basic battery meter that uses either<hilight>ACPI</hilight> or "
 "<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
