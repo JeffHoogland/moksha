@@ -1513,9 +1513,11 @@ e_config_profile_save(void)
 	ok = eet_write(ef, "config", _e_config_profile, 
 		       strlen(_e_config_profile), 0);
 	if (_e_config_eet_close_handle(ef, buf2))
-	  ecore_file_mv(buf2, buf);
-	else
-	  ecore_file_unlink(buf2);
+	  {
+	     rename(buf2, buf);
+	     /* FIXME: get rename err */
+	  }
+	ecore_file_unlink(buf2);
      }
    return ok;
 }
@@ -1538,14 +1540,16 @@ e_config_domain_save(char *domain, E_Config_DD *edd, void *data)
 	    homedir, _e_config_profile, domain);
    snprintf(buf2, sizeof(buf2), "%s.tmp", buf);
    E_FREE(homedir);
-   ef = eet_open(buf, EET_FILE_MODE_WRITE);
+   ef = eet_open(buf2, EET_FILE_MODE_WRITE);
    if (ef)
      {
 	ok = eet_data_write(ef, edd, "config", data, 1);
 	if (_e_config_eet_close_handle(ef, buf2))
-	  ecore_file_mv(buf2, buf);
-	else
-	  ecore_file_unlink(buf2);
+	  {
+	     rename(buf2, buf);
+	     /* FIXME: get rename err */
+	  }
+	ecore_file_unlink(buf2);
      }
    return ok;
 }
