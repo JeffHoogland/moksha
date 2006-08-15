@@ -586,7 +586,7 @@ _desklock_auth(const char *passwd)
         char *current_user, *p;
 	struct sigaction action;
 	
-	action.sa_sigaction = SIG_DFL;
+	action.sa_handler = SIG_DFL;
 	action.sa_flags = SA_ONSTACK | SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
 	sigemptyset(&action.sa_mask);
 	sigaction(SIGSEGV, &action, NULL);
