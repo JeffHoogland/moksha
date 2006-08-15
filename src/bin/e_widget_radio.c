@@ -242,6 +242,7 @@ _e_wid_do(Evas_Object *obj)
 	*(wd->group->valptr) = wd->valnum;
 	edje_object_signal_emit(wd->o_radio, "toggle_on", "");
      }
+   evas_object_smart_callback_call(obj, "changed", NULL);
 }
 
 static void 
