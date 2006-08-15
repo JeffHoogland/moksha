@@ -29,8 +29,8 @@ e_entry_dialog_show(const char *title, const char *icon, const char *text,
    dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_entry_dialog");
    if (!dia) 
      {
-	E_FREE(ed);
-	return;
+	e_object_del(E_OBJECT(ed));
+	return NULL;
      }
    dia->data = ed;
    ed->dia = dia;
