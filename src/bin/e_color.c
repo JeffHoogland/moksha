@@ -17,3 +17,16 @@ e_color_update_hsv(E_Color *ec)
   else
     evas_color_hsv_to_rgb(ec->h, ec->s, ec->v, &(ec->r), &(ec->g), &(ec->b));
 }
+
+void
+e_color_copy(E_Color *from, E_Color *to)
+{
+  if (!from || !to) return;
+  to->r = from->r;
+  to->g = from->g;
+  to->b = from->b;
+  to->h = from->h;
+  to->s = from->s;
+  to->v = from->v;
+  to->a = from->a;
+}
