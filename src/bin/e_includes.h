@@ -32,7 +32,6 @@
 #include "e_startup.h"
 #include "e_hints.h"
 #include "e_gadman.h"
-#include "e_gadget.h"
 #include "e_signals.h"
 #include "e_xinerama.h"
 #include "e_table.h"

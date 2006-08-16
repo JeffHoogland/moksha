@@ -55,7 +55,6 @@ e_resist.h \
 e_startup.h \
 e_hints.h \
 e_gadman.h \
-e_gadget.h \
 e_signals.h \
 e_xinerama.h \
 e_table.h \
@@ -173,7 +172,8 @@ e_widget_cslider.h \
 e_widget_csel.h \
 e_widget_color_well.h \
 e_int_config_wallpaper.h \
-e_int_config_wallpaper_import.h
+e_int_config_wallpaper_import.h \
+e_int_config_wallpaper_gradient.h
 
 enlightenment_src = \
 e_user.c \
@@ -204,7 +204,6 @@ e_resist.c \
 e_startup.c \
 e_hints.c \
 e_gadman.c \
-e_gadget.c \
 e_signals.c \
 e_xinerama.c \
 e_table.c \
@@ -323,6 +322,7 @@ e_widget_csel.c \
 e_widget_color_well.c \
 e_int_config_wallpaper.c \
 e_int_config_wallpaper_import.c \
+e_int_config_wallpaper_gradient.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \
