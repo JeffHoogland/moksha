@@ -1176,7 +1176,15 @@ e_app_fields_fill(E_App *a, const char *path)
 	   if (desktop->startup)
               a->startup_notify = *(desktop->startup);
 
-//	   if (desktop->icon_path)  a->icon_path = evas_stringshare_add(desktop->icon_path);
+	   if (desktop->icon)
+	      {
+	         /* FIXME: Should do this only when needed, is it can be expensive. */
+		 /* FIXME: Use a real icon size and theme. */
+	         v = ecore_desktop_icon_find(desktop->icon, NULL, NULL);
+		 if (v)
+	            a->icon_path = evas_stringshare_add(v);
+	      }
+
 //	   if (desktop->type)  a->type = evas_stringshare_add(desktop->type);
 //	   if (desktop->categories)  a->categories = evas_stringshare_add(desktop->categories);
       }
@@ -1400,6 +1408,7 @@ e_app_fields_empty(E_App *a)
    if (a->comment) evas_stringshare_del(a->comment);
    if (a->exe) evas_stringshare_del(a->exe);
    if (a->icon_class) evas_stringshare_del(a->icon_class);
+   if (a->icon_path) evas_stringshare_del(a->icon_path);
    if (a->win_name) evas_stringshare_del(a->win_name);
    if (a->win_class) evas_stringshare_del(a->win_class);
    if (a->win_title) evas_stringshare_del(a->win_title);
@@ -1409,6 +1418,7 @@ e_app_fields_empty(E_App *a)
    a->comment = NULL;
    a->exe = NULL;
    a->icon_class = NULL;
+   a->icon_path = NULL;
    a->win_name = NULL;
    a->win_class = NULL;
    a->win_title = NULL;
@@ -1506,7 +1516,20 @@ e_app_icon_add(Evas *evas, E_App *a)
    
    o = edje_object_add(evas);
    if (!e_util_edje_icon_list_set(o, a->icon_class))
-     edje_object_file_set(o, a->path, "icon");
+      {
+         if (edje_object_file_set(o, a->path, "icon"))
+	    {
+	       ;  /* It's a bit more obvious this way. */
+	    }
+         else if (a->icon_path)   /* If that fails, then this might be an FDO icon. */
+	    {
+	       /* Free the aborted object first. */
+               if (o) evas_object_del(o);
+	       o = e_icon_add(evas);
+	       e_icon_file_set(o, a->icon_path);
+	       e_icon_fill_inside_set(o, 1);
+            }
+      }
    return o;
 }
 
@@ -2085,6 +2108,7 @@ _e_app_copy(E_App *dst, E_App *src)
    dst->win_title = src->win_title;
    dst->win_role = src->win_role;
    dst->icon_class = src->icon_class;
+   dst->icon_path = src->icon_path;
    dst->startup_notify = src->startup_notify;
    dst->wait_exit = src->wait_exit;
    dst->starting = src->starting;
@@ -2276,6 +2300,7 @@ _e_app_cache_copy(E_App_Cache *ac, E_App *a)
    IF_DUP(win_title);
    IF_DUP(win_role);
    IF_DUP(icon_class);
+   IF_DUP(icon_path);
    a->startup_notify = ac->startup_notify;
    a->wait_exit = ac->wait_exit;
 }

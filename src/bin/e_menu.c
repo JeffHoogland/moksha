@@ -549,6 +549,21 @@ e_menu_item_num_get(E_Menu_Item *mi)
 }
 
 EAPI void
+e_menu_item_icon_path_set(E_Menu_Item *mi, const char *icon)
+{
+   E_OBJECT_CHECK(mi);
+   E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
+   if (((mi->icon_path) && (icon) && (!strcmp(icon, mi->icon_path))) ||
+       ((!mi->icon_path) && (!icon))) 
+     return;
+   if (mi->icon_path) evas_stringshare_del(mi->icon_path);
+   mi->icon_path = NULL;
+   if (icon) mi->icon_path = evas_stringshare_add(icon);
+   mi->changed = 1;
+   mi->menu->changed = 1;
+}
+
+EAPI void
 e_menu_item_icon_file_set(E_Menu_Item *mi, const char *icon)
 {
    E_OBJECT_CHECK(mi);
@@ -1045,6 +1060,7 @@ _e_menu_item_free(E_Menu_Item *mi)
    mi->menu->items = evas_list_remove(mi->menu->items, mi);
    if (mi->icon) evas_stringshare_del(mi->icon);
    if (mi->icon_key) evas_stringshare_del(mi->icon_key);
+   if (mi->icon_path) evas_stringshare_del(mi->icon_path);
    if (mi->label) evas_stringshare_del(mi->label);
    free(mi);
 }
@@ -1197,6 +1213,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     else
 	       evas_object_del(o);
 	     
+             /* FIXME: This should be cleaned up a bit. */
 	     if (mi->icon_object)
 	       {
 		  o = e_icon_add(mi->menu->evas);
@@ -1208,6 +1225,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	       }
 	     else if (mi->icon)
 	       {
+	          /* Try a the usual suspects first. */
 		  if (!mi->icon_key)
 		    {
 		       o = e_icon_add(mi->menu->evas);
@@ -1221,13 +1239,27 @@ _e_menu_item_realize(E_Menu_Item *mi)
 		       Evas_Coord iww, ihh;
 
 		       o = edje_object_add(mi->menu->evas);
+		       if (edje_object_file_set(o, mi->icon, mi->icon_key))
+		          {
+		             mi->icon_object = o;
+		             edje_object_size_max_get(o, &iww, &ihh);
+		             icon_w = iww;
+		             icon_h = ihh;
+			  }
+		    }
+
+                 if ((!mi->icon_object) && (mi->icon_path))   /* If that fails, then this might be an FDO icon. */
+		    {
+		       /* Free the aborted object first. */
+                       if (mi->icon_object) evas_object_del(mi->icon_object);
+		       o = e_icon_add(mi->menu->evas);
 		       mi->icon_object = o;
-		       edje_object_file_set(o, mi->icon, mi->icon_key);
-		       edje_object_size_max_get(o, &iww, &ihh);
-		       icon_w = iww;
-		       icon_h = ihh;
+		       e_icon_file_set(o, mi->icon_path);
+		       e_icon_fill_inside_set(o, 1);
+		       e_icon_size_get(mi->icon_object, &icon_w, &icon_h);
 		    }
 	       }
+
 	     evas_object_pass_events_set(o, 1);
 	     evas_object_show(o);
 	     

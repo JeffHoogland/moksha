@@ -84,6 +84,7 @@ struct _E_Menu_Item
    E_Menu        *menu;
    const char    *icon;
    const char    *icon_key;
+   const char    *icon_path;
    const char    *label;
    E_Menu        *submenu;
    
@@ -169,6 +170,7 @@ EAPI E_Menu      *e_menu_root_get(E_Menu *m);
 EAPI E_Menu_Item *e_menu_item_new(E_Menu *m);
 EAPI E_Menu_Item *e_menu_item_nth(E_Menu *m, int n);
 EAPI int          e_menu_item_num_get(E_Menu_Item *mi);
+EAPI void         e_menu_item_icon_path_set(E_Menu_Item *mi, const char *icon);
 EAPI void         e_menu_item_icon_file_set(E_Menu_Item *mi, const char *icon);
 EAPI void         e_menu_item_icon_edje_set(E_Menu_Item *mi, const char *icon, const char *key);
 EAPI void         e_menu_item_icon_object_set(E_Menu_Item *mi, Evas_Object *obj);

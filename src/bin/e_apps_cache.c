@@ -55,6 +55,7 @@ e_app_cache_init(void)
    NEWI("wt", win_title, EET_T_STRING);
    NEWI("wr", win_role, EET_T_STRING);
    NEWI("ic", icon_class, EET_T_STRING);
+   NEWI("ip", icon_path, EET_T_STRING);
    NEWL("ap", subapps, _e_app_cache_edd);
    NEWI("sn", startup_notify, EET_T_UCHAR);
    NEWI("wx", wait_exit, EET_T_UCHAR);
@@ -145,6 +146,7 @@ e_app_cache_free(E_App_Cache *ac)
    if (ac->win_title) evas_stringshare_del(ac->win_title);
    if (ac->win_role) evas_stringshare_del(ac->win_role);
    if (ac->icon_class) evas_stringshare_del(ac->icon_class);
+   if (ac->icon_path) evas_stringshare_del(ac->icon_path);
    while (ac->subapps)
      {
 	E_App_Cache *ac2;
@@ -190,6 +192,7 @@ _e_eapp_cache_fill(E_App_Cache *ac, E_App *a)
    IF_DUP(win_title);
    IF_DUP(win_role);
    IF_DUP(icon_class);
+   IF_DUP(icon_path);
    ac->startup_notify = a->startup_notify;
    ac->wait_exit = a->wait_exit;
 }

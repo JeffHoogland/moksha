@@ -25,6 +25,7 @@ struct _E_App_Cache
    const char         *win_role; /* window role */
    
    const char         *icon_class; /* icon_class */
+   const char         *icon_path;  /* FDO icon path */
    
    Evas_List          *subapps; /* if this a directory, a list of more E_App's */
    

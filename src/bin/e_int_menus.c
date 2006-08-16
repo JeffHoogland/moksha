@@ -439,7 +439,10 @@ _e_int_menus_apps_scan(E_Menu *m)
 		    {
 		       if (!((a->icon_class) && 
 			     (e_util_menu_item_edje_icon_list_set(mi, a->icon_class))))
-			 e_menu_item_icon_edje_set(mi, a->path, "icon");
+		          {	
+			     e_menu_item_icon_edje_set(mi, a->path, "icon");
+	                     if (a->icon_path) e_menu_item_icon_path_set(mi, a->icon_path);
+			  }
 		       e_menu_item_callback_set(mi, _e_int_menus_apps_run, a);
 		       app_count++;
 		    }
@@ -450,7 +453,7 @@ _e_int_menus_apps_scan(E_Menu *m)
 		       snprintf(buf, sizeof(buf), "%s/.directory.eap", a->path);
 		       if (!((a->icon_class) && 
 			     (e_util_menu_item_edje_icon_list_set(mi, a->icon_class))))
-			 e_menu_item_icon_edje_set(mi, buf, "icon");
+		          e_menu_item_icon_edje_set(mi, buf, "icon");
 		       e_menu_item_submenu_set(mi, e_int_menus_apps_new(a->path));
 		       app_count++;
 		    }
@@ -705,7 +708,10 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 	  {
 	     if (!((a->icon_class) && 
 		   (e_util_menu_item_edje_icon_list_set(mi, a->icon_class))))
-	       e_menu_item_icon_edje_set(mi, a->path, "icon");
+	        {
+	           e_menu_item_icon_edje_set(mi, a->path, "icon");
+	           if (a->icon_path) e_menu_item_icon_path_set(mi, a->icon_path);
+	        }
 	  }
      }
    mi = e_menu_item_new(m);
@@ -863,7 +869,10 @@ _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
 	  {
 	     if (!((a->icon_class) && 
 		   (e_util_menu_item_edje_icon_list_set(mi, a->icon_class))))
-	       e_menu_item_icon_edje_set(mi, a->path, "icon");
+	        {
+	           e_menu_item_icon_edje_set(mi, a->path, "icon");
+	           if (a->icon_path) e_menu_item_icon_path_set(mi, a->icon_path);
+		}
 	  }
      }
    e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_lost_clients_free_hook);
