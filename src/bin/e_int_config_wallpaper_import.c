@@ -111,7 +111,7 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    import->box_obj = o;
    edje_object_part_swallow(import->bg_obj, "buttons_swallow", o);
 
-  o = evas_object_rectangle_add(evas);
+   o = evas_object_rectangle_add(evas);
    import->event_obj = o;
    mask = 0;
    evas_object_key_grab(o, "Tab", mask, ~mask, 0);
@@ -223,6 +223,8 @@ e_int_config_wallpaper_del(E_Win *win)
    import->exe = NULL;
    e_object_del(E_OBJECT(import->win));
    e_int_config_wallpaper_import_done(import->parent);
+   E_FREE(import->cfdata->file);
+   E_FREE(import->cfdata);
    if (import) free(import);
 }
 
