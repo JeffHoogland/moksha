@@ -1351,28 +1351,33 @@ e_border_focus_set(E_Border *bd, int focus, int set)
      {
 	if (focused)
 	  {
-	     E_Event_Border_Focus_Out *ev;
-//	     printf("unfocus previous\n");
-	     edje_object_signal_emit(focused->bg_object, "passive", "");
-	     if (focused->icon_object)
-	       edje_object_signal_emit(focused->icon_object, "passive", "");
-	     e_focus_event_focus_out(focused);
-
-	     ev = calloc(1, sizeof(E_Event_Border_Focus_Out)); 
-	     ev->border = focused; 
-	     e_object_ref(E_OBJECT(focused));
-
-	     ecore_event_add(E_EVENT_BORDER_FOCUS_OUT, ev,
-			     _e_border_event_border_focus_out_free, NULL);
-
-	     /* FIXME: Sometimes we should leave the window fullscreen! */
-//	     if (focused->fullscreen) e_border_unfullscreen(focused);
-	     focused->focused = 0;
-//		  e_border_focus_set(focused, 0, 0);
-	     if (focused->raise_timer)
+	     if ((!e_object_is_del(E_OBJECT(focused))) &&
+		 (e_object_ref_get(E_OBJECT(focused)) > 0))
 	       {
-		  ecore_timer_del(focused->raise_timer);
-		  focused->raise_timer = NULL;
+		  E_Event_Border_Focus_Out *ev;
+	     
+//		  printf("unfocus previous\n");
+		  edje_object_signal_emit(focused->bg_object, "passive", "");
+		  if (focused->icon_object)
+		    edje_object_signal_emit(focused->icon_object, "passive", "");
+		  e_focus_event_focus_out(focused);
+		  
+		  ev = calloc(1, sizeof(E_Event_Border_Focus_Out)); 
+		  ev->border = focused; 
+		  e_object_ref(E_OBJECT(focused));
+		  
+		  ecore_event_add(E_EVENT_BORDER_FOCUS_OUT, ev,
+				  _e_border_event_border_focus_out_free, NULL);
+		  
+		  /* FIXME: Sometimes we should leave the window fullscreen! */
+//		  if (focused->fullscreen) e_border_unfullscreen(focused);
+		  focused->focused = 0;
+//		  e_border_focus_set(focused, 0, 0);
+		  if (focused->raise_timer)
+		    {
+		       ecore_timer_del(focused->raise_timer);
+		       focused->raise_timer = NULL;
+		    }
 	       }
 	  }
 	e_hints_active_window_set(bd->zone->container->manager, bd);
