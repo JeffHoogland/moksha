@@ -1,6 +1,13 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
+#ifdef E_TYPEDEFS
+
+typedef enum _E_Color_Component E_Color_Component;
+
+#else
 #ifndef E_COLOR_HEADER
 #define E_COLOR_HEADER
-typedef enum _E_Color_Component E_Color_Component;
 
 enum _E_Color_Component
 {
@@ -22,6 +29,8 @@ struct _E_Color
    int a;
 };
 
-void e_color_update_rgb(E_Color *ec);
-void e_color_update_hsv(E_Color *ec);
+EAPI void e_color_update_rgb (E_Color *ec);
+EAPI void e_color_update_hsv (E_Color *ec);
+EAPI void e_color_copy       (E_Color *from, E_Color *to);
+#endif
 #endif
