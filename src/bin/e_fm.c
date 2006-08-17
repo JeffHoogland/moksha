@@ -1487,7 +1487,9 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	    (!strcmp(ic->info.mime, "image/jpeg")) ||
 	    (!strcmp(ic->info.mime, "image/png")) ||
 	    (!strcmp(ic->info.mime, "image/gif")) ||
-	    (!strcmp(ic->info.mime, "image/tiff"))
+	    (!strcmp(ic->info.mime, "image/tiff")) ||
+	    (!strcmp(ic->info.mime, "image/x-xpixmap")) ||
+	    (!strcmp(ic->info.mime, "image/svg+xml"))
 	    )
 	  {
 	     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
