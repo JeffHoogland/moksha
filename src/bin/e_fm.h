@@ -98,7 +98,7 @@ struct _E_Fm2_Icon_Info
 EAPI int                   e_fm2_init(void);
 EAPI int                   e_fm2_shutdown(void);
 EAPI Evas_Object          *e_fm2_add(Evas *evas);
-EAPI void                  e_fm2_path_set(Evas_Object *obj, char *dev, char *path);
+EAPI void                  e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path);
 EAPI void                  e_fm2_path_get(Evas_Object *obj, const char **dev, const char **path);
 EAPI void                  e_fm2_refresh(Evas_Object *obj);
 EAPI const char           *e_fm2_real_path_get(Evas_Object *obj);

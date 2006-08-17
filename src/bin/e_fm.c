@@ -217,7 +217,7 @@ e_fm2_add(Evas *evas)
 }
 
 EAPI void
-e_fm2_path_set(Evas_Object *obj, char *dev, char *path)
+e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
 {
    E_Fm2_Smart_Data *sd;
 
