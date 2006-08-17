@@ -34,8 +34,8 @@ EAPI E_Entry_Dialog *e_entry_dialog_show(const char *title,
 					 const char *initial_text,
 					 const char *button_text,
 					 const char *button2_text, 
-					 void (*func) (char *text, void *data), 
-					 void (*func2) (void *data),
+					 void (*ok_func) (char *text, void *data), 
+					 void (*cancel_func) (void *data),
 					 void *data);
 
 #endif

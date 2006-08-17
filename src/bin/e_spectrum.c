@@ -100,7 +100,6 @@ static void
 _e_spectrum_smart_resize(Evas_Object *o, Evas_Coord w, Evas_Coord h)
 {
   E_Spectrum *sp;
-  Evas_Coord x, y;
 
   sp = evas_object_smart_data_get(o);
   if (!sp) return;
@@ -151,7 +150,6 @@ _e_spectrum_smart_clip_unset(Evas_Object *o)
 static void
 _e_spectrum_smart_init()
 {
-   Evas_Smart *smart;
    if ( _e_spectrum_smart ) return;
    _e_spectrum_smart = evas_smart_new("e_spectrum",
 				      _e_spectrum_smart_add,
@@ -204,7 +202,7 @@ _e_spectrum_color_calc(E_Spectrum *sp, float vx, float vy, float vz, int *r, int
 void
 _e_spectrum_2d_color_at(E_Spectrum *sp, int x, int y, int *r, int *g, int *b)
 {
-  int rr, gg, bb, aa;
+  int rr, gg, bb;
   float h, s, v;
 
   if (!sp || !sp->cv) return;

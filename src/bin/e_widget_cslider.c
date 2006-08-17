@@ -203,7 +203,6 @@ static void
 _e_wid_update_standard(E_Widget_Data *wd)
 {
    int r, g, b;
-   float h, s, v;
    int max, min;
    float vx;
 
@@ -262,7 +261,6 @@ _e_wid_update_standard(E_Widget_Data *wd)
 void
 _e_wid_update_fixed(E_Widget_Data *wd)
 {
-  int r, g, b;
   int max, min;
   float vx;
   if (!wd) return;

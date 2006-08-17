@@ -11,8 +11,8 @@ EAPI E_Entry_Dialog *
 e_entry_dialog_show(const char *title, const char *icon, const char *text,
 		    const char *initial_text,
 		    const char *button_text, const char *button2_text,
-		    void (*func)(char *text, void *data), 
-		    void (*func2)(void *data), void *data) 
+		    void (*ok_func)(char *text, void *data), 
+		    void (*cancel_func)(void *data), void *data) 
 {
    E_Entry_Dialog *ed;
    E_Dialog *dia;
@@ -20,9 +20,9 @@ e_entry_dialog_show(const char *title, const char *icon, const char *text,
    int w, h;
 
    ed = E_OBJECT_ALLOC(E_Entry_Dialog, E_ENTRY_DIALOG_TYPE, _e_entry_dialog_free);
-   ed->ok.func = func;
+   ed->ok.func = ok_func;
    ed->ok.data = data;
-   ed->cancel.func = func2;
+   ed->cancel.func = cancel_func;
    ed->cancel.data = data;
    ed->text = strdup(initial_text);
    

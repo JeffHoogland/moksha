@@ -6,7 +6,7 @@
 #ifndef E_WIDGET_FSEL_H
 #define E_WIDGET_FSEL_H
 
-EAPI Evas_Object *e_widget_fsel_add(Evas *evas, char *dev, char *path, char *selected, char *filter,
+EAPI Evas_Object *e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected, char *filter,
 				    void (*sel_func) (void *data, Evas_Object *obj), void *sel_data,
 				    void (*chg_func) (void *data, Evas_Object *obj), void *chg_data, int preview);
 EAPI const char *e_widget_fsel_selection_path_get(Evas_Object *obj);

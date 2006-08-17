@@ -148,7 +148,6 @@ e_widget_csel_add(Evas *evas, E_Color *color)
 {
    Evas_Object *obj, *o;
    Evas_Object *frame, *table;
-   Evas_Coord mw, mh;
    E_Color*cv;
    int i;
    E_Radio_Group *grp = NULL;

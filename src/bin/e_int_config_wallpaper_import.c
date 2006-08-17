@@ -72,7 +72,7 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    Evas_Coord w, h;
    E_Config_Dialog_Data *cfdata;
    Evas_Modifier_Mask mask;
-   char *fdev, *fpath;
+   const char *fdev, *fpath;
    
    import = E_NEW(Import, 1);
    if (!import) return NULL;

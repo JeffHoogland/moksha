@@ -205,7 +205,9 @@ static int
 _e_cb_timer(void *data)
 {
    E_Thumb *eth;
+   /*
    Evas_List *del_list = NULL, *l;
+   */
 
    /* take thumb at head of list */
    if (_thumblist)

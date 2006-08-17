@@ -192,7 +192,7 @@ _e_wid_fsel_files_selected(void *data, Evas_Object *obj, void *event_info)
 
 /* externally accessible functions */
 EAPI Evas_Object *
-e_widget_fsel_add(Evas *evas, char *dev, char *path, char *selected, char *filter, 
+e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected, char *filter, 
 		  void (*sel_func) (void *data, Evas_Object *obj), void *sel_data,
 		  void (*chg_func) (void *data, Evas_Object *obj), void *chg_data,
 		  int preview)
