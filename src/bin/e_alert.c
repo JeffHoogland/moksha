@@ -40,7 +40,7 @@ e_alert_init(const char *disp)
    /* dont i18n this - i dont want gettext doing anything as this is called 
       from a segv */
    title = "Enlightenment Error";
-   str1 = "(F1) Restart";
+   str1 = "(F1) Recover";
    str2 = "(F2) Exit";
    
    wid = DisplayWidth(dd, DefaultScreen(dd));
