@@ -586,16 +586,17 @@ e_container_border_add(E_Border *bd)
 EAPI void
 e_container_border_remove(E_Border *bd)
 {
-   int i;
+   int i, cl = 0;
 
    /* FIXME: Could revert to old behaviour, ->layer is consistent
     * with pos now. */
-   bd->zone->container->clients--;
    for (i = 0; i < 7; i++)
      {
 	bd->zone->container->layers[i].clients =
 	   evas_list_remove(bd->zone->container->layers[i].clients, bd);
+	cl += evas_list_count(bd->zone->container->layers[i].clients);
      }
+   bd->zone->container->clients = cl;
 }
 
 EAPI void
