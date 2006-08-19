@@ -93,6 +93,21 @@ _e_fm_mime_update(void)
 	static time_t last_changed = 0;
 	time_t ch;
 	
+	snprintf(buf, sizeof(buf), "/usr/local/etc/mime.types");
+	ch = ecore_file_mod_time(buf);
+	if ((ch != last_changed) || (reload))
+	  {
+	     _e_fm_mime_all_free();
+	     last_changed = ch;
+	     _e_fm_mime_mime_types_load(buf);
+	     reload = 1;
+	  }
+     }
+
+     {
+	static time_t last_changed = 0;
+	time_t ch;
+	
 	snprintf(buf, sizeof(buf), "/etc/mime.types");
 	ch = ecore_file_mod_time(buf);
 	if ((ch != last_changed) || (reload))
@@ -101,6 +116,19 @@ _e_fm_mime_update(void)
 	     last_changed = ch;
 	     _e_fm_mime_mime_types_load(buf);
 	     reload = 1;
+	  }
+     }
+
+     {
+	static time_t last_changed = 0;
+	time_t ch;
+	
+	snprintf(buf, sizeof(buf), "/usr/local/share/mime/globs");
+	ch = ecore_file_mod_time(buf);
+	if ((ch != last_changed) || (reload))
+	  {
+	     last_changed = ch;
+	     _e_fm_mime_shared_mimeinfo_globs_load(buf);
 	  }
      }
 
