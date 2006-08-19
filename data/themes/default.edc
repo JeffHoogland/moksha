@@ -22,7 +22,6 @@ fonts {
 }
 
 collections {
-#include "default_entry.edc"   
 #include "default_background.edc"
 #include "default_battery.edc"
 #include "default_border.edc"
@@ -46,6 +45,7 @@ collections {
 #include "default_pointer.edc"
 #include "default_about.edc"
 #include "default_theme_about.edc"
+#include "default_entry.edc"   
 #include "default_fileman.edc"
 #include "default_filesel.edc"   
 #include "default_check.edc"

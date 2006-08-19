@@ -75,6 +75,30 @@ group {
       }
    }
 }
+
+group {
+   name: "widgets/entry/text";
+   parts {
+      part {
+         name: "text";
+	 type: TEXT;
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    color: 0 0 0 255;
+	    text {
+	       text: "Entry";
+	       font: "Edje-Vera";
+	       size: 10;
+	       min: 1 1;
+	       align: 0.0 0.0;
+               text_class: "entry";
+	    }
+	 }
+      }
+   }
+}
+
 group {
    name: "widgets/entry/cursor";
    min: 1 0;
@@ -89,6 +113,7 @@ group {
       }
    }
 }
+
 group {
    name: "widgets/entry/selection";
    data {
