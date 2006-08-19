@@ -43,7 +43,7 @@ e_fm_mime_filename_get(const char *fname)
    for (l = mimes; l; l = l->next)
      {
 	mime = l->data;
-	if (e_util_glob_match(fname, mime->glob))
+	if (e_util_glob_case_match(fname, mime->glob))
 	  {
 	     mimes = evas_list_remove_list(mimes, l);
 	     mimes = evas_list_prepend(mimes, mime);
