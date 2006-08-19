@@ -345,6 +345,7 @@ _e_thumb_generate(E_Thumb *eth)
 	else
 	  {
 	     im = evas_object_image_add(evas);
+	     evas_object_image_load_size_set(im, eth->w, eth->h);
 	     evas_object_image_file_set(im, eth->file, NULL);
 	     iw = 0; ih = 0;
 	     evas_object_image_size_get(im, &iw, &ih);
