@@ -744,24 +744,37 @@ e_editable_char_size_get(Evas_Object *editable, int *w, int *h)
 {
    int tw = 0, th = 0;
    Evas *evas;
+   Evas_Object *text_obj;
    E_Editable_Smart_Data *sd;
    char *text = "Tout est bon dans l'abricot sauf le noyau!"
                 "Wakey wakey! Eggs and Bakey!";
+   const char *font, *font_source;
+   Evas_Text_Style_Type style;
+   int font_size;
 
    if (w)   *w = 0;
    if (h)   *h = 0;
    
    if ((!editable) || (!(evas = evas_object_evas_get(editable))))
      return;
-   if ((!(sd = evas_object_smart_data_get(editable))))
+   if (!(sd = evas_object_smart_data_get(editable)))
+     return;
+   if (!(text_obj = edje_object_part_object_get(sd->text_object, "text")))
      return;
    
    if ((sd->average_char_w <= 0) || (sd->average_char_h <= 0))
      {
-        /* TODO: 1st method */
-        edje_object_part_text_set(sd->text_object, "text", text);
-        edje_object_size_min_calc(sd->text_object, &tw, &th);
-        edje_object_part_text_set(sd->text_object, "text", sd->text ? sd->text : "NULL");
+        font_source = evas_object_text_font_source_get(text_obj);
+        evas_object_text_font_get(text_obj, &font, &font_size);
+        style = evas_object_text_style_get(text_obj);
+        
+        text_obj = evas_object_text_add(evas);
+        evas_object_text_font_source_set(text_obj, font_source);
+        evas_object_text_font_set(text_obj, font, font_size);
+        evas_object_text_style_set(text_obj, style);
+        evas_object_text_text_set(text_obj, text);
+        evas_object_geometry_get(text_obj, NULL, NULL, &tw, &th);
+        evas_object_del(text_obj);
         
         sd->average_char_w = tw / strlen(text);
         sd->average_char_h = th;
