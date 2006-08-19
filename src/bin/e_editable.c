@@ -26,7 +26,6 @@ struct _E_Editable_Smart_Data
    int cursor_visible;
    int selection_pos;
    int selection_visible;
-   int selectable;
    int password_mode;
    
    char *text;
@@ -97,7 +96,6 @@ e_editable_add(Evas *evas)
         _e_editable_smart_use = 0;
      }
    
-   _e_editable_smart_use++;
    return evas_object_smart_add(evas, _e_editable_smart);
 }
 
@@ -152,6 +150,8 @@ e_editable_theme_set(Evas_Object *editable, const char *category, const char *gr
      }
    
    /* TODO: font */
+   sd->average_char_w = -1;
+   sd->average_char_h = -1;
    
    _e_editable_cursor_update(editable);
 }
@@ -512,9 +512,9 @@ e_editable_cursor_hide(Evas_Object *editable)
      return;
    
    sd->cursor_visible = 0;
-   if (evas_object_visible_get(editable))
+   evas_object_hide(sd->cursor_object);
+   if (sd->cursor_timer)
      {
-        evas_object_hide(sd->cursor_object);
         ecore_timer_del(sd->cursor_timer);
         sd->cursor_timer = NULL;
      }
@@ -543,9 +543,7 @@ e_editable_selection_pos_set(Evas_Object *editable, int pos)
 }
 
 /**
- * Gets the position of the selection bound of the editable object. If the
- * editable object is not selectable, this function returns the position of the
- * cursor instead.
+ * Gets the position of the selection bound of the editable object
  *
  * @param editable an editable object
  * @return Returns the position of the selection bound of the editable object
@@ -557,7 +555,7 @@ e_editable_selection_pos_get(Evas_Object *editable)
    
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return 0;
-   return sd->selectable ? sd->selection_pos : sd->cursor_pos;
+   return sd->selection_pos;
 }
 
 /**
@@ -653,8 +651,7 @@ e_editable_unselect_all(Evas_Object *editable)
 }
 
 /**
- * Shows the selection of the editable object. The editable object need to be
- * selectable (see e_editable_selectable_set())
+ * Shows the selection of the editable object
  *
  * @param editable an editable object
  */
@@ -669,7 +666,7 @@ e_editable_selection_show(Evas_Object *editable)
      return;
    
    sd->selection_visible = 1;
-   if ((sd->selectable) && (evas_object_visible_get(editable)) &&
+   if ((evas_object_visible_get(editable)) &&
        (sd->cursor_pos != sd->selection_pos))
      evas_object_show(sd->selection_object);
 }
@@ -691,53 +688,6 @@ e_editable_selection_hide(Evas_Object *editable)
    
    sd->selection_visible = 0;
    evas_object_hide(sd->selection_object);
-}
-
-/**
- * Sets whether or not the editable object is selectable. If the editable object
- * is not selectable, the selection rectangle won't be shown, and
- * e_editable_selection_pos_get() will then return the position of the cursor
- *
- * @param editable an editable object
- * @param selection 1 to make the editable object selectable, 0 otherwise
- */
-EAPI void
-e_editable_selectable_set(Evas_Object *editable, int selectable)
-{
-   E_Editable_Smart_Data *sd;
-   
-   if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
-     return;
-   if (sd->selectable == selectable)
-     return;
-   
-   sd->selectable = selectable;
-   
-   if (sd->selectable)
-     e_editable_unselect_all(editable);
-   
-   if ((sd->selectable) && (sd->selection_visible) &&
-       (evas_object_visible_get(editable)) &&
-       (sd->cursor_pos != sd->selection_pos))
-     evas_object_show(sd->selection_object);
-   else
-     evas_object_hide(sd->selection_object);
-}
-
-/**
- * Gets whether or not the editable object is selectable
- *
- * @param editable an editable object
- * @return Returns 1 if the editable object is selectable, 0 otherwise
- */
-EAPI int
-e_editable_selectable_get(Evas_Object *editable)
-{
-   E_Editable_Smart_Data *sd;
-   
-   if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
-     return 0;
-   return sd->selectable;
 }
 
 /**
@@ -869,7 +819,6 @@ _e_editable_text_insert(Evas_Object *editable, int pos, const char *text)
      index = evas_string_char_next_get(sd->text, index, NULL);
    
    if ((unicode_length <= 0) || (char_length <= 0))
-   if ((unicode_length <= 0) || (char_length <= 0))
      return 0;
    
    prev_length = sd->char_length;
@@ -993,8 +942,7 @@ _e_editable_selection_update(Evas_Object *editable)
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
    
-   if ((sd->cursor_pos == sd->selection_pos) ||
-      (!sd->selection_visible) || (!sd->selectable))
+   if ((sd->cursor_pos == sd->selection_pos) || (!sd->selection_visible))
      evas_object_hide(sd->selection_object);
    else
      {
@@ -1146,6 +1094,7 @@ _e_editable_smart_add(Evas_Object *object)
    if (!sd)
      return;
    
+   _e_editable_smart_use++;
    evas_object_smart_data_set(object, sd);
    
    sd->text = malloc((E_EDITABLE_BLOCK_SIZE + 1) * sizeof(char));
@@ -1160,15 +1109,14 @@ _e_editable_smart_add(Evas_Object *object)
    sd->font_style = EVAS_TEXT_STYLE_PLAIN;
    sd->cursor_width = 1;
    sd->selection_on_fg = 0;
-   sd->average_char_w = 0;
-   sd->average_char_h = 0;
+   sd->average_char_w = -1;
+   sd->average_char_h = -1;
    
    sd->cursor_timer = NULL;
    sd->cursor_pos = 0;
    sd->cursor_visible = 1;
    sd->selection_pos = 0;
    sd->selection_visible = 1;
-   sd->selectable = 1;
    sd->password_mode = 0;
 
    sd->clip_object = evas_object_rectangle_add(evas);
@@ -1292,8 +1240,7 @@ _e_editable_smart_show(Evas_Object *object)
           }
      }
    
-   if ((sd->selectable) && (sd->selection_visible) &&
-      (sd->cursor_pos != sd->selection_pos))
+   if ((sd->selection_visible) && (sd->cursor_pos != sd->selection_pos))
      evas_object_show(sd->selection_object);
 }
 

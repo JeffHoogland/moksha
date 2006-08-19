@@ -37,8 +37,6 @@ EAPI void         e_editable_select_all              (Evas_Object *editable);
 EAPI void         e_editable_unselect_all            (Evas_Object *editable);
 EAPI void         e_editable_selection_show          (Evas_Object *editable);
 EAPI void         e_editable_selection_hide          (Evas_Object *editable);
-EAPI void         e_editable_selectable_set          (Evas_Object *editable, int selectable);
-EAPI int          e_editable_selectable_get          (Evas_Object *editable);
 
 EAPI int          e_editable_pos_get_from_coords     (Evas_Object *editable, Evas_Coord x, Evas_Coord y);
 EAPI void         e_editable_char_size_get           (Evas_Object *editable, int *w, int *h);
