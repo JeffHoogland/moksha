@@ -3,8 +3,6 @@
  */
 #include "e.h"
 
-#define E_EDITABLE_CURSOR_SHOW_DELAY 1.25
-#define E_EDITABLE_CURSOR_HIDE_DELAY 0.25
 #define E_EDITABLE_CURSOR_MARGIN 5
 
 #define E_EDITABLE_BLOCK_SIZE 128
@@ -21,7 +19,6 @@ struct _E_Editable_Smart_Data
    Evas_Object *cursor_object;
    Evas_Object *selection_object;
 
-   Ecore_Timer *cursor_timer;
    int cursor_pos;
    int cursor_visible;
    int selection_pos;
@@ -46,7 +43,6 @@ static void _e_editable_cursor_update(Evas_Object *editable);
 static void _e_editable_selection_update(Evas_Object *editable);
 static void _e_editable_text_update(Evas_Object *editable);
 static void _e_editable_text_position_update(Evas_Object *editable, Evas_Coord real_w);
-static int _e_editable_cursor_timer_cb(void *data);
 
 static void _e_editable_smart_add(Evas_Object *object);
 static void _e_editable_smart_del(Evas_Object *object);
@@ -489,13 +485,7 @@ e_editable_cursor_show(Evas_Object *editable)
      return;
    
    sd->cursor_visible = 1;
-   if (evas_object_visible_get(editable))
-     {
-        evas_object_show(sd->cursor_object);
-        sd->cursor_timer = ecore_timer_add(E_EDITABLE_CURSOR_SHOW_DELAY,
-                                           _e_editable_cursor_timer_cb,
-                                           editable);
-     }
+   evas_object_show(sd->cursor_object);
 }
 
 /**
@@ -515,11 +505,6 @@ e_editable_cursor_hide(Evas_Object *editable)
    
    sd->cursor_visible = 0;
    evas_object_hide(sd->cursor_object);
-   if (sd->cursor_timer)
-     {
-        ecore_timer_del(sd->cursor_timer);
-        sd->cursor_timer = NULL;
-     }
 }
 
 /**
@@ -924,11 +909,8 @@ _e_editable_cursor_update(Evas_Object *editable)
           }
      }
    
-   if (sd->cursor_timer)
-   {
-      evas_object_show(sd->cursor_object);
-        ecore_timer_interval_set(sd->cursor_timer, E_EDITABLE_CURSOR_SHOW_DELAY);
-   }
+   if (sd->cursor_visible)
+     evas_object_show(sd->cursor_object);
    
    _e_editable_selection_update(editable);
    _e_editable_text_position_update(editable, -1);
@@ -1067,29 +1049,6 @@ _e_editable_text_position_update(Evas_Object *editable, Evas_Coord real_w)
    }
 }
 
-/* Shows/hides the cursor on regular interval */
-static int
-_e_editable_cursor_timer_cb(void *data)
-{
-   Evas_Object *editable;
-   E_Editable_Smart_Data *sd;
-   
-   if ((!(editable = data)) || (!(sd = evas_object_smart_data_get(editable))))
-     return 1;
-   
-   if (evas_object_visible_get(sd->cursor_object))
-     {
-        evas_object_hide(sd->cursor_object);
-        ecore_timer_interval_set(sd->cursor_timer, E_EDITABLE_CURSOR_HIDE_DELAY);
-     }
-   else
-     {
-        evas_object_show(sd->cursor_object);
-        ecore_timer_interval_set(sd->cursor_timer, E_EDITABLE_CURSOR_SHOW_DELAY);
-     }
-   
-   return 1;
-}
 
 /* Editable object's smart methods */
 
@@ -1120,7 +1079,6 @@ _e_editable_smart_add(Evas_Object *object)
    sd->average_char_w = -1;
    sd->average_char_h = -1;
    
-   sd->cursor_timer = NULL;
    sd->cursor_pos = 0;
    sd->cursor_visible = 1;
    sd->selection_pos = 0;
@@ -1164,8 +1122,6 @@ _e_editable_smart_del(Evas_Object *object)
    evas_object_del(sd->text_object);
    evas_object_del(sd->cursor_object);
    evas_object_del(sd->selection_object);
-   if (sd->cursor_timer)
-     ecore_timer_del(sd->cursor_timer);
    
    free(sd);
    
@@ -1231,17 +1187,7 @@ _e_editable_smart_show(Evas_Object *object)
    evas_object_show(sd->text_object);
    
    if (sd->cursor_visible)
-     {
-        evas_object_show(sd->cursor_object);
-        if (sd->cursor_timer)
-          ecore_timer_interval_set(sd->cursor_timer, E_EDITABLE_CURSOR_SHOW_DELAY);
-        else
-          {
-             sd->cursor_timer = ecore_timer_add(E_EDITABLE_CURSOR_SHOW_DELAY,
-                                                _e_editable_cursor_timer_cb,
-                                                object);
-          }
-     }
+     evas_object_show(sd->cursor_object);
    
    if ((sd->selection_visible) && (sd->cursor_pos != sd->selection_pos))
      evas_object_show(sd->selection_object);
@@ -1261,12 +1207,6 @@ _e_editable_smart_hide(Evas_Object *object)
    evas_object_hide(sd->text_object);
    evas_object_hide(sd->cursor_object);
    evas_object_hide(sd->selection_object);
-   
-   if (sd->cursor_timer)
-     {
-        ecore_timer_del(sd->cursor_timer);
-        sd->cursor_timer = NULL;
-     }
 }
 
 /* Changes the color of the editable object */
