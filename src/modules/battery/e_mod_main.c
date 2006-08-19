@@ -932,7 +932,7 @@ _battery_bsd_acpi_check(void)
    len = sizeof(life);
    if (sysctl(mib_life, 4, &life, &len, NULL, 0) == -1)
       /* ERROR */
-      level = -1; 
+      level = -1;
 
    bat_val = life;
       
@@ -1008,7 +1008,7 @@ _battery_bsd_acpi_check(void)
 		    stat->alarm = 1;
 	       }
 	  }
-	if (!level)
+	if (level == -1)
           {
 	     stat->reading = strdup(_("BAD DRIVER"));
 	     stat->time = strdup("--:--");
