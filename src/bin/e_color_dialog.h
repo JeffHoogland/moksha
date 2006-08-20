@@ -19,7 +19,7 @@ struct _E_Color_Dialog
    E_Dialog            *dia;
    
    E_Color             *color;
-   
+  
    void (*select_func)(E_Color_Dialog *dia, E_Color *color, void *data);
    void  *select_data;
    void (*cancel_func)(E_Color_Dialog *dia, E_Color *color, void *data);

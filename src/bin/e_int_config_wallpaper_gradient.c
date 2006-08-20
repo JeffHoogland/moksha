@@ -58,6 +58,7 @@ static void _import_cb_delete(E_Win *win);
 static void _import_cb_close(void *data, E_Dialog *dia);
 static void _import_cb_ok(void *data, E_Dialog *dia);
 static void _import_config_save(Import *import);
+static void _import_cb_dia_del(E_Object *obj);
 
 EAPI E_Dialog *
 e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
@@ -81,7 +82,9 @@ e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
 	return NULL;	
      }
 
-   dia->win->data = import;
+   dia->data = import;
+   e_object_del_attach_func_set(E_OBJECT(dia), _import_cb_dia_del);
+   e_win_centered_set(dia->win, 1);
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->mode = GRAD_H;
@@ -96,7 +99,6 @@ e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
    import->parent = parent;
 
    e_dialog_title_set(dia, _("Create a gradient..."));
-   // e_win_delete_callback_set(dia->win, _import_cb_delete);
 
    cfdata->color1 = calloc(1, sizeof(E_Color));
    cfdata->color1->a = 255;
@@ -190,7 +192,7 @@ e_int_config_wallpaper_gradient_del(E_Dialog *dia)
 {
    Import *import;
 
-   import = dia->win->data;
+   import = dia->data;
    _import_config_save(import);
 
    if (import->exe_handler) ecore_event_handler_del(import->exe_handler);
@@ -376,11 +378,6 @@ _import_cb_edje_cc_exit(void *data, int type, void *event)
 }
 
 static void 
-_import_cb_delete(E_Win *win) 
-{
-}
-
-static void 
 _import_cb_close(void *data, E_Dialog *dia) 
 {
    e_int_config_wallpaper_gradient_del(dia);
@@ -391,7 +388,7 @@ _import_cb_ok(void *data, E_Dialog *dia)
 {
    Import *import;
 
-   import = dia->win->data;
+   import = dia->data;
 
    if (dia && import->cfdata->name)
      {
@@ -401,3 +398,9 @@ _import_cb_ok(void *data, E_Dialog *dia)
    e_int_config_wallpaper_gradient_del(dia);
 }
 
+static void
+_import_cb_dia_del(E_Object *obj)
+{
+   E_Dialog *dia = obj;
+   e_int_config_wallpaper_gradient_del(dia);
+}

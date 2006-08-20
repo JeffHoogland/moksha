@@ -7,6 +7,7 @@
 static void _e_color_dialog_button1_click(void *data, E_Dialog *edia);
 static void _e_color_dialog_button2_click(void *data, E_Dialog *edia);
 static void _e_color_dialog_free(E_Color_Dialog *dia);
+static void _e_color_dialog_dia_del(E_Object *obj);
 
 /**
  * Create a color selector dialog.
@@ -43,6 +44,9 @@ e_color_dialog_new (E_Container *con, const E_Color *color)
    e_dialog_button_add(dia->dia, "Cancel", NULL,  _e_color_dialog_button2_click, dia);
    e_dialog_resizable_set(dia->dia, 1);
    e_win_centered_set(dia->dia->win, 1);
+
+   dia->dia->data = dia;
+   e_object_del_attach_func_set(E_OBJECT(dia->dia), _e_color_dialog_dia_del);
 
    return dia;
 }
@@ -88,7 +92,7 @@ static void
 _e_color_dialog_button2_click(void *data, E_Dialog *edia)
 {
    E_Color_Dialog *dia;
-   
+
    dia = data;
    if(dia->cancel_func && dia->color)
      dia->cancel_func(dia, dia->color, dia->cancel_data);
@@ -98,8 +102,15 @@ _e_color_dialog_button2_click(void *data, E_Dialog *edia)
 static void
 _e_color_dialog_free(E_Color_Dialog *dia)
 {
-   printf("DIALOG FREE!\n");
    e_object_unref(E_OBJECT(dia->dia));
    E_FREE(dia->color);
    E_FREE(dia);
+}
+
+static void
+_e_color_dialog_dia_del(E_Object *obj)
+{
+   E_Dialog *dia = obj;
+   E_Color_Dialog *cdia = dia->data;
+   _e_color_dialog_button2_click(cdia, dia);
 }

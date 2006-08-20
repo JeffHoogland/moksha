@@ -76,6 +76,7 @@ _e_wid_del_hook(Evas_Object *obj)
    wd = e_widget_data_get(obj);
    if (!wd) return;
 
+   if (wd->dia) e_object_unref(E_OBJECT(wd->dia));
    E_FREE(wd);
 }
 

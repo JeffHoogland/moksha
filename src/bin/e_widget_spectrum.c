@@ -84,6 +84,8 @@ e_widget_spectrum_add(Evas *evas, E_Color_Component mode, E_Color *cv)
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP, _e_wid_cb_up, obj);
    wd->o_event = o;
 
+   e_widget_spectrum_update(obj, 0);
+
    return obj;
 }
 

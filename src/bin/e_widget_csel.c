@@ -68,21 +68,33 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
 	       {
 		case E_COLOR_COMPONENT_R:
 		   wd->cv->r = atoi(wd->values[i]);
+		   if (wd->cv->r > 255) wd->cv->r = 255;
+		   if (wd->cv->r < 0) wd->cv->r = 0;
 		   break;
 		case E_COLOR_COMPONENT_G:
 		   wd->cv->g = atoi(wd->values[i]);
+		   if (wd->cv->g > 255) wd->cv->g = 255;
+		   if (wd->cv->g < 0) wd->cv->g = 0;
 		   break;
 		case E_COLOR_COMPONENT_B:
 		   wd->cv->b = atoi(wd->values[i]);
+		   if (wd->cv->b > 255) wd->cv->b = 255;
+		   if (wd->cv->b < 0) wd->cv->b = 0;
 		   break;
 		case E_COLOR_COMPONENT_H:
 		   wd->cv->h = atof(wd->values[i]);
+		   if (wd->cv->h > 360) wd->cv->h = 360;
+		   if (wd->cv->h < 0) wd->cv->h = 0;
 		   break;
 		case E_COLOR_COMPONENT_S:
 		   wd->cv->s = atof(wd->values[i]);
+		   if (wd->cv->s > 1) wd->cv->s = 1;
+		   if (wd->cv->s < 0) wd->cv->s = 0;
 		   break;
 		case E_COLOR_COMPONENT_V:
 		   wd->cv->v = atof(wd->values[i]);
+		   if (wd->cv->v > 1) wd->cv->v = 1;
+		   if (wd->cv->v < 0) wd->cv->v = 0;
 		   break;
 	       }
 	     break;
