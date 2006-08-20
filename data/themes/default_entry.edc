@@ -120,9 +120,18 @@ group {
    }
    programs {
       program {
-         name: "cursor_show";
-	 signal:  "show";
+         name: "on_cursor_show";
+	 signal:  "cursor_show";
 	 source:  "";
+         action: ACTION_STOP;
+         target: "cursor_show";
+         target: "cursor_hide";
+         target: "cursor_show_timer";
+         target: "cursor_hide_timer";
+         after: "cursor_show";
+      }
+      program {
+         name: "cursor_show";
          action: STATE_SET "visible" 0.0;
          target: "cursor";
          after: "cursor_show_timer";
@@ -135,7 +144,7 @@ group {
       }
       program {
          name: "cursor_show_timer";
-         in: 1.25 0.0;
+         in: 1.0 0.0;
          after: "cursor_hide";
       }
       program {

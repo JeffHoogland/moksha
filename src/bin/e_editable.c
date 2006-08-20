@@ -485,7 +485,11 @@ e_editable_cursor_show(Evas_Object *editable)
      return;
    
    sd->cursor_visible = 1;
-   evas_object_show(sd->cursor_object);
+   if (evas_object_visible_get(editable))
+     {
+        evas_object_show(sd->cursor_object);
+        edje_object_signal_emit(sd->cursor_object, "cursor_show", "");
+     }
 }
 
 /**
@@ -922,8 +926,11 @@ _e_editable_cursor_update(Evas_Object *editable)
           }
      }
    
-   if (sd->cursor_visible)
-     evas_object_show(sd->cursor_object);
+   if (sd->cursor_visible && evas_object_visible_get(editable))
+     {
+        evas_object_show(sd->cursor_object);
+        edje_object_signal_emit(sd->cursor_object, "cursor_show", "");
+     }
    
    _e_editable_selection_update(editable);
    _e_editable_text_position_update(editable, -1);
@@ -1107,14 +1114,17 @@ _e_editable_smart_add(Evas_Object *object)
    evas_object_smart_member_add(sd->event_object, object);
    
    sd->text_object = edje_object_add(evas);
+   evas_object_pass_events_set(sd->text_object, 1);
    evas_object_clip_set(sd->text_object, sd->clip_object);
    evas_object_smart_member_add(sd->text_object, object);
    
    sd->selection_object = edje_object_add(evas);
+   evas_object_pass_events_set(sd->selection_object, 1);
    evas_object_clip_set(sd->selection_object, sd->clip_object);
    evas_object_smart_member_add(sd->selection_object, object);
    
    sd->cursor_object = edje_object_add(evas);
+   evas_object_pass_events_set(sd->cursor_object, 1);
    evas_object_clip_set(sd->cursor_object, sd->clip_object);
    evas_object_smart_member_add(sd->cursor_object, object);
    
@@ -1200,7 +1210,10 @@ _e_editable_smart_show(Evas_Object *object)
    evas_object_show(sd->text_object);
    
    if (sd->cursor_visible)
-     evas_object_show(sd->cursor_object);
+     {
+        evas_object_show(sd->cursor_object);
+        edje_object_signal_emit(sd->cursor_object, "cursor_show", "");
+     }
    
    if ((sd->selection_visible) && (sd->cursor_pos != sd->selection_pos))
      evas_object_show(sd->selection_object);

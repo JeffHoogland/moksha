@@ -283,6 +283,7 @@ _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    int selecting;
    int changed = 0;
    char *range;
+   E_Win *win;
    
    if ((!obj) || (!(sd = evas_object_smart_data_get(obj))))
      return;
@@ -379,7 +380,10 @@ _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
                  range = e_editable_text_range_get(editable, start_pos, end_pos);
                  if (range)
                    {
-                      //ecore_x_selection_clipboard_set();
+                      if ((win = e_win_evas_object_win_get(obj)))
+                        ecore_x_selection_clipboard_set(win->evas_win,
+                                                        range,
+                                                        strlen(range) + 1);
                       free(range);
                    }
                  if ((sd->enabled) && (strcmp(event->keyname, "x") == 0))
