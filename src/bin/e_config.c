@@ -473,6 +473,13 @@ e_config_init(void)
 
    E_CONFIG_VAL(D, T, wallpaper_import_last_dev, STR);
    E_CONFIG_VAL(D, T, wallpaper_import_last_path, STR);
+
+   E_CONFIG_VAL(D, T, wallpaper_grad_c1_r, INT);
+   E_CONFIG_VAL(D, T, wallpaper_grad_c1_g, INT);
+   E_CONFIG_VAL(D, T, wallpaper_grad_c1_b, INT);
+   E_CONFIG_VAL(D, T, wallpaper_grad_c2_r, INT);
+   E_CONFIG_VAL(D, T, wallpaper_grad_c2_g, INT);
+   E_CONFIG_VAL(D, T, wallpaper_grad_c2_b, INT);
    
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -1167,6 +1174,15 @@ e_config_init(void)
    IFCFG(0x0096); /* the version # where this value(s) was introduced */
    e_config->wallpaper_import_last_dev = evas_stringshare_add("~/");
    e_config->wallpaper_import_last_path = evas_stringshare_add("/");
+   IFCFGEND;
+
+   IFCFG(0x0098);
+   e_config->wallpaper_grad_c1_r = 0;
+   e_config->wallpaper_grad_c1_g = 0;
+   e_config->wallpaper_grad_c1_b = 0;
+   e_config->wallpaper_grad_c2_r = 255;
+   e_config->wallpaper_grad_c2_g = 255;
+   e_config->wallpaper_grad_c2_b = 255;
    IFCFGEND;
    
 #if 0 /* example of new config */
