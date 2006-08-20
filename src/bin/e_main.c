@@ -95,8 +95,8 @@ main(int argc, char **argv)
    sigaction(SIGABRT, &action, NULL);
 
    t = ecore_time_get();
-   s = getenv("START_TIME");
-   if ((s) && (getenv("CRASHED")))
+   s = getenv("E_START_TIME");
+   if ((s) && (!getenv("E_RESTART_OK")))
      {
 	tstart = atof(s);
 	if ((t - tstart) < 5.0)
@@ -104,11 +104,10 @@ main(int argc, char **argv)
 	     safe_mode = 1;
 	  }
      }
-   e_util_env_set("CRASHED", NULL);
    
    tstart = t;
    snprintf(buf, sizeof(buf), "%1.1f", tstart);
-   e_util_env_set("START_TIME", buf);
+   e_util_env_set("E_START_TIME", buf);
    
    /* FIXME: this is the init code for letting e be relocatable. right now
     * its not used - so i want to see if it can reliably determine its exe
@@ -159,12 +158,12 @@ main(int argc, char **argv)
    /* for debugging by redirecting stdout of e to a log file to tail */
    setvbuf(stdout, NULL, _IONBF, 0);
       
-   if (getenv("NOSTARTUP")) nostartup = 1;
-   if (getenv("RESTART")) after_restart = 1;
+   if (getenv("E_RESTART")) after_restart = 1;
    
    if (getenv("DESKTOP_STARTUP_ID")) e_util_env_set("DESKTOP_STARTUP_ID", NULL);
    
-   e_util_env_set("RESTART", "1");
+   e_util_env_set("E_RESTART_OK", NULL);
+   e_util_env_set("E_RESTART", "1");
    
    /* envrionment varabiles so you know E is running/launched you */
    e_util_env_set("PANTS", "ON");
@@ -194,22 +193,24 @@ main(int argc, char **argv)
 	  {
 	     good = 1;
 	     evil = 0;
+	     printf("LA LA LA\n");
 	  }
 	else if (!strcmp(argv[i], "-evil"))
 	  {
 	     good = 0;
 	     evil = 1;
+	     printf("MUHAHAHAHHAHAHAHAHA\n");
 	  }
 	else if (!strcmp(argv[i], "-psychotic"))
 	  {
 	     good = 1;
 	     evil = 1;
+	     printf("MUHAHALALALALALALALA\n");
 	  }
 	else if ((!strcmp(argv[i], "-profile")) && (i < (argc - 1)))
 	  {
 	     i++;
-	     
-	     e_util_env_set("CONF_PROFILE", argv[i]);
+	     e_util_env_set("E_CONF_PROFILE", argv[i]);
 	  }
 	else if ((!strcmp(argv[i], "-h")) ||
 		 (!strcmp(argv[i], "-help")) ||
@@ -734,6 +735,7 @@ main(int argc, char **argv)
 	e_app_unmonitor_all();
 	e_ipc_shutdown();
 	ecore_file_shutdown();
+	e_util_env_set("E_RESTART_OK", "1");
 	ecore_app_restart();
      }
 

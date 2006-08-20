@@ -25,7 +25,6 @@ e_sigseg_act(int x, siginfo_t *info, void *data)
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
    ecore_x_sync();
-   e_util_env_set("CRASHED", "SEGV");
    e_alert_show("This is very bad. Enlightenment has segfaulted.\n"
 		"This is not meant to happen and is likely a sign of a\n"
 		"bug in Enlightenment or the libraries it relies on.\n"
@@ -51,7 +50,6 @@ e_sigseg_act(int x, siginfo_t *info, void *data)
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
    ecore_x_sync();
-   e_util_env_set("CRASHED", "SEGV");
    e_alert_show("This is very bad. Enlightenment has segfaulted.\n"
 		"This is not meant to happen and is likely a sign of a\n"
 		"bug in Enlightenment or the libraries it relies on.\n"
@@ -78,7 +76,6 @@ e_sigill_act(int x, siginfo_t *info, void *data)
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
    ecore_x_sync();
-   e_util_env_set("CRASHED", "ILL");
    e_alert_show("This is very bad. Enlightenment has executed and illegal\n"
 		"instruction. This is most likely because Enlightenment or\n"
 		"a library it depends on has been compiled for a CPU type\n"
@@ -105,7 +102,6 @@ e_sigfpe_act(int x, siginfo_t *info, void *data)
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
    ecore_x_sync();
-   e_util_env_set("CRASHED", "FPE");
    e_alert_show("This is very bad. Enlightenment has recieved a floating\n"
 		"point exception. This is probably due to a divide by 0\n"
 		"in Enlightenment or a library it depends on.\n"
@@ -131,7 +127,6 @@ e_sigbus_act(int x, siginfo_t *info, void *data)
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
    ecore_x_sync();
-   e_util_env_set("CRASHED", "BUS");
    e_alert_show("This is very bad. Enlightenment has recieved a bus error.\n"
 		"This could be for many reasons - accessing memory not in\n"
 		"its available address space or unable to be paged in.\n"
@@ -157,7 +152,6 @@ e_sigabrt_act(int x, siginfo_t *info, void *data)
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
    ecore_x_sync();
-   e_util_env_set("CRASHED", "ABRT");
    e_alert_show("This is very bad. Enlightenment has recieved an abort.\n"
 		"This could be for many reasons - accessing memory not in\n"
 		"its available address space or unable to be paged in.\n"

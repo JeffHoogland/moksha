@@ -45,7 +45,7 @@ static E_Config_DD *_e_config_shelf_edd = NULL;
 EAPI int
 e_config_init(void)
 {
-   _e_config_profile = getenv("CONF_PROFILE");
+   _e_config_profile = getenv("E_CONF_PROFILE");
    if (!_e_config_profile)
      {
 	Eet_File *ef;
