@@ -129,17 +129,17 @@ e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
    evas_object_show(o);
    e_widget_table_object_append(ot, o, 2, 1, 1, 1, 1, 1, 1, 1);
 
-   o = e_widget_color_well_add(evas, cfdata->color1, parent->con);
+   o = e_widget_color_well_add(evas, cfdata->color1, 1);
    evas_object_show(o);
    e_widget_table_object_append(ot, o, 2, 2, 1, 1, 1, 1, 1, 1);
 
-   o = e_widget_color_well_add(evas, cfdata->color2, parent->con);
+   o = e_widget_color_well_add(evas, cfdata->color2, 1);
    evas_object_show(o);
    e_widget_table_object_append(ot, o, 2, 3, 1, 1, 1, 1, 1, 1);
 
    e_widget_list_object_append(ol, ot, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, "Fill and Spread Options", 1);
+   of = e_widget_framelist_add(evas, "Fill Options", 1);
 
    rg = e_widget_radio_group_new(&(cfdata->mode));
 
@@ -172,7 +172,7 @@ e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
    e_dialog_button_add(dia, _("Cancel"), NULL, _import_cb_close, cfdata);
    
    _import_opt_disabled_set(import, 1);
-   e_dialog_resizable_set(dia, 1);
+   e_dialog_resizable_set(dia, 0);
    e_dialog_show(dia);
    return dia;
 }

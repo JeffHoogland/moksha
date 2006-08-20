@@ -662,7 +662,7 @@ _e_test_internal(E_Container *con)
 {
    E_Color_Dialog *d;
 
-   d = e_color_dialog_new(con);
+   d = e_color_dialog_new(con, NULL);
    e_color_dialog_show(d);
    e_color_dialog_select_callback_add(d, _e_test_cb_ok, NULL);
 }

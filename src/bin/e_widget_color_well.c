@@ -13,6 +13,7 @@ struct _E_Widget_Data
    E_Color_Dialog *dia;
    E_Color *color;
    E_Container *con; // container to pop a color dialog up on
+   int show_color_dialog;
 };
 
 static void _e_wid_update(E_Widget_Data *wd);
@@ -38,10 +39,10 @@ _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char
    wid = data;
    wd = e_widget_data_get(wid);
 
-   if (!wd->con) return;
+   if (!wd->show_color_dialog || !wd->con) return;
    if (!wd->dia)
      {
-	wd->dia = e_color_dialog_new(wd->con);
+	wd->dia = e_color_dialog_new(wd->con, wd->color);
 	e_color_dialog_select_callback_add(wd->dia, _e_wid_color_select_cb, wd);
 	e_color_dialog_cancel_callback_add(wd->dia, _e_wid_color_cancel_cb, wd);
      }
@@ -83,11 +84,12 @@ _e_wid_del_hook(Evas_Object *obj)
  * An optional E_Container may be passed in. If not NULL, when clicked a color dialog will pop up.
  */
 Evas_Object *
-e_widget_color_well_add(Evas *evas, E_Color *color, E_Container *con)
+e_widget_color_well_add(Evas *evas, E_Color *color, int show_color_dialog)
 {
    Evas_Object *obj, *o;
    Evas_Coord mw, mh;
    E_Widget_Data *wd;
+   E_Win *win;
 
    obj = e_widget_add(evas);
    e_widget_del_hook_set(obj, _e_wid_del_hook);
@@ -97,7 +99,10 @@ e_widget_color_well_add(Evas *evas, E_Color *color, E_Container *con)
    wd->obj = obj;
 
    wd->color = color;
-   wd->con = con;
+   win = e_win_evas_object_win_get(obj);
+   wd->con = win->container;
+
+   wd->show_color_dialog = show_color_dialog;
 
    o = edje_object_add(evas);
    e_widget_sub_object_add(obj, o);

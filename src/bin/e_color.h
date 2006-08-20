@@ -31,6 +31,6 @@ struct _E_Color
 
 EAPI void e_color_update_rgb (E_Color *ec);
 EAPI void e_color_update_hsv (E_Color *ec);
-EAPI void e_color_copy       (E_Color *from, E_Color *to);
+EAPI void e_color_copy       (const E_Color *from, E_Color *to);
 #endif
 #endif

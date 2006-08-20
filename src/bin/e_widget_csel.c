@@ -256,7 +256,7 @@ e_widget_csel_add(Evas *evas, E_Color *color)
 
    e_widget_table_object_append(table, frame, 3, 1, 1, 1, 1, 1, 1, 1);
 
-   o = e_widget_color_well_add(evas, wd->cv, NULL);
+   o = e_widget_color_well_add(evas, wd->cv, 0);
    e_widget_sub_object_add(obj, o);
    evas_object_show(o);
    wd->well = o;

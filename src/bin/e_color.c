@@ -19,7 +19,7 @@ e_color_update_hsv(E_Color *ec)
 }
 
 void
-e_color_copy(E_Color *from, E_Color *to)
+e_color_copy(const E_Color *from, E_Color *to)
 {
   if (!from || !to) return;
   to->r = from->r;

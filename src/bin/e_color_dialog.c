@@ -8,8 +8,14 @@ static void _e_color_dialog_button1_click(void *data, E_Dialog *edia);
 static void _e_color_dialog_button2_click(void *data, E_Dialog *edia);
 static void _e_color_dialog_free(E_Color_Dialog *dia);
 
+/**
+ * Create a color selector dialog.
+ *
+ * @param con container to display on
+ * @param color color to initialize to (or NULL for black). 
+ */
 E_Color_Dialog  *
-e_color_dialog_new (E_Container *con) 
+e_color_dialog_new (E_Container *con, const E_Color *color) 
 {
    E_Color_Dialog *dia;
    Evas_Object *o;
@@ -21,7 +27,11 @@ e_color_dialog_new (E_Container *con)
    e_dialog_title_set(dia->dia, "Color Selector");
 
    dia->color = calloc(1, sizeof(E_Color));
-   dia->color->a = 255;
+
+   if (color)
+     e_color_copy(color, dia->color);
+   else
+      dia->color->a = 255;
 
    o = e_widget_csel_add(dia->dia->win->evas, dia->color);
    evas_object_show(o);
