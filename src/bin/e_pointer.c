@@ -15,7 +15,6 @@ struct _E_Pointer_Stack
 {
    void          *obj;
    const char    *type;
-   unsigned char  e_cursor : 1;
 };
 
 static Evas_List *_e_pointers = NULL;
@@ -66,7 +65,7 @@ e_pointers_size_set(int size)
 	Evas_Engine_Info_Buffer *einfo;
 
 	p = l->data;
-	if (p->e_cursor)
+	if (p->evas)
 	  {
 	     p->w = p->h = size;
 	     evas_output_size_set(p->evas, p->w, p->h);
@@ -88,12 +87,15 @@ e_pointers_size_set(int size)
 	else
 	  {
 	     const char *type;
-
+	     
 	     ecore_x_cursor_size_set(e_config->cursor_size * 3 / 4);
 	     type = p->type;
-	     p->type = NULL;
-	     _e_pointer_type_set(p, type);
-	     p->type = type;
+	     if (type)
+	       {
+		  p->type = NULL;
+		  _e_pointer_type_set(p, type);
+		  evas_stringshare_del(type);
+	       }
 	  }
      }
 }
@@ -104,29 +106,19 @@ e_pointer_type_push(E_Pointer *p, void *obj, const char *type)
    E_Pointer_Stack *stack;
 
    p->e_cursor = e_config->use_e_cursor;
-   if (p->e_cursor)
-     {
-	if (!p->evas) _e_pointer_canvas_add(p);
-     }
    
-   if (!_e_pointer_type_set(p, type))
-     {
-	p->e_cursor = 0;
-	if (!_e_pointer_type_set(p, type)) return;
-     }
-
-   if (p->type) evas_stringshare_del(p->type);
-   p->type = evas_stringshare_add(type);
+   _e_pointer_type_set(p, type);
+   
    p->obj = obj;
 
    stack = E_NEW(E_Pointer_Stack, 1);
    if (stack)
      {
-	stack->obj = p->obj;
 	stack->type = evas_stringshare_add(p->type);
-	stack->e_cursor = p->e_cursor;
+	stack->obj = p->obj;
 	p->stack = evas_list_prepend(p->stack, stack);
      }
+
 }
 
 EAPI void
@@ -150,32 +142,15 @@ e_pointer_type_pop(E_Pointer *p, void *obj, const char *type)
 
    if (!p->stack)
      {
-	if (p->e_cursor)
-	  {  
-	     if (p->evas) _e_pointer_canvas_del(p);
-	  }
+	if (p->evas) _e_pointer_canvas_del(p);
 	ecore_x_window_cursor_set(p->win, 0);
+	if (p->type) evas_stringshare_del(p->type);
+	p->type = NULL;
 	return;
      }
 
    stack = p->stack->data;
-   if ((stack->obj == p->obj) &&
-       (!strcmp(stack->type, p->type)))
-     {
-	/* We already use the top pointer */
-	return;
-     }
-
-   p->e_cursor = stack->e_cursor;
-   if (!_e_pointer_type_set(p, stack->type))
-     {
-	p->e_cursor = !p->e_cursor;
-	if (!_e_pointer_type_set(p, stack->type))
-	  {
-	     printf("BUG: Can't set cursor!\n");
-	     return;
-	  }
-     }
+   _e_pointer_type_set(p, stack->type);
 
    if (p->type) evas_stringshare_del(p->type);
    p->type = evas_stringshare_add(stack->type);
@@ -335,31 +310,37 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
    /* Check if this pointer is already set */
    if ((p->type) && (!strcmp(p->type, type))) return 1;
 
+   if (p->type) evas_stringshare_del(p->type);
+   p->type = evas_stringshare_add(type);
+   
    if (p->e_cursor)
      {
 	Evas_Object *o;
 	char cursor[1024];
 
+	if (!p->evas) _e_pointer_canvas_add(p);
 	o = p->pointer_object;
 	if (p->color)
 	  {
 	     snprintf(cursor, sizeof(cursor), "pointer/enlightenment/%s/color", type);
 	     if (!e_theme_edje_object_set(o, "base/theme/pointer", cursor))
-	       return 0;
+	       goto fallback;
 	  }
 	else
 	  {
 	     snprintf(cursor, sizeof(cursor), "pointer/enlightenment/%s/mono", type);
 	     if (!e_theme_edje_object_set(o, "base/theme/pointer", cursor))
-	       return 0;
+	       goto fallback;
 	  }
 	edje_object_part_swallow(p->pointer_object, "hotspot", p->hot_object);
 	p->hot.update = 1;
+	return;
      }
-   else
+   fallback:
      {
 	Ecore_X_Cursor cursor = 0;
 	
+	if (p->evas) _e_pointer_canvas_del(p);
 	if (!strcmp(type, "move"))
 	  {
 	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_FLEUR);
@@ -419,6 +400,12 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
 	else if (!strcmp(type, "resize_l"))
 	  {
 	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_LEFT_SIDE);
+	     if (!cursor) printf("X Cursor for %s is missing\n", type);
+	     ecore_x_window_cursor_set(p->win, cursor);
+	  }
+	else if (!strcmp(type, "entry"))
+	  {
+	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_XTERM);
 	     if (!cursor) printf("X Cursor for %s is missing\n", type);
 	     ecore_x_window_cursor_set(p->win, cursor);
 	  }

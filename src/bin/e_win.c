@@ -58,7 +58,7 @@ e_win_new(E_Container *con)
    ecore_evas_title_set(win->ecore_evas, "E");
    obj = evas_object_rectangle_add(win->evas);
    evas_object_name_set(obj, "E_Win");
-   evas_object_data_set(obj, "E_Win", obj);
+   evas_object_data_set(obj, "E_Win", win);
    win->x = 0;
    win->y = 0;
    win->w = 1;

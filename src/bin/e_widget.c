@@ -442,6 +442,17 @@ e_widget_disabled_get(Evas_Object *obj)
    return sd->disabled;
 }
 
+EAPI E_Pointer *
+e_widget_pointer_get(Evas_Object *obj)
+{
+   E_Win *win;
+   API_ENTRY return NULL;
+   
+   win = e_win_evas_object_win_get(obj);
+   if (win) return win->pointer;
+   return NULL;
+}
+
 /* local subsystem functions */
 static void
 _e_smart_reconfigure(E_Smart_Data *sd)
@@ -450,7 +461,7 @@ _e_smart_reconfigure(E_Smart_Data *sd)
      {
 	evas_object_move(sd->resize_obj, sd->x, sd->y);
 	evas_object_resize(sd->resize_obj, sd->w, sd->h);
-     }
+    }
 }
 
 static void

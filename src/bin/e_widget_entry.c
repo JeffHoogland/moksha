@@ -15,6 +15,8 @@ static void _e_wid_del_hook(Evas_Object *obj);
 static void _e_wid_focus_hook(Evas_Object *obj);
 static void _e_wid_disable_hook(Evas_Object *obj);
 static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_wid_in(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_wid_out(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_wid_changed_cb(void *data, Evas_Object *obj, void *event_info);
 
 
@@ -51,6 +53,8 @@ e_widget_entry_add(Evas *evas, char **text_location)
    e_widget_sub_object_add(obj, o);
    e_widget_resize_object_set(obj, o);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_focus_steal, obj);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN, _e_wid_in, obj);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_OUT, _e_wid_out, obj);
    
    if ((text_location) && (*text_location))
      e_entry_text_set(o, *text_location);
@@ -175,6 +179,24 @@ static void
 _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    e_widget_focus_steal(data);
+}
+
+static void
+_e_wid_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   E_Pointer *p;
+   
+   p = e_widget_pointer_get(data);
+   if (p) e_pointer_type_push(p, data, "entry");
+}
+
+static void
+_e_wid_out(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   E_Pointer *p;
+   
+   p = e_widget_pointer_get(data);
+   if (p) e_pointer_type_pop(p, data, "entry");
 }
 
 static void
