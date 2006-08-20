@@ -343,7 +343,7 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->win_import) e_int_config_wallpaper_del(cfdata->win_import);
-   //if (cfdata->dia_gradient) e_int_config_wallpaper_gradient_del(cfdata->dia_gradient);
+   if (cfdata->dia_gradient) e_int_config_wallpaper_gradient_del(cfdata->dia_gradient);
    E_FREE(cfdata->bg);
    free(cfdata);
 }
