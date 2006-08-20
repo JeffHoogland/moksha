@@ -38,6 +38,7 @@ EAPI E_Win *
 e_win_new(E_Container *con)
 {
    E_Win *win;
+   Evas_Object *obj;
    
    win = E_OBJECT_ALLOC(E_Win, E_WIN_TYPE, _e_win_free);
    if (!win) return NULL;
@@ -55,6 +56,9 @@ e_win_new(E_Container *con)
    win->evas = ecore_evas_get(win->ecore_evas);
    ecore_evas_name_class_set(win->ecore_evas, "E", "_e_internal_window");
    ecore_evas_title_set(win->ecore_evas, "E");
+   obj = evas_object_rectangle_add(win->evas);
+   evas_object_name_set(obj, "E_Win");
+   evas_object_data_set(obj, "E_Win", obj);
    win->x = 0;
    win->y = 0;
    win->w = 1;
@@ -88,23 +92,6 @@ e_win_show(E_Win *win)
 	  win->border->re_manage = 0;
 	win->border->internal = 1;
 	win->border->internal_ecore_evas = win->ecore_evas;
-/*	
-	if (win->engine == E_EVAS_ENGINE_GL_X11)
-	  {
-	     ecore_evas_gl_x11_extra_event_window_add(win->ecore_evas, win->border->win);
-	     ecore_evas_gl_x11_extra_event_window_add(win->ecore_evas, win->border->event_win);
-	  }
-	else if (win->engine == E_EVAS_ENGINE_XRENDER_X11)
-	  {
-	     ecore_evas_xrender_x11_extra_event_window_add(win->ecore_evas, win->border->win);
-	     ecore_evas_xrender_x11_extra_event_window_add(win->ecore_evas, win->border->event_win);
-	  }
-	else 
-	  {
-	     ecore_evas_software_x11_extra_event_window_add(win->ecore_evas, win->border->win);
-	     ecore_evas_software_x11_extra_event_window_add(win->ecore_evas, win->border->event_win);
-	  }
- */
      }
    _e_win_prop_update(win);
    e_border_show(win->border);
@@ -117,6 +104,7 @@ e_win_hide(E_Win *win)
    E_OBJECT_CHECK(win);
    E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    if (win->border) e_border_hide(win->border, 1);
+   e_pointer_type_pop(win->container->manager->pointer, win, NULL);
 }
 
 EAPI void
@@ -359,6 +347,21 @@ e_win_dialog_set(E_Win *win, int dialog)
 	win->state.dialog = 1;
 	_e_win_prop_update(win);
      }
+}
+
+EAPI E_Win *
+e_win_evas_object_win_get(Evas_Object *obj)
+{
+   Evas *evas;
+   Evas_Object *wobj;
+   E_Win *win;
+   
+   if (!obj) return NULL;
+   evas = evas_object_evas_get(obj);
+   wobj = evas_object_name_find(evas, "E_Win");
+   if (!wobj) return NULL;
+   win = evas_object_data_get(wobj, "E_Win");
+   return win;
 }
 
 /* local subsystem functions */
