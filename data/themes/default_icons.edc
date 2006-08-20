@@ -67,6 +67,7 @@ images {
    image: "e17_wallpaper_center.png" COMP;
    image: "e17_wallpaper_screen.png" COMP;
    image: "e17_wallpaper_center_flat.png" COMP;
+   image: "e17_wallpaper_grad_screen.png" COMP;
 }
 
 group {
@@ -1358,6 +1359,212 @@ group {
 	    aspect_preference: BOTH;
 	    image {
 	       normal: "e17_wallpaper_screen.png";
+	       border: 2 2 2 2;
+	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "icons/enlightenment/gradient_h";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "bg";
+         type: GRADIENT;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+            
+	    rel1 {
+	       to: "screen";
+	    }
+	    rel2 {
+	       to: "screen";
+	    }
+            gradient {
+              spectrum: "black_to_trans";
+            }
+            fill {
+              angle: 270;
+            }
+	 }
+      }
+      part {
+	 name:          "screen";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect: 1.0 1.0;
+	    aspect_preference: BOTH;
+	    image {
+	       normal: "e17_wallpaper_grad_screen.png";
+	       border: 2 2 2 2;
+	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "icons/enlightenment/gradient_v";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "bg";
+         type: GRADIENT;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+            
+	    rel1 {
+	       to: "screen";
+	    }
+	    rel2 {
+	       to: "screen";
+	    }
+            gradient {
+              spectrum: "black_to_trans";
+            }
+            fill {
+              angle: 0;
+            }
+	 }
+      }
+      part {
+	 name:          "screen";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect: 1.0 1.0;
+	    aspect_preference: BOTH;
+	    image {
+	       normal: "e17_wallpaper_grad_screen.png";
+	       border: 2 2 2 2;
+	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "icons/enlightenment/gradient_du";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "bg";
+         type: GRADIENT;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+            
+	    rel1 {
+	       to: "screen";
+	    }
+	    rel2 {
+	       to: "screen";
+	    }
+            gradient {
+              spectrum: "black_to_trans";
+            }
+            fill {
+              angle: 225;
+            }
+	 }
+      }
+      part {
+	 name:          "screen";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect: 1.0 1.0;
+	    aspect_preference: BOTH;
+	    image {
+	       normal: "e17_wallpaper_grad_screen.png";
+	       border: 2 2 2 2;
+	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "icons/enlightenment/gradient_dd";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "bg";
+         type: GRADIENT;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+            
+	    rel1 {
+	       to: "screen";
+	    }
+	    rel2 {
+	       to: "screen";
+	    }
+            gradient {
+              spectrum: "black_to_trans";
+            }
+            fill {
+              angle: 315;
+            }
+	 }
+      }
+      part {
+	 name:          "screen";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect: 1.0 1.0;
+	    aspect_preference: BOTH;
+	    image {
+	       normal: "e17_wallpaper_grad_screen.png";
+	       border: 2 2 2 2;
+	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "icons/enlightenment/gradient_rad";
+   max:  24 24;
+   parts {
+      part {
+	 name:          "bg";
+         type: GRADIENT;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+            
+	    rel1 {
+	       to: "screen";
+	    }
+	    rel2 {
+	       to: "screen";
+	    }
+            gradient {
+              spectrum: "black_to_trans";
+              type: "radial";
+            }
+            fill {
+              origin.relative: 0.5 0.5;
+            }
+	 }
+      }
+      part {
+	 name:          "screen";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect: 1.0 1.0;
+	    aspect_preference: BOTH;
+	    image {
+	       normal: "e17_wallpaper_grad_screen.png";
 	       border: 2 2 2 2;
 	    }
 	 }

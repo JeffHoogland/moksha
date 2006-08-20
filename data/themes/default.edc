@@ -21,6 +21,15 @@ fonts {
    font: "VeraBd.ttf" "Edje-Vera-Bold";
 }
 
+spectra {
+  spectrum {
+    name: "black_to_trans";
+    color: 0 0 0 255 1;
+    color: 0 0 0 0 1;
+  }
+}
+
+
 collections {
 #include "default_background.edc"
 #include "default_battery.edc"
