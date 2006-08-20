@@ -9,6 +9,7 @@ struct _E_Entry_Smart_Data
 {
    Evas_Object *entry_object;
    Evas_Object *editable_object;
+   Ecore_Event_Handler *selection_handler;
    
    int enabled;
    int focused;
@@ -23,6 +24,7 @@ static void _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *ev
 static void _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_entry_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_entry_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static int _e_entry_selection_notify_handler(void *data, int type, void *event);
 
 static void _e_entry_smart_add(Evas_Object *object);
 static void _e_entry_smart_del(Evas_Object *object);
@@ -391,9 +393,11 @@ _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
                }
            }
         else if (strcmp(event->keyname, "v") == 0)
-        {
-           //ecore_x_selection_clipboard_request();
-        }
+          {
+             if ((win = e_win_evas_object_win_get(obj)))
+               ecore_x_selection_clipboard_request(win->evas_win,
+                                          ECORE_X_SELECTION_TARGET_UTF8_STRING);
+          }
      }
    /* Otherwise, we insert the corresponding character */
    else if ((event->string) &&
@@ -472,6 +476,52 @@ _e_entry_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
      }
 }
 
+/* Called when the the "selection_notify" event is emitted */
+static int
+_e_entry_selection_notify_handler(void *data, int type, void *event)
+{
+   Evas_Object *entry;
+   E_Entry_Smart_Data *sd;
+   Ecore_X_Event_Selection_Notify *ev;
+   Ecore_X_Selection_Data *selection_data;
+   Evas_Object *editable;
+   int cursor_pos, selection_pos;
+   int start_pos, end_pos;
+   int selecting;
+   int changed = 0;
+   
+   if ((!(entry = data)) || (!(sd = evas_object_smart_data_get(entry))))
+     return 1;
+   if (!sd->focused)
+     return 1;
+   
+   editable = sd->editable_object;
+   cursor_pos = e_editable_cursor_pos_get(editable);
+   selection_pos = e_editable_selection_pos_get(editable);
+   start_pos = (cursor_pos <= selection_pos) ? cursor_pos : selection_pos;
+   end_pos = (cursor_pos >= selection_pos) ? cursor_pos : selection_pos;
+   selecting = (start_pos != end_pos);
+   
+   ev = event;
+   if (ev->selection == ECORE_X_SELECTION_CLIPBOARD)
+     {
+        if (strcmp(ev->target, ECORE_X_SELECTION_TARGET_UTF8_STRING) == 0)
+          {
+             Ecore_X_Selection_Data_Text *text_data;
+             
+             text_data = ev->data;
+             if (selecting)
+               changed = e_editable_delete(editable, start_pos, end_pos);
+             changed |= e_editable_insert(editable, start_pos, text_data->text);
+          }
+     }
+   
+   if (changed)
+     evas_object_smart_callback_call(entry, "changed", NULL);
+   
+   return 1;
+}
+
 /* Editable object's smart methods */
 
 static void _e_entry_smart_add(Evas_Object *object)
@@ -518,6 +568,10 @@ static void _e_entry_smart_add(Evas_Object *object)
                                   _e_entry_mouse_up_cb, NULL);
    evas_object_event_callback_add(object, EVAS_CALLBACK_MOUSE_MOVE,
                                   _e_entry_mouse_move_cb, NULL);
+   sd->selection_handler = ecore_event_handler_add(
+                                       ECORE_X_EVENT_SELECTION_NOTIFY,
+                                       _e_entry_selection_notify_handler,
+                                       object);
 }
 
 static void _e_entry_smart_del(Evas_Object *object)
@@ -527,8 +581,10 @@ static void _e_entry_smart_del(Evas_Object *object)
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
    
+   ecore_event_handler_del(sd->selection_handler);
    evas_object_del(sd->editable_object);
    evas_object_del(sd->entry_object);
+   free(sd);
 }
 
 static void _e_entry_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y)
