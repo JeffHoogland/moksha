@@ -966,22 +966,32 @@ _e_editable_selection_update(Evas_Object *editable)
         /* Position of the start cursor (note, the start cursor can not be at
          * the end of the editable object, and the editable object can not be
          * empty, or it would have returned before)*/
-        evas_object_text_char_pos_get(text_obj, start_pos, &cx, &cy, &cw, &ch);
+        if (!evas_object_text_char_pos_get(text_obj, start_pos,
+                                           &cx, &cy, &cw, &ch))
+          return;
+        
         sx = tx + cx - 1;
         sy = ty + cy;
+        
         
         /* Position of the end cursor (note, the editable object can not be
          * empty, or it would have returned before)*/
         if (end_pos >= sd->unicode_length)
           {
-             evas_object_text_char_pos_get(text_obj, sd->unicode_length - 1,
-                                          &cx, &cy, &cw, &ch);
+             if (!evas_object_text_char_pos_get(text_obj,
+                                                sd->unicode_length - 1,
+                                                &cx, &cy, &cw, &ch))
+               return;
+             
              sw = (tx + cx + cw - 1) - sx;
              sh = ch;
           }
         else
           {
-             evas_object_text_char_pos_get(text_obj, end_pos, &cx, &cy, &cw, &ch);
+             if (!evas_object_text_char_pos_get(text_obj, end_pos,
+                                                &cx, &cy, &cw, &ch))
+               return;
+             
              sw = (tx + cx - 1) - sx;
              sh = ch;
           }
@@ -1077,6 +1087,7 @@ _e_editable_smart_add(Evas_Object *object)
 {
    Evas *evas;
    E_Editable_Smart_Data *sd;
+   Evas_Coord ox, oy;
    
    if ((!object) || !(evas = evas_object_evas_get(object)))
      return;
@@ -1087,6 +1098,7 @@ _e_editable_smart_add(Evas_Object *object)
    
    _e_editable_smart_use++;
    evas_object_smart_data_set(object, sd);
+   evas_object_geometry_get(object, &ox, &oy, NULL, NULL);
    
    sd->text = malloc((E_EDITABLE_BLOCK_SIZE + 1) * sizeof(char));
    sd->text[0] = '\0';
@@ -1106,26 +1118,31 @@ _e_editable_smart_add(Evas_Object *object)
    sd->password_mode = 0;
 
    sd->clip_object = evas_object_rectangle_add(evas);
+   evas_object_move(sd->clip_object, ox, oy);
    evas_object_smart_member_add(sd->clip_object, object);
    
    sd->event_object = evas_object_rectangle_add(evas);
    evas_object_color_set(sd->event_object, 255, 255, 255, 0);
    evas_object_clip_set(sd->event_object, sd->clip_object);
+   evas_object_move(sd->event_object, ox, oy);
    evas_object_smart_member_add(sd->event_object, object);
    
    sd->text_object = edje_object_add(evas);
    evas_object_pass_events_set(sd->text_object, 1);
    evas_object_clip_set(sd->text_object, sd->clip_object);
+   evas_object_move(sd->text_object, ox, oy);
    evas_object_smart_member_add(sd->text_object, object);
    
    sd->selection_object = edje_object_add(evas);
    evas_object_pass_events_set(sd->selection_object, 1);
    evas_object_clip_set(sd->selection_object, sd->clip_object);
+   evas_object_move(sd->selection_object, ox, oy);
    evas_object_smart_member_add(sd->selection_object, object);
    
    sd->cursor_object = edje_object_add(evas);
    evas_object_pass_events_set(sd->cursor_object, 1);
    evas_object_clip_set(sd->cursor_object, sd->clip_object);
+   evas_object_move(sd->cursor_object, ox, oy);
    evas_object_smart_member_add(sd->cursor_object, object);
    
    _e_editable_cursor_update(object);
@@ -1145,7 +1162,7 @@ _e_editable_smart_del(Evas_Object *object)
    evas_object_del(sd->text_object);
    evas_object_del(sd->cursor_object);
    evas_object_del(sd->selection_object);
-   
+   free(sd->text);
    free(sd);
    
    _e_editable_smart_use--;
