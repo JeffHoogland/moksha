@@ -109,6 +109,8 @@ e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
    cfdata->color2->r = e_config->wallpaper_grad_c2_r;
    cfdata->color2->g = e_config->wallpaper_grad_c2_g;
    cfdata->color2->b = e_config->wallpaper_grad_c2_b;
+   e_color_update_rgb(cfdata->color1);
+   e_color_update_rgb(cfdata->color2);
 
    ol = e_widget_list_add(evas, 0, 0);
 
