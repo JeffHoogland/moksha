@@ -58,7 +58,7 @@ struct _E_Config_Dialog_Data
    
    int zone_count; // local variable;
    
-   char *cur_bg; // local variable;
+   char *bg; // local variable;
    Evas *evas; // local variable
    Evas_Object *preview_image; // local variable
 
@@ -144,9 +144,9 @@ _fill_desklock_data(E_Config_Dialog_Data *cfdata)
    cfdata->show_password = 0;
    
    if (!e_config->desklock_background)
-     cfdata->cur_bg = strdup(DEF_DESKLOCK_BACKGROUND);
+     cfdata->bg = strdup(DEF_DESKLOCK_BACKGROUND);
    else
-     cfdata->cur_bg = strdup(e_config->desklock_background);
+     cfdata->bg = strdup(e_config->desklock_background);
 
 #ifdef HAVE_PAM
    cfdata->auth_method = e_config->desklock_auth_method;
@@ -176,7 +176,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
   E_FREE(cfdata->desklock_passwd);
   E_FREE(cfdata->desklock_passwd_cp);
-  E_FREE(cfdata->cur_bg);
+  E_FREE(cfdata->bg);
 
   free(cfdata);
 }
@@ -296,11 +296,11 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      }
    e_config->desklock_personal_passwd = (char *)evas_stringshare_add(cfdata->desklock_passwd_cp);
 
-   if (cfdata->cur_bg)
+   if (cfdata->bg)
      {
 	if (e_config->desklock_background)
 	  evas_stringshare_del(e_config->desklock_background);
-	e_config->desklock_background = (char *)evas_stringshare_add(cfdata->cur_bg);
+	e_config->desklock_background = (char *)evas_stringshare_add(cfdata->bg);
      }
    
    if (_e_desklock_zone_num_get() > 1)
@@ -343,7 +343,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    
    /* start: bkg list */
    cfdata->gui.bg_list = e_widget_ilist_add(evas, BG_LIST_ICON_SIZE_W,
-					    BG_LIST_ICON_SIZE_H, &(cfdata->cur_bg));
+					    BG_LIST_ICON_SIZE_H, &(cfdata->bg));
    
    e_widget_ilist_selector_set(cfdata->gui.bg_list, 1);
    e_widget_min_size_set(cfdata->gui.bg_list, 180, 200);
@@ -651,16 +651,16 @@ _ibg_list_cb_bg_selected(void *data)
    E_Config_Dialog_Data *cfdata;
    
    cfdata = data;
-   if (cfdata->cur_bg[0])
+   if (cfdata->bg[0])
      {
-	if (!strcmp(cfdata->cur_bg, DEF_DESKLOCK_BACKGROUND))
+	if (!strcmp(cfdata->bg, DEF_DESKLOCK_BACKGROUND))
 	  {
 	     const char *theme;
 	     
 	     theme = e_theme_edje_file_get("base/theme/desklock", "desklock/background");
 	     e_widget_preview_edje_set(cfdata->preview_image, theme, "desklock/background");
 	  }
-	else if (!strcmp(cfdata->cur_bg, DEF_THEME_BACKGROUND))
+	else if (!strcmp(cfdata->bg, DEF_THEME_BACKGROUND))
 	  {
 	     const char *theme;
 	     
@@ -668,7 +668,7 @@ _ibg_list_cb_bg_selected(void *data)
 	     e_widget_preview_edje_set(cfdata->preview_image, theme, "desktop/background");
 	  }
 	else
-	  e_widget_preview_edje_set(cfdata->preview_image, cfdata->cur_bg, "desktop/background");
+	  e_widget_preview_edje_set(cfdata->preview_image, cfdata->bg, "desktop/background");
      }
    else
      {

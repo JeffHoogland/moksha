@@ -336,7 +336,7 @@ _import_edj_gen(Import *import)
    if (!imgdir) ipart[0] = '\0';
    else
      {
-	snprintf(ipart, sizeof(ipart), "-id %s", imgdir);
+	snprintf(ipart, sizeof(ipart), "-id %s", e_util_filename_escape(imgdir));
 	free(imgdir);
      }
 
