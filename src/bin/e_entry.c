@@ -392,7 +392,7 @@ _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
                    changed = e_editable_delete(editable, start_pos, end_pos);
                }
            }
-        else if (strcmp(event->keyname, "v") == 0)
+        else if ((sd->enabled) && (strcmp(event->keyname, "v") == 0))
           {
              if ((win = e_win_evas_object_win_get(obj)))
                ecore_x_selection_clipboard_request(win->evas_win,
@@ -426,17 +426,25 @@ _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if (!(event = event_info))
       return;
    
-   evas_object_geometry_get(sd->editable_object, &ox, &oy, NULL, NULL);
-   pos = e_editable_pos_get_from_coords(sd->editable_object,
-                                        event->canvas.x - ox,
-                                        event->canvas.y - oy);
-   if (pos >= 0)
+   if (event->button == 1)
      {
-        e_editable_cursor_pos_set(sd->editable_object, pos);
-        if (!evas_key_modifier_is_set(event->modifiers, "Shift"))
-          e_editable_selection_pos_set(sd->editable_object, pos);
-        
-        sd->selection_dragging = 1;
+        if (event->flags & EVAS_BUTTON_DOUBLE_CLICK)
+          e_editable_select_all(sd->editable_object);
+        else
+          {
+             evas_object_geometry_get(sd->editable_object, &ox, &oy, NULL, NULL);
+             pos = e_editable_pos_get_from_coords(sd->editable_object,
+                                                  event->canvas.x - ox,
+                                                  event->canvas.y - oy);
+             if (pos >= 0)
+               {
+                  e_editable_cursor_pos_set(sd->editable_object, pos);
+                  if (!evas_key_modifier_is_set(event->modifiers, "Shift"))
+                    e_editable_selection_pos_set(sd->editable_object, pos);
+                  
+                  sd->selection_dragging = 1;
+               }
+          }
      }
 }
 
