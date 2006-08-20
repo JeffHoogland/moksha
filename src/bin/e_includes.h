@@ -103,6 +103,7 @@
 #include "e_int_config_window_manipulation.h"
 #include "e_int_config_window_display.h"
 #include "e_int_config_theme.h"
+#include "e_int_config_icon_themes.h"
 #include "e_int_config_menus.h"
 #include "e_int_config_keybindings.h"
 #include "e_int_config_cursor.h"
