@@ -379,5 +379,13 @@ _sort_icon_themes(void *data1, void *data2)
 
    m1 = data1;
    m2 = data2;
+
+   /* These are supposed to be required strings.  Be paranoid pending further investigation. */
+   if (!m1->theme) return 1;
+   if (!m2->theme) return -1;
+
+   if (!m1->theme->name) return 1;
+   if (!m2->theme->name) return -1;
+
    return (strcmp((const char*)m1->theme->name, (const char*)m2->theme->name));
 }
