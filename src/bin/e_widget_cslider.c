@@ -15,7 +15,6 @@ struct _E_Widget_Data
    int fixed;
    E_Color_Component mode;
    int valnum;
-   //int r, g, b, a;
    E_Color *color;
 
    int dragging;

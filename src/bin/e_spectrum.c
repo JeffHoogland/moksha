@@ -55,6 +55,8 @@ _e_spectrum_smart_del(Evas_Object *o)
   evas_object_del(sp->o_cursor);
 
   if (sp->draw_timer) ecore_timer_del(sp->draw_timer);
+
+  E_FREE(sp);
 }
 
 static void

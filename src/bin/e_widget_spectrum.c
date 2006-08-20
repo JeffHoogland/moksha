@@ -77,6 +77,7 @@ e_widget_spectrum_add(Evas *evas, E_Color_Component mode, E_Color *cv)
 
    o = evas_object_rectangle_add(evas);
    evas_object_color_set(o, 0, 0, 0, 0);
+   e_widget_sub_object_add(obj, o);
    evas_object_show(o);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_cb_down, obj);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE, _e_wid_cb_move, obj);

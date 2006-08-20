@@ -652,39 +652,19 @@ _e_test_internal(E_Container *con)
 #elif 0
 
 static void
-_e_test_cb_change(void *data, Evas_Object *obj)
+_e_test_cb_ok(E_Color_Dialog *dia, E_Color *color, void *data)
 {
-   E_Color *c = data;
-   printf("Current color: %d, %d, %d\n", c->r, c->g, c->b);
+   printf("Current color: %d, %d, %d\n", color->r, color->g, color->b);
 }
 
 static void
 _e_test_internal(E_Container *con)
 {
-   E_Dialog *dia;
-   Evas_Object *o;
-   Evas_Coord mw, mh;
-   E_Color *color;
+   E_Color_Dialog *d;
 
-   dia = e_dialog_new(con, "E", "_test");
-   e_dialog_title_set(dia, "Test Color Selector");
-
-   color = calloc(1, sizeof(E_Color));
-   color->a = 255;
-
-   o = e_widget_csel_add(dia->win->evas, color);
-   evas_object_show(o);
-   e_widget_on_change_hook_set(o, _e_test_cb_change, color);
-   e_widget_min_size_get(o, &mw, &mh);
-   e_dialog_content_set(dia, o, mw, mh);
-
-   /* buttons at the bottom */
-   e_dialog_button_add(dia, "Cancel", NULL, NULL, NULL);
-   e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
-   e_dialog_resizable_set(dia, 1);
-   e_win_centered_set(dia->win, 1);
-   e_dialog_show(dia);
-   e_win_resize(dia->win, 460, 260); 
+   d = e_color_dialog_new(con);
+   e_color_dialog_show(d);
+   e_color_dialog_select_callback_add(d, _e_test_cb_ok, NULL);
 }
 
 #else

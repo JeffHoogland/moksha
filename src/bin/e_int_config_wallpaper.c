@@ -30,6 +30,7 @@ struct _E_Config_Dialog_Data
    int all_this_desk_screen;
    /* dialogs */
    E_Win *win_import;
+   E_Dialog *dia_gradient;
 };
 
 EAPI E_Config_Dialog *
@@ -89,6 +90,15 @@ e_int_config_wallpaper_import_done(E_Config_Dialog *dia)
    
    cfdata = dia->cfdata;
    cfdata->win_import = NULL;
+}
+
+EAPI void
+e_int_config_wallpaper_gradient_done(E_Config_Dialog *dia)
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = dia->cfdata;
+   cfdata->dia_gradient = NULL;
 }
 
 
@@ -163,7 +173,6 @@ _cb_files_selected(void *data, Evas_Object *obj, void *event_info)
    E_Config_Dialog_Data *cfdata;
    
    cfdata = data;
-   printf("SEL\n");
 }
 
 static void
@@ -255,8 +264,18 @@ _cb_import(void *data1, void *data2)
    else cfdata->win_import = e_int_config_wallpaper_import(cfdata->cfd);
 }
 
-
-
+static void
+_cb_gradient(void *data1, void *data2)
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data1;
+   if (cfdata->dia_gradient)
+     {
+	e_win_raise(cfdata->dia_gradient->win);
+     }
+   else cfdata->dia_gradient = e_int_config_wallpaper_gradient(cfdata->cfd);
+}
 
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
@@ -324,6 +343,7 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->win_import) e_int_config_wallpaper_del(cfdata->win_import);
+   //if (cfdata->dia_gradient) e_int_config_wallpaper_gradient_del(cfdata->dia_gradient);
    E_FREE(cfdata->bg);
    free(cfdata);
 }
@@ -424,7 +444,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 			   _cb_import, cfdata, NULL);
    e_widget_list_object_append(ol, o, 1, 0, 0.5);
    o = e_widget_button_add(evas, _("Gradient..."), "enlightenment/gradient",
-			   NULL, cfdata, NULL);
+			   _cb_gradient, cfdata, NULL);
    e_widget_list_object_append(ol, o, 1, 0, 0.5);
    e_widget_list_object_append(il, ol, 1, 0, 0.5);
    e_widget_list_object_append(of, il, 1, 0, 0.0);
@@ -564,7 +584,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 			   _cb_import, cfdata, NULL);
    e_widget_list_object_append(ol, o, 1, 0, 0.5);
    o = e_widget_button_add(evas, _("Gradient..."), "enlightenment/gradient",
-			   NULL, cfdata, NULL);
+			   _cb_gradient, cfdata, NULL);
    e_widget_list_object_append(ol, o, 1, 0, 0.5);
    e_widget_list_object_append(il, ol, 1, 0, 0.5);
    e_widget_list_object_append(of, il, 1, 0, 0.0);

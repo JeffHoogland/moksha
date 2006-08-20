@@ -149,3 +149,4 @@
 #include "e_widget_cslider.h"
 #include "e_widget_color_well.h"
 #include "e_widget_csel.h"
+#include "e_color_dialog.h"

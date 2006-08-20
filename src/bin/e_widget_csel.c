@@ -17,6 +17,27 @@ struct _E_Widget_Data
 };
 
 static void
+_e_wid_del_hook(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   int i;
+   
+   wd = e_widget_data_get(obj);
+   if (!wd) return;
+
+   for (i = 0; i < E_COLOR_COMPONENT_MAX; i++)
+     {
+	E_FREE(wd->values[i]);
+     }
+   E_FREE(wd->values);
+
+   evas_list_free(wd->sliders);
+   evas_list_free(wd->entries);
+
+   E_FREE(wd);
+}
+
+static void
 _e_wid_cb_radio_changed(void *data, Evas_Object *o)
 {
    E_Widget_Data *wd = data;
@@ -148,18 +169,19 @@ e_widget_csel_add(Evas *evas, E_Color *color)
 {
    Evas_Object *obj, *o;
    Evas_Object *frame, *table;
-   E_Color*cv;
    int i;
    E_Radio_Group *grp = NULL;
    char *labels[6] = { "R", "G", "B", "H", "S", "V" };
    E_Widget_Data *wd;
 
    obj = e_widget_add(evas);
+   e_widget_del_hook_set(obj, _e_wid_del_hook);
    
    wd = calloc(1, sizeof(E_Widget_Data));
    wd->mode = 1;
    wd->cv = color;
    wd->obj = obj;
+   e_widget_data_set(obj, wd);
 
    table = e_widget_table_add(evas, 0);
    e_widget_sub_object_add(obj, table);
@@ -177,22 +199,22 @@ e_widget_csel_add(Evas *evas, E_Color *color)
 	switch(i)
 	  {
 	   case E_COLOR_COMPONENT_R:
-	      snprintf(wd->values[i], 10, "%i", cv->r);
+	      snprintf(wd->values[i], 10, "%i", wd->cv->r);
 	      break;
 	   case E_COLOR_COMPONENT_G:
-	      snprintf(wd->values[i], 10, "%i", cv->g);
+	      snprintf(wd->values[i], 10, "%i", wd->cv->g);
 	      break;
 	   case E_COLOR_COMPONENT_B:
-	      snprintf(wd->values[i], 10, "%i", cv->b);
+	      snprintf(wd->values[i], 10, "%i", wd->cv->b);
 	      break;
 	   case E_COLOR_COMPONENT_H:
-	      snprintf(wd->values[i], 10, "%.0f", cv->h);
+	      snprintf(wd->values[i], 10, "%.0f", wd->cv->h);
 	      break;
 	   case E_COLOR_COMPONENT_S:
-	      snprintf(wd->values[i], 10, "%.2f", cv->s);
+	      snprintf(wd->values[i], 10, "%.2f", wd->cv->s);
 	      break;
 	   case E_COLOR_COMPONENT_V:
-	      snprintf(wd->values[i], 11, "%.2f", cv->v);
+	      snprintf(wd->values[i], 11, "%.2f", wd->cv->v);
 	      break;
 	  }
 
@@ -201,7 +223,7 @@ e_widget_csel_add(Evas *evas, E_Color *color)
 	e_widget_on_change_hook_set(o, _e_wid_cb_radio_changed, wd);
 	e_widget_frametable_object_append(frame, o, 0, i, 1, 1, 1, 1, 0, 0);
 
-	o = e_widget_cslider_add(evas, i, cv, 0, 0);
+	o = e_widget_cslider_add(evas, i, wd->cv, 0, 0);
 	e_widget_sub_object_add(obj, o);
 	evas_object_show(o);
 	wd->sliders = evas_list_append(wd->sliders, o);
@@ -217,23 +239,24 @@ e_widget_csel_add(Evas *evas, E_Color *color)
 
      }
 
-   o = e_widget_spectrum_add(evas, wd->mode, cv);
+   o = e_widget_spectrum_add(evas, wd->mode, wd->cv);
    e_widget_sub_object_add(obj, o);
    evas_object_show(o);
    e_widget_on_change_hook_set(o, _e_wid_cb_color_changed, wd);
    wd->spectrum = o;
    e_widget_table_object_append(table, o, 1, 1, 1, 1, 1, 1, 1, 1);
 
-   o = e_widget_cslider_add(evas, wd->mode, cv, 1, 1);
+   o = e_widget_cslider_add(evas, wd->mode, wd->cv, 1, 1);
    e_widget_sub_object_add(obj, o);
    e_widget_on_change_hook_set(o, _e_wid_cb_color_changed, wd);
+   e_widget_min_size_set(o, 30, 50);
    evas_object_show(o);
    wd->vert = o;
-   e_widget_table_object_append(table, o, 2, 1, 1, 1, 1, 1, 0, 1);
+   e_widget_table_object_append(table, o, 2, 1, 1, 1, 0, 1, 0, 1);
 
    e_widget_table_object_append(table, frame, 3, 1, 1, 1, 1, 1, 1, 1);
 
-   o = e_widget_color_well_add(evas, cv);
+   o = e_widget_color_well_add(evas, wd->cv, NULL);
    e_widget_sub_object_add(obj, o);
    evas_object_show(o);
    wd->well = o;
