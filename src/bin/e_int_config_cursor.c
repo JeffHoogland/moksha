@@ -79,7 +79,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     E_Manager *man;
 	     man = l->data;
 	     if (man->pointer) e_object_del(E_OBJECT(man->pointer));
-	     man->pointer = e_pointer_window_new(man->root);
+	     man->pointer = e_pointer_window_new(man->root, 1);
 	  }
      }   
    return 1;
@@ -128,7 +128,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     E_Manager *man;
 	     man = l->data;
 	     if (man->pointer) e_object_del(E_OBJECT(man->pointer));
-	     man->pointer = e_pointer_window_new(man->root);
+	     man->pointer = e_pointer_window_new(man->root, 1);
 	  }	
      }   
    return 1;

@@ -75,6 +75,8 @@ e_win_new(E_Container *con)
    win->min_aspect = 0.0;
    win->max_aspect = 0.0;
    wins = evas_list_append(wins, win);
+   
+   win->pointer = e_pointer_window_new(win->evas_win, 0);
    return win;
 }
 
@@ -104,7 +106,6 @@ e_win_hide(E_Win *win)
    E_OBJECT_CHECK(win);
    E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    if (win->border) e_border_hide(win->border, 1);
-   e_pointer_type_pop(win->container->manager->pointer, win, NULL);
 }
 
 EAPI void
@@ -368,6 +369,7 @@ e_win_evas_object_win_get(Evas_Object *obj)
 static void
 _e_win_free(E_Win *win)
 {
+   e_object_del(E_OBJECT(win->pointer));
    e_canvas_del(win->ecore_evas);
    ecore_evas_free(win->ecore_evas);
    if (win->border)

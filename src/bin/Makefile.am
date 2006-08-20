@@ -54,7 +54,6 @@ e_place.h \
 e_resist.h \
 e_startup.h \
 e_hints.h \
-e_gadman.h \
 e_signals.h \
 e_xinerama.h \
 e_table.h \
@@ -203,7 +202,6 @@ e_place.c \
 e_resist.c \
 e_startup.c \
 e_hints.c \
-e_gadman.c \
 e_signals.c \
 e_xinerama.c \
 e_table.c \

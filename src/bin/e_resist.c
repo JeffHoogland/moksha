@@ -85,13 +85,6 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
      }
    e_container_border_list_free(bl);
 
-   for (l = con->gadman->clients; l; l = l->next)
-     {
-        E_Gadman_Client *gmc;
-
-	gmc = l->data;
-	OBSTACLE(gmc->x, gmc->y, gmc->w, gmc->h, e_config->gadget_resist);
-     }
    for (l = e_shelf_list(); l; l = l->next)
      {
 	E_Shelf *es;
@@ -133,27 +126,6 @@ e_resist_container_gadman_position(E_Container *con, Evas_List *skiplist,
 	*rx = x;
 	*ry = y;
 	return 0;
-     }
-
-   for (l = con->gadman->clients; l; l = l->next)
-     {
-        E_Gadman_Client *gmc;
-	int ok;
-
-	gmc = l->data;
-	ok = 1;
-	for (ll = skiplist; ll; ll = ll->next)
-	  {
-	     if (ll->data == gmc)
-	       {
-		  ok = 0;
-		  break;
-	       }
-	  }
-	if (ok)
-	  {
-	     OBSTACLE(gmc->x, gmc->y, gmc->w, gmc->h, e_config->gadget_resist);
-	  }
      }
 
    for (l = e_shelf_list(); l; l = l->next)

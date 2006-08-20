@@ -1352,49 +1352,6 @@ ACT_FN_GO_KEY(winlist)
 }
 
 /***************************************************************************/
-ACT_FN_GO(edit_mode)
-{
-   if (!obj) obj = E_OBJECT(e_container_current_get(e_manager_current_get()));
-   if (!obj) return;
-   if (obj->type != E_CONTAINER_TYPE)
-     {
-	obj = E_OBJECT(e_container_current_get(e_manager_current_get()));
-	if (!obj) return;
-     }
-   e_gadman_mode_set(((E_Container *)obj)->gadman, E_GADMAN_MODE_EDIT);
-   e_gadcon_all_edit_begin();
-}
-ACT_FN_END(edit_mode)
-{
-   if (!obj) obj = E_OBJECT(e_container_current_get(e_manager_current_get()));
-   if (!obj) return;
-   if (obj->type != E_CONTAINER_TYPE)
-     {
-	obj = E_OBJECT(e_container_current_get(e_manager_current_get()));
-	if (!obj) return;
-     }
-   e_gadman_mode_set(((E_Container *)obj)->gadman, E_GADMAN_MODE_NORMAL);
-   e_gadcon_all_edit_end();
-}
-
-/***************************************************************************/
-ACT_FN_GO(edit_mode_toggle)
-{
-   if (!obj) obj = E_OBJECT(e_container_current_get(e_manager_current_get()));
-   if (!obj) return;
-   if (obj->type != E_CONTAINER_TYPE)
-     {
-	obj = E_OBJECT(e_container_current_get(e_manager_current_get()));
-	if (!obj) return;
-     }
-   if (e_gadman_mode_get(((E_Container *)obj)->gadman) == E_GADMAN_MODE_NORMAL)
-     e_gadman_mode_set(((E_Container *)obj)->gadman, E_GADMAN_MODE_EDIT);
-   else
-     e_gadman_mode_set(((E_Container *)obj)->gadman, E_GADMAN_MODE_NORMAL);
-}
-/***************************************************************************/
-
-/***************************************************************************/
 ACT_FN_GO(desk_deskshow_toggle)
 {
    E_Zone *zone;
@@ -1476,10 +1433,8 @@ ACT_FN_GO(pointer_resize_push)
 	  return;
 	if (bd->zone)
 	  man = bd->zone->container->manager;
+	e_pointer_type_push(bd->pointer, bd, params);
      }
-   if (!man) man = e_manager_current_get();
-   if (!man) return;
-   e_pointer_type_push(man->pointer, obj, params);
 }
 
 ACT_FN_GO(pointer_resize_pop)
@@ -1497,10 +1452,8 @@ ACT_FN_GO(pointer_resize_pop)
 	  return;
 	if (bd->zone)
 	  man = (E_Manager *)bd->zone->container->manager;
+	e_pointer_type_pop(bd->pointer, bd, params);
      }
-   if (!man) man = e_manager_current_get();
-   if (!man) return;
-   e_pointer_type_pop(man->pointer, obj, params);
 }
 
 /***************************************************************************/
@@ -1812,14 +1765,6 @@ e_actions_init(void)
    ACT_GO_MOUSE(winlist);
    ACT_GO_KEY(winlist);
    
-   ACT_GO(edit_mode);
-   ACT_END(edit_mode);
-   
-   /* edit_mode */
-   ACT_GO(edit_mode_toggle);
-   e_register_action_predef_name(_("Gadgets"), _("Toggle Edit Mode"), "edit_mode_toggle", NULL,
-				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
-
    /* restart */
    ACT_GO(restart);
    e_register_action_predef_name(_("Enlightenment"), _("Restart"), "restart", NULL,

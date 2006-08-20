@@ -907,7 +907,6 @@ _e_main_screens_init(void)
    if (!e_container_init()) return 0;
    if (!e_zone_init()) return 0;
    if (!e_desk_init()) return 0;
-   if (!e_gadman_init()) return 0;
    if (!e_menu_init()) return 0;
    if (!e_exehist_init()) return 0;
    
@@ -971,7 +970,6 @@ _e_main_screens_shutdown(void)
    e_focus_shutdown();
    e_exehist_shutdown();
    e_menu_shutdown();
-   e_gadman_shutdown();
    e_desk_shutdown();
    e_zone_shutdown();
    e_container_shutdown();

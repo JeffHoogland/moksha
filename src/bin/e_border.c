@@ -473,6 +473,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
 
    focus_stack = evas_list_append(focus_stack, bd);
    
+   bd->pointer = e_pointer_window_new(bd->win, 0);
    return bd;
 }
 
@@ -2973,6 +2974,7 @@ e_border_resize_limit(E_Border *bd, int *w, int *h)
 static void
 _e_border_free(E_Border *bd)
 {
+   e_object_del(E_OBJECT(bd->pointer));
    if (bd->focused)
      {
 	if (e_config->focus_revert_on_hide_or_close)
@@ -3189,8 +3191,6 @@ _e_border_del(E_Border *bd)
 	ecore_event_add(E_EVENT_BORDER_REMOVE, ev, _e_border_event_border_remove_free, NULL);
      }
 
-   /* remove all pointers for this win. */
-   e_pointer_type_pop(bd->zone->container->manager->pointer, bd, NULL);
    e_container_border_remove(bd);
    if (bd->parent)
      {
@@ -6981,28 +6981,28 @@ _e_border_pointer_resize_begin(E_Border *bd)
    switch (bd->resize_mode)
      {
       case RESIZE_TL:
-	 e_pointer_type_push(bd->zone->container->manager->pointer, bd, "resize_tl");
+	 e_pointer_type_push(bd->pointer, bd, "resize_tl");
 	 break;
       case RESIZE_T:
-	 e_pointer_type_push(bd->zone->container->manager->pointer, bd, "resize_t");
+	 e_pointer_type_push(bd->pointer, bd, "resize_t");
 	 break;
       case RESIZE_TR:
-	 e_pointer_type_push(bd->zone->container->manager->pointer, bd, "resize_tr");
+	 e_pointer_type_push(bd->pointer, bd, "resize_tr");
 	 break;
       case RESIZE_R:
-	 e_pointer_type_push(bd->zone->container->manager->pointer, bd, "resize_r");
+	 e_pointer_type_push(bd->pointer, bd, "resize_r");
 	 break;
       case RESIZE_BR:
-	 e_pointer_type_push(bd->zone->container->manager->pointer, bd, "resize_br");
+	 e_pointer_type_push(bd->pointer, bd, "resize_br");
 	 break;
       case RESIZE_B:
-	 e_pointer_type_push(bd->zone->container->manager->pointer, bd, "resize_b");
+	 e_pointer_type_push(bd->pointer, bd, "resize_b");
 	 break;
       case RESIZE_BL:
-	 e_pointer_type_push(bd->zone->container->manager->pointer, bd, "resize_bl");
+	 e_pointer_type_push(bd->pointer, bd, "resize_bl");
 	 break;
       case RESIZE_L:
-	 e_pointer_type_push(bd->zone->container->manager->pointer, bd, "resize_l");
+	 e_pointer_type_push(bd->pointer, bd, "resize_l");
 	 break;
      }
 }
@@ -7013,28 +7013,28 @@ _e_border_pointer_resize_end(E_Border *bd)
    switch (bd->resize_mode)
      {
       case RESIZE_TL:
-	 e_pointer_type_pop(bd->zone->container->manager->pointer, bd, "resize_tl");
+	 e_pointer_type_pop(bd->pointer, bd, "resize_tl");
 	 break;
       case RESIZE_T:
-	 e_pointer_type_pop(bd->zone->container->manager->pointer, bd, "resize_t");
+	 e_pointer_type_pop(bd->pointer, bd, "resize_t");
 	 break;
       case RESIZE_TR:
-	 e_pointer_type_pop(bd->zone->container->manager->pointer, bd, "resize_tr");
+	 e_pointer_type_pop(bd->pointer, bd, "resize_tr");
 	 break;
       case RESIZE_R:
-	 e_pointer_type_pop(bd->zone->container->manager->pointer, bd, "resize_r");
+	 e_pointer_type_pop(bd->pointer, bd, "resize_r");
 	 break;
       case RESIZE_BR:
-	 e_pointer_type_pop(bd->zone->container->manager->pointer, bd, "resize_br");
+	 e_pointer_type_pop(bd->pointer, bd, "resize_br");
 	 break;
       case RESIZE_B:
-	 e_pointer_type_pop(bd->zone->container->manager->pointer, bd, "resize_b");
+	 e_pointer_type_pop(bd->pointer, bd, "resize_b");
 	 break;
       case RESIZE_BL:
-	 e_pointer_type_pop(bd->zone->container->manager->pointer, bd, "resize_bl");
+	 e_pointer_type_pop(bd->pointer, bd, "resize_bl");
 	 break;
       case RESIZE_L:
-	 e_pointer_type_pop(bd->zone->container->manager->pointer, bd, "resize_l");
+	 e_pointer_type_pop(bd->pointer, bd, "resize_l");
 	 break;
      }
 }
@@ -7042,11 +7042,11 @@ _e_border_pointer_resize_end(E_Border *bd)
 static void
 _e_border_pointer_move_begin(E_Border *bd)
 {
-   e_pointer_type_push(bd->zone->container->manager->pointer, bd, "move");
+   e_pointer_type_push(bd->pointer, bd, "move");
 }
 
 static void
 _e_border_pointer_move_end(E_Border *bd)
 {
-   e_pointer_type_pop(bd->zone->container->manager->pointer, bd, "move");
+   e_pointer_type_pop(bd->pointer, bd, "move");
 }

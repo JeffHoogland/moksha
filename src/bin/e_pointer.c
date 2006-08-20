@@ -20,6 +20,8 @@ struct _E_Pointer_Stack
 
 static Evas_List *_e_pointers = NULL;
 
+static void _e_pointer_canvas_add(E_Pointer *p);
+static void _e_pointer_canvas_del(E_Pointer *p);
 static void _e_pointer_cb_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
 static void _e_pointer_free(E_Pointer *p);
 static void _e_pointer_stack_free(E_Pointer_Stack *elem);
@@ -27,109 +29,29 @@ static int  _e_pointer_type_set(E_Pointer *p, const char *type);
 
 /* externally accessible functions */
 EAPI E_Pointer *
-e_pointer_window_new(Ecore_X_Window win)
+e_pointer_window_new(Ecore_X_Window win, int filled)
 {
    E_Pointer *p = NULL;
 
+   p = E_OBJECT_ALLOC(E_Pointer, E_POINTER_TYPE, _e_pointer_free);
+   if (!p) return NULL;
+   
    if (e_config->use_e_cursor)
      {
-	Evas_Engine_Info_Buffer *einfo;
-	Evas_Object *o;
-	int rmethod;
-
-	rmethod = evas_render_method_lookup("buffer");
-	if (!rmethod) return NULL;
-
-	p = E_OBJECT_ALLOC(E_Pointer, E_POINTER_TYPE, _e_pointer_free);
-	if (!p) return NULL;
 	p->e_cursor = 1;
 	p->win = win;
-
-	p->w = e_config->cursor_size;
-	p->h = e_config->cursor_size;
-
-	/* create evas */
-	p->evas = evas_new();
-	if (!p->evas)
-	  {
-	     e_object_del(E_OBJECT(p));
-	     return NULL;
-	  }
-	evas_output_method_set(p->evas, rmethod);
-	evas_output_size_set(p->evas, p->w, p->h);
-	evas_output_viewport_set(p->evas, 0, 0, p->w, p->h);
-
-	p->pixels = malloc(p->w * p->h * sizeof(int));
-	if (!p->pixels)
-	  {
-	     e_object_del(E_OBJECT(p));
-	     return NULL;
-	  }
-
-	einfo = (Evas_Engine_Info_Buffer *)evas_engine_info_get(p->evas);
-	if (!einfo)
-	  {
-	     e_object_del(E_OBJECT(p));
-	     return NULL;
-	  }
-	einfo->info.depth_type = EVAS_ENGINE_BUFFER_DEPTH_ARGB32;
-	einfo->info.dest_buffer = p->pixels;
-	einfo->info.dest_buffer_row_bytes = p->w * sizeof(int);
-	einfo->info.use_color_key = 0;
-	einfo->info.alpha_threshold = 0;
-	einfo->info.func.new_update_region = NULL;
-	einfo->info.func.free_update_region = NULL;
-	evas_engine_info_set(p->evas, (Evas_Engine_Info *)einfo);
-
-	/* set the pointer edje */
-	o = edje_object_add(p->evas);
-	if (!o)
-	  {
-	     e_object_del(E_OBJECT(p));
-	     return NULL;
-	  }
-	p->pointer_object = o;
-
-	/* Create the hotspot object */
-	o = evas_object_rectangle_add(p->evas);
-	if (!o)
-	  {
-	     e_object_del(E_OBJECT(p));
-	     return NULL;
-	  }
-	p->hot_object = o;
-	evas_object_event_callback_add(o,
-				       EVAS_CALLBACK_MOVE,
-				       _e_pointer_cb_move, p);
-
 	/* Init the cursor object */
-	if (ecore_x_cursor_color_supported_get())
-	  p->color = 1;
-	else
-	  p->color = 0;
-
-	/* init edje */
-	evas_object_move(p->pointer_object, 0, 0);
-	evas_object_resize(p->pointer_object, p->w, p->h);
-	evas_object_show(p->pointer_object);
-
-	ecore_x_cursor_size_set(e_config->cursor_size * 3 / 4);
-	e_pointer_type_push(p, p, "default");
-
-	_e_pointers = evas_list_append(_e_pointers, p);
+	if (ecore_x_cursor_color_supported_get()) p->color = 1;
+	else p->color = 0;
      }
    else
      {
-	p = E_OBJECT_ALLOC(E_Pointer, E_POINTER_TYPE, _e_pointer_free);
-	if (!p) return NULL;
 	p->e_cursor = 0;
 	p->win = win;
-
-	ecore_x_cursor_size_set(e_config->cursor_size * 3 / 4);
-	e_pointer_type_push(p, p, "default");
-
-	_e_pointers = evas_list_append(_e_pointers, p);
      }
+   ecore_x_cursor_size_set(e_config->cursor_size * 3 / 4);
+   if (filled) e_pointer_type_push(p, p, "default");
+   _e_pointers = evas_list_append(_e_pointers, p); 
    return p;
 }
 
@@ -182,11 +104,15 @@ e_pointer_type_push(E_Pointer *p, void *obj, const char *type)
    E_Pointer_Stack *stack;
 
    p->e_cursor = e_config->use_e_cursor;
+   if (p->e_cursor)
+     {
+	if (!p->evas) _e_pointer_canvas_add(p);
+     }
+   
    if (!_e_pointer_type_set(p, type))
      {
 	p->e_cursor = 0;
-	if (!_e_pointer_type_set(p, type))
-	  return;
+	if (!_e_pointer_type_set(p, type)) return;
      }
 
    if (p->type) evas_stringshare_del(p->type);
@@ -224,7 +150,11 @@ e_pointer_type_pop(E_Pointer *p, void *obj, const char *type)
 
    if (!p->stack)
      {
-	printf("BUG: No pointer on the stack!\n");
+	if (p->e_cursor)
+	  {  
+	     if (p->evas) _e_pointer_canvas_del(p);
+	  }
+	ecore_x_window_cursor_set(p->win, 0);
 	return;
      }
 
@@ -267,6 +197,7 @@ e_pointer_idler_before(void)
 
 	p = l->data;
 	if (!p->e_cursor) continue;
+	if (!p->evas) continue;
 
 	updates = evas_render_updates(p->evas);
 	if ((updates) || (p->hot.update))
@@ -283,6 +214,80 @@ e_pointer_idler_before(void)
 }
 
 /* local subsystem functions */
+static void
+_e_pointer_canvas_add(E_Pointer *p)
+{
+   Evas_Engine_Info_Buffer *einfo;
+   Evas_Object *o;
+   int rmethod;
+   
+   p->w = e_config->cursor_size;
+   p->h = e_config->cursor_size;
+   
+   /* create evas */
+   p->evas = evas_new();
+   if (!p->evas)
+     {
+	e_object_del(E_OBJECT(p));
+	return;
+     }
+   rmethod = evas_render_method_lookup("buffer");
+   evas_output_method_set(p->evas, rmethod);
+   evas_output_size_set(p->evas, p->w, p->h);
+   evas_output_viewport_set(p->evas, 0, 0, p->w, p->h);
+   
+   p->pixels = malloc(p->w * p->h * sizeof(int));
+   if (!p->pixels)
+     {
+	evas_free(p->evas);
+	p->evas = NULL;
+	return;
+     }
+   einfo = (Evas_Engine_Info_Buffer *)evas_engine_info_get(p->evas);
+   if (!einfo)
+     {
+	free(p->pixels);
+	p->pixels = NULL;
+	evas_free(p->evas);
+	p->evas = NULL;
+	return;
+     }
+   einfo->info.depth_type = EVAS_ENGINE_BUFFER_DEPTH_ARGB32;
+   einfo->info.dest_buffer = p->pixels;
+   einfo->info.dest_buffer_row_bytes = p->w * sizeof(int);
+   einfo->info.use_color_key = 0;
+   einfo->info.alpha_threshold = 0;
+   einfo->info.func.new_update_region = NULL;
+   einfo->info.func.free_update_region = NULL;
+   evas_engine_info_set(p->evas, (Evas_Engine_Info *)einfo);
+   
+   /* set the pointer edje */
+   o = edje_object_add(p->evas);
+   p->pointer_object = o;
+   /* Create the hotspot object */
+   o = evas_object_rectangle_add(p->evas);
+   p->hot_object = o;
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOVE,
+				  _e_pointer_cb_move, p);
+   /* init edje */
+   evas_object_move(p->pointer_object, 0, 0);
+   evas_object_resize(p->pointer_object, p->w, p->h);
+   evas_object_show(p->pointer_object);
+}
+
+static void
+_e_pointer_canvas_del(E_Pointer *p)
+{
+   if (p->pointer_object) evas_object_del(p->pointer_object);
+   if (p->hot_object) evas_object_del(p->hot_object);
+   if (p->evas) evas_free(p->evas);
+   if (p->pixels) free(p->pixels);
+   p->pointer_object = NULL;
+   p->hot_object = NULL;
+   p->evas = NULL;
+   p->pixels = NULL;
+}
+
 static void
 _e_pointer_cb_move(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info)
 {
@@ -305,12 +310,8 @@ _e_pointer_free(E_Pointer *p)
 {
    _e_pointers = evas_list_remove(_e_pointers, p);
 
-   /* free evas */
-   if (p->pointer_object) evas_object_del(p->pointer_object);
-   if (p->hot_object) evas_object_del(p->hot_object);
-   if (p->evas) evas_free(p->evas);
-   if (p->pixels) free(p->pixels);
-
+   _e_pointer_canvas_del(p);
+   
    while (p->stack)
      {
 	_e_pointer_stack_free(p->stack->data);
@@ -324,8 +325,7 @@ _e_pointer_free(E_Pointer *p)
 static void
 _e_pointer_stack_free(E_Pointer_Stack *elem)
 {
-   if (elem->type) 
-     evas_stringshare_del(elem->type);
+   if (elem->type) evas_stringshare_del(elem->type);
    free(elem);
 }
 

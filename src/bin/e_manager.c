@@ -148,7 +148,7 @@ e_manager_new(Ecore_X_Window root, int num)
    h = ecore_event_handler_add(ECORE_X_EVENT_SCREENSAVER_NOTIFY, _e_manager_cb_screensaver_notify, man);
    if (h) man->handlers = evas_list_append(man->handlers, h);
 
-   man->pointer = e_pointer_window_new(man->root);
+   man->pointer = e_pointer_window_new(man->root, 1);
 
    return man;
 }

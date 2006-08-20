@@ -50,7 +50,7 @@ e_init_init(void)
    ecore_evas_name_class_set(_e_init_ecore_evas, "E", "Init_Window");
    ecore_evas_title_set(_e_init_ecore_evas, "Enlightenment Init");
 
-   _e_init_pointer = e_pointer_window_new(_e_init_win);
+   _e_init_pointer = e_pointer_window_new(_e_init_win, 1);
 
    ecore_evas_raise(_e_init_ecore_evas);
    ecore_evas_show(_e_init_ecore_evas);

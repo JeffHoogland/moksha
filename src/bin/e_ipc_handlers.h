@@ -5354,7 +5354,7 @@ break;
 	E_Manager *man;
 	man = ml->data;
 	if (man->pointer) e_object_del(E_OBJECT(man->pointer));
-	man->pointer = e_pointer_window_new(man->root);
+	man->pointer = e_pointer_window_new(man->root, 1);
      }
    SAVE;
    END_INT;

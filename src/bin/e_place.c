@@ -189,66 +189,6 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
      {
 	Evas_List *l;
 	
-	for (l = zone->container->gadman->clients; l; l = l->next)
-	  {
-	     E_Gadman_Client *gmc;
-	     int bx, by, bw, bh;
-	     
-	     gmc = l->data;
-	     if ((gmc->zone != zone)) continue;
-	     
-	     bx = gmc->x;
-	     by = gmc->y;
-	     bw = gmc->w;
-	     bh = gmc->h;
-	     if (E_INTERSECTS(bx, by, bw, bh, 0, 0, zw, zh))
-	       {
-		  if ((bx > 0) && (bx <= zw) && (!u_x[bx]))
-		    {
-		       a_w++;
-		       if (a_w > a_alloc_w)
-			 {
-			    a_alloc_w += 32;
-			    E_REALLOC(a_x, int, a_alloc_w);
-			 }
-		       a_x[a_w - 1] = bx;
-		       u_x[bx] = 1;
-		    }
-		  if (((bx + bw) > 0) && ((bx + bw) <= zw) && (!u_x[bx + bw]))
-		    {
-		       a_w++;
-		       if (a_w > a_alloc_w)
-			 {
-			    a_alloc_w += 32;
-			    E_REALLOC(a_x, int, a_alloc_w);
-			 }
-		       a_x[a_w - 1] = bx + bw;
-		       u_x[bx + bw] = 1;
-		    }
-		  if ((by > 0) && (by <= zh) && (!u_y[by]))
-		    {
-		       a_h++;
-		       if (a_h > a_alloc_h)
-			 {
-			    a_alloc_h += 32;
-			    E_REALLOC(a_y, int, a_alloc_h);
-			 }
-		       a_y[a_h - 1] = by;
-		       u_y[by] = 1;
-		    }
-		  if (((by + bh) > 0) && ((by + bh) <= zh) && (!u_y[by + bh]))
-		    {
-		       a_h++;
-		       if (a_h > a_alloc_h)
-			 {
-			    a_alloc_h += 32;
-			    E_REALLOC(a_y, int, a_alloc_h);
-			 }
-		       a_y[a_h - 1] = by + bh;
-		       u_y[by + bh] = 1;
-		    }
-	       }
-	  }
 	for (l = e_shelf_list(); l; l = l->next)
 	  {
 	     E_Shelf *es;

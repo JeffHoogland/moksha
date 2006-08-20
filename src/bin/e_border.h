@@ -444,6 +444,7 @@ struct _E_Border
    Evas_List *transients;
 
    E_App *app;
+   E_Pointer *pointer;
 };
 
 struct _E_Border_Pending_Move_Resize 

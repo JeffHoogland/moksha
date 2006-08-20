@@ -130,14 +130,6 @@ e_maximize_border_gadman_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
    Evas_List *l, *rects = NULL;
    E_Maximize_Rect *r;
 
-   for (l = bd->zone->container->gadman->clients; l; l = l->next)
-     {
-	E_Gadman_Client *gmc;
-
-	gmc = l->data;
-	if ((gmc->zone != bd->zone)) continue;
-	OBSTACLE(gmc->x, gmc->y, gmc->x + gmc->w, gmc->y + gmc->h);
-     }
    for (l = e_shelf_list(); l; l = l->next)
      {
 	E_Shelf *es;

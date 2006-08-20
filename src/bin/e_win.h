@@ -35,6 +35,8 @@ struct _E_Win
       unsigned char     centered : 1;
       unsigned char     dialog : 1;
    } state;
+   
+   E_Pointer           *pointer;
 };
 
 EAPI int    e_win_init               (void);

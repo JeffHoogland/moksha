@@ -174,8 +174,6 @@ e_container_new(E_Manager *man)
      {
 	zone = e_zone_new(con, 0, 0, 0, con->w, con->h);
      }
-   con->gadman = e_gadman_new(con);
-   
    return con;
 }
         
@@ -965,7 +963,6 @@ _e_container_free(E_Container *con)
 	l = l->next;
 	e_object_del(E_OBJECT(tmp->data));
      }
-   if (con->gadman) e_object_del(E_OBJECT(con->gadman));
    con->manager->containers = evas_list_remove(con->manager->containers, con);
    e_canvas_del(con->bg_ecore_evas);
    ecore_evas_free(con->bg_ecore_evas);
@@ -1150,7 +1147,6 @@ _e_container_resize_handle(E_Container *con)
    ev->container = con;
    e_object_ref(E_OBJECT(con));
    
-   e_gadman_all_save(con->gadman);
    e_xinerama_update();
    screens = (Evas_List *)e_xinerama_screens_get();
    if (screens)
@@ -1185,8 +1181,6 @@ _e_container_resize_handle(E_Container *con)
 	e_zone_move_resize(zone, 0, 0, con->w, con->h);
 	e_shelf_zone_move_resize_handle(zone);	
      }
-   
-   e_gadman_container_resize(con->gadman);
    
    ecore_event_add(E_EVENT_CONTAINER_RESIZE, ev, _e_container_event_container_resize_free, NULL);
    
