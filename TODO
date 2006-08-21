@@ -76,10 +76,8 @@ Some of the things (in very short form) that need to be done to E17...
   CLEANUPS
 -------------------------------------------------------------------------------
 
-* bg needs a gradient dialog that can take a set of pre-drawn png's and edc
-  recipies and use colored rects and overlayed png's recolored with color
-  options to create vertical, horizontal, radial etc. gradients quickly and
-  save to an edc
+* bg gradient dialog needs a preview widget. also edje needs to be updated so we can do proper fills for non 0 angles.
+* wallpaper dialog needs to select an existing wallpaper when the current on e is deleted. (might need to add a hook to e_fm2 for delete events).
 * fsel could do with an optional preview pane for selected file (bigger icon,
   file info (permissions, modification date etc.)
 * clientinfo dialog could be nicer - then again it is an obsucre thing.
@@ -103,6 +101,7 @@ Some of the things (in very short form) that need to be done to E17...
   per desktop (with stick windows considered to live on the "current" desk
   when winlist starts)
 * make it easy for modules to hook into ipc and extend it for themselves
+* e_color_dialog needs to have an area for favorite and recently selected colors. store in config and use ilist? or store as color files and use e_fm2? or custom widget?
 ]]]
 
 [[[
