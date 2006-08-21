@@ -163,11 +163,7 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob, *ot, *ilist, *mt;
-   E_Radio_Group *rg;
-   E_Module *m;
    Evas_List *l;
-   char buf[4096];
-   Evas_Coord ew, eh, mw, mh;
    E_Fm2_Config fmc;
    int i;
 
@@ -270,11 +266,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 static void
 _ilist_cb_change(void *data, Evas_Object *obj)
 {
-   E_Module *m;
    E_Config_Dialog_Data *cfdata;
-   Evas_List *l;
    const char *v;
-   char                icn[PATH_MAX];
    Ecore_Desktop_Icon_Theme *theme;
 
    cfdata = data;
