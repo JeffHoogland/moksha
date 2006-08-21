@@ -37,8 +37,10 @@ static void _e_int_menus_config_pre_cb       (void *data, E_Menu *m);
 static void _e_int_menus_config_free_hook    (void *obj);
 static void _e_int_menus_config_item_cb      (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_clients_pre_cb      (void *data, E_Menu *m);
+static void _e_int_menus_clients_item_create (E_Border *bd, E_Menu *m);
 static void _e_int_menus_clients_free_hook   (void *obj);
 static void _e_int_menus_clients_item_cb     (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_clients_icon_cb     (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_clients_cleanup_cb  (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_desktops_pre_cb     (void *data, E_Menu *m);
 static void _e_int_menus_desktops_item_cb    (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -685,21 +687,23 @@ static void
 _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
-   Evas_List *l, *borders = NULL;
-   E_Menu *root;
+   Evas_List *l, *borders = NULL, *alt = NULL;
    E_Zone *zone = NULL;
+   E_Desk *desk = NULL;
    const char *s;
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
-   root = e_menu_root_get(m);
    /* get the current clients */
-   if (root)
-     zone = root->zone;
+   zone =
+      e_zone_current_get(e_container_current_get(e_manager_current_get()));
+   desk = e_desk_current_get(zone);
    for (l = e_border_client_list(); l; l = l->next)
      {
 	E_Border *border;
 
 	border = l->data;
+	if (border->client.netwm.state.skip_taskbar) continue;
+	if (border->user_skip_winlist) continue;
 	if ((border->zone == zone) || (border->iconic))
 	  borders = evas_list_append(borders, border);
      }
@@ -714,31 +718,22 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
    for (l = borders; l; l = l->next)
      {
 	E_Border *bd = l->data;
-	E_App *a;
-	const char *title;
-	
-	title = e_border_name_get(bd);
-	mi = e_menu_item_new(m);
-	e_menu_item_check_set(mi, 1);
-	if ((title) && (title[0]))
-	  e_menu_item_label_set(mi, title);
-	else
-	  e_menu_item_label_set(mi, _("No name!!"));
-	/* ref the border as we implicitly unref it in the callback */
-	e_object_ref(E_OBJECT(bd));
-//	e_object_breadcrumb_add(E_OBJECT(bd), "clients_menu");
-	e_menu_item_callback_set(mi, _e_int_menus_clients_item_cb, bd);
-	if (!bd->iconic) e_menu_item_toggle_set(mi, 1);
-	a = bd->app;
-	if (a)
+
+	if (bd->desk != desk)
 	  {
-	     if (!((a->icon_class) && 
-		   (e_util_menu_item_edje_icon_list_set(mi, a->icon_class))))
-	        {
-	           e_menu_item_icon_edje_set(mi, a->path, "icon");
-	           if (a->icon_path) e_menu_item_icon_path_set(mi, a->icon_path);
-	        }
+	     alt = evas_list_append(alt, bd);
+	     continue;
 	  }
+	_e_int_menus_clients_item_create(bd, m);
+     }
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+
+   for (l = alt; l; l = l->next)
+     {
+	E_Border *bd = l->data;
+
+	_e_int_menus_clients_item_create(bd, m);
      }
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
@@ -752,6 +747,27 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
    
    e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_clients_free_hook);
    e_object_data_set(E_OBJECT(m), borders);
+}
+
+static void
+_e_int_menus_clients_item_create(E_Border *bd, E_Menu *m)
+{
+   E_Menu_Item *mi;
+   const char *title;
+	
+   title = e_border_name_get(bd);
+   mi = e_menu_item_new(m);
+   e_menu_item_check_set(mi, 1);
+   if ((title) && (title[0]))
+     e_menu_item_label_set(mi, title);
+   else
+     e_menu_item_label_set(mi, _("No name!!"));
+   /* ref the border as we implicitly unref it in the callback */
+   e_object_ref(E_OBJECT(bd));
+/*   e_object_breadcrumb_add(E_OBJECT(bd), "clients_menu");*/
+   e_menu_item_callback_set(mi, _e_int_menus_clients_item_cb, bd);
+   e_menu_item_realize_callback_set(mi, _e_int_menus_clients_icon_cb, bd);
+   if (!bd->iconic) e_menu_item_toggle_set(mi, 1);
 }
 
 static void
@@ -796,6 +812,21 @@ _e_int_menus_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 			       bd->y + (bd->h / 2));
 	e_border_focus_set(bd, 1, 1);
      }
+}
+
+static void 
+_e_int_menus_clients_icon_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Border *bd;
+   Evas_Object *o;
+   
+   bd = data;
+   E_OBJECT_CHECK(bd);
+
+   o = e_icon_add(m->evas);
+   e_icon_object_set(o, e_border_icon_add(bd, m->evas));
+
+   mi->icon_object = o;
 }
 
 static void 

@@ -47,6 +47,7 @@ static void _e_menu_submenu_activate              (E_Menu_Item *mi);
 static void _e_menu_submenu_deactivate            (E_Menu_Item *mi);
 static void _e_menu_reposition                    (E_Menu *m);
 static int  _e_menu_active_call                   (void);
+static int _e_menu_realize_call                   (E_Menu_Item *mi);
 static void _e_menu_item_activate_next            (void);
 static void _e_menu_item_activate_previous        (void);
 static void _e_menu_item_activate_first           (void);
@@ -599,19 +600,6 @@ e_menu_item_icon_edje_set(E_Menu_Item *mi, const char *icon, const char *key)
    mi->menu->changed = 1;
 }
 
-EAPI void      
-e_menu_item_icon_object_set(E_Menu_Item *mi, Evas_Object *obj)
-{
-   E_OBJECT_CHECK(mi);
-   E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
-   if (((mi->icon_object) && (obj) && (mi->icon_object == obj)) ||
-       ((!mi->icon_object) && (!obj)))
-     return;
-   mi->icon_object = obj;
-   mi->changed = 1;
-   mi->menu->changed = 1;
-}
-
 EAPI void
 e_menu_item_label_set(E_Menu_Item *mi, const char *label)
 {
@@ -759,6 +747,15 @@ e_menu_item_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, 
    E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    mi->cb.func = func;
    mi->cb.data = data;
+}
+
+EAPI void
+e_menu_item_realize_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data)
+{
+   E_OBJECT_CHECK(mi);
+   E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
+   mi->realize_cb.func = func;
+   mi->realize_cb.data = data;
 }
 
 EAPI void
@@ -1199,7 +1196,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     evas_object_pass_events_set(o, 1);
 	     e_box_pack_end(mi->container_object, o);
 	  }
-	if (mi->icon || mi->icon_object)
+	if (mi->icon || mi->realize_cb.func)
 	  {
 	     int icon_w, icon_h;
 	     
@@ -1213,17 +1210,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     else
 	       evas_object_del(o);
 	     
-             /* FIXME: This should be cleaned up a bit. */
-	     if (mi->icon_object)
-	       {
-		  o = e_icon_add(mi->menu->evas);
-		  e_icon_object_set(o, mi->icon_object);
-		  e_icon_fill_inside_set(o, 1);
-		  e_icon_size_get(o, &icon_w, &icon_h);
-
-		  mi->icon_object = o;
-	       }
-	     else if (mi->icon)
+	     if (mi->icon)
 	       {
 	          /* Try a the usual suspects first. */
 		  if (!mi->icon_key)
@@ -1258,6 +1245,12 @@ _e_menu_item_realize(E_Menu_Item *mi)
 		       e_icon_fill_inside_set(o, 1);
 		       e_icon_size_get(mi->icon_object, &icon_w, &icon_h);
 		    }
+	       }
+	     if (_e_menu_realize_call(mi))
+	       {
+		  o = mi->icon_object;
+		  e_icon_fill_inside_set(o, 1);
+		  e_icon_size_get(o, &icon_w, &icon_h);
 	       }
 
 	     evas_object_pass_events_set(o, 1);
@@ -1894,6 +1887,20 @@ _e_menu_active_call(void)
 	return 1;
      }
    return -1;
+}
+
+static int
+_e_menu_realize_call(E_Menu_Item *mi)
+{
+   if (mi)
+     {
+	if (mi->realize_cb.func)
+	  {
+	     mi->realize_cb.func(mi->realize_cb.data, mi->menu, mi);
+	     return 1;
+	  }
+     }
+   return 0;
 }
 
 static void

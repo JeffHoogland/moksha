@@ -113,7 +113,12 @@ struct _E_Menu_Item
    struct {
       void *data;
       void (*func) (void *data, E_Menu *m, E_Menu_Item *mi);
-   } cb;
+   } cb; /* Callback for menu item activation */
+
+   struct {
+      void *data;
+      void (*func) (void *data, E_Menu *m, E_Menu_Item *mi);
+   } realize_cb; /* Callback for menu item icon realization */
 
     struct {
       void *data;
@@ -173,7 +178,6 @@ EAPI int          e_menu_item_num_get(E_Menu_Item *mi);
 EAPI void         e_menu_item_icon_path_set(E_Menu_Item *mi, const char *icon);
 EAPI void         e_menu_item_icon_file_set(E_Menu_Item *mi, const char *icon);
 EAPI void         e_menu_item_icon_edje_set(E_Menu_Item *mi, const char *icon, const char *key);
-EAPI void         e_menu_item_icon_object_set(E_Menu_Item *mi, Evas_Object *obj);
 EAPI void         e_menu_item_label_set(E_Menu_Item *mi, const char *label);
 EAPI void         e_menu_item_submenu_set(E_Menu_Item *mi, E_Menu *sub);
 EAPI void         e_menu_item_separator_set(E_Menu_Item *mi, int sep);
@@ -183,6 +187,7 @@ EAPI void         e_menu_item_radio_group_set(E_Menu_Item *mi, int radg);
 EAPI void         e_menu_item_toggle_set(E_Menu_Item *mi, int tog);
 EAPI int          e_menu_item_toggle_get(E_Menu_Item *mi);
 EAPI void         e_menu_item_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data);
+EAPI void         e_menu_item_realize_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data);
 EAPI void         e_menu_item_submenu_pre_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data);
 EAPI void         e_menu_item_submenu_post_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data);
 EAPI void         e_menu_item_active_set(E_Menu_Item *mi, int active);
