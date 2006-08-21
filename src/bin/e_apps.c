@@ -1786,7 +1786,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
    _e_app_print(path, event);
 #endif
 
-   file = (char *)ecore_file_get_file((char *)path);
+   file = (char *)ecore_file_get_file(path);
    if (!strcmp(file, ".order"))
      {
 	if ((event == ECORE_FILE_EVENT_CREATED_FILE) ||
