@@ -333,7 +333,7 @@ e_intl_input_method_set(const char *method)
 	input_methods = _e_intl_imc_path_scan(path_input_methods);
 	_e_intl_input_method = strdup(method);
 	
-	imc = _e_intl_imc_find (input_methods, _e_intl_input_method);	
+	imc = _e_intl_imc_find(input_methods, _e_intl_input_method);	
 	
 	     if (imc) 	  
 	       {	     
@@ -367,7 +367,7 @@ e_intl_input_method_set(const char *method)
 	     
 	     imc = input_methods->data;	     
 	     input_methods = evas_list_remove_list(input_methods,input_methods);
-	     e_intl_input_method_config_free (imc); 
+	     e_intl_input_method_config_free(imc); 
 	  }
      }   
    else
@@ -406,14 +406,14 @@ e_intl_input_method_list(void)
 	     
 	imc = input_methods->data;	     
 	input_methods = evas_list_remove_list(input_methods, input_methods);
-	e_intl_input_method_config_free (imc);
+	e_intl_input_method_config_free(imc);
      }
    return im_list;
 }
 
 /* Get the input method configuration from the file */
 EAPI E_Input_Method_Config *
-e_intl_input_method_config_read (Eet_File * imc_file)
+e_intl_input_method_config_read(Eet_File * imc_file)
 {
    E_Input_Method_Config *imc;
    
@@ -427,7 +427,7 @@ e_intl_input_method_config_read (Eet_File * imc_file)
 
 /* Write the input method configuration to the file */
 EAPI int
-e_intl_input_method_config_write (Eet_File * imc_file, E_Input_Method_Config * imc)
+e_intl_input_method_config_write(Eet_File * imc_file, E_Input_Method_Config * imc)
 {
    int ok = 0;
 
@@ -439,7 +439,7 @@ e_intl_input_method_config_write (Eet_File * imc_file, E_Input_Method_Config * i
 }
 
 EAPI void
-e_intl_input_method_config_free (E_Input_Method_Config *imc)
+e_intl_input_method_config_free(E_Input_Method_Config *imc)
 {
    if (imc != NULL)
      {
@@ -1018,7 +1018,7 @@ _e_intl_imc_dir_scan(const char *dir)
 	     imc_file = eet_open(buf, EET_FILE_MODE_READ);
 	     if (imc_file)
 	       {
-		  imc = e_intl_input_method_config_read (imc_file);
+		  imc = e_intl_input_method_config_read(imc_file);
 		  if (imc)
 		    {
 		       imcs = evas_list_append(imcs, imc);

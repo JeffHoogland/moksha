@@ -16,7 +16,7 @@ static void _e_color_dialog_dia_del(E_Object *obj);
  * @param color color to initialize to (or NULL for black). 
  */
 E_Color_Dialog  *
-e_color_dialog_new (E_Container *con, const E_Color *color) 
+e_color_dialog_new(E_Container *con, const E_Color *color) 
 {
    E_Color_Dialog *dia;
    Evas_Object *o;
@@ -52,13 +52,13 @@ e_color_dialog_new (E_Container *con, const E_Color *color)
 }
 
 void
-e_color_dialog_show (E_Color_Dialog *dia)
+e_color_dialog_show(E_Color_Dialog *dia)
 {
    e_dialog_show(dia->dia);
 }
 
 void
-e_color_dialog_title_set (E_Color_Dialog *dia, const char *title)
+e_color_dialog_title_set(E_Color_Dialog *dia, const char *title)
 {
    e_dialog_title_set(dia->dia, title);
 }
