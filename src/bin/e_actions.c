@@ -1113,6 +1113,7 @@ _e_actions_menu_find(const char *name)
 {
    if (!strcmp(name, "main")) return e_int_menus_main_new();
    else if (!strcmp(name, "favorites")) return e_int_menus_favorite_apps_new();
+   else if (!strcmp(name, "all")) return e_int_menus_all_apps_new();
    else if (!strcmp(name, "clients")) return e_int_menus_clients_new();
    return NULL;
 }
@@ -1738,6 +1739,8 @@ e_actions_init(void)
    e_register_action_predef_name(_("Menu"), _("Show Main Menu"), "menu_show", "main",
 				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    e_register_action_predef_name(_("Menu"), _("Show Favorites Menu"), "menu_show", "favorites",
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   e_register_action_predef_name(_("Menu"), _("Show All Applications Menu"), "menu_show", "all",
 				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
    e_register_action_predef_name(_("Menu"), _("Show Clients Menu"), "menu_show", "clients",
 				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);

@@ -9,6 +9,7 @@ struct _Main_Data
 {
    E_Menu *menu;
    E_Menu *apps;
+   E_Menu *all_apps;
    E_Menu *desktops;
    E_Menu *clients;
 //   E_Menu *gadgets;
@@ -76,6 +77,13 @@ e_int_menus_main_new(void)
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Favorite Applications"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/favorites");
+   e_menu_item_submenu_set(mi, subm);
+
+   subm = e_int_menus_all_apps_new();
+   dat->all_apps = subm;
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("All Applications"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/all_applications");
    e_menu_item_submenu_set(mi, subm);
   
    mi = e_menu_item_new(m);
@@ -186,7 +194,25 @@ e_int_menus_favorite_apps_new(void)
    homedir = e_user_homedir_get();
    if (homedir)
      {
-	snprintf(buf, sizeof(buf), "%s/.e/e/applications/favorite", homedir);
+	snprintf(buf, sizeof(buf), "%s/.e/e/applications/menu/favorite", homedir);
+	m = e_int_menus_apps_new(buf);
+	free(homedir);
+	return m;
+     }
+   return NULL;
+}
+
+EAPI E_Menu *
+e_int_menus_all_apps_new(void)
+{
+   E_Menu *m;
+   char buf[4096];
+   char *homedir;
+   
+   homedir = e_user_homedir_get();
+   if (homedir)
+     {
+	snprintf(buf, sizeof(buf), "%s/.e/e/applications/menu/all", homedir);
 	m = e_int_menus_apps_new(buf);
 	free(homedir);
 	return m;
