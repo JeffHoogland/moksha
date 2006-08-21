@@ -189,7 +189,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if (e_config->desklock_personal_passwd)
 	  evas_stringshare_del(e_config->desklock_personal_passwd);
      }
-   e_config->desklock_personal_passwd = (char *)evas_stringshare_add(cfdata->desklock_passwd_cp);
+   e_config->desklock_personal_passwd = evas_stringshare_add(cfdata->desklock_passwd_cp);
    e_config->desklock_autolock = cfdata->autolock;
    e_config->desklock_use_timeout = cfdata->use_timeout;
    e_config->desklock_timeout = cfdata->timeout;
@@ -294,13 +294,13 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if (e_config->desklock_personal_passwd)
 	  evas_stringshare_del(e_config->desklock_personal_passwd);
      }
-   e_config->desklock_personal_passwd = (char *)evas_stringshare_add(cfdata->desklock_passwd_cp);
+   e_config->desklock_personal_passwd = evas_stringshare_add(cfdata->desklock_passwd_cp);
 
    if (cfdata->bg)
      {
 	if (e_config->desklock_background)
 	  evas_stringshare_del(e_config->desklock_background);
-	e_config->desklock_background = (char *)evas_stringshare_add(cfdata->bg);
+	e_config->desklock_background = evas_stringshare_add(cfdata->bg);
      }
    
    if (_e_desklock_zone_num_get() > 1)
@@ -519,8 +519,7 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
    Evas *evasbuf;
    Evas_List *bg_dirs, *bg;
    const char *f, *f1;
-   char *c;
-   
+ 
    if (!cfdata || !cfdata->gui.bg_list)
      return;
    
@@ -532,13 +531,12 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
    /* Desklock background */
    o = edje_object_add(evasbuf);
    f1 = e_theme_edje_file_get("base/theme/desklock", "desklock/background");
-   c = strdup(f1);
    
    e_widget_ilist_header_append(cfdata->gui.bg_list, NULL, _("Theme Backgrounds"));
    if (edje_object_file_set(o, f1, "desklock/background"))
      {
         ic = e_thumb_icon_add(cfd->dia->win->evas);
-	e_thumb_icon_file_set(ic, (char *)f1, "desktop/background");
+	e_thumb_icon_file_set(ic, f1, "desktop/background");
 	e_thumb_icon_size_set(ic, 64,
 			       (64 * e_zone_current_get(cfd->dia->win->container)->h) /
 			       e_zone_current_get(cfd->dia->win->container)->w);
@@ -552,11 +550,10 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
      e_widget_ilist_selected_set(cfdata->gui.bg_list, 1);
    
    im = e_widget_preview_add(cfdata->evas, BG_PREVIEW_W, BG_PREVIEW_H);
-   e_widget_preview_edje_set(im, c, "desklock/background");
+   e_widget_preview_edje_set(im, f1, "desklock/background");
    
    evas_object_del(o);
    ecore_evas_free(eebuf);
-   free(c);
    /* end: Desklock background */
    
    /* Theme Background */
@@ -565,12 +562,11 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
    
    o = edje_object_add(evasbuf);
    f = e_theme_edje_file_get("base/theme/backgrounds", "desktop/background");
-   c = strdup(f);
    ic = NULL;
    if (edje_object_file_set(o, f, "desktop/background"))
      {
         ic = e_thumb_icon_add(cfd->dia->win->evas);
-	e_thumb_icon_file_set(ic, (char *)f, "desktop/background");
+	e_thumb_icon_file_set(ic, f, "desktop/background");
 	e_thumb_icon_size_set(ic, 64,
 			       (64 * e_zone_current_get(cfd->dia->win->container)->h) /
 			       e_zone_current_get(cfd->dia->win->container)->w);
@@ -585,13 +581,12 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
 	e_widget_ilist_selected_set(cfdata->gui.bg_list, 2);
 	evas_object_del(im);
 	im = e_widget_preview_add(cfdata->evas, BG_PREVIEW_W, BG_PREVIEW_H);
-	e_widget_preview_edje_set(im, c, "desktop/background");
+	e_widget_preview_edje_set(im, f, "desktop/background");
      }
    
    evas_object_del(o);
    ecore_evas_free(eebuf);
-   free(c);
-   
+
    e_widget_ilist_header_append(cfdata->gui.bg_list, NULL, _("Personal"));
    bg_dirs = e_path_dir_list_get(path_backgrounds);
    for (bg = bg_dirs; bg; bg = bg->next)
