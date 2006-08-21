@@ -67,7 +67,7 @@ static int _e_desklock_check_auth();
 
 #ifdef HAVE_PAM
 static int _e_desklock_cb_exit(void *data, int type, void *event);
-static int _desklock_auth(const char *passwd);
+static int _desklock_auth(char *passwd);
 static int _desklock_pam_init(E_Desklock_Auth *da);
 static int _desklock_auth_pam_conv(int num_msg, const struct pam_message **msg, struct pam_response **resp, void *appdata_ptr);
 static char *_desklock_auth_get_current_user(void);
@@ -569,7 +569,7 @@ _e_desklock_cb_exit(void *data, int type, void *event)
 }
     
 static int
-_desklock_auth(const char *passwd)
+_desklock_auth(char *passwd)
 {
    if ((_e_desklock_child_pid = fork()))
      {
@@ -599,12 +599,7 @@ _desklock_auth(const char *passwd)
 	strncpy(da.user, current_user, PATH_MAX);
 	strncpy(da.passwd, passwd, PATH_MAX);
 	/* security - null out passwd string once we are done with it */
-	for (p = (char *)passwd; *p; p++);
-	while (p >= passwd)
-	  {
-	     *p = 0;
-	     p--;
-	  }
+	for (p = passwd; *p; p++) *p = 0;
 	da.pam.handle = NULL;
 	da.pam.conv.conv = NULL;
 	da.pam.conv.appdata_ptr = NULL;
