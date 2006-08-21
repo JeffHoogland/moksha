@@ -706,11 +706,11 @@ _desklock_auth_pam_conv(int num_msg, const struct pam_message **msg, struct pam_
 	  {
 	   case PAM_PROMPT_ECHO_ON:
 	     reply[replies].resp_retcode = PAM_SUCCESS;
-	     reply[replies].resp = (char *)strdup(da->user);
+	     reply[replies].resp = strdup(da->user);
 	     break;
 	   case PAM_PROMPT_ECHO_OFF:
 	     reply[replies].resp_retcode = PAM_SUCCESS;
-	     reply[replies].resp = (char *)strdup(da->passwd);
+	     reply[replies].resp = strdup(da->passwd);
 	     break;
 	   case PAM_ERROR_MSG:
 	   case PAM_TEXT_INFO:

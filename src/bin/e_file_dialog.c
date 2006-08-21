@@ -83,7 +83,7 @@ e_file_dialog_show(E_File_Dialog *dia)
 EAPI void
 e_file_dialog_title_set(E_File_Dialog *dia, const char *title)
 {
-   e_dialog_title_set(dia->dia, (char *)title);
+   e_dialog_title_set(dia->dia, title);
 }
 
 EAPI void
