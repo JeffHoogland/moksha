@@ -145,15 +145,15 @@ _check_matches(E_Border *bd, int matchflags)
 {
    Evas_List *l;
    int n = 0;
-   char *title;
+   const char *title;
    
-   title = (char *)e_border_name_get(bd);
+   title = e_border_name_get(bd);
    for (l = e_border_client_list(); l; l = l->next)
      {
 	E_Border *bd2;
 	int required_matches;
 	int matches;
-	char *title2;
+	const char *title2;
 	
 	bd2 = l->data;
         matches = 0;
@@ -164,7 +164,7 @@ _check_matches(E_Border *bd, int matchflags)
 	if (matchflags & E_REMEMBER_MATCH_ROLE) required_matches++;
 	if (matchflags & E_REMEMBER_MATCH_TYPE) required_matches++;
 	if (matchflags & E_REMEMBER_MATCH_TRANSIENT) required_matches++;
-	title2 = (char *)e_border_name_get(bd2);
+	title2 = e_border_name_get(bd2);
         if ((matchflags & E_REMEMBER_MATCH_NAME) &&
 	    ((!e_util_strcmp(bd->client.icccm.name, bd2->client.icccm.name)) ||
 	     (e_util_both_str_empty(bd->client.icccm.name, bd2->client.icccm.name))))

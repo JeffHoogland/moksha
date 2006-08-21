@@ -300,13 +300,13 @@ _add_theme(void *value, void *user_data)
 {
    Ecore_Hash_Node    *node;
    E_Config_Dialog_Data *cfdata;
-   char               *key;
+   const char           *key;
    Ecore_Desktop_Icon_Theme *theme;
    CFIconTheme *m;
 
    cfdata = user_data;
    node = (Ecore_Hash_Node *) value;
-   key = (char *)node->key;
+   key = node->key;
    theme = (Ecore_Desktop_Icon_Theme *)node->value;
 
    m = E_NEW(CFIconTheme, 1);
