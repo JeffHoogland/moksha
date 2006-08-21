@@ -53,8 +53,8 @@ e_int_config_icon_themes(E_Container *con)
    
    cfd = e_config_dialog_new(con,
 			     _("Icon Theme Settings"),
-			    "E", "_config_icon_themes_dialog",
-			     "enlightenment/icon_themes", 0, v, NULL);
+			    "E", "_config_icon_theme_dialog",
+			     "enlightenment/icon_theme", 0, v, NULL);
    return cfd;
 }
 
@@ -68,6 +68,13 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
    if (cfdata->icon_themes)
      cfdata->icon_themes = evas_list_sort(cfdata->icon_themes, evas_list_count(cfdata->icon_themes), _sort_icon_themes);
+
+   if (e_config->icon_theme)
+      cfdata->themename = strdup(e_config->icon_theme);
+   else
+      cfdata->themename = strdup("hicolor");
+
+printf("CURRENT ICON THEME - %s  -  %s\n", e_config->icon_theme, cfdata->themename);
 
    return;
 }
@@ -101,74 +108,22 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    free(cfdata);
 }
 
+
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   E_Module *m;
-   const char *v;
-   int i;
+   E_Action *a;
+   
+   /* Actually take our cfdata settings and apply them in real life */
+printf("NEW ICON THEME - %s\n", cfdata->themename);
+   e_config->icon_theme = evas_stringshare_add(cfdata->themename);
+   e_config_save_queue();
 
-   v = cfdata->themename;
-   if (!v) return 0;
-#if 0
-   for (i = 0; i < evas_list_count(cfdata->icon_themes); i++)
-     {
-	CFIconTheme *cm;
-
-	cm = evas_list_nth(cfdata->icon_themes, i);
-	if ((cm) && (!strcmp(cm->name, v)))
-	  {
-	     if (cm->state != cfdata->state)
-	       {
-		  e_widget_disabled_set(cfdata->gui.configure, 1);
-		  e_widget_disabled_set(cfdata->gui.about, 1);
-		  
-		  m = e_icon_theme_find(v);
-		  if (!m) 
-		    { 
-		       m = e_icon_theme_new(v);
-		       if (!m) break;
-		    }		  
-		  switch (cfdata->state)
-		    {
-		     case MOD_ENABLED:
-		       if (!m->enabled) 
-			 {
-			    if (!e_icon_theme_enable(m)) 
-			      {
-				 cm->state = MOD_UNLOADED;
-				 break;
-			      }
-			 }
-		       if (m->enabled) 
-			 {	 
-			    if (m->func.config)
-			      e_widget_disabled_set(cfdata->gui.configure, 0);
-			    if (m->func.about)
-			      e_widget_disabled_set(cfdata->gui.about, 0);
-			    cm->state = MOD_ENABLED;
-			 }
-		       break;
-		     case MOD_UNLOADED:
-		       if (m)
-			 {
-			    if (m->func.config)
-			      e_widget_disabled_set(cfdata->gui.configure, 1);
-			    if (m->func.about)
-			      e_widget_disabled_set(cfdata->gui.about, 1);
-			    e_icon_theme_disable(m);
-			    e_object_del(E_OBJECT(m));
-			    cm->state = MOD_UNLOADED;			    
-			 }
-		       break;
-		    }
-	       }
-	     break;
-	  }
-     }
-#endif
-   return 1;
+//   a = e_action_find("restart");
+//   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+   return 1; /* Apply was OK */
 }
+
 
 static void
 _cb_button_up(void *data1, void *data2)
@@ -214,16 +169,18 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    char buf[4096];
    Evas_Coord ew, eh, mw, mh;
    E_Fm2_Config fmc;
+   int i;
 
    o = e_widget_list_add(evas, 1, 0);
    ot = e_widget_table_add(evas, 1);
-   
+
    of = e_widget_framelist_add(evas, _("Icon Themes"), 1);
    ilist = e_widget_ilist_add(evas, 24, 24, &(cfdata->themename));
    cfdata->gui.list = ilist;
    e_widget_on_change_hook_set(ilist, _ilist_cb_change, cfdata);
 
    cfdata->state = -1;
+   i = 0;
    for (l = cfdata->icon_themes; l; l = l->next)
      {
 	CFIconTheme *cm;
@@ -244,6 +201,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 		      }
 		}
              e_widget_ilist_append(ilist, oc, cm->theme->name, NULL, NULL, cm->name);
+	     if (strcmp(cfdata->themename, cm->name) == 0)
+		e_widget_ilist_selected_set(ilist, i);
+	     i++;
 	  }
      }
 
@@ -286,13 +246,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_fm2_config_set(mt, &fmc);
    evas_object_smart_callback_add(mt, "dir_changed",
 				  _cb_files_changed, cfdata);
-//   evas_object_smart_callback_add(mt, "selection_change",
-//				  _cb_files_selection_change, cfdata);
-//   evas_object_smart_callback_add(mt, "selected",
-//				  _cb_files_selected, cfdata);
-//   evas_object_smart_callback_add(mt, "changed",
-//				  _cb_files_files_changed, cfdata);
-   e_fm2_path_set(cfdata->gui.o_fm, "/opt/kde3/share/icons/crystalsvg", "/");
+//   e_fm2_path_set(cfdata->gui.o_fm, "/opt/kde3/share/icons/crystalsvg", "/");
 
    ob = e_widget_scrollframe_pan_add(evas, mt,
 				     e_fm2_pan_set,
@@ -307,6 +261,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
 
    e_dialog_resizable_set(cfd->dia, 1);
+
+   _ilist_cb_change(cfdata, ilist);
+
    return o;
 }
 

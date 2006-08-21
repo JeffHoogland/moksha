@@ -233,6 +233,8 @@ struct _E_Config
    int         border_raise_on_mouse_action; // GUI
    int         border_raise_on_focus; // GUI
    int         desk_flip_wrap; // GUI
+
+   const char *icon_theme; // GUI
    
    const char *wallpaper_import_last_dev; // INTERNAL
    const char *wallpaper_import_last_path; // INTERNAL

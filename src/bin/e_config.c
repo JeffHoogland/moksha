@@ -471,6 +471,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, border_raise_on_focus, INT);
    E_CONFIG_VAL(D, T, desk_flip_wrap, INT);
 
+   E_CONFIG_VAL(D, T, icon_theme, STR);
+
    E_CONFIG_VAL(D, T, wallpaper_import_last_dev, STR);
    E_CONFIG_VAL(D, T, wallpaper_import_last_path, STR);
 
@@ -655,6 +657,8 @@ e_config_init(void)
    e_config->display_res_height = 0;
    e_config->display_res_hz = 0;
    e_config->display_res_rotation = 0;
+
+   e_config->icon_theme = evas_stringshare_add("hicolor");
    
      {
 	E_Config_Module *em;
@@ -1873,6 +1877,7 @@ _e_config_free(void)
 	if (e_config->transition_desk) evas_stringshare_del(e_config->transition_desk);
 	if (e_config->transition_change) evas_stringshare_del(e_config->transition_change);
 	if (e_config->input_method) evas_stringshare_del(e_config->input_method);
+	if (e_config->icon_theme) evas_stringshare_del(e_config->icon_theme);
 	E_FREE(e_config);
      }
 }

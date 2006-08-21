@@ -1179,8 +1179,8 @@ e_app_fields_fill(E_App *a, const char *path)
 	   if (desktop->icon)
 	      {
 	         /* FIXME: Should do this only when needed, is it can be expensive. */
-		 /* FIXME: Use a real icon size and theme. */
-	         v = (char *) ecore_desktop_icon_find(desktop->icon, NULL, NULL);
+		 /* FIXME: Use a real icon size. */
+	         v = (char *) ecore_desktop_icon_find(desktop->icon, NULL, e_config->icon_theme);
 		 if (v)
 	            a->icon_path = evas_stringshare_add(v);
 	      }
