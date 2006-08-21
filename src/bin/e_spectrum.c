@@ -244,6 +244,8 @@ _e_spectrum_2d_color_at(E_Spectrum *sp, int x, int y, int *r, int *g, int *b)
 	s = x / (double)(sp->iw); 
 	evas_color_hsv_to_rgb(h, s, v, &rr, &gg, &bb);
 	break;
+     case E_COLOR_COMPONENT_MAX:
+	break;
     }
 
   if (r) *r = rr;
@@ -286,6 +288,8 @@ _e_spectrum_redraw(void *d)
 	break;
      case E_COLOR_COMPONENT_V:
 	vz = sp->cv->v;
+	break;
+     case E_COLOR_COMPONENT_MAX:
 	break;
     }
 

@@ -126,6 +126,8 @@ e_widget_spectrum_update(Evas_Object *obj, int redraw)
 	 vy = wd->cv->h / 360.0;
 	 vx = wd->cv->s;
 	 break;
+     case E_COLOR_COMPONENT_MAX:
+	break;
      }
    edje_object_part_drag_value_set(wd->o_edje, "cursor", vx, vy);
 
@@ -265,7 +267,8 @@ _e_wid_mouse_handle(Evas_Object *obj, int mx, int my)
 	 wd->cv->s = vx;
 	 e_color_update_hsv(wd->cv);
 	 break;
-
+      case E_COLOR_COMPONENT_MAX:
+	 break;
      }
    e_widget_change(obj);
 }

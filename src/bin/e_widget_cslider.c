@@ -153,6 +153,8 @@ _e_wid_value_set(Evas_Object *o, double vx)
 	 wd->color->v = vx;
 	 e_color_update_hsv(wd->color);
 	 break;
+      case E_COLOR_COMPONENT_MAX:
+	 break;
      }
 
    _e_wid_update(wd);
@@ -252,6 +254,8 @@ _e_wid_update_standard(E_Widget_Data *wd)
 	 evas_object_gradient_color_add(wd->o_grad, r, g, b, 255, 1);
 	 vx = wd->color->v;
 	 break;
+      case E_COLOR_COMPONENT_MAX:
+	 break;
      }
 
      edje_object_part_drag_value_set(wd->o_cslider, "cursor", vx, vx);
@@ -314,6 +318,8 @@ _e_wid_update_fixed(E_Widget_Data *wd)
       evas_object_gradient_color_add(wd->o_grad, 255, 255, 255, 255, 1);
       evas_object_gradient_color_add(wd->o_grad, 0, 0, 0, 255, 1);
       vx = wd->color->v;
+      break;
+    case E_COLOR_COMPONENT_MAX:
       break;
   }
 
