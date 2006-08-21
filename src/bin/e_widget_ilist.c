@@ -62,7 +62,7 @@ e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, char **value)
 }
 
 EAPI void
-e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, const char *label, void (*func) (void *data), void *data, char *val)
+e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, const char *label, void (*func) (void *data), void *data, const char *val)
 {
    E_Widget_Data *wd;
    E_Widget_Callback *wcb;

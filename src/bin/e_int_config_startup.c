@@ -275,12 +275,12 @@ _init_file_added(void *data, Ecore_File_Monitor *monitor, Ecore_File_Event event
    cfd = cfdata->cfd;
    if (!cfd) return;
    
-   file = (char *)ecore_file_get_file((char *)path);
+   file = (char *)ecore_file_get_file(path);
    noext = ecore_file_strip_ext(file);
    
    if (event == ECORE_FILE_EVENT_CREATED_FILE) 
      {
-	if (e_util_edje_collection_exists((char *)path, "init/splash")) 
+	if (e_util_edje_collection_exists(path, "init/splash")) 
 	  {
 	     Evas *evas;
 
@@ -288,7 +288,7 @@ _init_file_added(void *data, Ecore_File_Monitor *monitor, Ecore_File_Event event
 	     ic = edje_object_add(evas);
 	     e_util_edje_icon_set(ic, "enlightenment/run");
 	     e_widget_ilist_append(il, ic, noext, _ilist_cb_init_selected, 
-				   cfd, (char *)path);
+				   cfd, path);
 	  }
      }
    else if (event == ECORE_FILE_EVENT_DELETED_FILE)
