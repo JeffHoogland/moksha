@@ -2630,7 +2630,6 @@ _e_fm2_file_rename(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Fm2_Icon *ic;
    E_Manager *man;
    E_Container *con;
-   char *old_path;
    char text[PATH_MAX + 256];
    
    ic = data;
@@ -2760,10 +2759,8 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
    E_Manager *man;
    E_Container *con;
    E_Fm2_Icon *ic;
-   Evas_Object *obj;
    char path[PATH_MAX];
-   int ret;
-   
+
    ic = data;
    ic->dialog = NULL;
    
