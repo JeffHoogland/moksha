@@ -255,7 +255,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   char *sel_res, *sel_rate;
+   const char *sel_res, *sel_rate;
    int w, h, r, i, n, k, rr;
    Ecore_X_Screen_Size *sizes;
    Ecore_X_Screen_Size size;
@@ -263,8 +263,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    Ecore_X_Screen_Refresh_Rate rate;
    E_Manager *man;
    
-   sel_res = (char *)e_widget_ilist_selected_label_get(res_list);
-   sel_rate = (char *)e_widget_ilist_selected_label_get(rate_list);
+   sel_res = e_widget_ilist_selected_label_get(res_list);
+   sel_rate = e_widget_ilist_selected_label_get(rate_list);
    if (!sel_res) return 0;
    if (!sel_rate) return 0;
    sscanf(sel_res, "%ix%i", &w, &h);
