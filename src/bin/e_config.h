@@ -216,8 +216,8 @@ struct _E_Config
    Evas_List  *shelves; // GUI
    int         font_hinting; // GUI
 
-   char       *desklock_personal_passwd; // GUI
-   char       *desklock_background; // GUI
+   const char *desklock_personal_passwd; // GUI
+   const char *desklock_background; // GUI
    int         desklock_auth_method; // GUI
    int         desklock_login_box_zone; // GUI
    int         desklock_autolock; // GUI
