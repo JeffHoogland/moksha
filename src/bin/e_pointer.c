@@ -334,7 +334,7 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
 	  }
 	edje_object_part_swallow(p->pointer_object, "hotspot", p->hot_object);
 	p->hot.update = 1;
-	return;
+	return 1;
      }
    fallback:
      {
