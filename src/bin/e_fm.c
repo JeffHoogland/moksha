@@ -456,7 +456,7 @@ e_fm2_select_set(Evas_Object *obj, const char *file, int select)
 }
 
 EAPI void
-e_fm2_file_show(Evas_Object *obj, char *file)
+e_fm2_file_show(Evas_Object *obj, const char *file)
 {
    E_Fm2_Smart_Data *sd;
    Evas_List *l;
