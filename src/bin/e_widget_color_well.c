@@ -71,8 +71,7 @@ static void
 _e_wid_del_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   int i;
-   
+
    wd = e_widget_data_get(obj);
    if (!wd) return;
 
