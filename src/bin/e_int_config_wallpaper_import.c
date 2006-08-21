@@ -276,10 +276,10 @@ _import_path_save(Import *import)
    if ((fdev) || (fpath))
      {
 	if (e_config->wallpaper_import_last_dev) evas_stringshare_del(e_config->wallpaper_import_last_dev);
-	if (fdev) e_config->wallpaper_import_last_dev = (char *)evas_stringshare_add(fdev);
+	if (fdev) e_config->wallpaper_import_last_dev = evas_stringshare_add(fdev);
 	else e_config->wallpaper_import_last_dev = NULL;
 	if (e_config->wallpaper_import_last_path) evas_stringshare_del(e_config->wallpaper_import_last_path);
-	if (fpath) e_config->wallpaper_import_last_path = (char *)evas_stringshare_add(fpath);
+	if (fpath) e_config->wallpaper_import_last_path = evas_stringshare_add(fpath);
 	else e_config->wallpaper_import_last_path = NULL;
 	e_config_save_queue();
      }
