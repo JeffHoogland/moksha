@@ -216,13 +216,11 @@ _e_app_cb_scan_hash_foreach(Evas_Hash *hash, const char *key, void *data, void *
 {
    E_App_Scan_Cache *sc;
    E_App_Cache *ac;
-   char *s;
-   
+
    sc = fdata;
-   s = (char *)key;
    ac = data;
    /* file "s" has been deleted */
-   printf("Cache %s - DELETED\n", s);
+   printf("Cache %s - DELETED\n", key);
    sc->need_rewrite = 1;
    return 1;
 }
