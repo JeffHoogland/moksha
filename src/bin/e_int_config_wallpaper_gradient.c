@@ -9,6 +9,9 @@
 #define GRAD_DD 3
 #define GRAD_RAD 4
 
+#define TYPE_LINEAR 0
+#define TYPE_RADIAL 1
+
 typedef struct _Import Import;
 
 struct _Import 
@@ -249,8 +252,8 @@ _import_edj_gen(Import *import)
    FILE *f;
 
    int angle;
-   float fill_origin_x, fill_origin_y; 
-   char *type;
+   float rel1_rel_x, rel1_rel_y, rel2_rel_x, rel2_rel_y;
+   float rel1_off_x, rel1_off_y, rel2_off_x, rel2_off_y;
    
    evas = e_win_evas_get(import->dia->win);
 
@@ -289,34 +292,6 @@ _import_edj_gen(Import *import)
    
    fstrip = strdup(e_util_filename_escape(file));
 
-   type = "linear";
-   angle = 0;
-   fill_origin_x = 0;
-   fill_origin_y = 0;
-   switch (import->cfdata->mode) 
-     {
-      case GRAD_H:
-	 angle = 270;
-	 break;
-      case GRAD_V:
-	 angle = 0;
-	 break;
-      case GRAD_DU:
-	 angle = 225;
-	 break;
-      case GRAD_DD:
-	 angle = 315;
-	 break;
-      case GRAD_RAD:
-	 fill_origin_x = 0.5;
-	 fill_origin_y = 0.5;
-	 type = "radial";
-	 break;
-      default:
-	/* won't happen */
-	break;
-     }
-
    fprintf(f,
 	 "spectra { spectrum { name: \"gradient\"; color: %d %d %d 255 1; color: %d %d %d 255 1; } }\n"
 	 "collections {\n"
@@ -328,20 +303,46 @@ _import_edj_gen(Import *import)
 	 "  type: GRADIENT;\n"
 	 "  description {\n"
 	 "    state: \"default\" 0.0;\n"
-	 "    gradient.spectrum: \"gradient\";\n"
-	 "    fill.angle: %d;\n"
-	 "    gradient.type: \"%s\";\n"
-	 "    fill.origin.relative: %.2f %.2f;\n"
-	 "  }\n"
-	 "}\n"
-	 "}\n",
+	 "    gradient.spectrum: \"gradient\";\n",
 	 import->cfdata->color1->r, import->cfdata->color1->g, import->cfdata->color1->b, 
-	 import->cfdata->color2->r, import->cfdata->color2->g, import->cfdata->color2->b, 
-	 angle,
-	 type,
-	 fill_origin_x, fill_origin_y);
+	 import->cfdata->color2->r, import->cfdata->color2->g, import->cfdata->color2->b);
 
-
+   switch (import->cfdata->mode) 
+     {
+      case GRAD_H:
+	 fprintf(f,
+	       "    gradient.rel1.relative: 0 0.5;\n"
+	       "    gradient.rel1.offset: 0 0;\n"
+	       "    gradient.rel2.relative: 1 0.5;\n"
+	       "    gradient.rel2.offset: -1 0;\n");
+	 break;
+      case GRAD_V:
+	 break;
+      case GRAD_DU:
+	 fprintf(f,
+	       "    gradient.rel1.relative: 0 1;\n"
+	       "    gradient.rel1.offset: 0 -1;\n"
+	       "    gradient.rel2.relative: 1 0;\n"
+	       "    gradient.rel2.offset: -1 0;\n");
+	 break;
+      case GRAD_DD:
+	 fprintf(f,
+	       "    gradient.rel1.relative: 0 0;\n"
+	       "    gradient.rel1.offset: 0 0;\n"
+	       "    gradient.rel2.relative: 1 1;\n"
+	       "    gradient.rel2.offset: -1 -1;\n");
+	 break;
+      case GRAD_RAD:
+	 fprintf(f,
+	       "    gradient.type: \"radial\";\n"
+	       "    fill.origin.relative: 0.5 0.5;\n");
+	 break;
+      default:
+	/* won't happen */
+	break;
+	
+     }
+   fprintf(f, "}}}}}\n");
    free(fstrip);
    
    fclose(f);
