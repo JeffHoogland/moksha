@@ -454,7 +454,7 @@ e_widget_fsel_selection_path_get(Evas_Object *obj)
 static void
 _e_wid_fsel_preview_file(E_Widget_Data *wd)
 {
-   Evas_Coord mw = 0, mh = 0;
+// Evas_Coord mw = 0, mh = 0;
    char *size, *owner, *perms, *time;
    struct stat st;
  
