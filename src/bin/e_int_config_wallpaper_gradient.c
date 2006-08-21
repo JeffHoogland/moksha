@@ -61,7 +61,7 @@ static void _import_cb_delete(E_Win *win);
 static void _import_cb_close(void *data, E_Dialog *dia);
 static void _import_cb_ok(void *data, E_Dialog *dia);
 static void _import_config_save(Import *import);
-static void _import_cb_dia_del(E_Object *obj);
+static void _import_cb_dia_del(void *obj);
 
 EAPI E_Dialog *
 e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
@@ -400,7 +400,7 @@ _import_cb_ok(void *data, E_Dialog *dia)
 }
 
 static void
-_import_cb_dia_del(E_Object *obj)
+_import_cb_dia_del(void *obj)
 {
    E_Dialog *dia = obj;
    e_int_config_wallpaper_gradient_del(dia);

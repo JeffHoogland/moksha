@@ -428,7 +428,7 @@ e_fm2_all_list_get(Evas_Object *obj)
 }
 
 EAPI void
-e_fm2_select_set(Evas_Object *obj, char *file, int select)
+e_fm2_select_set(Evas_Object *obj, const char *file, int select)
 {
    E_Fm2_Smart_Data *sd;
    Evas_List *l;

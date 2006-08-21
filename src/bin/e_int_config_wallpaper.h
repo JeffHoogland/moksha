@@ -9,6 +9,7 @@
 EAPI E_Config_Dialog *e_int_config_wallpaper(E_Container *con);
 EAPI void             e_int_config_wallpaper_update(E_Config_Dialog *dia, char *file);
 EAPI void             e_int_config_wallpaper_import_done(E_Config_Dialog *dia);
+EAPI void             e_int_config_wallpaper_gradient_done(E_Config_Dialog *dia);
 
 #endif
 #endif

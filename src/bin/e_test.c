@@ -465,9 +465,9 @@ _e_test_cb_favorites_selected(void *data, Evas_Object *obj, void *event_info)
    if (!selected) return;
    ici = selected->data;
    if ((ici->link) && (ici->mount))
-     e_fm2_path_set(data, (char *)ici->link, "/");
+     e_fm2_path_set(data, ici->link, "/");
    else if (ici->link)
-     e_fm2_path_set(data, NULL, (char *)ici->link);
+     e_fm2_path_set(data, NULL, ici->link);
 // FIXME: this should happen on the scrollframe not the fm obj   
 //   e_widget_scrollframe_child_pos_set(data, 0, 0);
    evas_list_free(selected);

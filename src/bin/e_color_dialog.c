@@ -7,7 +7,7 @@
 static void _e_color_dialog_button1_click(void *data, E_Dialog *edia);
 static void _e_color_dialog_button2_click(void *data, E_Dialog *edia);
 static void _e_color_dialog_free(E_Color_Dialog *dia);
-static void _e_color_dialog_dia_del(E_Object *obj);
+static void _e_color_dialog_dia_del(void *obj);
 
 /**
  * Create a color selector dialog.
@@ -108,7 +108,7 @@ _e_color_dialog_free(E_Color_Dialog *dia)
 }
 
 static void
-_e_color_dialog_dia_del(E_Object *obj)
+_e_color_dialog_dia_del(void *obj)
 {
    E_Dialog *dia = obj;
    E_Color_Dialog *cdia = dia->data;

@@ -88,7 +88,7 @@ _e_wid_fsel_favorites_files_changed(void *data, Evas_Object *obj, void *event_in
 	       {
 		  if (!strcmp(p1, p2))
 		    {
-		       e_fm2_select_set(wd->o_favorites_fm, (char *)ici->file, 1);
+		       e_fm2_select_set(wd->o_favorites_fm, ici->file, 1);
 		       E_FREE(p2);
 		       goto done;
 		    }
@@ -115,9 +115,9 @@ _e_wid_fsel_favorites_selected(void *data, Evas_Object *obj, void *event_info)
    if (!selected) return;
    ici = selected->data;
    if ((ici->link) && (ici->mount))
-     e_fm2_path_set(wd->o_files_fm, (char *)ici->link, "/");
+     e_fm2_path_set(wd->o_files_fm, ici->link, "/");
    else if (ici->link)
-     e_fm2_path_set(wd->o_files_fm, NULL, (char *)ici->link);
+     e_fm2_path_set(wd->o_files_fm, NULL, ici->link);
    evas_list_free(selected);
    e_widget_scrollframe_child_pos_set(wd->o_files_frame, 0, 0);
 }

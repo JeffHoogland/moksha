@@ -118,7 +118,7 @@ e_resist_container_gadman_position(E_Container *con, Evas_List *skiplist,
 				   int x, int y, int w, int h,
 				   int *rx, int *ry)
 {
-   Evas_List *l, *ll, *rects = NULL;
+   Evas_List *l, *rects = NULL;
    E_Resist_Rect *r;
 
    if (!e_config->use_resist)
