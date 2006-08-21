@@ -133,11 +133,11 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	  {
 	     char *p;
 	     Evas_Coord y;
-	     char *fname;
+	     const char *fname;
 	     int fsize;
 	     
 	     y = 16 + 64 + 16;
-	     fname = (char *)e_font_default_string_get("default", &fsize);
+	     fname = e_font_default_string_get("default", &fsize);
 	     for (p = newstr; p;)
 	       {
 		  char *pp;
