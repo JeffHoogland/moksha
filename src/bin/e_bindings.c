@@ -521,7 +521,7 @@ e_bindings_signal_del(E_Binding_Context ctxt, const char *sig, const char *src, 
 }
 
 EAPI E_Action  *
-e_bindings_signal_find(E_Binding_Context ctxt, E_Object *obj, char *sig, char *src, E_Binding_Signal **bind_ret)
+e_bindings_signal_find(E_Binding_Context ctxt, E_Object *obj, const char *sig, const char *src, E_Binding_Signal **bind_ret)
 {
    E_Binding_Modifier mod = 0;
    Evas_List *l;
@@ -553,7 +553,7 @@ e_bindings_signal_find(E_Binding_Context ctxt, E_Object *obj, char *sig, char *s
 }
 
 EAPI E_Action *
-e_bindings_signal_handle(E_Binding_Context ctxt, E_Object *obj, char *sig, char *src)
+e_bindings_signal_handle(E_Binding_Context ctxt, E_Object *obj, const char *sig, const char *src)
 {
    E_Action *act;
    E_Binding_Signal *bind;
