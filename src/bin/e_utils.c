@@ -351,12 +351,12 @@ e_util_menu_item_edje_icon_list_set(E_Menu_Item *mi, const char *list)
 EAPI int
 e_util_edje_icon_set(Evas_Object *obj, const char *name)
 {
-   char *file;
+   const char *file;
    char buf[4096];
 
    if ((!name) || (!name[0])) return 0;
    snprintf(buf, sizeof(buf), "icons/%s", name);
-   file = (char *)e_theme_edje_file_get("base/theme/icons", buf);
+   file = e_theme_edje_file_get("base/theme/icons", buf);
    if (file[0])
      {
 	edje_object_file_set(obj, file, buf);

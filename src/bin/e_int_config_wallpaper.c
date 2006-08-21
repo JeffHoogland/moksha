@@ -179,12 +179,13 @@ static void
 _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
-   char *p, *homedir, buf[4096];
+   const char *p;
+   char *homedir, buf[4096];
    
    cfdata = data;
    if (!cfdata->bg) return;
    if (!cfdata->o_fm) return;
-   p = (char *)e_fm2_real_path_get(cfdata->o_fm);
+   p = e_fm2_real_path_get(cfdata->o_fm);
    if (p)
      {
 	if (strncmp(p, cfdata->bg, strlen(p))) return;
