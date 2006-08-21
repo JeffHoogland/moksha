@@ -8,9 +8,6 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: e_entry/editable widget is pretty borken in sizing, clipping, initial
-  state and i think is also now causing segv's (not sure yet), but it needs
-  a complete going over if not a rewrite. :(
 * BUG: "match this window only" doesnt fall back to other unused remembers
 * BUG: if app asks for borderless in properties - borderless toggle in menu
   doesn't have any effect.
