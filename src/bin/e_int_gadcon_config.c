@@ -316,7 +316,7 @@ _load_selected_gadgets(void *data)
 		  if (!label) label = cc->name;
 		  if (cc->func.icon) icon = cc->func.icon(evas);
 		  e_widget_ilist_append(oi, icon, label, _cb_select_client_instance,
-					cfdata, (char *)cf_gcc->name);
+					cfdata, cf_gcc->name);
 	       }
 	  }
      }
