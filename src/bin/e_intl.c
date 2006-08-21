@@ -44,7 +44,7 @@ static int 		 _e_intl_language_list_find(Evas_List *language_list, char *languag
 
 /* Locale Validation and Discovery */
 static Evas_Hash	*_e_intl_locale_alias_hash_get(void);
-static char		*_e_intl_locale_alias_get(const char * language);
+static char		*_e_intl_locale_alias_get(const char *language);
 static Evas_List	*_e_intl_locale_system_locales_get(void);
 static Evas_List	*_e_intl_locale_search_order_get(char *locale);
 static int		 _e_intl_locale_validate(char *locale);
@@ -203,7 +203,7 @@ e_intl_language_set(const char *lang)
              locale_path = _e_intl_language_path_find(_e_intl_language_alias);
              if (locale_path == NULL)
 	       {
-		  char * match_lang;
+		  char *match_lang;
 
 		  match_lang = e_intl_locale_canonic_get(_e_intl_language_alias, E_LOC_LANG);
 		  
@@ -294,7 +294,7 @@ e_intl_language_list(void)
 }
 
 static int
-_e_intl_language_list_find(Evas_List *language_list, char * language)
+_e_intl_language_list_find(Evas_List *language_list, char *language)
 {
    Evas_List *l;
    
@@ -327,7 +327,7 @@ e_intl_input_method_set(const char *method)
    
    if (method) 
      {   
-	Evas_List * input_methods;
+	Evas_List *input_methods;
 	E_Input_Method_Config *imc;
 
 	input_methods = _e_intl_imc_path_scan(path_input_methods);
@@ -413,7 +413,7 @@ e_intl_input_method_list(void)
 
 /* Get the input method configuration from the file */
 EAPI E_Input_Method_Config *
-e_intl_input_method_config_read(Eet_File * imc_file)
+e_intl_input_method_config_read(Eet_File *imc_file)
 {
    E_Input_Method_Config *imc;
    
@@ -427,7 +427,7 @@ e_intl_input_method_config_read(Eet_File * imc_file)
 
 /* Write the input method configuration to the file */
 EAPI int
-e_intl_input_method_config_write(Eet_File * imc_file, E_Input_Method_Config * imc)
+e_intl_input_method_config_write(Eet_File *imc_file, E_Input_Method_Config *imc)
 {
    int ok = 0;
 
@@ -1032,7 +1032,7 @@ _e_intl_imc_dir_scan(const char *dir)
 }
 
 static E_Input_Method_Config *
-_e_intl_imc_find(Evas_List *imc_list, char * name)
+_e_intl_imc_find(Evas_List *imc_list, char *name)
 {
    Evas_List *l;
    
