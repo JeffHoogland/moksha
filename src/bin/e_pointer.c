@@ -332,7 +332,7 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
 	     if (!e_theme_edje_object_set(o, "base/theme/pointer", cursor))
 	       goto fallback;
 	  }
-	edje_object_part_swallow(p->pointer_object, "hotspot", p->hot_object);
+	edje_object_part_swallow(p->pointer_object, "e.swallow.hotspot", p->hot_object);
 	p->hot.update = 1;
 	return 1;
      }

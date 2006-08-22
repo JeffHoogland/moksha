@@ -57,7 +57,7 @@ group
 	  }
 	part 
 	  {
-	    name: "title";
+	    name: "e.text.title";
 	    type: TEXT;
 	    effect: SHADOW;
 	    description {
@@ -112,7 +112,7 @@ group
 	    }
 	  part 
 	    {
-	       name: "passwd";
+	       name: "e.text.password";
 	       type: TEXT;
 	       effect: SHADOW;
 	       clip_to: "passwd_entry_clip";
@@ -161,12 +161,12 @@ group
 		  rel1 {
 		     relative: 1.0 0.0;
 		     offset: 0 -2;
-		     to: "passwd";
+		     to: "e.text.password";
 		  }
 		  rel2 {
 		     relative: 1.0 0.9;
 		     offset: 0 0;
-		     to: "passwd";
+		     to: "e.text.password";
 		  }
 		  image {
 		     normal: "e17_entry_cursor.png";

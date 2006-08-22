@@ -54,7 +54,7 @@ e_dialog_new(E_Container *con, const char *name, const char *class)
    o = e_widget_list_add(e_win_evas_get(dia->win), 1, 1);
    e_widget_on_focus_hook_set(o, _e_dialog_cb_wid_on_focus, dia);
    dia->box_object = o;
-   edje_object_part_swallow(dia->bg_object, "buttons_swallow", o);
+   edje_object_part_swallow(dia->bg_object, "e.swallow.buttons", o);
 
    o = evas_object_rectangle_add(e_win_evas_get(dia->win));
    dia->event_object = o;
@@ -133,10 +133,10 @@ e_dialog_text_set(E_Dialog *dia, const char *text)
 	dia->text_object = o;
 	e_theme_edje_object_set(o, "base/theme/dialog",
 				"widgets/dialog/text");
-	edje_object_part_swallow(dia->bg_object, "content_swallow", o);
+	edje_object_part_swallow(dia->bg_object, "e.swallow.content", o);
 	evas_object_show(o);
      }
-   edje_object_part_text_set(dia->text_object, "text", text);
+   edje_object_part_text_set(dia->text_object, "e.textblock.message", text);
 }
 
 EAPI void
@@ -147,7 +147,7 @@ e_dialog_icon_set(E_Dialog *dia, const char *icon, Evas_Coord size)
    dia->icon_object = edje_object_add(e_win_evas_get(dia->win));
    e_util_edje_icon_set(dia->icon_object, icon);
    edje_extern_object_min_size_set(dia->icon_object, size, size);
-   edje_object_part_swallow(dia->bg_object, "icon_swallow", dia->icon_object);
+   edje_object_part_swallow(dia->bg_object, "e.swallow.icon", dia->icon_object);
    evas_object_show(dia->icon_object);
 }
 
@@ -169,7 +169,7 @@ e_dialog_content_set(E_Dialog *dia, Evas_Object *obj, Evas_Coord minw, Evas_Coor
    dia->content_object = obj;
    e_widget_on_focus_hook_set(obj, _e_dialog_cb_wid_on_focus, dia);
    edje_extern_object_min_size_set(obj, minw, minh);
-   edje_object_part_swallow(dia->bg_object, "content_swallow", obj);
+   edje_object_part_swallow(dia->bg_object, "e.swallow.content", obj);
    evas_object_show(obj);
 }
 
@@ -202,13 +202,13 @@ e_dialog_show(E_Dialog *dia)
      {
 	edje_object_size_min_calc(o, &mw, &mh);
 	edje_extern_object_min_size_set(o, mw, mh);
-	edje_object_part_swallow(dia->bg_object, "content_swallow", o);
+	edje_object_part_swallow(dia->bg_object, "e.swallow.content", o);
      }
 
    o = dia->box_object;
    e_widget_min_size_get(o, &mw, &mh);
    edje_extern_object_min_size_set(o, mw, mh);
-   edje_object_part_swallow(dia->bg_object, "buttons_swallow", o);
+   edje_object_part_swallow(dia->bg_object, "e.swallow.buttons", o);
    
    edje_object_size_min_calc(dia->bg_object, &mw, &mh);
    evas_object_resize(dia->bg_object, mw, mh);

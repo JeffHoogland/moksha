@@ -33,7 +33,7 @@ e_widget_frametable_add(Evas *evas, char *label, int homogenous)
    wd->o_frame = o;
    e_theme_edje_object_set(o, "base/theme/widgets",
 			   "widgets/frame");
-   edje_object_part_text_set(o, "label", label);
+   edje_object_part_text_set(o, "e.text.label", label);
    evas_object_show(o);
    e_widget_sub_object_add(obj, o);
    e_widget_resize_object_set(obj, o);
@@ -41,7 +41,7 @@ e_widget_frametable_add(Evas *evas, char *label, int homogenous)
    o = e_table_add(evas);
    wd->o_table = o;
    e_table_homogenous_set(o, homogenous);
-   edje_object_part_swallow(wd->o_frame, "items", o);
+   edje_object_part_swallow(wd->o_frame, "e.swallow.content", o);
    e_widget_sub_object_add(obj, o);
    evas_object_show(o);
    
@@ -70,7 +70,7 @@ e_widget_frametable_object_append(Evas_Object *obj, Evas_Object *sobj, int col, 
 			  );
    e_table_min_size_get(wd->o_table, &mw, &mh);
    edje_extern_object_min_size_set(wd->o_table, mw, mh);
-   edje_object_part_swallow(wd->o_frame, "items", wd->o_table);
+   edje_object_part_swallow(wd->o_frame, "e.swallow.content", wd->o_table);
    edje_object_size_min_calc(wd->o_frame, &mw, &mh);
    e_widget_min_size_set(obj, mw, mh);
    e_widget_sub_object_add(obj, sobj);
@@ -93,7 +93,7 @@ _e_wid_disable_hook(Evas_Object *obj)
    
    wd = e_widget_data_get(obj);
    if (e_widget_disabled_get(obj))
-     edje_object_signal_emit(wd->o_frame, "disabled", "");
+     edje_object_signal_emit(wd->o_frame, "e,state,disabled", "e");
    else
-     edje_object_signal_emit(wd->o_frame, "enabled", "");
+     edje_object_signal_emit(wd->o_frame, "e,state,enabled", "e");
 }

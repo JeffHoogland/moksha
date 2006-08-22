@@ -54,7 +54,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    
    o = edje_object_add(gc->evas);
    e_theme_edje_object_set(o, "base/theme/modules/start", "modules/start/main");
-   edje_object_signal_emit(o, "passive", "");
+   edje_object_signal_emit(o, "e,state,unfocused", "e");
    
    gcc = e_gadcon_client_new(gc, name, id, style, o);
    gcc->data = inst;
@@ -196,7 +196,7 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 				   e_util_zone_current_get(e_manager_current_get()),
 				   x, y, w, h,
 				   dir, ev->timestamp);
-	     edje_object_signal_emit(inst->o_button, "active", "");
+	     edje_object_signal_emit(inst->o_button, "e,state,focused", "e");
 	     evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
 				      EVAS_BUTTON_NONE, ev->timestamp, NULL);
 	  }
@@ -210,7 +210,7 @@ _menu_cb_post(void *data, E_Menu *m)
    
    inst = data;
    if (!inst->main_menu) return;
-   edje_object_signal_emit(inst->o_button, "passive", "");
+   edje_object_signal_emit(inst->o_button, "e,state,unfocused", "e");
    e_object_del(E_OBJECT(inst->main_menu));
    inst->main_menu = NULL;
 }

@@ -120,7 +120,7 @@ group {
 	 }
       }
       part {
-	 name:          "item";
+	 name:          "e.swallow.content";
 	 type:          SWALLOW;
 	 description {
 	    state: "default" 0.0;
@@ -139,7 +139,7 @@ group {
 	 }
       }
       part {
-	 name: "button";
+	 name: "e.swallow.button";
 	 type: SWALLOW;
 	 mouse_events:  1;
 	 description {
@@ -148,7 +148,7 @@ group {
 	    align: 0.5 1.0;
 	    fixed: 0 1;
 	    rel1 {
-	    	to_y: "item";
+	    	to_y: "e.swallow.content";
 	       relative: 0.5 1.0;
 	       offset:   0   2;
 	    }
@@ -314,7 +314,7 @@ group {
       program {
 	 name: "button_in";
 	 signal: "mouse,in";
-	 source: "button";
+	 source: "e.swallow.button";
 	 script {
 	    run_program(PROGRAM:"go_active");
 	 }

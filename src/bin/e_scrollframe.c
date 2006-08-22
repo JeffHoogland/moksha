@@ -184,8 +184,8 @@ e_scrollframe_child_pos_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    else vy = 0.0;
    if (vy < 0.0) vy = 0.0;
    else if (vy > 1.0) vy = 1.0;
-   edje_object_part_drag_value_set(sd->edje_obj, "vbar_bar", 0.0, vy);
-   edje_object_part_drag_value_set(sd->edje_obj, "hbar_bar", vx, 0.0);
+   edje_object_part_drag_value_set(sd->edje_obj, "e.dragable.vbar", 0.0, vy);
+   edje_object_part_drag_value_set(sd->edje_obj, "e.dragable.hbar", vx, 0.0);
    sd->pan_func.set(sd->pan_obj, x, y);
 }
 
@@ -411,8 +411,8 @@ _e_smart_scrollbar_read(E_Smart_Data *sd)
    Evas_Coord x, y, mx = 0, my = 0;
    double vx, vy;
    
-   edje_object_part_drag_value_get(sd->edje_obj, "vbar_bar", NULL, &vy);
-   edje_object_part_drag_value_get(sd->edje_obj, "hbar_bar", &vx, NULL);
+   edje_object_part_drag_value_get(sd->edje_obj, "e.dragable.vbar", NULL, &vy);
+   edje_object_part_drag_value_get(sd->edje_obj, "e.dragable.hbar", &vx, NULL);
    sd->pan_func.max_get(sd->pan_obj, &mx, &my);
    x = vx * (double)mx;
    y = vy * (double)my;
@@ -422,12 +422,12 @@ _e_smart_scrollbar_read(E_Smart_Data *sd)
 static void
 _e_smart_scrollbar_reset(E_Smart_Data *sd)
 {
-   edje_object_part_drag_value_set(sd->edje_obj, "vbar_bar", 0.0, 0.0);
-   edje_object_part_drag_value_set(sd->edje_obj, "hbar_bar", 0.0, 0.0);
+   edje_object_part_drag_value_set(sd->edje_obj, "e.dragable.vbar", 0.0, 0.0);
+   edje_object_part_drag_value_set(sd->edje_obj, "e.dragable.hbar", 0.0, 0.0);
    if ((!sd->child_obj) && (!sd->extern_pan))
      {
-	edje_object_part_drag_size_set(sd->edje_obj, "vbar_bar", 1.0, 1.0);
-	edje_object_part_drag_size_set(sd->edje_obj, "hbar_bar", 1.0, 1.0);
+	edje_object_part_drag_size_set(sd->edje_obj, "e.dragable.vbar", 1.0, 1.0);
+	edje_object_part_drag_size_set(sd->edje_obj, "e.dragable.hbar", 1.0, 1.0);
      }
    sd->pan_func.set(sd->pan_obj, 0, 0);
 }
@@ -487,9 +487,9 @@ _e_smart_scrollbar_bar_v_visibility_adjust(E_Smart_Data *sd)
    if (scroll_v_vis_change)
      {
 	if (sd->vbar_visible)
-	  edje_object_signal_emit(sd->edje_obj, "vbar", "show");
+	  edje_object_signal_emit(sd->edje_obj, "e,action,show,vbar", "e");
 	else
-	  edje_object_signal_emit(sd->edje_obj, "vbar", "hide");
+	  edje_object_signal_emit(sd->edje_obj, "e,action,hide,vbar", "e");
 	edje_object_message_signal_process(sd->edje_obj);
 	_e_smart_scrollbar_size_adjust(sd);
      }
@@ -551,9 +551,9 @@ _e_smart_scrollbar_bar_h_visibility_adjust(E_Smart_Data *sd)
    if (scroll_h_vis_change)
      {
 	if (sd->hbar_visible)
-	  edje_object_signal_emit(sd->edje_obj, "hbar", "show");
+	  edje_object_signal_emit(sd->edje_obj, "e,action,show,hbar", "e");
 	else
-	  edje_object_signal_emit(sd->edje_obj, "hbar", "hide");
+	  edje_object_signal_emit(sd->edje_obj, "e,action,hide,hbar", "e");
 	edje_object_message_signal_process(sd->edje_obj);
 	_e_smart_scrollbar_size_adjust(sd);
      }
@@ -589,9 +589,9 @@ _e_smart_scrollbar_size_adjust(E_Smart_Data *sd)
 	if (size > 1.0)
 	  {
 	     size = 1.0;
-	     edje_object_part_drag_value_set(sd->edje_obj, "hbar_bar", 0.0, 0.0);
+	     edje_object_part_drag_value_set(sd->edje_obj, "e.dragable.hbar", 0.0, 0.0);
 	  }
-	edje_object_part_drag_size_set(sd->edje_obj, "hbar_bar", size, 1.0);
+	edje_object_part_drag_size_set(sd->edje_obj, "e.dragable.hbar", size, 1.0);
 	
 	h = sd->child.h;
 	if (h < 1) h = 1;
@@ -599,33 +599,33 @@ _e_smart_scrollbar_size_adjust(E_Smart_Data *sd)
 	if (size > 1.0)
 	  {
 	     size = 1.0;
-	     edje_object_part_drag_value_set(sd->edje_obj, "vbar_bar", 0.0, 0.0);
+	     edje_object_part_drag_value_set(sd->edje_obj, "e.dragable.vbar", 0.0, 0.0);
 	  }
-	edje_object_part_drag_size_set(sd->edje_obj, "vbar_bar", 1.0, size);
+	edje_object_part_drag_size_set(sd->edje_obj, "e.dragable.vbar", 1.0, size);
 
-	edje_object_part_drag_value_get(sd->edje_obj, "hbar_bar", &vx, NULL);
-	edje_object_part_drag_value_get(sd->edje_obj, "vbar_bar", NULL, &vy);
+	edje_object_part_drag_value_get(sd->edje_obj, "e.dragable.hbar", &vx, NULL);
+	edje_object_part_drag_value_get(sd->edje_obj, "e.dragable.vbar", NULL, &vy);
 	sd->pan_func.max_get(sd->pan_obj, &mx, &my);
 	x = vx * mx;
 	y = vy * my;
 	
-	edje_object_part_drag_step_set(sd->edje_obj, "hbar_bar", (double)sd->step.x / (double)w, 0.0);
-	edje_object_part_drag_step_set(sd->edje_obj, "vbar_bar", 0.0, (double)sd->step.y / (double)h);
+	edje_object_part_drag_step_set(sd->edje_obj, "e.dragable.hbar", (double)sd->step.x / (double)w, 0.0);
+	edje_object_part_drag_step_set(sd->edje_obj, "e.dragable.vbar", 0.0, (double)sd->step.y / (double)h);
 	if (sd->page.x > 0)
-	  edje_object_part_drag_page_set(sd->edje_obj, "hbar_bar", (double)sd->page.x / (double)w, 0.0);
+	  edje_object_part_drag_page_set(sd->edje_obj, "e.dragable.hbar", (double)sd->page.x / (double)w, 0.0);
 	else
-	  edje_object_part_drag_page_set(sd->edje_obj, "hbar_bar", -((double)sd->page.x * ((double)vw / (double)w)) / 100.0, 0.0);
+	  edje_object_part_drag_page_set(sd->edje_obj, "e.dragable.hbar", -((double)sd->page.x * ((double)vw / (double)w)) / 100.0, 0.0);
 	if (sd->page.y > 0)
-	  edje_object_part_drag_page_set(sd->edje_obj, "vbar_bar", 0.0, (double)sd->page.y / (double)h);
+	  edje_object_part_drag_page_set(sd->edje_obj, "e.dragable.vbar", 0.0, (double)sd->page.y / (double)h);
 	else
-	  edje_object_part_drag_page_set(sd->edje_obj, "vbar_bar", 0.0, -((double)sd->page.y * ((double)vh / (double)h)) / 100.0);
+	  edje_object_part_drag_page_set(sd->edje_obj, "e.dragable.vbar", 0.0, -((double)sd->page.y * ((double)vh / (double)h)) / 100.0);
 	
 	sd->pan_func.set(sd->pan_obj, x, y);
      }
    else
      {
-	edje_object_part_drag_size_set(sd->edje_obj, "vbar_bar", 1.0, 1.0);
-	edje_object_part_drag_size_set(sd->edje_obj, "hbar_bar", 1.0, 1.0);
+	edje_object_part_drag_size_set(sd->edje_obj, "e.dragable.vbar", 1.0, 1.0);
+	edje_object_part_drag_size_set(sd->edje_obj, "e.dragable.hbar", 1.0, 1.0);
 	sd->pan_func.set(sd->pan_obj, 0, 0);
      }
    _e_smart_scrollbar_bar_visibility_adjust(sd);
@@ -672,8 +672,8 @@ _e_smart_add(Evas_Object *obj)
    sd->edje_obj = o;
    e_theme_edje_object_set(o, "base/theme/widgets",
 			   "widgets/scrollframe");
-   edje_object_signal_callback_add(o, "drag*", "vbar_bar", _e_smart_edje_drag_v, sd);
-   edje_object_signal_callback_add(o, "drag*", "hbar_bar", _e_smart_edje_drag_h, sd);
+   edje_object_signal_callback_add(o, "drag*", "e.dragable.vbar", _e_smart_edje_drag_v, sd);
+   edje_object_signal_callback_add(o, "drag*", "e.dragable.hbar", _e_smart_edje_drag_h, sd);
    evas_object_smart_member_add(o, obj);
    
    o = evas_object_rectangle_add(evas_object_evas_get(obj));

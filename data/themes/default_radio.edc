@@ -63,7 +63,7 @@ group {
 	 }
       }
       part {
-	 name:           "label";
+	 name:           "e.text.label";
 	 type:           TEXT;
 	 effect:         SHADOW;
 	 mouse_events:   0;
@@ -137,15 +137,15 @@ group {
    programs {
       program {
 	 name:    "turn_on1";
-	 signal:  "toggle_on";
-	 source:  "";
+	 signal:  "e,state,on";
+	 source:  "e";
 	 action:  STATE_SET "active" 0.0;
 	 target:  "item1";
       }
       program {
 	 name:    "turn_off1";
-	 signal:  "toggle_off";
-	 source:  "";
+	 signal:  "e,state,off";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "item1";
       }
@@ -153,41 +153,41 @@ group {
 	 name:    "click";
 	 signal:  "mouse,down,1";
 	 source:  "event";
-         action:  SIGNAL_EMIT "toggled" "on";
+         action:  SIGNAL_EMIT "e,action,toggle" "";
       }
       program {
 	 name: "focus_in";
-	 signal: "focus_in";
-	 source: "";
+	 signal: "e,state,focused";
+	 source: "e";
          action: STATE_SET "focused" 0.0;
 	 transition: DECELERATE 0.2;
 	 target: "focus";
       }
       program {
 	 name: "focus_out";
-	 signal: "focus_out";
-	 source: "";
+	 signal: "e,state,unfocused";
+	 source: "e";
          action: STATE_SET "default" 0.0;
 	 transition: ACCELERATE 0.5;
 	 target: "focus";
       }
       program {
 	 name: "disable";
-	 signal: "disabled";
-	 source: "";
+	 signal: "e,state,disabled";
+	 source: "e";
 	 action: STATE_SET "disabled" 0.0;
 	 target: "outline";
 	 target: "event";
-	 target: "label";
+	 target: "e.text.label";
       }
       program {
 	 name: "enable";
-	 signal: "enabled";
-	 source: "";
+	 signal: "e,state,enabled";
+	 source: "e";
 	 action: STATE_SET "default" 0.0;
 	 target: "outline";
 	 target: "event";
-	 target: "label";
+	 target: "e.text.label";
       }
    }
 }
@@ -251,7 +251,7 @@ group {
 	 }
       }
       part {
-	 name:           "icon_swallow";
+	 name:           "e.swallow.icon";
 	 type:           SWALLOW;
 	 mouse_events:   0;
 	 clip_to:        "icon_clip";
@@ -277,7 +277,7 @@ group {
 	       offset:   2 2;
 	    }
 	    rel2 {
-	       to_y: "label";
+	       to_y: "e.text.label";
 	       relative: 1.0  0.0;
 	       offset:   -2 -2;
 	    }
@@ -291,10 +291,10 @@ group {
 	    state: "default" 0.0;
 	    min:      16 16;
 	    rel1 {
-	       to:     "icon_swallow";
+	       to:     "e.swallow.icon";
 	    }
 	    rel2 {
-	       to:     "icon_swallow";
+	       to:     "e.swallow.icon";
 	    }
 	    color:    255 255 255 255;
 	 }
@@ -318,7 +318,7 @@ group {
 	 }
       }
       part {
-	 name:           "label";
+	 name:           "e.text.label";
 	 type:           TEXT;
 	 effect:         SHADOW;
 	 mouse_events:   0;
@@ -393,23 +393,23 @@ group {
    programs {
       program {
 	 name:    "label_on";
-	 signal:  "label_visible";
-	 source:  "";
+	 signal:  "e,state,labeled";
+	 source:  "e";
 	 action:  STATE_SET "label_visible" 0.0;
-	 target:  "icon_swallow";
+	 target:  "e.swallow.icon";
 	 target:  "label_clip";
       }
       program {
 	 name:    "turn_on1";
-	 signal:  "toggle_on";
-	 source:  "";
+	 signal:  "e,state,on";
+	 source:  "e";
 	 action:  STATE_SET "active" 0.0;
 	 target:  "item1";
       }
       program {
 	 name:    "turn_off1";
-	 signal:  "toggle_off";
-	 source:  "";
+	 signal:  "e,state,off";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "item1";
       }
@@ -417,42 +417,42 @@ group {
 	 name:    "click";
 	 signal:  "mouse,down,1";
 	 source:  "event";
-         action:  SIGNAL_EMIT "toggled" "on";
+         action:  SIGNAL_EMIT "e,action,toggle" "";
       }
       program {
 	 name: "focus_in";
-	 signal: "focus_in";
-	 source: "";
+	 signal: "e,state,focused";
+	 source: "e";
          action: STATE_SET "focused" 0.0;
 	 transition: DECELERATE 0.2;
 	 target: "focus";
       }
       program {
 	 name: "focus_out";
-	 signal: "focus_out";
-	 source: "";
+	 signal: "e,state,unfocused";
+	 source: "e";
          action: STATE_SET "default" 0.0;
 	 transition: ACCELERATE 0.5;
 	 target: "focus";
       }
       program {
 	 name: "disable";
-	 signal: "disabled";
-	 source: "";
+	 signal: "e,state,disabled";
+	 source: "e";
 	 action: STATE_SET "disabled" 0.0;
 	 target: "outline";
 	 target: "event";
-	 target: "label";
+	 target: "e.text.label";
 	 target: "icon_clip";
       }
       program {
 	 name: "enable";
-	 signal: "enabled";
-	 source: "";
+	 signal: "e,state,enabled";
+	 source: "e";
 	 action: STATE_SET "default" 0.0;
 	 target: "outline";
 	 target: "event";
-	 target: "label";
+	 target: "e.text.label";
 	 target: "icon_clip";
       }
    }

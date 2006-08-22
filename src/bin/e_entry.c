@@ -193,7 +193,7 @@ e_entry_focus(Evas_Object *entry)
       return;
    
    evas_object_focus_set(entry, 1);
-   edje_object_signal_emit(sd->entry_object, "focus_in", "");
+   edje_object_signal_emit(sd->entry_object, "e,state,focused", "e");
    if (sd->enabled)
       e_editable_cursor_show(sd->editable_object);
    e_editable_selection_show(sd->editable_object);
@@ -218,7 +218,7 @@ e_entry_unfocus(Evas_Object *entry)
       return;
    
    evas_object_focus_set(entry, 0);
-   edje_object_signal_emit(sd->entry_object, "focus_out", "");
+   edje_object_signal_emit(sd->entry_object, "e,state,unfocused", "e");
    e_editable_cursor_move_to_end(sd->editable_object);
    e_editable_selection_move_to_end(sd->editable_object);
    e_editable_cursor_hide(sd->editable_object);
@@ -241,7 +241,7 @@ e_entry_enable(Evas_Object *entry)
    if (sd->enabled)
       return;
    
-   edje_object_signal_emit(entry, "enabled", "");
+   edje_object_signal_emit(entry, "e,state,enabled", "e");
    if (sd->focused)
       e_editable_cursor_show(sd->editable_object);
    sd->enabled = 1;
@@ -265,7 +265,7 @@ e_entry_disable(Evas_Object *entry)
    if (!sd->enabled)
       return;
    
-   edje_object_signal_emit(entry, "disabled", "");
+   edje_object_signal_emit(entry, "e,state,disabled", "e");
    e_editable_cursor_hide(sd->editable_object);
    sd->enabled = 0;
 }
@@ -564,7 +564,7 @@ static void _e_entry_smart_add(Evas_Object *object)
    e_editable_cursor_hide(o);
    e_editable_char_size_get(o, &cw, &ch);
    edje_extern_object_min_size_set(o, cw, ch);
-   edje_object_part_swallow(sd->entry_object, "text_area", o);
+   edje_object_part_swallow(sd->entry_object, "e.swallow.text", o);
    edje_object_size_min_calc(sd->entry_object, &sd->min_width, &sd->height);
    evas_object_show(o);
    

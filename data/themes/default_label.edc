@@ -2,7 +2,7 @@ group {
    name: "widgets/label";
    parts {
       part {
-	 name:           "label";
+	 name:           "e.text.label";
 	 type:           TEXT;
 	 effect:         SHADOW;
 	 mouse_events:   0;

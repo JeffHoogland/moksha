@@ -110,13 +110,13 @@ e_tlist_selected_set(Evas_Object * obj, int n)
       return;
    si = evas_list_nth(sd->items, sd->selected);
    if (si)
-      edje_object_signal_emit(si->base_obj, "passive", "");
+      edje_object_signal_emit(si->base_obj, "e,state,unselected", "e");
    sd->selected = n;
    si = evas_list_nth(sd->items, sd->selected);
    if (si)
      {
 	evas_object_raise(si->base_obj);
-	edje_object_signal_emit(si->base_obj, "active", "");
+	edje_object_signal_emit(si->base_obj, "e,state,selected", "e");
 	if (si->func_hilight)
 	   si->func_hilight(si->data, si->data2);
 	if (!sd->selector)
@@ -150,9 +150,9 @@ e_tlist_selected_label_get(Evas_Object * obj)
    if (si)
      {
 	if (si->markup)
-	   return edje_object_part_text_get(si->base_obj, "labelblock");
+	   return edje_object_part_text_get(si->base_obj, "e.textblock.label");
 	else
-	   return edje_object_part_text_get(si->base_obj, "label");
+	   return edje_object_part_text_get(si->base_obj, "e.text.label");
      }
    return NULL;
 }
@@ -270,9 +270,9 @@ e_tlist_remove_label(Evas_Object * obj, char *label)
 
 	     if (si->markup)
 		t = strdup(edje_object_part_text_get
-			   (si->base_obj, "labelblock"));
+			   (si->base_obj, "e.textblock.label"));
 	     else
-		t = strdup(edje_object_part_text_get(si->base_obj, "label"));
+		t = strdup(edje_object_part_text_get(si->base_obj, "e.text.label"));
 	     if (!strcmp(t, label))
 	       {
 		  evas_object_del(si->base_obj);
@@ -334,9 +334,9 @@ _e_tlist_append(Evas_Object * obj, char *label,
       e_theme_edje_object_set(si->base_obj, "base/theme/widgets",
 			      "widgets/tlist");
    if (si->markup)
-      edje_object_part_text_set(si->base_obj, "labelblock", label);
+      edje_object_part_text_set(si->base_obj, "e.textblock.label", label);
    else
-      edje_object_part_text_set(si->base_obj, "label", label);
+      edje_object_part_text_set(si->base_obj, "e.text.label", label);
    si->func = func;
    si->func_hilight = func_hilight;
    si->data = data;

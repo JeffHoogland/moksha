@@ -119,12 +119,12 @@ _e_wid_focus_hook(Evas_Object *obj)
    wd = e_widget_data_get(obj);
    if (e_widget_focus_get(obj))
      {
-	edje_object_signal_emit(e_scrollframe_edje_object_get(wd->o_scrollframe), "focus_in", "");
+	edje_object_signal_emit(e_scrollframe_edje_object_get(wd->o_scrollframe), "e,state,focused", "e");
 	evas_object_focus_set(wd->o_scrollframe, 1);
      }
    else
      {
-	edje_object_signal_emit(e_scrollframe_edje_object_get(wd->o_scrollframe), "focus_out", "");
+	edje_object_signal_emit(e_scrollframe_edje_object_get(wd->o_scrollframe), "e,state,unfocused", "e");
 	evas_object_focus_set(wd->o_scrollframe, 0);
      }
 }

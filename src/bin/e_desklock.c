@@ -255,9 +255,9 @@ e_desklock_show(void)
 		       e_theme_edje_object_set(edp->login_box,
 					       "base/theme/desklock",
 					       "desklock/login_box");
-		       edje_object_part_text_set(edp->login_box, "title", 
+		       edje_object_part_text_set(edp->login_box, "e.text.title", 
 						 _("Please enter your unlock password"));
-		       edje_object_part_swallow(edp->bg_object, "login_box", edp->login_box);
+		       edje_object_part_swallow(edp->bg_object, "e.swallow.login_box", edp->login_box);
 		       edje_object_size_min_calc(edp->login_box, &mw, &mh);
 		       evas_object_move(edp->login_box, (int)((zone->w - mw)/2),
 						    (int)((zone->h - mh)/2));
@@ -445,7 +445,7 @@ _e_desklock_passwd_update()
    for (l = edd->elock_wnd_list; l; l = l->next)
      {
 	edp = l->data;
-	edje_object_part_text_set(edp->login_box, "passwd", passwd_hidden);
+	edje_object_part_text_set(edp->login_box, "e.text.password", passwd_hidden);
      }
 }
 

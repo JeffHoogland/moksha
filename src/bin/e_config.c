@@ -471,8 +471,6 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, border_raise_on_focus, INT);
    E_CONFIG_VAL(D, T, desk_flip_wrap, INT);
 
-   E_CONFIG_VAL(D, T, icon_theme, STR);
-
    E_CONFIG_VAL(D, T, wallpaper_import_last_dev, STR);
    E_CONFIG_VAL(D, T, wallpaper_import_last_path, STR);
 
@@ -657,8 +655,6 @@ e_config_init(void)
    e_config->display_res_height = 0;
    e_config->display_res_hz = 0;
    e_config->display_res_rotation = 0;
-
-   e_config->icon_theme = evas_stringshare_add("hicolor");
    
      {
 	E_Config_Module *em;
@@ -916,85 +912,112 @@ e_config_init(void)
    eb->params = _params == NULL ? NULL : evas_stringshare_add(_params); \
    e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb)
    
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1,double", "title",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1,double", 
+		       "e.event.titlebar",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_shaded_toggle", "up");
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,2", "title",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,2", 
+		       "e.event.titlebar",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_shaded_toggle", "up");		       
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,wheel,?,1", "title",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,wheel,?,1", 
+		       "e.event.titlebar",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_shaded", "0 up");
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,wheel,?,-1", "title",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,wheel,?,-1", 
+		       "e.event.titlebar",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_shaded", "1 up");
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,3", "title",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,3", 
+		       "e.event.titlebar",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_menu", NULL);
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,?", "icon",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,?", 
+		       "e.event.icon",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_menu", NULL);
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,[12]", "close",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,[12]", 
+		       "e.event.close",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_close", NULL);
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,3", "close",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,3", 
+		       "e.event.close",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_kill", NULL);
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,1", "maximize",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,1", 
+		       "e.event.maximize",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_maximized_toggle", NULL);
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,2", "maximize",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,2", 
+		       "e.event.maximize",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_maximized_toggle", "smart");
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,3", "maximize",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,3", 
+		       "e.event.maximize",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_maximized_toggle", "expand");
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,?", "minimize",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,?", 
+		       "e.event.minimize",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_iconic_toggle", NULL);
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,?", "shade",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,?", 
+		       "e.event.shade",
 		       E_BINDING_MODIFIER_NONE, 1,
 		       "window_shaded_toggle", "up");
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", "icon",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", 
+		       "e.event.icon",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_drag_icon", NULL);
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", "title",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", 
+		       "e.event.titlebar",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_move", NULL);
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,up,1", "title",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,up,1", 
+		       "e.event.titlebar",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_move", "end");
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", "resize_tl",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", 
+		       "e.event.resize.tl",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_resize", "tl");
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", "resize_t",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", 
+		       "e.event.resize.t",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_resize", "t");
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", "resize_tr",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", 
+		       "e.event.resize.tr",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_resize", "tr");
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", "resize_r",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", 
+		       "e.event.resize.r",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_resize", "r");
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", "resize_br",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", 
+		       "e.event.resize.br",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_resize", "br");
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", "resize_b",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", 
+		       "e.event.resize.b",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_resize", "b");
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", "resize_bl",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", 
+		       "e.event.resize.bl",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_resize", "bl");
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", "resize_l",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", 
+		       "e.event.resize.l",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_resize", "l");
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,up,1", "resize_*",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,up,1", 
+		       "e.event.resize.*",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_resize", "end");
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,3", "resize_*",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,3", 
+		       "e.event.resize.*",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_move", NULL);
-	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,up,3", "resize_*",
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,up,3", 
+		       "e.event.resize.*",
 		       E_BINDING_MODIFIER_NONE, 1, 
 		       "window_move", "end");
      }
@@ -1187,6 +1210,123 @@ e_config_init(void)
    e_config->wallpaper_grad_c2_r = 255;
    e_config->wallpaper_grad_c2_g = 255;
    e_config->wallpaper_grad_c2_b = 255;
+   IFCFGEND;
+
+   IFCFG(0x0100);
+   /* these changed, so update them */
+     {
+	E_Config_Binding_Signal *eb;
+
+   
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1,double", 
+		       "e.event.titlebar",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_shaded_toggle", "up");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,2", 
+		       "e.event.titlebar",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_shaded_toggle", "up");		       
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,wheel,?,1", 
+		       "e.event.titlebar",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_shaded", "0 up");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,wheel,?,-1", 
+		       "e.event.titlebar",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_shaded", "1 up");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,3", 
+		       "e.event.titlebar",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_menu", NULL);
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,?", 
+		       "e.event.icon",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_menu", NULL);
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,[12]", 
+		       "e.event.close",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_close", NULL);
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,3", 
+		       "e.event.close",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_kill", NULL);
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,1", 
+		       "e.event.maximize",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_maximized_toggle", NULL);
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,2", 
+		       "e.event.maximize",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_maximized_toggle", "smart");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,3", 
+		       "e.event.maximize",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_maximized_toggle", "expand");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,?", 
+		       "e.event.minimize",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_iconic_toggle", NULL);
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,?", 
+		       "e.event.shade",
+		       E_BINDING_MODIFIER_NONE, 1,
+		       "window_shaded_toggle", "up");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", 
+		       "e.event.icon",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_drag_icon", NULL);
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", 
+		       "e.event.titlebar",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_move", NULL);
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,up,1", 
+		       "e.event.titlebar",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_move", "end");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", 
+		       "e.event.resize.tl",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_resize", "tl");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", 
+		       "e.event.resize.t",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_resize", "t");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", 
+		       "e.event.resize.tr",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_resize", "tr");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", 
+		       "e.event.resize.r",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_resize", "r");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", 
+		       "e.event.resize.br",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_resize", "br");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", 
+		       "e.event.resize.b",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_resize", "b");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", 
+		       "e.event.resize.bl",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_resize", "bl");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", 
+		       "e.event.resize.l",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_resize", "l");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,up,1", 
+		       "e.event.resize.*",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_resize", "end");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,3", 
+		       "e.event.resize.*",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_move", NULL);
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,up,3", 
+		       "e.event.resize.*",
+		       E_BINDING_MODIFIER_NONE, 1, 
+		       "window_move", "end");
+     }
    IFCFGEND;
    
 #if 0 /* example of new config */
@@ -1877,7 +2017,6 @@ _e_config_free(void)
 	if (e_config->transition_desk) evas_stringshare_del(e_config->transition_desk);
 	if (e_config->transition_change) evas_stringshare_del(e_config->transition_change);
 	if (e_config->input_method) evas_stringshare_del(e_config->input_method);
-	if (e_config->icon_theme) evas_stringshare_del(e_config->icon_theme);
 	E_FREE(e_config);
      }
 }

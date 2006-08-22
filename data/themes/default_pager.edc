@@ -501,8 +501,8 @@ group {
    programs {
       program {
 	 name:    "go_active3b";
-	 signal:  "active";
-	 source:  "";
+	 signal:  "e,state,selected";
+	 source:  "e";
 	 action:  STATE_SET "active" 0.0;
 	 target:  "title_glint_1";
 	 target:  "title_glint_2";
@@ -546,8 +546,8 @@ group {
       }
       program {
 	 name:    "go_active_content";
-	 signal:  "active";
-	 source:  "";
+	 signal:  "e,state,selected";
+	 source:  "e";
 	 action:  STATE_SET "active" 0.0;
          transition: SINUSOIDAL 0.25;
 	 target:  "clip";
@@ -556,8 +556,8 @@ group {
       }
       program {
 	 name:    "go_passive";
-	 signal:  "passive";
-	 source:  "";
+	 signal:  "e,state,unselected";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
          transition: SINUSOIDAL 1.0;
 	 target:  "clip";
@@ -566,24 +566,24 @@ group {
       }
       program {
 	 name:    "set_active";
-	 signal:  "active";
-	 source:  "";
+	 signal:  "e,state,selected";
+	 source:  "e";
 	 script {
 	    set_int(active, 1);
 	 }
       }
       program {
 	 name:    "set_passive";
-	 signal:  "passive";
-	 source:  "";
+	 signal:  "e,state,unselected";
+	 source:  "e";
 	 script {
 	    set_int(active, 0);
 	 }
       }
       program {
 	 name:   "drag_in";
-	 signal: "drag";
-	 source: "in";
+	 signal: "e,action,drag,in";
+	 source: "e";
 	 script {
       	    if (get_int(drag) == 0) {
 	       set_state(PART:"overlay", "drag", 0.0);
@@ -593,8 +593,8 @@ group {
       }
       program {
 	 name:   "drag_out";
-	 signal: "drag";
-	 source: "out";
+	 signal: "e,action,drag,out";
+	 source: "e";
 	 script {
 	    if (get_int(drag) == 1) {
 	       if (get_int(active) == 1)

@@ -80,7 +80,7 @@ group {
 	 }
       }
       part {
-	 name:          "title";
+	 name:          "e.text.title";
 	 type:          TEXT;
          effect: SOFT_SHADOW;
 	 mouse_events:  0;
@@ -127,13 +127,13 @@ group {
 	 }
       }
       part {
-	 name:          "items";
+	 name:          "e.swallow.content";
 	 mouse_events:  0;
 	 type:          SWALLOW;
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       to_y:     "title";
+	       to_y:     "e.text.title";
 	       relative: 0.0  1.0;
 	       offset:   1    0;
 	    }
@@ -148,17 +148,17 @@ group {
    programs {
       program {
 	 name:    "on";
-	 signal:  "title,on";
-	 source:  "";
+	 signal:  "e,action,show,title";
+	 source:  "e";
 	 action:  STATE_SET "active" 0.0;
-	 target:  "title";
+	 target:  "e.text.title";
       }
       program {
 	 name:    "off";
-	 signal:  "title,off";
-	 source:  "";
+	 signal:  "e,action,hide,title";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
-	 target:  "title";
+	 target:  "e.text.title";
       }
    }
 }
@@ -194,7 +194,7 @@ group {
    name: "widgets/menu/default/item_bg";
    parts {
       part {
-	 name:          "item";
+	 name:          "e.swallow.content";
 	 type:          SWALLOW;
 	 description {
 	    state:    "default" 0.0;
@@ -215,7 +215,7 @@ group {
    name: "widgets/menu/default/submenu_bg";
    parts {
       part {
-	 name:          "item";
+	 name:          "e.swallow.content";
 	 type:          SWALLOW;
 	 description {
 	    state:    "default" 0.0;
@@ -301,15 +301,15 @@ group {
    programs {
       program {
 	 name:    "turn_on1";
-	 signal:  "toggle_on";
-	 source:  "";
+	 signal:  "e,state,on";
+	 source:  "e";
 	 action:  STATE_SET "active" 0.0;
 	 target:  "item1";
       }
       program {
 	 name:    "turn_off1";
-	 signal:  "toggle_off";
-	 source:  "";
+	 signal:  "e,state,off";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "item1";
       }
@@ -384,15 +384,15 @@ group {
    programs {
       program {
 	 name:    "turn_on1";
-	 signal:  "toggle_on";
-	 source:  "";
+	 signal:  "e,state,on";
+	 source:  "e";
 	 action:  STATE_SET "active" 0.0;
 	 target:  "item1";
       }
       program {
 	 name:    "turn_off1";
-	 signal:  "toggle_off";
-	 source:  "";
+	 signal:  "e,state,off";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "item1";
       }
@@ -402,7 +402,7 @@ group {
    name: "widgets/menu/default/icon";
    parts {
       part {
-	 name:          "item";
+	 name:          "e.swallow.content";
 	 type:          SWALLOW;
 	 description {
 	    state:    "default" 0.0;
@@ -608,7 +608,7 @@ group {
 	 }
       }
       part {
-	 name:           "label";
+	 name:           "e.text.label";
 	 type:           TEXT;
 	 effect:         SHADOW;
 	 mouse_events:   0;
@@ -803,8 +803,8 @@ group {
    programs {
       program {
 	 name:    "go_active_pre";
-	 signal:  "active";
-	 source:  "";
+	 signal:  "e,state,selected";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "title_outline";
 	 target:  "title_bar";
@@ -880,8 +880,8 @@ group {
 
       program {
 	 name:    "go_passive_pre";
-	 signal:  "passive";
-	 source:  "";
+	 signal:  "e,state,unselected";
+	 source:  "e";
 	 action:  STATE_SET "active" 0.0;
 	 target:  "title_outline";
 	 target:  "title_bar";

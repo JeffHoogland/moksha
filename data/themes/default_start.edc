@@ -378,8 +378,8 @@ group {
       }
       program {      
 	 name:    "handle_active";
-	 signal:  "active";
-	 source:  "";
+	 signal:  "e,state,focused";
+	 source:  "e";
 	 script {
 	    new val;
 	    
@@ -392,8 +392,8 @@ group {
       }
       program {      
 	 name:    "handle_passive";
-	 signal:  "passive";
-	 source:  "";
+	 signal:  "e,state,unfocused";
+	 source:  "e";
 	 script {
 	    new val;
 	    

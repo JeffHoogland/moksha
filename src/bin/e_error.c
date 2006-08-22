@@ -260,11 +260,11 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 
 	evas_object_move(o, 0, 0);
 	evas_object_resize(o, error_w, error_h);
-	edje_object_signal_callback_add(o, "close", "",
+	edje_object_signal_callback_add(o, "e,action,close", "",
 					_e_error_edje_cb_ok_up, ee);
 	evas_object_show(o);
 
-	edje_object_part_text_set(o, "title", title);
+	edje_object_part_text_set(o, "e.text.title", title);
 	
 	  {
 	     char *pp, *newstr, *p, *markup = NULL;
@@ -296,7 +296,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 		  else
 		    p = NULL;
 	       }
-	     edje_object_part_text_set(o, "text", markup);
+	     edje_object_part_text_set(o, "e.text.message", markup);
 	     free(markup);
 	     free(newstr);
 	  }

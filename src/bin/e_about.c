@@ -48,10 +48,10 @@ e_about_new(E_Container *con)
    evas_object_move(o, 0, 0);
    evas_object_show(o);
    
-   edje_object_part_text_set(about->bg_object, "title", _("Enlightenment"));
-   edje_object_part_text_set(about->bg_object, "version", VERSION);
+   edje_object_part_text_set(about->bg_object, "e.text.title", _("Enlightenment"));
+   edje_object_part_text_set(about->bg_object, "e.text.version", VERSION);
    edje_object_part_text_set
-     (about->bg_object, "about",
+     (about->bg_object, "e.text.about",
       _(
 	"Copyright &copy; 1999-2006, by the Enlightenment Development Team.<br>"
 	"<br>"
@@ -68,7 +68,7 @@ e_about_new(E_Container *con)
 	"yet and may have many bugs. You have been <hilight>WARNED!</hilight>"
 	)
       );
-   edje_object_signal_callback_add(about->bg_object, "close", "",
+   edje_object_signal_callback_add(about->bg_object, "e,action,close", "",
 				   _e_about_cb_close, about);
      {
 	FILE *f;
@@ -116,7 +116,7 @@ e_about_new(E_Container *con)
 	     fclose(f);
 	     if (tbuf)
 	       {
-		  edje_object_part_text_set(about->bg_object, "authors", tbuf);
+		  edje_object_part_text_set(about->bg_object, "e.text.authors", tbuf);
 		  free(tbuf);
 	       }
 	  }

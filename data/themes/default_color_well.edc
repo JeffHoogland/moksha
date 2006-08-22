@@ -44,7 +44,7 @@ group {
 	 }
       }
       part {
-	 name:          "content";
+	 name:          "e.swallow.content";
 	 type:          SWALLOW;
 	 mouse_events:  0;
 	 clip_to:       "content_clip";
@@ -80,7 +80,7 @@ group {
       name: "send_click";
       signal: "mouse,clicked,1";
       source: "overlay";
-      action: SIGNAL_EMIT "click" "";
+      action: SIGNAL_EMIT "e,action,click" "";
     } 
   }
 }

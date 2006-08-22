@@ -69,7 +69,7 @@ group {
 	 }
       }
       part {
-	 name: "text";
+	 name: "e.text.label";
 	 type: TEXT;
          effect: SHADOW;
 	 description {

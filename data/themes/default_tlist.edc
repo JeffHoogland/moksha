@@ -152,7 +152,7 @@ group {
 	 }
       }
       part {
-	 name:           "label";
+	 name:           "e.text.label";
 	 type:           TEXT;
 	 effect:         SHADOW;
 	 mouse_events:   0;
@@ -181,7 +181,7 @@ group {
 	 }
       }
       part {
-	 name:           "labelblock";
+	 name:           "e.textblock.label";
 	 type:           TEXTBLOCK;
 	 effect:         SHADOW;
 	 mouse_events:   0;
@@ -383,8 +383,8 @@ group {
    programs {
       program {
 	 name:    "go_active_pre";
-	 signal:  "active";
-	 source:  "";
+	 signal:  "e,state,selected";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "title_bar";
 	 target:  "title_shadow1";
@@ -458,8 +458,8 @@ group {
 
       program {
 	 name:    "go_passive_pre";
-	 signal:  "passive";
-	 source:  "";
+	 signal:  "e,state,unselected";
+	 source:  "e";
 	 action:  STATE_SET "active" 0.0;
 	 target:  "title_bar";
 	 target:  "title_shadow1";
@@ -625,7 +625,7 @@ group {
 	 }
       }
       part {
-	 name:           "label";
+	 name:           "e.text.label";
 	 type:           TEXT;
 	 effect:         SHADOW;
 	 mouse_events:   0;
@@ -654,7 +654,7 @@ group {
 	 }
       }
       part {
-	 name:           "labelblock";
+	 name:           "e.textblock.label";
 	 type:           TEXTBLOCK;
 	 effect:         SHADOW;
 	 mouse_events:   0;
@@ -856,8 +856,8 @@ group {
    programs {
       program {
 	 name:    "go_active_pre";
-	 signal:  "active";
-	 source:  "";
+	 signal:  "e,state,selected";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "title_bar";
 	 target:  "title_shadow1";
@@ -931,8 +931,8 @@ group {
 
       program {
 	 name:    "go_passive_pre";
-	 signal:  "passive";
-	 source:  "";
+	 signal:  "e,state,unselected";
+	 source:  "e";
 	 action:  STATE_SET "active" 0.0;
 	 target:  "title_bar";
 	 target:  "title_shadow1";

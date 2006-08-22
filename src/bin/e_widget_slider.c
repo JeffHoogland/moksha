@@ -165,12 +165,12 @@ _e_wid_focus_hook(Evas_Object *obj)
    wd = e_widget_data_get(obj);
    if (e_widget_focus_get(obj))
      {
-	edje_object_signal_emit(e_slider_edje_object_get(wd->o_slider), "focus_in", "");
+	edje_object_signal_emit(e_slider_edje_object_get(wd->o_slider), "e,state,focused", "e");
 	evas_object_focus_set(wd->o_slider, 1);
      }
    else
      {
-	edje_object_signal_emit(e_slider_edje_object_get(wd->o_slider), "focus_out", "");
+	edje_object_signal_emit(e_slider_edje_object_get(wd->o_slider), "e,state,unfocused", "e");
 	evas_object_focus_set(wd->o_slider, 0);
      }
 }
@@ -200,8 +200,8 @@ _e_wid_disable_hook(Evas_Object *obj)
    wd = e_widget_data_get(obj);
    if (e_widget_disabled_get(obj))
      edje_object_signal_emit(e_slider_edje_object_get(wd->o_slider),
-			     "disabled", "");
+			     "e,state,disabled", "");
    else
      edje_object_signal_emit(e_slider_edje_object_get(wd->o_slider),
-			     "enabled", "");
+			     "e,state,enabled", "");
 }

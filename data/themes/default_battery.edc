@@ -232,43 +232,43 @@ group {
    programs {
       program {
 	 name: "charge";
-	 signal: "charge";
-	 source: "";
+	 signal: "e,state,charging";
+	 source: "e";
 	 action: STATE_SET "default" 0.0;
 	 target: "fade_clip";
       }
       program {
 	 name: "charge2";
-	 signal: "charge";
-	 source: "";
+	 signal: "e,state,charging";
+	 source: "e";
 	 action: STATE_SET "active" 0.0;
 	 target: "ac";
       }
       program {
 	 name: "discharge";
-	 signal: "discharge";
-	 source: "";
+	 signal: "e,state,discharging";
+	 source: "e";
 	 action: STATE_SET "default" 0.0;
 	 target: "fade_clip";
       }
       program {
 	 name: "discharge2";
-	 signal: "discharge";
-	 source: "";
+	 signal: "e,state,discharging";
+	 source: "e";
 	 action: STATE_SET "default" 0.0;
 	 target: "ac";
       }
       program {
 	 name: "unknown";
-	 signal: "unknown";
-	 source: "";
+	 signal: "e,state,unknown";
+	 source: "e";
 	 action: STATE_SET "faded" 0.0;
 	 target: "fade_clip";
       }
       program {
 	 name: "pulse";
-	 signal: "pulse";
-	 source: "";
+	 signal: "e,action,pulse,start";
+	 source: "e";
 	 action: STATE_SET "faded" 0.0;
 	 transition: ACCELERATE 0.3;
 	 after: "pulse2";
@@ -277,15 +277,15 @@ group {
       program {
 	 name: "pulse2";
 	 signal: "pulse2";
-	 source: "";
+	 source: "e";
 	 action: STATE_SET "faded" 1.0;
 	 transition: ACCELERATE 0.1;
 	 target: "pulse_clip";
       }
       program {
 	 name: "pulsestop";
-	 signal: "pulsestop";
-	 source: "";
+	 signal: "e,action,pulse,stop";
+	 source: "e";
 	 action: STATE_SET "default" 0.0;
 	 target: "pulse_clip";
       }

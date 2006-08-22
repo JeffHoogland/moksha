@@ -399,14 +399,14 @@ _pager_desk_select(Pager_Desk *pd)
 	if (pd == pd2)
 	  {
 	     pd2->current = 1;
-	     edje_object_signal_emit(pd2->o_desk, "active", "");
+	     edje_object_signal_emit(pd2->o_desk, "e,state,selected", "e");
 	  }
 	else
 	  {
 	     if (pd2->current)
 	       {
 		  pd2->current = 0;
-		  edje_object_signal_emit(pd2->o_desk, "passive", "");
+		  edje_object_signal_emit(pd2->o_desk, "e,state,unselected", "e");
 	       }
 	  }
      }
@@ -1502,9 +1502,9 @@ _pager_inst_cb_move(void *data, const char *type, void *event_info)
      {
 	pd2 = l->data;
 	if (pd == pd2)
-	  edje_object_signal_emit(pd2->o_desk, "drag", "in");
+	  edje_object_signal_emit(pd2->o_desk, "e,action,drag,in", "e");
 	else
-	  edje_object_signal_emit(pd2->o_desk, "drag", "out");
+	  edje_object_signal_emit(pd2->o_desk, "e,action,drag,out", "e");
      }
 }
 
@@ -1524,7 +1524,7 @@ _pager_inst_cb_leave(void *data, const char *type, void *event_info)
 	Pager_Desk *pd;
 	
 	pd = l->data;
-	edje_object_signal_emit(pd->o_desk, "drag", "out");
+	edje_object_signal_emit(pd->o_desk, "e,action,drag,out", "e");
      }
 }
 
@@ -1589,7 +1589,7 @@ _pager_inst_cb_drop(void *data, const char *type, void *event_info)
    for (l = inst->pager->desks; l; l = l->next)
      {
 	pd = l->data;
-	edje_object_signal_emit(pd->o_desk, "drag", "out");
+	edje_object_signal_emit(pd->o_desk, "e,action,drag,out", "e");
      }
 }
 

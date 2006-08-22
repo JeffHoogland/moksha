@@ -78,7 +78,7 @@ group {
 	 }
       }
       part {
-	 name: "list_swallow";
+	 name: "e.swallow.list";
 	 type: SWALLOW;
 	 clip_to: "list_clip";
 	 description {
@@ -87,12 +87,12 @@ group {
 	    rel1 {
 	       relative: 0.0 1.0;
 	       offset:   16   16;
-	       to_y:    "title";
+	       to_y:    "e.text.title";
 	    }
 	    rel2 {
 	       relative: 1.0 0.0;
 	       offset:   -17  -17;
-	       to_y: "icon_swallow";
+	       to_y: "e.swallow.icon";
 	    }
 	 }
       }
@@ -105,12 +105,12 @@ group {
 	    rel1 {
 	       relative: 0.0 0.0;
 	       offset:   0   0;
-	       to_y: "list_swallow";
+	       to_y: "e.swallow.list";
 	    }
 	    rel2 {
 	       relative: 1.0 1.0;
 	       offset:   -1  -1;
-	       to_y: "list_swallow";
+	       to_y: "e.swallow.list";
 	    }
 	 }
       }
@@ -126,7 +126,7 @@ group {
 	    rel2 {
 	       relative: 1.0  0.0;
 	       offset:   -2   16;
-	       to_y:     "list_swallow";
+	       to_y:     "e.swallow.list";
 	    }
 	    image {
 	       normal: "e17_winlist_top.png";
@@ -145,7 +145,7 @@ group {
 	    rel1 {
 	       relative: 0.0  1.0;
 	       offset:   1    -3;
-	       to_y:     "list_swallow";
+	       to_y:     "e.swallow.list";
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
@@ -161,7 +161,7 @@ group {
 	 }
       }
       part {
-	 name: "title";
+	 name: "e.text.title";
 	 type: TEXT;
 	 effect: SOFT_SHADOW;
 	 mouse_events: 0;
@@ -209,7 +209,7 @@ group {
 	 }
       }
       part {
-	 name: "title_text";
+	 name: "e.text.label";
 	 type: TEXT;
 	 effect: SOFT_SHADOW;
 	 mouse_events: 0;
@@ -246,12 +246,12 @@ group {
 	    rel1 {
 	       relative: 0.0 0.0;
 	       offset:  16   -7;
-	       to_y: "title_text";
+	       to_y: "e.text.label";
 	    }
 	    rel2 {
 	       relative: 1.0 1.0;
 	       offset:  -17  6;
-	       to_y: "title_text";
+	       to_y: "e.text.label";
 	    }
 	    image {
 	       normal: "e17_ibar_over_h.png";
@@ -264,7 +264,7 @@ group {
 	 }
       }
       part {
-	 name: "icon_swallow";
+	 name: "e.swallow.icon";
 	 type: SWALLOW;
 	 description {
 	    state: "default" 0.0;
@@ -292,12 +292,12 @@ group {
 	 description {
 	    state: "default" 0.0;
 	    rel1 {
-	       to: "icon_swallow";
+	       to: "e.swallow.icon";
 	       relative: 0.0  0.0;
 	       offset:   -8    -8;
 	    }
 	    rel2 {
-	       to: "icon_swallow";
+	       to: "e.swallow.icon";
 	       relative: 1.0  1.0;
 	       offset:   7    7;
 	    }
@@ -324,7 +324,7 @@ group {
 	    rel1 {
 	       relative: 1.0  0.0;
 	       offset:   1    -1;
-	       to_x: "icon_swallow";
+	       to_x: "e.swallow.icon";
 	    }
 	    rel2 {
 	       relative: 0.0  1.0;
@@ -503,15 +503,15 @@ group {
 	      offset:   0    6;
 	   }
 	   text {
-	      text_source:   "title_text";
-	      source:        "title_text";
+	      text_source:   "e.text.label";
+	      source:        "e.text.label";
 	      min:           0 1;
 	      text_class:    "title_bar";
 	   }
 	}
      }
       part {
-	 name:           "title_text";
+	 name:           "e.text.label";
 	 type:           TEXT;
 	 effect:         SHADOW;
 	 mouse_events:   0;
@@ -520,7 +520,7 @@ group {
 	    rel1 {
 	       relative: 1.0  0.0;
 	       offset:   9 6;
-	       to_x: "icon_swallow";
+	       to_x: "e.swallow.icon";
 	    }
 	    rel2 {
 	       relative: 0.0  1.0;
@@ -706,7 +706,7 @@ group {
 	 }
       }
       part {
-	 name: "icon_swallow";
+	 name: "e.swallow.icon";
 	 type: SWALLOW;
 	 description {
 	    state: "default" 0.0;
@@ -772,29 +772,29 @@ group {
    programs {
       program {
 	 name:    "type1";
-	 signal:  "iconified";
-	 source:  "";
+	 signal:  "e,state,iconified";
+	 source:  "e";
 	 action:  STATE_SET "iconified" 0.0;
 	 target:  "type";
       }
       program {
 	 name:    "type2";
-	 signal:  "invisible";
-	 source:  "";
+	 signal:  "e,state,invisible";
+	 source:  "e";
 	 action:  STATE_SET "invisible" 0.0;
 	 target:  "type";
       }
       program {
 	 name:    "type3";
-	 signal:  "shaded";
-	 source:  "";
+	 signal:  "e,state,shaded";
+	 source:  "e";
 	 action:  STATE_SET "shaded" 0.0;
 	 target:  "type";
       }
       program {
 	 name:    "go_active_pre";
-	 signal:  "active";
-	 source:  "";
+	 signal:  "e,state,selected";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "title_outline";
 	 target:  "title_bar";
@@ -870,8 +870,8 @@ group {
 
       program {
 	 name:    "go_passive_pre";
-	 signal:  "passive";
-	 source:  "";
+	 signal:  "e,state,unselected";
+	 source:  "e";
 	 action:  STATE_SET "active" 0.0;
 	 target:  "title_outline";
 	 target:  "title_bar";

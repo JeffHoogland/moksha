@@ -183,12 +183,12 @@ group {
 	    visible:    0;
 	    align: 0.5 0.5;	    
  	    rel1 {
-	       to: "icon_swallow";
+	       to: "e.swallow.icon";
 	       relative: 0.0 0.0;
 	       offset: -1 -1;
 	    }
 	    rel2 {
-	       to: "icon_swallow";
+	       to: "e.swallow.icon";
 	       relative: 1.0 1.0;
 	       offset: 0 0;
 	    }	    
@@ -307,7 +307,7 @@ group {
 	 }
       }
       part {
-	 name:          "icon_swallow";
+	 name:          "e.swallow.icon";
 	 type:          SWALLOW;
 	 mouse_events:  0;
 	 description {
@@ -323,7 +323,7 @@ group {
 	 }
       }
       part {
-	 name:           "label";
+	 name:           "e.text.label";
 	 type:           TEXT;
 	 effect:         SHADOW;
 	 mouse_events:   0;
@@ -528,8 +528,8 @@ group {
    programs {
       program {
 	 name:    "go_active_pre";
-	 signal:  "active";
-	 source:  "";
+	 signal:  "e,state,selected";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "title_bar";
 	 target:  "title_shadow1";
@@ -603,8 +603,8 @@ group {
 
       program {
 	 name:    "go_passive_pre";
-	 signal:  "passive";
-	 source:  "";
+	 signal:  "e,state,unselected";
+	 source:  "e";
 	 action:  STATE_SET "active" 0.0;
 	 target:  "title_bar";
 	 target:  "title_shadow1";
@@ -633,8 +633,8 @@ group {
       }
       program {
 	 name:    "thumb_gen";
-	 signal:  "thumb";
-	 source:  "gen";
+	 signal:  "e,action,thumb,gen";
+	 source:  "e";
 	 action:  STATE_SET "visible" 0.0;
 	 target:  "icon_box_shadow";
 	 target:  "icon_box";
@@ -643,8 +643,8 @@ group {
       }
       program {
 	 name:    "thumb_gen-";
-	 signal:  "thumb";
-	 source:  "gen_alpha";
+	 signal:  "e,action,thumb,gen,alpha";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "icon_box_shadow";
 	 target:  "icon_box";
@@ -858,12 +858,12 @@ group {
 	    visible:    0;
 	    align: 0.5 0.5;	    
  	    rel1 {
-	       to: "icon_swallow";
+	       to: "e.swallow.icon";
 	       relative: 0.0 0.0;
 	       offset: -1 -1;
 	    }
 	    rel2 {
-	       to: "icon_swallow";
+	       to: "e.swallow.icon";
 	       relative: 1.0 1.0;
 	       offset: 0 0;
 	    }	    
@@ -982,7 +982,7 @@ group {
 	 }
       }
       part {
-	 name:          "icon_swallow";
+	 name:          "e.swallow.icon";
 	 type:          SWALLOW;
 	 mouse_events:  0;
 	 description {
@@ -998,7 +998,7 @@ group {
 	 }
       }
       part {
-	 name:           "label";
+	 name:           "e.text.label";
 	 type:           TEXT;
 	 effect:         SHADOW;
 	 mouse_events:   0;
@@ -1203,8 +1203,8 @@ group {
    programs {
       program {
 	 name:    "go_active_pre";
-	 signal:  "active";
-	 source:  "";
+	 signal:  "e,state,selected";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "title_bar";
 	 target:  "title_shadow1";
@@ -1278,8 +1278,8 @@ group {
 
       program {
 	 name:    "go_passive_pre";
-	 signal:  "passive";
-	 source:  "";
+	 signal:  "e,state,unselected";
+	 source:  "e";
 	 action:  STATE_SET "active" 0.0;
 	 target:  "title_bar";
 	 target:  "title_shadow1";
@@ -1308,8 +1308,8 @@ group {
       }
       program {
 	 name:    "thumb_gen";
-	 signal:  "thumb";
-	 source:  "gen";
+	 signal:  "e,action,thumb,gen";
+	 source:  "e";
 	 action:  STATE_SET "visible" 0.0;
 	 target:  "icon_box_shadow";
 	 target:  "icon_box";
@@ -1318,8 +1318,8 @@ group {
       }
       program {
 	 name:    "thumb_gen-";
-	 signal:  "thumb";
-	 source:  "gen_alpha";
+	 signal:  "e,action,thumb,gen,alpha";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "icon_box_shadow";
 	 target:  "icon_box";
@@ -1533,12 +1533,12 @@ group {
 	    visible:    0;
 	    align: 0.5 0.5;	    
  	    rel1 {
-	       to: "icon_swallow";
+	       to: "e.swallow.icon";
 	       relative: 0.0 0.0;
 	       offset: -1 -1;
 	    }
 	    rel2 {
-	       to: "icon_swallow";
+	       to: "e.swallow.icon";
 	       relative: 1.0 1.0;
 	       offset: 0 0;
 	    }	    
@@ -1656,7 +1656,7 @@ group {
 	 }
       }
       part {
-	 name:          "icon_swallow";
+	 name:          "e.swallow.icon";
 	 type:          SWALLOW;
 	 mouse_events:  0;
 	 description {
@@ -1672,7 +1672,7 @@ group {
 	 }
       }
       part {
-	 name:           "label";
+	 name:           "e.text.label";
 	 type:           TEXT;
 	 effect:         SHADOW;
 	 mouse_events:   0;
@@ -1877,8 +1877,8 @@ group {
    programs {
       program {
 	 name:    "go_active_pre";
-	 signal:  "active";
-	 source:  "";
+	 signal:  "e,state,selected";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "title_bar";
 	 target:  "title_shadow1";
@@ -1952,8 +1952,8 @@ group {
 
       program {
 	 name:    "go_passive_pre";
-	 signal:  "passive";
-	 source:  "";
+	 signal:  "e,state,unselected";
+	 source:  "e";
 	 action:  STATE_SET "active" 0.0;
 	 target:  "title_bar";
 	 target:  "title_shadow1";
@@ -1982,8 +1982,8 @@ group {
       }
       program {
 	 name:    "thumb_gen";
-	 signal:  "thumb";
-	 source:  "gen";
+	 signal:  "e,action,thumb,gen";
+	 source:  "e";
 	 action:  STATE_SET "visible" 0.0;
 	 target:  "icon_box_shadow";
 	 target:  "icon_box";
@@ -1992,8 +1992,8 @@ group {
       }
       program {
 	 name:    "thumb_gen-";
-	 signal:  "thumb";
-	 source:  "gen_alpha";
+	 signal:  "e,action,thumb,gen,alpha";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "icon_box_shadow";
 	 target:  "icon_box";
@@ -2207,12 +2207,12 @@ group {
 	    visible:    0;
 	    align: 0.5 0.5;	    
  	    rel1 {
-	       to: "icon_swallow";
+	       to: "e.swallow.icon";
 	       relative: 0.0 0.0;
 	       offset: -1 -1;
 	    }
 	    rel2 {
-	       to: "icon_swallow";
+	       to: "e.swallow.icon";
 	       relative: 1.0 1.0;
 	       offset: 0 0;
 	    }	    
@@ -2331,7 +2331,7 @@ group {
 	 }
       }
       part {
-	 name:          "icon_swallow";
+	 name:          "e.swallow.icon";
 	 type:          SWALLOW;
 	 mouse_events:  0;
 	 description {
@@ -2347,7 +2347,7 @@ group {
 	 }
       }
       part {
-	 name:           "label";
+	 name:           "e.text.label";
 	 type:           TEXT;
 	 effect:         SHADOW;
 	 mouse_events:   0;
@@ -2552,8 +2552,8 @@ group {
    programs {
       program {
 	 name:    "go_active_pre";
-	 signal:  "active";
-	 source:  "";
+	 signal:  "e,state,selected";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "title_bar";
 	 target:  "title_shadow1";
@@ -2627,8 +2627,8 @@ group {
 
       program {
 	 name:    "go_passive_pre";
-	 signal:  "passive";
-	 source:  "";
+	 signal:  "e,state,unselected";
+	 source:  "e";
 	 action:  STATE_SET "active" 0.0;
 	 target:  "title_bar";
 	 target:  "title_shadow1";
@@ -2657,8 +2657,8 @@ group {
       }
       program {
 	 name:    "thumb_gen";
-	 signal:  "thumb";
-	 source:  "gen";
+	 signal:  "e,action,thumb,gen";
+	 source:  "e";
 	 action:  STATE_SET "visible" 0.0;
 	 target:  "icon_box_shadow";
 	 target:  "icon_box";
@@ -2667,8 +2667,8 @@ group {
       }
       program {
 	 name:    "thumb_gen-";
-	 signal:  "thumb";
-	 source:  "gen_alpha";
+	 signal:  "e,action,thumb,gen,alpha";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "icon_box_shadow";
 	 target:  "icon_box";
@@ -2740,7 +2740,7 @@ group {
 	 }
       }      	 
       part {
-	 name:          "icon_swallow";
+	 name:          "e.swallow.icon";
 	 type:          SWALLOW;
 	 mouse_events:  0;
 	 description {
@@ -2752,14 +2752,14 @@ group {
 	       offset: 4 4;
 	    }
 	    rel2 {
-	       to_y: "label";
+	       to_y: "e.text.label";
 	       relative: 1.0 0.0;
 	       offset: -5 -2;
 	    }
 	 }
       }
       part {
-	 name:          "label";
+	 name:          "e.text.label";
 	 type:          TEXT;
 	 effect:        SHADOW;
 	 mouse_events:  0;
@@ -2801,19 +2801,19 @@ group {
    programs {
       program {
 	 name:   "active"; 
-	 signal: "active"; 
-	 source: ""; 
+	 signal: "e,state,selected"; 
+	 source: "e"; 
 	 action: STATE_SET "active" 0.0;
-	 target: "label"; 
+	 target: "e.text.label"; 
 	 target: "icon_overlay";
       } 
       program { 
 	 name:   "passive";
-	 signal: "passive"; 
-	 source: ""; 
+	 signal: "e,state,unselected"; 
+	 source: "e"; 
 	 action: STATE_SET "default" 0.0;
 	 transition: LINEAR 0.2;	 
-	 target: "label";
+	 target: "e.text.label";
          target: "icon_overlay";	 
       }      
    }   
@@ -2848,7 +2848,7 @@ group {
 	 }
       }      	 
       part {
-	 name:          "icon_swallow";
+	 name:          "e.swallow.icon";
 	 type:          SWALLOW;
 	 mouse_events:  0;
 	 description {
@@ -2860,14 +2860,14 @@ group {
 	       offset: 4 4;
 	    }
 	    rel2 {
-	       to_y: "label";
+	       to_y: "e.text.label";
 	       relative: 1.0 0.0;
 	       offset: -5 -2;
 	    }
 	 }
       }
       part {
-	 name:          "label";
+	 name:          "e.text.label";
 	 type:          TEXT;
 	 effect:        SHADOW;
 	 mouse_events:  0;
@@ -2909,19 +2909,19 @@ group {
    programs {
       program {
 	 name:   "active"; 
-	 signal: "active"; 
-	 source: ""; 
+	 signal: "e,state,selected"; 
+	 source: "e"; 
 	 action: STATE_SET "active" 0.0;
-	 target: "label"; 
+	 target: "e.text.label"; 
 	 target: "icon_overlay";
       } 
       program { 
 	 name:   "passive";
-	 signal: "passive"; 
-	 source: ""; 
+	 signal: "e,state,unselected"; 
+	 source: "e"; 
 	 action: STATE_SET "default" 0.0;
 	 transition: LINEAR 0.2;	 
-	 target: "label";
+	 target: "e.text.label";
          target: "icon_overlay";	 
       }      
    }   
@@ -2962,7 +2962,7 @@ group {
 	 }
       }
       part {
-	 name: "busy_label";
+	 name: "e.text.busy_label";
          type: TEXT;
 	 effect: SOFT_SHADOW;
 	 clip_to: "busy_clip";
@@ -3011,16 +3011,16 @@ group {
    programs {
       program {
 	 name: "go1";
-	 signal: "busy";
-	 source: "start";
+	 signal: "e,state,busy,start";
+	 source: "e";
 	 action: STATE_SET "active" 0.0;
 	 transition: SINUSOIDAL 1.0;
 	 target:  "busy_clip";
       }
       program {
 	 name: "go2";
-	 signal: "busy";
-	 source: "start";
+	 signal: "e,state,busy,start";
+	 source: "e";
 	 action: STATE_SET "default" 0.0;
 	 transition: LINEAR 0.5;
 	 target: "busy";
@@ -3028,8 +3028,8 @@ group {
       }
       program {
 	 name: "stop1";
-	 signal: "busy";
-	 source: "stop";
+	 signal: "e,state,busy,stop";
+	 source: "e";
 	 action: STATE_SET "default" 0.0;
 	 transition: SINUSOIDAL 1.0;
 	 target: "busy_clip";
@@ -4229,7 +4229,7 @@ group {
 	    }
 	 }
 	 part {
-	    name:          "icon_swallow";
+	    name:          "e.swallow.icon";
 	    type:          SWALLOW;
 	    mouse_events:  0;
 	    description {
@@ -4435,7 +4435,7 @@ group {
 	 }
       }
       part {
-	 name:          "icon_swallow";
+	 name:          "e.swallow.icon";
 	 type:          SWALLOW;
 	 mouse_events:  0;
 	 description {
@@ -4495,7 +4495,7 @@ group {
    name: "fileman/icon_list";
    parts {
       part {
-	 name:          "icon_swallow";
+	 name:          "e.swallow.icon";
 	 type:          SWALLOW;
 	 mouse_events:  0;
 	 description {	 
@@ -4519,7 +4519,7 @@ group {
 	 description {	 
 	    state: "default" 0.0;
 	    rel1 {
-	       to_x:     "icon_swallow";
+	       to_x:     "e.swallow.icon";
 	       relative: 1.0  0.0;
 	       offset:   2 2;
 	    }
@@ -4555,7 +4555,7 @@ group {
 	 effect:        NONE;
 	 description {
 	    rel1 {
-	       to_x:     "icon_swallow";
+	       to_x:     "e.swallow.icon";
 	       relative: 1.0  0.0;
 	       offset:   2 2;
 	    }

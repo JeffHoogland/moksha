@@ -123,7 +123,7 @@ e_slider_value_step_size_set(Evas_Object *obj, double step_size)
    step = 0.0;
    if (sd->val_max > sd->val_min)
      step = step_size / (sd->val_max - sd->val_min);
-   edje_object_part_drag_step_set(sd->edje_obj, "slider", step, step);
+   edje_object_part_drag_step_set(sd->edje_obj, "e.dragable.slider", step, step);
    _e_smart_value_limit(sd);
    _e_smart_value_update_now(sd);
 }
@@ -164,9 +164,9 @@ e_slider_value_format_display_set(Evas_Object *obj, const char *format)
    if (changed)
      {
 	if (sd->format)
-	  edje_object_signal_emit(sd->edje_obj, "show_label", "");
+	  edje_object_signal_emit(sd->edje_obj, "e,action,show,label", "e");
 	else
-	  edje_object_signal_emit(sd->edje_obj, "hide_label", "");
+	  edje_object_signal_emit(sd->edje_obj, "e,action,hide,label", "e");
      }
    _e_smart_format_update(sd);
    edje_object_message_signal_process(sd->edje_obj);
@@ -224,7 +224,7 @@ _e_smart_set_timer(void *data)
    if (pos < 0.0) pos = 0.0;
    else if (pos > 1.0) pos = 1.0;
    if (sd->reversed) pos = 1.0 - pos;
-   edje_object_part_drag_value_set(sd->edje_obj, "slider", pos, pos);
+   edje_object_part_drag_value_set(sd->edje_obj, "e.dragable.slider", pos, pos);
    sd->set_timer = NULL;
    return 0;
 }
@@ -248,7 +248,7 @@ _e_smart_value_fetch(E_Smart_Data *sd)
 {
    double posx = 0.0, posy = 0.0, pos = 0.0;
    
-   edje_object_part_drag_value_get(sd->edje_obj, "slider", &posx, &posy);
+   edje_object_part_drag_value_get(sd->edje_obj, "e.dragable.slider", &posx, &posy);
    if (sd->horizontal) pos = posx;
    else pos = posy;
    sd->val = (pos * (sd->val_max - sd->val_min)) + sd->val_min;
@@ -316,7 +316,7 @@ _e_smart_format_update(E_Smart_Data *sd)
 	char buf[256];
 	
 	snprintf(buf, sizeof(buf), sd->format, sd->val);
-	edje_object_part_text_set(sd->edje_obj, "label", buf);
+	edje_object_part_text_set(sd->edje_obj, "e.text.label", buf);
      }
 }
 
@@ -384,10 +384,10 @@ _e_smart_event_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	     double s;
 	     
 	     s = (sd->val_max - sd->val_min) / sd->step_count;
-	     edje_object_part_drag_step(sd->edje_obj, "slider", -s, -s);
+	     edje_object_part_drag_step(sd->edje_obj, "e.dragable.slider", -s, -s);
 	  }
 	else
-	  edje_object_part_drag_step(sd->edje_obj, "slider", -sd->step_size, -sd->step_size);
+	  edje_object_part_drag_step(sd->edje_obj, "e.dragable.slider", -sd->step_size, -sd->step_size);
      }
    else if ((!strcmp(ev->keyname, "Down")) ||
 	    (!strcmp(ev->keyname, "KP_Down")) ||
@@ -399,20 +399,20 @@ _e_smart_event_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	     double s;
 	     
 	     s = (sd->val_max - sd->val_min) / sd->step_count;
-	     edje_object_part_drag_step(sd->edje_obj, "slider", s, s);
+	     edje_object_part_drag_step(sd->edje_obj, "e.dragable.slider", s, s);
 	  }
 	else
-	  edje_object_part_drag_step(sd->edje_obj, "slider", sd->step_size, sd->step_size);
+	  edje_object_part_drag_step(sd->edje_obj, "e.dragable.slider", sd->step_size, sd->step_size);
      }
    else if ((!strcmp(ev->keyname, "Home")) ||
 	    (!strcmp(ev->keyname, "KP_Home")))
      {
-	edje_object_part_drag_value_set(sd->edje_obj, "slider", 0., 0.);
+	edje_object_part_drag_value_set(sd->edje_obj, "e.dragable.slider", 0., 0.);
      }
    else if ((!strcmp(ev->keyname, "End")) ||
 	    (!strcmp(ev->keyname, "KP_End")))
      {
-	edje_object_part_drag_value_set(sd->edje_obj, "slider", 1., 1.);
+	edje_object_part_drag_value_set(sd->edje_obj, "e.dragable.slider", 1., 1.);
      }
 }
 

@@ -61,7 +61,7 @@ group {
 	 }
       }
       part {
-	 name: "icon_swallow";
+	 name: "e.swallow.icon";
 	 type: SWALLOW;
 	 description {
 	    state: "default" 0.0;
@@ -98,7 +98,7 @@ group {
 	 }
       }
       part {
-	 name:          "label";
+	 name:          "e.text.label";
 	 type:          TEXT;
 	 effect:        SHADOW;
 	 mouse_events:  0;
@@ -107,7 +107,7 @@ group {
 	    rel1 {
 	       relative: 1.0  0.0;
 	       offset:   4    8;
-	       to_x:   "icon_swallow";
+	       to_x:   "e.swallow.icon";
 	       to_y:   "button_image";
 	    }
 	    rel2 {
@@ -327,14 +327,14 @@ group {
 	 name:   "button_unclick2";
 	 signal: "mouse,clicked,1";
 	 source: "button_image";
-	 action: SIGNAL_EMIT "click" "";
+	 action: SIGNAL_EMIT "e,action,click" "";
       }
       program {
 	 name:   "icon_visible";
-	 signal: "icon_visible";
-	 source: "";
+	 signal: "e,action,show,icon";
+	 source: "e";
 	 action: STATE_SET "visible" 0.0;
-	 target: "icon_swallow";
+	 target: "e.swallow.icon";
       }
       program {
 	 name: "button_in";
@@ -395,37 +395,37 @@ group {
       }      
       program {
 	 name: "focus_in";
-	 signal: "focus_in";
-	 source: "";
+	 signal: "e,state,focused";
+	 source: "e";
          action: STATE_SET "focused" 0.0;
 	 transition: DECELERATE 0.2;
 	 target: "focus";
       }
       program {
 	 name: "focus_out";
-	 signal: "focus_out";
-	 source: "";
+	 signal: "e,state,unfocused";
+	 source: "e";
          action: STATE_SET "default" 0.0;
 	 transition: ACCELERATE 0.5;
 	 target: "focus";
       }
       program {
 	 name: "disable";
-	 signal: "disabled";
-	 source: "";
+	 signal: "e,state,disabled";
+	 source: "e";
          action: STATE_SET "disabled" 0.0;
 	 target: "button_image";
 	 target: "button_image2";
-	 target: "label"; 
+	 target: "e.text.label"; 
       }
       program {
 	 name: "enable";
-	 signal: "enabled";
-	 source: "";
+	 signal: "e,state,enabled";
+	 source: "e";
          action: STATE_SET "default" 0.0;
 	 target: "button_image";
 	 target: "button_image2"; 
-	 target: "label"; 
+	 target: "e.text.label"; 
      }
    }
 }

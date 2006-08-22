@@ -1297,17 +1297,17 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	       e_border_focus_latest_set(bd);
 	  }
 //	printf("EMIT 0x%x activeve\n", bd->client.win);
-	edje_object_signal_emit(bd->bg_object, "active", "");
+	edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
 	if (bd->icon_object)
-	  edje_object_signal_emit(bd->icon_object, "active", "");
+	  edje_object_signal_emit(bd->icon_object, "e,state,focused", "e");
 	e_focus_event_focus_in(bd);
      }
    else if ((!focus) && (bd->focused))
      {
 //	printf("EMIT 0x%x passive\n", bd->client.win);
-	edje_object_signal_emit(bd->bg_object, "passive", "");
+	edje_object_signal_emit(bd->bg_object, "e,state,unfocused", "e");
 	if (bd->icon_object)
-	  edje_object_signal_emit(bd->icon_object, "passive", "");
+	  edje_object_signal_emit(bd->icon_object, "e,state,unfocused", "e");
 	e_focus_event_focus_out(bd);
 	/* FIXME: Sometimes we should leave the window fullscreen! */
 //	if (bd->fullscreen)
@@ -1358,9 +1358,9 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 		  E_Event_Border_Focus_Out *ev;
 	     
 //		  printf("unfocus previous\n");
-		  edje_object_signal_emit(focused->bg_object, "passive", "");
+		  edje_object_signal_emit(focused->bg_object, "e,state,unfocused", "e");
 		  if (focused->icon_object)
-		    edje_object_signal_emit(focused->icon_object, "passive", "");
+		    edje_object_signal_emit(focused->icon_object, "e,state,unfocused", "e");
 		  e_focus_event_focus_out(focused);
 		  
 		  ev = calloc(1, sizeof(E_Event_Border_Focus_Out)); 
@@ -1392,9 +1392,9 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	if (focused)
 	  {
 //	     printf("unfocus previous 2\n");
-	     edje_object_signal_emit(focused->bg_object, "passive", "");
+	     edje_object_signal_emit(focused->bg_object, "e,state,unfocused", "e");
 	     if (focused->icon_object)
-	       edje_object_signal_emit(focused->icon_object, "passive", "");
+	       edje_object_signal_emit(focused->icon_object, "e,state,unfocused", "e");
 	     e_focus_event_focus_out(focused);
 	     /* FIXME: Sometimes we should leave the window fullscreen! */
 	     if (focused->fullscreen) e_border_unfullscreen(focused);
@@ -1485,7 +1485,7 @@ e_border_shade(E_Border *bd, E_Direction dir)
 	       ecore_x_window_gravity_set(bd->client.win, ECORE_X_GRAVITY_NE);
 
 	     bd->shade.anim = ecore_animator_add(_e_border_shade_animator, bd);
-	     edje_object_signal_emit(bd->bg_object, "shading", "");
+	     edje_object_signal_emit(bd->bg_object, "e,state,shading", "e");
 	  }
 	else
 	  {
@@ -1524,7 +1524,7 @@ e_border_shade(E_Border *bd, E_Direction dir)
 		  bd->need_shape_merge = 1;
 		  bd->need_shape_export = 1;
 	       }
-	     edje_object_signal_emit(bd->bg_object, "shaded", "");
+	     edje_object_signal_emit(bd->bg_object, "e,state,shaded", "e");
 	     ev = calloc(1, sizeof(E_Event_Border_Resize));
 	     ev->border = bd;
 	     /* The resize is added in the animator when animation complete */
@@ -1595,7 +1595,7 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 	       ecore_x_window_gravity_set(bd->client.win, ECORE_X_GRAVITY_NE);
 
 	     bd->shade.anim = ecore_animator_add(_e_border_shade_animator, bd);
-	     edje_object_signal_emit(bd->bg_object, "unshading", "");
+	     edje_object_signal_emit(bd->bg_object, "e,state,unshading", "e");
 	  }
 	else
 	  {
@@ -1633,7 +1633,7 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 		  bd->need_shape_merge = 1;
 		  bd->need_shape_export = 1;
 	       }
-	     edje_object_signal_emit(bd->bg_object, "unshaded", "");
+	     edje_object_signal_emit(bd->bg_object, "e,state,unshaded", "e");
 	     ev = calloc(1, sizeof(E_Event_Border_Resize));
 	     ev->border = bd;
 	     /* The resize is added in the animator when animation complete */
@@ -1701,12 +1701,12 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	       {
 		  Evas_Coord cx, cy, cw, ch;
 		  
-		  edje_object_signal_emit(bd->bg_object, "maximize,fullscreen", "");
+		  edje_object_signal_emit(bd->bg_object, "e,action,maximize,fullscreen", "e");
 		  edje_object_message_signal_process(bd->bg_object);
 		  
 		  evas_object_resize(bd->bg_object, 1000, 1000);
 		  edje_object_calc_force(bd->bg_object);
-		  edje_object_part_geometry_get(bd->bg_object, "client", &cx, &cy, &cw, &ch);
+		  edje_object_part_geometry_get(bd->bg_object, "e.client", &cx, &cy, &cw, &ch);
 		  bd->client_inset.l = cx;
 		  bd->client_inset.r = 1000 - (cx + cw);
 		  bd->client_inset.t = cy;
@@ -1757,7 +1757,7 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	       e_border_move_resize(bd, bd->x, y1, bd->w, h);
 	     else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
 	       e_border_move_resize(bd, x1, bd->y, w, bd->h);
-	     edje_object_signal_emit(bd->bg_object, "maximize", "");
+	     edje_object_signal_emit(bd->bg_object, "e,action,maximize", "e");
 	     break;
 	   case E_MAXIMIZE_FILL:
 	     x1 = bd->zone->x;
@@ -1835,13 +1835,13 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 	       {
 		  Evas_Coord cx, cy, cw, ch;
 		  
-		  edje_object_signal_emit(bd->bg_object, "unmaximize,fullscreen", "");
+		  edje_object_signal_emit(bd->bg_object, "e,action,unmaximize,fullscreen", "e");
 		  signal = 0;
 		  edje_object_message_signal_process(bd->bg_object);
 		  
 		  evas_object_resize(bd->bg_object, 1000, 1000);
 		  edje_object_calc_force(bd->bg_object);
-		  edje_object_part_geometry_get(bd->bg_object, "client", &cx, &cy, &cw, &ch);
+		  edje_object_part_geometry_get(bd->bg_object, "e.client", &cx, &cy, &cw, &ch);
 		  bd->client_inset.l = cx;
 		  bd->client_inset.r = 1000 - (cx + cw);
 		  bd->client_inset.t = cy;
@@ -1911,7 +1911,7 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 	                             bd->maximized & E_MAXIMIZE_VERTICAL);
 	
 	if (signal)
-	  edje_object_signal_emit(bd->bg_object, "unmaximize", "");
+	  edje_object_signal_emit(bd->bg_object, "e,action,unmaximize", "e");
      }
    if (bd->remember)
      e_remember_update(bd->remember, bd);
@@ -2054,7 +2054,7 @@ e_border_iconify(E_Border *bd)
      {
 	bd->iconic = 1;
 	e_border_hide(bd, 1);
-	edje_object_signal_emit(bd->bg_object, "iconify", "");
+	edje_object_signal_emit(bd->bg_object, "e,action,iconify", "e");
      }
    iconic = 1;
    e_hints_window_iconic_set(bd);
@@ -2099,7 +2099,7 @@ e_border_uniconify(E_Border *bd)
 	e_border_desk_set(bd, desk);
 	e_border_show(bd);
 	e_border_raise(bd);
-	edje_object_signal_emit(bd->bg_object, "uniconify", "");
+	edje_object_signal_emit(bd->bg_object, "e,action,uniconify", "e");
      }
    iconic = 0;
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &iconic, 1);
@@ -2725,7 +2725,7 @@ e_border_frame_recalc(E_Border *bd)
 
    evas_object_resize(bd->bg_object, 1000, 1000);
    edje_object_calc_force(bd->bg_object);
-   edje_object_part_geometry_get(bd->bg_object, "client", &cx, &cy, &cw, &ch);
+   edje_object_part_geometry_get(bd->bg_object, "e.client", &cx, &cy, &cw, &ch);
    bd->client_inset.l = cx;
    bd->client_inset.r = 1000 - (cx + cw);
    bd->client_inset.t = cy;
@@ -4205,7 +4205,7 @@ _e_border_cb_signal_bind(void *data, Evas_Object *obj, const char *emission, con
    bd = data;
    if (e_dnd_active()) return;
    e_bindings_signal_handle(E_BINDING_CONTEXT_BORDER, E_OBJECT(bd), 
-			    emission, source);
+			    (char *)emission, (char *)source);
 }
 
 static int
@@ -4741,7 +4741,7 @@ _e_border_eval(E_Border *bd)
 	bd->client.icccm.fetch.title = 0;
 	if (bd->bg_object)
 	  {
-	     edje_object_part_text_set(bd->bg_object, "title_text",
+	     edje_object_part_text_set(bd->bg_object, "e.text.title",
 				       bd->client.icccm.title);
 	  }
 	rem_change = 1;
@@ -4754,7 +4754,7 @@ _e_border_eval(E_Border *bd)
 	bd->client.netwm.fetch.name = 0;
 	if (bd->bg_object)
 	  {
-	     edje_object_part_text_set(bd->bg_object, "title_text",
+	     edje_object_part_text_set(bd->bg_object, "e.text.title",
 				       bd->client.netwm.name);
 	  }
 	rem_change = 1;
@@ -5434,14 +5434,14 @@ _e_border_eval(E_Border *bd)
 		    }
 
 		  if (bd->client.netwm.name)
-		    edje_object_part_text_set(o, "title_text",
+		    edje_object_part_text_set(o, "e.text.title",
 					      bd->client.netwm.name);
 		  else if (bd->client.icccm.title)
-		    edje_object_part_text_set(o, "title_text",
+		    edje_object_part_text_set(o, "e.text.title",
 					      bd->client.icccm.title);
 		  evas_object_resize(o, 1000, 1000);
 		  edje_object_calc_force(o);
-		  edje_object_part_geometry_get(o, "client", &cx, &cy, &cw, &ch);
+		  edje_object_part_geometry_get(o, "e.client", &cx, &cy, &cw, &ch);
 		  l = cx;
 		  r = 1000 - (cx + cw);
 		  t = cy;
@@ -5472,20 +5472,20 @@ _e_border_eval(E_Border *bd)
 						  _e_border_cb_signal_bind, bd);
 		  if (bd->focused)
 		    {
-		       edje_object_signal_emit(bd->bg_object, "active", "");
+		       edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
 		       if (bd->icon_object)
-			 edje_object_signal_emit(bd->icon_object, "active", "");
+			 edje_object_signal_emit(bd->icon_object, "e,state,focused", "e");
 		    }
 		  if (bd->shaded)
-		    edje_object_signal_emit(bd->bg_object, "shaded", "");
+		    edje_object_signal_emit(bd->bg_object, "e,state,shaded", "e");
 		  if ((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN)
-		    edje_object_signal_emit(bd->bg_object, "maximize,fullscreen", "");
+		    edje_object_signal_emit(bd->bg_object, "e,action,maximize,fullscreen", "e");
 		  else if ((bd->maximized & E_MAXIMIZE_TYPE) != E_MAXIMIZE_NONE)
-		    edje_object_signal_emit(bd->bg_object, "maximize", "");
+		    edje_object_signal_emit(bd->bg_object, "e,action,maximize", "e");
 		  if (bd->hung)
-		    edje_object_signal_emit(bd->bg_object, "hung", "");
+		    edje_object_signal_emit(bd->bg_object, "e,state,hung", "e");
 		  if (bd->client.icccm.urgent)
-		    edje_object_signal_emit(bd->bg_object, "urgent", "");
+		    edje_object_signal_emit(bd->bg_object, "e,state,urgent", "e");
 
 		  evas_object_move(bd->bg_object, 0, 0);
 		  evas_object_resize(bd->bg_object, bd->w, bd->h);
@@ -5499,7 +5499,7 @@ _e_border_eval(E_Border *bd)
 	     if (bd->bg_object)
 	       {
 		  evas_object_show(bd->icon_object);
-		  edje_object_part_swallow(bd->bg_object, "icon_swallow", bd->icon_object);
+		  edje_object_part_swallow(bd->bg_object, "e.swallow.icon", bd->icon_object);
 	       }
 	     else
 	       {
@@ -6156,11 +6156,11 @@ _e_border_eval(E_Border *bd)
 	  }
 	bd->icon_object = e_border_icon_add(bd, bd->bg_evas);
 	if ((bd->focused) && (bd->icon_object))
-	  edje_object_signal_emit(bd->icon_object, "active", "");
+	  edje_object_signal_emit(bd->icon_object, "e,state,focused", "e");
 	if (bd->bg_object)
 	  {
 	     evas_object_show(bd->icon_object);
-	     edje_object_part_swallow(bd->bg_object, "icon_swallow", bd->icon_object);
+	     edje_object_part_swallow(bd->bg_object, "e.swallow.icon", bd->icon_object);
 	  }
 	else
 	  {
@@ -6183,9 +6183,9 @@ _e_border_eval(E_Border *bd)
    if (change_urgent)
      {
 	if (bd->client.icccm.urgent)
-	  edje_object_signal_emit(bd->bg_object, "urgent", "");
+	  edje_object_signal_emit(bd->bg_object, "e,state,urgent", "e");
 	else
-	  edje_object_signal_emit(bd->bg_object, "not_urgent", "");
+	  edje_object_signal_emit(bd->bg_object, "e,state,not_urgent", "e");
 	/* FIXME: we should probably do something with the pager or
 	 * maybe raising the window if it becomes urgent
 	 */
@@ -6457,11 +6457,11 @@ _e_border_shade_animator(void *data)
 
 	if (bd->shaded)
 	  {
-	     edje_object_signal_emit(bd->bg_object, "shaded", "");
+	     edje_object_signal_emit(bd->bg_object, "e,state,shaded", "e");
 	  }
 	else
 	  {
-	     edje_object_signal_emit(bd->bg_object, "unshaded", "");
+	     edje_object_signal_emit(bd->bg_object, "e,state,unshaded", "e");
 	  }
 	ecore_x_window_gravity_set(bd->client.win, ECORE_X_GRAVITY_NW);
 	ev = calloc(1, sizeof(E_Event_Border_Resize));
@@ -6876,7 +6876,7 @@ _e_border_cb_ping_timer(void *data)
 	if (bd->hung)
 	  {
 	     bd->hung = 0;
-	     edje_object_signal_emit(bd->bg_object, "unhung", "");
+	     edje_object_signal_emit(bd->bg_object, "e,state,unhung", "e");
 	     if (bd->kill_timer)
 	       {
 		  ecore_timer_del(bd->kill_timer);
@@ -6889,7 +6889,7 @@ _e_border_cb_ping_timer(void *data)
 	if (!bd->hung)
 	  {
 	     bd->hung = 1;
-	     edje_object_signal_emit(bd->bg_object, "hung", "");
+	     edje_object_signal_emit(bd->bg_object, "e,state,hung", "e");
 	     /* FIXME: if below dialog is up - hide it now */
 	  }
 	if (bd->delete_requested)

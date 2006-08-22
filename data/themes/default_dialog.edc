@@ -81,7 +81,7 @@ group {
 	 }
       }
       part {
-	 name: "icon_swallow";
+	 name: "e.swallow.icon";
 	 type: SWALLOW;
 	 description {
 	    state: "default" 0.0;
@@ -95,12 +95,12 @@ group {
 	    rel2 {
 	       relative: 0.0 0.0;
 	       offset:   16  -9;
-	       to_y: "buttons_swallow";
+	       to_y: "e.swallow.buttons";
 	    }
 	 }
       }
       part {
-	 name: "content_swallow";
+	 name: "e.swallow.content";
 	 type: SWALLOW;
 	 description {
 	    state: "default" 0.0;
@@ -108,12 +108,12 @@ group {
 	    rel1 {
 	       relative: 1.0 0.0;
 	       offset:   8   16;
-	       to_x:     "icon_swallow";
+	       to_x:     "e.swallow.icon";
 	    }
 	    rel2 {
 	       relative: 1.0 0.0;
 	       offset:   -17  -9;
-	       to_y: "buttons_swallow";
+	       to_y: "e.swallow.buttons";
 	    }
 	 }
       }
@@ -125,7 +125,7 @@ group {
 	    rel1 {
 	       relative: 0.0  1.0;
 	       offset:   1    -3;
-	       to_y:     "content_swallow";
+	       to_y:     "e.swallow.content";
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
@@ -141,7 +141,7 @@ group {
 	 }
       }
       part {
-	 name: "buttons_swallow";
+	 name: "e.swallow.buttons";
 	 type: SWALLOW;
 	 description {
 	    state: "default" 0.0;
@@ -165,7 +165,7 @@ group {
    name: "widgets/dialog/text";
    parts {
       part {
-	 name:          "text";
+	 name:          "e.textblock.message";
 	 type:          TEXTBLOCK;
 	 mouse_events:  0;
 	 description {

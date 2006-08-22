@@ -275,17 +275,17 @@ _battery_cb_check(void *data)
 		  if (ret->state == BATTERY_STATE_CHARGING)
 		    {
 		       if (battery_config->battery_prev_ac != 1)
-			 edje_object_signal_emit(inst->o_battery, "charge", "");
-		       edje_object_signal_emit(inst->o_battery, "pulsestop", "");
-		       edje_object_part_text_set(inst->o_battery, "reading", ret->reading);
-		       edje_object_part_text_set(inst->o_battery, "time", ret->time);
+			 edje_object_signal_emit(inst->o_battery, "e,state,charging", "e");
+		       edje_object_signal_emit(inst->o_battery, "e,action,pulse,stop", "e");
+		       edje_object_part_text_set(inst->o_battery, "e.text.reading", ret->reading);
+		       edje_object_part_text_set(inst->o_battery, "e.text.time", ret->time);
 		       _battery_face_level_set(inst, ret->level);
 		       battery_config->battery_prev_ac = 1;
 		    }
 		  else if (ret->state == BATTERY_STATE_DISCHARGING)
 		    {
 		       if (battery_config->battery_prev_ac != 0)
-			 edje_object_signal_emit(inst->o_battery, "discharge", "");
+			 edje_object_signal_emit(inst->o_battery, "e,state,discharging", "e");
 		       if (ret->alarm)
 			 {
 			    if (!battery_config->alarm_triggered)
@@ -304,10 +304,10 @@ _battery_cb_check(void *data)
 				 e_win_centered_set(dia->win, 1);
 				 e_dialog_show(dia);
 			      }
-			    edje_object_signal_emit(inst->o_battery, "pulse", "");
+			    edje_object_signal_emit(inst->o_battery, "e,action,pulse,start", "e");
 			 }
-		       edje_object_part_text_set(inst->o_battery, "reading", ret->reading);
-		       edje_object_part_text_set(inst->o_battery, "time", ret->time);
+		       edje_object_part_text_set(inst->o_battery, "e.text.reading", ret->reading);
+		       edje_object_part_text_set(inst->o_battery, "e.text.time", ret->time);
 		       _battery_face_level_set(inst, ret->level);
 		       battery_config->battery_prev_ac = 0;
 		       if (ret->alarm)
@@ -317,11 +317,11 @@ _battery_cb_check(void *data)
 		    {
 		       /* ret->state == BATTERY_STATE_NONE */
 		       if (battery_config->battery_prev_ac != 1)
-			 edje_object_signal_emit(inst->o_battery, "charge", "");
+			 edje_object_signal_emit(inst->o_battery, "e,state,charging", "e");
 		       if (battery_config->battery_prev_battery == 0)
-			 edje_object_signal_emit(inst->o_battery, "charge", "");
-		       edje_object_part_text_set(inst->o_battery, "reading", ret->reading);
-		       edje_object_part_text_set(inst->o_battery, "time", ret->time);
+			 edje_object_signal_emit(inst->o_battery, "e,state,charging", "e");
+		       edje_object_part_text_set(inst->o_battery, "e.text.reading", ret->reading);
+		       edje_object_part_text_set(inst->o_battery, "e.text.time", ret->time);
 		       _battery_face_level_set(inst, ret->level);
 		       battery_config->battery_prev_ac = 1;
 		       battery_config->battery_prev_battery = 1;
@@ -331,9 +331,9 @@ _battery_cb_check(void *data)
 	       {
 		  /* Hasn't battery */
 		  if (battery_config->battery_prev_battery != 0)
-		    edje_object_signal_emit(inst->o_battery, "unknown", "");
-		  edje_object_part_text_set(inst->o_battery, "reading", ret->reading);
-		  edje_object_part_text_set(inst->o_battery, "time", ret->time);
+		    edje_object_signal_emit(inst->o_battery, "e,state,unknown", "e");
+		  edje_object_part_text_set(inst->o_battery, "e.text.reading", ret->reading);
+		  edje_object_part_text_set(inst->o_battery, "e.text.time", ret->time);
 		  _battery_face_level_set(inst, ret->level);
 		  battery_config->battery_prev_battery = 0;
 	       }
@@ -342,9 +342,9 @@ _battery_cb_check(void *data)
 	  {
 	     /* Error reading status */
 	     if (battery_config->battery_prev_battery != -2)
-	       edje_object_signal_emit(inst->o_battery, "unknown", "");
-	     edje_object_part_text_set(inst->o_battery, "reading", _("NO INFO"));
-	     edje_object_part_text_set(inst->o_battery, "time", "--:--");
+	       edje_object_signal_emit(inst->o_battery, "e,state,unknown", "e");
+	     edje_object_part_text_set(inst->o_battery, "e.text.reading", _("NO INFO"));
+	     edje_object_part_text_set(inst->o_battery, "e.text.time", "--:--");
 	     _battery_face_level_set(inst, (double)(rand() & 0xff) / 255.0);
 	     battery_config->battery_prev_battery = -2;
 	     battery_config->battery_check_mode = CHECK_NONE;

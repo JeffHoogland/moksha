@@ -691,7 +691,7 @@ _e_fm2_scan_start(Evas_Object *obj)
    if ((sd->scan_idler) || (sd->scan_timer)) return;
    sd->scan_idler = ecore_idler_add(_e_fm2_cb_scan_idler, obj);
    sd->scan_timer = ecore_timer_add(0.2, _e_fm2_cb_scan_timer, obj);
-   edje_object_signal_emit(sd->overlay, "busy", "start");
+   edje_object_signal_emit(sd->overlay, "e,state,busy,start", "e");
 }
 
 static void
@@ -702,7 +702,7 @@ _e_fm2_scan_stop(Evas_Object *obj)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if (sd->dir)
-     edje_object_signal_emit(sd->overlay, "busy", "stop");
+     edje_object_signal_emit(sd->overlay, "e,state,busy,stop", "e");
    /* stop the scan idler, the sort timer and free the queue */
    if (sd->dir)
      {
@@ -831,7 +831,7 @@ _e_fm2_queue_process(Evas_Object *obj)
 //	  ecore_time_get() - tt, evas_list_count(sd->icons), queued, 
 //	  added, sd->tmp.iter);
    snprintf(buf, sizeof(buf), _("%i Files"), evas_list_count(sd->icons));
-   edje_object_part_text_set(sd->overlay, "busy_label", buf);
+   edje_object_part_text_set(sd->overlay, "e.text.busy_label", buf);
    /* FIXME: this could get a lot faster - avoid it or something. scan
     speed goes from 200-250 files/0.2 sec to 80 or so in my tests */
    if (sd->resize_job) ecore_job_del(sd->resize_job);
@@ -1278,7 +1278,7 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, char *file)
 	       }
 	     edje_extern_object_min_size_set(obj2, sd->config->icon.list.w, sd->config->icon.list.h);
 	     edje_extern_object_max_size_set(obj2, sd->config->icon.list.w, sd->config->icon.list.h);
-	     edje_object_part_swallow(obj, "icon_swallow", obj2);
+	     edje_object_part_swallow(obj, "e.swallow.icon", obj2);
 	     edje_object_size_min_calc(obj, &mw, &mh);
 	  }
 	if (mw < sd->w) ic->w = sd->w;
@@ -1389,8 +1389,8 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
    if (ic->selected)
      {
 	/* FIXME: need new signal to INSTANTLY activate - no anim */
-	edje_object_signal_emit(ic->obj, "active", "");
-	edje_object_signal_emit(ic->obj_icon, "active", "");
+	edje_object_signal_emit(ic->obj, "e,state,selected", "e");
+	edje_object_signal_emit(ic->obj_icon, "e,state,selected", "e");
      }
 }
 
@@ -1428,12 +1428,12 @@ _e_fm2_icon_label_set(E_Fm2_Icon *ic, Evas_Object *obj)
 
    if (ic->info.label)
      {
-	edje_object_part_text_set(obj, "label", ic->info.label);
+	edje_object_part_text_set(obj, "e.text.label", ic->info.label);
 	return;
      }
    if ((ic->sd->config->icon.extension.show) ||
        (S_ISDIR(ic->info.statinfo.st_mode)))
-     edje_object_part_text_set(obj, "label", ic->info.file);
+     edje_object_part_text_set(obj, "e.text.label", ic->info.file);
    else
      {
 	/* remove extension. handle double extensions like .tar.gz too
@@ -1453,7 +1453,7 @@ _e_fm2_icon_label_set(E_Fm2_Icon *ic, Evas_Object *obj)
 	     p = strrchr(buf, '.');
 	     if ((p) && ((len - (p - buf)) < 6)) *p = 0;
 	  }
-	edje_object_part_text_set(obj, "label", buf);
+	edje_object_part_text_set(obj, "e.text.label", buf);
      }
 }
 
@@ -1476,7 +1476,7 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	/* theme icon */
 	ic->obj_icon = edje_object_add(evas_object_evas_get(ic->sd->obj));
         e_util_edje_icon_set(ic->obj_icon, ic->info.icon);
-        edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
+        edje_object_part_swallow(ic->obj, "e.swallow.icon", ic->obj_icon);
 	evas_object_show(ic->obj_icon);
 	return;
      }
@@ -1498,7 +1498,7 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	     e_thumb_icon_size_set(ic->obj_icon, 64, 64);
 	     evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
 	     _e_fm2_icon_thumb(ic);
-	     edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
+	     edje_object_part_swallow(ic->obj, "e.swallow.icon", ic->obj_icon);
 	     evas_object_show(ic->obj_icon);
 	  }
 	else
@@ -1515,7 +1515,7 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 					  buf))
 	       e_theme_edje_object_set(ic->obj_icon, "base/theme/fileman",
 				       "icons/fileman/file");
-	     edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
+	     edje_object_part_swallow(ic->obj, "e.swallow.icon", ic->obj_icon);
 	     evas_object_show(ic->obj_icon);
 	  }
 	return;
@@ -1526,7 +1526,7 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	ic->obj_icon = edje_object_add(evas_object_evas_get(ic->sd->obj));
 	e_theme_edje_object_set(ic->obj_icon, "base/theme/fileman",
 				"icons/fileman/folder");
-	edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
+	edje_object_part_swallow(ic->obj, "e.swallow.icon", ic->obj_icon);
 	evas_object_show(ic->obj_icon);
      }
    else
@@ -1541,7 +1541,7 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	     e_thumb_icon_size_set(ic->obj_icon, 64, 48);
 	     evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
 	     _e_fm2_icon_thumb(ic);
-	     edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
+	     edje_object_part_swallow(ic->obj, "e.swallow.icon", ic->obj_icon);
 	     evas_object_show(ic->obj_icon);
 	  }
 	else if (
@@ -1554,7 +1554,7 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	     e_thumb_icon_size_set(ic->obj_icon, 64, 64);
 	     evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
 	     _e_fm2_icon_thumb(ic);
-	     edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
+	     edje_object_part_swallow(ic->obj, "e.swallow.icon", ic->obj_icon);
 	     evas_object_show(ic->obj_icon);
 	  }
 	else
@@ -1562,7 +1562,7 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	     ic->obj_icon = edje_object_add(evas_object_evas_get(ic->sd->obj));
 	     e_theme_edje_object_set(ic->obj_icon, "base/theme/fileman",
 				     "icons/fileman/file");
-	     edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
+	     edje_object_part_swallow(ic->obj, "e.swallow.icon", ic->obj_icon);
 	     evas_object_show(ic->obj_icon);
 	  }
      }
@@ -1586,8 +1586,8 @@ _e_fm2_icon_select(E_Fm2_Icon *ic)
    ic->last_selected = 1;
    if (ic->realized)
      {
-	edje_object_signal_emit(ic->obj, "active", "");
-	edje_object_signal_emit(ic->obj_icon, "active", "");
+	edje_object_signal_emit(ic->obj, "e,state,selected", "e");
+	edje_object_signal_emit(ic->obj_icon, "e,state,selected", "e");
 	evas_object_stack_below(ic->obj, ic->sd->overlay);
      }
 }
@@ -1600,8 +1600,8 @@ _e_fm2_icon_deselect(E_Fm2_Icon *ic)
    ic->last_selected = 0;
    if (ic->realized)
      {
-	edje_object_signal_emit(ic->obj, "passive", "");
-	edje_object_signal_emit(ic->obj_icon, "passive", "");
+	edje_object_signal_emit(ic->obj, "e,state,unselected", "e");
+	edje_object_signal_emit(ic->obj_icon, "e,state,unselected", "e");
      }
 }
 
@@ -1920,11 +1920,11 @@ _e_fm2_cb_icon_thumb_gen(void *data, Evas_Object *obj, void *event_info)
 	     edje_extern_object_aspect_set(ic->obj_icon, 
 					   EDJE_ASPECT_CONTROL_BOTH, w, h);
 	  }
-	edje_object_part_swallow(ic->obj, "icon_swallow", ic->obj_icon);
+	edje_object_part_swallow(ic->obj, "e.swallow.icon", ic->obj_icon);
 	if (have_alpha)
-	  edje_object_signal_emit(ic->obj, "thumb", "gen_alpha");
+	  edje_object_signal_emit(ic->obj, "e,action,thumb,gen,alpha", "e");
 	else
-	  edje_object_signal_emit(ic->obj, "thumb", "gen");
+	  edje_object_signal_emit(ic->obj, "e,action,thumb,gen", "e");
      }
 }
     

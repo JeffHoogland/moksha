@@ -33,7 +33,7 @@ group {
 */
       }
       part {
-	 name:          "hotspot";
+	 name:          "e.swallow.hotspot";
 	 type:          SWALLOW;
 	 mouse_events:  0;
 	 description {

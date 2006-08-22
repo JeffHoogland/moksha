@@ -94,7 +94,7 @@ group {
 	 }
       }
       part {
-	 name:           "label";
+	 name:           "e.text.label";
 	 type:           TEXT;
 	 mouse_events:   0;
 	 clip_to: "clip";
@@ -120,7 +120,7 @@ group {
 	       size:     10;
 	       min:      1 1;
 	       align:    0.5 0.5;
-               text_class: "slider";	       
+               text_class: "e.dragable.slider";	       
 	    }
 	 }
       }
@@ -138,12 +138,12 @@ group {
 	 description {
 	    state:    "active" 0.0;
 	    rel1 {
-	       to:       "label";
+	       to:       "e.text.label";
 	       relative: 0.0  0.0;
 	       offset:   -5   -4;
 	    }
 	    rel2 {
-	       to:       "label";
+	       to:       "e.text.label";
 	       relative: 1.0  1.0;
 	       offset:   2    3;
 	    }
@@ -166,7 +166,7 @@ group {
 	    rel2 {
 	       relative: 1.0 0.0;
 	       offset:   -1  -1;
-	       to:       "slider";
+	       to:       "e.dragable.slider";
 	    }
 	 }
       }
@@ -180,12 +180,12 @@ group {
 	    rel1 {
 	       relative: 0.0 1.0;
 	       offset:   0   0;
-	       to:       "slider";
+	       to:       "e.dragable.slider";
 	    }
 	 }
       }
       part {
-	 name: "slider";
+	 name: "e.dragable.slider";
 	 type: RECT;
 	 mouse_events: 1;
 	 dragable {
@@ -218,10 +218,10 @@ group {
 	    min: 32 32;
 	    fixed: 1 1;
 	    rel1 {
-	       to: "slider";
+	       to: "e.dragable.slider";
 	    }
 	    rel2 {
-	       to: "slider";
+	       to: "e.dragable.slider";
 	    }
 	    image {
 	       normal: "e17_slider_bt0.png";
@@ -317,33 +317,33 @@ group {
 	 signal: "mouse,down,1";
 	 source: "sld_p1";
 	 action:  DRAG_VAL_PAGE 0.0 -1.0;
-	 target: "slider";
+	 target: "e.dragable.slider";
       }
       program {
 	 name: "sld_p2_down";
 	 signal: "mouse,down,1";
 	 source: "sld_p2";
 	 action:  DRAG_VAL_PAGE  0.0 1.0;
-	 target: "slider";
+	 target: "e.dragable.slider";
       }
       program {
 	 name: "sld_down";
 	 signal: "mouse,down,1";
-	 source: "slider";
+	 source: "e.dragable.slider";
          action:  STATE_SET "clicked" 0.0;
 	 target: "slider_img";
       }
       program {
 	 name: "sld_up";
 	 signal: "mouse,up,1";
-	 source: "slider";
+	 source: "e.dragable.slider";
          action:  STATE_SET "default" 0.0;
 	 target: "slider_img";
       }
       program {
 	 name: "sld_in";
 	 signal: "mouse,in";
-	 source: "slider";
+	 source: "e.dragable.slider";
          action:  STATE_SET "visible" 0.0;
 	 transition: SINUSOIDAL 1.0;
 	 target: "slider_glow";
@@ -359,59 +359,59 @@ group {
       program {
 	 name: "sld_out";
 	 signal: "mouse,out";
-	 source: "slider";
+	 source: "e.dragable.slider";
          action:  STATE_SET "default" 0.0;
 	 transition: SINUSOIDAL 1.0;
 	 target: "slider_glow";
       }
       program {
 	 name: "focus_in";
-	 signal: "focus_in";
-	 source: "";
+	 signal: "e,state,focused";
+	 source: "e";
          action: STATE_SET "focused" 0.0;
 	 transition: DECELERATE 0.2;
 	 target: "focus";
       }
       program {
 	 name: "focus_out";
-	 signal: "focus_out";
-	 source: "";
+	 signal: "e,state,unfocused";
+	 source: "e";
          action: STATE_SET "default" 0.0;
 	 transition: ACCELERATE 0.5;
 	 target: "focus";
       }
       program {
-	 name: "show_label";
-	 signal: "show_label";
-	 source: "";
+	 name: "e,action,show,label";
+	 signal: "e,action,show,label";
+	 source: "e";
          action: STATE_SET "active" 0.0;
 	 target: "sld_base";
 	 target: "label_under";
-	 target: "label";
+	 target: "e.text.label";
 	 target: "label_over";
       }
       program {
-	 name: "hide_label";
-	 signal: "hide_label";
-	 source: "";
+	 name: "e,action,hide,label";
+	 signal: "e,action,hide,label";
+	 source: "e";
          action: STATE_SET "default" 0.0;
 	 target: "sld_base";
 	 target: "label_under";
-	 target: "label";
+	 target: "e.text.label";
 	 target: "label_over";
       }
       program {
 	 name: "disable";
-	 signal: "disabled";
-	 source: "";
+	 signal: "e,state,disabled";
+	 source: "e";
 	 action: STATE_SET "disabled" 0.0;
 	 target: "clip";
 	 target: "catch";
       }
       program {
 	 name: "enable";
-	 signal: "enabled";
-	 source: "";
+	 signal: "e,state,enabled";
+	 source: "e";
 	 action: STATE_SET "default" 0.0;
 	 target: "clip";
 	 target: "catch";
@@ -504,7 +504,7 @@ group {
 	 }
       }
       part {
-	 name:           "label";
+	 name:           "e.text.label";
 	 type:           TEXT;
 	 mouse_events:   0;
 	 clip_to: "clip";
@@ -531,7 +531,7 @@ group {
 	       size:     10;
 	       min:      1 1;
 	       align:    0.5 0.5;
-               text_class: "slider";	       
+               text_class: "e.dragable.slider";	       
 	    }
 	 }
       }
@@ -549,12 +549,12 @@ group {
 	 description {
 	    state:    "active" 0.0;
 	    rel1 {
-	       to:       "label";
+	       to:       "e.text.label";
 	       relative: 0.0  0.0;
 	       offset:   -5   -4;
 	    }
 	    rel2 {
-	       to:       "label";
+	       to:       "e.text.label";
 	       relative: 1.0  1.0;
 	       offset:   2    3;
 	    }
@@ -577,7 +577,7 @@ group {
 	    rel2 {
 	       relative: 0.0 1.0;
 	       offset:   -1  -1;
-	       to:       "slider";
+	       to:       "e.dragable.slider";
 	    }
 	 }
       }
@@ -591,12 +591,12 @@ group {
 	    rel1 {
 	       relative: 1.0 0.0;
 	       offset:   0   0;
-	       to:       "slider";
+	       to:       "e.dragable.slider";
 	    }
 	 }
       }
       part {
-	 name: "slider";
+	 name: "e.dragable.slider";
 	 type: RECT;
 	 mouse_events: 1;
 	 dragable {
@@ -630,10 +630,10 @@ group {
 	    min: 32 32;
 	    fixed: 1 1;
 	    rel1 {
-	       to: "slider";
+	       to: "e.dragable.slider";
 	    }
 	    rel2 {
-	       to: "slider";
+	       to: "e.dragable.slider";
 	    }
 	    image {
 	       normal: "e17_slider_bt0.png";
@@ -728,33 +728,33 @@ group {
 	 signal: "mouse,down,1";
 	 source: "sld_p1";
 	 action:  DRAG_VAL_PAGE -1.0 0.0;
-	 target: "slider";
+	 target: "e.dragable.slider";
       }
       program {
 	 name: "sld_p2_down";
 	 signal: "mouse,down,1";
 	 source: "sld_p2";
 	 action:  DRAG_VAL_PAGE  1.0 0.0;
-	 target: "slider";
+	 target: "e.dragable.slider";
       }
       program {
 	 name: "sld_down";
 	 signal: "mouse,down,1";
-	 source: "slider";
+	 source: "e.dragable.slider";
          action:  STATE_SET "clicked" 0.0;
 	 target: "slider_img";
       }
       program {
 	 name: "sld_up";
 	 signal: "mouse,up,1";
-	 source: "slider";
+	 source: "e.dragable.slider";
          action:  STATE_SET "default" 0.0;
 	 target: "slider_img";
       }
       program {
 	 name: "sld_in";
 	 signal: "mouse,in";
-	 source: "slider";
+	 source: "e.dragable.slider";
          action:  STATE_SET "visible" 0.0;
 	 transition: SINUSOIDAL 1.0;
 	 target: "slider_glow";
@@ -770,59 +770,59 @@ group {
       program {
 	 name: "sld_out";
 	 signal: "mouse,out";
-	 source: "slider";
+	 source: "e.dragable.slider";
          action:  STATE_SET "default" 0.0;
 	 transition: SINUSOIDAL 1.0;
 	 target: "slider_glow";
       }
       program {
 	 name: "focus_in";
-	 signal: "focus_in";
-	 source: "";
+	 signal: "e,state,focused";
+	 source: "e";
          action: STATE_SET "focused" 0.0;
 	 transition: DECELERATE 0.2;
 	 target: "focus";
       }
       program {
 	 name: "focus_out";
-	 signal: "focus_out";
-	 source: "";
+	 signal: "e,state,unfocused";
+	 source: "e";
          action: STATE_SET "default" 0.0;
 	 transition: ACCELERATE 0.5;
 	 target: "focus";
       }
       program {
-	 name: "show_label";
-	 signal: "show_label";
-	 source: "";
+	 name: "e,action,show,label";
+	 signal: "e,action,show,label";
+	 source: "e";
          action: STATE_SET "active" 0.0;
 	 target: "sld_base";
 	 target: "label_under";
-	 target: "label";
+	 target: "e.text.label";
 	 target: "label_over";
       }
       program {
-	 name: "hide_label";
-	 signal: "hide_label";
-	 source: "";
+	 name: "e,action,hide,label";
+	 signal: "e,action,hide,label";
+	 source: "e";
          action: STATE_SET "default" 0.0;
 	 target: "sld_base";
 	 target: "label_under";
-	 target: "label";
+	 target: "e.text.label";
 	 target: "label_over";
       }
       program {
 	 name: "disable";
-	 signal: "disabled";
-	 source: "";
+	 signal: "e,state,disabled";
+	 source: "e";
 	 action: STATE_SET "disabled" 0.0;
 	 target: "clip";
 	 target: "catch";
       }
       program {
 	 name: "enable";
-	 signal: "enabled";
-	 source: "";
+	 signal: "e,state,enabled";
+	 source: "e";
 	 action: STATE_SET "default" 0.0;
 	 target: "clip";
 	 target: "catch";

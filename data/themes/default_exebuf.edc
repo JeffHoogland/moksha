@@ -80,7 +80,7 @@ group {
       }
       
       part {
-	 name: "eap_list_swallow";
+	 name: "e.swallow.eap_list";
 	 type: SWALLOW;
 	 clip_to: "eap_list_clip";
 	 description {
@@ -95,7 +95,7 @@ group {
 	    rel2 {
 	       relative: 1.0  0.0;
 	       offset:   -17  -17;
-	       to_y: "label";
+	       to_y: "e.text.label";
 	    }
 	 }
       }
@@ -108,12 +108,12 @@ group {
 	    rel1 {
 	       relative: 0.0 0.0;
 	       offset:   0   0;
-	       to_y: "eap_list_swallow";
+	       to_y: "e.swallow.eap_list";
 	    }
 	    rel2 {
 	       relative: 1.0 1.0;
 	       offset:   -1  -1;
-	       to_y: "eap_list_swallow";
+	       to_y: "e.swallow.eap_list";
 	    }
 	 }
       }
@@ -129,7 +129,7 @@ group {
 	    rel2 {
 	       relative: 1.0  0.0;
 	       offset:   -2   16;
-	       to_y:     "eap_list_swallow";
+	       to_y:     "e.swallow.eap_list";
 	    }
 	    image {
 	       normal: "e17_winlist_top.png";
@@ -148,12 +148,12 @@ group {
 	    rel1 {
 	       relative: 0.0  1.0;
 	       offset:   1    -3;
-	       to_y:     "eap_list_swallow";
+	       to_y:     "e.swallow.eap_list";
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
 	       offset:   -2   16;
-	       to_y:     "label";
+	       to_y:     "e.text.label";
 	    }
 	    image {
 	       normal: "e17_winlist_bottom.png";
@@ -166,7 +166,7 @@ group {
       }
       
       part {
-	 name: "exe_list_swallow";
+	 name: "e.swallow.exe_list";
 	 type: SWALLOW;
 	 clip_to: "exe_list_clip";
 	 description {
@@ -177,7 +177,7 @@ group {
 	    rel1 {
 	       relative: 0.0 1.0;
 	       offset:   16  16;
-	       to_y: "label";
+	       to_y: "e.text.label";
 	    }
 	    rel2 {
 	       relative: 1.0 1.0;
@@ -194,12 +194,12 @@ group {
 	    rel1 {
 	       relative: 0.0 0.0;
 	       offset:   0   0;
-	       to_y: "exe_list_swallow";
+	       to_y: "e.swallow.exe_list";
 	    }
 	    rel2 {
 	       relative: 1.0 1.0;
 	       offset:   -1  -1;
-	       to_y: "exe_list_swallow";
+	       to_y: "e.swallow.exe_list";
 	    }
 	 }
       }
@@ -211,12 +211,12 @@ group {
 	    rel1 {
 	       relative: 0.0  0.0;
 	       offset:   1    -15;
-	       to_y:     "label";
+	       to_y:     "e.text.label";
 	    }
 	    rel2 {
 	       relative: 1.0  0.0;
 	       offset:   -2   16;
-	       to_y:     "exe_list_swallow";
+	       to_y:     "e.swallow.exe_list";
 	    }
 	    image {
 	       normal: "e17_winlist_top.png";
@@ -235,7 +235,7 @@ group {
 	    rel1 {
 	       relative: 0.0  1.0;
 	       offset:   1    -3;
-	       to_y:     "exe_list_swallow";
+	       to_y:     "e.swallow.exe_list";
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
@@ -253,7 +253,7 @@ group {
       
       
       part {
-	 name: "label";
+	 name: "e.text.label";
 	 type: TEXT;
          effect: SHADOW;
 	 description {
@@ -264,12 +264,12 @@ group {
 	    rel1 {
 	       relative: 1.0 0.5;
 	       offset:   16   0;
-	       to_x:     "icon_swallow";
+	       to_x:     "e.swallow.icons";
 	    }
 	    rel2 {
 	       relative: 1.0 0.5;
 	       offset:   16  0;
-	       to_x:     "icon_swallow";
+	       to_x:     "e.swallow.icons";
 	    }
             color: 0 0 0 255;
 	    color3: 255 255 255 128;
@@ -295,12 +295,12 @@ group {
 	    rel1 {
 	       relative: 1.0  0.0;
 	       offset:   3    0;
-	       to: "label";
+	       to: "e.text.label";
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
 	       offset:   3    -1;
-	       to: "label";
+	       to: "e.text.label";
 	    }
 	    image {
 	       normal: "e17_entry_cursor.png";
@@ -308,7 +308,7 @@ group {
 	 }
       }
       part {
-	 name: "icon_swallow";
+	 name: "e.swallow.icons";
 	 type: SWALLOW;
 	 description {
 	    state: "default" 0.0;
@@ -319,12 +319,12 @@ group {
 	    rel1 {
 	       relative: 0.0 0.0;
 	       offset:   16  -7;
-	       to_y: "label";
+	       to_y: "e.text.label";
 	    }
 	    rel2 {
 	       relative: 1.0 1.0;
 	       offset:   16  8;
-	       to_y: "label";
+	       to_y: "e.text.label";
 	    }
 	 }
       }
@@ -334,12 +334,12 @@ group {
 	 description {
 	    state: "default" 0.0;
 	    rel1 {
-	       to: "icon_swallow";
+	       to: "e.swallow.icons";
 	       relative: 0.0  0.0;
 	       offset:   -8    -8;
 	    }
 	    rel2 {
-	       to: "icon_swallow";
+	       to: "e.swallow.icons";
 	       relative: 1.0  1.0;
 	       offset:   7    7;
 	    }
@@ -365,7 +365,7 @@ group {
 	    rel1 {
 	       relative: 1.0  0.0;
 	       offset:   1    -1;
-	       to_x: "icon_swallow";
+	       to_x: "e.swallow.icons";
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
@@ -543,15 +543,15 @@ group {
 	      offset:   0    6;
 	   }
 	   text {
-	      text_source:   "title_text";
-	      source:        "title_text";
+	      text_source:   "e.text.title";
+	      source:        "e.text.title";
 	      min:           0 1;
 	      text_class:    "title_bar";
 	   }
 	}
      }
       part {
-	 name:           "title_text";
+	 name:           "e.text.title";
 	 type:           TEXT;
 	 effect:         SHADOW;
 	 mouse_events:   0;
@@ -560,7 +560,7 @@ group {
 	    rel1 {
 	       relative: 1.0  0.0;
 	       offset:   9 6;
-	       to_x: "icon_swallow";
+	       to_x: "e.swallow.icons";
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
@@ -744,7 +744,7 @@ group {
 	 }
       }
       part {
-	 name: "icon_swallow";
+	 name: "e.swallow.icons";
 	 type: SWALLOW;
 	 description {
 	    state: "default" 0.0;
@@ -767,8 +767,8 @@ group {
    programs {
       program {
 	 name:    "go_active_pre";
-	 signal:  "active";
-	 source:  "";
+	 signal:  "e,state,selected";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "title_outline";
 	 target:  "title_bar";
@@ -844,8 +844,8 @@ group {
 
       program {
 	 name:    "go_passive_pre";
-	 signal:  "passive";
-	 source:  "";
+	 signal:  "e,state,unselected";
+	 source:  "e";
 	 action:  STATE_SET "active" 0.0;
 	 target:  "title_outline";
 	 target:  "title_bar";

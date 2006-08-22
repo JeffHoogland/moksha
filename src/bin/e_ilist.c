@@ -79,7 +79,7 @@ e_ilist_icon_size_set(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 	     Evas_Coord mw = 0, mh = 0;
 	     
 	     edje_extern_object_min_size_set(si->icon_obj, sd->icon_w, sd->icon_h);
-	     edje_object_part_swallow(si->base_obj, "icon_swallow", si->icon_obj);
+	     edje_object_part_swallow(si->base_obj, "e.swallow.icon", si->icon_obj);
 	     edje_object_size_min_calc(si->base_obj, &mw, &mh);
 	     e_box_pack_options_set(si->icon_obj,
 				    1, 1, /* fill */
@@ -112,12 +112,12 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, const char *label, int heade
    else
      e_theme_edje_object_set(si->base_obj, "base/theme/widgets",
 			     "widgets/ilist");
-   edje_object_part_text_set(si->base_obj, "label", label);
+   edje_object_part_text_set(si->base_obj, "e.text.label", label);
    si->icon_obj = icon;
    if (si->icon_obj)
      {
 	edje_extern_object_min_size_set(si->icon_obj, sd->icon_w, sd->icon_h);
-	edje_object_part_swallow(si->base_obj, "icon_swallow", si->icon_obj);
+	edje_object_part_swallow(si->base_obj, "e.swallow.icon", si->icon_obj);
 	evas_object_show(si->icon_obj);
      }
    si->func = func; 
@@ -152,13 +152,13 @@ e_ilist_selected_set(Evas_Object *obj, int n)
    else if (n < 0) n = 0;
    if (sd->selected == n) return;
    si = evas_list_nth(sd->items, sd->selected);
-   if (si) edje_object_signal_emit(si->base_obj, "passive", "");
+   if (si) edje_object_signal_emit(si->base_obj, "e,state,unselected", "e");
    sd->selected = n;
    si = evas_list_nth(sd->items, sd->selected);
    if (si)
      {
 	evas_object_raise(si->base_obj);
-	edje_object_signal_emit(si->base_obj, "active", "");
+	edje_object_signal_emit(si->base_obj, "e,state,selected", "e");
 	if (si->func_hilight) si->func_hilight(si->data, si->data2);
 	if (!sd->selector)
 	  {
@@ -183,7 +183,7 @@ e_ilist_selected_label_get(Evas_Object *obj)
    API_ENTRY return NULL;
    if (!sd->items) return NULL;
    si = evas_list_nth(sd->items, sd->selected);
-   if (si) return edje_object_part_text_get(si->base_obj, "label");
+   if (si) return edje_object_part_text_get(si->base_obj, "e.text.label");
    return NULL;
 }
 
@@ -294,7 +294,7 @@ e_ilist_remove_label(Evas_Object *obj, const char *label)
 	if (si) 
 	  {
 	     char *t;
-	     t = strdup(edje_object_part_text_get(si->base_obj, "label"));
+	     t = strdup(edje_object_part_text_get(si->base_obj, "e.text.label"));
 	     if (!strcmp(t, label)) 
 	       {
 		  if (si->icon_obj) evas_object_del(si->icon_obj);
@@ -316,7 +316,7 @@ e_ilist_nth_label_get(Evas_Object *obj, int n)
    API_ENTRY return NULL;
    if (!sd->items) return NULL;
    si = evas_list_nth(sd->items, n);
-   if (si) return edje_object_part_text_get(si->base_obj, "label");
+   if (si) return edje_object_part_text_get(si->base_obj, "e.text.label");
    return NULL;
 }
 
@@ -328,7 +328,7 @@ e_ilist_nth_label_set(Evas_Object *obj, int n, const char *label)
    API_ENTRY return;
    if (!sd->items) return;
    si = evas_list_nth(sd->items, n);
-   if (si) edje_object_part_text_set(si->base_obj, "label", label);
+   if (si) edje_object_part_text_set(si->base_obj, "e.text.label", label);
 }
 
 EAPI Evas_Object *
@@ -364,7 +364,7 @@ e_ilist_nth_icon_set(Evas_Object *obj, int n, Evas_Object *icon)
 	if (si->icon_obj)
 	  {
 	     edje_extern_object_min_size_set(si->icon_obj, sd->icon_w, sd->icon_h);
-	     edje_object_part_swallow(si->base_obj, "icon_swallow", si->icon_obj);
+	     edje_object_part_swallow(si->base_obj, "e.swallow.icon", si->icon_obj);
 	     evas_object_show(si->icon_obj);
 	  }
      }

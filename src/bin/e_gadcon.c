@@ -582,7 +582,7 @@ e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id, const char *
 				    0, 0, /* min */
 				    -1, -1 /* max */
 				    );
-	     edje_object_part_swallow(gcc->o_frame, "items", gcc->o_box);
+	     edje_object_part_swallow(gcc->o_frame, gc->edje.swallow_name, gcc->o_box);
 	     evas_object_show(gcc->o_box);
 	     evas_object_show(gcc->o_frame);
 	  }
@@ -1431,7 +1431,7 @@ _e_gadcon_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info
    
    gcc = data;
    ev = event_info;
-   edje_object_signal_emit(gcc->o_control, "active", "");
+   edje_object_signal_emit(gcc->o_control, "e,state,focused", "e");
 }
 
 static void
@@ -1442,7 +1442,7 @@ _e_gadcon_cb_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_inf
    
    gcc = data;
    ev = event_info;
-   edje_object_signal_emit(gcc->o_control, "inactive", "");
+   edje_object_signal_emit(gcc->o_control, "e,state,unfocused", "e");
 }
 
 static void

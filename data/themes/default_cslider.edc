@@ -45,7 +45,7 @@ group {
 	 }
       }
       part {
-	 name:          "content";
+	 name:          "e.swallow.content";
 	 type:          SWALLOW;
 	 mouse_events:  0;
 	 clip_to:       "content_clip";
@@ -61,11 +61,11 @@ group {
 	 }
       }
     part {
-      name: "cursor";
+      name: "e.dragable.cursor";
       type: RECT;
       clip_to:       "content_clip";
       dragable {
-        confine: "content";
+        confine: "e.swallow.content";
         x: 1 1 0;
         y: -1 1 0;
       }
@@ -75,12 +75,12 @@ group {
         max: 1 9999;
         fixed: 1 1;
         rel1 {
-          to: "content";
+          to: "e.swallow.content";
           relative: 0.5 0;
           offset: 0 0;
         }
         rel2 {
-          to: "content";
+          to: "e.swallow.content";
           relative: 0.5 1;
           offset: 0 -1;
         }
@@ -91,12 +91,12 @@ group {
         max: 9999 1;
         fixed: 1 1;
         rel1 {
-          to: "content";
+          to: "e.swallow.content";
           relative: 0 0.5 ;
           offset: 0 0;
         }
         rel2 {
-          to: "content";
+          to: "e.swallow.content";
           relative: 1 0.5;
           offset: -1 0;
         }
@@ -123,10 +123,10 @@ group {
   programs {
     program {
       name: "go_vertical";
-      signal: "e,direction,v";
-      source: "";
+      signal: "e,state,direction,v";
+      source: "e";
       action: STATE_SET "vertical" 0.0;
-      target: "cursor";
+      target: "e.dragable.cursor";
       target: "background";
     } 
   }

@@ -533,11 +533,11 @@ _ibox_icon_fill(IBox_Icon *ic)
    char *label;
    
    ic->o_icon = e_border_icon_add(ic->border, evas_object_evas_get(ic->ibox->o_box));
-   edje_object_part_swallow(ic->o_holder, "item", ic->o_icon);
+   edje_object_part_swallow(ic->o_holder, "e.swallow.content", ic->o_icon);
    evas_object_pass_events_set(ic->o_icon, 1);
    evas_object_show(ic->o_icon);
    ic->o_icon2 = e_border_icon_add(ic->border, evas_object_evas_get(ic->ibox->o_box));
-   edje_object_part_swallow(ic->o_holder2, "item", ic->o_icon2);
+   edje_object_part_swallow(ic->o_holder2, "e.swallow.content", ic->o_icon2);
    evas_object_pass_events_set(ic->o_icon2, 1);
    evas_object_show(ic->o_icon2);
    
@@ -559,8 +559,8 @@ _ibox_icon_fill(IBox_Icon *ic)
      }
    
    if (!label) label = "?";
-   edje_object_part_text_set(ic->o_holder, "label", label);
-   edje_object_part_text_set(ic->o_holder2, "label", label);
+   edje_object_part_text_set(ic->o_holder, "e.text.label", label);
+   edje_object_part_text_set(ic->o_holder2, "e.text.label", label);
 }
 
 static void
@@ -646,9 +646,9 @@ _ibox_cb_icon_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
    
    ev = event_info;
    ic = data;
-   _ibox_icon_signal_emit(ic, "active", "");
+   _ibox_icon_signal_emit(ic, "e,state,focused", "e");
    if (ic->ibox->show_label)
-     _ibox_icon_signal_emit(ic, "label_active", "");
+     _ibox_icon_signal_emit(ic, "e,action,show,label", "e");
 }
 
 static void
@@ -659,9 +659,9 @@ _ibox_cb_icon_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info)
    
    ev = event_info;
    ic = data;
-   _ibox_icon_signal_emit(ic, "passive", "");
+   _ibox_icon_signal_emit(ic, "e,state,unfocused", "e");
    if (ic->ibox->show_label)
-     _ibox_icon_signal_emit(ic, "label_passive", "");
+     _ibox_icon_signal_emit(ic, "e,action,hide,label", "e");
 }
 
 static void

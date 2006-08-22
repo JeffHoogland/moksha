@@ -82,9 +82,9 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    o = edje_object_add(gc->evas);
    e_theme_edje_object_set(o, "base/theme/modules/cpufreq",
 			   "modules/cpufreq/main");
-   edje_object_signal_callback_add(o, "next_governor", "governor", _cpufreq_face_cb_set_governor, NULL);
-   edje_object_signal_callback_add(o, "increase_frequency", "frequency", _cpufreq_face_cb_set_frequency, NULL);
-   edje_object_signal_callback_add(o, "decrease_frequency", "frequency", _cpufreq_face_cb_set_frequency, NULL);
+   edje_object_signal_callback_add(o, "e,action,governor,next", "*", _cpufreq_face_cb_set_governor, NULL);
+   edje_object_signal_callback_add(o, "e,action,frequency,increase", "*", _cpufreq_face_cb_set_frequency, NULL);
+   edje_object_signal_callback_add(o, "e,action,frequency,decrease", "*", _cpufreq_face_cb_set_frequency, NULL);
    
    gcc = e_gadcon_client_new(gc, name, id, style, o);
    gcc->data = inst;
@@ -404,9 +404,9 @@ _cpufreq_cb_check(void *data)
 	  {
 	     inst = l->data;
 	     if (cpufreq_config->status->active == 0)
-	       edje_object_signal_emit(inst->o_cpu, "passive", "");
+	       edje_object_signal_emit(inst->o_cpu, "e,state,disabled", "e");
 	     else if (cpufreq_config->status->active == 1)
-	       edje_object_signal_emit(inst->o_cpu, "active", "");
+	       edje_object_signal_emit(inst->o_cpu, "e,state,enabled", "e");
 	  }
      }
 

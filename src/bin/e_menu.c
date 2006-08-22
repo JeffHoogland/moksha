@@ -684,33 +684,33 @@ e_menu_item_toggle_set(E_Menu_Item *mi, int tog)
      {
 	mi->toggle = 1;
 	if (mi->bg_object)
-	  edje_object_signal_emit(mi->bg_object, "toggle_on", "");
+	  edje_object_signal_emit(mi->bg_object, "e,state,on", "e");
 	if (mi->icon_bg_object)
-	  edje_object_signal_emit(mi->icon_bg_object, "toggle_on", "");
+	  edje_object_signal_emit(mi->icon_bg_object, "e,state,on", "e");
 	if (mi->label_object)
-	  edje_object_signal_emit(mi->label_object, "toggle_on", "");
+	  edje_object_signal_emit(mi->label_object, "e,state,on", "e");
 	if (mi->submenu_object)
-	  edje_object_signal_emit(mi->submenu_object, "toggle_on", "");
+	  edje_object_signal_emit(mi->submenu_object, "e,state,on", "e");
 	if (mi->toggle_object)
-	  edje_object_signal_emit(mi->toggle_object, "toggle_on", "");
+	  edje_object_signal_emit(mi->toggle_object, "e,state,on", "e");
 	if (mi->menu->bg_object)
-	  edje_object_signal_emit(mi->menu->bg_object, "toggle_on", "");
+	  edje_object_signal_emit(mi->menu->bg_object, "e,state,on", "e");
      }
    else
      {
 	mi->toggle = 0;
 	if (mi->bg_object)
-	  edje_object_signal_emit(mi->bg_object, "toggle_off", "");
+	  edje_object_signal_emit(mi->bg_object, "e,state,off", "e");
 	if (mi->icon_bg_object)
-	  edje_object_signal_emit(mi->icon_bg_object, "toggle_off", "");
+	  edje_object_signal_emit(mi->icon_bg_object, "e,state,off", "e");
 	if (mi->label_object)
-	  edje_object_signal_emit(mi->label_object, "toggle_off", "");
+	  edje_object_signal_emit(mi->label_object, "e,state,off", "e");
 	if (mi->submenu_object)
-	  edje_object_signal_emit(mi->submenu_object, "toggle_off", "");
+	  edje_object_signal_emit(mi->submenu_object, "e,state,off", "e");
 	if (mi->toggle_object)
-	  edje_object_signal_emit(mi->toggle_object, "toggle_off", "");
+	  edje_object_signal_emit(mi->toggle_object, "e,state,off", "e");
 	if (mi->menu->bg_object)
-	  edje_object_signal_emit(mi->menu->bg_object, "toggle_off", "");
+	  edje_object_signal_emit(mi->menu->bg_object, "e,state,off", "e");
      }
    if (tog)
      {
@@ -794,18 +794,18 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
 	mi->active = 1;
 	_e_active_menu_item = mi;
 	if (mi->bg_object)
-	  edje_object_signal_emit(mi->bg_object, "active", "");
+	  edje_object_signal_emit(mi->bg_object, "e,state,selected", "e");
 	if (mi->icon_bg_object)
-	  edje_object_signal_emit(mi->icon_bg_object, "active", "");
+	  edje_object_signal_emit(mi->icon_bg_object, "e,state,selected", "e");
 	if (mi->label_object)
-	  edje_object_signal_emit(mi->label_object, "active", "");
+	  edje_object_signal_emit(mi->label_object, "e,state,selected", "e");
 	if (mi->submenu_object)
-	  edje_object_signal_emit(mi->submenu_object, "active", "");
+	  edje_object_signal_emit(mi->submenu_object, "e,state,selected", "e");
 	if (mi->toggle_object)
-	  edje_object_signal_emit(mi->toggle_object, "active", "");
+	  edje_object_signal_emit(mi->toggle_object, "e,state,selected", "e");
 	if (mi->icon_key)
-	  edje_object_signal_emit(mi->icon_object, "active", "");
-	edje_object_signal_emit(mi->menu->bg_object, "active", "");
+	  edje_object_signal_emit(mi->icon_object, "e,state,selected", "e");
+	edje_object_signal_emit(mi->menu->bg_object, "e,state,selected", "e");
 	_e_menu_submenu_activate(mi);
      }
    else if ((!active) && (mi->active))
@@ -813,18 +813,18 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
 	mi->active = 0;
 	_e_active_menu_item = NULL;
 	if (mi->bg_object)
-	  edje_object_signal_emit(mi->bg_object, "passive", "");
+	  edje_object_signal_emit(mi->bg_object, "e,state,unselected", "e");
 	if (mi->icon_bg_object)
-	  edje_object_signal_emit(mi->icon_bg_object, "passive", "");
+	  edje_object_signal_emit(mi->icon_bg_object, "e,state,unselected", "e");
 	if (mi->label_object)
-	  edje_object_signal_emit(mi->label_object, "passive", "");
+	  edje_object_signal_emit(mi->label_object, "e,state,unselected", "e");
 	if (mi->submenu_object)
-	  edje_object_signal_emit(mi->submenu_object, "passive", "");
+	  edje_object_signal_emit(mi->submenu_object, "e,state,unselected", "e");
 	if (mi->toggle_object)
-	  edje_object_signal_emit(mi->toggle_object, "passive", "");
+	  edje_object_signal_emit(mi->toggle_object, "e,state,unselected", "e");
 	if (mi->icon_key)
-	  edje_object_signal_emit(mi->icon_object, "passive", "");
-	edje_object_signal_emit(mi->menu->bg_object, "passive", "");
+	  edje_object_signal_emit(mi->icon_object, "e,state,unselected", "e");
+	edje_object_signal_emit(mi->menu->bg_object, "e,state,unselected", "e");
 	_e_menu_submenu_deactivate(mi);
      }
 }
@@ -1260,14 +1260,14 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	       {
 		  edje_extern_object_min_size_set(mi->icon_object,
 						  icon_w, icon_h);
-		  edje_object_part_swallow(mi->icon_bg_object, "item", 
+		  edje_object_part_swallow(mi->icon_bg_object, "e.swallow.content", 
 					   mi->icon_object);
 		  edje_object_size_min_calc(mi->icon_bg_object, &ww, &hh);
 		  mi->icon_w = ww;
 		  mi->icon_h = hh;
 		  
 		  edje_extern_object_min_size_set(mi->icon_object, 0, 0);
-		  edje_object_part_swallow(mi->icon_bg_object, "item", 
+		  edje_object_part_swallow(mi->icon_bg_object, "e.swallow.content", 
 					   mi->icon_object);
 		  e_box_pack_end(mi->container_object, mi->icon_bg_object);
 	       }
@@ -1298,7 +1298,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     e_theme_edje_object_set(o, "base/theme/menus",
 				     "widgets/menu/default/label");
 	     /* default label */
-	     edje_object_part_text_set(o, "label", mi->label);
+	     edje_object_part_text_set(o, "e.text.label", mi->label);
 	     evas_object_pass_events_set(o, 1);
 	     evas_object_show(o);
 	     e_box_pack_end(mi->container_object, o);
@@ -1336,7 +1336,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     e_box_pack_end(mi->container_object, o);
 	  }
 
-	edje_object_part_swallow(mi->bg_object, "item", mi->container_object);
+	edje_object_part_swallow(mi->bg_object, "e.swallow.content", mi->container_object);
 	
 	o = evas_object_rectangle_add(mi->menu->evas);
 	evas_object_color_set(o, 0, 0, 0, 0);
@@ -1406,8 +1406,8 @@ _e_menu_realize(E_Menu *m)
      }
    if (m->header.title)
      {
-	edje_object_part_text_set(o, "title", m->header.title);
-	edje_object_signal_emit(o, "title,on", "");
+	edje_object_part_text_set(o, "e.text.title", m->header.title);
+	edje_object_signal_emit(o, "e,action,show,title", "e");
 	edje_object_message_signal_process(o);
      }
    evas_object_show(o);
@@ -1422,7 +1422,7 @@ _e_menu_realize(E_Menu *m)
    e_box_freeze(o);
    evas_object_show(o);
    e_box_homogenous_set(o, 0);
-   edje_object_part_swallow(m->bg_object, "items", m->container_object);
+   edje_object_part_swallow(m->bg_object, "e.swallow.content", m->container_object);
    
    
    for (l = m->items; l; l = l->next)
@@ -1617,7 +1617,7 @@ _e_menu_items_layout_update(E_Menu *m)
 				      0, 0 /* max */
 				      );
 	     edje_extern_object_min_size_set(mi->container_object, min_w, min_h);
-	     edje_object_part_swallow(mi->bg_object, "item", mi->container_object);
+	     edje_object_part_swallow(mi->bg_object, "e.swallow.content", mi->container_object);
 	     edje_object_size_min_calc(mi->bg_object, &mw, &mh);
 	     e_box_pack_options_set(mi->bg_object,
 				    1, 1, /* fill */
@@ -1632,7 +1632,7 @@ _e_menu_items_layout_update(E_Menu *m)
    e_box_min_size_get(m->container_object, &bw, &bh);
    edje_extern_object_min_size_set(m->container_object, bw, bh);
    edje_extern_object_max_size_set(m->container_object, bw, bh);
-   edje_object_part_swallow(m->bg_object, "items", m->container_object);
+   edje_object_part_swallow(m->bg_object, "e.swallow.content", m->container_object);
    edje_object_size_min_calc(m->bg_object, &mw, &mh);
    e_box_thaw(m->container_object);
    m->cur.w = mw;

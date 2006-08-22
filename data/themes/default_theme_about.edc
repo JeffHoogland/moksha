@@ -323,7 +323,7 @@ group {
 	 name:   "button_unclick2";
 	 signal: "mouse,clicked,1";
 	 source: "button";
-	 action: SIGNAL_EMIT "close" "";
+	 action: SIGNAL_EMIT "e,action,close" "";
       }
       
       program {      

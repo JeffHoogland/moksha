@@ -27,7 +27,7 @@ group {
 	 }
       }
       part {
-	 name:          "item";
+	 name:          "e.swallow.content";
 	 type:          SWALLOW;
 	 mouse_events:  0;
 	 clip_to:       "item_clip";
@@ -73,7 +73,7 @@ group {
 	 source:  "over";
 	 action:  STATE_SET "bigger" 0.0;
          transition: LINEAR 0.1;
-	 target:  "item";
+	 target:  "e.swallow.content";
       }
       program {
 	 name:    "hover_out";
@@ -81,20 +81,20 @@ group {
 	 source:  "over";
 	 action:  STATE_SET "default" 0.0;
          transition: LINEAR 0.2;
-	 target:  "item";
+	 target:  "e.swallow.content";
       }
       program {
 	 name:    "exec_start";
-	 signal:  "start";
-	 source:  "";
+	 signal:  "e,action,start";
+	 source:  "e";
 	 action:  STATE_SET "faded" 0.0;
          transition: LINEAR 0.5;
 	 target:  "item_clip";
       }
       program {
 	 name:    "exec_exec";
-	 signal:  "exec";
-	 source:  "";
+	 signal:  "e,action,exec";
+	 source:  "e";
 	 action:  STATE_SET "faded" 0.0;
          transition: LINEAR 0.5;
 	 target:  "item_clip";
@@ -102,8 +102,8 @@ group {
       }
       program {
 	 name:    "exec_stop";
-	 signal:  "stop";
-	 source:  "";
+	 signal:  "e,action,stop";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "item_clip";
       }
@@ -179,7 +179,7 @@ group {
 	 }
       }
       part {
-	 name:          "item";
+	 name:          "e.swallow.content";
 	 type:          SWALLOW;
 	 mouse_events:  0;
 	 clip_to:       "background";
@@ -195,7 +195,7 @@ group {
 	 }
       }
       part {      
-	 name: "label";
+	 name: "e.text.label";
 	 type: TEXT;
 	 effect: SOFT_SHADOW;                  
 	 mouse_events: 0;
@@ -240,19 +240,19 @@ group {
    programs {
       program {
 	 name:    "go_active";
-	 signal:  "active";
-	 source:  "";
+	 signal:  "e,state,focused";
+	 source:  "e";
 	 action:  STATE_SET "visible" 0.0;
 	 target:  "background";
 	 after:   "go_active2";
       }
       program {
 	 name:    "go_activeB";
-	 signal:  "label_active";
-	 source:  "";
+	 signal:  "e,action,show,label";
+	 source:  "e";
 	 action:  STATE_SET "visible" 0.0;
 	 transition: SINUSOIDAL 0.5;
-	 target:  "label";
+	 target:  "e.text.label";
       }
       program {
 	 name:    "go_active2";
@@ -265,8 +265,8 @@ group {
       }
       program {
 	 name:    "go_passive";
-	 signal:  "passive";
-	 source:  "";
+	 signal:  "e,state,unfocused";
+	 source:  "e";
 	 action:  ACTION_STOP;
 	 target:  "go_active";
 	 target:  "go_active2";
@@ -274,11 +274,11 @@ group {
       }
       program {
 	 name:    "go_passiveB";
-	 signal:  "label_passive";
-	 source:  "";
+	 signal:  "e,action,hide,label";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 transition: SINUSOIDAL 1.0;
-	 target:  "label";
+	 target:  "e.text.label";
       }
       program {
 	 name:    "go_passive2";
@@ -301,8 +301,8 @@ group {
       }
       program {
 	 name:    "exec_start";
-	 signal:  "start";
-	 source:  "";
+	 signal:  "e,action,start";
+	 source:  "e";
 	 action:  ACTION_STOP;
 	 target:  "go_active";
 	 target:  "go_active2";
@@ -314,14 +314,14 @@ group {
       }
       program {
 	 name:    "exec_exec";
-	 signal:  "exec";
-	 source:  "";
+	 signal:  "e,action,exec";
+	 source:  "e";
 	 after:   "exec_start";
       }
       program {
 	 name:    "exec_stop";
-	 signal:  "stop";
-	 source:  "";
+	 signal:  "e,action,stop";
+	 source:  "e";
 //	 action:  SIGNAL_EMIT "active" 0.0;
       }
    }

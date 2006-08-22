@@ -506,16 +506,16 @@ _ibar_config_update(void)
 	     switch (ci->eap_label) 
 	       {
 		case 0:
-		  edje_object_part_text_set(ic->o_holder, "label", ic->app->name);
-		  edje_object_part_text_set(ic->o_holder2, "label", ic->app->name);
+		  edje_object_part_text_set(ic->o_holder, "e.text.label", ic->app->name);
+		  edje_object_part_text_set(ic->o_holder2, "e.text.label", ic->app->name);
 		  break;
 		case 1:
-		  edje_object_part_text_set(ic->o_holder, "label", ic->app->comment);
-		  edje_object_part_text_set(ic->o_holder2, "label", ic->app->comment);
+		  edje_object_part_text_set(ic->o_holder, "e.text.label", ic->app->comment);
+		  edje_object_part_text_set(ic->o_holder2, "e.text.label", ic->app->comment);
 		  break;
 		case 2:
-		  edje_object_part_text_set(ic->o_holder, "label", ic->app->generic);
-		  edje_object_part_text_set(ic->o_holder2, "label", ic->app->generic);
+		  edje_object_part_text_set(ic->o_holder, "e.text.label", ic->app->generic);
+		  edje_object_part_text_set(ic->o_holder2, "e.text.label", ic->app->generic);
 		  break;
 	       }
 	  }
@@ -619,16 +619,16 @@ _ibar_icon_fill(IBar_Icon *ic)
    switch (ic->ibar->eap_label) 
      {
       case 0: /* Eap Name */
-	edje_object_part_text_set(ic->o_holder, "label", ic->app->name);
-	edje_object_part_text_set(ic->o_holder2, "label", ic->app->name);
+	edje_object_part_text_set(ic->o_holder, "e.text.label", ic->app->name);
+	edje_object_part_text_set(ic->o_holder2, "e.text.label", ic->app->name);
 	break;
       case 1: /* Eap Comment */
-	edje_object_part_text_set(ic->o_holder, "label", ic->app->comment);
-	edje_object_part_text_set(ic->o_holder2, "label", ic->app->comment);
+	edje_object_part_text_set(ic->o_holder, "e.text.label", ic->app->comment);
+	edje_object_part_text_set(ic->o_holder2, "e.text.label", ic->app->comment);
 	break;	
       case 2: /* Eap Generic */
-	edje_object_part_text_set(ic->o_holder, "label", ic->app->generic);
-	edje_object_part_text_set(ic->o_holder2, "label", ic->app->generic);
+	edje_object_part_text_set(ic->o_holder, "e.text.label", ic->app->generic);
+	edje_object_part_text_set(ic->o_holder2, "e.text.label", ic->app->generic);
 	break;	
      }
 }
@@ -754,9 +754,9 @@ _ibar_cb_app_change(void *data, E_App *a, E_App_Change ch)
 	     if (ic)
 	       {
 		  if (a->startup_notify)
-		    _ibar_icon_signal_emit(ic, "start", "");
+		    _ibar_icon_signal_emit(ic, "e,action,start", "e");
 		  else
-		    _ibar_icon_signal_emit(ic, "exec", "");
+		    _ibar_icon_signal_emit(ic, "e,action,exec", "e");
 	       }
 	  }
 	break;
@@ -768,7 +768,7 @@ _ibar_cb_app_change(void *data, E_App *a, E_App_Change ch)
 	     IBar_Icon *ic;
 	     
 	     ic = _ibar_icon_find(b, a);
-	     if (ic) _ibar_icon_signal_emit(ic, "stop", "");
+	     if (ic) _ibar_icon_signal_emit(ic, "e,action,stop", "e");
 	  }
 	break;
       default:
@@ -850,9 +850,9 @@ _ibar_cb_icon_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
    
    ev = event_info;
    ic = data;
-   _ibar_icon_signal_emit(ic, "active", "");
+   _ibar_icon_signal_emit(ic, "e,state,focused", "e");
    if (ic->ibar->show_label)
-     _ibar_icon_signal_emit(ic, "label_active", "");
+     _ibar_icon_signal_emit(ic, "e,action,show,label", "e");
 }
 
 static void
@@ -863,9 +863,9 @@ _ibar_cb_icon_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info)
    
    ev = event_info;
    ic = data;
-   _ibar_icon_signal_emit(ic, "passive", "");
+   _ibar_icon_signal_emit(ic, "e,state,unfocused", "e");
    if (ic->ibar->show_label)
-     _ibar_icon_signal_emit(ic, "label_passive", "");
+     _ibar_icon_signal_emit(ic, "e,action,hide,label", "e");
 }
 
 static void

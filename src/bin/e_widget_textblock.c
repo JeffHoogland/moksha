@@ -56,7 +56,7 @@ e_widget_textblock_markup_set(Evas_Object *obj, const char *text)
    Evas_Coord mw, mh, vw, vh;
 
    wd = e_widget_data_get(obj);
-   edje_object_part_text_set(wd->o_textblock, "text", text);
+   edje_object_part_text_set(wd->o_textblock, "e.textblock.text", text);
    edje_object_size_min_calc(wd->o_textblock, &mw, &mh);
    e_scrollframe_child_viewport_size_get(wd->o_scrollframe, &vw, &vh);
    if (vw > mw) mw = vw;
@@ -147,12 +147,12 @@ _e_wid_focus_hook(Evas_Object *obj)
    wd = e_widget_data_get(obj);
    if (e_widget_focus_get(obj))
      {
-	edje_object_signal_emit(e_scrollframe_edje_object_get(wd->o_scrollframe), "focus_in", "");
+	edje_object_signal_emit(e_scrollframe_edje_object_get(wd->o_scrollframe), "e,state,focused", "e");
 	evas_object_focus_set(wd->o_scrollframe, 1);
      }
    else
      {
-	edje_object_signal_emit(e_scrollframe_edje_object_get(wd->o_scrollframe), "focus_out", "");
+	edje_object_signal_emit(e_scrollframe_edje_object_get(wd->o_scrollframe), "e,state,unfocused", "e");
 	evas_object_focus_set(wd->o_scrollframe, 0);
      }
 }

@@ -39,7 +39,7 @@ group {
          }
       }
       part {
-         name: "text_area";
+         name: "e.swallow.text";
          type: SWALLOW;
          description {
             state: "default" 0.0;
@@ -80,7 +80,7 @@ group {
    name: "widgets/entry/text";
    parts {
       part {
-         name: "text";
+         name: "e.text.text";
 	 type: TEXT;
 	 mouse_events: 0;
 	 description {
@@ -121,8 +121,8 @@ group {
    programs {
       program {
          name: "on_cursor_show";
-	 signal:  "cursor_show";
-	 source:  "";
+	 signal:  "e,action,show,cursor";
+	 source:  "e";
          action: ACTION_STOP;
          target: "cursor_show";
          target: "cursor_hide";

@@ -109,7 +109,7 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 	evas_object_data_set(o, "e_zone", zone);
 	snprintf(buf, sizeof(buf), "transitions/%s", trans);
 	e_theme_edje_object_set(o, "base/theme/transitions", buf);
-	edje_object_signal_callback_add(o, "done", "*", _e_bg_signal, zone);
+	edje_object_signal_callback_add(o, "e,state,done", "*", _e_bg_signal, zone);
 	evas_object_move(o, zone->x, zone->y);
 	evas_object_resize(o, zone->w, zone->h);
 	evas_object_layer_set(o, -1);
@@ -128,11 +128,11 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
    
    if (transition != E_BG_TRANSITION_NONE)
      {
-	edje_object_part_swallow(zone->transition_object, "bg_prev",
+	edje_object_part_swallow(zone->transition_object, "e.swallow.bg.old",
 				 zone->prev_bg_object);
-	edje_object_part_swallow(zone->transition_object, "bg_new",
+	edje_object_part_swallow(zone->transition_object, "e.swallow.bg.new",
 				 zone->bg_object);
-	edje_object_signal_emit(zone->transition_object, "go", "");
+	edje_object_signal_emit(zone->transition_object, "e,action,start", "e");
      }
 }
 

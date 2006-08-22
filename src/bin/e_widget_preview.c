@@ -39,7 +39,7 @@ e_widget_preview_add(Evas *evas, int minw, int minh)
    edje_extern_object_min_size_set(o, minw, minh);
    edje_extern_object_max_size_set(o, minw, minh);
    evas_object_show(o);
-   edje_object_part_swallow(wd->o_frame, "item", o);
+   edje_object_part_swallow(wd->o_frame, "e.swallow.content", o);
    
    e_widget_data_set(obj, wd);   
    e_widget_can_focus_set(obj, 0);
@@ -83,7 +83,7 @@ e_widget_preview_thumb_set(Evas_Object *obj, const char *file, const char *key, 
    e_thumb_icon_begin(wd->img);
    evas_object_smart_callback_add(wd->img, "e_thumb_gen", _e_wid_preview_thumb_gen, wd);
    
-   edje_object_part_swallow(wd->o_frame, "item", wd->img);
+   edje_object_part_swallow(wd->o_frame, "e.swallow.content", wd->img);
    evas_object_show(wd->img);
    return 1;
 }

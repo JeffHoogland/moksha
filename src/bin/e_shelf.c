@@ -149,7 +149,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
      es->id = id;
 
    snprintf(buf, sizeof(buf), "%i", es->id);
-   es->gadcon = e_gadcon_swallowed_new(es->name, buf, es->o_base, "items");
+   es->gadcon = e_gadcon_swallowed_new(es->name, buf, es->o_base, "e.swallow.content");
    e_gadcon_min_size_request_callback_set(es->gadcon,
 					  _e_shelf_gadcon_min_size_request,
 					  es);
@@ -160,7 +160,8 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 				       _e_shelf_gadcon_frame_request,
 				       es);
    e_gadcon_orient(es->gadcon, E_GADCON_ORIENT_TOP);
-   edje_object_signal_emit(es->o_base, "set_orientation", "top");
+   snprintf(buf, sizeof(buf), "e,state,orientation,%s", _e_shelf_orient_string_get(es));
+   edje_object_signal_emit(es->o_base, buf, "e");
    edje_object_message_signal_process(es->o_base);
    e_gadcon_zone_set(es->gadcon, zone);
    e_gadcon_ecore_evas_set(es->gadcon, es->ee);
@@ -335,12 +336,13 @@ e_shelf_unsave(E_Shelf *es)
 EAPI void
 e_shelf_orient(E_Shelf *es, E_Gadcon_Orient orient)
 {
+   char buf[PATH_MAX];
    E_OBJECT_CHECK(es);
    E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
    
    e_gadcon_orient(es->gadcon, orient);
-   edje_object_signal_emit(es->o_base, "set_orientation",
-			   _e_shelf_orient_string_get(es));
+   snprintf(buf, sizeof(buf), "e,state,orientation,%s", _e_shelf_orient_string_get(es));
+   edje_object_signal_emit(es->o_base, buf, "e");
    edje_object_message_signal_process(es->o_base);
 }
 
@@ -773,8 +775,8 @@ _e_shelf_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *styl
 	evas_object_del(o);
 	return NULL;
      }
-   edje_object_signal_emit(o, "set_orientation",
-			   _e_shelf_orient_string_get(es));
+   snprintf(buf, sizeof(buf), "e,state,orientation,%s", _e_shelf_orient_string_get(es));
+   edje_object_signal_emit(es->o_base, buf, "e");
    edje_object_message_signal_process(o);
    return o;
 }
@@ -934,7 +936,7 @@ _e_shelf_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info)
    
    es = data;
    ev = event_info;
-   edje_object_signal_emit(es->o_base, "active", "");
+   edje_object_signal_emit(es->o_base, "e,state,focused", "e");
 }
 
 static void
@@ -945,7 +947,7 @@ _e_shelf_cb_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info
    
    es = data;
    ev = event_info;
-   edje_object_signal_emit(es->o_base, "inactive", "");
+   edje_object_signal_emit(es->o_base, "e,state,unfocused", "e");
 }
 
 static int

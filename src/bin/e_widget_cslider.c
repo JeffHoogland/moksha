@@ -62,9 +62,9 @@ e_widget_cslider_add(Evas *evas, E_Color_Component mode, E_Color *color, int ver
    e_theme_edje_object_set(o, "base/theme/widgets",
 			   "widgets/cslider");
    if (wd->vertical)
-     edje_object_signal_emit(o, "e,direction,v", "");
+     edje_object_signal_emit(o, "e,state,direction,v", "e");
    else
-     edje_object_signal_emit(o, "e,direction,h", "");
+     edje_object_signal_emit(o, "e,state,direction,h", "e");
    evas_object_show(o);
    edje_object_size_min_calc(o, &mw, &mh);
    e_widget_min_size_set(obj, mw, mh);
@@ -85,7 +85,7 @@ e_widget_cslider_add(Evas *evas, E_Color_Component mode, E_Color *color, int ver
    evas_object_show(o);
    e_widget_sub_object_add(obj, o);
    wd->o_grad = o;
-   edje_object_part_swallow(wd->o_cslider, "content", o);
+   edje_object_part_swallow(wd->o_cslider, "e.swallow.content", o);
    evas_object_intercept_resize_callback_add(o, _e_wid_resize, wd);
    evas_object_intercept_move_callback_add(o, _e_wid_move, wd);
    _e_wid_update(wd);
@@ -258,7 +258,7 @@ _e_wid_update_standard(E_Widget_Data *wd)
 	 break;
      }
 
-     edje_object_part_drag_value_set(wd->o_cslider, "cursor", vx, vx);
+     edje_object_part_drag_value_set(wd->o_cslider, "e.dragable.cursor", vx, vx);
 }
 
 void
@@ -323,7 +323,7 @@ _e_wid_update_fixed(E_Widget_Data *wd)
       break;
   }
 
-  edje_object_part_drag_value_set(wd->o_cslider, "cursor", vx, vx);
+  edje_object_part_drag_value_set(wd->o_cslider, "e.dragable.cursor", vx, vx);
 }
 
 static void
@@ -343,12 +343,12 @@ _e_wid_focus_hook(Evas_Object *obj)
    wd = e_widget_data_get(obj);
    if (e_widget_focus_get(obj))
      {
-	edje_object_signal_emit(wd->o_cslider, "focus_in", "");
+	edje_object_signal_emit(wd->o_cslider, "e,state,focused", "e");
 	evas_object_focus_set(wd->o_cslider, 1);
      }
    else
      {
-	edje_object_signal_emit(wd->o_cslider, "focus_out", "");
+	edje_object_signal_emit(wd->o_cslider, "e,state,unfocused", "e");
 	evas_object_focus_set(wd->o_cslider, 0);
      }
 }
@@ -368,9 +368,9 @@ _e_wid_disable_hook(Evas_Object *obj)
    
    wd = e_widget_data_get(obj);
    if (e_widget_disabled_get(obj))
-     edje_object_signal_emit(wd->o_cslider, "disabled", "");
+     edje_object_signal_emit(wd->o_cslider, "e,state,disabled", "e");
    else
-     edje_object_signal_emit(wd->o_cslider, "enabled", "");
+     edje_object_signal_emit(wd->o_cslider, "e,state,enabled", "e");
 }
 
 static void

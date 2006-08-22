@@ -30,7 +30,7 @@ e_resize_begin(E_Zone *zone, int w, int h)
 	e_theme_edje_object_set(_obj, "base/theme/borders",
 	      "widgets/border/default/resize");
 	snprintf(buf, sizeof(buf), "9999x9999");
-	edje_object_part_text_set(_obj, "text", buf);
+	edje_object_part_text_set(_obj, "e.text.label", buf);
 
 	edje_object_size_min_calc(_obj, &ew, &eh);
 	evas_object_move(_obj, 0, 0);
@@ -88,7 +88,7 @@ e_resize_update(int w, int h)
 	visible = 1;
      }
    snprintf(buf, sizeof(buf), "%ix%i", w, h);
-   edje_object_part_text_set(_obj, "text", buf);
+   edje_object_part_text_set(_obj, "e.text.label", buf);
 }
 
 EAPI void
@@ -107,7 +107,7 @@ e_move_begin(E_Zone *zone, int x, int y)
 	e_theme_edje_object_set(_obj, "base/theme/borders",
 	      "widgets/border/default/move");
 	snprintf(buf, sizeof(buf), "9999 9999");
-	edje_object_part_text_set(_obj, "text", buf);
+	edje_object_part_text_set(_obj, "e.text.label", buf);
 
 	edje_object_size_min_calc(_obj, &ew, &eh);
 	evas_object_move(_obj, 0, 0);
@@ -165,7 +165,7 @@ e_move_update(int x, int y)
 	visible = 1;
      }
    snprintf(buf, sizeof(buf), "%i %i", x, y);
-   edje_object_part_text_set(_obj, "text", buf);
+   edje_object_part_text_set(_obj, "e.text.label", buf);
 }
 
 EAPI void

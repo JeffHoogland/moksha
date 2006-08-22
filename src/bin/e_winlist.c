@@ -126,8 +126,8 @@ e_winlist_show(E_Zone *zone)
    e_box_align_set(o, 0.5, 0.0);
    e_box_orientation_set(o, 0);
    e_box_homogenous_set(o, 1);
-   edje_object_part_swallow(bg_object, "list_swallow", o);
-   edje_object_part_text_set(bg_object, "title", _("Select a window"));
+   edje_object_part_swallow(bg_object, "e.swallow.list", o);
+   edje_object_part_text_set(bg_object, "e.text.title", _("Select a window"));
    evas_object_show(o);
 
    desk = e_desk_current_get(winlist->zone);
@@ -356,10 +356,10 @@ _e_winlist_size_adjust(void)
    e_box_freeze(list_object);
    e_box_min_size_get(list_object, &mw, &mh);
    edje_extern_object_min_size_set(list_object, mw, mh);
-   edje_object_part_swallow(bg_object, "list_swallow", list_object);
+   edje_object_part_swallow(bg_object, "e.swallow.list", list_object);
    edje_object_size_min_calc(bg_object, &mw, &mh);
    edje_extern_object_min_size_set(list_object, -1, -1);
-   edje_object_part_swallow(bg_object, "list_swallow", list_object);
+   edje_object_part_swallow(bg_object, "e.swallow.list", list_object);
    e_box_thaw(list_object);
    
    zone = winlist->zone;
@@ -429,28 +429,28 @@ _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
 	ww->bg_object = o;
 	e_theme_edje_object_set(o, "base/theme/winlist",
 				"widgets/winlist/item");
-	edje_object_part_text_set(o, "title_text", e_border_name_get(ww->border));
+	edje_object_part_text_set(o, "e.text.label", e_border_name_get(ww->border));
 	evas_object_show(o);
-	if (edje_object_part_exists(ww->bg_object, "icon_swallow"))
+	if (edje_object_part_exists(ww->bg_object, "e.swallow.icon"))
 	  {
 	     o = e_border_icon_add(bd, winlist->evas);
 	     ww->icon_object = o;
-	     edje_object_part_swallow(ww->bg_object, "icon_swallow", o);
+	     edje_object_part_swallow(ww->bg_object, "e.swallow.icon", o);
 	     evas_object_show(o);
 	  }
 	if (bd->shaded)
 	  {
-	     edje_object_signal_emit(ww->bg_object, "shaded", "");
+	     edje_object_signal_emit(ww->bg_object, "e,state,shaded", "e");
 	  }
 	else if (bd->iconic)
 	  {
-	     edje_object_signal_emit(ww->bg_object, "iconified", "");
+	     edje_object_signal_emit(ww->bg_object, "e,state,iconified", "e");
 	  }
 	else if (bd->desk != desk)
 	  {
 	     if (!((bd->sticky) && (bd->zone == zone)))
 	       {
-		  edje_object_signal_emit(ww->bg_object, "invisible", "");
+		  edje_object_signal_emit(ww->bg_object, "e,state,invisible", "e");
 	       }
 	  }
 	  
@@ -521,8 +521,8 @@ _e_winlist_activate(void)
    
    if (!win_selected) return;
    ww = win_selected->data;
-   edje_object_signal_emit(ww->bg_object, "active", "");
-   if (ww->icon_object) edje_object_signal_emit(ww->icon_object, "active", "");
+   edje_object_signal_emit(ww->bg_object, "e,state,selected", "e");
+   if (ww->icon_object) edje_object_signal_emit(ww->icon_object, "e,state,selected", "e");
    ok = 0;
 
    if ((ww->border->iconic) &&
@@ -603,21 +603,21 @@ _e_winlist_activate(void)
 	if ((!ww->border->lock_focus_out) && (e_config->winlist_list_focus_while_selecting))
 	  e_border_focus_set(ww->border, 1, 1);
      }
-   edje_object_part_text_set(bg_object, "title_text", e_border_name_get(ww->border));
+   edje_object_part_text_set(bg_object, "e.text.label", e_border_name_get(ww->border));
    if (icon_object)
      {
 	evas_object_del(icon_object);
 	icon_object = NULL;
      }
-   if (edje_object_part_exists(bg_object, "icon_swallow"))
+   if (edje_object_part_exists(bg_object, "e.swallow.icon"))
      {
 	o = e_border_icon_add(ww->border, winlist->evas);
 	icon_object = o;
-	edje_object_part_swallow(bg_object, "icon_swallow", o);
+	edje_object_part_swallow(bg_object, "e.swallow.icon", o);
 	evas_object_show(o);
      }
    
-   edje_object_signal_emit(bg_object, "active", "");
+   edje_object_signal_emit(bg_object, "e,state,selected", "e");
 }
 
 static void
@@ -644,9 +644,9 @@ _e_winlist_deactivate(void)
 	evas_object_del(icon_object);
 	icon_object = NULL;
      }
-   edje_object_part_text_set(bg_object, "title_text", "");
-   edje_object_signal_emit(ww->bg_object, "passive", "");
-   if (ww->icon_object) edje_object_signal_emit(ww->icon_object, "passive", "");
+   edje_object_part_text_set(bg_object, "e.text.label", "");
+   edje_object_signal_emit(ww->bg_object, "e,state,unselected", "e");
+   if (ww->icon_object) edje_object_signal_emit(ww->icon_object, "e,state,unselected", "e");
    if (!ww->border->lock_focus_in)
      e_border_focus_set(ww->border, 0, 0);
 }

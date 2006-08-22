@@ -1,3 +1,5 @@
+/* this file looks like its deprecated and should probably be removed */
+
 images {
    image: "e17_ibar_bg_h.png" COMP;
    image: "e17_ibar_over_h.png" COMP;

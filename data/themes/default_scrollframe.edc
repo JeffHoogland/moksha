@@ -188,7 +188,7 @@ group {
 	    rel2 {
 	       relative: 1.0 0.0;
 	       offset:   -1  -1;
-	       to:       "vbar_bar";
+	       to:       "e.dragable.vbar";
 	    }
 	 }
       }
@@ -203,7 +203,7 @@ group {
 	    rel1 {
 	       relative: 0.0 1.0;
 	       offset:   0   0;
-	       to:       "vbar_bar";
+	       to:       "e.dragable.vbar";
 	    }
 	    rel2 {
 	       relative: 1.0 0.0;
@@ -213,7 +213,7 @@ group {
 	 }
       }
       part {
-	 name: "vbar_bar";
+	 name: "e.dragable.vbar";
 	 clip_to: "sb_vbar";
 	 mouse_events: 1;
 	 dragable {
@@ -256,10 +256,10 @@ group {
 	    max: 8 8;
 	    min: 8 8;
 	    rel1 {
-	       to: "vbar_bar";
+	       to: "e.dragable.vbar";
 	    }
 	    rel2 {
-	       to: "vbar_bar";
+	       to: "e.dragable.vbar";
 	    }
 	    image {
 	       normal: "e17_scrollbar_vdrag_thumb.png";
@@ -424,7 +424,7 @@ group {
 	    rel2 {
 	       relative: 0.0 1.0;
 	       offset:   -1  -1;
-	       to:       "hbar_bar";
+	       to:       "e.dragable.hbar";
 	    }
 	 }
       }
@@ -439,7 +439,7 @@ group {
 	    rel1 {
 	       relative: 1.0 0.0;
 	       offset:   0   0;
-	       to:       "hbar_bar";
+	       to:       "e.dragable.hbar";
 	    }
 	    rel2 {
 	       relative: 0.0 1.0;
@@ -449,7 +449,7 @@ group {
 	 }
       }
       part {
-	 name: "hbar_bar";
+	 name: "e.dragable.hbar";
 	 clip_to: "sb_hbar";
 	 mouse_events: 1;
 	 dragable {
@@ -492,10 +492,10 @@ group {
 	    max: 8 8;
 	    min: 8 8;
 	    rel1 {
-	       to: "hbar_bar";
+	       to: "e.dragable.hbar";
 	    }
 	    rel2 {
-	       to: "hbar_bar";
+	       to: "e.dragable.hbar";
 	    }
 	    image {
 	       normal: "e17_scrollbar_hdrag_thumb.png";
@@ -593,29 +593,29 @@ group {
    programs {	 
       program {
 	 name: "sb_vbar_show";
-	 signal: "vbar";
-	 source: "show";
+	 signal: "e,action,show,vbar";
+	 source: "e";
 	 action:  STATE_SET "default" 0.0;
 	 target: "sb_vbar";
       }
       program {
 	 name: "sb_vbar_hide";
-	 signal: "vbar";
-	 source: "hide";
+	 signal: "e,action,hide,vbar";
+	 source: "e";
 	 action:  STATE_SET "hidden" 0.0;
 	 target: "sb_vbar";
       }
       program {
 	 name: "sb_hbar_show";
-	 signal: "hbar";
-	 source: "show";
+	 signal: "e,action,show,hbar";
+	 source: "e";
 	 action:  STATE_SET "default" 0.0;
 	 target: "sb_hbar";
       }
       program {
 	 name: "sb_hbar_hide";
-	 signal: "hbar";
-	 source: "hide";
+	 signal: "e,action,hide,hbar";
+	 source: "e";
 	 action:  STATE_SET "hidden" 0.0;
 	 target: "sb_hbar";
       }
@@ -632,7 +632,7 @@ group {
 	 signal: "mouse,down,1";
 	 source: "sb_vbar_a1";
 	 action:  DRAG_VAL_STEP 0.0 -1.0;
-	 target: "vbar_bar";
+	 target: "e.dragable.vbar";
       }
       program {
 	 name: "sb_vbar_a1_up";
@@ -653,7 +653,7 @@ group {
 	 signal: "mouse,down,1";
 	 source: "sb_vbar_a2";
 	 action:  DRAG_VAL_STEP 0.0 1.0;
-	 target: "vbar_bar";
+	 target: "e.dragable.vbar";
       }
       program {
 	 name: "sb_vbar_a2_up";
@@ -667,28 +667,28 @@ group {
 	 signal: "mouse,down,1";
 	 source: "sb_vbar_p1";
 	 action:  DRAG_VAL_PAGE 0.0 -1.0;
-	 target: "vbar_bar";
+	 target: "e.dragable.vbar";
       }
       program {
 	 name: "sb_vbar_p2_down";
 	 signal: "mouse,down,1";
 	 source: "sb_vbar_p2";
 	 action:  DRAG_VAL_PAGE  0.0 1.0;
-	 target: "vbar_bar";
+	 target: "e.dragable.vbar";
       }
       program {
 	 name: "sb_vbar_down";
 	 signal: "mouse,down,1";
-	 source: "vbar_bar";
+	 source: "e.dragable.vbar";
          action:  STATE_SET "clicked" 0.0;
-	 target: "vbar_bar";
+	 target: "e.dragable.vbar";
       }
       program {
 	 name: "sb_vbar_up";
 	 signal: "mouse,up,1";
-	 source: "vbar_bar";
+	 source: "e.dragable.vbar";
          action:  STATE_SET "default" 0.0;
-	 target: "vbar_bar";
+	 target: "e.dragable.vbar";
       }
       program {
 	 name: "sb_hbar_a1_down";
@@ -702,7 +702,7 @@ group {
 	 signal: "mouse,down,1";
 	 source: "sb_hbar_a1";
 	 action:  DRAG_VAL_STEP -1.0 0.0;
-	 target: "hbar_bar";
+	 target: "e.dragable.hbar";
 	 }
       program {
 	 name: "sb_hbar_a1_up";
@@ -723,7 +723,7 @@ group {
 	 signal: "mouse,down,1";
 	 source: "sb_hbar_a2";
 	 action:  DRAG_VAL_STEP 1.0 0.0;
-	 target: "hbar_bar";
+	 target: "e.dragable.hbar";
       }
       program {
 	 name: "sb_hbar_a2_up";
@@ -737,41 +737,41 @@ group {
 	 signal: "mouse,down,1";
 	 source: "sb_hbar_p1";
 	 action:  DRAG_VAL_PAGE -1.0 0.0;
-	 target: "hbar_bar";
+	 target: "e.dragable.hbar";
       }
       program {
 	 name: "sb_hbar_p2_down";
 	 signal: "mouse,down,1";
 	 source: "sb_hbar_p2";
 	 action:  DRAG_VAL_PAGE  1.0 0.0;
-	 target: "hbar_bar";
+	 target: "e.dragable.hbar";
       }
       program {
 	 name: "sb_hbar_down";
 	 signal: "mouse,down,1";
-	 source: "hbar_bar";
+	 source: "e.dragable.hbar";
          action:  STATE_SET "clicked" 0.0;
-	 target: "hbar_bar";
+	 target: "e.dragable.hbar";
       }
       program {
 	 name: "sb_hbar_up";
 	 signal: "mouse,up,1";
-	 source: "hbar_bar";
+	 source: "e.dragable.hbar";
          action:  STATE_SET "default" 0.0;
-	 target: "hbar_bar";
+	 target: "e.dragable.hbar";
       }
       program {
 	 name: "focus_in";
-	 signal: "focus_in";
-	 source: "";
+	 signal: "e,state,focused";
+	 source: "e";
          action: STATE_SET "focused" 0.0;
 	 transition: DECELERATE 0.2;
 	 target: "focus";
       }
       program {
 	 name: "focus_out";
-	 signal: "focus_out";
-	 source: "";
+	 signal: "e,state,unfocused";
+	 source: "e";
          action: STATE_SET "default" 0.0;
 	 transition: ACCELERATE 0.5;
 	 target: "focus";

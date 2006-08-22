@@ -298,7 +298,7 @@ _temperature_cb_check(void *data)
 	     for (l = temperature_config->instances; l; l = l->next)
 	       {
 		  inst = l->data;
-		  edje_object_signal_emit(inst->o_temp, "known", "");
+		  edje_object_signal_emit(inst->o_temp, "e,state,known", "");
 	       }
 	     temperature_config->have_temp = 1;
 	  }
@@ -315,7 +315,7 @@ _temperature_cb_check(void *data)
 	     _temperature_face_level_set(inst,
 					 (double)(temp - temperature_config->low) /
 					 (double)(temperature_config->high - temperature_config->low));
-	     edje_object_part_text_set(inst->o_temp, "reading", utf8);
+	     edje_object_part_text_set(inst->o_temp, "e.text.reading", utf8);
 	  }
 	free(utf8);
      }
@@ -327,8 +327,8 @@ _temperature_cb_check(void *data)
 	     for (l = temperature_config->instances; l; l = l->next)
 	       {
 		  inst = l->data;
-		  edje_object_signal_emit(inst->o_temp, "unknown", "");
-		  edje_object_part_text_set(inst->o_temp, "reading", "NO TEMP");
+		  edje_object_signal_emit(inst->o_temp, "e,state,unknown", "");
+		  edje_object_part_text_set(inst->o_temp, "e.text.reading", "NO TEMP");
 		  _temperature_face_level_set(inst, 0.5);
 	       }
 	     temperature_config->have_temp = 0;

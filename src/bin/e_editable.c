@@ -488,7 +488,7 @@ e_editable_cursor_show(Evas_Object *editable)
    if (evas_object_visible_get(editable))
      {
         evas_object_show(sd->cursor_object);
-        edje_object_signal_emit(sd->cursor_object, "cursor_show", "");
+        edje_object_signal_emit(sd->cursor_object, "e,action,show,cursor", "e");
      }
 }
 
@@ -704,7 +704,7 @@ e_editable_pos_get_from_coords(Evas_Object *editable, Evas_Coord x, Evas_Coord y
    
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return -1;
-   if (!(text_obj = edje_object_part_object_get(sd->text_object, "text")))
+   if (!(text_obj = edje_object_part_object_get(sd->text_object, "e.text.text")))
      return -1;
    
    evas_object_geometry_get(editable, &ox, &oy, NULL, NULL);
@@ -763,7 +763,7 @@ e_editable_char_size_get(Evas_Object *editable, int *w, int *h)
      return;
    if (!(sd = evas_object_smart_data_get(editable)))
      return;
-   if (!(text_obj = edje_object_part_object_get(sd->text_object, "text")))
+   if (!(text_obj = edje_object_part_object_get(sd->text_object, "e.text.text")))
      return;
    
    if ((sd->average_char_w <= 0) || (sd->average_char_h <= 0))
@@ -897,7 +897,7 @@ _e_editable_cursor_update(Evas_Object *editable)
    
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
-   if (!(text_obj = edje_object_part_object_get(sd->text_object, "text")))
+   if (!(text_obj = edje_object_part_object_get(sd->text_object, "e.text.text")))
      return;
       
    evas_object_geometry_get(text_obj, &tx, &ty, NULL, NULL);
@@ -929,7 +929,7 @@ _e_editable_cursor_update(Evas_Object *editable)
    if (sd->cursor_visible && evas_object_visible_get(editable))
      {
         evas_object_show(sd->cursor_object);
-        edje_object_signal_emit(sd->cursor_object, "cursor_show", "");
+        edje_object_signal_emit(sd->cursor_object, "e,action,show,cursor", "e");
      }
    
    _e_editable_selection_update(editable);
@@ -949,7 +949,7 @@ _e_editable_selection_update(Evas_Object *editable)
    
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
-   if (!(text_obj = edje_object_part_object_get(sd->text_object, "text")))
+   if (!(text_obj = edje_object_part_object_get(sd->text_object, "e.text.text")))
      return;
    
    if ((sd->cursor_pos == sd->selection_pos) || (!sd->selection_visible))
@@ -1021,12 +1021,12 @@ _e_editable_text_update(Evas_Object *editable)
         text = malloc((sd->unicode_length + 1) * sizeof(char));
         memset(text, '*', sd->unicode_length * sizeof(char));
         text[sd->unicode_length] = '\0';
-        edje_object_part_text_set(sd->text_object, "text", text);
+        edje_object_part_text_set(sd->text_object, "e.text.text", text);
         free(text);
      }
    else
      {
-        edje_object_part_text_set(sd->text_object, "text",
+        edje_object_part_text_set(sd->text_object, "e.text.text",
                                   sd->text ? sd->text : "");
      }
    
@@ -1229,7 +1229,7 @@ _e_editable_smart_show(Evas_Object *object)
    if (sd->cursor_visible)
      {
         evas_object_show(sd->cursor_object);
-        edje_object_signal_emit(sd->cursor_object, "cursor_show", "");
+        edje_object_signal_emit(sd->cursor_object, "e,action,show,cursor", "e");
      }
    
    if ((sd->selection_visible) && (sd->cursor_pos != sd->selection_pos))

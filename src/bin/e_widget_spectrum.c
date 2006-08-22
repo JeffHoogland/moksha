@@ -179,12 +179,12 @@ _e_wid_focus_hook(Evas_Object *obj)
    wd = e_widget_data_get(obj);
    if (e_widget_focus_get(obj))
      {
-	edje_object_signal_emit(wd->o_edje, "focus_in", "");
+	edje_object_signal_emit(wd->o_edje, "e,state,focused", "e");
 	evas_object_focus_set(wd->o_edje, 1);
      }
    else
      {
-	edje_object_signal_emit(wd->o_edje, "focus_out", "");
+	edje_object_signal_emit(wd->o_edje, "e,state,unfocused", "e");
 	evas_object_focus_set(wd->o_edje, 0);
      }
 }
@@ -205,9 +205,9 @@ _e_wid_disable_hook(Evas_Object *obj)
    
    wd = e_widget_data_get(obj);
    if (e_widget_disabled_get(obj))
-     edje_object_signal_emit(wd->o_spectrum, "disabled", "");
+     edje_object_signal_emit(wd->o_spectrum, "e,state,disabled", "e");
    else
-     edje_object_signal_emit(wd->o_spectrum, "enabled", "");
+     edje_object_signal_emit(wd->o_spectrum, "e,state,enabled", "e");
 }
 
 static void
@@ -233,7 +233,7 @@ _e_wid_mouse_handle(Evas_Object *obj, int mx, int my)
    if (vy > 1) vy = 1;
    if (vy < 0) vy = 0;
 
-   edje_object_part_drag_value_set(wd->o_edje, "cursor", vx, vy);
+   edje_object_part_drag_value_set(wd->o_edje, "e.dragable.cursor", vx, vy);
 
    switch(wd->mode)
      {

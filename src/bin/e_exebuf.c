@@ -168,14 +168,14 @@ e_exebuf_show(E_Zone *zone)
    bg_object = o;
    e_theme_edje_object_set(o, "base/theme/exebuf",
 			   "widgets/exebuf/main");
-   edje_object_part_text_set(o, "label", cmd_buf);
+   edje_object_part_text_set(o, "e.text.label", cmd_buf);
    
    o = e_box_add(exebuf->evas);
    exe_list_object = o;
    e_box_align_set(o, 0.5, 1.0);
    e_box_orientation_set(o, 0);
    e_box_homogenous_set(o, 1);
-   edje_object_part_swallow(bg_object, "exe_list_swallow", o);
+   edje_object_part_swallow(bg_object, "e.swallow.exe_list", o);
    evas_object_show(o);
    
    o = e_box_add(exebuf->evas);
@@ -183,7 +183,7 @@ e_exebuf_show(E_Zone *zone)
    e_box_align_set(o, 0.5, 0.0);
    e_box_orientation_set(o, 0);
    e_box_homogenous_set(o, 1);
-   edje_object_part_swallow(bg_object, "eap_list_swallow", o);
+   edje_object_part_swallow(bg_object, "e.swallow.eap_list", o);
    evas_object_show(o);
    
    o = bg_object;
@@ -387,7 +387,7 @@ _e_exebuf_update(void)
    E_App *a;
    Evas_Object *o;
    
-   edje_object_part_text_set(bg_object, "label", cmd_buf);
+   edje_object_part_text_set(bg_object, "e.text.label", cmd_buf);
    if (icon_object) evas_object_del(icon_object);
    icon_object = NULL;
    a = e_app_exe_find(cmd_buf);
@@ -397,7 +397,7 @@ _e_exebuf_update(void)
      {
 	o = e_app_icon_add(exebuf->evas, a);
 	icon_object = o;
-	edje_object_part_swallow(bg_object, "icon_swallow", o);
+	edje_object_part_swallow(bg_object, "e.swallow.icons", o);
 	evas_object_show(o);
      }
 }
@@ -430,17 +430,17 @@ _e_exebuf_exec(void)
 static void
 _e_exebuf_exe_sel(E_Exebuf_Exe *exe)
 {
-   edje_object_signal_emit(exe->bg_object, "active", "");
+   edje_object_signal_emit(exe->bg_object, "e,state,selected", "e");
    if (exe->icon_object)
-     edje_object_signal_emit(exe->icon_object, "active", "");
+     edje_object_signal_emit(exe->icon_object, "e,state,selected", "e");
 }
 
 static void
 _e_exebuf_exe_desel(E_Exebuf_Exe *exe)
 {
-   edje_object_signal_emit(exe->bg_object, "passive", "");
+   edje_object_signal_emit(exe->bg_object, "e,state,unselected", "e");
    if (exe->icon_object)
-     edje_object_signal_emit(exe->icon_object, "passive", "");
+     edje_object_signal_emit(exe->icon_object, "e,state,unselected", "e");
 }
 
 static void
@@ -891,13 +891,13 @@ _e_exebuf_matches_update(void)
 	else if (opt == 0x2) snprintf(buf, sizeof(buf), "%s", exe->app->generic);
 	else if (opt == 0x1) snprintf(buf, sizeof(buf), "%s", exe->app->comment);
 	else snprintf(buf, sizeof(buf), "%s", exe->app->name);
-	edje_object_part_text_set(o, "title_text", buf);
+	edje_object_part_text_set(o, "e.text.title", buf);
 	evas_object_show(o);
-	if (edje_object_part_exists(exe->bg_object, "icon_swallow"))
+	if (edje_object_part_exists(exe->bg_object, "e.swallow.icons"))
 	  {
 	     o = e_app_icon_add(exebuf->evas, exe->app);
 	     exe->icon_object = o;
-	     edje_object_part_swallow(exe->bg_object, "icon_swallow", o);
+	     edje_object_part_swallow(exe->bg_object, "e.swallow.icons", o);
 	     evas_object_show(o);
 	  }
 	edje_object_size_min_calc(exe->bg_object, &mw, &mh);
@@ -932,9 +932,9 @@ _e_exebuf_matches_update(void)
         exe->bg_object = o;
 	e_theme_edje_object_set(o, "base/theme/exebuf",
 				"widgets/exebuf/item");
-	edje_object_part_text_set(o, "title_text", exe->file);
+	edje_object_part_text_set(o, "e.text.title", exe->file);
 	evas_object_show(o);
-	if (edje_object_part_exists(exe->bg_object, "icon_swallow"))
+	if (edje_object_part_exists(exe->bg_object, "e.swallow.icons"))
 	  {
 	     E_App *a;
 	     
@@ -943,7 +943,7 @@ _e_exebuf_matches_update(void)
 	       {
 		  o = e_app_icon_add(exebuf->evas, a);
 		  exe->icon_object = o;
-		  edje_object_part_swallow(exe->bg_object, "icon_swallow", o);
+		  edje_object_part_swallow(exe->bg_object, "e.swallow.icons", o);
 		  evas_object_show(o);
 		  exe->app = a;
 		  e_object_ref(E_OBJECT(exe->app));

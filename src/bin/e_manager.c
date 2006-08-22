@@ -669,7 +669,7 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
 	if ((maximized == 2) &&
 	    (e_config->maximize_policy == E_MAXIMIZE_FULLSCREEN))
 	  {
-	     signal = "maximize,fullscreen";
+	     signal = "e,action,maximize,fullscreen";
 	     key = "maximize,fullscreen";
 	  }
 	free(state);
@@ -693,7 +693,7 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
 
 		  if (signal)
 		    {
-		       edje_object_signal_emit(o, signal, "");
+		       edje_object_signal_emit(o, signal, "e");
 		       edje_object_message_signal_process(o);
 		    }
 

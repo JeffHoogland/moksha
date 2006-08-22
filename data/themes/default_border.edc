@@ -157,7 +157,7 @@ BORDER_BUTTON_ADV(NAME,TYPE,REL1X,REL1Y,OFF1X,OFF1Y,TO1,TO1,REL2X,REL2Y,OFF2X,OF
 	    } \
 	 } \
       } \
-      part { \
+      part { /* a rect for positioning */ \
 	 name:          NAME; \
 	 type:          RECT; \
 	 description { \
@@ -179,7 +179,18 @@ BORDER_BUTTON_ADV(NAME,TYPE,REL1X,REL1Y,OFF1X,OFF1Y,TO1,TO1,REL2X,REL2Y,OFF2X,OF
 	    } \
 	    color: 0 0 0 0; \
 	 } \
-      }
+      } \
+      part { /* a rect for window manager actions */ \
+         name:          "e.event."NAME; \
+         type:          RECT; \
+         repeat_events: 1; \
+         description { \
+            state:   "default" 0.0; \
+            color: 0 0 0 0; \
+            rel1.to: NAME; \
+            rel2.to: NAME; \
+         } \
+      } \
 
 #define FULL_SIZE_BORDER_BUTTON(TYPE) \
 group { \
@@ -291,8 +302,8 @@ group {
 	       offset:   0    7;
 	    }
 	    text {
-	       text_source:   "title_text";
-	       source:        "title_text";
+	       text_source:   "e.text.title";
+	       source:        "e.text.title";
 	       min:           0 1;
 	       text_class:    "title_bar";
 	    }
@@ -789,7 +800,7 @@ group {
 	 }
       }
       part {
-	 name:           "title_text";
+	 name:           "e.text.title";
 	 type:           TEXT;
 	 effect:         SHADOW;
 	 mouse_events:   0;
@@ -1013,7 +1024,7 @@ group {
 	 }
       }
       part {
-	 name:          "icon_swallow";
+	 name:          "e.swallow.icon";
 	 type:          SWALLOW;
 	 description {
 	    state:    "default" 0.0;
@@ -1031,7 +1042,7 @@ group {
 	 }
       }
       part {
-	 name:          "resize_l";
+	 name:          "e.event.resize.l";
 	 type:          RECT;
 	 description {
 	    state:    "default" 0.0;
@@ -1048,7 +1059,7 @@ group {
 	 }
       }
       part {
-	 name:          "resize_r";
+	 name:          "e.event.resize.r";
 	 type:          RECT;
 	 description {
 	    state:    "default" 0.0;
@@ -1065,7 +1076,7 @@ group {
 	 }
       }
       part {
-	 name:          "resize_b";
+	 name:          "e.event.resize.b";
 	 type:          RECT;
 	 description {
 	    state:    "default" 0.0;
@@ -1081,7 +1092,7 @@ group {
 	 }
       }
       part {
-	 name:          "resize_bl";
+	 name:          "e.event.resize.bl";
 	 type:          RECT;
 	 description {
 	    state:    "default" 0.0;
@@ -1097,7 +1108,7 @@ group {
 	 }
       }
       part {
-	 name:          "resize_br";
+	 name:          "e.event.resize.br";
 	 type:          RECT;
 	 description {
 	    state:    "default" 0.0;
@@ -1113,7 +1124,7 @@ group {
 	 }
       }
       part {
-	 name:          "client";
+	 name:          "e.client";
 	 type:          SWALLOW;
 	 description {
 	    state:    "default" 0.0;
@@ -1136,21 +1147,21 @@ group {
       BORDER_BUTTON("minimize","minimize",0.0,0.0,3,0,"maximize",0.0,1.0,3,-1,"maximize")
 
       part {
-	 name:          "icon";
+	 name:          "e.event.icon";
 	 type:          RECT;
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       to:    "icon_swallow";
+	       to:    "e.swallow.icon";
 	    }
 	    rel2 {
-	       to:    "icon_swallow";
+	       to:    "e.swallow.icon";
 	    }
 	    color: 0 0 0 0;
 	 }
       }
       part {
-	 name:          "title";
+	 name:          "e.event.titlebar";
 	 type:          RECT;
 	 description {
 	    state:    "default" 0.0;
@@ -1167,8 +1178,8 @@ group {
    programs {
       program {
 	 name:    "go_active_pre";
-	 signal:  "active";
-	 source:  "";
+	 signal:  "e,state,focused";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "title_outline";
 	 target:  "title_bar";
@@ -1244,8 +1255,8 @@ group {
 
       program {
 	 name:    "go_passive_pre";
-	 signal:  "passive";
-	 source:  "";
+	 signal:  "e,state,unfocused";
+	 source:  "e";
 	 action:  STATE_SET "active" 0.0;
 	 target:  "title_outline";
 	 target:  "title_bar";
@@ -1471,8 +1482,8 @@ group {
       }
       program {
 	 name:    "maximize_fullscreen";
-	 signal:  "maximize,fullscreen";
-	 source:  "";
+	 signal:  "e,action,maximize,fullscreen";
+	 source:  "e";
 	 action:  STATE_SET "hidden" 0.0;
 	 target:  "t1";
 	 target:  "t3";
@@ -1484,8 +1495,8 @@ group {
       }
       program {
 	 name:    "unmaximize_fullscreen";
-	 signal:  "unmaximize,fullscreen";
-	 source:  "";
+	 signal:  "e,action,unmaximize,fullscreen";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "t1";
 	 target:  "t3";
@@ -1498,8 +1509,8 @@ group {
       
       program {
 	 name:    "go_hung";
-	 signal:  "hung";
-	 source:  "";
+	 signal:  "e,state,hung";
+	 source:  "e";
 	 action:  STATE_SET "hung" 0.0;
 	 target:  "title_hung";
          transition: DECELERATE 0.5;
@@ -1514,8 +1525,8 @@ group {
       }
       program {
 	 name:    "go_unhung";
-	 signal:  "unhung";
-	 source:  "";
+	 signal:  "e,state,unhung";
+	 source:  "e";
 	 action:  ACTION_STOP;
 	 target:  "go_hung";
 	 target:  "go_hung2";
@@ -1571,8 +1582,8 @@ group {
 	       offset:   0    7;
 	    }
 	    text {
-	       text_source:   "title_text";
-	       source:        "title_text";
+	       text_source:   "e.text.title";
+	       source:        "e.text.title";
 	       min:           0 1;
 	       text_class:    "title_bar";
 	    }
@@ -1654,7 +1665,7 @@ group {
 	 }
       }
       part {
-	 name:          "resize_br";
+	 name:          "e.event.resize.br";
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
@@ -1692,7 +1703,7 @@ group {
 	 }
       }
       part {
-	 name:          "resize_bl";
+	 name:          "e.event.resize.bl";
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
@@ -1924,7 +1935,7 @@ group {
 	 }
       }
       part {
-	 name:           "title_text";
+	 name:           "e.text.title";
 	 type:           TEXT;
 	 effect:         SHADOW;
 	 mouse_events:   0;
@@ -2148,7 +2159,7 @@ group {
 	 }
       }
       part {
-	 name:          "icon_swallow";
+	 name:          "e.swallow.icon";
 	 type:          SWALLOW;
 	 description {
 	    state:    "default" 0.0;
@@ -2166,20 +2177,20 @@ group {
 	 }
       }
       part {
-	 name:          "client";
+	 name:          "e.client";
 	 type:          SWALLOW;
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
 	       relative: 0.0  1.0;
 	       offset:   4    0;
-	       to_x:     "resize_bl";
+	       to_x:     "e.event.resize.bl";
 	       to_y:     "t1";
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
 	       offset:   -5   -5;
-	       to:       "resize_br";
+	       to:       "e.event.resize.br";
 	    }
 	 }
       }
@@ -2189,21 +2200,21 @@ group {
       BORDER_BUTTON("minimize","minimize",0.0,0.0,3,0,"maximize",0.0,1.0,3,-1,"maximize")
 
       part {
-	 name:          "icon";
+	 name:          "e.event.icon";
 	 type:          RECT;
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       to:    "icon_swallow";
+	       to:    "e.swallow.icon";
 	    }
 	    rel2 {
-	       to:    "icon_swallow";
+	       to:    "e.swallow.icon";
 	    }
 	    color: 0 0 0 0;
 	 }
       }
       part {
-	 name:          "title";
+	 name:          "e.event.titlebar";
 	 type:          RECT;
 	 description {
 	    state:    "default" 0.0;
@@ -2220,8 +2231,8 @@ group {
    programs {
       program {
 	 name:    "go_active_pre";
-	 signal:  "active";
-	 source:  "";
+	 signal:  "e,state,focused";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "title_outline";
 	 target:  "title_bar";
@@ -2297,8 +2308,8 @@ group {
 
       program {
 	 name:    "go_passive_pre";
-	 signal:  "passive";
-	 source:  "";
+	 signal:  "e,state,unfocused";
+	 source:  "e";
 	 action:  STATE_SET "active" 0.0;
 	 target:  "title_outline";
 	 target:  "title_bar";
@@ -2524,25 +2535,25 @@ group {
       }
       program {
 	 name:    "maximize_fullscreen";
-	 signal:  "maximize,fullscreen";
-	 source:  "";
+	 signal:  "e,action,maximize,fullscreen";
+	 source:  "e";
 	 action:  STATE_SET "hidden" 0.0;
-	 target:  "resize_bl";
-	 target:  "resize_br";
+	 target:  "e.event.resize.bl";
+	 target:  "e.event.resize.br";
       }
       program {
 	 name:    "unmaximize_fullscreen";
-	 signal:  "unmaximize,fullscreen";
-	 source:  "";
+	 signal:  "e,action,unmaximize,fullscreen";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
-	 target:  "resize_bl";
-	 target:  "resize_br";
+	 target:  "e.event.resize.bl";
+	 target:  "e.event.resize.br";
       }
       
       program {
 	 name:    "go_hung";
-	 signal:  "hung";
-	 source:  "";
+	 signal:  "e,state,hung";
+	 source:  "e";
 	 action:  STATE_SET "hung" 0.0;
 	 target:  "title_hung";
          transition: DECELERATE 0.5;
@@ -2557,8 +2568,8 @@ group {
       }
       program {
 	 name:    "go_unhung";
-	 signal:  "unhung";
-	 source:  "";
+	 signal:  "e,state,unhung";
+	 source:  "e";
 	 action:  ACTION_STOP;
 	 target:  "go_hung";
 	 target:  "go_hung2";
@@ -2614,8 +2625,8 @@ group {
 	       offset:   0    7;
 	    }
 	    text {
-	       text_source:   "title_text";
-	       source:        "title_text";
+	       text_source:   "e.text.title";
+	       source:        "e.text.title";
 	       min:           0 1;
 	       text_class:    "title_bar";
 	    }
@@ -3112,7 +3123,7 @@ group {
 	 }
       }
       part {
-	 name:           "title_text";
+	 name:           "e.text.title";
 	 type:           TEXT;
 	 effect:         SHADOW;
 	 mouse_events:   0;
@@ -3336,7 +3347,7 @@ group {
 	 }
       }
       part {
-	 name:          "icon_swallow";
+	 name:          "e.swallow.icon";
 	 type:          SWALLOW;
 	 description {
 	    state:    "default" 0.0;
@@ -3354,7 +3365,7 @@ group {
 	 }
       }
       part {
-	 name:          "resize_l";
+	 name:          "e.event.resize.l";
 	 type:          RECT;
 	 description {
 	    state:    "default" 0.0;
@@ -3371,7 +3382,7 @@ group {
 	 }
       }
       part {
-	 name:          "resize_r";
+	 name:          "e.event.resize.r";
 	 type:          RECT;
 	 description {
 	    state:    "default" 0.0;
@@ -3388,7 +3399,7 @@ group {
 	 }
       }
       part {
-	 name:          "resize_b";
+	 name:          "e.event.resize.b";
 	 type:          RECT;
 	 description {
 	    state:    "default" 0.0;
@@ -3404,7 +3415,7 @@ group {
 	 }
       }
       part {
-	 name:          "resize_bl";
+	 name:          "e.event.resize.bl";
 	 type:          RECT;
 	 description {
 	    state:    "default" 0.0;
@@ -3420,7 +3431,7 @@ group {
 	 }
       }
       part {
-	 name:          "resize_br";
+	 name:          "e.event.resize.br";
 	 type:          RECT;
 	 description {
 	    state:    "default" 0.0;
@@ -3436,7 +3447,7 @@ group {
 	 }
       }
       part {
-	 name:          "client";
+	 name:          "e.client";
 	 type:          SWALLOW;
 	 description {
 	    state:    "default" 0.0;
@@ -3457,21 +3468,21 @@ group {
       BORDER_BUTTON_ADV("close","close",0.0,0.0, 0,0,"whole", "whole",1.0,1.0,-1,5,"whole", "title2")
 	
       part {
-	 name:          "icon";
+	 name:          "e.event.icon";
 	 type:          RECT;
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       to:    "icon_swallow";
+	       to:    "e.swallow.icon";
 	    }
 	    rel2 {
-	       to:    "icon_swallow";
+	       to:    "e.swallow.icon";
 	    }
 	    color: 0 0 0 0;
 	 }
       }
       part {
-	 name:          "title";
+	 name:          "e.event.titlebar";
 	 type:          RECT;
 	 description {
 	    state:    "default" 0.0;
@@ -3488,8 +3499,8 @@ group {
    programs {
       program {
 	 name:    "go_active_pre";
-	 signal:  "active";
-	 source:  "";
+	 signal:  "e,state,focused";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "title_outline";
 	 target:  "title_bar";
@@ -3565,8 +3576,8 @@ group {
 
       program {
 	 name:    "go_passive_pre";
-	 signal:  "passive";
-	 source:  "";
+	 signal:  "e,state,unfocused";
+	 source:  "e";
 	 action:  STATE_SET "active" 0.0;
 	 target:  "title_outline";
 	 target:  "title_bar";
@@ -3663,8 +3674,8 @@ group {
 
       program {
 	 name:    "maximize_fullscreen";
-	 signal:  "maximize,fullscreen";
-	 source:  "";
+	 signal:  "e,action,maximize,fullscreen";
+	 source:  "e";
 	 action:  STATE_SET "hidden" 0.0;
 	 target:  "t1";
 	 target:  "t3";
@@ -3676,8 +3687,8 @@ group {
       }
       program {
 	 name:    "unmaximize_fullscreen";
-	 signal:  "unmaximize,fullscreen";
-	 source:  "";
+	 signal:  "e,action,unmaximize,fullscreen";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "t1";
 	 target:  "t3";
@@ -3690,8 +3701,8 @@ group {
       
       program {
 	 name:    "go_hung";
-	 signal:  "hung";
-	 source:  "";
+	 signal:  "e,state,hung";
+	 source:  "e";
 	 action:  STATE_SET "hung" 0.0;
 	 target:  "title_hung";
          transition: DECELERATE 0.5;
@@ -3706,8 +3717,8 @@ group {
       }
       program {
 	 name:    "go_unhung";
-	 signal:  "unhung";
-	 source:  "";
+	 signal:  "e,state,unhung";
+	 source:  "e";
 	 action:  ACTION_STOP;
 	 target:  "go_hung";
 	 target:  "go_hung2";
@@ -3763,8 +3774,8 @@ group {
 	       offset:   0    7;
 	    }
 	    text {
-	       text_source:   "title_text";
-	       source:        "title_text";
+	       text_source:   "e.text.title";
+	       source:        "e.text.title";
 	       min:           0 1;
 	       text_class:    "title_bar";
 	    }
@@ -4261,7 +4272,7 @@ group {
 	 }
       }
       part {
-	 name:           "title_text";
+	 name:           "e.text.title";
 	 type:           TEXT;
 	 effect:         SHADOW;
 	 mouse_events:   0;
@@ -4485,7 +4496,7 @@ group {
 	 }
       }
       part {
-	 name:          "icon_swallow";
+	 name:          "e.swallow.icon";
 	 type:          SWALLOW;
 	 description {
 	    state:    "default" 0.0;
@@ -4503,7 +4514,7 @@ group {
 	 }
       }
       part {
-	 name:          "client";
+	 name:          "e.client";
 	 type:          SWALLOW;
 	 description {
 	    state:    "default" 0.0;
@@ -4524,21 +4535,21 @@ group {
       BORDER_BUTTON_ADV("close","close",0.0,0.0, 0,0,"whole", "whole",1.0,1.0,-1,5,"whole", "title2")
 	
       part {
-	 name:          "icon";
+	 name:          "e.event.icon";
 	 type:          RECT;
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       to:    "icon_swallow";
+	       to:    "e.swallow.icon";
 	    }
 	    rel2 {
-	       to:    "icon_swallow";
+	       to:    "e.swallow.icon";
 	    }
 	    color: 0 0 0 0;
 	 }
       }
       part {
-	 name:          "title";
+	 name:          "e.event.titlebar";
 	 type:          RECT;
 	 description {
 	    state:    "default" 0.0;
@@ -4555,8 +4566,8 @@ group {
    programs {
       program {
 	 name:    "go_active_pre";
-	 signal:  "active";
-	 source:  "";
+	 signal:  "e,state,focused";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "title_outline";
 	 target:  "title_bar";
@@ -4632,8 +4643,8 @@ group {
 
       program {
 	 name:    "go_passive_pre";
-	 signal:  "passive";
-	 source:  "";
+	 signal:  "e,state,unfocused";
+	 source:  "e";
 	 action:  STATE_SET "active" 0.0;
 	 target:  "title_outline";
 	 target:  "title_bar";
@@ -4730,8 +4741,8 @@ group {
 
       program {
 	 name:    "maximize_fullscreen";
-	 signal:  "maximize,fullscreen";
-	 source:  "";
+	 signal:  "e,action,maximize,fullscreen";
+	 source:  "e";
 	 action:  STATE_SET "hidden" 0.0;
 	 target:  "t1";
 	 target:  "t3";
@@ -4743,8 +4754,8 @@ group {
       }
       program {
 	 name:    "unmaximize_fullscreen";
-	 signal:  "unmaximize,fullscreen";
-	 source:  "";
+	 signal:  "e,action,unmaximize,fullscreen";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "t1";
 	 target:  "t3";
@@ -4757,8 +4768,8 @@ group {
       
       program {
 	 name:    "go_hung";
-	 signal:  "hung";
-	 source:  "";
+	 signal:  "e,state,hung";
+	 source:  "e";
 	 action:  STATE_SET "hung" 0.0;
 	 target:  "title_hung";
          transition: DECELERATE 0.5;
@@ -4773,8 +4784,8 @@ group {
       }
       program {
 	 name:    "go_unhung";
-	 signal:  "unhung";
-	 source:  "";
+	 signal:  "e,state,unhung";
+	 source:  "e";
 	 action:  ACTION_STOP;
 	 target:  "go_hung";
 	 target:  "go_hung2";
@@ -4862,7 +4873,7 @@ group {
 	 }
       }
       part {
-	 name:          "client";
+	 name:          "e.client";
 	 type:          SWALLOW;
 	 description {
 	    state:    "default" 0.0;

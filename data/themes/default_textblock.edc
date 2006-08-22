@@ -15,7 +15,7 @@ group {
    name: "widgets/textblock";
    parts {
       part {
-	 name:          "text";
+	 name:          "e.textblock.text";
 	 type:          TEXTBLOCK;
 	 mouse_events:  0;
 	 description {

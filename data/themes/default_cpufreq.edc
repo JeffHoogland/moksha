@@ -382,7 +382,7 @@ group {
 	 name: "next_governor";
 	 signal: "mouse,down,1";
 	 source: "cpu";
-	 action: SIGNAL_EMIT "next_governor" "governor";
+	 action: SIGNAL_EMIT "e,action,governor,next" "";
       }
       program {
 	 name: "next_governor2";
@@ -402,7 +402,7 @@ group {
 	 name: "increase_frequency";
 	 signal: "mouse,down,1";
 	 source: "increase";
-	 action: SIGNAL_EMIT "increase_frequency" "frequency";
+	 action: SIGNAL_EMIT "e,action,frequency,increase" "";
       }
       program {
 	 name: "increase_frequency2";
@@ -422,7 +422,7 @@ group {
 	 name: "decrease_frequency";
 	 signal: "mouse,down,1";
 	 source: "decrease";
-	 action: SIGNAL_EMIT "decrease_frequency" "frequency";
+	 action: SIGNAL_EMIT "e,action,frequency,decrease" "";
       }
       program {
 	 name: "decrease_frequency2";
@@ -440,15 +440,15 @@ group {
       }
       program {
 	 name: "enabled";
-	 signal: "active";
-	 source: "";
+	 signal: "e,state,enabled";
+	 source: "e";
 	 action: STATE_SET "default" 0.0;
 	 target: "fade_clip";
       }
       program {
 	 name: "disabled";
-	 signal: "passive";
-	 source: "";
+	 signal: "e,state,disabled";
+	 source: "e";
 	 action: STATE_SET "faded" 0.0;
 	 target: "fade_clip";
       }

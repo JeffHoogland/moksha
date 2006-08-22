@@ -69,7 +69,7 @@ group {
 	 }
       }
       part {
-	 name:           "reading";
+	 name:           "e.text.reading";
 	 type:           TEXT;
 	 effect:         SOFT_SHADOW;
 	 clip_to:        "fade_clip";
@@ -162,15 +162,15 @@ group {
    programs {
       program {
 	 name: "known";
-	 signal: "known";
-	 source: "";
+	 signal: "e,state,known";
+	 source: "e";
 	 action: STATE_SET "default" 0.0;
 	 target: "fade_clip";
       }
       program {
 	 name: "unknown";
-	 signal: "unknown";
-	 source: "";
+	 signal: "e,state,unknown";
+	 source: "e";
 	 action: STATE_SET "faded" 0.0;
 	 target: "fade_clip";
       }

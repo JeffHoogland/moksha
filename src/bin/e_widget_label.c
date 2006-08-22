@@ -29,7 +29,7 @@ e_widget_label_add(Evas *evas, const char *label)
    e_theme_edje_object_set(o, "base/theme/widgets",
 			   "widgets/label");
    wd->text = o;
-   edje_object_part_text_set(o, "label", label);
+   edje_object_part_text_set(o, "e.text.label", label);
    evas_object_show(o);
    edje_object_size_min_calc(o, &mw, &mh);
    e_widget_can_focus_set(obj, 0);
@@ -47,7 +47,7 @@ e_widget_label_text_set(Evas_Object *obj, const char *text)
    Evas_Coord mw, mh;
 
    wd = e_widget_data_get(obj);
-   edje_object_part_text_set(wd->text, "label", text);
+   edje_object_part_text_set(wd->text, "e.text.label", text);
    edje_object_size_min_calc(wd->text, &mw, &mh);
    edje_extern_object_min_size_set(wd->text, mw, mh);
    return;

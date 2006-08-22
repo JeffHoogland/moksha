@@ -63,7 +63,7 @@ group {
 	 }
       }
     part {
-      name: "cursor";
+      name: "e.dragable.cursor";
       type: RECT;
       dragable {
         confine: "content";
@@ -94,11 +94,11 @@ group {
       description {
         state: "default" 0.0;
         rel1 {
-          to_x: "cursor";
+          to_x: "e.dragable.cursor";
           to_y: "content";
         }
         rel2 {
-          to_x: "cursor";
+          to_x: "e.dragable.cursor";
           to_y: "content";
 
         }
@@ -111,11 +111,11 @@ group {
         state: "default" 0.0;
         rel1 {
           to_x: "content";
-          to_y: "cursor";
+          to_y: "e.dragable.cursor";
         }
         rel2 {
           to_x: "content";
-          to_y: "cursor";
+          to_y: "e.dragable.cursor";
 
         }
       }

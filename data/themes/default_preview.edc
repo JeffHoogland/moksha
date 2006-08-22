@@ -12,11 +12,11 @@ group {
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       to: "item";
+	       to: "e.swallow.content";
 	       offset: -3 -3;
 	    }
 	    rel2 {
-	       to: "item";
+	       to: "e.swallow.content";
 	       offset: 2 2;
 	    }
 	    image {
@@ -35,15 +35,15 @@ group {
 	 description {
 	    state: "default" 0.0;
 	    rel1 {
-	       to: "item";
+	       to: "e.swallow.content";
 	    }
 	    rel2 {
-	       to: "item";
+	       to: "e.swallow.content";
 	    }
 	 }
       }
       part {
-	 name: "item";
+	 name: "e.swallow.content";
 	 clip_to: "clipper";
 	 type: SWALLOW;
 	 mouse_events: 0;

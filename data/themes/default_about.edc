@@ -232,11 +232,11 @@ group {
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       to:       "about";
+	       to:       "e.text.about";
 	       offset:   -7 -7;
 	    }
 	    rel2 {
-	       to:       "about";
+	       to:       "e.text.about";
 	       offset:   6 6;
 	    }
 	    image {
@@ -251,11 +251,11 @@ group {
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       to:       "authors";
+	       to:       "e.text.authors";
 	       offset:   -7 -7;
 	    }
 	    rel2 {
-	       to:       "authors";
+	       to:       "e.text.authors";
 	       offset:   6 6;
 	    }
 	    image {
@@ -302,7 +302,7 @@ group {
 	 }
       }
       part {
-	 name:          "about";
+	 name:          "e.text.about";
 	 type:          TEXTBLOCK;
 	 mouse_events:  0;
 	 description {
@@ -310,7 +310,7 @@ group {
 	    max: 200 1000;
 	    min: 200 0;
 	    rel1 {
-	       to_y: "version";
+	       to_y: "e.text.version";
 	       relative: 0.0 1.0;
 	       offset: 16 8;
 	    }
@@ -327,7 +327,7 @@ group {
 	 }
       }
       part {
-	 name:          "authors";
+	 name:          "e.text.authors";
 	 type:          TEXTBLOCK;
 	 mouse_events:  0;
 	 description {
@@ -335,7 +335,7 @@ group {
 	    max: 1000 1000;
 	    min: 200  0;
 	    rel1 {
-	       to_y: "version";
+	       to_y: "e.text.version";
 	       to_x: "logo";
 	       relative: 1.0 1.0;
 	       offset: 8 8;
@@ -386,7 +386,7 @@ group {
 	 }
       }
       part {
-	 name:          "title";
+	 name:          "e.text.title";
 	 type:          TEXT;
 	 effect:        SOFT_SHADOW;
 	 mouse_events:  0;
@@ -415,7 +415,7 @@ group {
 	 }
       }
       part {
-	 name:          "version";
+	 name:          "e.text.version";
 	 type:          TEXT;
 	 effect:        SOFT_SHADOW;
 	 mouse_events:  0;
@@ -424,12 +424,12 @@ group {
 	    fixed:    0 1;
 	    align:    0.5 0.0;
 	    rel1 {
-	       to: "title";
+	       to: "e.text.title";
 	       relative: 0.0  1.0;
 	       offset:   6    2;
 	    }
 	    rel2 {
-	       to: "title";
+	       to: "e.text.title";
 	       relative: 1.0  1.0;
 	       offset:   -7   2;
 	    }
@@ -458,12 +458,12 @@ group {
 	    rel1 {
 	       relative: 0.5  0.5;
 	       offset:   0    0;
-	       to_y:     "about";
+	       to_y:     "e.text.about";
 	    }
 	    rel2 {
 	       relative: 0.5  0.5;
 	       offset:   0    0;
-	       to_y:     "about";
+	       to_y:     "e.text.about";
 	    }
 	    image {
 	       normal:   "e17_logo.png";
@@ -549,7 +549,7 @@ group {
 	 name:   "button_unclick2";
 	 signal: "mouse,clicked,1";
 	 source: "button";
-	 action: SIGNAL_EMIT "close" "";
+	 action: SIGNAL_EMIT "e,action,close" "";
       }
       
       program {      

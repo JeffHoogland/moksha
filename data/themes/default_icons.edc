@@ -115,16 +115,16 @@ group {
    programs {
       program {	 
 	 name:       "e_in";
-	 signal:     "active";
-	 source:     "";
+	 signal:     "e,state,selected";
+	 source:     "e";
 	 action:     STATE_SET "hilited" 0.0;
 	 transition: LINEAR 0.5;
 	 target:     "e_glow";
       }
       program {
 	 name:       "e_out";
-	 signal:     "passive";
-	 source:     "";
+	 signal:     "e,state,unselected";
+	 source:     "e";
 	 action:     STATE_SET "default" 0.0;
 	 transition: LINEAR 0.5;
 	 target:     "e_glow";
@@ -176,16 +176,16 @@ group {
    programs {
       program {	 
 	 name:       "power_button_in";
-	 signal:     "active";
-	 source:     "";
+	 signal:     "e,state,selected";
+	 source:     "e";
 	 action:     STATE_SET "hilited" 0.0;
 	 transition: LINEAR 0.5;
 	 target:     "power_button_glow";
       }
       program {
 	 name:       "power_button_out";
-	 signal:     "passive";
-	 source:     "";
+	 signal:     "e,state,unselected";
+	 source:     "e";
 	 action:     STATE_SET "default" 0.0;
 	 transition: LINEAR 0.5;
 	 target:     "power_button_glow";
@@ -237,16 +237,16 @@ group {
    programs {
       program {	 
 	 name:       "reset_button_in";
-	 signal:     "active";
-	 source:     "";
+	 signal:     "e,state,selected";
+	 source:     "e";
 	 action:     STATE_SET "hilited" 0.0;
 	 transition: LINEAR 0.5;
 	 target:     "reset_button_glow";
       }
       program {
 	 name:       "reset_button_out";
-	 signal:     "passive";
-	 source:     "";
+	 signal:     "e,state,unselected";
+	 source:     "e";
 	 action:     STATE_SET "default" 0.0;
 	 transition: LINEAR 0.5;
 	 target:     "reset_button_glow";
@@ -469,16 +469,16 @@ group {
    programs {
       program {	 
 	 name:       "fileman_button_in";
-	 signal:     "active";
-	 source:     "";
+	 signal:     "e,state,selected";
+	 source:     "e";
 	 action:     STATE_SET "hilited" 0.0;
 	 transition: LINEAR 0.5;
 	 target:     "fileman_button_glow";
       }
       program {
 	 name:       "fileman_button_out";
-	 signal:     "passive";
-	 source:     "";
+	 signal:     "e,state,unselected";
+	 source:     "e";
 	 action:     STATE_SET "default" 0.0;
 	 transition: LINEAR 0.5;
 	 target:     "fileman_button_glow";
@@ -1385,9 +1385,10 @@ group {
 	    }
             gradient {
               spectrum: "black_to_trans";
-            }
-            fill {
-              angle: 270;
+							rel1.relative: 0 0.5;
+							rel1.offset: 0 0;
+							rel2.relative: 1 0.5;
+							rel2.offset: -1 0;
             }
 	 }
       }
@@ -1427,9 +1428,6 @@ group {
             gradient {
               spectrum: "black_to_trans";
             }
-            fill {
-              angle: 0;
-            }
 	 }
       }
       part {
@@ -1467,9 +1465,10 @@ group {
 	    }
             gradient {
               spectrum: "black_to_trans";
-            }
-            fill {
-              angle: 225;
+							rel1.relative: 0 1;
+							rel1.offset: 0 -1;
+							rel2.relative: 1 0;
+							rel2.offset: -1 0;
             }
 	 }
       }
@@ -1508,9 +1507,10 @@ group {
 	    }
             gradient {
               spectrum: "black_to_trans";
-            }
-            fill {
-              angle: 315;
+							rel1.relative: 0 0;
+							rel1.offset: 0 0;
+							rel2.relative: 1 1;
+							rel2.offset: -1 -1;
             }
 	 }
       }

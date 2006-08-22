@@ -48,7 +48,7 @@ e_theme_about_new(E_Container *con)
    evas_object_move(o, 0, 0);
    evas_object_show(o);
    
-   edje_object_signal_callback_add(about->bg_object, "close", "",
+   edje_object_signal_callback_add(about->bg_object, "e,action,close", "",
 				   _e_theme_about_cb_close, about);
    e_win_centered_set(about->win, 1);
    return about;

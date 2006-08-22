@@ -7,7 +7,7 @@ group {
    name: "widgets/frame";
    parts {
       part {
-	 name:          "items";
+	 name:          "e.swallow.content";
 	 mouse_events:  0;
 	 type:          SWALLOW;
 	 description {
@@ -32,7 +32,7 @@ group {
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       to_y: "label";
+	       to_y: "e.text.label";
 	       relative: 0.0  0.5;
 	       offset:   2    -1;
 	    }
@@ -75,7 +75,7 @@ group {
 	 }
       }
       part {
-	 name:           "label";
+	 name:           "e.text.label";
 	 type:           TEXT;
 	 mouse_events:   0;
 	 description {
@@ -107,12 +107,12 @@ group {
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       to:       "label";
+	       to:       "e.text.label";
 	       relative: 0.0  0.0;
 	       offset:   -5   -4;
 	    }
 	    rel2 {
-	       to:       "label";
+	       to:       "e.text.label";
 	       relative: 1.0  1.0;
 	       offset:   2    2;
 	    }

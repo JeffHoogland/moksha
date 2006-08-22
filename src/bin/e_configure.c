@@ -59,7 +59,7 @@ e_configure_show(E_Container *con)
    e_widget_ilist_selector_set(eco->ilist, 1);
    e_widget_min_size_get(eco->ilist, &mw, &mh);
    edje_extern_object_min_size_set(eco->ilist, mw, mh);
-   edje_object_part_swallow(eco->edje, "item", eco->ilist);
+   edje_object_part_swallow(eco->edje, "e.swallow.content", eco->ilist);
    edje_object_part_text_set(eco->edje, "title", _("Configuration Panel"));
 
    /* add items here */
@@ -105,7 +105,7 @@ e_configure_show(E_Container *con)
    eco->close = e_widget_button_add(eco->evas, _("Close"), NULL, _e_configure_cb_close, eco, NULL);
    e_widget_min_size_get(eco->close, &mw, &mh);
    edje_extern_object_min_size_set(eco->close, mw, mh);
-   edje_object_part_swallow(eco->edje, "button", eco->close);
+   edje_object_part_swallow(eco->edje, "e.swallow.button", eco->close);
 
    edje_object_size_min_calc(eco->edje, &ew, &eh);
    e_win_resize(eco->win, ew, eh);

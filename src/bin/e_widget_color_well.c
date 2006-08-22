@@ -109,7 +109,7 @@ e_widget_color_well_add(Evas *evas, E_Color *color, int show_color_dialog)
    e_widget_resize_object_set(obj, o);
    e_theme_edje_object_set(o, "base/theme/widgets",
 			   "widgets/color_well");
-   edje_object_signal_callback_add(o, "click", "", _e_wid_signal_cb1, obj);
+   edje_object_signal_callback_add(o, "e,action,click", "", _e_wid_signal_cb1, obj);
    evas_object_show(o); 
    wd->o_edje = o;
 
@@ -119,7 +119,7 @@ e_widget_color_well_add(Evas *evas, E_Color *color, int show_color_dialog)
    o = evas_object_rectangle_add(evas);
    e_widget_sub_object_add(obj, o);
    evas_object_color_set(o, color->r, color->g, color->b, color->a);
-   edje_object_part_swallow(wd->o_edje, "content", o);
+   edje_object_part_swallow(wd->o_edje, "e.swallow.content", o);
    evas_object_show(o);
    wd->o_rect = o;
 
