@@ -26,9 +26,8 @@ static int _e_menu_make_apps(const void *data, Ecore_Desktop_Tree * tree, int el
 static void _e_menu_dump_each_hash_node(void *value, void *user_data);
 static int _e_search_list(Ecore_List *list, const char *search);
 
-
-void
-e_fdo_menu_to_order()
+EAPI void
+e_fdo_menu_to_order(void)
 {
    char *menu_file;
 
