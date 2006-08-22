@@ -130,6 +130,15 @@ struct _E_Menu_Item
       void (*func) (void *data, E_Menu *m, E_Menu_Item *mi);
    } submenu_post_cb;
 
+   struct {
+      void *data;
+      void (*func) (void *data, E_Menu *m, E_Menu_Item *mi);
+   } drag_cb; /* Callback for menu item dragging */
+
+   struct {
+      int x, y;
+   } drag;
+
    unsigned char  separator : 1;
    unsigned char  radio : 1;
    unsigned char  check : 1;
@@ -190,6 +199,7 @@ EAPI void         e_menu_item_callback_set(E_Menu_Item *mi,  void (*func) (void 
 EAPI void         e_menu_item_realize_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data);
 EAPI void         e_menu_item_submenu_pre_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data);
 EAPI void         e_menu_item_submenu_post_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data);
+EAPI void         e_menu_item_drag_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data);
 EAPI void         e_menu_item_active_set(E_Menu_Item *mi, int active);
 
 EAPI void         e_menu_idler_before(void);

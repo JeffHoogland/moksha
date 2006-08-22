@@ -92,6 +92,8 @@ static E_Menu_Item         *_e_active_menu_item         = NULL;
 static Evas_Hash	   *_e_menu_categories		= NULL;
 static Ecore_X_Time         _e_menu_activate_time       = 0;
 static int                  _e_menu_activate_floating   = 0;
+static int                  _e_menu_activate_maybe_drag = 0;
+static int                  _e_menu_activate_dragging   = 0;
 static Ecore_Timer         *_e_menu_scroll_timer        = NULL;
 static double               _e_menu_scroll_start        = 0.0;
 static int                  _e_menu_x                   = 0;
@@ -776,6 +778,15 @@ e_menu_item_submenu_post_callback_set(E_Menu_Item *mi,  void (*func) (void *data
    E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    mi->submenu_post_cb.func = func;
    mi->submenu_post_cb.data = data;
+}
+
+EAPI void
+e_menu_item_drag_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data)
+{
+   E_OBJECT_CHECK(mi);
+   E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
+   mi->drag_cb.func = func;
+   mi->drag_cb.data = data;
 }
 
 EAPI void
@@ -1778,6 +1789,9 @@ _e_menu_deactivate_all(void)
 	m->parent_item = NULL;
 	e_object_unref(E_OBJECT(m));
      }
+   _e_menu_activate_floating = 0;
+   _e_menu_activate_maybe_drag = 0;
+   _e_menu_activate_dragging = 0;
 }
 
 static void
@@ -2473,9 +2487,24 @@ static void
 _e_menu_cb_item_out(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 {
    E_Menu_Item *mi;
+   Evas_Event_Mouse_In *ev;
    
    mi = data;
+   ev = event_info;
    e_menu_item_active_set(mi, 0);
+   if (_e_menu_activate_maybe_drag)
+      {
+	 if (mi->drag_cb.func)
+	    {
+               /* User is dragging a draggable item elsewhere. */
+	       mi->drag.x = ev->output.x - (ev->output.x - mi->x);
+	       mi->drag.y = ev->output.y - (ev->output.y - mi->y);
+               _e_menu_deactivate_all();
+	       mi->drag_cb.func(mi->drag_cb.data, mi->menu, mi);
+	    }
+         /* Either way, the maybe drag stops here. */
+         _e_menu_activate_maybe_drag = 0;
+      }
 }
 
 static int
@@ -2560,6 +2589,15 @@ _e_menu_cb_mouse_down(void *data, int type, void *event)
    
    ev = event;
    if (ev->win != _e_menu_win) return 1;
+
+   /* Only allow dragging from floating menus for now.
+    * The reason for this is that for non floating menus, 
+    * the mouse is already down and dragging, so the decision
+    * to start a drag is much more complex.
+    */
+   if (_e_menu_activate_floating)
+         _e_menu_activate_maybe_drag = 1;
+
    return 1;
 }
 
@@ -2568,11 +2606,11 @@ _e_menu_cb_mouse_up(void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_Button_Up *ev;
    Ecore_X_Time t;
-   int ret;
+   int ret = 0;
    
    ev = event;
    if (ev->win != _e_menu_win) return 1;
-   
+
    t = ev->time - _e_menu_activate_time;
    if ((_e_menu_activate_time != 0) &&
        (t < (e_config->menus_click_drag_timeout * 1000)))
@@ -2581,7 +2619,16 @@ _e_menu_cb_mouse_up(void *data, int type, void *event)
 	return 1;
      }
 
-   ret = _e_menu_active_call();
+   if (_e_menu_activate_dragging)
+      {
+         /* FIXME: This is a drop, which is not allowed for now.
+	  * Once dragging is working, this will be subject to some experimenattion.
+	  */
+      }
+   else
+      ret = _e_menu_active_call();
+   _e_menu_activate_maybe_drag = 0;
+   _e_menu_activate_dragging = 0;
    if (ret == 1)
      {
 /* allow mouse to pop down menu if clicked elsewhere */	
@@ -2617,6 +2664,7 @@ _e_menu_cb_mouse_move(void *data, int type, void *event)
      is_fast = 1;
 //   printf("d=%i dt=%3.9f fast_move_threshold=%3.3f ---> FAST=%i\n", 
 //	  d, dt, fast_move_threshold, is_fast);
+
    for (l = _e_active_menus; l; l = l->next)
      {
 	tmp = evas_list_append(tmp, l->data);

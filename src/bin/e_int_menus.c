@@ -33,6 +33,8 @@ static void _e_int_menus_apps_start          (void *data, E_Menu *m);
 static void _e_int_menus_apps_del_hook       (void *obj);
 static void _e_int_menus_apps_free_hook      (void *obj);
 static void _e_int_menus_apps_run            (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_apps_drag           (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_apps_drag_finished(E_Drag *drag, int dropped);
 static void _e_int_menus_config_pre_cb       (void *data, E_Menu *m);
 static void _e_int_menus_config_free_hook    (void *obj);
 static void _e_int_menus_config_item_cb      (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -472,6 +474,7 @@ _e_int_menus_apps_scan(E_Menu *m)
 	                     if (a->icon_path) e_menu_item_icon_path_set(mi, a->icon_path);
 			  }
 		       e_menu_item_callback_set(mi, _e_int_menus_apps_run, a);
+		       e_menu_item_drag_callback_set(mi, _e_int_menus_apps_drag, a);
 		       app_count++;
 		    }
 		  else
@@ -538,6 +541,41 @@ _e_int_menus_apps_run(void *data, E_Menu *m, E_Menu_Item *mi)
    a = data;
    e_zone_app_exec(m->zone, a);
    e_exehist_add("menu/apps", a->exe);
+}
+
+static void
+_e_int_menus_apps_drag(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_App *a;
+   
+   a = data;
+
+   /* start drag! */
+   if (mi->icon_object)
+      {
+	 E_Drag *drag;
+	 Evas_Object *o = NULL;
+	 Evas_Coord x, y, w, h;
+	 const char *file = NULL, *part = NULL;
+	 const char *drag_types[] = { "enlightenment/eapp" };
+
+	 evas_object_geometry_get(mi->icon_object,
+				     &x, &y, &w, &h);
+	 drag = e_drag_new(m->zone->container, x, y,
+			      drag_types, 1, a, -1, _e_int_menus_apps_drag_finished);
+
+         o = e_app_icon_add(e_drag_evas_get(drag), a);
+	 e_drag_object_set(drag, o);
+         e_drag_resize(drag, w, h);
+         e_object_ref(E_OBJECT(a));
+	 e_drag_start(drag, mi->drag.x + w, mi->drag.y + h);
+      }
+}
+
+static void
+_e_int_menus_apps_drag_finished(E_Drag *drag, int dropped)
+{
+   e_object_unref(E_OBJECT(drag->data));
 }
 
 static void
