@@ -6,10 +6,6 @@
 typedef enum _E_Color_Component E_Color_Component;
 typedef struct _E_Color E_Color;
 
-#else
-#ifndef E_COLOR_HEADER
-#define E_COLOR_HEADER
-
 enum _E_Color_Component
 {
    E_COLOR_COMPONENT_R,
@@ -20,6 +16,10 @@ enum _E_Color_Component
    E_COLOR_COMPONENT_V,
    E_COLOR_COMPONENT_MAX
 };
+
+#else
+#ifndef E_COLOR_HEADER
+#define E_COLOR_HEADER
 
 // used so that a single color struct can be shared by all elements of the color dialog
 struct _E_Color
