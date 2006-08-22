@@ -62,6 +62,7 @@
 #include <Ecore_File.h>
 #include <Ecore_X_Atoms.h>
 #include <Ecore_X_Cursor.h>
+#include <Ecore_Desktop.h>
 #include <Eet.h>
 #include <Edje.h>
 

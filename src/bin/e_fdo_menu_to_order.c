@@ -1,22 +1,4 @@
-/* This file currently lives in two places, the source code for E and the source code for e_utils e17genmenu
- *
- * It will soon go away from e17genmenu.  It still needs to be cleaned up to E coding specs.
- *
- * The standard includes will be replaced with "e.h" when this is no longer needed for e17genmenu.
- *
- * FIXME: .order file usage in here and in e_apps.c need to be reviewed.
- */
-
-#include "config.h"
-#include "e_fdo_menu_to_order.h"
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <limits.h>
-#include <string.h>
-#include <Ecore.h>
-#include <Ecore_Desktop.h>
-#include <Ecore_File.h>
+#include "e.h"
 
 //#define DEBUG 1
 
@@ -29,29 +11,52 @@ static int _e_search_list(Ecore_List *list, const char *search);
 EAPI void
 e_fdo_menu_to_order(void)
 {
+   int i;
+   /* i added all the files i see in /etc/xdg/menus on debian. maybe we
+    * should list the contents of the xdg menu dir and load every *.menu file
+    * ?
+    */
+   const char *menu_names[9] = 
+     {
+	"applications.menu",
+	  "gnome-applications.menu",
+	  "gnome-preferences.menu",
+	  "gnome-settings.menu",
+	  "kde-applications.menu",
+	  "kde-information.menu",
+	  "kde-screensavers.menu",
+	  "kde-settings.menu",
+	  "debian-menu.menu"
+     };
    char *menu_file;
-
-    /* Find the main menu file. */
-    menu_file = ecore_desktop_paths_file_find(ecore_desktop_paths_menus, "applications.menu", -1, NULL, NULL);
-    if (menu_file)
-      {
-         char *path;
-
-         path = ecore_file_get_dir(menu_file);
-         if (path)
-           {
-              Ecore_Desktop_Tree *menus;
-
-              /* convert the xml into menus */
-              menus = ecore_desktop_menu_get(menu_file);
-              if (menus)
-                {
-                   /* create the .eap and order files from the menu */
-                   ecore_desktop_tree_foreach(menus, 0, _e_menu_make_apps, path);
-                }
-              free(path);
-           }
-      }
+   
+   for (i = 0; i < 9; i++)
+     {
+	/* Find the main menu file. */
+	menu_file = ecore_desktop_paths_file_find(ecore_desktop_paths_menus, 
+						  menu_names[i], -1, NULL, NULL);
+	if (menu_file)
+	  {
+	     char *path;
+	     
+	     path = ecore_file_get_dir(menu_file);
+	     if (path)
+	       {
+		  Ecore_Desktop_Tree *menus;
+		  
+		  /* convert the xml into menus */
+		  menus = ecore_desktop_menu_get(menu_file);
+		  if (menus)
+		    {
+		       /* create the .eap and order files from the menu */
+		       ecore_desktop_tree_foreach(menus, 0, _e_menu_make_apps, path);
+		    }
+		  free(path);
+		  // FIXME: leak: menus?
+	       }
+	     // FIXME: leak: menu_file?
+	  }
+     }
 }
 
 static int

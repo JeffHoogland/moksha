@@ -885,7 +885,8 @@ _e_main_dirs_init(void)
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/menu/all/.order", homedir);
    if (!ecore_file_exists(buf))
      {
-        e_fdo_menu_to_order();
+// leave it to manual generation for now - ecore_desktop segv's badly.	
+//        e_fdo_menu_to_order();
      }
    /* FIXME: THIS is to get people started - shoudl be in a wizard */
    snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites", homedir);
