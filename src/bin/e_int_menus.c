@@ -602,6 +602,13 @@ _e_int_menus_eapedit_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
+_e_int_menus_fdomenus_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   /* This is temporarily put here so we can test the fdo menu convertor. */
+   e_fdo_menu_to_order();
+}
+
+static void
 _e_int_menus_background_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    e_int_config_wallpaper(m->zone->container);
@@ -654,6 +661,11 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    e_menu_item_label_set(mi, _("Create a new Application"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/e");
    e_menu_item_callback_set(mi, _e_int_menus_eapedit_item_cb, NULL);   
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Regenerate \"All Applications\" Menu"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/e");
+   e_menu_item_callback_set(mi, _e_int_menus_fdomenus_item_cb, NULL);   
 
    l = evas_hash_find(_e_int_menus_augmentation, "config");
    if (l)
