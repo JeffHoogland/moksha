@@ -59,16 +59,16 @@ group {
    programs {
       program {
          name: "entry_focus";
-         signal: "focus_in";
-         source: "";
+         signal: "e,state,focused";
+         source: "e";
          action: STATE_SET "focus" 0.0;
 	 transition: DECELERATE 0.2;
          target: "entry_focus";
       }
       program {
          name: "entry_unfocus";
-         signal: "focus_out";
-         source: "";
+         signal: "e,state,unfocused";
+         source: "e";
          action: STATE_SET "default" 0.0;
          transition: ACCELERATE 0.5;
          target: "entry_focus";
