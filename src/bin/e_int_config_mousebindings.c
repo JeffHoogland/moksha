@@ -497,8 +497,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    _update_binding_action_list(cfdata);
    _update_delete_button(cfdata);
-
-   e_dialog_resizable_set(cfd->dia, 1);
    return ol;
 }
 
