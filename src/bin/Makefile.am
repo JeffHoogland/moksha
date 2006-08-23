@@ -132,6 +132,7 @@ e_int_config_theme.h \
 e_int_config_icon_themes.h \
 e_int_config_menus.h \
 e_int_config_keybindings.h \
+e_int_config_mousebindings.h \
 e_int_config_cursor.h \
 e_int_config_fonts.h \
 e_int_config_startup.h \
@@ -283,6 +284,7 @@ e_int_config_theme.c \
 e_int_config_icon_themes.c \
 e_int_config_menus.c \
 e_int_config_keybindings.c \
+e_int_config_mousebindings.c \
 e_int_config_cursor.c \
 e_int_config_fonts.c \
 e_int_config_startup.c \

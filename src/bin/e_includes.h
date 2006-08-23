@@ -105,6 +105,7 @@
 #include "e_int_config_icon_themes.h"
 #include "e_int_config_menus.h"
 #include "e_int_config_keybindings.h"
+#include "e_int_config_mousebindings.h"
 #include "e_int_config_cursor.h"
 #include "e_int_config_fonts.h"
 #include "e_int_config_startup.h"
