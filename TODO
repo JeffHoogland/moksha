@@ -83,9 +83,9 @@ Some of the things (in very short form) that need to be done to E17...
   changes.
 * keybindings dialog doesn't conform its formatting or datatype naming to
   anything else in e17 - it needs fixing.
-* need to do a massive theme spec overhaul. need to namespace signals, special
-  named parts that are needed, specific what is NEEDED froma  theme, what is
-  optional (in terms of parts, groups and signals). etc.
+* need to audit, namespace and expand text and color classes
+* need to specify what is NEEDED from a  theme, what is  optional (in terms of
+  parts, groups and signals). etc.
 * default config for shelf is screwy and needs fixing - related to gadcon
   layout algorithm though.
 * ipc is a mess. overgrown. hard to work with. what to do? remove?
