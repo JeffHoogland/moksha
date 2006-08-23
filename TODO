@@ -8,6 +8,8 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: the ibar specific menu only shows when you right click on icons (and not
+  on the bar itself). so, if there are no icons you can't get to the config
 * BUG: "match this window only" doesnt fall back to other unused remembers
 * BUG: if app asks for borderless in properties - borderless toggle in menu
   doesn't have any effect.
