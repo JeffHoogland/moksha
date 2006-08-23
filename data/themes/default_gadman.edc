@@ -847,75 +847,75 @@ group {
    programs {
       program {
 	 name:    "api_hsize_on";
-	 signal:  "hsize";
-	 source:  "on";
+	 signal:  "e,state,hsize,on";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "hclip";
       }
       program {
 	 name:    "api_hsize_off";
-	 signal:  "hsize";
-	 source:  "off";
+	 signal:  "e,state,hsize,off";
+	 source:  "e";
 	 action:  STATE_SET "disabled" 0.0;
 	 target:  "hclip";
       }
       program {
 	 name:    "api_vsize_on";
-	 signal:  "vsize";
-	 source:  "on";
+	 signal:  "e,state,vsize,on";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "vclip";
       }
       program {
 	 name:    "api_vsize_off";
-	 signal:  "vsize";
-	 source:  "off";
+	 signal:  "e,state,vsize,off";
+	 source:  "e";
 	 action:  STATE_SET "disabled" 0.0;
 	 target:  "vclip";
       }
       program {
 	 name:    "api_move_on";
-	 signal:  "move";
-	 source:  "on";
+	 signal:  "e,state,move,on";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "indicator";
       }
       program {
 	 name:    "api_move_off";
-	 signal:  "move";
-	 source:  "off";
+	 signal:  "e,state,move,off";
+	 source:  "e";
 	 action:  STATE_SET "disabled" 0.0;
 	 target:  "indicator";
       }
 /*      
       program {
 	 name:    "api_active";
-	 signal:  "active";
-	 source:  "";
+	 signal:  "e,state,focused";
+	 source:  "e";
       }
       program {
 	 name:    "api_inactive";
-	 signal:  "inactive";
-	 source:  "";
+	 signal:  "e,state,unfocused";
+	 source:  "e";
       }
 */      
       program {
 	 name:    "mv_down";
 	 signal:  "mouse,down,1";
 	 source:  "overlay";
-	 action:  SIGNAL_EMIT "move_start" "";
+	 action:  SIGNAL_EMIT "e,action,move,start" "";
       }
       program {
 	 name:    "mv_up";
 	 signal:  "mouse,up,1";
 	 source:  "overlay";
-	 action:  SIGNAL_EMIT "move_stop" "";
+	 action:  SIGNAL_EMIT "e,action,move,stop" "";
       }
       program {
 	 name:    "mv_move";
 	 signal:  "mouse,move";
 	 source:  "overlay";
-	 action:  SIGNAL_EMIT "move_go" "";
+	 action:  SIGNAL_EMIT "e,action,move,go" "";
       }
       
       program {
@@ -938,19 +938,19 @@ group {
 	 name:    "h1_down2";
 	 signal:  "mouse,down,1";
 	 source:  "h1";
-	 action:  SIGNAL_EMIT "resize_start" "left";
+	 action:  SIGNAL_EMIT "e,action,resize,left,start" "";
       }
       program {
 	 name:    "h1_up2";
 	 signal:  "mouse,up,1";
 	 source:  "h1";
-	 action:  SIGNAL_EMIT "resize_stop" "left";
+	 action:  SIGNAL_EMIT "e,action,resize,left,stop" "";
       }
       program {
 	 name:    "h1_move";
 	 signal:  "mouse,move";
 	 source:  "h1";
-	 action:  SIGNAL_EMIT "resize_go" "left";
+	 action:  SIGNAL_EMIT "e,action,resize,left,go" "";
       }
       program {
 	 name:    "h1_in";
@@ -1051,19 +1051,19 @@ group {
 	 name:    "h2_down2";
 	 signal:  "mouse,down,1";
 	 source:  "h2";
-	 action:  SIGNAL_EMIT "resize_start" "right";
+	 action:  SIGNAL_EMIT "e,action,resize,right,start" "";
       }
       program {
 	 name:    "h2_up2";
 	 signal:  "mouse,up,1";
 	 source:  "h2";
-	 action:  SIGNAL_EMIT "resize_stop" "right";
+	 action:  SIGNAL_EMIT "e,action,resize,right,stop" "";
       }
       program {
 	 name:    "h2_move";
 	 signal:  "mouse,move";
 	 source:  "h2";
-	 action:  SIGNAL_EMIT "resize_go" "right";
+	 action:  SIGNAL_EMIT "e,action,resize,right,go" "";
       }
       program {
 	 name:    "h2_in";
@@ -1165,19 +1165,19 @@ group {
 	 name:    "v1_down2";
 	 signal:  "mouse,down,1";
 	 source:  "v1";
-	 action:  SIGNAL_EMIT "resize_start" "up";
+	 action:  SIGNAL_EMIT "e,action,resize,up,start" "";
       }
       program {
 	 name:    "v1_up2";
 	 signal:  "mouse,up,1";
 	 source:  "v1";
-	 action:  SIGNAL_EMIT "resize_stop" "up";
+	 action:  SIGNAL_EMIT "e,action,resize,up,stop" "";
       }
       program {
 	 name:    "v1_move";
 	 signal:  "mouse,move";
 	 source:  "v1";
-	 action:  SIGNAL_EMIT "resize_go" "up";
+	 action:  SIGNAL_EMIT "e,action,resize,up,go" "";
       }
       program {
 	 name:    "v1_in";
@@ -1279,19 +1279,19 @@ group {
 	 name:    "v2_down2";
 	 signal:  "mouse,down,1";
 	 source:  "v2";
-	 action:  SIGNAL_EMIT "resize_start" "down";
+	 action:  SIGNAL_EMIT "e,action,resize,down,start" "";
       }
       program {
 	 name:    "v2_up2";
 	 signal:  "mouse,up,1";
 	 source:  "v2";
-	 action:  SIGNAL_EMIT "resize_stop" "down";
+	 action:  SIGNAL_EMIT "e,action,resize,down,stop" "";
       }
       program {
 	 name:    "v2_move";
 	 signal:  "mouse,move";
 	 source:  "v2";
-	 action:  SIGNAL_EMIT "resize_go" "down";
+	 action:  SIGNAL_EMIT "e,action,resize,down,go" "";
       }
       program {
 	 name:    "v2_in";

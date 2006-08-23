@@ -381,7 +381,7 @@ group {
 	 target: "focus";
       }
       program {
-	 name: "e,action,show,label";
+	 name: "show_label";
 	 signal: "e,action,show,label";
 	 source: "e";
          action: STATE_SET "active" 0.0;
@@ -391,7 +391,7 @@ group {
 	 target: "label_over";
       }
       program {
-	 name: "e,action,hide,label";
+	 name: "hide_label";
 	 signal: "e,action,hide,label";
 	 source: "e";
          action: STATE_SET "default" 0.0;
@@ -792,7 +792,7 @@ group {
 	 target: "focus";
       }
       program {
-	 name: "e,action,show,label";
+	 name: "show_label";
 	 signal: "e,action,show,label";
 	 source: "e";
          action: STATE_SET "active" 0.0;
@@ -802,7 +802,7 @@ group {
 	 target: "label_over";
       }
       program {
-	 name: "e,action,hide,label";
+	 name: "hide_label";
 	 signal: "e,action,hide,label";
 	 source: "e";
          action: STATE_SET "default" 0.0;

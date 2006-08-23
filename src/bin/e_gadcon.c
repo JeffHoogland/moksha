@@ -619,16 +619,16 @@ e_gadcon_client_edit_begin(E_Gadcon_Client *gcc)
    if ((gcc->autoscroll) || (gcc->resizable))
      {
 	if (e_box_orientation_get(gcc->o_box))
-	  edje_object_signal_emit(gcc->o_control, "hsize", "on");
+	  edje_object_signal_emit(gcc->o_control, "e,state,hsize,on", "e");
 	else
-	  edje_object_signal_emit(gcc->o_control, "vsize", "on");
+	  edje_object_signal_emit(gcc->o_control, "e,state,vsize,on", "e");
      }
    else
      {
-	edje_object_signal_emit(gcc->o_control, "hsize", "off");
-	edje_object_signal_emit(gcc->o_control, "vsize", "off");
+	edje_object_signal_emit(gcc->o_control, "e,state,hsize,off", "e");
+	edje_object_signal_emit(gcc->o_control, "e,state,vsize,off", "e");
      }
-   edje_object_signal_emit(gcc->o_control, "move", "on");
+   edje_object_signal_emit(gcc->o_control, "e,state,move,on", "e");
    
    gcc->o_event = evas_object_rectangle_add(gcc->gadcon->evas);
    evas_object_color_set(gcc->o_event, 0, 0, 0, 0);
@@ -637,35 +637,35 @@ e_gadcon_client_edit_begin(E_Gadcon_Client *gcc)
    evas_object_move(gcc->o_event, x, y);
    evas_object_resize(gcc->o_event, w, h);
 
-   edje_object_signal_callback_add(gcc->o_control, "move_start", "",
+   edje_object_signal_callback_add(gcc->o_control, "e,action,move,start", "",
 				   _e_gadcon_cb_signal_move_start, gcc);
-   edje_object_signal_callback_add(gcc->o_control, "move_stop", "",
+   edje_object_signal_callback_add(gcc->o_control, "e,action,move,stop", "",
 				   _e_gadcon_cb_signal_move_stop, gcc);
-   edje_object_signal_callback_add(gcc->o_control, "move_go", "",
+   edje_object_signal_callback_add(gcc->o_control, "e,action,move,go", "",
 				   _e_gadcon_cb_signal_move_go, gcc);
-   edje_object_signal_callback_add(gcc->o_control, "resize_start", "left",
+   edje_object_signal_callback_add(gcc->o_control, "e,action,resize,left,start", "",
 				   _e_gadcon_cb_signal_resize_left_start, gcc);
-   edje_object_signal_callback_add(gcc->o_control, "resize_stop", "left",
+   edje_object_signal_callback_add(gcc->o_control, "e,action,resize,left,stop", "",
 				   _e_gadcon_cb_signal_resize_left_stop, gcc);
-   edje_object_signal_callback_add(gcc->o_control, "resize_go", "left",
+   edje_object_signal_callback_add(gcc->o_control, "e,action,resize,left,go", "",
 				   _e_gadcon_cb_signal_resize_left_go, gcc);
-   edje_object_signal_callback_add(gcc->o_control, "resize_start", "right",
+   edje_object_signal_callback_add(gcc->o_control, "e,action,resize,right,start", "",
 				   _e_gadcon_cb_signal_resize_right_start, gcc);
-   edje_object_signal_callback_add(gcc->o_control, "resize_stop", "right",
+   edje_object_signal_callback_add(gcc->o_control, "e,action,resize,right,stop", "",
 				   _e_gadcon_cb_signal_resize_right_stop, gcc);
-   edje_object_signal_callback_add(gcc->o_control, "resize_go", "right",
+   edje_object_signal_callback_add(gcc->o_control, "e,action,resize,right,go", "",
 				   _e_gadcon_cb_signal_resize_right_go, gcc);
-   edje_object_signal_callback_add(gcc->o_control, "resize_start", "up",
+   edje_object_signal_callback_add(gcc->o_control, "e,action,resize,up,start", "",
 				   _e_gadcon_cb_signal_resize_left_start, gcc);
-   edje_object_signal_callback_add(gcc->o_control, "resize_stop", "up",
+   edje_object_signal_callback_add(gcc->o_control, "e,action,resize,up,stop", "",
 				   _e_gadcon_cb_signal_resize_left_stop, gcc);
-   edje_object_signal_callback_add(gcc->o_control, "resize_go", "up",
+   edje_object_signal_callback_add(gcc->o_control, "e,action,resize,up,go", "",
 				   _e_gadcon_cb_signal_resize_left_go, gcc);
-   edje_object_signal_callback_add(gcc->o_control, "resize_start", "down",
+   edje_object_signal_callback_add(gcc->o_control, "e,action,resize,down,start", "",
 				   _e_gadcon_cb_signal_resize_right_start, gcc);
-   edje_object_signal_callback_add(gcc->o_control, "resize_stop", "down",
+   edje_object_signal_callback_add(gcc->o_control, "e,action,resize,down,stop", "",
 				   _e_gadcon_cb_signal_resize_right_stop, gcc);
-   edje_object_signal_callback_add(gcc->o_control, "resize_go", "down",
+   edje_object_signal_callback_add(gcc->o_control, "e,action,resize,down,go", "",
 				   _e_gadcon_cb_signal_resize_right_go, gcc);
    
    evas_object_event_callback_add(gcc->o_event, EVAS_CALLBACK_MOUSE_DOWN, _e_gadcon_cb_mouse_down, gcc);
