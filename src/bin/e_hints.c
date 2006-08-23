@@ -290,13 +290,12 @@ e_hints_client_stacking_set(void)
 	     num += e_container_borders_count(c);
 	  }
      }
-   
-   clients = calloc(num, sizeof(Ecore_X_Window));
-   if (!clients)
-      return;
 
    if (num > 0)
      {
+	clients = calloc(num, sizeof(Ecore_X_Window));
+	if (!clients) return;
+	
 	for (ml = e_manager_list(); ml; ml = ml->next)
 	  {
 	     m = ml->data;
@@ -305,15 +304,35 @@ e_hints_client_stacking_set(void)
 		  c = cl->data;
 		  bl = e_container_border_list_first(c);
 		  while ((b = e_container_border_list_next(bl)))
-		    clients[i++] = b->win;
+		    {
+		       if (i >= num)
+			 {
+			    e_error_message_show("e_hints.c: e_hints_client_stacking_set()<br>"
+						 "<br>"
+						 "Window list size greater than window count.<br>"
+						 "This is really bad.<br>"
+						 "Please report this.");
+			    break;
+			 }
+		       clients[i++] = b->win;
+		    }
 		  e_container_border_list_free(bl);
 	       }
+	  }
+	if (i < num)
+	  {
+	     e_error_message_show("e_hints.c: e_hints_client_stacking_set()<br>"
+				  "<br>"
+				  "Window list size less than window count.<br>"
+				  "This is strange, but not harmful.<br>"
+				  "Please report this.");
 	  }
 	for (ml = e_manager_list(); ml; ml = ml->next)
 	  {
 	     m = ml->data;
 	     ecore_x_netwm_client_list_stacking_set(m->root, clients, num);
 	  }
+	E_FREE(clients);
      }
    else
      {
@@ -323,7 +342,6 @@ e_hints_client_stacking_set(void)
 	     ecore_x_netwm_client_list_stacking_set(m->root, NULL, 0);
 	  }
      }
-   E_FREE(clients);
 }
 
 EAPI void
