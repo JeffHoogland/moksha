@@ -102,14 +102,14 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
 
    o = edje_object_add(evas);
    import->bg_obj = o;
-   e_theme_edje_object_set(o, "base/theme/dialog", "widgets/dialog/main");
+   e_theme_edje_object_set(o, "base/theme/dialog", "e/widgets/dialog/main");
    evas_object_move(o, 0, 0);
    evas_object_show(o);
    
    o = e_widget_list_add(evas, 1, 1);
    e_widget_on_focus_hook_set(o, _import_cb_wid_on_focus, import);
    import->box_obj = o;
-   edje_object_part_swallow(import->bg_obj, "buttons_swallow", o);
+   edje_object_part_swallow(import->bg_obj, "e.swallow.buttons", o);
 
    o = evas_object_rectangle_add(evas);
    import->event_obj = o;
@@ -176,7 +176,7 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    
    e_widget_min_size_get(o, &w, &h);
    edje_extern_object_min_size_set(o, w, h);
-   edje_object_part_swallow(import->bg_obj, "content_swallow", o);
+   edje_object_part_swallow(import->bg_obj, "e.swallow.content", o);
    evas_object_show(o);
    
    import->ok_obj = e_widget_button_add(evas, _("OK"), NULL, _import_cb_ok, win, cfdata);
@@ -190,7 +190,7 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    o = import->box_obj;
    e_widget_min_size_get(o, &w, &h);
    edje_extern_object_min_size_set(o, w, h);
-   edje_object_part_swallow(import->bg_obj, "buttons_swallow", o);
+   edje_object_part_swallow(import->bg_obj, "e.swallow.buttons", o);
    
    edje_object_size_min_calc(import->bg_obj, &w, &h);
    evas_object_resize(import->bg_obj, w, h + 64);
@@ -356,7 +356,7 @@ _import_edj_gen(Import *import)
 	fprintf(f, 
 		"images { image: \"%s\" %s; }\n"
 		"collections {\n"
-		"group { name: \"desktop/background\";\n"
+		"group { name: \"e/desktop/background\";\n"
 		"max: %i %i;\n"
 		"parts {\n"
 		"part { name: \"bg\"; mouse_events: 0;\n"
@@ -369,7 +369,7 @@ _import_edj_gen(Import *import)
 	fprintf(f, 
 		"images { image: \"%s\" %s; }\n"
 		"collections {\n"
-		"group { name: \"desktop/background\";\n"
+		"group { name: \"e/desktop/background\";\n"
 		"max: %i %i;\n"
 		"parts {\n"
 		"part { name: \"bg\"; mouse_events: 0;\n"
@@ -385,7 +385,7 @@ _import_edj_gen(Import *import)
 	fprintf(f, 
 		"images { image: \"%s\" %s; }\n"
 		"collections {\n"
-		"group { name: \"desktop/background\";\n"
+		"group { name: \"e/desktop/background\";\n"
 		"max: %i %i;\n"
 		"parts {\n"
 		"part { name: \"col\"; type: RECT; mouse_events: 0;\n"
@@ -403,7 +403,7 @@ _import_edj_gen(Import *import)
 	fprintf(f, 
 		"images { image: \"%s\" %s; }\n"
 		"collections {\n"
-		"group { name: \"desktop/background\";\n"
+		"group { name: \"e/desktop/background\";\n"
 		"max: %i %i;\n"
 		"parts {\n"
 		"part { name: \"col\"; type: RECT; mouse_events: 0;\n"
@@ -421,7 +421,7 @@ _import_edj_gen(Import *import)
 	fprintf(f, 
 		"images { image: \"%s\" %s; }\n"
 		"collections {\n"
-		"group { name: \"desktop/background\";\n"
+		"group { name: \"e/desktop/background\";\n"
 		"max: %i %i;\n"
 		"parts {\n"
 		"part { name: \"bg\"; mouse_events: 0;\n"
