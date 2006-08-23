@@ -14,7 +14,7 @@ images {
 styles
 {
    style {
-      name: "e/theme_about_style";
+      name: "theme_about_style";
       base: "font=Edje-Vera style=glow color=#fff glow2_color=#fe87 glow_color=#fa14 font_size=12 align=center wrap=word";
       
       tag:  "br" "\n";
