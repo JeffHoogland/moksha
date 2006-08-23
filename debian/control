@@ -11,6 +11,7 @@ Section: x11
 Recommends: libevas-engine-xrender
 Suggests: entrance
 Depends: ${shlibs:Depends}, libevas, libecore, libecore-con, libecore-evas, libecore-file, libecore-ipc, libecore-job, libecore-txt, libecore-x, libeet, libembryo, embryo-bin, edje-bin, libedje, libevas-loader-eet, libevas-loader-jpeg, libevas-loader-png, libevas-saver-eet, libevas-saver-jpeg, libevas-saver-png, libevas-engine-buffer, libevas-engine-software-x11
+Provides: e17-core
 Description: Enlightenment themes, etc.
  Enlightenment is an advanced window manager for X11. Unique
  features include: a fully animated background, nice drop shadows
@@ -20,8 +21,109 @@ Description: Enlightenment themes, etc.
 Package: enlightenment-dev
 Architecture: any
 Section: devel
-Architecture: any
 Depends: libevas-dev, libecore-dev, libeet-dev, libembryo-dev, libedje-dev
 Conflicts: libenlightenment-dev
+Provides: e17-devel, efl-devel. efl-dev
 Description: Enlightenment headers, static libraries and documentation
  Headers, static libraries and documentation for enlightenment.
+
+Package: e17-libs
+Architecture: any
+Section: x11
+Depends: libevas0, libecore0, libeet0, libembryo0, libedje0
+Provides: efl-libs, efl
+Description: Virtual package providing the libraries needed by E17
+ Enlightenment is an advanced window manager for X11. Unique
+ features include: a fully animated background, nice drop shadows
+ around windows, backed by an extremely clean and optimized
+ foundation of APIs.
+ .
+ This virtual package provides the libraries necessary for
+ running E17:
+  * Evas - Enlightenment advanced canvas library
+  * Ecore - Core abstraction layer for Enlightenment
+  * Eet - Enlightenment file chunk reading/writing library
+  * Embryo - SMALL-based abstract machine (AMX) bytecode interpreter
+  * Ejde - Graphical layout and animation library.
+
+Package: e17
+Architecture: any
+Section: x11
+Depends: enlightenment, e17-libs, e17-modules, eutils 
+Suggests: e17-extras
+Description: Virtual package providing the E17 desktop shell 
+ Enlightenment is an advanced window manager for X11. Unique
+ features include: a fully animated background, nice drop shadows
+ around windows, backed by an extremely clean and optimized
+ foundation of APIs.
+ .
+ This virtual package provides all you need to run E17:
+  * E17 windowmanager
+  * E17 modules
+  * E17 tools.
+
+Package: e17-devel-extras
+Architecture: any
+Section: x11
+Depends: enlightenment-dev, libesmart0-dev, libewl0-dev, libetk0-dev, libenhance0-dev, libepsilon0-dev, libevfs0-dev, libentrance0-edit-dev, libentrance0-widgets-dev, libemotion0-dev, libepeg0
+Provides: efl-devel-extras
+Description: Virtual package providing additional E17 dev packages
+ Enlightenment is an advanced window manager for X11. Unique
+ features include: a fully animated background, nice drop shadows
+ around windows, backed by an extremely clean and optimized
+ foundation of APIs.
+ .
+ This virtual package provides headers, static libraries and documentation
+ for the following libraries:
+  * Enlightenment Foundation Libraries
+  * Esmart - The Esmart Prototype Library
+  * Epsilon - Enlightenment thumbnailing library
+  * Epeg - Enlightenment jpeg thumbnailer library
+  * Emotion - Enlightenment video playback library
+  * Ewl - The Enlightened Widget Library
+  * Etk - A widget toolkit based on the Enlightenment Foundation Libraries
+  * Enhance - Library for easy application GUI development
+  * Entrance-widgets - Entrance widget library
+  * Evfs - Enlightenment virtual filesystem header files.
+
+Package: e17-extras
+Architecture: any
+Section: x11
+Depends: exhibit, entropy, edje-viewer, empower, extract, estickies, ephoto, entice, engage, entrance, entrance-edit-gui
+Suggests: enlightenment
+Description: Virtual package providing extras for the E17 window manager
+ Enlightenment is an advanced window manager for X11. Unique
+ features include: a fully animated background, nice drop shadows
+ around windows, backed by an extremely clean and optimized
+ foundation of APIs.
+ .
+ This virtual package provides some applications based on the
+ Enlightenment Foundation Libraries:
+  * exhibit - the Etk image viewer
+  * entropy - file manager based on Etk 
+  * edje-viewer - A simple viewer for edje files
+  * empower - graphical sudo tool
+  * extract - an audio CD ripper and encoder
+  * estickies - A sticky notes application based on Etk
+  * ephoto - A slideshow creator with audio-support
+  * entice - Image viewer based on libeet
+  * engage - Enlightenment dock-like app
+  * entrance - The Enlightened Login Manager & tools.
+
+Package: e17-desktop
+Architecture: any
+Section: x11
+Depends: e17, e17-modules, eutils, entrance, entrance-edit-gui
+Suggests: e17-extras
+Description: Virtual package providing the E17 desktop environment
+ Enlightenment is an advanced window manager for X11. Unique
+ features include: a fully animated background, nice drop shadows
+ around windows, backed by an extremely clean and optimized
+ foundation of APIs.
+ .
+ This virtual package provides everythinh necessary to run E17 as
+ your main desktop environment:
+  * E17 window manager
+  * E17 modules
+  * Enlightened Login Manager & tools.
+
