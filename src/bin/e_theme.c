@@ -50,9 +50,9 @@ e_theme_init(void)
      }
 
    /* Find transitions */
-   transitions = _e_theme_collection_items_find("base/theme/transitions", "transitions");
+   transitions = _e_theme_collection_items_find("base/theme/transitions", "e/transitions");
    borders = _e_theme_collection_items_find("base/theme/borders", "e/widgets/border");
-   shelfs = _e_theme_collection_items_find("base/theme/shelf", "shelf");
+   shelfs = _e_theme_collection_items_find("base/theme/shelf", "e/shelf");
 
    return 1;
 }
