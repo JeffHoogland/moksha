@@ -73,7 +73,7 @@ e_widget_entry_add(Evas *evas, char **text_location)
  * @param entry an entry widget
  * @param text the text to set
  */
-EAPI void     
+EAPI void
 e_widget_entry_text_set(Evas_Object *entry, const char *text)
 {
    E_Widget_Data *wd;
@@ -89,7 +89,7 @@ e_widget_entry_text_set(Evas_Object *entry, const char *text)
  * @param entry an entry widget
  * @return Returns the text of the entry widget
  */
-EAPI const char *     
+EAPI const char *
 e_widget_entry_text_get(Evas_Object *entry)
 {
    E_Widget_Data *wd;
@@ -97,6 +97,21 @@ e_widget_entry_text_get(Evas_Object *entry)
    if (!(entry) || (!(wd = e_widget_data_get(entry))))
       return NULL;
    return e_entry_text_get(wd->o_entry);
+}
+
+/**
+ * Clears the entry widget
+ *
+ * @param entry an entry widget
+ */
+EAPI void
+e_widget_entry_clear(Evas_Object *entry)
+{
+   E_Widget_Data *wd;
+
+   if (!(entry) || (!(wd = e_widget_data_get(entry))))
+      return;
+   e_entry_clear(wd->o_entry);
 }
 
 /**
