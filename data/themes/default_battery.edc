@@ -142,7 +142,7 @@ group {
 	 }
       }
       part {
-	 name:           "reading";
+	 name:           "e.text.reading";
 	 type:           TEXT;
 	 effect:         SOFT_SHADOW;
 	 clip_to: "fade_clip";
@@ -169,7 +169,7 @@ group {
 	 }
       }
       part {
-	 name:           "time";
+	 name:           "e.text.time";
 	 type:           TEXT;
 	 effect:         SOFT_SHADOW;
 	 clip_to: "fade_clip";
@@ -179,11 +179,11 @@ group {
 	    rel1 {
 	       relative: 1.0  1.0;
 	       to_x:     "battery";
-	       to_y:     "reading";
+	       to_y:     "e.text.reading";
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       to_y:     "reading";
+	       to_y:     "e.text.reading";
 	    }
 	    color: 255 255 255 255;
 	    color3: 0 0 0 32;
