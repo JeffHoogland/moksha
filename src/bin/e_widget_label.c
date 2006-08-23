@@ -27,7 +27,7 @@ e_widget_label_add(Evas *evas, const char *label)
 
    o = edje_object_add(evas);
    e_theme_edje_object_set(o, "base/theme/widgets",
-			   "widgets/label");
+			   "e/widgets/label");
    wd->text = o;
    edje_object_part_text_set(o, "e.text.label", label);
    evas_object_show(o);

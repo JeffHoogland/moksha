@@ -555,12 +555,12 @@ static void _e_entry_smart_add(Evas_Object *object)
    
    o = edje_object_add(evas);
    sd->entry_object = o;
-   e_theme_edje_object_set(o, "base/theme/widgets", "widgets/entry");
+   e_theme_edje_object_set(o, "base/theme/widgets", "e/widgets/entry");
    evas_object_smart_member_add(o, object);
    
    o = e_editable_add(evas);
    sd->editable_object = o;
-   e_editable_theme_set(o, "base/theme/widgets", "widgets/entry");
+   e_editable_theme_set(o, "base/theme/widgets", "e/widgets/entry");
    e_editable_cursor_hide(o);
    e_editable_char_size_get(o, &cw, &ch);
    edje_extern_object_min_size_set(o, cw, ch);

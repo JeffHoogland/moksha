@@ -3,7 +3,7 @@ images {
 }
 
 group {
-  name: "widgets/color_well";
+  name: "e/widgets/color_well";
   parts {
       part {
 	 name:          "background";

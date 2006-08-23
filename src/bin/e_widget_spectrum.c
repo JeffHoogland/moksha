@@ -54,7 +54,7 @@ e_widget_spectrum_add(Evas *evas, E_Color_Component mode, E_Color *cv)
    o = edje_object_add(evas);
    wd->o_edje = o;
    e_theme_edje_object_set(o, "base/theme/widgets",
-			   "widgets/spectrum");
+			   "e/widgets/spectrum");
 
    evas_object_show(o);
    edje_object_size_min_calc(o, &mw, &mh);
@@ -72,7 +72,7 @@ e_widget_spectrum_add(Evas *evas, E_Color_Component mode, E_Color *cv)
    e_widget_sub_object_add(obj, o);
    evas_object_show(o);
    wd->o_spectrum = o;
-   edje_object_part_swallow(wd->o_edje, "content", o);
+   edje_object_part_swallow(wd->o_edje, "e.swallow.content", o);
    edje_extern_object_min_size_set(o, 100, 100);
 
    o = evas_object_rectangle_add(evas);

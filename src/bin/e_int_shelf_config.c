@@ -473,7 +473,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 	ob = e_livethumb_add(evas);
 	e_livethumb_vsize_set(ob, 256, 40);
 	oj = edje_object_add(e_livethumb_evas_get(ob));
-	snprintf(buf, sizeof(buf), "shelf/%s/base", (char *)l->data);
+	snprintf(buf, sizeof(buf), "e/shelf/%s/base", (char *)l->data);
 	e_theme_edje_object_set(oj, "base/theme/shelf", buf);
 	e_livethumb_thumb_set(ob, oj);
 	e_widget_ilist_append(oi, ob, (char *)l->data, NULL, NULL, l->data);

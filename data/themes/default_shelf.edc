@@ -8,7 +8,7 @@ images {
 }
 
 group {
-   name: "shelf/default/base";
+   name: "e/shelf/default/base";
    data {
       // this tells e the border is shaped
       item: "shaped" "1";
@@ -421,7 +421,7 @@ group {
    }
 }
 group {
-   name: "shelf/default/inset";
+   name: "e/shelf/default/inset";
    parts {
       part {
 	 name:          "background";
@@ -517,7 +517,7 @@ group {
 
 
 group {
-   name: "shelf/gold/base";
+   name: "e/shelf/gold/base";
    data {
       // this tells e the border is shaped
       item: "shaped" "1";
@@ -930,7 +930,7 @@ group {
    }
 }
 group {
-   name: "shelf/gold/inset";
+   name: "e/shelf/gold/inset";
    parts {
       part {
 	 name:          "background";
@@ -1017,7 +1017,7 @@ group {
 
 
 group {
-   name: "shelf/invisible/base";
+   name: "e/shelf/invisible/base";
    data {
       // this tells e the border is shaped
       item: "shaped" "1";
@@ -1034,7 +1034,7 @@ group {
    }
 }
 group {
-   name: "shelf/invisible/inset";
+   name: "e/shelf/invisible/inset";
    parts {
       part {
 	 name:          "background";

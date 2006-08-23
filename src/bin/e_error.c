@@ -83,7 +83,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
    e = ecore_evas_get(ee);
 
    o = edje_object_add(e);
-   if (!e_theme_edje_object_set(o, "base/theme/error", "error/main"))
+   if (!e_theme_edje_object_set(o, "base/theme/error", "e/error/main"))
      {
 	Evas_Coord tw, th;
 	char *newstr;

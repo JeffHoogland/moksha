@@ -586,7 +586,7 @@ _e_fm_smart_add(Evas_Object *object)
    evas_object_repeat_events_set(sd->edje_obj, 1);
    e_theme_edje_object_set(sd->edje_obj,
 			   "base/theme/fileman",
-			   "fileman/smart");
+			   "e/fileman/smart");
    evas_object_smart_member_add(sd->edje_obj, object);
    evas_object_show(sd->edje_obj);
 
@@ -622,7 +622,7 @@ _e_fm_smart_add(Evas_Object *object)
    evas_object_smart_member_add(sd->selection.band.obj, object);
    e_theme_edje_object_set(sd->selection.band.obj,
 			   "base/theme/fileman/rubberband",
-			   "fileman/rubberband");
+			   "e/fileman/rubberband");
 
    evas_object_focus_set(sd->object, 1);
    evas_object_event_callback_add(sd->object, EVAS_CALLBACK_KEY_DOWN, _e_fm_key_down_cb, sd);
@@ -1929,8 +1929,8 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	if (!sd->win) break;
 
 	mn = e_menu_new();
-	e_menu_category_set(mn,"fileman/unknown");
-	e_menu_category_data_set("fileman/unknown",sd);
+	e_menu_category_set(mn,"e/fileman/unknown");
+	e_menu_category_data_set("e/fileman/unknown",sd);
 
 	sd->menu = mn;
 
@@ -1939,12 +1939,12 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	e_menu_item_label_set(mi, _("Arrange Icons"));
 	e_menu_item_icon_edje_set(mi,
 				  (char *)e_theme_edje_file_get("base/theme/fileman",
-								"fileman/button/arrange"),
-				  "fileman/button/arrange");
+								"e/fileman/button/arrange"),
+				  "e/fileman/button/arrange");
 
 	mn = e_menu_new();
-	e_menu_category_set(mn,"fileman/unknown/arrange");
-	e_menu_category_data_set("fileman/unknown/arrange",sd);
+	e_menu_category_set(mn,"e/fileman/unknown/arrange");
+	e_menu_category_data_set("e/fileman/unknown/arrange",sd);
 	e_menu_item_submenu_set(mi, mn);
 
 	mi = e_menu_item_new(mn);
@@ -1955,8 +1955,8 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	e_menu_item_callback_set(mi, _e_fm_menu_arrange_cb, sd);
 	e_menu_item_icon_edje_set(mi,
 				  (char *)e_theme_edje_file_get("base/theme/fileman",
-								"fileman/button/arrange_name"),
-				  "fileman/button/arrange_name");
+								"e/fileman/button/arrange_name"),
+				  "e/fileman/button/arrange_name");
 
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("By Mod Time"));
@@ -1966,19 +1966,19 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	e_menu_item_callback_set(mi, _e_fm_menu_arrange_cb, sd);
 	e_menu_item_icon_edje_set(mi,
 				  (char *)e_theme_edje_file_get("base/theme/fileman",
-								"fileman/button/arrange_time"),
-				  "fileman/button/arrange_time");
+								"e/fileman/button/arrange_time"),
+				  "e/fileman/button/arrange_time");
        /*- New -*/
 	mi = e_menu_item_new(sd->menu);
 	e_menu_item_label_set(mi, _("New"));
 	e_menu_item_icon_edje_set(mi,
 				  (char *)e_theme_edje_file_get("base/theme/fileman",
-								"fileman/button/new"),
-				  "fileman/button/new");
+								"e/fileman/button/new"),
+				  "e/fileman/button/new");
 
 	mn = e_menu_new();
-	e_menu_category_set(mn,"fileman/unknown/new");
-	e_menu_category_data_set("fileman/unknown/new",sd);
+	e_menu_category_set(mn,"e/fileman/unknown/new");
+	e_menu_category_data_set("e/fileman/unknown/new",sd);
 	e_menu_item_submenu_set(mi, mn);
 
 	mi = e_menu_item_new(mn);
@@ -1986,19 +1986,19 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	e_menu_item_callback_set(mi, _e_fm_menu_new_dir_cb, sd);
 	e_menu_item_icon_edje_set(mi,
 				  (char *)e_theme_edje_file_get("base/theme/fileman",
-								"fileman/button/new_dir"),
-				  "fileman/button/new_dir");
+								"e/fileman/button/new_dir"),
+				  "e/fileman/button/new_dir");
        /*- View -*/
 	mi = e_menu_item_new(sd->menu);
 	e_menu_item_label_set(mi, _("View"));
 	e_menu_item_icon_edje_set(mi,
 				  (char *)e_theme_edje_file_get("base/theme/fileman",
-								"fileman/button/view"),
-				  "fileman/button/view");
+								"e/fileman/button/view"),
+				  "e/fileman/button/view");
 
 	mn = e_menu_new();
-	e_menu_category_set(mn,"fileman/unknown/view");
-	e_menu_category_data_set("fileman/unknown/view",sd);
+	e_menu_category_set(mn,"e/fileman/unknown/view");
+	e_menu_category_data_set("e/fileman/unknown/view",sd);
 	e_menu_item_submenu_set(mi, mn);
 
 	mi = e_menu_item_new(mn);
@@ -2007,8 +2007,8 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	e_menu_item_radio_group_set(mi, 2);
 	e_menu_item_icon_edje_set(mi,
 				  (char *)e_theme_edje_file_get("base/theme/fileman",
-								"fileman/button/view_name"),
-				  "fileman/button/view_name");
+								"e/fileman/button/view_name"),
+				  "e/fileman/button/view_name");
 
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("Details"));
@@ -2016,8 +2016,8 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	e_menu_item_radio_group_set(mi, 2);
 	e_menu_item_icon_edje_set(mi,
 				  (char *)e_theme_edje_file_get("base/theme/fileman",
-								"fileman/button/view_details"),
-				  "fileman/button/view_details");
+								"e/fileman/button/view_details"),
+				  "e/fileman/button/view_details");
 
        /*- Refresh -*/
 	mi = e_menu_item_new(sd->menu);
@@ -2025,15 +2025,15 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	e_menu_item_callback_set(mi, _e_fm_menu_refresh_cb, sd);
 	e_menu_item_icon_edje_set(mi,
 				  (char *)e_theme_edje_file_get("base/theme/fileman",
-								"fileman/button/refresh"),
-				  "fileman/button/refresh");
+								"e/fileman/button/refresh"),
+				  "e/fileman/button/refresh");
        /*- Properties -*/
 	mi = e_menu_item_new(sd->menu);
 	e_menu_item_label_set(mi, _("Properties"));
 	e_menu_item_icon_edje_set(mi,
 				  (char *)e_theme_edje_file_get("base/theme/fileman",
-								"fileman/button/properties"),
-				  "fileman/button/properties");
+								"e/fileman/button/properties"),
+				  "e/fileman/button/properties");
 
 	ecore_evas_geometry_get(sd->win->ecore_evas, &x, &y, &w, &h);
 
@@ -3825,8 +3825,8 @@ _e_fm_menu_action_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, uns
      multiple = 1;
  
    mn = e_menu_new();
-   e_menu_category_set(mn,"fileman/action");
-   e_menu_category_data_set("fileman/action",sd);
+   e_menu_category_set(mn,"e/fileman/action");
+   e_menu_category_data_set("e/fileman/action",sd);
 
    mi = NULL;
    default_action = NULL;
@@ -3859,7 +3859,7 @@ _e_fm_menu_action_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, uns
 	e_menu_item_label_set(mi, _(action->label));
 	e_menu_item_callback_set(mi, _e_fm_menu_actions, mid);
 	e_menu_item_icon_edje_set(mi, (char *)e_theme_edje_file_get("base/theme/fileman",
-		 "fileman/button/open"),"fileman/button/open");
+		 "e/fileman/button/open"),"fileman/button/open");
    
 	mi = e_menu_item_new(mn);
 	e_menu_item_separator_set(mi, 1);
@@ -3897,7 +3897,7 @@ _e_fm_menu_action_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, uns
 	     e_menu_item_label_set(mi, _(action->label));
 	     e_menu_item_callback_set(mi, _e_fm_menu_actions, mid);
 	     e_menu_item_icon_edje_set(mi, (char *)e_theme_edje_file_get("base/theme/fileman",
-             "fileman/button/open"),"fileman/button/open");
+             "e/fileman/button/open"),"fileman/button/open");
 	       
 	  }
 	mime = mime->parent;
@@ -3911,15 +3911,15 @@ _e_fm_menu_action_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, uns
    //e_menu_item_callback_set(mi, _e_fm_file_menu_copy, icon);
    e_menu_item_icon_edje_set(mi,
 	 (char *)e_theme_edje_file_get("base/theme/fileman",
-				       "fileman/button/copy"),
-				       "fileman/button/copy");
+				       "e/fileman/button/copy"),
+				       "e/fileman/button/copy");
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Cut"));
    //e_menu_item_callback_set(mi, _e_fm_file_menu_cut, icon);
    e_menu_item_icon_edje_set(mi,
 	 (char *)e_theme_edje_file_get("base/theme/fileman",
-				       "fileman/button/cut"),
-				       "fileman/button/cut");
+				       "e/fileman/button/cut"),
+				       "e/fileman/button/cut");
    mi = e_menu_item_new(mn);
    e_menu_item_separator_set(mi, 1);
    
@@ -3930,8 +3930,8 @@ _e_fm_menu_action_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, uns
 	//e_menu_item_callback_set(mi, _e_fm_file_menu_rename, icon);
 	e_menu_item_icon_edje_set(mi,
 	 (char *)e_theme_edje_file_get("base/theme/fileman",
-				       "fileman/button/rename"),
-				       "fileman/button/rename");
+				       "e/fileman/button/rename"),
+				       "e/fileman/button/rename");
      }
 
    mi = e_menu_item_new(mn);
@@ -3939,8 +3939,8 @@ _e_fm_menu_action_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, uns
    //e_menu_item_callback_set(mi, _e_fm_file_menu_delete, icon);
    e_menu_item_icon_edje_set(mi,
 	 (char *)e_theme_edje_file_get("base/theme/fileman",
-				       "fileman/button/delete"),
-				       "fileman/button/delete");
+				       "e/fileman/button/delete"),
+				       "e/fileman/button/delete");
 
 
    mi = e_menu_item_new(mn);
@@ -3951,8 +3951,8 @@ _e_fm_menu_action_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, uns
    //e_menu_item_callback_set(mi, _e_fm_file_menu_properties, icon);
    e_menu_item_icon_edje_set(mi,
 	 (char *)e_theme_edje_file_get("base/theme/fileman",
-				       "fileman/button/properties"),
-				       "fileman/button/properties");
+				       "e/fileman/button/properties"),
+				       "e/fileman/button/properties");
    sd->operation.menu = mn;
    
    if (!sd->win) return;
@@ -3989,8 +3989,8 @@ _e_fm_menu_context_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, un
      multiple = 1;
     
    mn = e_menu_new();
-   e_menu_category_set(mn,"fileman/action");
-   e_menu_category_data_set("fileman/action",sd);
+   e_menu_category_set(mn,"e/fileman/action");
+   e_menu_category_data_set("e/fileman/action",sd);
 
    mi = NULL;
    default_action = NULL;
@@ -4022,7 +4022,7 @@ _e_fm_menu_context_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, un
 	e_menu_item_label_set(mi, e_fm_mime_translate(sd, action->label));
 	e_menu_item_callback_set(mi, _e_fm_menu_actions, mid);
 	e_menu_item_icon_edje_set(mi, (char *)e_theme_edje_file_get("base/theme/fileman",
-		 "fileman/button/open"),"fileman/button/open");
+		 "e/fileman/button/open"),"fileman/button/open");
    
 	mi = e_menu_item_new(mn);
 	e_menu_item_separator_set(mi, 1);
@@ -4062,7 +4062,7 @@ _e_fm_menu_context_display(E_Fm_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy, un
 	     e_menu_item_label_set(mi, e_fm_mime_translate(sd, action->label));
 	     e_menu_item_callback_set(mi, _e_fm_menu_actions, mid);
 	     e_menu_item_icon_edje_set(mi, (char *)e_theme_edje_file_get("base/theme/fileman",
-             "fileman/button/open"),"fileman/button/open");
+             "e/fileman/button/open"),"fileman/button/open");
 	       
 	  }
 	mime = mime->parent;

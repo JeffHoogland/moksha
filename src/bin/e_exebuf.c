@@ -167,7 +167,7 @@ e_exebuf_show(E_Zone *zone)
    o = edje_object_add(exebuf->evas);
    bg_object = o;
    e_theme_edje_object_set(o, "base/theme/exebuf",
-			   "widgets/exebuf/main");
+			   "e/widgets/exebuf/main");
    edje_object_part_text_set(o, "e.text.label", cmd_buf);
    
    o = e_box_add(exebuf->evas);
@@ -879,7 +879,7 @@ _e_exebuf_matches_update(void)
 	o = edje_object_add(exebuf->evas);
         exe->bg_object = o;
 	e_theme_edje_object_set(o, "base/theme/exebuf",
-				"widgets/exebuf/item");
+				"e/widgets/exebuf/item");
 	if (e_config->menu_eap_name_show && exe->app->name) opt |= 0x4;
 	if (e_config->menu_eap_generic_show && exe->app->generic) opt |= 0x2;
 	if (e_config->menu_eap_comment_show && exe->app->comment) opt |= 0x1;
@@ -931,7 +931,7 @@ _e_exebuf_matches_update(void)
 	o = edje_object_add(exebuf->evas);
         exe->bg_object = o;
 	e_theme_edje_object_set(o, "base/theme/exebuf",
-				"widgets/exebuf/item");
+				"e/widgets/exebuf/item");
 	edje_object_part_text_set(o, "e.text.title", exe->file);
 	evas_object_show(o);
 	if (edje_object_part_exists(exe->bg_object, "e.swallow.icons"))

@@ -329,10 +329,10 @@ _e_tlist_append(Evas_Object * obj, char *label,
    /* FIXME: Use a color class or something to avoid duplicating the theme with only the background piccie being different. */
    if (evas_list_count(sd->items) & 0x1)
       e_theme_edje_object_set(si->base_obj, "base/theme/widgets",
-			      "widgets/tlist_odd");
+			      "e/widgets/tlist_odd");
    else
       e_theme_edje_object_set(si->base_obj, "base/theme/widgets",
-			      "widgets/tlist");
+			      "e/widgets/tlist");
    if (si->markup)
       edje_object_part_text_set(si->base_obj, "e.textblock.label", label);
    else

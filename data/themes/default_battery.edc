@@ -13,7 +13,7 @@ images {
    image: "e17_battery_ac.png" COMP;
 }
 group {
-   name: "modules/battery/main";
+   name: "e/modules/battery/main";
    max:  128 128;
    script {
     public message(Msg_Type:type, id, ...) {

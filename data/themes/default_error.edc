@@ -7,7 +7,7 @@ images {
 styles
 {
    style {
-      name: "error_style";
+      name: "e/error_style";
       base: "font=Edje-Vera font_size=10 text_class=tb_plain align=left color=#000 style=shadow shadow_color=#ffffff80 wrap=word";
       
       tag:  "br" "\n";
@@ -16,7 +16,7 @@ styles
 }
 
 group {
-   name: "error/main";
+   name: "e/error/main";
    min: 400 200;
    max: 400 200;
    parts {

@@ -28,7 +28,7 @@ e_resize_begin(E_Zone *zone, int w, int h)
 	e_popup_layer_set(_disp_pop, 255);
 	_obj = edje_object_add(_disp_pop->evas);
 	e_theme_edje_object_set(_obj, "base/theme/borders",
-	      "widgets/border/default/resize");
+	      "e/widgets/border/default/resize");
 	snprintf(buf, sizeof(buf), "9999x9999");
 	edje_object_part_text_set(_obj, "e.text.label", buf);
 
@@ -105,7 +105,7 @@ e_move_begin(E_Zone *zone, int x, int y)
 	_disp_pop = e_popup_new(zone, 0, 0, 1, 1);
 	_obj = edje_object_add(_disp_pop->evas);
 	e_theme_edje_object_set(_obj, "base/theme/borders",
-	      "widgets/border/default/move");
+	      "e/widgets/border/default/move");
 	snprintf(buf, sizeof(buf), "9999 9999");
 	edje_object_part_text_set(_obj, "e.text.label", buf);
 

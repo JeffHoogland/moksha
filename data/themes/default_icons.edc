@@ -74,7 +74,7 @@ images {
 }
 
 group {
-   name: "icons/enlightenment/e";
+   name: "e/icons/enlightenment/e";
    max:  64 64;
    parts {
       part {      
@@ -135,7 +135,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/exit";
+   name: "e/icons/enlightenment/exit";
    max:  64 64;
    parts {
       part {      
@@ -196,7 +196,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/reset";
+   name: "e/icons/enlightenment/reset";
    max:  64 64;
    parts {
       part {      
@@ -257,11 +257,11 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/themes";
+   name: "e/icons/enlightenment/themes";
    max:  64 64;
    parts {
       part {      
-	 name:          "theme_button";
+	 name:          "e/theme_button";
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
@@ -276,7 +276,7 @@ group {
    }
 }   
 group {
-   name: "icons/enlightenment/windows";
+   name: "e/icons/enlightenment/windows";
    max:  64 64;
    parts {
       part {
@@ -295,7 +295,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/lost_windows";
+   name: "e/icons/enlightenment/lost_windows";
    max:  64 64;
    parts {
       part {
@@ -314,7 +314,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/focus";
+   name: "e/icons/enlightenment/focus";
    max:  64 64;
    parts {
       part {
@@ -333,7 +333,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/modules";
+   name: "e/icons/enlightenment/modules";
    max:  64 64;
    parts {
       part {
@@ -352,7 +352,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/favorites";
+   name: "e/icons/enlightenment/favorites";
    max:  64 64;
    parts {
       part {
@@ -371,7 +371,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/desktops";
+   name: "e/icons/enlightenment/desktops";
    max:  64 64;
    parts {
       part {
@@ -390,7 +390,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/gadgets";
+   name: "e/icons/enlightenment/gadgets";
    max:  64 64;
    parts {
       part {
@@ -409,7 +409,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/configuration";
+   name: "e/icons/enlightenment/configuration";
    max:  64 64;
    parts {
       part {
@@ -428,7 +428,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/run";
+   name: "e/icons/enlightenment/run";
    max:  64 64;
    parts {
       part {
@@ -447,7 +447,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/fileman";
+   name: "e/icons/enlightenment/fileman";
    max:  64 64;
    parts {
       part {      
@@ -508,7 +508,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/unknown";
+   name: "e/icons/enlightenment/unknown";
    max:  64 64;
    parts {
       part {
@@ -527,7 +527,7 @@ group {
    }
 }
 group {
-   name: "icons/widget/new_dialog";
+   name: "e/icons/widget/new_dialog";
    parts {
       part {
 	 name:          "icon";
@@ -545,7 +545,7 @@ group {
    }
 }
 group {
-   name: "icons/widget/up_arrow";
+   name: "e/icons/widget/up_arrow";
    parts {
       part {
 	 name:          "icon";
@@ -563,7 +563,7 @@ group {
    }
 }
 group {
-   name: "icons/widget/down_arrow";
+   name: "e/icons/widget/down_arrow";
    parts {
       part {
 	 name:          "icon";
@@ -581,7 +581,7 @@ group {
    }
 }
 group {
-   name: "icons/widget/up_dir";
+   name: "e/icons/widget/up_dir";
    parts {
       part {
 	 name:          "icon";
@@ -599,7 +599,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/mouse";
+   name: "e/icons/enlightenment/mouse";
    max:  64 64;
    parts {
       part {
@@ -618,7 +618,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/keys";
+   name: "e/icons/enlightenment/keys";
    max:  64 64;
    parts {
       part {
@@ -637,7 +637,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/desklock";
+   name: "e/icons/enlightenment/desklock";
    max:  64 64;
    parts {
       part {
@@ -656,7 +656,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/screen_resolution";
+   name: "e/icons/enlightenment/screen_resolution";
    max:  64 64;
    parts {
       part {
@@ -675,7 +675,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/shelf";
+   name: "e/icons/enlightenment/shelf";
    max:  64 64;
    parts {
       part {
@@ -694,7 +694,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/fonts";
+   name: "e/icons/enlightenment/fonts";
    max:  64 64;
    parts {
       part {
@@ -713,7 +713,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/background";
+   name: "e/icons/enlightenment/background";
    max:  64 64;
    parts {
       part {
@@ -732,7 +732,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/screen_normal";
+   name: "e/icons/enlightenment/screen_normal";
    max:  24 24;
    parts {
       part {
@@ -751,7 +751,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/screen_normal";
+   name: "e/icons/enlightenment/screen_normal";
    max:  24 24;
    parts {
       part {
@@ -770,7 +770,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/screen_around";
+   name: "e/icons/enlightenment/screen_around";
    max:  24 24;
    parts {
       part {
@@ -789,7 +789,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/screen_left";
+   name: "e/icons/enlightenment/screen_left";
    max:  24 24;
    parts {
       part {
@@ -808,7 +808,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/screen_right";
+   name: "e/icons/enlightenment/screen_right";
    max:  24 24;
    parts {
       part {
@@ -827,7 +827,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/screen_vflip";
+   name: "e/icons/enlightenment/screen_vflip";
    max:  24 24;
    parts {
       part {
@@ -846,7 +846,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/screen_hflip";
+   name: "e/icons/enlightenment/screen_hflip";
    max:  24 24;
    parts {
       part {
@@ -865,7 +865,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/shelf_position_bottom";
+   name: "e/icons/enlightenment/shelf_position_bottom";
    max:  24 24;
    parts {
       part {
@@ -884,7 +884,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/shelf_position_bottom_left";
+   name: "e/icons/enlightenment/shelf_position_bottom_left";
    max:  24 24;
    parts {
       part {
@@ -903,7 +903,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/shelf_position_bottom_right";
+   name: "e/icons/enlightenment/shelf_position_bottom_right";
    max:  24 24;
    parts {
       part {
@@ -922,7 +922,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/shelf_position_top";
+   name: "e/icons/enlightenment/shelf_position_top";
    max:  24 24;
    parts {
       part {
@@ -941,7 +941,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/shelf_position_top_left";
+   name: "e/icons/enlightenment/shelf_position_top_left";
    max:  24 24;
    parts {
       part {
@@ -960,7 +960,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/shelf_position_top_right";
+   name: "e/icons/enlightenment/shelf_position_top_right";
    max:  24 24;
    parts {
       part {
@@ -979,7 +979,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/shelf_position_left";
+   name: "e/icons/enlightenment/shelf_position_left";
    max:  24 24;
    parts {
       part {
@@ -998,7 +998,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/shelf_position_left_top";
+   name: "e/icons/enlightenment/shelf_position_left_top";
    max:  24 24;
    parts {
       part {
@@ -1017,7 +1017,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/shelf_position_left_bottom";
+   name: "e/icons/enlightenment/shelf_position_left_bottom";
    max:  24 24;
    parts {
       part {
@@ -1036,7 +1036,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/shelf_position_right";
+   name: "e/icons/enlightenment/shelf_position_right";
    max:  24 24;
    parts {
       part {
@@ -1055,7 +1055,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/shelf_position_right_top";
+   name: "e/icons/enlightenment/shelf_position_right_top";
    max:  24 24;
    parts {
       part {
@@ -1074,7 +1074,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/shelf_position_right_bottom";
+   name: "e/icons/enlightenment/shelf_position_right_bottom";
    max:  24 24;
    parts {
       part {
@@ -1093,7 +1093,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/shelf_bottom_desk";
+   name: "e/icons/enlightenment/shelf_bottom_desk";
    max:  24 24;
    parts {
       part {
@@ -1112,7 +1112,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/shelf_custom";
+   name: "e/icons/enlightenment/shelf_custom";
    max:  24 24;
    parts {
       part {
@@ -1131,7 +1131,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/shelf_dock";
+   name: "e/icons/enlightenment/shelf_dock";
    max:  24 24;
    parts {
       part {
@@ -1150,7 +1150,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/shelf_menu_bar";
+   name: "e/icons/enlightenment/shelf_menu_bar";
    max:  24 24;
    parts {
       part {
@@ -1169,7 +1169,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/shelf_panel";
+   name: "e/icons/enlightenment/shelf_panel";
    max:  24 24;
    parts {
       part {
@@ -1188,7 +1188,7 @@ group {
    }
 }
 group {
-   name: "icons/enlightenment/shelf_top_desk";
+   name: "e/icons/enlightenment/shelf_top_desk";
    max:  24 24;
    parts {
       part {
@@ -1208,7 +1208,7 @@ group {
 }
 
 group {
-   name: "icons/enlightenment/wallpaper_stretch";
+   name: "e/icons/enlightenment/wallpaper_stretch";
    max:  24 24;
    parts {
       part {
@@ -1245,7 +1245,7 @@ group {
 }
 
 group {
-   name: "icons/enlightenment/wallpaper_tile";
+   name: "e/icons/enlightenment/wallpaper_tile";
    max:  24 24;
    parts {
       part {
@@ -1287,7 +1287,7 @@ group {
 }
 
 group {
-   name: "icons/enlightenment/wallpaper_center";
+   name: "e/icons/enlightenment/wallpaper_center";
    max:  24 24;
    parts {
       part {
@@ -1330,7 +1330,7 @@ group {
 }
 
 group {
-   name: "icons/enlightenment/wallpaper_scale_aspect_in";
+   name: "e/icons/enlightenment/wallpaper_scale_aspect_in";
    max:  24 24;
    parts {
       part {
@@ -1369,7 +1369,7 @@ group {
 }
 
 group {
-   name: "icons/enlightenment/wallpaper_scale_aspect_out";
+   name: "e/icons/enlightenment/wallpaper_scale_aspect_out";
    max:  24 24;
    parts {
       part {
@@ -1408,7 +1408,7 @@ group {
 }
 
 group {
-   name: "icons/enlightenment/gradient_h";
+   name: "e/icons/enlightenment/gradient_h";
    max:  24 24;
    parts {
       part {
@@ -1450,7 +1450,7 @@ group {
 }
 
 group {
-   name: "icons/enlightenment/gradient_v";
+   name: "e/icons/enlightenment/gradient_v";
    max:  24 24;
    parts {
       part {
@@ -1488,7 +1488,7 @@ group {
 }
 
 group {
-   name: "icons/enlightenment/gradient_du";
+   name: "e/icons/enlightenment/gradient_du";
    max:  24 24;
    parts {
       part {
@@ -1530,7 +1530,7 @@ group {
 }
 
 group {
-   name: "icons/enlightenment/gradient_dd";
+   name: "e/icons/enlightenment/gradient_dd";
    max:  24 24;
    parts {
       part {
@@ -1572,7 +1572,7 @@ group {
 }
 
 group {
-   name: "icons/enlightenment/gradient_rad";
+   name: "e/icons/enlightenment/gradient_rad";
    max:  24 24;
    parts {
       part {

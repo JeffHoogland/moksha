@@ -17,7 +17,7 @@ styles
 }
 
 group {
-   name: "widgets/tlist";
+   name: "e/widgets/tlist";
    parts {
       part {
 	 name: "base";
@@ -490,7 +490,7 @@ group {
 }
 
 group {
-   name: "widgets/tlist_odd";
+   name: "e/widgets/tlist_odd";
    parts {
       part {
 	 name: "base";

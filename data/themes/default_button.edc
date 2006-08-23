@@ -9,7 +9,7 @@ images {
 }
 
 group {
-   name: "widgets/button";
+   name: "e/widgets/button";
    parts {
       part {
 	 name:          "button_image";

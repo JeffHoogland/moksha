@@ -4,7 +4,7 @@ images {
 }
 
 group {
-   name: "widgets/preview";
+   name: "e/widgets/preview";
    parts {
       part {
 	 name:          "bg";

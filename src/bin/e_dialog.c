@@ -47,7 +47,7 @@ e_dialog_new(E_Container *con, const char *name, const char *class)
    o = edje_object_add(e_win_evas_get(dia->win));
    dia->bg_object = o;
    e_theme_edje_object_set(o, "base/theme/dialog",
-			   "widgets/dialog/main");
+			   "e/widgets/dialog/main");
    evas_object_move(o, 0, 0);
    evas_object_show(o);
 
@@ -132,7 +132,7 @@ e_dialog_text_set(E_Dialog *dia, const char *text)
 	o = edje_object_add(e_win_evas_get(dia->win));
 	dia->text_object = o;
 	e_theme_edje_object_set(o, "base/theme/dialog",
-				"widgets/dialog/text");
+				"e/widgets/dialog/text");
 	edje_object_part_swallow(dia->bg_object, "e.swallow.content", o);
 	evas_object_show(o);
      }

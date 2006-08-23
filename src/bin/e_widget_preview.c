@@ -28,7 +28,7 @@ e_widget_preview_add(Evas *evas, int minw, int minh)
    o = edje_object_add(evas);
    wd->o_frame = o;
    e_theme_edje_object_set(o, "base/theme/widgets",
-			   "widgets/preview");
+			   "e/widgets/preview");
    evas_object_show(o);
    e_widget_sub_object_add(obj, o);
    e_widget_resize_object_set(obj, o);

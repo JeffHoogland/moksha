@@ -115,7 +115,7 @@ e_winlist_show(E_Zone *zone)
    o = edje_object_add(winlist->evas);
    bg_object = o;
    e_theme_edje_object_set(o, "base/theme/winlist",
-			   "widgets/winlist/main");
+			   "e/widgets/winlist/main");
    evas_object_move(o, 0, 0);
    evas_object_resize(o, w, h);
    evas_object_show(o);
@@ -428,7 +428,7 @@ _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
 	o = edje_object_add(winlist->evas);
 	ww->bg_object = o;
 	e_theme_edje_object_set(o, "base/theme/winlist",
-				"widgets/winlist/item");
+				"e/widgets/winlist/item");
 	edje_object_part_text_set(o, "e.text.label", e_border_name_get(ww->border));
 	evas_object_show(o);
 	if (edje_object_part_exists(ww->bg_object, "e.swallow.icon"))

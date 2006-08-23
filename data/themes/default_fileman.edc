@@ -13,7 +13,7 @@ images {
 }
 
 group {
-   name: "fileman/list/fixed";
+   name: "e/fileman/list/fixed";
    parts {
       part {
 	 name: "base";
@@ -688,7 +688,7 @@ group {
 }
 
 group {
-   name: "fileman/list_odd/fixed";
+   name: "e/fileman/list_odd/fixed";
    parts {
       part {
 	 name: "base";
@@ -1363,7 +1363,7 @@ group {
 }
 
 group {
-   name: "fileman/list/variable";
+   name: "e/fileman/list/variable";
    parts {
       part {
 	 name: "base";
@@ -2037,7 +2037,7 @@ group {
 }
 
 group {
-   name: "fileman/list_odd/variable";
+   name: "e/fileman/list_odd/variable";
    parts {
       part {
 	 name: "base";
@@ -2712,7 +2712,7 @@ group {
 }
 
 group {
-   name: "fileman/icon/fixed";
+   name: "e/fileman/icon/fixed";
    parts {
       part {      
 	 name:          "icon_overlay";
@@ -2820,7 +2820,7 @@ group {
 }
 
 group {
-   name: "fileman/icon/variable";
+   name: "e/fileman/icon/variable";
    parts {
       part {      
 	 name:          "icon_overlay";
@@ -2928,7 +2928,7 @@ group {
 }
 
 group {
-   name: "fileman/overlay";
+   name: "e/fileman/overlay";
    parts {
       part {
 	 name: "busy";
@@ -3067,7 +3067,7 @@ group {
 
 #define FULL_SIZE_FILEMAN_BUTTON(TYPE) \
 group { \
-   name:  "fileman/button/"TYPE; \
+   name:  "e/fileman/button/"TYPE; \
    parts { \
       part { \
 	 name:           "whole"; \
@@ -3091,7 +3091,7 @@ group { \
 
 #define FILEMAN_ICON(TYPE) \
 group { \
-   name: "icons/fileman/"TYPE; \
+   name: "e/icons/fileman/"TYPE; \
    parts { \
       part { \
 	 name:          "icon"; \
@@ -3134,7 +3134,7 @@ group { \
    
 #define FILEMAN_ICON_CLICKABLE(TYPE) \
 group { \
-   name: "icons/fileman/"TYPE; \
+   name: "e/icons/fileman/"TYPE; \
    parts { \
       part { \
 	 name:          "icon"; \
@@ -3271,7 +3271,7 @@ images
 styles
 {
       style {
-	 name: "fileman_icon_style"; 
+	 name: "e/fileman_icon_style"; 
 	 base: "font=Edje-Vera color=#000 style=shadow shadow_color=#cccccc font_size=10 align=center wrap=char";
 	 tag:  "br" "\n";
 	 tag:  "hilight" "+ font=Edje-Vera-Bold";
@@ -3280,7 +3280,7 @@ styles
 }
 
 group {
-   name: "fileman/smart";
+   name: "e/fileman/smart";
    parts {
       part {
 	 name: "background";
@@ -3305,7 +3305,7 @@ group {
 	 }      
       }
       part {
-	 name: "icons";
+	 name: "e/icons";
 	 type: SWALLOW;
 	 description {
 	    state: "default" 0.0;
@@ -3405,7 +3405,7 @@ group {
 }
 
 group {
-   name: "fileman/main";
+   name: "e/fileman/main";
    parts {
       part {
          name: "background_clip";
@@ -4170,7 +4170,7 @@ group {
 }
 
 group {
-   name: "fileman/icon_normal";
+   name: "e/fileman/icon_normal";
       parts {
 	 part {      
 	    name:          "icon_overlay";
@@ -4366,7 +4366,7 @@ group {
 
 
 group {
-   name: "fileman/icon_thumb";
+   name: "e/fileman/icon_thumb";
    parts {
       part {
 	 name:          "icon_box_shadow";
@@ -4492,7 +4492,7 @@ group {
 
 
 group {
-   name: "fileman/icon_list";
+   name: "e/fileman/icon_list";
    parts {
       part {
 	 name:          "e.swallow.icon";
@@ -4577,7 +4577,7 @@ group {
 }
 
 group {
-   name: "fileman/background";
+   name: "e/fileman/background";
    parts {
       part {
 	 name:          "base";
@@ -4600,7 +4600,7 @@ group {
 }
 
 group {
-   name: "fileman/rubberband";
+   name: "e/fileman/rubberband";
    parts {
       part {
 	 name:          "base";

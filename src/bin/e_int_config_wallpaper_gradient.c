@@ -296,7 +296,7 @@ _import_edj_gen(Import *import)
 	 "spectra { spectrum { name: \"gradient\"; color: %d %d %d 255 1; color: %d %d %d 255 1; } }\n"
 	 "collections {\n"
 	 "group {\n"
-	 "name: \"desktop/background\";\n"
+	 "name: \"e/desktop/background\";\n"
 	 "parts {\n"
 	 "part {\n"
 	 "  name: \"gradient\";\n"

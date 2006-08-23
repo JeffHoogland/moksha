@@ -12,7 +12,7 @@ images {
 }
 
 group {
-   name: "widgets/exebuf/main";
+   name: "e/widgets/exebuf/main";
    parts {
       part {
 	 name:          "base";
@@ -353,7 +353,7 @@ group {
 }
 
 group {
-   name: "widgets/exebuf/item";
+   name: "e/widgets/exebuf/item";
    parts {
       part {
 	 name:          "title_outline";

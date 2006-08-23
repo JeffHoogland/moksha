@@ -5,7 +5,7 @@ images {
    image: "focus.png" COMP;
 }
 group {
-   name: "widgets/radio";
+   name: "e/widgets/radio";
    parts {
       part {
 	 name:          "outline";
@@ -193,7 +193,7 @@ group {
 }
 
 group {
-   name: "widgets/radio_icon";
+   name: "e/widgets/radio_icon";
    parts {
       part {
 	 name:          "outline";

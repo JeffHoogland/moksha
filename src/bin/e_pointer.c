@@ -322,13 +322,13 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
 	o = p->pointer_object;
 	if (p->color)
 	  {
-	     snprintf(cursor, sizeof(cursor), "pointer/enlightenment/%s/color", type);
+	     snprintf(cursor, sizeof(cursor), "e/pointer/enlightenment/%s/color", type);
 	     if (!e_theme_edje_object_set(o, "base/theme/pointer", cursor))
 	       goto fallback;
 	  }
 	else
 	  {
-	     snprintf(cursor, sizeof(cursor), "pointer/enlightenment/%s/mono", type);
+	     snprintf(cursor, sizeof(cursor), "e/pointer/enlightenment/%s/mono", type);
 	     if (!e_theme_edje_object_set(o, "base/theme/pointer", cursor))
 	       goto fallback;
 	  }

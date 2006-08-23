@@ -75,7 +75,7 @@ e_int_config_wallpaper_update(E_Config_Dialog *dia, char *file)
    if (cfdata->o_fm)
      e_fm2_path_set(cfdata->o_fm, path, "/");
    if (cfdata->o_preview)
-     e_widget_preview_edje_set(cfdata->o_preview, cfdata->bg, "desktop/background");
+     e_widget_preview_edje_set(cfdata->o_preview, cfdata->bg, "e/desktop/background");
    if (cfdata->o_theme_bg)
      e_widget_check_checked_set(cfdata->o_theme_bg, 0);
    cfdata->use_theme_bg = 0;
@@ -159,7 +159,7 @@ _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
    E_FREE(cfdata->bg);
    cfdata->bg = strdup(buf);
    if (cfdata->o_preview)
-     e_widget_preview_edje_set(cfdata->o_preview, buf, "desktop/background");
+     e_widget_preview_edje_set(cfdata->o_preview, buf, "e/desktop/background");
    if (cfdata->o_theme_bg)
      e_widget_check_checked_set(cfdata->o_theme_bg, 0);
    cfdata->use_theme_bg = 0;
@@ -218,16 +218,16 @@ _cb_theme_wallpaper(void *data, Evas_Object *obj, void *event_info)
    cfdata = data;
    if (cfdata->use_theme_bg)
      {
-	f = e_theme_edje_file_get("base/theme/backgrounds", "desktop/background");
+	f = e_theme_edje_file_get("base/theme/backgrounds", "e/desktop/background");
 	if (cfdata->o_preview)
-	  e_widget_preview_edje_set(cfdata->o_preview, f, "desktop/background");
+	  e_widget_preview_edje_set(cfdata->o_preview, f, "e/desktop/background");
      }
    else
      {
 	if (cfdata->bg)
 	  {
 	     if (cfdata->o_preview)
-	       e_widget_preview_edje_set(cfdata->o_preview, cfdata->bg, "desktop/background");
+	       e_widget_preview_edje_set(cfdata->o_preview, cfdata->bg, "e/desktop/background");
 	  }
      }
 }
@@ -455,8 +455,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    if (cfdata->bg)
      f = cfdata->bg;
    else
-     f = e_theme_edje_file_get("base/theme/backgrounds", "desktop/background");
-   e_widget_preview_edje_set(o, f, "desktop/background");
+     f = e_theme_edje_file_get("base/theme/backgrounds", "e/desktop/background");
+   e_widget_preview_edje_set(o, f, "e/desktop/background");
    e_widget_list_object_append(of, o, 1, 0, 0.5);
    
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 0, 1, 0, 1);
@@ -595,8 +595,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    if (cfdata->bg)
      f = cfdata->bg;
    else
-     f = e_theme_edje_file_get("base/theme/backgrounds", "desktop/background");
-   e_widget_preview_edje_set(o, f, "desktop/background");
+     f = e_theme_edje_file_get("base/theme/backgrounds", "e/desktop/background");
+   e_widget_preview_edje_set(o, f, "e/desktop/background");
    e_widget_list_object_append(of, o, 1, 0, 0.5);
    
    ol = e_widget_framelist_add(evas, _("Where to place the Wallpaper"), 0);

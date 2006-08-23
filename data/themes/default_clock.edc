@@ -183,7 +183,7 @@ images {
    image: "e17_clock_minutes_59.png" COMP;
 }
 group {
-   name: "modules/clock/main";
+   name: "e/modules/clock/main";
    script {
       public clock_cb(val) {
 	 new buf[11];

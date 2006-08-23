@@ -16,7 +16,7 @@ styles
 }
 
 group {
-   name: "widgets/dialog/main";
+   name: "e/widgets/dialog/main";
    parts {
       part {
 	 name:          "base";
@@ -162,7 +162,7 @@ group {
 }
 
 group {
-   name: "widgets/dialog/text";
+   name: "e/widgets/dialog/text";
    parts {
       part {
 	 name:          "e.textblock.message";

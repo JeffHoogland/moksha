@@ -3,7 +3,7 @@ images {
 }
 
 group {
-   name: "widgets/entry";
+   name: "e/widgets/entry";
    min: 18 18;
    parts {
       part {
@@ -77,7 +77,7 @@ group {
 }
 
 group {
-   name: "widgets/entry/text";
+   name: "e/widgets/entry/text";
    parts {
       part {
          name: "e.text.text";
@@ -100,7 +100,7 @@ group {
 }
 
 group {
-   name: "widgets/entry/cursor";
+   name: "e/widgets/entry/cursor";
    min: 1 0;
    parts {
       part {
@@ -156,7 +156,7 @@ group {
 }
 
 group {
-   name: "widgets/entry/selection";
+   name: "e/widgets/entry/selection";
    data {
       item: "on_foreground" "1";
    }

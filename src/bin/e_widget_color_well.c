@@ -108,7 +108,7 @@ e_widget_color_well_add(Evas *evas, E_Color *color, int show_color_dialog)
    e_widget_sub_object_add(obj, o);
    e_widget_resize_object_set(obj, o);
    e_theme_edje_object_set(o, "base/theme/widgets",
-			   "widgets/color_well");
+			   "e/widgets/color_well");
    edje_object_signal_callback_add(o, "e,action,click", "", _e_wid_signal_cb1, obj);
    evas_object_show(o); 
    wd->o_edje = o;

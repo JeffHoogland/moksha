@@ -57,9 +57,9 @@ e_file_dialog_new(E_Container *con)
    
    list = e_widget_framelist_add(evas, _("Places"), 0);
    e_widget_framelist_content_align_set(list, 0.5, 0.0);
-   e_widget_framelist_object_append(list, e_widget_button_add(evas, _("Home"), "fileman/home", _cb_home, fm, NULL));
-   e_widget_framelist_object_append(list, e_widget_button_add(evas, _("Desktop"), "fileman/desktop", _cb_desktop, fm, NULL));
-   e_widget_framelist_object_append(list, e_widget_button_add(evas, _("Icons"), "fileman/folder", _cb_icons, fm, NULL));
+   e_widget_framelist_object_append(list, e_widget_button_add(evas, _("Home"), "e/fileman/home", _cb_home, fm, NULL));
+   e_widget_framelist_object_append(list, e_widget_button_add(evas, _("Desktop"), "e/fileman/desktop", _cb_desktop, fm, NULL));
+   e_widget_framelist_object_append(list, e_widget_button_add(evas, _("Icons"), "e/fileman/folder", _cb_icons, fm, NULL));
    e_widget_list_object_append(ol, list, 1, 0, 0.0);
 
    e_widget_list_object_append(ol, fm, 1, 1, 0.0);

@@ -685,7 +685,7 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
 	     char buf[1024];
 
 	     o = edje_object_add(con->bg_evas);
-	     snprintf(buf, sizeof(buf), "widgets/border/%s/border", border);
+	     snprintf(buf, sizeof(buf), "e/widgets/border/%s/border", border);
 	     ok = e_theme_edje_object_set(o, "base/theme/borders", buf);
 	     if (ok)
 	       {

@@ -5,7 +5,7 @@ images {
    image: "e17_ibar_over_h.png" COMP;
 }
 group {
-   name: "widgets/fileselector/main";
+   name: "e/widgets/fileselector/main";
    parts {
       part {
 	 name:          "background";

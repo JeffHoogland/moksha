@@ -154,13 +154,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	ob = e_livethumb_add(evas);
 	e_livethumb_vsize_set(ob, 160, 96);
 	oj = edje_object_add(e_livethumb_evas_get(ob));
-        snprintf(buf, sizeof(buf), "widgets/border/%s/border", (char *)l->data);
+        snprintf(buf, sizeof(buf), "e/widgets/border/%s/border", (char *)l->data);
 	e_theme_edje_object_set(oj, "base/theme/borders", buf);
 	e_livethumb_thumb_set(ob, oj);
 	orect = evas_object_rectangle_add(e_livethumb_evas_get(ob));
 	evas_object_color_set(orect, 0, 0, 0, 128);
 	evas_object_show(orect);
-	edje_object_part_swallow(oj, "client", orect);
+	edje_object_part_swallow(oj, "e.swallow.client", orect);
 	e_widget_ilist_append(oi, ob, (char *)l->data, NULL, NULL, l->data);
 	if (!strcmp(cfdata->border->client.border.name, (char *)l->data))
 	  sel = n;

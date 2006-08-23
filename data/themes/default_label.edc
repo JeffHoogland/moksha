@@ -1,5 +1,5 @@
 group {
-   name: "widgets/label";
+   name: "e/widgets/label";
    parts {
       part {
 	 name:           "e.text.label";

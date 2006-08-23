@@ -37,7 +37,7 @@ e_widget_textblock_add(Evas *evas)
 
    o = edje_object_add(evas);
    e_theme_edje_object_set(o, "base/theme/widgets",
-			   "widgets/textblock");
+			   "e/widgets/textblock");
    wd->o_textblock = o;
    evas_object_event_callback_add(wd->o_scrollframe, EVAS_CALLBACK_RESIZE, _e_wid_cb_scrollframe_resize, wd);
    e_scrollframe_child_set(wd->o_scrollframe, o);

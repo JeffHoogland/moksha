@@ -5393,12 +5393,12 @@ _e_border_eval(E_Border *bd)
 		  evas_object_del(bd->bg_object);
 	       }
 	     o = edje_object_add(bd->bg_evas);
-	     snprintf(buf, sizeof(buf), "widgets/border/%s/border",
+	     snprintf(buf, sizeof(buf), "e/widgets/border/%s/border",
 		      bd->client.border.name);
 	     ok = e_theme_edje_object_set(o, "base/theme/borders", buf);
 	     if ((!ok) && (strcmp(bd->client.border.name, "borderless")))
 	       ok = e_theme_edje_object_set(o, "base/theme/borders",
-					    "widgets/border/default/border");
+					    "e/widgets/border/default/border");
 	     if (ok)
 	       {
 		  const char *shape_option;

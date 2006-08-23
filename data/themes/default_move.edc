@@ -2,7 +2,7 @@ images {
    image: "e17_menu_bg.png" COMP;
 }
 group {
-   name: "widgets/border/default/move";
+   name: "e/widgets/border/default/move";
    parts {
       part {
 	 name:          "base";

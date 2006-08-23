@@ -44,7 +44,7 @@ e_about_new(E_Container *con)
    o = edje_object_add(e_win_evas_get(about->win));
    about->bg_object = o;
    e_theme_edje_object_set(o, "base/theme/about",
-			   "widgets/about/main");
+			   "e/widgets/about/main");
    evas_object_move(o, 0, 0);
    evas_object_show(o);
    

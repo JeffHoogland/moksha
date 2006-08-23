@@ -614,7 +614,7 @@ e_gadcon_client_edit_begin(E_Gadcon_Client *gcc)
    evas_object_move(gcc->o_control, x, y);
    evas_object_resize(gcc->o_control, w, h);
    e_theme_edje_object_set(gcc->o_control, "base/theme/gadman",
-			   "gadman/control");
+			   "e/gadman/control");
 
    if ((gcc->autoscroll) || (gcc->resizable))
      {

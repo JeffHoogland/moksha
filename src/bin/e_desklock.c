@@ -218,32 +218,32 @@ e_desklock_show(void)
 			 {
 			   e_theme_edje_object_set(edp->bg_object,
 						   "base/theme/desklock",
-						   "desklock/background");
+						   "e/desklock/background");
 			 }
 		       else if (!strcmp(e_config->desklock_background, "theme_background"))
 			 {
 			    e_theme_edje_object_set(edp->bg_object,
 						    "base/theme/backgrounds",
-						    "desktop/background");
+						    "e/desktop/background");
 			 }
 		       else
 			 {
 			   if (e_util_edje_collection_exists(e_config->desklock_background,
-							     "desklock/background"))
+							     "e/desklock/background"))
 			     {
 			       edje_object_file_set(edp->bg_object, e_config->desklock_background,
-						    "desklock/background");
+						    "e/desklock/background");
 			     }
 			   else
 			     {
 			       if (!edje_object_file_set(edp->bg_object,
 							 e_config->desklock_background,
-							 "desktop/background"))
+							 "e/desktop/background"))
 				 {
 				   edje_object_file_set(edp->bg_object,
 						      e_theme_edje_file_get("base/theme/desklock",
-									    "desklock/background"),
-									    "desklock/background");
+									    "e/desklock/background"),
+									    "e/desklock/background");
 				 }
 			     }
 			 }
@@ -254,7 +254,7 @@ e_desklock_show(void)
 		       edp->login_box = edje_object_add(edp->popup_wnd->evas);
 		       e_theme_edje_object_set(edp->login_box,
 					       "base/theme/desklock",
-					       "desklock/login_box");
+					       "e/desklock/login_box");
 		       edje_object_part_text_set(edp->login_box, "e.text.title", 
 						 _("Please enter your unlock password"));
 		       edje_object_part_swallow(edp->bg_object, "e.swallow.login_box", edp->login_box);

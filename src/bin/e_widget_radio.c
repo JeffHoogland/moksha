@@ -59,7 +59,7 @@ e_widget_radio_add(Evas *evas, char *label, int valnum, E_Radio_Group *group)
    o = edje_object_add(evas);
    wd->o_radio = o;
    e_theme_edje_object_set(o, "base/theme/widgets",
-			   "widgets/radio");
+			   "e/widgets/radio");
    edje_object_signal_callback_add(o, "e,action,toggle", "*", _e_wid_signal_cb1, obj);
    edje_object_part_text_set(o, "e.text.label", label);
    evas_object_show(o);
@@ -102,7 +102,7 @@ e_widget_radio_icon_add(Evas *evas, char *label, char *icon, int icon_w, int ico
    o = edje_object_add(evas);
    wd->o_radio = o;
    e_theme_edje_object_set(o, "base/theme/widgets",
-			   "widgets/radio_icon");
+			   "e/widgets/radio_icon");
    edje_object_signal_callback_add(o, "e,action,toggle", "*", _e_wid_signal_cb1, obj);
    edje_object_part_text_set(o, "e.text.label", label);
    evas_object_show(o);

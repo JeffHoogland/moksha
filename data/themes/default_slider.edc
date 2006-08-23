@@ -10,7 +10,7 @@ images {
 }
 
 group {
-   name: "widgets/slider_vertical";
+   name: "e/widgets/slider_vertical";
    parts {
       part {
 	 name: "sld_base";
@@ -420,7 +420,7 @@ group {
 }
 
 group {
-   name: "widgets/slider_horizontal";
+   name: "e/widgets/slider_horizontal";
    parts {
       part {
 	 name: "sld_base";

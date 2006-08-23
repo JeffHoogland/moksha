@@ -109,7 +109,7 @@ e_container_new(E_Manager *man)
    evas_object_move(o, 0, 0);
    evas_object_resize(o, con->w, con->h);
    evas_object_color_set(o, 255, 255, 255, 255);
-   evas_object_name_set(o, "desktop/background");
+   evas_object_name_set(o, "e/desktop/background");
    evas_object_data_set(o, "e_container", con);
    evas_object_show(o);
    

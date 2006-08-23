@@ -9,7 +9,7 @@ images {
 }
 
 group {
-   name: "widgets/configure/main";
+   name: "e/widgets/configure/main";
    parts {
       part {
 	 name:          "base";

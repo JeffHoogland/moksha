@@ -1,5 +1,5 @@
 group {
-  name: "widgets/cslider";
+  name: "e/widgets/cslider";
   parts {
       part {
 	 name:          "background";

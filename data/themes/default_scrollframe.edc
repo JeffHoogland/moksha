@@ -22,7 +22,7 @@ images {
 }
 
 group {
-   name: "widgets/scrollframe";
+   name: "e/widgets/scrollframe";
    parts {
       part {
 	 name:          "bg";

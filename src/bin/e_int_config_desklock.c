@@ -530,13 +530,13 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
    ic = NULL;
    /* Desklock background */
    o = edje_object_add(evasbuf);
-   f1 = e_theme_edje_file_get("base/theme/desklock", "desklock/background");
+   f1 = e_theme_edje_file_get("base/theme/desklock", "e/desklock/background");
    
    e_widget_ilist_header_append(cfdata->gui.bg_list, NULL, _("Theme Backgrounds"));
-   if (edje_object_file_set(o, f1, "desklock/background"))
+   if (edje_object_file_set(o, f1, "e/desklock/background"))
      {
         ic = e_thumb_icon_add(cfd->dia->win->evas);
-	e_thumb_icon_file_set(ic, f1, "desktop/background");
+	e_thumb_icon_file_set(ic, f1, "e/desktop/background");
 	e_thumb_icon_size_set(ic, 64,
 			       (64 * e_zone_current_get(cfd->dia->win->container)->h) /
 			       e_zone_current_get(cfd->dia->win->container)->w);
@@ -550,7 +550,7 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
      e_widget_ilist_selected_set(cfdata->gui.bg_list, 1);
    
    im = e_widget_preview_add(cfdata->evas, BG_PREVIEW_W, BG_PREVIEW_H);
-   e_widget_preview_edje_set(im, f1, "desklock/background");
+   e_widget_preview_edje_set(im, f1, "e/desklock/background");
    
    evas_object_del(o);
    ecore_evas_free(eebuf);
@@ -561,12 +561,12 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
    evasbuf = ecore_evas_get(eebuf);
    
    o = edje_object_add(evasbuf);
-   f = e_theme_edje_file_get("base/theme/backgrounds", "desktop/background");
+   f = e_theme_edje_file_get("base/theme/backgrounds", "e/desktop/background");
    ic = NULL;
-   if (edje_object_file_set(o, f, "desktop/background"))
+   if (edje_object_file_set(o, f, "e/desktop/background"))
      {
         ic = e_thumb_icon_add(cfd->dia->win->evas);
-	e_thumb_icon_file_set(ic, f, "desktop/background");
+	e_thumb_icon_file_set(ic, f, "e/desktop/background");
 	e_thumb_icon_size_set(ic, 64,
 			       (64 * e_zone_current_get(cfd->dia->win->container)->h) /
 			       e_zone_current_get(cfd->dia->win->container)->w);
@@ -581,7 +581,7 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
 	e_widget_ilist_selected_set(cfdata->gui.bg_list, 2);
 	evas_object_del(im);
 	im = e_widget_preview_add(cfdata->evas, BG_PREVIEW_W, BG_PREVIEW_H);
-	e_widget_preview_edje_set(im, f, "desktop/background");
+	e_widget_preview_edje_set(im, f, "e/desktop/background");
      }
    
    evas_object_del(o);
@@ -608,10 +608,10 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
 		  
 		  snprintf(full_path, sizeof(full_path), "%s/%s", d->dir, bg_file);
 		  if (ecore_file_is_dir(full_path)) continue;
-		  if (!e_util_edje_collection_exists(full_path, "desktop/background")) continue;
+		  if (!e_util_edje_collection_exists(full_path, "e/desktop/background")) continue;
 		  
 		  ic = e_thumb_icon_add(cfd->dia->win->evas);
-		  e_thumb_icon_file_set(ic, full_path, "desktop/background");
+		  e_thumb_icon_file_set(ic, full_path, "e/desktop/background");
 		  e_thumb_icon_size_set(ic, 64,
 					 (64 * e_zone_current_get(cfd->dia->win->container)->h) /
 					 e_zone_current_get(cfd->dia->win->container)->w);
@@ -625,7 +625,7 @@ _load_bgs(E_Config_Dialog_Data *cfdata)
 		       e_widget_ilist_selected_set(cfdata->gui.bg_list, i);
 		       evas_object_del(im);
 		       im = e_widget_preview_add(cfdata->evas, BG_PREVIEW_W, BG_PREVIEW_H);
-		       e_widget_preview_edje_set(im, full_path, "desktop/background");
+		       e_widget_preview_edje_set(im, full_path, "e/desktop/background");
 		    }
 		  i++;
 	       }
@@ -652,25 +652,25 @@ _ibg_list_cb_bg_selected(void *data)
 	  {
 	     const char *theme;
 	     
-	     theme = e_theme_edje_file_get("base/theme/desklock", "desklock/background");
-	     e_widget_preview_edje_set(cfdata->preview_image, theme, "desklock/background");
+	     theme = e_theme_edje_file_get("base/theme/desklock", "e/desklock/background");
+	     e_widget_preview_edje_set(cfdata->preview_image, theme, "e/desklock/background");
 	  }
 	else if (!strcmp(cfdata->bg, DEF_THEME_BACKGROUND))
 	  {
 	     const char *theme;
 	     
-	     theme = e_theme_edje_file_get("base/theme/backgrounds", "desktop/background");
-	     e_widget_preview_edje_set(cfdata->preview_image, theme, "desktop/background");
+	     theme = e_theme_edje_file_get("base/theme/backgrounds", "e/desktop/background");
+	     e_widget_preview_edje_set(cfdata->preview_image, theme, "e/desktop/background");
 	  }
 	else
-	  e_widget_preview_edje_set(cfdata->preview_image, cfdata->bg, "desktop/background");
+	  e_widget_preview_edje_set(cfdata->preview_image, cfdata->bg, "e/desktop/background");
      }
    else
      {
 	const char *theme;
 	
-	theme = e_theme_edje_file_get("base/theme/desklock", "desklock/background");
-	e_widget_preview_edje_set(cfdata->preview_image, theme, "desklock/background");
+	theme = e_theme_edje_file_get("base/theme/desklock", "e/desklock/background");
+	e_widget_preview_edje_set(cfdata->preview_image, theme, "e/desklock/background");
      }
 }
 

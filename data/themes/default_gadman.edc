@@ -14,7 +14,7 @@ images {
 }
 
 group {
-   name: "gadman/control";
+   name: "e/gadman/control";
    parts {
       part {
 	 name:          "hclip";

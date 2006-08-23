@@ -3,7 +3,7 @@ images {
    image: "e17_"SM"reflection_shadow_overlay.png" LOSSY 90;
 }
 group {
-   name: "desktop/background";
+   name: "e/desktop/background";
    parts {
       part {
 	 name: "background_image";

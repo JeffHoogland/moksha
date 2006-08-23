@@ -2,7 +2,7 @@ images {
    image: "e17_menu_bg.png" COMP;
 }
 group {
-   name: "widgets/border/default/resize";
+   name: "e/widgets/border/default/resize";
    parts {
       part {
 	 name:          "base";

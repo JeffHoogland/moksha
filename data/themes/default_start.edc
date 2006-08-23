@@ -1,5 +1,5 @@
 group {
-   name: "modules/start/main";
+   name: "e/modules/start/main";
    max:  128 128;
    script {
       public is_active;

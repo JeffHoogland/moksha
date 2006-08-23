@@ -32,7 +32,7 @@ e_widget_frametable_add(Evas *evas, char *label, int homogenous)
    o = edje_object_add(evas);
    wd->o_frame = o;
    e_theme_edje_object_set(o, "base/theme/widgets",
-			   "widgets/frame");
+			   "e/widgets/frame");
    edje_object_part_text_set(o, "e.text.label", label);
    evas_object_show(o);
    e_widget_sub_object_add(obj, o);

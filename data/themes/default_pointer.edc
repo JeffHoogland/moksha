@@ -4,10 +4,10 @@ images {
 }
 
 group {
-   name: "pointer/enlightenment/default/color";
+   name: "e/pointer/enlightenment/default/color";
    parts {
       part {
-	 name:          "pointer";
+	 name:          "e/pointer";
 	 type:          IMAGE;
 	 mouse_events:  0;
 	 description {
@@ -73,10 +73,10 @@ group {
 }
 
 group {
-   name: "pointer/enlightenment/default/mono";
+   name: "e/pointer/enlightenment/default/mono";
    parts {
       part {
-	 name:          "pointer";
+	 name:          "e/pointer";
 	 type:          IMAGE;
 	 mouse_events:  0;
 	 description {

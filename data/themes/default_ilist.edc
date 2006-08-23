@@ -3,7 +3,7 @@ images {
    image: "e17_ilist_bg1.png" COMP;
 }
 group {
-   name: "widgets/ilist";
+   name: "e/widgets/ilist";
    parts {
       part {
 	 name: "base";
@@ -470,7 +470,7 @@ group {
 }
 
 group {
-   name: "widgets/ilist_odd";
+   name: "e/widgets/ilist_odd";
    parts {
       part {
 	 name: "base";
@@ -937,7 +937,7 @@ group {
 }
 
 group {
-   name: "widgets/ilist_header";
+   name: "e/widgets/ilist_header";
    parts {
       part {
 	 name: "base";

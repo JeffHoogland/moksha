@@ -194,7 +194,7 @@ BORDER_BUTTON_ADV(NAME,TYPE,REL1X,REL1Y,OFF1X,OFF1Y,TO1,TO1,REL2X,REL2Y,OFF2X,OF
 
 #define FULL_SIZE_BORDER_BUTTON(TYPE) \
 group { \
-   name:  "widgets/border/default/"TYPE; \
+   name:  "e/widgets/border/default/"TYPE; \
    parts { \
       part { \
 	 name:           "whole"; \
@@ -261,7 +261,7 @@ images {
 }
 
 group {
-   name: "widgets/border/default/border";
+   name: "e/widgets/border/default/border";
    // ALSO:
    // borderless, noresize, shaped, nofocus, urgent, dialog, modal, skipped
    data {
@@ -1541,7 +1541,7 @@ group {
 }
 
 group {
-   name: "widgets/border/shaped/border";
+   name: "e/widgets/border/shaped/border";
    // ALSO:
    // borderless, noresize, shaped, nofocus, urgent, dialog, modal, skipped
    data {
@@ -2584,7 +2584,7 @@ group {
 }
 
 group {
-   name: "widgets/border/dialog/border";
+   name: "e/widgets/border/dialog/border";
    // ALSO:
    // borderless, noresize, shaped, nofocus, urgent, dialog, modal, skipped
    data {
@@ -3733,7 +3733,7 @@ group {
 }
 
 group {
-   name: "widgets/border/noresize_dialog/border";
+   name: "e/widgets/border/noresize_dialog/border";
    // ALSO:
    // borderless, noresize, shaped, nofocus, urgent, dialog, modal, skipped
    data {
@@ -4800,7 +4800,7 @@ group {
 }
 
 group {
-   name: "widgets/border/pixel/border";
+   name: "e/widgets/border/pixel/border";
    // ALSO:
    // borderless, noresize, shaped, nofocus, urgent, dialog, modal, skipped
    data {

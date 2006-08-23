@@ -44,7 +44,7 @@ e_widget_button_add(Evas *evas, const char *label, const char *icon, void (*func
    o = edje_object_add(evas);
    wd->o_button = o;
    e_theme_edje_object_set(o, "base/theme/widgets",
-			   "widgets/button");
+			   "e/widgets/button");
    edje_object_signal_callback_add(o, "e,action,click", "", _e_wid_signal_cb1, obj);
    edje_object_part_text_set(o, "e.text.label", label);
    evas_object_show(o);

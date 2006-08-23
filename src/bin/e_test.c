@@ -194,7 +194,7 @@ _e_test_internal(E_Container *con)
       
    o2 = e_scrollframe_add(dia->win->evas);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_test_click, o2);
-//   e_scrollframe_custom_theme_set(o2, "base/theme/widgets", "widgets/scrollframe");
+//   e_scrollframe_custom_theme_set(o2, "base/theme/widgets", "e/widgets/scrollframe");
    evas_object_show(o2);
 #if 0   
    o3 = e_pan_add(dia->win->evas);
@@ -297,7 +297,7 @@ _e_test_internal(E_Container *con)
    e_livethumb_vsize_set(o3, 160, 96);
    o4 = edje_object_add(e_livethumb_evas_get(o3));
    e_theme_edje_object_set(o4, "base/theme/borders",
-			   "widgets/border/default/border");
+			   "e/widgets/border/default/border");
    e_livethumb_thumb_set(o3, o4);
    e_ilist_append(o, o3, "Item 1", 0, _e_test_sel, NULL, NULL, NULL);
    

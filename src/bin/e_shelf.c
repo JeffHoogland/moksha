@@ -125,11 +125,11 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    
    es->o_base = edje_object_add(es->evas);
    es->name = evas_stringshare_add(name);
-   snprintf(buf, sizeof(buf), "shelf/%s/base", es->style);
+   snprintf(buf, sizeof(buf), "e/shelf/%s/base", es->style);
    evas_object_resize(es->o_base, es->w, es->h);
    if (!e_theme_edje_object_set(es->o_base, "base/theme/shelf", buf))
      e_theme_edje_object_set(es->o_base, "base/theme/shelf",
-			     "shelf/default/base");
+			     "e/shelf/default/base");
    if (es->popup)
      {
 	evas_object_show(es->o_event);
@@ -468,13 +468,13 @@ e_shelf_style_set(E_Shelf *es, const char *style)
    es->style = evas_stringshare_add(style);
    
    if (style)
-     snprintf(buf, sizeof(buf), "shelf/%s/base", style);
+     snprintf(buf, sizeof(buf), "e/shelf/%s/base", style);
    else
-     snprintf(buf, sizeof(buf), "shelf/%s/base", "default");
+     snprintf(buf, sizeof(buf), "e/shelf/%s/base", "default");
      
    if (!e_theme_edje_object_set(es->o_base, "base/theme/shelf", buf))
      e_theme_edje_object_set(es->o_base, "base/theme/shelf", 
-			     "shelf/default/base");
+			     "e/shelf/default/base");
 }
 
 EAPI void 
@@ -769,7 +769,7 @@ _e_shelf_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *styl
    
    es = data;
    o = edje_object_add(gcc->gadcon->evas);
-   snprintf(buf, sizeof(buf), "shelf/%s/%s", es->style, style);
+   snprintf(buf, sizeof(buf), "e/shelf/%s/%s", es->style, style);
    if (!e_theme_edje_object_set(o, "base/theme/shelf", buf))
      {
 	evas_object_del(o);

@@ -60,7 +60,7 @@ e_widget_cslider_add(Evas *evas, E_Color_Component mode, E_Color *color, int ver
    o = edje_object_add(evas);
    wd->o_cslider = o;
    e_theme_edje_object_set(o, "base/theme/widgets",
-			   "widgets/cslider");
+			   "e/widgets/cslider");
    if (wd->vertical)
      edje_object_signal_emit(o, "e,state,direction,v", "e");
    else

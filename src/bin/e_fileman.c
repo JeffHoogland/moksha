@@ -137,7 +137,7 @@ e_fileman_new_to_dir(E_Container *con, char *path)
    
    fileman->main = e_scrollframe_add(fileman->evas);
    e_scrollframe_custom_theme_set(fileman->main, "base/themes/fileman",
-				  "fileman/main");
+				  "e/fileman/main");
    e_scrollframe_extern_pan_set(fileman->main, fileman->smart, 
 				_e_fileman_scroll_set,
 				_e_fileman_scroll_get,

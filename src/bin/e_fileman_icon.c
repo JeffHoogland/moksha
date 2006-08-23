@@ -150,7 +150,7 @@ e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
 	evas_object_show(sd->thumb_object);
 	sd->image_object = edje_object_add(sd->evas);
 	e_theme_edje_object_set(sd->image_object, "base/theme/fileman",
-				"fileman/icon_thumb");
+				"e/fileman/icon_thumb");
 	edje_extern_object_min_size_set(sd->thumb_object, sd->iw, sd->ih);
 	edje_extern_object_max_size_set(sd->thumb_object, sd->iw, sd->ih);
 	edje_object_part_swallow(sd->image_object, "icon_swallow",
@@ -483,9 +483,9 @@ _e_fm_icon_icon_mime_get(E_Smart_Data *sd)
   sd->image_object = edje_object_add(sd->evas);
   /* since a mime is set with every creation of an E_Fm_File its existence isnt checked here */
    	  
-  snprintf(part, PATH_MAX, "icons/fileman/%s", (sd->file->mime->name)); 
+  snprintf(part, PATH_MAX, "e/icons/fileman/%s", (sd->file->mime->name)); 
   if (!e_theme_edje_object_set(sd->image_object, "base/theme/fileman", part))
-    e_theme_edje_object_set(sd->image_object, "base/theme/fileman", "icons/fileman/file");
+    e_theme_edje_object_set(sd->image_object, "base/theme/fileman", "e/icons/fileman/file");
 
    evas_object_show(sd->image_object);
    edje_extern_object_min_size_set(sd->image_object, sd->iw, sd->ih);
@@ -501,17 +501,17 @@ _e_fm_icon_type_set(E_Smart_Data *sd)
      {
       case E_FM_ICON_NORMAL:
 	e_theme_edje_object_set(sd->icon_object, "base/theme/fileman",
-				"fileman/icon_normal");
+				"e/fileman/icon_normal");
 	break;
 
       case E_FM_ICON_LIST:
 	e_theme_edje_object_set(sd->icon_object, "base/theme/fileman",
-				"fileman/icon_list");
+				"e/fileman/icon_list");
 	break;
 
       default:
 	e_theme_edje_object_set(sd->icon_object, "base/theme/fileman",
-				"fileman/icon_normal");
+				"e/fileman/icon_normal");
 	break;
      }
 

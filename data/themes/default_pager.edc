@@ -10,7 +10,7 @@ images {
 }
 
 group {
-   name: "widgets/pager/popup";
+   name: "e/widgets/pager/popup";
    parts {
       part {
 	 name:          "base";
@@ -233,7 +233,7 @@ group {
 }
 
 group {
-   name: "modules/pager/desk";
+   name: "e/modules/pager/desk";
    script {
       public active;
       public drag;
@@ -618,7 +618,7 @@ group {
 }
 
 group {
-   name: "modules/pager/window";
+   name: "e/modules/pager/window";
    parts {
       part {
 	 name:          "overlay";

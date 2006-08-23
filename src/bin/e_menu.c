@@ -1137,7 +1137,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	o = edje_object_add(mi->menu->evas);
 	mi->separator_object = o;
 	e_theme_edje_object_set(o, "base/theme/menus", 
-				"widgets/menu/default/separator");
+				"e/widgets/menu/default/separator");
 	evas_object_show(o);
 	edje_object_size_min_calc(mi->separator_object, &ww, &hh);
 	mi->separator_w = ww;
@@ -1154,14 +1154,14 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	if ((mi->submenu) || (mi->submenu_pre_cb.func))
 	  {
 	     if (!e_theme_edje_object_set(mi->bg_object, "base/theme/menus",
-					  "widgets/menu/default/submenu_bg"))
+					  "e/widgets/menu/default/submenu_bg"))
 	       goto no_submenu_item;
 	  }
 	else
 	  {
 	     no_submenu_item:
 	     e_theme_edje_object_set(mi->bg_object, "base/theme/menus",
-				     "widgets/menu/default/item_bg");
+				     "e/widgets/menu/default/item_bg");
 	  }
 	evas_object_show(o);
 	
@@ -1178,7 +1178,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     o = edje_object_add(mi->menu->evas);
 	     mi->toggle_object = o;
 	     e_theme_edje_object_set(o, "base/theme/menus",
-				     "widgets/menu/default/check");
+				     "e/widgets/menu/default/check");
 	     evas_object_pass_events_set(o, 1);
 	     evas_object_show(o);
 	     e_box_pack_end(mi->container_object, o);
@@ -1191,7 +1191,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     o = edje_object_add(mi->menu->evas);
 	     mi->toggle_object = o;
 	     e_theme_edje_object_set(o, "base/theme/menus",
-				     "widgets/menu/default/radio");
+				     "e/widgets/menu/default/radio");
 	     evas_object_pass_events_set(o, 1);
 	     evas_object_show(o);
 	     e_box_pack_end(mi->container_object, o);
@@ -1213,7 +1213,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     
 	     o = edje_object_add(mi->menu->evas);
 	     if (e_theme_edje_object_set(o, "base/theme/menus",
-					 "widgets/menu/default/icon"))
+					 "e/widgets/menu/default/icon"))
 	       {
 		  mi->icon_bg_object = o;
 		  evas_object_show(o);
@@ -1307,7 +1307,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     o = edje_object_add(mi->menu->evas);
 	     mi->label_object = o;
 	     e_theme_edje_object_set(o, "base/theme/menus",
-				     "widgets/menu/default/label");
+				     "e/widgets/menu/default/label");
 	     /* default label */
 	     edje_object_part_text_set(o, "e.text.label", mi->label);
 	     evas_object_pass_events_set(o, 1);
@@ -1330,7 +1330,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     o = edje_object_add(mi->menu->evas);
 	     mi->submenu_object = o;
 	     e_theme_edje_object_set(o, "base/theme/menus",
-				     "widgets/menu/default/submenu");
+				     "e/widgets/menu/default/submenu");
 	     evas_object_pass_events_set(o, 1);
 	     evas_object_show(o);
 	     e_box_pack_end(mi->container_object, o);
@@ -1401,7 +1401,7 @@ _e_menu_realize(E_Menu *m)
    evas_object_move(o, 0, 0);
    evas_object_resize(o, m->cur.w, m->cur.h);
    ok = e_theme_edje_object_set(o, "base/theme/menus",
-				"widgets/menu/default/background");
+				"e/widgets/menu/default/background");
    if (ok)
      {
 	const char *shape_option;

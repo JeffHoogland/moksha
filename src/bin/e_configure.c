@@ -52,7 +52,7 @@ e_configure_show(E_Container *con)
       
    eco->edje = edje_object_add(eco->evas);
    e_theme_edje_object_set(eco->edje, "base/theme/configure",
-			   "widgets/configure/main");
+			   "e/widgets/configure/main");
    
    /* 24 */
    eco->ilist = e_widget_ilist_add(eco->evas, 32, 32, NULL);

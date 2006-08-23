@@ -3,7 +3,7 @@ images {
 }
 
 group {
-  name: "widgets/spectrum";
+  name: "e/widgets/spectrum";
   parts {
       part {
 	 name:          "background";
@@ -46,7 +46,7 @@ group {
 	 }
       }
       part {
-	 name:          "content";
+	 name:          "e.swallow.content";
 	 type:          SWALLOW;
 	 mouse_events:  0;
 	 clip_to:       "content_clip";
@@ -66,7 +66,7 @@ group {
       name: "e.dragable.cursor";
       type: RECT;
       dragable {
-        confine: "content";
+        confine: "e.swallow.content";
         x: 1 1 0;
         y: 1 1 0;
       }
@@ -77,12 +77,12 @@ group {
         fixed: 1 1;
         visible: 0;
         rel1 {
-          to: "content";
+          to: "e.swallow.content";
           relative: 0.5 0.5;
           offset: 0 0;
         }
         rel2 {
-          to: "content";
+          to: "e.swallow.content";
           relative: 0.5 0.5;
           offset: 0 0;
         }
@@ -95,11 +95,11 @@ group {
         state: "default" 0.0;
         rel1 {
           to_x: "e.dragable.cursor";
-          to_y: "content";
+          to_y: "e.swallow.content";
         }
         rel2 {
           to_x: "e.dragable.cursor";
-          to_y: "content";
+          to_y: "e.swallow.content";
 
         }
       }
@@ -110,11 +110,11 @@ group {
       description {
         state: "default" 0.0;
         rel1 {
-          to_x: "content";
+          to_x: "e.swallow.content";
           to_y: "e.dragable.cursor";
         }
         rel2 {
-          to_x: "content";
+          to_x: "e.swallow.content";
           to_y: "e.dragable.cursor";
 
         }

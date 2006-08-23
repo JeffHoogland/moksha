@@ -3,7 +3,7 @@ images {
 }
 
 group {
-   name: "transitions/crossfade";
+   name: "e/transitions/crossfade";
    parts {
       part {
 	 name:          "e.swallow.bg.old";
@@ -55,7 +55,7 @@ group {
 }
 
 group {
-   name: "transitions/vswipe";
+   name: "e/transitions/vswipe";
    parts {
       part {
 	 name:          "e.swallow.bg.old";

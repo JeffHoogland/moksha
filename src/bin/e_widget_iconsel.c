@@ -70,7 +70,7 @@ e_widget_iconsel_add(Evas *evas, Evas_Object *icon, Evas_Coord minw, Evas_Coord 
    o = edje_object_add(evas);
    wd->o_button = o;
    e_theme_edje_object_set(o, "base/theme/widgets",
-			   "widgets/button");
+			   "e/widgets/button");
    edje_object_signal_callback_add(o, "click", "", _e_wid_signal_cb1, obj);
    edje_object_part_text_set(o, "label", "");   
    evas_object_show(o);
@@ -122,7 +122,7 @@ e_widget_iconsel_add_from_file(Evas *evas, char *icon, Evas_Coord minw, Evas_Coo
    o = edje_object_add(evas);
    wd->o_button = o;
    e_theme_edje_object_set(o, "base/theme/widgets",
-			   "widgets/button");
+			   "e/widgets/button");
    edje_object_signal_callback_add(o, "click", "", _e_wid_signal_cb1, obj);
    edje_object_part_text_set(o, "label", "");
    evas_object_show(o);

@@ -9,7 +9,7 @@ images {
    image: "e17_menu_separator.png" COMP;
 }
 group {
-   name: "widgets/menu/default/background";
+   name: "e/widgets/menu/default/background";
    data {
 // this tells e the border is shaped
 //      item: "shaped" "1";
@@ -163,7 +163,7 @@ group {
    }
 }
 group {
-   name: "widgets/menu/default/separator";
+   name: "e/widgets/menu/default/separator";
    parts {
       part {
 	 name:          "separator";
@@ -191,7 +191,7 @@ group {
    }
 }
 group {
-   name: "widgets/menu/default/item_bg";
+   name: "e/widgets/menu/default/item_bg";
    parts {
       part {
 	 name:          "e.swallow.content";
@@ -212,7 +212,7 @@ group {
    }
 }
 group {
-   name: "widgets/menu/default/submenu_bg";
+   name: "e/widgets/menu/default/submenu_bg";
    parts {
       part {
 	 name:          "e.swallow.content";
@@ -233,7 +233,7 @@ group {
    }
 }
 group {
-   name: "widgets/menu/default/check";
+   name: "e/widgets/menu/default/check";
    parts {
       part {
 	 name:          "outline";
@@ -316,7 +316,7 @@ group {
    }
 }
 group {
-   name: "widgets/menu/default/radio";
+   name: "e/widgets/menu/default/radio";
    parts {
       part {
 	 name:          "outline";
@@ -399,7 +399,7 @@ group {
    }
 }
 group {
-   name: "widgets/menu/default/icon";
+   name: "e/widgets/menu/default/icon";
    parts {
       part {
 	 name:          "e.swallow.content";
@@ -419,7 +419,7 @@ group {
    }
 }
 group {
-   name: "widgets/menu/default/label";
+   name: "e/widgets/menu/default/label";
    parts {
       part {
 	 name:          "title_outline";
@@ -913,7 +913,7 @@ group {
    }
 }
 group {
-   name: "widgets/menu/default/submenu";
+   name: "e/widgets/menu/default/submenu";
    parts {
       part {
 	 name:          "arrow";

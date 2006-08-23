@@ -54,8 +54,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	e_menu_item_callback_set(mi, _e_border_menu_cb_on_top, bd);
 	e_menu_item_icon_edje_set(mi,
 				  e_theme_edje_file_get("base/theme/borders",
-							"widgets/border/default/stack_on_top"),
-				  "widgets/border/default/stack_on_top");
+							"e/widgets/border/default/stack_on_top"),
+				  "e/widgets/border/default/stack_on_top");
 	
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Normal"));
@@ -65,8 +65,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	e_menu_item_callback_set(mi, _e_border_menu_cb_normal, bd);
 	e_menu_item_icon_edje_set(mi,
 				  e_theme_edje_file_get("base/theme/borders",
-							"widgets/border/default/stack_normal"),
-				  "widgets/border/default/stack_normal");
+							"e/widgets/border/default/stack_normal"),
+				  "e/widgets/border/default/stack_normal");
 
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Always Below"));
@@ -76,8 +76,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	e_menu_item_callback_set(mi, _e_border_menu_cb_below, bd);
 	e_menu_item_icon_edje_set(mi,
 				  e_theme_edje_file_get("base/theme/borders",
-							"widgets/border/default/stack_below"),
-				  "widgets/border/default/stack_below");
+							"e/widgets/border/default/stack_below"),
+				  "e/widgets/border/default/stack_below");
      }
 
    /* Only allow to change layer for windows in "normal" layers */
@@ -97,8 +97,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
      e_menu_item_callback_set(mi, _e_border_menu_cb_maximize, bd);
      e_menu_item_icon_edje_set(mi,
 			       e_theme_edje_file_get("base/theme/borders",
-       						     "widgets/border/default/maximize"),
-       			"widgets/border/default/maximize");
+       						     "e/widgets/border/default/maximize"),
+       			"e/widgets/border/default/maximize");
 
      mi = e_menu_item_new(m);
      e_menu_item_label_set(mi, _("Maximize vertically"));
@@ -108,8 +108,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
      e_menu_item_callback_set(mi, _e_border_menu_cb_maximize_vertically, bd);
      e_menu_item_icon_edje_set(mi,
 			       e_theme_edje_file_get("base/theme/borders",
-       						     "widgets/border/default/maximize"),
-       			"widgets/border/default/maximize");
+       						     "e/widgets/border/default/maximize"),
+       			"e/widgets/border/default/maximize");
 
      mi = e_menu_item_new(m);
      e_menu_item_label_set(mi, _("Maximize horizontally"));
@@ -119,8 +119,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
      e_menu_item_callback_set(mi, _e_border_menu_cb_maximize_horizontally, bd);
      e_menu_item_icon_edje_set(mi,
 			       e_theme_edje_file_get("base/theme/borders",
-						     "widgets/border/default/maximize"),
-				"widgets/border/default/maximize");
+						     "e/widgets/border/default/maximize"),
+				"e/widgets/border/default/maximize");
 
      mi = e_menu_item_new(m);
      e_menu_item_label_set(mi, _("Unmaximize"));
@@ -130,8 +130,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
      e_menu_item_callback_set(mi, _e_border_menu_cb_unmaximize, bd);
      e_menu_item_icon_edje_set(mi,
 			       e_theme_edje_file_get("base/theme/borders",
-						     "widgets/border/default/maximize"),
-				"widgets/border/default/maximize");
+						     "e/widgets/border/default/maximize"),
+				"e/widgets/border/default/maximize");
    }
 
    m = e_menu_new();
@@ -146,22 +146,22 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
    e_menu_item_callback_set(mi, _e_border_menu_cb_locks, bd);
    e_menu_item_icon_edje_set(mi,
 			     e_theme_edje_file_get("base/theme/borders",
-						   "widgets/border/default/locks"),
-			     "widgets/border/default/locks");
+						   "e/widgets/border/default/locks"),
+			     "e/widgets/border/default/locks");
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Remember"));
    e_menu_item_callback_set(mi, _e_border_menu_cb_remember, bd);
    e_menu_item_icon_edje_set(mi,
 			     e_theme_edje_file_get("base/theme/borders",
-						   "widgets/border/default/remember"),
-			     "widgets/border/default/remember");
+						   "e/widgets/border/default/remember"),
+			     "e/widgets/border/default/remember");
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Borders"));
    e_menu_item_callback_set(mi, _e_border_menu_cb_border, bd);
    e_menu_item_icon_edje_set(mi,
 			     e_theme_edje_file_get("base/theme/borders",
-						   "widgets/border/default/borders"),
-			     "widgets/border/default/borders");
+						   "e/widgets/border/default/borders"),
+			     "e/widgets/border/default/borders");
 
    if (!bd->sticky)
      {
@@ -173,8 +173,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	e_menu_item_submenu_pre_callback_set(mi, _e_border_menu_cb_sendto_pre, bd);
 	e_menu_item_icon_edje_set(mi,
 				  e_theme_edje_file_get("base/theme/borders",
-							"widgets/border/default/sendto"),
-				  "widgets/border/default/sendto");
+							"e/widgets/border/default/sendto"),
+				  "e/widgets/border/default/sendto");
      }
 
    mi = e_menu_item_new(m);
@@ -185,8 +185,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
    e_menu_item_submenu_set(mi, bd->border_stacking_menu);
    e_menu_item_icon_edje_set(mi,
 			     e_theme_edje_file_get("base/theme/borders",
-						   "widgets/border/default/stacking"),
-			     "widgets/border/default/stacking");
+						   "e/widgets/border/default/stacking"),
+			     "e/widgets/border/default/stacking");
    
    if (!(((bd->client.icccm.min_w == bd->client.icccm.max_w) &&
 	  (bd->client.icccm.min_h == bd->client.icccm.max_h)) ||
@@ -197,8 +197,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	e_menu_item_submenu_set(mi, bd->border_maximize_menu);
 	e_menu_item_icon_edje_set(mi,
 				  e_theme_edje_file_get("base/theme/borders",
-							"widgets/border/default/maximize"),
-				  "widgets/border/default/maximize");
+							"e/widgets/border/default/maximize"),
+				  "e/widgets/border/default/maximize");
      }
 
    if ((!bd->lock_user_shade) && (!bd->fullscreen) && (!bd->maximized) &&
@@ -211,8 +211,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	e_menu_item_callback_set(mi, _e_border_menu_cb_shade, bd);
 	e_menu_item_icon_edje_set(mi,
 				  e_theme_edje_file_get("base/theme/borders",
-							"widgets/border/default/shade"),
-				  "widgets/border/default/shade");
+							"e/widgets/border/default/shade"),
+				  "e/widgets/border/default/shade");
      }
 
    if (!bd->lock_user_sticky)
@@ -224,8 +224,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	e_menu_item_callback_set(mi, _e_border_menu_cb_stick, bd);
 	e_menu_item_icon_edje_set(mi,
 				  e_theme_edje_file_get("base/theme/borders",
-							"widgets/border/default/stick"),
-				  "widgets/border/default/stick");
+							"e/widgets/border/default/stick"),
+				  "e/widgets/border/default/stick");
      }
   
    if ((!bd->shaded) && (!bd->fullscreen) && (!bd->lock_border))
@@ -237,8 +237,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	e_menu_item_callback_set(mi, _e_border_menu_cb_borderless, bd);
 	e_menu_item_icon_edje_set(mi,
 				  e_theme_edje_file_get("base/theme/borders",
-							"widgets/border/default/borderless"),
-				  "widgets/border/default/borderless");
+							"e/widgets/border/default/borderless"),
+				  "e/widgets/border/default/borderless");
      }
    
    if ((!bd->lock_user_fullscreen) && (!bd->shaded))
@@ -250,8 +250,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	e_menu_item_callback_set(mi, _e_border_menu_cb_fullscreen, bd);
 	e_menu_item_icon_edje_set(mi,
 				  e_theme_edje_file_get("base/theme/borders",
-							"widgets/border/default/fullscreen"),
-				  "widgets/border/default/fullscreen");
+							"e/widgets/border/default/fullscreen"),
+				  "e/widgets/border/default/fullscreen");
      }
 
    if ((bd->client.icccm.accepts_focus || bd->client.icccm.take_focus) &&
@@ -264,8 +264,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	e_menu_item_callback_set(mi, _e_border_menu_cb_skip_winlist, bd);
 	e_menu_item_icon_edje_set(mi,
 				  e_theme_edje_file_get("base/theme/borders",
-							"widgets/border/default/skip_winlist"),
-				  "widgets/border/default/skip_winlist");
+							"e/widgets/border/default/skip_winlist"),
+				  "e/widgets/border/default/skip_winlist");
      }
    
    if (!bd->internal) 
@@ -296,8 +296,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
    e_menu_item_callback_set(mi, _e_border_menu_cb_prop, bd);
    e_menu_item_icon_edje_set(mi,
 			     e_theme_edje_file_get("base/theme/borders",
-						   "widgets/border/default/properties"),
-				  "widgets/border/default/properties");
+						   "e/widgets/border/default/properties"),
+				  "e/widgets/border/default/properties");
    
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
@@ -309,8 +309,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	e_menu_item_callback_set(mi, _e_border_menu_cb_kill, bd);
 	e_menu_item_icon_edje_set(mi, 
 				  e_theme_edje_file_get("base/theme/borders",
-							"widgets/border/default/kill"),
-				  "widgets/border/default/kill");
+							"e/widgets/border/default/kill"),
+				  "e/widgets/border/default/kill");
      }
 
    if (!bd->lock_close)
@@ -320,8 +320,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	e_menu_item_callback_set(mi, _e_border_menu_cb_close, bd);
 	e_menu_item_icon_edje_set(mi, 
 				  e_theme_edje_file_get("base/theme/borders",
-							"widgets/border/default/close"), 
-				  "widgets/border/default/close");
+							"e/widgets/border/default/close"), 
+				  "e/widgets/border/default/close");
      }
 
    mi = e_menu_item_new(m);
@@ -337,16 +337,16 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	e_menu_item_callback_set(mi, _e_border_menu_cb_raise, bd);
 	e_menu_item_icon_edje_set(mi,
 				  e_theme_edje_file_get("base/theme/borders",
-							"widgets/border/default/stack_on_top"),
-				  "widgets/border/default/stack_on_top");
+							"e/widgets/border/default/stack_on_top"),
+				  "e/widgets/border/default/stack_on_top");
 
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Lower"));
 	e_menu_item_callback_set(mi, _e_border_menu_cb_lower, bd);
 	e_menu_item_icon_edje_set(mi,
 				  e_theme_edje_file_get("base/theme/borders",
-							"widgets/border/default/stack_on_top"),
-				  "widgets/border/default/stack_below");
+							"e/widgets/border/default/stack_on_top"),
+				  "e/widgets/border/default/stack_below");
 	mi = e_menu_item_new(m);
 	e_menu_item_separator_set(mi, 1);
 	
@@ -359,8 +359,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	e_menu_item_callback_set(mi, _e_border_menu_cb_iconify, bd);
 	e_menu_item_icon_edje_set(mi,
 				  e_theme_edje_file_get("base/theme/borders",
-							"widgets/border/default/minimize"),
-				  "widgets/border/default/minimize");
+							"e/widgets/border/default/minimize"),
+				  "e/widgets/border/default/minimize");
      }
    
    if (key)

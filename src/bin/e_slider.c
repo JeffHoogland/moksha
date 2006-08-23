@@ -63,10 +63,10 @@ e_slider_orientation_set(Evas_Object *obj, int horizontal)
    sd->horizontal = horizontal;
    if (sd->horizontal)
      e_theme_edje_object_set(sd->edje_obj, "base/theme/widgets",
-			     "widgets/slider_horizontal");
+			     "e/widgets/slider_horizontal");
    else
      e_theme_edje_object_set(sd->edje_obj, "base/theme/widgets",
-			     "widgets/slider_vertical");
+			     "e/widgets/slider_vertical");
    edje_object_size_min_calc(sd->edje_obj, &(sd->minw), &(sd->minh));
    _e_smart_value_update(sd);
 }
@@ -449,7 +449,7 @@ _e_smart_add(Evas_Object *obj)
    
    sd->edje_obj = edje_object_add(evas_object_evas_get(obj));
    e_theme_edje_object_set(sd->edje_obj, "base/theme/widgets",
-			   "widgets/slider_vertical");
+			   "e/widgets/slider_vertical");
    edje_object_size_min_calc(sd->edje_obj, &(sd->minw), &(sd->minh));
    evas_object_smart_member_add(sd->edje_obj, obj);
    

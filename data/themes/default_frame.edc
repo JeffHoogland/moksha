@@ -4,7 +4,7 @@ images {
    image: "e17_frame_outline.png" COMP;
 }
 group {
-   name: "widgets/frame";
+   name: "e/widgets/frame";
    parts {
       part {
 	 name:          "e.swallow.content";

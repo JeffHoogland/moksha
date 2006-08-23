@@ -209,7 +209,7 @@ e_fm_file_is_etheme(E_Fm_File *file)
 
    for (l = groups; l; l = l->next)
    {
-    if (!strcmp(l->data, "widgets/border/default/border"))
+    if (!strcmp(l->data, "e/widgets/border/default/border"))
     {
        val = 1;
        break;
@@ -235,7 +235,7 @@ e_fm_file_is_ebg(E_Fm_File *file)
 
    for (l = groups; l; l = l->next)
    {
-    if (!strcmp(l->data, "desktop/background"))
+    if (!strcmp(l->data, "e/desktop/background"))
     {
        val = 1;
        break;

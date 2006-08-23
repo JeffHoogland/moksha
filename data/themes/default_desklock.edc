@@ -7,7 +7,7 @@ images {
 }
 
 group {
-  name, "desklock/background";
+  name, "e/desklock/background";
   parts {
     part {
        name: "background_image";
@@ -37,7 +37,7 @@ group {
 }
 group 
   {
-    name, "desklock/login_box";
+    name, "e/desklock/login_box";
     parts 
       {
 	part 

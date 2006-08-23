@@ -41,7 +41,7 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 	  {
 	     for (ll = entries; ll; ll = ll->next)
 	       {
-		  if (!strcmp(ll->data, "desktop/background"))
+		  if (!strcmp(ll->data, "e/desktop/background"))
 		    {
 		       bgfile = cfbg->file;
 		       ok = 1;
@@ -59,7 +59,7 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 	  {
 	     for (ll = entries; ll; ll = ll->next)
 	       {
-		  if (!strcmp(ll->data, "desktop/background"))
+		  if (!strcmp(ll->data, "e/desktop/background"))
 		    {
 		       bgfile = e_config->desktop_default_background;
 		       ok = 1;
@@ -70,7 +70,7 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 	  }
 	if (!ok)
 	  {
-	     bgfile = e_theme_edje_file_get("base/theme/background", "desktop/background");
+	     bgfile = e_theme_edje_file_get("base/theme/background", "e/desktop/background");
 	  }
      }
    if (zone->bg_object)
@@ -107,7 +107,7 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 	o = edje_object_add(zone->container->bg_evas);
 	zone->transition_object = o;
 	evas_object_data_set(o, "e_zone", zone);
-	snprintf(buf, sizeof(buf), "transitions/%s", trans);
+	snprintf(buf, sizeof(buf), "e/transitions/%s", trans);
 	e_theme_edje_object_set(o, "base/theme/transitions", buf);
 	edje_object_signal_callback_add(o, "e,state,done", "*", _e_bg_signal, zone);
 	evas_object_move(o, zone->x, zone->y);
@@ -121,7 +121,7 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
    evas_object_data_set(o, "e_zone", zone);
    evas_object_move(o, zone->x, zone->y);
    evas_object_resize(o, zone->w, zone->h);
-   edje_object_file_set(o, bgfile, "desktop/background");
+   edje_object_file_set(o, bgfile, "e/desktop/background");
    evas_object_layer_set(o, -1);
    evas_object_clip_set(o, zone->bg_clip_object);
    evas_object_show(o);

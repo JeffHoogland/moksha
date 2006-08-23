@@ -12,7 +12,7 @@ styles
 }
 
 group {
-   name: "widgets/textblock";
+   name: "e/widgets/textblock";
    parts {
       part {
 	 name:          "e.textblock.text";

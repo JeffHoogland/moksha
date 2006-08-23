@@ -51,7 +51,7 @@ e_theme_init(void)
 
    /* Find transitions */
    transitions = _e_theme_collection_items_find("base/theme/transitions", "transitions");
-   borders = _e_theme_collection_items_find("base/theme/borders", "widgets/border");
+   borders = _e_theme_collection_items_find("base/theme/borders", "e/widgets/border");
    shelfs = _e_theme_collection_items_find("base/theme/shelf", "shelf");
 
    return 1;

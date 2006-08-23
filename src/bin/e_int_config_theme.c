@@ -102,7 +102,7 @@ _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
    E_FREE(cfdata->theme);
    cfdata->theme = strdup(buf);
    if (cfdata->o_preview)
-     e_widget_preview_edje_set(cfdata->o_preview, buf, "desktop/background");
+     e_widget_preview_edje_set(cfdata->o_preview, buf, "e/desktop/background");
    if (cfdata->o_frame)
      e_widget_change(cfdata->o_frame);
 }
@@ -320,7 +320,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->o_preview = o;
    if (cfdata->theme)
      f = cfdata->theme;
-   e_widget_preview_edje_set(o, f, "desktop/background");
+   e_widget_preview_edje_set(o, f, "e/desktop/background");
    e_widget_list_object_append(of, o, 1, 0, 0.5);
    
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 0, 1, 0, 1);

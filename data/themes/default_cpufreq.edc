@@ -19,7 +19,7 @@ images {
 }
 
 group {
-   name: "modules/cpufreq/main";
+   name: "e/modules/cpufreq/main";
    min: 4 4;
    max: 128 128;
    

@@ -105,13 +105,13 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, const char *label, int heade
    
    if (header)
      e_theme_edje_object_set(si->base_obj, "base/theme/widgets",
-			     "widgets/ilist_header");
+			     "e/widgets/ilist_header");
    else if (evas_list_count(sd->items) & 0x1)
      e_theme_edje_object_set(si->base_obj, "base/theme/widgets",
-			     "widgets/ilist_odd");
+			     "e/widgets/ilist_odd");
    else
      e_theme_edje_object_set(si->base_obj, "base/theme/widgets",
-			     "widgets/ilist");
+			     "e/widgets/ilist");
    edje_object_part_text_set(si->base_obj, "e.text.label", label);
    si->icon_obj = icon;
    if (si->icon_obj)

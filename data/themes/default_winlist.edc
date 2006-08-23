@@ -11,7 +11,7 @@ images {
 }
 
 group {
-   name: "widgets/winlist/main";
+   name: "e/widgets/winlist/main";
    parts {
       part {
 	 name:          "base";
@@ -312,7 +312,7 @@ group {
 
 
 group {
-   name: "widgets/winlist/item";
+   name: "e/widgets/winlist/item";
    parts {
       part {
 	 name:          "title_outline";
