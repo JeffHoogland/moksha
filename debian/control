@@ -23,7 +23,7 @@ Architecture: any
 Section: devel
 Depends: libevas-dev, libecore-dev, libeet-dev, libembryo-dev, libedje-dev
 Conflicts: libenlightenment-dev
-Provides: e17-devel, efl-devel. efl-dev
+Provides: e17-devel, efl-devel, efl-dev
 Description: Enlightenment headers, static libraries and documentation
  Headers, static libraries and documentation for enlightenment.
 
