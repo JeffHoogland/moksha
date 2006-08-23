@@ -325,7 +325,7 @@ _pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos)
    o = edje_object_add(evas_object_evas_get(p->o_table));
    pd->o_desk = o;
    e_theme_edje_object_set(o, "base/theme/modules/pager",
-			   "modules/pager/desk");
+			   "e/modules/pager/desk");
    edje_object_part_text_set(o, "label", desk->name);
    e_table_pack(p->o_table, o, xpos, ypos, 1, 1);
    e_table_pack_options_set(o, 1, 1, 1, 1, 0.5, 0.5, 0, 0, -1, -1);
@@ -447,7 +447,7 @@ _pager_window_new(Pager_Desk *pd, E_Border *border)
    o = edje_object_add(evas_object_evas_get(pd->pager->o_table));
    pw->o_window = o;
    e_theme_edje_object_set(o, "base/theme/modules/pager",
-			   "modules/pager/window");
+			   "e/modules/pager/window");
    if (visible) evas_object_show(o);
 
    e_layout_pack(pd->o_layout, pw->o_window);
@@ -563,7 +563,7 @@ _pager_popup_new(Pager *p)
    pp->o_bg = edje_object_add(pp->popup->evas);
    e_theme_edje_object_set(pp->o_bg,
 			   "base/theme/modules/pager",
-			   "widgets/pager/popup");
+			   "e/widgets/pager/popup");
    desk = e_desk_current_get(p->zone);
    if (desk)
      edje_object_part_text_set(pp->o_bg, "text", desk->name);

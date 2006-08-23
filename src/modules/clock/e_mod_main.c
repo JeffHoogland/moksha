@@ -50,7 +50,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    
    o = edje_object_add(gc->evas);
    e_theme_edje_object_set(o, "base/theme/modules/clock",
-			   "modules/clock/main");
+			   "e/modules/clock/main");
    evas_object_show(o);
    
    gcc = e_gadcon_client_new(gc, name, id, style, o);

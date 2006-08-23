@@ -81,7 +81,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    
    o = edje_object_add(gc->evas);
    e_theme_edje_object_set(o, "base/theme/modules/cpufreq",
-			   "modules/cpufreq/main");
+			   "e/modules/cpufreq/main");
    edje_object_signal_callback_add(o, "e,action,governor,next", "*", _cpufreq_face_cb_set_governor, NULL);
    edje_object_signal_callback_add(o, "e,action,frequency,increase", "*", _cpufreq_face_cb_set_frequency, NULL);
    edje_object_signal_callback_add(o, "e,action,frequency,decrease", "*", _cpufreq_face_cb_set_frequency, NULL);

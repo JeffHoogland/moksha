@@ -320,7 +320,7 @@ _itray_box_new(ITray *it, E_Container *con)
    o = edje_object_add(itb->evas);
    itb->box_object = o;
    e_theme_edje_object_set(o, "base/theme/modules/itray",
-			   "modules/itray/main");
+			   "e/modules/itray/main");
    evas_object_show(o);
 
    o = evas_object_rectangle_add(itb->evas);

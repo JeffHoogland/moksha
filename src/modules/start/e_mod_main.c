@@ -53,7 +53,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst = E_NEW(Instance, 1);
    
    o = edje_object_add(gc->evas);
-   e_theme_edje_object_set(o, "base/theme/modules/start", "modules/start/main");
+   e_theme_edje_object_set(o, "base/theme/modules/start", "e/modules/start/main");
    edje_object_signal_emit(o, "e,state,unfocused", "e");
    
    gcc = e_gadcon_client_new(gc, name, id, style, o);

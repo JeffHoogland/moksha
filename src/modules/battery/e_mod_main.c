@@ -89,7 +89,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    
    o = edje_object_add(gc->evas);
    e_theme_edje_object_set(o, "base/theme/modules/battery",
-			   "modules/battery/main");
+			   "e/modules/battery/main");
    
    gcc = e_gadcon_client_new(gc, name, id, style, o);
    gcc->data = inst;

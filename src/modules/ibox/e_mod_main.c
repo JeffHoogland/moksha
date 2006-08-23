@@ -488,7 +488,7 @@ _ibox_icon_new(IBox *b, E_Border *bd)
    ic->border = bd;
    ic->o_holder = edje_object_add(evas_object_evas_get(b->o_box));
    e_theme_edje_object_set(ic->o_holder, "base/theme/modules/ibox",
-			   "modules/ibox/icon");
+			   "e/modules/ibox/icon");
    evas_object_event_callback_add(ic->o_holder, EVAS_CALLBACK_MOUSE_IN,  _ibox_cb_icon_mouse_in,  ic);
    evas_object_event_callback_add(ic->o_holder, EVAS_CALLBACK_MOUSE_OUT, _ibox_cb_icon_mouse_out, ic);
    evas_object_event_callback_add(ic->o_holder, EVAS_CALLBACK_MOUSE_DOWN, _ibox_cb_icon_mouse_down, ic);
@@ -500,7 +500,7 @@ _ibox_icon_new(IBox *b, E_Border *bd)
    
    ic->o_holder2 = edje_object_add(evas_object_evas_get(b->o_box));
    e_theme_edje_object_set(ic->o_holder2, "base/theme/modules/ibox",
-			   "modules/ibox/icon_overlay");
+			   "e/modules/ibox/icon_overlay");
    evas_object_layer_set(ic->o_holder2, 9999);
    evas_object_pass_events_set(ic->o_holder2, 1);
    evas_object_show(ic->o_holder2);
@@ -846,9 +846,9 @@ _ibox_inst_cb_enter(void *data, const char *type, void *event_info)
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOVE, _ibox_cb_drop_move, inst->ibox);
    evas_object_event_callback_add(o, EVAS_CALLBACK_RESIZE, _ibox_cb_drop_resize, inst->ibox);
    e_theme_edje_object_set(o, "base/theme/modules/ibox",
-			   "modules/ibox/drop");
+			   "e/modules/ibox/drop");
    e_theme_edje_object_set(o2, "base/theme/modules/ibox",
-			   "modules/ibox/drop_overlay");
+			   "e/modules/ibox/drop_overlay");
    evas_object_layer_set(o2, 19999);
    evas_object_show(o);
    evas_object_show(o2);
