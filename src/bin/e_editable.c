@@ -43,6 +43,7 @@ static void _e_editable_cursor_update(Evas_Object *editable);
 static void _e_editable_selection_update(Evas_Object *editable);
 static void _e_editable_text_update(Evas_Object *editable);
 static void _e_editable_text_position_update(Evas_Object *editable, Evas_Coord real_w);
+static int _e_editable_char_geometry_get_from_pos(Evas_Object *editable, int utf_pos, Evas_Coord *cx, Evas_Coord *cy, Evas_Coord *cw, Evas_Coord *ch);
 
 static void _e_editable_smart_add(Evas_Object *object);
 static void _e_editable_smart_del(Evas_Object *object);
@@ -689,7 +690,7 @@ e_editable_selection_hide(Evas_Object *editable)
  * @param x the x coord, relative to the editable object
  * @param y the y coord, relative to the editable object
  * @return Returns the position where to place the cursor according to the
- * given coords, or -1 on failure
+ * given coords
  */
 EAPI int
 e_editable_pos_get_from_coords(Evas_Object *editable, Evas_Coord x, Evas_Coord y)
@@ -700,12 +701,13 @@ e_editable_pos_get_from_coords(Evas_Object *editable, Evas_Coord x, Evas_Coord y
    Evas_Coord tx, ty, tw, th;
    Evas_Coord cx, cw;
    Evas_Coord canvas_x, canvas_y;
-   int pos;
+   int index, pos, i, j;
+   const char *text;
    
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
-     return -1;
+     return 0;
    if (!(text_obj = edje_object_part_object_get(sd->text_object, "e.text.text")))
-     return -1;
+     return 0;
    
    evas_object_geometry_get(editable, &ox, &oy, NULL, NULL);
    evas_object_geometry_get(text_obj, &tx, &ty, &tw, &th);
@@ -718,18 +720,30 @@ e_editable_pos_get_from_coords(Evas_Object *editable, Evas_Coord x, Evas_Coord y
       pos = sd->unicode_length;
    else
      {
-        pos = evas_object_text_char_coords_get(text_obj,
+        index = evas_object_text_char_coords_get(text_obj,
                                                canvas_x - tx, canvas_y - ty,
                                                &cx, NULL, &cw, NULL);
-        if (pos >= 0)
+        text = evas_object_text_text_get(text_obj);
+        if ((index >= 0) && (text))
           {
              if ((canvas_x - tx) > (cx + (cw / 2)))
-               pos++;
+               index++;
+             
+             i = 0;
+             j = -1;
+             pos = 0;
+             while ((i < index) && (j != i))
+               {
+                  pos++;
+                  j = i;
+                  i = evas_string_char_next_get(text, i, NULL);
+               }
+             
              if (pos > sd->unicode_length)
                pos = sd->unicode_length;
           }
         else
-          pos = -1;
+          pos = 0;
      }
    
    return pos;
@@ -901,30 +915,12 @@ _e_editable_cursor_update(Evas_Object *editable)
      return;
       
    evas_object_geometry_get(text_obj, &tx, &ty, NULL, NULL);
+   _e_editable_char_geometry_get_from_pos(editable, sd->cursor_pos,
+                                          &cx, &cy, NULL, &ch);
    
-   if ((sd->unicode_length <= 0) || (sd->cursor_pos <= 0))
-     {
-        e_editable_char_size_get(editable, &cw, &ch);
-        evas_object_move(sd->cursor_object, tx, ty);
-        evas_object_resize(sd->cursor_object, 1, ch);
-     }
-   else
-     {
-        if (sd->cursor_pos >= sd->unicode_length)
-          {
-             evas_object_text_char_pos_get(text_obj, sd->unicode_length - 1,
-                                          &cx, &cy, &cw, &ch);
-             evas_object_move(sd->cursor_object, tx + cx + cw - 1, ty + cy);
-             evas_object_resize(sd->cursor_object, 1, ch);
-          }
-        else
-          {
-             evas_object_text_char_pos_get(text_obj, sd->cursor_pos,
-                                           &cx, &cy, &cw, &ch);
-             evas_object_move(sd->cursor_object, tx + cx - 1, ty + cy);
-             evas_object_resize(sd->cursor_object, 1, ch);
-          }
-     }
+   evas_object_move(sd->cursor_object, tx + cx, ty + cy);
+   /* TODO: cursor_width */
+   evas_object_resize(sd->cursor_object, 1, ch);
    
    if (sd->cursor_visible && evas_object_visible_get(editable))
      {
@@ -963,38 +959,14 @@ _e_editable_selection_update(Evas_Object *editable)
         end_pos = (sd->cursor_pos >= sd->selection_pos) ?
                   sd->cursor_pos : sd->selection_pos;
         
-        /* Position of the start cursor (note, the start cursor can not be at
-         * the end of the editable object, and the editable object can not be
-         * empty, or it would have returned before)*/
-        if (!evas_object_text_char_pos_get(text_obj, start_pos,
-                                           &cx, &cy, &cw, &ch))
-          return;
-        
-        sx = tx + cx - 1;
+        _e_editable_char_geometry_get_from_pos(editable, start_pos,
+                                               &cx, &cy, NULL, NULL);
+        sx = tx + cx;
         sy = ty + cy;
         
-        
-        /* Position of the end cursor (note, the editable object can not be
-         * empty, or it would have returned before)*/
-        if (end_pos >= sd->unicode_length)
-          {
-             if (!evas_object_text_char_pos_get(text_obj,
-                                                sd->unicode_length - 1,
-                                                &cx, &cy, &cw, &ch))
-               return;
-             
-             sw = (tx + cx + cw - 1) - sx;
-             sh = ch;
-          }
-        else
-          {
-             if (!evas_object_text_char_pos_get(text_obj, end_pos,
-                                                &cx, &cy, &cw, &ch))
-               return;
-             
-             sw = (tx + cx - 1) - sx;
-             sh = ch;
-          }
+        _e_editable_char_geometry_get_from_pos(editable, end_pos,
+                                               &cx, NULL, NULL, &sh);
+        sw = tx + cx - sx;
         
         evas_object_move(sd->selection_object, sx, sy);
         evas_object_resize(sd->selection_object, sw, sh);
@@ -1026,8 +998,7 @@ _e_editable_text_update(Evas_Object *editable)
      }
    else
      {
-        edje_object_part_text_set(sd->text_object, "e.text.text",
-                                  sd->text ? sd->text : "");
+        edje_object_part_text_set(sd->text_object, "e.text.text", sd->text);
      }
    
    edje_object_size_min_calc(sd->text_object, &minw, &minh);
@@ -1079,6 +1050,57 @@ _e_editable_text_position_update(Evas_Object *editable, Evas_Coord real_w)
    }
 }
 
+/* Gets the geometry of the char according to its utf-8 pos */
+static int
+_e_editable_char_geometry_get_from_pos(Evas_Object *editable, int utf_pos, Evas_Coord *cx, Evas_Coord *cy, Evas_Coord *cw, Evas_Coord *ch)
+{
+   E_Editable_Smart_Data *sd;
+   Evas_Object *text_obj;
+   const char *text;
+   Evas_Coord x, w;
+   int index, i;
+   int last_pos;
+   int ret;
+   
+   if (cx)   *cx = 0;
+   if (cy)   *cy = 0;
+   if (cw)   *cw = 0;
+   if (ch)   *ch = 0;
+   
+   if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
+     return 0;
+   if (!(text_obj = edje_object_part_object_get(sd->text_object, "e.text.text")))
+     return 0;
+   
+   text = evas_object_text_text_get(text_obj);
+   if ((!text) || (sd->unicode_length <= 0) || (utf_pos <= 0))
+     {
+        if (cx)   *cx = 0;
+        if (cy)   *cy = 0;
+        e_editable_char_size_get(editable, cw, ch);
+        return 1;
+     }
+   else
+     {
+        if (utf_pos >= sd->unicode_length)
+          {
+            utf_pos = sd->unicode_length - 1;
+            last_pos = 1;
+          }
+        else
+          last_pos = 0;
+        
+        
+        index = 0;
+        for (i = 0; i < utf_pos; i++)
+          index = evas_string_char_next_get(text, index, NULL);
+        
+        ret = evas_object_text_char_pos_get(text_obj, index, &x, cy, &w, ch);
+        if (cx)   *cx = x - 1 + (last_pos ? w : 0);
+        if (cw)   *cw = last_pos ? 1 : w;
+        return ret;
+     }
+}
 
 /* Editable object's smart methods */
 
