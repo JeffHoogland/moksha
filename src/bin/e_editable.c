@@ -919,8 +919,7 @@ _e_editable_cursor_update(Evas_Object *editable)
                                           &cx, &cy, NULL, &ch);
    
    evas_object_move(sd->cursor_object, tx + cx, ty + cy);
-   /* TODO: cursor_width */
-   evas_object_resize(sd->cursor_object, 1, ch);
+   evas_object_resize(sd->cursor_object, sd->cursor_width, ch);
    
    if (sd->cursor_visible && evas_object_visible_get(editable))
      {

@@ -24,7 +24,8 @@ static void _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *ev
 static void _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_entry_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_entry_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static int _e_entry_selection_notify_handler(void *data, int type, void *event);
+static int _e_entry_x_selection_notify_handler(void *data, int type, void *event);
+static void _e_entry_x_selection_update(Evas_Object *entry);
 
 static void _e_entry_smart_add(Evas_Object *object);
 static void _e_entry_smart_del(Evas_Object *object);
@@ -248,7 +249,6 @@ e_entry_enable(Evas_Object *entry)
    
 }
 
-
 /**
  * Disables the entry object: the user won't be able to type anymore. Selection
  * will still be possible (to copy the text)
@@ -284,6 +284,7 @@ _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    int start_pos, end_pos;
    int selecting;
    int changed = 0;
+   int selection_changed = 0;
    char *range;
    E_Win *win;
    
@@ -303,7 +304,10 @@ _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if (strcmp(event->key, "Left") == 0)
      {
         if (evas_key_modifier_is_set(event->modifiers, "Shift"))
-          e_editable_cursor_move_left(editable);
+          {
+             e_editable_cursor_move_left(editable);
+             selection_changed = 1;
+          }
         else if (selecting)
           {
              if (cursor_pos < selection_pos)
@@ -322,7 +326,10 @@ _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    else if (strcmp(event->key, "Right") == 0)
      {
         if (evas_key_modifier_is_set(event->modifiers, "Shift"))
-          e_editable_cursor_move_right(editable);
+          {
+             e_editable_cursor_move_right(editable);
+             selection_changed = 1;
+          }
         else if (selecting)
           {
              if (cursor_pos > selection_pos)
@@ -344,6 +351,8 @@ _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
         if (!evas_key_modifier_is_set(event->modifiers, "Shift"))
           e_editable_selection_pos_set(editable,
                                        e_editable_cursor_pos_get(editable));
+        else
+          selection_changed = 1;
      }
    /* Move the cursor/selection to the end of the entry */
    else if (strcmp(event->keyname, "End") == 0)
@@ -352,6 +361,8 @@ _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
         if (!evas_key_modifier_is_set(event->modifiers, "Shift"))
           e_editable_selection_pos_set(editable,
                                        e_editable_cursor_pos_get(editable));
+        else
+          selection_changed = 1;
      }
    /* Remove the previous character */
    else if ((sd->enabled) && (strcmp(event->keyname, "BackSpace") == 0))
@@ -373,7 +384,10 @@ _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    else if (evas_key_modifier_is_set(event->modifiers, "Control"))
      {
         if (strcmp(event->keyname, "a") == 0)
-          e_editable_select_all(editable);
+          {
+             e_editable_select_all(editable);
+             selection_changed = 1;
+          }
         else if ((strcmp(event->keyname, "x") == 0) ||
                  (strcmp(event->keyname, "c") == 0))
           {
@@ -410,6 +424,8 @@ _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    
    if (changed)
      evas_object_smart_callback_call(obj, "changed", NULL);
+   if (selection_changed)
+     _e_entry_x_selection_update(obj);
 }
 
 /* Called when the entry object is pressed by the mouse */
@@ -426,25 +442,34 @@ _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if (!(event = event_info))
       return;
    
+   evas_object_geometry_get(sd->editable_object, &ox, &oy, NULL, NULL);
+   pos = e_editable_pos_get_from_coords(sd->editable_object,
+                                        event->canvas.x - ox,
+                                        event->canvas.y - oy);
+   
    if (event->button == 1)
      {
         if (event->flags & EVAS_BUTTON_DOUBLE_CLICK)
           e_editable_select_all(sd->editable_object);
         else
           {
-             evas_object_geometry_get(sd->editable_object, &ox, &oy, NULL, NULL);
-             pos = e_editable_pos_get_from_coords(sd->editable_object,
-                                                  event->canvas.x - ox,
-                                                  event->canvas.y - oy);
-             if (pos >= 0)
-               {
-                  e_editable_cursor_pos_set(sd->editable_object, pos);
-                  if (!evas_key_modifier_is_set(event->modifiers, "Shift"))
-                    e_editable_selection_pos_set(sd->editable_object, pos);
-                  
-                  sd->selection_dragging = 1;
-               }
+             e_editable_cursor_pos_set(sd->editable_object, pos);
+             if (!evas_key_modifier_is_set(event->modifiers, "Shift"))
+               e_editable_selection_pos_set(sd->editable_object, pos);
+             
+             sd->selection_dragging = 1;
           }
+     }
+   else if (event->button == 2)
+     {
+        E_Win *win;
+        
+        e_editable_cursor_pos_set(sd->editable_object, pos);
+        e_editable_selection_pos_set(sd->editable_object, pos);
+        
+        if ((win = e_win_evas_object_win_get(obj)))
+          ecore_x_selection_primary_request(win->evas_win,
+                                       ECORE_X_SELECTION_TARGET_UTF8_STRING);
      }
 }
 
@@ -456,7 +481,12 @@ _e_entry_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    
    if ((!obj) || (!(sd = evas_object_smart_data_get(obj))))
      return;
-   sd->selection_dragging = 0;
+   
+   if (sd->selection_dragging)
+     {
+        sd->selection_dragging = 0;
+        _e_entry_x_selection_update(obj);
+     }
 }
 
 /* Called when the mouse moves over the entry object */
@@ -479,14 +509,13 @@ _e_entry_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
         pos = e_editable_pos_get_from_coords(sd->editable_object,
                                              event->cur.canvas.x - ox,
                                              event->cur.canvas.y - oy);
-        if (pos >= 0)
-          e_editable_cursor_pos_set(sd->editable_object, pos);
+        e_editable_cursor_pos_set(sd->editable_object, pos);
      }
 }
 
 /* Called when the the "selection_notify" event is emitted */
 static int
-_e_entry_selection_notify_handler(void *data, int type, void *event)
+_e_entry_x_selection_notify_handler(void *data, int type, void *event)
 {
    Evas_Object *entry;
    E_Entry_Smart_Data *sd;
@@ -511,7 +540,8 @@ _e_entry_selection_notify_handler(void *data, int type, void *event)
    selecting = (start_pos != end_pos);
    
    ev = event;
-   if (ev->selection == ECORE_X_SELECTION_CLIPBOARD)
+   if ((ev->selection == ECORE_X_SELECTION_CLIPBOARD) ||
+       (ev->selection == ECORE_X_SELECTION_PRIMARY))
      {
         if (strcmp(ev->target, ECORE_X_SELECTION_TARGET_UTF8_STRING) == 0)
           {
@@ -528,6 +558,38 @@ _e_entry_selection_notify_handler(void *data, int type, void *event)
      evas_object_smart_callback_call(entry, "changed", NULL);
    
    return 1;
+}
+
+/* Updates the X selection with the selected text of the entry */
+static void
+_e_entry_x_selection_update(Evas_Object *entry)
+{
+   E_Entry_Smart_Data *sd;
+   Evas_Object *editable;
+   E_Win *win;
+   int cursor_pos, selection_pos;
+   int start_pos, end_pos;
+   int selecting;
+   char *text;
+   
+   if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
+     return;
+   if (!(win = e_win_evas_object_win_get(entry)))
+     return;
+   
+   editable = sd->editable_object;
+   cursor_pos = e_editable_cursor_pos_get(editable);
+   selection_pos = e_editable_selection_pos_get(editable);
+   start_pos = (cursor_pos <= selection_pos) ? cursor_pos : selection_pos;
+   end_pos = (cursor_pos >= selection_pos) ? cursor_pos : selection_pos;
+   selecting = (start_pos != end_pos);
+   
+   if ((!selecting) ||
+       (!(text = e_editable_text_range_get(editable, start_pos, end_pos))))
+     return;
+   
+   ecore_x_selection_primary_set(win->evas_win, text, strlen(text) + 1);
+   free(text);
 }
 
 /* Editable object's smart methods */
@@ -578,7 +640,7 @@ static void _e_entry_smart_add(Evas_Object *object)
                                   _e_entry_mouse_move_cb, NULL);
    sd->selection_handler = ecore_event_handler_add(
                                        ECORE_X_EVENT_SELECTION_NOTIFY,
-                                       _e_entry_selection_notify_handler,
+                                       _e_entry_x_selection_notify_handler,
                                        object);
 }
 
