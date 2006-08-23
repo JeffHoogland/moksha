@@ -55,7 +55,7 @@ e_bindings_init(void)
 	if ((eb->action) && (eb->signal) && (eb->source) &&
 	    (!strcmp(eb->action, "window_resize")) &&
 	    (!strncmp(eb->signal, "mouse,down,", 11)) &&
-	    (!strncmp(eb->source, "resize_", 7)))
+	    (!strncmp(eb->source, "e.event.resize.", 15)))
 	  {
 	     char params[32];
 	     snprintf(params, sizeof(params), "resize_%s", eb->params);
