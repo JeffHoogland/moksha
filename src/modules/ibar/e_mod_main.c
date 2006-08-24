@@ -608,11 +608,11 @@ static void
 _ibar_icon_fill(IBar_Icon *ic)
 {
    ic->o_icon = e_app_icon_add(evas_object_evas_get(ic->ibar->o_box), ic->app);
-   edje_object_part_swallow(ic->o_holder, "item", ic->o_icon);
+   edje_object_part_swallow(ic->o_holder, "e.swallow.content", ic->o_icon);
    evas_object_pass_events_set(ic->o_icon, 1);
    evas_object_show(ic->o_icon);
    ic->o_icon2 = e_app_icon_add(evas_object_evas_get(ic->ibar->o_box), ic->app);
-   edje_object_part_swallow(ic->o_holder2, "item", ic->o_icon2);
+   edje_object_part_swallow(ic->o_holder2, "e.swallow.content", ic->o_icon2);
    evas_object_pass_events_set(ic->o_icon2, 1);
    evas_object_show(ic->o_icon2);
    

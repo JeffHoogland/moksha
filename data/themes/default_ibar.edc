@@ -27,7 +27,7 @@ group {
 	 }
       }
       part {
-	 name:          "item";
+	 name:          "e.swallow.content";
 	 type:          SWALLOW;
 	 mouse_events:  0;
 	 clip_to:       "item_clip";
@@ -73,7 +73,7 @@ group {
 	 source:  "over";
 	 action:  STATE_SET "bigger" 0.0;
          transition: LINEAR 0.1;
-	 target:  "item";
+	 target:  "e.swallow.content";
       }
       program {
 	 name:    "hover_out";
@@ -81,7 +81,7 @@ group {
 	 source:  "over";
 	 action:  STATE_SET "default" 0.0;
          transition: LINEAR 0.2;
-	 target:  "item";
+	 target:  "e.swallow.content";
       }
       program {
 	 name:    "exec_start";
@@ -179,7 +179,7 @@ group {
 	 }
       }
       part {
-	 name:          "item";
+	 name:          "e.swallow.content";
 	 type:          SWALLOW;
 	 mouse_events:  0;
 	 clip_to:       "background";
