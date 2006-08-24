@@ -46,7 +46,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
 /* increment this whenever we change config enough that you need new 
  * defaults for e to work.
  */
-#define E_CONFIG_FILE_EPOCH      0x0000
+#define E_CONFIG_FILE_EPOCH      0x0001
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need top be wiped - simply new values need to be put in
  */
