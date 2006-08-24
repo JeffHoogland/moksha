@@ -99,7 +99,7 @@ e_scrollframe_child_set(Evas_Object *obj, Evas_Object *child)
 	evas_object_smart_callback_add(o, "changed", _e_smart_pan_changed_hook, sd);
 	evas_object_smart_callback_add(o, "changed", _e_smart_pan_pan_changed_hook, sd);
 	evas_object_show(o);
-	edje_object_part_swallow(sd->edje_obj, "item", o);
+	edje_object_part_swallow(sd->edje_obj, "e.swallow.content", o);
      }
    
    sd->pan_func.set = e_pan_set;
@@ -156,7 +156,7 @@ e_scrollframe_extern_pan_set(Evas_Object *obj, Evas_Object *pan,
    sd->extern_pan = 1;
    evas_object_smart_callback_add(sd->pan_obj, "changed", _e_smart_pan_changed_hook, sd);
    evas_object_smart_callback_add(sd->pan_obj, "pan_changed", _e_smart_pan_pan_changed_hook, sd);
-   edje_object_part_swallow(sd->edje_obj, "item", sd->pan_obj);
+   edje_object_part_swallow(sd->edje_obj, "e.swallow.content", sd->pan_obj);
    evas_object_show(sd->pan_obj);
 }
 

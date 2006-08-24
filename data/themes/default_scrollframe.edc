@@ -55,7 +55,7 @@ group {
 	 }
       }
       part {
-	 name: "item";
+	 name: "e.swallow.content";
 	 clip_to: "clipper";
 	 type: SWALLOW;
 	 mouse_events: 0;
