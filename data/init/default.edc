@@ -1357,7 +1357,7 @@ collections {
 	 }
 	 program {
 	    name: "done3";
-	    action: SIGNAL_EMIT "e,state,done_ok" "";
+	    action: SIGNAL_EMIT "e,state,done_ok" "e";
 	 }
 	 
 	 program {

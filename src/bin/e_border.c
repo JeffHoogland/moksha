@@ -5499,7 +5499,7 @@ _e_border_eval(E_Border *bd)
 	     if (bd->bg_object)
 	       {
 		  evas_object_show(bd->icon_object);
-		  edje_object_part_swallow(bd->bg_object, "e.swallow.icon", bd->icon_object);
+		  edje_object_part_swallow(bd->bg_object, "e.swallow.icons", bd->icon_object);
 	       }
 	     else
 	       {

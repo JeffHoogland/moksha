@@ -58,7 +58,7 @@ e_init_init(void)
 
    if (!e_config->init_default_theme)
      s = e_path_find(path_init, "default.edj");
-   else if (e_config->init_default_theme[0] != '/')
+   else if (e_config->init_default_theme[0] == '/')
      s = evas_stringshare_add(e_config->init_default_theme);
    else
      s = e_path_find(path_init, e_config->init_default_theme);
