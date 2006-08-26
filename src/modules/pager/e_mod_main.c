@@ -1636,58 +1636,13 @@ _pager_desk_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 static void
 _pager_desk_cb_mouse_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
+   return;
    Evas_Event_Mouse_Wheel *ev;
    Pager_Desk *pd;
    Evas_List *l;
 
    ev = event_info;
    pd = data;
-   for (l = pd->pager->desks; l; l = l->next)
-     {
-	Pager_Desk *pd;
-	
-	pd = l->data;
-	if (pd->current)
-	  {
-	     /* Mouse wheel up, scroll back through desks */
-	     if (ev->z < 0)
-	       {
-		  if (l->prev)
-		    {
-		       pd = l->prev->data;
-		       e_desk_show(pd->desk);
-		    }
-		  else
-		    {
-		       /* We've looped around, go to the last desk. Not sure if there's a better way. */
-		       Evas_List  *l2;
-		       
-		       l2 =evas_list_last(pd->pager->desks);
-		       if (l2)
-			 {
-			    pd = l2->data;
-			    e_desk_show(pd->desk);
-			 }
-		    }
-	       }
-	     /* Mouse wheel down, scroll forward through desks */
-	     else if (ev->z > 0)
-	       {
-		  if (l->next)
-		    {
-		       pd = l->next->data;
-		       e_desk_show(pd->desk);
-		    }
-		  else
-		    {
-		       /* We've looped around, start back at the first desk */
-		       pd = pd->pager->desks->data;
-		       e_desk_show(pd->desk);
-		    }
-	       }
-	     break;
-	  }
-     }
 }
 
 static int
