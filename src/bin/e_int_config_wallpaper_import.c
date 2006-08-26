@@ -193,8 +193,8 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    edje_object_part_swallow(import->bg_obj, "e.swallow.buttons", o);
    
    edje_object_size_min_calc(import->bg_obj, &w, &h);
-   evas_object_resize(import->bg_obj, w, h + 64);
-   e_win_resize(win, w, h + 64);
+   evas_object_resize(import->bg_obj, w, h);
+   e_win_resize(win, w, h);
    e_win_size_min_set(win, w, h);
    e_win_size_max_set(win, 99999, 99999);
    e_win_show(win);
