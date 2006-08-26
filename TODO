@@ -9,7 +9,6 @@ Some of the things (in very short form) that need to be done to E17...
 -------------------------------------------------------------------------------
 
 * BUG: e17 screen res diaolg doesnt work under xephyr - why?
-* BUG: icon theme dialog too big for 640x480
 * BUG: the ibar specific menu only shows when you right click on icons (and not
   on the bar itself). so, if there are no icons you can't get to the config
 * BUG: "match this window only" doesnt fall back to other unused remembers

@@ -55,6 +55,13 @@ e_init_init(void)
    ecore_evas_raise(_e_init_ecore_evas);
    ecore_evas_show(_e_init_ecore_evas);
 
+   if (!e_config->init_default_theme)
+     s = e_path_find(path_init, "default.edj");
+   else if (e_config->init_default_theme[0] != '/')
+     s = evas_stringshare_add(e_config->init_default_theme);
+   else
+     s = e_path_find(path_init, e_config->init_default_theme);
+   
    screens = (Evas_List *)e_xinerama_screens_get();
    if (screens)
      {
@@ -67,24 +74,12 @@ e_init_init(void)
 	     /* first screen */
 	     if (l == screens)
 	       {
-		  if (!e_config->init_default_theme)
-		    s = e_path_find(path_init, "init.edj");
-		  else
-		    s = e_path_find(path_init, e_config->init_default_theme);
-		  edje_object_file_set(o, s, "init/splash");
-		  if (s) evas_stringshare_del(s);
+		  edje_object_file_set(o, s, "e/init/splash");
 		  _e_init_object = o;
 	       }
 	     /* other screens */
 	     else
-	       {
-		  if (!e_config->init_default_theme)
-		    s = e_path_find(path_init, "init.edj");
-		  else 
-		    s = e_path_find(path_init, e_config->init_default_theme);
-		  edje_object_file_set(o, s, "init/extra_screen");
-		  if (s) evas_stringshare_del(s);
-	       }
+	       edje_object_file_set(o, s, "e/init/extra_screen");
 	     evas_object_move(o, scr->x, scr->y);
 	     evas_object_resize(o, scr->w, scr->h);
 	     evas_object_show(o);
@@ -93,17 +88,15 @@ e_init_init(void)
    else
      {
 	o = edje_object_add(_e_init_evas);
-	if (!e_config->init_default_theme)
-	  s = e_path_find(path_init, "init.edj");
-	else 
-	  s = e_path_find(path_init, e_config->init_default_theme);
-	edje_object_file_set(o, s, "init/splash");
+	edje_object_file_set(o, s, "e/init/splash");
 	if (s) evas_stringshare_del(s);
 	_e_init_object = o;
 	evas_object_move(o, 0, 0);
 	evas_object_resize(o, w, h);
 	evas_object_show(o);
      }
+   if (s) evas_stringshare_del(s);
+   
    edje_object_part_text_set(_e_init_object, "disable_text", 
 			     _("Disable this splash screen in the future?"));
    edje_object_signal_callback_add(_e_init_object, "disable_state", "*",

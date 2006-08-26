@@ -47,6 +47,7 @@ struct _E_Fm2_Config
       struct {
 	 unsigned char show;
       } extension;
+      const char      *key_hint;
    } icon;
    /* how to sort files */
    struct {

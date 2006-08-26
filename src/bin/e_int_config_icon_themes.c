@@ -53,7 +53,7 @@ e_int_config_icon_themes(E_Container *con)
    
    cfd = e_config_dialog_new(con,
 			     _("Icon Theme Settings"),
-			    "E", "_config_icon_theme_dialog",
+			     "E", "_config_icon_theme_dialog",
 			     "enlightenment/icon_theme", 0, v, NULL);
    return cfd;
 }
@@ -234,6 +234,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    fmc.icon.fixed.w = 1;
    fmc.icon.fixed.h = 1;
    fmc.icon.extension.show = 1;
+   fmc.icon.key_hint = NULL;
    fmc.list.sort.no_case = 1;
    fmc.list.sort.dirs.first = 1;
    fmc.list.sort.dirs.last = 0;
@@ -250,7 +251,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 				     e_fm2_pan_max_get,
 				     e_fm2_pan_child_size_get);
    cfdata->gui.o_frame = ob;
-   e_widget_min_size_set(ob, 200, 290);
+   e_widget_min_size_set(ob, 200, 120);
    e_widget_framelist_object_append(of, ob);
 
    e_widget_table_object_append(ot, of, 2, 0, 2, 4, 1, 1, 1, 1);

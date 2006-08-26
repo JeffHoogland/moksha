@@ -332,6 +332,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    fmc.icon.fixed.w = 1;
    fmc.icon.fixed.h = 1;
    fmc.icon.extension.show = 0;
+   fmc.icon.key_hint = NULL;
    fmc.list.sort.no_case = 1;
    fmc.list.sort.dirs.first = 0;
    fmc.list.sort.dirs.last = 0;
@@ -368,6 +369,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    fmc.icon.fixed.w = 1;
    fmc.icon.fixed.h = 1;
    fmc.icon.extension.show = 1;
+   fmc.icon.key_hint = NULL;
    fmc.list.sort.no_case = 1;
    fmc.list.sort.dirs.first = 1;
    fmc.list.sort.dirs.last = 0;

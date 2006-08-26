@@ -497,7 +497,7 @@ images {
 
 collections {
    group {
-      name: "init/splash";
+      name: "e/init/splash";
       script {
 	 public is_ready;
 	 public do_end;
@@ -1391,7 +1391,7 @@ collections {
       }
    }
    group {
-      name: "init/extra_screen";
+      name: "e/init/extra_screen";
       parts {
 	 part {
 	    name: "background";

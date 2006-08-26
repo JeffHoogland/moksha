@@ -405,6 +405,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    fmc.icon.fixed.w = 1;
    fmc.icon.fixed.h = 1;
    fmc.icon.extension.show = 0;
+   fmc.icon.key_hint = NULL;
    fmc.list.sort.no_case = 1;
    fmc.list.sort.dirs.first = 0;
    fmc.list.sort.dirs.last = 1;
@@ -545,6 +546,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    fmc.icon.fixed.w = 1;
    fmc.icon.fixed.h = 1;
    fmc.icon.extension.show = 0;
+   fmc.icon.key_hint = NULL;
    fmc.list.sort.no_case = 1;
    fmc.list.sort.dirs.first = 0;
    fmc.list.sort.dirs.last = 1;
