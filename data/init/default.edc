@@ -539,7 +539,7 @@ collections {
 	    }
 	 }
          part {	 
-	    name: "title";
+	    name: "e.text.title";
 	    type: TEXT;
 	    effect: SOFT_SHADOW;
 	    mouse_events: 0;
@@ -569,7 +569,7 @@ collections {
 	    }
 	 }
          part {	 
-	    name: "version";
+	    name: "e.text.version";
 	    type: TEXT;
 	    effect: SHADOW;
 	    description {
@@ -596,7 +596,7 @@ collections {
 	    }
 	 }
          part {	 
-	    name: "status";
+	    name: "e.text.status";
 	    type: TEXT;
 	    effect: SHADOW;
 	    mouse_events: 0;
@@ -606,12 +606,12 @@ collections {
 	       rel1 {
 		  relative: 0.0 1.0;
 		  offset:   0   5;
-		  to: "title";
+		  to: "e.text.title";
 	       }
 	       rel2 {
 		  relative: 1.0 1.0;
 		  offset:   -1   5;
-		  to: "title";
+		  to: "e.text.title";
 	       }
 	       color: 0 0 0 128;
 	       color3: 255 255 255 128;
@@ -626,7 +626,7 @@ collections {
 	    }
 	 }
          part {	 
-	    name: "disable_text";
+	    name: "e.text.disable_text";
 	    type: TEXT;
 	    effect: SHADOW;
 	    mouse_events: 0;
@@ -664,12 +664,12 @@ collections {
 	       rel1 {
 		  relative: 1.0 0.0;
 		  offset:   5 0;
-		  to: "disable_text";
+		  to: "e.text.disable_text";
 	       }
 	       rel2 {
 		  relative: 1.0 1.0;
 		  offset:   5  -1;
-		  to: "disable_text";
+		  to: "e.text.disable_text";
 	       }
 	       image {
 		  normal: "check1.png";
@@ -691,7 +691,7 @@ collections {
 	       visible: 0;
 	       color: 0 0 0 0;
 	       rel1 {
-		  to: "disable_text";
+		  to: "e.text.disable_text";
 		  relative: 0.0 0.0;
 		  offset:   -5 -5;
 	       }
@@ -715,7 +715,7 @@ collections {
 	       visible: 1;
 	       color: 0 0 0 0;
 	       rel1 {
-		  to: "disable_text";
+		  to: "e.text.disable_text";
 		  relative: 0.0 0.0;
 		  offset:   -5 -5;
 	       }
@@ -732,7 +732,7 @@ collections {
 	    }
 	 }
          part {	 
-	    name: "icons";
+	    name: "e.swallow.icons";
 	    type: SWALLOW;
 	    mouse_events: 0;
 	    description {
@@ -741,12 +741,12 @@ collections {
 	       min:   128 32;
 	       max:   1280 32;
 	       rel1 {
-		  to_y:     "status";
+		  to_y:     "e.text.status";
 		  relative: 0.0 1.0;
 		  offset:   16   8;
 	       }
 	       rel2 {
-		  to_y:     "status";
+		  to_y:     "e.text.status";
 		  relative: 1.0 1.0;
 		  offset:   -17 8;
 	       }
@@ -1336,7 +1336,7 @@ collections {
 
 	 program {
 	    name: "done1";
-	    signal: "done";
+	    signal: "e.state.done";
 	    source: "";
 	    script {
 	       new val;
@@ -1357,7 +1357,7 @@ collections {
 	 }
 	 program {
 	    name: "done3";
-	    action: SIGNAL_EMIT "done_ok" "";
+	    action: SIGNAL_EMIT "e,state,done_ok" "";
 	 }
 	 
 	 program {
@@ -1382,11 +1382,11 @@ collections {
 	 }
 	 program {
 	    name: "disable_on";
-	    action: SIGNAL_EMIT "disable_state" "disable";
+	    action: SIGNAL_EMIT "e,action,init,disable" "e";
 	 }
 	 program {
 	    name: "disable_off";
-	    action: SIGNAL_EMIT "disable_state" "enable";
+	    action: SIGNAL_EMIT "e,action,init,enable" "e";
 	 }
       }
    }

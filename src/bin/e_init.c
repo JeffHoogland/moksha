@@ -5,6 +5,7 @@
 
 static void _e_init_icons_del(void);
 static void _e_init_cb_signal_disable(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _e_init_cb_signal_enable(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_init_cb_signal_done_ok(void *data, Evas_Object *obj, const char *emission, const char *source);
 
 /* local subsystem globals */
@@ -97,11 +98,13 @@ e_init_init(void)
      }
    if (s) evas_stringshare_del(s);
    
-   edje_object_part_text_set(_e_init_object, "disable_text", 
+   edje_object_part_text_set(_e_init_object, "e.text.disable_text", 
 			     _("Disable this splash screen in the future?"));
-   edje_object_signal_callback_add(_e_init_object, "disable_state", "*",
+   edje_object_signal_callback_add(_e_init_object, "e,action,init,disable", "e",
 				   _e_init_cb_signal_disable, NULL);
-   edje_object_signal_callback_add(_e_init_object, "done_ok", "*",
+   edje_object_signal_callback_add(_e_init_object, "e,action,init,enable", "e",
+				   _e_init_cb_signal_enable, NULL);
+   edje_object_signal_callback_add(_e_init_object, "e,state,done_ok", "e",
 				   _e_init_cb_signal_done_ok, NULL);
    free(roots);
    return 1;
@@ -152,21 +155,21 @@ EAPI void
 e_init_title_set(const char *str)
 {
    if (!_e_init_object) return;
-   edje_object_part_text_set(_e_init_object, "title", str);
+   edje_object_part_text_set(_e_init_object, "e.text.title", str);
 }
 
 EAPI void
 e_init_version_set(const char *str)
 {
    if (!_e_init_object) return;
-   edje_object_part_text_set(_e_init_object, "version", str);
+   edje_object_part_text_set(_e_init_object, "e.text.version", str);
 }
 
 EAPI void
 e_init_status_set(const char *str)
 {
    if (!_e_init_object) return;
-   edje_object_part_text_set(_e_init_object, "status", str);
+   edje_object_part_text_set(_e_init_object, "e.text.status", str);
 }
 
 EAPI Ecore_X_Window
@@ -179,7 +182,7 @@ EAPI void
 e_init_done(void)
 {
    if (!_e_init_object) return;
-   edje_object_signal_emit(_e_init_object, "done", "");
+   edje_object_signal_emit(_e_init_object, "e.state.done", "");
 }
 
 EAPI void
@@ -200,7 +203,7 @@ e_init_icons_app_add(E_App *app)
 	_e_init_icon_box = o;
 	e_box_homogenous_set(o, 1);
 	e_box_align_set(o, 0.5, 0.5);
-	edje_object_part_swallow(_e_init_object, "icons", o);
+	edje_object_part_swallow(_e_init_object, "e.swallow.icons", o);
 	evas_object_geometry_get(o, NULL, NULL, &w, &h);
 	if (w > h)
 	  {
@@ -247,8 +250,14 @@ _e_init_icons_del(void)
 static void
 _e_init_cb_signal_disable(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
-   if (!strcmp(source, "disable")) e_config->show_splash = 0;
-   else e_config->show_splash = 1;
+   e_config->show_splash = 0;
+   e_config_save_queue();
+}
+
+static void
+_e_init_cb_signal_enable(void *data, Evas_Object *obj, const char *emission, const char *source)
+{
+   e_config->show_splash = 1;
    e_config_save_queue();
 }
 
