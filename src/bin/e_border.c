@@ -3119,6 +3119,7 @@ _e_border_free(E_Border *bd)
    borders = evas_list_remove(borders, bd);
    focus_stack = evas_list_remove(focus_stack, bd);
    
+   e_container_border_remove(bd);
    free(bd);
 }
 
@@ -3191,7 +3192,6 @@ _e_border_del(E_Border *bd)
 	ecore_event_add(E_EVENT_BORDER_REMOVE, ev, _e_border_event_border_remove_free, NULL);
      }
 
-   e_container_border_remove(bd);
    if (bd->parent)
      {
 	bd->parent->transients = evas_list_remove(bd->parent->transients, bd);
