@@ -524,7 +524,7 @@ e_config_init(void)
 #define IFCFGEND }
    IFCFG(0x008d);
    e_config->show_splash = 1;
-   e_config->init_default_theme = evas_stringshare_add("init.edj");
+   e_config->init_default_theme = evas_stringshare_add("default.edj");
    e_config->desktop_default_background = NULL;
    e_config->desktop_default_name = evas_stringshare_add(_("Desktop %i, %i"));
    e_config->menus_scroll_speed = 1000.0;
