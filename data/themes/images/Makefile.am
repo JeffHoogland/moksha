@@ -302,7 +302,6 @@ e17_icon_desktop.png \
 e17_icon_e_0.png \
 e17_icon_e_glow_0.png \
 e17_icon_favorites.png \
-e17_icon_gadget.png \
 e17_icon_module.png \
 e17_icon_power_button_0.png \
 e17_icon_power_button_glow_0.png \
