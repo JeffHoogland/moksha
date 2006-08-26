@@ -255,7 +255,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
                                      wd->o_preview_preview,
                                      0, 0, 1, 1, 0, 0, 1, 1);
 
-        o = e_widget_label_add(evas, "Size:");
+        o = e_widget_label_add(evas, _("Size:"));
         wd->o_preview_size = o;
         e_widget_sub_object_add(obj, o);
         e_widget_table_object_append(wd->o_preview_table,
@@ -270,7 +270,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
 				     wd->o_preview_size_entry,
 				     1, 0, 1, 1, 1, 1, 1, 1);
 
-        o = e_widget_label_add(evas, "Owner:");
+        o = e_widget_label_add(evas, _("Owner:"));
         wd->o_preview_owner = o;
         e_widget_sub_object_add(obj, o);
         e_widget_table_object_append(wd->o_preview_table,
@@ -285,7 +285,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
 				     wd->o_preview_owner_entry, 
 				     1, 1, 1, 1, 1, 1, 1, 1);
 
-        o = e_widget_label_add(evas, "Permissions:");
+        o = e_widget_label_add(evas, _("Permissions:"));
         wd->o_preview_perms = o;
         e_widget_sub_object_add(obj, o);
         e_widget_table_object_append(wd->o_preview_table,
@@ -300,7 +300,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
 				     wd->o_preview_perms_entry,
 				     1, 2, 1, 1, 1, 1, 1, 1);
 
-        o = e_widget_label_add(evas, "Modified:");
+        o = e_widget_label_add(evas, _("Modified:"));
         wd->o_preview_time = o;
         e_widget_sub_object_add(obj, o);
         e_widget_table_object_append(wd->o_preview_table,
@@ -514,22 +514,22 @@ _e_wid_file_size_get(off_t st_size)
    char size[1024];
 
    dsize = (double)st_size;
-   if (dsize < 1024) 
-      snprintf(size, 1024, "%'.0f B", dsize);
+   if (dsize < 1024.0)
+      snprintf(size, sizeof(size), _("%'.0f Bytes"), dsize);
    else
      {
        dsize /= 1024.0;
        if (dsize < 1024) 
-          snprintf(size, 1024, "%'.0f KB", dsize);
+          snprintf(size, sizeof(size), _("%'.0f KB"), dsize);
        else
          {
            dsize /= 1024.0;
            if (dsize < 1024) 
-              snprintf(size, 1024, "%'.0f MB", dsize);
+              snprintf(size, sizeof(size), _("%'.0f MB"), dsize);
            else
              {
                dsize /= 1024.0;
-               snprintf(size, 1024, "%'.1f gb", dsize);
+               snprintf(size, sizeof(size), _("%'.1f GB"), dsize);
              }
          }
      }
@@ -543,14 +543,14 @@ _e_wid_file_user_get(uid_t st_uid)
    struct passwd *pwd;
 
    if (getuid() == st_uid) 
-      snprintf(name, PATH_MAX, "You");
+      snprintf(name, sizeof(name), _("You"));
    else
      {
        pwd = getpwuid(st_uid);
        if (pwd) 
-          snprintf(name, PATH_MAX, "%s", pwd->pw_name);
+          snprintf(name, sizeof(name), "%s", pwd->pw_name);
        else 
-          snprintf(name, PATH_MAX, "%-8d", (int)st_uid);
+          snprintf(name, sizeof(name), "%-8d", (int)st_uid);
      }
    return strdup(name);
 }
@@ -624,27 +624,27 @@ _e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t st_gid)
    if (owner)
      {
         if ((!user_read) && (!user_write)) 
-           snprintf(perms, PATH_MAX, "Protected");
+           snprintf(perms, sizeof(perms), _("Protected"));
         else if ((user_read) && (!user_write)) 
-           snprintf(perms, PATH_MAX, "Read Only");
+           snprintf(perms, sizeof(perms), _("Read Only"));
         else if ((user_read) && (user_write)) 
            access = 1;
      }
    else if (group)
      {
         if ((!group_read) && (!group_write)) 
-           snprintf(perms, PATH_MAX, "Forbidden");
+           snprintf(perms, sizeof(perms), _("Forbidden"));
         else if ((group_read) && (!group_write)) 
-           snprintf(perms, PATH_MAX, "Read Only");
+           snprintf(perms, sizeof(perms), _("Read Only"));
         else if ((group_read) && (group_write)) 
            access = 1;
      }
    else if ((!owner) && (!group))
      {
         if ((!other_read) && (!other_write)) 
-           snprintf(perms, PATH_MAX, "Forbidden");
+           snprintf(perms, sizeof(perms), _("Forbidden"));
         else if ((other_read) && (!other_write)) 
-           snprintf(perms, PATH_MAX, "Read Only");
+           snprintf(perms, sizeof(perms), _("Read Only"));
         else if ((other_read) && (other_write)) 
            access = 1;
      }
@@ -665,24 +665,24 @@ _e_wid_file_time_get(time_t st_modtime)
    ltime = time(NULL);
    diff = difftime(ltime, st_modtime);
    if (diff <= 60) 
-      snprintf(modtime, PATH_MAX, "Under a minute ago");
+      snprintf(modtime, sizeof(modtime), _("In the last minute"));
    if (diff > 60) 
-      snprintf(modtime, PATH_MAX, "%d minutes ago", ((int)diff/60));
+      snprintf(modtime, sizeof(modtime), _("%i minutes ago"), ((int)diff/60));
    if (diff >= 3600) 
-      snprintf(modtime, PATH_MAX, "%d hours ago", ((int)diff/3600));
+      snprintf(modtime, sizeof(modtime), _("%i hours ago"), ((int)diff/3600));
    if (diff >= 86400) 
-      snprintf(modtime, PATH_MAX, "%d days ago", ((int)diff/86400));
+      snprintf(modtime, sizeof(modtime), _("%i days ago"), ((int)diff/86400));
    if (diff >= 604800) 
-      snprintf(modtime, PATH_MAX, "%d weeks ago", ((int)diff/604800));
+      snprintf(modtime, sizeof(modtime), _("%i weeks ago"), ((int)diff/604800));
    if (diff >= 2592000) 
-      snprintf(modtime, PATH_MAX, "%d months ago", ((int)diff/2592000));
+      snprintf(modtime, sizeof(modtime), _("%i months ago"), ((int)diff/2592000));
    if (diff >= 31526000) 
-      snprintf(modtime, PATH_MAX, "%d years ago", ((int)diff/31526000));
+      snprintf(modtime, sizeof(modtime), _("%i years ago"), ((int)diff/31526000));
  
    if (modtime) 
       motime = strdup(modtime);
    else 
-      motime = strdup("unknown");
+      motime = strdup(_("Unknown"));
    return motime;
 }
 
