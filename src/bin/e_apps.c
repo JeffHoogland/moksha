@@ -477,7 +477,6 @@ e_app_exec(E_App *a, int launch_id)
    inst->launch_time = ecore_time_get();
    inst->expire_timer = ecore_timer_add(10.0, _e_app_cb_expire_timer, inst);
    a->instances = evas_list_append(a->instances, inst);
-//   e_object_ref(E_OBJECT(a));
    _e_apps_start_pending = evas_list_append(_e_apps_start_pending, a);
    if (a->startup_notify) a->starting = 1;
    for (l = a->references; l; l = l->next)
@@ -2201,9 +2200,10 @@ _e_apps_cb_exit(void *data, int type, void *event)
 	aut->read = ecore_exe_event_data_get(ai->exe, ECORE_EXE_PIPE_READ);
 	e_app_error_dialog(NULL, aut);
      }
+   a->instances = evas_list_remove(a->instances, ai);
+   ai->exe = NULL;
    if (ai->expire_timer) ecore_timer_del(ai->expire_timer);
    free(ai);
-   a->instances = evas_list_remove(a->instances, ai);
    _e_apps_start_pending = evas_list_remove(_e_apps_start_pending, a);
    for (l = a->references; l; l = l->next)
      {

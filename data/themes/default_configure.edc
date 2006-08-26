@@ -146,9 +146,9 @@ group {
 	    state: "default" 0.0;
 	    color: 0 0 0 0;
 	    align: 0.5 1.0;
-	    fixed: 0 1;
+	    fixed: 1 1;
 	    rel1 {
-	    	to_y: "e.swallow.content";
+	       to_y: "e.swallow.content";
 	       relative: 0.5 1.0;
 	       offset:   0   2;
 	    }
