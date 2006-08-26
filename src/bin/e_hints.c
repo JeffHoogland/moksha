@@ -307,11 +307,11 @@ e_hints_client_stacking_set(void)
 		    {
 		       if (i >= num)
 			 {
-			    e_error_message_show("e_hints.c: e_hints_client_stacking_set()<br>"
-						 "<br>"
-						 "Window list size greater than window count.<br>"
-						 "This is really bad.<br>"
-						 "Please report this.");
+			    e_error_message_show("e_hints.c: e_hints_client_stacking_set()\n"
+						 "\n"
+						 "Window list size greater than window count.\n"
+						 "This is really bad.\n"
+						 "Please report this.\n");
 			    break;
 			 }
 		       clients[i++] = b->win;
@@ -321,11 +321,11 @@ e_hints_client_stacking_set(void)
 	  }
 	if (i < num)
 	  {
-	     e_error_message_show("e_hints.c: e_hints_client_stacking_set()<br>"
-				  "<br>"
-				  "Window list size less than window count.<br>"
-				  "This is strange, but not harmful.<br>"
-				  "Please report this.");
+	     e_error_message_show("e_hints.c: e_hints_client_stacking_set()\n"
+				  "\n"
+				  "Window list size less than window count.\n"
+				  "This is strange, but not harmful.\n"
+				  "Please report this.\n");
 	  }
 	for (ml = e_manager_list(); ml; ml = ml->next)
 	  {

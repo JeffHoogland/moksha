@@ -239,8 +239,8 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
 	sd->config->view.selector = 1;
 	sd->config->view.single_click = 0;
 	sd->config->view.no_subdir_jump = 0;
-	sd->config->icon.icon.w = 64;
-	sd->config->icon.icon.h = 64;
+	sd->config->icon.icon.w = 128;
+	sd->config->icon.icon.h = 128;
 	sd->config->icon.list.w = 24;
 	sd->config->icon.list.h = 24;
 	sd->config->icon.fixed.w = 1;

@@ -116,8 +116,10 @@ EAPI void
 e_widget_min_size_set(Evas_Object *obj, Evas_Coord minw, Evas_Coord minh)
 {
    API_ENTRY return;
-   sd->minw = minw;
-   sd->minh = minh;
+   if (minw >= 0)
+     sd->minw = minw;
+   if (minh >= 0)
+     sd->minh = minh;
 }
 
 EAPI void

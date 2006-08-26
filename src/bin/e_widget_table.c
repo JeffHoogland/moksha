@@ -59,6 +59,28 @@ e_widget_table_object_append(Evas_Object *obj, Evas_Object *sobj, int col, int r
    evas_object_show(sobj);
 }
 
+EAPI void
+e_widget_table_object_repack(Evas_Object *obj, Evas_Object *sobj, int col, int row, int colspan, int rowspan, int fill_w, int fill_h, int expand_w, int expand_h)
+{
+   E_Widget_Data *wd;
+   Evas_Coord mw = 0, mh = 0;
+   
+   wd = e_widget_data_get(obj);
+   
+   e_table_unpack(sobj);
+   e_table_pack(wd->o_table, sobj, col, row, colspan, rowspan);
+   e_widget_min_size_get(sobj, &mw, &mh);
+   e_table_pack_options_set(sobj,
+			    fill_w, fill_h, /* fill */
+			    expand_w, expand_h, /* expand */
+			    0.5, 0.5, /* align */
+			    mw, mh, /* min */
+			    99999, 99999 /* max */
+			    );
+   e_table_min_size_get(wd->o_table, &mw, &mh);
+   e_widget_min_size_set(obj, mw, mh);
+}
+
 static void
 _e_wid_del_hook(Evas_Object *obj)
 {

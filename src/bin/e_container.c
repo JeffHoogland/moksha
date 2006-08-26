@@ -567,7 +567,7 @@ e_container_borders_count(E_Container *con)
 EAPI void
 e_container_border_add(E_Border *bd)
 {
-   int pos;
+   int pos = 0;
 
    if (bd->layer == 0) pos = 0;
    else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
@@ -584,44 +584,45 @@ e_container_border_add(E_Border *bd)
 EAPI void
 e_container_border_remove(E_Border *bd)
 {
-   int i, cl = 0;
+   int i;
 
+   if (!bd->zone) return;
    /* FIXME: Could revert to old behaviour, ->layer is consistent
     * with pos now. */
    for (i = 0; i < 7; i++)
      {
 	bd->zone->container->layers[i].clients =
 	   evas_list_remove(bd->zone->container->layers[i].clients, bd);
-	cl += evas_list_count(bd->zone->container->layers[i].clients);
      }
-   bd->zone->container->clients = cl;
+   bd->zone->container->clients--;
+   bd->zone = NULL;
 }
 
 EAPI void
 e_container_window_raise(E_Container *con, Ecore_X_Window win, int layer)
 {
-   int pos;
+   int pos = 0;
 
-   if (layer == 0) pos = 1;
-   else if ((layer > 0) && (layer <= 50)) pos = 2;
-   else if ((layer > 50) && (layer <= 100)) pos = 3;
-   else if ((layer > 100) && (layer <= 150)) pos = 4;
-   else if ((layer > 150) && (layer <= 200)) pos = 5;
-   else pos = 6;
+   if (layer <= 0) pos = 0;
+   else if ((layer > 0) && (layer <= 50)) pos = 1;
+   else if ((layer > 50) && (layer <= 100)) pos = 2;
+   else if ((layer > 100) && (layer <= 150)) pos = 3;
+   else if ((layer > 150) && (layer <= 200)) pos = 4;
+   else pos = 5;
 
    ecore_x_window_configure(win,
 			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
 			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
 			    0, 0, 0, 0, 0,
-			    con->layers[pos].win, ECORE_X_WINDOW_STACK_BELOW);
+			    con->layers[pos + 1].win, ECORE_X_WINDOW_STACK_BELOW);
 }
 
 EAPI void
 e_container_window_lower(E_Container *con, Ecore_X_Window win, int layer)
 {
-   int pos;
+   int pos = 0;
 
-   if (layer == 0) pos = 0;
+   if (layer <= 0) pos = 0;
    else if ((layer > 0) && (layer <= 50)) pos = 1;
    else if ((layer > 50) && (layer <= 100)) pos = 2;
    else if ((layer > 100) && (layer <= 150)) pos = 3;
@@ -640,7 +641,7 @@ e_container_border_raise(E_Border *bd)
 {
    E_Border *above = NULL;
    Evas_List *l;
-   int pos, i;
+   int pos = 0, i;
 
    /* Remove from old layer */
    for (i = 0; i < 7; i++)
@@ -650,24 +651,24 @@ e_container_border_raise(E_Border *bd)
      }
 
    /* Add to new layer */
-   if (bd->layer == 0) pos = 1;
-   else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 2;
-   else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 3;
-   else if ((bd->layer > 100) && (bd->layer <= 150)) pos = 4;
-   else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 5;
-   else pos = 6;
+   if (bd->layer <= 0) pos = 0;
+   else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
+   else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
+   else if ((bd->layer > 100) && (bd->layer <= 150)) pos = 3;
+   else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
+   else pos = 5;
 
    ecore_x_window_configure(bd->win,
 			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
 			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
 			    0, 0, 0, 0, 0,
-			    bd->zone->container->layers[pos].win, ECORE_X_WINDOW_STACK_BELOW);
+			    bd->zone->container->layers[pos + 1].win, ECORE_X_WINDOW_STACK_BELOW);
 
-   bd->zone->container->layers[pos - 1].clients =
-      evas_list_append(bd->zone->container->layers[pos - 1].clients, bd);
+   bd->zone->container->layers[pos].clients =
+      evas_list_append(bd->zone->container->layers[pos].clients, bd);
 
    /* Find the window below this one */
-   l = evas_list_find_list(bd->zone->container->layers[pos - 1].clients, bd);
+   l = evas_list_find_list(bd->zone->container->layers[pos].clients, bd);
    if (l->prev)
      above = l->prev->data;
    else
@@ -693,7 +694,7 @@ e_container_border_lower(E_Border *bd)
 {
    E_Border *below = NULL;
    Evas_List *l;
-   int pos, i;
+   int pos = 0, i;
    
    /* Remove from old layer */
    for (i = 0; i < 7; i++)
@@ -703,7 +704,7 @@ e_container_border_lower(E_Border *bd)
      }
 
    /* Add to new layer */
-   if (bd->layer == 0) pos = 0;
+   if (bd->layer <= 0) pos = 0;
    else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
    else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
    else if ((bd->layer > 100) && (bd->layer <= 150)) pos = 3;
@@ -743,23 +744,19 @@ e_container_border_lower(E_Border *bd)
 EAPI void
 e_container_border_stack_above(E_Border *bd, E_Border *above)
 {
-   int pos;
+   int pos = 0, i;
 
    /* Remove from old layer */
-   if (bd->layer == 0) pos = 0;
-   else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
-   else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
-   else if ((bd->layer > 100) && (bd->layer <= 150)) pos = 3;
-   else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
-   else pos = 5;
-
-   bd->zone->container->layers[pos].clients =
-      evas_list_remove(bd->zone->container->layers[pos].clients, bd);
+   for (i = 0; i < 7; i++)
+     {
+	bd->zone->container->layers[i].clients =
+	   evas_list_remove(bd->zone->container->layers[i].clients, bd);
+     }
 
    /* Add to new layer */
    bd->layer = above->layer;
 
-   if (bd->layer == 0) pos = 0;
+   if (bd->layer <= 0) pos = 0;
    else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
    else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
    else if ((bd->layer > 100) && (bd->layer <= 150)) pos = 3;
@@ -779,23 +776,19 @@ e_container_border_stack_above(E_Border *bd, E_Border *above)
 EAPI void
 e_container_border_stack_below(E_Border *bd, E_Border *below)
 {
-   int pos;
+   int pos = 0, i;
 
    /* Remove from old layer */
-   if (bd->layer == 0) pos = 0;
-   else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
-   else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
-   else if ((bd->layer > 100) && (bd->layer <= 150)) pos = 3;
-   else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
-   else pos = 5;
-
-   bd->zone->container->layers[pos].clients =
-      evas_list_remove(bd->zone->container->layers[pos].clients, bd);
+   for (i = 0; i < 7; i++)
+     {
+	bd->zone->container->layers[i].clients =
+	   evas_list_remove(bd->zone->container->layers[i].clients, bd);
+     }
 
    /* Add to new layer */
    bd->layer = below->layer;
 
-   if (bd->layer == 0) pos = 0;
+   if (bd->layer <= 0) pos = 0;
    else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
    else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
    else if ((bd->layer > 100) && (bd->layer <= 150)) pos = 3;
@@ -939,7 +932,7 @@ _e_container_free(E_Container *con)
    Evas_List *l, *tmp;
 
    ecore_x_window_del(con->event_win);
-    /* We can't use e_object_del here, because border adds a ref to itself
+   /* We can't use e_object_del here, because border adds a ref to itself
     * when it is removed, and the ref is never unref'ed */
 /* FIXME: had to disable this as it was freeing already freed items during
  * looping (particularly remember/lock config dialogs). this is just

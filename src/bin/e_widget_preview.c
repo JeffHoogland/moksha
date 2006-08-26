@@ -6,7 +6,7 @@
 typedef struct _E_Widget_Data E_Widget_Data;
 struct _E_Widget_Data
 {
-   Evas_Object *o_frame, *img, *o_thumb;
+   Evas_Object *obj, *o_frame, *img, *o_thumb;
 };
 
 static void _e_wid_del_hook(Evas_Object *obj);
@@ -25,6 +25,8 @@ e_widget_preview_add(Evas *evas, int minw, int minh)
    e_widget_del_hook_set(obj, _e_wid_del_hook);
    wd = calloc(1, sizeof(E_Widget_Data));
 
+   wd->obj = obj;
+   
    o = edje_object_add(evas);
    wd->o_frame = o;
    e_theme_edje_object_set(o, "base/theme/widgets",
@@ -78,7 +80,10 @@ e_widget_preview_thumb_set(Evas_Object *obj, const char *file, const char *key, 
       evas_object_del(wd->img);
 
    wd->img = e_thumb_icon_add(evas_object_evas_get(obj));
-   e_thumb_icon_file_set(wd->img, file, key);
+   if (e_util_glob_case_match(file, "*.edj"))
+     e_thumb_icon_file_set(wd->img, file, "e/desktop/background");
+   else
+     e_thumb_icon_file_set(wd->img, file, NULL);
    e_thumb_icon_size_set(wd->img, w, h);
    e_thumb_icon_begin(wd->img);
    evas_object_smart_callback_add(wd->img, "e_thumb_gen", _e_wid_preview_thumb_gen, wd);
@@ -96,7 +101,13 @@ _e_wid_preview_thumb_gen(void *data, Evas_Object *obj, void *event_info)
    wd = data;
 
    e_icon_size_get(wd->img, &w, &h);
-   evas_object_resize(wd->o_frame, w, h);
+   edje_extern_object_min_size_set(wd->img, w, h);
+   edje_extern_object_max_size_set(wd->img, w, h);
+   edje_object_part_swallow(wd->o_frame, "e.swallow.content", wd->img);
+   edje_object_size_min_calc(wd->o_frame, &w, &h);
+   e_widget_min_size_set(wd->obj, w, h);
+   evas_object_resize(wd->obj, w, h);
+   evas_object_smart_callback_call(wd->obj, "preview_update", NULL);
 }
 
 EAPI int
