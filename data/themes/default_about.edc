@@ -5,7 +5,7 @@ images {
    image: "e17_dialog_watermark.png" COMP;
    image: "e17_about_bg_v.png" COMP;
    image: "e17_about_over_v.png" COMP;
-   image: "e17_logo.png" COMP;
+   image: "e17_logo_small.png" COMP;
    image: "e17_about_sky0.png" LOSSY 70;
    image: "e17_about_sky1.png" LOSSY 70;
    image: "e17_about_sky2.png" LOSSY 70;
@@ -466,7 +466,7 @@ group {
 	       to_y:     "e.text.about";
 	    }
 	    image {
-	       normal:   "e17_logo.png";
+	       normal:   "e17_logo_small.png";
 	    }
 	 }
       }

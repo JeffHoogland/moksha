@@ -1,3 +1,6 @@
+images {
+   image: "e17_logo_small.png" COMP;
+}
 group {
    name: "e/modules/start/main";
    max:  128 128;
@@ -100,7 +103,7 @@ group {
 	       offset: -1 -1;
 	    }
 	    image {
-	       normal: "e17_logo.png";
+	       normal: "e17_logo_small.png";
 	    }
 	 }
 	 description {
@@ -300,7 +303,7 @@ group {
 	       offset:   -1   -1;
 	    }
 	    image {
-	       normal: "e17_logo.png";
+	       normal: "e17_logo_small.png";
 	    }
 	    color: 255 255 255 0;
 	 }
@@ -565,5 +568,3 @@ group {
       }
    }
 }
-
-
