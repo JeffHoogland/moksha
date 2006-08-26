@@ -479,7 +479,7 @@ _e_wid_fsel_preview_update(void *data, Evas_Object *obj, void *event_info)
 static void
 _e_wid_fsel_preview_file(E_Widget_Data *wd)
 {
-   char *size, *owner, *perms, *time;
+   char *size, *owner, *perms, *mtime;
    struct stat st;
  
    stat(wd->path, &st);
@@ -487,7 +487,7 @@ _e_wid_fsel_preview_file(E_Widget_Data *wd)
    size =  _e_wid_file_size_get(st.st_size);
    owner = _e_wid_file_user_get(st.st_uid);
    perms = _e_wid_file_perms_get(st.st_mode, st.st_uid, st.st_gid);
-   time = _e_wid_file_time_get(st.st_mtime); 
+   mtime = _e_wid_file_time_get(st.st_mtime); 
    
    e_widget_preview_thumb_set(wd->o_preview_preview, wd->path,
 			      "background", 128, 128);
@@ -499,19 +499,19 @@ _e_wid_fsel_preview_file(E_Widget_Data *wd)
    e_widget_entry_text_set(wd->o_preview_size_entry, size);
    e_widget_entry_text_set(wd->o_preview_owner_entry, owner);
    e_widget_entry_text_set(wd->o_preview_perms_entry, perms);
-   e_widget_entry_text_set(wd->o_preview_time_entry, time);
+   e_widget_entry_text_set(wd->o_preview_time_entry, mtime);
 
    free(size);
    free(owner);
    free(perms);
-   free(time);
+   free(mtime);
 }
 
 static char *
 _e_wid_file_size_get(off_t st_size)
 {
    double dsize;
-   char size[1024];
+   char size[256];
 
    dsize = (double)st_size;
    if (dsize < 1024.0)
@@ -558,8 +558,7 @@ _e_wid_file_user_get(uid_t st_uid)
 static char *
 _e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t st_gid)
 {
-   char *perm;
-   char perms[PATH_MAX];
+   char perms[256];
    int access = 0;
    int owner = 0;
    int group = 0;
@@ -576,82 +575,52 @@ _e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t st_gid)
    if (getgid() == st_gid) 
       group = 1;   
 
-   perm = (char *)malloc(sizeof(char) * 10);
-
-   for (i = 0; i < 9; i++) 
-      perm[i] = '-';
-   perm[9] = '\0';
-
    if ((S_IRUSR & st_mode) == S_IRUSR) 
-     {
-        perm[0] = 'r';
-        user_read = 1;
-     }
+     user_read = 1;
    if ((S_IWUSR & st_mode) == S_IWUSR) 
-     {
-        perm[1] = 'w';
-        user_write = 1;
-     }
-   if ((S_IXUSR & st_mode) == S_IXUSR) 
-      perm[2] = 'x';
+     user_write = 1;
 
    if ((S_IRGRP & st_mode) == S_IRGRP) 
-     {
-	perm[3] = 'r';
-        group_read = 1;
-     }
+     group_read = 1;
    if ((S_IWGRP & st_mode) == S_IWGRP) 
-     {	
-        perm[4] = 'w';
-        group_write = 1;
-     }
-   if ((S_IXGRP & st_mode) == S_IXGRP) 
-      perm[5] = 'x';
+     group_write = 1;
    
    if ((S_IROTH & st_mode) == S_IROTH)
-     {
-        perm[5] = 'r';
-        other_read = 1;
-     }
+     other_read = 1;
    if ((S_IWOTH & st_mode) == S_IWOTH)
-     {
-        perm[6] = 'w';
-        other_write = 1;
-     }
-   if ((S_IXOTH & st_mode) == S_IXOTH) 
-      perm[8] = 'x';
+     other_write = 1;
 
    if (owner)
      {
         if ((!user_read) && (!user_write)) 
-           snprintf(perms, sizeof(perms), _("Protected"));
+	  snprintf(perms, sizeof(perms), _("Protected"));
         else if ((user_read) && (!user_write)) 
-           snprintf(perms, sizeof(perms), _("Read Only"));
+	  snprintf(perms, sizeof(perms), _("Read Only"));
         else if ((user_read) && (user_write)) 
-           access = 1;
+	  access = 1;
      }
    else if (group)
      {
         if ((!group_read) && (!group_write)) 
-           snprintf(perms, sizeof(perms), _("Forbidden"));
+	  snprintf(perms, sizeof(perms), _("Forbidden"));
         else if ((group_read) && (!group_write)) 
-           snprintf(perms, sizeof(perms), _("Read Only"));
+	  snprintf(perms, sizeof(perms), _("Read Only"));
         else if ((group_read) && (group_write)) 
-           access = 1;
+	  access = 1;
      }
-   else if ((!owner) && (!group))
+   else
      {
         if ((!other_read) && (!other_write)) 
-           snprintf(perms, sizeof(perms), _("Forbidden"));
+	  snprintf(perms, sizeof(perms), _("Forbidden"));
         else if ((other_read) && (!other_write)) 
-           snprintf(perms, sizeof(perms), _("Read Only"));
+	  snprintf(perms, sizeof(perms), _("Read Only"));
         else if ((other_read) && (other_write)) 
-           access = 1;
+	  access = 1;
      }
    if (!access) 
-      return strdup(perms);
+     return strdup(perms);
    else 
-      return strdup("Read-Write");
+     return strdup("Read-Write");
 }
 
 static char * 
@@ -659,7 +628,7 @@ _e_wid_file_time_get(time_t st_modtime)
 {
    float diff;
    time_t ltime;
-   char modtime[PATH_MAX];
+   char modtime[256];
    char *motime;   
 
    ltime = time(NULL);
