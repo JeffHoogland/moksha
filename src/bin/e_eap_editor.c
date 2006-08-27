@@ -426,7 +426,7 @@ _e_eap_editor_cb_icon_select(void *data1, void *data2)
 
    o = e_widget_fsel_add(dia->win->evas, "~/", "/", NULL, NULL,
 			 _e_eap_edit_select_cb, cfdata,
-			 _e_eap_edit_change_cb, cfdata, 0);
+			 _e_eap_edit_change_cb, cfdata, 1);
    evas_object_show(o);
    e_widget_min_size_get(o, &mw, &mh);
    e_dialog_content_set(dia, o, mw, mh);
@@ -437,7 +437,7 @@ _e_eap_editor_cb_icon_select(void *data1, void *data2)
    e_dialog_resizable_set(dia, 1);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
-   e_win_resize(dia->win, 400, 300);
+   e_win_resize(dia->win, 475, 341);
 }
 
 static void
