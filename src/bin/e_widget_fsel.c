@@ -85,7 +85,7 @@ _e_wid_fsel_favorites_add(void *data1, void *data2)
 	     snprintf(dest_path, PATH_MAX, "%s/.e/e/fileman/favorites/%s-%d",
 	                                     getenv("HOME"), 
 					     basename(current_path), i);
-	     i = i+1;
+	     i++;
 	  }
 	symlink(current_path, dest_path);  
      }
