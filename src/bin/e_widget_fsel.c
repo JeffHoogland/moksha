@@ -637,24 +637,24 @@ _e_wid_file_time_get(time_t st_modtime)
    diff = ltime - st_modtime;
    if (st_modtime > ltime)
      {
-	snprintf(modtime, sizeof(modtime), _("In the future"));
+	snprintf(modtime, sizeof(modtime), _("In the Future"));
      }
    else
      {
 	if (diff <= 60) 
-	  snprintf(modtime, sizeof(modtime), _("In the last minute"));
+	  snprintf(modtime, sizeof(modtime), _("In the last Minute"));
 	else if (diff >= 31526000) 
-	  snprintf(modtime, sizeof(modtime), _("%i years ago"), (diff / 31526000));
+	  snprintf(modtime, sizeof(modtime), _("%i Years ago"), (diff / 31526000));
 	else if (diff >= 2592000) 
-	  snprintf(modtime, sizeof(modtime), _("%i months ago"), (diff / 2592000));
+	  snprintf(modtime, sizeof(modtime), _("%i Months ago"), (diff / 2592000));
 	else if (diff >= 604800) 
-	  snprintf(modtime, sizeof(modtime), _("%i weeks ago"), (diff / 604800));
+	  snprintf(modtime, sizeof(modtime), _("%i Weeks ago"), (diff / 604800));
 	else if (diff >= 86400)
-	  snprintf(modtime, sizeof(modtime), _("%i days ago"), (diff / 86400));
+	  snprintf(modtime, sizeof(modtime), _("%i Days ago"), (diff / 86400));
 	else if (diff >= 3600) 
-	  snprintf(modtime, sizeof(modtime), _("%i hours ago"), (diff / 3600));
+	  snprintf(modtime, sizeof(modtime), _("%i Hours ago"), (diff / 3600));
 	else if (diff > 60) 
-	  snprintf(modtime, sizeof(modtime), _("%i minutes ago"), (diff / 60));
+	  snprintf(modtime, sizeof(modtime), _("%i Minutes ago"), (diff / 60));
      }
  
    if (modtime) 
