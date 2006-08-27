@@ -174,6 +174,7 @@ _e_wid_fsel_files_changed(void *data, Evas_Object *obj, void *event_info)
      e_widget_scrollframe_child_pos_set(wd->o_files_frame, 0, 0);
    E_FREE(wd->path);
    if (wd->chg_func) wd->chg_func(wd->chg_data, wd->obj);
+   e_widget_entry_text_set(wd->o_entry, " ");
 }
 
 static void

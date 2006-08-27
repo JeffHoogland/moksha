@@ -31,7 +31,6 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
-* fsel needs to clear the entry when entering a new dir
 * fm2 .desktop parser needs to handle i18n
 * fm2 needs a mime filter
 * fm2 needs to have a mime & filetype -> icon mapping
