@@ -34,7 +34,6 @@ Some of the things (in very short form) that need to be done to E17...
 * fm2 .desktop parser needs to handle i18n
 * fm2 needs a mime filter
 * fm2 needs to have a mime & filetype -> icon mapping
-* fsel needs to display the current dir (for better context) somewhere
 * eap editor is broken - segv in advanced mode
 * use .desktop files and move eap editor to edit them etc. etc. instead to fix
 * if we want to do icons on the desktop - and as part of efm, i am thinking
