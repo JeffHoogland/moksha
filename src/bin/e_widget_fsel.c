@@ -628,27 +628,34 @@ _e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t st_gid)
 static char * 
 _e_wid_file_time_get(time_t st_modtime)
 {
-   float diff;
+   time_t diff;
    time_t ltime;
    char modtime[256];
    char *motime;   
 
    ltime = time(NULL);
-   diff = difftime(ltime, st_modtime);
-   if (diff <= 60) 
-      snprintf(modtime, sizeof(modtime), _("In the last minute"));
-   if (diff > 60) 
-      snprintf(modtime, sizeof(modtime), _("%i minutes ago"), ((int)diff/60));
-   if (diff >= 3600) 
-      snprintf(modtime, sizeof(modtime), _("%i hours ago"), ((int)diff/3600));
-   if (diff >= 86400) 
-      snprintf(modtime, sizeof(modtime), _("%i days ago"), ((int)diff/86400));
-   if (diff >= 604800) 
-      snprintf(modtime, sizeof(modtime), _("%i weeks ago"), ((int)diff/604800));
-   if (diff >= 2592000) 
-      snprintf(modtime, sizeof(modtime), _("%i months ago"), ((int)diff/2592000));
-   if (diff >= 31526000) 
-      snprintf(modtime, sizeof(modtime), _("%i years ago"), ((int)diff/31526000));
+   diff = ltime - st_modtime;
+   if (st_modtime > ltime)
+     {
+	snprintf(modtime, sizeof(modtime), _("In the future"));
+     }
+   else
+     {
+	if (diff <= 60) 
+	  snprintf(modtime, sizeof(modtime), _("In the last minute"));
+	else if (diff >= 31526000) 
+	  snprintf(modtime, sizeof(modtime), _("%i years ago"), (diff / 31526000));
+	else if (diff >= 2592000) 
+	  snprintf(modtime, sizeof(modtime), _("%i months ago"), (diff / 2592000));
+	else if (diff >= 604800) 
+	  snprintf(modtime, sizeof(modtime), _("%i weeks ago"), (diff / 604800));
+	else if (diff >= 86400)
+	  snprintf(modtime, sizeof(modtime), _("%i days ago"), (diff / 86400));
+	else if (diff >= 3600) 
+	  snprintf(modtime, sizeof(modtime), _("%i hours ago"), (diff / 3600));
+	else if (diff > 60) 
+	  snprintf(modtime, sizeof(modtime), _("%i minutes ago"), (diff / 60));
+     }
  
    if (modtime) 
       motime = strdup(modtime);
