@@ -12,6 +12,7 @@ struct _E_App_Edit
 
    Evas_Object *img;
    Evas_Object *img_widget;
+   E_Dialog    *fsel_dia;
    int          img_set;
 
    E_Config_Dialog *cfd;
@@ -156,6 +157,7 @@ _e_eap_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data)
 	if (data->editor->img) evas_object_del(data->editor->img);
 	if (data->editor->img_widget) evas_object_del(data->editor->img_widget);
 	free(data->editor);
+	if (data->editor->fsel_dia) e_object_del(E_OBJECT(data->editor->fsel_dia));
      }
    free(data);
 }
@@ -283,7 +285,7 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dial
 
    if (editor->img_widget) evas_object_del(editor->img_widget);
    editor->img_widget = e_widget_button_add(evas, "", NULL,
-					    _e_eap_editor_cb_icon_select, data, NULL);
+					    _e_eap_editor_cb_icon_select, data, editor);
    e_widget_button_icon_set(editor->img_widget, editor->img);
    e_widget_min_size_set(editor->img_widget, 48, 48);
    e_widget_frametable_object_append(o, editor->img_widget,
@@ -416,7 +418,9 @@ _e_eap_editor_cb_icon_select(void *data1, void *data2)
    E_Dialog *dia;
    Evas_Object *o;
    Evas_Coord mw, mh;
+   E_App_Edit *editor;
 
+   editor = data2;
    cfdata = data1;
    dia = e_dialog_new(cfdata->editor->cfd->con, "E", "_eap_icon_select_dialog");
    if (!dia) return;
@@ -438,6 +442,7 @@ _e_eap_editor_cb_icon_select(void *data1, void *data2)
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
    e_win_resize(dia->win, 475, 341);
+   editor->fsel_dia = dia;
 }
 
 static void
