@@ -12,6 +12,7 @@ struct _E_App_Edit
 
    Evas_Object *img;
    Evas_Object *img_widget;
+   Evas_Object *fsel;
    E_Dialog    *fsel_dia;
    int          img_set;
 
@@ -157,7 +158,7 @@ _e_eap_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data)
 	if (data->editor->img) evas_object_del(data->editor->img);
 	if (data->editor->img_widget) evas_object_del(data->editor->img_widget);
 	free(data->editor);
-	if (data->editor->fsel_dia) e_object_del(E_OBJECT(data->editor->fsel_dia));
+	if (data->editor->fsel) e_object_del(E_OBJECT(data->editor->fsel_dia));
      }
    free(data);
 }
@@ -432,6 +433,7 @@ _e_eap_editor_cb_icon_select(void *data1, void *data2)
 			 _e_eap_edit_select_cb, cfdata,
 			 _e_eap_edit_change_cb, cfdata, 1);
    evas_object_show(o);
+   editor->fsel = o;
    e_widget_min_size_get(o, &mw, &mh);
    e_dialog_content_set(dia, o, mw, mh);
 
