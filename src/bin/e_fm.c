@@ -1505,7 +1505,7 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 		  snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 		  ic->obj_icon = e_thumb_icon_add(evas_object_evas_get(ic->sd->obj));
 		  e_thumb_icon_file_set(ic->obj_icon, buf, NULL);
-		  e_thumb_icon_size_set(ic->obj_icon, 64, 64);
+		  e_thumb_icon_size_set(ic->obj_icon, 128, 128);
 		  evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
 		  _e_fm2_icon_thumb(ic);
 		  edje_object_part_swallow(ic->obj, "e.swallow.icon", ic->obj_icon);
@@ -1543,7 +1543,7 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 		    e_thumb_icon_file_set(ic->obj_icon, buf, ic->sd->config->icon.key_hint);
 		  else
 		    e_thumb_icon_file_set(ic->obj_icon, buf, "e/desktop/background");
-		  e_thumb_icon_size_set(ic->obj_icon, 64, 48);
+		  e_thumb_icon_size_set(ic->obj_icon, 128, 96);
 		  evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
 		  _e_fm2_icon_thumb(ic);
 		  edje_object_part_swallow(ic->obj, "e.swallow.icon", ic->obj_icon);
@@ -1556,7 +1556,7 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 		  snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 		  ic->obj_icon = e_thumb_icon_add(evas_object_evas_get(ic->sd->obj));
 		  e_thumb_icon_file_set(ic->obj_icon, buf, "icon");
-		  e_thumb_icon_size_set(ic->obj_icon, 64, 64);
+		  e_thumb_icon_size_set(ic->obj_icon, 128, 128);
 		  evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
 		  _e_fm2_icon_thumb(ic);
 		  edje_object_part_swallow(ic->obj, "e.swallow.icon", ic->obj_icon);
