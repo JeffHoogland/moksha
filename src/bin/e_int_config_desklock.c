@@ -44,6 +44,14 @@ struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
    
+   Evas_Object *o_frame;
+   Evas_Object *o_fm;
+   Evas_Object *o_up_button;
+   Evas_Object *o_preview;
+   Evas_Object *o_personal;
+   Evas_Object *o_system;
+   int fmdir;
+   
    char *desklock_passwd;
    char *desklock_passwd_cp;
    int show_password; // local
@@ -68,7 +76,7 @@ struct _E_Config_Dialog_Data
    
    struct {
       Evas_Object *passwd_field;
-      Evas_Object *bg_list;
+//      Evas_Object *bg_list;
 
       Evas_Object *show_passwd_check;
       
@@ -105,9 +113,139 @@ e_int_config_desklock(E_Container *con)
   return cfd;
 }
 
+
 static void
-_fill_desklock_data(E_Config_Dialog_Data *cfdata)
+_cb_button_up(void *data1, void *data2)
 {
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data1;
+   if (cfdata->o_fm)
+     e_fm2_parent_go(cfdata->o_fm);
+   if (cfdata->o_frame)
+     e_widget_scrollframe_child_pos_set(cfdata->o_frame, 0, 0);
+}
+
+static void
+_cb_files_changed(void *data, Evas_Object *obj, void *event_info)
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data;
+   if (!cfdata->o_fm) return;
+   if (!e_fm2_has_parent_get(cfdata->o_fm))
+     {
+	if (cfdata->o_up_button)
+	  e_widget_disabled_set(cfdata->o_up_button, 1);
+     }
+   else
+     {
+	if (cfdata->o_up_button)
+	  e_widget_disabled_set(cfdata->o_up_button, 0);
+     }
+   if (cfdata->o_frame)
+     e_widget_scrollframe_child_pos_set(cfdata->o_frame, 0, 0);
+}
+
+static void
+_cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
+{
+   E_Config_Dialog_Data *cfdata;
+   Evas_List *selected;
+   E_Fm2_Icon_Info *ici;
+   const char *realpath;
+   char buf[4096];
+   
+   cfdata = data;
+   if (!cfdata->o_fm) return;
+   selected = e_fm2_selected_list_get(cfdata->o_fm);
+   if (!selected) return;
+   ici = selected->data;
+   realpath = e_fm2_real_path_get(cfdata->o_fm);
+   if (!strcmp(realpath, "/"))
+     snprintf(buf, sizeof(buf), "/%s", ici->file);
+   else
+     snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+   evas_list_free(selected);
+   if (ecore_file_is_dir(buf)) return;
+   E_FREE(cfdata->bg);
+   cfdata->bg = strdup(buf);
+   if (cfdata->o_preview)
+     e_widget_preview_edje_set(cfdata->o_preview, buf, "e/desktop/background");
+   if (cfdata->o_frame)
+     e_widget_change(cfdata->o_frame);
+}
+
+static void
+_cb_files_selected(void *data, Evas_Object *obj, void *event_info)
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data;
+   printf("SEL\n");
+}
+
+static void
+_cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
+{
+   E_Config_Dialog_Data *cfdata;
+   const char *p;
+   char *homedir, buf[4096];
+   
+   cfdata = data;
+   if (!cfdata->bg) return;
+   if (!cfdata->o_fm) return;
+   p = e_fm2_real_path_get(cfdata->o_fm);
+   if (p)
+     {
+	if (strncmp(p, cfdata->bg, strlen(p))) return;
+     }
+   homedir = e_user_homedir_get();
+   if (!homedir) return;
+   snprintf(buf, sizeof(buf), "%s/.e/e/backgrounds", homedir);
+   free(homedir);
+   if (!p) return;
+   if (!strncmp(cfdata->bg, buf, strlen(buf)))
+     p = cfdata->bg + strlen(buf) + 1;
+   else
+     {
+	snprintf(buf, sizeof(buf), "%s/data/backgrounds", e_prefix_data_get());
+	if (!strncmp(cfdata->bg, buf, strlen(buf)))
+	  p = cfdata->bg + strlen(buf) + 1;
+	else
+	  p = cfdata->bg;
+     }
+   e_fm2_select_set(cfdata->o_fm, p, 1);
+   e_fm2_file_show(cfdata->o_fm, p);
+}
+
+static void
+_cb_dir(void *data, Evas_Object *obj, void *event_info)
+{
+   E_Config_Dialog_Data *cfdata;
+   char path[4096], *homedir;
+   
+   cfdata = data;
+   if (cfdata->fmdir == 1)
+     {
+	snprintf(path, sizeof(path), "%s/data/backgrounds", e_prefix_data_get());
+     }
+   else
+     {
+	homedir = e_user_homedir_get();
+	snprintf(path, sizeof(path), "%s/.e/e/backgrounds", homedir);
+	free(homedir);
+     }
+   e_fm2_path_set(cfdata->o_fm, path, "/");
+}
+
+
+
+static void
+_fill_data(E_Config_Dialog_Data *cfdata)
+{
+   char path[4096], *homedir;
+
    // we have to read it from e_config->...
    if (e_config->desklock_personal_passwd)
      {
@@ -148,6 +286,27 @@ _fill_desklock_data(E_Config_Dialog_Data *cfdata)
    else
      cfdata->bg = strdup(e_config->desklock_background);
 
+   if (cfdata->bg[0] != '/')
+     {
+	homedir = e_user_homedir_get();
+	snprintf(path, sizeof(path), "%s/.e/e/backgrounds/%s", homedir, cfdata->bg);
+	if (ecore_file_exists(path))
+	  {
+	     E_FREE(cfdata->bg);
+	     cfdata->bg = strdup(path);
+	  }
+	else
+	  {
+	     snprintf(path, sizeof(path), "%s/data/backgrounds/%s", e_prefix_data_get(), cfdata->bg);
+	     if (ecore_file_exists(path))
+	       {
+		  E_FREE(cfdata->bg);
+		  cfdata->bg = strdup(path);
+	       }
+	  }
+	free(homedir);
+     }
+   
 #ifdef HAVE_PAM
    cfdata->auth_method = e_config->desklock_auth_method;
 #endif
@@ -165,7 +324,7 @@ _create_data(E_Config_Dialog *cfd)
   cfdata->desklock_passwd_cp = strdup("");
   cfdata->cfd = cfd;
 
-  _fill_desklock_data(cfdata);
+  _fill_data(cfdata);
 
   return cfdata;
 }
@@ -213,7 +372,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    Evas_Object	  *oc;
 #endif
    
-   //_fill_desklock_data(cfdata);
    o = e_widget_list_add(evas, 0, 0);
 
 /*   
@@ -330,36 +488,102 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *of, *ob, *oc;
+   Evas_Object *ob, *oc;
+   Evas_Object *o, *ot, *of, *il, *ol;
+   char path[4096], *homedir;
+   const char *f;
+   E_Fm2_Config fmc;
+   E_Zone *z;
    E_Radio_Group *rg;
-   Evas_Object *ot;
 #ifdef HAVE_PAM
    E_Radio_Group *rg_auth;
 #endif
+
+   homedir = e_user_homedir_get();
+   if (!homedir) return NULL;
+   
+   z = e_zone_current_get(cfd->con);
    
    cfdata->evas = evas;
    
    ot = e_widget_table_add(evas, 0);
+   ol = e_widget_table_add(evas, 0);
+   il = e_widget_table_add(evas, 1);
    
-   /* start: bkg list */
-   cfdata->gui.bg_list = e_widget_ilist_add(evas, BG_LIST_ICON_SIZE_W,
-					    BG_LIST_ICON_SIZE_H, &(cfdata->bg));
+   rg = e_widget_radio_group_new(&(cfdata->fmdir));
+   o = e_widget_radio_add(evas, _("Personal"), 0, rg);
+   cfdata->o_personal = o;
+   evas_object_smart_callback_add(o, "changed",
+				  _cb_dir, cfdata);
+   e_widget_table_object_append(il, o, 0, 0, 1, 1, 1, 1, 0, 0);
+   o = e_widget_radio_add(evas, _("System"), 1, rg);
+   cfdata->o_system = o;
+   evas_object_smart_callback_add(o, "changed",
+				  _cb_dir, cfdata);
+   e_widget_table_object_append(il, o, 1, 0, 1, 1, 1, 1, 0, 0);
    
-   e_widget_ilist_selector_set(cfdata->gui.bg_list, 1);
-   e_widget_min_size_set(cfdata->gui.bg_list, 180, 200);
+   e_widget_table_object_append(ol, il, 0, 0, 1, 1, 0, 0, 0, 0);
    
-   _load_bgs(cfdata);
+   o = e_widget_button_add(evas, _("Go up a Directory"), "widget/up_dir",
+			   _cb_button_up, cfdata, NULL);
+   cfdata->o_up_button = o;
+   e_widget_table_object_append(ol, o, 0, 1, 1, 1, 0, 0, 0, 0);
    
-   e_widget_focus_set(cfdata->gui.bg_list, 1);
-   e_widget_ilist_go(cfdata->gui.bg_list);
+   if (cfdata->fmdir == 1)
+     snprintf(path, sizeof(path), "%s/data/backgrounds", e_prefix_data_get());
+   else
+     snprintf(path, sizeof(path), "%s/.e/e/backgrounds", homedir);
    
-   e_widget_table_object_append(ot, cfdata->gui.bg_list, 0, 0, 1, 2, 1, 1, 1, 1);
-   /* end: bkg list */
+   o = e_fm2_add(evas);
+   cfdata->o_fm = o;
+   memset(&fmc, 0, sizeof(E_Fm2_Config));
+   fmc.view.mode = E_FM2_VIEW_MODE_LIST;
+   fmc.view.open_dirs_in_place = 1;
+   fmc.view.selector = 1;
+   fmc.view.single_click = 0;
+   fmc.view.no_subdir_jump = 0;
+   fmc.icon.list.w = 48;
+   fmc.icon.list.h = 48;
+   fmc.icon.fixed.w = 1;
+   fmc.icon.fixed.h = 1;
+   fmc.icon.extension.show = 0;
+   fmc.icon.key_hint = NULL;
+   fmc.list.sort.no_case = 1;
+   fmc.list.sort.dirs.first = 0;
+   fmc.list.sort.dirs.last = 1;
+   fmc.selection.single = 1;
+   fmc.selection.windows_modifiers = 0;
+   e_fm2_config_set(o, &fmc);
+   evas_object_smart_callback_add(o, "dir_changed",
+				  _cb_files_changed, cfdata);
+   evas_object_smart_callback_add(o, "selection_change",
+				  _cb_files_selection_change, cfdata);
+   evas_object_smart_callback_add(o, "selected",
+				  _cb_files_selected, cfdata);
+   evas_object_smart_callback_add(o, "changed",
+				  _cb_files_files_changed, cfdata);
+   e_fm2_path_set(o, path, "/");
    
-   /* start: Desk Lock Window Preview */
+   of = e_widget_scrollframe_pan_add(evas, o,
+				     e_fm2_pan_set,
+				     e_fm2_pan_get,
+				     e_fm2_pan_max_get,
+				     e_fm2_pan_child_size_get);
+   cfdata->o_frame = of;
+   e_widget_min_size_set(of, 160, 160);
+   e_widget_table_object_append(ol, of, 0, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ot, ol, 0, 0, 1, 2, 1, 1, 1, 1);   
    
-   e_widget_table_object_append(ot, cfdata->preview_image, 1, 0, 1, 1, 1, 1, 1, 1);
-   /* end: Desk Lock Window Preview */
+   of = e_widget_list_add(evas, 0, 0);
+   
+   o = e_widget_preview_add(evas, 320, (320 * z->h) / z->w);
+   cfdata->o_preview = o;
+   if (cfdata->bg)
+     f = cfdata->bg;
+   e_widget_preview_edje_set(o, f, "e/desktop/background");
+   e_widget_list_object_append(of, o, 1, 0, 0.5);
+   
+   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
    
    /* start: login box options */
    
@@ -473,6 +697,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_table_object_append(ot, of, 1, 2, 1, 1 ,1 ,1 ,1 ,1);
 #endif
    
+   free(homedir);
    e_dialog_resizable_set(cfd->dia, 0);
    return ot;
 }
@@ -508,170 +733,6 @@ _e_desklock_zone_num_get(void)
 	  }
      }
    return num;
-}
-
-static void
-_load_bgs(E_Config_Dialog_Data *cfdata)
-{
-   E_Config_Dialog *cfd;
-   Evas_Object *o, *ic, *im;
-   Ecore_Evas *eebuf;
-   Evas *evasbuf;
-   Evas_List *bg_dirs, *bg;
-   const char *f, *f1;
- 
-   if (!cfdata || !cfdata->gui.bg_list)
-     return;
-   
-   cfd = cfdata->cfd;
-   eebuf = ecore_evas_buffer_new(1, 1);
-   evasbuf = ecore_evas_get(eebuf);
-   
-   ic = NULL;
-   /* Desklock background */
-   o = edje_object_add(evasbuf);
-   f1 = e_theme_edje_file_get("base/theme/desklock", "e/desklock/background");
-   
-   e_widget_ilist_header_append(cfdata->gui.bg_list, NULL, _("Theme Backgrounds"));
-   if (edje_object_file_set(o, f1, "e/desklock/background"))
-     {
-        ic = e_thumb_icon_add(cfd->dia->win->evas);
-	e_thumb_icon_file_set(ic, f1, "e/desktop/background");
-	e_thumb_icon_size_set(ic, 64,
-			       (64 * e_zone_current_get(cfd->dia->win->container)->h) /
-			       e_zone_current_get(cfd->dia->win->container)->w);
-	e_thumb_icon_begin(ic);
-	e_widget_ilist_append(cfdata->gui.bg_list, ic, _("Theme Desklock Background"),
-			      _ibg_list_cb_bg_selected, cfdata, DEF_DESKLOCK_BACKGROUND);
-     }
-   
-   if ((!e_config->desklock_background) ||
-       (!strcmp(e_config->desklock_background, DEF_DESKLOCK_BACKGROUND)))
-     e_widget_ilist_selected_set(cfdata->gui.bg_list, 1);
-   
-   im = e_widget_preview_add(cfdata->evas, BG_PREVIEW_W, BG_PREVIEW_H);
-   e_widget_preview_edje_set(im, f1, "e/desklock/background");
-   
-   evas_object_del(o);
-   ecore_evas_free(eebuf);
-   /* end: Desklock background */
-   
-   /* Theme Background */
-   eebuf = ecore_evas_buffer_new(1, 1);
-   evasbuf = ecore_evas_get(eebuf);
-   
-   o = edje_object_add(evasbuf);
-   f = e_theme_edje_file_get("base/theme/backgrounds", "e/desktop/background");
-   ic = NULL;
-   if (edje_object_file_set(o, f, "e/desktop/background"))
-     {
-        ic = e_thumb_icon_add(cfd->dia->win->evas);
-	e_thumb_icon_file_set(ic, f, "e/desktop/background");
-	e_thumb_icon_size_set(ic, 64,
-			       (64 * e_zone_current_get(cfd->dia->win->container)->h) /
-			       e_zone_current_get(cfd->dia->win->container)->w);
-	e_thumb_icon_begin(ic);
-	e_widget_ilist_append(cfdata->gui.bg_list, ic, _("Theme Background"),
-			      _ibg_list_cb_bg_selected, cfdata, DEF_THEME_BACKGROUND);
-     }
-   
-   if ((e_config->desklock_background) &&
-       (!strcmp(e_config->desklock_background, DEF_THEME_BACKGROUND)))
-     {
-	e_widget_ilist_selected_set(cfdata->gui.bg_list, 2);
-	evas_object_del(im);
-	im = e_widget_preview_add(cfdata->evas, BG_PREVIEW_W, BG_PREVIEW_H);
-	e_widget_preview_edje_set(im, f, "e/desktop/background");
-     }
-   
-   evas_object_del(o);
-   ecore_evas_free(eebuf);
-
-   e_widget_ilist_header_append(cfdata->gui.bg_list, NULL, _("Personal"));
-   bg_dirs = e_path_dir_list_get(path_backgrounds);
-   for (bg = bg_dirs; bg; bg = bg->next)
-     {
-	E_Path_Dir *d;
-	
-	d = bg->data;
-	if (ecore_file_is_dir(d->dir))
-	  {
-	     char *bg_file;
-	     Ecore_List *bgs;
-	     int i = e_widget_ilist_count(cfdata->gui.bg_list);
-	     
-	     bgs = ecore_file_ls(d->dir);
-	     if (!bgs) continue;
-	     while ((bg_file = ecore_list_next(bgs)))
-	       {
-		  char full_path[4096];
-		  
-		  snprintf(full_path, sizeof(full_path), "%s/%s", d->dir, bg_file);
-		  if (ecore_file_is_dir(full_path)) continue;
-		  if (!e_util_edje_collection_exists(full_path, "e/desktop/background")) continue;
-		  
-		  ic = e_thumb_icon_add(cfd->dia->win->evas);
-		  e_thumb_icon_file_set(ic, full_path, "e/desktop/background");
-		  e_thumb_icon_size_set(ic, 64,
-					 (64 * e_zone_current_get(cfd->dia->win->container)->h) /
-					 e_zone_current_get(cfd->dia->win->container)->w);
-		  e_thumb_icon_begin(ic);
-		  e_widget_ilist_append(cfdata->gui.bg_list, ic, ecore_file_strip_ext(bg_file),
-					_ibg_list_cb_bg_selected, cfdata, full_path);
-		  
-		  if ((e_config->desklock_background) &&
-		      (!strcmp(e_config->desklock_background, full_path)))
-		    {
-		       e_widget_ilist_selected_set(cfdata->gui.bg_list, i);
-		       evas_object_del(im);
-		       im = e_widget_preview_add(cfdata->evas, BG_PREVIEW_W, BG_PREVIEW_H);
-		       e_widget_preview_edje_set(im, full_path, "e/desktop/background");
-		    }
-		  i++;
-	       }
-	     free(bg_file);
-	     ecore_list_destroy(bgs);
-	  }
-	free(d);
-     }
-   evas_list_free(bg);
-   evas_list_free(bg_dirs);
-   
-   cfdata->preview_image = im;
-}
-
-static void
-_ibg_list_cb_bg_selected(void *data)
-{
-   E_Config_Dialog_Data *cfdata;
-   
-   cfdata = data;
-   if (cfdata->bg[0])
-     {
-	if (!strcmp(cfdata->bg, DEF_DESKLOCK_BACKGROUND))
-	  {
-	     const char *theme;
-	     
-	     theme = e_theme_edje_file_get("base/theme/desklock", "e/desklock/background");
-	     e_widget_preview_edje_set(cfdata->preview_image, theme, "e/desklock/background");
-	  }
-	else if (!strcmp(cfdata->bg, DEF_THEME_BACKGROUND))
-	  {
-	     const char *theme;
-	     
-	     theme = e_theme_edje_file_get("base/theme/backgrounds", "e/desktop/background");
-	     e_widget_preview_edje_set(cfdata->preview_image, theme, "e/desktop/background");
-	  }
-	else
-	  e_widget_preview_edje_set(cfdata->preview_image, cfdata->bg, "e/desktop/background");
-     }
-   else
-     {
-	const char *theme;
-	
-	theme = e_theme_edje_file_get("base/theme/desklock", "e/desklock/background");
-	e_widget_preview_edje_set(cfdata->preview_image, theme, "e/desklock/background");
-     }
 }
 
 static void
