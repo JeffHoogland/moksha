@@ -420,7 +420,7 @@ _e_eap_editor_cb_icon_select(void *data1, void *data2)
    cfdata = data1;
    dia = e_dialog_new(cfdata->editor->cfd->con, "E", "_eap_icon_select_dialog");
    if (!dia) return;
-   e_dialog_title_set(dia, _("Select An Icon"));
+   e_dialog_title_set(dia, _("Select an Icon"));
    dia->data = cfdata;
    e_object_del_attach_func_set(E_OBJECT(dia), _e_eap_edit_cb_icon_select_del);
 
