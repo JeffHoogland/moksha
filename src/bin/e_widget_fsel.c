@@ -25,6 +25,7 @@ struct _E_Widget_Data
    Evas_Object *o_up_button;
    Evas_Object *o_favorites_frame;
    Evas_Object *o_favorites_fm;
+   Evas_Object *o_favorites_add;
    Evas_Object *o_files_frame;
    Evas_Object *o_files_fm;
    Evas_Object *o_entry;
@@ -61,6 +62,34 @@ _e_wid_fsel_button_up(void *data1, void *data2)
      e_fm2_parent_go(wd->o_files_fm);
    if (wd->o_files_frame)
      e_widget_scrollframe_child_pos_set(wd->o_files_frame, 0, 0);
+}
+
+static void
+_e_wid_fsel_favorites_add(void *data1, void *data2)
+{
+   E_Widget_Data *wd;
+   const char *current_path;
+   char dest_path[PATH_MAX];
+   struct stat st;
+   int i = 1;
+   
+   wd = data1;
+   current_path = e_fm2_real_path_get(wd->o_files_fm);
+   snprintf(dest_path, PATH_MAX, "%s/.e/e/fileman/favorites/%s", 
+                                     getenv("HOME"), basename(current_path));
+   if (stat(dest_path, &st) < 0) symlink(current_path, dest_path);
+   else
+     {
+        while(stat(dest_path, &st) == 0)
+	  {
+	     snprintf(dest_path, PATH_MAX, "%s/.e/e/fileman/favorites/%s-%d",
+	                                     getenv("HOME"), 
+					     basename(current_path), i);
+	     i = i+1;
+	  }
+	symlink(current_path, dest_path);  
+     }
+   e_fm2_refresh(wd->o_favorites_fm);   
 }
 
 static void
@@ -225,6 +254,12 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    o = e_widget_table_add(evas, 0);
    wd->o_table2 = o;
    e_widget_sub_object_add(obj, o);
+   
+   o = e_widget_button_add(evas, _("Add Current to Favorites"), "widget/add_fav",
+			   _e_wid_fsel_favorites_add, wd, NULL);
+   wd->o_favorites_add = o;
+   e_widget_sub_object_add(obj, o);
+   e_widget_table_object_append(wd->o_table2, o, 0, 0, 1, 1, 0, 0, 1, 0);
    
    o = e_widget_button_add(evas, _("Go up a Directory"), "widget/up_dir",
 			   _e_wid_fsel_button_up, wd, NULL);
@@ -418,7 +453,8 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
 
    e_widget_min_size_get(wd->o_table, &mw, &mh);
    e_widget_min_size_set(obj, mw, mh);
-   
+  
+   evas_object_show(wd->o_favorites_add); 
    evas_object_show(wd->o_up_button);
    evas_object_show(wd->o_favorites_frame);
    evas_object_show(wd->o_favorites_fm);
