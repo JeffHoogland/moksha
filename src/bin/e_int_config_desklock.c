@@ -50,6 +50,9 @@ struct _E_Config_Dialog_Data
    Evas_Object *o_preview;
    Evas_Object *o_personal;
    Evas_Object *o_system;
+   Evas_Object *o_bg_mode_theme;
+   Evas_Object *o_bg_mode_bg;
+   Evas_Object *o_bg_mode_custom;
    int fmdir;
    
    char *desklock_passwd;
@@ -65,8 +68,9 @@ struct _E_Config_Dialog_Data
    int specific_lb_zone_backup; // used to have smart iface
    
    int zone_count; // local variable;
-   
-   char *bg; // local variable;
+
+   int bg_mode; // config
+   char *bg; // config
    Evas *evas; // local variable
    Evas_Object *preview_image; // local variable
 
@@ -174,6 +178,7 @@ _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
      e_widget_preview_edje_set(cfdata->o_preview, buf, "e/desktop/background");
    if (cfdata->o_frame)
      e_widget_change(cfdata->o_frame);
+   e_widget_radio_toggle_set(cfdata->o_bg_mode_custom, 1);
 }
 
 static void
@@ -239,6 +244,38 @@ _cb_dir(void *data, Evas_Object *obj, void *event_info)
    e_fm2_path_set(cfdata->o_fm, path, "/");
 }
 
+static void
+_bg_mode(void *data, Evas_Object *obj, void *event_info)
+{
+   E_Config_Dialog_Data *cfdata;
+   const char *f;
+   
+   cfdata = data;
+   if (cfdata->bg_mode == 0)
+     {
+        f = e_theme_edje_file_get("base/theme/desklock", "e/desklock/background");
+	if (cfdata->o_preview)
+	  e_widget_preview_edje_set(cfdata->o_preview, f, "e/desktop/background");
+	E_FREE(cfdata->bg);
+     }
+   else if (cfdata->bg_mode == 1)
+     {
+        f = e_theme_edje_file_get("base/theme/backgrounds", "e/desktop/background");
+	if (cfdata->o_preview)
+	  e_widget_preview_edje_set(cfdata->o_preview, f, "e/desktop/background");
+	E_FREE(cfdata->bg);
+	cfdata->bg = strdup("theme_background");
+     }
+   else if (cfdata->bg_mode == 2)
+     {
+	if (cfdata->bg)
+	  {
+	     if (cfdata->o_preview)
+	       e_widget_preview_edje_set(cfdata->o_preview, cfdata->bg, "e/desktop/background");
+	  }
+     }
+}
+
 
 
 static void
@@ -280,7 +317,14 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->zone_count = _e_desklock_zone_num_get();
    
    cfdata->show_password = 0;
-   
+ 
+   if ((!e_config->desklock_background) ||
+       (!strcmp(e_config->desklock_background, "theme_desklock_background")))
+     cfdata->bg_mode = 0;
+   else if (!strcmp(e_config->desklock_background, "theme_background"))
+     cfdata->bg_mode = 1;
+   else
+     cfdata->bg_mode = 2;
    if (!e_config->desklock_background)
      cfdata->bg = strdup(DEF_DESKLOCK_BACKGROUND);
    else
@@ -573,14 +617,57 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_min_size_set(of, 160, 160);
    e_widget_table_object_append(ol, of, 0, 2, 1, 1, 1, 1, 1, 1);
    e_widget_table_object_append(ot, ol, 0, 0, 1, 2, 1, 1, 1, 1);   
+
+   of = e_widget_framelist_add(evas, _("Wallpaper Mode"), 0);
    
+   rg = e_widget_radio_group_new(&(cfdata->bg_mode));
+   o = e_widget_radio_add(evas, _("Theme Defined"), 0, rg);
+   cfdata->o_bg_mode_theme = o;
+   evas_object_smart_callback_add(o, "changed",
+				  _bg_mode, cfdata);
+   e_widget_framelist_object_append(of, o);
+   o = e_widget_radio_add(evas, _("Theme Wallpaper"), 1, rg);
+   cfdata->o_bg_mode_bg = o;
+   evas_object_smart_callback_add(o, "changed",
+				  _bg_mode, cfdata);
+   e_widget_framelist_object_append(of, o);
+   o = e_widget_radio_add(evas, _("Custom"), 2, rg);
+   cfdata->o_bg_mode_custom = o;
+   evas_object_smart_callback_add(o, "changed",
+				  _bg_mode, cfdata);
+   e_widget_framelist_object_append(of, o);
+   
+   
+#ifdef HAVE_PAM
+   e_widget_table_object_append(ot, of, 0, 2, 1, 2 ,1 ,1 ,1 ,1);
+#else
+   e_widget_table_object_append(ot, of, 0, 2, 1, 1 ,1 ,1 ,1 ,1);
+#endif
+
    of = e_widget_list_add(evas, 0, 0);
    
    o = e_widget_preview_add(evas, 320, (320 * z->h) / z->w);
    cfdata->o_preview = o;
-   if (cfdata->bg)
-     f = cfdata->bg;
-   e_widget_preview_edje_set(o, f, "e/desktop/background");
+   if (cfdata->bg_mode == 0)
+     {
+        f = e_theme_edje_file_get("base/theme/desklock", "e/desklock/background");
+	if (cfdata->o_preview)
+	  e_widget_preview_edje_set(cfdata->o_preview, f, "e/desktop/background");
+	E_FREE(cfdata->bg);
+     }
+   else if (cfdata->bg_mode == 1)
+     {
+        f = e_theme_edje_file_get("base/theme/backgrounds", "e/desktop/background");
+	if (cfdata->o_preview)
+	  e_widget_preview_edje_set(cfdata->o_preview, f, "e/desktop/background");
+	E_FREE(cfdata->bg);
+	cfdata->bg = strdup("theme_background");
+     }
+   else if (cfdata->bg_mode == 2)
+     {
+	f = cfdata->bg;
+	e_widget_preview_edje_set(o, f, "e/desktop/background");
+     }
    e_widget_list_object_append(of, o, 1, 0, 0.5);
    
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
@@ -593,7 +680,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
     * Let the world know about them. Maybe in the feature somebody will turn this if
     */
    
-   if (1 || _e_desklock_zone_num_get() > 1)
+   if ((1) || (_e_desklock_zone_num_get() > 1))
      {
 	of = e_widget_framelist_add(evas, _("Login Box Settings"), 0);
 	rg = e_widget_radio_group_new((int *)(&(cfdata->login_box_zone)));
