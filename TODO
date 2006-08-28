@@ -118,6 +118,10 @@ Some of the things (in very short form) that need to be done to E17...
 * improve drag/resize of gadget items
 * pager should be able to be configured to control more than the current zone
   (select which zone they control)
+* add a dialog to allow selecting the default border from among those present
+  in the theme (e.g. winter provides a 'square' border). after a theme change
+  this should fall back to "default" if the selected one doesn't exist in the
+  new theme.
 ]]]
 
 [[[
