@@ -57,6 +57,7 @@ const E_Text_Class_Pair text_class_predefined_names[ ] = {
        { "init_version",    N_("Splash Version")},
        
        {  NULL,		    N_("Widget")},
+       { "entry",           N_("Entry")},
        { "frame",           N_("Frame")},
        { "label",           N_("Label")},
        { "button",   	    N_("Buttons")},
