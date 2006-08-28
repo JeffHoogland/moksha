@@ -28,10 +28,8 @@ struct _E_Widget_Data
    Evas_Object *o_favorites_add;
    Evas_Object *o_files_frame;
    Evas_Object *o_files_fm;
-   Evas_Object *o_directory_entry;
    Evas_Object *o_entry;
    Evas_Coord   preview_w, preview_h;
-   char *directory_entry_text;
    char *entry_text;
    char *preview_size_text;
    char *preview_owner_text;
@@ -64,7 +62,7 @@ _e_wid_fsel_button_up(void *data1, void *data2)
      e_fm2_parent_go(wd->o_files_fm);
    if (wd->o_files_frame)
      e_widget_scrollframe_child_pos_set(wd->o_files_frame, 0, 0);
-   e_widget_entry_text_set(wd->o_directory_entry, 
+   e_widget_entry_text_set(wd->o_entry, 
 			   e_fm2_real_path_get(wd->o_files_fm));
 }
 
@@ -132,7 +130,7 @@ _e_wid_fsel_favorites_files_changed(void *data, Evas_Object *obj, void *event_in
 	  }
      }
    done:
-   e_widget_entry_text_set(wd->o_directory_entry, realpath);
+   e_widget_entry_text_set(wd->o_entry, realpath);
    E_FREE(p1);
    evas_list_free(icons);
 }
@@ -156,7 +154,7 @@ _e_wid_fsel_favorites_selected(void *data, Evas_Object *obj, void *event_info)
      e_fm2_path_set(wd->o_files_fm, NULL, ici->link);
    evas_list_free(selected);
    e_widget_scrollframe_child_pos_set(wd->o_files_frame, 0, 0);
-   e_widget_entry_text_set(wd->o_directory_entry, 
+   e_widget_entry_text_set(wd->o_entry, 
 			   e_fm2_real_path_get(wd->o_files_fm));
 }
 
@@ -181,8 +179,7 @@ _e_wid_fsel_files_changed(void *data, Evas_Object *obj, void *event_info)
    if (wd->o_files_frame)
      e_widget_scrollframe_child_pos_set(wd->o_files_frame, 0, 0);
    if (stat(wd->path, &st) == 0)
-     e_widget_entry_text_set(wd->o_directory_entry, wd->path);
-   e_widget_entry_text_set(wd->o_entry, " ");
+     e_widget_entry_text_set(wd->o_entry, wd->path);
    E_FREE(wd->path);
    if (wd->chg_func) wd->chg_func(wd->chg_data, wd->obj);
 }
@@ -195,6 +192,7 @@ _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj, void *event_inf
    E_Fm2_Icon_Info *ici;
    const char *realpath;
    char buf[4096];
+   struct stat st;
    
    wd = data;
    if (!wd->o_files_fm) return;
@@ -214,8 +212,10 @@ _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj, void *event_inf
      }
    wd->path = strdup(buf);
    if (wd->preview)
-     _e_wid_fsel_preview_file(wd);
-   e_widget_entry_text_set(wd->o_entry, ici->file);
+      _e_wid_fsel_preview_file(wd);
+   stat(wd->path, &st);
+   if (!S_ISDIR(st.st_mode))
+      e_widget_entry_text_set(wd->o_entry, ici->file);
    evas_list_free(selected);
    if (wd->chg_func) wd->chg_func(wd->chg_data, wd->obj);
 }
@@ -440,10 +440,6 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    e_widget_min_size_set(o, 128, 128);
    e_widget_table_object_append(wd->o_table2, o, 1, 1, 1, 1, 1, 1, 1, 1);
 
-   o = e_widget_entry_add(evas, &(wd->directory_entry_text));
-   wd->o_directory_entry = o;
-   e_widget_sub_object_add(obj, o);
-   
    o = e_widget_entry_add(evas, &(wd->entry_text));
    wd->o_entry = o;
    e_widget_sub_object_add(obj, o);
@@ -461,12 +457,10 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
                                      2, 1, 1, 1, 0, 1, 0, 1);
     }
 
-   e_widget_table_object_append(wd->o_table, wd->o_directory_entry,
-                                0, 0, 1, 1, 1, 0, 1, 0);
    e_widget_table_object_append(wd->o_table, wd->o_table2,
-                                0, 1, 1, 1, 1, 1, 1, 1);
+                                0, 0, 1, 1, 1, 1, 1, 1);
    e_widget_table_object_append(wd->o_table, wd->o_entry,
-                                0, 2, 1, 1, 1, 0, 1, 0);
+                                0, 1, 1, 1, 1, 0, 1, 0);
 
    e_widget_min_size_get(wd->o_table, &mw, &mh);
    e_widget_min_size_set(obj, mw, mh);
@@ -477,7 +471,6 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    evas_object_show(wd->o_favorites_fm);
    evas_object_show(wd->o_files_frame);
    evas_object_show(wd->o_files_fm);
-   evas_object_show(wd->o_directory_entry);
    evas_object_show(wd->o_entry);
    if (preview)
      {
