@@ -216,6 +216,8 @@ _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj, void *event_inf
    stat(wd->path, &st);
    if (!S_ISDIR(st.st_mode))
       e_widget_entry_text_set(wd->o_entry, ici->file);
+   else
+      e_widget_entry_text_set(wd->o_entry, wd->path);
    evas_list_free(selected);
    if (wd->chg_func) wd->chg_func(wd->chg_data, wd->obj);
 }
