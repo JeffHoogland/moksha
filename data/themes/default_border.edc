@@ -1124,7 +1124,7 @@ group {
 	 }
       }
       part {
-	 name:          "e.client";
+	 name:          "e.swallow.client";
 	 type:          SWALLOW;
 	 description {
 	    state:    "default" 0.0;
@@ -2177,7 +2177,7 @@ group {
 	 }
       }
       part {
-	 name:          "e.client";
+	 name:          "e.swallow.client";
 	 type:          SWALLOW;
 	 description {
 	    state:    "default" 0.0;
@@ -3447,7 +3447,7 @@ group {
 	 }
       }
       part {
-	 name:          "e.client";
+	 name:          "e.swallow.client";
 	 type:          SWALLOW;
 	 description {
 	    state:    "default" 0.0;
@@ -4514,7 +4514,7 @@ group {
 	 }
       }
       part {
-	 name:          "e.client";
+	 name:          "e.swallow.client";
 	 type:          SWALLOW;
 	 description {
 	    state:    "default" 0.0;
@@ -4873,7 +4873,7 @@ group {
 	 }
       }
       part {
-	 name:          "e.client";
+	 name:          "e.swallow.client";
 	 type:          SWALLOW;
 	 description {
 	    state:    "default" 0.0;

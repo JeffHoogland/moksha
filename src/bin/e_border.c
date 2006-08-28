@@ -1706,7 +1706,7 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 		  
 		  evas_object_resize(bd->bg_object, 1000, 1000);
 		  edje_object_calc_force(bd->bg_object);
-		  edje_object_part_geometry_get(bd->bg_object, "e.client", &cx, &cy, &cw, &ch);
+		  edje_object_part_geometry_get(bd->bg_object, "e.swallow.client", &cx, &cy, &cw, &ch);
 		  bd->client_inset.l = cx;
 		  bd->client_inset.r = 1000 - (cx + cw);
 		  bd->client_inset.t = cy;
@@ -1841,7 +1841,7 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 		  
 		  evas_object_resize(bd->bg_object, 1000, 1000);
 		  edje_object_calc_force(bd->bg_object);
-		  edje_object_part_geometry_get(bd->bg_object, "e.client", &cx, &cy, &cw, &ch);
+		  edje_object_part_geometry_get(bd->bg_object, "e.swallow.client", &cx, &cy, &cw, &ch);
 		  bd->client_inset.l = cx;
 		  bd->client_inset.r = 1000 - (cx + cw);
 		  bd->client_inset.t = cy;
@@ -2725,7 +2725,7 @@ e_border_frame_recalc(E_Border *bd)
 
    evas_object_resize(bd->bg_object, 1000, 1000);
    edje_object_calc_force(bd->bg_object);
-   edje_object_part_geometry_get(bd->bg_object, "e.client", &cx, &cy, &cw, &ch);
+   edje_object_part_geometry_get(bd->bg_object, "e.swallow.client", &cx, &cy, &cw, &ch);
    bd->client_inset.l = cx;
    bd->client_inset.r = 1000 - (cx + cw);
    bd->client_inset.t = cy;
@@ -5441,7 +5441,7 @@ _e_border_eval(E_Border *bd)
 					      bd->client.icccm.title);
 		  evas_object_resize(o, 1000, 1000);
 		  edje_object_calc_force(o);
-		  edje_object_part_geometry_get(o, "e.client", &cx, &cy, &cw, &ch);
+		  edje_object_part_geometry_get(o, "e.swallow.client", &cx, &cy, &cw, &ch);
 		  l = cx;
 		  r = 1000 - (cx + cw);
 		  t = cy;
