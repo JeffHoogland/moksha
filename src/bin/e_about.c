@@ -51,7 +51,7 @@ e_about_new(E_Container *con)
    edje_object_part_text_set(about->bg_object, "e.text.title", _("Enlightenment"));
    edje_object_part_text_set(about->bg_object, "e.text.version", VERSION);
    edje_object_part_text_set
-     (about->bg_object, "e.text.about",
+     (about->bg_object, "e.textblock.about",
       _(
 	"Copyright &copy; 1999-2006, by the Enlightenment Development Team.<br>"
 	"<br>"
@@ -116,7 +116,7 @@ e_about_new(E_Container *con)
 	     fclose(f);
 	     if (tbuf)
 	       {
-		  edje_object_part_text_set(about->bg_object, "e.text.authors", tbuf);
+		  edje_object_part_text_set(about->bg_object, "e.textblock.authors", tbuf);
 		  free(tbuf);
 	       }
 	  }

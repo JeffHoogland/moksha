@@ -250,11 +250,11 @@ group {
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       to:       "e.text.about";
+	       to:       "e.textblock.about";
 	       offset:   -7 -7;
 	    }
 	    rel2 {
-	       to:       "e.text.about";
+	       to:       "e.textblock.about";
 	       offset:   6 6;
 	    }
 	    image {
@@ -269,11 +269,11 @@ group {
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       to:       "e.text.authors";
+	       to:       "e.textblock.authors";
 	       offset:   -7 -7;
 	    }
 	    rel2 {
-	       to:       "e.text.authors";
+	       to:       "e.textblock.authors";
 	       offset:   6 6;
 	    }
 	    image {
@@ -320,7 +320,7 @@ group {
 	 }
       }
       part {
-	 name:          "e.text.about";
+	 name:          "e.textblock.about";
 	 type:          TEXTBLOCK;
 	 mouse_events:  0;
 	 description {
@@ -345,7 +345,7 @@ group {
 	 }
       }
       part {
-	 name:          "e.text.authors";
+	 name:          "e.textblock.authors";
 	 type:          TEXTBLOCK;
 	 mouse_events:  0;
 	 description {
@@ -476,12 +476,12 @@ group {
 	    rel1 {
 	       relative: 0.5  0.5;
 	       offset:   0    0;
-	       to_y:     "e.text.about";
+	       to_y:     "e.textblock.about";
 	    }
 	    rel2 {
 	       relative: 0.5  0.5;
 	       offset:   0    0;
-	       to_y:     "e.text.about";
+	       to_y:     "e.textblock.about";
 	    }
 	    image {
 	       normal:   "e17_logo_small.png";
