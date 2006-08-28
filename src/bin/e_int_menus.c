@@ -372,7 +372,7 @@ _e_int_menus_themes_about(void *data, E_Menu *m, E_Menu_Item *mi)
    if (about) e_theme_about_show(about);
 }
 
-/* FIXME: this is a workaround for menus' haveing a key grab ANd exebuf
+/* FIXME: this is a workaround for menus' haveing a key grab AND exebuf
  * wanting one too
  */
 static int
@@ -391,7 +391,7 @@ _e_int_menus_main_run(void *data, E_Menu *m, E_Menu_Item *mi)
    ecore_idle_enterer_add(_e_int_menus_main_run_defer_cb, m->zone);
 }
 
-/* FIXME: this is a workaround for menus' haveing a key grab ANd exebuf
+/* FIXME: this is a workaround for menus' haveing a key grab AND exebuf
  * wanting one too
  */
 static int
@@ -630,23 +630,6 @@ _e_int_menus_desktops_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_int_menus_eapedit_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   /* This is temporarily put here so we can test the eap editor */
-   E_App *a;
-   
-   a = e_app_empty_new(NULL);
-   e_eap_edit_show(m->zone->container, a);
-}
-
-static void
-_e_int_menus_fdomenus_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   /* This is temporarily put here so we can test the fdo menu convertor. */
-   e_fdo_menu_to_order();
-}
-
-static void
 _e_int_menus_background_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    e_int_config_wallpaper(m->zone->container);
@@ -691,19 +674,6 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    e_menu_item_label_set(mi, _("Modules"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/modules");
    e_menu_item_callback_set(mi, _e_int_menus_module_item_cb, NULL);
-
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-   
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Create a new Application"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/e");
-   e_menu_item_callback_set(mi, _e_int_menus_eapedit_item_cb, NULL);   
-
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Regenerate \"All Applications\" Menu"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/e");
-   e_menu_item_callback_set(mi, _e_int_menus_fdomenus_item_cb, NULL);   
 
    l = evas_hash_find(_e_int_menus_augmentation, "config");
    if (l)
