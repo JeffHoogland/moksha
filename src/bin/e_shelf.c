@@ -475,6 +475,9 @@ e_shelf_style_set(E_Shelf *es, const char *style)
    if (!e_theme_edje_object_set(es->o_base, "base/theme/shelf", buf))
      e_theme_edje_object_set(es->o_base, "base/theme/shelf", 
 			     "e/shelf/default/base");
+   
+   e_gadcon_unpopulate(es->gadcon);
+   e_gadcon_populate(es->gadcon);
 }
 
 EAPI void 
