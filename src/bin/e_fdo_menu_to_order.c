@@ -12,51 +12,48 @@ EAPI void
 e_fdo_menu_to_order(void)
 {
    int i;
-   /* i added all the files i see in /etc/xdg/menus on debian. maybe we
-    * should list the contents of the xdg menu dir and load every *.menu file
-    * ?
+   /* NEW STRATEGY -
+    *
+    *   if there is no applications.menu
+    *     try debian-menu.menu instead.
+    *   if all else fails
+    *     run debians funky menu generator shit.
     */
-   const char *menu_names[9] = 
-     {
-	"applications.menu",
-	  "gnome-applications.menu",
-	  "gnome-preferences.menu",
-	  "gnome-settings.menu",
-	  "kde-applications.menu",
-	  "kde-information.menu",
-	  "kde-screensavers.menu",
-	  "kde-settings.menu",
-	  "debian-menu.menu"
-     };
    char *menu_file;
    
-   for (i = 0; i < 9; i++)
-     {
-	/* Find the main menu file. */
-	menu_file = ecore_desktop_paths_file_find(ecore_desktop_paths_menus, 
-						  menu_names[i], -1, NULL, NULL);
-	if (menu_file)
-	  {
-	     char *path;
+   /* Find the main menu file. */
+   menu_file = ecore_desktop_paths_file_find(ecore_desktop_paths_menus, 
+						  "applications.menu", -1, NULL, NULL);
+   if (!menu_file)
+      {
+         /* Try various quirks of various systems. */
+         menu_file = ecore_desktop_paths_file_find(ecore_desktop_paths_menus, 
+						  "debian-menu.menu", -1, NULL, NULL);
+      }
+
+   if (menu_file)
+      {
+         char *path;
 	     
-	     path = ecore_file_get_dir(menu_file);
-	     if (path)
-	       {
-		  Ecore_Desktop_Tree *menus;
+	 path = ecore_file_get_dir(menu_file);
+	 if (path)
+	    {
+	       Ecore_Desktop_Tree *menus;
 		  
-		  /* convert the xml into menus */
-		  menus = ecore_desktop_menu_get(menu_file);
-		  if (menus)
-		    {
-		       /* create the .eap and order files from the menu */
-		       ecore_desktop_tree_foreach(menus, 0, _e_menu_make_apps, path);
-		    }
-		  free(path);
-		  // FIXME: leak: menus?
-	       }
-	     // FIXME: leak: menu_file?
-	  }
-     }
+	       /* convert the xml into menus */
+	       menus = ecore_desktop_menu_get(menu_file);
+	       if (menus)
+	          {
+		     /* create the .eap and order files from the menu */
+		     ecore_desktop_tree_foreach(menus, 0, _e_menu_make_apps, path);
+// FIXME: Can't free this just yet, causes major memory corruption.
+//		     ecore_desktop_tree_del(menus);
+		  }
+	       free(path);
+	       
+	    }
+	 free(menu_file);
+      }
 }
 
 static int
