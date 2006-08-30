@@ -577,7 +577,8 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
    }
    else if (CMP("favorites")) {
       /* this is a virtual device - it's where your favorites list is 
-       * stored - a dir with .desktop files or symlinks (in fact anything
+       * stored - a dir with 
+       .desktop files or symlinks (in fact anything
        * you like
        */
       s = e_user_homedir_get();
@@ -1473,11 +1474,21 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	 * if ic->info.icon == blah.xxx then use relative path to icon dirs
 	 * if ic->info.icon == blah/blah2.xxx then use relative path to icon dirs
 	 */
-	/* theme icon */
-	ic->obj_icon = edje_object_add(evas_object_evas_get(ic->sd->obj));
-        e_util_edje_icon_set(ic->obj_icon, ic->info.icon);
-        edje_object_part_swallow(ic->obj, "e.swallow.icon", ic->obj_icon);
-	evas_object_show(ic->obj_icon);
+	if (ic->info.icon[0] == '/')
+	   {
+	      /* path to icon file */
+	       ic->obj_icon = e_icon_add(evas_object_evas_get(ic->sd->obj));
+	       e_icon_file_set(ic->obj_icon, ic->info.icon);
+	       e_icon_fill_inside_set(ic->obj_icon, 1);
+	   }
+	else
+	   {
+	      /* theme icon */
+	      ic->obj_icon = edje_object_add(evas_object_evas_get(ic->sd->obj));
+              e_util_edje_icon_set(ic->obj_icon, ic->info.icon);
+	   }
+              edje_object_part_swallow(ic->obj, "e.swallow.icon", ic->obj_icon);
+        evas_object_show(ic->obj_icon);
 	return;
      }
    if (S_ISDIR(ic->info.statinfo.st_mode))
@@ -1632,39 +1643,45 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 {
    char buf[4096], key[256], val[4096];
    FILE *f;
+      Ecore_Desktop *desktop;
    
    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
-   f = fopen(buf, "rb");
-   if (!f) return 0;
-   if (!fgets(buf, sizeof(buf), f)) goto error;
-   if (strcmp(buf, "[Desktop Entry]\n")) goto error;
-   while (fscanf(f, "%255[^=]=%4095[^\n]\n", key, val) == 2)
-     {
-	if      (!strcmp(key, "Name"))
-	  ic->info.label = evas_stringshare_add(val);
-	else if (!strcmp(key, "Comment"))
-	  ic->info.comment = evas_stringshare_add(val);
-	else if (!strcmp(key, "Generic"))
-	  ic->info.generic = evas_stringshare_add(val);
-	else if (!strcmp(key, "Icon"))
-	  ic->info.icon = evas_stringshare_add(val);
-	else if (!strcmp(key, "Type"))
-	  {
-	     if (!strcmp(val, "Mount")) ic->info.mount = 1;
-	     else if (!strcmp(val, "Link"))
-	       {
-	       }
-	     else
-	       goto error;
-	  }
-	else if (!strcmp(key, "File"))
-	  ic->info.link = _e_fm2_icon_desktop_url_eval(val);
-	else if (!strcmp(key, "URL"))
-	  ic->info.link = _e_fm2_icon_desktop_url_eval(val);
-	else if (!strcmp(key, "Path"))
-	  ic->info.link = _e_fm2_icon_desktop_url_eval(val);
-     }
-   fclose(f);
+
+   desktop = ecore_desktop_get(buf, NULL);
+   if (desktop)
+      {
+         if (desktop->name)     ic->info.label   = evas_stringshare_add(desktop->name);
+	 if (desktop->generic)  ic->info.generic = evas_stringshare_add(desktop->generic);
+	 if (desktop->comment)  ic->info.comment = evas_stringshare_add(desktop->comment);
+
+	 if (desktop->file)     ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->file);
+	 if (desktop->URL)      ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->URL);
+	 if (desktop->path)     ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->path);
+
+	 if (desktop->icon)
+	    {
+	       char *v;
+
+	       /* FIXME: Use a real icon size. */
+	       v = (char *) ecore_desktop_icon_find(desktop->icon, NULL, e_config->icon_theme);
+	       if (v)
+	          ic->info.icon = evas_stringshare_add(v);
+	    }
+
+	 if (desktop->type)
+	    {
+	       if (!strcmp(desktop->type, "Mount")) ic->info.mount = 1;
+	       else if (!strcmp(desktop->type, "Link"))
+	          {
+	          }
+	       else if (!strcmp(desktop->type, "Application"))
+	          {
+	          }
+	       else
+	          goto error;
+            }
+      }
+
    return 1;
    error:
    if (ic->info.label) evas_stringshare_del(ic->info.label);
