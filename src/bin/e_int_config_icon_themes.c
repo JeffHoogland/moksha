@@ -308,7 +308,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      }
 
    e_widget_ilist_go(ilist);
-   e_widget_min_size_set(o, 300, 160);
+   e_widget_min_size_set(ilist, 200, 240);
    e_widget_list_object_append(o, ilist, 1, 1, 0.5);
 
    e_dialog_resizable_set(cfd->dia, 1);
