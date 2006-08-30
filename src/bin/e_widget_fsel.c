@@ -272,7 +272,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
 			   _e_wid_fsel_favorites_add, wd, NULL);
    wd->o_favorites_add = o;
    e_widget_sub_object_add(obj, o);
-   e_widget_table_object_append(wd->o_table2, o, 0, 0, 1, 1, 0, 0, 1, 0);
+   e_widget_table_object_append(wd->o_table2, o, 0, 0, 1, 1, 0, 0, 0, 0);
    
    o = e_widget_button_add(evas, _("Go up a Directory"), "widget/up_dir",
 			   _e_wid_fsel_button_up, wd, NULL);
