@@ -278,6 +278,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    fmc_all.view.selector = 1;
    fmc_all.view.single_click = 0;
    fmc_all.view.no_subdir_jump = 0;
+   fmc_all.view.extra_file_source = NULL;
    fmc_all.icon.list.w = 24;
    fmc_all.icon.list.h = 24;
    fmc_all.icon.fixed.w = 1;
@@ -337,6 +338,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
          fmc.view.selector = 1;
          fmc.view.single_click = 0;
          fmc.view.no_subdir_jump = 0;
+	 fmc.view.extra_file_source = NULL;
          fmc.icon.list.w = 24;
          fmc.icon.list.h = 24;
          fmc.icon.fixed.w = 1;

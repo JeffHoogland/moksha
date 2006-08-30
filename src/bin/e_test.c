@@ -536,6 +536,7 @@ _e_test_internal(E_Container *con)
    fmc.view.selector = 1;
    fmc.view.single_click = 0;
    fmc.view.no_subdir_jump = 0;
+   fmc.view.extra_file_source = NULL;
    fmc.icon.list.w = 24;
    fmc.icon.list.h = 24;
    fmc.icon.fixed.w = 1;
@@ -575,6 +576,7 @@ _e_test_internal(E_Container *con)
    fmc.view.selector = 1;
    fmc.view.single_click = 1;
    fmc.view.no_subdir_jump = 1;
+   fmc.view.extra_file_source = NULL;
    fmc.icon.list.w = 24;
    fmc.icon.list.h = 24;
    fmc.icon.fixed.w = 1;

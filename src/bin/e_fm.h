@@ -31,6 +31,7 @@ struct _E_Fm2_Config
       unsigned char   selector;
       unsigned char   single_click;
       unsigned char   no_subdir_jump;
+      char           *extra_file_source;
    } view;
    /* display of icons */
    struct {
@@ -94,6 +95,7 @@ struct _E_Fm2_Icon_Info
    const char       *link;
    struct stat       statinfo;
    unsigned char     mount : 1;
+   unsigned char     pseudo_link : 1;
 };
 
 EAPI int                   e_fm2_init(void);

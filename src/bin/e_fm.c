@@ -52,6 +52,7 @@ struct _E_Fm2_Smart_Data
    Ecore_Job        *resize_job;
    Ecore_Job        *refresh_job;
    DIR              *dir;
+   FILE             *order;
    E_Menu           *menu;
    E_Entry_Dialog   *entry_dialog;
    unsigned char     iconlist_changed : 1;
@@ -673,17 +674,23 @@ _e_fm2_file_add(Evas_Object *obj, char *file)
    ic = _e_fm2_icon_new(sd, file);
    if (ic)
      {
-	/* insertion sort it here to spread the sort load into idle time */
-	for (l = sd->queue; l; l = l->next)
+	/* respekt da ordah! */
+	if (sd->order)
+	  sd->queue = evas_list_append(sd->queue, ic);
+	else
 	  {
-	     ic2 = l->data;
-	     if (_e_fm2_cb_icon_sort(ic, ic2) < 0)
+	     /* insertion sort it here to spread the sort load into idle time */
+	     for (l = sd->queue; l; l = l->next)
 	       {
-		  sd->queue = evas_list_prepend_relative_list(sd->queue, ic, l);
-		  break;
+		  ic2 = l->data;
+		  if (_e_fm2_cb_icon_sort(ic, ic2) < 0)
+		    {
+		       sd->queue = evas_list_prepend_relative_list(sd->queue, ic, l);
+		       break;
+		    }
 	       }
+	     if (!l) sd->queue = evas_list_append(sd->queue, ic);
 	  }
-	if (!l) sd->queue = evas_list_append(sd->queue, ic);
 	sd->tmp.last_insert = NULL;
 	sd->iconlist_changed = 1;
      }
@@ -735,13 +742,18 @@ _e_fm2_scan_stop(Evas_Object *obj)
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-   if (sd->dir)
+   if ((sd->dir) || (sd->order))
      edje_object_signal_emit(sd->overlay, "e,state,busy,stop", "e");
    /* stop the scan idler, the sort timer and free the queue */
    if (sd->dir)
      {
 	closedir(sd->dir);
 	sd->dir = NULL;
+     }
+   if (sd->order)
+     {
+	fclose(sd->order);
+	sd->order = NULL;
      }
    if (sd->tmp.obj)
      {
@@ -841,14 +853,21 @@ _e_fm2_queue_process(Evas_Object *obj)
 	 * a worst case of O(n) where n is the # of files in the list
 	 * so far
 	 */
-	for (; l; l = l->next)
+	if (sd->order)
 	  {
-	     ic2 = l->data;
-	     if (_e_fm2_cb_icon_sort(ic, ic2) < 0)
+	     l = NULL;
+	  }
+	else
+	  {
+	     for (; l; l = l->next)
 	       {
-		  sd->icons = evas_list_prepend_relative_list(sd->icons, ic, l);
-		  sd->tmp.last_insert = l;
-		  break;
+		  ic2 = l->data;
+		  if (_e_fm2_cb_icon_sort(ic, ic2) < 0)
+		    {
+		       sd->icons = evas_list_prepend_relative_list(sd->icons, ic, l);
+		       sd->tmp.last_insert = l;
+		       break;
+		    }
 	       }
 	  }
 	if (!l)
@@ -1224,8 +1243,17 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, char *file)
    snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, file);
    if (stat(buf, &(ic->info.statinfo)) == -1)
      {
-	free(ic);
-	return NULL;
+	if (sd->config->view.extra_file_source)
+	  {
+	     snprintf(buf, sizeof(buf), "%s/%s", sd->config->view.extra_file_source, file);
+	     if (stat(buf, &(ic->info.statinfo)) == -1)
+	       {
+		  free(ic);
+		  return NULL;
+	       }
+	     ic->info.link = evas_stringshare_add(sd->config->view.extra_file_source);
+	     ic->info.pseudo_link = 1;
+	  }
      }
    ic->sd = sd;
    ic->info.file = evas_stringshare_add(file);
@@ -1546,7 +1574,10 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 		 (!strcmp(ic->info.mime, "image/svg+xml"))
 		 )
 	       {
-		  snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
+		  if (ic->info.pseudo_link)
+		    snprintf(buf, sizeof(buf), "%s/%s", ic->info.link, ic->info.file);
+		  else
+		    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 		  ic->obj_icon = e_thumb_icon_add(evas_object_evas_get(ic->sd->obj));
 		  e_thumb_icon_file_set(ic->obj_icon, buf, NULL);
 		  e_thumb_icon_size_set(ic->obj_icon, 128, 128);
@@ -1581,7 +1612,10 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 		 (e_util_glob_case_match(ic->info.file, "*.edj"))
 		 )
 	       {
-		  snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
+		  if (ic->info.pseudo_link)
+		    snprintf(buf, sizeof(buf), "%s/%s", ic->info.link, ic->info.file);
+		  else
+		    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 		  ic->obj_icon = e_thumb_icon_add(evas_object_evas_get(ic->sd->obj));
 		  if (ic->sd->config->icon.key_hint)
 		    e_thumb_icon_file_set(ic->obj_icon, buf, ic->sd->config->icon.key_hint);
@@ -1597,12 +1631,12 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 		      (e_util_glob_case_match(ic->info.file, "*.eap"))
 		      )
 	       {
-		  snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
-		  ic->obj_icon = e_thumb_icon_add(evas_object_evas_get(ic->sd->obj));
-		  e_thumb_icon_file_set(ic->obj_icon, buf, "icon");
-		  e_thumb_icon_size_set(ic->obj_icon, 128, 128);
-		  evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
-		  _e_fm2_icon_thumb(ic);
+		  if (ic->info.pseudo_link)
+		    snprintf(buf, sizeof(buf), "%s/%s", ic->info.link, ic->info.file);
+		  else
+		    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
+		  ic->obj_icon = edje_object_add(evas_object_evas_get(ic->sd->obj));
+		  edje_object_file_set(ic->obj_icon, buf, "icon");
 		  edje_object_part_swallow(ic->obj, "e.swallow.icon", ic->obj_icon);
 		  evas_object_show(ic->obj_icon);
 	       }
@@ -1676,9 +1710,12 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 {
    char buf[4096], key[256], val[4096];
    FILE *f;
-      Ecore_Desktop *desktop;
+   Ecore_Desktop *desktop;
    
-   snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
+   if (ic->info.pseudo_link)
+     snprintf(buf, sizeof(buf), "%s/%s", ic->info.link, ic->info.file);
+   else
+     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 
    desktop = ecore_desktop_get(buf, NULL);
    if (desktop)
@@ -1827,7 +1864,10 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     char buf[4096], *dev = NULL;
 	     
 	     if (ic->sd->dev) dev = strdup(ic->sd->dev);
-	     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->path, ic->info.file);
+	     if (ic->info.pseudo_link)
+	       snprintf(buf, sizeof(buf), "%s/%s", ic->info.link, ic->info.file);
+	     else
+	       snprintf(buf, sizeof(buf), "%s/%s", ic->sd->path, ic->info.file);
 	     e_fm2_path_set(ic->sd->obj, dev, buf);
 	     E_FREE(dev);
 	  }
@@ -2144,19 +2184,40 @@ _e_fm2_cb_scan_idler(void *data)
 {
    E_Fm2_Smart_Data *sd;
    struct dirent *dp;
-
+   int len;
+   char buf[4096];
+   
    sd = evas_object_smart_data_get(data);
    if (!sd) return 0;
-   if (!sd->dir) sd->dir = opendir(sd->realpath);
-   if (!sd->dir) goto endscan;
-   
-   dp = readdir(sd->dir);
-   if (!dp) goto endscan;
-   /* no - you don't want the cuirrent and parent dir links listed */
-   if ((!strcmp(dp->d_name, ".")) || (!strcmp(dp->d_name, ".."))) return 1;
-   /* skip dotfiles */
-   if (dp->d_name[0] == '.') return 1;
-   _e_fm2_file_add(data, dp->d_name);
+ 
+   if ((!sd->dir) && (!sd->order))
+     {
+	snprintf(buf, sizeof(buf), "%s/.order", sd->realpath);
+	sd->order = fopen(buf, "rb");
+	if (!sd->order)
+	  {
+	     sd->dir = opendir(sd->realpath);
+	     if (!sd->dir) goto endscan;
+	  }
+     }
+
+   if (sd->order)
+     {
+	if (!fgets(buf, sizeof(buf), sd->order)) goto endscan;
+	len = strlen(buf);
+	if ((len > 0) && (buf[len - 1] == '\n')) buf[len - 1] = 0;
+	_e_fm2_file_add(data, buf);
+     }
+   else if (sd->dir)
+     {
+	dp = readdir(sd->dir);
+	if (!dp) goto endscan;
+	/* no - you don't want the cuirrent and parent dir links listed */
+	if ((!strcmp(dp->d_name, ".")) || (!strcmp(dp->d_name, ".."))) return 1;
+	/* skip dotfiles */
+	if (dp->d_name[0] == '.') return 1;
+	_e_fm2_file_add(data, dp->d_name);
+     }
    return 1;
    
    endscan:
@@ -2536,7 +2597,10 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	
      }
    
-   snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, ic->info.file);
+   if (ic->info.pseudo_link)
+     snprintf(buf, sizeof(buf), "%s/%s", ic->info.link, ic->info.file);
+   else
+     snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, ic->info.file);
    can_w = 0;
    if (ic->info.link)
      {
@@ -2762,16 +2826,19 @@ _e_fm2_file_rename_yes_cb(char *text, void *data)
    E_Dialog *dialog;
    E_Manager *man;
    E_Container *con;
-   char newpath[PATH_MAX];
-   char oldpath[PATH_MAX];
-   char error[PATH_MAX + 256];
+   char newpath[4096];
+   char oldpath[4096];
+   char error[4096 + 256];
    
    ic = data;
    ic->entry_dialog = NULL;
    if ((text) && (strcmp(text, ic->info.file)))
      {
-	snprintf(newpath, PATH_MAX, "%s/%s", ic->sd->realpath, text);
-	snprintf(oldpath, PATH_MAX, "%s/%s", ic->sd->realpath, ic->info.file);
+	snprintf(newpath, sizeof(newpath), "%s/%s", ic->sd->realpath, text);
+	if (ic->info.pseudo_link)
+	  snprintf(oldpath, sizeof(oldpath), "%s/%s", ic->info.link, ic->info.file);
+	else
+	  snprintf(oldpath, sizeof(oldpath), "%s/%s", ic->sd->realpath, ic->info.file);
 	
 	if (!ecore_file_mv(oldpath, newpath))
 	  {
@@ -2784,7 +2851,7 @@ _e_fm2_file_rename_yes_cb(char *text, void *data)
 	     e_dialog_button_add(dialog, _("OK"), NULL, NULL, NULL);
 	     e_dialog_button_focus_num(dialog, 1);
 	     e_dialog_title_set(dialog, _("Error"));
-	     snprintf(error, PATH_MAX + 256,
+	     snprintf(error, sizeof(error),
 		      _("Could not rename from <hilight>%s</hilight> to <hilight>%s</hilight>"),
 		      ic->info.file, text);
 	     e_dialog_text_set(dialog, error);
@@ -2813,7 +2880,7 @@ _e_fm2_file_delete(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Container *con;
    E_Dialog *dialog;
    E_Fm2_Icon *ic;
-   char text[PATH_MAX + 256];
+   char text[4096 + 256];
    
    man = e_manager_current_get();
    if (!man) return;
@@ -2830,7 +2897,7 @@ _e_fm2_file_delete(void *data, E_Menu *m, E_Menu_Item *mi)
    e_dialog_button_add(dialog, _("No"), NULL, _e_fm2_file_delete_no_cb, ic);
    e_dialog_button_focus_num(dialog, 1);
    e_dialog_title_set(dialog, _("Confirm Delete"));
-   snprintf(text, PATH_MAX + 256, 
+   snprintf(text, sizeof(text), 
 	    _("Are you sure you want to delete <br>"
 	      "<hilight>%s</hilight> ?"),
 	    ic->info.file);
@@ -2854,17 +2921,20 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
    E_Manager *man;
    E_Container *con;
    E_Fm2_Icon *ic;
-   char path[PATH_MAX];
+   char buf[4096];
 
    ic = data;
    ic->dialog = NULL;
    
-   snprintf(path, PATH_MAX, "%s/%s", ic->sd->realpath, ic->info.file);
+   if (ic->info.pseudo_link)
+     snprintf(buf, sizeof(buf), "%s/%s", ic->info.link, ic->info.file);
+   else
+     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 
    /* FIXME: recursive rm might block - need to get smart */
-   if (!(ecore_file_recursive_rm(path)))
+   if (!(ecore_file_recursive_rm(buf)))
      {
-	char text[PATH_MAX + 256];
+	char text[4096 + 256];
 	
 	man = e_manager_current_get();
 	if (!man) return;
@@ -2876,9 +2946,9 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
 	e_dialog_button_add(dialog, _("OK"), NULL, NULL, NULL);
 	e_dialog_button_focus_num(dialog, 1);
 	e_dialog_title_set(dialog, _("Error"));
-	snprintf(text, PATH_MAX + 256,
+	snprintf(text, sizeof(text),
 		 _("Could not delete <br>"
-		   "<hilight>%s</hilight>"), path);
+		   "<hilight>%s</hilight>"), buf);
 	e_dialog_text_set(dialog, text);
 	e_win_centered_set(dialog->win, 1);
 	e_dialog_show(dialog);

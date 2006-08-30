@@ -323,7 +323,10 @@ _e_thumb_generate(E_Thumb *eth)
 	ww = 0;
 	hh = 0;
 	ext = strrchr(eth->file, '.');
-	if ((ext) && (!strcasecmp(ext, ".edj")) && (eth->key))
+	if ((ext) && (eth->key) &&
+	    ((!strcasecmp(ext, ".edj")) ||
+	     (!strcasecmp(ext, ".eap")))
+	    )
 	  {
 	     ww = eth->w;
 	     hh = eth->h;
