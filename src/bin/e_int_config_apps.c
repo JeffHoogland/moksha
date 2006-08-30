@@ -168,7 +168,31 @@ _cb_button_delete_right(void *data1, void *data2)
 static void
 _cb_button_add(void *data1, void *data2)
 {
-   e_fdo_menu_to_order();
+   E_Config_Dialog_Data *cfdata;
+   Evas_List *selected;
+   E_Fm2_Icon_Info *ici;
+   const char *realpath;
+   char buf[4096];
+   E_App *a, *parent;
+
+   cfdata = data1;
+   if (!cfdata->gui.o_fm) return;
+   if (!cfdata->gui.o_fm_all) return;
+   selected = e_fm2_selected_list_get(cfdata->gui.o_fm_all);
+   if (!selected) return;
+   ici = selected->data;
+   realpath = e_fm2_real_path_get(cfdata->gui.o_fm_all);
+   if (!strcmp(realpath, "/"))
+     snprintf(buf, sizeof(buf), "/%s", ici->file);
+   else
+     snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+   evas_list_free(selected);
+   if (ecore_file_is_dir(buf)) return;
+   a = e_app_new(buf, 0);
+   realpath = e_fm2_real_path_get(cfdata->gui.o_fm);
+   parent = e_app_new(realpath, 0);
+   if ((a) && (parent))
+      e_app_append(a, parent);
 }
 
 static void
