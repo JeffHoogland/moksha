@@ -150,7 +150,7 @@ _cb_files_selected(void *data, Evas_Object *obj, void *event_info)
      snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
    evas_list_free(selected);
    if (ecore_file_is_dir(buf)) return;
-   a = e_app_empty_new(buf);
+   a = e_app_new(buf, 0);
    if (a)
       e_eap_edit_show(cfdata->cfd->con, a);
 }
