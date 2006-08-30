@@ -222,6 +222,8 @@ e_editable_text_set(Evas_Object *editable, const char *text)
         sd->unicode_length = 0;
         sd->allocated_length = E_EDITABLE_BLOCK_SIZE;
      }
+   else
+     _e_editable_text_update(editable);
    
    sd->cursor_pos = sd->unicode_length;
    sd->selection_pos = sd->unicode_length;
