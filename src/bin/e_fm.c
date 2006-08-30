@@ -36,6 +36,12 @@ struct _E_Fm2_Smart_Data
       Evas_List     *list;
       int            member_max;
    } regions;
+   struct {
+      struct {
+	 void (*func) (void *data, Evas_Object *obj, E_Menu *m);
+	 void *data;
+      } start, end;
+   } icon_menu;
    
    Evas_List        *icons;
    Evas_List        *queue;
@@ -477,6 +483,33 @@ e_fm2_file_show(Evas_Object *obj, const char *file)
 	  }
      }
 }
+
+EAPI void
+e_fm2_icon_menu_start_extend_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj, E_Menu *m), void *data)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+   sd->icon_menu.start.func = func;
+   sd->icon_menu.start.data = data;
+}
+
+EAPI void
+e_fm2_icon_menu_end_extend_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj, E_Menu *m), void *data)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+   sd->icon_menu.end.func = func;
+   sd->icon_menu.end.data = data;
+}
+
 
 EAPI void
 e_fm2_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
@@ -2465,14 +2498,21 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
    E_Manager *man;
    E_Container *con;
    E_Zone *zone;
-   int x, y;
+   int x, y, can_w;
    char buf[4096];
    
    sd = ic->sd;
 
    mn = e_menu_new();
    e_menu_category_set(mn, "e/fileman/action");
-   
+
+   if (sd->icon_menu.start.func)
+     {
+	sd->icon_menu.start.func(sd->icon_menu.start.data, sd->obj, mn);
+	mi = e_menu_item_new(mn);
+	e_menu_item_separator_set(mi, 1);
+     }
+
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Refresh View"));
    e_menu_item_icon_edje_set(mi,
@@ -2497,7 +2537,32 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
      }
    
    snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, ic->info.file);
-   if (ecore_file_can_write(buf))
+   can_w = 0;
+   if (ic->info.link)
+     {
+	struct stat st;
+	
+	if (lstat(buf, &st) == 0)
+	  {
+	     if (st.st_uid == getuid())
+	       {
+		  if (st.st_mode & S_IWUSR) can_w = 1;
+	       }
+	     else if (st.st_gid == getgid())
+	       {
+		  if (st.st_mode & S_IWGRP) can_w = 1;
+	       }
+	     else
+	       {
+		  if (st.st_mode & S_IWOTH) can_w = 1;
+	       }
+	  }
+     }
+   else
+     {
+	if (ecore_file_can_write(buf)) can_w = 1;
+     }
+   if (can_w)
      {
 	mi = e_menu_item_new(mn);
 	e_menu_item_separator_set(mi, 1);
@@ -2517,6 +2582,13 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 							"e/fileman/button/rename"),
 				  "e/fileman/button/rename");
 	e_menu_item_callback_set(mi, _e_fm2_file_rename, ic);
+     }
+
+   if (sd->icon_menu.end.func)
+     {
+	sd->icon_menu.end.func(sd->icon_menu.end.data, sd->obj, mn);
+	mi = e_menu_item_new(mn);
+	e_menu_item_separator_set(mi, 1);
      }
    
    man = e_manager_current_get();

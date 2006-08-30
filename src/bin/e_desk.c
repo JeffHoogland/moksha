@@ -183,6 +183,113 @@ e_desk_name_update(void)
      }
 }
 
+static void _e_desk_show_begin(E_Desk *desk);
+static void _e_desk_show_end(E_Desk *desk);
+static int _e_desk_show_animator(void *data);
+
+static void
+_e_desk_show_begin(E_Desk *desk)
+{
+   E_Border_List     *bl;
+   E_Border          *bd;
+
+   bl = e_container_border_list_first(desk->zone->container);
+   while ((bd = e_container_border_list_next(bl)))
+     {
+	if ((bd->desk->zone == desk->zone) && (!bd->iconic))
+	  {
+	     if ((bd->desk == desk) && (!bd->sticky))
+	       {
+		  e_border_fx_offset(bd, -desk->zone->w, 0);
+		  e_border_show(bd);
+		  if (bd->want_fullscreen)
+		    {
+		       e_border_fullscreen(bd, e_config->fullscreen_policy);
+		       bd->want_fullscreen = 0;
+		    }
+	       }
+	     else if (bd->moving)
+	       e_border_desk_set(bd, desk);
+	  }
+     }
+   e_container_border_list_free(bl);
+   ecore_animator_add(_e_desk_show_animator, desk);
+}
+
+static void
+_e_desk_show_end(E_Desk *desk)
+{
+   E_Border_List     *bl;
+   E_Border          *bd;
+
+   bl = e_container_border_list_first(desk->zone->container);
+   while ((bd = e_container_border_list_next(bl)))
+     {
+	if ((bd->desk->zone == desk->zone) && (!bd->iconic))
+	  {
+	     if ((bd->desk == desk) && (!bd->sticky))
+	       {
+		  e_border_fx_offset(bd, 0, 0);
+	       }
+	     else if (bd->moving)
+	       {
+		  e_border_fx_offset(bd, 0, 0);
+		  e_border_desk_set(bd, desk);
+	       }
+	  }
+     }
+   e_container_border_list_free(bl);
+}
+
+static int
+_e_desk_show_animator(void *data)
+{
+   E_Desk            *desk;
+   E_Border_List     *bl;
+   E_Border          *bd;
+   int done = 1;
+
+   desk = data;
+   bl = e_container_border_list_first(desk->zone->container);
+   while ((bd = e_container_border_list_next(bl)))
+     {
+	if ((bd->desk->zone == desk->zone) && (!bd->iconic))
+	  {
+	     if (bd->moving)
+	       {
+	       }
+	     else if ((bd->desk == desk) || (!bd->sticky))
+	       {
+                  e_border_fx_offset(bd, bd->fx.x + 20, 0);
+		  if (bd->fx.x < 0)
+		    done = 0;
+	       }
+	  }
+     }
+   e_container_border_list_free(bl);
+   if (done)
+     {
+	_e_desk_show_end(desk);
+	return 0;
+     }
+   return 1;
+}
+
+static void
+_e_desk_hide_begin(E_Desk *desk)
+{
+}
+
+static void
+_e_desk_hide_end(E_Desk *desk)
+{
+}
+
+static int
+_e_desk_hide_animator(void *data)
+{
+}
+
 EAPI void
 e_desk_show(E_Desk *desk)
 {
@@ -196,6 +303,8 @@ e_desk_show(E_Desk *desk)
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
    if (desk->visible) return;
 
+//   _e_desk_show_begin(desk);
+   
    for (x = 0; x < desk->zone->desk_x_count; x++)
      {
 	for (y = 0; y < desk->zone->desk_y_count; y++)

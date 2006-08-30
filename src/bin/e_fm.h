@@ -111,7 +111,9 @@ EAPI Evas_List            *e_fm2_selected_list_get(Evas_Object *obj);
 EAPI Evas_List            *e_fm2_all_list_get(Evas_Object *obj);
 EAPI void                  e_fm2_select_set(Evas_Object *obj, const char *file, int select);
 EAPI void                  e_fm2_file_show(Evas_Object *obj, const char *file);
-    
+EAPI void                  e_fm2_icon_menu_start_extend_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj, E_Menu *m), void *data);
+EAPI void                  e_fm2_icon_menu_end_extend_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj, E_Menu *m), void *data);
+
 EAPI void                  e_fm2_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
 EAPI void                  e_fm2_pan_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
 EAPI void                  e_fm2_pan_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
