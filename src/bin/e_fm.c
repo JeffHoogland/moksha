@@ -378,6 +378,7 @@ e_fm2_config_set(Evas_Object *obj, E_Fm2_Config *cfg)
    sd->config = E_NEW(E_Fm2_Config, 1);
    if (!sd->config) return;
    memcpy(sd->config, cfg, sizeof(E_Fm2_Config));
+   if (cfg->view.extra_file_source) sd->config->view.extra_file_source = evas_stringshare_add(cfg->view.extra_file_source);
    if (cfg->theme.background) sd->config->theme.background = evas_stringshare_add(cfg->theme.background);
    if (cfg->theme.frame) sd->config->theme.frame = evas_stringshare_add(cfg->theme.frame);
    if (cfg->theme.icons) sd->config->theme.icons = evas_stringshare_add(cfg->theme.icons);
@@ -1221,6 +1222,7 @@ _e_fm2_regions_eval(Evas_Object *obj)
 static void
 _e_fm2_config_free(E_Fm2_Config *cfg)
 {
+   if (cfg->view.extra_file_source) evas_stringshare_del(cfg->view.extra_file_source);
    if (cfg->theme.background) evas_stringshare_del(cfg->theme.background);
    if (cfg->theme.frame) evas_stringshare_del(cfg->theme.frame);
    if (cfg->theme.icons) evas_stringshare_del(cfg->theme.icons);
