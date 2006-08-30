@@ -7,15 +7,17 @@
 #define MOD_ENABLED 1
 
 /* TODO:
- * DND from left side to righ side, and to ibar etc.
- * Double click or fm menu of eap/.desktop brings up eap editor.
  * FDO menu generation puts symlinks to .desktops in /all/,
  *   if we edit one of those, replace symlink with resulting .desktop, 
  *   include original path in new .desktop.
+ * Filtering/sorting of left side to make managing thousands of apps easy.
+ *
+ * These things require support from e_fm -
+ * DND from left side to righ side, and to ibar etc.
+ * fm right click menu of eap/.desktop brings up eap editor.
  * Display contents of .order files on right side.
  * Stop user from deleting standard directories on right side.
  * Stop user from creating new directories on left side.
- * Filtering/sorting of left side to make managing thousands of apps easy.
  */
 
 
