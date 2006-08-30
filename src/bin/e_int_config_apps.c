@@ -14,8 +14,6 @@
  *
  * These things require support from e_fm -
  * DND from left side to righ side, and to ibar etc.
- * fm right click menu of eap/.desktop brings up eap editor.
- * Display contents of .order files on right side.
  * Stop user from deleting standard directories on right side.
  * Stop user from creating new directories on left side.
  */
@@ -29,6 +27,7 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Co
 struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
+   E_Fm2_Icon_Info *info;
    int state;
    struct {
       Evas_Object *o_fm_all;
@@ -185,13 +184,103 @@ _cb_files_selected(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
+_cb_files_edited(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Config_Dialog_Data *cfdata;
+   E_Fm2_Icon_Info *info;
+   const char *realpath;
+   char buf[4096];
+   E_App *a;
+   
+   cfdata = data;
+   if (!cfdata->gui.o_fm_all) return;
+   if (!cfdata->info) return;
+   info = cfdata->info;
+
+   realpath = e_fm2_real_path_get(cfdata->gui.o_fm_all);
+
+   if (info->pseudo_link)
+     snprintf(buf, sizeof(buf), "%s/%s", info->link, info->file);
+   else
+     snprintf(buf, sizeof(buf), "%s/%s", realpath, info->file);
+
+   if (ecore_file_is_dir(buf)) return;
+   a = e_app_new(buf, 0);
+   if (a)
+      e_eap_edit_show(cfdata->cfd->con, a);
+}
+
+static void
+_cb_files_add_edited(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info)
+{
+   E_Config_Dialog_Data *cfdata;
+   E_Menu_Item *mi;
+
+   cfdata = data;
+   /* We need to get this info data to the menu callback, all this is created on the fly when user right clicks. */
+   cfdata->info = info;
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Edit Application"));
+   e_menu_item_callback_set(mi, _cb_files_edited, cfdata);
+}
+
+static void
 _cb_button_delete_left(void *data1, void *data2)
 {
+   E_Config_Dialog_Data *cfdata;
+   Evas_List *selected;
+   E_Fm2_Icon_Info *ici;
+   const char *realpath;
+   char buf[4096];
+   E_App *a;
+
+   cfdata = data1;
+   if (!cfdata->gui.o_fm_all) return;
+
+   selected = e_fm2_selected_list_get(cfdata->gui.o_fm_all);
+   if (!selected) return;
+   ici = selected->data;
+   realpath = e_fm2_real_path_get(cfdata->gui.o_fm_all);
+   if (!strcmp(realpath, "/"))
+     snprintf(buf, sizeof(buf), "/%s", ici->file);
+   else
+     snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+   evas_list_free(selected);
+   if (ecore_file_is_dir(buf)) return;
+printf("DELETING LEFT APPLICATION %s\n", buf);
+// FIXME: find parent, so that e_app_remove can do the right thing.
+//   a = e_app_new(buf, 0);
+//   if (a)
+//      e_app_remove(a);
+   e_fm2_refresh(cfdata->gui.o_fm_all);
 }
 
 static void
 _cb_button_delete_right(void *data1, void *data2)
 {
+   E_Config_Dialog_Data *cfdata;
+   Evas_List *selected;
+   E_Fm2_Icon_Info *ici;
+   const char *realpath;
+   char buf[4096];
+   E_App *a;
+
+   cfdata = data1;
+   if (!cfdata->gui.o_fm) return;
+
+   selected = e_fm2_selected_list_get(cfdata->gui.o_fm);
+   if (!selected) return;
+   ici = selected->data;
+   realpath = e_fm2_real_path_get(cfdata->gui.o_fm);
+   if (!strcmp(realpath, "/"))
+     snprintf(buf, sizeof(buf), "/%s", ici->file);
+   else
+     snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+   evas_list_free(selected);
+//   if (ecore_file_is_dir(buf)) return;
+printf("DELETING RIGHT APPLICATION %s\n", buf);
+// FIXME: find parent .order, so that e_app_remove can do the right thing.
+   e_fm2_refresh(cfdata->gui.o_fm);
 }
 
 static void
@@ -235,12 +324,18 @@ _cb_button_add(void *data1, void *data2)
          if ((a) && (parent))
             e_app_append(a, parent);
       }
+   e_fm2_refresh(cfdata->gui.o_fm);
 }
 
 static void
 _cb_button_regen(void *data1, void *data2)
 {
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = data1;
    e_fdo_menu_to_order();
+   if (cfdata->gui.o_fm_all)   e_fm2_refresh(cfdata->gui.o_fm_all);
+   if (cfdata->gui.o_fm)       e_fm2_refresh(cfdata->gui.o_fm);
 }
 
 
@@ -293,6 +388,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_fm2_config_set(mt, &fmc_all);
    evas_object_smart_callback_add(mt, "selected",
 				  _cb_files_selected, cfdata);
+   e_fm2_icon_menu_start_extend_callback_set(mt, _cb_files_add_edited, cfdata);
    snprintf(path_all, sizeof(path_all), "%s/.e/e/applications/all", homedir);
    e_fm2_path_set(cfdata->gui.o_fm_all, path_all, "/");
 

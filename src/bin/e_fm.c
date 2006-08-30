@@ -38,7 +38,7 @@ struct _E_Fm2_Smart_Data
    } regions;
    struct {
       struct {
-	 void (*func) (void *data, Evas_Object *obj, E_Menu *m);
+	 void (*func) (void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info);
 	 void *data;
       } start, end;
    } icon_menu;
@@ -487,7 +487,7 @@ e_fm2_file_show(Evas_Object *obj, const char *file)
 }
 
 EAPI void
-e_fm2_icon_menu_start_extend_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj, E_Menu *m), void *data)
+e_fm2_icon_menu_start_extend_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info), void *data)
 {
    E_Fm2_Smart_Data *sd;
    
@@ -500,7 +500,7 @@ e_fm2_icon_menu_start_extend_callback_set(Evas_Object *obj, void (*func) (void *
 }
 
 EAPI void
-e_fm2_icon_menu_end_extend_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj, E_Menu *m), void *data)
+e_fm2_icon_menu_end_extend_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info), void *data)
 {
    E_Fm2_Smart_Data *sd;
    
@@ -2571,7 +2571,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 
    if (sd->icon_menu.start.func)
      {
-	sd->icon_menu.start.func(sd->icon_menu.start.data, sd->obj, mn);
+	sd->icon_menu.start.func(sd->icon_menu.start.data, sd->obj, mn, &(ic->info));
 	mi = e_menu_item_new(mn);
 	e_menu_item_separator_set(mi, 1);
      }
@@ -2652,7 +2652,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 
    if (sd->icon_menu.end.func)
      {
-	sd->icon_menu.end.func(sd->icon_menu.end.data, sd->obj, mn);
+	sd->icon_menu.end.func(sd->icon_menu.end.data, sd->obj, mn, &(ic->info));
 	mi = e_menu_item_new(mn);
 	e_menu_item_separator_set(mi, 1);
      }
