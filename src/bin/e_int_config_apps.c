@@ -9,7 +9,7 @@
 /* TODO:
  * DND from left side to righ side, and to ibar etc.
  * Double click or fm menu of eap/.desktop brings up eap editor.
- * FDO menu generation should put symlinks to .desktops in /all/,
+ * FDO menu generation puts symlinks to .desktops in /all/,
  *   if we edit one of those, replace symlink with resulting .desktop, 
  *   include original path in new .desktop.
  * Display contents of .order files on right side.
@@ -33,7 +33,10 @@ struct _E_Config_Dialog_Data
       Evas_Object *o_fm;
       Evas_Object *o_frame;
       Evas_Object *o_up_button;
+      Evas_Object *o_add_button;
       Evas_Object *o_create_button;
+      Evas_Object *o_delete_left_button;
+      Evas_Object *o_delete_right_button;
       Evas_Object *o_regen_button;
    } gui;
 };
@@ -126,8 +129,46 @@ _cb_button_create(void *data1, void *data2)
 }
 
 static void
-_cb_button_delete(void *data1, void *data2)
+_cb_files_selected(void *data, Evas_Object *obj, void *event_info)
 {
+   E_Config_Dialog_Data *cfdata;
+   Evas_List *selected;
+   E_Fm2_Icon_Info *ici;
+   const char *realpath;
+   char buf[4096];
+   E_App *a;
+   
+   cfdata = data;
+   if (!cfdata->gui.o_fm_all) return;
+   selected = e_fm2_selected_list_get(cfdata->gui.o_fm_all);
+   if (!selected) return;
+   ici = selected->data;
+   realpath = e_fm2_real_path_get(cfdata->gui.o_fm_all);
+   if (!strcmp(realpath, "/"))
+     snprintf(buf, sizeof(buf), "/%s", ici->file);
+   else
+     snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+   evas_list_free(selected);
+   if (ecore_file_is_dir(buf)) return;
+   a = e_app_empty_new(buf);
+   if (a)
+      e_eap_edit_show(cfdata->cfd->con, a);
+}
+
+static void
+_cb_button_delete_left(void *data1, void *data2)
+{
+}
+
+static void
+_cb_button_delete_right(void *data1, void *data2)
+{
+}
+
+static void
+_cb_button_add(void *data1, void *data2)
+{
+   e_fdo_menu_to_order();
 }
 
 static void
@@ -179,6 +220,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    fmc_all.selection.single = 1;
    fmc_all.selection.windows_modifiers = 0;
    e_fm2_config_set(mt, &fmc_all);
+   evas_object_smart_callback_add(mt, "selected",
+				  _cb_files_selected, cfdata);
    snprintf(path_all, sizeof(path_all), "%s/.e/e/applications/all", homedir);
    e_fm2_path_set(cfdata->gui.o_fm_all, path_all, "/");
 
@@ -191,9 +234,14 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_min_size_set(ob, 150, 220);
    e_widget_framelist_object_append(of, ob);
 
+   mt = e_widget_button_add(evas, _("Add application ->"), "enlightenment/e",
+			   _cb_button_add, cfdata, NULL);
+   cfdata->gui.o_add_button = mt;
+   e_widget_framelist_object_append(of, mt);
+
    mt = e_widget_button_add(evas, _("Delete application"), "enlightenment/e",
-			   _cb_button_delete, cfdata, NULL);
-   cfdata->gui.o_create_button = mt;
+			   _cb_button_delete_left, cfdata, NULL);
+   cfdata->gui.o_delete_left_button = mt;
    e_widget_framelist_object_append(of, mt);
 
    e_widget_table_object_append(ot, of, 0, 0, 2, 4, 1, 1, 1, 1);
@@ -240,6 +288,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_min_size_set(ob, 150, 220);
    e_widget_framelist_object_append(of, ob);
 
+   mt = e_widget_button_add(evas, _("Remove application"), "enlightenment/e",
+			   _cb_button_delete_right, cfdata, NULL);
+   cfdata->gui.o_delete_right_button = mt;
+   e_widget_framelist_object_append(of, mt);
 
    mt = e_widget_button_add(evas, _("Regenerate \"All Applications\" Menu"), "enlightenment/e",
 			   _cb_button_regen, cfdata, NULL);
