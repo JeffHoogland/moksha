@@ -65,6 +65,7 @@ static void      _e_app_print(const char *path, Ecore_File_Event event);
 #endif
 static void      _e_app_check_order(const char *file);
 static int       _e_app_order_contains(E_App *a, const char *file);
+static void      _e_app_resolve_file_name(char *buf, size_t size, const char *path, const char *file);
 
 /* local subsystem globals */
 static Evas_Hash   *_e_apps = NULL;
@@ -289,10 +290,12 @@ e_app_new(const char *path, int scan_subdirs)
 	       goto error;
 	  }
 	else
-	  return NULL;
+	   {
+	      return NULL;
+	   }
 	_e_apps = evas_hash_add(_e_apps, a->path, a);
 	_e_apps_list = evas_list_prepend(_e_apps_list, a);
-	
+
 	ac = e_app_cache_generate(a);
 	e_app_cache_save(ac, a->path);
 	e_app_cache_free(ac);
@@ -388,10 +391,7 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 
 	     a2 = NULL;
 
-	     if (s[0] == '/')
-		snprintf(buf, sizeof(buf), "%s", s);
-	     else
-	        snprintf(buf, sizeof(buf), "%s/%s", a->path, s);
+             _e_app_resolve_file_name(buf, sizeof(buf), a->path, s);
 	     if (ecore_file_exists(buf))
 	       {
 		  a2 = e_app_new(buf, scan_subdirs);
@@ -409,10 +409,7 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 		  pl = _e_apps_repositories;
 		  while ((!a2) && (pl))
 		    {
-	               if (s[0] == '/')
-		          snprintf(buf, sizeof(buf), "%s", s);
-	               else
-		          snprintf(buf, sizeof(buf), "%s/%s", (char *)pl->data, s);
+                       _e_app_resolve_file_name(buf, sizeof(buf), (char *)pl->data, s);
 		       a2 = e_app_new(buf, scan_subdirs);
 		       pl = pl->next;
 		    }
@@ -1154,13 +1151,12 @@ e_app_fields_fill(E_App *a, const char *path)
      }
    if (!path) path = a->path;
 
-   ext = strchr(path, '.');
+   ext = strrchr(path, '.');
    if ((ext) && (strcmp(ext, ".desktop") == 0))
    {   /* It's a .desktop file. */
       Ecore_Desktop *desktop;
 
       desktop = ecore_desktop_get(path, lang);
-      if (!desktop) return;
       if (desktop)
         {
 	   if (desktop->name)  a->name = evas_stringshare_add(desktop->name);
@@ -1952,10 +1948,7 @@ _e_app_subdir_rescan(E_App *app)
 	     else
 	       {
 		  /* If we still haven't found it, it is new! */
-		  if (s[0] == '/')
-		     snprintf(buf, sizeof(buf), "%s", s);
-		  else
-		     snprintf(buf, sizeof(buf), "%s/%s", app->path, s);
+                  _e_app_resolve_file_name(buf, sizeof(buf), app->path, s);
 		  a2 = e_app_new(buf, 1);
 		  if (a2)
 		    {
@@ -1977,10 +1970,7 @@ _e_app_subdir_rescan(E_App *app)
 		       pl = _e_apps_repositories;
 		       while ((!a2) && (pl))
 			 {
-		            if (s[0] == '/')
-		               snprintf(buf, sizeof(buf), "%s", s);
-		            else
-			       snprintf(buf, sizeof(buf), "%s/%s", (char *)pl->data, s);
+                            _e_app_resolve_file_name(buf, sizeof(buf), (char *)pl->data, s);
 			    a2 = e_app_new(buf, 1);
 			    pl = pl->next;
 			 }
@@ -2329,10 +2319,7 @@ _e_app_cb_scan_cache_timer(void *data)
 //	printf("Cache scan finish.\n");
 	return 0;
      }
-   if (s[0] == '/')
-      snprintf(buf, sizeof(buf), "%s", s);
-   else
-      snprintf(buf, sizeof(buf), "%s/%s", sc->path, s);
+   _e_app_resolve_file_name(buf, sizeof(buf), sc->path, s);
    is_dir = ecore_file_is_dir(buf);
    if (_e_app_is_eapp(s) || is_dir)
      {
@@ -2386,10 +2373,7 @@ _e_app_cache_new(E_App_Cache *ac, const char *path, int scan_subdirs)
 	E_App *a2;
 	
 	ac2 = l->data;
-	if (ac2->file[0] == '/')
-	   snprintf(buf, sizeof(buf), "%s", ac2->file);
-	else
-	   snprintf(buf, sizeof(buf), "%s/%s", path, ac2->file);
+        _e_app_resolve_file_name(buf, sizeof(buf), path, ac2->file);
 	if ((ac2->is_dir) && (scan_subdirs))
 	  {
 	     a2 = e_app_new(buf, scan_subdirs);
@@ -2424,10 +2408,7 @@ _e_app_cache_new(E_App_Cache *ac, const char *path, int scan_subdirs)
 		  a2 = NULL;
 		  while ((!a2) && (pl))
 		    {
-	               if (ac2->file[0] == '/')
-	                  snprintf(buf, sizeof(buf), "%s", ac2->file);
-	               else
-		          snprintf(buf, sizeof(buf), "%s/%s", (char *)pl->data, ac2->file);
+                       _e_app_resolve_file_name(buf, sizeof(buf), (char *)pl->data, ac2->file);
 		       a2 = e_app_new(buf, scan_subdirs);
 		       pl = pl->next;
 		    }
@@ -2556,4 +2537,19 @@ _e_app_order_contains(E_App *a, const char *file)
      }
    fclose(f);
    return ret;
+}
+
+
+static void
+_e_app_resolve_file_name(char *buf, size_t size, const char *path, const char *file)
+{
+   size_t length;
+
+   length = strlen(path);
+   if (file[0] == '/')
+      snprintf(buf, size, "%s", file);
+   else if ((length > 0) && (path[length - 1] == '/'))
+      snprintf(buf, size, "%s%s", path, file);
+   else
+      snprintf(buf, size, "%s/%s", path, file);
 }

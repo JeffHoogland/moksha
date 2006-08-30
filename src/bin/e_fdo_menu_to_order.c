@@ -90,7 +90,7 @@ _e_menu_dump_each_hash_node(void *value, void *user_data)
 {
    Ecore_Hash_Node *node;
    Ecore_Desktop *desktop;
-   char *file, *path;
+   const char *file, *path;
 
    path = (char *)user_data;
    node = (Ecore_Hash_Node *) value;
@@ -110,6 +110,10 @@ _e_menu_dump_each_hash_node(void *value, void *user_data)
          FILE *f;
          Ecore_List *list = NULL;
 
+         snprintf(path2, sizeof(path2), "%s/.e/e/applications/all/%s", ecore_desktop_home_get(), ecore_file_get_file(file));
+         if (!ecore_file_exists(path2))
+            ecore_file_symlink(file, path2);
+         file = ecore_file_get_file(file);
          snprintf(order_path, sizeof(order_path), "%s/.e/e/applications/menu/all/%s", ecore_desktop_home_get(), path);
          if (!ecore_file_exists(order_path))
             {
@@ -151,7 +155,7 @@ _e_menu_dump_each_hash_node(void *value, void *user_data)
                }
                fclose(f2);
                /* If We Had To Create This Order Then Just Add The file */
-               if (!ecore_list_append(list, file))
+               if (!ecore_list_append(list, strdup(file)))
                  {
                     fprintf(stderr, "ERROR: Ecore List Append Failed !!\n");
                     return;
@@ -188,7 +192,7 @@ _e_menu_dump_each_hash_node(void *value, void *user_data)
                /* Add This file To List Of Existing ? */
                if (!_e_search_list(list, file))
                  {
-                    if (!ecore_list_append(list, file))
+                    if (!ecore_list_append(list, strdup(file)))
                       {
                          fprintf(stderr, "ERROR: Ecore List Append Failed !!\n");
                          return;
