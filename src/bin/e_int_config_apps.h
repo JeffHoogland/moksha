@@ -7,6 +7,7 @@
 #define E_INT_CONFIG_APPS_H
 
 EAPI E_Config_Dialog *e_int_config_apps(E_Container *con);
+EAPI E_Config_Dialog *e_int_config_apps_once(E_Container *con, const char *label, int (*func) (void *data, const char *path), void *data);
 
 #endif
 #endif

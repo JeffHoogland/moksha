@@ -834,6 +834,33 @@ _ibar_cb_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi)
    _config_ibar_module(ci);
 }
 
+static int
+_ibar_cb_menu_add_application_cb(void *data, const char *path)
+{
+   IBar *b;
+   IBar_Icon *ic;
+   E_App *a;
+   
+   b = data;
+   a = e_app_new(path, 0);
+   ic = _ibar_icon_new(b, a);
+   b->icons = evas_list_append(b->icons, ic);
+   e_box_pack_end(b->o_box, ic->o_holder);
+   _ibar_empty_handle(b);
+   _ibar_resize_handle(b);
+
+   return 1;
+}
+
+static void
+_ibar_cb_menu_add(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   IBar *b;
+   
+   b = data;
+   e_int_config_apps_once(b->inst->gcc->gadcon->zone->container, "Add to IBar", _ibar_cb_menu_add_application_cb, b);
+}
+
 static void
 _ibar_cb_menu_post(void *data, E_Menu *m)
 {
@@ -903,15 +930,20 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 	e_menu_item_label_set(mi, _("Remove Icon"));
 	e_util_menu_item_edje_icon_set(mi, "enlightenment/delete");
 	e_menu_item_callback_set(mi, _ibar_cb_menu_icon_remove, ic);
-	
+
 	mi = e_menu_item_new(mn);
 	e_menu_item_separator_set(mi, 1);
-	
+
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("Configuration"));
 	e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
 	e_menu_item_callback_set(mi, _ibar_cb_menu_configuration, ic->ibar);
-	
+
+	mi = e_menu_item_new(mn);
+	e_menu_item_label_set(mi, _("Add Application"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/add");
+	e_menu_item_callback_set(mi, _ibar_cb_menu_add, ic->ibar);
+
 	e_gadcon_client_util_menu_items_append(ic->ibar->inst->gcc, mn, 0);
 	
 	e_gadcon_canvas_zone_geometry_get(ic->ibar->inst->gcc->gadcon,
