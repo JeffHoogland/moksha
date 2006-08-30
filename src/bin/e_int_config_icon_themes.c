@@ -12,6 +12,7 @@ static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 static void _ilist_cb_change(void *data, Evas_Object *obj);
 static void _add_theme(void *value, void *user_data);
@@ -48,6 +49,8 @@ e_int_config_icon_themes(E_Container *con)
    
    v->create_cfdata           = _create_data;
    v->free_cfdata             = _free_data;
+   v->advanced.create_widgets = _advanced_create_widgets;
+   v->advanced.apply_cfdata   = _basic_apply_data;
    v->basic.create_widgets    = _basic_create_widgets;
    v->basic.apply_cfdata      = _basic_apply_data;
    
@@ -73,8 +76,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
       cfdata->themename = strdup(e_config->icon_theme);
    else
       cfdata->themename = strdup("hicolor");
-
-printf("CURRENT ICON THEME - %s  -  %s\n", e_config->icon_theme, cfdata->themename);
 
    return;
 }
@@ -115,10 +116,10 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    E_Action *a;
    
    /* Actually take our cfdata settings and apply them in real life */
-printf("NEW ICON THEME - %s\n", cfdata->themename);
    e_config->icon_theme = evas_stringshare_add(cfdata->themename);
    e_config_save_queue();
 
+   /* FIXME: Not sure about this stuff, but we need to redo any existing icons now. */
 //   a = e_action_find("restart");
 //   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
    return 1; /* Apply was OK */
@@ -160,7 +161,7 @@ _cb_files_changed(void *data, Evas_Object *obj, void *event_info)
 
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob, *ot, *ilist, *mt;
    Evas_List *l;
@@ -264,6 +265,59 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    return o;
 }
 
+
+static Evas_Object *
+_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+{
+   Evas_Object *o, *ilist;
+   Evas_List *l;
+   E_Fm2_Config fmc;
+   int i;
+
+   o = e_widget_list_add(evas, 1, 0);
+   ilist = e_widget_ilist_add(evas, 24, 24, &(cfdata->themename));
+   cfdata->gui.list = ilist;
+   e_widget_on_change_hook_set(ilist, _ilist_cb_change, cfdata);
+
+   cfdata->state = -1;
+   i = 0;
+   for (l = cfdata->icon_themes; l; l = l->next)
+     {
+	CFIconTheme *cm;
+	Evas_Object *oc = NULL;
+	
+	cm = l->data;
+	if (cm)
+	  {
+	     if (cm->theme)
+	        {
+	           if (!cm->theme->example_path)
+                      cm->theme->example_path = (char *) ecore_desktop_icon_find(cm->theme->example, "24x24", cm->name);
+	           if (cm->theme->example_path)
+		      {
+                         oc = e_icon_add(evas);
+	                 e_icon_file_set(oc, cm->theme->example_path);
+	                 e_icon_fill_inside_set(oc, 1);
+		      }
+		}
+             e_widget_ilist_append(ilist, oc, cm->theme->name, NULL, NULL, cm->name);
+	     if (strcmp(cfdata->themename, cm->name) == 0)
+		e_widget_ilist_selected_set(ilist, i);
+	     i++;
+	  }
+     }
+
+   e_widget_ilist_go(ilist);
+   e_widget_min_size_set(o, 300, 160);
+   e_widget_list_object_append(o, ilist, 1, 1, 0.5);
+
+   e_dialog_resizable_set(cfd->dia, 1);
+
+   _ilist_cb_change(cfdata, ilist);
+
+   return o;
+}
+
 static void
 _ilist_cb_change(void *data, Evas_Object *obj)
 {
@@ -274,6 +328,7 @@ _ilist_cb_change(void *data, Evas_Object *obj)
    cfdata = data;
    v = cfdata->themename;
    if (!v) return;
+   if (!cfdata->gui.comment)   return;
 
    if ((theme = ecore_desktop_icon_theme_get(v, NULL)))
       {
