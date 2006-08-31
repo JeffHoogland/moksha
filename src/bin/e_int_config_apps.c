@@ -249,6 +249,8 @@ _cb_button_delete_left(void *data1, void *data2)
    E_Config_Dialog_Data *cfdata;
    Evas_List *l;
    E_Fm2_Icon_Info *ici;
+   const char *realpath;
+   char buf[4096];
 
    cfdata = data1;
    if (!cfdata->gui.o_fm_all) return;
@@ -258,6 +260,9 @@ _cb_button_delete_left(void *data1, void *data2)
    if (!l) return;
    ici = l->data;
    evas_list_free(l);
+
+#if 0
+   /* This just isn't working, lets try the crude method instead. */
    for (l = cfdata->parent_all->subapps; l; l = l->next)
      {
 	E_App *a2;
@@ -271,6 +276,17 @@ _cb_button_delete_left(void *data1, void *data2)
 	      break;
 	   }
      }
+#else
+   realpath = e_fm2_real_path_get(cfdata->gui.o_fm_all);
+   if (!strcmp(realpath, "/"))
+     snprintf(buf, sizeof(buf), "/%s", ici->file);
+   else
+     snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+   ecore_file_unlink(buf);
+   snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", realpath);
+   ecore_file_unlink(buf);
+   e_fm2_refresh(cfdata->gui.o_fm_all);
+#endif
 }
 
 static void
@@ -279,15 +295,19 @@ _cb_button_delete_right(void *data1, void *data2)
    E_Config_Dialog_Data *cfdata;
    Evas_List *l;
    E_Fm2_Icon_Info *ici;
+   const char *realpath;
 
    cfdata = data1;
    if (!cfdata->gui.o_fm) return;
-   if (!cfdata->parent) return;
 
    l = e_fm2_selected_list_get(cfdata->gui.o_fm);
    if (!l) return;
    ici = l->data;
    evas_list_free(l);
+
+#if 0
+   /* This just isn't working, lets try the crude method instead. */
+   if (!cfdata->parent) return;
    for (l = cfdata->parent->subapps; l; l = l->next)
      {
 	E_App *a2;
@@ -296,11 +316,16 @@ _cb_button_delete_right(void *data1, void *data2)
 	if ((a2->deleted) || ((a2->orig) && (a2->orig->deleted))) continue;
 	if (!strcmp(ecore_file_get_file(a2->path), ecore_file_get_file(ici->file)))
 	   {
-              e_app_remove(a2);
+              e_app_remove_from_order(a2);
               e_fm2_refresh(cfdata->gui.o_fm);
 	      break;
 	   }
      }
+#else
+   realpath = e_fm2_real_path_get(cfdata->gui.o_fm);
+   e_app_remove_file_from_order(realpath, ecore_file_get_file(ici->file));
+   e_fm2_refresh(cfdata->gui.o_fm);
+#endif
 }
 
 static void

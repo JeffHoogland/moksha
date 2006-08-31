@@ -112,6 +112,8 @@ EAPI void        e_app_append                            (E_App *add, E_App *par
 EAPI void        e_app_files_prepend_relative            (Evas_List *files, E_App *before);
 EAPI void        e_app_files_append                      (Evas_List *files, E_App *parent);
 EAPI void        e_app_remove                            (E_App *a);
+EAPI void        e_app_remove_from_order                 (E_App *a);
+EAPI void        e_app_remove_file_from_order            (const char *order, const char *file);
     
 EAPI void        e_app_change_callback_add               (void (*func) (void *data, E_App *a, E_App_Change ch), void *data);
 EAPI void        e_app_change_callback_del               (void (*func) (void *data, E_App *a, E_App_Change ch), void *data);
