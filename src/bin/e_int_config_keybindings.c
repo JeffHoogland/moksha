@@ -11,7 +11,7 @@
 #define TEXT_ACTION _("Action")
 #define TEXT_NONE_ACTION_KEY _("<None>")
 #define TEXT_PRESS_KEY_SEQUENCE _("Please press key sequence,<br>" \
-				  "or <hilight>Escape</hilight> to abort")
+				  "or <hilight>Escape</hilight> to abort.")
 
 #define ILIST_ICON_WITH_KEYBIND	    "enlightenment/keys"
 #define ILIST_ICON_WITHOUT_KEYBIND  ""
@@ -1292,6 +1292,7 @@ _e_keybinding_keybind_cb_new_shortcut(void *data, void *data2)
   e_dialog_icon_set(cfdata->locals.dia, "enlightenment/e", 64);
   e_dialog_text_set(cfdata->locals.dia, TEXT_PRESS_KEY_SEQUENCE);
   e_win_centered_set(cfdata->locals.dia->win, 1);
+  e_win_borderless_set(cfdata->locals.dia->win, 1);
 
   cfdata->locals.keybind_win = ecore_x_window_input_new(e_manager_current_get()->root,
 							0, 0, 1, 1);

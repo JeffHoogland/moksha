@@ -90,6 +90,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, geom.pos, INT);
    E_CONFIG_VAL(D, T, geom.size, INT);
    E_CONFIG_VAL(D, T, geom.res, INT);
+   E_CONFIG_VAL(D, T, state_info.seq, INT);
+   E_CONFIG_VAL(D, T, state_info.flags, INT);
    E_CONFIG_VAL(D, T, style, STR);
    E_CONFIG_VAL(D, T, autoscroll, UCHAR);
    E_CONFIG_VAL(D, T, resizable, UCHAR);
@@ -1145,6 +1147,8 @@ e_config_init(void)
    cf_gcc->geom.res = _res; \
    cf_gcc->geom.size = _size; \
    cf_gcc->geom.pos = _pos; \
+   cf_gcc->state_info.seq = 0; \
+   cf_gcc->state_info.flags = 0; \
    if (_style) cf_gcc->style = evas_stringshare_add(_style); \
    else cf_gcc->style = NULL; \
    cf_gcc->autoscroll = _autoscr; \

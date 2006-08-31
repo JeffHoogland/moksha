@@ -251,6 +251,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	cfdata->escfg->orient = cfdata->orient;
 	e_shelf_orient(cfdata->es, cfdata->orient);
 	e_shelf_position_calc(cfdata->es);
+	restart = 1;
      }
 
    /* Only Change fit along if we need to */

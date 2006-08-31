@@ -261,8 +261,8 @@ e_shelf_move_resize(E_Shelf *es, int x, int y, int w, int h)
    es->y = y;
    es->w = w;
    es->h = h;
-   if (es->popup)
-     e_popup_move_resize(es->popup, es->x, es->y, es->w, es->h);
+   if (es->popup) 
+     e_popup_move_resize(es->popup, es->x, es->y, es->w, es->h); 
    else
      {
 	evas_object_move(es->o_event, es->zone->x + es->x, es->zone->y + es->y);
@@ -475,7 +475,6 @@ e_shelf_style_set(E_Shelf *es, const char *style)
    if (!e_theme_edje_object_set(es->o_base, "base/theme/shelf", buf))
      e_theme_edje_object_set(es->o_base, "base/theme/shelf", 
 			     "e/shelf/default/base");
-   
    e_gadcon_unpopulate(es->gadcon);
    e_gadcon_populate(es->gadcon);
 }

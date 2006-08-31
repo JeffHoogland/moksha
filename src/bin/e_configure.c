@@ -80,7 +80,7 @@ e_configure_show(E_Container *con)
    e_configure_header_item_add(eco, "enlightenment/behavior", _("Behavior"));
    e_configure_standard_item_add(eco, "enlightenment/focus", _("Window Focus"), e_int_config_focus);
    e_configure_standard_item_add(eco, "enlightenment/keys", _("Key Bindings"), e_int_config_keybindings);
-   e_configure_standard_item_add(eco, "enlightenment/mouse_binding_left", _("Mouse Bindings"), e_int_config_mousebindings);
+   e_configure_standard_item_add(eco, "enlightenment/mouse_clean", _("Mouse Bindings"), e_int_config_mousebindings);
    e_configure_standard_item_add(eco, "enlightenment/menus", _("Menus"), e_int_config_menus);
    
    e_configure_header_item_add(eco, "enlightenment/misc", _("Miscellaneous"));

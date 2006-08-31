@@ -332,11 +332,12 @@ e17_icon_windows.png \
 e17_icon_window_focus.png \
 e17_icon_lost_windows.png \
 e17_icon_screen_resolution.png \
-e17_icon_mouse_bindings_left.png \
-e17_icon_mouse_bindings_middle.png \
-e17_icon_mouse_bindings_right.png \
-e17_icon_mouse_bindings_scroll_up.png \
-e17_icon_mouse_bindings_scroll_down.png \
+e17_icon_mouse_left.png \
+e17_icon_mouse_middle.png \
+e17_icon_mouse_right.png \
+e17_icon_mouse_extra.png \
+e17_icon_mouse_wheel.png \
+e17_icon_mouse_clean.png \
 e17_pointer.png \
 e17_pointer_mono.png \
 e17_dialog_watermark.png \

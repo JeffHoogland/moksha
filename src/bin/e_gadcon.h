@@ -114,7 +114,15 @@ struct _E_Gadcon_Client
    void                  *data;
    struct {
       int                 pos, size, res;
-   } config;
+   } config; 
+
+   struct { 
+     int seq, flags; // goes to save
+     int state, resist;
+     int prev_pos, prev_size;
+     int want_save : 1;
+   } state_info;
+
    struct {
       Evas_Coord          w, h;
    } pad, min, aspect;
@@ -129,7 +137,7 @@ struct _E_Gadcon_Client
    
    unsigned char          moving : 1;
    unsigned char          resizing : 1;
-   Evas_Coord             dx, dy, sx, sy, sw, sh;
+   Evas_Coord             dx, dy;
 };
 
 EAPI int              e_gadcon_init(void);

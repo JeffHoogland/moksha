@@ -6,7 +6,7 @@
 static void _e_gadcon_free(E_Gadcon *gc);
 static void _e_gadcon_client_free(E_Gadcon_Client *gcc);
 
-static void _e_gadcon_movereisze_handle(E_Gadcon_Client *gcc);
+static void _e_gadcon_moveresize_handle(E_Gadcon_Client *gcc);
 static int _e_gadcon_cb_client_scroll_timer(void *data);
 static int _e_gadcon_cb_client_scroll_animator(void *data);
 static void _e_gadcon_cb_client_frame_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -42,11 +42,116 @@ static void e_gadcon_layout_asked_size_get(Evas_Object *obj, Evas_Coord *w, Evas
 static int e_gadcon_layout_pack(Evas_Object *obj, Evas_Object *child);
 static void e_gadcon_layout_pack_size_set(Evas_Object *obj, int size);
 static void e_gadcon_layout_pack_request_set(Evas_Object *obj, int pos, int size);
-static void e_gadcon_layout_pack_options_set(Evas_Object *obj, int pos, int size, int res);
+static void e_gadcon_layout_pack_options_set(Evas_Object *obj, E_Gadcon_Client *gcc);
 static void e_gadcon_layout_pack_min_size_set(Evas_Object *obj, int w, int h);
 static void e_gadcon_layout_pack_aspect_set(Evas_Object *obj, int w, int h);
 static void e_gadcon_layout_pack_aspect_pad_set(Evas_Object *obj, int w, int h);
 static void e_gadcon_layout_unpack(Evas_Object *obj);
+
+/********************/
+#define E_LAYOUT_ITEM_DRAG_RESIST_LEVEL 10
+
+typedef struct _E_Smart_Data E_Smart_Data;
+typedef struct _E_Layout_Item_Container E_Layout_Item_Container;
+
+static void _e_gadcon_client_current_position_sync(E_Gadcon_Client *gcc);
+static void _e_gadcon_layout_smart_sync_clients(E_Gadcon *gc);
+static void _e_gadcon_layout_smart_gadcon_position_shrinked_mode(E_Smart_Data *sd);
+static void _e_gadcon_layout_smart_gadcon_clients_save(E_Smart_Data *sd);
+static void _e_gadcon_layout_smart_gadcons_asked_position_set(E_Smart_Data *sd);
+static Evas_List *_e_gadcon_layout_smart_gadcons_wrap(E_Smart_Data *sd);
+static void _e_gadcon_layout_smart_gadcons_position(E_Smart_Data *sd, Evas_List **list);
+static void _e_gadcon_layout_smart_gadcons_position_static(E_Smart_Data *sd, Evas_List **list);
+static E_Layout_Item_Container * _e_gadcon_layout_smart_containers_position_adjust(E_Smart_Data *sd, E_Layout_Item_Container *lc, E_Layout_Item_Container *lc2);
+static void _e_gadcon_layout_smart_position_items_inside_container(E_Smart_Data *sd, E_Layout_Item_Container *lc);
+static void _e_gadcon_layout_smart_containers_merge(E_Smart_Data *sd, E_Layout_Item_Container *lc, E_Layout_Item_Container *lc2);
+static void _e_gadcon_layout_smart_restore_gadcons_position_before_move(E_Smart_Data *sd, E_Layout_Item_Container **lc_moving, E_Layout_Item_Container *lc_back, Evas_List **con_list);
+
+typedef enum _E_Gadcon_Layout_Item_State
+{
+   E_LAYOUT_ITEM_STATE_NONE,
+   E_LAYOUT_ITEM_STATE_POS_INC,
+   E_LAYOUT_ITEM_STATE_POS_DEC,
+   E_LAYOUT_ITEM_STATE_SIZE_MIN_END_INC,
+   E_LAYOUT_ITEM_STATE_SIZE_MIN_END_DEC,
+   E_LAYOUT_ITEM_STATE_SIZE_MAX_END_INC,
+   E_LAYOUT_ITEM_STATE_SIZE_MAX_END_DEC,
+} E_Gadcon_Layout_Item_State;
+
+typedef enum _E_Gadcon_Layout_Item_Flags
+{
+   E_GADCON_LAYOUT_ITEM_LOCK_NONE     = 0x00000000,
+   E_GADCON_LAYOUT_ITEM_LOCK_POSITION = 0x00000001,
+   E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE = 0x00000002
+} E_Gadcon_Layout_Item_Flags;
+
+typedef enum _E_Layout_Item_Container_State
+{
+   E_LAYOUT_ITEM_CONTAINER_STATE_NONE, 
+   E_LAYOUT_ITEM_CONTAINER_STATE_POS_INC, 
+   E_LAYOUT_ITEM_CONTAINER_STATE_POS_DEC, 
+   E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MIN_END_INC, 
+   E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MIN_END_DEC, 
+   E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MAX_END_INC, 
+   E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MAX_END_DEC, 
+   E_LAYOUT_ITEM_CONTAINER_STATE_POS_LOCKED
+} E_Layout_Item_Container_State;
+
+struct _E_Layout_Item_Container
+{
+   int pos, size, prev_pos, prev_size;
+
+   struct {
+      int min_seq, max_seq;
+   } state_info;
+
+   E_Smart_Data *sd;
+   Evas_List *items;
+
+   E_Layout_Item_Container_State state;
+};
+
+#define LC_FREE(__lc) \
+   if (__lc->items) \
+     evas_list_free(__lc->items); \
+   E_FREE(__lc)
+
+#define E_LAYOUT_ITEM_CONTAINER_STATE_SET(__con_state, __bi_state) \
+   if (__bi_state == E_LAYOUT_ITEM_STATE_NONE) \
+      __con_state = E_LAYOUT_ITEM_CONTAINER_STATE_NONE; \
+   else if (__bi_state == E_LAYOUT_ITEM_STATE_POS_INC) \
+      __con_state = E_LAYOUT_ITEM_CONTAINER_STATE_POS_INC; \
+   else if (__bi_state == E_LAYOUT_ITEM_STATE_POS_DEC) \
+      __con_state = E_LAYOUT_ITEM_CONTAINER_STATE_POS_DEC; \
+   else if (__bi_state == E_LAYOUT_ITEM_STATE_SIZE_MIN_END_INC) \
+      __con_state = E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MIN_END_INC; \
+   else if (__bi_state == E_LAYOUT_ITEM_STATE_SIZE_MIN_END_DEC) \
+      __con_state = E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MIN_END_DEC; \
+   else if (__bi_state == E_LAYOUT_ITEM_STATE_SIZE_MAX_END_INC) \
+      __con_state = E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MAX_END_INC; \
+   else if (__bi_state == E_LAYOUT_ITEM_STATE_SIZE_MAX_END_DEC) \
+      __con_state = E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MAX_END_DEC
+
+#define LC_OVERLAP(__lc, __lc2) \
+   ( __lc2->pos >= __lc->pos && (__lc2->pos < (__lc->pos + __lc->size)) || \
+     __lc->pos >= __lc2->pos && (__lc->pos < (__lc2->pos + __lc2->size)))
+
+#define E_LAYOUT_ITEM_CONTAINER_SIZE_CHANGE_BY(__lc, __bi, __increase) \
+   if (__lc->sd->horizontal) \
+     { \
+	if (__increase) \
+	  __lc->size += __bi->w; \
+	else \
+	  __lc->size -= __bi->w; \
+     } \
+   else \
+     { \
+	if (__increase) \
+	  __lc->size += __bi->h; \
+	else \
+	  __lc->size -= __bi->h; \
+     }
+/********************/
 
 static Evas_Hash *providers = NULL;
 static Evas_List *providers_list = NULL;
@@ -243,20 +348,19 @@ e_gadcon_populate(E_Gadcon *gc)
 		       gcc->config.pos = cf_gcc->geom.pos;
 		       gcc->config.size = cf_gcc->geom.size;
 		       gcc->config.res = cf_gcc->geom.res;
+		       gcc->state_info.seq = cf_gcc->state_info.seq;
+		       gcc->state_info.flags = cf_gcc->state_info.flags;
 		       if (gcc->o_frame)
-			 e_gadcon_layout_pack_options_set(gcc->o_frame,
-							  gcc->config.pos, 
-							  gcc->config.size,
-							  gcc->config.res);
+			 e_gadcon_layout_pack_options_set(gcc->o_frame, gcc);
 		       else
-			 e_gadcon_layout_pack_options_set(gcc->o_base,
-							  gcc->config.pos, 
-							  gcc->config.size,
-							  gcc->config.res);
+			 e_gadcon_layout_pack_options_set(gcc->o_base, gcc);
+
 		       e_gadcon_client_autoscroll_set(gcc, cf_gcc->autoscroll);
 		       e_gadcon_client_resizable_set(gcc, cf_gcc->resizable);
 		       if (gcc->client_class->func.orient)
 			 gcc->client_class->func.orient(gcc);
+
+		       _e_gadcon_client_save(gcc);
 		    }
 	       }
 	  }
@@ -337,18 +441,17 @@ e_gadcon_populate_class(E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
 		       gcc->config.pos = cf_gcc->geom.pos;
 		       gcc->config.size = cf_gcc->geom.size;
 		       gcc->config.res = cf_gcc->geom.res;
+		       gcc->state_info.seq = cf_gcc->state_info.seq;
+		       gcc->state_info.flags = cf_gcc->state_info.flags;
 		       if (gcc->o_frame)
-			 e_gadcon_layout_pack_options_set(gcc->o_frame,
-							  gcc->config.pos, 
-							  gcc->config.size,
-							  gcc->config.res);
+			 e_gadcon_layout_pack_options_set(gcc->o_frame, gcc);
 		       else
-			 e_gadcon_layout_pack_options_set(gcc->o_base,
-							  gcc->config.pos, 
-							  gcc->config.size,
-							  gcc->config.res);
+			 e_gadcon_layout_pack_options_set(gcc->o_base, gcc);
+
 		       if (gcc->client_class->func.orient)
-			 gcc->client_class->func.orient(gcc);
+			 gcc->client_class->func.orient(gcc); 
+		       
+		       _e_gadcon_client_save(gcc);
 		    }
 	       }
 	  }
@@ -767,7 +870,7 @@ e_gadcon_client_min_size_set(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h)
 	else
 	  e_gadcon_layout_pack_min_size_set(gcc->o_base, w, h);
      }
-   _e_gadcon_movereisze_handle(gcc);
+   _e_gadcon_moveresize_handle(gcc);
 }
 
 EAPI void
@@ -787,7 +890,7 @@ e_gadcon_client_aspect_set(E_Gadcon_Client *gcc, int w, int h)
 	else
 	  e_gadcon_layout_pack_aspect_set(gcc->o_base, w, h);
      }
-   _e_gadcon_movereisze_handle(gcc);
+   _e_gadcon_moveresize_handle(gcc);
 }
 
 EAPI void
@@ -807,8 +910,8 @@ e_gadcon_client_autoscroll_set(E_Gadcon_Client *gcc, int autoscroll)
 	  }
 	else
 	  {
-	     e_gadcon_layout_pack_min_size_set(gcc->o_base, 0, 0);
 	     e_gadcon_layout_pack_aspect_set(gcc->o_base, 0, 0);
+	     e_gadcon_layout_pack_min_size_set(gcc->o_base, 0, 0);
 	  }
      }
    else
@@ -901,27 +1004,26 @@ _e_gadcon_client_cb_menu_autoscroll(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Gadcon *gc;
    
    gcc = data;
-   gc = gcc->gadcon;
+   e_gadcon_layout_freeze(gcc->gadcon->o_container);
    if (gcc->autoscroll) gcc->autoscroll = 0;
-   else gcc->autoscroll = 1;
+   else gcc->autoscroll = 1; 
+   e_gadcon_client_autoscroll_set(gcc, gcc->autoscroll);
    _e_gadcon_client_save(gcc);
-   e_gadcon_unpopulate(gc);
-   e_gadcon_populate(gc);
+   e_gadcon_layout_thaw(gcc->gadcon->o_container);
 }
 
 static void
 _e_gadcon_client_cb_menu_resizable(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Gadcon_Client *gcc;
-   E_Gadcon *gc;
    
    gcc = data;
-   gc = gcc->gadcon;
+   e_gadcon_layout_freeze(gcc->gadcon->o_container);
    if (gcc->resizable) gcc->resizable = 0;
    else gcc->resizable = 1;
+   e_gadcon_client_resizable_set(gcc, gcc->resizable);
    _e_gadcon_client_save(gcc);
-   e_gadcon_unpopulate(gc);
-   e_gadcon_populate(gc);
+   e_gadcon_layout_thaw(gcc->gadcon->o_container);
 }
 
 static void
@@ -1156,7 +1258,7 @@ _e_gadcon_client_free(E_Gadcon_Client *gcc)
 }
 
 static void
-_e_gadcon_movereisze_handle(E_Gadcon_Client *gcc)
+_e_gadcon_moveresize_handle(E_Gadcon_Client *gcc)
 {
    Evas_Coord x, y, w, h;
    
@@ -1267,7 +1369,7 @@ _e_gadcon_cb_client_frame_moveresize(void *data, Evas *e, Evas_Object *obj, void
    E_Gadcon_Client *gcc;
    
    gcc = data;
-   _e_gadcon_movereisze_handle(gcc);
+   _e_gadcon_moveresize_handle(gcc);
 }
     
 static void
@@ -1277,7 +1379,7 @@ _e_gadcon_client_save(E_Gadcon_Client *gcc)
    E_Config_Gadcon *cf_gc;
    E_Config_Gadcon_Client *cf_gcc;
    int ok;
-   
+
    ok = 0;
    for (l = e_config->gadcons; l; l = l->next)
      {
@@ -1300,6 +1402,8 @@ _e_gadcon_client_save(E_Gadcon_Client *gcc)
 		       cf_gcc->geom.pos = gcc->config.pos;
 		       cf_gcc->geom.size = gcc->config.size;
 		       cf_gcc->geom.res = gcc->config.res;
+		       cf_gcc->state_info.seq = gcc->state_info.seq;
+		       cf_gcc->state_info.flags = gcc->state_info.flags;
 		       cf_gcc->autoscroll = gcc->autoscroll;
 		       if (cf_gcc->style) evas_stringshare_del(cf_gcc->style);
 		       cf_gcc->style = NULL;
@@ -1329,6 +1433,8 @@ _e_gadcon_client_save(E_Gadcon_Client *gcc)
 	cf_gcc->geom.pos = gcc->config.pos;
 	cf_gcc->geom.size = gcc->config.size;
 	cf_gcc->geom.res = gcc->config.res;
+	cf_gcc->state_info.seq = gcc->state_info.seq;
+	cf_gcc->state_info.flags = gcc->state_info.flags;
 	cf_gcc->autoscroll = gcc->autoscroll;
 	if (cf_gcc->style) evas_stringshare_del(cf_gcc->style);
 	cf_gcc->style = NULL;
@@ -1336,7 +1442,6 @@ _e_gadcon_client_save(E_Gadcon_Client *gcc)
 	  cf_gcc->style = evas_stringshare_add(gcc->style);
 	cf_gcc->resizable = gcc->resizable;
 	cf_gc->clients = evas_list_append(cf_gc->clients, cf_gcc);
-	ok++;
      }
    e_config_save_queue();
 }
@@ -1473,20 +1578,13 @@ static void
 _e_gadcon_cb_signal_move_start(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Gadcon_Client *gcc;
-   Evas_Coord x, y;
    
    gcc = data;
    evas_object_raise(gcc->o_event);
    evas_object_stack_below(gcc->o_control, gcc->o_event);
    gcc->moving = 1;
    evas_pointer_canvas_xy_get(gcc->gadcon->evas, &gcc->dx, &gcc->dy);
-   evas_object_geometry_get(gcc->gadcon->o_container, &x, &y, NULL, NULL);
-   if (gcc->o_frame)
-     evas_object_geometry_get(gcc->o_frame, &gcc->sx, &gcc->sy, NULL, NULL);
-   else
-     evas_object_geometry_get(gcc->o_base, &gcc->sx, &gcc->sy, NULL, NULL);
-   gcc->sx -= x;
-   gcc->sy -= y;
+   gcc->state_info.resist = 0;
 }
 
 static void
@@ -1495,8 +1593,11 @@ _e_gadcon_cb_signal_move_stop(void *data, Evas_Object *obj, const char *emission
    E_Gadcon_Client *gcc;
    
    gcc = data;
-   gcc->moving = 0;
-   _e_gadcon_client_save(gcc);
+   gcc->moving = 0; 
+   
+   gcc->state_info.state = E_LAYOUT_ITEM_STATE_NONE;
+   gcc->state_info.resist = 0;
+   _e_gadcon_layout_smart_sync_clients(gcc->gadcon);
 }
 
 static void
@@ -1509,18 +1610,61 @@ _e_gadcon_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
    if (!gcc->moving) return;
    evas_pointer_canvas_xy_get(gcc->gadcon->evas, &x, &y);
    x = x - gcc->dx;
-   y = y - gcc->dy;
+   y = y - gcc->dy; 
+   
+   gcc->state_info.flags = E_GADCON_LAYOUT_ITEM_LOCK_POSITION | E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
+   _e_gadcon_client_current_position_sync(gcc);
+   if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
+     {
+	if (x > 0)
+	  {
+	     if (gcc->state_info.state != E_LAYOUT_ITEM_STATE_POS_INC)
+	       gcc->state_info.resist = 0;
+	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_POS_INC;
+	     x = 1;
+	  }
+	else if (x < 0)
+	  {
+	     if (gcc->state_info.state != E_LAYOUT_ITEM_STATE_POS_DEC)
+	       gcc->state_info.resist = 0; 
+	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_POS_DEC;
+	     x = -1; // would like to move by one pixel to be safe
+	  }
+     }
+   else
+     {
+	if (y > 0)
+	  {
+	     if (gcc->state_info.state != E_LAYOUT_ITEM_STATE_POS_INC)
+	       gcc->state_info.resist = 0;
+	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_POS_INC;
+	     y = 1;
+	  }
+	else if (y < 0)
+	  {
+	     if (gcc->state_info.state != E_LAYOUT_ITEM_STATE_POS_DEC)
+	       gcc->state_info.resist = 0;
+	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_POS_DEC;
+	     y = -1;
+	  }
+     }
+
+
    if (gcc->o_frame)
      evas_object_geometry_get(gcc->o_frame, NULL, NULL, &w, &h);
    else
      evas_object_geometry_get(gcc->o_base, NULL, NULL, &w, &h);
+
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
      {
 	if (gcc->o_frame)
-	  e_gadcon_layout_pack_request_set(gcc->o_frame, gcc->sx + x, w);
+	  e_gadcon_layout_pack_request_set(gcc->o_frame, gcc->config.pos + x, w);
 	else
-	  e_gadcon_layout_pack_request_set(gcc->o_base, gcc->sx + x, w);
-	gcc->config.pos = gcc->sx + x;
+	  e_gadcon_layout_pack_request_set(gcc->o_base, gcc->config.pos + x, w);
+
+	//gcc->config.pos will be set in smart_recofigure
+	//gcc->config.size will be set in smart_reconfigure
+	//original: gcc->config.pos = gcc->sx + x;
 	gcc->config.size = w;
 	evas_object_geometry_get(gcc->gadcon->o_container, NULL, NULL, &w, &h);
 	gcc->config.res = w;
@@ -1528,38 +1672,37 @@ _e_gadcon_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
    else
      {
 	if (gcc->o_frame)
-	  e_gadcon_layout_pack_request_set(gcc->o_frame, gcc->sy + y, h);
+	  e_gadcon_layout_pack_request_set(gcc->o_frame, gcc->config.pos + y, h);
 	else
-	  e_gadcon_layout_pack_request_set(gcc->o_base, gcc->sy + y, h);
-	gcc->config.pos = gcc->sy + y;
+	  e_gadcon_layout_pack_request_set(gcc->o_base, gcc->config.pos + y, h);
+
+	//gcc->config.pos will be set in smart_recofigure
+	//gcc->config.size will be set in smart_reconfigure
+	//original: gcc->config.pos = gcc->sy + y;
 	gcc->config.size = h;
 	evas_object_geometry_get(gcc->gadcon->o_container, NULL, NULL, &w, &h);
 	gcc->config.res = h;
      }
+   gcc->dx += x;
+   gcc->dy += y;
 }
 
 static void
 _e_gadcon_client_resize_start(E_Gadcon_Client *gcc)
 {
-   Evas_Coord x, y;
-   
    evas_object_raise(gcc->o_event);
    evas_object_stack_below(gcc->o_control, gcc->o_event);
    gcc->resizing = 1;
    evas_pointer_canvas_xy_get(gcc->gadcon->evas, &gcc->dx, &gcc->dy);
-   evas_object_geometry_get(gcc->gadcon->o_container, &x, &y, NULL, NULL);
-   if (gcc->o_frame)
-     evas_object_geometry_get(gcc->o_frame, &gcc->sx, &gcc->sy, &gcc->sw, &gcc->sh);
-   else
-     evas_object_geometry_get(gcc->o_base, &gcc->sx, &gcc->sy, &gcc->sw, &gcc->sh);
-   gcc->sx -= x;
-   gcc->sy -= y;
 }
 
 static void
 _e_gadconclient_resize_stop(E_Gadcon_Client *gcc)
 {
    gcc->resizing = 0;
+
+   gcc->state_info.state = E_LAYOUT_ITEM_STATE_NONE;
+   _e_gadcon_layout_smart_sync_clients(gcc->gadcon);
    _e_gadcon_client_save(gcc);
 }
 
@@ -1586,32 +1729,68 @@ _e_gadcon_cb_signal_resize_left_go(void *data, Evas_Object *obj, const char *emi
    evas_pointer_canvas_xy_get(gcc->gadcon->evas, &x, &y);
    x = x - gcc->dx;
    y = y - gcc->dy;
+
+   gcc->state_info.flags = E_GADCON_LAYOUT_ITEM_LOCK_POSITION | E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
+
    if (gcc->o_frame)
      evas_object_geometry_get(gcc->o_frame, NULL, NULL, &w, &h);
    else
      evas_object_geometry_get(gcc->o_base, NULL, NULL, &w, &h);
+
+   _e_gadcon_client_current_position_sync(gcc);
+
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
      {
-	if (gcc->o_frame)
-	  e_gadcon_layout_pack_request_set(gcc->o_frame, gcc->sx + x, gcc->sw - x);
+	if (x > 0)
+	  {
+	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MIN_END_INC;
+	  }
+	else if (x < 0)
+	  {
+	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MIN_END_DEC;
+	  }
+     }
+   else
+     {
+	if (y > 0)
+	  {
+	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MIN_END_INC;
+	  }
+	else if (y < 0)
+	  {
+	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MIN_END_DEC;
+	  }
+     }
+
+   if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
+     {
+	if (gcc->o_frame) 
+	  e_gadcon_layout_pack_request_set(gcc->o_frame, gcc->config.pos + x, w - x);
 	else
-	  e_gadcon_layout_pack_request_set(gcc->o_base, gcc->sx + x, gcc->sw - x);
-	gcc->config.pos = gcc->sx + x;
-	gcc->config.size = gcc->sw - x;
+	  e_gadcon_layout_pack_request_set(gcc->o_base, gcc->config.pos + x, w - x);
+	//gcc->config.pos will be set in smart_reconfigure
+	//gcc->config.size will be set in smart_reconfigure
+	//original: gcc->config.pos = gcc->sx + x;
+	//original: gcc->config.size = gcc->sw - x;
 	evas_object_geometry_get(gcc->gadcon->o_container, NULL, NULL, &w, &h);
 	gcc->config.res = w;
      }
    else
      {
 	if (gcc->o_frame)
-	  e_gadcon_layout_pack_request_set(gcc->o_frame, gcc->sy + y, gcc->sh - y);
+	  e_gadcon_layout_pack_request_set(gcc->o_frame, gcc->config.pos + y, h - y);
 	else
-	  e_gadcon_layout_pack_request_set(gcc->o_base, gcc->sy + y, gcc->sh - y);
-	gcc->config.pos = gcc->sy + y;
-	gcc->config.size = gcc->sh - y;
+	  e_gadcon_layout_pack_request_set(gcc->o_base, gcc->config.pos + y, h - y);
+	//gcc->config.pos will be set in smart_reconfigure
+	//gcc->config.size will be set in smart_reconfigure
+	//original: gcc->config.pos = gcc->sy + y;
+	//original: gcc->config.size = gcc->sh - y;
 	evas_object_geometry_get(gcc->gadcon->o_container, NULL, NULL, &w, &h);
-	gcc->config.res = h;
+	gcc->config.res = h; 
+	
      }
+   gcc->dx += x;
+   gcc->dy += y;
 }
 
 static void
@@ -1637,41 +1816,73 @@ _e_gadcon_cb_signal_resize_right_go(void *data, Evas_Object *obj, const char *em
    evas_pointer_canvas_xy_get(gcc->gadcon->evas, &x, &y);
    x = x - gcc->dx;
    y = y - gcc->dy;
+
+   gcc->state_info.flags = E_GADCON_LAYOUT_ITEM_LOCK_POSITION | E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
+
    if (gcc->o_frame)
      evas_object_geometry_get(gcc->o_frame, NULL, NULL, &w, &h);
    else
      evas_object_geometry_get(gcc->o_base, NULL, NULL, &w, &h);
+
+   _e_gadcon_client_current_position_sync(gcc);
+
+   if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
+     {
+	if (x > 0)
+	  { 
+	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MAX_END_INC;
+	  }
+	else if (x < 0)
+	  {
+	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MAX_END_DEC;
+	  }
+     }
+   else
+     {
+	if (y > 0)
+	  {
+	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MAX_END_INC;
+	  }
+	else if (y < 0)
+	  {
+	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MAX_END_INC;
+	  }
+     }
+
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
      {
 	if (gcc->o_frame)
-	  e_gadcon_layout_pack_request_set(gcc->o_frame, gcc->sx, gcc->sw + x);
+	  e_gadcon_layout_pack_request_set(gcc->o_frame, gcc->config.pos, w + x);
 	else
-	  e_gadcon_layout_pack_request_set(gcc->o_base, gcc->sx, gcc->sw + x);
-	gcc->config.pos = gcc->sx;
-	gcc->config.size = gcc->sw + x;
+	  e_gadcon_layout_pack_request_set(gcc->o_base, gcc->config.pos, w + x);
+	//gcc->config.pos is set inside smart_reconfigure
+	//gcc->config.size is set inside smart_reconfigure
+	//original: gcc->config.pos = gcc->sx;
+	//original: gcc->config.size = gcc->sw + x;
 	evas_object_geometry_get(gcc->gadcon->o_container, NULL, NULL, &w, &h);
 	gcc->config.res = w;
      }
    else
      {
 	if (gcc->o_frame)
-	  e_gadcon_layout_pack_request_set(gcc->o_frame, gcc->sy, gcc->sh + y);
+	  e_gadcon_layout_pack_request_set(gcc->o_frame, gcc->config.pos, h + y);
 	else
-	  e_gadcon_layout_pack_request_set(gcc->o_base, gcc->sy, gcc->sh + y);
-	gcc->config.pos = gcc->sy;
-	gcc->config.size = gcc->sh + y;
+	  e_gadcon_layout_pack_request_set(gcc->o_base, gcc->config.pos, h + y);
+	//gcc->config.pos is set inside smart_reconfigure
+	//gcc->config.size is set inside smart_reconfigure
+	//original: gcc->config.pos = gcc->sy;
+	//original: gcc->config.size = gcc->sh + y;
 	evas_object_geometry_get(gcc->gadcon->o_container, NULL, NULL, &w, &h);
 	gcc->config.res = h;
      }
+   gcc->dx += x;
+   gcc->dy += y;
 }
-
-
 
 
 
 /* a smart object JUST for gadcon */
 
-typedef struct _E_Smart_Data E_Smart_Data;
 typedef struct _E_Gadcon_Layout_Item  E_Gadcon_Layout_Item;
 
 struct _E_Smart_Data
@@ -1691,12 +1902,15 @@ struct _E_Gadcon_Layout_Item
 {
    E_Smart_Data    *sd;
    struct {
-      int           pos, size, size2, res;
+      int           pos, size, size2, res, prev_pos, prev_size;
    } ask;
    int              hookp;
    struct {
       int           w, h;
    } min, aspect, aspect_pad;
+
+   E_Gadcon_Client *gcc;
+
    Evas_Coord       x, y, w, h;
    Evas_Object     *obj;
    unsigned char    can_move : 1;
@@ -1718,6 +1932,12 @@ static void _e_gadcon_layout_smart_hide(Evas_Object *obj);
 static void _e_gadcon_layout_smart_color_set(Evas_Object *obj, int r, int g, int b, int a);
 static void _e_gadcon_layout_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
 static void _e_gadcon_layout_smart_clip_unset(Evas_Object *obj);
+
+static void _e_gadcon_layout_smart_min_cur_size_calc(E_Smart_Data *sd, int *min, int *mino, int *cur);
+void _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur);
+
+static int _e_gadcon_layout_smart_sort_by_sequence_number_cb(void *d1, void *d2);
+static int _e_gadcon_layout_smart_sort_by_position_cb(void *d1, void *d2);
 
 /* local subsystem globals */
 static Evas_Smart *_e_smart = NULL;
@@ -1797,6 +2017,7 @@ e_gadcon_layout_min_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 
    if (w) *w = sd->minw;
    if (h) *h = sd->minh;
+
 /*   
    for (l = sd->items; l; l = l->next)
      {
@@ -1827,10 +2048,12 @@ e_gadcon_layout_asked_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
    E_Smart_Data *sd;
    Evas_Coord tw = 0, th = 0;
 
+
    if (!obj) return;
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
+
    if (sd->horizontal)
      tw = sd->req;
    else
@@ -1875,6 +2098,9 @@ e_gadcon_layout_pack(Evas_Object *obj, Evas_Object *child)
 static void
 e_gadcon_layout_pack_size_set(Evas_Object *obj, int size)
 {
+   //FIXME: simplify this function until the 
+   //is redone _e_gadcon_layout_smart_gadcons_asked_position_set(E_Smart_Data *sd)
+   //
    E_Gadcon_Layout_Item *bi;
    int xx;
 
@@ -1947,18 +2173,45 @@ e_gadcon_layout_pack_request_set(Evas_Object *obj, int pos, int size)
 
 /* called when restoring config from saved config */
 static void
-e_gadcon_layout_pack_options_set(Evas_Object *obj, int pos, int size, int res)
+e_gadcon_layout_pack_options_set(Evas_Object *obj, E_Gadcon_Client *gcc)
 {
-   E_Gadcon_Layout_Item *bi;
+   int ok, seq;
+   Evas_List *l;
+   E_Gadcon_Layout_Item *bi, *bi2;
 
    if (!obj) return;
    
    bi = evas_object_data_get(obj, "e_gadcon_layout_data");
    if (!bi) return;
-   bi->ask.res = res;
-   bi->ask.size = size;
-   bi->ask.pos = pos;
-   _e_gadcon_layout_smart_reconfigure(bi->sd);
+   bi->ask.res = gcc->config.res;
+   bi->ask.size = gcc->config.size;
+   bi->ask.pos = gcc->config.pos;
+   bi->gcc = gcc;
+
+   ok = 0;
+   if (!gcc->state_info.seq) 
+     ok = 1;
+
+   seq = 1;
+   for (l = bi->sd->items; l; l = l->next)
+     {
+	bi2 = evas_object_data_get(l->data, "e_gadcon_layout_data");
+	if (bi == bi2) continue;
+
+	if (bi->gcc->state_info.seq == bi2->gcc->state_info.seq)
+	  ok = 1;
+
+	if (bi2->gcc->state_info.seq > seq)
+	  seq = bi2->gcc->state_info.seq;
+     }
+
+   if (ok)
+     { 
+	gcc->state_info.seq = seq + 1; 
+	gcc->state_info.want_save = 1;
+	gcc->state_info.flags = E_GADCON_LAYOUT_ITEM_LOCK_NONE;
+     }
+   _e_gadcon_layout_smart_reconfigure(bi->sd); 
 }
 
 static void
@@ -2074,43 +2327,17 @@ _e_gadcon_layout_smart_item_del_hook(void *data, Evas *e, Evas_Object *obj, void
    e_gadcon_layout_unpack(obj);
 }
 
-static int
-_e_gadcon_sort_cb(void *d1, void *d2)
-{
-   E_Gadcon_Layout_Item *bi1, *bi2;
-   int v1, v2;
-   
-   bi1 = evas_object_data_get(d1, "e_gadcon_layout_data");
-   bi2 = evas_object_data_get(d2, "e_gadcon_layout_data");
-   v1 = (bi1->ask.pos + (bi1->ask.size / 2)) - bi1->hookp;
-   if (v1 < 0) v1 = -v1;
-   v2 = (bi2->ask.pos + (bi2->ask.size / 2)) - bi2->hookp;
-   if (v2 < 0) v2 = -v2;
-   return v1 - v2;
-}    
-
-static int
-_e_gadcon_sort_all_cb(void *d1, void *d2)
-{
-   E_Gadcon_Layout_Item *bi1, *bi2;
-   int v1, v2;
-   
-   bi1 = evas_object_data_get(d1, "e_gadcon_layout_data");
-   bi2 = evas_object_data_get(d2, "e_gadcon_layout_data");
-   v1 = (bi1->ask.pos + (bi1->ask.size / 2));
-   if (v1 < 0) v1 = -v1;
-   v2 = (bi2->ask.pos + (bi2->ask.size / 2));
-   if (v2 < 0) v2 = -v2;
-   return v1 - v2;
-}    
-
 static void
 _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 {
    Evas_Coord x, y, w, h, xx, yy;
    Evas_List *l, *l2;
    int min, mino, cur;
-   Evas_List *list_s = NULL, *list_m = NULL, *list_e = NULL, *list = NULL;
+   Evas_List *list = NULL;
+   E_Gadcon_Layout_Item *bi;
+   E_Layout_Item_Container *lc;
+   int i;
+   int set_prev_pos = 0;
 
    if (sd->frozen) return;
    if (sd->doing_config)
@@ -2119,569 +2346,114 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	return;
      }
    
-   x = sd->x; y = sd->y; w = sd->w; h = sd->h;
+   //x = sd->x; y = sd->y; w = sd->w; h = sd->h;
    min = mino = cur = 0;
 
-   for (l = sd->items; l; l = l->next)
-     {
-	E_Gadcon_Layout_Item *bi;
-	Evas_Object *obj;
-	
-	obj = l->data;
-	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
-	if (!bi) continue;
-	bi->ask.size2 = bi->ask.size;
-	if ((bi->aspect.w > 0) && (bi->aspect.h > 0))
-	  {
-	     if (sd->horizontal)
-	       {
-		  bi->ask.size2 = (((h - bi->aspect_pad.h) * bi->aspect.w) / 
-				   bi->aspect.h) + bi->aspect_pad.w;
-		  if (bi->ask.size2 > bi->min.w)
-		    {
-		       min += bi->ask.size2;
-		       cur += bi->ask.size2;
-		    }
-		  else
-		    {
-		       cur += bi->min.w;
-		       min += bi->min.w;
-		    }
-	       }
-	     else 
-	       {
-		  bi->ask.size2 = (((w - bi->aspect_pad.w) * bi->aspect.h) / 
-				   bi->aspect.w) + bi->aspect_pad.h;
-		  if (bi->ask.size2 > bi->min.h)
-		    {
-		       min += bi->ask.size2;
-		       cur += bi->ask.size2;
-		    }
-		  else
-		    {
-		       cur += bi->min.h;
-		       min += bi->min.h;
-		    }
-	       }
-	  }
-	else
-	  {
-	     if (sd->horizontal)
-	       {
-		  min += bi->min.w;
-		  if (bi->min.h > mino) mino = bi->min.h;
-		  if (bi->ask.size < bi->min.w)
-		    cur += bi->min.w;
-		  else
-		    cur += bi->ask.size;
-	       }
-	     else
-	       {
-		  min += bi->min.h;
-		  if (bi->min.w > mino) mino = bi->min.w;
-		  if (bi->ask.size < bi->min.h)
-		    cur += bi->min.h;
-		  else
-		    cur += bi->ask.size;
-	       }
-	  }
-     }
-   
+   _e_gadcon_layout_smart_min_cur_size_calc(sd, &min, &mino, &cur); 
+
+   // update sd info about minw req etc
+   // here request for gadcon size !!
    if (sd->horizontal)
      {
-	if (cur <= w)
+	if ((sd->minw != min) || (sd->minh != mino))
 	  {
-	     /* all is fine - it should all fit */
-	  }
-	else
-	  {
-	     int sub, give, num, given, i;
-	     
-	     sub = cur - w; /* we need to find "sub" extra pixels */
-	     if (min <= w)
-	       {
-		  for (l = sd->items; l; l = l->next)
-		    {
-		       E_Gadcon_Layout_Item *bi;
-		       Evas_Object *obj;
-		       
-		       obj = l->data;
-		       bi = evas_object_data_get(obj, "e_gadcon_layout_data");
-		       if (!bi) continue;
-		       give = bi->ask.size - bi->min.w; // how much give does this have?
-		       if (give < sub) give = sub;
-		       bi->ask.size2 = bi->ask.size - give;
-		       sub -= give;
-		       if (sub <= 0) break;
-		    }
-	       }
-	     else
-	       { /* EEK - all items just cant fit at their minimum! what do we do? */
-		  num = 0;
-		  num = evas_list_count(sd->items);
-		  give = min - w; // how much give total below minw we need
-		  given = 0;
-		  for (l = sd->items; l; l = l->next)
-		    {
-		       E_Gadcon_Layout_Item *bi;
-		       Evas_Object *obj;
-		       
-		       obj = l->data;
-		       bi = evas_object_data_get(obj, "e_gadcon_layout_data");
-		       if (!bi) continue;
-		       bi->ask.size2 = bi->min.w;
-		       if (!l->next)
-			 {
-			    bi->ask.size2 -= (give - given);
-			 }
-		       else
-			 {
-			    i = (give + (num / 2)) / num;
-			    given -= i;
-			    bi->ask.size2 -= i;
-			 }
-		    }
-	       }
+	     sd->minw = min;
+	     sd->minh = mino;
+	     evas_object_smart_callback_call(sd->obj, "min_size_request", NULL);
 	  }
      }
    else
      {
-	if (cur <= h)
+	if ((sd->minh != min) || (sd->minw != mino))
 	  {
-	     /* all is fine - it should all fit */
+	     sd->minh = min;
+	     sd->minw = mino;
+	     evas_object_smart_callback_call(sd->obj, "min_size_request", NULL);
+	  }
+     }
+
+   if (sd->req != cur)
+     {
+	if (((sd->horizontal) && (cur >= sd->minw)) ||
+	    ((!sd->horizontal) && (cur >= sd->minh)))
+	  {
+	     sd->req = cur;
+	     evas_object_smart_callback_call(sd->obj, "size_request", NULL);
 	  }
 	else
 	  {
-	     int sub, give, num, given, i;
-	     
-	     sub = cur - h; /* we need to find "sub" extra pixels */
-	     if (min <= h)
-	       {
-		  for (l = sd->items; l; l = l->next)
-		    {
-		       E_Gadcon_Layout_Item *bi;
-		       Evas_Object *obj;
-		       
-		       obj = l->data;
-		       bi = evas_object_data_get(obj, "e_gadcon_layout_data");
-		       if (!bi) continue;
-		       give = bi->ask.size - bi->min.h; // how much give does this have?
-		       if (give < sub) give = sub;
-		       bi->ask.size2 = bi->ask.size - give;
-		       sub -= give;
-		       if (sub <= 0) break;
-		    }
-	       }
-	     else
-	       { /* EEK - all items just cant fit at their minimum! what do we do? */
-		  num = 0;
-		  num = evas_list_count(sd->items);
-		  give = min - h; // how much give total below minw we need
-		  given = 0;
-		  for (l = sd->items; l; l = l->next)
-		    {
-		       E_Gadcon_Layout_Item *bi;
-		       Evas_Object *obj;
-		       
-		       obj = l->data;
-		       bi = evas_object_data_get(obj, "e_gadcon_layout_data");
-		       if (!bi) continue;
-		       bi->ask.size2 = bi->min.h;
-		       if (!l->next)
-			 {
-			    bi->ask.size2 -= (give - given);
-			 }
-		       else
-			 {
-			    i = (give + (num / 2)) / num;
-			    given -= i;
-			    bi->ask.size2 -= i;
-			 }
-		    }
-	       }
-	  }
-     }
-   
-   for (l = sd->items; l; l = l->next)
-     {
-	E_Gadcon_Layout_Item *bi;
-	Evas_Object *obj;
-	
-	obj = l->data;
-	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
-	if (!bi) continue;
-	list = evas_list_append(list, obj);
-	if (sd->horizontal)
-	  {
-	     xx = bi->ask.pos + (bi->ask.size / 2);
-	     if (xx < (bi->ask.res / 3))
-	       { /* hooked to start */
-		  bi->x = bi->ask.pos;
-		  bi->w = bi->ask.size2;
-		  list_s = evas_list_append(list_s, obj);
-		  bi->hookp = 0;
-	       }
-	     else if (xx > ((2 * bi->ask.res) / 3))
-	       { /* hooked to end */
-		  bi->x = (bi->ask.pos - bi->ask.res) + w;
-		  bi->w = bi->ask.size2;
-		  list_e = evas_list_append(list_e, obj);
-		  bi->hookp = bi->ask.res;
-	       }
-	     else
-	       { /* hooked to middle */
-		  if ((bi->ask.pos <= (bi->ask.res / 2)) &&
-		      ((bi->ask.pos + bi->ask.size2) > (bi->ask.res / 2)))
-		    { /* straddles middle */
-		       if (bi->ask.res > 2)
-			 bi->x = (w / 2) + 
-			 (((bi->ask.pos + (bi->ask.size2 / 2) - 
-			    (bi->ask.res / 2)) * 
-			   (bi->ask.res / 2)) /
-			  (bi->ask.res / 2)) - (bi->ask.size2 / 2);
-		       else
-			 bi->x = w / 2;
-		       bi->w = bi->ask.size2;
-		    }
-		  else
-		    { /* either side of middle */
-		       bi->x = (bi->ask.pos - (bi->ask.res / 2)) + (w / 2);
-		       bi->w = bi->ask.size2;
-		    }
-		  list_m = evas_list_append(list_m, obj);
-		  bi->hookp = bi->ask.res / 2;
-	       }
-	     if (bi->x < 0) bi->x = 0;
-	     else if ((bi->x + bi->w) > w) bi->x = w - bi->w;
-	  }
-	else
-	  {
-	     yy = bi->ask.pos + (bi->ask.size2 / 2);
-	     if (yy < (bi->ask.res / 3))
-	       { /* hooked to start */
-		  bi->y = bi->ask.pos;
-		  bi->h = bi->ask.size2;
-		  list_s = evas_list_append(list_s, obj);
-		  bi->hookp = 0;
-	       }
-	     else if (yy > ((2 * bi->ask.res) / 3))
-	       { /* hooked to end */
-		  bi->y = (bi->ask.pos - bi->ask.res) + h;
-		  bi->h = bi->ask.size2;
-		  list_e = evas_list_append(list_e, obj);
-		  bi->hookp = bi->ask.res;
-	       }
-	     else
-	       { /* hooked to middle */
-		  if ((bi->ask.pos <= (bi->ask.res / 2)) &&
-		      ((bi->ask.pos + bi->ask.size2) > (bi->ask.res / 2)))
-		    { /* straddles middle */
-		       if (bi->ask.res > 2)
-			 bi->y = (h / 2) + 
-			 (((bi->ask.pos + (bi->ask.size2 / 2) - 
-			    (bi->ask.res / 2)) * 
-			   (bi->ask.res / 2)) /
-			  (bi->ask.res / 2)) - (bi->ask.size2 / 2);
-		       else
-			 bi->y = h / 2;
-		       bi->h = bi->ask.size2;
-		    }
-		  else
-		    { /* either side of middle */
-		       bi->y = (bi->ask.pos - (bi->ask.res / 2)) + (h / 2);
-		       bi->h = bi->ask.size2;
-		    }
-		  list_s = evas_list_append(list_s, obj);
-		  bi->hookp = bi->ask.res / 2;
-	       }
-	     if (bi->y < 0) bi->y = 0;
-	     else if ((bi->y + bi->h) > h) bi->y = h - bi->h;
-	  }
-     }
-   list_s = evas_list_sort(list_s, evas_list_count(list_s), _e_gadcon_sort_cb);
-   list_m = evas_list_sort(list_m, evas_list_count(list_m), _e_gadcon_sort_cb);
-   list_e = evas_list_sort(list_e, evas_list_count(list_e), _e_gadcon_sort_cb);
-   list = evas_list_sort(list, evas_list_count(list), _e_gadcon_sort_all_cb);
-   for (l = list_s; l; l = l->next)
-     {
-	E_Gadcon_Layout_Item *bi;
-	Evas_Object *obj;
-	
-	obj = l->data;
-	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
-	if (!bi) continue;
-	again1:
-	for (l2 = l->prev; l2; l2 = l2->prev)
-	  {
-	     E_Gadcon_Layout_Item *bi2;
-	     
-	     obj = l2->data;
-	     bi2 = evas_object_data_get(obj, "e_gadcon_layout_data");
-	     if (!bi2) continue;
 	     if (sd->horizontal)
-	       {
-		  if (E_SPANS_COMMON(bi->x, bi->w, bi2->x, bi2->w))
-		    {
-		       bi->x = bi2->x + bi2->w;
-		       goto again1;
-		    }
-	       }
+	       sd->req = sd->minw;
 	     else
-	       {
-		  if (E_SPANS_COMMON(bi->y, bi->h, bi2->y, bi2->h))
-		    {
-		       bi->y = bi2->y + bi2->h;
-		       goto again1;
-		    }
-	       }
+	       sd->req = sd->minh;
 	  }
      }
-   for (l = list_m; l; l = l->next)
-     {
-	E_Gadcon_Layout_Item *bi;
-	Evas_Object *obj;
-	
-	obj = l->data;
-	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
-	if (!bi) continue;
-	again2:
-	for (l2 = l->prev; l2; l2 = l2->prev)
-	  {
-	     E_Gadcon_Layout_Item *bi2;
-	     
-	     obj = l2->data;
-	     bi2 = evas_object_data_get(obj, "e_gadcon_layout_data");
-	     if (!bi2) continue;
-             if (sd->horizontal)
-	       {
-		  if (E_SPANS_COMMON(bi->x, bi->w, bi2->x, bi2->w))
-		    {
-		       if ((bi2->x + (bi2->w / 2)) < (w / 2))
-			 bi->x = bi2->x - bi->w;
-		       else
-			 bi->x = bi2->x + bi2->w;
-		       goto again2;
-		    }
-	       }
-	     else
-	       {
-		  if (E_SPANS_COMMON(bi->y, bi->h, bi2->y, bi2->h))
-		    {
-		       if ((bi2->y + (bi2->h / 2)) < (h / 2))
-			 bi->y = bi2->y - bi->h;
-		       else
-			 bi->y = bi2->y + bi2->h;
-		       goto again2;
-		    }
-	       }
-	  }
-     }
-   for (l = list_e; l; l = l->next)
-     {
-	E_Gadcon_Layout_Item *bi;
-	Evas_Object *obj;
-	
-	obj = l->data;
-	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
-	if (!bi) continue;
-	again3:
-	for (l2 = l->prev; l2; l2 = l2->prev)
-	  {
-	     E_Gadcon_Layout_Item *bi2;
-	     
-	     obj = l2->data;
-	     bi2 = evas_object_data_get(obj, "e_gadcon_layout_data");
-	     if (!bi2) continue;
-             if (sd->horizontal)
-	       {
-		  if (E_SPANS_COMMON(bi->x, bi->w, bi2->x, bi2->w))
-		    {
-		       bi->x = bi2->x - bi->w;
-		       goto again3;
-		    }
-	       }
-	     else
-	       {
-		  if (E_SPANS_COMMON(bi->y, bi->h, bi2->y, bi2->h))
-		    {
-		       bi->y = bi2->y - bi->h;
-		       goto again3;
-		    }
-	       }
-	  }
-     }
-   for (l = list; l; l = l->next)
-     {
-	E_Gadcon_Layout_Item *bi;
-	Evas_Object *obj;
-	
-	obj = l->data;
-	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
-	if (!bi) continue;
-	bi->can_move = 1;
-	if (sd->horizontal)
-	  {
-	     if (!l->prev)
-	       {
-		  if (bi->x <= 0)
-		    {
-		       bi->x = 0;
-		       bi->can_move = 0;
-		    }
-	       }
-	     if (!l->next)
-	       {
-		  if ((bi->x + bi->w) >= w)
-		    {
-		       bi->x = w - bi->w;
-		       bi->can_move = 0;
-		    }
-	       }
-	  }
-	else
-	  {
-	     if (!l->prev)
-	       {
-		  if (bi->y <= 0)
-		    {
-		       bi->y = 0;
-		       bi->can_move = 0;
-		    }
-	       }
-	     if (!l->next)
-	       {
-		  if ((bi->y + bi->h) >= h)
-		    {
-		       bi->y = h - bi->h;
-		       bi->can_move = 0;
-		    }
-	       }
-	  }
-     }
-   if (sd->horizontal)
-     {
-	int overlap;
-	int count;
-	
-	overlap = 1;
-	count = 0;
-	while (overlap)
-	  {
-	     overlap = 0;
-	     for (l = list; l; l = l->next)
-	       {
-		  E_Gadcon_Layout_Item *bi;
-		  Evas_Object *obj;
-		  
-		  obj = l->data;
-		  bi = evas_object_data_get(obj, "e_gadcon_layout_data");
-		  if (!bi) continue;
-		  if (bi->can_move)
-		    {
-		       for (l2 = l->next; l2; l2 = l2->next)
-			 {
-			    E_Gadcon_Layout_Item *bi2;
-			    
-			    obj = l2->data;
-			    bi2 = evas_object_data_get(obj, "e_gadcon_layout_data");
-			    if (!bi2) continue;
-			    if (E_SPANS_COMMON(bi->x, bi->w, bi2->x, bi2->w))
-			      {
-				 bi->x = bi2->x - bi->w;
-				 if (!bi2->can_move) bi->can_move = 0;
-				 if ((bi->x + bi->w) >= w) bi->x = w - bi->w;
-				 if (bi->x <= 0) bi->x = 0;
-				 overlap = 1;
-			      }
-			 }
-		       for (l2 = l->prev; l2; l2 = l2->prev)
-			 {
-			    E_Gadcon_Layout_Item *bi2;
-			    
-			    obj = l2->data;
-			    bi2 = evas_object_data_get(obj, "e_gadcon_layout_data");
-			    if (!bi2) continue;
-			    if (E_SPANS_COMMON(bi->x, bi->w, bi2->x, bi2->w))
-			      {
-				 bi->x = bi2->x + bi2->w;
-				 if (!bi2->can_move) bi->can_move = 0;
-				 if ((bi->x + bi->w) >= w) bi->x = w - bi->w;
-				 if (bi->x <= 0) bi->x = 0;
-				 overlap = 1;
-			      }
-			 }
-		    }
-	       }
-	     count++;
-	     if (count > 200) break; // quick infinite loop fix
-	  }
+   _e_gadcon_layout_smart_gadcons_width_adjust(sd, min, cur);
+
+   if (((sd->horizontal) && (sd->w <= sd->req)) || ((!sd->horizontal) && (sd->h <= sd->req)))
+     { 
+	_e_gadcon_layout_smart_gadcon_position_shrinked_mode(sd);
+	set_prev_pos = 0;
      }
    else
-     {
-	/* FIXME: for how this is just a copy of the above but in the vertical
-	 *        so when the above is "fixeD" the below needs to mirror it
-	 */
-	int overlap;
-	int count;
-	
-	overlap = 1;
-	count = 0;
-	while (overlap)
+     { 
+	_e_gadcon_layout_smart_gadcons_asked_position_set(sd);
+
+	list = _e_gadcon_layout_smart_gadcons_wrap(sd);
+
+	_e_gadcon_layout_smart_gadcons_position(sd, &list);
+
+	for (l = list; l; l = l->next)
 	  {
-	     overlap = 0;
-	     for (l = list; l; l = l->next)
-	       {
-		  E_Gadcon_Layout_Item *bi;
-		  Evas_Object *obj;
-		  
-		  obj = l->data;
-		  bi = evas_object_data_get(obj, "e_gadcon_layout_data");
-		  if (!bi) continue;
-		  if (bi->can_move)
-		    {
-		       for (l2 = l->next; l2; l2 = l2->next)
-			 {
-			    E_Gadcon_Layout_Item *bi2;
-			    
-			    obj = l2->data;
-			    bi2 = evas_object_data_get(obj, "e_gadcon_layout_data");
-			    if (!bi2) continue;
-			    if (E_SPANS_COMMON(bi->y, bi->h, bi2->y, bi2->h))
-			      {
-				 bi->y = bi2->y - bi->h;
-				 if (!bi2->can_move) bi->can_move = 0;
-				 if ((bi->y + bi->h) >= h) bi->y = h - bi->h;
-				 if (bi->y <= 0) bi->y = 0;
-				 overlap = 1;
-			      }
-			 }
-		       for (l2 = l->prev; l2; l2 = l2->prev)
-			 {
-			    E_Gadcon_Layout_Item *bi2;
-			    
-			    obj = l2->data;
-			    bi2 = evas_object_data_get(obj, "e_gadcon_layout_data");
-			    if (!bi2) continue;
-			    if (E_SPANS_COMMON(bi->y, bi->h, bi2->y, bi2->h))
-			      {
-				 bi->y = bi2->y + bi2->h;
-				 if (!bi2->can_move) bi->can_move = 0;
-				 if ((bi->y + bi->h) >= h) bi->y = h - bi->h;
-				 if (bi->y <= 0) bi->y = 0;
-				 overlap = 1;
-			      }
-			 }
-		    }
-	       }
-	     count++;
-	     if (count > 200) break; // quick infinite loop fix
+	     lc = l->data;
+	     LC_FREE(lc);
 	  }
+	list = evas_list_free(list);
+	set_prev_pos = 1;
      }
-   
-   evas_list_free(list_s);
-   evas_list_free(list_m);
-   evas_list_free(list_e);
-   evas_list_free(list);
+
+
+   sd->items = evas_list_sort(sd->items, evas_list_count(sd->items),
+			      _e_gadcon_layout_smart_sort_by_position_cb);
+   for (l = sd->items, i = 1; l; l = l->next, i++)
+     {
+	bi = evas_object_data_get(l->data, "e_gadcon_layout_data"); 
+	bi->gcc->state_info.seq = i; 
+
+	if (set_prev_pos)
+	  {
+	     if (sd->horizontal)
+	       { 
+		  bi->ask.prev_pos = bi->x; 
+		  bi->ask.prev_size = bi->w;
+	       }
+	     else
+	       {
+		  bi->ask.prev_pos = bi->y;
+		  bi->ask.prev_size = bi->h;
+	       }
+	  }
+	if (sd->horizontal)
+	  {
+	     if ((bi->x == bi->ask.pos) &&
+		 (bi->gcc->state_info.flags & E_GADCON_LAYOUT_ITEM_LOCK_POSITION))
+	       bi->gcc->state_info.flags |= E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
+	  }
+	else
+	  {
+	     if ((bi->y == bi->ask.pos) &&
+		 (bi->gcc->state_info.flags & E_GADCON_LAYOUT_ITEM_LOCK_POSITION))
+	       bi->gcc->state_info.flags |= E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
+	  }
+
+	if ((bi->gcc->state_info.flags & E_GADCON_LAYOUT_ITEM_LOCK_POSITION) &&
+	    (bi->gcc->state_info.flags & E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE))
+	  {
+	     if (((sd->horizontal) && (bi->x != bi->ask.pos)) ||
+	         ((!sd->horizontal) && (bi->y != bi->ask.pos)))
+	       bi->gcc->state_info.flags &= ~E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
+	  }
+     } 
    
    for (l = sd->items; l; l = l->next)
      {
@@ -2693,15 +2465,15 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	if (!bi) continue;
 	if (sd->horizontal)
 	  {
-	     bi->h = h;
-	     xx = x + bi->x;
-	     yy = y + ((h - bi->h) / 2);
+	     bi->h = sd->h;
+	     xx = sd->x + bi->x;
+	     yy = sd->y + ((sd->h - bi->h) / 2);
 	  }
 	else
 	  {
-	     bi->w = w;
-	     xx = x + ((w - bi->w) / 2);
-	     yy = y + bi->y;
+	     bi->w = sd->w;
+	     xx = sd->x + ((sd->w - bi->w) / 2);
+	     yy = sd->y + bi->y;
 	  }
 	evas_object_move(obj, xx, yy);
 	evas_object_resize(obj, bi->w, bi->h);
@@ -2904,3 +2676,1670 @@ _e_gadcon_layout_smart_clip_unset(Evas_Object *obj)
    if (!sd) return;
    evas_object_clip_unset(sd->clip);
 }  
+
+
+/*
+ * @min - the minimum width required by all the gadcons
+ * @cur - the current width required by all the gadcons
+ * @mino - the smalest width/height among all the objects
+ */
+static void
+_e_gadcon_layout_smart_min_cur_size_calc(E_Smart_Data *sd, int *min, int *mino, int *cur)
+{
+   E_Gadcon_Layout_Item	*bi;
+   Evas_List *l;
+
+   // how much space all the gadgets takes in the shelf
+   for (l = sd->items; l; l = l->next)
+     {
+	bi = evas_object_data_get(l->data, "e_gadcon_layout_data");
+	bi->ask.size2 = bi->ask.size;
+
+	if ((bi->aspect.w > 0) && (bi->aspect.h > 0))
+	  {
+	     if (sd->horizontal)
+	       {
+		  bi->ask.size2 = (((sd->h - bi->aspect_pad.h) * bi->aspect.w) / bi->aspect.h)
+				   + bi->aspect_pad.w;
+		  if (bi->ask.size2 > bi->min.w)
+		    {
+		       *min += bi->ask.size2;
+		       *cur += bi->ask.size2;
+		    }
+		  else
+		    {
+		       *min += bi->min.w;
+		       *cur += bi->min.w;
+		    }
+	       }
+	     else
+	       {
+		  bi->ask.size2 = (((sd->w - bi->aspect_pad.w) * bi->aspect.h) / bi->aspect.w)
+				   + bi->aspect_pad.h;
+		  if (bi->ask.size2 > bi->min.h)
+		    {
+		       *min += bi->ask.size2;
+		       *cur += bi->ask.size2;
+		    }
+		  else
+		    {
+		       *cur += bi->min.h;
+		       *min += bi->min.h;
+		    }
+	       }
+	  }
+	else
+	  {
+	     if (sd->horizontal)
+	       {
+		  *min += bi->min.w;
+		  if (bi->min.h > *mino) *mino = bi->min.h;
+		  //if (bi->min.w > *mino) *mino = bi->min.w;
+		  if (bi->ask.size < bi->min.w)
+		    *cur += bi->min.w;
+		  else
+		    *cur += bi->ask.size;
+	       }
+	     else
+	       {
+		  *min += bi->min.h;
+		  //if (bi->min.h > *mino) *mino = bi->min.h;
+		  if (bi->min.w > *mino) *mino = bi->min.w;
+		  if (bi->ask.size < bi->min.h)
+		    *cur += bi->min.h;
+		  else
+		    *cur += bi->ask.size;
+	       }
+	  }
+     }
+}
+
+static int 
+_e_gadcon_layout_smart_width_smart_sort_reverse_cb(void *d1, void *d2)
+{
+   E_Gadcon_Layout_Item *bi, *bi2;
+   int v1, v2;
+
+   bi = evas_object_data_get(d1, "e_gadcon_layout_data");
+   bi2 = evas_object_data_get(d2, "e_gadcon_layout_data"); 
+   
+   if (bi->sd->horizontal)
+     { 
+	if (bi->ask.size2 > bi->min.w)
+	  {
+	     if (bi2->ask.size2 > bi2->min.w) 
+	       { 
+		  if (bi->ask.size2 < bi2->ask.size2)
+		    return 1;
+		  else
+		    return -1;
+	       }
+	     else
+	       {
+		  if (bi->ask.size2 == bi2->ask.size2)
+		    return -1;
+		  else
+		    { 
+		       if (bi->ask.size2 < bi2->ask.size2)
+			 return 1;
+		       else
+			 return -1;
+		    }
+	       }
+	  }
+	else
+	  {
+	     if (bi2->ask.size2 > bi2->min.w)
+	       {
+		  if (bi->ask.size2 == bi2->ask.size2)
+		    return 1;
+		  else
+		    { 
+		       if (bi->ask.size2 < bi2->ask.size2)
+			 return 1;
+		       else
+			 return -1;
+		    }
+	       }
+	     else
+	       { 
+		  if (bi->ask.size2 < bi2->ask.size2)
+		    return 1;
+		  else if (bi->ask.size2 > bi2->ask.size2)
+		    return -1;
+	       }
+	  }
+     }
+   else
+     {
+	if (bi->ask.size2 > bi->min.h)
+	  {
+	     if (bi2->ask.size2 > bi2->min.h) 
+	       { 
+		  if (bi->ask.size2 < bi2->ask.size2)
+		    return 1;
+		  else
+		    return -1;
+	       }
+	     else
+	       {
+		  if (bi->ask.size2 == bi2->ask.size2)
+		    return -1;
+		  else
+		    { 
+		       if (bi->ask.size2 < bi2->ask.size2)
+			 return 1;
+		       else
+			 return -1;
+		    }
+	       }
+	  }
+	else
+	  {
+	     if (bi2->ask.size2 > bi2->min.h)
+	       {
+		  if (bi->ask.size2 == bi2->ask.size2)
+		    return 1;
+		  else
+		    { 
+		       if (bi->ask.size2 < bi2->ask.size2)
+			 return 1;
+		       else
+			 return -1;
+		    }
+	       }
+	     else
+	       { 
+		  if (bi->ask.size2 < bi2->ask.size2)
+		    return 1;
+		  else if (bi->ask.size2 > bi2->ask.size2)
+		    return -1;
+	       }
+	  }
+     }
+   return 0;
+}
+
+void 
+_e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
+{ 
+   int need, limit, reduce_total, reduce;
+   int max_size;
+   int c;
+   Evas_List *l, *l2;
+   E_Gadcon_Layout_Item *bi, *bi2;
+
+   if (sd->horizontal)
+     {
+	if (sd->w < cur)
+	  {
+	     if (sd->w < min)
+	       max_size = min;
+	     else
+	       max_size = cur;
+
+	     need = max_size - sd->w;
+	  }
+	else
+	  { 
+	     return;
+	  }
+     }
+   else
+     {
+	if (sd->h < cur)
+	  {
+	     if (sd->h < min)
+	       max_size = min;
+	     else
+	       max_size = cur; 
+	     need = max_size - sd->h;
+	  }
+	else
+	  { 
+	     return;
+	  }
+
+     } 
+
+   sd->items = evas_list_sort(sd->items, evas_list_count(sd->items), 
+			      _e_gadcon_layout_smart_width_smart_sort_reverse_cb); 
+
+   __adjust_size_again: 
+   for (l = sd->items, c = 0; l; l = l->next) 
+     { 
+	if (l->next) 
+	  { 
+	     bi = evas_object_data_get(l->data, "e_gadcon_layout_data");
+	     bi2 = evas_object_data_get(l->next->data, "e_gadcon_layout_data"); 
+	     
+	     if (bi->ask.size2 > bi2->ask.size2)
+	       { 
+		  limit = bi2->ask.size2;
+		  c++;
+		  break;
+	       } 
+	     c++;
+	  }
+     } 
+
+   if (evas_list_count(sd->items) == 1)
+     c = 1;
+   
+   if (l)
+     { 
+	reduce = bi->ask.size2 - limit; 
+	reduce_total = reduce * c; 
+	
+	if (reduce_total <= need) 
+	  { 
+	     for (l2 = l; l2; l2 = l2->prev) 
+	       { 
+		  bi2 = evas_object_data_get(l2->data, "e_gadcon_layout_data"); 
+		  bi2->ask.size2 -= reduce; 
+	       } 
+	     need -= reduce * c;
+	     if (need) 
+	       goto __adjust_size_again;
+	  } 
+	else
+	  { 
+	     int reduce_by, c2; 
+	     
+	     while (need)
+	       { 
+		  reduce_by = 1;
+		  while (1) 
+		    { 
+		       if (((reduce_by + 1) * c) < need) 
+			 reduce_by++; 
+		       else 
+			 break; 
+		    } 
+		  c2 = c;
+		  for (l2 = sd->items; l2 && c2 && need; l2 = l2->next, c2--) 
+		    { 
+		       bi2 = evas_object_data_get(l2->data, "e_gadcon_layout_data");
+		       bi2->ask.size2 -= reduce_by; 
+		       need -= reduce_by; 
+		    } 
+	       }
+	  } 
+     }
+   else
+     { 
+	int reduce_by, c2; 
+	
+	while (need)
+	  { 
+	     reduce_by = 1;
+	     while (1) 
+	       { 
+		  if (((reduce_by + 1) * c) < need) 
+		    reduce_by++; 
+		  else 
+		    break; 
+	       } 
+	     c2 = c;
+	     for (l2 = sd->items; l2 && c2 && need; l2 = l2->next, c2--) 
+	       { 
+		  bi2 = evas_object_data_get(l2->data, "e_gadcon_layout_data");
+		  bi2->ask.size2 -= reduce_by; 
+		  need -= reduce_by; 
+	       } 
+	  }
+     }
+}
+
+
+static int 
+_e_gadcon_layout_smart_sort_by_sequence_number_cb(void *d1, void *d2)
+{
+   E_Gadcon_Layout_Item *bi, *bi2;
+
+   bi = evas_object_data_get(d1, "e_gadcon_layout_data");
+   bi2 = evas_object_data_get(d2, "e_gadcon_layout_data");
+
+   if ((!bi->gcc->state_info.seq) && (!bi2->gcc->state_info.seq)) return 0;
+   else if (!bi->gcc->state_info.seq) return 1;
+   else if (!bi2->gcc->state_info.seq) return -1;
+
+   return bi->gcc->state_info.seq - bi2->gcc->state_info.seq;
+} 
+
+static int
+_e_gadcon_layout_smart_sort_by_position_cb(void *d1, void *d2)
+{
+   E_Gadcon_Layout_Item *bi, *bi2;
+
+   bi = evas_object_data_get(d1, "e_gadcon_layout_data");
+   bi2 = evas_object_data_get(d2, "e_gadcon_layout_data");
+
+   if (bi->sd->horizontal) 
+     return (bi->x - bi2->x);
+   return (bi->y - bi2->y);
+}
+
+static int
+_e_gadcon_layout_smart_containers_sort_cb(void *d1, void *d2)
+{
+   E_Layout_Item_Container *lc, *lc2;
+
+   lc = d1;
+   lc2 = d2;
+
+   if (lc->pos < lc2->pos) return -1;
+   else if (lc->pos > lc2->pos) return 1;
+
+   return 0;
+}
+
+static int
+_e_gadcon_layout_smart_seq_sort_cb(void *d1, void *d2)
+{
+   E_Gadcon_Layout_Item *bi, *bi2;
+
+   bi = d1;
+   bi2 = d2;
+
+   return (bi->gcc->state_info.seq - bi2->gcc->state_info.seq);
+}
+
+static void
+_e_gadcon_layout_smart_sync_clients(E_Gadcon *gc)
+{
+   E_Gadcon_Client *gcc;
+   Evas_List *l;
+
+   for (l = gc->clients; l; l = l->next)
+     {
+	gcc = l->data;
+	_e_gadcon_client_save(gcc);
+     }
+} 
+static void
+_e_gadcon_client_current_position_sync(E_Gadcon_Client *gcc)
+{
+   E_Gadcon_Layout_Item *bi;
+   Evas_Object *o;
+
+   o = gcc->o_frame ? gcc->o_frame : gcc->o_base;
+   bi = evas_object_data_get(o, "e_gadcon_layout_data");
+
+   gcc->state_info.prev_pos = gcc->config.pos;
+   gcc->state_info.prev_size = gcc->config.size;
+   if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container)) 
+     gcc->config.pos = bi->x;
+   else
+     gcc->config.pos = bi->y;
+}
+
+static void
+_e_gadcon_layout_smart_gadcon_position_shrinked_mode(E_Smart_Data *sd)
+{ 
+   Evas_List *l;
+   E_Gadcon_Layout_Item *bi, *bi2; 
+   void *tp; 
+   int pos = 0; 
+
+   sd->items = evas_list_sort(sd->items, evas_list_count(sd->items),
+			      _e_gadcon_layout_smart_sort_by_sequence_number_cb); 
+   
+   for (l = sd->items; l; l = l->next) 
+     { 
+	bi = evas_object_data_get(l->data, "e_gadcon_layout_data"); 
+	if (bi->gcc->state_info.state == E_LAYOUT_ITEM_STATE_POS_INC) 
+	  { 
+	     if (bi->gcc->state_info.resist <= E_LAYOUT_ITEM_DRAG_RESIST_LEVEL) 
+	       { 
+		  bi->gcc->state_info.resist++; 
+		  bi->gcc->config.pos = bi->ask.pos = bi->gcc->state_info.prev_pos; 
+	       } 
+	     else 
+	       { 
+		  bi->gcc->state_info.resist = 0; 
+		  if (l->next) 
+		    { 
+		       tp = l->next->data; 
+		       l->next->data = l->data; 
+		       l->data = tp; 
+		       
+		       bi2 = evas_object_data_get(tp, "e_gadcon_layout_data");
+		       bi->gcc->config.pos = bi->ask.pos = bi2->ask.pos;
+		       bi->gcc->state_info.flags &= ~E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
+		       bi->gcc->state_info.want_save = 1;
+		       bi2->gcc->state_info.want_save = 1;
+		       break;
+		    }
+		  else
+		    bi->gcc->config.pos = bi->ask.pos = bi->gcc->state_info.prev_pos;
+	       } 
+	  } 
+	else if (bi->gcc->state_info.state == E_LAYOUT_ITEM_STATE_POS_DEC)
+	  { 
+	     if (bi->gcc->state_info.resist <= E_LAYOUT_ITEM_DRAG_RESIST_LEVEL)
+	       {
+		  bi->gcc->state_info.resist++;
+		  bi->gcc->config.pos = bi->ask.pos = bi->gcc->state_info.prev_pos;
+	       }
+	     else
+	       {
+		  bi->gcc->state_info.resist = 0; 
+		  if (l->prev)
+		    { 
+		       E_Gadcon_Layout_Item *bi2;
+		       void *tp;
+		       tp = l->prev->data;
+		       l->prev->data = l->data;
+		       l->data = tp; 
+		       
+		       bi2 = evas_object_data_get(tp, "e_gadcon_layout_data");
+		       bi->gcc->config.pos = bi->ask.pos = bi2->ask.pos;
+		       bi->gcc->state_info.flags &= ~E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
+		       bi->gcc->state_info.want_save = 1;
+		       bi2->gcc->state_info.want_save = 1;
+		       break;
+		    }
+		  else
+		    bi->gcc->config.pos = bi->ask.pos = bi->gcc->state_info.prev_pos;
+	       }
+	  }
+	else if ((bi->gcc->state_info.state == E_LAYOUT_ITEM_STATE_SIZE_MIN_END_INC) ||
+	         (bi->gcc->state_info.state == E_LAYOUT_ITEM_STATE_SIZE_MAX_END_DEC) ||
+		 (bi->gcc->state_info.state == E_LAYOUT_ITEM_STATE_SIZE_MIN_END_DEC) ||
+	         (bi->gcc->state_info.state == E_LAYOUT_ITEM_STATE_SIZE_MAX_END_INC))
+	  { 
+	     if (sd->horizontal)
+	       { 
+		  if (bi->w < bi->min.w) 
+		    bi->gcc->config.size = bi->w = bi->min.w;
+		  else
+		    bi->gcc->config.size = bi->w;
+	       }
+	     else
+	       {
+		  if (bi->h < bi->min.h)
+		    bi->gcc->config.size = bi->h = bi->min.h;
+		  else
+		    bi->gcc->config.size = bi->h;
+	       }
+	     bi->gcc->config.pos = bi->gcc->state_info.prev_pos;
+	  } 
+     } 
+   
+   for (l = sd->items; l; l = l->next)
+     { 
+	bi = evas_object_data_get(l->data, "e_gadcon_layout_data");
+	if (sd->horizontal) 
+	  { 
+	     bi->x = pos; 
+	     bi->gcc->config.size = bi->w = bi->ask.size2; 
+	     pos = bi->x + bi->w;
+	  }
+	else
+	  {
+	     bi->y = pos; 
+	     bi->gcc->config.size = bi->h = bi->ask.size2; 
+	     pos = bi->y + bi->h;
+	  }
+     }
+}
+
+/* 
+ * The function returns a list of E_Gadcon_Layout_Item_Container
+ */
+static void
+_e_gadcon_layout_smart_gadcons_asked_position_set(E_Smart_Data *sd)
+{
+   E_Gadcon_Layout_Item *bi;
+   Evas_List *l;
+   int xx, yy;
+
+   for (l = sd->items; l; l = l->next)
+     {
+	bi = evas_object_data_get(l->data, "e_gadcon_layout_data");
+	if (!bi) continue;
+
+	if (sd->horizontal)
+	  {
+	     bi->x = bi->ask.pos;
+	     bi->w = bi->ask.size2;
+	  }
+	else
+	  {
+	     bi->y = bi->ask.pos;
+	     bi->h = bi->ask.size2;
+	  }
+     }
+
+#if 0
+   for (l = sd->items; l; l = l->next)
+     {
+	bi = evas_object_data_get(l->data, "e_gadcon_layout_data");
+	if (!bi) continue;
+	if (sd->horizontal)
+	  {
+	     xx = bi->ask.pos + (bi->ask.size / 2);
+	     if (xx < (bi->ask.res / 3))
+	       { /* hooked to start */
+		  bi->x = bi->ask.pos;
+		  bi->w = bi->ask.size2;
+		  bi->hookp = 0;
+	       }
+	     else if (xx > ((2 * bi->ask.res) / 3))
+	       { /* hooked to end */
+		  bi->x = (bi->ask.pos - bi->ask.res) + sd->w;
+		  bi->w = bi->ask.size2;
+		  bi->hookp = bi->ask.res;
+	       }
+	     else
+	       { /* hooked to middle */
+		  if ((bi->ask.pos <= (bi->ask.res / 2)) &&
+		      ((bi->ask.pos + bi->ask.size2) > (bi->ask.res / 2)))
+		    { /* straddles middle */
+		       if (bi->ask.res > 2)
+			 bi->x = (sd->w / 2) + 
+			 (((bi->ask.pos + (bi->ask.size2 / 2) - 
+			    (bi->ask.res / 2)) * 
+			   (bi->ask.res / 2)) /
+			  (bi->ask.res / 2)) - (bi->ask.size2 / 2);
+		       else
+			 bi->x = sd->w / 2;
+		       bi->w = bi->ask.size2;
+		    }
+		  else
+		    { /* either side of middle */
+		       bi->x = (bi->ask.pos - (bi->ask.res / 2)) + (sd->w / 2);
+		       bi->w = bi->ask.size2;
+		    }
+		  bi->hookp = bi->ask.res / 2;
+	       }
+	  }
+	else
+	  {
+	     yy = bi->ask.pos + (bi->ask.size2 / 2);
+	     if (yy < (bi->ask.res / 3))
+	       { /* hooked to start */
+		  bi->y = bi->ask.pos;
+		  bi->h = bi->ask.size2;
+		  bi->hookp = 0;
+	       }
+	     else if (yy > ((2 * bi->ask.res) / 3))
+	       { /* hooked to end */
+		  bi->y = (bi->ask.pos - bi->ask.res) + sd->h;
+		  bi->h = bi->ask.size2;
+		  bi->hookp = bi->ask.res;
+	       }
+	     else
+	       { /* hooked to middle */
+		  if ((bi->ask.pos <= (bi->ask.res / 2)) &&
+		      ((bi->ask.pos + bi->ask.size2) > (bi->ask.res / 2)))
+		    { /* straddles middle */
+		       if (bi->ask.res > 2)
+			 bi->y = (sd->h / 2) + 
+			 (((bi->ask.pos + (bi->ask.size2 / 2) - 
+			    (bi->ask.res / 2)) * 
+			   (bi->ask.res / 2)) /
+			  (bi->ask.res / 2)) - (bi->ask.size2 / 2);
+		       else
+			 bi->y = sd->h / 2;
+		       bi->h = bi->ask.size2;
+		    }
+		  else
+		    { /* either side of middle */
+		       bi->y = (bi->ask.pos - (bi->ask.res / 2)) + (sd->h / 2);
+		       bi->h = bi->ask.size2;
+		    }
+		  bi->hookp = bi->ask.res / 2;
+	       }
+	  }
+     }
+#endif
+}
+
+static Evas_List *
+_e_gadcon_layout_smart_gadcons_wrap(E_Smart_Data *sd)
+{
+   Evas_List *l, *list = NULL;
+   E_Layout_Item_Container *lc;
+   E_Gadcon_Layout_Item *bi;
+
+   for (l = sd->items; l; l = l->next)
+     {
+	bi = evas_object_data_get(l->data, "e_gadcon_layout_data");
+	lc = E_NEW(E_Layout_Item_Container, 1);
+	lc->state_info.min_seq = lc->state_info.max_seq = bi->gcc->state_info.seq;
+	lc->sd = sd;
+	if (sd->horizontal)
+	  {
+	     lc->pos = bi->x;
+	     lc->size = bi->w;
+	  }
+	else
+	  {
+	     lc->pos = bi->y;
+	     lc->size = bi->h;
+	  }
+	lc->prev_pos = bi->ask.prev_pos;
+	lc->prev_size = bi->ask.prev_size;
+
+	E_LAYOUT_ITEM_CONTAINER_STATE_SET(lc->state, bi->gcc->state_info.state);
+
+	if ((bi->gcc->state_info.flags & E_GADCON_LAYOUT_ITEM_LOCK_POSITION) &&
+	    (lc->state == E_LAYOUT_ITEM_CONTAINER_STATE_NONE))
+	  lc->state = E_LAYOUT_ITEM_CONTAINER_STATE_POS_LOCKED;
+
+	lc->items = evas_list_append(lc->items, bi);
+	list = evas_list_append(list, lc);
+     }
+   return list;
+}
+
+static void
+_e_gadcon_layout_smart_gadcons_position(E_Smart_Data *sd, Evas_List **list)
+{
+   int ok;
+   Evas_List *l, *l2, *l3;
+   E_Layout_Item_Container *lc_moving = NULL, *lc_back, *lc, *lc3;
+   E_Gadcon_Layout_Item *bi, *bi_moving;
+
+   if (!list || !*list) return;
+
+   for (l = *list; l; l = l->next)
+     {
+	lc_moving = l->data;
+
+	if ((lc_moving->state == E_LAYOUT_ITEM_CONTAINER_STATE_POS_INC) ||
+	    (lc_moving->state == E_LAYOUT_ITEM_CONTAINER_STATE_POS_DEC) ||
+	    (lc_moving->state == E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MIN_END_INC) ||
+	    (lc_moving->state == E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MIN_END_DEC) ||
+	    (lc_moving->state == E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MAX_END_INC) ||
+	    (lc_moving->state == E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MAX_END_DEC))
+	  {
+	     lc_back = E_NEW(E_Layout_Item_Container, 1);
+	     lc_back->pos = lc_moving->pos;
+	     lc_back->prev_pos = lc_moving->prev_pos;
+	     lc_back->size = lc_moving->size;
+	     lc_back->prev_size = lc_moving->prev_size;
+	     lc_back->state_info.min_seq = lc_moving->state_info.min_seq;
+	     lc_back->state_info.max_seq = lc_moving->state_info.max_seq;
+	     lc_back->sd = lc_moving->sd;
+	     for (l2 = lc_moving->items; l2; l2 = l2->next)
+	       lc_back->items = evas_list_append(lc_back->items, l2->data);
+	     lc_back->state = lc_moving->state;
+	     bi_moving = lc_back->items->data;
+	     break;
+	  }
+	lc_moving = NULL;
+     }
+
+   if (!lc_moving)
+     {
+	_e_gadcon_layout_smart_gadcons_position_static(sd, list);
+	return;
+     } 
+   
+   if (lc_moving->state == E_LAYOUT_ITEM_CONTAINER_STATE_POS_DEC) 
+     { 
+	_e_gadcon_layout_smart_restore_gadcons_position_before_move(sd, &lc_moving, lc_back, list); 
+	for (l = *list; (l) && (l->data != lc_moving); l = l->next); 
+	
+	ok = 0; 
+	if ((l) && (l->prev)) 
+	  { 
+	     lc = l->prev->data; 
+	     if (LC_OVERLAP(lc, lc_moving)) 
+	       { 
+		  bi = lc_moving->items->data; 
+		  if (bi->gcc->state_info.resist <= E_LAYOUT_ITEM_DRAG_RESIST_LEVEL) 
+		    { 
+		       ok = 1; 
+		       bi->gcc->state_info.resist++; 
+		       lc_moving->pos = lc_moving->prev_pos; 
+		       _e_gadcon_layout_smart_position_items_inside_container(sd, lc_moving); 
+		    } 
+		  else 
+		    { 
+		       bi->gcc->state_info.resist = 0; 
+		       lc3 = _e_gadcon_layout_smart_containers_position_adjust(sd, lc, lc_moving); 
+		       if (lc3) 
+			 { 
+			    ok = 1; 
+			    l->data = lc3; 
+			    *list = evas_list_remove_list(*list, l->prev); 
+			    LC_FREE(lc_moving); 
+			    LC_FREE(lc); 
+			 } 
+		    } 
+	       } 
+	  } 
+	if (!ok) 
+	  { 
+	     for (l = *list; (l) && (l->data != lc_moving); l = l->next); 
+
+	     if ((l) && (l->next)) 
+	       { 
+	       }
+	  }
+     }
+   else if (lc_moving->state == E_LAYOUT_ITEM_CONTAINER_STATE_POS_INC)
+     { 
+	_e_gadcon_layout_smart_restore_gadcons_position_before_move(sd, &lc_moving, lc_back, list); 
+	for (l = *list; (l) && (l->data != lc_moving); l = l->next); 
+
+	ok = 0; 
+	if ((l) && (l->next))
+	  {
+	     lc = l->next->data;
+	     if (LC_OVERLAP(lc_moving, lc))
+	       {
+		  bi = lc_moving->items->data;
+		  if (bi->gcc->state_info.resist <= E_LAYOUT_ITEM_DRAG_RESIST_LEVEL)
+		    {
+		       ok = 1;
+		       bi->gcc->state_info.resist++;
+		       lc_moving->pos = lc_moving->prev_pos;
+		       _e_gadcon_layout_smart_position_items_inside_container(sd, lc_moving);
+		    }
+		  else
+		    {
+		       bi->gcc->state_info.resist = 0;
+		       lc3 = _e_gadcon_layout_smart_containers_position_adjust(sd, lc_moving, lc);
+		       if (lc3)
+			 {
+			    ok = 1;
+			    l->data = lc3;
+			    *list = evas_list_remove_list(*list, l->next);
+			    LC_FREE(lc_moving);
+			    LC_FREE(lc);
+			 }
+		    }
+	       }
+	  }
+
+	if (!ok)
+	  {
+	     for (l = *list; (l) && (l->data != lc_moving); l = l->next);
+
+	     if ((l) && (l->prev))
+	       {
+		  //FIXME: need code that will shift l->prev's if needed. Basically
+		  //it is need to unwrap all the l->prev, then restore the asked positions
+		  //of each bi, wrap again and do static positioning.
+	       }
+	  }
+     } 
+   else if (lc_moving->state == E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MIN_END_DEC)
+     { 
+	_e_gadcon_layout_smart_restore_gadcons_position_before_move(sd, &lc_moving, lc_back, list); 
+	for (l = *list; (l) && (l->data != lc_moving); l = l->next);
+
+	if ((l) && (l->prev))
+	  {
+	     int new_pos = 0;
+
+	     ok = 0;
+	     new_pos = lc_moving->pos;
+	     for (l2 = l->prev; l2; l2 = l2->prev)
+	       {
+		  lc = l2->data;
+		  if (new_pos >= (lc->pos + lc->size)) break;
+
+		  ok = 1;
+		  new_pos -= lc->size;
+	       }
+
+	     if (new_pos < 0)
+	       {
+		  lc_moving->size += new_pos;
+		  lc_moving->pos -= new_pos;
+
+		  bi = lc_moving->items->data;
+		  if (sd->horizontal)
+		    bi->w = lc_moving->size;
+		  else
+		    bi->h = lc_moving->size;
+		  _e_gadcon_layout_smart_position_items_inside_container(sd, lc_moving);
+
+		  new_pos = 0;
+	       }
+
+	     if (ok)
+	       { 
+		  if (!l2) l2 = *list; 
+		  else l2 = l2->next;
+		  
+		  for (l2; l2 != l; l2 = l2->next) 
+		    { 
+		       lc = l2->data; 
+		       lc->pos = new_pos; 
+		       _e_gadcon_layout_smart_position_items_inside_container(sd, lc); 
+		       for (l3 = lc->items; l3; l3 = l3->next)
+			 {
+			    bi = l3->data;
+			    bi->gcc->state_info.flags &= ~E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
+			 }
+		       new_pos += lc->size; 
+		    }
+	       }
+	  }
+	else if ((l) && (!l->prev))
+	  {
+	     if (lc_moving->pos <= 0)
+	       {
+		  lc_moving->size = lc_moving->prev_size;
+		  lc_moving->pos = 0;
+
+		  bi = lc_moving->items->data;
+		  if (sd->horizontal)
+		    bi->w = lc_moving->size;
+		  else
+		    bi->h = lc_moving->size;
+		  _e_gadcon_layout_smart_position_items_inside_container(sd, lc_moving);
+	       }
+	  }
+     }
+   else if (lc_moving->state == E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MIN_END_INC)
+     {
+	lc_moving->state = E_LAYOUT_ITEM_CONTAINER_STATE_POS_LOCKED;
+	_e_gadcon_layout_smart_gadcons_position_static(sd, list);
+	LC_FREE(lc_back);
+     }
+   else if (lc_moving->state == E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MAX_END_INC)
+     {
+	_e_gadcon_layout_smart_restore_gadcons_position_before_move(sd, &lc_moving, lc_back, list); 
+	for (l = *list; (l) && (l->data != lc_moving); l = l->next);
+
+	if ((l) && (l->next))
+	  {
+	     Evas_List *stop;
+	     int new_pos = 0;
+
+	     ok = 0;
+	     new_pos = lc_moving->pos + lc_moving->size;
+	     for (l2 = l->next; l2; l2 = l2->next)
+	       {
+		  lc = l2->data;
+
+		  if (new_pos <= lc->pos)
+		    {
+		       stop = l2;
+		       break;
+		    }
+
+		  ok = 1;
+		  new_pos += lc->size;
+	       }
+
+	     if (sd->horizontal)
+	       {
+		  if (new_pos > sd->w)
+		    {
+		       lc_moving->size -= (new_pos - sd->w);
+		       bi = lc_moving->items->data;
+		       bi->w = lc_moving->size;
+
+		       new_pos = lc_moving->pos + lc_moving->size;
+		    }
+	       }
+	     else
+	       {
+		  if (new_pos > sd->h)
+		    {
+		       lc_moving->size -= (new_pos - sd->h);
+		       bi = lc_moving->items->data;
+		       bi->h = lc_moving->size;
+
+		       new_pos = lc_moving->pos + lc_moving->size;
+		    }
+	       }
+
+	     if (ok)
+	       {
+		  new_pos = lc_moving->pos + lc_moving->size;
+		  for (l2 = l->next; l2 && l2 != stop; l2 = l2->next)
+		    {
+		       lc = l2->data;
+		       lc->pos = new_pos;
+		       _e_gadcon_layout_smart_position_items_inside_container(sd, lc);
+		       for (l3 = lc->items; l3; l3 = l3->next)
+			 {
+			    bi = l3->data;
+			    bi->gcc->state_info.flags &= ~E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
+			 }
+		       new_pos += lc->size;
+		    }
+	       }
+	  }
+	else if ((l) && (!l->next))
+	  {
+	     if (sd->horizontal) 
+	       {
+		  if ((lc_moving->pos + lc_moving->size) >= sd->w)
+		    {
+		       lc_moving->size = lc_moving->prev_size;
+		       bi = lc_moving->items->data;
+		       bi->w = lc_moving->size;
+		    }
+	       }
+	     else
+	       {
+		  if ((lc_moving->pos + lc_moving->size) > sd->h)
+		    {
+		       lc_moving->size = lc_moving->prev_size;
+		       bi = lc_moving->items->data;
+		       bi->h = lc_moving->size;
+		    }
+	       }
+	  }
+     }
+   else if (lc_moving->state == E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MAX_END_DEC)
+     {
+	lc_moving->state = E_LAYOUT_ITEM_CONTAINER_STATE_POS_LOCKED;
+	_e_gadcon_layout_smart_gadcons_position_static(sd, list);
+	LC_FREE(lc_back);
+     }
+
+   //set lc_moving->items->data->gcc->config.pos;
+   if (sd->horizontal) 
+     { 
+	bi_moving->gcc->config.pos = bi_moving->ask.pos = bi_moving->x; 
+	bi_moving->gcc->config.size = bi_moving->w;
+     }
+   else
+     {
+	bi_moving->gcc->config.pos = bi_moving->ask.pos = bi_moving->y;
+	bi_moving->gcc->config.size = bi_moving->w;
+     }
+}
+
+static void
+_e_gadcon_layout_smart_gadcons_position_static(E_Smart_Data *sd, Evas_List **list)
+{
+   int ok;
+   Evas_List *l;
+   E_Layout_Item_Container *lc, *lc2, *lc3;
+
+   *list = evas_list_sort(*list, evas_list_count(*list), _e_gadcon_layout_smart_containers_sort_cb);
+
+   __reposition_again:
+   for (l = *list; l; l = l->next)
+     {
+	if (!l->next) continue;
+
+	lc = l->data;
+	lc2 = l->next->data;
+
+	if (LC_OVERLAP(lc, lc2))
+	  {
+	     lc3 = _e_gadcon_layout_smart_containers_position_adjust(sd, lc, lc2);
+	     if (lc3)
+	       { 
+		  l->data = lc3; 
+		  *list = evas_list_remove_list(*list, l->next); 
+		  LC_FREE(lc);
+		  LC_FREE(lc2);
+		  goto __reposition_again;
+	       }
+	  }
+     }
+
+   ok = 1;
+   for (l = *list; l; l = l->next)
+     {
+	lc = l->data;
+	if (lc->pos < 0)
+	  {
+	     ok = 0;
+	     lc->pos = 0;
+	     _e_gadcon_layout_smart_position_items_inside_container(sd, lc);
+	     continue;
+	  }
+
+	if (sd->horizontal)
+	  {
+	     if (((lc->pos + lc->size) > sd->w) && (lc->size <= sd->w))
+	       {
+		  ok = 0;
+		  lc->pos = sd->w - lc->size;
+		  _e_gadcon_layout_smart_position_items_inside_container(sd, lc);
+	       }
+	  }
+	else
+	  {
+	     if (((lc->pos + lc->size) > sd->h) && (lc->size <= sd->h))
+	       {
+		  ok = 0;
+		  lc->pos = sd->h - lc->size;
+		  _e_gadcon_layout_smart_position_items_inside_container(sd, lc);
+	       }
+	  }
+     }
+   if (!ok)
+     _e_gadcon_layout_smart_gadcons_position_static(sd, list);
+}
+
+static E_Layout_Item_Container *
+_e_gadcon_layout_smart_containers_position_adjust(E_Smart_Data *sd, E_Layout_Item_Container *lc, E_Layout_Item_Container *lc2)
+{
+   int create_new;
+   Evas_List *l;
+   E_Layout_Item_Container *lc3 = NULL;
+   E_Layout_Item_Container_State new_state;
+   E_Gadcon_Layout_Item *bi, *bi2;
+
+   if ((lc->state == E_LAYOUT_ITEM_CONTAINER_STATE_NONE) &&
+       (lc2->state == E_LAYOUT_ITEM_CONTAINER_STATE_NONE))
+     {
+	if (lc->state_info.max_seq <= lc2->state_info.min_seq)
+	  {
+	     lc2->pos = lc->pos + lc->size;
+	     _e_gadcon_layout_smart_position_items_inside_container(sd, lc2);
+	  }
+	else if (lc->state_info.min_seq > lc2->state_info.max_seq)
+	  {
+	     lc->pos = lc2->pos + lc2->size;
+	     _e_gadcon_layout_smart_position_items_inside_container(sd, lc);
+	  }
+	else if (((lc->state_info.min_seq > lc2->state_info.min_seq) &&
+		  (lc->state_info.min_seq < lc2->state_info.max_seq)) ||
+	         ((lc2->state_info.min_seq > lc->state_info.min_seq) &&
+		  (lc2->state_info.min_seq < lc->state_info.max_seq)))
+	  {
+	     _e_gadcon_layout_smart_containers_merge(sd, lc, lc2);
+	  } 
+	create_new = 1; 
+	new_state = E_LAYOUT_ITEM_CONTAINER_STATE_NONE;
+     }
+   else if ((lc->state != E_LAYOUT_ITEM_CONTAINER_STATE_NONE) &&
+	    (lc2->state == E_LAYOUT_ITEM_CONTAINER_STATE_NONE))
+     {
+	if (lc->state == E_LAYOUT_ITEM_CONTAINER_STATE_POS_INC)
+	  {
+	     int t;
+
+	     bi = lc->items->data;
+	     bi2  = lc2->items->data;
+
+	     if (sd->horizontal)
+	       {
+		  bi->gcc->config.pos = bi->ask.pos = bi->x = (bi2->x + bi2->w) - bi->w;
+		  bi->gcc->config.size = bi->w;
+		  bi2->x = bi->x - bi2->w;
+	       }
+	     else
+	       {
+		  bi->gcc->config.pos = bi->ask.pos = bi->y = (bi2->y + bi2->h) - bi->h;
+		  bi->gcc->config.size = bi->h;
+		  bi2->y = bi->y - bi2->h;
+	       }
+	     bi2->gcc->state_info.flags &= ~E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
+
+	     t = bi->gcc->state_info.seq;
+	     bi->gcc->state_info.seq = bi2->gcc->state_info.seq;
+	     bi2->gcc->state_info.seq = t;
+
+	     _e_gadcon_layout_smart_containers_merge(sd, lc, lc2);
+	  }
+	else if (lc->state == E_LAYOUT_ITEM_CONTAINER_STATE_POS_LOCKED)
+	  {
+	     if (lc->state_info.max_seq < lc2->state_info.min_seq)
+	       {
+		  lc2->pos = lc->pos + lc->size;
+		  _e_gadcon_layout_smart_position_items_inside_container(sd, lc2);
+	       }
+	     else if (lc->state_info.min_seq > lc2->state_info.max_seq)
+	       {
+		  lc2->pos = lc->pos - lc2->size;
+		  _e_gadcon_layout_smart_position_items_inside_container(sd, lc2);
+	       } 
+	     else if (((lc->state_info.min_seq > lc2->state_info.min_seq) && 
+		      (lc->state_info.min_seq < lc2->state_info.max_seq)) || 
+		     ((lc2->state_info.min_seq > lc->state_info.min_seq) && 
+		      (lc2->state_info.min_seq < lc->state_info.max_seq)))
+	       {
+		  int shift = 0;
+		  _e_gadcon_layout_smart_containers_merge(sd, lc, lc2);
+
+		  for (l = lc->items; l; l = l->next)
+		    {
+		       bi = l->data;
+		       if (bi->gcc->state_info.flags & E_GADCON_LAYOUT_ITEM_LOCK_POSITION)
+			 {
+			    if (sd->horizontal) shift = bi->ask.pos - bi->x;
+			    else shift = bi->ask.pos - bi->y;
+			 }
+
+		       if (bi->gcc->state_info.flags & E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE)
+			 break;
+		    }
+
+		  for (l = lc->items; l && shift; l = l->next)
+		    {
+		       bi = l->data;
+
+		       if (sd->horizontal) bi->x += shift;
+		       else bi->y += shift;
+
+		       if (l == lc->items)
+			 {
+			    if (sd->horizontal) lc->pos = bi->x;
+			    else lc->pos = bi->y;
+			 }
+		    }
+	       } 
+	  } 
+	create_new = 1; 
+	new_state = E_LAYOUT_ITEM_CONTAINER_STATE_POS_LOCKED;
+     }
+   else if ((lc->state == E_LAYOUT_ITEM_CONTAINER_STATE_NONE) &&
+	    (lc2->state != E_LAYOUT_ITEM_CONTAINER_STATE_NONE))
+     {
+	if (lc2->state == E_LAYOUT_ITEM_CONTAINER_STATE_POS_LOCKED)
+	  {
+	     if (lc->state_info.max_seq < lc2->state_info.min_seq)
+	       {
+		  lc->pos = lc2->pos - lc->size;
+		  _e_gadcon_layout_smart_position_items_inside_container(sd, lc);
+	       }
+	     else if (lc->state_info.min_seq > lc2->state_info.max_seq)
+	       {
+		  lc->pos = lc2->pos + lc2->size;
+		  _e_gadcon_layout_smart_position_items_inside_container(sd, lc);
+	       }
+	     else if (((lc->state_info.min_seq > lc2->state_info.min_seq) && 
+		      (lc->state_info.min_seq < lc2->state_info.max_seq)) || 
+		     ((lc2->state_info.min_seq > lc->state_info.min_seq) && 
+		      (lc2->state_info.min_seq < lc->state_info.max_seq)))
+	       {
+		  int shift = 0;
+
+		  for (l = lc->items; l; l = l->next)
+		    {
+		       if (bi->gcc->state_info.flags & E_GADCON_LAYOUT_ITEM_LOCK_POSITION)
+			 {
+			    if (sd->horizontal) shift = bi->ask.pos - bi->x;
+			    else shift = bi->ask.pos - bi->y;
+			 }
+
+		       if (bi->gcc->state_info.flags & E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE)
+			 break;
+		    }
+
+		  for (l = lc->items; l && shift; l = l->next)
+		    {
+		       bi = l->data;
+
+		       if (sd->horizontal) bi->x += shift;
+		       else bi->y += shift;
+
+		       if (l == lc->items)
+			 {
+			    if (sd->horizontal) lc->pos = bi->x;
+			    else lc->pos = bi->y;
+			 }
+		    }
+	       }
+	  }
+	else if (lc2->state == E_LAYOUT_ITEM_CONTAINER_STATE_POS_DEC)
+	  {
+	     int t;
+
+	     bi = (evas_list_last(lc->items))->data;
+	     bi2 = lc2->items->data;
+
+	     if (sd->horizontal)
+	       {
+		  bi2->gcc->config.pos = bi2->ask.pos = bi2->x = bi->x;
+		  bi2->gcc->config.size = bi2->w;
+		  bi->x = bi2->x + bi2->w;
+	       }
+	     else
+	       {
+		  bi2->gcc->config.pos = bi2->ask.pos = bi2->y = bi->y;
+		  bi2->gcc->config.size = bi2->h;
+		  bi->y = bi2->y + bi2->h;
+	       }
+
+	     bi->gcc->state_info.flags &= ~E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
+
+	     t = bi->gcc->state_info.seq;
+	     bi->gcc->state_info.seq = bi2->gcc->state_info.seq;
+	     bi2->gcc->state_info.seq = t;
+
+	     lc->items = evas_list_remove_list(lc->items, evas_list_last(lc->items));
+	     lc->items = evas_list_append(lc->items, bi2);
+	     lc->items = evas_list_append(lc->items, bi);
+	     lc2->items = evas_list_free(lc2->items);
+	     E_LAYOUT_ITEM_CONTAINER_SIZE_CHANGE_BY(lc, bi2, 1);
+	     lc2->pos = lc->pos + lc->size;
+	     lc2->size = 0;
+	  }
+	create_new = 1;
+	new_state = E_LAYOUT_ITEM_CONTAINER_STATE_POS_LOCKED;
+     }
+   else if ((lc->state != E_LAYOUT_ITEM_CONTAINER_STATE_NONE) &&
+	    (lc2->state != E_LAYOUT_ITEM_CONTAINER_STATE_NONE))
+     {
+	if ((lc->state == E_LAYOUT_ITEM_CONTAINER_STATE_POS_LOCKED) &&
+	    (lc2->state == E_LAYOUT_ITEM_CONTAINER_STATE_POS_LOCKED))
+	  {
+	     if (lc->state_info.max_seq < lc2->state_info.min_seq)
+	       {
+		  int move_lc1 = 1;
+		  int move_lc2 = 1;
+		  for (l = lc->items; l; l = l->next)
+		    {
+		       bi = l->data;
+		       if (bi->gcc->state_info.flags & E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE)
+			 {
+			    move_lc1 = 0;
+			    break;
+			 }
+		    }
+		  for (l = lc2->items; l; l = l->next)
+		    {
+		       bi = l->data;
+		       if (bi->gcc->state_info.flags & E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE)
+			 {
+			    move_lc2 = 0;
+			    break;
+			 }
+		    }
+
+		  if ((move_lc1) && (!move_lc2))
+		    {
+		       lc->pos = lc2->pos - lc->size;
+		       _e_gadcon_layout_smart_position_items_inside_container(sd, lc);
+		    }
+		  else
+		    {
+		       lc2->pos = lc->pos + lc->size;
+		       _e_gadcon_layout_smart_position_items_inside_container(sd, lc2);
+		    }
+	       }
+	     else if (lc->state_info.min_seq > lc2->state_info.max_seq)
+	       {
+		  int move_lc1 = 1;
+		  int move_lc2 = 1;
+
+		  for (l = lc->items; l; l = l->next)
+		    {
+		       bi = l->data;
+		       if (bi->gcc->state_info.flags & E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE)
+			 {
+			    move_lc1 = 0;
+			    break;
+			 }
+		    }
+		  for (l = lc2->items; l; l = l->next)
+		    {
+		       bi = l->data;
+		       if (bi->gcc->state_info.flags & E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE)
+			 {
+			    move_lc2 = 0;
+			    break;
+			 }
+		    }
+
+		  if ((!move_lc1) && (move_lc2))
+		    {
+		       lc2->pos = lc->pos - lc2->size;
+		       _e_gadcon_layout_smart_position_items_inside_container(sd, lc2);
+		    }
+		  else
+		    {
+		       lc->pos = lc2->pos + lc2->size;
+		       _e_gadcon_layout_smart_position_items_inside_container(sd, lc);
+		    }
+	       }
+	     else if (((lc->state_info.min_seq > lc2->state_info.min_seq) && 
+		      (lc->state_info.min_seq < lc2->state_info.max_seq)) || 
+		     ((lc2->state_info.min_seq > lc->state_info.min_seq) && 
+		      (lc2->state_info.min_seq < lc->state_info.max_seq)))
+	       {
+		  int shift = 0;
+		  _e_gadcon_layout_smart_containers_merge(sd, lc, lc2);
+
+		  for (l = lc->items; l; l = l->next)
+		    {
+		       bi = l->data;
+		       if ((bi->gcc->state_info.flags & E_GADCON_LAYOUT_ITEM_LOCK_POSITION) &&
+			   (bi->gcc->state_info.flags & E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE))
+			 {
+			    if (sd->horizontal)
+			      shift = bi->ask.pos - bi->x;
+			    else
+			      shift = bi->ask.pos - bi->y;
+			    break;
+			 }
+		    }
+
+		  for (l = lc->items; l && shift; l = l->next)
+		    {
+		       bi = l->data;
+
+		       if (sd->horizontal)
+			 bi->x += shift;
+		       else
+			 bi->y += shift;
+
+		       if (l == lc->items)
+			 {
+			    if (sd->horizontal)
+			      lc->pos = bi->x;
+			    else
+			      lc->pos = bi->y;
+			 }
+		    }
+	       } 
+	     create_new = 1; 
+	     new_state = E_LAYOUT_ITEM_CONTAINER_STATE_POS_LOCKED;
+	  }
+	else
+	  {
+	  }
+     }
+
+   if (create_new)
+     {
+	lc3 = E_NEW(E_Layout_Item_Container, 1);
+	lc3->sd = sd;
+	if (lc->pos < lc2->pos)
+	  {
+	     lc3->pos = lc->pos;
+	     for (l = lc->items; l; l = l->next)
+	       lc3->items = evas_list_append(lc3->items, l->data);
+	     for (l = lc2->items; l; l = l->next)
+	       lc3->items = evas_list_append(lc3->items, l->data);
+
+	     lc3->state_info.min_seq = lc->state_info.min_seq;
+	     if (lc2->items)
+	       lc3->state_info.max_seq = lc2->state_info.max_seq;
+	     else
+	       lc3->state_info.max_seq = lc->state_info.max_seq;
+	  }
+	else
+	  {
+	     lc3->pos = lc2->pos;
+	     for (l = lc2->items; l; l = l->next)
+	       lc3->items = evas_list_append(lc3->items, l->data);
+	     for (l = lc->items; l; l = l->next)
+	       lc3->items = evas_list_append(lc3->items, l->data);
+
+	     lc3->state_info.min_seq = lc2->state_info.min_seq;
+	     if (lc->items)
+	       lc3->state_info.max_seq = lc->state_info.max_seq;
+	     else
+	       lc3->state_info.max_seq = lc2->state_info.max_seq;
+	  }
+	lc3->size = lc->size + lc2->size;
+	lc3->state = new_state;
+     }
+
+   return lc3;
+} 
+
+static void
+_e_gadcon_layout_smart_position_items_inside_container(E_Smart_Data *sd, E_Layout_Item_Container *lc)
+{
+   int shift;
+   Evas_List *l;
+   E_Gadcon_Layout_Item *bi;
+
+   if (!lc->items) return;
+
+   bi = lc->items->data;
+   if (sd->horizontal)
+     shift = lc->pos - bi->x;
+   else
+     shift = lc->pos - bi->y;
+   if (!shift) return;
+
+   for (l = lc->items; l; l = l->next)
+     {
+	bi = l->data;
+	if (sd->horizontal)
+	  bi->x += shift;
+	else
+	  bi->y += shift;
+
+	if ((bi->gcc->state_info.state == E_LAYOUT_ITEM_STATE_POS_DEC) ||
+	    (bi->gcc->state_info.state == E_LAYOUT_ITEM_STATE_POS_INC))
+	  {
+	     if (sd->horizontal)
+	       bi->gcc->config.pos = bi->ask.pos = bi->x;
+	     else
+	       bi->gcc->config.pos = bi->ask.pos = bi->y;
+	  }
+     }
+} 
+
+static void
+_e_gadcon_layout_smart_containers_merge(E_Smart_Data *sd, E_Layout_Item_Container *lc, E_Layout_Item_Container *lc2)
+{
+   int start = 0, size = 0, next = 0, min_seq = 0, max_seq = 0;
+   Evas_List *l, *nl = NULL;
+   E_Gadcon_Layout_Item *bi;
+
+   for (l = lc->items; l; l = l->next)
+     nl = evas_list_append(nl, l->data);
+   for (l = lc2->items; l; l = l->next)
+     nl = evas_list_append(nl, l->data);
+
+   nl = evas_list_sort(nl, evas_list_count(nl), _e_gadcon_layout_smart_seq_sort_cb);
+
+   for (l = nl; l; l = l->next)
+     {
+	bi = l->data;
+	if (l == nl)
+	  {
+	     min_seq = max_seq = bi->gcc->state_info.seq;
+	     if (sd->horizontal)
+	       {
+		  start = bi->x;
+		  size = bi->w;
+		  next = bi->x + bi->w;
+	       }
+	     else
+	       {
+		  start = bi->y;
+		  size = bi->h;
+		  next = bi->y + bi->h;
+	       }
+	     continue;
+	  }
+
+	max_seq = bi->gcc->state_info.seq;
+	if (sd->horizontal)
+	  {
+	     bi->x = next;
+	     size += bi->w;
+	     next = bi->x + bi->w;
+	  }
+	else
+	  {
+	     bi->y = next;
+	     size += bi->h;
+	     next = bi->y + bi->h;
+	  }
+     }
+
+   lc->items = evas_list_free(lc->items);
+   lc2->items = evas_list_free(lc->items);
+   lc->items = nl;
+   lc->pos = start;
+   lc->size = size;
+   lc->state_info.min_seq = min_seq;
+   lc->state_info.max_seq = max_seq;
+   lc2->pos = lc->pos + lc->size;
+   lc2->size = 0;
+} 
+
+static void
+_e_gadcon_layout_smart_restore_gadcons_position_before_move(E_Smart_Data *sd, E_Layout_Item_Container **lc_moving, E_Layout_Item_Container *lc_back, Evas_List **con_list)
+{
+   int ok;
+   Evas_List *l, *l2, *l3;
+   E_Gadcon_Layout_Item *bi, *bi2;
+   E_Layout_Item_Container *lc, *lc2, *lc3;
+
+
+
+   (*lc_moving)->pos = (*lc_moving)->prev_pos;
+   if (((*lc_moving)->state == E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MIN_END_INC) || 
+       ((*lc_moving)->state == E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MIN_END_DEC) || 
+       ((*lc_moving)->state == E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MAX_END_INC) || 
+       ((*lc_moving)->state == E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MAX_END_DEC))
+     {
+	(*lc_moving)->size = (*lc_moving)->prev_size;
+	bi = (*lc_moving)->items->data;
+	if (sd->horizontal)
+	  bi->w = (*lc_moving)->prev_size;
+	else
+	  bi->h = (*lc_moving)->prev_size;
+
+     }
+   _e_gadcon_layout_smart_position_items_inside_container(sd, (*lc_moving));
+   (*lc_moving)->state = E_LAYOUT_ITEM_CONTAINER_STATE_POS_LOCKED;
+   _e_gadcon_layout_smart_gadcons_position_static(sd, con_list);
+
+
+   lc2 = NULL;
+   lc3 = NULL;
+   ok = 0;
+   for (l = *con_list; l; l = l->next)
+     {
+	lc = l->data;
+	if (lc->state == E_LAYOUT_ITEM_CONTAINER_STATE_NONE) continue;
+
+	if (evas_list_count(lc->items) == 1)
+	  {
+	     bi = lc->items->data;
+	     if ((bi->gcc->state_info.state == E_LAYOUT_ITEM_STATE_POS_INC) || 
+		 (bi->gcc->state_info.state == E_LAYOUT_ITEM_STATE_POS_DEC) || 
+		 (bi->gcc->state_info.state == E_LAYOUT_ITEM_STATE_SIZE_MIN_END_INC) || 
+		 (bi->gcc->state_info.state == E_LAYOUT_ITEM_STATE_SIZE_MIN_END_DEC) || 
+		 (bi->gcc->state_info.state == E_LAYOUT_ITEM_STATE_SIZE_MAX_END_INC) || 
+		 (bi->gcc->state_info.state == E_LAYOUT_ITEM_STATE_SIZE_MAX_END_DEC))
+	       {
+		  LC_FREE(lc);
+		  l->data = *lc_moving = lc_back;
+		  _e_gadcon_layout_smart_position_items_inside_container(sd, (*lc_moving));
+
+		  if (((*lc_moving)->state != E_LAYOUT_ITEM_CONTAINER_STATE_POS_INC) &&
+		      ((*lc_moving)->state != E_LAYOUT_ITEM_CONTAINER_STATE_POS_DEC))
+		    {
+		       bi = (*lc_moving)->items->data;
+		       if (sd->horizontal)
+			 bi->w = (*lc_moving)->size;
+		       else
+			 bi->h = (*lc_moving)->size;
+		    }
+	       }
+	  }
+	else
+	  {
+	     for (l2 = lc->items; l2; l2 = l2->next)
+	       {
+		  bi = l2->data; 
+		  if ((bi->gcc->state_info.state == E_LAYOUT_ITEM_STATE_POS_INC) || 
+		      (bi->gcc->state_info.state == E_LAYOUT_ITEM_STATE_POS_DEC) || 
+		      (bi->gcc->state_info.state == E_LAYOUT_ITEM_STATE_SIZE_MIN_END_INC) || 
+		      (bi->gcc->state_info.state == E_LAYOUT_ITEM_STATE_SIZE_MIN_END_DEC) || 
+		      (bi->gcc->state_info.state == E_LAYOUT_ITEM_STATE_SIZE_MAX_END_INC) || 
+		      (bi->gcc->state_info.state == E_LAYOUT_ITEM_STATE_SIZE_MAX_END_DEC))
+		    {
+		       ok = 1;
+		       if (l2 != lc->items)
+			 {
+			    lc2 = E_NEW(E_Layout_Item_Container, 1);
+			    lc2->sd = sd;
+			    lc2->state = E_LAYOUT_ITEM_CONTAINER_STATE_NONE;
+			    for (l3 = lc->items; l3 != l2; l3 = l3->next)
+			      {
+				 bi2 = l3->data;
+				 lc2->items = evas_list_append(lc2->items, bi2);
+				 if (l3 == lc->items)
+				   {
+				      lc2->state_info.min_seq = bi2->gcc->state_info.seq;
+				      if (sd->horizontal)
+					lc2->pos = lc2->prev_pos = bi2->x;
+				      else
+					lc2->pos = lc2->prev_pos = bi2->y;
+				   }
+				 lc2->state_info.max_seq = bi2->gcc->state_info.seq;
+				 E_LAYOUT_ITEM_CONTAINER_SIZE_CHANGE_BY(lc2, bi2, 1);
+			      }
+			 }
+
+		       if (l2->next)
+			 {
+			    lc3 = E_NEW(E_Layout_Item_Container, 1);
+			    lc3->sd = sd;
+			    lc3->state = E_LAYOUT_ITEM_CONTAINER_STATE_NONE;
+			    for (l3 = l2->next; l3; l3 = l3->next)
+			      {
+				 bi2 = l3->data;
+				 lc3->items = evas_list_append(lc3->items, bi2);
+				 if (l3 == l2->next)
+				   {
+				      lc3->state_info.min_seq = bi2->gcc->state_info.seq;
+				      if (sd->horizontal)
+					lc3->pos = lc3->prev_pos = bi2->x;
+				      else
+					lc3->pos = lc3->prev_pos = bi2->y;
+				   }
+				 lc3->state_info.max_seq = bi2->gcc->state_info.seq;
+				 E_LAYOUT_ITEM_CONTAINER_SIZE_CHANGE_BY(lc3, bi2, 1);
+			      }
+			 }
+		       *lc_moving = lc_back;
+		       _e_gadcon_layout_smart_position_items_inside_container(sd, *lc_moving); 
+		       
+		       if (((*lc_moving)->state != E_LAYOUT_ITEM_CONTAINER_STATE_POS_INC) && 
+			   ((*lc_moving)->state != E_LAYOUT_ITEM_CONTAINER_STATE_POS_DEC)) 
+			 { 
+			    bi = (*lc_moving)->items->data; 
+			    if (sd->horizontal) 
+			      bi->w = (*lc_moving)->size; 
+			    else 
+			      bi->h = (*lc_moving)->size; 
+			 }
+		       break;
+		    }
+	       }
+	     if (ok)
+	       {
+		  LC_FREE(lc);
+		  if (lc2)
+		    {
+		       l->data = lc2;
+		       *con_list = evas_list_append(*con_list, *lc_moving);
+		       if (lc3)
+			 *con_list = evas_list_append(*con_list, lc3);
+		       *con_list = evas_list_sort(*con_list, evas_list_count(*con_list),
+						  _e_gadcon_layout_smart_containers_sort_cb);
+		    }
+		  else
+		    {
+		       l->data = *lc_moving;
+		       if (lc3)
+			 {
+			    *con_list = evas_list_append(*con_list, lc3);
+			    *con_list = evas_list_sort(*con_list, evas_list_count(*con_list),
+						       _e_gadcon_layout_smart_containers_sort_cb);
+			 }
+		    }
+		  break;
+	       }
+	  }
+     }
+
+   for (l = *con_list; l; l = l->next)
+     {
+	lc = l->data;
+	if (lc == *lc_moving) continue;
+	lc->state = E_LAYOUT_ITEM_CONTAINER_STATE_NONE;
+     }
+}

@@ -50,7 +50,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need top be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0100
+#define E_CONFIG_FILE_GENERATION 0x0101
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT      0
@@ -113,10 +113,10 @@ struct _E_Config
    Evas_List  *font_fallbacks; // GUI
    Evas_List  *font_defaults; // GUI
    Evas_List  *themes; // GUI
-   Evas_List  *mouse_bindings;
+   Evas_List  *mouse_bindings; // GUI
    Evas_List  *key_bindings; // GUI
    Evas_List  *signal_bindings;
-   Evas_List  *wheel_bindings;
+   Evas_List  *wheel_bindings; // GUI
    Evas_List  *path_append_data; // GUI
    Evas_List  *path_append_images; // GUI
    Evas_List  *path_append_fonts; // GUI
@@ -333,6 +333,9 @@ struct _E_Config_Gadcon_Client
    struct {
       int pos, size, res;
    } geom;
+   struct {
+      int seq, flags;
+   } state_info;
    const char    *style;
    unsigned char  autoscroll;
    unsigned char  resizable;
