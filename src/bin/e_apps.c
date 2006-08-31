@@ -1321,112 +1321,154 @@ _e_app_localized_val_get(Eet_File *ef, const char *lang, const char *field, int 
 EAPI void
 e_app_fields_save(E_App *a)
 {
-   Eet_File *ef;
    char buf[PATH_MAX];
-   const char *lang;
-   unsigned char tmp[1];
-//   int img;
+   const char *lang, *ext;
 
-//   if ((!a->path) || (!ecore_file_exists(a->path)))
-//     {
-	_e_app_new_save(a);
-//	img = 0;
-//     }
-//   else
-//     img = 1;
+   /* FIXME: if there is no path, put it in applications/all/a->name.desktop. */
 
-   /* get our current language */
-   lang = e_intl_language_alias_get();
+   ext = strrchr(a->path, '.');
+   if ((ext) && (strcmp(ext, ".desktop") == 0))
+      {   /* It's a .desktop file. */
+         Ecore_Desktop *desktop;
+	 int created = 0;
 
-   /* if its "C" its the default - so drop it */
-   if (!strcmp(lang, "C")) lang = NULL;
+         desktop = ecore_desktop_get(a->path, NULL);
+	 if (!desktop)
+	    {
+	       desktop = E_NEW(Ecore_Desktop, 1);
+	       created = 1;
+	    }
+	 if (desktop)
+	    {
+	       desktop->eap_name = (char *) a->path;
+	       desktop->name = (char *) a->name;
+	       desktop->generic = (char *) a->generic;
+	       desktop->comment = (char *) a->comment;
 
-   ef = eet_open(a->path, EET_FILE_MODE_READ_WRITE);
-   if (!ef) return;
+	       desktop->exec = (char *) a->exe;
+	       desktop->icon_class = (char *) a->icon_class;
+               desktop->icon_path = (char *) a->icon_path;
+	       desktop->window_class = (char *) a->win_class;
+	       if (a->startup_notify)
+	          desktop->startup = "1";
+	       else
+	          desktop->startup = "0";
 
-   if (a->name)
-     {
-	/*if (lang) snprintf(buf, sizeof(buf), "app/info/name[%s]", lang);  
-	  else */
-	snprintf(buf, sizeof(buf), "app/info/name");
-	eet_write(ef, buf, a->name, strlen(a->name), 0);
-     }
-   
-   if (a->generic)
-     {
-	/*if (lang) snprintf(buf, sizeof(buf), "app/info/generic[%s]", lang);
-	  else */
-	snprintf(buf, sizeof(buf), "app/info/generic");
-	eet_write(ef, buf, a->generic, strlen(a->generic), 0);
-     }
+               desktop->type = "Application";
+//               desktop.categories = a->categories;
 
-   if (a->comment)
-     {
-	/*if (lang) snprintf(buf, sizeof(buf), "app/info/comment[%s]", lang);
-	  else*/
-	snprintf(buf, sizeof(buf), "app/info/comment");
-	eet_write(ef, buf, a->comment, strlen(a->comment), 0);
-     }
-
-   if (a->exe)
-     eet_write(ef, "app/info/exe", a->exe, strlen(a->exe), 0);
-   if (a->win_name)
-     eet_write(ef, "app/window/name", a->win_name, strlen(a->win_name), 0);
-   if (a->win_class)
-     eet_write(ef, "app/window/class", a->win_class, strlen(a->win_class), 0);
-   if (a->win_title)
-     eet_write(ef, "app/window/title", a->win_title, strlen(a->win_title), 0);
-   if (a->win_role)
-     eet_write(ef, "app/window/role", a->win_role, strlen(a->win_role), 0);
-   if (a->icon_class)
-     eet_write(ef, "app/icon/class", a->icon_class, strlen(a->icon_class), 0);
-   
-   if (a->startup_notify)
-     tmp[0] = 1;
+               ecore_desktop_save(desktop);
+	       if (created)
+	          E_FREE(desktop);
+	    }
+      }
    else
-     tmp[0] = 0;
-   eet_write(ef, "app/info/startup_notify", tmp, 1, 0);
+      {   /* Must be an .eap file. */
+         Eet_File *ef;
+         unsigned char tmp[1];
+//         int img;
+//         if ((!a->path) || (!ecore_file_exists(a->path)))
+//           {
+	      _e_app_new_save(a);
+//	      img = 0;
+//           }
+//         else
+//           img = 1;
+
+         /* get our current language */
+         lang = e_intl_language_alias_get();
+
+         /* if its "C" its the default - so drop it */
+         if (!strcmp(lang, "C")) lang = NULL;
+
+         ef = eet_open(a->path, EET_FILE_MODE_READ_WRITE);
+         if (!ef) return;
+
+         if (a->name)
+           {
+	      /*if (lang) snprintf(buf, sizeof(buf), "app/info/name[%s]", lang);  
+	        else */
+	      snprintf(buf, sizeof(buf), "app/info/name");
+	      eet_write(ef, buf, a->name, strlen(a->name), 0);
+           }
    
-   if (a->wait_exit)
-     tmp[0] = 1;
-   else
-     tmp[0] = 0;   
-   eet_write(ef, "app/info/wait_exit", tmp, 1, 0);
+         if (a->generic)
+           {
+	      /*if (lang) snprintf(buf, sizeof(buf), "app/info/generic[%s]", lang);
+	        else */
+	      snprintf(buf, sizeof(buf), "app/info/generic");
+	      eet_write(ef, buf, a->generic, strlen(a->generic), 0);
+           }
 
-   /*
-   if ((a->image) && (img))
-     {
-	int alpha;
-	Ecore_Evas *buf;
-	Evas *evasbuf;
-	Evas_Coord iw, ih;
-	Evas_Object *im;
-	const int *data;
+         if (a->comment)
+           {
+	      /*if (lang) snprintf(buf, sizeof(buf), "app/info/comment[%s]", lang);
+	        else*/
+	      snprintf(buf, sizeof(buf), "app/info/comment");
+	      eet_write(ef, buf, a->comment, strlen(a->comment), 0);
+           }
 
-	buf = ecore_evas_buffer_new(1, 1);
-	evasbuf = ecore_evas_get(buf);
-	im = evas_object_image_add(evasbuf);
-	evas_object_image_file_set(im, a->image, NULL);
-	iw = 0; ih = 0;
-	evas_object_image_size_get(im, &iw, &ih);
-	alpha = evas_object_image_alpha_get(im);
-	if (a->width <= EAP_MIN_WIDTH)
-	  a->width = EAP_MIN_WIDTH;
-	if (a->height <= EAP_MIN_HEIGHT)
-	  a->height = EAP_MIN_HEIGHT;	
-	if ((iw > 0) && (ih > 0))
-	  {
-	     ecore_evas_resize(buf, a->width, a->height);
-	     evas_object_image_fill_set(im, 0, 0, a->width, a->height);
-	     evas_object_resize(im, a->height, a->width);
-	     evas_object_move(im, 0, 0);
-	     evas_object_show(im);	     
-	     data = ecore_evas_buffer_pixels_get(buf);
-	     eet_data_image_write(ef, "images/0", (void *)data, a->width, a->height, alpha, 1, 0, 0);
-	  }
-     }
-    */
-   eet_close(ef);
+         if (a->exe)
+           eet_write(ef, "app/info/exe", a->exe, strlen(a->exe), 0);
+         if (a->win_name)
+           eet_write(ef, "app/window/name", a->win_name, strlen(a->win_name), 0);
+         if (a->win_class)
+           eet_write(ef, "app/window/class", a->win_class, strlen(a->win_class), 0);
+         if (a->win_title)
+           eet_write(ef, "app/window/title", a->win_title, strlen(a->win_title), 0);
+         if (a->win_role)
+           eet_write(ef, "app/window/role", a->win_role, strlen(a->win_role), 0);
+         if (a->icon_class)
+           eet_write(ef, "app/icon/class", a->icon_class, strlen(a->icon_class), 0);
+   
+         if (a->startup_notify)
+           tmp[0] = 1;
+         else
+           tmp[0] = 0;
+         eet_write(ef, "app/info/startup_notify", tmp, 1, 0);
+   
+         if (a->wait_exit)
+           tmp[0] = 1;
+         else
+           tmp[0] = 0;   
+         eet_write(ef, "app/info/wait_exit", tmp, 1, 0);
+
+         /*
+         if ((a->image) && (img))
+           {
+	      int alpha;
+	      Ecore_Evas *buf;
+	      Evas *evasbuf;
+	      Evas_Coord iw, ih;
+	      Evas_Object *im;
+	      const int *data;
+
+	      buf = ecore_evas_buffer_new(1, 1);
+	      evasbuf = ecore_evas_get(buf);
+	      im = evas_object_image_add(evasbuf);
+	      evas_object_image_file_set(im, a->image, NULL);
+	      iw = 0; ih = 0;
+	      evas_object_image_size_get(im, &iw, &ih);
+	      alpha = evas_object_image_alpha_get(im);
+	      if (a->width <= EAP_MIN_WIDTH)
+	        a->width = EAP_MIN_WIDTH;
+	      if (a->height <= EAP_MIN_HEIGHT)
+	        a->height = EAP_MIN_HEIGHT;	
+	      if ((iw > 0) && (ih > 0))
+	        {
+	           ecore_evas_resize(buf, a->width, a->height);
+	           evas_object_image_fill_set(im, 0, 0, a->width, a->height);
+	           evas_object_resize(im, a->height, a->width);
+	           evas_object_move(im, 0, 0);
+	           evas_object_show(im);	     
+	           data = ecore_evas_buffer_pixels_get(buf);
+	           eet_data_image_write(ef, "images/0", (void *)data, a->width, a->height, alpha, 1, 0, 0);
+	        }
+           }
+          */
+         eet_close(ef);
+      }
+
    if (a->parent)
      {
 	Evas_List *l;
