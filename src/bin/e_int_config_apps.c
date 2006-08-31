@@ -29,6 +29,8 @@ struct _E_Config_Dialog_Data
    E_Config_Dialog *cfd;
    E_Fm2_Icon_Info *info;
    int state;
+   E_App *parent;
+   E_App *parent_all;
    struct {
       Evas_Object *o_fm_all;
       Evas_Object *o_fm;
@@ -91,6 +93,13 @@ e_int_config_apps(E_Container *con)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
+   char path_all[4096], *homedir;
+
+   homedir = e_user_homedir_get();
+   if (!homedir) return;
+
+   snprintf(path_all, sizeof(path_all), "%s/.e/e/applications/all", homedir);
+   cfdata->parent_all = e_app_new(path_all, 1);
    return;
 }
 
@@ -133,11 +142,21 @@ _cb_files_changed(void *data, Evas_Object *obj, void *event_info)
    if (!cfdata->gui.o_fm) return;
    if (!e_fm2_has_parent_get(cfdata->gui.o_fm))
      {
+        cfdata->parent = NULL;
 	if (cfdata->gui.o_up_button)
 	  e_widget_disabled_set(cfdata->gui.o_up_button, 1);
      }
    else
      {
+        const char *realpath;
+        char buf[4096];
+
+        realpath = e_fm2_real_path_get(cfdata->gui.o_fm_all);
+        snprintf(buf, sizeof(buf), "%s/.order", realpath);
+        if (ecore_file_exists(buf))
+           cfdata->parent = e_app_new(realpath, 1);
+	else
+           cfdata->parent = NULL;
 	if (cfdata->gui.o_up_button)
 	  e_widget_disabled_set(cfdata->gui.o_up_button, 0);
      }
@@ -228,59 +247,60 @@ static void
 _cb_button_delete_left(void *data1, void *data2)
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *selected;
+   Evas_List *l;
    E_Fm2_Icon_Info *ici;
-   const char *realpath;
-   char buf[4096];
-   E_App *a;
 
    cfdata = data1;
    if (!cfdata->gui.o_fm_all) return;
+   if (!cfdata->parent_all) return;
 
-   selected = e_fm2_selected_list_get(cfdata->gui.o_fm_all);
-   if (!selected) return;
-   ici = selected->data;
-   realpath = e_fm2_real_path_get(cfdata->gui.o_fm_all);
-   if (!strcmp(realpath, "/"))
-     snprintf(buf, sizeof(buf), "/%s", ici->file);
-   else
-     snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
-   evas_list_free(selected);
-   if (ecore_file_is_dir(buf)) return;
-printf("DELETING LEFT APPLICATION %s\n", buf);
-// FIXME: find parent, so that e_app_remove can do the right thing.
-//   a = e_app_new(buf, 0);
-//   if (a)
-//      e_app_remove(a);
-   e_fm2_refresh(cfdata->gui.o_fm_all);
+   l = e_fm2_selected_list_get(cfdata->gui.o_fm_all);
+   if (!l) return;
+   ici = l->data;
+   evas_list_free(l);
+   for (l = cfdata->parent_all->subapps; l; l = l->next)
+     {
+	E_App *a2;
+	
+	a2 = l->data;
+	if ((a2->deleted) || ((a2->orig) && (a2->orig->deleted))) continue;
+	if (!strcmp(ecore_file_get_file(a2->path), ecore_file_get_file(ici->file)))
+	   {
+              e_app_remove(a2);
+              e_fm2_refresh(cfdata->gui.o_fm_all);
+	      break;
+	   }
+     }
 }
 
 static void
 _cb_button_delete_right(void *data1, void *data2)
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *selected;
+   Evas_List *l;
    E_Fm2_Icon_Info *ici;
-   const char *realpath;
-   char buf[4096];
-   E_App *a;
 
    cfdata = data1;
    if (!cfdata->gui.o_fm) return;
+   if (!cfdata->parent) return;
 
-   selected = e_fm2_selected_list_get(cfdata->gui.o_fm);
-   if (!selected) return;
-   ici = selected->data;
-   realpath = e_fm2_real_path_get(cfdata->gui.o_fm);
-   if (!strcmp(realpath, "/"))
-     snprintf(buf, sizeof(buf), "/%s", ici->file);
-   else
-     snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
-   evas_list_free(selected);
-//   if (ecore_file_is_dir(buf)) return;
-printf("DELETING RIGHT APPLICATION %s\n", buf);
-// FIXME: find parent .order, so that e_app_remove can do the right thing.
-   e_fm2_refresh(cfdata->gui.o_fm);
+   l = e_fm2_selected_list_get(cfdata->gui.o_fm);
+   if (!l) return;
+   ici = l->data;
+   evas_list_free(l);
+   for (l = cfdata->parent->subapps; l; l = l->next)
+     {
+	E_App *a2;
+	
+	a2 = l->data;
+	if ((a2->deleted) || ((a2->orig) && (a2->orig->deleted))) continue;
+	if (!strcmp(ecore_file_get_file(a2->path), ecore_file_get_file(ici->file)))
+	   {
+              e_app_remove(a2);
+              e_fm2_refresh(cfdata->gui.o_fm);
+	      break;
+	   }
+     }
 }
 
 static void
@@ -324,6 +344,13 @@ _cb_button_add(void *data1, void *data2)
          if ((a) && (parent))
             e_app_append(a, parent);
       }
+
+   snprintf(buf, sizeof(buf), "%s/.order", realpath);
+   if (ecore_file_exists(buf))
+      cfdata->parent = e_app_new(realpath, 1);
+   else
+      cfdata->parent = NULL;
+
    e_fm2_refresh(cfdata->gui.o_fm);
 }
 

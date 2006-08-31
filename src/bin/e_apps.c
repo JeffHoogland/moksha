@@ -2058,6 +2058,8 @@ _e_app_is_eapp(const char *path)
 {
    char *p;
 
+   if (!path)
+     return 0;
    p = strrchr(path, '.');
    if (!p)
      return 0;
