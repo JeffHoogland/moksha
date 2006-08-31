@@ -493,6 +493,43 @@ group {
       }
    }
 }
+group {
+   name: "e/shelf/default/plain";
+   parts {
+      part {
+	 name:          "items_clip";
+	 type:          RECT;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       offset:   0    0;
+	    }
+	    rel2 {
+	       offset:   -1    -1;
+	    }
+	    color: 255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "e.swallow.content";
+	 type:          SWALLOW;
+	 mouse_events:  0;
+	 clip_to:       "items_clip";
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       offset:   0 0;
+	    }
+	    rel2 {
+	       offset:   -1    -1;
+	    }
+	    color: 0 0 0 0;
+	 }
+      }
+   }
+}
+
 
 
 
@@ -1002,6 +1039,42 @@ group {
       }
    }
 }
+group {
+   name: "e/shelf/gold/plain";
+   parts {
+      part {
+	 name:          "items_clip";
+	 type:          RECT;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       offset:   0    0;
+	    }
+	    rel2 {
+	       offset:   -1    -1;
+	    }
+	    color: 255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "e.swallow.content";
+	 type:          SWALLOW;
+	 mouse_events:  0;
+	 clip_to:       "items_clip";
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       offset:   0 0;
+	    }
+	    rel2 {
+	       offset:   -1    -1;
+	    }
+	    color: 0 0 0 0;
+	 }
+      }
+   }
+}
 
 
 
@@ -1033,6 +1106,7 @@ group {
       }
    }
 }
+
 group {
    name: "e/shelf/invisible/inset";
    parts {
@@ -1102,6 +1176,43 @@ group {
 	    fill {
 	       smooth: 0;
 	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "e/shelf/invisible/plain";
+   parts {
+      part {
+	 name:          "items_clip";
+	 type:          RECT;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       offset:   0    0;
+	    }
+	    rel2 {
+	       offset:   -1    -1;
+	    }
+	    color: 255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "e.swallow.content";
+	 type:          SWALLOW;
+	 mouse_events:  0;
+	 clip_to:       "items_clip";
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       offset:   0 0;
+	    }
+	    rel2 {
+	       offset:   -1    -1;
+	    }
+	    color: 0 0 0 0;
 	 }
       }
    }
