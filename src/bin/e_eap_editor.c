@@ -32,6 +32,7 @@ struct _E_Config_Dialog_Data
    char *wtitle;
    char *wrole;
    char *iclass;
+   int   icon_theme;
    int   startup_notify;
    int   wait_exit;
    /*- common -*/
@@ -91,7 +92,7 @@ e_eap_edit_show(E_Container *con, E_App *a)
    v->advanced.create_widgets = _e_eap_edit_advanced_create_widgets;
    /* create config diaolg for NULL object/data */
    editor->cfd = e_config_dialog_new(con,
-				     _("Eap Editor"), 
+				     _("Application Editor"), 
 				     "E", "_eap_editor_dialog",
 				     NULL, 0, v, editor);
 }
@@ -157,8 +158,9 @@ _e_eap_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data)
      {
 	if (data->editor->img) evas_object_del(data->editor->img);
 	if (data->editor->img_widget) evas_object_del(data->editor->img_widget);
+	if (data->editor->fsel) evas_object_del(data->editor->fsel);
+//	if (data->editor->fsel_dia) e_object_del(E_OBJECT(data->editor->fsel_dia));
 	free(data->editor);
-	if (data->editor->fsel) e_object_del(E_OBJECT(data->editor->fsel_dia));
      }
    free(data);
 }
@@ -292,6 +294,11 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dial
    e_widget_frametable_object_append(o, editor->img_widget,
 				     0, 0, 1, 1,
 				     1, 1, 1, 1);
+
+   e_widget_frametable_object_append(o, e_widget_check_add(evas, _("Use Icon Theme"), &(data->icon_theme)),
+				     1, 0, 1, 1,
+				     1, 1, 1, 1);
+
    e_widget_table_object_append(ol, o, 0, 0, 1, 1, 1 ,1, 1, 1);
 
 
