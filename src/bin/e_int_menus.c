@@ -749,15 +749,18 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
-   for (l = alt; l; l = l->next)
+   if (evas_list_count(alt) > 0) 
      {
-	E_Border *bd = l->data;
-
-	_e_int_menus_clients_item_create(bd, m);
+	for (l = alt; l; l = l->next)
+	  {
+	     E_Border *bd = l->data;
+	     
+	     _e_int_menus_clients_item_create(bd, m);
+	  }
+	mi = e_menu_item_new(m);
+	e_menu_item_separator_set(mi, 1);
      }
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-
+   
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Cleanup Windows"));
    s = e_path_find(path_icons, "default.edj");
