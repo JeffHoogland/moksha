@@ -812,24 +812,6 @@ e_app_remove(E_App *a)
    e_object_unref(E_OBJECT(a));
 }
 
-EAPI void
-e_app_remove_from_order(E_App *a)
-{
-   Evas_List *l;
-   char buf[PATH_MAX];
-
-   if (!a) return;
-   if (!a->parent) return;
-
-   a->parent->subapps = evas_list_remove(a->parent->subapps, a);
-   _e_app_save_order(a->parent);
-   snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", a->parent->path);
-   ecore_file_unlink(buf);
-   _e_app_change(a, E_APP_DEL);
-   a->parent = NULL;
-   e_object_unref(E_OBJECT(a));
-}
-
 
 EAPI void
 e_app_remove_file_from_order(const char *order, const char *file)
@@ -839,14 +821,10 @@ e_app_remove_file_from_order(const char *order, const char *file)
    int ret = 0;
    FILE *f;
 
-printf("E_APP_REMOVE_FILE_FROM_ORDER(%s, %s)\n", order, file);
    snprintf(buf, sizeof(buf), "%s/.order", order);
-printf("E_APP_REMOVE_FILE_FROM_ORDER(%s, %s)  -  %s\n", order, file, buf);
    if (!ecore_file_exists(buf)) return;
-printf("E_APP_REMOVE_FILE_FROM_ORDER(%s, %s)  - EXISTS\n", order, file);
    f = fopen(buf, "rb");
    if (!f) return;
-printf("E_APP_REMOVE_FILE_FROM_ORDER(%s, %s)  -  OPENED FOR READING\n", order, file);
 
    while (fgets(buf, sizeof(buf), f))
      {
@@ -860,20 +838,16 @@ printf("E_APP_REMOVE_FILE_FROM_ORDER(%s, %s)  -  OPENED FOR READING\n", order, f
 		  buf[len - 1] = 0;
 		  len--;
 	       }
-printf("E_APP_REMOVE_FILE_FROM_ORDER(%s, %s)  -  %s == %s\n", order, file, buf, file);
 	     if (strcmp(buf, file) != 0)
                   list = evas_list_append(list, strdup(buf));
 	  }
      }
    fclose(f);
 
-printf("E_APP_REMOVE_FILE_FROM_ORDER(%s, %s)  -  READ\n", order, file);
    snprintf(buf, sizeof(buf), "%s/.order", order);
    ecore_file_unlink(buf);
-printf("E_APP_REMOVE_FILE_FROM_ORDER(%s, %s)  -  DELETED\n", order, file);
    f = fopen(buf, "wb");
    if (!f) return;
-printf("E_APP_REMOVE_FILE_FROM_ORDER(%s, %s)  -  OPENED FOR WRITING\n", order, file);
    for (l = list; l; l = l->next)
      {
         char *text;
@@ -885,10 +859,8 @@ printf("E_APP_REMOVE_FILE_FROM_ORDER(%s, %s)  -  OPENED FOR WRITING\n", order, f
    fclose(f);
    evas_list_free(list);
 
-printf("E_APP_REMOVE_FILE_FROM_ORDER(%s, %s)  -  WRITTEN\n", order, file);
    snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", order);
    ecore_file_unlink(buf);
-printf("E_APP_REMOVE_FILE_FROM_ORDER(%s, %s)  -  CACHE NUKED\n", order, file);
 
    return;
 }
