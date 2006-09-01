@@ -789,6 +789,8 @@ e_gadcon_client_edit_begin(E_Gadcon_Client *gcc)
    
    evas_object_show(gcc->o_event);
    evas_object_show(gcc->o_control);
+   
+   gcc->gadcon->editing = 1;
 }
 
 EAPI void
@@ -817,6 +819,8 @@ e_gadcon_client_edit_end(E_Gadcon_Client *gcc)
    gcc->o_event = NULL;
    if (gcc->o_control) evas_object_del(gcc->o_control);
    gcc->o_control = NULL;
+
+   gcc->gadcon->editing = 0;
 }
 
 EAPI void
@@ -1137,6 +1141,14 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int f
    mi = e_menu_item_new(menu);
    e_menu_item_separator_set(mi, 1);
    
+   if (!gcc->gadcon->editing) 
+     {
+	mi = e_menu_item_new(menu);
+	e_menu_item_label_set(mi, _("Move/Resize this gadget"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/edit");
+	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_edit, gcc);
+     }
+
    mi = e_menu_item_new(menu);
    e_menu_item_label_set(mi, _("Remove this gadget"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/remove");
