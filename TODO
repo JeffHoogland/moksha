@@ -10,7 +10,9 @@ Some of the things (in very short form) that need to be done to E17...
 
 * BUG: e17 screen res diaolg doesnt work under xephyr - why?
 * BUG: the ibar specific menu only shows when you right click on icons (and not
-  on the bar itself). so, if there are no icons you can't get to the config
+  on the bar itself). so, if there are no icons you can't get to the config.
+  ibox also has this problem..related to the o_empty object not resizing when
+  the module does.
 * BUG: "match this window only" doesnt fall back to other unused remembers
 * BUG: if app asks for borderless in properties - borderless toggle in menu
   doesn't have any effect.
