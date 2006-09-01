@@ -129,6 +129,7 @@ e_widget_slider.h \
 e_int_config_window_manipulation.h \
 e_int_config_window_display.h \
 e_int_config_theme.h \
+e_int_config_theme_import.h \
 e_int_config_icon_themes.h \
 e_int_config_menus.h \
 e_int_config_keybindings.h \
@@ -282,6 +283,7 @@ e_widget_slider.c \
 e_int_config_window_manipulation.c \
 e_int_config_window_display.c \
 e_int_config_theme.c \
+e_int_config_theme_import.c \
 e_int_config_icon_themes.c \
 e_int_config_menus.c \
 e_int_config_keybindings.c \

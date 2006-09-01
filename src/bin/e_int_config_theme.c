@@ -22,6 +22,9 @@ struct _E_Config_Dialog_Data
    int fmdir;
    
    char *theme;
+   
+   /* Dialog */
+   E_Win *win_import;   
 };
 
 EAPI E_Config_Dialog *
@@ -44,6 +47,53 @@ e_int_config_theme(E_Container *con)
    return cfd;
 }
 
+EAPI void
+e_int_config_theme_import_done(E_Config_Dialog *dia) 
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = dia->cfdata;
+   cfdata->win_import = NULL;
+}
+
+EAPI void
+e_int_config_theme_update(E_Config_Dialog *dia, char *file) 
+{
+   E_Config_Dialog_Data *cfdata;
+   char *homedir, path[4096];
+   
+   cfdata = dia->cfdata;
+
+   homedir = e_user_homedir_get();
+   if (!homedir) return;
+   cfdata->fmdir = 1;
+   e_widget_radio_toggle_set(cfdata->o_personal, 1);
+   
+   snprintf(path, sizeof(path), "%s/.e/e/themes", homedir);
+   E_FREE(homedir);
+   E_FREE(cfdata->theme);
+   cfdata->theme = strdup(file);
+
+   if (cfdata->o_fm)
+     e_fm2_path_set(cfdata->o_fm, path, "/");
+   
+   if (cfdata->o_preview)
+     e_widget_preview_edje_set(cfdata->o_preview, cfdata->theme, "e/desktop/background");
+   if (cfdata->o_frame)
+     e_widget_change(cfdata->o_frame);
+   
+/*   
+
+   if (cfdata->o_fm) 
+     {
+	e_fm2_select_set(cfdata->o_fm, file, 1);
+	e_fm2_file_show(cfdata->o_fm, file);
+
+	evas_object_smart_callback_call(cfdata->o_fm, 
+					"selection_change", cfdata);
+     }
+ */ 
+}
 
 static void
 _cb_button_up(void *data1, void *data2)
@@ -86,19 +136,24 @@ _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
    E_Fm2_Icon_Info *ici;
    const char *realpath;
    char buf[4096];
-   
+
    cfdata = data;
    if (!cfdata->o_fm) return;
+
    selected = e_fm2_selected_list_get(cfdata->o_fm);
    if (!selected) return;
+
    ici = selected->data;
    realpath = e_fm2_real_path_get(cfdata->o_fm);
+   
    if (!strcmp(realpath, "/"))
      snprintf(buf, sizeof(buf), "/%s", ici->file);
    else
      snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
    evas_list_free(selected);
+
    if (ecore_file_is_dir(buf)) return;
+
    E_FREE(cfdata->theme);
    cfdata->theme = strdup(buf);
    if (cfdata->o_preview)
@@ -207,7 +262,17 @@ _cb_files_files_deleted(void *data, Evas_Object *obj, void *event_info)
    evas_object_smart_callback_call(cfdata->o_fm, "selection_change", cfdata);
 }
 
-
+static void
+_cb_import(void *data1, void *data2) 
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data1;
+   if (cfdata->win_import) 
+     e_win_raise(cfdata->win_import);
+   else
+     cfdata->win_import = e_int_config_theme_import(cfdata->cfd);
+}
 
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
@@ -264,6 +329,9 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
+   if (cfdata->win_import) 
+     e_int_config_theme_del(cfdata->win_import);
+   
    E_FREE(cfdata->theme);
    free(cfdata);
 }
@@ -356,6 +424,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_table_object_append(ot, ol, 0, 0, 1, 1, 1, 1, 1, 1);
    
    of = e_widget_list_add(evas, 0, 0);
+
+   il = e_widget_list_add(evas, 0, 1);
+   o = e_widget_button_add(evas, _("Import..."), "enlightenment/theme",
+			   _cb_import, cfdata, NULL);
+   e_widget_list_object_append(il, o, 1, 0, 0.5);
+   e_widget_list_object_append(of, il, 1, 0, 0.0);
    
    o = e_widget_preview_add(evas, 320, (320 * z->h) / z->w);
    cfdata->o_preview = o;
