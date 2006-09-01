@@ -89,7 +89,7 @@ Description: Virtual package providing additional E17 dev packages
 Package: e17-extras
 Architecture: any
 Section: x11
-Depends: exhibit, entropy, edje-viewer, empower, extract, estickies, ephoto, entice, engage, entrance, entrance-edit-gui
+Depends: exhibit, entropy, edje-viewer, empower, extrackt, estickies, ephoto, entice, engage, entrance, entrance-edit-gui
 Suggests: enlightenment
 Description: Virtual package providing extras for the E17 window manager
  Enlightenment is an advanced window manager for X11. Unique
@@ -103,7 +103,7 @@ Description: Virtual package providing extras for the E17 window manager
   * entropy - file manager based on Etk 
   * edje-viewer - A simple viewer for edje files
   * empower - graphical sudo tool
-  * extract - an audio CD ripper and encoder
+  * extrackt - an audio CD ripper and encoder
   * estickies - A sticky notes application based on Etk
   * ephoto - A slideshow creator with audio-support
   * entice - Image viewer based on libeet
