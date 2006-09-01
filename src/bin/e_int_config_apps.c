@@ -244,91 +244,6 @@ _cb_files_add_edited(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *i
 }
 
 static void
-_cb_button_delete_left(void *data1, void *data2)
-{
-   E_Config_Dialog_Data *cfdata;
-   Evas_List *l;
-   E_Fm2_Icon_Info *ici;
-   const char *realpath;
-   char buf[4096];
-
-   cfdata = data1;
-   if (!cfdata->gui.o_fm_all) return;
-   if (!cfdata->parent_all) return;
-
-   l = e_fm2_selected_list_get(cfdata->gui.o_fm_all);
-   if (!l) return;
-   ici = l->data;
-   evas_list_free(l);
-
-#if 0
-   /* This just isn't working, lets try the crude method instead. */
-   for (l = cfdata->parent_all->subapps; l; l = l->next)
-     {
-	E_App *a2;
-	
-	a2 = l->data;
-	if ((a2->deleted) || ((a2->orig) && (a2->orig->deleted))) continue;
-	if (!strcmp(ecore_file_get_file(a2->path), ecore_file_get_file(ici->file)))
-	   {
-              e_app_remove(a2);
-              e_fm2_refresh(cfdata->gui.o_fm_all);
-	      break;
-	   }
-     }
-#else
-   realpath = e_fm2_real_path_get(cfdata->gui.o_fm_all);
-   if (!strcmp(realpath, "/"))
-     snprintf(buf, sizeof(buf), "/%s", ici->file);
-   else
-     snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
-   ecore_file_unlink(buf);
-   snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", realpath);
-   ecore_file_unlink(buf);
-   e_fm2_refresh(cfdata->gui.o_fm_all);
-#endif
-}
-
-static void
-_cb_button_delete_right(void *data1, void *data2)
-{
-   E_Config_Dialog_Data *cfdata;
-   Evas_List *l;
-   E_Fm2_Icon_Info *ici;
-   const char *realpath;
-
-   cfdata = data1;
-   if (!cfdata->gui.o_fm) return;
-
-   l = e_fm2_selected_list_get(cfdata->gui.o_fm);
-   if (!l) return;
-   ici = l->data;
-   evas_list_free(l);
-
-#if 0
-   /* This just isn't working, lets try the crude method instead. */
-   if (!cfdata->parent) return;
-   for (l = cfdata->parent->subapps; l; l = l->next)
-     {
-	E_App *a2;
-	
-	a2 = l->data;
-	if ((a2->deleted) || ((a2->orig) && (a2->orig->deleted))) continue;
-	if (!strcmp(ecore_file_get_file(a2->path), ecore_file_get_file(ici->file)))
-	   {
-              e_app_remove_from_order(a2);
-              e_fm2_refresh(cfdata->gui.o_fm);
-	      break;
-	   }
-     }
-#else
-   realpath = e_fm2_real_path_get(cfdata->gui.o_fm);
-   e_app_remove_file_from_order(realpath, ecore_file_get_file(ici->file));
-   e_fm2_refresh(cfdata->gui.o_fm);
-#endif
-}
-
-static void
 _cb_button_add(void *data1, void *data2)
 {
    E_Config_Dialog_Data *cfdata;
@@ -462,11 +377,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->gui.o_add_button = mt;
    e_widget_framelist_object_append(of, mt);
 
-   mt = e_widget_button_add(evas, _("Delete application"), "enlightenment/e",
-			   _cb_button_delete_left, cfdata, NULL);
-   cfdata->gui.o_delete_left_button = mt;
-   e_widget_framelist_object_append(of, mt);
-
    e_widget_table_object_append(ot, of, 0, 0, 2, 4, 1, 1, 1, 1);
 
    if (!once)
@@ -512,11 +422,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
          cfdata->gui.o_frame = ob;
          e_widget_min_size_set(ob, 150, 220);
          e_widget_framelist_object_append(of, ob);
-
-         mt = e_widget_button_add(evas, _("Remove application"), "enlightenment/e",
-			   _cb_button_delete_right, cfdata, NULL);
-         cfdata->gui.o_delete_right_button = mt;
-         e_widget_framelist_object_append(of, mt);
 
          mt = e_widget_button_add(evas, _("Regenerate \"All Applications\" Menu"), "enlightenment/e",
 			   _cb_button_regen, cfdata, NULL);

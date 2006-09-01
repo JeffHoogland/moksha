@@ -812,59 +812,6 @@ e_app_remove(E_App *a)
    e_object_unref(E_OBJECT(a));
 }
 
-
-EAPI void
-e_app_remove_file_from_order(const char *order, const char *file)
-{
-   char buf[4096];
-   Evas_List *list = NULL, *l;
-   int ret = 0;
-   FILE *f;
-
-   snprintf(buf, sizeof(buf), "%s/.order", order);
-   if (!ecore_file_exists(buf)) return;
-   f = fopen(buf, "rb");
-   if (!f) return;
-
-   while (fgets(buf, sizeof(buf), f))
-     {
-	int len;
-
-	len = strlen(buf);
-	if (len > 0)
-	  {
-	     if (buf[len - 1] == '\n')
-	       {
-		  buf[len - 1] = 0;
-		  len--;
-	       }
-	     if (strcmp(buf, file) != 0)
-                  list = evas_list_append(list, strdup(buf));
-	  }
-     }
-   fclose(f);
-
-   snprintf(buf, sizeof(buf), "%s/.order", order);
-   ecore_file_unlink(buf);
-   f = fopen(buf, "wb");
-   if (!f) return;
-   for (l = list; l; l = l->next)
-     {
-        char *text;
-
-        text = l->data;
-	fprintf(f, "%s\n", text);
-	free(text);
-     }
-   fclose(f);
-   evas_list_free(list);
-
-   snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", order);
-   ecore_file_unlink(buf);
-
-   return;
-}
-
 EAPI void
 e_app_change_callback_add(void (*func) (void *data, E_App *a, E_App_Change ch), void *data)
 {
