@@ -467,12 +467,7 @@ _e_int_menus_apps_scan(E_Menu *m)
 		  e_menu_item_label_set(mi, label);
 		  if (a->exe)
 		    {
-		       if (!((a->icon_class) && 
-			     (e_util_menu_item_edje_icon_list_set(mi, a->icon_class))))
-		          {	
-			     e_menu_item_icon_edje_set(mi, a->path, "icon");
-	                     if (a->icon_path) e_menu_item_icon_path_set(mi, a->icon_path);
-			  }
+                       e_app_icon_add_to_menu_item(mi, a);
 		       e_menu_item_callback_set(mi, _e_int_menus_apps_run, a);
 		       e_menu_item_drag_callback_set(mi, _e_int_menus_apps_drag, a);
 		       app_count++;
@@ -481,6 +476,7 @@ _e_int_menus_apps_scan(E_Menu *m)
 		    {
 		       char buf[4096];
 		       
+                       /* FIXME: .directory.eaps are obsolete, but have yet to be replaced by FDO stuff. */
 		       snprintf(buf, sizeof(buf), "%s/.directory.eap", a->path);
 		       if (!((a->icon_class) && 
 			     (e_util_menu_item_edje_icon_list_set(mi, a->icon_class))))
@@ -946,14 +942,7 @@ _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
 	e_menu_item_callback_set(mi, _e_int_menus_lost_clients_item_cb, bd);
 	a = bd->app;
 	if (a)
-	  {
-	     if (!((a->icon_class) && 
-		   (e_util_menu_item_edje_icon_list_set(mi, a->icon_class))))
-	        {
-	           e_menu_item_icon_edje_set(mi, a->path, "icon");
-	           if (a->icon_path) e_menu_item_icon_path_set(mi, a->icon_path);
-		}
-	  }
+             e_app_icon_add_to_menu_item(mi, a);
      }
    e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_lost_clients_free_hook);
    e_object_data_set(E_OBJECT(m), borders);

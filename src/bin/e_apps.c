@@ -1617,8 +1617,34 @@ e_app_icon_add(Evas *evas, E_App *a)
 	       e_icon_file_set(o, a->icon_path);
 	       e_icon_fill_inside_set(o, 1);
             }
+	    /* FIXME: if we still haven't found an icon, feed icon_class into the FDO lookup process. */
       }
    return o;
+}
+
+/* Search order? -
+ * 
+ * fixed path to icon
+ * an .edje icon in ~/.e/e/icons
+ * icon_class in theme
+ * icon from a->path in theme
+ * FDO search
+ * FDO search for icon_class
+ */
+
+EAPI void
+e_app_icon_add_to_menu_item(E_Menu_Item *mi, E_App *a)
+{
+   if (!e_util_menu_item_edje_icon_list_set(mi, a->icon_class))
+      {
+         /* e_menu_item_icon_edje_set() just tucks away the params, the actual call to edje_object_file_set() happens later. */
+         /* e_menu_item_icon_file_set() just tucks away the params, the actual call to e_icon_add() happens later. */
+         e_menu_item_icon_edje_set(mi, a->path, "icon");
+         if (a->icon_path)   /* If that fails, then this might be an FDO icon. */
+	    e_menu_item_icon_file_set(mi, a->icon_path);
+         /* FIXME: if we still haven't found an icon, feed icon_class into the FDO lookup process. */
+      }
+   return;
 }
 
 

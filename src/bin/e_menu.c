@@ -552,21 +552,6 @@ e_menu_item_num_get(E_Menu_Item *mi)
 }
 
 EAPI void
-e_menu_item_icon_path_set(E_Menu_Item *mi, const char *icon)
-{
-   E_OBJECT_CHECK(mi);
-   E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
-   if (((mi->icon_path) && (icon) && (!strcmp(icon, mi->icon_path))) ||
-       ((!mi->icon_path) && (!icon))) 
-     return;
-   if (mi->icon_path) evas_stringshare_del(mi->icon_path);
-   mi->icon_path = NULL;
-   if (icon) mi->icon_path = evas_stringshare_add(icon);
-   mi->changed = 1;
-   mi->menu->changed = 1;
-}
-
-EAPI void
 e_menu_item_icon_file_set(E_Menu_Item *mi, const char *icon)
 {
    E_OBJECT_CHECK(mi);
@@ -1068,7 +1053,6 @@ _e_menu_item_free(E_Menu_Item *mi)
    mi->menu->items = evas_list_remove(mi->menu->items, mi);
    if (mi->icon) evas_stringshare_del(mi->icon);
    if (mi->icon_key) evas_stringshare_del(mi->icon_key);
-   if (mi->icon_path) evas_stringshare_del(mi->icon_path);
    if (mi->label) evas_stringshare_del(mi->label);
    free(mi);
 }
@@ -1223,16 +1207,9 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     
 	     if (mi->icon)
 	       {
-	          /* Try a the usual suspects first. */
-		  if (!mi->icon_key)
-		    {
-		       o = e_icon_add(mi->menu->evas);
-		       mi->icon_object = o;
-		       e_icon_file_set(o, mi->icon);
-		       e_icon_fill_inside_set(o, 1);
-		       e_icon_size_get(mi->icon_object, &icon_w, &icon_h);
-		    }
-		  else
+	          /* This is done this way to match up with how e_app_icon_add does it. */
+                  mi->icon_object = NULL;   /* Just coz I'm paranoid, may not be needed. */
+		  if (mi->icon_key)
 		    {
 		       Evas_Coord iww, ihh;
 
@@ -1245,14 +1222,11 @@ _e_menu_item_realize(E_Menu_Item *mi)
 		             icon_h = ihh;
 			  }
 		    }
-
-                 if ((!mi->icon_object) && (mi->icon_path))   /* If that fails, then this might be an FDO icon. */
+		  if (!mi->icon_object)
 		    {
-		       /* Free the aborted object first. */
-                       if (mi->icon_object) evas_object_del(mi->icon_object);
 		       o = e_icon_add(mi->menu->evas);
 		       mi->icon_object = o;
-		       e_icon_file_set(o, mi->icon_path);
+		       e_icon_file_set(o, mi->icon);
 		       e_icon_fill_inside_set(o, 1);
 		       e_icon_size_get(mi->icon_object, &icon_w, &icon_h);
 		    }
