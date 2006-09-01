@@ -21,25 +21,26 @@ struct _E_App_Edit
 
 struct _E_Config_Dialog_Data
 {
+   E_App eap;
    /*- BASIC -*/
-   char *name;
-   char *exe;
+   char  *name;
+   char  *exe;
    /*- ADVANCED -*/
-   char *generic;
-   char *comment;
-   char *wname;
-   char *wclass;
-   char *wtitle;
-   char *wrole;
-   char *iclass;
-   char *ipath;
-   int   icon_theme;
-   int   startup_notify;
-   int   wait_exit;
+   char  *generic;
+   char  *comment;
+   char  *wname;
+   char  *wclass;
+   char  *wtitle;
+   char  *wrole;
+   char  *iclass;
+   char  *ipath;
+   int    startup_notify;
+   int    wait_exit;
    /*- common -*/
-   char *image;
-   int   width;
-   int   height;
+   char  *image;
+   int    width;
+   int    height;
+   int    icon_theme;
    E_App_Edit *editor;
 };
 
@@ -122,6 +123,11 @@ _e_eap_edit_fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->height = cfdata->editor->eap->height;
    cfdata->width = cfdata->editor->eap->width;
    if (cfdata->image) cfdata->editor->img_set = 1;
+
+   IFDUP(cfdata->editor->eap->path, cfdata->eap.path);
+   IFDUP(cfdata->editor->eap->icon_class, cfdata->eap.icon_class);
+   IFDUP(cfdata->editor->eap->icon_path, cfdata->eap.icon_path);
+
 }
 
 static void *
@@ -151,6 +157,14 @@ _e_eap_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data)
    E_FREE(data->iclass);
    E_FREE(data->ipath);
    E_FREE(data->image);
+
+   if (data->eap.path)
+      free((char *) data->eap.path);
+   if (data->eap.icon_class)
+      free((char *) data->eap.icon_class);
+   if (data->eap.icon_path)
+      free((char *) data->eap.icon_path);
+
    if (data->editor->eap->tmpfile) ecore_file_unlink(data->editor->eap->image);
    data->editor->eap->tmpfile = 0;
    if (data->editor->eap->image) evas_stringshare_del(data->editor->eap->image);
@@ -183,7 +197,11 @@ _e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data)
 
    if (data->name) eap->name = evas_stringshare_add(data->name);
    if (data->exe) eap->exe = evas_stringshare_add(data->exe);
-   if (data->image) eap->image = evas_stringshare_add(data->image);
+   if (data->image)
+      {
+         eap->image = evas_stringshare_add(data->image);
+         eap->icon_class = evas_stringshare_add("");   /* Call this temporary, until I reconsider the icon search order. */
+      }
 
    eap->startup_notify = data->startup_notify;
    eap->wait_exit = data->wait_exit;
@@ -228,7 +246,6 @@ _e_eap_edit_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data
 
    if (data->name) eap->name = evas_stringshare_add(data->name);
    if (data->exe) eap->exe = evas_stringshare_add(data->exe);
-   if (data->image) eap->image = evas_stringshare_add(data->image);
 
    if (data->generic) eap->generic = evas_stringshare_add(data->generic);
    if (data->comment) eap->comment = evas_stringshare_add(data->comment);
@@ -237,6 +254,12 @@ _e_eap_edit_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data
    if (data->wtitle) eap->win_title = evas_stringshare_add(data->wtitle);
    if (data->wrole) eap->win_role = evas_stringshare_add(data->wrole);
    if (data->iclass) eap->icon_class = evas_stringshare_add(data->iclass);
+
+   if (data->image)
+      {
+         eap->image = evas_stringshare_add(data->image);
+         eap->icon_class = evas_stringshare_add("");   /* Call this temporary, until I reconsider the icon search order. */
+      }
 
    /* FIXME: hardcoded until the eap editor provides fields to change it */
    if (data->width) eap->width = data->width;
@@ -272,6 +295,8 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dial
 	editor->img = NULL;
      }
    
+   editor->img = e_app_icon_add(evas, &(data->eap));
+#if 0
    if ((editor->img_set) && (data->image))
      {
 	if (editor->img) evas_object_del(editor->img);
@@ -288,6 +313,7 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dial
 	     e_icon_fill_inside_set(editor->img, 1);
 	  }
      }
+#endif
 
    if (editor->img_widget) evas_object_del(editor->img_widget);
    editor->img_widget = e_widget_button_add(evas, "", NULL,
@@ -501,9 +527,23 @@ _e_eap_edit_cb_icon_select_ok(void *data, E_Dialog *dia)
      {
 	cfdata->editor->img_set = 1;
 	if (cfdata->editor->img) evas_object_del(cfdata->editor->img);
+
+        if (cfdata->eap.path)
+           free((char *) cfdata->eap.path);
+        if (cfdata->eap.icon_class)
+           free((char *) cfdata->eap.icon_class);
+        if (cfdata->eap.icon_path)
+           free((char *) cfdata->eap.icon_path);
+
+	cfdata->eap.icon_path = strdup(cfdata->image);
+	cfdata->eap.path = strdup("");
+	cfdata->eap.icon_class = strdup("");
+        cfdata->editor->img = e_app_icon_add(cfdata->editor->evas, &(cfdata->eap));
+#if 0
 	cfdata->editor->img = e_icon_add(cfdata->editor->evas);
 	e_icon_file_set(cfdata->editor->img, cfdata->image);
 	e_icon_fill_inside_set(cfdata->editor->img, 1);
+#endif
 	e_widget_button_icon_set(cfdata->editor->img_widget, cfdata->editor->img);
      }
    else
