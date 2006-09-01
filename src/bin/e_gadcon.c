@@ -3868,6 +3868,7 @@ _e_gadcon_layout_smart_containers_position_adjust(E_Smart_Data *sd, E_Layout_Ite
 
 		  for (l = lc->items; l; l = l->next)
 		    {
+		       bi = l->data;
 		       if (bi->gcc->state_info.flags & E_GADCON_LAYOUT_ITEM_LOCK_POSITION)
 			 {
 			    if (sd->horizontal) shift = bi->ask.pos - bi->x;
