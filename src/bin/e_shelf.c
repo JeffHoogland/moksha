@@ -771,11 +771,19 @@ _e_shelf_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *styl
    
    es = data;
    o = edje_object_add(gcc->gadcon->evas);
+
    snprintf(buf, sizeof(buf), "e/shelf/%s/%s", es->style, style);
    if (!e_theme_edje_object_set(o, "base/theme/shelf", buf))
      {
-	evas_object_del(o);
-	return NULL;
+	/* if an inset style (e.g. plain) isn't implemented for a given
+	 * shelf style, fall back to the default one. no need for every
+	 * theme to implement the plain style */
+	snprintf(buf, sizeof(buf), "e/shelf/default/%s", style);
+	if (!e_theme_edje_object_set(o, "base/theme/shelf", buf))
+	  {
+	     evas_object_del(o);
+	     return NULL;
+	  }
      }
    snprintf(buf, sizeof(buf), "e,state,orientation,%s", _e_shelf_orient_string_get(es));
    edje_object_signal_emit(es->o_base, buf, "e");
