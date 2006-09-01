@@ -870,96 +870,96 @@ group {
    programs {
       program {
 	 name:    "orient1";
-	 signal:  "e,state,orientation,";
-	 source:  "top";
+	 signal:  "e,state,orientation,top";
+	 source:  "e";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "base";
 	 target:  "e.swallow.content";
       }
       program {
 	 name:    "orient2";
-	 signal:  "e,state,orientation,";
-	 source:  "top_left";
+	 signal:  "e,state,orientation,top_left";
+	 source:  "e";
 	 action:  STATE_SET "top_left" 0.0;
 	 target:  "base";
 	 target:  "e.swallow.content";
       }
       program {
 	 name:    "orient3";
-	 signal:  "e,state,orientation,";
-	 source:  "top_right";
+	 signal:  "e,state,orientation,top_right";
+	 source:  "e";
 	 action:  STATE_SET "top_right" 0.0;
 	 target:  "base";
 	 target:  "e.swallow.content";
       }
       program {
 	 name:    "orient4";
-	 signal:  "e,state,orientation,";
-	 source:  "bottom";
+	 signal:  "e,state,orientation,bottom";
+	 source:  "e";
 	 action:  STATE_SET "bottom" 0.0;
 	 target:  "base";
 	 target:  "e.swallow.content";
       }
       program {
 	 name:    "orient5";
-	 signal:  "e,state,orientation,";
-	 source:  "bottom_left";
+	 signal:  "e,state,orientation,bottom_left";
+	 source:  "e";
 	 action:  STATE_SET "bottom_left" 0.0;
 	 target:  "base";
 	 target:  "e.swallow.content";
       }
       program {
 	 name:    "orient6";
-	 signal:  "e,state,orientation,";
-	 source:  "bottom_right";
+	 signal:  "e,state,orientation,bottom_right";
+	 source:  "e";
 	 action:  STATE_SET "bottom_right" 0.0;
 	 target:  "base";
 	 target:  "e.swallow.content";
       }
       program {
 	 name:    "orient7";
-	 signal:  "e,state,orientation,";
-	 source:  "left";
+	 signal:  "e,state,orientation,left";
+	 source:  "e";
 	 action:  STATE_SET "left" 0.0;
 	 target:  "base";
 	 target:  "e.swallow.content";
       }
       program {
 	 name:    "orient8";
-	 signal:  "e,state,orientation,";
-	 source:  "left_top";
+	 signal:  "e,state,orientation,left_top";
+	 source:  "e";
 	 action:  STATE_SET "left_top" 0.0;
 	 target:  "base";
 	 target:  "e.swallow.content";
       }
       program {
 	 name:    "orient9";
-	 signal:  "e,state,orientation,";
-	 source:  "left_bottom";
+	 signal:  "e,state,orientation,left_bottom";
+	 source:  "e";
 	 action:  STATE_SET "left_bottom" 0.0;
 	 target:  "base";
 	 target:  "e.swallow.content";
       }
       program {
 	 name:    "orient10";
-	 signal:  "e,state,orientation,";
-	 source:  "right";
+	 signal:  "e,state,orientation,right";
+	 source:  "e";
 	 action:  STATE_SET "right" 0.0;
 	 target:  "base";
 	 target:  "e.swallow.content";
       }
       program {
 	 name:    "orient11";
-	 signal:  "e,state,orientation,";
-	 source:  "right_top";
+	 signal:  "e,state,orientation,right_top";
+	 source:  "e";
 	 action:  STATE_SET "right_top" 0.0;
 	 target:  "base";
 	 target:  "e.swallow.content";
       }
       program {
 	 name:    "orient12";
-	 signal:  "e,state,orientation,";
-	 source:  "right_bottom";
+	 signal:  "e,state,orientation,right_bottom";
+	 source:  "e";
 	 action:  STATE_SET "right_bottom" 0.0;
 	 target:  "base";
 	 target:  "e.swallow.content";
