@@ -365,6 +365,17 @@ e_win_evas_object_win_get(Evas_Object *obj)
    return win;
 }
 
+EAPI void 
+e_win_border_icon_set(E_Win *win, const char *icon) 
+{
+   E_Border *border;
+   
+   if (!icon) return;
+   border = win->border;
+   if (!border) return;
+   border->internal_icon = evas_stringshare_add(icon);
+}
+
 /* local subsystem functions */
 static void
 _e_win_free(E_Win *win)

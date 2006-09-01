@@ -99,7 +99,7 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    e_win_resize_callback_set(win, _import_cb_resize);
    e_win_dialog_set(win, 1);
    e_win_name_class_set(win, "E", "_wallpaper_import_dialog");
-
+   
    o = edje_object_add(evas);
    import->bg_obj = o;
    e_theme_edje_object_set(o, "base/theme/dialog", "e/widgets/dialog/main");
@@ -198,6 +198,7 @@ e_int_config_wallpaper_import(E_Config_Dialog *parent)
    e_win_size_min_set(win, w, h);
    e_win_size_max_set(win, 99999, 99999);
    e_win_show(win);
+   e_win_border_icon_set(win, "enlightenment/background");
    
    if (!e_widget_focus_get(import->bg_obj))
      e_widget_focus_set(import->box_obj, 1);
