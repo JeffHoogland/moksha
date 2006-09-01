@@ -827,7 +827,7 @@ e_border_fx_offset(E_Border *bd, int x, int y)
 				  bd->y + bd->fx.y + bd->client_inset.t,
 				  bd->client.w,
 				  bd->client.h);
-   _e_border_move_update(bd);
+   if (bd->moving) _e_border_move_update(bd);
 }
 
 EAPI void
@@ -2309,8 +2309,9 @@ e_border_idler_before(void)
 	     bl = e_container_border_list_last(con);
 	     while ((bd = e_container_border_list_prev(bl)))
 	       {
-		  if ((bd->changes.visible) && (bd->visible) && 
-		      (!bd->new_client))
+ 		  if ((bd->changes.visible) && (bd->visible) && 
+		      (!bd->new_client) && (!bd->changes.pos) &&
+		      (!bd->changes.size))
 		    {
 		       ecore_evas_show(bd->bg_ecore_evas);
 		       ecore_x_window_show(bd->win);
@@ -2343,6 +2344,13 @@ e_border_idler_before(void)
 		       bd->changes.visible = 0;
 		    }
 		  if (bd->changed) _e_border_eval(bd);
+		  if ((bd->changes.visible) && (bd->visible) && 
+		      (!bd->new_client))
+		    {
+		       ecore_evas_show(bd->bg_ecore_evas);
+		       ecore_x_window_show(bd->win);
+		       bd->changes.visible = 0;
+		    }
 	       }
 	     e_container_border_list_free(bl);
 	  }

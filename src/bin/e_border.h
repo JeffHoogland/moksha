@@ -125,6 +125,10 @@ struct _E_Border
 
    struct {
       int          x, y;
+      struct {
+	 int       x, y;
+	 double    t;
+      } start;
    } fx;
    
    struct {

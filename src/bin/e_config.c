@@ -473,6 +473,12 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, border_raise_on_focus, INT);
    E_CONFIG_VAL(D, T, desk_flip_wrap, INT);
 
+   E_CONFIG_VAL(D, T, icon_theme, STR);
+   
+   E_CONFIG_VAL(D, T, desk_flip_animate_mode, INT);
+   E_CONFIG_VAL(D, T, desk_flip_animate_interpolation, INT);
+   E_CONFIG_VAL(D, T, desk_flip_animate_time, DOUBLE);
+   
    E_CONFIG_VAL(D, T, wallpaper_import_last_dev, STR);
    E_CONFIG_VAL(D, T, wallpaper_import_last_path, STR);
 
@@ -1216,7 +1222,10 @@ e_config_init(void)
    e_config->wallpaper_grad_c2_b = 255;
    IFCFGEND;
 
-   IFCFG(0x0100);
+   IFCFG(0x0101);
+   e_config->desk_flip_animate_mode = 1;
+   e_config->desk_flip_animate_interpolation = 0;
+   e_config->desk_flip_animate_time = 0.2;
    IFCFGEND;
    
 #if 0 /* example of new config */

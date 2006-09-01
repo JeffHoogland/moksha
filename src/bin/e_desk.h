@@ -25,6 +25,8 @@ struct _E_Desk
    unsigned int         deskshow_toggle : 1;
 
    Evas_Object         *bg_object;
+   
+   Ecore_Animator      *animator;
 };
 
 struct _E_Event_Desk_Show
