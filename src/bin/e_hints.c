@@ -244,7 +244,7 @@ e_hints_client_list_set(void)
 		  c = cl->data;
 		  bl = e_container_border_list_first(c);
 		  while ((b = e_container_border_list_next(bl)))
-		    clients[i++] = b->win;
+		    clients[i++] = b->client.win;
 		  e_container_border_list_free(bl);
 	       }
 	  }
