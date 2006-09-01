@@ -118,9 +118,15 @@ _basic_apply_data(E_Config_Dialog *cdd, E_Config_Dialog_Data *cfdata)
 
    if (cfdata->flip_animate)
      {
+	cfdata->flip_mode = 1;
 	e_config->desk_flip_animate_mode = 1;
 	e_config->desk_flip_animate_interpolation = 0;
 	e_config->desk_flip_animate_time  = 0.5;
+     }
+else
+     {
+	cfdata->flip_mode = 0;
+	e_config->desk_flip_animate_mode = 0;
      }
    e_config->edge_flip_dragging = cfdata->edge_flip_basic;
    e_config->edge_flip_moving = cfdata->edge_flip_basic;
