@@ -76,7 +76,6 @@ Some of the things (in very short form) that need to be done to E17...
 -------------------------------------------------------------------------------
 
 * bg gradient dialog needs a preview widget. also edje needs to be updated so we can do proper fills for non 0 angles.
-* wallpaper dialog needs to select an existing wallpaper when the current on e is deleted. (might need to add a hook to e_fm2 for delete events).
 * clientinfo dialog could be nicer - then again it is an obsucre thing.
 * desklock's pam profile should be configurable as system-auth doesn't
   always work and the fallback checks might not work either.
