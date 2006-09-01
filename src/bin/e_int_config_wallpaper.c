@@ -171,7 +171,7 @@ static void
 _cb_files_selected(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
-   
+
    cfdata = data;
 }
 
@@ -205,8 +205,46 @@ _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
 	else
 	  p = cfdata->bg;
      }
+   
    e_fm2_select_set(cfdata->o_fm, p, 1);
    e_fm2_file_show(cfdata->o_fm, p);
+}
+
+static void
+_cb_files_files_deleted(void *data, Evas_Object *obj, void *event_info) 
+{
+   E_Config_Dialog_Data *cfdata;
+   Evas_List *sel, *all, *n;
+   E_Fm2_Icon_Info *ici, *ic;
+   
+   cfdata = data;
+   if (!cfdata->bg) return;
+   if (!cfdata->o_fm) return;
+
+   all = e_fm2_all_list_get(cfdata->o_fm);
+   if (!all) return;
+   sel = e_fm2_selected_list_get(cfdata->o_fm);
+   if (!sel) return;
+
+   ici = sel->data;
+   
+   all = evas_list_find_list(all, ici);
+   n = evas_list_next(all);
+   if (!n) 
+     {
+	n = evas_list_prev(all);
+	if (!n) return;
+     }
+   
+   ic = n->data;
+   if (!ic) return;
+   
+   e_fm2_select_set(cfdata->o_fm, ic->file, 1);
+   e_fm2_file_show(cfdata->o_fm, ic->file);
+   
+   evas_list_free(n);
+   
+   evas_object_smart_callback_call(cfdata->o_fm, "selection_change", cfdata);
 }
 
 static void
@@ -421,6 +459,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 				  _cb_files_selected, cfdata);
    evas_object_smart_callback_add(o, "changed",
 				  _cb_files_files_changed, cfdata);
+   evas_object_smart_callback_add(o, "files_deleted",
+				  _cb_files_files_deleted, cfdata);
+   
    e_fm2_path_set(o, path, "/");
 
    of = e_widget_scrollframe_pan_add(evas, o,

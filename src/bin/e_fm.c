@@ -3021,6 +3021,8 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
    
    if (ic->sd->refresh_job) ecore_job_del(ic->sd->refresh_job);
    ic->sd->refresh_job = ecore_job_add(_e_fm2_refresh_job_cb, ic->sd->obj);
+   
+   evas_object_smart_callback_call(ic->sd->obj, "files_deleted", NULL);
 }
 
 static void
