@@ -1165,11 +1165,12 @@ e_app_fields_fill(E_App *a, const char *path)
 
 	   if (desktop->exec)  a->exe = evas_stringshare_add(desktop->exec);
 	   if (desktop->icon_class)  a->icon_class = evas_stringshare_add(desktop->icon_class);
+	   if (desktop->icon_path)  a->icon_path = evas_stringshare_add(desktop->icon_path);
 	   if (desktop->window_class)  a->win_class = evas_stringshare_add(desktop->window_class);
 	   if (desktop->startup)
               a->startup_notify = *(desktop->startup);
 
-	   if (desktop->icon)
+	   if ((desktop->icon)  && (!desktop->icon_path))
 	      {
 	         /* FIXME: Should do this only when needed, is it can be expensive. */
 		 /* FIXME: Use a real icon size. */
