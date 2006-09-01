@@ -67,6 +67,7 @@ e_int_config_wallpaper_update(E_Config_Dialog *dia, char *file)
    cfdata->fmdir = 1;
    e_widget_radio_toggle_set(cfdata->o_personal, 1);
    snprintf(path, sizeof(path), "%s/.e/e/backgrounds", homedir);
+   E_FREE(homedir);
    E_FREE(cfdata->bg);
    cfdata->bg = strdup(file);
    cfdata->use_theme_bg = 0;
