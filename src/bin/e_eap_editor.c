@@ -32,6 +32,7 @@ struct _E_Config_Dialog_Data
    char *wtitle;
    char *wrole;
    char *iclass;
+   char *ipath;
    int   icon_theme;
    int   startup_notify;
    int   wait_exit;
@@ -113,6 +114,7 @@ _e_eap_edit_fill_data(E_Config_Dialog_Data *cfdata)
    IFDUP(cfdata->editor->eap->win_title, cfdata->wtitle);
    IFDUP(cfdata->editor->eap->win_role, cfdata->wrole);
    IFDUP(cfdata->editor->eap->icon_class, cfdata->iclass);
+   IFDUP(cfdata->editor->eap->icon_path, cfdata->ipath);
    cfdata->startup_notify = cfdata->editor->eap->startup_notify;
    cfdata->wait_exit = cfdata->editor->eap->wait_exit;
    /*- COMMON -*/
@@ -147,6 +149,7 @@ _e_eap_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data)
    E_FREE(data->wtitle);
    E_FREE(data->wrole);
    E_FREE(data->iclass);
+   E_FREE(data->ipath);
    E_FREE(data->image);
    if (data->editor->eap->tmpfile) ecore_file_unlink(data->editor->eap->image);
    data->editor->eap->tmpfile = 0;
