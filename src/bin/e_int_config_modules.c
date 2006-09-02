@@ -18,6 +18,15 @@ static int _sort_modules(void *data1, void *data2);
 static void _module_configure(void *data, void *data2);
 static void _module_about(void *data, void *data2);
 
+static void _module_cb_monitor(void *data, Ecore_File_Monitor *mon, Ecore_File_Event event, const char *path);
+static void _mod_cb_monitor(void *data, Ecore_File_Monitor *mon, Ecore_File_Event event, const char *path);
+static void _dir_cb_monitor(void *data, Ecore_File_Monitor *mon, Ecore_File_Event event, const char *path);
+static void _load_modules(E_Config_Dialog_Data *cfdata);
+static void _fill_list(E_Config_Dialog_Data *cfdata);
+
+static Evas_List *monitors;
+Ecore_File_Monitor *mod_mon, *dir_mon;
+
 struct _CFModule
 {
    char *name;
@@ -29,6 +38,7 @@ struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
    Evas_List *modules;
+   Evas *evas;
    int state;
    char *modname;
    struct {
@@ -91,46 +101,22 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
    Evas_List *l;
-   Ecore_List *dirs = NULL;
 
    for (l = e_path_dir_list_get(path_modules); l; l = l->next)
      {
 	E_Path_Dir *epd;
 
 	epd = l->data;
-	if (ecore_file_is_dir(epd->dir))
+	if (ecore_file_is_dir(epd->dir)) 
 	  {
-	     dirs = ecore_file_ls(epd->dir);
-	     if (dirs)
-	       {
-		  char *mod;
-
-		  ecore_list_goto_first(dirs);
-		  while ((mod = ecore_list_next(dirs)))
-		    {
-		       CFModule *m;
-		       char buff[4096];
-
-		       m = E_NEW(CFModule, 1);
-		       if (m)
-			 {
-			    snprintf(buff, sizeof(buff), "%s/%s", epd->dir, mod);
-			    m->name = strdup(mod);
-			    m->path = strdup(buff);
-			    cfdata->modules = evas_list_append(cfdata->modules, m);
-			 }
-		    }
-		  ecore_list_destroy(dirs);
-	       }
+	     Ecore_File_Monitor *monitor;
+	     monitor = ecore_file_monitor_add(epd->dir, _module_cb_monitor, 
+					      cfdata);
+	     monitors = evas_list_append(monitors, monitor);
 	  }
      }
-
-   if (cfdata->modules)
-     cfdata->modules = evas_list_sort(cfdata->modules, evas_list_count(cfdata->modules), _sort_modules);
-
-   /* Free Lists */
-   if (l) evas_list_free(l);
-   return;
+      
+   _load_modules(cfdata);
 }
 
 static void *
@@ -149,18 +135,32 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    Evas_List *l;
 
+   if (mod_mon)
+     ecore_file_monitor_del(mod_mon);
+   if (dir_mon)
+     ecore_file_monitor_del(dir_mon);
+   
+   while (monitors) 
+     {
+	Ecore_File_Monitor *mon;
+	
+	mon = monitors->data;
+	ecore_file_monitor_del(mon);
+	monitors = evas_list_remove_list(monitors, monitors);
+     }
+   
    while ((l = cfdata->modules))
      {
         CFModule *m;
 
         m = l->data;
         cfdata->modules = evas_list_remove_list(cfdata->modules, l);
-        free(m->name);
-        free(m->path);
+        E_FREE(m->name);
+        E_FREE(m->path);
         E_FREE(m);
      }
    E_FREE(cfdata->modname);
-   free(cfdata);
+   E_FREE(cfdata);
 }
 
 static int
@@ -235,10 +235,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    Evas_Object *o, *of, *ob, *ot, *ilist, *mt;
    E_Radio_Group *rg;
-   E_Module *m;
-   Evas_List *l;
-   char buf[4096];
 
+   cfdata->evas = evas;
+   
    o = e_widget_list_add(evas, 1, 0);
    ot = e_widget_table_add(evas, 1);
    
@@ -248,37 +247,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_on_change_hook_set(ilist, _ilist_cb_change, cfdata);
 
    cfdata->state = -1;
-   for (l = cfdata->modules; l; l = l->next)
-     {
-	CFModule *cm;
-	Evas_Object *oc;
-	
-	cm = l->data;
-	if (cm)
-	  {
-	     E_App *a;
-	     
-	     cm->state = MOD_UNLOADED;
-	     m = e_module_find(cm->name);
-	     if (m)
-	       {
-		  if (m->enabled) cm->state = MOD_ENABLED;
-	       }
-	     snprintf(buf, sizeof(buf), "%s/module.desktop", cm->path);
-	     if (!ecore_file_exists(buf))
-	        snprintf(buf, sizeof(buf), "%s/module.eap", cm->path);
 
-	     a = e_app_new(buf, 0);
-	     if (a)
-	       {
-	          oc = e_app_icon_add(evas, a);
-		  e_widget_ilist_append(ilist, oc, a->name, NULL, NULL, cm->name);
-		  e_object_unref(E_OBJECT(a));
-	       }
-	  }
-     }
-
-   e_widget_ilist_go(ilist);
+   _fill_list(cfdata);
+   
    e_widget_framelist_object_append(of, ilist);
    e_widget_table_object_append(ot, of, 0, 0, 2, 5, 1, 1, 1, 1);
 
@@ -376,4 +347,186 @@ _sort_modules(void *data1, void *data2)
    m1 = data1;
    m2 = data2;
    return (strcmp((const char*)m1->name, (const char*)m2->name));
+}
+
+static void 
+_module_cb_monitor(void *data, Ecore_File_Monitor *mon, Ecore_File_Event event, const char *path) 
+{
+   E_Config_Dialog_Data *cfdata;
+   const char *file;
+   
+   cfdata = data;
+   if (!cfdata) return;
+   
+   file = ecore_file_get_file(path);
+   switch (event) 
+     {
+      case ECORE_FILE_EVENT_CREATED_DIRECTORY:
+	if (mod_mon) ecore_file_monitor_del(mod_mon);
+	mod_mon = ecore_file_monitor_add(path, _mod_cb_monitor, cfdata);
+	break;
+      case ECORE_FILE_EVENT_DELETED_DIRECTORY:
+	_load_modules(cfdata);
+	_fill_list(cfdata);	
+	break;
+      default:
+	break;
+     }
+}
+
+static void 
+_mod_cb_monitor(void *data, Ecore_File_Monitor *mon, Ecore_File_Event event, const char *path) 
+{
+   E_Config_Dialog_Data *cfdata;
+   const char *f;
+   
+   cfdata = data;
+   if (!cfdata) return;
+
+   switch (event) 
+     {
+      case ECORE_FILE_EVENT_CREATED_DIRECTORY:
+	f = ecore_file_get_file(path);
+	if (!e_util_glob_case_match(f, MODULE_ARCH)) break;
+	if (!dir_mon)
+	  dir_mon = ecore_file_monitor_add(path, _dir_cb_monitor, cfdata);
+	break;
+      default:
+	break;
+     }
+}
+
+static void 
+_dir_cb_monitor(void *data, Ecore_File_Monitor *mon, Ecore_File_Event event, const char *path) 
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data;
+   if (!cfdata) return;
+   
+   switch (event) 
+     {
+      case ECORE_FILE_EVENT_CREATED_FILE:
+	if (e_util_glob_case_match(path, "*.so")) 
+	  {
+	     ecore_file_monitor_del(dir_mon);
+	     dir_mon = NULL;
+	     if (mod_mon) ecore_file_monitor_del(mod_mon);
+	     mod_mon = NULL;
+
+	     _load_modules(cfdata);
+	     _fill_list(cfdata);
+	  }
+	break;
+     }
+}
+
+static void 
+_load_modules(E_Config_Dialog_Data *cfdata) 
+{
+   Evas_List *l;
+   Ecore_List *dirs = NULL;
+
+   if (cfdata->modules) 
+     {
+	while ((l = cfdata->modules))
+	  {
+	     CFModule *m;
+
+	     m = l->data;
+	     cfdata->modules = evas_list_remove_list(cfdata->modules, l);
+	     E_FREE(m->name);
+	     E_FREE(m->path);
+	     E_FREE(m);
+	  }
+     }
+
+   for (l = e_path_dir_list_get(path_modules); l; l = l->next)
+     {
+	E_Path_Dir *epd;
+
+	epd = l->data;
+	if (ecore_file_is_dir(epd->dir))
+	  {
+	     dirs = ecore_file_ls(epd->dir);
+	     if (dirs)
+	       {
+		  char *mod;
+
+		  ecore_list_goto_first(dirs);
+		  while ((mod = ecore_list_next(dirs)))
+		    {
+		       CFModule *m;
+		       char buff[4096];
+
+		       m = E_NEW(CFModule, 1);
+		       if (m)
+			 {
+			    snprintf(buff, sizeof(buff), "%s/%s", epd->dir, 
+				     mod);
+			    m->name = strdup(mod);
+			    m->path = strdup(buff);
+			    cfdata->modules = 
+			      evas_list_append(cfdata->modules, m);
+			 }
+		    }
+		  ecore_list_destroy(dirs);
+	       }
+	  }
+     }
+
+   if (cfdata->modules)
+     cfdata->modules = evas_list_sort(cfdata->modules, 
+				      evas_list_count(cfdata->modules), 
+				      _sort_modules);
+   
+   /* Free Lists */
+   if (l) evas_list_free(l);
+}
+
+static void
+_fill_list(E_Config_Dialog_Data *cfdata) 
+{
+   E_Module *m;
+   Evas_List *l;
+   char buf[4096];
+
+   if (!cfdata->gui.list) return;
+   
+   e_widget_ilist_clear(cfdata->gui.list);
+   e_widget_ilist_go(cfdata->gui.list);
+
+   for (l = cfdata->modules; l; l = l->next)
+     {
+	CFModule *cm;
+	Evas_Object *oc;
+
+	cm = l->data;
+	if (cm)
+	  {
+	     E_App *a;
+	     
+	     cm->state = MOD_UNLOADED;
+	     m = e_module_find(cm->name);
+	     if (m)
+	       {
+		  if (m->enabled) cm->state = MOD_ENABLED;
+	       }
+	     snprintf(buf, sizeof(buf), "%s/module.desktop", cm->path);
+	     if (!ecore_file_exists(buf))
+	        snprintf(buf, sizeof(buf), "%s/module.eap", cm->path);
+	     
+	     a = e_app_new(buf, 1);
+	     if (a)
+	       {
+		  oc = edje_object_add(cfdata->evas);
+		  edje_object_file_set(oc, buf, "icon");
+		  e_widget_ilist_append(cfdata->gui.list, oc, a->name, 
+					NULL, NULL, cm->name);
+		  e_object_unref(E_OBJECT(a));
+	       }
+	  }
+     }
+
+   e_widget_ilist_go(cfdata->gui.list);
 }
