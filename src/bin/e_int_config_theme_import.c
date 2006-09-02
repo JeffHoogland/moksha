@@ -278,7 +278,7 @@ _theme_import_cb_ok(void *data, void *data2)
 	     if (!ecore_file_cp(import->cfdata->file, buf)) 
 	       {
 		  e_util_dialog_show(_("Theme Import Error"),
-				     _("Enlightenment was unable to import"
+				     _("Enlightenment was unable to import "
 				       "the theme<br>due to a copy error."));
 	       }
 	     else
