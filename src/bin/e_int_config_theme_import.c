@@ -256,28 +256,36 @@ _theme_import_cb_ok(void *data, void *data2)
    if (import->cfdata->file) 
      {
 	file = ecore_file_get_file(import->cfdata->file);
-	if (!ecore_file_strip_ext(file)) 
-	  {
-	     E_FREE(homedir);
-	     return;
-	  }
-	if (!e_util_glob_case_match(file, "*.edj")) 
-	  {
-	     E_FREE(homedir);
-	     return;
-	  }
-	
-	/* Copy File */
 	snprintf(buf, sizeof(buf), "%s/.e/e/themes/%s", homedir, file);
-	if (!ecore_file_cp(import->cfdata->file, buf)) 
+	E_FREE(homedir);
+
+	if (!ecore_file_strip_ext(file)) 
+	  return;
+	if (!e_util_glob_case_match(file, "*.edj")) 
+	  return;
+
+	if (!edje_file_data_get(import->cfdata->file, 
+				"e/widgets/border/default/border")) 
 	  {
 	     e_util_dialog_show(_("Theme Import Error"),
-				_("Enlightenment was unable to import"
-				  "the theme<br>due to a copy error"));
+				_("Enlightenment was unable to import "
+				  "the theme.<br><br>Are you sure this "
+				  "is really a valid theme?"));
 	  }
-	else
-	  e_int_config_theme_update(import->parent, buf);
+	else 
+	  {
+	     if (!ecore_file_cp(import->cfdata->file, buf)) 
+	       {
+		  e_util_dialog_show(_("Theme Import Error"),
+				     _("Enlightenment was unable to import"
+				       "the theme<br>due to a copy error"));
+	       }
+	     else
+	       e_int_config_theme_update(import->parent, buf);
+	  }
      }
+   else
+     E_FREE(homedir);
    
    e_int_config_theme_del(import->win);
 }
