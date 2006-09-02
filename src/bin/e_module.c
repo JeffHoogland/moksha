@@ -386,7 +386,7 @@ printf("e_module_dialog_show() - Trying %s\n", eap);
 printf("e_module_dialog_show() - Trying %s, and it exists.\n", eap);
 	            dia->icon_object = e_app_icon_add(e_win_evas_get(dia->win), app);
                     edje_extern_object_min_size_set(dia->icon_object, 64, 64);
-                    edje_object_part_swallow(dia->bg_object, "icon_swallow", dia->icon_object);
+                    edje_object_part_swallow(dia->bg_object, "e.swallow.icon", dia->icon_object);
                     evas_object_show(dia->icon_object);
 	            e_object_unref(E_OBJECT(app));
 		 }
@@ -550,7 +550,7 @@ _e_module_dialog_disable_show(const char *title, const char *body, E_Module *m)
    if (!dia) return;
 
    snprintf(buf, sizeof(buf), "%s<br>%s", body,
-					  _("Would you like to unload this module?<br>"));
+	    _("Would you like to unload this module?<br>"));
 
    e_dialog_title_set(dia, title);
    e_dialog_icon_set(dia, "enlightenment/e", 64);
@@ -579,10 +579,13 @@ _e_module_dialog_icon_set(E_Dialog *dia, const char *icon)
    /* These should never happen, but just in case */
    if (!dia) return;
    if (!icon) return;
-   
+
+   printf("%p %s\n", dia, icon);
+   printf("evas: %p\n", e_win_evas_get(dia->win));
    dia->icon_object = edje_object_add(e_win_evas_get(dia->win));
+   printf("obj: %p\n", dia->icon_object);
    edje_object_file_set(dia->icon_object, icon, "icon");
    edje_extern_object_min_size_set(dia->icon_object, 64, 64);
-   edje_object_part_swallow(dia->bg_object, "icon_swallow", dia->icon_object);
+   edje_object_part_swallow(dia->bg_object, "e.swallow.icon", dia->icon_object);
    evas_object_show(dia->icon_object);
 }
