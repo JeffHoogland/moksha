@@ -21,6 +21,7 @@ e_fdo_menu_to_order(void)
     */
    char *menu_file;
    
+   /* Should rm -fr ~/.e/e/applications/menu/all to make sure we start from a clean slate. */
    /* Find the main menu file. */
    menu_file = ecore_desktop_paths_file_find(ecore_desktop_paths_menus, 
 						  "applications.menu", -1, NULL, NULL);

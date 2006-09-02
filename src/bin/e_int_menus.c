@@ -644,6 +644,12 @@ _e_int_menus_module_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
+_e_int_menus_applications_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   e_int_config_apps(m->zone->container);
+}
+
+static void
 _e_int_menus_config_pre_cb(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
@@ -670,6 +676,11 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    e_menu_item_label_set(mi, _("Modules"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/modules");
    e_menu_item_callback_set(mi, _e_int_menus_module_item_cb, NULL);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("All Applications"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/applications");
+   e_menu_item_callback_set(mi, _e_int_menus_applications_item_cb, NULL);
 
    l = evas_hash_find(_e_int_menus_augmentation, "config");
    if (l)
