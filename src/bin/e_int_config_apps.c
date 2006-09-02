@@ -23,14 +23,14 @@ static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static void _move_file_up_in_order(const char *order, const char *file);
+static void _move_file_down_in_order(const char *order, const char *file);
 
 struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
    E_Fm2_Icon_Info *info;
    int state;
-   E_App *parent;
-   E_App *parent_all;
    struct {
       Evas_Object *o_fm_all;
       Evas_Object *o_fm;
@@ -41,6 +41,8 @@ struct _E_Config_Dialog_Data
       Evas_Object *o_delete_left_button;
       Evas_Object *o_delete_right_button;
       Evas_Object *o_regen_button;
+      Evas_Object *o_move_up_button;
+      Evas_Object *o_move_down_button;
    } gui;
 };
 
@@ -99,7 +101,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    if (!homedir) return;
 
    snprintf(path_all, sizeof(path_all), "%s/.e/e/applications/all", homedir);
-   cfdata->parent_all = e_app_new(path_all, 1);
    return;
 }
 
@@ -142,21 +143,34 @@ _cb_files_changed(void *data, Evas_Object *obj, void *event_info)
    if (!cfdata->gui.o_fm) return;
    if (!e_fm2_has_parent_get(cfdata->gui.o_fm))
      {
-        cfdata->parent = NULL;
 	if (cfdata->gui.o_up_button)
 	  e_widget_disabled_set(cfdata->gui.o_up_button, 1);
+	if (cfdata->gui.o_move_up_button)
+	  e_widget_disabled_set(cfdata->gui.o_move_up_button, 1);
+	if (cfdata->gui.o_move_down_button)
+	  e_widget_disabled_set(cfdata->gui.o_move_down_button, 1);
      }
    else
      {
         const char *realpath;
         char buf[4096];
 
-        realpath = e_fm2_real_path_get(cfdata->gui.o_fm_all);
+        realpath = e_fm2_real_path_get(cfdata->gui.o_fm);
         snprintf(buf, sizeof(buf), "%s/.order", realpath);
         if (ecore_file_exists(buf))
-           cfdata->parent = e_app_new(realpath, 1);
+	   {
+	      if (cfdata->gui.o_move_up_button)
+	        e_widget_disabled_set(cfdata->gui.o_move_up_button, 0);
+	      if (cfdata->gui.o_move_down_button)
+	        e_widget_disabled_set(cfdata->gui.o_move_down_button, 0);
+	   }
 	else
-           cfdata->parent = NULL;
+	   {
+	      if (cfdata->gui.o_move_up_button)
+	        e_widget_disabled_set(cfdata->gui.o_move_up_button, 1);
+	      if (cfdata->gui.o_move_down_button)
+	        e_widget_disabled_set(cfdata->gui.o_move_down_button, 1);
+	   }
 	if (cfdata->gui.o_up_button)
 	  e_widget_disabled_set(cfdata->gui.o_up_button, 0);
      }
@@ -285,13 +299,51 @@ _cb_button_add(void *data1, void *data2)
             e_app_append(a, parent);
       }
 
-   snprintf(buf, sizeof(buf), "%s/.order", realpath);
-   if (ecore_file_exists(buf))
-      cfdata->parent = e_app_new(realpath, 1);
-   else
-      cfdata->parent = NULL;
-
    e_fm2_refresh(cfdata->gui.o_fm);
+}
+
+static void
+_cb_button_move_up(void *data1, void *data2)
+{
+   E_Config_Dialog_Data *cfdata;
+   Evas_List *selected;
+   E_Fm2_Icon_Info *ici;
+   const char *realpath;
+
+   cfdata = data1;
+   if (!cfdata->gui.o_fm) return;
+
+   selected = e_fm2_selected_list_get(cfdata->gui.o_fm);
+   if (!selected) return;
+   ici = selected->data;
+   realpath = e_fm2_real_path_get(cfdata->gui.o_fm);
+   evas_list_free(selected);
+   _move_file_up_in_order(realpath, ici->file);
+   e_fm2_refresh(cfdata->gui.o_fm);
+   /* FIXME: This doesn't seem to work, maybe I need to call it in a callback after the refresh is done? */
+   e_fm2_select_set(cfdata->gui.o_fm, ici->file, 1);
+}
+
+static void
+_cb_button_move_down(void *data1, void *data2)
+{
+   E_Config_Dialog_Data *cfdata;
+   Evas_List *selected;
+   E_Fm2_Icon_Info *ici;
+   const char *realpath;
+
+   cfdata = data1;
+   if (!cfdata->gui.o_fm) return;
+
+   selected = e_fm2_selected_list_get(cfdata->gui.o_fm);
+   if (!selected) return;
+   ici = selected->data;
+   realpath = e_fm2_real_path_get(cfdata->gui.o_fm);
+   evas_list_free(selected);
+   _move_file_down_in_order(realpath, ici->file);
+   e_fm2_refresh(cfdata->gui.o_fm);
+   /* FIXME: This doesn't seem to work, maybe I need to call it in a callback after the refresh is done? */
+   e_fm2_select_set(cfdata->gui.o_fm, ici->file, 1);
 }
 
 static void
@@ -377,6 +429,14 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->gui.o_add_button = mt;
    e_widget_framelist_object_append(of, mt);
 
+   if (!once)
+      {
+         mt = e_widget_button_add(evas, _("Regenerate \"All Applications\" Menu"), "enlightenment/e",
+			   _cb_button_regen, cfdata, NULL);
+         cfdata->gui.o_regen_button = mt;
+         e_widget_framelist_object_append(of, mt);
+      }
+
    e_widget_table_object_append(ot, of, 0, 0, 2, 4, 1, 1, 1, 1);
 
    if (!once)
@@ -423,10 +483,17 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
          e_widget_min_size_set(ob, 150, 220);
          e_widget_framelist_object_append(of, ob);
 
-         mt = e_widget_button_add(evas, _("Regenerate \"All Applications\" Menu"), "enlightenment/e",
-			   _cb_button_regen, cfdata, NULL);
-         cfdata->gui.o_regen_button = mt;
+         mt = e_widget_button_add(evas, _("Move application up"), "enlightenment/e",
+			   _cb_button_move_up, cfdata, NULL);
+         cfdata->gui.o_move_up_button = mt;
          e_widget_framelist_object_append(of, mt);
+	 e_widget_disabled_set(cfdata->gui.o_move_up_button, 1);
+
+         mt = e_widget_button_add(evas, _("Move application down"), "enlightenment/e",
+			   _cb_button_move_down, cfdata, NULL);
+         cfdata->gui.o_move_down_button = mt;
+         e_widget_framelist_object_append(of, mt);
+	 e_widget_disabled_set(cfdata->gui.o_move_down_button, 1);
 
          e_widget_table_object_append(ot, of, 2, 0, 2, 4, 1, 1, 1, 1);
       }
@@ -435,4 +502,133 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_dialog_resizable_set(cfd->dia, 1);
 
    return o;
+}
+
+static void
+_move_file_up_in_order(const char *order, const char *file)
+{
+   char buf[4096];
+   Evas_List *list = NULL, *l;
+   int ret = 0;
+   FILE *f;
+
+   snprintf(buf, sizeof(buf), "%s/.order", order);
+   if (!ecore_file_exists(buf)) return;
+   f = fopen(buf, "rb");
+   if (!f) return;
+
+   while (fgets(buf, sizeof(buf), f))
+     {
+	int len;
+
+	len = strlen(buf);
+	if (len > 0)
+	  {
+	     if (buf[len - 1] == '\n')
+	       {
+		  buf[len - 1] = 0;
+		  len--;
+	       }
+	     if (strcmp(buf, file) != 0)
+                list = evas_list_append(list, strdup(buf));
+	     else
+	        {
+		   l = evas_list_last(list);
+		   if (l)
+                      list = evas_list_prepend_relative_list(list, strdup(buf), l);
+		   else
+                      list = evas_list_append(list, strdup(buf));
+		}
+	  }
+     }
+   fclose(f);
+
+   snprintf(buf, sizeof(buf), "%s/.order", order);
+   ecore_file_unlink(buf);
+   f = fopen(buf, "wb");
+   if (!f) return;
+   for (l = list; l; l = l->next)
+     {
+        char *text;
+
+        text = l->data;
+	fprintf(f, "%s\n", text);
+	free(text);
+     }
+   fclose(f);
+   evas_list_free(list);
+
+   snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", order);
+   ecore_file_unlink(buf);
+
+   return;
+}
+
+static void
+_move_file_down_in_order(const char *order, const char *file)
+{
+   char buf[4096], *last;
+   Evas_List *list = NULL, *l;
+   int ret = 0;
+   FILE *f;
+
+   snprintf(buf, sizeof(buf), "%s/.order", order);
+   if (!ecore_file_exists(buf)) return;
+   f = fopen(buf, "rb");
+   if (!f) return;
+
+   last = NULL;
+   while (fgets(buf, sizeof(buf), f))
+     {
+	int len;
+
+	len = strlen(buf);
+	if (len > 0)
+	  {
+	     if (buf[len - 1] == '\n')
+	       {
+		  buf[len - 1] = 0;
+		  len--;
+	       }
+	     if (strcmp(buf, file) != 0)
+	        {
+                   list = evas_list_append(list, strdup(buf));
+		   if (last)
+		      {
+                         list = evas_list_append(list, last);
+			 last = NULL;
+		      }
+		}
+	     else
+	        {
+		   last = strdup(buf);
+		}
+	  }
+     }
+   if (last)
+      {
+          list = evas_list_append(list, last);
+	  last = NULL;
+      }
+   fclose(f);
+
+   snprintf(buf, sizeof(buf), "%s/.order", order);
+   ecore_file_unlink(buf);
+   f = fopen(buf, "wb");
+   if (!f) return;
+   for (l = list; l; l = l->next)
+     {
+        char *text;
+
+        text = l->data;
+	fprintf(f, "%s\n", text);
+	free(text);
+     }
+   fclose(f);
+   evas_list_free(list);
+
+   snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", order);
+   ecore_file_unlink(buf);
+
+   return;
 }
