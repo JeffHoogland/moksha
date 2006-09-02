@@ -525,16 +525,12 @@ _import_cb_ok(void *data, void *data2)
 	     snprintf(buf, sizeof(buf), "%s/.e/e/backgrounds/%s", 
 		      homedir, file);
 	     E_FREE(homedir);
-
-	     Evas_Object *o;
 	     
-	     o = edje_object_add(e_win_evas_get(import->win));
-	     is_bg = (edje_object_file_set(o, import->cfdata->file, 
-					   "e/desktop/background"));
+	     is_bg = edje_file_group_exists(import->cfdata->file, 
+					    "e/desktop/background");
 	     is_theme = 
-	       (edje_object_file_set(o, import->cfdata->file, 
-				     "e/widgets/border/default/border"));
-	     evas_object_del(o);
+	       edje_file_group_exists(import->cfdata->file, 
+				      "e/widgets/border/default/border");
 	     
 	     if ((is_bg) && (!is_theme)) 
 	       {

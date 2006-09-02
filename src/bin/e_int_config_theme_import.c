@@ -236,7 +236,6 @@ _theme_import_cb_ok(void *data, void *data2)
 {
    Import *import;
    E_Win *win;
-   Evas_Object *o;
    const char *path;
    const char *file;
    char *homedir;
@@ -266,12 +265,8 @@ _theme_import_cb_ok(void *data, void *data2)
 	if (!e_util_glob_case_match(file, "*.edj")) 
 	  return;
 
-	o = edje_object_add(e_win_evas_get(win));
-	is_theme = (edje_object_file_set(o, import->cfdata->file,
-					 "e/widgets/border/default/border"));
-	evas_object_del(o);
-
-	if (!is_theme)
+	if (!edje_file_group_exists(import->cfdata->file, 
+				    "e/widgets/border/default/border"))
 	  {
 	     e_util_dialog_show(_("Theme Import Error"),
 				_("Enlightenment was unable to import "
