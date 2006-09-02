@@ -306,6 +306,11 @@ group {
 	       normal: "e17_entry_cursor.png";
 	    }
 	 }
+	 description {
+	    state:    "faded" 0.0;
+	    inherit:  "default" 0.0;
+	    color:    255 255 255 0;
+	 }
       }
       part {
 	 name: "e.swallow.icons";
@@ -348,6 +353,24 @@ group {
 	       border: 15 15 15 15;
 	    }
 	 }
+      }
+   }
+   programs {
+      program {
+	 name:    "blink1";
+	 signal:  "show";
+	 source:  "";
+	 action:  STATE_SET "faded" 0.0;
+	 transition: SINUSOIDAL 0.5;
+	 target:  "cursor";
+	 after:   "blink2";
+      }
+      program {
+	 name:    "blink2";
+	 action:  STATE_SET "default" 0.0;
+	 transition: SINUSOIDAL 0.5;
+	 target:  "cursor";
+	 after:   "blink1";
       }
    }
 }
