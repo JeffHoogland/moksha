@@ -377,7 +377,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_list_add(evas, 1, 0);
    ot = e_widget_table_add(evas, 1);
 
-   of = e_widget_framelist_add(evas, _("All Applications"), 0);
+   of = e_widget_framelist_add(evas, _("Available Applications"), 0);
 
    mt = e_widget_button_add(evas, _("Create a new application"), "enlightenment/e",
 			   _cb_button_create, cfdata, NULL);
