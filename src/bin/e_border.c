@@ -2544,17 +2544,28 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 	  e_util_edje_icon_set(o, "enlightenment/e");
 	else
 	  {
-	     /* FIXME: .eaps are going away, raster says this is for module .eaps, so need to take care of all that at the same time. */
-	     if (!strcmp(bd->internal_icon + strlen(bd->internal_icon) - 4, ".eap")) 
-	       {
-		  if (!edje_object_file_set(o, bd->internal_icon, "icon"))
-		    e_util_edje_icon_set(o, "enlightenment/e");	       
-	       }
-	     else 
-	       {
-		  if (!e_util_edje_icon_set(o, bd->internal_icon))
-		    e_util_edje_icon_set(o, "enlightenment/e"); 
-	       }
+	     a = e_app_new(bd->internal_icon, 0);
+	     if (a)
+	        {
+                   /* Free the aborted object first. */
+                   if (o)   evas_object_del(o);
+	           o = e_app_icon_add(evas, a);
+	           bd->app = a;
+	           e_object_ref(E_OBJECT(bd->app));
+		}
+	     else
+	        {
+	           if (!strcmp(bd->internal_icon + strlen(bd->internal_icon) - 4, ".eap")) 
+	             {
+		        if (!edje_object_file_set(o, bd->internal_icon, "icon"))
+		          e_util_edje_icon_set(o, "enlightenment/e");	       
+	             }
+	           else 
+	             {
+		        if (!e_util_edje_icon_set(o, bd->internal_icon))
+		          e_util_edje_icon_set(o, "enlightenment/e"); 
+	             }
+	        }
 	  }
 	return o;
      }
