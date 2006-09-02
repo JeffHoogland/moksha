@@ -198,6 +198,19 @@ _temperature_cb_check(void *data)
 	  }
      }
 #else  
+# ifdef HAVE_OMNIBOOK
+   FILE *f;
+   char dummy[256];
+   
+   f = fopen("/proc/omnibook/temperature", "r");
+   if (f) 
+     {
+	fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
+	if (sscanf(buf, "%s %s %i", dummy, dummy, &temp) == 3)
+	  ret = 1;
+	fclose(f);
+     }
+# else
    therms = ecore_file_ls("/proc/acpi/thermal_zone");
    if ((!therms) || ecore_list_is_empty(therms))
      {
@@ -283,6 +296,7 @@ _temperature_cb_check(void *data)
 	  }
 	ecore_list_destroy(therms);
      }
+# endif
 #endif   
    
    if (temperature_config->units == FAHRENHEIT)
