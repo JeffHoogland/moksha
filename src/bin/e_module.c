@@ -377,7 +377,7 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
 	snprintf(eap, sizeof(eap), "%s/module.desktop", e_module_dir_get(m));
 	if (ecore_file_exists(eap))
 	   {
-              EAPI E_App *app;
+              E_App *app;
 
               app = e_app_new(eap, 0);
 	      if (app)
