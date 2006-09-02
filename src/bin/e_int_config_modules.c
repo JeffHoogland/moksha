@@ -264,13 +264,14 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	       {
 		  if (m->enabled) cm->state = MOD_ENABLED;
 	       }
-	     snprintf(buf, sizeof(buf), "%s/module.eap", cm->path);
-	     
+	     snprintf(buf, sizeof(buf), "%s/module.desktop", cm->path);
+	     if (!ecore_file_exists(buf))
+	        snprintf(buf, sizeof(buf), "%s/module.eap", cm->path);
+
 	     a = e_app_new(buf, 0);
 	     if (a)
 	       {
-		  oc = edje_object_add(evas);
-		  edje_object_file_set(oc, buf, "icon");
+	          oc = e_app_icon_add(evas, a);
 		  e_widget_ilist_append(ilist, oc, a->name, NULL, NULL, cm->name);
 		  e_object_unref(E_OBJECT(a));
 	       }

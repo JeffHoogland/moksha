@@ -379,9 +379,11 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
 	   {
               E_App *app;
 
+printf("e_module_dialog_show() - Trying %s\n", eap);
               app = e_app_new(eap, 0);
 	      if (app)
 	         {
+printf("e_module_dialog_show() - Trying %s, and it exists.\n", eap);
 	            dia->icon_object = e_app_icon_add(e_win_evas_get(dia->win), app);
                     edje_extern_object_min_size_set(dia->icon_object, 64, 64);
                     edje_object_part_swallow(dia->bg_object, "icon_swallow", dia->icon_object);
@@ -393,10 +395,14 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
 	   {
 	      snprintf(eap, sizeof(eap), "%s/module.edj", e_module_dir_get(m));
 	      if (ecore_file_exists(eap))
-	         _e_module_dialog_icon_set(dia, eap);
+	         {
+printf("e_module_dialog_show() - Trying %s\n", eap);
+	            _e_module_dialog_icon_set(dia, eap);
+		 }
 	      else
 	         {
 	            snprintf(eap, sizeof(eap), "%s/module.eap", e_module_dir_get(m));
+printf("e_module_dialog_show() - Trying %s\n", eap);
 	            _e_module_dialog_icon_set(dia, eap);
 	         }
 	   }
