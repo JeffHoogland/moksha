@@ -503,6 +503,9 @@ _import_cb_ok(void *data, void *data2)
    Import *import;
    E_Win *win;
    const char *path;
+   const char *file;
+   char buf[4096], *homedir;
+   int is_bg, is_theme;
    
    win = data;
    import = win->data;
@@ -512,7 +515,58 @@ _import_cb_ok(void *data, void *data2)
    if (path) import->cfdata->file = strdup(path);
    if (import->cfdata->file)
      {
-	_import_edj_gen(import);
+	file = ecore_file_get_file(import->cfdata->file);
+	if (!e_util_glob_case_match(file, "*.edj"))
+	  _import_edj_gen(import);
+	else 
+	  {
+	     homedir = e_user_homedir_get();
+	     if (!homedir) return;
+	     snprintf(buf, sizeof(buf), "%s/.e/e/backgrounds/%s", 
+		      homedir, file);
+	     E_FREE(homedir);
+
+	     Evas_Object *o;
+	     
+	     o = edje_object_add(e_win_evas_get(import->win));
+	     is_bg = (edje_object_file_set(o, import->cfdata->file, 
+					   "e/desktop/background"));
+	     is_theme = 
+	       (edje_object_file_set(o, import->cfdata->file, 
+				     "e/widgets/border/default/border"));
+	     evas_object_del(o);
+	     
+	     if ((is_bg) && (!is_theme)) 
+	       {
+		  if (!ecore_file_cp(import->cfdata->file, buf)) 
+		    {
+		       e_int_config_wallpaper_del(win);
+		       e_util_dialog_show(_("Wallpaper Import Error"),
+					  _("Enlightenment was unable to "
+					    "import the wallpaper<br>due to a "
+					    "copy error"));
+		       return;
+		    }
+		  else 
+		    {
+		       e_int_config_wallpaper_update(import->parent, buf);
+		       e_int_config_wallpaper_del(win);
+		       return;
+		    }
+	       }
+	     else 
+	       {
+		  e_int_config_wallpaper_del(win);
+		  e_util_dialog_show(_("Wallpaper Import Error"),
+				     _("Enlightenment was unable to "
+				       "import the wallpaper.<br><br>"
+				       "Are you sure this is a valid "
+				       "wallpaper?"));
+		  return;		  
+	       }
+	     
+	  }
+	
 	e_win_hide(win);
 	return;
      }

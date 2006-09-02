@@ -236,10 +236,12 @@ _theme_import_cb_ok(void *data, void *data2)
 {
    Import *import;
    E_Win *win;
+   Evas_Object *o;
    const char *path;
    const char *file;
    char *homedir;
    char buf[4096];
+   int is_theme;
    
    win = data;
    import = win->data;
@@ -264,8 +266,12 @@ _theme_import_cb_ok(void *data, void *data2)
 	if (!e_util_glob_case_match(file, "*.edj")) 
 	  return;
 
-	if (!edje_file_data_get(import->cfdata->file, 
-				"e/widgets/border/default/border")) 
+	o = edje_object_add(e_win_evas_get(win));
+	is_theme = (edje_object_file_set(o, import->cfdata->file,
+					 "e/widgets/border/default/border"));
+	evas_object_del(o);
+
+	if (!is_theme)
 	  {
 	     e_util_dialog_show(_("Theme Import Error"),
 				_("Enlightenment was unable to import "
@@ -278,7 +284,7 @@ _theme_import_cb_ok(void *data, void *data2)
 	       {
 		  e_util_dialog_show(_("Theme Import Error"),
 				     _("Enlightenment was unable to import"
-				       "the theme<br>due to a copy error"));
+				       "the theme<br>due to a copy error."));
 	       }
 	     else
 	       e_int_config_theme_update(import->parent, buf);
