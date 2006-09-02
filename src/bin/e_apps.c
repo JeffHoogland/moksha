@@ -1170,15 +1170,6 @@ e_app_fields_fill(E_App *a, const char *path)
 	   if (desktop->startup)
               a->startup_notify = *(desktop->startup);
 
-	   if ((desktop->icon)  && (!desktop->icon_path))
-	      {
-	         /* FIXME: Should do this only when needed, is it can be expensive. */
-		 /* FIXME: Use a real icon size. */
-	         v = (char *) ecore_desktop_icon_find(desktop->icon, NULL, e_config->icon_theme);
-		 if (v)
-	            a->icon_path = evas_stringshare_add(v);
-	      }
-
 //	   if (desktop->type)  a->type = evas_stringshare_add(desktop->type);
 //	   if (desktop->categories)  a->categories = evas_stringshare_add(desktop->categories);
       }
@@ -1557,7 +1548,17 @@ e_app_icon_add(Evas *evas, E_App *a)
 	    {
 	       ;  /* It's a bit more obvious this way. */
 	    }
-         else if (a->icon_path)   /* If that fails, then this might be an FDO icon. */
+         else if (a->icon_class)   /* If that fails, then this might be an FDO icon. */
+	    {
+	       char *v;
+
+	       /* FIXME: Use a real icon size. */
+	       v = (char *) ecore_desktop_icon_find(a->icon_class, NULL, e_config->icon_theme);
+	       if (v)
+	          a->icon_path = evas_stringshare_add(v);
+	    }
+
+         if (a->icon_path)
 	    {
 	       /* Free the aborted object first. */
                if (o) evas_object_del(o);
@@ -1565,33 +1566,39 @@ e_app_icon_add(Evas *evas, E_App *a)
 	       e_icon_file_set(o, a->icon_path);
 	       e_icon_fill_inside_set(o, 1);
             }
-	    /* FIXME: if we still haven't found an icon, feed icon_class into the FDO lookup process. */
       }
+
    return o;
 }
 
 /* Search order? -
- * 
+ *
  * fixed path to icon
- * an .edje icon in ~/.e/e/icons
+ * an .edj icon in ~/.e/e/icons
  * icon_class in theme
  * icon from a->path in theme
- * FDO search
  * FDO search for icon_class
  */
 
 EAPI void
 e_app_icon_add_to_menu_item(E_Menu_Item *mi, E_App *a)
 {
-   if (!e_util_menu_item_edje_icon_list_set(mi, a->icon_class))
+   if ((!a->icon_path) && (a->icon_class))
       {
-         /* e_menu_item_icon_edje_set() just tucks away the params, the actual call to edje_object_file_set() happens later. */
-         /* e_menu_item_icon_file_set() just tucks away the params, the actual call to e_icon_add() happens later. */
-         e_menu_item_icon_edje_set(mi, a->path, "icon");
-         if (a->icon_path)   /* If that fails, then this might be an FDO icon. */
-	    e_menu_item_icon_file_set(mi, a->icon_path);
-         /* FIXME: if we still haven't found an icon, feed icon_class into the FDO lookup process. */
+         char *v;
+
+	 /* FIXME: Use a real icon size. */
+	 v = (char *) ecore_desktop_icon_find(a->icon_class, NULL, e_config->icon_theme);
+	 if (v)
+	    a->icon_path = evas_stringshare_add(v);
       }
+
+   e_util_menu_item_edje_icon_list_set(mi, a->icon_class);
+   /* e_menu_item_icon_edje_set() just tucks away the params, the actual call to edje_object_file_set() happens later. */
+   /* e_menu_item_icon_file_set() just tucks away the params, the actual call to e_icon_add() happens later. */
+   e_menu_item_icon_edje_set(mi, a->path, "icon");
+   if (a->icon_path)
+      e_menu_item_icon_file_set(mi, a->icon_path);
    return;
 }
 

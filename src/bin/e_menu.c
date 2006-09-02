@@ -1208,7 +1208,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     if (mi->icon)
 	       {
 	          /* This is done this way to match up with how e_app_icon_add does it. */
-                  mi->icon_object = NULL;   /* Just coz I'm paranoid, may not be needed. */
+//                  mi->icon_object = NULL;   /* Just coz I'm paranoid, may not be needed. */
 		  if (mi->icon_key)
 		    {
 		       Evas_Coord iww, ihh;
