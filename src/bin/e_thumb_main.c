@@ -322,6 +322,7 @@ _e_thumb_generate(E_Thumb *eth)
 	evas_font_cache_set(evas, 0);
 	ww = 0;
 	hh = 0;
+	alpha = 1;
 	ext = strrchr(eth->file, '.');
 	if ((ext) && (eth->key) &&
 	    ((!strcasecmp(ext, ".edj")) ||
@@ -338,6 +339,10 @@ _e_thumb_generate(E_Thumb *eth)
 	     evas_object_image_size_set(im, ww * 8, hh * 8);
 	     evas_object_image_fill_set(im, 0, 0, ww, hh);
 	     edje = edje_object_add(evas_im);
+	     if ((eth->key) && 
+		 ((!strcmp(eth->key, "e/desktop/background")) ||
+		  (!strcmp(eth->key, "e/init/splash"))))
+	       alpha = 0;
 	     if (edje_object_file_set(edje, eth->file, eth->key))
 	       {
 		  evas_object_move(edje, 0, 0);
