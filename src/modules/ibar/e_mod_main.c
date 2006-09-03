@@ -843,14 +843,14 @@ _ibar_cb_menu_add_application_cb(void *data, const char *path)
    
    b = data;
    a = e_app_new(path, 0);
-   ic = _ibar_icon_new(b, a);
-   b->icons = evas_list_append(b->icons, ic);
-   e_box_pack_end(b->o_box, ic->o_holder);
+   if (a)
+      e_app_list_append(a, b->apps);
    _ibar_empty_handle(b);
    _ibar_resize_handle(b);
-
+   _gc_orient(b->inst->gcc);
    return 1;
 }
+
 
 static void
 _ibar_cb_menu_add(void *data, E_Menu *m, E_Menu_Item *mi)
