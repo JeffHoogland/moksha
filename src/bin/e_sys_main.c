@@ -12,7 +12,7 @@
 #include <Evas.h>
 
 /* local subsystem functions */
-static int auth_action_ok(char *a);
+static int auth_action_ok(char *a, uid_t uid, gid_t gid);
 static int auth_etc_enlightenment_sysactions(char *a, char *u, char *g);
 static char *get_word(char *s, char *d);
 
@@ -26,6 +26,8 @@ main(int argc, char **argv)
    int i;
    int test = 0;
    char *action, *cmd;
+   uid_t uid;
+   gid_t gid;
 
    for (i = 1; i < argc; i++)
      {
@@ -54,15 +56,23 @@ main(int argc, char **argv)
 	exit(-1);
      }
 
-   if (seteuid(0))
+   uid = getuid();
+   gid = getgid();
+   
+   if (setuid(0) != 0)
      {
 	printf("ERROR: UNABLE TO ASSUME ROOT PRIVILEDGES\n");
 	exit(5);
      }
+   if (setgid(0) != 0)
+     {
+	printf("ERROR: UNABLE TO ASSUME ROOT GROUP PRIVILEDGES\n");
+	exit(7);
+     }
    
    evas_init();
 
-   if (!auth_action_ok(action))
+   if (!auth_action_ok(action, uid, gid))
      {
 	printf("ERROR: ACTION NOT ALLOWED: %s\n", action);
 	exit(10);
@@ -84,18 +94,18 @@ main(int argc, char **argv)
 
 /* local subsystem functions */
 static int
-auth_action_ok(char *a)
+auth_action_ok(char *a, uid_t uid, gid_t gid)
 {
    struct passwd *pw;
    struct group *gp;
    char *usr = NULL, *grp;
    int ret;
 
-   pw = getpwuid(getuid());
+   pw = getpwuid(uid);
    if (!pw) return 0;
    usr = pw->pw_name;
    if (!usr) return 0;
-   gp = getgrgid(getgid());
+   gp = getgrgid(gid);
    if (gp) grp = gp->gr_name;
    /* first stage - check:
     * PREFIX/etc/enlightenment/sysactions.conf
@@ -117,9 +127,9 @@ auth_etc_enlightenment_sysactions(char *a, char *u, char *g)
    int allow = 0;
    int deny = 0;
    
-   snprintf(file, sizeof(file), "/etc/enlightenment/sysactions.conf");
-   f = fopen(file, "r");
-   if (!f)
+//   snprintf(file, sizeof(file), "/etc/enlightenment/sysactions.conf");
+//   f = fopen(file, "r");
+//   if (!f)
      {
 	snprintf(file, sizeof(file), PACKAGE_SYSCONF_DIR"/enlightenment/sysactions.conf");
 	f = fopen(file, "r");
@@ -147,7 +157,7 @@ auth_etc_enlightenment_sysactions(char *a, char *u, char *g)
 	deny = 0;
 	if (!strcmp(id, "user:"))
 	  {
-	     if (!fnmatch(u, ugname, 0))
+	     if (!fnmatch(ugname, u, 0))
 	       {
 		  if (!strcmp(perm, "allow:")) allow = 1;
 		  else if (!strcmp(perm, "deny:")) deny = 1;
@@ -159,7 +169,7 @@ auth_etc_enlightenment_sysactions(char *a, char *u, char *g)
 	  }
 	else if (!strcmp(id, "group:"))
 	  {
-	     if (!fnmatch(u, ugname, 0))
+	     if (!fnmatch(ugname, g, 0))
 	       {
 		  if (!strcmp(perm, "allow:")) allow = 1;
 		  else if (!strcmp(perm, "deny:")) deny = 1;
