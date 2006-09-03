@@ -8,8 +8,6 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: add application to ibar via ibar's right click menu is broken - it
-  doesnt resize ibar on add. and on a restart of e the icon is gone.
 * BUG: right click remove icon from ibar deletes the original file - not the
   ibar link to it in .order
 * BUG: add app to ibar via ibar right menu and restart - app is gone. (dnd
@@ -49,11 +47,6 @@ Some of the things (in very short form) that need to be done to E17...
 * fm2 needs a mime filter
 * fm2 needs to have a mime & filetype -> icon mapping
 * eap editor is broken - segv in advanced mode
-* use .desktop files and move eap editor to edit them etc. etc. instead to fix
-* if we want to do icons on the desktop - and as part of efm, i am thinking
-  that we have little choice but to implement a .desktop file loader. this
-  is not to hard - it's the xml jungle of the system menus that is sucky. the
-  real problems are where to find the icons for the .desktop files.
 * middle mouse on gadgets as a quick move/resize thing?
 * language packs: need to have a tool to load/setup a language pack (which
   means .mo compiled files from a .po, an optional font and a config file that
