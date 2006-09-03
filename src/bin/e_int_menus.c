@@ -18,8 +18,6 @@ struct _Main_Data
 };
 
 /* local subsystem functions */
-static void _e_int_menus_quit                (void);
-static void _e_int_menus_quit_cb             (void *data);
 static void _e_int_menus_main_del_hook       (void *obj);
 static void _e_int_menus_main_about          (void *data, E_Menu *m, E_Menu_Item *mi);
 static int  _e_int_menus_main_run_defer_cb   (void *data);
@@ -28,6 +26,10 @@ static int  _e_int_menus_main_lock_defer_cb  (void *data);
 static void _e_int_menus_main_lock           (void *data, E_Menu *m, E_Menu_Item*mi);
 static void _e_int_menus_main_restart        (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_exit           (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_main_halt           (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_main_reboot         (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_main_suspend        (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_main_hibernate      (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_apps_scan           (E_Menu *m);
 static void _e_int_menus_apps_start          (void *data, E_Menu *m);
 static void _e_int_menus_apps_del_hook       (void *obj);
@@ -56,8 +58,6 @@ static void _e_int_menus_augmentation_add    (E_Menu *m, Evas_List *augmentation
 static void _e_int_menus_augmentation_del    (E_Menu *m, Evas_List *augmentation);
 
 /* local subsystem globals */
-static Ecore_Job *_e_int_menus_quit_job = NULL;
-
 static Evas_Hash *_e_int_menus_augmentation = NULL;
 
 /* externally accessible functions */
@@ -150,6 +150,43 @@ e_int_menus_main_new(void)
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
+
+   if (e_sys_action_possible_get(E_SYS_HALT) ||
+       e_sys_action_possible_get(E_SYS_REBOOT) ||
+       e_sys_action_possible_get(E_SYS_SUSPEND) ||
+       e_sys_action_possible_get(E_SYS_HIBERNATE))
+     {
+	if (e_sys_action_possible_get(E_SYS_HALT))
+	  {
+	     mi = e_menu_item_new(m);
+	     e_menu_item_label_set(mi, _("Shut Down your Computer"));
+	     e_util_menu_item_edje_icon_set(mi, "enlightenment/halt");
+	     e_menu_item_callback_set(mi, _e_int_menus_main_halt, NULL);
+	  }
+	if (e_sys_action_possible_get(E_SYS_REBOOT))
+	  {
+	     mi = e_menu_item_new(m);
+	     e_menu_item_label_set(mi, _("Reboot your Computer"));
+	     e_util_menu_item_edje_icon_set(mi, "enlightenment/reboot");
+	     e_menu_item_callback_set(mi, _e_int_menus_main_reboot, NULL);
+	  }
+	if (e_sys_action_possible_get(E_SYS_SUSPEND))
+	  {
+	     mi = e_menu_item_new(m);
+	     e_menu_item_label_set(mi, _("Suspend your Computer"));
+	     e_util_menu_item_edje_icon_set(mi, "enlightenment/suspend");
+	     e_menu_item_callback_set(mi, _e_int_menus_main_suspend, NULL);
+	  }
+	if (e_sys_action_possible_get(E_SYS_HIBERNATE))
+	  {
+	     mi = e_menu_item_new(m);
+	     e_menu_item_label_set(mi, _("Hibernate your Computer"));
+	     e_util_menu_item_edje_icon_set(mi, "enlightenment/hibernate");
+	     e_menu_item_callback_set(mi, _e_int_menus_main_hibernate, NULL);
+	  }
+	mi = e_menu_item_new(m);
+	e_menu_item_separator_set(mi, 1);
+     }
    
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Restart Enlightenment"));
@@ -314,27 +351,6 @@ e_int_menus_menu_augmentation_del(const char *menu, E_Int_Menu_Augmentation *mau
 
 /* local subsystem functions */
 static void
-_e_int_menus_quit(void)
-{
-   if (_e_int_menus_quit_job)
-     {
-	ecore_job_del(_e_int_menus_quit_job);
-	_e_int_menus_quit_job = NULL;
-     }
-   _e_int_menus_quit_job = ecore_job_add(_e_int_menus_quit_cb, NULL);
-}
-
-static void
-_e_int_menus_quit_cb(void *data)
-{
-   E_Action *a;
-   
-   a = e_action_find("exit");
-   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
-   _e_int_menus_quit_job = NULL;
-}
-
-static void
 _e_int_menus_main_del_hook(void *obj)
 {
    Main_Data *dat;
@@ -428,7 +444,46 @@ _e_int_menus_main_restart(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_int_menus_main_exit(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   if (!e_util_immortal_check()) _e_int_menus_quit();
+   E_Action *a;
+   
+   a = e_action_find("exit");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+}
+
+static void
+_e_int_menus_main_halt(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Action *a;
+   
+   a = e_action_find("halt");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+}
+
+static void
+_e_int_menus_main_reboot(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Action *a;
+   
+   a = e_action_find("reboot");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+}
+
+static void
+_e_int_menus_main_suspend(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Action *a;
+   
+   a = e_action_find("suspend");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+}
+
+static void
+_e_int_menus_main_hibernate(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Action *a;
+   
+   a = e_action_find("hibernate");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
 
 static void

@@ -105,6 +105,15 @@ e_widget_ilist_selected_get(Evas_Object *obj)
    return e_ilist_selected_get(wd->o_ilist);
 }
 
+EAPI void
+e_widget_ilist_unselect(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   e_ilist_unselect(wd->o_ilist);
+}
+
 EAPI const char *
 e_widget_ilist_selected_label_get(Evas_Object *obj)
 {

@@ -28,6 +28,7 @@ struct _Config
    int              battery_prev_drain;
    int              battery_prev_ac;
    int              battery_prev_battery;
+   int              battery_prev_level;
 };
 
 #ifdef __FreeBSD__

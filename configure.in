@@ -103,12 +103,15 @@ AC_SUBST(PACKAGE_LIB_DIR)
 if test "x${prefix}" = "xNONE"; then
   PACKAGE_DATA_DIR="${ac_default_prefix}/share/${PACKAGE}"
   LOCALE_DIR="${ac_default_prefix}/share/locale"
+  PACKAGE_SYSCONF_DIR="${ac_default_prefix}/etc"
 else
   PACKAGE_DATA_DIR="${prefix}/share/${PACKAGE}"
   LOCALE_DIR="${prefix}/share/locale"
+  PACKAGE_SYSCONF_DIR="${sysconfdir}"
 fi
 AC_SUBST(PACKAGE_DATA_DIR)
 AC_SUBST(LOCALE_DIR)
+AC_SUBST(PACKAGE_SYSCONF_DIR)
 
 x_dir=""
 x_cflags=""
@@ -289,6 +292,7 @@ data/other/Makefile
 data/xsession/Makefile
 data/xsession/enlightenment.desktop
 data/backgrounds/Makefile
+data/etc/Makefile
 doc/Makefile
 po/Makefile
 intl/Makefile

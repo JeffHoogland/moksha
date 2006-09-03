@@ -13,6 +13,7 @@ EAPI void e_widget_ilist_selected_set(Evas_Object *obj, int n);
 EAPI void e_widget_ilist_selector_set(Evas_Object *obj, int selector);
 EAPI void e_widget_ilist_go(Evas_Object *obj);
 EAPI int e_widget_ilist_selected_get(Evas_Object *obj);
+EAPI void e_widget_ilist_unselect(Evas_Object *obj);
 EAPI const char *e_widget_ilist_selected_label_get(Evas_Object *obj);
 EAPI void e_widget_ilist_remove_num(Evas_Object *obj, int n);
 EAPI void e_widget_ilist_remove_label(Evas_Object *obj, const char *label);

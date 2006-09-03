@@ -66,8 +66,6 @@ static void _e_action_free(E_Action *act);
 static Evas_Bool _e_actions_cb_free(Evas_Hash *hash, const char *key, void *data, void *fdata);
 static E_Maximize _e_actions_maximize_parse(const char *maximize);
 
-static E_Dialog *exit_dialog = NULL;
-
 /* to save writing this in N places - the sctions are defined here */
 /***************************************************************************/
 ACT_FN_GO(window_move)
@@ -1364,14 +1362,16 @@ ACT_FN_GO(desk_deskshow_toggle)
 	e_desk_deskshow(zone);
      }
 }
+
 /***************************************************************************/
+static E_Dialog *exit_dialog = NULL;
 
 static void
 _e_actions_cb_exit_dialog_ok(void *data, E_Dialog *dia)
 {
-   ecore_main_loop_quit();
    e_object_del(E_OBJECT(exit_dialog));
    exit_dialog = NULL;
+   e_sys_action_do(E_SYS_EXIT, NULL);
 }
 
 static void
@@ -1415,10 +1415,261 @@ ACT_FN_GO(exit)
 /***************************************************************************/
 ACT_FN_GO(restart)
 {
-   restart = 1;
-   ecore_main_loop_quit();
+   e_sys_action_do(E_SYS_RESTART, NULL);
 }
 
+/***************************************************************************/
+ACT_FN_GO(exit_now)
+{
+   e_sys_action_do(E_SYS_EXIT_NOW, NULL);
+}
+
+/***************************************************************************/
+static E_Dialog *logout_dialog = NULL;
+
+static void
+_e_actions_cb_logout_dialog_ok(void *data, E_Dialog *dia)
+{
+   e_object_del(E_OBJECT(logout_dialog));
+   logout_dialog = NULL;
+   e_sys_action_do(E_SYS_LOGOUT, NULL);
+}
+
+static void
+_e_actions_cb_logout_dialog_cancel(void *data, E_Dialog *dia)
+{
+   e_object_del(E_OBJECT(logout_dialog));
+   logout_dialog = NULL;
+}
+
+static void
+_e_actions_cb_logout_dialog_delete(E_Win *win)
+{
+   E_Dialog *dia;
+
+   dia = win->data;
+   _e_actions_cb_logout_dialog_cancel(NULL, dia);
+}
+
+ACT_FN_GO(logout)
+{
+   if (logout_dialog) e_object_del(E_OBJECT(logout_dialog));
+   logout_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_logout_dialog");
+   if (!logout_dialog) return;
+   e_win_delete_callback_set(logout_dialog->win, _e_actions_cb_logout_dialog_delete);
+   e_dialog_title_set(logout_dialog, _("Are you sure you want to log out?"));
+   e_dialog_text_set(logout_dialog,
+		     _("You are about to log out.<br>"
+		       "<br>"
+		       "Are you sure you want to do this?"
+		       ));
+   e_dialog_icon_set(logout_dialog, "enlightenment/logout", 64);
+   e_dialog_button_add(logout_dialog, _("Yes"), NULL,
+		       _e_actions_cb_logout_dialog_ok, NULL);
+   e_dialog_button_add(logout_dialog, _("No"), NULL,
+		       _e_actions_cb_logout_dialog_cancel, NULL);
+   e_dialog_button_focus_num(logout_dialog, 1);
+   e_win_centered_set(logout_dialog->win, 1);
+   e_dialog_show(logout_dialog);
+}
+
+/***************************************************************************/
+static E_Dialog *halt_dialog = NULL;
+
+static void
+_e_actions_cb_halt_dialog_ok(void *data, E_Dialog *dia)
+{
+   e_object_del(E_OBJECT(halt_dialog));
+   halt_dialog = NULL;
+   e_sys_action_do(E_SYS_HALT, NULL);
+}
+
+static void
+_e_actions_cb_halt_dialog_cancel(void *data, E_Dialog *dia)
+{
+   e_object_del(E_OBJECT(halt_dialog));
+   halt_dialog = NULL;
+}
+
+static void
+_e_actions_cb_halt_dialog_delete(E_Win *win)
+{
+   E_Dialog *dia;
+
+   dia = win->data;
+   _e_actions_cb_halt_dialog_cancel(NULL, dia);
+}
+
+ACT_FN_GO(halt)
+{
+   if (halt_dialog) e_object_del(E_OBJECT(halt_dialog));
+   halt_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_halt_dialog");
+   if (!halt_dialog) return;
+   e_win_delete_callback_set(halt_dialog->win, _e_actions_cb_halt_dialog_delete);
+   e_dialog_title_set(halt_dialog, _("Are you sure you want to turn off?"));
+   e_dialog_text_set(halt_dialog,
+		     _("You requested to turn off your Computer.<br>"
+		       "<br>"
+		       "Are you sure you want to shut down?"
+		       ));
+   e_dialog_icon_set(halt_dialog, "enlightenment/halt", 64);
+   e_dialog_button_add(halt_dialog, _("Yes"), NULL,
+		       _e_actions_cb_halt_dialog_ok, NULL);
+   e_dialog_button_add(halt_dialog, _("No"), NULL,
+		       _e_actions_cb_halt_dialog_cancel, NULL);
+   e_dialog_button_focus_num(halt_dialog, 1);
+   e_win_centered_set(halt_dialog->win, 1);
+   e_dialog_show(halt_dialog);
+}
+
+/***************************************************************************/
+static E_Dialog *reboot_dialog = NULL;
+
+static void
+_e_actions_cb_reboot_dialog_ok(void *data, E_Dialog *dia)
+{
+   e_object_del(E_OBJECT(reboot_dialog));
+   reboot_dialog = NULL;
+   e_sys_action_do(E_SYS_REBOOT, NULL);
+}
+
+static void
+_e_actions_cb_reboot_dialog_cancel(void *data, E_Dialog *dia)
+{
+   e_object_del(E_OBJECT(reboot_dialog));
+   reboot_dialog = NULL;
+}
+
+static void
+_e_actions_cb_reboot_dialog_delete(E_Win *win)
+{
+   E_Dialog *dia;
+
+   dia = win->data;
+   _e_actions_cb_reboot_dialog_cancel(NULL, dia);
+}
+
+ACT_FN_GO(reboot)
+{
+   if (reboot_dialog) e_object_del(E_OBJECT(reboot_dialog));
+   reboot_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_reboot_dialog");
+   if (!reboot_dialog) return;
+   e_win_delete_callback_set(reboot_dialog->win, _e_actions_cb_reboot_dialog_delete);
+   e_dialog_title_set(reboot_dialog, _("Are you sure you want to reboot?"));
+   e_dialog_text_set(reboot_dialog,
+		     _("You requested to reboot your Computer.<br>"
+		       "<br>"
+		       "Are you sure you want to restart it?"
+		       ));
+   e_dialog_icon_set(reboot_dialog, "enlightenment/reboot", 64);
+   e_dialog_button_add(reboot_dialog, _("Yes"), NULL,
+		       _e_actions_cb_reboot_dialog_ok, NULL);
+   e_dialog_button_add(reboot_dialog, _("No"), NULL,
+		       _e_actions_cb_reboot_dialog_cancel, NULL);
+   e_dialog_button_focus_num(reboot_dialog, 1);
+   e_win_centered_set(reboot_dialog->win, 1);
+   e_dialog_show(reboot_dialog);
+}
+
+/***************************************************************************/
+static E_Dialog *suspend_dialog = NULL;
+
+static void
+_e_actions_cb_suspend_dialog_ok(void *data, E_Dialog *dia)
+{
+   e_object_del(E_OBJECT(suspend_dialog));
+   suspend_dialog = NULL;
+   e_sys_action_do(E_SYS_SUSPEND, NULL);
+}
+
+static void
+_e_actions_cb_suspend_dialog_cancel(void *data, E_Dialog *dia)
+{
+   e_object_del(E_OBJECT(suspend_dialog));
+   suspend_dialog = NULL;
+}
+
+static void
+_e_actions_cb_suspend_dialog_delete(E_Win *win)
+{
+   E_Dialog *dia;
+
+   dia = win->data;
+   _e_actions_cb_suspend_dialog_cancel(NULL, dia);
+}
+
+ACT_FN_GO(suspend)
+{
+   if (suspend_dialog) e_object_del(E_OBJECT(suspend_dialog));
+   suspend_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_suspend_dialog");
+   if (!suspend_dialog) return;
+   e_win_delete_callback_set(suspend_dialog->win, _e_actions_cb_suspend_dialog_delete);
+   e_dialog_title_set(suspend_dialog, _("Are you sure you want to turn off?"));
+   e_dialog_text_set(suspend_dialog,
+		     _("You requested to suspend your Computer.<br>"
+		       "<br>"
+		       "Are you sure you want to suspend?"
+		       ));
+   e_dialog_icon_set(suspend_dialog, "enlightenment/suspend", 64);
+   e_dialog_button_add(suspend_dialog, _("Yes"), NULL,
+		       _e_actions_cb_suspend_dialog_ok, NULL);
+   e_dialog_button_add(suspend_dialog, _("No"), NULL,
+		       _e_actions_cb_suspend_dialog_cancel, NULL);
+   e_dialog_button_focus_num(suspend_dialog, 1);
+   e_win_centered_set(suspend_dialog->win, 1);
+   e_dialog_show(suspend_dialog);
+}
+
+/***************************************************************************/
+static E_Dialog *hibernate_dialog = NULL;
+
+static void
+_e_actions_cb_hibernate_dialog_ok(void *data, E_Dialog *dia)
+{
+   e_object_del(E_OBJECT(hibernate_dialog));
+   hibernate_dialog = NULL;
+   e_sys_action_do(E_SYS_HIBERNATE, NULL);
+}
+
+static void
+_e_actions_cb_hibernate_dialog_cancel(void *data, E_Dialog *dia)
+{
+   e_object_del(E_OBJECT(hibernate_dialog));
+   hibernate_dialog = NULL;
+}
+
+static void
+_e_actions_cb_hibernate_dialog_delete(E_Win *win)
+{
+   E_Dialog *dia;
+
+   dia = win->data;
+   _e_actions_cb_hibernate_dialog_cancel(NULL, dia);
+}
+
+ACT_FN_GO(hibernate)
+{
+   if (hibernate_dialog) e_object_del(E_OBJECT(hibernate_dialog));
+   hibernate_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_hibernate_dialog");
+   if (!hibernate_dialog) return;
+   e_win_delete_callback_set(hibernate_dialog->win, _e_actions_cb_hibernate_dialog_delete);
+   e_dialog_title_set(hibernate_dialog, _("Are you sure you want to hibernate?"));
+   e_dialog_text_set(hibernate_dialog,
+		     _("You requested to hibernate your Computer.<br>"
+		       "<br>"
+		       "Are you sure you want to suspend to disk?"
+		       ));
+   e_dialog_icon_set(hibernate_dialog, "enlightenment/hibernate", 64);
+   e_dialog_button_add(hibernate_dialog, _("Yes"), NULL,
+		       _e_actions_cb_hibernate_dialog_ok, NULL);
+   e_dialog_button_add(hibernate_dialog, _("No"), NULL,
+		       _e_actions_cb_hibernate_dialog_cancel, NULL);
+   e_dialog_button_focus_num(hibernate_dialog, 1);
+   e_win_centered_set(hibernate_dialog->win, 1);
+   e_dialog_show(hibernate_dialog);
+}
+
+/***************************************************************************/
 ACT_FN_GO(pointer_resize_push)
 {
    E_Manager *man = NULL;
@@ -1438,6 +1689,7 @@ ACT_FN_GO(pointer_resize_push)
      }
 }
 
+/***************************************************************************/
 ACT_FN_GO(pointer_resize_pop)
 {
    E_Manager *man = NULL;
@@ -1467,6 +1719,7 @@ ACT_FN_GO(exebuf)
      e_exebuf_show(zone);
 }
 
+/***************************************************************************/
 ACT_FN_GO(desk_lock)
 {
 /*  E_Zone *zone;
@@ -1768,16 +2021,32 @@ e_actions_init(void)
    ACT_GO_MOUSE(winlist);
    ACT_GO_KEY(winlist);
    
-   /* restart */
    ACT_GO(restart);
    e_register_action_predef_name(_("Enlightenment"), _("Restart"), "restart", NULL,
 				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
-				 
-   /* exit */
    ACT_GO(exit);
    e_register_action_predef_name(_("Enlightenment"), _("Exit"), "exit", NULL,
 				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   ACT_GO(logout);
+   e_register_action_predef_name(_("Enlightenment"), _("Log Out"), "logout", NULL,
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   ACT_GO(exit_now);
+   e_register_action_predef_name(_("Enlightenment"), _("Exit Immediately"), "exit_now", NULL,
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
 
+   ACT_GO(halt);
+   e_register_action_predef_name(_("System"), _("Shut Down"), "halt", NULL,
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   ACT_GO(reboot);
+   e_register_action_predef_name(_("System"), _("Reboot"), "reboot", NULL,
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   ACT_GO(suspend);
+   e_register_action_predef_name(_("System"), _("Suspend"), "suspend", NULL,
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   ACT_GO(hibernate);
+   e_register_action_predef_name(_("System"), _("Suspend to Disk"), "hibernate", NULL,
+				 EDIT_RESTRICT_ACTION | EDIT_RESTRICT_PARAMS, 0);
+   
    ACT_GO(pointer_resize_push);
    ACT_GO(pointer_resize_pop);
    

@@ -10,7 +10,8 @@ INCLUDES = -I$(top_srcdir) \
 	   -DPACKAGE_BIN_DIR=\"@PACKAGE_BIN_DIR@\" \
 	   -DPACKAGE_LIB_DIR=\"@PACKAGE_LIB_DIR@\" \
 	   -DPACKAGE_DATA_DIR=\"@PACKAGE_DATA_DIR@\" \
-	   -DLOCALE_DIR=\"@LOCALE_DIR@\"
+	   -DLOCALE_DIR=\"@LOCALE_DIR@\" \
+	   -DPACKAGE_SYSCONF_DIR=\"@PACKAGE_SYSCONF_DIR@\"
 
 bin_PROGRAMS = \
 enlightenment \
@@ -19,7 +20,8 @@ enlightenment_eapp \
 enlightenment_eapp_cache_gen \
 enlightenment_imc \
 enlightenment_start \
-enlightenment_thumb
+enlightenment_thumb \
+enlightenment_sys
 
 ENLIGHTENMENTHEADERS = \
 e.h \
@@ -178,8 +180,9 @@ e_int_config_wallpaper.h \
 e_int_config_wallpaper_import.h \
 e_int_config_wallpaper_gradient.h \
 e_color_dialog.h  \
-e_fdo_menu_to_order.h
-
+e_fdo_menu_to_order.h \
+e_sys.h
+ 
 enlightenment_src = \
 e_user.c \
 e_manager.c \
@@ -333,6 +336,7 @@ e_int_config_wallpaper_import.c \
 e_int_config_wallpaper_gradient.c \
 e_color_dialog.c \
 e_fdo_menu_to_order.c \
+e_sys.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \
@@ -378,6 +382,15 @@ e_sha1.c \
 e_sha1.h
 
 enlightenment_thumb_LDFLAGS = @e_libs@ @dlopen_libs@
+
+enlightenment_sys_SOURCES = \
+e_sys_main.c
+
+enlightenment_sys_LDFLAGS = @e_libs@ @dlopen_libs@
+
+setuid_root_mode = a=rx,u+s
+install-exec-hook:
+	@chmod $(setuid_root_mode) $(DESTDIR)$(bindir)/enlightenment_sys$(EXEEXT) || true
 
 installed_headersdir = $(prefix)/include/enlightenment
 installed_headers_DATA = $(ENLIGHTENMENTHEADERS)

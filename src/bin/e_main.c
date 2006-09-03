@@ -457,6 +457,14 @@ main(int argc, char **argv)
     }
    _e_main_shutdown_push(e_thumb_shutdown);
    
+   /* init the enlightenment sys command system */
+   if (!e_sys_init())
+    {
+       e_error_message_show(_("Enlightenment cannot initialize the System Command system.\n"));
+       _e_main_shutdown(-1);
+    }
+   _e_main_shutdown_push(e_sys_shutdown);
+   
    
    /* init the enlightenment file manager */
    if (!e_fm_icon_init() || !e_fm_init() || !e_fm2_init())

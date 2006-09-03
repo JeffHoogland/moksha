@@ -29,7 +29,7 @@ freqset_DATA = \
 freqset$(EXEEXT)
 setuid_root_mode = a=rx,u+s
 
-install-data-hook:
+install-exec-hook:
 	@chmod $(setuid_root_mode) $(DESTDIR)$(freqsetdir)/freqset$(EXEEXT) || true
 
 noinst_PROGRAMS        = freqset

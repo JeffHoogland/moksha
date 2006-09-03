@@ -101,6 +101,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 				  _button_cb_mouse_down, inst);
    battery_config->instances = evas_list_append(battery_config->instances, inst);
    battery_config->battery_check_mode = CHECK_NONE;
+   battery_config->battery_prev_level = -1;
    battery_config->battery_prev_drain = 1;
    battery_config->battery_prev_ac = -1;
    battery_config->battery_prev_battery = -1;
@@ -391,14 +392,15 @@ _battery_linux_acpi_check(void)
 	  {
 	     FILE *f;
 	     char *tmp;
+	     int design_cap;
+	     int last_full;
 
 	     snprintf(buf, sizeof(buf), "/proc/acpi/battery/%s/info", name);
 	     f = fopen(buf, "r");
 	     if (f)
 	       {
-		  int design_cap = 0;
-		  int last_full = 0;
-
+		  design_cap = 0;
+		  last_full = 0;
 		  /* present */
 		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
 		  /* design capacity */
@@ -420,8 +422,6 @@ _battery_linux_acpi_check(void)
 		       free(tmp);
 		    }
 		  fclose(f);
-		  bat_max += design_cap;
-		  bat_filled += last_full;
 	       }
 	     snprintf(buf, sizeof(buf), "/proc/acpi/battery/%s/state", name);
 	     f = fopen(buf, "r");
@@ -448,7 +448,7 @@ _battery_linux_acpi_check(void)
 		  tmp = _battery_string_get(buf2);
 		  if (tmp)
 		    {
-		       if (!strcmp(tmp, "unknown")) rate_unknown = 1;
+		       if (!strcmp(tmp, "unknown")) rate_unknown++;
 		       else rate = atoi(tmp);
 		       free(tmp);
 		    }
@@ -457,7 +457,7 @@ _battery_linux_acpi_check(void)
 		  tmp = _battery_string_get(buf2);
 		  if (tmp)
 		    {
-		       if (!strcmp(tmp, "unknown")) level_unknown = 1;
+		       if (!strcmp(tmp, "unknown")) level_unknown++;
 		       else level = atoi(tmp);
 		       free(tmp);
 		    }
@@ -472,15 +472,18 @@ _battery_linux_acpi_check(void)
 		       if (!strcmp(charging_state, "discharging"))
 			 {
 			    discharging++;
-			    if ((rate == 0) && (rate_unknown == 0)) rate_unknown = 1;
+                            if ((rate == 0) && (rate_unknown == 0)) rate_unknown++;
 			 }
 		       else if (!strcmp(charging_state, "charging"))
 			 {
 			    charging++;
-			    if ((rate == 0) && (rate_unknown == 0)) rate_unknown = 1;
+                            if ((rate == 0) && (rate_unknown == 0)) rate_unknown++;
 			 }
 		       else if (!strcmp(charging_state, "charged"))
-			 rate_unknown = 0;
+			 {
+//			    level = last_full;
+			    rate_unknown--;
+			 }
 		       free(charging_state);
 		    }
 		  E_FREE(capacity_state);
@@ -488,16 +491,35 @@ _battery_linux_acpi_check(void)
 		  bat_drain += rate;
 		  bat_level += level;
 	       }
+	     bat_max += design_cap;
+	     bat_filled += last_full;
 	  }
 	ecore_list_destroy(bats);
      }
-
-   if (battery_config->battery_prev_drain < 1) battery_config->battery_prev_drain = 1;
-   if (bat_drain < 1) bat_drain = battery_config->battery_prev_drain;
-   battery_config->battery_prev_drain = bat_drain;
-
+   
+   if ((rate_unknown) && (bat_level != battery_config->battery_prev_level) &&
+       (battery_config->battery_prev_level >= 0))
+     {
+	bat_drain = 
+	  ((bat_level - battery_config->battery_prev_level) * 60 * 60) /
+	  battery_config->poll_time;
+	if (bat_drain < 0) bat_drain = -bat_drain;
+	if (bat_drain == 0) bat_drain = 1;
+	rate_unknown = 0;
+     }
+   else
+     {
+	if (battery_config->battery_prev_drain < 1)
+	  battery_config->battery_prev_drain = 1;
+	if (bat_drain < 1)
+	  bat_drain = battery_config->battery_prev_drain;
+	battery_config->battery_prev_drain = bat_drain;
+     }
+   
    if (bat_filled > 0) bat_val = (100 * bat_level) / bat_filled;
    else bat_val = 100;
+   
+   battery_config->battery_prev_level = bat_level;
    
    if (discharging) minutes = (60 * bat_level) / bat_drain;
    else

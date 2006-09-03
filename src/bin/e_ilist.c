@@ -175,6 +175,18 @@ e_ilist_selected_get(Evas_Object *obj)
    return sd->selected;
 }
 
+EAPI void
+e_ilist_unselect(Evas_Object *obj)
+{
+   E_Smart_Item *si;
+   
+   API_ENTRY return;
+   if (!sd->items) return;
+   si = evas_list_nth(sd->items, sd->selected);
+   if (si) edje_object_signal_emit(si->base_obj, "e,state,unselected", "e");
+   sd->selected = -1;
+}
+
 EAPI const char *
 e_ilist_selected_label_get(Evas_Object *obj)
 {
