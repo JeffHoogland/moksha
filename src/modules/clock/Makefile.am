@@ -4,7 +4,7 @@ MODULE = clock
 # data files for the module
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)
 files_DATA = \
-module.eap
+module.edj module.desktop
 
 EXTRA_DIST = $(files_DATA)
 
@@ -23,3 +23,6 @@ module_la_SOURCES      = e_mod_main.c \
 module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version
 module_la_DEPENDENCIES = $(top_builddir)/config.h
+
+uninstall:
+	rm -rf $(libdir)/enlightenment/modules/$(MODULE)

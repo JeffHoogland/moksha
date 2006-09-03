@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Cpufreq
+Exec=enlightenment
+X-Enlightenment-IconClass=cpufreq,gadget
+Icon=./module.edj

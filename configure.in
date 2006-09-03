@@ -252,6 +252,7 @@ AC_ARG_WITH(edje-cc,
 ])
 AC_SUBST(edje_cc)
 
+
 AC_OUTPUT([
 Makefile
 enlightenment.spec
@@ -259,14 +260,23 @@ src/Makefile
 src/bin/Makefile
 src/modules/Makefile
 src/modules/ibar/Makefile
+src/modules/ibar/module.desktop
 src/modules/dropshadow/Makefile
+src/modules/dropshadow/module.desktop
 src/modules/clock/Makefile
+src/modules/clock/module.desktop
 src/modules/pager/Makefile
+src/modules/pager/module.desktop
 src/modules/battery/Makefile
+src/modules/battery/module.desktop
 src/modules/temperature/Makefile
+src/modules/temperature/module.desktop
 src/modules/cpufreq/Makefile
+src/modules/cpufreq/module.desktop
 src/modules/ibox/Makefile
+src/modules/ibox/module.desktop
 src/modules/start/Makefile
+src/modules/start/module.desktop
 data/Makefile
 data/fonts/Makefile
 data/images/Makefile

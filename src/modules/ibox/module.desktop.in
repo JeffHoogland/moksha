@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=IBox
+Exec=enlightenment
+X-Enlightenment-IconClass=ibox,gadget
+Icon=./module.edj

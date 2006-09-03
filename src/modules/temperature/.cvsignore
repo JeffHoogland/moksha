@@ -6,4 +6,4 @@ e_mod_main.lo
 module.la
 *.la
 *.lo
-
+module.desktop

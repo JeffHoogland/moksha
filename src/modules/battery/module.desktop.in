@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Battery
+Exec=enlightenment
+X-Enlightenment-IconClass=battery,gadget
+Icon=./module.edj

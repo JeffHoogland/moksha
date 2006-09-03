@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Dropshadow
+Exec=enlightenment
+X-Enlightenment-IconClass=dropshadow,gadget
+Icon=./module.edj

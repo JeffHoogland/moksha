@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Clock
+Exec=enlightenment
+X-Enlightenment-IconClass=clock,gadget
+Icon=./module.edj

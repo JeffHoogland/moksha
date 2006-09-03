@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Temperature
+Exec=enlightenment
+X-Enlightenment-IconClass=temperature,gadget
+Icon=./module.edj

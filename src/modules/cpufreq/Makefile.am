@@ -4,7 +4,7 @@ MODULE = cpufreq
 # data files for the module
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)
 files_DATA = \
-module.eap
+module.edj module.desktop
 
 EXTRA_DIST = $(files_DATA)
 
@@ -34,3 +34,6 @@ install-data-hook:
 
 noinst_PROGRAMS        = freqset
 freqset_SOURCES        = freqset.c
+
+uninstall:
+	rm -rf $(libdir)/enlightenment/modules/$(MODULE)
