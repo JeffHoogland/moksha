@@ -62,6 +62,7 @@ test "x$RPM_BUILD_ROOT" != "x/" && rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}
 %{_datadir}/locale/*
 %{_datadir}/xsessions/%{name}.desktop
+%{_sysconfdir}/enlightenment/*
 
 %files devel
 %defattr(-, root, root)
