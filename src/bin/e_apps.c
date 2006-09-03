@@ -283,8 +283,8 @@ e_app_new(const char *path, int scan_subdirs)
 		  e_app_fields_fill(a, path);
 		  
 		  /* no exe field.. not valid. drop it */
-		  if (!_e_app_exe_valid_get(a->exe))
-		    goto error;
+//		  if (!_e_app_exe_valid_get(a->exe))
+//		    goto error;
 	       }
 	     else
 	       goto error;
@@ -1572,36 +1572,38 @@ e_app_icon_add(Evas *evas, E_App *a)
 {
    Evas_Object *o = NULL;
    
-   if (a->icon_path)
-      o = _e_app_icon_path_add(evas, a);
+   printf("a->icon_path = %s\n", a->icon_path);
+   if ((a->icon_path) && (a->icon_path[0] != 0))
+     o = _e_app_icon_path_add(evas, a);
    else
-      {
-         o = edje_object_add(evas);
-         if (!e_util_edje_icon_list_set(o, a->icon_class))
-            {
-               if (edje_object_file_set(o, a->path, "icon"))
-	          {
-	             ;  /* It's a bit more obvious this way. */
-	          }
-               else if (a->icon_class)   /* If that fails, then this might be an FDO icon. */
-	          {
-	             char *v;
-
-	             /* FIXME: Use a real icon size. */
-	             v = (char *) ecore_desktop_icon_find(a->icon_class, NULL, e_config->icon_theme);
-	             if (v)
-	                a->icon_path = evas_stringshare_add(v);
-	          }
-
-               if (a->icon_path)
-                  {
-                     /* Free the aborted object first. */
-                     if (o)   evas_object_del(o);
-                     o = _e_app_icon_path_add(evas, a);
-                  }
-            }
-      }
-
+     {
+	o = edje_object_add(evas);
+	printf("a->icon_class = %s\n", a->icon_class);
+	if (!e_util_edje_icon_list_set(o, a->icon_class))
+	  {
+	     printf("a->path = %s\n", a->path);
+	     if (edje_object_file_set(o, a->path, "icon"))
+	       {
+		  ;  /* It's a bit more obvious this way. */
+	       }
+	     else if (a->icon_class)   /* If that fails, then this might be an FDO icon. */
+	       {
+		  char *v;
+		  
+		  /* FIXME: Use a real icon size. */
+		  v = (char *) ecore_desktop_icon_find(a->icon_class, NULL, e_config->icon_theme);
+		  if (v)
+		    a->icon_path = evas_stringshare_add(v);
+	       }
+	     
+	     if (a->icon_path)
+	       {
+		  /* Free the aborted object first. */
+		  if (o)   evas_object_del(o);
+		  o = _e_app_icon_path_add(evas, a);
+	       }
+	  }
+     }
    return o;
 }
 

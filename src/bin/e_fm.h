@@ -93,6 +93,7 @@ struct _E_Fm2_Icon_Info
    const char       *generic;
    const char       *icon;
    const char       *link;
+   const char       *pseudo_dir;
    struct stat       statinfo;
    unsigned char     mount : 1;
    unsigned char     pseudo_link : 1;

@@ -1258,7 +1258,7 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, char *file)
 		  free(ic);
 		  return NULL;
 	       }
-	     ic->info.link = evas_stringshare_add(sd->config->view.extra_file_source);
+	     ic->info.pseudo_dir = evas_stringshare_add(sd->config->view.extra_file_source);
 	     ic->info.pseudo_link = 1;
 	  }
      }
@@ -1392,6 +1392,7 @@ _e_fm2_icon_free(E_Fm2_Icon *ic)
    if (ic->info.generic) evas_stringshare_del(ic->info.generic);
    if (ic->info.icon) evas_stringshare_del(ic->info.icon);
    if (ic->info.link) evas_stringshare_del(ic->info.link);
+   if (ic->info.pseudo_dir) evas_stringshare_del(ic->info.pseudo_dir);
    free(ic);
 }
 
@@ -1555,7 +1556,7 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	      ic->obj_icon = edje_object_add(evas_object_evas_get(ic->sd->obj));
               e_util_edje_icon_set(ic->obj_icon, ic->info.icon);
 	   }
-              edje_object_part_swallow(ic->obj, "e.swallow.icon", ic->obj_icon);
+	edje_object_part_swallow(ic->obj, "e.swallow.icon", ic->obj_icon);
         evas_object_show(ic->obj_icon);
 	return;
      }
@@ -1582,7 +1583,7 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 		 )
 	       {
 		  if (ic->info.pseudo_link)
-		    snprintf(buf, sizeof(buf), "%s/%s", ic->info.link, ic->info.file);
+		    snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
 		  else
 		    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 		  ic->obj_icon = e_thumb_icon_add(evas_object_evas_get(ic->sd->obj));
@@ -1620,7 +1621,7 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 		 )
 	       {
 		  if (ic->info.pseudo_link)
-		    snprintf(buf, sizeof(buf), "%s/%s", ic->info.link, ic->info.file);
+		    snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
 		  else
 		    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 		  ic->obj_icon = e_thumb_icon_add(evas_object_evas_get(ic->sd->obj));
@@ -1639,7 +1640,7 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 		      )
 	       {
 		  if (ic->info.pseudo_link)
-		    snprintf(buf, sizeof(buf), "%s/%s", ic->info.link, ic->info.file);
+		    snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
 		  else
 		    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 		  ic->obj_icon = edje_object_add(evas_object_evas_get(ic->sd->obj));
@@ -1654,20 +1655,20 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	          E_App *app;
 
 		  if (ic->info.pseudo_link)
-		     {
-		        /* FIXME: first one should be correct I think, but it isn't. */
-//		        snprintf(buf, sizeof(buf), "%s/%s", ic->info.link, ic->info.file);
-		        snprintf(buf, sizeof(buf), "%s", ic->info.link);
-		     }
+		    {
+		       /* FIXME: first one should be correct I think, but it isn't. */
+		       snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
+		    }
 		  else
 		    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
-//printf("ICON FOR APP  (%s) %s  -  %s  -  %s  -  %s\n", ((ic->info.pseudo_link) ? "pseudo" : "real" ), buf, ic->info.link, ic->info.file, ic->sd->realpath);
+		  //printf("ICON FOR APP  (%s) %s  -  %s  -  %s  -  %s\n", ((ic->info.pseudo_link) ? "pseudo" : "real" ), buf, ic->info.pseudo_dir, ic->info.file, ic->sd->realpath);
                   app = e_app_new(buf, 0);
+		  printf("ic: %s = %p\n", buf, app);
 		  if (app)
-		     {
-		        ic->obj_icon = e_app_icon_add(evas_object_evas_get(ic->sd->obj), app);
-			e_object_unref(E_OBJECT(app));
-		     }
+		    {
+		       ic->obj_icon = e_app_icon_add(evas_object_evas_get(ic->sd->obj), app);
+		       e_object_unref(E_OBJECT(app));
+		    }
 		  edje_object_part_swallow(ic->obj, "e.swallow.icon", ic->obj_icon);
 		  evas_object_show(ic->obj_icon);
 	       }
@@ -1744,7 +1745,7 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
    Ecore_Desktop *desktop;
    
    if (ic->info.pseudo_link)
-     snprintf(buf, sizeof(buf), "%s/%s", ic->info.link, ic->info.file);
+     snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
    else
      snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 
@@ -1755,21 +1756,30 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 	 if (desktop->generic)  ic->info.generic = evas_stringshare_add(desktop->generic);
 	 if (desktop->comment)  ic->info.comment = evas_stringshare_add(desktop->comment);
 
+	 printf("di: %s %s %s\n", desktop->icon, desktop->icon_path, desktop->icon_class);
 	 if (desktop->icon)
 	    {
 	       char *v;
 
 	       /* FIXME: Use a real icon size. */
-	       v = (char *) ecore_desktop_icon_find(desktop->icon, NULL, e_config->icon_theme);
+	       v = (char *)ecore_desktop_icon_find(desktop->icon, NULL, e_config->icon_theme);
 	       if (v)
 	          ic->info.icon = evas_stringshare_add(v);
+	       printf("%s ->v\n", desktop->icon, v);
 	    }
 
 	 if (desktop->type)
 	    {
-	       if (!strcmp(desktop->type, "Mount")) ic->info.mount = 1;
+	       if (!strcmp(desktop->type, "Mount"))
+		 {
+		    ic->info.mount = 1;
+		    if (desktop->URL)
+		      ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->URL);
+		 }
 	       else if (!strcmp(desktop->type, "Link"))
 	          {
+		    if (desktop->URL)
+		      ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->URL);
 	          }
 	       else if (!strcmp(desktop->type, "Application"))
 	          {
@@ -1786,11 +1796,13 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
    if (ic->info.generic) evas_stringshare_del(ic->info.generic);
    if (ic->info.icon) evas_stringshare_del(ic->info.icon);
    if (ic->info.link) evas_stringshare_del(ic->info.link);
+   if (ic->info.pseudo_dir) evas_stringshare_del(ic->info.pseudo_dir);
    ic->info.label = NULL;
    ic->info.comment = NULL;
    ic->info.generic = NULL;
    ic->info.icon = NULL;
    ic->info.link = NULL;
+   ic->info.pseudo_dir = NULL;
    fclose(f);
    return 0;
 }
@@ -1892,7 +1904,7 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     
 	     if (ic->sd->dev) dev = strdup(ic->sd->dev);
 	     if (ic->info.pseudo_link)
-	       snprintf(buf, sizeof(buf), "%s/%s", ic->info.link, ic->info.file);
+	       snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
 	     else
 	       snprintf(buf, sizeof(buf), "%s/%s", ic->sd->path, ic->info.file);
 	     e_fm2_path_set(ic->sd->obj, dev, buf);
@@ -2658,7 +2670,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	can_w2 = ecore_file_can_write(buf);
      }
    if (ic->info.pseudo_link)
-     snprintf(buf, sizeof(buf), "%s/%s", ic->info.link, ic->info.file);
+     snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
    else
      snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, ic->info.file);
    if ((ic->info.link) && (!ic->info.pseudo_link))
@@ -2907,8 +2919,8 @@ _e_fm2_file_rename_yes_cb(char *text, void *data)
      {
 	if (ic->info.pseudo_link)
 	  {
-	     snprintf(oldpath, sizeof(oldpath), "%s/%s", ic->info.link, ic->info.file);
-	     snprintf(newpath, sizeof(newpath), "%s/%s", ic->info.link, text);
+	     snprintf(oldpath, sizeof(oldpath), "%s/%s", ic->info.pseudo_dir, ic->info.file);
+	     snprintf(newpath, sizeof(newpath), "%s/%s", ic->info.pseudo_dir, text);
 	  }
 	else
 	  {
