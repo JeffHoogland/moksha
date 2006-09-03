@@ -172,13 +172,13 @@ _e_eap_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data)
    data->editor->eap->height = 0;
    if (data->editor)
      {
+	e_object_unref(E_OBJECT(data->editor->eap));
 //	if (data->editor->img) evas_object_del(data->editor->img);
 //	if (data->editor->img_widget) evas_object_del(data->editor->img_widget);
 //	if (data->editor->fsel) evas_object_del(data->editor->fsel);
 //	if (data->editor->fsel_dia) e_object_del(E_OBJECT(data->editor->fsel_dia));
 	free(data->editor);
      }
-   e_object_unref(E_OBJECT(data->editor->eap));
    free(data);
 }
 
