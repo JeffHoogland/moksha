@@ -6,6 +6,10 @@ include /usr/share/cdbs/1/class/autotools.mk
 
 DEB_MAKE_CLEAN_TARGET := clean
 
+install/enlightenment::
+	mkdir debian/enlightenment/etc
+	mv debian/tmp/usr/etc/enlightenment debian/enlightenment/etc/
+
 clean::
 	if [ -f $(CURDIR)/../../snapshot ]; then ./autogen.sh --prefix=/usr; fi
 	
