@@ -190,6 +190,27 @@ _cb_button_create(void *data1, void *data2)
 }
 
 static void
+_cb_files_selection_changed_all(void *data, Evas_Object *obj, void *event_info)
+{
+   E_Config_Dialog_Data *cfdata;
+   Evas_List *selected;
+
+   cfdata = data;
+   if (!cfdata->gui.o_fm_all) return;
+   selected = e_fm2_selected_list_get(cfdata->gui.o_fm_all);
+   if (selected)
+      {
+         if (cfdata->gui.o_add_button)
+            e_widget_disabled_set(cfdata->gui.o_add_button, 0);
+      }
+   else
+      {
+         if (cfdata->gui.o_add_button)
+            e_widget_disabled_set(cfdata->gui.o_add_button, 1);
+      }
+}
+
+static void
 _cb_files_selected(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
@@ -405,8 +426,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    fmc_all.selection.single = 1;
    fmc_all.selection.windows_modifiers = 0;
    e_fm2_config_set(mt, &fmc_all);
+   evas_object_smart_callback_add(mt, "changed",
+				  _cb_files_selection_changed_all, cfdata);
    evas_object_smart_callback_add(mt, "selected",
 				  _cb_files_selected, cfdata);
+   evas_object_smart_callback_add(mt, "selection_change",
+				  _cb_files_selection_changed_all, cfdata);
    e_fm2_icon_menu_start_extend_callback_set(mt, _cb_files_add_edited, cfdata);
    snprintf(path_all, sizeof(path_all), "%s/.e/e/applications/all", homedir);
    e_fm2_path_set(cfdata->gui.o_fm_all, path_all, "/");
@@ -428,6 +453,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 			   _cb_button_add, cfdata, NULL);
    cfdata->gui.o_add_button = mt;
    e_widget_framelist_object_append(of, mt);
+   e_widget_disabled_set(cfdata->gui.o_add_button, 1);
 
    if (!once)
       {
