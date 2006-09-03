@@ -10,8 +10,6 @@ Some of the things (in very short form) that need to be done to E17...
 
 * BUG: right click remove icon from ibar deletes the original file - not the
   ibar link to it in .order
-* BUG: add app to ibar via ibar right menu and restart - app is gone. (dnd
-  for add/remove still works though)
 * BUG: "add aplication" in applicatiosn dialog shoudl be disabled if no
   app is selected in the fm view above it
 * BUG: "create new application" from "applications main config dialog when
