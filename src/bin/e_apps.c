@@ -1609,8 +1609,7 @@ e_app_icon_add(Evas *evas, E_App *a)
 EAPI void
 e_app_icon_add_to_menu_item(E_Menu_Item *mi, E_App *a)
 {
-   if (a->icon_path)
-      e_menu_item_icon_file_set(mi, a->icon_path);
+   mi->app = a;
    if ((!a->icon_path) && (a->icon_class))
       {
          char *v;
@@ -1625,7 +1624,8 @@ e_app_icon_add_to_menu_item(E_Menu_Item *mi, E_App *a)
    /* e_menu_item_icon_edje_set() just tucks away the params, the actual call to edje_object_file_set() happens later. */
    /* e_menu_item_icon_file_set() just tucks away the params, the actual call to e_icon_add() happens later. */
    e_menu_item_icon_edje_set(mi, a->path, "icon");
-   return;
+   if (a->icon_path)
+      e_menu_item_icon_file_set(mi, a->icon_path);
 }
 
 

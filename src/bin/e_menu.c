@@ -1205,10 +1205,19 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     else
 	       evas_object_del(o);
 	     
-	     if (mi->icon)
+             /* FIXME: Not sure why there are two different tries to get the icon size, surely only the last one si needed. */
+             /* FIXME: Do it this way later, when e_app_icon_add() just registers a request for an icon to be filled in when it's ready.
+             if (mi->app)
+	        {
+		   o = e_app_icon_add(mi->menu->evas, mi->app);
+		   mi->icon_object = o;
+	           e_icon_size_get(mi->icon_object, &icon_w, &icon_h);
+		}
+	     else
+             */
+             if (mi->icon)
 	       {
 	          /* This is done this way to match up with how e_app_icon_add does it. */
-//                  mi->icon_object = NULL;   /* Just coz I'm paranoid, may not be needed. */
 		  if (mi->icon_key)
 		    {
 		       Evas_Coord iww, ihh;
