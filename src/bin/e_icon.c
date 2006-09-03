@@ -44,6 +44,7 @@ e_icon_file_set(Evas_Object *obj, const char *file)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    /* smart code here */
+   evas_object_image_load_size_set(sd->obj, 64, 64);
    evas_object_image_file_set(sd->obj, file, NULL);
    _e_icon_smart_reconfigure(sd);
 }
@@ -56,6 +57,7 @@ e_icon_file_key_set(Evas_Object *obj, const char *file, const char *key)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    /* smart code here */
+   evas_object_image_load_size_set(sd->obj, 64, 64);
    evas_object_image_file_set(sd->obj, file, key);
    _e_icon_smart_reconfigure(sd);
 }
