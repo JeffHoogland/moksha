@@ -178,7 +178,7 @@ _e_wid_fsel_files_changed(void *data, Evas_Object *obj, void *event_info)
      }
    if (wd->o_files_frame)
      e_widget_scrollframe_child_pos_set(wd->o_files_frame, 0, 0);
-   if (stat(wd->path, &st) == 0)
+   if ((wd->path) && (stat(wd->path, &st) == 0))
      e_widget_entry_text_set(wd->o_entry, wd->path);
    E_FREE(wd->path);
    if (wd->chg_func) wd->chg_func(wd->chg_data, wd->obj);
