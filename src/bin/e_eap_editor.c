@@ -3,22 +3,6 @@
  */
 #include "e.h"
 
-typedef struct _E_App_Edit E_App_Edit;
-
-struct _E_App_Edit
-{
-   E_App       *eap;
-   Evas        *evas;
-
-   Evas_Object *img;
-   Evas_Object *img_widget;
-   Evas_Object *fsel;
-   E_Dialog    *fsel_dia;
-   int          img_set;
-
-   E_Config_Dialog *cfd;
-};
-
 struct _E_Config_Dialog_Data
 {
    E_App eap;
@@ -46,6 +30,7 @@ struct _E_Config_Dialog_Data
 
 /* local subsystem functions */
 
+static void           _e_eap_edit_free(E_App_Edit *editor);
 static void           _e_eap_edit_fill_data(E_Config_Dialog_Data *cdfata);
 static void          *_e_eap_edit_create_data(E_Config_Dialog *cfd);
 static void           _e_eap_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data);
@@ -64,7 +49,7 @@ static void           _e_eap_edit_cb_icon_select_cancel(void *data, E_Dialog *di
 
 /* externally accessible functions */
 
-EAPI void
+EAPI E_App_Edit *
 e_eap_edit_show(E_Container *con, E_App *a)
 {
    E_Config_Dialog_View *v;
@@ -72,13 +57,13 @@ e_eap_edit_show(E_Container *con, E_App *a)
 
    if (!con) return;
 
-   editor = E_NEW(E_App_Edit, 1);
-   if (!editor) return;
+   editor = E_OBJECT_ALLOC(E_App_Edit, E_EAP_EDIT_TYPE, _e_eap_edit_free);
+   if (!editor) return NULL;;
    v = E_NEW(E_Config_Dialog_View, 1);
    if (!v)
      {
 	free(editor);
-	return;
+	return NULL;
      }
 
    editor->img = NULL;
@@ -97,9 +82,34 @@ e_eap_edit_show(E_Container *con, E_App *a)
 				     _("Application Editor"), 
 				     "E", "_eap_editor_dialog",
 				     NULL, 0, v, editor);
+   return editor;
 }
 
 /* local subsystem functions */
+static void
+_e_eap_edit_free(E_App_Edit *editor)
+{
+   if (!editor) return;
+   if (editor->cfd)
+     {
+	E_Object *obj;
+	
+	obj = E_OBJECT(editor->cfd);
+	editor->cfd = NULL;
+	e_object_del(obj);
+     }
+   if (editor->eap->tmpfile) ecore_file_unlink(editor->eap->image);
+   editor->eap->tmpfile = 0;
+   if (editor->eap->image) evas_stringshare_del(editor->eap->image);
+   editor->eap->width = 0;
+   editor->eap->height = 0;
+   e_object_unref(E_OBJECT(editor->eap));
+//	if (editor->img) evas_object_del(editor->img);
+//	if (editor->img_widget) evas_object_del(editor->img_widget);
+//	if (editor->fsel) evas_object_del(editor->fsel);
+//	if (editor->fsel_dia) e_object_del(E_OBJECT(editor->fsel_dia));
+   free(editor);
+}
 
 static void
 _e_eap_edit_fill_data(E_Config_Dialog_Data *cfdata)
@@ -127,7 +137,6 @@ _e_eap_edit_fill_data(E_Config_Dialog_Data *cfdata)
    IFDUP(cfdata->editor->eap->path, cfdata->eap.path);
    IFDUP(cfdata->editor->eap->icon_class, cfdata->eap.icon_class);
    IFDUP(cfdata->editor->eap->icon_path, cfdata->eap.icon_path);
-
 }
 
 static void *
@@ -158,27 +167,19 @@ _e_eap_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data)
    E_FREE(data->ipath);
    E_FREE(data->image);
 
-   if (data->eap.path)
-      free((char *) data->eap.path);
-   if (data->eap.icon_class)
-      free((char *) data->eap.icon_class);
-   if (data->eap.icon_path)
-      free((char *) data->eap.icon_path);
-
-   if (data->editor->eap->tmpfile) ecore_file_unlink(data->editor->eap->image);
-   data->editor->eap->tmpfile = 0;
-   if (data->editor->eap->image) evas_stringshare_del(data->editor->eap->image);
-   data->editor->eap->width = 0;
-   data->editor->eap->height = 0;
+   if (data->eap.path) free((char *) data->eap.path);
+   if (data->eap.icon_class) free((char *) data->eap.icon_class);
+   if (data->eap.icon_path) free((char *) data->eap.icon_path);
+   
    if (data->editor)
      {
-	e_object_unref(E_OBJECT(data->editor->eap));
-//	if (data->editor->img) evas_object_del(data->editor->img);
-//	if (data->editor->img_widget) evas_object_del(data->editor->img_widget);
-//	if (data->editor->fsel) evas_object_del(data->editor->fsel);
-//	if (data->editor->fsel_dia) e_object_del(E_OBJECT(data->editor->fsel_dia));
-	free(data->editor);
+	E_Object *obj;
+	
+	obj = E_OBJECT(data->editor);
+	data->editor = NULL;
+	e_object_del(obj);
      }
+
    free(data);
 }
 

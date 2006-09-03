@@ -44,6 +44,7 @@ struct _E_Config_Dialog_Data
       Evas_Object *o_move_up_button;
       Evas_Object *o_move_down_button;
    } gui;
+   E_App_Edit *editor;
 };
 
 struct _E_Config_Once
@@ -135,7 +136,7 @@ _cb_button_up(void *data1, void *data2)
 }
 
 static void
-_cb_files_changed(void *data, Evas_Object *obj, void *event_info)
+_cb_files_dir_changed(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
    
@@ -145,37 +146,71 @@ _cb_files_changed(void *data, Evas_Object *obj, void *event_info)
      {
 	if (cfdata->gui.o_up_button)
 	  e_widget_disabled_set(cfdata->gui.o_up_button, 1);
+     }
+   else
+     {
+	if (cfdata->gui.o_up_button)
+	  e_widget_disabled_set(cfdata->gui.o_up_button, 0);
+     }
+   if (cfdata->gui.o_move_up_button)
+     e_widget_disabled_set(cfdata->gui.o_move_up_button, 1);
+   if (cfdata->gui.o_move_down_button)
+     e_widget_disabled_set(cfdata->gui.o_move_down_button, 1);
+   if (cfdata->gui.o_frame)
+     e_widget_scrollframe_child_pos_set(cfdata->gui.o_frame, 0, 0);
+}
+
+static void
+_cb_files_sel_changed(void *data, Evas_Object *obj, void *event_info)
+{
+   E_Config_Dialog_Data *cfdata;
+   const char *realpath;
+   char buf[4096];
+   
+   cfdata = data;
+   if (!cfdata->gui.o_fm) return;
+   realpath = e_fm2_real_path_get(cfdata->gui.o_fm);
+   snprintf(buf, sizeof(buf), "%s/.order", realpath);
+   if (ecore_file_exists(buf))
+     {
+	if (cfdata->gui.o_move_up_button)
+	  e_widget_disabled_set(cfdata->gui.o_move_up_button, 0);
+	if (cfdata->gui.o_move_down_button)
+	  e_widget_disabled_set(cfdata->gui.o_move_down_button, 0);
+     }
+   else
+     {
 	if (cfdata->gui.o_move_up_button)
 	  e_widget_disabled_set(cfdata->gui.o_move_up_button, 1);
 	if (cfdata->gui.o_move_down_button)
 	  e_widget_disabled_set(cfdata->gui.o_move_down_button, 1);
      }
-   else
-     {
-        const char *realpath;
-        char buf[4096];
+}
 
-        realpath = e_fm2_real_path_get(cfdata->gui.o_fm);
-        snprintf(buf, sizeof(buf), "%s/.order", realpath);
-        if (ecore_file_exists(buf))
-	   {
-	      if (cfdata->gui.o_move_up_button)
-	        e_widget_disabled_set(cfdata->gui.o_move_up_button, 0);
-	      if (cfdata->gui.o_move_down_button)
-	        e_widget_disabled_set(cfdata->gui.o_move_down_button, 0);
-	   }
-	else
-	   {
-	      if (cfdata->gui.o_move_up_button)
-	        e_widget_disabled_set(cfdata->gui.o_move_up_button, 1);
-	      if (cfdata->gui.o_move_down_button)
-	        e_widget_disabled_set(cfdata->gui.o_move_down_button, 1);
-	   }
-	if (cfdata->gui.o_up_button)
-	  e_widget_disabled_set(cfdata->gui.o_up_button, 0);
-     }
-   if (cfdata->gui.o_frame)
-     e_widget_scrollframe_child_pos_set(cfdata->gui.o_frame, 0, 0);
+static void
+_cb_files_changed(void *data, Evas_Object *obj, void *event_info)
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data;
+   if (!cfdata->gui.o_fm) return;
+   if (cfdata->gui.o_move_up_button)
+     e_widget_disabled_set(cfdata->gui.o_move_up_button, 1);
+   if (cfdata->gui.o_move_down_button)
+     e_widget_disabled_set(cfdata->gui.o_move_down_button, 1);
+}
+
+static void
+_cb_editor_del(E_Object *obj)
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = e_object_data_get(obj);
+   cfdata->editor = NULL;
+   e_object_del_attach_func_set(obj, NULL);
+   e_object_data_set(obj, NULL);
+   e_fm2_refresh(cfdata->gui.o_fm);
+   e_fm2_refresh(cfdata->gui.o_fm_all);
 }
 
 static void
@@ -183,31 +218,13 @@ _cb_button_create(void *data1, void *data2)
 {
    E_App *a;
    E_Config_Dialog_Data *cfdata;
-
+   
    cfdata = data1;
    a = e_app_empty_new(NULL);
-   e_eap_edit_show(cfdata->cfd->con, a);
-}
-
-static void
-_cb_files_selection_changed_all(void *data, Evas_Object *obj, void *event_info)
-{
-   E_Config_Dialog_Data *cfdata;
-   Evas_List *selected;
-
-   cfdata = data;
-   if (!cfdata->gui.o_fm_all) return;
-   selected = e_fm2_selected_list_get(cfdata->gui.o_fm_all);
-   if (selected)
-      {
-         if (cfdata->gui.o_add_button)
-            e_widget_disabled_set(cfdata->gui.o_add_button, 0);
-      }
-   else
-      {
-         if (cfdata->gui.o_add_button)
-            e_widget_disabled_set(cfdata->gui.o_add_button, 1);
-      }
+   if (cfdata->editor) e_object_del(E_OBJECT(cfdata->editor));
+   cfdata->editor = e_eap_edit_show(cfdata->cfd->con, a);
+   e_object_data_set(E_OBJECT(cfdata->editor), cfdata);
+   e_object_del_attach_func_set(E_OBJECT(cfdata->editor), _cb_editor_del);
 }
 
 static void
@@ -234,7 +251,30 @@ _cb_files_selected(void *data, Evas_Object *obj, void *event_info)
    if (ecore_file_is_dir(buf)) return;
    a = e_app_new(buf, 0);
    if (a)
-      e_eap_edit_show(cfdata->cfd->con, a);
+     {
+	if (cfdata->editor) e_object_del(E_OBJECT(cfdata->editor));
+	cfdata->editor = e_eap_edit_show(cfdata->cfd->con, a);
+	e_object_data_set(E_OBJECT(cfdata->editor), cfdata);
+	e_object_del_attach_func_set(E_OBJECT(cfdata->editor), _cb_editor_del);
+     }
+}
+
+static void
+_cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data;
+   e_widget_disabled_set(cfdata->gui.o_add_button, 0);
+}
+
+static void
+_cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data;
+   e_widget_disabled_set(cfdata->gui.o_add_button, 1);
 }
 
 static void
@@ -261,7 +301,12 @@ _cb_files_edited(void *data, E_Menu *m, E_Menu_Item *mi)
    if (ecore_file_is_dir(buf)) return;
    a = e_app_new(buf, 0);
    if (a)
-      e_eap_edit_show(cfdata->cfd->con, a);
+     {
+	if (cfdata->editor) e_object_del(E_OBJECT(cfdata->editor));
+	cfdata->editor = e_eap_edit_show(cfdata->cfd->con, a);
+	e_object_data_set(E_OBJECT(cfdata->editor), cfdata);
+	e_object_del_attach_func_set(E_OBJECT(cfdata->editor), _cb_editor_del);
+     }
 }
 
 static void
@@ -426,12 +471,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    fmc_all.selection.single = 1;
    fmc_all.selection.windows_modifiers = 0;
    e_fm2_config_set(mt, &fmc_all);
-   evas_object_smart_callback_add(mt, "changed",
-				  _cb_files_selection_changed_all, cfdata);
    evas_object_smart_callback_add(mt, "selected",
 				  _cb_files_selected, cfdata);
    evas_object_smart_callback_add(mt, "selection_change",
-				  _cb_files_selection_changed_all, cfdata);
+				  _cb_files_selection_change, cfdata);
+   evas_object_smart_callback_add(mt, "changed",
+				  _cb_files_files_changed, cfdata);
    e_fm2_icon_menu_start_extend_callback_set(mt, _cb_files_add_edited, cfdata);
    snprintf(path_all, sizeof(path_all), "%s/.e/e/applications/all", homedir);
    e_fm2_path_set(cfdata->gui.o_fm_all, path_all, "/");
@@ -449,11 +494,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
       mt = e_widget_button_add(evas, _(once->label), "enlightenment/e",
 			   _cb_button_add, cfdata, NULL);
    else
-      mt = e_widget_button_add(evas, _("Add application ->"), "enlightenment/e",
+      mt = e_widget_button_add(evas, _("Add application..."), "enlightenment/e",
 			   _cb_button_add, cfdata, NULL);
    cfdata->gui.o_add_button = mt;
    e_widget_framelist_object_append(of, mt);
-   e_widget_disabled_set(cfdata->gui.o_add_button, 1);
+   e_widget_disabled_set(mt, 1);
 
    if (!once)
       {
@@ -496,7 +541,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
          fmc.selection.windows_modifiers = 0;
          e_fm2_config_set(mt, &fmc);
          evas_object_smart_callback_add(mt, "dir_changed",
-				  _cb_files_changed, cfdata);
+					_cb_files_dir_changed, cfdata);
+         evas_object_smart_callback_add(mt, "selection_change",
+					_cb_files_sel_changed, cfdata);
+         evas_object_smart_callback_add(mt, "changed",
+					_cb_files_changed, cfdata);
          snprintf(path, sizeof(path), "%s/.e/e/applications", homedir);
          e_fm2_path_set(cfdata->gui.o_fm, path, "/");
 
