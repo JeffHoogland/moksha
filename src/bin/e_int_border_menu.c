@@ -556,7 +556,7 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
      {
 	if (bname) 
 	  {
-	     snprintf(path, sizeof(path), "%s/.e/e/applications/all/%s.eap", getenv("HOME"), bname);
+	     snprintf(path, sizeof(path), "%s/.e/e/applications/all/%s.desktop", getenv("HOME"), bname);
 	     a = e_app_empty_new(path);
 	  }
 	else

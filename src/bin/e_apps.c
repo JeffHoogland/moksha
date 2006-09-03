@@ -322,7 +322,7 @@ e_app_empty_new(const char *path)
      {
 	char buf[4096];
 
-	snprintf(buf, sizeof(buf), "%s/_new_app_%1.1f.eap", 
+	snprintf(buf, sizeof(buf), "%s/_new_app_%1.1f.desktop", 
 		 _e_apps_all->path, ecore_time_get());
 	a->path = evas_stringshare_add(buf);
      }
@@ -1261,9 +1261,16 @@ EAPI void
 e_app_fields_save(E_App *a)
 {
    char buf[PATH_MAX];
-   const char *lang, *ext;
+   const char *lang, *ext = NULL;
 
-   /* FIXME: if there is no path, put it in applications/all/a->name.desktop. */
+   /* Check if it's a new one that has not been saved yet. */
+   if (a->path)
+      ext = ecore_file_get_file(a->path);
+   if ( (!a->path) || ((strncmp(ext, "_new_app_", 9) == 0) && (!ecore_file_exists(a->path))) )
+      {
+         snprintf(buf, sizeof(buf), "%s/%s.desktop", _e_apps_all->path, a->name);
+	 a->path = evas_stringshare_add(buf);
+      }
 
    ext = strrchr(a->path, '.');
    if ((ext) && (strcmp(ext, ".desktop") == 0))
@@ -1275,6 +1282,7 @@ e_app_fields_save(E_App *a)
 	 if (!desktop)
 	    {
 	       desktop = E_NEW(Ecore_Desktop, 1);
+	       desktop->original_path = strdup(a->path);
 	       created = 1;
 	    }
 	 if (desktop)

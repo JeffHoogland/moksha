@@ -254,6 +254,7 @@ _e_eap_edit_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data
    if (data->wtitle) eap->win_title = evas_stringshare_add(data->wtitle);
    if (data->wrole) eap->win_role = evas_stringshare_add(data->wrole);
    if (data->iclass) eap->icon_class = evas_stringshare_add(data->iclass);
+   if (data->eap.icon_path) eap->icon_path = evas_stringshare_add(data->eap.icon_path);
 
    if (data->image)
       {
@@ -528,16 +529,16 @@ _e_eap_edit_cb_icon_select_ok(void *data, E_Dialog *dia)
 	cfdata->editor->img_set = 1;
 	if (cfdata->editor->img) evas_object_del(cfdata->editor->img);
 
-        if (cfdata->eap.path)
-           free((char *) cfdata->eap.path);
+//        if (cfdata->eap.path)
+//           free((char *) cfdata->eap.path);
         if (cfdata->eap.icon_class)
            free((char *) cfdata->eap.icon_class);
         if (cfdata->eap.icon_path)
            free((char *) cfdata->eap.icon_path);
 
 	cfdata->eap.icon_path = strdup(cfdata->image);
-	cfdata->eap.path = strdup("");
-	cfdata->eap.icon_class = strdup("");
+//	cfdata->eap.path = strdup("");
+	cfdata->eap.icon_class = NULL;
         cfdata->editor->img = e_app_icon_add(cfdata->editor->evas, &(cfdata->eap));
 #if 0
 	cfdata->editor->img = e_icon_add(cfdata->editor->evas);
