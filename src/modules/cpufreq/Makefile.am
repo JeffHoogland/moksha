@@ -27,9 +27,9 @@ module_la_DEPENDENCIES = $(top_builddir)/config.h
 freqsetdir = $(pkgdir)
 freqset_DATA = \
 freqset$(EXEEXT)
-setuid_root_mode = a=rx,u+s
 
-install-exec-hook:
+setuid_root_mode = a=rx,u+xs
+install-data-hook:
 	@chmod $(setuid_root_mode) $(DESTDIR)$(freqsetdir)/freqset$(EXEEXT) || true
 
 noinst_PROGRAMS        = freqset

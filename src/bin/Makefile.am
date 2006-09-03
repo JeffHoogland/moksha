@@ -388,7 +388,7 @@ e_sys_main.c
 
 enlightenment_sys_LDFLAGS = @e_libs@ @dlopen_libs@
 
-setuid_root_mode = a=rx,u+s
+setuid_root_mode = a=rx,u+xs
 install-exec-hook:
 	@chmod $(setuid_root_mode) $(DESTDIR)$(bindir)/enlightenment_sys$(EXEEXT) || true
 

@@ -53,6 +53,12 @@ main(int argc, char **argv)
      {
 	exit(-1);
      }
+
+   if (seteuid(0))
+     {
+	printf("ERROR: UNABLE TO ASSUME ROOT PRIVILEDGES\n");
+	exit(5);
+     }
    
    evas_init();
 
