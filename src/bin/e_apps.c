@@ -1572,16 +1572,13 @@ e_app_icon_add(Evas *evas, E_App *a)
 {
    Evas_Object *o = NULL;
    
-   printf("a->icon_path = %s\n", a->icon_path);
    if ((a->icon_path) && (a->icon_path[0] != 0))
      o = _e_app_icon_path_add(evas, a);
    else
      {
 	o = edje_object_add(evas);
-	printf("a->icon_class = %s\n", a->icon_class);
 	if (!e_util_edje_icon_list_set(o, a->icon_class))
 	  {
-	     printf("a->path = %s\n", a->path);
 	     if (edje_object_file_set(o, a->path, "icon"))
 	       {
 		  ;  /* It's a bit more obvious this way. */

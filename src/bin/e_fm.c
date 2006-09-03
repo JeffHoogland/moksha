@@ -1655,15 +1655,10 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	          E_App *app;
 
 		  if (ic->info.pseudo_link)
-		    {
-		       /* FIXME: first one should be correct I think, but it isn't. */
 		       snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
-		    }
 		  else
 		    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
-		  //printf("ICON FOR APP  (%s) %s  -  %s  -  %s  -  %s\n", ((ic->info.pseudo_link) ? "pseudo" : "real" ), buf, ic->info.pseudo_dir, ic->info.file, ic->sd->realpath);
                   app = e_app_new(buf, 0);
-		  printf("ic: %s = %p\n", buf, app);
 		  if (app)
 		    {
 		       ic->obj_icon = e_app_icon_add(evas_object_evas_get(ic->sd->obj), app);
@@ -1756,7 +1751,6 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 	 if (desktop->generic)  ic->info.generic = evas_stringshare_add(desktop->generic);
 	 if (desktop->comment)  ic->info.comment = evas_stringshare_add(desktop->comment);
 
-	 printf("di: %s %s %s\n", desktop->icon, desktop->icon_path, desktop->icon_class);
 	 if (desktop->icon)
 	    {
 	       char *v;
@@ -1765,7 +1759,6 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 	       v = (char *)ecore_desktop_icon_find(desktop->icon, NULL, e_config->icon_theme);
 	       if (v)
 	          ic->info.icon = evas_stringshare_add(v);
-	       printf("%s ->v\n", desktop->icon, v);
 	    }
 
 	 if (desktop->type)
