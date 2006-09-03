@@ -8,7 +8,6 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: eap editor - creates eap files not .desktop files
 * BUG: add application to ibar via ibar's right click menu is broken - it
   doesnt resize ibar on add. and on a restart of e the icon is gone.
 * BUG: right click remove icon from ibar deletes the original file - not the
@@ -19,7 +18,6 @@ Some of the things (in very short form) that need to be done to E17...
   app is selected in the fm view above it
 * BUG: "create new application" from "applications main config dialog when
   done (ok) does not refresh the available applications view automatically.
-* BUG: all applications eap edit - same as ibar - new applications are .eap
 * BUG: e17 screen res diaolg doesnt work under xephyr - why?
 * BUG: the ibar specific menu only shows when you right click on icons (and not
   on the bar itself). so, if there are no icons you can't get to the config.
