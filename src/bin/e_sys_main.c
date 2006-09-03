@@ -127,9 +127,9 @@ auth_etc_enlightenment_sysactions(char *a, char *u, char *g)
    int allow = 0;
    int deny = 0;
    
-//   snprintf(file, sizeof(file), "/etc/enlightenment/sysactions.conf");
-//   f = fopen(file, "r");
-//   if (!f)
+   snprintf(file, sizeof(file), "/etc/enlightenment/sysactions.conf");
+   f = fopen(file, "r");
+   if (!f)
      {
 	snprintf(file, sizeof(file), PACKAGE_SYSCONF_DIR"/enlightenment/sysactions.conf");
 	f = fopen(file, "r");
