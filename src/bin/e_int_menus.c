@@ -86,7 +86,7 @@ e_int_menus_main_new(void)
    subm = e_int_menus_all_apps_new();
    dat->all_apps = subm;
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("All Applications"));
+   e_menu_item_label_set(mi, _("Applications"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/all_applications");
    e_menu_item_submenu_set(mi, subm);
   
@@ -733,7 +733,7 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    e_menu_item_callback_set(mi, _e_int_menus_module_item_cb, NULL);
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("All Applications"));
+   e_menu_item_label_set(mi, _("Applications"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/applications");
    e_menu_item_callback_set(mi, _e_int_menus_applications_item_cb, NULL);
 

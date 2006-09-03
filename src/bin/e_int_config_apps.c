@@ -80,7 +80,7 @@ e_int_config_apps_once(E_Container *con, const char *label, int (*func) (void *d
       }
 
    cfd = e_config_dialog_new(con,
-			     _("All Applications"),
+			     _("Applications"),
 			     "E", "_config_applications_dialog",
 			     "enlightenment/applications", 0, v, once);
    return cfd;
