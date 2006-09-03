@@ -436,9 +436,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    if (cfdata->theme)
      f = cfdata->theme;
    e_widget_preview_edje_set(o, f, "e/desktop/background");
-   e_widget_list_object_append(of, o, 1, 0, 0.5);
+   e_widget_list_object_append(of, o, 1, 1, 0.5);
    
-   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 0, 1, 0, 1);
+   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
    
    free(homedir);
    e_dialog_resizable_set(cfd->dia, 1);
