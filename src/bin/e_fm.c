@@ -1647,6 +1647,30 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 		  edje_object_part_swallow(ic->obj, "e.swallow.icon", ic->obj_icon);
 		  evas_object_show(ic->obj_icon);
 	       }
+	     else if (
+		      (e_util_glob_case_match(ic->info.file, "*.desktop"))
+		      )
+	       {
+	          E_App *app;
+
+		  if (ic->info.pseudo_link)
+		     {
+		        /* FIXME: first one should be correct I think, but it isn't. */
+//		        snprintf(buf, sizeof(buf), "%s/%s", ic->info.link, ic->info.file);
+		        snprintf(buf, sizeof(buf), "%s", ic->info.link);
+		     }
+		  else
+		    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
+//printf("ICON FOR APP  (%s) %s  -  %s  -  %s  -  %s\n", ((ic->info.pseudo_link) ? "pseudo" : "real" ), buf, ic->info.link, ic->info.file, ic->sd->realpath);
+                  app = e_app_new(buf, 0);
+		  if (app)
+		     {
+		        ic->obj_icon = e_app_icon_add(evas_object_evas_get(ic->sd->obj), app);
+			e_object_unref(E_OBJECT(app));
+		     }
+		  edje_object_part_swallow(ic->obj, "e.swallow.icon", ic->obj_icon);
+		  evas_object_show(ic->obj_icon);
+	       }
 	     else
 	       {
 		  ic->obj_icon = edje_object_add(evas_object_evas_get(ic->sd->obj));
@@ -1730,10 +1754,6 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
          if (desktop->name)     ic->info.label   = evas_stringshare_add(desktop->name);
 	 if (desktop->generic)  ic->info.generic = evas_stringshare_add(desktop->generic);
 	 if (desktop->comment)  ic->info.comment = evas_stringshare_add(desktop->comment);
-
-	 if (desktop->file)     ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->file);
-	 if (desktop->URL)      ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->URL);
-	 if (desktop->path)     ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->path);
 
 	 if (desktop->icon)
 	    {
