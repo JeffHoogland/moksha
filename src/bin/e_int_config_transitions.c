@@ -69,27 +69,29 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int 
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
+   if (e_config->transition_start)
+     evas_stringshare_del(e_config->transition_start);
+   e_config->transition_start = NULL;
    if (cfdata->transition_start) 
      {
-	if (e_config->transition_start)
-	  evas_stringshare_del(e_config->transition_start);
 	if (e_theme_transition_find(cfdata->transition_start)) 
 	  e_config->transition_start = evas_stringshare_add(cfdata->transition_start);
      }
 
+   if (e_config->transition_desk)
+     evas_stringshare_del(e_config->transition_desk);
+   e_config->transition_desk = NULL;
    if (cfdata->transition_desk) 
      {
-   
-	if (e_config->transition_desk)
-	  evas_stringshare_del(e_config->transition_desk);
 	if (e_theme_transition_find(cfdata->transition_desk)) 
 	  e_config->transition_desk = evas_stringshare_add(cfdata->transition_desk);
      }
 
+   if (e_config->transition_change)
+     evas_stringshare_del(e_config->transition_change);
+   e_config->transition_change = NULL;
    if (cfdata->transition_change) 
      {   
-	if (e_config->transition_change)
-	  evas_stringshare_del(e_config->transition_change);
 	if (e_theme_transition_find(cfdata->transition_change)) 
 	  e_config->transition_change = evas_stringshare_add(cfdata->transition_change);
      }
@@ -124,6 +126,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->trans_list = il;
    e_widget_min_size_set(il, 160, 200);
 
+   e_widget_ilist_append(il, NULL, _("None"), _trans_cb_changed, cfdata, NULL);
    l = e_theme_transition_list();
    for (l = e_theme_transition_list(); l; l = l->next) 
      {
@@ -163,20 +166,25 @@ _event_cb_changed(void *data)
 	break;
      }
 
-   if (!trans) 
-     {
-	e_widget_ilist_unselect(cfdata->trans_list);
-	return;
-     }
-
    for (i = 0; i < e_widget_ilist_count(cfdata->trans_list); i++) 
      {
 	list = e_widget_ilist_nth_label_get(cfdata->trans_list, i);
 	if (!list) continue;
-	if (!strcmp(trans, list)) 
+	if (!trans)
 	  {
-	     e_widget_ilist_selected_set(cfdata->trans_list, i);
-	     return;
+	     if (!strcmp(_("None"), list)) 
+	       {
+		  e_widget_ilist_selected_set(cfdata->trans_list, i);
+		  return;
+	       }
+	  }
+	else
+	  {
+	     if (!strcmp(trans, list)) 
+	       {
+		  e_widget_ilist_selected_set(cfdata->trans_list, i);
+		  return;
+	       }
 	  }
      }
    
@@ -196,17 +204,23 @@ _trans_cb_changed(void *data)
 
    t = e_widget_ilist_selected_label_get(cfdata->trans_list);
    if (!t) return;
-   
+
+   if (!strcmp(t, _("None"))) t = NULL;
    switch (sel) 
      {
       case 0:
-	cfdata->transition_start = strdup(t);
+	E_FREE(cfdata->transition_start);
+	if (t) cfdata->transition_start = strdup(t);
 	break;
       case 1:
-	cfdata->transition_desk = strdup(t);
+	E_FREE(cfdata->transition_desk);
+	if (t) cfdata->transition_desk = strdup(t);
 	break;
       case 2:
-	cfdata->transition_change = strdup(t);
+	E_FREE(cfdata->transition_change);
+	if (t) cfdata->transition_change = strdup(t);
+	break;
+      default:
 	break;
      }
 }
