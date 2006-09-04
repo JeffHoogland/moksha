@@ -30,6 +30,9 @@ Some of the things (in very short form) that need to be done to E17...
   it's iconified.
 * BUG: Hiding the label of e_widget_slider causes the slider line to disappear
 * BUG: Transition config dialog needs preview.
+* BUG: Configuration Panel: mouse wheel scroll stops working on ilist widget
+       when too many items are added. Comment out one item in the ilist and
+       it works again.
 ]]]
 
 [[[
