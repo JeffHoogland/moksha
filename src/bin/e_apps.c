@@ -588,7 +588,6 @@ _e_app_files_download(Evas_List *files)
 	
 	file = l->data;
 	if (!_e_app_is_eapp(file)) continue;
-// FIXME: onefang, check this for full path compliance.
         snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all,
 		 ecore_file_get_file(file));
 	if (!ecore_file_download(file, buf, NULL, NULL, NULL)) continue;
@@ -648,7 +647,6 @@ e_app_prepend_relative(E_App *add, E_App *before)
    if (!strncmp(add->path, _e_apps_path_trash, strlen(_e_apps_path_trash)))
      {
 	/* Move to all */
-// FIXME: onefang, check this for full path compliance.
 	snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all, ecore_file_get_file(add->path));
 	if (ecore_file_exists(buf))
 	  snprintf(buf, sizeof(buf), "%s/%s", before->parent->path, ecore_file_get_file(add->path));
@@ -675,7 +673,6 @@ e_app_append(E_App *add, E_App *parent)
    if (!strncmp(add->path, _e_apps_path_trash, strlen(_e_apps_path_trash)))
      {
 	/* Move to all */
-// FIXME: onefang, check this for full path compliance.
 	snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all, ecore_file_get_file(add->path));
 	if (ecore_file_exists(buf))
 	  snprintf(buf, sizeof(buf), "%s/%s", parent->path, ecore_file_get_file(add->path));
@@ -787,7 +784,6 @@ e_app_remove(E_App *a)
 
    a->parent->subapps = evas_list_remove(a->parent->subapps, a);
    /* Check if this app is in a repository or in the parents dir */
-// FIXME: onefang, check this for full path compliance.
    snprintf(buf, sizeof(buf), "%s/%s", a->parent->path, ecore_file_get_file(a->path));
    if (ecore_file_exists(buf))
      {

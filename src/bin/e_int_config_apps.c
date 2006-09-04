@@ -7,9 +7,6 @@
 #define MOD_ENABLED 1
 
 /* TODO:
- * FDO menu generation puts symlinks to .desktops in /all/,
- *   if we edit one of those, replace symlink with resulting .desktop, 
- *   include original path in new .desktop.
  * Filtering/sorting of left side to make managing thousands of apps easy.
  *
  * These things require support from e_fm -
