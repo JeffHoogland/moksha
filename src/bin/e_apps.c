@@ -449,6 +449,11 @@ e_app_exec(E_App *a, int launch_id)
    E_OBJECT_CHECK_RETURN(a, 0);
    E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, 0);
    if (!a->exe) return 0;
+
+  /* no exe field, don't exe it. */
+  if (!_e_app_exe_valid_get(a->exe))
+     return 0;
+
    /* FIXME: set up locale, encoding and input method env vars if they are in
     * the eapp file */
    inst = E_NEW(E_App_Instance, 1);
