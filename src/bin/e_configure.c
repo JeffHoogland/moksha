@@ -70,7 +70,8 @@ e_configure_show(E_Container *con)
    e_configure_standard_item_add(eco, "enlightenment/icon_themes", _("Icon Theme"), e_int_config_icon_themes);
    e_configure_standard_item_add(eco, "enlightenment/mouse", _("Mouse Cursor"), e_int_config_cursor);
    e_configure_standard_item_add(eco, "enlightenment/windows", _("Window Display"), e_int_config_window_display);
-   e_configure_standard_item_add(eco, "enlightenment/shelf", _("Shelves"), e_int_config_shelf); 
+   e_configure_standard_item_add(eco, "enlightenment/e", _("Transitions"), e_int_config_transitions);
+   e_configure_standard_item_add(eco, "enlightenment/shelf", _("Shelves"), e_int_config_shelf);
    
    e_configure_header_item_add(eco, "enlightenment/screen_setup", _("Screen"));
    e_configure_standard_item_add(eco, "enlightenment/desktops", _("Virtual Desktops"), e_int_config_desks);
@@ -93,7 +94,7 @@ e_configure_show(E_Container *con)
    e_configure_standard_item_add(eco, "enlightenment/winlist", _("Window List"), e_int_config_winlist);
    e_configure_standard_item_add(eco, "enlightenment/window_manipulation", _("Window Manipulation"), e_int_config_window_manipulation);
    e_configure_standard_item_add(eco, "enlightenment/run", _("Run Command"), e_int_config_exebuf);
-   e_configure_standard_item_add(eco, "enlightenment/directories", _("Search Directories"), e_int_config_paths); 
+   e_configure_standard_item_add(eco, "enlightenment/directories", _("Search Directories"), e_int_config_paths);
 
    e_configure_header_item_add(eco, "enlightenment/extensions", _("Extensions"));
    e_configure_standard_item_add(eco, "enlightenment/modules", _("Modules"), e_int_config_modules);
