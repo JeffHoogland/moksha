@@ -236,9 +236,9 @@ struct _E_Config
 
    const char *icon_theme; // GUI
    
-   int         desk_flip_animate_mode;
-   int         desk_flip_animate_interpolation;
-   double      desk_flip_animate_time;
+   int         desk_flip_animate_mode; // GUI
+   int         desk_flip_animate_interpolation; // GUI
+   double      desk_flip_animate_time; // GUI
    
    const char *wallpaper_import_last_dev; // INTERNAL
    const char *wallpaper_import_last_path; // INTERNAL
