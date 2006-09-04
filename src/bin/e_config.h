@@ -167,9 +167,9 @@ struct _E_Config
    double      kill_timer_wait;
    int         ping_clients;
    double      ping_clients_wait;
-   const char *transition_start;
-   const char *transition_desk;
-   const char *transition_change;
+   const char *transition_start; // GUI
+   const char *transition_desk; // GUI
+   const char *transition_change; // GUI
    Evas_List  *remembers;
    int         move_info_follows; // GUI
    int         resize_info_follows; // GUI
