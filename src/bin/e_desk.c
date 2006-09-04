@@ -553,6 +553,14 @@ _e_desk_show_begin(E_Desk *desk, int mode, int dx, int dy)
 		       bd->fx.start.x = bx;
 		       bd->fx.start.y = by;
 		    }
+		  if (bd->fx.start.x < 0)
+		    bd->fx.start.x -= bd->zone->x;
+		  else
+		    bd->fx.start.x += bd->zone->container->w - (bd->zone->x + bd->zone->w);
+		  if (bd->fx.start.y < 0)
+		    bd->fx.start.y -= bd->zone->y;
+		  else
+		    bd->fx.start.y += bd->zone->container->h - (bd->zone->y + bd->zone->h);
 		  e_border_fx_offset(bd, bd->fx.start.x, bd->fx.start.y);
 		  e_border_show(bd);
 		  if (bd->want_fullscreen)
@@ -582,7 +590,6 @@ _e_desk_show_end(E_Desk *desk)
 	     if (bd->moving)
 	       {
 		  e_border_fx_offset(bd, 0, 0);
-//		  e_border_desk_set(bd, desk);
 	       }
 	     else if ((bd->desk == desk) && (!bd->sticky))
 	       {
@@ -688,6 +695,14 @@ _e_desk_hide_begin(E_Desk *desk, int mode, int dx, int dy)
 		       bd->fx.start.x = bx;
 		       bd->fx.start.y = by;
 		    }
+		  if (bd->fx.start.x < 0)
+		    bd->fx.start.x -= bd->zone->x;
+		  else
+		    bd->fx.start.x += bd->zone->container->w - (bd->zone->x + bd->zone->w);
+		  if (bd->fx.start.y < 0)
+		    bd->fx.start.y -= bd->zone->y;
+		  else
+		    bd->fx.start.y += bd->zone->container->h - (bd->zone->y + bd->zone->h);
 		  e_border_fx_offset(bd, 0, 0);
 		  if (bd->want_fullscreen)
 		    {
