@@ -99,7 +99,7 @@ _e_menu_dump_each_hash_node(void *value, void *user_data)
 //   item_count++;
    desktop = ecore_desktop_get(file, NULL);
    /* Check If We Process */
-   if ((!desktop->type) || (!strcmp(desktop->type, "Application")))
+   if ( (!desktop->hidden) && (!desktop->no_display) && ((desktop->type == NULL) || (strcmp(desktop->type, "Application") == 0)) )
       {
          char order_path[PATH_MAX];
          int length;
