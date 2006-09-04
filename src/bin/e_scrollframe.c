@@ -97,7 +97,7 @@ e_scrollframe_child_set(Evas_Object *obj, Evas_Object *child)
 	o = e_pan_add(evas_object_evas_get(obj));
 	sd->pan_obj = o;
 	evas_object_smart_callback_add(o, "changed", _e_smart_pan_changed_hook, sd);
-	evas_object_smart_callback_add(o, "changed", _e_smart_pan_pan_changed_hook, sd);
+	evas_object_smart_callback_add(o, "pan_changed", _e_smart_pan_pan_changed_hook, sd);
 	evas_object_show(o);
 	edje_object_part_swallow(sd->edje_obj, "e.swallow.content", o);
      }
@@ -356,7 +356,7 @@ _e_smart_event_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info)
    Evas_Event_Mouse_Wheel *ev;
    E_Smart_Data *sd;
    Evas_Coord x = 0, y = 0;
-   
+
    sd = data;
    ev = event_info;
    e_scrollframe_child_pos_get(sd->smart_obj, &x, &y);
