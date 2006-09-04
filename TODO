@@ -8,9 +8,6 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: "favorite" places in fsel (left pane) has 1 bug left - e app caching.
-  if you modify a .desktop file while e is running - it will not find the
-  changes until a restart (kind of bad for a fm/file selector :()
 * BUG: e17 screen res diaolg doesnt work under xephyr - why?
 * BUG: the ibar specific menu only shows when you right click on icons (and not
   on the bar itself). so, if there are no icons you can't get to the config.
