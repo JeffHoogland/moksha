@@ -73,7 +73,7 @@ typedef enum _E_Engine_Context
 
 struct _E_Config
 {
-   int         config_version;
+   int         config_version; // INTERNAL
    int         show_splash; //GUI
    const char *init_default_theme; // GUI
    const char *desktop_default_background; // GUI
@@ -94,20 +94,20 @@ struct _E_Config
    double      cache_flush_interval; //GUI
    int         zone_desks_x_count; // GUI
    int         zone_desks_y_count; // GUI
-   int         use_virtual_roots;
+   int         use_virtual_roots; // NO GUI - maybe remove?
    int         edge_flip_dragging; // GUI
    int         edge_flip_moving; // GUI
    double      edge_flip_timeout; // GUI
    int         evas_engine_default;
-   int         evas_engine_container;
-   int         evas_engine_init;
-   int         evas_engine_menus;
-   int         evas_engine_borders;
-   int         evas_engine_errors;
-   int         evas_engine_popups;
-   int         evas_engine_drag;
-   int         evas_engine_win;
-   int         evas_engine_zone;
+   int         evas_engine_container; // NO GUI - maybe remove?
+   int         evas_engine_init; // NO GUI - maybe remove?
+   int         evas_engine_menus; // NO GUI - maybe remove?
+   int         evas_engine_borders; // NO GUI - maybe remove?
+   int         evas_engine_errors; // NO GUI - maybe remove?
+   int         evas_engine_popups; // NO GUI - maybe remove?
+   int         evas_engine_drag; // NO GUI - maybe remove?
+   int         evas_engine_win; // NO GUI - maybe remove?
+   int         evas_engine_zone; // NO GUI - maybe remove?
    const char *language;
    Evas_List  *modules; // GUI
    Evas_List  *font_fallbacks; // GUI
