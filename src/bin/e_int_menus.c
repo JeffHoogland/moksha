@@ -156,20 +156,6 @@ e_int_menus_main_new(void)
        e_sys_action_possible_get(E_SYS_SUSPEND) ||
        e_sys_action_possible_get(E_SYS_HIBERNATE))
      {
-	if (e_sys_action_possible_get(E_SYS_HALT))
-	  {
-	     mi = e_menu_item_new(m);
-	     e_menu_item_label_set(mi, _("Shut Down your Computer"));
-	     e_util_menu_item_edje_icon_set(mi, "enlightenment/halt");
-	     e_menu_item_callback_set(mi, _e_int_menus_main_halt, NULL);
-	  }
-	if (e_sys_action_possible_get(E_SYS_REBOOT))
-	  {
-	     mi = e_menu_item_new(m);
-	     e_menu_item_label_set(mi, _("Reboot your Computer"));
-	     e_util_menu_item_edje_icon_set(mi, "enlightenment/reboot");
-	     e_menu_item_callback_set(mi, _e_int_menus_main_reboot, NULL);
-	  }
 	if (e_sys_action_possible_get(E_SYS_SUSPEND))
 	  {
 	     mi = e_menu_item_new(m);
@@ -183,6 +169,20 @@ e_int_menus_main_new(void)
 	     e_menu_item_label_set(mi, _("Hibernate your Computer"));
 	     e_util_menu_item_edje_icon_set(mi, "enlightenment/hibernate");
 	     e_menu_item_callback_set(mi, _e_int_menus_main_hibernate, NULL);
+	  }
+	if (e_sys_action_possible_get(E_SYS_REBOOT))
+	  {
+	     mi = e_menu_item_new(m);
+	     e_menu_item_label_set(mi, _("Reboot your Computer"));
+	     e_util_menu_item_edje_icon_set(mi, "enlightenment/reboot");
+	     e_menu_item_callback_set(mi, _e_int_menus_main_reboot, NULL);
+	  }
+	if (e_sys_action_possible_get(E_SYS_HALT))
+	  {
+	     mi = e_menu_item_new(m);
+	     e_menu_item_label_set(mi, _("Shut Down your Computer"));
+	     e_util_menu_item_edje_icon_set(mi, "enlightenment/halt");
+	     e_menu_item_callback_set(mi, _e_int_menus_main_halt, NULL);
 	  }
 	mi = e_menu_item_new(m);
 	e_menu_item_separator_set(mi, 1);
