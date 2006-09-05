@@ -579,6 +579,7 @@ e_container_border_add(E_Border *bd)
    bd->zone->container->clients++;
    bd->zone->container->layers[pos].clients =
       evas_list_append(bd->zone->container->layers[pos].clients, bd);
+   e_hints_client_list_set();
 }
 
 EAPI void
@@ -596,6 +597,7 @@ e_container_border_remove(E_Border *bd)
      }
    bd->zone->container->clients--;
    bd->zone = NULL;
+   e_hints_client_list_set();
 }
 
 EAPI void
