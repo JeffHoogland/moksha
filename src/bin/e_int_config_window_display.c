@@ -171,7 +171,7 @@ static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for an advanced dialog */
-   Evas_Object *o, *ob, *of;
+   Evas_Object *o, *ob, *of, *ot;
    E_Radio_Group *rg;
    
    if (cfdata->move_resize_info)
@@ -186,25 +186,29 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
      }
 
    o = e_widget_list_add(evas, 0, 0);
+   ot = e_widget_table_add(evas, 0);
    
    of = e_widget_framelist_add(evas, _("Window Move Geometry"), 0);
+   e_widget_framelist_content_align_set(of, 0.0, 0.0);
    ob = e_widget_check_add(evas, _("Display information"), &(cfdata->move_info_visible));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Follow the window as it moves"), &(cfdata->move_info_follows));
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
    
    of = e_widget_framelist_add(evas, _("Window Resize Geometry"), 0);
+   e_widget_framelist_content_align_set(of, 0.0, 0.0);
    ob = e_widget_check_add(evas, _("Display information"), &(cfdata->resize_info_visible));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Follow the window as it resizes"), &(cfdata->resize_info_follows));
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
+   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
+
    of = e_widget_framelist_add(evas, _("Window Shading"), 0);
+   e_widget_framelist_content_align_set(of, 0.0, 0.0);
    ob = e_widget_check_add(evas, _("Animate the shading and unshading of windows"), &(cfdata->border_shade_animate));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%4.0f pixels/sec"), 100, 9900, 100, 0, &(cfdata->border_shade_speed), NULL, 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%4.0f pixels/sec"), 100, 9900, 100, 0, &(cfdata->border_shade_speed), NULL, 150);
    e_widget_framelist_object_append(of, ob);
    rg = e_widget_radio_group_new(&(cfdata->border_shade_transition));
    ob = e_widget_radio_add(evas, _("Linear"), E_TRANSITION_LINEAR, rg);
@@ -215,9 +219,10 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Decelerate"), E_TRANSITION_DECELERATE, rg);
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
    
    of = e_widget_framelist_add(evas, _("Automatic New Window Placement"), 0);
+   e_widget_framelist_content_align_set(of, 0.0, 0.0);
    rg = e_widget_radio_group_new(&(cfdata->window_placement_policy));
    ob = e_widget_radio_add(evas, _("Smart Placement"), E_WINDOW_PLACEMENT_SMART, rg);
    e_widget_framelist_object_append(of, ob);
@@ -227,12 +232,15 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Place manually with the mouse"), E_WINDOW_PLACEMENT_MANUAL, rg);
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
    
    of = e_widget_framelist_add(evas, _("Window Frame"), 0);
+   e_widget_framelist_content_align_set(of, 0.0, 0.0);
    ob = e_widget_check_add(evas, _("Use application provided icon instead"), &(cfdata->use_app_icon));
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
+   
+   e_widget_list_object_append(o, ot, 1, 1, 0.5);
    
    return o;
 }
