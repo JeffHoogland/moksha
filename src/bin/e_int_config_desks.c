@@ -188,6 +188,7 @@ _basic_create_widgets(E_Config_Dialog *cdd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_slider_add(evas, 0, 0, _("%1.0f"), 1.0, 12.0, 1.0, 0, NULL, &(cfdata->y), 150);
    e_widget_table_object_append(ot, ob, 1, 0, 1, 1, 0, 1, 0, 1);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 12.0, 1.0, 0, NULL, &(cfdata->x), 200);
+
    e_widget_table_object_append(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0);
    e_widget_framelist_object_append(of, ot);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
@@ -207,42 +208,35 @@ static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for an advanced dialog */
-   Evas_Object *o, *ob, *of, *ot;
+   Evas_Object *o, *ob, *of, *ot, *ott;
    E_Radio_Group *rg;
    
    o = e_widget_list_add(evas, 0, 0);
+   ott = e_widget_table_add(evas, 0);
    
    of = e_widget_framelist_add(evas, _("Number of Desktops"), 0);
-   
    ot = e_widget_table_add(evas, 0);
    ob = e_widget_slider_add(evas, 0, 0, _("%1.0f"), 1.0, 12.0, 1.0, 0, NULL, &(cfdata->y), 150);
    e_widget_table_object_append(ot, ob, 1, 0, 1, 1, 0, 1, 0, 1);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 12.0, 1.0, 0, NULL, &(cfdata->x), 200);
    e_widget_table_object_append(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0);
    e_widget_framelist_object_append(of, ot);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_table_object_append(ott, of, 0, 0, 1, 2, 1, 1, 1, 1);
    
    of = e_widget_framelist_add(evas, _("Desktop Mouse Flip"), 0);
-
    ob = e_widget_check_add(evas, _("Flip when moving mouse to the screen edge"), &(cfdata->edge_flip_moving));
    e_widget_framelist_object_append(of, ob);
-
    ob = e_widget_check_add(evas, _("Flip when dragging objects to the screen edge"), &(cfdata->edge_flip_dragging));
    e_widget_framelist_object_append(of, ob);
-   
    ob = e_widget_label_add(evas, _("Time the mouse is at the edge before flipping:"));
    e_widget_framelist_object_append(of, ob);
-  
    ob = e_widget_slider_add(evas, 1, 0, _("%1.1f sec"), 0.0, 2.0, 0.05, 0, &(cfdata->edge_flip_timeout), NULL, 200);
    e_widget_framelist_object_append(of, ob);
-  
    ob = e_widget_check_add(evas, _("Wrap desktops around when flipping"), &(cfdata->flip_wrap));
    e_widget_framelist_object_append(of, ob);
-   
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_table_object_append(ott, of, 1, 0, 1, 1, 1, 0, 1, 0);
    
    of = e_widget_framelist_add(evas, _("Flip Animation"), 0);
-
    rg = e_widget_radio_group_new(&(cfdata->flip_mode));
    ob = e_widget_radio_add(evas, _("Off"), 0, rg);
    e_widget_framelist_object_append(of, ob);
@@ -250,11 +244,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Zoom"), 2, rg);
    e_widget_framelist_object_append(of, ob);
-   
    ob = e_widget_slider_add(evas, 1, 0, _("%1.1f sec"), 0.0, 5.0, 0.05, 0, &(cfdata->flip_speed), NULL, 200);
    e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(ott, of, 1, 1, 1, 1, 1, 1, 1, 1);
   
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o, ott, 1, 1, 0.5);
    
    return o;
 }
