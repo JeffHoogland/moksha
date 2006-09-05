@@ -2586,14 +2586,7 @@ e_border_icon_add(E_Border *bd, Evas *evas)
      {
 	if ((bd->client.icccm.name) && (bd->client.icccm.class))
 	  {
-	     char *title = "";
-	     
-	     if (bd->client.netwm.name) title = bd->client.netwm.name;
-	     else title = bd->client.icccm.title;
-	     a = e_app_window_name_class_title_role_find(bd->client.icccm.name,
-							 bd->client.icccm.class,
-							 title,
-							 bd->client.icccm.window_role);
+	     a = e_app_border_find(bd);
 	  }
 	if (!a)
 	  {

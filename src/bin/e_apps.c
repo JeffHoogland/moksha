@@ -919,31 +919,36 @@ e_app_launch_id_pid_find(int launch_id, pid_t pid)
 }
 
 EAPI E_App *
-e_app_window_name_class_title_role_find(const char *name, const char *class,
-					const char *title, const char *role)
+e_app_border_find(E_Border *bd)
 {
    Evas_List *l, *l_match = NULL;
    int ok, match = 0;
    E_App *a, *a_match = NULL;
+   char *title;
    
-   if ((!name) && (!class) && (!title) && (!role))
+   if ((!bd->client.icccm.name) && (!bd->client.icccm.class) &&
+       (!bd->client.icccm.title) && (bd->client.netwm.name) &&
+       (!bd->client.icccm.window_role) && (!bd->client.icccm.command.argv))
      return NULL;
 
+   title = bd->client.netwm.name;
+   if (!title) title = bd->client.icccm.title;
    for (l = _e_apps_list; l; l = l->next)
      {
 	a = l->data;
 	ok = 0;
 	if ((a->win_name) || (a->win_class) || (a->win_title) || (a->win_role))
 	  {
-	     if ((a->win_name) && (a->win_class) && (name) && (class))
+	     if ((a->win_name) && (a->win_class) && 
+		 (bd->client.icccm.name) && (bd->client.icccm.class))
 	       {
-		  if ((e_util_glob_match(name, a->win_name)) &&
-		      (e_util_glob_match(class, a->win_class)))
+		  if ((e_util_glob_match(bd->client.icccm.name, a->win_name)) &&
+		      (e_util_glob_match(bd->client.icccm.class, a->win_class)))
 		    ok += 2;
 	       }
-	     else if ((a->win_class) && (class))
+	     else if ((a->win_class) && (bd->client.icccm.class))
 	       {
-		  if (e_util_glob_match(class, a->win_class))
+		  if (e_util_glob_match(bd->client.icccm.class, a->win_class))
 		    ok += 2;
 	       }
 	     
@@ -951,8 +956,28 @@ e_app_window_name_class_title_role_find(const char *name, const char *class,
 		 ((a->win_title) && (title) && (e_util_glob_match(title, a->win_title))))
 	       ok++;
 	     if (//(!a->win_role) ||
-		 ((a->win_role) && (role) && (e_util_glob_match(role, a->win_role))))
+		 ((a->win_role) && (bd->client.icccm.window_role) && (e_util_glob_match(bd->client.icccm.window_role, a->win_role))))
 	       ok++;
+	     if (
+		 (a->exe) && (bd->client.icccm.command.argv))
+	       {
+		  char *ts, *p;
+		  
+		  ts = alloca(strlen(a->exe) + 1);
+		  strcpy(ts, a->exe);
+		  p = ts;
+		  while (*p)
+		    {
+		       if (isspace(*p))
+			 {
+			    *p = 0;
+			    break;
+			 }
+		       p++;
+		    }
+		  if (!strcmp(a->exe, ts))
+		    ok++;
+	       }
 	  }
 	if (ok > match)
 	  {

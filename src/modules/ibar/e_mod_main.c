@@ -1219,10 +1219,7 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
 
 	if (!app)
 	  {
-	     app = e_app_window_name_class_title_role_find(bd->client.icccm.name,
-							   bd->client.icccm.class,
-							   e_border_name_get(bd),
-							   bd->client.icccm.window_role);
+	     app = e_app_border_find(bd);
 	  }
 	if (!app)
 	  {

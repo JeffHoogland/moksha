@@ -117,7 +117,7 @@ EAPI void        e_app_change_callback_add               (void (*func) (void *da
 EAPI void        e_app_change_callback_del               (void (*func) (void *data, E_App *a, E_App_Change ch), void *data);
 
 EAPI E_App      *e_app_launch_id_pid_find                (int launch_id, pid_t pid);
-EAPI E_App      *e_app_window_name_class_title_role_find (const char *name, const char *class, const char *title, const char *role);
+EAPI E_App      *e_app_border_find                       (E_Border *bd);
 EAPI E_App      *e_app_file_find                         (const char *file);
 EAPI E_App      *e_app_name_find                         (const char *name);
 EAPI E_App      *e_app_generic_find                      (const char *generic);
