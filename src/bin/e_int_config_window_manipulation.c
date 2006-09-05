@@ -161,10 +161,11 @@ static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for an advanced dialog */
-   Evas_Object *o, *ob, *of;
+   Evas_Object *o, *ob, *of, *ot;
    E_Radio_Group *rg;
    
    o = e_widget_list_add(evas, 0, 0);
+   ot = e_widget_table_add(evas, 0);
    
    of = e_widget_framelist_add(evas, _("Autoraise"), 0);
    ob = e_widget_check_add(evas, _("Automatically raise windows on mouse over"), &(cfdata->use_auto_raise));
@@ -173,7 +174,15 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.1f sec"), 0.0, 9.9, 0.1, 0, &(cfdata->auto_raise_delay), NULL, 200);
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
+
+   of = e_widget_framelist_add(evas, _("Raise Window"), 0);
+   e_widget_framelist_content_align_set(of, 0.0, 0.0);
+   ob = e_widget_check_add(evas, _("Raise when starting to move or resize"), &(cfdata->border_raise_on_mouse_action));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Raise when clicking to focus"), &(cfdata->border_raise_on_focus));
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
    
    of = e_widget_framelist_add(evas, _("Resistance"), 0);
    ob = e_widget_check_add(evas, _("Resist moving or resizing a window over an obstacle"), &(cfdata->use_resist));
@@ -190,7 +199,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%2.0f pixels"), 0, 64.0, 1.0, 0, NULL, &(cfdata->gadget_resist), 200);
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
  
    of = e_widget_framelist_add(evas, _("Maximize Policy"), 0);
    rg = e_widget_radio_group_new(&(cfdata->maximize_policy));
@@ -213,15 +222,9 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    ob = e_widget_check_add(evas, _("Allow window manipulation"), &(cfdata->allow_manip));
    e_widget_framelist_object_append(of, ob);
-
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-
-   of = e_widget_framelist_add(evas, _("Raise Window"), 0);
-   ob = e_widget_check_add(evas, _("Raise when starting to move or resize"), &(cfdata->border_raise_on_mouse_action));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Raise when clicking to focus"), &(cfdata->border_raise_on_focus));
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
+   
+   e_widget_list_object_append(o, ot, 1, 1, 0.5);
    
    return o;
 }
