@@ -615,11 +615,12 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 				     e_fm2_pan_max_get,
 				     e_fm2_pan_child_size_get);
    cfdata->o_frame = of;
-   e_widget_min_size_set(of, 160, 160);
+   e_widget_min_size_set(of, 100, 100);
    e_widget_table_object_append(ol, of, 0, 2, 1, 1, 1, 1, 1, 1);
    e_widget_table_object_append(ot, ol, 0, 0, 1, 2, 1, 1, 1, 1);   
 
    of = e_widget_framelist_add(evas, _("Wallpaper Mode"), 0);
+   e_widget_framelist_content_align_set(of, 0.0, 0.0);
    
    rg = e_widget_radio_group_new(&(cfdata->bg_mode));
    o = e_widget_radio_add(evas, _("Theme Defined"), 0, rg);
@@ -647,7 +648,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    of = e_widget_list_add(evas, 0, 0);
    
-   o = e_widget_preview_add(evas, 320, (320 * z->h) / z->w);
+   o = e_widget_preview_add(evas, 200, (200 * z->h) / z->w);
    cfdata->o_preview = o;
    if (cfdata->bg_mode == 0)
      {
@@ -777,7 +778,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f seconds"),
 			    1.0, 600.0,
 			    1.0, 0, &(cfdata->timeout), NULL,
-			    200);
+			    100);
    e_widget_framelist_object_append(of, ob);
 #ifdef HAVE_PAM
    e_widget_table_object_append(ot, of, 1, 2, 1, 2 ,1 ,1 ,1 ,1);
