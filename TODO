@@ -8,6 +8,9 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: right click on ibar - select "remove icon" from menu -> segv.
+* BUG: adding app using "applications" dialog to a bar dir for example means
+  the target bar dir is emptied and only that app is put in.
 * BUG: .desktop fils with %u/%u and other params are not filtered/handled
   right (maybe put stripped exe as exe and a exe_params with all %'s there.)
 * BUG: smart placement seems to screw up if a shelf is at the top of the screen
@@ -66,7 +69,6 @@ Some of the things (in very short form) that need to be done to E17...
   this desktop and other desktops, sorting by recently used, separate
   section for iconified apps etc. etc - configurable.
 * cleanup windows menu item needs action wrapper
-* need to try map WM_COMMAND to e app too for fuzzy matching
 * remove a lot of ipc commands that shoudl be done via the gui now
 * remove config items marked for removal
 * make default set of apps .desktop files in tarball
