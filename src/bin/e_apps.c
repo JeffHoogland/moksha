@@ -1767,7 +1767,8 @@ _e_app_free(E_App *a)
 	       }
 	     if (inst->exe)
 	       {
-		  ecore_exe_free(inst->exe);
+// FIXME: sometimes causes a segv... hrrrm...
+//		  ecore_exe_free(inst->exe);
 		  inst->exe = NULL;
 	       }
 	     free(inst);

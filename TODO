@@ -8,6 +8,8 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: .desktop fils with %u/%u and other params are not filtered/handled
+  right (maybe put stripped exe as exe and a exe_params with all %'s there.)
 * BUG: smart placement seems to screw up if a shelf is at the top of the screen
 * BUG: e17 screen res diaolg doesnt work under xephyr - why?
 * BUG: the ibar specific menu only shows when you right click on icons (and not
@@ -17,17 +19,9 @@ Some of the things (in very short form) that need to be done to E17...
 * BUG: "match this window only" doesnt fall back to other unused remembers
 * BUG: if app asks for borderless in properties - borderless toggle in menu
   doesn't have any effect.
-* BUG: change exe name in basic mode in eap editor and icon vanishes (don't
-  extract existing icon and write out to tmp .png while rebuilding).
-* BUG: ghost windows happen if windows close when on another desktop or if
-  windows are very short-lived
 * BUG: xdaliclock -transparent doesnt use shaped border (not handling shape
   change later)
-* BUG: if you iconify a window and while iconified the window unmaps
-  (rhythmbox does this a lot apparently) e doesnt realize and still thinks
-  it's iconified.
 * BUG: Hiding the label of e_widget_slider causes the slider line to disappear
-* BUG: Transition config dialog needs preview.
 ]]]
 
 [[[
@@ -35,6 +29,8 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
+* nuke the current eap cache mechanism entirely
+* transition config dialog needs preview.
 * fm2 needs way to replace or extend the right click menu (disable/enable
   rename/delete/refresh etc.)
 * fm2 .desktop parser needs to handle i18n
@@ -56,15 +52,9 @@ Some of the things (in very short form) that need to be done to E17...
 * gui config dialogs for all config
 * make it possible to disable border buttons/actions (tell theme what is
   disabled)
-* Window Border Icon > "Create Icon" needs to copy the ARGB icon data (into a 
-  temp file?) and use that as the default icon.
 * Dragging a non-eap icon from a border to the ibar should automatically
   create the icon and add that (instead of warning the user that this can't be
   done)
-* new fm code re-lays-out a dir every time the queue is processed - maybe try
-  to speed this up
-* new fm code's file scanning isn't insanely fast - icon size calcs etc. speed
-  up for special cases like list view?
 ]]]
 
 [[[
@@ -72,9 +62,18 @@ Some of the things (in very short form) that need to be done to E17...
   CLEANUPS
 -------------------------------------------------------------------------------
 
-* desktop transitions with xinerama - are... weird. might stretch the anim to
-use the whole container bounds.
-* bg gradient dialog needs a preview widget. also edje needs to be updated so we can do proper fills for non 0 angles.
+* client list menu could do with work on ordering, using sepaators to demark
+  this desktop and other desktops, sorting by recently used, separate
+  section for iconified apps etc. etc - configurable.
+* cleanup windows menu item needs action wrapper
+* need to try map WM_COMMAND to e app too for fuzzy matching
+* remove a lot of ipc commands that shoudl be done via the gui now
+* remove config items marked for removal
+* make default set of apps .desktop files in tarball
+* add a installed icons dir with icons for the .desktop files
+* about dialog can do with redesign
+* bg gradient dialog needs a preview widget. also edje needs to be updated so
+  we can do proper fills for non 0 angles.
 * clientinfo dialog could be nicer - then again it is an obsucre thing.
 * desklock's pam profile should be configurable as system-auth doesn't
   always work and the fallback checks might not work either.
@@ -96,7 +95,21 @@ use the whole container bounds.
   per desktop (with stick windows considered to live on the "current" desk
   when winlist starts)
 * make it easy for modules to hook into ipc and extend it for themselves
-* e_color_dialog needs to have an area for favorite and recently selected colors. store in config and use ilist? or store as color files and use e_fm2? or custom widget?
+* e_color_dialog needs to have an area for favorite and recently selected
+  colors. store in config and use ilist? or store as color files and use
+  e_fm2? or custom widget?
+* virtualize e_bg to be able to put a bg in any canvas (given any desktop
+  config input) and return an object.
+* virtual desktops config needs a preview of the desktops and their bg's
+* desktop flip animations need to allow control over accel/decel and
+  have a better ui - add wobble and controls etc. etc.
+* logout sysaction needs to be implemented
+* reboot, shutdown needs a progress dialog (as it does logout first) and
+  show status then a "shutting down/rebooting now" - maybe an abort too
+  with a countdown.
+* suspend/hibernate needs a "suspending/hibernating" "progress" dialog
+* suspend/hibernate/shutdown/reboot need to trap errors in exec and
+  report (and abort).
 ]]]
 
 [[[
@@ -104,9 +117,12 @@ use the whole container bounds.
   "NICE TO HAVE" FEATURES
 -------------------------------------------------------------------------------
 
+* make fdo .desktop support work on debian & ubuntu
 * full fm2 support as an icon fm needs work - beyond fsel needs and for icons
   on the desktop etc. etc.
 * winlist and exebuf can let the mouse select items
+* up arrow in exebuf with empty buf goes into history mode and up/down let u
+  browse command history
 * switch to desktop of a new window if it opens on another desktop than the
   current one (optional too)
 * emit signal to submenu entries if they have a submenu shown for them or not
@@ -124,6 +140,12 @@ use the whole container bounds.
   in the theme (e.g. winter provides a 'square' border). after a theme change
   this should fall back to "default" if the selected one doesn't exist in the
   new theme.
+* icons for all config panel items
+* icons for most mime types
+* icons for most menu items
+* default battery theme could use slightly larger fonts
+* default temp theme - larger font
+* default cpufreq theme - larger font
 ]]]
 
 [[[
@@ -132,4 +154,12 @@ use the whole container bounds.
 -------------------------------------------------------------------------------
 
 * optimize clock theme (speed/cpu) (rotation in edje??? or evas???)
+* evas could detect an image is scaled multiple times and keep a scaled copy
+  that it could share in cache, and then punt the original back to cache.
+* evas could support 8bbp alpha only images for dropshadow
+* better app cache for .desktop files
+* new fm code's file scanning isn't insanely fast - icon size calcs etc. speed
+  up for special cases like list view?
+* new fm code re-lays-out a dir every time the queue is processed - maybe try
+  to speed this up
 ]]]
