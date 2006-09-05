@@ -14,11 +14,13 @@
  */
 
 #define DEBUG 0
-
+#define APP_CACHE 0
 /* local subsystem functions */
 typedef struct _E_App_Change_Info E_App_Change_Info;
 typedef struct _E_App_Callback    E_App_Callback;
+#if APP_CACHE
 typedef struct _E_App_Scan_Cache  E_App_Scan_Cache;
+#endif
 
 struct _E_App_Change_Info
 {
@@ -33,6 +35,7 @@ struct _E_App_Callback
    unsigned char delete_me : 1;
 };
 
+#if APP_CACHE
 struct _E_App_Scan_Cache
 {
    const char    *path;
@@ -42,6 +45,7 @@ struct _E_App_Scan_Cache
    Ecore_Timer   *timer;
    unsigned char  need_rewrite : 1;
 };
+#endif
 
 static void      _e_app_free               (E_App *a);
 static E_App     *_e_app_subapp_file_find  (E_App *a, const char *file);
@@ -55,9 +59,11 @@ static int       _e_app_copy               (E_App *dst, E_App *src);
 static void      _e_app_save_order         (E_App *app);
 static int       _e_app_cb_event_border_add(void *data, int type, void *event);
 static int       _e_app_cb_expire_timer    (void *data);
+#if APP_CACHE
 static void      _e_app_cache_copy         (E_App_Cache *ac, E_App *a);
 static int       _e_app_cb_scan_cache_timer(void *data);
 static E_App    *_e_app_cache_new          (E_App_Cache *ac, const char *path, int scan_subdirs);
+#endif
 static int       _e_app_exe_valid_get      (const char *exe);
 static char     *_e_app_localized_val_get (Eet_File *ef, const char *lang, const char *field, int *size);
 #if DEBUG
@@ -68,7 +74,9 @@ static int       _e_app_order_contains(E_App *a, const char *file);
 static void      _e_app_resolve_file_name(char *buf, size_t size, const char *path, const char *file);
 
 /* local subsystem globals */
+#if APP_CACHE
 static Evas_Hash   *_e_apps = NULL;
+#endif
 static Evas_List   *_e_apps_list = NULL;
 static int          _e_apps_callbacks_walking = 0;
 static int          _e_apps_callbacks_delete_me = 0;
@@ -132,7 +140,9 @@ e_app_init(void)
    char *home;
    char buf[PATH_MAX];
    
+#if APP_CACHE
    e_app_cache_init();
+#endif
    home = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/trash", home);
    _e_apps_path_trash = evas_stringshare_add(buf);
@@ -181,7 +191,9 @@ e_app_shutdown(void)
 	     printf("BUG: References %d %s\n", E_OBJECT(a)->references, a->path);
 	  }
      }
+#if APP_CACHE
    e_app_cache_shutdown();
+#endif
    return 1;
 }
 
@@ -212,6 +224,7 @@ e_app_raw_new(void)
    return a;
 }
 
+#if APP_CACHE
 Evas_Bool 
 _e_app_cb_scan_hash_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata)
 {
@@ -225,14 +238,20 @@ _e_app_cb_scan_hash_foreach(Evas_Hash *hash, const char *key, void *data, void *
    sc->need_rewrite = 1;
    return 1;
 }
+#endif
 
 EAPI E_App *
 e_app_new(const char *path, int scan_subdirs)
 {
    E_App *a;
    char buf[PATH_MAX];
+#if APP_CACHE
    E_App_Cache *ac;
-   
+#endif
+
+   if (!path)   return NULL;
+
+#if APP_CACHE
    a = evas_hash_find(_e_apps, path);
    if (a)
      {
@@ -255,6 +274,7 @@ e_app_new(const char *path, int scan_subdirs)
 //	e_app_cache_free(ac);
      }
    else
+#endif
      {
 	if (ecore_file_exists(path))
 	  {
@@ -293,12 +313,16 @@ e_app_new(const char *path, int scan_subdirs)
 	   {
 	      return NULL;
 	   }
+#if APP_CACHE
 	_e_apps = evas_hash_add(_e_apps, a->path, a);
+#endif
 	_e_apps_list = evas_list_prepend(_e_apps_list, a);
 
+#if APP_CACHE
 	ac = e_app_cache_generate(a);
 	e_app_cache_save(ac, a->path);
 	e_app_cache_free(ac);
+#endif
      }
    return a;
 
@@ -367,7 +391,9 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
    Ecore_List *files;
    char *s;
    char buf[PATH_MAX];
+#if APP_CACHE
    E_App_Cache *ac;
+#endif
    
    E_OBJECT_CHECK(a);
    E_OBJECT_TYPE_CHECK(a, E_APP_TYPE);
@@ -434,9 +460,11 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 	ecore_list_destroy(files);
      }
 
+#if APP_CACHE
    ac = e_app_cache_generate(a);
    e_app_cache_save(ac, a->path);
    e_app_cache_free(ac);
+#endif
 }
 
 EAPI int
@@ -1801,7 +1829,9 @@ _e_app_free(E_App *a)
 	  a->parent->subapps = evas_list_remove(a->parent->subapps, a);
 	if (a->monitor)
 	  ecore_file_monitor_del(a->monitor);
+#if APP_CACHE
 	_e_apps = evas_hash_del(_e_apps, a->path, a);
+#endif
 	_e_apps_list = evas_list_remove(_e_apps_list, a);
 	e_app_fields_empty(a);
 	if (a->path) evas_stringshare_del(a->path);
@@ -2149,6 +2179,7 @@ _e_app_subdir_rescan(E_App *app)
 	e_object_unref(E_OBJECT(ch->app));
 	free(ch);
      }
+#if APP_CACHE
    if (changes)
      {
 	E_App_Cache *ac;
@@ -2157,6 +2188,7 @@ _e_app_subdir_rescan(E_App *app)
 	e_app_cache_save(ac, app->path);
 	e_app_cache_free(ac);
      }
+#endif
    evas_list_free(changes);
 }
 
@@ -2384,6 +2416,7 @@ _e_app_cb_expire_timer(void *data)
    return 0;
 }
 
+#if APP_CACHE
 static void
 _e_app_cache_copy(E_App_Cache *ac, E_App *a)
 {
@@ -2555,6 +2588,7 @@ _e_app_cache_new(E_App_Cache *ac, const char *path, int scan_subdirs)
      e_app_cache_free(ac);
    return a;
 }
+#endif
 
 static int
 _e_app_exe_valid_get(const char *exe)
