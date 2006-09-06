@@ -8,6 +8,7 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: change border type loses window icon
 * BUG: right click on ibar - select "remove icon" from menu -> segv.
 * BUG: adding app using "applications" dialog to a bar dir for example means
   the target bar dir is emptied and only that app is put in.
