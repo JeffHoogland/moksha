@@ -1,0 +1,44 @@
+Enlightenment DR17 use freedesktop.org .desktop files according to the
+XDG Desktop Entry Specification version 0.9.4, icon themes according to
+the XDG Icon Theme Specification version 0.11, and menus according to
+the Desktop Menu Specification version 0.92.  There are some extensions
+though.
+
+
+.desktop extensions.
+
+Two extension fields are defined as allowed by the specification. 
+
+X-Enlightenment-IconPath is used to specify an absolute or relative path to
+an icon file.  If it exists it overrides any other icon specifications.
+
+X-Enlightenment-IconClass is used to specify a list of icon classes. 
+This is the same information that was in .eaps as app/icon/class, and is
+used the same way if it exists.  Obviously any .desktop file that comes
+with packages outside of E is unlikely to have that field.  One further
+twist is that if the icon classes are not found in edje, then icon class
+becomes a list of icons to search in the standard FDO way.
+
+The standard Icon field is also treated differently.  If it contains a /
+it is considered to be an absolute path, or a path relative to the
+location of the .desktop file.  Otherwise, if no icon class was
+specified in the .desktop file, then the Icon, Exec, and Categories
+fields are used in that order to build an icon class.  Everything but
+the Icon field is lower cased.
+
+This means that for standard .desktop files, with out the extension
+fields, icons in the E theme are searched for first, then icons are
+searched for in the usual FDO way, unless the Icon field specifies a
+path, then it is simply used with no searching.  Converted .eaps should
+just copy the app/icon/class data to the X-Enlightenment-IconClass
+field.
+
+
+Icon theme extensions.
+
+.edj files are searched for before the other types of icon file.  The
+"icon" group is used to specify the graphics for the icon.  It is up to
+the code using the result to allow full edje interactions and
+animations, and people that write that code are encouraged to support it
+all.
+
