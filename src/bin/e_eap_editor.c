@@ -58,11 +58,11 @@ e_eap_edit_show(E_Container *con, E_App *a)
    if (!con) return;
 
    editor = E_OBJECT_ALLOC(E_App_Edit, E_EAP_EDIT_TYPE, _e_eap_edit_free);
-   if (!editor) return NULL;;
+   if (!editor) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    if (!v)
      {
-	free(editor);
+	e_object_del(E_OBJECT(editor));
 	return NULL;
      }
 
