@@ -931,22 +931,6 @@ break;
  *   ...
  */
 /****************************************************************************/
-#define HDL E_IPC_EFM_START
-#if (TYPE == E_REMOTE_OPTIONS)
-   OP("-start-efm", 1, "Starts the E File Manager in Directory 'OPT1'", 0, HDL)
-#elif (TYPE == E_REMOTE_OUT)
-     REQ_STRING(params[0], HDL);
-#elif (TYPE == E_WM_IN)
-   STRING(s, HDL);
-   E_Fileman *fileman;
-   fileman = e_fileman_new_to_dir(e_container_current_get(e_manager_current_get()), s);
-   e_fileman_show (fileman);
-   END_STRING(s);
-#elif (TYPE == E_REMOTE_IN)
-#endif
-#undef HDL
-
-/****************************************************************************/
 #define HDL E_IPC_EAP_EDIT_START
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-start-eap-edit", 1, "Starts the Eap editor on the eap 'OPT1'", 0, HDL)
