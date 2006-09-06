@@ -219,8 +219,6 @@ _gc_orient(E_Gadcon_Client *gcc)
       default:
 	break;
      }
-   if (evas_list_count(inst->ibox->icons) < 1)
-     e_gadcon_client_aspect_set(gcc, 16, 16);
    e_gadcon_client_min_size_set(gcc, 16, 16);
 }
 
@@ -336,7 +334,7 @@ _ibox_empty_handle(IBox *b)
 				    1, 1, /* expand */
 				    0.5, 0.5, /* align */
 				    w, h, /* min */
-				    w, h /* max */
+				    9999, 9999 /* max */
 				    );
 	  }
      }

@@ -1281,15 +1281,11 @@ _e_gadcon_moveresize_handle(E_Gadcon_Client *gcc)
 	  {
 	     if ((gcc->aspect.w > 0) && (gcc->aspect.h > 0))
 	       w = (h * gcc->aspect.w) / gcc->aspect.h;
-	     else
-	       w = gcc->min.w;
 	  }
 	else
 	  {
 	     if ((gcc->aspect.w > 0) && (gcc->aspect.h > 0))
 	       h = (w * gcc->aspect.h) / gcc->aspect.w;
-	     else
-	       h = gcc->min.h;
 	  }
      }
    e_box_pack_options_set(gcc->o_base,
