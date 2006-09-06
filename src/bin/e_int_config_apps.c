@@ -198,7 +198,7 @@ _cb_files_changed(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_cb_editor_del(E_Object *obj)
+_cb_editor_del(void *obj)
 {
    E_Config_Dialog_Data *cfdata;
    
