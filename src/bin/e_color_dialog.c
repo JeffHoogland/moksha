@@ -22,7 +22,7 @@ e_color_dialog_new(E_Container *con, const E_Color *color)
    Evas_Object *o;
    Evas_Coord mw, mh;
 
-   dia = E_OBJECT_ALLOC(E_File_Dialog, E_COLOR_DIALOG_TYPE, _e_color_dialog_free);
+   dia = E_OBJECT_ALLOC(E_Color_Dialog, E_COLOR_DIALOG_TYPE, _e_color_dialog_free);
    if(!dia) return NULL;
    dia->dia = e_dialog_new(con, "E", "_test");
    e_dialog_title_set(dia->dia, "Color Selector");
