@@ -1,0 +1,247 @@
+As part of the .eap to .desktop conversion, raster wants me to redo the
+relevant caching to suit.  He has made many "eap caching needs
+fixing" noises in the recent past, so maybe a fresh start is needed
+at this point.  
+
+This is a discussion and design document.  Major parts of it where sent
+to the devel list but got no response.  Raster said to put it in here,
+and keep it up to date with whatever information and design is relevant.
+
+
+The problem -
+
+It's really the E_App structure as defined in e_apps.h that may need
+caching, no matter what their source.  I say "no matter what their
+source" because at the moment the sources are .eap files and .desktop
+files, and at some unspecified date in the future .eap files might go
+away.  I say "may need caching" because this is a fresh start, do they
+really need caching?
+
+To answer that last question we need to look at all the places that use
+E_Apps and check to see if those uses are performance critical.  Then
+we need to see how much time it takes to load an E_App from it's source.
+
+Grepping through the source code shows that E_App is used in the ibar,
+engage, and mbar modules, plus in E itself.  Devilhorns tells me that
+mbar will be replaced, so I will ignore that for now.  HandyAndE tells
+me that the stand alone version of engage is deprecated, so I can
+ignore that.  Both ibar and engage essentially do the same things with
+E_App, so I'll speak about those in generic terms.  I'll also try to
+avoid spending time fully groking all the code that uses E_Apps, as I
+have some time pressure here.  That's why I'm thinking out loud, if I
+miss something, other devs will point it out.
+
+Interesting that neither entangle, nor the stand alone eapp_edit came up
+in the grep results.  There may be other things that deal with
+application icons in their own way.  I'll ignore them for now.  I know
+raster will say "engage entangle and such ar not part of corr e, ignre
+them".  Entangle and the stand alone eapp_edit are now obsolete, as they
+where not included in the .desktop update.
+
+Ibar and engage both display a handful of application icons, allow the
+user to click on those icons to start the application.  Ibar runs a
+"starting application" animation, and engage keeps track of open
+windows that belong to all applications, but tries to keep the open
+window icons next to the application icon if it has one for that
+application.  I don't know if ibar uses the freedesktop.org startup
+notification spec, some other method, or just runs the animation for an
+arbitrary time.  Either way, there are three operations in these
+modules that use E_Apps - show the icon, start the application, and
+match newly created windows with the E_App.
+
+E also needs to do those three operations, and more.  Menus, winlist,
+pager, exebuf, and borders all need to show the icon.  Menus and exebuf
+need to start the application.  When a window is opened, it needs to be
+matched to it's E_App to show it's icon and other things.  Exebuf needs
+to search through all the E_Apps looking for matches to the partially
+typed in command.  EFM needs to show an icon for any .eap or .desktop it
+is currently displaying, maybe needs to run the application.  The
+built in eap editor needs to read, display, and save all the
+application icon information.
+
+These operations fall into two distinct categories - dealing with one
+E_App at a time, or searching through all E_Apps with arbitrary search
+criteria.  One at a time is often done in user time (the user only
+operates one icon at a time) so caching is not so important there.
+Searching through all E_Apps is an expensive operation that should be
+optimised as much as possible.  Note that I count the showing of menus
+as the later category, as the user may want to quickly access many sub
+menus full of E_Apps.
+
+Since the source of the image data used for the icon can be something
+that needs time to decode, at the times when lots of icons are being
+used at once (exebuf and menus mostly) we probably want that image data
+cached for speed as well.  The searching through all E_Apps can occur
+on data that is part of the original file that is the source, so an in
+memory search will be a lot faster than any file searching.
+
+So the problem is - as fast as possible search through all the E_Apps,
+no matter what their source, and give access to all the information
+they have ,including image data.  Since this is useful in the "one at a
+time" category, might as well use the same method there to.
+
+
+The issues with possible solutions -
+
+An in memory cache of all E_App information is needed.  Since the
+information that could be used to search this cache can be quite
+arbitrary, hashes and other such structures may not be useful.  On the
+other hand, some sort of index mechanism may be useful for the most
+common searches, and those that need to be quickest.
+
+Lets try to come up with some numbers.  The eap torture test involves
+over two thousand .eaps, and that's from a full install of SuSE 9.3
+Pro.  Certain distros have just as many applications, or more, and they
+are growing all the time.  120x120 pixels is probably the largest
+commonly used icon size, 32 bits per pixel to include the alpha
+channel.  I have seen .desktop files up to 25 KB in size, but that
+includes all the translations for name, comment, and keywords,
+something that is not currently stored in E_App.  A much more common
+size is 2 - 4 KB, but that still mostly is for the name translations.
+Note, .desktop files only include the name of the icon, not the image
+data itself.  I use the .desktop files for this part of the discussion
+because they include all the non image data that is typically in an
+E_App.  1 KB is probably maximum storage requirement for non image,
+single translation E_App data.  That could be a maximum of 56 KB per
+E_App, and possibly 100 MB for the entire cache including image data.
+Ouch, no wonder raster suggested mmaping the cache file.
+
+Note, this is a likely maximum for those people that install two
+thousand applications and like really big icons.  I have over two
+thousand applications installed, and I like the icons in engage to zoom
+out really big.  B-)  Typical users will require a much smaller amount
+of data.
+
+The original caching strategy uses multiple caches, on a per directory
+basis, but still has a single cache for the all directory, the one with
+all the .eaps in it.  raster has mentioned that a single cache might be
+a better solution.  With .desktop files scattered all over the place, a
+single cache is more desirable for searching purposes.
+
+This does raise some interesting issues.  While .eap files have in the
+past been per user, the majority of .desktop files are likely to be
+system files, mostly unchanging, but with new ones added whenever new
+software is installed.  The user can create their own, and override
+system ones.  There is also the translations to deal with.  Do we
+include only one translation in the cache?  Do we have a system cache
+and per user caches that allow overrides?  Do we really need image data
+in the cache?  Although the freedesktop.org spec says that the user
+chooses a single icon size, in practise the various things that render
+icons render them at different sizes.
+
+There is the cache update strategy to consider.  The current one causes
+problems.  Raster has thought about changing to no auto update, but with
+a manually triggered update.  I would prefer automatic updates that
+work smoothly and without great pauses in the operation of the wm, as
+that gives the users less to complain about.  Maybe we can make use of
+the thumb nailing stuff?
+
+Answers to these questions will help choose a caching mechanism.
+
+
+-----------------------------------------------------------------------
+
+ecore_desktop_paths
+
+USED BY:
+     All of the ecore_desktop code.
+WHEN:
+     At startup.  They hardly ever change.
+ISSUES:
+    The use of GNOME and KDE apps to figure out some of the paths. 
+    They are curently commented out, and guesses are made.
+SOLUTION:
+    Go with the guesses, run the apps later to correct the guesses.
+    Cache the results to disk.
+
+-----------------------------------------------------------------------
+
+ecore_desktop_menu
+
+USED BY:
+    "Applications" menu and "Applications" config dialog.
+WHEN:
+    The menus are parsed at first startup, then manually by the dialog.
+ISSUES:
+    When new applications are installed, will need to update.
+SOLUTION:
+    Parse them during idle time.  Monitor relevant directories.
+    ~/.e/e/applications/menu/all is the results cached to disk.
+
+-----------------------------------------------------------------------
+
+icon themes
+
+USED BY:
+    The icon theme config dialog.
+WHEN:
+    When the icon theme config dialog is started.
+ISSUES:
+    The actual icon theme currently in use is a small amount of info that
+    can always be in ram, and is quick to get at startup or theme change.
+    It's the complete list of themes that are currently installed that can 
+    take ages to find.  The list itself should also be small.
+SOLUTION:
+    Find them during idle time, and finish the job async when the dialog is
+    started.  Monitor the icon paths for the installation of new themes.
+
+-----------------------------------------------------------------------
+
+icons
+
+USED BY:
+    Whenever an E_App is displayed and others.
+WHEN:
+    On demand.
+ISSUES:
+    Combined .edj and FDO searching. FDO searching can take a long time.
+    Things that display lots of icons wont want to wait for all those 
+    complex searches.
+SOLUTION:
+    e_app_icon_add() should be used everywhere, and it should register a 
+    rectangle for use by the icon.  The caller then shows an empty icon.
+    A thumbnailing style process then does all the searching, and does 
+    the fm2 bouncy icon thing when the icon is found.
+    
+    The results of the search should be cached somewhere on disk for 
+    future reference.  That needs to be nuked when the user changes 
+    icon theme.  Changing the icon theme currently does not update all 
+    displayed icons.
+
+-----------------------------------------------------------------------
+
+.desktop files
+
+USED BY:
+    E_Apps and others.
+WHEN:
+    Whenever the E_App needs to be read from disk.
+ISSUES:
+    Currently a fairly simple in memory hash of them is kept.  Since 
+    each Ecore_Desktop holds a hash of the fields, this can be 
+    expensive in memory.  Also, we would like a pre parsed binary on
+    disk cache for the sheer speed.  ~/.e/e/applications/all is a 
+    directory with all of them that are for E_Apps, some are just links 
+    to system files. 
+SOLUTION:
+
+-----------------------------------------------------------------------
+
+E_Apps
+
+USED BY:
+    Menus, bars, borders, exebuf, lots of other places.
+WHEN:
+    Currently all read in at startup time.  Should change this to an 
+    idle time task.  Still need to read in them all near startup time 
+    though.  WE need all of them for searching.
+ISSUES:
+    The current eap caching code is not up to scratch, and the .desktop 
+    conversion didn't help.  It does hide some other bugs though, so that 
+    needs to be cleaned up first.
+    
+    We need quick sorted access to all Apps on the system.  Things like 
+    menus and bars need quick access to the ones in their .order files.
+    As mentioned above, we need quick searching of them all.
+SOLUTION:
+    Nuke the existing cache code.  Replace with...
