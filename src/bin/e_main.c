@@ -382,6 +382,12 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(ecore_desktop_shutdown);
 
+   ecore_desktop_paths_extras_clear();
+   ecore_desktop_paths_prepend_user(ECORE_DESKTOP_PATHS_ICONS, "~/.e/e/icons");
+   snprintf(buf, sizeof(buf), "%s/data/images", e_prefix_data_get());
+   ecore_desktop_paths_append_system(ECORE_DESKTOP_PATHS_ICONS, buf);
+   ecore_desktop_paths_regen();
+
    /* init the evas wrapper */
    if (!ecore_evas_init())
      { 
