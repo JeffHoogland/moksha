@@ -24,7 +24,8 @@ e_entry_dialog_show(const char *title, const char *icon, const char *text,
    ed->ok.data = data;
    ed->cancel.func = cancel_func;
    ed->cancel.data = data;
-   ed->text = strdup(initial_text);
+   if (initial_text)
+     ed->text = strdup(initial_text);
    
    dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_entry_dialog");
    if (!dia) 
