@@ -150,6 +150,8 @@ Some of the things (in very short form) that need to be done to E17...
   OPTIMISATIONS
 -------------------------------------------------------------------------------
 
+* add evas pre/post render callbacks per evas canvas and callbacks per object
+  for pre/post render too
 * optimize clock theme (speed/cpu) (rotation in edje??? or evas???)
 * evas could detect an image is scaled multiple times and keep a scaled copy
   that it could share in cache, and then punt the original back to cache.

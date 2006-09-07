@@ -1842,10 +1842,33 @@ static void
 _e_menu_reposition(E_Menu *m)
 {
    Evas_List *l, *tmp = NULL;
+   int parent_item_bottom;
    
    if (!m->parent_item) return;
    m->cur.x = m->parent_item->menu->cur.x + m->parent_item->menu->cur.w;
-   m->cur.y = m->parent_item->menu->cur.y + m->parent_item->y - m->container_y;
+
+   parent_item_bottom = m->parent_item->menu->cur.y + m->parent_item->y;
+   if(m->cur.h > m->zone->h)
+     {
+	/* menu is larger than screen */
+	if(parent_item_bottom > (m->zone->h / 2))
+	  /* more is shown if menu goes up */
+	  m->cur.y = (parent_item_bottom - (m->container_h + 1)); 
+	else
+	  /* more is shown if menu goes down */
+	  m->cur.y = parent_item_bottom - m->container_y;
+     }
+   else
+     {  
+	/* menu is smaller than screen */
+	if(((parent_item_bottom + m->cur.h - m->container_y) > m->zone->h) && 
+	   (parent_item_bottom > (m->zone->h / 2)))
+	  /* menu is partially out of screen and more is shown if menu goes up */
+	  m->cur.y = (parent_item_bottom - (m->container_h + 1)); 
+	else
+	  m->cur.y = parent_item_bottom - m->container_y;
+     }
+   
    /* FIXME: this will suck for big menus */
    for (l = _e_active_menus; l; l = l->next)
      {

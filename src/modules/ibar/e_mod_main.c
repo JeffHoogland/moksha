@@ -1240,7 +1240,7 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
 	     e_dialog_button_focus_num(dia, 1);
 	     e_win_centered_set(dia->win, 1);
 	     e_dialog_show(dia);
-	     return;
+	     goto clean;
 	  }
      }
    else if (!strcmp(type, "text/uri-list"))
@@ -1283,7 +1283,7 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
 	       e_app_files_list_append(l, inst->ibar->apps);
 	  }
      }
-   
+   clean:
    evas_object_del(inst->ibar->o_drop);
    inst->ibar->o_drop = NULL;
    evas_object_del(inst->ibar->o_drop_over);
