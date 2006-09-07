@@ -31,12 +31,14 @@ struct _E_App
    
    E_App              *parent; /* the parent e_app node */
    E_App              *orig; /* if this is a copy, point to the original */
+   Ecore_Desktop      *desktop; /* if this came from a .desktop file. */
    
    const char         *name; /* app name */
    const char         *generic; /* generic app name */
    const char         *comment; /* a longer description */
    const char         *exe; /* command to execute, NULL if directory */
-   
+   const char         *exe_params; /* command params to execute, NULL if directory */
+
    const char         *path; /* path to .eet containing icons etc. etc. */
 //   const char         *icon_path; /* path to icon file, in case it is different from path. */
 

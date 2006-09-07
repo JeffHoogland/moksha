@@ -114,9 +114,13 @@ _e_eap_edit_free(E_App_Edit *editor)
 static void
 _e_eap_edit_fill_data(E_Config_Dialog_Data *cfdata)
 {
+   char *exe;
    /*- BASIC -*/
    IFDUP(cfdata->editor->eap->name, cfdata->name);
    IFDUP(cfdata->editor->eap->exe, cfdata->exe);
+   exe = ecore_desktop_merge_command((char *)cfdata->editor->eap->exe, (char *)cfdata->editor->eap->exe_params);
+   if (exe)
+      cfdata->exe = exe;
    /*- ADVANCED -*/
    IFDUP(cfdata->editor->eap->generic, cfdata->generic);
    IFDUP(cfdata->editor->eap->comment, cfdata->comment);
@@ -194,10 +198,27 @@ _e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data)
 
    if (eap->name) evas_stringshare_del(eap->name);
    if (eap->exe) evas_stringshare_del(eap->exe);
+   if (eap->exe_params) evas_stringshare_del(eap->exe_params);
    if (eap->image) evas_stringshare_del(eap->image);
+   eap->name = NULL;
+   eap->exe = NULL;
+   eap->exe_params = NULL;
+   eap->image = NULL;
 
    if (data->name) eap->name = evas_stringshare_add(data->name);
-   if (data->exe) eap->exe = evas_stringshare_add(data->exe);
+   if (data->exe)
+      {
+         char *exe;
+
+         exe = strchr(data->exe, ' ');
+	 if (exe)
+	    {
+	       *exe = '\0';
+               eap->exe_params = evas_stringshare_add(++exe);
+	       *exe = ' ';
+	    }
+         eap->exe = evas_stringshare_add(data->exe);
+      }
    if (data->image)
       {
          eap->image = evas_stringshare_add(data->image);
@@ -228,25 +249,7 @@ _e_eap_edit_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data
    editor = data->editor;
    eap = editor->eap;
 
-   if (eap->name) evas_stringshare_del(eap->name);
-   if (eap->exe) evas_stringshare_del(eap->exe);
-   if (eap->image) evas_stringshare_del(eap->image);
-
-   if (eap->generic) evas_stringshare_del(eap->generic);
-   if (eap->comment) evas_stringshare_del(eap->comment);
-   if (eap->win_name) evas_stringshare_del(eap->win_name);
-   if (eap->win_class) evas_stringshare_del(eap->win_class);
-   if (eap->win_title) evas_stringshare_del(eap->win_title);
-   if (eap->win_role) evas_stringshare_del(eap->win_role);
-   if (eap->icon_class) evas_stringshare_del(eap->icon_class);
-
-   if (data->startup_notify) eap->startup_notify = 1;
-   else eap->startup_notify = 0;
-   if (data->wait_exit) eap->wait_exit = 1;
-   else eap->wait_exit = 0;
-
-   if (data->name) eap->name = evas_stringshare_add(data->name);
-   if (data->exe) eap->exe = evas_stringshare_add(data->exe);
+   e_app_fields_empty(eap);
 
    if (data->generic) eap->generic = evas_stringshare_add(data->generic);
    if (data->comment) eap->comment = evas_stringshare_add(data->comment);
@@ -257,20 +260,8 @@ _e_eap_edit_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data
    if (data->iclass) eap->icon_class = evas_stringshare_add(data->iclass);
    if (data->eap.icon_path) eap->icon_path = evas_stringshare_add(data->eap.icon_path);
 
-   if (data->image)
-      {
-         eap->image = evas_stringshare_add(data->image);
-         eap->icon_class = evas_stringshare_add("");   /* Call this temporary, until I reconsider the icon search order. */
-      }
+   _e_eap_edit_basic_apply_data(cfd, data);
 
-   /* FIXME: hardcoded until the eap editor provides fields to change it */
-   if (data->width) eap->width = data->width;
-   else eap->width = 128;
-   if (data->height) eap->height = data->height;
-   else eap->height = 128;
-
-   if ((eap->name) && (eap->exe))
-     e_app_fields_save(eap);
    return 1;
 }
 
