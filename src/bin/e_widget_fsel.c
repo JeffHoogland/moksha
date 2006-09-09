@@ -282,7 +282,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
 
    if (preview)
      {
-        o = e_widget_frametable_add(evas, "Preview", 0);
+        o = e_widget_frametable_add(evas, _("Preview"), 0);
         wd->o_preview_frame = o;
         e_widget_sub_object_add(obj, o);
 

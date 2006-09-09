@@ -152,7 +152,7 @@ e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
 
    e_widget_list_object_append(ol, ot, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, "Fill Options", 1);
+   of = e_widget_framelist_add(evas, _("Fill Options"), 1);
 
    rg = e_widget_radio_group_new(&(cfdata->mode));
 
