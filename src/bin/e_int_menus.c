@@ -12,9 +12,9 @@ struct _Main_Data
    E_Menu *all_apps;
    E_Menu *desktops;
    E_Menu *clients;
-//   E_Menu *gadgets;
    E_Menu *config;
    E_Menu *lost_clients;
+   E_Menu *sys;
 };
 
 /* local subsystem functions */
@@ -25,6 +25,7 @@ static void _e_int_menus_main_run            (void *data, E_Menu *m, E_Menu_Item
 static int  _e_int_menus_main_lock_defer_cb  (void *data);
 static void _e_int_menus_main_lock           (void *data, E_Menu *m, E_Menu_Item*mi);
 static void _e_int_menus_main_restart        (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_main_logout         (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_exit           (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_halt           (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_reboot         (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -48,12 +49,12 @@ static void _e_int_menus_clients_icon_cb     (void *data, E_Menu *m, E_Menu_Item
 static void _e_int_menus_clients_cleanup_cb  (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_desktops_pre_cb     (void *data, E_Menu *m);
 static void _e_int_menus_desktops_item_cb    (void *data, E_Menu *m, E_Menu_Item *mi);
-//static void _e_int_menus_gadgets_pre_cb      (void *data, E_Menu *m);
-//static void _e_int_menus_gadgets_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_themes_about        (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_lost_clients_pre_cb   (void *data, E_Menu *m);
 static void _e_int_menus_lost_clients_free_hook(void *obj);
 static void _e_int_menus_lost_clients_item_cb  (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_sys_pre_cb          (void *data, E_Menu *m);
+static void _e_int_menus_sys_free_hook       (void *obj);
 static void _e_int_menus_augmentation_add    (E_Menu *m, Evas_List *augmentation);
 static void _e_int_menus_augmentation_del    (E_Menu *m, Evas_List *augmentation);
 
@@ -119,15 +120,6 @@ e_int_menus_main_new(void)
    e_util_menu_item_edje_icon_set(mi, "enlightenment/lost_windows");
    e_menu_item_submenu_set(mi, subm);
 
-/*   
-   subm = e_int_menus_gadgets_new();
-   dat->gadgets = subm;
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Gadgets"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/gadgets");
-   e_menu_item_submenu_set(mi, subm);
-*/
-   
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
@@ -151,52 +143,13 @@ e_int_menus_main_new(void)
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
-   if (e_sys_action_possible_get(E_SYS_HALT) ||
-       e_sys_action_possible_get(E_SYS_REBOOT) ||
-       e_sys_action_possible_get(E_SYS_SUSPEND) ||
-       e_sys_action_possible_get(E_SYS_HIBERNATE))
-     {
-	if (e_sys_action_possible_get(E_SYS_SUSPEND))
-	  {
-	     mi = e_menu_item_new(m);
-	     e_menu_item_label_set(mi, _("Suspend your Computer"));
-	     e_util_menu_item_edje_icon_set(mi, "enlightenment/suspend");
-	     e_menu_item_callback_set(mi, _e_int_menus_main_suspend, NULL);
-	  }
-	if (e_sys_action_possible_get(E_SYS_HIBERNATE))
-	  {
-	     mi = e_menu_item_new(m);
-	     e_menu_item_label_set(mi, _("Hibernate your Computer"));
-	     e_util_menu_item_edje_icon_set(mi, "enlightenment/hibernate");
-	     e_menu_item_callback_set(mi, _e_int_menus_main_hibernate, NULL);
-	  }
-	if (e_sys_action_possible_get(E_SYS_REBOOT))
-	  {
-	     mi = e_menu_item_new(m);
-	     e_menu_item_label_set(mi, _("Reboot your Computer"));
-	     e_util_menu_item_edje_icon_set(mi, "enlightenment/reboot");
-	     e_menu_item_callback_set(mi, _e_int_menus_main_reboot, NULL);
-	  }
-	if (e_sys_action_possible_get(E_SYS_HALT))
-	  {
-	     mi = e_menu_item_new(m);
-	     e_menu_item_label_set(mi, _("Shut Down your Computer"));
-	     e_util_menu_item_edje_icon_set(mi, "enlightenment/halt");
-	     e_menu_item_callback_set(mi, _e_int_menus_main_halt, NULL);
-	  }
-	mi = e_menu_item_new(m);
-	e_menu_item_separator_set(mi, 1);
-     }
-   
+   subm = e_int_menus_sys_new();
+   dat->sys = subm;
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Restart Enlightenment"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/reset");
-   e_menu_item_callback_set(mi, _e_int_menus_main_restart, NULL);
+   e_menu_item_label_set(mi, _("System"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/system");
+   e_menu_item_submenu_set(mi, subm);
 
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Exit Enlightenment"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/exit");
-   e_menu_item_callback_set(mi, _e_int_menus_main_exit, NULL);
    return m;
 }
 
@@ -281,17 +234,7 @@ e_int_menus_clients_new(void)
    e_menu_pre_activate_callback_set(m, _e_int_menus_clients_pre_cb, NULL);
    return m;
 }
-/*
-EAPI E_Menu *
-e_int_menus_gadgets_new(void)
-{
-   E_Menu *m;
 
-   m = e_menu_new();
-   e_menu_pre_activate_callback_set(m, _e_int_menus_gadgets_pre_cb, NULL);
-   return m;
-}
-*/
 EAPI E_Menu *
 e_int_menus_lost_clients_new(void)
 {
@@ -299,6 +242,17 @@ e_int_menus_lost_clients_new(void)
 
    m = e_menu_new();
    e_menu_pre_activate_callback_set(m, _e_int_menus_lost_clients_pre_cb, NULL);
+   return m;
+}
+
+EAPI E_Menu *
+e_int_menus_sys_new(void)
+{
+   E_Menu *m;
+   
+   m = e_menu_new();
+   e_menu_pre_activate_callback_set(m, _e_int_menus_sys_pre_cb, NULL);
+
    return m;
 }
 
@@ -363,9 +317,9 @@ _e_int_menus_main_del_hook(void *obj)
 	e_object_del(E_OBJECT(dat->apps));
 	e_object_del(E_OBJECT(dat->desktops));
 	e_object_del(E_OBJECT(dat->clients));
-//	e_object_del(E_OBJECT(dat->gadgets));
 	e_object_del(E_OBJECT(dat->config));
 	e_object_del(E_OBJECT(dat->lost_clients));
+	e_object_del(E_OBJECT(dat->sys));
 	free(dat);
      }
 }
@@ -438,6 +392,15 @@ _e_int_menus_main_restart(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Action *a;
    
    a = e_action_find("restart");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+}
+
+static void
+_e_int_menus_main_logout(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Action *a;
+   
+   a = e_action_find("logout");
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
 
@@ -638,11 +601,6 @@ _e_int_menus_desktops_pre_cb(void *data, E_Menu *m)
    e_menu_pre_activate_callback_set(m, NULL, NULL);
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Lock Screen"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/desklock");
-   e_menu_item_callback_set(mi, _e_int_menus_main_lock, NULL);
-   
-   mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Show/Hide All Windows"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/showhide");
    e_menu_item_callback_set(mi, _e_int_menus_main_showhide, NULL);
@@ -763,6 +721,99 @@ static void
 _e_int_menus_config_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    e_configure_show(m->zone->container);
+}
+
+static void
+_e_int_menus_sys_pre_cb(void *data, E_Menu *m)
+{
+   E_Menu_Item *mi;
+   Evas_List *l;
+
+   e_menu_pre_activate_callback_set(m, NULL, NULL);
+   
+   l = evas_hash_find(_e_int_menus_augmentation, "sys");
+   if (l)
+     {
+	_e_int_menus_augmentation_add(m, l);
+	
+	mi = e_menu_item_new(m);
+	e_menu_item_separator_set(mi, 1);
+     }
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Lock Screen"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/desklock");
+   e_menu_item_callback_set(mi, _e_int_menus_main_lock, NULL);
+   
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+   
+   if (e_sys_action_possible_get(E_SYS_HALT) ||
+       e_sys_action_possible_get(E_SYS_REBOOT) ||
+       e_sys_action_possible_get(E_SYS_SUSPEND) ||
+       e_sys_action_possible_get(E_SYS_HIBERNATE))
+     {
+	if (e_sys_action_possible_get(E_SYS_SUSPEND))
+	  {
+	     mi = e_menu_item_new(m);
+	     e_menu_item_label_set(mi, _("Suspend"));
+	     e_util_menu_item_edje_icon_set(mi, "enlightenment/suspend");
+	     e_menu_item_callback_set(mi, _e_int_menus_main_suspend, NULL);
+	  }
+	if (e_sys_action_possible_get(E_SYS_HIBERNATE))
+	  {
+	     mi = e_menu_item_new(m);
+	     e_menu_item_label_set(mi, _("Hibernate"));
+	     e_util_menu_item_edje_icon_set(mi, "enlightenment/hibernate");
+	     e_menu_item_callback_set(mi, _e_int_menus_main_hibernate, NULL);
+	  }
+	if (e_sys_action_possible_get(E_SYS_REBOOT))
+	  {
+	     mi = e_menu_item_new(m);
+	     e_menu_item_label_set(mi, _("Reboot"));
+	     e_util_menu_item_edje_icon_set(mi, "enlightenment/reboot");
+	     e_menu_item_callback_set(mi, _e_int_menus_main_reboot, NULL);
+	  }
+	if (e_sys_action_possible_get(E_SYS_HALT))
+	  {
+	     mi = e_menu_item_new(m);
+	     e_menu_item_label_set(mi, _("Shut Down"));
+	     e_util_menu_item_edje_icon_set(mi, "enlightenment/halt");
+	     e_menu_item_callback_set(mi, _e_int_menus_main_halt, NULL);
+	  }
+	mi = e_menu_item_new(m);
+	e_menu_item_separator_set(mi, 1);
+     }
+   
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Restart Enlightenment"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/reset");
+   e_menu_item_callback_set(mi, _e_int_menus_main_restart, NULL);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Exit Enlightenment"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/exit");
+   e_menu_item_callback_set(mi, _e_int_menus_main_exit, NULL);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+   
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Logout"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/logout");
+   e_menu_item_callback_set(mi, _e_int_menus_main_logout, NULL);
+   
+   e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_sys_free_hook);
+}
+
+static void
+_e_int_menus_sys_free_hook(void *obj)
+{
+   E_Menu *m;
+
+   m = obj;
+
+   _e_int_menus_augmentation_del(m, evas_hash_find(_e_int_menus_augmentation, "sys"));
 }
 
 static void
@@ -922,52 +973,7 @@ _e_int_menus_clients_cleanup_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    zone = data;
    e_place_zone_region_smart_cleanup(zone);
 }
-/*
-static void
-_e_int_menus_gadgets_pre_cb(void *data, E_Menu *m)
-{
-   E_Menu_Item *mi;
-   E_Menu *root;
 
-   e_menu_pre_activate_callback_set(m, NULL, NULL);
-   root = e_menu_root_get(m);
-   if ((root) && (root->zone))
-     {
-	mi = e_menu_item_new(m);
-	  e_menu_item_check_set(mi, 1);
-	if (e_gadman_mode_get(root->zone->container->gadman) == E_GADMAN_MODE_EDIT)
-	  e_menu_item_toggle_set(mi, 1);
-	else
-	  e_menu_item_toggle_set(mi, 0);
-	e_menu_item_label_set(mi, _("Edit Mode"));
-	e_menu_item_callback_set(mi, _e_int_menus_gadgets_edit_mode_cb, root->zone->container->gadman);
-     }
-   else
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("(Unused)"));
-	e_menu_item_callback_set(mi, NULL, NULL);
-     }
-}
-
-static void
-_e_int_menus_gadgets_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Gadman *gm;
-   
-   gm = data;
-   if (e_menu_item_toggle_get(mi))
-     {
-//	e_gadcon_all_edit_begin();
-	e_gadman_mode_set(gm, E_GADMAN_MODE_EDIT);
-     }
-   else
-     {
-//	e_gadcon_all_edit_end();
-	e_gadman_mode_set(gm, E_GADMAN_MODE_NORMAL);
-     }
-}
-*/		       
 static void
 _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
 {

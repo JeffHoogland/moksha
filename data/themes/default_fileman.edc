@@ -192,7 +192,7 @@ group {
 	       relative: 1.0 1.0;
 	       offset: 0 0;
 	    }	    
-	    color: 0 0 0 255;
+	    color: 0 0 0 64;
 	 }
 	 description {
 	    state:      "visible" 0.0;
@@ -867,7 +867,7 @@ group {
 	       relative: 1.0 1.0;
 	       offset: 0 0;
 	    }	    
-	    color: 0 0 0 255;
+	    color: 0 0 0 64;
 	 }
 	 description {
 	    state:      "visible" 0.0;
@@ -1542,7 +1542,7 @@ group {
 	       relative: 1.0 1.0;
 	       offset: 0 0;
 	    }	    
-	    color: 0 0 0 255;
+	    color: 0 0 0 64;
 	 }
 	 description {
 	    state:      "visible" 0.0;
@@ -2216,7 +2216,7 @@ group {
 	       relative: 1.0 1.0;
 	       offset: 0 0;
 	    }	    
-	    color: 0 0 0 255;
+	    color: 0 0 0 64;
 	 }
 	 description {
 	    state:      "visible" 0.0;
@@ -4404,7 +4404,7 @@ group {
 	       relative: 1.0 1.0;
 	       offset: -6 -6;
 	    }	    
-	    color: 0 0 0 255;
+	    color: 0 0 0 128;
 	 }
       }            
       part {

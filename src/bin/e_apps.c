@@ -14,7 +14,7 @@
  */
 
 #define DEBUG 0
-#define APP_CACHE 1
+#define APP_CACHE 0
 /* local subsystem functions */
 typedef struct _E_App_Change_Info E_App_Change_Info;
 typedef struct _E_App_Callback    E_App_Callback;

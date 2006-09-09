@@ -12,8 +12,8 @@ typedef struct _E_Int_Menu_Augmentation E_Int_Menu_Augmentation;
 struct _E_Int_Menu_Augmentation
 {
    struct {
-	void (*func)(void *data, E_Menu *m);
-	void *data;
+      void (*func)(void *data, E_Menu *m);
+      void *data;
    } add, del;
 };
 
@@ -24,9 +24,8 @@ EAPI E_Menu *e_int_menus_apps_new(const char *dir);
 EAPI E_Menu *e_int_menus_favorite_apps_new(void);
 EAPI E_Menu *e_int_menus_all_apps_new(void);
 EAPI E_Menu *e_int_menus_config_new(void);
-EAPI E_Menu *e_int_menus_gadgets_new(void);
-EAPI E_Menu *e_int_menus_themes_new(void);
 EAPI E_Menu *e_int_menus_lost_clients_new(void);
+EAPI E_Menu *e_int_menus_sys_new(void);
 
 EAPI E_Int_Menu_Augmentation *e_int_menus_menu_augmentation_add(const char *menu,
 								void (*func_add) (void *data, E_Menu *m),

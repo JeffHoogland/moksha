@@ -877,7 +877,7 @@ e_config_init(void)
 		    "restart", NULL);
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Delete",
 		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		    "exit", NULL);
+		    "logout", NULL);
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Escape",
 		    E_BINDING_MODIFIER_ALT, 0,
 		    "exebuf", NULL);

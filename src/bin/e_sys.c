@@ -5,9 +5,17 @@
 
 /* local subsystem functions */
 static int _e_sys_cb_exit(void *data, int type, void *event);
+static void _e_sys_cb_logout_logout(void *data, E_Dialog *dia);
+static void _e_sys_cb_logout_wait(void *data, E_Dialog *dia);
+static void _e_sys_cb_logout_abort(void *data, E_Dialog *dia);
+static int _e_sys_cb_logout_timer(void *data);
+static void _e_sys_logout_after(void);
+static void _e_sys_logout_begin(E_Sys_Action a_after);
+static void _e_sys_current_action(void);
+static void _e_sys_action_failed(void);
+static int _e_sys_action_do(E_Sys_Action a, char *param);
 
 static Ecore_Event_Handler *_e_sys_exe_exit_handler = NULL;
-static int _e_sys_exe_pending = 0;
 static Ecore_Exe *_e_sys_halt_check_exe = NULL;
 static Ecore_Exe *_e_sys_reboot_check_exe = NULL;
 static Ecore_Exe *_e_sys_suspend_check_exe = NULL;
@@ -16,6 +24,12 @@ static int _e_sys_can_halt = 0;
 static int _e_sys_can_reboot = 0;
 static int _e_sys_can_suspend = 0;
 static int _e_sys_can_hibernate = 0;
+
+static E_Sys_Action _e_sys_action_current = E_SYS_NONE;
+static E_Sys_Action _e_sys_action_after = E_SYS_NONE;
+static Ecore_Exe *_e_sys_exe = NULL;
+static double _e_sys_logout_begin_time = 0.0;
+static Ecore_Timer *_e_sys_logout_timer = NULL;
 
 /* externally accessible functions */
 EAPI int
@@ -26,18 +40,17 @@ e_sys_init(void)
    /* this is not optimal - but it does work cleanly */
    _e_sys_exe_exit_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
 						     _e_sys_cb_exit, NULL);
+   /* exec out sys helper and ask it to test if we are allowed to do these
+    * things
+    */
    snprintf(buf, sizeof(buf), "%s/enlightenment_sys -t halt", e_prefix_bin_get());
    _e_sys_halt_check_exe = ecore_exe_run(buf, NULL);
-   _e_sys_exe_pending++;
    snprintf(buf, sizeof(buf), "%s/enlightenment_sys -t reboot", e_prefix_bin_get());
    _e_sys_reboot_check_exe = ecore_exe_run(buf, NULL);
-   _e_sys_exe_pending++;
    snprintf(buf, sizeof(buf), "%s/enlightenment_sys -t suspend", e_prefix_bin_get());
    _e_sys_suspend_check_exe = ecore_exe_run(buf, NULL);
-   _e_sys_exe_pending++;
    snprintf(buf, sizeof(buf), "%s/enlightenment_sys -t hibernate", e_prefix_bin_get());
    _e_sys_hibernate_check_exe = ecore_exe_run(buf, NULL);
-   _e_sys_exe_pending++;
    return 1;
 }
 
@@ -82,60 +95,33 @@ e_sys_action_possible_get(E_Sys_Action a)
 EAPI int
 e_sys_action_do(E_Sys_Action a, char *param)
 {
-   char buf[4096];
+   int ret;
    
+   if (_e_sys_action_current != E_SYS_NONE)
+     {
+	_e_sys_current_action();
+	return 0;
+     }
    switch (a)
      {
       case E_SYS_EXIT:
-	if (!e_util_immortal_check())
-	  ecore_main_loop_quit();
-	break;
       case E_SYS_RESTART:
-	restart = 1;
-	ecore_main_loop_quit();
-	break;
       case E_SYS_EXIT_NOW:
-	exit(0);
-	break;
       case E_SYS_LOGOUT:
-	/* FIXME: go through to every window and if it wants delete req - ask
-	 * it to delete, otherwise just close it. set handler for window
-	 * deletes, and once all windows are deleted - exit, OR if a timer
-	 * expires - pop up dialog saying something is not responding
-	 */
+      case E_SYS_SUSPEND:
+      case E_SYS_HIBERNATE:
+	ret = _e_sys_action_do(a, param);
 	break;
       case E_SYS_HALT:
-	/* shutdown -h now */
-	snprintf(buf, sizeof(buf), "%s/enlightenment_sys halt",
-		 e_prefix_bin_get());
-	ecore_exe_run(buf, NULL);
-	/* FIXME: track command return value and have dialog */
-	break;
       case E_SYS_REBOOT:
-	/* shutdown -r now */
-	snprintf(buf, sizeof(buf), "%s/enlightenment_sys reboot",
-		 e_prefix_bin_get());
-	ecore_exe_run(buf, NULL);
-	/* FIXME: track command return value and have dialog */
-	break;
-      case E_SYS_SUSPEND:
-	/* /etc/acpi/sleep.sh force */
-	snprintf(buf, sizeof(buf), "%s/enlightenment_sys suspend",
-		 e_prefix_bin_get());
-	ecore_exe_run(buf, NULL);
-	/* FIXME: track command return value and have dialog */
-	break;
-      case E_SYS_HIBERNATE:
-	/* /etc/acpi/hibernate.sh force */
-	snprintf(buf, sizeof(buf), "%s/enlightenment_sys hibernate",
-		 e_prefix_bin_get());
-	ecore_exe_run(buf, NULL);
-	/* FIXME: track command return value and have dialog */
+	if (!e_util_immortal_check()) _e_sys_logout_begin(a);
+	return 1;
 	break;
       default:
 	return 0;
      }
-   return 0;
+   _e_sys_action_current = a;
+   return ret;
 }
 
 /* local subsystem functions */
@@ -145,14 +131,25 @@ _e_sys_cb_exit(void *data, int type, void *event)
    Ecore_Exe_Event_Del *ev;
 
    ev = event;
+   if ((_e_sys_exe) && (ev->exe == _e_sys_exe))
+     {
+	if (ev->exit_code != 0) _e_sys_action_failed();
+	_e_sys_action_current = E_SYS_NONE;
+	_e_sys_exe = NULL;
+	/* if we have a suspend or hibernate status popup/dialog - close it
+	 * here as we have finished suspend/hibernate (and probably just
+	 * came back out of suspend/hibernate */
+	return 1;
+     }
    if ((_e_sys_halt_check_exe) && (ev->exe == _e_sys_halt_check_exe))
      {
+	/* exit_code: 0 == OK, 5 == suid root removed, 7 == group id error
+	 * 10 == permission denied, 20 == action undefined */
 	if (ev->exit_code == 0)
 	  {
 	     _e_sys_can_halt = 1;
 	     _e_sys_halt_check_exe = NULL;
 	  }
-	_e_sys_exe_pending--;
      }
    else if ((_e_sys_reboot_check_exe) && (ev->exe == _e_sys_reboot_check_exe))
      {
@@ -161,7 +158,6 @@ _e_sys_cb_exit(void *data, int type, void *event)
 	     _e_sys_can_reboot = 1;
 	     _e_sys_reboot_check_exe = NULL;
 	  }
-	_e_sys_exe_pending--;
      }
    else if ((_e_sys_suspend_check_exe) && (ev->exe == _e_sys_suspend_check_exe))
      {
@@ -170,7 +166,6 @@ _e_sys_cb_exit(void *data, int type, void *event)
 	     _e_sys_can_suspend = 1;
 	     _e_sys_suspend_check_exe = NULL;
 	  }
-	_e_sys_exe_pending--;
      }
    else if ((_e_sys_hibernate_check_exe) && (ev->exe == _e_sys_hibernate_check_exe))
      {
@@ -179,14 +174,322 @@ _e_sys_cb_exit(void *data, int type, void *event)
 	     _e_sys_can_hibernate = 1;
 	     _e_sys_hibernate_check_exe = NULL;
 	  }
-	_e_sys_exe_pending--;
      }
-   
-   if (_e_sys_exe_pending <= 0)
+   return 1;
+}
+
+static void
+_e_sys_cb_logout_logout(void *data, E_Dialog *dia)
+{
+   if (_e_sys_logout_timer)
      {
-	if (_e_sys_exe_exit_handler)
-	  ecore_event_handler_del(_e_sys_exe_exit_handler);
-	_e_sys_exe_exit_handler = NULL;
+	ecore_timer_del(_e_sys_logout_timer);
+	_e_sys_logout_timer = NULL;
+     }
+   _e_sys_logout_begin_time = 0.0;
+   _e_sys_logout_after();
+   e_object_del(E_OBJECT(dia));
+}
+
+static void
+_e_sys_cb_logout_wait(void *data, E_Dialog *dia)
+{
+   if (_e_sys_logout_timer) ecore_timer_del(_e_sys_logout_timer);
+   _e_sys_logout_timer = ecore_timer_add(0.5, _e_sys_cb_logout_timer, NULL);
+   _e_sys_logout_begin_time = ecore_time_get();
+   e_object_del(E_OBJECT(dia));
+}
+
+static void
+_e_sys_cb_logout_abort(void *data, E_Dialog *dia)
+{
+   if (_e_sys_logout_timer)
+     {
+	ecore_timer_del(_e_sys_logout_timer);
+	_e_sys_logout_timer = NULL;
+     }
+   _e_sys_logout_begin_time = 0.0;
+   e_object_del(E_OBJECT(dia));
+   _e_sys_action_current = E_SYS_NONE;
+   _e_sys_action_after = E_SYS_NONE;
+}
+
+static int
+_e_sys_cb_logout_timer(void *data)
+{
+   Evas_List *l;
+   int pending = 0;
+   
+   for (l = e_border_client_list(); l; l = l->next)
+     {
+	E_Border *bd;
+	
+	bd = l->data;
+	if (!bd->internal) pending++;
+     }
+   if (pending == 0) goto after;
+   else
+     {
+	/* it has taken 15 seconds of waiting and we still have apps that
+	 * will not go away
+	 */
+	if ((ecore_time_get() - _e_sys_logout_begin_time) > 15.0)
+	  {
+	     E_Dialog *dia;
+	     
+	     dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_sys_error_logout_slow");
+	     if (dia)
+	       {
+		  e_dialog_title_set(dia, _("Logout problems"));
+		  e_dialog_icon_set(dia, "enlightenment/logout", 64);
+		  e_dialog_text_set(dia, 
+				    _("Logout is taking too long. Some<br>"
+				      "applications refuse to close.<br>"
+				      "Do you want to finish the logout<br>"
+				      "anyway without closing these<br>"
+				      "applications first?")
+				    );
+		  e_dialog_button_add(dia, _("Logout now"), NULL, _e_sys_cb_logout_logout, NULL);
+		  e_dialog_button_add(dia, _("Wait longer"), NULL, _e_sys_cb_logout_wait, NULL);
+		  e_dialog_button_add(dia, _("Cancel Logout"), NULL, _e_sys_cb_logout_abort, NULL);
+		  e_dialog_button_focus_num(dia, 1);
+		  e_win_centered_set(dia->win, 1);
+		  e_dialog_show(dia);
+		  _e_sys_logout_begin_time = ecore_time_get() + (60 * 60 * 24 * 365);
+	       }
+	     _e_sys_logout_timer = NULL;
+	     return 0;
+	  }
+     }
+   return 1;
+   after:
+   _e_sys_logout_after();
+   _e_sys_logout_timer = NULL;
+   return 0;
+}
+
+static void
+_e_sys_logout_after(void)
+{
+   _e_sys_action_do(_e_sys_action_after, NULL);
+   _e_sys_action_current = E_SYS_NONE;
+   _e_sys_action_after = E_SYS_NONE;
+}
+
+static void
+_e_sys_logout_begin(E_Sys_Action a_after)
+{
+   Evas_List *l;
+   
+   /* start logout - at end do the a_after action */
+   _e_sys_action_after = a_after;
+   /* FIXME: go through to every window and if it wants delete req - ask
+    * it to delete, otherwise just close it. set handler for window
+    * deletes, and once all windows are deleted - exit, OR if a timer
+    * expires - pop up dialog saying something is not responding
+    */
+   for (l = e_border_client_list(); l; l = l->next)
+     {
+	E_Border *bd;
+	
+	bd = l->data;
+	e_border_act_close_begin(bd);
+     }
+   /* and poll to see if all pending windows are gone yet every 0.5 sec */
+   _e_sys_logout_begin_time = ecore_time_get();
+   if (_e_sys_logout_timer) ecore_timer_del(_e_sys_logout_timer);
+   _e_sys_logout_timer = ecore_timer_add(0.5, _e_sys_cb_logout_timer, NULL);
+}
+
+static void
+_e_sys_current_action(void)
+{
+   /* display dialog that currently an action is in progress */
+   E_Dialog *dia;
+
+   dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_sys_error_action_busy");
+   if (!dia) return;
+   
+   e_dialog_title_set(dia, _("Enlightenment is busy with another request"));
+   e_dialog_icon_set(dia, "enlightenment/sys", 64);
+   switch (_e_sys_action_current)
+     {
+      case E_SYS_LOGOUT:
+	e_dialog_text_set(dia, 
+			  _("Enlightenment is busy logging out<br>"
+			    "You cannot perform other system actions<br>"
+			    "once a logout has begun.")
+			  );
+	break;
+      case E_SYS_HALT:
+	e_dialog_text_set(dia, 
+			  _("Enlightenment is shutting the system down.<br>"
+			    "You cannot do any other system actions<br>"
+			    "once a shutdown has been started.")
+			  );
+	break;
+      case E_SYS_REBOOT:
+	e_dialog_text_set(dia, 
+			  _("Enlightenment is rebooting the system.<br>"
+			    "You cannot do any other system actions<br>"
+			    "once a reboot has begun.")
+			  );
+	break;
+      case E_SYS_SUSPEND:
+	e_dialog_text_set(dia, 
+			  _("Enlightenment is suspending the system.<br>"
+			    "Until suspend is complete you cannot perform<br>"
+			    "any other system actions.")
+			  );
+	break;
+      case E_SYS_HIBERNATE:
+	e_dialog_text_set(dia, 
+			  _("Enlightenment is hibernating the system.<br>"
+			    "You cannot perform an other system actions<br>"
+			    "until this is complete.")
+			  );
+	break;
+      default:
+	e_dialog_text_set(dia, 
+			  _("EEK! This should not happen")
+			  );
+	break;
+     }
+   e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
+   e_dialog_button_focus_num(dia, 0);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
+}
+
+static void
+_e_sys_action_failed(void)
+{
+   /* display dialog that the current action failed */
+   E_Dialog *dia;
+
+   dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_sys_error_action_failed");
+   if (!dia) return;
+   
+   e_dialog_title_set(dia, _("Enlightenment is busy with another request"));
+   e_dialog_icon_set(dia, "enlightenment/sys", 64);
+   switch (_e_sys_action_current)
+     {
+      case E_SYS_HALT:
+	e_dialog_text_set(dia, 
+			  _("Shutting down of your system failed.")
+			  );
+	break;
+      case E_SYS_REBOOT:
+	e_dialog_text_set(dia, 
+			  _("Rebooting your system failed.")
+			  );
+	break;
+      case E_SYS_SUSPEND:
+	e_dialog_text_set(dia, 
+			  _("Suspend of your system failed.")
+			  );
+	break;
+      case E_SYS_HIBERNATE:
+	e_dialog_text_set(dia, 
+			  _("Hibernating your system failed.")
+			  );
+	break;
+      default:
+	e_dialog_text_set(dia, 
+			  _("EEK! This should not happen")
+			  );
+	break;
+     }
+   e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
+   e_dialog_button_focus_num(dia, 0);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
+}
+
+static int
+_e_sys_action_do(E_Sys_Action a, char *param)
+{
+   char buf[4096];
+   
+   switch (a)
+     {
+      case E_SYS_EXIT:
+	if (!e_util_immortal_check()) ecore_main_loop_quit();
+	break;
+      case E_SYS_RESTART:
+	restart = 1;
+	ecore_main_loop_quit();
+	break;
+      case E_SYS_EXIT_NOW:
+	exit(0);
+	break;
+      case E_SYS_LOGOUT:
+	_e_sys_logout_begin(E_SYS_EXIT);
+	break;
+      case E_SYS_HALT:
+	/* shutdown -h now */
+	if (e_util_immortal_check()) return 0;
+	snprintf(buf, sizeof(buf), "%s/enlightenment_sys halt",
+		 e_prefix_bin_get());
+	if (_e_sys_exe)
+	  {
+	     _e_sys_current_action();
+	     return 0;
+	  }
+	else
+	  {
+	     _e_sys_exe = ecore_exe_run(buf, NULL);
+	     /* FIXME: display halt status */
+	  }
+	break;
+      case E_SYS_REBOOT:
+	/* shutdown -r now */
+	if (e_util_immortal_check()) return 0;
+	snprintf(buf, sizeof(buf), "%s/enlightenment_sys reboot",
+		 e_prefix_bin_get());
+	if (_e_sys_exe)
+	  {
+	     _e_sys_current_action();
+	     return 0;
+	  }
+	else
+	  {
+	     _e_sys_exe = ecore_exe_run(buf, NULL);
+	     /* FIXME: display reboot status */
+	  }
+	break;
+      case E_SYS_SUSPEND:
+	/* /etc/acpi/sleep.sh force */
+	snprintf(buf, sizeof(buf), "%s/enlightenment_sys suspend",
+		 e_prefix_bin_get());
+	if (_e_sys_exe)
+	  {
+	     _e_sys_current_action();
+	     return 0;
+	  }
+	else
+	  {
+	     _e_sys_exe = ecore_exe_run(buf, NULL);
+	     /* FIXME: display suspend status */
+	  }
+	break;
+      case E_SYS_HIBERNATE:
+	/* /etc/acpi/hibernate.sh force */
+	snprintf(buf, sizeof(buf), "%s/enlightenment_sys hibernate",
+		 e_prefix_bin_get());
+	if (_e_sys_exe)
+	  {
+	     _e_sys_current_action();
+	     return 0;
+	  }
+	else
+	  {
+	     _e_sys_exe = ecore_exe_run(buf, NULL);
+	     /* FIXME: display hibernate status */
+	  }
+	break;
+      default:
+	return 0;
      }
    return 1;
 }

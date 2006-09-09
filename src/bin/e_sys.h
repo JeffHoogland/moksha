@@ -7,6 +7,7 @@ typedef enum _E_Sys_Action E_Sys_Action;
 
 enum _E_Sys_Action
 {
+   E_SYS_NONE,
    E_SYS_EXIT,
    E_SYS_RESTART,
    E_SYS_EXIT_NOW,
