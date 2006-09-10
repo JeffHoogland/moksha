@@ -9,7 +9,7 @@ typedef struct _E_About E_About;
 #ifndef E_ABOUT_H
 #define E_ABOUT_H
 
-#define E_ABOUT_TYPE 0xE0b01013
+#define E_ABOUT_TYPE 0xE0b0101a
 
 struct _E_About
 {

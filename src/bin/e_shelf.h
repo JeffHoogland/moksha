@@ -9,7 +9,7 @@ typedef struct _E_Shelf E_Shelf;
 #ifndef E_SHELF_H
 #define E_SHELF_H
 
-#define E_SHELF_TYPE 0xE0b01024
+#define E_SHELF_TYPE 0xE0b0101e
 
 struct _E_Shelf
 {

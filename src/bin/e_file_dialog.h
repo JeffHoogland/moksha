@@ -9,7 +9,7 @@ typedef struct _E_File_Dialog E_File_Dialog;
 #ifndef E_FILE_DIALOG_H
 #define E_FILE_DIALOG_H
 
-#define E_FILE_DIALOG_TYPE 0xE0b01020
+#define E_FILE_DIALOG_TYPE 0xE0b0101f
 
 struct _E_File_Dialog
 {

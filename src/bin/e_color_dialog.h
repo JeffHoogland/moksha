@@ -9,7 +9,7 @@ typedef struct _E_Color_Dialog E_Color_Dialog;
 #ifndef E_COLOR_DIALOG_H
 #define E_COLOR_DIALOG_H
 
-#define E_COLOR_DIALOG_TYPE 0xE0b01026
+#define E_COLOR_DIALOG_TYPE 0xE0b0101c
 
 struct _E_Color_Dialog
 {

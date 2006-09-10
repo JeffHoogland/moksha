@@ -30,6 +30,7 @@ static E_Sys_Action _e_sys_action_after = E_SYS_NONE;
 static Ecore_Exe *_e_sys_exe = NULL;
 static double _e_sys_logout_begin_time = 0.0;
 static Ecore_Timer *_e_sys_logout_timer = NULL;
+static E_Obj_Dialog *_e_sys_dialog = NULL;
 
 /* externally accessible functions */
 EAPI int
@@ -134,11 +135,18 @@ _e_sys_cb_exit(void *data, int type, void *event)
    if ((_e_sys_exe) && (ev->exe == _e_sys_exe))
      {
 	if (ev->exit_code != 0) _e_sys_action_failed();
+	if (((_e_sys_action_current != E_SYS_HALT) &&
+	     (_e_sys_action_current != E_SYS_REBOOT)) ||
+	    (ev->exit_code != 0))
+	  {
+	     if (_e_sys_dialog)
+	       {
+		  e_object_del(E_OBJECT(_e_sys_dialog));
+		  _e_sys_dialog = NULL;
+	       }
+	  }
 	_e_sys_action_current = E_SYS_NONE;
 	_e_sys_exe = NULL;
-	/* if we have a suspend or hibernate status popup/dialog - close it
-	 * here as we have finished suspend/hibernate (and probably just
-	 * came back out of suspend/hibernate */
 	return 1;
      }
    if ((_e_sys_halt_check_exe) && (ev->exe == _e_sys_halt_check_exe))
@@ -212,6 +220,11 @@ _e_sys_cb_logout_abort(void *data, E_Dialog *dia)
    e_object_del(E_OBJECT(dia));
    _e_sys_action_current = E_SYS_NONE;
    _e_sys_action_after = E_SYS_NONE;
+   if (_e_sys_dialog)
+     {
+	e_object_del(E_OBJECT(_e_sys_dialog));
+	_e_sys_dialog = NULL;
+     }
 }
 
 static int
@@ -255,7 +268,7 @@ _e_sys_cb_logout_timer(void *data)
 		  e_dialog_button_focus_num(dia, 1);
 		  e_win_centered_set(dia->win, 1);
 		  e_dialog_show(dia);
-		  _e_sys_logout_begin_time = ecore_time_get() + (60 * 60 * 24 * 365);
+		  _e_sys_logout_begin_time = 0.0;
 	       }
 	     _e_sys_logout_timer = NULL;
 	     return 0;
@@ -271,8 +284,13 @@ _e_sys_cb_logout_timer(void *data)
 static void
 _e_sys_logout_after(void)
 {
+   if (_e_sys_dialog)
+     {
+	e_object_del(E_OBJECT(_e_sys_dialog));
+	_e_sys_dialog = NULL;
+     }
+   _e_sys_action_current = _e_sys_action_after;
    _e_sys_action_do(_e_sys_action_after, NULL);
-   _e_sys_action_current = E_SYS_NONE;
    _e_sys_action_after = E_SYS_NONE;
 }
 
@@ -280,14 +298,20 @@ static void
 _e_sys_logout_begin(E_Sys_Action a_after)
 {
    Evas_List *l;
+   E_Obj_Dialog *od;
    
    /* start logout - at end do the a_after action */
+   od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()), 
+			 _("Logout in progress"), "E", "_sys_logout");
+   e_obj_dialog_obj_theme_set(od, "base/theme/sys", "e/sys/logout");
+   e_obj_dialog_obj_part_text_set(od, "e.textblock.message",
+				  _("Logout is currently in progress.<br>"
+				    "<hilight>Please wait.</hilight>"));
+   e_obj_dialog_show(od);
+   e_obj_dialog_icon_set(od, "enlightenment/logout");
+   if (_e_sys_dialog) e_object_del(E_OBJECT(_e_sys_dialog));
+   _e_sys_dialog = od;
    _e_sys_action_after = a_after;
-   /* FIXME: go through to every window and if it wants delete req - ask
-    * it to delete, otherwise just close it. set handler for window
-    * deletes, and once all windows are deleted - exit, OR if a timer
-    * expires - pop up dialog saying something is not responding
-    */
    for (l = e_border_client_list(); l; l = l->next)
      {
 	E_Border *bd;
@@ -410,6 +434,7 @@ static int
 _e_sys_action_do(E_Sys_Action a, char *param)
 {
    char buf[4096];
+   E_Obj_Dialog *od;
    
    switch (a)
      {
@@ -439,6 +464,16 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 	else
 	  {
 	     _e_sys_exe = ecore_exe_run(buf, NULL);
+	     od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()), 
+				   _("Shutting down"), "E", "_sys_halt");
+	     e_obj_dialog_obj_theme_set(od, "base/theme/sys", "e/sys/halt");
+	     e_obj_dialog_obj_part_text_set(od, "e.textblock.message",
+					    _("Shutting down your Computer.<br>"
+					      "<hilight>Please wait.</hilight>"));
+	     e_obj_dialog_show(od);
+	     e_obj_dialog_icon_set(od, "enlightenment/logout");
+	     if (_e_sys_dialog) e_object_del(E_OBJECT(_e_sys_dialog));
+	     _e_sys_dialog = od;
 	     /* FIXME: display halt status */
 	  }
 	break;
@@ -455,6 +490,16 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 	else
 	  {
 	     _e_sys_exe = ecore_exe_run(buf, NULL);
+	     od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()), 
+				   _("Rebooting"), "E", "_sys_reboot");
+	     e_obj_dialog_obj_theme_set(od, "base/theme/sys", "e/sys/reboot");
+	     e_obj_dialog_obj_part_text_set(od, "e.textblock.message",
+					    _("Rebooting your Computer.<br>"
+					      "<hilight>Please wait.</hilight>"));
+	     e_obj_dialog_show(od);
+	     e_obj_dialog_icon_set(od, "enlightenment/logout");
+	     if (_e_sys_dialog) e_object_del(E_OBJECT(_e_sys_dialog));
+	     _e_sys_dialog = od;
 	     /* FIXME: display reboot status */
 	  }
 	break;
@@ -470,6 +515,16 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 	else
 	  {
 	     _e_sys_exe = ecore_exe_run(buf, NULL);
+	     od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()), 
+				   _("Suspending"), "E", "_sys_suspend");
+	     e_obj_dialog_obj_theme_set(od, "base/theme/sys", "e/sys/suspend");
+	     e_obj_dialog_obj_part_text_set(od, "e.textblock.message",
+					    _("Suspending your Computer.<br>"
+					      "<hilight>Please wait.</hilight>"));
+	     e_obj_dialog_show(od);
+	     e_obj_dialog_icon_set(od, "enlightenment/logout");
+	     if (_e_sys_dialog) e_object_del(E_OBJECT(_e_sys_dialog));
+	     _e_sys_dialog = od;
 	     /* FIXME: display suspend status */
 	  }
 	break;
@@ -485,6 +540,16 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 	else
 	  {
 	     _e_sys_exe = ecore_exe_run(buf, NULL);
+	     od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()), 
+				   _("Hibernating"), "E", "_sys_hibernate");
+	     e_obj_dialog_obj_theme_set(od, "base/theme/sys", "e/sys/hibernate");
+	     e_obj_dialog_obj_part_text_set(od, "e.textblock.message",
+					    _("Hibernating your Computer.<br>"
+					      "<hilight>Please wait.</hilight>"));
+	     e_obj_dialog_show(od);
+	     e_obj_dialog_icon_set(od, "enlightenment/logout");
+	     if (_e_sys_dialog) e_object_del(E_OBJECT(_e_sys_dialog));
+	     _e_sys_dialog = od;
 	     /* FIXME: display hibernate status */
 	  }
 	break;

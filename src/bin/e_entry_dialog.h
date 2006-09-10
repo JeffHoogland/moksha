@@ -9,7 +9,7 @@ typedef struct _E_Entry_Dialog E_Entry_Dialog;
 #ifndef E_ENTRY_DIALOG_H
 #define E_ENTRY_DIALOG_H
 
-#define E_ENTRY_DIALOG_TYPE 0xE0b01025
+#define E_ENTRY_DIALOG_TYPE 0xE0b0101d
 
 struct _E_Entry_Dialog
 {

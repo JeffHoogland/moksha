@@ -40,8 +40,8 @@ typedef struct _E_Gadcon_Client_Class E_Gadcon_Client_Class;
 #ifndef E_GADCON_H
 #define E_GADCON_H
 
-#define E_GADCON_TYPE 0xE0b01022
-#define E_GADCON_CLIENT_TYPE 0xE0b01023
+#define E_GADCON_TYPE 0xE0b01006
+#define E_GADCON_CLIENT_TYPE 0xE0b01007
 
 struct _E_Gadcon
 {

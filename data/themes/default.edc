@@ -74,5 +74,6 @@ collections {
 #include "default_cslider.edc"
 #include "default_spectrum.edc"
 #include "default_color_well.edc"
+#include "default_sys.edc"
 }
 
