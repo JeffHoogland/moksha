@@ -13,7 +13,7 @@ Some of the things (in very short form) that need to be done to E17...
   cmd-line options (eg my exe is "xterm -e mutt" should nto strip off the
   options) so "exe %u" -> "exe ", "exe -f %u" -> "exe -f ",
   "exe -f" -> "exe -f"
-* BUG: adding app using "applications" dialog to a bar dir ends up with bmank
+* BUG: adding app using "applications" dialog to a bar dir ends up with blank
   icons in the bar dir in the apps dialog - until a restart
 * BUG: smart placement seems to screw up if a shelf is at the top of the screen
 * BUG: e17 screen res diaolg doesnt work under xephyr - why?
@@ -47,13 +47,13 @@ Some of the things (in very short form) that need to be done to E17...
 * finish complete netwm support
 * add a "taskbar" module
 * add cpu load module
-* add setup/install wizard to seed eap files etc. etc.
+* add setup/install wizard to seed .desktop files etc. etc.
 * support color classes (gui config  etc. etc.)
 * finish clientinfo dialog for borders (netwm props etc. etc.)
 * gui config dialogs for all config
 * make it possible to disable border buttons/actions (tell theme what is
   disabled)
-* Dragging a non-eap icon from a border to the ibar should automatically
+* Dragging a non-desktop icon from a border to the ibar should automatically
   create the icon and add that (instead of warning the user that this can't be
   done)
 ]]]
@@ -63,7 +63,7 @@ Some of the things (in very short form) that need to be done to E17...
   CLEANUPS
 -------------------------------------------------------------------------------
 
-* client list menu could do with work on ordering, using sepaators to demark
+* client list menu could do with work on ordering, using separators to demark
   this desktop and other desktops, sorting by recently used, separate
   section for iconified apps etc. etc - configurable.
 * cleanup windows menu item needs action wrapper
@@ -84,7 +84,6 @@ Some of the things (in very short form) that need to be done to E17...
 * need to audit, namespace and expand text and color classes
 * need to specify what is NEEDED from a  theme, what is  optional (in terms of
   parts, groups and signals). etc.
-* ipc is a mess. overgrown. hard to work with. what to do? remove?
 * winlist should support place for window "screenshot" in list as well as
   app icon
 * winlist could divide windows up into blocks - sub-lists within a container
@@ -99,11 +98,6 @@ Some of the things (in very short form) that need to be done to E17...
 * virtual desktops config needs a preview of the desktops and their bg's
 * desktop flip animations need to allow control over accel/decel and
   have a better ui - add wobble and controls etc. etc.
-* logout sysaction needs to be implemented
-* reboot, shutdown needs a progress dialog (as it does logout first) and
-  show status then a "shutting down/rebooting now" - maybe an abort too
-  with a countdown.
-* suspend/hibernate needs a "suspending/hibernating" "progress" dialog
 ]]]
 
 [[[
@@ -123,7 +117,7 @@ Some of the things (in very short form) that need to be done to E17...
 * setup configs for gnome and kde (as options) if they are installed (eg
   run gnome-settings-daemon).
 * check evas engine can work on a given screen before using it
-* non opaque move/resize
+* add non-opaque move/resize (use shaped windows with canvases etc.)
 * add "osd" subsystem for things like volume controls on keybboards, etc.
   that overlay the screen
 * file icons on the desktop (people ask for it) - xdnd for these
