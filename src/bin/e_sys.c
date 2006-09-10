@@ -471,7 +471,7 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 					    _("Shutting down your Computer.<br>"
 					      "<hilight>Please wait.</hilight>"));
 	     e_obj_dialog_show(od);
-	     e_obj_dialog_icon_set(od, "enlightenment/logout");
+	     e_obj_dialog_icon_set(od, "enlightenment/halt");
 	     if (_e_sys_dialog) e_object_del(E_OBJECT(_e_sys_dialog));
 	     _e_sys_dialog = od;
 	     /* FIXME: display halt status */
@@ -497,7 +497,7 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 					    _("Rebooting your Computer.<br>"
 					      "<hilight>Please wait.</hilight>"));
 	     e_obj_dialog_show(od);
-	     e_obj_dialog_icon_set(od, "enlightenment/logout");
+	     e_obj_dialog_icon_set(od, "enlightenment/reboot");
 	     if (_e_sys_dialog) e_object_del(E_OBJECT(_e_sys_dialog));
 	     _e_sys_dialog = od;
 	     /* FIXME: display reboot status */
@@ -522,7 +522,7 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 					    _("Suspending your Computer.<br>"
 					      "<hilight>Please wait.</hilight>"));
 	     e_obj_dialog_show(od);
-	     e_obj_dialog_icon_set(od, "enlightenment/logout");
+	     e_obj_dialog_icon_set(od, "enlightenment/suspend");
 	     if (_e_sys_dialog) e_object_del(E_OBJECT(_e_sys_dialog));
 	     _e_sys_dialog = od;
 	     /* FIXME: display suspend status */
@@ -547,7 +547,7 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 					    _("Hibernating your Computer.<br>"
 					      "<hilight>Please wait.</hilight>"));
 	     e_obj_dialog_show(od);
-	     e_obj_dialog_icon_set(od, "enlightenment/logout");
+	     e_obj_dialog_icon_set(od, "enlightenment/hibernate");
 	     if (_e_sys_dialog) e_object_del(E_OBJECT(_e_sys_dialog));
 	     _e_sys_dialog = od;
 	     /* FIXME: display hibernate status */

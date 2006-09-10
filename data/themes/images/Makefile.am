@@ -322,10 +322,6 @@ e17_icon_e_0.png \
 e17_icon_e_glow_0.png \
 e17_icon_favorites.png \
 e17_icon_module.png \
-e17_icon_power_button_0.png \
-e17_icon_power_button_glow_0.png \
-e17_icon_reset_button_0.png \
-e17_icon_reset_button_glow_0.png \
 e17_icon_run.png \
 e17_icon_theme.png \
 e17_icon_windows.png \
@@ -493,4 +489,11 @@ e17_wallpaper_center.png \
 e17_wallpaper_grad_screen.png \
 e17_wallpaper_screen.png \
 e17_wallpaper_center_flat.png \
-e17_well_overlay.png
+e17_well_overlay.png \
+e17_icon_e_exit.png \
+e17_icon_e_reset.png \
+e17_icon_logout.png \
+e17_icon_hibernate.png \
+e17_icon_suspend.png \
+e17_icon_halt.png \
+e17_icon_reboot.png

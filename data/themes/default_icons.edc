@@ -2,12 +2,6 @@ images {
    image: "e17_icon_e_0.png" LOSSY 90;
    image: "e17_icon_e_glow_0.png" LOSSY 90;
    
-   image: "e17_icon_power_button_0.png" LOSSY 90;
-   image: "e17_icon_power_button_glow_0.png" LOSSY 90;
-   
-   image: "e17_icon_reset_button_0.png" LOSSY 90;
-   image: "e17_icon_reset_button_glow_0.png" LOSSY 90;
-   
    image: "e17_icon_theme.png" LOSSY 90;
 
    image: "e17_icon_windows.png" LOSSY 90;
@@ -78,6 +72,13 @@ images {
    image: "e17_wallpaper_screen.png" COMP;
    image: "e17_wallpaper_center_flat.png" COMP;
    image: "e17_wallpaper_grad_screen.png" COMP;
+   image: "e17_icon_e_exit.png" COMP;
+   image: "e17_icon_e_reset.png" COMP;
+   image: "e17_icon_logout.png" COMP;
+   image: "e17_icon_hibernate.png" COMP;
+   image: "e17_icon_suspend.png" COMP;
+   image: "e17_icon_halt.png" COMP;
+   image: "e17_icon_reboot.png" COMP;
 }
 
 group {
@@ -142,72 +143,11 @@ group {
    }
 }
 group {
-   name: "e/icons/enlightenment/exit";
-   max:  64 64;
-   parts {
-      part {      
-	 name:          "power_button";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    aspect:   1.0 1.0;
-	    aspect_preference: BOTH;
-	    max:      64 64;
-	    image {
-	       normal: "e17_icon_power_button_0.png";
-	    }
-	 }
-      }
-      part {
-	 name:          "power_button_glow";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    visible:   0;
-	    rel1 {
-	       to:       "power_button";
-	    }
-	    rel2 {
-	       to:       "power_button";
-	    }
-	    color:       255 255 255 0;
-	    image {
-	       normal: "e17_icon_power_button_glow_0.png";
-	    }
-	 }
-	 description {
-	    state:    "hilited" 0.0;
-	    inherit:  "default"  0.0;
-	    visible:   1;
-	    color:     255 255 255 255;
-	 }
-      }
-   }
-   programs {
-      program {	 
-	 name:       "power_button_in";
-	 signal:     "e,state,selected";
-	 source:     "e";
-	 action:     STATE_SET "hilited" 0.0;
-	 transition: LINEAR 0.5;
-	 target:     "power_button_glow";
-      }
-      program {
-	 name:       "power_button_out";
-	 signal:     "e,state,unselected";
-	 source:     "e";
-	 action:     STATE_SET "default" 0.0;
-	 transition: LINEAR 0.5;
-	 target:     "power_button_glow";
-      }
-   }
-}
-group {
    name: "e/icons/enlightenment/reset";
    max:  64 64;
    parts {
-      part {      
-	 name:          "reset_button";
+      part {
+	 name:          "icon";
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
@@ -215,60 +155,132 @@ group {
 	    aspect_preference: BOTH;
 	    max:      64 64;
 	    image {
-	       normal: "e17_icon_reset_button_0.png";
+	       normal: "e17_icon_e_reset.png";
 	    }
 	 }
       }
+   }
+}   
+group {
+   name: "e/icons/enlightenment/exit";
+   max:  64 64;
+   parts {
       part {
-	 name:          "reset_button_glow";
+	 name:          "icon";
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
-	    visible:   0;
-	    rel1 {
-	       to:       "reset_button";
-	    }
-	    rel2 {
-	       to:       "reset_button";
-	    }
-	    color:       255 255 255 0;
+	    aspect:   1.0 1.0;
+	    aspect_preference: BOTH;
+	    max:      64 64;
 	    image {
-	       normal: "e17_icon_reset_button_glow_0.png";
+	       normal: "e17_icon_e_exit.png";
 	    }
 	 }
+      }
+   }
+}   
+group {
+   name: "e/icons/enlightenment/logout";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
 	 description {
-	    state:    "hilited" 0.0;
-	    inherit:  "default"  0.0;
-	    visible:   1;
-	    color:     255 255 255 255;
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    aspect_preference: BOTH;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_logout.png";
+	    }
 	 }
       }
    }
-   programs {
-      program {	 
-	 name:       "reset_button_in";
-	 signal:     "e,state,selected";
-	 source:     "e";
-	 action:     STATE_SET "hilited" 0.0;
-	 transition: LINEAR 0.5;
-	 target:     "reset_button_glow";
-      }
-      program {
-	 name:       "reset_button_out";
-	 signal:     "e,state,unselected";
-	 source:     "e";
-	 action:     STATE_SET "default" 0.0;
-	 transition: LINEAR 0.5;
-	 target:     "reset_button_glow";
+}   
+group {
+   name: "e/icons/enlightenment/halt";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    aspect_preference: BOTH;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_halt.png";
+	    }
+	 }
       }
    }
-}
+}   
+group {
+   name: "e/icons/enlightenment/reboot";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    aspect_preference: BOTH;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_reboot.png";
+	    }
+	 }
+      }
+   }
+}   
+group {
+   name: "e/icons/enlightenment/suspend";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    aspect_preference: BOTH;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_suspend.png";
+	    }
+	 }
+      }
+   }
+}   
+group {
+   name: "e/icons/enlightenment/hibernate";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    aspect_preference: BOTH;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_hibernate.png";
+	    }
+	 }
+      }
+   }
+}   
 group {
    name: "e/icons/enlightenment/themes";
    max:  64 64;
    parts {
       part {      
-	 name:          "e/theme_button";
+	 name:          "icon";
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
