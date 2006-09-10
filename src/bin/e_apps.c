@@ -1658,12 +1658,15 @@ e_app_icon_add(Evas *evas, E_App *a)
 	       }
 	     else if (a->icon_class)   /* If that fails, then this might be an FDO icon. */
 	       {
-		  char *v;
+		  char *v = NULL;
 		  
 		  /* FIXME: Use a real icon size. */
-		  v = (char *) ecore_desktop_icon_find(a->icon_class, NULL, e_config->icon_theme);
+		  v = (char *)ecore_desktop_icon_find(a->icon_class, NULL, e_config->icon_theme);
 		  if (v)
-		    a->icon_path = evas_stringshare_add(v);
+		    {
+		       a->icon_path = evas_stringshare_add(v);
+		       free(v);
+		    }
 	       }
 	     
 	     if (a->icon_path)
