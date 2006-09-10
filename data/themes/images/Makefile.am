@@ -406,6 +406,7 @@ e17_icon_shelf.png \
 e17_icon_applications.png \
 e17_icon_performance.png \
 e17_icon_startup.png \
+e17_icon_menus.png \
 e17_button_detail_paste.png \
 e17_button_detail_arrange_name.png \
 e17_button_detail_properties.png \
