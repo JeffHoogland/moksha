@@ -1237,7 +1237,7 @@ e_app_fields_fill(E_App *a, const char *path)
 	   if (desktop->comment)  a->comment = evas_stringshare_add(desktop->comment);
 
 	   if (desktop->exec)  a->exe = evas_stringshare_add(desktop->exec);
-	   if (desktop->exec_params)  a->exe = evas_stringshare_add(desktop->exec_params);
+	   if (desktop->exec_params)  a->exe_params = evas_stringshare_add(desktop->exec_params);
 	   if (desktop->icon_class)  a->icon_class = evas_stringshare_add(desktop->icon_class);
 	   if (desktop->icon_path)  a->icon_path = evas_stringshare_add(desktop->icon_path);
 	   if (desktop->window_class)  a->win_class = evas_stringshare_add(desktop->window_class);
@@ -1301,7 +1301,6 @@ e_app_fields_fill(E_App *a, const char *path)
         }
       eet_close(ef);
    }
-
 }
 
 static char *
@@ -1520,6 +1519,7 @@ e_app_fields_empty(E_App *a)
    if (a->win_class) evas_stringshare_del(a->win_class);
    if (a->win_title) evas_stringshare_del(a->win_title);
    if (a->win_role) evas_stringshare_del(a->win_role);
+   a->desktop = NULL;
    a->name = NULL;
    a->generic = NULL;
    a->comment = NULL;
@@ -2276,6 +2276,7 @@ _e_app_copy(E_App *dst, E_App *src)
      }
 
    dst->orig = src;
+   dst->desktop = src->desktop;
 
    dst->name = src->name;
    dst->generic = src->generic;
