@@ -165,8 +165,9 @@ WHEN:
 ISSUES:
     When new applications are installed, will need to update.
 SOLUTION:
-    Parse them during idle time.  Monitor relevant directories.
-    ~/.e/e/applications/menu/all is the results cached to disk.
+    Parse them during idle time, maybe as a seperate process.  Monitor
+    relevant directories. ~/.e/e/applications/menu/all is the results
+    cached to disk.
 
 -----------------------------------------------------------------------
 
@@ -206,7 +207,8 @@ SOLUTION:
     The results of the search should be cached somewhere on disk for 
     future reference.  That needs to be nuked when the user changes 
     icon theme.  Changing the icon theme currently does not update all 
-    displayed icons.
+    displayed icons.  The X-Enlightenment-IconPath field of the .desktop
+    file could be used for the on disk cache.
 
 -----------------------------------------------------------------------
 
@@ -224,6 +226,9 @@ ISSUES:
     directory with all of them that are for E_Apps, some are just links 
     to system files. 
 SOLUTION:
+    Remove after implementing the E_App cache then see if these still
+    needs caching.  Note that the menu generation probably reads the
+    .desktop files twice each.
 
 -----------------------------------------------------------------------
 
@@ -234,7 +239,7 @@ USED BY:
 WHEN:
     Currently all read in at startup time.  Should change this to an 
     idle time task.  Still need to read in them all near startup time 
-    though.  WE need all of them for searching.
+    though.  We need all of them for searching.
 ISSUES:
     The current eap caching code is not up to scratch, and the .desktop 
     conversion didn't help.  It does hide some other bugs though, so that 
@@ -245,3 +250,10 @@ ISSUES:
     As mentioned above, we need quick searching of them all.
 SOLUTION:
     Nuke the existing cache code.  Replace with...
+
+    Hash of filenames that contains the E_App structures, alphabetically
+    sorted list (Ecore_Sheap?) of human visible names that contains the
+    filenames.  Fill them during idle time, also as needed, and finish
+    it async when exebuf starts up.  Later we shall see if an on disk
+    copy is needed.
+
