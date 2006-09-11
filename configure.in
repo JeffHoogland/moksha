@@ -293,6 +293,7 @@ data/xsession/Makefile
 data/xsession/enlightenment.desktop
 data/backgrounds/Makefile
 data/etc/Makefile
+data/icons/Makefile
 doc/Makefile
 po/Makefile
 intl/Makefile

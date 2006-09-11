@@ -384,7 +384,7 @@ main(int argc, char **argv)
 
    ecore_desktop_paths_extras_clear();
    ecore_desktop_paths_prepend_user(ECORE_DESKTOP_PATHS_ICONS, "~/.e/e/icons");
-   snprintf(buf, sizeof(buf), "%s/data/images", e_prefix_data_get());
+   snprintf(buf, sizeof(buf), "%s/data/icons", e_prefix_data_get());
    ecore_desktop_paths_append_system(ECORE_DESKTOP_PATHS_ICONS, buf);
    ecore_desktop_paths_regen();
 
