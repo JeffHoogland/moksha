@@ -7,7 +7,7 @@
 #define MOD_ENABLED 1
 
 /* TODO:
- * Filtering/sorting of left side to make managing thousands of apps easy.
+ * More filtering/sorting of left side to make managing thousands of apps easy.
  *
  * These things require support from e_fm -
  * DND from left side to righ side, and to ibar etc.
@@ -27,8 +27,8 @@ struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
    E_Fm2_Icon_Info *info;
+   char *selected;
    char path_all[4096], path_everything[4096], path[4096], *homedir;
-   int state;
    int sorted;
    struct {
       Evas_Object *o_fm_all;
@@ -70,7 +70,6 @@ e_int_config_apps_once(E_Container *con, const char *label, int (*func) (void *d
 
    if (func)
       {
-         /* FIXME: figure out some way of freeing this once we have finished with it. */
          once = E_NEW(struct _E_Config_Once, 1);
 	 if (once)
 	    {
@@ -119,9 +118,10 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
+   if (cfdata->selected)   free(cfdata->selected);
+   if (cfdata->cfd->data)  free(cfdata->cfd->data);
    free(cfdata);
 }
-
 
 static void
 _cb_button_up(void *data1, void *data2)
@@ -170,6 +170,8 @@ _cb_files_dir_changed(void *data, Evas_Object *obj, void *event_info)
      e_widget_disabled_set(cfdata->gui.o_move_down_button, 1);
    if (cfdata->gui.o_frame)
      e_widget_scrollframe_child_pos_set(cfdata->gui.o_frame, 0, 0);
+   if (cfdata->selected)   free(cfdata->selected);
+   cfdata->selected = NULL;
 }
 
 static void
@@ -194,22 +196,30 @@ _cb_files_dir_changed_all(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_cb_files_sel_changed(void *data, Evas_Object *obj, void *event_info)
+_cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
+   Evas_List *selected;
+   E_Fm2_Icon_Info *ici = NULL;
    const char *realpath;
    char buf[4096];
    
    cfdata = data;
    if (!cfdata->gui.o_fm) return;
+   selected = e_fm2_selected_list_get(cfdata->gui.o_fm);
+   if (selected)   ici = selected->data;
    realpath = e_fm2_real_path_get(cfdata->gui.o_fm);
    snprintf(buf, sizeof(buf), "%s/.order", realpath);
+   if (cfdata->selected)   free(cfdata->selected);
+   cfdata->selected = NULL;
    if (ecore_file_exists(buf))
      {
 	if (cfdata->gui.o_move_up_button)
-	  e_widget_disabled_set(cfdata->gui.o_move_up_button, 0);
+	   e_widget_disabled_set(cfdata->gui.o_move_up_button, 0);
 	if (cfdata->gui.o_move_down_button)
-	  e_widget_disabled_set(cfdata->gui.o_move_down_button, 0);
+	   e_widget_disabled_set(cfdata->gui.o_move_down_button, 0);
+	if ((ici) && (ici->file))
+           cfdata->selected = strdup(ici->file);
      }
    else
      {
@@ -227,10 +237,21 @@ _cb_files_changed(void *data, Evas_Object *obj, void *event_info)
    
    cfdata = data;
    if (!cfdata->gui.o_fm) return;
-   if (cfdata->gui.o_move_up_button)
-     e_widget_disabled_set(cfdata->gui.o_move_up_button, 1);
-   if (cfdata->gui.o_move_down_button)
-     e_widget_disabled_set(cfdata->gui.o_move_down_button, 1);
+   if (cfdata->selected)
+      {
+         if (cfdata->gui.o_move_up_button)
+            e_widget_disabled_set(cfdata->gui.o_move_up_button, 0);
+         if (cfdata->gui.o_move_down_button)
+            e_widget_disabled_set(cfdata->gui.o_move_down_button, 0);
+         e_fm2_select_set(cfdata->gui.o_fm, cfdata->selected, 1);
+      }
+   else
+      {
+         if (cfdata->gui.o_move_up_button)
+            e_widget_disabled_set(cfdata->gui.o_move_up_button, 1);
+         if (cfdata->gui.o_move_down_button)
+            e_widget_disabled_set(cfdata->gui.o_move_down_button, 1);
+      }
 }
 
 static void
@@ -261,7 +282,7 @@ _cb_button_create(void *data1, void *data2)
 }
 
 static void
-_cb_files_selected(void *data, Evas_Object *obj, void *event_info)
+_cb_files_selected_all(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
    Evas_List *selected;
@@ -293,7 +314,7 @@ _cb_files_selected(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
+_cb_files_selection_change_all(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
    
@@ -302,7 +323,7 @@ _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
+_cb_files_changed_all(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
    
@@ -432,8 +453,6 @@ _cb_button_move_up(void *data1, void *data2)
    evas_list_free(selected);
    _move_file_up_in_order(realpath, ici->file);
    e_fm2_refresh(cfdata->gui.o_fm);
-   /* FIXME: This doesn't seem to work, maybe I need to call it in a callback after the refresh is done? */
-   e_fm2_select_set(cfdata->gui.o_fm, ici->file, 1);
 }
 
 static void
@@ -454,8 +473,6 @@ _cb_button_move_down(void *data1, void *data2)
    evas_list_free(selected);
    _move_file_down_in_order(realpath, ici->file);
    e_fm2_refresh(cfdata->gui.o_fm);
-   /* FIXME: This doesn't seem to work, maybe I need to call it in a callback after the refresh is done? */
-   e_fm2_select_set(cfdata->gui.o_fm, ici->file, 1);
 }
 
 static void
@@ -516,11 +533,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    evas_object_smart_callback_add(mt, "dir_changed",
 					_cb_files_dir_changed_all, cfdata);
    evas_object_smart_callback_add(mt, "selected",
-				  _cb_files_selected, cfdata);
+				  _cb_files_selected_all, cfdata);
    evas_object_smart_callback_add(mt, "selection_change",
-				  _cb_files_selection_change, cfdata);
+				  _cb_files_selection_change_all, cfdata);
    evas_object_smart_callback_add(mt, "changed",
-				  _cb_files_files_changed, cfdata);
+				  _cb_files_changed_all, cfdata);
    e_fm2_icon_menu_start_extend_callback_set(mt, _cb_files_add_edited, cfdata);
    e_fm2_path_set(cfdata->gui.o_fm_all, cfdata->path_all, "/");
 
@@ -603,7 +620,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
          evas_object_smart_callback_add(mt, "dir_changed",
 					_cb_files_dir_changed, cfdata);
          evas_object_smart_callback_add(mt, "selection_change",
-					_cb_files_sel_changed, cfdata);
+					_cb_files_selection_change, cfdata);
          evas_object_smart_callback_add(mt, "changed",
 					_cb_files_changed, cfdata);
          e_fm2_path_set(cfdata->gui.o_fm, cfdata->path, "/");
