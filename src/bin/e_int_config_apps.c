@@ -486,6 +486,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->gui.o_frame = ob;
    e_widget_min_size_set(ob, 150, 220);
    e_widget_framelist_object_append(of, ob);
+   e_box_pack_options_set(ob,
+			  1, 1, /* fill */
+			  1, 1, /* expand */
+			  0.5, 0.5, /* align */
+			  150, 220, /* min */
+			  99999, 99999 /* max */
+			  );
 
    if (once)
       mt = e_widget_button_add(evas, _(once->label), "enlightenment/e",
@@ -554,6 +561,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
          cfdata->gui.o_frame = ob;
          e_widget_min_size_set(ob, 150, 220);
          e_widget_framelist_object_append(of, ob);
+         e_box_pack_options_set(ob,
+			  1, 1, /* fill */
+			  1, 1, /* expand */
+			  0.5, 0.5, /* align */
+			  150, 220, /* min */
+			  99999, 99999 /* max */
+			  );
 
          mt = e_widget_button_add(evas, _("Move application up"), "enlightenment/e",
 			   _cb_button_move_up, cfdata, NULL);
