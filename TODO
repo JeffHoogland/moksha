@@ -8,11 +8,6 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: exe and options split doesnt do things quite right - it should empty
-  out %u/U/f whatever (parts and conver them to empty strings) but keep other
-  cmd-line options (eg my exe is "xterm -e mutt" should nto strip off the
-  options) so "exe %u" -> "exe ", "exe -f %u" -> "exe -f ",
-  "exe -f" -> "exe -f"
 * BUG: adding app using "applications" dialog to a bar dir ends up with blank
   icons in the bar dir in the apps dialog - until a restart
 * BUG: smart placement seems to screw up if a shelf is at the top of the screen
