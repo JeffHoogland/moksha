@@ -317,12 +317,14 @@ e17_winlist_bottom.png \
 e17_pager_window_shaded.png \
 e17_transition_vswipe_gap.png \
 e17_icon_configuration.png \
+e17_icon_system.png \
 e17_icon_desktop.png \
 e17_icon_e_0.png \
 e17_icon_e_glow_0.png \
 e17_icon_favorites.png \
 e17_icon_module.png \
 e17_icon_run.png \
+e17_icon_directories.png \
 e17_icon_theme.png \
 e17_icon_windows.png \
 e17_icon_window_focus.png \
