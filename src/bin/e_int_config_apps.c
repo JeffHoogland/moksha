@@ -27,12 +27,15 @@ struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
    E_Fm2_Icon_Info *info;
+   char path_all[4096], path_everything[4096], path[4096], *homedir;
    int state;
+   int sorted;
    struct {
       Evas_Object *o_fm_all;
       Evas_Object *o_fm;
       Evas_Object *o_frame;
       Evas_Object *o_up_button;
+      Evas_Object *o_up_all_button;
       Evas_Object *o_add_button;
       Evas_Object *o_create_button;
       Evas_Object *o_delete_left_button;
@@ -93,12 +96,12 @@ e_int_config_apps(E_Container *con)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
-   char path_all[4096], *homedir;
-
-   homedir = e_user_homedir_get();
-   if (!homedir) return;
-
-   snprintf(path_all, sizeof(path_all), "%s/.e/e/applications/all", homedir);
+   cfdata->homedir = e_user_homedir_get();
+   if (!cfdata->homedir) return;
+   
+   snprintf(cfdata->path_everything, sizeof(cfdata->path_everything), "%s/.e/e/applications/all", cfdata->homedir);
+   snprintf(cfdata->path, sizeof(cfdata->path), "%s/.e/e/applications", cfdata->homedir);
+   snprintf(cfdata->path_all, sizeof(cfdata->path_all), "%s/.e/e/applications/menu/all", cfdata->homedir);
    return;
 }
 
@@ -133,6 +136,18 @@ _cb_button_up(void *data1, void *data2)
 }
 
 static void
+_cb_button_up_all(void *data1, void *data2)
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data1;
+   if (cfdata->gui.o_fm_all)
+     e_fm2_parent_go(cfdata->gui.o_fm_all);
+   if (cfdata->gui.o_frame)
+     e_widget_scrollframe_child_pos_set(cfdata->gui.o_frame, 0, 0);
+}
+
+static void
 _cb_files_dir_changed(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
@@ -153,6 +168,27 @@ _cb_files_dir_changed(void *data, Evas_Object *obj, void *event_info)
      e_widget_disabled_set(cfdata->gui.o_move_up_button, 1);
    if (cfdata->gui.o_move_down_button)
      e_widget_disabled_set(cfdata->gui.o_move_down_button, 1);
+   if (cfdata->gui.o_frame)
+     e_widget_scrollframe_child_pos_set(cfdata->gui.o_frame, 0, 0);
+}
+
+static void
+_cb_files_dir_changed_all(void *data, Evas_Object *obj, void *event_info)
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data;
+   if (!cfdata->gui.o_fm_all) return;
+   if (!e_fm2_has_parent_get(cfdata->gui.o_fm_all))
+     {
+	if (cfdata->gui.o_up_all_button)
+	  e_widget_disabled_set(cfdata->gui.o_up_all_button, 1);
+     }
+   else
+     {
+	if (cfdata->gui.o_up_all_button)
+	  e_widget_disabled_set(cfdata->gui.o_up_all_button, 0);
+     }
    if (cfdata->gui.o_frame)
      e_widget_scrollframe_child_pos_set(cfdata->gui.o_frame, 0, 0);
 }
@@ -321,6 +357,19 @@ _cb_files_add_edited(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *i
 }
 
 static void
+_cb_files_sorted_changed(void *data, Evas_Object *obj, void *event_info)
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data;
+   if (!cfdata->gui.o_fm_all) return;
+   if (cfdata->sorted)
+      e_fm2_path_set(cfdata->gui.o_fm_all, cfdata->path_everything, "/");
+   else
+      e_fm2_path_set(cfdata->gui.o_fm_all, cfdata->path_all, "/");
+}
+
+static void
 _cb_button_add(void *data1, void *data2)
 {
    E_Config_Dialog_Data *cfdata;
@@ -428,12 +477,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    Evas_Object *o, *of, *ob, *ot, *ilist, *mt;
    Evas_List *l;
    E_Fm2_Config fmc_all, fmc;
-   char path_all[4096], path[4096], *homedir;
    int i;
 
-   homedir = e_user_homedir_get();
-   if (!homedir) return NULL;
-   
    if (cfdata->cfd->data)
       once = cfdata->cfd->data;
 
@@ -442,9 +487,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    of = e_widget_framelist_add(evas, _("Available Applications"), 0);
 
-   mt = e_widget_button_add(evas, _("Create a new application"), "enlightenment/e",
-			   _cb_button_create, cfdata, NULL);
-   cfdata->gui.o_create_button = mt;
+   mt = e_widget_button_add(evas, _("Go up a Directory"), "widget/up_dir",
+		           _cb_button_up_all, cfdata, NULL);
+   cfdata->gui.o_up_all_button = mt;
    e_widget_framelist_object_append(of, mt);
 
    mt = e_fm2_add(evas);
@@ -455,7 +500,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    fmc_all.view.selector = 1;
    fmc_all.view.single_click = 0;
    fmc_all.view.no_subdir_jump = 0;
-   fmc_all.view.extra_file_source = NULL;
+   fmc_all.view.extra_file_source = cfdata->path_everything;
    fmc_all.icon.list.w = 24;
    fmc_all.icon.list.h = 24;
    fmc_all.icon.fixed.w = 1;
@@ -468,6 +513,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    fmc_all.selection.single = 1;
    fmc_all.selection.windows_modifiers = 0;
    e_fm2_config_set(mt, &fmc_all);
+   evas_object_smart_callback_add(mt, "dir_changed",
+					_cb_files_dir_changed_all, cfdata);
    evas_object_smart_callback_add(mt, "selected",
 				  _cb_files_selected, cfdata);
    evas_object_smart_callback_add(mt, "selection_change",
@@ -475,8 +522,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    evas_object_smart_callback_add(mt, "changed",
 				  _cb_files_files_changed, cfdata);
    e_fm2_icon_menu_start_extend_callback_set(mt, _cb_files_add_edited, cfdata);
-   snprintf(path_all, sizeof(path_all), "%s/.e/e/applications/all", homedir);
-   e_fm2_path_set(cfdata->gui.o_fm_all, path_all, "/");
+   e_fm2_path_set(cfdata->gui.o_fm_all, cfdata->path_all, "/");
 
    ob = e_widget_scrollframe_pan_add(evas, mt,
 				     e_fm2_pan_set,
@@ -494,6 +540,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 			  99999, 99999 /* max */
 			  );
 
+   mt = e_widget_check_add(evas, _("Sort applications"), &(cfdata->sorted));
+   evas_object_smart_callback_add(mt, "changed",
+				  _cb_files_sorted_changed, cfdata);
+   e_widget_framelist_object_append(of, mt);
+
    if (once)
       mt = e_widget_button_add(evas, _(once->label), "enlightenment/e",
 			   _cb_button_add, cfdata, NULL);
@@ -503,6 +554,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->gui.o_add_button = mt;
    e_widget_framelist_object_append(of, mt);
    e_widget_disabled_set(mt, 1);
+
+   mt = e_widget_button_add(evas, _("Create a new application"), "enlightenment/e",
+			   _cb_button_create, cfdata, NULL);
+   cfdata->gui.o_create_button = mt;
+   e_widget_framelist_object_append(of, mt);
 
    if (!once)
       {
@@ -531,7 +587,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
          fmc.view.selector = 1;
          fmc.view.single_click = 0;
          fmc.view.no_subdir_jump = 0;
-	 fmc.view.extra_file_source = path_all;
+	 fmc.view.extra_file_source = cfdata->path_everything;
          fmc.icon.list.w = 24;
          fmc.icon.list.h = 24;
          fmc.icon.fixed.w = 1;
@@ -550,8 +606,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 					_cb_files_sel_changed, cfdata);
          evas_object_smart_callback_add(mt, "changed",
 					_cb_files_changed, cfdata);
-         snprintf(path, sizeof(path), "%s/.e/e/applications", homedir);
-         e_fm2_path_set(cfdata->gui.o_fm, path, "/");
+         e_fm2_path_set(cfdata->gui.o_fm, cfdata->path, "/");
 
          ob = e_widget_scrollframe_pan_add(evas, mt,
 				     e_fm2_pan_set,
