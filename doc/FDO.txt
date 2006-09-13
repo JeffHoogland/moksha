@@ -22,7 +22,7 @@ start up.
 
 .desktop.
 
-Two extension fields are defined as allowed by the specification. 
+Some extension fields are defined as allowed by the specification. 
 
 X-Enlightenment-IconPath is used to specify an absolute or relative path to
 an icon file.  If it exists it overrides any other icon specifications.
@@ -47,6 +47,10 @@ searched for in the usual FDO way, unless the Icon field specifies a
 path, then it is simply used with no searching.  Converted .eaps should
 just copy the app/icon/class data to the X-Enlightenment-IconClass
 field.
+
+X-Enlightenment-WindowName, X-Enlightenment-WindowTitle, 
+X-Enlightenment-WindowRole, and X-Enlightenment-WaitExit are just the same
+as their namesakes in .eaps.
 
 
 Icon theme.

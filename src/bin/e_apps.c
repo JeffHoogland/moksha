@@ -1240,8 +1240,12 @@ e_app_fields_fill(E_App *a, const char *path)
 	   if (desktop->exec_params)  a->exe_params = evas_stringshare_add(desktop->exec_params);
 	   if (desktop->icon_class)  a->icon_class = evas_stringshare_add(desktop->icon_class);
 	   if (desktop->icon_path)  a->icon_path = evas_stringshare_add(desktop->icon_path);
+	   if (desktop->window_name)  a->win_name = evas_stringshare_add(desktop->window_name);
 	   if (desktop->window_class)  a->win_class = evas_stringshare_add(desktop->window_class);
+	   if (desktop->window_title)  a->win_title = evas_stringshare_add(desktop->window_title);
+	   if (desktop->window_role)  a->win_role = evas_stringshare_add(desktop->window_role);
            a->startup_notify = desktop->startup;
+           a->wait_exit = desktop->wait_exit;
 
 //	   if (desktop->type)  a->type = evas_stringshare_add(desktop->type);
 //	   if (desktop->categories)  a->categories = evas_stringshare_add(desktop->categories);
@@ -1368,8 +1372,12 @@ e_app_fields_save(E_App *a)
 	       desktop->exec_params = (char *) a->exe_params;
 	       desktop->icon_class = (char *) a->icon_class;
                desktop->icon_path = (char *) a->icon_path;
+	       desktop->window_name = (char *) a->win_name;
 	       desktop->window_class = (char *) a->win_class;
+	       desktop->window_title = (char *) a->win_title;
+	       desktop->window_role = (char *) a->win_role;
 	       desktop->startup = a->startup_notify;
+	       desktop->wait_exit = a->wait_exit;
 
                desktop->type = "Application";
 //               desktop.categories = a->categories;
