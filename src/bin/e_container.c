@@ -569,6 +569,7 @@ e_container_border_add(E_Border *bd)
 {
    int pos = 0;
 
+   if (!bd->zone) return;
    if (bd->layer == 0) pos = 0;
    else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
    else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
@@ -645,6 +646,7 @@ e_container_border_raise(E_Border *bd)
    Evas_List *l;
    int pos = 0, i;
 
+   if (!bd->zone) return;
    /* Remove from old layer */
    for (i = 0; i < 7; i++)
      {
@@ -698,6 +700,7 @@ e_container_border_lower(E_Border *bd)
    Evas_List *l;
    int pos = 0, i;
    
+   if (!bd->zone) return;
    /* Remove from old layer */
    for (i = 0; i < 7; i++)
      {
@@ -748,6 +751,7 @@ e_container_border_stack_above(E_Border *bd, E_Border *above)
 {
    int pos = 0, i;
 
+   if (!bd->zone) return;
    /* Remove from old layer */
    for (i = 0; i < 7; i++)
      {
@@ -780,6 +784,7 @@ e_container_border_stack_below(E_Border *bd, E_Border *below)
 {
    int pos = 0, i;
 
+   if (!bd->zone) return;
    /* Remove from old layer */
    for (i = 0; i < 7; i++)
      {

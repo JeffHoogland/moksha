@@ -508,7 +508,7 @@ e_border_res_change_geometry_restore(E_Border *bd)
    
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   if (!bd->pre_res_change.valid) return ;
+   if (!bd->pre_res_change.valid) return;
    
    memcpy(&pre_res_change, &bd->pre_res_change, sizeof(pre_res_change));
    
@@ -571,7 +571,8 @@ e_border_zone_set(E_Border *bd, E_Zone *zone)
    E_OBJECT_CHECK(zone);
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    if (bd->zone == zone) return;
-
+   if (!zone) return;
+   
    /* if the window does not lie in the new zone, move it so that it does */
    if (!E_INTERSECTS(bd->x, bd->y, bd->w, bd->h, zone->x, zone->y, zone->w, zone->h))
      {
