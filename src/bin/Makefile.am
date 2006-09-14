@@ -17,7 +17,6 @@ bin_PROGRAMS = \
 enlightenment \
 enlightenment_remote \
 enlightenment_eapp \
-enlightenment_eapp_cache_gen \
 enlightenment_imc \
 enlightenment_start \
 enlightenment_thumb \
@@ -84,7 +83,6 @@ e_pan.h \
 e_dialog.h \
 e_about.h \
 e_theme_about.h \
-e_apps_cache.h \
 e_editable.h \
 e_entry.h \
 e_widget.h \
@@ -230,7 +228,6 @@ e_pan.c \
 e_dialog.c \
 e_about.c \
 e_theme_about.c \
-e_apps_cache.c \
 e_editable.c \
 e_entry.c \
 e_widget.c \
@@ -339,12 +336,6 @@ e.h \
 e_eapp_main.c
 
 enlightenment_eapp_LDFLAGS = @e_libs@ @dlopen_libs@
-
-enlightenment_eapp_cache_gen_SOURCES = \
-e_eapp_cache_gen_main.c \
-$(enlightenment_src)
-
-enlightenment_eapp_cache_gen_LDFLAGS = @e_libs@ @dlopen_libs@
 
 enlightenment_imc_SOURCES = \
 e.h \
