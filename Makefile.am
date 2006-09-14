@@ -6,7 +6,7 @@ MAINTAINERCLEANFILES = Makefile.in aclocal.m4 config.guess \
 		       stamp-h.in acconfig.h debian/changelog \
 		       enlightenment.spec
 
-bin_SCRIPTS = enlightenment-config
+bin_SCRIPTS = enlightenment-config eap_to_desktop
 
 EXTRA_DIST = README AUTHORS COPYING COPYING-PLAIN \
              enlightenment.spec.in enlightenment.spec \
