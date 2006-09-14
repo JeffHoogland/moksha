@@ -8,6 +8,8 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: add applications to ibar etc. is broken now (indirect references from
+  all applications menu don't work when trying to add - nothing happens)
 * BUG: adding app using "applications" dialog to a bar dir ends up with blank
   icons in the bar dir in the apps dialog - until a restart
 * BUG: smart placement seems to screw up if a shelf is at the top of the screen
