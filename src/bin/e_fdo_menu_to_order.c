@@ -9,9 +9,23 @@ struct order_data
    Ecore_Sheap *sheap;
 };
 
-static void _e_fdo_menu_to_order_make_apps(char *name, char *path, Ecore_Hash *apps);
-static void _e_fdo_menu_to_order_dump_each_hash_node(void *value, void *user_data);
-static void _e_fdo_menu_to_order_add_sheap(Ecore_Sheap *sheap, const char *order_path, const char *file);
+
+struct category_data
+{
+   char *path;
+   Ecore_Hash *menus;
+};
+
+static void  _e_fdo_menu_to_order_make_apps(char *name, char *path, Ecore_Hash *apps);
+static void  _e_fdo_menu_to_order_dump_each_hash_node(void *value, void *user_data);
+static void  _e_fdo_menu_to_order_add_sheap(Ecore_Sheap *sheap, const char *order_path, const char *file);
+static void  _e_fdo_menu_to_order_cb_desktop_dir_foreach(void *list_data, void *data);
+static void  _e_fdo_menu_to_order_cb_desktop_foreach(void *list_data, void *data);
+static char *_e_fdo_menu_to_order_find_category(char *category);
+static void  _e_fdo_menu_to_order_dump_each_hash_node2(void *value, void *user_data);
+
+static menu_count;
+static item_count;
 
 EAPI void
 e_fdo_menu_to_order(void)
@@ -21,7 +35,24 @@ e_fdo_menu_to_order(void)
    /* Nuke the old menus. */
    snprintf(dir, sizeof(dir), "%s/.e/e/applications/menu/all/", ecore_desktop_home_get());
    ecore_file_recursive_rm(dir);
+   menu_count = 0;
+   item_count = 0;
    ecore_desktop_menu_for_each(_e_fdo_menu_to_order_make_apps);
+   /* This is a hueristic to guess if there are not enough apps.  Feel free to tweak it. */
+   if ((item_count < 50) || (menu_count > (item_count * 3)))
+      {
+         struct category_data cat_data;
+
+         // FIXME: search out all .desktop files and generate menus ala e17genmenu.
+         cat_data.menus = ecore_hash_new(ecore_str_hash, ecore_str_compare);
+	 if (cat_data.menus)
+	    {
+	       ecore_hash_set_free_key(cat_data.menus, free);
+	       ecore_hash_set_free_value(cat_data.menus, (Ecore_Free_Cb) ecore_hash_destroy);
+               ecore_desktop_paths_for_each(ECORE_DESKTOP_PATHS_DESKTOPS, _e_fdo_menu_to_order_cb_desktop_dir_foreach, &cat_data);
+               ecore_hash_for_each_node(cat_data.menus, _e_fdo_menu_to_order_dump_each_hash_node2, &cat_data);
+	    }
+      }
 }
 
 static void
@@ -41,6 +72,7 @@ _e_fdo_menu_to_order_make_apps(char *name, char *path, Ecore_Hash *apps)
 
                ecore_file_mkpath(order_data.order_path);
                /* If we create a dir, we add it to the parents .order file. */
+	       menu_count++;
                temp = ecore_file_get_dir((const char *) order_data.order_path);
 	       if (temp)
 	          {
@@ -55,7 +87,7 @@ _e_fdo_menu_to_order_make_apps(char *name, char *path, Ecore_Hash *apps)
 	       if (temp)
 	          {
 // FIXME: What to do about .directory.eap's when .desktop takes over?
-//                     create_dir_eap(order_path, temp);
+//                     create_dir_eap(order_data.order_path, temp, name);
 		  }
             }
          /* Create the apps. */
@@ -86,6 +118,7 @@ _e_fdo_menu_to_order_dump_each_hash_node(void *value, void *user_data)
 #ifdef DEBUG
          printf("MAKING MENU ITEM %s -> %s  (%s)\n", order_data->order_path, file, key);
 #endif
+         item_count++;
          snprintf(path2, sizeof(path2), "%s/.e/e/applications/all/%s", ecore_desktop_home_get(), key);
          if (!ecore_file_exists(path2))
             ecore_file_symlink(file, path2);
@@ -122,7 +155,7 @@ _e_fdo_menu_to_order_add_sheap(Ecore_Sheap *sheap, const char *order_path, const
 
    f = fopen(path2, "w");
    if (!f)
-      fprintf(stderr, "ERROR: Cannot Open Order File %s \n", path2);
+      fprintf(stderr, "ERROR: Cannot open order file %s \n", path2);
    else
       {
          char *last = NULL;
@@ -144,4 +177,166 @@ _e_fdo_menu_to_order_add_sheap(Ecore_Sheap *sheap, const char *order_path, const
 	    }
          fclose(f);
       }
+}
+
+static void
+_e_fdo_menu_to_order_cb_desktop_dir_foreach(void *list_data, void *data)
+{
+   char *path = list_data;
+   struct category_data *cat_data = data;
+   Ecore_List *desktops;
+
+   if(!path)      return;
+   if(!cat_data)  return;
+
+   cat_data->path = path;
+   desktops = ecore_file_ls(path);
+   if(desktops)
+      ecore_list_for_each(desktops, _e_fdo_menu_to_order_cb_desktop_foreach, cat_data);
+}
+
+static void
+_e_fdo_menu_to_order_cb_desktop_foreach(void *list_data, void *data)
+{
+   const char* filename = list_data;
+   struct category_data *cat_data = data;
+   char path[PATH_MAX], *ext;
+   Ecore_Desktop *desktop = ecore_desktop_get(path, NULL);
+
+   if(!filename)
+      return;
+
+   ext = strrchr(filename, '.');
+   if ((ext) && (strcmp(ext, ".desktop") == 0))
+      {
+         snprintf(path, PATH_MAX, "%s/%s", cat_data->path, filename);
+         desktop = ecore_desktop_get(path, NULL);
+         /* Check if we process */
+         if ( (!desktop->hidden) && (!desktop->no_display) && ((desktop->type == NULL) || (strcmp(desktop->type, "Application") == 0)) )
+            {
+               char *category;
+	       Ecore_Hash *menu;
+
+               category = _e_fdo_menu_to_order_find_category(desktop->categories);
+	       menu = ecore_hash_get(cat_data->menus, category);
+	       if (!menu)
+	          {
+		     menu = ecore_hash_new(ecore_str_hash, ecore_str_compare);
+		     if (menu)
+		       {
+		          ecore_hash_set_free_key(menu, free);
+		          ecore_hash_set_free_value(menu, free);
+	                  ecore_hash_set(cat_data->menus, strdup(category), menu);
+		       }
+	          }
+
+	       if (menu)
+                  ecore_hash_set(menu, strdup(filename), strdup(path));
+            }
+      }
+}
+
+
+// FIXME: There are better ways of dealing with this, just a quick cut'n'paste from e17genmenu for now.
+
+#define CATEGORIES "Accessibility:Accessories:Amusement:AudioVideo:Core:Development:Education:Game:Graphics:Multimedia:Network:Office:Programming:Settings:System:TextEditor:Utility:Video"
+
+static char *
+_e_fdo_menu_to_order_find_category(char *category)
+{
+   char *token, *cat, *categories;
+
+   cat = NULL;
+   if (category)
+      {
+         categories = strdup(CATEGORIES);
+         if (categories)
+	    {
+               token = strtok(categories, ":");
+               while (token)
+                 {
+                    /* Check If this token is in supplied $t */
+                    if (strstr(category, token) != NULL)
+                      {
+                         if (strstr(token, "Development") != NULL)
+                           {
+                              cat = "Programming";
+                           }
+                         else if (strstr(token, "Game") != NULL)
+                           {
+                              cat = "Games";
+                           }
+                         else if ((strstr(token, "AudioVideo") != NULL) ||
+                                  (strstr(token, "Sound") != NULL) || (strstr(token, "Video") != NULL) || (strstr(token, "Multimedia") != NULL))
+                           {
+                              cat = "Multimedia";
+                           }
+                         else if (strstr(token, "Net") != NULL)
+                           {
+                              cat = "Internet";
+                           }
+                         else if (strstr(token, "Education") != NULL)
+                           {
+                              cat = "Edutainment";
+                           }
+                         else if (strstr(token, "Amusement") != NULL)
+                           {
+                              cat = "Toys";
+                           }
+                         else if (strstr(token, "System") != NULL)
+                           {
+                              cat = "System";
+                           }
+                         else if ((strstr(token, "Shells") != NULL) || (strstr(token, "Utility") != NULL) || (strstr(token, "Tools") != NULL))
+                           {
+                              cat = "Utilities";
+                           }
+                         else if ((strstr(token, "Viewers") != NULL) || (strstr(token, "Editors") != NULL) || (strstr(token, "Text") != NULL))
+                           {
+                              cat = "Editors";
+                           }
+                         else if (strstr(token, "Graphics") != NULL)
+                           {
+                              cat = "Graphics";
+                           }
+                         else if ((strstr(token, "WindowManagers") != NULL) || (strstr(token, "Core") != NULL))
+                           {
+                              cat = "Core";
+                           }
+                         else if ((strstr(token, "Settings") != NULL) || (strstr(token, "Accessibility") != NULL))
+                           {
+                              cat = "Settings";
+                           }
+                         else if (strstr(token, "Office") != NULL)
+                           {
+                              cat = "Office";
+                           }
+                         else
+                           {
+                              cat = "Core";
+                           }
+                      }
+                    token = strtok(NULL, ":");
+                 }
+               if (token)
+                  free(token);
+               free(categories);
+	    }
+      }
+   if (!cat)
+      cat = "Core";
+   return strdup(cat);
+}
+
+static void
+_e_fdo_menu_to_order_dump_each_hash_node2(void *value, void *user_data)
+{
+   Ecore_Hash_Node *node;
+   Ecore_Hash *menu;
+   char *category;
+
+   node = (Ecore_Hash_Node *) value;
+   category = (char *)node->key;
+   menu = (Ecore_Hash *)node->value;
+   _e_fdo_menu_to_order_make_apps(category, category, menu);
 }
