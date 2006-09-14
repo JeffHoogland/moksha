@@ -11,6 +11,8 @@ EAPI Evas_Object *e_widget_scrollframe_simple_add(Evas *evas, Evas_Object *child
 EAPI void e_widget_scrollframe_child_pos_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
 EAPI void e_widget_scrollframe_child_pos_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
 EAPI void e_widget_scrollframe_child_region_show(Evas_Object *obj, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h);
-
+EAPI void e_widget_scrollframe_focus_object_set(Evas_Object *obj, Evas_Object *fobj);
+EAPI Evas_Object *e_widget_scrollframe_object_get(Evas_Object *obj);
+    
 #endif
 #endif

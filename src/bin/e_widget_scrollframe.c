@@ -6,7 +6,7 @@
 typedef struct _E_Widget_Data E_Widget_Data;
 struct _E_Widget_Data
 {
-   Evas_Object *o_scrollframe, *o_child;
+   Evas_Object *o_scrollframe, *o_child, *o_fobj;
 };
 
 static void _e_wid_del_hook(Evas_Object *obj);
@@ -101,6 +101,24 @@ e_widget_scrollframe_child_region_show(Evas_Object *obj, Evas_Coord x, Evas_Coor
    e_scrollframe_child_region_show(wd->o_scrollframe, x, y, w, h);
 }
 
+EAPI void
+e_widget_scrollframe_focus_object_set(Evas_Object *obj, Evas_Object *fobj)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   wd->o_fobj = fobj;
+}
+
+EAPI Evas_Object *
+e_widget_scrollframe_object_get(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   return wd->o_scrollframe;
+}
+
 /* Private functions */
 static void
 _e_wid_del_hook(Evas_Object *obj)
@@ -120,11 +138,13 @@ _e_wid_focus_hook(Evas_Object *obj)
    if (e_widget_focus_get(obj))
      {
 	edje_object_signal_emit(e_scrollframe_edje_object_get(wd->o_scrollframe), "e,state,focused", "e");
-	evas_object_focus_set(wd->o_scrollframe, 1);
+	if (wd->o_fobj) evas_object_focus_set(wd->o_fobj, 1);
+	else evas_object_focus_set(wd->o_scrollframe, 1);
      }
    else
      {
 	edje_object_signal_emit(e_scrollframe_edje_object_get(wd->o_scrollframe), "e,state,unfocused", "e");
+	if (wd->o_fobj) evas_object_focus_set(wd->o_fobj, 0);
 	evas_object_focus_set(wd->o_scrollframe, 0);
      }
 }
@@ -138,14 +158,14 @@ _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info)
 static void
 _e_wid_cb_scrollframe_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-    Evas_Coord mw, mh, vw, vh, w, h;    
-
-    e_scrollframe_child_viewport_size_get(obj, &vw, &vh);
-    e_widget_min_size_get(data, &mw, &mh);
-    evas_object_geometry_get(data, NULL, NULL, &w, &h);
-    if (vw >= mw)
-    {
-       if (w != vw) evas_object_resize(data, vw, h);
-    }
+   Evas_Coord mw, mh, vw, vh, w, h;    
+   
+   e_scrollframe_child_viewport_size_get(obj, &vw, &vh);
+   e_widget_min_size_get(data, &mw, &mh);
+   evas_object_geometry_get(data, NULL, NULL, &w, &h);
+   if (vw >= mw)
+     {
+	if (w != vw) evas_object_resize(data, vw, h);
+     }
 }
 

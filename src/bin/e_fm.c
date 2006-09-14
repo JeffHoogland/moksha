@@ -134,6 +134,7 @@ static void _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, voi
 static void _e_fm2_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_fm2_cb_icon_thumb_gen(void *data, Evas_Object *obj, void *event_info);
+static void _e_fm2_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_fm2_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_fm2_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_fm2_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -580,9 +581,6 @@ e_fm2_pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
    if (w) *w = sd->max.w;
    if (h) *h = sd->max.h;
 }
-
-
-
 
 /* local subsystem functions */
 static const char *
@@ -1736,7 +1734,6 @@ static int
 _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 {
    char buf[4096], key[256], val[4096];
-   FILE *f;
    Ecore_Desktop *desktop;
    
    if (ic->info.pseudo_link)
@@ -1796,7 +1793,6 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
    ic->info.icon = NULL;
    ic->info.link = NULL;
    ic->info.pseudo_dir = NULL;
-   fclose(f);
    return 0;
 }
 
@@ -1993,7 +1989,7 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	  _e_fm2_icon_deselect(ic);
 	else
 	  _e_fm2_icon_select(ic);
-	evas_object_smart_callback_call(ic->sd->obj, "selection_change", NULL);
+ 	evas_object_smart_callback_call(ic->sd->obj, "selection_change", NULL);
 	if ((!(S_ISDIR(ic->info.statinfo.st_mode)) ||
 	     (ic->sd->config->view.no_subdir_jump)) &&
 	    (ic->sd->config->view.single_click)
@@ -2055,7 +2051,276 @@ _e_fm2_cb_icon_thumb_gen(void *data, Evas_Object *obj, void *event_info)
 	  edje_object_signal_emit(ic->obj, "e,action,thumb,gen", "e");
      }
 }
-    
+
+/* FIXME: prototype */
+static void
+_e_fm2_icon_make_visible(E_Fm2_Icon *ic)
+{
+   if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
+     {
+	if (
+	    ((ic->y - ic->sd->pos.y) >= 0) &&
+	    ((ic->y + ic->h - ic->sd->pos.y) <= (ic->sd->h))
+	    )
+	  return;
+	if ((ic->y - ic->sd->pos.y) < 0)
+	  e_fm2_pan_set(ic->sd->obj, ic->sd->pos.x, ic->y);
+	else
+	  e_fm2_pan_set(ic->sd->obj, ic->sd->pos.x, ic->y - ic->sd->h + ic->h);
+     }
+   else
+     {
+	Evas_Coord x, y;
+	
+	if (
+	    ((ic->y - ic->sd->pos.y) >= 0) &&
+	    ((ic->y + ic->h - ic->sd->pos.y) <= (ic->sd->h)) &&
+	    ((ic->x - ic->sd->pos.x) >= 0) &&
+	    ((ic->x + ic->w - ic->sd->pos.x) <= (ic->sd->w))
+	    )
+	  return;
+	x = ic->sd->pos.x;
+	if ((ic->x - ic->sd->pos.x) < 0)
+	  x = ic->x;
+	else if ((ic->x + ic->w - ic->sd->pos.x) > (ic->sd->w))
+	  x = ic->x + ic->w - ic->sd->w;
+	y = ic->sd->pos.y;
+	if ((ic->y - ic->sd->pos.y) < 0)
+	  y = ic->y;
+	else if ((ic->y + ic->h - ic->sd->pos.y) > (ic->sd->h))
+	  y = ic->y + ic->h - ic->sd->h;
+	e_fm2_pan_set(ic->sd->obj, x, y);
+     }
+   evas_object_smart_callback_call(ic->sd->obj, "pan_changed", NULL);
+}
+
+/* FIXME: prototype */
+static void
+_e_fm2_icon_desel_any(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   Evas_List *l;
+   E_Fm2_Icon *ic;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   for (l = sd->icons; l; l = l->next)
+     {
+	ic = l->data;
+	if (ic->selected) _e_fm2_icon_deselect(ic);
+     }
+}
+
+/* FIXME: prototype */
+static E_Fm2_Icon *
+_e_fm2_icon_first_selected_find(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   Evas_List *l;
+   E_Fm2_Icon *ic;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return NULL;
+   for (l = sd->icons; l; l = l->next)
+     {
+	ic = l->data;
+	if (ic->selected) return ic;
+     }
+   return NULL;
+}
+
+/* FIXME: prototype */
+static void
+_e_fm2_icon_sel_first(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   E_Fm2_Icon *ic;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   if (!sd->icons) return;
+   _e_fm2_icon_desel_any(obj);
+   ic = sd->icons->data;
+   _e_fm2_icon_select(ic);
+   evas_object_smart_callback_call(sd->obj, "selection_change", NULL);
+   _e_fm2_icon_make_visible(ic);
+}
+
+/* FIXME: prototype */
+static void
+_e_fm2_icon_sel_last(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   E_Fm2_Icon *ic;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   if (!sd->icons) return;
+   _e_fm2_icon_desel_any(obj);
+   ic = evas_list_last(sd->icons)->data;
+   _e_fm2_icon_select(ic);
+   evas_object_smart_callback_call(sd->obj, "selection_change", NULL);
+   _e_fm2_icon_make_visible(ic);
+}
+
+/* FIXME: prototype */
+static void
+_e_fm2_icon_sel_prev(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   Evas_List *l;
+   E_Fm2_Icon *ic;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   if (!sd->icons) return;
+   for (l = sd->icons; l; l = l->next)
+     {
+	ic = l->data;
+	if (ic->selected)
+	  {
+	     if (!l->prev) return;
+	     ic = l->prev->data;
+	     break;
+	  }
+     }
+   if (!ic)
+     {
+	_e_fm2_icon_sel_last(obj);
+	return;
+     }
+   _e_fm2_icon_desel_any(obj);
+   _e_fm2_icon_select(ic);
+   evas_object_smart_callback_call(sd->obj, "selection_change", NULL);
+   _e_fm2_icon_make_visible(ic);
+}
+
+/* FIXME: prototype */
+static void
+_e_fm2_icon_sel_next(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   Evas_List *l;
+   E_Fm2_Icon *ic;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   if (!sd->icons) return;
+   for (l = sd->icons; l; l = l->next)
+     {
+	ic = l->data;
+	if (ic->selected)
+	  {
+	     if (!l->next) return;
+	     ic = l->next->data;
+	     break;
+	  }
+     }
+   if (!ic)
+     {
+	_e_fm2_icon_sel_first(obj);
+	return;
+     }
+   _e_fm2_icon_desel_any(obj);
+   _e_fm2_icon_select(ic);
+   evas_object_smart_callback_call(sd->obj, "selection_change", NULL);
+   _e_fm2_icon_make_visible(ic);
+}
+
+static void
+_e_fm2_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Key_Down *ev;
+   E_Fm2_Smart_Data *sd;
+   E_Fm2_Icon *ic;
+//   Evas_Coord x = 0, y = 0, w = 0, h = 0;
+   
+   sd = data;
+   ev = event_info;
+   /* FIXME: handle key navigation, searching etc. etc. */
+   if (!strcmp(ev->keyname, "Left"))
+     { 
+	/* list mode: scroll left n pix
+	 * icon mode: prev icon
+	 */
+	_e_fm2_icon_sel_prev(obj);
+    }
+   else if (!strcmp(ev->keyname, "Right"))
+     {
+	/* list mode: scroll right n pix
+	 * icon mode: next icon
+	 */
+	_e_fm2_icon_sel_next(obj);
+     }
+   else if (!strcmp(ev->keyname, "Up"))
+     {
+	/* list mode: prev icon
+	 * icon mode: up an icon
+	 */
+	_e_fm2_icon_sel_prev(obj);
+     }
+   else if (!strcmp(ev->keyname, "Home"))
+     {
+	/* go to first icon */
+	_e_fm2_icon_sel_first(obj);
+     }
+   else if (!strcmp(ev->keyname, "End"))
+     {
+	/* go to last icon */
+	_e_fm2_icon_sel_last(obj);
+     }
+   else if (!strcmp(ev->keyname, "Down"))
+     {
+	/* list mode: next icon
+	 * icon mode: down an icon
+	 */
+	_e_fm2_icon_sel_next(obj);
+     }
+   else if (!strcmp(ev->keyname, "Prior"))
+     {
+	/* up h * n pixels */
+	e_fm2_pan_set(obj, sd->pos.x, sd->pos.y - sd->h);
+	evas_object_smart_callback_call(sd->obj, "pan_changed", NULL);
+     }
+   else if (!strcmp(ev->keyname, "Next"))
+     {
+	/* down h * n pixels */
+	e_fm2_pan_set(obj, sd->pos.x, sd->pos.y + sd->h);
+	evas_object_smart_callback_call(sd->obj, "pan_changed", NULL);
+     }
+   else if (!strcmp(ev->keyname, "Escape"))
+     {
+	_e_fm2_icon_desel_any(obj);
+     }
+   else if (!strcmp(ev->keyname, "Return"))
+     {
+	/* selected */
+	ic = _e_fm2_icon_first_selected_find(obj);
+	if (ic)
+	  evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
+     }
+   else if (!strcmp(ev->keyname, "Insert"))
+     {
+	/* dunno what to do with this yet */
+     }
+   else if (!strcmp(ev->keyname, "Tab"))
+     {
+	/* tab complete possible completes of typebuffer */
+     }
+   else if (!strcmp(ev->keyname, "Backspace"))
+     {
+	/* erase from typebuffer */
+     }
+   else if (!strcmp(ev->keyname, "Delete"))
+     {
+	/* delete file dialog */
+     }
+   else
+     {
+	/* just start typing a filename - a tmp match buffer jumps to first match (type a glob) ot typedfile* */
+     }
+}
+
 static void
 _e_fm2_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
@@ -2360,6 +2625,7 @@ _e_fm2_smart_add(Evas_Object *obj)
    evas_object_color_set(sd->underlay, 0, 0, 0, 0);
    evas_object_show(sd->underlay);
 
+   evas_object_event_callback_add(obj, EVAS_CALLBACK_KEY_DOWN, _e_fm2_cb_key_down, sd);
    evas_object_event_callback_add(sd->underlay, EVAS_CALLBACK_MOUSE_DOWN, _e_fm2_cb_mouse_down, sd);
    evas_object_event_callback_add(sd->underlay, EVAS_CALLBACK_MOUSE_UP, _e_fm2_cb_mouse_up, sd);
    evas_object_event_callback_add(sd->underlay, EVAS_CALLBACK_MOUSE_MOVE, _e_fm2_cb_mouse_move, sd);
@@ -2383,7 +2649,7 @@ _e_fm2_smart_del(Evas_Object *obj)
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-   
+  
    _e_fm2_scan_stop(obj);
    _e_fm2_queue_free(obj);
    _e_fm2_regions_free(obj);

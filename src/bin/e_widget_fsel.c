@@ -78,15 +78,15 @@ _e_wid_fsel_favorites_add(void *data1, void *data2)
    wd = data1;
    current_path = e_fm2_real_path_get(wd->o_files_fm);
    snprintf(dest_path, PATH_MAX, "%s/.e/e/fileman/favorites/%s", 
-                                     getenv("HOME"), basename(current_path));
+	    getenv("HOME"), basename(current_path));
    if (stat(dest_path, &st) < 0) symlink(current_path, dest_path);
    else
      {
-        while(stat(dest_path, &st) == 0)
+        while (stat(dest_path, &st) == 0)
 	  {
 	     snprintf(dest_path, PATH_MAX, "%s/.e/e/fileman/favorites/%s-%d",
-	                                     getenv("HOME"), 
-					     basename(current_path), i);
+		      getenv("HOME"), 
+		      basename(current_path), i);
 	     i++;
 	  }
 	symlink(current_path, dest_path);  
@@ -211,13 +211,14 @@ _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj, void *event_inf
 		 realpath, ici->file);
      }
    wd->path = strdup(buf);
-   if (wd->preview)
-      _e_wid_fsel_preview_file(wd);
-   stat(wd->path, &st);
-   if (!S_ISDIR(st.st_mode))
-      e_widget_entry_text_set(wd->o_entry, ici->file);
-   else
-      e_widget_entry_text_set(wd->o_entry, wd->path);
+   if (stat(wd->path, &st) == 0)
+     {
+	if (wd->preview) _e_wid_fsel_preview_file(wd);
+	if (!S_ISDIR(st.st_mode))
+	  e_widget_entry_text_set(wd->o_entry, ici->file);
+	else
+	  e_widget_entry_text_set(wd->o_entry, wd->path);
+     }
    evas_list_free(selected);
    if (wd->chg_func) wd->chg_func(wd->chg_data, wd->obj);
 }
@@ -399,6 +400,9 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
 				    e_fm2_pan_get,
 				    e_fm2_pan_max_get, 
 				    e_fm2_pan_child_size_get);
+   evas_object_propagate_events_set(wd->o_favorites_fm, 0);
+   e_widget_scrollframe_focus_object_set(o, wd->o_favorites_fm);
+   
    wd->o_favorites_frame = o;
    e_widget_sub_object_add(obj, o);
    e_widget_min_size_set(o, 128, 128);
@@ -439,6 +443,9 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
 				    e_fm2_pan_get,
 				    e_fm2_pan_max_get,
 				    e_fm2_pan_child_size_get);
+   evas_object_propagate_events_set(wd->o_files_fm, 0);
+   e_widget_scrollframe_focus_object_set(o, wd->o_files_fm);
+   
    wd->o_files_frame = o;
    e_widget_sub_object_add(obj, o);
    e_widget_min_size_set(o, 128, 128);
@@ -535,7 +542,7 @@ _e_wid_fsel_preview_file(E_Widget_Data *wd)
    char *size, *owner, *perms, *mtime;
    struct stat st;
  
-   stat(wd->path, &st);
+   if (stat(wd->path, &st) < 0) return;
 
    size =  _e_wid_file_size_get(st.st_size);
    owner = _e_wid_file_user_get(st.st_uid);
