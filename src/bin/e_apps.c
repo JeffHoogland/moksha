@@ -199,10 +199,28 @@ EAPI E_App *
 e_app_new(const char *path, int scan_subdirs)
 {
    E_App *a;
+   struct stat         st;
+   int                 stated = 0;
    char buf[PATH_MAX];
 
    if (!path)   return NULL;
 
+   a = e_app_path_find(path);
+   /* Check if the cache is still valid. */
+   if (a)
+      {
+         if (stat(a->path, &st) >= 0)
+	 {
+	    if(st.st_mtime > a->mtime)
+	    {
+	       e_object_del(E_OBJECT(a));
+	       a = NULL;
+	       stated = 1;
+	    }
+	 }
+      }
+
+   if (!a)
      {
 	if (ecore_file_exists(path))
 	  {
@@ -240,6 +258,12 @@ e_app_new(const char *path, int scan_subdirs)
 	else
 	   {
 	      return NULL;
+	   }
+        /* Timestamp the cache, and no need to stat the file twice if the cache was stale. */
+        if ((stated) || (stat(a->path, &st) >= 0))
+           {
+	      a->mtime = st.st_mtime;
+	      stated = 1;
 	   }
 	_e_apps_list = evas_list_prepend(_e_apps_list, a);
      }
@@ -950,6 +974,31 @@ e_app_file_find(const char *file)
 		       return a;
 		    }
 	       }
+	  }
+     }
+   return NULL;
+}
+
+EAPI E_App *
+e_app_path_find(const char *path)
+{
+   Evas_List *l;
+   
+   if (!path) return NULL;
+
+   for (l = _e_apps_list; l; l = l->next)
+     {
+	E_App *a;
+	
+	a = l->data;
+	if (a->path)
+	  {
+	     if (!strcmp(a->path, path))
+		{
+//		   _e_apps_list = evas_list_remove_list(_e_apps_list, l);
+//		   _e_apps_list = evas_list_prepend(_e_apps_list, a);
+		   return a;
+		}
 	  }
      }
    return NULL;

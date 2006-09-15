@@ -22,6 +22,7 @@ static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _move_file_up_in_order(const char *order, const char *file);
 static void _move_file_down_in_order(const char *order, const char *file);
+static void _append_to_order(const char *order, const char *file);
 
 struct _E_Config_Dialog_Data
 {
@@ -407,10 +408,15 @@ _cb_button_add(void *data1, void *data2)
    if (!selected) return;
    ici = selected->data;
    realpath = e_fm2_real_path_get(cfdata->gui.o_fm_all);
-   if (!strcmp(realpath, "/"))
-     snprintf(buf, sizeof(buf), "/%s", ici->file);
+   if (cfdata->sorted)
+      {
+         if (!strcmp(realpath, "/"))
+            snprintf(buf, sizeof(buf), "/%s", ici->file);
+         else
+            snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+      }
    else
-     snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+      snprintf(buf, sizeof(buf), "%s/%s", cfdata->path_everything, ici->file);
    evas_list_free(selected);
    if (ecore_file_is_dir(buf)) return;
 
@@ -425,11 +431,12 @@ _cb_button_add(void *data1, void *data2)
       {
          if (!cfdata->gui.o_fm) return;
 
-         a = e_app_new(buf, 0);
+//         a = e_app_new(buf, 0);
          realpath = e_fm2_real_path_get(cfdata->gui.o_fm);
-         parent = e_app_new(realpath, 0);
-         if ((a) && (parent))
-            e_app_append(a, parent);
+//         parent = e_app_new(realpath, 0);
+//         if (parent) e_app_subdir_scan(parent, 0);
+//         e_app_append(a, parent);
+         _append_to_order(realpath, ecore_file_get_file(buf));
       }
 
    e_fm2_refresh(cfdata->gui.o_fm);
@@ -769,6 +776,61 @@ _move_file_down_in_order(const char *order, const char *file)
 	  last = NULL;
       }
    fclose(f);
+
+   snprintf(buf, sizeof(buf), "%s/.order", order);
+   ecore_file_unlink(buf);
+   f = fopen(buf, "wb");
+   if (!f) return;
+   for (l = list; l; l = l->next)
+     {
+        char *text;
+
+        text = l->data;
+	fprintf(f, "%s\n", text);
+	free(text);
+     }
+   fclose(f);
+   evas_list_free(list);
+
+   snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", order);
+   ecore_file_unlink(buf);
+
+   return;
+}
+
+
+
+static void
+_append_to_order(const char *order, const char *file)
+{
+   char buf[4096];
+   Evas_List *list = NULL, *l;
+   int ret = 0;
+   FILE *f;
+
+   snprintf(buf, sizeof(buf), "%s/.order", order);
+   if (!ecore_file_exists(buf)) return;
+   f = fopen(buf, "rb");
+   if (!f) return;
+
+   while (fgets(buf, sizeof(buf), f))
+     {
+	int len;
+
+	len = strlen(buf);
+	if (len > 0)
+	  {
+	     if (buf[len - 1] == '\n')
+	       {
+		  buf[len - 1] = 0;
+		  len--;
+	       }
+             list = evas_list_append(list, strdup(buf));
+	  }
+     }
+   fclose(f);
+
+   list = evas_list_append(list, strdup(file));
 
    snprintf(buf, sizeof(buf), "%s/.order", order);
    ecore_file_unlink(buf);

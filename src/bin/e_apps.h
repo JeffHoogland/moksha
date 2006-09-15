@@ -65,6 +65,9 @@ struct _E_App
    unsigned char       scanned : 1; /* have we scanned a subdir app yet */
 
    unsigned char       deleted : 1; /* this app's file is deleted from disk */
+
+   /* Actually calling this st_mtime causes compile issues, must be some strange macros at work. */
+   time_t              mtime;           /* For checking if the cache is valid. */
    
    /* used for eap edit */
    const char         *image; /* used when we're saving a image into the eap */
@@ -121,6 +124,7 @@ EAPI void        e_app_change_callback_del               (void (*func) (void *da
 EAPI E_App      *e_app_launch_id_pid_find                (int launch_id, pid_t pid);
 EAPI E_App      *e_app_border_find                       (E_Border *bd);
 EAPI E_App      *e_app_file_find                         (const char *file);
+EAPI E_App      *e_app_path_find                         (const char *path);
 EAPI E_App      *e_app_name_find                         (const char *name);
 EAPI E_App      *e_app_generic_find                      (const char *generic);
 EAPI E_App      *e_app_exe_find                          (const char *exe);
