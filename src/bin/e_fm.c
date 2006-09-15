@@ -57,6 +57,7 @@ struct _E_Fm2_Smart_Data
    E_Entry_Dialog   *entry_dialog;
    unsigned char     iconlist_changed : 1;
    unsigned char     order_file : 1;
+   unsigned char     typebuf_visible : 1;
 
    E_Fm2_Config     *config;
 
@@ -66,6 +67,10 @@ struct _E_Fm2_Smart_Data
       Evas_List        **list_index;
       int              iter;
    } tmp;
+   
+   struct {
+      char            *buf;
+   } typebuf;
 };
 
 struct _E_Fm2_Region
@@ -2227,54 +2232,233 @@ _e_fm2_icon_sel_next(Evas_Object *obj)
    _e_fm2_icon_make_visible(ic);
 }
 
+/* FIXME: prototype */
+static void
+_e_fm2_typebuf_show(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   E_FREE(sd->typebuf.buf);
+   sd->typebuf.buf = strdup("");
+   edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
+   edje_object_signal_emit(sd->overlay, "e,state,typebuf,start", "e");
+   sd->typebuf_visible = 1;
+}
+
+/* FIXME: prototype */
+static void
+_e_fm2_typebuf_hide(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   E_FREE(sd->typebuf.buf);
+   edje_object_signal_emit(sd->overlay, "e,state,typebuf,stop", "e");
+   sd->typebuf_visible = 0;
+}
+
+/* FIXME: prototype */
+static void
+_e_fm2_typebuf_history_prev(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   /* FIXME: do */
+}
+
+/* FIXME: prototype */
+static void
+_e_fm2_typebuf_history_next(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   /* FIXME: do */
+}
+
+/* FIXME: prototype */
+static void
+_e_fm2_typebuf_run(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   E_Fm2_Icon *ic;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   _e_fm2_typebuf_hide(obj);
+   ic = _e_fm2_icon_first_selected_find(obj);
+   if (ic)
+     evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
+}
+
+/* FIXME: prototype */
+static void
+_e_fm2_typebuf_match(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   Evas_List *l;
+   E_Fm2_Icon *ic;
+   char *tb;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   if (!sd->typebuf.buf) return;
+   if (!sd->icons) return;
+   _e_fm2_icon_desel_any(obj);
+   tb = malloc(strlen(sd->typebuf.buf) + 2);
+   if (!tb) return;
+   strcpy(tb, sd->typebuf.buf);
+   strcat(tb, "*");
+   for (l = sd->icons; l; l = l->next)
+     {
+	ic = l->data;
+	if (
+	    ((ic->info.label) &&
+	     (e_util_glob_case_match(ic->info.label, tb))) ||
+	    ((ic->info.file) &&
+	     (e_util_glob_case_match(ic->info.file, tb)))
+	    )
+	  {
+	     _e_fm2_icon_select(ic);
+	     evas_object_smart_callback_call(sd->obj, "selection_change", NULL);
+	     _e_fm2_icon_make_visible(ic);
+	     break;
+	  }
+     }
+   free(tb);
+}
+
+/* FIXME: prototype */
+static void
+_e_fm2_typebuf_complete(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   /* FIXME: do */
+   _e_fm2_typebuf_match(obj);
+}
+
+/* FIXME: prototype */
+static void
+_e_fm2_typebuf_char_append(Evas_Object *obj, char *ch)
+{
+   E_Fm2_Smart_Data *sd;
+   char *ts;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   if (!sd->typebuf.buf) return;
+   ts = malloc(strlen(sd->typebuf.buf) + strlen(ch) + 1);
+   if (!ts) return;
+   strcpy(ts, sd->typebuf.buf);
+   strcat(ts, ch);
+   free(sd->typebuf.buf);
+   sd->typebuf.buf = ts;
+   _e_fm2_typebuf_match(obj);
+   edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
+}
+
+/* FIXME: prototype */
+static void
+_e_fm2_typebuf_char_backspace(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   char *ts;
+   int len, p, dec;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   if (!sd->typebuf.buf) return;
+   len = strlen(sd->typebuf.buf);
+   if (len == 0)
+     {
+	_e_fm2_typebuf_hide(obj);
+	return;
+     }
+   p = evas_string_char_prev_get(sd->typebuf.buf, len, &dec);
+   if (p >= 0) sd->typebuf.buf[p] = 0;
+   ts = strdup(sd->typebuf.buf);
+   if (!ts) return;
+   free(sd->typebuf.buf);
+   sd->typebuf.buf = ts;
+   _e_fm2_typebuf_match(obj);
+   edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
+}
+
 static void
 _e_fm2_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Key_Down *ev;
    E_Fm2_Smart_Data *sd;
    E_Fm2_Icon *ic;
-//   Evas_Coord x = 0, y = 0, w = 0, h = 0;
    
    sd = data;
    ev = event_info;
-   /* FIXME: handle key navigation, searching etc. etc. */
    if (!strcmp(ev->keyname, "Left"))
      { 
+	/* FIXME: icon mode, typebuf extras */
 	/* list mode: scroll left n pix
 	 * icon mode: prev icon
+	 * typebuf mode: cursor left
 	 */
 	_e_fm2_icon_sel_prev(obj);
     }
    else if (!strcmp(ev->keyname, "Right"))
      {
+	/* FIXME: icon mode, typebuf extras */
 	/* list mode: scroll right n pix
 	 * icon mode: next icon
+	 * typebuf mode: cursor right
 	 */
 	_e_fm2_icon_sel_next(obj);
      }
    else if (!strcmp(ev->keyname, "Up"))
      {
+	/* FIXME: icon mode */
 	/* list mode: prev icon
 	 * icon mode: up an icon
+	 * typebuf mode: previous history
 	 */
-	_e_fm2_icon_sel_prev(obj);
+	if (sd->typebuf_visible)
+	  _e_fm2_typebuf_history_prev(obj);
+	else
+	  _e_fm2_icon_sel_prev(obj);
      }
    else if (!strcmp(ev->keyname, "Home"))
      {
-	/* go to first icon */
+	/* FIXME: typebuf extras */
+	/* go to first icon
+	 * typebuf mode: cursor to start
+	 */
 	_e_fm2_icon_sel_first(obj);
      }
    else if (!strcmp(ev->keyname, "End"))
      {
-	/* go to last icon */
+	/* FIXME: typebuf extras */
+	/* go to last icon
+	 * typebuf mode: cursor to end
+	 */
 	_e_fm2_icon_sel_last(obj);
      }
    else if (!strcmp(ev->keyname, "Down"))
      {
+	/* FIXME: icon mode */
 	/* list mode: next icon
 	 * icon mode: down an icon
+	 * typebuf mode: next history
 	 */
-	_e_fm2_icon_sel_next(obj);
+	if (sd->typebuf_visible)
+	  _e_fm2_typebuf_history_next(obj);
+	else
+	  _e_fm2_icon_sel_next(obj);
      }
    else if (!strcmp(ev->keyname, "Prior"))
      {
@@ -2290,14 +2474,25 @@ _e_fm2_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
      }
    else if (!strcmp(ev->keyname, "Escape"))
      {
-	_e_fm2_icon_desel_any(obj);
+	/* typebuf mode: end typebuf mode */
+	if (sd->typebuf_visible)
+	  _e_fm2_typebuf_hide(obj);
+	else
+	  _e_fm2_icon_desel_any(obj);
      }
    else if (!strcmp(ev->keyname, "Return"))
      {
-	/* selected */
-	ic = _e_fm2_icon_first_selected_find(obj);
-	if (ic)
-	  evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
+	/* if selected - select callback.
+	 * typebuf mode: if nothing selected - run cmd
+	 */
+	if (sd->typebuf_visible)
+	  _e_fm2_typebuf_run(obj);
+	else
+	  {
+	     ic = _e_fm2_icon_first_selected_find(obj);
+	     if (ic)
+	       evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
+	  }
      }
    else if (!strcmp(ev->keyname, "Insert"))
      {
@@ -2305,19 +2500,29 @@ _e_fm2_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
      }
    else if (!strcmp(ev->keyname, "Tab"))
      {
-	/* tab complete possible completes of typebuffer */
+	/* typebuf mode: tab complete */
+	if (sd->typebuf_visible)
+	  _e_fm2_typebuf_complete(obj);
      }
-   else if (!strcmp(ev->keyname, "Backspace"))
+   else if (!strcmp(ev->keyname, "BackSpace"))
      {
-	/* erase from typebuffer */
+	/* typebuf mode: backspace */
+	if (sd->typebuf_visible)
+	  _e_fm2_typebuf_char_backspace(obj);
      }
    else if (!strcmp(ev->keyname, "Delete"))
      {
+	/* FIXME: all */
 	/* delete file dialog */
+	/* typebuf mode: delete */
      }
    else
      {
-	/* just start typing a filename - a tmp match buffer jumps to first match (type a glob) ot typedfile* */
+	if (ev->string)
+	  {
+	     if (!sd->typebuf_visible) _e_fm2_typebuf_show(obj);
+	     _e_fm2_typebuf_char_append(obj, ev->string);
+	  }
      }
 }
 
@@ -2673,6 +2878,8 @@ _e_fm2_smart_del(Evas_Object *obj)
    if (sd->realpath) evas_stringshare_del(sd->realpath);
    sd->dev = sd->path = sd->realpath = NULL;
    if (sd->config) _e_fm2_config_free(sd->config);
+   
+   E_FREE(sd->typebuf.buf);
    
    evas_object_del(sd->underlay);
    evas_object_del(sd->overlay);
