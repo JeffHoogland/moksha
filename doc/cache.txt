@@ -234,7 +234,10 @@ SOLUTION:
 
 .order files
 USED BY:
+    Menus, bars, startup, restart.
 WHEN:
+    When displaying the menu or bar.  At startup and restart.  When
+    editing them.
 ISSUES:
 SOLUTION:
 
@@ -278,6 +281,45 @@ ISSUES:
     conversion didn't help.  It does hide some other bugs though, so that 
     needs to be cleaned up first.
 
+    How this all hangs together is complex.
+
+    Evas_List *_e_app_repositories;
+	Only contains ~/.e/e/applications/all for now.
+
+    E_App *_e_apps_all = ~/.e/e/applications/all
+	Currently has all the E_Apps as subbapps, but only used as if it was a single E_App.
+	On the other hand, this is scanned at startup time, so is used to preload the caches.
+	
+    _e_apps_list = Most recently used list / all apps list.
+
+    E_App members -
+
+    E_App *parent; /* the parent e_app node */
+	e_apps.c internal
+	This is in a directory, the parent is the E_App for that directory.
+
+    Evas_List *subapps; /* if this a directory, a list of more E_App's */
+	e_apps.c internal except for _e_startup and _e_int_menus_apps_scan
+	This will be a directory with a .order file, subapps points to the content E_Apps.
+
+    Evas_List *references; /* If this app is in a main repository, this would
+			      be a list to other eapp pointing to this */
+	e_apps.c internal
+	E_Apps in a repository are copied before use, this points to those copies.
+
+    E_App *orig; /* if this is a copy, point to the original */
+	e_apps.c internal except for _e_border_menu_cb_icon_edit
+	E_Apps in a repository are copied before use, this points to the original.
+
+    Evas_List *instances; /* a list of all the exe handles for executions */
+	e_apps.c internal except for e_zone_exec
+	Tracks E_Apps that are currently running.
+
+    Ecore_File_Monitor *monitor; /* Check for changes and files */
+	e_apps.c internal
+	Only E_Apps that are directories are monitored.
+
+
 SOLUTION:
     Start by putting all filenames in ~/.e/e/applications/all in a hash
     with "empty" E_Apps.  Fill the "empty" E_Apps during idle time, also
@@ -285,8 +327,10 @@ SOLUTION:
     hash and put it in the directory.
 
     The most recently used list can be built from whatever gets used, it
-    will actually speed things up if it does not contain everything, as
-    it is usually a linear search.
+    could actually speed things up if it does not contain everything, as
+    it is usually a linear search.  On the other hand, we could reuse
+    the subapps of _e_apps_all as this list, since it already exists,
+    and it doesn't care what order its subapps are in.
 
     Executing an app can probably afford to use a slow search.  Border
     icons could make use of bouncy icon thumbnailing.  e_int_config_apps
