@@ -2188,6 +2188,7 @@ _e_fm2_icon_sel_prev(Evas_Object *obj)
 	     ic = l->prev->data;
 	     break;
 	  }
+	ic = NULL;
      }
    if (!ic)
      {
@@ -2220,6 +2221,7 @@ _e_fm2_icon_sel_next(Evas_Object *obj)
 	     ic = l->next->data;
 	     break;
 	  }
+	ic = NULL;
      }
    if (!ic)
      {
@@ -2294,7 +2296,28 @@ _e_fm2_typebuf_run(Evas_Object *obj)
    _e_fm2_typebuf_hide(obj);
    ic = _e_fm2_icon_first_selected_find(obj);
    if (ic)
-     evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
+     {
+	if ((S_ISDIR(ic->info.statinfo.st_mode)) && 
+	    (ic->sd->config->view.open_dirs_in_place) &&
+	    (!ic->sd->config->view.no_subdir_jump) &&
+	    (!ic->sd->config->view.single_click)
+	    )
+	  {
+	     char buf[4096], *dev = NULL;
+	     
+	     if (ic->sd->dev) dev = strdup(ic->sd->dev);
+	     if (ic->info.pseudo_link)
+	       snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
+	     else
+	       snprintf(buf, sizeof(buf), "%s/%s", ic->sd->path, ic->info.file);
+	     e_fm2_path_set(ic->sd->obj, dev, buf);
+	     E_FREE(dev);
+	  }
+	else
+	  {
+	     evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
+	  }
+     }
 }
 
 /* FIXME: prototype */
@@ -2478,7 +2501,16 @@ _e_fm2_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	if (sd->typebuf_visible)
 	  _e_fm2_typebuf_hide(obj);
 	else
-	  _e_fm2_icon_desel_any(obj);
+	  {
+	     ic = _e_fm2_icon_first_selected_find(obj);
+	     if (ic)
+	       _e_fm2_icon_desel_any(obj);
+	     else
+	       {
+		  if (e_fm2_has_parent_get(obj))
+		    e_fm2_parent_go(obj);
+	       }
+	  }
      }
    else if (!strcmp(ev->keyname, "Return"))
      {
@@ -2491,7 +2523,28 @@ _e_fm2_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	  {
 	     ic = _e_fm2_icon_first_selected_find(obj);
 	     if (ic)
-	       evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
+	       {
+		  if ((S_ISDIR(ic->info.statinfo.st_mode)) && 
+		      (ic->sd->config->view.open_dirs_in_place) &&
+		      (!ic->sd->config->view.no_subdir_jump) &&
+		      (!ic->sd->config->view.single_click)
+		      )
+		    {
+		       char buf[4096], *dev = NULL;
+		       
+		       if (ic->sd->dev) dev = strdup(ic->sd->dev);
+		       if (ic->info.pseudo_link)
+			 snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
+		       else
+			 snprintf(buf, sizeof(buf), "%s/%s", ic->sd->path, ic->info.file);
+		       e_fm2_path_set(ic->sd->obj, dev, buf);
+		       E_FREE(dev);
+		    }
+		  else
+		    {
+		       evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
+		    }
+	       }
 	  }
      }
    else if (!strcmp(ev->keyname, "Insert"))
