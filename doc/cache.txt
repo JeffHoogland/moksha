@@ -232,6 +232,14 @@ SOLUTION:
 
 -----------------------------------------------------------------------
 
+.order files
+USED BY:
+WHEN:
+ISSUES:
+SOLUTION:
+
+-----------------------------------------------------------------------
+
 E_Apps
 
 USED BY:
@@ -240,20 +248,50 @@ WHEN:
     Currently all read in at startup time.  Should change this to an 
     idle time task.  Still need to read in them all near startup time 
     though.  We need all of them for searching.
+
+    a_actions searches for filename, name, generic, and exe to find an
+    app to execute.  Updates the most recently used list.
+
+    e_border searches for border and pid to find the border icon.  The
+    border search involves searching all E_Apps for win_* and exe that
+    match the app in the border.  The pid search involves searching all
+    instances of all E_Apps, looking for a matching pid.  Both searches
+    update the most recently used list.  None of this is needed for
+    remember stuff.
+
+    e_exebuf searches/lists all apps and most recently used apps based
+    on a partially typed in string.  It globs name, exe, generic, and
+    comment.  When actually listing the matches, it searches for exe. 
+    When showing an icon for the current match, it searches exe, name,
+    then generic.  Updates the most recently used list.
+
+    e_zone searches for exe to find a matching E_App when it is
+    executing things.  Updates the most recently used list.
+
+    e_int_config_apps shows a sorted list of all apps.
+
+    Everything else loads E_Apps by file name or directory name.  Some
+    have .order files.
+
 ISSUES:
     The current eap caching code is not up to scratch, and the .desktop 
     conversion didn't help.  It does hide some other bugs though, so that 
     needs to be cleaned up first.
-    
-    We need quick sorted access to all Apps on the system.  Things like 
-    menus and bars need quick access to the ones in their .order files.
-    As mentioned above, we need quick searching of them all.
+
 SOLUTION:
-    Nuke the existing cache code.  Replace with...
+    Start by putting all filenames in ~/.e/e/applications/all in a hash
+    with "empty" E_Apps.  Fill the "empty" E_Apps during idle time, also
+    as needed.  Everytime a new .desktop file is created, add it to the
+    hash and put it in the directory.
 
-    Hash of filenames that contains the E_App structures, alphabetically
-    sorted list (Ecore_Sheap?) of human visible names that contains the
-    filenames.  Fill them during idle time, also as needed, and finish
-    it async when exebuf starts up.  Later we shall see if an on disk
-    copy is needed.
+    The most recently used list can be built from whatever gets used, it
+    will actually speed things up if it does not contain everything, as
+    it is usually a linear search.
 
+    Executing an app can probably afford to use a slow search.  Border
+    icons could make use of bouncy icon thumbnailing.  e_int_config_apps
+    can just show ~/.e/e/applications/all, but e_fm will need to know to
+    sort based on visible name.  e_exebuf can also use bouncy icon
+    thumbnailing, but may need more speedups for its globbing.
+
+    Later we shall see if an on disk copy is needed.
