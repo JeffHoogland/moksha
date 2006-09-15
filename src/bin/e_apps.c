@@ -14,6 +14,7 @@
  */
 
 #define DEBUG 0
+#define NO_APP_LIST 1
 /* local subsystem functions */
 typedef struct _E_App_Change_Info E_App_Change_Info;
 typedef struct _E_App_Callback    E_App_Callback;
@@ -127,6 +128,11 @@ e_app_init(void)
    _e_apps_exit_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_apps_cb_exit, NULL);
    _e_apps_border_add_handler = ecore_event_handler_add(E_EVENT_BORDER_ADD, _e_app_cb_event_border_add, NULL);
    _e_apps_all = e_app_new(buf, 1);
+#if NO_APPS_LIST
+   /* The list already exists, and it doesn't care what order it is in. */
+   if (_e_apps_all)
+      _e_apps_list = _e_apps_all->subapps;
+#endif
    return 1;
 }
 
@@ -265,7 +271,9 @@ e_app_new(const char *path, int scan_subdirs)
 	      a->mtime = st.st_mtime;
 	      stated = 1;
 	   }
+#if ! NO_APP_LIST
 	_e_apps_list = evas_list_prepend(_e_apps_list, a);
+#endif
      }
    return a;
 
@@ -337,6 +345,7 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
    
    E_OBJECT_CHECK(a);
    E_OBJECT_TYPE_CHECK(a, E_APP_TYPE);
+   /* FIXME: This is probably the wrong test. */
    if (a->exe) return;
    if (a->scanned)
      {
@@ -389,7 +398,9 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 				 a3->parent = a;
 				 a->subapps = evas_list_append(a->subapps, a3);
 				 a2->references = evas_list_append(a2->references, a3);
+#if ! NO_APP_LIST
 				 _e_apps_list = evas_list_prepend(_e_apps_list, a3);
+#endif
 			      }
 			    else
 			      e_object_del(E_OBJECT(a3));
@@ -986,21 +997,24 @@ e_app_path_find(const char *path)
    
    if (!path) return NULL;
 
-   for (l = _e_apps_list; l; l = l->next)
-     {
-	E_App *a;
+   if (_e_apps_list)
+      {
+         for (l = _e_apps_list; l; l = l->next)
+           {
+	      E_App *a;
 	
-	a = l->data;
-	if (a->path)
-	  {
-	     if (!strcmp(a->path, path))
-		{
-//		   _e_apps_list = evas_list_remove_list(_e_apps_list, l);
-//		   _e_apps_list = evas_list_prepend(_e_apps_list, a);
-		   return a;
-		}
-	  }
-     }
+	      a = l->data;
+	      if (a->path)
+	        {
+	           if (!strcmp(a->path, path))
+		      {
+//		         _e_apps_list = evas_list_remove_list(_e_apps_list, l);
+//		         _e_apps_list = evas_list_prepend(_e_apps_list, a);
+		         return a;
+		      }
+	        }
+           }
+      }
    return NULL;
 }
 
@@ -1796,7 +1810,9 @@ _e_app_free(E_App *a)
 	if (a->parent)
 	  a->parent->subapps = evas_list_remove(a->parent->subapps, a);
 	a->orig->references = evas_list_remove(a->orig->references, a);
+#if ! NO_APP_LIST
 	_e_apps_list = evas_list_remove(_e_apps_list, a);
+#endif
 	e_object_unref(E_OBJECT(a->orig));
 	free(a);
      }
@@ -1848,7 +1864,9 @@ _e_app_free(E_App *a)
 	  a->parent->subapps = evas_list_remove(a->parent->subapps, a);
 	if (a->monitor)
 	  ecore_file_monitor_del(a->monitor);
+#if ! NO_APP_LIST
 	_e_apps_list = evas_list_remove(_e_apps_list, a);
+#endif
 	e_app_fields_empty(a);
 	if (a->path) evas_stringshare_del(a->path);
 	free(a);
@@ -2143,7 +2161,9 @@ _e_app_subdir_rescan(E_App *app)
 
 				      subapps = evas_list_append(subapps, a3);
 				      a2->references = evas_list_append(a2->references, a3);
+#if ! NO_APP_LIST
 				      _e_apps_list = evas_list_prepend(_e_apps_list, a3);
+#endif
 				   }
 				 else
 				   e_object_del(E_OBJECT(a3));
