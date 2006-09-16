@@ -71,27 +71,46 @@ _e_wid_fsel_favorites_add(void *data1, void *data2)
 {
    E_Widget_Data *wd;
    const char *current_path;
-   char dest_path[PATH_MAX];
+   char buf[4096], *fname, *homedir;
    struct stat st;
    int i = 1;
+   FILE *f;
    
    wd = data1;
    current_path = e_fm2_real_path_get(wd->o_files_fm);
-   snprintf(dest_path, PATH_MAX, "%s/.e/e/fileman/favorites/%s", 
-	    getenv("HOME"), basename(current_path));
-   if (stat(dest_path, &st) < 0) symlink(current_path, dest_path);
+   if (!ecore_file_is_dir(current_path)) return;
+   homedir = e_user_homedir_get();
+   if (!homedir) return;
+   snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/%s", 
+	    homedir, ecore_file_get_file(current_path));
+   if (stat(buf, &st) < 0) symlink(current_path, buf);
    else
      {
-        while (stat(dest_path, &st) == 0)
+        while (stat(buf, &st) == 0)
 	  {
-	     snprintf(dest_path, PATH_MAX, "%s/.e/e/fileman/favorites/%s-%d",
-		      getenv("HOME"), 
-		      basename(current_path), i);
+	     snprintf(buf, sizeof(buf),
+		      "%s/.e/e/fileman/favorites/%s-%d",
+		      homedir,
+		      ecore_file_get_file(current_path), i);
 	     i++;
 	  }
-	symlink(current_path, dest_path);  
+	symlink(current_path, buf);  
      }
-   e_fm2_refresh(wd->o_favorites_fm);   
+   fname = alloca(strlen(ecore_file_get_file(buf)) + 1);
+   strcpy(fname, ecore_file_get_file(buf));
+   snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/.order", 
+	    homedir, ecore_file_get_file(current_path));
+   if (ecore_file_exists(buf))
+     {
+	f = fopen(buf, "a");
+	if (f)
+	  {
+	     fprintf(f, "%s\n", fname);
+	     fclose(f);
+	  }
+     }
+   e_fm2_refresh(wd->o_favorites_fm);
+   free(homedir);
 }
 
 static void
@@ -599,7 +618,7 @@ _e_wid_file_size_get(off_t st_size)
 static char * 
 _e_wid_file_user_get(uid_t st_uid)
 {
-   char name[PATH_MAX];
+   char name[4096];
    struct passwd *pwd;
 
    if (getuid() == st_uid) 
