@@ -26,6 +26,7 @@ struct _E_Config_Dialog_Data
    int    height;
    int    icon_theme;
    E_App_Edit *editor;
+   Evas_Object *themed;
 };
 
 /* local subsystem functions */
@@ -44,6 +45,7 @@ static void           _e_eap_edit_change_cb(void *data, Evas_Object *obj);
 static void           _e_eap_edit_cb_icon_select_del(void *obj);
 static void           _e_eap_edit_cb_icon_select_ok(void *data, E_Dialog *dia);
 static void           _e_eap_edit_cb_icon_select_cancel(void *data, E_Dialog *dia);
+static void           _cb_files_icon_theme_changed(void *data, Evas_Object *obj, void *event_info);
 
 #define IFADD(src, dst) if (src) dst = evas_stringshare_add(src); else dst = NULL
 #define IFDEL(src) if (src) evas_stringshare_del(src);  src = NULL;
@@ -139,12 +141,12 @@ _e_eap_edit_fill_data(E_Config_Dialog_Data *cfdata)
    IFDUP(cfdata->editor->eap->image, cfdata->image);
    cfdata->height = cfdata->editor->eap->height;
    cfdata->width = cfdata->editor->eap->width;
-   if (cfdata->image)  cfdata->editor->img_set = 1;
 
+   IFADD(cfdata->editor->eap->path, cfdata->eap.path);
    IFADD(cfdata->editor->eap->icon_class, cfdata->eap.icon_class);
-
-   IFDEL(cfdata->eap.icon_path);
    IFADD(cfdata->editor->eap->icon_path, cfdata->eap.icon_path);
+   if (!cfdata->eap.icon_path)
+      cfdata->icon_theme = 1;
 }
 
 static void *
@@ -205,6 +207,8 @@ _e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data)
    IFDEL(eap->image);
 
    IFADD(data->name, eap->name);
+   IFADD(data->iclass, eap->icon_class);
+   IFADD(data->eap.icon_path, eap->icon_path);
    if (data->exe)
       {
          char *exe;
@@ -217,11 +221,6 @@ _e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data)
 	       *exe = ' ';
 	    }
          eap->exe = evas_stringshare_add(data->exe);
-      }
-   if (data->image)
-      {
-         eap->image = evas_stringshare_add(data->image);
-         eap->icon_class = evas_stringshare_add("");   /* Call this temporary, until I reconsider the icon search order. */
       }
 
    eap->startup_notify = data->startup_notify;
@@ -256,8 +255,6 @@ _e_eap_edit_advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data
    IFADD(data->wclass, eap->win_class);
    IFADD(data->wtitle, eap->win_title);
    IFADD(data->wrole, eap->win_role);
-   IFADD(data->iclass, eap->icon_class);
-   IFADD(data->eap.icon_path, eap->icon_path);
 
    _e_eap_edit_basic_apply_data(cfd, data);
 
@@ -270,7 +267,7 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dial
 {
    E_App_Edit *editor;
    E_App *eap;
-   Evas_Object *ol, *o;
+   Evas_Object *ol, *o, *mt;
    Evas_Object *entry;
 
    editor = data->editor;
@@ -288,24 +285,6 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dial
      }
    
    editor->img = e_app_icon_add(evas, &(data->eap));
-#if 0
-   if ((editor->img_set) && (data->image))
-     {
-	if (editor->img) evas_object_del(editor->img);
-	editor->img = e_icon_add(evas);
-	e_icon_file_set(editor->img, data->image);
-	e_icon_fill_inside_set(editor->img, 1);
-     }
-   else if (!editor->img)
-     {
-	editor->img = e_icon_add(evas);
-	if (eap->path)
-	  {
-	     e_icon_file_key_set(editor->img, eap->path, "images/0");
-	     e_icon_fill_inside_set(editor->img, 1);
-	  }
-     }
-#endif
 
    if (editor->img_widget) evas_object_del(editor->img_widget);
    editor->img_widget = e_widget_button_add(evas, "", NULL,
@@ -316,7 +295,10 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dial
 				     0, 0, 1, 1,
 				     1, 1, 1, 1);
 
-   e_widget_frametable_object_append(o, e_widget_check_add(evas, _("Use Icon Theme"), &(data->icon_theme)),
+   data->themed = e_widget_check_add(evas, _("Use Icon Theme"), &(data->icon_theme));
+   evas_object_smart_callback_add(data->themed, "changed",
+				  _cb_files_icon_theme_changed, data);
+   e_widget_frametable_object_append(o, data->themed,
 				     1, 0, 1, 1,
 				     1, 1, 1, 1);
 
@@ -494,7 +476,7 @@ _e_eap_edit_change_cb(void *data, Evas_Object *obj)
    if (!file) return;
 
    IFFREE(cfdata->image);
-   IFDUP(cfdata->image, file);
+   IFDUP(file, cfdata->image);
 }
 
 static void
@@ -505,7 +487,6 @@ _e_eap_edit_cb_icon_select_del(void *obj)
 
    dia = obj;
    cfdata = dia->data;
-   cfdata->editor->img_set = 0;
    e_widget_focused_object_clear(cfdata->editor->img_widget);
 }
 
@@ -517,28 +498,11 @@ _e_eap_edit_cb_icon_select_ok(void *data, E_Dialog *dia)
    cfdata = data;
    if (cfdata->image)
      {
-	cfdata->editor->img_set = 1;
-	if (cfdata->editor->img) evas_object_del(cfdata->editor->img);
-
-        IFDEL(cfdata->eap.icon_class);
-        IFDEL(cfdata->eap.icon_path);
-
-	cfdata->eap.icon_path = evas_stringshare_add(cfdata->image);
-	cfdata->eap.icon_class = NULL;
-        cfdata->editor->img = e_app_icon_add(cfdata->editor->evas, &(cfdata->eap));
-#if 0
-	cfdata->editor->img = e_icon_add(cfdata->editor->evas);
-	e_icon_file_set(cfdata->editor->img, cfdata->image);
-	e_icon_fill_inside_set(cfdata->editor->img, 1);
-#endif
-	e_widget_button_icon_set(cfdata->editor->img_widget, cfdata->editor->img);
+        e_widget_check_checked_set(cfdata->themed, 0);
+        _cb_files_icon_theme_changed(cfdata, NULL, NULL);
      }
-   else
-     cfdata->editor->img_set = 0;
 
-   e_widget_focused_object_clear(cfdata->editor->img_widget);
-   e_object_del_attach_func_set(E_OBJECT(dia), NULL);
-   e_object_del(E_OBJECT(dia));
+   _e_eap_edit_cb_icon_select_cancel(data, dia);
 }
 
 static void
@@ -547,8 +511,23 @@ _e_eap_edit_cb_icon_select_cancel(void *data, E_Dialog *dia)
    E_Config_Dialog_Data *cfdata;
 
    cfdata = data;
-   cfdata->editor->img_set = 0;
    e_widget_focused_object_clear(cfdata->editor->img_widget);
    e_object_del_attach_func_set(E_OBJECT(dia), NULL);
    e_object_del(E_OBJECT(dia));
+}
+
+static void
+_cb_files_icon_theme_changed(void *data, Evas_Object *obj, void *event_info)
+{
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = data;
+   IFDEL(cfdata->eap.icon_path);
+   if (!cfdata->icon_theme)
+      {
+         IFADD(cfdata->image, cfdata->eap.icon_path);
+      }
+   if (cfdata->editor->img) evas_object_del(cfdata->editor->img);
+   cfdata->editor->img = e_app_icon_add(cfdata->editor->evas, &(cfdata->eap));
+   e_widget_button_icon_set(cfdata->editor->img_widget, cfdata->editor->img);
 }

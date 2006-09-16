@@ -1355,7 +1355,6 @@ e_app_fields_save(E_App *a)
 	    }
 	 if (desktop)
 	    {
-	       desktop->eap_name = (char *) a->path;
 	       desktop->name = (char *) a->name;
 	       desktop->generic = (char *) a->generic;
 	       desktop->comment = (char *) a->comment;
@@ -1670,7 +1669,10 @@ EAPI Evas_Object *
 e_app_icon_add(Evas *evas, E_App *a)
 {
    Evas_Object *o = NULL;
-   
+
+#if DEBUG
+printf("e_app_icon_add(%s)   %s   %s   %s\n", a->path, a->icon_class, e_config->icon_theme, a->icon_path);
+#endif
    if ((a->icon_path) && (a->icon_path[0] != 0))
      o = _e_app_icon_path_add(evas, a);
    else
@@ -1722,6 +1724,9 @@ e_app_icon_add_to_menu_item(E_Menu_Item *mi, E_App *a)
    /* e_menu_item_icon_edje_set() just tucks away the params, the actual call to edje_object_file_set() happens later. */
    /* e_menu_item_icon_file_set() just tucks away the params, the actual call to e_icon_add() happens later. */
 
+#if DEBUG
+printf("e_app_icon_add_to_menu_item(%s)   %s   %s   %s\n", a->path, a->icon_class, e_config->icon_theme, a->icon_path);
+#endif
    if ((a->icon_path) && (a->icon_path[0] != 0))
       _e_app_icon_path_add_to_menu_item(mi, a);
    else
