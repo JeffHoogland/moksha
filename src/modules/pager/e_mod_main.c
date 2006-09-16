@@ -1636,13 +1636,14 @@ _pager_desk_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 static void
 _pager_desk_cb_mouse_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   return;
    Evas_Event_Mouse_Wheel *ev;
    Pager_Desk *pd;
    Evas_List *l;
 
    ev = event_info;
    pd = data;
+
+   e_zone_desk_linear_flip_by(pd->desk->zone, ev->z);
 }
 
 static int
