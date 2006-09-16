@@ -128,7 +128,7 @@ e_app_init(void)
    _e_apps_exit_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_apps_cb_exit, NULL);
    _e_apps_border_add_handler = ecore_event_handler_add(E_EVENT_BORDER_ADD, _e_app_cb_event_border_add, NULL);
    _e_apps_all = e_app_new(buf, 1);
-#if NO_APPS_LIST
+#if NO_APP_LIST
    /* The list already exists, and it doesn't care what order it is in. */
    if (_e_apps_all)
       _e_apps_list = _e_apps_all->subapps;
