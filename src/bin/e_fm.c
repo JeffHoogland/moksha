@@ -3224,7 +3224,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
    can_w2 = 1;
    if (ic->sd->order_file)
      {
-	snprintf(buf, sizeof(buf), "%s/.order", sd->realpath, ic->info.file);
+	snprintf(buf, sizeof(buf), "%s/.order", sd->realpath);
 	can_w2 = ecore_file_can_write(buf);
      }
    if (ic->info.pseudo_link)
@@ -3253,6 +3253,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
      }
    else
      {
+	snprintf(buf, sizeof(buf), "%s/.order", sd->realpath);
 	if (ecore_file_can_write(buf)) can_w = 1;
      }
    if ((can_w) && (can_w2))
