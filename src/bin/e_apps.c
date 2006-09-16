@@ -192,6 +192,7 @@ e_app_unmonitor_all(void)
      }
 }
 
+/* FIXME: Not actualy used anywhere, should we nuke it or should we use it everywhere that an E_App is allocated? */
 EAPI E_App *
 e_app_raw_new(void)
 {
@@ -248,7 +249,9 @@ e_app_new(const char *path, int scan_subdirs)
 		    a->name = evas_stringshare_add(ecore_file_get_file(a->path));
 		  if (scan_subdirs) e_app_subdir_scan(a, scan_subdirs);
 		  
-		  a->monitor = ecore_file_monitor_add(a->path, _e_app_cb_monitor, a);
+		  /* Don't monitor the all directory, all changes to that must go through e_app. */
+                  if (strcmp(_e_apps_path_all, a->path) != 0)
+		     a->monitor = ecore_file_monitor_add(a->path, _e_app_cb_monitor, a);
 	       }
 	     else if (_e_app_is_eapp(path))
 	       {
@@ -1312,6 +1315,7 @@ e_app_fields_save(E_App *a)
 {
    char buf[PATH_MAX];
    const char *lang, *ext = NULL;
+   int new_eap = 0;
 
    /* Check if it's a new one that has not been saved yet. */
    if (a->path)
@@ -1320,6 +1324,19 @@ e_app_fields_save(E_App *a)
       {
          snprintf(buf, sizeof(buf), "%s/%s.desktop", _e_apps_all->path, a->name);
 	 a->path = evas_stringshare_add(buf);
+      }
+   if (!a->path)  return;
+   /* This still lets old ones that are not in all to be saved, but new ones are forced to be in all. */
+   if (!ecore_file_exists(a->path))
+      {
+         /* Force it to be in all. */
+         snprintf(buf, sizeof(buf), "%s/%s", _e_apps_all->path, ecore_file_get_file(a->path));
+	 a->path = evas_stringshare_add(buf);
+      }
+   if (!a->path)  return;
+   if (!ecore_file_exists(a->path))
+      {
+         new_eap = 1;
       }
 
    ext = strrchr(a->path, '.');
@@ -1485,6 +1502,14 @@ e_app_fields_save(E_App *a)
 	  }
 	_e_app_subdir_rescan(a->parent);
      }
+   if (new_eap)
+      {
+         /* Careful, if this is being created from the border icon, this E_App is already part of the border. */
+         a->parent = _e_apps_all;
+         _e_apps_all->subapps = evas_list_append(_e_apps_all->subapps, a);
+	 /* FIXME: Don't know if we need to copy and reference this since it is in the repository. */
+	 _e_app_change(a, E_APP_ADD);
+      }
 }
 
 EAPI void

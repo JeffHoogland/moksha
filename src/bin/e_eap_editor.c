@@ -141,7 +141,6 @@ _e_eap_edit_fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->width = cfdata->editor->eap->width;
    if (cfdata->image)  cfdata->editor->img_set = 1;
 
-   IFADD(cfdata->editor->eap->path, cfdata->eap.path);
    IFADD(cfdata->editor->eap->icon_class, cfdata->eap.icon_class);
 
    IFDEL(cfdata->eap.icon_path);
@@ -176,7 +175,6 @@ _e_eap_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data)
    IFFREE(data->ipath);
    IFFREE(data->image);
 
-   IFDEL(data->eap.path);
    IFDEL(data->eap.icon_class);
    IFDEL(data->eap.icon_path);
    
@@ -522,12 +520,10 @@ _e_eap_edit_cb_icon_select_ok(void *data, E_Dialog *dia)
 	cfdata->editor->img_set = 1;
 	if (cfdata->editor->img) evas_object_del(cfdata->editor->img);
 
-//        IFDEL(cfdata->eap.path);
         IFDEL(cfdata->eap.icon_class);
         IFDEL(cfdata->eap.icon_path);
 
 	cfdata->eap.icon_path = evas_stringshare_add(cfdata->image);
-//	cfdata->eap.path = evas_stringshare_add("");
 	cfdata->eap.icon_class = NULL;
         cfdata->editor->img = e_app_icon_add(cfdata->editor->evas, &(cfdata->eap));
 #if 0
