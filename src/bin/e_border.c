@@ -3408,14 +3408,14 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
      {
 	int x, y;
 
-	y = bd->y;
 	x = bd->x;
+	y = bd->y;
 #if 0
-	printf("##- ASK FOR 0x%x TO MOVE TO [FLG X%liY%li] %i,%i\n",
+	printf("##- ASK FOR 0x%x TO MOVE TO [FLG X%liY%li] %i,%i -> %i,%i\n",
 	       bd->client.win,
 	       e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X,
 	       e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y,
-	       x, y);
+	       x, y, e->x, e->y);
 #endif
 	if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X)
 	  x = e->x;
@@ -3440,9 +3440,27 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 		    e->w, e->h);
 #endif
 	     if ((!bd->lock_client_location) && (!bd->lock_client_size))
-	       e_border_move_resize(bd, x, y, w, h);
+	       {
+		  if ((bd->maximized & E_MAXIMIZE_TYPE) != E_MAXIMIZE_NONE)
+		    {
+		       bd->saved.x = x;	
+		       bd->saved.y = y;
+		       bd->saved.w = w;
+		       bd->saved.h = h;
+		    }
+		  else
+		    e_border_move_resize(bd, x, y, w, h);
+	       }
 	     else if (!bd->lock_client_location)
-	       e_border_move(bd, x, y);
+	       {
+		  if ((bd->maximized & E_MAXIMIZE_TYPE) != E_MAXIMIZE_NONE)
+		    {
+		       bd->saved.x = x;	
+		       bd->saved.y = y;
+		    }
+		  else
+		    e_border_move(bd, x, y);
+	       }
 	     else if (!bd->lock_client_size)
 	       {
 		  if ((bd->shaded) || (bd->shading))
@@ -3464,13 +3482,29 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 			 }
 		    }
 		  else
-		    e_border_resize(bd, w, h);
+		    {
+		       if ((bd->maximized & E_MAXIMIZE_TYPE) != E_MAXIMIZE_NONE)
+			 {
+			    bd->saved.w = w;
+			    bd->saved.h = h;
+			 }
+		       else
+			 e_border_resize(bd, w, h);
+		    }
 	       }
 	  }
 	else
 	  {
 	     if (!bd->lock_client_location)
-	       e_border_move(bd, x, y);
+	       {
+		  if ((bd->maximized & E_MAXIMIZE_TYPE) != E_MAXIMIZE_NONE)
+		    {
+		       bd->saved.x = x;
+		       bd->saved.y = y;
+		    }
+		  else
+		    e_border_move(bd, x, y);
+	       }
 	  }
      }
    else if ((e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W) ||
@@ -3512,7 +3546,15 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 		    }
 	       }
 	     else
-	       e_border_resize(bd, w, h);
+	       {
+		  if ((bd->maximized & E_MAXIMIZE_TYPE) != E_MAXIMIZE_NONE)
+		    {
+		       bd->saved.w = w;
+		       bd->saved.h = h;
+		    }
+		  else
+		    e_border_resize(bd, w, h);
+	       }
 	  }
      }
    if (!bd->lock_client_stacking)
