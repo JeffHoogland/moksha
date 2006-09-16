@@ -659,12 +659,6 @@ e_zone_exec(E_Zone *zone, char *exe)
    if (!ex)
      {
 	free(inst);
-	e_error_dialog_show(_("Run Error"),
-			    _("Enlightenment was unable to fork a child process:\n"
-			      "\n"
-			      "%s\n"
-			      "\n"),
-			    exe);
 	ret = 0;
      }
    /* reset env vars */

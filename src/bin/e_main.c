@@ -591,10 +591,6 @@ main(int argc, char **argv)
    
    _e_main_shutdown_push(_e_main_screens_shutdown);
 
-   
-   /* tell the error system that it can use gui dialogs now */
-   e_error_gui_set(1);
-   
    /* setup e ipc service */
    if (_e_main_ipc_init())
      _e_main_shutdown_push(_e_main_ipc_shutdown);
@@ -1209,7 +1205,6 @@ _e_main_ipc_shutdown(void)
 static void
 _e_main_cb_x_fatal(void *data __UNUSED__)
 {
-   e_error_gui_set(0);
    e_error_message_show("Lost X connection.");
    ecore_main_loop_quit();
 //   _e_main_shutdown(-1);
