@@ -2722,9 +2722,14 @@ static int
 _e_fm2_cb_icon_sort(void *data1, void *data2)
 {
    E_Fm2_Icon *ic1, *ic2;
+   char *l1, *l2;
    
    ic1 = data1;
    ic2 = data2;
+   l1 = ic1->info.file;
+   if (ic1->info.label) l1 = ic1->info.label;
+   l2 = ic2->info.file;
+   if (ic2->info.label) l2 = ic2->info.label;
    if (ic1->sd->config->list.sort.dirs.first)
      {
 	if ((S_ISDIR(ic1->info.statinfo.st_mode)) != 
@@ -2747,8 +2752,8 @@ _e_fm2_cb_icon_sort(void *data1, void *data2)
      {
 	char buf1[4096], buf2[4096], *p;
 	
-	strncpy(buf1, ic1->info.file, sizeof(buf1) - 2);
-	strncpy(buf2, ic2->info.file, sizeof(buf2) - 2);
+	strncpy(buf1, l1, sizeof(buf1) - 2);
+	strncpy(buf2, l2, sizeof(buf2) - 2);
 	buf1[sizeof(buf1) - 1] = 0;
 	buf2[sizeof(buf2) - 1] = 0;
 	p = buf1;
@@ -2765,7 +2770,7 @@ _e_fm2_cb_icon_sort(void *data1, void *data2)
 	  }
 	return strcmp(buf1, buf2);
      }
-   return strcmp(ic1->info.file, ic2->info.file);
+   return strcmp(l1, l2);
 }
 
 static int
