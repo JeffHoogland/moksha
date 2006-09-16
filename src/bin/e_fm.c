@@ -1658,9 +1658,12 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	          E_App *app;
 
 		  if (ic->info.pseudo_link)
-		       snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
+		    snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
 		  else
 		    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
+/* FIXME FIXME FIXME: e_app_new() is SLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOW. it can
+ * be a complete hog. this destroys performance in fm2. :(:(:(
+ */
                   app = e_app_new(buf, 0);
 		  if (app)
 		    {
