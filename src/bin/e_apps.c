@@ -1209,6 +1209,7 @@ e_app_fields_fill(E_App *a, const char *path)
       if (desktop)
         {
 	   a->desktop = desktop;
+
 	   if (desktop->name)  a->name = evas_stringshare_add(desktop->name);
 	   if (desktop->generic)  a->generic = evas_stringshare_add(desktop->generic);
 	   if (desktop->comment)  a->comment = evas_stringshare_add(desktop->comment);
@@ -1647,6 +1648,24 @@ _e_app_icon_path_add(Evas *evas, E_App *a)
 }
 
 
+static void
+_e_app_icon_path_add_to_menu_item(E_Menu_Item *mi, E_App *a)
+{
+   char *ext;
+
+   ext = strrchr(a->icon_path, '.');
+   if (ext)
+      {
+          if (strcmp(ext, ".edj") == 0)
+             e_menu_item_icon_edje_set(mi, a->icon_path, "icon");
+          else
+             e_menu_item_icon_file_set(mi, a->icon_path);
+      }
+   else
+      e_menu_item_icon_file_set(mi, a->icon_path);
+}
+
+
 EAPI Evas_Object *
 e_app_icon_add(Evas *evas, E_App *a)
 {
@@ -1700,22 +1719,36 @@ EAPI void
 e_app_icon_add_to_menu_item(E_Menu_Item *mi, E_App *a)
 {
    mi->app = a;
-   if ((!a->icon_path) && (a->icon_class))
-      {
-         char *v;
-
-	 /* FIXME: Use a real icon size. */
-	 v = (char *) ecore_desktop_icon_find(a->icon_class, NULL, e_config->icon_theme);
-	 if (v)
-	    a->icon_path = evas_stringshare_add(v);
-      }
-
-   e_util_menu_item_edje_icon_list_set(mi, a->icon_class);
    /* e_menu_item_icon_edje_set() just tucks away the params, the actual call to edje_object_file_set() happens later. */
    /* e_menu_item_icon_file_set() just tucks away the params, the actual call to e_icon_add() happens later. */
-   e_menu_item_icon_edje_set(mi, a->path, "icon");
-   if (a->icon_path)
-      e_menu_item_icon_file_set(mi, a->icon_path);
+
+   if ((a->icon_path) && (a->icon_path[0] != 0))
+      _e_app_icon_path_add_to_menu_item(mi, a);
+   else
+      {
+         if (!e_util_menu_item_edje_icon_list_set(mi, a->icon_class))
+	    {
+               if (edje_file_group_exists(a->path, "icon"))
+	          {
+                     e_menu_item_icon_edje_set(mi, a->path, "icon");
+	          }
+               else if ((a->icon_class))
+                  {
+                     char *v;
+
+	             /* FIXME: Use a real icon size. */
+	             v = (char *) ecore_desktop_icon_find(a->icon_class, NULL, e_config->icon_theme);
+	             if (v)
+	                {
+	                   a->icon_path = evas_stringshare_add(v);
+		           free(v);
+		        }
+                  }
+
+               if (a->icon_path)
+                  _e_app_icon_path_add_to_menu_item(mi, a);
+	    }
+      }
 }
 
 
