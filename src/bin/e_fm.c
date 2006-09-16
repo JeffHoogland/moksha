@@ -1578,7 +1578,6 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	     const char *icon;
 	     
 	     icon = e_fm_mime_icon_get(ic->info.mime);
-	     printf("%s -> %s | %s\n", ic->info.file, ic->info.mime, icon);
 	     /* use mime type to select icon */
 	     if (!icon)
 	       {
