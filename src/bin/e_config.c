@@ -39,6 +39,7 @@ static E_Config_DD *_e_config_color_class_edd = NULL;
 static E_Config_DD *_e_config_gadcon_edd = NULL;
 static E_Config_DD *_e_config_gadcon_client_edd = NULL;
 static E_Config_DD *_e_config_shelf_edd = NULL;
+static E_Config_DD *_e_config_mime_icon_edd = NULL;
 
 
 /* externally accessible functions */
@@ -309,6 +310,14 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, b3, INT);
    E_CONFIG_VAL(D, T, a3, INT);
 
+   _e_config_mime_icon_edd = E_CONFIG_DD_NEW("E_Config_Mime_Icon", E_Config_Mime_Icon);
+#undef T
+#undef D
+#define T E_Config_Mime_Icon
+#define D _e_config_mime_icon_edd
+   E_CONFIG_VAL(D, T, mime, STR);
+   E_CONFIG_VAL(D, T, icon, STR);
+
    _e_config_edd = E_CONFIG_DD_NEW("E_Config", E_Config);
 #undef T
 #undef D
@@ -488,6 +497,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, wallpaper_grad_c2_r, INT);
    E_CONFIG_VAL(D, T, wallpaper_grad_c2_g, INT);
    E_CONFIG_VAL(D, T, wallpaper_grad_c2_b, INT);
+   
+   E_CONFIG_LIST(D, T, mime_icons, _e_config_mime_icon_edd); /**/
    
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -1226,6 +1237,29 @@ e_config_init(void)
    e_config->desk_flip_animate_mode = 1;
    e_config->desk_flip_animate_interpolation = 0;
    e_config->desk_flip_animate_time = 0.2;
+   IFCFGEND;
+   
+   IFCFG(0x0102);
+     {
+	E_Config_Mime_Icon *mi;
+
+#define CFG_MIME_ICON(_mime, _icon) \
+   mi = E_NEW(E_Config_Mime_Icon, 1); \
+   mi->mime = evas_stringshare_add(_mime); \
+   mi->icon = evas_stringshare_add(_icon); \
+   e_config->mime_icons = evas_list_append(e_config->mime_icons, mi)
+	
+	CFG_MIME_ICON("image/jpeg", "THUMB");
+	CFG_MIME_ICON("image/png", "THUMB");
+	CFG_MIME_ICON("image/x-pixmap", "THUMB");
+	CFG_MIME_ICON("image/svg+xml", "THUMB");
+	CFG_MIME_ICON("image/gif", "THUMB");
+	CFG_MIME_ICON("image/tiff", "THUMB");
+
+	CFG_MIME_ICON("application/x-desktop", "DESKTOP");
+	
+//	CFG_MIME_ICON("image/*", "e/icons/fileman/mime/image");
+     }
    IFCFGEND;
    
 #if 0 /* example of new config */

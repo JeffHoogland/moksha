@@ -12,6 +12,7 @@ struct _E_Mime
 };
 
 /* local subsystem functions */
+static Evas_Bool _e_fm_mime_icon_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata);
 static void _e_fm_mime_all_free(void);
 static void _e_fm_mime_update(void);
 static int _e_fm_mime_glob_remove(const char *glob);
@@ -19,6 +20,7 @@ static void _e_fm_mime_mime_types_load(char *file);
 static void _e_fm_mime_shared_mimeinfo_globs_load(char *file);
 
 static Evas_List *mimes = NULL;
+static Evas_Hash *icon_map = NULL;
 
 /* externally accessible functions */
 EAPI const char *
@@ -53,7 +55,116 @@ e_fm_mime_filename_get(const char *fname)
    return NULL;
 }
 
+/* returns:
+ * NULL == don't know
+ * "THUMB" == generate a thumb
+ * "e/icons/fileman/mime/..." == theme icon
+ * "/path/to/file....edj" = explicit icon edje file
+ * "/path/to/file..." = explicit image file to use
+ */
+EAPI const char *
+e_fm_mime_icon_get(const char *mime)
+{
+   char buf[4096], buf2[4096], *homedir = NULL, *val;
+   Evas_List *l;
+   E_Config_Mime_Icon *mi;
+   Evas_List *freelist = NULL;
+   
+   /* 0.0 clean out hash cache once it has mroe than 256 entried in it */
+   if (evas_hash_size(icon_map) > 256)
+     {
+	evas_hash_foreach(icon_map, _e_fm_mime_icon_foreach, &freelist);
+	while (freelist)
+	  {
+	     evas_stringshare_del(freelist->data);
+	     freelist = evas_list_remove_list(freelist, freelist);
+	  }
+	evas_hash_free(icon_map);
+	icon_map = NULL;
+     }
+   /* 0. look in mapping cache */
+   val = evas_hash_find(icon_map, mime);
+   if (val) return val;
+   
+   strncpy(buf2, mime, sizeof(buf2) - 1);
+   buf2[sizeof(buf2) - 1] = 0;
+   val = strchr(buf2, '/');
+   if (val) *val = 0;
+   
+   /* 1. look up in mapping to file or thumb (thumb has flag)*/
+   for (l = e_config->mime_icons; l; l = l->next)
+     {
+	mi = l->data;
+	if (e_util_glob_match(mi->mime, mime))
+	  {
+	     strncpy(buf, mi->icon, sizeof(buf) - 1);
+	     buf[sizeof(buf) - 1] = 0;
+	     goto ok;
+	  }
+     }
+   
+   /* 2. look up in ~/.e/e/icons */
+   homedir = e_user_homedir_get();
+   if (!homedir) return NULL;
+   
+   snprintf(buf, sizeof(buf), "%s/.e/e/icons/%s.edj", homedir, mime);
+   if (ecore_file_exists(buf)) goto ok;
+   snprintf(buf, sizeof(buf), "%s/.e/e/icons/%s.svg", homedir, mime);
+   if (ecore_file_exists(buf)) goto ok;
+   snprintf(buf, sizeof(buf), "%s/.e/e/icons/%s.png", homedir, mime);
+   if (ecore_file_exists(buf)) goto ok;
+   snprintf(buf, sizeof(buf), "%s/.e/e/icons/%s.edj", homedir, buf2);
+   if (ecore_file_exists(buf)) goto ok;
+   snprintf(buf, sizeof(buf), "%s/.e/e/icons/%s.svg", homedir, buf2);
+   if (ecore_file_exists(buf)) goto ok;
+   snprintf(buf, sizeof(buf), "%s/.e/e/icons/%s.png", homedir, buf2);
+   if (ecore_file_exists(buf)) goto ok;
+   
+   /* 3. look up icon in theme */
+   snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", mime);
+   val = (char *)e_theme_edje_file_get("base/theme/fileman", buf);
+   if ((val) && (e_util_edje_collection_exists(val, buf))) goto ok;
+   snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", buf2);
+   val = (char *)e_theme_edje_file_get("base/theme/fileman", buf);
+   if ((val) && (e_util_edje_collection_exists(val, buf))) goto ok;
+   
+   /* 4. look up icon in PREFIX/share/enlightent/data/icons */
+   snprintf(buf, sizeof(buf), "%s/data/icons/%s.edj", e_prefix_data_get(), mime);
+   if (ecore_file_exists(buf)) goto ok;
+   snprintf(buf, sizeof(buf), "%s/data/icons/%s.svg", e_prefix_data_get(), mime);
+   if (ecore_file_exists(buf)) goto ok;
+   snprintf(buf, sizeof(buf), "%s/data/icons/%s.png", e_prefix_data_get(), mime);
+   if (ecore_file_exists(buf)) goto ok;
+   snprintf(buf, sizeof(buf), "%s/data/icons/%s.edj", e_prefix_data_get(), buf2);
+   if (ecore_file_exists(buf)) goto ok;
+   snprintf(buf, sizeof(buf), "%s/data/icons/%s.svg", e_prefix_data_get(), buf2);
+   if (ecore_file_exists(buf)) goto ok;
+   snprintf(buf, sizeof(buf), "%s/data/icons/%s.png", e_prefix_data_get(), buf2);
+   if (ecore_file_exists(buf)) goto ok;
+   
+   error:
+   if (homedir) free(homedir);
+   return NULL;
+   
+   ok:
+   val = (char *)evas_stringshare_add(buf);
+   icon_map = evas_hash_add(icon_map, mime, val);
+   if (homedir) free(homedir);
+   return val;
+   
+}
+
 /* local subsystem functions */
+static Evas_Bool
+_e_fm_mime_icon_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata)
+{
+   Evas_List **freelist;
+   
+   freelist = fdata;
+   *freelist = evas_list_append(*freelist, data);
+   return 1;
+}
+
 static void
 _e_fm_mime_all_free(void)
 {
@@ -93,7 +204,7 @@ _e_fm_mime_update(void)
 	static time_t last_changed = 0;
 	time_t ch;
 	
-	snprintf(buf, sizeof(buf), "/usr/local/etc/mime.types");
+	snprintf(buf, sizeof(buf), "/etc/mime.types");
 	ch = ecore_file_mod_time(buf);
 	if ((ch != last_changed) || (reload))
 	  {
@@ -108,7 +219,7 @@ _e_fm_mime_update(void)
 	static time_t last_changed = 0;
 	time_t ch;
 	
-	snprintf(buf, sizeof(buf), "/etc/mime.types");
+	snprintf(buf, sizeof(buf), "/usr/local/etc/mime.types");
 	ch = ecore_file_mod_time(buf);
 	if ((ch != last_changed) || (reload))
 	  {
@@ -272,7 +383,7 @@ _e_fm_mime_shared_mimeinfo_globs_load(char *file)
 
     */
    FILE *f;
-   char buf[4096], buf2[4096], mimetype[4096], ext[4096], *p, *pp;
+   char buf[4096], mimetype[4096], ext[4096], *p, *pp;
    E_Mime *mime;
    
    f = fopen(file, "rb");
@@ -302,8 +413,7 @@ _e_fm_mime_shared_mimeinfo_globs_load(char *file)
 	if (mime)
 	  {
 	     mime->mime = evas_stringshare_add(mimetype);
-	     snprintf(buf2, sizeof(buf2), "*.%s", ext);
-	     mime->glob = evas_stringshare_add(buf2);
+	     mime->glob = evas_stringshare_add(ext);
 	     if ((!mime->mime) || (!mime->glob))
 	       {
 		  if (mime->mime) evas_stringshare_del(mime->mime);
@@ -312,7 +422,7 @@ _e_fm_mime_shared_mimeinfo_globs_load(char *file)
 	       }
 	     else
 	       {
-		  _e_fm_mime_glob_remove(buf2);
+		  _e_fm_mime_glob_remove(ext);
 		  mimes = evas_list_append(mimes, mime);
 	       }
 	  }

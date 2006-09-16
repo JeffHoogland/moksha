@@ -8,6 +8,7 @@
 #define E_FM_MIME_H
 
 EAPI const char *e_fm_mime_filename_get(const char *fname);
+EAPI const char *e_fm_mime_icon_get(const char *mime);
     
 #endif
 #endif

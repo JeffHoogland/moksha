@@ -36,6 +36,7 @@ typedef struct _E_Config_Desktop_Name       E_Config_Desktop_Name;
 typedef struct _E_Config_Gadcon             E_Config_Gadcon;
 typedef struct _E_Config_Gadcon_Client      E_Config_Gadcon_Client;
 typedef struct _E_Config_Shelf              E_Config_Shelf;
+typedef struct _E_Config_Mime_Icon          E_Config_Mime_Icon;
 
 typedef Eet_Data_Descriptor                 E_Config_DD;
 
@@ -50,7 +51,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need top be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0101
+#define E_CONFIG_FILE_GENERATION 0x0102
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT      0
@@ -249,6 +250,8 @@ struct _E_Config
    int wallpaper_grad_c2_r; // INTERNAL
    int wallpaper_grad_c2_g; // INTERNAL
    int wallpaper_grad_c2_b; // INTERNAL
+   
+   Evas_List *mime_icons;
 };
 
 struct _E_Config_Module
@@ -356,6 +359,12 @@ struct _E_Config_Shelf
    unsigned char fit_size;
    const char   *style;
    int           size;
+};
+
+struct _E_Config_Mime_Icon
+{
+   char *mime;
+   char *icon;
 };
 
 EAPI int        e_config_init(void);

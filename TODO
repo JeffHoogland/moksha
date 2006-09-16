@@ -37,7 +37,6 @@ Some of the things (in very short form) that need to be done to E17...
 * fm2 needs way to replace or extend the right click menu (disable/enable
   rename/delete/refresh etc.)
 * fm2 needs a mime filter
-* fm2 needs to have a mime & filetype -> icon mapping
 * middle mouse on gadgets as a quick move/resize thing?
 * language packs: need to have a tool to load/setup a language pack (which
   means .mo compiled files from a .po, an optional font and a config file that
