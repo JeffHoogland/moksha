@@ -40,8 +40,7 @@ struct _Instance
    Evas_Object     *o_ibar;
    IBar            *ibar;
    E_Drop_Handler  *drop_handler;
-   Ecore_Timer     *drop_recalc_timer;
-   const char            *dir;
+   const char      *dir;
 };
 
 struct _IBar
@@ -93,7 +92,6 @@ static void _ibar_icon_fill(IBar_Icon *ic);
 static void _ibar_icon_empty(IBar_Icon *ic);
 static void _ibar_icon_signal_emit(IBar_Icon *ic, char *sig, char *src);
 static void _ibar_cb_app_change(void *data, E_App *a, E_App_Change ch);
-static int _ibar_cb_timer_drop_recalc(void *data);
 static void _ibar_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _ibar_cb_menu_icon_properties(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _ibar_cb_menu_icon_remove(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -125,7 +123,6 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    E_Gadcon_Client *gcc;
    Instance *inst;
    Evas_Coord x, y, w, h;
-   int cx, cy, cw, ch;
    const char *drop[] = { "enlightenment/eapp", "enlightenment/border", "text/uri-list" };
    Config_Item *ci;
    
@@ -146,21 +143,17 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst->gcc = gcc;
    inst->o_ibar = o;
    
-   e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy, &cw, &ch);
    evas_object_geometry_get(o, &x, &y, &w, &h);
    inst->drop_handler =
-     e_drop_handler_add(inst,
+     e_drop_handler_add(inst->gcc->gadcon, inst,
 			_ibar_inst_cb_enter, _ibar_inst_cb_move,
 			_ibar_inst_cb_leave, _ibar_inst_cb_drop,
-			drop, 3, cx + x, cy + y, w,  h);
+			drop, 3, x, y, w,  h);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOVE,
 				  _ibar_cb_obj_moveresize, inst);
    evas_object_event_callback_add(o, EVAS_CALLBACK_RESIZE,
 				  _ibar_cb_obj_moveresize, inst);
    ibar_config->instances = evas_list_append(ibar_config->instances, inst);
-   /* FIXME: HACK!!!! */
-   inst->drop_recalc_timer = ecore_timer_add(1.0, _ibar_cb_timer_drop_recalc,
-					     inst);
    return gcc;
 }
 
@@ -171,7 +164,6 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    
    inst = gcc->data;
    evas_stringshare_del(inst->dir);
-   ecore_timer_del(inst->drop_recalc_timer);
    ibar_config->instances = evas_list_remove(ibar_config->instances, inst);
    e_drop_handler_del(inst->drop_handler);
    _ibar_free(inst->ibar);
@@ -425,11 +417,9 @@ static void
 _ibar_instance_drop_zone_recalc(Instance *inst)
 {
    Evas_Coord x, y, w, h;
-   int cx, cy, cw, ch;
    
    evas_object_geometry_get(inst->o_ibar, &x, &y, &w, &h);
-   e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy, &cw, &ch);
-   e_drop_handler_geometry_set(inst->drop_handler, cx + x, cy + y, w, h);
+   e_drop_handler_geometry_set(inst->drop_handler, x, y, w, h);
 }  
 
 static Config_Item *
@@ -772,16 +762,6 @@ _ibar_cb_app_change(void *data, E_App *a, E_App_Change ch)
       default:
 	break;
      }
-}
-
-static int
-_ibar_cb_timer_drop_recalc(void *data)
-{
-   Instance *inst;
-   
-   inst = data;
-   _ibar_instance_drop_zone_recalc(inst);
-   return 1;
 }
 
 static void

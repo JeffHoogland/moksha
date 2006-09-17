@@ -4,7 +4,12 @@
 
 #ifdef E_TYPEDEFS
 
-typedef enum   _E_Drag_Type        E_Drag_Type;
+typedef enum _E_Drag_Type
+{
+   E_DRAG_NONE,
+   E_DRAG_INTERNAL,
+   E_DRAG_XDND
+} E_Drag_Type;
 
 typedef struct _E_Drag             E_Drag;
 typedef struct _E_Drop_Handler     E_Drop_Handler;
@@ -18,13 +23,6 @@ typedef struct _E_Event_Dnd_Drop   E_Event_Dnd_Drop;
 #define E_DND_H
 
 #define E_DRAG_TYPE 0xE0b0100f
-
-enum _E_Drag_Type
-{
-   E_DRAG_NONE,
-   E_DRAG_INTERNAL,
-   E_DRAG_XDND
-};
 
 struct _E_Drag
 {
@@ -69,6 +67,7 @@ struct _E_Drop_Handler
 	void *data;
    } cb;
 
+   E_Object      *obj;
    char         **types;
    unsigned int   num_types;
 
@@ -117,7 +116,8 @@ EAPI void    e_drag_idler_before(void);
 EAPI int  e_drag_start(E_Drag *drag, int x, int y);
 EAPI int  e_drag_xdnd_start(E_Drag *drag, int x, int y);
 
-EAPI E_Drop_Handler *e_drop_handler_add(void *data,
+EAPI E_Drop_Handler *e_drop_handler_add(E_Object *obj,
+					void *data,
 					void (*enter_cb)(void *data, const char *type, void *event),
 					void (*move_cb)(void *data, const char *type, void *event),
 					void (*leave_cb)(void *data, const char *type, void *event),

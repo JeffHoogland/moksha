@@ -42,7 +42,6 @@ struct _Instance
    Evas_Object     *o_pager; // table
    Pager           *pager;
    E_Drop_Handler  *drop_handler;
-   Ecore_Timer     *drop_recalc_timer;
 };
 
 struct _Pager
@@ -94,7 +93,6 @@ struct _Pager_Popup
    Ecore_Timer *timer;
 };
 
-static int _pager_cb_timer_drop_recalc(void *data);
 static void _pager_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _menu_cb_post(void *data, E_Menu *m);
@@ -159,7 +157,6 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    E_Gadcon_Client *gcc;
    Instance *inst;
    Evas_Coord x, y, w, h;
-   int cx, cy, cw, ch;
    const char *drop[] = { "enlightenment/border", "enlightenment/pager_win" };
    
    inst = E_NEW(Instance, 1);
@@ -174,13 +171,12 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst->gcc = gcc;
    inst->o_pager = o;
 
-   e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy, &cw, &ch);
    evas_object_geometry_get(o, &x, &y, &w, &h);
    inst->drop_handler =
-     e_drop_handler_add(inst,
+     e_drop_handler_add(inst->gcc->gadcon, inst,
 			_pager_inst_cb_enter, _pager_inst_cb_move,
 			_pager_inst_cb_leave, _pager_inst_cb_drop,
-			drop, 2, cx + x, cy + y, w, h);
+			drop, 2, x, y, w, h);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOVE,
 				  _pager_cb_obj_moveresize, inst);
    evas_object_event_callback_add(o, EVAS_CALLBACK_RESIZE,
@@ -188,9 +184,6 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
 				  _button_cb_mouse_down, inst);
    pager_config->instances = evas_list_append(pager_config->instances, inst);
-   /* FIXME: HACK!!!! */
-   inst->drop_recalc_timer = ecore_timer_add(1.0, _pager_cb_timer_drop_recalc,
-					     inst);
    return gcc;
 }
 
@@ -200,7 +193,6 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    Instance *inst;
    
    inst = gcc->data;
-   ecore_timer_del(inst->drop_recalc_timer);
    pager_config->instances = evas_list_remove(pager_config->instances, inst);
    e_drop_handler_del(inst->drop_handler);
    _pager_free(inst->pager);
@@ -600,16 +592,6 @@ _pager_popup_free(Pager_Popup *pp)
    free(pp);
 }
 
-static int
-_pager_cb_timer_drop_recalc(void *data)
-{
-   Instance *inst;
-   
-   inst = data;
-   _pager_instance_drop_zone_recalc(inst);
-   return 1;
-}
-
 static void
 _pager_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
@@ -676,11 +658,9 @@ static void
 _pager_instance_drop_zone_recalc(Instance *inst)
 {
    Evas_Coord x, y, w, h;
-   int cx, cy, cw, ch;
    
    evas_object_geometry_get(inst->o_pager, &x, &y, &w, &h);
-   e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy, &cw, &ch);
-   e_drop_handler_geometry_set(inst->drop_handler, cx + x, cy + y, w, h);
+   e_drop_handler_geometry_set(inst->drop_handler, x, y, w, h);
 }
 
 void

@@ -40,7 +40,6 @@ struct _Instance
    Evas_Object     *o_ibox;
    IBox            *ibox;
    E_Drop_Handler  *drop_handler;
-   Ecore_Timer     *drop_recalc_timer;
 };
 
 struct _IBox
@@ -94,7 +93,6 @@ static void _ibox_icon_empty(IBox_Icon *ic);
 static void _ibox_icon_signal_emit(IBox_Icon *ic, char *sig, char *src);
 //static IBox *_ibox_zone_find(E_Zone *zone);
 static Evas_List *_ibox_zone_find(E_Zone *zone);
-static int _ibox_cb_timer_drop_recalc(void *data);
 static void _ibox_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _ibox_cb_menu_post(void *data, E_Menu *m);
 static void _ibox_cb_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -132,7 +130,6 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    E_Gadcon_Client *gcc;
    Instance *inst;
    Evas_Coord x, y, w, h;
-   int cx, cy, cw, ch;
    const char *drop[] = { "enlightenment/border" };
    Config_Item *ci;
    
@@ -156,21 +153,17 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst->gcc = gcc;
    inst->o_ibox = o;
    
-   e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy, &cw, &ch);
    evas_object_geometry_get(o, &x, &y, &w, &h);
    inst->drop_handler =
-     e_drop_handler_add(inst,
+     e_drop_handler_add(inst->gcc->gadcon, inst,
 			_ibox_inst_cb_enter, _ibox_inst_cb_move,
 			_ibox_inst_cb_leave, _ibox_inst_cb_drop,
-			drop, 1, cx + x, cy + y, w, h);
+			drop, 1, x, y, w, h);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOVE,
 				  _ibox_cb_obj_moveresize, inst);
    evas_object_event_callback_add(o, EVAS_CALLBACK_RESIZE,
 				  _ibox_cb_obj_moveresize, inst);
    ibox_config->instances = evas_list_append(ibox_config->instances, inst);
-   /* FIXME: HACK!!!! */
-   inst->drop_recalc_timer = ecore_timer_add(1.0, _ibox_cb_timer_drop_recalc,
-					     inst);
    return gcc;
 }
 
@@ -180,7 +173,6 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    Instance *inst;
    
    inst = gcc->data;
-   ecore_timer_del(inst->drop_recalc_timer);
    ibox_config->instances = evas_list_remove(ibox_config->instances, inst);
    e_drop_handler_del(inst->drop_handler);
    _ibox_free(inst->ibox);
@@ -436,11 +428,9 @@ static void
 _ibox_instance_drop_zone_recalc(Instance *inst)
 {
    Evas_Coord x, y, w, h;
-   int cx, cy, cw, ch;
    
    evas_object_geometry_get(inst->o_ibox, &x, &y, &w, &h);
-   e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy, &cw, &ch);
-   e_drop_handler_geometry_set(inst->drop_handler, cx + x, cy + y, w, h);
+   e_drop_handler_geometry_set(inst->drop_handler, x, y, w, h);
 }  
 
 static IBox_Icon *
@@ -606,16 +596,6 @@ _ibox_zone_find(E_Zone *zone)
 	  }
      }
    return ibox;
-}
-
-static int
-_ibox_cb_timer_drop_recalc(void *data)
-{
-   Instance *inst;
-   
-   inst = data;
-   _ibox_instance_drop_zone_recalc(inst);
-   return 1;
 }
 
 static void

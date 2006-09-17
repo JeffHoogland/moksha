@@ -18,6 +18,8 @@
 static void _e_drag_show(E_Drag *drag);
 static void _e_drag_hide(E_Drag *drag);
 static void _e_drag_move(E_Drag *drag, int x, int y);
+static void _e_drag_coords_update(E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh);
+static int _e_drag_win_matches(E_Drop_Handler *h, Ecore_X_Window win);
 static void _e_drag_update(int x, int y);
 static void _e_drag_end(int x, int y);
 static void _e_drag_xdnd_end(int x, int y);
@@ -299,7 +301,8 @@ e_drag_xdnd_start(E_Drag *drag, int x, int y)
 }
 
 EAPI E_Drop_Handler *
-e_drop_handler_add(void *data,
+e_drop_handler_add(E_Object *obj,
+		   void *data,
 		   void (*enter_cb)(void *data, const char *type, void *event),
 		   void (*move_cb)(void *data, const char *type, void *event),
 		   void (*leave_cb)(void *data, const char *type, void *event),
@@ -329,6 +332,8 @@ e_drop_handler_add(void *data,
    handler->w = w;
    handler->h = h;
 
+   handler->obj = obj;
+   
    _drop_handlers = evas_list_append(_drop_handlers, handler);
 
    return handler;
@@ -486,13 +491,108 @@ _e_drag_move(E_Drag *drag, int x, int y)
 }
 
 static void
+_e_drag_coords_update(E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh)
+{
+   int px = 0, py = 0;
+   
+   *dx = h->x;
+   *dy = h->y;
+   *dw = h->w;
+   *dh = h->h;
+   if (h->obj)
+     {
+	switch (h->obj->type)
+	  {
+	   case E_GADCON_TYPE:
+	     e_gadcon_canvas_zone_geometry_get((E_Gadcon *)(h->obj), &px, &py, NULL, NULL);
+	     break;
+	   case E_WIN_TYPE:
+	     px = ((E_Win *)(h->obj))->x;
+	     py = ((E_Win *)(h->obj))->y;
+	     if ((((E_Win *)(h->obj))->border) &&
+		 (((E_Win *)(h->obj))->border->zone))
+	       {
+		  px -= ((E_Win *)(h->obj))->border->zone->x;
+		  py -= ((E_Win *)(h->obj))->border->zone->y;
+	       }
+	     break;
+	   case E_BORDER_TYPE:
+	     px = ((E_Border *)(h->obj))->x + ((E_Border *)(h->obj))->fx.x;
+	     py = ((E_Border *)(h->obj))->y + ((E_Border *)(h->obj))->fx.y;
+	     if (((E_Border *)(h->obj))->zone)
+	       {
+		  px -= ((E_Border *)(h->obj))->zone->x;
+		  py -= ((E_Border *)(h->obj))->zone->y;
+	       }
+	     break;
+	   case E_POPUP_TYPE:
+	     px = ((E_Popup *)(h->obj))->x;
+	     py = ((E_Popup *)(h->obj))->y;
+	     if (((E_Popup *)(h->obj))->zone)
+	       {
+		  px -= ((E_Popup *)(h->obj))->zone->x;
+		  py -= ((E_Popup *)(h->obj))->zone->y;
+	       }
+	     break;
+	     /* FIXME: add mroe types as needed */
+	   default:
+	     break;
+	  }
+     }
+   *dx += px;
+   *dy += py;
+}
+
+static int
+_e_drag_win_matches(E_Drop_Handler *h, Ecore_X_Window win)
+{
+   Ecore_X_Window hwin = 0;
+   
+   if (h->obj)
+     {
+	switch (h->obj->type)
+	  {
+	   case E_GADCON_TYPE:
+	     hwin = ecore_evas_software_x11_window_get(((E_Gadcon *)(h->obj))->ecore_evas);
+	     break;
+	   case E_WIN_TYPE:
+	     hwin = ((E_Win *)(h->obj))->evas_win;
+	     break;
+	   case E_BORDER_TYPE:
+	     hwin = ((E_Border *)(h->obj))->event_win;
+	     break;
+	   case E_POPUP_TYPE:
+	     hwin = ((E_Popup *)(h->obj))->evas_win;
+	     break;
+	     /* FIXME: add mroe types as needed */
+	   default:
+	     break;
+	  }
+     }
+   if (win == hwin) return 1;
+   return 0;
+}
+
+static void
 _e_drag_update(int x, int y)
 {
    Evas_List *l;
    E_Event_Dnd_Enter *enter_ev;
    E_Event_Dnd_Move *move_ev;
    E_Event_Dnd_Leave *leave_ev;
+   int dx, dy, dw, dh;
+   Ecore_X_Window win, ignore_win[2];
 
+   if (_drag_current)
+     {
+	ignore_win[0] = _drag_current->evas_win;
+	ignore_win[1] = _drag_win;
+	/* this is nasty - but necessary to get the window stacking */
+	win = ecore_x_window_at_xy_with_skip_get(x, y, &ignore_win, 2);
+     }
+   else
+     win = ecore_x_window_at_xy_with_skip_get(x, y, NULL, 0);
+   
    if (_drag_current)
      {
 	_e_drag_show(_drag_current);
@@ -518,11 +618,10 @@ _e_drag_update(int x, int y)
 	     E_Drop_Handler *h;
 	     
 	     h = l->data;
-	     
-	     if (!h->active)
-	       continue;
-	     
-	     if (E_INSIDE(x, y, h->x, h->y, h->w, h->h))
+	     if (!h->active) continue;
+	     _e_drag_coords_update(h, &dx, &dy, &dw, &dh);
+	     if ((_e_drag_win_matches(h, win)) &&
+		 (E_INSIDE(x, y, dx, dy, dw, dh)))
 	       {
 		  if (!h->entered)
 		    {
@@ -551,11 +650,10 @@ _e_drag_update(int x, int y)
 	     E_Drop_Handler *h;
 	     
 	     h = l->data;
-	     
-	     if (!h->active)
-	       continue;
-	     
-	     if (E_INSIDE(x, y, h->x, h->y, h->w, h->h))
+	     if (!h->active) continue;
+	     _e_drag_coords_update(h, &dx, &dy, &dw, &dh);
+	     if ((_e_drag_win_matches(h, win)) &&
+		 (E_INSIDE(x, y, dx, dy, dw, dh)))
 	       {
 		  if (!h->entered)
 		    {
@@ -589,8 +687,14 @@ _e_drag_end(int x, int y)
    Evas_List *l;
    E_Event_Dnd_Drop *ev;
    const char *type = NULL;
+   int dx, dy, dw, dh;
+   Ecore_X_Window win, ignore_win[2];
 
    if (!_drag_current) return;
+   ignore_win[0] = _drag_current->evas_win;
+   ignore_win[1] = _drag_win;
+   /* this is nasty - but necessary to get the window stacking */
+   win = ecore_x_window_at_xy_with_skip_get(x, y, &ignore_win, 2);
    zone = e_container_zone_at_point_get(_drag_current->container, x, y);
    /* Pass -1, -1, so that it is possible to drop at the edge. */
    if (zone) e_zone_flip_coords_handle(zone, -1, -1);
@@ -627,14 +731,13 @@ _e_drag_end(int x, int y)
 	for (l = _drop_handlers; l; l = l->next)
 	  {
 	     E_Drop_Handler *h;
-
+	     
 	     h = l->data;
-
-	     if (!h->active)
-	       continue;
-
-	     if ((h->cb.drop) &&
-		   E_INSIDE(x, y, h->x, h->y, h->w, h->h))
+	     if (!h->active) continue;
+	     _e_drag_coords_update(h, &dx, &dy, &dw, &dh);
+	     if ((_e_drag_win_matches(h, win)) &&
+		 ((h->cb.drop) &&
+		  (E_INSIDE(x, y, dx, dy, dw, dh))))
 	       {
 		  h->cb.drop(h->cb.data, type, ev);
 		  dropped = 1;
@@ -682,8 +785,19 @@ _e_drag_xdnd_end(int x, int y)
    Evas_List *l;
    E_Event_Dnd_Drop *ev;
    const char *type = NULL;
+   int dx, dy, dw, dh;
+   Ecore_X_Window win, ignore_win[2];
 
    if (!_xdnd) return;
+   if (_drag_current)
+     {
+	ignore_win[0] = _drag_current->evas_win;
+	ignore_win[1] = _drag_win;
+	/* this is nasty - but necessary to get the window stacking */
+	win = ecore_x_window_at_xy_with_skip_get(x, y, &ignore_win, 2);
+     }
+   else
+     win = ecore_x_window_at_xy_with_skip_get(x, y, NULL, 0);
 
    ev = E_NEW(E_Event_Dnd_Drop, 1);
    ev->data = _xdnd->data;
@@ -699,14 +813,13 @@ _e_drag_xdnd_end(int x, int y)
 	for (l = _drop_handlers; l; l = l->next)
 	  {
 	     E_Drop_Handler *h;
-
+	     
 	     h = l->data;
-
-	     if (!h->active)
-	       continue;
-
-	     if ((h->cb.drop) &&
-		 E_INSIDE(x, y, h->x, h->y, h->w, h->h))
+	     if (!h->active) continue;
+	     _e_drag_coords_update(h, &dx, &dy, &dw, &dh);
+	     if ((_e_drag_win_matches(h, win)) &&
+		 ((h->cb.drop) &&
+		  (E_INSIDE(x, y, dx, dy, dw, dh))))
 	       {
 		  h->cb.drop(h->cb.data, type, ev);
 		  dropped = 1;
