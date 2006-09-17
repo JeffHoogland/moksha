@@ -217,14 +217,12 @@ e_app_new(const char *path, int scan_subdirs)
    if (a)
       {
          if (stat(a->path, &st) >= 0)
-	 {
-	    if(st.st_mtime > a->mtime)
 	    {
-	       e_object_free(E_OBJECT(a));
-	       a = NULL;
 	       stated = 1;
+	       if (st.st_mtime > a->mtime)
+                  e_app_fields_empty(a);
 	    }
-	 }
+         e_object_ref(E_OBJECT(a));
       }
 
    if (!a)
@@ -233,61 +231,73 @@ e_app_new(const char *path, int scan_subdirs)
 	  {
 	     a = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
 	     
-	     /* no image for now */
-	     a->image = NULL;
-	     a->width = 0;
-	     a->height = 0;
-	     /* record the path */
-	     a->path = evas_stringshare_add(path);
-	     
-	     if (ecore_file_is_dir(a->path))
-	       {
-		  snprintf(buf, sizeof(buf), "%s/.directory.eap", path);
-		  if (ecore_file_exists(buf))
-		    e_app_fields_fill(a, buf);
-		  else
-		    a->name = evas_stringshare_add(ecore_file_get_file(a->path));
-		  if (scan_subdirs) e_app_subdir_scan(a, scan_subdirs);
+	     if (a)
+	        {
+	           /* no image for now */
+	           a->image = NULL;
+	           a->width = 0;
+	           a->height = 0;
+	           /* record the path */
+	           a->path = evas_stringshare_add(path);
+		}
+          }
+      }
+
+   if ((a) && (a->path))
+      {
+         if (ecore_file_is_dir(a->path))
+	    {
+	       snprintf(buf, sizeof(buf), "%s/.directory.eap", path);
+	       if (ecore_file_exists(buf))
+		  e_app_fields_fill(a, buf);
+	       else
+		  a->name = evas_stringshare_add(ecore_file_get_file(a->path));
+	       if (scan_subdirs)
+	          {
+		     if (stated)
+		        _e_app_subdir_rescan(a);
+		     else
+		        e_app_subdir_scan(a, scan_subdirs);
+		  }
 		  
-		  /* Don't monitor the all directory, all changes to that must go through e_app. */
-                  if (strcmp(_e_apps_path_all, a->path) != 0)
-		     a->monitor = ecore_file_monitor_add(a->path, _e_app_cb_monitor, a);
-	       }
-	     else if (_e_app_is_eapp(path))
-	       {
-		  e_app_fields_fill(a, path);
+	       /* Don't monitor the all directory, all changes to that must go through e_app. */
+               if ((!stated) && (strcmp(_e_apps_path_all, a->path) != 0))
+		  a->monitor = ecore_file_monitor_add(a->path, _e_app_cb_monitor, a);
+	    }
+	 else if (_e_app_is_eapp(path))
+	    {
+		e_app_fields_fill(a, path);
 		  
-		  /* no exe field.. not valid. drop it */
+		/* no exe field.. not valid. drop it */
 //		  if (!_e_app_exe_valid_get(a->exe))
-//		    goto error;
-	       }
-	     else
-	       goto error;
-	  }
-	else
-	   {
-	      return NULL;
-	   }
-        /* Timestamp the cache, and no need to stat the file twice if the cache was stale. */
-        if ((stated) || (stat(a->path, &st) >= 0))
-           {
-	      a->mtime = st.st_mtime;
-	      stated = 1;
-	   }
+//		     goto error;
+	    }
+	 else
+	    goto error;
+
+         /* Timestamp the cache, and no need to stat the file twice if the cache was stale. */
+         if ((stated) || (stat(a->path, &st) >= 0))
+            {
+               a->mtime = st.st_mtime;
+	       stated = 1;
+            }
 #if ! NO_APP_LIST
-	_e_apps_list = evas_list_prepend(_e_apps_list, a);
+	 _e_apps_list = evas_list_prepend(_e_apps_list, a);
 #endif
-     }
+      }
    else
-      e_object_ref(E_OBJECT(a));
+      goto error;
 
    return a;
 
 error:
-   if (a->monitor) ecore_file_monitor_del(a->monitor);
-   if (a->path) evas_stringshare_del(a->path);
-   e_app_fields_empty(a);
-   free(a);
+   if (a)
+      {
+         if (a->monitor) ecore_file_monitor_del(a->monitor);
+         if (a->path) evas_stringshare_del(a->path);
+         e_app_fields_empty(a);
+         free(a);
+      }
    return NULL;
 }
 
