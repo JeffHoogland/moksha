@@ -81,7 +81,15 @@ e_widget_preview_thumb_set(Evas_Object *obj, const char *file, const char *key, 
 
    wd->img = e_thumb_icon_add(evas_object_evas_get(obj));
    if (e_util_glob_case_match(file, "*.edj"))
-     e_thumb_icon_file_set(wd->img, file, "e/desktop/background");
+      {
+         /* FIXME: There is probably a quicker way of doing this. */
+         if (edje_file_group_exists(file, "icon"))
+            e_thumb_icon_file_set(wd->img, file, "icon");
+         else if (edje_file_group_exists(file, "e/desktop/background"))
+            e_thumb_icon_file_set(wd->img, file, "e/desktop/background");
+         else if (edje_file_group_exists(file, "e/init/splash"))
+	    e_thumb_icon_file_set(wd->img, file, "e/init/splash");
+      }
    else
      e_thumb_icon_file_set(wd->img, file, NULL);
    e_thumb_icon_size_set(wd->img, w, h);

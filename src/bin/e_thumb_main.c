@@ -340,8 +340,8 @@ _e_thumb_generate(E_Thumb *eth)
 	     evas_object_image_fill_set(im, 0, 0, ww, hh);
 	     edje = edje_object_add(evas_im);
 	     if ((eth->key) && 
-		 ((!strcmp(eth->key, "e/desktop/background")) ||
-		  (!strcmp(eth->key, "e/init/splash"))))
+		 ( (!strcmp(eth->key, "e/desktop/background")) ||
+		   (!strcmp(eth->key, "e/init/splash")) ))
 	       alpha = 0;
 	     if (edje_object_file_set(edje, eth->file, eth->key))
 	       {

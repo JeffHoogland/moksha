@@ -1665,7 +1665,15 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 		  if (ic->sd->config->icon.key_hint)
 		    e_thumb_icon_file_set(ic->obj_icon, buf, ic->sd->config->icon.key_hint);
 		  else
-		    e_thumb_icon_file_set(ic->obj_icon, buf, "e/desktop/background");
+		     {
+                        /* FIXME: There is probably a quicker way of doing this. */
+                        if (edje_file_group_exists(buf, "icon"))
+		           e_thumb_icon_file_set(ic->obj_icon, buf, "icon");
+                        else if (edje_file_group_exists(buf, "e/desktop/background"))
+		           e_thumb_icon_file_set(ic->obj_icon, buf, "e/desktop/background");
+                        else if (edje_file_group_exists(buf, "e/init/splash"))
+		           e_thumb_icon_file_set(ic->obj_icon, buf, "e/init/splash");
+		     }
 		  e_thumb_icon_size_set(ic->obj_icon, 128, 96);
 		  evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
 		  _e_fm2_icon_thumb(ic);
