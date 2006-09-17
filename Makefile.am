@@ -17,7 +17,8 @@ EXTRA_DIST = README AUTHORS COPYING COPYING-PLAIN \
 	     debian/enlightenment.install \
 	     debian/enlightenment-dev.install \
 	     debian/enlightenment.docs \
-	     debian/rules
+	     debian/rules \
+	     eap_to_desktop
 
 filesdir = $(datadir)/enlightenment/
 files_DATA = AUTHORS COPYING 
