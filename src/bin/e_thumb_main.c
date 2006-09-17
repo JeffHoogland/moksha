@@ -9,6 +9,7 @@
 #include <Ecore_Evas.h>
 #include <Ecore_Ipc.h>
 #include <Ecore_File.h>
+#include <Ecore_Desktop.h>
 #include <Evas.h>
 #include <Eet.h>
 #include <Edje.h>
@@ -44,6 +45,7 @@ static char _thumbdir[4096] = "";
 int
 main(int argc, char **argv)
 {
+   char buf[4096];
    int i;
 
 /* FIXME: make this configurable */
@@ -71,6 +73,13 @@ main(int argc, char **argv)
    ecore_file_init();
    ecore_ipc_init();
 
+   ecore_desktop_init();
+   ecore_desktop_paths_extras_clear();
+   ecore_desktop_paths_prepend_user(ECORE_DESKTOP_PATHS_ICONS, "~/.e/e/icons");
+//   snprintf(buf, sizeof(buf), "%s/data/icons", e_prefix_data_get());
+   ecore_desktop_paths_append_system(ECORE_DESKTOP_PATHS_ICONS, buf);
+   ecore_desktop_paths_regen();
+
    snprintf(_thumbdir, sizeof(_thumbdir), "%s/.e/e/fileman/thumbnails",
 	    getenv("HOME"));
    ecore_file_mkpath(_thumbdir);
@@ -82,6 +91,8 @@ main(int argc, char **argv)
 	ecore_ipc_server_del(_e_ipc_server);
 	_e_ipc_server = NULL;
      }
+
+   ecore_desktop_shutdown();
    ecore_ipc_shutdown();
    ecore_file_shutdown();
    ecore_evas_shutdown();
@@ -324,6 +335,40 @@ _e_thumb_generate(E_Thumb *eth)
 	hh = 0;
 	alpha = 1;
 	ext = strrchr(eth->file, '.');
+
+	if ((ext) && (!strcasecmp(ext, ".desktop")))
+	  {
+	     Ecore_Desktop *desktop;
+
+             desktop = ecore_desktop_get(eth->file, NULL);
+             free(eth->file);
+	     eth->file = NULL;
+	     if (desktop)
+	        {
+		   if (desktop->icon_path)
+		      eth->file = strdup(desktop->icon_path);
+		   else
+	              eth->file = (char *)ecore_desktop_icon_find(desktop->icon_class, NULL, eth->key);
+                   free(eth->key);
+	           eth->key = NULL;
+		   if (eth->file)
+		      {
+	                 ext = strrchr(eth->file, '.');
+	                 if ((ext) &&
+	                     ((!strcasecmp(ext, ".edj")) ||
+	                      (!strcasecmp(ext, ".eap")))
+	                     )
+		            {
+		               eth->key = strdup("icon");
+		            }
+		      }
+		   else
+		      {
+		         return;
+		      }
+		}
+	  }
+
 	if ((ext) && (eth->key) &&
 	    ((!strcasecmp(ext, ".edj")) ||
 	     (!strcasecmp(ext, ".eap")))

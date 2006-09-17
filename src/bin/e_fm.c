@@ -1599,24 +1599,15 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 	       }
 	     else if (!strcmp(icon, "DESKTOP"))
 	       {
-	          E_App *app;
-
 		  if (ic->info.pseudo_link)
 		    snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
 		  else
 		    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
-/* FIXME FIXME FIXME: e_app_new() is SLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOW. it can
- * be a complete hog. this destroys performance in fm2. :(:(:(
- */
-                  app = e_app_new(buf, 0);
-		  if (app)
-		    {
-/* FIXME: Actually, I think it's the icon searching that is slowing things down a lot.
- * That will be fixed by moving it to thumbnailing as planned.  Commented out for now.
- */
-//		       ic->obj_icon = e_app_icon_add(evas_object_evas_get(ic->sd->obj), app);
-		       e_object_unref(E_OBJECT(app));
-		    }
+		  ic->obj_icon = e_thumb_icon_add(evas_object_evas_get(ic->sd->obj));
+		  e_thumb_icon_file_set(ic->obj_icon, buf, e_config->icon_theme);
+		  e_thumb_icon_size_set(ic->obj_icon, 128, 128);
+		  evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
+		  _e_fm2_icon_thumb(ic);
 	       }
 	     else if (!strncmp(icon, "e/icons/fileman/mime/", 21))
 	       {
@@ -1697,24 +1688,21 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 		      (e_util_glob_case_match(ic->info.file, "*.desktop"))
 		      )
 	       {
-	          E_App *app;
-
 		  if (ic->info.pseudo_link)
 		    snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
 		  else
 		    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
-/* FIXME FIXME FIXME: e_app_new() is SLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOW. it can
- * be a complete hog. this destroys performance in fm2. :(:(:(
- */
-                  app = e_app_new(buf, 0);
-		  if (app)
-		    {
-/* FIXME: Actually, I think it's the icon searching that is slowing things down a lot.
- * That will be fixed by moving it to thumbnailing as planned.  Commented out for now.
- */
-//		       ic->obj_icon = e_app_icon_add(evas_object_evas_get(ic->sd->obj), app);
-		       e_object_unref(E_OBJECT(app));
-		    }
+
+		  ic->obj_icon = e_thumb_icon_add(evas_object_evas_get(ic->sd->obj));
+// FIXME: Dunno if key_hint is useful here, no one seems to use it.
+//		  if (ic->sd->config->icon.key_hint)
+//		     e_thumb_icon_file_set(ic->obj_icon, buf, ic->sd->config->icon.key_hint);
+//		  else
+		     e_thumb_icon_file_set(ic->obj_icon, buf, e_config->icon_theme);
+		  e_thumb_icon_size_set(ic->obj_icon, 128, 96);
+		  evas_object_smart_callback_add(ic->obj_icon, "e_thumb_gen", _e_fm2_cb_icon_thumb_gen, ic);
+		  _e_fm2_icon_thumb(ic);
+
 		  edje_object_part_swallow(ic->obj, "e.swallow.icon", ic->obj_icon);
 		  evas_object_show(ic->obj_icon);
 	       }
