@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-09-09 18:25+0200\n"
-"PO-Revision-Date: 2006-09-09 18:26+0200\n"
+"POT-Creation-Date: 2006-09-16 13:29+0200\n"
+"PO-Revision-Date: 2006-09-16 13:37+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@inwind.it>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,7 @@ msgid "Add"
 msgstr "Aggiungi"
 
 #: src/bin/e_int_config_shelf.c:73 src/bin/e_fileman_smart.c:3938
-#: src/bin/e_fm.c:2699 src/bin/e_int_config_mousebindings.c:337
+#: src/bin/e_fm.c:3228 src/bin/e_int_config_mousebindings.c:337
 #: src/modules/ibar/e_mod_config.c:109
 msgid "Delete"
 msgstr "Cancella"
@@ -274,7 +274,7 @@ msgid "Favorite Applications"
 msgstr "Applicazioni preferite"
 
 #: src/bin/e_int_menus.c:90 src/bin/e_int_menus.c:694 src/bin/e_configure.c:88
-#: src/bin/e_int_config_apps.c:81
+#: src/bin/e_int_config_apps.c:84
 msgid "Applications"
 msgstr "Applicazioni"
 
@@ -317,7 +317,7 @@ msgstr "Configurazione"
 #: src/bin/e_actions.c:2044 src/bin/e_actions.c:2047 src/bin/e_actions.c:2050
 #: src/bin/e_int_config_desklock.c:563
 msgid "System"
-msgstr "Dal sistema"
+msgstr "Sistema"
 
 #: src/bin/e_int_menus.c:511
 msgid "(No Applications)"
@@ -400,8 +400,9 @@ msgstr "Personali"
 
 #: src/bin/e_int_config_theme.c:372 src/bin/e_int_config_wallpaper.c:424
 #: src/bin/e_int_config_wallpaper.c:569 src/bin/e_int_config_startup.c:285
-#: src/bin/e_int_config_icon_themes.c:220 src/bin/e_widget_fsel.c:277
+#: src/bin/e_int_config_icon_themes.c:220 src/bin/e_widget_fsel.c:278
 #: src/bin/e_int_config_desklock.c:571 src/bin/e_int_config_apps.c:514
+#: src/bin/e_int_config_apps.c:601
 msgid "Go up a Directory"
 msgstr "Directory superiore"
 
@@ -502,30 +503,30 @@ msgstr "Dati dell'output"
 msgid "There was no output."
 msgstr "Non ci sono output."
 
-#: src/bin/e_apps.c:498 src/bin/e_apps.c:511 src/bin/e_zone.c:662
+#: src/bin/e_apps.c:444 src/bin/e_apps.c:457 src/bin/e_zone.c:662
 #: src/bin/e_fileman_file.c:312 src/bin/e_fileman_file.c:363
 #: src/bin/e_utils.c:231 src/bin/e_fileman_mime.c:393
 msgid "Run Error"
 msgstr "Errore di esecuzione"
 
-#: src/bin/e_apps.c:499
+#: src/bin/e_apps.c:445
 #, c-format
 msgid "Enlightenment was unable to process a command line:<br><br>%s %s<br>"
 msgstr ""
 "Enlightenment non ha potuto processare la linea di comando:<br><br>%s %s<br>"
 
-#: src/bin/e_apps.c:512
+#: src/bin/e_apps.c:458
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s %s<br>"
 msgstr ""
 "Enlightenment non ha potuto fare il fork di un processo figlio:<br><br>%s %"
 "s<br>"
 
-#: src/bin/e_apps.c:2355
+#: src/bin/e_apps.c:2334
 msgid "Application run error"
 msgstr "Errore d'esecuzione dell'applicazione"
 
-#: src/bin/e_apps.c:2357
+#: src/bin/e_apps.c:2336
 #, c-format
 msgid ""
 "Enlightenment was unable to run the application:<br><br>%s<br><br>The "
@@ -534,12 +535,12 @@ msgstr ""
 "Enlightenment non ha potuto avviare l'applicazione:<br><br>%"
 "s<br><br>L'applicazione non è partita"
 
-#: src/bin/e_apps.c:2365 src/bin/e_sys.c:358 src/bin/e_sys.c:403
+#: src/bin/e_apps.c:2344 src/bin/e_sys.c:382 src/bin/e_sys.c:427
 #: src/bin/e_int_border_remember.c:248 src/bin/e_int_border_remember.c:329
 #: src/bin/e_int_border_remember.c:371 src/bin/e_config_dialog.c:159
 #: src/bin/e_fileman_smart.c:906 src/bin/e_module.c:410
-#: src/bin/e_file_dialog.c:70 src/bin/e_fm.c:2824 src/bin/e_fm.c:2934
-#: src/bin/e_fm.c:3030 src/bin/e_error.c:196 src/bin/e_error.c:205
+#: src/bin/e_file_dialog.c:70 src/bin/e_fm.c:3353 src/bin/e_fm.c:3463
+#: src/bin/e_fm.c:3559 src/bin/e_error.c:196 src/bin/e_error.c:205
 #: src/bin/e_int_config_wallpaper_import.c:182 src/bin/e_utils.c:526
 #: src/bin/e_int_config_wallpaper_gradient.c:184
 #: src/bin/e_int_config_theme_import.c:113 src/modules/ibar/e_mod_main.c:1239
@@ -560,7 +561,7 @@ msgstr "Aspetto"
 msgid "Fonts"
 msgstr "Font"
 
-#: src/bin/e_configure.c:70 src/bin/e_eap_editor.c:415
+#: src/bin/e_configure.c:70 src/bin/e_eap_editor.c:416
 #: src/bin/e_int_config_icon_themes.c:212
 msgid "Icon Theme"
 msgstr "Tema icona"
@@ -792,11 +793,11 @@ msgstr "Questo desktop"
 msgid "This Screen"
 msgstr "Questo schermo"
 
-#: src/bin/e_sys.c:243
+#: src/bin/e_sys.c:256
 msgid "Logout problems"
 msgstr "Problemi chiusura sessione"
 
-#: src/bin/e_sys.c:246
+#: src/bin/e_sys.c:259
 msgid ""
 "Logout is taking too long. Some<br>applications refuse to close.<br>Do you "
 "want to finish the logout<br>anyway without closing these<br>applications "
@@ -806,23 +807,31 @@ msgstr ""
 "applicazioni rifiutano di chiudersi.<br>Volete chiudere comunque la sessione "
 "senza aspettare<br>prima la chiusura di queste applicazioni?"
 
-#: src/bin/e_sys.c:252
+#: src/bin/e_sys.c:265
 msgid "Logout now"
 msgstr "Chiudi sessione adesso"
 
-#: src/bin/e_sys.c:253
+#: src/bin/e_sys.c:266
 msgid "Wait longer"
 msgstr "Attendi ancora"
 
-#: src/bin/e_sys.c:254
+#: src/bin/e_sys.c:267
 msgid "Cancel Logout"
 msgstr "Annulla chiusura"
 
-#: src/bin/e_sys.c:313 src/bin/e_sys.c:373
+#: src/bin/e_sys.c:305
+msgid "Logout in progress"
+msgstr "Chiusura in corso"
+
+#: src/bin/e_sys.c:308
+msgid "Logout is currently in progress.<br><hilight>Please wait.</hilight>"
+msgstr "Chiusura attualmente in corso.<br><hilight>Attendere prego.</hilight>"
+
+#: src/bin/e_sys.c:337 src/bin/e_sys.c:397
 msgid "Enlightenment is busy with another request"
 msgstr "Enlightenment è occupato con un'altra richiesta"
 
-#: src/bin/e_sys.c:319
+#: src/bin/e_sys.c:343
 msgid ""
 "Enlightenment is busy logging out<br>You cannot perform other system "
 "actions<br>once a logout has begun."
@@ -831,7 +840,7 @@ msgstr ""
 "richiedere ulteriori azioni di sistema<br>una volta che è stata richiesta la "
 "chiusura di sessione."
 
-#: src/bin/e_sys.c:326
+#: src/bin/e_sys.c:350
 msgid ""
 "Enlightenment is shutting the system down.<br>You cannot do any other system "
 "actions<br>once a shutdown has been started."
@@ -840,7 +849,7 @@ msgstr ""
 "ulteriori azioni di sistema<br>una volta che è iniziato l'arresto del "
 "sistema."
 
-#: src/bin/e_sys.c:333
+#: src/bin/e_sys.c:357
 msgid ""
 "Enlightenment is rebooting the system.<br>You cannot do any other system "
 "actions<br>once a reboot has begun."
@@ -849,7 +858,7 @@ msgstr ""
 "ulteriori azioni di sistema<br>una volta che è iniziato il riavvio del "
 "sistema."
 
-#: src/bin/e_sys.c:340
+#: src/bin/e_sys.c:364
 msgid ""
 "Enlightenment is suspending the system.<br>Until suspend is complete you "
 "cannot perform<br>any other system actions."
@@ -858,7 +867,7 @@ msgstr ""
 "ulteriori azioni di sistema<br>finchè non è terminata la procedura di "
 "sospensione."
 
-#: src/bin/e_sys.c:347
+#: src/bin/e_sys.c:371
 msgid ""
 "Enlightenment is hibernating the system.<br>You cannot perform an other "
 "system actions<br>until this is complete."
@@ -867,25 +876,57 @@ msgstr ""
 "ulteriori azioni di sistema<br>finchè non è terminata la procedura di "
 "ibernazione."
 
-#: src/bin/e_sys.c:354 src/bin/e_sys.c:399
+#: src/bin/e_sys.c:378 src/bin/e_sys.c:423
 msgid "EEK! This should not happen"
 msgstr "EEK! Questo non dovrebbe succedere"
 
-#: src/bin/e_sys.c:379
+#: src/bin/e_sys.c:403
 msgid "Shutting down of your system failed."
 msgstr "Arresto del sistema fallito."
 
-#: src/bin/e_sys.c:384
+#: src/bin/e_sys.c:408
 msgid "Rebooting your system failed."
 msgstr "Riavvio del sistema fallito."
 
-#: src/bin/e_sys.c:389
+#: src/bin/e_sys.c:413
 msgid "Suspend of your system failed."
 msgstr "Sospensione del sistema fallita."
 
-#: src/bin/e_sys.c:394
+#: src/bin/e_sys.c:418
 msgid "Hibernating your system failed."
 msgstr "Ibernazione del sistema fallita."
+
+#: src/bin/e_sys.c:468
+msgid "Shutting down"
+msgstr "Arresto in corso"
+
+#: src/bin/e_sys.c:471
+msgid "Shutting down your Computer.<br><hilight>Please wait.</hilight>"
+msgstr "Arresto del computer in corso.<br><hilight>Attendere prego.</hilight>"
+
+#: src/bin/e_sys.c:494
+msgid "Rebooting"
+msgstr "Riavvio in corso"
+
+#: src/bin/e_sys.c:497
+msgid "Rebooting your Computer.<br><hilight>Please wait.</hilight>"
+msgstr "Riavvio del computer in corso.<br><hilight>Attendere prego.</hilight>"
+
+#: src/bin/e_sys.c:519
+msgid "Suspending"
+msgstr "Sospensione in corso"
+
+#: src/bin/e_sys.c:522
+msgid "Suspending your Computer.<br><hilight>Please wait.</hilight>"
+msgstr "Sospensione del computer in corso.<br><hilight>Attendere prego.</hilight>"
+
+#: src/bin/e_sys.c:544
+msgid "Hibernating"
+msgstr "Ibernazione in corso"
+
+#: src/bin/e_sys.c:547
+msgid "Hibernating your Computer.<br><hilight>Please wait.</hilight>"
+msgstr "Ibernazione del computer in corso.<br><hilight>Attendere prego.</hilight>"
 
 #: src/bin/e_int_config_fonts.c:134
 msgid "Font Settings"
@@ -1055,7 +1096,7 @@ msgstr "Nome e classe"
 msgid "Title"
 msgstr "Titolo"
 
-#: src/bin/e_int_border_remember.c:472 src/bin/e_eap_editor.c:406
+#: src/bin/e_int_border_remember.c:472 src/bin/e_eap_editor.c:407
 msgid "Window Role"
 msgstr "Ruolo"
 
@@ -1198,8 +1239,8 @@ msgstr "Basilari"
 msgid "Apply"
 msgstr "Applica"
 
-#: src/bin/e_fileman_smart.c:908 src/bin/e_fm.c:2826 src/bin/e_fm.c:2936
-#: src/bin/e_fm.c:3032
+#: src/bin/e_fileman_smart.c:908 src/bin/e_fm.c:3355 src/bin/e_fm.c:3465
+#: src/bin/e_fm.c:3561
 msgid "Error"
 msgstr "Errore"
 
@@ -1208,7 +1249,7 @@ msgstr "Errore"
 msgid "Could not delete  <br><b>%s</b>"
 msgstr "Impossibile cancellare <br><b>%s</b>"
 
-#: src/bin/e_fileman_smart.c:996 src/bin/e_module.c:554 src/bin/e_fm.c:2981
+#: src/bin/e_fileman_smart.c:996 src/bin/e_module.c:554 src/bin/e_fm.c:3510
 #: src/bin/e_confirm_dialog.c:61 src/bin/e_actions.c:1409
 #: src/bin/e_actions.c:1470 src/bin/e_actions.c:1519 src/bin/e_actions.c:1568
 #: src/bin/e_actions.c:1617 src/bin/e_actions.c:1666
@@ -1216,7 +1257,7 @@ msgstr "Impossibile cancellare <br><b>%s</b>"
 msgid "Yes"
 msgstr "Sì"
 
-#: src/bin/e_fileman_smart.c:997 src/bin/e_module.c:555 src/bin/e_fm.c:2982
+#: src/bin/e_fileman_smart.c:997 src/bin/e_module.c:555 src/bin/e_fm.c:3511
 #: src/bin/e_confirm_dialog.c:62 src/bin/e_actions.c:1411
 #: src/bin/e_actions.c:1472 src/bin/e_actions.c:1521 src/bin/e_actions.c:1570
 #: src/bin/e_actions.c:1619 src/bin/e_actions.c:1668
@@ -1233,7 +1274,7 @@ msgstr "Conferma"
 msgid " Are you sure you want to delete <br><b>%s</b> ?"
 msgstr "Siete sicuri di voler cancellare <br><b>%s</b> ?"
 
-#: src/bin/e_fileman_smart.c:1213 src/bin/e_eap_editor.c:361
+#: src/bin/e_fileman_smart.c:1213 src/bin/e_eap_editor.c:362
 msgid "General"
 msgstr "Generale"
 
@@ -1242,7 +1283,7 @@ msgstr "Generale"
 msgid "File:"
 msgstr "File:"
 
-#: src/bin/e_fileman_smart.c:1231 src/bin/e_widget_fsel.c:306
+#: src/bin/e_fileman_smart.c:1231 src/bin/e_widget_fsel.c:307
 #, c-format
 msgid "Size:"
 msgstr "Dimensione:"
@@ -1276,7 +1317,7 @@ msgstr "Impostazioni personalizzate"
 msgid "File Info:"
 msgstr "Informazioni sul file:"
 
-#: src/bin/e_fileman_smart.c:1305 src/bin/e_widget_fsel.c:321
+#: src/bin/e_fileman_smart.c:1305 src/bin/e_widget_fsel.c:322
 msgid "Owner:"
 msgstr "Proprietario:"
 
@@ -1292,7 +1333,7 @@ msgstr "Ultimo accesso:"
 msgid "Last Modified:"
 msgstr "Ultima modifica:"
 
-#: src/bin/e_fileman_smart.c:1327 src/bin/e_widget_fsel.c:336
+#: src/bin/e_fileman_smart.c:1327 src/bin/e_widget_fsel.c:337
 msgid "Permissions:"
 msgstr "Permessi:"
 
@@ -1372,7 +1413,7 @@ msgstr "Copia"
 msgid "Cut"
 msgstr "Taglia"
 
-#: src/bin/e_fileman_smart.c:3929 src/bin/e_fm.c:2707
+#: src/bin/e_fileman_smart.c:3929 src/bin/e_fm.c:3236
 msgid "Rename"
 msgstr "Rinomina"
 
@@ -1937,57 +1978,57 @@ msgstr ""
 msgid "Starting %s"
 msgstr "Avvio di %s"
 
-#: src/bin/e_fm.c:891
+#: src/bin/e_fm.c:894
 #, c-format
 msgid "%i Files"
 msgstr "%i File"
 
-#: src/bin/e_fm.c:2555 src/bin/e_fm.c:2636
+#: src/bin/e_fm.c:3084 src/bin/e_fm.c:3165
 msgid "Refresh View"
 msgstr "Aggiorna vista"
 
-#: src/bin/e_fm.c:2568 src/bin/e_fm.c:2649 src/bin/e_int_config_paths.c:208
+#: src/bin/e_fm.c:3097 src/bin/e_fm.c:3178 src/bin/e_int_config_paths.c:208
 msgid "New Directory"
 msgstr "Nuova directory"
 
-#: src/bin/e_fm.c:2782
+#: src/bin/e_fm.c:3311
 msgid "Create a new Directory"
 msgstr "Crea nuova directory"
 
-#: src/bin/e_fm.c:2783
+#: src/bin/e_fm.c:3312
 msgid "New Directory Name:"
 msgstr "Nome directory:"
 
-#: src/bin/e_fm.c:2828
+#: src/bin/e_fm.c:3357
 #, c-format
 msgid "Could not create directory:<br><hilight>%s</hilight>"
 msgstr "Impossibile creare la directory:<br><hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:2879
+#: src/bin/e_fm.c:3408
 #, c-format
 msgid "Rename %s to:"
 msgstr "Rinomina %s in:"
 
-#: src/bin/e_fm.c:2881
+#: src/bin/e_fm.c:3410
 msgid "Rename File"
 msgstr "Rinomina file"
 
-#: src/bin/e_fm.c:2938
+#: src/bin/e_fm.c:3467
 #, c-format
 msgid "Could not rename from <hilight>%s</hilight> to <hilight>%s</hilight>"
 msgstr ""
 "Impossibile rinominare da <hilight>%s</hilight> a <hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:2984
+#: src/bin/e_fm.c:3513
 msgid "Confirm Delete"
 msgstr "Conferma eliminazione"
 
-#: src/bin/e_fm.c:2986
+#: src/bin/e_fm.c:3515
 #, c-format
 msgid "Are you sure you want to delete <br><hilight>%s</hilight> ?"
 msgstr "Siete sicuri di voler eliminare <br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:3034
+#: src/bin/e_fm.c:3563
 #, c-format
 msgid "Could not delete <br><hilight>%s</hilight>"
 msgstr "Impossibile eliminare <br><hilight>%s</hilight>"
@@ -2800,71 +2841,71 @@ msgstr "Problemi scrittura configurazione di Enlightenment"
 msgid "Enlightenment: Error!"
 msgstr "Enlightenment: Errore!"
 
-#: src/bin/e_eap_editor.c:82
+#: src/bin/e_eap_editor.c:85
 msgid "Application Editor"
 msgstr "Editor delle applicazioni"
 
-#: src/bin/e_eap_editor.c:283
+#: src/bin/e_eap_editor.c:284
 msgid "Icon"
 msgstr "Icona"
 
-#: src/bin/e_eap_editor.c:320
+#: src/bin/e_eap_editor.c:321
 msgid "Use Icon Theme"
 msgstr "Usa tema icone"
 
-#: src/bin/e_eap_editor.c:327
+#: src/bin/e_eap_editor.c:328
 msgid "Basic Info"
 msgstr "Informazioni di base"
 
-#: src/bin/e_eap_editor.c:328
+#: src/bin/e_eap_editor.c:329
 msgid "App name"
 msgstr "Nome"
 
-#: src/bin/e_eap_editor.c:337
+#: src/bin/e_eap_editor.c:338
 msgid "Executable"
 msgstr "Eseguibile"
 
-#: src/bin/e_eap_editor.c:364
+#: src/bin/e_eap_editor.c:365
 msgid "Generic Info"
 msgstr "Descrizione"
 
-#: src/bin/e_eap_editor.c:373
+#: src/bin/e_eap_editor.c:374
 msgid "Comment"
 msgstr "Commento"
 
-#: src/bin/e_eap_editor.c:383
+#: src/bin/e_eap_editor.c:384
 msgid "Window"
 msgstr "Finestra"
 
-#: src/bin/e_eap_editor.c:385
+#: src/bin/e_eap_editor.c:386
 msgid "Window Name"
 msgstr "Nome"
 
-#: src/bin/e_eap_editor.c:394
+#: src/bin/e_eap_editor.c:395
 msgid "Window Class"
 msgstr "Classe"
 
-#: src/bin/e_eap_editor.c:400
+#: src/bin/e_eap_editor.c:401
 msgid "Window Title"
 msgstr "Titolo"
 
-#: src/bin/e_eap_editor.c:417
+#: src/bin/e_eap_editor.c:418
 msgid "Icon Class"
 msgstr "Classe icona"
 
-#: src/bin/e_eap_editor.c:431
+#: src/bin/e_eap_editor.c:432
 msgid "Misc"
 msgstr "Varie"
 
-#: src/bin/e_eap_editor.c:432
+#: src/bin/e_eap_editor.c:433
 msgid "Startup Notify"
 msgstr "Notifica avvio"
 
-#: src/bin/e_eap_editor.c:435
+#: src/bin/e_eap_editor.c:436
 msgid "Wait Exit"
 msgstr "Attesa uscita"
 
-#: src/bin/e_eap_editor.c:457
+#: src/bin/e_eap_editor.c:458
 msgid "Select an Icon"
 msgstr "Seleziona un'icona"
 
@@ -3189,7 +3230,7 @@ msgid "Unsorted"
 msgstr "Non ordinate"
 
 #: src/bin/e_int_config_keybindings.c:20
-#: src/bin/e_int_config_keybindings.c:689 src/bin/e_widget_fsel.c:714
+#: src/bin/e_int_config_keybindings.c:689 src/bin/e_widget_fsel.c:721
 msgid "Unknown"
 msgstr "Sconosciuto"
 
@@ -3563,95 +3604,95 @@ msgstr "%1.0f collezioni"
 msgid "Select a window"
 msgstr "Seleziona una finestra"
 
-#: src/bin/e_widget_fsel.c:271
+#: src/bin/e_widget_fsel.c:272
 msgid "Add to Favorites"
 msgstr "Aggiungi ai preferiti"
 
-#: src/bin/e_widget_fsel.c:285
+#: src/bin/e_widget_fsel.c:286
 msgid "Preview"
 msgstr "Anteprima"
 
-#: src/bin/e_widget_fsel.c:351
+#: src/bin/e_widget_fsel.c:352
 msgid "Modified:"
 msgstr "Modificato:"
 
-#: src/bin/e_widget_fsel.c:571
+#: src/bin/e_widget_fsel.c:578
 #, c-format
 msgid "%'.0f Bytes"
 msgstr "%'.0f Byte"
 
-#: src/bin/e_widget_fsel.c:576
+#: src/bin/e_widget_fsel.c:583
 #, c-format
 msgid "%'.0f KB"
 msgstr "%'.0f KB"
 
-#: src/bin/e_widget_fsel.c:581
+#: src/bin/e_widget_fsel.c:588
 #, c-format
 msgid "%'.0f MB"
 msgstr "%'.0f MB"
 
-#: src/bin/e_widget_fsel.c:585
+#: src/bin/e_widget_fsel.c:592
 #, c-format
 msgid "%'.1f GB"
 msgstr "%'.1f MB"
 
-#: src/bin/e_widget_fsel.c:599
+#: src/bin/e_widget_fsel.c:606
 #, c-format
 msgid "You"
 msgstr "Tu"
 
-#: src/bin/e_widget_fsel.c:649
+#: src/bin/e_widget_fsel.c:656
 #, c-format
 msgid "Protected"
 msgstr "Protetto"
 
-#: src/bin/e_widget_fsel.c:651 src/bin/e_widget_fsel.c:660
-#: src/bin/e_widget_fsel.c:669
+#: src/bin/e_widget_fsel.c:658 src/bin/e_widget_fsel.c:667
+#: src/bin/e_widget_fsel.c:676
 #, c-format
 msgid "Read Only"
 msgstr "Sola lettura"
 
-#: src/bin/e_widget_fsel.c:658 src/bin/e_widget_fsel.c:667
+#: src/bin/e_widget_fsel.c:665 src/bin/e_widget_fsel.c:674
 #, c-format
 msgid "Forbidden"
 msgstr "Proibito"
 
-#: src/bin/e_widget_fsel.c:691
+#: src/bin/e_widget_fsel.c:698
 #, c-format
 msgid "In the Future"
 msgstr "In futuro"
 
-#: src/bin/e_widget_fsel.c:696
+#: src/bin/e_widget_fsel.c:703
 #, c-format
 msgid "In the last Minute"
 msgstr "Nell'ultimo minuto"
 
-#: src/bin/e_widget_fsel.c:698
+#: src/bin/e_widget_fsel.c:705
 #, c-format
 msgid "%i Years ago"
 msgstr "%i anni fa"
 
-#: src/bin/e_widget_fsel.c:700
+#: src/bin/e_widget_fsel.c:707
 #, c-format
 msgid "%i Months ago"
 msgstr "%i mesi fa"
 
-#: src/bin/e_widget_fsel.c:702
+#: src/bin/e_widget_fsel.c:709
 #, c-format
 msgid "%i Weeks ago"
 msgstr "%i settimane fa"
 
-#: src/bin/e_widget_fsel.c:704
+#: src/bin/e_widget_fsel.c:711
 #, c-format
 msgid "%i Days ago"
 msgstr "%i giorni fa"
 
-#: src/bin/e_widget_fsel.c:706
+#: src/bin/e_widget_fsel.c:713
 #, c-format
 msgid "%i Hours ago"
 msgstr "%i ore fa"
 
-#: src/bin/e_widget_fsel.c:708
+#: src/bin/e_widget_fsel.c:715
 #, c-format
 msgid "%i Minutes ago"
 msgstr "%i minuti fa"
@@ -3884,35 +3925,39 @@ msgstr "Errore creazione gradiente"
 msgid "For some reason, Enlightenment was unable to create a gradient."
 msgstr "Per qualche ragione Enlightenment non ha potuto creare il gradiente."
 
-#: src/bin/e_int_config_apps.c:319
+#: src/bin/e_int_config_apps.c:377
 msgid "Edit Application"
 msgstr "Modifica applicazione"
 
-#: src/bin/e_int_config_apps.c:443
+#: src/bin/e_int_config_apps.c:512
 msgid "Available Applications"
 msgstr "Applicazioni disponibili"
 
-#: src/bin/e_int_config_apps.c:445
-msgid "Create a new application"
-msgstr "Crea nuova applicazione"
+#: src/bin/e_int_config_apps.c:567
+msgid "Sort applications"
+msgstr "Ordina applicazioni"
 
-#: src/bin/e_int_config_apps.c:494
+#: src/bin/e_int_config_apps.c:576
 msgid "Add application..."
 msgstr "Aggiungi applicazione..."
 
-#: src/bin/e_int_config_apps.c:502
+#: src/bin/e_int_config_apps.c:582
+msgid "Create a new application"
+msgstr "Crea nuova applicazione"
+
+#: src/bin/e_int_config_apps.c:589
 msgid "Regenerate \"Applications\" Menu"
 msgstr "Rigenera menù \"Applicazioni\""
 
-#: src/bin/e_int_config_apps.c:512
+#: src/bin/e_int_config_apps.c:599
 msgid "Bars, Menus, etc."
 msgstr "Barre, menù, ecc."
 
-#: src/bin/e_int_config_apps.c:558
+#: src/bin/e_int_config_apps.c:651
 msgid "Move application up"
 msgstr "Sposta applicazione in alto"
 
-#: src/bin/e_int_config_apps.c:564
+#: src/bin/e_int_config_apps.c:657
 msgid "Move application down"
 msgstr "Sposta applicazione in basso"
 
@@ -4290,11 +4335,11 @@ msgstr "%1.1f secondi"
 msgid "Pager"
 msgstr "Pager"
 
-#: src/modules/pager/e_mod_main.c:1785
+#: src/modules/pager/e_mod_main.c:1786
 msgid "Enlightenment Pager Module"
 msgstr "Modulo Pager di Enlightenment"
 
-#: src/modules/pager/e_mod_main.c:1786
+#: src/modules/pager/e_mod_main.c:1787
 msgid "A pager module to navigate virtual desktops."
 msgstr "Un modulo per navigare i desktop virtuali."
 
