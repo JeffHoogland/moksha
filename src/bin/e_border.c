@@ -2552,7 +2552,7 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 		  if (o)   evas_object_del(o);
 		  o = e_app_icon_add(evas, a);
 		  bd->app = a;
-//		  e_object_ref(E_OBJECT(bd->app));
+		  e_object_ref(E_OBJECT(bd->app));
 	       }
 	     else
 	       {
