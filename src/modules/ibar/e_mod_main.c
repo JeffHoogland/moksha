@@ -842,7 +842,10 @@ _ibar_cb_menu_add_application_cb(void *data, const char *path)
    b = data;
    a = e_app_new(path, 0);
    if (a)
-      e_app_list_append(a, b->apps);
+      {
+         e_app_list_append(a, b->apps);
+         e_object_unref(E_OBJECT(a));
+      }
    _ibar_empty_handle(b);
    _ibar_resize_handle(b);
    _gc_orient(b->inst->gcc);

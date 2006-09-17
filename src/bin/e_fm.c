@@ -1611,7 +1611,10 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
                   app = e_app_new(buf, 0);
 		  if (app)
 		    {
-		       ic->obj_icon = e_app_icon_add(evas_object_evas_get(ic->sd->obj), app);
+/* FIXME: Actually, I think it's the icon searching that is slowing things down a lot.
+ * That will be fixed by moving it to thumbnailing as planned.  Commented out for now.
+ */
+//		       ic->obj_icon = e_app_icon_add(evas_object_evas_get(ic->sd->obj), app);
 		       e_object_unref(E_OBJECT(app));
 		    }
 	       }
@@ -1698,7 +1701,10 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
                   app = e_app_new(buf, 0);
 		  if (app)
 		    {
-		       ic->obj_icon = e_app_icon_add(evas_object_evas_get(ic->sd->obj), app);
+/* FIXME: Actually, I think it's the icon searching that is slowing things down a lot.
+ * That will be fixed by moving it to thumbnailing as planned.  Commented out for now.
+ */
+//		       ic->obj_icon = e_app_icon_add(evas_object_evas_get(ic->sd->obj), app);
 		       e_object_unref(E_OBJECT(app));
 		    }
 		  edje_object_part_swallow(ic->obj, "e.swallow.icon", ic->obj_icon);

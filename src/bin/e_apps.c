@@ -220,7 +220,7 @@ e_app_new(const char *path, int scan_subdirs)
 	 {
 	    if(st.st_mtime > a->mtime)
 	    {
-	       e_object_del(E_OBJECT(a));
+	       e_object_free(E_OBJECT(a));
 	       a = NULL;
 	       stated = 1;
 	    }
@@ -278,6 +278,9 @@ e_app_new(const char *path, int scan_subdirs)
 	_e_apps_list = evas_list_prepend(_e_apps_list, a);
 #endif
      }
+   else
+      e_object_ref(E_OBJECT(a));
+
    return a;
 
 error:
