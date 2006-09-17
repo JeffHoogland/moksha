@@ -71,7 +71,7 @@ if [ -e "$FILENAME.eap" ]; then
     if [ "$ICLASS" ]; then
 	echo "X-Enlightenment-IconClass=$ICLASS" >>$FILENAME.desktop
     fi
-    echo "Icon=$FILENAME.edj" >>$FILENAME.desktop
+    echo "Icon=$FILENAME" >>$FILENAME.desktop
 
     cp -f $FILENAME.desktop $WD
 
