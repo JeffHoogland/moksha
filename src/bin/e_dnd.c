@@ -509,30 +509,14 @@ _e_drag_coords_update(E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh)
 	   case E_WIN_TYPE:
 	     px = ((E_Win *)(h->obj))->x;
 	     py = ((E_Win *)(h->obj))->y;
-	     if ((((E_Win *)(h->obj))->border) &&
-		 (((E_Win *)(h->obj))->border->zone))
-	       {
-		  px -= ((E_Win *)(h->obj))->border->zone->x;
-		  py -= ((E_Win *)(h->obj))->border->zone->y;
-	       }
 	     break;
 	   case E_BORDER_TYPE:
 	     px = ((E_Border *)(h->obj))->x + ((E_Border *)(h->obj))->fx.x;
 	     py = ((E_Border *)(h->obj))->y + ((E_Border *)(h->obj))->fx.y;
-	     if (((E_Border *)(h->obj))->zone)
-	       {
-		  px -= ((E_Border *)(h->obj))->zone->x;
-		  py -= ((E_Border *)(h->obj))->zone->y;
-	       }
 	     break;
 	   case E_POPUP_TYPE:
 	     px = ((E_Popup *)(h->obj))->x;
 	     py = ((E_Popup *)(h->obj))->y;
-	     if (((E_Popup *)(h->obj))->zone)
-	       {
-		  px -= ((E_Popup *)(h->obj))->zone->x;
-		  py -= ((E_Popup *)(h->obj))->zone->y;
-	       }
 	     break;
 	     /* FIXME: add mroe types as needed */
 	   default:
@@ -577,9 +561,9 @@ static void
 _e_drag_update(int x, int y)
 {
    Evas_List *l;
-   E_Event_Dnd_Enter *enter_ev;
-   E_Event_Dnd_Move *move_ev;
-   E_Event_Dnd_Leave *leave_ev;
+   E_Event_Dnd_Enter enter_ev;
+   E_Event_Dnd_Move move_ev;
+   E_Event_Dnd_Leave leave_ev;
    int dx, dy, dw, dh;
    Ecore_X_Window win, ignore_win[2];
 
@@ -588,7 +572,7 @@ _e_drag_update(int x, int y)
 	ignore_win[0] = _drag_current->evas_win;
 	ignore_win[1] = _drag_win;
 	/* this is nasty - but necessary to get the window stacking */
-	win = ecore_x_window_at_xy_with_skip_get(x, y, &ignore_win, 2);
+	win = ecore_x_window_at_xy_with_skip_get(x, y, ignore_win, 2);
      }
    else
      win = ecore_x_window_at_xy_with_skip_get(x, y, NULL, 0);
@@ -599,18 +583,6 @@ _e_drag_update(int x, int y)
 	_e_drag_move(_drag_current, x, y);
      }
 
-   enter_ev = E_NEW(E_Event_Dnd_Enter, 1);
-   enter_ev->x = x;
-   enter_ev->y = y;
-   
-   move_ev = E_NEW(E_Event_Dnd_Move, 1);
-   move_ev->x = x;
-   move_ev->y = y;
-
-   leave_ev = E_NEW(E_Event_Dnd_Leave, 1);
-   leave_ev->x = x;
-   leave_ev->y = y;
-
    if ((_drag_current) && (_drag_current->types))
      {
 	for (l = _drop_handlers; l; l = l->next)
@@ -620,24 +592,30 @@ _e_drag_update(int x, int y)
 	     h = l->data;
 	     if (!h->active) continue;
 	     _e_drag_coords_update(h, &dx, &dy, &dw, &dh);
+	     enter_ev.x = x - dx;
+	     enter_ev.y = y - dy;
+	     move_ev.x = x - dx;
+	     move_ev.y = y - dy;
+	     leave_ev.x = x - dx;
+	     leave_ev.y = y - dy;
 	     if ((_e_drag_win_matches(h, win)) &&
 		 (E_INSIDE(x, y, dx, dy, dw, dh)))
 	       {
 		  if (!h->entered)
 		    {
 		       if (h->cb.enter)
-			 h->cb.enter(h->cb.data, _drag_current->types[0], enter_ev);
+			 h->cb.enter(h->cb.data, _drag_current->types[0], &enter_ev);
 		       h->entered = 1;
 		    }
 		  if (h->cb.move)
-		    h->cb.move(h->cb.data, _drag_current->types[0], move_ev);
+		    h->cb.move(h->cb.data, _drag_current->types[0], &move_ev);
 	       }
 	     else
 	       {
 		  if (h->entered)
 		    {
 		       if (h->cb.leave)
-			 h->cb.leave(h->cb.data, _drag_current->types[0], leave_ev);
+			 h->cb.leave(h->cb.data, _drag_current->types[0], &leave_ev);
 		       h->entered = 0;
 		    }
 	       }
@@ -652,32 +630,35 @@ _e_drag_update(int x, int y)
 	     h = l->data;
 	     if (!h->active) continue;
 	     _e_drag_coords_update(h, &dx, &dy, &dw, &dh);
+	     enter_ev.x = x - dx;
+	     enter_ev.y = y - dy;
+	     move_ev.x = x - dx;
+	     move_ev.y = y - dy;
+	     leave_ev.x = x - dx;
+	     leave_ev.y = y - dy;
 	     if ((_e_drag_win_matches(h, win)) &&
 		 (E_INSIDE(x, y, dx, dy, dw, dh)))
 	       {
 		  if (!h->entered)
 		    {
 		       if (h->cb.enter)
-			 h->cb.enter(h->cb.data, _xdnd->type, enter_ev);
+			 h->cb.enter(h->cb.data, _xdnd->type, &enter_ev);
 		       h->entered = 1;
 		    }
 		  if (h->cb.move)
-		    h->cb.move(h->cb.data, _xdnd->type, move_ev);
+		    h->cb.move(h->cb.data, _xdnd->type, &move_ev);
 	       }
 	     else
 	       {
 		  if (h->entered)
 		    {
 		       if (h->cb.leave)
-			 h->cb.leave(h->cb.data, _xdnd->type, leave_ev);
+			 h->cb.leave(h->cb.data, _xdnd->type, &leave_ev);
 		       h->entered = 0;
 		    }
 	       }
 	  }
      }
-   free(enter_ev);
-   free(move_ev);
-   free(leave_ev);
 }
 
 static void
@@ -685,7 +666,7 @@ _e_drag_end(int x, int y)
 {
    E_Zone *zone;
    Evas_List *l;
-   E_Event_Dnd_Drop *ev;
+   E_Event_Dnd_Drop ev;
    const char *type = NULL;
    int dx, dy, dw, dh;
    Ecore_X_Window win, ignore_win[2];
@@ -694,7 +675,7 @@ _e_drag_end(int x, int y)
    ignore_win[0] = _drag_current->evas_win;
    ignore_win[1] = _drag_win;
    /* this is nasty - but necessary to get the window stacking */
-   win = ecore_x_window_at_xy_with_skip_get(x, y, &ignore_win, 2);
+   win = ecore_x_window_at_xy_with_skip_get(x, y, ignore_win, 2);
    zone = e_container_zone_at_point_get(_drag_current->container, x, y);
    /* Pass -1, -1, so that it is possible to drop at the edge. */
    if (zone) e_zone_flip_coords_handle(zone, -1, -1);
@@ -717,13 +698,9 @@ _e_drag_end(int x, int y)
    ecore_x_window_del(_drag_win);
    _drag_win = 0;
 
-   ev = E_NEW(E_Event_Dnd_Drop, 1);
-   ev->data = _drag_current->data;
+   ev.data = _drag_current->data;
    type = _drag_current->types[0];
-   ev->x = x;
-   ev->y = y;
-
-   if (ev->data)
+   if (ev.data)
      {
 	int dropped;
 
@@ -735,11 +712,13 @@ _e_drag_end(int x, int y)
 	     h = l->data;
 	     if (!h->active) continue;
 	     _e_drag_coords_update(h, &dx, &dy, &dw, &dh);
+	     ev.x = x - dx;
+	     ev.y = y - dy;
 	     if ((_e_drag_win_matches(h, win)) &&
 		 ((h->cb.drop) &&
 		  (E_INSIDE(x, y, dx, dy, dw, dh))))
 	       {
-		  h->cb.drop(h->cb.data, type, ev);
+		  h->cb.drop(h->cb.data, type, &ev);
 		  dropped = 1;
 	       }
 	  }
@@ -751,12 +730,11 @@ _e_drag_end(int x, int y)
    else
      {
 	/* Just leave */
-	E_Event_Dnd_Leave *leave_ev;
+	E_Event_Dnd_Leave leave_ev;
 
-	leave_ev = E_NEW(E_Event_Dnd_Leave, 1);
 	/* FIXME: We don't need x and y in leave */
-	leave_ev->x = 0;
-	leave_ev->y = 0;
+	leave_ev.x = 0;
+	leave_ev.y = 0;
 
 	for (l = _drop_handlers; l; l = l->next)
 	  {
@@ -770,20 +748,18 @@ _e_drag_end(int x, int y)
 	     if (h->entered)
 	       {
 		  if (h->cb.leave)
-		    h->cb.leave(h->cb.data, type, leave_ev);
+		    h->cb.leave(h->cb.data, type, &leave_ev);
 		  h->entered = 0;
 	       }
 	  }
      }
-
-   free(ev);
 }
 
 static void
 _e_drag_xdnd_end(int x, int y)
 {
    Evas_List *l;
-   E_Event_Dnd_Drop *ev;
+   E_Event_Dnd_Drop ev;
    const char *type = NULL;
    int dx, dy, dw, dh;
    Ecore_X_Window win, ignore_win[2];
@@ -794,18 +770,15 @@ _e_drag_xdnd_end(int x, int y)
 	ignore_win[0] = _drag_current->evas_win;
 	ignore_win[1] = _drag_win;
 	/* this is nasty - but necessary to get the window stacking */
-	win = ecore_x_window_at_xy_with_skip_get(x, y, &ignore_win, 2);
+	win = ecore_x_window_at_xy_with_skip_get(x, y, ignore_win, 2);
      }
    else
      win = ecore_x_window_at_xy_with_skip_get(x, y, NULL, 0);
 
-   ev = E_NEW(E_Event_Dnd_Drop, 1);
-   ev->data = _xdnd->data;
+   ev.data = _xdnd->data;
    type = _xdnd->type;
-   ev->x = x;
-   ev->y = y;
 
-   if (ev->data)
+   if (ev.data)
      {
 	int dropped;
 
@@ -817,11 +790,13 @@ _e_drag_xdnd_end(int x, int y)
 	     h = l->data;
 	     if (!h->active) continue;
 	     _e_drag_coords_update(h, &dx, &dy, &dw, &dh);
+	     ev.x = x - dx;
+	     ev.y = y - dy;
 	     if ((_e_drag_win_matches(h, win)) &&
 		 ((h->cb.drop) &&
 		  (E_INSIDE(x, y, dx, dy, dw, dh))))
 	       {
-		  h->cb.drop(h->cb.data, type, ev);
+		  h->cb.drop(h->cb.data, type, &ev);
 		  dropped = 1;
 	       }
 	  }
@@ -829,12 +804,11 @@ _e_drag_xdnd_end(int x, int y)
    else
      {
 	/* Just leave */
-	E_Event_Dnd_Leave *leave_ev;
+	E_Event_Dnd_Leave leave_ev;
 
-	leave_ev = E_NEW(E_Event_Dnd_Leave, 1);
 	/* FIXME: We don't need x and y in leave */
-	leave_ev->x = 0;
-	leave_ev->y = 0;
+	leave_ev.x = 0;
+	leave_ev.y = 0;
 
 	for (l = _drop_handlers; l; l = l->next)
 	  {
@@ -848,13 +822,11 @@ _e_drag_xdnd_end(int x, int y)
 	     if (h->entered)
 	       {
 		  if (h->cb.leave)
-		    h->cb.leave(h->cb.data, type, leave_ev);
+		    h->cb.leave(h->cb.data, type, &leave_ev);
 		  h->entered = 0;
 	       }
 	  }
      }
-
-   free(ev);
 }
 
 static void
@@ -872,8 +844,7 @@ _e_drag_free(E_Drag *drag)
    evas_object_del(drag->object);
    e_canvas_del(drag->ecore_evas);
    ecore_evas_free(drag->ecore_evas);
-   for (i = 0; i < drag->num_types; i++)
-     free(drag->types[i]);
+   for (i = 0; i < drag->num_types; i++) free(drag->types[i]);
    free(drag->types);
    free(drag);
 }

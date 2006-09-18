@@ -307,8 +307,10 @@ _ibar_cb_empty_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
-	evas_event_feed_mouse_up(b->inst->gcc->gadcon->evas, ev->button,
-				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
+	e_util_evas_fake_mouse_up_later(b->inst->gcc->gadcon->evas,
+					ev->button);
+//	evas_event_feed_mouse_up(b->inst->gcc->gadcon->evas, ev->button,
+//				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
 }
 
@@ -933,8 +935,10 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
-	evas_event_feed_mouse_up(ic->ibar->inst->gcc->gadcon->evas, ev->button,
-				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
+	e_util_evas_fake_mouse_up_later(ic->ibar->inst->gcc->gadcon->evas,
+					ev->button);
+//	evas_event_feed_mouse_up(ic->ibar->inst->gcc->gadcon->evas, ev->button,
+//				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
 }
 
@@ -989,9 +993,11 @@ _ibar_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 
 	     e_drag_resize(d, w, h);
 	     e_drag_start(d, ic->drag.x, ic->drag.y);
-	     evas_event_feed_mouse_up(ic->ibar->inst->gcc->gadcon->evas,
-				      1, EVAS_BUTTON_NONE, 
-				      ecore_x_current_time_get(), NULL);
+	     e_util_evas_fake_mouse_up_later(ic->ibar->inst->gcc->gadcon->evas,
+					     1);
+//	     evas_event_feed_mouse_up(ic->ibar->inst->gcc->gadcon->evas,
+//				      1, EVAS_BUTTON_NONE, 
+//				      ecore_x_current_time_get(), NULL);
 	     e_object_ref(E_OBJECT(ic->app));
 	     ic->ibar->icons = evas_list_remove(ic->ibar->icons, ic);
 	     _ibar_resize_handle(ic->ibar);
@@ -1061,7 +1067,7 @@ _ibar_inst_cb_enter(void *data, const char *type, void *event_info)
    Instance *inst;
    Evas_Object *o, *o2;
    IBar_Icon *ic;
-   int cx, cy, cw, ch;
+   Evas_Coord xx, yy;
    
    ev = event_info;
    inst = data;
@@ -1078,8 +1084,8 @@ _ibar_inst_cb_enter(void *data, const char *type, void *event_info)
    evas_object_layer_set(o2, 19999);
    evas_object_show(o);
    evas_object_show(o2);
-   e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy, &cw, &ch);
-   ic = _ibar_icon_at_coord(inst->ibar, ev->x - cx, ev->y - cy);
+   evas_object_geometry_get(inst->ibar->o_box, &xx, &yy, NULL, NULL);
+   ic = _ibar_icon_at_coord(inst->ibar, ev->x + xx, ev->y + yy);
    inst->ibar->ic_drop_before = ic;
    if (ic)
      {
@@ -1089,11 +1095,11 @@ _ibar_inst_cb_enter(void *data, const char *type, void *event_info)
 	evas_object_geometry_get(ic->o_holder, &ix, &iy, &iw, &ih);
 	if (e_box_orientation_get(inst->ibar->o_box))
 	  {
-	     if ((ev->x - cx) < (ix + (iw / 2))) before = 1;
+	     if ((ev->x + xx) < (ix + (iw / 2))) before = 1;
 	  }
 	else
 	  {
-	     if ((ev->y - cy) < (iy + (ih / 2))) before = 1;
+	     if ((ev->y + yy) < (iy + (ih / 2))) before = 1;
 	  }
 	if (before)
 	  e_box_pack_before(inst->ibar->o_box, inst->ibar->o_drop, ic->o_holder);
@@ -1119,13 +1125,13 @@ _ibar_inst_cb_move(void *data, const char *type, void *event_info)
    E_Event_Dnd_Move *ev;
    Instance *inst;
    IBar_Icon *ic;
-   int cx, cy, cw, ch;
+   Evas_Coord xx, yy;
    
    ev = event_info;
    inst = data;
    e_box_unpack(inst->ibar->o_drop);
-   e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy, &cw, &ch);
-   ic = _ibar_icon_at_coord(inst->ibar, ev->x - cx, ev->y - cy);
+   evas_object_geometry_get(inst->ibar->o_box, &xx, &yy, NULL, NULL);
+   ic = _ibar_icon_at_coord(inst->ibar, ev->x + xx, ev->y + yy);
    inst->ibar->ic_drop_before = ic;
    if (ic)
      {
@@ -1135,11 +1141,11 @@ _ibar_inst_cb_move(void *data, const char *type, void *event_info)
 	evas_object_geometry_get(ic->o_holder, &ix, &iy, &iw, &ih);
 	if (e_box_orientation_get(inst->ibar->o_box))
 	  {
-	     if ((ev->x - cx) < (ix + (iw / 2))) before = 1;
+	     if ((ev->x + xx) < (ix + (iw / 2))) before = 1;
 	  }
 	else
 	  {
-	     if ((ev->y - cy) < (iy + (ih / 2))) before = 1;
+	     if ((ev->y + yy) < (iy + (ih / 2))) before = 1;
 	  }
 	if (before)
 	  e_box_pack_before(inst->ibar->o_box, inst->ibar->o_drop, ic->o_holder);

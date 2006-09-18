@@ -197,8 +197,10 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 				   x, y, w, h,
 				   dir, ev->timestamp);
 	     edje_object_signal_emit(inst->o_button, "e,state,focused", "e");
-	     evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
-				      EVAS_BUTTON_NONE, ev->timestamp, NULL);
+	     e_util_evas_fake_mouse_up_later(inst->gcc->gadcon->evas,
+					     ev->button);
+//	     evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
+//				      EVAS_BUTTON_NONE, ev->timestamp, NULL);
 	  }
      }
 }

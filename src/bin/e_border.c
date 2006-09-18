@@ -4719,9 +4719,10 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 
 			    e_drag_resize(drag, w, h);
 			    e_drag_start(drag, bd->drag.x, bd->drag.y);
-			    evas_event_feed_mouse_up(bd->bg_evas, 1,
-						     EVAS_BUTTON_NONE, ev->time, 
-						     NULL);
+			    e_util_evas_fake_mouse_up_later(bd->bg_evas, 1);
+//			    evas_event_feed_mouse_up(bd->bg_evas, 1,
+//						     EVAS_BUTTON_NONE, ev->time, 
+//						     NULL);
 			 }
 		       bd->drag.start = 0;
 		    }

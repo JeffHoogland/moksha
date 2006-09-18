@@ -542,6 +542,17 @@ e_widget_fsel_selection_path_get(Evas_Object *obj)
    return wd->path;
 }
 
+EAPI void
+e_widget_fsel_window_object_set(Evas_Object *obj, E_Object *eobj)
+{
+   E_Widget_Data *wd;
+
+   if (!obj) return NULL;
+   wd = e_widget_data_get(obj);
+   e_fm2_window_object_set(wd->o_favorites_fm, eobj);
+   e_fm2_window_object_set(wd->o_files_fm, eobj);
+}
+
 static void
 _e_wid_fsel_preview_update(void *data, Evas_Object *obj, void *event_info)
 {

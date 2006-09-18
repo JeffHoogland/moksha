@@ -632,8 +632,10 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
-	evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
-				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
+	e_util_evas_fake_mouse_up_later(inst->gcc->gadcon->evas,
+					ev->button);
+//	evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
+//				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
 }
 
@@ -1391,9 +1393,11 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
 	     pw->drag.from_pager = pw->desk->pager;
 	     pw->drag.from_pager->dragging = 1;
 	     pw->drag.in_pager = 0;
-	     evas_event_feed_mouse_up(evas_object_evas_get(pw->desk->pager->o_table),
-				      pw->drag.button, EVAS_BUTTON_NONE, 
-				      ecore_x_current_time_get(), NULL);
+	     e_util_evas_fake_mouse_up_later(evas_object_evas_get(pw->desk->pager->o_table),
+					     pw->drag.button);
+//	     evas_event_feed_mouse_up(evas_object_evas_get(pw->desk->pager->o_table),
+//				      pw->drag.button, EVAS_BUTTON_NONE, 
+//				      ecore_x_current_time_get(), NULL);
 	  }
      }
 }
@@ -1470,12 +1474,12 @@ _pager_inst_cb_move(void *data, const char *type, void *event_info)
    Instance *inst;
    Pager_Desk *pd, *pd2;
    Evas_List *l;
-   int cx, cy, cw, ch;
+   Evas_Coord xx, yy;
 
    ev = event_info;
    inst = data;
-   e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy, &cw, &ch);
-   pd = _pager_desk_at_coord(inst->pager, ev->x - cx, ev->y - cy);
+   evas_object_geometry_get(inst->pager->o_table, &xx, &yy, NULL, NULL);
+   pd = _pager_desk_at_coord(inst->pager, ev->x + xx, ev->y + yy);
    /* FIXME: keep track which one its over so we only emit drag in/out
     * when it actually goes form one desk to another */
    for (l = inst->pager->desks; l; l = l->next)
@@ -1517,13 +1521,14 @@ _pager_inst_cb_drop(void *data, const char *type, void *event_info)
    E_Border *bd = NULL;
    Evas_List *l;
    int dx = 0, dy = 0;
-   int cx, cy, cw, ch;
    Pager_Win *pw = NULL;
+   Evas_Coord xx, yy;
 
    ev = event_info;
    inst = data;
-   e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy, &cw, &ch);
-   pd = _pager_desk_at_coord(inst->pager, ev->x - cx, ev->y - cy);
+
+   evas_object_geometry_get(inst->pager->o_table, &xx, &yy, NULL, NULL);
+   pd = _pager_desk_at_coord(inst->pager, ev->x + xx, ev->y + yy);
    if (pd)
      {
 	if (!strcmp(type, "enlightenment/pager_win"))
@@ -1558,7 +1563,8 @@ _pager_inst_cb_drop(void *data, const char *type, void *event_info)
 	     if ((!pw) || ((pw) && (!pw->drag.no_place)))
 	       {
 		  e_layout_coord_canvas_to_virtual(pd->o_layout, 
-						   ev->x - cx + dx, ev->y - cy + dy,
+						   ev->x + xx + dx,
+						   ev->y + yy + dy,
 						   &nx, &ny);
 		  e_border_move(bd, nx + pd->desk->zone->x, ny + pd->desk->zone->y);
 	       }

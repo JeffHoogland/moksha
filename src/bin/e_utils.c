@@ -22,7 +22,7 @@ typedef struct _E_Util_Fake_Mouse_Up_Info E_Util_Fake_Mouse_Up_Info;
 
 struct _E_Util_Fake_Mouse_Up_Info
 {
-   E_Container *con;
+   Evas        *evas;
    int          button;
 };
 
@@ -37,19 +37,10 @@ static Ecore_Timer *_e_util_dummy_timer = NULL;
 EAPI void
 e_util_container_fake_mouse_up_later(E_Container *con, int button)
 {
-   E_Util_Fake_Mouse_Up_Info *info;
-   
    E_OBJECT_CHECK(con);
    E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
    
-   info = calloc(1, sizeof(E_Util_Fake_Mouse_Up_Info));
-   if (info)
-     {
-	info->con = con;
-	info->button = button;
-	e_object_ref(E_OBJECT(info->con));
-	ecore_job_add(_e_util_container_fake_mouse_up_cb, info);
-     }
+   e_util_evas_fake_mouse_up_later(con->bg_evas, button);
 }
 
 EAPI void
@@ -61,6 +52,20 @@ e_util_container_fake_mouse_up_all_later(E_Container *con)
    e_util_container_fake_mouse_up_later(con, 1);
    e_util_container_fake_mouse_up_later(con, 2);
    e_util_container_fake_mouse_up_later(con, 3);
+}
+
+EAPI void
+e_util_evas_fake_mouse_up_later(Evas *e, int button)
+{
+   E_Util_Fake_Mouse_Up_Info *info;
+   
+   info = calloc(1, sizeof(E_Util_Fake_Mouse_Up_Info));
+   if (info)
+     {
+	info->evas = e;
+	info->button = button;
+	ecore_job_add(_e_util_container_fake_mouse_up_cb, info);
+     }
 }
 
 EAPI void
@@ -675,8 +680,8 @@ _e_util_container_fake_mouse_up_cb(void *data)
    info = data;
    if (info)
      {
-	evas_event_feed_mouse_up(info->con->bg_evas, info->button, EVAS_BUTTON_NONE, ecore_x_current_time_get(), NULL);
-	e_object_unref(E_OBJECT(info->con));
+	evas_event_feed_mouse_up(info->evas, info->button, EVAS_BUTTON_NONE,
+				 ecore_x_current_time_get(), NULL);
 	free(info);
      }
 }

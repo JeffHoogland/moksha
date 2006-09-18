@@ -184,8 +184,10 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
-	evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
-				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
+	e_util_evas_fake_mouse_up_later(inst->gcc->gadcon->evas,
+					ev->button);
+//	evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
+//				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
 }
 
