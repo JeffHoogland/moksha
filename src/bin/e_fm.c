@@ -132,9 +132,9 @@ static void _e_fm2_icon_realize(E_Fm2_Icon *ic);
 static void _e_fm2_icon_unrealize(E_Fm2_Icon *ic);
 static int _e_fm2_icon_visible(E_Fm2_Icon *ic);
 static void _e_fm2_icon_label_set(E_Fm2_Icon *ic, Evas_Object *obj);
-static Evas_Object *_e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (void *data, Evas_Object *obj, void *event_info), void *data);
+static Evas_Object *_e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (void *data, Evas_Object *obj, void *event_info), void *data, int force_gen);
 static void _e_fm2_icon_icon_set(E_Fm2_Icon *ic);
-static void _e_fm2_icon_thumb(E_Fm2_Icon *ic);
+static void _e_fm2_icon_thumb(E_Fm2_Icon *ic, Evas_Object *oic, int force);
 static void _e_fm2_icon_select(E_Fm2_Icon *ic);
 static void _e_fm2_icon_deselect(E_Fm2_Icon *ic);
 static int _e_fm2_icon_desktop_load(E_Fm2_Icon *ic);
@@ -1582,7 +1582,7 @@ _e_fm2_icon_label_set(E_Fm2_Icon *ic, Evas_Object *obj)
 }
 
 static Evas_Object *
-_e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (void *data, Evas_Object *obj, void *event_info), void *data)
+_e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (void *data, Evas_Object *obj, void *event_info), void *data, int force_gen)
 {
    Evas_Object *oic;
    char buf[4096], *p;
@@ -1648,7 +1648,7 @@ _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (vo
 		  e_thumb_icon_size_set(oic, 128, 128);
 		  evas_object_smart_callback_add(oic, "e_thumb_gen",
 						 gen_func, data);
-		  _e_fm2_icon_thumb(ic);
+		  _e_fm2_icon_thumb(ic, oic, force_gen);
 	       }
 	     else if (!strcmp(icon, "DESKTOP"))
 	       {
@@ -1679,7 +1679,7 @@ _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (vo
 		  e_thumb_icon_size_set(oic, 128, 128);
 		  evas_object_smart_callback_add(oic, "e_thumb_gen",
 						 gen_func, data);
-		  _e_fm2_icon_thumb(ic);
+		  _e_fm2_icon_thumb(ic, oic, force_gen);
  */
 	       }
 	     else if (!strncmp(icon, "e/icons/fileman/mime/", 21))
@@ -1737,7 +1737,7 @@ _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (vo
 		  e_thumb_icon_size_set(oic, 128, 96);
 		  evas_object_smart_callback_add(oic, "e_thumb_gen",
 						 gen_func, data);
-		  _e_fm2_icon_thumb(ic);
+		  _e_fm2_icon_thumb(ic, oic, force_gen);
 	       }
 	     else if (
 		      (e_util_glob_case_match(ic->info.file, "*.desktop"))
@@ -1770,7 +1770,7 @@ _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (vo
 		  e_thumb_icon_size_set(oic, 128, 96);
 		  evas_object_smart_callback_add(oic, "e_thumb_gen", 
 						 gen_func, data);
-		  _e_fm2_icon_thumb(ic);
+		  _e_fm2_icon_thumb(ic, oic, force_gen);
  */
 	       }
 	     else
@@ -1792,17 +1792,18 @@ _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
    if (!ic->realized) return;
    ic->obj_icon = _e_fm2_icon_icon_direct_set(ic, ic->obj,
 					      _e_fm2_cb_icon_thumb_gen,
-					      ic);
+					      ic, 0);
 }
 
 static void
-_e_fm2_icon_thumb(E_Fm2_Icon *ic)
+_e_fm2_icon_thumb(E_Fm2_Icon *ic, Evas_Object *oic, int force)
 {
-   if ((_e_fm2_icon_visible(ic)) && 
-       (!ic->sd->queue) && 
-       (!ic->sd->sort_idler) &&
-       (!ic->sd->scan_idler))
-     e_thumb_icon_begin(ic->obj_icon);
+   if ((force) ||
+       ((_e_fm2_icon_visible(ic)) && 
+	(!ic->sd->queue) && 
+	(!ic->sd->sort_idler) &&
+	(!ic->sd->scan_idler)))
+     e_thumb_icon_begin(oic);
 }
 
 static void
@@ -2638,7 +2639,8 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	       }
 	     _e_fm2_icon_label_set(ic, o);
 	     o2 = _e_fm2_icon_icon_direct_set(ic, o,
-					      _e_fm2_cb_icon_thumb_dnd_gen, o);
+					      _e_fm2_cb_icon_thumb_dnd_gen, o,
+					      1);
 	     edje_object_signal_emit(o, "e,state,selected", "e");
 	     edje_object_signal_emit(o2, "e,state,selected", "e");
 	     e_drag_object_set(d, o);
@@ -2661,6 +2663,7 @@ _e_fm2_cb_icon_thumb_dnd_gen(void *data, Evas_Object *obj, void *event_info)
    int have_alpha;
    
    o = data;
+   printf("dnd gen\n");
    e_icon_size_get(obj, &w, &h);
    have_alpha = e_icon_alpha_get(obj);
 //   if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
@@ -3147,7 +3150,7 @@ _e_fm2_obj_icons_place(E_Fm2_Smart_Data *sd)
 					sd->x + ic->x - sd->pos.x, 
 					sd->y + ic->y - sd->pos.y);
 		       evas_object_resize(ic->obj, ic->w, ic->h);
-		       _e_fm2_icon_thumb(ic);
+		       _e_fm2_icon_thumb(ic, ic->obj_icon, 0);
 		    }
 	       }
 	  }
