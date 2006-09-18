@@ -2333,6 +2333,26 @@ _e_fm2_typebuf_char_backspace(Evas_Object *obj)
 /**************************/
 
 static void
+_e_fm2_dnd_drop_into_show(E_Fm2_Icon *ic)
+{
+}
+
+static void
+_e_fm2_dnd_drop_into_hide(Evas_Object *obj)
+{
+}
+
+static void
+_e_fm2_dnd_drop_between_show(E_Fm2_Icon *ic, int after)
+{
+}
+
+static void
+_e_fm2_dnd_drop_between_hide(Evas_Object *obj)
+{
+}
+
+static void
 _e_fm2_cb_dnd_enter(void *data, const char *type, void *event)
 {
    E_Fm2_Smart_Data *sd;
@@ -2350,14 +2370,90 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 {
    E_Fm2_Smart_Data *sd;
    E_Event_Dnd_Move *ev;
+   E_Fm2_Icon *ic;
+   Evas_List *l;
    
    sd = data;
    if (!type) return;
    if (strcmp(type, "text/uri-list")) return;
    ev = (E_Event_Dnd_Move *)event;
    printf("DND MOVE %i %i\n", ev->x, ev->y);
+   for (l = sd->icons; l; l = l->next)
+     {
+	ic = l->data;
+	if (ic->drag.dnd) continue;
+	if (E_INSIDE(ev->x, ev->y, ic->x, ic->y, ic->w, ic->h))
+	  {
+	     printf("OVER %s\n", ic->info.file);
+	     /* if list view */
+	     if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
+	       {
+		  /* if there is a .order file - we can re-order files */
+		  if (ic->sd->order_file)
+		    {
+		       /* if dir: */
+		       if (S_ISDIR(ic->info.statinfo.st_mode))
+			 {
+			    /* if bottom 25% or top 25% then insert between prev or next */
+			    /* if in middle 50% then put in dir */
+			    if (ev->y <= (ic->y + (ic->h / 4)))
+			      {
+				 _e_fm2_dnd_drop_into_hide(ic);
+				 _e_fm2_dnd_drop_between_show(sd->obj, 0);
+			      }
+			    else if (ev->y > (ic->y + ((ic->h * 3) / 4)))
+			      {
+				 _e_fm2_dnd_drop_into_hide(ic);
+				 _e_fm2_dnd_drop_between_show(sd->obj, 1);
+			      }
+			    else
+			      {
+				 _e_fm2_dnd_drop_between_hide(sd->obj);
+				 _e_fm2_dnd_drop_into_show(ic);
+			      }
+			 }
+		       else
+			 {
+			    /* if top 50% or bottom 50% then insert between prev or next */
+			    if (ev->y <= (ic->y + (ic->h / 2)))
+			      {
+				 _e_fm2_dnd_drop_into_hide(ic);
+				 _e_fm2_dnd_drop_between_show(sd->obj, 0);
+			      }
+			    else
+			      {
+				 _e_fm2_dnd_drop_into_hide(ic);
+				 _e_fm2_dnd_drop_between_show(sd->obj, 1);
+			      }
+			 }
+		    }
+		  /* we can only drop into subdirs */
+		  else
+		    {
+		       /* if it's over a dir - hilight as it will be dropped in */
+                       if (S_ISDIR(ic->info.statinfo.st_mode))
+			 {
+			    _e_fm2_dnd_drop_between_hide(sd->obj);
+			    _e_fm2_dnd_drop_into_show(ic);
+			 }
+		       else
+			 {
+			    _e_fm2_dnd_drop_between_hide(sd->obj);
+			    _e_fm2_dnd_drop_into_hide(sd->obj);
+			 }
+		    }
+	       }
+	     else
+	       {
+		  /* FIXME: icon view mode */
+	       }
+	     return;
+	  }
+     }
+   _e_fm2_dnd_drop_between_hide(sd->obj);
+   _e_fm2_dnd_drop_into_hide(sd->obj);
 }
- 
+
 static void
 _e_fm2_cb_dnd_leave(void *data, const char *type, void *event)
 {
@@ -2369,6 +2465,8 @@ _e_fm2_cb_dnd_leave(void *data, const char *type, void *event)
    if (strcmp(type, "text/uri-list")) return;
    ev = (E_Event_Dnd_Leave *)event;
    printf("DND LEAVE %i %i\n", ev->x, ev->y);
+   _e_fm2_dnd_drop_between_hide(sd->obj);
+   _e_fm2_dnd_drop_into_hide(sd->obj);
 }
  
 static void
@@ -2386,6 +2484,11 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
    selected = ev->data;
    printf("DROP: %i %i\n", ev->x, ev->y);
    for (i = 0, f = selected[i]; f; i++, f = selected[i]) printf("  %s\n", f);
+   /* FIXME: record the descision where to drop it in the dnd move callback
+    * then fix list, rewrite .order or move into dir (and if drag icon is
+    * from this dir, then refresh) */
+   _e_fm2_dnd_drop_between_hide(sd->obj);
+   _e_fm2_dnd_drop_into_hide(sd->obj);
 }
  
 static void

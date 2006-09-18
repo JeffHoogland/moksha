@@ -111,6 +111,7 @@ _e_fdo_menu_to_order_dump_each_hash_node(void *value, void *user_data)
    file = (char *)node->value;
    desktop = ecore_desktop_get(file, NULL);
    /* Check if we process */
+   if (!desktop) return;
    if ( (!desktop->hidden) && (!desktop->no_display) && ((desktop->type == NULL) || (strcmp(desktop->type, "Application") == 0)) )
       {
          char path2[PATH_MAX];
