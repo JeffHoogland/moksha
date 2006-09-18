@@ -2376,12 +2376,16 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 {
    E_Fm2_Smart_Data *sd;
    E_Event_Dnd_Drop *ev;
+   char **selected, *f;
+   int i;
    
    sd = data;
    if (!type) return;
    if (strcmp(type, "text/uri-list")) return;
    ev = (E_Event_Dnd_Drop *)event;
-   printf("DROP: %i %i %s\n", ev->x, ev->y, ev->data);
+   selected = ev->data;
+   printf("DROP: %i %i\n", ev->x, ev->y);
+   for (i = 0, f = selected[i]; f; i++, f = selected[i]) printf("  %s\n", f);
 }
  
 static void
@@ -2548,7 +2552,12 @@ _e_fm2_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 static void
 _e_fm2_cb_drag_finished(E_Drag *drag, int dropped)
 {
-   free(drag->data);
+   char **selected, *f;
+   int i;
+   
+   selected = drag->data;
+   for (i = 0, f = selected[i]; f; i++, f = selected[i]) free(f);
+   free(selected);
 }
 
 static void
@@ -2572,8 +2581,11 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     Evas_Object *o, *o2;
 	     Evas_Coord x, y, w, h;
 	     const char *drag_types[] = { "text/uri-list" }, *realpath;
+	     char **selected = NULL;
 	     char buf[4096];
 	     E_Container *con = NULL;
+	     Evas_List *l, *sl;
+	     int i;
 	     
 	     switch (ic->sd->eobj->type)
 	       {
@@ -2598,14 +2610,20 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     ic->drag.start = 0;
 	     evas_object_geometry_get(ic->obj, &x, &y, &w, &h);
 	     realpath = e_fm2_real_path_get(ic->sd->obj);
-	     if (!strcmp(realpath, "/"))
-	       snprintf(buf, sizeof(buf), "/%s", ic->info.file);
-	     else
-	       snprintf(buf, sizeof(buf), "%s/%s", realpath, ic->info.file);
-	       
+	     sl = e_fm2_selected_list_get(ic->sd->obj);
+	     selected = E_NEW(char *, evas_list_count(sl) + 1);
+	     for (l = sl, i = 0; l; l = l->next, i++)
+	       {
+		  if (!strcmp(realpath, "/"))
+		    snprintf(buf, sizeof(buf), "/%s", ic->info.file);
+		  else
+		    snprintf(buf, sizeof(buf), "%s/%s", realpath, ic->info.file);
+		  selected[i] = strdup(buf);
+	       }
+	     evas_list_free(sl);
 	     d = e_drag_new(con,
 			    x, y, drag_types, 1,
-			    strdup(buf), -1, _e_fm2_cb_drag_finished);
+			    selected, -1, _e_fm2_cb_drag_finished);
 	     o = edje_object_add(e_drag_evas_get(d));
 	     if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
 	       {

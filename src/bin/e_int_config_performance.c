@@ -13,8 +13,8 @@ struct _E_Config_Dialog_Data
 
    /* Advanced */   
    double cache_flush_interval;
-   int font_cache;
-   int image_cache;
+   double font_cache;
+   double image_cache;
    int edje_cache;
    int edje_collection_cache;
 };
@@ -45,8 +45,8 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
    cfdata->framerate = e_config->framerate;
-   cfdata->font_cache = (e_config->font_cache / 1024);
-   cfdata->image_cache = (e_config->image_cache / 1024);
+   cfdata->font_cache = ((double)e_config->font_cache / 1024);
+   cfdata->image_cache = ((double)e_config->image_cache / 1024);
    cfdata->edje_cache = e_config->edje_cache;
    cfdata->edje_collection_cache = e_config->edje_collection_cache;
    cfdata->cache_flush_interval = e_config->cache_flush_interval;
@@ -133,12 +133,12 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    ob = e_widget_label_add(evas, _("Size Of Font Cache"));
    e_widget_framelist_object_append(of, ob);   
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f MB"), 0, 32, 0.5, 0, NULL, &(cfdata->font_cache), 150);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f MB"), 0, 4, 0.1, 0, &(cfdata->font_cache), NULL, 150);
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_label_add(evas, _("Size Of Image Cache"));
    e_widget_framelist_object_append(of, ob);   
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f MB"), 0, 256, 1, 0, NULL, &(cfdata->image_cache), 150);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f MB"), 0, 32, 1, 0, &(cfdata->image_cache), NULL, 150);
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_label_add(evas, _("Number Of Edje Files To Cache"));
