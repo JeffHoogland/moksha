@@ -2332,21 +2332,25 @@ _e_fm2_typebuf_char_backspace(Evas_Object *obj)
 
 /**************************/
 
+/* FIXME: prototype + reposition + implement */
 static void
 _e_fm2_dnd_drop_into_show(E_Fm2_Icon *ic)
 {
 }
 
+/* FIXME: prototype + reposition + implement */
 static void
 _e_fm2_dnd_drop_into_hide(Evas_Object *obj)
 {
 }
 
+/* FIXME: prototype + reposition + implement */
 static void
 _e_fm2_dnd_drop_between_show(E_Fm2_Icon *ic, int after)
 {
 }
 
+/* FIXME: prototype + reposition + implement */
 static void
 _e_fm2_dnd_drop_between_hide(Evas_Object *obj)
 {
