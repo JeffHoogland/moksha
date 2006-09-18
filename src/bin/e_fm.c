@@ -1587,7 +1587,6 @@ _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (vo
    Evas_Object *oic;
    char buf[4096], *p;
    
-   if (!ic->realized) return;
    if (ic->info.icon)
      {
 	/* custom icon */
@@ -1643,6 +1642,7 @@ _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (vo
 		    snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
 		  else
 		    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
+		  
 		  oic = e_thumb_icon_add(evas_object_evas_get(o));
 		  e_thumb_icon_file_set(oic, buf, NULL);
 		  e_thumb_icon_size_set(oic, 128, 128);
@@ -1652,16 +1652,35 @@ _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (vo
 	       }
 	     else if (!strcmp(icon, "DESKTOP"))
 	       {
+		  E_App *app;
+		  
 		  if (ic->info.pseudo_link)
 		    snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
 		  else
 		    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
+		  /* FIXME FIXME FIXME: e_app_new() is SLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOW. it can
+		   * be a complete hog. this destroys performance in fm2. :(:(:(
+		   */
+		  app = e_app_new(buf, 0);
+		  if (app)
+		    {
+		       /* FIXME: Actually, I think it's the icon searching that is slowing things down a lot.
+			* thumbnailing won't work - animated edj icons :)
+			* need to actually fix the icon searching :) throw in
+			* a hash cache. they work like a charm - also look
+			* at improving the search algo :)
+			*/
+		       oic = e_app_icon_add(evas_object_evas_get(o), app);
+		       e_object_unref(E_OBJECT(app));
+		    }
+/* thumbnailing will work only on non-edj animated icons
 		  oic = e_thumb_icon_add(evas_object_evas_get(o));
 		  e_thumb_icon_file_set(oic, buf, e_config->icon_theme);
 		  e_thumb_icon_size_set(oic, 128, 128);
 		  evas_object_smart_callback_add(oic, "e_thumb_gen",
 						 gen_func, data);
 		  _e_fm2_icon_thumb(ic);
+ */
 	       }
 	     else if (!strncmp(icon, "e/icons/fileman/mime/", 21))
 	       {
@@ -1690,9 +1709,6 @@ _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (vo
 		       e_icon_file_set(oic, icon);
 		    }
 	       }
-	     edje_object_part_swallow(o, "e.swallow.icon", oic);
-	     evas_object_show(oic);
-	     return;
 	  }
 	else
 	  {
@@ -1722,50 +1738,50 @@ _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (vo
 		  evas_object_smart_callback_add(oic, "e_thumb_gen",
 						 gen_func, data);
 		  _e_fm2_icon_thumb(ic);
-		  edje_object_part_swallow(o, "e.swallow.icon", oic);
-		  evas_object_show(oic);
-	       }
-	     else if (
-		      (e_util_glob_case_match(ic->info.file, "*.eap"))
-		      )
-	       {
-		  if (ic->info.pseudo_link)
-		    snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
-		  else
-		    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
-		  oic = edje_object_add(evas_object_evas_get(o));
-		  edje_object_file_set(oic, buf, "icon");
-		  edje_object_part_swallow(o, "e.swallow.icon", oic);
-		  evas_object_show(oic);
 	       }
 	     else if (
 		      (e_util_glob_case_match(ic->info.file, "*.desktop"))
 		      )
 	       {
+		  E_App *app;
+		  
 		  if (ic->info.pseudo_link)
 		    snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
 		  else
 		    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
-
+		  /* FIXME FIXME FIXME: e_app_new() is SLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOW. it can
+		   * be a complete hog. this destroys performance in fm2. :(:(:(
+		   */
+		  app = e_app_new(buf, 0);
+		  if (app)
+		    {
+		       /* FIXME: Actually, I think it's the icon searching that is slowing things down a lot.
+			* thumbnailing won't work - animated edj icons :)
+			* need to actually fix the icon searching :) throw in
+			* a hash cache. they work like a charm - also look
+			* at improving the search algo :)
+			*/
+		       oic = e_app_icon_add(evas_object_evas_get(o), app);
+		       e_object_unref(E_OBJECT(app));
+		    }
+/* thumbnailing will work only on non-edj animated icons
 		  oic = e_thumb_icon_add(evas_object_evas_get(o));
 		  e_thumb_icon_file_set(oic, buf, e_config->icon_theme);
 		  e_thumb_icon_size_set(oic, 128, 96);
 		  evas_object_smart_callback_add(oic, "e_thumb_gen", 
 						 gen_func, data);
 		  _e_fm2_icon_thumb(ic);
-
-		  edje_object_part_swallow(o, "e.swallow.icon", oic);
-		  evas_object_show(oic);
+ */
 	       }
 	     else
 	       {
 		  oic = edje_object_add(evas_object_evas_get(o));
 		  e_theme_edje_object_set(oic, "base/theme/fileman",
 					  "e/icons/fileman/file");
-		  edje_object_part_swallow(o, "e.swallow.icon", oic);
-		  evas_object_show(oic);
 	       }
 	  }
+	edje_object_part_swallow(o, "e.swallow.icon", oic);
+	evas_object_show(oic);
      }
    return oic;
 }
@@ -1773,9 +1789,10 @@ _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (vo
 static void
 _e_fm2_icon_icon_set(E_Fm2_Icon *ic)
 {
+   if (!ic->realized) return;
    ic->obj_icon = _e_fm2_icon_icon_direct_set(ic, ic->obj,
 					      _e_fm2_cb_icon_thumb_gen,
-					      ic->obj);
+					      ic);
 }
 
 static void
@@ -2664,6 +2681,7 @@ _e_fm2_cb_icon_thumb_gen(void *data, Evas_Object *obj, void *event_info)
    E_Fm2_Icon *ic;
    
    ic = data;
+   printf("GEN!\n");
    if (ic->realized)
      {
 	Evas_Coord w = 0, h = 0;
