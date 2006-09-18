@@ -390,6 +390,7 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 		    {
 		       a2->parent = a;
 		       a->subapps = evas_list_append(a->subapps, a2);
+                       e_object_ref(E_OBJECT(a2));
 		    }
 	       }
 	     else
@@ -413,6 +414,7 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 			      {
 				 a3->parent = a;
 				 a->subapps = evas_list_append(a->subapps, a3);
+                                 e_object_ref(E_OBJECT(a3));
 				 a2->references = evas_list_append(a2->references, a3);
 #if ! NO_APP_LIST
 				 _e_apps_list = evas_list_prepend(_e_apps_list, a3);
@@ -654,6 +656,7 @@ e_app_prepend_relative(E_App *add, E_App *before)
 
    before->parent->subapps = evas_list_prepend_relative(before->parent->subapps,
 							add, before);
+   e_object_ref(E_OBJECT(add));
    add->parent = before->parent;
 
    /* Check if this app is in the trash */
@@ -680,6 +683,7 @@ e_app_append(E_App *add, E_App *parent)
 
    if ((!add) || (!parent)) return;
    parent->subapps = evas_list_append(parent->subapps, add);
+   e_object_ref(E_OBJECT(add));
    add->parent = parent;
 
    /* Check if this app is in the trash */
@@ -793,6 +797,8 @@ e_app_remove(E_App *a)
    char buf[PATH_MAX];
 
    if (!a) return;
+   E_OBJECT_CHECK(a);
+   E_OBJECT_TYPE_CHECK(a, E_APP_TYPE);
    if (!a->parent) return;
 
    a->parent->subapps = evas_list_remove(a->parent->subapps, a);
@@ -881,6 +887,8 @@ e_app_launch_id_pid_find(int launch_id, pid_t pid)
 	E_App *a;
 
 	a = l->data;
+        E_OBJECT_CHECK_RETURN(a, NULL);
+        E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
 	for (ll = a->instances; ll; ll = ll->next)
 	  {
 	     E_App_Instance *ai;
@@ -916,6 +924,8 @@ e_app_border_find(E_Border *bd)
    for (l = _e_apps_list; l; l = l->next)
      {
 	a = l->data;
+        E_OBJECT_CHECK_RETURN(a, NULL);
+        E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
 	ok = 0;
 	if ((a->win_name) || (a->win_class) || (a->win_title) || (a->win_role))
 	  {
@@ -986,6 +996,8 @@ e_app_file_find(const char *file)
 	E_App *a;
 	
 	a = l->data;
+        E_OBJECT_CHECK_RETURN(a, NULL);
+        E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
 	if (a->path)
 	  {
 	     char *p;
@@ -1020,6 +1032,8 @@ e_app_path_find(const char *path)
 	      E_App *a;
 	
 	      a = l->data;
+              E_OBJECT_CHECK_RETURN(a, NULL);
+              E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
 	      if (a->path)
 	        {
 	           if (!strcmp(a->path, path))
@@ -1046,6 +1060,8 @@ e_app_name_find(const char *name)
 	E_App *a;
 	
 	a = l->data;
+        E_OBJECT_CHECK_RETURN(a, NULL);
+        E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
 	if (a->name)
 	  {
 	     if (!strcasecmp(a->name, name))
@@ -1071,6 +1087,8 @@ e_app_generic_find(const char *generic)
 	E_App *a;
 	
 	a = l->data;
+        E_OBJECT_CHECK_RETURN(a, NULL);
+        E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
 	if (a->generic)
 	  {
 	     if (!strcasecmp(a->generic, generic))
@@ -1096,6 +1114,8 @@ e_app_exe_find(const char *exe)
 	E_App *a;
 	
 	a = l->data;
+        E_OBJECT_CHECK_RETURN(a, NULL);
+        E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
 	if (a->exe)
 	  {
 	     if (!strcmp(a->exe, exe))
@@ -1123,6 +1143,8 @@ e_app_name_glob_list(const char *name)
 	E_App *a;
 	
 	a = l->data;
+        E_OBJECT_CHECK_RETURN(a, NULL);
+        E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
 	if (a->name)
 	  {
 	     if (e_util_glob_case_match(a->name, name))
@@ -1144,6 +1166,8 @@ e_app_generic_glob_list(const char *generic)
 	E_App *a;
 	
 	a = l->data;
+        E_OBJECT_CHECK_RETURN(a, NULL);
+        E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
 	if (a->generic)
 	  {
 	     if (e_util_glob_case_match(a->generic, generic))
@@ -1165,6 +1189,8 @@ e_app_exe_glob_list(const char *exe)
 	E_App *a;
 	
 	a = l->data;
+        E_OBJECT_CHECK_RETURN(a, NULL);
+        E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
 	if (a->exe)
 	  {
 	     if (e_util_glob_match(a->exe, exe))
@@ -1186,6 +1212,8 @@ e_app_comment_glob_list(const char *comment)
 	E_App *a;
 	
 	a = l->data;
+        E_OBJECT_CHECK_RETURN(a, NULL);
+        E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
 	if (a->comment)
 	  {
 	     if (e_util_glob_case_match(a->comment, comment))
@@ -1331,12 +1359,15 @@ e_app_fields_save(E_App *a)
    const char *lang, *ext = NULL;
    int new_eap = 0;
 
+   E_OBJECT_CHECK(a);
+   E_OBJECT_TYPE_CHECK(a, E_APP_TYPE);
    /* Check if it's a new one that has not been saved yet. */
    if (a->path)
       ext = ecore_file_get_file(a->path);
    if ( (!a->path) || ((strncmp(ext, "_new_app_", 9) == 0) && (!ecore_file_exists(a->path))) )
       {
          snprintf(buf, sizeof(buf), "%s/%s.desktop", _e_apps_all->path, a->name);
+	 if (a->path)  evas_stringshare_del(a->path);
 	 a->path = evas_stringshare_add(buf);
       }
    if (!a->path)  return;
@@ -1345,6 +1376,7 @@ e_app_fields_save(E_App *a)
       {
          /* Force it to be in all. */
          snprintf(buf, sizeof(buf), "%s/%s", _e_apps_all->path, ecore_file_get_file(a->path));
+	 if (a->path)  evas_stringshare_del(a->path);
 	 a->path = evas_stringshare_add(buf);
       }
    if (!a->path)  return;
@@ -1498,30 +1530,46 @@ e_app_fields_save(E_App *a)
          eet_close(ef);
       }
 
-   if (a->parent)
-     {
-	Evas_List *l;
-	
-	snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", a->parent->path);
-	ecore_file_unlink(buf);
-	_e_app_change(a->parent, E_APP_CHANGE);
-	_e_app_change(a, E_APP_CHANGE);
-	for (l = a->references; l; l = l->next)
-	  {
-	     E_App *a2;
-	     
-	     a2 = l->data;
-	     if (_e_app_copy(a2, a)) _e_app_change(a2, E_APP_CHANGE);
-	  }
-	_e_app_subdir_rescan(a->parent);
-     }
    if (new_eap)
       {
          /* Careful, if this is being created from the border icon, this E_App is already part of the border. */
          a->parent = _e_apps_all;
          _e_apps_all->subapps = evas_list_append(_e_apps_all->subapps, a);
+         e_object_ref(E_OBJECT(a));
 	 /* FIXME: Don't know if we need to copy and reference this since it is in the repository. */
 	 _e_app_change(a, E_APP_ADD);
+      }
+   else
+      {
+         Evas_List *l;
+
+         for (l = a->references; l; l = l->next)
+            {
+	       E_App *a2;
+	     
+	       a2 = l->data;
+	       if (_e_app_copy(a2, a)) _e_app_change(a2, E_APP_CHANGE);
+            }
+         if (a->orig)
+            {
+	       E_App *a2;
+	     
+	       a2 = a->orig;
+	       if (_e_app_copy(a2, a)) _e_app_change(a2, E_APP_CHANGE);
+            }
+         _e_app_change(a, E_APP_CHANGE);
+         if (a->parent)
+            {
+	       snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", a->parent->path);
+	       ecore_file_unlink(buf);
+	       _e_app_change(a->parent, E_APP_CHANGE);
+	       /* I don't think we need to rescan.
+	        * A) we should be changing all the relevant stuff here.
+	        * B) monitoring will catch other changes.
+	        * C) it's a waste of time.
+	       _e_app_subdir_rescan(a->parent);
+	       */
+            }
       }
 }
 
@@ -1884,7 +1932,9 @@ _e_app_free(E_App *a)
 	if (a->references)
 	  printf("BUG: A eapp copy shouldn't have any references!\n");
 	if (a->parent)
-	  a->parent->subapps = evas_list_remove(a->parent->subapps, a);
+	   {
+	      a->parent->subapps = evas_list_remove(a->parent->subapps, a);
+	   }
 	a->orig->references = evas_list_remove(a->orig->references, a);
 #if ! NO_APP_LIST
 	_e_apps_list = evas_list_remove(_e_apps_list, a);
@@ -1959,6 +2009,8 @@ _e_app_subapp_file_find(E_App *a, const char *file)
 	E_App *a2;
 	
 	a2 = l->data;
+        E_OBJECT_CHECK_RETURN(a2, NULL);
+        E_OBJECT_TYPE_CHECK_RETURN(a2, E_APP_TYPE, NULL);
 	if ((a2->deleted) || ((a2->orig) && (a2->orig->deleted))) continue;
 	if (!strcmp(ecore_file_get_file(a2->path), ecore_file_get_file(file))) return a2;
      }
@@ -2191,6 +2243,7 @@ _e_app_subdir_rescan(E_App *app)
 	     if (a2)
 	       {
 		  subapps = evas_list_append(subapps, a2);
+		  e_object_ref(E_OBJECT(a2));
 	       }
 	     else
 	       {
@@ -2207,6 +2260,7 @@ _e_app_subdir_rescan(E_App *app)
 		       changes = evas_list_append(changes, ch);
 
 		       subapps = evas_list_append(subapps, a2);
+		       e_object_ref(E_OBJECT(a2));
 		    }
 		  else
 		    {
@@ -2236,6 +2290,7 @@ _e_app_subdir_rescan(E_App *app)
 				      changes = evas_list_append(changes, ch);
 
 				      subapps = evas_list_append(subapps, a3);
+		                      e_object_ref(E_OBJECT(a3));
 				      a2->references = evas_list_append(a2->references, a3);
 #if ! NO_APP_LIST
 				      _e_apps_list = evas_list_prepend(_e_apps_list, a3);
@@ -2268,12 +2323,10 @@ _e_app_subdir_rescan(E_App *app)
 	     ch = E_NEW(E_App_Change_Info, 1);
 	     ch->app = a2;
 	     ch->change = E_APP_DEL;
-	     /* We don't need to ref this,
-	      * it has an extra ref
-	      e_object_ref(E_OBJECT(ch->app));
-	      */
+	     e_object_ref(E_OBJECT(ch->app));
 	     changes = evas_list_append(changes, ch);
 	  }
+        e_object_unref(E_OBJECT(a2));
      }
    /* FIXME: We only need to tell about order changes if there are! */
    evas_list_free(app->subapps);

@@ -95,20 +95,26 @@ static void
 _e_eap_edit_free(E_App_Edit *editor)
 {
    if (!editor) return;
+   E_OBJECT_CHECK(editor);
+   E_OBJECT_TYPE_CHECK(editor, E_EAP_EDIT_TYPE);
    if (editor->cfd)
      {
 	E_Object *obj;
-	
+
 	obj = E_OBJECT(editor->cfd);
 	editor->cfd = NULL;
 	e_object_del(obj);
      }
-   if (editor->eap->tmpfile) ecore_file_unlink(editor->eap->image);
-   editor->eap->tmpfile = 0;
-   IFDEL(editor->eap->image);
-   editor->eap->width = 0;
-   editor->eap->height = 0;
-   e_object_unref(E_OBJECT(editor->eap));
+   if (editor->eap)
+      {
+         if (editor->eap->tmpfile) ecore_file_unlink(editor->eap->image);
+         editor->eap->tmpfile = 0;
+         IFDEL(editor->eap->image);
+         editor->eap->width = 0;
+         editor->eap->height = 0;
+         e_object_unref(E_OBJECT(editor->eap));
+         editor->eap = NULL;
+      }
 //	if (editor->img) evas_object_del(editor->img);
 //	if (editor->img_widget) evas_object_del(editor->img_widget);
 //	if (editor->fsel) evas_object_del(editor->fsel);
@@ -233,7 +239,7 @@ _e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data)
    else eap->height = 128;
 
    if ((eap->name) && (eap->exe))
-     e_app_fields_save(eap);
+      e_app_fields_save(eap);
 
    return 1;
 }
