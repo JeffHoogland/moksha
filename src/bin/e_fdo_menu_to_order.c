@@ -213,6 +213,7 @@ _e_fdo_menu_to_order_cb_desktop_foreach(void *list_data, void *data)
          snprintf(path, PATH_MAX, "%s/%s", cat_data->path, filename);
          desktop = ecore_desktop_get(path, NULL);
          /* Check if we process */
+         if (!desktop) return;
          if ( (!desktop->hidden) && (!desktop->no_display) && ((desktop->type == NULL) || (strcmp(desktop->type, "Application") == 0)) )
             {
                char *category;
