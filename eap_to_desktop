@@ -7,8 +7,6 @@
 # WARNING - this can make E unresponsive for a few minutes.  Have patience.
 # Don't use this on module.eaps, as the icon ends up in the wrong place.
 
-
-
 WD=`pwd`
 FILENAME=`basename $@ .eap`
 
@@ -16,7 +14,7 @@ if [ -e "$FILENAME.eap" ]; then
     rm -fr /tmp/convert.eap/$FILENAME
     mkdir -p /tmp/convert.eap/$FILENAME
     cp $FILENAME.eap /tmp/convert.eap/$FILENAME
-    pushd /tmp/convert.eap/$FILENAME >/dev/null
+    cd /tmp/convert.eap/$FILENAME >/dev/null
 
     eet -d $FILENAME.eap >/dev/null
     NAME=`cat app/info/name 2>/dev/null`
@@ -32,50 +30,51 @@ if [ -e "$FILENAME.eap" ]; then
     ICLASS=`cat app/icon/class 2>/dev/null`
 
     echo "[Desktop Entry]" >$FILENAME.desktop
-    if [ "$NAME" ]; then
+    if [ ! -z "$NAME" ]; then
 	echo "Name=$NAME" >>$FILENAME.desktop
     fi
-    if [ "$GENERIC" ]; then
+    if [ ! -z "$GENERIC" ]; then
 	echo "GenericName=$GENERIC" >>$FILENAME.desktop
     fi
-    if [ "$COMMENT" ]; then
+    if [ ! -z "$COMMENT" ]; then
 	echo "Comment=$COMMENT" >>$FILENAME.desktop
     fi
-    if [ "$EXEC" ]; then
+    if [ ! -z "$EXEC" ]; then
 	echo "Exec=$EXEC" >>$FILENAME.desktop
     fi
-    if [ "$STARTUP" == "0" ]; then
+    if [ "$STARTUP" = "0" ]; then
 	echo "StartupNotify=false" >>$FILENAME.desktop
     fi
-    if [ "$STARTUP" == "1" ]; then
+    if [ "$STARTUP" = "1" ]; then
 	echo "StartupNotify=true" >>$FILENAME.desktop
     fi
-    if [ "$WAIT" == "0" ]; then
+    if [ "$WAIT" = "0" ]; then
 	echo "X-Enlightenment-WaitExit=false" >>$FILENAME.desktop
     fi
-    if [ "$WAIT" == "1" ]; then
+    if [ "$WAIT" = "1" ]; then
 	echo "X-Enlightenment-WaitExit=true" >>$FILENAME.desktop
     fi
-    if [ "$WNAME" ]; then
+            
+    if [ ! -z "$WNAME" ]; then
 	echo "X-Enlightenment-WIndowName=$WNAME" >>$FILENAME.desktop
     fi
-    if [ "$WCLASS" ]; then
+    if [ ! -z "$WCLASS" ]; then
 	echo "StartupWMClass=$WCLASS" >>$FILENAME.desktop
     fi
-    if [ "$WTITLE" ]; then
+    if [ ! -z "$WTITLE" ]; then
 	echo "X-Enlightenment-WindowTitle=$WTITLE" >>$FILENAME.desktop
     fi
-    if [ "$WROLE" ]; then
+    if [ ! -z "$WROLE" ]; then
 	echo "X-Enlightenment-WindowRole=$WROLE" >>$FILENAME.desktop
     fi
-    if [ "$ICLASS" ]; then
+    if [ ! -z "$ICLASS" ]; then
 	echo "X-Enlightenment-IconClass=$ICLASS" >>$FILENAME.desktop
     fi
     echo "Icon=$FILENAME" >>$FILENAME.desktop
 
     cp -f $FILENAME.desktop $WD
 
-    popd >/dev/null
+    cd $WD >/dev/null
 
     mv $FILENAME.eap ~/.e/e/icons/$FILENAME.edj
     rm -fr /tmp/convert.eap/$FILENAME
