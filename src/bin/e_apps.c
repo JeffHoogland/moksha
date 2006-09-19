@@ -950,7 +950,7 @@ e_app_border_find(E_Border *bd)
 		 ((a->win_role) && (bd->client.icccm.window_role) && (e_util_glob_match(bd->client.icccm.window_role, a->win_role))))
 	       ok++;
 	     if (
-		 (a->exe) && (bd->client.icccm.command.argv) && (bd->client.icccm.command.argv))
+		 (a->exe) && (bd->client.icccm.command.argc) && (bd->client.icccm.command.argv))
 	       {
 		  char *ts, *p;
 		  
