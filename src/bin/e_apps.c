@@ -2315,6 +2315,7 @@ _e_app_subdir_rescan(E_App *app)
 	  if (l->data == l2->data)
 	    {
 	       /* We still have this app */
+               e_object_unref(E_OBJECT(a2));
 	       a2 = NULL;
 	       break;
 	    }
@@ -2326,8 +2327,8 @@ _e_app_subdir_rescan(E_App *app)
 	     ch->change = E_APP_DEL;
 	     e_object_ref(E_OBJECT(ch->app));
 	     changes = evas_list_append(changes, ch);
+             e_object_unref(E_OBJECT(a2));
 	  }
-        e_object_unref(E_OBJECT(a2));
      }
    /* FIXME: We only need to tell about order changes if there are! */
    evas_list_free(app->subapps);
