@@ -35,6 +35,7 @@ static int _e_exebuf_cb_sort_eap(void *data1, void *data2);
 static int _e_exebuf_cb_sort_exe(void *data1, void *data2);
 static void _e_exebuf_update(void);
 static void _e_exebuf_exec(void);
+static void _e_exebuf_exec_term(void);
 static void _e_exebuf_exe_sel(E_Exebuf_Exe *exe);
 static void _e_exebuf_exe_desel(E_Exebuf_Exe *exe);
 static void _e_exebuf_exe_scroll_to(int i);
@@ -424,6 +425,42 @@ _e_exebuf_exec(void)
 	e_exehist_add("exebuf", cmd_buf);
      }
    
+   e_exebuf_hide();
+}
+
+static void
+_e_exebuf_exec_term(void)
+{
+   char tmp[EXEBUFLEN];
+   char *active_cmd;
+
+   if (exe_sel)
+     {
+	if (exe_sel->app)
+	  {
+	     if (exe_sel->app->exe)
+	       active_cmd = exe_sel->app->exe;
+	     else
+	       {
+		  e_zone_app_exec(exebuf->zone, exe_sel->app);
+		  e_exehist_add("exebuf", exe_sel->app->exe);
+	       }
+	  }
+	else 
+	  active_cmd = exe_sel->file;
+     }
+   else
+     active_cmd = cmd_buf;
+
+   if (strlen(active_cmd) > 0)
+     {
+	/* Copy the terminal command to the start of the string...
+	 * making sure it has a null terminator if greater than EXEBUFLEN */
+	snprintf(tmp, EXEBUFLEN, "%s %s", e_config->exebuf_term_cmd, active_cmd);
+	e_zone_exec(exebuf->zone, tmp);
+	e_exehist_add("exebuf", tmp);
+     }
+
    e_exebuf_hide();
 }
 
@@ -984,8 +1021,12 @@ _e_exebuf_cb_key_down(void *data, int type, void *event)
      _e_exebuf_complete();
    else if (!strcmp(ev->keysymbol, "Tab"))
      _e_exebuf_complete();
+   else if (!strcmp(ev->keysymbol, "Return") && (ev->modifiers & ECORE_X_MODIFIER_CTRL))
+     _e_exebuf_exec_term();
    else if (!strcmp(ev->keysymbol, "Return"))
      _e_exebuf_exec();
+   else if (!strcmp(ev->keysymbol, "KP_Enter") && (ev->modifiers & ECORE_X_MODIFIER_CTRL))
+     _e_exebuf_exec_term();
    else if (!strcmp(ev->keysymbol, "KP_Enter"))
      _e_exebuf_exec();
    else if (!strcmp(ev->keysymbol, "Escape"))

@@ -457,6 +457,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, exebuf_pos_min_h, INT);
    E_CONFIG_VAL(D, T, exebuf_pos_max_w, INT);
    E_CONFIG_VAL(D, T, exebuf_pos_max_h, INT);
+   E_CONFIG_VAL(D, T, exebuf_term_cmd, STR);
    E_CONFIG_LIST(D, T, color_classes, _e_config_color_class_edd);
    E_CONFIG_VAL(D, T, use_app_icon, INT);
    E_CONFIG_VAL(D, T, cfgdlg_auto_apply, INT); /**/
@@ -653,6 +654,7 @@ e_config_init(void)
    e_config->exebuf_pos_min_h = 160;
    e_config->exebuf_pos_max_w = 400;
    e_config->exebuf_pos_max_h = 320;
+   e_config->exebuf_term_cmd = evas_stringshare_add("xterm -hold -e");
    e_config->color_classes = NULL;
    e_config->use_app_icon = 0;
    e_config->cfgdlg_auto_apply = 0;

@@ -23,6 +23,7 @@ struct _E_Config_Dialog_Data
    int pos_min_h;
    int pos_max_w;
    int pos_max_h;
+   char * term_cmd;
 };
 
 EAPI E_Config_Dialog *
@@ -63,6 +64,9 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->pos_min_h = e_config->exebuf_pos_min_h;
    cfdata->pos_max_w = e_config->exebuf_pos_max_w;
    cfdata->pos_max_h = e_config->exebuf_pos_max_h;
+   if (e_config->exebuf_term_cmd)
+     cfdata->term_cmd = strdup(e_config->exebuf_term_cmd);
+
 }
 
 static void *
@@ -99,11 +103,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
-   ob = e_widget_label_add(evas, _("Maximum Number Of Matched Eaps To List"));
+   ob = e_widget_label_add(evas, _("Maximum Number of Matched Eaps to List"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 10, 50, 5, 0, NULL, &(cfdata->max_eap_list), 200);
    e_widget_framelist_object_append(of, ob);   
-   ob = e_widget_label_add(evas, _("Maximum Number Of Matched Exes To List"));
+   ob = e_widget_label_add(evas, _("Maximum Number of Matched Exes to List"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 10, 50, 5, 0, NULL, &(cfdata->max_exe_list), 200);
    e_widget_framelist_object_append(of, ob);   
@@ -129,6 +133,13 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->exebuf_pos_min_h = cfdata->pos_min_h;
    e_config->exebuf_pos_max_w = cfdata->pos_max_w;
    e_config->exebuf_pos_max_h = cfdata->pos_max_h;
+   if (e_config->exebuf_term_cmd)
+     evas_stringshare_del(e_config->exebuf_term_cmd);
+   e_config->exebuf_term_cmd = NULL;
+   if (cfdata->term_cmd) 
+     {
+	  e_config->exebuf_term_cmd = evas_stringshare_add(cfdata->term_cmd);
+     }
    e_config_save_queue();
 
    return 1;
@@ -191,6 +202,13 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_slider_add(evas, 1, 0, _("%4.0f"), 0, 4000, 50, 0, NULL, &(cfdata->pos_max_h), 200);
    e_widget_framelist_object_append(of, ob);   
    e_widget_table_object_append(ot, of, 1, 0, 1, 2, 1, 0, 1, 0);
+
+   of = e_widget_framelist_add(evas, _("Terminal Settings"), 0);      
+   ob = e_widget_label_add(evas, _("Terminal Command"));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_entry_add(evas, &(cfdata->term_cmd));
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(ot, of, 1, 2, 1, 1, 1, 1, 1, 1);
 
    e_widget_list_object_append(o, ot, 1, 1, 0.5);      
    return o;   

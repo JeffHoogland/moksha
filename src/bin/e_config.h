@@ -209,6 +209,7 @@ struct _E_Config
    int         exebuf_pos_min_h; // GUI
    int         exebuf_pos_max_w; // GUI
    int         exebuf_pos_max_h; // GUI
+   const char *exebuf_term_cmd; // GUI
    Evas_List  *color_classes;
    int         use_app_icon; // GUI
    int         cfgdlg_auto_apply; // GUI

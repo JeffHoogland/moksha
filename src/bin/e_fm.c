@@ -58,6 +58,7 @@ struct _E_Fm2_Smart_Data
    unsigned char     iconlist_changed : 1;
    unsigned char     order_file : 1;
    unsigned char     typebuf_visible : 1;
+   unsigned char     show_hidden_files : 1;
 
    E_Fm2_Config     *config;
 
@@ -200,6 +201,7 @@ static void _e_fm2_menu_post_cb(void *data, E_Menu *m);
 static void _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp);
 static void _e_fm2_icon_menu_post_cb(void *data, E_Menu *m);
 static void _e_fm2_refresh(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_toggle_hidden_files(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_new_directory(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_new_directory_delete_cb(void *obj);
 static void _e_fm2_new_directory_yes_cb(char *text, void *data);
@@ -233,6 +235,7 @@ e_fm2_init(void)
 	free(homedir);
      }
    else return 0;
+
 
    _e_fm2_smart = evas_smart_new("e_fm",
 				 _e_fm2_smart_add, /* add */
@@ -3190,10 +3193,10 @@ _e_fm2_cb_scan_idler(void *data)
      {
 	dp = readdir(sd->dir);
 	if (!dp) goto endscan;
-	/* no - you don't want the cuirrent and parent dir links listed */
+	/* no - you don't want the current and parent dir links listed */
 	if ((!strcmp(dp->d_name, ".")) || (!strcmp(dp->d_name, ".."))) return 1;
-	/* skip dotfiles */
-	if (dp->d_name[0] == '.') return 1;
+	/* skip dotfiles if we're not showing hidden files */
+	if (dp->d_name[0] == '.' && !sd->show_hidden_files) return 1;
 	_e_fm2_file_add(data, dp->d_name);
      }
    return 1;
@@ -3511,6 +3514,16 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 			     "e/fileman/button/refresh");
    e_menu_item_callback_set(mi, _e_fm2_refresh, sd);
 
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Show Hidden Files"));
+   e_menu_item_icon_edje_set(mi,
+			     e_theme_edje_file_get("base/theme/fileman",
+						   "e/fileman/button/hidden_files"),
+			     "e/fileman/button/hidden_files");
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, sd->show_hidden_files);
+   e_menu_item_callback_set(mi, _e_fm2_toggle_hidden_files, sd);
+
    if (ecore_file_can_write(sd->realpath))
      {
 	mi = e_menu_item_new(mn);
@@ -3591,6 +3604,16 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 						   "e/fileman/button/refresh"),
 			     "e/fileman/button/refresh");
    e_menu_item_callback_set(mi, _e_fm2_refresh, ic->sd);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Show Hidden Files"));
+   e_menu_item_icon_edje_set(mi,
+			     e_theme_edje_file_get("base/theme/fileman",
+						   "e/fileman/button/hidden_files"),
+			     "e/fileman/button/hidden_files");
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, sd->show_hidden_files);
+   e_menu_item_callback_set(mi, _e_fm2_toggle_hidden_files, sd);
 
    if (ecore_file_can_write(sd->realpath))
      {
@@ -3716,6 +3739,20 @@ _e_fm2_refresh(void *data, E_Menu *m, E_Menu_Item *mi)
    sd = data;
    if (sd->refresh_job) ecore_job_del(sd->refresh_job);
    sd->refresh_job = ecore_job_add(_e_fm2_refresh_job_cb, sd->obj);
+}
+
+static void
+_e_fm2_toggle_hidden_files(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = data;
+   if (sd->show_hidden_files)
+     sd->show_hidden_files = 0;
+   else
+     sd->show_hidden_files = 1;
+
+   _e_fm2_refresh(data, m, mi);
 }
 
 static void
