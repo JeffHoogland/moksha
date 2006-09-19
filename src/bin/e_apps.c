@@ -899,6 +899,7 @@ e_app_launch_id_pid_find(int launch_id, pid_t pid)
 	       {
 		  _e_apps_list = evas_list_remove_list(_e_apps_list, l);
 		  _e_apps_list = evas_list_prepend(_e_apps_list, a);
+printf("e_app_launch_id_pid_find() - FOUND - %s\n", a->path);
 		  return a;
 	       }
 	  }
@@ -927,7 +928,7 @@ e_app_border_find(E_Border *bd)
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
 	ok = 0;
-	if ((a->win_name) || (a->win_class) || (a->win_title) || (a->win_role))
+	if ((a->win_name) || (a->win_class) || (a->win_title) || (a->win_role) || (a->exe))
 	  {
 	     if ((a->win_name) && (a->win_class) && 
 		 (bd->client.icccm.name) && (bd->client.icccm.class))
@@ -949,7 +950,7 @@ e_app_border_find(E_Border *bd)
 		 ((a->win_role) && (bd->client.icccm.window_role) && (e_util_glob_match(bd->client.icccm.window_role, a->win_role))))
 	       ok++;
 	     if (
-		 (a->exe) && (bd->client.icccm.command.argv))
+		 (a->exe) && (bd->client.icccm.command.argv) && (bd->client.icccm.command.argv))
 	       {
 		  char *ts, *p;
 		  
@@ -965,7 +966,7 @@ e_app_border_find(E_Border *bd)
 			 }
 		       p++;
 		    }
-		  if (!strcmp(a->exe, ts))
+		  if (!strcmp(ts, bd->client.icccm.command.argv[0]))
 		    ok++;
 	       }
 	  }
