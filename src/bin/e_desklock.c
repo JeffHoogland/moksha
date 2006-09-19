@@ -650,8 +650,12 @@ _desklock_pam_init(E_Desklock_Auth *da)
    da->pam.conv.appdata_ptr = da;
    da->pam.handle = NULL;
 
-   /* try other pam profiles - and system-auth is a fallback */
+   /* try other pam profiles - and system-auth (login for fbsd users) is a fallback */
+#ifdef __FreeBSD__
+   pam_prof = "login"
+#else
    pam_prof = "system-auth";
+#endif
    if (ecore_file_exists("/etc/pam.d/enlightenment")) pam_prof = "enlightenment";
    if (ecore_file_exists("/etc/pam.d/xscreensaver")) pam_prof = "xscreensaver";
    if (ecore_file_exists("/etc/pam.d/kscreensaver")) pam_prof = "kscreensaver";
