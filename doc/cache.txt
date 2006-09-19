@@ -339,3 +339,62 @@ SOLUTION:
     thumbnailing, but may need more speedups for its globbing.
 
     Later we shall see if an on disk copy is needed.
+
+------------------------------------------------------------------------------
+comments on cache doc:
+
+   1. ignore caching of image data - evas already does that. just provide
+      file paths and "keys" if inside .edj/eap/eet files. don't duplicate
+      image data or do anything "smart" as it will invariably end up less
+      smart that the existing evas cache :) so don't worry about icons and
+      their pixels - just the file paths/keys
+   2. instead of "in memory" let's try a new idea. lets put it in a flat
+      mmap'ed file (not eet). let's not make it architecture dependant
+      (write any integers in a fixed byte order) and make it all offset
+      based. fill the file with strings and indexes and fast search indexes
+      etc. 1 big flat file for the whole cache.. the eap structs themselves
+      are "in memory" and allocated but all strings and "content" are pointed
+      to this mmaped file - map and unmap this file whenever needed (need to
+      add calls that implicitly map it when you want to access eap struct
+      contents and then unmap when done - refcount) and on map check the
+      header of the file for some "modification count) and keep the last mod
+      count value - if they don't match re-evaluate all internal tabels in
+      the map file. re-evaluate all pointers in eap structs. always try and
+      map the file to the same mem address (remember it and try map TO that
+      addr so you don't need to do address fixups). if you can't map to there
+      map to unspecified address (let mmap choose) and now keep trying to
+      map to this addr from now on. if the addr changes or the mmap file
+      changes all eap files need a fixup of their str pointers done.
+      so now you have a e_app_use() and e_app_unuse() thatg basically makes
+      sure the apps map file is mappeed after a use and unmapped after an
+      unuse (when refcount goes to 0 for the maps file - maybe with a
+      timeout to avoid map thrashing).
+      the advantage of all this is most of the time e is not accessing eapp
+      data - it just has references TO them so during this time no memory
+      is consumed by the data and no kernel mappings. we should bring mem
+      use down to a tiny fraction.
+      this is a quick braindump... so it may need more discussion. nb - this
+      is just a bug flat dump for all ".desktop files" - hash it for fast
+      lookup - have fast search hash indexes for lookup by exe, name, class
+      etc. other cache files for menu structures etc. would implicitly
+      reference data in this big fat cache.
+   3. on any change of .desktop files on the system or by users - rewrite the
+      whole cache and re-fix pointers etc. - this shouldn't happen often.
+   4. same mmap setup for lookups of icon name in .desktop -> fully resolved
+      path based on icon themes and inheritance. if the themes change then
+      re-evaluate this cache.
+   5. .order files and menu structs can just live in the same cache.
+   6. all eaps can be quickyl created at startup from an all apps cache that
+      referenced the desktop content cache file as above. putting it into
+      an idel taks means on addition of new eaps all window icons need
+      re-evaluation as to all eap instances in ibar etc. etc. - makes life
+      more complex (for now). maybe simpler on that front and better cache
+      will work well here.
+   7. eap instances are created as you lanich apps - no need to cache or
+      worry about these - the search by exe, win name/class etc. are what
+      we need to worry about :)
+   8. the above should mean no need to fill in eaps in idlers - map the
+      "big fat desktop cache" that contains everything - icon paths, labels
+      exe strings etc. when needed - fox up all pointers in eapp structs
+      if the contents or base address ever change - unmap when refcount
+      goes to 0 (with a timeout to avoid thrashing).
