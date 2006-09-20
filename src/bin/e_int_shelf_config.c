@@ -25,6 +25,8 @@ struct _E_Config_Dialog_Data
    E_Config_Shelf *escfg;
    /* BASIC */
    int mode;
+   int basic_size;
+   
    /* ADVANCED */
    char *style;
    int orient;
@@ -111,6 +113,17 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->fit_along = cfdata->escfg->fit_along;
    cfdata->fit_size = cfdata->escfg->fit_size;
    cfdata->size = cfdata->escfg->size;
+   if (cfdata->size <= 24)
+     cfdata->basic_size = 24;
+   else if (cfdata->size <= 32)
+     cfdata->basic_size = 32;
+   else if (cfdata->size <= 40)
+     cfdata->basic_size = 40;
+   else if (cfdata->size <= 48)
+     cfdata->basic_size = 48;
+   else if (cfdata->size >= 48)
+     cfdata->basic_size = 56;
+
    if ((!cfdata->escfg->popup) && 
        (cfdata->escfg->layer == 1))
      cfdata->layering = 0;
@@ -202,8 +215,9 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	break;
      }
    
-   cfdata->escfg->size = cfdata->size;
-
+   cfdata->escfg->size = cfdata->basic_size;
+   cfdata->size = cfdata->basic_size;
+   
    zone = cfdata->es->zone;
    id = cfdata->es->id;
    cfdata->es->config_dialog = NULL;
@@ -274,6 +288,17 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    /* Only Change size if we need to */
    if (cfdata->escfg->size != cfdata->size) 
      {	
+	if (cfdata->size <= 24)
+	  cfdata->basic_size = 24;
+	else if (cfdata->size <= 32)
+	  cfdata->basic_size = 32;
+	else if (cfdata->size <= 40)
+	  cfdata->basic_size = 40;
+	else if (cfdata->size <= 48)
+	  cfdata->basic_size = 48;
+	else if (cfdata->size >= 48)
+	  cfdata->basic_size = 56;
+	  
 	cfdata->escfg->size = cfdata->size;
 	cfdata->es->size = cfdata->size;
 	restart = 1;
@@ -369,9 +394,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_radio_icon_add(evas, NULL, "enlightenment/shelf_custom", 64, 24, MODE_CUSTOM, rg);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
-   
+
    of = e_widget_framelist_add(evas, _("Size"), 0);
-   rg = e_widget_radio_group_new(&(cfdata->size));
+   rg = e_widget_radio_group_new(&(cfdata->basic_size));
    ob = e_widget_radio_add(evas, _("Tiny"), 24, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Small"), 32, rg);
