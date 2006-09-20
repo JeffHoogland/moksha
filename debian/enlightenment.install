@@ -1,5 +1,6 @@
 debian/tmp/usr/bin/enlightenment
 debian/tmp/usr/bin/enlightenment_*
+debian/tmp/usr/bin/eap_to_desktop
 debian/tmp/usr/lib/enlightenment/modules/battery/*/*.so
 debian/tmp/usr/lib/enlightenment/modules/battery/*.desktop
 debian/tmp/usr/lib/enlightenment/modules/battery/*.edj
