@@ -27,6 +27,9 @@ static void  _cfdata_language_go(const char *lang, const char *region, const cha
 static Evas_Bool _lang_hash_cb(Evas_Hash *hash, const char *key, void *data, void *fdata);
 static Evas_Bool _region_hash_cb(Evas_Hash *hash, const char *key, void *data, void *fdata);
 
+static Evas_Bool _language_hash_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata);
+static Evas_Bool _region_hash_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata);
+
 struct _E_Intl_Pair
 {
    const char	*locale_key;
@@ -675,8 +678,59 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    E_FREE(cfdata->cur_language);
+   E_FREE(cfdata->cur_blang);
+   E_FREE(cfdata->cur_lang);
+   E_FREE(cfdata->cur_reg);
+   E_FREE(cfdata->cur_cs);
+   E_FREE(cfdata->cur_mod);
 
+   evas_hash_foreach(cfdata->locale_hash, _language_hash_free_cb, NULL);
+   evas_hash_free(cfdata->locale_hash);
+   
    free(cfdata);
+}
+
+static Evas_Bool 
+_language_hash_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
+{
+   E_Intl_Language_Node *node;
+
+   node = data;   
+   if (node->lang_code) evas_stringshare_del(node->lang_code);
+   evas_hash_foreach(node->region_hash, _region_hash_free_cb, NULL);
+   evas_hash_free(node->region_hash);
+   free(node); 
+   
+   return 1;
+}
+
+static Evas_Bool 
+_region_hash_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
+{ 
+   E_Intl_Region_Node *node;
+
+   node = data;   
+   if (node->region_code) evas_stringshare_del(node->region_code);
+   while (node->available_codesets) 
+     {
+	const char *str;
+
+	str = node->available_codesets->data;
+	if (str) evas_stringshare_del(str);
+	node->available_codesets = evas_list_remove_list(node->available_codesets, node->available_codesets);
+     }
+    
+   while (node->available_modifiers) 
+     {
+	const char *str;
+
+	str = node->available_modifiers->data;
+	if (str) evas_stringshare_del(str);
+	node->available_modifiers = evas_list_remove_list(node->available_modifiers, node->available_modifiers);
+     }
+   
+   free(node);  
+   return 1;
 }
 
 static int
