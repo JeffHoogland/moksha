@@ -132,8 +132,8 @@ struct _E_Layout_Item_Container
       __con_state = E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MAX_END_DEC
 
 #define LC_OVERLAP(__lc, __lc2) \
-   ( __lc2->pos >= __lc->pos && (__lc2->pos < (__lc->pos + __lc->size)) || \
-     __lc->pos >= __lc2->pos && (__lc->pos < (__lc2->pos + __lc2->size)))
+   ((((__lc2)->pos >= (__lc)->pos) && ((__lc2)->pos < ((__lc)->pos + (__lc)->size))) || \
+    (((__lc)->pos >= (__lc2)->pos) && ((__lc)->pos < ((__lc2)->pos + (__lc2)->size))))
 
 #define E_LAYOUT_ITEM_CONTAINER_SIZE_CHANGE_BY(__lc, __bi, __increase) \
    if (__lc->sd->horizontal) \
