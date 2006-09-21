@@ -54,10 +54,8 @@ struct _E_Config_Dialog_Data
 static Ecore_Event_Handler *_import_edje_cc_exit_handler = NULL;
 
 static void _import_opt_disabled_set(Import *import, int disabled);
-static void _import_path_save(Import *import);
 static void _import_edj_gen(Import *import);
 static int _import_cb_edje_cc_exit(void *data, int type, void *event);
-static void _import_cb_delete(E_Win *win);
 static void _import_cb_close(void *data, E_Dialog *dia);
 static void _import_cb_ok(void *data, E_Dialog *dia);
 static void _import_config_save(Import *import);
@@ -72,7 +70,6 @@ e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
    Evas_Object *o, *ol, *of, *ord, *ot;
    Evas_Coord mw, mh;
    E_Radio_Group *rg;
-   Evas_Coord w, h;
    E_Config_Dialog_Data *cfdata;
 
    import = E_NEW(Import, 1);
@@ -244,19 +241,12 @@ static void
 _import_edj_gen(Import *import)
 {
    Evas *evas;
-   Evas_Object *img;
    int fd, num = 1;
-   int w = 0, h = 0;
    const char *file;
-   char buf[4096], cmd[4096], tmpn[4096], ipart[4096], enc[128];
-   char *imgdir = NULL, *homedir, *fstrip;
-   int cr = 255, cg = 255, cb = 255, ca = 255;
+   char buf[4096], cmd[4096], tmpn[4096];
+   char *homedir, *fstrip;
    FILE *f;
 
-   int angle;
-   float rel1_rel_x, rel1_rel_y, rel2_rel_x, rel2_rel_y;
-   float rel1_off_x, rel1_off_y, rel2_off_x, rel2_off_y;
-   
    evas = e_win_evas_get(import->dia->win);
 
    file = import->cfdata->name;
