@@ -810,7 +810,7 @@ e_intl_locale_canonic_get(const char *locale, int ret_mask)
       case 3:
 	 modifier[tmp_idx] = 0;
      }
-
+   
    /* Construct the clean locale string */
 
    /* determine the size */
@@ -830,25 +830,27 @@ e_intl_locale_canonic_get(const char *locale, int ret_mask)
    clean_locale[0] = 0;
    
    /* Put the parts of the string together */
-   strcat(clean_locale, language);
-   loc_mask |= E_LOC_LANG;
-   
+   if ((ret_mask & E_LOC_LANG) && language[0] != 0)
+     {
+	loc_mask |= E_LOC_LANG;
+	strcat(clean_locale, language);
+     }
    if ((ret_mask & E_LOC_REGION) && territory[0] != 0)
      {
 	loc_mask |= E_LOC_REGION;
-	strcat(clean_locale, "_");
+	if (clean_locale[0] != 0) strcat(clean_locale, "_");
 	strcat(clean_locale, territory);
      }	
    if ((ret_mask & E_LOC_CODESET) && codeset[0] != 0)	  
      {
 	loc_mask |= E_LOC_CODESET;
-	strcat(clean_locale, ".");
+	if (clean_locale[0] != 0) strcat(clean_locale, ".");
 	strcat(clean_locale, codeset);	  
      }	
    if ((ret_mask & E_LOC_MODIFIER) && (modifier[0] != 0))     
      {	       
 	loc_mask |= E_LOC_MODIFIER;
-	strcat(clean_locale, "@");
+	if (clean_locale[0] != 0) strcat(clean_locale, "@");
 	strcat(clean_locale, modifier);     
      }
 

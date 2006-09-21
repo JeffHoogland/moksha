@@ -88,6 +88,8 @@ e_configure_show(E_Container *con)
    e_configure_standard_item_add(eco, "enlightenment/applications", _("Applications"), e_int_config_apps);
    e_configure_standard_item_add(eco, "enlightenment/performance", _("Performance"), e_int_config_performance);
    e_configure_standard_item_add(eco, "enlightenment/configuration", _("Configuration Dialogs"), e_int_config_cfgdialogs);
+   e_configure_standard_item_add(eco, "enlightenment/intl", _("Internationalization"), e_int_config_intl);
+
    
    e_configure_header_item_add(eco, "enlightenment/advanced", _("Advanced"));
    e_configure_standard_item_add(eco, "enlightenment/startup", _("Startup"), e_int_config_startup);
