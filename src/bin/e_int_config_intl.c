@@ -524,6 +524,15 @@ e_int_config_intl(E_Container *con)
    return cfd;
 }
 
+/* Build hash tables used for locale navigation. The locale information is 
+ * gathered using the locale -a command. 
+ *
+ * Below the following terms are used:
+ * ll - Locale Language Code (Example en)
+ * RR - Locale Region code (Example US)
+ * enc - Locale Encoding (Example UTF-8)
+ * mod - Locale Modifier (Example EURO)
+ */
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
@@ -549,6 +558,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 		  language = NULL;
 	       }
 	     
+	     /* If the language is a valid ll_RR[.enc[@mod]] locale add it to the hash */
 	     if (language) 
 	       {
 		  E_Intl_Language_Node *lang_node;
@@ -557,10 +567,13 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 		  char *codeset;
 		  char *modifier;
 
+		  /* Separate out ll RR enc and mod parts */
 		  region = e_intl_locale_canonic_get(line, E_INTL_LOC_REGION);
 		  codeset = e_intl_locale_canonic_get(line, E_INTL_LOC_CODESET);
 		  modifier = e_intl_locale_canonic_get(line, E_INTL_LOC_MODIFIER);
    
+		  /* Add the language to the new locale properties to the hash */
+		  /* First check if the LANGUAGE exists in there already */
 		  lang_node  = evas_hash_find(cfdata->locale_hash, language);
 		  if (lang_node == NULL) 
 		    {
@@ -572,6 +585,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
 		       lang_node->lang_code = evas_stringshare_add(language);
 
+		       /* Check if the language list exists */
+		       /* Linear Search */
 		       for (next = e_lang_list; next; next = next->next) 
 			 {
 			    char *e_lang;
@@ -584,6 +599,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 			      }
 			 }
 		       
+		       /* Search for translation */
+		       /* Linear Search */
 		       i = 0;
 		       while (language_predefined_pairs[i].locale_key)
 			 {
@@ -592,15 +609,20 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 			      
 			    i++;
 			 }
+		       
 		       cfdata->locale_hash = evas_hash_add(cfdata->locale_hash, language, lang_node);
 		    }
 
+		  /* If no region data just go next */	  
 		  if (region && (region[0] == 0))
 		    {
 		       free(region);
 		       region = NULL;
 		    }
 
+		  /* We now have the current language hash node, lets see if there is
+		     region data that needs to be added. 
+		   */
 		  if (region)
 		    {
 		       region_node = evas_hash_find(lang_node->region_hash, region);
@@ -613,6 +635,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 			    region_node = E_NEW(E_Intl_Region_Node, 1);
 			    region_node->region_code = evas_stringshare_add(region);
 		       
+			    /* Get the region translation */
+			    /* Linear Search */
 			    i = 0;
 			    while (region_predefined_pairs[i].locale_key)
 			      {
@@ -623,21 +647,28 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 			    lang_node->region_hash = evas_hash_add(lang_node->region_hash, region, region_node);
 			 }
 
+		       /* We now have the current region hash node */
+		       /* Add codeset to the region hash node if it exists */
 		       if (codeset && (codeset[0] != 0))
 			 {
 			    const char * cs;
 			    
 			    cs = evas_stringshare_add(codeset);
+			    /* Exclusive */
+			    /* Linear Search */
 			    if (!evas_list_find(region_node->available_codesets, cs))
 			      region_node->available_codesets = evas_list_append(region_node->available_codesets, cs);
 			 }
 
+		       /* Add modifier to the region hash node if it exists */
 		       if (modifier && (modifier[0] != 0))
 			 {
 			    const char * mod;
 			    
 			    /* Find only works here because we are using stringshare*/
 			    mod = evas_stringshare_add(modifier);
+			    /* Exclusive */
+			    /* Linear Search */
 			    if (!evas_list_find(region_node->available_modifiers, mod))
 			      region_node->available_modifiers = evas_list_append(region_node->available_modifiers, mod);
 			 }
@@ -658,6 +689,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	pclose(output);
      }
 
+   /* Make sure we know the currently configured locale */
    cfdata->cur_language = strdup(e_config->language);
    
    return;
