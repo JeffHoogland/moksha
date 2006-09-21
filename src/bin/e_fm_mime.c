@@ -142,7 +142,6 @@ e_fm_mime_icon_get(const char *mime)
    snprintf(buf, sizeof(buf), "%s/data/icons/%s.png", e_prefix_data_get(), buf2);
    if (ecore_file_exists(buf)) goto ok;
    
-   error:
    if (homedir) free(homedir);
    return NULL;
    
