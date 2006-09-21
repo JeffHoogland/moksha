@@ -2349,7 +2349,7 @@ _e_fm2_dnd_drop_into_hide(E_Fm2_Icon *ic)
 
 /* FIXME: prototype + reposition + implement */
 static void
-_e_fm2_dnd_drop_between_show(Evas_Object *obj, int after)
+_e_fm2_dnd_drop_between_show(E_Fm2_Icon *ic, int after)
 {
 }
 
@@ -2405,13 +2405,13 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 			    /* if in middle 50% then put in dir */
 			    if (ev->y <= (ic->y + (ic->h / 4)))
 			      {
-				 _e_fm2_dnd_drop_into_hide(ic);
-				 _e_fm2_dnd_drop_between_show(sd->obj, 0);
+				 _e_fm2_dnd_drop_into_hide(sd->obj);
+				 _e_fm2_dnd_drop_between_show(ic, 0);
 			      }
 			    else if (ev->y > (ic->y + ((ic->h * 3) / 4)))
 			      {
-				 _e_fm2_dnd_drop_into_hide(ic);
-				 _e_fm2_dnd_drop_between_show(sd->obj, 1);
+				 _e_fm2_dnd_drop_into_hide(sd->obj);
+				 _e_fm2_dnd_drop_between_show(ic, 1);
 			      }
 			    else
 			      {
@@ -2424,13 +2424,13 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 			    /* if top 50% or bottom 50% then insert between prev or next */
 			    if (ev->y <= (ic->y + (ic->h / 2)))
 			      {
-				 _e_fm2_dnd_drop_into_hide(ic);
-				 _e_fm2_dnd_drop_between_show(sd->obj, 0);
+				 _e_fm2_dnd_drop_into_hide(sd->obj);
+				 _e_fm2_dnd_drop_between_show(ic, 0);
 			      }
 			    else
 			      {
-				 _e_fm2_dnd_drop_into_hide(ic);
-				 _e_fm2_dnd_drop_between_show(sd->obj, 1);
+				 _e_fm2_dnd_drop_into_hide(sd->obj);
+				 _e_fm2_dnd_drop_between_show(ic, 1);
 			      }
 			 }
 		    }
@@ -2457,6 +2457,40 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 	     return;
 	  }
      }
+   /* FIXME: not over icon - is it within the fm view? if so drop there */
+   if (E_INSIDE(ev->x, ev->y, 0, 0, sd->w, sd->h))
+     {
+	/* if listview - it is now after last file */
+	if (sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
+	  {
+	     ic = evas_list_data(evas_list_last(sd->icons));
+	     if (ic)
+	       {
+		  if (!ic->drag.dnd)
+		    {
+		       _e_fm2_dnd_drop_into_hide(sd->obj);
+		       _e_fm2_dnd_drop_between_show(ic, 1);
+		    }
+		  else
+		    {
+		       _e_fm2_dnd_drop_between_hide(sd->obj);
+		       _e_fm2_dnd_drop_into_hide(sd->obj);
+		    }
+	       }
+	     else
+	       {
+		  /* no icons in dir - drop it in */
+		  _e_fm2_dnd_drop_between_hide(sd->obj);
+		  _e_fm2_dnd_drop_into_hide(sd->obj);
+	       }
+	  }
+	else
+	  {
+	     /* if iconview - drop here */
+	  }
+	return;
+     }
+   /* outside fm view */
    _e_fm2_dnd_drop_between_hide(sd->obj);
    _e_fm2_dnd_drop_into_hide(sd->obj);
 }
