@@ -2349,13 +2349,13 @@ _e_fm2_dnd_drop_into_hide(E_Fm2_Icon *ic)
 
 /* FIXME: prototype + reposition + implement */
 static void
-_e_fm2_dnd_drop_between_show(E_Fm2_Icon *ic, int after)
+_e_fm2_dnd_drop_between_show(Evas_Object *obj, int after)
 {
 }
 
 /* FIXME: prototype + reposition + implement */
 static void
-_e_fm2_dnd_drop_between_hide(E_Fm2_Icon *ic)
+_e_fm2_dnd_drop_between_hide(Evas_Object *obj)
 {
 }
 
