@@ -908,7 +908,7 @@ _e_editable_cursor_update(Evas_Object *editable)
    E_Editable_Smart_Data *sd;
    Evas_Object *text_obj;
    Evas_Coord tx, ty;
-   Evas_Coord cx, cy, cw, ch;
+   Evas_Coord cx, cy, ch;
    
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
@@ -939,7 +939,7 @@ _e_editable_selection_update(Evas_Object *editable)
    E_Editable_Smart_Data *sd;
    Evas_Object *text_obj;
    Evas_Coord tx, ty;
-   Evas_Coord cx, cy, cw, ch;
+   Evas_Coord cx, cy;
    Evas_Coord sx, sy, sw, sh;
    int start_pos, end_pos;
    

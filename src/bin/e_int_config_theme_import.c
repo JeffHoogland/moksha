@@ -240,8 +240,7 @@ _theme_import_cb_ok(void *data, void *data2)
    const char *file;
    char *homedir;
    char buf[4096];
-   int is_theme;
-   
+
    win = data;
    import = win->data;
    if (!import) return;

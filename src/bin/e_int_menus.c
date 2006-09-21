@@ -570,7 +570,6 @@ _e_int_menus_apps_drag(void *data, E_Menu *m, E_Menu_Item *mi)
 	 E_Drag *drag;
 	 Evas_Object *o = NULL;
 	 Evas_Coord x, y, w, h;
-	 const char *file = NULL, *part = NULL;
 	 const char *drag_types[] = { "enlightenment/eapp" };
 
 	 evas_object_geometry_get(mi->icon_object,

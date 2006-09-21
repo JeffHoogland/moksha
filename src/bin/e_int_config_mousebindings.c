@@ -445,7 +445,6 @@ _auto_apply_changes(E_Config_Dialog_Data *cfdata)
 {
    char *n;
    const char *action;
-   int i;
    E_Config_Binding_Mouse *eb;
    E_Config_Binding_Wheel *bw;
 
@@ -669,7 +668,6 @@ _update_buttons(E_Config_Dialog_Data *cfdata)
 static void
 _update_binding_context(E_Config_Dialog_Data *cfdata)
 {
-   int found = 0;
    char *n;
    E_Config_Binding_Mouse *eb;
    E_Config_Binding_Wheel *bw;
@@ -845,7 +843,6 @@ _action_change_cb(void *data)
 static void
 _binding_change_cb(void *data)
 {
-   char *n;
    E_Config_Dialog_Data *cfdata;
 
    cfdata = data;
@@ -853,7 +850,7 @@ _binding_change_cb(void *data)
    _auto_apply_changes(cfdata);
 
    if (cfdata->locals.cur) free(cfdata->locals.cur);
-   cfdata->locals.cur == NULL;
+   cfdata->locals.cur = NULL;
 
    if (cfdata->locals.binding[0]) 
      cfdata->locals.cur = strdup(cfdata->locals.binding);
@@ -1000,7 +997,6 @@ _delete_mouse_binding_cb(void *data, void *data2)
 static void
 _restore_default_cb(void *data, void *data2)
 {
-   Evas_List *l;
    E_Config_Binding_Mouse *eb;
    E_Config_Binding_Wheel *bw;
    E_Config_Dialog_Data *cfdata;
@@ -1101,10 +1097,9 @@ _restore_default_cb(void *data, void *data2)
 static int
 _grab_mouse_down_cb(void *data, int type, void *event)
 {
-   Evas_List *l;
    E_Config_Dialog_Data *cfdata;
    E_Config_Binding_Mouse *eb;
-   int mod = E_BINDING_MODIFIER_NONE, found = 0;
+   int mod = E_BINDING_MODIFIER_NONE;
    Ecore_X_Event_Mouse_Button_Down *ev = event;
 
    cfdata = data;
@@ -1152,11 +1147,10 @@ _grab_mouse_down_cb(void *data, int type, void *event)
 }
 static int _grab_mouse_wheel_cb(void *data, int type, void *event)
 {
-   Evas_List *l;
    E_Config_Binding_Wheel *bw;
    E_Config_Dialog_Data *cfdata;
    Ecore_X_Event_Mouse_Wheel *ev = event;
-   int mod = E_BINDING_MODIFIER_NONE, found = 0;
+   int mod = E_BINDING_MODIFIER_NONE;
 
    cfdata = data;
 
@@ -1223,6 +1217,7 @@ _grab_key_down_cb(void *data, int type, void *event)
      { 
 	_grab_wnd_hide_cb(cfdata);
      }
+   return 1;
 }
 static void
 _grab_wnd_hide_cb(E_Config_Dialog_Data *cfdata)

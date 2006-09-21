@@ -60,7 +60,7 @@ e_eap_edit_show(E_Container *con, E_App *a)
    E_Config_Dialog_View *v;
    E_App_Edit *editor;
 
-   if (!con) return;
+   if (!con) return NULL;
 
    editor = E_OBJECT_ALLOC(E_App_Edit, E_EAP_EDIT_TYPE, _e_eap_edit_free);
    if (!editor) return NULL;
@@ -273,7 +273,7 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dial
 {
    E_App_Edit *editor;
    E_App *eap;
-   Evas_Object *ol, *o, *mt;
+   Evas_Object *ol, *o;
    Evas_Object *entry;
 
    editor = data->editor;

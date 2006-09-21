@@ -383,7 +383,6 @@ _e_entry_x_selection_notify_handler(void *data, int type, void *event)
    Evas_Object *entry;
    E_Entry_Smart_Data *sd;
    Ecore_X_Event_Selection_Notify *ev;
-   Ecore_X_Selection_Data *selection_data;
    Evas_Object *editable;
    int cursor_pos, selection_pos;
    int start_pos, end_pos;

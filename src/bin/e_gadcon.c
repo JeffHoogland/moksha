@@ -57,7 +57,6 @@ typedef struct _E_Layout_Item_Container E_Layout_Item_Container;
 static void _e_gadcon_client_current_position_sync(E_Gadcon_Client *gcc);
 static void _e_gadcon_layout_smart_sync_clients(E_Gadcon *gc);
 static void _e_gadcon_layout_smart_gadcon_position_shrinked_mode(E_Smart_Data *sd);
-static void _e_gadcon_layout_smart_gadcon_clients_save(E_Smart_Data *sd);
 static void _e_gadcon_layout_smart_gadcons_asked_position_set(E_Smart_Data *sd);
 static Evas_List *_e_gadcon_layout_smart_gadcons_wrap(E_Smart_Data *sd);
 static void _e_gadcon_layout_smart_gadcons_position(E_Smart_Data *sd, Evas_List **list);
@@ -1005,8 +1004,7 @@ static void
 _e_gadcon_client_cb_menu_autoscroll(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Gadcon_Client *gcc;
-   E_Gadcon *gc;
-   
+
    gcc = data;
    e_gadcon_layout_freeze(gcc->gadcon->o_container);
    if (gcc->autoscroll) gcc->autoscroll = 0;
@@ -2338,8 +2336,8 @@ _e_gadcon_layout_smart_item_del_hook(void *data, Evas *e, Evas_Object *obj, void
 static void
 _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 {
-   Evas_Coord x, y, w, h, xx, yy;
-   Evas_List *l, *l2;
+   Evas_Coord xx, yy;
+   Evas_List *l;
    int min, mino, cur;
    Evas_List *list = NULL;
    E_Gadcon_Layout_Item *bi;
@@ -2766,7 +2764,6 @@ static int
 _e_gadcon_layout_smart_width_smart_sort_reverse_cb(void *d1, void *d2)
 {
    E_Gadcon_Layout_Item *bi, *bi2;
-   int v1, v2;
 
    bi = evas_object_data_get(d1, "e_gadcon_layout_data");
    bi2 = evas_object_data_get(d2, "e_gadcon_layout_data"); 
@@ -3201,7 +3198,6 @@ _e_gadcon_layout_smart_gadcons_asked_position_set(E_Smart_Data *sd)
 {
    E_Gadcon_Layout_Item *bi;
    Evas_List *l;
-   int xx, yy;
 
    for (l = sd->items; l; l = l->next)
      {
@@ -3637,7 +3633,7 @@ _e_gadcon_layout_smart_gadcons_position(E_Smart_Data *sd, Evas_List **list)
 		  if (!l2) l2 = *list; 
 		  else l2 = l2->next;
 		  
-		  for (l2; l2 != l; l2 = l2->next) 
+		  for (; l2 != l; l2 = l2->next) 
 		    { 
 		       lc = l2->data; 
 		       lc->pos = new_pos; 

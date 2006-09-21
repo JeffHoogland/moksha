@@ -160,7 +160,7 @@ static void _e_fm2_typebuf_history_next(Evas_Object *obj);
 static void _e_fm2_typebuf_run(Evas_Object *obj);
 static void _e_fm2_typebuf_match(Evas_Object *obj);
 static void _e_fm2_typebuf_complete(Evas_Object *obj);
-static void _e_fm2_typebuf_char_append(Evas_Object *obj, char *ch);
+static void _e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch);
 static void _e_fm2_typebuf_char_backspace(Evas_Object *obj);
 
 static void _e_fm2_cb_dnd_enter(void *data, const char *type, void *event);
@@ -1855,7 +1855,7 @@ _e_fm2_icon_desktop_url_eval(const char *val)
 static int
 _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 {
-   char buf[4096], key[256], val[4096];
+   char buf[4096];
    Ecore_Desktop *desktop;
    
    if (ic->info.pseudo_link)
@@ -2289,7 +2289,7 @@ _e_fm2_typebuf_complete(Evas_Object *obj)
 }
 
 static void
-_e_fm2_typebuf_char_append(Evas_Object *obj, char *ch)
+_e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch)
 {
    E_Fm2_Smart_Data *sd;
    char *ts;
@@ -2343,7 +2343,7 @@ _e_fm2_dnd_drop_into_show(E_Fm2_Icon *ic)
 
 /* FIXME: prototype + reposition + implement */
 static void
-_e_fm2_dnd_drop_into_hide(Evas_Object *obj)
+_e_fm2_dnd_drop_into_hide(E_Fm2_Icon *ic)
 {
 }
 
@@ -2355,7 +2355,7 @@ _e_fm2_dnd_drop_between_show(E_Fm2_Icon *ic, int after)
 
 /* FIXME: prototype + reposition + implement */
 static void
-_e_fm2_dnd_drop_between_hide(Evas_Object *obj)
+_e_fm2_dnd_drop_between_hide(E_Fm2_Icon *ic)
 {
 }
 

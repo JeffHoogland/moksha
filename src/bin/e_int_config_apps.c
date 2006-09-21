@@ -399,7 +399,6 @@ _cb_button_add(void *data1, void *data2)
    E_Fm2_Icon_Info *ici;
    const char *realpath;
    char buf[4096];
-   E_App *a, *parent;
 
    cfdata = data1;
    if (!cfdata->gui.o_fm_all) return;
@@ -498,10 +497,8 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    struct _E_Config_Once *once = NULL;
-   Evas_Object *o, *of, *ob, *ot, *ilist, *mt;
-   Evas_List *l;
+   Evas_Object *o, *of, *ob, *ot, *mt;
    E_Fm2_Config fmc_all, fmc;
-   int i;
 
    if (cfdata->cfd->data)
       once = cfdata->cfd->data;
@@ -674,7 +671,6 @@ _move_file_up_in_order(const char *order, const char *file)
 {
    char buf[4096];
    Evas_List *list = NULL, *l;
-   int ret = 0;
    FILE *f;
 
    snprintf(buf, sizeof(buf), "%s/.order", order);
@@ -734,7 +730,6 @@ _move_file_down_in_order(const char *order, const char *file)
 {
    char buf[4096], *last;
    Evas_List *list = NULL, *l;
-   int ret = 0;
    FILE *f;
 
    snprintf(buf, sizeof(buf), "%s/.order", order);
@@ -805,7 +800,6 @@ _append_to_order(const char *order, const char *file)
 {
    char buf[4096];
    Evas_List *list = NULL, *l;
-   int ret = 0;
    FILE *f;
 
    snprintf(buf, sizeof(buf), "%s/.order", order);

@@ -4,7 +4,6 @@ static void        *_create_data(E_Config_Dialog *cfd);
 static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int          _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static void         _load_inits(E_Config_Dialog *cfd, Evas_Object *il);
 void                _ilist_cb_init_selected(void *data);
 
 struct _E_Config_Dialog_Data 

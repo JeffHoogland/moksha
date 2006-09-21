@@ -364,8 +364,8 @@ struct _E_Config_Shelf
 
 struct _E_Config_Mime_Icon
 {
-   char *mime;
-   char *icon;
+   const char *mime;
+   const char *icon;
 };
 
 EAPI int        e_config_init(void);

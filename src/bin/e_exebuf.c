@@ -432,7 +432,7 @@ static void
 _e_exebuf_exec_term(void)
 {
    char tmp[EXEBUFLEN];
-   char *active_cmd;
+   const char *active_cmd;
 
    if (exe_sel)
      {
