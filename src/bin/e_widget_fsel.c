@@ -98,8 +98,7 @@ _e_wid_fsel_favorites_add(void *data1, void *data2)
      }
    fname = alloca(strlen(ecore_file_get_file(buf)) + 1);
    strcpy(fname, ecore_file_get_file(buf));
-   snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/.order", 
-	    homedir, ecore_file_get_file(current_path));
+   snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/.order", homedir);
    if (ecore_file_exists(buf))
      {
 	f = fopen(buf, "a");
@@ -547,7 +546,7 @@ e_widget_fsel_window_object_set(Evas_Object *obj, E_Object *eobj)
 {
    E_Widget_Data *wd;
 
-   if (!obj) return NULL;
+   if (!obj) return;
    wd = e_widget_data_get(obj);
    e_fm2_window_object_set(wd->o_favorites_fm, eobj);
    e_fm2_window_object_set(wd->o_files_fm, eobj);
@@ -658,7 +657,6 @@ _e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t st_gid)
    int group_write = 0;
    int other_read = 0;
    int other_write = 0;
-   int i;
 
    if (getuid() == st_uid) 
       owner = 1;
@@ -732,17 +730,17 @@ _e_wid_file_time_get(time_t st_modtime)
 	if (diff <= 60) 
 	  snprintf(modtime, sizeof(modtime), _("In the last Minute"));
 	else if (diff >= 31526000) 
-	  snprintf(modtime, sizeof(modtime), _("%i Years ago"), (diff / 31526000));
+	  snprintf(modtime, sizeof(modtime), _("%li Years ago"), (diff / 31526000));
 	else if (diff >= 2592000) 
-	  snprintf(modtime, sizeof(modtime), _("%i Months ago"), (diff / 2592000));
+	  snprintf(modtime, sizeof(modtime), _("%li Months ago"), (diff / 2592000));
 	else if (diff >= 604800) 
-	  snprintf(modtime, sizeof(modtime), _("%i Weeks ago"), (diff / 604800));
+	  snprintf(modtime, sizeof(modtime), _("%li Weeks ago"), (diff / 604800));
 	else if (diff >= 86400)
-	  snprintf(modtime, sizeof(modtime), _("%i Days ago"), (diff / 86400));
+	  snprintf(modtime, sizeof(modtime), _("%li Days ago"), (diff / 86400));
 	else if (diff >= 3600) 
-	  snprintf(modtime, sizeof(modtime), _("%i Hours ago"), (diff / 3600));
+	  snprintf(modtime, sizeof(modtime), _("%li Hours ago"), (diff / 3600));
 	else if (diff > 60) 
-	  snprintf(modtime, sizeof(modtime), _("%i Minutes ago"), (diff / 60));
+	  snprintf(modtime, sizeof(modtime), _("%li Minutes ago"), (diff / 60));
      }
  
    if (modtime) 
