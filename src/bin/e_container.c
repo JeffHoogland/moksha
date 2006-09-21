@@ -646,7 +646,7 @@ e_container_border_raise(E_Border *bd)
    Evas_List *l;
    int pos = 0, i;
 
-   if (!bd->zone) return;
+   if (!bd->zone) return NULL;
    /* Remove from old layer */
    for (i = 0; i < 7; i++)
      {
@@ -700,7 +700,7 @@ e_container_border_lower(E_Border *bd)
    Evas_List *l;
    int pos = 0, i;
    
-   if (!bd->zone) return;
+   if (!bd->zone) return NULL;
    /* Remove from old layer */
    for (i = 0; i < 7; i++)
      {
