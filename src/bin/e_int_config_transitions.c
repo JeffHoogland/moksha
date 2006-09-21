@@ -197,8 +197,7 @@ _trans_cb_changed(void *data)
    E_Config_Dialog_Data *cfdata;
    const char *t;
    int sel;
-   char buf[4096];
-   
+
    cfdata = data;
    sel = e_widget_ilist_selected_get(cfdata->event_list);
 

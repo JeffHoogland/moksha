@@ -24,8 +24,8 @@ static void  _e_fdo_menu_to_order_cb_desktop_foreach(void *list_data, void *data
 static char *_e_fdo_menu_to_order_find_category(char *category);
 static void  _e_fdo_menu_to_order_dump_each_hash_node2(void *value, void *user_data);
 
-static menu_count;
-static item_count;
+static int menu_count;
+static int item_count;
 
 EAPI void
 e_fdo_menu_to_order(void)

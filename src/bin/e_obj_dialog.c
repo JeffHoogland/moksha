@@ -66,7 +66,7 @@ e_obj_dialog_icon_set(E_Obj_Dialog *od, char *icon)
 EAPI void
 e_obj_dialog_show(E_Obj_Dialog *od)
 {
-   Evas_Coord mw, mh, w, h;
+   Evas_Coord mw, mh;
    
    E_OBJECT_CHECK(od);
    E_OBJECT_TYPE_CHECK(od, E_OBJ_DIALOG_TYPE);
