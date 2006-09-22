@@ -292,22 +292,17 @@ _import_edj_gen(Import *import)
    Evas_Object *img;
    int fd, num = 1;
    int w = 0, h = 0;
-   const char *file;
+   const char *file, *homedir;
    char buf[4096], cmd[4096], tmpn[4096], ipart[4096], enc[128];
-   char *imgdir = NULL, *homedir, *fstrip;
+   char *imgdir = NULL, *fstrip;
    int cr = 255, cg = 255, cb = 255, ca = 255;
    FILE *f;
    
    evas = e_win_evas_get(import->win);
    file = ecore_file_get_file(import->cfdata->file);
    homedir = e_user_homedir_get();
-   if (!homedir) return;
    fstrip = ecore_file_strip_ext(file);
-   if (!fstrip)
-     {
-	free(homedir);
-	return;
-     }
+   if (!fstrip) return;
    snprintf(buf, sizeof(buf), "%s/.e/e/backgrounds/%s.edj", homedir, fstrip);
    while (ecore_file_exists(buf))
      {
@@ -315,7 +310,6 @@ _import_edj_gen(Import *import)
 	num++;
      }
    free(fstrip);
-   free(homedir);
    strcpy(tmpn, "/tmp/e_bgdlg_new.edc-tmp-XXXXXX");
    fd = mkstemp(tmpn);
    if (fd < 0) 
@@ -503,7 +497,8 @@ _import_cb_ok(void *data, void *data2)
    E_Win *win;
    const char *path;
    const char *file;
-   char buf[4096], *homedir;
+   const char *homedir;
+   char buf[4096];
    int is_bg, is_theme;
    
    win = data;
@@ -520,11 +515,9 @@ _import_cb_ok(void *data, void *data2)
 	else 
 	  {
 	     homedir = e_user_homedir_get();
-	     if (!homedir) return;
 	     snprintf(buf, sizeof(buf), "%s/.e/e/backgrounds/%s", 
 		      homedir, file);
-	     E_FREE(homedir);
-	     
+
 	     is_bg = edje_file_group_exists(import->cfdata->file, 
 					    "e/desktop/background");
 	     is_theme = 

@@ -238,7 +238,7 @@ _theme_import_cb_ok(void *data, void *data2)
    E_Win *win;
    const char *path;
    const char *file;
-   char *homedir;
+   const char *homedir;
    char buf[4096];
 
    win = data;
@@ -246,8 +246,7 @@ _theme_import_cb_ok(void *data, void *data2)
    if (!import) return;
 
    homedir = e_user_homedir_get();
-   if (!homedir) return;
-   
+ 
    path = e_widget_fsel_selection_path_get(import->fsel_obj);
    E_FREE(import->cfdata->file);
    if (path)
@@ -257,7 +256,6 @@ _theme_import_cb_ok(void *data, void *data2)
      {
 	file = ecore_file_get_file(import->cfdata->file);
 	snprintf(buf, sizeof(buf), "%s/.e/e/themes/%s", homedir, file);
-	E_FREE(homedir);
 
 	if (!ecore_file_strip_ext(file)) 
 	  return;
@@ -284,9 +282,7 @@ _theme_import_cb_ok(void *data, void *data2)
 	       e_int_config_theme_update(import->parent, buf);
 	  }
      }
-   else
-     E_FREE(homedir);
-   
+
    e_int_config_theme_del(import->win);
 }
 

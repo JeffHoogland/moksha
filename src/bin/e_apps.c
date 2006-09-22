@@ -115,7 +115,7 @@ static Evas_List   *_e_apps_start_pending = NULL;
 EAPI int
 e_app_init(void)
 {
-   char *home;
+   const char *home;
    char buf[PATH_MAX];
    
    home = e_user_homedir_get();
@@ -123,7 +123,6 @@ e_app_init(void)
    _e_apps_path_trash = evas_stringshare_add(buf);
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/all", home);
    _e_apps_path_all = evas_stringshare_add(buf);
-   free(home);
    _e_apps_repositories = evas_list_append(_e_apps_repositories, evas_stringshare_add(buf));
    _e_apps_exit_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_apps_cb_exit, NULL);
    _e_apps_border_add_handler = ecore_event_handler_add(E_EVENT_BORDER_ADD, _e_app_cb_event_border_add, NULL);

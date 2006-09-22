@@ -195,7 +195,7 @@ _e_prefix_share_hunt(void)
    char buf[4096], buf2[4096], *p;
    FILE *f;
 #ifdef PREFIX_CACHE_FILE
-   char *home;
+   const char *home;
 #endif   
 
    /* sometimes this isnt the case - so we need to do a more exhaustive search
@@ -214,8 +214,7 @@ _e_prefix_share_hunt(void)
    /* 1. check cache file - as a first attempt. this will speed up subsequent
     * hunts - if needed */
    home = e_user_homedir_get();
-   if (!home) return 0;
-   
+ 
    snprintf(buf, sizeof(buf), "%s/.e/e/prefix_share_cache.txt", home);
    f = fopen(buf, "r");
    if (f)
@@ -237,7 +236,6 @@ _e_prefix_share_hunt(void)
 		  snprintf(buf2, sizeof(buf2), "%s/locale", buf);
 		  _prefix_path_locale = strdup(buf2);
 		  fclose(f);
-		  free(home);
 		  return 1;
 	       }
 	  }
@@ -319,14 +317,10 @@ _e_prefix_share_hunt(void)
 	     fprintf(f, "%s\n", _prefix_path_data);
 	     fclose(f);
 	  }
-	free(home);
 #endif	
 	return 1;
      }
    /* fail. everything failed */
-#ifdef PREFIX_CACHE_FILE
-   free(home);
-#endif	
    return 0;
 }
 

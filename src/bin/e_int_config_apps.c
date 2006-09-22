@@ -96,9 +96,9 @@ e_int_config_apps(E_Container *con)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
-   cfdata->homedir = e_user_homedir_get();
+   cfdata->homedir = strdup(e_user_homedir_get());
    if (!cfdata->homedir) return;
-   
+
    snprintf(cfdata->path_everything, sizeof(cfdata->path_everything), "%s/.e/e/applications/all", cfdata->homedir);
    snprintf(cfdata->path, sizeof(cfdata->path), "%s/.e/e/applications", cfdata->homedir);
    snprintf(cfdata->path_all, sizeof(cfdata->path_all), "%s/.e/e/applications/menu/all", cfdata->homedir);

@@ -194,8 +194,8 @@ static void
 _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
-   const char *p;
-   char *homedir, buf[4096];
+   const char *p, *homedir;
+   char buf[4096];
    
    cfdata = data;
    if (!cfdata->bg) return;
@@ -206,9 +206,7 @@ _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
 	if (strncmp(p, cfdata->bg, strlen(p))) return;
      }
    homedir = e_user_homedir_get();
-   if (!homedir) return;
    snprintf(buf, sizeof(buf), "%s/.e/e/backgrounds", homedir);
-   free(homedir);
    if (!p) return;
    if (!strncmp(cfdata->bg, buf, strlen(buf)))
      p = cfdata->bg + strlen(buf) + 1;
@@ -228,7 +226,8 @@ static void
 _cb_dir(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
-   char path[4096], *homedir;
+   char path[4096];
+   const char *homedir;
    
    cfdata = data;
    if (cfdata->fmdir == 1)
@@ -239,7 +238,6 @@ _cb_dir(void *data, Evas_Object *obj, void *event_info)
      {
 	homedir = e_user_homedir_get();
 	snprintf(path, sizeof(path), "%s/.e/e/backgrounds", homedir);
-	free(homedir);
      }
    e_fm2_path_set(cfdata->o_fm, path, "/");
 }
@@ -281,7 +279,8 @@ _bg_mode(void *data, Evas_Object *obj, void *event_info)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
-   char path[4096], *homedir;
+   char path[4096];
+   const char *homedir;
 
    // we have to read it from e_config->...
    if (e_config->desklock_personal_passwd)
@@ -348,7 +347,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 		  cfdata->bg = strdup(path);
 	       }
 	  }
-	free(homedir);
      }
    
 #ifdef HAVE_PAM
@@ -534,7 +532,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 {
    Evas_Object *ob, *oc;
    Evas_Object *o, *ot, *of, *il, *ol;
-   char path[4096], *homedir;
+   char path[4096];
+   const char *homedir;
    const char *f;
    E_Fm2_Config fmc;
    E_Zone *z;
@@ -544,8 +543,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 #endif
 
    homedir = e_user_homedir_get();
-   if (!homedir) return NULL;
-   
+
    z = e_zone_current_get(cfd->con);
    
    cfdata->evas = evas;
@@ -786,7 +784,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_table_object_append(ot, of, 1, 2, 1, 1 ,1 ,1 ,1 ,1);
 #endif
    
-   free(homedir);
    e_dialog_resizable_set(cfd->dia, 0);
    return ot;
 }

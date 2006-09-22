@@ -267,16 +267,12 @@ main(int argc, char **argv)
 
    /* fixes for FOOLS that keep cp'ing default.edj into ~/.e/e/themes */
      {
-	char *homedir;
+	const char *homedir;
 	
 	homedir = e_user_homedir_get();
-	if (homedir)
-	  {
-	     snprintf(buf, sizeof(buf), "%s/.e/e/themes/default.edj", homedir);
-	     if (ecore_file_exists(buf))
-	       ecore_file_unlink(buf);
-	     free(homedir);
-	  }
+	snprintf(buf, sizeof(buf), "%s/.e/e/themes/default.edj", homedir);
+	if (ecore_file_exists(buf))
+	  ecore_file_unlink(buf);
      }
    
    
@@ -828,7 +824,7 @@ _e_main_x_shutdown(void)
 static int
 _e_main_dirs_init(void)
 {
-   char *homedir;
+   const char *homedir;
    char buf[PATH_MAX];
    const char *dirs[] =
      {
@@ -857,7 +853,6 @@ _e_main_dirs_init(void)
    int i;
    
    homedir = e_user_homedir_get();
-   if (!homedir) return 0;
    for (i = 0; i < (int)(sizeof(dirs) / sizeof(char *)); i++)
      {
 	snprintf(buf, sizeof(buf), dirs[i], homedir);
@@ -866,7 +861,6 @@ _e_main_dirs_init(void)
 	     e_error_message_show("Error creating directory:\n"
 				  "%s",
 				  buf);
-	     free(homedir);
 	     return 0;
 	  }
      }
@@ -911,7 +905,6 @@ _e_main_dirs_init(void)
 		 homedir);
 	system(buf);
      }
-   free(homedir);
 
    return 1;
 }

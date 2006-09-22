@@ -116,8 +116,8 @@ static void
 _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
-   const char *p;
-   char *homedir, buf[4096];
+   const char *p, *homedir;
+   char buf[4096];
    
    cfdata = data;
    if (!cfdata->splash) return;
@@ -128,9 +128,7 @@ _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
 	if (strncmp(p, cfdata->splash, strlen(p))) return;
      }
    homedir = e_user_homedir_get();
-   if (!homedir) return;
    snprintf(buf, sizeof(buf), "%s/.e/e/init", homedir);
-   free(homedir);
    if (!p) return;
    if (!strncmp(cfdata->splash, buf, strlen(buf)))
      p = cfdata->splash + strlen(buf) + 1;
@@ -150,7 +148,8 @@ static void
 _cb_dir(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
-   char path[4096], *homedir;
+   char path[4096];
+   const char *homedir;
    
    cfdata = data;
    if (cfdata->fmdir == 1)
@@ -161,7 +160,6 @@ _cb_dir(void *data, Evas_Object *obj, void *event_info)
      {
 	homedir = e_user_homedir_get();
 	snprintf(path, sizeof(path), "%s/.e/e/init", homedir);
-	free(homedir);
      }
    e_fm2_path_set(cfdata->o_fm, path, "/");
 }
@@ -169,8 +167,9 @@ _cb_dir(void *data, Evas_Object *obj, void *event_info)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
-   char path[4096], *homedir;
-   
+   char path[4096];
+   const char *homedir;
+
    cfdata->show_splash = e_config->show_splash;
    cfdata->splash = NULL;
    if (e_config->init_default_theme)
@@ -198,7 +197,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 		  cfdata->splash = strdup(path);
 	       }
 	  }
-	free(homedir);
      }
    
    snprintf(path, sizeof(path), "%s/data/init", e_prefix_data_get());
@@ -252,14 +250,13 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *o, *ot, *of, *il, *ol;
-   char path[4096], *homedir;
-   const char *f;
+   char path[4096];
+   const char *f, *homedir;
    E_Fm2_Config fmc;
    E_Zone *z;
    E_Radio_Group *rg;
 
    homedir = e_user_homedir_get();
-   if (!homedir) return NULL;
 
    z = e_zone_current_get(cfd->con);
    
@@ -347,6 +344,5 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 			  &(cfdata->show_splash));
    e_widget_table_object_append(ot, o, 1, 3, 1, 1, 1, 0, 0, 0);
    
-   free(homedir);
    return ot;
 }

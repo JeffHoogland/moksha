@@ -51,13 +51,12 @@ e_config_init(void)
      {
 	Eet_File *ef;
 	char buf[4096];
-	char *homedir;
+	const char *homedir;
 
 	homedir = e_user_homedir_get();
 	snprintf(buf, sizeof(buf), "%s/.e/e/config/profile.cfg",
 		 homedir);
 	ef = eet_open(buf, EET_FILE_MODE_READ);
-	E_FREE(homedir);
 	if (ef)
 	  {
 	     char *data;
@@ -1465,7 +1464,7 @@ e_config_profile_list(void)
 {
    Ecore_List *files;
    char buf[4096];
-   char *homedir;
+   const char *homedir;
    Evas_List *flist = NULL;
    
    homedir = e_user_homedir_get();
@@ -1485,7 +1484,6 @@ e_config_profile_list(void)
 	  }
         ecore_list_destroy(files);
      }
-   E_FREE(homedir);
    return flist;
 }
 
@@ -1493,13 +1491,12 @@ EAPI void
 e_config_profile_add(char *prof)
 {
    char buf[4096];
-   char *homedir;
+   const char *homedir;
    
    homedir = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", 
 	    homedir, prof);
    ecore_file_mkpath(buf);
-   E_FREE(homedir);
 }
 
 EAPI void
@@ -1507,7 +1504,7 @@ e_config_profile_del(char *prof)
 {
    Ecore_List *files;
    char buf[4096];
-   char *homedir;
+   const char *homedir;
    
    homedir = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", homedir, prof);
@@ -1528,7 +1525,6 @@ e_config_profile_del(char *prof)
      }
    snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", homedir, prof);
    ecore_file_rmdir(buf);
-   E_FREE(homedir);
 }
 
 EAPI Evas_List *
@@ -1562,7 +1558,7 @@ e_config_domain_load(char *domain, E_Config_DD *edd)
 {
    Eet_File *ef;
    char buf[4096];
-   char *homedir;
+   const char *homedir;
    void *data = NULL;
 
    homedir = e_user_homedir_get();
@@ -1575,7 +1571,6 @@ e_config_domain_load(char *domain, E_Config_DD *edd)
 		 homedir, "default", domain);
 	ef = eet_open(buf, EET_FILE_MODE_READ);
      }
-   E_FREE(homedir);
    if (ef)
      {
 	data = eet_data_read(ef, edd, "config");
@@ -1589,7 +1584,7 @@ e_config_profile_save(void)
 {
    Eet_File *ef;
    char buf[4096], buf2[4096];
-   char *homedir;
+   const char *homedir;
    int ok = 0;
 
    /* FIXME: check for other sessions fo E running */
@@ -1597,7 +1592,6 @@ e_config_profile_save(void)
    snprintf(buf, sizeof(buf), "%s/.e/e/config/profile.cfg",
 	    homedir);
    snprintf(buf2, sizeof(buf2), "%s.tmp", buf);
-   free(homedir);
 
    ef = eet_open(buf2, EET_FILE_MODE_WRITE);
    if (ef)
@@ -1619,7 +1613,7 @@ e_config_domain_save(char *domain, E_Config_DD *edd, void *data)
 {
    Eet_File *ef;
    char buf[4096], buf2[4096];
-   char *homedir;
+   const char *homedir;
    int ok = 0;
 
    if (_e_config_save_block) return 0;
@@ -1631,7 +1625,6 @@ e_config_domain_save(char *domain, E_Config_DD *edd, void *data)
    snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/%s.cfg", 
 	    homedir, _e_config_profile, domain);
    snprintf(buf2, sizeof(buf2), "%s.tmp", buf);
-   E_FREE(homedir);
    ef = eet_open(buf2, EET_FILE_MODE_WRITE);
    if (ef)
      {

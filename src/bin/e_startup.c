@@ -20,7 +20,7 @@ static E_App       *waiting_app = NULL;
 EAPI void
 e_startup(E_Startup_Mode mode)
 {
-   char *homedir;
+   const char *homedir;
    char buf[PATH_MAX];
    
    homedir = e_user_homedir_get();
@@ -28,7 +28,6 @@ e_startup(E_Startup_Mode mode)
      snprintf(buf, sizeof(buf), "%s/.e/e/applications/startup", homedir);
    else if (mode == E_STARTUP_RESTART)
      snprintf(buf, sizeof(buf), "%s/.e/e/applications/restart", homedir);
-   free(homedir);
    startup_apps = e_app_new(buf, 1);
    if (!startup_apps)
      {

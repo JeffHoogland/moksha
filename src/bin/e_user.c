@@ -4,19 +4,19 @@
 #include "e.h"
 
 /* externally accessible functions */
-EAPI char *
+EAPI const char *
 e_user_homedir_get(void)
 {
    char *homedir;
    int len;
    
    homedir = getenv("HOME");
-   if (!homedir) return strdup("/tmp");
+   if (!homedir) return "/tmp";
    len = strlen(homedir);
    while ((len > 1) && (homedir[len - 1] == '/'))
      {
 	homedir[len - 1] = 0;
 	len--;
      }
-   return strdup(homedir);
+   return homedir;
 }

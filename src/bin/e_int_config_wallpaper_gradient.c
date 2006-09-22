@@ -241,21 +241,17 @@ _import_edj_gen(Import *import)
    Evas *evas;
    int fd, num = 1;
    const char *file;
+   const char *homedir;
    char buf[4096], cmd[4096], tmpn[4096];
-   char *homedir, *fstrip;
+   char *fstrip;
    FILE *f;
 
    evas = e_win_evas_get(import->dia->win);
 
    file = import->cfdata->name;
    homedir = e_user_homedir_get();
-   if (!homedir) return;
    fstrip = ecore_file_strip_ext(file);
-   if (!fstrip)
-     {
-	free(homedir);
-	return;
-     }
+   if (!fstrip) return;
    snprintf(buf, sizeof(buf), "%s/.e/e/backgrounds/%s.edj", homedir, fstrip);
    while (ecore_file_exists(buf))
      {
@@ -263,7 +259,6 @@ _import_edj_gen(Import *import)
 	num++;
      }
    free(fstrip);
-   free(homedir);
    strcpy(tmpn, "/tmp/e_bgdlg_new.edc-tmp-XXXXXX");
    fd = mkstemp(tmpn);
    if (fd < 0) 

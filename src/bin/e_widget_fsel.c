@@ -70,8 +70,8 @@ static void
 _e_wid_fsel_favorites_add(void *data1, void *data2)
 {
    E_Widget_Data *wd;
-   const char *current_path;
-   char buf[4096], *fname, *homedir;
+   const char *current_path, *homedir;
+   char buf[4096], *fname;
    struct stat st;
    int i = 1;
    FILE *f;
@@ -80,7 +80,6 @@ _e_wid_fsel_favorites_add(void *data1, void *data2)
    current_path = e_fm2_real_path_get(wd->o_files_fm);
    if (!ecore_file_is_dir(current_path)) return;
    homedir = e_user_homedir_get();
-   if (!homedir) return;
    snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/%s", 
 	    homedir, ecore_file_get_file(current_path));
    if (stat(buf, &st) < 0) symlink(current_path, buf);
@@ -109,7 +108,6 @@ _e_wid_fsel_favorites_add(void *data1, void *data2)
 	  }
      }
    e_fm2_refresh(wd->o_favorites_fm);
-   free(homedir);
 }
 
 static void

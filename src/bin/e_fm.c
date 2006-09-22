@@ -223,19 +223,13 @@ static Evas_Smart *_e_fm2_smart = NULL;
 EAPI int
 e_fm2_init(void)
 {
-   char *homedir;
+   const char *homedir;
    char  path[PATH_MAX];
 
    homedir = e_user_homedir_get();
-   if (homedir)
-     {
-	snprintf(path, sizeof(path), "%s/.e/e/fileman/metadata", homedir);
-	ecore_file_mkpath(path);
-	_meta_path = strdup(path);
-	free(homedir);
-     }
-   else return 0;
-
+   snprintf(path, sizeof(path), "%s/.e/e/fileman/metadata", homedir);
+   ecore_file_mkpath(path);
+   _meta_path = strdup(path);
 
    _e_fm2_smart = evas_smart_new("e_fm",
 				 _e_fm2_smart_add, /* add */
@@ -665,7 +659,6 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
    else if (CMP("~/")) {
       s = e_user_homedir_get();
       PRT("%s%s", s, path);
-      free(s);
    }
    else if (dev[0] == '/') {
       /* dev is a full path - consider it a mountpoint device on its own */
@@ -679,7 +672,6 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
        */
       s = e_user_homedir_get();
       PRT("%s/.e/e/fileman/favorites", s);
-      free(s);
    }
    else if (CMP("dvd") || CMP("dvd-*"))  {
       /* FIXME: find dvd mountpoint optionally for dvd no. X */

@@ -226,7 +226,8 @@ static void
 _load_tlist(E_Config_Dialog_Data *cfdata) 
 {
    Ecore_List *dirs;
-   char *home, buf[4096], *file;
+   const char *home;
+   char buf[4096], *file;
    int selnum = -1;
 
    e_widget_tlist_clear(cfdata->tlist);
@@ -254,7 +255,6 @@ _load_tlist(E_Config_Dialog_Data *cfdata)
 	  }
 	ecore_list_destroy(dirs);
      }
-   free(home);
    e_widget_tlist_go(cfdata->tlist);
    if (selnum >= 0)
      e_widget_tlist_selected_set(cfdata->tlist, selnum);   

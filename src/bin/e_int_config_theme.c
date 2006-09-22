@@ -60,17 +60,16 @@ EAPI void
 e_int_config_theme_update(E_Config_Dialog *dia, char *file) 
 {
    E_Config_Dialog_Data *cfdata;
-   char *homedir, path[4096];
+   const char *homedir;
+   char path[4096];
    
    cfdata = dia->cfdata;
 
    homedir = e_user_homedir_get();
-   if (!homedir) return;
    cfdata->fmdir = 1;
    e_widget_radio_toggle_set(cfdata->o_personal, 1);
    
    snprintf(path, sizeof(path), "%s/.e/e/themes", homedir);
-   E_FREE(homedir);
    E_FREE(cfdata->theme);
    cfdata->theme = strdup(file);
 
@@ -176,7 +175,8 @@ _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
    const char *p;
-   char *homedir, buf[4096];
+   const char *homedir;
+   char buf[4096];
    
    cfdata = data;
    if (!cfdata->theme) return;
@@ -187,9 +187,7 @@ _cb_files_files_changed(void *data, Evas_Object *obj, void *event_info)
 	if (strncmp(p, cfdata->theme, strlen(p))) return;
      }
    homedir = e_user_homedir_get();
-   if (!homedir) return;
    snprintf(buf, sizeof(buf), "%s/.e/e/themes", homedir);
-   free(homedir);
    if (!p) return;
    if (!strncmp(cfdata->theme, buf, strlen(buf)))
      p = cfdata->theme + strlen(buf) + 1;
@@ -209,8 +207,9 @@ static void
 _cb_dir(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
-   char path[4096], *homedir;
-   
+   char path[4096];
+   const char *homedir;
+
    cfdata = data;
    if (cfdata->fmdir == 1)
      {
@@ -220,7 +219,6 @@ _cb_dir(void *data, Evas_Object *obj, void *event_info)
      {
 	homedir = e_user_homedir_get();
 	snprintf(path, sizeof(path), "%s/.e/e/themes", homedir);
-	free(homedir);
      }
    e_fm2_path_set(cfdata->o_fm, path, "/");
 }
@@ -278,7 +276,8 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Theme * c;
-   char path[4096], *homedir;
+   char path[4096];
+   const char *homedir;
    
    c = e_theme_config_get("theme");
    if (c)
@@ -306,7 +305,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 		  cfdata->theme = strdup(path);
 	       }
 	  }
-        free(homedir);
      }
    
    snprintf(path, sizeof(path), "%s/data/themes", e_prefix_data_get());
@@ -340,14 +338,13 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *ot, *of, *il, *ol;
-   char path[4096], *homedir;
-   const char *f;
+   char path[4096];
+   const char *f, *homedir;
    E_Fm2_Config fmc;
    E_Zone *z;
    E_Radio_Group *rg;
    
    homedir = e_user_homedir_get();
-   if (!homedir) return NULL;
 
    z = e_zone_current_get(cfd->con);
    
@@ -440,7 +437,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
    
-   free(homedir);
    e_dialog_resizable_set(cfd->dia, 1);
    return ot;
 }

@@ -559,15 +559,11 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
      {
 	if (bname) 
 	  {
-	     char *homedir;
+	     const char *homedir;
 
 	     homedir = e_user_homedir_get();
-	     if (homedir)
-	       {
-		  snprintf(path, sizeof(path), "%s/.e/e/applications/all/%s.desktop", homedir, bname);
-		  free(homedir);
-		  a = e_app_empty_new(path);
-	       }
+	     snprintf(path, sizeof(path), "%s/.e/e/applications/all/%s.desktop", homedir, bname);
+	     a = e_app_empty_new(path);
 	  }
 	else
 	  a = e_app_empty_new(NULL);

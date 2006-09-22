@@ -183,17 +183,12 @@ e_int_menus_favorite_apps_new(void)
 {
    E_Menu *m;
    char buf[4096];
-   char *homedir;
+   const char *homedir;
    
    homedir = e_user_homedir_get();
-   if (homedir)
-     {
-	snprintf(buf, sizeof(buf), "%s/.e/e/applications/menu/favorite", homedir);
-	m = e_int_menus_apps_new(buf);
-	free(homedir);
-	return m;
-     }
-   return NULL;
+   snprintf(buf, sizeof(buf), "%s/.e/e/applications/menu/favorite", homedir);
+   m = e_int_menus_apps_new(buf);
+   return m;
 }
 
 EAPI E_Menu *
@@ -201,17 +196,12 @@ e_int_menus_all_apps_new(void)
 {
    E_Menu *m;
    char buf[4096];
-   char *homedir;
+   const char *homedir;
    
    homedir = e_user_homedir_get();
-   if (homedir)
-     {
-	snprintf(buf, sizeof(buf), "%s/.e/e/applications/menu/all", homedir);
-	m = e_int_menus_apps_new(buf);
-	free(homedir);
-	return m;
-     }
-   return NULL;
+   snprintf(buf, sizeof(buf), "%s/.e/e/applications/menu/all", homedir);
+   m = e_int_menus_apps_new(buf);
+   return m;
 }
 
 EAPI E_Menu *

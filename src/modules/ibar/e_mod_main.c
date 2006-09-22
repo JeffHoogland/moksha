@@ -145,7 +145,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    
    evas_object_geometry_get(o, &x, &y, &w, &h);
    inst->drop_handler =
-     e_drop_handler_add(inst->gcc->gadcon, inst,
+     e_drop_handler_add(E_OBJECT(inst->gcc->gadcon), inst,
 			_ibar_inst_cb_enter, _ibar_inst_cb_move,
 			_ibar_inst_cb_leave, _ibar_inst_cb_drop,
 			drop, 3, x, y, w,  h);
@@ -242,14 +242,10 @@ _ibar_new(Evas *evas, const char *dir)
    e_box_align_set(b->o_box, 0.5, 0.5);
    if (dir[0] != '/')
      {
-	char *homedir;
+	const char *homedir;
 
 	homedir = e_user_homedir_get();
-	if (homedir)
-	  {
-	     snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s", homedir, dir);
-	     free(homedir);
-	  }
+	snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s", homedir, dir);
      }
    else
      snprintf(buf, sizeof(buf), dir);
@@ -468,14 +464,10 @@ _ibar_config_update(void)
 	       e_object_unref(E_OBJECT(inst->ibar->apps));
 	     if (inst->dir[0] != '/')
 	       {
-		  char *homedir;
+		  const char *homedir;
 		  
 		  homedir = e_user_homedir_get();
-		  if (homedir)
-		    {
-		       snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s", homedir, inst->dir);
-		       free(homedir);
-		    }
+		  snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s", homedir, inst->dir);
 	       }
 	     else
 	       snprintf(buf, sizeof(buf), inst->dir);

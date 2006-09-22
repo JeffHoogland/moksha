@@ -65,7 +65,8 @@ e_fm_mime_filename_get(const char *fname)
 EAPI const char *
 e_fm_mime_icon_get(const char *mime)
 {
-   char buf[4096], buf2[4096], *homedir = NULL, *val;
+   char buf[4096], buf2[4096], *val;
+   const char *homedir = NULL;
    Evas_List *l;
    E_Config_Mime_Icon *mi;
    Evas_List *freelist = NULL;
@@ -105,8 +106,7 @@ e_fm_mime_icon_get(const char *mime)
    
    /* 2. look up in ~/.e/e/icons */
    homedir = e_user_homedir_get();
-   if (!homedir) return NULL;
-   
+
    snprintf(buf, sizeof(buf), "%s/.e/e/icons/%s.edj", homedir, mime);
    if (ecore_file_exists(buf)) goto ok;
    snprintf(buf, sizeof(buf), "%s/.e/e/icons/%s.svg", homedir, mime);
@@ -142,13 +142,11 @@ e_fm_mime_icon_get(const char *mime)
    snprintf(buf, sizeof(buf), "%s/data/icons/%s.png", e_prefix_data_get(), buf2);
    if (ecore_file_exists(buf)) goto ok;
    
-   if (homedir) free(homedir);
    return NULL;
    
    ok:
    val = (char *)evas_stringshare_add(buf);
    icon_map = evas_hash_add(icon_map, mime, val);
-   if (homedir) free(homedir);
    return val;
    
 }
@@ -184,7 +182,7 @@ _e_fm_mime_update(void)
 {
    static double last_t = 0.0, t;
    char buf[4096];
-   char *homedir;
+   const char *homedir;
    int reload = 0;
    
    /* load /etc/mime.types
@@ -197,8 +195,7 @@ _e_fm_mime_update(void)
    if ((t - last_t) < 1.0) return;
 
    homedir = e_user_homedir_get();
-   if (!homedir) return;
-   
+ 
      {
 	static time_t last_changed = 0;
 	time_t ch;
@@ -280,7 +277,6 @@ _e_fm_mime_update(void)
 	     _e_fm_mime_shared_mimeinfo_globs_load(buf);
 	  }
      }
-   free(homedir);
 }
 
 static int

@@ -28,23 +28,17 @@ e_path_default_path_append(E_Path *ep, const char *path)
      {
         E_Path_Dir *epd;
 	char *new_path;
-	char *home_dir;
+	const char *home_dir;
 	int len1, len2;
 	
 	home_dir = e_user_homedir_get();
-	if (!home_dir) return;
 	len1 = strlen(home_dir);
 	len2 = strlen(path);
 	new_path = malloc(len1 + len2 + 1);
-	if (!new_path)
-	  {
-	     free(home_dir);
-	     return;
-	  }
+	if (!new_path) return;
 	epd = malloc(sizeof(E_Path_Dir));
         if (!epd)
 	  {
-	     free(home_dir);
 	     free(new_path);
 	     return;
 	  }
@@ -53,7 +47,6 @@ e_path_default_path_append(E_Path *ep, const char *path)
 	strcat(new_path, path + 1);
         epd->dir = evas_stringshare_add(new_path);
 	free(new_path);
-	free(home_dir);
 	ep->default_dir_list = evas_list_append(ep->default_dir_list, epd);	
      }
    else
@@ -89,23 +82,17 @@ e_path_user_path_append(E_Path *ep, const char *path)
      {
         E_Path_Dir *epd;
 	char *new_path;
-	char *home_dir;
+	const char *home_dir;
 	int len1, len2;
 	
 	home_dir = e_user_homedir_get();
-	if (!home_dir) return;
 	len1 = strlen(home_dir);
 	len2 = strlen(path);
 	new_path = malloc(len1 + len2 + 1);
-	if (!new_path)
-	  {
-	     free(home_dir);
-	     return;
-	  }
+	if (!new_path) return;
 	epd = malloc(sizeof(E_Path_Dir));
         if (!epd)
 	  {
-	     free(home_dir);
 	     free(new_path);
 	     return;
 	  }
@@ -114,7 +101,6 @@ e_path_user_path_append(E_Path *ep, const char *path)
 	strcat(new_path, path + 1);
         epd->dir = evas_stringshare_add(new_path);
 	free(new_path);
-	free(home_dir);
 	*(ep->user_dir_list) = evas_list_append(*(ep->user_dir_list), epd);	
      }
    else
@@ -139,23 +125,17 @@ e_path_user_path_prepend(E_Path *ep, const char *path)
      {
         E_Path_Dir *epd;
 	char *new_path;
-	char *home_dir;
+	const char *home_dir;
 	int len1, len2;
 	
 	home_dir = e_user_homedir_get();
-	if (!home_dir) return;
 	len1 = strlen(home_dir);
 	len2 = strlen(path);
 	new_path = malloc(len1 + len2 + 1);
-	if (!new_path)
-	  {
-	     free(home_dir);
-	     return;
-	  }
+	if (!new_path) return;
 	epd = malloc(sizeof(E_Path_Dir));
         if (!epd)
 	  {
-	     free(home_dir);
 	     free(new_path);
 	     return;
 	  }
@@ -164,7 +144,6 @@ e_path_user_path_prepend(E_Path *ep, const char *path)
 	strcat(new_path, path + 1);
         epd->dir = evas_stringshare_add(new_path);
 	free(new_path);
-	free(home_dir);
 	*(ep->user_dir_list) = evas_list_prepend(*(ep->user_dir_list), epd);	
      }
    else
@@ -190,22 +169,16 @@ e_path_user_path_remove(E_Path *ep, const char *path)
    if (path[0] == '~')
      {
 	char *new_path;
-	char *home_dir;
+	const char *home_dir;
 	int len1, len2;
 	
 	home_dir = e_user_homedir_get();
-	if (!home_dir) return;
 	len1 = strlen(home_dir);
 	len2 = strlen(path);
 	new_path = malloc(len1 + len2 + 1);
-	if (!new_path)
-	  {
-	     free(home_dir);
-	     return;
-	  }
+	if (!new_path) return;
 	strcpy(new_path, home_dir);
 	strcat(new_path, path + 1);
-	free(home_dir);
 	for (l = *(ep->user_dir_list); l; l = l->next)
 	  {
 	     E_Path_Dir *epd;
