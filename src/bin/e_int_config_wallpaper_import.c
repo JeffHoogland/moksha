@@ -46,8 +46,6 @@ struct _E_Config_Dialog_Data
    int quality;
 };
 
-static Ecore_Event_Handler *_import_edje_cc_exit_handler = NULL;
-
 static void _import_opt_disabled_set(Import *import, int disabled);
 static void _import_cb_sel_selected(void *data, Evas_Object *obj);
 static void _import_cb_sel_change(void *data, Evas_Object *obj);

@@ -51,8 +51,6 @@ struct _E_Config_Dialog_Data
    E_Color *color1, *color2;
 };
 
-static Ecore_Event_Handler *_import_edje_cc_exit_handler = NULL;
-
 static void _import_opt_disabled_set(Import *import, int disabled);
 static void _import_edj_gen(Import *import);
 static int _import_cb_edje_cc_exit(void *data, int type, void *event);
