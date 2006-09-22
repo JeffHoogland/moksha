@@ -113,11 +113,15 @@ e_fm_mime_icon_get(const char *mime)
    if (ecore_file_exists(buf)) goto ok;
    snprintf(buf, sizeof(buf), "%s/.e/e/icons/%s.png", homedir, mime);
    if (ecore_file_exists(buf)) goto ok;
+   snprintf(buf, sizeof(buf), "%s/.e/e/icons/%s.xpm", homedir, mime);
+   if (ecore_file_exists(buf)) goto ok;
    snprintf(buf, sizeof(buf), "%s/.e/e/icons/%s.edj", homedir, buf2);
    if (ecore_file_exists(buf)) goto ok;
    snprintf(buf, sizeof(buf), "%s/.e/e/icons/%s.svg", homedir, buf2);
    if (ecore_file_exists(buf)) goto ok;
    snprintf(buf, sizeof(buf), "%s/.e/e/icons/%s.png", homedir, buf2);
+   if (ecore_file_exists(buf)) goto ok;
+   snprintf(buf, sizeof(buf), "%s/.e/e/icons/%s.xpm", homedir, buf2);
    if (ecore_file_exists(buf)) goto ok;
    
    /* 3. look up icon in theme */
@@ -135,11 +139,15 @@ e_fm_mime_icon_get(const char *mime)
    if (ecore_file_exists(buf)) goto ok;
    snprintf(buf, sizeof(buf), "%s/data/icons/%s.png", e_prefix_data_get(), mime);
    if (ecore_file_exists(buf)) goto ok;
+   snprintf(buf, sizeof(buf), "%s/data/icons/%s.xpm", e_prefix_data_get(), mime);
+   if (ecore_file_exists(buf)) goto ok;
    snprintf(buf, sizeof(buf), "%s/data/icons/%s.edj", e_prefix_data_get(), buf2);
    if (ecore_file_exists(buf)) goto ok;
    snprintf(buf, sizeof(buf), "%s/data/icons/%s.svg", e_prefix_data_get(), buf2);
    if (ecore_file_exists(buf)) goto ok;
    snprintf(buf, sizeof(buf), "%s/data/icons/%s.png", e_prefix_data_get(), buf2);
+   if (ecore_file_exists(buf)) goto ok;
+   snprintf(buf, sizeof(buf), "%s/data/icons/%s.xpm", e_prefix_data_get(), buf2);
    if (ecore_file_exists(buf)) goto ok;
    
    if (homedir) free(homedir);
