@@ -457,6 +457,7 @@ _e_int_menus_apps_scan(E_Menu *m)
    Evas_List *l;
    int app_count = 0;
    
+   ecore_desktop_instrumentation_reset();
    a = e_object_data_get(E_OBJECT(m));
    if (a)
      {
@@ -510,6 +511,7 @@ _e_int_menus_apps_scan(E_Menu *m)
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("(No Applications)"));
      }
+   ecore_desktop_instrumentation_print();
 }
 
 static void

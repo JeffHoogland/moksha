@@ -32,18 +32,21 @@ e_fdo_menu_to_order(void)
 {
    char dir[PATH_MAX];
 
+   ecore_desktop_instrumentation_reset();
    /* Nuke the old menus. */
    snprintf(dir, sizeof(dir), "%s/.e/e/applications/menu/all/", ecore_desktop_home_get());
    ecore_file_recursive_rm(dir);
    menu_count = 0;
    item_count = 0;
    ecore_desktop_menu_for_each(_e_fdo_menu_to_order_make_apps);
+   ecore_desktop_instrumentation_print();
    /* This is a hueristic to guess if there are not enough apps.  Feel free to tweak it. */
    if ((item_count < 50) || (menu_count > (item_count * 3)))
       {
          struct category_data cat_data;
 
          // FIXME: search out all .desktop files and generate menus ala e17genmenu.
+         ecore_desktop_instrumentation_reset();
          cat_data.menus = ecore_hash_new(ecore_str_hash, ecore_str_compare);
 	 if (cat_data.menus)
 	    {
@@ -52,6 +55,7 @@ e_fdo_menu_to_order(void)
                ecore_desktop_paths_for_each(ECORE_DESKTOP_PATHS_DESKTOPS, _e_fdo_menu_to_order_cb_desktop_dir_foreach, &cat_data);
                ecore_hash_for_each_node(cat_data.menus, _e_fdo_menu_to_order_dump_each_hash_node2, &cat_data);
 	    }
+         ecore_desktop_instrumentation_print();
       }
 }
 
