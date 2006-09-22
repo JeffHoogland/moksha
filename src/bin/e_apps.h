@@ -39,8 +39,7 @@ struct _E_App
    const char         *exe; /* command to execute, NULL if directory */
    const char         *exe_params; /* command params to execute, NULL if directory */
 
-   const char         *path; /* path to .eet containing icons etc. etc. */
-//   const char         *icon_path; /* path to icon file, in case it is different from path. */
+   const char         *path; /* path to .desktop containing icons etc. etc. */
 
    const char         *win_name; /* window name */
    const char         *win_class; /* window class */
@@ -48,16 +47,19 @@ struct _E_App
    const char         *win_role; /* window role */
 
    const char         *icon_class; /* icon_class */
-   const char         *icon_path;  /* FDO icon path */
-   
+   const char         *icon_theme; /* FDO icon theme */
+   const char         *icon;       /* FDO icon */
+   const char         *icon_path;  /* icon path */
+   time_t              icon_time;  /* For checking if the icon cache is valid. */
+
    Evas_List          *subapps; /* if this a directory, a list of more E_App's */
-   
+
    Evas_List          *instances; /* a list of all the exe handles for executions */
 
    Evas_List          *references; /* If this app is in a main repository, this would
 				      be a list to other eapp pointing to this */
    Ecore_File_Monitor *monitor; /* Check for changes and files */
-   
+
    unsigned char       startup_notify : 1; /* disable while starting etc. */
    unsigned char       wait_exit : 1; /* wait for app to exit before execing next */
    unsigned char       starting : 1; /* this app is starting */
@@ -68,7 +70,7 @@ struct _E_App
 
    /* Actually calling this st_mtime causes compile issues, must be some strange macros at work. */
    time_t              mtime;           /* For checking if the cache is valid. */
-   
+
    /* used for eap edit */
    const char         *image; /* used when we're saving a image into the eap */
    int                 width; /* used for saving eap's image width in edje */

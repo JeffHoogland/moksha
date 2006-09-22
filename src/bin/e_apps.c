@@ -1260,12 +1260,15 @@ e_app_fields_fill(E_App *a, const char *path)
 
 	   if (desktop->exec)  a->exe = evas_stringshare_add(desktop->exec);
 	   if (desktop->exec_params)  a->exe_params = evas_stringshare_add(desktop->exec_params);
+	   if (desktop->icon)  a->icon = evas_stringshare_add(desktop->icon);
+	   if (desktop->icon_theme)  a->icon_theme = evas_stringshare_add(desktop->icon_theme);
 	   if (desktop->icon_class)  a->icon_class = evas_stringshare_add(desktop->icon_class);
 	   if (desktop->icon_path)  a->icon_path = evas_stringshare_add(desktop->icon_path);
 	   if (desktop->window_name)  a->win_name = evas_stringshare_add(desktop->window_name);
 	   if (desktop->window_class)  a->win_class = evas_stringshare_add(desktop->window_class);
 	   if (desktop->window_title)  a->win_title = evas_stringshare_add(desktop->window_title);
 	   if (desktop->window_role)  a->win_role = evas_stringshare_add(desktop->window_role);
+	   a->icon_time = desktop->icon_time;
            a->startup_notify = desktop->startup;
            a->wait_exit = desktop->wait_exit;
 
@@ -1409,12 +1412,15 @@ e_app_fields_save(E_App *a)
 
 	       desktop->exec = (char *) a->exe;
 	       desktop->exec_params = (char *) a->exe_params;
+	       desktop->icon = (char *) a->icon;
+	       desktop->icon_theme = (char *) a->icon_theme;
 	       desktop->icon_class = (char *) a->icon_class;
                desktop->icon_path = (char *) a->icon_path;
 	       desktop->window_name = (char *) a->win_name;
 	       desktop->window_class = (char *) a->win_class;
 	       desktop->window_title = (char *) a->win_title;
 	       desktop->window_role = (char *) a->win_role;
+	       desktop->icon_time = a->icon_time;
 	       desktop->startup = a->startup_notify;
 	       desktop->wait_exit = a->wait_exit;
 
@@ -1584,6 +1590,8 @@ e_app_fields_empty(E_App *a)
    if (a->comment) evas_stringshare_del(a->comment);
    if (a->exe) evas_stringshare_del(a->exe);
    if (a->exe_params) evas_stringshare_del(a->exe_params);
+   if (a->icon_theme) evas_stringshare_del(a->icon_theme);
+   if (a->icon) evas_stringshare_del(a->icon);
    if (a->icon_class) evas_stringshare_del(a->icon_class);
    if (a->icon_path) evas_stringshare_del(a->icon_path);
    if (a->win_name) evas_stringshare_del(a->win_name);
@@ -1596,6 +1604,8 @@ e_app_fields_empty(E_App *a)
    a->comment = NULL;
    a->exe = NULL;
    a->exe_params = NULL;
+   a->icon_theme = NULL;
+   a->icon = NULL;
    a->icon_class = NULL;
    a->icon_path = NULL;
    a->win_name = NULL;
@@ -2396,10 +2406,13 @@ _e_app_copy(E_App *dst, E_App *src)
    dst->win_class = src->win_class;
    dst->win_title = src->win_title;
    dst->win_role = src->win_role;
+   dst->icon_theme = src->icon_theme;
+   dst->icon = src->icon;
    dst->icon_class = src->icon_class;
    dst->icon_path = src->icon_path;
    dst->startup_notify = src->startup_notify;
    dst->wait_exit = src->wait_exit;
+   dst->icon_time = src->icon_time;
    dst->starting = src->starting;
    dst->scanned = src->scanned;
 

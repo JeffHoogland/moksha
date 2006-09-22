@@ -16,6 +16,8 @@ struct _E_Config_Dialog_Data
    char  *wclass;
    char  *wtitle;
    char  *wrole;
+   char  *itheme;
+   char  *icon;
    char  *iclass;
    char  *ipath;
    int    startup_notify;
@@ -139,6 +141,8 @@ _e_eap_edit_fill_data(E_Config_Dialog_Data *cfdata)
    IFDUP(cfdata->editor->eap->win_class, cfdata->wclass);
    IFDUP(cfdata->editor->eap->win_title, cfdata->wtitle);
    IFDUP(cfdata->editor->eap->win_role, cfdata->wrole);
+   IFDUP(cfdata->editor->eap->icon_theme, cfdata->itheme);
+   IFDUP(cfdata->editor->eap->icon, cfdata->icon);
    IFDUP(cfdata->editor->eap->icon_class, cfdata->iclass);
    IFDUP(cfdata->editor->eap->icon_path, cfdata->ipath);
    cfdata->startup_notify = cfdata->editor->eap->startup_notify;
@@ -149,6 +153,8 @@ _e_eap_edit_fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->width = cfdata->editor->eap->width;
 
    IFADD(cfdata->editor->eap->path, cfdata->eap.path);
+   IFADD(cfdata->editor->eap->icon_theme, cfdata->eap.icon_theme);
+   IFADD(cfdata->editor->eap->icon, cfdata->eap.icon);
    IFADD(cfdata->editor->eap->icon_class, cfdata->eap.icon_class);
    IFADD(cfdata->editor->eap->icon_path, cfdata->eap.icon_path);
    if (!cfdata->eap.icon_path)
@@ -179,11 +185,15 @@ _e_eap_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data)
    IFFREE(data->wclass);
    IFFREE(data->wtitle);
    IFFREE(data->wrole);
+   IFFREE(data->itheme);
+   IFFREE(data->icon);
    IFFREE(data->iclass);
    IFFREE(data->ipath);
    IFFREE(data->image);
 
    IFDEL(data->eap.icon_class);
+   IFDEL(data->eap.icon);
+   IFDEL(data->eap.icon_theme);
    IFDEL(data->eap.icon_path);
    
    if (data->editor)
@@ -213,8 +223,11 @@ _e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data)
    IFDEL(eap->image);
 
    IFADD(data->name, eap->name);
+   IFADD(data->itheme, eap->icon_theme);
    IFADD(data->iclass, eap->icon_class);
+   IFADD(data->icon, eap->icon);
    IFADD(data->eap.icon_path, eap->icon_path);
+   IFADD(data->eap.icon, eap->icon);
    if (data->exe)
       {
          char *exe;
