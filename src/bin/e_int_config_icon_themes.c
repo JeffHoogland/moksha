@@ -119,9 +119,9 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->icon_theme = evas_stringshare_add(cfdata->themename);
    e_config_save_queue();
 
-   /* FIXME: Not sure about this stuff, but we need to redo any existing icons now. */
-//   a = e_action_find("restart");
-//   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+   /* If it's good enough for themes, it's good enough for icon themes, but ICK!. */
+   a = e_action_find("restart");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
    return 1; /* Apply was OK */
 }
 
