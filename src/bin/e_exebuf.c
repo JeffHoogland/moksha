@@ -45,9 +45,14 @@ static void _e_exebuf_prev(void);
 static void _e_exebuf_complete(void);
 static void _e_exebuf_backspace(void);
 static void _e_exebuf_matches_update(void);
+static void _e_exebuf_cb_eap_item_mouse_in(void *data, Evas *evas,
+      Evas_Object *obj, void *event_info);
+static void _e_exebuf_cb_exe_item_mouse_in(void *data, Evas *evas,
+      Evas_Object *obj, void *event_info);
 static int _e_exebuf_cb_key_down(void *data, int type, void *event);
 static int _e_exebuf_cb_mouse_down(void *data, int type, void *event);
 static int _e_exebuf_cb_mouse_up(void *data, int type, void *event);
+static int _e_exebuf_cb_mouse_move(void *data, int type, void *event);
 static int _e_exebuf_cb_mouse_wheel(void *data, int type, void *event);
 static int _e_exebuf_exe_scroll_timer(void *data);
 static int _e_exebuf_eap_scroll_timer(void *data);
@@ -136,9 +141,10 @@ e_exebuf_show(E_Zone *zone)
    if (e_winlist_active_get()) return 0;
    if (exebuf) return 0;
 
-   input_window = ecore_x_window_input_new(zone->container->win, 0, 0, 1, 1);
+   input_window = ecore_x_window_input_new(zone->container->win, zone->x,
+	 zone->y, zone->w, zone->h);
    ecore_x_window_show(input_window);
-   if (!e_grabinput_get(input_window, 0, input_window))
+   if (!e_grabinput_get(input_window, 1, input_window))
      {
         ecore_x_window_del(input_window);
 	input_window = 0;
@@ -152,7 +158,7 @@ e_exebuf_show(E_Zone *zone)
    
    exebuf = e_popup_new(zone, x, y, w, h); 
    if (!exebuf) return 0;
-   
+
    cmd_buf = malloc(EXEBUFLEN);
    if (!cmd_buf)
      {
@@ -161,10 +167,10 @@ e_exebuf_show(E_Zone *zone)
      }
    cmd_buf[0] = 0;
 
-   evas_event_feed_mouse_move(exebuf->evas, -1000000, -1000000, ecore_x_current_time_get(), NULL);
-   
    e_popup_layer_set(exebuf, 255);
    evas_event_freeze(exebuf->evas);
+   evas_event_feed_mouse_in(exebuf->evas, ecore_x_current_time_get(), NULL);
+   evas_event_feed_mouse_move(exebuf->evas, -1000000, -1000000, ecore_x_current_time_get(), NULL);
    o = edje_object_add(exebuf->evas);
    bg_object = o;
    e_theme_edje_object_set(o, "base/theme/exebuf",
@@ -221,6 +227,9 @@ e_exebuf_show(E_Zone *zone)
    handlers = evas_list_append
      (handlers, ecore_event_handler_add
       (ECORE_X_EVENT_MOUSE_BUTTON_UP, _e_exebuf_cb_mouse_up, NULL));
+   handlers = evas_list_append
+     (handlers, ecore_event_handler_add
+      (ECORE_X_EVENT_MOUSE_MOVE, _e_exebuf_cb_mouse_move, NULL));
    handlers = evas_list_append
      (handlers, ecore_event_handler_add
       (ECORE_X_EVENT_MOUSE_WHEEL, _e_exebuf_cb_mouse_wheel, NULL));
@@ -683,7 +692,11 @@ _e_exebuf_complete(void)
      {
 	if (exe_sel->app)
 	  {
-	     strncpy(cmd_buf, exe_sel->app->name, EXEBUFLEN - 1);
+	     if (exe_sel->app->exe_params)
+	       snprintf(cmd_buf, EXEBUFLEN - 1, "%s %s", 
+		     exe_sel->app->exe, exe_sel->app->exe_params);
+	     else
+	       strncpy(cmd_buf, exe_sel->app->exe, EXEBUFLEN - 1);
 	     cmd_buf[EXEBUFLEN - 1] = 0;
 	  }
 	else if (exe_sel->file)
@@ -929,6 +942,8 @@ _e_exebuf_matches_update(void)
 	else if (opt == 0x1) snprintf(buf, sizeof(buf), "%s", exe->app->comment);
 	else snprintf(buf, sizeof(buf), "%s", exe->app->name);
 	edje_object_part_text_set(o, "e.text.title", buf);
+	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN,
+	      _e_exebuf_cb_eap_item_mouse_in, exe);
 	evas_object_show(o);
 	if (edje_object_part_exists(exe->bg_object, "e.swallow.icons"))
 	  {
@@ -970,6 +985,8 @@ _e_exebuf_matches_update(void)
 	e_theme_edje_object_set(o, "base/theme/exebuf",
 				"e/widgets/exebuf/item");
 	edje_object_part_text_set(o, "e.text.title", exe->file);
+	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN,
+	      _e_exebuf_cb_exe_item_mouse_in, exe);
 	evas_object_show(o);
 	if (edje_object_part_exists(exe->bg_object, "e.swallow.icons"))
 	  {
@@ -998,6 +1015,26 @@ _e_exebuf_matches_update(void)
      }
    e_box_thaw(exe_list_object);
    evas_event_thaw(exebuf->evas);
+}
+
+static void 
+_e_exebuf_cb_eap_item_mouse_in(void *data, Evas *evas, Evas_Object *obj, 
+      void *event_info)
+{
+   if (exe_sel) _e_exebuf_exe_desel(exe_sel);
+   if (!(exe_sel = data)) return;
+   which_list = EAP_LIST;
+   _e_exebuf_exe_sel(exe_sel);
+}
+
+static void 
+_e_exebuf_cb_exe_item_mouse_in(void *data, Evas *evas, Evas_Object *obj, 
+      void *event_info)
+{
+   if (exe_sel) _e_exebuf_exe_desel(exe_sel);
+   if (!(exe_sel = data)) return;
+   which_list = EXE_LIST;
+   _e_exebuf_exe_sel(exe_sel);
 }
 
 static int
@@ -1057,6 +1094,10 @@ _e_exebuf_cb_mouse_down(void *data, int type, void *event)
    
    ev = event;
    if (ev->win != input_window) return 1;
+   if (ev->button == 1) 
+     _e_exebuf_exec();
+   else if (ev->button == 2)
+     _e_exebuf_complete();
    return 1;
 }
 
@@ -1067,6 +1108,20 @@ _e_exebuf_cb_mouse_up(void *data, int type, void *event)
    
    ev = event;
    if (ev->win != input_window) return 1;
+   return 1;
+}
+
+static int 
+_e_exebuf_cb_mouse_move(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Move *ev;
+
+   ev = event;
+   if (ev->win != input_window) return 1;
+
+   evas_event_feed_mouse_move(exebuf->evas, ev->x - exebuf->x +
+	 exebuf->zone->x, ev->y - exebuf->y + exebuf->zone->y, ev->time, NULL);
+
    return 1;
 }
 

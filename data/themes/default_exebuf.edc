@@ -786,6 +786,26 @@ group {
 	    }
 	 }
       }
+      part {
+	 name:          "e.event.exebuf.item";
+	 type:          RECT;
+	 mouse_events:  1;
+	 description {
+	    state:    "default" 0.0;
+	    min:      14 14;
+	    visible:  1;
+	    color: 0 0 0 0;
+	    rel1 {
+	       relative: 1.0  0.0;
+	       offset:   1    -1;
+	       to_x: "e.swallow.icons";
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
+	    }
+	 }
+      }
    }
    programs {
       program {
