@@ -183,8 +183,9 @@ ISSUES:
     It's the complete list of themes that are currently installed that can 
     take ages to find.  The list itself should also be small.
 SOLUTION:
-    Find them during idle time, and finish the job async when the dialog is
-    started.  Monitor the icon paths for the installation of new themes.
+    Find them during idle time, and finish the job async when the dialog
+    is started.  Monitor the icon paths for the installation of new
+    themes.  Keep them all in a hash.
 
 -----------------------------------------------------------------------
 
@@ -197,18 +198,28 @@ WHEN:
 ISSUES:
     Combined .edj and FDO searching. FDO searching can take a long time.
     Things that display lots of icons wont want to wait for all those 
-    complex searches.
+    complex searches.  Searching for icons that don't exist is what
+    takes the longest, as the FDO algo means we have to look through all
+    the directories, in this theme, and the next theme.
 SOLUTION:
     e_app_icon_add() should be used everywhere, and it should register a 
     rectangle for use by the icon.  The caller then shows an empty icon.
     A thumbnailing style process then does all the searching, and does 
-    the fm2 bouncy icon thing when the icon is found.
-    
+    the fm2 bouncy icon thing when the icon is found.  raster forbids 
+    this method.
+
     The results of the search should be cached somewhere on disk for 
     future reference.  That needs to be nuked when the user changes 
     icon theme.  Changing the icon theme currently does not update all 
-    displayed icons.  The X-Enlightenment-IconPath field of the .desktop
-    file could be used for the on disk cache.
+    displayed icons, it just does a restart like wm theme changing does. 
+    The X-Enlightenment-IconPath field of the .desktop file could be
+    used for the on disk cache.  X-Enlightenment-Icon-Theme and
+    X-Enlightenment-Icon-TimeStamp can be used to determine if the icon
+    path stored on disk is out of date, or in a different theme.  An
+    idle task can go through all the .desktops in
+    ~/.e/e/applications/all and check if the icons need updating.  The
+    spec allows caching of dirs, and we can monitor just the top level
+    icon theme directory.
 
 -----------------------------------------------------------------------
 
