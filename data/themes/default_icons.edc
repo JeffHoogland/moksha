@@ -27,6 +27,8 @@ images {
    image: "e17_icon_shelf.png" LOSSY 90;
    image: "e17_icon_performance.png" LOSSY 90;
    image: "e17_icon_startup.png" LOSSY 90;
+   image: "e17_icon_winlist.png" LOSSY 90;
+   image: "e17_icon_window_manipulation.png" LOSSY 90;
    image: "e17_icon_applications.png" LOSSY 90;
    image: "e17_icon_menus.png" LOSSY 90;
 
@@ -940,6 +942,44 @@ group {
         max:    64 64;
         image {
            normal: "e17_icon_startup.png";
+        }
+     }
+      }
+   }
+}
+group {
+   name: "e/icons/enlightenment/winlist";
+   max: 64 64;
+   parts {
+      part {
+     name:          "icon";
+     mouse_events: 0;
+     description {
+        state:   "default" 0.0;
+        aspect: 1.0 1.0;
+        aspect_preference: BOTH;
+        max:    64 64;
+        image {
+           normal: "e17_icon_winlist.png";
+        }
+     }
+      }
+   }
+}
+group {
+   name: "e/icons/enlightenment/window_manipulation";
+   max: 64 64;
+   parts {
+      part {
+     name:          "icon";
+     mouse_events: 0;
+     description {
+        state:   "default" 0.0;
+        aspect: 1.0 1.0;
+        aspect_preference: BOTH;
+        max:    64 64;
+        image {
+           normal: "e17_icon_window_manipulation.png";
         }
      }
       }
