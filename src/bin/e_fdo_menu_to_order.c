@@ -34,7 +34,7 @@ e_fdo_menu_to_order(void)
 
    ecore_desktop_instrumentation_reset();
    /* Nuke the old menus. */
-   snprintf(dir, sizeof(dir), "%s/.e/e/applications/menu/all/", ecore_desktop_home_get());
+   snprintf(dir, sizeof(dir), "%s/.e/e/applications/menu/all/", e_user_homedir_get());
    ecore_file_recursive_rm(dir);
    menu_count = 0;
    item_count = 0;
