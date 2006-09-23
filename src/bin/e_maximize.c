@@ -3,9 +3,6 @@
  */
 #include "e.h"
 
-/* FIXME: this code is quite bad.. formatting, correctness, list management - 
- * overly long and complex... */
-
 typedef struct _E_Maximize_Rect E_Maximize_Rect;
 
 struct _E_Maximize_Rect
