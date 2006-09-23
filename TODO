@@ -11,7 +11,6 @@ Some of the things (in very short form) that need to be done to E17...
 * BUG: performance bug: e_app_new() is amazingly slow and heavy. see the FIXME
   comment in e_fm.c in _e_fm2_icon_icon_set()... this needs to be traced,
   profiled and leaned down by many factors :)
-* BUG: smart placement seems to screw up if a shelf is at the top of the screen
 * BUG: e17 screen res diaolg doesnt work under xephyr - why?
 * BUG: "match this window only" doesnt fall back to other unused remembers
 * BUG: if app asks for borderless in properties - borderless toggle in menu

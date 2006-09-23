@@ -20,12 +20,15 @@ struct _E_Maximize_Rect
       rects = evas_list_append(rects, r); \
    }
 
-static void _e_maximize_border_rects_fill(E_Border *bd, Evas_List *list, int *x1, int *y1, int *x2, int *y2);
+static void _e_maximize_border_rects_fill(E_Border *bd, Evas_List *list, int *x1, int *y1, int *x2, int *y2, E_Maximize dir);
+static void _e_maximize_border_rects_fill_both(E_Border *bd, Evas_List *rects, int *x1, int *y1, int *x2, int *y2); 
+static void _e_maximize_border_rects_fill_horiz(E_Border *bd, Evas_List *rects, int *x1, int *x2, int *bx, int *by, int *bw, int *bh);
+static void _e_maximize_border_rects_fill_vert(E_Border *bd, Evas_List *rects, int *y1, int *y2, int *bx, int *by, int *bw, int *bh);
 
 EAPI void
-e_maximize_border_gadman_fit(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
+e_maximize_border_shelf_fit(E_Border *bd, int *x1, int *y1, int *x2, int *y2, E_Maximize dir)
 {
-   return e_maximize_border_gadman_fill(bd, x1, y1, x2, y2);
+   return e_maximize_border_shelf_fill(bd, x1, y1, x2, y2, dir);
 }
 
 EAPI void
@@ -125,7 +128,7 @@ e_maximize_border_dock_fit(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
 }
 
 EAPI void
-e_maximize_border_gadman_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
+e_maximize_border_shelf_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2, E_Maximize dir)
 {
    Evas_List *l, *rects = NULL;
    E_Maximize_Rect *r;
@@ -141,7 +144,7 @@ e_maximize_border_gadman_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
      }
    if (rects)
      {
-	_e_maximize_border_rects_fill(bd, rects, x1, y1, x2, y2);
+	_e_maximize_border_rects_fill(bd, rects, x1, y1, x2, y2, dir);
 	for (l = rects; l; l = l->next)
 	  free(l->data);
 	evas_list_free(rects);
@@ -149,7 +152,7 @@ e_maximize_border_gadman_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
 }
 
 EAPI void
-e_maximize_border_border_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
+e_maximize_border_border_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2, E_Maximize dir)
 {
    Evas_List *l, *rects = NULL;
    E_Border_List *bl;
@@ -167,7 +170,7 @@ e_maximize_border_border_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
    e_container_border_list_free(bl);
    if (rects)
      {
-	_e_maximize_border_rects_fill(bd, rects, x1, y1, x2, y2);
+	_e_maximize_border_rects_fill(bd, rects, x1, y1, x2, y2, dir);
 	for (l = rects; l; l = l->next)
 	  free(l->data);
 	evas_list_free(rects);
@@ -175,87 +178,167 @@ e_maximize_border_border_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
 }
 
 static void
-_e_maximize_border_rects_fill(E_Border *bd, Evas_List *rects, int *x1, int *y1, int *x2, int *y2)
+_e_maximize_border_rects_fill(E_Border *bd, Evas_List *rects, int *x1, int *y1, int *x2, int *y2, E_Maximize dir)
 {
-   Evas_List *l;
+   if ((dir & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTH)
+     {
+        _e_maximize_border_rects_fill_both(bd, rects, x1, y1, x2, y2);
+     }
+   else
+     {
+        int bx, by, bw, bh;
+
+        bx = bd->x;
+        by = bd->y;
+        bw = bd->w;
+        bh = bd->h;
+
+	if ((dir & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
+	  _e_maximize_border_rects_fill_horiz(bd, rects, x1, x2, &bx, &by, &bw, &bh);
+	else if ((dir & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
+	  _e_maximize_border_rects_fill_vert(bd, rects, y1, y2, &bx, &by, &bw, &bh);  
+     }
+}
+
+static void
+_e_maximize_border_rects_fill_both(E_Border *bd, Evas_List *rects, int *x1, int *y1, int *x2, int *y2)
+{
+   int hx1, hy1, hx2, hy2;
+   int vx1, vy1, vx2, vy2;
    int bx, by, bw, bh;
-   int cx1, cx2, cy1, cy2;
 
-   cx1 = bd->zone->x;
-   if (x1) cx1 = *x1;
+   hx1 = vx1 = bd->zone->x;
+   if (x1) hx1 = vx1 = *x1;
    
-   cy1 = bd->zone->y;
-   if (y1) cy1 = *y1;
+   hy1 = vy1 = bd->zone->y;
+   if (y1) hy1 = vy1 = *y1;
    
-   cx2 = bd->zone->x + bd->zone->w;
-   if (x2) cx2 = *x2;
+   hx2 = vx2 = bd->zone->x + bd->zone->w;
+   if (x2) hx2 = vx2 = *x2;
 
-   cy2 = bd->zone->y + bd->zone->h;
-   if (y2) cy2 = *y2;
+   hy2 = vy2 = bd->zone->y + bd->zone->h;
+   if (y2) hy2 = vy2 = *y2;
 
-   /* Loop four times. We expand left, up, right, down. */
-   /* FIXME: The right order? */
+   /* Init working values, try maximizing horizontally first */
    bx = bd->x;
    by = bd->y;
    bw = bd->w;
    bh = bd->h;
+   _e_maximize_border_rects_fill_horiz(bd, rects, &hx1, &hx2, &bx, &by, &bw, &bh);
+   _e_maximize_border_rects_fill_vert(bd, rects, &hy1, &hy2, &bx, &by, &bw, &bh);
+
+   /* Reset working values, try maximizing vertically first */
+   bx = bd->x;
+   by = bd->y;
+   bw = bd->w;
+   bh = bd->h;
+   _e_maximize_border_rects_fill_vert(bd, rects, &vy1, &vy2, &bx, &by, &bw, &bh);
+   _e_maximize_border_rects_fill_horiz(bd, rects, &vx1, &vx2, &bx, &by, &bw, &bh);
+
+   /* Use the result set that gives the largest volume */
+   if (((hx2 - hx1) * (hy2 - hy1)) > ((vx2 - vx1) * (vy2 - vy1)))
+     {
+        if (x1) *x1 = hx1;
+	if (y1) *y1 = hy1;
+	if (x2) *x2 = hx2;
+	if (y2) *y2 = hy2;
+     }
+   else
+     {
+        if (x1) *x1 = vx1;
+	if (y1) *y1 = vy1;
+	if (x2) *x2 = vx2;
+	if (y2) *y2 = vy2;
+     }
+}
+
+static void
+_e_maximize_border_rects_fill_horiz(E_Border *bd, Evas_List *rects, int *x1, int *x2, int *bx, int *by, int *bw, int *bh)
+{
+   Evas_List *l;
+   int cx1, cx2;
+
+   cx1 = bd->zone->x;
+   if (x1) cx1 = *x1;
+   
+   cx2 = bd->zone->x + bd->zone->w;
+   if (x2) cx2 = *x2;
+
+   /* Expand left */
    for (l = rects; l; l = l->next)
      {
-	/* expand left */
 	E_Maximize_Rect *rect;
 
 	rect = l->data;
-	if ((rect->x2 > cx1) && (rect->x2 <= bx) &&
-	    E_INTERSECTS(0, rect->y1, bd->zone->w, (rect->y2 - rect->y1), 0, by, bd->zone->w, bh))
+	if ((rect->x2 > cx1) && (rect->x2 <= *bx) &&
+	    E_INTERSECTS(0, rect->y1, bd->zone->w, (rect->y2 - rect->y1), 0, *by, bd->zone->w, *bh))
 	  {
 	     cx1 = rect->x2;
 	  }
      }
-   bw += (bx - cx1);
-   bx = cx1;
+   *bw += (*bx - cx1);
+   *bx = cx1;
+
+   /* Expand right */
    for (l = rects; l; l = l->next)
      {
-	/* expand up */
 	E_Maximize_Rect *rect;
 
 	rect = l->data;
-	if ((rect->y2 > cy1) && (rect->y2 <= by) &&
-	    E_INTERSECTS(rect->x1, 0, (rect->x2 - rect->x1), bd->zone->h, bx, 0, bw, bd->zone->h))
-	  {
-	     cy1 = rect->y2;
-	  }
-     }
-   bh += (by - cy1);
-   by = cy1;
-   for (l = rects; l; l = l->next)
-     {
-	/* expand right */
-	E_Maximize_Rect *rect;
-
-	rect = l->data;
-	if ((rect->x1 < cx2) && (rect->x1 >= (bx + bw)) &&
-	    E_INTERSECTS(0, rect->y1, bd->zone->w, (rect->y2 - rect->y1), 0, by, bd->zone->w, bh))
+	if ((rect->x1 < cx2) && (rect->x1 >= (*bx + *bw)) &&
+	    E_INTERSECTS(0, rect->y1, bd->zone->w, (rect->y2 - rect->y1), 0, *by, bd->zone->w, *bh))
 	  {
 	     cx2 = rect->x1;
 	  }
      }
-   bw = (cx2 - cx1);
+   *bw = (cx2 - cx1);
+ 
+   if (x1) *x1 = cx1;
+   if (x2) *x2 = cx2;
+}
+
+static void
+_e_maximize_border_rects_fill_vert(E_Border *bd, Evas_List *rects, int *y1, int *y2, int *bx, int *by, int *bw, int *bh)
+{
+   Evas_List *l;
+   int cy1, cy2;
+
+   cy1 = bd->zone->y;
+   if (y1) cy1 = *y1;
+   
+   cy2 = bd->zone->y + bd->zone->h;
+   if (y2) cy2 = *y2;
+
+   /* Expand up */
    for (l = rects; l; l = l->next)
      {
-	/* expand down */
 	E_Maximize_Rect *rect;
 
 	rect = l->data;
-	if ((rect->y1 < cy2) && (rect->y1 >= (by + bh)) &&
-	    E_INTERSECTS(rect->x1, 0, (rect->x2 - rect->x1), bd->zone->h, bx, 0, bw, bd->zone->h))
+	if ((rect->y2 > cy1) && (rect->y2 <= *by) &&
+	    E_INTERSECTS(rect->x1, 0, (rect->x2 - rect->x1), bd->zone->h, *bx, 0, *bw, bd->zone->h))
+	  {
+	     cy1 = rect->y2;
+	  }
+     }
+   *bh += (*by - cy1);
+   *by = cy1;
+
+   /* Expand down */
+   for (l = rects; l; l = l->next)
+     {
+	E_Maximize_Rect *rect;
+
+	rect = l->data;
+	if ((rect->y1 < cy2) && (rect->y1 >= (*by + *bh)) &&
+	    E_INTERSECTS(rect->x1, 0, (rect->x2 - rect->x1), bd->zone->h, *bx, 0, *bw, bd->zone->h))
 	  {
 	     cy2 = rect->y1;
 	  }
      }
-   bh = (cy2 - cy1);
+   *bh = (cy2 - cy1);
 
-   if (x1) *x1 = cx1;
    if (y1) *y1 = cy1;
-   if (x2) *x2 = cx2;
    if (y2) *y2 = cy2;
 }
+

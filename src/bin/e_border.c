@@ -1767,8 +1767,8 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	     x2 = bd->zone->x + bd->zone->w;
 	     y2 = bd->zone->y + bd->zone->h;
 	     
-	     /* walk through all gadgets */
-	     e_maximize_border_gadman_fit(bd, &x1, &y1, &x2, &y2);
+	     /* walk through all shelves */
+	     e_maximize_border_shelf_fit(bd, &x1, &y1, &x2, &y2, max);
 	     
 	     /* walk through docks and toolbars */
 	     e_maximize_border_dock_fit(bd, &x1, &y1, &x2, &y2);
@@ -1790,11 +1790,11 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	     x2 = bd->zone->x + bd->zone->w;
 	     y2 = bd->zone->y + bd->zone->h;
 	     
-	     /* walk through all gadgets */
-	     e_maximize_border_gadman_fill(bd, &x1, &y1, &x2, &y2);
+	     /* walk through all shelves */
+	     e_maximize_border_shelf_fill(bd, &x1, &y1, &x2, &y2, max);
 	     
 	     /* walk through all windows */
-	     e_maximize_border_border_fill(bd, &x1, &y1, &x2, &y2);
+	     e_maximize_border_border_fill(bd, &x1, &y1, &x2, &y2, max);
 	     
 	     w = x2 - x1;
 	     h = y2 - y1;
