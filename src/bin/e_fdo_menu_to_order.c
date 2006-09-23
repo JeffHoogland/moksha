@@ -68,7 +68,7 @@ _e_fdo_menu_to_order_make_apps(char *name, char *path, Ecore_Hash *apps)
    if (order_data.sheap)
       {
          ecore_sheap_set_free_cb(order_data.sheap, free);
-         snprintf(order_data.order_path, sizeof(order_data.order_path), "%s/.e/e/applications/menu/all/%s", ecore_desktop_home_get(), path);
+         snprintf(order_data.order_path, sizeof(order_data.order_path), "%s/.e/e/applications/menu/all/%s", e_user_homedir_get(), path);
          /* Check if we need to create the directory. */
          if (!ecore_file_exists(order_data.order_path))
             {
@@ -124,7 +124,7 @@ _e_fdo_menu_to_order_dump_each_hash_node(void *value, void *user_data)
          printf("MAKING MENU ITEM %s -> %s  (%s)\n", order_data->order_path, file, key);
 #endif
          item_count++;
-         snprintf(path2, sizeof(path2), "%s/.e/e/applications/all/%s", ecore_desktop_home_get(), key);
+         snprintf(path2, sizeof(path2), "%s/.e/e/applications/all/%s", e_user_homedir_get(), key);
          if (!ecore_file_exists(path2))
             ecore_file_symlink(file, path2);
          ecore_sheap_insert(order_data->sheap, strdup(key));
