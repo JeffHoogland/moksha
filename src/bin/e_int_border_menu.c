@@ -701,9 +701,15 @@ _e_border_menu_cb_borderless(void *data, E_Menu *m, E_Menu_Item *mi)
      {
 	toggle = e_menu_item_toggle_get(mi);
 	if (toggle)
-	  bd->borderless = 1;
+	  {
+	     bd->borderless = 1;
+	     ecore_x_mwm_borderless_set(bd->client.win, 1);
+	  }
 	else
-	  bd->borderless = 0;
+	  {
+	     bd->borderless = 0;
+	     ecore_x_mwm_borderless_set(bd->client.win, 0);
+	  }
 	  
 	bd->client.border.changed = 1;
 	bd->changed = 1;
