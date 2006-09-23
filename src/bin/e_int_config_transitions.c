@@ -33,7 +33,7 @@ e_int_config_transitions(E_Container *con)
    v->basic.create_widgets = _basic_create_widgets;
    
    cfd = e_config_dialog_new(con, _("Transition Settings"),"E", 
-			     "_config_transitions_dialog", "enlightenment/e", 
+			     "_config_transitions_dialog", "enlightenment/transitions", 
 			     0, v, NULL);
    if (!cfd) return NULL;
    return cfd;

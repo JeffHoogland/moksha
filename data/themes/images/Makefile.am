@@ -405,6 +405,7 @@ e17_icon_mouse.png \
 e17_icon_keys.png \
 e17_icon_desklock.png \
 e17_icon_shelf.png \
+e17_icon_transitions.png \
 e17_icon_applications.png \
 e17_icon_performance.png \
 e17_icon_startup.png \
