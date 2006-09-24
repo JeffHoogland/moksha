@@ -17,66 +17,70 @@ if [ -e "$FILENAME.eap" ]; then
     cd /tmp/convert.eap/$FILENAME >/dev/null
 
     eet -d $FILENAME.eap >/dev/null
-    NAME=`cat app/info/name 2>/dev/null`
-    GENERIC=`cat app/info/generic 2>/dev/null`
-    COMMENT=`cat app/info/comment 2>/dev/null`
-    EXEC=`cat app/info/exe 2>/dev/null`
-    STARTUP=`cat app/info/startup_notify 2>/dev/null | tr "\000\001" "01"`
-    WAIT=`cat app/info/wait_exit 2>/dev/null | tr "\000\001" "01"`
-    WNAME=`cat app/window/name 2>/dev/null`
-    WCLASS=`cat app/window/class 2>/dev/null`
-    WZTITLE=`cat app/window/title 2>/dev/null`
-    WZROLE=`cat app/window/role 2>/dev/null`
-    ICLASS=`cat app/icon/class 2>/dev/null`
 
-    echo "[Desktop Entry]" >$FILENAME.desktop
-    if [ ! -z "$NAME" ]; then
-	echo "Name=$NAME" >>$FILENAME.desktop
-    fi
-    if [ ! -z "$GENERIC" ]; then
-	echo "GenericName=$GENERIC" >>$FILENAME.desktop
-    fi
-    if [ ! -z "$COMMENT" ]; then
-	echo "Comment=$COMMENT" >>$FILENAME.desktop
-    fi
-    if [ ! -z "$EXEC" ]; then
-	echo "Exec=$EXEC" >>$FILENAME.desktop
-    fi
-    if [ "$STARTUP" = "0" ]; then
-	echo "StartupNotify=false" >>$FILENAME.desktop
-    fi
-    if [ "$STARTUP" = "1" ]; then
-	echo "StartupNotify=true" >>$FILENAME.desktop
-    fi
-    if [ "$WAIT" = "0" ]; then
-	echo "X-Enlightenment-WaitExit=false" >>$FILENAME.desktop
-    fi
-    if [ "$WAIT" = "1" ]; then
-	echo "X-Enlightenment-WaitExit=true" >>$FILENAME.desktop
-    fi
+    if [ -e "app/info/name" ]; then
+	NAME=`cat app/info/name 2>/dev/null`
+	GENERIC=`cat app/info/generic 2>/dev/null`
+	COMMENT=`cat app/info/comment 2>/dev/null`
+	EXEC=`cat app/info/exe 2>/dev/null`
+	STARTUP=`cat app/info/startup_notify 2>/dev/null | tr "\000\001" "01"`
+	WAIT=`cat app/info/wait_exit 2>/dev/null | tr "\000\001" "01"`
+	WNAME=`cat app/window/name 2>/dev/null`
+	WCLASS=`cat app/window/class 2>/dev/null`
+	WZTITLE=`cat app/window/title 2>/dev/null`
+	WZROLE=`cat app/window/role 2>/dev/null`
+	ICLASS=`cat app/icon/class 2>/dev/null`
+
+	echo "[Desktop Entry]" >$FILENAME.desktop
+	if [ ! -z "$NAME" ]; then
+	    echo "Name=$NAME" >>$FILENAME.desktop
+	fi
+	if [ ! -z "$GENERIC" ]; then
+	    echo "GenericName=$GENERIC" >>$FILENAME.desktop
+	fi
+	if [ ! -z "$COMMENT" ]; then
+	    echo "Comment=$COMMENT" >>$FILENAME.desktop
+	fi
+	if [ ! -z "$EXEC" ]; then
+	    echo "Exec=$EXEC" >>$FILENAME.desktop
+	fi
+	if [ "$STARTUP" = "0" ]; then
+	    echo "StartupNotify=false" >>$FILENAME.desktop
+	fi
+	if [ "$STARTUP" = "1" ]; then
+	    echo "StartupNotify=true" >>$FILENAME.desktop
+	fi
+	if [ "$WAIT" = "0" ]; then
+	    echo "X-Enlightenment-WaitExit=false" >>$FILENAME.desktop
+	fi
+	if [ "$WAIT" = "1" ]; then
+	    echo "X-Enlightenment-WaitExit=true" >>$FILENAME.desktop
+	fi
             
-    if [ ! -z "$WNAME" ]; then
-	echo "X-Enlightenment-WIndowName=$WNAME" >>$FILENAME.desktop
-    fi
-    if [ ! -z "$WCLASS" ]; then
-	echo "StartupWMClass=$WCLASS" >>$FILENAME.desktop
-    fi
-    if [ ! -z "$WTITLE" ]; then
-	echo "X-Enlightenment-WindowTitle=$WTITLE" >>$FILENAME.desktop
-    fi
-    if [ ! -z "$WROLE" ]; then
-	echo "X-Enlightenment-WindowRole=$WROLE" >>$FILENAME.desktop
-    fi
-    if [ ! -z "$ICLASS" ]; then
-	echo "X-Enlightenment-IconClass=$ICLASS" >>$FILENAME.desktop
-    fi
-    echo "Icon=$FILENAME" >>$FILENAME.desktop
+	if [ ! -z "$WNAME" ]; then
+	    echo "X-Enlightenment-WIndowName=$WNAME" >>$FILENAME.desktop
+	fi
+	if [ ! -z "$WCLASS" ]; then
+	    echo "StartupWMClass=$WCLASS" >>$FILENAME.desktop
+	fi
+	if [ ! -z "$WTITLE" ]; then
+	    echo "X-Enlightenment-WindowTitle=$WTITLE" >>$FILENAME.desktop
+	fi
+	if [ ! -z "$WROLE" ]; then
+	    echo "X-Enlightenment-WindowRole=$WROLE" >>$FILENAME.desktop
+	fi
+	if [ ! -z "$ICLASS" ]; then
+	    echo "X-Enlightenment-IconClass=$ICLASS" >>$FILENAME.desktop
+	fi
+	echo "Icon=$FILENAME" >>$FILENAME.desktop
 
-    cp -f $FILENAME.desktop $WD
+	cp -f $FILENAME.desktop $WD
+	mv $WD/$FILENAME.eap ~/.e/e/icons/$FILENAME.edj
+    else
+	echo "Problem extracting info from $FILENAME.eap."
+    fi
 
     cd $WD >/dev/null
-
-    mv $FILENAME.eap ~/.e/e/icons/$FILENAME.edj
     rm -fr /tmp/convert.eap/$FILENAME
 else
     echo "Not a .eap file."
