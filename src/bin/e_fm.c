@@ -278,7 +278,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
      {
 	sd->config = E_NEW(E_Fm2_Config, 1);
 	if (!sd->config) return;
-//   sd->config->view.mode = E_FM2_VIEW_MODE_ICONS;
+//	sd->config->view.mode = E_FM2_VIEW_MODE_ICONS;
 	sd->config->view.mode = E_FM2_VIEW_MODE_LIST;
 	sd->config->view.open_dirs_in_place = 1;
 	sd->config->view.selector = 1;
@@ -1857,42 +1857,42 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 
    desktop = ecore_desktop_get(buf, NULL);
    if (desktop)
-      {
-         if (desktop->name)     ic->info.label   = evas_stringshare_add(desktop->name);
-	 if (desktop->generic)  ic->info.generic = evas_stringshare_add(desktop->generic);
-	 if (desktop->comment)  ic->info.comment = evas_stringshare_add(desktop->comment);
-
-	 if (desktop->icon)
-	    {
-	       char *v;
-
-	       /* FIXME: Use a real icon size. */
-	       v = (char *)ecore_desktop_icon_find(desktop->icon, NULL, e_config->icon_theme);
-	       if (v)
-	          ic->info.icon = evas_stringshare_add(v);
-	    }
-
-	 if (desktop->type)
-	    {
-	       if (!strcmp(desktop->type, "Mount"))
-		 {
-		    ic->info.mount = 1;
-		    if (desktop->URL)
-		      ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->URL);
-		 }
-	       else if (!strcmp(desktop->type, "Link"))
-	          {
-		    if (desktop->URL)
-		      ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->URL);
-	          }
-	       else if (!strcmp(desktop->type, "Application"))
-	          {
-	          }
-	       else
-	          goto error;
-            }
-      }
-
+     {
+	if (desktop->name)     ic->info.label   = evas_stringshare_add(desktop->name);
+	if (desktop->generic)  ic->info.generic = evas_stringshare_add(desktop->generic);
+	if (desktop->comment)  ic->info.comment = evas_stringshare_add(desktop->comment);
+	
+	if (desktop->icon)
+	  {
+	     char *v;
+	     
+	     /* FIXME: Use a real icon size. */
+	     v = (char *)ecore_desktop_icon_find(desktop->icon, NULL, e_config->icon_theme);
+	     if (v)
+	       ic->info.icon = evas_stringshare_add(v);
+	  }
+	
+	if (desktop->type)
+	  {
+	     if (!strcmp(desktop->type, "Mount"))
+	       {
+		  ic->info.mount = 1;
+		  if (desktop->URL)
+		    ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->URL);
+	       }
+	     else if (!strcmp(desktop->type, "Link"))
+	       {
+		  if (desktop->URL)
+		    ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->URL);
+	       }
+	     else if (!strcmp(desktop->type, "Application"))
+	       {
+	       }
+	     else
+	       goto error;
+	  }
+     }
+   
    return 1;
    error:
    if (ic->info.label) evas_stringshare_del(ic->info.label);
@@ -2335,7 +2335,7 @@ _e_fm2_dnd_drop_into_show(E_Fm2_Icon *ic)
 
 /* FIXME: prototype + reposition + implement */
 static void
-_e_fm2_dnd_drop_into_hide(E_Fm2_Icon *ic)
+_e_fm2_dnd_drop_into_hide(Evas_Object *obj)
 {
 }
 
@@ -2478,7 +2478,7 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 	  }
 	else
 	  {
-	     /* if iconview - drop here */
+	     /* FIXME: icon view mode */
 	  }
 	return;
      }
