@@ -810,7 +810,6 @@ static int
 _ibar_cb_menu_add_application_cb(void *data, const char *path)
 {
    IBar *b;
-   IBar_Icon *ic;
    E_App *a;
    
    b = data;

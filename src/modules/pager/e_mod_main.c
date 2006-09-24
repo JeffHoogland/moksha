@@ -173,7 +173,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    evas_object_geometry_get(o, &x, &y, &w, &h);
    inst->drop_handler =
-     e_drop_handler_add(inst->gcc->gadcon, inst,
+     e_drop_handler_add(E_OBJECT(inst->gcc->gadcon), inst,
 			_pager_inst_cb_enter, _pager_inst_cb_move,
 			_pager_inst_cb_leave, _pager_inst_cb_drop,
 			drop, 2, x, y, w, h);
@@ -1624,7 +1624,6 @@ _pager_desk_cb_mouse_wheel(void *data, Evas *e, Evas_Object *obj, void *event_in
 {
    Evas_Event_Mouse_Wheel *ev;
    Pager_Desk *pd;
-   Evas_List *l;
 
    ev = event_info;
    pd = data;
