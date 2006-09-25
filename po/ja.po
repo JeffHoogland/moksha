@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-09-10 22:30+0900\n"
-"PO-Revision-Date: 2006-09-11 04:19+0900\n"
+"POT-Creation-Date: 2006-09-24 23:22+0900\n"
+"PO-Revision-Date: 2006-09-25 13:16+0900\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgid "About Enlightenment"
 msgstr "Enlightenment について"
 
 #: src/bin/e_about.c:51 src/bin/e_actions.c:2028 src/bin/e_actions.c:2031
-#: src/bin/e_actions.c:2034 src/bin/e_actions.c:2037 src/bin/e_main.c:699
+#: src/bin/e_actions.c:2034 src/bin/e_actions.c:2037 src/bin/e_main.c:691
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
@@ -52,17 +52,15 @@ msgstr "Enlightenment を終了しようとしています.<br><br>本当に終�
 
 #: src/bin/e_actions.c:1409 src/bin/e_actions.c:1470 src/bin/e_actions.c:1519
 #: src/bin/e_actions.c:1568 src/bin/e_actions.c:1617 src/bin/e_actions.c:1666
-#: src/bin/e_confirm_dialog.c:61 src/bin/e_fileman_smart.c:996
-#: src/bin/e_fm.c:2981 src/bin/e_int_config_display.c:170
-#: src/bin/e_module.c:554
+#: src/bin/e_confirm_dialog.c:61 src/bin/e_fm.c:3998
+#: src/bin/e_int_config_display.c:170 src/bin/e_module.c:554
 msgid "Yes"
 msgstr "はい"
 
 #: src/bin/e_actions.c:1411 src/bin/e_actions.c:1472 src/bin/e_actions.c:1521
 #: src/bin/e_actions.c:1570 src/bin/e_actions.c:1619 src/bin/e_actions.c:1668
-#: src/bin/e_confirm_dialog.c:62 src/bin/e_fileman_smart.c:997
-#: src/bin/e_fm.c:2982 src/bin/e_int_config_display.c:171
-#: src/bin/e_module.c:555
+#: src/bin/e_confirm_dialog.c:62 src/bin/e_fm.c:3999
+#: src/bin/e_int_config_display.c:171 src/bin/e_module.c:555
 msgid "No"
 msgstr "いいえ"
 
@@ -137,7 +135,7 @@ msgid "Lower"
 msgstr "下げる"
 
 #: src/bin/e_actions.c:1778 src/bin/e_config_dialog.c:167
-#: src/bin/e_configure.c:108 src/bin/e_int_border_menu.c:322
+#: src/bin/e_configure.c:110 src/bin/e_int_border_menu.c:322
 msgid "Close"
 msgstr "閉じる"
 
@@ -232,8 +230,7 @@ msgstr "ボーダー無し状態反転"
 #: src/bin/e_actions.c:1900 src/bin/e_actions.c:1902 src/bin/e_actions.c:1904
 #: src/bin/e_actions.c:1906 src/bin/e_actions.c:1908 src/bin/e_actions.c:1910
 #: src/bin/e_actions.c:1912 src/bin/e_actions.c:1914 src/bin/e_actions.c:1916
-#: src/bin/e_actions.c:2062 src/bin/e_file_dialog.c:61
-#: src/modules/ibox/e_mod_config.c:142
+#: src/bin/e_actions.c:2062 src/modules/ibox/e_mod_config.c:142
 msgid "Desktop"
 msgstr "デスクトップ"
 
@@ -485,22 +482,22 @@ msgid "Exit Immediately"
 msgstr "ただちに終了する"
 
 #: src/bin/e_actions.c:2041 src/bin/e_actions.c:2044 src/bin/e_actions.c:2047
-#: src/bin/e_actions.c:2050 src/bin/e_int_config_desklock.c:563
-#: src/bin/e_int_config_startup.c:277 src/bin/e_int_config_theme.c:364
-#: src/bin/e_int_config_wallpaper.c:416 src/bin/e_int_config_wallpaper.c:561
+#: src/bin/e_actions.c:2050 src/bin/e_int_config_desklock.c:561
+#: src/bin/e_int_config_startup.c:273 src/bin/e_int_config_theme.c:361
+#: src/bin/e_int_config_wallpaper.c:412 src/bin/e_int_config_wallpaper.c:555
 #: src/bin/e_int_menus.c:149
 msgid "System"
 msgstr "システム"
 
-#: src/bin/e_actions.c:2041 src/bin/e_int_menus.c:780
+#: src/bin/e_actions.c:2041 src/bin/e_int_menus.c:771
 msgid "Shut Down"
 msgstr "シャットダウン"
 
-#: src/bin/e_actions.c:2044 src/bin/e_int_menus.c:773
+#: src/bin/e_actions.c:2044 src/bin/e_int_menus.c:764
 msgid "Reboot"
 msgstr "再起動"
 
-#: src/bin/e_actions.c:2047 src/bin/e_int_menus.c:759
+#: src/bin/e_actions.c:2047 src/bin/e_int_menus.c:750
 msgid "Suspend"
 msgstr "サスペンド"
 
@@ -516,27 +513,27 @@ msgstr "コマンド実行ダイアログ"
 msgid "Desktop Lock"
 msgstr "デスクトップロック"
 
-#: src/bin/e_apps.c:498 src/bin/e_apps.c:511 src/bin/e_fileman_file.c:312
-#: src/bin/e_fileman_file.c:363 src/bin/e_fileman_mime.c:393
-#: src/bin/e_utils.c:231 src/bin/e_zone.c:662
+#: src/bin/e_apps.c:463 src/bin/e_apps.c:476 src/bin/e_utils.c:236
 msgid "Run Error"
 msgstr "実行エラー"
 
-#: src/bin/e_apps.c:499
+#: src/bin/e_apps.c:464
 #, c-format
 msgid "Enlightenment was unable to process a command line:<br><br>%s %s<br>"
-msgstr "Enlightenment で以下のコマンドラインが処理できませんでした.<br><br>%s %s<br>"
+msgstr ""
+"Enlightenment で以下のコマンドラインが処理できませんでした.<br><br>%s %s<br>"
 
-#: src/bin/e_apps.c:512
+#: src/bin/e_apps.c:477
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s %s<br>"
-msgstr "Enlightenment で以下の子プロセスが fork できませんでした.<br><br>%s %s<br>"
+msgstr ""
+"Enlightenment で以下の子プロセスが fork できませんでした.<br><br>%s %s<br>"
 
-#: src/bin/e_apps.c:2358
+#: src/bin/e_apps.c:2479
 msgid "Application run error"
 msgstr "アプリケーション実行エラー"
 
-#: src/bin/e_apps.c:2360
+#: src/bin/e_apps.c:2481
 #, c-format
 msgid ""
 "Enlightenment was unable to run the application:<br><br>%s<br><br>The "
@@ -545,18 +542,16 @@ msgstr ""
 "Enlightenment で以下のアプリケーションが実行できませんでした.<br><br>%"
 "s<br><br>起動に失敗しました."
 
-#: src/bin/e_apps.c:2368 src/bin/e_config_dialog.c:159 src/bin/e_error.c:196
-#: src/bin/e_error.c:205 src/bin/e_file_dialog.c:70
-#: src/bin/e_fileman_smart.c:906 src/bin/e_fm.c:2824 src/bin/e_fm.c:2934
-#: src/bin/e_fm.c:3030 src/bin/e_int_border_remember.c:248
+#: src/bin/e_apps.c:2489 src/bin/e_config_dialog.c:159 src/bin/e_fm.c:3841
+#: src/bin/e_fm.c:3951 src/bin/e_fm.c:4047 src/bin/e_int_border_remember.c:248
 #: src/bin/e_int_border_remember.c:329 src/bin/e_int_border_remember.c:371
-#: src/bin/e_int_config_wallpaper_gradient.c:184
-#: src/bin/e_int_config_wallpaper_import.c:182 src/bin/e_module.c:410
-#: src/bin/e_utils.c:526 src/bin/e_int_config_theme_import.c:113
+#: src/bin/e_int_config_wallpaper_gradient.c:179
+#: src/bin/e_int_config_wallpaper_import.c:181 src/bin/e_module.c:410
+#: src/bin/e_utils.c:531 src/bin/e_int_config_theme_import.c:113
 #: src/bin/e_sys.c:382 src/bin/e_sys.c:427
-#: src/modules/battery/e_mod_main.c:304 src/modules/cpufreq/e_mod_main.c:332
-#: src/modules/cpufreq/e_mod_main.c:359 src/modules/cpufreq/e_mod_main.c:378
-#: src/modules/ibar/e_mod_main.c:1239
+#: src/modules/battery/e_mod_main.c:306 src/modules/cpufreq/e_mod_main.c:334
+#: src/modules/cpufreq/e_mod_main.c:361 src/modules/cpufreq/e_mod_main.c:380
+#: src/modules/ibar/e_mod_main.c:1220
 msgid "OK"
 msgstr "了解"
 
@@ -654,7 +649,7 @@ msgstr "出力データ"
 msgid "There was no output."
 msgstr "出力はありませんでした"
 
-#: src/bin/e_config.c:500
+#: src/bin/e_config.c:511
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -671,7 +666,7 @@ msgstr ""
 "いデフォルト設定<br>を追加すれば更新されます. これで好きなように設定できます."
 "ちょっと面倒ですが, <br>よろしくお願いします.<br>"
 
-#: src/bin/e_config.c:514
+#: src/bin/e_config.c:525
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very<br>strange. "
 "This should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -686,16 +681,16 @@ msgstr ""
 "おかけしますが, よろしくお願いします.<br>"
 
 #
-#: src/bin/e_config.c:537
+#: src/bin/e_config.c:548
 #, c-format
 msgid "Desktop %i, %i"
 msgstr "デスクトップ %i,%i"
 
-#: src/bin/e_config.c:1926
+#: src/bin/e_config.c:1955
 msgid "Configuration Upgraded"
 msgstr "設定をアップグレードしました"
 
-#: src/bin/e_config.c:1941
+#: src/bin/e_config.c:1970
 #, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>configuration to disk. The "
@@ -707,7 +702,7 @@ msgstr ""
 "以下のとおりです.<br>%s<br><br>壊れたデータが使われないように, このファイルは"
 "削除されました."
 
-#: src/bin/e_config.c:1952
+#: src/bin/e_config.c:1981
 #, c-format
 msgid ""
 "Enlightenment's configuration files are too big<br>for the file system they "
@@ -722,7 +717,7 @@ msgstr ""
 "ファイルは次のとおりです.<br>%s<br><br>壊れたデータが使われないように, この"
 "ファイルは削除されました."
 
-#: src/bin/e_config.c:1965
+#: src/bin/e_config.c:1994
 #, c-format
 msgid ""
 "An output error occured when writing the configuration<br>files for "
@@ -735,7 +730,7 @@ msgstr ""
 "ラー発生時に処理していたファイルは次のとおりです.<br>%s<br><br>壊れたデータが"
 "使われないように, このファイルは削除されました."
 
-#: src/bin/e_config.c:1976
+#: src/bin/e_config.c:2005
 #, c-format
 msgid ""
 "Enlightenment cannot write its configuration file<br>because it ran out of "
@@ -748,7 +743,7 @@ msgstr ""
 "ていたファイルは次のとおりです.<br>%s<br><br>壊れたデータが使われないように, "
 "このファイルは削除されました."
 
-#: src/bin/e_config.c:1988
+#: src/bin/e_config.c:2017
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the configuration file<br>it was writing "
@@ -759,11 +754,11 @@ msgstr ""
 "えられません.<br><br>エラー発生時に処理していたファイルは次のとおりです.<br>%"
 "s<br><br>壊れたデータが使われないように, このファイルは削除されました."
 
-#: src/bin/e_config.c:2004
+#: src/bin/e_config.c:2033
 msgid "Enlightenment Configration Write Problems"
 msgstr "Enlightenment の設定を書き込む時に問題が起きました."
 
-#: src/bin/e_config_dialog.c:130 src/bin/e_configure.c:92
+#: src/bin/e_config_dialog.c:130 src/bin/e_configure.c:94
 msgid "Advanced"
 msgstr "詳細設定"
 
@@ -779,19 +774,19 @@ msgstr "適用"
 msgid "Enlightenment Configuration"
 msgstr "Enlightenment の設定"
 
-#: src/bin/e_configure.c:63 src/bin/e_int_menus.c:674
+#: src/bin/e_configure.c:63 src/bin/e_int_menus.c:665
 msgid "Configuration Panel"
 msgstr "設定パネル"
 
-#: src/bin/e_configure.c:66 src/bin/e_gadcon.c:1122
+#: src/bin/e_configure.c:66 src/bin/e_gadcon.c:1120
 msgid "Appearance"
 msgstr "外観"
 
-#: src/bin/e_configure.c:67 src/bin/e_int_menus.c:679
+#: src/bin/e_configure.c:67 src/bin/e_int_menus.c:670
 msgid "Wallpaper"
 msgstr "壁紙"
 
-#: src/bin/e_configure.c:68 src/bin/e_int_menus.c:684
+#: src/bin/e_configure.c:68 src/bin/e_int_menus.c:675
 msgid "Theme"
 msgstr "テーマ"
 
@@ -856,8 +851,8 @@ msgstr "メニュー"
 msgid "Miscellaneous"
 msgstr "その他"
 
-#: src/bin/e_configure.c:88 src/bin/e_int_menus.c:90 src/bin/e_int_menus.c:694
-#: src/bin/e_int_config_apps.c:81
+#: src/bin/e_configure.c:88 src/bin/e_int_menus.c:90 src/bin/e_int_menus.c:685
+#: src/bin/e_int_config_apps.c:84
 msgid "Applications"
 msgstr "アプリケーション"
 
@@ -869,32 +864,36 @@ msgstr "性能"
 msgid "Configuration Dialogs"
 msgstr "設定パネル"
 
-#: src/bin/e_configure.c:93 src/bin/e_int_config_transitions.c:117
+#: src/bin/e_configure.c:91
+msgid "Internationalization"
+msgstr "国際化"
+
+#: src/bin/e_configure.c:95 src/bin/e_int_config_transitions.c:117
 msgid "Startup"
 msgstr "起動時"
 
-#: src/bin/e_configure.c:94
+#: src/bin/e_configure.c:96
 msgid "Window List"
 msgstr "ウィンドウリスト"
 
-#: src/bin/e_configure.c:95 src/bin/e_int_config_window_manipulation.c:50
+#: src/bin/e_configure.c:97 src/bin/e_int_config_window_manipulation.c:50
 msgid "Window Manipulation"
 msgstr "ウィンドウの動作"
 
-#: src/bin/e_configure.c:96 src/bin/e_int_menus.c:95
+#: src/bin/e_configure.c:98 src/bin/e_int_menus.c:95
 msgid "Run Command"
 msgstr "コマンド実行"
 
-#: src/bin/e_configure.c:97
+#: src/bin/e_configure.c:99
 msgid "Search Directories"
 msgstr "検索パス"
 
-#: src/bin/e_configure.c:99
+#: src/bin/e_configure.c:101
 msgid "Extensions"
 msgstr "拡張機能"
 
-#: src/bin/e_configure.c:100 src/bin/e_int_config_modules.c:244
-#: src/bin/e_int_config_paths.c:87 src/bin/e_int_menus.c:689
+#: src/bin/e_configure.c:102 src/bin/e_int_config_modules.c:244
+#: src/bin/e_int_config_paths.c:87 src/bin/e_int_menus.c:680
 msgid "Modules"
 msgstr "モジュール"
 
@@ -934,19 +933,18 @@ msgstr ""
 "コードは <hilight>%i</hilight> です.<br>これはまずいですね. 起きてはいけない"
 "ことです. ぜひバグ報告して下さい."
 
-#: src/bin/e_eap_editor.c:82
+#: src/bin/e_eap_editor.c:89
 msgid "Application Editor"
 msgstr "アプリケーションエディタ"
 
 #
-#: src/bin/e_eap_editor.c:283 src/bin/e_int_config_fonts.c:73
+#: src/bin/e_eap_editor.c:298 src/bin/e_int_config_fonts.c:73
 msgid "Icon"
 msgstr "アイコン"
 
-#: src/bin/e_eap_editor.c:320
-#, fuzzy
+#: src/bin/e_eap_editor.c:317
 msgid "Use Icon Theme"
-msgstr "アイコンのテーマ"
+msgstr "アイコンテーマを使う"
 
 #: src/bin/e_eap_editor.c:327
 msgid "Basic Info"
@@ -960,7 +958,7 @@ msgstr "アプリケーション名"
 msgid "Executable"
 msgstr "実行ファイル名"
 
-#: src/bin/e_eap_editor.c:361 src/bin/e_fileman_smart.c:1213
+#: src/bin/e_eap_editor.c:361
 msgid "General"
 msgstr "一般"
 
@@ -1012,290 +1010,1632 @@ msgstr ""
 msgid "Select an Icon"
 msgstr "アイコンを選択する"
 
+#: src/bin/e_int_config_intl.c:94 src/bin/e_int_config_intl.c:144
+msgid "English"
+msgstr "英語"
+
+#: src/bin/e_int_config_intl.c:95 src/bin/e_int_config_intl.c:174
+msgid "Japanese"
+msgstr "日本語"
+
+#: src/bin/e_int_config_intl.c:96 src/bin/e_int_config_intl.c:152
+msgid "French"
+msgstr "フランス語"
+
+#: src/bin/e_int_config_intl.c:97 src/bin/e_int_config_intl.c:146
+msgid "Spanish"
+msgstr "スペイン語"
+
+#: src/bin/e_int_config_intl.c:98 src/bin/e_int_config_intl.c:214
+msgid "Portuguese"
+msgstr "ポルトガル語"
+
+#: src/bin/e_int_config_intl.c:99 src/bin/e_int_config_intl.c:150
+msgid "Finnish"
+msgstr "フィンランド語"
+
+#: src/bin/e_int_config_intl.c:100 src/bin/e_int_config_intl.c:216
+msgid "Russian"
+msgstr "ロシア語"
+
+#: src/bin/e_int_config_intl.c:101 src/bin/e_int_config_intl.c:129
+msgid "Bulgarian"
+msgstr "ブルガリア語"
+
+#: src/bin/e_int_config_intl.c:102 src/bin/e_int_config_intl.c:139
+msgid "German"
+msgstr "ドイツ語"
+
+#: src/bin/e_int_config_intl.c:103 src/bin/e_int_config_intl.c:212
+msgid "Polish"
+msgstr "ポーランド語"
+
+#: src/bin/e_int_config_intl.c:104
+msgid "Simplified Chinese"
+msgstr "簡体中文"
+
+#: src/bin/e_int_config_intl.c:105
+msgid "Traditional Chinese"
+msgstr "繁体中文"
+
+#: src/bin/e_int_config_intl.c:106 src/bin/e_int_config_intl.c:165
+msgid "Hungarian"
+msgstr "ハンガリー語"
+
+#: src/bin/e_int_config_intl.c:107 src/bin/e_int_config_intl.c:223
+msgid "Slovenian"
+msgstr "スロベニア語"
+
+#: src/bin/e_int_config_intl.c:108 src/bin/e_int_config_intl.c:171
+msgid "Italian"
+msgstr "イタリア語"
+
+#: src/bin/e_int_config_intl.c:109 src/bin/e_int_config_intl.c:136
+msgid "Czech"
+msgstr "チェコ語"
+
+#: src/bin/e_int_config_intl.c:110 src/bin/e_int_config_intl.c:138
+msgid "Danish"
+msgstr "デンマーク語"
+
+#: src/bin/e_int_config_intl.c:111 src/bin/e_int_config_intl.c:222
+msgid "Slovak"
+msgstr "スロバキア語"
+
+#: src/bin/e_int_config_intl.c:112 src/bin/e_int_config_intl.c:229
+msgid "Swedish"
+msgstr "スウェーデン語"
+
+#: src/bin/e_int_config_intl.c:113 src/bin/e_int_config_intl.c:200
+msgid "Norwegian Bokmål"
+msgstr "ノルウェー語(ブークモール)"
+
+#: src/bin/e_int_config_intl.c:114 src/bin/e_int_config_intl.c:202
+msgid "Dutch"
+msgstr "オランダ語"
+
+#: src/bin/e_int_config_intl.c:115 src/bin/e_int_config_intl.c:184
+msgid "Korean"
+msgstr "韓国語"
+
+#: src/bin/e_int_config_intl.c:120
+msgid "Afar"
+msgstr "アファル語"
+
+#: src/bin/e_int_config_intl.c:121
+msgid "Afrikaans"
+msgstr "アフリカーンス語"
+
+#: src/bin/e_int_config_intl.c:122
+msgid "Akan"
+msgstr "アカン語"
+
+#: src/bin/e_int_config_intl.c:123
+msgid "Amharic"
+msgstr "アムハラ語"
+
+#: src/bin/e_int_config_intl.c:124
+msgid "Aragonese"
+msgstr "アラゴン語"
+
+#: src/bin/e_int_config_intl.c:125
+msgid "Arabic"
+msgstr "アラビア語"
+
+#: src/bin/e_int_config_intl.c:126
+msgid "Assamese"
+msgstr "アッサム語"
+
+#: src/bin/e_int_config_intl.c:127
+msgid "Azerbaijani"
+msgstr "アゼルバイジャン語"
+
+#: src/bin/e_int_config_intl.c:128
+msgid "Belarusian"
+msgstr "ベラルーシ語"
+
+#: src/bin/e_int_config_intl.c:130
+msgid "Bengali"
+msgstr "ベンガル語"
+
+#: src/bin/e_int_config_intl.c:131
+msgid "Breton"
+msgstr "ブルトン語"
+
+#: src/bin/e_int_config_intl.c:132
+msgid "Bosnian"
+msgstr "ボスニア語"
+
+#: src/bin/e_int_config_intl.c:133
+#, fuzzy
+msgid "Blin"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:134
+msgid "Catalan"
+msgstr "カタロニア語"
+
+#: src/bin/e_int_config_intl.c:135
+msgid "Atsam"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:137
+msgid "Welsh"
+msgstr "ウェールズ語"
+
+#: src/bin/e_int_config_intl.c:140
+msgid "Divehi"
+msgstr "ディヴェヒ語"
+
+#: src/bin/e_int_config_intl.c:141
+msgid "Dzongkha"
+msgstr "ブータン語"
+
+#: src/bin/e_int_config_intl.c:142
+msgid "Ewe"
+msgstr "エウェ語"
+
+#: src/bin/e_int_config_intl.c:143
+msgid "Greek"
+msgstr "ギリシャ語"
+
+#: src/bin/e_int_config_intl.c:145
+msgid "Esperanto"
+msgstr "エスペラント語"
+
+#: src/bin/e_int_config_intl.c:147
+msgid "Estonian"
+msgstr "エストニア語"
+
+#: src/bin/e_int_config_intl.c:148
+msgid "Basque"
+msgstr "バスク語"
+
+#: src/bin/e_int_config_intl.c:149
+msgid "Persian"
+msgstr "ペルシャ語"
+
+#: src/bin/e_int_config_intl.c:151
+msgid "Faroese"
+msgstr "フェロー語"
+
+#: src/bin/e_int_config_intl.c:153
+msgid "Friulian"
+msgstr "フリウリ語"
+
+#: src/bin/e_int_config_intl.c:154
+msgid "Irish"
+msgstr "アイルランド語"
+
+#: src/bin/e_int_config_intl.c:155
+msgid "Ga"
+msgstr "ガ語"
+
+#: src/bin/e_int_config_intl.c:156
+msgid "Geez"
+msgstr "ゲーズ語"
+
+#: src/bin/e_int_config_intl.c:157
+msgid "Galician"
+msgstr "ガリシア語"
+
+#: src/bin/e_int_config_intl.c:158
+msgid "Gujarati"
+msgstr "グジャラート語"
+
+#: src/bin/e_int_config_intl.c:159
+msgid "Manx"
+msgstr "マン島語"
+
+#: src/bin/e_int_config_intl.c:160
+msgid "Hausa"
+msgstr "ハウサ語"
+
+#: src/bin/e_int_config_intl.c:161
+msgid "Hawaiian"
+msgstr "ハワイ語"
+
+#: src/bin/e_int_config_intl.c:162 src/bin/e_int_config_intl.c:173
+msgid "Hebrew"
+msgstr "ヘブライ語"
+
+#: src/bin/e_int_config_intl.c:163
+msgid "Hindi"
+msgstr "ヒンディー語"
+
+#: src/bin/e_int_config_intl.c:164
+msgid "Croatian"
+msgstr "クロアチア語"
+
+#: src/bin/e_int_config_intl.c:166
+msgid "Armenian"
+msgstr "アルメニア語"
+
+#: src/bin/e_int_config_intl.c:167
+msgid "Interlingua"
+msgstr "インターリングア(国際語)"
+
+#: src/bin/e_int_config_intl.c:168
+msgid "Indonesian"
+msgstr "インドネシア語"
+
+#: src/bin/e_int_config_intl.c:169
+msgid "Igbo"
+msgstr "イボ語(ナイジェリア)"
+
+#: src/bin/e_int_config_intl.c:170
+msgid "Icelandic"
+msgstr "アイスランド語"
+
+#: src/bin/e_int_config_intl.c:172
+msgid "Inuktitut"
+msgstr "イヌイット語"
+
+#: src/bin/e_int_config_intl.c:175
+msgid "Georgian"
+msgstr "グルジア語"
+
+#: src/bin/e_int_config_intl.c:176
+msgid "Jju"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:177
+msgid "Kamba"
+msgstr "カンバ語"
+
+#: src/bin/e_int_config_intl.c:178
+msgid "Tyap"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:179
+msgid "Koro"
+msgstr "コロ語"
+
+#: src/bin/e_int_config_intl.c:180
+msgid "Kazakh"
+msgstr "カザフ語"
+
+#: src/bin/e_int_config_intl.c:181
+msgid "Kalaallisut"
+msgstr "グリーンランド語西方言"
+
+#: src/bin/e_int_config_intl.c:182
+msgid "Khmer"
+msgstr "クメール語"
+
+#: src/bin/e_int_config_intl.c:183
+msgid "Kannada"
+msgstr "カンナダ語"
+
+#: src/bin/e_int_config_intl.c:185
+msgid "Konkani"
+msgstr "コンカニ語"
+
+#: src/bin/e_int_config_intl.c:186
+msgid "Kurdish"
+msgstr "クルド語"
+
+#: src/bin/e_int_config_intl.c:187
+msgid "Cornish"
+msgstr "コーンウォール語"
+
+#: src/bin/e_int_config_intl.c:188
+msgid "Kirghiz"
+msgstr "キルギス語"
+
+#: src/bin/e_int_config_intl.c:189
+msgid "Lingala"
+msgstr "リンガラ語"
+
+#: src/bin/e_int_config_intl.c:190
+msgid "Lao"
+msgstr "ラオス語"
+
+#: src/bin/e_int_config_intl.c:191
+msgid "Lithuanian"
+msgstr "リトアニア語"
+
+#: src/bin/e_int_config_intl.c:192
+msgid "Latvian"
+msgstr "ラトビア語"
+
+#: src/bin/e_int_config_intl.c:193
+msgid "Maori"
+msgstr "マオリ語"
+
+#: src/bin/e_int_config_intl.c:194
+msgid "Macedonian"
+msgstr "マケドニア語"
+
+#: src/bin/e_int_config_intl.c:195
+msgid "Malayalam"
+msgstr "マラヤーラム語"
+
+#: src/bin/e_int_config_intl.c:196
+msgid "Mongolian"
+msgstr "モンゴル語"
+
+#: src/bin/e_int_config_intl.c:197
+msgid "Marathi"
+msgstr "マラティー語"
+
+#: src/bin/e_int_config_intl.c:198
+msgid "Malay"
+msgstr "マレー語"
+
+#: src/bin/e_int_config_intl.c:199
+msgid "Maltese"
+msgstr "マルタ語"
+
+#: src/bin/e_int_config_intl.c:201
+msgid "Nepali"
+msgstr "ネパール語(インド)"
+
+#: src/bin/e_int_config_intl.c:203
+msgid "Norwegian Nynorsk"
+msgstr "ノルウェー語(ニーノシク)"
+
+#: src/bin/e_int_config_intl.c:204
+msgid "Norwegian"
+msgstr "ノルウェー語"
+
+#: src/bin/e_int_config_intl.c:205
+msgid "South Ndebele"
+msgstr "マタベレ語(南部)"
+
+#: src/bin/e_int_config_intl.c:206
+msgid "Northern Sotho"
+msgstr "ソト語(北部)"
+
+#: src/bin/e_int_config_intl.c:207
+msgid "Nyanja; Chichewa; Chewa"
+msgstr "ニャンジャ語"
+
+#: src/bin/e_int_config_intl.c:208
+msgid "Occitan"
+msgstr "オック語"
+
+#: src/bin/e_int_config_intl.c:209
+msgid "Oromo"
+msgstr "オロモ語"
+
+#: src/bin/e_int_config_intl.c:210
+msgid "Oriya"
+msgstr "オリヤー語"
+
+#: src/bin/e_int_config_intl.c:211
+msgid "Punjabi"
+msgstr "パンジャブ語"
+
+#: src/bin/e_int_config_intl.c:213
+msgid "Pashto"
+msgstr "パシュト語"
+
+#: src/bin/e_int_config_intl.c:215
+msgid "Romanian"
+msgstr "ルーマニア語"
+
+#: src/bin/e_int_config_intl.c:217
+msgid "Kinyarwanda"
+msgstr "キンヤルワンダ語"
+
+#: src/bin/e_int_config_intl.c:218
+msgid "Sanskrit"
+msgstr "サンスクリット語(梵語)"
+
+#: src/bin/e_int_config_intl.c:219
+msgid "Northern Sami"
+msgstr "サモス語"
+
+#: src/bin/e_int_config_intl.c:220
+msgid "Serbo-Croatian"
+msgstr "セルボ・クロアチア語"
+
+#: src/bin/e_int_config_intl.c:221
+msgid "Sidamo"
+msgstr "シダモ語"
+
+#: src/bin/e_int_config_intl.c:224
+msgid "Somali"
+msgstr "ソマリ語"
+
+#: src/bin/e_int_config_intl.c:225
+msgid "Albanian"
+msgstr "アルバニア語"
+
+#: src/bin/e_int_config_intl.c:226
+msgid "Serbian"
+msgstr "セルビア語"
+
+#: src/bin/e_int_config_intl.c:227
+msgid "Swati"
+msgstr "シスワティ語"
+
+#: src/bin/e_int_config_intl.c:228
+msgid "Southern Sotho"
+msgstr "ソト語(南部)"
+
+#: src/bin/e_int_config_intl.c:230
+msgid "Swahili"
+msgstr "スワヒリ語"
+
+#: src/bin/e_int_config_intl.c:231
+msgid "Syriac"
+msgstr "シリア語"
+
+#: src/bin/e_int_config_intl.c:232
+msgid "Tamil"
+msgstr "タミール語"
+
+#: src/bin/e_int_config_intl.c:233
+msgid "Telugu"
+msgstr "テルグ語"
+
+#: src/bin/e_int_config_intl.c:234
+msgid "Tajik"
+msgstr "タジク語"
+
+#: src/bin/e_int_config_intl.c:235
+msgid "Thai"
+msgstr "タイ語"
+
+#: src/bin/e_int_config_intl.c:236
+msgid "Tigrinya"
+msgstr "ティグリニャ語"
+
+#: src/bin/e_int_config_intl.c:237
+msgid "Tigre"
+msgstr "ティグレ語"
+
+#: src/bin/e_int_config_intl.c:238
+msgid "Tagalog"
+msgstr "タガログ語"
+
+#: src/bin/e_int_config_intl.c:239
+msgid "Tswana"
+msgstr "ツワナ語"
+
+#: src/bin/e_int_config_intl.c:240
+msgid "Turkish"
+msgstr "トルコ語"
+
+#: src/bin/e_int_config_intl.c:241
+msgid "Tsonga"
+msgstr "ツォンガ語"
+
+#: src/bin/e_int_config_intl.c:242
+msgid "Tatar"
+msgstr "タタール語"
+
+#: src/bin/e_int_config_intl.c:243
+msgid "Ukrainian"
+msgstr "ウクライナ語"
+
+#: src/bin/e_int_config_intl.c:244
+msgid "Urdu"
+msgstr "ウルドゥー語"
+
+#: src/bin/e_int_config_intl.c:245
+msgid "Uzbek"
+msgstr "ウズベク語"
+
+#: src/bin/e_int_config_intl.c:246
+msgid "Venda"
+msgstr "ベンダ語"
+
+#: src/bin/e_int_config_intl.c:247
+msgid "Vietnamese"
+msgstr "ベトナム語"
+
+#: src/bin/e_int_config_intl.c:248
+msgid "Walloon"
+msgstr "ワロン語"
+
+#: src/bin/e_int_config_intl.c:249
+msgid "Walamo"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:250
+msgid "Xhosa"
+msgstr "コーサ語"
+
+#: src/bin/e_int_config_intl.c:251
+msgid "Yiddish"
+msgstr "イディッシュ語"
+
+#: src/bin/e_int_config_intl.c:252
+msgid "Yoruba"
+msgstr "ヨルバ語"
+
+#: src/bin/e_int_config_intl.c:253
+msgid "Chinese"
+msgstr "中国語"
+
+#: src/bin/e_int_config_intl.c:254
+msgid "Zulu"
+msgstr "ズールー語"
+
+#: src/bin/e_int_config_intl.c:259
+msgid "Afghanistan"
+msgstr "アフガニスタン"
+
+#: src/bin/e_int_config_intl.c:260
+msgid "Åland Islands"
+msgstr "オーランド諸島"
+
+#: src/bin/e_int_config_intl.c:261
+msgid "Albania"
+msgstr "アルバニア語"
+
+#: src/bin/e_int_config_intl.c:262
+msgid "Algeria"
+msgstr "アルジェリア"
+
+#: src/bin/e_int_config_intl.c:263
+msgid "American Samoa"
+msgstr "アメリカ領サモア"
+
+#: src/bin/e_int_config_intl.c:264
+msgid "Andorra"
+msgstr "アンドラ"
+
+#: src/bin/e_int_config_intl.c:265
+msgid "Angola"
+msgstr "アンゴラ"
+
+#: src/bin/e_int_config_intl.c:266
+msgid "Anguilla"
+msgstr "アンギラ"
+
+#: src/bin/e_int_config_intl.c:267
+msgid "Antarctica"
+msgstr "南極"
+
+#: src/bin/e_int_config_intl.c:268
+msgid "Antigua and Barbuda"
+msgstr "アンティグア・バーブーダ"
+
+#: src/bin/e_int_config_intl.c:269
+msgid "Argentina"
+msgstr "アルゼンチン"
+
+#: src/bin/e_int_config_intl.c:270
+msgid "Armenia"
+msgstr "アルメニア"
+
+#: src/bin/e_int_config_intl.c:271
+msgid "Aruba"
+msgstr "アルバ"
+
+#: src/bin/e_int_config_intl.c:272
+msgid "Australia"
+msgstr "オーストラリア"
+
+#: src/bin/e_int_config_intl.c:273
+msgid "Austria"
+msgstr "オーストリア"
+
+#: src/bin/e_int_config_intl.c:274
+msgid "Azerbaijan"
+msgstr "アゼルバイジャン"
+
+#: src/bin/e_int_config_intl.c:275
+msgid "Bahamas"
+msgstr "バハマ"
+
+#: src/bin/e_int_config_intl.c:276
+msgid "Bahrain"
+msgstr "バーレーン"
+
+#: src/bin/e_int_config_intl.c:277
+msgid "Bangladesh"
+msgstr "バングラデシュ"
+
+#: src/bin/e_int_config_intl.c:278
+msgid "Barbados"
+msgstr "バルバドス"
+
+#: src/bin/e_int_config_intl.c:279
+msgid "Belarus"
+msgstr "ベラルーシ"
+
+#: src/bin/e_int_config_intl.c:280
+msgid "Belgium"
+msgstr "ベルギー"
+
+#: src/bin/e_int_config_intl.c:281
+msgid "Belize"
+msgstr "ベリーズ"
+
+#: src/bin/e_int_config_intl.c:282
+msgid "Benin"
+msgstr "ベナン"
+
+#: src/bin/e_int_config_intl.c:283
+msgid "Bermuda"
+msgstr "バミューダ諸島"
+
+#: src/bin/e_int_config_intl.c:284
+msgid "Bhutan"
+msgstr "ブータン"
+
+#: src/bin/e_int_config_intl.c:285
+msgid "Bolivia"
+msgstr "ボリビア"
+
+#: src/bin/e_int_config_intl.c:286
+msgid "Bosnia and Herzegovina"
+msgstr "ボスニア・ヘルツェゴビナ"
+
+#: src/bin/e_int_config_intl.c:287
+msgid "Botswana"
+msgstr "ボツワナ"
+
+#: src/bin/e_int_config_intl.c:288
+msgid "Bouvet Island"
+msgstr "ブーベ島"
+
+#: src/bin/e_int_config_intl.c:289
+msgid "Brazil"
+msgstr "ブラジル"
+
+#: src/bin/e_int_config_intl.c:290
+msgid "British Indian Ocean Territory"
+msgstr "イギリス領インド洋地域"
+
+#: src/bin/e_int_config_intl.c:291
+msgid "Brunei Darussalam"
+msgstr "ブルネイ・ダルサラーム"
+
+#: src/bin/e_int_config_intl.c:292
+msgid "Bulgaria"
+msgstr "ブルガリア"
+
+#: src/bin/e_int_config_intl.c:293
+msgid "Burkina Faso"
+msgstr "ブルキナファソ"
+
+#: src/bin/e_int_config_intl.c:294
+msgid "Burundi"
+msgstr "ブルンジ"
+
+#: src/bin/e_int_config_intl.c:295
+msgid "Cambodia"
+msgstr "カンボジア"
+
+#: src/bin/e_int_config_intl.c:296
+msgid "Cameroon"
+msgstr "カメルーン"
+
+#: src/bin/e_int_config_intl.c:297
+msgid "Canada"
+msgstr "カナダ"
+
+#: src/bin/e_int_config_intl.c:298
+msgid "Cape Verde"
+msgstr "カボベルデ"
+
+#: src/bin/e_int_config_intl.c:299
+msgid "Cayman Islands"
+msgstr "ケイマン諸島"
+
+#: src/bin/e_int_config_intl.c:300
+msgid "Central African Republic"
+msgstr "中央アフリカ"
+
+#: src/bin/e_int_config_intl.c:301
+msgid "Chad"
+msgstr "チャド"
+
+#: src/bin/e_int_config_intl.c:302
+msgid "Chile"
+msgstr "チリ"
+
+#: src/bin/e_int_config_intl.c:303
+msgid "China"
+msgstr "中華人民共和国"
+
+#: src/bin/e_int_config_intl.c:304
+msgid "Christmas Island"
+msgstr "クリスマス島"
+
+#: src/bin/e_int_config_intl.c:305
+msgid "Cocos (keeling) Islands"
+msgstr "ココス諸島"
+
+#: src/bin/e_int_config_intl.c:306
+msgid "Colombia"
+msgstr "コロンビア"
+
+#: src/bin/e_int_config_intl.c:307
+msgid "Comoros"
+msgstr "コモロ連合"
+
+#: src/bin/e_int_config_intl.c:308 src/bin/e_int_config_intl.c:309
+msgid "Congo"
+msgstr "コンゴ"
+
+#: src/bin/e_int_config_intl.c:310
+msgid "Cook Islands"
+msgstr "クック諸島"
+
+#: src/bin/e_int_config_intl.c:311
+msgid "Costa Rica"
+msgstr "コスタリカ"
+
+#: src/bin/e_int_config_intl.c:312
+msgid "Cote D'ivoire"
+msgstr "コートジボワール"
+
+#: src/bin/e_int_config_intl.c:313
+msgid "Croatia"
+msgstr "クロアチア"
+
+#: src/bin/e_int_config_intl.c:314
+msgid "Cuba"
+msgstr "キューバ"
+
+#: src/bin/e_int_config_intl.c:315
+msgid "Cyprus"
+msgstr "キプロス"
+
+#: src/bin/e_int_config_intl.c:316
+msgid "Czech Republic"
+msgstr "チェコ"
+
+#: src/bin/e_int_config_intl.c:317
+msgid "Denmark"
+msgstr "デンマーク"
+
+#: src/bin/e_int_config_intl.c:318
+msgid "Djibouti"
+msgstr "ジブチ"
+
+#: src/bin/e_int_config_intl.c:319
+msgid "Dominica"
+msgstr "ドミニカ連邦"
+
+#: src/bin/e_int_config_intl.c:320
+msgid "Dominican Republic"
+msgstr "ドミニカ共和国"
+
+#: src/bin/e_int_config_intl.c:321
+msgid "Ecuador"
+msgstr "エクアドル"
+
+#: src/bin/e_int_config_intl.c:322
+msgid "Egypt"
+msgstr "エジプト"
+
+#: src/bin/e_int_config_intl.c:323
+msgid "El Salvador"
+msgstr "エルサルバドル"
+
+#: src/bin/e_int_config_intl.c:324
+msgid "Equatorial Guinea"
+msgstr "赤道ギニア"
+
+#: src/bin/e_int_config_intl.c:325
+msgid "Eritrea"
+msgstr "エリトリア"
+
+#: src/bin/e_int_config_intl.c:326
+msgid "Estonia"
+msgstr "エストニア"
+
+#: src/bin/e_int_config_intl.c:327
+msgid "Ethiopia"
+msgstr "エチオピア"
+
+#: src/bin/e_int_config_intl.c:328
+msgid "Falkland Islands (malvinas)"
+msgstr "フォークランド諸島"
+
+#: src/bin/e_int_config_intl.c:329
+msgid "Faroe Islands"
+msgstr "フェロー諸島"
+
+#: src/bin/e_int_config_intl.c:330
+msgid "Fiji"
+msgstr "フィジー"
+
+#: src/bin/e_int_config_intl.c:331
+msgid "Finland"
+msgstr "フィンランド"
+
+#: src/bin/e_int_config_intl.c:332
+msgid "France"
+msgstr "フランス"
+
+#: src/bin/e_int_config_intl.c:333
+msgid "French Guiana"
+msgstr "フランス領ギアナ"
+
+#: src/bin/e_int_config_intl.c:334
+msgid "French Polynesia"
+msgstr "フランス領ポリネシア"
+
+#: src/bin/e_int_config_intl.c:335
+msgid "French Southern Territories"
+msgstr "フランス領南方地域"
+
+#: src/bin/e_int_config_intl.c:336
+msgid "Gabon"
+msgstr "ガボン"
+
+#: src/bin/e_int_config_intl.c:337
+msgid "Gambia"
+msgstr "ガンビア"
+
+#: src/bin/e_int_config_intl.c:338
+msgid "Georgia"
+msgstr "グルジア"
+
+#: src/bin/e_int_config_intl.c:339
+msgid "Germany"
+msgstr "ドイツ"
+
+#: src/bin/e_int_config_intl.c:340
+msgid "Ghana"
+msgstr "ガーナ"
+
+#: src/bin/e_int_config_intl.c:341
+msgid "Gibraltar"
+msgstr "ジブラルタル"
+
+#: src/bin/e_int_config_intl.c:342
+msgid "Greece"
+msgstr "ギリシャ"
+
+#: src/bin/e_int_config_intl.c:343
+msgid "Greenland"
+msgstr "グリーンランド"
+
+#: src/bin/e_int_config_intl.c:344
+msgid "Grenada"
+msgstr "グレナダ"
+
+#: src/bin/e_int_config_intl.c:345
+msgid "Guadeloupe"
+msgstr "グアドループ島"
+
+#: src/bin/e_int_config_intl.c:346
+msgid "Guam"
+msgstr "グアム"
+
+#: src/bin/e_int_config_intl.c:347
+msgid "Guatemala"
+msgstr "グアテマラ"
+
+#: src/bin/e_int_config_intl.c:348
+msgid "Guernsey"
+msgstr "ガーンジー島"
+
+#: src/bin/e_int_config_intl.c:349
+msgid "Guinea"
+msgstr "ギニア"
+
+#: src/bin/e_int_config_intl.c:350
+msgid "Guinea-bissau"
+msgstr "ギニアビサウ"
+
+#: src/bin/e_int_config_intl.c:351
+msgid "Guyana"
+msgstr "ガイアナ"
+
+#: src/bin/e_int_config_intl.c:352
+msgid "Haiti"
+msgstr "ハイチ"
+
+#: src/bin/e_int_config_intl.c:353
+msgid "Heard Island and Mcdonald Islands"
+msgstr "ヘアド島・マクドナルド諸島"
+
+#: src/bin/e_int_config_intl.c:354
+msgid "Holy See (vatican City State)"
+msgstr "バチカン市国"
+
+#: src/bin/e_int_config_intl.c:355
+msgid "Honduras"
+msgstr "ホンジュラス"
+
+#: src/bin/e_int_config_intl.c:356
+msgid "Hong Kong"
+msgstr "香港特別行政区"
+
+#: src/bin/e_int_config_intl.c:357
+msgid "Hungary"
+msgstr "ハンガリー"
+
+#: src/bin/e_int_config_intl.c:358
+msgid "Iceland"
+msgstr "アイスランド"
+
+#: src/bin/e_int_config_intl.c:359
+msgid "India"
+msgstr "インド"
+
+#: src/bin/e_int_config_intl.c:360
+msgid "Indonesia"
+msgstr "インドネシア"
+
+#: src/bin/e_int_config_intl.c:361
+msgid "Iran"
+msgstr "イラン"
+
+#: src/bin/e_int_config_intl.c:362
+msgid "Iraq"
+msgstr "イラク"
+
+#: src/bin/e_int_config_intl.c:363
+msgid "Ireland"
+msgstr "アイルランド"
+
+#: src/bin/e_int_config_intl.c:364
+msgid "Isle Of Man"
+msgstr "マン島"
+
+#: src/bin/e_int_config_intl.c:365
+msgid "Israel"
+msgstr "イスラエル"
+
+#: src/bin/e_int_config_intl.c:366
+msgid "Italy"
+msgstr "イタリア"
+
+#: src/bin/e_int_config_intl.c:367
+msgid "Jamaica"
+msgstr "ジャマイカ"
+
+#: src/bin/e_int_config_intl.c:368
+msgid "Japan"
+msgstr "日本"
+
+#: src/bin/e_int_config_intl.c:369
+msgid "Jersey"
+msgstr "ジャージー島"
+
+#: src/bin/e_int_config_intl.c:370
+msgid "Jordan"
+msgstr "ヨルダン"
+
+#: src/bin/e_int_config_intl.c:371
+msgid "Kazakhstan"
+msgstr "カザフスタン"
+
+#: src/bin/e_int_config_intl.c:372
+msgid "Kenya"
+msgstr "ケニア"
+
+#: src/bin/e_int_config_intl.c:373
+msgid "Kiribati"
+msgstr "キリバス"
+
+#: src/bin/e_int_config_intl.c:374 src/bin/e_int_config_intl.c:375
+msgid "Korea"
+msgstr "大韓民国"
+
+#: src/bin/e_int_config_intl.c:376
+msgid "Kuwait"
+msgstr "クウェート"
+
+#: src/bin/e_int_config_intl.c:377
+msgid "Kyrgyzstan"
+msgstr "キルギスタン"
+
+#: src/bin/e_int_config_intl.c:378
+msgid "Lao People's Democratic Republic"
+msgstr "ラオス"
+
+#: src/bin/e_int_config_intl.c:379
+msgid "Latvia"
+msgstr "ラトビア"
+
+#: src/bin/e_int_config_intl.c:380
+msgid "Lebanon"
+msgstr "レバノン"
+
+#: src/bin/e_int_config_intl.c:381
+msgid "Lesotho"
+msgstr "レソト"
+
+#: src/bin/e_int_config_intl.c:382
+msgid "Liberia"
+msgstr "リベリア"
+
+#: src/bin/e_int_config_intl.c:383
+msgid "Libyan Arab Jamahiriya"
+msgstr "リビア"
+
+#: src/bin/e_int_config_intl.c:384
+msgid "Liechtenstein"
+msgstr "リヒテンシュタイン"
+
+#: src/bin/e_int_config_intl.c:385
+msgid "Lithuania"
+msgstr "リトアニア"
+
+#: src/bin/e_int_config_intl.c:386
+msgid "Luxembourg"
+msgstr "ルクセンブルク"
+
+#: src/bin/e_int_config_intl.c:387
+msgid "Macao"
+msgstr "マカオ特別行政区"
+
+#: src/bin/e_int_config_intl.c:388
+msgid "Macedonia"
+msgstr "マケドニア"
+
+#: src/bin/e_int_config_intl.c:389
+msgid "Madagascar"
+msgstr "マダガスカル"
+
+#: src/bin/e_int_config_intl.c:390
+msgid "Malawi"
+msgstr "マラウィ"
+
+#: src/bin/e_int_config_intl.c:391
+msgid "Malaysia"
+msgstr "マレーシア"
+
+#: src/bin/e_int_config_intl.c:392
+msgid "Maldives"
+msgstr "モルジブ"
+
+#: src/bin/e_int_config_intl.c:393
+msgid "Mali"
+msgstr "マリ"
+
+#: src/bin/e_int_config_intl.c:394
+msgid "Malta"
+msgstr "マルタ"
+
+#: src/bin/e_int_config_intl.c:395
+msgid "Marshall Islands"
+msgstr "マーシャル諸島"
+
+#: src/bin/e_int_config_intl.c:396
+msgid "Martinique"
+msgstr "マルチニーク島"
+
+#: src/bin/e_int_config_intl.c:397
+msgid "Mauritania"
+msgstr "モーリタニア"
+
+#: src/bin/e_int_config_intl.c:398
+msgid "Mauritius"
+msgstr "モーリシャス"
+
+#: src/bin/e_int_config_intl.c:399
+msgid "Mayotte"
+msgstr "マヨット島"
+
+#: src/bin/e_int_config_intl.c:400
+msgid "Mexico"
+msgstr "メキシコ"
+
+#: src/bin/e_int_config_intl.c:401
+msgid "Micronesia"
+msgstr "ミクロネシア連邦"
+
+#: src/bin/e_int_config_intl.c:402
+msgid "Moldova"
+msgstr "モルドバ"
+
+#: src/bin/e_int_config_intl.c:403
+msgid "Monaco"
+msgstr "モナコ"
+
+#: src/bin/e_int_config_intl.c:404
+msgid "Mongolia"
+msgstr "モンゴル"
+
+#: src/bin/e_int_config_intl.c:405
+msgid "Montserrat"
+msgstr "モントセラト"
+
+#: src/bin/e_int_config_intl.c:406
+msgid "Morocco"
+msgstr "モロッコ"
+
+#: src/bin/e_int_config_intl.c:407
+msgid "Mozambique"
+msgstr "モザンビーク"
+
+#: src/bin/e_int_config_intl.c:408
+msgid "Myanmar"
+msgstr "ミャンマー"
+
+#: src/bin/e_int_config_intl.c:409
+msgid "Namibia"
+msgstr "ナミビア"
+
+#: src/bin/e_int_config_intl.c:410
+msgid "Nauru"
+msgstr "ナウル"
+
+#: src/bin/e_int_config_intl.c:411
+msgid "Nepal"
+msgstr "ネパール"
+
+#: src/bin/e_int_config_intl.c:412
+msgid "Netherlands"
+msgstr "オランダ"
+
+#: src/bin/e_int_config_intl.c:413
+msgid "Netherlands Antilles"
+msgstr "オランダ領アンティル"
+
+#: src/bin/e_int_config_intl.c:414
+msgid "New Caledonia"
+msgstr "ニューカレドニア"
+
+#: src/bin/e_int_config_intl.c:415
+msgid "New Zealand"
+msgstr "ニュージーランド"
+
+#: src/bin/e_int_config_intl.c:416
+msgid "Nicaragua"
+msgstr "ニカラグア"
+
+#: src/bin/e_int_config_intl.c:417
+msgid "Niger"
+msgstr "ニジェール"
+
+#: src/bin/e_int_config_intl.c:418
+msgid "Nigeria"
+msgstr "ナイジェリア"
+
+#: src/bin/e_int_config_intl.c:419
+msgid "Niue"
+msgstr "ニウエ"
+
+#: src/bin/e_int_config_intl.c:420
+msgid "Norfolk Island"
+msgstr "ノーフォーク島"
+
+#: src/bin/e_int_config_intl.c:421
+msgid "Northern Mariana Islands"
+msgstr "北マリアナ諸島"
+
+#: src/bin/e_int_config_intl.c:422
+msgid "Norway"
+msgstr "ノルウェー"
+
+#: src/bin/e_int_config_intl.c:423
+msgid "Oman"
+msgstr "オマーン"
+
+#: src/bin/e_int_config_intl.c:424
+msgid "Pakistan"
+msgstr "パキスタン"
+
+#: src/bin/e_int_config_intl.c:425
+msgid "Palau"
+msgstr "パラオ"
+
+#: src/bin/e_int_config_intl.c:426
+msgid "Palestinian Territory"
+msgstr "パレスチナ"
+
+#: src/bin/e_int_config_intl.c:427
+msgid "Panama"
+msgstr "パナマ"
+
+#: src/bin/e_int_config_intl.c:428
+msgid "Papua New Guinea"
+msgstr "パプアニューギニア"
+
+#: src/bin/e_int_config_intl.c:429
+msgid "Paraguay"
+msgstr "パラグアイ"
+
+#: src/bin/e_int_config_intl.c:430
+msgid "Peru"
+msgstr "ペルー"
+
+#: src/bin/e_int_config_intl.c:431
+msgid "Philippines"
+msgstr "フィリピン"
+
+#: src/bin/e_int_config_intl.c:432
+msgid "Pitcairn"
+msgstr "ピトケアン諸島"
+
+#: src/bin/e_int_config_intl.c:433
+msgid "Poland"
+msgstr "ポーランド"
+
+#: src/bin/e_int_config_intl.c:434
+msgid "Portugal"
+msgstr "ポルトガル"
+
+#: src/bin/e_int_config_intl.c:435
+msgid "Puerto Rico"
+msgstr "プエルトリコ"
+
+#: src/bin/e_int_config_intl.c:436
+msgid "Qatar"
+msgstr "カタール"
+
+#: src/bin/e_int_config_intl.c:437
+msgid "Reunion"
+msgstr "レユニオン"
+
+#: src/bin/e_int_config_intl.c:438
+msgid "Romania"
+msgstr "ルーマニア"
+
+#: src/bin/e_int_config_intl.c:439
+msgid "Russian Federation"
+msgstr "ロシア"
+
+#: src/bin/e_int_config_intl.c:440
+msgid "Rwanda"
+msgstr "ルワンダ"
+
+#: src/bin/e_int_config_intl.c:441
+msgid "Saint Helena"
+msgstr "セントヘレナ島"
+
+#: src/bin/e_int_config_intl.c:442
+msgid "Saint Kitts and Nevis"
+msgstr "セントクリストファー・ネイビス"
+
+#: src/bin/e_int_config_intl.c:443
+msgid "Saint Lucia"
+msgstr "セントルシア"
+
+#: src/bin/e_int_config_intl.c:444
+msgid "Saint Pierre and Miquelon"
+msgstr "サンピエール島・ミクロン島"
+
+#: src/bin/e_int_config_intl.c:445
+msgid "Saint Vincent and the Grenadines"
+msgstr "セントビンセントおよびグレナディーン諸島"
+
+#: src/bin/e_int_config_intl.c:446
+msgid "Samoa"
+msgstr "サモア"
+
+#: src/bin/e_int_config_intl.c:447
+msgid "San Marino"
+msgstr "サンマリノ"
+
+#: src/bin/e_int_config_intl.c:448
+msgid "Sao Tome and Principe"
+msgstr "サントメ・プリンシペ"
+
+#: src/bin/e_int_config_intl.c:449
+msgid "Saudi Arabia"
+msgstr "サウジアラビア"
+
+#: src/bin/e_int_config_intl.c:450
+msgid "Senegal"
+msgstr "セネガル"
+
+#: src/bin/e_int_config_intl.c:451
+msgid "Serbia and Montenegro"
+msgstr "セルビア・モンテネグロ"
+
+#: src/bin/e_int_config_intl.c:452
+msgid "Seychelles"
+msgstr "セーシェル"
+
+#: src/bin/e_int_config_intl.c:453
+msgid "Sierra Leone"
+msgstr "シエラレオネ"
+
+#: src/bin/e_int_config_intl.c:454
+msgid "Singapore"
+msgstr "シンガポール"
+
+#: src/bin/e_int_config_intl.c:455
+msgid "Slovakia"
+msgstr "スロバキア"
+
+#: src/bin/e_int_config_intl.c:456
+msgid "Slovenia"
+msgstr "スロベニア"
+
+#: src/bin/e_int_config_intl.c:457
+msgid "Solomon Islands"
+msgstr "ソロモン諸島"
+
+#: src/bin/e_int_config_intl.c:458
+msgid "Somalia"
+msgstr "ソマリア"
+
+#: src/bin/e_int_config_intl.c:459
+msgid "South Africa"
+msgstr "南アフリカ"
+
+#: src/bin/e_int_config_intl.c:460
+msgid "South Georgia and the South Sandwich Islands"
+msgstr "南ジョージア島・南サンドイッチ諸島"
+
+#: src/bin/e_int_config_intl.c:461
+msgid "Spain"
+msgstr "スペイン"
+
+#: src/bin/e_int_config_intl.c:462
+msgid "Sri Lanka"
+msgstr "スリランカ"
+
+#: src/bin/e_int_config_intl.c:463
+msgid "Sudan"
+msgstr "スーダン"
+
+#: src/bin/e_int_config_intl.c:464
+msgid "Suriname"
+msgstr "スリナム"
+
+#: src/bin/e_int_config_intl.c:465
+msgid "Svalbard and Jan Mayen"
+msgstr "スバールバル諸島・ヤンマイエン島"
+
+#: src/bin/e_int_config_intl.c:466
+msgid "Swaziland"
+msgstr "スワジランド"
+
+#: src/bin/e_int_config_intl.c:467
+msgid "Sweden"
+msgstr "スウェーデン"
+
+#: src/bin/e_int_config_intl.c:468
+msgid "Switzerland"
+msgstr "スイス"
+
+#: src/bin/e_int_config_intl.c:469
+msgid "Syrian Arab Republic"
+msgstr "シリア・アラブ"
+
+#: src/bin/e_int_config_intl.c:470
+msgid "Taiwan"
+msgstr "中華民国"
+
+#: src/bin/e_int_config_intl.c:471
+msgid "Tajikistan"
+msgstr "タジキスタン"
+
+#: src/bin/e_int_config_intl.c:472
+msgid "Tanzania"
+msgstr "タンザニア"
+
+#: src/bin/e_int_config_intl.c:473
+msgid "Thailand"
+msgstr "タイ"
+
+#: src/bin/e_int_config_intl.c:474
+msgid "Timor-leste"
+msgstr "東ティモール"
+
+#: src/bin/e_int_config_intl.c:475
+msgid "Togo"
+msgstr "トーゴ"
+
+#: src/bin/e_int_config_intl.c:476
+msgid "Tokelau"
+msgstr "トケラウ諸島"
+
+#: src/bin/e_int_config_intl.c:477
+msgid "Tonga"
+msgstr "トンガ"
+
+#: src/bin/e_int_config_intl.c:478
+msgid "Trinidad and Tobago"
+msgstr "トリニダード・トバゴ"
+
+#: src/bin/e_int_config_intl.c:479
+msgid "Tunisia"
+msgstr "チュニジア"
+
+#: src/bin/e_int_config_intl.c:480
+msgid "Turkey"
+msgstr "トルコ"
+
+#: src/bin/e_int_config_intl.c:481
+msgid "Turkmenistan"
+msgstr "トルクメニスタン"
+
+#: src/bin/e_int_config_intl.c:482
+msgid "Turks and Caicos Islands"
+msgstr "タークス・カイコス諸島"
+
+#: src/bin/e_int_config_intl.c:483
+msgid "Tuvalu"
+msgstr "ツバル"
+
+#: src/bin/e_int_config_intl.c:484
+msgid "Uganda"
+msgstr "ウガンダ"
+
+#: src/bin/e_int_config_intl.c:485
+msgid "Ukraine"
+msgstr "ウクライナ"
+
+#: src/bin/e_int_config_intl.c:486
+msgid "United Arab Emirates"
+msgstr "アラブ首長国連邦"
+
+#: src/bin/e_int_config_intl.c:487
+msgid "United Kingdom"
+msgstr "イギリス"
+
+#: src/bin/e_int_config_intl.c:488
+msgid "United States"
+msgstr "アメリカ"
+
+#: src/bin/e_int_config_intl.c:489
+msgid "United States Minor Outlying Islands"
+msgstr "アメリカ領太平洋諸島"
+
+#: src/bin/e_int_config_intl.c:490
+msgid "Uruguay"
+msgstr "ウルグアイ"
+
+#: src/bin/e_int_config_intl.c:491
+msgid "Uzbekistan"
+msgstr "ウズベキスタン"
+
+#: src/bin/e_int_config_intl.c:492
+msgid "Vanuatu"
+msgstr "バヌアツ"
+
+#: src/bin/e_int_config_intl.c:493
+msgid "Venezuela"
+msgstr "ベネズエラ"
+
+#: src/bin/e_int_config_intl.c:494
+msgid "Viet Nam"
+msgstr "ベトナム"
+
+#: src/bin/e_int_config_intl.c:495 src/bin/e_int_config_intl.c:496
+msgid "Virgin Islands"
+msgstr "ヴァージン諸島"
+
+#: src/bin/e_int_config_intl.c:497
+msgid "Wallis and Futuna"
+msgstr "ウォリス・フツナ"
+
+#: src/bin/e_int_config_intl.c:498
+msgid "Western Sahara"
+msgstr "西サハラ"
+
+#: src/bin/e_int_config_intl.c:499
+msgid "Yemen"
+msgstr "イエメン"
+
+#: src/bin/e_int_config_intl.c:500
+msgid "Zambia"
+msgstr "ザンビア"
+
+#: src/bin/e_int_config_intl.c:501
+msgid "Zimbabwe"
+msgstr "ジンバブエ"
+
+#: src/bin/e_int_config_intl.c:521
+msgid "Language Configuration"
+msgstr "言語の設定"
+
+#: src/bin/e_int_config_intl.c:806 src/bin/e_int_config_intl.c:871
+msgid "Language Selector"
+msgstr "使用する言語"
+
+#: src/bin/e_int_config_intl.c:831 src/bin/e_int_config_intl.c:914
+msgid "Locale Selected"
+msgstr "選択されたロケール"
+
+#: src/bin/e_int_config_intl.c:833 src/bin/e_int_config_intl.c:916
+msgid "Locale"
+msgstr "ロケール"
+
 #: src/bin/e_entry_dialog.c:56
 msgid "Ok"
 msgstr "了解"
 
-#: src/bin/e_entry_dialog.c:57 src/bin/e_file_dialog.c:71
-#: src/bin/e_int_config_wallpaper_gradient.c:185
-#: src/bin/e_int_config_wallpaper_import.c:185
+#: src/bin/e_entry_dialog.c:57 src/bin/e_int_config_wallpaper_gradient.c:180
+#: src/bin/e_int_config_wallpaper_import.c:184
 #: src/bin/e_int_config_theme_import.c:117
 msgid "Cancel"
 msgstr "取消"
 
-#: src/bin/e_error.c:352
-msgid "Enlightenment: Error!"
-msgstr "Enlightenment: エラー!"
-
-#: src/bin/e_file_dialog.c:58
-msgid "Places"
-msgstr ""
-
-#: src/bin/e_file_dialog.c:60
-msgid "Home"
-msgstr "ホーム"
-
-#: src/bin/e_file_dialog.c:62 src/bin/e_int_config_paths.c:85
-msgid "Icons"
-msgstr "アイコン"
-
-#: src/bin/e_fileman_file.c:313 src/bin/e_fileman_file.c:364
-#: src/bin/e_fileman_mime.c:394 src/bin/e_zone.c:663
-#, c-format
-msgid ""
-"Enlightenment was unable to fork a child process:\n"
-"\n"
-"%s\n"
-"\n"
-msgstr ""
-"Enlightenment で以下の子プロセスが fork できませんでした.\n"
-"\n"
-"%s\n"
-"\n"
-
-#
-#: src/bin/e_fileman_smart.c:908 src/bin/e_fm.c:2826 src/bin/e_fm.c:2936
-#: src/bin/e_fm.c:3032
-msgid "Error"
-msgstr "エラー"
-
-#: src/bin/e_fileman_smart.c:909
-#, c-format
-msgid "Could not delete  <br><b>%s</b>"
-msgstr "以下が削除できません. <br><b>%s</b>"
-
-#
-#: src/bin/e_fileman_smart.c:999
-msgid "Confirm"
-msgstr "確認"
-
-#: src/bin/e_fileman_smart.c:1000
-#, c-format
-msgid " Are you sure you want to delete <br><b>%s</b> ?"
-msgstr "以下を本当に削除しますか. <br><b>%s</b>"
-
-#: src/bin/e_fileman_smart.c:1222
-#, c-format
-msgid "File:"
-msgstr "ファイル"
-
-#: src/bin/e_fileman_smart.c:1231 src/bin/e_widget_fsel.c:306
-#, c-format
-msgid "Size:"
-msgstr "サイズ"
-
-#: src/bin/e_fileman_smart.c:1240
-#, c-format
-msgid "Type:"
-msgstr "タイプ"
-
-#: src/bin/e_fileman_smart.c:1249
-msgid "Protect this file"
-msgstr "このファイルを保護する"
-
-#: src/bin/e_fileman_smart.c:1255
-msgid "Let others see this file"
-msgstr "他でもこのファイルの閲覧を可能にする"
-
-#: src/bin/e_fileman_smart.c:1259
-msgid "Let others modify this file"
-msgstr "他でもこのファイルの変更を可能にする"
-
-#: src/bin/e_fileman_smart.c:1263
-msgid "Dont let others see or modify this file"
-msgstr "他ではこのファイルの閲覧と変更を禁止する"
-
-#: src/bin/e_fileman_smart.c:1267
-msgid "Custom settings"
-msgstr "カスタム設定"
-
-#: src/bin/e_fileman_smart.c:1304
-msgid "File Info:"
-msgstr "ファイル情報"
-
-#: src/bin/e_fileman_smart.c:1305 src/bin/e_widget_fsel.c:321
-msgid "Owner:"
-msgstr "所有者"
-
-#: src/bin/e_fileman_smart.c:1310
-msgid "Group:"
-msgstr "グループ"
-
-#: src/bin/e_fileman_smart.c:1315
-msgid "Last Access:"
-msgstr "最終アクセス日"
-
-#: src/bin/e_fileman_smart.c:1320
-msgid "Last Modified:"
-msgstr "最終更新日"
-
-#: src/bin/e_fileman_smart.c:1327 src/bin/e_widget_fsel.c:336
-msgid "Permissions:"
-msgstr "許可情報"
-
-#: src/bin/e_fileman_smart.c:1328
-msgid "Me"
-msgstr "所有者"
-
-#: src/bin/e_fileman_smart.c:1330 src/bin/e_fileman_smart.c:1339
-#: src/bin/e_fileman_smart.c:1348
-msgid "r"
-msgstr "r(読取)"
-
-#: src/bin/e_fileman_smart.c:1332 src/bin/e_fileman_smart.c:1341
-#: src/bin/e_fileman_smart.c:1350
-msgid "w"
-msgstr "w(書込)"
-
-#: src/bin/e_fileman_smart.c:1334 src/bin/e_fileman_smart.c:1343
-#: src/bin/e_fileman_smart.c:1352
-msgid "x"
-msgstr "x(実行)"
-
-#: src/bin/e_fileman_smart.c:1337
-msgid "My Group"
-msgstr "グループ"
-
-#: src/bin/e_fileman_smart.c:1346
-msgid "Everyone"
-msgstr "その他"
-
-#: src/bin/e_fileman_smart.c:1381 src/bin/e_fileman_smart.c:2032
-#: src/bin/e_fileman_smart.c:3950
-msgid "Properties"
-msgstr "プロパティ"
-
-#: src/bin/e_fileman_smart.c:1939
-msgid "Arrange Icons"
-msgstr "アイコンの整頓"
-
-#: src/bin/e_fileman_smart.c:1951
-msgid "By Name"
-msgstr "名前で"
-
-#: src/bin/e_fileman_smart.c:1962
-msgid "By Mod Time"
-msgstr "更新日で"
-
-#: src/bin/e_fileman_smart.c:1973
-msgid "New"
-msgstr "新規"
-
-#: src/bin/e_fileman_smart.c:1985
-msgid "Directory"
-msgstr "ディレクトリ"
-
-#: src/bin/e_fileman_smart.c:1993
-msgid "View"
-msgstr "閲覧"
-
-#: src/bin/e_fileman_smart.c:2005
-msgid "Name Only"
-msgstr "名前だけ"
-
-#: src/bin/e_fileman_smart.c:2014
-msgid "Details"
-msgstr "詳細"
-
-#: src/bin/e_fileman_smart.c:2024 src/bin/e_int_config_display.c:369
-msgid "Refresh"
-msgstr "更新"
-
-#: src/bin/e_fileman_smart.c:3910
-msgid "Copy"
-msgstr "コピー"
-
-#: src/bin/e_fileman_smart.c:3917
-msgid "Cut"
-msgstr "カット"
-
-#: src/bin/e_fileman_smart.c:3929 src/bin/e_fm.c:2707
-msgid "Rename"
-msgstr "名前変更"
-
-#: src/bin/e_fileman_smart.c:3938 src/bin/e_fm.c:2699
-#: src/bin/e_int_config_mousebindings.c:337 src/bin/e_int_config_shelf.c:73
-#: src/modules/ibar/e_mod_config.c:109
-msgid "Delete"
-msgstr "削除"
-
-#: src/bin/e_fm.c:891
+#: src/bin/e_fm.c:940
 #, c-format
 msgid "%i Files"
 msgstr "ファイル数 %i"
 
-#: src/bin/e_fm.c:2555 src/bin/e_fm.c:2636
+#: src/bin/e_fm.c:3536 src/bin/e_fm.c:3627
 msgid "Refresh View"
 msgstr "内容を更新する"
 
-#: src/bin/e_fm.c:2568 src/bin/e_fm.c:2649 src/bin/e_int_config_paths.c:208
+#: src/bin/e_fm.c:3544 src/bin/e_fm.c:3635
+msgid "Show Hidden Files"
+msgstr "隠しファイルを表示する"
+
+#: src/bin/e_fm.c:3559 src/bin/e_fm.c:3650 src/bin/e_int_config_paths.c:208
 msgid "New Directory"
 msgstr "新しいディレクトリ"
 
-#: src/bin/e_fm.c:2782
+#: src/bin/e_fm.c:3702 src/bin/e_int_config_mousebindings.c:337
+#: src/bin/e_int_config_shelf.c:73 src/modules/ibar/e_mod_config.c:109
+msgid "Delete"
+msgstr "削除"
+
+#: src/bin/e_fm.c:3710
+msgid "Rename"
+msgstr "名前変更"
+
+#: src/bin/e_fm.c:3799
 msgid "Create a new Directory"
 msgstr "ディレクトリを新規作成する"
 
-#: src/bin/e_fm.c:2783
+#: src/bin/e_fm.c:3800
 msgid "New Directory Name:"
 msgstr "新しいディレクトリ名"
 
-#: src/bin/e_fm.c:2828
+#
+#: src/bin/e_fm.c:3843 src/bin/e_fm.c:3953 src/bin/e_fm.c:4049
+msgid "Error"
+msgstr "エラー"
+
+#: src/bin/e_fm.c:3845
 #, c-format
 msgid "Could not create directory:<br><hilight>%s</hilight>"
 msgstr "以下のディレクトリが作成できません.<br><hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:2879
+#: src/bin/e_fm.c:3896
 #, c-format
 msgid "Rename %s to:"
 msgstr "名前を %s から変更:"
 
-#: src/bin/e_fm.c:2881
+#: src/bin/e_fm.c:3898
 msgid "Rename File"
 msgstr "ファイル名を変更する"
 
-#: src/bin/e_fm.c:2938
+#: src/bin/e_fm.c:3955
 #, c-format
 msgid "Could not rename from <hilight>%s</hilight> to <hilight>%s</hilight>"
 msgstr ""
 "名前を <hilight>%s</hilight> から <hilight>%s</hilight> に変更できません."
 
 #
-#: src/bin/e_fm.c:2984
+#: src/bin/e_fm.c:4001
 msgid "Confirm Delete"
 msgstr "削除確認"
 
-#: src/bin/e_fm.c:2986
+#: src/bin/e_fm.c:4003
 #, c-format
 msgid "Are you sure you want to delete <br><hilight>%s</hilight> ?"
 msgstr "以下を本当に削除しますか.<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:3034
+#: src/bin/e_fm.c:4051
 #, c-format
 msgid "Could not delete <br><hilight>%s</hilight>"
 msgstr "以下が削除できません.<br><hilight>%s</hilight>"
 
-#: src/bin/e_gadcon.c:1102
+#: src/bin/e_gadcon.c:1100
 msgid "Plain"
 msgstr "普通"
 
-#: src/bin/e_gadcon.c:1111
+#: src/bin/e_gadcon.c:1109
 msgid "Inset"
 msgstr "埋め込む"
 
-#: src/bin/e_gadcon.c:1128
+#: src/bin/e_gadcon.c:1126
 msgid "Automatically scroll contents"
 msgstr "自動的にスクロールする"
 
-#: src/bin/e_gadcon.c:1135
+#: src/bin/e_gadcon.c:1133
 msgid "Able to be resized"
 msgstr "大きさが変えられる"
 
-#: src/bin/e_gadcon.c:1147
+#: src/bin/e_gadcon.c:1145
 msgid "Move/Resize this gadget"
 msgstr "このガジェットを移動/大きさ変更する"
 
-#: src/bin/e_gadcon.c:1153
+#: src/bin/e_gadcon.c:1151
 msgid "Remove this gadget"
 msgstr "このガジェットを削除する"
 
@@ -1361,14 +2701,14 @@ msgid "Position"
 msgstr "位置"
 
 #: src/bin/e_int_border_locks.c:320 src/bin/e_int_border_locks.c:339
-#: src/bin/e_int_border_remember.c:495 src/bin/e_int_shelf_config.c:373
-#: src/bin/e_int_shelf_config.c:452
+#: src/bin/e_int_border_remember.c:495 src/bin/e_int_shelf_config.c:398
+#: src/bin/e_int_shelf_config.c:477
 msgid "Size"
 msgstr "サイズ"
 
 #: src/bin/e_int_border_locks.c:322 src/bin/e_int_border_locks.c:341
 #: src/bin/e_int_border_menu.c:187 src/bin/e_int_border_remember.c:497
-#: src/bin/e_int_shelf_config.c:410
+#: src/bin/e_int_shelf_config.c:435
 msgid "Stacking"
 msgstr "積み重ね順"
 
@@ -1500,11 +2840,11 @@ msgstr "ウィンドウプロパティ"
 msgid "Iconify"
 msgstr "アイコン化"
 
-#: src/bin/e_int_border_menu.c:614
+#: src/bin/e_int_border_menu.c:617
 msgid "Incomplete Window Properties"
 msgstr "ウィンドウプロパティが不完全です"
 
-#: src/bin/e_int_border_menu.c:615
+#: src/bin/e_int_border_menu.c:618
 msgid ""
 "The window you are creating an icon for<br>does not contain window name and "
 "class<br>properties, so the needed properties for<br>the icon so that it "
@@ -1796,79 +3136,80 @@ msgstr "%1.0f ピクセル"
 msgid "Desktop Lock Settings"
 msgstr "デスクトップロックの設定"
 
-#: src/bin/e_int_config_desklock.c:460 src/bin/e_int_config_desklock.c:763
+#: src/bin/e_int_config_desklock.c:458 src/bin/e_int_config_desklock.c:761
 msgid "Automatic Locking"
 msgstr "自動ロック"
 
-#: src/bin/e_int_config_desklock.c:463 src/bin/e_int_config_desklock.c:767
+#: src/bin/e_int_config_desklock.c:461 src/bin/e_int_config_desklock.c:765
 msgid "Enable screensaver"
 msgstr "スクリーンセーバーを有効にする"
 
-#: src/bin/e_int_config_desklock.c:467 src/bin/e_int_config_desklock.c:771
+#: src/bin/e_int_config_desklock.c:465 src/bin/e_int_config_desklock.c:769
 msgid "Lock when the screensaver starts"
 msgstr "スクリーンセーバーが起動したらロックする"
 
-#: src/bin/e_int_config_desklock.c:471 src/bin/e_int_config_desklock.c:775
+#: src/bin/e_int_config_desklock.c:469 src/bin/e_int_config_desklock.c:773
 msgid "Time until screensaver starts"
 msgstr "スクリーンセーバーが起動するまでの時間"
 
-#: src/bin/e_int_config_desklock.c:474 src/bin/e_int_config_desklock.c:778
+#: src/bin/e_int_config_desklock.c:472 src/bin/e_int_config_desklock.c:776
 #: src/bin/e_int_config_performance.c:131
 #, c-format
 msgid "%1.0f seconds"
 msgstr "%1.0f 秒"
 
-#: src/bin/e_int_config_desklock.c:558 src/bin/e_int_config_startup.c:272
-#: src/bin/e_int_config_theme.c:359 src/bin/e_int_config_wallpaper.c:411
-#: src/bin/e_int_config_wallpaper.c:556
+#: src/bin/e_int_config_desklock.c:556 src/bin/e_int_config_startup.c:268
+#: src/bin/e_int_config_theme.c:356 src/bin/e_int_config_wallpaper.c:407
+#: src/bin/e_int_config_wallpaper.c:550
 msgid "Personal"
 msgstr "ユーザー"
 
-#: src/bin/e_int_config_desklock.c:571 src/bin/e_int_config_icon_themes.c:220
-#: src/bin/e_int_config_startup.c:285 src/bin/e_int_config_theme.c:372
-#: src/bin/e_int_config_wallpaper.c:424 src/bin/e_int_config_wallpaper.c:569
-#: src/bin/e_widget_fsel.c:277 src/bin/e_int_config_apps.c:514
+#: src/bin/e_int_config_desklock.c:569 src/bin/e_int_config_icon_themes.c:220
+#: src/bin/e_int_config_startup.c:281 src/bin/e_int_config_theme.c:369
+#: src/bin/e_int_config_wallpaper.c:420 src/bin/e_int_config_wallpaper.c:563
+#: src/bin/e_widget_fsel.c:294 src/bin/e_int_config_apps.c:511
+#: src/bin/e_int_config_apps.c:598
 msgid "Go up a Directory"
 msgstr "上のディレクトリへ移動"
 
-#: src/bin/e_int_config_desklock.c:622
+#: src/bin/e_int_config_desklock.c:620
 msgid "Wallpaper Mode"
 msgstr "壁紙モード"
 
-#: src/bin/e_int_config_desklock.c:626
+#: src/bin/e_int_config_desklock.c:624
 msgid "Theme Defined"
 msgstr "テーマ指定"
 
-#: src/bin/e_int_config_desklock.c:631
+#: src/bin/e_int_config_desklock.c:629
 msgid "Theme Wallpaper"
 msgstr "テーマの壁紙"
 
-#: src/bin/e_int_config_desklock.c:636
+#: src/bin/e_int_config_desklock.c:634
 msgid "Custom"
 msgstr "ユーザー指定"
 
 #
-#: src/bin/e_int_config_desklock.c:687
+#: src/bin/e_int_config_desklock.c:685
 msgid "Login Box Settings"
 msgstr "ログインボックスの設定"
 
-#: src/bin/e_int_config_desklock.c:690
+#: src/bin/e_int_config_desklock.c:688
 msgid "Show on all screen zones"
 msgstr "全スクリーンゾーンに表示する"
 
-#: src/bin/e_int_config_desklock.c:697
+#: src/bin/e_int_config_desklock.c:695
 msgid "Show on current screen zone"
 msgstr "現在のスクリーンゾーンに表示する"
 
-#: src/bin/e_int_config_desklock.c:704
+#: src/bin/e_int_config_desklock.c:702
 msgid "Show on screen zone #:"
 msgstr "以下のスクリーンゾーンに表示する :"
 
-#: src/bin/e_int_config_desklock.c:711 src/bin/e_int_config_desks.c:188
+#: src/bin/e_int_config_desklock.c:709 src/bin/e_int_config_desks.c:188
 #: src/bin/e_int_config_desks.c:190 src/bin/e_int_config_desks.c:219
-#: src/bin/e_int_config_desks.c:221 src/bin/e_int_config_exebuf.c:104
-#: src/bin/e_int_config_exebuf.c:108 src/bin/e_int_config_exebuf.c:148
-#: src/bin/e_int_config_exebuf.c:152
+#: src/bin/e_int_config_desks.c:221 src/bin/e_int_config_exebuf.c:108
+#: src/bin/e_int_config_exebuf.c:112 src/bin/e_int_config_exebuf.c:159
+#: src/bin/e_int_config_exebuf.c:163
 #, c-format
 msgid "%1.0f"
 msgstr ""
@@ -1891,7 +3232,7 @@ msgstr "マウスが画面の端に達したらデスクトップを切り替え
 
 #: src/bin/e_int_config_desks.c:199
 msgid "Animated flip"
-msgstr ""
+msgstr "デスクトップの切り替えに特殊効果をつける"
 
 #: src/bin/e_int_config_desks.c:226
 msgid "Desktop Mouse Flip"
@@ -1920,22 +3261,20 @@ msgid "Wrap desktops around when flipping"
 msgstr "デスクトップの上下左右をつなげる"
 
 #: src/bin/e_int_config_desks.c:239
-#, fuzzy
 msgid "Flip Animation"
-msgstr "デスクトップ切り替えのアニメ化"
+msgstr "切り替えの特殊効果"
 
 #: src/bin/e_int_config_desks.c:241
 msgid "Off"
-msgstr ""
+msgstr "無効"
 
 #: src/bin/e_int_config_desks.c:243
-#, fuzzy
 msgid "Pane"
-msgstr "ページャ"
+msgstr "パン"
 
 #: src/bin/e_int_config_desks.c:245
 msgid "Zoom"
-msgstr ""
+msgstr "ズーム"
 
 #: src/bin/e_int_config_display.c:108
 #, c-format
@@ -1975,6 +3314,10 @@ msgstr "解像度"
 msgid "Restore on login"
 msgstr "ログイン時に解像度復帰"
 
+#: src/bin/e_int_config_display.c:369
+msgid "Refresh"
+msgstr "更新"
+
 #: src/bin/e_int_config_display.c:451
 msgid "Rotation"
 msgstr "回転"
@@ -2000,41 +3343,49 @@ msgstr ""
 "えないと画面の解像度は変更できません.<br><hilight>ecore</hilight> の構築時"
 "に, XRandr サポートが検出されなかった<br>可能性もあります."
 
-#: src/bin/e_int_config_exebuf.c:43
+#: src/bin/e_int_config_exebuf.c:44
 msgid "Run Command Settings"
 msgstr "コマンド実行の設定"
 
-#: src/bin/e_int_config_exebuf.c:101 src/bin/e_int_config_exebuf.c:145
+#: src/bin/e_int_config_exebuf.c:105 src/bin/e_int_config_exebuf.c:156
 #: src/bin/e_int_config_performance.c:88
 #: src/bin/e_int_config_performance.c:121 src/bin/e_int_config_winlist.c:124
 #: src/modules/ibox/e_mod_config.c:96 src/modules/pager/e_mod_config.c:77
 msgid "General Settings"
 msgstr "一般の設定"
 
-#: src/bin/e_int_config_exebuf.c:102 src/bin/e_int_config_exebuf.c:146
-msgid "Maximum Number Of Matched Eaps To List"
-msgstr "表示する該当 eap の最大数"
+#: src/bin/e_int_config_exebuf.c:106
+msgid "Maximum Number of Matched Eaps to List"
+msgstr "該当 eap の最大表示数"
 
-#: src/bin/e_int_config_exebuf.c:106 src/bin/e_int_config_exebuf.c:150
-msgid "Maximum Number Of Matched Exes To List"
-msgstr "表示する該当実行可能ファイルの最大数"
+#: src/bin/e_int_config_exebuf.c:110
+msgid "Maximum Number of Matched Exes to List"
+msgstr "該当実行可能ファイルの最大表示数"
 
-#: src/bin/e_int_config_exebuf.c:112 src/bin/e_int_config_exebuf.c:156
+#: src/bin/e_int_config_exebuf.c:116 src/bin/e_int_config_exebuf.c:167
 #: src/bin/e_int_config_winlist.c:151 src/bin/e_int_config_winlist.c:227
 msgid "Scroll Settings"
 msgstr "スクロールの設定"
 
-#: src/bin/e_int_config_exebuf.c:113 src/bin/e_int_config_exebuf.c:157
+#: src/bin/e_int_config_exebuf.c:117 src/bin/e_int_config_exebuf.c:168
 #: src/bin/e_int_config_winlist.c:152 src/bin/e_int_config_winlist.c:228
 msgid "Scroll Animate"
 msgstr "ウィンドウリストのスクロールをアニメ化する"
 
-#: src/bin/e_int_config_exebuf.c:159 src/bin/e_int_config_winlist.c:230
+#: src/bin/e_int_config_exebuf.c:157
+msgid "Maximum Number Of Matched Eaps To List"
+msgstr "表示する該当 eap の最大数"
+
+#: src/bin/e_int_config_exebuf.c:161
+msgid "Maximum Number Of Matched Exes To List"
+msgstr "表示する該当実行可能ファイルの最大数"
+
+#: src/bin/e_int_config_exebuf.c:170 src/bin/e_int_config_winlist.c:230
 msgid "Scroll Speed"
 msgstr "スクロール速度"
 
-#: src/bin/e_int_config_exebuf.c:161 src/bin/e_int_config_exebuf.c:168
-#: src/bin/e_int_config_exebuf.c:172 src/bin/e_int_config_winlist.c:223
+#: src/bin/e_int_config_exebuf.c:172 src/bin/e_int_config_exebuf.c:179
+#: src/bin/e_int_config_exebuf.c:183 src/bin/e_int_config_winlist.c:223
 #: src/bin/e_int_config_winlist.c:232 src/bin/e_int_config_winlist.c:239
 #: src/bin/e_int_config_winlist.c:243
 #, c-format
@@ -2042,45 +3393,53 @@ msgid "%1.2f"
 msgstr ""
 
 #
-#: src/bin/e_int_config_exebuf.c:165 src/bin/e_int_config_winlist.c:236
+#: src/bin/e_int_config_exebuf.c:176 src/bin/e_int_config_winlist.c:236
 msgid "Position Settings"
 msgstr "ウィンドウリストの表示位置"
 
-#: src/bin/e_int_config_exebuf.c:166 src/bin/e_int_config_winlist.c:237
+#: src/bin/e_int_config_exebuf.c:177 src/bin/e_int_config_winlist.c:237
 msgid "X-Axis Alignment"
 msgstr "横位置"
 
-#: src/bin/e_int_config_exebuf.c:170 src/bin/e_int_config_winlist.c:241
+#: src/bin/e_int_config_exebuf.c:181 src/bin/e_int_config_winlist.c:241
 msgid "Y-Axis Alignment"
 msgstr "縦位置"
 
-#: src/bin/e_int_config_exebuf.c:176 src/bin/e_int_config_winlist.c:247
+#: src/bin/e_int_config_exebuf.c:187 src/bin/e_int_config_winlist.c:247
 msgid "Size Settings"
 msgstr "ウィンドウリストの大きさ"
 
-#: src/bin/e_int_config_exebuf.c:177 src/bin/e_int_config_winlist.c:248
+#: src/bin/e_int_config_exebuf.c:188 src/bin/e_int_config_winlist.c:248
 msgid "Minimum Width"
 msgstr "最小幅"
 
-#: src/bin/e_int_config_exebuf.c:179 src/bin/e_int_config_exebuf.c:183
-#: src/bin/e_int_config_exebuf.c:187 src/bin/e_int_config_exebuf.c:191
+#: src/bin/e_int_config_exebuf.c:190 src/bin/e_int_config_exebuf.c:194
+#: src/bin/e_int_config_exebuf.c:198 src/bin/e_int_config_exebuf.c:202
 #: src/bin/e_int_config_winlist.c:250 src/bin/e_int_config_winlist.c:254
 #: src/bin/e_int_config_winlist.c:258 src/bin/e_int_config_winlist.c:262
 #, c-format
 msgid "%4.0f"
 msgstr ""
 
-#: src/bin/e_int_config_exebuf.c:181 src/bin/e_int_config_winlist.c:252
+#: src/bin/e_int_config_exebuf.c:192 src/bin/e_int_config_winlist.c:252
 msgid "Minimum Height"
 msgstr "最小高"
 
-#: src/bin/e_int_config_exebuf.c:185 src/bin/e_int_config_winlist.c:256
+#: src/bin/e_int_config_exebuf.c:196 src/bin/e_int_config_winlist.c:256
 msgid "Maximum Width"
 msgstr "最大幅"
 
-#: src/bin/e_int_config_exebuf.c:189 src/bin/e_int_config_winlist.c:260
+#: src/bin/e_int_config_exebuf.c:200 src/bin/e_int_config_winlist.c:260
 msgid "Maximum Height"
 msgstr "最大高"
+
+#: src/bin/e_int_config_exebuf.c:206
+msgid "Terminal Settings"
+msgstr "端末の設定"
+
+#: src/bin/e_int_config_exebuf.c:207
+msgid "Terminal Command"
+msgstr "端末起動コマンド"
 
 #: src/bin/e_int_config_focus.c:48
 msgid "Focus Settings"
@@ -2297,11 +3656,11 @@ msgstr ""
 msgid "Module"
 msgstr "モジュール"
 
-#: src/bin/e_int_config_fonts.c:76 src/bin/e_int_shelf_config.c:377
+#: src/bin/e_int_config_fonts.c:76 src/bin/e_int_shelf_config.c:402
 msgid "Small"
 msgstr "小"
 
-#: src/bin/e_int_config_fonts.c:78 src/bin/e_int_shelf_config.c:381
+#: src/bin/e_int_config_fonts.c:78 src/bin/e_int_shelf_config.c:406
 msgid "Large"
 msgstr "大"
 
@@ -2358,7 +3717,7 @@ msgstr "自動"
 #: src/bin/e_int_config_mousebindings.c:413
 #: src/bin/e_int_config_transitions.c:129
 #: src/bin/e_int_config_transitions.c:175
-#: src/bin/e_int_config_transitions.c:208
+#: src/bin/e_int_config_transitions.c:207
 msgid "None"
 msgstr "無し"
 
@@ -2408,7 +3767,7 @@ msgid "Unsorted"
 msgstr "その他"
 
 #: src/bin/e_int_config_keybindings.c:20
-#: src/bin/e_int_config_keybindings.c:689 src/bin/e_widget_fsel.c:714
+#: src/bin/e_int_config_keybindings.c:689 src/bin/e_widget_fsel.c:747
 msgid "Unknown"
 msgstr "不明"
 
@@ -2630,9 +3989,9 @@ msgid ""
 "or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
 "highlight> to abort."
 msgstr ""
-"修飾キーを押しながら, マウスボタンを押すかホイールを回して,<br>"
-"マウスバインディングを割り当てて下さい.<br>"
-"あるいは <hilight>エスケープ</highlight> を押して終了して下さい."
+"修飾キーを押しながら, マウスボタンを押すかホイールを回して,<br>マウスバイン"
+"ディングを割り当てて下さい.<br>あるいは <hilight>エスケープ</highlight> を押"
+"して終了して下さい."
 
 #: src/bin/e_int_config_mousebindings.c:134
 msgid "Mouse Binding Settings"
@@ -2659,8 +4018,8 @@ msgstr "アクションパラメータ"
 msgid "Action Context"
 msgstr "カテゴリー"
 
-#: src/bin/e_int_config_mousebindings.c:878
-#: src/bin/e_int_config_mousebindings.c:915
+#: src/bin/e_int_config_mousebindings.c:875
+#: src/bin/e_int_config_mousebindings.c:912
 msgid "Mouse Binding Sequence"
 msgstr "マウスバインドシーケンス"
 
@@ -2683,6 +4042,10 @@ msgstr "テーマ"
 #: src/bin/e_int_config_paths.c:83
 msgid "Init"
 msgstr "初期化"
+
+#: src/bin/e_int_config_paths.c:85
+msgid "Icons"
+msgstr "アイコン"
 
 #: src/bin/e_int_config_paths.c:89
 msgid "Backgrounds"
@@ -2787,11 +4150,11 @@ msgstr ""
 msgid "Are you sure you want to delete this shelf?"
 msgstr "このシェルフを本当に削除しますか."
 
-#: src/bin/e_int_config_startup.c:39
+#: src/bin/e_int_config_startup.c:38
 msgid "Startup Settings"
 msgstr "起動時の設定"
 
-#: src/bin/e_int_config_startup.c:347
+#: src/bin/e_int_config_startup.c:343
 msgid "Show Splash Screen on Login"
 msgstr "ログイン時にスプラッシュスクリーンを表示する"
 
@@ -2799,7 +4162,7 @@ msgstr "ログイン時にスプラッシュスクリーンを表示する"
 msgid "Theme Selector"
 msgstr "テーマの選択"
 
-#: src/bin/e_int_config_theme.c:429
+#: src/bin/e_int_config_theme.c:426
 msgid "Import..."
 msgstr "他のテーマ..."
 
@@ -2807,81 +4170,81 @@ msgstr "他のテーマ..."
 msgid "Wallpaper Settings"
 msgstr "壁紙の設定"
 
-#: src/bin/e_int_config_wallpaper.c:481 src/bin/e_int_config_wallpaper.c:623
+#: src/bin/e_int_config_wallpaper.c:477 src/bin/e_int_config_wallpaper.c:617
 msgid "Use Theme Wallpaper"
 msgstr "テーマの壁紙を使う"
 
-#: src/bin/e_int_config_wallpaper.c:488 src/bin/e_int_config_wallpaper.c:630
+#: src/bin/e_int_config_wallpaper.c:484 src/bin/e_int_config_wallpaper.c:624
 msgid "Picture..."
 msgstr "他の画像..."
 
-#: src/bin/e_int_config_wallpaper.c:491 src/bin/e_int_config_wallpaper.c:633
+#: src/bin/e_int_config_wallpaper.c:487 src/bin/e_int_config_wallpaper.c:627
 msgid "Gradient..."
 msgstr "グラデーション..."
 
-#: src/bin/e_int_config_wallpaper.c:648
+#: src/bin/e_int_config_wallpaper.c:642
 msgid "Where to place the Wallpaper"
 msgstr "壁紙の設定先"
 
-#: src/bin/e_int_config_wallpaper.c:652
+#: src/bin/e_int_config_wallpaper.c:646
 msgid "All Desktops"
 msgstr "全デスクトップ"
 
-#: src/bin/e_int_config_wallpaper.c:654
+#: src/bin/e_int_config_wallpaper.c:648
 msgid "This Desktop"
 msgstr "このデスクトップ"
 
-#: src/bin/e_int_config_wallpaper.c:656
+#: src/bin/e_int_config_wallpaper.c:650
 msgid "This Screen"
 msgstr "このスクリーン"
 
-#: src/bin/e_int_config_wallpaper_gradient.c:104
+#: src/bin/e_int_config_wallpaper_gradient.c:99
 msgid "Create a gradient..."
 msgstr "グラデーションを壁紙にする..."
 
-#: src/bin/e_int_config_wallpaper_gradient.c:125
+#: src/bin/e_int_config_wallpaper_gradient.c:120
 msgid "Name:"
 msgstr "名前:"
 
-#: src/bin/e_int_config_wallpaper_gradient.c:129
+#: src/bin/e_int_config_wallpaper_gradient.c:124
 msgid "Color 1:"
 msgstr "色1:"
 
-#: src/bin/e_int_config_wallpaper_gradient.c:133
+#: src/bin/e_int_config_wallpaper_gradient.c:128
 msgid "Color 2:"
 msgstr "色2:"
 
-#: src/bin/e_int_config_wallpaper_gradient.c:155
+#: src/bin/e_int_config_wallpaper_gradient.c:150
 msgid "Fill Options"
 msgstr "形状"
 
-#: src/bin/e_int_config_wallpaper_gradient.c:159
+#: src/bin/e_int_config_wallpaper_gradient.c:154
 #: src/bin/e_int_config_window_manipulation.c:218
 msgid "Horizontal"
 msgstr "横に広げる"
 
-#: src/bin/e_int_config_wallpaper_gradient.c:163
+#: src/bin/e_int_config_wallpaper_gradient.c:158
 #: src/bin/e_int_config_window_manipulation.c:220
 msgid "Vertical"
 msgstr "縦に広げる"
 
-#: src/bin/e_int_config_wallpaper_gradient.c:167
+#: src/bin/e_int_config_wallpaper_gradient.c:162
 msgid "Diagonal Up"
 msgstr "左下から右上へ"
 
-#: src/bin/e_int_config_wallpaper_gradient.c:171
+#: src/bin/e_int_config_wallpaper_gradient.c:166
 msgid "Diagonal Down"
 msgstr "左上から右下へ"
 
-#: src/bin/e_int_config_wallpaper_gradient.c:175
+#: src/bin/e_int_config_wallpaper_gradient.c:170
 msgid "Radial"
 msgstr "放射状"
 
-#: src/bin/e_int_config_wallpaper_gradient.c:373
+#: src/bin/e_int_config_wallpaper_gradient.c:356
 msgid "Gradient Creation Error"
 msgstr "グラデーション作成エラー"
 
-#: src/bin/e_int_config_wallpaper_gradient.c:374
+#: src/bin/e_int_config_wallpaper_gradient.c:357
 msgid "For some reason, Enlightenment was unable to create a gradient."
 msgstr "何らかの理由で、グラデーションが作成できませんでした."
 
@@ -2937,66 +4300,68 @@ msgstr "選択完了後マウスをワープさせる"
 msgid "Warp Speed"
 msgstr "ワープ速度"
 
-#: src/bin/e_int_config_wallpaper_import.c:97
+#: src/bin/e_int_config_wallpaper_import.c:95
 msgid "Select a Picture..."
 msgstr "画像の選択..."
 
-#: src/bin/e_int_config_wallpaper_import.c:148
+#: src/bin/e_int_config_wallpaper_import.c:147
 msgid "Fill and Stretch Options"
 msgstr "画像の配置方法"
 
-#: src/bin/e_int_config_wallpaper_import.c:151
+#: src/bin/e_int_config_wallpaper_import.c:150
 msgid "Stretch"
 msgstr "変形"
 
-#: src/bin/e_int_config_wallpaper_import.c:154
+#: src/bin/e_int_config_wallpaper_import.c:153
 msgid "Center"
 msgstr "中央"
 
-#: src/bin/e_int_config_wallpaper_import.c:157
+#: src/bin/e_int_config_wallpaper_import.c:156
 msgid "Tile"
 msgstr "タイル"
 
-#: src/bin/e_int_config_wallpaper_import.c:160
+#: src/bin/e_int_config_wallpaper_import.c:159
 msgid "Within"
 msgstr "等倍"
 
-#: src/bin/e_int_config_wallpaper_import.c:163
+#: src/bin/e_int_config_wallpaper_import.c:162
 msgid "Fill"
 msgstr "全面"
 
-#: src/bin/e_int_config_wallpaper_import.c:168
+#: src/bin/e_int_config_wallpaper_import.c:167
 msgid "File Quality"
 msgstr "画質"
 
-#: src/bin/e_int_config_wallpaper_import.c:170
+#: src/bin/e_int_config_wallpaper_import.c:169
 #, c-format
 msgid "%3.0f%%"
 msgstr ""
 
-#: src/bin/e_int_config_wallpaper_import.c:464
+#: src/bin/e_int_config_wallpaper_import.c:457
 msgid "Picture Import Error"
 msgstr "画像のインポートエラー"
 
-#: src/bin/e_int_config_wallpaper_import.c:465
+#: src/bin/e_int_config_wallpaper_import.c:458
 msgid ""
 "Enlightenment was unable to import the picture<br>due to conversion errors."
 msgstr "画像の変換でエラーが発生したため画像が取り込めませんでした."
 
-#: src/bin/e_int_config_wallpaper_import.c:540
-#: src/bin/e_int_config_wallpaper_import.c:556
+#: src/bin/e_int_config_wallpaper_import.c:532
+#: src/bin/e_int_config_wallpaper_import.c:548
 msgid "Wallpaper Import Error"
 msgstr "画像のインポートエラー"
 
-#: src/bin/e_int_config_wallpaper_import.c:541
+#: src/bin/e_int_config_wallpaper_import.c:533
 msgid "Enlightenment was unable to import the wallpaper<br>due to a copy error"
 msgstr "画像のコピーでエラーが発生したため画像が取り込めませんでした."
 
-#: src/bin/e_int_config_wallpaper_import.c:557
+#: src/bin/e_int_config_wallpaper_import.c:549
 msgid ""
 "Enlightenment was unable to import the wallpaper.<br><br>Are you sure this "
 "is a valid wallpaper?"
-msgstr "Enlightenment で画像が取り込めませんでした.<br><br>これは本当に正しい壁紙ですか"
+msgstr ""
+"Enlightenment で画像が取り込めませんでした.<br><br>これは本当に正しい壁紙です"
+"か"
 
 #: src/bin/e_int_config_window_display.c:148
 msgid "Display"
@@ -3207,103 +4572,103 @@ msgid "About This Theme"
 msgstr "このテーマについて"
 
 #: src/bin/e_int_menus.c:139 src/bin/e_module.c:479
-#: src/modules/battery/e_mod_main.c:175 src/modules/ibar/e_mod_main.c:303
-#: src/modules/ibar/e_mod_main.c:936 src/modules/ibox/e_mod_main.c:293
-#: src/modules/ibox/e_mod_main.c:692 src/modules/itray/e_mod_main.c:417
-#: src/modules/pager/e_mod_main.c:641 src/modules/temperature/e_mod_main.c:145
+#: src/modules/battery/e_mod_main.c:175 src/modules/ibar/e_mod_main.c:291
+#: src/modules/ibar/e_mod_main.c:913 src/modules/ibox/e_mod_main.c:285
+#: src/modules/ibox/e_mod_main.c:673 src/modules/itray/e_mod_main.c:417
+#: src/modules/pager/e_mod_main.c:623 src/modules/temperature/e_mod_main.c:145
 msgid "Configuration"
 msgstr "設定"
 
-#: src/bin/e_int_menus.c:511
+#: src/bin/e_int_menus.c:502
 msgid "(No Applications)"
 msgstr "(アプリケーション無し)"
 
-#: src/bin/e_int_menus.c:604
+#: src/bin/e_int_menus.c:595
 msgid "Show/Hide All Windows"
 msgstr "全ウィンドウを一度に隠す／表示する"
 
-#: src/bin/e_int_menus.c:744
+#: src/bin/e_int_menus.c:735
 msgid "Lock Screen"
 msgstr "画面をロックする"
 
-#: src/bin/e_int_menus.c:766
+#: src/bin/e_int_menus.c:757
 msgid "Hibernate"
-msgstr ""
+msgstr "ハイバネート"
 
-#: src/bin/e_int_menus.c:789
+#: src/bin/e_int_menus.c:780
 msgid "Restart Enlightenment"
 msgstr "Enlightenment 再起動"
 
-#: src/bin/e_int_menus.c:794
+#: src/bin/e_int_menus.c:785
 msgid "Exit Enlightenment"
 msgstr "Enlightenment 終了"
 
-#: src/bin/e_int_menus.c:802
+#: src/bin/e_int_menus.c:793
 msgid "Logout"
 msgstr "ログアウト"
 
-#: src/bin/e_int_menus.c:848 src/bin/e_int_menus.c:996
+#: src/bin/e_int_menus.c:839 src/bin/e_int_menus.c:987
 msgid "(No Windows)"
 msgstr "(ウインドウ無し)"
 
-#: src/bin/e_int_menus.c:878
+#: src/bin/e_int_menus.c:869
 msgid "Cleanup Windows"
 msgstr "ウィンドウ整頓"
 
-#: src/bin/e_int_menus.c:900 src/bin/e_int_menus.c:1010
+#: src/bin/e_int_menus.c:891 src/bin/e_int_menus.c:1001
 msgid "No name!!"
 msgstr "名前無し"
 
-#: src/bin/e_int_shelf_config.c:59 src/bin/e_shelf.c:800
+#: src/bin/e_int_shelf_config.c:61 src/bin/e_shelf.c:800
 msgid "Shelf Configuration"
 msgstr "シェルフの設定"
 
-#: src/bin/e_int_shelf_config.c:357 src/bin/e_int_shelf_config.c:420
+#: src/bin/e_int_shelf_config.c:382 src/bin/e_int_shelf_config.c:445
 msgid "Layout"
 msgstr "配置"
 
-#: src/bin/e_int_shelf_config.c:375
+#: src/bin/e_int_shelf_config.c:400
 msgid "Tiny"
 msgstr "とても小さい"
 
-#: src/bin/e_int_shelf_config.c:379 src/modules/dropshadow/e_mod_config.c:122
+#: src/bin/e_int_shelf_config.c:404 src/modules/dropshadow/e_mod_config.c:122
 msgid "Medium"
 msgstr "普通"
 
-#: src/bin/e_int_shelf_config.c:383
+#: src/bin/e_int_shelf_config.c:408
 msgid "Huge"
 msgstr "極めて大きい"
 
-#: src/bin/e_int_shelf_config.c:389 src/bin/e_int_shelf_config.c:494
+#: src/bin/e_int_shelf_config.c:414 src/bin/e_int_shelf_config.c:519
 msgid "Configure Contents..."
 msgstr "中身を設定する..."
 
-#: src/bin/e_int_shelf_config.c:412
+#: src/bin/e_int_shelf_config.c:437
 msgid "Above Everything"
 msgstr "常に一番上"
 
-#: src/bin/e_int_shelf_config.c:414
+#: src/bin/e_int_shelf_config.c:439
 msgid "Below Windows"
 msgstr "ウィンドウの下"
 
-#: src/bin/e_int_shelf_config.c:416
+#: src/bin/e_int_shelf_config.c:441
 msgid "Below Everything"
 msgstr "常に一番下"
 
-#: src/bin/e_int_shelf_config.c:453
+#: src/bin/e_int_shelf_config.c:478
 msgid "Shrink to Content Size"
 msgstr "中身の大きさに合わせて縮小する"
 
-#: src/bin/e_int_shelf_config.c:457
+#: src/bin/e_int_shelf_config.c:482
 msgid "Shelf Size"
 msgstr "シェルフの大きさ"
 
-#: src/bin/e_int_shelf_config.c:459
+#: src/bin/e_int_shelf_config.c:484
 #, c-format
 msgid "%3.0f pixels"
 msgstr "%3.0f ピクセル"
 
-#: src/bin/e_int_shelf_config.c:463
+#: src/bin/e_int_shelf_config.c:488
 msgid "Styles"
 msgstr "スタイル"
 
@@ -3394,7 +4759,7 @@ msgstr ""
 "\t-psychotic\n"
 "\t\t精神病様にしてて\n"
 
-#: src/bin/e_main.c:290
+#: src/bin/e_main.c:286
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -3402,7 +4767,7 @@ msgstr ""
 "Enlightenment で Ecore が初期化できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:303
+#: src/bin/e_main.c:299
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -3410,7 +4775,7 @@ msgstr ""
 "Enlightenment でファイルシステムが初期化できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:314
+#: src/bin/e_main.c:310
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -3418,7 +4783,7 @@ msgstr ""
 "Enlightenment で終了シグナルハンドラーが準備できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:320
+#: src/bin/e_main.c:316
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -3426,7 +4791,7 @@ msgstr ""
 "Enlightenment で HUP シグナルハンドラーが準備できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:331
+#: src/bin/e_main.c:327
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -3434,7 +4799,7 @@ msgstr ""
 "Enlightenment で X との接続が初期化できません.\n"
 "環境変数 DISPLAY の定義を確認してください."
 
-#: src/bin/e_main.c:339
+#: src/bin/e_main.c:335
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -3442,7 +4807,7 @@ msgstr ""
 "Enlightenment で緊急アラートシステムが初期化できません.\n"
 "環境変数 DISPLAY の定義を確認してください."
 
-#: src/bin/e_main.c:346
+#: src/bin/e_main.c:342
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -3450,7 +4815,7 @@ msgstr ""
 "Enlightenment で xinerama のラッピングが設定できません.\n"
 "そんなばかな..."
 
-#: src/bin/e_main.c:362
+#: src/bin/e_main.c:358
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -3458,7 +4823,7 @@ msgstr ""
 "Enlightenment で接続システムが初期化できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:370
+#: src/bin/e_main.c:366
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -3466,7 +4831,7 @@ msgstr ""
 "Enlightenment で IPC システムが初期化できません.\n"
 "メモリー不足かも知れません."
 
-#: src/bin/e_main.c:379
+#: src/bin/e_main.c:375
 msgid ""
 "Enlightenment cannot initialize the FDO desktop system.\n"
 "Perhaps you are out of memory?"
@@ -3474,7 +4839,7 @@ msgstr ""
 "Enlightenment で FDO デスクトップシステムが初期化できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:394
+#: src/bin/e_main.c:390
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -3482,7 +4847,7 @@ msgstr ""
 "Enlightenment で Evas システムが初期化できません.\n"
 "メモリー不足かも知れません."
 
-#: src/bin/e_main.c:400
+#: src/bin/e_main.c:396
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -3493,7 +4858,7 @@ msgstr ""
 "ア\n"
 "x11 レンダリングエンジンがサポートされていることも確認してください."
 
-#: src/bin/e_main.c:407
+#: src/bin/e_main.c:403
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -3505,7 +4870,7 @@ msgstr ""
 "ア\n"
 "バッファレンダリングエンジンがサポートされていることを確認してください."
 
-#: src/bin/e_main.c:421
+#: src/bin/e_main.c:417
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -3513,7 +4878,7 @@ msgstr ""
 "evas でバッファキャンバスが作成できません. evas にソフトウェアバッファ\n"
 "エンジンがサポートされていることを確認して下さい.\n"
 
-#: src/bin/e_main.c:431
+#: src/bin/e_main.c:427
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
@@ -3521,7 +4886,7 @@ msgstr ""
 "evas で PNG ファイルがロードできません. evas で PNG ローダーがサポート\n"
 "されていることを確認して下さい.\n"
 
-#: src/bin/e_main.c:440
+#: src/bin/e_main.c:436
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
@@ -3529,7 +4894,7 @@ msgstr ""
 "evas で JPEG ファイルがロードできません. evas で JPEG ローダーがサポート\n"
 "されていることを確認して下さい.\n"
 
-#: src/bin/e_main.c:449
+#: src/bin/e_main.c:445
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
@@ -3538,21 +4903,21 @@ msgstr ""
 "されていることを確認して下さい.\n"
 
 #
-#: src/bin/e_main.c:461
+#: src/bin/e_main.c:457
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "Enlightenment でサムネイル処理システムが初期化できません.\n"
 
 #
-#: src/bin/e_main.c:469
+#: src/bin/e_main.c:465
 msgid "Enlightenment cannot initialize the System Command system.\n"
 msgstr "Enlightenment でシステムコマンドの処理システムが初期化できません.\n"
 
 #
-#: src/bin/e_main.c:478
+#: src/bin/e_main.c:474
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment でファイルマネージャが初期化できません.\n"
 
-#: src/bin/e_main.c:488
+#: src/bin/e_main.c:484
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -3560,11 +4925,11 @@ msgstr ""
 "Enlightenment ではあなたのホームディレクトリにディレクトリが作成できません.\n"
 "ホームディレクトリはちゃんとありますか, ディスクが一杯になっていませんか."
 
-#: src/bin/e_main.c:496
+#: src/bin/e_main.c:492
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment で設定処理システムが初期化できません."
 
-#: src/bin/e_main.c:503
+#: src/bin/e_main.c:499
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -3572,31 +4937,31 @@ msgstr ""
 "Enlightenment でファイル検索用のパスが設定できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:511
+#: src/bin/e_main.c:507
 msgid "Enlightenment cannot set up its intl system."
 msgstr "Enlightenment で国際化システムが準備できません."
 
-#: src/bin/e_main.c:518
+#: src/bin/e_main.c:514
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Enlightenment でアクションシステムが準備できません."
 
-#: src/bin/e_main.c:525
+#: src/bin/e_main.c:521
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment でバインディングシステムが準備できません."
 
-#: src/bin/e_main.c:532
+#: src/bin/e_main.c:528
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Enlightenment でポップアップシステムが準備できません."
 
-#: src/bin/e_main.c:543
+#: src/bin/e_main.c:539
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment でフォントシステムが準備できません."
 
-#: src/bin/e_main.c:553
+#: src/bin/e_main.c:549
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Enlightenment でテーマシステムが準備できません."
 
-#: src/bin/e_main.c:562
+#: src/bin/e_main.c:558
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -3604,7 +4969,7 @@ msgstr ""
 "Enlightenment で初期スクリーンが準備できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:571
+#: src/bin/e_main.c:567
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -3612,39 +4977,39 @@ msgstr ""
 "Enlightenment でこのシステムのすべての画面に対するウィンドウ管理が\n"
 "準備できませんでした. 別のウィンドウマネージャが動いているかもしれません.\n"
 
-#: src/bin/e_main.c:578
+#: src/bin/e_main.c:574
 msgid "Enlightenment cannot set up its app system."
 msgstr "Enlightenment でアプリケーションシステムが準備できません."
 
-#: src/bin/e_main.c:585
+#: src/bin/e_main.c:581
 msgid "Enlightenment cannot setup remember settings."
 msgstr "Enlightenment で記憶機能の設定が準備できません."
 
-#: src/bin/e_main.c:605
+#: src/bin/e_main.c:597
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Enlightenment で msg システムが準備できません."
 
-#: src/bin/e_main.c:612
+#: src/bin/e_main.c:604
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment で dnd システムが準備できません."
 
-#: src/bin/e_main.c:619
+#: src/bin/e_main.c:611
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr "Enlightenment で入力グラブ処理システムが準備できません."
 
-#: src/bin/e_main.c:626
+#: src/bin/e_main.c:618
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment でモジュールシステムが準備できません."
 
-#: src/bin/e_main.c:633
+#: src/bin/e_main.c:625
 msgid "Enlightenment cannot set up its window list system."
 msgstr "Enlightenment でウィンドウリストシステムが準備できません."
 
-#: src/bin/e_main.c:640
+#: src/bin/e_main.c:632
 msgid "Enlightenment cannot set up its color class system."
 msgstr "Enlightenment でカラークラスシステムが準備できません."
 
-#: src/bin/e_main.c:651
+#: src/bin/e_main.c:643
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
@@ -3652,23 +5017,23 @@ msgid ""
 "dialog should let you select your<br>modules again."
 msgstr ""
 
-#: src/bin/e_main.c:662
+#: src/bin/e_main.c:654
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr "Enlightenment でガジェット管理システムが準備できません."
 
-#: src/bin/e_main.c:669
+#: src/bin/e_main.c:661
 msgid "Enlightenment cannot set up its shelf system."
 msgstr "Enlightenment でシェルフシステムが準備できません."
 
-#: src/bin/e_main.c:676
+#: src/bin/e_main.c:668
 msgid "Enlightenment cannot set up its exebuf system."
 msgstr "Enlightenment で exebuf システムが準備できません."
 
-#: src/bin/e_main.c:684
+#: src/bin/e_main.c:676
 msgid "Enlightenment cannot set up its desk locking system."
 msgstr "Enlightenment で デスクロッキングシステムが準備できません."
 
-#: src/bin/e_main.c:701
+#: src/bin/e_main.c:693
 msgid "Enlightenment Starting. Please wait."
 msgstr "Enlightenment を起動しています. しばらくお待ちください."
 
@@ -3744,22 +5109,22 @@ msgid ""
 "it?"
 msgstr "このシェルフを削除しようとしています.<br><br>本当に削除しますか."
 
-#: src/bin/e_startup.c:68
+#: src/bin/e_startup.c:67
 #, c-format
 msgid "Starting %s"
 msgstr "%s 起動中"
 
-#: src/bin/e_utils.c:232
+#: src/bin/e_utils.c:237
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
 msgstr ""
 "Enlightenment で以下の子プロセスが fork できませんでした.<br><br>%s<br>"
 
-#: src/bin/e_utils.c:276
+#: src/bin/e_utils.c:281
 msgid "Cannot exit - immortal windows."
 msgstr "終了できません. 不死身のウィンドウです."
 
-#: src/bin/e_utils.c:277
+#: src/bin/e_utils.c:282
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
 "means<br>that Enlightenment will not allow itself to exit until these "
@@ -3781,133 +5146,148 @@ msgstr "下へ"
 msgid "Remove"
 msgstr "削除"
 
-#: src/bin/e_widget_fsel.c:271
+#: src/bin/e_widget_fsel.c:288
 msgid "Add to Favorites"
 msgstr "お気に入りに追加する"
 
-#: src/bin/e_widget_fsel.c:285
+#: src/bin/e_widget_fsel.c:302
 msgid "Preview"
 msgstr "プレビュー"
 
-#: src/bin/e_widget_fsel.c:351
+#: src/bin/e_widget_fsel.c:323
+msgid "Size:"
+msgstr "サイズ"
+
+#: src/bin/e_widget_fsel.c:338
+msgid "Owner:"
+msgstr "所有者"
+
+#: src/bin/e_widget_fsel.c:353
+msgid "Permissions:"
+msgstr "許可情報"
+
+#: src/bin/e_widget_fsel.c:368
 msgid "Modified:"
 msgstr "最終更新日"
 
-#: src/bin/e_widget_fsel.c:571
+#: src/bin/e_widget_fsel.c:605
 #, c-format
 msgid "%'.0f Bytes"
 msgstr "%'.0f バイト"
 
-#: src/bin/e_widget_fsel.c:576
+#: src/bin/e_widget_fsel.c:610
 #, c-format
 msgid "%'.0f KB"
 msgstr ""
 
-#: src/bin/e_widget_fsel.c:581
+#: src/bin/e_widget_fsel.c:615
 #, c-format
 msgid "%'.0f MB"
 msgstr ""
 
-#: src/bin/e_widget_fsel.c:585
+#: src/bin/e_widget_fsel.c:619
 #, c-format
 msgid "%'.1f GB"
 msgstr ""
 
-#: src/bin/e_widget_fsel.c:599
+#: src/bin/e_widget_fsel.c:633
 #, c-format
 msgid "You"
 msgstr "本人"
 
-#: src/bin/e_widget_fsel.c:649
+#: src/bin/e_widget_fsel.c:682
 #, c-format
 msgid "Protected"
 msgstr "保護"
 
-#: src/bin/e_widget_fsel.c:651 src/bin/e_widget_fsel.c:660
-#: src/bin/e_widget_fsel.c:669
+#: src/bin/e_widget_fsel.c:684 src/bin/e_widget_fsel.c:693
+#: src/bin/e_widget_fsel.c:702
 #, c-format
 msgid "Read Only"
 msgstr "読込専用"
 
-#: src/bin/e_widget_fsel.c:658 src/bin/e_widget_fsel.c:667
+#: src/bin/e_widget_fsel.c:691 src/bin/e_widget_fsel.c:700
 #, c-format
 msgid "Forbidden"
 msgstr "禁止"
 
-#: src/bin/e_widget_fsel.c:691
+#: src/bin/e_widget_fsel.c:724
 #, c-format
 msgid "In the Future"
 msgstr "未来"
 
-#: src/bin/e_widget_fsel.c:696
+#: src/bin/e_widget_fsel.c:729
 #, c-format
 msgid "In the last Minute"
 msgstr "直前"
 
-#: src/bin/e_widget_fsel.c:698
+#: src/bin/e_widget_fsel.c:731
 #, c-format
-msgid "%i Years ago"
-msgstr "%i 年前"
+msgid "%li Years ago"
+msgstr "%li 年前"
 
-#: src/bin/e_widget_fsel.c:700
+#: src/bin/e_widget_fsel.c:733
 #, c-format
-msgid "%i Months ago"
-msgstr "%i ヶ月前"
+msgid "%li Months ago"
+msgstr "%li ヶ月前"
 
-#: src/bin/e_widget_fsel.c:702
+#: src/bin/e_widget_fsel.c:735
 #, c-format
-msgid "%i Weeks ago"
-msgstr "%i 週間前"
+msgid "%li Weeks ago"
+msgstr "%li 週間前"
 
-#: src/bin/e_widget_fsel.c:704
+#: src/bin/e_widget_fsel.c:737
 #, c-format
-msgid "%i Days ago"
-msgstr "%i 日前"
+msgid "%li Days ago"
+msgstr "%li 日前"
 
-#: src/bin/e_widget_fsel.c:706
+#: src/bin/e_widget_fsel.c:739
 #, c-format
-msgid "%i Hours ago"
-msgstr "%i 時間前"
+msgid "%li Hours ago"
+msgstr "%li 時間前"
 
-#: src/bin/e_widget_fsel.c:708
+#: src/bin/e_widget_fsel.c:741
 #, c-format
-msgid "%i Minutes ago"
-msgstr "%i 分前"
+msgid "%li Minutes ago"
+msgstr "%li 分前"
 
 #: src/bin/e_winlist.c:130
 msgid "Select a window"
 msgstr "ウィンドウの選択"
 
-#: src/bin/e_int_config_apps.c:319
-#, fuzzy
+#: src/bin/e_int_config_apps.c:377
 msgid "Edit Application"
-msgstr "アプリケーション"
+msgstr "アプリケーションの編集"
 
-#: src/bin/e_int_config_apps.c:443
+#: src/bin/e_int_config_apps.c:509
 msgid "Available Applications"
 msgstr "利用できるアプリケーション"
 
-#: src/bin/e_int_config_apps.c:445
-msgid "Create a new application"
-msgstr "アプリケーションを登録する"
+#: src/bin/e_int_config_apps.c:564
+msgid "Sort applications"
+msgstr "アプリケーションを並べ替える"
 
-#: src/bin/e_int_config_apps.c:494
+#: src/bin/e_int_config_apps.c:573
 msgid "Add application..."
 msgstr "アプリケーションを追加する..."
 
-#: src/bin/e_int_config_apps.c:502
+#: src/bin/e_int_config_apps.c:579
+msgid "Create a new application"
+msgstr "アプリケーションを登録する"
+
+#: src/bin/e_int_config_apps.c:586
 msgid "Regenerate \"Applications\" Menu"
 msgstr "\"アプリケーション\"メニューを再作成する"
 
-#: src/bin/e_int_config_apps.c:512
+#: src/bin/e_int_config_apps.c:596
 msgid "Bars, Menus, etc."
 msgstr "バー、メニュー、他"
 
-#: src/bin/e_int_config_apps.c:558
+#: src/bin/e_int_config_apps.c:648
 msgid "Move application up"
 msgstr "上に移動"
 
-#: src/bin/e_int_config_apps.c:564
+#: src/bin/e_int_config_apps.c:654
 msgid "Move application down"
 msgstr "下に移動"
 
@@ -3915,43 +5295,43 @@ msgstr "下に移動"
 msgid "Select a Theme..."
 msgstr "テーマの選択..."
 
-#: src/bin/e_int_config_theme_import.c:271
-#: src/bin/e_int_config_theme_import.c:280
+#: src/bin/e_int_config_theme_import.c:268
+#: src/bin/e_int_config_theme_import.c:277
 msgid "Theme Import Error"
 msgstr "テーマのインポートエラー"
 
-#: src/bin/e_int_config_theme_import.c:272
+#: src/bin/e_int_config_theme_import.c:269
 msgid ""
 "Enlightenment was unable to import the theme.<br><br>Are you sure this is "
 "really a valid theme?"
-msgstr "Enlightenment でテーマが取り込めませんでした<br><br>これは本当に正しいテーマですか"
+msgstr ""
+"Enlightenment でテーマが取り込めませんでした<br><br>これは本当に正しいテーマ"
+"ですか"
 
-#: src/bin/e_int_config_theme_import.c:281
+#: src/bin/e_int_config_theme_import.c:278
 msgid "Enlightenment was unable to import the theme<br>due to a copy error."
-msgstr "コピーでエラーが発生したためEnlightenmentでテーマが取り込めませんでした."
+msgstr ""
+"コピーでエラーが発生したためEnlightenmentでテーマが取り込めませんでした."
 
-#
 #: src/bin/e_int_config_transitions.c:35
-#, fuzzy
 msgid "Transition Settings"
-msgstr "ウィンドウリストの表示位置"
+msgstr "デスクトップの特殊効果設定"
 
 #: src/bin/e_int_config_transitions.c:113
 msgid "Events"
-msgstr ""
+msgstr "イベント"
 
 #: src/bin/e_int_config_transitions.c:118
 msgid "Desk Change"
-msgstr ""
+msgstr "デスクトップの移動"
 
 #: src/bin/e_int_config_transitions.c:119
-#, fuzzy
 msgid "Background Change"
-msgstr "背景"
+msgstr "背景の変更"
 
 #: src/bin/e_sys.c:256
 msgid "Logout problems"
-msgstr ""
+msgstr "ログアウトに問題があります"
 
 #: src/bin/e_sys.c:259
 msgid ""
@@ -3959,24 +5339,24 @@ msgid ""
 "want to finish the logout<br>anyway without closing these<br>applications "
 "first?"
 msgstr ""
+"ログアウトに時間がかかり過ぎています. 閉じられないアプリケーションがあるためです.<br>"
+"このアプリケーションを無視して、とにかくログアウトを完了させますか."
 
 #: src/bin/e_sys.c:265
-#, fuzzy
 msgid "Logout now"
-msgstr "迷子なウィンドウ"
+msgstr "ただちにログアウトする"
 
 #: src/bin/e_sys.c:266
 msgid "Wait longer"
-msgstr ""
+msgstr "待機する"
 
 #: src/bin/e_sys.c:267
-#, fuzzy
 msgid "Cancel Logout"
-msgstr "取消"
+msgstr "ログアウトを取り消す"
 
 #: src/bin/e_sys.c:305
 msgid "Logout in progress"
-msgstr ""
+msgstr "ログアウト中"
 
 #: src/bin/e_sys.c:308
 msgid "Logout is currently in progress.<br><hilight>Please wait.</hilight>"
@@ -3991,40 +5371,40 @@ msgid ""
 "Enlightenment is busy logging out<br>You cannot perform other system "
 "actions<br>once a logout has begun."
 msgstr ""
-"Enlightenment でログアウト処理中です.<br>"
-"ログアウト処理が始まったら他のシステム処理はできません."
+"Enlightenment でログアウト処理中です.<br>ログアウト処理が始まったら他のシステ"
+"ム処理はできません."
 
 #: src/bin/e_sys.c:350
 msgid ""
 "Enlightenment is shutting the system down.<br>You cannot do any other system "
 "actions<br>once a shutdown has been started."
 msgstr ""
-"Enlightenment でシャットダウン処理中です.<br>"
-"シャットダウン処理が始まったら他のシステム処理はできません."
+"Enlightenment でシャットダウン処理中です.<br>シャットダウン処理が始まったら他"
+"のシステム処理はできません."
 
 #: src/bin/e_sys.c:357
 msgid ""
 "Enlightenment is rebooting the system.<br>You cannot do any other system "
 "actions<br>once a reboot has begun."
 msgstr ""
-"Enlightenment で再起動処理中です.<br>"
-"再起動処理が始まったら他のシステム処理はできません."
+"Enlightenment で再起動処理中です.<br>再起動処理が始まったら他のシステム処理は"
+"できません."
 
 #: src/bin/e_sys.c:364
 msgid ""
 "Enlightenment is suspending the system.<br>Until suspend is complete you "
 "cannot perform<br>any other system actions."
 msgstr ""
-"Enlightenment でシステムをサスペンド中です.<br>"
-"サスペンドが完了するまでは他のシステム処理はできません."
+"Enlightenment でシステムをサスペンド中です.<br>サスペンドが完了するまでは他の"
+"システム処理はできません."
 
 #: src/bin/e_sys.c:371
 msgid ""
 "Enlightenment is hibernating the system.<br>You cannot perform an other "
 "system actions<br>until this is complete."
 msgstr ""
-"Enlightenment でシステムをハイバネート中です.<br>"
-"ハイバネートが完了するまでは他のシステム処理はできません."
+"Enlightenment でシステムをハイバネート中です.<br>ハイバネートが完了するまでは"
+"他のシステム処理はできません."
 
 #: src/bin/e_sys.c:378 src/bin/e_sys.c:423
 msgid "EEK! This should not happen"
@@ -4048,34 +5428,31 @@ msgstr "ハイバネートに失敗しました"
 
 #: src/bin/e_sys.c:468
 msgid "Shutting down"
-msgstr ""
+msgstr "シャットダウン中"
 
 #: src/bin/e_sys.c:471
 msgid "Shutting down your Computer.<br><hilight>Please wait.</hilight>"
 msgstr "シャットダウン中です.<br><hilight>しばらくお待ち下さい</hilight>"
 
 #: src/bin/e_sys.c:494
-#, fuzzy
 msgid "Rebooting"
-msgstr "解像度"
+msgstr "再起動中"
 
 #: src/bin/e_sys.c:497
 msgid "Rebooting your Computer.<br><hilight>Please wait.</hilight>"
 msgstr "再起動中です.<br><hilight>しばらくお待ち下さい.</hilight>"
 
 #: src/bin/e_sys.c:519
-#, fuzzy
 msgid "Suspending"
-msgstr "マウスバインド"
+msgstr "サスペンド中"
 
 #: src/bin/e_sys.c:522
 msgid "Suspending your Computer.<br><hilight>Please wait.</hilight>"
 msgstr "サスペンド中です.<br><hilight>しばらくお待ち下さい.</hilight>"
 
 #: src/bin/e_sys.c:544
-#, fuzzy
 msgid "Hibernating"
-msgstr "ヒンティング"
+msgstr "ハイバネート中"
 
 #: src/bin/e_sys.c:547
 msgid "Hibernating your Computer.<br><hilight>Please wait.</hilight>"
@@ -4122,7 +5499,7 @@ msgstr "%1.0f 分"
 msgid "Battery"
 msgstr "バッテリ"
 
-#: src/modules/battery/e_mod_main.c:301
+#: src/modules/battery/e_mod_main.c:303
 msgid ""
 "Battery Running Low<br>Your battery is running low.<br>You may wish to "
 "switch to an AC source."
@@ -4130,46 +5507,46 @@ msgstr ""
 "バッテリ容量低下<br>使用中のバッテリが切れかけています. <br>AC 電源に切り替え"
 "た方がいいかもしれません."
 
-#: src/modules/battery/e_mod_main.c:347
+#: src/modules/battery/e_mod_main.c:349
 msgid "NO INFO"
 msgstr "情報無し"
 
-#: src/modules/battery/e_mod_main.c:543 src/modules/battery/e_mod_main.c:856
-#: src/modules/battery/e_mod_main.c:1010
+#: src/modules/battery/e_mod_main.c:545 src/modules/battery/e_mod_main.c:858
+#: src/modules/battery/e_mod_main.c:1012
 msgid "NO BAT"
 msgstr "バッテリ無し"
 
-#: src/modules/battery/e_mod_main.c:567 src/modules/battery/e_mod_main.c:1035
+#: src/modules/battery/e_mod_main.c:569 src/modules/battery/e_mod_main.c:1037
 msgid "BAD DRIVER"
 msgstr "ドライバが変"
 
-#: src/modules/battery/e_mod_main.c:591 src/modules/battery/e_mod_main.c:892
-#: src/modules/battery/e_mod_main.c:1059
+#: src/modules/battery/e_mod_main.c:593 src/modules/battery/e_mod_main.c:894
+#: src/modules/battery/e_mod_main.c:1061
 msgid "FULL"
 msgstr "満タン"
 
-#: src/modules/battery/e_mod_main.c:652 src/modules/battery/e_mod_main.c:1120
+#: src/modules/battery/e_mod_main.c:654 src/modules/battery/e_mod_main.c:1122
 msgid "High"
 msgstr "高"
 
-#: src/modules/battery/e_mod_main.c:656 src/modules/battery/e_mod_main.c:1124
+#: src/modules/battery/e_mod_main.c:658 src/modules/battery/e_mod_main.c:1126
 msgid "Low"
 msgstr "低"
 
-#: src/modules/battery/e_mod_main.c:660 src/modules/battery/e_mod_main.c:1128
+#: src/modules/battery/e_mod_main.c:662 src/modules/battery/e_mod_main.c:1130
 msgid "Danger"
 msgstr "危険"
 
-#: src/modules/battery/e_mod_main.c:664 src/modules/battery/e_mod_main.c:1132
-#: src/modules/battery/e_mod_main.c:1299
+#: src/modules/battery/e_mod_main.c:666 src/modules/battery/e_mod_main.c:1134
+#: src/modules/battery/e_mod_main.c:1301
 msgid "Charging"
 msgstr "充電中"
 
-#: src/modules/battery/e_mod_main.c:1455
+#: src/modules/battery/e_mod_main.c:1457
 msgid "Enlightenment Battery Module"
 msgstr "Enlightenment バッテリモジュール"
 
-#: src/modules/battery/e_mod_main.c:1456
+#: src/modules/battery/e_mod_main.c:1458
 msgid ""
 "A basic battery meter that uses either<hilight>ACPI</hilight> or "
 "<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
@@ -4259,7 +5636,7 @@ msgstr "CPU パワーポリシーを設定する"
 msgid "Set CPU Speed"
 msgstr "CPU 速度を設定する"
 
-#: src/modules/cpufreq/e_mod_main.c:329
+#: src/modules/cpufreq/e_mod_main.c:331
 msgid ""
 "There was an error trying to set the<br>cpu frequency governor via the "
 "module's<br>setfreq utility."
@@ -4267,7 +5644,7 @@ msgstr ""
 "このモジュールの setfreq ユーティリティを使った CPU 周波数ガバナーの設定で"
 "<br>エラーが起きました."
 
-#: src/modules/cpufreq/e_mod_main.c:355
+#: src/modules/cpufreq/e_mod_main.c:357
 msgid ""
 "Your kernel does not support setting the<br>CPU frequency at all. You may be "
 "missing<br>Kernel modules or features, or your CPU<br>simply does not "
@@ -4277,7 +5654,7 @@ msgstr ""
 "や機能で必要なものが欠けているのかもしれません.<br>さもなければお使いの CPU "
 "でこの機能がサポートされていないだけです."
 
-#: src/modules/cpufreq/e_mod_main.c:375
+#: src/modules/cpufreq/e_mod_main.c:377
 msgid ""
 "There was an error trying to set the<br>cpu frequency setting via the "
 "module's<br>setfreq utility."
@@ -4285,11 +5662,11 @@ msgstr ""
 "このモジュールの setfreq ユーティリティを使った CPU 周波数設定で<br>エラーが"
 "起きました."
 
-#: src/modules/cpufreq/e_mod_main.c:940
+#: src/modules/cpufreq/e_mod_main.c:942
 msgid "CPU Frequency Controller Module"
 msgstr "CPU 周波数コントローラモジュール"
 
-#: src/modules/cpufreq/e_mod_main.c:941
+#: src/modules/cpufreq/e_mod_main.c:943
 msgid ""
 "A simple module to control the frequency of the system CPU.<br>This is "
 "especially useful to save power on laptops."
@@ -4445,27 +5822,27 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "この IBar を本当に削除しますか."
 
-#: src/modules/ibar/e_mod_main.c:219
+#: src/modules/ibar/e_mod_main.c:211
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:923
+#: src/modules/ibar/e_mod_main.c:900
 msgid "Change Icon Properties"
 msgstr "アイコンのプロパティを変える"
 
-#: src/modules/ibar/e_mod_main.c:928
+#: src/modules/ibar/e_mod_main.c:905
 msgid "Remove Icon"
 msgstr "アイコンを削除する"
 
-#: src/modules/ibar/e_mod_main.c:941
+#: src/modules/ibar/e_mod_main.c:918
 msgid "Add Application"
 msgstr "アプリケーションを追加する"
 
-#: src/modules/ibar/e_mod_main.c:1232
+#: src/modules/ibar/e_mod_main.c:1213
 msgid "Cannot add icon"
 msgstr "アイコンが追加できません"
 
-#: src/modules/ibar/e_mod_main.c:1234
+#: src/modules/ibar/e_mod_main.c:1215
 msgid ""
 "You tried to drop an icon of an application that<br>does not have a matching "
 "application file.<br><br>The icon cannot be added to IBar."
@@ -4473,11 +5850,11 @@ msgstr ""
 "アイコンをドロップしようとしましたが, そのアプリケーションに対応するプログラ"
 "ムファイルがありません. <br><br>そのアイコンは IBar に追加できません."
 
-#: src/modules/ibar/e_mod_main.c:1405
+#: src/modules/ibar/e_mod_main.c:1386
 msgid "Enlightenment IBar Module"
 msgstr "Enlightenment IBar モジュール"
 
-#: src/modules/ibar/e_mod_main.c:1406
+#: src/modules/ibar/e_mod_main.c:1387
 msgid ""
 "This is the IBar Application Launcher bar module for Enlightenment.<br>It is "
 "a first example module and is being used to flesh out several<br>interfaces "
@@ -4526,15 +5903,15 @@ msgstr "すべてのデスクトップのウィンドウを表示する"
 msgid "Show windows from active desktop"
 msgstr "現在のデスクトップのウィンドウを表示する"
 
-#: src/modules/ibox/e_mod_main.c:228
+#: src/modules/ibox/e_mod_main.c:220
 msgid "IBox"
 msgstr ""
 
-#: src/modules/ibox/e_mod_main.c:1415
+#: src/modules/ibox/e_mod_main.c:1400
 msgid "Enlightenment IBox Module"
 msgstr "Enlightenment IBox モジュール"
 
-#: src/modules/ibox/e_mod_main.c:1416
+#: src/modules/ibox/e_mod_main.c:1401
 msgid ""
 "This is the IBox Iconified Application module for Enlightenment.<br>It will "
 "hold minimized applications"
@@ -4598,15 +5975,15 @@ msgstr "ポップアップの設定"
 msgid "Popup Speed"
 msgstr "ポップアップの速度"
 
-#: src/modules/pager/e_mod_main.c:225
+#: src/modules/pager/e_mod_main.c:217
 msgid "Pager"
 msgstr "ページャ"
 
-#: src/modules/pager/e_mod_main.c:1785
+#: src/modules/pager/e_mod_main.c:1772
 msgid "Enlightenment Pager Module"
 msgstr "Enlightenment ページャモジュール"
 
-#: src/modules/pager/e_mod_main.c:1786
+#: src/modules/pager/e_mod_main.c:1773
 msgid "A pager module to navigate virtual desktops."
 msgstr "仮想デスクトップを切替えるためのページャモジュールです."
 
@@ -4614,11 +5991,11 @@ msgstr "仮想デスクトップを切替えるためのページャモジュー
 msgid "Start"
 msgstr ""
 
-#: src/modules/start/e_mod_main.c:256
+#: src/modules/start/e_mod_main.c:258
 msgid "Enlightenment Start Module"
 msgstr "Enlightenment スタート モジュール"
 
-#: src/modules/start/e_mod_main.c:257
+#: src/modules/start/e_mod_main.c:259
 msgid "Experimental Button module for E17"
 msgstr "試験的な E17 用ボタンモジュールです."
 
@@ -4748,11 +6125,11 @@ msgstr ""
 msgid "Temperature"
 msgstr "温度計"
 
-#: src/modules/temperature/e_mod_main.c:464
+#: src/modules/temperature/e_mod_main.c:466
 msgid "Enlightenment Temperature Module"
 msgstr "Enlightenment 温度計モジュール"
 
-#: src/modules/temperature/e_mod_main.c:465
+#: src/modules/temperature/e_mod_main.c:467
 msgid ""
 "A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux."
 "<br>It is especially useful for modern Laptops with high speed<br>CPUs that "
@@ -4760,6 +6137,105 @@ msgid ""
 msgstr ""
 "Linux の <hilight>ACPI 温度センサー</hilight>を読みとるモジュールです. <br>大"
 "量に発熱する最近の高速ラップトップでは特に便利です."
+
+#~ msgid "Enlightenment: Error!"
+#~ msgstr "Enlightenment: エラー!"
+
+#~ msgid "Home"
+#~ msgstr "ホーム"
+
+#~ msgid ""
+#~ "Enlightenment was unable to fork a child process:\n"
+#~ "\n"
+#~ "%s\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Enlightenment で以下の子プロセスが fork できませんでした.\n"
+#~ "\n"
+#~ "%s\n"
+#~ "\n"
+
+#~ msgid "Could not delete  <br><b>%s</b>"
+#~ msgstr "以下が削除できません. <br><b>%s</b>"
+
+#
+#~ msgid "Confirm"
+#~ msgstr "確認"
+
+#~ msgid " Are you sure you want to delete <br><b>%s</b> ?"
+#~ msgstr "以下を本当に削除しますか. <br><b>%s</b>"
+
+#~ msgid "File:"
+#~ msgstr "ファイル"
+
+#~ msgid "Protect this file"
+#~ msgstr "このファイルを保護する"
+
+#~ msgid "Let others see this file"
+#~ msgstr "他でもこのファイルの閲覧を可能にする"
+
+#~ msgid "Let others modify this file"
+#~ msgstr "他でもこのファイルの変更を可能にする"
+
+#~ msgid "Dont let others see or modify this file"
+#~ msgstr "他ではこのファイルの閲覧と変更を禁止する"
+
+#~ msgid "Custom settings"
+#~ msgstr "カスタム設定"
+
+#~ msgid "File Info:"
+#~ msgstr "ファイル情報"
+
+#~ msgid "Group:"
+#~ msgstr "グループ"
+
+#~ msgid "Last Access:"
+#~ msgstr "最終アクセス日"
+
+#~ msgid "Last Modified:"
+#~ msgstr "最終更新日"
+
+#~ msgid "Me"
+#~ msgstr "所有者"
+
+#~ msgid "r"
+#~ msgstr "r(読取)"
+
+#~ msgid "w"
+#~ msgstr "w(書込)"
+
+#~ msgid "x"
+#~ msgstr "x(実行)"
+
+#~ msgid "My Group"
+#~ msgstr "グループ"
+
+#~ msgid "Everyone"
+#~ msgstr "その他"
+
+#~ msgid "By Name"
+#~ msgstr "名前で"
+
+#~ msgid "By Mod Time"
+#~ msgstr "更新日で"
+
+#~ msgid "New"
+#~ msgstr "新規"
+
+#~ msgid "Directory"
+#~ msgstr "ディレクトリ"
+
+#~ msgid "View"
+#~ msgstr "閲覧"
+
+#~ msgid "Name Only"
+#~ msgstr "名前だけ"
+
+#~ msgid "Copy"
+#~ msgstr "コピー"
+
+#~ msgid "Cut"
+#~ msgstr "カット"
 
 #~ msgid "Eap Editor"
 #~ msgstr "アプリケーションの登録(EAPエディタ)"
@@ -4790,9 +6266,6 @@ msgstr ""
 
 #~ msgid "Context"
 #~ msgstr "カテゴリー"
-
-#~ msgid "Params"
-#~ msgstr "パラメータ:"
 
 #~ msgid "Gadgets"
 #~ msgstr "ガジェット"
@@ -4859,9 +6332,6 @@ msgstr ""
 
 #~ msgid "No Hinting"
 #~ msgstr "ヒンティングしない"
-
-#~ msgid "Other"
-#~ msgstr "その他"
 
 #~ msgid "Select Another Image"
 #~ msgstr "他の画像を取り込む"
@@ -5027,9 +6497,6 @@ msgstr ""
 #~ msgid "Right Top"
 #~ msgstr "右上(縦)"
 
-#~ msgid "Path"
-#~ msgstr "パス"
-
 #~ msgid "Allow shading/resizing"
 #~ msgstr "シェーディングとサイズ変更を許可する"
 
@@ -5159,9 +6626,6 @@ msgstr ""
 
 #~ msgid "Prev Key Binding"
 #~ msgstr "前のキーバインド"
-
-#~ msgid "Key :"
-#~ msgstr "キー:"
 
 #~ msgid "Background Preview"
 #~ msgstr "背景のプレビュー"
@@ -5333,9 +6797,6 @@ msgstr ""
 #~ msgid "Digital Display"
 #~ msgstr "デジタル表示"
 
-#~ msgid "Microscopic"
-#~ msgstr "極めて小さい"
-
 #~ msgid "Very Small"
 #~ msgstr "かなり小さい"
 
@@ -5347,9 +6808,6 @@ msgstr ""
 
 #~ msgid "Gigantic"
 #~ msgstr "超巨大"
-
-#~ msgid "Shade"
-#~ msgstr "シェード"
 
 #~ msgid "User"
 #~ msgstr "ユーザー"
