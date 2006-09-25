@@ -784,6 +784,7 @@ _e_fm2_scan_start(Evas_Object *obj)
     */
    /* if i add the above pre-scan and it doesnt finish - continue here */
    if ((sd->scan_idler) || (sd->scan_timer)) return;
+   ecore_desktop_instrumentation_reset();
    sd->scan_idler = ecore_idler_add(_e_fm2_cb_scan_idler, obj);
    sd->scan_timer = ecore_timer_add(0.2, _e_fm2_cb_scan_timer, obj);
    edje_object_signal_emit(sd->overlay, "e,state,busy,start", "e");
@@ -838,6 +839,7 @@ _e_fm2_scan_stop(Evas_Object *obj)
    E_FREE(sd->tmp.list_index);
    _e_fm2_queue_free(obj);
    _e_fm2_obj_icons_place(sd);
+   ecore_desktop_instrumentation_print();
 }
 
 static void
