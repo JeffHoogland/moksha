@@ -690,7 +690,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      }
 
    /* Make sure we know the currently configured locale */
-   cfdata->cur_language = strdup(e_config->language);
+   if (e_config->language)
+     cfdata->cur_language = strdup(e_config->language);
    
    return;
 }
@@ -817,7 +818,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	const char *trans;
 
 	key = basic_language_predefined_pairs[i].locale_key;
-	trans = basic_language_predefined_pairs[i].locale_translation;
+	trans = _(basic_language_predefined_pairs[i].locale_translation);
 	e_widget_ilist_append(cfdata->gui.blang_list, NULL, trans, NULL, NULL, key);
 	i++;
      }
