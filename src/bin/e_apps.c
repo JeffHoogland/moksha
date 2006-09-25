@@ -1270,6 +1270,7 @@ e_app_fields_fill(E_App *a, const char *path)
 	   a->icon_time = desktop->icon_time;
            a->startup_notify = desktop->startup;
            a->wait_exit = desktop->wait_exit;
+           a->dirty_icon = 0;
 
 //	   if (desktop->type)  a->type = evas_stringshare_add(desktop->type);
 //	   if (desktop->categories)  a->categories = evas_stringshare_add(desktop->categories);
@@ -1427,6 +1428,7 @@ e_app_fields_save(E_App *a)
 //               desktop.categories = a->categories;
 
                ecore_desktop_save(desktop);
+               a->dirty_icon = 0;
 	       if (created)
 	          E_FREE(desktop);
 	    }
@@ -1611,6 +1613,7 @@ e_app_fields_empty(E_App *a)
    a->win_class = NULL;
    a->win_title = NULL;
    a->win_role = NULL;
+   a->dirty_icon = 0;
 }
 
 EAPI Ecore_List *
@@ -1742,15 +1745,28 @@ EAPI Evas_Object *
 e_app_icon_add(Evas *evas, E_App *a)
 {
    Evas_Object *o = NULL;
+   int theme_match = 0;
 
 #if DEBUG
 printf("e_app_icon_add(%s)   %s   %s   %s\n", a->path, a->icon_class, e_config->icon_theme, a->icon_path);
 #endif
-   if ((a->icon_path) && (a->icon_path[0] != 0))
+
+   /* First check to see if the icon theme is different. */
+   if ((e_config->icon_theme) && (a->icon_theme))
+     {
+        if (strcmp(e_config->icon_theme, a->icon_theme) == 0)
+	   theme_match = 1;
+     }
+   else if ((e_config->icon_theme == NULL) && (a->icon_theme == NULL))
+        theme_match = 1;
+
+   /* Then check if we already know the icon path. */
+   if ((theme_match) && (a->icon_path) && (a->icon_path[0] != 0))
      o = _e_app_icon_path_add(evas, a);
    else
      {
 	o = edje_object_add(evas);
+	/* Check the theme for icons. */
 	if (!e_util_edje_icon_list_set(o, a->icon_class))
 	  {
 	     if (edje_object_file_set(o, a->path, "icon"))
@@ -1765,7 +1781,14 @@ printf("e_app_icon_add(%s)   %s   %s   %s\n", a->path, a->icon_class, e_config->
 		  v = (char *)ecore_desktop_icon_find(a->icon_class, NULL, e_config->icon_theme);
 		  if (v)
 		    {
+                       if (a->icon_path) evas_stringshare_del(a->icon_path);
 		       a->icon_path = evas_stringshare_add(v);
+		       if (e_config->icon_theme)
+		         {
+                            if (a->icon_theme) evas_stringshare_del(a->icon_theme);
+		            a->icon_theme = evas_stringshare_add(e_config->icon_theme);
+			 }
+		       a->dirty_icon = 1;
 		       free(v);
 		    }
 	       }
@@ -1793,6 +1816,8 @@ printf("e_app_icon_add(%s)   %s   %s   %s\n", a->path, a->icon_class, e_config->
 EAPI void
 e_app_icon_add_to_menu_item(E_Menu_Item *mi, E_App *a)
 {
+   int theme_match = 0;
+
    mi->app = a;
    /* e_menu_item_icon_edje_set() just tucks away the params, the actual call to edje_object_file_set() happens later. */
    /* e_menu_item_icon_file_set() just tucks away the params, the actual call to e_icon_add() happens later. */
@@ -1800,17 +1825,28 @@ e_app_icon_add_to_menu_item(E_Menu_Item *mi, E_App *a)
 #if DEBUG
 printf("e_app_icon_add_to_menu_item(%s)   %s   %s   %s\n", a->path, a->icon_class, e_config->icon_theme, a->icon_path);
 #endif
-   if ((a->icon_path) && (a->icon_path[0] != 0))
+   /* First check to see if the icon theme is different. */
+   if ((e_config->icon_theme) && (a->icon_theme))
+     {
+        if (strcmp(e_config->icon_theme, a->icon_theme) == 0)
+	   theme_match = 1;
+     }
+   else if ((e_config->icon_theme == NULL) && (a->icon_theme == NULL))
+        theme_match = 1;
+
+   /* Then check if we already know the icon path. */
+   if ((theme_match) && (a->icon_path) && (a->icon_path[0] != 0))
       _e_app_icon_path_add_to_menu_item(mi, a);
    else
       {
+	/* Check the theme for icons. */
          if (!e_util_menu_item_edje_icon_list_set(mi, a->icon_class))
 	    {
                if (edje_file_group_exists(a->path, "icon"))
 	          {
                      e_menu_item_icon_edje_set(mi, a->path, "icon");
 	          }
-               else if ((a->icon_class))
+               else if ((a->icon_class))   /* If that fails, then this might be an FDO icon. */
                   {
                      char *v;
 
@@ -1818,7 +1854,14 @@ printf("e_app_icon_add_to_menu_item(%s)   %s   %s   %s\n", a->path, a->icon_clas
 	             v = (char *) ecore_desktop_icon_find(a->icon_class, NULL, e_config->icon_theme);
 	             if (v)
 	                {
-	                   a->icon_path = evas_stringshare_add(v);
+                           if (a->icon_path) evas_stringshare_del(a->icon_path);
+		           a->icon_path = evas_stringshare_add(v);
+		           if (e_config->icon_theme)
+		             {
+                                if (a->icon_theme) evas_stringshare_del(a->icon_theme);
+		                a->icon_theme = evas_stringshare_add(e_config->icon_theme);
+			     }
+		           a->dirty_icon = 1;
 		           free(v);
 		        }
                   }

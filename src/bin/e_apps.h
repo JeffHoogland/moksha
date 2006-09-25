@@ -68,6 +68,8 @@ struct _E_App
 
    unsigned char       deleted : 1; /* this app's file is deleted from disk */
 
+   unsigned char       dirty_icon : 1; /* this app's icon has been found, and the on disk cache needs to be updated. */
+
    /* Actually calling this st_mtime causes compile issues, must be some strange macros at work. */
    time_t              mtime;           /* For checking if the cache is valid. */
 
