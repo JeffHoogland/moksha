@@ -2457,6 +2457,7 @@ _e_app_copy(E_App *dst, E_App *src)
    dst->icon_time = src->icon_time;
    dst->starting = src->starting;
    dst->scanned = src->scanned;
+   dst->dirty_icon = src->dirty_icon;
 
    return 1;
 }
