@@ -30,6 +30,8 @@ static Evas_Bool _region_hash_cb(Evas_Hash *hash, const char *key, void *data, v
 static Evas_Bool _language_hash_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata);
 static Evas_Bool _region_hash_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata);
 
+static void _intl_current_locale_setup(E_Config_Dialog_Data *cfdata);
+
 struct _E_Intl_Pair
 {
    const char	*locale_key;
@@ -74,6 +76,8 @@ struct _E_Config_Dialog_Data
    char *cur_cs;
    char *cur_mod;
 
+   int  lang_dirty;
+   
    Evas_Hash *locale_hash;
 
    struct
@@ -106,10 +110,10 @@ const E_Intl_Pair basic_language_predefined_pairs[ ] = {
        {"hu_HU.UTF-8", N_("Hungarian")},
        {"sl_SI.UTF-8", N_("Slovenian")},
        {"it_IT.UTF-8", N_("Italian")},
-       {"cs_CS.UTF-8", N_("Czech")},
+       {"cs_CZ.UTF-8", N_("Czech")},
        {"da_DK.UTF-8", N_("Danish")},
        {"sk_SK.UTF-8", N_("Slovak")},
-       {"sv_SV.UTF-8", N_("Swedish")},
+       {"sv_SE.UTF-8", N_("Swedish")},
        {"nb_NO.UTF-8", N_("Norwegian Bokmål")},
        {"nl_NL.UTF-8", N_("Dutch")},
        {"ko_KR.UTF-8", N_("Korean")},
@@ -551,12 +555,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	     char *language;
 	     
 	     language = e_intl_locale_canonic_get(line, E_INTL_LOC_LANG);
-
-	     if (language && (language[0] == 0))
-	       {
-		  free(language);
-		  language = NULL;
-	       }
 	     
 	     /* If the language is a valid ll_RR[.enc[@mod]] locale add it to the hash */
 	     if (language) 
@@ -613,13 +611,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 		       cfdata->locale_hash = evas_hash_add(cfdata->locale_hash, language, lang_node);
 		    }
 
-		  /* If no region data just go next */	  
-		  if (region && (region[0] == 0))
-		    {
-		       free(region);
-		       region = NULL;
-		    }
-
 		  /* We now have the current language hash node, lets see if there is
 		     region data that needs to be added. 
 		   */
@@ -649,7 +640,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
 		       /* We now have the current region hash node */
 		       /* Add codeset to the region hash node if it exists */
-		       if (codeset && (codeset[0] != 0))
+		       if (codeset)
 			 {
 			    const char * cs;
 			    
@@ -661,7 +652,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 			 }
 
 		       /* Add modifier to the region hash node if it exists */
-		       if (modifier && (modifier[0] != 0))
+		       if (modifier)
 			 {
 			    const char * mod;
 			    
@@ -798,6 +789,7 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob;
+   const char *cur_sig_loc;
    int i;
    
    cfdata->evas = evas;
@@ -811,6 +803,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_on_change_hook_set(ob, _ilist_basic_language_cb_change, cfdata);
    cfdata->gui.blang_list = ob;
 
+   cur_sig_loc = e_intl_locale_canonic_get(cfdata->cur_language, 
+	 E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+   
    i = 0;
    while (basic_language_predefined_pairs[i].locale_key)
      {
@@ -820,6 +815,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	key = basic_language_predefined_pairs[i].locale_key;
 	trans = _(basic_language_predefined_pairs[i].locale_translation);
 	e_widget_ilist_append(cfdata->gui.blang_list, NULL, trans, NULL, NULL, key);
+	if (cur_sig_loc && !strncmp(key, cur_sig_loc, strlen(cur_sig_loc)))
+	  {
+	     e_widget_ilist_selected_set(cfdata->gui.blang_list, i);
+	  }
+	
 	i++;
      }
    e_widget_ilist_go(ob);
@@ -854,18 +854,10 @@ static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob;
-   char *language;
-   char *region;
-   char *codeset;
-   char *modifier;
-
+     
    cfdata->evas = evas;
   
-   E_FREE(cfdata->cur_lang);
-   cfdata->cur_lang = NULL;
-  
-   E_FREE(cfdata->cur_reg);
-   cfdata->cur_reg = NULL;
+   _intl_current_locale_setup(cfdata);
    
    o = e_widget_list_add(evas, 0, 0);
   
@@ -873,7 +865,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
   
    /* Language List */ 
    ob = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_lang));
-   e_widget_on_change_hook_set(ob, _ilist_language_cb_change, cfdata);
    cfdata->gui.lang_list = ob;
 
    evas_hash_foreach(cfdata->locale_hash, _lang_hash_cb, cfdata);
@@ -884,7 +875,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    
    /* Region List */
    ob = e_widget_ilist_add(evas, 0, 0, &(cfdata->cur_reg));
-   e_widget_on_change_hook_set(ob, _ilist_region_cb_change, cfdata); 
    cfdata->gui.reg_list = ob;
  
    e_widget_ilist_go(ob);
@@ -893,7 +883,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
  
    /* Codeset List */
    ob = e_widget_ilist_add(evas, 0, 0, &(cfdata->cur_cs));
-   e_widget_on_change_hook_set(ob, _ilist_codeset_cb_change, cfdata); 
    cfdata->gui.cs_list = ob;
 
    e_widget_ilist_go(ob);
@@ -902,7 +891,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    
    /* Modified List */
    ob = e_widget_ilist_add(evas, 0, 0, &(cfdata->cur_mod));
-   e_widget_on_change_hook_set(ob, _ilist_modifier_cb_change, cfdata); 
    cfdata->gui.mod_list = ob;
 
    e_widget_ilist_go(ob);
@@ -928,19 +916,14 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 					1, 1, 1, 1);
     
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-  
-   language = e_intl_locale_canonic_get(cfdata->cur_language, E_INTL_LOC_LANG);
-   region = e_intl_locale_canonic_get(cfdata->cur_language, E_INTL_LOC_REGION);
-   codeset = e_intl_locale_canonic_get(cfdata->cur_language, E_INTL_LOC_CODESET);
-   modifier = e_intl_locale_canonic_get(cfdata->cur_language, E_INTL_LOC_MODIFIER);
-  
-   _cfdata_language_go(language, region, codeset, modifier, cfdata);
    
-   E_FREE(language);
-   E_FREE(region);
-   E_FREE(codeset);
-   E_FREE(modifier);
-   
+   _cfdata_language_go(cfdata->cur_lang, cfdata->cur_reg, cfdata->cur_cs, cfdata->cur_mod, cfdata);
+    
+   e_widget_on_change_hook_set(cfdata->gui.lang_list, _ilist_language_cb_change, cfdata);
+   e_widget_on_change_hook_set(cfdata->gui.reg_list, _ilist_region_cb_change, cfdata); 
+   e_widget_on_change_hook_set(cfdata->gui.cs_list, _ilist_codeset_cb_change, cfdata); 
+   e_widget_on_change_hook_set(cfdata->gui.mod_list, _ilist_modifier_cb_change, cfdata); 
+
    return o;
 }
 
@@ -960,7 +943,7 @@ _ilist_language_cb_change(void *data, Evas_Object *obj)
     E_Config_Dialog_Data * cfdata;
     
     cfdata = data;
-    
+   
     _cfdata_language_go(cfdata->cur_lang, NULL, NULL, NULL, cfdata);
 
     e_widget_entry_text_set(cfdata->gui.locale_entry, cfdata->cur_lang);
@@ -1033,7 +1016,7 @@ _cfdata_language_go(const char *lang, const char *region, const char *codeset, c
    lang_update = 0;
    region_update = 0;
    
-   if (cfdata->cur_lang == NULL || (lang && !region)) 
+   if (cfdata->lang_dirty || (lang && !region)) 
      {
 	lang_update = 1;
 	region_update = 1;
@@ -1046,6 +1029,8 @@ _cfdata_language_go(const char *lang, const char *region, const char *codeset, c
 	e_widget_ilist_clear(cfdata->gui.cs_list);
 	e_widget_ilist_clear(cfdata->gui.mod_list);
      }
+  
+   cfdata->lang_dirty = 0;
    
    if (lang)
      {
@@ -1059,29 +1044,44 @@ _cfdata_language_go(const char *lang, const char *region, const char *codeset, c
 		  evas_hash_foreach(lang_node->region_hash, _region_hash_cb, cfdata);
 	       }
 	     if (region && region_update)
-	       {
+	       { 
 		  E_Intl_Region_Node *reg_node;
-		  
+				    
 		  reg_node = evas_hash_find(lang_node->region_hash, region);
 		  if (reg_node)
 		    {
 		       Evas_List *next;
-
+		       
 		       for (next = reg_node->available_codesets; next; next = next->next) 
 			 {
 			    const char * cs;
 			    
 			    cs = next->data;
 			    e_widget_ilist_append(cfdata->gui.cs_list, NULL, cs, NULL, NULL, cs);
+			    if (codeset && !strcmp(cs, codeset)) 
+			      {
+				 int count;
+
+				 count = e_widget_ilist_count(cfdata->gui.cs_list);
+				 e_widget_ilist_selected_set(cfdata->gui.cs_list, count - 1);
+			      }
 			 }
+		       
 		       for (next = reg_node->available_modifiers; next; next = next->next) 
 			 {
 			    const char * mod;
 			    
 			    mod = next->data;
 			    e_widget_ilist_append(cfdata->gui.mod_list, NULL, mod, NULL, NULL, mod);
-			 }
+			    if (modifier && !strcmp(mod, modifier)) 
+			      {
+				 int count;
 
+				 count = e_widget_ilist_count(cfdata->gui.mod_list);
+				 e_widget_ilist_selected_set(cfdata->gui.mod_list, count - 1);
+			      }
+
+			 }
 		    }
 		  e_widget_ilist_go(cfdata->gui.cs_list);
 		  e_widget_ilist_go(cfdata->gui.mod_list);
@@ -1123,6 +1123,15 @@ _lang_hash_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
      {	
 	e_widget_ilist_append(cfdata->gui.lang_list, NULL, trans, NULL, NULL, key);
      }
+
+   if (cfdata->cur_lang && !strcmp(cfdata->cur_lang, key)) 
+     {
+	int count;
+
+	count = e_widget_ilist_count(cfdata->gui.lang_list);
+	e_widget_ilist_selected_set(cfdata->gui.lang_list, count - 1);
+     }
+
    return 1;
 }
 
@@ -1145,6 +1154,58 @@ _region_hash_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
 	trans = key;
      }
  
-   e_widget_ilist_append(cfdata->gui.reg_list, NULL, trans, NULL, NULL, key); 
+   e_widget_ilist_append(cfdata->gui.reg_list, NULL, trans, NULL, NULL, key);  
+   
+   if (cfdata->cur_reg && !strcmp(cfdata->cur_reg, key)) 
+     {
+	int count;
+
+	count = e_widget_ilist_count(cfdata->gui.reg_list);
+	e_widget_ilist_selected_set(cfdata->gui.reg_list, count - 1);
+     }
+
    return 1;
+}
+
+void 
+_intl_current_locale_setup(E_Config_Dialog_Data *cfdata)
+{
+   char *language;
+   char *region;
+   char *codeset;
+   char *modifier;
+   
+   E_FREE(cfdata->cur_lang);
+   cfdata->cur_lang = NULL;
+   E_FREE(cfdata->cur_reg);
+   cfdata->cur_reg = NULL;
+   E_FREE(cfdata->cur_cs);
+   cfdata->cur_cs = NULL;
+   E_FREE(cfdata->cur_mod);
+   cfdata->cur_mod = NULL;
+   
+   language = e_intl_locale_canonic_get(cfdata->cur_language, 
+	 E_INTL_LOC_LANG);
+   region = e_intl_locale_canonic_get(cfdata->cur_language, 
+	 E_INTL_LOC_REGION);
+   codeset = e_intl_locale_canonic_get(cfdata->cur_language, 
+	 E_INTL_LOC_CODESET);
+   modifier = e_intl_locale_canonic_get(cfdata->cur_language, 
+	 E_INTL_LOC_MODIFIER);
+   
+   if (language) 
+     cfdata->cur_lang = strdup(language);
+   if (region) 
+     cfdata->cur_reg = strdup(region);
+   if (codeset) 
+     cfdata->cur_cs = strdup(codeset);
+   if (modifier) 
+     cfdata->cur_mod = strdup(modifier);
+  
+   E_FREE(language);
+   E_FREE(region);
+   E_FREE(codeset);
+   E_FREE(modifier);
+
+   cfdata->lang_dirty = 1;
 }

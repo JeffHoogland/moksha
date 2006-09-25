@@ -854,8 +854,13 @@ e_intl_locale_canonic_get(const char *locale, int ret_mask)
 	strcat(clean_locale, modifier);     
      }
 
+   if (clean_locale[0] == 0)
+     {
+	free(clean_locale);
+	return NULL;
+     }
+   
    return clean_locale;
-	 
 }
 
 static Evas_List *
