@@ -227,25 +227,47 @@ _e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
          eap->exe = evas_stringshare_add(cfdata->exec);
       }
 
+   IFADD(cfdata->eap.icon, eap->icon);
+   IFADD(cfdata->icon_class, eap->icon_class);
+   IFADD(cfdata->eap.icon_theme, eap->icon_theme);
    if (cfdata->icon_theme)
      {
         IFDEL(eap->icon_path);
+        IFDEL(eap->icon_theme);
      }
    else
      {
         IFADD(cfdata->icon_path, eap->icon_path);
-	if (cfdata->editor->eap->image)
+	/* Check if it's still the same old temporary image. */
+	if ((eap->icon_path) && (cfdata->editor->eap->image))
 	  {
+	    if (strcmp(eap->icon_path, cfdata->editor->eap->image) == 0)
+	      {
+                 IFDEL(eap->icon_path);
+	      }
+	  }
+	/* Move the temporary image to a proper place. */
+	if ((!eap->icon_path) && (cfdata->editor->eap->image))
+	  {
+	     char file[PATH_MAX];
+
 /* FIXME: eap->image was created by the border menu "Create Icon" and it's the
- * path to a temporary file.  This was fine for .eaps' as the file got saved 
+ * path to a temporary file.  This was fine for .eaps as the file got saved 
  * into the .eap.  For .desktops, we need to copy this file into ~/.e/e/icons 
- * and find a decent name for it.
+ * and find a decent name for it.  A decent name for it is whatever the icon 
+ * search algo will find quickly.  On the other hand, this goes into icon_path, 
+ * which is checked first.  The original temp name includes win_name and a time 
+ * stamp.
+ *
+ * I'm going to just copy the existing filename for now, and leave the issue of 
+ * a proper name until later.
  */
+             snprintf(file, PATH_MAX, "%s/.e/e/icons/%s", e_user_homedir_get(), ecore_file_get_file(cfdata->editor->eap->image));
+	     ecore_file_mv(cfdata->editor->eap->image, file);
+             IFADD(file, eap->icon_path);
+             IFDEL(eap->icon_theme);
 	  }
      }
-   IFADD(cfdata->eap.icon_theme, eap->icon_theme);
-   IFADD(cfdata->eap.icon, eap->icon);
-   IFADD(cfdata->icon_class, eap->icon_class);
 
    /* FIXME: hardcoded until the eap editor provides fields to change it */
    if (cfdata->eap.width) eap->width = cfdata->eap.width;
@@ -542,7 +564,9 @@ _cb_files_icon_theme_changed(void *data, Evas_Object *obj, void *event_info)
    cfdata = data;
    IFFREE(cfdata->icon_path);
    if (!cfdata->icon_theme)
-      IFDUP(cfdata->image, cfdata->icon_path);
+     {
+        IFDUP(cfdata->image, cfdata->icon_path);
+     }
    _e_eap_editor_icon_show(cfdata);
    e_widget_button_icon_set(cfdata->editor->img_widget, cfdata->editor->img);
 }
