@@ -492,7 +492,10 @@ _e_eap_edit_cb_icon_select_ok(void *data, E_Dialog *dia)
    cfdata = data;
    if (cfdata->eap.image)
      {
-        e_widget_check_checked_set(cfdata->themed, 0);
+        if (cfdata->themed)
+           e_widget_check_checked_set(cfdata->themed, 0);
+	else
+	   cfdata->icon_theme = 0;
         _cb_files_icon_theme_changed(cfdata, NULL, NULL);
      }
 
