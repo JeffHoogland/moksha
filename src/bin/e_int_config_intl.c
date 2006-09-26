@@ -760,7 +760,7 @@ _region_hash_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {	 
-   if (cfdata->cur_language != NULL)
+   if (cfdata->cur_language)
      {
 	e_config->language = evas_stringshare_add(cfdata->cur_language);
 	e_intl_language_set(e_config->language);
@@ -774,7 +774,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {	 
-   if (cfdata->cur_language != NULL)
+   if (cfdata->cur_language)
      {
 	e_config->language = evas_stringshare_add(cfdata->cur_language);
 	e_intl_language_set(e_config->language);
@@ -803,8 +803,15 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_on_change_hook_set(ob, _ilist_basic_language_cb_change, cfdata);
    cfdata->gui.blang_list = ob;
 
-   cur_sig_loc = e_intl_locale_canonic_get(cfdata->cur_language, 
-	 E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+   if (cfdata->cur_language)
+     {
+	cur_sig_loc = e_intl_locale_canonic_get(cfdata->cur_language, 
+	      E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+     }
+   else
+     {
+	cur_sig_loc = NULL;
+     }
    
    i = 0;
    while (basic_language_predefined_pairs[i].locale_key)
@@ -1176,22 +1183,31 @@ _intl_current_locale_setup(E_Config_Dialog_Data *cfdata)
    char *modifier;
    
    E_FREE(cfdata->cur_lang);
-   cfdata->cur_lang = NULL;
    E_FREE(cfdata->cur_reg);
-   cfdata->cur_reg = NULL;
    E_FREE(cfdata->cur_cs);
-   cfdata->cur_cs = NULL;
    E_FREE(cfdata->cur_mod);
+
+   cfdata->cur_lang = NULL;
+   cfdata->cur_reg = NULL;
+   cfdata->cur_cs = NULL;
    cfdata->cur_mod = NULL;
+ 
+   language = NULL;
+   region = NULL;   
+   codeset = NULL;
+   modifier = NULL;
    
-   language = e_intl_locale_canonic_get(cfdata->cur_language, 
-	 E_INTL_LOC_LANG);
-   region = e_intl_locale_canonic_get(cfdata->cur_language, 
-	 E_INTL_LOC_REGION);
-   codeset = e_intl_locale_canonic_get(cfdata->cur_language, 
-	 E_INTL_LOC_CODESET);
-   modifier = e_intl_locale_canonic_get(cfdata->cur_language, 
-	 E_INTL_LOC_MODIFIER);
+   if (cfdata->cur_language) 
+     { 
+	language = e_intl_locale_canonic_get(cfdata->cur_language, 
+	      E_INTL_LOC_LANG);
+	region = e_intl_locale_canonic_get(cfdata->cur_language, 
+	      E_INTL_LOC_REGION);
+     	codeset = e_intl_locale_canonic_get(cfdata->cur_language, 
+	      E_INTL_LOC_CODESET);
+     	modifier = e_intl_locale_canonic_get(cfdata->cur_language, 
+     	      E_INTL_LOC_MODIFIER);
+     }
    
    if (language) 
      cfdata->cur_lang = strdup(language);
