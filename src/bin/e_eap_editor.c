@@ -144,6 +144,8 @@ _e_eap_edit_create_data(E_Config_Dialog *cfd)
         if (!cfdata->eap.icon_path)
            cfdata->icon_theme = 1;
      }
+   /* Save it for later. */
+   IFADD(cfdata->eap.icon_path, cfdata->eap.image);
    return cfdata;
 }
 
@@ -188,6 +190,8 @@ _e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    editor = cfdata->editor;
    eap = editor->eap;
 
+   /* FIXME: should NULL out any blank things, and sanity check the entire lot. */
+
    e_app_fields_empty(eap);
 
    IFADD(cfdata->eap.path, eap->path);
@@ -205,16 +209,26 @@ _e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	    }
          eap->exe = evas_stringshare_add(cfdata->exe);
       }
+
+   if (cfdata->icon_theme)
+     {
+        IFDEL(eap->icon_path);
+     }
+   else
+     {
+        IFADD(cfdata->eap.icon_path, eap->icon_path);
+	if (cfdata->editor->eap->image)
+	  {
 /* FIXME: eap->image was created by the border menu "Create Icon" and it's the
  * path to a temporary file.  This was fine for .eaps' as the file got saved 
- * into the .eap.  For .desktops, we need to copy this file inte ~/.e/e/icons 
+ * into the .eap.  For .desktops, we need to copy this file into ~/.e/e/icons 
  * and find a decent name for it.
  */
-//   IFADD(cfdata->eap.image, eap->image);
+	  }
+     }
    IFADD(cfdata->eap.icon_theme, eap->icon_theme);
    IFADD(cfdata->eap.icon, eap->icon);
    IFADD(cfdata->eap.icon_class, eap->icon_class);
-   IFADD(cfdata->eap.icon_path, eap->icon_path);
 
    /* FIXME: hardcoded until the eap editor provides fields to change it */
    if (cfdata->eap.width) eap->width = cfdata->eap.width;
@@ -422,19 +436,21 @@ _e_eap_editor_cb_icon_select(void *data1, void *data2)
    e_object_del_attach_func_set(E_OBJECT(dia), _e_eap_edit_cb_icon_select_del);
 
    if (cfdata->eap.icon_path)
-      dir = ecore_file_get_dir(cfdata->eap.icon_path);
+      {
+         dir = ecore_file_get_dir(cfdata->eap.icon_path);
+      }
    if (dir)
      {
         o = e_widget_fsel_add(dia->win->evas, dir, "/", NULL, NULL,
 		              _e_eap_edit_select_cb, cfdata,
-		              _e_eap_edit_change_cb, cfdata, 1);
+		              NULL, cfdata, 1);
 	free(dir);
      }
    else
      {
         o = e_widget_fsel_add(dia->win->evas, "~/", "/", NULL, NULL,
 			      _e_eap_edit_select_cb, cfdata,
-			      _e_eap_edit_change_cb, cfdata, 1);
+			      NULL, cfdata, 1);
      }
    evas_object_show(o);
    editor->fsel = o;
@@ -462,15 +478,6 @@ _e_eap_edit_select_cb(void *data, Evas_Object *obj)
 static void
 _e_eap_edit_change_cb(void *data, Evas_Object *obj)
 {
-   E_Config_Dialog_Data *cfdata;
-   const char *file;
-
-   cfdata = data;
-   file = e_widget_fsel_selection_path_get(obj);
-   if (!file) return;
-
-   IFDEL(cfdata->eap.image);
-   IFADD(file, cfdata->eap.image);
 }
 
 static void
@@ -488,14 +495,22 @@ static void
 _e_eap_edit_cb_icon_select_ok(void *data, E_Dialog *dia)
 {
    E_Config_Dialog_Data *cfdata;
+   const char *file;
 
    cfdata = data;
-   if (cfdata->eap.image)
+   file = e_widget_fsel_selection_path_get(cfdata->editor->fsel);
+   if (file)
      {
+        IFDEL(cfdata->eap.image);
+        IFADD(file, cfdata->eap.image);
         if (cfdata->themed)
            e_widget_check_checked_set(cfdata->themed, 0);
 	else
-	   cfdata->icon_theme = 0;
+	  {
+	     cfdata->icon_theme = 0;
+             IFDEL(cfdata->eap.icon_path);
+             IFADD(file, cfdata->eap.icon_path);
+	  }
         _cb_files_icon_theme_changed(cfdata, NULL, NULL);
      }
 
