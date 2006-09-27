@@ -900,7 +900,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    
    e_widget_ilist_go(ob);
    e_widget_min_size_set(ob, 140, 200);
-   e_widget_frametable_object_append(of, ob, 0, 1, 1, 4, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 4, 1, 1, 1, 1);
    
    /* Region List */
    //ob = e_widget_label_add(evas, _("Region"));
@@ -911,7 +911,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
  
    e_widget_ilist_go(ob);
    e_widget_min_size_set(ob, 100, 100);
-   e_widget_frametable_object_append(of, ob, 1, 1, 1, 4, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, ob, 1, 0, 1, 4, 1, 1, 1, 1);
  
    /* Codeset List */
    //ob = e_widget_label_add(evas, _("Codeset"));
@@ -922,7 +922,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    e_widget_ilist_go(ob);
    e_widget_min_size_set(ob, 100, 100);
-   e_widget_frametable_object_append(of, ob, 2, 1, 1, 4, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, ob, 2, 0, 1, 4, 1, 1, 1, 1);
    
    /* Modified List */
    //ob = e_widget_label_add(evas, _("Modifier"));
@@ -933,7 +933,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    e_widget_ilist_go(ob);
    e_widget_min_size_set(ob, 100, 100);
-   e_widget_frametable_object_append(of, ob, 3, 1, 1, 4, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, ob, 3, 0, 1, 4, 1, 1, 1, 1);
     
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
