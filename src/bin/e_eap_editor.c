@@ -42,7 +42,6 @@ static Evas_Object   *_e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Eva
 static Evas_Object   *_e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *data);
 static void           _e_eap_editor_cb_icon_select(void *data1, void *data2);
 static void           _e_eap_edit_select_cb(void *data, Evas_Object *obj);
-static void           _e_eap_edit_cb_icon_select_del(void *obj);
 static void           _e_eap_edit_cb_icon_select_ok(void *data, E_Dialog *dia);
 static void           _e_eap_edit_cb_icon_select_cancel(void *data, E_Dialog *dia);
 static void           _cb_files_icon_theme_changed(void *data, Evas_Object *obj, void *event_info);
@@ -98,6 +97,8 @@ _e_eap_edit_free(E_App_Edit *editor)
    if (!editor) return;
    E_OBJECT_CHECK(editor);
    E_OBJECT_TYPE_CHECK(editor, E_EAP_EDIT_TYPE);
+   if (editor->img) evas_object_del(editor->img);
+   if (editor->fsel_dia) e_object_del(E_OBJECT(editor->fsel_dia));
    if (editor->cfd)
      {
 	E_Object *obj;
@@ -117,10 +118,6 @@ _e_eap_edit_free(E_App_Edit *editor)
          e_object_unref(E_OBJECT(editor->eap));
          editor->eap = NULL;
       }
-//	if (editor->img) evas_object_del(editor->img);
-//	if (editor->img_widget) evas_object_del(editor->img_widget);
-//	if (editor->fsel) evas_object_del(editor->fsel);
-//	if (editor->fsel_dia) e_object_del(E_OBJECT(editor->fsel_dia));
    e_object_del(E_OBJECT(editor));
 }
 
@@ -452,7 +449,6 @@ _e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_D
 static void
 _e_eap_editor_cb_icon_select(void *data1, void *data2)
 {
-   /* FIXME: Only one icon selection dialog! */
    E_Config_Dialog_Data *cfdata;
    E_Dialog *dia;
    Evas_Object *o;
@@ -462,11 +458,13 @@ _e_eap_editor_cb_icon_select(void *data1, void *data2)
 
    editor = data2;
    cfdata = data1;
+
+   if (editor->fsel_dia) return;
+
    dia = e_dialog_new(cfdata->editor->cfd->con, "E", "_eap_icon_select_dialog");
    if (!dia) return;
    e_dialog_title_set(dia, _("Select an Icon"));
    dia->data = cfdata;
-   e_object_del_attach_func_set(E_OBJECT(dia), _e_eap_edit_cb_icon_select_del);
 
    if (cfdata->icon_path)
       {
@@ -509,17 +507,6 @@ _e_eap_edit_select_cb(void *data, Evas_Object *obj)
 }
 
 static void
-_e_eap_edit_cb_icon_select_del(void *obj)
-{
-   E_Dialog *dia;
-   E_Config_Dialog_Data *cfdata;
-
-   dia = obj;
-   cfdata = dia->data;
-   e_widget_focused_object_clear(cfdata->editor->img_widget);
-}
-
-static void
 _e_eap_edit_cb_icon_select_ok(void *data, E_Dialog *dia)
 {
    E_Config_Dialog_Data *cfdata;
@@ -551,9 +538,8 @@ _e_eap_edit_cb_icon_select_cancel(void *data, E_Dialog *dia)
    E_Config_Dialog_Data *cfdata;
 
    cfdata = data;
-   e_widget_focused_object_clear(cfdata->editor->img_widget);
-   e_object_del_attach_func_set(E_OBJECT(dia), NULL);
    e_object_del(E_OBJECT(dia));
+   cfdata->editor->fsel_dia = NULL;
 }
 
 static void
