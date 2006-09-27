@@ -352,7 +352,7 @@ const E_Intl_Pair region_predefined_pairs[ ] = {
        { "GP", N_("Guadeloupe")},
        { "GU", N_("Guam")},
        { "GT", N_("Guatemala")},
-       { " GG", N_("Guernsey")},
+       { "GG", N_("Guernsey")},
        { "GN", N_("Guinea")},
        { "GW", N_("Guinea-bissau")},
        { "GY", N_("Guyana")},
@@ -713,13 +713,10 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    evas_hash_foreach(cfdata->locale_hash, _language_hash_free_cb, NULL);
    evas_hash_free(cfdata->locale_hash);
-
-   cfdata->lang_list = evas_list_free(cfdata->lang_list);
-   cfdata->lang_list = NULL;
-
-   cfdata->region_list = evas_list_free(cfdata->region_list);
-   cfdata->region_list = NULL;
    
+   cfdata->lang_list = evas_list_free(cfdata->lang_list);
+   cfdata->region_list = evas_list_free(cfdata->region_list);
+
    free(cfdata);
 }
 
@@ -879,45 +876,64 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    of = e_widget_frametable_add(evas, _("Language Selector"), 1);
   
    /* Language List */ 
+   //ob = e_widget_label_add(evas, _("Language"));
+   //e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
+    
    ob = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_lang));
    cfdata->gui.lang_list = ob;
 
-   evas_hash_foreach(cfdata->locale_hash, _lang_hash_cb, cfdata);
-   if (cfdata->lang_list) 
+   /* If lang_list already loaded just use it */
+   if (cfdata->lang_list == NULL) 
      {
-	cfdata->lang_list = evas_list_sort(cfdata->lang_list, 
-					evas_list_count(cfdata->lang_list), 
-					_lang_list_sort);
-	_lang_list_load(cfdata);
+	evas_hash_foreach(cfdata->locale_hash, _lang_hash_cb, cfdata);
+	if (cfdata->lang_list) 
+	  {
+	     cfdata->lang_list = evas_list_sort(cfdata->lang_list, 
+		   evas_list_count(cfdata->lang_list), 
+		   _lang_list_sort);
+	     
+	     _lang_list_load(cfdata);
+	  }
      }
+
+   _lang_list_load(cfdata);
    
    e_widget_ilist_go(ob);
    e_widget_min_size_set(ob, 140, 200);
-   e_widget_frametable_object_append(of, ob, 0, 0, 1, 4, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 4, 1, 1, 1, 1);
    
    /* Region List */
+   //ob = e_widget_label_add(evas, _("Region"));
+   //e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1); 
+
    ob = e_widget_ilist_add(evas, 0, 0, &(cfdata->cur_reg));
    cfdata->gui.reg_list = ob;
  
    e_widget_ilist_go(ob);
    e_widget_min_size_set(ob, 100, 100);
-   e_widget_frametable_object_append(of, ob, 1, 0, 1, 4, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, ob, 1, 1, 1, 4, 1, 1, 1, 1);
  
    /* Codeset List */
+   //ob = e_widget_label_add(evas, _("Codeset"));
+   //e_widget_frametable_object_append(of, ob, 2, 0, 1, 1, 1, 1, 1, 1); 
+
    ob = e_widget_ilist_add(evas, 0, 0, &(cfdata->cur_cs));
    cfdata->gui.cs_list = ob;
 
    e_widget_ilist_go(ob);
    e_widget_min_size_set(ob, 100, 100);
-   e_widget_frametable_object_append(of, ob, 2, 0, 1, 4, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, ob, 2, 1, 1, 4, 1, 1, 1, 1);
    
    /* Modified List */
+   //ob = e_widget_label_add(evas, _("Modifier"));
+   //e_widget_frametable_object_append(of, ob, 3, 0, 1, 1, 1, 1, 1, 1); 
+   
    ob = e_widget_ilist_add(evas, 0, 0, &(cfdata->cur_mod));
    cfdata->gui.mod_list = ob;
 
    e_widget_ilist_go(ob);
    e_widget_min_size_set(ob, 100, 100);
-   e_widget_frametable_object_append(of, ob, 3, 0, 1, 4, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, ob, 3, 1, 1, 4, 1, 1, 1, 1);
     
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
@@ -1058,6 +1074,7 @@ _cfdata_language_go(const char *lang, const char *region, const char *codeset, c
 	     if (lang_update)
 	       {
 		  e_widget_ilist_clear(cfdata->gui.reg_list);
+		   
 		  cfdata->region_list = evas_list_free(cfdata->region_list);
 		  evas_hash_foreach(lang_node->region_hash, _region_hash_cb, cfdata);
 		  cfdata->region_list = evas_list_sort(cfdata->region_list, 
@@ -1065,6 +1082,7 @@ _cfdata_language_go(const char *lang, const char *region, const char *codeset, c
 						     _region_list_sort);
 		  _region_list_load(cfdata);
 	       }
+	     
 	     if (region && region_update)
 	       { 
 		  E_Intl_Region_Node *reg_node;
