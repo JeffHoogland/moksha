@@ -1,6 +1,8 @@
 /*
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -9,11 +11,14 @@
 #include <pwd.h>
 #include <grp.h>
 #include <fnmatch.h>
+#ifdef HAVE_ALLOCA_H
+#include <alloca.h>
+#endif
 #include <Evas.h>
 
 /* local subsystem functions */
 static int auth_action_ok(char *a, uid_t uid, gid_t gid);
-static int auth_etc_enlightenment_sysactions(char *a, char *u, char *g);
+static int auth_etc_enlightenment_sysactions(char *a, char *u, char **g);
 static char *get_word(char *s, char *d);
 
 /* local subsystem globals */
@@ -98,15 +103,37 @@ auth_action_ok(char *a, uid_t uid, gid_t gid)
 {
    struct passwd *pw;
    struct group *gp;
-   char *usr = NULL, *grp;
-   int ret;
+   char *usr = NULL, **grp;
+   int ret, gn, i, j;
+   gid_t gl[1024], egid;
 
    pw = getpwuid(uid);
    if (!pw) return 0;
    usr = pw->pw_name;
    if (!usr) return 0;
+   egid = getegid();
+   gn = getgroups(1024, gl);
+   grp = alloca(sizeof(char *) * (gn + 1 + 1));
+   j = 0;
    gp = getgrgid(gid);
-   if (gp) grp = gp->gr_name;
+   if (gp)
+     {
+	grp[j] = gp->gr_name;
+	j++;
+     }
+   for (i = 0; i < gn; i++)
+     {
+	if (gl[i] != egid)
+	  {
+	     gp = getgrgid(gl[i]);
+	     if (gp)
+	       {
+		  grp[j] = gp->gr_name;
+		  j++;
+	       }
+	  }
+     }
+   grp[j] = NULL;
    /* first stage - check:
     * PREFIX/etc/enlightenment/sysactions.conf
     */
@@ -118,11 +145,11 @@ auth_action_ok(char *a, uid_t uid, gid_t gid)
 }
 
 static int
-auth_etc_enlightenment_sysactions(char *a, char *u, char *g)
+auth_etc_enlightenment_sysactions(char *a, char *u, char **g)
 {
    FILE *f;
    char file[4096], buf[4096], id[4096], ugname[4096], perm[4096], act[4096];
-   char *p, *pp, *s;
+   char *p, *pp, *s, **gp;
    int len, line = 0, ok = 0;
    int allow = 0;
    int deny = 0;
@@ -169,15 +196,21 @@ auth_etc_enlightenment_sysactions(char *a, char *u, char *g)
 	  }
 	else if (!strcmp(id, "group:"))
 	  {
-	     if (!fnmatch(ugname, g, 0))
+	     int matched;
+	     
+	     matched = 0;
+	     for (gp = g; *gp; gp++)
 	       {
-		  if (!strcmp(perm, "allow:")) allow = 1;
-		  else if (!strcmp(perm, "deny:")) deny = 1;
-		  else
-		    goto malformed;
+		  if (!fnmatch(ugname, *gp, 0))
+		    {
+		       matched = 1;
+		       if (!strcmp(perm, "allow:")) allow = 1;
+		       else if (!strcmp(perm, "deny:")) deny = 1;
+		       else
+			 goto malformed;
+		    }
 	       }
-	     else
-	       continue;
+	     if (matched) continue;
 	  }
 	else if (!strcmp(id, "action:"))
 	  {

@@ -61,9 +61,9 @@ group {
 	    set_state(PART:"meter", "default", freq);
 	    
 	    if (f < 1000000) {
-	       snprintf(text, 100, "%i Mhz", f / 1000);
+	       snprintf(text, 100, "%i", f / 1000);
 	    } else {
-	       snprintf(text, 100, "%i.%i Ghz", f / 1000000,
+	       snprintf(text, 100, "%i.%i", f / 1000000,
 			(f % 1000000) / 100000);
 	    }
 	    set_text(PART:"readout", text);
@@ -288,7 +288,7 @@ group {
       part {
 	 name: "readout";
 	 type: TEXT;
-	 effect: SOFT_SHADOW;
+	 effect: OUTLINE_SOFT_SHADOW;
 	 mouse_events: 0;
          clip_to: "fade_clip";
 	 description {
@@ -302,11 +302,12 @@ group {
 	       offset: 0 0;
 	    }
 	    color: 255 255 255 255;
+	    color2: 0 0 0 128;
 	    color3: 0 0 0 32;
 	    text {
 	       text: "??? Ghz";
-	       font: "Edje-Vera";
-	       size: 7;
+	       font: "Edje-Vera-Bold";
+	       size: 8;
 	       align: 0.5 0.5;
 	       min: 1 1;
                text_class: "module_small";	       

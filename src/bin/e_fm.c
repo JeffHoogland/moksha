@@ -22,6 +22,8 @@ struct _E_Fm2_Smart_Data
    Evas_Object      *clip;
    Evas_Object      *underlay;
    Evas_Object      *overlay;
+   Evas_Object      *drop;
+   Evas_Object      *drop_in;
    const char       *dev;
    const char       *path;
    const char       *realpath;
@@ -75,6 +77,12 @@ struct _E_Fm2_Smart_Data
    
    E_Object           *eobj;
    E_Drop_Handler     *drop_handler;
+   E_Fm2_Icon         *drop_icon;
+   char                drop_after;
+   unsigned char       drop_show : 1;
+   unsigned char       drop_in_show : 1;
+   unsigned char       drop_all : 1;
+   unsigned char       drag : 1;
 };
  
 struct _E_Fm2_Region
@@ -216,8 +224,9 @@ static void _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog);
 static void _e_fm2_file_delete_no_cb(void *data, E_Dialog *dialog);
 static void _e_fm2_refresh_job_cb(void *data);
 
-static char *_meta_path = NULL;
+static char *_e_fm2_meta_path = NULL;
 static Evas_Smart *_e_fm2_smart = NULL;
+static Evas_List *_e_fm2_list = NULL;
 
 /* externally accessible functions */
 EAPI int
@@ -229,7 +238,7 @@ e_fm2_init(void)
    homedir = e_user_homedir_get();
    snprintf(path, sizeof(path), "%s/.e/e/fileman/metadata", homedir);
    ecore_file_mkpath(path);
-   _meta_path = strdup(path);
+   _e_fm2_meta_path = strdup(path);
 
    _e_fm2_smart = evas_smart_new("e_fm",
 				 _e_fm2_smart_add, /* add */
@@ -251,7 +260,7 @@ e_fm2_shutdown(void)
 {
    evas_smart_free(_e_fm2_smart);
    _e_fm2_smart = NULL;
-   E_FREE(_meta_path);
+   E_FREE(_e_fm2_meta_path);
    return 1;
 }
 
@@ -657,7 +666,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
       PRT("%s", path);
    }
    else if (CMP("~/")) {
-      s = e_user_homedir_get();
+      s = (char *)e_user_homedir_get();
       PRT("%s%s", s, path);
    }
    else if (dev[0] == '/') {
@@ -670,7 +679,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
        .desktop files or symlinks (in fact anything
        * you like
        */
-      s = e_user_homedir_get();
+      s = (char *)e_user_homedir_get();
       PRT("%s/.e/e/fileman/favorites", s);
    }
    else if (CMP("dvd") || CMP("dvd-*"))  {
@@ -1419,6 +1428,11 @@ static void
 _e_fm2_icon_free(E_Fm2_Icon *ic)
 {
    /* free icon, object data etc. etc. */
+   if (ic->sd->drop_icon == ic)
+     {
+	/* FIXME: call hide call */
+	ic->sd->drop_icon = NULL;
+     }
    _e_fm2_icon_unrealize(ic);
    if (ic->menu)
      {
@@ -1457,7 +1471,9 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
    ic->obj = edje_object_add(evas_object_evas_get(ic->sd->obj));
    edje_object_freeze(ic->obj);
    evas_object_smart_member_add(ic->obj, ic->sd->obj);
-   evas_object_stack_below(ic->obj, ic->sd->overlay);
+   evas_object_stack_below(ic->obj, ic->sd->drop);
+//   evas_object_stack_below(ic->sd->drop, ic->sd->overlay);
+//   evas_object_stack_below(ic->sd->drop_in, ic->sd->overlay);
    /* FIXME: this is currently a hack just to get a display working - go back
     * and do proper icon stuff later */
    if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
@@ -1813,7 +1829,9 @@ _e_fm2_icon_select(E_Fm2_Icon *ic)
      {
 	edje_object_signal_emit(ic->obj, "e,state,selected", "e");
 	edje_object_signal_emit(ic->obj_icon, "e,state,selected", "e");
-	evas_object_stack_below(ic->obj, ic->sd->overlay);
+	evas_object_stack_below(ic->obj, ic->sd->drop);
+//	evas_object_stack_below(ic->sd->drop, ic->sd->overlay);
+//	evas_object_stack_below(ic->sd->drop_in, ic->sd->overlay);
      }
 }
 
@@ -1951,7 +1969,8 @@ _e_fm2_region_realize(E_Fm2_Region *rg)
    for (l = rg->list; l; l = l->next)
      {
 	ic = l->data;
-	if (ic->selected) evas_object_raise(ic->obj);
+	if (ic->selected)
+	  evas_object_stack_below(ic->obj, ic->sd->drop);
      }
    edje_thaw();
 }
@@ -2331,26 +2350,159 @@ _e_fm2_typebuf_char_backspace(Evas_Object *obj)
 
 /* FIXME: prototype + reposition + implement */
 static void
-_e_fm2_dnd_drop_into_show(E_Fm2_Icon *ic)
+_e_fm2_dnd_drop_configure(Evas_Object *obj)
 {
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   if (!sd->drop_icon) return;
+   if (sd->drop_after == -1)
+     {
+	evas_object_move(sd->drop_in,
+			 sd->x + sd->drop_icon->x - sd->pos.x,
+			 sd->y + sd->drop_icon->y - sd->pos.y);
+	evas_object_resize(sd->drop_in, sd->drop_icon->w, sd->drop_icon->h);
+     }
+   else if (sd->drop_after)
+     {
+	evas_object_move(sd->drop,
+			 sd->x + sd->drop_icon->x - sd->pos.x,
+			 sd->y + sd->drop_icon->y - sd->pos.y + sd->drop_icon->h - 1);
+	evas_object_resize(sd->drop, sd->drop_icon->w, 2);
+     }
+   else
+     {
+	evas_object_move(sd->drop,
+			 sd->x + sd->drop_icon->x - sd->pos.x,
+			 sd->y + sd->drop_icon->y - sd->pos.y - 1);
+	evas_object_resize(sd->drop, sd->drop_icon->w, 2);
+     }
 }
 
 /* FIXME: prototype + reposition + implement */
 static void
-_e_fm2_dnd_drop_into_hide(Evas_Object *obj)
+_e_fm2_dnd_drop_all_show(Evas_Object *obj)
 {
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   if (sd->drop_show)
+     {
+	edje_object_signal_emit(sd->drop, "e,state,unselected", "e");
+	sd->drop_show = 0;
+     }
+   if (sd->drop_in_show)
+     {
+	edje_object_signal_emit(sd->drop_in, "e,state,unselected", "e");
+	sd->drop_in_show = 0;
+     }
+   if (!sd->drop_all)
+     {
+	printf("DISP DROP ALL SHOW\n");
+	edje_object_signal_emit(sd->overlay, "e,state,drop,start", "e");
+	sd->drop_all = 1;
+     }
+   sd->drop_icon = NULL;
+   sd->drop_after = 0;
 }
 
 /* FIXME: prototype + reposition + implement */
 static void
-_e_fm2_dnd_drop_between_show(E_Fm2_Icon *ic, int after)
+_e_fm2_dnd_drop_all_hide(Evas_Object *obj)
 {
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   if (sd->drop_all)
+     {
+	printf("DISP DROP ALL HIDE\n");
+	edje_object_signal_emit(sd->overlay, "e,state,drop,stop", "e");
+	sd->drop_all = 0;
+     }
 }
 
 /* FIXME: prototype + reposition + implement */
 static void
-_e_fm2_dnd_drop_between_hide(Evas_Object *obj)
+_e_fm2_dnd_drop_show(E_Fm2_Icon *ic, int after)
 {
+   int emit = 0;
+   
+   if ((ic->sd->drop_icon == ic) &&
+       (ic->sd->drop_after == after)) return;
+   if (((ic->sd->drop_icon) && (!ic)) ||
+       ((!ic->sd->drop_icon) && (ic)) ||
+       ((after < 0) && (ic->sd->drop_after >= 0)) ||
+       ((after >= 0) && (ic->sd->drop_after < 0)))
+     emit = 1;
+   ic->sd->drop_icon = ic;
+   ic->sd->drop_after = after;
+   if (emit)
+     {  
+	if (ic->sd->drop_after != -1)
+	  {
+	     printf("DISP DROP ON drop\n");
+	     edje_object_signal_emit(ic->sd->drop_in, "e,state,unselected", "e");
+	     edje_object_signal_emit(ic->sd->drop, "e,state,selected", "e");
+	     ic->sd->drop_in_show = 0;
+	     ic->sd->drop_show = 1;
+	  }
+	else
+	  {
+	     printf("DISP DROP ON drop_in\n");
+	     edje_object_signal_emit(ic->sd->drop, "e,state,unselected", "e");
+	     edje_object_signal_emit(ic->sd->drop_in, "e,state,selected", "e");
+	     ic->sd->drop_in_show = 1;
+	     ic->sd->drop_show = 0;
+	  }
+     }
+   _e_fm2_dnd_drop_all_hide(ic->sd->obj);
+   _e_fm2_dnd_drop_configure(ic->sd->obj);
+}
+
+/* FIXME: prototype + reposition + implement */
+static void
+_e_fm2_dnd_drop_hide(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   printf("DISP DROP OFF BOTH\n");
+   if (sd->drop_show)
+     {
+	edje_object_signal_emit(sd->drop, "e,state,unselected", "e");
+	sd->drop_show = 0;
+     }
+   if (sd->drop_in_show)
+     {
+	edje_object_signal_emit(sd->drop_in, "e,state,unselected", "e");
+	sd->drop_in_show = 0;
+     }
+   sd->drop_icon = NULL;
+   sd->drop_after = 0;
+}
+
+/* FIXME: prototype + reposition + implement */
+static void
+_e_fm2_dnd_finish(Evas_Object *obj, int refresh)
+{
+   E_Fm2_Smart_Data *sd;
+   E_Fm2_Icon *ic;
+   Evas_List *l;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   if (!sd->drag) return;
+   sd->drag = 0;
+   for (l = sd->icons; l; l = l->next)
+     {
+	ic = l->data;
+	ic->drag.dnd = 0;
+     }
+   if (refresh) e_fm2_refresh(obj);
 }
 
 static void
@@ -2382,10 +2534,10 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
    for (l = sd->icons; l; l = l->next)
      {
 	ic = l->data;
-	if (ic->drag.dnd) continue;
 	if (E_INSIDE(ev->x, ev->y, ic->x, ic->y, ic->w, ic->h))
 	  {
 	     printf("OVER %s\n", ic->info.file);
+	     if (ic->drag.dnd) return;
 	     /* if list view */
 	     if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
 	       {
@@ -2398,34 +2550,19 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 			    /* if bottom 25% or top 25% then insert between prev or next */
 			    /* if in middle 50% then put in dir */
 			    if (ev->y <= (ic->y + (ic->h / 4)))
-			      {
-				 _e_fm2_dnd_drop_into_hide(sd->obj);
-				 _e_fm2_dnd_drop_between_show(ic, 0);
-			      }
+			      _e_fm2_dnd_drop_show(ic, 0);
 			    else if (ev->y > (ic->y + ((ic->h * 3) / 4)))
-			      {
-				 _e_fm2_dnd_drop_into_hide(sd->obj);
-				 _e_fm2_dnd_drop_between_show(ic, 1);
-			      }
+			      _e_fm2_dnd_drop_show(ic, 1);
 			    else
-			      {
-				 _e_fm2_dnd_drop_between_hide(sd->obj);
-				 _e_fm2_dnd_drop_into_show(ic);
-			      }
+			      _e_fm2_dnd_drop_show(ic, -1);
 			 }
 		       else
 			 {
 			    /* if top 50% or bottom 50% then insert between prev or next */
 			    if (ev->y <= (ic->y + (ic->h / 2)))
-			      {
-				 _e_fm2_dnd_drop_into_hide(sd->obj);
-				 _e_fm2_dnd_drop_between_show(ic, 0);
-			      }
+			      _e_fm2_dnd_drop_show(ic, 0);
 			    else
-			      {
-				 _e_fm2_dnd_drop_into_hide(sd->obj);
-				 _e_fm2_dnd_drop_between_show(ic, 1);
-			      }
+			      _e_fm2_dnd_drop_show(ic, 1);
 			 }
 		    }
 		  /* we can only drop into subdirs */
@@ -2433,15 +2570,9 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 		    {
 		       /* if it's over a dir - hilight as it will be dropped in */
                        if (S_ISDIR(ic->info.statinfo.st_mode))
-			 {
-			    _e_fm2_dnd_drop_between_hide(sd->obj);
-			    _e_fm2_dnd_drop_into_show(ic);
-			 }
+			 _e_fm2_dnd_drop_show(ic, -1);
 		       else
-			 {
-			    _e_fm2_dnd_drop_between_hide(sd->obj);
-			    _e_fm2_dnd_drop_into_hide(sd->obj);
-			 }
+			 _e_fm2_dnd_drop_hide(sd->obj);
 		    }
 	       }
 	     else
@@ -2457,26 +2588,22 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 	/* if listview - it is now after last file */
 	if (sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
 	  {
-	     ic = evas_list_data(evas_list_last(sd->icons));
-	     if (ic)
+	     /* if there is a .order file - we can re-order files */
+	     if (ic->sd->order_file)
 	       {
-		  if (!ic->drag.dnd)
+		  ic = evas_list_data(evas_list_last(sd->icons));
+		  if (ic)
 		    {
-		       _e_fm2_dnd_drop_into_hide(sd->obj);
-		       _e_fm2_dnd_drop_between_show(ic, 1);
+		       if (!ic->drag.dnd)
+			 _e_fm2_dnd_drop_show(ic, 1);
+		       else
+			 _e_fm2_dnd_drop_all_show(sd->obj);
 		    }
 		  else
-		    {
-		       _e_fm2_dnd_drop_between_hide(sd->obj);
-		       _e_fm2_dnd_drop_into_hide(sd->obj);
-		    }
+		    _e_fm2_dnd_drop_all_show(sd->obj);
 	       }
 	     else
-	       {
-		  /* no icons in dir - drop it in */
-		  _e_fm2_dnd_drop_between_hide(sd->obj);
-		  _e_fm2_dnd_drop_into_hide(sd->obj);
-	       }
+	       _e_fm2_dnd_drop_all_show(sd->obj);
 	  }
 	else
 	  {
@@ -2485,8 +2612,7 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 	return;
      }
    /* outside fm view */
-   _e_fm2_dnd_drop_between_hide(sd->obj);
-   _e_fm2_dnd_drop_into_hide(sd->obj);
+   _e_fm2_dnd_drop_hide(sd->obj);
 }
 
 static void
@@ -2500,8 +2626,8 @@ _e_fm2_cb_dnd_leave(void *data, const char *type, void *event)
    if (strcmp(type, "text/uri-list")) return;
    ev = (E_Event_Dnd_Leave *)event;
    printf("DND LEAVE %i %i\n", ev->x, ev->y);
-   _e_fm2_dnd_drop_between_hide(sd->obj);
-   _e_fm2_dnd_drop_into_hide(sd->obj);
+   _e_fm2_dnd_drop_hide(sd->obj);
+   _e_fm2_dnd_drop_all_hide(sd->obj);
 }
  
 static void
@@ -2509,21 +2635,68 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 {
    E_Fm2_Smart_Data *sd;
    E_Event_Dnd_Drop *ev;
-   char **selected, *f;
-   int i;
+   Evas_List *fsel, *l;
+   char *f;
+   int i, refresh = 0;
    
    sd = data;
    if (!type) return;
    if (strcmp(type, "text/uri-list")) return;
    ev = (E_Event_Dnd_Drop *)event;
-   selected = ev->data;
+   fsel = ev->data;
    printf("DROP: %i %i\n", ev->x, ev->y);
-   for (i = 0, f = selected[i]; f; i++, f = selected[i]) printf("  %s\n", f);
-   /* FIXME: record the descision where to drop it in the dnd move callback
-    * then fix list, rewrite .order or move into dir (and if drag icon is
-    * from this dir, then refresh) */
-   _e_fm2_dnd_drop_between_hide(sd->obj);
-   _e_fm2_dnd_drop_into_hide(sd->obj);
+   for (l = fsel; l; l = l->next)
+     {
+	f = l->data;
+	printf("  %s\n", f);
+     }
+   /* note - logic.
+    * if drop file prefix path matches extra_file_source then it can be
+    * and indirect link - dont MOVE the file just add filename to list.
+    * if not literally move the file in. if move can't work - try a copy.
+    * on a literal move find any fm views for the dir of the dropped file
+    * and refresh those, as well as refresh current target fm dir
+    */
+   if (sd->drop_all) /* drop arbitarily into the dir */
+     {
+	/* move file into this fm dir */
+	refresh  = 1; /* refresh src fm */
+	e_fm2_refresh(sd->obj); /* refresh dst fm */
+     }
+   else if (sd->drop_icon) /* inot or before/after an icon */
+     {
+	if (sd->drop_after == -1) /* put into subdir in icon */
+	  {
+	     /* move file into dir that this icon is for */
+	     /* FIXME: mv file */
+	     refresh  = 1; /* refresh src fm */
+	     e_fm2_refresh(sd->obj); /* refresh dst fm */
+	  }
+	else
+	  {
+	     if (sd->config->view.mode == E_FM2_VIEW_MODE_LIST) /* list */
+	       {
+		  if (sd->order_file) /* there is an order file */
+		    {
+		       /* write order file with all files up to drop_icon
+			* that are not being dragged, then insert list of
+			* dropped files, then everything after that is not
+			* being dragged then refresh view
+			*/
+		       refresh  = 1; /* refresh src fm */
+		       e_fm2_refresh(sd->obj); /* refresh dst fm */
+		    }
+		  else /* no order file */
+		    {
+		       /* shouldnt happen */
+		    }
+	       }
+	  }
+     }
+   _e_fm2_dnd_drop_hide(sd->obj);
+   _e_fm2_dnd_drop_all_hide(sd->obj);
+   for (l = _e_fm2_list; l; l = l->next)
+     _e_fm2_dnd_finish(l->data, refresh);
 }
  
 static void
@@ -2690,12 +2863,16 @@ _e_fm2_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 static void
 _e_fm2_cb_drag_finished(E_Drag *drag, int dropped)
 {
-   char **selected, *f;
-   int i;
+   Evas_List *fsel;
+   char *f;
    
-   selected = drag->data;
-   for (i = 0, f = selected[i]; f; i++, f = selected[i]) free(f);
-   free(selected);
+   fsel = drag->data;
+   while (fsel)
+     {
+	f = fsel->data;
+	free(f);
+	fsel = evas_list_remove_list(fsel, fsel);
+     }
 }
 
 static void
@@ -2719,10 +2896,9 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     Evas_Object *o, *o2;
 	     Evas_Coord x, y, w, h;
 	     const char *drag_types[] = { "text/uri-list" }, *realpath;
-	     char **selected = NULL;
 	     char buf[4096];
 	     E_Container *con = NULL;
-	     Evas_List *l, *sl;
+	     Evas_List *l, *sl, *fsel = NULL;
 	     int i;
 	     
 	     switch (ic->sd->eobj->type)
@@ -2744,24 +2920,25 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 		  break;
 	       }
 	     if (!con) return;
+	     ic->sd->drag = 1;
 	     ic->drag.dnd = 1;
 	     ic->drag.start = 0;
 	     evas_object_geometry_get(ic->obj, &x, &y, &w, &h);
 	     realpath = e_fm2_real_path_get(ic->sd->obj);
 	     sl = e_fm2_selected_list_get(ic->sd->obj);
-	     selected = E_NEW(char *, evas_list_count(sl) + 1);
 	     for (l = sl, i = 0; l; l = l->next, i++)
 	       {
+		  /* FIXME: URI - needs to be file:/..... (can't remember 1 or 2 /'s) */
 		  if (!strcmp(realpath, "/"))
 		    snprintf(buf, sizeof(buf), "/%s", ic->info.file);
 		  else
 		    snprintf(buf, sizeof(buf), "%s/%s", realpath, ic->info.file);
-		  selected[i] = strdup(buf);
+		  fsel = evas_list_append(fsel, strdup(buf));
 	       }
 	     evas_list_free(sl);
 	     d = e_drag_new(con,
 			    x, y, drag_types, 1,
-			    selected, -1, _e_fm2_cb_drag_finished);
+			    fsel, -1, _e_fm2_cb_drag_finished);
 	     o = edje_object_add(e_drag_evas_get(d));
 	     if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
 	       {
@@ -3347,9 +3524,24 @@ _e_fm2_smart_add(Evas_Object *obj)
    evas_object_smart_member_add(sd->overlay, obj);
    evas_object_show(sd->overlay);
    
+   sd->drop = edje_object_add(evas_object_evas_get(obj));
+   evas_object_clip_set(sd->drop, sd->clip);
+   e_theme_edje_object_set(sd->drop, "base/theme/fileman",
+			   "e/fileman/list/drop_between");
+   evas_object_smart_member_add(sd->drop, obj);
+   evas_object_show(sd->drop);
+   
+   sd->drop_in = edje_object_add(evas_object_evas_get(obj));
+   evas_object_clip_set(sd->drop_in, sd->clip);
+   e_theme_edje_object_set(sd->drop_in, "base/theme/fileman",
+			   "e/fileman/list/drop_in");
+   evas_object_smart_member_add(sd->drop_in, obj);
+   evas_object_show(sd->drop_in);
+   
    evas_object_smart_data_set(obj, sd);
    evas_object_move(obj, 0, 0);
    evas_object_resize(obj, 0, 0);
+   _e_fm2_list = evas_list_append(_e_fm2_list, sd->obj);
 }
 
 static void
@@ -3388,8 +3580,11 @@ _e_fm2_smart_del(Evas_Object *obj)
 
    evas_object_del(sd->underlay);
    evas_object_del(sd->overlay);
+   evas_object_del(sd->drop);
+   evas_object_del(sd->drop_in);
    evas_object_del(sd->clip);
    if (sd->drop_handler) e_drop_handler_del(sd->drop_handler);
+   _e_fm2_list = evas_list_remove(_e_fm2_list, sd->obj);
    free(sd);
 }
 
@@ -3405,6 +3600,7 @@ _e_fm2_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    sd->y = y;
    evas_object_move(sd->underlay, sd->x, sd->y);
    evas_object_move(sd->overlay, sd->x, sd->y);
+   _e_fm2_dnd_drop_configure(sd->obj);
    evas_object_move(sd->clip, sd->x - OVERCLIP, sd->y - OVERCLIP);
    _e_fm2_obj_icons_place(sd);
    if (sd->drop_handler)
@@ -3426,6 +3622,7 @@ _e_fm2_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    sd->h = h;
    evas_object_resize(sd->underlay, sd->w, sd->h);
    evas_object_resize(sd->overlay, sd->w, sd->h);
+   _e_fm2_dnd_drop_configure(sd->obj);
    evas_object_resize(sd->clip, sd->w + (OVERCLIP * 2), sd->h + (OVERCLIP * 2));
 
    /* for automatic layout - do this - NB; we could put this on a timer delay */
