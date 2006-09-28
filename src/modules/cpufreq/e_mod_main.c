@@ -710,12 +710,12 @@ _cpufreq_face_cb_set_frequency(void *data, Evas_Object *obj, const char *emissio
      {
 	if (cpufreq_config->status->cur_frequency == (int)l->data)
 	  {
-	     if (!strcmp(emission, "increase_frequency"))
+	     if (!strcmp(emission, "e,action,frequency,increase"))
 	       {
 		  if (l->next) next_frequency = (int)l->next->data;
 		  break;
 	       }
-	     else if (!strcmp(emission, "decrease_frequency"))
+	     else if (!strcmp(emission, "e,action,frequency,decrease"))
 	       {
 		  if (l->prev) next_frequency = (int)l->prev->data;
 		  break;
