@@ -1321,6 +1321,11 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, char *file)
 	     ic->info.pseudo_dir = evas_stringshare_add(sd->config->view.extra_file_source);
 	     ic->info.pseudo_link = 1;
 	  }
+	else
+	  {
+	     free(ic);
+	     return NULL;
+	  }
      }
    ic->sd = sd;
    ic->info.file = evas_stringshare_add(file);
@@ -2635,9 +2640,12 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 {
    E_Fm2_Smart_Data *sd;
    E_Event_Dnd_Drop *ev;
-   Evas_List *fsel, *l;
-   char *f;
+   E_Fm2_Icon *ic;
+   Evas_List *fsel, *l, *ll;
+   char *fl;
    int i, refresh = 0;
+   char buf[4096];
+   FILE *f;
    
    sd = data;
    if (!type) return;
@@ -2647,8 +2655,8 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
    printf("DROP: %i %i\n", ev->x, ev->y);
    for (l = fsel; l; l = l->next)
      {
-	f = l->data;
-	printf("  %s\n", f);
+	fl = l->data;
+	printf("  %s\n", fl);
      }
    /* note - logic.
     * if drop file prefix path matches extra_file_source then it can be
@@ -2665,6 +2673,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
      }
    else if (sd->drop_icon) /* inot or before/after an icon */
      {
+	printf("drop icon\n");
 	if (sd->drop_after == -1) /* put into subdir in icon */
 	  {
 	     /* move file into dir that this icon is for */
@@ -2683,7 +2692,52 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 			* dropped files, then everything after that is not
 			* being dragged then refresh view
 			*/
-		       refresh  = 1; /* refresh src fm */
+		       snprintf(buf, sizeof(buf), "%s/.order", sd->realpath);
+		       f = fopen(buf, "w");
+		       if (f)
+			 {
+			    for (l = sd->icons; l; l = l->next)
+			      {
+				 ic = l->data;
+				 if (!ic->drag.dnd)
+				   {
+				      if ((sd->drop_after == 0) && 
+					  (ic == sd->drop_icon))
+					{
+					   for (ll = fsel; ll; ll = ll->next)
+					     fprintf(f, "%s\n", ecore_file_get_file(ll->data));
+					   fprintf(f, "%s\n", ic->info.file);
+					}
+				      else if ((sd->drop_after == 1) && 
+					       (ic == sd->drop_icon))
+					{
+					   fprintf(f, "%s\n", ic->info.file);
+					   for (ll = fsel; ll; ll = ll->next)
+					     fprintf(f, "%s\n", ecore_file_get_file(ll->data));
+					}
+				      else
+					fprintf(f, "%s\n", ic->info.file);
+				   }
+			      }
+			    fclose(f);
+			 }
+		       for (ll = fsel; ll; ll = ll->next)
+			 {
+			    char *d;
+			    
+			    d = ecore_file_get_dir(ll->data);
+			    if (d)
+			      {
+				 if (strcmp(d, sd->realpath))
+				   {
+				      snprintf(buf, sizeof(buf), "%s/%s",
+					       sd->realpath, ecore_file_get_file(ll->data));
+				      ecore_file_symlink(ll->data, buf);
+				   }
+				 free(d);
+			      }
+			 }
+		       refresh = 1; /* refresh src fm */
 		       e_fm2_refresh(sd->obj); /* refresh dst fm */
 		    }
 		  else /* no order file */
