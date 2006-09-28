@@ -17,7 +17,7 @@
 #include <Evas.h>
 
 /* local subsystem functions */
-static int auth_action_ok(char *a, uid_t uid, gid_t gid);
+static int auth_action_ok(char *a, uid_t uid, gid_t gid, gid_t *gl, int gn, gid_t egid);
 static int auth_etc_enlightenment_sysactions(char *a, char *u, char **g);
 static char *get_word(char *s, char *d);
 
@@ -28,11 +28,11 @@ Evas_Hash *actions = NULL;
 int
 main(int argc, char **argv)
 {
-   int i;
+   int i, gn;
    int test = 0;
    char *action, *cmd;
    uid_t uid;
-   gid_t gid;
+   gid_t gid, gl[1024], egid;
 
    for (i = 1; i < argc; i++)
      {
@@ -63,6 +63,8 @@ main(int argc, char **argv)
 
    uid = getuid();
    gid = getgid();
+   egid = getegid();
+   gn = getgroups(1024, gl);
    
    if (setuid(0) != 0)
      {
@@ -77,7 +79,7 @@ main(int argc, char **argv)
    
    evas_init();
 
-   if (!auth_action_ok(action, uid, gid))
+   if (!auth_action_ok(action, uid, gid, gl, gn, egid))
      {
 	printf("ERROR: ACTION NOT ALLOWED: %s\n", action);
 	exit(10);
@@ -99,20 +101,17 @@ main(int argc, char **argv)
 
 /* local subsystem functions */
 static int
-auth_action_ok(char *a, uid_t uid, gid_t gid)
+auth_action_ok(char *a, uid_t uid, gid_t gid, gid_t *gl, int gn, gid_t egid)
 {
    struct passwd *pw;
    struct group *gp;
-   char *usr = NULL, **grp;
-   int ret, gn, i, j;
-   gid_t gl[1024], egid;
+   char *usr = NULL, **grp, *g;
+   int ret, i, j;
 
    pw = getpwuid(uid);
    if (!pw) return 0;
    usr = pw->pw_name;
    if (!usr) return 0;
-   egid = getegid();
-   gn = getgroups(1024, gl);
    grp = alloca(sizeof(char *) * (gn + 1 + 1));
    j = 0;
    gp = getgrgid(gid);
@@ -128,7 +127,9 @@ auth_action_ok(char *a, uid_t uid, gid_t gid)
 	     gp = getgrgid(gl[i]);
 	     if (gp)
 	       {
-		  grp[j] = gp->gr_name;
+		  g = alloca(strlen(gp->gr_name) + 1);
+		  strcpy(g, gp->gr_name);
+		  grp[j] = g;
 		  j++;
 	       }
 	  }
@@ -210,7 +211,7 @@ auth_etc_enlightenment_sysactions(char *a, char *u, char **g)
 			 goto malformed;
 		    }
 	       }
-	     if (matched) continue;
+	     if (!matched) continue;
 	  }
 	else if (!strcmp(id, "action:"))
 	  {
