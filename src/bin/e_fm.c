@@ -2564,7 +2564,7 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
    for (l = sd->icons; l; l = l->next)
      {
 	ic = l->data;
-	if (E_INSIDE(ev->x, ev->y, ic->x, ic->y, ic->w, ic->h))
+	if (E_INSIDE(ev->x, ev->y, ic->x - ic->sd->pos.x, ic->y - ic->sd->pos.y, ic->w, ic->h))
 	  {
 	     printf("OVER %s\n", ic->info.file);
 	     if (ic->drag.dnd) return;

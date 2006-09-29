@@ -147,3 +147,4 @@
 #include "e_sys.h"
 #include "e_int_config_transitions.h"
 #include "e_obj_dialog.h"
+#include "e_fwin.h"

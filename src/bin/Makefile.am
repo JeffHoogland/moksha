@@ -171,7 +171,8 @@ e_color_dialog.h  \
 e_fdo_menu_to_order.h \
 e_sys.h \
 e_obj_dialog.h \
-e_int_config_transitions.h
+e_int_config_transitions.h \
+e_fwin.h
  
 enlightenment_src = \
 e_user.c \
@@ -318,6 +319,7 @@ e_fdo_menu_to_order.c \
 e_sys.c \
 e_int_config_transitions.c \
 e_obj_dialog.c \
+e_fwin.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \
