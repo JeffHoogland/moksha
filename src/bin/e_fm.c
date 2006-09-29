@@ -122,7 +122,7 @@ struct _E_Fm2_Icon
 };
 
 static const char *_e_fm2_dev_path_map(const char *dev, const char *path);
-static void _e_fm2_file_add(Evas_Object *obj, char *file);
+static void _e_fm2_file_add(Evas_Object *obj, char *file, int unique);
 static void _e_fm2_file_del(Evas_Object *obj, char *file);
 static void _e_fm2_scan_start(Evas_Object *obj);
 static void _e_fm2_scan_stop(Evas_Object *obj);
@@ -725,7 +725,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
 }
 
 static void
-_e_fm2_file_add(Evas_Object *obj, char *file)
+_e_fm2_file_add(Evas_Object *obj, char *file, int unique)
 {
    E_Fm2_Smart_Data *sd;
    E_Fm2_Icon *ic, *ic2;
@@ -733,12 +733,36 @@ _e_fm2_file_add(Evas_Object *obj, char *file)
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
+   /* if we only want unique icon names - if it's there - ignore */
+   if (unique)
+     {
+	for (l = sd->icons; l; l = l->next)
+	  {
+	     ic = l->data;
+	     if (!strcmp(ic->info.file, file))
+	       {
+		  sd->tmp.last_insert = NULL;
+		  sd->iconlist_changed = 1;
+		  return;
+	       }
+	  }
+	for (l = sd->queue; l; l = l->next)
+	  {
+	     ic = l->data;
+	     if (!strcmp(ic->info.file, file))
+	       {
+		  sd->tmp.last_insert = NULL;
+		  sd->iconlist_changed = 1;
+		  return;
+	       }
+	  }
+     }
    /* create icon obj and append to unsorted list */
    ic = _e_fm2_icon_new(sd, file);
    if (ic)
      {
 	/* respekt da ordah! */
-	if (sd->order)
+	if (sd->order_file)
 	  sd->queue = evas_list_append(sd->queue, ic);
 	else
 	  {
@@ -793,6 +817,7 @@ _e_fm2_scan_start(Evas_Object *obj)
     */
    /* if i add the above pre-scan and it doesnt finish - continue here */
    if ((sd->scan_idler) || (sd->scan_timer)) return;
+   sd->order_file = 0;
    ecore_desktop_instrumentation_reset();
    sd->scan_idler = ecore_idler_add(_e_fm2_cb_scan_idler, obj);
    sd->scan_timer = ecore_timer_add(0.2, _e_fm2_cb_scan_timer, obj);
@@ -918,7 +943,7 @@ _e_fm2_queue_process(Evas_Object *obj)
 	 * a worst case of O(n) where n is the # of files in the list
 	 * so far
 	 */
-	if (sd->order)
+	if (sd->order_file)
 	  {
 	     l = NULL;
 	  }
@@ -2550,7 +2575,8 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 		  if (ic->sd->order_file)
 		    {
 		       /* if dir: */
-		       if (S_ISDIR(ic->info.statinfo.st_mode))
+                       if ((S_ISDIR(ic->info.statinfo.st_mode)) &&
+			   (!ic->sd->config->view.no_subdir_drop))
 			 {
 			    /* if bottom 25% or top 25% then insert between prev or next */
 			    /* if in middle 50% then put in dir */
@@ -2573,8 +2599,11 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 		  /* we can only drop into subdirs */
 		  else
 		    {
+		       /* FIXME: need some flag to prevent drops INTO dirs linked
+			* to in the favorites list */
 		       /* if it's over a dir - hilight as it will be dropped in */
-                       if (S_ISDIR(ic->info.statinfo.st_mode))
+                       if ((S_ISDIR(ic->info.statinfo.st_mode)) &&
+			   (!ic->sd->config->view.no_subdir_drop))
 			 _e_fm2_dnd_drop_show(ic, -1);
 		       else
 			 _e_fm2_dnd_drop_hide(sd->obj);
@@ -2642,9 +2671,8 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
    E_Event_Dnd_Drop *ev;
    E_Fm2_Icon *ic;
    Evas_List *fsel, *l, *ll;
-   char *fl;
    int i, refresh = 0;
-   char buf[4096];
+   char buf[4096], *fl, *d;
    FILE *f;
    
    sd = data;
@@ -2667,7 +2695,57 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
     */
    if (sd->drop_all) /* drop arbitarily into the dir */
      {
+	printf("drop all\n");
 	/* move file into this fm dir */
+	for (ll = fsel; ll; ll = ll->next)
+	  {
+	     d = ecore_file_get_dir(ll->data);
+	     /* get the dir of each file */
+	     if (d)
+	       {
+		  /* if the file is not in the target dir */
+		  if (strcmp(d, sd->realpath))
+		    {
+		       /* if the file is not a pseudo-link */
+		       if (e_util_strcmp(sd->config->view.extra_file_source, d))
+			 {
+			    /* move the file into the subdir */
+			    snprintf(buf, sizeof(buf), "%s/%s",
+				     sd->realpath, ecore_file_get_file(ll->data));
+			    if (ecore_file_exists(buf))
+			      {
+				 /* FIXME: error - file exists */
+			      }
+			    else
+			      ecore_file_mv(ll->data, buf);
+			 }
+		       else
+			 {
+			    snprintf(buf, sizeof(buf), "%s/.order",
+				     sd->realpath);
+			    f = fopen(buf, "a");
+			    if (f)
+			      {
+				 fprintf(f, "%s\n", ecore_file_get_file(ll->data));
+				 fclose(f);
+			      }
+			 }
+		    }
+		  else
+		    {
+		       /* file is in target dir - move into subdir */
+		       snprintf(buf, sizeof(buf), "%s/%s",
+				sd->realpath, ecore_file_get_file(ll->data));
+		       if (ecore_file_exists(buf))
+			 {
+			    /* FIXME: error - file exists */
+			 }
+		       else
+			 ecore_file_mv(ll->data, buf);
+		    }
+		  free(d);
+	       }
+	  }
 	refresh  = 1; /* refresh src fm */
 	e_fm2_refresh(sd->obj); /* refresh dst fm */
      }
@@ -2677,7 +2755,74 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	if (sd->drop_after == -1) /* put into subdir in icon */
 	  {
 	     /* move file into dir that this icon is for */
-	     /* FIXME: mv file */
+	     snprintf(buf, sizeof(buf), "%s/%s/.order",
+		      sd->realpath, sd->drop_icon->info.file);
+	     if (ecore_file_exists(buf))
+	       {
+		  f = fopen(buf, "a");
+		  if (f)
+		    {
+		       /* go through all files to drop */
+		       for (ll = fsel; ll; ll = ll->next)
+			 {
+			    fprintf(f, "%s\n", ecore_file_get_file(ll->data));
+                            d = ecore_file_get_dir(ll->data);
+			    /* get the dir of each file */
+			    if (d)
+			      {
+				 /* if the file is not in the target dir */
+				 if (strcmp(d, sd->realpath))
+				   {
+				      /* if the file is not apseudo-link */
+				      if (e_util_strcmp(sd->config->view.extra_file_source, d))
+					{
+					   /* move the file into the subdir */
+					   snprintf(buf, sizeof(buf), "%s/%s/%s",
+						    sd->realpath, sd->drop_icon->info.file, ecore_file_get_file(ll->data));
+					   if (ecore_file_exists(buf))
+					     {
+						/* FIXME: error - file exists */
+					     }
+					   else
+					     ecore_file_mv(ll->data, buf);
+					}
+				   }
+				 else
+				   {
+				      /* file is in target dir - move into subdir */
+				      snprintf(buf, sizeof(buf), "%s/%s/%s",
+					       sd->realpath, sd->drop_icon->info.file, ecore_file_get_file(ll->data));
+				      if (ecore_file_exists(buf))
+					{
+					   /* FIXME: error - file exists */
+					}
+				      else
+					ecore_file_mv(ll->data, buf);
+				   }
+				 free(d);
+			      }
+			 }
+		       fclose(f);
+		    }
+	       }
+	     else
+	       {
+		  printf("no .order\n");
+		  /* go through all files to drop */
+		  for (ll = fsel; ll; ll = ll->next)
+		    {
+		       /* move the file into the subdir */
+		       snprintf(buf, sizeof(buf), "%s/%s/%s",
+				sd->realpath, sd->drop_icon->info.file, ecore_file_get_file(ll->data));
+		       printf("mv %s %s\n", ll->data, buf);
+		       if (ecore_file_exists(buf))
+			 {
+			    /* FIXME: error - file exists */
+			 }
+		       else
+			 ecore_file_mv(ll->data, buf);
+		    }
+	       }
 	     refresh  = 1; /* refresh src fm */
 	     e_fm2_refresh(sd->obj); /* refresh dst fm */
 	  }
@@ -2723,8 +2868,6 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 			 }
 		       for (ll = fsel; ll; ll = ll->next)
 			 {
-			    char *d;
-			    
 			    d = ecore_file_get_dir(ll->data);
 			    if (d)
 			      {
@@ -2737,7 +2880,6 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 				 free(d);
 			      }
 			 }
-		       refresh = 1; /* refresh src fm */
 		       e_fm2_refresh(sd->obj); /* refresh dst fm */
 		    }
 		  else /* no order file */
@@ -3430,12 +3572,15 @@ _e_fm2_cb_scan_idler(void *data)
  
    if ((!sd->dir) && (!sd->order))
      {
-	snprintf(buf, sizeof(buf), "%s/.order", sd->realpath);
-	sd->order = fopen(buf, "rb");
-	sd->order_file = 1;
+	if (!sd->order_file)
+	  {
+	     snprintf(buf, sizeof(buf), "%s/.order", sd->realpath);
+	     sd->order = fopen(buf, "rb");
+	     if (sd->order) sd->order_file = 1;
+	  }
 	if (!sd->order)
 	  {
-	     sd->order_file = 0;
+//	     sd->order_file = 0;
 	     sd->dir = opendir(sd->realpath);
 	     if (!sd->dir) goto endscan;
 	  }
@@ -3443,10 +3588,18 @@ _e_fm2_cb_scan_idler(void *data)
 
    if (sd->order)
      {
-	if (!fgets(buf, sizeof(buf), sd->order)) goto endscan;
-	len = strlen(buf);
-	if ((len > 0) && (buf[len - 1] == '\n')) buf[len - 1] = 0;
-	_e_fm2_file_add(data, buf);
+	if (!fgets(buf, sizeof(buf), sd->order))
+	  {
+	     /* stop order file read - now pick up real files */
+	     fclose(sd->order);
+	     sd->order = NULL;
+	  }
+	else
+	  {
+	     len = strlen(buf);
+	     if ((len > 0) && (buf[len - 1] == '\n')) buf[len - 1] = 0;
+	     _e_fm2_file_add(data, buf, 0);
+	  }
      }
    else if (sd->dir)
      {
@@ -3456,7 +3609,7 @@ _e_fm2_cb_scan_idler(void *data)
 	if ((!strcmp(dp->d_name, ".")) || (!strcmp(dp->d_name, ".."))) return 1;
 	/* skip dotfiles if we're not showing hidden files */
 	if (dp->d_name[0] == '.' && !sd->show_hidden_files) return 1;
-	_e_fm2_file_add(data, dp->d_name);
+	_e_fm2_file_add(data, dp->d_name, sd->order_file);
      }
    return 1;
    

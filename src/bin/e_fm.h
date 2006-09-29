@@ -31,6 +31,7 @@ struct _E_Fm2_Config
       unsigned char   selector;
       unsigned char   single_click;
       unsigned char   no_subdir_jump;
+      unsigned char   no_subdir_drop;
       const char     *extra_file_source;
    } view;
    /* display of icons */
