@@ -715,7 +715,8 @@ _ibar_cb_app_change(void *data, E_App *a, E_App_Change ch)
 		  _ibar_icon_fill(ic);
 	       }
 	     _ibar_resize_handle(b);
-	     _gc_orient(b->inst->gcc);
+	     if (b->inst)
+	        _gc_orient(b->inst->gcc);
 	  }
 	break;
       case E_APP_ORDER:
@@ -724,7 +725,8 @@ _ibar_cb_app_change(void *data, E_App *a, E_App_Change ch)
 	     _ibar_empty(b);
 	     _ibar_fill(b);
 	     _ibar_resize_handle(b);
-             _gc_orient(b->inst->gcc);
+	     if (b->inst)
+                _gc_orient(b->inst->gcc);
 	  }
 	break;
       case E_APP_EXEC:
