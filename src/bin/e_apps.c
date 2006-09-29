@@ -379,6 +379,7 @@ e_app_is_parent(E_App *parent, E_App *app)
 
    while (current)
      {
+printf("e_app_is_parent(%s,  %s) -  %s\n", parent->path, app->path, current->path);
 	if (current == parent)
 	  return 1;
 	current = current->parent;
@@ -477,6 +478,7 @@ EAPI int
 e_app_exec(E_App *a, int launch_id)
 {
    Ecore_Exe *exe;
+   E_App *original;
    E_App_Instance *inst;
    Evas_List *l;
    char *command;
@@ -493,6 +495,11 @@ e_app_exec(E_App *a, int launch_id)
     * the eapp file */
    inst = E_NEW(E_App_Instance, 1);
    if (!inst) return 0;
+
+   if (a->orig)
+      original = a->orig;
+   else
+      original = a;
 
    if (a->desktop)
       command = ecore_desktop_get_command(a->desktop, NULL, 1);
@@ -524,22 +531,22 @@ e_app_exec(E_App *a, int launch_id)
    /* 20 lines at start and end, 20x100 limit on bytes at each end. */
    ecore_exe_auto_limits_set(exe, 2000, 2000, 20, 20);
    ecore_exe_tag_set(exe, "E/app");
-   inst->app = a;
+   inst->app = original;
    inst->exe = exe;
    inst->launch_id = launch_id;
    inst->launch_time = ecore_time_get();
    inst->expire_timer = ecore_timer_add(10.0, _e_app_cb_expire_timer, inst);
-   a->instances = evas_list_append(a->instances, inst);
-   _e_apps_start_pending = evas_list_append(_e_apps_start_pending, a);
-   if (a->startup_notify) a->starting = 1;
-   for (l = a->references; l; l = l->next)
+   original->instances = evas_list_append(original->instances, inst);
+   _e_apps_start_pending = evas_list_append(_e_apps_start_pending, original);
+   if (original->startup_notify) original->starting = 1;
+   for (l = original->references; l; l = l->next)
      {
 	E_App *a2;
 	
 	a2 = l->data;
 	_e_app_change(a2, E_APP_EXEC);
      }
-   _e_app_change(a, E_APP_EXEC);
+   _e_app_change(original, E_APP_EXEC);
    free(command);
    return 1;
 }
@@ -557,6 +564,8 @@ e_app_running_get(E_App *a)
 {
    E_OBJECT_CHECK_RETURN(a, 0);
    E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, 0);
+   if (a->orig)
+      a = a->orig;
    if (a->instances) return 1;
    return 0;
 }
@@ -960,7 +969,7 @@ e_app_border_find(E_Border *bd)
    int ok, match = 0;
    E_App *a, *a_match = NULL;
    char *title;
-   
+
    if ((!bd->client.icccm.name) && (!bd->client.icccm.class) &&
        (!bd->client.icccm.title) && (bd->client.netwm.name) &&
        (!bd->client.icccm.window_role) && (!bd->client.icccm.command.argv))
@@ -1027,6 +1036,7 @@ e_app_border_find(E_Border *bd)
      }
    if ((a_match) && (l_match))
      {
+printf("e_app_border_find() - FOUND - %s\n", a_match->path);
 	_e_apps_list = evas_list_remove_list(_e_apps_list, l_match);
 	_e_apps_list = evas_list_prepend(_e_apps_list, a_match);
      }
@@ -1314,6 +1324,7 @@ e_app_fields_fill(E_App *a, const char *path)
            a->wait_exit = desktop->wait_exit;
            a->hard_icon = desktop->hard_icon;
            a->dirty_icon = 0;
+           a->no_icon = 0;
 	   a->filled = 1;
 
 //	   if (desktop->type)  a->type = evas_stringshare_add(desktop->type);
@@ -1669,6 +1680,7 @@ e_app_fields_empty(E_App *a)
    a->win_role = NULL;
    a->dirty_icon = 0;
    a->hard_icon = 0;
+   a->no_icon = 0;
    a->filled = 0;
 }
 
@@ -2514,6 +2526,7 @@ _e_app_copy(E_App *dst, E_App *src)
    dst->scanned = src->scanned;
    dst->dirty_icon = src->dirty_icon;
    dst->hard_icon = src->hard_icon;
+   dst->no_icon = src->no_icon;
    dst->filled = src->filled;
 
    return 1;
