@@ -142,7 +142,8 @@ e_app_init(void)
 	  {
 	     E_App *app;
 
-             app = e_app_empty_new(file);
+             snprintf(buf, PATH_MAX, "%s/%s", _e_apps_path_all, file);
+             app = e_app_empty_new(buf);
 	     if ((app) && (app->path))
                 _e_apps_every_app = evas_hash_direct_add(_e_apps_every_app, app->path, app);
 	  }
@@ -167,7 +168,7 @@ _e_apps_hash_cb_init(Evas_Hash *hash, const char *key, void *data, void *fdata)
 
    a = data;
    /* Link it in to all if needed. */
-   if ((!a->parent) && (_e_apps_all) && strncmp(a->path, _e_apps_path_all, strlen(_e_apps_path_all)) == 0)
+   if ((!a->parent) && (_e_apps_all) && (a != _e_apps_all) && (strncmp(a->path, _e_apps_path_all, strlen(_e_apps_path_all)) == 0))
      {
         a->parent = _e_apps_all;
         _e_apps_all->subapps = evas_list_append(_e_apps_all->subapps, a);
@@ -944,6 +945,8 @@ e_app_launch_id_pid_find(int launch_id, pid_t pid)
 	a = l->data;
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
+        if (!a->filled)
+	   e_app_fields_fill(a, a->path);
 	for (ll = a->instances; ll; ll = ll->next)
 	  {
 	     E_App_Instance *ai;
