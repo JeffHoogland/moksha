@@ -33,6 +33,7 @@ struct _E_App_Callback
 };
 
 
+static Evas_Bool _e_apps_hash_cb_init(Evas_Hash *hash, const char *key, void *data, void *fdata);
 static void      _e_app_free               (E_App *a);
 static E_App     *_e_app_subapp_file_find  (E_App *a, const char *file);
 static int        _e_app_new_save          (E_App *a);    
@@ -42,6 +43,7 @@ static void      _e_app_cb_monitor         (void *data, Ecore_File_Monitor *em, 
 static void      _e_app_subdir_rescan      (E_App *app);
 static int       _e_app_is_eapp            (const char *path);
 static int       _e_app_copy               (E_App *dst, E_App *src);
+static void      _e_app_fields_save_others(E_App *a);
 static void      _e_app_save_order         (E_App *app);
 static int       _e_app_cb_event_border_add(void *data, int type, void *event);
 static int       _e_app_cb_expire_timer    (void *data);
@@ -66,6 +68,7 @@ static E_App       *_e_apps_all = NULL;
 static const char  *_e_apps_path_all = NULL;
 static const char  *_e_apps_path_trash = NULL;
 static Evas_List   *_e_apps_start_pending = NULL;
+static Evas_Hash   *_e_apps_every_app = NULL;
 
 #define EAP_MIN_WIDTH 8
 #define EAP_MIN_HEIGHT 8
@@ -115,8 +118,10 @@ static Evas_List   *_e_apps_start_pending = NULL;
 EAPI int
 e_app_init(void)
 {
+   Ecore_List  *_e_apps_all_filenames = NULL;
    const char *home;
    char buf[PATH_MAX];
+   double begin;
    
    home = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/trash", home);
@@ -127,7 +132,25 @@ e_app_init(void)
    _e_apps_exit_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_apps_cb_exit, NULL);
    _e_apps_border_add_handler = ecore_event_handler_add(E_EVENT_BORDER_ADD, _e_app_cb_event_border_add, NULL);
    ecore_desktop_instrumentation_reset();
-   _e_apps_all = e_app_new(buf, 1);
+   begin = ecore_time_get();
+   _e_apps_all_filenames = ecore_file_ls(_e_apps_path_all);
+   if (_e_apps_all_filenames)
+     {
+        const char *file;
+
+        while ((file = ecore_list_next(_e_apps_all_filenames)))
+	  {
+	     E_App *app;
+
+             app = e_app_empty_new(file);
+	     if ((app) && (app->path))
+                _e_apps_every_app = evas_hash_direct_add(_e_apps_every_app, app->path, app);
+	  }
+        ecore_list_destroy(_e_apps_all_filenames);
+     }
+   _e_apps_all = e_app_new(_e_apps_path_all, 0);
+   evas_hash_foreach(_e_apps_every_app, _e_apps_hash_cb_init, NULL);
+   printf("INITIAL APP SCAN %3.3f\n", ecore_time_get() - begin);
 #if NO_APP_LIST
    /* The list already exists, and it doesn't care what order it is in. */
    if (_e_apps_all)
@@ -136,6 +159,23 @@ e_app_init(void)
    ecore_desktop_instrumentation_print();
    return 1;
 }
+
+static Evas_Bool 
+_e_apps_hash_cb_init(Evas_Hash *hash, const char *key, void *data, void *fdata)
+{
+   E_App *a;
+
+   a = data;
+   /* Link it in to all if needed. */
+   if ((!a->parent) && (_e_apps_all) && strncmp(a->path, _e_apps_path_all, strlen(_e_apps_path_all)) == 0)
+     {
+        a->parent = _e_apps_all;
+        _e_apps_all->subapps = evas_list_append(_e_apps_all->subapps, a);
+        e_object_ref(E_OBJECT(a));
+     }
+   return 1;
+}
+
 
 EAPI int
 e_app_shutdown(void)
@@ -172,8 +212,11 @@ e_app_shutdown(void)
 	     printf("BUG: References %d %s\n", E_OBJECT(a)->references, a->path);
 	  }
      }
+   evas_hash_free(_e_apps_every_app);
+   _e_apps_every_app = NULL;
    return 1;
 }
+
 
 EAPI void
 e_app_unmonitor_all(void)
@@ -226,23 +269,13 @@ e_app_new(const char *path, int scan_subdirs)
          e_object_ref(E_OBJECT(a));
       }
 
-   if (!a)
+   if ((!a) && (ecore_file_exists(path)))
      {
-	if (ecore_file_exists(path))
-	  {
-	     a = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
-	     
-	     if (a)
-	        {
-	           /* no image for now */
-	           a->image = NULL;
-	           a->width = 0;
-	           a->height = 0;
-	           /* record the path */
-	           a->path = evas_stringshare_add(path);
-		}
-          }
-      }
+        /* Create it and add it to the cache. */
+        a = e_app_empty_new(path);
+	if (a)
+           _e_apps_every_app = evas_hash_direct_add(_e_apps_every_app, a->path, a);
+     }
 
    if ((a) && (a->path))
       {
@@ -265,9 +298,11 @@ e_app_new(const char *path, int scan_subdirs)
                if ((!stated) && (strcmp(_e_apps_path_all, a->path) != 0))
 		  a->monitor = ecore_file_monitor_add(a->path, _e_app_cb_monitor, a);
 	    }
-	 else if (_e_app_is_eapp(path))
+	 else if (_e_app_is_eapp(a->path))
 	    {
-		e_app_fields_fill(a, path);
+	        if (!a->filled)
+		   e_app_fields_fill(a, a->path);
+//                _e_apps_hash_cb_init(_e_apps_every_app, a->path, a, NULL);
 		  
 		/* no exe field.. not valid. drop it */
 //		  if (!_e_app_exe_valid_get(a->exe))
@@ -308,15 +343,22 @@ e_app_empty_new(const char *path)
    E_App *a;
    
    a = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
-   a->image = NULL;
-   if (path) a->path = evas_stringshare_add(path);   
-   else if ((_e_apps_all) && (_e_apps_all->path))
+   if (a)
      {
-	char buf[4096];
+        /* no image for now */
+        a->image = NULL;
+	a->width = 0;
+	a->height = 0;
+	/* record the path, or make one up */
+        if (path)
+	   a->path = evas_stringshare_add(path);   
+        else if (_e_apps_path_all)
+          {
+	     char buf[PATH_MAX];
 
-	snprintf(buf, sizeof(buf), "%s/_new_app_%1.1f.desktop", 
-		 _e_apps_all->path, ecore_time_get());
-	a->path = evas_stringshare_add(buf);
+	     snprintf(buf, sizeof(buf), "%s/_new_app_%1.1f.desktop", _e_apps_path_all, ecore_time_get());
+	     a->path = evas_stringshare_add(buf);
+          }
      }
    return a;
 }
@@ -429,7 +471,6 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 	  }
 	ecore_list_destroy(files);
      }
-
 }
 
 EAPI int
@@ -695,8 +736,10 @@ e_app_append(E_App *add, E_App *parent)
 	if (ecore_file_exists(buf))
 	  snprintf(buf, sizeof(buf), "%s/%s", parent->path, ecore_file_get_file(add->path));
 	ecore_file_mv(add->path, buf);
+        _e_apps_every_app = evas_hash_del(_e_apps_every_app, add->path, add);
 	evas_stringshare_del(add->path);
 	add->path = evas_stringshare_add(buf);
+        _e_apps_every_app = evas_hash_direct_add(_e_apps_every_app, add->path, add);
      }
 
    _e_app_save_order(parent);
@@ -810,8 +853,10 @@ e_app_remove(E_App *a)
 	/* Move to trash */
 	snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_trash, ecore_file_get_file(a->path));
 	ecore_file_mv(a->path, buf);
+        _e_apps_every_app = evas_hash_del(_e_apps_every_app, a->path, a);
 	evas_stringshare_del(a->path);
 	a->path = evas_stringshare_add(buf);
+        _e_apps_every_app = evas_hash_direct_add(_e_apps_every_app, a->path, a);
      }
    _e_app_save_order(a->parent);
    for (l = a->references; l; l = l->next)
@@ -928,6 +973,8 @@ e_app_border_find(E_Border *bd)
 	a = l->data;
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
+        if (!a->filled)
+	   e_app_fields_fill(a, a->path);
 	ok = 0;
 	if ((a->win_name) || (a->win_class) || (a->win_title) || (a->win_role) || (a->exe))
 	  {
@@ -1023,31 +1070,11 @@ e_app_file_find(const char *file)
 EAPI E_App *
 e_app_path_find(const char *path)
 {
-   Evas_List *l;
-   
-   if (!path) return NULL;
+   E_App *a = NULL;
 
-   if (_e_apps_list)
-      {
-         for (l = _e_apps_list; l; l = l->next)
-           {
-	      E_App *a;
-	
-	      a = l->data;
-              E_OBJECT_CHECK_RETURN(a, NULL);
-              E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
-	      if (a->path)
-	        {
-	           if (!strcmp(a->path, path))
-		      {
-//		         _e_apps_list = evas_list_remove_list(_e_apps_list, l);
-//		         _e_apps_list = evas_list_prepend(_e_apps_list, a);
-		         return a;
-		      }
-	        }
-           }
-      }
-   return NULL;
+   if ((path) && (_e_apps_every_app))
+      a = evas_hash_find(_e_apps_every_app, path);
+   return a;
 }
 
 EAPI E_App *
@@ -1064,6 +1091,8 @@ e_app_name_find(const char *name)
 	a = l->data;
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
+        if (!a->filled)
+	   e_app_fields_fill(a, a->path);
 	if (a->name)
 	  {
 	     if (!strcasecmp(a->name, name))
@@ -1091,6 +1120,8 @@ e_app_generic_find(const char *generic)
 	a = l->data;
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
+        if (!a->filled)
+	   e_app_fields_fill(a, a->path);
 	if (a->generic)
 	  {
 	     if (!strcasecmp(a->generic, generic))
@@ -1118,6 +1149,8 @@ e_app_exe_find(const char *exe)
 	a = l->data;
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
+        if (!a->filled)
+	   e_app_fields_fill(a, a->path);
 	if (a->exe)
 	  {
 	     if (!strcmp(a->exe, exe))
@@ -1147,6 +1180,8 @@ e_app_name_glob_list(const char *name)
 	a = l->data;
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
+        if (!a->filled)
+	   e_app_fields_fill(a, a->path);
 	if (a->name)
 	  {
 	     if (e_util_glob_case_match(a->name, name))
@@ -1170,6 +1205,8 @@ e_app_generic_glob_list(const char *generic)
 	a = l->data;
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
+        if (!a->filled)
+	   e_app_fields_fill(a, a->path);
 	if (a->generic)
 	  {
 	     if (e_util_glob_case_match(a->generic, generic))
@@ -1193,6 +1230,8 @@ e_app_exe_glob_list(const char *exe)
 	a = l->data;
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
+        if (!a->filled)
+	   e_app_fields_fill(a, a->path);
 	if (a->exe)
 	  {
 	     if (e_util_glob_match(a->exe, exe))
@@ -1216,6 +1255,8 @@ e_app_comment_glob_list(const char *comment)
 	a = l->data;
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
+        if (!a->filled)
+	   e_app_fields_fill(a, a->path);
 	if (a->comment)
 	  {
 	     if (e_util_glob_case_match(a->comment, comment))
@@ -1242,6 +1283,7 @@ e_app_fields_fill(E_App *a, const char *path)
 	lang = NULL;
      }
    if (!path) path = a->path;
+   if (!path) return;
 
    ext = strrchr(path, '.');
    if ((ext) && (strcmp(ext, ".desktop") == 0))
@@ -1271,6 +1313,7 @@ e_app_fields_fill(E_App *a, const char *path)
            a->startup_notify = desktop->startup;
            a->wait_exit = desktop->wait_exit;
            a->dirty_icon = 0;
+	   a->filled = 1;
 
 //	   if (desktop->type)  a->type = evas_stringshare_add(desktop->type);
 //	   if (desktop->categories)  a->categories = evas_stringshare_add(desktop->categories);
@@ -1329,6 +1372,7 @@ e_app_fields_fill(E_App *a, const char *path)
 	   free(v);
         }
       eet_close(ef);
+      a->filled = 1;
    }
 }
 
@@ -1358,6 +1402,7 @@ _e_app_localized_val_get(Eet_File *ef, const char *lang, const char *field, int 
    return eet_read(ef, field, size);
 }
 
+
 EAPI void
 e_app_fields_save(E_App *a)
 {
@@ -1372,7 +1417,7 @@ e_app_fields_save(E_App *a)
       ext = ecore_file_get_file(a->path);
    if ( (!a->path) || ((strncmp(ext, "_new_app_", 9) == 0) && (!ecore_file_exists(a->path))) )
       {
-         snprintf(buf, sizeof(buf), "%s/%s.desktop", _e_apps_all->path, a->name);
+         snprintf(buf, sizeof(buf), "%s/%s.desktop", _e_apps_path_all, a->name);
 	 if (a->path)  evas_stringshare_del(a->path);
 	 a->path = evas_stringshare_add(buf);
       }
@@ -1381,15 +1426,15 @@ e_app_fields_save(E_App *a)
    if (!ecore_file_exists(a->path))
       {
          /* Force it to be in all. */
-         snprintf(buf, sizeof(buf), "%s/%s", _e_apps_all->path, ecore_file_get_file(a->path));
+         snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all, ecore_file_get_file(a->path));
 	 if (a->path)  evas_stringshare_del(a->path);
 	 a->path = evas_stringshare_add(buf);
       }
    if (!a->path)  return;
-   if (!ecore_file_exists(a->path))
-      {
-         new_eap = 1;
-      }
+   if (ecore_file_exists(a->path))
+      _e_apps_every_app = evas_hash_del(_e_apps_every_app, a->path, a);
+   else
+      new_eap = 1;
 
    ext = strrchr(a->path, '.');
    if ((ext) && (strcmp(ext, ".desktop") == 0))
@@ -1540,6 +1585,7 @@ e_app_fields_save(E_App *a)
          eet_close(ef);
       }
 
+   _e_apps_every_app = evas_hash_direct_add(_e_apps_every_app, a->path, a);
    if (new_eap)
       {
          /* Careful, if this is being created from the border icon, this E_App is already part of the border. */
@@ -1550,38 +1596,44 @@ e_app_fields_save(E_App *a)
 	 _e_app_change(a, E_APP_ADD);
       }
    else
-      {
-         Evas_List *l;
-
-         for (l = a->references; l; l = l->next)
-            {
-	       E_App *a2;
-	     
-	       a2 = l->data;
-	       if (_e_app_copy(a2, a)) _e_app_change(a2, E_APP_CHANGE);
-            }
-         if (a->orig)
-            {
-	       E_App *a2;
-	     
-	       a2 = a->orig;
-	       if (_e_app_copy(a2, a)) _e_app_change(a2, E_APP_CHANGE);
-            }
-         _e_app_change(a, E_APP_CHANGE);
-         if (a->parent)
-            {
-	       snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", a->parent->path);
-	       ecore_file_unlink(buf);
-	       _e_app_change(a->parent, E_APP_CHANGE);
-	       /* I don't think we need to rescan.
-	        * A) we should be changing all the relevant stuff here.
-	        * B) monitoring will catch other changes.
-	        * C) it's a waste of time.
-	       _e_app_subdir_rescan(a->parent);
-	       */
-            }
-      }
+      _e_app_fields_save_others(a);
 }
+
+static void
+_e_app_fields_save_others(E_App *a)
+{
+   Evas_List *l;
+   char buf[PATH_MAX];
+
+   for (l = a->references; l; l = l->next)
+     {
+        E_App *a2;
+	     
+	a2 = l->data;
+	if (_e_app_copy(a2, a)) _e_app_change(a2, E_APP_CHANGE);
+     }
+   if (a->orig)
+     {
+	E_App *a2;
+	     
+	a2 = a->orig;
+	if (_e_app_copy(a2, a)) _e_app_change(a2, E_APP_CHANGE);
+     }
+   _e_app_change(a, E_APP_CHANGE);
+   if (a->parent)
+     {
+	snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", a->parent->path);
+	ecore_file_unlink(buf);
+	_e_app_change(a->parent, E_APP_CHANGE);
+	/* I don't think we need to rescan.
+	 * A) we should be changing all the relevant stuff here.
+	 * B) monitoring will catch other changes.
+	 * C) it's a waste of time.
+	_e_app_subdir_rescan(a->parent);
+	 */
+     }
+}
+
 
 EAPI void
 e_app_fields_empty(E_App *a)
@@ -1614,6 +1666,7 @@ e_app_fields_empty(E_App *a)
    a->win_title = NULL;
    a->win_role = NULL;
    a->dirty_icon = 0;
+   a->filled = 0;
 }
 
 EAPI Ecore_List *
@@ -1740,6 +1793,33 @@ _e_app_icon_path_add_to_menu_item(E_Menu_Item *mi, E_App *a)
       e_menu_item_icon_file_set(mi, a->icon_path);
 }
 
+static void
+_e_app_fdo_icon_search(E_App *a)
+{
+   if ((!a->no_icon) && (a->icon_class))
+     {
+        char *v = NULL;
+		  
+	/* FIXME: Use a real icon size. */
+	v = (char *)ecore_desktop_icon_find(a->icon_class, NULL, e_config->icon_theme);
+	if (v)
+	  {
+             if (a->icon_path) evas_stringshare_del(a->icon_path);
+	     a->icon_path = evas_stringshare_add(v);
+	     if (e_config->icon_theme)
+	       {
+                  if (a->icon_theme) evas_stringshare_del(a->icon_theme);
+		  a->icon_theme = evas_stringshare_add(e_config->icon_theme);
+	       }
+	     a->dirty_icon = 1;
+	     free(v);
+	  }
+        else
+           a->no_icon = 1;
+        /* Copy the new found icon data to the original. */
+        _e_app_fields_save_others(a);
+      }
+}
 
 EAPI Evas_Object *
 e_app_icon_add(Evas *evas, E_App *a)
@@ -1773,25 +1853,8 @@ printf("e_app_icon_add(%s)   %s   %s   %s\n", a->path, a->icon_class, e_config->
 	       {
 		  ;  /* It's a bit more obvious this way. */
 	       }
-	     else if (a->icon_class)   /* If that fails, then this might be an FDO icon. */
-	       {
-		  char *v = NULL;
-		  
-		  /* FIXME: Use a real icon size. */
-		  v = (char *)ecore_desktop_icon_find(a->icon_class, NULL, e_config->icon_theme);
-		  if (v)
-		    {
-                       if (a->icon_path) evas_stringshare_del(a->icon_path);
-		       a->icon_path = evas_stringshare_add(v);
-		       if (e_config->icon_theme)
-		         {
-                            if (a->icon_theme) evas_stringshare_del(a->icon_theme);
-		            a->icon_theme = evas_stringshare_add(e_config->icon_theme);
-			 }
-		       a->dirty_icon = 1;
-		       free(v);
-		    }
-	       }
+	     else /* If that fails, then this might be an FDO icon. */
+                _e_app_fdo_icon_search(a);
 	     
 	     if (a->icon_path)
 	       {
@@ -1843,28 +1906,9 @@ printf("e_app_icon_add_to_menu_item(%s)   %s   %s   %s\n", a->path, a->icon_clas
          if (!e_util_menu_item_edje_icon_list_set(mi, a->icon_class))
 	    {
                if (edje_file_group_exists(a->path, "icon"))
-	          {
-                     e_menu_item_icon_edje_set(mi, a->path, "icon");
-	          }
-               else if ((a->icon_class))   /* If that fails, then this might be an FDO icon. */
-                  {
-                     char *v;
-
-	             /* FIXME: Use a real icon size. */
-	             v = (char *) ecore_desktop_icon_find(a->icon_class, NULL, e_config->icon_theme);
-	             if (v)
-	                {
-                           if (a->icon_path) evas_stringshare_del(a->icon_path);
-		           a->icon_path = evas_stringshare_add(v);
-		           if (e_config->icon_theme)
-		             {
-                                if (a->icon_theme) evas_stringshare_del(a->icon_theme);
-		                a->icon_theme = evas_stringshare_add(e_config->icon_theme);
-			     }
-		           a->dirty_icon = 1;
-		           free(v);
-		        }
-                  }
+                  e_menu_item_icon_edje_set(mi, a->path, "icon");
+               else /* If that fails, then this might be an FDO icon. */
+                  _e_app_fdo_icon_search(a);
 
                if (a->icon_path)
                   _e_app_icon_path_add_to_menu_item(mi, a);
@@ -2049,7 +2093,11 @@ _e_app_free(E_App *a)
 	_e_apps_list = evas_list_remove(_e_apps_list, a);
 #endif
 	e_app_fields_empty(a);
-	if (a->path) evas_stringshare_del(a->path);
+	if (a->path)
+	  {
+             _e_apps_every_app = evas_hash_del(_e_apps_every_app, a->path, a);
+             evas_stringshare_del(a->path);
+	  }
 	free(a);
      }
 }
@@ -2087,7 +2135,7 @@ _e_app_change(E_App *a, E_App_Change ch)
    for (l = _e_apps_change_callbacks; l; l = l->next)
      {
 	E_App_Callback *cb;
-	
+
 	cb = l->data;
 	if (!cb->delete_me) cb->func(cb->data, a, ch);
      }
@@ -2458,6 +2506,7 @@ _e_app_copy(E_App *dst, E_App *src)
    dst->starting = src->starting;
    dst->scanned = src->scanned;
    dst->dirty_icon = src->dirty_icon;
+   dst->filled = src->filled;
 
    return 1;
 }
@@ -2487,7 +2536,7 @@ _e_app_save_order(E_App *app)
      {
 	char buf[PATH_MAX];
 	
-	snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", app    ->parent->path);
+	snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", app->parent->path);
 	ecore_file_unlink(buf);
      }
 }
