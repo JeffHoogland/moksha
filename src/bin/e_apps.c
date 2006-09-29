@@ -1312,6 +1312,7 @@ e_app_fields_fill(E_App *a, const char *path)
 	   a->icon_time = desktop->icon_time;
            a->startup_notify = desktop->startup;
            a->wait_exit = desktop->wait_exit;
+           a->hard_icon = desktop->hard_icon;
            a->dirty_icon = 0;
 	   a->filled = 1;
 
@@ -1466,6 +1467,7 @@ e_app_fields_save(E_App *a)
 	       desktop->window_title = (char *) a->win_title;
 	       desktop->window_role = (char *) a->win_role;
 	       desktop->icon_time = a->icon_time;
+	       desktop->hard_icon = a->hard_icon;
 	       desktop->startup = a->startup_notify;
 	       desktop->wait_exit = a->wait_exit;
 
@@ -1666,6 +1668,7 @@ e_app_fields_empty(E_App *a)
    a->win_title = NULL;
    a->win_role = NULL;
    a->dirty_icon = 0;
+   a->hard_icon = 0;
    a->filled = 0;
 }
 
@@ -1839,6 +1842,10 @@ printf("e_app_icon_add(%s)   %s   %s   %s\n", a->path, a->icon_class, e_config->
      }
    else if ((e_config->icon_theme == NULL) && (a->icon_theme == NULL))
         theme_match = 1;
+
+   /* If the icon was hard coded into the .desktop files Icon field, then theming doesn't matter. */
+   if (a->hard_icon)
+      theme_match = 1;
 
    /* Then check if we already know the icon path. */
    if ((theme_match) && (a->icon_path) && (a->icon_path[0] != 0))
@@ -2506,6 +2513,7 @@ _e_app_copy(E_App *dst, E_App *src)
    dst->starting = src->starting;
    dst->scanned = src->scanned;
    dst->dirty_icon = src->dirty_icon;
+   dst->hard_icon = src->hard_icon;
    dst->filled = src->filled;
 
    return 1;
