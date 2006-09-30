@@ -29,9 +29,12 @@ static int _e_winlist_cb_key_up(void *data, int type, void *event);
 static int _e_winlist_cb_mouse_down(void *data, int type, void *event);
 static int _e_winlist_cb_mouse_up(void *data, int type, void *event);
 static int _e_winlist_cb_mouse_wheel(void *data, int type, void *event);
+static int _e_winlist_cb_mouse_move(void *data, int type, void *event);
 static int _e_winlist_scroll_timer(void *data);
 static int _e_winlist_warp_timer(void *data);
 static int _e_winlist_animator(void *data);
+static void _e_winlist_cb_item_mouse_in(void *data, Evas *evas,
+      Evas_Object *obj, void *event_info);
 
 /* local subsystem globals */
 static E_Popup *winlist = NULL;
@@ -108,6 +111,7 @@ e_winlist_show(E_Zone *zone)
    winlist = e_popup_new(zone, x, y, w, h); 
    if (!winlist) return 0;
    
+   evas_event_feed_mouse_in(winlist->evas, ecore_x_current_time_get(), NULL);
    evas_event_feed_mouse_move(winlist->evas, -1000000, -1000000, ecore_x_current_time_get(), NULL);
    
    e_popup_layer_set(winlist, 255);
@@ -178,6 +182,9 @@ e_winlist_show(E_Zone *zone)
    handlers = evas_list_append
      (handlers, ecore_event_handler_add
       (ECORE_X_EVENT_MOUSE_WHEEL, _e_winlist_cb_mouse_wheel, NULL));
+   handlers = evas_list_append
+     (handlers, ecore_event_handler_add
+      (ECORE_X_EVENT_MOUSE_MOVE, _e_winlist_cb_mouse_move, NULL));
    
    e_popup_show(winlist);
    return 1;
@@ -430,6 +437,9 @@ _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
 	e_theme_edje_object_set(o, "base/theme/winlist",
 				"e/widgets/winlist/item");
 	edje_object_part_text_set(o, "e.text.label", e_border_name_get(ww->border));
+	if (!e_config->winlist_warp_while_selecting)
+	  evas_object_event_callback_add(ww->bg_object, EVAS_CALLBACK_MOUSE_IN,
+		_e_winlist_cb_item_mouse_in, ww);
 	evas_object_show(o);
 	if (edje_object_part_exists(ww->bg_object, "e.swallow.icon"))
 	  {
@@ -834,6 +844,20 @@ _e_winlist_cb_mouse_wheel(void *data, int type, void *event)
    return 1;
 }
 
+static int 
+_e_winlist_cb_mouse_move(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Move *ev;
+
+   ev = event;
+   if (ev->win != input_window) return 1;
+
+   evas_event_feed_mouse_move(winlist->evas, ev->x - winlist->x +
+	 winlist->zone->x, ev->y - winlist->y + winlist->zone->y, ev->time, NULL);
+
+   return 1;
+}
+
 static int
 _e_winlist_scroll_timer(void *data)
 {
@@ -905,3 +929,23 @@ _e_winlist_animator(void *data)
    animator = NULL;
    return 0;
 }
+
+static void 
+_e_winlist_cb_item_mouse_in(void *data, Evas *evas, Evas_Object *obj, 
+      void *event_info)
+{
+   E_Winlist_Win *ww;
+   Evas_List *l;
+
+   if (!(ww = data)) return;
+   if (!wins) return;
+   for (l = wins; l; l = l->next)
+     {
+	if (l->data == ww) break;
+     }
+   _e_winlist_deactivate();
+   win_selected = l;
+   _e_winlist_show_active();
+   _e_winlist_activate();
+}
+
