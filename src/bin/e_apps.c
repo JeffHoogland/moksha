@@ -320,6 +320,7 @@ e_app_new(const char *path, int scan_subdirs)
    E_App *a;
    struct stat         st;
    int                 stated = 0;
+   int                 new_app = 0;
    char buf[PATH_MAX];
 
    if (!path)   return NULL;
@@ -350,52 +351,54 @@ e_app_new(const char *path, int scan_subdirs)
    
    if ((!a) && (ecore_file_exists(path)))
      {
-        /* Create it and add it to the cache. */
+        /* Create it. */
         a = e_app_empty_new(path);
-	if (a)
-	  _e_apps_every_app = evas_hash_direct_add(_e_apps_every_app, a->path, a);
+	new_app = 1;
      }
 
    if ((a) && (a->path))
-     {
-	if (ecore_file_is_dir(a->path))
-	  {
-	     if (!a->filled)
-	       {
-		  snprintf(buf, sizeof(buf), "%s/.directory.eap", path);
-		  if (ecore_file_exists(buf))
-		    e_app_fields_fill(a, buf);
-		  else
-		    {
-		       a->name = evas_stringshare_add(ecore_file_get_file(a->path));
-		       a->filled = 1;
-		    }
-	       }
-	     if (!a->filled) goto error;
-	     if (scan_subdirs)
-	       {
-		  if (stated)
-		    _e_app_subdir_rescan(a);
-		  else
-		    e_app_subdir_scan(a, scan_subdirs);
-	       }
-	     
-	     /* Don't monitor the all directory, all changes to that must go through e_app. */
-	     if ((!stated) && (strcmp(_e_apps_path_all, a->path) != 0))
-	       a->monitor = ecore_file_monitor_add(a->path, _e_app_cb_monitor, a);
-	  }
-	else if (_e_app_is_eapp(a->path))
-	  {
-	     if (!a->filled)
-	       e_app_fields_fill(a, a->path);
-	     _e_apps_hash_cb_init(_e_apps_every_app, a->path, a, NULL);
-	     
+      {
+         if (ecore_file_is_dir(a->path))
+	    {
+	       if (!a->filled)
+	         {
+	            snprintf(buf, sizeof(buf), "%s/.directory.eap", path);
+	            if (ecore_file_exists(buf))
+		       e_app_fields_fill(a, buf);
+	            else
+	              {
+		         a->name = evas_stringshare_add(ecore_file_get_file(a->path));
+		         a->filled = 1;
+		      }
+		 }
+	       if (!a->filled) goto error;
+	       if (scan_subdirs)
+	          {
+		     if (stated)
+		        _e_app_subdir_rescan(a);
+		     else
+		        e_app_subdir_scan(a, scan_subdirs);
+		  }
+		  
+	       /* Don't monitor the all directory, all changes to that must go through e_app. */
+               if ((!stated) && (strcmp(_e_apps_path_all, a->path) != 0))
+		  a->monitor = ecore_file_monitor_add(a->path, _e_app_cb_monitor, a);
+	    }
+	 else if (_e_app_is_eapp(a->path))
+	    {
+	        if (!a->filled)
+		   e_app_fields_fill(a, a->path);
+                _e_apps_hash_cb_init(_e_apps_every_app, a->path, a, NULL);
+		  
 		/* no exe field.. not valid. drop it */
 //		  if (!_e_app_exe_valid_get(a->exe))
 //		     goto error;
 	  }
 	else
 	  goto error;
+
+	if (new_app)
+	  _e_apps_every_app = evas_hash_direct_add(_e_apps_every_app, a->path, a);
 	
 	/* Timestamp the cache, and no need to stat the file twice if the cache was stale. */
 	if ((stated) || (stat(a->path, &st) >= 0))
