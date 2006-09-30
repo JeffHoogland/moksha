@@ -154,11 +154,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ot = e_widget_table_add(evas, 0);
 
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
-   ob = e_widget_label_add(evas, _("Maximum Number Of Matched Eaps To List"));
+   ob = e_widget_label_add(evas, _("Maximum Number of Matched Eaps to List"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 10, 50, 5, 0, NULL, &(cfdata->max_eap_list), 200);
    e_widget_framelist_object_append(of, ob);   
-   ob = e_widget_label_add(evas, _("Maximum Number Of Matched Exes To List"));
+   ob = e_widget_label_add(evas, _("Maximum Number of Matched Exes to List"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 10, 50, 5, 0, NULL, &(cfdata->max_exe_list), 200);
    e_widget_framelist_object_append(of, ob);      
