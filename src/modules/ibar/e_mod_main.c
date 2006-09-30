@@ -235,6 +235,7 @@ _ibar_new(Evas *evas, const char *dir)
    IBar *b;
    char buf[4096];
    
+   ecore_desktop_instrumentation_reset();
    b = E_NEW(IBar, 1);
    b->o_box = e_box_add(evas);
    e_box_homogenous_set(b->o_box, 1);
@@ -253,6 +254,7 @@ _ibar_new(Evas *evas, const char *dir)
    if (b->apps) e_app_subdir_scan(b->apps, 0);
    e_app_change_callback_add(_ibar_cb_app_change, b);
    _ibar_fill(b);
+   ecore_desktop_instrumentation_print();
    return b;
 }
 
