@@ -2171,7 +2171,7 @@ _e_app_free(E_App *a)
     * and so u have a nasty dangling pointer to garbage memory
     */
    if (_e_apps_all)
-     _e_apps_all->subapps = evas_list_remove_list(_e_apps_all->subapps, a);
+     _e_apps_all->subapps = evas_list_remove(_e_apps_all->subapps, a);
    /* END FIXME */
    
    while (evas_list_find(_e_apps_start_pending, a))

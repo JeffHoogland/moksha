@@ -5753,6 +5753,22 @@ _e_border_eval(E_Border *bd)
 	     bd->placed = 1;
 	  }
 
+	/* always remember internal windows - config */
+	if ((bd->internal) && (!bd->remember) && (1)) /* FIXME: config value */
+	  {
+	     E_Remember *rem;
+	     
+	     rem = e_remember_new();
+	     if (rem)
+	       {
+		  rem->match = E_REMEMBER_MATCH_NAME | E_REMEMBER_MATCH_CLASS | E_REMEMBER_MATCH_ROLE | E_REMEMBER_MATCH_TYPE | E_REMEMBER_MATCH_TRANSIENT;
+		  rem->apply = E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE | E_REMEMBER_APPLY_BORDER;
+		  bd->remember = rem;
+		  e_remember_use(rem);
+		  e_remember_update(rem, bd);
+	       }
+	  }
+	
 	if (bd->internal_ecore_evas)
 	  ecore_evas_managed_move(bd->internal_ecore_evas,
 				  bd->x + bd->fx.x + bd->client_inset.l,

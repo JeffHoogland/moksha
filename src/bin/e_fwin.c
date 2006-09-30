@@ -35,7 +35,7 @@ EAPI E_Fwin *
 e_fwin_new(E_Container *con, const char *dev, const char *path)
 {
    E_Fwin *fwin;
-   char buf[4096];
+   char buf[4096], *file;
    Evas_Object *o;
    E_Fm2_Config fmc;
    
@@ -53,11 +53,10 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
    fwin->win->data = fwin;
 
    /* fm issues: */
-   /* FIXME: need a way of going to parent dir */
-   /* FIXME: need to handle change-in-place and new window per dir */
-   /* FIXME: drop on file on another dir doesnt do drop all */
-   /* FIXME: on shift-click then drag - don't deselect */
-   /* FIXME: drag multiple files doesnt work */
+   /* FIXME: need a way of going to parent dir (menu extn.) */
+   /* FIXME: bug: drop on file on another dir doesnt do drop all */
+   /* FIXME: bug: on shift-click then drag - don't deselect */
+   /* FIXME: bug: drag multiple files doesnt work */
    
    /* FIXME: temporary - a white bg until we have a proper fm specific
     * scrollframe etc.
@@ -71,7 +70,7 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
    fwin->fm_obj = o;
    memset(&fmc, 0, sizeof(E_Fm2_Config));
    fmc.view.mode = E_FM2_VIEW_MODE_LIST;
-   fmc.view.open_dirs_in_place = 1;
+   fmc.view.open_dirs_in_place = 0;
    fmc.view.selector = 0;
    fmc.view.single_click = 0;
    fmc.view.no_subdir_jump = 0;
@@ -109,13 +108,14 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
    
    e_widget_focus_set(fwin->scrollframe_obj, 1);
    
-   if (dev)
-     snprintf(buf, sizeof(buf), "_fwin::/%s/::/%s", dev, path);
-   else
-     snprintf(buf, sizeof(buf), "_fwin:/%s", path);
+   snprintf(buf, sizeof(buf), "_fwin::/%s", e_fm2_real_path_get(fwin->fm_obj));
    e_win_name_class_set(fwin->win, "E", buf);
-   /* FIXME: better title */
-   e_win_title_set(fwin->win, path);
+   file = ecore_file_get_file(e_fm2_real_path_get(fwin->fm_obj));
+   if (file)
+     snprintf(buf, sizeof(buf), "%s", file);
+   else
+     snprintf(buf, sizeof(buf), "%s", e_fm2_real_path_get(fwin->fm_obj));
+   e_win_title_set(fwin->win, buf);
    e_win_size_min_set(fwin->win, 24, 24);
    e_win_resize(fwin->win, 280, 200);
    e_win_show(fwin->win);
@@ -165,6 +165,24 @@ static void
 _e_fwin_selected(void *data, Evas_Object *obj, void *event_info)
 {
    E_Fwin *fwin;
+   Evas_List *selected;
+   E_Fm2_Icon_Info *ici;
+   char buf[4096];
+   const *rp;
    
    fwin = data;
+   selected = e_fm2_selected_list_get(fwin->fm_obj);
+   if (!selected) return;
+   ici = selected->data;
+   if ((ici->link) && (ici->mount))
+     e_fwin_new(fwin->win->container, ici->link, "/");
+   else if (ici->link)
+     e_fwin_new(fwin->win->container, NULL, ici->link);
+   else
+     {
+	snprintf(buf, sizeof(buf), "%s/%s", 
+		 e_fm2_real_path_get(fwin->fm_obj), ici->file);
+	e_fwin_new(fwin->win->container, NULL, buf);
+     }
+   evas_list_free(selected);
 }

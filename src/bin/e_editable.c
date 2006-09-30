@@ -1144,7 +1144,7 @@ _e_editable_smart_add(Evas_Object *object)
    evas_object_smart_member_add(sd->clip_object, object);
    
    sd->event_object = evas_object_rectangle_add(evas);
-   evas_object_color_set(sd->event_object, 255, 255, 255, 0);
+   evas_object_color_set(sd->event_object, 0, 0, 0, 0);
    evas_object_clip_set(sd->event_object, sd->clip_object);
    evas_object_move(sd->event_object, ox, oy);
    evas_object_smart_member_add(sd->event_object, object);

@@ -26,7 +26,11 @@ _e_wid_update(E_Widget_Data *wd)
 {
    if (!wd) return;
 
-   evas_object_color_set(wd->o_rect, wd->color->r, wd->color->g, wd->color->b, wd->color->a);
+   evas_object_color_set(wd->o_rect, 
+			 (wd->color->r * wd->color->a) / 255,
+			 (wd->color->g * wd->color->a) / 255,
+			 (wd->color->b * wd->color->a) / 255,
+			 wd->color->a);
    e_widget_change(wd->obj);
 }
 
@@ -118,7 +122,11 @@ e_widget_color_well_add(Evas *evas, E_Color *color, int show_color_dialog)
 
    o = evas_object_rectangle_add(evas);
    e_widget_sub_object_add(obj, o);
-   evas_object_color_set(o, color->r, color->g, color->b, color->a);
+   evas_object_color_set(o,
+			 (color->r * color->a) / 255,
+			 (color->g * color->a) / 255,
+			 (color->b * color->a) / 255,
+			 color->a);
    edje_object_part_swallow(wd->o_edje, "e.swallow.content", o);
    evas_object_show(o);
    wd->o_rect = o;

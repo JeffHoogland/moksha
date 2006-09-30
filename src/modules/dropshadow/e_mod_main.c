@@ -379,7 +379,7 @@ _ds_shadow_obj_init(Shadow *sh)
 	evas_object_move(sh->object[i], 0, 0);
 	evas_object_resize(sh->object[i], 0, 0);
 	evas_object_color_set(sh->object[i],
-			      255, 255, 255, 
+			      0, 0, 0, 
 			      255 * sh->ds->conf->shadow_darkness);
 	if (sh->visible)
 	  evas_object_show(sh->object[i]);
@@ -412,7 +412,7 @@ _ds_shadow_obj_init_rects(Shadow *sh, Evas_List *rects)
 	     evas_object_move(o, r->x, r->y);
 	     evas_object_resize(o, r->w, r->h);
 	     evas_object_color_set(o,
-				   255, 255, 255, 
+				   0, 0, 0,
 				   255 * sh->ds->conf->shadow_darkness);
 	     if (sh->visible)
 	       evas_object_show(o);
@@ -1055,7 +1055,7 @@ _ds_config_darkness_set(Dropshadow *ds, double v)
 		  
 		  so = ll->data;
 		  evas_object_color_set(so->obj,
-					255, 255, 255, 
+					0, 0, 0,
 					255 * ds->conf->shadow_darkness);
 	       }
 	  }
@@ -1063,7 +1063,7 @@ _ds_config_darkness_set(Dropshadow *ds, double v)
 	  {
 	     for (i = 0; i < 4; i++)
 	       evas_object_color_set(sh->object[i],
-				     255, 255, 255, 
+				     0, 0, 0,
 				     255 * ds->conf->shadow_darkness);
 	  }
      }
