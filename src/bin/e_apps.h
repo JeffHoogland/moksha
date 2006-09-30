@@ -70,6 +70,7 @@ struct _E_App
 
    unsigned char       filled : 1; /* this app has had its data filled in */
    unsigned char       no_icon : 1; /* this app's icon has not been found in the current theme, future searhes should give up early . */
+   unsigned char       found_icon : 1; /* this app has been searched for and found. */
    unsigned char       dirty_icon : 1; /* this app's icon has been found, and the on disk cache needs to be updated. */
    unsigned char       hard_icon : 1; /* this app's icon was hard coded into the .desktop files Icon field. */
 

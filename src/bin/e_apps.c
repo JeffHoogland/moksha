@@ -32,8 +32,17 @@ struct _E_App_Callback
    unsigned char delete_me : 1;
 };
 
+struct _E_App_Hash_Idler
+{
+   Ecore_Idler *idler;
+   Evas *evas;
+   int all_done;
+   double begin;
+};
 
-static Evas_Bool _e_apps_hash_cb_init(Evas_Hash *hash, const char *key, void *data, void *fdata);
+static Evas_Bool _e_apps_hash_cb_init      (Evas_Hash *hash, const char *key, void *data, void *fdata);
+static int       _e_apps_hash_idler_cb     (void *data);
+static Evas_Bool _e_apps_hash_idler_cb_init(Evas_Hash *hash, const char *key, void *data, void *fdata);
 static void      _e_app_free               (E_App *a);
 static E_App     *_e_app_subapp_file_find  (E_App *a, const char *file);
 static int        _e_app_new_save          (E_App *a);    
@@ -48,13 +57,13 @@ static void      _e_app_save_order         (E_App *app);
 static int       _e_app_cb_event_border_add(void *data, int type, void *event);
 static int       _e_app_cb_expire_timer    (void *data);
 static int       _e_app_exe_valid_get      (const char *exe);
-static char     *_e_app_localized_val_get (Eet_File *ef, const char *lang, const char *field, int *size);
+static char     *_e_app_localized_val_get  (Eet_File *ef, const char *lang, const char *field, int *size);
 #if DEBUG
-static void      _e_app_print(const char *path, Ecore_File_Event event);
+static void      _e_app_print              (const char *path, Ecore_File_Event event);
 #endif
-static void      _e_app_check_order(const char *file);
-static int       _e_app_order_contains(E_App *a, const char *file);
-static void      _e_app_resolve_file_name(char *buf, size_t size, const char *path, const char *file);
+static void      _e_app_check_order        (const char *file);
+static int       _e_app_order_contains     (E_App *a, const char *file);
+static void      _e_app_resolve_file_name  (char *buf, size_t size, const char *path, const char *file);
 
 /* local subsystem globals */
 static int          _e_apps_callbacks_walking = 0;
@@ -68,6 +77,7 @@ static const char  *_e_apps_path_all = NULL;
 static const char  *_e_apps_path_trash = NULL;
 static Evas_List   *_e_apps_start_pending = NULL;
 static Evas_Hash   *_e_apps_every_app = NULL;
+static struct _E_App_Hash_Idler _e_apps_hash_idler;
 
 #define EAP_MIN_WIDTH 8
 #define EAP_MIN_HEIGHT 8
@@ -152,6 +162,11 @@ e_app_init(void)
    evas_hash_foreach(_e_apps_every_app, _e_apps_hash_cb_init, NULL);
    printf("INITIAL APP SCAN %3.3f\n", ecore_time_get() - begin);
    ecore_desktop_instrumentation_print();
+   _e_apps_hash_idler.all_done = 0;
+   /* FIXME: I need a fake evas here so that the icon searching will work. */
+   _e_apps_hash_idler.evas = NULL;
+   _e_apps_hash_idler.begin = ecore_time_get();
+   _e_apps_hash_idler.idler = ecore_idler_add(_e_apps_hash_idler_cb, &_e_apps_hash_idler);
    return 1;
 }
 
@@ -171,10 +186,67 @@ _e_apps_hash_cb_init(Evas_Hash *hash, const char *key, void *data, void *fdata)
    return 1;
 }
 
+static int
+_e_apps_hash_idler_cb(void *data)
+{
+   struct _E_App_Hash_Idler *idler;
+
+   idler = data;
+   idler->all_done = 1;
+   evas_hash_foreach(_e_apps_every_app, _e_apps_hash_idler_cb_init, idler);
+   if (idler->all_done)
+     {
+        printf("IDLE APP FILLING SCAN %3.3f\n", ecore_time_get() - idler->begin);
+	idler->idler = NULL;
+        return 0;
+     }
+   return 1;
+}
+
+static Evas_Bool 
+_e_apps_hash_idler_cb_init(Evas_Hash *hash, const char *key, void *data, void *fdata)
+{
+   E_App *a;
+   struct _E_App_Hash_Idler *idler;
+
+   a = data;
+   idler = fdata;
+   E_OBJECT_CHECK(a);
+   E_OBJECT_TYPE_CHECK(a, E_APP_TYPE);
+   /* Either fill an E_App, or look for an icon of an already filled E_App.
+    * Icon searching can take a long time, so don't do both at once. */
+   if (!a->filled)
+     {
+        e_app_fields_fill(a, a->path);
+	idler->all_done = 0;
+	return 0;
+     }
+   else if ((!a->found_icon) && (!a->no_icon))
+     {
+        Evas_Object *o = NULL;
+
+printf("IDLY SEARCHING AN FDO ICON FOR %s\n", a->path);
+        if (idler->evas)
+           o = e_app_icon_add(idler->evas, a);
+        if (o)
+	   evas_object_del(o);
+	else
+	   a->found_icon = 1;   /* Seems strange, but this stops it from looping infinitely. */
+	idler->all_done = 0;
+	return 0;
+     }
+   return 1;
+}
+
 
 EAPI int
 e_app_shutdown(void)
 {
+   if (_e_apps_hash_idler.idler)
+     {
+        ecore_idler_del(_e_apps_hash_idler.idler);
+	_e_apps_hash_idler.idler = NULL;
+     }
    _e_apps_start_pending = evas_list_free(_e_apps_start_pending);
    if (_e_apps_all)
      {
@@ -287,11 +359,17 @@ e_app_new(const char *path, int scan_subdirs)
       {
          if (ecore_file_is_dir(a->path))
 	    {
-	       snprintf(buf, sizeof(buf), "%s/.directory.eap", path);
-	       if (ecore_file_exists(buf))
-		  e_app_fields_fill(a, buf);
-	       else
-		  a->name = evas_stringshare_add(ecore_file_get_file(a->path));
+	       if (!a->filled)
+	         {
+	            snprintf(buf, sizeof(buf), "%s/.directory.eap", path);
+	            if (ecore_file_exists(buf))
+		       e_app_fields_fill(a, buf);
+	            else
+	              {
+		         a->name = evas_stringshare_add(ecore_file_get_file(a->path));
+		         a->filled = 1;
+		      }
+		 }
 	       if (scan_subdirs)
 	          {
 		     if (stated)
@@ -943,6 +1021,7 @@ e_app_change_callback_del(void (*func) (void *data, E_App *a, E_App_Change ch), 
      }
 }
 
+/* Used by e_border and ibar. */
 EAPI E_App *
 e_app_launch_id_pid_find(int launch_id, pid_t pid)
 {
@@ -973,6 +1052,7 @@ e_app_launch_id_pid_find(int launch_id, pid_t pid)
    return NULL;
 }
 
+/* Used by e_border and ibar. */
 EAPI E_App *
 e_app_border_find(E_Border *bd)
 {
@@ -993,12 +1073,8 @@ e_app_border_find(E_Border *bd)
 	a = l->data;
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
-	/* No need to fill up unfilled E_Apps during this scan, 
-	 * although this might fail for apps started without E's help.
-	 * That gets fixed when the next cache code is implemented.
-	 */
-//        if (!a->filled)
-//	   e_app_fields_fill(a, a->path);
+        if (!a->filled)
+	   e_app_fields_fill(a, a->path);
 	ok = 0;
 	if ((a->win_name) || (a->win_class) || (a->win_title) || (a->win_role) || (a->exe))
 	  {
@@ -1057,6 +1133,7 @@ e_app_border_find(E_Border *bd)
    return a_match;
 }
 
+/* Used by e_actions. */
 EAPI E_App *
 e_app_file_find(const char *file)
 {
@@ -1091,6 +1168,7 @@ e_app_file_find(const char *file)
    return NULL;
 }
 
+/* Used by e_apps. */
 EAPI E_App *
 e_app_path_find(const char *path)
 {
@@ -1101,6 +1179,7 @@ e_app_path_find(const char *path)
    return a;
 }
 
+/* Used by e_actions and e_exebuf. */
 EAPI E_App *
 e_app_name_find(const char *name)
 {
@@ -1130,6 +1209,7 @@ e_app_name_find(const char *name)
    return NULL;
 }
 
+/* Used by e_actions and e_exebuf. */
 EAPI E_App *
 e_app_generic_find(const char *generic)
 {
@@ -1159,6 +1239,7 @@ e_app_generic_find(const char *generic)
    return NULL;
 }
 
+/* Used by e_actions, e_exebuf, and e_zone. */
 EAPI E_App *
 e_app_exe_find(const char *exe)
 {
@@ -1190,6 +1271,7 @@ e_app_exe_find(const char *exe)
 
 
 
+/* Used e_exebuf. */
 EAPI Evas_List *
 e_app_name_glob_list(const char *name)
 {
@@ -1215,6 +1297,7 @@ e_app_name_glob_list(const char *name)
    return list;
 }
 
+/* Used e_exebuf. */
 EAPI Evas_List *
 e_app_generic_glob_list(const char *generic)
 {
@@ -1240,6 +1323,7 @@ e_app_generic_glob_list(const char *generic)
    return list;
 }
 
+/* Used e_exebuf. */
 EAPI Evas_List *
 e_app_exe_glob_list(const char *exe)
 {
@@ -1265,6 +1349,7 @@ e_app_exe_glob_list(const char *exe)
    return list;
 }
 
+/* Used e_exebuf. */
 EAPI Evas_List *
 e_app_comment_glob_list(const char *comment)
 {
@@ -1298,6 +1383,7 @@ e_app_fields_fill(E_App *a, const char *path)
    const char *lang, *ext;
    int size;
    
+   a->filled = 1;
    /* get our current language */
    lang = e_intl_language_alias_get();
    
@@ -1339,7 +1425,7 @@ e_app_fields_fill(E_App *a, const char *path)
            a->hard_icon = desktop->hard_icon;
            a->dirty_icon = 0;
            a->no_icon = 0;
-	   a->filled = 1;
+           a->found_icon = 0;
 
 //	   if (desktop->type)  a->type = evas_stringshare_add(desktop->type);
 //	   if (desktop->categories)  a->categories = evas_stringshare_add(desktop->categories);
@@ -1398,7 +1484,6 @@ e_app_fields_fill(E_App *a, const char *path)
 	   free(v);
         }
       eet_close(ef);
-      a->filled = 1;
    }
 }
 
@@ -1695,6 +1780,7 @@ e_app_fields_empty(E_App *a)
    a->dirty_icon = 0;
    a->hard_icon = 0;
    a->no_icon = 0;
+   a->found_icon = 0;
    a->filled = 0;
 }
 
@@ -1884,7 +1970,7 @@ printf("e_app_icon_add(%s)   %s   %s   %s\n", a->path, a->icon_class, e_config->
 	  {
 	     if (edje_object_file_set(o, a->path, "icon"))
 	       {
-		  ;  /* It's a bit more obvious this way. */
+		  a->found_icon = 1;
 	       }
 	     else /* If that fails, then this might be an FDO icon. */
                 _e_app_fdo_icon_search(a);
@@ -1897,6 +1983,8 @@ printf("e_app_icon_add(%s)   %s   %s   %s\n", a->path, a->icon_class, e_config->
 	       }
 	  }
      }
+   if (o)
+      a->found_icon = 1;
    return o;
 }
 
@@ -1930,21 +2018,38 @@ printf("e_app_icon_add_to_menu_item(%s)   %s   %s   %s\n", a->path, a->icon_clas
    else if ((e_config->icon_theme == NULL) && (a->icon_theme == NULL))
         theme_match = 1;
 
+   /* If the icon was hard coded into the .desktop files Icon field, then theming doesn't matter. */
+   if (a->hard_icon)
+      theme_match = 1;
+
    /* Then check if we already know the icon path. */
    if ((theme_match) && (a->icon_path) && (a->icon_path[0] != 0))
-      _e_app_icon_path_add_to_menu_item(mi, a);
+     {
+         _e_app_icon_path_add_to_menu_item(mi, a);
+         a->found_icon = 1;
+     }
    else
       {
 	/* Check the theme for icons. */
-         if (!e_util_menu_item_edje_icon_list_set(mi, a->icon_class))
+         if (e_util_menu_item_edje_icon_list_set(mi, a->icon_class))
+	    {
+               a->found_icon = 1;
+	    }
+	 else
 	    {
                if (edje_file_group_exists(a->path, "icon"))
-                  e_menu_item_icon_edje_set(mi, a->path, "icon");
+	         {
+                    e_menu_item_icon_edje_set(mi, a->path, "icon");
+                    a->found_icon = 1;
+		 }
                else /* If that fails, then this might be an FDO icon. */
                   _e_app_fdo_icon_search(a);
 
                if (a->icon_path)
-                  _e_app_icon_path_add_to_menu_item(mi, a);
+	         {
+                    _e_app_icon_path_add_to_menu_item(mi, a);
+                    a->found_icon = 1;
+		 }
 	    }
       }
 }
@@ -2129,6 +2234,7 @@ _e_app_free(E_App *a)
      }
 }
 
+/* Used by _e_app_cb_monitor and _e_app_subdir_rescan */ 
 static E_App *
 _e_app_subapp_file_find(E_App *a, const char *file)
 {
