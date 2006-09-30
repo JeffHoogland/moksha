@@ -57,7 +57,6 @@ static int       _e_app_order_contains(E_App *a, const char *file);
 static void      _e_app_resolve_file_name(char *buf, size_t size, const char *path, const char *file);
 
 /* local subsystem globals */
-static Evas_List   *_e_apps_list = NULL;
 static int          _e_apps_callbacks_walking = 0;
 static int          _e_apps_callbacks_delete_me = 0;
 static Evas_List   *_e_apps_change_callbacks = NULL;
@@ -152,11 +151,6 @@ e_app_init(void)
    _e_apps_all = e_app_new(_e_apps_path_all, 0);
    evas_hash_foreach(_e_apps_every_app, _e_apps_hash_cb_init, NULL);
    printf("INITIAL APP SCAN %3.3f\n", ecore_time_get() - begin);
-#if NO_APP_LIST
-   /* The list already exists, and it doesn't care what order it is in. */
-   if (_e_apps_all)
-      _e_apps_list = _e_apps_all->subapps;
-#endif
    ecore_desktop_instrumentation_print();
    return 1;
 }
@@ -168,10 +162,10 @@ _e_apps_hash_cb_init(Evas_Hash *hash, const char *key, void *data, void *fdata)
 
    a = data;
    /* Link it in to all if needed. */
-   if ((!a->parent) && (_e_apps_all) && (a != _e_apps_all) && (strncmp(a->path, _e_apps_path_all, strlen(_e_apps_path_all)) == 0))
+   if ((!a->parent) && (_e_apps_all) && (a != _e_apps_all) /*&& (strncmp(a->path, _e_apps_path_all, strlen(_e_apps_path_all)) == 0)*/)
      {
         a->parent = _e_apps_all;
-        _e_apps_all->subapps = evas_list_append(_e_apps_all->subapps, a);
+        _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, a);
         e_object_ref(E_OBJECT(a));
      }
    return 1;
@@ -206,7 +200,7 @@ e_app_shutdown(void)
    evas_stringshare_del(_e_apps_path_all);
      {
 	Evas_List *l;
-	for (l = _e_apps_list; l; l = l->next)
+	for (l = _e_apps_all->subapps; l; l = l->next)
 	  {
 	     E_App *a;
 	     a = l->data;
@@ -224,7 +218,7 @@ e_app_unmonitor_all(void)
 {
    Evas_List *l;
    
-   for (l = _e_apps_list; l; l = l->next)
+   for (l = _e_apps_all->subapps; l; l = l->next)
      {
 	E_App *a;
 
@@ -258,6 +252,17 @@ e_app_new(const char *path, int scan_subdirs)
    if (!path)   return NULL;
 
    a = e_app_path_find(path);
+   /* Is it a virtual path from inside a .order file? */
+   if ((!a) && (!ecore_file_exists(path)))
+     {
+         snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all, ecore_file_get_file(path));
+         if (ecore_file_exists(path))
+	   {
+	      path = buf;
+              a = e_app_path_find(path);
+	   }
+     }
+
    /* Check if the cache is still valid. */
    if (a)
       {
@@ -303,7 +308,7 @@ e_app_new(const char *path, int scan_subdirs)
 	    {
 	        if (!a->filled)
 		   e_app_fields_fill(a, a->path);
-//                _e_apps_hash_cb_init(_e_apps_every_app, a->path, a, NULL);
+                _e_apps_hash_cb_init(_e_apps_every_app, a->path, a, NULL);
 		  
 		/* no exe field.. not valid. drop it */
 //		  if (!_e_app_exe_valid_get(a->exe))
@@ -318,9 +323,11 @@ e_app_new(const char *path, int scan_subdirs)
                a->mtime = st.st_mtime;
 	       stated = 1;
             }
-#if ! NO_APP_LIST
-	 _e_apps_list = evas_list_prepend(_e_apps_list, a);
-#endif
+         if ((_e_apps_all) && (_e_apps_all->subapps))
+	   {
+              _e_apps_all->subapps = evas_list_remove(_e_apps_all->subapps, a);
+	      _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, a);
+	   }
       }
    else
       goto error;
@@ -380,7 +387,6 @@ e_app_is_parent(E_App *parent, E_App *app)
 
    while (current)
      {
-printf("e_app_is_parent(%s,  %s) -  %s\n", parent->path, app->path, current->path);
 	if (current == parent)
 	  return 1;
 	current = current->parent;
@@ -462,7 +468,7 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
                                  e_object_ref(E_OBJECT(a3));
 				 a2->references = evas_list_append(a2->references, a3);
 #if ! NO_APP_LIST
-				 _e_apps_list = evas_list_prepend(_e_apps_list, a3);
+				 _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, a3);
 #endif
 			      }
 			    else
@@ -537,6 +543,10 @@ e_app_exec(E_App *a, int launch_id)
    inst->launch_id = launch_id;
    inst->launch_time = ecore_time_get();
    inst->expire_timer = ecore_timer_add(10.0, _e_app_cb_expire_timer, inst);
+
+   _e_apps_all->subapps = evas_list_remove(_e_apps_all->subapps, original);
+   _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, original);
+
    original->instances = evas_list_append(original->instances, inst);
    _e_apps_start_pending = evas_list_append(_e_apps_start_pending, original);
    if (original->startup_notify) original->starting = 1;
@@ -620,7 +630,7 @@ _e_app_files_list_prepend_relative(Evas_List *files, E_App *before, E_App *paren
 	     for (l2 = files; l2; l2 = l2->next)
 	       {
 		  char *file;
-		  
+
 		  file = l2->data;
 		  fprintf(f, "%s\n", ecore_file_get_file(file));
 	       }
@@ -938,15 +948,14 @@ e_app_launch_id_pid_find(int launch_id, pid_t pid)
 {
    Evas_List *l, *ll;
    
-   for (l = _e_apps_list; l; l = l->next)
+   for (l = _e_apps_all->subapps; l; l = l->next)
      {
 	E_App *a;
 
 	a = l->data;
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
-        if (!a->filled)
-	   e_app_fields_fill(a, a->path);
+	/* No need to fill up unfilled E_Apps during this scan. */
 	for (ll = a->instances; ll; ll = ll->next)
 	  {
 	     E_App_Instance *ai;
@@ -955,9 +964,8 @@ e_app_launch_id_pid_find(int launch_id, pid_t pid)
 	     if (((launch_id > 0) && (ai->launch_id > 0) && (ai->launch_id == launch_id)) ||
 		 ((pid > 1) && (ai->exe) && (ecore_exe_pid_get(ai->exe) == pid)))
 	       {
-		  _e_apps_list = evas_list_remove_list(_e_apps_list, l);
-		  _e_apps_list = evas_list_prepend(_e_apps_list, a);
-printf("e_app_launch_id_pid_find() - FOUND - %s\n", a->path);
+		  _e_apps_all->subapps = evas_list_remove_list(_e_apps_all->subapps, l);
+		  _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, a);
 		  return a;
 	       }
 	  }
@@ -980,13 +988,17 @@ e_app_border_find(E_Border *bd)
 
    title = bd->client.netwm.name;
    if (!title) title = bd->client.icccm.title;
-   for (l = _e_apps_list; l; l = l->next)
+   for (l = _e_apps_all->subapps; l; l = l->next)
      {
 	a = l->data;
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
-        if (!a->filled)
-	   e_app_fields_fill(a, a->path);
+	/* No need to fill up unfilled E_Apps during this scan, 
+	 * although this might fail for apps started without E's help.
+	 * That gets fixed when the next cache code is implemented.
+	 */
+//        if (!a->filled)
+//	   e_app_fields_fill(a, a->path);
 	ok = 0;
 	if ((a->win_name) || (a->win_class) || (a->win_title) || (a->win_role) || (a->exe))
 	  {
@@ -1039,9 +1051,8 @@ e_app_border_find(E_Border *bd)
      }
    if ((a_match) && (l_match))
      {
-printf("e_app_border_find() - FOUND - %s\n", a_match->path);
-	_e_apps_list = evas_list_remove_list(_e_apps_list, l_match);
-	_e_apps_list = evas_list_prepend(_e_apps_list, a_match);
+	_e_apps_all->subapps = evas_list_remove_list(_e_apps_all->subapps, l_match);
+	_e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, a_match);
      }
    return a_match;
 }
@@ -1053,7 +1064,7 @@ e_app_file_find(const char *file)
    
    if (!file) return NULL;
 
-   for (l = _e_apps_list; l; l = l->next)
+   for (l = _e_apps_all->subapps; l; l = l->next)
      {
 	E_App *a;
 	
@@ -1070,8 +1081,8 @@ e_app_file_find(const char *file)
 		  p++;
 		  if (!strcmp(p, file))
 		    {
-		       _e_apps_list = evas_list_remove_list(_e_apps_list, l);
-		       _e_apps_list = evas_list_prepend(_e_apps_list, a);
+		       _e_apps_all->subapps = evas_list_remove_list(_e_apps_all->subapps, l);
+		       _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, a);
 		       return a;
 		    }
 	       }
@@ -1097,7 +1108,7 @@ e_app_name_find(const char *name)
    
    if (!name) return NULL;
 
-   for (l = _e_apps_list; l; l = l->next)
+   for (l = _e_apps_all->subapps; l; l = l->next)
      {
 	E_App *a;
 	
@@ -1110,8 +1121,8 @@ e_app_name_find(const char *name)
 	  {
 	     if (!strcasecmp(a->name, name))
 	       {
-		  _e_apps_list = evas_list_remove_list(_e_apps_list, l);
-		  _e_apps_list = evas_list_prepend(_e_apps_list, a);
+		  _e_apps_all->subapps = evas_list_remove_list(_e_apps_all->subapps, l);
+		  _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, a);
 		  return a;
 	       }
 	  }
@@ -1126,7 +1137,7 @@ e_app_generic_find(const char *generic)
    
    if (!generic) return NULL;
 
-   for (l = _e_apps_list; l; l = l->next)
+   for (l = _e_apps_all->subapps; l; l = l->next)
      {
 	E_App *a;
 	
@@ -1139,8 +1150,8 @@ e_app_generic_find(const char *generic)
 	  {
 	     if (!strcasecmp(a->generic, generic))
 	       {
-		  _e_apps_list = evas_list_remove_list(_e_apps_list, l);
-		  _e_apps_list = evas_list_prepend(_e_apps_list, a);
+		  _e_apps_all->subapps = evas_list_remove_list(_e_apps_all->subapps, l);
+		  _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, a);
 		  return a;
 	       }
 	  }
@@ -1155,7 +1166,7 @@ e_app_exe_find(const char *exe)
    
    if (!exe) return NULL;
 
-   for (l = _e_apps_list; l; l = l->next)
+   for (l = _e_apps_all->subapps; l; l = l->next)
      {
 	E_App *a;
 	
@@ -1168,8 +1179,8 @@ e_app_exe_find(const char *exe)
 	  {
 	     if (!strcmp(a->exe, exe))
 	       {
-		  _e_apps_list = evas_list_remove_list(_e_apps_list, l);
-		  _e_apps_list = evas_list_prepend(_e_apps_list, a);
+		  _e_apps_all->subapps = evas_list_remove_list(_e_apps_all->subapps, l);
+		  _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, a);
 		  return a;
 	       }
 	  }
@@ -1186,7 +1197,7 @@ e_app_name_glob_list(const char *name)
    
    if (!name) return NULL;
 
-   for (l = _e_apps_list; l; l = l->next)
+   for (l = _e_apps_all->subapps; l; l = l->next)
      {
 	E_App *a;
 	
@@ -1211,7 +1222,7 @@ e_app_generic_glob_list(const char *generic)
    
    if (!generic) return NULL;
 
-   for (l = _e_apps_list; l; l = l->next)
+   for (l = _e_apps_all->subapps; l; l = l->next)
      {
 	E_App *a;
 	
@@ -1236,7 +1247,7 @@ e_app_exe_glob_list(const char *exe)
    
    if (!exe) return NULL;
 
-   for (l = _e_apps_list; l; l = l->next)
+   for (l = _e_apps_all->subapps; l; l = l->next)
      {
 	E_App *a;
 	
@@ -1261,7 +1272,7 @@ e_app_comment_glob_list(const char *comment)
    
    if (!comment) return NULL;
 
-   for (l = _e_apps_list; l; l = l->next)
+   for (l = _e_apps_all->subapps; l; l = l->next)
      {
 	E_App *a;
 	
@@ -2057,9 +2068,6 @@ _e_app_free(E_App *a)
 	      a->parent->subapps = evas_list_remove(a->parent->subapps, a);
 	   }
 	a->orig->references = evas_list_remove(a->orig->references, a);
-#if ! NO_APP_LIST
-	_e_apps_list = evas_list_remove(_e_apps_list, a);
-#endif
 	e_object_unref(E_OBJECT(a->orig));
 	free(a);
      }
@@ -2111,9 +2119,6 @@ _e_app_free(E_App *a)
 	  a->parent->subapps = evas_list_remove(a->parent->subapps, a);
 	if (a->monitor)
 	  ecore_file_monitor_del(a->monitor);
-#if ! NO_APP_LIST
-	_e_apps_list = evas_list_remove(_e_apps_list, a);
-#endif
 	e_app_fields_empty(a);
 	if (a->path)
 	  {
@@ -2418,7 +2423,7 @@ _e_app_subdir_rescan(E_App *app)
 		                      e_object_ref(E_OBJECT(a3));
 				      a2->references = evas_list_append(a2->references, a3);
 #if ! NO_APP_LIST
-				      _e_apps_list = evas_list_prepend(_e_apps_list, a3);
+				      _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, a3);
 #endif
 				   }
 				 else
@@ -2750,7 +2755,7 @@ _e_app_check_order(const char *file)
 {
    Evas_List *l;
 
-   for (l = _e_apps_list; l; l = l->next)
+   for (l = _e_apps_all->subapps; l; l = l->next)
      {
 	E_App *a;
 

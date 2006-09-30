@@ -53,7 +53,7 @@ main(int argc, char **argv)
    char buf[PATH_MAX];
    char *s;
    struct sigaction action;
-   double t, tstart;
+   double t, tstart, begin;
    /* trap deadly bug signals and allow some form of sane recovery */
    /* or ability to gdb attach and debug at this point - better than your */
    /* wm/desktop vanishing and not knowing what happened */
@@ -370,6 +370,7 @@ main(int argc, char **argv)
    _e_main_shutdown_push(ecore_ipc_shutdown);
 
    /* init FDO desktop */
+   begin = ecore_time_get();
    if (!ecore_desktop_init())
      {
 	e_error_message_show(_("Enlightenment cannot initialize the FDO desktop system.\n"
@@ -383,6 +384,8 @@ main(int argc, char **argv)
    snprintf(buf, sizeof(buf), "%s/data/icons", e_prefix_data_get());
    ecore_desktop_paths_append_system(ECORE_DESKTOP_PATHS_ICONS, buf);
    ecore_desktop_paths_regen();
+
+   printf("SETUP FDO %3.3f\n", ecore_time_get() - begin);
 
    /* init the evas wrapper */
    if (!ecore_evas_init())
