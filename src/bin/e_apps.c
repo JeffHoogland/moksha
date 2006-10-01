@@ -131,7 +131,7 @@ e_app_init(void)
    const char *home;
    char buf[PATH_MAX];
    double begin;
-   
+
    home = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/trash", home);
    _e_apps_path_trash = evas_stringshare_add(buf);
@@ -142,24 +142,32 @@ e_app_init(void)
    _e_apps_border_add_handler = ecore_event_handler_add(E_EVENT_BORDER_ADD, _e_app_cb_event_border_add, NULL);
    ecore_desktop_instrumentation_reset();
    begin = ecore_time_get();
+   _e_apps_all = e_app_new(_e_apps_path_all, 0);
    _e_apps_all_filenames = ecore_file_ls(_e_apps_path_all);
    if (_e_apps_all_filenames)
      {
         const char *file;
-	
+
         while ((file = ecore_list_next(_e_apps_all_filenames)))
 	  {
 	     E_App *app;
-	     
+
              snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all, file);
              app = e_app_empty_new(buf);
 	     if ((app) && (app->path))
-	       _e_apps_every_app = evas_hash_direct_add(_e_apps_every_app, app->path, app);
+	       {
+	          _e_apps_every_app = evas_hash_direct_add(_e_apps_every_app, app->path, app);
+                  /* Link it in to all if needed. */
+                  if (strcmp(app->path, _e_apps_path_all) != 0)
+                    {
+                       app->parent = _e_apps_all;
+                      _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, app);
+                      e_object_ref(E_OBJECT(app));
+                    }
+	       }
 	  }
         ecore_list_destroy(_e_apps_all_filenames);
      }
-   _e_apps_all = e_app_new(_e_apps_path_all, 0);
-   evas_hash_foreach(_e_apps_every_app, _e_apps_hash_cb_init, NULL);
    printf("INITIAL APP SCAN %3.3f\n", ecore_time_get() - begin);
    ecore_desktop_instrumentation_print();
    _e_apps_hash_idler.all_done = 0;
@@ -170,21 +178,6 @@ e_app_init(void)
    return 1;
 }
 
-static Evas_Bool 
-_e_apps_hash_cb_init(Evas_Hash *hash, const char *key, void *data, void *fdata)
-{
-   E_App *a;
-
-   a = data;
-   /* Link it in to all if needed. */
-   if ((!a->parent) && (_e_apps_all) && (a != _e_apps_all) /*&& (strncmp(a->path, _e_apps_path_all, strlen(_e_apps_path_all)) == 0)*/)
-     {
-        a->parent = _e_apps_all;
-        _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, a);
-        e_object_ref(E_OBJECT(a));
-     }
-   return 1;
-}
 
 static int
 _e_apps_hash_idler_cb(void *data)
@@ -226,7 +219,6 @@ _e_apps_hash_idler_cb_init(Evas_Hash *hash, const char *key, void *data, void *f
      {
         Evas_Object *o = NULL;
 
-printf("IDLY SEARCHING AN FDO ICON FOR %s\n", a->path);
         if (idler->evas)
            o = e_app_icon_add(idler->evas, a);
         if (o)
@@ -243,6 +235,7 @@ printf("IDLY SEARCHING AN FDO ICON FOR %s\n", a->path);
 EAPI int
 e_app_shutdown(void)
 {
+   Evas_List *subapps;
    if (_e_apps_hash_idler.idler)
      {
         ecore_idler_del(_e_apps_hash_idler.idler);
@@ -251,6 +244,7 @@ e_app_shutdown(void)
    _e_apps_start_pending = evas_list_free(_e_apps_start_pending);
    if (_e_apps_all)
      {
+        subapps = _e_apps_all->subapps;
 	e_object_unref(E_OBJECT(_e_apps_all));
 	_e_apps_all = NULL;
      }
@@ -273,7 +267,7 @@ e_app_shutdown(void)
    evas_stringshare_del(_e_apps_path_all);
      {
 	Evas_List *l;
-	for (l = _e_apps_all->subapps; l; l = l->next)
+	for (l = subapps; l; l = l->next)
 	  {
 	     E_App *a;
 	     a = l->data;
@@ -321,6 +315,7 @@ e_app_new(const char *path, int scan_subdirs)
    struct stat         st;
    int                 stated = 0;
    int                 new_app = 0;
+   int                 in_all = 0;
    char buf[PATH_MAX];
 
    if (!path)   return NULL;
@@ -334,6 +329,7 @@ e_app_new(const char *path, int scan_subdirs)
 	  {
 	     path = buf;
 	     a = e_app_path_find(path);
+	     in_all = 1;
 	  }
      }
 
@@ -358,6 +354,8 @@ e_app_new(const char *path, int scan_subdirs)
 
    if ((a) && (a->path))
       {
+         if ((!in_all) && (strncmp(a->path, _e_apps_path_all, strlen(_e_apps_path_all)) == 0))
+	    in_all = 1;
          if (ecore_file_is_dir(a->path))
 	    {
 	       if (!a->filled)
@@ -388,7 +386,6 @@ e_app_new(const char *path, int scan_subdirs)
 	    {
 	        if (!a->filled)
 		   e_app_fields_fill(a, a->path);
-                _e_apps_hash_cb_init(_e_apps_every_app, a->path, a, NULL);
 		  
 		/* no exe field.. not valid. drop it */
 //		  if (!_e_app_exe_valid_get(a->exe))
@@ -398,18 +395,25 @@ e_app_new(const char *path, int scan_subdirs)
 	  goto error;
 
 	if (new_app)
-	  _e_apps_every_app = evas_hash_direct_add(_e_apps_every_app, a->path, a);
+	  {
+	     _e_apps_every_app = evas_hash_direct_add(_e_apps_every_app, a->path, a);
+             /* Link it in to all if needed. */
+             if ((_e_apps_all) && (a != _e_apps_all) && (in_all))
+               {
+                  a->parent = _e_apps_all;
+                  e_object_ref(E_OBJECT(a));
+               }
+	  }
+	else if ((_e_apps_all) && (_e_apps_all->subapps) && (in_all))
+           _e_apps_all->subapps = evas_list_remove(_e_apps_all->subapps, a);
+        if ((_e_apps_all) && (a != _e_apps_all) && (in_all))
+	     _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, a);
 	
 	/* Timestamp the cache, and no need to stat the file twice if the cache was stale. */
 	if ((stated) || (stat(a->path, &st) >= 0))
 	  {
 	     a->mtime = st.st_mtime;
 	     stated = 1;
-	  }
-	if ((_e_apps_all) && (_e_apps_all->subapps))
-	  {
-	     _e_apps_all->subapps = evas_list_remove(_e_apps_all->subapps, a);
-	     _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, a);
 	  }
      }
    else
@@ -435,10 +439,6 @@ e_app_empty_new(const char *path)
    
    a = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
    if (!a) return NULL;
-   /* no image for now */
-   a->image = NULL;
-   a->width = 0;
-   a->height = 0;
    /* record the path, or make one up */
    if (path) a->path = evas_stringshare_add(path);   
    else if (_e_apps_path_all)
