@@ -15,6 +15,7 @@
 
 #define DEBUG 0
 #define NO_APP_LIST 1
+#define IDLE_ICONS 0
 /* local subsystem functions */
 typedef struct _E_App_Change_Info E_App_Change_Info;
 typedef struct _E_App_Callback    E_App_Callback;
@@ -35,7 +36,6 @@ struct _E_App_Callback
 struct _E_App_Hash_Idler
 {
    Ecore_Idler *idler;
-   Evas *evas;
    int all_done;
    double begin;
 };
@@ -43,6 +43,7 @@ struct _E_App_Hash_Idler
 static Evas_Bool _e_apps_hash_cb_init      (Evas_Hash *hash, const char *key, void *data, void *fdata);
 static int       _e_apps_hash_idler_cb     (void *data);
 static Evas_Bool _e_apps_hash_idler_cb_init(Evas_Hash *hash, const char *key, void *data, void *fdata);
+static void      _e_app_fdo_icon_search    (E_App *a);
 static void      _e_app_free               (E_App *a);
 static E_App     *_e_app_subapp_file_find  (E_App *a, const char *file);
 static int        _e_app_new_save          (E_App *a);    
@@ -167,9 +168,8 @@ e_app_init(void)
      }
    printf("INITIAL APP SCAN %3.3f\n", ecore_time_get() - begin);
    ecore_desktop_instrumentation_print();
+   ecore_desktop_instrumentation_reset();
    _e_apps_hash_idler.all_done = 0;
-   /* FIXME: I need a fake evas here so that the icon searching will work. */
-   _e_apps_hash_idler.evas = NULL;
    _e_apps_hash_idler.begin = ecore_time_get();
    _e_apps_hash_idler.idler = ecore_idler_add(_e_apps_hash_idler_cb, &_e_apps_hash_idler);
    return 1;
@@ -188,6 +188,7 @@ _e_apps_hash_idler_cb(void *data)
      {
         printf("IDLE APP FILLING SCAN %3.3f\n", ecore_time_get() - idler->begin);
 	idler->idler = NULL;
+        ecore_desktop_instrumentation_print();
         return 0;
      }
    return 1;
@@ -205,26 +206,72 @@ _e_apps_hash_idler_cb_init(Evas_Hash *hash, const char *key, void *data, void *f
    E_OBJECT_TYPE_CHECK(a, E_APP_TYPE);
    /* Either fill an E_App, or look for an icon of an already filled E_App.
     * Icon searching can take a long time, so don't do both at once. */
-   if (!a->filled)
+   if ((!a->idle_fill) && (!a->filled))
      {
+        struct stat         st;
+
+        a->idle_fill = 1;
+	if (stat(a->path, &st) >= 0)
+           a->mtime = st.st_mtime;
         e_app_fields_fill(a, a->path);
 	if (!a->filled) return 1;
 	idler->all_done = 0;
 	return 0;
      }
-   else if ((!a->found_icon) && (!a->no_icon))
+#if IDLE_ICONS
+   else if ((!a->idle_icon) && (!a->found_icon) && (!a->no_icon))
      {
-        Evas_Object *o = NULL;
+        int theme_match = 0;
 
-        if (idler->evas)
-           o = e_app_icon_add(idler->evas, a);
-        if (o)
-	   evas_object_del(o);
-	else
-	   a->found_icon = 1;   /* Seems strange, but this stops it from looping infinitely. */
+        a->idle_icon = 1;
+        /* If the icon was hard coded into the .desktop files Icon field, then theming doesn't matter. */
+        if (a->hard_icon)
+           theme_match = 1;
+        else if ((e_config->icon_theme == NULL) && (a->icon_theme == NULL))  /* Check to see if the icon theme is different. */
+             theme_match = 1;
+        else if ((e_config->icon_theme) && (a->icon_theme) && (strcmp(e_config->icon_theme, a->icon_theme) == 0))
+	     theme_match = 1;
+
+        /* Check if we already know the icon path. */
+        if ((theme_match) && (a->icon_path) && (a->icon_path[0] != 0))
+	  {
+             a->found_icon = 1;
+	     printf("P");
+	  }
+        else
+           {
+	     /* Check the theme for icons. */
+              if (e_util_edje_icon_list_check(a->icon_class))
+	        {
+                   a->found_icon = 1;
+	           printf("C");
+		}
+	      else
+	         {
+                    if (edje_file_group_exists(a->path, "icon"))
+		      {
+                         a->found_icon = 1;
+	                 printf("G");
+		      }
+                    else /* If that fails, then this might be an FDO icon. */
+                       _e_app_fdo_icon_search(a);
+
+                    if (a->icon_path)
+		      {
+                         a->found_icon = 1;
+	                 printf("F");
+		      }
+	           else
+                      printf("N");
+	         }
+           }
+
+        a->found_icon = 1;   /* Seems strange, but this stops it from looping infinitely. */
+        if ((!a->found_icon) && (!a->no_icon)) return 1;
 	idler->all_done = 0;
 	return 0;
      }
+#endif
    return 1;
 }
 
@@ -348,7 +395,12 @@ e_app_new(const char *path, int scan_subdirs)
 	  {
 	     stated = 1;
 	     if (st.st_mtime > a->mtime)
-	       e_app_fields_empty(a);
+	       {
+	          e_app_fields_empty(a);
+		  printf("n");
+	       }
+	     else
+	        printf("o");
 	  }
 	e_object_ref(E_OBJECT(a));
      }
@@ -358,6 +410,7 @@ e_app_new(const char *path, int scan_subdirs)
         /* Create it. */
         a = e_app_empty_new(path);
 	new_app = 1;
+printf("+");
      }
 
    if ((a) && (a->path))
@@ -476,7 +529,7 @@ e_app_empty_new(const char *path)
 	snprintf(buf, sizeof(buf), "%s/_new_app_%1.1f.desktop", _e_apps_path_all, ecore_time_get());
 	a->path = evas_stringshare_add(buf);
      }
-   printf("NEW APP %p %s\n", a, a->path);
+//   printf("NEW APP %p %s\n", a, a->path);
    return a;
 }
 
@@ -1445,6 +1498,7 @@ e_app_fields_fill(E_App *a, const char *path)
 	  {
 	     a->desktop = desktop;
 	     
+printf(".");
 	     if (desktop->name)  a->name = evas_stringshare_add(desktop->name);
 	     if (desktop->generic)  a->generic = evas_stringshare_add(desktop->generic);
 	     if (desktop->comment)  a->comment = evas_stringshare_add(desktop->comment);
@@ -1491,6 +1545,7 @@ e_app_fields_fill(E_App *a, const char *path)
 	 free(v); \
       }
 	
+printf("e");
 	ef = eet_open(path, EET_FILE_MODE_READ);
 	if (!ef) return;
 	
@@ -1793,6 +1848,7 @@ _e_app_fields_save_others(E_App *a)
 EAPI void
 e_app_fields_empty(E_App *a)
 {
+printf("-");
    if (a->name) evas_stringshare_del(a->name);
    if (a->generic) evas_stringshare_del(a->generic);
    if (a->comment) evas_stringshare_del(a->comment);
@@ -1985,6 +2041,9 @@ e_app_icon_add(Evas *evas, E_App *a)
    Evas_Object *o = NULL;
    int theme_match = 0;
 
+   if (a->orig)
+      a = a->orig;
+
 #if DEBUG
 printf("e_app_icon_add(%s)   %s   %s   %s\n", a->path, a->icon_class, e_config->icon_theme, a->icon_path);
 #endif
@@ -2045,6 +2104,9 @@ e_app_icon_add_to_menu_item(E_Menu_Item *mi, E_App *a)
 {
    int theme_match = 0;
 
+   if (a->orig)
+      a = a->orig;
+
    mi->app = a;
    /* e_menu_item_icon_edje_set() just tucks away the params, the actual call to edje_object_file_set() happens later. */
    /* e_menu_item_icon_file_set() just tucks away the params, the actual call to e_icon_add() happens later. */
@@ -2070,6 +2132,7 @@ printf("e_app_icon_add_to_menu_item(%s)   %s   %s   %s\n", a->path, a->icon_clas
      {
          _e_app_icon_path_add_to_menu_item(mi, a);
          a->found_icon = 1;
+	 printf("P");
      }
    else
       {
@@ -2077,6 +2140,7 @@ printf("e_app_icon_add_to_menu_item(%s)   %s   %s   %s\n", a->path, a->icon_clas
          if (e_util_menu_item_edje_icon_list_set(mi, a->icon_class))
 	    {
                a->found_icon = 1;
+	       printf("C");
 	    }
 	 else
 	    {
@@ -2084,6 +2148,7 @@ printf("e_app_icon_add_to_menu_item(%s)   %s   %s   %s\n", a->path, a->icon_clas
 	         {
                     e_menu_item_icon_edje_set(mi, a->path, "icon");
                     a->found_icon = 1;
+	            printf("G");
 		 }
                else /* If that fails, then this might be an FDO icon. */
                   _e_app_fdo_icon_search(a);
@@ -2092,7 +2157,10 @@ printf("e_app_icon_add_to_menu_item(%s)   %s   %s   %s\n", a->path, a->icon_clas
 	         {
                     _e_app_icon_path_add_to_menu_item(mi, a);
                     a->found_icon = 1;
+	            printf("F");
 		 }
+	       else
+                  printf("N");
 	    }
       }
 }
@@ -2311,12 +2379,12 @@ _e_app_change(E_App *a, E_App_Change ch)
 {
    Evas_List *l;
 
-   if (ch == E_APP_DEL)
-     printf("APP_DEL %s\n", a->path);
-   if (ch == E_APP_CHANGE)
-     printf("APP_CHANGE %p %s\n", a, a->path);
-   if (ch == E_APP_ADD)
-     printf("APP_ADD %s\n", a->path);
+//   if (ch == E_APP_DEL)
+//     printf("APP_DEL %s\n", a->path);
+//   if (ch == E_APP_CHANGE)
+//     printf("APP_CHANGE %p %s\n", a, a->path);
+//   if (ch == E_APP_ADD)
+//     printf("APP_ADD %s\n", a->path);
    _e_apps_callbacks_walking = 1;
    for (l = _e_apps_change_callbacks; l; l = l->next)
      {
