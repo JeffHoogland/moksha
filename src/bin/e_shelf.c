@@ -314,6 +314,7 @@ e_shelf_save(E_Shelf *es)
 	cf_es->style = evas_stringshare_add(es->style);
 	cf_es->fit_along = es->fit_along;
 	cf_es->fit_size = es->fit_size;
+	cf_es->overlap = 0;
 	es->cfg = cf_es;
      }
    e_config_save_queue();

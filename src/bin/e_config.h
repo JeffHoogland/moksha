@@ -360,6 +360,7 @@ struct _E_Config_Shelf
    unsigned char fit_size;
    const char   *style;
    int           size;
+   int           overlap;
 };
 
 struct _E_Config_Mime_Icon

@@ -34,6 +34,7 @@ struct _E_Config_Dialog_Data
    int fit_size;
    int size;
    int layering;
+   int overlapping;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -113,6 +114,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->fit_along = cfdata->escfg->fit_along;
    cfdata->fit_size = cfdata->escfg->fit_size;
    cfdata->size = cfdata->escfg->size;
+   cfdata->overlapping = cfdata->escfg->overlap;
    if (cfdata->size <= 24)
      cfdata->basic_size = 24;
    else if (cfdata->size <= 32)
@@ -332,6 +334,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	  }
      }
 
+   cfdata->escfg->overlap = cfdata->overlapping;
+
    if (restart) 
      {
 	zone = cfdata->es->zone;
@@ -439,6 +443,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_radio_add(evas, _("Below Windows"), 1, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Below Everything"), 0, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Allow windows to overlap the shelf"), &(cfdata->overlapping));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o2, of, 1, 1, 0.5);
    

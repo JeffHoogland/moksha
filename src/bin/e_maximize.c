@@ -135,6 +135,7 @@ e_maximize_border_shelf_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2, E
 	E_Shelf *es;
 
 	es = l->data;
+	if (es->cfg->overlap) continue;
 	if (es->zone != bd->zone) continue;
 	OBSTACLE(es->x + es->zone->x, es->y + es->zone->y, 
 		 es->x + es->zone->x + es->w, es->y + es->zone->y + es->h);
