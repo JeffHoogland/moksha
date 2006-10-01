@@ -292,6 +292,37 @@ e_util_immortal_check(void)
 }
 
 EAPI int
+e_util_edje_icon_list_check(const char *list)
+{
+   char *buf;
+   const char *p;
+   const char *c;
+   
+   if ((!list) || (!list[0])) return 0;
+   buf = alloca(strlen(list) + 1);
+   p = list;
+   while (p)
+     {
+	c = strchr(p, ',');
+	if (c)
+	  {
+	     strncpy(buf, p, c - p);
+	     buf[c - p] = 0;
+	     if (e_util_edje_icon_check(buf)) return 1;
+	     p = c + 1;
+	     if (!*p) return 0;
+	  }
+	else
+	  {
+	     strcpy(buf, p);
+	     if (e_util_edje_icon_check(buf)) return 1;
+	     return 0;
+	  }
+     }
+   return 0;
+}
+
+EAPI int
 e_util_edje_icon_list_set(Evas_Object *obj, const char *list)
 {
    char *buf;
@@ -350,6 +381,20 @@ e_util_menu_item_edje_icon_list_set(E_Menu_Item *mi, const char *list)
 	     return 0;
 	  }
      }
+   return 0;
+}
+
+EAPI int
+e_util_edje_icon_check(const char *name)
+{
+   const char *file;
+   char buf[4096];
+
+   if ((!name) || (!name[0])) return 0;
+   snprintf(buf, sizeof(buf), "e/icons/%s", name);
+   file = e_theme_edje_file_get("base/theme/icons", buf);
+   if (file[0])
+      return 1;
    return 0;
 }
 
