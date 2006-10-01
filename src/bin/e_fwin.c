@@ -14,6 +14,8 @@ static void _e_fwin_cb_delete(E_Win *win);
 static void _e_fwin_cb_resize(E_Win *win);
 static void _e_fwin_changed(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_selected(void *data, Evas_Object *obj, void *event_info);
+static void _e_fwin_menu_extend(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info);
+static void _e_fwin_parent(void *data, E_Menu *m, E_Menu_Item *mi);
 
 /* local subsystem globals */
 static Evas_List *fwins = NULL;
@@ -35,7 +37,8 @@ EAPI E_Fwin *
 e_fwin_new(E_Container *con, const char *dev, const char *path)
 {
    E_Fwin *fwin;
-   char buf[4096], *file;
+   char buf[4096];
+   const char *file;
    Evas_Object *o;
    E_Fm2_Config fmc;
    
@@ -53,14 +56,9 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
    fwin->win->data = fwin;
 
    /* fm issues: */
-   /* FIXME: need a way of going to parent dir (menu extn.) */
-   /* FIXME: bug: drop on file on another dir doesnt do drop all */
-   /* FIXME: bug: on shift-click then drag - don't deselect */
-   /* FIXME: bug: drag multiple files doesnt work */
+   /* FIXME: "select" of a file opens that file  based on mimetype etc. */
+   /* FIXME: if file executable - run it */
    
-   /* FIXME: temporary - a white bg until we have a proper fm specific
-    * scrollframe etc.
-    */
    o = evas_object_rectangle_add(e_win_evas_get(fwin->win));
    evas_object_color_set(o, 255, 255, 255, 255);
    evas_object_show(o);
@@ -90,23 +88,35 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
    evas_object_smart_callback_add(o, "selected",
 				  _e_fwin_selected, fwin);
    e_fm2_path_set(o, dev, path);
-   evas_object_move(o, 0, 0);
+   e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_menu_extend, fwin);
    evas_object_show(o);
    
-   o = e_widget_scrollframe_pan_add(e_win_evas_get(fwin->win), fwin->fm_obj,
-				    e_fm2_pan_set,
-				    e_fm2_pan_get,
-				    e_fm2_pan_max_get,
-				    e_fm2_pan_child_size_get);
+   o = e_scrollframe_add(e_win_evas_get(fwin->win));
+   /* FIXME: this theme object will have more versions and options later
+    * for things like swallowing widgets/buttons ot providing them - a
+    * gadcon for starters for fm widgets. need to register the owning 
+    * e_object of the gadcon so gadcon clients can get it and thus do
+    * things like find out what dirs/path the fwin is for etc. this will
+    * probably be how you add optional gadgets to fwin views like empty/full
+    * meters for disk usage, and other dir info/stats or controls. also it
+    * might be possible that we can have custom frames per dir later so need
+    * a way to set an edje file directly
+    */
+   e_scrollframe_custom_theme_set(o, "base/theme/fileman",
+				  "e/fileman/scrollframe/default");
+   e_scrollframe_extern_pan_set(o, fwin->fm_obj,
+				e_fm2_pan_set,
+				e_fm2_pan_get,
+				e_fm2_pan_max_get,
+				e_fm2_pan_child_size_get);
    evas_object_propagate_events_set(fwin->fm_obj, 0);
-   e_widget_scrollframe_focus_object_set(o, fwin->fm_obj);
    fwin->scrollframe_obj = o;
    evas_object_move(o, 0, 0);
    evas_object_show(o);
    
    e_fm2_window_object_set(fwin->fm_obj, E_OBJECT(fwin->win));
    
-   e_widget_focus_set(fwin->scrollframe_obj, 1);
+   evas_object_focus_set(fwin->fm_obj, 1);
    
    snprintf(buf, sizeof(buf), "_fwin::/%s", e_fm2_real_path_get(fwin->fm_obj));
    e_win_name_class_set(fwin->win, "E", buf);
@@ -158,7 +168,7 @@ _e_fwin_changed(void *data, Evas_Object *obj, void *event_info)
    
    fwin = data;
    if (fwin->scrollframe_obj)
-     e_widget_scrollframe_child_pos_set(fwin->scrollframe_obj, 0, 0);
+     e_scrollframe_child_pos_set(fwin->scrollframe_obj, 0, 0);
 }
 
 static void
@@ -177,12 +187,53 @@ _e_fwin_selected(void *data, Evas_Object *obj, void *event_info)
    if ((ici->link) && (ici->mount))
      e_fwin_new(fwin->win->container, ici->link, "/");
    else if (ici->link)
-     e_fwin_new(fwin->win->container, NULL, ici->link);
+     {
+	if (S_ISDIR(ici->statinfo.st_mode))
+	  e_fwin_new(fwin->win->container, NULL, ici->link);
+	else
+	  {
+	     /* FIXME: link to file - open file */
+	  }
+     }
    else
      {
 	snprintf(buf, sizeof(buf), "%s/%s", 
 		 e_fm2_real_path_get(fwin->fm_obj), ici->file);
-	e_fwin_new(fwin->win->container, NULL, buf);
+	if (S_ISDIR(ici->statinfo.st_mode))
+	  e_fwin_new(fwin->win->container, NULL, buf);
+	else
+	  {
+	     /* FIXME: file - open file */
+	  }
      }
    evas_list_free(selected);
 }
+
+static void
+_e_fwin_menu_extend(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info)
+{
+   E_Fwin *fwin;
+   E_Menu_Item *mi;
+   
+   fwin = data;
+   if (e_fm2_has_parent_get(obj))
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Go to Parent Directory"));
+	e_menu_item_icon_edje_set(mi,
+				  e_theme_edje_file_get("base/theme/fileman",
+							"e/fileman/button/parent"),
+				  "e/fileman/button/parent");
+	e_menu_item_callback_set(mi, _e_fwin_parent, obj);
+     }
+   /* FIXME: if info != null then check mime type and offer options based
+    * on that
+    */
+}
+
+static void
+_e_fwin_parent(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   e_fm2_parent_go(data);
+}
+

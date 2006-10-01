@@ -72,6 +72,7 @@ group {
 	    image {
 	       normal: "e17_ibar_over_v.png";
 	       border: 13 13 13 13;
+               middle: 0;
 	    }
             fill {
 	       smooth : 0;

@@ -371,6 +371,7 @@ _cb_files_add_edited(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *i
    E_Menu_Item *mi;
 
    cfdata = data;
+   if (!info) return;
    /* We need to get this info data to the menu callback, all this is created on the fly when user right clicks. */
    cfdata->info = info;
    mi = e_menu_item_new(m);

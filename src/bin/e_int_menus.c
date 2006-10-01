@@ -655,9 +655,15 @@ _e_int_menus_applications_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_int_menus_fileman_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_int_menus_fwin_home_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    e_fwin_new(m->zone->container, "~/", "/");
+}
+
+static void
+_e_int_menus_fwin_favorites_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   e_fwin_new(m->zone->container, "favorites", "/");
 }
 
 static void
@@ -700,9 +706,14 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    e_menu_item_separator_set(mi, 1);
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Filemanager"));
+   e_menu_item_label_set(mi, _("Home Directory"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/fileman");
-   e_menu_item_callback_set(mi, _e_int_menus_fileman_item_cb, NULL);
+   e_menu_item_callback_set(mi, _e_int_menus_fwin_home_item_cb, NULL);
+   
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Favorite Links"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/fileman");
+   e_menu_item_callback_set(mi, _e_int_menus_fwin_favorites_item_cb, NULL);
    
    l = evas_hash_find(_e_int_menus_augmentation, "config");
    if (l)
