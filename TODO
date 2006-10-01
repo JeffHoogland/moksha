@@ -63,7 +63,6 @@ Some of the things (in very short form) that need to be done to E17...
 * remove a lot of ipc commands that should be done via the gui now
 * remove config items marked for removal
 * make default set of apps .desktop files in tarball
-* add a installed icons dir with icons for the .desktop files
 * about dialog can do with redesign
 * bg gradient dialog needs a preview widget. also edje needs to be updated so
   we can do proper fills for non 0 angles.
