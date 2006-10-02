@@ -7,25 +7,27 @@ main=$DISPLAY
 display=" -display :1"
 
 case "$@" in
+	"")	action="gdb -x gdb.txt" ; main=":1" ; display=""  ;;
+	"-b")	action="gdb -x gdb.txt" ; main=":1" ; display=""  ;;
 	"-d")	action="ddd -display $main" ; display="" ;;
 	"-e")	action="" ;;
-	"-g")	action="gdb -x gdb.txt" ; main=":1" ; display=""  ;;
-	"")	action="gdb -x gdb.txt" ; main=":1" ; display=""  ;;
+	"-g")	action="gdb" ; main=":1" ; display=""  ;;
 	"-l")	action="valgrind --tool=memcheck --leak-check=yes --show-reachable=yes --log-file=valgrind_log" ;;
 	"-m")	action="valgrind --tool=memcheck --log-file=valgrind_log" ;;
 	"-p")	action="memprof --display=$main" ; main=":1" ; display="" ;;
 	"-r")	action="memprof_raster --display=$main" ; main=":1" ; display="" ;;
 	"-v")	action="valkyrie -display $main" ; main=":1" ; display="" ;;
 	*)      echo -e "Usage : xnest.sh [option]"
-		echo -e "\tdefault option is -g"
-		echo -e "\t-d use the GUI debugger\t\t\tddd"
+		echo -e "\tdefault option is -b"
+		echo -e "\t-b use text debugger with auto backtrace\tgdb"
+		echo -e "\t-d use the GUI debugger\t\t\t\tddd"
 		echo -e "\t-e enlightenment with no debugging"
-		echo -e "\t-g use text debugger\t\t\tgdb"
-		echo -e "\t-l leak check\t\t\t\tvalgrind"
-		echo -e "\t-m memory check\t\t\t\tvalgrind"
-		echo -e "\t-p memory profiling\t\t\tmemprof"
-		echo -e "\t-r raster's memory profiling\t\tmemprof_raster"
-		echo -e "\t-v GUI memory check\t\t\tvalkyrie"
+		echo -e "\t-g use text debugger\t\t\t\tgdb"
+		echo -e "\t-l leak check\t\t\t\t\tvalgrind"
+		echo -e "\t-m memory check\t\t\t\t\tvalgrind"
+		echo -e "\t-p memory profiling\t\t\t\tmemprof"
+		echo -e "\t-r raster's memory profiling\t\t\tmemprof_raster"
+		echo -e "\t-v GUI memory check\t\t\t\tvalkyrie"
 		echo -e ""
 		echo -e "You need to add \"-display :1\" as the run arguments for the GUI debugger."
 		echo -e "When you have finished with the text debugger, use the q command to quit."
