@@ -1102,7 +1102,55 @@ e_app_border_find(E_Border *bd)
        (!bd->client.icccm.title) && (bd->client.netwm.name) &&
        (!bd->client.icccm.window_role) && (!bd->client.icccm.command.argv))
      return NULL;
+/* FIXME:
+  Speed this up.
+  
+  ASSUMPTIONS:
+    When E execs an E_App, it will fill the E_App first.
+    All E_Apps are eventually filled in by an idler early on.
+    There will be enough non glob win_things that the extra complexity will be 
+    much faster than the current linear glob search through the list of E_Apps.
+    The globs wont match so many E_Apps that the final check for highest count 
+    wont take too much time.  It might be better to insert into a sorted by 
+    count list, then just pull out the top one.
 
+  PROBLEMS:
+    Apps started early, but outside E, most likely from a terminal, may get 
+    the wrong border.  This will be a result of the two pass part that is 
+    designed to make sure the startup apps don't sit and wait for all the 
+    E_Apps to be filled.  The same problem might hit all currently running 
+    apps during a restart.
+
+  DATA:
+    There will be non-glob hash + glob list for each of win_class, win_title, 
+    win_role, and win_name.
+    There will also be a non-glob hash for exe.
+    The non-glob hashs are keyed on the exe, win_class, win_title, win_role, or 
+    win_name.
+    They store a list of E_App paths that contain that exe, win_class, win_title, 
+    win_role, or win_name.
+
+  INIT:
+    for each app
+      put exe in the exe non-glob hash.  (key = exe, data = list of paths)
+      if win_class, win_title, win_role, and win_name is not a glob
+        look it up in the non-glob hash, add path to the list stored there
+      else
+        put it in the glob list
+
+  FIND:
+    2 passes (This speeds up startup programs, as the E_App should be filled.)
+      first without calling e_app_fields_fill and skipping the unfilled ones
+      if there is no winner
+        only do the ones that need filling on the second pass
+
+    on each pass
+      look up client strings in non-glob hashes
+        add contents of resulting list to temp hash (key = path, data = count of matches)
+      go through glob lists
+        if a glob matches, store path in the temp hash
+      go through temp hash, the hash entry with the highest count wins
+*/
    title = bd->client.netwm.name;
    if (!title) title = bd->client.icccm.title;
    for (l = _e_apps_all->subapps; l; l = l->next)
@@ -1134,9 +1182,10 @@ e_app_border_find(E_Border *bd)
 	     if (//(!a->win_role) ||
 		 ((a->win_role) && (bd->client.icccm.window_role) && (e_util_glob_match(bd->client.icccm.window_role, a->win_role))))
 	       ok++;
-	     if (
-		 (a->exe) && (bd->client.icccm.command.argc) && (bd->client.icccm.command.argv))
+	     if ((a->exe) && (bd->client.icccm.command.argv) && (bd->client.icccm.command.argv[0]))
 	       {
+/* a->exe is now already split at the space, so no need to do this.
+ * I left it in in case that becomes false.
 		  char *ts, *p;
 		  
 		  ts = alloca(strlen(a->exe) + 1);
@@ -1152,6 +1201,9 @@ e_app_border_find(E_Border *bd)
 		       p++;
 		    }
 		  if (!strcmp(ts, bd->client.icccm.command.argv[0]))
+		    ok++;
+*/
+		  if (!strcmp(a->exe, bd->client.icccm.command.argv[0]))
 		    ok++;
 	       }
 	  }
