@@ -1183,7 +1183,7 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
    E_Event_Dnd_Drop *ev;
    Instance *inst;
    E_App *app = NULL;
-   Evas_List *l = NULL;
+   Evas_List *l, *fl = NULL;
    IBar_Icon *ic;
    
    ev = event_info;
@@ -1229,7 +1229,7 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
      }
    else if (!strcmp(type, "text/uri-list"))
      {
-	l = ev->data;
+	fl = ev->data;
      }
    
    ic = inst->ibar->ic_drop_before;
@@ -1253,8 +1253,8 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
 	if (!ic) goto atend;
 	if (app)
 	  e_app_list_prepend_relative(app, ic->app);
-	else if (l)
-	  e_app_files_list_prepend_relative(l, ic->app);
+	else if (fl)
+	  e_app_files_list_prepend_relative(fl, ic->app);
      }
    else
      {
@@ -1263,8 +1263,8 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
 	  {
 	     if (app)
 	       e_app_list_append(app, inst->ibar->apps);
-	     else if (l)
-	       e_app_files_list_append(l, inst->ibar->apps);
+	     else if (fl)
+	       e_app_files_list_append(fl, inst->ibar->apps);
 	  }
      }
    clean:
