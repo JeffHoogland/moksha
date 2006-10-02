@@ -545,7 +545,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 				  _cb_files_changed_all, cfdata);
    e_fm2_icon_menu_start_extend_callback_set(mt, _cb_files_add_edited, cfdata);
    e_fm2_path_set(cfdata->gui.o_fm_all, cfdata->path_all, "/");
-
+   e_fm2_window_object_set(mt, E_OBJECT(cfd->dia->win));
    ob = e_widget_scrollframe_pan_add(evas, mt,
 				     e_fm2_pan_set,
 				     e_fm2_pan_get,
@@ -629,6 +629,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
          evas_object_smart_callback_add(mt, "changed",
 					_cb_files_changed, cfdata);
          e_fm2_path_set(cfdata->gui.o_fm, cfdata->path, "/");
+	 e_fm2_window_object_set(cfdata->gui.o_fm, E_OBJECT(cfd->dia->win));
 
          ob = e_widget_scrollframe_pan_add(evas, mt,
 				     e_fm2_pan_set,
