@@ -15,6 +15,7 @@
 
 #define DEBUG 0
 #define IDLE_ICONS 0
+#define CLEVER_BORDERS 0
 /* local subsystem functions */
 typedef struct _E_App_Change_Info E_App_Change_Info;
 typedef struct _E_App_Callback    E_App_Callback;
@@ -78,6 +79,28 @@ static Evas_List   *_e_apps_start_pending = NULL;
 static Evas_Hash   *_e_apps_every_app = NULL;
 static struct _E_App_Hash_Idler _e_apps_hash_idler;
 
+#if CLEVER_BORDERS
+struct _E_App_Glob_List_Entry
+{
+   const char *key;
+   const char *path;
+};
+
+static Evas_Hash *_e_apps_border_ng_win_class = NULL, 
+                 *_e_apps_border_ng_win_title = NULL, 
+		 *_e_apps_border_ng_win_name = NULL, 
+		 *_e_apps_border_ng_win_role = NULL, 
+		 *_e_apps_border_ng_exe = NULL;
+static Evas_List *_e_apps_border_g_win_class = NULL, 
+                 *_e_apps_border_g_win_title = NULL, 
+		 *_e_apps_border_g_win_name = NULL, 
+		 *_e_apps_border_g_win_role = NULL;
+static double border_setup_time = 0.0;
+static int    border_setup_count = 0, glob_count = 0;
+#endif
+static double border_time = 0.0;
+static int    border_count = 0;
+
 #define EAP_MIN_WIDTH 8
 #define EAP_MIN_HEIGHT 8
 
@@ -138,6 +161,8 @@ e_app_init(void)
    _e_apps_path_all = evas_stringshare_add(buf);
    _e_apps_exit_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_apps_cb_exit, NULL);
    _e_apps_border_add_handler = ecore_event_handler_add(E_EVENT_BORDER_ADD, _e_app_cb_event_border_add, NULL);
+#if CLEVER_BORDERS
+#endif
    /* Prefill with empty E_Apps from the all directory. */
    ecore_desktop_instrumentation_reset();
    begin = ecore_time_get();
@@ -187,7 +212,10 @@ _e_apps_hash_idler_cb(void *data)
    evas_hash_foreach(_e_apps_every_app, _e_apps_hash_idler_cb_init, idler);
    if (idler->all_done)
      {
-        printf("IDLE APP FILLING SCAN %3.3f\n", ecore_time_get() - idler->begin);
+        printf("\nIDLE APP FILLING SCAN %3.3f\n", ecore_time_get() - idler->begin);
+#if CLEVER_BORDERS
+        printf("APP BORDER SETUP %3.6f (average %2.6f) %d globs\n", border_setup_time, border_setup_time / border_setup_count, glob_count);
+#endif
 	idler->idler = NULL;
         ecore_desktop_instrumentation_print();
         return 0;
@@ -277,10 +305,22 @@ _e_apps_hash_idler_cb_init(Evas_Hash *hash, const char *key, void *data, void *f
 }
 
 
+#if CLEVER_BORDERS
+static Evas_Bool
+_e_apps_border_hash_cb_free(Evas_Hash *hash, const char *key, void *data, void *fdata)
+{
+   Evas_List *list;
+
+   list = data;
+   evas_list_free(list);
+}
+#endif
+
 EAPI int
 e_app_shutdown(void)
 {
-   Evas_List *subapps;
+   Evas_List *list;
+
    if (_e_apps_hash_idler.idler)
      {
         ecore_idler_del(_e_apps_hash_idler.idler);
@@ -289,7 +329,7 @@ e_app_shutdown(void)
    _e_apps_start_pending = evas_list_free(_e_apps_start_pending);
    if (_e_apps_all)
      {
-        subapps = _e_apps_all->subapps;
+        list = _e_apps_all->subapps;
 	e_object_unref(E_OBJECT(_e_apps_all));
 	_e_apps_all = NULL;
      }
@@ -307,7 +347,8 @@ e_app_shutdown(void)
    evas_stringshare_del(_e_apps_path_all);
      {
 	Evas_List *l;
-	for (l = subapps; l; l = l->next)
+
+	for (l = list; l; l = l->next)
 	  {
 	     E_App *a;
 	     a = l->data;
@@ -316,6 +357,56 @@ e_app_shutdown(void)
      }
    evas_hash_free(_e_apps_every_app);
    _e_apps_every_app = NULL;
+#if CLEVER_BORDERS
+   for (list = _e_apps_border_g_win_name; list; list = list->next)
+     {
+	struct _E_App_Glob_List_Entry *entry;
+
+	entry = list->data;
+	if (entry)   free(entry);
+	list->data = NULL;
+     }
+   for (list = _e_apps_border_g_win_class; list; list = list->next)
+     {
+	struct _E_App_Glob_List_Entry *entry;
+
+	entry = list->data;
+	if (entry)   free(entry);
+	list->data = NULL;
+     }
+   for (list = _e_apps_border_g_win_title; list; list = list->next)
+     {
+	struct _E_App_Glob_List_Entry *entry;
+
+	entry = list->data;
+	if (entry)   free(entry);
+	list->data = NULL;
+     }
+   for (list = _e_apps_border_g_win_role; list; list = list->next)
+     {
+	struct _E_App_Glob_List_Entry *entry;
+
+	entry = list->data;
+	if (entry)   free(entry);
+	list->data = NULL;
+     }
+
+   evas_hash_foreach(_e_apps_border_ng_win_name, _e_apps_border_hash_cb_free, NULL);
+   evas_hash_foreach(_e_apps_border_ng_win_class, _e_apps_border_hash_cb_free, NULL);
+   evas_hash_foreach(_e_apps_border_ng_win_title, _e_apps_border_hash_cb_free, NULL);
+   evas_hash_foreach(_e_apps_border_ng_win_role, _e_apps_border_hash_cb_free, NULL);
+
+   evas_hash_free(_e_apps_border_ng_win_name);    _e_apps_border_ng_win_name = NULL;
+   evas_hash_free(_e_apps_border_ng_win_class);   _e_apps_border_ng_win_class = NULL;
+   evas_hash_free(_e_apps_border_ng_win_title);   _e_apps_border_ng_win_title = NULL;
+   evas_hash_free(_e_apps_border_ng_win_role);    _e_apps_border_ng_win_role = NULL;
+   evas_hash_free(_e_apps_border_ng_exe);         _e_apps_border_ng_exe = NULL;
+
+   evas_list_free(_e_apps_border_g_win_name);     _e_apps_border_g_win_name = NULL;
+   evas_list_free(_e_apps_border_g_win_class);    _e_apps_border_g_win_class = NULL;
+   evas_list_free(_e_apps_border_g_win_title);    _e_apps_border_g_win_title = NULL;
+   evas_list_free(_e_apps_border_g_win_role);     _e_apps_border_g_win_role = NULL;
+#endif
    return 1;
 }
 
@@ -385,10 +476,10 @@ e_app_new(const char *path, int scan_subdirs)
 	     if (st.st_mtime > a->mtime)
 	       {
 	          e_app_fields_empty(a);
-		  printf("n");
+		  printf("H");
 	       }
 	     else
-	        printf("o");
+	        printf("O");
 	  }
 	e_object_ref(E_OBJECT(a));
      }
@@ -1089,6 +1180,60 @@ e_app_launch_id_pid_find(int launch_id, pid_t pid)
    return NULL;
 }
 
+#if CLEVER_BORDERS
+static void
+_e_apps_border_setup(Evas_Hash **non_glob, Evas_List **glob, const char *text, const char *path, char t)
+{
+   int is_glob = 0;
+
+printf("%c", t);
+   if (glob)
+     {
+        /* Check if text is a glob.  This is a really simple check, it could be more complex. */
+	if (strpbrk(text, "*?[]"))
+	   is_glob = 1;
+     }
+
+   if (is_glob)
+     {
+        struct _E_App_Glob_List_Entry *entry;
+
+        /* Put it into the glob list. */
+        entry = E_NEW(struct _E_App_Glob_List_Entry, 1);
+	if (entry)
+	  {
+	     entry->key = text;
+	     entry->path = path;
+	     (*glob) = evas_list_append(*glob, entry);
+	     glob_count++;
+	  }
+     }
+   else
+     {
+        Evas_List *entry = NULL;
+	int found = 0;
+
+        /* Put it into the list in the non_glob hash. */
+	if (*non_glob)
+	   entry = evas_hash_find(*non_glob, text);
+	if (entry)
+	   found = 1;
+	entry = evas_list_append(entry, path);
+	if (entry)
+	  {
+             if (found)
+	       {
+	           evas_hash_modify(*non_glob, text, entry);
+	       }
+	     else
+	       {
+	           (*non_glob) = evas_hash_direct_add(*non_glob, text, entry);
+	       }
+	  }
+     }
+}
+#endif
+
 /* Used by e_border and ibar. */
 EAPI E_App *
 e_app_border_find(E_Border *bd)
@@ -1097,11 +1242,14 @@ e_app_border_find(E_Border *bd)
    int ok, match = 0;
    E_App *a, *a_match = NULL;
    char *title;
+   double begin, time;
 
    if ((!bd->client.icccm.name) && (!bd->client.icccm.class) &&
        (!bd->client.icccm.title) && (bd->client.netwm.name) &&
        (!bd->client.icccm.window_role) && (!bd->client.icccm.command.argv))
      return NULL;
+
+   begin = ecore_time_get();
 /* FIXME:
   Speed this up.
   
@@ -1151,6 +1299,8 @@ e_app_border_find(E_Border *bd)
         if a glob matches, store path in the temp hash
       go through temp hash, the hash entry with the highest count wins
 */
+#if CLEVER_BORDERS
+#endif
    title = bd->client.netwm.name;
    if (!title) title = bd->client.icccm.title;
    for (l = _e_apps_all->subapps; l; l = l->next)
@@ -1219,6 +1369,10 @@ e_app_border_find(E_Border *bd)
 	_e_apps_all->subapps = evas_list_remove_list(_e_apps_all->subapps, l_match);
 	_e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, a_match);
      }
+   time = ecore_time_get() - begin;
+   border_count++;
+   border_time += time;
+   printf("APP BORDER SCAN %2.6f (average %2.6f) FOUND %s\n", time, border_time / border_count, ((a_match == NULL) ? "NOTHING" : a_match->path));
    return a_match;
 }
 
@@ -1335,6 +1489,15 @@ EAPI E_App *
 e_app_exe_find(const char *exe)
 {
    Evas_List *l;
+#if CLEVER_BORDERS
+   E_App *a = NULL;
+
+   l = evas_hash_find(_e_apps_border_ng_exe, exe);
+   if (l)
+      a = e_app_path_find((char *) l->data);
+   /* FIXME: Don't know if it's important to still be returning the least recently used E_App. */
+   return a;
+#else
    
    if (!exe) return NULL;
 
@@ -1359,6 +1522,7 @@ e_app_exe_find(const char *exe)
 	  }
      }
    return NULL;
+#endif
 }
 
 
@@ -1548,7 +1712,7 @@ printf(".");
 	 free(v); \
       }
 	
-printf("e");
+printf("E");
 	ef = eet_open(path, EET_FILE_MODE_READ);
 	if (!ef) return;
 	
@@ -1586,6 +1750,24 @@ printf("e");
 	eet_close(ef);
 	a->filled = 1;
      }
+#if CLEVER_BORDERS
+   if (a->filled)
+     {
+        double begin, time;
+
+        begin = ecore_time_get();
+
+        if ((a->path) && (a->win_class))   _e_apps_border_setup(&_e_apps_border_ng_win_class, &_e_apps_border_g_win_class, a->win_class, a->path, 'c');
+        if ((a->path) && (a->win_name))    _e_apps_border_setup(&_e_apps_border_ng_win_name,  &_e_apps_border_g_win_name,  a->win_name,  a->path, 'n');
+        if ((a->path) && (a->win_title))   _e_apps_border_setup(&_e_apps_border_ng_win_title, &_e_apps_border_g_win_title, a->win_title, a->path, 't');
+        if ((a->path) && (a->win_role))    _e_apps_border_setup(&_e_apps_border_ng_win_role,  &_e_apps_border_g_win_role,  a->win_role,  a->path, 'r');
+        if ((a->path) && (a->exe))         _e_apps_border_setup(&_e_apps_border_ng_exe, NULL, a->exe, a->path, 'e');
+
+        time = ecore_time_get() - begin;
+        border_setup_count++;
+        border_setup_time += time;
+     }
+#endif
 }
 
 static char *
