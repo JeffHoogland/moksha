@@ -72,7 +72,6 @@ static int          _e_apps_callbacks_delete_me = 0;
 static Evas_List   *_e_apps_change_callbacks = NULL;
 static Ecore_Event_Handler *_e_apps_exit_handler = NULL;
 static Ecore_Event_Handler *_e_apps_border_add_handler = NULL;
-static Evas_List   *_e_apps_repositories = NULL;
 static E_App       *_e_apps_all = NULL;
 static const char  *_e_apps_path_all = NULL;
 static const char  *_e_apps_path_trash = NULL;
@@ -138,7 +137,6 @@ e_app_init(void)
    _e_apps_path_trash = evas_stringshare_add(buf);
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/all", home);
    _e_apps_path_all = evas_stringshare_add(buf);
-   _e_apps_repositories = evas_list_append(_e_apps_repositories, evas_stringshare_add(buf));
    _e_apps_exit_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_apps_cb_exit, NULL);
    _e_apps_border_add_handler = ecore_event_handler_add(E_EVENT_BORDER_ADD, _e_app_cb_event_border_add, NULL);
    /* Prefill with empty E_Apps from the all directory. */
@@ -292,11 +290,6 @@ e_app_shutdown(void)
 	e_object_unref(E_OBJECT(_e_apps_all));
 	_e_apps_all = NULL;
      }
-   while (_e_apps_repositories)
-     {
-	evas_stringshare_del(_e_apps_repositories->data);
-	_e_apps_repositories = evas_list_remove_list(_e_apps_repositories, _e_apps_repositories);
-     }
    if (_e_apps_exit_handler)
      {
 	ecore_event_handler_del(_e_apps_exit_handler);
@@ -370,21 +363,13 @@ e_app_new(const char *path, int scan_subdirs)
    /* Is it a virtual path from inside a .order file? */
    if ((!a) && (!ecore_file_exists(path)))
      {
-	Evas_List *pl;
-
-	pl = _e_apps_repositories;
-	while (pl)
-	  {
-             _e_app_resolve_file_name(buf, sizeof(buf), (char *)pl->data, ecore_file_get_file(path));
-	     if (ecore_file_exists(buf))
-	       {
-	          path = buf;
-	          a = e_app_path_find(path);
-	          in_all = 1;
-	          virtual_app = 1;
-	          break;
-	       }
-	     pl = pl->next;
+        _e_app_resolve_file_name(buf, sizeof(buf), _e_apps_path_all, ecore_file_get_file(path));
+        if (ecore_file_exists(buf))
+          {
+             path = buf;
+             a = e_app_path_find(path);
+             in_all = 1;
+             virtual_app = 1;
           }
      }
 
