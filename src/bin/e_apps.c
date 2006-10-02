@@ -14,7 +14,6 @@
  */
 
 #define DEBUG 0
-#define NO_APP_LIST 1
 #define IDLE_ICONS 0
 /* local subsystem functions */
 typedef struct _E_App_Change_Info E_App_Change_Info;
@@ -181,6 +180,10 @@ _e_apps_hash_idler_cb(void *data)
 
    idler = data;
    idler->all_done = 1;
+   /* Even though we are only interested in the next one, the hash may have changed 
+    * since we last looked at it, so iterate through them again.  Doesn't seem to 
+    * slow the process down much. 
+    */
    evas_hash_foreach(_e_apps_every_app, _e_apps_hash_idler_cb_init, idler);
    if (idler->all_done)
      {
@@ -581,50 +584,13 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 	     a2 = NULL;
 
              _e_app_resolve_file_name(buf, sizeof(buf), a->path, s);
-//	     if (ecore_file_exists(buf))
+	     a2 = e_app_new(buf, scan_subdirs);
+	     if (a2)
 	       {
-		  a2 = e_app_new(buf, scan_subdirs);
-		  if (a2)
-		    {
-		       a2->parent = a;
-		       a->subapps = evas_list_append(a->subapps, a2);
-                       e_object_ref(E_OBJECT(a2));
-		    }
+	          a2->parent = a;
+		  a->subapps = evas_list_append(a->subapps, a2);
+                  e_object_ref(E_OBJECT(a2));
 	       }
-#if 0
-	     else
-	       {
-		  E_App *a3;
-		  Evas_List *pl;
-
-		  pl = _e_apps_repositories;
-		  while ((!a2) && (pl))
-		    {
-                       _e_app_resolve_file_name(buf, sizeof(buf), (char *)pl->data, s);
-		       a2 = e_app_new(buf, scan_subdirs);
-		       pl = pl->next;
-		    }
-		  if (a2)
-		    {
-		       a3 = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
-		       if (a3)
-			 {
-			    if (_e_app_copy(a3, a2))
-			      {
-				 a3->parent = a;
-				 a->subapps = evas_list_append(a->subapps, a3);
-                                 e_object_ref(E_OBJECT(a3));
-				 a2->references = evas_list_append(a2->references, a3);
-#if ! NO_APP_LIST
-				 _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, a3);
-#endif
-			      }
-			    else
-			      e_object_del(E_OBJECT(a3));
-			 }
-		    }
-	       }
-#endif
 	  }
 	ecore_list_destroy(files);
      }
@@ -2610,47 +2576,6 @@ _e_app_subdir_rescan(E_App *app)
 		       subapps = evas_list_append(subapps, a2);
 		       e_object_ref(E_OBJECT(a2));
 		    }
-#if 0
-		  else
-		    {
-		       /* We ask for a reference! */
-		       Evas_List *pl;
-		       E_App *a3;
-
-		       pl = _e_apps_repositories;
-		       while ((!a2) && (pl))
-			 {
-                            _e_app_resolve_file_name(buf, sizeof(buf), (char *)pl->data, s);
-			    a2 = e_app_new(buf, 1);
-			    pl = pl->next;
-			 }
-		       if (a2)
-			 {
-			    a3 = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
-			    if (a3)
-			      {
-				 if (_e_app_copy(a3, a2))
-				   {
-				      a3->parent = app;
-				      ch = E_NEW(E_App_Change_Info, 1);
-				      ch->app = a3;
-				      ch->change = E_APP_ADD;
-				      e_object_ref(E_OBJECT(ch->app));
-				      changes = evas_list_append(changes, ch);
-
-				      subapps = evas_list_append(subapps, a3);
-		                      e_object_ref(E_OBJECT(a3));
-				      a2->references = evas_list_append(a2->references, a3);
-#if ! NO_APP_LIST
-				      _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, a3);
-#endif
-				   }
-				 else
-				   e_object_del(E_OBJECT(a3));
-			      }
-			 }
-		    }
-#endif
 	       }
 	  }
 	ecore_list_destroy(files);
