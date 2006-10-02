@@ -303,9 +303,9 @@ _e_spectrum_redraw(void *d)
 	    _e_spectrum_color_calc(sp, vx, vy, vz, &r, &g, &b);
 	    data[(i * sp->iw) + j] =
 	      (sp->cv->a << 24) |
-	      (((r << 16) * sp->cv->a) / 255) |
-	      (((g << 8 ) * sp->cv->a) / 255) |
-	      (((b      ) * sp->cv->a) / 255);
+	      (((r * sp->cv->a) / 255) << 16) |
+	      (((g * sp->cv->a) / 255) <<  8) |
+	      (((b * sp->cv->a) / 255)      );
 	 }
     }
 
