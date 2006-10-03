@@ -33,20 +33,26 @@ struct _E_Config_Dialog_Data
    Evas_List *classes;
 };
 
+/* Key Pairs for color classes
+ * 
+ * These can/should be changed to "official" key/names
+ */
 const CFColor_Hash _color_hash[] = 
 {
-     {NULL, N_("Window Manager")},
-     {"about_title", N_("About Dialog Title")},
-     {"about_version", N_("About Dialog Version")},
+     {NULL,                 N_("Window Manager")},
+     {"about_title",        N_("About Dialog Title")},
+     {"about_version",      N_("About Dialog Version")},
      {"menu_title_default", N_("Menu Title")},
-     {"menu_title_active", N_("Menu Title Active")},
-     {"menu_item_default", N_("Menu Item")},
+     {"menu_title_active",  N_("Menu Title Active")},
+     {"menu_item_default",  N_("Menu Item")},
 
      {NULL, N_("Widgets")},
-     {"button_text_enabled", N_("Button Text Enabled")},
+     {"button_text_enabled",  N_("Button Text Enabled")},
      {"button_text_disabled", N_("Button Text Disabled")},
 
      {NULL, N_("Modules")},
+     {"ibar_label_default", N_("IBar Label")},
+     {"ibar_label_active",  N_("IBar Label Active")},
      {NULL, NULL}
 };
 
@@ -259,7 +265,7 @@ _load_color_classes(Evas_Object *obj, E_Config_Dialog_Data *cfdata)
 	       }
 	     else
 	       icon = NULL;
-	     printf("Adding: %s\n", cfc->name);
+
 	     e_widget_ilist_append(obj, icon, cfc->name, NULL, NULL, NULL);
 	  }
      }
