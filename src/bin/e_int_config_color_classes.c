@@ -1,6 +1,7 @@
 #include "e.h"
 
 typedef struct _CFColor_Class CFColor_Class;
+typedef struct _CFColor_Hash CFColor_Hash;
 
 static void        *_create_data          (E_Config_Dialog *cfd);
 static void         _free_data            (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -10,6 +11,12 @@ static int          _adv_apply_data       (E_Config_Dialog *cfd, E_Config_Dialog
 static Evas_Object *_adv_create_widgets   (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 static void         _load_color_classes   (Evas_Object *obj, E_Config_Dialog_Data *cfdata);
+
+struct _CFColor_Hash 
+{
+   const char *key;
+   const char *name;
+};
 
 struct _CFColor_Class 
 {
@@ -23,6 +30,13 @@ struct _E_Config_Dialog_Data
    int state;
    E_Color *color1, *color2, *color3;
    Evas_List *classes;
+};
+
+const CFColor_Hash _color_hash[] = 
+{
+     {"button_text_enabled", N_("Button Text Enabled")},
+     {"button_text_disabled", N_("Button Text Disabled")},
+     {NULL, NULL}
 };
 
 EAPI E_Config_Dialog *
@@ -50,9 +64,41 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
    Evas_List *l;
+   Evas_Hash *color_hash;
    
    cfdata->cur_class = NULL;
    cfdata->state = 0;
+   
+   for (l = edje_color_class_list(); l; l = l->next) 
+     {
+	Evas_Object *icon;
+	E_Color_Class *cc;
+	CFColor_Class *cfc;
+	char *name;
+	int i = 0;
+	
+	name = (char *)l->data;
+	if (!name) continue;
+
+	cfc = E_NEW(CFColor_Class, 1);
+	while (_color_hash[i].key) 
+	  {
+	     if (!strcmp(_color_hash[i].key, name)) 
+	       {
+		  cfc->name = evas_stringshare_add(_color_hash[i].name);
+		  break;
+	       }
+	     i++;
+	  }
+	if (!cfc->name)
+	  cfc->name = evas_stringshare_add(name);
+	  
+	cfc->enabled = 0;
+	cc = e_color_class_find(name);
+	if (cc) 
+	  cfc->enabled = 1;
+	cfdata->classes = evas_list_append(cfdata->classes, cfc);
+     }
 
    cfdata->color1 = calloc(1, sizeof(E_Color));
    cfdata->color1->a = 255;
@@ -75,25 +121,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    e_color_update_rgb(cfdata->color1);
    e_color_update_rgb(cfdata->color2);
    e_color_update_rgb(cfdata->color3);
-   
-   for (l = edje_color_class_list(); l; l = l->next) 
-     {
-	char *name;
-	Evas_Object *icon;
-	E_Color_Class *cc;
-	CFColor_Class *cfc;
-	
-	name = (char *)l->data;
-	if (!name) continue;
-	
-	cfc = E_NEW(CFColor_Class, 1);
-	cfc->name = evas_stringshare_add(name);
-	cfc->enabled = 0;
-	cc = e_color_class_find(name);
-	if (cc) 
-	  cfc->enabled = 1;
-	cfdata->classes = evas_list_append(cfdata->classes, cfc);
-     }
 }
 
 static void *
