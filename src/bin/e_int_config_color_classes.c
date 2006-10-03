@@ -43,6 +43,7 @@ struct _E_Config_Dialog_Data
    Evas_List *classes;
    struct 
      {
+	Evas_Object *ilist;
 	Evas_Object *renable, *rdisable;
 	Evas_Object *c1, *c2, *c3;
      } gui;
@@ -244,6 +245,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("Color Classes"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
    ob = e_widget_ilist_add(evas, 16, 16, NULL);
+   cfdata->gui.ilist = ob;
    e_widget_on_change_hook_set(ob, _list_cb_change, cfdata);
    _load_color_classes(ob, cfdata);
    e_widget_framelist_object_append(of, ob);
@@ -322,6 +324,7 @@ _adv_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfda
    of = e_widget_framelist_add(evas, _("Color Classes"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
    ob = e_widget_ilist_add(evas, 16, 16, NULL);
+   cfdata->gui.ilist = ob;
    e_widget_on_change_hook_set(ob, _list_cb_change, cfdata);
    _load_color_classes(ob, cfdata);
    e_widget_framelist_object_append(of, ob);
@@ -408,10 +411,14 @@ _radio_cb_change(void *data, Evas_Object *obj, void *event_info)
 {
    E_Config_Dialog_Data *cfdata;
    Evas_List *l;
+   Evas_Object *icon;
+   int n;
    
    cfdata = data;
    if (!cfdata) return;
 
+   n = e_widget_ilist_selected_get(cfdata->gui.ilist);
+   
    for (l = cfdata->classes; l; l = l->next) 
      {
 	CFColor_Class *c;
@@ -421,9 +428,18 @@ _radio_cb_change(void *data, Evas_Object *obj, void *event_info)
 	if (!c->key) continue;
 	if (strcmp(c->name, cfdata->cur_class)) continue;
 	c->enabled = cfdata->state;
+	if (c->enabled) 
+	  {
+	     icon = edje_object_add(evas_object_evas_get(cfdata->gui.ilist));
+	     e_util_edje_icon_set(icon, "enlightenment/e");
+	  }
+	else
+	  icon = NULL;
+
+	e_widget_ilist_nth_icon_set(cfdata->gui.ilist, n, icon);
 	break;
      }
-   
+
    if (!cfdata->gui.c1) return;   
    if (cfdata->state == 0) 
      {
