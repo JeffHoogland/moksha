@@ -73,6 +73,11 @@ group {
 	       smooth: 0;
 	    }
 	 }
+	 description 
+	   {
+	      state: "disabled" 0.0;
+	      inherit: "default" 0.0;
+	   }	 
       }
   }
   programs {
@@ -82,5 +87,21 @@ group {
       source: "overlay";
       action: SIGNAL_EMIT "e,action,click" "";
     } 
+     program 
+       {
+	  name: "disable";
+	  signal: "e,state,disabled";
+	  source: "e";
+	  action: STATE_SET "disabled" 0.0;
+	  target: "overlay";
+       }
+     program 
+       {
+	  name: "enable";
+	  signal: "e,state,enabled";
+	  source: "e";
+	  action: STATE_SET "default" 0.0;
+	  target: "overlay";
+       }
   }
 }
