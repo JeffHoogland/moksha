@@ -20,6 +20,7 @@ struct _CFColor_Hash
 
 struct _CFColor_Class 
 {
+   const char *key;
    const char *name;
    int enabled;
 };
@@ -34,8 +35,18 @@ struct _E_Config_Dialog_Data
 
 const CFColor_Hash _color_hash[] = 
 {
+     {NULL, N_("Window Manager")},
+     {"about_title", N_("About Dialog Title")},
+     {"about_version", N_("About Dialog Version")},
+     {"menu_title_default", N_("Menu Title")},
+     {"menu_title_active", N_("Menu Title Active")},
+     {"menu_item_default", N_("Menu Item")},
+
+     {NULL, N_("Widgets")},
      {"button_text_enabled", N_("Button Text Enabled")},
      {"button_text_disabled", N_("Button Text Disabled")},
+
+     {NULL, N_("Modules")},
      {NULL, NULL}
 };
 
@@ -63,43 +74,37 @@ e_int_config_color_classes(E_Container *con)
 static void 
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
-   Evas_List *l;
+   Evas_List *l, *cclist;
    Evas_Hash *color_hash;
-   
+   int i = 0;
+
+   cclist = edje_color_class_list();
    cfdata->cur_class = NULL;
    cfdata->state = 0;
    
-   for (l = edje_color_class_list(); l; l = l->next) 
+   for (i = 0; _color_hash[i].name; i++) 
      {
-	Evas_Object *icon;
-	E_Color_Class *cc;
 	CFColor_Class *cfc;
-	char *name;
-	int i = 0;
-	
-	name = (char *)l->data;
-	if (!name) continue;
+	E_Color_Class *cc;
 
 	cfc = E_NEW(CFColor_Class, 1);
-	while (_color_hash[i].key) 
-	  {
-	     if (!strcmp(_color_hash[i].key, name)) 
-	       {
-		  cfc->name = evas_stringshare_add(_color_hash[i].name);
-		  break;
-	       }
-	     i++;
-	  }
-	if (!cfc->name)
-	  cfc->name = evas_stringshare_add(name);
-	  
 	cfc->enabled = 0;
-	cc = e_color_class_find(name);
-	if (cc) 
-	  cfc->enabled = 1;
+	cfc->key = NULL;
+
+	if (_color_hash[i].key) 
+	  {
+	     cfc->key = evas_stringshare_add(_color_hash[i].key);
+	     cfc->name = evas_stringshare_add(_(_color_hash[i].name));
+	     cc = e_color_class_find(cfc->name);
+	     if (cc) 
+	       cfc->enabled = 1;
+	  }
+	else 
+	  cfc->name = evas_stringshare_add(_color_hash[i].name);
+	
 	cfdata->classes = evas_list_append(cfdata->classes, cfc);
      }
-
+   
    cfdata->color1 = calloc(1, sizeof(E_Color));
    cfdata->color1->a = 255;
    cfdata->color1->r = 255;
@@ -144,6 +149,9 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if (!cfc) continue;
 	if (cfc->name)
 	  evas_stringshare_del(cfc->name);
+	if (cfc->key)
+	  evas_stringshare_del(cfc->key);
+	
 	cfdata->classes = evas_list_remove_list(cfdata->classes, cfdata->classes);
      }
    E_FREE(cfdata->color1);
@@ -230,6 +238,7 @@ static void
 _load_color_classes(Evas_Object *obj, E_Config_Dialog_Data *cfdata) 
 {
    Evas_List *l;
+   Evas_Coord w, h;
    
    e_widget_ilist_clear(obj);
    for (l = cfdata->classes; l; l = l->next) 
@@ -239,15 +248,22 @@ _load_color_classes(Evas_Object *obj, E_Config_Dialog_Data *cfdata)
 	
 	cfc = l->data;
 	if (!cfc) continue;
-	if (cfc->enabled) 
+	if (!cfc->key) 
+	  e_widget_ilist_header_append(obj, NULL, cfc->name);
+	else 
 	  {
-	     icon = edje_object_add(evas_object_evas_get(obj));
-	     e_util_edje_icon_set(icon, "enlightenment/e");
+	     if (cfc->enabled) 
+	       {
+		  icon = edje_object_add(evas_object_evas_get(obj));
+		  e_util_edje_icon_set(icon, "enlightenment/e");
+	       }
+	     else
+	       icon = NULL;
+	     printf("Adding: %s\n", cfc->name);
 	     e_widget_ilist_append(obj, icon, cfc->name, NULL, NULL, NULL);
 	  }
-	else
-	  e_widget_ilist_append(obj, NULL, cfc->name, NULL, NULL, NULL);
      }
    e_widget_ilist_go(obj);
-   e_widget_min_size_set(obj, 150, 275);
+   e_widget_min_size_get(obj, &w, &h);
+   e_widget_min_size_set(obj, w, 275);
 }
