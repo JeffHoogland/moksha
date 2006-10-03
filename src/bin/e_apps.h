@@ -15,6 +15,17 @@ typedef enum _E_App_Change
    E_APP_READY_EXPIRE
 } E_App_Change;
 
+typedef enum _E_App_Icon_Type
+{
+   E_APP_ICON_UNKNOWN,
+   E_APP_ICON_NONE,
+   E_APP_ICON_PATH,
+   E_APP_ICON_CLASS,
+   E_APP_ICON_GROUP,
+   E_APP_ICON_FDO
+} E_App_Icon_Type;
+
+
 typedef struct _E_App          E_App;
 typedef struct _E_App_Instance E_App_Instance;
 typedef struct _E_App_Autopsy  E_App_Autopsy;
@@ -51,6 +62,7 @@ struct _E_App
    const char         *icon;       /* FDO icon */
    const char         *icon_path;  /* icon path */
    time_t              icon_time;  /* For checking if the icon cache is valid. */
+   E_App_Icon_Type     icon_type;
 
    Evas_List          *subapps; /* if this a directory, a list of more E_App's */
 
@@ -69,8 +81,6 @@ struct _E_App
    unsigned char       deleted : 1; /* this app's file is deleted from disk */
 
    unsigned char       filled : 1; /* this app has had its data filled in */
-   unsigned char       no_icon : 1; /* this app's icon has not been found in the current theme, future searhes should give up early . */
-   unsigned char       found_icon : 1; /* this app has been searched for and found. */
    unsigned char       dirty_icon : 1; /* this app's icon has been found, and the on disk cache needs to be updated. */
    unsigned char       hard_icon : 1; /* this app's icon was hard coded into the .desktop files Icon field. */
 

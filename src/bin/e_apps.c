@@ -44,13 +44,12 @@ struct _E_App_Hash_Idler
 {
    Ecore_Idler *idler;
    int all_done;
-   double begin;
+   double begin, pass;
 };
 
 static Evas_Bool _e_apps_hash_cb_init      (Evas_Hash *hash, const char *key, void *data, void *fdata);
 static int       _e_apps_hash_idler_cb     (void *data);
 static Evas_Bool _e_apps_hash_idler_cb_init(Evas_Hash *hash, const char *key, void *data, void *fdata);
-static void      _e_app_fdo_icon_search    (E_App *a);
 static void      _e_app_free               (E_App *a);
 static E_App     *_e_app_subapp_file_find  (E_App *a, const char *file);
 static int        _e_app_new_save          (E_App *a);    
@@ -60,6 +59,7 @@ static void      _e_app_cb_monitor         (void *data, Ecore_File_Monitor *em, 
 static void      _e_app_subdir_rescan      (E_App *app);
 static int       _e_app_is_eapp            (const char *path);
 static int       _e_app_copy               (E_App *dst, E_App *src);
+static E_App_Icon_Type _e_app_icon_type    (E_App *a);
 static void      _e_app_fields_save_others(E_App *a);
 static void      _e_app_save_order         (E_App *app);
 static int       _e_app_cb_event_border_add(void *data, int type, void *event);
@@ -218,6 +218,7 @@ _e_apps_hash_idler_cb(void *data)
 
    idler = data;
    idler->all_done = 1;
+   idler->pass = ecore_time_get();
    /* Even though we are only interested in the next one, the hash may have changed 
     * since we last looked at it, so iterate through them again.  Doesn't seem to 
     * slow the process down much. 
@@ -256,66 +257,24 @@ _e_apps_hash_idler_cb_init(Evas_Hash *hash, const char *key, void *data, void *f
 	if (stat(a->path, &st) >= 0)
            a->mtime = st.st_mtime;
         e_app_fields_fill(a, a->path);
-	if (!a->filled) return 1;
-	idler->all_done = 0;
-	return 0;
      }
 #if IDLE_ICONS
-   else if ((!a->idle_icon) && (!a->found_icon) && (!a->no_icon))
+   else if ((!a->idle_icon) && (a->icon_type == E_APP_ICON_UNKNOWN))
      {
         int theme_match = 0;
 
         a->idle_icon = 1;
-        /* If the icon was hard coded into the .desktop files Icon field, then theming doesn't matter. */
-        if (a->hard_icon)
-           theme_match = 1;
-        else if ((e_config->icon_theme == NULL) && (a->icon_theme == NULL))  /* Check to see if the icon theme is different. */
-             theme_match = 1;
-        else if ((e_config->icon_theme) && (a->icon_theme) && (strcmp(e_config->icon_theme, a->icon_theme) == 0))
-	     theme_match = 1;
-
-        /* Check if we already know the icon path. */
-        if ((theme_match) && (a->icon_path) && (a->icon_path[0] != 0))
-	  {
-             a->found_icon = 1;
-	     printf("P");
-	  }
-        else
-           {
-	     /* Check the theme for icons. */
-              if (e_util_edje_icon_list_check(a->icon_class))
-	        {
-                   a->found_icon = 1;
-	           printf("C");
-		}
-	      else
-	         {
-                    if (edje_file_group_exists(a->path, "icon"))
-		      {
-                         a->found_icon = 1;
-	                 printf("G");
-		      }
-                    else /* If that fails, then this might be an FDO icon. */
-                       _e_app_fdo_icon_search(a);
-
-                    if (a->icon_path)
-		      {
-                         a->found_icon = 1;
-	                 printf("F");
-		      }
-	           else
-                      printf("N");
-	         }
-           }
-
-        a->found_icon = 1;   /* Seems strange, but this stops it from looping infinitely. */
-        if ((!a->found_icon) && (!a->no_icon)) return 1;
-	idler->all_done = 0;
-	return 0;
+        _e_app_icon_type(a);
      }
 #endif
-   return 1;
+   /* FIXME: This time should be since the beginnig of all idler processing, 
+    * and the time limit should be tied to the frame rate. 
+    */
+   if ((ecore_time_get() - idler->pass) < 0.07) return 1;
+   idler->all_done = 0;
+   return 0;
 }
+
 
 
 #if CLEVER_BORDERS
@@ -490,10 +449,10 @@ e_app_new(const char *path, int scan_subdirs)
 	     if (st.st_mtime > a->mtime)
 	       {
 	          e_app_fields_empty(a);
-		  printf("H");
+		  printf("M");
 	       }
 	     else
-	        printf("O");
+	        printf("H");
 	  }
 	e_object_ref(E_OBJECT(a));
      }
@@ -623,6 +582,7 @@ e_app_empty_new(const char *path)
 	snprintf(buf, sizeof(buf), "%s/_new_app_%1.1f.desktop", _e_apps_path_all, ecore_time_get());
 	a->path = evas_stringshare_add(buf);
      }
+   a->icon_type = E_APP_ICON_UNKNOWN;
 //   printf("NEW APP %p %s\n", a, a->path);
    return a;
 }
@@ -1201,7 +1161,9 @@ _e_apps_border_setup(Evas_Hash **non_glob, Evas_List **glob, const char *text, c
 {
    int is_glob = 0;
 
+#if DEBUG
 printf("%c", t);
+#endif
    if (glob)
      {
         /* Check if text is a glob.  This is a really simple check, it could be more complex. */
@@ -1415,6 +1377,7 @@ e_app_border_find(E_Border *bd)
         winner.ok = 0;
         if (ok)  /* Fill all E_Apps and try again on the second pass. */
 	  {
+printf("SECOND PASS\n");
              for (l = _e_apps_all->subapps; l; l = l->next)
                {
 	          a = l->data;
@@ -1829,7 +1792,7 @@ e_app_fields_fill(E_App *a, const char *path)
 	if (desktop)
 	  {
 	     a->desktop = desktop;
-	     
+
 printf(".");
 	     if (desktop->name)  a->name = evas_stringshare_add(desktop->name);
 	     if (desktop->generic)  a->generic = evas_stringshare_add(desktop->generic);
@@ -1850,8 +1813,7 @@ printf(".");
 	     a->wait_exit = desktop->wait_exit;
 	     a->hard_icon = desktop->hard_icon;
 	     a->dirty_icon = 0;
-	     a->no_icon = 0;
-	     a->found_icon = 0;
+             a->icon_type = E_APP_ICON_UNKNOWN;
 
 	     a->filled = 1;
 
@@ -2228,10 +2190,10 @@ printf("-");
    a->win_role = NULL;
    a->dirty_icon = 0;
    a->hard_icon = 0;
-   a->no_icon = 0;
-   a->found_icon = 0;
+   a->icon_type = E_APP_ICON_UNKNOWN;
    a->filled = 0;
    a->idle_fill = 0;
+   a->idle_icon = 0;
 }
 
 EAPI Ecore_List *
@@ -2318,79 +2280,99 @@ e_app_valid_exe_get(E_App *a)
    return ok;
 }
 
-static Evas_Object *
-_e_app_icon_path_add(Evas *evas, E_App *a)
+static E_App_Icon_Type
+_e_app_icon_type(E_App *a)
 {
-   Evas_Object *o;
-   char *ext;
-
-   o = e_icon_add(evas);
-   ext = strrchr(a->icon_path, '.');
-   if (ext)
-      {
-         if (strcmp(ext, ".edj") == 0)
-            e_icon_file_edje_set(o, a->icon_path, "icon");
-         else
-            e_icon_file_set(o, a->icon_path);
-      }
-   else
-      e_icon_file_set(o, a->icon_path);
-   e_icon_fill_inside_set(o, 1);
-
-   return o;
-}
-
-
-static void
-_e_app_icon_path_add_to_menu_item(E_Menu_Item *mi, E_App *a)
-{
-   char *ext;
-
-   ext = strrchr(a->icon_path, '.');
-   if (ext)
-      {
-          if (strcmp(ext, ".edj") == 0)
-             e_menu_item_icon_edje_set(mi, a->icon_path, "icon");
-          else
-             e_menu_item_icon_file_set(mi, a->icon_path);
-      }
-   else
-      e_menu_item_icon_file_set(mi, a->icon_path);
-}
-
-static void
-_e_app_fdo_icon_search(E_App *a)
-{
-   if ((!a->no_icon) && (a->icon_class))
+   if (a->icon_type == E_APP_ICON_UNKNOWN)
      {
-        char *v = NULL;
-		  
-	/* FIXME: Use a real icon size. */
-	v = (char *)ecore_desktop_icon_find(a->icon_class, NULL, e_config->icon_theme);
-	if (v)
-	  {
-             if (a->icon_path) evas_stringshare_del(a->icon_path);
-	     a->icon_path = evas_stringshare_add(v);
-	     if (e_config->icon_theme)
-	       {
-                  if (a->icon_theme) evas_stringshare_del(a->icon_theme);
-		  a->icon_theme = evas_stringshare_add(e_config->icon_theme);
-	       }
-	     a->dirty_icon = 1;
-	     free(v);
-	  }
+        int theme_match = 0;
+
+        /* If the icon was hard coded into the .desktop files Icon field, then theming doesn't matter. */
+        if (a->hard_icon)
+           theme_match = 1;
+        else if ((e_config->icon_theme == NULL) && (a->icon_theme == NULL))  /* Check to see if the icon theme is different. */
+           theme_match = 1;
+        else if ((e_config->icon_theme) && (a->icon_theme) && (strcmp(e_config->icon_theme, a->icon_theme) == 0))
+           theme_match = 1;
+
+        /* Check if we already know the icon path. */
+        if ((theme_match) && (a->icon_path) && (a->icon_path[0] != 0))
+          {
+	     a->icon_type = E_APP_ICON_PATH;
+#if DEBUG
+             printf("P");
+#endif
+          }
         else
-           a->no_icon = 1;
-        /* Copy the new found icon data to the original. */
-        _e_app_fields_save_others(a);
-      }
+          {
+             /* Check the theme for icons. */
+             if (e_util_edje_icon_list_check(a->icon_class))
+	       {
+	          a->icon_type = E_APP_ICON_CLASS;
+#if DEBUG
+	          printf("C");
+#endif
+	       }
+             else
+               {
+                  if (edje_file_group_exists(a->path, "icon"))
+	            {
+	               a->icon_type = E_APP_ICON_GROUP;
+#if DEBUG
+	               printf("G");
+#endif
+	            }
+                  else /* If that fails, then this might be an FDO icon. */
+                    {
+                       if (a->icon_class)
+                         {
+                            char *v = NULL;
+
+                    	    /* FIXME: Use a real icon size. */
+                    	    v = (char *)ecore_desktop_icon_find(a->icon_class, NULL, e_config->icon_theme);
+                    	    if (v)
+                    	      {
+                                 if (a->icon_path) evas_stringshare_del(a->icon_path);
+                    	         a->icon_path = evas_stringshare_add(v);
+                    	         if (e_config->icon_theme)
+                    	           {
+                                      if (a->icon_theme) evas_stringshare_del(a->icon_theme);
+                    		      a->icon_theme = evas_stringshare_add(e_config->icon_theme);
+                    	           }
+                    	         a->dirty_icon = 1;
+                    	         free(v);
+                    	      }
+                            /* Copy the new found icon data to the original. */
+                            _e_app_fields_save_others(a);
+                          }
+                    }
+
+                  if (a->icon_path)
+	            {
+	               a->icon_type = E_APP_ICON_FDO;
+#if DEBUG
+	               printf("F");
+#endif
+	            }
+	          else
+	            {
+	               a->icon_type = E_APP_ICON_NONE;
+#if DEBUG
+                       printf("N");
+#endif
+	            }
+               }
+          }
+     }
+
+   return a->icon_type;
 }
 
 EAPI Evas_Object *
 e_app_icon_add(Evas *evas, E_App *a)
 {
    Evas_Object *o = NULL;
-   int theme_match = 0;
+   E_App_Icon_Type type;
 
    if (a->orig)
       a = a->orig;
@@ -2399,45 +2381,36 @@ e_app_icon_add(Evas *evas, E_App *a)
 printf("e_app_icon_add(%s)   %s   %s   %s\n", a->path, a->icon_class, e_config->icon_theme, a->icon_path);
 #endif
 
-   /* First check to see if the icon theme is different. */
-   if ((e_config->icon_theme) && (a->icon_theme))
+   type = _e_app_icon_type(a);
+   switch (type)
      {
-        if (strcmp(e_config->icon_theme, a->icon_theme) == 0)
-	   theme_match = 1;
-     }
-   else if ((e_config->icon_theme == NULL) && (a->icon_theme == NULL))
-        theme_match = 1;
+        case E_APP_ICON_CLASS   : o = edje_object_add(evas);  e_util_edje_icon_list_set(o, a->icon_class); break;
+        case E_APP_ICON_GROUP   : o = edje_object_add(evas);  edje_object_file_set(o, a->path, "icon");    break;
+        case E_APP_ICON_PATH    :
+        case E_APP_ICON_FDO     : 
+          {
+             char *ext;
 
-   /* If the icon was hard coded into the .desktop files Icon field, then theming doesn't matter. */
-   if (a->hard_icon)
-      theme_match = 1;
+             o = e_icon_add(evas);
+             ext = strrchr(a->icon_path, '.');
+             if (ext)
+                {
+                   if (strcmp(ext, ".edj") == 0)
+                      e_icon_file_edje_set(o, a->icon_path, "icon");
+                   else
+                      e_icon_file_set(o, a->icon_path);
+                }
+             else
+                e_icon_file_set(o, a->icon_path);
+             e_icon_fill_inside_set(o, 1);
+	     break;
+          }
 
-   /* Then check if we already know the icon path. */
-   if ((theme_match) && (a->icon_path) && (a->icon_path[0] != 0))
-     o = _e_app_icon_path_add(evas, a);
-   else
-     {
-	o = edje_object_add(evas);
-	/* Check the theme for icons. */
-	if (!e_util_edje_icon_list_set(o, a->icon_class))
-	  {
-	     if (edje_object_file_set(o, a->path, "icon"))
-	       {
-		  a->found_icon = 1;
-	       }
-	     else /* If that fails, then this might be an FDO icon. */
-                _e_app_fdo_icon_search(a);
-	     
-	     if (a->icon_path)
-	       {
-		  /* Free the aborted object first. */
-		  if (o)   evas_object_del(o);
-		  o = _e_app_icon_path_add(evas, a);
-	       }
-	  }
+        case E_APP_ICON_UNKNOWN :
+        case E_APP_ICON_NONE    :
+	default :
+	   break;
      }
-   if (o)
-      a->found_icon = 1;
    return o;
 }
 
@@ -2453,67 +2426,46 @@ printf("e_app_icon_add(%s)   %s   %s   %s\n", a->path, a->icon_class, e_config->
 EAPI void
 e_app_icon_add_to_menu_item(E_Menu_Item *mi, E_App *a)
 {
-   int theme_match = 0;
+   E_App_Icon_Type type;
 
    if (a->orig)
       a = a->orig;
-
    mi->app = a;
-   /* e_menu_item_icon_edje_set() just tucks away the params, the actual call to edje_object_file_set() happens later. */
-   /* e_menu_item_icon_file_set() just tucks away the params, the actual call to e_icon_add() happens later. */
 
 #if DEBUG
 printf("e_app_icon_add_to_menu_item(%s)   %s   %s   %s\n", a->path, a->icon_class, e_config->icon_theme, a->icon_path);
 #endif
-   /* First check to see if the icon theme is different. */
-   if ((e_config->icon_theme) && (a->icon_theme))
+
+   /* e_menu_item_icon_edje_set() just tucks away the params, the actual call to edje_object_file_set() happens later. */
+   /* e_menu_item_icon_file_set() just tucks away the params, the actual call to e_icon_add() happens later. */
+   type = _e_app_icon_type(a);
+   switch (type)
      {
-        if (strcmp(e_config->icon_theme, a->icon_theme) == 0)
-	   theme_match = 1;
+        case E_APP_ICON_CLASS   : e_util_menu_item_edje_icon_list_set(mi, a->icon_class);  break;
+        case E_APP_ICON_GROUP   : e_menu_item_icon_edje_set(mi, a->path, "icon");  break;
+        case E_APP_ICON_PATH    :
+        case E_APP_ICON_FDO     : 
+          {
+             char *ext;
+
+             ext = strrchr(a->icon_path, '.');
+             if (ext)
+                {
+                    if (strcmp(ext, ".edj") == 0)
+                       e_menu_item_icon_edje_set(mi, a->icon_path, "icon");
+                    else
+                       e_menu_item_icon_file_set(mi, a->icon_path);
+                }
+             else
+                e_menu_item_icon_file_set(mi, a->icon_path);
+	     break;
+          }
+
+        case E_APP_ICON_UNKNOWN :
+        case E_APP_ICON_NONE    :
+	default :
+	   break;
      }
-   else if ((e_config->icon_theme == NULL) && (a->icon_theme == NULL))
-        theme_match = 1;
-
-   /* If the icon was hard coded into the .desktop files Icon field, then theming doesn't matter. */
-   if (a->hard_icon)
-      theme_match = 1;
-
-   /* Then check if we already know the icon path. */
-   if ((theme_match) && (a->icon_path) && (a->icon_path[0] != 0))
-     {
-         _e_app_icon_path_add_to_menu_item(mi, a);
-         a->found_icon = 1;
-	 printf("P");
-     }
-   else
-      {
-	/* Check the theme for icons. */
-         if (e_util_menu_item_edje_icon_list_set(mi, a->icon_class))
-	    {
-               a->found_icon = 1;
-	       printf("C");
-	    }
-	 else
-	    {
-               if (edje_file_group_exists(a->path, "icon"))
-	         {
-                    e_menu_item_icon_edje_set(mi, a->path, "icon");
-                    a->found_icon = 1;
-	            printf("G");
-		 }
-               else /* If that fails, then this might be an FDO icon. */
-                  _e_app_fdo_icon_search(a);
-
-               if (a->icon_path)
-	         {
-                    _e_app_icon_path_add_to_menu_item(mi, a);
-                    a->found_icon = 1;
-	            printf("F");
-		 }
-	       else
-                  printf("N");
-	    }
-      }
 }
 
 
@@ -3077,11 +3029,12 @@ _e_app_copy(E_App *dst, E_App *src)
    dst->icon_time = src->icon_time;
    dst->starting = src->starting;
    dst->scanned = src->scanned;
+   dst->icon_type = src->icon_type;
    dst->dirty_icon = src->dirty_icon;
    dst->hard_icon = src->hard_icon;
-   dst->no_icon = src->no_icon;
    dst->filled = src->filled;
    dst->idle_fill = src->idle_fill;
+   dst->idle_icon = src->idle_icon;
 
    return 1;
 }
