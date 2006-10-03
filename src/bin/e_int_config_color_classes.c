@@ -4,8 +4,8 @@ static void        *_create_data          (E_Config_Dialog *cfd);
 static void         _free_data            (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int          _basic_apply_data     (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int          _adv_apply_data     (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_adv_create_widgets (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int          _adv_apply_data       (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_adv_create_widgets   (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 struct _E_Config_Dialog_Data 
 {
@@ -70,7 +70,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Color Classes"), 0);
    ob = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_class));
-//   e_widget_ilist_append(ob, NULL, _("Test"), NULL, NULL, NULL);
    for (l = edje_color_class_list(); l; l = l->next) 
      {
 	e_widget_ilist_append(ob, NULL, l->data, NULL, NULL, NULL);
@@ -78,9 +77,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_ilist_go(ob);
    e_widget_min_size_set(ob, 100, 200);
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-
-   e_dialog_resizable_set(cfd->dia, 1);
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
    return o;
 }
 
@@ -99,13 +96,12 @@ _adv_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfda
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Color Classes"), 0);
    ob = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_class));
-//   e_widget_ilist_append(ob, NULL, _("Test"), NULL, NULL, NULL);
    for (l = edje_color_class_list(); l; l = l->next) 
      {
 	e_widget_ilist_append(ob, NULL, l->data, NULL, NULL, NULL);
      }
    e_widget_ilist_go(ob);
-   e_widget_min_size_set(ob, 100, 100);
+   e_widget_min_size_set(ob, 100, 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
