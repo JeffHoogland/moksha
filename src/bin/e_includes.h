@@ -106,6 +106,7 @@
 #include "e_int_config_apps.h"
 #include "e_int_config_cfgdialogs.h"
 #include "e_int_config_intl.h"
+#include "e_int_config_color_classes.h"
 #include "e_deskpreview.h"
 #include "e_exebuf.h"
 #include "e_desklock.h"
