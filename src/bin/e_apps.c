@@ -86,6 +86,12 @@ struct _E_App_Glob_List_Entry
    const char *path;
 };
 
+struct _E_App_Glob_List_Winner
+{
+   const char *path;
+   int         ok;
+};
+
 static Evas_Hash *_e_apps_border_ng_win_class = NULL, 
                  *_e_apps_border_ng_win_title = NULL, 
 		 *_e_apps_border_ng_win_name = NULL, 
@@ -98,7 +104,7 @@ static Evas_List *_e_apps_border_g_win_class = NULL,
 static double border_setup_time = 0.0;
 static int    border_setup_count = 0, glob_count = 0;
 #endif
-static double border_time = 0.0;
+static double border_time = 0.0, border_clever_time = 0.0;
 static int    border_count = 0;
 
 #define EAP_MIN_WIDTH 8
@@ -313,6 +319,7 @@ _e_apps_border_hash_cb_free(Evas_Hash *hash, const char *key, void *data, void *
 
    list = data;
    evas_list_free(list);
+   return 0;
 }
 #endif
 
@@ -1214,23 +1221,87 @@ printf("%c", t);
 	int found = 0;
 
         /* Put it into the list in the non_glob hash. */
-	if (*non_glob)
-	   entry = evas_hash_find(*non_glob, text);
+        entry = evas_hash_find(*non_glob, text);
 	if (entry)
 	   found = 1;
 	entry = evas_list_append(entry, path);
 	if (entry)
 	  {
              if (found)
-	       {
-	           evas_hash_modify(*non_glob, text, entry);
-	       }
+	        evas_hash_modify(*non_glob, text, entry);
 	     else
-	       {
-	           (*non_glob) = evas_hash_direct_add(*non_glob, text, entry);
-	       }
+	        (*non_glob) = evas_hash_direct_add(*non_glob, text, entry);
 	  }
      }
+}
+
+
+static void
+_e_apps_winners_add(Evas_Hash **winners, const char *path, int addition)
+{
+   int *count = NULL;
+   int found = 0;
+
+   count = evas_hash_find((*winners), path);
+   if (count)
+      found = 1;
+   else
+      count = calloc(1, sizeof(int));  // FIXME: not very efficient, allocate a bunch of them in one go and point into the next available one.
+
+   if (count)
+     {
+        (*count) = (*count) + addition;
+        if (found)
+	   evas_hash_modify((*winners), path, count);
+	else
+	   (*winners) = evas_hash_direct_add((*winners), path, count);
+     }
+}
+
+static void
+_e_apps_winners_search(Evas_Hash *non_glob, Evas_List *glob, const char *text, Evas_Hash **winners, int addition)
+{
+   Evas_List *l, *entry = NULL;
+
+   entry = evas_hash_find(non_glob, text);
+   if (entry)
+     {
+        for (l = entry; l; l = l->next)
+          {
+	     const char *path;
+
+	     path = l->data;
+             _e_apps_winners_add(winners, path, addition);
+	  }
+     }
+   if (glob)
+     {
+        for (l = glob; l; l = l->next)
+          {
+             struct _E_App_Glob_List_Entry *glob;
+
+	     glob = l->data;
+	     if (e_util_glob_match(text, glob->path))
+                _e_apps_winners_add(winners, glob->path, addition);
+          }
+     }
+}
+
+static Evas_Bool
+_e_apps_winners_hash_cb_check_free(Evas_Hash *hash, const char *key, void *data, void *fdata)
+{
+   struct _E_App_Glob_List_Winner *winner;
+   int *count;
+
+   count = data;
+   winner = fdata;
+printf("%d %d %s\n", winner->ok, (*count), key);
+   if ((*count) > winner->ok)
+     {
+        winner->path = key;
+	winner->ok = (*count);
+     }
+   free(count);
 }
 #endif
 
@@ -1240,15 +1311,18 @@ e_app_border_find(E_Border *bd)
 {
    Evas_List *l, *l_match = NULL;
    int ok, match = 0;
-   E_App *a, *a_match = NULL;
+   E_App *a = NULL, *a_match = NULL, *clever_match = NULL;
    char *title;
-   double begin, time;
+   double begin, time, clever_time = 0.0;
 
+   /* FIXME: Should that be (bd->client.netwm.name) or (!bd->client.netwm.name) like everything else ? */
    if ((!bd->client.icccm.name) && (!bd->client.icccm.class) &&
        (!bd->client.icccm.title) && (bd->client.netwm.name) &&
        (!bd->client.icccm.window_role) && (!bd->client.icccm.command.argv))
      return NULL;
 
+   title = bd->client.netwm.name;
+   if (!title) title = bd->client.icccm.title;
    begin = ecore_time_get();
 /* FIXME:
   Speed this up.
@@ -1291,6 +1365,8 @@ e_app_border_find(E_Border *bd)
       first without calling e_app_fields_fill and skipping the unfilled ones
       if there is no winner
         only do the ones that need filling on the second pass
+	Actually, this seems fast enough that I think we can get away with just 
+	running it on all after the fill.
 
     on each pass
       look up client strings in non-glob hashes
@@ -1300,16 +1376,63 @@ e_app_border_find(E_Border *bd)
       go through temp hash, the hash entry with the highest count wins
 */
 #if CLEVER_BORDERS
+{
+   Evas_Hash *winners = NULL;
+   struct _E_App_Glob_List_Winner winner;
+
+   for (ok = 0; ok < 2; ok++)
+     {
+        winner.path = NULL;
+        winner.ok = 0;
+        if (ok)  /* Fill all E_Apps and try again. */
+	  {
+             for (l = _e_apps_all->subapps; l; l = l->next)
+               {
+	          a = l->data;
+                  E_OBJECT_CHECK_RETURN(a, NULL);
+                  E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
+                  if ((!a->idle_fill) && (!a->filled))
+		     e_app_fields_fill(a, a->path);
+	       }
+	  }
+        /* FIXME: +2 if class AND name match; +2 if class matches and there is no name. */
+        if ((bd->client.icccm.class))
+          {
+           _e_apps_winners_search(_e_apps_border_ng_win_class, _e_apps_border_g_win_class, bd->client.icccm.class, &winners, 2);
+          }
+
+        if ((bd->client.icccm.name))
+          {
+            _e_apps_winners_search(_e_apps_border_ng_win_name, _e_apps_border_g_win_name, bd->client.icccm.name, &winners, 2);
+          }
+
+        if ((title))
+           _e_apps_winners_search(_e_apps_border_ng_win_title, _e_apps_border_g_win_title, title, &winners, 1);
+        if ((bd->client.icccm.window_role))
+           _e_apps_winners_search(_e_apps_border_ng_win_role, _e_apps_border_g_win_role, bd->client.icccm.window_role, &winners, 1);
+        if ((bd->client.icccm.command.argv) && (bd->client.icccm.command.argv[0]))
+           _e_apps_winners_search(_e_apps_border_ng_exe, NULL, bd->client.icccm.command.argv[0], &winners, 1);
+
+        evas_hash_foreach(winners, _e_apps_winners_hash_cb_check_free, &winner);
+        if (winner.path)
+	  {
+              clever_match = e_app_path_find(winner.path);
+	      if (clever_match)
+	         break;
+	  }
+        evas_hash_free(winners);
+        winners = NULL;
+     }
+}
+   clever_time = ecore_time_get() - begin;
 #endif
-   title = bd->client.netwm.name;
-   if (!title) title = bd->client.icccm.title;
    for (l = _e_apps_all->subapps; l; l = l->next)
      {
 	a = l->data;
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
-        if (!a->filled) e_app_fields_fill(a, a->path);
-	if (!a->filled) continue;
+        if ((!a->idle_fill) && (!a->filled))   e_app_fields_fill(a, a->path);
+	if (!a->filled)   continue;
 	ok = 0;
 	if ((a->win_name) || (a->win_class) || (a->win_title) || (a->win_role) || (a->exe))
 	  {
@@ -1370,9 +1493,11 @@ e_app_border_find(E_Border *bd)
 	_e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, a_match);
      }
    time = ecore_time_get() - begin;
+   time -= clever_time;
    border_count++;
    border_time += time;
-   printf("APP BORDER SCAN %2.6f (average %2.6f) FOUND %s\n", time, border_time / border_count, ((a_match == NULL) ? "NOTHING" : a_match->path));
+   border_clever_time += clever_time;
+   printf("APP BORDER SCAN %2.6f, %2.6f (average %2.6f, %2.6f) FOUND %s AND %s\n", clever_time, time, border_clever_time / border_count, border_time / border_count, ((clever_match == NULL) ? "NOTHING" : clever_match->path), ((a_match == NULL) ? "NOTHING" : a_match->path));
    return a_match;
 }
 
