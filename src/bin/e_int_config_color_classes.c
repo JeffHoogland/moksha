@@ -11,6 +11,7 @@ static int          _adv_apply_data       (E_Config_Dialog *cfd, E_Config_Dialog
 static Evas_Object *_adv_create_widgets   (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 static void         _load_color_classes   (Evas_Object *obj, E_Config_Dialog_Data *cfdata);
+static void         _cb_enable_change     (void *data, Evas_Object *obj, void *event_info);
 
 struct _CFColor_Hash 
 {
@@ -31,6 +32,10 @@ struct _E_Config_Dialog_Data
    int state;
    E_Color *color1, *color2, *color3;
    Evas_List *classes;
+   struct 
+     {
+	Evas_Object *c1, *c2, *c3;
+     } gui;
 };
 
 /* Key Pairs for color classes
@@ -211,29 +216,37 @@ _adv_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfda
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 0, 1, 4, 1, 1, 1, 1);
    
-   of = e_widget_framelist_add(evas, _("State"), 0);
-   e_widget_framelist_content_align_set(of, 0.0, 0.0);
-   rg = e_widget_radio_group_new(&(cfdata->state));
-   ob = e_widget_radio_add(evas, _("Enabled"), 1, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Disabled"), 0, rg);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
-
    of = e_widget_framelist_add(evas, _("Object Color"), 1);
    ob = e_widget_color_well_add(evas, cfdata->color1, 1);
+   cfdata->gui.c1 = ob;
+   e_widget_disabled_set(ob, 1);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
 
    of = e_widget_framelist_add(evas, _("Outline Color"), 1);
    ob = e_widget_color_well_add(evas, cfdata->color2, 1);
+   cfdata->gui.c2 = ob;
+   e_widget_disabled_set(ob, 1);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 1, 2, 1, 1, 1, 1, 1, 1);
 
    of = e_widget_framelist_add(evas, _("Shadow Color"), 1);
    ob = e_widget_color_well_add(evas, cfdata->color3, 1);
+   cfdata->gui.c3 = ob;
+   e_widget_disabled_set(ob, 1);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 1, 3, 1, 1, 1, 1, 1, 1);
+
+   of = e_widget_framelist_add(evas, _("State"), 0);
+   e_widget_framelist_content_align_set(of, 0.0, 0.0);
+   rg = e_widget_radio_group_new(&(cfdata->state));
+   ob = e_widget_radio_add(evas, _("Enabled"), 1, rg);
+   evas_object_smart_callback_add(ob, "changed", _cb_enable_change, cfdata);   
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Disabled"), 0, rg);
+   evas_object_smart_callback_add(ob, "changed", _cb_enable_change, cfdata);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
    
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
    e_dialog_resizable_set(cfd->dia, 1);
@@ -272,4 +285,26 @@ _load_color_classes(Evas_Object *obj, E_Config_Dialog_Data *cfdata)
    e_widget_ilist_go(obj);
    e_widget_min_size_get(obj, &w, &h);
    e_widget_min_size_set(obj, w, 275);
+}
+
+static void 
+_cb_enable_change(void *data, Evas_Object *obj, void *event_info) 
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data;
+   if (!cfdata) return;
+   printf("Change Event: %i\n", cfdata->state);
+   if (cfdata->state == 0) 
+     {
+	e_widget_disabled_set(cfdata->gui.c1, 1);
+	e_widget_disabled_set(cfdata->gui.c2, 1);
+	e_widget_disabled_set(cfdata->gui.c3, 1);	
+     }
+   else if (cfdata->state == 1) 
+     {
+	e_widget_disabled_set(cfdata->gui.c1, 0);
+	e_widget_disabled_set(cfdata->gui.c2, 0);
+	e_widget_disabled_set(cfdata->gui.c3, 0);
+     }
 }
