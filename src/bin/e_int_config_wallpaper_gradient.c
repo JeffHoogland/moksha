@@ -133,10 +133,6 @@ e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
    evas_object_show(o);
    e_widget_table_object_append(ot, o, 2, 1, 1, 1, 1, 1, 1, 1);
 
-   o = e_widget_entry_add(evas, &(cfdata->name));
-   evas_object_show(o);
-   e_widget_table_object_append(ot, o, 2, 1, 1, 1, 1, 1, 1, 1);
-
    o = e_widget_color_well_add(evas, cfdata->color1, 1);
    evas_object_show(o);
    e_widget_table_object_append(ot, o, 2, 2, 1, 1, 1, 1, 1, 1);
