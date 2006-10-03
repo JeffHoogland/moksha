@@ -15,7 +15,14 @@
 
 #define DEBUG 0
 #define IDLE_ICONS 0
-#define CLEVER_BORDERS 0
+
+/* These two can be used to turn on or off the new and old border matching code.
+ * There is a printf at the end of e_app_border_find that gives the times and results.
+ * You can have both turned on at once for a better comparison.
+ * Just never turn them both off.
+ */
+#define CLEVER_BORDERS 1
+#define OLD_BORDERS 0
 /* local subsystem functions */
 typedef struct _E_App_Change_Info E_App_Change_Info;
 typedef struct _E_App_Callback    E_App_Callback;
@@ -505,7 +512,7 @@ printf("+");
 	    in_all = 1;
          if (ecore_file_is_dir(a->path))
 	    {
-	       if (!a->filled)
+               if ((!a->idle_fill) && (!a->filled))
 	         {
 	            snprintf(buf, sizeof(buf), "%s/.directory.eap", path);
 	            if (ecore_file_exists(buf))
@@ -514,6 +521,7 @@ printf("+");
 	              {
 		         a->name = evas_stringshare_add(ecore_file_get_file(a->path));
 		         a->filled = 1;
+			 a->idle_fill = 1;
 		      }
 		 }
 	       if (!a->filled) goto error;
@@ -531,7 +539,7 @@ printf("+");
 	    }
 	 else if (_e_app_is_eapp(a->path))
 	    {
-	        if (!a->filled)
+                if ((!a->idle_fill) && (!a->filled))
 		   e_app_fields_fill(a, a->path);
 		  
 		/* no exe field.. not valid. drop it */
@@ -1237,32 +1245,53 @@ printf("%c", t);
 
 
 static void
-_e_apps_winners_add(Evas_Hash **winners, const char *path, int addition)
+_e_apps_winners_add(Evas_Hash **winners, const char *path, const char *name, int match_name)
 {
    int *count = NULL;
-   int found = 0;
+   int found = 0, do_it = 0, addition = 1;
 
-   count = evas_hash_find((*winners), path);
-   if (count)
-      found = 1;
-   else
-      count = calloc(1, sizeof(int));  // FIXME: not very efficient, allocate a bunch of them in one go and point into the next available one.
-
-   if (count)
+   /* Do the name batching magic if we need to. */
+   if (match_name)
      {
-        (*count) = (*count) + addition;
-        if (found)
-	   evas_hash_modify((*winners), path, count);
-	else
-	   (*winners) = evas_hash_direct_add((*winners), path, count);
+        E_App *a;
+
+        /* If class didn't match then we would not be here. */
+	/* Its a match if the name and the border are both NULL. */
+	/* If a name glob was specified in the E_App, then try to match that. */
+        addition = 2;
+        a = e_app_path_find(path);
+	if (a)
+	   if ( (!a->win_name) || ((!name) && (!a->win_name)) || (e_util_glob_match(name, a->win_name)) )
+              do_it = 1;
+     }
+   else
+     do_it = 1;
+
+   if (do_it)
+     {
+        count = evas_hash_find((*winners), path);
+        if (count)
+           found = 1;
+        else
+           count = calloc(1, sizeof(int));  // FIXME: not very efficient, allocate a bunch of them in one go and point into the next available one.
+
+        if (count)
+          {
+             (*count) = (*count) + addition;
+             if (found)
+	        evas_hash_modify((*winners), path, count);
+	     else
+	        (*winners) = evas_hash_direct_add((*winners), path, count);
+          }
      }
 }
 
 static void
-_e_apps_winners_search(Evas_Hash *non_glob, Evas_List *glob, const char *text, Evas_Hash **winners, int addition)
+_e_apps_winners_search(Evas_Hash *non_glob, Evas_List *glob, const char *text, const char *name, Evas_Hash **winners, int match_name)
 {
    Evas_List *l, *entry = NULL;
 
+   /* Check the non_glob list first. */
    entry = evas_hash_find(non_glob, text);
    if (entry)
      {
@@ -1271,9 +1300,10 @@ _e_apps_winners_search(Evas_Hash *non_glob, Evas_List *glob, const char *text, E
 	     const char *path;
 
 	     path = l->data;
-             _e_apps_winners_add(winners, path, addition);
+             _e_apps_winners_add(winners, path, name, match_name);
 	  }
      }
+   /* Then check the glob lilst. */
    if (glob)
      {
         for (l = glob; l; l = l->next)
@@ -1281,8 +1311,8 @@ _e_apps_winners_search(Evas_Hash *non_glob, Evas_List *glob, const char *text, E
              struct _E_App_Glob_List_Entry *glob;
 
 	     glob = l->data;
-	     if (e_util_glob_match(text, glob->path))
-                _e_apps_winners_add(winners, glob->path, addition);
+	     if (e_util_glob_match(text, glob->key))
+                _e_apps_winners_add(winners, glob->path, name, match_name);
           }
      }
 }
@@ -1324,8 +1354,7 @@ e_app_border_find(E_Border *bd)
    title = bd->client.netwm.name;
    if (!title) title = bd->client.icccm.title;
    begin = ecore_time_get();
-/* FIXME:
-  Speed this up.
+/* About the CLEVER_BORDERS code.
   
   ASSUMPTIONS:
     When E execs an E_App, it will fill the E_App first.
@@ -1384,7 +1413,7 @@ e_app_border_find(E_Border *bd)
      {
         winner.path = NULL;
         winner.ok = 0;
-        if (ok)  /* Fill all E_Apps and try again. */
+        if (ok)  /* Fill all E_Apps and try again on the second pass. */
 	  {
              for (l = _e_apps_all->subapps; l; l = l->next)
                {
@@ -1395,23 +1424,14 @@ e_app_border_find(E_Border *bd)
 		     e_app_fields_fill(a, a->path);
 	       }
 	  }
-        /* FIXME: +2 if class AND name match; +2 if class matches and there is no name. */
         if ((bd->client.icccm.class))
-          {
-           _e_apps_winners_search(_e_apps_border_ng_win_class, _e_apps_border_g_win_class, bd->client.icccm.class, &winners, 2);
-          }
-
-        if ((bd->client.icccm.name))
-          {
-            _e_apps_winners_search(_e_apps_border_ng_win_name, _e_apps_border_g_win_name, bd->client.icccm.name, &winners, 2);
-          }
-
+           _e_apps_winners_search(_e_apps_border_ng_win_class, _e_apps_border_g_win_class, bd->client.icccm.class, bd->client.icccm.name, &winners, TRUE);
         if ((title))
-           _e_apps_winners_search(_e_apps_border_ng_win_title, _e_apps_border_g_win_title, title, &winners, 1);
+           _e_apps_winners_search(_e_apps_border_ng_win_title, _e_apps_border_g_win_title, title, NULL, &winners, FALSE);
         if ((bd->client.icccm.window_role))
-           _e_apps_winners_search(_e_apps_border_ng_win_role, _e_apps_border_g_win_role, bd->client.icccm.window_role, &winners, 1);
+           _e_apps_winners_search(_e_apps_border_ng_win_role, _e_apps_border_g_win_role, bd->client.icccm.window_role, NULL, &winners, FALSE);
         if ((bd->client.icccm.command.argv) && (bd->client.icccm.command.argv[0]))
-           _e_apps_winners_search(_e_apps_border_ng_exe, NULL, bd->client.icccm.command.argv[0], &winners, 1);
+           _e_apps_winners_search(_e_apps_border_ng_exe, NULL, bd->client.icccm.command.argv[0], NULL, &winners, FALSE);
 
         evas_hash_foreach(winners, _e_apps_winners_hash_cb_check_free, &winner);
         if (winner.path)
@@ -1426,6 +1446,7 @@ e_app_border_find(E_Border *bd)
 }
    clever_time = ecore_time_get() - begin;
 #endif
+#if OLD_BORDERS
    for (l = _e_apps_all->subapps; l; l = l->next)
      {
 	a = l->data;
@@ -1492,12 +1513,31 @@ e_app_border_find(E_Border *bd)
 	_e_apps_all->subapps = evas_list_remove_list(_e_apps_all->subapps, l_match);
 	_e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, a_match);
      }
+#else
+   a_match = clever_match;
+   clever_match = NULL;
+#endif
    time = ecore_time_get() - begin;
    time -= clever_time;
    border_count++;
    border_time += time;
    border_clever_time += clever_time;
-   printf("APP BORDER SCAN %2.6f, %2.6f (average %2.6f, %2.6f) FOUND %s AND %s\n", clever_time, time, border_clever_time / border_count, border_time / border_count, ((clever_match == NULL) ? "NOTHING" : clever_match->path), ((a_match == NULL) ? "NOTHING" : a_match->path));
+#if CLEVER_BORDERS && OLD_BORDERS
+   printf("APP BORDER SCAN NEW - %2.6f, OLD - %2.6f (average %2.6f, %2.6f) FOUND %s AND %s\n",
+          clever_time, time, border_clever_time / border_count, border_time / border_count, 
+	  ((clever_match == NULL) ? "NOTHING" : clever_match->path), ((a_match == NULL) ? "NOTHING" : a_match->path));
+#else
+#if CLEVER_BORDERS
+   printf("APP BORDER SCAN NEW - %2.6f (average %2.6f) FOUND %s\n",
+          clever_time, border_clever_time / border_count, 
+	  ((a_match == NULL) ? "NOTHING" : a_match->path));
+#endif
+#if OLD_BORDERS
+   printf("APP BORDER SCAN OLD - %2.6f (average %2.6f) FOUND %s\n",
+          time, border_time / border_count, 
+	  ((a_match == NULL) ? "NOTHING" : a_match->path));
+#endif
+#endif
    return a_match;
 }
 
@@ -1562,7 +1602,7 @@ e_app_name_find(const char *name)
 	a = l->data;
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
-        if (!a->filled)
+        if ((!a->idle_fill) && (!a->filled))
 	  e_app_fields_fill(a, a->path);
 	if (!a->filled) continue;
 	if (a->name)
@@ -1593,7 +1633,7 @@ e_app_generic_find(const char *generic)
 	a = l->data;
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
-        if (!a->filled)
+        if ((!a->idle_fill) && (!a->filled))
 	  e_app_fields_fill(a, a->path);
 	if (!a->filled) continue;
 	if (a->generic)
@@ -1633,7 +1673,7 @@ e_app_exe_find(const char *exe)
 	a = l->data;
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
-        if (!a->filled)
+        if ((!a->idle_fill) && (!a->filled))
 	  e_app_fields_fill(a, a->path);
 	if (!a->filled) continue;
 	if (a->exe)
@@ -1667,7 +1707,7 @@ e_app_name_glob_list(const char *name)
 	a = l->data;
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
-        if (!a->filled)
+        if ((!a->idle_fill) && (!a->filled))
 	  e_app_fields_fill(a, a->path);
 	if (!a->filled) continue;
 	if (a->name)
@@ -1694,7 +1734,7 @@ e_app_generic_glob_list(const char *generic)
 	a = l->data;
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
-        if (!a->filled)
+        if ((!a->idle_fill) && (!a->filled))
 	  e_app_fields_fill(a, a->path);
 	if (!a->filled) continue;
 	if (a->generic)
@@ -1721,7 +1761,7 @@ e_app_exe_glob_list(const char *exe)
 	a = l->data;
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
-        if (!a->filled)
+        if ((!a->idle_fill) && (!a->filled))
 	  e_app_fields_fill(a, a->path);
 	if (!a->filled) continue;
 	if (a->exe)
@@ -1748,7 +1788,7 @@ e_app_comment_glob_list(const char *comment)
 	a = l->data;
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
-        if (!a->filled)
+        if ((!a->idle_fill) && (!a->filled))
 	  e_app_fields_fill(a, a->path);
 	if (!a->filled)
 	  continue;
@@ -2191,6 +2231,7 @@ printf("-");
    a->no_icon = 0;
    a->found_icon = 0;
    a->filled = 0;
+   a->idle_fill = 0;
 }
 
 EAPI Ecore_List *
@@ -3040,6 +3081,7 @@ _e_app_copy(E_App *dst, E_App *src)
    dst->hard_icon = src->hard_icon;
    dst->no_icon = src->no_icon;
    dst->filled = src->filled;
+   dst->idle_fill = src->idle_fill;
 
    return 1;
 }
