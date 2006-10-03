@@ -20,6 +20,7 @@ static void _e_wid_update(E_Widget_Data *wd);
 static void _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_wid_color_select_cb(E_Color_Dialog *dia, E_Color *color, void *data);
 static void _e_wid_color_cancel_cb(E_Color_Dialog *dia, E_Color *color, void *data);
+static void _e_wid_disable_hook(Evas_Object *obj);
 
 static void
 _e_wid_update(E_Widget_Data *wd)
@@ -83,9 +84,28 @@ _e_wid_del_hook(Evas_Object *obj)
    E_FREE(wd);
 }
 
+static void 
+_e_wid_disable_hook(Evas_Object *obj) 
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   if (e_widget_disabled_get(obj)) 
+     {
+	wd->show_color_dialog = 0;
+	edje_object_signal_emit(wd->o_edje, "e,state,disabled", "e");
+     }
+   else 
+     {
+	wd->show_color_dialog = 1;	
+	edje_object_signal_emit(wd->o_edje, "e,state,enabled", "e");
+     }
+}
+
 /**
  * Add a color well widget to an evas.
- * An optional E_Container may be passed in. If not NULL, when clicked a color dialog will pop up.
+ * An optional E_Container may be passed in. 
+ If not NULL, when clicked a color dialog will pop up.
  */
 Evas_Object *
 e_widget_color_well_add(Evas *evas, E_Color *color, int show_color_dialog)
@@ -97,6 +117,7 @@ e_widget_color_well_add(Evas *evas, E_Color *color, int show_color_dialog)
 
    obj = e_widget_add(evas);
    e_widget_del_hook_set(obj, _e_wid_del_hook);
+   e_widget_disable_hook_set(obj, _e_wid_disable_hook);
    
    wd = calloc(1, sizeof(E_Widget_Data));
    e_widget_data_set(obj, wd);
@@ -113,7 +134,8 @@ e_widget_color_well_add(Evas *evas, E_Color *color, int show_color_dialog)
    e_widget_resize_object_set(obj, o);
    e_theme_edje_object_set(o, "base/theme/widgets",
 			   "e/widgets/color_well");
-   edje_object_signal_callback_add(o, "e,action,click", "", _e_wid_signal_cb1, obj);
+   edje_object_signal_callback_add(o, "e,action,click", "", 
+				   _e_wid_signal_cb1, obj);
    evas_object_show(o); 
    wd->o_edje = o;
 
@@ -145,5 +167,3 @@ e_widget_color_well_update(Evas_Object *obj)
    wd = e_widget_data_get(obj);
    _e_wid_update(wd);
 }
-
-
