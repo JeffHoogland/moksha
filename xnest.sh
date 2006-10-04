@@ -5,10 +5,12 @@
 
 main=$DISPLAY
 display=" -display :1"
+tmp='mktemp' || exit 1
+echo -e "run\nbt\nq\ny" > $tmp
 
 case "$@" in
-	"")	action="gdb -x gdb.txt" ; main=":1" ; display=""  ;;
-	"-b")	action="gdb -x gdb.txt" ; main=":1" ; display=""  ;;
+	"")	action="gdb -x $tmp" ; main=":1" ; display=""  ;;
+	"-b")	action="gdb -x $tmp" ; main=":1" ; display=""  ;;
 	"-d")	action="ddd -display $main" ; display="" ;;
 	"-e")	action="" ;;
 	"-g")	action="gdb" ; main=":1" ; display=""  ;;
@@ -42,3 +44,6 @@ Xnest :1 -ac &
 sleep 2   # Someone reported that it starts E before X has started properly.
 
 DISPLAY=$main; $action enlightenment $display
+
+rm -f $tmp
+killall -TERM Xnest
