@@ -156,9 +156,9 @@ _e_eap_edit_create_data(E_Config_Dialog *cfd)
    if (!cfdata->icon_path)
      {
         IFDUP(cfdata->image, cfdata->icon_path);
-        if (!cfdata->icon_path)
-           cfdata->icon_theme = 1;
      }
+   if (!cfdata->icon_path)
+      cfdata->icon_theme = 1;
    /* Save it for later. */
    IFDUP(cfdata->icon_path, cfdata->image);
    return cfdata;
@@ -320,7 +320,8 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dial
    if (editor->img_widget) evas_object_del(editor->img_widget);
    editor->img_widget = e_widget_button_add(evas, "", NULL,
 					    _e_eap_editor_cb_icon_select, cfdata, editor);
-   e_widget_button_icon_set(editor->img_widget, editor->img);
+   if (editor->img)
+      e_widget_button_icon_set(editor->img_widget, editor->img);
    e_widget_min_size_set(editor->img_widget, 48, 48);
    e_widget_frametable_object_append(o, editor->img_widget,
 				     0, 0, 1, 1,
@@ -553,13 +554,9 @@ _cb_files_icon_theme_changed(void *data, Evas_Object *obj, void *event_info)
    E_Config_Dialog_Data *cfdata;
 
    cfdata = data;
-   IFFREE(cfdata->icon_path);
-   if (!cfdata->icon_theme)
-     {
-        IFDUP(cfdata->image, cfdata->icon_path);
-     }
    _e_eap_editor_icon_show(cfdata);
-   e_widget_button_icon_set(cfdata->editor->img_widget, cfdata->editor->img);
+   if (cfdata->editor->img)
+      e_widget_button_icon_set(cfdata->editor->img_widget, cfdata->editor->img);
 }
 
 static void
@@ -569,6 +566,12 @@ _e_eap_editor_icon_show(E_Config_Dialog_Data *cfdata)
      {
 	evas_object_del(cfdata->editor->img);
 	cfdata->editor->img = NULL;
+     }
+
+   IFFREE(cfdata->icon_path);
+   if (!cfdata->icon_theme)
+     {
+        IFDUP(cfdata->image, cfdata->icon_path);
      }
 
    IFDEL(cfdata->eap.icon_class);
