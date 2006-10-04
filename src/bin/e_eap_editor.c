@@ -142,6 +142,7 @@ _e_eap_edit_create_data(E_Config_Dialog *cfd)
    IFADD(cfdata->editor->eap->icon, cfdata->eap.icon);
    IFDUP(cfdata->editor->eap->icon_class, cfdata->icon_class);
    IFDUP(cfdata->editor->eap->icon_path, cfdata->icon_path);
+   cfdata->eap.icon_type = cfdata->editor->eap->icon_type;
    /*- ADVANCED -*/
    IFDUP(cfdata->editor->eap->generic, cfdata->generic);
    IFDUP(cfdata->editor->eap->comment, cfdata->comment);
@@ -265,6 +266,10 @@ _e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
              IFDEL(eap->icon_theme);
 	  }
      }
+   if ((!cfdata->icon_theme) && (eap->icon_path))
+      eap->icon_type = E_APP_ICON_PATH;
+   else
+      eap->icon_type = E_APP_ICON_UNKNOWN;
 
    /* FIXME: hardcoded until the eap editor provides fields to change it */
    if (cfdata->eap.width) eap->width = cfdata->eap.width;
@@ -570,5 +575,9 @@ _e_eap_editor_icon_show(E_Config_Dialog_Data *cfdata)
    IFDEL(cfdata->eap.icon_path);
    IFADD(cfdata->icon_class, cfdata->eap.icon_class);
    IFADD(cfdata->icon_path, cfdata->eap.icon_path);
+   if ((!cfdata->icon_theme) && (cfdata->eap.icon_path))
+      cfdata->eap.icon_type = E_APP_ICON_PATH;
+   else
+      cfdata->eap.icon_type = E_APP_ICON_UNKNOWN;
    cfdata->editor->img = e_app_icon_add(cfdata->editor->evas, &(cfdata->eap));
 }
