@@ -8,7 +8,11 @@
 # Don't use this on module.eaps, as the icon ends up in the wrong place.
 
 WD=`pwd`
-FILENAME=`basename $@ .eap`
+
+# small hack to avoid people using *.eap and don't know what to do...
+if [ ! "$i" == "*.eap" ]; then
+    FILENAME=`basename '$1' .eap`
+fi	
 
 if [ -e "$FILENAME.eap" ]; then
     rm -fr /tmp/convert.eap/$FILENAME
@@ -83,5 +87,7 @@ if [ -e "$FILENAME.eap" ]; then
     cd $WD >/dev/null
     rm -fr /tmp/convert.eap/$FILENAME
 else
-    echo "Not a .eap file."
+    echo -e "\nExample:"
+    echo "cd ~/.e/e/applications/all/"
+    echo -e "$0 firefox.eap\n"
 fi
