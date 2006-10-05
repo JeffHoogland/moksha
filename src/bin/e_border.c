@@ -2571,7 +2571,8 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 		    }
 	       }
 	  }
-	return o;
+	if (o)
+	   return o;
      }
    if (e_config->use_app_icon)
      {
@@ -2582,7 +2583,6 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 			     bd->client.netwm.icons[0].width,
 			     bd->client.netwm.icons[0].height);
 	     e_icon_alpha_set(o, 1);
-	     return o;
 	  }
      }
    if (!o)
@@ -2601,7 +2601,6 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 	     o = e_app_icon_add(evas, a);
 	     bd->app = a;
 	     e_object_ref(E_OBJECT(bd->app));
-	     return o;
 	  }
 	else if (bd->client.netwm.icons)
 	  {
@@ -2610,14 +2609,12 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 			     bd->client.netwm.icons[0].width,
 			     bd->client.netwm.icons[0].height);
 	     e_icon_alpha_set(o, 1);
-	     return o;
 	  }
      }
    if (!o)
      {
 	o = edje_object_add(evas);
 	e_util_edje_icon_set(o, "enlightenment/unknown");
-	return o;
      }
    return o;
 }
