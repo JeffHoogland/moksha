@@ -4,6 +4,7 @@ files_DATA = \
 xterm.png \
 web_browser.png \
 audio_player.png \
+mail_client.png \
 video_player.png
 
 EXTRA_DIST = $(files_DATA)
