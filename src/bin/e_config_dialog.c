@@ -243,12 +243,12 @@ _e_config_dialog_cb_ok(void *data, E_Dialog *dia)
    if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
       {
          if (cfd->view->basic.apply_cfdata)
-            ok = cfd->view->basic.apply_cfdata(cfd, cfd->cfdata);
+	   ok = cfd->view->basic.apply_cfdata(cfd, cfd->cfdata);
       }
    else
       {
          if (cfd->view->advanced.apply_cfdata)
-            ok = cfd->view->advanced.apply_cfdata(cfd, cfd->cfdata);
+	   ok = cfd->view->advanced.apply_cfdata(cfd, cfd->cfdata);
       }
    if (ok) e_object_del(E_OBJECT(cfd));
 }
@@ -263,12 +263,12 @@ _e_config_dialog_cb_apply(void *data, E_Dialog *dia)
    if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
       {
          if (cfd->view->basic.apply_cfdata)
-            ok = cfd->view->basic.apply_cfdata(cfd, cfd->cfdata);
+	   ok = cfd->view->basic.apply_cfdata(cfd, cfd->cfdata);
       }
    else
       {
          if (cfd->view->advanced.apply_cfdata)
-            ok = cfd->view->advanced.apply_cfdata(cfd, cfd->cfdata);
+	   ok = cfd->view->advanced.apply_cfdata(cfd, cfd->cfdata);
       }   
    if ((ok) && (!cfd->hide_buttons))
      {
@@ -326,8 +326,8 @@ _e_config_dialog_cb_close(void *data, E_Dialog *dia)
    cfd = dia->data;
    if (cfd->auto_apply_timer) _e_config_dialog_cb_auto_apply_timer(cfd);
    if (cfd->view->close_cfdata)
-      ok = cfd->view->close_cfdata(cfd, cfd->cfdata);
+     ok = cfd->view->close_cfdata(cfd, cfd->cfdata);
 
    if (ok)
-      e_object_del(E_OBJECT(dia));
+     e_object_del(E_OBJECT(dia));
 }
