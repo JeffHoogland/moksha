@@ -359,6 +359,7 @@ _ibar_fill(IBar *b)
 	for (l = b->apps->subapps; l; l = l->next)
 	  {
 	     a = l->data;
+	     if (!e_app_valid_exe_get(a))  continue;
 	     ic = _ibar_icon_new(b, a);
 	     b->icons = evas_list_append(b->icons, ic);
 	     e_box_pack_end(b->o_box, ic->o_holder);
