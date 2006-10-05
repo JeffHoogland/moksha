@@ -291,9 +291,6 @@ _adv_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	  }
 	else 
 	  {
-	     printf("Alpha: %i\n", c->a);
-	     printf("Alpha2: %i\n", c->a2);
-	     printf("Alpha3: %i\n", c->a3);
 	     if (cc) 
 	       {
 		  e_color_class_set(cc->name, c->r, c->g, c->b, c->a,
