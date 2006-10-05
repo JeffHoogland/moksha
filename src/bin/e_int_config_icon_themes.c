@@ -255,6 +255,13 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    cfdata->gui.o_frame = ob;
    e_widget_min_size_set(ob, 200, 120);
    e_widget_framelist_object_append(of, ob);
+   e_box_pack_options_set(ob,
+			  1, 1, /* fill */
+			  1, 1, /* expand */
+			  1, 1, /* align */
+			  200, 120, /* min */
+			  99999, 99999 /* max */
+			  );
 
    e_widget_table_object_append(ot, of, 2, 0, 2, 4, 1, 1, 1, 1);
    e_widget_list_object_append(o, ot, 1, 1, 0.5);

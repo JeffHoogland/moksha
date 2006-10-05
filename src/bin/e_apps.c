@@ -1218,8 +1218,9 @@ _e_apps_winners_add(Evas_Hash **winners, const char *path, const char *name, int
         E_App *a;
 
         /* If class didn't match then we would not be here. */
-	/* Its a match if the name and the border are both NULL. */
-	/* If a name glob was specified in the E_App, then try to match that. */
+	/* If there is no name in the E_App, it is implicitily a match. */
+	/* Its a match if the E_App name and the border name are both NULL. */
+	/* If a name glob was specified in the E_App, then try to match that with the border name. */
         addition = 2;
         a = e_app_path_find(path);
 	if (a)
@@ -1393,6 +1394,9 @@ printf("SECOND PASS\n");
            _e_apps_winners_search(_e_apps_border_ng_win_title, _e_apps_border_g_win_title, title, NULL, &winners, FALSE);
         if ((bd->client.icccm.window_role))
            _e_apps_winners_search(_e_apps_border_ng_win_role, _e_apps_border_g_win_role, bd->client.icccm.window_role, NULL, &winners, FALSE);
+        /* We deliberately ignore the exe arguments when matching, even though ICCCM supplies them.
+	 * Ask raster if you want to know why.
+	 */
         if ((bd->client.icccm.command.argv) && (bd->client.icccm.command.argv[0]))
            _e_apps_winners_search(_e_apps_border_ng_exe, NULL, bd->client.icccm.command.argv[0], NULL, &winners, FALSE);
 
