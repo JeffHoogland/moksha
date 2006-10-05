@@ -1255,6 +1255,7 @@ e_config_init(void)
 	CFG_MIME_ICON("image/jpeg", "THUMB");
 	CFG_MIME_ICON("image/png", "THUMB");
 	CFG_MIME_ICON("image/x-pixmap", "THUMB");
+	CFG_MIME_ICON("image/x-xpixmap", "THUMB");
 	CFG_MIME_ICON("image/svg+xml", "THUMB");
 	CFG_MIME_ICON("image/gif", "THUMB");
 	CFG_MIME_ICON("image/tiff", "THUMB");
