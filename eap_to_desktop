@@ -10,8 +10,8 @@
 WD=`pwd`
 
 # small hack to avoid people using *.eap and don't know what to do...
-if [ ! "$i" == "*.eap" ]; then
-    FILENAME=`basename '$1' .eap`
+if [ ! "$1" == "*.eap" ]; then
+    FILENAME=`basename "$1" .eap`
 fi	
 
 if [ -e "$FILENAME.eap" ]; then
@@ -62,7 +62,7 @@ if [ -e "$FILENAME.eap" ]; then
 	fi
             
 	if [ ! -z "$WNAME" ]; then
-	    echo "X-Enlightenment-WIndowName=$WNAME" >>$FILENAME.desktop
+	    echo "X-Enlightenment-WindowName=$WNAME" >>$FILENAME.desktop
 	fi
 	if [ ! -z "$WCLASS" ]; then
 	    echo "StartupWMClass=$WCLASS" >>$FILENAME.desktop
