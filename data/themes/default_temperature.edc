@@ -86,6 +86,7 @@ group {
 	    color: 255 255 255 255;
 	    color2: 0 0 0 128;
 	    color3: 0 0 0 32;
+	    color_class: "temperature_label";
 	    text {
 	       text:     "99^C";
 	       font:     "Edje-Vera-Bold";

@@ -116,6 +116,7 @@ group {
 	       offset:   -8  -8;
 	    }
 	    color: 0 0 0 255;
+	    color_class: "slider_text";
 	    text {
 	       text:     "00.00";
 	       font:     "Edje-Vera";
@@ -529,6 +530,7 @@ group {
 	       offset:   -8  -8;
 	    }
 	    color: 0 0 0 255;
+	    color_class: "slider_text";
 	    text {
 	       text:     "00.00";
 	       font:     "Edje-Vera";

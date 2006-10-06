@@ -86,6 +86,7 @@ group {
 	 description {
 	    state: "default" 0.0;
 	    color: 0 0 0 255;
+	    color_class: "entry_text";
 	    text {
 	       text: "Entry";
 	       font: "Edje-Vera";
