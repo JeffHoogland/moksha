@@ -98,6 +98,7 @@ group {
 	    }
             color: 255 255 255 255;
             color3: 0 0 0 42;
+	    color_class: "menu_title";
 	    text {
 	       text:     "Menu Title";
 	       font:     "Edje-Vera-Bold";
@@ -121,6 +122,7 @@ group {
 	       relative: 1.0  0.0;
 	       offset:   -1   4;
 	    }
+	    color_class: "menu_title_active";
 	    text {
 	       min:      1 1;
 	    }
@@ -624,6 +626,7 @@ group {
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
+	    color_class: "menu_item";
 	    text {
 	       text:     "Item Label";
 	       font:     "Edje-Vera";

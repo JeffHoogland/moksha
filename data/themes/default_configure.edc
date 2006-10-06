@@ -86,6 +86,7 @@ group {
 	    }
 	    color: 255 255 255 255;
 	    color3: 0 0 0 32;
+	    color_class: "configure_title";
 	    text {
 	       text:     "Enlightenment Configuration";
 	       font:     "Edje-Vera-Bold";

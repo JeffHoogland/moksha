@@ -81,6 +81,7 @@ group {
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
+	    color_class: "check_text";
 	    text {
 	       text:     "Check Button";
 	       font:     "Edje-Vera";
@@ -95,6 +96,7 @@ group {
 	    inherit:  "default" 0.0;
 	    color:    0   0   0 128;
 	    color3: 255 255 255 64;
+	    color_class: "check_text_disabled";
 	 }
       }
       part {
@@ -323,6 +325,7 @@ group {
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
+	    color_class: "check_text";
 	    text {
 	       text:     "";
 	       font:     "Edje-Vera";
@@ -337,6 +340,7 @@ group {
 	    inherit:  "default" 0.0;
 	    color:    0   0   0 128;
 	    color3: 255 255 255 64;
+	    color_class: "check_text_disabled";
 	 }
       }
       part {

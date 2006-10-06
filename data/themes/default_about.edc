@@ -422,6 +422,7 @@ group {
 	    }
 	    color: 255 255 255 255;
 	    color3: 0 0 0 32;
+	    color_class: "about_title";
 	    text {
 	       text:     "Enlightenment";
 	       font:     "Edje-Vera-Bold";
@@ -453,6 +454,7 @@ group {
 	    }
 	    color: 255 255 255 255;
 	    color3: 0 0 0 32;
+	    color_class: "about_version";
 	    text {
 	       text:     "0.17.0.000";
 	       font:     "Edje-Vera-Bold";
@@ -591,6 +593,7 @@ group {
 	    }
 	    color:    0   0   0 255;
 	    color3: 255 255 255 128;
+	    color_class: "button_text";
 	    text {
 	       text:     "OK";
 	       font:     "Edje-Vera";

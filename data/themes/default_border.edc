@@ -819,6 +819,7 @@ group {
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
+	    color_class: "border_title";
 	    text {
 	       text:     "";
 	       font:     "Edje-Vera";
@@ -1954,6 +1955,7 @@ group {
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
+	    color_class: "border_title";
 	    text {
 	       text:     "";
 	       font:     "Edje-Vera";
@@ -3142,6 +3144,7 @@ group {
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
+	    color_class: "border_title";
 	    text {
 	       text:     "";
 	       font:     "Edje-Vera";
@@ -4291,6 +4294,7 @@ group {
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
+	    color_class: "border_title";
 	    text {
 	       text:     "";
 	       font:     "Edje-Vera";
