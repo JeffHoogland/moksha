@@ -58,17 +58,20 @@ const CFColor_Hash _color_hash[] =
      {NULL,                 N_("Window Manager")},
      {"about_title",        N_("About Dialog Title")},
      {"about_version",      N_("About Dialog Version")},
-     {"menu_title_default", N_("Menu Title")},
+     {"border_title",       N_("Border Title")},
+     {"configure_title",    N_("Configure Dialog Title")},
+     {"menu_title",         N_("Menu Title")},
      {"menu_title_active",  N_("Menu Title Active")},
-     {"menu_item_default",  N_("Menu Item")},
+     {"menu_item",          N_("Menu Item")},
 
      {NULL, N_("Widgets")},
-     {"button_text_enabled",  N_("Button Text Enabled")},
+     {"button_text",          N_("Button Text")},
      {"button_text_disabled", N_("Button Text Disabled")},
+     {"check_text",           N_("Check Text")},
+     {"check_text_disabled",  N_("Check Text Disabled")},
 
      {NULL, N_("Modules")},
-     {"ibar_label_default", N_("IBar Label")},
-     {"ibar_label_active",  N_("IBar Label Active")},
+     {"ibar_label",          N_("IBar Label")},
      {NULL, NULL}
 };
 
