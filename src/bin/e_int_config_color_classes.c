@@ -60,6 +60,7 @@ const CFColor_Hash _color_hash[] =
      {"about_version",      N_("About Dialog Version")},
      {"border_title",       N_("Border Title")},
      {"configure_title",    N_("Configure Dialog Title")},
+     {"error_text",         N_("Error Text")},
      {"menu_title",         N_("Menu Title")},
      {"menu_title_active",  N_("Menu Title Active")},
      {"menu_item",          N_("Menu Item")},
@@ -69,9 +70,18 @@ const CFColor_Hash _color_hash[] =
      {"button_text_disabled", N_("Button Text Disabled")},
      {"check_text",           N_("Check Text")},
      {"check_text_disabled",  N_("Check Text Disabled")},
+     {"entry_text",           N_("Entry Text")},
+     {"radio_text",           N_("Radio Text")},
+     {"radio_text_disabled",  N_("Radio Text Disabled")},
+     {"slider_text",           N_("Slider Text")},
+     {"slider_text_disabled",  N_("Slider Text Disabled")},
 
      {NULL, N_("Modules")},
-     {"ibar_label",          N_("IBar Label")},
+     {"battery_label",     N_("Battery Label")},
+     {"cpufreq_label",     N_("Cpufreq Label")},
+     {"ibar_label",        N_("IBar Label")},
+     {"ibox_label",        N_("IBox Label")},
+     {"temperature_label", N_("Temperature Label")},   
      {NULL, NULL}
 };
 
