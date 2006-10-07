@@ -495,8 +495,8 @@ _e_eap_editor_cb_icon_select(void *data1, void *data2)
    e_dialog_content_set(dia, o, mw, mh);
 
    /* buttons at the bottom */
-   e_dialog_button_add(dia, "OK", NULL, _e_eap_edit_cb_icon_select_ok, cfdata);
-   e_dialog_button_add(dia, "Cancel", NULL, _e_eap_edit_cb_icon_select_cancel, cfdata);
+   e_dialog_button_add(dia, _("OK"), NULL, _e_eap_edit_cb_icon_select_ok, cfdata);
+   e_dialog_button_add(dia, _("Cancel"), NULL, _e_eap_edit_cb_icon_select_cancel, cfdata);
    e_dialog_resizable_set(dia, 1);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);

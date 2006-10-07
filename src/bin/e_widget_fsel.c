@@ -707,7 +707,7 @@ _e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t st_gid)
    if (!access) 
      return strdup(perms);
    else 
-     return strdup("Read-Write");
+     return strdup(_("Read-Write"));
 }
 
 static char * 

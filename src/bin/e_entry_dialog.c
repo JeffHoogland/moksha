@@ -53,7 +53,7 @@ e_entry_dialog_show(const char *title, const char *icon, const char *text,
    e_widget_min_size_get(o, &w, &h);
    e_dialog_content_set(dia, o, w, h);
    
-   e_dialog_button_add(dia, !button_text ? _("Ok") : button_text, NULL, _e_entry_dialog_ok, ed);
+   e_dialog_button_add(dia, !button_text ? _("OK") : button_text, NULL, _e_entry_dialog_ok, ed);
    e_dialog_button_add(dia, !button2_text ? _("Cancel") : button2_text, NULL, _e_entry_dialog_cancel, ed);
    
    e_win_centered_set(dia->win, 1);
