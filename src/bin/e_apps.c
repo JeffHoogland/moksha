@@ -1767,6 +1767,24 @@ printf(".");
 //	   if (desktop->categories)  a->categories = evas_stringshare_add(desktop->categories);
 	  }
      }
+#if CLEVER_BORDERS
+   if (a->filled)
+     {
+        double begin, time;
+
+        begin = ecore_time_get();
+
+        if ((a->path) && (a->win_class))   _e_apps_border_setup(&_e_apps_border_ng_win_class, &_e_apps_border_g_win_class, a->win_class, a->path, 'c');
+        if ((a->path) && (a->win_name))    _e_apps_border_setup(&_e_apps_border_ng_win_name,  &_e_apps_border_g_win_name,  a->win_name,  a->path, 'n');
+        if ((a->path) && (a->win_title))   _e_apps_border_setup(&_e_apps_border_ng_win_title, &_e_apps_border_g_win_title, a->win_title, a->path, 't');
+        if ((a->path) && (a->win_role))    _e_apps_border_setup(&_e_apps_border_ng_win_role,  &_e_apps_border_g_win_role,  a->win_role,  a->path, 'r');
+        if ((a->path) && (a->exe))         _e_apps_border_setup(&_e_apps_border_ng_exe, NULL, a->exe, a->path, 'e');
+
+        time = ecore_time_get() - begin;
+        border_setup_count++;
+        border_setup_time += time;
+     }
+#endif
 }
 
 static char *
