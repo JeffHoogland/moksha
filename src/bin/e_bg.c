@@ -9,20 +9,12 @@ static void _e_bg_signal(void *data, Evas_Object *obj, const char *emission, con
 /* local subsystem globals */
 
 /* externally accessible functions */
-EAPI void
-e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
+EAPI const char *
+e_bg_file_get(E_Zone *zone)
 {
-   Evas_Object *o;
    Evas_List *l, *ll, *entries;
    int ok;
    const char *bgfile = "";
-   const char *trans = "";
-   
-   if (transition == E_BG_TRANSITION_START) trans = e_config->transition_start;
-   else if (transition == E_BG_TRANSITION_DESK) trans = e_config->transition_desk;
-   else if (transition == E_BG_TRANSITION_CHANGE) trans = e_config->transition_change;
-   if ((!trans) || (strlen(trans) < 1)) transition = E_BG_TRANSITION_NONE;
-
    ok = 0;
    for (l = e_config->desktop_backgrounds; l; l = l->next)
      {
@@ -73,6 +65,23 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 	     bgfile = e_theme_edje_file_get("base/theme/background", "e/desktop/background");
 	  }
      }
+   return bgfile;
+}
+
+EAPI void
+e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
+{
+   Evas_Object *o;
+   const char *bgfile = "";
+   const char *trans = "";
+   
+   if (transition == E_BG_TRANSITION_START) trans = e_config->transition_start;
+   else if (transition == E_BG_TRANSITION_DESK) trans = e_config->transition_desk;
+   else if (transition == E_BG_TRANSITION_CHANGE) trans = e_config->transition_change;
+   if ((!trans) || (strlen(trans) < 1)) transition = E_BG_TRANSITION_NONE;
+
+   bgfile = e_bg_file_get(zone);
+
    if (zone->bg_object)
      {
 	const char *pfile = "";
