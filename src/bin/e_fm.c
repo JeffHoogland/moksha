@@ -127,7 +127,6 @@ struct _E_Fm2_Icon
    unsigned char     last_selected : 1;
    unsigned char     saved_pos : 1;
    unsigned char     odd : 1;
-   unsigned char     deleted : 1;
    unsigned char     down_sel : 1;
 };
 
@@ -3997,7 +3996,7 @@ _e_fm2_order_file_rewrite(Evas_Object *obj)
    for (l = sd->icons; l; l = l->next)
      {
 	ic = l->data;
-	if (!ic->deleted)
+	if (!ic->info.deleted)
 	  fprintf(f, "%s\n", ic->info.file);
      }
    fclose(f);
@@ -4485,6 +4484,7 @@ _e_fm2_file_delete(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Dialog *dialog;
    E_Fm2_Icon *ic;
    char text[4096 + 256];
+   Evas_List *sel;
    
    man = e_manager_current_get();
    if (!man) return;
@@ -4501,10 +4501,21 @@ _e_fm2_file_delete(void *data, E_Menu *m, E_Menu_Item *mi)
    e_dialog_button_add(dialog, _("No"), NULL, _e_fm2_file_delete_no_cb, ic);
    e_dialog_button_focus_num(dialog, 1);
    e_dialog_title_set(dialog, _("Confirm Delete"));
-   snprintf(text, sizeof(text), 
-	    _("Are you sure you want to delete <br>"
-	      "<hilight>%s</hilight> ?"),
-	    ic->info.file);
+   sel = e_fm2_selected_list_get(ic->sd->obj);
+   if ((!sel) || (evas_list_count(sel) == 1))
+     snprintf(text, sizeof(text), 
+	      _("Are you sure you want to delete<br>"
+		"<hilight>%s</hilight> ?"),
+	      ic->info.file);
+   else
+     {
+	snprintf(text, sizeof(text), 
+		 _("Are you sure you want to delete<br>"
+		   "the selected files in:<br>"
+		   "<hilight>%s</hilight> ?"),
+		 ic->sd->realpath);
+     }
+   if (sel) evas_list_free(sel);
    e_dialog_text_set(dialog, text);
    e_win_centered_set(dialog->win, 1);
    e_dialog_show(dialog);
@@ -4526,41 +4537,85 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
    E_Container *con;
    E_Fm2_Icon *ic;
    char buf[4096];
-
+   Evas_List *sel, *l;
+   E_Fm2_Icon_Info *ici;
+   
    ic = data;
    ic->dialog = NULL;
    
-   if (!ic->info.pseudo_link)
-     {
-	snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
-
-	/* FIXME: recursive rm might block - need to get smart */
-	if (!(ecore_file_recursive_rm(buf)))
-	  {
-	     char text[4096 + 256];
-	     
-	     man = e_manager_current_get();
-	     if (!man) return;
-	     con = e_container_current_get(man);
-	     if (!con) return;
-	     
-	     e_object_del(E_OBJECT(dialog));
-	     dialog = e_dialog_new(con, "E", "_fm_file_delete_error_dialog");
-	     e_dialog_button_add(dialog, _("OK"), NULL, NULL, NULL);
-	     e_dialog_button_focus_num(dialog, 1);
-	     e_dialog_title_set(dialog, _("Error"));
-	     snprintf(text, sizeof(text),
-		      _("Could not delete <br>"
-			"<hilight>%s</hilight>"), buf);
-	     e_dialog_text_set(dialog, text);
-	     e_win_centered_set(dialog->win, 1);
-	     e_dialog_show(dialog);
-	     e_object_del(E_OBJECT(dialog));
-	     return;
-	  }
-     }
    e_object_del(E_OBJECT(dialog));
-   ic->deleted = 1;
+   sel = e_fm2_selected_list_get(ic->sd->obj);
+   if (sel)
+     {
+	for (l = sel; l; l = l->next)
+	  {
+	     ici = l->data;
+	     if (!ici->pseudo_link)
+	       {
+		  snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ici->file);
+		  
+		  /* FIXME: recursive rm might block - need to get smart */
+		  if (!(ecore_file_recursive_rm(buf)))
+		    {
+		       char text[4096 + 256];
+		       
+		       man = e_manager_current_get();
+		       if (man)
+			 {
+			    con = e_container_current_get(man);
+			    if (con)
+			      {
+				 dialog = e_dialog_new(con, "E", "_fm_file_delete_error_dialog");
+				 e_dialog_button_add(dialog, _("OK"), NULL, NULL, NULL);
+				 e_dialog_button_focus_num(dialog, 1);
+				 e_dialog_title_set(dialog, _("Error"));
+				 snprintf(text, sizeof(text),
+					  _("Could not delete <br>"
+					    "<hilight>%s</hilight>"), buf);
+				 e_dialog_text_set(dialog, text);
+				 e_win_centered_set(dialog->win, 1);
+				 e_dialog_show(dialog);
+				 // e_object_del(E_OBJECT(dialog));
+			      }
+			 }
+		    }
+		  else ici->deleted = 1;
+	       }
+	  }
+	evas_list_free(sel);
+     }
+   else
+     {
+	if (!ic->info.pseudo_link)
+	  {
+	     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
+
+	     /* FIXME: recursive rm might block - need to get smart */
+	     if (!(ecore_file_recursive_rm(buf)))
+	       {
+		  char text[4096 + 256];
+		  
+		  man = e_manager_current_get();
+		  if (!man) return;
+		  con = e_container_current_get(man);
+		  if (!con) return;
+		  
+		  dialog = e_dialog_new(con, "E", "_fm_file_delete_error_dialog");
+		  e_dialog_button_add(dialog, _("OK"), NULL, NULL, NULL);
+		  e_dialog_button_focus_num(dialog, 1);
+		  e_dialog_title_set(dialog, _("Error"));
+		  snprintf(text, sizeof(text),
+			   _("Could not delete <br>"
+			     "<hilight>%s</hilight>"), buf);
+		  e_dialog_text_set(dialog, text);
+		  e_win_centered_set(dialog->win, 1);
+		  e_dialog_show(dialog);
+		  // e_object_del(E_OBJECT(dialog));
+		  return;
+	       }
+	  }
+	ic->info.deleted = 1;
+     }
    if (ic->sd->order_file) _e_fm2_order_file_rewrite(ic->sd->obj);
    
    if (ic->sd->refresh_job) ecore_job_del(ic->sd->refresh_job);

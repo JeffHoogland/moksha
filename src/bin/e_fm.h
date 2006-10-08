@@ -99,6 +99,7 @@ struct _E_Fm2_Icon_Info
    struct stat       statinfo;
    unsigned char     mount : 1;
    unsigned char     pseudo_link : 1;
+   unsigned char     deleted : 1;
 };
 
 EAPI int                   e_fm2_init(void);

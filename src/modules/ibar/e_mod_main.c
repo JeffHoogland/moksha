@@ -66,6 +66,7 @@ struct _IBar_Icon
    Evas_Object *o_holder2;
    Evas_Object *o_icon2;
    E_App       *app;
+   int          mouse_down;
    struct {
       unsigned char  start : 1;
       unsigned char  dnd : 1;
@@ -888,6 +889,7 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 	ic->drag.y = ev->output.y;
 	ic->drag.start = 1;
 	ic->drag.dnd = 0;
+	ic->mouse_down = 1;
      }
    else if ((ev->button == 3) && (!ibar_config->menu))
      {
@@ -946,12 +948,13 @@ _ibar_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    
    ev = event_info;
    ic = data;
-   if ((ev->button == 1) && (!ic->drag.dnd))
+   if ((ev->button == 1) && (!ic->drag.dnd) && (ic->mouse_down == 1))
      {
 	e_zone_app_exec(ic->ibar->inst->gcc->gadcon->zone, ic->app);
 	e_exehist_add("ibar", ic->app->exe);
 	ic->drag.start = 0;
 	ic->drag.dnd = 0;
+	ic->mouse_down = 0;
      }
 }
 
