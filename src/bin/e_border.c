@@ -2559,7 +2559,7 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 		  char *ext;
 
 		  ext = strrchr(bd->internal_icon, '.');
-		  if ((ext) && ((!strcmp(ext, ".eap")) || (!strcmp(ext, ".edj"))))
+		  if ((ext) && ((!strcmp(ext, ".edj"))))
 		    {
 		       if (!edje_object_file_set(o, bd->internal_icon, "icon"))
 			 e_util_edje_icon_set(o, "enlightenment/e");	       
