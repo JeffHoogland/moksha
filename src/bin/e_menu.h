@@ -102,6 +102,8 @@ struct _E_Menu_Item
    Evas_Object   *event_object;
 
    E_App         *app;  /* For when this item is used for an app.  Experimental, if this makes it into cvs, kill onefang. */
+
+   Evas_List	 *list_position;
    
    int            label_w, label_h;
    int            icon_w, icon_h;

@@ -91,10 +91,10 @@ e_config_dialog_find(const char *name, const char *class)
 	  {
 	     E_Zone *z;
 
+	     z = e_util_zone_current_get(e_manager_current_get());
 	     e_border_uniconify(cfd->dia->win->border);
 	     e_dialog_show(cfd->dia);
 	     e_win_raise(cfd->dia->win);
-	     z = e_util_zone_current_get(e_manager_current_get());
 	     if (z->container == cfd->dia->win->border->zone->container)
 	       e_border_desk_set(cfd->dia->win->border, e_desk_current_get(z));
 	     else

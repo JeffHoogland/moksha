@@ -53,6 +53,7 @@ static void _e_menu_item_activate_previous        (void);
 static void _e_menu_item_activate_first           (void);
 static void _e_menu_item_activate_last            (void);
 static void _e_menu_item_activate_nth             (int n);
+static void _e_menu_item_activate_char            (char * key_compose);
 static void _e_menu_activate_next                 (void);
 static void _e_menu_activate_previous             (void);
 static void _e_menu_activate_first                (void);
@@ -60,6 +61,7 @@ static void _e_menu_activate_last                 (void);
 static void _e_menu_activate_nth                  (int n);
 static E_Menu *_e_menu_active_get                 (void);
 static E_Menu_Item *_e_menu_item_active_get       (void);
+static Evas_List * _e_menu_list_item_active_get   (void);
 static int  _e_menu_outside_bounds_get            (int xdir, int ydir);
 static void _e_menu_scroll_by                     (int dx, int dy);
 static void _e_menu_mouse_autoscroll_check        (void);
@@ -536,6 +538,7 @@ e_menu_item_new(E_Menu *m)
    mi = E_OBJECT_ALLOC(E_Menu_Item, E_MENU_ITEM_TYPE, _e_menu_item_free);
    mi->menu = m;
    mi->menu->items = evas_list_append(mi->menu->items, mi);
+   mi->list_position = evas_list_last(mi->menu->items);
    return mi;
 }
 
@@ -1941,118 +1944,68 @@ _e_menu_realize_call(E_Menu_Item *mi)
 static void
 _e_menu_item_activate_next(void)
 {
-   E_Menu *m;
+   E_Menu_Item *mi;
+   Evas_List *ll;
 
-   /* FIXME: inefficient. should track active item */
-   m = _e_menu_active_get();
-   if (m)
+   ll = _e_menu_list_item_active_get();
+   mi = _e_menu_item_active_get();
+   if (ll && mi) 
      {
-	Evas_List *ll;
-	
-	for (ll = m->items; ll; ll = ll->next)
-	  {
-	     E_Menu_Item *mi;
-	     
+	/* Look at the next item and then cycle until we're not on
+	 * a separator. */
+	if (!(ll->next)) 
+	  ll = mi->menu->items;
+	else
+	   ll = ll->next;
+	mi = ll->data;
+	while (mi->separator)
+	  { 
+	     if (!(ll->next)) 
+	       ll = mi->menu->items;
+	     else
+	       ll = ll->next;
 	     mi = ll->data;
-	     if (mi->active) 
-	       {
-		  if (ll->next)
-		    {
-		       ll = ll->next;
-		       mi = ll->data;
-		       while ((mi->separator) && (ll->next))
-			 {
-			    ll = ll->next;
-			    mi = ll->data;
-			 }
-		       if ((mi->separator) && (!ll->next))
-			 {
-			    ll = m->items;
-			    mi = ll->data;
-			    while ((mi->separator) && (ll->next))
-			      {
-				 ll = ll->next;
-				 mi = ll->data;
-			      }
-			 }
-		       e_menu_item_active_set(mi, 1);
-		       _e_menu_item_ensure_onscreen(mi);
-		    }
-		  else
-		    {
-		       ll = m->items;
-		       mi = ll->data;
-		       while ((mi->separator) && (ll->next))
-			 {
-			    ll = ll->next;
-			    mi = ll->data;
-			 }
-		       e_menu_item_active_set(mi, 1);
-		       _e_menu_item_ensure_onscreen(mi);
-		    }
-		  return;
-	       }
 	  }
+
+	e_menu_item_active_set(mi, 1);
+	_e_menu_item_ensure_onscreen(mi);
+	return;
      }
+
    _e_menu_activate_first();
 }
 
 static void
 _e_menu_item_activate_previous(void)
 {
-   E_Menu *m;
+   E_Menu_Item *mi;
+   Evas_List *ll;
 
-   /* FIXME: inefficient. should track active item */
-   m = _e_menu_active_get();
-   if (m)
+   ll = _e_menu_list_item_active_get();
+   mi = _e_menu_item_active_get();
+   if (ll && mi) 
      {
-	Evas_List *ll;
-	
-	for (ll = m->items; ll; ll = ll->next)
-	  {
-	     E_Menu_Item *mi;
-	     
+	/* Look at the prev item and then cycle until we're not on
+	 * a separator. */
+	if (!(ll->prev)) 
+	  ll = evas_list_last(ll);
+	else
+	   ll = ll->prev;
+	mi = ll->data;
+	while (mi->separator)
+	  { 
+	     if (!(ll->prev)) 
+	       ll = evas_list_last(ll);
+	     else
+	       ll = ll->prev;
 	     mi = ll->data;
-	     if (mi->active) 
-	       {
-		  if (ll->prev)
-		    {
-		       ll = ll->prev;
-		       mi = ll->data;
-		       while ((mi->separator) && (ll->prev))
-			 {
-			    ll = ll->prev;
-			    mi = ll->data;
-			 }
-		       if ((mi->separator) && (!ll->prev))
-			 {
-			    ll = m->items;
-			    mi = ll->data;
-			    while ((mi->separator) && (ll->prev))
-			      {
-				 ll = ll->prev;
-				 mi = ll->data;
-			      }
-			 }
-		       e_menu_item_active_set(mi, 1);
-		       _e_menu_item_ensure_onscreen(mi);
-		    }
-		  else
-		    {
-		       ll = evas_list_last(m->items);
-		       mi = ll->data;
-		       while ((mi->separator) && (ll->prev))
-			 {
-			    ll = ll->prev;
-			    mi = ll->data;
-			 }
-		       e_menu_item_active_set(mi, 1);
-		       _e_menu_item_ensure_onscreen(mi);
-		    }
-		  return;
-	       }
 	  }
+
+	e_menu_item_active_set(mi, 1);
+	_e_menu_item_ensure_onscreen(mi);
+	return;
      }
+
    _e_menu_activate_first();
 }
 
@@ -2130,6 +2083,75 @@ _e_menu_item_activate_nth(int n)
      }
    e_menu_item_active_set(mi, 1);
    _e_menu_item_ensure_onscreen(mi);
+}
+
+static void
+_e_menu_item_activate_char(char * key_compose)
+{
+   E_Menu *m;
+   E_Menu_Item *mi;
+   Evas_List *ll, *ll_orig;
+
+   /* Ignore modifiers and such. */
+   if (!key_compose) return;
+
+   /* Check we've got a menu and it's active. */
+   m = _e_menu_active_get();
+   if (!m) 
+     {
+	if (!_e_active_menus) return;
+	m = _e_active_menus->data;
+	if (!m) return;
+     }
+
+   ll = _e_menu_list_item_active_get();
+   /* If we don't have an active item, start from the top of the list. */
+   if (!ll)
+     {
+	ll = m->items;
+	mi = ll->data;
+	/* Only check the current item if it wasn't active before. */
+	if (!mi->separator && mi->label && !strncasecmp(key_compose, mi->label, strlen(key_compose))) 
+	  {
+	     e_menu_item_active_set(mi, 1);
+	     _e_menu_item_ensure_onscreen(mi);
+	     return;
+	  }
+     }
+
+   ll_orig = ll;
+
+   mi = ll->data;
+   if (!(ll->next)) 
+     ll = mi->menu->items;
+   else
+     ll = ll->next;
+   mi = ll->data;
+
+   /* While we don't have a label OR we don't match  AND we haven't
+    * wrapped around */
+   while ((!mi->label || strncasecmp(key_compose, mi->label, strlen(key_compose))) 
+	 && ll != ll_orig)
+     {
+	if (!(ll->next)) 
+	  ll = mi->menu->items;
+	else
+	  ll = ll->next;
+	mi = ll->data;
+
+	while (mi->separator)
+	  { 
+	     if (!(ll->next)) 
+	       ll = mi->menu->items;
+	     else
+	       ll = ll->next;
+	     mi = ll->data;
+	  }
+     }
+
+   e_menu_item_active_set(mi, 1);
+   _e_menu_item_ensure_onscreen(mi);
+   return;
 }
 
 static void
@@ -2259,6 +2281,15 @@ static E_Menu_Item *
 _e_menu_item_active_get(void)
 {
    return _e_active_menu_item;
+}
+
+static Evas_List * 
+_e_menu_list_item_active_get(void)
+{
+   if (_e_active_menu_item)
+      return _e_active_menu_item->list_position;
+   else
+     return NULL;
 }
 
 static int
@@ -2585,6 +2616,8 @@ _e_menu_cb_key_down(void *data, int type, void *event)
      _e_menu_item_activate_nth(8);
    else if ((!strcmp(ev->keysymbol, "0")) || (!strcmp(ev->keysymbol, "KP_0")))
      _e_menu_item_activate_last();
+   else if (ev->key_compose)
+     _e_menu_item_activate_char(ev->key_compose);
    return 1;
 }
 
