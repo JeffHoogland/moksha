@@ -78,7 +78,7 @@ e_widget_cslider_add(Evas *evas, E_Color_Component mode, E_Color *color, int ver
    e_widget_sub_object_add(obj, o);
 
    if (wd->vertical)
-     evas_object_gradient_angle_set(o, 180);
+     evas_object_gradient_angle_set(o, 0);
    else
      evas_object_gradient_angle_set(o, 270);
 
@@ -113,10 +113,7 @@ static void
 _e_wid_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_Coord h)
 {
    E_Widget_Data *wd = data;
-   if (wd->vertical)
-     evas_object_gradient_fill_set(o, 0, 0, w, h); 
-   else
-     evas_object_gradient_fill_set(o, 0, 0, h, w); 
+   evas_object_gradient_fill_set(o, 0, 0, w, h); 
    evas_object_resize(o, w, h);
    evas_object_resize(wd->o_event, w, h);
 }
