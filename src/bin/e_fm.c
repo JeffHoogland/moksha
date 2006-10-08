@@ -3022,10 +3022,13 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers)
      }
    else
      {
-	for (l = ic->sd->icons; l; l = l->next)
+	if (!up)
 	  {
-	     ic2 = l->data;
-	     ic2->last_selected = 0;
+	     for (l = ic->sd->icons; l; l = l->next)
+	       {
+		  ic2 = l->data;
+		  ic2->last_selected = 0;
+	       }
 	  }
      }
    printf("multi_sel=%i, selected=%i up=%i, dnd=%i\n", 
@@ -3042,6 +3045,7 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers)
 	  {
 	     _e_fm2_icon_select(ic);
 	     ic->down_sel = 1;
+	     ic->last_selected = 1;
 	  }
      }
    evas_object_smart_callback_call(ic->sd->obj, "selection_change", NULL);
