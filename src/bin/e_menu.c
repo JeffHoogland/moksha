@@ -181,6 +181,11 @@ e_menu_activate_key(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir
    _e_menu_activate_time = 0;
    _e_menu_activate_floating = 0;
    _e_menu_activate_internal(m, zone);
+   if (!m->zone)
+     {
+	e_menu_deactivate(m);
+	return;
+     }
    switch (dir)
      {
       case E_MENU_POP_DIRECTION_LEFT:
@@ -245,6 +250,11 @@ e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int d
    _e_menu_activate_time = activate_time;
    _e_menu_activate_floating = 0;
    _e_menu_activate_internal(m, zone);
+   if (!m->zone)
+     {
+	e_menu_deactivate(m);
+	return;
+     }
    switch (dir)
      {
       case E_MENU_POP_DIRECTION_LEFT:
@@ -302,6 +312,11 @@ e_menu_activate(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir)
    _e_menu_activate_time = 0;
    _e_menu_activate_floating = 0;
    _e_menu_activate_internal(m, zone);
+   if (!m->zone)
+     {
+	e_menu_deactivate(m);
+	return;
+     }
    switch (dir)
      {
       case E_MENU_POP_DIRECTION_LEFT:
@@ -1713,7 +1728,6 @@ _e_menu_activate_internal(E_Menu *m, E_Zone *zone)
 	  {
 	     ecore_x_window_del(_e_menu_win);
 	     _e_menu_win = 0;
-	     m->zone = zone;
 	     return;
 	  }
      }
