@@ -14,12 +14,37 @@ static void _e_configure_cb_resize(E_Win *win);
 static void _e_configure_cb_standard(void *data);
 static void _e_configure_cb_close(void *data, void *data2);
 
+static E_Configure *_e_configure = NULL;
+
 EAPI E_Configure *
 e_configure_show(E_Container *con)
 {
    E_Configure *eco;
    E_Manager *man;
    Evas_Coord ew, eh, mw, mh;
+
+   if (_e_configure)
+     {
+	E_Zone *z;
+	
+	eco = _e_configure;
+	z = e_util_zone_current_get(e_manager_current_get());
+	e_border_uniconify(eco->win->border);
+	e_win_show(eco->win);
+	e_win_raise(eco->win);
+	if (z->container == eco->win->border->zone->container)
+	  e_border_desk_set(eco->win->border, e_desk_current_get(z));
+	else
+	  {
+	     if (!eco->win->border->sticky)
+	       e_desk_show(eco->win->border->desk);
+	     ecore_x_pointer_warp(eco->win->border->zone->container->win,
+				  eco->win->border->zone->x + (eco->win->border->zone->w / 2),
+				  eco->win->border->zone->y + (eco->win->border->zone->h / 2));
+	  }
+	e_border_unshade(eco->win->border, E_DIRECTION_DOWN);
+	return NULL;
+     }
    
    if (!con)
      {
@@ -126,6 +151,8 @@ e_configure_show(E_Container *con)
 
    e_widget_focus_set(eco->ilist, 1);
    e_widget_ilist_go(eco->ilist);
+
+   _e_configure = eco;
    
    return eco;
 }
@@ -159,6 +186,7 @@ e_configure_header_item_add(E_Configure *eco, char *icon, char *label)
 static void
 _e_configure_free(E_Configure *eco)
 {
+   _e_configure = NULL;
    while (eco->cblist)
      {
 	free(eco->cblist->data);

@@ -25,6 +25,7 @@ e_int_config_shelf(E_Container *con)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    
+   if (e_config_dialog_find("E", "_config_shelf_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    if (!v) return NULL; 
    v->create_cfdata = _create_data;

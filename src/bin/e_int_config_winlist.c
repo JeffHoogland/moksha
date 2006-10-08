@@ -39,6 +39,7 @@ e_int_config_winlist(E_Container *con)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    
+   if (e_config_dialog_find("E", "_config_winlist_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    
    v->create_cfdata = _create_data;
@@ -47,7 +48,7 @@ e_int_config_winlist(E_Container *con)
    v->basic.create_widgets = _basic_create_widgets;
    v->advanced.apply_cfdata = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
-   
+
    cfd = e_config_dialog_new(con,
 			     _("Window List Settings"),
 			     "E", "_config_winlist_dialog",

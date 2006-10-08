@@ -90,6 +90,7 @@ e_int_config_apps_once(E_Container *con, const char *label, int (*func) (void *d
 EAPI E_Config_Dialog *
 e_int_config_apps(E_Container *con)
 {
+   if (e_config_dialog_find("E", "_config_applications_dialog")) return NULL;
    return e_int_config_apps_once(con, NULL, NULL, NULL);
 }
 

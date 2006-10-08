@@ -16,6 +16,7 @@ static void _e_config_dialog_cb_changed(void *data, Evas_Object *obj);
 static void _e_config_dialog_cb_close(void *data, E_Dialog *dia);
 
 /* local subsystem globals */
+static Evas_List *_e_config_dialog_list = NULL;
 
 /* externally accessible functions */
 
@@ -70,8 +71,45 @@ e_config_dialog_new(E_Container *con, const char *title, const char *name, const
 	  _e_config_dialog_go(cfd, E_CONFIG_DIALOG_CFDATA_TYPE_BASIC);	
 	break;
      }
-
+   _e_config_dialog_list = evas_list_append(_e_config_dialog_list, cfd);
+   
    return cfd;
+}
+
+EAPI int
+e_config_dialog_find(const char *name, const char *class)
+{
+   Evas_List *l;
+   E_Config_Dialog *cfd;
+   
+   for (l = _e_config_dialog_list; l; l = l->next)
+     {
+	cfd = l->data;
+	
+	if ((!e_util_strcmp(name, cfd->name)) &&
+	    (!e_util_strcmp(class, cfd->class)))
+	  {
+	     E_Zone *z;
+
+	     e_border_uniconify(cfd->dia->win->border);
+	     e_dialog_show(cfd->dia);
+	     e_win_raise(cfd->dia->win);
+	     z = e_util_zone_current_get(e_manager_current_get());
+	     if (z->container == cfd->dia->win->border->zone->container)
+	       e_border_desk_set(cfd->dia->win->border, e_desk_current_get(z));
+	     else
+	       {
+		  if (!cfd->dia->win->border->sticky)
+		    e_desk_show(cfd->dia->win->border->desk);
+		  ecore_x_pointer_warp(cfd->dia->win->border->zone->container->win,
+				       cfd->dia->win->border->zone->x + (cfd->dia->win->border->zone->w / 2),
+				       cfd->dia->win->border->zone->y + (cfd->dia->win->border->zone->h / 2));
+	       }
+	     e_border_unshade(cfd->dia->win->border, E_DIRECTION_DOWN);
+	     return 1;
+	  }
+     }
+   return 0;
 }
 
 /* local subsystem functions */
@@ -79,6 +117,7 @@ e_config_dialog_new(E_Container *con, const char *title, const char *name, const
 static void
 _e_config_dialog_free(E_Config_Dialog *cfd)
 {
+   _e_config_dialog_list = evas_list_remove(_e_config_dialog_list, cfd);
    if (cfd->auto_apply_timer) _e_config_dialog_cb_auto_apply_timer(cfd);
    if (cfd->title) evas_stringshare_del(cfd->title);
    if (cfd->name) evas_stringshare_del(cfd->name);

@@ -119,22 +119,23 @@ struct _E_Config_Dialog_Data
 EAPI E_Config_Dialog *
 e_int_config_mousebindings(E_Container *con)
 {
-  E_Config_Dialog *cfd;
-  E_Config_Dialog_View *v;
-
-  v = E_NEW(E_Config_Dialog_View, 1);
-
-  v->create_cfdata = _create_data;
-  v->free_cfdata = _free_data;
-  v->basic.apply_cfdata = _basic_apply_data;
-  v->basic.create_widgets = _basic_create_widgets;
-  v->override_auto_apply = 0;
-
-  cfd = e_config_dialog_new(con,
-			    _("Mouse Binding Settings"),
-			    "E", "_config_mousebindings_dialog",
-			    "enlightenment/mouse_clean", 0, v, NULL);
-  return cfd;
+   E_Config_Dialog *cfd;
+   E_Config_Dialog_View *v;
+   
+   if (e_config_dialog_find("E", "_config_mousebindings_dialog")) return NULL;
+   v = E_NEW(E_Config_Dialog_View, 1);
+   
+   v->create_cfdata = _create_data;
+   v->free_cfdata = _free_data;
+   v->basic.apply_cfdata = _basic_apply_data;
+   v->basic.create_widgets = _basic_create_widgets;
+   v->override_auto_apply = 0;
+   
+   cfd = e_config_dialog_new(con,
+			     _("Mouse Binding Settings"),
+			     "E", "_config_mousebindings_dialog",
+			     "enlightenment/mouse_clean", 0, v, NULL);
+   return cfd;
 }
 
 static void
