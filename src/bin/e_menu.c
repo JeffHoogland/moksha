@@ -1713,6 +1713,7 @@ _e_menu_activate_internal(E_Menu *m, E_Zone *zone)
 	  {
 	     ecore_x_window_del(_e_menu_win);
 	     _e_menu_win = 0;
+	     m->zone = zone;
 	     return;
 	  }
      }
@@ -1721,6 +1722,7 @@ _e_menu_activate_internal(E_Menu *m, E_Zone *zone)
 	printf("FIXME: cannot move menus between containers yet\n");
 	return;
      }
+   m->zone = zone;
    if (!m->active)
      {
 	/* this remove is in case the menu is marked as inactive but hasnt */
@@ -1749,7 +1751,6 @@ _e_menu_activate_internal(E_Menu *m, E_Zone *zone)
 	  }
      }
    m->cur.visible = 1;
-   m->zone = zone;
 }
 
 static void
