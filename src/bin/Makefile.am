@@ -16,7 +16,6 @@ INCLUDES = -I$(top_srcdir) \
 bin_PROGRAMS = \
 enlightenment \
 enlightenment_remote \
-enlightenment_eapp \
 enlightenment_imc \
 enlightenment_start \
 enlightenment_thumb \
@@ -336,12 +335,6 @@ e_ipc_codec.c \
 e_remote_main.c
 
 enlightenment_remote_LDFLAGS = @e_libs@ @dlopen_libs@
-
-enlightenment_eapp_SOURCES = \
-e.h \
-e_eapp_main.c
-
-enlightenment_eapp_LDFLAGS = @e_libs@ @dlopen_libs@
 
 enlightenment_imc_SOURCES = \
 e.h \
