@@ -509,6 +509,55 @@ const E_Intl_Pair region_predefined_pairs[ ] = {
        { NULL, NULL}
 };
 
+/* This comes from 
+   $ man charsets
+ * and 
+   $ locale -a | grep -v @ | grep "\." | cut -d . -f 2 | sort -u
+ *
+ * On some machines is complains if codesets don't look like this
+ * On linux its not really a problem but BSD has issues. So we neet to 
+ * make sure that locale -a output gets converted to upper-case form in
+ * all situations just to be safe. 
+ */
+const E_Intl_Pair charset_predefined_pairs[ ] = {
+       /* These are in locale -a but not in charsets */
+       {"cp1255", "CP1255"},
+       {"euc", "EUC"},
+       {"georgianps", "GEORGIAN-PS"},
+       {"iso885914", "ISO-8859-14"},
+       {"koi8t", "KOI8-T"},
+       {"tcvn", "TCVN"},
+       {"ujis", "UJIS"},
+
+       /* These are from charsets man page */
+       {"big5", "BIG5"},
+       {"big5hkscs", "BIG5-HKSCS"},
+       {"cp1251", "CP1251"},
+       {"eucjp", "EUC-JP"},
+       {"euckr", "EUC-KR"},
+       {"euctw", "EUC-TW"},
+       {"gb18030", "GB18030"},
+       {"gb2312", "GB2312"},
+       {"gbk", "GBK"},
+       {"iso88591", "ISO-8859-1"},
+       {"iso885913", "ISO-8859-13"},
+       {"iso885915", "ISO-8859-15"},
+       {"iso88592", "ISO-8859-2"},
+       {"iso88593", "ISO-8859-3"},
+       {"iso88595", "ISO-8859-5"},
+       {"iso88596", "ISO-8859-6"},
+       {"iso88597", "ISO-8859-7"},
+       {"iso88598", "ISO-8859-8"},
+       {"iso88599", "ISO-8859-9"},
+       {"koi8r", "KOI8-R"},
+       {"koi8u", "KOI8-U"},
+       {"tis620", "TIS-620"},
+       {"utf8", "UTF-8"},
+       { NULL, NULL }
+};
+
+
+
 EAPI E_Config_Dialog *
 e_int_config_intl(E_Container *con)
 {
@@ -607,8 +656,10 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 		       while (language_predefined_pairs[i].locale_key)
 			 {
 			    if (!strcmp(language_predefined_pairs[i].locale_key, language))
-			      lang_node->lang_name = _(language_predefined_pairs[i].locale_translation);
-			      
+			      {
+				 lang_node->lang_name = _(language_predefined_pairs[i].locale_translation);
+				 break;
+			      }
 			    i++;
 			 }
 		       
@@ -636,7 +687,10 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 			    while (region_predefined_pairs[i].locale_key)
 			      {
 				 if (!strcmp(region_predefined_pairs[i].locale_key, region))
-				   region_node->region_name = _(region_predefined_pairs[i].locale_translation);
+				   {
+				      region_node->region_name = _(region_predefined_pairs[i].locale_translation);
+				      break;
+				   }
 				 i++;
 			      }
 			    lang_node->region_hash = evas_hash_add(lang_node->region_hash, region, region_node);
@@ -646,9 +700,24 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 		       /* Add codeset to the region hash node if it exists */
 		       if (codeset)
 			 {
+			    int i;
 			    const char * cs;
 			    
-			    cs = evas_stringshare_add(codeset);
+			    /* get the charset UpperCase form */
+			    /* linear serach */
+			    i = 0;
+			    cs = NULL;
+			    while (charset_predefined_pairs[i].locale_key)
+			      {
+				 if (!strcmp(charset_predefined_pairs[i].locale_key, codeset))
+				   {
+				      cs = evas_stringshare_add(charset_predefined_pairs[i].locale_translation);
+				      break;
+				   }
+				 i++;
+			      }
+			    
+			    if (cs == NULL) cs = evas_stringshare_add(codeset);
 			    /* Exclusive */
 			    /* Linear Search */
 			    if (!evas_list_find(region_node->available_codesets, cs))
