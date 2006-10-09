@@ -2625,7 +2625,8 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 	     if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
 	       {
 		  /* if there is a .order file - we can re-order files */
-		  if (ic->sd->order_file)
+//		  if (ic->sd->order_file)
+		  if (1)
 		    {
 		       /* if dir: */
                        if ((S_ISDIR(ic->info.statinfo.st_mode)) &&
@@ -2633,17 +2634,26 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 			 {
 			    /* if bottom 25% or top 25% then insert between prev or next */
 			    /* if in middle 50% then put in dir */
-			    if (ev->y <= (ic->y + (ic->h / 4)))
-			      _e_fm2_dnd_drop_show(ic, 0);
-			    else if (ev->y > (ic->y + ((ic->h * 3) / 4)))
-			      _e_fm2_dnd_drop_show(ic, 1);
+			    if (ev->y <= (ic->y - ic->sd->pos.y + (ic->h / 4)))
+			      {
+				 _e_fm2_dnd_drop_show(ic, 0);
+				 printf("DDD 0\n");
+			      }
+			    else if (ev->y > (ic->y - ic->sd->pos.y + ((ic->h * 3) / 4)))
+			      {
+				 _e_fm2_dnd_drop_show(ic, 1);
+				 printf("DDD 1\n");
+			      }
 			    else
-			      _e_fm2_dnd_drop_show(ic, -1);
+			      {
+				 _e_fm2_dnd_drop_show(ic, -1);
+				 printf("DDD -1\n");
+			      }
 			 }
 		       else
 			 {
 			    /* if top 50% or bottom 50% then insert between prev or next */
-			    if (ev->y <= (ic->y + (ic->h / 2)))
+			    if (ev->y <= (ic->y - ic->sd->pos.y + (ic->h / 2)))
 			      _e_fm2_dnd_drop_show(ic, 0);
 			    else
 			      _e_fm2_dnd_drop_show(ic, 1);
@@ -2652,8 +2662,6 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 		  /* we can only drop into subdirs */
 		  else
 		    {
-		       /* FIXME: need some flag to prevent drops INTO dirs linked
-			* to in the favorites list */
 		       /* if it's over a dir - hilight as it will be dropped in */
                        if ((S_ISDIR(ic->info.statinfo.st_mode)) &&
 			   (!ic->sd->config->view.no_subdir_drop))
@@ -2676,7 +2684,7 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 	if (sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
 	  {
 	     /* if there is a .order file - we can re-order files */
-	     if (ic->sd->order_file)
+	     if (sd->order_file)
 	       {
 		  ic = evas_list_data(evas_list_last(sd->icons));
 		  if (ic)
@@ -2938,6 +2946,21 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		  else /* no order file */
 		    {
 		       /* shouldnt happen */
+		       for (ll = fsel; ll; ll = ll->next)
+			 {
+			    /* move the file into the subdir */
+			    snprintf(buf, sizeof(buf), "%s/%s",
+				     sd->realpath, ecore_file_get_file(ll->data));
+			    printf("mv %s %s\n", ll->data, buf);
+			    if (ecore_file_exists(buf))
+			      {
+				 /* FIXME: error - file exists */
+			      }
+			    else
+			      ecore_file_mv(ll->data, buf);
+			 }
+		       refresh  = 1; /* refresh src fm */
+		       e_fm2_refresh(sd->obj); /* refresh dst fm */
 		    }
 	       }
 	  }
