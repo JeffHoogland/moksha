@@ -26,4 +26,4 @@ module_la_LDFLAGS      = -module -avoid-version
 module_la_DEPENDENCIES = $(top_builddir)/config.h
 
 uninstall:
-	rm -rf $(libdir)/enlightenment/modules/$(MODULE)
+	rm -rf $(DESTDIR)$(libdir)/enlightenment/modules/$(MODULE)

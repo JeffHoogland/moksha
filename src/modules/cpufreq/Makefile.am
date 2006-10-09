@@ -36,4 +36,4 @@ noinst_PROGRAMS        = freqset
 freqset_SOURCES        = freqset.c
 
 uninstall:
-	rm -rf $(libdir)/enlightenment/modules/$(MODULE)
+	rm -rf $(DESTDIR)$(libdir)/enlightenment/modules/$(MODULE)
