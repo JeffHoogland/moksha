@@ -57,7 +57,8 @@ default_preview.edc \
 default_cslider.edc \
 default_spectrum.edc \
 default_color_well.edc \
-default_sys.edc
+default_sys.edc \
+default_deskpreview.edc
 
 default.edj: Makefile $(EXTRA_DIST)
 	$(EDJE_CC) $(EDJE_FLAGS) \

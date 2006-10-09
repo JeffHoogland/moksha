@@ -10,22 +10,24 @@ static void _e_bg_signal(void *data, Evas_Object *obj, const char *emission, con
 
 /* externally accessible functions */
 EAPI const char *
-e_bg_file_get(E_Zone *zone)
+e_bg_file_get(E_Zone *zone, E_Desk *desk)
 {
    Evas_List *l, *ll, *entries;
    int ok;
    const char *bgfile = "";
+
+
+   if (!zone) zone = e_zone_current_get(e_container_current_get(e_manager_current_get()));
+
    ok = 0;
-   for (l = e_config->desktop_backgrounds; l; l = l->next)
+   /* look for desk specific background. if desk is NULL this is skipped */
+   for (l = e_config->desktop_backgrounds; desk && l; l = l->next)
      {
 	E_Config_Desktop_Background *cfbg;
-	E_Desk *desk;
 	
 	cfbg = l->data;
 	if ((cfbg->container >= 0) && (zone->container->num != cfbg->container)) continue;
 	if ((cfbg->zone >= 0) && (zone->num != cfbg->zone)) continue;
-	desk = e_desk_current_get(zone);
-	if (!desk) continue;
 	if ((cfbg->desk_x >= 0) && (cfbg->desk_x != desk->x)) continue;
 	if ((cfbg->desk_y >= 0) && (cfbg->desk_y != desk->y)) continue;
 	entries = edje_file_collection_list(cfbg->file);
@@ -44,6 +46,7 @@ e_bg_file_get(E_Zone *zone)
 	  }
 	break;
      }
+   /* fall back to default bg for zone */
    if (!ok)
      {
 	entries = edje_file_collection_list(e_config->desktop_default_background);
@@ -80,7 +83,7 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
    else if (transition == E_BG_TRANSITION_CHANGE) trans = e_config->transition_change;
    if ((!trans) || (strlen(trans) < 1)) transition = E_BG_TRANSITION_NONE;
 
-   bgfile = e_bg_file_get(zone);
+   bgfile = e_bg_file_get(zone, e_desk_current_get(zone));
 
    if (zone->bg_object)
      {

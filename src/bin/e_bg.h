@@ -14,7 +14,7 @@ typedef enum {
 #ifndef E_BG_H
 #define E_BG_H
 
-EAPI const char *e_bg_file_get(E_Zone *zone);
+EAPI const char *e_bg_file_get(E_Zone *zone, E_Desk *desk);
 EAPI void e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition);
 EAPI void e_bg_add(int container, int zone, int desk_x, int desk_y, char *file);
 EAPI void e_bg_del(int container, int zone, int desk_x, int desk_y);

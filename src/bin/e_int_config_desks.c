@@ -10,6 +10,7 @@ static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static void _cb_slider_change(void *data, Evas_Object *obj);
 
 /* Actual config data we will be playing with whil the dialog is active */
 struct _E_Config_Dialog_Data
@@ -28,6 +29,9 @@ struct _E_Config_Dialog_Data
    int flip_mode;
    int flip_interp;
    double flip_speed;
+
+   /*- GUI -*/
+   Evas_Object *preview;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -186,11 +190,19 @@ _basic_create_widgets(E_Config_Dialog *cdd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("Number of Desktops"), 0);
    
    ot = e_widget_table_add(evas, 0);
-   ob = e_widget_slider_add(evas, 0, 0, _("%1.0f"), 1.0, 12.0, 1.0, 0, NULL, &(cfdata->y), 150);
-   e_widget_table_object_append(ot, ob, 1, 0, 1, 1, 0, 1, 0, 1);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 12.0, 1.0, 0, NULL, &(cfdata->x), 200);
 
+   ob = e_widget_desk_preview_add(evas, cfdata->x, cfdata->y);
+   e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 1, 1, 1);
+   cfdata->preview = ob;
+
+   ob = e_widget_slider_add(evas, 0, 0, _("%1.0f"), 1.0, 12.0, 1.0, 0, NULL, &(cfdata->y), 150);
+   e_widget_on_change_hook_set(ob, _cb_slider_change, cfdata);
+   e_widget_table_object_append(ot, ob, 1, 0, 1, 1, 0, 1, 0, 1);
+
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 12.0, 1.0, 0, NULL, &(cfdata->x), 200);
+   e_widget_on_change_hook_set(ob, _cb_slider_change, cfdata);
    e_widget_table_object_append(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0);
+
    e_widget_framelist_object_append(of, ot);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
     
@@ -252,4 +264,13 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_list_object_append(o, ott, 1, 1, 0.5);
    
    return o;
+}
+
+static void
+_cb_slider_change(void *data, Evas_Object *obj)
+{
+   E_Config_Dialog_Data *cfdata = data;
+
+   e_widget_desk_preview_num_desks_set(cfdata->preview, cfdata->x, cfdata->y);
+
 }

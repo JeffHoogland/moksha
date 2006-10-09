@@ -172,7 +172,9 @@ e_fdo_menu_to_order.h \
 e_sys.h \
 e_obj_dialog.h \
 e_int_config_transitions.h \
-e_fwin.h
+e_fwin.h \
+e_widget_aspect.h \
+e_widget_desk_preview.h
  
 enlightenment_src = \
 e_user.c \
@@ -321,6 +323,8 @@ e_sys.c \
 e_int_config_transitions.c \
 e_obj_dialog.c \
 e_fwin.c \
+e_widget_aspect.c \
+e_widget_desk_preview.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \
