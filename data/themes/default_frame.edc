@@ -81,14 +81,14 @@ group {
 	 description {
 	    state: "default" 0.0;
 	    align: 0.0 0.0;
-            fixed:    1 1;
+            fixed:    0 1;
 	    rel1 {
 	       relative: 0.0  0.0;
 	       offset:   16   5;
 	    }
 	    rel2 {
-	       relative: 0.0  0.0;
-	       offset:   16   5;
+	       relative: 1.0  0.0;
+	       offset:   -17   5;
 	    }
 	    color: 0 0 0 80;
 	    text {
@@ -96,6 +96,7 @@ group {
 	       font:     "Edje-Vera-Bold";
 	       size:     10;
 	       min:      1 1;
+	       max:      1 1;
 	       align:    0.0 0.5;
                text_class: "frame";
 	    }
