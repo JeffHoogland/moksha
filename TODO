@@ -87,7 +87,8 @@ Some of the things (in very short form) that need to be done to E17...
   e_fm2? or custom widget?
 * virtualize e_bg to be able to put a bg in any canvas (given any desktop
   config input) and return an object.
-* virtual desktops config needs a preview of the desktops and their bg's
+* virtual desktops preview should allow clicking on a desk to access the
+  "wallpaper" dialog. should default to only changing the clicked desktop
 * desktop flip animations need to allow control over accel/decel and
   have a better ui - add wobble and controls etc. etc.
 ]]]
