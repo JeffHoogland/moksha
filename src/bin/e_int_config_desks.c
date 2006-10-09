@@ -229,10 +229,19 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    
    of = e_widget_framelist_add(evas, _("Number of Desktops"), 0);
    ot = e_widget_table_add(evas, 0);
+
+   ob = e_widget_desk_preview_add(evas, cfdata->x, cfdata->y);
+   e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 1, 1, 1);
+   cfdata->preview = ob;
+
    ob = e_widget_slider_add(evas, 0, 0, _("%1.0f"), 1.0, 12.0, 1.0, 0, NULL, &(cfdata->y), 150);
+   e_widget_on_change_hook_set(ob, _cb_slider_change, cfdata);
    e_widget_table_object_append(ot, ob, 1, 0, 1, 1, 0, 1, 0, 1);
+
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 12.0, 1.0, 0, NULL, &(cfdata->x), 200);
+   e_widget_on_change_hook_set(ob, _cb_slider_change, cfdata);
    e_widget_table_object_append(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0);
+
    e_widget_framelist_object_append(of, ot);
    e_widget_table_object_append(ott, of, 0, 0, 1, 2, 1, 1, 1, 1);
    
