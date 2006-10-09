@@ -5336,6 +5336,16 @@ _e_border_eval(E_Border *bd)
 		  /* we can trust internal windows */
 		  if (bd->internal)
 		    {
+		       if (bd->zone->w != rem->prop.res_x)
+			 {	 
+			    if (bd->client.w > (bd->zone->w - 32))
+			      bd->client.w = bd->zone->w - 32;
+			 }
+		       if (bd->zone->h != rem->prop.res_y)
+			 {	 
+			    if (bd->client.h > (bd->zone->h - 32))
+			      bd->client.h = bd->zone->h - 32;
+			 }
 		       if (bd->client.icccm.min_w > bd->client.w)
 			 bd->client.w = bd->client.icccm.min_w;
 		       if (bd->client.icccm.max_w < bd->client.w)
