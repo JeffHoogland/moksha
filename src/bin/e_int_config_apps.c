@@ -3,9 +3,6 @@
  */
 #include "e.h"
 
-#define MOD_UNLOADED 0
-#define MOD_ENABLED 1
-
 /* TODO:
  * More filtering/sorting of left side to make managing thousands of apps easy.
  *
