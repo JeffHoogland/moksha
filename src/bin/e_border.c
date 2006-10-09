@@ -5329,31 +5329,125 @@ _e_border_eval(E_Border *bd)
 		  if (desk)
 		    e_border_desk_set(bd, desk);
 	       }
+	     if (rem->apply & E_REMEMBER_APPLY_SIZE)
+	       {
+		  bd->client.w = rem->prop.w;
+		  bd->client.h = rem->prop.h;
+		  /* we can trust internal windows */
+		  if (bd->internal)
+		    {
+		       if (bd->client.icccm.min_w > bd->client.w)
+			 bd->client.w = bd->client.icccm.min_w;
+		       if (bd->client.icccm.max_w < bd->client.w)
+			 bd->client.w = bd->client.icccm.max_w;
+		       if (bd->client.icccm.min_h > bd->client.h)
+			 bd->client.h = bd->client.icccm.min_h;
+		       if (bd->client.icccm.max_h < bd->client.h)
+			 bd->client.h = bd->client.icccm.max_h;
+		    }
+		  bd->w = bd->client.w + bd->client_inset.l + bd->client_inset.r;
+		  bd->h = bd->client.h + bd->client_inset.t + bd->client_inset.b;
+		  bd->changes.size = 1;
+		  bd->changes.shape = 1;
+	       }
 	     if ((rem->apply & E_REMEMBER_APPLY_POS) && (!bd->re_manage))
 	       {
 		  bd->x = rem->prop.pos_x;
 		  bd->y = rem->prop.pos_y;
 		  if (bd->zone->w != rem->prop.res_x)
 		    {
-		       bd->x = (rem->prop.pos_x * rem->prop.res_x) / bd->zone->w;
+		       int px;
+		       
+		       px = bd->x + (bd->w / 2);
+		       if (px < ((rem->prop.res_x * 1) / 3))
+			 {
+			    if (bd->zone->w >= (rem->prop.res_x / 3))
+			      bd->x = rem->prop.pos_x;
+			    else
+			      bd->x = ((rem->prop.pos_x - 0) * bd->zone->w) / 
+			      (rem->prop.res_x / 3);
+			 }
+		       else if (px < ((rem->prop.res_x * 2) / 3))
+			 {
+			    if (bd->zone->w >= (rem->prop.res_x / 3))
+			      bd->x = (bd->zone->w / 2) + 
+			      (px - (rem->prop.res_x / 2)) -
+			      (bd->w / 2);
+			    else
+			      bd->x = (bd->zone->w / 2) + 
+			      (((px - (rem->prop.res_x / 2)) * bd->zone->w) / 
+			       (rem->prop.res_x / 3)) -
+			      (bd->w / 2);
+			 }
+		       else
+			 {
+			    if (bd->zone->w >= (rem->prop.res_x / 3))
+			      bd->x = bd->zone->w + 
+			      rem->prop.pos_x - rem->prop.res_x +
+			      (rem->prop.w - bd->client.w);
+			    else
+			      bd->x = bd->zone->w + 
+			      (((rem->prop.pos_x - rem->prop.res_x) * bd->zone->w) /
+			       (rem->prop.res_x / 3)) +
+			      (rem->prop.w - bd->client.w);
+			 }
+		       if ((rem->prop.pos_x >= 0) && (bd->x < 0))
+			 bd->x = 0;
+		       else if (((rem->prop.pos_x + rem->prop.w) < rem->prop.res_x) &&
+				((bd->x + bd->w) > bd->zone->w))
+			 bd->x = bd->zone->w - bd->w;
 		    }
 		  if (bd->zone->h != rem->prop.res_y)
 		    {
-		       bd->y = (rem->prop.pos_y * rem->prop.res_y) / bd->zone->h;
+		       int py;
+		       
+		       py = bd->y + (bd->h / 2);
+		       if (py < ((rem->prop.res_y * 1) / 3))
+			 {
+			    if (bd->zone->h >= (rem->prop.res_y / 3))
+			      bd->y = rem->prop.pos_y;
+			    else
+			      bd->y = ((rem->prop.pos_y - 0) * bd->zone->h) / 
+			      (rem->prop.res_y / 3);
+			 }
+		       else if (py < ((rem->prop.res_y * 2) / 3))
+			 {
+			    if (bd->zone->h >= (rem->prop.res_y / 3))
+			      bd->y = (bd->zone->h / 2) + 
+			      (py - (rem->prop.res_y / 2)) -
+			      (bd->h / 2);
+			    else
+			      bd->y = (bd->zone->h / 2) + 
+			      (((py - (rem->prop.res_y / 2)) * bd->zone->h) / 
+			       (rem->prop.res_y / 3)) -
+			      (bd->h / 2);
+			 }
+		       else
+			 {
+			    if (bd->zone->h >= (rem->prop.res_y / 3))
+			      bd->y = bd->zone->h + 
+			      rem->prop.pos_y - rem->prop.res_y +
+			      (rem->prop.h - bd->client.h);
+			    else
+			      bd->y = bd->zone->h + 
+			      (((rem->prop.pos_y - rem->prop.res_y) * bd->zone->h) /
+			       (rem->prop.res_y / 3)) +
+			      (rem->prop.h - bd->client.h);
+			 }
+		       if ((rem->prop.pos_y >= 0) && (bd->y < 0))
+			 bd->y = 0;
+		       else if (((rem->prop.pos_y + rem->prop.h) < rem->prop.res_y) &&
+				((bd->y + bd->h) > bd->zone->h))
+			 bd->y = bd->zone->h - bd->h;
 		    }
+//		  if (bd->zone->w != rem->prop.res_x)
+//		    bd->x = (rem->prop.pos_x * bd->zone->w) / rem->prop.res_x;
+//		  if (bd->zone->h != rem->prop.res_y)
+//		    bd->y = (rem->prop.pos_y * bd->zone->h) / rem->prop.res_y;
 		  bd->x += bd->zone->x;
 		  bd->y += bd->zone->y;
 		  bd->placed = 1;
 		  bd->changes.pos = 1;
-	       }
-	     if (rem->apply & E_REMEMBER_APPLY_SIZE)
-	       {
-		  bd->w = rem->prop.w + bd->client_inset.l + bd->client_inset.r;
-		  bd->h = rem->prop.h + bd->client_inset.t + bd->client_inset.b;
-		  bd->client.w = bd->w - (bd->client_inset.l + bd->client_inset.r);
-		  bd->client.h = bd->h - (bd->client_inset.t + bd->client_inset.b);
-		  bd->changes.size = 1;
-		  bd->changes.shape = 1;
 	       }
 	     if (rem->apply & E_REMEMBER_APPLY_LAYER)
 	       {
@@ -5625,7 +5719,7 @@ _e_border_eval(E_Border *bd)
 		  switch (bd->client.icccm.gravity)
 		    {
 		     case ECORE_X_GRAVITY_N:
-		       bd->x = (att->x - (bw / 2));
+		       bd->x = (att->x - (bw / 2)) - (bd->client_inset.l / 2);
 		       bd->y = att->y;
 		       break;
 		     case ECORE_X_GRAVITY_NE:
@@ -5634,14 +5728,14 @@ _e_border_eval(E_Border *bd)
 		       break;
 		     case ECORE_X_GRAVITY_E:
 		       bd->x = (att->x - (bw)) - (bd->client_inset.l);
-		       bd->y = (att->y - (bw / 2));
+		       bd->y = (att->y - (bw / 2)) - (bd->client_inset.t / 2);
 		       break;
 		     case ECORE_X_GRAVITY_SE:
 		       bd->x = (att->x - (bw)) - (bd->client_inset.l);
 		       bd->y = (att->y - (bw)) - (bd->client_inset.t);
 		       break;
 		     case ECORE_X_GRAVITY_S:
-		       bd->x = (att->x - (bw / 2));
+		       bd->x = (att->x - (bw / 2)) - (bd->client_inset.l / 2);
 		       bd->y = (att->y - (bw)) - (bd->client_inset.t);
 		       break;
 		     case ECORE_X_GRAVITY_SW:
@@ -5651,6 +5745,10 @@ _e_border_eval(E_Border *bd)
 		     case ECORE_X_GRAVITY_W:
 		       bd->x = att->x;
 		       bd->y = (att->y - (bw)) - (bd->client_inset.t);
+		       break;
+		     case ECORE_X_GRAVITY_CENTER:
+		       bd->x = (att->x - (bw / 2)) - (bd->client_inset.l / 2);
+		       bd->y = (att->y - (bw / 2)) - (bd->client_inset.t / 2);
 		       break;
 		     case ECORE_X_GRAVITY_NW:
 		     default:
