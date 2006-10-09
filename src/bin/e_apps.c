@@ -1347,10 +1347,16 @@ printf("SECOND PASS\n");
 	  {
               clever_match = e_app_path_find(winner.path);
 	      if (clever_match)
-	         break;
+	       {
+		  if (winners) evas_hash_free(winners);
+		  break;
+	       }
 	  }
-        evas_hash_free(winners);
-        winners = NULL;
+        if (winners)
+	  {
+	     evas_hash_free(winners);
+	     winners = NULL;
+	  }
      }
 }
    clever_time = ecore_time_get() - begin;
