@@ -16,6 +16,7 @@ struct _E_Config_Dialog_Data
    
    Evas_Object *event_list;
    Evas_Object *trans_list;
+   Evas_Object *tp;
 };
 
 EAPI E_Config_Dialog *
@@ -104,9 +105,12 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_Object *o, *of, *ot, *il;
+   E_Zone *zone;
+   Evas_Object *o, *of, *ot, *il, *ob;
    Evas_List *l;
    char *t;
+
+   zone = e_zone_current_get(cfd->con);
    
    o = e_widget_list_add(evas, 1, 0);
    ot = e_widget_table_add(evas, 0);
@@ -114,7 +118,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("Events"), 0);
    il = e_widget_ilist_add(evas, 48, 48, NULL);
    cfdata->event_list = il;
-   e_widget_min_size_set(il, 160, 200);
+   e_widget_min_size_set(il, 160, 225);
    e_widget_ilist_append(il, NULL, _("Startup"), _event_cb_changed, cfdata, NULL);
    e_widget_ilist_append(il, NULL, _("Desk Change"), _event_cb_changed, cfdata, NULL);
    e_widget_ilist_append(il, NULL, _("Background Change"), _event_cb_changed, cfdata, NULL);
@@ -125,7 +129,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("Transitions"), 0);
    il = e_widget_ilist_add(evas, 48, 48, NULL);
    cfdata->trans_list = il;
-   e_widget_min_size_set(il, 160, 200);
+   e_widget_min_size_set(il, 160, 225);
 
    e_widget_ilist_append(il, NULL, _("None"), _trans_cb_changed, cfdata, NULL);
    l = e_theme_transition_list();
@@ -140,6 +144,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, il);
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
 
+   of = e_widget_framelist_add(evas, _("Preview"), 0);
+   ob = e_widget_trans_preview_add(evas, 300, ((300 * zone->h) / zone->w));
+   cfdata->tp = ob;
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(ot, of, 2, 0, 1, 1, 1, 1, 1, 1);
+   
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
    
    return o;
@@ -223,4 +233,6 @@ _trans_cb_changed(void *data)
       default:
 	break;
      }
+   if (!t) return;
+   e_widget_trans_preview_trans_set(cfdata->tp, t);
 }

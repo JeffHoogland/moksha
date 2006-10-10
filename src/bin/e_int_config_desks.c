@@ -281,5 +281,4 @@ _cb_slider_change(void *data, Evas_Object *obj)
    E_Config_Dialog_Data *cfdata = data;
 
    e_widget_desk_preview_num_desks_set(cfdata->preview, cfdata->x, cfdata->y);
-
 }
