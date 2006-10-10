@@ -1317,7 +1317,10 @@ _intl_current_locale_setup(E_Config_Dialog_Data *cfdata)
 	const char *cs_trans;
 	
 	cs_trans = _intl_charset_upper_get(codeset);
-	if (cs_trans) cfdata->cur_cs = strdup(cs_trans);
+	if (cs_trans == NULL)
+	  cfdata->cur_cs = strdup(codeset);
+	else 
+	  cfdata->cur_cs = strdup(cs_trans);
      }
    if (modifier) 
      cfdata->cur_mod = strdup(modifier);
