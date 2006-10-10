@@ -174,7 +174,6 @@ _cb_remove_instance(void *data, void *data2)
    cfdata = data;
    i = e_widget_ilist_selected_get(cfdata->o_instances);
    name = e_widget_ilist_selected_label_get(cfdata->o_instances);
-   printf("Name: %s\n", name);
    
    for (l = cfdata->cf_gc->clients; l; l = l->next) 
      {
@@ -183,7 +182,6 @@ _cb_remove_instance(void *data, void *data2)
 	cf_gcc = l->data;
 	if (!cf_gcc) continue;
 	if (!cf_gcc->name) continue;
-	printf("Cf Name: %s\n", cf_gcc->name);	
 	if (!strcasecmp(cf_gcc->name, name)) 
 	  {
 	     if (cf_gcc->name) evas_stringshare_del(cf_gcc->name);
