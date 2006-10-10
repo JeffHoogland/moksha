@@ -159,7 +159,7 @@ group {
 	    color: 255 255 255 255;
 	    color2: 0 0 0 128;
 	    color3: 0 0 0 32;
-	    color_class: "battery_label";
+	    color_class: "module_label";
 	    text {
 	       text:     "100%";
 	       font:     "Edje-Vera-Bold";
@@ -190,7 +190,7 @@ group {
 	    color: 255 255 255 255;
 	    color2: 0 0 0 128;
 	    color3: 0 0 0 32;
-	    color_class: "battery_label";
+	    color_class: "module_label";
 	    text {
 	       text:     "00:00";
 	       font:     "Edje-Vera-Bold";
