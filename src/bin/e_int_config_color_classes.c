@@ -51,7 +51,10 @@ const CFColor_Hash _wm_hash[] =
      {"menu_title_active",  N_("Menu Title Active")},
      {"menu_item",          N_("Menu Item")},
      {"move_text",          N_("Move Text")},
-     {"resize_text",        N_("Resize Text")},   
+     {"resize_text",        N_("Resize Text")},
+     {"winlist_item",       N_("Winlist Item")},
+     {"winlist_label",      N_("Winlist Label")},
+     {"winlist_title",      N_("Winlist Title")},
      {NULL, NULL}
 };
 
