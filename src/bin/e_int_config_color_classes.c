@@ -50,6 +50,8 @@ const CFColor_Hash _wm_hash[] =
      {"menu_title",         N_("Menu Title")},
      {"menu_title_active",  N_("Menu Title Active")},
      {"menu_item",          N_("Menu Item")},
+     {"move_text",          N_("Move Text")},
+     {"resize_text",        N_("Resize Text")},   
      {NULL, NULL}
 };
 
@@ -61,6 +63,7 @@ const CFColor_Hash _wid_hash[] =
      {"check_text",           N_("Check Text")},
      {"check_text_disabled",  N_("Check Text Disabled")},
      {"entry_text",           N_("Entry Text")},
+     {"label_text",           N_("Label Text")},   
      {"ilist_item",           N_("List Item Text")},
      {"ilist_item_odd",       N_("List Item Odd Text")},
      {"ilist_header",         N_("List Header")},   
@@ -78,6 +81,7 @@ const CFColor_Hash _mod_hash[] =
      {"cpufreq_label",     N_("Cpufreq Label")},
      {"ibar_label",        N_("IBar Label")},
      {"ibox_label",        N_("IBox Label")},
+     {"pager_label",       N_("Pager Label")},   
      {"temperature_label", N_("Temperature Label")},   
      {NULL, NULL}
 };
@@ -91,7 +95,6 @@ static Evas_Object *_adv_create_widgets   (E_Config_Dialog *cfd, Evas *evas, E_C
 
 static void         _fill_data_hash       (E_Config_Dialog_Data *cfdata, const CFColor_Hash *cfhash);
 static void         _fill_data_basic      (E_Config_Dialog_Data *cfdata);
-static void         _fill_data_adv        (E_Config_Dialog_Data *cfdata);
 
 static void         _load_color_classes   (Evas_Object *obj, E_Config_Dialog_Data *cfdata);
 static void         _radio_cb_change      (void *data, Evas_Object *obj, void *event_info);
@@ -243,27 +246,6 @@ _fill_data_basic(E_Config_Dialog_Data *cfdata)
 	       }
 	  }
      }
-}
-
-static void 
-_fill_data_adv(E_Config_Dialog_Data *cfdata) 
-{
-   while (cfdata->classes) 
-     {
-	CFColor_Class *cfc;
-	
-	cfc = cfdata->classes->data;
-	if (!cfc) continue;
-	if (cfc->name)
-	  evas_stringshare_del(cfc->name);
-	if (cfc->key)
-	  evas_stringshare_del(cfc->key);
-	
-	cfdata->classes = evas_list_remove_list(cfdata->classes, cfdata->classes);
-     }
-   _fill_data_hash(cfdata, _wm_hash);
-   _fill_data_hash(cfdata, _wid_hash);
-   _fill_data_hash(cfdata, _mod_hash);
 }
 
 static void *
@@ -419,8 +401,6 @@ _adv_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfda
    Evas_Object *o, *of, *ob, *ot;
    E_Radio_Group *rg;
    Evas_List *l;
-
-//   _fill_data_adv(cfdata);
       
    o = e_widget_list_add(evas, 0, 0);
    ot = e_widget_table_add(evas, 1);
