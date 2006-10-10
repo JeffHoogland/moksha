@@ -343,6 +343,7 @@ group {
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
+	    color_class: "ilist_item";
 	    text {
 	       text:     "Item Label";
 	       font:     "Edje-Vera";
@@ -1018,6 +1019,7 @@ group {
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
+	    color_class: "ilist_item_odd";
 	    text {
 	       text:     "Item Label";
 	       font:     "Edje-Vera";
@@ -1692,6 +1694,7 @@ group {
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
+	    color_class: "ilist_item";
 	    text {
 	       text:     "Item Label";
 	       font:     "Edje-Vera";
@@ -2367,6 +2370,7 @@ group {
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
+	    color_class: "ilist_item_odd";
 	    text {
 	       text:     "Item Label";
 	       font:     "Edje-Vera";
@@ -2779,6 +2783,7 @@ group {
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
+	    color_class: "label_text";
 	    text {
 	       text:     "No Title";
 	       size:     10;
@@ -2887,6 +2892,7 @@ group {
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
+	    color_class: "label_text";
 	    text {
 	       text:     "No Title";
 	       size:     10;

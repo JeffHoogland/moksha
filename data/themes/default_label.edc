@@ -18,6 +18,7 @@ group {
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
+	    color_class: "label_text";
 	    text {
 	       text:     "Label";
 	       font:     "Edje-Vera";

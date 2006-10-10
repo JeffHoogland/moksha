@@ -114,6 +114,7 @@ group {
 	    }
 	    color: 0 0 0 255;
 	    color3: 0 0 0 22;
+	    color_class: "pager_label";
 	    text {
 	       text: "Title goes here";
 	       font: "Edje-Vera-Bold";
