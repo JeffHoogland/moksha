@@ -168,20 +168,32 @@ _cb_remove_instance(void *data, void *data2)
 {
    int i;
    E_Config_Dialog_Data *cfdata;
-   E_Config_Gadcon_Client *cf_gcc;
    Evas_List *l;
-
+   const char *name;
+   
    cfdata = data;
    i = e_widget_ilist_selected_get(cfdata->o_instances);
-   l = evas_list_nth_list(cfdata->cf_gc->clients, i);
-   cf_gcc = l->data;
+   name = e_widget_ilist_selected_label_get(cfdata->o_instances);
+   printf("Name: %s\n", name);
    
-   if (cf_gcc->name) evas_stringshare_del(cf_gcc->name);
-   if (cf_gcc->id) evas_stringshare_del(cf_gcc->id);
-   if (cf_gcc->style) evas_stringshare_del(cf_gcc->style);
-   free(cf_gcc);
+   for (l = cfdata->cf_gc->clients; l; l = l->next) 
+     {
+	E_Config_Gadcon_Client *cf_gcc;
 
-   cfdata->cf_gc->clients = evas_list_remove_list(cfdata->cf_gc->clients, l);
+	cf_gcc = l->data;
+	if (!cf_gcc) continue;
+	if (!cf_gcc->name) continue;
+	printf("Cf Name: %s\n", cf_gcc->name);	
+	if (!strcasecmp(cf_gcc->name, name)) 
+	  {
+	     if (cf_gcc->name) evas_stringshare_del(cf_gcc->name);
+	     if (cf_gcc->id) evas_stringshare_del(cf_gcc->id);
+	     if (cf_gcc->style) evas_stringshare_del(cf_gcc->style);
+	     cfdata->cf_gc->clients = evas_list_remove(cfdata->cf_gc->clients, cf_gcc);
+	     free(cf_gcc);
+	     break;
+	  }	
+     }
 
    _load_selected_gadgets(cfdata);
 
