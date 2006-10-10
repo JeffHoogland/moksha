@@ -23,6 +23,7 @@ static int  _lang_list_sort                 (void *data1, void *data2);
 static void _lang_list_load                 (void *data);
 static int  _region_list_sort               (void *data1, void *data2);
 static void _region_list_load               (void *data);
+static int  _basic_lang_list_sort           (void *data1, void *data2);
 
 /* Fill the clear lists, fill with language, select */
 /* Update lanague */
@@ -32,6 +33,7 @@ static Evas_Bool _region_hash_cb            (Evas_Hash *hash, const char *key, v
 static Evas_Bool _language_hash_free_cb     (Evas_Hash *hash, const char *key, void *data, void *fdata);
 static Evas_Bool _region_hash_free_cb       (Evas_Hash *hash, const char *key, void *data, void *fdata);
 static void      _intl_current_locale_setup (E_Config_Dialog_Data *cfdata);
+static const char *_intl_charset_upper_get  (const char *charset);
 
 struct _E_Intl_Pair
 {
@@ -82,6 +84,7 @@ struct _E_Config_Dialog_Data
    Evas_Hash *locale_hash;
    Evas_List *lang_list;
    Evas_List *region_list;
+   Evas_List *blang_list;
    
    struct
      {
@@ -606,6 +609,28 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	while (fscanf(output, "%[^\n]\n", line) == 1)
 	  {
 	     char *language;
+	     char *basic_language;
+
+	     basic_language = e_intl_locale_canonic_get(line, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+	     if (basic_language)
+	       {
+		  int i;
+
+		  i = 0;
+		  while (basic_language_predefined_pairs[i].locale_key)
+		    {
+		       /* if basic language is supported by E and System*/
+		       if (!strncmp(basic_language_predefined_pairs[i].locale_key, 
+				basic_language, strlen(basic_language)))
+			 {
+			    if (!evas_list_find(cfdata->blang_list, &basic_language_predefined_pairs[i]))
+			       cfdata->blang_list = evas_list_append(cfdata->blang_list, &basic_language_predefined_pairs[i]);
+			    break;
+			 }
+		       i++;
+		    }
+	       }
+	     E_FREE(basic_language);
 	     
 	     language = e_intl_locale_canonic_get(line, E_INTL_LOC_LANG);
 	     
@@ -700,24 +725,14 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 		       /* Add codeset to the region hash node if it exists */
 		       if (codeset)
 			 {
-			    int i;
 			    const char * cs;
+			    const char * cs_trans;
 			    
-			    /* get the charset UpperCase form */
-			    /* linear serach */
-			    i = 0;
-			    cs = NULL;
-			    while (charset_predefined_pairs[i].locale_key)
-			      {
-				 if (!strcmp(charset_predefined_pairs[i].locale_key, codeset))
-				   {
-				      cs = evas_stringshare_add(charset_predefined_pairs[i].locale_translation);
-				      break;
-				   }
-				 i++;
-			      }
-			    
-			    if (cs == NULL) cs = evas_stringshare_add(codeset);
+			    cs_trans = _intl_charset_upper_get(codeset);
+			    if (cs_trans == NULL) 
+			      cs = evas_stringshare_add(codeset);
+			    else 
+			      cs = evas_stringshare_add(cs_trans);
 			    /* Exclusive */
 			    /* Linear Search */
 			    if (!evas_list_find(region_node->available_codesets, cs))
@@ -744,6 +759,11 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 		  free(language);
 	       }
 	  }
+	
+	/* Sort basic languages */	
+	cfdata->blang_list = evas_list_sort(cfdata->blang_list, 
+	      evas_list_count(cfdata->blang_list), 
+	      _basic_lang_list_sort);
 
         while (e_lang_list)
 	  {
@@ -786,7 +806,8 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    
    cfdata->lang_list = evas_list_free(cfdata->lang_list);
    cfdata->region_list = evas_list_free(cfdata->region_list);
-
+   cfdata->blang_list = evas_list_free(cfdata->blang_list);
+   
    free(cfdata);
 }
 
@@ -865,7 +886,8 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob, *ot;
-   const char *cur_sig_loc;
+   char *cur_sig_loc;
+   Evas_List *next;
    int i;
    
    cfdata->evas = evas;
@@ -887,21 +909,25 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      }
    else
      cur_sig_loc = NULL;
-   
-   i = 0;
-   while (basic_language_predefined_pairs[i].locale_key)
+
+   i = 0;  
+   for (next = cfdata->blang_list; next; next = next->next) 
      {
+	E_Intl_Pair *pair;
 	const char *key;
 	const char *trans;
 
-	key = basic_language_predefined_pairs[i].locale_key;
-	trans = _(basic_language_predefined_pairs[i].locale_translation);
+	pair = next->data;
+	key = pair->locale_key;
+	trans = _(pair->locale_translation);
 	e_widget_ilist_append(cfdata->gui.blang_list, NULL, trans, NULL, NULL, key);
 	if (cur_sig_loc && !strncmp(key, cur_sig_loc, strlen(cur_sig_loc)))
 	  e_widget_ilist_selected_set(cfdata->gui.blang_list, i);
 	
 	i++;
      }
+   E_FREE(cur_sig_loc);
+   
    e_widget_ilist_go(ob);
    e_widget_frametable_object_append(of, ob, 0, 0, 2, 6, 1, 1, 1, 1);
     
@@ -936,7 +962,7 @@ static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob, *ot;
-     
+   const char *lang, *reg, *cs, *mod;
    cfdata->evas = evas;
   
    _intl_current_locale_setup(cfdata);
@@ -1025,9 +1051,27 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ot);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
+  
+   /* all these cur_* values are not guaranteed to be const so we need to
+    * copy them. 
+    */
+   lang = NULL;
+   reg = NULL;
+   cs = NULL;
+   mod = NULL;
    
-   _cfdata_language_go(cfdata->cur_lang, cfdata->cur_reg, cfdata->cur_cs, cfdata->cur_mod, cfdata);
-    
+   if (cfdata->cur_lang) lang = evas_stringshare_add(cfdata->cur_lang);
+   if (cfdata->cur_reg) reg = evas_stringshare_add(cfdata->cur_reg);
+   if (cfdata->cur_cs) cs = evas_stringshare_add(cfdata->cur_cs);
+   if (cfdata->cur_mod) mod = evas_stringshare_add(cfdata->cur_mod);
+   
+   _cfdata_language_go(lang, reg, cs, mod, cfdata);
+   
+   if (lang) evas_stringshare_del(lang); 
+   if (reg) evas_stringshare_del(reg); 
+   if (cs) evas_stringshare_del(cs); 
+   if (mod) evas_stringshare_del(mod); 
+   
    e_widget_on_change_hook_set(cfdata->gui.lang_list, _ilist_language_cb_change, cfdata);
    e_widget_on_change_hook_set(cfdata->gui.reg_list, _ilist_region_cb_change, cfdata); 
    e_widget_on_change_hook_set(cfdata->gui.cs_list, _ilist_codeset_cb_change, cfdata); 
@@ -1134,7 +1178,7 @@ _cfdata_language_go(const char *lang, const char *region, const char *codeset, c
      }
   
    cfdata->lang_dirty = 0;
-   
+  	  
    if (lang)
      {
 	lang_node = evas_hash_find(cfdata->locale_hash, lang);
@@ -1269,7 +1313,12 @@ _intl_current_locale_setup(E_Config_Dialog_Data *cfdata)
    if (region) 
      cfdata->cur_reg = strdup(region);
    if (codeset) 
-     cfdata->cur_cs = strdup(codeset);
+     {
+	const char *cs_trans;
+	
+	cs_trans = _intl_charset_upper_get(codeset);
+	if (cs_trans) cfdata->cur_cs = strdup(cs_trans);
+     }
    if (modifier) 
      cfdata->cur_mod = strdup(modifier);
   
@@ -1379,7 +1428,7 @@ _region_list_load(void *data)
 
    cfdata = data;
    if (!cfdata->region_list) return;
-   
+
    for (l = cfdata->region_list; l; l = l->next) 
      {
 	E_Intl_Region_Node *rn;
@@ -1393,7 +1442,7 @@ _region_list_load(void *data)
 	  trans = rn->region_code;
 	
 	e_widget_ilist_append(cfdata->gui.reg_list, NULL, trans, NULL, NULL, rn->region_code);
-   
+  
 	if (cfdata->cur_reg && !strcmp(cfdata->cur_reg, rn->region_code)) 
 	  {
 	     int count;
@@ -1402,4 +1451,44 @@ _region_list_load(void *data)
 	     e_widget_ilist_selected_set(cfdata->gui.reg_list, count - 1);
 	  }
      }
+}
+
+static int 
+_basic_lang_list_sort(void *data1, void *data2) 
+{
+   E_Intl_Pair *ln1, *ln2;
+   const char *trans1;
+   const char *trans2;
+   
+   if (!data1) return 1;
+   if (!data2) return -1;
+   
+   ln1 = data1;
+   ln2 = data2;
+
+   if (!ln1->locale_translation) return 1;
+   trans1 = ln1->locale_translation;
+
+   if (!ln2->locale_translation) return -1;
+   trans2 = ln2->locale_translation;
+   
+   return (strcmp((const char *)trans1, (const char *)trans2));
+}
+
+const char *
+_intl_charset_upper_get(const char *charset)
+{
+   int i;
+   
+   i = 0;
+   while (charset_predefined_pairs[i].locale_key)
+     {
+	if (!strcmp(charset_predefined_pairs[i].locale_key, charset))
+	  {
+	     return charset_predefined_pairs[i].locale_translation;
+	  }			 
+	i++;			      
+     }
+
+   return NULL;
 }
