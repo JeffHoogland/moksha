@@ -39,7 +39,6 @@ Some of the things (in very short form) that need to be done to E17...
 * add a "taskbar" module
 * add cpu load module
 * add setup/install wizard to seed .desktop files etc. etc.
-* support color classes (gui config  etc. etc.)
 * finish clientinfo dialog for borders (netwm props etc. etc.)
 * gui config dialogs for all config
 * make it possible to disable border buttons/actions (tell theme what is
