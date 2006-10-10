@@ -26,7 +26,6 @@ Some of the things (in very short form) that need to be done to E17...
 
 * nuke the current eap cache mechanism entirely (and replace with .desktop
   cache)
-* transition config dialog needs preview.
 * fm2 needs way to replace or extend the right click menu (disable/enable
   rename/delete/refresh etc.)
 * fm2 needs a mime filter
