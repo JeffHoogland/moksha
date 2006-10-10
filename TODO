@@ -16,6 +16,7 @@ Some of the things (in very short form) that need to be done to E17...
 * BUG: "match this window only" doesnt fall back to other unused remembers
 * BUG: xdaliclock -transparent doesnt use shaped border (not handling shape
   change later)
+* BUG: Virtual desks preview widget overlaps the sliders when desk counts are 1
 ]]]
 
 [[[
