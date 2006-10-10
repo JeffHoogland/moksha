@@ -80,12 +80,7 @@ const CFColor_Hash _wid_hash[] =
 const CFColor_Hash _mod_hash[] = 
 {
      {NULL, N_("Modules")},
-     {"battery_label",     N_("Battery Label")},
-     {"cpufreq_label",     N_("Cpufreq Label")},
-     {"ibar_label",        N_("IBar Label")},
-     {"ibox_label",        N_("IBox Label")},
-     {"pager_label",       N_("Pager Label")},   
-     {"temperature_label", N_("Temperature Label")},   
+     {"module_label", N_("Module Label")},   
      {NULL, NULL}
 };
 
