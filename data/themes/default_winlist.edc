@@ -179,6 +179,7 @@ group {
 	    }
 	    color: 255 255 255 255;
 	    color3: 0 0 0 22;
+	    color_class: "winlist_title";
 	    text {
 	       text: "Title goes here";
 	       font: "Edje-Vera-Bold";
@@ -227,6 +228,7 @@ group {
 	    }
 	    color: 0 0 0 255;
 	    color3: 0 0 0 22;
+	    color_class: "winlist_label";
 	    text {
 	       text: "Title goes here";
 	       font: "Edje-Vera-Bold";
@@ -529,6 +531,7 @@ group {
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
+	    color_class: "winlist_item";
 	    text {
 	       text:     "Item Label";
 	       font:     "Edje-Vera";
