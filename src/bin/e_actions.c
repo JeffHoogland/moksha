@@ -1354,7 +1354,6 @@ ACT_FN_GO_KEY(winlist)
      }
 }
 
-/***************************************************************************/
 ACT_FN_GO(desk_deskshow_toggle)
 {
    E_Zone *zone;
@@ -1365,6 +1364,16 @@ ACT_FN_GO(desk_deskshow_toggle)
      {
 	e_desk_deskshow(zone);
      }
+}
+
+ACT_FN_GO(cleanup_windows)
+{
+   E_Zone *zone;
+
+   zone = _e_actions_zone_get(obj);
+   if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
+   if (zone)
+     e_place_zone_region_smart_cleanup(zone);
 }
 
 /***************************************************************************/
@@ -2006,6 +2015,10 @@ e_actions_init(void)
    /* desk_lock */
    ACT_GO(desk_lock);
    e_action_predef_name_set(_("Desktop"), _("Desktop Lock"), "desk_lock", NULL, NULL, 0);
+
+   /* cleanup_windows */
+   ACT_GO(cleanup_windows);
+   e_action_predef_name_set(_("Desktop"), _("Cleanup Windows"), "cleanup_windows", NULL, NULL, 0);
    
    return 1;
 }

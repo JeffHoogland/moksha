@@ -988,10 +988,10 @@ _e_int_menus_clients_icon_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 static void 
 _e_int_menus_clients_cleanup_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Zone *zone;
-
-   zone = data;
-   e_place_zone_region_smart_cleanup(zone);
+   E_Action *act;
+   
+   act = e_action_find("cleanup_windows");
+   if (act) act->func.go(E_OBJECT(m->zone), NULL);
 }
 
 static void
