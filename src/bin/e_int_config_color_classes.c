@@ -515,9 +515,24 @@ _radio_cb_change(void *data, Evas_Object *obj, void *event_info)
 	     icon = edje_object_add(evas_object_evas_get(cfdata->gui.ilist));
 	     e_util_edje_icon_set(icon, "enlightenment/e");
 	  }
-	else
-	  icon = NULL;
-
+	else 
+	  {
+	     c->r = 255;
+	     c->g = 255;
+	     c->b = 255;
+	     c->a = 255;
+	     c->r2 = 0;
+	     c->g2 = 0;
+	     c->b2 = 0;
+	     c->a2 = 255;
+	     c->r3 = 0;
+	     c->g3 = 0;
+	     c->b3 = 0;
+	     c->a3 = 255;	     
+	     icon = NULL;
+	     _update_colors(cfdata, c);
+	  }
+	
 	e_widget_ilist_nth_icon_set(cfdata->gui.ilist, n, icon);
 	break;
      }
