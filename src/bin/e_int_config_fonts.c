@@ -15,6 +15,7 @@ static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static void _fill_ilist(E_Config_Dialog_Data *cfdata);
 
 static void _ilist_font_cb_change(void *data, Evas_Object *obj);
 static void _enabled_font_cb_change(void *data, Evas_Object *obj);
@@ -292,33 +293,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->gui.class_list = e_widget_ilist_add(evas, 16, 16, NULL);
    e_widget_min_size_set(cfdata->gui.class_list, 100, 250);
    e_widget_on_change_hook_set(cfdata->gui.class_list, _ilist_font_cb_change, cfdata);
-
-   /* Fill In Ilist */
-   for (next = cfdata->text_classes; next; next = next->next)
-     {
-	CFText_Class *tc;
-	Evas_Object *ic;
-	
-	tc = next->data;
-	if (tc)
-	  {
-	     if (tc->class_name)
-	       {
-		  if (tc->enabled)
-		    {
-		       ic = edje_object_add(evas);
-		       e_util_edje_icon_set(ic, ILIST_ICON_WITH_DEFINED_FONT);
-		    }
-		  else
-		    ic = NULL;
-		  e_widget_ilist_append(cfdata->gui.class_list, ic, tc->class_description, NULL, NULL, NULL);
-	       }
-	     else
-	       e_widget_ilist_header_append(cfdata->gui.class_list, NULL, tc->class_description);
-	  }
-     }
-
-   e_widget_ilist_go(cfdata->gui.class_list);
+   _fill_ilist(cfdata);
    e_widget_framelist_object_append(of, cfdata->gui.class_list);
    e_widget_table_object_append(ot, of, 0, 0, 1, 3, 1, 1, 1, 1);
 
@@ -379,13 +354,9 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if (!tc->class_name) continue;
 	
 	if (tc->enabled && tc->font) 
-	  {
-	     e_font_default_set(tc->class_name, tc->font, tc->size);
-	  }
+	  e_font_default_set(tc->class_name, tc->font, tc->size);
 	else
-	  {
-	     e_font_default_remove(tc->class_name);
-	  }
+	  e_font_default_remove(tc->class_name);
      }
 
    /* Fallbacks configure */
@@ -428,33 +399,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    cfdata->gui.class_list = e_widget_ilist_add(evas, 16, 16, NULL);
    e_widget_min_size_set(cfdata->gui.class_list, 100, 100);
    e_widget_on_change_hook_set(cfdata->gui.class_list, _ilist_font_cb_change, cfdata);
-
-   /* Fill In Ilist */
-   for (next = cfdata->text_classes; next; next = next->next)
-     {
-	CFText_Class *tc;
-	Evas_Object *ic;
-	
-	tc = next->data;
-	if (tc)
-	  {
-	     if (tc->class_name)
-	       {
-		  if (tc->enabled)
-		    {
-		       ic = edje_object_add(evas);
-		       e_util_edje_icon_set(ic, ILIST_ICON_WITH_DEFINED_FONT);
-		    }
-		  else
-		    ic = NULL;
-		  e_widget_ilist_append(cfdata->gui.class_list, ic, tc->class_description, NULL, NULL, NULL);
-	       }
-	     else
-	       e_widget_ilist_header_append(cfdata->gui.class_list, NULL, tc->class_description);
-	  }
-     }
-
-   e_widget_ilist_go(cfdata->gui.class_list);
+   _fill_ilist(cfdata);
    e_widget_frametable_object_append(of, cfdata->gui.class_list, 
 				     0, 0, 1, 5, 1, 1, 1, 1);
 
@@ -528,10 +473,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
      }
    
    ob = e_widget_check_add(evas, _("Enable Fallbacks"), &(cfdata->cur_fallbacks_enabled));
-   e_widget_config_list_object_append(	cfdata->gui.fallback_list, 
-					ob, 
-					0, 3, 2, 1, 
-					1, 1, 1, 1);
+   e_widget_config_list_object_append(cfdata->gui.fallback_list, ob, 
+				      0, 3, 2, 1, 1, 1, 1, 1);
    e_widget_on_change_hook_set(ob, _enabled_fallback_cb_change, cfdata);
    e_widget_check_checked_set(ob, option_enable);
    e_widget_change(ob);
@@ -542,6 +485,42 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 }
 
 /* Private Font Class Functions */
+static void 
+_fill_ilist(E_Config_Dialog_Data *cfdata) 
+{
+   Evas *evas;
+   Evas_List *next;
+   
+   if (!cfdata->gui.class_list) return;
+   evas = evas_object_evas_get(cfdata->gui.class_list);
+   e_widget_ilist_clear(cfdata->gui.class_list);
+   
+   /* Fill In Ilist */
+   for (next = cfdata->text_classes; next; next = next->next)
+     {
+	CFText_Class *tc;
+	Evas_Object *ic;
+	
+	tc = next->data;
+	if (tc)
+	  {
+	     if (tc->class_name)
+	       {
+		  if (tc->enabled)
+		    {
+		       ic = edje_object_add(evas);
+		       e_util_edje_icon_set(ic, ILIST_ICON_WITH_DEFINED_FONT);
+		    }
+		  else
+		    ic = NULL;
+		  e_widget_ilist_append(cfdata->gui.class_list, ic, tc->class_description, NULL, NULL, NULL);
+	       }
+	     else
+	       e_widget_ilist_header_append(cfdata->gui.class_list, NULL, tc->class_description);
+	  }
+     }
+   e_widget_ilist_go(cfdata->gui.class_list);   
+}
 
 static void
 _ilist_font_cb_change(void *data, Evas_Object *obj)
