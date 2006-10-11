@@ -72,7 +72,7 @@ e_int_border_prop(E_Border *bd)
 	cfd = e_config_dialog_new(bd->zone->container,
 				  _("Window Properties"),
 				  "E", "_border_properties_dialog",
-				  NULL, 0, v, bd);
+				  "enlightenment/windows", 0, v, bd);
      }
 }
 
@@ -326,21 +326,21 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    STR_ENTRY(_("Base Size"),      0, 8,    icccm.base);
    STR_ENTRY(_("Resize Steps"),   0, 9,    icccm.step);
 
-   STR_ENTRY(_("Aspect Ratio"),   0, 10,   icccm.aspect);
-   STR_ENTRY(_("Initial State"),  0, 11,   icccm.initial_state);
-   STR_ENTRY(_("State"),          0, 12,   icccm.state);
-   STR_ENTRY(_("Window ID"),      0, 13,   icccm.window_id);
-   STR_ENTRY(_("Window Group"),   0, 14,   icccm.window_group);
-   STR_ENTRY(_("Transient For"),  0, 15,   icccm.transient_for);
-   STR_ENTRY(_("Client Leader"),  0, 16,   icccm.client_leader);
-   STR_ENTRY(_("Gravity"),        0, 17,   icccm.gravity);
-   STR_ENTRY(_("Command"),        0, 18,   icccm.command);
+   STR_ENTRY(_("Aspect Ratio"),   2, 0,   icccm.aspect);
+   STR_ENTRY(_("Initial State"),  2, 1,   icccm.initial_state);
+   STR_ENTRY(_("State"),          2, 2,   icccm.state);
+   STR_ENTRY(_("Window ID"),      2, 3,   icccm.window_id);
+   STR_ENTRY(_("Window Group"),   2, 4,   icccm.window_group);
+   STR_ENTRY(_("Transient For"),  2, 5,   icccm.transient_for);
+   STR_ENTRY(_("Client Leader"),  2, 6,   icccm.client_leader);
+   STR_ENTRY(_("Gravity"),        2, 7,   icccm.gravity);
+   STR_ENTRY(_("Command"),        2, 8,   icccm.command);
 
-   CHK_ENTRY(_("Take Focus"),       0, 19, icccm.take_focus);
-   CHK_ENTRY(_("Accepts Focus"),    0, 20, icccm.accepts_focus);
-   CHK_ENTRY(_("Urgent"),           0, 21, icccm.urgent);
-   CHK_ENTRY(_("Request Delete"),   0, 22, icccm.delete_request);
-   CHK_ENTRY(_("Request Position"), 0, 23, icccm.request_pos);
+   CHK_ENTRY(_("Take Focus"),       0, 11, icccm.take_focus);
+   CHK_ENTRY(_("Accepts Focus"),    0, 12, icccm.accepts_focus);
+   CHK_ENTRY(_("Urgent"),           0, 13, icccm.urgent);
+   CHK_ENTRY(_("Request Delete"),   2, 11, icccm.delete_request);
+   CHK_ENTRY(_("Request Position"), 2, 12, icccm.request_pos);
    
    e_widget_table_object_append(o, of, 0, 0, 1, 1,    1, 1, 1, 1);
    
