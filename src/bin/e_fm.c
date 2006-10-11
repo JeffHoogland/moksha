@@ -3832,13 +3832,6 @@ _e_fm2_smart_add(Evas_Object *obj)
    evas_object_event_callback_add(sd->underlay, EVAS_CALLBACK_MOUSE_UP, _e_fm2_cb_mouse_up, sd);
    evas_object_event_callback_add(sd->underlay, EVAS_CALLBACK_MOUSE_MOVE, _e_fm2_cb_mouse_move, sd);
    
-   sd->overlay = edje_object_add(evas_object_evas_get(obj));
-   evas_object_clip_set(sd->overlay, sd->clip);
-   e_theme_edje_object_set(sd->overlay, "base/theme/fileman",
-			   "e/fileman/overlay");
-   evas_object_smart_member_add(sd->overlay, obj);
-   evas_object_show(sd->overlay);
-   
    sd->drop = edje_object_add(evas_object_evas_get(obj));
    evas_object_clip_set(sd->drop, sd->clip);
    e_theme_edje_object_set(sd->drop, "base/theme/fileman",
@@ -3852,6 +3845,13 @@ _e_fm2_smart_add(Evas_Object *obj)
 			   "e/fileman/list/drop_in");
    evas_object_smart_member_add(sd->drop_in, obj);
    evas_object_show(sd->drop_in);
+   
+   sd->overlay = edje_object_add(evas_object_evas_get(obj));
+   evas_object_clip_set(sd->overlay, sd->clip);
+   e_theme_edje_object_set(sd->overlay, "base/theme/fileman",
+			   "e/fileman/overlay");
+   evas_object_smart_member_add(sd->overlay, obj);
+   evas_object_show(sd->overlay);
    
    evas_object_smart_data_set(obj, sd);
    evas_object_move(obj, 0, 0);
