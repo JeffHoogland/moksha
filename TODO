@@ -56,7 +56,6 @@ Some of the things (in very short form) that need to be done to E17...
 * client list menu could do with work on ordering, using separators to demark
   this desktop and other desktops, sorting by recently used, separate
   section for iconified apps etc. etc - configurable.
-* cleanup windows menu item needs action wrapper
 * remove a lot of ipc commands that should be done via the gui now
 * remove config items marked for removal
 * make default set of apps .desktop files in tarball
