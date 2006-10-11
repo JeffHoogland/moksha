@@ -133,7 +133,22 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->color1 = calloc(1, sizeof(E_Color));
    cfdata->color2 = calloc(1, sizeof(E_Color));
    cfdata->color3 = calloc(1, sizeof(E_Color));
-
+   cfdata->color1->r = 255;
+   cfdata->color1->g = 255;
+   cfdata->color1->b = 255;
+   cfdata->color1->a = 255;
+   cfdata->color2->r = 0;
+   cfdata->color2->g = 0;
+   cfdata->color2->b = 0;
+   cfdata->color2->a = 255;
+   cfdata->color3->r = 0;
+   cfdata->color3->g = 0;
+   cfdata->color3->b = 0;
+   cfdata->color3->a = 255;
+   e_color_update_rgb(cfdata->color1);
+   e_color_update_rgb(cfdata->color2);
+   e_color_update_rgb(cfdata->color3);
+   
    _fill_data_hash(cfdata, _wm_hash);
    _fill_data_hash(cfdata, _wid_hash);
    _fill_data_hash(cfdata, _mod_hash);
@@ -373,22 +388,13 @@ _adv_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if (!c->enabled) 
 	  {
 	     if (cc)
-	       e_color_class_del(cc->name);
+	       e_color_class_del(c->key);
 	  }
 	else 
 	  {
-	     if (cc) 
-	       {
-		  e_color_class_set(cc->name, c->r, c->g, c->b, c->a,
-				    c->r2, c->g2, c->b2, c->a2,
-				    c->r3, c->g3, c->b3, c->a3);
-	       }
-	     else 
-	       {
-		  e_color_class_set(c->key, c->r, c->g, c->b, c->a,
-				    c->r2, c->g2, c->b2, c->a2,
-				    c->r3, c->g3, c->b3, c->a3);
-	       }
+	     e_color_class_set(c->key, c->r, c->g, c->b, c->a,
+			       c->r2, c->g2, c->b2, c->a2,
+			       c->r3, c->g3, c->b3, c->a3);
 	  }
      }
    return 1;
