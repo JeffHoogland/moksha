@@ -716,7 +716,7 @@ _update_action_params(E_Config_Dialog_Data *cfdata)
 	return;
      }
    
-   if (actd->restrictions & ACT_EDIT_RESTRICT_PARAMS)
+   if (!actd->editable)
      e_widget_disabled_set(cfdata->gui.o_params, 1);
    else
      e_widget_disabled_set(cfdata->gui.o_params, 0); 

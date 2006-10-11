@@ -30,20 +30,13 @@ struct _E_Action
    } func;
 };
 
-typedef enum
-{
-   ACT_EDIT_RESTRICT_NONE = (0 << 0),
-   ACT_EDIT_RESTRICT_ACTION = (1 << 0),
-   ACT_EDIT_RESTRICT_PARAMS = (1 << 1)
-} E_Action_Edit_Restrictions;
-
 struct _E_Action_Description
 {
    const char *act_name;
    const char *act_cmd;
    const char *act_params;
    const char *param_example;
-   E_Action_Edit_Restrictions restrictions;
+   int editable;
 };
 
 struct _E_Action_Group
@@ -61,7 +54,7 @@ EAPI E_Action   *e_action_add(const char *name);
 EAPI void	e_action_del(const char *name);
 EAPI E_Action   *e_action_find(const char *name);
 
-EAPI void       e_action_predef_name_set(const char *act_grp, const char *act_name, const char *act_cmd, const char *act_params, const char *param_example, E_Action_Edit_Restrictions restrictions); 
+EAPI void       e_action_predef_name_set(const char *act_grp, const char *act_name, const char *act_cmd, const char *act_params, const char *param_example, int editable); 
 EAPI void       e_action_predef_name_del(const char *act_grp, const char *act_name);
 EAPI void       e_action_predef_name_all_del();
 EAPI Evas_List  *e_action_groups_get();
