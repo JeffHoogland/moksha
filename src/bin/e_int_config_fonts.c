@@ -399,6 +399,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    cfdata->cur_index = -1;
    cfdata->evas = evas;
+   cfdata->gui.font_list = NULL;
+   
    o = e_widget_list_add(evas, 0, 0);
   
    /* Create Font Class Widgets */ 
