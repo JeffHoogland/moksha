@@ -19,8 +19,8 @@ static void _fill_ilist(E_Config_Dialog_Data *cfdata);
 
 static void _ilist_font_cb_change(void *data, Evas_Object *obj);
 static void _enabled_font_cb_change(void *data, Evas_Object *obj);
-
 static void _enabled_fallback_cb_change(void *data, Evas_Object *obj);
+static int  _sort_fonts(void *data1, void *data2);
 
 struct _E_Text_Class_Pair
 {
@@ -282,7 +282,7 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob, *ot, *ott;
-   Evas_List *next, *fonts;
+   Evas_List *next, *fonts, *l = NULL;
    int option_enable;
 
    cfdata->cur_index = -1;
@@ -327,8 +327,20 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	
 	f = fonts->data;
 	if (strstr(f, ":")) continue;
-	e_widget_ilist_append(cfdata->gui.font_list, NULL, f, NULL, NULL, f);
+	l = evas_list_append(l, strdup(f));
      }
+   if (l) 
+     {
+	l = evas_list_sort(l, evas_list_count(l), _sort_fonts);
+	for (fonts = l; fonts; fonts = fonts->next) 
+	  {
+	     char *f;
+	     
+	     f = fonts->data;
+	     e_widget_ilist_append(cfdata->gui.font_list, NULL, f, NULL, NULL, f);
+	  }
+     }
+   
    e_widget_ilist_go(cfdata->gui.font_list);
    e_widget_min_size_set(cfdata->gui.font_list, 100, 200);
    e_widget_framelist_object_append(of, cfdata->gui.font_list);
@@ -621,3 +633,11 @@ static void _enabled_fallback_cb_change(void *data, Evas_Object *obj)
    e_widget_disabled_set(cfdata->gui.fallback_list, !cfdata->cur_fallbacks_enabled); 
 }
 
+static int 
+_sort_fonts(void *data1, void *data2) 
+{
+   if (!data1) return 1;
+   if (!data2) return -1;
+   
+   return e_util_strcmp((const char *)data1, (const char *)data2);
+}
