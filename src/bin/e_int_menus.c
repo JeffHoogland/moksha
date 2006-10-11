@@ -88,7 +88,7 @@ e_int_menus_main_new(void)
    dat->all_apps = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Applications"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/all_applications");
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/applications");
    e_menu_item_submenu_set(mi, subm);
   
    mi = e_menu_item_new(m);
