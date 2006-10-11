@@ -741,6 +741,10 @@ e_config_init(void)
    eb->action = _action == NULL ? NULL : evas_stringshare_add(_action); \
    eb->params = _params == NULL ? NULL : evas_stringshare_add(_params); \
    e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb)
+
+	//FIXME: If new mouse binding are added/changed/modified, then do not
+	//forget to reflect those changes in e_int_config_mousebinding.c in
+	//_restore_defaults_cb function
 	
 	CFG_MOUSEBIND(E_BINDING_CONTEXT_BORDER, 1,
 		      E_BINDING_MODIFIER_ALT, 0, 
@@ -773,6 +777,10 @@ e_config_init(void)
    eb->action = _action == NULL ? NULL : evas_stringshare_add(_action); \
    eb->params = _params == NULL ? NULL : evas_stringshare_add(_params); \
    e_config->key_bindings = evas_list_append(e_config->key_bindings, eb)
+
+	//FIXME: If new key binding are added/changed/modified, then do not
+	//forget to reflect those changes in e_int_config_keybinding.c in
+	//_restore_key_binding_defaults_cb function
 
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Left",
 		    E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT, 0,
@@ -814,7 +822,7 @@ e_config_init(void)
 		    E_BINDING_MODIFIER_ALT, 0,
 		    "window_maximized_toggle", "default vertical");
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "F10",
-		    E_BINDING_MODIFIER_CTRL, 0,
+		    E_BINDING_MODIFIER_SHIFT, 0,
 		    "window_maximized_toggle", "default horizontal");
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "r",
 		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
@@ -1056,6 +1064,10 @@ e_config_init(void)
    eb->params = _params == NULL ? NULL : evas_stringshare_add(_params); \
    e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb)
 
+	//FIXME: If new wheel binding are added/changed/modified, then do not
+	//forget to reflect those changes in e_int_config_mousebinding.c in
+	//_restore_defaults_cb function
+	
 	CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 0, -1,
 		      E_BINDING_MODIFIER_NONE, 1,
 		      "desk_linear_flip_by", "-1");

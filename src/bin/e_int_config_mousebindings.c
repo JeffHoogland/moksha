@@ -31,7 +31,7 @@ static void _action_change_cb(void *data);
 static void _add_mouse_binding_cb(void *data, void *data2);
 static void _modify_mouse_binding_cb(void *data, void *data2);
 static void _delete_mouse_binding_cb(void *data, void *data2);
-static void _restore_default_cb(void *data, void *data2);
+static void _restore_defaults_cb(void *data, void *data2);
 
 static int _grab_key_down_cb(void *data, int type, void *event);
 static int _grab_mouse_down_cb(void *data, int type, void *event);
@@ -342,7 +342,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ol2);
 
    o = e_widget_button_add(evas, _("Restore Mouse and Wheel Binding Defaults"), NULL,
-			   _restore_default_cb, cfdata, NULL);
+			   _restore_defaults_cb, cfdata, NULL);
    e_widget_framelist_object_append(of, o);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
@@ -990,13 +990,13 @@ _delete_mouse_binding_cb(void *data, void *data2)
 	_update_binding_context(cfdata);
 	_update_binding_params(cfdata);
 	_update_buttons(cfdata);
-	e_widget_ilist_selected_set(cfdata->gui.o_action_list, 0);
+	e_widget_ilist_unselect(cfdata->gui.o_action_list);
      }
    else 
      e_widget_ilist_selected_set(cfdata->gui.o_binding_list, sel);
 }
 static void
-_restore_default_cb(void *data, void *data2)
+_restore_defaults_cb(void *data, void *data2)
 {
    E_Config_Binding_Mouse *eb;
    E_Config_Binding_Wheel *bw;
@@ -1023,7 +1023,7 @@ _restore_default_cb(void *data, void *data2)
 	cfdata->binding.wheel =
 	   evas_list_remove_list(cfdata->binding.wheel, cfdata->binding.wheel);
      }
-#define CFG_MOUSEBIND(_context, _button, _modifiers, _anymod, _action, _params) \
+#define CFG_MOUSEBIND_DFLT(_context, _button, _modifiers, _anymod, _action, _params) \
    eb = E_NEW(E_Config_Binding_Mouse, 1); \
    eb->context = _context; \
    eb->button = _button; \
@@ -1033,15 +1033,15 @@ _restore_default_cb(void *data, void *data2)
    eb->params = _params == NULL ? NULL : evas_stringshare_add(_params); \
    cfdata->binding.mouse = evas_list_append(cfdata->binding.mouse, eb) 
    
-   CFG_MOUSEBIND(E_BINDING_CONTEXT_BORDER, 1, E_BINDING_MODIFIER_ALT, 0, "window_move", NULL); 
-   CFG_MOUSEBIND(E_BINDING_CONTEXT_BORDER, 2, E_BINDING_MODIFIER_ALT, 0, "window_resize", NULL); 
-   CFG_MOUSEBIND(E_BINDING_CONTEXT_BORDER, 3, E_BINDING_MODIFIER_ALT, 0, "window_menu", NULL); 
-   CFG_MOUSEBIND(E_BINDING_CONTEXT_ZONE, 1, 0, 0, "menu_show", "main"); 
-   CFG_MOUSEBIND(E_BINDING_CONTEXT_ZONE, 2, 0, 0, "menu_show", "clients"); 
-   CFG_MOUSEBIND(E_BINDING_CONTEXT_ZONE, 3, 0, 0, "menu_show", "favorites");
+   CFG_MOUSEBIND_DFLT(E_BINDING_CONTEXT_BORDER, 1, E_BINDING_MODIFIER_ALT, 0, "window_move", NULL); 
+   CFG_MOUSEBIND_DFLT(E_BINDING_CONTEXT_BORDER, 2, E_BINDING_MODIFIER_ALT, 0, "window_resize", NULL); 
+   CFG_MOUSEBIND_DFLT(E_BINDING_CONTEXT_BORDER, 3, E_BINDING_MODIFIER_ALT, 0, "window_menu", NULL); 
+   CFG_MOUSEBIND_DFLT(E_BINDING_CONTEXT_ZONE, 1, 0, 0, "menu_show", "main"); 
+   CFG_MOUSEBIND_DFLT(E_BINDING_CONTEXT_ZONE, 2, 0, 0, "menu_show", "clients"); 
+   CFG_MOUSEBIND_DFLT(E_BINDING_CONTEXT_ZONE, 3, 0, 0, "menu_show", "favorites");
 
 
-#define CFG_WHEELBIND(_context, _direction, _z, _modifiers, _anymod, _action, _params) \
+#define CFG_WHEELBIND_DFLT(_context, _direction, _z, _modifiers, _anymod, _action, _params) \
    bw = E_NEW(E_Config_Binding_Wheel, 1); \
    bw->context = _context; \
    bw->direction = _direction; \
@@ -1052,37 +1052,37 @@ _restore_default_cb(void *data, void *data2)
    bw->params = _params == NULL ? NULL : evas_stringshare_add(_params); \
    cfdata->binding.wheel = evas_list_append(cfdata->binding.wheel, bw) 
    
-   CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 0, -1, E_BINDING_MODIFIER_NONE, 1, 
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_CONTAINER, 0, -1, E_BINDING_MODIFIER_NONE, 1, 
 	 "desk_linear_flip_by", "-1"); 
-   CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 1, -1, E_BINDING_MODIFIER_NONE, 1, 
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_CONTAINER, 1, -1, E_BINDING_MODIFIER_NONE, 1, 
 	 "desk_linear_flip_by", "-1"); 
-   CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 0, 1, E_BINDING_MODIFIER_NONE, 1, 
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_CONTAINER, 0, 1, E_BINDING_MODIFIER_NONE, 1, 
 	 "desk_linear_flip_by", "1"); 
-   CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 1, 1, E_BINDING_MODIFIER_NONE, 1, 
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_CONTAINER, 1, 1, E_BINDING_MODIFIER_NONE, 1, 
 	 "desk_linear_flip_by", "1"); 
-   CFG_WHEELBIND(E_BINDING_CONTEXT_POPUP, 0, -1, E_BINDING_MODIFIER_NONE, 1, 
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_POPUP, 0, -1, E_BINDING_MODIFIER_NONE, 1, 
 	 "desk_linear_flip_by", "-1"); 
-   CFG_WHEELBIND(E_BINDING_CONTEXT_POPUP, 1, -1, E_BINDING_MODIFIER_NONE, 1, 
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_POPUP, 1, -1, E_BINDING_MODIFIER_NONE, 1, 
 	 "desk_linear_flip_by", "-1"); 
-   CFG_WHEELBIND(E_BINDING_CONTEXT_POPUP, 0, 1, E_BINDING_MODIFIER_NONE, 1, 
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_POPUP, 0, 1, E_BINDING_MODIFIER_NONE, 1, 
 	 "desk_linear_flip_by", "1"); 
-   CFG_WHEELBIND(E_BINDING_CONTEXT_POPUP, 1, 1, E_BINDING_MODIFIER_NONE, 1, 
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_POPUP, 1, 1, E_BINDING_MODIFIER_NONE, 1, 
 	 "desk_linear_flip_by", "1"); 
-   CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 0, -1, E_BINDING_MODIFIER_ALT, 0, 
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_CONTAINER, 0, -1, E_BINDING_MODIFIER_ALT, 0, 
 	 "desk_linear_flip_by", "-1"); 
-   CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 1, -1, E_BINDING_MODIFIER_ALT, 0, 
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_CONTAINER, 1, -1, E_BINDING_MODIFIER_ALT, 0, 
 	 "desk_linear_flip_by", "-1"); 
-   CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 0, 1, E_BINDING_MODIFIER_ALT, 0, 
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_CONTAINER, 0, 1, E_BINDING_MODIFIER_ALT, 0, 
 	 "desk_linear_flip_by", "1"); 
-   CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 1, 1, E_BINDING_MODIFIER_ALT, 0, 
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_CONTAINER, 1, 1, E_BINDING_MODIFIER_ALT, 0, 
 	 "desk_linear_flip_by", "1"); 
-   CFG_WHEELBIND(E_BINDING_CONTEXT_BORDER, 0, -1, E_BINDING_MODIFIER_ALT, 0, 
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_BORDER, 0, -1, E_BINDING_MODIFIER_ALT, 0, 
 	 "desk_linear_flip_by", "-1"); 
-   CFG_WHEELBIND(E_BINDING_CONTEXT_BORDER, 1, -1, E_BINDING_MODIFIER_ALT, 0, 
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_BORDER, 1, -1, E_BINDING_MODIFIER_ALT, 0, 
 	 "desk_linear_flip_by", "-1"); 
-   CFG_WHEELBIND(E_BINDING_CONTEXT_BORDER, 0, 1, E_BINDING_MODIFIER_ALT, 0, 
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_BORDER, 0, 1, E_BINDING_MODIFIER_ALT, 0, 
 	 "desk_linear_flip_by", "1"); 
-   CFG_WHEELBIND(E_BINDING_CONTEXT_BORDER, 1, 1, E_BINDING_MODIFIER_ALT, 0, 
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_BORDER, 1, 1, E_BINDING_MODIFIER_ALT, 0, 
 	 "desk_linear_flip_by", "1");
 
    if (cfdata->locals.cur) free(cfdata->locals.cur);
@@ -1092,7 +1092,7 @@ _restore_default_cb(void *data, void *data2)
    _update_buttons(cfdata);
    _update_binding_params(cfdata);
    _update_binding_context(cfdata);
-   e_widget_ilist_selected_set(cfdata->gui.o_action_list, 0);
+   e_widget_ilist_unselect(cfdata->gui.o_action_list);
 }
 
 static int
@@ -1146,7 +1146,8 @@ _grab_mouse_down_cb(void *data, int type, void *event)
    _update_buttons(cfdata);
    return 1;
 }
-static int _grab_mouse_wheel_cb(void *data, int type, void *event)
+static int 
+_grab_mouse_wheel_cb(void *data, int type, void *event)
 {
    E_Config_Binding_Wheel *bw;
    E_Config_Dialog_Data *cfdata;
