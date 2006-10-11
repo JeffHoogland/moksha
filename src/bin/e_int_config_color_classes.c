@@ -442,10 +442,12 @@ _adv_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfda
    rg = e_widget_radio_group_new(&(cfdata->state));
    ob = e_widget_radio_add(evas, _("Enabled"), 1, rg);
    cfdata->gui.renable = ob;
+   e_widget_disabled_set(ob, 1);
    evas_object_smart_callback_add(ob, "changed", _radio_cb_change, cfdata);   
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Disabled"), 0, rg);
    cfdata->gui.rdisable = ob;
+   e_widget_disabled_set(ob, 1);
    evas_object_smart_callback_add(ob, "changed", _radio_cb_change, cfdata);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
@@ -554,6 +556,8 @@ _list_cb_change(void *data, Evas_Object *obj)
    if (!cfdata) return;
    
    cfdata->cur_class = (char *)e_widget_ilist_selected_label_get(obj);
+   e_widget_disabled_set(cfdata->gui.rdisable, 0);
+   e_widget_disabled_set(cfdata->gui.renable, 0);
    
    for (l = cfdata->classes; l; l = l->next) 
      {
@@ -572,6 +576,7 @@ _list_cb_change(void *data, Evas_Object *obj)
 		  e_widget_disabled_set(cfdata->gui.c1, 0);
 		  e_widget_disabled_set(cfdata->gui.c2, 0);
 		  e_widget_disabled_set(cfdata->gui.c3, 0);
+		  e_widget_disabled_set(cfdata->gui.button, 0);		  
 		  e_widget_radio_toggle_set(cfdata->gui.renable, 1);
 		  e_widget_radio_toggle_set(cfdata->gui.rdisable, 0);
 	       }
@@ -580,6 +585,7 @@ _list_cb_change(void *data, Evas_Object *obj)
 		  e_widget_disabled_set(cfdata->gui.c1, 1);
 		  e_widget_disabled_set(cfdata->gui.c2, 1);
 		  e_widget_disabled_set(cfdata->gui.c3, 1);
+		  e_widget_disabled_set(cfdata->gui.button, 1);
 		  e_widget_radio_toggle_set(cfdata->gui.renable, 0);
 		  e_widget_radio_toggle_set(cfdata->gui.rdisable, 1);
 	       }
