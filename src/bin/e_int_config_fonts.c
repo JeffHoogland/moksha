@@ -41,6 +41,7 @@ const E_Text_Class_Pair text_class_predefined_names[ ] = {
        {  NULL,		    N_("Window Manager")},
        { "title_bar",	    N_("Title Bar")},
        { "menu_item",	    N_("Menu Item")},
+       { "menu_title",	    N_("Menu Title")},   
        { "tb_plain",	    N_("Textblock Plain")},
        { "tb_light",        N_("Textblock Light")},
        { "tb_big",          N_("Textblock Big")},
