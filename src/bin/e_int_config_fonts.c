@@ -287,6 +287,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    cfdata->cur_index = -1;
    cfdata->evas = evas;
+   cfdata->gui.font = NULL;
+
    o = e_widget_list_add(evas, 0, 0);
    ot = e_widget_table_add(evas, 0);
    
