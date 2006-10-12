@@ -980,19 +980,15 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    /* If lang_list already loaded just use it */
    if (cfdata->lang_list == NULL) 
+     evas_hash_foreach(cfdata->locale_hash, _lang_hash_cb, cfdata);
+   
+   if (cfdata->lang_list) 
      {
-	evas_hash_foreach(cfdata->locale_hash, _lang_hash_cb, cfdata);
-	if (cfdata->lang_list) 
-	  {
-	     cfdata->lang_list = evas_list_sort(cfdata->lang_list, 
-		   evas_list_count(cfdata->lang_list), 
-		   _lang_list_sort);
-	     
-	     _lang_list_load(cfdata);
-	  }
+	cfdata->lang_list = evas_list_sort(cfdata->lang_list, 
+					   evas_list_count(cfdata->lang_list), 
+					   _lang_list_sort);
+	_lang_list_load(cfdata);
      }
-
-   _lang_list_load(cfdata);
    
    e_widget_ilist_go(ob);
    e_widget_min_size_set(ob, 140, 200);
