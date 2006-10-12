@@ -20,21 +20,14 @@ struct _Import
    E_Config_Dialog_Data *cfdata;
   
    E_Dialog    *dia;
-   Evas_Object *bg_obj;
-   Evas_Object *box_obj;
-   Evas_Object *content_obj;
-   Evas_Object *fsel_obj;
    
-   Evas_Object *ok_obj;
-   Evas_Object *close_obj;
-
    Evas_Object *fill_h_obj;
    Evas_Object *fill_v_obj;
    Evas_Object *fill_du_obj;
    Evas_Object *fill_dd_obj;
    Evas_Object *fill_rad_obj;
-   Evas_Object *spread_obj;
-   Evas_Object *frame_obj;
+
+   Evas_Object *preview;
 
    Ecore_Exe *exe;
    Ecore_Event_Handler *exe_handler;
@@ -51,13 +44,16 @@ struct _E_Config_Dialog_Data
    E_Color *color1, *color2;
 };
 
-static void _import_opt_disabled_set(Import *import, int disabled);
 static void _import_edj_gen(Import *import);
 static int _import_cb_edje_cc_exit(void *data, int type, void *event);
 static void _import_cb_close(void *data, E_Dialog *dia);
 static void _import_cb_ok(void *data, E_Dialog *dia);
 static void _import_config_save(Import *import);
 static void _import_cb_dia_del(void *obj);
+static void _preview_widget_grad_resize(void *data, Evas_Object *obj,
+					Evas_Coord w, Evas_Coord h);
+static Evas_Object *_preview_widget_add(Evas *evas);
+static void _import_cb_on_change(void *data, Evas_Object *obj);
 
 EAPI E_Dialog *
 e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
@@ -134,10 +130,12 @@ e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
    e_widget_table_object_append(ot, o, 2, 1, 1, 1, 1, 1, 1, 1);
 
    o = e_widget_color_well_add(evas, cfdata->color1, 1);
+   e_widget_on_change_hook_set(o, _import_cb_on_change, import);
    evas_object_show(o);
    e_widget_table_object_append(ot, o, 2, 2, 1, 1, 1, 1, 1, 1);
 
    o = e_widget_color_well_add(evas, cfdata->color2, 1);
+   e_widget_on_change_hook_set(o, _import_cb_on_change, import);
    evas_object_show(o);
    e_widget_table_object_append(ot, o, 2, 3, 1, 1, 1, 1, 1, 1);
 
@@ -148,34 +146,46 @@ e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
    rg = e_widget_radio_group_new(&(cfdata->mode));
 
    ord = e_widget_radio_icon_add(evas, _("Horizontal"), "enlightenment/gradient_h", 24, 24, GRAD_H, rg);
+   e_widget_on_change_hook_set(ord, _import_cb_on_change, import);
    import->fill_h_obj = ord;
    e_widget_framelist_object_append(of, ord);
 
    ord = e_widget_radio_icon_add(evas, _("Vertical"), "enlightenment/gradient_v", 24, 24, GRAD_V, rg);
+   e_widget_on_change_hook_set(ord, _import_cb_on_change, import);
    import->fill_h_obj = ord;
    e_widget_framelist_object_append(of, ord);
 
    ord = e_widget_radio_icon_add(evas, _("Diagonal Up"), "enlightenment/gradient_du", 24, 24, GRAD_DU, rg);
+   e_widget_on_change_hook_set(ord, _import_cb_on_change, import);
    import->fill_h_obj = ord;
    e_widget_framelist_object_append(of, ord);
 
    ord = e_widget_radio_icon_add(evas, _("Diagonal Down"), "enlightenment/gradient_dd", 24, 24, GRAD_DD, rg);
+   e_widget_on_change_hook_set(ord, _import_cb_on_change, import);
    import->fill_h_obj = ord;
    e_widget_framelist_object_append(of, ord);
 
    ord = e_widget_radio_icon_add(evas, _("Radial"), "enlightenment/gradient_rad", 24, 24, GRAD_RAD, rg);
+   e_widget_on_change_hook_set(ord, _import_cb_on_change, import);
    import->fill_h_obj = ord;
    e_widget_framelist_object_append(of, ord);
 
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
+   o = _preview_widget_add(evas);
+   evas_object_show(o);
+   evas_object_resize(o, 200, 150);
+   e_widget_min_size_set(o, 200, 150);
+   e_widget_list_object_append(ol, o, 0, 0, 0.5);
+   import->preview = o;
+   _import_cb_on_change(import, NULL);
+   
    e_widget_min_size_get(ol, &mw, &mh);
    e_dialog_content_set(dia, ol, mw, mh);
 
    e_dialog_button_add(dia, _("OK"), NULL, _import_cb_ok, cfdata);
    e_dialog_button_add(dia, _("Cancel"), NULL, _import_cb_close, cfdata);
 
-   _import_opt_disabled_set(import, 1);
    e_dialog_resizable_set(dia, 0);
    e_dialog_show(dia);
    
@@ -206,11 +216,6 @@ e_int_config_wallpaper_gradient_del(E_Dialog *dia)
    E_FREE(import);
    e_object_unref(E_OBJECT(dia));
 
-}
-
-static void
-_import_opt_disabled_set(Import *import, int disabled)
-{
 }
 
 static void
@@ -386,3 +391,72 @@ _import_cb_dia_del(void *obj)
    E_Dialog *dia = obj;
    e_int_config_wallpaper_gradient_del(dia);
 }
+
+static Evas_Object *
+_preview_widget_add(Evas *evas)
+{
+   Evas_Object *obj, *o, *g;
+
+   obj = e_widget_add(evas);
+
+   o = edje_object_add(evas);
+   e_theme_edje_object_set(o, "base/theme/widgets", "e/widgets/gradpreview");
+   e_widget_sub_object_add(obj, o);
+   e_widget_resize_object_set(obj, o);
+   evas_object_show(o);
+
+   g = evas_object_gradient_add(evas);
+   evas_object_show(g);
+   e_widget_sub_object_add(obj, g);
+   edje_object_part_swallow(o, "e.swallow.content", g);
+
+   e_widget_data_set(obj, g);
+
+   return obj;
+}
+
+static void
+_import_cb_on_change(void *data, Evas_Object *obj)
+{
+   Import *import;
+   Evas_Object *grad;
+   Evas_Coord w, h;
+
+   import = data;
+
+   grad = e_widget_data_get(import->preview);
+   evas_object_geometry_get(grad, NULL, NULL, &w, &h);
+
+   evas_object_gradient_clear(grad);
+   evas_object_gradient_color_stop_add(grad, import->cfdata->color1->r, import->cfdata->color1->g, import->cfdata->color1->b, 255, 1);
+   evas_object_gradient_color_stop_add(grad, import->cfdata->color2->r, import->cfdata->color2->g, import->cfdata->color2->b, 255, 1);
+
+   switch(import->cfdata->mode)
+     {
+      case GRAD_H:
+	 evas_object_gradient_type_set(grad, "linear", NULL);
+	 evas_object_gradient_angle_set(grad, 270);
+	 evas_object_gradient_fill_set(grad, 0, 0, w, h);
+	 break;
+      case GRAD_V:
+	 evas_object_gradient_type_set(grad, "linear", NULL);
+	 evas_object_gradient_angle_set(grad, 0);
+	 evas_object_gradient_fill_set(grad, 0, 0, w, h);
+	 break;
+      case GRAD_DU:
+	 evas_object_gradient_type_set(grad, "linear.codiag", NULL);
+	 evas_object_gradient_angle_set(grad, 180);
+	 evas_object_gradient_fill_set(grad, 0, 0, w, h);
+	 break;
+      case GRAD_DD:
+	 evas_object_gradient_type_set(grad, "linear.diag", NULL);
+	 evas_object_gradient_angle_set(grad, 0);
+	 evas_object_gradient_fill_set(grad, 0, 0, w, h);
+	 break;
+      case GRAD_RAD:
+	 evas_object_gradient_type_set(grad, "radial", NULL);
+	 evas_object_gradient_fill_set(grad, w / 2, h / 2, w, h);
+	 break;
+     }
+}
+
