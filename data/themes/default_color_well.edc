@@ -4,6 +4,7 @@ images {
 
 group {
   name: "e/widgets/color_well";
+  alias: "e/widgets/gradpreview";
   parts {
       part {
 	 name:          "background";
