@@ -396,11 +396,6 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
 	         {
 	            _e_module_dialog_icon_set(dia, eap);
 		 }
-	      else
-	         {
-	            snprintf(eap, sizeof(eap), "%s/module.eap", e_module_dir_get(m));
-	            _e_module_dialog_icon_set(dia, eap);
-	         }
 	   }
      }
    else

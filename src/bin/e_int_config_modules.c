@@ -514,8 +514,6 @@ _fill_list(E_Config_Dialog_Data *cfdata)
 		  if (m->enabled) cm->state = MOD_ENABLED;
 	       }
 	     snprintf(buf, sizeof(buf), "%s/module.desktop", cm->path);
-	     if (!ecore_file_exists(buf))
-	        snprintf(buf, sizeof(buf), "%s/module.eap", cm->path);
 	     
 	     a = e_app_new(buf, 1);
 	     if (a)

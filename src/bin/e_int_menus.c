@@ -487,7 +487,7 @@ _e_int_menus_apps_scan(E_Menu *m)
 		       char buf[4096];
 		       
                        /* FIXME: .directory.eaps are obsolete, but have yet to be replaced by FDO stuff. */
-		       snprintf(buf, sizeof(buf), "%s/.directory.eap", a->path);
+		       snprintf(buf, sizeof(buf), "%s/.directory.desktop", a->path);
 		       if (!((a->icon_class) && 
 			     (e_util_menu_item_edje_icon_list_set(mi, a->icon_class))))
 		          /*e_menu_item_icon_edje_set(mi, buf, "icon")*/;
