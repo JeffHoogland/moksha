@@ -92,7 +92,7 @@ e_widget_desk_preview_num_desks_set(Evas_Object *obj, int nx, int ny)
    e_widget_aspect_child_set(wd->aspect, o); 
    wd->table = o;
 
-   evas_object_geometry_get(wd->aspect, NULL, NULL, &aw, &ah);
+   evas_object_geometry_get(wd->table, NULL, NULL, &aw, &ah);
 
    if (ny > nx)
      {
@@ -150,7 +150,7 @@ e_widget_desk_preview_num_desks_set(Evas_Object *obj, int nx, int ny)
 	     e_icon_fill_inside_set(o, 0);
 	     e_thumb_icon_file_set(o, bgfile, "e/desktop/background");
 	     e_thumb_icon_size_set(o, tw, th);
-	     edje_object_part_swallow(overlay, "e.swallow.desk", o);
+	     edje_object_part_swallow(overlay, "e.swallow.content", o);
 	     e_thumb_icon_begin(o);
 	     evas_object_show(o);
 	     e_widget_sub_object_add(dw, o);
