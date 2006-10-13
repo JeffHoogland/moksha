@@ -61,7 +61,7 @@ e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
    Evas *evas;
    E_Dialog *dia;
    Import *import;
-   Evas_Object *o, *ol, *of, *ord, *ot;
+   Evas_Object *o, *ol, *of, *ord, *ot, *ott;
    Evas_Coord mw, mh;
    E_Radio_Group *rg;
    E_Config_Dialog_Data *cfdata;
@@ -112,37 +112,48 @@ e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
 
    ot = e_widget_table_add(evas, 0);
    evas_object_show(ot);
+   ott = e_widget_table_add(evas, 0);
+   evas_object_show(ott);
 
    o = e_widget_label_add(evas, _("Name:"));
    evas_object_show(o);
-   e_widget_table_object_append(ot, o, 1, 1, 1, 1, 0, 1, 0, 1);
+   e_widget_table_object_append(ott, o, 0, 0, 1, 1, 0, 1, 0, 1);
 
    o = e_widget_label_add(evas, _("Color 1:"));
    evas_object_show(o);
-   e_widget_table_object_append(ot, o, 1, 2, 1, 1, 0, 1, 0, 1);
+   e_widget_table_object_append(ott, o, 0, 1, 1, 1, 0, 1, 0, 1);
 
    o = e_widget_label_add(evas, _("Color 2:"));
    evas_object_show(o);
-   e_widget_table_object_append(ot, o, 1, 3, 1, 1, 0, 1, 0, 1);
+   e_widget_table_object_append(ott, o, 0, 2, 1, 1, 0, 1, 0, 1);
 
    o = e_widget_entry_add(evas, &(cfdata->name));
    evas_object_show(o);
-   e_widget_table_object_append(ot, o, 2, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ott, o, 1, 0, 1, 1, 1, 1, 1, 1);
 
    o = e_widget_color_well_add(evas, cfdata->color1, 1);
    e_widget_on_change_hook_set(o, _import_cb_on_change, import);
    evas_object_show(o);
-   e_widget_table_object_append(ot, o, 2, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ott, o, 1, 1, 1, 1, 1, 1, 1, 1);
 
    o = e_widget_color_well_add(evas, cfdata->color2, 1);
    e_widget_on_change_hook_set(o, _import_cb_on_change, import);
    evas_object_show(o);
-   e_widget_table_object_append(ot, o, 2, 3, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ott, o, 1, 2, 1, 1, 1, 1, 1, 1);
 
-   e_widget_list_object_append(ol, ot, 1, 1, 0.5);
+   e_widget_table_object_append(ot, ott, 0, 0, 1, 1, 1, 1, 1, 1);   
 
+   of = e_widget_framelist_add(evas, _("Preview"), 1);   
+   o = _preview_widget_add(evas);
+   evas_object_show(o);
+   evas_object_resize(o, 200, 150);
+   e_widget_min_size_set(o, 200, 150);
+   e_widget_framelist_object_append(of, o);
+   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
+   import->preview = o;
+   _import_cb_on_change(import, NULL);
+   
    of = e_widget_framelist_add(evas, _("Fill Options"), 1);
-
    rg = e_widget_radio_group_new(&(cfdata->mode));
 
    ord = e_widget_radio_icon_add(evas, _("Horizontal"), "enlightenment/gradient_h", 24, 24, GRAD_H, rg);
@@ -170,16 +181,9 @@ e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
    import->fill_h_obj = ord;
    e_widget_framelist_object_append(of, ord);
 
-   e_widget_list_object_append(ol, of, 1, 1, 0.5);
+   e_widget_table_object_append(ot, of, 0, 2, 2, 1, 1, 1, 1, 1);
+   e_widget_list_object_append(ol, ot, 1, 1, 0.5);
 
-   o = _preview_widget_add(evas);
-   evas_object_show(o);
-   evas_object_resize(o, 200, 150);
-   e_widget_min_size_set(o, 200, 150);
-   e_widget_list_object_append(ol, o, 0, 0, 0.5);
-   import->preview = o;
-   _import_cb_on_change(import, NULL);
-   
    e_widget_min_size_get(ol, &mw, &mh);
    e_dialog_content_set(dia, ol, mw, mh);
 
