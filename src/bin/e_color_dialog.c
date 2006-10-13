@@ -26,7 +26,7 @@ e_color_dialog_new(E_Container *con, const E_Color *color)
    if(!dia) return NULL;
    dia->dia = e_dialog_new(con, "E", "_test");
    e_dialog_title_set(dia->dia, "Color Selector");
-
+   
    dia->color = calloc(1, sizeof(E_Color));
 
    if (color)
@@ -55,6 +55,7 @@ void
 e_color_dialog_show(E_Color_Dialog *dia)
 {
    e_dialog_show(dia->dia);
+   e_dialog_border_icon_set(dia->dia, "enlightenment/colors");
 }
 
 void
