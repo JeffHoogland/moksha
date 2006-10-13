@@ -13,7 +13,7 @@
  */
 
 #define DEBUG 0
-#define IDLE_ICONS 0
+#define IDLE_ICONS 1
 
 /* These two can be used to turn on or off the new and old border matching code.
  * There is a printf at the end of e_app_border_find that gives the times and results.
@@ -403,10 +403,14 @@ e_app_new(const char *path, int scan_subdirs)
 	     if (st.st_mtime > a->mtime)
 	       {
 	          e_app_fields_empty(a);
+#if DEBUG
 		  printf("M");
+#endif
 	       }
+#if DEBUG
 	     else
 	        printf("H");
+#endif
 	  }
 	e_object_ref(E_OBJECT(a));
      }
@@ -416,7 +420,9 @@ e_app_new(const char *path, int scan_subdirs)
         /* Create it. */
         a = e_app_empty_new(path);
 	new_app = 1;
-printf("+");
+#if DEBUG
+        printf("+");
+#endif
      }
 
    if ((a) && (a->path))
@@ -537,7 +543,9 @@ e_app_empty_new(const char *path)
 	a->path = evas_stringshare_add(buf);
      }
    a->icon_type = E_APP_ICON_UNKNOWN;
-//   printf("NEW APP %p %s\n", a, a->path);
+#if DEBUG
+   printf("NEW APP %p %s\n", a, a->path);
+#endif
    return a;
 }
 
@@ -1104,7 +1112,7 @@ _e_apps_border_setup(Evas_Hash **non_glob, Evas_List **glob, const char *text, c
    int is_glob = 0;
 
 #if DEBUG
-printf("%c", t);
+   printf("%c", t);
 #endif
    if (glob)
      {
@@ -1230,7 +1238,9 @@ _e_apps_winners_hash_cb_check_free(Evas_Hash *hash, const char *key, void *data,
 
    count = data;
    winner = fdata;
-printf("%d %d %s\n", winner->ok, (*count), key);
+#if DEBUG
+   printf("%d %d %s\n", winner->ok, (*count), key);
+#endif
    if ((*count) > winner->ok)
      {
         winner->path = key;
@@ -1320,7 +1330,9 @@ e_app_border_find(E_Border *bd)
         winner.ok = 0;
         if (ok)  /* Fill all E_Apps and try again on the second pass. */
 	  {
-printf("SECOND PASS\n");
+#if DEBUG
+             printf("SECOND PASS\n");
+#endif
              for (l = _e_apps_all->subapps; l; l = l->next)
                {
 	          a = l->data;
@@ -1745,7 +1757,9 @@ e_app_fields_fill(E_App *a, const char *path)
 	  {
 	     a->desktop = desktop;
 
-printf(".");
+#if DEBUG
+             printf(".");
+#endif
 	     if (desktop->name)  a->name = evas_stringshare_add(desktop->name);
 	     if (desktop->generic)  a->generic = evas_stringshare_add(desktop->generic);
 	     if (desktop->comment)  a->comment = evas_stringshare_add(desktop->comment);
@@ -1948,7 +1962,9 @@ _e_app_fields_save_others(E_App *a)
 EAPI void
 e_app_fields_empty(E_App *a)
 {
-printf("-");
+#if DEBUG
+   printf("-");
+#endif
    if (a->name) evas_stringshare_del(a->name);
    if (a->generic) evas_stringshare_del(a->generic);
    if (a->comment) evas_stringshare_del(a->comment);
@@ -2379,12 +2395,14 @@ _e_app_change(E_App *a, E_App_Change ch)
 {
    Evas_List *l;
 
-//   if (ch == E_APP_DEL)
-//     printf("APP_DEL %s\n", a->path);
-//   if (ch == E_APP_CHANGE)
-//     printf("APP_CHANGE %p %s\n", a, a->path);
-//   if (ch == E_APP_ADD)
-//     printf("APP_ADD %s\n", a->path);
+#if DEBUG
+   if (ch == E_APP_DEL)
+     printf("APP_DEL %s\n", a->path);
+   if (ch == E_APP_CHANGE)
+     printf("APP_CHANGE %p %s\n", a, a->path);
+   if (ch == E_APP_ADD)
+     printf("APP_ADD %s\n", a->path);
+#endif
    _e_apps_callbacks_walking = 1;
    for (l = _e_apps_change_callbacks; l; l = l->next)
      {
