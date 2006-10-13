@@ -59,7 +59,6 @@ Some of the things (in very short form) that need to be done to E17...
 * remove config items marked for removal
 * make default set of apps .desktop files in tarball
 * about dialog can do with redesign
-* edje needs to be updated so we can do proper fills for non 0 angles.
 * clientinfo dialog could be nicer - then again it is an obsucre thing.
 * desklock's pam profile should be configurable as system-auth doesn't
   always work and the fallback checks might not work either.
