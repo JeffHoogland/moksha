@@ -87,12 +87,14 @@ _e_fdo_menu_to_order_make_apps(char *name, char *path, char *directory, Ecore_Ha
                      order_data.sheap = ecore_sheap_new(ecore_str_compare, 100);
                      ecore_sheap_set_free_cb(order_data.sheap, free);
 		  }
-	       temp = ecore_file_get_file(order_data.order_path);
-	       if (temp)
-	          {
-// FIXME: What to do about .directory.eap's when .desktop takes over?
-//                     create_dir_eap(order_data.order_path, temp, name);
-		  }
+	       if (directory)
+	         {
+                    char dir[PATH_MAX];
+
+                    snprintf(dir, sizeof(dir), "%s/.directory", order_data.order_path);
+                    if ((ecore_file_exists(directory)) && (!ecore_file_exists(dir)))
+                       ecore_file_symlink(directory, dir);
+		 }
             }
          /* Create the apps. */
          ecore_hash_for_each_node(apps, _e_fdo_menu_to_order_dump_each_hash_node, &order_data);
