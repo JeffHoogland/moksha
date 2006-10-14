@@ -336,7 +336,7 @@ _e_thumb_generate(E_Thumb *eth)
 	alpha = 1;
 	ext = strrchr(eth->file, '.');
 
-	if ((ext) && (!strcasecmp(ext, ".desktop")))
+	if ( (ext) && ((!strcasecmp(ext, ".desktop")) || (!strcasecmp(ext, ".directory"))) )
 	  {
 	     Ecore_Desktop *desktop;
 

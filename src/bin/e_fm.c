@@ -1393,7 +1393,7 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, char *file)
 	if (mime) ic->info.mime = evas_stringshare_add(mime);
      }
    
-   if (e_util_glob_case_match(ic->info.file, "*.desktop"))
+   if ((e_util_glob_case_match(ic->info.file, "*.desktop")) || (e_util_glob_case_match(ic->info.file, "*.directory")))
      _e_fm2_icon_desktop_load(ic);
    evas_event_freeze(evas_object_evas_get(sd->obj));
    edje_freeze();
@@ -1809,9 +1809,7 @@ _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (vo
 						 gen_func, data);
 		  _e_fm2_icon_thumb(ic, oic, force_gen);
 	       }
-	     else if (
-		      (e_util_glob_case_match(ic->info.file, "*.desktop"))
-		      )
+	     else if ((e_util_glob_case_match(ic->info.file, "*.desktop")) || (e_util_glob_case_match(ic->info.file, "*.directory")))
 	       {
 		  E_App *app;
 		  

@@ -2698,7 +2698,7 @@ _e_app_is_eapp(const char *path)
      return 0;
 
    p++;
-   if (strcasecmp(p, "desktop"))
+   if ((strcasecmp(p, "desktop") != 0) && (strcasecmp(p, "desktop") != 0))
      return 0;
 
    return 1;
