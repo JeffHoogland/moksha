@@ -1748,7 +1748,7 @@ e_app_fields_fill(E_App *a, const char *path)
    if (!path) return;
 
    ext = strrchr(path, '.');
-   if ((ext) && (strcmp(ext, ".desktop") == 0))
+   if ( (ext) && ((strcmp(ext, ".desktop") == 0) || (strcmp(ext, ".directory") == 0)) )
      {   /* It's a .desktop file. */
 	Ecore_Desktop *desktop;
 	
