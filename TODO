@@ -76,6 +76,7 @@ Some of the things (in very short form) that need to be done to E17...
   "wallpaper" dialog. should default to only changing the clicked desktop
 * desktop flip animations need to allow control over accel/decel and
   have a better ui - add wobble and controls etc. etc.
+* internal windows (config dialogs, etc) should re-open after a restart
 ]]]
 
 [[[
