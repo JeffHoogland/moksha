@@ -79,7 +79,6 @@ _e_wid_color_change_cb(E_Color_Dialog *dia, E_Color *color, void *data)
 {
    E_Widget_Data *wd;
    wd = data;
-   printf("COLOR WELL change_cb\n");
    e_color_copy(color, wd->color);
    _e_wid_update(wd);
 }

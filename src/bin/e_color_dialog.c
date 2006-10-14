@@ -93,7 +93,6 @@ _e_color_dialog_cb_csel_change(void *data, Evas_Object *obj)
 {
    E_Color_Dialog *dia;
    dia = data;
-   printf("COLOR DIALOG csel change\n");
    if (dia->change_func && dia->color)
      dia->change_func(dia, dia->color, dia->change_data);
 }
