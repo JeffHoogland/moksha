@@ -442,7 +442,7 @@ _e_border_menu_cb_border(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
    bd = data;
    if (bd->border_border_dialog) return;
-   e_int_border_border(bd);
+   e_int_config_borders_border(bd);
 }
    
 static void

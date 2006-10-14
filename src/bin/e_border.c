@@ -5560,8 +5560,8 @@ _e_border_eval(E_Border *bd)
 	else if ((bd->client.netwm.state.skip_taskbar) ||
 		 (bd->client.netwm.state.skip_pager))
 	  bordername = "skipped";
-	else
-	  bordername = "default";
+	else 
+	  bordername = e_config->theme_default_border_style;
 
 	if ((!bd->client.border.name) || (strcmp(bd->client.border.name, bordername)))
 	  {
@@ -5584,8 +5584,19 @@ _e_border_eval(E_Border *bd)
 		      bd->client.border.name);
 	     ok = e_theme_edje_object_set(o, "base/theme/borders", buf);
 	     if ((!ok) && (strcmp(bd->client.border.name, "borderless")))
-	       ok = e_theme_edje_object_set(o, "base/theme/borders",
-					    "e/widgets/border/default/border");
+	       {
+		  ok = e_theme_edje_object_set(o, "base/theme/borders",
+					       "e/widgets/border/default/border");
+		  if (ok) 
+		    {
+		       /* Reset default border style to default */
+		       if (e_config->theme_default_border_style)
+			 evas_stringshare_del(e_config->theme_default_border_style);
+		       e_config->theme_default_border_style = evas_stringshare_add("default");
+		       e_config_save_queue();
+		    }
+	       }
+
 	     if (ok)
 	       {
 		  const char *shape_option;

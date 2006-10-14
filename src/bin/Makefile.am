@@ -109,7 +109,6 @@ e_int_border_menu.h \
 e_ilist.h \
 e_tlist.h \
 e_livethumb.h \
-e_int_border_border.h \
 e_widget_ilist.h \
 e_widget_tlist.h \
 e_widget_config_list.h \
@@ -174,7 +173,8 @@ e_obj_dialog.h \
 e_int_config_transitions.h \
 e_fwin.h \
 e_widget_aspect.h \
-e_widget_desk_preview.h
+e_widget_desk_preview.h \
+e_int_config_borders.h
  
 enlightenment_src = \
 e_user.c \
@@ -258,7 +258,6 @@ e_int_border_menu.c \
 e_ilist.c \
 e_tlist.c \
 e_livethumb.c \
-e_int_border_border.c \
 e_widget_ilist.c \
 e_widget_tlist.c \
 e_widget_config_list.c \
@@ -325,6 +324,7 @@ e_obj_dialog.c \
 e_fwin.c \
 e_widget_aspect.c \
 e_widget_desk_preview.c \
+e_int_config_borders.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \
