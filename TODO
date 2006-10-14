@@ -8,9 +8,6 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: performance bug: e_app_new() is amazingly slow and heavy. see the FIXME
-  comment in e_fm.c in _e_fm2_icon_icon_set()... this needs to be traced,
-  profiled and leaned down by many factors :)
 * BUG: smart placement seems to screw up if a shelf is at the top of the screen
 * BUG: e17 screen res diaolg doesnt work under xephyr - why?
 * BUG: "match this window only" doesnt fall back to other unused remembers
@@ -23,8 +20,6 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
-* nuke the current eap cache mechanism entirely (and replace with .desktop
-  cache)
 * fm2 needs way to replace or extend the right click menu (disable/enable
   rename/delete/refresh etc.)
 * fm2 needs a mime filter
@@ -57,7 +52,6 @@ Some of the things (in very short form) that need to be done to E17...
   section for iconified apps etc. etc - configurable.
 * remove a lot of ipc commands that should be done via the gui now
 * remove config items marked for removal
-* make default set of apps .desktop files in tarball
 * about dialog can do with redesign
 * clientinfo dialog could be nicer - then again it is an obsucre thing.
 * desklock's pam profile should be configurable as system-auth doesn't
@@ -128,7 +122,7 @@ Some of the things (in very short form) that need to be done to E17...
 * evas could detect an image is scaled multiple times and keep a scaled copy
   that it could share in cache, and then punt the original back to cache.
 * evas could support 8bbp alpha only images for dropshadow
-* better app cache for .desktop files
+* on disk app cache for .desktop files, icons and paths
 * new fm code's file scanning isn't insanely fast - icon size calcs etc. speed
   up for special cases like list view?
 * new fm code re-lays-out a dir every time the queue is processed - maybe try
