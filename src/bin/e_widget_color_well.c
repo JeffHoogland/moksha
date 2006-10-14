@@ -20,6 +20,7 @@ static void _e_wid_update(E_Widget_Data *wd);
 static void _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_wid_color_select_cb(E_Color_Dialog *dia, E_Color *color, void *data);
 static void _e_wid_color_cancel_cb(E_Color_Dialog *dia, E_Color *color, void *data);
+static void _e_wid_color_change_cb(E_Color_Dialog *dia, E_Color *color, void *data);
 static void _e_wid_disable_hook(Evas_Object *obj);
 
 static void
@@ -48,8 +49,9 @@ _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char
    if (!wd->dia)
      {
 	wd->dia = e_color_dialog_new(wd->con, wd->color);
-	e_color_dialog_select_callback_add(wd->dia, _e_wid_color_select_cb, wd);
-	e_color_dialog_cancel_callback_add(wd->dia, _e_wid_color_cancel_cb, wd);
+	e_color_dialog_select_callback_set(wd->dia, _e_wid_color_select_cb, wd);
+	e_color_dialog_cancel_callback_set(wd->dia, _e_wid_color_cancel_cb, wd);
+	e_color_dialog_change_callback_set(wd->dia, _e_wid_color_change_cb, wd);
      }
    e_color_dialog_show(wd->dia);
 }
@@ -70,6 +72,16 @@ _e_wid_color_cancel_cb(E_Color_Dialog *dia, E_Color *color, void *data)
    E_Widget_Data *wd;
    wd = data;
    wd->dia = NULL;
+}
+
+static void
+_e_wid_color_change_cb(E_Color_Dialog *dia, E_Color *color, void *data)
+{
+   E_Widget_Data *wd;
+   wd = data;
+   printf("COLOR WELL change_cb\n");
+   e_color_copy(color, wd->color);
+   _e_wid_update(wd);
 }
 
 static void

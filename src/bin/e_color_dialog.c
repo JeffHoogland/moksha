@@ -8,6 +8,7 @@ static void _e_color_dialog_button1_click(void *data, E_Dialog *edia);
 static void _e_color_dialog_button2_click(void *data, E_Dialog *edia);
 static void _e_color_dialog_free(E_Color_Dialog *dia);
 static void _e_color_dialog_dia_del(void *obj);
+static void _e_color_dialog_cb_csel_change(void *data, Evas_Object *obj);
 
 /**
  * Create a color selector dialog.
@@ -38,6 +39,7 @@ e_color_dialog_new(E_Container *con, const E_Color *color)
    evas_object_show(o);
    e_widget_min_size_get(o, &mw, &mh);
    e_dialog_content_set(dia->dia, o, 460, 260);
+   e_widget_on_change_hook_set(o, _e_color_dialog_cb_csel_change, dia);
 
    /* buttons at the bottom */
    e_dialog_button_add(dia->dia, "OK", NULL,  _e_color_dialog_button1_click, dia);
@@ -65,17 +67,35 @@ e_color_dialog_title_set(E_Color_Dialog *dia, const char *title)
 }
 
 void
-e_color_dialog_select_callback_add(E_Color_Dialog *dia, void (*func)(E_Color_Dialog *dia, E_Color *color, void *data), void *data)
+e_color_dialog_select_callback_set(E_Color_Dialog *dia, void (*func)(E_Color_Dialog *dia, E_Color *color, void *data), void *data)
 {
    dia->select_func = func;
    dia->select_data = data;
 }
 
 void
-e_color_dialog_cancel_callback_add(E_Color_Dialog *dia, void (*func)(E_Color_Dialog *dia, E_Color *color, void *data), void *data)
+e_color_dialog_cancel_callback_set(E_Color_Dialog *dia, void (*func)(E_Color_Dialog *dia, E_Color *color, void *data), void *data)
 {
    dia->cancel_func = func;
    dia->cancel_data = data;
+}
+
+
+EAPI void
+e_color_dialog_change_callback_set(E_Color_Dialog *dia, void (*func)(E_Color_Dialog *dia, E_Color *color, void *data), void *data)
+{
+   dia->change_func = func;
+   dia->change_data = data;
+}
+
+static void
+_e_color_dialog_cb_csel_change(void *data, Evas_Object *obj)
+{
+   E_Color_Dialog *dia;
+   dia = data;
+   printf("COLOR DIALOG csel change\n");
+   if (dia->change_func && dia->color)
+     dia->change_func(dia, dia->color, dia->change_data);
 }
 
 static void
