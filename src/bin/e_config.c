@@ -498,6 +498,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, wallpaper_grad_c2_r, INT);
    E_CONFIG_VAL(D, T, wallpaper_grad_c2_g, INT);
    E_CONFIG_VAL(D, T, wallpaper_grad_c2_b, INT);
+
+   E_CONFIG_VAL(D, T, theme_default_border_style, STR);
    
    E_CONFIG_LIST(D, T, mime_icons, _e_config_mime_icon_edd); /**/
    
@@ -1277,6 +1279,10 @@ e_config_init(void)
 //	CFG_MIME_ICON("image/*", "e/icons/fileman/mime/image");
      }
    IFCFGEND;
+
+   IFCFG(0x00103);
+   e_config->theme_default_border_style = evas_stringshare_add("default");
+   IFCFGEND;
    
 #if 0 /* example of new config */
    IFCFG(0x0090); /* the version # where this value(s) was introduced */
@@ -1960,6 +1966,13 @@ _e_config_free(void)
 	if (e_config->transition_desk) evas_stringshare_del(e_config->transition_desk);
 	if (e_config->transition_change) evas_stringshare_del(e_config->transition_change);
 	if (e_config->input_method) evas_stringshare_del(e_config->input_method);
+	if (e_config->exebuf_term_cmd) evas_stringshare_del(e_config->exebuf_term_cmd);
+	if (e_config->desklock_personal_passwd) evas_stringshare_del(e_config->desklock_personal_passwd);
+	if (e_config->desklock_background) evas_stringshare_del(e_config->desklock_background);
+	if (e_config->icon_theme) evas_stringshare_del(e_config->icon_theme);
+	if (e_config->wallpaper_import_last_dev) evas_stringshare_del(e_config->wallpaper_import_last_dev);
+	if (e_config->wallpaper_import_last_path) evas_stringshare_del(e_config->wallpaper_import_last_path);
+	if (e_config->theme_default_border_style) evas_stringshare_del(e_config->theme_default_border_style);
 	E_FREE(e_config);
      }
 }
