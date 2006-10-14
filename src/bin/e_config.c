@@ -447,6 +447,7 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, path_append_messages, _e_config_path_append_edd); /**/
    E_CONFIG_VAL(D, T, exebuf_max_exe_list, INT);
    E_CONFIG_VAL(D, T, exebuf_max_eap_list, INT);
+   E_CONFIG_VAL(D, T, exebuf_max_hist_list, INT);
    E_CONFIG_VAL(D, T, exebuf_scroll_animate, INT);
    E_CONFIG_VAL(D, T, exebuf_scroll_speed, DOUBLE);
    E_CONFIG_VAL(D, T, exebuf_pos_align_x, DOUBLE);
@@ -646,6 +647,7 @@ e_config_init(void)
    e_config->input_method = NULL;	
    e_config->exebuf_max_exe_list = 20;
    e_config->exebuf_max_eap_list = 20;
+   e_config->exebuf_max_hist_list = 20;
    e_config->exebuf_scroll_animate = 1;
    e_config->exebuf_scroll_speed = 0.1;
    e_config->exebuf_pos_align_x = 0.5;

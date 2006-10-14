@@ -12,6 +12,7 @@ struct _E_Config_Dialog_Data
    /* Basic */
    int max_exe_list;
    int max_eap_list;
+   int max_hist_list;
    int scroll_animate;
    /* Advanced */
    double scroll_speed;
@@ -54,6 +55,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    /* Basic */
    cfdata->max_exe_list = e_config->exebuf_max_exe_list;
    cfdata->max_eap_list = e_config->exebuf_max_eap_list;
+   cfdata->max_hist_list = e_config->exebuf_max_hist_list;
    cfdata->scroll_animate = e_config->exebuf_scroll_animate;
    /* Advanced */
    cfdata->scroll_speed = e_config->exebuf_scroll_speed;
@@ -91,6 +93,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    e_config->exebuf_max_exe_list = cfdata->max_exe_list;
    e_config->exebuf_max_eap_list = cfdata->max_eap_list;
+   e_config->exebuf_max_hist_list = cfdata->max_hist_list;
    e_config->exebuf_scroll_animate = cfdata->scroll_animate;
    e_config_save_queue();
    return 1;
@@ -112,6 +115,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 10, 50, 5, 0, NULL, &(cfdata->max_exe_list), 200);
    e_widget_framelist_object_append(of, ob);   
+   ob = e_widget_label_add(evas, _("Maximum History to List"));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 10, 200, 5, 0, NULL, &(cfdata->max_hist_list), 200);
+   e_widget_framelist_object_append(of, ob);   
    e_widget_list_object_append(o, of, 1, 1, 0.5);   
    
    of = e_widget_framelist_add(evas, _("Scroll Settings"), 0);
@@ -126,6 +133,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    e_config->exebuf_max_exe_list = cfdata->max_exe_list;
    e_config->exebuf_max_eap_list = cfdata->max_eap_list;   
+   e_config->exebuf_max_hist_list = cfdata->max_hist_list;   
    e_config->exebuf_scroll_animate = cfdata->scroll_animate;   
    e_config->exebuf_scroll_speed = cfdata->scroll_speed;
    e_config->exebuf_pos_align_x = cfdata->pos_align_x;
@@ -163,6 +171,10 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 10, 50, 5, 0, NULL, &(cfdata->max_exe_list), 200);
    e_widget_framelist_object_append(of, ob);      
+   ob = e_widget_label_add(evas, _("Maximum History to List"));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 10, 200, 5, 0, NULL, &(cfdata->max_hist_list), 200);
+   e_widget_framelist_object_append(of, ob);   
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
 
    of = e_widget_framelist_add(evas, _("Scroll Settings"), 0);   
@@ -174,15 +186,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);   
    e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
 
-   of = e_widget_framelist_add(evas, _("Position Settings"), 0);   
-   ob = e_widget_label_add(evas, _("X-Axis Alignment"));
+   of = e_widget_framelist_add(evas, _("Terminal Settings"), 0);      
+   ob = e_widget_label_add(evas, _("Terminal Command"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"), 0.0, 1.0, 0.01, 0, &(cfdata->pos_align_x), NULL, 200);
-   e_widget_framelist_object_append(of, ob);   
-   ob = e_widget_label_add(evas, _("Y-Axis Alignment"));
+   ob = e_widget_entry_add(evas, &(cfdata->term_cmd));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"), 0.0, 1.0, 0.01, 0, &(cfdata->pos_align_y), NULL, 200);
-   e_widget_framelist_object_append(of, ob);   
    e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
 
    of = e_widget_framelist_add(evas, _("Size Settings"), 0);      
@@ -204,11 +212,15 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);   
    e_widget_table_object_append(ot, of, 1, 0, 1, 2, 1, 0, 1, 0);
 
-   of = e_widget_framelist_add(evas, _("Terminal Settings"), 0);      
-   ob = e_widget_label_add(evas, _("Terminal Command"));
+   of = e_widget_framelist_add(evas, _("Position Settings"), 0);   
+   ob = e_widget_label_add(evas, _("X-Axis Alignment"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_entry_add(evas, &(cfdata->term_cmd));
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"), 0.0, 1.0, 0.01, 0, &(cfdata->pos_align_x), NULL, 200);
+   e_widget_framelist_object_append(of, ob);   
+   ob = e_widget_label_add(evas, _("Y-Axis Alignment"));
    e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"), 0.0, 1.0, 0.01, 0, &(cfdata->pos_align_y), NULL, 200);
+   e_widget_framelist_object_append(of, ob);   
    e_widget_table_object_append(ot, of, 1, 2, 1, 1, 1, 1, 1, 1);
 
    e_widget_list_object_append(o, ot, 1, 1, 0.5);      

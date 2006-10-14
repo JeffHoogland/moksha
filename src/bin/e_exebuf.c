@@ -45,6 +45,8 @@ static void _e_exebuf_prev(void);
 static void _e_exebuf_complete(void);
 static void _e_exebuf_backspace(void);
 static void _e_exebuf_matches_update(void);
+static void _e_exebuf_hist_update(void);
+static void _e_exebuf_hist_clear(void);
 static void _e_exebuf_cb_eap_item_mouse_in(void *data, Evas *evas,
       Evas_Object *obj, void *event_info);
 static void _e_exebuf_cb_exe_item_mouse_in(void *data, Evas *evas,
@@ -82,6 +84,7 @@ static Evas_List *eaps = NULL;
 #define NO_LIST 0
 #define EAP_LIST 1
 #define EXE_LIST 2
+#define HIST_LIST 3
 static int which_list = NO_LIST;
 static E_Exebuf_Exe *exe_sel = NULL;
 static int exe_scroll_to = 0;
@@ -609,6 +612,32 @@ _e_exebuf_next(void)
 		    }
 	       }
 	  }
+	else if (which_list == HIST_LIST)
+	  {
+	     if (exe_sel)
+	       {
+		  for (i = 0, l = eaps; l; l = l->next, i++)
+		    {
+		       if (l->data == exe_sel)
+			 {
+			    _e_exebuf_exe_desel(exe_sel);
+			    if (l->prev)
+			      {
+				 exe_sel = l->prev->data;
+				 _e_exebuf_exe_sel(exe_sel);
+				 _e_exebuf_eap_scroll_to(i - 1);
+			      }
+			    else
+			      {
+				 exe_sel = NULL;
+				 which_list = NO_LIST;
+				 _e_exebuf_hist_clear();
+			      }
+			    break;
+			 }
+		    }
+	       }
+	  }
      }
 }
 
@@ -624,6 +653,17 @@ _e_exebuf_prev(void)
 	  {
 	     exe_sel = eaps->data;
 	     which_list = EAP_LIST;
+	     if (exe_sel)
+	       {
+		  _e_exebuf_exe_sel(exe_sel);
+		  _e_exebuf_eap_scroll_to(0);
+	       }
+	  }
+	else
+	  {
+	     _e_exebuf_hist_update();
+	     which_list = HIST_LIST;
+	     exe_sel = eaps->data;
 	     if (exe_sel)
 	       {
 		  _e_exebuf_exe_sel(exe_sel);
@@ -678,6 +718,26 @@ _e_exebuf_prev(void)
 		    }
 	       }
 	  }
+	else if (which_list == HIST_LIST)
+	  {
+	     if (exe_sel)
+	       {
+		  for (i = 0, l = eaps; l; l = l->next, i++)
+		    {
+		       if (l->data == exe_sel)
+			 {
+			    if (l->next)
+			      {
+				 _e_exebuf_exe_desel(exe_sel);
+				 exe_sel = l->next->data;
+				 _e_exebuf_exe_sel(exe_sel);
+				 _e_exebuf_eap_scroll_to(i + 1);
+			      }
+			    break;
+			 }
+		    }
+	       }
+	  }
      }
 }
 
@@ -687,7 +747,10 @@ _e_exebuf_complete(void)
    char common[EXEBUFLEN], *exe = NULL;
    Evas_List *l;
    int orig_len = 0, common_len = 0, exe_len, next_char, val, pos, matches;
+   int clear_hist = 0;
    
+   if (!(strlen(cmd_buf)))
+     clear_hist = 1;
    if (exe_sel)
      {
 	if (exe_sel->app)
@@ -745,6 +808,8 @@ _e_exebuf_complete(void)
 	strncpy(cmd_buf, exe, common_len);
 	cmd_buf[common_len] = 0;
      }
+   if (clear_hist)
+     _e_exebuf_hist_clear();
    _e_exebuf_update();
    _e_exebuf_matches_update();
 }
@@ -1017,6 +1082,66 @@ _e_exebuf_matches_update(void)
    evas_event_thaw(exebuf->evas);
 }
 
+static void
+_e_exebuf_hist_update(void)
+{
+   Evas_List *list = NULL, *l = NULL;
+
+   edje_object_signal_emit(bg_object, "e,action,show,history", "e");
+   list = evas_list_reverse(e_exehist_list_get());
+   for (l = list; l; l = l->next)
+     {
+	E_Exebuf_Exe *exe;
+	Evas_Coord mw, mh;
+	Evas_Object *o;
+	
+	exe = calloc(1, sizeof(E_Exebuf_Exe));
+	exe->file = l->data;
+        eaps = evas_list_prepend(eaps, exe);
+	o = edje_object_add(exebuf->evas);
+        exe->bg_object = o;
+	e_theme_edje_object_set(o, "base/theme/exebuf",
+				"e/widgets/exebuf/item");
+	edje_object_part_text_set(o, "e.text.title", exe->file);
+	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN,
+	      _e_exebuf_cb_exe_item_mouse_in, exe);
+	evas_object_show(o);
+	edje_object_size_min_calc(exe->bg_object, &mw, &mh);
+	e_box_pack_end(eap_list_object, exe->bg_object);
+	e_box_pack_options_set(exe->bg_object,
+			       1, 1, /* fill */
+			       1, 0, /* expand */
+			       0.5, 0.5, /* align */
+			       mw, mh, /* min */
+			       9999, mh /* max */
+			       );
+     }
+   evas_list_free(list);
+}
+
+static void
+_e_exebuf_hist_clear(void)
+{
+   edje_object_signal_emit(bg_object, "e,action,hide,history", "e");
+   evas_event_freeze(exebuf->evas);
+   e_box_freeze(eap_list_object);
+   e_box_freeze(exe_list_object);
+   while (eaps)
+     {
+	_e_exebuf_exe_free((E_Exebuf_Exe *)(eaps->data));
+	eaps = evas_list_remove_list(eaps, eaps);
+     }
+   e_box_thaw(exe_list_object);
+   e_box_thaw(eap_list_object);
+   evas_event_thaw(exebuf->evas);
+   
+   e_box_align_set(eap_list_object, 0.5, 0.0);
+   e_box_align_set(exe_list_object, 0.5, 1.0);
+   exe_sel = NULL;
+   which_list = NO_LIST;
+
+}
+
 static void 
 _e_exebuf_cb_eap_item_mouse_in(void *data, Evas *evas, Evas_Object *obj, 
       void *event_info)
@@ -1033,7 +1158,8 @@ _e_exebuf_cb_exe_item_mouse_in(void *data, Evas *evas, Evas_Object *obj,
 {
    if (exe_sel) _e_exebuf_exe_desel(exe_sel);
    if (!(exe_sel = data)) return;
-   which_list = EXE_LIST;
+   if (which_list != HIST_LIST)
+     which_list = EXE_LIST;
    _e_exebuf_exe_sel(exe_sel);
 }
 
@@ -1078,6 +1204,8 @@ _e_exebuf_cb_key_down(void *data, int type, void *event)
 	  {
 	     if ((strlen(cmd_buf) < (EXEBUFLEN - strlen(ev->key_compose))))
 	       {
+		  if (!(strlen(cmd_buf)) && exe_sel)
+		    _e_exebuf_hist_clear();
 		  strcat(cmd_buf, ev->key_compose);
 		  _e_exebuf_update();
 		  _e_exebuf_matches_update();

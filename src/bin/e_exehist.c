@@ -128,6 +128,43 @@ e_exehist_newest_run_get(const char *exe)
    return 0.0;
 }
 
+EAPI Evas_List *
+e_exehist_list_get(void)
+{
+   Evas_List *list = NULL, *l, *m;
+   int count = 1;
+   int max;
+
+   max = e_config->exebuf_max_hist_list;
+   if (!max) max = 20;
+   _e_exehist_load();
+   for (l = evas_list_last(_e_exehist->history); l; l = l->prev)
+     {
+	int bad = 0;
+	E_Exehist_Item *ei;
+	
+	ei = l->data;
+	if (!(ei->exe)) continue;
+	for (m = list; m; m = m->next) 
+	  {
+	     const char *exe;
+
+	     if (!(exe = m->data)) continue;
+	     if (!strcmp(exe, ei->exe))
+	       {
+		  bad = 1;
+		  break;
+	       }
+	  }
+	if (!(bad)) {
+	     list = evas_list_append(list, ei->exe);
+	     count++;
+	}
+	if (count > max) break;
+     }
+   return list;
+}
+
 /* local subsystem functions */
 static void
 _e_exehist_unload_queue(void)

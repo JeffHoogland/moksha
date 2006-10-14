@@ -86,8 +86,6 @@ Some of the things (in very short form) that need to be done to E17...
 
 * full fm2 support as an icon fm needs work - beyond fsel needs and for icons
   on the desktop etc. etc.
-* up arrow in exebuf with empty buf goes into history mode and up/down let u
-  browse command history
 * switch to desktop of a new window if it opens on another desktop than the
   current one (optional too)
 * emit signal to submenu entries if they have a submenu shown for them or not

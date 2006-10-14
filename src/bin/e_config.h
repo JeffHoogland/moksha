@@ -199,6 +199,7 @@ struct _E_Config
    int         fullscreen_policy; // GUI
    int         exebuf_max_exe_list; // GUI
    int         exebuf_max_eap_list; // GUI
+   int         exebuf_max_hist_list; // GUI
    int         exebuf_scroll_animate; // GUI
    double      exebuf_scroll_speed; // GUI
    double      exebuf_pos_align_x; // GUI
