@@ -843,7 +843,6 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
    Evas_List *l, *borders = NULL, *alt = NULL;
    E_Zone *zone = NULL;
    E_Desk *desk = NULL;
-   const char *s;
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
    /* get the current clients */
@@ -897,7 +896,6 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Cleanup Windows"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/windows");
-   if (s) evas_stringshare_del(s);
    e_menu_item_callback_set(mi, _e_int_menus_clients_cleanup_cb, zone);
    
    e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_clients_free_hook);
