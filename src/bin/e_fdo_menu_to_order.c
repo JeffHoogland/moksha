@@ -16,7 +16,7 @@ struct category_data
    Ecore_Hash *menus;
 };
 
-static void  _e_fdo_menu_to_order_make_apps(char *name, char *path, Ecore_Hash *apps);
+static void  _e_fdo_menu_to_order_make_apps(char *name, char *path, char *directory, Ecore_Hash *apps);
 static void  _e_fdo_menu_to_order_dump_each_hash_node(void *value, void *user_data);
 static void  _e_fdo_menu_to_order_add_sheap(Ecore_Sheap *sheap, const char *order_path, const char *file);
 static void  _e_fdo_menu_to_order_cb_desktop_dir_foreach(void *list_data, void *data);
@@ -60,7 +60,7 @@ e_fdo_menu_to_order(void)
 }
 
 static void
-_e_fdo_menu_to_order_make_apps(char *name, char *path, Ecore_Hash *apps)
+_e_fdo_menu_to_order_make_apps(char *name, char *path, char *directory, Ecore_Hash *apps)
 {
    struct order_data order_data;
 
@@ -344,5 +344,5 @@ _e_fdo_menu_to_order_dump_each_hash_node2(void *value, void *user_data)
    node = (Ecore_Hash_Node *) value;
    category = (char *)node->key;
    menu = (Ecore_Hash *)node->value;
-   _e_fdo_menu_to_order_make_apps(category, category, menu);
+   _e_fdo_menu_to_order_make_apps(category, category, "", menu);
 }
