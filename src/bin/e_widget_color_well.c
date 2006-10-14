@@ -71,6 +71,9 @@ _e_wid_color_cancel_cb(E_Color_Dialog *dia, E_Color *color, void *data)
 {
    E_Widget_Data *wd;
    wd = data;
+   /* cancel sends the original color back */
+   e_color_copy(color, wd->color);
+   _e_wid_update(wd);
    wd->dia = NULL;
 }
 

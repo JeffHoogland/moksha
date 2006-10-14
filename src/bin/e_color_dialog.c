@@ -29,11 +29,14 @@ e_color_dialog_new(E_Container *con, const E_Color *color)
    e_dialog_title_set(dia->dia, "Color Selector");
    
    dia->color = calloc(1, sizeof(E_Color));
+   dia->initial = calloc(1, sizeof(E_Color));
 
    if (color)
      e_color_copy(color, dia->color);
    else
       dia->color->a = 255;
+
+   e_color_copy(dia->color, dia->initial);
 
    o = e_widget_csel_add(dia->dia->win->evas, dia->color);
    evas_object_show(o);
@@ -114,8 +117,8 @@ _e_color_dialog_button2_click(void *data, E_Dialog *edia)
    E_Color_Dialog *dia;
 
    dia = data;
-   if(dia->cancel_func && dia->color)
-     dia->cancel_func(dia, dia->color, dia->cancel_data);
+   if(dia->cancel_func && dia->initial)
+     dia->cancel_func(dia, dia->initial, dia->cancel_data);
    _e_color_dialog_free(data);     	
 }
 
