@@ -433,7 +433,7 @@ e_app_new(const char *path, int scan_subdirs)
 	    {
                if ((!a->idle_fill) && (!a->filled))
 	         {
-	            snprintf(buf, sizeof(buf), "%s/.directory.desktop", path);
+	            snprintf(buf, sizeof(buf), "%s/.directory", path);
 	            if (ecore_file_exists(buf))
 		       e_app_fields_fill(a, buf);
 	            else
@@ -2469,7 +2469,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	     printf("BUG: Weird event for .order: %d\n", event);
 	  }
      }
-   else if (!strcmp(file, ".directory.desktop"))
+   else if (!strcmp(file, ".directory"))
      {
 	if ((event == ECORE_FILE_EVENT_CREATED_FILE) ||
 	    (event == ECORE_FILE_EVENT_MODIFIED))
@@ -2495,7 +2495,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	  }
 	else
 	  {
-	     printf("BUG: Weird event for .directory.desktop: %d\n", event);
+	     printf("BUG: Weird event for .directory: %d\n", event);
 	  }
      }
    else
