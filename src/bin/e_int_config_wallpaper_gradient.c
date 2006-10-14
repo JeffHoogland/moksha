@@ -27,6 +27,8 @@ struct _Import
    Evas_Object *fill_dd_obj;
    Evas_Object *fill_rad_obj;
 
+   Evas_Object *well1, *well2;
+
    Evas_Object *preview;
 
    Ecore_Exe *exe;
@@ -54,6 +56,7 @@ static void _preview_widget_grad_resize(void *data, Evas_Object *obj,
 					Evas_Coord w, Evas_Coord h);
 static Evas_Object *_preview_widget_add(Evas *evas);
 static void _import_cb_on_change(void *data, Evas_Object *obj);
+static void _import_cb_color_swap(void *data, void *data2);
 
 EAPI E_Dialog *
 e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
@@ -135,11 +138,17 @@ e_int_config_wallpaper_gradient(E_Config_Dialog *parent)
    e_widget_on_change_hook_set(o, _import_cb_on_change, import);
    evas_object_show(o);
    e_widget_table_object_append(ott, o, 1, 1, 1, 1, 1, 1, 1, 1);
+   import->well1 = o;
 
    o = e_widget_color_well_add(evas, cfdata->color2, 1);
    e_widget_on_change_hook_set(o, _import_cb_on_change, import);
    evas_object_show(o);
    e_widget_table_object_append(ott, o, 1, 2, 1, 1, 1, 1, 1, 1);
+   import->well2 = o;
+
+   o = e_widget_button_add(evas, "Swap Colors", "", _import_cb_color_swap, import, NULL);
+   evas_object_show(o);
+   e_widget_table_object_append(ott, o, 1, 3, 1, 1, 1, 1, 1, 1);
 
    e_widget_table_object_append(ot, ott, 0, 0, 1, 1, 1, 1, 1, 1);   
 
@@ -464,3 +473,20 @@ _import_cb_on_change(void *data, Evas_Object *obj)
      }
 }
 
+static void
+_import_cb_color_swap(void *data, void *data2)
+{
+   Import *import;
+   E_Color *tmp;
+
+   import = data;
+
+   tmp = malloc(sizeof(E_Color));
+   e_color_copy(import->cfdata->color1, tmp);
+   e_color_copy(import->cfdata->color2, import->cfdata->color1);
+   e_color_copy(tmp, import->cfdata->color2);
+
+   e_widget_color_well_update(import->well1);
+   e_widget_color_well_update(import->well2);
+   _import_cb_on_change(import, NULL);
+}
