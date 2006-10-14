@@ -475,25 +475,15 @@ _e_int_menus_apps_scan(E_Menu *m)
 		  else if (opt == 0x1) snprintf(label, sizeof(label), "%s", a->comment);
 		  else snprintf(label, sizeof(label), "%s", a->name);
 		  e_menu_item_label_set(mi, label);
+                  e_app_icon_add_to_menu_item(mi, a);
 		  if (a->exe)
 		    {
-                       e_app_icon_add_to_menu_item(mi, a);
 		       e_menu_item_callback_set(mi, _e_int_menus_apps_run, a);
 		       e_menu_item_drag_callback_set(mi, _e_int_menus_apps_drag, a);
-		       app_count++;
 		    }
 		  else
-		    {
-		       char buf[4096];
-		       
-                       /* FIXME: .directory.eaps are obsolete, but have yet to be replaced by FDO stuff. */
-		       snprintf(buf, sizeof(buf), "%s/.directory", a->path);
-		       if (!((a->icon_class) && 
-			     (e_util_menu_item_edje_icon_list_set(mi, a->icon_class))))
-		          /*e_menu_item_icon_edje_set(mi, buf, "icon")*/;
-		       e_menu_item_submenu_set(mi, e_int_menus_apps_new(a->path));
-		       app_count++;
-		    }
+		     e_menu_item_submenu_set(mi, e_int_menus_apps_new(a->path));
+	          app_count++;
 	       }
 	  }
      }
