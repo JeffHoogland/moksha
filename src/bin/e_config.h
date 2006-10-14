@@ -109,7 +109,7 @@ struct _E_Config
    int         evas_engine_drag; // NO GUI - maybe remove?
    int         evas_engine_win; // NO GUI - maybe remove?
    int         evas_engine_zone; // NO GUI - maybe remove?
-   const char *language;
+   const char *language; // GUI
    Evas_List  *modules; // GUI
    Evas_List  *font_fallbacks; // GUI
    Evas_List  *font_defaults; // GUI
