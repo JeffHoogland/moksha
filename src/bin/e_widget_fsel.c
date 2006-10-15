@@ -756,5 +756,10 @@ _e_wid_del_hook(Evas_Object *obj)
    
    wd = e_widget_data_get(obj);
    E_FREE(wd->entry_text);
+   E_FREE(wd->preview_size_text);
+   E_FREE(wd->preview_owner_text);
+   E_FREE(wd->preview_perms_text);
+   E_FREE(wd->preview_time_text);
+   E_FREE(wd->path);
    free(wd);
 }

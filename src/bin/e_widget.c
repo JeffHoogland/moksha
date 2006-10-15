@@ -484,12 +484,15 @@ _e_smart_add(Evas_Object *obj)
 static void
 _e_smart_del(Evas_Object *obj)
 {
+   Evas_Object *sobj;
+   
    INTERNAL_ENTRY;
    if (sd->del_func) sd->del_func(obj);
    while (sd->subobjs)
      {
-	evas_object_del(sd->subobjs->data);
+	sobj = sd->subobjs->data;
 	sd->subobjs = evas_list_remove_list(sd->subobjs, sd->subobjs);
+	evas_object_del(sobj);
      }
    free(sd);
 }

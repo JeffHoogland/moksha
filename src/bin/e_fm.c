@@ -4973,18 +4973,18 @@ _e_fm2_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event even
 	    (event == ECORE_FILE_EVENT_CREATED_DIRECTORY))
 	  {
 	     _e_fm2_live_file_add(sd->obj, file, NULL, 0);
-	     printf("FADD %s\n", file);
+//	     printf("FADD %s\n", file);
 	  }
 	else if ((event == ECORE_FILE_EVENT_DELETED_FILE) ||
 		 (event == ECORE_FILE_EVENT_DELETED_DIRECTORY))
 	  {
 	     _e_fm2_live_file_del(sd->obj, file);
-	     printf("FDEL %s\n", file);
+//	     printf("FDEL %s\n", file);
 	  }
 	else if (event == ECORE_FILE_EVENT_MODIFIED)
 	  {
 	     _e_fm2_live_file_changed(sd->obj, file);
-	     printf("FMOD %s\n", file);
+//	     printf("FMOD %s\n", file);
 	  }
 	else if (event == ECORE_FILE_EVENT_DELETED_SELF)
 	  {
