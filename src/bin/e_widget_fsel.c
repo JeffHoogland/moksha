@@ -319,7 +319,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
         e_widget_table_object_append(wd->o_preview_preview_table,
                                      wd->o_preview_preview,
                                      0, 0, 1, 1, 0, 0, 1, 1);
-
+	
         o = e_widget_label_add(evas, _("Size:"));
         wd->o_preview_size = o;
         e_widget_sub_object_add(obj, o);
@@ -576,9 +576,9 @@ _e_wid_fsel_preview_file(E_Widget_Data *wd)
    owner = _e_wid_file_user_get(st.st_uid);
    perms = _e_wid_file_perms_get(st.st_mode, st.st_uid, st.st_gid);
    mtime = _e_wid_file_time_get(st.st_mtime); 
-   
+
    e_widget_preview_thumb_set(wd->o_preview_preview, wd->path,
-			      "background", 128, 128);
+			      "e/desktop/background", 128, 128);
    
    e_widget_table_object_repack(wd->o_preview_preview_table,
 				wd->o_preview_preview,

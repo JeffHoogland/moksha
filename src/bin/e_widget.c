@@ -134,6 +134,11 @@ EAPI void
 e_widget_sub_object_add(Evas_Object *obj, Evas_Object *sobj)
 {
    API_ENTRY return;
+   if (evas_list_find(sd->subobjs, sobj))
+     {
+	printf("----------EEEEEK! dupe sub obj is a sub obj!\n");
+	abort();
+     }
    sd->subobjs = evas_list_append(sd->subobjs, sobj);
    if (!sd->child_can_focus)
      {
