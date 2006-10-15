@@ -3796,6 +3796,8 @@ _e_fm2_cb_scan_idler(void *data)
 	if ((!strcmp(dp->d_name, ".")) || (!strcmp(dp->d_name, ".."))) return 1;
 	/* skip dotfiles if we're not showing hidden files */
 	if (dp->d_name[0] == '.' && !sd->show_hidden_files) return 1;
+	/* always hide .order files */
+	if (!strcmp(dp->d_name[0], ".order")) return 1;
 	_e_fm2_file_add(data, dp->d_name, sd->order_file, NULL, 0);
      }
    return 1;
@@ -4879,26 +4881,31 @@ _e_fm2_live_process(Evas_Object *obj)
      {
       case FILE_ADD:
 	/* new file to sort in place */
-	_e_fm2_file_add(obj, a->file, 1, a->file2, a->flags);
+	if (!((a->file[0] == '.') && (!sd->show_hidden_files)))
+	  _e_fm2_file_add(obj, a->file, 1, a->file2, a->flags);
 	break;
       case FILE_DEL:
-	_e_fm2_file_del(obj, a->file);
+	if (!((a->file[0] == '.') && (!sd->show_hidden_files)))
+	  _e_fm2_file_del(obj, a->file);
 	sd->live.deletions = 1;
 	break;
       case FILE_CHANGE:
-	for (l = sd->icons; l; l = l->next)
+	if (!((a->file[0] == '.') && (!sd->show_hidden_files)))
 	  {
-	     ic = l->data;
-	     if (!strcmp(ic->info.file, a->file))
+	     for (l = sd->icons; l; l = l->next)
 	       {
-		  int realized;
-		  
-		  realized = ic->realized;
-		  if (realized) _e_fm2_icon_unrealize(ic);
-		  _e_fm2_icon_unfill(ic);
-		  _e_fm2_icon_fill(ic);
-		  if (realized) _e_fm2_icon_realize(ic);
-		  break;
+		  ic = l->data;
+		  if (!strcmp(ic->info.file, a->file))
+		    {
+		       int realized;
+		       
+		       realized = ic->realized;
+		       if (realized) _e_fm2_icon_unrealize(ic);
+		       _e_fm2_icon_unfill(ic);
+		       _e_fm2_icon_fill(ic);
+		       if (realized) _e_fm2_icon_realize(ic);
+		       break;
+		    }
 	       }
 	  }
 	break;
