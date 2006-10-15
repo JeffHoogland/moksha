@@ -83,7 +83,6 @@ e_widget_cslider_add(Evas *evas, E_Color_Component mode, E_Color *color, int ver
      evas_object_gradient_angle_set(o, 270);
 
    evas_object_show(o);
-   e_widget_sub_object_add(obj, o);
    wd->o_grad = o;
    edje_object_part_swallow(wd->o_cslider, "e.swallow.content", o);
    evas_object_intercept_resize_callback_add(o, _e_wid_resize, wd);
