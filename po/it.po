@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-10-14 12:58+0200\n"
-"PO-Revision-Date: 2006-10-14 13:29+0200\n"
+"POT-Creation-Date: 2006-10-15 11:07+0200\n"
+"PO-Revision-Date: 2006-10-15 14:03+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@inwind.it>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr "Barre configurate"
 msgid "Add"
 msgstr "Aggiungi"
 
-#: src/bin/e_int_config_shelf.c:74 src/bin/e_fm.c:4230
+#: src/bin/e_int_config_shelf.c:74 src/bin/e_fm.c:4310
 #: src/bin/e_int_config_mousebindings.c:338
 #: src/modules/ibar/e_mod_config.c:109
 msgid "Delete"
@@ -273,12 +273,12 @@ msgstr "Principale"
 msgid "Favorite Applications"
 msgstr "Applicazioni preferite"
 
-#: src/bin/e_int_menus.c:90 src/bin/e_int_menus.c:701
-#: src/bin/e_configure.c:114 src/bin/e_int_config_apps.c:81
+#: src/bin/e_int_menus.c:90 src/bin/e_int_menus.c:691
+#: src/bin/e_configure.c:115 src/bin/e_int_config_apps.c:81
 msgid "Applications"
 msgstr "Applicazioni"
 
-#: src/bin/e_int_menus.c:95 src/bin/e_configure.c:123
+#: src/bin/e_int_menus.c:95 src/bin/e_configure.c:124
 msgid "Run Command"
 msgstr "Esegui comando"
 
@@ -319,80 +319,81 @@ msgstr "Configurazione"
 msgid "System"
 msgstr "Sistema"
 
-#: src/bin/e_int_menus.c:503
+#: src/bin/e_int_menus.c:493
 msgid "(No Applications)"
 msgstr "(Nessuna Applicazione)"
 
-#: src/bin/e_int_menus.c:596
+#: src/bin/e_int_menus.c:586
 msgid "Show/Hide All Windows"
 msgstr "Mostra/nascondi tutte le finestre"
 
-#: src/bin/e_int_menus.c:678 src/bin/e_configure.c:88
+#: src/bin/e_int_menus.c:668 src/bin/e_configure.c:88
 msgid "Configuration Panel"
 msgstr "Pannello di configurazione"
 
-#: src/bin/e_int_menus.c:686 src/bin/e_configure.c:92
+#: src/bin/e_int_menus.c:676 src/bin/e_configure.c:92
 msgid "Wallpaper"
 msgstr "Sfondo"
 
-#: src/bin/e_int_menus.c:691 src/bin/e_configure.c:93
+#: src/bin/e_int_menus.c:681 src/bin/e_configure.c:93
 msgid "Theme"
 msgstr "Tema"
 
-#: src/bin/e_int_menus.c:696 src/bin/e_configure.c:127
-#: src/bin/e_int_config_modules.c:245 src/bin/e_int_config_paths.c:88
+#: src/bin/e_int_menus.c:686 src/bin/e_configure.c:128
+#: src/bin/e_int_config_modules.c:245 src/bin/e_int_config_color_classes.c:82
+#: src/bin/e_int_config_paths.c:88
 msgid "Modules"
 msgstr "Moduli"
 
-#: src/bin/e_int_menus.c:709
+#: src/bin/e_int_menus.c:699
 msgid "Home Directory"
 msgstr "Home directory"
 
-#: src/bin/e_int_menus.c:714
+#: src/bin/e_int_menus.c:704
 msgid "Favorite Links"
 msgstr "Directory preferite"
 
-#: src/bin/e_int_menus.c:764
+#: src/bin/e_int_menus.c:754
 msgid "Lock Screen"
 msgstr "Blocca schermo"
 
-#: src/bin/e_int_menus.c:779 src/bin/e_actions.c:2003
+#: src/bin/e_int_menus.c:769 src/bin/e_actions.c:2003
 msgid "Suspend"
 msgstr "Sospendi"
 
-#: src/bin/e_int_menus.c:786
+#: src/bin/e_int_menus.c:776
 msgid "Hibernate"
 msgstr "Iberna"
 
-#: src/bin/e_int_menus.c:793 src/bin/e_actions.c:2000
+#: src/bin/e_int_menus.c:783 src/bin/e_actions.c:2000
 msgid "Reboot"
 msgstr "Riavvia"
 
-#: src/bin/e_int_menus.c:800 src/bin/e_actions.c:1997
+#: src/bin/e_int_menus.c:790 src/bin/e_actions.c:1997
 msgid "Shut Down"
 msgstr "Arresta"
 
-#: src/bin/e_int_menus.c:809
+#: src/bin/e_int_menus.c:799
 msgid "Restart Enlightenment"
 msgstr "Riavvia Enlightement"
 
-#: src/bin/e_int_menus.c:814
+#: src/bin/e_int_menus.c:804
 msgid "Exit Enlightenment"
 msgstr "Esci da Enlightenment"
 
-#: src/bin/e_int_menus.c:822
+#: src/bin/e_int_menus.c:812
 msgid "Logout"
 msgstr "Chiudi sessione"
 
-#: src/bin/e_int_menus.c:867 src/bin/e_int_menus.c:1013
+#: src/bin/e_int_menus.c:857 src/bin/e_int_menus.c:1003
 msgid "(No Windows)"
 msgstr "(Nessuna Finestra)"
 
-#: src/bin/e_int_menus.c:897 src/bin/e_actions.c:2021
+#: src/bin/e_int_menus.c:887 src/bin/e_actions.c:2021
 msgid "Cleanup Windows"
 msgstr "Ordina Finestre"
 
-#: src/bin/e_int_menus.c:917 src/bin/e_int_menus.c:1027
+#: src/bin/e_int_menus.c:907 src/bin/e_int_menus.c:1017
 msgid "No name!!"
 msgstr "Nessun nome!!"
 
@@ -511,28 +512,28 @@ msgstr "Dati dell'output"
 msgid "There was no output."
 msgstr "Non ci sono output."
 
-#: src/bin/e_apps.c:661 src/bin/e_apps.c:674 src/bin/e_utils.c:236
+#: src/bin/e_apps.c:671 src/bin/e_apps.c:684 src/bin/e_utils.c:236
 msgid "Run Error"
 msgstr "Errore di esecuzione"
 
-#: src/bin/e_apps.c:662
+#: src/bin/e_apps.c:672
 #, c-format
 msgid "Enlightenment was unable to process a command line:<br><br>%s %s<br>"
 msgstr ""
 "Enlightenment non ha potuto processare la linea di comando:<br><br>%s %s<br>"
 
-#: src/bin/e_apps.c:675
+#: src/bin/e_apps.c:685
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s %s<br>"
 msgstr ""
 "Enlightenment non ha potuto fare il fork di un processo figlio:<br><br>%s %"
 "s<br>"
 
-#: src/bin/e_apps.c:2804
+#: src/bin/e_apps.c:2814
 msgid "Application run error"
 msgstr "Errore d'esecuzione dell'applicazione"
 
-#: src/bin/e_apps.c:2806
+#: src/bin/e_apps.c:2816
 #, c-format
 msgid ""
 "Enlightenment was unable to run the application:<br><br>%s<br><br>The "
@@ -541,11 +542,11 @@ msgstr ""
 "Enlightenment non ha potuto avviare l'applicazione:<br><br>%"
 "s<br><br>L'applicazione non è partita"
 
-#: src/bin/e_apps.c:2814 src/bin/e_sys.c:382 src/bin/e_sys.c:427
+#: src/bin/e_apps.c:2824 src/bin/e_sys.c:382 src/bin/e_sys.c:427
 #: src/bin/e_int_border_remember.c:248 src/bin/e_int_border_remember.c:329
 #: src/bin/e_int_border_remember.c:371 src/bin/e_config_dialog.c:198
-#: src/bin/e_module.c:405 src/bin/e_entry_dialog.c:56 src/bin/e_fm.c:4369
-#: src/bin/e_fm.c:4479 src/bin/e_fm.c:4596 src/bin/e_fm.c:4631
+#: src/bin/e_module.c:405 src/bin/e_entry_dialog.c:56 src/bin/e_fm.c:4449
+#: src/bin/e_fm.c:4560 src/bin/e_fm.c:4681 src/bin/e_fm.c:4717
 #: src/bin/e_eap_editor.c:498 src/bin/e_int_config_wallpaper_import.c:181
 #: src/bin/e_utils.c:576 src/bin/e_int_config_wallpaper_gradient.c:199
 #: src/bin/e_int_config_theme_import.c:113 src/modules/ibar/e_mod_main.c:1227
@@ -571,106 +572,110 @@ msgstr "Colori"
 msgid "Fonts"
 msgstr "Font"
 
-#: src/bin/e_configure.c:96 src/bin/e_eap_editor.c:420
+#: src/bin/e_configure.c:96 src/bin/e_int_border_menu.c:161
+msgid "Borders"
+msgstr "Bordi"
+
+#: src/bin/e_configure.c:97 src/bin/e_eap_editor.c:420
 #: src/bin/e_int_config_icon_themes.c:213
 msgid "Icon Theme"
 msgstr "Tema icona"
 
-#: src/bin/e_configure.c:97
+#: src/bin/e_configure.c:98
 msgid "Mouse Cursor"
 msgstr "Puntatore del mouse"
 
-#: src/bin/e_configure.c:98 src/bin/e_int_config_window_display.c:52
+#: src/bin/e_configure.c:99 src/bin/e_int_config_window_display.c:52
 msgid "Window Display"
 msgstr "Visualizzazione finestre"
 
-#: src/bin/e_configure.c:99 src/bin/e_int_config_transitions.c:141
+#: src/bin/e_configure.c:100 src/bin/e_int_config_transitions.c:141
 msgid "Transitions"
 msgstr "Transizioni"
 
-#: src/bin/e_configure.c:100
+#: src/bin/e_configure.c:101
 msgid "Shelves"
 msgstr "Barre portamoduli"
 
-#: src/bin/e_configure.c:102 src/bin/e_actions.c:1908 src/bin/e_actions.c:1910
+#: src/bin/e_configure.c:103 src/bin/e_actions.c:1908 src/bin/e_actions.c:1910
 #: src/bin/e_actions.c:1912 src/bin/e_actions.c:1916 src/bin/e_actions.c:1918
 #: src/bin/e_actions.c:1920
 msgid "Screen"
 msgstr "Schermo"
 
-#: src/bin/e_configure.c:103
+#: src/bin/e_configure.c:104
 msgid "Virtual Desktops"
 msgstr "Desktop virtuali"
 
-#: src/bin/e_configure.c:104
+#: src/bin/e_configure.c:105
 msgid "Screen Resolution"
 msgstr "Risoluzione dello schermo"
 
-#: src/bin/e_configure.c:105
+#: src/bin/e_configure.c:106
 msgid "Screen Lock"
-msgstr "Blocco dello schermo"
+msgstr "Blocca schermo"
 
-#: src/bin/e_configure.c:107
+#: src/bin/e_configure.c:108
 msgid "Behavior"
 msgstr "Comportamento"
 
-#: src/bin/e_configure.c:108
+#: src/bin/e_configure.c:109
 msgid "Window Focus"
 msgstr "Fuoco delle finestre"
 
-#: src/bin/e_configure.c:109 src/bin/e_int_config_keybindings.c:221
+#: src/bin/e_configure.c:110 src/bin/e_int_config_keybindings.c:221
 msgid "Key Bindings"
 msgstr "Combinazioni della tastiera"
 
-#: src/bin/e_configure.c:110 src/bin/e_int_config_mousebindings.c:320
+#: src/bin/e_configure.c:111 src/bin/e_int_config_mousebindings.c:320
 msgid "Mouse Bindings"
 msgstr "Combinazioni del mouse"
 
-#: src/bin/e_configure.c:111
+#: src/bin/e_configure.c:112
 msgid "Menus"
 msgstr "Menù"
 
-#: src/bin/e_configure.c:113
+#: src/bin/e_configure.c:114
 msgid "Miscellaneous"
 msgstr "Varie"
 
-#: src/bin/e_configure.c:115
+#: src/bin/e_configure.c:116
 msgid "Performance"
 msgstr "Prestazioni"
 
-#: src/bin/e_configure.c:116
+#: src/bin/e_configure.c:117
 msgid "Configuration Dialogs"
 msgstr "Dialoghi di configurazione"
 
-#: src/bin/e_configure.c:117
+#: src/bin/e_configure.c:118
 msgid "Language Settings"
 msgstr "Lingua"
 
-#: src/bin/e_configure.c:119 src/bin/e_config_dialog.c:169
+#: src/bin/e_configure.c:120 src/bin/e_config_dialog.c:169
 msgid "Advanced"
 msgstr "Avanzate"
 
-#: src/bin/e_configure.c:120 src/bin/e_int_config_transitions.c:134
+#: src/bin/e_configure.c:121 src/bin/e_int_config_transitions.c:134
 msgid "Startup"
 msgstr "Avvio"
 
-#: src/bin/e_configure.c:121
+#: src/bin/e_configure.c:122
 msgid "Window List"
 msgstr "Lista finestre"
 
-#: src/bin/e_configure.c:122 src/bin/e_int_config_window_manipulation.c:51
+#: src/bin/e_configure.c:123 src/bin/e_int_config_window_manipulation.c:51
 msgid "Window Manipulation"
 msgstr "Manipolazione finestre"
 
-#: src/bin/e_configure.c:124
+#: src/bin/e_configure.c:125
 msgid "Search Directories"
 msgstr "Directory predefinite"
 
-#: src/bin/e_configure.c:126
+#: src/bin/e_configure.c:127
 msgid "Extensions"
 msgstr "Estensioni"
 
-#: src/bin/e_configure.c:135 src/bin/e_config_dialog.c:206
+#: src/bin/e_configure.c:136 src/bin/e_config_dialog.c:206
 #: src/bin/e_int_border_menu.c:322 src/bin/e_actions.c:1787
 msgid "Close"
 msgstr "Chiudi"
@@ -949,6 +954,175 @@ msgstr "Ibernazione in corso"
 msgid "Hibernating your Computer.<br><hilight>Please wait.</hilight>"
 msgstr ""
 "Ibernazione del computer in corso.<br><hilight>Attendere prego.</hilight>"
+
+#: src/bin/e_int_config_fonts.c:41 src/bin/e_int_config_color_classes.c:44
+msgid "Window Manager"
+msgstr "Window manager"
+
+#: src/bin/e_int_config_fonts.c:42
+msgid "Title Bar"
+msgstr "Barra del titolo"
+
+#: src/bin/e_int_config_fonts.c:43 src/bin/e_int_config_color_classes.c:52
+msgid "Menu Item"
+msgstr "Voce di menù"
+
+#: src/bin/e_int_config_fonts.c:44 src/bin/e_int_config_color_classes.c:50
+msgid "Menu Title"
+msgstr "Titolo menù"
+
+#: src/bin/e_int_config_fonts.c:45
+msgid "Textblock Plain"
+msgstr "Textblock"
+
+#: src/bin/e_int_config_fonts.c:46
+msgid "Textblock Light"
+msgstr "Textblock leggero"
+
+#: src/bin/e_int_config_fonts.c:47
+msgid "Textblock Big"
+msgstr "Textblock grande"
+
+#: src/bin/e_int_config_fonts.c:48 src/bin/e_int_config_color_classes.c:53
+msgid "Move Text"
+msgstr "Testo spostamento"
+
+#: src/bin/e_int_config_fonts.c:49 src/bin/e_int_config_color_classes.c:54
+msgid "Resize Text"
+msgstr "Testo ridimensionamento"
+
+#: src/bin/e_int_config_fonts.c:50 src/bin/e_int_config_color_classes.c:57
+msgid "Winlist Title"
+msgstr "Titolo lista finestre"
+
+#: src/bin/e_int_config_fonts.c:51
+msgid "Configure Heading"
+msgstr "Intestazioni configurazione"
+
+#: src/bin/e_int_config_fonts.c:52
+msgid "About Title"
+msgstr "Titolo \"Informazioni su...\""
+
+#: src/bin/e_int_config_fonts.c:53
+msgid "About Version"
+msgstr "Versione \"Informazioni su...\""
+
+#: src/bin/e_int_config_fonts.c:54
+msgid "About Text"
+msgstr "Testo \"Informazioni su...\""
+
+#: src/bin/e_int_config_fonts.c:55
+msgid "Desklock Title"
+msgstr "Titolo blocca schermo"
+
+#: src/bin/e_int_config_fonts.c:56
+msgid "Desklock Password"
+msgstr "Password blocca schermo"
+
+#: src/bin/e_int_config_fonts.c:57
+msgid "Dialog Error"
+msgstr "Finestra errore"
+
+#: src/bin/e_int_config_fonts.c:58
+msgid "Exebuf Command"
+msgstr "Comando \"Esegui comando\""
+
+#: src/bin/e_int_config_fonts.c:59
+msgid "Splash Title"
+msgstr "Titolo splash screen"
+
+#: src/bin/e_int_config_fonts.c:60
+msgid "Splash Text"
+msgstr "Testo splash screen"
+
+#: src/bin/e_int_config_fonts.c:61
+msgid "Splash Version"
+msgstr "Versione splash screen"
+
+#: src/bin/e_int_config_fonts.c:63
+msgid "Widget"
+msgstr "Widget"
+
+#: src/bin/e_int_config_fonts.c:64
+msgid "Entry"
+msgstr "Voce"
+
+#: src/bin/e_int_config_fonts.c:65
+msgid "Frame"
+msgstr "Cornice"
+
+#: src/bin/e_int_config_fonts.c:66
+msgid "Label"
+msgstr "Etichetta"
+
+#: src/bin/e_int_config_fonts.c:67
+msgid "Buttons"
+msgstr "Bottone"
+
+#: src/bin/e_int_config_fonts.c:68
+msgid "Slider"
+msgstr "Cursore"
+
+#: src/bin/e_int_config_fonts.c:69
+msgid "Radio Buttons"
+msgstr "Casella di opzione"
+
+#: src/bin/e_int_config_fonts.c:70
+msgid "Check Buttons"
+msgstr "Casella di spunta"
+
+#: src/bin/e_int_config_fonts.c:71
+msgid "Text List Item"
+msgstr "Casella di testo"
+
+#: src/bin/e_int_config_fonts.c:72
+msgid "List Item"
+msgstr "Voce casella combinata"
+
+#: src/bin/e_int_config_fonts.c:73 src/bin/e_int_config_color_classes.c:72
+msgid "List Header"
+msgstr "Intestazione casella combinata"
+
+#: src/bin/e_int_config_fonts.c:75
+msgid "EFM"
+msgstr "File manager"
+
+#: src/bin/e_int_config_fonts.c:76
+msgid "Typebuf"
+msgstr "Casella immissione testo"
+
+#: src/bin/e_int_config_fonts.c:77 src/bin/e_eap_editor.c:316
+msgid "Icon"
+msgstr "Icona"
+
+#: src/bin/e_int_config_fonts.c:79
+msgid "Module"
+msgstr "Moduli"
+
+#: src/bin/e_int_config_fonts.c:80 src/bin/e_int_shelf_config.c:406
+msgid "Small"
+msgstr "Piccolo"
+
+#: src/bin/e_int_config_fonts.c:81 src/bin/e_int_border_menu.c:61
+#: src/modules/temperature/e_mod_config.c:158
+msgid "Normal"
+msgstr "Normale"
+
+#: src/bin/e_int_config_fonts.c:82 src/bin/e_int_shelf_config.c:410
+msgid "Large"
+msgstr "Grande"
+
+#: src/bin/e_int_config_fonts.c:83
+msgid "Small Styled"
+msgstr "Piccolo stilizzato"
+
+#: src/bin/e_int_config_fonts.c:84
+msgid "Normal Styled"
+msgstr "Normale stilizzato"
+
+#: src/bin/e_int_config_fonts.c:85
+msgid "Large Styled"
+msgstr "Grande stilizzato"
 
 #: src/bin/e_int_config_fonts.c:142
 msgid "Font Settings"
@@ -1271,6 +1445,1510 @@ msgstr "Basilari"
 #: src/bin/e_config_dialog.c:199
 msgid "Apply"
 msgstr "Applica"
+
+#: src/bin/e_int_config_intl.c:104 src/bin/e_int_config_intl.c:139
+msgid "Bulgarian"
+msgstr "Bulgaro"
+
+#: src/bin/e_int_config_intl.c:105
+msgid "Chinese (Simplified)"
+msgstr "Cinese (semplificato)"
+
+#: src/bin/e_int_config_intl.c:106
+msgid "Chinese (Traditional)"
+msgstr "Cinese (tradizionale)"
+
+#: src/bin/e_int_config_intl.c:107 src/bin/e_int_config_intl.c:146
+msgid "Czech"
+msgstr "Ceco"
+
+#: src/bin/e_int_config_intl.c:108 src/bin/e_int_config_intl.c:148
+msgid "Danish"
+msgstr "Danese"
+
+#: src/bin/e_int_config_intl.c:109 src/bin/e_int_config_intl.c:212
+msgid "Dutch"
+msgstr "Olandese"
+
+#: src/bin/e_int_config_intl.c:110 src/bin/e_int_config_intl.c:154
+msgid "English"
+msgstr "Inglese"
+
+#: src/bin/e_int_config_intl.c:111 src/bin/e_int_config_intl.c:160
+msgid "Finnish"
+msgstr "Finlandese"
+
+#: src/bin/e_int_config_intl.c:112 src/bin/e_int_config_intl.c:162
+msgid "French"
+msgstr "Francese"
+
+#: src/bin/e_int_config_intl.c:113 src/bin/e_int_config_intl.c:149
+msgid "German"
+msgstr "Tedesco"
+
+#: src/bin/e_int_config_intl.c:114 src/bin/e_int_config_intl.c:175
+msgid "Hungarian"
+msgstr "Ungherese"
+
+#: src/bin/e_int_config_intl.c:115 src/bin/e_int_config_intl.c:181
+msgid "Italian"
+msgstr "Italiano"
+
+#: src/bin/e_int_config_intl.c:116 src/bin/e_int_config_intl.c:184
+msgid "Japanese"
+msgstr "Giapponese"
+
+#: src/bin/e_int_config_intl.c:117 src/bin/e_int_config_intl.c:194
+msgid "Korean"
+msgstr "Coreano"
+
+#: src/bin/e_int_config_intl.c:118 src/bin/e_int_config_intl.c:210
+msgid "Norwegian Bokmål"
+msgstr "Norvegese bokmål"
+
+#: src/bin/e_int_config_intl.c:119 src/bin/e_int_config_intl.c:222
+msgid "Polish"
+msgstr "Polacco"
+
+#: src/bin/e_int_config_intl.c:120 src/bin/e_int_config_intl.c:224
+msgid "Portuguese"
+msgstr "Portoghese"
+
+#: src/bin/e_int_config_intl.c:121 src/bin/e_int_config_intl.c:226
+msgid "Russian"
+msgstr "Russo"
+
+#: src/bin/e_int_config_intl.c:122 src/bin/e_int_config_intl.c:232
+msgid "Slovak"
+msgstr "Slovacco"
+
+#: src/bin/e_int_config_intl.c:123 src/bin/e_int_config_intl.c:233
+msgid "Slovenian"
+msgstr "Sloveno"
+
+#: src/bin/e_int_config_intl.c:124 src/bin/e_int_config_intl.c:156
+msgid "Spanish"
+msgstr "Spagnolo"
+
+#: src/bin/e_int_config_intl.c:125 src/bin/e_int_config_intl.c:239
+msgid "Swedish"
+msgstr "Svedese"
+
+#: src/bin/e_int_config_intl.c:130
+msgid "Afar"
+msgstr "Afar"
+
+#: src/bin/e_int_config_intl.c:131
+msgid "Afrikaans"
+msgstr "Afrikaans"
+
+#: src/bin/e_int_config_intl.c:132
+msgid "Akan"
+msgstr "Akan"
+
+#: src/bin/e_int_config_intl.c:133
+msgid "Amharic"
+msgstr "Amarico"
+
+#: src/bin/e_int_config_intl.c:134
+msgid "Aragonese"
+msgstr "Aragonese"
+
+#: src/bin/e_int_config_intl.c:135
+msgid "Arabic"
+msgstr "Arabo"
+
+#: src/bin/e_int_config_intl.c:136
+msgid "Assamese"
+msgstr "Assamese"
+
+#: src/bin/e_int_config_intl.c:137
+msgid "Azerbaijani"
+msgstr "Azero"
+
+#: src/bin/e_int_config_intl.c:138
+msgid "Belarusian"
+msgstr "Bielorusso"
+
+#: src/bin/e_int_config_intl.c:140
+msgid "Bengali"
+msgstr "Bengalese"
+
+#: src/bin/e_int_config_intl.c:141
+msgid "Breton"
+msgstr "Bretone"
+
+#: src/bin/e_int_config_intl.c:142
+msgid "Bosnian"
+msgstr "Bosniaco"
+
+#: src/bin/e_int_config_intl.c:143
+msgid "Blin"
+msgstr "Blin"
+
+#: src/bin/e_int_config_intl.c:144
+msgid "Catalan"
+msgstr "Catalano"
+
+#: src/bin/e_int_config_intl.c:145
+msgid "Atsam"
+msgstr "Atsam"
+
+#: src/bin/e_int_config_intl.c:147
+msgid "Welsh"
+msgstr "Gallese"
+
+#: src/bin/e_int_config_intl.c:150
+msgid "Divehi"
+msgstr "Divehi"
+
+#: src/bin/e_int_config_intl.c:151
+msgid "Dzongkha"
+msgstr "Dzongkha"
+
+#: src/bin/e_int_config_intl.c:152
+msgid "Ewe"
+msgstr "Ewe"
+
+#: src/bin/e_int_config_intl.c:153
+msgid "Greek"
+msgstr "Greco"
+
+#: src/bin/e_int_config_intl.c:155
+msgid "Esperanto"
+msgstr "Esperanto"
+
+#: src/bin/e_int_config_intl.c:157
+msgid "Estonian"
+msgstr "Estone"
+
+#: src/bin/e_int_config_intl.c:158
+msgid "Basque"
+msgstr "Basco"
+
+#: src/bin/e_int_config_intl.c:159
+msgid "Persian"
+msgstr "Persiano"
+
+#: src/bin/e_int_config_intl.c:161
+msgid "Faroese"
+msgstr "Faroese"
+
+#: src/bin/e_int_config_intl.c:163
+msgid "Friulian"
+msgstr "Friulano"
+
+#: src/bin/e_int_config_intl.c:164
+msgid "Irish"
+msgstr "Irlandese"
+
+#: src/bin/e_int_config_intl.c:165
+msgid "Ga"
+msgstr "Ga"
+
+#: src/bin/e_int_config_intl.c:166
+msgid "Geez"
+msgstr "Geez"
+
+#: src/bin/e_int_config_intl.c:167
+msgid "Galician"
+msgstr "Galiziano"
+
+#: src/bin/e_int_config_intl.c:168
+msgid "Gujarati"
+msgstr "Gujarati"
+
+#: src/bin/e_int_config_intl.c:169
+msgid "Manx"
+msgstr "Manx"
+
+#: src/bin/e_int_config_intl.c:170
+msgid "Hausa"
+msgstr "Hausa"
+
+#: src/bin/e_int_config_intl.c:171
+msgid "Hawaiian"
+msgstr "Hawaiano"
+
+#: src/bin/e_int_config_intl.c:172 src/bin/e_int_config_intl.c:183
+msgid "Hebrew"
+msgstr "Ebraico"
+
+#: src/bin/e_int_config_intl.c:173
+msgid "Hindi"
+msgstr "Hindi"
+
+#: src/bin/e_int_config_intl.c:174
+msgid "Croatian"
+msgstr "Croato"
+
+#: src/bin/e_int_config_intl.c:176
+msgid "Armenian"
+msgstr "Armeno"
+
+#: src/bin/e_int_config_intl.c:177
+msgid "Interlingua"
+msgstr "Interlingua"
+
+#: src/bin/e_int_config_intl.c:178
+msgid "Indonesian"
+msgstr "Indonesiano"
+
+#: src/bin/e_int_config_intl.c:179
+msgid "Igbo"
+msgstr "Igbo"
+
+#: src/bin/e_int_config_intl.c:180
+msgid "Icelandic"
+msgstr "Islandese"
+
+#: src/bin/e_int_config_intl.c:182
+msgid "Inuktitut"
+msgstr "Inuktitut"
+
+#: src/bin/e_int_config_intl.c:185
+msgid "Georgian"
+msgstr "Georgiano"
+
+#: src/bin/e_int_config_intl.c:186
+msgid "Jju"
+msgstr "Jju"
+
+#: src/bin/e_int_config_intl.c:187
+msgid "Kamba"
+msgstr "Kamba"
+
+#: src/bin/e_int_config_intl.c:188
+msgid "Tyap"
+msgstr "Tyap"
+
+#: src/bin/e_int_config_intl.c:189
+msgid "Koro"
+msgstr "Koro"
+
+#: src/bin/e_int_config_intl.c:190
+msgid "Kazakh"
+msgstr "Kazako"
+
+#: src/bin/e_int_config_intl.c:191
+msgid "Kalaallisut"
+msgstr "Kalaallisut"
+
+#: src/bin/e_int_config_intl.c:192
+msgid "Khmer"
+msgstr "Khmer"
+
+#: src/bin/e_int_config_intl.c:193
+msgid "Kannada"
+msgstr "Kannada"
+
+#: src/bin/e_int_config_intl.c:195
+msgid "Konkani"
+msgstr "Konkani"
+
+#: src/bin/e_int_config_intl.c:196
+msgid "Kurdish"
+msgstr "Curdo"
+
+#: src/bin/e_int_config_intl.c:197
+msgid "Cornish"
+msgstr "Cornish"
+
+#: src/bin/e_int_config_intl.c:198
+msgid "Kirghiz"
+msgstr "Kirghiz"
+
+#: src/bin/e_int_config_intl.c:199
+msgid "Lingala"
+msgstr "Lingala"
+
+#: src/bin/e_int_config_intl.c:200
+msgid "Lao"
+msgstr "Lao"
+
+#: src/bin/e_int_config_intl.c:201
+msgid "Lithuanian"
+msgstr "Lituano"
+
+#: src/bin/e_int_config_intl.c:202
+msgid "Latvian"
+msgstr "Lettone"
+
+#: src/bin/e_int_config_intl.c:203
+msgid "Maori"
+msgstr "Maori"
+
+#: src/bin/e_int_config_intl.c:204
+msgid "Macedonian"
+msgstr "Macedone"
+
+#: src/bin/e_int_config_intl.c:205
+msgid "Malayalam"
+msgstr "Malayalam"
+
+#: src/bin/e_int_config_intl.c:206
+msgid "Mongolian"
+msgstr "Mongolo"
+
+#: src/bin/e_int_config_intl.c:207
+msgid "Marathi"
+msgstr "Marathi"
+
+#: src/bin/e_int_config_intl.c:208
+msgid "Malay"
+msgstr "Malay"
+
+#: src/bin/e_int_config_intl.c:209
+msgid "Maltese"
+msgstr "Maltese"
+
+#: src/bin/e_int_config_intl.c:211
+msgid "Nepali"
+msgstr "Nepalese"
+
+#: src/bin/e_int_config_intl.c:213
+msgid "Norwegian Nynorsk"
+msgstr "Norvegese nynorsk"
+
+#: src/bin/e_int_config_intl.c:214
+msgid "Norwegian"
+msgstr "Norvegese"
+
+#: src/bin/e_int_config_intl.c:215
+msgid "South Ndebele"
+msgstr "Ndebele del sud"
+
+#: src/bin/e_int_config_intl.c:216
+msgid "Northern Sotho"
+msgstr "Sotho del nord"
+
+#: src/bin/e_int_config_intl.c:217
+msgid "Nyanja; Chichewa; Chewa"
+msgstr "Nyanja; Chichewa; Chewa"
+
+#: src/bin/e_int_config_intl.c:218
+msgid "Occitan"
+msgstr "Occitano"
+
+#: src/bin/e_int_config_intl.c:219
+msgid "Oromo"
+msgstr "Oromo"
+
+#: src/bin/e_int_config_intl.c:220
+msgid "Oriya"
+msgstr "Oriya"
+
+#: src/bin/e_int_config_intl.c:221
+msgid "Punjabi"
+msgstr "Punjabese"
+
+#: src/bin/e_int_config_intl.c:223
+msgid "Pashto"
+msgstr "Pashto"
+
+#: src/bin/e_int_config_intl.c:225
+msgid "Romanian"
+msgstr "Rumeno"
+
+#: src/bin/e_int_config_intl.c:227
+msgid "Kinyarwanda"
+msgstr "Kinyarwanda"
+
+#: src/bin/e_int_config_intl.c:228
+msgid "Sanskrit"
+msgstr "Sanscrito"
+
+#: src/bin/e_int_config_intl.c:229
+msgid "Northern Sami"
+msgstr "Sami del nord"
+
+#: src/bin/e_int_config_intl.c:230
+msgid "Serbo-Croatian"
+msgstr "Serbo-Croato"
+
+#: src/bin/e_int_config_intl.c:231
+msgid "Sidamo"
+msgstr "Sidamo"
+
+#: src/bin/e_int_config_intl.c:234
+msgid "Somali"
+msgstr "Somalo"
+
+#: src/bin/e_int_config_intl.c:235
+msgid "Albanian"
+msgstr "Albanese"
+
+#: src/bin/e_int_config_intl.c:236
+msgid "Serbian"
+msgstr "Serbo"
+
+#: src/bin/e_int_config_intl.c:237
+msgid "Swati"
+msgstr "Swati"
+
+#: src/bin/e_int_config_intl.c:238
+msgid "Southern Sotho"
+msgstr "Sotho del sud"
+
+#: src/bin/e_int_config_intl.c:240
+msgid "Swahili"
+msgstr "Swahili"
+
+#: src/bin/e_int_config_intl.c:241
+msgid "Syriac"
+msgstr "Siriano"
+
+#: src/bin/e_int_config_intl.c:242
+msgid "Tamil"
+msgstr "Tamil"
+
+#: src/bin/e_int_config_intl.c:243
+msgid "Telugu"
+msgstr "Telugu"
+
+#: src/bin/e_int_config_intl.c:244
+msgid "Tajik"
+msgstr "Tajik"
+
+#: src/bin/e_int_config_intl.c:245
+msgid "Thai"
+msgstr "Tailandese"
+
+#: src/bin/e_int_config_intl.c:246
+msgid "Tigrinya"
+msgstr "Tigrinya"
+
+#: src/bin/e_int_config_intl.c:247
+msgid "Tigre"
+msgstr "Tigre"
+
+#: src/bin/e_int_config_intl.c:248
+msgid "Tagalog"
+msgstr "Tagalog"
+
+#: src/bin/e_int_config_intl.c:249
+msgid "Tswana"
+msgstr "Tswana"
+
+#: src/bin/e_int_config_intl.c:250
+msgid "Turkish"
+msgstr "Turco"
+
+#: src/bin/e_int_config_intl.c:251
+msgid "Tsonga"
+msgstr "Tsonga"
+
+#: src/bin/e_int_config_intl.c:252
+msgid "Tatar"
+msgstr "Tatar"
+
+#: src/bin/e_int_config_intl.c:253
+msgid "Ukrainian"
+msgstr "Ucraino"
+
+#: src/bin/e_int_config_intl.c:254
+msgid "Urdu"
+msgstr "Urdu"
+
+#: src/bin/e_int_config_intl.c:255
+msgid "Uzbek"
+msgstr "Uzbeco"
+
+#: src/bin/e_int_config_intl.c:256
+msgid "Venda"
+msgstr "Venda"
+
+#: src/bin/e_int_config_intl.c:257
+msgid "Vietnamese"
+msgstr "Vietnamese"
+
+#: src/bin/e_int_config_intl.c:258
+msgid "Walloon"
+msgstr "Walloon"
+
+#: src/bin/e_int_config_intl.c:259
+msgid "Walamo"
+msgstr "Walamo"
+
+#: src/bin/e_int_config_intl.c:260
+msgid "Xhosa"
+msgstr "Xhosa"
+
+#: src/bin/e_int_config_intl.c:261
+msgid "Yiddish"
+msgstr "Yiddish"
+
+#: src/bin/e_int_config_intl.c:262
+msgid "Yoruba"
+msgstr "Yoruba"
+
+#: src/bin/e_int_config_intl.c:263
+msgid "Chinese"
+msgstr "Cinese"
+
+#: src/bin/e_int_config_intl.c:264
+msgid "Zulu"
+msgstr "Zulu"
+
+#: src/bin/e_int_config_intl.c:269
+msgid "Afghanistan"
+msgstr "Afghanistan"
+
+#: src/bin/e_int_config_intl.c:270
+msgid "Åland Islands"
+msgstr "Isole Åland"
+
+#: src/bin/e_int_config_intl.c:271
+msgid "Albania"
+msgstr "Albania"
+
+#: src/bin/e_int_config_intl.c:272
+msgid "Algeria"
+msgstr "Algeria"
+
+#: src/bin/e_int_config_intl.c:273
+msgid "American Samoa"
+msgstr "Samoa americane"
+
+#: src/bin/e_int_config_intl.c:274
+msgid "Andorra"
+msgstr "Andorra"
+
+#: src/bin/e_int_config_intl.c:275
+msgid "Angola"
+msgstr "Angola"
+
+#: src/bin/e_int_config_intl.c:276
+msgid "Anguilla"
+msgstr "Anguilla"
+
+#: src/bin/e_int_config_intl.c:277
+msgid "Antarctica"
+msgstr "Antartide"
+
+#: src/bin/e_int_config_intl.c:278
+msgid "Antigua and Barbuda"
+msgstr "Antigua e Barbuda"
+
+#: src/bin/e_int_config_intl.c:279
+msgid "Argentina"
+msgstr "Argentina"
+
+#: src/bin/e_int_config_intl.c:280
+msgid "Armenia"
+msgstr "Armenia"
+
+#: src/bin/e_int_config_intl.c:281
+msgid "Aruba"
+msgstr "Aruba"
+
+#: src/bin/e_int_config_intl.c:282
+msgid "Australia"
+msgstr "Australia"
+
+#: src/bin/e_int_config_intl.c:283
+msgid "Austria"
+msgstr "Austria"
+
+#: src/bin/e_int_config_intl.c:284
+msgid "Azerbaijan"
+msgstr "Azerbaijan"
+
+#: src/bin/e_int_config_intl.c:285
+msgid "Bahamas"
+msgstr "Bahamas"
+
+#: src/bin/e_int_config_intl.c:286
+msgid "Bahrain"
+msgstr "Bahrain"
+
+#: src/bin/e_int_config_intl.c:287
+msgid "Bangladesh"
+msgstr "Bangladesh"
+
+#: src/bin/e_int_config_intl.c:288
+msgid "Barbados"
+msgstr "Barbados"
+
+#: src/bin/e_int_config_intl.c:289
+msgid "Belarus"
+msgstr "Bielorussia"
+
+#: src/bin/e_int_config_intl.c:290
+msgid "Belgium"
+msgstr "Belgio"
+
+#: src/bin/e_int_config_intl.c:291
+msgid "Belize"
+msgstr "Belize"
+
+#: src/bin/e_int_config_intl.c:292
+msgid "Benin"
+msgstr "Benin"
+
+#: src/bin/e_int_config_intl.c:293
+msgid "Bermuda"
+msgstr "Bermuda"
+
+#: src/bin/e_int_config_intl.c:294
+msgid "Bhutan"
+msgstr "Bhutan"
+
+#: src/bin/e_int_config_intl.c:295
+msgid "Bolivia"
+msgstr "Bolivia"
+
+#: src/bin/e_int_config_intl.c:296
+msgid "Bosnia and Herzegovina"
+msgstr "Bosnia e Herzegovina"
+
+#: src/bin/e_int_config_intl.c:297
+msgid "Botswana"
+msgstr "Botswana"
+
+#: src/bin/e_int_config_intl.c:298
+msgid "Bouvet Island"
+msgstr "Isole Bouvet"
+
+#: src/bin/e_int_config_intl.c:299
+msgid "Brazil"
+msgstr "Brasile"
+
+#: src/bin/e_int_config_intl.c:300
+msgid "British Indian Ocean Territory"
+msgstr "Territori Britannici Oceano Indiano"
+
+#: src/bin/e_int_config_intl.c:301
+msgid "Brunei Darussalam"
+msgstr "Brunei Darussalam"
+
+#: src/bin/e_int_config_intl.c:302
+msgid "Bulgaria"
+msgstr "Bulgaria"
+
+#: src/bin/e_int_config_intl.c:303
+msgid "Burkina Faso"
+msgstr "Burkina Faso"
+
+#: src/bin/e_int_config_intl.c:304
+msgid "Burundi"
+msgstr "Burundi"
+
+#: src/bin/e_int_config_intl.c:305
+msgid "Cambodia"
+msgstr "Cambogia"
+
+#: src/bin/e_int_config_intl.c:306
+msgid "Cameroon"
+msgstr "Camerun"
+
+#: src/bin/e_int_config_intl.c:307
+msgid "Canada"
+msgstr "Canada"
+
+#: src/bin/e_int_config_intl.c:308
+msgid "Cape Verde"
+msgstr "Capo Verde"
+
+#: src/bin/e_int_config_intl.c:309
+msgid "Cayman Islands"
+msgstr "Isole Cayman"
+
+#: src/bin/e_int_config_intl.c:310
+msgid "Central African Republic"
+msgstr "Repubblica Centro Africana"
+
+#: src/bin/e_int_config_intl.c:311
+msgid "Chad"
+msgstr "Chad"
+
+#: src/bin/e_int_config_intl.c:312
+msgid "Chile"
+msgstr "Cile"
+
+#: src/bin/e_int_config_intl.c:313
+msgid "China"
+msgstr "Cina"
+
+#: src/bin/e_int_config_intl.c:314
+msgid "Christmas Island"
+msgstr "Isola Christmas"
+
+#: src/bin/e_int_config_intl.c:315
+msgid "Cocos (keeling) Islands"
+msgstr "Isole Cocos (keeling)"
+
+#: src/bin/e_int_config_intl.c:316
+msgid "Colombia"
+msgstr "Colombia"
+
+#: src/bin/e_int_config_intl.c:317
+msgid "Comoros"
+msgstr "Comoro"
+
+#: src/bin/e_int_config_intl.c:318 src/bin/e_int_config_intl.c:319
+msgid "Congo"
+msgstr "Congo"
+
+#: src/bin/e_int_config_intl.c:320
+msgid "Cook Islands"
+msgstr "Isole Cook"
+
+#: src/bin/e_int_config_intl.c:321
+msgid "Costa Rica"
+msgstr "Costarica"
+
+#: src/bin/e_int_config_intl.c:322
+msgid "Cote D'ivoire"
+msgstr "Costa d'Avorio"
+
+#: src/bin/e_int_config_intl.c:323
+msgid "Croatia"
+msgstr "Croazia"
+
+#: src/bin/e_int_config_intl.c:324
+msgid "Cuba"
+msgstr "Cuba"
+
+#: src/bin/e_int_config_intl.c:325
+msgid "Cyprus"
+msgstr "Cipro"
+
+#: src/bin/e_int_config_intl.c:326
+msgid "Czech Republic"
+msgstr "Repubblica Ceca"
+
+#: src/bin/e_int_config_intl.c:327
+msgid "Denmark"
+msgstr "Danimarca"
+
+#: src/bin/e_int_config_intl.c:328
+msgid "Djibouti"
+msgstr "Djibouti"
+
+#: src/bin/e_int_config_intl.c:329
+msgid "Dominica"
+msgstr "Dominica"
+
+#: src/bin/e_int_config_intl.c:330
+msgid "Dominican Republic"
+msgstr "Repubblica Dominicana"
+
+#: src/bin/e_int_config_intl.c:331
+msgid "Ecuador"
+msgstr "Ecuador"
+
+#: src/bin/e_int_config_intl.c:332
+msgid "Egypt"
+msgstr "Egitto"
+
+#: src/bin/e_int_config_intl.c:333
+msgid "El Salvador"
+msgstr "El Salvador"
+
+#: src/bin/e_int_config_intl.c:334
+msgid "Equatorial Guinea"
+msgstr "Guinea equatoriale"
+
+#: src/bin/e_int_config_intl.c:335
+msgid "Eritrea"
+msgstr "Eritrea"
+
+#: src/bin/e_int_config_intl.c:336
+msgid "Estonia"
+msgstr "Estonia"
+
+#: src/bin/e_int_config_intl.c:337
+msgid "Ethiopia"
+msgstr "Etiopia"
+
+#: src/bin/e_int_config_intl.c:338
+msgid "Falkland Islands (malvinas)"
+msgstr "Isole Falkland (malvinas)"
+
+#: src/bin/e_int_config_intl.c:339
+msgid "Faroe Islands"
+msgstr "Isole Faroe"
+
+#: src/bin/e_int_config_intl.c:340
+msgid "Fiji"
+msgstr "Fiji"
+
+#: src/bin/e_int_config_intl.c:341
+msgid "Finland"
+msgstr "Finlandia"
+
+#: src/bin/e_int_config_intl.c:342
+msgid "France"
+msgstr "Francia"
+
+#: src/bin/e_int_config_intl.c:343
+msgid "French Guiana"
+msgstr "Guinea Francese"
+
+#: src/bin/e_int_config_intl.c:344
+msgid "French Polynesia"
+msgstr "Polinesia Francese"
+
+#: src/bin/e_int_config_intl.c:345
+msgid "French Southern Territories"
+msgstr "Territori del Sud Francesi"
+
+#: src/bin/e_int_config_intl.c:346
+msgid "Gabon"
+msgstr "Gabon"
+
+#: src/bin/e_int_config_intl.c:347
+msgid "Gambia"
+msgstr "Gambia"
+
+#: src/bin/e_int_config_intl.c:348
+msgid "Georgia"
+msgstr "Georgia"
+
+#: src/bin/e_int_config_intl.c:349
+msgid "Germany"
+msgstr "Germania"
+
+#: src/bin/e_int_config_intl.c:350
+msgid "Ghana"
+msgstr "Ghana"
+
+#: src/bin/e_int_config_intl.c:351
+msgid "Gibraltar"
+msgstr "Gibilterra"
+
+#: src/bin/e_int_config_intl.c:352
+msgid "Greece"
+msgstr "Grecia"
+
+#: src/bin/e_int_config_intl.c:353
+msgid "Greenland"
+msgstr "Groenlandia"
+
+#: src/bin/e_int_config_intl.c:354
+msgid "Grenada"
+msgstr "Grenada"
+
+#: src/bin/e_int_config_intl.c:355
+msgid "Guadeloupe"
+msgstr "Guadalupa"
+
+#: src/bin/e_int_config_intl.c:356
+msgid "Guam"
+msgstr "Guam"
+
+#: src/bin/e_int_config_intl.c:357
+msgid "Guatemala"
+msgstr "Guatemala"
+
+#: src/bin/e_int_config_intl.c:358
+msgid "Guernsey"
+msgstr "Guernsey"
+
+#: src/bin/e_int_config_intl.c:359
+msgid "Guinea"
+msgstr "Guinea"
+
+#: src/bin/e_int_config_intl.c:360
+msgid "Guinea-bissau"
+msgstr "Guinea-bissau"
+
+#: src/bin/e_int_config_intl.c:361
+msgid "Guyana"
+msgstr "Guyana"
+
+#: src/bin/e_int_config_intl.c:362
+msgid "Haiti"
+msgstr "Haiti"
+
+#: src/bin/e_int_config_intl.c:363
+msgid "Heard Island and Mcdonald Islands"
+msgstr "Isola di Heard e Isole Mcdonald"
+
+#: src/bin/e_int_config_intl.c:364
+msgid "Holy See (vatican City State)"
+msgstr "Città del Vaticano"
+
+#: src/bin/e_int_config_intl.c:365
+msgid "Honduras"
+msgstr "Honduras"
+
+#: src/bin/e_int_config_intl.c:366
+msgid "Hong Kong"
+msgstr "Hong Kong"
+
+#: src/bin/e_int_config_intl.c:367
+msgid "Hungary"
+msgstr "Ungheria"
+
+#: src/bin/e_int_config_intl.c:368
+msgid "Iceland"
+msgstr "Islanda"
+
+#: src/bin/e_int_config_intl.c:369
+msgid "India"
+msgstr "India"
+
+#: src/bin/e_int_config_intl.c:370
+msgid "Indonesia"
+msgstr "Indonesia"
+
+#: src/bin/e_int_config_intl.c:371
+msgid "Iran"
+msgstr "Iran"
+
+#: src/bin/e_int_config_intl.c:372
+msgid "Iraq"
+msgstr "Iraq"
+
+#: src/bin/e_int_config_intl.c:373
+msgid "Ireland"
+msgstr "Irlanda"
+
+#: src/bin/e_int_config_intl.c:374
+msgid "Isle Of Man"
+msgstr "Isola di Man"
+
+#: src/bin/e_int_config_intl.c:375
+msgid "Israel"
+msgstr "Israele"
+
+#: src/bin/e_int_config_intl.c:376
+msgid "Italy"
+msgstr "Italia"
+
+#: src/bin/e_int_config_intl.c:377
+msgid "Jamaica"
+msgstr "Giamaica"
+
+#: src/bin/e_int_config_intl.c:378
+msgid "Japan"
+msgstr "Giappone"
+
+#: src/bin/e_int_config_intl.c:379
+msgid "Jersey"
+msgstr "Jersey"
+
+#: src/bin/e_int_config_intl.c:380
+msgid "Jordan"
+msgstr "Jordan"
+
+#: src/bin/e_int_config_intl.c:381
+msgid "Kazakhstan"
+msgstr "Kazakhistan"
+
+#: src/bin/e_int_config_intl.c:382
+msgid "Kenya"
+msgstr "Kenia"
+
+#: src/bin/e_int_config_intl.c:383
+msgid "Kiribati"
+msgstr "Kiribati"
+
+#: src/bin/e_int_config_intl.c:384 src/bin/e_int_config_intl.c:385
+msgid "Korea"
+msgstr "Corea"
+
+#: src/bin/e_int_config_intl.c:386
+msgid "Kuwait"
+msgstr "Kuwait"
+
+#: src/bin/e_int_config_intl.c:387
+msgid "Kyrgyzstan"
+msgstr "Kyrgyzstan"
+
+#: src/bin/e_int_config_intl.c:388
+msgid "Lao People's Democratic Republic"
+msgstr "Repubblica Democratica Popolare del Lao"
+
+#: src/bin/e_int_config_intl.c:389
+msgid "Latvia"
+msgstr "Lettonia"
+
+#: src/bin/e_int_config_intl.c:390
+msgid "Lebanon"
+msgstr "Libano"
+
+#: src/bin/e_int_config_intl.c:391
+msgid "Lesotho"
+msgstr "Lesotho"
+
+#: src/bin/e_int_config_intl.c:392
+msgid "Liberia"
+msgstr "Liberia"
+
+#: src/bin/e_int_config_intl.c:393
+msgid "Libyan Arab Jamahiriya"
+msgstr "Libia"
+
+#: src/bin/e_int_config_intl.c:394
+msgid "Liechtenstein"
+msgstr "Liechtenstein"
+
+#: src/bin/e_int_config_intl.c:395
+msgid "Lithuania"
+msgstr "Lituania"
+
+#: src/bin/e_int_config_intl.c:396
+msgid "Luxembourg"
+msgstr "Lussemburgo"
+
+#: src/bin/e_int_config_intl.c:397
+msgid "Macao"
+msgstr "Macao"
+
+#: src/bin/e_int_config_intl.c:398
+msgid "Macedonia"
+msgstr "Macedonia"
+
+#: src/bin/e_int_config_intl.c:399
+msgid "Madagascar"
+msgstr "Madagascar"
+
+#: src/bin/e_int_config_intl.c:400
+msgid "Malawi"
+msgstr "Malawi"
+
+#: src/bin/e_int_config_intl.c:401
+msgid "Malaysia"
+msgstr "Malaysia"
+
+#: src/bin/e_int_config_intl.c:402
+msgid "Maldives"
+msgstr "Maldive"
+
+#: src/bin/e_int_config_intl.c:403
+msgid "Mali"
+msgstr "Mali"
+
+#: src/bin/e_int_config_intl.c:404
+msgid "Malta"
+msgstr "Malta"
+
+#: src/bin/e_int_config_intl.c:405
+msgid "Marshall Islands"
+msgstr "Isole Marshall"
+
+#: src/bin/e_int_config_intl.c:406
+msgid "Martinique"
+msgstr "Martinica"
+
+#: src/bin/e_int_config_intl.c:407
+msgid "Mauritania"
+msgstr "Mauritania"
+
+#: src/bin/e_int_config_intl.c:408
+msgid "Mauritius"
+msgstr "Mauritius"
+
+#: src/bin/e_int_config_intl.c:409
+msgid "Mayotte"
+msgstr "Mayotte"
+
+#: src/bin/e_int_config_intl.c:410
+msgid "Mexico"
+msgstr "Messico"
+
+#: src/bin/e_int_config_intl.c:411
+msgid "Micronesia"
+msgstr "Micronesia"
+
+#: src/bin/e_int_config_intl.c:412
+msgid "Moldova"
+msgstr "Moldavia"
+
+#: src/bin/e_int_config_intl.c:413
+msgid "Monaco"
+msgstr "Monaco"
+
+#: src/bin/e_int_config_intl.c:414
+msgid "Mongolia"
+msgstr "Mongolia"
+
+#: src/bin/e_int_config_intl.c:415
+msgid "Montserrat"
+msgstr "Montserrat"
+
+#: src/bin/e_int_config_intl.c:416
+msgid "Morocco"
+msgstr "Marocco"
+
+#: src/bin/e_int_config_intl.c:417
+msgid "Mozambique"
+msgstr "Mozambico"
+
+#: src/bin/e_int_config_intl.c:418
+msgid "Myanmar"
+msgstr "Myanmar"
+
+#: src/bin/e_int_config_intl.c:419
+msgid "Namibia"
+msgstr "Namibia"
+
+#: src/bin/e_int_config_intl.c:420
+msgid "Nauru"
+msgstr "Nauru"
+
+#: src/bin/e_int_config_intl.c:421
+msgid "Nepal"
+msgstr "Nepal"
+
+#: src/bin/e_int_config_intl.c:422
+msgid "Netherlands"
+msgstr "Olanda"
+
+#: src/bin/e_int_config_intl.c:423
+msgid "Netherlands Antilles"
+msgstr "Antille Olandesi"
+
+#: src/bin/e_int_config_intl.c:424
+msgid "New Caledonia"
+msgstr "Nuova Caledonia"
+
+#: src/bin/e_int_config_intl.c:425
+msgid "New Zealand"
+msgstr "Nuova Zelanda"
+
+#: src/bin/e_int_config_intl.c:426
+msgid "Nicaragua"
+msgstr "Nicaragua"
+
+#: src/bin/e_int_config_intl.c:427
+msgid "Niger"
+msgstr "Niger"
+
+#: src/bin/e_int_config_intl.c:428
+msgid "Nigeria"
+msgstr "Nigeria"
+
+#: src/bin/e_int_config_intl.c:429
+msgid "Niue"
+msgstr "Niue"
+
+#: src/bin/e_int_config_intl.c:430
+msgid "Norfolk Island"
+msgstr "Isola Norfolk"
+
+#: src/bin/e_int_config_intl.c:431
+msgid "Northern Mariana Islands"
+msgstr "Isole Mariana del sud"
+
+#: src/bin/e_int_config_intl.c:432
+msgid "Norway"
+msgstr "Norvegia"
+
+#: src/bin/e_int_config_intl.c:433
+msgid "Oman"
+msgstr "Oman"
+
+#: src/bin/e_int_config_intl.c:434
+msgid "Pakistan"
+msgstr "Pakistan"
+
+#: src/bin/e_int_config_intl.c:435
+msgid "Palau"
+msgstr "Palau"
+
+#: src/bin/e_int_config_intl.c:436
+msgid "Palestinian Territory"
+msgstr "Palestina"
+
+#: src/bin/e_int_config_intl.c:437
+msgid "Panama"
+msgstr "Panama"
+
+#: src/bin/e_int_config_intl.c:438
+msgid "Papua New Guinea"
+msgstr "Papua Nuova Guinea"
+
+#: src/bin/e_int_config_intl.c:439
+msgid "Paraguay"
+msgstr "Paraguay"
+
+#: src/bin/e_int_config_intl.c:440
+msgid "Peru"
+msgstr "Perù"
+
+#: src/bin/e_int_config_intl.c:441
+msgid "Philippines"
+msgstr "Filippine"
+
+#: src/bin/e_int_config_intl.c:442
+msgid "Pitcairn"
+msgstr "Pitcairn"
+
+#: src/bin/e_int_config_intl.c:443
+msgid "Poland"
+msgstr "Polonia"
+
+#: src/bin/e_int_config_intl.c:444
+msgid "Portugal"
+msgstr "Portogallo"
+
+#: src/bin/e_int_config_intl.c:445
+msgid "Puerto Rico"
+msgstr "Portorico"
+
+#: src/bin/e_int_config_intl.c:446
+msgid "Qatar"
+msgstr "Qatar"
+
+#: src/bin/e_int_config_intl.c:447
+msgid "Reunion"
+msgstr "Reunion"
+
+#: src/bin/e_int_config_intl.c:448
+msgid "Romania"
+msgstr "Romania"
+
+#: src/bin/e_int_config_intl.c:449
+msgid "Russian Federation"
+msgstr "Russia"
+
+#: src/bin/e_int_config_intl.c:450
+msgid "Rwanda"
+msgstr "Rwanda"
+
+#: src/bin/e_int_config_intl.c:451
+msgid "Saint Helena"
+msgstr "Sant'Elena"
+
+#: src/bin/e_int_config_intl.c:452
+msgid "Saint Kitts and Nevis"
+msgstr "Saint Kitts e Nevis"
+
+#: src/bin/e_int_config_intl.c:453
+msgid "Saint Lucia"
+msgstr "Santa Lucia"
+
+#: src/bin/e_int_config_intl.c:454
+msgid "Saint Pierre and Miquelon"
+msgstr "Saint Pierre e Miquelon"
+
+#: src/bin/e_int_config_intl.c:455
+msgid "Saint Vincent and the Grenadines"
+msgstr "Saint Vincent e Grenadine"
+
+#: src/bin/e_int_config_intl.c:456
+msgid "Samoa"
+msgstr "Samoa"
+
+#: src/bin/e_int_config_intl.c:457
+msgid "San Marino"
+msgstr "San Marino"
+
+#: src/bin/e_int_config_intl.c:458
+msgid "Sao Tome and Principe"
+msgstr "Sao Tome e Principe"
+
+#: src/bin/e_int_config_intl.c:459
+msgid "Saudi Arabia"
+msgstr "Arabia Saudita"
+
+#: src/bin/e_int_config_intl.c:460
+msgid "Senegal"
+msgstr "Senegal"
+
+#: src/bin/e_int_config_intl.c:461
+msgid "Serbia and Montenegro"
+msgstr "Serbia e Montenegro"
+
+#: src/bin/e_int_config_intl.c:462
+msgid "Seychelles"
+msgstr "Seychelles"
+
+#: src/bin/e_int_config_intl.c:463
+msgid "Sierra Leone"
+msgstr "Sierra Leone"
+
+#: src/bin/e_int_config_intl.c:464
+msgid "Singapore"
+msgstr "Singapore"
+
+#: src/bin/e_int_config_intl.c:465
+msgid "Slovakia"
+msgstr "Slovacchia"
+
+#: src/bin/e_int_config_intl.c:466
+msgid "Slovenia"
+msgstr "Slovenia"
+
+#: src/bin/e_int_config_intl.c:467
+msgid "Solomon Islands"
+msgstr "Isole Salomone"
+
+#: src/bin/e_int_config_intl.c:468
+msgid "Somalia"
+msgstr "Somalia"
+
+#: src/bin/e_int_config_intl.c:469
+msgid "South Africa"
+msgstr "Repubblica Sudafricana"
+
+#: src/bin/e_int_config_intl.c:470
+msgid "South Georgia and the South Sandwich Islands"
+msgstr "Georgia del sud e Isole Sandwich del sud"
+
+#: src/bin/e_int_config_intl.c:471
+msgid "Spain"
+msgstr "Spagna"
+
+#: src/bin/e_int_config_intl.c:472
+msgid "Sri Lanka"
+msgstr "Sri Lanka"
+
+#: src/bin/e_int_config_intl.c:473
+msgid "Sudan"
+msgstr "Sudan"
+
+#: src/bin/e_int_config_intl.c:474
+msgid "Suriname"
+msgstr "Suriname"
+
+#: src/bin/e_int_config_intl.c:475
+msgid "Svalbard and Jan Mayen"
+msgstr "Svalbard e Jan Mayen"
+
+#: src/bin/e_int_config_intl.c:476
+msgid "Swaziland"
+msgstr "Swaziland"
+
+#: src/bin/e_int_config_intl.c:477
+msgid "Sweden"
+msgstr "Svezia"
+
+#: src/bin/e_int_config_intl.c:478
+msgid "Switzerland"
+msgstr "Svizzera"
+
+#: src/bin/e_int_config_intl.c:479
+msgid "Syrian Arab Republic"
+msgstr "Siria"
+
+#: src/bin/e_int_config_intl.c:480
+msgid "Taiwan"
+msgstr "Taiwan"
+
+#: src/bin/e_int_config_intl.c:481
+msgid "Tajikistan"
+msgstr "Tajikistan"
+
+#: src/bin/e_int_config_intl.c:482
+msgid "Tanzania"
+msgstr "Tanzania"
+
+#: src/bin/e_int_config_intl.c:483
+msgid "Thailand"
+msgstr "Tailandia"
+
+#: src/bin/e_int_config_intl.c:484
+msgid "Timor-leste"
+msgstr "Timor Est"
+
+#: src/bin/e_int_config_intl.c:485
+msgid "Togo"
+msgstr "Togo"
+
+#: src/bin/e_int_config_intl.c:486
+msgid "Tokelau"
+msgstr "Tokelau"
+
+#: src/bin/e_int_config_intl.c:487
+msgid "Tonga"
+msgstr "Tonga"
+
+#: src/bin/e_int_config_intl.c:488
+msgid "Trinidad and Tobago"
+msgstr "Trinidad e Tobago"
+
+#: src/bin/e_int_config_intl.c:489
+msgid "Tunisia"
+msgstr "Tunisia"
+
+#: src/bin/e_int_config_intl.c:490
+msgid "Turkey"
+msgstr "Turchia"
+
+#: src/bin/e_int_config_intl.c:491
+msgid "Turkmenistan"
+msgstr "Turkmenistan"
+
+#: src/bin/e_int_config_intl.c:492
+msgid "Turks and Caicos Islands"
+msgstr "Isole Turks e Caicos"
+
+#: src/bin/e_int_config_intl.c:493
+msgid "Tuvalu"
+msgstr "Tuvalu"
+
+#: src/bin/e_int_config_intl.c:494
+msgid "Uganda"
+msgstr "Uganda"
+
+#: src/bin/e_int_config_intl.c:495
+msgid "Ukraine"
+msgstr "Ucraina"
+
+#: src/bin/e_int_config_intl.c:496
+msgid "United Arab Emirates"
+msgstr "Emirati Arabi Uniti"
+
+#: src/bin/e_int_config_intl.c:497
+msgid "United Kingdom"
+msgstr "Regno Unito"
+
+#: src/bin/e_int_config_intl.c:498
+msgid "United States"
+msgstr "Stati Uniti"
+
+#: src/bin/e_int_config_intl.c:499
+msgid "United States Minor Outlying Islands"
+msgstr "Isole minori degli Stati Uniti"
+
+#: src/bin/e_int_config_intl.c:500
+msgid "Uruguay"
+msgstr "Uruguay"
+
+#: src/bin/e_int_config_intl.c:501
+msgid "Uzbekistan"
+msgstr "Uzbekistan"
+
+#: src/bin/e_int_config_intl.c:502
+msgid "Vanuatu"
+msgstr "Vanuatu"
+
+#: src/bin/e_int_config_intl.c:503
+msgid "Venezuela"
+msgstr "Venezuela"
+
+#: src/bin/e_int_config_intl.c:504
+msgid "Viet Nam"
+msgstr "Vietnam"
+
+#: src/bin/e_int_config_intl.c:505 src/bin/e_int_config_intl.c:506
+msgid "Virgin Islands"
+msgstr "Isole Vergini"
+
+#: src/bin/e_int_config_intl.c:507
+msgid "Wallis and Futuna"
+msgstr "Wallis e Futuna"
+
+#: src/bin/e_int_config_intl.c:508
+msgid "Western Sahara"
+msgstr "Sahara occidentale"
+
+#: src/bin/e_int_config_intl.c:509
+msgid "Yemen"
+msgstr "Yemen"
+
+#: src/bin/e_int_config_intl.c:510
+msgid "Zambia"
+msgstr "Zambia"
+
+#: src/bin/e_int_config_intl.c:511
+msgid "Zimbabwe"
+msgstr "Zimbabwe"
 
 #: src/bin/e_int_config_intl.c:581
 msgid "Language Configuration"
@@ -1672,7 +3350,7 @@ msgstr ""
 msgid "Enlightenment cannot set up its desk locking system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
-"sistema di blocco del desktop."
+"sistema di blocco dello schermo."
 
 #: src/bin/e_main.c:694 src/bin/e_actions.c:1985 src/bin/e_actions.c:1988
 #: src/bin/e_actions.c:1991 src/bin/e_actions.c:1994 src/bin/e_about.c:51
@@ -1690,6 +3368,94 @@ msgstr "Avvio di Enlightenment"
 #: src/bin/e_int_config_startup.c:344
 msgid "Show Splash Screen on Login"
 msgstr "Mostra splash screen al login"
+
+#: src/bin/e_int_config_color_classes.c:45
+msgid "About Dialog Title"
+msgstr "Titolo \"Informazioni su...\""
+
+#: src/bin/e_int_config_color_classes.c:46
+msgid "About Dialog Version"
+msgstr "Versione \"Informazioni su...\""
+
+#: src/bin/e_int_config_color_classes.c:47
+msgid "Border Title"
+msgstr "Titolo del bordo"
+
+#: src/bin/e_int_config_color_classes.c:48
+msgid "Configure Dialog Title"
+msgstr "Titolo dialoghi di configurazione"
+
+#: src/bin/e_int_config_color_classes.c:49
+msgid "Error Text"
+msgstr "Testo di errore"
+
+#: src/bin/e_int_config_color_classes.c:51
+msgid "Menu Title Active"
+msgstr "Titolo menù attivo"
+
+#: src/bin/e_int_config_color_classes.c:55
+msgid "Winlist Item"
+msgstr "Voce lista finestre"
+
+#: src/bin/e_int_config_color_classes.c:56
+msgid "Winlist Label"
+msgstr "Etichetta lista finestre"
+
+#: src/bin/e_int_config_color_classes.c:63
+msgid "Widgets"
+msgstr "Widget"
+
+#: src/bin/e_int_config_color_classes.c:64
+msgid "Button Text"
+msgstr "Testo bottone"
+
+#: src/bin/e_int_config_color_classes.c:65
+msgid "Button Text Disabled"
+msgstr "Testo bottone disabilitato"
+
+#: src/bin/e_int_config_color_classes.c:66
+msgid "Check Text"
+msgstr "Testo casella di spunta"
+
+#: src/bin/e_int_config_color_classes.c:67
+msgid "Check Text Disabled"
+msgstr "Testo casella di spunta disabilitata"
+
+#: src/bin/e_int_config_color_classes.c:68
+msgid "Entry Text"
+msgstr "Testo voce"
+
+#: src/bin/e_int_config_color_classes.c:69
+msgid "Label Text"
+msgstr "Testo etichetta"
+
+#: src/bin/e_int_config_color_classes.c:70
+msgid "List Item Text"
+msgstr "Testo casella di testo"
+
+#: src/bin/e_int_config_color_classes.c:71
+msgid "List Item Odd Text"
+msgstr "Testo singolare casella di testo"
+
+#: src/bin/e_int_config_color_classes.c:73
+msgid "Radio Text"
+msgstr "Testo casella di opzione"
+
+#: src/bin/e_int_config_color_classes.c:74
+msgid "Radio Text Disabled"
+msgstr "Testo casella di opzione disabilitata"
+
+#: src/bin/e_int_config_color_classes.c:75
+msgid "Slider Text"
+msgstr "Testo cursore"
+
+#: src/bin/e_int_config_color_classes.c:76
+msgid "Slider Text Disabled"
+msgstr "Testo cursore disabilitato"
+
+#: src/bin/e_int_config_color_classes.c:83
+msgid "Module Label"
+msgstr "Etichetta del modulo"
 
 #: src/bin/e_int_config_color_classes.c:346
 msgid "Window Manager Colors"
@@ -1727,11 +3493,15 @@ msgstr "Stato"
 msgid "Defaults"
 msgstr "Predefiniti"
 
-#: src/bin/e_int_border_border.c:40
+#: src/bin/e_int_config_borders.c:28
+msgid "Default Border Style"
+msgstr "Stile di bordo predefinito"
+
+#: src/bin/e_int_config_borders.c:43
 msgid "Window Border Selection"
 msgstr "Selezione bordo della finestra"
 
-#: src/bin/e_int_border_border.c:176
+#: src/bin/e_int_config_borders.c:216
 msgid "Remember this Border for this window next time it appears"
 msgstr "Ricorda questo bordo alla prossima apertura della finestra"
 
@@ -1817,14 +3587,14 @@ msgstr "Informazioni su..."
 msgid "Would you like to unload this module?<br>"
 msgstr "Volete disattivare questo modulo?<br>"
 
-#: src/bin/e_module.c:549 src/bin/e_fm.c:4527 src/bin/e_confirm_dialog.c:61
+#: src/bin/e_module.c:549 src/bin/e_fm.c:4612 src/bin/e_confirm_dialog.c:61
 #: src/bin/e_actions.c:1419 src/bin/e_actions.c:1480 src/bin/e_actions.c:1529
 #: src/bin/e_actions.c:1578 src/bin/e_actions.c:1627 src/bin/e_actions.c:1676
 #: src/bin/e_int_config_display.c:170
 msgid "Yes"
 msgstr "Sì"
 
-#: src/bin/e_module.c:550 src/bin/e_fm.c:4528 src/bin/e_confirm_dialog.c:62
+#: src/bin/e_module.c:550 src/bin/e_fm.c:4613 src/bin/e_confirm_dialog.c:62
 #: src/bin/e_actions.c:1421 src/bin/e_actions.c:1482 src/bin/e_actions.c:1531
 #: src/bin/e_actions.c:1580 src/bin/e_actions.c:1629 src/bin/e_actions.c:1678
 #: src/bin/e_int_config_display.c:171
@@ -1871,79 +3641,79 @@ msgstr ""
 msgid "Starting %s"
 msgstr "Avvio di %s"
 
-#: src/bin/e_fm.c:985
+#: src/bin/e_fm.c:1060
 #, c-format
 msgid "%i Files"
 msgstr "%i File"
 
-#: src/bin/e_fm.c:4057 src/bin/e_fm.c:4155
+#: src/bin/e_fm.c:4137 src/bin/e_fm.c:4235
 msgid "Refresh View"
 msgstr "Aggiorna vista"
 
-#: src/bin/e_fm.c:4065 src/bin/e_fm.c:4163
+#: src/bin/e_fm.c:4145 src/bin/e_fm.c:4243
 msgid "Show Hidden Files"
 msgstr "Mostra file nascosti"
 
-#: src/bin/e_fm.c:4080 src/bin/e_fm.c:4178 src/bin/e_int_config_paths.c:209
+#: src/bin/e_fm.c:4160 src/bin/e_fm.c:4258 src/bin/e_int_config_paths.c:209
 msgid "New Directory"
 msgstr "Nuova directory"
 
-#: src/bin/e_fm.c:4238
+#: src/bin/e_fm.c:4318
 msgid "Rename"
 msgstr "Rinomina"
 
-#: src/bin/e_fm.c:4327
+#: src/bin/e_fm.c:4407
 msgid "Create a new Directory"
 msgstr "Crea nuova directory"
 
-#: src/bin/e_fm.c:4328
+#: src/bin/e_fm.c:4408
 msgid "New Directory Name:"
 msgstr "Nome directory:"
 
-#: src/bin/e_fm.c:4371 src/bin/e_fm.c:4481 src/bin/e_fm.c:4598
-#: src/bin/e_fm.c:4633
+#: src/bin/e_fm.c:4451 src/bin/e_fm.c:4562 src/bin/e_fm.c:4683
+#: src/bin/e_fm.c:4719
 msgid "Error"
 msgstr "Errore"
 
-#: src/bin/e_fm.c:4373
+#: src/bin/e_fm.c:4453
 #, c-format
 msgid "Could not create directory:<br><hilight>%s</hilight>"
 msgstr "Impossibile creare la directory:<br><hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:4424
+#: src/bin/e_fm.c:4508
 #, c-format
 msgid "Rename %s to:"
 msgstr "Rinomina %s in:"
 
-#: src/bin/e_fm.c:4426
+#: src/bin/e_fm.c:4510
 msgid "Rename File"
 msgstr "Rinomina file"
 
-#: src/bin/e_fm.c:4483
+#: src/bin/e_fm.c:4564
 #, c-format
 msgid "Could not rename from <hilight>%s</hilight> to <hilight>%s</hilight>"
 msgstr ""
 "Impossibile rinominare da <hilight>%s</hilight> a <hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:4530
+#: src/bin/e_fm.c:4615
 msgid "Confirm Delete"
 msgstr "Conferma eliminazione"
 
-#: src/bin/e_fm.c:4534
+#: src/bin/e_fm.c:4619
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Siete sicuri di voler eliminare<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:4540
+#: src/bin/e_fm.c:4625
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the selected files in:<br><hilight>%s</"
 "hilight> ?"
 msgstr ""
-"Siete sicuri di voler eliminare<br>i file selezionati in:"
-"<br><hilight>%s</hilight> ?"
+"Siete sicuri di voler eliminare<br>i file selezionati in:<br><hilight>%s</"
+"hilight> ?"
 
-#: src/bin/e_fm.c:4600 src/bin/e_fm.c:4635
+#: src/bin/e_fm.c:4685 src/bin/e_fm.c:4721
 #, c-format
 msgid "Could not delete <br><hilight>%s</hilight>"
 msgstr "Impossibile eliminare <br><hilight>%s</hilight>"
@@ -1951,10 +3721,6 @@ msgstr "Impossibile eliminare <br><hilight>%s</hilight>"
 #: src/bin/e_int_border_menu.c:50
 msgid "Always On Top"
 msgstr "Sempre sulle altre"
-
-#: src/bin/e_int_border_menu.c:61 src/modules/temperature/e_mod_config.c:158
-msgid "Normal"
-msgstr "Normale"
 
 #: src/bin/e_int_border_menu.c:72
 msgid "Always Below"
@@ -1980,10 +3746,6 @@ msgstr "Dimensioni normali"
 #: src/bin/e_int_border_menu.c:152
 msgid "Remember"
 msgstr "Ricorda"
-
-#: src/bin/e_int_border_menu.c:161
-msgid "Borders"
-msgstr "Bordi"
 
 #: src/bin/e_int_border_menu.c:175
 msgid "Send to Desktop"
@@ -2580,7 +4342,7 @@ msgstr "Dialogo \"Esegui comando\""
 msgid "Desktop Lock"
 msgstr "Blocco schermo"
 
-#: src/bin/e_config.c:514
+#: src/bin/e_config.c:515
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -2600,7 +4362,7 @@ msgstr ""
 "funzionalità.<br>Adesso è possibile riconfigurare le cose a proprio "
 "piacimento.<br>Ci scusiamo per il disagio.<br>"
 
-#: src/bin/e_config.c:528
+#: src/bin/e_config.c:529
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very<br>strange. "
 "This should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -2615,16 +4377,16 @@ msgstr ""
 "male, quindi la vostra configurazione è<br>stata ripristinata a scopo "
 "precauzionale ai valori predefiniti. Ci<br>scusiamo per l'inconveniente.<br>"
 
-#: src/bin/e_config.c:551
+#: src/bin/e_config.c:552
 #, c-format
 msgid "Desktop %i, %i"
 msgstr "Desktop %i, %i"
 
-#: src/bin/e_config.c:1983
+#: src/bin/e_config.c:1985
 msgid "Configuration Upgraded"
 msgstr "Aggiornamento configurazione"
 
-#: src/bin/e_config.c:1998
+#: src/bin/e_config.c:2000
 #, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>configuration to disk. The "
@@ -2636,7 +4398,7 @@ msgstr ""
 "dove è avvenuto l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:2009
+#: src/bin/e_config.c:2011
 #, c-format
 msgid ""
 "Enlightenment's configuration files are too big<br>for the file system they "
@@ -2652,7 +4414,7 @@ msgstr ""
 "avvenuto l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:2022
+#: src/bin/e_config.c:2024
 #, c-format
 msgid ""
 "An output error occured when writing the configuration<br>files for "
@@ -2666,7 +4428,7 @@ msgstr ""
 "l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:2033
+#: src/bin/e_config.c:2035
 #, c-format
 msgid ""
 "Enlightenment cannot write its configuration file<br>because it ran out of "
@@ -2680,7 +4442,7 @@ msgstr ""
 "l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:2045
+#: src/bin/e_config.c:2047
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the configuration file<br>it was writing "
@@ -2692,17 +4454,13 @@ msgstr ""
 "avvenuto l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:2061
+#: src/bin/e_config.c:2063
 msgid "Enlightenment Configration Write Problems"
 msgstr "Problemi scrittura configurazione di Enlightenment"
 
 #: src/bin/e_eap_editor.c:87
 msgid "Application Editor"
 msgstr "Editor delle applicazioni"
-
-#: src/bin/e_eap_editor.c:316
-msgid "Icon"
-msgstr "Icona"
 
 #: src/bin/e_eap_editor.c:332
 msgid "Basic Info"
@@ -2920,8 +4678,8 @@ msgid "Window List Settings"
 msgstr "Commutatore finestre (alt+tab)"
 
 #: src/bin/e_int_config_winlist.c:125 src/bin/e_int_config_performance.c:89
-#: src/bin/e_int_config_performance.c:121 src/bin/e_int_config_exebuf.c:106
-#: src/bin/e_int_config_exebuf.c:157 src/modules/ibox/e_mod_config.c:96
+#: src/bin/e_int_config_performance.c:121 src/bin/e_int_config_exebuf.c:109
+#: src/bin/e_int_config_exebuf.c:165 src/modules/ibox/e_mod_config.c:96
 #: src/modules/pager/e_mod_config.c:77
 msgid "General Settings"
 msgstr "Impostazioni generali"
@@ -2971,12 +4729,12 @@ msgid "Warp At End"
 msgstr "Invia solo alla fine"
 
 #: src/bin/e_int_config_winlist.c:152 src/bin/e_int_config_winlist.c:228
-#: src/bin/e_int_config_exebuf.c:117 src/bin/e_int_config_exebuf.c:168
+#: src/bin/e_int_config_exebuf.c:124 src/bin/e_int_config_exebuf.c:180
 msgid "Scroll Settings"
 msgstr "Scorrimento"
 
 #: src/bin/e_int_config_winlist.c:153 src/bin/e_int_config_winlist.c:229
-#: src/bin/e_int_config_exebuf.c:118 src/bin/e_int_config_exebuf.c:169
+#: src/bin/e_int_config_exebuf.c:125 src/bin/e_int_config_exebuf.c:181
 msgid "Scroll Animate"
 msgstr "Scorrimento animato"
 
@@ -2986,53 +4744,53 @@ msgstr "Velocità invio puntatore"
 
 #: src/bin/e_int_config_winlist.c:224 src/bin/e_int_config_winlist.c:233
 #: src/bin/e_int_config_winlist.c:240 src/bin/e_int_config_winlist.c:244
-#: src/bin/e_int_config_exebuf.c:173 src/bin/e_int_config_exebuf.c:180
-#: src/bin/e_int_config_exebuf.c:184
+#: src/bin/e_int_config_exebuf.c:185 src/bin/e_int_config_exebuf.c:218
+#: src/bin/e_int_config_exebuf.c:222
 #, c-format
 msgid "%1.2f"
 msgstr "%1.2f"
 
-#: src/bin/e_int_config_winlist.c:231 src/bin/e_int_config_exebuf.c:171
+#: src/bin/e_int_config_winlist.c:231 src/bin/e_int_config_exebuf.c:183
 msgid "Scroll Speed"
 msgstr "Velocità scorrimento"
 
-#: src/bin/e_int_config_winlist.c:237 src/bin/e_int_config_exebuf.c:177
+#: src/bin/e_int_config_winlist.c:237 src/bin/e_int_config_exebuf.c:215
 msgid "Position Settings"
 msgstr "Posizione"
 
-#: src/bin/e_int_config_winlist.c:238 src/bin/e_int_config_exebuf.c:178
+#: src/bin/e_int_config_winlist.c:238 src/bin/e_int_config_exebuf.c:216
 msgid "X-Axis Alignment"
 msgstr "Allineamento all'asse X"
 
-#: src/bin/e_int_config_winlist.c:242 src/bin/e_int_config_exebuf.c:182
+#: src/bin/e_int_config_winlist.c:242 src/bin/e_int_config_exebuf.c:220
 msgid "Y-Axis Alignment"
 msgstr "Allineamento all'asse Y"
 
-#: src/bin/e_int_config_winlist.c:248 src/bin/e_int_config_exebuf.c:188
+#: src/bin/e_int_config_winlist.c:248 src/bin/e_int_config_exebuf.c:196
 msgid "Size Settings"
 msgstr "Dimensioni"
 
-#: src/bin/e_int_config_winlist.c:249 src/bin/e_int_config_exebuf.c:189
+#: src/bin/e_int_config_winlist.c:249 src/bin/e_int_config_exebuf.c:197
 msgid "Minimum Width"
 msgstr "Larghezza minima"
 
 #: src/bin/e_int_config_winlist.c:251 src/bin/e_int_config_winlist.c:255
 #: src/bin/e_int_config_winlist.c:259 src/bin/e_int_config_winlist.c:263
-#: src/bin/e_int_config_exebuf.c:191 src/bin/e_int_config_exebuf.c:195
 #: src/bin/e_int_config_exebuf.c:199 src/bin/e_int_config_exebuf.c:203
+#: src/bin/e_int_config_exebuf.c:207 src/bin/e_int_config_exebuf.c:211
 #, c-format
 msgid "%4.0f"
 msgstr "%4.0f"
 
-#: src/bin/e_int_config_winlist.c:253 src/bin/e_int_config_exebuf.c:193
+#: src/bin/e_int_config_winlist.c:253 src/bin/e_int_config_exebuf.c:201
 msgid "Minimum Height"
 msgstr "Altezza minima"
 
-#: src/bin/e_int_config_winlist.c:257 src/bin/e_int_config_exebuf.c:197
+#: src/bin/e_int_config_winlist.c:257 src/bin/e_int_config_exebuf.c:205
 msgid "Maximum Width"
 msgstr "Larghezza massima"
 
-#: src/bin/e_int_config_winlist.c:261 src/bin/e_int_config_exebuf.c:201
+#: src/bin/e_int_config_winlist.c:261 src/bin/e_int_config_exebuf.c:209
 msgid "Maximum Height"
 msgstr "Altezza massima"
 
@@ -3071,7 +4829,9 @@ msgstr "<Nessuna>"
 #: src/bin/e_int_config_keybindings.c:4
 msgid ""
 "Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
-msgstr "Premere la combinazione di tasti,<br><br>o <hilight>Escape</hilight> per abortire"
+msgstr ""
+"Premere la combinazione di tasti,<br><br>o <hilight>Escape</hilight> per "
+"abortire"
 
 #: src/bin/e_int_config_keybindings.c:91
 msgid "Key Binding Settings"
@@ -3187,8 +4947,9 @@ msgstr "Numero di desktop"
 
 #: src/bin/e_int_config_desks.c:198 src/bin/e_int_config_desks.c:202
 #: src/bin/e_int_config_desks.c:237 src/bin/e_int_config_desks.c:241
-#: src/bin/e_int_config_exebuf.c:109 src/bin/e_int_config_exebuf.c:113
-#: src/bin/e_int_config_exebuf.c:160 src/bin/e_int_config_exebuf.c:164
+#: src/bin/e_int_config_exebuf.c:112 src/bin/e_int_config_exebuf.c:116
+#: src/bin/e_int_config_exebuf.c:120 src/bin/e_int_config_exebuf.c:168
+#: src/bin/e_int_config_exebuf.c:172 src/bin/e_int_config_exebuf.c:176
 #: src/bin/e_int_config_desklock.c:710
 #, c-format
 msgid "%1.0f"
@@ -3520,23 +5281,27 @@ msgstr "Sposta giù"
 msgid "Remove"
 msgstr "Elimina"
 
-#: src/bin/e_int_config_exebuf.c:45
+#: src/bin/e_int_config_exebuf.c:46
 msgid "Run Command Settings"
 msgstr "Impostazioni di \"Esegui comando\""
 
-#: src/bin/e_int_config_exebuf.c:107 src/bin/e_int_config_exebuf.c:158
+#: src/bin/e_int_config_exebuf.c:110 src/bin/e_int_config_exebuf.c:166
 msgid "Maximum Number of Matched Eaps to List"
 msgstr "Numero massimo di eap corrispondenti visualizzate"
 
-#: src/bin/e_int_config_exebuf.c:111 src/bin/e_int_config_exebuf.c:162
+#: src/bin/e_int_config_exebuf.c:114 src/bin/e_int_config_exebuf.c:170
 msgid "Maximum Number of Matched Exes to List"
 msgstr "Numero massimo eseguibili corrispondenti visualizzati"
 
-#: src/bin/e_int_config_exebuf.c:207
+#: src/bin/e_int_config_exebuf.c:118 src/bin/e_int_config_exebuf.c:174
+msgid "Maximum History to List"
+msgstr "Massimo storico visualizzato"
+
+#: src/bin/e_int_config_exebuf.c:189
 msgid "Terminal Settings"
 msgstr "Impostazioni del terminale"
 
-#: src/bin/e_int_config_exebuf.c:208
+#: src/bin/e_int_config_exebuf.c:190
 msgid "Terminal Command"
 msgstr "Comando del terminale"
 
@@ -3568,17 +5333,9 @@ msgstr "Posizione"
 msgid "Tiny"
 msgstr "Piccolissima"
 
-#: src/bin/e_int_shelf_config.c:406
-msgid "Small"
-msgstr "Piccola"
-
 #: src/bin/e_int_shelf_config.c:408 src/modules/dropshadow/e_mod_config.c:122
 msgid "Medium"
 msgstr "Media"
-
-#: src/bin/e_int_shelf_config.c:410
-msgid "Large"
-msgstr "Grande"
 
 #: src/bin/e_int_shelf_config.c:412
 msgid "Huge"
@@ -3623,7 +5380,7 @@ msgstr "Stili"
 
 #: src/bin/e_int_config_desklock.c:115
 msgid "Desktop Lock Settings"
-msgstr "Impostazioni blocco dello schermo"
+msgstr "Impostazioni blocca schermo"
 
 #: src/bin/e_int_config_desklock.c:459 src/bin/e_int_config_desklock.c:762
 msgid "Automatic Locking"
