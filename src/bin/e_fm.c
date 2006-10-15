@@ -2805,7 +2805,9 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		  free(d);
 	       }
 	  }
-	refresh  = 1; /* refresh src fm */
+	/* FIXME: disable refresh - modify icons in-place */
+	refresh = 1; /* refresh src fm */
+	/* FIXME: disable refresh - modify icons in-place */
 	e_fm2_refresh(sd->obj); /* refresh dst fm */
      }
    else if (sd->drop_icon) /* inot or before/after an icon */
@@ -2882,7 +2884,9 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 			 ecore_file_mv(ll->data, buf);
 		    }
 	       }
-	     refresh  = 1; /* refresh src fm */
+	     /* FIXME: disable refresh - modify icons in-place */
+	     refresh = 1; /* refresh src fm */
+	     /* FIXME: disable refresh - modify icons in-place */
 	     e_fm2_refresh(sd->obj); /* refresh dst fm */
 	  }
 	else
@@ -2939,6 +2943,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 				 free(d);
 			      }
 			 }
+		       /* FIXME: disable refresh - modify icons in-place */
 		       e_fm2_refresh(sd->obj); /* refresh dst fm */
 		    }
 		  else /* no order file */
@@ -2957,7 +2962,9 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 			    else
 			      ecore_file_mv(ll->data, buf);
 			 }
-		       refresh  = 1; /* refresh src fm */
+		       /* FIXME: disable refresh - modify icons in-place */
+		       refresh = 1; /* refresh src fm */
+		       /* FIXME: disable refresh - modify icons in-place */
 		       e_fm2_refresh(sd->obj); /* refresh dst fm */
 		    }
 	       }
@@ -2965,6 +2972,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
      }
    _e_fm2_dnd_drop_hide(sd->obj);
    _e_fm2_dnd_drop_all_hide(sd->obj);
+   /* FIXME: disable refresh */
    for (l = _e_fm2_list; l; l = l->next)
      _e_fm2_dnd_finish(l->data, refresh);
 }
@@ -4388,6 +4396,7 @@ _e_fm2_new_directory_yes_cb(char *text, void *data)
 		  fclose(f);
 	       }
 	  }
+	/* FIXME: disable refresh - modify icons in-place */
 	if (sd->refresh_job) ecore_job_del(sd->refresh_job);
 	sd->refresh_job = ecore_job_add(_e_fm2_refresh_job_cb, sd->obj);
      }
@@ -4487,6 +4496,7 @@ _e_fm2_file_rename_yes_cb(char *text, void *data)
 	  }
         if (ic->sd->order_file) _e_fm2_order_file_rewrite(ic->sd->obj);
 	
+	/* FIXME: disable refresh - modify icons in-place */
 	if (ic->sd->refresh_job) ecore_job_del(ic->sd->refresh_job);
 	ic->sd->refresh_job = ecore_job_add(_e_fm2_refresh_job_cb, ic->sd->obj);
      }
@@ -4643,6 +4653,7 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
      }
    if (ic->sd->order_file) _e_fm2_order_file_rewrite(ic->sd->obj);
    
+   /* FIXME: disable refresh - modify icons in-place */
    if (ic->sd->refresh_job) ecore_job_del(ic->sd->refresh_job);
    ic->sd->refresh_job = ecore_job_add(_e_fm2_refresh_job_cb, ic->sd->obj);
    

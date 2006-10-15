@@ -177,7 +177,13 @@ _e_apps_hash_idler_cb(void *data)
     * since we last looked at it, so iterate through them again.  Doesn't seem to 
     * slow the process down much. 
     */
+   /* FIXME: on a slow enough system this will never complete. the hash walk
+    * may abort before scanning anything t all (entries walked in hash all
+    * already filled but further entries later in the hash walk will never
+    * be reashed as timeout happens before getting there)
+    */
    evas_hash_foreach(_e_apps_every_app, _e_apps_hash_idler_cb_init, idler);
+   printf("\nIDLE APP FILLING PASS %3.3f\n", ecore_time_get() - idler->pass);
    if (idler->all_done)
      {
         printf("\nIDLE APP FILLING SCAN %3.3f\n", ecore_time_get() - idler->begin);
@@ -196,6 +202,7 @@ _e_apps_hash_idler_cb_init(Evas_Hash *hash, const char *key, void *data, void *f
 {
    E_App *a;
    struct _E_App_Hash_Idler *idler;
+   double t;
 
    a = data;
    idler = fdata;
@@ -210,6 +217,8 @@ _e_apps_hash_idler_cb_init(Evas_Hash *hash, const char *key, void *data, void *f
         a->idle_fill = 1;
 	if (stat(a->path, &st) >= 0)
            a->mtime = st.st_mtime;
+	/* FIXME: the main problem is this call - when it does get run it can
+	 * sometimes take 0.2 or 0.3 seconds, causing much jerkiness */
         e_app_fields_fill(a, a->path);
      }
 #if IDLE_ICONS
@@ -224,7 +233,8 @@ _e_apps_hash_idler_cb_init(Evas_Hash *hash, const char *key, void *data, void *f
    /* FIXME: This time should be since the beginnig of all idler processing, 
     * and the time limit should be tied to the frame rate. 
     */
-   if ((ecore_time_get() - idler->pass) < 0.07) return 1;
+   t = ecore_time_get() - idler->pass;
+   if (t < 0.02) return 1;
    idler->all_done = 0;
    return 0;
 }
