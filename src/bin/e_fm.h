@@ -100,6 +100,7 @@ struct _E_Fm2_Icon_Info
    unsigned char     mount : 1;
    unsigned char     pseudo_link : 1;
    unsigned char     deleted : 1;
+   unsigned char     broken_link : 1;
 };
 
 EAPI int                   e_fm2_init(void);
