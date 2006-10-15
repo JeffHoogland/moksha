@@ -3797,7 +3797,7 @@ _e_fm2_cb_scan_idler(void *data)
 	/* skip dotfiles if we're not showing hidden files */
 	if (dp->d_name[0] == '.' && !sd->show_hidden_files) return 1;
 	/* always hide .order files */
-	if (!strcmp(dp->d_name[0], ".order")) return 1;
+	if (!strcmp(dp->d_name, ".order")) return 1;
 	_e_fm2_file_add(data, dp->d_name, sd->order_file, NULL, 0);
      }
    return 1;
