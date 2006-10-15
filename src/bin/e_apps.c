@@ -42,13 +42,16 @@ struct _E_App_Callback
 struct _E_App_Hash_Idler
 {
    Ecore_Idler *idler;
-   int all_done;
-   double begin, pass;
+   /* We keep a seperate list so that nothing external can change it between 
+    * idler calls.  Means we might miss some during the idler run, but since 
+    * this is just an optimization pre load thing, then that's no problem.
+    */
+   Evas_List   *apps;
+   double       begin, pass;
 };
 
 static Evas_Bool _e_apps_hash_cb_init      (Evas_Hash *hash, const char *key, void *data, void *fdata);
 static int       _e_apps_hash_idler_cb     (void *data);
-static Evas_Bool _e_apps_hash_idler_cb_init(Evas_Hash *hash, const char *key, void *data, void *fdata);
 static void      _e_app_free               (E_App *a);
 static E_App     *_e_app_subapp_file_find  (E_App *a, const char *file);
 static void      _e_app_change             (E_App *a, E_App_Change ch);
@@ -150,6 +153,7 @@ e_app_init(void)
 	          _e_apps_every_app = evas_hash_direct_add(_e_apps_every_app, app->path, app);
                   app->parent = _e_apps_all;
                   _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, app);
+		  _e_apps_hash_idler.apps = evas_list_append(_e_apps_hash_idler.apps, app);
                   e_object_ref(E_OBJECT(app));
 	       }
 	  }
@@ -158,12 +162,10 @@ e_app_init(void)
    printf("INITIAL APP SCAN %3.3f\n", ecore_time_get() - begin);
    ecore_desktop_instrumentation_print();
    ecore_desktop_instrumentation_reset();
-   _e_apps_hash_idler.all_done = 0;
    _e_apps_hash_idler.begin = ecore_time_get();
    _e_apps_hash_idler.idler = ecore_idler_add(_e_apps_hash_idler_cb, &_e_apps_hash_idler);
    return 1;
 }
-
 
 static int
 _e_apps_hash_idler_cb(void *data)
@@ -171,20 +173,41 @@ _e_apps_hash_idler_cb(void *data)
    struct _E_App_Hash_Idler *idler;
 
    idler = data;
-   idler->all_done = 1;
    idler->pass = ecore_time_get();
-   /* Even though we are only interested in the next one, the hash may have changed 
-    * since we last looked at it, so iterate through them again.  Doesn't seem to 
-    * slow the process down much. 
-    */
-   /* FIXME: on a slow enough system this will never complete. the hash walk
-    * may abort before scanning anything t all (entries walked in hash all
-    * already filled but further entries later in the hash walk will never
-    * be reashed as timeout happens before getting there)
-    */
-   evas_hash_foreach(_e_apps_every_app, _e_apps_hash_idler_cb_init, idler);
-   printf("\nIDLE APP FILLING PASS %3.3f\n", ecore_time_get() - idler->pass);
-   if (idler->all_done)
+   while (idler->apps != NULL)
+     {
+        E_App *a;
+        double t;
+
+        a = idler->apps->data;
+        E_OBJECT_CHECK(a);
+        E_OBJECT_TYPE_CHECK(a, E_APP_TYPE);
+        if ((!a->idle_fill) && (!a->filled))
+          {
+             struct stat         st;
+
+             a->idle_fill = 1;
+	     if (stat(a->path, &st) >= 0)
+                a->mtime = st.st_mtime;
+             e_app_fields_fill(a, a->path);
+          }
+#if IDLE_ICONS
+        if ((!a->idle_icon) && (a->icon_type == E_APP_ICON_UNKNOWN))
+          {
+             int theme_match = 0;
+
+             a->idle_icon = 1;
+             _e_app_icon_type(a);
+          }
+#endif
+        /* FIXME: This time should be since the beginnig of all idler processing, 
+         * and the time limit should be tied to the frame rate. 
+         */
+        idler->apps = evas_list_remove_list(idler->apps, idler->apps);
+        t = ecore_time_get() - idler->pass;
+        if (t > 0.02)   break;
+     }
+   if (idler->apps == NULL)
      {
         printf("\nIDLE APP FILLING SCAN %3.3f\n", ecore_time_get() - idler->begin);
 #if CLEVER_BORDERS
@@ -196,49 +219,6 @@ _e_apps_hash_idler_cb(void *data)
      }
    return 1;
 }
-
-static Evas_Bool 
-_e_apps_hash_idler_cb_init(Evas_Hash *hash, const char *key, void *data, void *fdata)
-{
-   E_App *a;
-   struct _E_App_Hash_Idler *idler;
-   double t;
-
-   a = data;
-   idler = fdata;
-   E_OBJECT_CHECK(a);
-   E_OBJECT_TYPE_CHECK(a, E_APP_TYPE);
-   /* Either fill an E_App, or look for an icon of an already filled E_App.
-    * Icon searching can take a long time, so don't do both at once. */
-   if ((!a->idle_fill) && (!a->filled))
-     {
-        struct stat         st;
-
-        a->idle_fill = 1;
-	if (stat(a->path, &st) >= 0)
-           a->mtime = st.st_mtime;
-	/* FIXME: the main problem is this call - when it does get run it can
-	 * sometimes take 0.2 or 0.3 seconds, causing much jerkiness */
-        e_app_fields_fill(a, a->path);
-     }
-#if IDLE_ICONS
-   else if ((!a->idle_icon) && (a->icon_type == E_APP_ICON_UNKNOWN))
-     {
-        int theme_match = 0;
-
-        a->idle_icon = 1;
-        _e_app_icon_type(a);
-     }
-#endif
-   /* FIXME: This time should be since the beginnig of all idler processing, 
-    * and the time limit should be tied to the frame rate. 
-    */
-   t = ecore_time_get() - idler->pass;
-   if (t < 0.02) return 1;
-   idler->all_done = 0;
-   return 0;
-}
-
 
 
 #if CLEVER_BORDERS
