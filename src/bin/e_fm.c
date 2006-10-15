@@ -3307,10 +3307,15 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	       {
 		  ici = l->data;
 		  /* FIXME: URI - needs to be file:/..... (can't remember 1 or 2 /'s) */
-		  if (!strcmp(realpath, "/"))
-		    snprintf(buf, sizeof(buf), "/%s", ici->file);
+		  if (ici->pseudo_link)
+		    snprintf(buf, sizeof(buf), "%s/%s", ici->pseudo_dir, ici->file);
 		  else
-		    snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+		    {
+		       if (!strcmp(realpath, "/"))
+			 snprintf(buf, sizeof(buf), "/%s", ici->file);
+		       else
+			 snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+		    }
 		  fsel = evas_list_append(fsel, strdup(buf));
 	       }
 	     evas_list_free(sl);
@@ -4651,6 +4656,7 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
    char buf[4096];
    Evas_List *sel, *l;
    E_Fm2_Icon_Info *ici;
+   int ok;
    
    ic = data;
    ic->dialog = NULL;
@@ -4661,6 +4667,7 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
      {
 	for (l = sel; l; l = l->next)
 	  {
+	     ok = 1;
 	     ici = l->data;
 	     if (!ici->pseudo_link)
 	       {
@@ -4670,7 +4677,8 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
 		  if (!(ecore_file_recursive_rm(buf)))
 		    {
 		       char text[4096 + 256];
-		       
+		     
+		       ok = 0;
 		       man = e_manager_current_get();
 		       if (man)
 			 {
@@ -4692,8 +4700,9 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
 			 }
 		    }
 		  else ici->deleted = 1;
-		  _e_fm2_live_file_del(ic->sd->obj, ici->file);
 	       }
+	     else ici->deleted = 1;
+	     if (ok) _e_fm2_live_file_del(ic->sd->obj, ici->file);
 	  }
 	evas_list_free(sel);
      }
