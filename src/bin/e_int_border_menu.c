@@ -17,6 +17,7 @@ static void _e_border_menu_cb_unmaximize(void *data, E_Menu *m, E_Menu_Item *mi)
 static void _e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_icon_add(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_icon_add_pre(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_prop(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -290,12 +291,10 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	     e_menu_item_label_set(mi, _("Create Icon"));
 	     e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, bd);
 	  }
-	/*
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Add App To Launcher"));
+	e_menu_item_submenu_pre_callback_set(mi, _e_border_menu_cb_icon_add_pre, bd);
 	e_util_menu_item_edje_icon_set(mi, "enlightenment/applications");
-	e_menu_item_callback_set(mi, _e_border_menu_cb_icon_add, bd);
-	*/ 
      }
    
    mi = e_menu_item_new(m);
@@ -642,13 +641,13 @@ _e_border_menu_cb_icon_add(void *data, E_Menu *m, E_Menu_Item *mi)
    Evas_List *l;
    char buf[4096];
    int found = 0;
-   
-   bd = data;
+
+   bd = e_object_data_get(E_OBJECT(m));
    a = bd->app;
    if (!a)
      return;
    
-   snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/default", e_user_homedir_get());
+   snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s", e_user_homedir_get(), (char *)data);
    bar_apps = e_app_new(buf, 0);
    if (bar_apps)
      e_app_subdir_scan(bar_apps, 0);
@@ -667,6 +666,38 @@ _e_border_menu_cb_icon_add(void *data, E_Menu *m, E_Menu_Item *mi)
      }
    if (!found)
      e_app_list_append(a, bar_apps);
+}
+
+static void 
+_e_border_menu_cb_icon_add_pre(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Menu *subm;
+   E_Menu_Item *submi;
+   E_Border *bd;
+   Ecore_List *dirs;
+   char buf[4096], *file;
+   
+   bd = data;
+
+   snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar", e_user_homedir_get());
+   dirs = ecore_file_ls(buf);
+   if (!dirs) return;
+   
+   subm = e_menu_new();
+   while ((file = ecore_list_next(dirs))) 
+     {
+	if (file[0] == '.') continue;
+	snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s", e_user_homedir_get(), file);
+	if (ecore_file_is_dir(buf)) 
+	  {
+	     submi = e_menu_item_new(subm);
+	     e_menu_item_label_set(submi, file);
+	     e_menu_item_callback_set(submi, _e_border_menu_cb_icon_edit, file);
+	  }
+     }
+
+   e_object_data_set(E_OBJECT(subm), bd);
+   e_menu_item_submenu_set(mi, subm);
 }
 
 static void
