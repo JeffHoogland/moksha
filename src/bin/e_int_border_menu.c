@@ -692,7 +692,7 @@ _e_border_menu_cb_icon_add_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 	  {
 	     submi = e_menu_item_new(subm);
 	     e_menu_item_label_set(submi, file);
-	     e_menu_item_callback_set(submi, _e_border_menu_cb_icon_edit, file);
+	     e_menu_item_callback_set(submi, _e_border_menu_cb_icon_add, file);
 	  }
      }
 
