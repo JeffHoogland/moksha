@@ -16,6 +16,7 @@ static void _e_border_menu_cb_maximize_horizontally(void *data, E_Menu *m, E_Men
 static void _e_border_menu_cb_unmaximize(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_icon_add(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_prop(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -289,6 +290,10 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	     e_menu_item_label_set(mi, _("Create Icon"));
 	     e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, bd);
 	  }
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Add App To Launcher"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/applications");
+	e_menu_item_callback_set(mi, _e_border_menu_cb_icon_add, bd);
      }
    
    mi = e_menu_item_new(m);
@@ -625,6 +630,41 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 			     "the time the window starts up, and does not<br>"
 			     "change."));
      }
+}
+
+static void 
+_e_border_menu_cb_icon_add(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_App *a, *bar_apps;
+   E_Border *bd;
+   Evas_List *l;
+   char buf[4096];
+   int found = 0;
+   
+   bd = data;
+   a = bd->app;
+   if (!a)
+     return;
+   
+   snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/default", e_user_homedir_get());
+   bar_apps = e_app_new(buf, 0);
+   if (bar_apps)
+     e_app_subdir_scan(bar_apps, 0);
+   for (l = bar_apps->subapps; l; l = l->next) 
+     {
+	E_App *ap;
+	
+	ap = l->data;
+	if (!ap) continue;
+	if (!e_app_valid_exe_get(ap)) continue;
+	if (!strcmp(ap->name, a->name)) 
+	  {
+	     found = 1;
+	     break;
+	  }
+     }
+   if (!found)
+     e_app_list_append(a, bar_apps);
 }
 
 static void
