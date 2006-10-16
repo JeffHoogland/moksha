@@ -81,6 +81,13 @@ e_widget_table_object_repack(Evas_Object *obj, Evas_Object *sobj, int col, int r
    e_widget_min_size_set(obj, mw, mh);
 }
 
+EAPI void
+e_widget_table_unpack(Evas_Object *obj, Evas_Object *sobj)
+{
+   e_widget_sub_object_del(obj, sobj);
+   e_table_unpack(sobj);
+}
+
 static void
 _e_wid_del_hook(Evas_Object *obj)
 {

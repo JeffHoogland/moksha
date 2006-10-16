@@ -140,7 +140,7 @@ e_widget_sub_object_add(Evas_Object *obj, Evas_Object *sobj)
 	printf("----------EEEEEK! dupe sub obj is a sub obj!\n");
 	abort();
      }
- */
+  */
    sd->subobjs = evas_list_append(sd->subobjs, sobj);
    if (!sd->child_can_focus)
      {
