@@ -416,63 +416,63 @@ e_app_new(const char *path, int scan_subdirs)
      }
 
    if ((a) && (a->path))
-      {
-         if ((!in_all) && (strncmp(a->path, _e_apps_path_all, strlen(_e_apps_path_all)) == 0))
-	    in_all = 1;
-         if (ecore_file_is_dir(a->path))
-	    {
-               if ((!a->idle_fill) && (!a->filled))
-	         {
-	            snprintf(buf, sizeof(buf), "%s/.directory", path);
-	            if (ecore_file_exists(buf))
-		       e_app_fields_fill(a, buf);
-	            else
-	              {
-		         a->name = evas_stringshare_add(ecore_file_get_file(a->path));
-		         a->filled = 1;
-			 a->idle_fill = 1;
-		      }
-		 }
-	       if (!a->filled) goto error;
-	       if (scan_subdirs)
-	          {
-		     if (stated)
-		        _e_app_subdir_rescan(a);
-		     else
-		        e_app_subdir_scan(a, scan_subdirs);
-		  }
-		  
-	       /* Don't monitor the all directory, all changes to that must go through e_app. */
-               if ((!stated) && (strcmp(_e_apps_path_all, a->path) != 0))
-		  a->monitor = ecore_file_monitor_add(a->path, _e_app_cb_monitor, a);
-	    }
-	 else if (_e_app_is_eapp(a->path))
-	    {
-                if ((!a->idle_fill) && (!a->filled))
-		   e_app_fields_fill(a, a->path);
-		  
-		/* no exe field.. not valid. drop it */
-//		  if (!_e_app_exe_valid_get(a->exe))
-//		     goto error;
+     {
+	if ((!in_all) && (strncmp(a->path, _e_apps_path_all, strlen(_e_apps_path_all)) == 0))
+	  in_all = 1;
+	if (ecore_file_is_dir(a->path))
+	  {
+	     if ((!a->idle_fill) && (!a->filled))
+	       {
+		  snprintf(buf, sizeof(buf), "%s/.directory", path);
+		  if (ecore_file_exists(buf))
+		    e_app_fields_fill(a, buf);
+		  else
+		    {
+		       a->name = evas_stringshare_add(ecore_file_get_file(a->path));
+		       a->filled = 1;
+		       a->idle_fill = 1;
+		    }
+	       }
+	     if (!a->filled) goto error;
+	     if (scan_subdirs)
+	       {
+		  if (stated)
+		    _e_app_subdir_rescan(a);
+		  else
+		    e_app_subdir_scan(a, scan_subdirs);
+	       }
+	     
+	     /* Don't monitor the all directory, all changes to that must go through e_app. */
+	     if ((!stated) && (strcmp(_e_apps_path_all, a->path) != 0))
+	       a->monitor = ecore_file_monitor_add(a->path, _e_app_cb_monitor, a);
+	  }
+	else if (_e_app_is_eapp(a->path))
+	  {
+	     if ((!a->idle_fill) && (!a->filled))
+	       e_app_fields_fill(a, a->path);
+	     
+	     /* no exe field.. not valid. drop it */
+	     //		  if (!_e_app_exe_valid_get(a->exe))
+	     //		     goto error;
 	  }
 	else
 	  goto error;
-
+	
         if (virtual_app)
 	  {
 	     a2 = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
 	     if (a2)
 	       {
 		  if (_e_app_copy(a2, a))
-		     a->references = evas_list_append(a->references, a2);
+		    a->references = evas_list_append(a->references, a2);
 		  else
 		    {
 		       e_object_del(E_OBJECT(a2));
 		       goto error;
 		    }
-		}
-	      else
-	         goto error;
+	       }
+	     else
+	       goto error;
 	  }
 	/* Timestamp the cache, and no need to stat the file twice if the cache was stale. */
 	if ((stated) || (stat(a->path, &st) >= 0))
@@ -480,7 +480,7 @@ e_app_new(const char *path, int scan_subdirs)
 	     a->mtime = st.st_mtime;
 	     stated = 1;
 	  }
-
+	
 	if (new_app)
 	  {
 	     _e_apps_every_app = evas_hash_direct_add(_e_apps_every_app, a->path, a);
@@ -492,13 +492,13 @@ e_app_new(const char *path, int scan_subdirs)
                }
 	  }
 	else if ((_e_apps_all) && (_e_apps_all->subapps) && (in_all))
-           _e_apps_all->subapps = evas_list_remove(_e_apps_all->subapps, a);
+	  _e_apps_all->subapps = evas_list_remove(_e_apps_all->subapps, a);
         if ((_e_apps_all) && (a != _e_apps_all) && (in_all))
-	     _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, a);
-
+	  _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, a);
+	
         if (virtual_app)
-           a = a2;
-
+	  a = a2;
+	
      }
    else
      goto error;
@@ -2502,6 +2502,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 		  e_app_fields_fill(a, path);
 		  if (a->filled)
 		    {
+/* allow invalid apps
 		       if (!_e_app_exe_valid_get(a->exe))
 			 {
 			    a->deleted = 1;
@@ -2517,6 +2518,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 			    _e_app_subdir_rescan(app);
 			 }
 		       else
+ */
 			 {
 			    _e_app_change(a, E_APP_CHANGE);
 			    for (l = a->references; l; l = l->next)

@@ -26,11 +26,12 @@ Some of the things (in very short form) that need to be done to E17...
 -------------------------------------------------------------------------------
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
+* fm2 needs a right-click file properties dialog
 * fm2 needs a way to set custom backgrounds and handle scrolling
 * fm2 needs to display symlink info on files somehow
 * fm2 needs to display more than 1 file being dragged (if more than 1 is being
   dragged)
-* fm2 needs a way of mapping a mimetype to 1 ore more commands to execute or
+* fm2 needs a way of mapping a mimetype to 1 or more commands to execute or
   internal e actions to do (like add as wallpaper etc.)
 * fm2 needs a way to use custom icons per dir/file
 * fm2 needs a icon views (auto-arrange, snap to grid and free placement)

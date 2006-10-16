@@ -496,7 +496,7 @@ _e_int_menus_apps_scan(E_Menu *m)
 	  {
 	     a = l->data;
 	     
-             if (e_app_valid_exe_get(a) || (!a->exe))
+//             if (e_app_valid_exe_get(a) || (!a->exe))
 	       {
 		  int opt = 0;
 		  char label[4096];

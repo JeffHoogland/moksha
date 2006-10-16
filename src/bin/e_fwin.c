@@ -12,6 +12,7 @@
 static void _e_fwin_free(E_Fwin *fwin);
 static void _e_fwin_cb_delete(E_Win *win);
 static void _e_fwin_cb_resize(E_Win *win);
+static void _e_fwin_deleted(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_changed(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_selected(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_menu_extend(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info);
@@ -85,6 +86,8 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
    e_fm2_config_set(o, &fmc);
    evas_object_smart_callback_add(o, "dir_changed",
 				  _e_fwin_changed, fwin);
+   evas_object_smart_callback_add(o, "dir_deleted",
+				  _e_fwin_deleted, fwin);
    evas_object_smart_callback_add(o, "selected",
 				  _e_fwin_selected, fwin);
    e_fm2_path_set(o, dev, path);
@@ -159,6 +162,15 @@ _e_fwin_cb_resize(E_Win *win)
    fwin = win->data;
    evas_object_resize(fwin->bg_obj, fwin->win->w, fwin->win->h);
    evas_object_resize(fwin->scrollframe_obj, fwin->win->w, fwin->win->h);
+}
+
+static void
+_e_fwin_deleted(void *data, Evas_Object *obj, void *event_info)
+{
+   E_Fwin *fwin;
+   
+   fwin = data;
+   e_object_del(E_OBJECT(fwin));
 }
 
 static void
