@@ -71,6 +71,8 @@ struct _E_Config_Dialog_Data
 	Evas_Object *o_binding_list, *o_action_list;
 	Evas_Object *o_params;
      } gui;
+
+   E_Config_Dialog *cfd;
 };
 
 EAPI E_Config_Dialog *
@@ -132,7 +134,7 @@ _create_data(E_Config_Dialog *cfd)
    E_Config_Dialog_Data *cfdata;
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
-
+   cfdata->cfd = cfd;
    _fill_data(cfdata);
 
    return cfdata;
@@ -174,7 +176,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
 	bi = e_config->key_bindings->data;
 	e_bindings_key_del(bi->context, bi->key, bi->modifiers, bi->any_mod, 
-	      bi->action, bi->params);
+			   bi->action, bi->params);
 	e_config->key_bindings =
 	   evas_list_remove_list(e_config->key_bindings, e_config->key_bindings);
 
@@ -202,7 +204,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
 	e_config->key_bindings = evas_list_append(e_config->key_bindings, bi);
 	e_bindings_key_add(bi->context, bi->key, bi->modifiers, bi->any_mod,
-	      bi->action, bi->params);
+			   bi->action, bi->params);
      }
    e_managers_keys_grab();
    e_config_save_queue();
@@ -871,9 +873,13 @@ _key_binding_sort_cb(void *d1, void *d2)
 static void
 _grab_wnd_show(E_Config_Dialog_Data *cfdata)
 {
+   E_Manager *man;
+   
    if (cfdata->locals.bind_win != 0) return;
 
-   cfdata->locals.dia = e_dialog_new(e_container_current_get(e_manager_current_get()),
+   man = e_manager_current_get();
+   
+   cfdata->locals.dia = e_dialog_new(e_container_current_get(man),
 				     "E", "_keybind_getkey_dialog");
    if (!cfdata->locals.dia) return;
    e_dialog_title_set(cfdata->locals.dia, _("Key Binding Sequence"));
@@ -881,11 +887,11 @@ _grab_wnd_show(E_Config_Dialog_Data *cfdata)
    e_dialog_text_set(cfdata->locals.dia, TEXT_PRESS_KEY_SEQUENCE);
    e_win_centered_set(cfdata->locals.dia->win, 1);
    e_win_borderless_set(cfdata->locals.dia->win, 1);
-
-   cfdata->locals.bind_win = ecore_x_window_input_new(e_manager_current_get()->root, 0, 0, 1, 1);
+   
+   cfdata->locals.bind_win = ecore_x_window_input_new(man->root, 0, 0, 1, 1);
    ecore_x_window_show(cfdata->locals.bind_win);
    e_grabinput_get(cfdata->locals.bind_win, 0, cfdata->locals.bind_win);
-
+   
    cfdata->locals.handlers = evas_list_append(cfdata->locals.handlers,
 			      ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,
 				 _grab_key_down_cb, cfdata));
@@ -903,6 +909,7 @@ _grab_wnd_show(E_Config_Dialog_Data *cfdata)
 				 _grab_mouse_dumb_cb, NULL));
 
    e_dialog_show(cfdata->locals.dia);
+   ecore_x_icccm_transient_for_set(cfdata->locals.dia->win->evas_win, cfdata->cfd->dia->win->evas_win);
 }
 
 static void
