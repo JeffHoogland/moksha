@@ -8,7 +8,6 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: dnd does not work to/with/around ibar if ibar is on the desktop canvas
 * BUG: on resolution (down to a lower res) change windows used to be shuffled
   to a smaller size then reshuffled back to where they were when res goes up
   again - but this seems to have broken.
