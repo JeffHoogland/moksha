@@ -253,7 +253,7 @@ struct _E_Config
    int wallpaper_grad_c2_g; // INTERNAL
    int wallpaper_grad_c2_b; // INTERNAL
 
-   const char *theme_default_border_style;
+   const char *theme_default_border_style; // GUI
    
    Evas_List *mime_icons;
 };
