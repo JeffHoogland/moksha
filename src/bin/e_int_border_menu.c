@@ -30,6 +30,7 @@ static void _e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 static void _e_border_menu_cb_sendto(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_raise(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_lower(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_state_pre(void *data, E_Menu *m, E_Menu_Item *mi);
 
 EAPI void
 e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_Time timestamp)
@@ -164,8 +165,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	e_menu_item_callback_set(mi, _e_border_menu_cb_border, bd);
 	e_menu_item_icon_edje_set(mi,
 				  e_theme_edje_file_get("base/theme/borders",
-							"e/widgets/border/default/borders"),
-				  "e/widgets/border/default/borders");
+							"e/widgets/border/default/borderless"),
+				  "e/widgets/border/default/borderless");
      }
 
    if (!bd->sticky)
@@ -206,33 +207,17 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 				  "e/widgets/border/default/maximize");
      }
 
-   if ((!bd->lock_user_shade) && (!bd->fullscreen) && (!bd->maximized) &&
-       ((!bd->client.border.name) || (strcmp("borderless", bd->client.border.name))))
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Shaded"));
-	e_menu_item_check_set(mi, 1);
-	e_menu_item_toggle_set(mi, (bd->shaded ? 1 : 0));
-	e_menu_item_callback_set(mi, _e_border_menu_cb_shade, bd);
-	e_menu_item_icon_edje_set(mi,
-				  e_theme_edje_file_get("base/theme/borders",
-							"e/widgets/border/default/shade"),
-				  "e/widgets/border/default/shade");
-     }
-
-   if (!bd->lock_user_sticky)
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Sticky"));
-	e_menu_item_check_set(mi, 1);
-	e_menu_item_toggle_set(mi, (bd->sticky ? 1 : 0));
-	e_menu_item_callback_set(mi, _e_border_menu_cb_stick, bd);
-	e_menu_item_icon_edje_set(mi,
-				  e_theme_edje_file_get("base/theme/borders",
-							"e/widgets/border/default/stick"),
-				  "e/widgets/border/default/stick");
-     }
-  
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("State"));
+   e_menu_item_submenu_pre_callback_set(mi, _e_border_menu_cb_state_pre, bd);
+   e_menu_item_icon_edje_set(mi,
+			     e_theme_edje_file_get("base/theme/borders",
+						   "e/widgets/border/default/stick"),
+			     "e/widgets/border/default/stick");
+   
+   
+   /* Removed as Borderless is in the Borders dialog also */
+   /*
    if ((!bd->shaded) && (!bd->fullscreen) && (!bd->lock_border))
      {
 	mi = e_menu_item_new(m);
@@ -245,20 +230,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 							"e/widgets/border/default/borderless"),
 				  "e/widgets/border/default/borderless");
      }
+   */
    
-   if ((!bd->lock_user_fullscreen) && (!bd->shaded))
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Fullscreen"));
-	e_menu_item_check_set(mi, 1);
-	e_menu_item_toggle_set(mi, bd->fullscreen);
-	e_menu_item_callback_set(mi, _e_border_menu_cb_fullscreen, bd);
-	e_menu_item_icon_edje_set(mi,
-				  e_theme_edje_file_get("base/theme/borders",
-							"e/widgets/border/default/fullscreen"),
-				  "e/widgets/border/default/fullscreen");
-     }
-
    if ((bd->client.icccm.accepts_focus || bd->client.icccm.take_focus) &&
        (!bd->client.netwm.state.skip_taskbar))
      {
@@ -356,11 +329,8 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 				  e_theme_edje_file_get("base/theme/borders",
 							"e/widgets/border/default/stack_on_top"),
 				  "e/widgets/border/default/stack_below");
-	mi = e_menu_item_new(m);
-	e_menu_item_separator_set(mi, 1);
-	
      }
-   
+
    if ((!bd->lock_user_iconify) && (!bd->fullscreen))
      {
 	mi = e_menu_item_new(m);
@@ -894,3 +864,56 @@ _e_border_menu_cb_lower(void *data, E_Menu *m, E_Menu_Item *mi)
      }   
 }
 
+static void 
+_e_border_menu_cb_state_pre(void *data, E_Menu *m, E_Menu_Item *mi) 
+{
+   E_Border *bd = data;
+   E_Menu *subm;
+   E_Menu_Item *submi;
+   
+   if (!bd) return;
+
+   subm = e_menu_new();
+   e_object_data_set(E_OBJECT(subm), bd);
+   e_menu_item_submenu_set(mi, subm);
+   
+   if ((!bd->lock_user_shade) && (!bd->fullscreen) && (!bd->maximized) &&
+       ((!bd->client.border.name) || (strcmp("borderless", bd->client.border.name))))
+     {
+	submi = e_menu_item_new(subm);
+	e_menu_item_label_set(submi, _("Shaded"));
+	e_menu_item_check_set(submi, 1);
+	e_menu_item_toggle_set(submi, (bd->shaded ? 1 : 0));
+	e_menu_item_callback_set(submi, _e_border_menu_cb_shade, bd);
+	e_menu_item_icon_edje_set(submi,
+				  e_theme_edje_file_get("base/theme/borders",
+							"e/widgets/border/default/shade"),
+				  "e/widgets/border/default/shade");
+     }
+
+   if (!bd->lock_user_sticky)
+     {
+	submi = e_menu_item_new(subm);
+	e_menu_item_label_set(submi, _("Sticky"));
+	e_menu_item_check_set(submi, 1);
+	e_menu_item_toggle_set(submi, (bd->sticky ? 1 : 0));
+	e_menu_item_callback_set(submi, _e_border_menu_cb_stick, bd);
+	e_menu_item_icon_edje_set(submi,
+				  e_theme_edje_file_get("base/theme/borders",
+							"e/widgets/border/default/stick"),
+				  "e/widgets/border/default/stick");
+     }
+
+   if ((!bd->lock_user_fullscreen) && (!bd->shaded))
+     {
+	submi = e_menu_item_new(subm);
+	e_menu_item_label_set(submi, _("Fullscreen"));
+	e_menu_item_check_set(submi, 1);
+	e_menu_item_toggle_set(submi, bd->fullscreen);
+	e_menu_item_callback_set(submi, _e_border_menu_cb_fullscreen, bd);
+	e_menu_item_icon_edje_set(submi,
+				  e_theme_edje_file_get("base/theme/borders",
+							"e/widgets/border/default/fullscreen"),
+				  "e/widgets/border/default/fullscreen");
+     }
+}
