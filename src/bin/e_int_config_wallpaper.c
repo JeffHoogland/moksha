@@ -716,16 +716,9 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 		  
 		  cfbg = l->data;
 		  if (
-		      (((cfbg->container == z->container->num) ||
-			(cfbg->container < 0)) && 
-		       ((cfbg->zone == 0) ||
-			(cfbg->zone < 0)))
-		      ||
-		      (((cfbg->zone == z->num) ||
-			(cfbg->zone < 0)) && 
-		       ((cfbg->container == 0) ||
-			(cfbg->container < 0)))
-		      )
+		      (cfbg->container == z->container->num) &&
+		      (cfbg->zone == z->num) 
+		     )
 		    fl = evas_list_append(fl, cfbg);
 	       }
 	     while (fl)

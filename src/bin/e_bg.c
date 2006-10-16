@@ -14,22 +14,35 @@ e_bg_file_get(E_Zone *zone, E_Desk *desk)
 {
    Evas_List *l, *ll, *entries;
    int ok;
+   int current_spec;
    const char *bgfile = "";
 
 
    if (!zone) zone = e_zone_current_get(e_container_current_get(e_manager_current_get()));
 
    ok = 0;
+   current_spec = 0; /* how specific the setting is - we want the least general one that applies */
+
    /* look for desk specific background. if desk is NULL this is skipped */
    for (l = e_config->desktop_backgrounds; desk && l; l = l->next)
      {
 	E_Config_Desktop_Background *cfbg;
+	int spec;
 	
 	cfbg = l->data;
 	if ((cfbg->container >= 0) && (zone->container->num != cfbg->container)) continue;
 	if ((cfbg->zone >= 0) && (zone->num != cfbg->zone)) continue;
 	if ((cfbg->desk_x >= 0) && (cfbg->desk_x != desk->x)) continue;
 	if ((cfbg->desk_y >= 0) && (cfbg->desk_y != desk->y)) continue;
+
+	spec = 0;
+	if (cfbg->container >= 0) spec++;
+	if (cfbg->zone >= 0) spec++;
+	if (cfbg->desk_x >= 0) spec++;
+	if (cfbg->desk_y >= 0) spec++;
+
+	if (spec <= current_spec) continue;
+
 	entries = edje_file_collection_list(cfbg->file);
 	if (entries)
 	  {
@@ -38,13 +51,12 @@ e_bg_file_get(E_Zone *zone, E_Desk *desk)
 		  if (!strcmp(ll->data, "e/desktop/background"))
 		    {
 		       bgfile = cfbg->file;
+		       current_spec = spec;
 		       ok = 1;
-		       break;
 		    }
 	       }
 	     edje_file_collection_list_free(entries);
 	  }
-	break;
      }
    /* fall back to default bg for zone */
    if (!ok)
