@@ -537,7 +537,7 @@ _e_drag_win_matches(E_Drop_Handler *h, Ecore_X_Window win)
 	switch (h->obj->type)
 	  {
 	   case E_GADCON_TYPE:
-	     hwin = ecore_evas_software_x11_window_get(((E_Gadcon *)(h->obj))->ecore_evas);
+	     hwin = e_gadcon_dnd_window_get((E_Gadcon *)(h->obj));
 	     break;
 	   case E_WIN_TYPE:
 	     hwin = ((E_Win *)(h->obj))->evas_win;

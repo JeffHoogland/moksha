@@ -105,7 +105,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
      }
    else
      {
-	e_drop_xdnd_register_set(zone->container->bg_win, 1);
+	e_drop_xdnd_register_set(zone->container->event_win, 1);
 	es->ee = zone->container->bg_ecore_evas;
 	es->evas = zone->container->bg_evas;
      }
@@ -165,6 +165,10 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    edje_object_message_signal_process(es->o_base);
    e_gadcon_zone_set(es->gadcon, zone);
    e_gadcon_ecore_evas_set(es->gadcon, es->ee);
+   if (popup)
+     e_gadcon_dnd_window_set(es->gadcon, es->popup->evas_win);
+   else
+     e_gadcon_dnd_window_set(es->gadcon, zone->container->event_win);
    e_gadcon_util_menu_attach_func_set(es->gadcon,
 				      _e_shelf_cb_menu_items_append,
 				      es);
