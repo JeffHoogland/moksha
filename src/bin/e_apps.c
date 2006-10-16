@@ -2122,8 +2122,7 @@ _e_app_icon_type(E_App *a)
                          {
                             char *v = NULL;
 
-                    	    /* FIXME: Use a real icon size. */
-                    	    v = (char *)ecore_desktop_icon_find(a->icon_class, NULL, e_config->icon_theme);
+                    	    v = (char *)ecore_desktop_icon_find(a->icon_class, "64x64", e_config->icon_theme);
                     	    if (v)
                     	      {
                                  if (a->icon_path) evas_stringshare_del(a->icon_path);
