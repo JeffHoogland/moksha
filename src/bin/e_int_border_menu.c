@@ -290,10 +290,12 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	     e_menu_item_label_set(mi, _("Create Icon"));
 	     e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, bd);
 	  }
+	/*
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Add App To Launcher"));
 	e_util_menu_item_edje_icon_set(mi, "enlightenment/applications");
 	e_menu_item_callback_set(mi, _e_border_menu_cb_icon_add, bd);
+	*/ 
      }
    
    mi = e_menu_item_new(m);
