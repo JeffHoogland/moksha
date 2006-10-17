@@ -5,12 +5,6 @@
 
 #define OVERCLIP 128
 
-/* FIXME: display symlinks in icons somehow */
-/* FIXME: bug: drag multiple files doesnt display all files being dragged 
-          only 1 icon shown to be dragged (instead of at least a group) */
-/* FIXME: need a mapping of mimetype to actions to do on the file
- *        (e actions like import as wallpaper etc. as well as execute app
- *         X on the file based on what mimetypes the app handles) */
 /* FIXME: use edje messages & embryo for scrolling of bg's */
 /* FIXME: put in code to allow for custom icons per file/dir somehow */
 

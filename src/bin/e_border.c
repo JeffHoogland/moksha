@@ -509,9 +509,10 @@ e_border_res_change_geometry_restore(E_Border *bd)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (!bd->pre_res_change.valid) return;
+   if (bd->new_client) return;
    
    memcpy(&pre_res_change, &bd->pre_res_change, sizeof(pre_res_change));
-   
+
    if (bd->fullscreen)
      {
 	e_border_unfullscreen(bd);
@@ -814,7 +815,6 @@ e_border_fx_offset(E_Border *bd, int x, int y)
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
    if ((x == bd->fx.x) && (y == bd->fx.y)) return;
-   bd->pre_res_change.valid = 0;
    bd->fx.x = x;
    bd->fx.y = y;
    bd->changed = 1;

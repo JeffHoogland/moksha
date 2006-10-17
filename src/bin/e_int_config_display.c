@@ -10,10 +10,11 @@ static void        *_create_data             (E_Config_Dialog *cfd);
 static void         _free_data               (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int          _basic_apply_data        (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets    (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static void         _load_rates              (void *data);
+static void         _load_rates              (void *data, E_Config_Dialog_Data *cfdata);
 static void         _ilist_item_change       (void *data);
 static int          _deferred_noxrandr_error (void *data);
 
+/* FIXME: although this works.. this is nasty - shoudl be in cfdata */
 Evas_Object *rate_list = NULL;
 Evas_Object *res_list = NULL;
 
@@ -51,6 +52,7 @@ struct _E_Config_Dialog_Data
    int flip;
    int flip_x;
    int flip_y;
+   int orig_res, orig_refresh;
 
    SureBox *surebox;
 };
@@ -93,6 +95,8 @@ _surebox_dialog_cb_no(void *data, E_Dialog *dia)
    sb->cfdata->orig_size = sb->orig_size;
    sb->cfdata->orig_rate = sb->orig_rate;
    e_config_save_queue();
+   e_widget_ilist_selected_set(res_list, sb->cfdata->orig_res);
+   e_widget_ilist_selected_set(rate_list, sb->cfdata->orig_refresh);
    _surebox_dialog_cb_delete(dia->win);
 }
 
@@ -141,6 +145,8 @@ _surebox_timer_cb(void *data)
 	sb->cfdata->orig_size = sb->orig_size;
 	sb->cfdata->orig_rate = sb->orig_rate;
 	e_config_save_queue();
+	e_widget_ilist_selected_set(res_list, sb->cfdata->orig_res);
+	e_widget_ilist_selected_set(rate_list, sb->cfdata->orig_refresh);
 	sb->timer = NULL;
 	e_object_del(E_OBJECT(sb->dia));
 	sb->dia = NULL;
@@ -170,9 +176,9 @@ _surebox_new(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_dialog_button_add(sb->dia, _("Yes"), NULL, _surebox_dialog_cb_yes, sb);
    e_dialog_button_add(sb->dia, _("No"), NULL, _surebox_dialog_cb_no, sb);
    e_dialog_button_focus_num(sb->dia, 1);
+   e_win_centered_set(sb->dia->win, 1);
    e_win_borderless_set(sb->dia->win, 1);
    e_win_layer_set(sb->dia->win, 6);
-   e_win_centered_set(sb->dia->win, 1);
    e_win_sticky_set(sb->dia->win, 1);
    e_dialog_show(sb->dia);
    e_object_ref(E_OBJECT(cfd));
@@ -436,8 +442,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	     if ((res->size.width == size.width) &&
 		 (res->size.height == size.height)) 
 	       { 	     
+		  cfdata->orig_res = i;
 		  e_widget_ilist_selected_set(ol, i);
-		  _load_rates(res);	     		  
+		  _load_rates(res, cfdata);
 	       }
 	  }	
      }
@@ -489,7 +496,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 }
 
 static void
-_load_rates(void *data) 
+_load_rates(void *data, E_Config_Dialog_Data *cfdata)
 {
    int k, r;
    E_Manager *man;
@@ -509,7 +516,10 @@ _load_rates(void *data)
 	snprintf(buf, sizeof(buf), "%i Hz", rts[k].rate);
 	e_widget_ilist_append(rate_list, NULL, buf, NULL, NULL, NULL);
 	if (rt.rate == rts[k].rate) 
-	  e_widget_ilist_selected_set(rate_list, k);
+	  {
+	     if (cfdata) cfdata->orig_refresh = k;
+	     e_widget_ilist_selected_set(rate_list, k);
+	  }
      }   
    e_widget_ilist_selected_set(rate_list, 0);
 }
@@ -517,7 +527,7 @@ _load_rates(void *data)
 static void
 _ilist_item_change(void *data) 
 {
-   _load_rates(data);
+   _load_rates(data, NULL);
 }
 
 static int
