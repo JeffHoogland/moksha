@@ -71,7 +71,6 @@ struct _E_Config_Dialog_Data
 
    int bg_mode; // config
    char *bg; // config
-   Evas *evas; // local variable
    Evas_Object *preview_image; // local variable
 
 #ifdef HAVE_PAM
@@ -547,7 +546,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    z = e_zone_current_get(cfd->con);
    
-   cfdata->evas = evas;
+   cfdata->o_fm = NULL;
+   cfdata->o_frame = NULL;
    
    ot = e_widget_table_add(evas, 0);
    ol = e_widget_table_add(evas, 0);
