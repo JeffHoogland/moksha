@@ -7,8 +7,47 @@
 static void _e_bg_signal(void *data, Evas_Object *obj, const char *emission, const char *source);
 
 /* local subsystem globals */
+static int _e_bg_reg_files = 0;
 
 /* externally accessible functions */
+EAPI int 
+e_bg_init(void)
+{
+   Evas_List *l;
+
+   /* Register files in use */
+   if (e_config->desktop_default_background)
+      e_filereg_register(e_config->desktop_default_background);
+
+   for (l = e_config->desktop_backgrounds; l; l = l->next)
+     {
+       E_Config_Desktop_Background *cfbg;
+       cfbg = l->data;
+       e_filereg_register(cfbg->file);
+     }
+
+   return 1;
+}
+
+EAPI int 
+e_bg_shutdown(void)
+{
+   Evas_List *l;
+
+   /* Register files in use */
+   if (e_config->desktop_default_background)
+      e_filereg_deregister(e_config->desktop_default_background);
+
+   for (l = e_config->desktop_backgrounds; l; l = l->next)
+     {
+       E_Config_Desktop_Background *cfbg;
+       cfbg = l->data;
+       e_filereg_deregister(cfbg->file);
+     }
+
+   return 1;
+}
+
 EAPI const char *
 e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
 {
@@ -166,6 +205,24 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 }
 
 EAPI void
+e_bg_default_set(char * file)
+{
+    if (e_config->desktop_default_background)
+      {
+	 e_filereg_deregister(e_config->desktop_default_background);
+	 evas_stringshare_del(e_config->desktop_default_background);
+      }
+
+    if (file)
+      {
+	 e_filereg_register(file);
+	 e_config->desktop_default_background = evas_stringshare_add(file);
+      }
+    else
+       e_config->desktop_default_background = NULL;
+}
+
+EAPI void
 e_bg_add(int container, int zone, int desk_x, int desk_y, char *file)
 {
    E_Config_Desktop_Background *cfbg;
@@ -178,6 +235,7 @@ e_bg_add(int container, int zone, int desk_x, int desk_y, char *file)
    cfbg->desk_y = desk_y;
    cfbg->file = evas_stringshare_add(file);
    e_config->desktop_backgrounds = evas_list_append(e_config->desktop_backgrounds, cfbg);
+   e_filereg_register(cfbg->file);
 }
 
 EAPI void
@@ -194,6 +252,7 @@ e_bg_del(int container, int zone, int desk_x, int desk_y)
 	    (cfbg->desk_x == desk_x) && (cfbg->desk_y == desk_y))
 	  {
 	     e_config->desktop_backgrounds = evas_list_remove_list(e_config->desktop_backgrounds, l);
+	     e_filereg_deregister(cfbg->file);
 	     if (cfbg->file) evas_stringshare_del(cfbg->file);
 	     free(cfbg);
 	     break;
@@ -208,7 +267,7 @@ e_bg_update(void)
    E_Manager *man;
    E_Container *con;
    E_Zone *zone;
-   
+
    for (l = e_manager_list(); l; l = l->next)
      {
 	man = l->data;
@@ -249,3 +308,4 @@ _e_bg_signal(void *data, Evas_Object *obj, const char *emission, const char *sou
    evas_object_clip_set(zone->bg_object, zone->bg_clip_object);
    evas_object_show(zone->bg_object);
 }
+

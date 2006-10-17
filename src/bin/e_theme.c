@@ -271,6 +271,7 @@ EAPI void
 e_theme_file_set(const char *category, const char *file)
 {
    E_Theme_Result *res;
+   char buf[4096];
 
    if (group_cache)
      {
@@ -282,12 +283,16 @@ e_theme_file_set(const char *category, const char *file)
    if (res)
      {
 	mappings = evas_hash_del(mappings, category, res);
-	if (res->file) evas_stringshare_del(res->file);
+	if (res->file) {
+	     e_filereg_deregister(res->file);
+	     evas_stringshare_del(res->file);
+	}
 	if (res->cache) evas_stringshare_del(res->cache);
 	free(res);
      }
    res = calloc(1, sizeof(E_Theme_Result));
    res->file = evas_stringshare_add(file);
+   e_filereg_register(res->file);
    mappings = evas_hash_add(mappings, category, res);
 }
 

@@ -148,6 +148,7 @@
 #include "e_int_config_transitions.h"
 #include "e_obj_dialog.h"
 #include "e_fwin.h"
+#include "e_filereg.h"
 #include "e_widget_aspect.h"
 #include "e_widget_desk_preview.h"
 #include "e_int_config_borders.h"

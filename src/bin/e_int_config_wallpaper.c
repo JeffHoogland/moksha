@@ -515,12 +515,10 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	cfbg = e_config->desktop_backgrounds->data;
 	e_bg_del(cfbg->container, cfbg->zone, cfbg->desk_x, cfbg->desk_y);
      }
-   if (e_config->desktop_default_background)
-     evas_stringshare_del(e_config->desktop_default_background);
    if ((cfdata->use_theme_bg) || (!cfdata->bg))
-     e_config->desktop_default_background = NULL;
+     e_bg_default_set(NULL);
    else
-     e_config->desktop_default_background = evas_stringshare_add(cfdata->bg);
+     e_bg_default_set(cfdata->bg);
    
    cfdata->all_this_desk_screen = 0;
    
@@ -681,9 +679,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     cfbg = e_config->desktop_backgrounds->data;
 	     e_bg_del(cfbg->container, cfbg->zone, cfbg->desk_x, cfbg->desk_y);
 	  }
-	if (e_config->desktop_default_background)
-	  evas_stringshare_del(e_config->desktop_default_background);
-	e_config->desktop_default_background = NULL;
+	  e_bg_default_set(NULL);
      }
    else
      {
@@ -695,9 +691,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 		  cfbg = e_config->desktop_backgrounds->data;
 		  e_bg_del(cfbg->container, cfbg->zone, cfbg->desk_x, cfbg->desk_y);
 	       }
-	     if (e_config->desktop_default_background)
-	       evas_stringshare_del(e_config->desktop_default_background);
-	     e_config->desktop_default_background = evas_stringshare_add(cfdata->bg);
+	     e_bg_default_set(cfdata->bg);
 	  }
 	else if (cfdata->all_this_desk_screen == 1)
 	  {

@@ -489,6 +489,13 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(_e_main_dirs_shutdown);
+   /* setup file registry */
+   if (!e_filereg_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its file registry system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_filereg_shutdown);
    /* init config system */
    if (!e_config_init())
      {
@@ -553,6 +560,13 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_theme_shutdown);
+   /* init desktop background system */
+   if (!e_bg_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its desktop background system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_bg_init);
    if (!((!e_config->show_splash) || (after_restart)))
      {
 	/* setup init status window/screen */

@@ -4223,7 +4223,8 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
    E_Manager *man;
    E_Container *con;
    E_Zone *zone;
-   int x, y, can_w, can_w2;
+   Evas_List *sel;
+   int x, y, can_w, can_w2, protected;
    char buf[4096];
    
    sd = ic->sd;
@@ -4308,7 +4309,17 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	  snprintf(buf, sizeof(buf), "%s/.order", sd->realpath);
 	if (ecore_file_can_write(buf)) can_w = 1;
      }
-   if ((can_w) && (can_w2))
+   
+   sel = e_fm2_selected_list_get(ic->sd->obj);
+   if ((!sel) || evas_list_count(sel) == 1)
+     {
+	 snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, ic->info.file);
+	 protected = e_filereg_file_protected(buf);
+     }
+   else
+     protected = 0;
+
+   if ((can_w) && (can_w2) && !(protected))
      {
 	mi = e_menu_item_new(mn);
 	e_menu_item_separator_set(mi, 1);
@@ -4556,6 +4567,8 @@ _e_fm2_file_rename_yes_cb(char *text, void *data)
 	     snprintf(oldpath, sizeof(oldpath), "%s/%s", ic->sd->realpath, ic->info.file);
 	     snprintf(newpath, sizeof(newpath), "%s/%s", ic->sd->realpath, text);
 	  }
+	if (e_filereg_file_protected(oldpath)) return;
+
 	if (!ecore_file_mv(oldpath, newpath))
 	  {
 	     man = e_manager_current_get();
@@ -4665,7 +4678,7 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
    
    e_object_del(E_OBJECT(dialog));
    sel = e_fm2_selected_list_get(ic->sd->obj);
-   if (sel)
+   if (sel && (evas_list_count(sel) != 1))
      {
 	for (l = sel; l; l = l->next)
 	  {
@@ -4674,6 +4687,7 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
 	     if (!ici->pseudo_link)
 	       {
 		  snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ici->file);
+		  if (e_filereg_file_protected(buf)) continue;
 		  
 		  /* FIXME: recursive rm might block - need to get smart */
 		  if (!(ecore_file_recursive_rm(buf)))
@@ -4713,6 +4727,7 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
 	if (!ic->info.pseudo_link)
 	  {
 	     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
+	     if (e_filereg_file_protected(buf)) return;
 
 	     /* FIXME: recursive rm might block - need to get smart */
 	     if (!(ecore_file_recursive_rm(buf)))
