@@ -340,6 +340,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	     e_widget_ilist_append(cfdata->gui.font_list, NULL, f, NULL, NULL, f);
 	  }
      }
+   evas_font_available_list_free(evas, fonts);
    
    e_widget_ilist_go(cfdata->gui.font_list);
    e_widget_min_size_set(cfdata->gui.font_list, 100, 200);
