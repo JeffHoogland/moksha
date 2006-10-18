@@ -21,6 +21,7 @@ struct _Main_Data
 static void _e_int_menus_main_del_hook       (void *obj);
 static void _e_int_menus_main_about          (void *data, E_Menu *m, E_Menu_Item *mi);
 static int  _e_int_menus_main_run_defer_cb   (void *data);
+static void _e_int_menus_fwin_favorites_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_run            (void *data, E_Menu *m, E_Menu_Item*mi);
 static int  _e_int_menus_main_lock_defer_cb  (void *data);
 static void _e_int_menus_main_lock           (void *data, E_Menu *m, E_Menu_Item*mi);
@@ -98,6 +99,11 @@ e_int_menus_main_new(void)
    e_menu_item_submenu_set(mi, subm);
   
    mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Files"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/fileman");
+   e_menu_item_callback_set(mi, _e_int_menus_fwin_favorites_item_cb, NULL);
+   
+   mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Run Command"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/run");
    e_menu_item_callback_set(mi, _e_int_menus_main_run, NULL);	
@@ -113,19 +119,21 @@ e_int_menus_main_new(void)
    e_menu_item_submenu_set(mi, subm);
   
    subm = e_int_menus_clients_new();
+   e_object_data_set(E_OBJECT(subm), dat);   
    dat->clients = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Windows"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/windows");
    e_menu_item_submenu_set(mi, subm);
-  
+/*  
    subm = e_int_menus_lost_clients_new();
+   e_object_data_set(E_OBJECT(subm), dat);   
    dat->lost_clients = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Lost Windows"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/lost_windows");
    e_menu_item_submenu_set(mi, subm);
-   
+ */
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
@@ -145,6 +153,26 @@ e_int_menus_main_new(void)
    e_menu_item_label_set(mi, _("Configuration"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
    e_menu_item_submenu_set(mi, subm);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+
+   subm = e_menu_new();
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Advanced"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/advanced");
+   e_object_free_attach_func_set(E_OBJECT(subm), _e_int_menus_items_del_hook);
+   e_menu_item_submenu_set(mi, subm);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Restart Enlightenment"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/reset");
+   e_menu_item_callback_set(mi, _e_int_menus_main_restart, NULL);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Exit Enlightenment"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/exit");
+   e_menu_item_callback_set(mi, _e_int_menus_main_exit, NULL);
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
@@ -341,7 +369,7 @@ _e_int_menus_main_del_hook(void *obj)
 	e_object_del(E_OBJECT(dat->desktops));
 	e_object_del(E_OBJECT(dat->clients));
 	e_object_del(E_OBJECT(dat->config));
-	e_object_del(E_OBJECT(dat->lost_clients));
+	if (dat->lost_clients) e_object_del(E_OBJECT(dat->lost_clients));
 	e_object_del(E_OBJECT(dat->sys));
 	free(dat);
      }
@@ -376,6 +404,12 @@ _e_int_menus_main_run_defer_cb(void *data)
    zone = data;
    e_exebuf_show(zone);
    return 0;
+}
+
+static void
+_e_int_menus_fwin_favorites_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   e_fwin_new(m->zone->container, "favorites", "/");
 }
 
 static void
@@ -690,18 +724,6 @@ _e_int_menus_applications_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_int_menus_fwin_home_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   e_fwin_new(m->zone->container, "~/", "/");
-}
-
-static void
-_e_int_menus_fwin_favorites_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   e_fwin_new(m->zone->container, "favorites", "/");
-}
-
-static void
 _e_int_menus_config_pre_cb(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
@@ -742,19 +764,6 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    e_util_menu_item_edje_icon_set(mi, "enlightenment/applications");
    e_menu_item_callback_set(mi, _e_int_menus_applications_item_cb, NULL);
 
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Home Directory"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/fileman");
-   e_menu_item_callback_set(mi, _e_int_menus_fwin_home_item_cb, NULL);
-   
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Favorite Links"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/fileman");
-   e_menu_item_callback_set(mi, _e_int_menus_fwin_favorites_item_cb, NULL);
-   
    l = evas_hash_find(_e_int_menus_augmentation, "config");
    if (l)
      {
@@ -845,19 +854,6 @@ _e_int_menus_sys_pre_cb(void *data, E_Menu *m)
      }
    
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Restart Enlightenment"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/reset");
-   e_menu_item_callback_set(mi, _e_int_menus_main_restart, NULL);
-
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Exit Enlightenment"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/exit");
-   e_menu_item_callback_set(mi, _e_int_menus_main_exit, NULL);
-
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-   
-   mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Logout"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/logout");
    e_menu_item_callback_set(mi, _e_int_menus_main_logout, NULL);
@@ -877,10 +873,12 @@ _e_int_menus_sys_free_hook(void *obj)
 static void
 _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 {
+   E_Menu *subm;
    E_Menu_Item *mi;
    Evas_List *l, *borders = NULL, *alt = NULL;
    E_Zone *zone = NULL;
    E_Desk *desk = NULL;
+   Main_Data *dat;
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
    /* get the current clients */
@@ -903,7 +901,7 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 	/* FIXME here we want nothing, but that crashes!!! */
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("(No Windows)"));
-	return;
+//	return;
      }
    for (l = borders; l; l = l->next)
      {
@@ -935,6 +933,18 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
    e_menu_item_label_set(mi, _("Cleanup Windows"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/windows");
    e_menu_item_callback_set(mi, _e_int_menus_clients_cleanup_cb, zone);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+
+   dat = (Main_Data *)e_object_data_get(E_OBJECT(m));
+   subm = e_int_menus_lost_clients_new();
+   e_object_data_set(E_OBJECT(subm), e_object_data_get(E_OBJECT(m)));   
+   dat->lost_clients = subm;
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Lost Windows"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/lost_windows");
+   e_menu_item_submenu_set(mi, subm);
    
    e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_clients_free_hook);
    e_object_data_set(E_OBJECT(m), borders);
@@ -1067,8 +1077,7 @@ _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
 //	e_object_breadcrumb_add(E_OBJECT(bd), "lost_clients_menu");
 	e_menu_item_callback_set(mi, _e_int_menus_lost_clients_item_cb, bd);
 	a = bd->app;
-	if (a)
-             e_app_icon_add_to_menu_item(mi, a);
+	if (a) e_app_icon_add_to_menu_item(mi, a);
      }
    e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_lost_clients_free_hook);
    e_object_data_set(E_OBJECT(m), borders);
