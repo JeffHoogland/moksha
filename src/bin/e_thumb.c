@@ -180,6 +180,20 @@ e_thumb_icon_end(Evas_Object *obj)
 }
 
 EAPI void
+e_thumb_icon_rethumb(Evas_Object *obj)
+{
+   E_Thumb *eth;
+   eth = evas_object_data_get(obj, "e_thumbdata");
+   if (!eth) return;
+
+   if (eth->done) eth->done = 0;
+   else e_thumb_icon_end(obj);
+
+   e_thumb_icon_begin(obj);
+}
+
+
+EAPI void
 e_thumb_client_data(Ecore_Ipc_Event_Client_Data *e)
 {
    int objid;

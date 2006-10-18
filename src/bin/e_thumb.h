@@ -16,6 +16,7 @@ EAPI void                  e_thumb_icon_file_set(Evas_Object *obj, const char *f
 EAPI void                  e_thumb_icon_size_set(Evas_Object *obj, int w, int h);
 EAPI void                  e_thumb_icon_begin(Evas_Object *obj);
 EAPI void                  e_thumb_icon_end(Evas_Object *obj);
+EAPI void		   e_thumb_icon_rethumb(Evas_Object *obj);
 
 EAPI void                  e_thumb_client_data(Ecore_Ipc_Event_Client_Data *e);
 EAPI void                  e_thumb_client_del(Ecore_Ipc_Event_Client_Del *e);

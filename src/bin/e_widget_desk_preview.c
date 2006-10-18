@@ -4,7 +4,6 @@
 
 /* 
  * XXX need to detect when bg's change and update
- * XXX thumb doesn't properly change size 
  */
 #include "e.h"
 
@@ -164,7 +163,7 @@ _e_wid_reconfigure(E_Widget_Data *wd)
 	     e_widget_min_size_set(dw, mw, mh);
 	     e_widget_table_object_repack(wd->table, dw, dd->x, dd->y, 1, 1, 1, 1, 1, 1);
 	     e_thumb_icon_size_set(dd->thumb, tw, th);
-	     e_thumb_icon_begin(dd->thumb); /* XXX this isn't working - never ggetting new thumb */
+	     e_thumb_icon_rethumb(dd->thumb); 
 	  }
 	else
 	  {
