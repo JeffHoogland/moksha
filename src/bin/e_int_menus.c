@@ -934,17 +934,20 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
    e_util_menu_item_edje_icon_set(mi, "enlightenment/windows");
    e_menu_item_callback_set(mi, _e_int_menus_clients_cleanup_cb, zone);
 
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-
    dat = (Main_Data *)e_object_data_get(E_OBJECT(m));
-   subm = e_int_menus_lost_clients_new();
-   e_object_data_set(E_OBJECT(subm), e_object_data_get(E_OBJECT(m)));   
-   dat->lost_clients = subm;
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Lost Windows"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/lost_windows");
-   e_menu_item_submenu_set(mi, subm);
+   if (dat)
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_separator_set(mi, 1);
+
+	subm = e_int_menus_lost_clients_new();
+	e_object_data_set(E_OBJECT(subm), e_object_data_get(E_OBJECT(m)));   
+	dat->lost_clients = subm;
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Lost Windows"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/lost_windows");
+	e_menu_item_submenu_set(mi, subm);
+     }
    
    e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_clients_free_hook);
    e_object_data_set(E_OBJECT(m), borders);
