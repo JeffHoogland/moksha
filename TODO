@@ -63,8 +63,6 @@ Some of the things (in very short form) that need to be done to E17...
 
 * menus need to be able to limit max width (especialyl windows and lost
   windows menus) optionally.
-* about enlightenment and about theme could go into an "enlightenment"
-  submenu item to remove 1 menu item from the main menu
 * app menus should prune out menu submenus if the submenus only contain menus
   and no actual app desktop files (just a menus tree and nothing useful)
 * client list menu could do with work on ordering, using separators to demark

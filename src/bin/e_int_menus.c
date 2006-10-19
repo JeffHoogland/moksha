@@ -137,42 +137,45 @@ e_int_menus_main_new(void)
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
+   subm = e_menu_new();
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("About Enlightenment"));   
+   e_menu_item_label_set(mi, _("Enlightenment"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/e");
+   e_object_free_attach_func_set(E_OBJECT(subm), _e_int_menus_items_del_hook);
+   e_menu_item_submenu_set(mi, subm);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("About"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/e");
    e_menu_item_callback_set(mi, _e_int_menus_main_about, NULL);
 
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("About This Theme"));   
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Theme"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/themes");
    e_menu_item_callback_set(mi, _e_int_menus_themes_about, NULL);
    
+   mi = e_menu_item_new(subm);
+   e_menu_item_separator_set(mi, 1);
+   
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Restart"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/reset");
+   e_menu_item_callback_set(mi, _e_int_menus_main_restart, NULL);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Exit"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/exit");
+   e_menu_item_callback_set(mi, _e_int_menus_main_exit, NULL);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+
    subm = e_int_menus_config_new();
    dat->config = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Configuration"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
    e_menu_item_submenu_set(mi, subm);
-
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-
-   subm = e_menu_new();
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Advanced"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/advanced");
-   e_object_free_attach_func_set(E_OBJECT(subm), _e_int_menus_items_del_hook);
-   e_menu_item_submenu_set(mi, subm);
-
-   mi = e_menu_item_new(subm);
-   e_menu_item_label_set(mi, _("Restart Enlightenment"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/reset");
-   e_menu_item_callback_set(mi, _e_int_menus_main_restart, NULL);
-
-   mi = e_menu_item_new(subm);
-   e_menu_item_label_set(mi, _("Exit Enlightenment"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/exit");
-   e_menu_item_callback_set(mi, _e_int_menus_main_exit, NULL);
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
