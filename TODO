@@ -34,8 +34,6 @@ Some of the things (in very short form) that need to be done to E17...
 * fm2 needs a icon views (auto-arrange, snap to grid and free placement)
 * fm2 needs a way to bypass thumb gen anim on just a unrealize/realize as well
   as change state instantly if it already was selected
-* fm2 needs right click menu for enable/disable .order file (will change the
-  behavior of a dir on dnd and all sorts of stuff)
 * fm2 needs way to replace or extend the right click menu (disable/enable
   rename/delete/refresh etc.)
 * fm2 needs a mime filter

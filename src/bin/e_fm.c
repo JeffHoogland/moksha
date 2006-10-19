@@ -242,6 +242,7 @@ static void _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int time
 static void _e_fm2_icon_menu_post_cb(void *data, E_Menu *m);
 static void _e_fm2_refresh(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_toggle_hidden_files(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_toggle_ordering(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_new_directory(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_new_directory_delete_cb(void *obj);
 static void _e_fm2_new_directory_yes_cb(char *text, void *data);
@@ -4152,6 +4153,16 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
    e_menu_item_toggle_set(mi, sd->show_hidden_files);
    e_menu_item_callback_set(mi, _e_fm2_toggle_hidden_files, sd);
 
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Remember Ordering"));
+   e_menu_item_icon_edje_set(mi,
+			     e_theme_edje_file_get("base/theme/fileman",
+						   "e/fileman/button/ordering"),
+			     "e/fileman/button/ordering");
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, sd->order_file);
+   e_menu_item_callback_set(mi, _e_fm2_toggle_ordering, sd);
+
    if (ecore_file_can_write(sd->realpath))
      {
 	mi = e_menu_item_new(mn);
@@ -4250,6 +4261,16 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, sd->show_hidden_files);
    e_menu_item_callback_set(mi, _e_fm2_toggle_hidden_files, sd);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Remember Ordering"));
+   e_menu_item_icon_edje_set(mi,
+			     e_theme_edje_file_get("base/theme/fileman",
+						   "e/fileman/button/ordering"),
+			     "e/fileman/button/ordering");
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, sd->order_file);
+   e_menu_item_callback_set(mi, _e_fm2_toggle_ordering, sd);
 
    if (ecore_file_can_write(sd->realpath))
      {
@@ -4398,6 +4419,23 @@ _e_fm2_toggle_hidden_files(void *data, E_Menu *m, E_Menu_Item *mi)
    else
      sd->show_hidden_files = 1;
 
+   _e_fm2_refresh(data, m, mi);
+}
+
+static void
+_e_fm2_toggle_ordering(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd;
+   char buf[4096];
+   
+   sd = data;
+   if (sd->order_file)
+     {
+	snprintf(buf, sizeof(buf), "%s/.order", sd->realpath);
+	ecore_file_unlink(buf);
+     }
+   else
+     _e_fm2_order_file_rewrite(sd->obj);
    _e_fm2_refresh(data, m, mi);
 }
 
