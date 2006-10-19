@@ -426,7 +426,8 @@ e_app_new(const char *path, int scan_subdirs)
 		  snprintf(buf, sizeof(buf), "%s/.directory", path);
 		  if (ecore_file_exists(buf))
 		    e_app_fields_fill(a, buf);
-		  else
+		  /* Not all .directory files are created equal, some unknown file manager can create bogus ones. */
+		  if (!a->filled)
 		    {
 		       a->name = evas_stringshare_add(ecore_file_get_file(a->path));
 		       a->filled = 1;
