@@ -1,5 +1,43 @@
 images {
+   image: "e17_trans1.png" LOSSY 90;
+   image: "e17_trans2.png" LOSSY 90;
    image: "e17_transition_vswipe_gap.png" COMP;
+}
+
+group {
+   name: "e/transpreview/0";
+   parts {
+      part {
+	 name: "bg";
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    aspect: 1.33333333333 1.33333333333;
+	    aspect_preference: NONE;
+	    image {
+	       normal: "e17_trans1.png";
+	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "e/transpreview/1";
+   parts {
+      part {
+	 name: "bg";
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    aspect: 1.33333333333 1.33333333333;
+	    aspect_preference: NONE;
+	    image {
+	       normal: "e17_trans2.png";
+	    }
+	 }
+      }
+   }
 }
 
 group {

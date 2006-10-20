@@ -6,7 +6,7 @@
 typedef struct _E_Widget_Data E_Widget_Data;
 struct _E_Widget_Data
 {
-   Evas_Object *obj, *o_frame, *img, *o_thumb;
+   Evas_Object *obj, *o_frame, *img, *o_thumb, *o_extern;
 };
 
 static void _e_wid_del_hook(Evas_Object *obj);
@@ -50,6 +50,25 @@ e_widget_preview_add(Evas *evas, int minw, int minh)
    e_widget_sub_object_add(obj, o);
       
    return obj;
+}
+
+EAPI Evas *
+e_widget_preview_evas_get(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   return e_livethumb_evas_get(wd->img);
+}
+
+EAPI void
+e_widget_preview_extern_object_set(Evas_Object *obj, Evas_Object *eobj)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   wd->o_extern = eobj;
+   e_livethumb_thumb_set(wd->img, wd->o_extern);
 }
 
 EAPI int

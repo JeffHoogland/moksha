@@ -1,16 +1,8 @@
 #include "e.h"
 
-typedef struct _E_Widget_Data E_Widget_Data;
-struct _E_Widget_Data 
-{
-   Evas_Object *obj, *o_frame, *o_clip;
-   Evas_Object *prev_bg, *bg, *o_trans;
-};
-
-static void _e_wid_del_hook(Evas_Object *obj);
-static void _e_wid_done(void *data, Evas_Object *obj, const char *emission, const char *source);
-static Evas_Object *_trans_preview_add(Evas *evas, int minw, int minh);
-static void         _trans_preview_trans_set(Evas_Object *obj, const char *trans);
+static Evas_Object *_trans_preview_add(E_Config_Dialog_Data *cfdata, Evas *evas, int minw, int minh);
+static void         _e_wid_done(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void         _trans_preview_trans_set(E_Config_Dialog_Data *cfdata, const char *trans);
 
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -29,6 +21,9 @@ struct _E_Config_Dialog_Data
    Evas_Object *event_list;
    Evas_Object *trans_list;
    Evas_Object *tp;
+   Evas_Object *o_trans;
+   Evas_Object *o_prev_bg;
+   Evas_Object *o_bg;
 };
 
 EAPI E_Config_Dialog *
@@ -157,7 +152,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
 
    of = e_widget_framelist_add(evas, _("Preview"), 0);
-   ob = _trans_preview_add(evas, 300, ((300 * zone->h) / zone->w));
+   ob = _trans_preview_add(cfdata, evas, 300, ((300 * zone->h) / zone->w));
    cfdata->tp = ob;
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 2, 0, 1, 1, 1, 1, 1, 1);
@@ -246,132 +241,89 @@ _trans_cb_changed(void *data)
 	break;
      }
    if (!t) return;
-   _trans_preview_trans_set(cfdata->tp, t);
+   _trans_preview_trans_set(cfdata, t);
 }
 
 Evas_Object *
-_trans_preview_add(Evas *evas, int minw, int minh) 
+_trans_preview_add(E_Config_Dialog_Data *cfdata, Evas *evas, int minw, int minh) 
 {
    Evas_Object *obj, *o;
-   E_Widget_Data *wd;
    
-   obj = e_widget_add(evas);
-   e_widget_del_hook_set(obj, _e_wid_del_hook);
-   
-   wd = calloc(1, sizeof(E_Widget_Data));
-   wd->obj = obj;
+   obj = e_widget_preview_add(evas, minw, minh);
 
-   o = edje_object_add(evas);
-   wd->o_frame = o;
-   e_theme_edje_object_set(o, "base/theme/widgets", "e/widgets/preview");
+   o = edje_object_add(e_widget_preview_evas_get(obj));
+   cfdata->o_prev_bg = o;
+   e_theme_edje_object_set(o, "base/theme/widgets", "e/transpreview/1");
    evas_object_show(o);
-   e_widget_sub_object_add(obj, o);
-   e_widget_resize_object_set(obj, o);
+   e_widget_preview_extern_object_set(obj, o);
    
-   o = edje_object_add(evas);
-   wd->prev_bg = o;
-   e_theme_edje_object_set(o, "base/theme/backgrounds", "e/desktop/background");
-   evas_object_layer_set(o, -1);
-   evas_object_clip_set(o, wd->o_frame);
-   evas_object_show(o);
-   edje_object_part_swallow(wd->o_frame, "e.swallow.content", wd->prev_bg);
-   
-   e_widget_data_set(obj, wd);
-   e_widget_can_focus_set(obj, 0);
-   e_widget_min_size_set(obj, minw, minh);
-
    return obj;
 }
 
 static void 
-_trans_preview_trans_set(Evas_Object *obj, const char *trans) 
+_trans_preview_trans_set(E_Config_Dialog_Data *cfdata, const char *trans)
 {
-   Evas *evas;
    Evas_Object *o;
-   E_Widget_Data *wd;
    char buf[4096];
    
-   wd = e_widget_data_get(obj);
-   evas = evas_object_evas_get(wd->o_frame);
+   if (cfdata->o_trans)
+     evas_object_del(cfdata->o_trans);
+   if (cfdata->o_bg)
+     evas_object_del(cfdata->o_bg);
+   if (cfdata->o_prev_bg)
+     evas_object_del(cfdata->o_prev_bg);
    
-   if (wd->o_trans)
-     evas_object_del(wd->o_trans);
-   if (wd->bg)
-     evas_object_del(wd->bg);
-   if (wd->prev_bg)
-     evas_object_del(wd->prev_bg);
+   cfdata->o_trans = NULL;
+   cfdata->o_bg = NULL;
+   cfdata->o_prev_bg = NULL;
    
    snprintf(buf, sizeof(buf), "e/transitions/%s", trans);
 
-   o = edje_object_add(evas);
-   wd->o_trans = o;
-   e_theme_edje_object_set(wd->o_trans, "base/theme/transitions", buf);
-   edje_object_signal_callback_add(o, "e,state,done", "*", _e_wid_done, wd);
-   evas_object_layer_set(o, -1);
-   evas_object_clip_set(o, wd->o_frame);
+   o = edje_object_add(e_widget_preview_evas_get(cfdata->tp));
+   cfdata->o_trans = o;
+   e_theme_edje_object_set(cfdata->o_trans, "base/theme/transitions", buf);
+   edje_object_signal_callback_add(o, "e,state,done", "*", _e_wid_done, cfdata);
    evas_object_show(o);
-   edje_object_part_swallow(wd->o_frame, "e.swallow.content", wd->o_trans);
+   e_widget_preview_extern_object_set(cfdata->tp, o);
 
-   o = edje_object_add(evas);
-   wd->bg = o;
-   e_theme_edje_object_set(o, "base/theme/icons", "e/icons/enlightenment/e");
-   evas_object_layer_set(o, -1);
-   evas_object_clip_set(o, wd->o_frame);
+   o = edje_object_add(e_widget_preview_evas_get(cfdata->tp));
+   cfdata->o_bg = o;
+   e_theme_edje_object_set(o, "base/theme/widgets", "e/transpreview/0");
    evas_object_show(o);
 
-   o = edje_object_add(evas);
-   wd->prev_bg = o;
-   e_theme_edje_object_set(o, "base/theme/backgrounds", "e/desktop/background");
-   evas_object_layer_set(o, -1);
-   evas_object_clip_set(o, wd->o_frame);
+   o = edje_object_add(e_widget_preview_evas_get(cfdata->tp));
+   cfdata->o_prev_bg = o;
+   e_theme_edje_object_set(o, "base/theme/widgets", "e/transpreview/1");
    evas_object_show(o);
    
-   edje_object_part_swallow(wd->o_trans, "e.swallow.bg.old", wd->prev_bg);
-   edje_object_part_swallow(wd->o_trans, "e.swallow.bg.new", wd->bg);
-   edje_object_part_swallow(wd->o_frame, "e.swallow.content", wd->o_trans);
+   edje_object_part_swallow(cfdata->o_trans, "e.swallow.bg.old", cfdata->o_prev_bg);
+   edje_object_part_swallow(cfdata->o_trans, "e.swallow.bg.new", cfdata->o_bg);
    
-   edje_object_signal_emit(wd->o_trans, "e,action,start", "e");
-}
-
-static void 
-_e_wid_del_hook(Evas_Object *obj) 
-{
-   E_Widget_Data *wd;
-   
-   wd = e_widget_data_get(obj);
-   if (wd->o_frame)
-     evas_object_del(wd->o_frame);
-   if (wd->o_trans)
-     evas_object_del(wd->o_trans);
-   if (wd->bg)
-     evas_object_del(wd->bg);
-   if (wd->prev_bg)
-     evas_object_del(wd->prev_bg);
-   E_FREE(wd);
+   edje_object_signal_emit(cfdata->o_trans, "e,action,start", "e");
 }
 
 static void 
 _e_wid_done(void *data, Evas_Object *obj, const char *emission, const char *source) 
 {
-   E_Widget_Data *wd;
+   E_Config_Dialog_Data *cfdata;
    Evas_Object *o;
-   Evas *evas;
    
-   wd = data;
-   evas = evas_object_evas_get(wd->o_frame);
+   cfdata = data;
    
-   if (wd->o_trans) 
-     evas_object_del(wd->o_trans);
-   if (wd->bg)
-     evas_object_del(wd->bg);
-   if (wd->prev_bg)
-     evas_object_del(wd->prev_bg);
+   if (cfdata->o_trans) 
+     evas_object_del(cfdata->o_trans);
+   if (cfdata->o_bg)
+     evas_object_del(cfdata->o_bg);
+   if (cfdata->o_prev_bg)
+     evas_object_del(cfdata->o_prev_bg);
 
-   o = edje_object_add(evas);
-   wd->prev_bg = o;
-   e_theme_edje_object_set(o, "base/theme/backgrounds", "e/desktop/background");
-   evas_object_layer_set(o, -1);
-   evas_object_clip_set(o, wd->o_frame);
+   cfdata->o_trans = NULL;
+   cfdata->o_bg = NULL;
+   cfdata->o_prev_bg = NULL;
+   
+   o = edje_object_add(e_widget_preview_evas_get(cfdata->tp));
+   cfdata->o_prev_bg = o;
+   e_theme_edje_object_set(o, "base/theme/widgets", "e/transpreview/1");
    evas_object_show(o);
-   edje_object_part_swallow(wd->o_frame, "e.swallow.content", wd->prev_bg);
+   e_widget_preview_extern_object_set(cfdata->tp, o);
 }
