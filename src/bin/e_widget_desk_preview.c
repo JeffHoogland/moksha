@@ -15,6 +15,8 @@ struct _E_Widget_Data
    Evas_Object *table;
    Evas_List *desks;
 
+   Ecore_Event_Handler *update_handler;
+
    int w, h;
    int cur_x, cur_y; /* currently drawn */
    int desk_count_x, desk_count_y;
@@ -24,19 +26,32 @@ typedef struct _E_Widget_Desk_Data E_Widget_Desk_Data;
 struct _E_Widget_Desk_Data
 {
    Evas_Object *thumb;
+   int container, zone;
    int x, y;
 };
 
 static void _e_wid_reconfigure(E_Widget_Data *wd);
+static void _e_wid_desk_cb_menu(void *data, Evas_Object *obj, const char *signal, const char *source);
+static void _e_wid_cb_bg_update(void *data, int type, void *event);
 
 static void
 _e_wid_del_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
+   Evas_List *l;
 
    wd = e_widget_data_get(obj);
    if (!wd) return;
 
+   if (wd->update_handler) ecore_event_handler_del(wd->update_handler);
+   for (l = wd->desks; l; l = l->next)
+     {
+	Evas_Object *o;
+	E_Widget_Desk_Data *dd;
+	o = l->data;
+	dd = e_widget_data_get(o);
+	e_thumb_icon_end(o);
+     }
    evas_list_free(wd->desks);
    free(wd);
 }
@@ -81,6 +96,8 @@ e_widget_deskpreview_desk_add(Evas *evas, E_Zone *zone, int x, int y, int tw, in
 
    dd = calloc(1, sizeof(E_Widget_Desk_Data));
    e_widget_data_set(obj, dd);
+   dd->container = zone->container->num;
+   dd->zone = zone->num;
    dd->x = x;
    dd->y = y;
 
@@ -92,6 +109,7 @@ e_widget_deskpreview_desk_add(Evas *evas, E_Zone *zone, int x, int y, int tw, in
    evas_object_show(o);
    e_widget_sub_object_add(obj, o);
    overlay = o;
+   edje_object_signal_callback_add(o, "mouse,down,1", "e.event.menu", _e_wid_desk_cb_menu, dd);
 
    o = e_thumb_icon_add(evas);
    e_icon_fill_inside_set(o, 0);
@@ -102,6 +120,7 @@ e_widget_deskpreview_desk_add(Evas *evas, E_Zone *zone, int x, int y, int tw, in
    evas_object_show(o);
    e_widget_sub_object_add(obj, o);
    dd->thumb = o;
+
 
    return obj;
 }
@@ -230,7 +249,51 @@ e_widget_desk_preview_add(Evas *evas, int nx, int ny)
 
    e_widget_desk_preview_num_desks_set(obj, nx, ny);
 
+   wd->update_handler = ecore_event_handler_add(E_EVENT_BG_UPDATE, _e_wid_cb_bg_update, wd);
+
    return obj;
 }
 
+static void
+_e_wid_desk_cb_menu(void *data, Evas_Object *obj, const char *signal, const char *source)
+{
+   E_Widget_Desk_Data *dd;
 
+   dd = data;
+   /* XXX change this to display a menu with the option to set the desktop name or change the desktop bg */
+   e_int_config_wallpaper_desk(dd->container, dd->zone, dd->x, dd->y);
+}
+
+static void
+_e_wid_cb_bg_update(void *data, int type, void *event)
+{
+   E_Event_Bg_Update *ev;
+   E_Widget_Data *wd;
+   Evas_List *l;
+
+   if (type != E_EVENT_BG_UPDATE) return;
+
+   wd = data;
+   ev = event;
+
+   for(l = wd->desks; l; l = l->next)
+     {
+	Evas_Object *o;
+	E_Widget_Desk_Data *dd;
+	o = l->data;
+	dd = e_widget_data_get(o);
+
+	if (!dd) 
+	  continue;
+
+	if (((ev->container < 0) || (dd->container == ev->container)) &&
+	    ((ev->zone < 0) || (dd->zone == ev->zone)) &&
+	    ((ev->desk_x < 0) || (dd->x == ev->desk_x)) &&
+	    ((ev->desk_y < 0) || (dd->y == ev->desk_y)))
+	  {
+	     const char *bgfile = e_bg_file_get(dd->container, dd->zone, dd->x, dd->y);
+	     e_thumb_icon_file_set(dd->thumb, bgfile, "e/desktop/background");
+	     e_thumb_icon_rethumb(dd->thumb);
+	  }
+     }
+}

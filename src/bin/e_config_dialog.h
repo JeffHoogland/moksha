@@ -22,6 +22,7 @@ typedef struct _E_Config_Dialog_Data E_Config_Dialog_Data;
 struct _E_Config_Dialog_View
 {
    int override_auto_apply;
+   int basic_only;
    
    void           *(*create_cfdata)     (E_Config_Dialog *cfd);
    void            (*free_cfdata)       (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);

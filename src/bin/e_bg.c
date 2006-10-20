@@ -5,9 +5,12 @@
 
 /* local subsystem functions */
 static void _e_bg_signal(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _e_bg_event_bg_update_free(void *data, void *event);
 
 /* local subsystem globals */
 static int _e_bg_reg_files = 0;
+
+EAPI int E_EVENT_BG_UPDATE = 0;
 
 /* externally accessible functions */
 EAPI int 
@@ -26,6 +29,7 @@ e_bg_init(void)
        e_filereg_register(cfbg->file);
      }
 
+   E_EVENT_BG_UPDATE = ecore_event_type_new();
    return 1;
 }
 
@@ -48,16 +52,18 @@ e_bg_shutdown(void)
    return 1;
 }
 
-EAPI const char *
-e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
+/**
+ * Find the configuration for a given desktop background
+ * Use -1 as a wild card for each parameter.
+ * The most specific match will be returned
+ */
+EAPI const E_Config_Desktop_Background *
+e_bg_config_get(int container_num, int zone_num, int desk_x, int desk_y)
 {
    Evas_List *l, *ll, *entries;
-   int ok;
-   int current_spec;
-   const char *bgfile = "";
 
-   ok = 0;
-   current_spec = 0; /* how specific the setting is - we want the least general one that applies */
+   E_Config_Desktop_Background *bg = NULL;
+   int current_spec = 0; /* how specific the setting is - we want the least general one that applies */
 
    /* look for desk specific background. */
    if (container_num >= 0 || zone_num >= 0 || desk_x >= 0 || desk_y >= 0)
@@ -88,24 +94,38 @@ e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
 		    {
 		       if (!strcmp(ll->data, "e/desktop/background"))
 			 {
-			    bgfile = cfbg->file;
+			    bg = cfbg;
 			    current_spec = spec;
-			    ok = 1;
 			 }
 		    }
 		  edje_file_collection_list_free(entries);
 	       }
 	  }
      }
+   return bg;
+}
+
+EAPI const char *
+e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
+{
+   const E_Config_Desktop_Background *cfbg;
+   Evas_List *l, *entries;
+   const char *bgfile = "";
+   int ok = 0;
+
+   cfbg = e_bg_config_get(container_num, zone_num, desk_x, desk_y);
+
    /* fall back to default */
-   if (!ok)
+   if (cfbg)
+     bgfile = cfbg->file;
+   else
      {
 	entries = edje_file_collection_list(e_config->desktop_default_background);
 	if (entries)
 	  {
-	     for (ll = entries; ll; ll = ll->next)
+	     for (l = entries; l; l = l->next)
 	       {
-		  if (!strcmp(ll->data, "e/desktop/background"))
+		  if (!strcmp(l->data, "e/desktop/background"))
 		    {
 		       bgfile = e_config->desktop_default_background;
 		       ok = 1;
@@ -119,6 +139,7 @@ e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
 	     bgfile = e_theme_edje_file_get("base/theme/background", "e/desktop/background");
 	  }
      }
+
    return bgfile;
 }
 
@@ -207,25 +228,35 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 EAPI void
 e_bg_default_set(char * file)
 {
-    if (e_config->desktop_default_background)
-      {
-	 e_filereg_deregister(e_config->desktop_default_background);
-	 evas_stringshare_del(e_config->desktop_default_background);
-      }
+   E_Event_Bg_Update *ev;
 
-    if (file)
-      {
-	 e_filereg_register(file);
-	 e_config->desktop_default_background = evas_stringshare_add(file);
-      }
-    else
-       e_config->desktop_default_background = NULL;
+   if (e_config->desktop_default_background)
+     {
+	e_filereg_deregister(e_config->desktop_default_background);
+	evas_stringshare_del(e_config->desktop_default_background);
+     }
+
+   if (file)
+     {
+	e_filereg_register(file);
+	e_config->desktop_default_background = evas_stringshare_add(file);
+     }
+   else
+     e_config->desktop_default_background = NULL;
+
+   ev = E_NEW(E_Event_Bg_Update, 1);
+   ev->container = -1;
+   ev->zone = -1;
+   ev->desk_x = -1;
+   ev->desk_y = -1;
+   ecore_event_add(E_EVENT_BG_UPDATE, ev, _e_bg_event_bg_update_free, NULL);
 }
 
 EAPI void
 e_bg_add(int container, int zone, int desk_x, int desk_y, char *file)
 {
    E_Config_Desktop_Background *cfbg;
+   E_Event_Bg_Update *ev;
    
    e_bg_del(container, zone, desk_x, desk_y);
    cfbg = E_NEW(E_Config_Desktop_Background, 1);
@@ -235,13 +266,22 @@ e_bg_add(int container, int zone, int desk_x, int desk_y, char *file)
    cfbg->desk_y = desk_y;
    cfbg->file = evas_stringshare_add(file);
    e_config->desktop_backgrounds = evas_list_append(e_config->desktop_backgrounds, cfbg);
+   
    e_filereg_register(cfbg->file);
+
+   ev = E_NEW(E_Event_Bg_Update, 1);
+   ev->container = container;
+   ev->zone = zone;
+   ev->desk_x = desk_x;
+   ev->desk_y = desk_y;
+   ecore_event_add(E_EVENT_BG_UPDATE, ev, _e_bg_event_bg_update_free, NULL);
 }
 
 EAPI void
 e_bg_del(int container, int zone, int desk_x, int desk_y)
 {
    Evas_List *l;
+   E_Event_Bg_Update *ev;
    
    for (l = e_config->desktop_backgrounds; l; l = l->next)
      {
@@ -258,6 +298,13 @@ e_bg_del(int container, int zone, int desk_x, int desk_y)
 	     break;
 	  }
      }
+
+   ev = E_NEW(E_Event_Bg_Update, 1);
+   ev->container = container;
+   ev->zone = zone;
+   ev->desk_x = desk_x;
+   ev->desk_y = desk_y;
+   ecore_event_add(E_EVENT_BG_UPDATE, ev, _e_bg_event_bg_update_free, NULL);
 }
 
 EAPI void
@@ -309,3 +356,8 @@ _e_bg_signal(void *data, Evas_Object *obj, const char *emission, const char *sou
    evas_object_show(zone->bg_object);
 }
 
+static void
+_e_bg_event_bg_update_free(void *data, void *event)
+{
+   free(event);
+}

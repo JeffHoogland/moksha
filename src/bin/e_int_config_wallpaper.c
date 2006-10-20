@@ -12,6 +12,17 @@ static Evas_Object *_basic_create_widgets       (E_Config_Dialog *cfd, Evas *eva
 static int          _advanced_apply_data        (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets    (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
+#define E_CONFIG_WALLPAPER_ALL 0
+#define E_CONFIG_WALLPAPER_DESK 1
+#define E_CONFIG_WALLPAPER_SCREEN 2
+
+struct _E_Config_Wallpaper
+{
+   int specific_config;
+   int con_num, zone_num;
+   int desk_x, desk_y;
+};
+
 struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
@@ -23,9 +34,10 @@ struct _E_Config_Dialog_Data
    Evas_Object *o_personal;
    Evas_Object *o_system;
    int fmdir;
-   
+
    int use_theme_bg;
    char *bg;
+
    /* advanced */
    int all_this_desk_screen;
    /* dialogs */
@@ -36,23 +48,48 @@ struct _E_Config_Dialog_Data
 EAPI E_Config_Dialog *
 e_int_config_wallpaper(E_Container *con)
 {
+   E_Zone *zone;
+   return e_int_config_wallpaper_desk(-1, -1, -1, -1);
+}
+
+EAPI E_Config_Dialog *
+e_int_config_wallpaper_desk(int con_num, int zone_num, int desk_x, int desk_y)
+{
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
+   E_Config_Wallpaper *cw;
+   E_Container *con;
 
    if (e_config_dialog_find("E", "_config_wallpaper_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
-   
+   cw = E_NEW(E_Config_Wallpaper, 1);
+  
    v->create_cfdata           = _create_data;
    v->free_cfdata             = _free_data;
    v->basic.apply_cfdata      = _basic_apply_data;
    v->basic.create_widgets    = _basic_create_widgets;
-   v->advanced.apply_cfdata   = _advanced_apply_data;
-   v->advanced.create_widgets = _advanced_create_widgets;
+
+   if (!(con_num == -1 && zone_num == -1 && desk_x == -1 && desk_y == -1))
+     cw->specific_config = 1;
+   else
+     {
+	v->advanced.apply_cfdata   = _advanced_apply_data;
+	v->advanced.create_widgets = _advanced_create_widgets;
+     }
+
    v->override_auto_apply = 1;
+
+   cw->con_num = con_num;
+   cw->zone_num = zone_num;
+   cw->desk_x = desk_x;
+   cw->desk_y = desk_y;
+
+   con = e_container_current_get(e_manager_current_get());
+
    cfd = e_config_dialog_new(con,
 			     _("Wallpaper Settings"),
 			     "E", "_config_wallpaper_dialog",
-			     "enlightenment/background", 0, v, NULL);
+			     "enlightenment/background", 0, v, cw);
    return cfd;
 }
 
@@ -318,45 +355,52 @@ _cb_gradient(void *data1, void *data2)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
-   E_Zone *z;
-   E_Desk *d;
    Evas_List *l;
    char path[4096];
-   
-   if (e_config->desktop_default_background)
-     cfdata->bg = strdup(e_config->desktop_default_background);
-   
-   z = e_zone_current_get(cfdata->cfd->con);
-   if (!z) return;
-   d = e_desk_current_get(z);
-   if (!d) return;
-   for (l = e_config->desktop_backgrounds; l; l = l->next)
+   E_Config_Wallpaper *cw;
+   const E_Config_Desktop_Background *cfbg;
+  
+   cw = cfdata->cfd->data;
+
+   if (cw->specific_config)
      {
-	E_Config_Desktop_Background *cfbg;
-	
-	cfbg = l->data;
-	if (((cfbg->container == z->container->num) ||
-	     (cfbg->container < 0)) && 
-	    ((cfbg->zone == z->num) ||
-	     (cfbg->zone < 0)) &&
-	    ((cfbg->desk_x == d->x) ||
-	     (cfbg->desk_x < 0)) && 
-	    ((cfbg->desk_y == d->y) ||
-	     (cfbg->desk_y < 0)))
+	const char *bg;
+	/* specific config passed in. set for that only */
+	bg = e_bg_file_get(cw->con_num, cw->zone_num, cw->desk_x, cw->desk_y);
+	if (bg) cfdata->bg = strdup(bg);
+     }
+   else
+     {
+	/* get current desk. advanced mode allows selecting all, screen or desk */
+	E_Container *c;
+	E_Zone *z;
+	E_Desk *d;
+
+	c = e_container_current_get(e_manager_current_get());
+	z = e_zone_current_get(c);
+	d = e_desk_current_get(z);
+
+	cfbg = e_bg_config_get(c->num, z->num, d->x, d->y);
+	/* if we have a config for this bg, use it. */
+	if (cfbg)
 	  {
+	     if (cfbg->container >= 0 && cfbg->zone >= 0)
+	       {
+		  if (cfbg->desk_x >= 0 && cfbg->desk_y >= 0)
+		    cfdata->all_this_desk_screen = E_CONFIG_WALLPAPER_DESK;
+		  else
+		    cfdata->all_this_desk_screen = E_CONFIG_WALLPAPER_SCREEN;
+	       }
 	     E_FREE(cfdata->bg);
 	     cfdata->bg = strdup(cfbg->file);
-	     if ((cfbg->container >= 0) ||
-		 (cfbg->zone >= 0))
-	       cfdata->all_this_desk_screen = 2;
-	     if ((cfbg->desk_x >= 0) ||
-		 (cfbg->desk_y >= 0))
-	       cfdata->all_this_desk_screen = 1;
-	     break;
 	  }
      }
 
-   if (!cfdata->bg) cfdata->use_theme_bg = 1;
+   if (!cfdata->bg && e_config->desktop_default_background)
+     cfdata->bg = strdup(e_config->desktop_default_background);
+   else
+     cfdata->use_theme_bg = 1;
+
    if (cfdata->bg)
      {
 	snprintf(path, sizeof(path), "%s/data/backgrounds", e_prefix_data_get());
@@ -383,6 +427,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->win_import) e_int_config_wallpaper_del(cfdata->win_import);
    if (cfdata->dia_gradient) e_int_config_wallpaper_gradient_del(cfdata->dia_gradient);
    E_FREE(cfdata->bg);
+   E_FREE(cfd->data);
    free(cfdata);
 }
 
@@ -509,19 +554,33 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   while (e_config->desktop_backgrounds)
+   E_Config_Wallpaper *cw;
+
+   cw = cfd->data;
+   if (cw->specific_config)
      {
-	E_Config_Desktop_Background *cfbg;
-	cfbg = e_config->desktop_backgrounds->data;
-	e_bg_del(cfbg->container, cfbg->zone, cfbg->desk_x, cfbg->desk_y);
+	/* update a specific config */
+	e_bg_del(cw->con_num, cw->zone_num, cw->desk_x, cw->desk_y);
+	e_bg_add(cw->con_num, cw->zone_num, cw->desk_x, cw->desk_y, cfdata->bg);
      }
-   if ((cfdata->use_theme_bg) || (!cfdata->bg))
-     e_bg_default_set(NULL);
    else
-     e_bg_default_set(cfdata->bg);
+     {
+	/* set the default and nuke individual configs */
+	while (e_config->desktop_backgrounds)
+	  {
+	     E_Config_Desktop_Background *cfbg;
+	     cfbg = e_config->desktop_backgrounds->data;
+	     e_bg_del(cfbg->container, cfbg->zone, cfbg->desk_x, cfbg->desk_y);
+	  }
+	if ((cfdata->use_theme_bg) || (!cfdata->bg))
+	  e_bg_default_set(NULL);
+	else
+	  e_bg_default_set(cfdata->bg);
+
+	cfdata->all_this_desk_screen = 0;
+     }
    
-   cfdata->all_this_desk_screen = 0;
-   
+
    e_bg_update();
    e_config_save_queue();
    return 1;
@@ -642,11 +701,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_content_align_set(ol, 0.0, 0.0);
    rg = e_widget_radio_group_new(&(cfdata->all_this_desk_screen));
 
-   o = e_widget_radio_add(evas, _("All Desktops"), 0, rg);
+   o = e_widget_radio_add(evas, _("All Desktops"), E_CONFIG_WALLPAPER_ALL, rg);
    e_widget_framelist_object_append(ol, o);
-   o = e_widget_radio_add(evas, _("This Desktop"), 1, rg);
+   o = e_widget_radio_add(evas, _("This Desktop"), E_CONFIG_WALLPAPER_DESK, rg);
    e_widget_framelist_object_append(ol, o);
-   o = e_widget_radio_add(evas, _("This Screen"), 2, rg);
+   o = e_widget_radio_add(evas, _("This Screen"), E_CONFIG_WALLPAPER_SCREEN, rg);
    if (!((e_util_container_zone_number_get(0, 1)) ||
 	 (e_util_container_zone_number_get(1, 0))))
      e_widget_disabled_set(o, 1);
@@ -683,7 +742,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      }
    else
      {
-	if (cfdata->all_this_desk_screen == 0)
+	if (cfdata->all_this_desk_screen == E_CONFIG_WALLPAPER_ALL)
 	  {
 	     while (e_config->desktop_backgrounds)
 	       {
@@ -693,7 +752,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	       }
 	     e_bg_default_set(cfdata->bg);
 	  }
-	else if (cfdata->all_this_desk_screen == 1)
+	else if (cfdata->all_this_desk_screen == E_CONFIG_WALLPAPER_DESK)
 	  {
 	     e_bg_del(z->container->num, z->num, d->x, d->y);
 	     e_bg_del(z->container->num, -1, d->x, d->y);
@@ -702,7 +761,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     e_bg_add(z->container->num, z->num, d->x, d->y, cfdata->bg);
 	     
 	  }
-	else if (cfdata->all_this_desk_screen == 2)
+	else if (cfdata->all_this_desk_screen == E_CONFIG_WALLPAPER_SCREEN)
 	  {
 	     for (l = e_config->desktop_backgrounds; l; l = l->next)
 	       {
