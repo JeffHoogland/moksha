@@ -511,6 +511,9 @@ e_app_new(const char *path, int scan_subdirs)
      {
 	if (a->monitor) ecore_file_monitor_del(a->monitor);
 	if (a->path) evas_stringshare_del(a->path);
+	/* Just going that little extra paranoid, coz rephorm got a strange seggie. */
+	a->monitor = NULL;
+	a->path = NULL;
 	e_app_fields_empty(a);
 	free(a);
      }
@@ -1000,7 +1003,8 @@ e_app_remove(E_App *a)
         _e_apps_every_app = evas_hash_del(_e_apps_every_app, a->path, a);
 	evas_stringshare_del(a->path);
 	a->path = evas_stringshare_add(buf);
-        _e_apps_every_app = evas_hash_direct_add(_e_apps_every_app, a->path, a);
+	if (a->path)
+           _e_apps_every_app = evas_hash_direct_add(_e_apps_every_app, a->path, a);
      }
    _e_app_save_order(a->parent);
    for (l = a->references; l; l = l->next)
@@ -1742,7 +1746,7 @@ e_app_fields_fill(E_App *a, const char *path)
    if ( (ext) && ((strcmp(ext, ".desktop") == 0) || (strcmp(ext, ".directory") == 0)) )
      {   /* It's a .desktop file. */
 	Ecore_Desktop *desktop;
-	
+
 	desktop = ecore_desktop_get(path, lang);
 	if (desktop)
 	  {
@@ -2185,18 +2189,22 @@ printf("e_app_icon_add(%s)   %s   %s   %s\n", a->path, a->icon_class, e_config->
           {
              char *ext;
 
-             o = e_icon_add(evas);
-             ext = strrchr(a->icon_path, '.');
-             if (ext)
-                {
-                   if (strcmp(ext, ".edj") == 0)
-                      e_icon_file_edje_set(o, a->icon_path, "icon");
-                   else
-                      e_icon_file_set(o, a->icon_path);
-                }
-             else
-                e_icon_file_set(o, a->icon_path);
-             e_icon_fill_inside_set(o, 1);
+             /* Be paranoid. */
+             if (a->icon_path)
+	       {
+                  o = e_icon_add(evas);
+                  ext = strrchr(a->icon_path, '.');
+                  if (ext)
+                     {
+                        if (strcmp(ext, ".edj") == 0)
+                           e_icon_file_edje_set(o, a->icon_path, "icon");
+                        else
+                           e_icon_file_set(o, a->icon_path);
+                     }
+                  else
+                     e_icon_file_set(o, a->icon_path);
+                  e_icon_fill_inside_set(o, 1);
+	       }
 	     break;
           }
 
@@ -2242,16 +2250,20 @@ printf("e_app_icon_add_to_menu_item(%s)   %s   %s   %s\n", a->path, a->icon_clas
           {
              char *ext;
 
-             ext = strrchr(a->icon_path, '.');
-             if (ext)
-                {
-                    if (strcmp(ext, ".edj") == 0)
-                       e_menu_item_icon_edje_set(mi, a->icon_path, "icon");
-                    else
-                       e_menu_item_icon_file_set(mi, a->icon_path);
-                }
-             else
-                e_menu_item_icon_file_set(mi, a->icon_path);
+             /* Be paranoid. */
+             if (a->icon_path)
+	       {
+                  ext = strrchr(a->icon_path, '.');
+                  if (ext)
+                     {
+                         if (strcmp(ext, ".edj") == 0)
+                            e_menu_item_icon_edje_set(mi, a->icon_path, "icon");
+                         else
+                            e_menu_item_icon_file_set(mi, a->icon_path);
+                     }
+                  else
+                     e_menu_item_icon_file_set(mi, a->icon_path);
+	       }
 	     break;
           }
 
@@ -2357,6 +2369,9 @@ _e_app_free(E_App *a)
 	e_app_fields_empty(a);
 	if (a->path)
 	  evas_stringshare_del(a->path);
+	/* Just going that little extra paranoid, coz rephorm got a strange seggie. */
+	a->monitor = NULL;
+	a->path = NULL;
 	free(a);
      }
 }
