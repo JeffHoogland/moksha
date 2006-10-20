@@ -45,7 +45,7 @@ e_fdo_menu_to_order(void)
       {
          struct category_data cat_data;
 
-         // FIXME: search out all .desktop files and generate menus ala e17genmenu.
+         /* search out all .desktop files and generate menus ala e17genmenu. */
          ecore_desktop_instrumentation_reset();
          cat_data.menus = ecore_hash_new(ecore_str_hash, ecore_str_compare);
 	 if (cat_data.menus)
@@ -69,37 +69,43 @@ _e_fdo_menu_to_order_make_apps(char *name, char *path, char *directory, Ecore_Ha
       {
          ecore_sheap_set_free_cb(order_data.sheap, free);
          snprintf(order_data.order_path, sizeof(order_data.order_path), "%s/.e/e/applications/menu/all/%s", e_user_homedir_get(), path);
+         /* Collect the apps. */
+         ecore_hash_for_each_node(apps, _e_fdo_menu_to_order_dump_each_hash_node, &order_data);
+
          /* Check if we need to create the directory. */
-         if (!ecore_file_exists(order_data.order_path))
+         if ((order_data.sheap->size) && (!ecore_file_exists(order_data.order_path)))
             {
+               Ecore_Sheap *sheap;
                const char *temp;
 
-               ecore_file_mkpath(order_data.order_path);
-               /* If we create a dir, we add it to the parents .order file. */
-	       menu_count++;
+               sheap = ecore_sheap_new(ecore_str_compare, 100);
                temp = ecore_file_get_dir((const char *) order_data.order_path);
-	       if (temp)
+	       if ((sheap) && (temp))
 	          {
-                     _e_fdo_menu_to_order_add_sheap(order_data.sheap, temp, ecore_file_get_file(order_data.order_path));
-		     free((char *) temp);
-		     /* We just used the sheap, but we want it clear for next time. */
-                     ecore_sheap_destroy(order_data.sheap);
-                     order_data.sheap = ecore_sheap_new(ecore_str_compare, 100);
-                     ecore_sheap_set_free_cb(order_data.sheap, free);
+                     ecore_sheap_set_free_cb(sheap, free);
+                     ecore_file_mkpath(order_data.order_path);
+	             menu_count++;
+                     /* If we create a dir, we add it to the parents .order file. */
+                     _e_fdo_menu_to_order_add_sheap(sheap, temp, ecore_file_get_file(order_data.order_path));
 		  }
-	       if (directory)
-	         {
-                    char dir[PATH_MAX];
-
-                    snprintf(dir, sizeof(dir), "%s/.directory", order_data.order_path);
-                    if ((ecore_file_exists(directory)) && (!ecore_file_exists(dir)))
-                       ecore_file_symlink(directory, dir);
-		 }
+	       if (temp)    free((char *) temp);
+               if (sheap)   ecore_sheap_destroy(sheap);
             }
-         /* Create the apps. */
-         ecore_hash_for_each_node(apps, _e_fdo_menu_to_order_dump_each_hash_node, &order_data);
-         _e_fdo_menu_to_order_add_sheap(order_data.sheap, order_data.order_path, NULL);
-         ecore_sheap_destroy(order_data.sheap);
+
+         if (ecore_file_exists(order_data.order_path))
+	   {
+	      if (directory)
+	        {
+                   char dir[PATH_MAX];
+
+                   snprintf(dir, sizeof(dir), "%s/.directory", order_data.order_path);
+                   if ((ecore_file_exists(directory)) && (!ecore_file_exists(dir)))
+                      ecore_file_symlink(directory, dir);
+	        }
+              /* Create the apps. */
+              _e_fdo_menu_to_order_add_sheap(order_data.sheap, order_data.order_path, NULL);
+              ecore_sheap_destroy(order_data.sheap);
+	   }
       }
 }
 
