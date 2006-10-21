@@ -1,8 +1,11 @@
+#include "config.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-#include "config.h"
+#ifdef HAVE_ALLOCA_H
+#include <alloca.h>
+#endif
 
 static void env_set(const char *var, const char *val);
 static int prefix_determine(char *argv0);
@@ -15,8 +18,9 @@ env_set(const char *var, const char *val)
 #ifdef HAVE_SETENV
 	setenv(var, val, 1);
 #else
-	char buf[8192];
+	char *buf;
 	
+	buf = alloca(strlen(var) + 1 + strlen(val) + 1);
 	snprintf(buf, sizeof(buf), "%s=%s", var, val);
 	if (getenv(var))
 	  putenv(buf);
@@ -248,31 +252,29 @@ int
 main(int argc, char **argv)
 {
    int i;
-   char buf[16384];
-   char **args;
-   char *p;
+   char buf[16384], **args, *p;
 
    prefix_determine(argv[0]);
+
+   env_set("E_START", argv[0]);
+   
    p = getenv("PATH");
-   if (p)
-     snprintf(buf, sizeof(buf), "%s/bin:%s", _prefix_path, p);
-   else
-     snprintf(buf, sizeof(buf), "%s/bin", _prefix_path);
+   if (p) snprintf(buf, sizeof(buf), "%s/bin:%s", _prefix_path, p);
+   else snprintf(buf, sizeof(buf), "%s/bin", _prefix_path);
    env_set("PATH", buf);
 
    p = getenv("LD_LIBRARY_PATH");
-   if (p)
-     snprintf(buf, sizeof(buf), "%s/lib:%s", _prefix_path, p);
-   else
-     snprintf(buf, sizeof(buf), "%s/lib", _prefix_path);
+   if (p) snprintf(buf, sizeof(buf), "%s/lib:%s", _prefix_path, p);
+   else snprintf(buf, sizeof(buf), "%s/lib", _prefix_path);
    env_set("LD_LIBRARY_PATH", buf);
 
-   args = malloc((argc + 1) * sizeof(char *));
+   args = alloca((argc + 1) * sizeof(char *));
    args[0] = "enlightenment";
-   for (i = 1; i < argc; i++)
-     args[i] = argv[i];
+   for (i = 1; i < argc; i++) args[i] = argv[i];
    args[i] = NULL;
    
    snprintf(buf, sizeof(buf), "%s/bin/enlightenment", _prefix_path);
-   return execv(buf, args);
+   execv(buf, args);
+   perror("execv");
+   return -1;
 }

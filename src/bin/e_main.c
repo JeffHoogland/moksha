@@ -337,6 +337,18 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_alert_shutdown);
+
+   /* we want to have been launched by enlightenment_start. there is a very */
+   /* good reason we want to have been launched this way, thus check */
+   if (!getenv("E_START"))
+     {
+	e_alert_show("You are executing enlightenment directly. This is bad. Please do not execute the\n"
+		     "\"enlightenment\" binary. Use the \"enlightenment_start\" launcher. It will\n"
+		     "handle setting up environment variables, paths, and launching any other required\n"
+		     "services etc. before enlightenment itself begins running.\n");
+	exit(-1);
+     }
+   
    if (!e_xinerama_init())
      {
 	e_error_message_show(_("Enlightenment cannot setup xinerama wrapping.\n"
