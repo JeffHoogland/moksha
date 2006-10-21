@@ -8,10 +8,6 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: if maximize policy == fullscreen then weird things happen on
-  maximize and unmaximize with gvim (probably gvim tries to resize itself
-  on maximize and it screws e's account keeping) but on unmax it ends up
-  just moving a bit, not going down in size.
 * BUG: smart placement seems to screw up if a shelf is at the top of the screen
 * BUG: e17 screen res diaolg doesnt work under xephyr - why?
 * BUG: "match this window only" doesnt fall back to other unused remembers

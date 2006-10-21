@@ -594,7 +594,7 @@ static void _e_entry_key_down_windows(Evas_Object *entry, Evas_Event_Key_Down *e
           }
      }
    /* Otherwise, we insert the corresponding character */
-   else if ((event->string) &&
+   else if ((event->string) && ((sd->enabled)) &&
           ((strlen(event->string) != 1) || (event->string[0] >= 0x20)))
      {
         if (selecting)

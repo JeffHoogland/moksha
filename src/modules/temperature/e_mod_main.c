@@ -276,7 +276,7 @@ _temperature_cb_check(void *data)
 	  {
 	     char *p, *q;
 	     FILE *f;
-
+	     name = temperature_config->acpi_sel;
 	     snprintf(buf, sizeof(buf), "/proc/acpi/thermal_zone/%s/temperature", name);
 	     f = fopen(buf, "rb");
 	     if (f)
@@ -403,6 +403,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, high, INT);
    E_CONFIG_VAL(D, T, sensor_name, STR);
    E_CONFIG_VAL(D, T, units, INT);
+   E_CONFIG_VAL(D, T, acpi_sel, STR);
 
    temperature_config = e_config_domain_load("module.temperature", conf_edd);
    if (!temperature_config)
@@ -413,6 +414,7 @@ e_modapi_init(E_Module *m)
 	temperature_config->high = 80;
 	temperature_config->sensor_name = evas_stringshare_add("temp1");
 	temperature_config->units = CELCIUS;
+	temperature_config->acpi_sel = evas_stringshare_add("TZ1");
      }
    E_CONFIG_LIMIT(temperature_config->poll_time, 0.5, 1000.0);
    E_CONFIG_LIMIT(temperature_config->low, 0, 100);

@@ -300,6 +300,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
       e_widget_frametable_object_append(of, ob, x, y, 1, 1,    1, 1, 1, 1); \
       ob = e_widget_entry_add(evas, &(cfdata->val)); \
       if (!cfdata->val) e_widget_disabled_set(ob, 1); \
+      e_widget_entry_readonly_set(ob, 1); \
       e_widget_min_size_get(ob, &mw, &mh); \
       e_widget_min_size_set(ob, 160, mh); \
       e_widget_frametable_object_append(of, ob, x + 1, y, 1, 1,    1, 1, 1, 1); \
@@ -309,6 +310,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
       ob = e_widget_label_add(evas, label); \
       e_widget_frametable_object_append(of, ob, x, y, 1, 1,    1, 1, 1, 1); \
       ob = e_widget_check_add(evas, "", &(cfdata->val)); \
+      e_widget_disabled_set(ob, 1); \
       e_widget_frametable_object_append(of, ob, x + 1, y, 1, 1,    1, 1, 1, 1); \
    }
    

@@ -132,6 +132,27 @@ e_widget_entry_password_set(Evas_Object *entry, int password_mode)
 }
 
 /**
+ * Sets whether or not the entry widget is user-editable. This still
+ * allows copying and selecting, just no inserting or deleting of text.
+ *
+ * @param entry an entry widget
+ * @param readonly 1 to enable read-only mode, 0 to turn it off
+ */
+EAPI void
+e_widget_entry_readonly_set(Evas_Object *entry, int readonly_mode)
+{
+   E_Widget_Data *wd;
+
+   if (!(entry) || (!(wd = e_widget_data_get(entry))))
+      return;
+
+   if (readonly_mode)
+     e_entry_disable(wd->o_entry);
+   else
+     e_entry_enable(wd->o_entry);
+}
+
+/**
  * Gets the editable object of the entry widget. It will allow you to have
  * better control on the text, the cursor or the selection of the entry with
  * the e_editable_*() functions.

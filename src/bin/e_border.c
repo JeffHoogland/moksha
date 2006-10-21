@@ -1684,7 +1684,7 @@ e_border_maximize(E_Border *bd, E_Maximize max)
    if ((bd->shaded) || (bd->shading)) return;
    if (bd->fullscreen)
      e_border_unfullscreen(bd);
-   /* Only allow changes in vertical/ horisontal maximization */
+   /* Only allow changes in vertical/ horizontal maximization */
    if (((bd->maximized & E_MAXIMIZE_DIRECTION) == (max & E_MAXIMIZE_DIRECTION)) || 
        ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTH)) return;
    if (bd->new_client)
@@ -1899,18 +1899,29 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 	if (dir & E_MAXIMIZE_HORIZONTAL)
 	  {
 	     /* Remove vertical */
+	     int w,h;
+
 	     signal = 0;
 	     bd->maximized &= ~E_MAXIMIZE_VERTICAL;
-	     e_border_move_resize(bd, bd->x, bd->saved.y, bd->w, bd->saved.h);
+	     w = bd->w;
+	     h = bd->saved.h;
+	     e_border_resize_limit(bd, &w, &h);
+	     e_border_resize_limit(bd, &w, &h);
+	     e_border_move_resize(bd, bd->x, bd->saved.y, w, h);
 	     bd->saved.y = bd->saved.h = 0;
 	     e_hints_window_size_set(bd);
 	  }
 	else if (dir & E_MAXIMIZE_VERTICAL)
 	  {
-	     /* Remove horisontal */
+	     /* Remove horizontal */
+	     int w,h;
+
 	     signal = 0;
 	     bd->maximized &= ~E_MAXIMIZE_HORIZONTAL;
-	     e_border_move_resize(bd, bd->saved.x, bd->y, bd->saved.w, bd->h);
+	     w = bd->saved.w;
+	     h = bd->h;
+	     e_border_resize_limit(bd, &w, &h);
+	     e_border_move_resize(bd, bd->saved.x, bd->y, w, h);
 	     bd->saved.x = bd->saved.w = 0;
 	     e_hints_window_size_set(bd);
 	  }
@@ -1928,6 +1939,7 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 	     else h = bd->h;
 	     
 	     bd->maximized = E_MAXIMIZE_NONE;
+	     e_border_resize_limit(bd, &w, &h);
 	     e_border_move_resize(bd, x, y, w, h);
 	     bd->saved.x = bd->saved.y = bd->saved.w = bd->saved.h = 0;
 	     e_hints_window_size_unset(bd);
@@ -3544,12 +3556,7 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	       }
 	     else
 	       {
-		  if ((bd->maximized & E_MAXIMIZE_TYPE) != E_MAXIMIZE_NONE)
-		    {
-		       bd->saved.w = w;
-		       bd->saved.h = h;
-		    }
-		  else
+		  if ((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_NONE)
 		    e_border_resize(bd, w, h);
 	       }
 	  }

@@ -84,6 +84,10 @@ e_desklock_init(void)
 	if (e_config->desklock_use_timeout)
 	  ecore_x_screensaver_timeout_set(e_config->desklock_timeout);
      }
+
+   if (e_config->desklock_background)
+       e_filereg_register(e_config->desklock_background);
+
    return 1;
 }
 
@@ -91,6 +95,9 @@ EAPI int
 e_desklock_shutdown(void)
 {
    e_desklock_hide();
+   if (e_config->desklock_background)
+       e_filereg_deregister(e_config->desklock_background);
+
    return 1;
 }
 

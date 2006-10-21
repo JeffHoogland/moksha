@@ -18,6 +18,7 @@ struct _Config
    double           poll_time;
    int              low, high;
    const char      *sensor_name;
+   const char	   *acpi_sel;
    Unit             units;
    /* just config state */
    E_Module        *module;

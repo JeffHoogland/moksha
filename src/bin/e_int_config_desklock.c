@@ -499,8 +499,12 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->bg)
      {
 	if (e_config->desklock_background)
+        {
+          e_filereg_deregister(e_config->desklock_background);
 	  evas_stringshare_del(e_config->desklock_background);
+        }
 	e_config->desklock_background = evas_stringshare_add(cfdata->bg);
+        e_filereg_register(e_config->desklock_background);
      }
    
    if (_e_desklock_zone_num_get() > 1)
