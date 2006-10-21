@@ -46,7 +46,7 @@ Some of the things (in very short form) that need to be done to E17...
 * finish clientinfo dialog for borders (netwm props etc. etc.)
 * gui config dialogs for all config
 * make it possible to disable border buttons/actions (tell theme what is
-  disabled)
+  disabled) like close, maximize, etc. etc. buttons.
 * Dragging a non-desktop icon from a border to the ibar should automatically
   create the icon and add that (instead of warning the user that this can't be
   done)
@@ -69,7 +69,7 @@ Some of the things (in very short form) that need to be done to E17...
 * desklock's pam profile should be configurable as system-auth doesn't
   always work and the fallback checks might not work either.
 * If a user has set a border type on a window, don't bother to check for
-  changes.
+  changes in properties to change the border based on prop changes.
 * need to audit, namespace and expand text and color classes
 * need to specify what is NEEDED from a  theme, what is  optional (in terms of
   parts, groups and signals). etc.
