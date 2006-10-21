@@ -44,6 +44,18 @@ static Ecore_Idle_Enterer *_e_main_idle_enterer_flusher = NULL;
 
 #define TS_DO
 
+#ifdef TS_DO   
+#define TS(x) \
+   { \
+      t1 = ecore_time_get(); \
+      printf("ESTART: %1.5f [%1.5f] - %s\n", t1 - t0, t1 - t2, x); \
+      t2 = t1; \
+   }
+static double t0, t1, t2;
+#else
+#define TS(x)
+#endif
+   
 /* externally accessible functions */
 int
 main(int argc, char **argv)
@@ -57,19 +69,9 @@ main(int argc, char **argv)
    struct sigaction action;
    double t, tstart, begin;
 
-#ifdef TS_DO   
-#define TS(x) \
-   { \
-      t1 = ecore_time_get(); \
-      printf("ESTART: %1.5f [%1.5f] - %s\n", t1 - t0, t1 - t2, x); \
-      t2 = t1; \
-   }
-   double t0, t1, t2;
+#ifdef TS_DO
    t0 = t1 = t2 = ecore_time_get();   
-#else
-#define TS(x)
 #endif
-   
    TS("begin");
    
 #if 0
@@ -1028,14 +1030,22 @@ _e_main_screens_init(void)
    Ecore_X_Window *roots;
    int num, i;
 
+   TS("screens: atoms");
    if (!e_atoms_init()) return 0;
+   TS("screens: manager");
    if (!e_manager_init()) return 0;
+   TS("screens: container");
    if (!e_container_init()) return 0;
+   TS("screens: zone");
    if (!e_zone_init()) return 0;
+   TS("screens: desk");
    if (!e_desk_init()) return 0;
+   TS("screens: menu");
    if (!e_menu_init()) return 0;
+   TS("screens: exehist");
    if (!e_exehist_init()) return 0;
    
+   TS("screens: get roots");
    num = 0;
    roots = ecore_x_window_root_list(&num);
    if ((!roots) || (num <= 0))
@@ -1044,9 +1054,13 @@ _e_main_screens_init(void)
 			     num);
 	return 0;
      }
+   TS("screens: focus");
    if (!e_focus_init()) return 0;
+   TS("screens: border");
    if (!e_border_init()) return 0;
+   TS("screens: win");
    if (!e_win_init()) return 0;
+   TS("screens: manage roots");
    for (i = 0; i < num; i++)
      {
 	E_Manager *man;
@@ -1082,6 +1096,7 @@ _e_main_screens_init(void)
 	     return 0;
 	  }
      }
+   TS("screens: sync");
 
    free(roots);
    ecore_x_sync();

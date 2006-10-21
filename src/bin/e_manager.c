@@ -181,6 +181,7 @@ e_manager_manage_windows(E_Manager *man)
 	     int ret;
 
 	     ecore_x_window_attributes_get(windows[i], &att);
+	     if ((att.override) || (att.input_only)) continue;
 	     if (!ecore_x_window_prop_property_get(windows[i],
 						   atom_xmbed,
 						   atom_xmbed, 32,
@@ -265,10 +266,10 @@ e_manager_manage_windows(E_Manager *man)
 		   * should be seen */
 		  E_Container *con;
 		  E_Border *bd;
+		  
 		  con = e_container_current_get(man);
 		  bd = e_border_new(con, windows[i], 1, 0);
-		  if (bd)
-		    e_border_show(bd);
+		  if (bd) e_border_show(bd);
 	       }
 	  }
 	free(windows);
