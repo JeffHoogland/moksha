@@ -42,6 +42,8 @@ static Ecore_Idle_Enterer *_e_main_idle_enterer_before  = NULL;
 static Ecore_Idle_Enterer *_e_main_idle_enterer_after   = NULL;
 static Ecore_Idle_Enterer *_e_main_idle_enterer_flusher = NULL;
 
+#define TS_DO
+
 /* externally accessible functions */
 int
 main(int argc, char **argv)
@@ -54,10 +56,22 @@ main(int argc, char **argv)
    char *s;
    struct sigaction action;
    double t, tstart, begin;
-   /* trap deadly bug signals and allow some form of sane recovery */
-   /* or ability to gdb attach and debug at this point - better than your */
-   /* wm/desktop vanishing and not knowing what happened */
 
+#ifdef TS_DO   
+#define TS(x) \
+   { \
+      t1 = ecore_time_get(); \
+      printf("ESTART: %1.5f [%1.5f] - %s\n", t1 - t0, t1 - t2, x); \
+      t2 = t1; \
+   }
+   double t0, t1, t2;
+   t0 = t1 = t2 = ecore_time_get();   
+#else
+#define TS(x)
+#endif
+   
+   TS("begin");
+   
 #if 0
      {   
 	stack_t ss;
@@ -69,6 +83,10 @@ main(int argc, char **argv)
      }
 #endif
    
+   /* trap deadly bug signals and allow some form of sane recovery */
+   /* or ability to gdb attach and debug at this point - better than your */
+   /* wm/desktop vanishing and not knowing what happened */
+
    action.sa_sigaction = e_sigseg_act;
    action.sa_flags = SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
    sigemptyset(&action.sa_mask);
@@ -94,6 +112,8 @@ main(int argc, char **argv)
    sigemptyset(&action.sa_mask);
    sigaction(SIGABRT, &action, NULL);
 
+   TS("signals done");
+   
    t = ecore_time_get();
    s = getenv("E_START_TIME");
    if ((s) && (!getenv("E_RESTART_OK")))
@@ -113,6 +133,7 @@ main(int argc, char **argv)
     * its not used - so i want to see if it can reliably determine its exe
     * prefix
     */
+   TS("determine prefix");
    if (!e_prefix_determine(argv[0]))
      {
 	fprintf(stderr,
@@ -154,6 +175,7 @@ main(int argc, char **argv)
 	       }
 	  }
      }
+   TS("prefix done");
    
    /* for debugging by redirecting stdout of e to a log file to tail */
    setvbuf(stdout, NULL, _IONBF, 0);
@@ -169,8 +191,10 @@ main(int argc, char **argv)
    e_util_env_set("PANTS", "ON");
    e_util_env_set("DESKTOP", "Enlightenment-0.17.0");
 
+   TS("intl init");
    e_intl_init();
    
+   TS("parse args");
    /* handle some command-line parameters */
    for (i = 1; i < argc; i++)
      {
@@ -265,6 +289,7 @@ main(int argc, char **argv)
 	  }
      }
 
+   TS("arg parse done");
    /* fixes for FOOLS that keep cp'ing default.edj into ~/.e/e/themes */
      {
 	const char *homedir;
@@ -275,11 +300,13 @@ main(int argc, char **argv)
 	  ecore_file_unlink(buf);
      }
    
+   TS("edje init");
    
    /* init edje and set it up in frozen mode */
    edje_init();
    edje_freeze();
    
+   TS("ecore init");
    /* basic ecore init */
    if (!ecore_init())
      {
@@ -293,7 +320,8 @@ main(int argc, char **argv)
 /* eet_cacheburst(_e_cacheburst); */
    ecore_timer_add(5.0, _e_main_cb_eet_cacheburst_end, NULL);
    
-    /* init the file system */
+   TS("ecore_file init");
+   /* init the file system */
    if (!ecore_file_init())
      {
 	e_error_message_show(_("Enlightenment cannot initialize the File system.\n"
@@ -302,6 +330,7 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(ecore_file_shutdown);   
    
+   TS("more ecore");
    /* setup my args */
    ecore_app_args_set(argc, (const char **)argv);
    /* setup a handler for when e is asked to exit via a system signal */
@@ -321,6 +350,7 @@ main(int argc, char **argv)
    /* an idle enterer to be called before all others */
    _e_main_idle_enterer_before = ecore_idle_enterer_add(_e_main_cb_idler_before, NULL);
    
+   TS("x connect");
    /* init x */
    if (!ecore_x_init(NULL))
      {
@@ -349,6 +379,7 @@ main(int argc, char **argv)
 	exit(-1);
      }
    
+   TS("xinerama");
    if (!e_xinerama_init())
      {
 	e_error_message_show(_("Enlightenment cannot setup xinerama wrapping.\n"
@@ -361,9 +392,12 @@ main(int argc, char **argv)
    
    ecore_x_io_error_handler_set(_e_main_cb_x_fatal, NULL);
 
+   TS("x hints");
    /* Init window manager hints */
    e_hints_init();
+   TS("x hints done");
    
+   TS("ecore_con");
    /* init generic communications */
    if (!ecore_con_init())
      {
@@ -381,6 +415,7 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(ecore_ipc_shutdown);
 
+   TS("ecore_desktop");
    /* init FDO desktop */
    begin = ecore_time_get();
    if (!ecore_desktop_init())
@@ -390,7 +425,9 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(ecore_desktop_shutdown);
+   TS("ecore_desktop done");
 
+   TS("ecore_desktop paths");
    ecore_desktop_paths_extras_clear();
    ecore_desktop_paths_prepend_user(ECORE_DESKTOP_PATHS_ICONS, "~/.e/e/icons");
    snprintf(buf, sizeof(buf), "%s/data/icons", e_prefix_data_get());
@@ -398,7 +435,9 @@ main(int argc, char **argv)
    ecore_desktop_paths_regen();
 
    printf("SETUP FDO %3.3f\n", ecore_time_get() - begin);
+   TS("ecore_desktop paths done");
 
+   TS("ecore_evas init");
    /* init the evas wrapper */
    if (!ecore_evas_init())
      { 
@@ -420,7 +459,7 @@ main(int argc, char **argv)
 			       "Ecore and check they support the Software Buffer rendering engine."));
 	_e_main_shutdown(-1);
      }
-   
+   TS("test file format support");   
      {
 	Ecore_Evas *ee;
 	Evas_Object *im;
@@ -465,7 +504,9 @@ main(int argc, char **argv)
 	ecore_evas_free(ee);
      }
    _e_main_shutdown_push(ecore_evas_shutdown);        
+   TS("test done");
    
+   TS("thumb init");
    /* init the enlightenment thumbnailing system */
    if (!e_thumb_init())
     {
@@ -474,6 +515,7 @@ main(int argc, char **argv)
     }
    _e_main_shutdown_push(e_thumb_shutdown);
    
+   TS("sys init");
    /* init the enlightenment sys command system */
    if (!e_sys_init())
     {
@@ -483,6 +525,9 @@ main(int argc, char **argv)
    _e_main_shutdown_push(e_sys_shutdown);
    
    
+   /*** Finished loading subsystems, Loading WM Specifics ***/
+	 
+   TS("fm2");
    /* init the enlightenment file manager */
    if (!e_fm2_init())
     {
@@ -490,9 +535,7 @@ main(int argc, char **argv)
        _e_main_shutdown(-1);
     }
    _e_main_shutdown_push(e_fm2_shutdown);
-   
-   /*** Finished loading subsystems, Loading WM Specifics ***/
-	 
+   TS("dirs");
    /* setup directories we will be using for configurations storage etc. */
    if (!_e_main_dirs_init())
      {
@@ -501,6 +544,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(_e_main_dirs_shutdown);
+   TS("filereg");
    /* setup file registry */
    if (!e_filereg_init())
      {
@@ -508,6 +552,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_filereg_shutdown);
+   TS("config");
    /* init config system */
    if (!e_config_init())
      {
@@ -515,6 +560,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_config_shutdown);
+   TS("path");
    /* setup paths for finding things */
    if (!_e_main_path_init())
      {
@@ -523,6 +569,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(_e_main_path_shutdown);
+   TS("intl post");
    /* init intl system */
    if (!e_intl_post_init())
      {
@@ -530,6 +577,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_intl_post_shutdown);
+   TS("actions");
    /* init actions system */
    if (!e_actions_init())
      {
@@ -537,6 +585,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_actions_shutdown);
+   TS("bindings");
    /* init bindings system */
    if (!e_bindings_init())
      {
@@ -544,6 +593,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_bindings_shutdown);
+   TS("popup");
    /* init popup system */
    if (!e_popup_init())
      {
@@ -555,6 +605,7 @@ main(int argc, char **argv)
    /* setup edje to animate @ e_config->framerate frames per sec. */
    edje_frametime_set(1.0 / e_config->framerate);
 
+   TS("font");
    /* init font system */
    if (!e_font_init())
      {
@@ -565,6 +616,7 @@ main(int argc, char **argv)
    e_font_apply();
    e_canvas_recache();
 
+   TS("theme");
    /* init theme system */
    if (!e_theme_init())
      {
@@ -572,6 +624,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_theme_shutdown);
+   TS("bg");
    /* init desktop background system */
    if (!e_bg_init())
      {
@@ -579,6 +632,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_bg_init);
+   TS("splash");
    if (!((!e_config->show_splash) || (after_restart)))
      {
 	/* setup init status window/screen */
@@ -590,6 +644,7 @@ main(int argc, char **argv)
 	  }
 	_e_main_shutdown_push(e_init_shutdown);
      }
+   TS("screens");
    /* manage the root window */
    if (!_e_main_screens_init())
      {
@@ -597,6 +652,8 @@ main(int argc, char **argv)
 			       "failed. Perhaps another window manager is running?\n"));
 	_e_main_shutdown(-1);
      }
+   _e_main_shutdown_push(_e_main_screens_shutdown);
+   TS("apps");
    /* init app system */
    if (!e_app_init())
      {
@@ -604,6 +661,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_app_shutdown);
+   TS("remember");
    /* do remember stuff */
    if (!e_remember_init(after_restart ? E_STARTUP_RESTART: E_STARTUP_START))
      {
@@ -612,14 +670,15 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_remember_shutdown);
    
+   TS("container freeze");
    e_container_all_freeze();
    
-   _e_main_shutdown_push(_e_main_screens_shutdown);
-
+   TS("ipc");
    /* setup e ipc service */
    if (_e_main_ipc_init())
      _e_main_shutdown_push(_e_main_ipc_shutdown);
 
+   TS("msg");
    /* setup generic msg handling etc */
    if (!e_msg_init())
      {
@@ -627,6 +686,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_msg_shutdown);
+   TS("dnd");
    /* setup dnd */
    if (!e_dnd_init())
      {
@@ -634,6 +694,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_dnd_shutdown);
+   TS("grabinput");
    /* setup input grabbing co-operation system */
    if (!e_grabinput_init())
      {
@@ -641,6 +702,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_grabinput_shutdown);
+   TS("modules");
    /* setup module loading etc */
    if (!e_module_init())
      {
@@ -648,6 +710,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_module_shutdown);
+   TS("winlist");
    /* setup winlist */
    if (!e_winlist_init())
      {
@@ -655,6 +718,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_winlist_shutdown);
+   TS("colorclasses");
    /* setup color_class */
    if (!e_color_class_init())
      {
@@ -663,6 +727,7 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_color_class_shutdown);
    /* load modules */
+   TS("load modules");
    if (!safe_mode)
      e_module_all_load();
    else
@@ -677,6 +742,7 @@ main(int argc, char **argv)
 	     "modules again."));
 	e_config_save_queue();
      }
+   TS("gadcon");
    /* setup gadcon */
    if (!e_gadcon_init())
      {
@@ -684,6 +750,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_gadcon_shutdown);
+   TS("shelves");
    /* setup shelves */
    if (!e_shelf_init())
      {
@@ -691,6 +758,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_shelf_shutdown);
+   TS("exebuf");
    /* setup exebuf */
    if (!e_exebuf_init())
      {
@@ -699,6 +767,7 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_exebuf_shutdown);
 
+   TS("desklock");
    /* setup desklock */
    if (!e_desklock_init())
      {
@@ -707,6 +776,7 @@ main(int argc, char **argv)
      }
 /* _e_main_shutdown_push(e_desklock_shutdown); */
 
+   TS("add idle enterers");
    /* add in a handler that just before we go idle we flush x */
    _e_main_idle_enterer_flusher = ecore_idle_enterer_add(_e_main_cb_x_flusher, NULL);
       
@@ -717,6 +787,7 @@ main(int argc, char **argv)
    
 /* ecore_x_ungrab(); */
    
+   TS("init properites");
    e_init_title_set(_("Enlightenment"));
    e_init_version_set(VERSION);
    e_init_status_set(_("Enlightenment Starting. Please wait."));
@@ -734,13 +805,16 @@ main(int argc, char **argv)
    
    e_container_all_thaw();
    
+   TS("test code");
    /* run any testing code now we are set up */
    e_test();
 
    /* FIXME: for testing only */
 //   
+   TS("shelf config init");
    e_shelf_config_init();
    
+   TS("MAIN LOOP AT LAST");
    /* no longer starting up */
    starting = 0;
    /* start our main loop */
@@ -858,7 +932,7 @@ _e_main_dirs_init(void)
    const char *dirs[] =
      {
 	"%s/.e",
-	"%s/.e/e",
+	"%s/.e/e/",
 	"%s/.e/e/images",
 	"%s/.e/e/fonts",
 	"%s/.e/e/themes",
@@ -867,6 +941,7 @@ _e_main_dirs_init(void)
 	"%s/.e/e/backgrounds",
 	"%s/.e/e/applications",
 	"%s/.e/e/applications/all",
+	"%s/.e/e/applications/menu",
 	"%s/.e/e/applications/menu/favorite",
 	"%s/.e/e/applications/menu/all",
 	"%s/.e/e/applications/bar",
@@ -885,12 +960,15 @@ _e_main_dirs_init(void)
    for (i = 0; i < (int)(sizeof(dirs) / sizeof(char *)); i++)
      {
 	snprintf(buf, sizeof(buf), dirs[i], homedir);
-	if (!ecore_file_mkpath(buf))
+	if (!ecore_file_mkdir(buf))
 	  {
-	     e_error_message_show("Error creating directory:\n"
-				  "%s",
-				  buf);
-	     return 0;
+	     if (!ecore_file_is_dir(buf))
+	       {
+		  e_error_message_show("Error creating directory:\n"
+				       "%s",
+				       buf);
+		  return 0;
+	       }
 	  }
      }
    

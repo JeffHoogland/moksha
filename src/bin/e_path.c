@@ -253,12 +253,21 @@ e_path_find(E_Path *ep, const char *file)
    for (l = ep->default_dir_list; l; l = l->next)
      {
 	E_Path_Dir *epd;
-	char *rp;
+//	char *rp;
 	
 	epd = l->data;
 	if (epd->dir)
 	  {
 	     snprintf(buf, sizeof(buf), "%s/%s", epd->dir, file);
+	     if (ecore_file_exists(buf))
+	       {
+		  if (evas_hash_size(ep->hash) >= 512)
+		    _e_path_cache_free(ep);
+		  ep->hash = evas_hash_add(ep->hash, file,
+					   evas_stringshare_add(buf));
+		  return evas_stringshare_add(buf);
+	       }
+/*	     
 	     rp = ecore_file_realpath(buf);
 	     if ((rp) && (rp[0] != 0))
 	       {
@@ -272,6 +281,7 @@ e_path_find(E_Path *ep, const char *file)
 		  return evas_stringshare_add(buf);
 	       }
 	     if (rp) free(rp);
+ */
 	  }
      }
    /* Look in the users dir list */
@@ -284,6 +294,15 @@ e_path_find(E_Path *ep, const char *file)
 	if (epd->dir)
 	  {
 	     snprintf(buf, sizeof(buf), "%s/%s", epd->dir, file);
+	     if (ecore_file_exists(buf))
+	       {
+		  if (evas_hash_size(ep->hash) >= 512)
+		    _e_path_cache_free(ep);
+		  ep->hash = evas_hash_add(ep->hash, file,
+					   evas_stringshare_add(buf));
+		  return evas_stringshare_add(buf);
+	       }
+/*	     
 	     rp = ecore_file_realpath(buf);
 	     if ((rp) && (rp[0] != 0))
 	       {
@@ -297,6 +316,7 @@ e_path_find(E_Path *ep, const char *file)
 		  return evas_stringshare_add(buf);
 	       }
 	     if (rp) free(rp);
+ */
 	  }
      }
    return NULL;

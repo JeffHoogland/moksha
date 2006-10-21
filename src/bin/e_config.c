@@ -1519,7 +1519,7 @@ e_config_profile_add(char *prof)
    homedir = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", 
 	    homedir, prof);
-   ecore_file_mkpath(buf);
+   ecore_file_mkdir(buf);
 }
 
 EAPI void
@@ -1644,7 +1644,7 @@ e_config_domain_save(char *domain, E_Config_DD *edd, void *data)
    homedir = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", 
 	    homedir, _e_config_profile);
-   ecore_file_mkpath(buf);
+   ecore_file_mkdir(buf);
    snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/%s.cfg", 
 	    homedir, _e_config_profile, domain);
    snprintf(buf2, sizeof(buf2), "%s.tmp", buf);

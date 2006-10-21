@@ -4,6 +4,7 @@
 #include "e.h"
 
 /* local subsystem functions */
+static int _e_sys_cb_timer(void *data);
 static int _e_sys_cb_exit(void *data, int type, void *event);
 static void _e_sys_cb_logout_logout(void *data, E_Dialog *dia);
 static void _e_sys_cb_logout_wait(void *data, E_Dialog *dia);
@@ -36,22 +37,11 @@ static E_Obj_Dialog *_e_sys_dialog = NULL;
 EAPI int
 e_sys_init(void)
 {
-   char buf[4096];
-   
    /* this is not optimal - but it does work cleanly */
    _e_sys_exe_exit_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
 						     _e_sys_cb_exit, NULL);
-   /* exec out sys helper and ask it to test if we are allowed to do these
-    * things
-    */
-   snprintf(buf, sizeof(buf), "%s/enlightenment_sys -t halt", e_prefix_bin_get());
-   _e_sys_halt_check_exe = ecore_exe_run(buf, NULL);
-   snprintf(buf, sizeof(buf), "%s/enlightenment_sys -t reboot", e_prefix_bin_get());
-   _e_sys_reboot_check_exe = ecore_exe_run(buf, NULL);
-   snprintf(buf, sizeof(buf), "%s/enlightenment_sys -t suspend", e_prefix_bin_get());
-   _e_sys_suspend_check_exe = ecore_exe_run(buf, NULL);
-   snprintf(buf, sizeof(buf), "%s/enlightenment_sys -t hibernate", e_prefix_bin_get());
-   _e_sys_hibernate_check_exe = ecore_exe_run(buf, NULL);
+   /* delay this for 10.0 seconds while the rest of e starts up */
+   ecore_timer_add(10.0, _e_sys_cb_timer, NULL);
    return 1;
 }
 
@@ -126,6 +116,25 @@ e_sys_action_do(E_Sys_Action a, char *param)
 }
 
 /* local subsystem functions */
+static int
+_e_sys_cb_timer(void *data)
+{
+   /* exec out sys helper and ask it to test if we are allowed to do these
+    * things
+    */
+   char buf[4096];
+   
+   snprintf(buf, sizeof(buf), "%s/enlightenment_sys -t halt", e_prefix_bin_get());
+   _e_sys_halt_check_exe = ecore_exe_run(buf, NULL);
+   snprintf(buf, sizeof(buf), "%s/enlightenment_sys -t reboot", e_prefix_bin_get());
+   _e_sys_reboot_check_exe = ecore_exe_run(buf, NULL);
+   snprintf(buf, sizeof(buf), "%s/enlightenment_sys -t suspend", e_prefix_bin_get());
+   _e_sys_suspend_check_exe = ecore_exe_run(buf, NULL);
+   snprintf(buf, sizeof(buf), "%s/enlightenment_sys -t hibernate", e_prefix_bin_get());
+   _e_sys_hibernate_check_exe = ecore_exe_run(buf, NULL);
+   return 0;
+}
+
 static int
 _e_sys_cb_exit(void *data, int type, void *event)
 {

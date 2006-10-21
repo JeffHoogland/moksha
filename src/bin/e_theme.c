@@ -10,9 +10,11 @@ struct _E_Theme_Result
 {
    const char *file;
    const char *cache;
+   Evas_Hash  *quickfind;
 };
 
 static Evas_Bool _e_theme_mappings_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata);
+static Evas_Bool _e_theme_mappings_quickfind_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata);
 static void      _e_theme_category_register(const char *category);
 static Evas_List *_e_theme_collection_item_register(Evas_List *list, const char *name);
 static Evas_List *_e_theme_collection_items_find(const char *base, const char *collname);
@@ -231,17 +233,18 @@ e_theme_edje_file_get(const char *category, const char *group)
 	     if (!tres)
 	       {
 		  /* if the group exists - return */
-		  coll = edje_file_collection_list(str);
-		  ok = 0;
-		  for (l = coll; l; l = l->next)
+		  if (!res->quickfind)
 		    {
-		       if (!strcmp(l->data, group))
+		       /* great a quick find hash of all group entires */
+		       coll = edje_file_collection_list(str);
+		       for (l = coll; l; l = l->next)
 			 {
-			    ok = 1;
-			    break;
+			    p = evas_stringshare_add(l->data);
+			    res->quickfind = evas_hash_direct_add(res->quickfind, p, p);
 			 }
+		       if (coll) edje_file_collection_list_free(coll);
 		    }
-		  if (coll) edje_file_collection_list_free(coll);
+		  ok = evas_hash_find(res->quickfind, group);
 		  /* save in the group cache hash */
 		  if (ok)
 		    group_cache = evas_hash_add(group_cache, buf, res);
@@ -455,7 +458,6 @@ e_theme_shelf_list(void)
 }
 
 /* local subsystem functions */
-
 static Evas_Bool
 _e_theme_mappings_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
 {
@@ -464,7 +466,19 @@ _e_theme_mappings_free_cb(Evas_Hash *hash, const char *key, void *data, void *fd
    res = data;
    if (res->file) evas_stringshare_del(res->file);
    if (res->cache) evas_stringshare_del(res->cache);
+   if (res->quickfind)
+     {
+	evas_hash_foreach(res->quickfind, _e_theme_mappings_quickfind_free_cb, NULL);
+	evas_hash_free(res->quickfind);
+     }
    free(res);
+   return 1;
+}
+
+static Evas_Bool
+_e_theme_mappings_quickfind_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
+{
+   evas_stringshare_del(key);
    return 1;
 }
 
@@ -475,8 +489,7 @@ _e_theme_category_register(const char *category)
 
    for (l = categories; l; l = l->next)
      {
-	if (!strcmp(category, l->data))
-	  return;
+	if (!strcmp(category, l->data)) return;
      }
 
    categories = evas_list_append(categories, evas_stringshare_add(category));
