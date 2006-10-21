@@ -57,8 +57,6 @@ Some of the things (in very short form) that need to be done to E17...
   CLEANUPS
 -------------------------------------------------------------------------------
 
-* menus need to be able to limit max width (especialyl windows and lost
-  windows menus) optionally.
 * client list menu could do with work on ordering, using separators to demark
   this desktop and other desktops, sorting by recently used, separate
   section for iconified apps etc. etc - configurable.
