@@ -40,8 +40,8 @@ e_sys_init(void)
    /* this is not optimal - but it does work cleanly */
    _e_sys_exe_exit_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
 						     _e_sys_cb_exit, NULL);
-   /* delay this for 10.0 seconds while the rest of e starts up */
-   ecore_timer_add(10.0, _e_sys_cb_timer, NULL);
+   /* delay this for 5.0 seconds while the rest of e starts up */
+   ecore_timer_add(5.0, _e_sys_cb_timer, NULL);
    return 1;
 }
 
