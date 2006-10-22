@@ -17,6 +17,8 @@ static void _e_fwin_changed(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_selected(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_menu_extend(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info);
 static void _e_fwin_parent(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fwin_file_open(E_Fwin *fwin, const char *file, const char *mime);
+static void _e_fwin_file_open_app(E_Fwin *fwin, E_App *a, const char *file);
 
 /* local subsystem globals */
 static Evas_List *fwins = NULL;
@@ -187,35 +189,33 @@ static void
 _e_fwin_selected(void *data, Evas_Object *obj, void *event_info)
 {
    E_Fwin *fwin;
-   Evas_List *selected;
+   Evas_List *selected, *l;
    E_Fm2_Icon_Info *ici;
    char buf[4096];
-   const *rp;
    
    fwin = data;
    selected = e_fm2_selected_list_get(fwin->fm_obj);
    if (!selected) return;
-   ici = selected->data;
-   if ((ici->link) && (ici->mount))
-     e_fwin_new(fwin->win->container, ici->link, "/");
-   else if (ici->link)
+   for (l = selected; l; l = l->next)
      {
-	if (S_ISDIR(ici->statinfo.st_mode))
-	  e_fwin_new(fwin->win->container, NULL, ici->link);
-	else
+	ici = l->data;
+	if ((ici->link) && (ici->mount))
+	  e_fwin_new(fwin->win->container, ici->link, "/");
+	else if (ici->link)
 	  {
-	     /* FIXME: link to file - open file */
+	     if (S_ISDIR(ici->statinfo.st_mode))
+	       e_fwin_new(fwin->win->container, NULL, ici->link);
+	     else
+	       _e_fwin_file_open(fwin, ici->link, e_fm_mime_filename_get(ici->link));
 	  }
-     }
-   else
-     {
-	snprintf(buf, sizeof(buf), "%s/%s", 
-		 e_fm2_real_path_get(fwin->fm_obj), ici->file);
-	if (S_ISDIR(ici->statinfo.st_mode))
-	  e_fwin_new(fwin->win->container, NULL, buf);
 	else
 	  {
-	     /* FIXME: file - open file */
+	     snprintf(buf, sizeof(buf), "%s/%s", 
+		      e_fm2_real_path_get(fwin->fm_obj), ici->file);
+	     if (S_ISDIR(ici->statinfo.st_mode))
+	       e_fwin_new(fwin->win->container, NULL, buf);
+	     else
+	       _e_fwin_file_open(fwin, buf, ici->mime);
 	  }
      }
    evas_list_free(selected);
@@ -249,3 +249,109 @@ _e_fwin_parent(void *data, E_Menu *m, E_Menu_Item *mi)
    e_fm2_parent_go(data);
 }
 
+static void
+_e_fwin_file_open(E_Fwin *fwin, const char *file, const char *mime)
+{
+   Evas_List *apps, *l;
+   E_App *a;
+   char pcwd[4096];
+
+   /* 1. find previously used launcher */
+   /*   if found - is there still an app for it? */
+   /*     a = e_app_file_find(prev_launcher); */
+   /*     if (a) - run it */
+   /*       return; */
+   /* 2. list possible apps */
+   /*   if list == 1 element - run it */
+   /*     return; */
+   /* 3. create dialog */
+   /*   if (list) add apps in list */
+   /*     dialog should have optin to show all apps */   
+   getcwd(pcwd, sizeof(pcwd));
+   chdir(e_fm2_real_path_get(fwin->fm_obj));
+   /* 1. */
+   /* FIXME: implement the above # 1. */
+   /* 2. */
+   apps = e_app_mime_list(e_fm_mime_filename_get(file));
+   if (apps)
+     {
+	if (evas_list_count(apps) == 1)
+	  {
+	     a = apps->data;
+	     _e_fwin_file_open_app(fwin, a, ecore_file_get_file(file));
+	  }
+	else
+	  {
+	     /* FIXME: hack. do dialog as above in # 3. */
+	     a = apps->data;
+	     _e_fwin_file_open_app(fwin, a, ecore_file_get_file(file));
+	     /* FIXME: register app a as handling mime type if app doesnt */
+	     /* say it can already in a separate info blob so in future */
+	     /* e will list it as an option */
+	     for (l = apps; l; l = l->next)
+	       {
+		  a = l->data;
+	       }
+	  }
+	evas_list_free(apps);
+     }
+   chdir(pcwd);
+}
+
+static void
+_e_fwin_file_open_app(E_Fwin *fwin, E_App *a, const char *file)
+{
+   char buf[4096], *p, *e, *s;
+   
+   if (!a->exe) return;
+   if (a->exe_params)
+     {
+	/* cmd is "a->exe a->exe_params" where a->exe_params will */
+	/* have replaced %[uU] or %[fF] or %[mM] with the filename */
+	/* in question. also replace %[cC] and %[iI] with blanks */
+	e = buf + sizeof(buf) - 1;
+	if ((strlen(a->exe) + strlen(file)) >= (sizeof(buf) - 10)) return;
+        strcpy(buf, a->exe);
+	strcat(buf, " ");
+	p = buf + strlen(buf);
+	s = (char *)a->exe_params;
+	while ((*s) && (p < e))
+	  {
+	     if (*s != '%')
+	       {
+		  *p = *s;
+		  p++;
+	       }
+	     else
+	       {
+		  s++;
+		  if (*s == '%')
+		    {
+		       *p = '%';
+		       p++;
+		    }
+		  else
+		    {
+		       if ((*s == 'u') || (*s == 'U') ||
+			   (*s == 'f') || (*s == 'F') ||
+			   (*s == 'm') || (*s == 'M'))
+			 {
+			    if ((e - p) > (strlen(file) + 1))
+			      {
+				 strcpy(p, file);
+				 p += strlen(file);
+			      }
+			 }
+		    }
+	       }
+	     s++;
+	  }
+	*p = 0;
+     }
+   else
+     {
+	/* cmd is "a->exe filename" */
+	snprintf(buf, sizeof(buf), "%s %s", a->exe, file);
+     }
+   e_zone_exec(fwin->win->border->zone, buf);
+}

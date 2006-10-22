@@ -1723,6 +1723,34 @@ e_app_comment_glob_list(const char *comment)
    return list;
 }
 
+/* Used e_fm2. */
+EAPI Evas_List *
+e_app_mime_list(const char *mime)
+{
+   Evas_List *l, *list = NULL;
+   
+   if (!mime) return NULL;
+
+   for (l = _e_apps_all->subapps; l; l = l->next)
+     {
+	E_App *a;
+	
+	a = l->data;
+        E_OBJECT_CHECK_RETURN(a, NULL);
+        E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
+        if ((!a->idle_fill) && (!a->filled))
+	  e_app_fields_fill(a, a->path);
+	if (!a->filled)
+	  continue;
+	if ((a->desktop) && (a->desktop->MimeTypes))
+	  {
+	     if (ecore_hash_get(a->desktop->MimeTypes, mime))
+	       list = evas_list_append(list, a);
+	  }
+     }
+   return list;
+}
+
 
 EAPI void
 e_app_fields_fill(E_App *a, const char *path)

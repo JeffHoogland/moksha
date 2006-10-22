@@ -782,9 +782,6 @@ main(int argc, char **argv)
    /* add in a handler that just before we go idle we flush x */
    _e_main_idle_enterer_flusher = ecore_idle_enterer_add(_e_main_cb_x_flusher, NULL);
       
-   /* an idle enterer to be called after all others */
-   _e_main_idle_enterer_after = ecore_idle_enterer_add(_e_main_cb_idler_after, NULL);
-
    e_managers_keys_grab();
    
 /* ecore_x_ungrab(); */
@@ -816,6 +813,9 @@ main(int argc, char **argv)
    TS("shelf config init");
    e_shelf_config_init();
    
+   /* an idle enterer to be called after all others */
+   _e_main_idle_enterer_after = ecore_idle_enterer_add(_e_main_cb_idler_after, NULL);
+
    TS("MAIN LOOP AT LAST");
    /* no longer starting up */
    starting = 0;
@@ -1397,6 +1397,15 @@ _e_main_cb_idler_after(void *data __UNUSED__)
    edje_freeze();
    _e_cacheburst++;
 /* eet_cacheburst(_e_cacheburst); */
+     {
+	static int first_idle = 1;
+	
+	if (first_idle)
+	  {
+	     TS("SLEEP");
+	     first_idle = 0;
+	  }
+     }
    return 1;
 }
 

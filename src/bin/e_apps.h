@@ -154,6 +154,7 @@ EAPI Evas_List  *e_app_name_glob_list                    (const char *name);
 EAPI Evas_List  *e_app_generic_glob_list                 (const char *generic);
 EAPI Evas_List  *e_app_exe_glob_list                     (const char *exe);
 EAPI Evas_List  *e_app_comment_glob_list                 (const char *comment);
+EAPI Evas_List  *e_app_mime_list                         (const char *mime);
     
 EAPI void         e_app_fields_fill                       (E_App *a, const char *path);
 EAPI void         e_app_fields_save                       (E_App *a);
