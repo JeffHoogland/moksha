@@ -268,8 +268,8 @@ main(int argc, char **argv)
    else snprintf(buf, sizeof(buf), "%s/lib", _prefix_path);
    env_set("LD_LIBRARY_PATH", buf);
 
-   snprintf(buf, sizeof(buf), "%s/lib/enlightenment/preload/e_precache.so", _prefix_path);
-   env_set("LD_PRELOAD", buf);
+//   snprintf(buf, sizeof(buf), "%s/lib/enlightenment/preload/e_precache.so", _prefix_path);
+//   env_set("LD_PRELOAD", buf);
    
    args = alloca((argc + 1) * sizeof(char *));
    args[0] = "enlightenment";
