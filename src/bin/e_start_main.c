@@ -268,6 +268,9 @@ main(int argc, char **argv)
    else snprintf(buf, sizeof(buf), "%s/lib", _prefix_path);
    env_set("LD_LIBRARY_PATH", buf);
 
+   snprintf(buf, sizeof(buf), "%s/lib/enlightenment/preload/e_precache.so", _prefix_path);
+   env_set("LD_PRELOAD", buf);
+   
    args = alloca((argc + 1) * sizeof(char *));
    args[0] = "enlightenment";
    for (i = 1; i < argc; i++) args[i] = argv[i];
@@ -275,6 +278,8 @@ main(int argc, char **argv)
    
    snprintf(buf, sizeof(buf), "%s/bin/enlightenment", _prefix_path);
    execv(buf, args);
+   printf("FAILED TO RUN:\n");
+   printf("  %s\n", buf);
    perror("execv");
    return -1;
 }
