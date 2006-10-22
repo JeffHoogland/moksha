@@ -3,6 +3,8 @@
  */
 #include "e.h"
 
+EAPI int e_precache_end = 0;
+
 /* local subsystem functions */
 static void _e_main_shutdown_push(int (*func)(void));
 static void _e_main_shutdown(int errorcode);
@@ -1404,6 +1406,7 @@ _e_main_cb_idler_after(void *data __UNUSED__)
 	  {
 	     TS("SLEEP");
 	     first_idle = 0;
+	     e_precache_end = 1;
 	  }
      }
    return 1;

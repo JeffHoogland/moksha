@@ -3,6 +3,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/utsname.h>
+#include <fcntl.h>
 #ifdef HAVE_ALLOCA_H
 #include <alloca.h>
 #endif
@@ -248,6 +252,72 @@ _prefix_try_argv(char *argv0)
    return 0;
 }
 
+static void
+precache(void)
+{
+   FILE *f;
+   char *home;
+   char buf[4096], tbuf[256 * 1024];
+   struct stat st;
+   int l, fd, children = 0, cret;
+   
+   home = getenv("HOME");
+   if (home)
+     snprintf(buf, sizeof(buf), "%s/.e-precache", home);
+   else
+     snprintf(buf, sizeof(buf), "/tmp/.e-precache");
+   f = fopen(buf, "r");
+   if (!f) return;
+   unlink(buf);
+   if (fork()) return;
+   while (fgets(buf, sizeof(buf), f));
+   rewind(f);
+   while (fgets(buf, sizeof(buf), f))
+     {
+	l = strlen(buf);
+	if (l > 0) buf[l - 1] = 0;
+	if (!fork())
+	  {
+	     if (buf[0] == 's')
+	       {
+		  stat(buf + 2, &st);
+	       }
+	     else if (buf[0] == 'o')
+	       {
+		  fd = open(buf + 2, O_RDONLY);
+		  if (fd >= 0)
+		    {
+		       while (read(fd, tbuf, 256 * 1024) > 0);
+		       close(fd);
+		    }
+	       }
+	     else if (buf[0] == 'd')
+	       {
+		  fd = open(buf + 2, O_RDONLY);
+		  if (fd >= 0)
+		    {
+		       while (read(fd, tbuf, 256 * 1024) > 0);
+		       close(fd);
+		    }
+	       }
+	     exit(0);
+	  }
+	children++;
+	if (children > 400)
+	  {
+	     wait(&cret);
+	     children--;
+	  }
+     }
+   fclose(f);
+   while (children > 0)
+     {
+	wait(&cret);
+	children--;
+     }
+   exit(0);
+} 
+
 int
 main(int argc, char **argv)
 {
@@ -268,8 +338,10 @@ main(int argc, char **argv)
    else snprintf(buf, sizeof(buf), "%s/lib", _prefix_path);
    env_set("LD_LIBRARY_PATH", buf);
 
-//   snprintf(buf, sizeof(buf), "%s/lib/enlightenment/preload/e_precache.so", _prefix_path);
-//   env_set("LD_PRELOAD", buf);
+   snprintf(buf, sizeof(buf), "%s/lib/enlightenment/preload/e_precache.so", _prefix_path);
+   env_set("LD_PRELOAD", buf);
+   
+   precache();
    
    args = alloca((argc + 1) * sizeof(char *));
    args[0] = "enlightenment";
