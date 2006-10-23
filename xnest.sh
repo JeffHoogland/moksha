@@ -43,7 +43,7 @@ Xnest :1 -ac &
 
 sleep 2   # Someone reported that it starts E before X has started properly.
 
-DISPLAY=$main; $action enlightenment_start $display
+DISPLAY=$main; E_START="enlightenment_start"; $action enlightenment $display
 
 rm -f $tmp
 killall -TERM Xnest
