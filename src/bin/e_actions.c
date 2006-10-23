@@ -1755,6 +1755,8 @@ e_actions_init(void)
    E_Action *act;
 
    ACT_GO(window_move);
+   e_action_predef_name_set(_("Window : Actions"), _("Move"), "window_move", NULL, NULL, 0);
+
    ACT_GO_MOUSE(window_move);
    ACT_GO_SIGNAL(window_move);
    ACT_END(window_move);
@@ -1762,6 +1764,8 @@ e_actions_init(void)
    
    /* window_resize */
    ACT_GO(window_resize);
+   e_action_predef_name_set(_("Window : Actions"), _("Resize"), "window_resize", NULL, NULL, 0);
+
    ACT_GO_MOUSE(window_resize);
    ACT_GO_SIGNAL(window_resize);
    ACT_END(window_resize);

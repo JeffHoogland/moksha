@@ -1,6 +1,8 @@
 #include "e.h"
 
 
+#define TEXT_NO_PARAMS _("<None>")
+
 #define EXAMPLE_STRING "example : "
 #define E_BINDING_CONTEXT_NUMBER  10
 
@@ -18,60 +20,41 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Co
 static void _fill_data(E_Config_Dialog_Data *cfdata);
 
 static void _fill_actions_list(E_Config_Dialog_Data *cfdata);
-static void _auto_apply_changes(E_Config_Dialog_Data *cfdata);
-/******** updates ************/
-static void _update_binding_list(E_Config_Dialog_Data *cfdata);
-static void _update_binding_list_selection(E_Config_Dialog_Data *cfdata, const void *bind);
-static void _update_buttons(E_Config_Dialog_Data *cfdata);
-static void _update_binding_params(E_Config_Dialog_Data *cfdata);
 
-/******** callbacks ***********/
+
+/******************* Callbacks *************/
 static void _binding_change_cb(void *data);
 static void _action_change_cb(void *data);
+static void _delete_mouse_binding_cb(void *data, void *data2);
+static void _delete_all_mouse_binding_cb(void *data, void *data2);
+static void _restore_mouse_binding_defaults_cb(void *data, void *data2);
 static void _add_mouse_binding_cb(void *data, void *data2);
 static void _modify_mouse_binding_cb(void *data, void *data2);
-static void _delete_mouse_binding_cb(void *data, void *data2);
-static void _restore_defaults_cb(void *data, void *data2);
 
-static int _grab_key_down_cb(void *data, int type, void *event);
-static int _grab_mouse_down_cb(void *data, int type, void *event);
-static int _grab_mouse_wheel_cb(void *data, int type, void *event);
-static void _grab_wnd_hide_cb(E_Config_Dialog_Data *cfdata);
+/******************* Updates *****************/
+static void _update_action_list(E_Config_Dialog_Data *cfdata);
+static void _update_action_params(E_Config_Dialog_Data *cfdata);
+static void _update_mouse_binding_list(E_Config_Dialog_Data *cfdata);
+static void _update_buttons(E_Config_Dialog_Data *cfdata);
+static void _update_binding_context(E_Config_Dialog_Data *cfdata);
 
-/******** helpers *************/
+/****************** Helper *****************/
+static void _find_key_binding_action(const char *action, const char *params, int *g, int *a, int *n);
 static char *_helper_button_name_get(E_Config_Binding_Mouse *eb);
 static char *_helper_wheel_name_get(E_Config_Binding_Wheel *bw);
 static char *_helper_modifier_name_get(int mod);
+static void _auto_apply_changes(E_Config_Dialog_Data *cfdata);
 
-/********* sorts ***************/
+/********* Sorting ***************/
 static int _mouse_binding_sort_cb(void *d1, void *d2);
 static int _wheel_binding_sort_cb(void *d1, void *d2);
 
-
-#define E_ACTION_NUMBER 32
-const char *action_to_name[E_ACTION_NUMBER][2] = { 
-       {"window_move", "Move Window"}, {"window_resize", "Resize Window" },
-       {"window_raise", "Raise Window"}, {"window_menu", "Window Menu"},
-       {"window_lower", "Lower Window"}, {"window_close", "Close Window"},
-       {"window_kill", "Kill Window"}, {"window_sticky_toggle", "Sticky Window"},
-       {"window_iconic_toggle", "Iconify Window"}, {"window_shaded_toggle", "Shade Window"},
-       {"window_bordless_toggle", "Bordless Window"}, {"desk_flip_by", "Flip Desktop By #:#"},
-       {"desk_deskshow_toggle", "Show Desktop"}, {"desk_flip_to", "Flip To Desktop #:#"},
-       {"desk_linear_flip_by", "Flip Desktop By #"},
-       {"desk_linear_flip_to", "Flip To Desktop #"},
-       {"screen_send_to", "Move Mouse To Screen #"},
-       {"screen_send_by", "Move Mouse By Screen #"},
-       {"window_move_to", "Move Window To Position"}, {"window_move_by", "Shift Window"},
-       {"window_resize_by", "Resize Window By Size"},
-       {"window_drag_icon", "Drag Window Icon"},
-       {"window_desk_move_by", "Move Window By Desktop #"},
-       {"window_desk_move_to", "Move Window To Desktop #"}, {"menu_show", "Show Menu"},
-       {"exec", "Run User Command"}, {"app", "Launch Application"},
-       {"winlist", "Run Winlist Dialog"}, {"restart", "Restart Enlightenment"},
-       {"exit", "Exit Enlightenment"}, {"exebuf", "Run Command Dialog"},
-       {"desk_lock", "Lock Screen"}
-};
-
+/********* grab window **********/
+static void _grab_wnd_show(E_Config_Dialog_Data *cfdata);
+static void _grab_wnd_hide(E_Config_Dialog_Data *cfdata);
+static int _grab_mouse_down_cb(void *data, int type, void *event);
+static int _grab_mouse_wheel_cb(void *data, int type, void *event);
+static int _grab_key_down_cb(void *data, int type, void *event);
 
 struct _E_Config_Dialog_Data
 {
@@ -96,7 +79,7 @@ struct _E_Config_Dialog_Data
        int add; //just to distinguesh among two buttons add/modify
 
        E_Dialog *dia;
-       Ecore_X_Window mousebind_win;
+       Ecore_X_Window bind_win;
        Evas_List *handlers;
     } locals;
 
@@ -107,6 +90,7 @@ struct _E_Config_Dialog_Data
        Evas_Object *o_add;
        Evas_Object *o_mod;
        Evas_Object *o_del;
+       Evas_Object *o_del_all;
        Evas_Object *o_params;
 
        struct {
@@ -151,7 +135,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->locals.context = E_BINDING_CONTEXT_ANY;
    cfdata->binding.mouse = NULL;
    cfdata->binding.wheel = NULL;
-   cfdata->locals.mousebind_win = 0;
+   cfdata->locals.bind_win = 0;
    cfdata->locals.handlers =  NULL;
    cfdata->locals.dia = NULL;
 
@@ -326,23 +310,34 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, o);
 
    ol2 = e_widget_list_add(evas, 1, 1);
-   o = e_widget_button_add(evas, _("Add"), NULL, _add_mouse_binding_cb, cfdata, NULL);
+   o = e_widget_button_add(evas, _("Add Mouse"), "enlightenment/e",
+			   _add_mouse_binding_cb, cfdata, NULL);
    cfdata->gui.o_add = o;
    e_widget_list_object_append(ol2, o, 1, 1, 0.5);
 
-   o = e_widget_button_add(evas, _("Modify"), NULL, _modify_mouse_binding_cb, cfdata, NULL);
-   cfdata->gui.o_mod = o;
-   e_widget_disabled_set(o, 1);
-   e_widget_list_object_append(ol2, o, 1, 1, 0.5);
-
-   o = e_widget_button_add(evas, _("Delete"), NULL, _delete_mouse_binding_cb, cfdata, NULL);
+   o = e_widget_button_add(evas, _("Delete Mouse"), "enlightenment/e",
+			   _delete_mouse_binding_cb, cfdata, NULL);
    cfdata->gui.o_del = o;
    e_widget_disabled_set(o, 1);
    e_widget_list_object_append(ol2, o, 1, 1, 0.5);
    e_widget_framelist_object_append(of, ol2);
 
-   o = e_widget_button_add(evas, _("Restore Mouse and Wheel Binding Defaults"), NULL,
-			   _restore_defaults_cb, cfdata, NULL);
+   ol2 = e_widget_list_add(evas, 1, 1);
+   o = e_widget_button_add(evas, _("Modify"), "enlightenment/e",
+			   _modify_mouse_binding_cb, cfdata, NULL);
+   cfdata->gui.o_mod = o;
+   e_widget_disabled_set(o, 1);
+   e_widget_list_object_append(ol2, o, 1, 1, 0.5);
+
+   o = e_widget_button_add(evas, _("Delete All"), "enlightenment/e",
+			   _delete_all_mouse_binding_cb, cfdata, NULL);
+   cfdata->gui.o_del_all = o;
+   e_widget_disabled_set(o, 1);
+   e_widget_list_object_append(ol2, o, 1, 1, 0.5);
+   e_widget_framelist_object_append(of, ol2);
+
+   o = e_widget_button_add(evas, _("Restore Mouse and Wheel Binding Defaults"), "enlightenment/e",
+			   _restore_mouse_binding_defaults_cb, cfdata, NULL);
    e_widget_framelist_object_append(of, o);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
@@ -351,7 +346,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("Action"), 0);
    o = e_widget_ilist_add(evas, 24, 24, &(cfdata->locals.action));
    cfdata->gui.o_action_list = o;
-   e_widget_min_size_set(o, 250, 180); 
+   e_widget_min_size_set(o, 250, 210); 
    e_widget_ilist_go(o);
    e_widget_framelist_object_append(of, o);
    e_widget_list_object_append(ol2, of, 1, 1, 0.5);
@@ -420,8 +415,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    e_widget_list_object_append(ol, ol2, 1, 1, 0.5);
 
+   _update_mouse_binding_list(cfdata);
    _fill_actions_list(cfdata);
-   _update_binding_list(cfdata);
 
    return ol;
 }
@@ -430,417 +425,63 @@ static void
 _fill_actions_list(E_Config_Dialog_Data *cfdata)
 {
    char buf[1024];
-   int i;
+   Evas_List *l, *l2;
+   E_Action_Group *actg;
+   E_Action_Description *actd;
+   int g, a;
 
-   for (i = 0; i < E_ACTION_NUMBER; i++)
+   e_widget_ilist_clear(cfdata->gui.o_action_list);
+   for (l = e_action_groups_get(), g = 0; l; l = l->next, g++)
      {
-	snprintf(buf, sizeof(buf), "%d", i);
-	e_widget_ilist_append(cfdata->gui.o_action_list, NULL, action_to_name[i][1],
-			      _action_change_cb, cfdata, buf);
-     } 
+	actg = l->data;
+
+	if (!actg->acts) continue;
+
+	e_widget_ilist_header_append(cfdata->gui.o_action_list, NULL, actg->act_grp);
+
+	for (l2 = actg->acts, a = 0; l2; l2 = l2->next, a++)
+	  {
+	     actd = l2->data;
+
+	     snprintf(buf, sizeof(buf), "%d %d", g, a);
+	     e_widget_ilist_append(cfdata->gui.o_action_list, NULL, actd->act_name,
+				   _action_change_cb, cfdata, buf);
+	  }
+     }
    e_widget_ilist_go(cfdata->gui.o_action_list);
 }
 
+/******************* Callbacks *************/
 static void
-_auto_apply_changes(E_Config_Dialog_Data *cfdata)
+_add_mouse_binding_cb(void *data, void *data2)
 {
-   char *n;
-   const char *action;
-   E_Config_Binding_Mouse *eb;
-   E_Config_Binding_Wheel *bw;
-
-   if (!cfdata->locals.cur) return;
-
-   n = cfdata->locals.cur;
-
-   if (cfdata->locals.cur[0] == 'm')
-     {
-	eb = evas_list_nth(cfdata->binding.mouse, atoi(++n));
-	if (!eb) return;
-
-	eb->context = cfdata->locals.context;
-
-	if (eb->action) evas_stringshare_del(eb->action);
-	if (e_widget_ilist_selected_get(cfdata->gui.o_action_list) >= 0) 
-	  action = action_to_name[atoi(cfdata->locals.action)][0];
-	else
-	  action = NULL;
-	eb->action = action ? evas_stringshare_add(action) : NULL;
-
-	if (eb->params) evas_stringshare_del(eb->params);
-	if ((!cfdata->locals.params) || (!cfdata->locals.params[0]) ||
-	    (!strncmp(cfdata->locals.params, EXAMPLE_STRING, strlen(EXAMPLE_STRING))))
-	  eb->params = NULL;
-	else
-	  eb->params = evas_stringshare_add(cfdata->locals.params);
-     }
-   else
-     {
-	bw = evas_list_nth(cfdata->binding.wheel, atoi(++n));
-	if (!bw) return;
-
-	bw->context = cfdata->locals.context;
-	if (bw->action) evas_stringshare_del(bw->action);
-	if (e_widget_ilist_selected_get(cfdata->gui.o_action_list) >= 0)
-	  action = action_to_name[atoi(cfdata->locals.action)][0];
-	else
-	  action = NULL;
-	bw->action = action ? evas_stringshare_add(action) : NULL;
-
-	if (bw->params) evas_stringshare_del(bw->params);
-	if ((!cfdata->locals.params) || (!cfdata->locals.params[0]))
-	  bw->params = NULL;
-	else
-	  bw->params = evas_stringshare_add(cfdata->locals.params);
-     }
-}
-/********* updates *************/
-static void 
-_update_binding_actions(E_Config_Dialog_Data *cfdata)
-{
-   char *n;
-   int i;
-   E_Config_Binding_Mouse *eb;
-   E_Config_Binding_Wheel *bw;
-   const char *action;
-
-   e_widget_ilist_clear(cfdata->gui.o_action_list);
-   _fill_actions_list(cfdata);
-
-   if (!cfdata->locals.cur) return;
-
-   n = cfdata->locals.cur;
-   if (cfdata->locals.cur[0] == 'm')
-     {
-	eb = evas_list_nth(cfdata->binding.mouse, atoi(++n));
-	if (!eb) return;
-	action = eb->action;
-     }
-   else
-     {
-	bw = evas_list_nth(cfdata->binding.wheel, atoi(++n));
-	if (!bw) return;
-	action = bw->action;
-     }
-
-   if (action && action[0])
-     { 
-	for (i = 0; i < E_ACTION_NUMBER; i++) 
-	  { 
-	     if (!strcmp(action_to_name[i][0], action)) 
-	       { 
-		  e_widget_ilist_selected_set(cfdata->gui.o_action_list, i); 
-		  break; 
-	       }
-	  }
-     }
-   else
-     cfdata->locals.action[0] = '\0';
-}
-static void
-_update_binding_list(E_Config_Dialog_Data *cfdata)
-{
-   char *icon = NULL, *button, *mods;
-   char label[1024], val[10];
-   int i;
-   Evas_List *l;
-   E_Config_Binding_Mouse *eb;
-   E_Config_Binding_Wheel *bw;
-
-   e_widget_ilist_clear(cfdata->gui.o_binding_list);
-
-   if (cfdata->binding.mouse) 
-     { 
-	cfdata->binding.mouse = evas_list_sort(cfdata->binding.mouse, 
-	      evas_list_count(cfdata->binding.mouse), _mouse_binding_sort_cb);
-	
-	e_widget_ilist_header_append(cfdata->gui.o_binding_list, NULL, "Mouse Buttons");
-     }
-
-   for (l = cfdata->binding.mouse, i = 0; l; l = l->next, i++)
-     {
-	Evas_Object *ic;
-	eb = l->data;
-
-	button = _helper_button_name_get(eb);
-	mods = _helper_modifier_name_get(eb->modifiers);
-
-	snprintf(label, sizeof(label), "%s%s%s", button ? button : "", mods[0] ? " + ": "",
-	         mods ? mods : "");
-	if (button) free(button);
-	if (mods) free(mods);
-
-	switch (eb->button)
-	  {
-	   case 1:
-	      icon = "enlightenment/mouse_left";
-	      break;
-	   case 2:
-	      icon = "enlightenment/mouse_middle";
-	      break;
-	   case 3:
-	      icon = "enlightenment/mouse_right";
-	      break;
-	   default:
-	      icon = "enlightenment/mouse_extra";
-	  }
-
-	snprintf(val, sizeof(val), "m%d", i);
-
-	ic = edje_object_add(cfdata->evas);
-	e_util_edje_icon_set(ic, icon);
-	e_widget_ilist_append(cfdata->gui.o_binding_list, ic, label, _binding_change_cb,
-			      cfdata, val);
-     }
-
-   if (cfdata->binding.wheel) 
-     {
-	cfdata->binding.wheel = evas_list_sort(cfdata->binding.wheel, 
-	      evas_list_count(cfdata->binding.wheel), _wheel_binding_sort_cb); 
-	
-	e_widget_ilist_header_append(cfdata->gui.o_binding_list, NULL, "Mouse Wheels");
-     }
-
-   for (l = cfdata->binding.wheel, i = 0; l; l = l->next, i++)
-     {
-	Evas_Object *ic;
-	bw = l->data;
-
-	button = _helper_wheel_name_get(bw);
-	mods = _helper_modifier_name_get(bw->modifiers);
-
-	snprintf(label, sizeof(label), "%s%s%s", button ? button : "", mods[0] ? " + ": "",
-	        mods ? mods : "");
-	if (button) free(button);
-	if (mods) free(mods);
-
-	snprintf(val, sizeof(val), "w%d", i);
-
-	ic = edje_object_add(cfdata->evas);
-	e_util_edje_icon_set(ic, "enlightenment/mouse_wheel");
-	e_widget_ilist_append(cfdata->gui.o_binding_list, ic, label, _binding_change_cb,
-			      cfdata, val);
-     }
-
-   e_widget_ilist_go(cfdata->gui.o_binding_list);
-}
-static void
-_update_binding_list_selection(E_Config_Dialog_Data *cfdata, const void *bind)
-{
-   Evas_List *l;
-   int sel;
-
-   for (l = cfdata->binding.mouse, sel = 0; l; l = l->next, sel++)
-     {
-	if (l->data == bind)
-	  {
-	     e_widget_ilist_selected_set(cfdata->gui.o_binding_list, sel + 1);
-	     return;
-	  }
-     }
-
-   if (evas_list_count(cfdata->binding.mouse)) 
-     sel = evas_list_count(cfdata->binding.mouse) + 1;
-   else
-     sel = 0;
-
-   for (l = cfdata->binding.wheel; l; l = l->next, sel++)
-     {
-	if (l->data == bind)
-	  {
-	     e_widget_ilist_selected_set(cfdata->gui.o_binding_list, sel + 1);
-	     return;
-	  }
-     }
-}
-static void
-_update_buttons(E_Config_Dialog_Data *cfdata)
-{
-   if (!cfdata->locals.cur)
-     { 
-	e_widget_disabled_set(cfdata->gui.o_mod, 1); 
-	e_widget_disabled_set(cfdata->gui.o_del, 1);
-	return;
-     }
-
-   e_widget_disabled_set(cfdata->gui.o_mod, 0);
-   e_widget_disabled_set(cfdata->gui.o_del, 0);
-}
-static void
-_update_binding_context(E_Config_Dialog_Data *cfdata)
-{
-   char *n;
-   E_Config_Binding_Mouse *eb;
-   E_Config_Binding_Wheel *bw;
-   E_Binding_Context ctxt;
-
-   e_widget_disabled_set(cfdata->gui.context.o_any, 1);
-   e_widget_radio_toggle_set(cfdata->gui.context.o_any, 1);
-   e_widget_disabled_set(cfdata->gui.context.o_border, 1);
-   e_widget_disabled_set(cfdata->gui.context.o_menu, 1);
-   e_widget_disabled_set(cfdata->gui.context.o_winlist, 1);
-   e_widget_disabled_set(cfdata->gui.context.o_popup, 1);
-   e_widget_disabled_set(cfdata->gui.context.o_zone, 1);
-   e_widget_disabled_set(cfdata->gui.context.o_container, 1);
-   e_widget_disabled_set(cfdata->gui.context.o_manager, 1);
-   e_widget_disabled_set(cfdata->gui.context.o_none, 1);
-
-   if (!cfdata->locals.cur) return;
-
-   n = cfdata->locals.cur;
-   if (cfdata->locals.cur[0] == 'm')
-     {
-	eb = evas_list_nth(cfdata->binding.mouse, atoi(++n));
-	if (!eb) return;
-	ctxt = eb->context;
-     }
-   else
-     {
-	bw = evas_list_nth(cfdata->binding.wheel, atoi(++n));
-	if (!bw) return;
-	ctxt = bw->context;
-     }
-
-   e_widget_disabled_set(cfdata->gui.context.o_any, 0);
-   e_widget_disabled_set(cfdata->gui.context.o_border, 0);
-   e_widget_disabled_set(cfdata->gui.context.o_menu, 0);
-   e_widget_disabled_set(cfdata->gui.context.o_winlist, 0);
-   e_widget_disabled_set(cfdata->gui.context.o_popup, 0);
-   e_widget_disabled_set(cfdata->gui.context.o_zone, 0);
-   e_widget_disabled_set(cfdata->gui.context.o_container, 0);
-   e_widget_disabled_set(cfdata->gui.context.o_manager, 0);
-   e_widget_disabled_set(cfdata->gui.context.o_none, 0);
-
-   if (ctxt == E_BINDING_CONTEXT_ANY) 
-     e_widget_radio_toggle_set(cfdata->gui.context.o_any, 1);
-   else if (ctxt == E_BINDING_CONTEXT_BORDER)
-     e_widget_radio_toggle_set(cfdata->gui.context.o_border, 1);
-   else if (ctxt == E_BINDING_CONTEXT_MENU)
-     e_widget_radio_toggle_set(cfdata->gui.context.o_menu, 1);
-   else if (ctxt == E_BINDING_CONTEXT_WINLIST)
-     e_widget_radio_toggle_set(cfdata->gui.context.o_winlist, 1);
-   else if (ctxt == E_BINDING_CONTEXT_POPUP)
-     e_widget_radio_toggle_set(cfdata->gui.context.o_popup, 1);
-   else if (ctxt == E_BINDING_CONTEXT_ZONE)
-     e_widget_radio_toggle_set(cfdata->gui.context.o_zone, 1);
-   else if (ctxt == E_BINDING_CONTEXT_CONTAINER)
-     e_widget_radio_toggle_set(cfdata->gui.context.o_container, 1);
-   else if (ctxt == E_BINDING_CONTEXT_MANAGER)
-     e_widget_radio_toggle_set(cfdata->gui.context.o_manager, 1);
-   else if (ctxt == E_BINDING_CONTEXT_NONE)
-     e_widget_radio_toggle_set(cfdata->gui.context.o_none, 1);
-}
-static void
-_update_binding_params(E_Config_Dialog_Data *cfdata)
-{ 
-   char *n;
-   const char *params;
-   E_Config_Binding_Mouse *eb;
-   E_Config_Binding_Wheel *bw;
-
-   e_widget_entry_clear(cfdata->gui.o_params);
-   e_widget_disabled_set(cfdata->gui.o_params, 1);
-
-   if (!cfdata->locals.cur) return; 
-   
-   e_widget_disabled_set(cfdata->gui.o_params, 0);
-
-   n = cfdata->locals.cur;
-   if (cfdata->locals.cur[0] == 'm')
-     {
-	eb = evas_list_nth(cfdata->binding.mouse, atoi(++n));
-	params = eb->params;
-     }
-   else
-     {
-	bw = evas_list_nth(cfdata->binding.wheel, atoi(++n));
-	params = bw->params;
-     }
-
-   if ((!params) || (!params[0]))
-     { 
-	//FIXME: need to put example
-	//e_widget_entry_text_set(cfdata->gui.o_params, EXAMPLE_STRING);
-	e_widget_entry_clear(cfdata->gui.o_params);
-     }
-   else
-     e_widget_entry_text_set(cfdata->gui.o_params, params);
-}
-/******** callbacks ***********/
-static void
-_action_change_cb(void *data)
-{
-   const char *action;
-   char *n;
-   E_Config_Binding_Mouse *eb;
-   E_Config_Binding_Wheel *bw;
-
    E_Config_Dialog_Data *cfdata;
 
    cfdata = data;
+   _auto_apply_changes(cfdata);
 
-   if (!cfdata->locals.cur) return;
-
-   action = action_to_name[atoi(cfdata->locals.action)][0];
-
-   n = cfdata->locals.cur;
-   if (cfdata->locals.cur[0] == 'm')
-     {
-	eb = evas_list_nth(cfdata->binding.mouse, atoi(++n));
-	if (!eb || !eb->action)
-	  { 
-	     //FIXME: need to put here an example how to make binding 
-	     e_widget_entry_clear(cfdata->gui.o_params);
-	     return;
-	  }
-
-	if (!strcmp(eb->action, action))
-	  {
-	     if (!eb->params)
-	       { 
-		  //FIXME: need to put here an example how to make binding 
-		  //e_widget_entry_text_set(cfdata->gui.o_params, EXAMPLE_STRING);
-		  e_widget_entry_clear(cfdata->gui.o_params);
-	       }
-	     else
-	       e_widget_entry_text_set(cfdata->gui.o_params, eb->params);
-	  }
-	else
-	  { 
-	     //FIXME: need to put here an example how to make binding 
-	     //e_widget_entry_text_set(cfdata->gui.o_params, EXAMPLE_STRING);
-	     e_widget_entry_clear(cfdata->gui.o_params);
-	  }
-     }
-   else
-     {
-	bw = evas_list_nth(cfdata->binding.wheel, atoi(++n));
-	if (!bw || !bw->action)
-	  { 
-	     //FIXME: need to put here an example how to make binding 
-	     e_widget_entry_clear(cfdata->gui.o_params);
-	     return;
-	  }
-
-	if (!strcmp(bw->action, action))
-	  { 
-	     if (!bw->params)
-	       {
-		  //FIXME: need to put here an example how to make binding 
-		  e_widget_entry_clear(cfdata->gui.o_params);
-	       }
-	     else
-	       e_widget_entry_text_set(cfdata->gui.o_params, bw->params);
-	  }
-	else
-	  { 
-	     //FIXME: need to put here an example how to make binding 
-	     //e_widget_entry_text_set(cfdata->gui.o_params, EXAMPLE_STRING);
-	     e_widget_entry_clear(cfdata->gui.o_params);
-	  }
-     }
+   cfdata->locals.add = 1;
+   _grab_wnd_show(cfdata);
 }
+static void
+_modify_mouse_binding_cb(void *data, void *data2)
+{
+   E_Config_Dialog_Data *cfdata;
 
+   cfdata = data;
+   _auto_apply_changes(cfdata);
+
+   cfdata->locals.add = 0;
+   _grab_wnd_show(cfdata);
+}
+static void
+_action_change_cb(void *data)
+{
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = data;
+   _update_action_params(cfdata);
+}
 static void
 _binding_change_cb(void *data)
 {
@@ -856,91 +497,58 @@ _binding_change_cb(void *data)
    if (cfdata->locals.binding[0]) 
      cfdata->locals.cur = strdup(cfdata->locals.binding);
 
-   _update_binding_context(cfdata);
-   _update_binding_actions(cfdata);
-   _update_binding_params(cfdata);
    _update_buttons(cfdata);
+   _update_action_list(cfdata);
+   _update_binding_context(cfdata);
 }
 static void
-_add_mouse_binding_cb(void *data, void *data2)
+_delete_all_mouse_binding_cb(void *data, void *data2)
 {
    E_Config_Dialog_Data *cfdata;
+   E_Config_Binding_Mouse *eb;
+   E_Config_Binding_Wheel *bw;
+
    cfdata = data;
 
-   if (cfdata->locals.mousebind_win != 0) return;
+   //FIXME: need confirmation dialog
+   
+   while (cfdata->binding.mouse)
+     {
+	eb = cfdata->binding.mouse->data;
+	if (eb->action) evas_stringshare_del(eb->action);
+	if (eb->params) evas_stringshare_del(eb->params);
+	E_FREE(eb);
+	cfdata->binding.mouse =
+	   evas_list_remove_list(cfdata->binding.mouse, cfdata->binding.mouse);
+     }
 
-   cfdata->locals.add = 1;
-   cfdata->locals.dia = e_dialog_new(e_container_current_get(e_manager_current_get()),
-				     "E", "_mousebind_getmouse_dialog");
-   if (!cfdata->locals.dia) return;
-   e_dialog_title_set(cfdata->locals.dia, _("Mouse Binding Sequence"));
-   e_dialog_icon_set(cfdata->locals.dia, "enlightenment/mouse_clean", 64);
-   e_dialog_text_set(cfdata->locals.dia, TEXT_PRESS_MOUSE_BINIDING_SEQUENCE);
-   e_win_centered_set(cfdata->locals.dia->win, 1);
-   e_win_borderless_set(cfdata->locals.dia->win, 1);
+   while (cfdata->binding.wheel)
+     {
+	bw = cfdata->binding.wheel->data;
+	if (bw->action) evas_stringshare_del(bw->action);
+	if (bw->params) evas_stringshare_del(bw->params);
+	E_FREE(bw);
+	cfdata->binding.wheel =
+	   evas_list_remove_list(cfdata->binding.wheel, cfdata->binding.wheel);
+     }
 
-   cfdata->locals.mousebind_win = ecore_x_window_input_new(e_manager_current_get()->root,
-							   0, 0, 1, 1);
-   ecore_x_window_show(cfdata->locals.mousebind_win);
-   e_grabinput_get(cfdata->locals.mousebind_win, 0, cfdata->locals.mousebind_win);
+   if (cfdata->locals.cur) free(cfdata->locals.cur);
+   cfdata->locals.cur = NULL;
 
-   cfdata->locals.handlers = evas_list_append(cfdata->locals.handlers,
-			      ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,
-				 _grab_key_down_cb, cfdata));
+   e_widget_ilist_clear(cfdata->gui.o_binding_list);
+   e_widget_ilist_go(cfdata->gui.o_binding_list);
+   e_widget_ilist_unselect(cfdata->gui.o_action_list);
+   e_widget_entry_clear(cfdata->gui.o_params);
+   e_widget_disabled_set(cfdata->gui.o_params, 1);
 
-   cfdata->locals.handlers = evas_list_append(cfdata->locals.handlers,
-			      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN,
-				 _grab_mouse_down_cb, cfdata));
-
-   cfdata->locals.handlers = evas_list_append(cfdata->locals.handlers,
-			      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL,
-				 _grab_mouse_wheel_cb, cfdata));
-
-   e_dialog_show(cfdata->locals.dia);
-}
-static void
-_modify_mouse_binding_cb(void *data, void *data2)
-{
-   E_Config_Dialog_Data *cfdata;
-   cfdata = data;
-
-   if (cfdata->locals.mousebind_win != 0) return;
-
-   cfdata->locals.add = 0;
-   cfdata->locals.dia = e_dialog_new(e_container_current_get(e_manager_current_get()),
-				     "E", "_mousebind_getmouse_dialog");
-   if (!cfdata->locals.dia) return;
-   e_dialog_title_set(cfdata->locals.dia, _("Mouse Binding Sequence"));
-   e_dialog_icon_set(cfdata->locals.dia, "enlightenment/mouse_clean", 64);
-   e_dialog_text_set(cfdata->locals.dia, TEXT_PRESS_MOUSE_BINIDING_SEQUENCE);
-   e_win_centered_set(cfdata->locals.dia->win, 1);
-   e_win_borderless_set(cfdata->locals.dia->win, 1);
-
-   cfdata->locals.mousebind_win = ecore_x_window_input_new(e_manager_current_get()->root,
-							   0, 0, 1, 1);
-   ecore_x_window_show(cfdata->locals.mousebind_win);
-   e_grabinput_get(cfdata->locals.mousebind_win, 0, cfdata->locals.mousebind_win);
-
-   cfdata->locals.handlers = evas_list_append(cfdata->locals.handlers,
-			      ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,
-				 _grab_key_down_cb, cfdata));
-
-   cfdata->locals.handlers = evas_list_append(cfdata->locals.handlers,
-			      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN,
-				 _grab_mouse_down_cb, cfdata));
-
-   cfdata->locals.handlers = evas_list_append(cfdata->locals.handlers,
-			      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL,
-				 _grab_mouse_wheel_cb, cfdata));
-
-   e_dialog_show(cfdata->locals.dia);
+   _update_buttons(cfdata);
+   _update_binding_context(cfdata);
 }
 static void
 _delete_mouse_binding_cb(void *data, void *data2)
 {
    Evas_List *l;
-   char *n;
-   int sel;
+   int sel, n;
    E_Config_Dialog_Data *cfdata;
    E_Config_Binding_Mouse *eb;
    E_Config_Binding_Wheel *bw;
@@ -948,37 +556,36 @@ _delete_mouse_binding_cb(void *data, void *data2)
    cfdata = data;
 
    sel = e_widget_ilist_selected_get(cfdata->gui.o_binding_list);
-   if (cfdata->locals.binding[0] == 'm') 
+   if (cfdata->locals.binding[0] == 'm')
      {
-	n = cfdata->locals.binding;
-	l = evas_list_nth_list(cfdata->binding.mouse, atoi(++n));
-
+	sscanf(cfdata->locals.binding, "m%d", &n);
+	l = evas_list_nth_list(cfdata->binding.mouse, n);
 	if (l)
-	  { 
-	     eb = l->data; 
-	     if (eb->action) evas_stringshare_del(eb->action); 
-	     if (eb->params) evas_stringshare_del(eb->params); 
-	     E_FREE(eb); 
+	  {
+	     eb = l->data;
+	     if (eb->action) evas_stringshare_del(eb->action);
+	     if (eb->params) evas_stringshare_del(eb->params);
+	     E_FREE(eb);
 	     cfdata->binding.mouse = evas_list_remove_list(cfdata->binding.mouse, l);
 	  }
      }
-   else
+   else if (cfdata->locals.binding[0] == 'w')
      {
-	n = cfdata->locals.binding;
-	l = evas_list_nth_list(cfdata->binding.wheel, atoi(++n));
-
+	sscanf(cfdata->locals.binding, "w%d", &n);
+	l = evas_list_nth_list(cfdata->binding.wheel, n);
 	if (l)
 	  {
 	     bw = l->data;
 	     if (bw->action) evas_stringshare_del(bw->action);
 	     if (bw->params) evas_stringshare_del(bw->params);
 	     E_FREE(bw);
-
 	     cfdata->binding.wheel = evas_list_remove_list(cfdata->binding.wheel, l);
 	  }
      }
+   else
+     return;
 
-   _update_binding_list(cfdata);
+   _update_mouse_binding_list(cfdata);
    if (sel >= e_widget_ilist_count(cfdata->gui.o_binding_list))
      sel = e_widget_ilist_count(cfdata->gui.o_binding_list) - 1;
 
@@ -987,16 +594,22 @@ _delete_mouse_binding_cb(void *data, void *data2)
    cfdata->locals.cur = NULL;
    if (!e_widget_ilist_count(cfdata->gui.o_binding_list))
      { 
+	
 	_update_binding_context(cfdata);
-	_update_binding_params(cfdata);
-	_update_buttons(cfdata);
+	_update_buttons(cfdata); 
+	
 	e_widget_ilist_unselect(cfdata->gui.o_action_list);
+	e_widget_entry_clear(cfdata->gui.o_params);
+	e_widget_disabled_set(cfdata->gui.o_params, 1);
      }
    else 
-     e_widget_ilist_selected_set(cfdata->gui.o_binding_list, sel);
+     { 
+	if (e_widget_ilist_nth_is_header(cfdata->gui.o_binding_list, sel)) sel++;
+	e_widget_ilist_selected_set(cfdata->gui.o_binding_list, sel);
+     }
 }
 static void
-_restore_defaults_cb(void *data, void *data2)
+_restore_mouse_binding_defaults_cb(void *data, void *data2)
 {
    E_Config_Binding_Mouse *eb;
    E_Config_Binding_Wheel *bw;
@@ -1088,184 +701,504 @@ _restore_defaults_cb(void *data, void *data2)
    if (cfdata->locals.cur) free(cfdata->locals.cur);
    cfdata->locals.cur = NULL;
 
-   _update_binding_list(cfdata);
+   _update_mouse_binding_list(cfdata);
    _update_buttons(cfdata);
-   _update_binding_params(cfdata);
    _update_binding_context(cfdata);
+
    e_widget_ilist_unselect(cfdata->gui.o_action_list);
+   e_widget_entry_clear(cfdata->gui.o_params);
+   e_widget_disabled_set(cfdata->gui.o_params, 1);
 }
 
-static int
-_grab_mouse_down_cb(void *data, int type, void *event)
+/******************* Updates *****************/
+
+static void
+_update_action_list(E_Config_Dialog_Data *cfdata)
 {
-   E_Config_Dialog_Data *cfdata;
    E_Config_Binding_Mouse *eb;
-   int mod = E_BINDING_MODIFIER_NONE;
-   Ecore_X_Event_Mouse_Button_Down *ev = event;
+   E_Config_Binding_Wheel *bw;
+   E_Action_Group *actg;
+   E_Action_Description *actd;
+   Evas_List *l, *l2;
+   const char *action, *params;
+   int j = -1, i, n;
 
-   cfdata = data;
-   if (ev->win != cfdata->locals.mousebind_win) return 1; 
+   if (!cfdata->locals.cur) return;
 
-   if (ev->modifiers & ECORE_X_MODIFIER_SHIFT)
-     mod |= E_BINDING_MODIFIER_SHIFT;
-   if (ev->modifiers & ECORE_X_MODIFIER_CTRL)
-     mod |= E_BINDING_MODIFIER_CTRL;
-   if (ev->modifiers & ECORE_X_MODIFIER_ALT)
-     mod |= E_BINDING_MODIFIER_ALT;
-   if (ev->modifiers & ECORE_X_MODIFIER_WIN)
-     mod |= E_BINDING_MODIFIER_WIN; 
-   
-   
-   if (cfdata->locals.add) 
-     { 
-	eb = E_NEW(E_Config_Binding_Mouse, 1); 
-	eb->context = E_BINDING_CONTEXT_ANY; 
-	eb->button = ev->button; 
-	eb->modifiers = mod; 
-	eb->any_mod = 0; 
-	eb->action = evas_stringshare_add(action_to_name[0][0]); 
-	eb->params = NULL; 
-	
-	cfdata->binding.mouse = evas_list_append(cfdata->binding.mouse, eb);
+   if (cfdata->locals.cur[0] == 'm')
+     {
+	sscanf(cfdata->locals.cur, "m%d", &n);
+	eb = evas_list_nth(cfdata->binding.mouse, n);
+	if (!eb)
+	  {
+	     e_widget_ilist_unselect(cfdata->gui.o_action_list);
+	     e_widget_entry_clear(cfdata->gui.o_params);
+	     e_widget_disabled_set(cfdata->gui.o_params, 1);
+	     return;
+	  }
+	action = eb->action;
+	params = eb->params;
+     }
+   else if (cfdata->locals.cur[0] == 'w')
+     {
+	sscanf(cfdata->locals.cur, "w%d", &n);
+	bw = evas_list_nth(cfdata->binding.wheel, n);
+	if (!bw)
+	  {
+	     e_widget_ilist_unselect(cfdata->gui.o_action_list);
+	     e_widget_entry_clear(cfdata->gui.o_params);
+	     e_widget_disabled_set(cfdata->gui.o_params, 1);
+	     return;
+	  }
+	action = bw->action;
+	params = bw->params;
+     }
+   else
+     return;
+
+   _find_key_binding_action(action, params, NULL, NULL, &j);
+   if (j >= 0)
+     {
+	for (i = 0; i < e_widget_ilist_count(cfdata->gui.o_action_list); i++)
+	  {
+	     if (i > j) break;
+	     if (e_widget_ilist_nth_is_header(cfdata->gui.o_action_list, i)) j++;
+	  }
+     }
+
+   if (j >= 0)
+     {
+	if (j == e_widget_ilist_selected_get(cfdata->gui.o_action_list))
+	  _update_action_params(cfdata);
+	else
+	  e_widget_ilist_selected_set(cfdata->gui.o_action_list, j);
      }
    else
      {
-	char *n = cfdata->locals.cur; 
-	
-	eb = evas_list_nth(cfdata->binding.mouse, atoi(++n));
-	if (eb)
-	  {
-	     eb->button = ev->button;
-	     eb->modifiers = mod;
-	  }
-     } 
-   _update_binding_list(cfdata); 
-   _update_binding_list_selection(cfdata, eb); 
-
-   _grab_wnd_hide_cb(cfdata);
-   _update_buttons(cfdata);
-   return 1;
-}
-static int 
-_grab_mouse_wheel_cb(void *data, int type, void *event)
-{
-   E_Config_Binding_Wheel *bw;
-   E_Config_Dialog_Data *cfdata;
-   Ecore_X_Event_Mouse_Wheel *ev = event;
-   int mod = E_BINDING_MODIFIER_NONE;
-
-   cfdata = data;
-
-   if (ev->win != cfdata->locals.mousebind_win) return 1;
-
-   if (ev->modifiers & ECORE_X_MODIFIER_SHIFT)
-     mod |= E_BINDING_MODIFIER_SHIFT;
-   if (ev->modifiers & ECORE_X_MODIFIER_CTRL)
-     mod |= E_BINDING_MODIFIER_CTRL;
-   if (ev->modifiers & ECORE_X_MODIFIER_ALT)
-     mod |= E_BINDING_MODIFIER_ALT;
-   if (ev->modifiers & ECORE_X_MODIFIER_WIN)
-     mod |= E_BINDING_MODIFIER_WIN; 
-   
-   
-   if (cfdata->locals.add)
-     {
-	bw = E_NEW(E_Config_Binding_Wheel, 1);
-	bw->context = E_BINDING_CONTEXT_ANY;
-	bw->direction = ev->direction;
-	bw->z = ev->z;
-	bw->modifiers = mod;
-	bw->any_mod = 0;
-	bw->action = evas_stringshare_add(action_to_name[0][0]);
-	bw->params = NULL; 
-	
-	cfdata->binding.wheel = evas_list_append(cfdata->binding.wheel, bw);
+	e_widget_ilist_unselect(cfdata->gui.o_action_list);
+	if (cfdata->locals.action) free(cfdata->locals.action);
+	cfdata->locals.action = strdup("");
+	e_widget_entry_clear(cfdata->gui.o_params);
      }
-   else 
-     {
-	char *n = cfdata->locals.cur; 
-	
-	bw = evas_list_nth(cfdata->binding.wheel, atoi(++n));
-	if (bw)
-	  {
-	     bw->direction = ev->direction;
-	     bw->z = ev->z;
-	     bw->modifiers = mod;
-	  }
-     } 
-   _update_binding_list(cfdata); 
-   _update_binding_list_selection(cfdata, bw);
-
-   _grab_wnd_hide_cb(cfdata);
-   _update_buttons(cfdata);
-
-   return 1;
-}
-static int
-_grab_key_down_cb(void *data, int type, void *event)
-{
-   E_Config_Dialog_Data *cfdata;
-   Ecore_X_Event_Key_Down *ev = event;
-
-   cfdata = data;
-
-   if (ev->win != cfdata->locals.mousebind_win) return 1;
-
-   if (!strcmp(ev->keyname, "Escape") &&
-       !(ev->modifiers & ECORE_X_MODIFIER_SHIFT) &&
-       !(ev->modifiers & ECORE_X_MODIFIER_CTRL) &&
-       !(ev->modifiers & ECORE_X_MODIFIER_ALT) &&
-       !(ev->modifiers & ECORE_X_MODIFIER_WIN))
-     { 
-	_grab_wnd_hide_cb(cfdata);
-     }
-   return 1;
 }
 static void
-_grab_wnd_hide_cb(E_Config_Dialog_Data *cfdata)
+_update_mouse_binding_list(E_Config_Dialog_Data *cfdata)
 {
-   while (cfdata->locals.handlers)
-     {
-	ecore_event_handler_del(cfdata->locals.handlers->data);
-	cfdata->locals.handlers = evas_list_remove_list(cfdata->locals.handlers,
-							cfdata->locals.handlers);
-     }
-   cfdata->locals.handlers = NULL;
-   e_grabinput_release(cfdata->locals.mousebind_win, cfdata->locals.mousebind_win);
-   ecore_x_window_del(cfdata->locals.mousebind_win);
-   cfdata->locals.mousebind_win = 0;
+   char *icon = NULL, *button, *mods;
+   char label[1024], val[10];
+   int i;
+   Evas_List *l;
+   E_Config_Binding_Mouse *eb;
+   E_Config_Binding_Wheel *bw;
 
-   e_object_del(E_OBJECT(cfdata->locals.dia));
-   cfdata->locals.dia = NULL;
+   e_widget_ilist_clear(cfdata->gui.o_binding_list);
+
+   if (cfdata->binding.mouse) 
+     { 
+	cfdata->binding.mouse = evas_list_sort(cfdata->binding.mouse, 
+	      evas_list_count(cfdata->binding.mouse), _mouse_binding_sort_cb);
+	
+	e_widget_ilist_header_append(cfdata->gui.o_binding_list, NULL, "Mouse Buttons");
+     }
+
+   for (l = cfdata->binding.mouse, i = 0; l; l = l->next, i++)
+     {
+	Evas_Object *ic;
+	eb = l->data;
+
+	button = _helper_button_name_get(eb);
+	mods = _helper_modifier_name_get(eb->modifiers);
+
+	snprintf(label, sizeof(label), "%s%s%s", button ? button : "", mods[0] ? " + ": "",
+	         mods ? mods : "");
+	if (button) free(button);
+	if (mods) free(mods);
+
+	switch (eb->button)
+	  {
+	   case 1:
+	      icon = "enlightenment/mouse_left";
+	      break;
+	   case 2:
+	      icon = "enlightenment/mouse_middle";
+	      break;
+	   case 3:
+	      icon = "enlightenment/mouse_right";
+	      break;
+	   default:
+	      icon = "enlightenment/mouse_extra";
+	  }
+
+	snprintf(val, sizeof(val), "m%d", i);
+
+	ic = edje_object_add(cfdata->evas);
+	e_util_edje_icon_set(ic, icon);
+	e_widget_ilist_append(cfdata->gui.o_binding_list, ic, label, _binding_change_cb,
+			      cfdata, val);
+     }
+
+   if (cfdata->binding.wheel) 
+     {
+	cfdata->binding.wheel = evas_list_sort(cfdata->binding.wheel, 
+	      evas_list_count(cfdata->binding.wheel), _wheel_binding_sort_cb); 
+	
+	e_widget_ilist_header_append(cfdata->gui.o_binding_list, NULL, "Mouse Wheels");
+     }
+
+   for (l = cfdata->binding.wheel, i = 0; l; l = l->next, i++)
+     {
+	Evas_Object *ic;
+	bw = l->data;
+
+	button = _helper_wheel_name_get(bw);
+	mods = _helper_modifier_name_get(bw->modifiers);
+
+	snprintf(label, sizeof(label), "%s%s%s", button ? button : "", mods[0] ? " + ": "",
+	        mods ? mods : "");
+	if (button) free(button);
+	if (mods) free(mods);
+
+	snprintf(val, sizeof(val), "w%d", i);
+
+	ic = edje_object_add(cfdata->evas);
+	e_util_edje_icon_set(ic, "enlightenment/mouse_wheel");
+	e_widget_ilist_append(cfdata->gui.o_binding_list, ic, label, _binding_change_cb,
+			      cfdata, val);
+     }
+
+   e_widget_ilist_go(cfdata->gui.o_binding_list);
+
+   if (evas_list_count(cfdata->binding.mouse) + evas_list_count(cfdata->binding.wheel))
+     e_widget_disabled_set(cfdata->gui.o_del_all, 0);
+   else
+     e_widget_disabled_set(cfdata->gui.o_del_all, 1);
 }
-/******** helpers *************/
-static char *
-_helper_modifier_name_get(int mod)
+static void
+_update_action_params(E_Config_Dialog_Data *cfdata)
 {
-   char mods[1024]="";
+   int g, a, b;
+   E_Action_Group *actg;
+   E_Action_Description *actd;
+   E_Config_Binding_Mouse *eb;
+   E_Config_Binding_Wheel *bw;
+   const char *action, *params;
 
-   if (mod & E_BINDING_MODIFIER_SHIFT)
-     snprintf(mods, sizeof(mods), "SHIFT");
+#define MB_EXAMPLE_PARAMS \
+   if ((!actd->param_example) || (!actd->param_example[0])) \
+     e_widget_entry_text_set(cfdata->gui.o_params, TEXT_NO_PARAMS); \
+   else \
+     e_widget_entry_text_set(cfdata->gui.o_params, actd->param_example)
 
-   if (mod & E_BINDING_MODIFIER_CTRL)
+
+   if ((!cfdata->locals.action) || (!cfdata->locals.action[0]))
      {
-	if (mods[0]) strcat(mods, " + ");
-	strcat(mods, "CTRL");
+	e_widget_disabled_set(cfdata->gui.o_params, 1);
+	e_widget_entry_clear(cfdata->gui.o_params);
+     }
+   sscanf(cfdata->locals.action, "%d %d", &g, &a);
+
+   actg = evas_list_nth(e_action_groups_get(), g);
+   if (!actg) return;
+   actd = evas_list_nth(actg->acts, a);
+   if (!actd) return;
+
+   if (actd->act_params)
+     {
+	e_widget_disabled_set(cfdata->gui.o_params, 1);
+	e_widget_entry_text_set(cfdata->gui.o_params, actd->act_params);
+	return;
      }
 
-   if (mod & E_BINDING_MODIFIER_ALT)
+   if ((!cfdata->locals.cur) || (!cfdata->locals.cur[0]))
      {
-	if (mods[0]) strcat(mods, " + ");
-	strcat(mods, "ALT");
+	e_widget_disabled_set(cfdata->gui.o_params, 1);
+	MB_EXAMPLE_PARAMS;
+	return;
      }
 
-   if (mod & E_BINDING_MODIFIER_WIN)
+   if (!actd->editable)
+     e_widget_disabled_set(cfdata->gui.o_params, 1);
+   else
+     e_widget_disabled_set(cfdata->gui.o_params, 0);
+
+   if (cfdata->locals.cur[0] == 'm')
      {
-	if (mods[0]) strcat(mods, " + ");
-	strcat(mods, "WIN");
+	sscanf(cfdata->locals.cur, "m%d", &b);
+	eb = evas_list_nth(cfdata->binding.mouse, b);
+	if (!eb)
+	  {
+	     e_widget_disabled_set(cfdata->gui.o_params, 1);
+	     MB_EXAMPLE_PARAMS;
+	     return;
+	  }
+	action = eb->action;
+	params = eb->params;
+     }
+   else if (cfdata->locals.cur[0] = 'w')
+     {
+	sscanf(cfdata->locals.cur, "w%d", &b);
+	bw = evas_list_nth(cfdata->binding.wheel, b);
+	if (!bw)
+	  {
+	     e_widget_disabled_set(cfdata->gui.o_params, 1);
+	     MB_EXAMPLE_PARAMS;
+	     return;
+	  }
+	action = bw->action;
+	params = bw->params;
+     }
+   else
+     { 
+	e_widget_disabled_set(cfdata->gui.o_params, 1);
+        MB_EXAMPLE_PARAMS;
+	return;
      }
 
-   return strdup(mods);
+   if (action)
+     {
+	if (!strcmp(action, actd->act_cmd))
+	  {
+	     if ((!params) || (!params[0]))
+	       {
+		  MB_EXAMPLE_PARAMS;
+	       }
+	     else
+	       e_widget_entry_text_set(cfdata->gui.o_params, params);
+	  }
+	else
+	  {
+	     MB_EXAMPLE_PARAMS;
+	  }
+     }
+   else
+     {
+	MB_EXAMPLE_PARAMS;
+     }
+}
+
+static void
+_update_buttons(E_Config_Dialog_Data *cfdata)
+{
+   if (e_widget_ilist_count(cfdata->gui.o_binding_list))
+     e_widget_disabled_set(cfdata->gui.o_del_all, 0);
+   else
+     e_widget_disabled_set(cfdata->gui.o_del_all, 1);
+
+   if (!cfdata->locals.cur)
+     { 
+	e_widget_disabled_set(cfdata->gui.o_mod, 1); 
+	e_widget_disabled_set(cfdata->gui.o_del, 1);
+	return;
+     }
+
+   e_widget_disabled_set(cfdata->gui.o_mod, 0);
+   e_widget_disabled_set(cfdata->gui.o_del, 0);
+}
+static void
+_update_binding_context(E_Config_Dialog_Data *cfdata)
+{
+   int n;
+   E_Config_Binding_Mouse *eb;
+   E_Config_Binding_Wheel *bw;
+   E_Binding_Context ctxt;
+
+   // disable all the radios.
+   e_widget_radio_toggle_set(cfdata->gui.context.o_any, 1);
+   e_widget_disabled_set(cfdata->gui.context.o_any, 1);
+   e_widget_disabled_set(cfdata->gui.context.o_border, 1);
+   e_widget_disabled_set(cfdata->gui.context.o_menu, 1);
+   e_widget_disabled_set(cfdata->gui.context.o_winlist, 1);
+   e_widget_disabled_set(cfdata->gui.context.o_popup, 1);
+   e_widget_disabled_set(cfdata->gui.context.o_zone, 1);
+   e_widget_disabled_set(cfdata->gui.context.o_container, 1);
+   e_widget_disabled_set(cfdata->gui.context.o_manager, 1);
+   e_widget_disabled_set(cfdata->gui.context.o_none, 1);
+
+   if (!cfdata->locals.cur) return;
+
+   if (cfdata->locals.cur[0] == 'm')
+     {
+	sscanf(cfdata->locals.cur, "m%d", &n);
+	eb = evas_list_nth(cfdata->binding.mouse, n);
+	if (!eb) return;
+	ctxt = eb->context;
+     }
+   else if (cfdata->locals.cur[0] == 'w')
+     {
+	sscanf(cfdata->locals.cur, "w%d", &n);
+	bw = evas_list_nth(cfdata->binding.wheel, n);
+	if (!bw) return;
+	ctxt = bw->context;
+     }
+   else
+     return;
+
+   e_widget_disabled_set(cfdata->gui.context.o_any, 0);
+   e_widget_disabled_set(cfdata->gui.context.o_border, 0);
+   e_widget_disabled_set(cfdata->gui.context.o_menu, 0);
+   e_widget_disabled_set(cfdata->gui.context.o_winlist, 0);
+   e_widget_disabled_set(cfdata->gui.context.o_popup, 0);
+   e_widget_disabled_set(cfdata->gui.context.o_zone, 0);
+   e_widget_disabled_set(cfdata->gui.context.o_container, 0);
+   e_widget_disabled_set(cfdata->gui.context.o_manager, 0);
+   e_widget_disabled_set(cfdata->gui.context.o_none, 0);
+
+   if (ctxt == E_BINDING_CONTEXT_ANY) 
+     e_widget_radio_toggle_set(cfdata->gui.context.o_any, 1);
+   else if (ctxt == E_BINDING_CONTEXT_BORDER)
+     e_widget_radio_toggle_set(cfdata->gui.context.o_border, 1);
+   else if (ctxt == E_BINDING_CONTEXT_MENU)
+     e_widget_radio_toggle_set(cfdata->gui.context.o_menu, 1);
+   else if (ctxt == E_BINDING_CONTEXT_WINLIST)
+     e_widget_radio_toggle_set(cfdata->gui.context.o_winlist, 1);
+   else if (ctxt == E_BINDING_CONTEXT_POPUP)
+     e_widget_radio_toggle_set(cfdata->gui.context.o_popup, 1);
+   else if (ctxt == E_BINDING_CONTEXT_ZONE)
+     e_widget_radio_toggle_set(cfdata->gui.context.o_zone, 1);
+   else if (ctxt == E_BINDING_CONTEXT_CONTAINER)
+     e_widget_radio_toggle_set(cfdata->gui.context.o_container, 1);
+   else if (ctxt == E_BINDING_CONTEXT_MANAGER)
+     e_widget_radio_toggle_set(cfdata->gui.context.o_manager, 1);
+   else if (ctxt == E_BINDING_CONTEXT_NONE)
+     e_widget_radio_toggle_set(cfdata->gui.context.o_none, 1);
+}
+/****************** Helper *****************/
+static void
+_auto_apply_changes(E_Config_Dialog_Data *cfdata)
+{
+   int n, g, a;
+   E_Config_Binding_Mouse *eb;
+   E_Config_Binding_Wheel *bw;
+
+   E_Action_Group *actg;
+   E_Action_Description *actd;
+   const char **action, **params;
+
+   if ((!cfdata->locals.cur) || (!cfdata->locals.cur[0])) return;
+
+   if (cfdata->locals.cur[0] == 'm')
+     {
+	sscanf(cfdata->locals.cur, "m%d", &n);
+	eb = evas_list_nth(cfdata->binding.mouse, n);
+	if (!eb) return;
+
+	eb->context = cfdata->locals.context;
+	action = &(eb->action);
+	params = &(eb->params);
+     }
+   else if (cfdata->locals.cur[0] == 'w')
+     {
+	sscanf(cfdata->locals.cur, "w%d", &n);
+	bw = evas_list_nth(cfdata->binding.wheel, n);
+	if (!bw) return;
+
+	bw->context = cfdata->locals.context;
+	action = &(bw->action);
+	params = &(bw->params);
+     } 
+   
+   if (*action) evas_stringshare_del(*action); 
+   if (*params) evas_stringshare_del(*params); 
+   *action = NULL; 
+   *params = NULL;
+
+   if ((!cfdata->locals.action) || (!cfdata->locals.action[0])) return;
+
+   sscanf(cfdata->locals.action, "%d %d", &g, &a);
+
+   actg = evas_list_nth(e_action_groups_get(), g);
+   if (!actg) return;
+   actd = evas_list_nth(actg->acts, a);
+   if (!actd) return;
+
+   if (actd->act_cmd) *action = evas_stringshare_add(actd->act_cmd);
+   if (actd->act_params) 
+     *params = evas_stringshare_add(actd->act_params);
+   else
+     {
+	int ok = 1;
+	if (cfdata->locals.params)
+	  {
+	     if (!strcmp(cfdata->locals.params, TEXT_NO_PARAMS)) ok = 0;
+
+	     if ((actd->param_example) && (!strcmp(cfdata->locals.params, actd->param_example)))
+	       ok = 0;
+	  }
+	else
+	  ok = 0;
+
+	if (ok)
+	  *params = evas_stringshare_add(cfdata->locals.params);
+     }
+}
+
+static void
+_find_key_binding_action(const char *action, const char *params, int *g, int *a, int *n)
+{
+   Evas_List *l, *l2;
+   int gg = -1, aa = -1, nn = -1, found;
+   E_Action_Group *actg;
+   E_Action_Description *actd;
+
+   if (g) *g = -1;
+   if (a) *a = -1;
+   if (n) *n = -1;
+
+   found = 0;
+   for (l = e_action_groups_get(), gg = 0, nn = 0; l; l = l->next, gg++)
+     {
+	actg = l->data;
+
+	for (l2 = actg->acts, aa = 0; l2; l2 = l2->next, aa++)
+	  {
+	     actd = l2->data;
+
+	     if (!strcmp((!action ? "" : action), (!actd->act_cmd ? "" : actd->act_cmd)))
+	       {
+		  if (!params || !params[0])
+		    {
+		       if ((!actd->act_params) || (!actd->act_params[0]))
+			 {
+			    if (g) *g = gg;
+			    if (a) *a = aa;
+			    if (n) *n = nn;
+			    return;
+			 }
+		       else
+			 continue;
+		    }
+		  else
+		    {
+		       if ((!actd->act_params) || (!actd->act_params[0]))
+			 {
+			    if (g) *g = gg;
+			    if (a) *a = aa;
+			    if (n) *n = nn;
+			    found = 1;
+			 }
+		       else
+			 {
+			    if (!strcmp(params, actd->act_params))
+			      {
+				 if (g) *g = gg;
+				 if (a) *a = aa;
+				 if (n) *n = nn;
+				 return;
+			      }
+			 }
+		    }
+	       }
+	     nn++;
+	  }
+	if (found) break;
+     }
+
+   if (!found)
+     {
+	if (g) *g = -1;
+	if (a) *a = -1;
+	if (n) *n = -1;
+     }
 }
 static char *
 _helper_button_name_get(E_Config_Binding_Mouse *eb)
@@ -1318,7 +1251,37 @@ _helper_wheel_name_get(E_Config_Binding_Wheel *bw)
      }
    return name;
 }
-/********* sorts ***************/
+
+static char *
+_helper_modifier_name_get(int mod)
+{
+   char mods[1024]="";
+
+   if (mod & E_BINDING_MODIFIER_SHIFT)
+     snprintf(mods, sizeof(mods), "SHIFT");
+
+   if (mod & E_BINDING_MODIFIER_CTRL)
+     {
+	if (mods[0]) strcat(mods, " + ");
+	strcat(mods, "CTRL");
+     }
+
+   if (mod & E_BINDING_MODIFIER_ALT)
+     {
+	if (mods[0]) strcat(mods, " + ");
+	strcat(mods, "ALT");
+     }
+
+   if (mod & E_BINDING_MODIFIER_WIN)
+     {
+	if (mods[0]) strcat(mods, " + ");
+	strcat(mods, "WIN");
+     }
+
+   return strdup(mods);
+}
+
+/********* Sorting ***************/
 static int
 _mouse_binding_sort_cb(void *d1, void *d2)
 {
@@ -1372,4 +1335,312 @@ _wheel_binding_sort_cb(void *d1, void *d2)
 	  }
      }
    return 0;
+}
+
+static void
+_grab_wnd_show(E_Config_Dialog_Data *cfdata)
+{
+   E_Manager *man;
+
+   if (cfdata->locals.bind_win != 0) return;
+
+   man = e_manager_current_get();
+
+   cfdata->locals.dia = e_dialog_new(e_container_current_get(man), 
+				     "E", "_mousebind_getmouse_dialog");
+   if (!cfdata->locals.dia) return;
+   e_dialog_title_set(cfdata->locals.dia, _("Mouse Binding Sequence"));
+   e_dialog_icon_set(cfdata->locals.dia, "enlightenment/mouse_clean", 48);
+   e_dialog_text_set(cfdata->locals.dia, TEXT_PRESS_MOUSE_BINIDING_SEQUENCE);
+   e_win_centered_set(cfdata->locals.dia->win, 1);
+   e_win_borderless_set(cfdata->locals.dia->win, 1);
+
+   cfdata->locals.bind_win = ecore_x_window_input_new(man->root, 0, 0, 1, 1);
+   ecore_x_window_show(cfdata->locals.bind_win);
+   e_grabinput_get(cfdata->locals.bind_win, 0, cfdata->locals.bind_win);
+
+   cfdata->locals.handlers = evas_list_append(cfdata->locals.handlers,
+			      ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,
+				 _grab_key_down_cb, cfdata));
+
+   cfdata->locals.handlers = evas_list_append(cfdata->locals.handlers,
+			      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN,
+				 _grab_mouse_down_cb, cfdata));
+
+   cfdata->locals.handlers = evas_list_append(cfdata->locals.handlers,
+			      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL,
+				 _grab_mouse_wheel_cb, cfdata));
+
+   e_dialog_show(cfdata->locals.dia);
+   ecore_x_icccm_transient_for_set(cfdata->locals.dia->win->evas_win, cfdata->cfd->dia->win->evas_win);
+}
+
+static void
+_grab_wnd_hide(E_Config_Dialog_Data *cfdata)
+{
+   while (cfdata->locals.handlers)
+     {
+	ecore_event_handler_del(cfdata->locals.handlers->data);
+	cfdata->locals.handlers = 
+	   evas_list_remove_list(cfdata->locals.handlers, cfdata->locals.handlers);
+     }
+   cfdata->locals.handlers = NULL;
+   e_grabinput_release(cfdata->locals.bind_win, cfdata->locals.bind_win);
+   ecore_x_window_del(cfdata->locals.bind_win);
+   cfdata->locals.bind_win = 0;
+
+   e_object_del(E_OBJECT(cfdata->locals.dia));
+   cfdata->locals.dia = NULL;
+}
+
+static int
+_grab_mouse_down_cb(void *data, int type, void *event)
+{
+   Evas_List *l;
+   E_Config_Dialog_Data *cfdata;
+   E_Config_Binding_Mouse *eb;
+   E_Config_Binding_Wheel *bw;
+   int mod = E_BINDING_MODIFIER_NONE, n;
+
+   Ecore_X_Event_Mouse_Button_Down *ev;
+   
+   ev = event;
+   cfdata = data;
+
+   if (ev->win != cfdata->locals.bind_win) return 1; 
+
+   if (ev->modifiers & ECORE_X_MODIFIER_SHIFT)
+     mod |= E_BINDING_MODIFIER_SHIFT;
+   if (ev->modifiers & ECORE_X_MODIFIER_CTRL)
+     mod |= E_BINDING_MODIFIER_CTRL;
+   if (ev->modifiers & ECORE_X_MODIFIER_ALT)
+     mod |= E_BINDING_MODIFIER_ALT;
+   if (ev->modifiers & ECORE_X_MODIFIER_WIN)
+     mod |= E_BINDING_MODIFIER_WIN; 
+   
+   
+   if (cfdata->locals.add) 
+     { 
+	eb = E_NEW(E_Config_Binding_Mouse, 1); 
+	eb->context = E_BINDING_CONTEXT_ANY; 
+	eb->button = ev->button; 
+	eb->modifiers = mod; 
+	eb->any_mod = 0; 
+	eb->action = NULL; 
+	eb->params = NULL; 
+	
+	cfdata->binding.mouse = evas_list_append(cfdata->binding.mouse, eb);
+     }
+   else
+     {
+	if (cfdata->locals.cur[0] == 'm')
+	  { 
+	     sscanf(cfdata->locals.cur, "m%d", &n); 
+	     eb = evas_list_nth(cfdata->binding.mouse, n); 
+	     if (eb) 
+	       { 
+		  eb->button = ev->button; 
+		  eb->modifiers = mod; 
+	       }
+	  }
+	else if (cfdata->locals.cur[0] == 'w')
+	  {
+	     sscanf(cfdata->locals.cur, "w%d", &n);
+	     l = evas_list_nth_list(cfdata->binding.wheel, n);
+	     bw = l->data;
+
+	     eb = E_NEW(E_Config_Binding_Mouse, 1); 
+	     eb->context = bw->context;
+	     eb->button = ev->button; 
+	     eb->modifiers = mod; 
+	     eb->any_mod = 0; 
+	     eb->action = bw->action; 
+	     eb->params = bw->params; 
+
+	     cfdata->binding.mouse = evas_list_append(cfdata->binding.mouse, eb);
+
+	     bw->action = NULL;
+	     bw->params = NULL;
+	     E_FREE(bw);
+	     cfdata->binding.wheel = evas_list_remove_list(cfdata->binding.wheel, l);
+	  }
+	else
+	  ;
+     } 
+   _update_mouse_binding_list(cfdata); 
+
+   if (cfdata->locals.add)
+     { 
+	for (l = cfdata->binding.mouse, n = 0; l; l = l->next, n++)
+	  {
+	     if (l->data == eb) break;
+	  } 
+
+	e_widget_ilist_selected_set(cfdata->gui.o_binding_list, n + 1); 
+
+	if (cfdata->locals.action) free(cfdata->locals.action);
+	cfdata->locals.action = strdup("");
+	e_widget_ilist_unselect(cfdata->gui.o_action_list);
+	e_widget_entry_clear(cfdata->gui.o_params);
+	e_widget_disabled_set(cfdata->gui.o_params, 1);
+     }
+   else
+     { 
+	for (l = cfdata->binding.mouse, n = 0; l; l = l->next, n++) 
+	  { 
+	     if (l->data == eb) break; 
+	  } 
+
+	if (cfdata->locals.cur) free(cfdata->locals.cur);
+	cfdata->locals.cur = NULL;
+
+	e_widget_ilist_selected_set(cfdata->gui.o_binding_list, n + 1);
+     }
+   _update_buttons(cfdata);
+   _grab_wnd_hide(cfdata);
+
+   return 1;
+}
+
+static int 
+_grab_mouse_wheel_cb(void *data, int type, void *event)
+{
+   Evas_List *l;
+   E_Config_Binding_Wheel *bw;
+   E_Config_Binding_Mouse *eb;
+   E_Config_Dialog_Data *cfdata;
+   Ecore_X_Event_Mouse_Wheel *ev; 
+   int mod = E_BINDING_MODIFIER_NONE, n;
+
+   ev = event;
+   cfdata = data;
+
+   if (ev->win != cfdata->locals.bind_win) return 1;
+
+   if (ev->modifiers & ECORE_X_MODIFIER_SHIFT)
+     mod |= E_BINDING_MODIFIER_SHIFT;
+   if (ev->modifiers & ECORE_X_MODIFIER_CTRL)
+     mod |= E_BINDING_MODIFIER_CTRL;
+   if (ev->modifiers & ECORE_X_MODIFIER_ALT)
+     mod |= E_BINDING_MODIFIER_ALT;
+   if (ev->modifiers & ECORE_X_MODIFIER_WIN)
+     mod |= E_BINDING_MODIFIER_WIN; 
+   
+   
+   if (cfdata->locals.add)
+     {
+	bw = E_NEW(E_Config_Binding_Wheel, 1);
+	bw->context = E_BINDING_CONTEXT_ANY;
+	bw->direction = ev->direction;
+	bw->z = ev->z;
+	bw->modifiers = mod;
+	bw->any_mod = 0;
+	bw->action = NULL;
+	bw->params = NULL; 
+	
+	cfdata->binding.wheel = evas_list_append(cfdata->binding.wheel, bw);
+     }
+   else 
+     {
+	if (cfdata->locals.cur[0] == 'm')
+	  {
+	     sscanf(cfdata->locals.cur, "m%d", &n);
+	     l = evas_list_nth_list(cfdata->binding.mouse, n);
+	     eb = l->data; 
+	     
+	     bw = E_NEW(E_Config_Binding_Wheel, 1);
+	     bw->context = eb->context;
+	     bw->direction = ev->direction;
+	     bw->z = ev->z;
+	     bw->modifiers = mod;
+	     bw->any_mod = 0;
+	     bw->action = eb->action;
+	     bw->params = eb->params; 
+
+	     cfdata->binding.wheel = evas_list_append(cfdata->binding.wheel, bw);
+
+	     E_FREE(eb);
+	     cfdata->binding.mouse = evas_list_remove_list(cfdata->binding.mouse, l);
+
+	  }
+	else if (cfdata->locals.cur[0] == 'w')
+	  {
+	     sscanf(cfdata->locals.cur, "w%d", &n);
+	     bw = evas_list_nth(cfdata->binding.wheel, n);
+	     if (bw)
+	       {
+		  bw->direction = ev->direction;
+		  bw->z = ev->z;
+		  bw->modifiers = mod;
+	       }
+	  }
+	else
+	  ;
+     } 
+   _update_mouse_binding_list(cfdata); 
+
+   if (cfdata->locals.add)
+     { 
+	for (l = cfdata->binding.wheel, n = 0; l; l = l->next, n++)
+	  {
+	     if (l->data == bw) break;
+	  } 
+
+	if (evas_list_count(cfdata->binding.mouse))
+	  { 
+	     n += evas_list_count(cfdata->binding.mouse) + 2;
+	     e_widget_ilist_selected_set(cfdata->gui.o_binding_list, n); 
+	  }
+	else 
+	  e_widget_ilist_selected_set(cfdata->gui.o_binding_list, n + 1); 
+
+	e_widget_ilist_unselect(cfdata->gui.o_action_list);
+	if (cfdata->locals.action) free(cfdata->locals.action);
+	cfdata->locals.action = strdup("");
+	e_widget_entry_clear(cfdata->gui.o_params);
+	e_widget_disabled_set(cfdata->gui.o_params, 1);
+     }
+   else
+     {
+	for (l = cfdata->binding.wheel, n = 0; l; l = l->next, n++)
+	  {
+	     if (l->data == bw) break;
+	  }
+
+	if (cfdata->locals.cur) free(cfdata->locals.cur);
+	cfdata->locals.cur = NULL;
+
+	if (evas_list_count(cfdata->binding.mouse)) 
+	  { 
+	     n += evas_list_count(cfdata->binding.mouse) + 2;
+	     e_widget_ilist_selected_set(cfdata->gui.o_binding_list, n);
+	  }
+	else
+	  e_widget_ilist_selected_set(cfdata->gui.o_binding_list, n + 1);
+     }
+   _update_buttons(cfdata);
+
+   _grab_wnd_hide(cfdata);
+   return 1;
+}
+
+static int
+_grab_key_down_cb(void *data, int type, void *event)
+{
+   E_Config_Dialog_Data *cfdata;
+   Ecore_X_Event_Key_Down *ev = event;
+
+   cfdata = data;
+
+   if (ev->win != cfdata->locals.bind_win) return 1;
+
+   if (!strcmp(ev->keyname, "Escape") &&
+       !(ev->modifiers & ECORE_X_MODIFIER_SHIFT) &&
+       !(ev->modifiers & ECORE_X_MODIFIER_CTRL) &&
+       !(ev->modifiers & ECORE_X_MODIFIER_ALT) &&
+       !(ev->modifiers & ECORE_X_MODIFIER_WIN))
+     { 
+	_grab_wnd_hide(cfdata);
+     }
+   return 1;
 }

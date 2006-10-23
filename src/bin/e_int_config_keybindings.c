@@ -33,7 +33,7 @@ static void _modify_key_binding_cb(void *data, void *data2);
 /********* Helper *************************/
 static char *_key_binding_text_get(E_Config_Binding_Key *bi);
 static void _auto_apply_changes(E_Config_Dialog_Data *cfdata);
-static void _find_key_binding_action(E_Config_Binding_Key *bi, int *g, int *a, int *n);
+static void _find_key_binding_action(const char *action, const char *params, int *g, int *a, int *n);
 
 /********* Sorting ************************/
 static int _key_binding_sort_cb(void *d1, void *d2);
@@ -290,6 +290,7 @@ _fill_actions_list(E_Config_Dialog_Data *cfdata)
    E_Action_Description *actd;
    int g, a;
 
+   e_widget_ilist_clear(cfdata->gui.o_action_list);
    for (l = e_action_groups_get(), g = 0; l; l = l->next, g++)
      {
 	actg = l->data;
@@ -364,7 +365,6 @@ _action_change_cb(void *data)
 
    cfdata = data;
    _update_action_params(cfdata);
-
 }
 
 static void
@@ -637,10 +637,54 @@ _update_action_list(E_Config_Dialog_Data *cfdata)
    E_Action_Description *actd;
    Evas_List *l, *l2;
    int j = -1, i, n;
+   const char *action, *params;
 
    if (!cfdata->locals.cur) return;
 
    if (cfdata->locals.cur[0] == 'k')
+     {
+	sscanf(cfdata->locals.cur, "k%d", &n);
+	bi = evas_list_nth(cfdata->binding.key, n);
+	if (!bi)
+	  {
+	     e_widget_ilist_unselect(cfdata->gui.o_action_list);
+	     e_widget_entry_clear(cfdata->gui.o_params);
+	     e_widget_disabled_set(cfdata->gui.o_params, 1);
+	     return;
+	  }
+	action = bi->action;
+	params = bi->params;
+     }
+   else
+     return;
+
+   _find_key_binding_action(action, params, NULL, NULL, &j);
+
+   if (j >= 0)
+     { 
+	for (i = 0; i < e_widget_ilist_count(cfdata->gui.o_action_list); i++) 
+	  { 
+	     if (i > j) break;
+	     if (e_widget_ilist_nth_is_header(cfdata->gui.o_action_list, i)) j++;
+	  }
+     } 
+
+   if (j >= 0) 
+     { 
+	if (j == e_widget_ilist_selected_get(cfdata->gui.o_action_list)) 
+	  _update_action_params(cfdata);
+	else 
+	  e_widget_ilist_selected_set(cfdata->gui.o_action_list, j);
+     }
+   else
+     { 
+	e_widget_ilist_unselect(cfdata->gui.o_action_list);
+	if (cfdata->locals.action) free(cfdata->locals.action);
+	cfdata->locals.action = strdup("");
+	e_widget_entry_clear(cfdata->gui.o_params);
+     }
+
+   /*if (cfdata->locals.cur[0] == 'k')
      {
 	sscanf(cfdata->locals.cur, "k%d", &n);
 	bi = evas_list_nth(cfdata->binding.key, n);
@@ -676,7 +720,7 @@ _update_action_list(E_Config_Dialog_Data *cfdata)
 	     cfdata->locals.action = strdup("");
 	     e_widget_entry_clear(cfdata->gui.o_params);
 	  }
-     }
+     }*/
 }
 static void
 _update_action_params(E_Config_Dialog_Data *cfdata)
@@ -685,6 +729,14 @@ _update_action_params(E_Config_Dialog_Data *cfdata)
    E_Action_Group *actg;
    E_Action_Description *actd;
    E_Config_Binding_Key *bi;
+   const char *action, *params;
+
+#define KB_EXAMPLE_PARAMS \
+   if ((!actd->param_example) || (!actd->param_example[0])) \
+     e_widget_entry_text_set(cfdata->gui.o_params, TEXT_NO_PARAMS); \
+   else \
+     e_widget_entry_text_set(cfdata->gui.o_params, actd->param_example)
+
 
    if ((!cfdata->locals.action) || (!cfdata->locals.action[0]))
      {
@@ -709,12 +761,7 @@ _update_action_params(E_Config_Dialog_Data *cfdata)
    if ((!cfdata->locals.cur) || (!cfdata->locals.cur[0])) 
      { 
 	e_widget_disabled_set(cfdata->gui.o_params, 1); 
-	
-	if ((!actd->param_example) || (!actd->param_example[0])) 
-	  e_widget_entry_text_set(cfdata->gui.o_params, TEXT_NO_PARAMS);
-	else 
-	  e_widget_entry_text_set(cfdata->gui.o_params, actd->param_example);
-
+	KB_EXAMPLE_PARAMS;
 	return;
      }
    
@@ -722,48 +769,46 @@ _update_action_params(E_Config_Dialog_Data *cfdata)
      e_widget_disabled_set(cfdata->gui.o_params, 1);
    else
      e_widget_disabled_set(cfdata->gui.o_params, 0); 
-   
-   if (cfdata->locals.cur[0] == 'k') 
-     { 
-	sscanf(cfdata->locals.cur, "k%d", &b); 
-	bi = evas_list_nth(cfdata->binding.key, b); 
-	if (!bi) 
-	  { 
-	     e_widget_entry_text_set(cfdata->gui.o_params, TEXT_NO_PARAMS); 
-	     e_widget_disabled_set(cfdata->gui.o_params, 1); 
-	  } 
-	else 
-	  { 
-	     if (bi->action)
-	       { 
-		  if (!strcmp(bi->action, actd->act_cmd)) 
-		    { 
-		       if ((!bi->params) || (!bi->params[0])) 
-			 { 
-			    if ((!actd->param_example) || (!actd->param_example[0])) 
-			      e_widget_entry_text_set(cfdata->gui.o_params, TEXT_NO_PARAMS); 
-			    else 
-			      e_widget_entry_text_set(cfdata->gui.o_params, actd->param_example); 
-			 }
-		       else 
-			 e_widget_entry_text_set(cfdata->gui.o_params, bi->params);
-		    }
-		  else
-		    {
-		       if ((!actd->param_example) || (!actd->param_example[0])) 
-			 e_widget_entry_text_set(cfdata->gui.o_params, TEXT_NO_PARAMS);
-		       else 
-			 e_widget_entry_text_set(cfdata->gui.o_params, actd->param_example);
-		    }
+
+   if (cfdata->locals.cur[0] == 'k')
+     {
+	sscanf(cfdata->locals.cur, "k%d", &b);
+	bi = evas_list_nth(cfdata->binding.key, b);
+	if (!bi)
+	  {
+	     e_widget_disabled_set(cfdata->gui.o_params, 1);
+	     KB_EXAMPLE_PARAMS;
+	     return;
+	  }
+	action = bi->action;
+	params = bi->params;
+     }
+   else
+     {
+	e_widget_disabled_set(cfdata->gui.o_params, 1);
+	KB_EXAMPLE_PARAMS;
+	return;
+     }
+
+   if (action)
+     {
+	if (!strcmp(action, actd->act_cmd))
+	  {
+	     if ((!params) || (!params[0]))
+	       {
+		  KB_EXAMPLE_PARAMS;
 	       }
 	     else
-	       { 
-		  if ((!actd->param_example) || (!actd->param_example[0])) 
-		    e_widget_entry_text_set(cfdata->gui.o_params, TEXT_NO_PARAMS);
-		  else 
-		    e_widget_entry_text_set(cfdata->gui.o_params, actd->param_example);
-	       }
+	       e_widget_entry_text_set(cfdata->gui.o_params, params);
 	  }
+	else
+	  {
+	     KB_EXAMPLE_PARAMS;
+	  }
+     }
+   else
+     {
+	KB_EXAMPLE_PARAMS;
      }
 }
 static void
@@ -1043,6 +1088,7 @@ _grab_key_down_cb(void *data, int type, void *event)
 		       if (cfdata->locals.action) free(cfdata->locals.action);
 		       cfdata->locals.action = strdup("");
 		       e_widget_entry_clear(cfdata->gui.o_params);
+		       e_widget_disabled_set(cfdata->gui.o_params, 1);
 		    }
 		  else
 		    {
@@ -1061,7 +1107,10 @@ _grab_key_down_cb(void *data, int type, void *event)
 		  E_Action_Group *actg = NULL;
 		  E_Action_Description *actd = NULL;
 
-		  _find_key_binding_action(cfdata->locals.add ? bi : bi2, &g, &a, &j);
+		  if (cfdata->locals.add) 
+		    _find_key_binding_action(bi->action, bi->params, &g, &a, &j);
+		  else
+		    _find_key_binding_action(bi2->action, bi2->params, &g, &a, &j);
 
 		  actg = evas_list_nth(e_action_groups_get(), g);
 		  if (actg) actd = evas_list_nth(actg->acts, a);
@@ -1140,18 +1189,16 @@ _auto_apply_changes(E_Config_Dialog_Data *cfdata)
      }
 }
 static void
-_find_key_binding_action(E_Config_Binding_Key *bi, int *g, int *a, int *n)
+_find_key_binding_action(const char *action, const char *params, int *g, int *a, int *n)
 {
    Evas_List *l, *l2;
-   int gg, aa, nn, found;
+   int gg = -1, aa = -1, nn = -1, found;
    E_Action_Group *actg;
    E_Action_Description *actd;
 
    if (g) *g = -1;
    if (a) *a = -1;
    if (n) *n = -1;
-
-   if (!bi) return;
 
    found = 0;
    for (l = e_action_groups_get(), gg = 0, nn = 0; l; l = l->next, gg++)
@@ -1160,33 +1207,38 @@ _find_key_binding_action(E_Config_Binding_Key *bi, int *g, int *a, int *n)
 
 	for (l2 = actg->acts, aa = 0; l2; l2 = l2->next, aa++)
 	  {
-	     actd = l2->data; 
-	     if (!strcmp((!bi->action ? "" : bi->action), (!actd->act_cmd ? "" : actd->act_cmd)))
+	     actd = l2->data;
+	     if (!strcmp((!action ? "" : action), (!actd->act_cmd ? "" : actd->act_cmd)))
 	       {
-		  if (!actd->act_params || !actd->act_params[0])
-		    { 
-		       if (n) *n = nn;
-		       if (g) *g = gg;
-		       if (a) *a = aa;
-		       if (!bi->params || bi->params[0])
+		  if (!params || !params[0])
+		    {
+		       if ((!actd->act_params) || (!actd->act_params[0]))
 			 {
-			    found = 1;
-			    break;
+			    if (g) *g = gg;
+			    if (a) *a = aa;
+			    if (n) *n = nn;
+			    return;
 			 }
+		       else
+			 continue;
 		    }
 		  else
 		    {
-		       if (!bi->params || !bi->params[0])
-			 continue;
+		       if ((!actd->act_params) || (!actd->act_params[0]))
+			 {
+			    if (g) *g = gg;
+			    if (a) *a = aa;
+			    if (n) *n = nn;
+			    found = 1;
+			 }
 		       else
 			 {
-			    if (!strcmp(actd->act_params, bi->params))
-			      { 
-				 if (n) *n = nn;
+			    if (!strcmp(params, actd->act_params))
+			      {
 				 if (g) *g = gg;
 				 if (a) *a = aa;
-				 found = 1;
-				 break;
+				 if (n) *n = nn;
+				 return;
 			      }
 			 }
 		    }
@@ -1197,7 +1249,7 @@ _find_key_binding_action(E_Config_Binding_Key *bi, int *g, int *a, int *n)
      }
 
    if (!found)
-     { 
+     {
 	if (g) *g = -1;
 	if (a) *a = -1;
 	if (n) *n = -1;
