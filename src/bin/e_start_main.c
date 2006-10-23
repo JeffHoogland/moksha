@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <dlfcn.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/utsname.h>
@@ -321,7 +322,7 @@ precache(void)
 int
 main(int argc, char **argv)
 {
-   int i;
+   int i, do_precache = 1;
    char buf[16384], **args, *p;
 
    prefix_determine(argv[0]);
@@ -338,10 +339,36 @@ main(int argc, char **argv)
    else snprintf(buf, sizeof(buf), "%s/lib", _prefix_path);
    env_set("LD_LIBRARY_PATH", buf);
 
-   snprintf(buf, sizeof(buf), "%s/lib/enlightenment/preload/e_precache.so", _prefix_path);
-   env_set("LD_PRELOAD", buf);
-   
-   precache();
+   for (i = 1; i < argc; i++)
+     {
+	if (!strcmp(argv[i], "-no-precache")) do_precache = 0;
+     }
+   while (do_precache)
+     {
+	void *lib, *func;
+	
+	/* sanity checks - if precache might fail - check here first */
+	lib = dlopen("libevas.so", RTLD_GLOBAL | RTLD_LAZY);
+	if (!lib) dlopen("libevas.so.1", RTLD_GLOBAL | RTLD_LAZY);
+	if (!lib) break;
+	func = dlsym(lib, "evas_init");
+	if (!func) break;
+	lib = dlopen("libecore_file.so", RTLD_GLOBAL | RTLD_LAZY);
+	if (!lib) dlopen("libecore_file.so.1", RTLD_GLOBAL | RTLD_LAZY);
+	if (!lib) break;
+	func = dlsym(lib, "ecore_file_init");
+	if (!func) break;
+	lib = dlopen("libeet.so", RTLD_GLOBAL | RTLD_LAZY);
+	if (!lib) dlopen("libeet.so.0", RTLD_GLOBAL | RTLD_LAZY);
+	if (!lib) break;
+	func = dlsym(lib, "eet_init");
+	if (!func) break;
+	/* precache SHOULD work */
+	snprintf(buf, sizeof(buf), "%s/lib/enlightenment/preload/e_precache.so", _prefix_path);
+	env_set("LD_PRELOAD", buf);
+	precache();
+	break;
+     }
    
    args = alloca((argc + 1) * sizeof(char *));
    args[0] = "enlightenment";

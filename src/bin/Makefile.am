@@ -352,7 +352,7 @@ enlightenment_imc_LDFLAGS = @e_libs@ @dlopen_libs@
 enlightenment_start_SOURCES = \
 e_start_main.c
 
-enlightenment_start_LDFLAGS = 
+enlightenment_start_LDFLAGS = @dlopen_libs@
 
 enlightenment_thumb_SOURCES = \
 e_thumb_main.c \

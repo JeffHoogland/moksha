@@ -15,7 +15,7 @@ static int do_log = 0;
 static void
 log_open(void)
 {
-   char buf[4096], *home;
+   char buf[4096] = "DUMMY", *home;
    
    if (log_fd != -1) return;
 #ifdef HAVE_UNSETENV
@@ -36,7 +36,11 @@ log_open(void)
 static void
 log_close(void)
 {
-   close(log_fd);
+   if (log_fd >= 0)
+     {
+	close(log_fd);
+	log_fd = -1;
+     }
    do_log = 0;
 }
 
@@ -74,6 +78,23 @@ log_write(const char *type, const char *file)
    write(log_fd, "\n", 1);
 }
 
+static void *
+lib_func(const char *lib1, const char *lib2, const char *fname, const char *libname, void **lib)
+{
+   void *func;
+   
+   if (!*lib) *lib = dlopen(lib1, RTLD_GLOBAL | RTLD_LAZY);
+   if (!*lib) *lib = dlopen(lib2, RTLD_GLOBAL | RTLD_LAZY);
+   func = dlsym(*lib, fname);
+   if (!func)
+     {
+	printf("ABORT: Can't find %s() in %s or %s (%s = %p)\n",
+	       fname, lib1, lib2, libname, *lib);
+	abort();
+     }
+   log_open();
+   return func;
+}
 
 /* intercepts */
 void
@@ -81,12 +102,8 @@ evas_object_image_file_set(Evas_Object *obj, const char *file, const char *key)
 {
    static void (*func) (Evas_Object *obj, const char *file, const char *key) = NULL;
    if (!func)
-     {
-	if (!lib_evas)
-	  lib_evas = dlopen("libevas.so", RTLD_GLOBAL | RTLD_LAZY);
-	func = dlsym(lib_evas, "evas_object_image_file_set");
-	log_open();
-     }
+     func = lib_func("libevas.so", "libevas.so.1", 
+		     "evas_object_image_file_set", "lib_evas", &lib_evas);
    if (do_log) log_write("o", file);
    (*func) (obj, file, key);
 }
@@ -96,12 +113,8 @@ ecore_file_mod_time(const char *file)
 {
    static time_t (*func) (const char *file) = NULL;
    if (!func)
-     {
-	if (!lib_ecore_file)
-	  lib_ecore_file = dlopen("libecore_file.so", RTLD_GLOBAL | RTLD_LAZY);
-	func = dlsym(lib_ecore_file, "ecore_file_mod_time");
-	log_open();
-     }
+     func = lib_func("libecore_file.so", "libecore_file.so.1", 
+		     "ecore_file_mod_time", "lib_ecore_file", &lib_ecore_file);
    if (do_log) log_write("s", file);
    return (*func) (file);
 }
@@ -111,12 +124,8 @@ ecore_file_size(const char *file)
 {
    static int (*func) (const char *file) = NULL;
    if (!func)
-     {
-	if (!lib_ecore_file)
-	  lib_ecore_file = dlopen("libecore_file.so", RTLD_GLOBAL | RTLD_LAZY);
-	func = dlsym(lib_ecore_file, "ecore_file_size");
-	log_open();
-     }
+     func = lib_func("libecore_file.so", "libecore_file.so.1", 
+		     "ecore_file_size", "lib_ecore_file", &lib_ecore_file);
    if (do_log) log_write("s", file);
    return (*func) (file);
 }
@@ -126,12 +135,8 @@ ecore_file_exists(const char *file)
 {
    static int (*func) (const char *file) = NULL;
    if (!func)
-     {
-	if (!lib_ecore_file)
-	  lib_ecore_file = dlopen("libecore_file.so", RTLD_GLOBAL | RTLD_LAZY);
-	func = dlsym(lib_ecore_file, "ecore_file_exists");
-	log_open();
-     }
+     func = lib_func("libecore_file.so", "libecore_file.so.1", 
+		     "ecore_file_exists", "lib_ecore_file", &lib_ecore_file);
    if (do_log) log_write("s", file);
    return (*func) (file);
 }
@@ -141,12 +146,8 @@ ecore_file_is_dir(const char *file)
 {
    static int (*func) (const char *file) = NULL;
    if (!func)
-     {
-	if (!lib_ecore_file)
-	  lib_ecore_file = dlopen("libecore_file.so", RTLD_GLOBAL | RTLD_LAZY);
-	func = dlsym(lib_ecore_file, "ecore_file_is_dir");
-	log_open();
-     }
+     func = lib_func("libecore_file.so", "libecore_file.so.1", 
+		     "ecore_file_is_dir", "lib_ecore_file", &lib_ecore_file);
    if (do_log) log_write("s", file);
    return (*func) (file);
 }
@@ -156,12 +157,8 @@ ecore_file_can_read(const char *file)
 {
    static int (*func) (const char *file) = NULL;
    if (!func)
-     {
-	if (!lib_ecore_file)
-	  lib_ecore_file = dlopen("libecore_file.so", RTLD_GLOBAL | RTLD_LAZY);
-	func = dlsym(lib_ecore_file, "ecore_file_can_read");
-	log_open();
-     }
+     func = lib_func("libecore_file.so", "libecore_file.so.1", 
+		     "ecore_file_can_read", "lib_ecore_file", &lib_ecore_file);
    if (do_log) log_write("s", file);
    return (*func) (file);
 }
@@ -171,12 +168,8 @@ ecore_file_can_write(const char *file)
 {
    static int (*func) (const char *file) = NULL;
    if (!func)
-     {
-	if (!lib_ecore_file)
-	  lib_ecore_file = dlopen("libecore_file.so", RTLD_GLOBAL | RTLD_LAZY);
-	func = dlsym(lib_ecore_file, "ecore_file_can_write");
-	log_open();
-     }
+     func = lib_func("libecore_file.so", "libecore_file.so.1", 
+		     "ecore_file_can_write", "lib_ecore_file", &lib_ecore_file);
    if (do_log) log_write("s", file);
    return (*func) (file);
 }
@@ -186,12 +179,8 @@ ecore_file_can_exec(const char *file)
 {
    static int (*func) (const char *file) = NULL;
    if (!func)
-     {
-	if (!lib_ecore_file)
-	  lib_ecore_file = dlopen("libecore_file.so", RTLD_GLOBAL | RTLD_LAZY);
-	func = dlsym(lib_ecore_file, "ecore_file_can_exec");
-	log_open();
-     }
+     func = lib_func("libecore_file.so", "libecore_file.so.1", 
+		     "ecore_file_can_exec", "lib_ecore_file", &lib_ecore_file);
    if (do_log) log_write("s", file);
    return (*func) (file);
 }
@@ -201,12 +190,8 @@ ecore_file_ls(const char *file)
 {
    static Ecore_List * (*func) (const char *file) = NULL;
    if (!func)
-     {
-	if (!lib_ecore_file)
-	  lib_ecore_file = dlopen("libecore_file.so", RTLD_GLOBAL | RTLD_LAZY);
-	func = dlsym(lib_ecore_file, "ecore_file_ls");
-	log_open();
-     }
+     func = lib_func("libecore_file.so", "libecore_file.so.1", 
+		     "ecore_file_ls", "lib_ecore_file", &lib_ecore_file);
    if (do_log) log_write("d", file);
    return (*func) (file);
 }
@@ -216,12 +201,8 @@ eet_open(const char *file, Eet_File_Mode mode)
 {
    static Eet_File * (*func) (const char *file, Eet_File_Mode mode) = NULL;
    if (!func)
-     {
-	if (!lib_eet)
-	  lib_eet = dlopen("libeet.so", RTLD_GLOBAL | RTLD_LAZY);
-	func = dlsym(lib_eet, "eet_open");
-	log_open();
-     }
+     func = lib_func("libeet.so", "libeet.so.0", 
+		     "eet_open", "lib_eet", &lib_eet);
    if (do_log) log_write("o", file);
    return (*func) (file, mode);
 }

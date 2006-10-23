@@ -19,6 +19,7 @@ static void _e_fwin_menu_extend(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_I
 static void _e_fwin_parent(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fwin_file_open(E_Fwin *fwin, const char *file, const char *mime);
 static void _e_fwin_file_open_app(E_Fwin *fwin, E_App *a, const char *file);
+static void _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files);
 
 /* local subsystem globals */
 static Evas_List *fwins = NULL;
@@ -250,6 +251,11 @@ _e_fwin_parent(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
+_e_fwin_cb_ilist_change(void *data, Evas_Object *obj)
+{
+}
+
+static void
 _e_fwin_file_open(E_Fwin *fwin, const char *file, const char *mime)
 {
    Evas_List *apps, *l;
@@ -288,10 +294,6 @@ _e_fwin_file_open(E_Fwin *fwin, const char *file, const char *mime)
 	     /* FIXME: register app a as handling mime type if app doesnt */
 	     /* say it can already in a separate info blob so in future */
 	     /* e will list it as an option */
-	     for (l = apps; l; l = l->next)
-	       {
-		  a = l->data;
-	       }
 	  }
 	evas_list_free(apps);
      }
@@ -354,4 +356,65 @@ _e_fwin_file_open_app(E_Fwin *fwin, E_App *a, const char *file)
 	snprintf(buf, sizeof(buf), "%s %s", a->exe, file);
      }
    e_zone_exec(fwin->win->border->zone, buf);
+}
+
+static void
+_e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files)
+{
+   E_Dialog *dia;
+   Evas_Coord mw, mh;
+   Evas_Object *o, *ocon, *of, *oi;
+   Evas *evas;
+   Evas_List *l, *ll;
+   Evas_List *apps;
+   E_App *a;
+   
+   dia = e_dialog_new(fwin->win->border->zone->container, 
+		      "E", "_fwin_open_apps");
+   e_dialog_title_set(dia, _("Open with..."));
+   e_dialog_border_icon_set(dia, "enlightenment/applications");
+   e_dialog_button_add(dia, _("Open"), "enlightenment/open", NULL, NULL);
+   e_dialog_button_add(dia, _("Close"), "enlightenment/close", NULL, NULL);
+   
+   evas = e_win_evas_get(dia->win);
+   
+   o = e_widget_list_add(evas, 1, 1);
+   ocon = o;
+   
+   of = e_widget_framelist_add(evas, _("Specific Applications"), 0);
+   /* FIXME: dialog needs data attched to store what u select */
+   o = e_widget_ilist_add(evas, 24, 24, NULL);
+//   apps = e_app_mime_list(e_fm_mime_filename_get(file));
+   apps = NULL;
+   if (apps)
+     {
+	for (l = apps; l; l = l->next)
+	  {
+	     a = l->data;
+	     oi = e_app_icon_add(evas, a);
+	     e_widget_ilist_append(o, oi, a->name,
+				   _e_fwin_cb_ilist_change, NULL, 
+				   ecore_file_get_file(a->path));
+	  }
+	evas_list_free(apps);
+     }
+   e_widget_ilist_go(o);
+   e_widget_min_size_set(o, 160, 240);
+   e_widget_framelist_object_append(of, o);
+   e_widget_list_object_append(ocon, of, 1, 1, 0.5);
+   
+   of = e_widget_framelist_add(evas, _("All Applications"), 0);
+   /* FIXME: fm2 view etc. etc. */
+   o = e_widget_ilist_add(evas, 24, 24, NULL);
+   e_widget_ilist_go(o);
+   e_widget_min_size_set(o, 160, 240);
+   e_widget_framelist_object_append(of, o);
+   e_widget_list_object_append(ocon, of, 1, 1, 0.5);
+   
+   /* FIXME: add rest of widgets */
+   
+   e_widget_min_size_get(ocon, &mw, &mh);
+   e_dialog_content_set(dia, ocon, mw, mh);
+   
+   e_dialog_show(dia);
 }
