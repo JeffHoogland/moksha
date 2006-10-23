@@ -29,6 +29,7 @@ debian/tmp/usr/lib/enlightenment/modules/start/*.edj
 debian/tmp/usr/lib/enlightenment/modules/temperature/*/*.so
 debian/tmp/usr/lib/enlightenment/modules/temperature/*.desktop
 debian/tmp/usr/lib/enlightenment/modules/temperature/*.edj
+debian/tmp/usr/lib/enlightenment/preload/*.so
 debian/tmp/usr/share/enlightenment
 debian/tmp/usr/share/locale
 debian/tmp/usr/share/xsessions
