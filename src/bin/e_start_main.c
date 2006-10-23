@@ -342,6 +342,17 @@ main(int argc, char **argv)
    for (i = 1; i < argc; i++)
      {
 	if (!strcmp(argv[i], "-no-precache")) do_precache = 0;
+        else if ((!strcmp(argv[i], "-h")) ||
+		 (!strcmp(argv[i], "-help")) ||
+		 (!strcmp(argv[i], "--help")))
+	  {
+	     printf
+	       ("Options:\n"
+		"\t-no-precache\n"
+		"\t\tDisable pre-caching of files\n"
+		);
+	     exit(0);
+	  }
      }
    while (do_precache)
      {
@@ -364,6 +375,7 @@ main(int argc, char **argv)
 	func = dlsym(lib, "eet_init");
 	if (!func) break;
 	/* precache SHOULD work */
+	printf("E PRECACHE ENABLED\n");
 	snprintf(buf, sizeof(buf), "%s/lib/enlightenment/preload/e_precache.so", _prefix_path);
 	env_set("LD_PRELOAD", buf);
 	precache();
