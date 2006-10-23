@@ -65,8 +65,9 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
    /* FIXME: "select" of a file opens that file  based on mimetype etc. */
    /* FIXME: if file executable - run it */
    
-   o = evas_object_rectangle_add(e_win_evas_get(fwin->win));
-   evas_object_color_set(o, 255, 255, 255, 255);
+   o = edje_object_add(e_win_evas_get(fwin->win));
+   e_theme_edje_object_set(o, "base/theme/fileman",
+			   "e/fileman/window/main");
    evas_object_show(o);
    fwin->bg_obj = o;
    
