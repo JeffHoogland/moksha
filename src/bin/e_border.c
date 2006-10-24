@@ -67,6 +67,7 @@ static void _e_border_event_border_zone_set_free(void *data, void *ev);
 static void _e_border_event_border_desk_set_free(void *data, void *ev);
 static void _e_border_event_border_stack_free(void *data, void *ev);
 static void _e_border_event_border_icon_change_free(void *data, void *ev);
+static void _e_border_event_border_urgent_change_free(void *data, void *ev);
 static void _e_border_event_border_focus_in_free(void *data, void *ev);
 static void _e_border_event_border_focus_out_free(void *data, void *ev);
 static void _e_border_event_border_resize_free(void *data, void *ev);
@@ -130,6 +131,7 @@ EAPI int E_EVENT_BORDER_STICK = 0;
 EAPI int E_EVENT_BORDER_UNSTICK = 0;
 EAPI int E_EVENT_BORDER_STACK = 0;
 EAPI int E_EVENT_BORDER_ICON_CHANGE = 0;
+EAPI int E_EVENT_BORDER_URGENT_CHANGE = 0;
 EAPI int E_EVENT_BORDER_FOCUS_IN = 0;
 EAPI int E_EVENT_BORDER_FOCUS_OUT = 0;
 EAPI int E_EVENT_BORDER_PROPERTY = 0;
@@ -183,6 +185,7 @@ e_border_init(void)
    E_EVENT_BORDER_UNSTICK = ecore_event_type_new();
    E_EVENT_BORDER_STACK = ecore_event_type_new();
    E_EVENT_BORDER_ICON_CHANGE = ecore_event_type_new();
+   E_EVENT_BORDER_URGENT_CHANGE = ecore_event_type_new();
    E_EVENT_BORDER_FOCUS_IN = ecore_event_type_new();
    E_EVENT_BORDER_FOCUS_OUT = ecore_event_type_new();
    E_EVENT_BORDER_PROPERTY = ecore_event_type_new();
@@ -6421,9 +6424,13 @@ _e_border_eval(E_Border *bd)
 	  edje_object_signal_emit(bd->bg_object, "e,state,urgent", "e");
 	else
 	  edje_object_signal_emit(bd->bg_object, "e,state,not_urgent", "e");
-	/* FIXME: we should probably do something with the pager or
-	 * maybe raising the window if it becomes urgent
-	 */
+	E_Event_Border_Urgent_Change *ev;
+
+	ev = calloc(1, sizeof(E_Event_Border_Urgent_Change));
+	ev->border = bd;
+	e_object_ref(E_OBJECT(bd));
+	ecore_event_add(E_EVENT_BORDER_URGENT_CHANGE, ev,
+	      _e_border_event_border_urgent_change_free, NULL);
      }
    
    bd->new_client = 0;
@@ -6867,6 +6874,16 @@ _e_border_event_border_icon_change_free(void *data, void *ev)
 
    e = ev;
 //   e_object_breadcrumb_del(E_OBJECT(e->border), "border_icon_change_event");
+   e_object_unref(E_OBJECT(e->border));
+   free(e);
+}
+
+static void
+_e_border_event_border_urgent_change_free(void *data, void *ev)
+{
+   E_Event_Border_Urgent_Change *e;
+
+   e = ev;
    e_object_unref(E_OBJECT(e->border));
    free(e);
 }

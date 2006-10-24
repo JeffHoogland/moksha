@@ -113,6 +113,7 @@ static int _ibox_cb_event_border_remove(void *data, int type, void *event);
 static int _ibox_cb_event_border_iconify(void *data, int type, void *event);
 static int _ibox_cb_event_border_uniconify(void *data, int type, void *event);
 static int _ibox_cb_event_border_icon_change(void *data, int type, void *event);
+static int _ibox_cb_event_border_urgent_change(void *data, int type, void *event);
 static int _ibox_cb_event_border_zone_set(void *data, int type, void *event);
 static int _ibox_cb_event_desk_show(void *data, int type, void *event);
 static Config_Item *_ibox_config_item_get(const char *id);
@@ -1146,6 +1147,31 @@ _ibox_cb_event_border_icon_change(void *data, int type, void *event)
 }
 
 static int
+_ibox_cb_event_border_urgent_change(void *data, int type, void *event)
+{
+   E_Event_Border_Urgent_Change *ev;
+   IBox *b;
+   IBox_Icon *ic;
+   Evas_List *l, *ibox;
+   
+   ev = event;
+   /* update icon */
+   ibox = _ibox_zone_find(ev->border->zone);
+   for (l = ibox; l; l = l->next)
+     {
+	b = l->data; 
+	ic = _ibox_icon_find(b, ev->border); 
+	if (!ic) continue; 
+	if (ev->border->client.icccm.urgent)
+	  edje_object_signal_emit(ic->o_holder2, "e,state,urgent", "e");
+	else
+	  edje_object_signal_emit(ic->o_holder2, "e,state,not_urgent", "e");
+     }
+
+   return 1;
+}
+
+static int
 _ibox_cb_event_border_zone_set(void *data, int type, void *event)
 {
    E_Event_Border_Zone_Set *ev;
@@ -1318,6 +1344,10 @@ e_modapi_init(E_Module *m)
    ibox_config->handlers = evas_list_append
      (ibox_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_ICON_CHANGE, _ibox_cb_event_border_icon_change, NULL));
+   ibox_config->handlers = evas_list_append
+     (ibox_config->handlers, ecore_event_handler_add
+      (E_EVENT_BORDER_URGENT_CHANGE, 
+       _ibox_cb_event_border_urgent_change, NULL));
    ibox_config->handlers = evas_list_append
      (ibox_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_ZONE_SET, _ibox_cb_event_border_zone_set, NULL));

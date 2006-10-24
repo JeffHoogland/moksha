@@ -109,6 +109,7 @@ static int _pager_cb_event_border_unstick(void *data, int type, void *event);
 static int _pager_cb_event_border_desk_set(void *data, int type, void *event);
 static int _pager_cb_event_border_stack(void *data, int type, void *event);
 static int _pager_cb_event_border_icon_change(void *data, int type, void *event);
+static int _pager_cb_event_border_urgent_change(void *data, int type, void *event);
 static int _pager_cb_event_zone_desk_count_set(void *data, int type, void *event);
 static int _pager_cb_event_desk_show(void *data, int type, void *event);
 static int _pager_cb_event_desk_name_change(void *data, int type, void *event);
@@ -1144,6 +1145,48 @@ _pager_cb_event_border_icon_change(void *data, int type, void *event)
 }
 
 static int
+_pager_cb_event_border_urgent_change(void *data, int type, void *event)
+{
+   E_Event_Border_Urgent_Change  *ev;
+   Evas_List                   *l, *l2;
+
+   ev = event;
+   for (l = pager_config->instances; l; l = l->next)
+     {
+	Instance *inst;
+
+	inst = l->data;
+        if (inst->pager->zone != ev->border->zone) continue;
+	for (l2 = inst->pager->desks; l2; l2 = l2->next)
+	  {
+	     Pager_Desk *pd;
+	     Pager_Win *pw;
+
+	     pd = l2->data;
+	     pw = _pager_desk_window_find(pd, ev->border);
+	     if (pw)
+	       {
+		  if (ev->border->client.icccm.urgent)
+		    {
+		       edje_object_signal_emit(pd->o_desk, 
+			     "e,state,urgent", "e");
+		       edje_object_signal_emit(pw->o_window, 
+			     "e,state,urgent", "e");
+		    }
+		  else
+		    {
+		       edje_object_signal_emit(pd->o_desk, 
+			     "e,state,not_urgent", "e");
+		       edje_object_signal_emit(pw->o_window, 
+			     "e,state,not_urgent", "e");
+		    }
+	       }
+	  }
+     }
+   return 1;
+}
+
+static int
 _pager_cb_event_zone_desk_count_set(void *data, int type, void *event)
 {
    Evas_List *l;
@@ -1714,6 +1757,10 @@ e_modapi_init(E_Module *m)
    pager_config->handlers = evas_list_append
      (pager_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_ICON_CHANGE, _pager_cb_event_border_icon_change, NULL));
+   pager_config->handlers = evas_list_append
+     (pager_config->handlers, ecore_event_handler_add
+      (E_EVENT_BORDER_URGENT_CHANGE, 
+       _pager_cb_event_border_urgent_change, NULL));
    pager_config->handlers = evas_list_append
      (pager_config->handlers, ecore_event_handler_add
       (E_EVENT_ZONE_DESK_COUNT_SET, _pager_cb_event_zone_desk_count_set, NULL));
