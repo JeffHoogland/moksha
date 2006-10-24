@@ -1168,15 +1168,17 @@ _pager_cb_event_border_urgent_change(void *data, int type, void *event)
 	       {
 		  if (ev->border->client.icccm.urgent)
 		    {
-		       edje_object_signal_emit(pd->o_desk, 
-			     "e,state,urgent", "e");
+		       if (!(ev->border->iconic))
+			 edje_object_signal_emit(pd->o_desk, 
+			       "e,state,urgent", "e");
 		       edje_object_signal_emit(pw->o_window, 
 			     "e,state,urgent", "e");
 		    }
 		  else
 		    {
-		       edje_object_signal_emit(pd->o_desk, 
-			     "e,state,not_urgent", "e");
+		       if (!(ev->border->iconic))
+			 edje_object_signal_emit(pd->o_desk, 
+			       "e,state,not_urgent", "e");
 		       edje_object_signal_emit(pw->o_window, 
 			     "e,state,not_urgent", "e");
 		    }
