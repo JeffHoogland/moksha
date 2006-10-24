@@ -342,9 +342,10 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 {
    E_Fwin_Apps_Dialog *fad;
    E_App *a = NULL;
-   char pcwd[4096], buf[4096];
+   char pcwd[4096], buf[4096], *cmd;
    Evas_List *selected, *l;
    E_Fm2_Icon_Info *ici;
+   Ecore_List *files = NULL;
    
    fad = data;
    if (fad->app1) a = e_app_file_find(fad->app1);
@@ -353,7 +354,13 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
      {
 	getcwd(pcwd, sizeof(pcwd));
 	chdir(e_fm2_real_path_get(fad->fwin->fm_obj));
-	                           
+
+	/* FIXME: save desktop file as most recently used for the mime
+	 * types of the selected files so it can be used as a default
+	 */
+#if 0	
+	files = ecore_dlist_new();
+#endif	
 	selected = e_fm2_selected_list_get(fad->fwin->fm_obj);
 	if (selected)
 	  {
@@ -376,14 +383,22 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 		    }
 		  if (buf[0] != 0)
 		    {
-		       /* FIXME: the question is - execute N times - or place N files on the cmd-line in place of %u/f/ etc */
-		       /* for now - execute N times as it's simple */
+		       /* FIXME: use ecore_desktop_get_command() */
 		       printf("a->exe = %s, ici->file = %s\n", a->exe, ici->file);
 		       _e_fwin_file_open_app(fad->fwin, a, ici->file);
 		    }
 	       }
 	     evas_list_free(selected);
 	  }
+#if 0	
+	cmd = ecore_desktop_get_command(a->desktop, files, 1);
+	
+	if (cmd)
+	  {
+	     e_zone_exec(fwin->win->border->zone, cmd);
+	     free(cmd);
+	  }
+#endif
 	chdir(pcwd);
      }
    e_object_del(fad->dia);
@@ -502,6 +517,16 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files)
 	  }
 	evas_list_free(mlist);
      }
+
+   /* FIXME: check all the mimes - if there is only 1 mime - then open with
+    * the last used app - if any (if not continue with dialog). if there
+    * are multiple or no previously used app for this mime - then open
+    * dialog
+    */
+   /* FIXME: double click on fm2 or ilist entry shoudl implicitly be
+    * open. need to add callback for fm2 and make ilist handle double
+    * click stuff
+    */
    
    fad = E_NEW(E_Fwin_Apps_Dialog, 1);
    dia = e_dialog_new(fwin->win->border->zone->container, 
