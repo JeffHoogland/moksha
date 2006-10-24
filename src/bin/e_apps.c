@@ -144,17 +144,20 @@ e_app_init(void)
 
         while ((file = ecore_list_next(_e_apps_all_filenames)))
 	  {
-	     E_App *app;
-
-             snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all, file);
-             app = e_app_empty_new(buf);
-	     if ((app) && (app->path))
+             if (_e_app_is_eapp(file))
 	       {
-	          _e_apps_every_app = evas_hash_direct_add(_e_apps_every_app, app->path, app);
-                  app->parent = _e_apps_all;
-                  _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, app);
-		  _e_apps_hash_idler.apps = evas_list_append(_e_apps_hash_idler.apps, app);
-                  e_object_ref(E_OBJECT(app));
+	          E_App *app;
+
+                  snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all, file);
+                  app = e_app_empty_new(buf);
+	          if ((app) && (app->path))
+	            {
+	               _e_apps_every_app = evas_hash_direct_add(_e_apps_every_app, app->path, app);
+                       app->parent = _e_apps_all;
+                       _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, app);
+		       _e_apps_hash_idler.apps = evas_list_append(_e_apps_hash_idler.apps, app);
+                       e_object_ref(E_OBJECT(app));
+	            }
 	       }
 	  }
         ecore_list_destroy(_e_apps_all_filenames);
@@ -496,7 +499,7 @@ e_app_new(const char *path, int scan_subdirs)
 	  _e_apps_all->subapps = evas_list_remove(_e_apps_all->subapps, a);
         if ((_e_apps_all) && (a != _e_apps_all) && (in_all))
 	  _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, a);
-	
+
         if (virtual_app)
 	  a = a2;
 	
@@ -1756,7 +1759,7 @@ EAPI void
 e_app_fields_fill(E_App *a, const char *path)
 {
    char *str, *v;
-   const char *lang, *ext;
+   const char *lang;
    int size;
    
    /* get our current language */
@@ -1770,8 +1773,7 @@ e_app_fields_fill(E_App *a, const char *path)
    if (!path) path = a->path;
    if (!path) return;
 
-   ext = strrchr(path, '.');
-   if ( (ext) && ((strcmp(ext, ".desktop") == 0) || (strcmp(ext, ".directory") == 0)) )
+   if (_e_app_is_eapp(path))
      {   /* It's a .desktop file. */
 	Ecore_Desktop *desktop;
 
@@ -1890,8 +1892,7 @@ e_app_fields_save(E_App *a)
    else
       new_eap = 1;
 
-   ext = strrchr(a->path, '.');
-   if ((ext) && (strcmp(ext, ".desktop") == 0))
+   if (_e_app_is_eapp(a->path))
       {   /* It's a .desktop file. */
          Ecore_Desktop *desktop;
 	 int created = 0;
