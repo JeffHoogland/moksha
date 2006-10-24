@@ -1471,7 +1471,6 @@ e_app_file_find(const char *file)
    
    if (!file) return NULL;
 
-   printf("e_app_file_find(%s\n", file);
    for (l = _e_apps_all->subapps; l; l = l->next)
      {
 	E_App *a;
@@ -1479,13 +1478,11 @@ e_app_file_find(const char *file)
 	a = l->data;
         E_OBJECT_CHECK_RETURN(a, NULL);
         E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, NULL);
-	printf("%s\n", a);
 	if (a->path)
 	  {
 	     char *p;
 	     
 	     p = strrchr(a->path, '/');
-	     printf("FIND: %s == %s\n", p, file);
 	     if (p)
 	       {
 		  p++;
