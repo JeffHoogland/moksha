@@ -1163,9 +1163,15 @@ _ibox_cb_event_border_urgent_change(void *data, int type, void *event)
 	ic = _ibox_icon_find(b, ev->border); 
 	if (!ic) continue; 
 	if (ev->border->client.icccm.urgent)
-	  edje_object_signal_emit(ic->o_holder2, "e,state,urgent", "e");
+	  {
+	     edje_object_signal_emit(ic->o_holder, "e,state,urgent", "e");
+	     edje_object_signal_emit(ic->o_holder2, "e,state,urgent", "e");
+	  }
 	else
-	  edje_object_signal_emit(ic->o_holder2, "e,state,not_urgent", "e");
+	  {
+	     edje_object_signal_emit(ic->o_holder, "e,state,not_urgent", "e");
+	     edje_object_signal_emit(ic->o_holder2, "e,state,not_urgent", "e");
+	  }
      }
 
    return 1;
