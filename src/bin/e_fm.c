@@ -540,7 +540,7 @@ e_fm2_select_set(Evas_Object *obj, const char *file, int select)
    for (l = sd->icons; l; l = l->next)
      {
 	ic = l->data;
-	if (!strcmp(ic->info.file, file))
+	if ((file) && (!strcmp(ic->info.file, file)))
 	  {
 	     if (select) _e_fm2_icon_select(ic);
 	     else _e_fm2_icon_deselect(ic);

@@ -17,7 +17,6 @@ static void _e_fwin_changed(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_selected(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_menu_extend(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info);
 static void _e_fwin_parent(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_fwin_file_open(E_Fwin *fwin, const char *file, const char *mime);
 static void _e_fwin_file_open_app(E_Fwin *fwin, E_App *a, const char *file);
 
 static void _e_fwin_cb_ilist_change(void *data, Evas_Object *obj);
@@ -230,57 +229,16 @@ _e_fwin_parent(void *data, E_Menu *m, E_Menu_Item *mi)
    e_fm2_parent_go(data);
 }
 
-static void
-_e_fwin_file_open(E_Fwin *fwin, const char *file, const char *mime)
-{
-   Evas_List *apps, *l;
-   E_App *a;
-   char pcwd[4096];
-
-   /* 1. find previously used launcher */
-   /*   if found - is there still an app for it? */
-   /*     a = e_app_file_find(prev_launcher); */
-   /*     if (a) - run it */
-   /*       return; */
-   /* 2. list possible apps */
-   /*   if list == 1 element - run it */
-   /*     return; */
-   /* 3. create dialog */
-   /*   if (list) add apps in list */
-   /*     dialog should have optin to show all apps */   
-   getcwd(pcwd, sizeof(pcwd));
-   chdir(e_fm2_real_path_get(fwin->fm_obj));
-   /* 1. */
-   /* FIXME: implement the above # 1. */
-   /* 2. */
-   apps = e_app_mime_list(e_fm_mime_filename_get(file));
-   if (apps)
-     {
-	if (evas_list_count(apps) == 1)
-	  {
-	     a = apps->data;
-	     _e_fwin_file_open_app(fwin, a, ecore_file_get_file(file));
-	  }
-	else
-	  {
-	     /* FIXME: hack. do dialog as above in # 3. */
-	     a = apps->data;
-	     _e_fwin_file_open_app(fwin, a, ecore_file_get_file(file));
-	     /* FIXME: register app a as handling mime type if app doesnt */
-	     /* say it can already in a separate info blob so in future */
-	     /* e will list it as an option */
-	  }
-	evas_list_free(apps);
-     }
-   chdir(pcwd);
-}
 
 static void
 _e_fwin_file_open_app(E_Fwin *fwin, E_App *a, const char *file)
 {
    char buf[4096], *p, *e, *s;
+   const char *f;
    
    if (!a->exe) return;
+   f = e_util_filename_escape(file);
+   if (!f) return;
    if (a->exe_params)
      {
 	/* cmd is "a->exe a->exe_params" where a->exe_params will */
@@ -313,10 +271,10 @@ _e_fwin_file_open_app(E_Fwin *fwin, E_App *a, const char *file)
 			   (*s == 'f') || (*s == 'F') ||
 			   (*s == 'm') || (*s == 'M'))
 			 {
-			    if ((e - p) > (strlen(file) + 1))
+			    if ((e - p) > (strlen(f) + 1))
 			      {
-				 strcpy(p, file);
-				 p += strlen(file);
+				 strcpy(p, f);
+				 p += strlen(f);
 			      }
 			 }
 		    }
@@ -328,10 +286,16 @@ _e_fwin_file_open_app(E_Fwin *fwin, E_App *a, const char *file)
    else
      {
 	/* cmd is "a->exe filename" */
-	snprintf(buf, sizeof(buf), "%s %s", a->exe, file);
+	snprintf(buf, sizeof(buf), "%s %s", a->exe, f);
      }
    e_zone_exec(fwin->win->border->zone, buf);
 }
+
+
+
+
+
+
 
 typedef struct _E_Fwin_Apps_Dialog E_Fwin_Apps_Dialog;
 
@@ -346,6 +310,105 @@ struct _E_Fwin_Apps_Dialog
 static void
 _e_fwin_cb_ilist_change(void *data, Evas_Object *obj)
 {
+   E_Fwin_Apps_Dialog *fad;
+   
+   fad = data;
+   E_FREE(fad->app2);
+   e_fm2_select_set(fad->o_fm, NULL, 0);
+}
+
+static void
+_e_fwin_cb_fm_selection_change(void *data, Evas_Object *obj, void *event_info)
+{
+   E_Fwin_Apps_Dialog *fad;
+   Evas_List *sel;
+   E_Fm2_Icon_Info *ici;
+   
+   fad = data;
+   E_FREE(fad->app1);
+   e_widget_ilist_unselect(fad->o_ilist);
+   E_FREE(fad->app2);
+   sel = e_fm2_selected_list_get(obj);
+   if (sel)
+     {
+	ici = sel->data;
+	fad->app2 = strdup(ici->file);
+	evas_list_free(sel);
+     }
+}
+
+static void
+_e_fwin_cb_open(void *data, E_Dialog *dia)
+{
+   E_Fwin_Apps_Dialog *fad;
+   E_App *a = NULL;
+   char pcwd[4096], buf[4096];
+   Evas_List *selected, *l;
+   E_Fm2_Icon_Info *ici;
+   
+   fad = data;
+   if (fad->app1) a = e_app_file_find(fad->app1);
+   else if (fad->app2) a = e_app_file_find(fad->app2);
+   if (a)
+     {
+	getcwd(pcwd, sizeof(pcwd));
+	chdir(e_fm2_real_path_get(fad->fwin->fm_obj));
+	                           
+	selected = e_fm2_selected_list_get(fad->fwin->fm_obj);
+	if (selected)
+	  {
+	     for (l = selected; l; l = l->next)
+	       {
+		  ici = l->data;
+		  buf[0] = 0;
+		  if (!((ici->link) && (ici->mount)))
+		    {
+		       if (ici->link)
+			 {
+			    if (!S_ISDIR(ici->statinfo.st_mode))
+			      snprintf(buf, sizeof(buf), "%s", ici->file);
+			 }
+		       else
+			 {
+			    if (!S_ISDIR(ici->statinfo.st_mode))
+			      snprintf(buf, sizeof(buf), "%s", ici->file);
+			 }
+		    }
+		  if (buf[0] != 0)
+		    {
+		       /* FIXME: the question is - execute N times - or place N files on the cmd-line in place of %u/f/ etc */
+		       /* for now - execute N times as it's simple */
+		       printf("a->exe = %s, ici->file = %s\n", a->exe, ici->file);
+		       _e_fwin_file_open_app(fad->fwin, a, ici->file);
+		    }
+	       }
+	     evas_list_free(selected);
+	  }
+	chdir(pcwd);
+     }
+   e_object_del(fad->dia);
+}
+    
+static void
+_e_fwin_cb_close(void *data, E_Dialog *dia)
+{
+   E_Fwin_Apps_Dialog *fad;
+   
+   fad = data;
+   e_object_del(fad->dia);
+}
+
+static void
+_e_fwin_cb_dialog_free(void *obj)
+{
+   E_Dialog *dia;
+   E_Fwin_Apps_Dialog *fad;
+
+   dia = (E_Dialog *)obj;
+   fad = dia->data;
+   E_FREE(fad->app1);
+   E_FREE(fad->app2);
+   free(fad);
 }
 
 static Evas_Bool
@@ -387,7 +450,6 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files)
 	       e_fwin_new(fwin->win->container, NULL, ici->link);
 	     else
 	       need_dia = 1;
-//	       _e_fwin_file_open(fwin, ici->link, e_fm_mime_filename_get(ici->link));
 	  }
 	else
 	  {
@@ -397,14 +459,9 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files)
 	       e_fwin_new(fwin->win->container, NULL, buf);
 	     else
 	       need_dia = 1;
-//	       _e_fwin_file_open(fwin, buf, ici->mime);
 	  }
      }
    if (!need_dia) return;
-   /* FIXME: display dialog. left side is all apps that say they handle
-    * the mime type(s) of the file(s) in the list. and the right side
-    * should have an fm2 view of ALL apps
-    */
    
    /* 1. build hash of mimetypes */
    for (l = files; l; l = l->next)
@@ -447,29 +504,30 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files)
      }
    
    fad = E_NEW(E_Fwin_Apps_Dialog, 1);
-   /* FIXME: add delete callback to dia obj to cleanup */
    dia = e_dialog_new(fwin->win->border->zone->container, 
 		      "E", "_fwin_open_apps");
    e_dialog_title_set(dia, _("Open with..."));
    e_dialog_border_icon_set(dia, "enlightenment/applications");
-   /* FIXME: add real callbacks */
-   e_dialog_button_add(dia, _("Open"), "enlightenment/open", NULL, NULL);
-   e_dialog_button_add(dia, _("Close"), "enlightenment/close", NULL, NULL);
+   e_dialog_button_add(dia, _("Open"), "enlightenment/open",
+		       _e_fwin_cb_open, fad);
+   e_dialog_button_add(dia, _("Close"), "enlightenment/close",
+		       _e_fwin_cb_close, fad);
 
-   fad->dia = fad;
+   fad->dia = dia;
    fad->fwin = fwin;
    dia->data = fad;
+   e_object_free_attach_func_set(E_OBJECT(dia), _e_fwin_cb_dialog_free);
    
    evas = e_win_evas_get(dia->win);
    
    o = e_widget_list_add(evas, 1, 1);
    ocon = o;
-   
-   of = e_widget_framelist_add(evas, _("Specific Applications"), 0);
-   o = e_widget_ilist_add(evas, 24, 24, NULL);
-   fad->o_ilist = o;
+
    if (apps)
      {
+	of = e_widget_framelist_add(evas, _("Specific Applications"), 0);
+	o = e_widget_ilist_add(evas, 24, 24, &(fad->app1));
+	fad->o_ilist = o;
 	for (l = apps; l; l = l->next)
 	  {
 	     a = l->data;
@@ -479,11 +537,11 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files)
 				   ecore_file_get_file(a->path));
 	  }
 	evas_list_free(apps);
+	e_widget_ilist_go(o);
+	e_widget_min_size_set(o, 160, 240);
+	e_widget_framelist_object_append(of, o);
+	e_widget_list_object_append(ocon, of, 1, 1, 0.5);
      }
-   e_widget_ilist_go(o);
-   e_widget_min_size_set(o, 160, 240);
-   e_widget_framelist_object_append(of, o);
-   e_widget_list_object_append(ocon, of, 1, 1, 0.5);
    
    of = e_widget_framelist_add(evas, _("All Applications"), 0);
    mt = e_fm2_add(evas);
@@ -507,11 +565,8 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files)
    fmc.selection.single = 1;
    fmc.selection.windows_modifiers = 0;
    e_fm2_config_set(mt, &fmc);
-   /* FIXME: add real callbacks */
-//   evas_object_smart_callback_add(mt, "selection_change",
-//				  _cb_files_selection_change, fad);
-//   evas_object_smart_callback_add(mt, "changed",
-//                                _cb_files_changed, fad);
+   evas_object_smart_callback_add(mt, "selection_change",
+				  _e_fwin_cb_fm_selection_change, fad);
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/all", e_user_homedir_get());
    e_fm2_path_set(mt, buf, "/");
    o = e_widget_scrollframe_pan_add(evas, mt,
