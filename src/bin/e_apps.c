@@ -649,7 +649,21 @@ e_app_exec(E_App *a, int launch_id)
      original = a;
    
    if (a->desktop)
-     command = ecore_desktop_get_command(a->desktop, NULL, 1);
+     {
+        Ecore_List *commands;
+
+        /* We are not passing a list of files, so we only expect one command. */
+        commands = ecore_desktop_get_command(a->desktop, NULL, 1);
+	if (commands)
+	  {
+	     char *temp;
+
+	     temp = ecore_list_first(commands);
+	     if (temp)
+	        command = strdup(temp);
+	     ecore_list_destroy(commands);
+	  }
+     }
    else
      command = strdup(a->exe);
    if (!command)
