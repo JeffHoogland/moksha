@@ -1104,8 +1104,23 @@ _e_exebuf_hist_update(void)
 				"e/widgets/exebuf/item");
 	edje_object_part_text_set(o, "e.text.title", exe->file);
 	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN,
-	      _e_exebuf_cb_exe_item_mouse_in, exe);
+				       _e_exebuf_cb_exe_item_mouse_in, exe);
 	evas_object_show(o);
+	if (edje_object_part_exists(exe->bg_object, "e.swallow.icons"))
+	  {
+	     E_App *a;
+	     
+	     a = e_app_exe_find(exe->file);
+	     if (a)
+	       {
+		  o = e_app_icon_add(exebuf->evas, a);
+		  exe->icon_object = o;
+		  edje_object_part_swallow(exe->bg_object, "e.swallow.icons", o);
+		  evas_object_show(o);
+		  exe->app = a;
+		  e_object_ref(E_OBJECT(exe->app));
+	       }
+	  }
 	edje_object_size_min_calc(exe->bg_object, &mw, &mh);
 	e_box_pack_end(eap_list_object, exe->bg_object);
 	e_box_pack_options_set(exe->bg_object,
