@@ -314,7 +314,7 @@ _e_fwin_cb_ilist_change(void *data, Evas_Object *obj)
    
    fad = data;
    E_FREE(fad->app2);
-   e_fm2_select_set(fad->o_fm, NULL, 0);
+   if (fad->o_fm) e_fm2_select_set(fad->o_fm, NULL, 0);
 }
 
 static void
@@ -326,7 +326,7 @@ _e_fwin_cb_fm_selection_change(void *data, Evas_Object *obj, void *event_info)
    
    fad = data;
    E_FREE(fad->app1);
-   e_widget_ilist_unselect(fad->o_ilist);
+   if (fad->o_ilist) e_widget_ilist_unselect(fad->o_ilist);
    E_FREE(fad->app2);
    sel = e_fm2_selected_list_get(obj);
    if (sel)
@@ -345,7 +345,7 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
    char pcwd[4096], buf[4096], *cmd;
    Evas_List *selected, *l;
    E_Fm2_Icon_Info *ici;
-   Ecore_List *files = NULL;
+   Ecore_List *files = NULL, *cmds = NULL;
    
    fad = data;
    if (fad->app1) a = e_app_file_find(fad->app1);
@@ -357,13 +357,12 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 
 	/* FIXME: save desktop file as most recently used for the mime
 	 * types of the selected files so it can be used as a default
-	 */
-#if 0	
-	files = ecore_dlist_new();
-#endif	
+	 */	
 	selected = e_fm2_selected_list_get(fad->fwin->fm_obj);
 	if (selected)
 	  {
+	     files = ecore_list_new();
+	     ecore_list_set_free_cb(files, free);
 	     for (l = selected; l; l = l->next)
 	       {
 		  ici = l->data;
@@ -383,22 +382,23 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 		    }
 		  if (buf[0] != 0)
 		    {
-		       /* FIXME: use ecore_desktop_get_command() */
-		       printf("a->exe = %s, ici->file = %s\n", a->exe, ici->file);
-		       _e_fwin_file_open_app(fad->fwin, a, ici->file);
+//		       /* FIXME: use ecore_desktop_get_command() */
+//		       printf("a->exe = %s, ici->file = %s\n", a->exe, ici->file);
+//		       _e_fwin_file_open_app(fad->fwin, a, ici->file);
+		       ecore_list_append(files, strdup(ici->file));
 		    }
 	       }
 	     evas_list_free(selected);
+	     cmds = ecore_desktop_get_command(a->desktop, files, 1);
+	     if (cmds)
+	       {
+		  ecore_list_goto_first(cmds);
+		  while ((cmd = ecore_list_next(cmds)))
+		    e_zone_exec(fad->fwin->win->border->zone, cmd);
+		  ecore_list_destroy(cmds);
+	       }
+	     ecore_list_destroy(files);
 	  }
-#if 0	
-	cmd = ecore_desktop_get_command(a->desktop, files, 1);
-	
-	if (cmd)
-	  {
-	     e_zone_exec(fwin->win->border->zone, cmd);
-	     free(cmd);
-	  }
-#endif
 	chdir(pcwd);
      }
    e_object_del(fad->dia);
