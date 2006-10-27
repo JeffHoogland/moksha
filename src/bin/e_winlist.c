@@ -437,9 +437,9 @@ _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
 	e_theme_edje_object_set(o, "base/theme/winlist",
 				"e/widgets/winlist/item");
 	edje_object_part_text_set(o, "e.text.label", e_border_name_get(ww->border));
-	if (!e_config->winlist_warp_while_selecting)
-	  evas_object_event_callback_add(ww->bg_object, EVAS_CALLBACK_MOUSE_IN,
-		_e_winlist_cb_item_mouse_in, ww);
+//	if (!e_config->winlist_warp_while_selecting)
+//	  evas_object_event_callback_add(ww->bg_object, EVAS_CALLBACK_MOUSE_IN,
+//					 _e_winlist_cb_item_mouse_in, ww);
 	evas_object_show(o);
 	if (edje_object_part_exists(ww->bg_object, "e.swallow.icon"))
 	  {
