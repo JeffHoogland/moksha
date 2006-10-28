@@ -205,9 +205,9 @@ e_manager_manage_windows(E_Manager *man)
 	       }
 	     if (data)
 	       {
-		  continue;
 		  free(data);
 		  data = NULL;
+		  continue;
 	       }
 	     ret = ecore_x_window_prop_card32_get(windows[i],
 						  E_ATOM_MANAGED,
