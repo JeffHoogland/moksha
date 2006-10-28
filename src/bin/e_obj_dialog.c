@@ -45,8 +45,15 @@ e_obj_dialog_new(E_Container *con, char *title, char *class_name, char *class_cl
    od->bg_object = o;
    
    e_win_centered_set(od->win, 1);
+   od->cb_delete = NULL;
    
    return od;
+}
+
+EAPI void
+e_obj_dialog_cb_delete_set(E_Obj_Dialog *od, void (*func)(E_Obj_Dialog *od))
+{
+   od->cb_delete = func;
 }
 
 EAPI void
@@ -116,6 +123,8 @@ _e_obj_dialog_cb_delete(E_Win *win)
    E_Obj_Dialog *od;
    
    od = win->data;
+   if (od->cb_delete)
+     od->cb_delete(od);
    e_object_del(E_OBJECT(od));
 }
 
@@ -125,5 +134,7 @@ _e_obj_dialog_cb_close(void *data, Evas_Object *obj, const char *emission, const
    E_Obj_Dialog *od;
    
    od = data;
+   if (od->cb_delete)
+     od->cb_delete(od);
    e_object_del(E_OBJECT(od));
 }

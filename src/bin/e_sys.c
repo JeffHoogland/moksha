@@ -15,6 +15,7 @@ static void _e_sys_logout_begin(E_Sys_Action a_after);
 static void _e_sys_current_action(void);
 static void _e_sys_action_failed(void);
 static int _e_sys_action_do(E_Sys_Action a, char *param);
+static void _e_sys_dialog_cb_delete(E_Obj_Dialog * od);
 
 static Ecore_Event_Handler *_e_sys_exe_exit_handler = NULL;
 static Ecore_Exe *_e_sys_halt_check_exe = NULL;
@@ -482,6 +483,7 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 	     e_obj_dialog_show(od);
 	     e_obj_dialog_icon_set(od, "enlightenment/halt");
 	     if (_e_sys_dialog) e_object_del(E_OBJECT(_e_sys_dialog));
+	     e_obj_dialog_cb_delete_set(od, _e_sys_dialog_cb_delete);
 	     _e_sys_dialog = od;
 	     /* FIXME: display halt status */
 	  }
@@ -508,6 +510,7 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 	     e_obj_dialog_show(od);
 	     e_obj_dialog_icon_set(od, "enlightenment/reboot");
 	     if (_e_sys_dialog) e_object_del(E_OBJECT(_e_sys_dialog));
+	     e_obj_dialog_cb_delete_set(od, _e_sys_dialog_cb_delete);
 	     _e_sys_dialog = od;
 	     /* FIXME: display reboot status */
 	  }
@@ -533,6 +536,7 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 	     e_obj_dialog_show(od);
 	     e_obj_dialog_icon_set(od, "enlightenment/suspend");
 	     if (_e_sys_dialog) e_object_del(E_OBJECT(_e_sys_dialog));
+	     e_obj_dialog_cb_delete_set(od, _e_sys_dialog_cb_delete);
 	     _e_sys_dialog = od;
 	     /* FIXME: display suspend status */
 	  }
@@ -559,6 +563,7 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 	     e_obj_dialog_icon_set(od, "enlightenment/hibernate");
 	     if (_e_sys_dialog) e_object_del(E_OBJECT(_e_sys_dialog));
 	     _e_sys_dialog = od;
+	     e_obj_dialog_cb_delete_set(od, _e_sys_dialog_cb_delete);
 	     /* FIXME: display hibernate status */
 	  }
 	break;
@@ -566,4 +571,12 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 	return 0;
      }
    return 1;
+}
+
+static void _e_sys_dialog_cb_delete(E_Obj_Dialog * od)
+{
+   /* If we don't NULL out the _e_sys_dialog, then the
+    * ECORE_EXE_EVENT_DEL callback will trigger and segv if the window
+    * is deleted in some other way. */
+   _e_sys_dialog = NULL;
 }
