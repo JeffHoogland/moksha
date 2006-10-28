@@ -235,7 +235,7 @@ group {
 	       size: 10;
 	       min:  0 1;
 	       align: 0.0 0.5;
-               text_class: "winlist_title";	       
+               text_class: "winlist_label";	       
 	    }
 	 }
       }
@@ -508,7 +508,7 @@ group {
 	      text_source:   "e.text.label";
 	      source:        "e.text.label";
 	      min:           0 1;
-	      text_class:    "title_bar";
+	      text_class:    "winlist_title";
 	   }
 	}
      }
