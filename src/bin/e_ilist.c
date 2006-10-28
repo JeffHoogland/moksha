@@ -440,6 +440,8 @@ _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     break;
 	  }
      }
+   if (ev->flags & EVAS_BUTTON_DOUBLE_CLICK)
+     evas_object_smart_callback_call(si->sd->smart_obj, "selected", NULL);
 }
 
 static void 

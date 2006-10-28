@@ -4,6 +4,7 @@
 #ifdef E_TYPEDEFS
 
 typedef struct _E_Fwin E_Fwin;
+typedef struct _E_Fwin_Apps_Dialog E_Fwin_Apps_Dialog;
 
 #else
 #ifndef E_FWIN_H
@@ -19,6 +20,15 @@ struct _E_Fwin
    Evas_Object         *scrollframe_obj;
    Evas_Object         *fm_obj;
    Evas_Object         *bg_obj;
+   E_Fwin_Apps_Dialog  *fad;
+};
+
+struct _E_Fwin_Apps_Dialog
+{
+   E_Dialog           *dia;
+   E_Fwin             *fwin;
+   char               *app1, *app2;
+   Evas_Object        *o_ilist, *o_fm;
 };
 
 EAPI int     e_fwin_init             (void);

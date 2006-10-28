@@ -23,6 +23,7 @@ static void _e_wid_focus_hook(Evas_Object *obj);
 static void _e_wid_cb_scrollframe_resize(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_wid_cb_item_sel(void *data, void *data2);
 static void _e_wid_cb_item_hilight(void *data, void *data2);
+static void _e_wid_cb_selected(void *data, Evas_Object *obj, void *event_info);
 static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
 /* externally accessible functions */
@@ -55,6 +56,8 @@ e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, char **value)
    e_scrollframe_child_set(wd->o_scrollframe, o);
    e_widget_sub_object_add(obj, o);
    evas_object_show(o);
+   evas_object_smart_callback_add(o, "selected", _e_wid_cb_selected, obj);
+   
    
    evas_object_resize(obj, 32, 32);
    e_widget_min_size_set(obj, 32, 32);
@@ -350,6 +353,12 @@ _e_wid_cb_item_hilight(void *data, void *data2)
    wcb = data2;
    e_ilist_selected_geometry_get(wd->o_ilist, &x, &y, &w, &h);
    e_scrollframe_child_region_show(wd->o_scrollframe, x, y, w, h);
+}
+
+static void
+_e_wid_cb_selected(void *data, Evas_Object *obj, void *event_info)
+{
+   evas_object_smart_callback_call(data, "selected", event_info);
 }
 
 static void

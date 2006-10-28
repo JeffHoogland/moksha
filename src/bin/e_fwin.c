@@ -19,7 +19,14 @@ static void _e_fwin_menu_extend(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_I
 static void _e_fwin_parent(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fwin_file_open_app(E_Fwin *fwin, E_App *a, const char *file);
 
-static void _e_fwin_cb_ilist_change(void *data, Evas_Object *obj);
+static void _e_fwin_cb_ilist_change(void *data);
+static void _e_fwin_cb_ilist_selected(void *data, Evas_Object *obj, void *event_info);
+static void _e_fwin_cb_fm_selection_change(void *data, Evas_Object *obj, void *event_info);
+static void _e_fwin_cb_fm_selected(void *data, Evas_Object *obj, void *event_info);
+static void _e_fwin_cb_open(void *data, E_Dialog *dia);
+static void _e_fwin_cb_close(void *data, E_Dialog *dia);
+static void _e_fwin_cb_dialog_free(void *obj);
+static Evas_Bool _e_fwin_cb_hash_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata);
 static void _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files);
 
 /* local subsystem globals */
@@ -145,6 +152,11 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
 static void
 _e_fwin_free(E_Fwin *fwin)
 {
+   if (fwin->fad)
+     {
+	e_object_del(E_OBJECT(fwin->fad->dia));
+	fwin->fad = NULL;
+     }
    e_object_del(E_OBJECT(fwin->win));
    fwins = evas_list_remove(fwins, fwin);
    free(fwin);
@@ -229,7 +241,8 @@ _e_fwin_parent(void *data, E_Menu *m, E_Menu_Item *mi)
    e_fm2_parent_go(data);
 }
 
-
+/* KILL: this func will die as soon as ecore_desktops's cmd thing works
+ * perfectly */
 static void
 _e_fwin_file_open_app(E_Fwin *fwin, E_App *a, const char *file)
 {
@@ -291,30 +304,23 @@ _e_fwin_file_open_app(E_Fwin *fwin, E_App *a, const char *file)
    e_zone_exec(fwin->win->border->zone, buf);
 }
 
-
-
-
-
-
-
-typedef struct _E_Fwin_Apps_Dialog E_Fwin_Apps_Dialog;
-
-struct _E_Fwin_Apps_Dialog
-{
-   E_Dialog *dia;
-   E_Fwin *fwin;
-   char *app1, *app2;
-   Evas_Object *o_ilist, *o_fm;
-};
-
 static void
-_e_fwin_cb_ilist_change(void *data, Evas_Object *obj)
+_e_fwin_cb_ilist_change(void *data)
 {
    E_Fwin_Apps_Dialog *fad;
    
    fad = data;
    E_FREE(fad->app2);
    if (fad->o_fm) e_fm2_select_set(fad->o_fm, NULL, 0);
+}
+
+static void
+_e_fwin_cb_ilist_selected(void *data, Evas_Object *obj, void *event_info)
+{
+   E_Fwin_Apps_Dialog *fad;
+   
+   fad = data;
+   _e_fwin_cb_open(fad, fad->dia);
 }
 
 static void
@@ -335,6 +341,15 @@ _e_fwin_cb_fm_selection_change(void *data, Evas_Object *obj, void *event_info)
 	fad->app2 = strdup(ici->file);
 	evas_list_free(sel);
      }
+}
+
+static void
+_e_fwin_cb_fm_selected(void *data, Evas_Object *obj, void *event_info)
+{
+   E_Fwin_Apps_Dialog *fad;
+   
+   fad = data;
+   _e_fwin_cb_open(fad, fad->dia);
 }
 
 static void
@@ -366,6 +381,10 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 	     for (l = selected; l; l = l->next)
 	       {
 		  ici = l->data;
+		  /* this snprintf is silly - but it's here in case i really do
+		   * need to provide full paths (seems silly since we chdir
+		   * into the dir)
+		   */
 		  buf[0] = 0;
 		  if (!((ici->link) && (ici->mount)))
 		    {
@@ -401,7 +420,7 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 	  }
 	chdir(pcwd);
      }
-   e_object_del(fad->dia);
+   e_object_del(E_OBJECT(fad->dia));
 }
     
 static void
@@ -410,7 +429,7 @@ _e_fwin_cb_close(void *data, E_Dialog *dia)
    E_Fwin_Apps_Dialog *fad;
    
    fad = data;
-   e_object_del(fad->dia);
+   e_object_del(E_OBJECT(fad->dia));
 }
 
 static void
@@ -423,6 +442,7 @@ _e_fwin_cb_dialog_free(void *obj)
    fad = dia->data;
    E_FREE(fad->app1);
    E_FREE(fad->app2);
+   fad->fwin->fad = NULL;
    free(fad);
 }
 
@@ -453,7 +473,12 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files)
    int need_dia = 0;
    Evas_Hash *mimes = NULL;
    Evas_List *mlist = NULL;
-   
+
+   if (fwin->fad)
+     {
+	e_object_del(E_OBJECT(fwin->fad->dia));
+	fwin->fad = NULL;
+     }
    for (l = files; l; l = l->next)
      {
 	ici = l->data;
@@ -523,10 +548,6 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files)
     * are multiple or no previously used app for this mime - then open
     * dialog
     */
-   /* FIXME: double click on fm2 or ilist entry shoudl implicitly be
-    * open. need to add callback for fm2 and make ilist handle double
-    * click stuff
-    */
    
    fad = E_NEW(E_Fwin_Apps_Dialog, 1);
    dia = e_dialog_new(fwin->win->border->zone->container, 
@@ -540,6 +561,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files)
 
    fad->dia = dia;
    fad->fwin = fwin;
+   fwin->fad = fad;
    dia->data = fad;
    e_object_free_attach_func_set(E_OBJECT(dia), _e_fwin_cb_dialog_free);
    
@@ -566,6 +588,8 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files)
 	e_widget_min_size_set(o, 160, 240);
 	e_widget_framelist_object_append(of, o);
 	e_widget_list_object_append(ocon, of, 1, 1, 0.5);
+	evas_object_smart_callback_add(o, "selected",
+				       _e_fwin_cb_ilist_selected, fad);
      }
    
    of = e_widget_framelist_add(evas, _("All Applications"), 0);
@@ -592,6 +616,8 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files)
    e_fm2_config_set(mt, &fmc);
    evas_object_smart_callback_add(mt, "selection_change",
 				  _e_fwin_cb_fm_selection_change, fad);
+   evas_object_smart_callback_add(mt, "selected",
+				  _e_fwin_cb_fm_selected, fad);
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/all", e_user_homedir_get());
    e_fm2_path_set(mt, buf, "/");
    o = e_widget_scrollframe_pan_add(evas, mt,
@@ -606,6 +632,5 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files)
    e_widget_min_size_get(ocon, &mw, &mh);
    e_dialog_content_set(dia, ocon, mw, mh);
    
-   /* FIXME: store fad in fwin (on fwin delete close fad. on fad close, delete from fwin) */
    e_dialog_show(dia);
 }
