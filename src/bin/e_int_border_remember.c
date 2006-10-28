@@ -256,20 +256,13 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
 	cfdata->border->remember = e_remember_new();
 	if (cfdata->border->remember)
-	  {
 	     e_remember_use(cfdata->border->remember);
-	     e_remember_update(cfdata->border->remember, cfdata->border);
-	  }
      }
+
    if (cfdata->border->remember)
      {
-	if ((cfdata->border->client.icccm.name) &&
-	    (cfdata->border->client.icccm.class) &&
-	    (cfdata->border->client.icccm.name[0] != 0) &&
-	    (cfdata->border->client.icccm.class[0] != 0))
-	  cfdata->border->remember->match = E_REMEMBER_MATCH_NAME | E_REMEMBER_MATCH_CLASS | E_REMEMBER_MATCH_ROLE | E_REMEMBER_MATCH_TYPE | E_REMEMBER_MATCH_TRANSIENT;
-	else
-	  cfdata->border->remember->match = E_REMEMBER_MATCH_TITLE | E_REMEMBER_MATCH_ROLE | E_REMEMBER_MATCH_TYPE | E_REMEMBER_MATCH_TRANSIENT;
+	cfdata->border->remember->match = e_remember_default_match(cfdata->border);
+
 	if (cfdata->mode == MODE_GEOMETRY)
 	  cfdata->border->remember->apply = E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE;
 	else if (cfdata->mode == MODE_LOCKS)
@@ -279,6 +272,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	else if (cfdata->mode == MODE_ALL)
 	  cfdata->border->remember->apply = E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE | E_REMEMBER_APPLY_LAYER | E_REMEMBER_APPLY_LOCKS | E_REMEMBER_APPLY_BORDER | E_REMEMBER_APPLY_STICKY | E_REMEMBER_APPLY_DESKTOP | E_REMEMBER_APPLY_SHADE | E_REMEMBER_APPLY_ZONE | E_REMEMBER_APPLY_SKIP_WINLIST;
 	cfdata->border->remember->apply_first_only = 0;
+       e_remember_update(cfdata->border->remember, cfdata->border);
      }
   
    e_config_save_queue();
@@ -380,14 +374,12 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
 	cfdata->border->remember = e_remember_new();
 	if (cfdata->border->remember)
-	  {
-	     e_remember_use(cfdata->border->remember);
-	     e_remember_update(cfdata->border->remember, cfdata->border);
-	  }
+	   e_remember_use(cfdata->border->remember);
      }
    if (cfdata->border->remember)
      {
 	cfdata->border->remember->apply = 0;
+	cfdata->border->remember->match = 0;
 	if (cfdata->remember.match_name) cfdata->border->remember->match |= E_REMEMBER_MATCH_NAME;
 	if (cfdata->remember.match_class) cfdata->border->remember->match |= E_REMEMBER_MATCH_CLASS;
 	if (cfdata->remember.match_title) cfdata->border->remember->match |= E_REMEMBER_MATCH_TITLE;
@@ -406,6 +398,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if (cfdata->remember.apply_skip_winlist) cfdata->border->remember->apply |= E_REMEMBER_APPLY_SKIP_WINLIST;
 	if (cfdata->remember.apply_run) cfdata->border->remember->apply |= E_REMEMBER_APPLY_RUN;
 	cfdata->border->remember->apply_first_only = cfdata->remember.apply_first_only;
+	e_remember_update(cfdata->border->remember, cfdata->border);
      }
    
    e_config_save_queue();

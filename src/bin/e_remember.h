@@ -41,6 +41,7 @@ struct _E_Remember
    int            type;
    unsigned char  transient;
    int            apply;
+   int		  max_score;
    struct {
       int           pos_x, pos_y;
       int           res_x, res_y;
@@ -99,7 +100,10 @@ EAPI void         e_remember_use(E_Remember *rem);
 EAPI void         e_remember_unuse(E_Remember *rem);
 EAPI void         e_remember_del(E_Remember *rem);
 EAPI E_Remember  *e_remember_find(E_Border *bd);
+EAPI E_Remember  *e_remember_find_usable(E_Border *bd);
+EAPI void         e_remember_match_update(E_Remember *rem);
 EAPI void         e_remember_update(E_Remember *rem, E_Border *bd);
+EAPI int	  e_remember_default_match(E_Border *bd);
     
 #endif
 #endif

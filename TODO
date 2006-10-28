@@ -10,7 +10,6 @@ Some of the things (in very short form) that need to be done to E17...
 
 * BUG: smart placement seems to screw up if a shelf is at the top of the screen
 * BUG: e17 screen res diaolg doesnt work under xephyr - why?
-* BUG: "match this window only" doesnt fall back to other unused remembers
 * BUG: xdaliclock -transparent doesnt use shaped border (not handling shape
   change later)
 ]]]

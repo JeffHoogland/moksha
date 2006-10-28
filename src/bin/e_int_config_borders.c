@@ -124,23 +124,27 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static void 
 _basic_apply_border(E_Config_Dialog_Data *cfdata) 
 {
+   if ((!cfdata->border->lock_border) && (!cfdata->border->shaded)) 
+     {
+	if (cfdata->border->bordername) evas_stringshare_del(cfdata->border->bordername);
+	cfdata->border->bordername = evas_stringshare_add(cfdata->bordername);
+	cfdata->border->client.border.changed = 1;
+	cfdata->border->changed = 1;
+     }
    if (cfdata->remember_border) 
      {
-	if (!cfdata->border->remember) 
-	  {
-	     cfdata->border->remember = e_remember_new();
-	     if (cfdata->border->remember) 
-	       {
-		  e_remember_use(cfdata->border->remember);
-		  e_remember_update(cfdata->border->remember, cfdata->border);
-		  cfdata->border->remember->match |= E_REMEMBER_MATCH_NAME;
-		  cfdata->border->remember->match |= E_REMEMBER_MATCH_CLASS;
-		  cfdata->border->remember->match |= E_REMEMBER_MATCH_ROLE;
-		  cfdata->border->remember->match |= E_REMEMBER_MATCH_TYPE;
-		  cfdata->border->remember->match |= E_REMEMBER_MATCH_TRANSIENT;
-		  cfdata->border->remember->apply |= E_REMEMBER_APPLY_BORDER;
-	       }
-	  }
+         if (!cfdata->border->remember) 
+             cfdata->border->remember = e_remember_new();
+         {
+             if (cfdata->border->remember)
+                 e_remember_use(cfdata->border->remember);
+         }
+         if (cfdata->border->remember) 
+         {
+	     cfdata->border->remember->apply |= E_REMEMBER_APPLY_BORDER;
+             cfdata->border->remember->match = e_remember_default_match(cfdata->border);
+             e_remember_update(cfdata->border->remember, cfdata->border);
+         }
      }
    else 
      {
@@ -154,13 +158,6 @@ _basic_apply_border(E_Config_Dialog_Data *cfdata)
 		  cfdata->border->remember = NULL;
 	       }
 	  }
-     }
-   if ((!cfdata->border->lock_border) && (!cfdata->border->shaded)) 
-     {
-	if (cfdata->border->bordername) evas_stringshare_del(cfdata->border->bordername);
-	cfdata->border->bordername = evas_stringshare_add(cfdata->bordername);
-	cfdata->border->client.border.changed = 1;
-	cfdata->border->changed = 1;
      }
 }
 

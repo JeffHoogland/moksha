@@ -249,6 +249,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, type, INT);
    E_CONFIG_VAL(D, T, transient, UCHAR);
    E_CONFIG_VAL(D, T, apply, INT);
+   E_CONFIG_VAL(D, T, max_score, INT);
    E_CONFIG_VAL(D, T, prop.pos_x, INT);
    E_CONFIG_VAL(D, T, prop.pos_y, INT);
    E_CONFIG_VAL(D, T, prop.res_x, INT);

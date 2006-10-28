@@ -181,24 +181,19 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    flag = cfdata->keep_my_border;
    cfdata->border->lock_border = flag;
    
-   /* FIXME: need to check if the remember stuff will actually work or not
-    * (see e_int_border_remember.c where it checks and warns) */
    if (cfdata->remember_locks)
      {
 	if (!cfdata->border->remember)
 	  {
 	     cfdata->border->remember = e_remember_new();
 	     if (cfdata->border->remember)
-	       {
 		  e_remember_use(cfdata->border->remember);
-		  e_remember_update(cfdata->border->remember, cfdata->border);
-		  cfdata->border->remember->match |= E_REMEMBER_MATCH_NAME;
-		  cfdata->border->remember->match |= E_REMEMBER_MATCH_CLASS;
-		  cfdata->border->remember->match |= E_REMEMBER_MATCH_ROLE;
-		  cfdata->border->remember->match |= E_REMEMBER_MATCH_TYPE;
-		  cfdata->border->remember->match |= E_REMEMBER_MATCH_TRANSIENT;
-		  cfdata->border->remember->apply |= E_REMEMBER_APPLY_LOCKS;
-	       }
+	  }
+	if (cfdata->border->remember)
+	  {
+	     cfdata->border->remember->apply |= E_REMEMBER_APPLY_LOCKS;
+             cfdata->border->remember->match = e_remember_default_match(cfdata->border);
+	     e_remember_update(cfdata->border->remember, cfdata->border);
 	  }
      }
    else
@@ -245,24 +240,20 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    cfdata->border->lock_focus_in = cfdata->lock.focus_in;
    cfdata->border->lock_focus_out = cfdata->lock.focus_out;
    cfdata->border->lock_life = cfdata->lock.life;
-   /* FIXME: need to check if the remember stuff will actually work or not 
-    * (see e_int_border_remember.c where it checks and warns) */
+
    if (cfdata->lock.remember)
      {
 	if (!cfdata->border->remember)
 	  {
 	     cfdata->border->remember = e_remember_new();
 	     if (cfdata->border->remember)
-	       {
 		  e_remember_use(cfdata->border->remember);
-		  e_remember_update(cfdata->border->remember, cfdata->border);
-		  cfdata->border->remember->match |= E_REMEMBER_MATCH_NAME;
-		  cfdata->border->remember->match |= E_REMEMBER_MATCH_CLASS;
-		  cfdata->border->remember->match |= E_REMEMBER_MATCH_ROLE;
-		  cfdata->border->remember->match |= E_REMEMBER_MATCH_TYPE;
-		  cfdata->border->remember->match |= E_REMEMBER_MATCH_TRANSIENT;
-		  cfdata->border->remember->apply |= E_REMEMBER_APPLY_LOCKS;
-	       }
+	  }
+	if (cfdata->border->remember)
+	  {
+	     cfdata->border->remember->apply |= E_REMEMBER_APPLY_LOCKS;
+             cfdata->border->remember->match = e_remember_default_match(cfdata->border);
+	     e_remember_update(cfdata->border->remember, cfdata->border);
 	  }
      }
    else

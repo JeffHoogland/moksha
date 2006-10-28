@@ -3,12 +3,16 @@
  */
 #include "e.h"
 
+#define REMEMBER_HIERARCHY 1
+#define REMEMBER_SIMPLE 0
+
 /* local subsystem functions */
 static void _e_remember_free(E_Remember *rem);
+static int _e_remember_sort_list(void * d1, void * d2);
+static E_Remember  *_e_remember_find(E_Border *bd, int check_usable);
 
-/* FIXME: match netwm window type
- * FIXME: match transient (is it a transient for something or not)
- */
+
+/* FIXME: match netwm window type */
 
 /* local subsystem globals */
 
@@ -18,13 +22,14 @@ EAPI int
 e_remember_init(E_Startup_Mode mode)
 {
    Evas_List *l;
+   int not_updated = 0;
  
    if (mode == E_STARTUP_START)
      {
 	for (l = e_config->remembers; l; l = l->next)
 	  {
 	     E_Remember *rem;
-	     
+
 	     rem = l->data;
 	     if ((rem->apply & E_REMEMBER_APPLY_RUN) && 
 		 (rem->prop.command))
@@ -34,6 +39,34 @@ e_remember_init(E_Startup_Mode mode)
 	       }
 	  }
      }
+
+#if 1
+   for (l = e_config->remembers; l; l = l->next)
+     {
+        E_Remember *rem;
+
+        rem = l->data;
+	/* Code to bring up old configs to scratch. Can be removed
+	 * after X amount of time, where X is a figure that will be
+	 * decided by whoever remembers to take this out. */
+	if (!rem->max_score)
+	  {
+	     int max_count = 0;
+	     if (rem->match & E_REMEMBER_MATCH_NAME) max_count += 2;
+	     if (rem->match & E_REMEMBER_MATCH_CLASS) max_count += 2;
+	     if (rem->match & E_REMEMBER_MATCH_TITLE) max_count += 2;
+	     if (rem->match & E_REMEMBER_MATCH_ROLE) max_count += 2;
+	     if (rem->match & E_REMEMBER_MATCH_TYPE) max_count += 2;
+	     if (rem->match & E_REMEMBER_MATCH_TRANSIENT) max_count +=2;
+	     if (rem->apply_first_only) max_count++;
+	     rem->max_score = max_count;
+	     not_updated = 1;
+	  }
+     }
+
+   if (not_updated)
+     e_config->remembers = evas_list_sort(e_config->remembers, evas_list_count(e_config->remembers), _e_remember_sort_list);
+#endif
    return 1;
 }
 
@@ -100,58 +133,80 @@ e_remember_del(E_Remember *rem)
    _e_remember_free(rem);
 }
 
-EAPI E_Remember *
+EAPI E_Remember  *
+e_remember_find_usable(E_Border *bd)
+{
+   E_Remember * rem;
+   rem = _e_remember_find(bd, 1);
+   return rem;
+}
+
+EAPI E_Remember  *
 e_remember_find(E_Border *bd)
 {
-   Evas_List *l;
-   
-   for (l = e_config->remembers; l; l = l->next)
+   E_Remember * rem;
+   rem = _e_remember_find(bd, 0);
+   return rem;
+}
+
+EAPI void
+e_remember_match_update(E_Remember *rem)
+{
+   int max_count = 0;
+
+   if (rem->match & E_REMEMBER_MATCH_NAME) max_count += 2;
+   if (rem->match & E_REMEMBER_MATCH_CLASS) max_count += 2;
+   if (rem->match & E_REMEMBER_MATCH_TITLE) max_count += 2;
+   if (rem->match & E_REMEMBER_MATCH_ROLE) max_count += 2;
+   if (rem->match & E_REMEMBER_MATCH_TYPE) max_count += 2;
+   if (rem->match & E_REMEMBER_MATCH_TRANSIENT) max_count +=2;
+   if (rem->apply_first_only) max_count++;
+
+   if (max_count != rem->max_score)
      {
-	E_Remember *rem;
-	int required_matches;
-	int matches;
-	const char *title = "";
-	
-	rem = l->data;
-	matches = 0;
-	required_matches = 0;
-	if (rem->match & E_REMEMBER_MATCH_NAME) required_matches++;
-	if (rem->match & E_REMEMBER_MATCH_CLASS) required_matches++;
-	if (rem->match & E_REMEMBER_MATCH_TITLE) required_matches++;
-	if (rem->match & E_REMEMBER_MATCH_ROLE) required_matches++;
-	if (rem->match & E_REMEMBER_MATCH_TYPE) required_matches++;
-	if (rem->match & E_REMEMBER_MATCH_TRANSIENT) required_matches++;
-	
-	if (bd->client.netwm.name) title = bd->client.netwm.name;
-	else title = bd->client.icccm.title;
-	
-	if ((rem->match & E_REMEMBER_MATCH_NAME) &&
-	    ((!e_util_strcmp(rem->name, bd->client.icccm.name)) ||
-	     (e_util_both_str_empty(rem->name, bd->client.icccm.name))))
-	  matches++;
-	if ((rem->match & E_REMEMBER_MATCH_CLASS) &&
-	    ((!e_util_strcmp(rem->class, bd->client.icccm.class)) ||
-	     (e_util_both_str_empty(rem->class, bd->client.icccm.class))))
-	  matches++;
-	if ((rem->match & E_REMEMBER_MATCH_TITLE) &&
-	    ((!e_util_strcmp(rem->title, title)) ||
-	     (e_util_both_str_empty(rem->title, title))))
-	  matches++;
-	if ((rem->match & E_REMEMBER_MATCH_ROLE) &&
-	    ((!e_util_strcmp(rem->role, bd->client.icccm.window_role)) ||
-	     (e_util_both_str_empty(rem->role, bd->client.icccm.window_role))))
-	  matches++;
-	if ((rem->match & E_REMEMBER_MATCH_TYPE) &&
-	    (rem->type == bd->client.netwm.type))
-	  matches++;
-	if ((rem->match & E_REMEMBER_MATCH_TRANSIENT) &&
-	    (((rem->transient) && (bd->client.icccm.transient_for != 0)) ||
-	     ((!rem->transient) && (bd->client.icccm.transient_for == 0))))
-	  matches++;
-	if ((matches >= required_matches) && (!rem->delete_me))
-	  return rem;
+	/* The number of matches for this remember has changed so we
+	 * need to remove from list and insert back into the appropriate
+	 * loction. */
+	Evas_List *l;
+	E_Remember *r; 
+	rem->max_score = max_count;
+	e_config->remembers = evas_list_remove(e_config->remembers, rem);
+
+	for (l = e_config->remembers; l; l = l->next)
+	  {
+	     r = l->data;
+	     if (r->max_score <= rem->max_score)
+	       break;
+	  }
+
+	if (l)
+	   e_config->remembers = evas_list_prepend_relative_list(e_config->remembers, rem, l);
+	else
+	   e_config->remembers = evas_list_append(e_config->remembers, rem);
      }
-   return NULL;
+}
+
+EAPI int
+e_remember_default_match(E_Border *bd)
+{
+   int match = E_REMEMBER_MATCH_TRANSIENT;
+   if ((bd->client.icccm.name) &&
+	 (bd->client.icccm.class) &&
+	 (bd->client.icccm.name[0] != 0) &&
+	 (bd->client.icccm.class[0] != 0))
+     match |= E_REMEMBER_MATCH_NAME | E_REMEMBER_MATCH_CLASS;
+   else
+     if ((e_border_name_get(bd))[0] != 0)
+       match |= E_REMEMBER_MATCH_TITLE;
+
+   if ((bd->client.icccm.window_role) && 
+	 (bd->client.icccm.window_role[0] != 0))
+     match |= E_REMEMBER_MATCH_ROLE;
+
+   if (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_UNKNOWN)
+     match |= E_REMEMBER_MATCH_TYPE;
+
+   return match;
 }
 
 EAPI void
@@ -182,6 +237,8 @@ e_remember_update(E_Remember *rem, E_Border *bd)
    if (bd->client.icccm.window_role)
      rem->role = evas_stringshare_add(bd->client.icccm.window_role);
 
+   e_remember_match_update(rem);
+   
    rem->type = bd->client.netwm.type;
    
    if (bd->client.icccm.transient_for != 0)
@@ -225,9 +282,9 @@ e_remember_update(E_Remember *rem, E_Border *bd)
    rem->prop.lock_focus_out = bd->lock_focus_out;
    rem->prop.lock_life = bd->lock_life;
 
-   if (bd->client.border.name)
-     rem->prop.border = evas_stringshare_add(bd->client.border.name);
-   
+   if (bd->bordername)
+     rem->prop.border = evas_stringshare_add(bd->bordername);
+
    rem->prop.sticky = bd->sticky;
    
    if (bd->shaded)
@@ -285,6 +342,117 @@ e_remember_update(E_Remember *rem, E_Border *bd)
 }
 
 /* local subsystem functions */
+static E_Remember *
+_e_remember_find(E_Border *bd, int check_usable)
+{
+#if REMEMBER_SIMPLE
+   Evas_List *l;
+   
+   for (l = e_config->remembers; l; l = l->next)
+     {
+	E_Remember *rem;
+	int required_matches;
+	int matches;
+	const char *title = "";
+	
+	rem = l->data;
+	matches = 0;
+	required_matches = 0;
+	if (rem->match & E_REMEMBER_MATCH_NAME) required_matches++;
+	if (rem->match & E_REMEMBER_MATCH_CLASS) required_matches++;
+	if (rem->match & E_REMEMBER_MATCH_TITLE) required_matches++;
+	if (rem->match & E_REMEMBER_MATCH_ROLE) required_matches++;
+	if (rem->match & E_REMEMBER_MATCH_TYPE) required_matches++;
+	if (rem->match & E_REMEMBER_MATCH_TRANSIENT) required_matches++;
+	
+	if (bd->client.netwm.name) title = bd->client.netwm.name;
+	else title = bd->client.icccm.title;
+	
+	if ((rem->match & E_REMEMBER_MATCH_NAME) &&
+	    ((!e_util_strcmp(rem->name, bd->client.icccm.name)) ||
+	     (e_util_both_str_empty(rem->name, bd->client.icccm.name))))
+	  matches++;
+	if ((rem->match & E_REMEMBER_MATCH_CLASS) &&
+	    ((!e_util_strcmp(rem->class, bd->client.icccm.class)) ||
+	     (e_util_both_str_empty(rem->class, bd->client.icccm.class))))
+	  matches++;
+	if ((rem->match & E_REMEMBER_MATCH_TITLE) &&
+	    ((!e_util_strcmp(rem->title, title)) ||
+	     (e_util_both_str_empty(rem->title, title))))
+	  matches++;
+	if ((rem->match & E_REMEMBER_MATCH_ROLE) &&
+	    ((!e_util_strcmp(rem->role, bd->client.icccm.window_role)) ||
+	     (e_util_both_str_empty(rem->role, bd->client.icccm.window_role))))
+	  matches++;
+	if ((rem->match & E_REMEMBER_MATCH_TYPE) &&
+	    (rem->type == bd->client.netwm.type))
+	  matches++;
+	if ((rem->match & E_REMEMBER_MATCH_TRANSIENT) &&
+	    (((rem->transient) && (bd->client.icccm.transient_for != 0)) ||
+	     ((!rem->transient) && (bd->client.icccm.transient_for == 0))))
+	  matches++;
+	 if ((matches >= required_matches) && (!rem->delete_me))
+		return rem;
+     }
+   return NULL;
+#endif
+#if REMEMBER_HIERARCHY
+   Evas_List *l;
+   E_Remember *best_rem;
+   int best_score = 0;
+   
+   /* This search method finds the best possible match available and is
+    * based on the fact that the list is sorted, with those remembers
+    * with the most possible matches at the start of the list. This
+    * means, as soon as a valid match is found, it is a match
+    * within the set of best possible matches. */
+   for (l = e_config->remembers; l; l = l->next)
+     {
+	 E_Remember *rem;
+	 const char *title = "";
+	 int score = 0;
+
+	 rem = l->data;
+	 if (check_usable && !e_remember_usable_get(rem))
+	   continue;
+
+	  if (bd->client.netwm.name) title = bd->client.netwm.name;
+	  else title = bd->client.icccm.title;
+
+	  /* For each type of match, check whether the match is
+	   * required, and if it is, check whether there's a match. If
+	   * it fails, then go to the next remember */
+	  if (rem->match & E_REMEMBER_MATCH_NAME &&
+		e_util_strcmp(rem->name, bd->client.icccm.name) &&
+		!e_util_both_str_empty(rem->name, bd->client.icccm.name))
+	    continue;
+	  if (rem->match & E_REMEMBER_MATCH_CLASS &&
+		e_util_strcmp(rem->class, bd->client.icccm.class) &&
+		!e_util_both_str_empty(rem->class, bd->client.icccm.class))
+	    continue;
+	  if (rem->match & E_REMEMBER_MATCH_TITLE &&
+		e_util_strcmp(rem->title, title) &&
+		!e_util_both_str_empty(rem->title, title))
+	    continue;
+	  if (rem->match & E_REMEMBER_MATCH_ROLE &&
+		e_util_strcmp(rem->role, bd->client.icccm.window_role) &&
+		!e_util_both_str_empty(rem->role, bd->client.icccm.window_role))
+	    continue;
+	  if (rem->match & E_REMEMBER_MATCH_TYPE &&
+		rem->type != bd->client.netwm.type)
+	    continue;
+	  if (rem->match & E_REMEMBER_MATCH_TRANSIENT &&
+		!(rem->transient && bd->client.icccm.transient_for != 0) &&
+		!(!rem->transient) && (bd->client.icccm.transient_for == 0))
+	    continue;
+
+	  return rem;
+     }
+
+   return NULL;
+#endif
+}
+
 static void
 _e_remember_free(E_Remember *rem)
 {
@@ -296,4 +464,17 @@ _e_remember_free(E_Remember *rem)
    if (rem->prop.border) evas_stringshare_del(rem->prop.border);
    if (rem->prop.command) evas_stringshare_del(rem->prop.command);
    free(rem);
+}
+
+static int 
+_e_remember_sort_list(void * d1, void * d2)
+{
+   E_Remember * r1, * r2;
+   
+   r1 = d1;
+   r2 = d2;
+   if (r1->max_score >= r2->max_score)
+     return -1;
+   else
+     return 1;
 }

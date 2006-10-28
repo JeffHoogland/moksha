@@ -5312,8 +5312,8 @@ _e_border_eval(E_Border *bd)
 	  }
 	if (!bd->remember)
 	  {
-	     rem = e_remember_find(bd);
-	     if ((rem) && (e_remember_usable_get(rem)))
+	     rem = e_remember_find_usable(bd);
+	     if (rem)
 	       {
 		  bd->remember = rem;
 		  e_remember_use(rem);
