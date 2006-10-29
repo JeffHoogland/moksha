@@ -55,7 +55,7 @@ log_write(const char *type, const char *file)
    static Evas_Hash *d_hash = NULL;
    char buf[2];
 
-   if ((*e_precache_end) && (*e_precache_end))
+   if ((e_precache_end) && (*e_precache_end))
      {
 	log_close();
 	return;
