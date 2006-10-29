@@ -6,7 +6,7 @@ static void *lib_evas = NULL;
 static void *lib_ecore_file = NULL;
 static void *lib_eet = NULL;
 
-static int *e_precache_end = 0;
+static int *e_precache_end = NULL;
 
 /* internal calls */
 static int log_fd = -1;
@@ -18,6 +18,10 @@ log_open(void)
    char buf[4096] = "DUMMY", *home;
    
    if (log_fd != -1) return;
+   if (!e_precache_end) e_precache_end = dlsym(NULL, "e_precache_end");
+   if (!e_precache_end) return;
+   if (*e_precache_end) return;
+   
 #ifdef HAVE_UNSETENV
    unsetenv("LD_PRELOAD");
 #else
@@ -28,9 +32,8 @@ log_open(void)
      snprintf(buf, sizeof(buf), "%s/.e-precache", home);
    else
      snprintf(buf, sizeof(buf), "/tmp/.e-precache");
-   log_fd = open(buf, O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR|S_IWUSR);
-   do_log = 1;
-   e_precache_end = dlsym(NULL, "e_precache_end");
+   log_fd = open(buf, O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR);
+   if (log_fd) do_log = 1;
 }
 
 static void
