@@ -59,6 +59,9 @@ e_fwin_shutdown(void)
    return 1;
 }
 
+/* FIXME: this opens a new window - we need a way to inherit a zone as the
+ * "fwin" window
+ */
 EAPI E_Fwin *
 e_fwin_new(E_Container *con, const char *dev, const char *path)
 {
@@ -533,6 +536,9 @@ _e_fwin_file_is_exec(E_Fm2_Icon_Info *ici)
 static void
 _e_fwin_file_exec(E_Fwin *fwin, E_Fm2_Icon_Info *ici, E_Fwin_Exec_Type ext)
 {
+   char buf[4096];
+   E_App *a;
+   
    /* FIXME: execute file ici with either a temrinal, the shell, or directly
     * or open the .desktop and exec it */
    switch (ext)
@@ -544,12 +550,24 @@ _e_fwin_file_exec(E_Fwin *fwin, E_Fm2_Icon_Info *ici, E_Fwin_Exec_Type ext)
 	e_exehist_add("fwin", ici->file);
 	break;
       case E_FWIN_EXEC_SH:
+	snprintf(buf, sizeof(buf), "/bin/sh %s", e_util_filename_escape(ici->file));
+	e_zone_exec(fwin->win->border->zone, buf);
 	break;
       case E_FWIN_EXEC_TERMINAL_DIRECT:
+	snprintf(buf, sizeof(buf), "%s %s", e_config->exebuf_term_cmd, e_util_filename_escape(ici->file));
+	e_zone_exec(fwin->win->border->zone, buf);
 	break;
       case E_FWIN_EXEC_TERMINAL_SH:
+	snprintf(buf, sizeof(buf), "%s /bin/sh %s", e_config->exebuf_term_cmd, e_util_filename_escape(ici->file));
+	e_zone_exec(fwin->win->border->zone, buf);
 	break;
       case E_FWIN_EXEC_DESKTOP:
+	a = e_app_new(ici->file, 0);
+	if (a)
+	  {
+	     e_zone_app_exec(fwin->win->border->zone, a);
+	     e_object_unref(E_OBJECT(a));
+	  }
 	break;
       default:
 	break;
