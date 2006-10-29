@@ -526,13 +526,18 @@ _e_fwin_file_is_exec(E_Fm2_Icon_Info *ici)
 		      (!strcmp(ici->mime, "text/x-sh"))
 		      )
 	       {
-		  return E_FWIN_EXEC_SH;
+		  return E_FWIN_EXEC_TERMINAL_SH;
 	       }
 	  }
 	else if ((e_util_glob_match(ici->file, "*.desktop")) ||
-		 (e_util_glob_match(ici->file, "*.kdelink")))
+		 (e_util_glob_match(ici->file, "*.kdelink"))
+		 )
 	  {
 	     return E_FWIN_EXEC_DESKTOP;
+	  }
+	else if (e_util_glob_match(ici->file, "*.run"))
+	  {
+	     return E_FWIN_EXEC_TERMINAL_SH;
 	  }
      }
    return E_FWIN_EXEC_NONE;
