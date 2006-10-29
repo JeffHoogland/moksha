@@ -19,7 +19,7 @@ static void _e_fwin_menu_extend(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_I
 static void _e_fwin_parent(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fwin_cb_menu_extend_start(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info);
 static void _e_fwin_cb_menu_open(void *data, E_Menu *m);
-static void _e_fwin_file_open_app(E_Fwin *fwin, E_App *a, const char *file);
+static void _e_fwin_cb_menu_open_with(void *data, E_Menu *m);
 
 static void _e_fwin_cb_ilist_change(void *data);
 static void _e_fwin_cb_ilist_selected(void *data, Evas_Object *obj, void *event_info);
@@ -258,6 +258,13 @@ _e_fwin_cb_menu_extend_start(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon
 						   "e/fileman/button/open"),
 			     "e/fileman/button/open");
    e_menu_item_callback_set(mi, _e_fwin_cb_menu_open, fwin);
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Open with..."));
+   e_menu_item_icon_edje_set(mi,
+			     e_theme_edje_file_get("base/theme/fileman",
+						   "e/fileman/button/open"),
+			     "e/fileman/button/open");
+   e_menu_item_callback_set(mi, _e_fwin_cb_menu_open_with, fwin);
 }
 
 static void
@@ -269,72 +276,23 @@ _e_fwin_cb_menu_open(void *data, E_Menu *m)
    fwin = data;
    selected = e_fm2_selected_list_get(fwin->fm_obj);
    if (!selected) return;
+   _e_fwin_file_open_dialog(fwin, selected, 0);
+   evas_list_free(selected);
+}
+
+static void
+_e_fwin_cb_menu_open_with(void *data, E_Menu *m)
+{
+   E_Fwin *fwin;
+   Evas_List *selected;
+   
+   fwin = data;
+   selected = e_fm2_selected_list_get(fwin->fm_obj);
+   if (!selected) return;
    _e_fwin_file_open_dialog(fwin, selected, 1);
    evas_list_free(selected);
 }
 
-/* KILL: this func will die as soon as ecore_desktops's cmd thing works
- * perfectly */
-static void
-_e_fwin_file_open_app(E_Fwin *fwin, E_App *a, const char *file)
-{
-   char buf[4096], *p, *e, *s;
-   const char *f;
-   
-   if (!a->exe) return;
-   f = e_util_filename_escape(file);
-   if (!f) return;
-   if (a->exe_params)
-     {
-	/* cmd is "a->exe a->exe_params" where a->exe_params will */
-	/* have replaced %[uU] or %[fF] or %[mM] with the filename */
-	/* in question. also replace %[cC] and %[iI] with blanks */
-	e = buf + sizeof(buf) - 1;
-	if ((strlen(a->exe) + strlen(file)) >= (sizeof(buf) - 10)) return;
-        strcpy(buf, a->exe);
-	strcat(buf, " ");
-	p = buf + strlen(buf);
-	s = (char *)a->exe_params;
-	while ((*s) && (p < e))
-	  {
-	     if (*s != '%')
-	       {
-		  *p = *s;
-		  p++;
-	       }
-	     else
-	       {
-		  s++;
-		  if (*s == '%')
-		    {
-		       *p = '%';
-		       p++;
-		    }
-		  else
-		    {
-		       if ((*s == 'u') || (*s == 'U') ||
-			   (*s == 'f') || (*s == 'F') ||
-			   (*s == 'm') || (*s == 'M'))
-			 {
-			    if ((e - p) > (strlen(f) + 1))
-			      {
-				 strcpy(p, f);
-				 p += strlen(f);
-			      }
-			 }
-		    }
-	       }
-	     s++;
-	  }
-	*p = 0;
-     }
-   else
-     {
-	/* cmd is "a->exe filename" */
-	snprintf(buf, sizeof(buf), "%s %s", a->exe, f);
-     }
-   e_zone_exec(fwin->win->border->zone, buf);
-}
 
 static void
 _e_fwin_cb_ilist_change(void *data)
@@ -402,9 +360,6 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 	getcwd(pcwd, sizeof(pcwd));
 	chdir(e_fm2_real_path_get(fad->fwin->fm_obj));
 
-	/* FIXME: save desktop file as most recently used for the mime
-	 * types of the selected files so it can be used as a default
-	 */	
 	e_exehist_add(buf, cmd);
 	selected = e_fm2_selected_list_get(fad->fwin->fm_obj);
 	if (selected)
@@ -436,9 +391,6 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 		    {
 		       if (ici->mime)
 			 e_exehist_mime_app_add(ici->mime, a);
-//		       /* FIXME: use ecore_desktop_get_command() */
-//		       printf("a->exe = %s, ici->file = %s\n", a->exe, ici->file);
-//		       _e_fwin_file_open_app(fad->fwin, a, ici->file);
 		       ecore_list_append(files, strdup(ici->file));
 		    }
 	       }
@@ -627,7 +579,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 			    e_zone_exec(fwin->win->border->zone, cmd);
 			    e_exehist_add("fwin", cmd);
 			 }
-			    ecore_list_destroy(cmds);
+		       ecore_list_destroy(cmds);
 		    }
 		  ecore_list_destroy(files_list);
 		  
