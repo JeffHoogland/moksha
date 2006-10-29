@@ -697,9 +697,12 @@ e_app_exec(E_App *a, int launch_id)
    inst->launch_id = launch_id;
    inst->launch_time = ecore_time_get();
    inst->expire_timer = ecore_timer_add(10.0, _e_app_cb_expire_timer, inst);
-   
-   _e_apps_all->subapps = evas_list_remove(_e_apps_all->subapps, original);
-   _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, original);
+
+   if (original->parent == _e_apps_all)
+     {
+	_e_apps_all->subapps = evas_list_remove(_e_apps_all->subapps, original);
+	_e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, original);
+     }
 
    original->instances = evas_list_append(original->instances, inst);
    _e_apps_start_pending = evas_list_append(_e_apps_start_pending, original);

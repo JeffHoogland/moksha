@@ -673,9 +673,9 @@ e_zone_exec(E_Zone *zone, char *exe)
      }
    /* 20 lines at start and end, 20x100 limit on bytes at each end. */
    ecore_exe_auto_limits_set(ex, 2000, 2000, 20, 20);
-   ecore_exe_tag_set(ex, "E/app");
    if (a)
      {
+	ecore_exe_tag_set(ex, "E/app");
 	inst->app = a;
 	inst->exe = ex;
 	inst->launch_id = startup_id;
@@ -684,9 +684,7 @@ e_zone_exec(E_Zone *zone, char *exe)
 	if (a->startup_notify) a->starting = 1;
      }
    else
-     {
-	ecore_exe_free(ex);
-     }
+     ecore_exe_free(ex);
    return ret;
 }
 

@@ -529,6 +529,11 @@ _e_fwin_file_is_exec(E_Fm2_Icon_Info *ici)
 		  return E_FWIN_EXEC_SH;
 	       }
 	  }
+	else if ((e_util_glob_match(ici->file, "*.desktop")) ||
+		 (e_util_glob_match(ici->file, "*.kdelink")))
+	  {
+	     return E_FWIN_EXEC_DESKTOP;
+	  }
      }
    return E_FWIN_EXEC_NONE;
 }
@@ -562,7 +567,11 @@ _e_fwin_file_exec(E_Fwin *fwin, E_Fm2_Icon_Info *ici, E_Fwin_Exec_Type ext)
 	e_zone_exec(fwin->win->border->zone, buf);
 	break;
       case E_FWIN_EXEC_DESKTOP:
-	a = e_app_new(ici->file, 0);
+	if (ici->pseudo_link)
+	  snprintf(buf, sizeof(buf), "%s/%s", ici->pseudo_dir, ici->file);
+	else
+	  snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(fwin->fm_obj), ici->file);
+	a = e_app_new(buf, 0);
 	if (a)
 	  {
 	     e_zone_app_exec(fwin->win->border->zone, a);
@@ -693,34 +702,39 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	 * use it, if not fall back again - and so on - if all apps listed do
 	 * not contain 1 that handles all the mime types - fall back to dialog
 	 */
-	if (evas_list_count(mlist) == 1)
+	if (evas_list_count(mlist) <= 1)
 	  {
-	     a = e_exehist_mime_app_get(mlist->data);
+	     char pcwd[4096], buf[4096], *cmd;
+	     Ecore_List *files_list = NULL, *cmds = NULL;
+	   
+	     need_dia = 1;
+	     a = NULL;
+	     if (mlist) a = e_exehist_mime_app_get(mlist->data);
+	     getcwd(pcwd, sizeof(pcwd));
+	     chdir(e_fm2_real_path_get(fwin->fm_obj));
+	     
+	     files_list = ecore_list_new();
+	     ecore_list_set_free_cb(files_list, free);
+	     for (l = files; l; l = l->next)
+	       {
+		  ici = l->data;
+		  if (_e_fwin_file_is_exec(ici) == E_FWIN_EXEC_NONE)
+		    ecore_list_append(files_list, strdup(ici->file));
+	       }
+	     for (l = files; l; l = l->next)
+	       {
+		  E_Fwin_Exec_Type ext;
+		  
+		  ici = l->data;
+		  ext = _e_fwin_file_is_exec(ici);
+		  if (ext != E_FWIN_EXEC_NONE)
+		    {
+		       _e_fwin_file_exec(fwin, ici, ext);
+		       need_dia = 0;
+		    }
+	       }
 	     if (a)
 	       {
-		  char pcwd[4096], buf[4096], *cmd;
-		  Ecore_List *files_list = NULL, *cmds = NULL;
-		  
-		  getcwd(pcwd, sizeof(pcwd));
-		  chdir(e_fm2_real_path_get(fwin->fm_obj));
-		  
-		  files_list = ecore_list_new();
-		  ecore_list_set_free_cb(files_list, free);
-		  for (l = files; l; l = l->next)
-		    {
-		       ici = l->data;
-		       if (_e_fwin_file_is_exec(ici) == E_FWIN_EXEC_NONE)
-			 ecore_list_append(files_list, strdup(ici->file));
-		    }
-		  for (l = files; l; l = l->next)
-		    {
-		       E_Fwin_Exec_Type ext;
-		       
-		       ici = l->data;
-		       ext = _e_fwin_file_is_exec(ici);
-		       if (ext != E_FWIN_EXEC_NONE)
-			 _e_fwin_file_exec(fwin, ici, ext);
-		    }
 		  cmds = ecore_desktop_get_command(a->desktop, files_list, 1);
 		  if (cmds)
 		    {
@@ -729,15 +743,18 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 			 {
 			    e_zone_exec(fwin->win->border->zone, cmd);
 			    e_exehist_add("fwin", cmd);
+			    need_dia = 0;
 			 }
 		       ecore_list_destroy(cmds);
 		    }
-		  ecore_list_destroy(files_list);
-		  
+	       }
+	     ecore_list_destroy(files_list);
+	     
+	     chdir(pcwd);
+	     if (!need_dia)
+	       {
 		  if (apps) evas_list_free(apps);
 		  evas_list_free(mlist);
-		  
-		  chdir(pcwd);
 		  return;
 	       }
 	  }
