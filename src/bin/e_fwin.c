@@ -584,13 +584,22 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	  }
      }
 
-   /* FIXME: check all the mimes - if there is only 1 mime - then open with
-    * the last used app - if any (if not continue with dialog). if there
-    * are multiple or no previously used app for this mime - then open
-    * dialog
-    */
    if (!always)
      {
+	/* FIXME: well this is simplisitic - if only 1 mime type is being
+	 * opened then look for the previously used app for that mimetype and
+	 * if found, use that.
+	 * 
+	 * we could get more sophisitcated.
+	 * 1. find apps for each mimetype in mlist. if all prev used apps are
+	 * the same, then use previously used app.
+	 * OR if this fails
+	 * 2. find all apps for each mimetype. find the one used the most.
+	 * if that app can handle all mimetypes in the list - use that. if not
+	 * find the next most often listed app - if that can handle all apps,
+	 * use it, if not fall back again - and so on - if all apps listed do
+	 * not contain 1 that handles all the mime types - fall back to dialog
+	 */
 	if (evas_list_count(mlist) == 1)
 	  {
 	     a = e_exehist_mime_app_get(mlist->data);

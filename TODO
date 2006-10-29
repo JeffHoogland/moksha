@@ -30,9 +30,10 @@ Some of the things (in very short form) that need to be done to E17...
 * fm2 needs a icon views (auto-arrange, snap to grid and free placement)
 * fm2 needs a way to bypass thumb gen anim on just a unrealize/realize as well
   as change state instantly if it already was selected
-* fm2 needs way to replace or extend the right click menu (disable/enable
-  rename/delete/refresh etc.)
+* fm2 needs way to replace or modify the default right click menu contents
+  (disable/enable rename/delete/refresh etc.)
 * fm2 needs a mime filter
+* fwin: multi-mime open is too simplisitc. fix in fwin.c line 590 or so.
 * middle mouse on gadgets as a quick move/resize thing?
 * language packs: need to have a tool to load/setup a language pack (which
   means .mo compiled files from a .po, an optional font and a config file that
