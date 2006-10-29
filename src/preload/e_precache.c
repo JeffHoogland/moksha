@@ -18,15 +18,18 @@ log_open(void)
    char buf[4096] = "DUMMY", *home;
    
    if (log_fd != -1) return;
-   if (!e_precache_end) e_precache_end = dlsym(NULL, "e_precache_end");
+   if (!e_precache_end)
+     {
+#ifdef HAVE_UNSETENV
+	unsetenv("LD_PRELOAD");
+#else
+	if (getenv("LD_PRELOAD")) putenv("LD_PRELOAD");
+#endif
+	e_precache_end = dlsym(NULL, "e_precache_end");
+     }
    if (!e_precache_end) return;
    if (*e_precache_end) return;
    
-#ifdef HAVE_UNSETENV
-   unsetenv("LD_PRELOAD");
-#else
-   if (getenv("LD_PRELOAD")) putenv("LD_PRELOAD");
-#endif
    home = getenv("HOME");
    if (home)
      snprintf(buf, sizeof(buf), "%s/.e-precache", home);
