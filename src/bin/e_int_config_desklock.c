@@ -111,7 +111,7 @@ e_int_config_desklock(E_Container *con)
    v->override_auto_apply = 1;
    
    cfd = e_config_dialog_new(con,
-			     _("Desktop Lock Settings"),
+			     _("Screen Lock Settings"),
 			     "E", "_config_desklock_dialog",
 			     "enlightenment/desklock", 0, v, NULL);
    return cfd;

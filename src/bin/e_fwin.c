@@ -17,6 +17,8 @@ static void _e_fwin_changed(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_selected(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_menu_extend(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info);
 static void _e_fwin_parent(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fwin_cb_menu_extend_start(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info);
+static void _e_fwin_cb_menu_open(void *data, E_Menu *m);
 static void _e_fwin_file_open_app(E_Fwin *fwin, E_App *a, const char *file);
 
 static void _e_fwin_cb_ilist_change(void *data);
@@ -27,7 +29,7 @@ static void _e_fwin_cb_open(void *data, E_Dialog *dia);
 static void _e_fwin_cb_close(void *data, E_Dialog *dia);
 static void _e_fwin_cb_dialog_free(void *obj);
 static Evas_Bool _e_fwin_cb_hash_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata);
-static void _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files);
+static void _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always);
 
 /* local subsystem globals */
 static Evas_List *fwins = NULL;
@@ -102,6 +104,7 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
 				  _e_fwin_deleted, fwin);
    evas_object_smart_callback_add(o, "selected",
 				  _e_fwin_selected, fwin);
+   e_fm2_icon_menu_start_extend_callback_set(o, _e_fwin_cb_menu_extend_start, fwin);
    e_fm2_path_set(o, dev, path);
    e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_menu_extend, fwin);
    evas_object_show(o);
@@ -209,7 +212,7 @@ _e_fwin_selected(void *data, Evas_Object *obj, void *event_info)
    fwin = data;
    selected = e_fm2_selected_list_get(fwin->fm_obj);
    if (!selected) return;
-   _e_fwin_file_open_dialog(fwin, selected);
+   _e_fwin_file_open_dialog(fwin, selected, 0);
    evas_list_free(selected);
 }
 
@@ -239,6 +242,35 @@ static void
 _e_fwin_parent(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    e_fm2_parent_go(data);
+}
+
+static void
+_e_fwin_cb_menu_extend_start(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info)
+{
+   E_Menu_Item *mi;
+   E_Fwin *fwin;
+   
+   fwin = data;
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Open"));
+   e_menu_item_icon_edje_set(mi,
+			     e_theme_edje_file_get("base/theme/fileman",
+						   "e/fileman/button/open"),
+			     "e/fileman/button/open");
+   e_menu_item_callback_set(mi, _e_fwin_cb_menu_open, fwin);
+}
+
+static void
+_e_fwin_cb_menu_open(void *data, E_Menu *m)
+{
+   E_Fwin *fwin;
+   Evas_List *selected;
+   
+   fwin = data;
+   selected = e_fm2_selected_list_get(fwin->fm_obj);
+   if (!selected) return;
+   _e_fwin_file_open_dialog(fwin, selected, 1);
+   evas_list_free(selected);
 }
 
 /* KILL: this func will die as soon as ecore_desktops's cmd thing works
@@ -373,6 +405,7 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 	/* FIXME: save desktop file as most recently used for the mime
 	 * types of the selected files so it can be used as a default
 	 */	
+	e_exehist_add(buf, cmd);
 	selected = e_fm2_selected_list_get(fad->fwin->fm_obj);
 	if (selected)
 	  {
@@ -401,6 +434,8 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 		    }
 		  if (buf[0] != 0)
 		    {
+		       if (ici->mime)
+			 e_exehist_mime_app_add(ici->mime, a);
 //		       /* FIXME: use ecore_desktop_get_command() */
 //		       printf("a->exe = %s, ici->file = %s\n", a->exe, ici->file);
 //		       _e_fwin_file_open_app(fad->fwin, a, ici->file);
@@ -413,7 +448,10 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 	       {
 		  ecore_list_goto_first(cmds);
 		  while ((cmd = ecore_list_next(cmds)))
-		    e_zone_exec(fad->fwin->win->border->zone, cmd);
+		    {
+		       e_zone_exec(fad->fwin->win->border->zone, cmd);
+		       e_exehist_add("fwin", cmd);
+		    }
 		  ecore_list_destroy(cmds);
 	       }
 	     ecore_list_destroy(files);
@@ -457,7 +495,7 @@ _e_fwin_cb_hash_foreach(Evas_Hash *hash, const char *key, void *data, void *fdat
 }
 
 static void
-_e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files)
+_e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 {
    E_Dialog *dia;
    Evas_Coord mw, mh;
@@ -479,29 +517,33 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files)
 	e_object_del(E_OBJECT(fwin->fad->dia));
 	fwin->fad = NULL;
      }
-   for (l = files; l; l = l->next)
+   if (!always)
      {
-	ici = l->data;
-	if ((ici->link) && (ici->mount))
-	  e_fwin_new(fwin->win->container, ici->link, "/");
-	else if (ici->link)
+	for (l = files; l; l = l->next)
 	  {
-	     if (S_ISDIR(ici->statinfo.st_mode))
-	       e_fwin_new(fwin->win->container, NULL, ici->link);
+	     ici = l->data;
+	     if ((ici->link) && (ici->mount))
+	       e_fwin_new(fwin->win->container, ici->link, "/");
+	     else if (ici->link)
+	       {
+		  if (S_ISDIR(ici->statinfo.st_mode))
+		    e_fwin_new(fwin->win->container, NULL, ici->link);
+		  else
+		    need_dia = 1;
+	       }
 	     else
-	       need_dia = 1;
+	       {
+		  snprintf(buf, sizeof(buf), "%s/%s", 
+			   e_fm2_real_path_get(fwin->fm_obj), ici->file);
+		  if (S_ISDIR(ici->statinfo.st_mode))
+		    e_fwin_new(fwin->win->container, NULL, buf);
+		  else
+		    need_dia = 1;
+	       }
 	  }
-	else
-	  {
-	     snprintf(buf, sizeof(buf), "%s/%s", 
-		      e_fm2_real_path_get(fwin->fm_obj), ici->file);
-	     if (S_ISDIR(ici->statinfo.st_mode))
-	       e_fwin_new(fwin->win->container, NULL, buf);
-	     else
-	       need_dia = 1;
-	  }
+	if (!need_dia) return;
+	need_dia = 0;
      }
-   if (!need_dia) return;
    
    /* 1. build hash of mimetypes */
    for (l = files; l; l = l->next)
@@ -540,7 +582,6 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files)
 		  evas_list_free(al);
 	       }
 	  }
-	evas_list_free(mlist);
      }
 
    /* FIXME: check all the mimes - if there is only 1 mime - then open with
@@ -548,6 +589,48 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files)
     * are multiple or no previously used app for this mime - then open
     * dialog
     */
+   if (!always)
+     {
+	if (evas_list_count(mlist) == 1)
+	  {
+	     a = e_exehist_mime_app_get(mlist->data);
+	     if (a)
+	       {
+		  char pcwd[4096], buf[4096], *cmd;
+		  Ecore_List *files_list = NULL, *cmds = NULL;
+		  
+		  getcwd(pcwd, sizeof(pcwd));
+		  chdir(e_fm2_real_path_get(fwin->fm_obj));
+		  
+		  files_list = ecore_list_new();
+		  ecore_list_set_free_cb(files_list, free);
+		  for (l = files; l; l = l->next)
+		    {
+		       ici = l->data;
+		       ecore_list_append(files_list, strdup(ici->file));
+		    }
+		  cmds = ecore_desktop_get_command(a->desktop, files_list, 1);
+		  if (cmds)
+		    {
+		       ecore_list_goto_first(cmds);
+		       while ((cmd = ecore_list_next(cmds)))
+			 {
+			    e_zone_exec(fwin->win->border->zone, cmd);
+			    e_exehist_add("fwin", cmd);
+			 }
+			    ecore_list_destroy(cmds);
+		    }
+		  ecore_list_destroy(files_list);
+		  
+		  if (apps) evas_list_free(apps);
+		  
+		  chdir(pcwd);
+		  evas_list_free(mlist);
+		  return;
+	       }
+	  }
+     }
+   evas_list_free(mlist);
    
    fad = E_NEW(E_Fwin_Apps_Dialog, 1);
    dia = e_dialog_new(fwin->win->border->zone->container, 
