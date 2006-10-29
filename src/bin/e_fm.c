@@ -2078,7 +2078,10 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 	     /* FIXME: Use a real icon size. */
 	     v = (char *)ecore_desktop_icon_find(desktop->icon, NULL, e_config->icon_theme);
 	     if (v)
-	       ic->info.icon = evas_stringshare_add(v);
+	       {
+		  ic->info.icon = evas_stringshare_add(v);
+		  free(v);
+	       }
 	  }
 	
 	if (desktop->type)

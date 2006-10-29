@@ -371,7 +371,6 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 	getcwd(pcwd, sizeof(pcwd));
 	chdir(e_fm2_real_path_get(fad->fwin->fm_obj));
 
-	e_exehist_add(buf, cmd);
 	selected = e_fm2_selected_list_get(fad->fwin->fm_obj);
 	if (selected)
 	  {
@@ -536,6 +535,25 @@ _e_fwin_file_exec(E_Fwin *fwin, E_Fm2_Icon_Info *ici, E_Fwin_Exec_Type ext)
 {
    /* FIXME: execute file ici with either a temrinal, the shell, or directly
     * or open the .desktop and exec it */
+   switch (ext)
+     {
+      case E_FWIN_EXEC_NONE:
+	break;
+      case E_FWIN_EXEC_DIRECT:
+	e_zone_exec(fwin->win->border->zone, ici->file);
+	e_exehist_add("fwin", ici->file);
+	break;
+      case E_FWIN_EXEC_SH:
+	break;
+      case E_FWIN_EXEC_TERMINAL_DIRECT:
+	break;
+      case E_FWIN_EXEC_TERMINAL_SH:
+	break;
+      case E_FWIN_EXEC_DESKTOP:
+	break;
+      default:
+	break;
+     }
 }
 
 static void
@@ -551,7 +569,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
    E_Fwin_Apps_Dialog *fad;
    E_Fm2_Config fmc;
    E_Fm2_Icon_Info *ici;
-   char buf[4096];
+   char buf[4096], *f;
    int need_dia = 0;
    Evas_Hash *mimes = NULL;
    Evas_List *mlist = NULL;
@@ -600,14 +618,21 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 		  if (ici->link)
 		    {
 		       if (!S_ISDIR(ici->statinfo.st_mode))
-			 mimes = evas_hash_direct_add(mimes, e_fm_mime_filename_get(ici->link), (void *)1);
+			 {
+			    f = e_fm_mime_filename_get(ici->link);
+			    mimes = evas_hash_del(mimes, f, (void *)1);
+			    mimes = evas_hash_direct_add(mimes, f, (void *)1);
+			 }
 		    }
 		  else
 		    {
 		       snprintf(buf, sizeof(buf), "%s/%s",
 				e_fm2_real_path_get(fwin->fm_obj), ici->file);
 		       if (!S_ISDIR(ici->statinfo.st_mode))
-			 mimes = evas_hash_direct_add(mimes, ici->mime, (void *)1);
+			 {
+			    mimes = evas_hash_del(mimes, ici->mime, (void *)1);
+			    mimes = evas_hash_direct_add(mimes, ici->mime, (void *)1);
+			 }
 		    }
 	       }
 	  }

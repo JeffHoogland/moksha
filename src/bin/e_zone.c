@@ -647,18 +647,21 @@ e_zone_exec(E_Zone *zone, char *exe)
    a = e_app_exe_find(exe);
    if (!a) 
      {
-	a = E_NEW(E_App, 1);
-	a->name = strdup (exe);
-	a->exe = strdup (exe);
+//	a = E_NEW(E_App, 1);
+//	a->name = strdup(exe);
+//	a->exe = strdup(exe);
      }
 
-   inst = E_NEW(E_App_Instance, 1);
-   if (!inst) return 0;
+   if (a)
+     {
+	inst = E_NEW(E_App_Instance, 1);
+	if (!inst) return 0;
+     }
 
    ex = ecore_exe_pipe_run(exe, ECORE_EXE_PIPE_AUTO | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR | ECORE_EXE_PIPE_READ_LINE_BUFFERED | ECORE_EXE_PIPE_ERROR_LINE_BUFFERED, inst);
    if (!ex)
      {
-	free(inst);
+	if (inst) free(inst);
 	ret = 0;
      }
    /* reset env vars */
@@ -671,12 +674,19 @@ e_zone_exec(E_Zone *zone, char *exe)
    /* 20 lines at start and end, 20x100 limit on bytes at each end. */
    ecore_exe_auto_limits_set(ex, 2000, 2000, 20, 20);
    ecore_exe_tag_set(ex, "E/app");
-   inst->app = a;
-   inst->exe = ex;
-   inst->launch_id = startup_id;
-   inst->launch_time = ecore_time_get();
-   a->instances = evas_list_append(a->instances, inst);
-   if (a->startup_notify) a->starting = 1;
+   if (a)
+     {
+	inst->app = a;
+	inst->exe = ex;
+	inst->launch_id = startup_id;
+	inst->launch_time = ecore_time_get();
+	a->instances = evas_list_append(a->instances, inst);
+	if (a->startup_notify) a->starting = 1;
+     }
+   else
+     {
+	ecore_exe_free(ex);
+     }
    return ret;
 }
 
