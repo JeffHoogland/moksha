@@ -180,6 +180,7 @@ e_exehist_mime_app_add(const char *mime, E_App *a)
    Evas_List *l;
    
    if ((!mime) || (!a)) return;
+   if (!a->path) return;
    _e_exehist_load();
    if (!_e_exehist) return;
    

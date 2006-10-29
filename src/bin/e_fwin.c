@@ -8,6 +8,16 @@
  * play with this unless u want to help with it. NOT COMPLETE! BEWARE!
  */
 
+typedef enum
+{
+   E_FWIN_EXEC_NONE,
+   E_FWIN_EXEC_DIRECT,
+   E_FWIN_EXEC_SH,
+   E_FWIN_EXEC_TERMINAL_DIRECT,
+   E_FWIN_EXEC_TERMINAL_SH,
+   E_FWIN_EXEC_DESKTOP
+} E_Fwin_Exec_Type;
+
 /* local subsystem functions */
 static void _e_fwin_free(E_Fwin *fwin);
 static void _e_fwin_cb_delete(E_Win *win);
@@ -18,8 +28,8 @@ static void _e_fwin_selected(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_menu_extend(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info);
 static void _e_fwin_parent(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fwin_cb_menu_extend_start(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info);
-static void _e_fwin_cb_menu_open(void *data, E_Menu *m);
-static void _e_fwin_cb_menu_open_with(void *data, E_Menu *m);
+static void _e_fwin_cb_menu_open(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fwin_cb_menu_open_with(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static void _e_fwin_cb_ilist_change(void *data);
 static void _e_fwin_cb_ilist_selected(void *data, Evas_Object *obj, void *event_info);
@@ -29,6 +39,8 @@ static void _e_fwin_cb_open(void *data, E_Dialog *dia);
 static void _e_fwin_cb_close(void *data, E_Dialog *dia);
 static void _e_fwin_cb_dialog_free(void *obj);
 static Evas_Bool _e_fwin_cb_hash_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata);
+static E_Fwin_Exec_Type _e_fwin_file_is_exec(E_Fm2_Icon_Info *ici);
+static void _e_fwin_file_exec(E_Fwin *fwin, E_Fm2_Icon_Info *ici, E_Fwin_Exec_Type ext);
 static void _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always);
 
 /* local subsystem globals */
@@ -70,7 +82,6 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
    fwin->win->data = fwin;
 
    /* fm issues: */
-   /* FIXME: "select" of a file opens that file  based on mimetype etc. */
    /* FIXME: if file executable - run it */
    
    o = edje_object_add(e_win_evas_get(fwin->win));
@@ -268,7 +279,7 @@ _e_fwin_cb_menu_extend_start(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon
 }
 
 static void
-_e_fwin_cb_menu_open(void *data, E_Menu *m)
+_e_fwin_cb_menu_open(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Fwin *fwin;
    Evas_List *selected;
@@ -281,7 +292,7 @@ _e_fwin_cb_menu_open(void *data, E_Menu *m)
 }
 
 static void
-_e_fwin_cb_menu_open_with(void *data, E_Menu *m)
+_e_fwin_cb_menu_open_with(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Fwin *fwin;
    Evas_List *selected;
@@ -368,23 +379,31 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 	     ecore_list_set_free_cb(files, free);
 	     for (l = selected; l; l = l->next)
 	       {
+		  E_Fwin_Exec_Type ext;
+		  
 		  ici = l->data;
 		  /* this snprintf is silly - but it's here in case i really do
 		   * need to provide full paths (seems silly since we chdir
 		   * into the dir)
 		   */
 		  buf[0] = 0;
-		  if (!((ici->link) && (ici->mount)))
+		  ext = _e_fwin_file_is_exec(ici);
+		  if (ext != E_FWIN_EXEC_NONE)
+		    _e_fwin_file_exec(fad->fwin, ici, ext);
+		  else
 		    {
-		       if (ici->link)
+		       if (!((ici->link) && (ici->mount)))
 			 {
-			    if (!S_ISDIR(ici->statinfo.st_mode))
-			      snprintf(buf, sizeof(buf), "%s", ici->file);
-			 }
-		       else
-			 {
-			    if (!S_ISDIR(ici->statinfo.st_mode))
-			      snprintf(buf, sizeof(buf), "%s", ici->file);
+			    if (ici->link)
+			      {
+				 if (!S_ISDIR(ici->statinfo.st_mode))
+				   snprintf(buf, sizeof(buf), "%s", ici->file);
+			      }
+			    else
+			      {
+				 if (!S_ISDIR(ici->statinfo.st_mode))
+				   snprintf(buf, sizeof(buf), "%s", ici->file);
+			      }
 			 }
 		    }
 		  if (buf[0] != 0)
@@ -446,6 +465,79 @@ _e_fwin_cb_hash_foreach(Evas_Hash *hash, const char *key, void *data, void *fdat
    return 1;
 }
 
+static E_Fwin_Exec_Type
+_e_fwin_file_is_exec(E_Fm2_Icon_Info *ici)
+{
+   /* special file or dir - can't exec anyway */
+   if ((S_ISDIR(ici->statinfo.st_mode)) ||
+       (S_ISCHR(ici->statinfo.st_mode)) ||
+       (S_ISBLK(ici->statinfo.st_mode)) ||
+       (S_ISFIFO(ici->statinfo.st_mode)) ||
+       (S_ISSOCK(ici->statinfo.st_mode)))
+     return E_FWIN_EXEC_NONE;
+   /* it is executable */
+   if ((ici->statinfo.st_mode & S_IXOTH) ||
+       ((getgid() == ici->statinfo.st_gid) &&
+	(ici->statinfo.st_mode & S_IXGRP)) ||
+       ((getuid() == ici->statinfo.st_uid) &&
+	(ici->statinfo.st_mode & S_IXUSR)))
+     {
+	/* no mimetype */
+	if (!ici->mime)
+	  {
+	     return E_FWIN_EXEC_DIRECT;
+	  }
+	/* mimetype */
+	else
+	  {
+	     /* FIXME: - this could be config */
+	     if (!strcmp(ici->mime, "application/x-desktop"))
+	       {
+		  return E_FWIN_EXEC_DESKTOP;
+	       }
+	     else if ((!strcmp(ici->mime, "application/x-sh")) ||
+		      (!strcmp(ici->mime, "application/x-shellscript")) ||
+		      (!strcmp(ici->mime, "application/x-csh")) ||
+		      (!strcmp(ici->mime, "application/x-perl")) ||
+		      (!strcmp(ici->mime, "application/x-shar")) ||
+		      (!strcmp(ici->mime, "text/x-csh")) ||
+		      (!strcmp(ici->mime, "text/x-python")) ||
+		      (!strcmp(ici->mime, "text/x-sh"))
+		      )
+	       {
+		  return E_FWIN_EXEC_DIRECT;
+	       }
+	  }
+     }
+   else
+     {
+	/* mimetype */
+	if (ici->mime)
+	  {
+	     /* FIXME: - this could be config */
+	     if (!strcmp(ici->mime, "application/x-desktop"))
+	       {
+		  return E_FWIN_EXEC_DESKTOP;
+	       }
+	     else if ((!strcmp(ici->mime, "application/x-sh")) ||
+		      (!strcmp(ici->mime, "application/x-shellscript")) ||
+		      (!strcmp(ici->mime, "text/x-sh"))
+		      )
+	       {
+		  return E_FWIN_EXEC_SH;
+	       }
+	  }
+     }
+   return E_FWIN_EXEC_NONE;
+}
+
+static void
+_e_fwin_file_exec(E_Fwin *fwin, E_Fm2_Icon_Info *ici, E_Fwin_Exec_Type ext)
+{
+   /* FIXME: execute file ici with either a temrinal, the shell, or directly
+    * or open the .desktop and exec it */
+}
+
 static void
 _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 {
@@ -503,23 +595,29 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	ici = l->data;
         if (!((ici->link) && (ici->mount)))
 	  {
-	     if (ici->link)
+	     if (_e_fwin_file_is_exec(ici) == E_FWIN_EXEC_NONE)
 	       {
-		  if (!S_ISDIR(ici->statinfo.st_mode))
-		    mimes = evas_hash_direct_add(mimes, e_fm_mime_filename_get(ici->link), (void *)1);
-	       }
-	     else
-	       {
-		  snprintf(buf, sizeof(buf), "%s/%s",
-			   e_fm2_real_path_get(fwin->fm_obj), ici->file);
-		  if (!S_ISDIR(ici->statinfo.st_mode))
-		    mimes = evas_hash_direct_add(mimes, ici->mime, (void *)1);
+		  if (ici->link)
+		    {
+		       if (!S_ISDIR(ici->statinfo.st_mode))
+			 mimes = evas_hash_direct_add(mimes, e_fm_mime_filename_get(ici->link), (void *)1);
+		    }
+		  else
+		    {
+		       snprintf(buf, sizeof(buf), "%s/%s",
+				e_fm2_real_path_get(fwin->fm_obj), ici->file);
+		       if (!S_ISDIR(ici->statinfo.st_mode))
+			 mimes = evas_hash_direct_add(mimes, ici->mime, (void *)1);
+		    }
 	       }
 	  }
      }
    /* 2. for each mimetype list apps that handle it */
-   evas_hash_foreach(mimes, _e_fwin_cb_hash_foreach, &mlist);
-   evas_hash_free(mimes);
+   if (mimes)
+     {
+	evas_hash_foreach(mimes, _e_fwin_cb_hash_foreach, &mlist);
+	evas_hash_free(mimes);
+     }
    /* 3. add apps to a list so its a unique app list */
    apps = NULL;
    if (mlist)
@@ -568,7 +666,17 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 		  for (l = files; l; l = l->next)
 		    {
 		       ici = l->data;
-		       ecore_list_append(files_list, strdup(ici->file));
+		       if (_e_fwin_file_is_exec(ici) == E_FWIN_EXEC_NONE)
+			 ecore_list_append(files_list, strdup(ici->file));
+		    }
+		  for (l = files; l; l = l->next)
+		    {
+		       E_Fwin_Exec_Type ext;
+		       
+		       ici = l->data;
+		       ext = _e_fwin_file_is_exec(ici);
+		       if (ext != E_FWIN_EXEC_NONE)
+			 _e_fwin_file_exec(fwin, ici, ext);
 		    }
 		  cmds = ecore_desktop_get_command(a->desktop, files_list, 1);
 		  if (cmds)
@@ -584,9 +692,9 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 		  ecore_list_destroy(files_list);
 		  
 		  if (apps) evas_list_free(apps);
+		  evas_list_free(mlist);
 		  
 		  chdir(pcwd);
-		  evas_list_free(mlist);
 		  return;
 	       }
 	  }
