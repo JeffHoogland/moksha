@@ -7,14 +7,17 @@ static void _e_init_icons_del(void);
 static void _e_init_cb_signal_disable(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_init_cb_signal_enable(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_init_cb_signal_done_ok(void *data, Evas_Object *obj, const char *emission, const char *source);
+static int _e_init_cb_window_configure(void *data, int ev_type, void *ev);
 
 /* local subsystem globals */
+static Ecore_X_Window  _e_init_root_win = 0;
 static Ecore_X_Window  _e_init_win = 0;
 static Ecore_Evas     *_e_init_ecore_evas = NULL;
 static Evas           *_e_init_evas = NULL;
 static Evas_Object    *_e_init_object = NULL;
 static Evas_Object    *_e_init_icon_box = NULL;
 static E_Pointer      *_e_init_pointer = NULL;
+static Ecore_Event_Handler *e_init_configure_handler = NULL;
 
 /* startup icons */
 static Evas_Coord _e_init_icon_size = 0;
@@ -31,6 +34,10 @@ e_init_init(void)
    Evas_Object *o;
    Evas_List *l, *screens;
    const char *s;
+
+   e_init_configure_handler = 
+     ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE, 
+			     _e_init_cb_window_configure, NULL);
    
    num = 0;
    roots = ecore_x_window_root_list(&num);
@@ -41,6 +48,7 @@ e_init_init(void)
 	return 0;
      }
    root = roots[0];
+   _e_init_root_win = root;
    
    ecore_x_window_size_get(root, &w, &h);
    _e_init_ecore_evas = e_canvas_new(e_config->evas_engine_init, root,
@@ -113,6 +121,8 @@ e_init_init(void)
 EAPI int
 e_init_shutdown(void)
 {
+   ecore_event_handler_del(e_init_configure_handler);
+   e_init_configure_handler = NULL;
    e_init_hide();
    e_canvas_cache_flush();
    return 1;
@@ -265,4 +275,18 @@ static void
 _e_init_cb_signal_done_ok(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    e_init_hide();
+}
+
+static int
+_e_init_cb_window_configure(void *data, int ev_type, void *ev)
+{
+   Ecore_X_Event_Window_Configure *e;
+   
+   e = ev;
+   /* really simple - don't handle xinerama - because this event will only
+    * happen in single head */
+   if (e->win != _e_init_root_win) return 1;
+   ecore_evas_resize(_e_init_ecore_evas, e->w, e->h);
+   evas_object_resize(_e_init_object, e->w, e->h);
+   return 1;
 }
