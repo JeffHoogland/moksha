@@ -208,14 +208,12 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 	     int bx, by, bw, bh;
 	     
 	     es = l->data;
-	     printf("%p != %p\n", es->zone, zone);
 	     if (es->zone != zone) continue;
 		  
 	     bx = es->x;
 	     by = es->y;
 	     bw = es->w;
 	     bh = es->h;
-	     printf("SH: %i %i %ix%i\n", bx, by, bw, bh);
 	     if (!E_INTERSECTS(bx, by, bw, bh, 0, 0, zw, zh)) continue;
 
 	     if (bx < 0)
@@ -373,10 +371,6 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
       int                 i, j;
       int                 area = 0x7fffffff;
 
-      for (i = 0; i < a_w; i++)
-	printf("X %i\n", a_x[i]);
-      for (i = 0; i < a_h; i++)
-	printf("Y %i\n", a_y[i]);
       for (j = 0; j < a_h - 1; j++)
 	{
 	   for (i = 0; i < a_w - 1; i++)
