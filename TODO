@@ -83,8 +83,6 @@ Some of the things (in very short form) that need to be done to E17...
   e_fm2? or custom widget?
 * virtualize e_bg to be able to put a bg in any canvas (given any desktop
   config input) and return an object.
-* virtual desktops preview should allow clicking on a desk to access the
-  "wallpaper" dialog. should default to only changing the clicked desktop
 * desktop flip animations need to allow control over accel/decel and
   have a better ui - add wobble and controls etc. etc.
 * internal windows (config dialogs, etc) should re-open after a restart
@@ -114,8 +112,6 @@ Some of the things (in very short form) that need to be done to E17...
   (select which zone they control)
 * icons for all config panel items
 * icons for most mime types
-* move restart and exit enlightenmtn menu items out of system menu somewhere
-  in advanced things for mega-nerd e users.
 ]]]
 
 [[[
