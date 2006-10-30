@@ -175,7 +175,8 @@ _cb_del(void *data, void *data2)
 	    cfdata->dir);
    
    e_confirm_dialog_show(_("Are you sure you want to delete this bar source?"),
-			 "enlightenment/exit", buf, NULL, NULL, _cb_confirm_dialog_yes, NULL, cfdata, NULL);
+			 "enlightenment/exit", buf, NULL, NULL, _cb_confirm_dialog_yes, NULL, cfdata, NULL,
+			 NULL, NULL);
 }
 
 static void
