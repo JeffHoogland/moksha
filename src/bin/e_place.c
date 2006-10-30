@@ -115,6 +115,7 @@ _e_place_coverage_shelf_add(E_Zone *zone, int ar, int x, int y, int w, int h)
    int x2, y2, w2, h2;
    int iw, ih;
    int x0, x00, y0, y00;
+   int tmp;
    
    for (l = e_shelf_list(); l; l = l->next)
      {
@@ -134,7 +135,12 @@ _e_place_coverage_shelf_add(E_Zone *zone, int ar, int x, int y, int w, int h)
 	     if ((y2 + h2) < (y + h)) y00 = (y2 + h2);
 	     iw = x00 - x0;
 	     ih = y00 - y0;
-	     ar += (iw * ih) * 100; /* 100 == 100 times more unlikely for overlap than a normal window */
+	     tmp = (iw * ih);
+	     /* 100 times the weight for avoidance */
+	     if (tmp > (0x7ffffff / 100)) tmp = 0x7fffffff;
+	     else tmp *= 100;
+	     if ((0x7fffffff - ar) <= tmp) ar = 0x7fffffff;
+	     else ar += tmp;
 	  }
      }
    return ar;
@@ -171,6 +177,8 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
    a_h = 2;
    a_x = E_NEW(int, 2);
    a_y = E_NEW(int, 2);
+   a_alloc_w = 2;
+   a_alloc_h = 2;
 
    x -= zone->x;
    y -= zone->y;
@@ -179,76 +187,94 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
       
    u_x = calloc(zw + 1, sizeof(char));
    u_y = calloc(zh + 1, sizeof(char));
-   
+
    a_x[0] = 0;
    a_x[1] = zw;
    a_y[0] = 0;
    a_y[1] = zh;
    
-   if (e_config->window_placement_policy == E_WINDOW_PLACEMENT_ANTIGADGET)
+   u_x[0] = 1;
+   u_x[zw] = 1;
+   u_y[0] = 1;
+   u_y[zh] = 1;
+   
+   if (e_config->window_placement_policy == E_WINDOW_PLACEMENT_SMART)
      {
 	Evas_List *l;
 	
 	for (l = e_shelf_list(); l; l = l->next)
 	  {
 	     E_Shelf *es;
+	     int bx, by, bw, bh;
 	     
 	     es = l->data;
-	     if (es->zone == zone)
-	       {
-		  int bx, by, bw, bh;
+	     printf("%p != %p\n", es->zone, zone);
+	     if (es->zone != zone) continue;
 		  
-		  bx = es->x;
-		  by = es->y;
-		  bw = es->w;
-		  bh = es->h;
-		  if (E_INTERSECTS(bx, by, bw, bh, 0, 0, zw, zh))
+	     bx = es->x;
+	     by = es->y;
+	     bw = es->w;
+	     bh = es->h;
+	     printf("SH: %i %i %ix%i\n", bx, by, bw, bh);
+	     if (!E_INTERSECTS(bx, by, bw, bh, 0, 0, zw, zh)) continue;
+
+	     if (bx < 0)
+	       {
+		  bw += bx;
+		  bx = 0;
+	       }
+	     if ((bx + bw) > zw) bw = zw - bx;
+	     if (bx >= zw) continue;
+	     if (by < 0)
+	       {
+		  bh += by;
+		  by = 0;
+	       }
+	     if ((by + bh) > zh) bh = zh - by;
+	     if (by >= zh) continue;
+	     if (!u_x[bx])
+	       {
+		  a_w++;
+		  if (a_w > a_alloc_w)
 		    {
-		       if ((bx > 0) && (bx <= zw) && (!u_x[bx]))
-			 {
-			    a_w++;
-			    if (a_w > a_alloc_w)
-			      {
-				 a_alloc_w += 32;
-				 E_REALLOC(a_x, int, a_alloc_w);
-			      }
-			    a_x[a_w - 1] = bx;
-			    u_x[bx] = 1;
-			 }
-		       if (((bx + bw) > 0) && ((bx + bw) <= zw) && (!u_x[bx + bw]))
-			 {
-			    a_w++;
-			    if (a_w > a_alloc_w)
-			      {
-				 a_alloc_w += 32;
-				 E_REALLOC(a_x, int, a_alloc_w);
-			      }
-			    a_x[a_w - 1] = bx + bw;
-			    u_x[bx + bw] = 1;
-			 }
-		       if ((by > 0) && (by <= zh) && (!u_y[by]))
-			 {
-			    a_h++;
-			    if (a_h > a_alloc_h)
-			      {
-				 a_alloc_h += 32;
-				 E_REALLOC(a_y, int, a_alloc_h);
-			      }
-			    a_y[a_h - 1] = by;
-			    u_y[by] = 1;
-			 }
-		       if (((by + bh) > 0) && ((by + bh) <= zh) && (!u_y[by + bh]))
-			 {
-			    a_h++;
-			    if (a_h > a_alloc_h)
-			      {
-				 a_alloc_h += 32;
-				 E_REALLOC(a_y, int, a_alloc_h);
-			      }
-			    a_y[a_h - 1] = by + bh;
-			    u_y[by + bh] = 1;
-			 }
+		       a_alloc_w += 32;
+		       E_REALLOC(a_x, int, a_alloc_w);
 		    }
+		  a_x[a_w - 1] = bx;
+		  u_x[bx] = 1;
+	       }
+	     if (!u_x[bx + bw])
+	       {
+		  a_w++;
+		  if (a_w > a_alloc_w)
+		    {
+		       a_alloc_w += 32;
+		       E_REALLOC(a_x, int, a_alloc_w);
+		    }
+		  a_x[a_w - 1] = bx + bw;
+		  u_x[bx + bw] = 1;
+	       }
+	     if (!u_y[by])
+	       {
+		  a_h++;
+		  if (a_h > a_alloc_h)
+		    {
+		       a_alloc_h += 32;
+		       E_REALLOC(a_y, int, a_alloc_h);
+		    }
+		  a_y[a_h - 1] = by;
+		  u_y[by] = 1;
+	       }
+	     if (!u_y[by + bh])
+	       {
+		  a_h++;
+		  if (a_h > a_alloc_h)
+		    {
+		       a_alloc_h += 32;
+		       E_REALLOC(a_y, int, a_alloc_h);
+		    }
+		  a_y[a_h - 1] = by + bh;
+		  u_y[by + bh] = 1;
 	       }
 	  }
      }
@@ -277,7 +303,21 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 	
 	if (E_INTERSECTS(bx, by, bw, bh, 0, 0, zw, zh))
 	  {
-	     if ((bx > 0) && (bx <= zw) && (!u_x[bx]))
+	     if (bx < 0)
+	       {
+		  bw += bx;
+		  bx = 0;
+	       }
+	     if ((bx + bw) > zw) bw = zw - bx;
+	     if (bx >= zw) continue;
+	     if (by < 0)
+	       {
+		  bh += by;
+		  by = 0;
+	       }
+	     if ((by + bh) > zh) bh = zh - by;
+	     if (by >= zh) continue;
+	     if (!u_x[bx])
 	       {
 		  a_w++;
 		  if (a_w > a_alloc_w)
@@ -288,7 +328,7 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 		  a_x[a_w - 1] = bx;
 		  u_x[bx] = 1;
 	       }
-	     if (((bx + bw) > 0) && ((bx + bw) <= zw) && (!u_x[bx + bw]))
+	     if (!u_x[bx + bw])
 	       {
 		  a_w++;
 		  if (a_w > a_alloc_w)
@@ -299,7 +339,7 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 		  a_x[a_w - 1] = bx + bw;
 		  u_x[bx + bw] = 1;
 	       }
-	     if ((by > 0) && (by <= zh) && (!u_y[by]))
+	     if (!u_y[by])
 	       {
 		  a_h++;
 		  if (a_h > a_alloc_h)
@@ -310,7 +350,7 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 		  a_y[a_h - 1] = by;
 		  u_y[by] = 1;
 	       }
-	     if (((by + bh) > 0) && ((by + bh) <= zh) && (!u_y[by + bh]))
+	     if (!u_y[by + bh])
 	       {
 		  a_h++;
 		  if (a_h > a_alloc_h)
@@ -333,6 +373,10 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
       int                 i, j;
       int                 area = 0x7fffffff;
 
+      for (i = 0; i < a_w; i++)
+	printf("X %i\n", a_x[i]);
+      for (i = 0; i < a_h; i++)
+	printf("Y %i\n", a_y[i]);
       for (j = 0; j < a_h - 1; j++)
 	{
 	   for (i = 0; i < a_w - 1; i++)
@@ -345,9 +389,10 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 		     ar = _e_place_coverage_border_add(zone, skiplist, ar,
 						       a_x[i], a_y[j],
 						       w, h);
-		     ar = _e_place_coverage_shelf_add(zone, ar,
-						      a_x[i], a_y[j],
-						      w, h);
+		     if (e_config->window_placement_policy == E_WINDOW_PLACEMENT_SMART)
+		       ar = _e_place_coverage_shelf_add(zone, ar,
+							a_x[i], a_y[j],
+							w, h);
 		     if (ar < area)
 		       {
 			  area = ar;
@@ -363,9 +408,10 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 		     ar = _e_place_coverage_border_add(zone, skiplist, ar,
 						       a_x[i + 1] - w, a_y[j],
 						       w, h);
-		     ar = _e_place_coverage_shelf_add(zone, ar,
-						      a_x[i + 1] - w, a_y[j],
-						      w, h);
+		     if (e_config->window_placement_policy == E_WINDOW_PLACEMENT_SMART)
+		       ar = _e_place_coverage_shelf_add(zone, ar,
+							a_x[i + 1] - w, a_y[j],
+							w, h);
 		     if (ar < area)
 		       {
 			  area = ar;
@@ -381,9 +427,10 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 		     ar = _e_place_coverage_border_add(zone, skiplist, ar,
 						       a_x[i + 1] - w, a_y[j + 1] - h,
 						       w, h);
-		     ar = _e_place_coverage_shelf_add(zone, ar,
-						      a_x[i + 1] - w, a_y[j + 1] - h,
-						      w, h);
+		     if (e_config->window_placement_policy == E_WINDOW_PLACEMENT_SMART)
+		       ar = _e_place_coverage_shelf_add(zone, ar,
+							a_x[i + 1] - w, a_y[j + 1] - h,
+							w, h);
 		     if (ar < area)
 		       {
 			  area = ar;
@@ -399,9 +446,10 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 		     ar = _e_place_coverage_border_add(zone, skiplist, ar,
 						       a_x[i], a_y[j + 1] - h,
 						       w, h);
-		     ar = _e_place_coverage_shelf_add(zone, ar,
-						      a_x[i], a_y[j + 1] - h,
-						      w, h);
+		     if (e_config->window_placement_policy == E_WINDOW_PLACEMENT_SMART)
+		       ar = _e_place_coverage_shelf_add(zone, ar,
+							a_x[i], a_y[j + 1] - h,
+							w, h);
 		     if (ar < area)
 		       {
 			  area = ar;
