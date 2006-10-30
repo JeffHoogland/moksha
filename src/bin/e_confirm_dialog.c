@@ -18,6 +18,12 @@ struct _E_Confirm_Dialog
 	void *data;
 	void (*func)(void *data);
      } no;
+
+   struct
+     {
+	void *data;
+	void (*func)(void *data);
+     } del;
    E_Dialog *dia;
 };
 
@@ -32,7 +38,7 @@ static void _e_confirm_dialog_no(void *data, E_Dialog *dia);
 EAPI void 
 e_confirm_dialog_show(const char *title, const char *icon, const char *text,
 		      const char *button_text, const char *button2_text, void (*func)(void *data),
-		      void (*func2)(void *data), void *data, void *data2)
+		      void (*func2)(void *data), void *data, void *data2, void (*del_func)(void *data), void *del_data)
 {
    E_Confirm_Dialog *cd; 
    E_Dialog *dia;
@@ -42,6 +48,8 @@ e_confirm_dialog_show(const char *title, const char *icon, const char *text,
    cd->yes.data = data;
    cd->no.func = func2;
    cd->no.data = data2;
+   cd->del.func = del_func;
+   cd->del.data = del_data;
 
    dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_confirm_dialog");
    if (!dia)
@@ -94,6 +102,7 @@ _e_confirm_dialog_delete(E_Win *win)
    dia = win->data;
    cd = dia->data;
 
+   if (cd->del.func) cd->del.func(cd->del.data);
    e_object_del(E_OBJECT(dia));
    free(cd);
 }

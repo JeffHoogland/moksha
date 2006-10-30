@@ -12,6 +12,7 @@ static void _e_shelf_cb_menu_config(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_shelf_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_shelf_cb_menu_contents(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_shelf_cb_confirm_dialog_yes(void *data);
+static void _e_shelf_cb_confirm_dialog_no(void *data);
 static void _e_shelf_cb_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_shelf_menu_append(E_Shelf *es, E_Menu *mn);
 static void _e_shelf_cb_menu_items_append(void *data, E_Menu *mn);
@@ -22,6 +23,7 @@ static void _e_shelf_cb_mouse_out(void *data, Evas *evas, Evas_Object *obj, void
 static int  _e_shelf_cb_id_sort(void *data1, void *data2);
 
 static Evas_List *shelves = NULL;
+static Evas_Bool _del_confirm_active = 0;
 
 /* externally accessible functions */
 EAPI int
@@ -866,6 +868,15 @@ _e_shelf_cb_menu_contents(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
+_e_shelf_cb_confirm_dialog_destroy(void *data)
+{
+   E_Shelf *es;
+
+   es = data;
+   e_object_unref(E_OBJECT(es));
+}
+
+static void
 _e_shelf_cb_confirm_dialog_yes(void *data)
 {
    E_Config_Shelf *cfg;
@@ -873,6 +884,7 @@ _e_shelf_cb_confirm_dialog_yes(void *data)
 
    es = data;
    cfg = es->cfg;
+   if (e_object_is_del(E_OBJECT(es))) return;
    e_object_del(E_OBJECT(es));
    e_config->shelves = evas_list_remove(e_config->shelves, cfg);
    if (cfg->name) evas_stringshare_del(cfg->name);
@@ -886,11 +898,14 @@ _e_shelf_cb_confirm_dialog_yes(void *data)
 static void
 _e_shelf_cb_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi)
 {
+   E_Shelf * es = data;
+   e_object_ref(E_OBJECT(es));
    e_confirm_dialog_show(_("Are you sure you want to delete this shelf?"), "enlightenment/e",
 			 _("You requested to delete this shelf.<br>"
 			      "<br>"
 			      "Are you sure you want to delete it?"), NULL, NULL,
-			 _e_shelf_cb_confirm_dialog_yes, NULL, data, NULL);
+			 _e_shelf_cb_confirm_dialog_yes, NULL, data, NULL, 
+			 _e_shelf_cb_confirm_dialog_destroy, data);
 }
 
 static void

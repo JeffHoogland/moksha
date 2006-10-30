@@ -8,6 +8,7 @@ static void _ilist_cb_selected(void *data);
 static void _cb_add(void *data, void *data2);
 static void _cb_delete(void *data, void *data2);
 static void _cb_dialog_yes(void *data);
+static void _cb_dialog_destroy(void *data);
 static void _cb_config(void *data, void *data2);
 
 struct _E_Config_Dialog_Data 
@@ -18,6 +19,14 @@ struct _E_Config_Dialog_Data
    
    char *cur_shelf;
 };
+
+typedef struct _Shelf_Del_Confirm_Data Shelf_Del_Confirm_Data;
+struct _Shelf_Del_Confirm_Data
+{
+    E_Config_Dialog_Data *cfdata;
+    E_Shelf *es;
+};
+    
 
 EAPI E_Config_Dialog *
 e_int_config_shelf(E_Container *con) 
@@ -229,38 +238,51 @@ _cb_add(void *data, void *data2)
 static void 
 _cb_delete(void *data, void *data2) 
 {
-   E_Config_Dialog_Data *cfdata;
+   Shelf_Del_Confirm_Data *d;
    char buf[4096];
    
-   cfdata = data;
-   if (!cfdata) return;
-   if (!cfdata->cur_shelf) return;
+   d = E_NEW(Shelf_Del_Confirm_Data, 1);
+   if (!d) return;
+   d->cfdata = data;
+   if (!d->cfdata) return;
+   if (!d->cfdata->cur_shelf) return;
+   d->es = evas_list_nth(e_shelf_list(), e_widget_ilist_selected_get(d->cfdata->o_list));
+   if (!d->es) return;
+   e_object_ref(E_OBJECT(d->es));
    
    snprintf(buf, sizeof(buf), _("You requested to delete \"%s\".<br><br>"
 				"Are you sure you want to delete this shelf?"),
-	    cfdata->cur_shelf);
+                                d->cfdata->cur_shelf);
    
    e_confirm_dialog_show(_("Are you sure you want to delete this shelf?"), 
-			   "enlightenment/exit", buf, NULL, NULL, _cb_dialog_yes, NULL, cfdata, NULL);
+			   "enlightenment/exit", buf, NULL, NULL, _cb_dialog_yes, NULL, d, NULL, 
+                           _cb_dialog_destroy, d);
 }
 
 static void 
 _cb_dialog_yes(void *data) 
 {
-   E_Config_Dialog_Data *cfdata;
+   Shelf_Del_Confirm_Data *d;
    E_Shelf *es;
    
-   cfdata = data;
-   if (!cfdata) return;
+   d = data;
+   if (!data) return;
 
-   es = evas_list_nth(e_shelf_list(), e_widget_ilist_selected_get(cfdata->o_list));
-   if (!es) return;
-
-   e_shelf_unsave(es);
-   e_object_del(E_OBJECT(es));
+   if (e_object_is_del(E_OBJECT(d->es))) return;
+   e_shelf_unsave(d->es);
+   e_object_del(E_OBJECT(d->es));
    e_config_save_queue();
+}
 
-   _ilist_fill(cfdata);
+static void
+_cb_dialog_destroy(void *data)
+{
+   Shelf_Del_Confirm_Data *d;
+
+   d = data;
+   e_object_unref(E_OBJECT(d->es));
+   _ilist_fill(d->cfdata);
+   E_FREE(d);
 }
 
 static void 

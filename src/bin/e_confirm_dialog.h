@@ -18,7 +18,7 @@
  * data - the pointer passed to func
  * data2 - the pointer passed to func2
  */
-EAPI void e_confirm_dialog_show(const char *title, const char *icon, const char *text, const char *button_text, const char *button2_text, void (*func)(void *data), void (*func2)(void *data), void *data, void *data2);
+EAPI void e_confirm_dialog_show(const char *title, const char *icon, const char *text, const char *button_text, const char *button2_text, void (*func)(void *data), void (*func2)(void *data), void *data, void *data2, void (*del_func)(void *data), void * del_data);
 
 #endif
 #endif
