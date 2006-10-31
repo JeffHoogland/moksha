@@ -333,11 +333,5 @@ src/modules/cpufreq/e_mod_main.h
 src/modules/cpufreq/freqset.c
 src/modules/start/e_mod_main.c
 src/modules/start/e_mod_main.h
-src/modules/itray/e_mod_config.c
-src/modules/itray/e_mod_config.h
-src/modules/itray/e_mod_main.c
-src/modules/itray/e_mod_main.h
-src/preload/e_hack.c
-src/preload/e_hack.h
 src/preload/e_precache.c
 src/preload/e_precache.h
