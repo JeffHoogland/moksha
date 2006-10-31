@@ -1186,7 +1186,14 @@ _e_container_resize_handle(E_Container *con)
    
    for (i = 0; i < 7; i++)
      {
+	Evas_List *tmp = NULL;
+
+	/* Make temporary list as e_border_res_change_geometry_restore
+	 * rearranges the order. */
 	for (l = con->layers[i].clients; l; l = l->next)
+	     tmp = evas_list_append(tmp, l->data);
+
+	for (l = tmp; l; l = l->next)
 	  {
 	     E_Border *bd;
 
@@ -1194,6 +1201,8 @@ _e_container_resize_handle(E_Container *con)
 	     e_border_res_change_geometry_save(bd);
 	     e_border_res_change_geometry_restore(bd);
 	  }
+
+	tmp = evas_list_free(tmp);
      }
 }
 

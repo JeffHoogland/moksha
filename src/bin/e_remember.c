@@ -310,6 +310,11 @@ e_remember_update(E_Remember *rem, E_Border *bd)
 	k = 0;
 	for (i = 0; i < bd->client.icccm.command.argc; i++)
 	  {
+	     if (i > 0)
+	       {
+		  buf[k] = ' ';
+		  k++;
+	       }
 	     for (j = 0; bd->client.icccm.command.argv[i][j]; j++)
 	       {
 		  if (k >= (sizeof(buf) - 10))
