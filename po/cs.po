@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DR17 \n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-05-25 16:42+0200\n"
+"POT-Creation-Date: 2006-11-01 08:22+0900\n"
 "PO-Revision-Date: 2005-05-25 18:29+0100\n"
 "Last-Translator: Martin Sekera <trancelis@centrum.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -14,911 +14,349 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/modules/cpufreq/e_mod_main.c:456
+#: src/bin/e_apps.c:672 src/bin/e_apps.c:685 src/bin/e_utils.c:236
+msgid "Run Error"
+msgstr ""
+
+#: src/bin/e_apps.c:673
 #, c-format
-msgid "%i Mhz"
-msgstr "%i MHz"
+msgid "Enlightenment was unable to process a command line:<br><br>%s %s<br>"
+msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:459
+#: src/bin/e_apps.c:686
 #, c-format
-msgid "%i.%i Ghz"
-msgstr "%i.%i GHz"
+msgid "Enlightenment was unable to fork a child process:<br><br>%s %s<br>"
+msgstr ""
 
-#: src/bin/e_int_menus.c:661
-msgid "(Empty)"
-msgstr "(Prázdné)"
+#: src/bin/e_apps.c:2857
+msgid "Application run error"
+msgstr ""
 
-#: src/bin/e_int_menus.c:304
-msgid "(No Applications)"
-msgstr "(Žádné aplikace)"
-
-#: src/bin/e_int_menus.c:478
-msgid "(No Windows)"
-msgstr "(Žádná okna)"
-
-#: src/bin/e_int_menus.c:571
-msgid "(Unused)"
-msgstr "(Nepoužito)"
-
-#: src/modules/battery/e_mod_main.c:418
-msgid "1 hour"
-msgstr "1 hodina"
-
-#: src/modules/temperature/e_mod_main.c:598
-msgid "100C"
-msgstr "100 °C"
-
-#: src/modules/temperature/e_mod_main.c:502
-msgid "10C"
-msgstr "10 °C"
-
-#: src/modules/temperature/e_mod_main.c:509
-#: src/modules/temperature/e_mod_main.c:542
-msgid "20C"
-msgstr "20 °C"
-
-#: src/modules/temperature/e_mod_main.c:516
-#: src/modules/temperature/e_mod_main.c:549
-msgid "30C"
-msgstr "30 °C"
-
-#: src/modules/temperature/e_mod_main.c:523
-#: src/modules/temperature/e_mod_main.c:556
-msgid "40C"
-msgstr "40 °C"
-
-#: src/modules/temperature/e_mod_main.c:530
-#: src/modules/temperature/e_mod_main.c:563
-msgid "50C"
-msgstr "50 °C"
-
-#: src/modules/temperature/e_mod_main.c:570
-msgid "60C"
-msgstr "60 °C"
-
-#: src/modules/temperature/e_mod_main.c:577
-msgid "70C"
-msgstr "70 °C"
-
-#: src/modules/temperature/e_mod_main.c:584
-msgid "80C"
-msgstr "80 °C"
-
-#: src/modules/temperature/e_mod_main.c:591
-msgid "90C"
-msgstr "90 °C"
-
-#: src/modules/battery/e_mod_main.c:99
+#: src/bin/e_apps.c:2859
+#, c-format
 msgid ""
-"A basic battery meter that uses either ACPI or APM\n"
-"on Linux to monitor your battery and AC power adaptor\n"
-"status. This will only work under Linux and is only\n"
-"as accurate as your BIOS or kernel drivers."
+"Enlightenment was unable to run the application:<br><br>%s<br><br>The "
+"application failed to start."
 msgstr ""
-"Základní měřič stavu baterie a zdroje, který používá buď\n"
-" ACPI nebo APM. Funguje pouze na Linuxu a je tak přesný,\n"
-"jak přesné jsou vaše jaderné ovladače nebo ovladač BIOSu."
 
-#: src/modules/temperature/e_mod_main.c:97
+#: src/bin/e_apps.c:2867 src/bin/e_module.c:405 src/bin/e_utils.c:576
+#: src/bin/e_config_dialog.c:198 src/bin/e_int_border_remember.c:248
+#: src/bin/e_int_border_remember.c:323 src/bin/e_int_border_remember.c:365
+#: src/bin/e_eap_editor.c:498 src/bin/e_sys.c:392 src/bin/e_sys.c:437
+#: src/bin/e_entry_dialog.c:56 src/bin/e_fm.c:4583 src/bin/e_fm.c:4696
+#: src/bin/e_fm.c:4821 src/bin/e_fm.c:4859
+#: src/bin/e_int_config_wallpaper_import.c:181
+#: src/bin/e_int_config_wallpaper_gradient.c:199
+#: src/bin/e_int_config_theme_import.c:113
+#: src/modules/battery/e_mod_main.c:306 src/modules/ibar/e_mod_main.c:1227
+#: src/modules/cpufreq/e_mod_main.c:334 src/modules/cpufreq/e_mod_main.c:361
+#: src/modules/cpufreq/e_mod_main.c:380
+msgid "OK"
+msgstr "OK"
+
+#: src/bin/e_config.c:516
+#, fuzzy
 msgid ""
-"A module to measure the ACPI Thermal sensor on Linux.\n"
-"It is especially useful for modern Laptops with high speed\n"
-"CPUs that generate a lot of heat."
-msgstr ""
-"Modul využívající ACPI senzor k měření teploty na Linuxu.\n"
-"Největší uplatnění najde na moderních laptopech osazených rychlými CPU,\n"
-"které produkují mnoho tepla."
-
-#: src/modules/pager/e_mod_main.c:141
-msgid "A pager module to navigate virtual desktops."
-msgstr "Modul pageru pro pohyb mezi virtuálními plochami."
-
-#: src/modules/cpufreq/e_mod_main.c:108
-msgid "A simple module to control the frequency of the system CPU. This is especially useful to save power on laptops."
-msgstr ""
-
-#: src/modules/clock/e_mod_main.c:96
-msgid "A simple module to give E17 a clock."
-msgstr "Jednoduchý modul, který dává E17 hodiny."
-
-#: src/bin/e_int_menus.c:120
-#: src/bin/e_int_menus.c:242
-msgid "About Enlightenment"
-msgstr "O Enlightenmentu"
-
-#: src/bin/e_module.c:384
-msgid "About..."
-msgstr "O aplikaci..."
-
-#: src/bin/e_border.c:3846
-msgid "Always On Top"
-msgstr "Vždy navrchu"
-
-#: src/bin/e_main.c:438
-msgid "Artificially slowing startup so you can see it all."
-msgstr "Uměle brzdím start aby bylo všecko vidět."
-
-#: src/modules/ibar/e_mod_main.c:730
-#: src/modules/ibox/e_mod_main.c:590
-msgid "Auto fit icons"
-msgstr "Automaticky zvětšovat ikony"
-
-#: src/modules/cpufreq/e_mod_main.c:430
-msgid "Automatic"
-msgstr "Automatický"
-
-#: src/bin/e_gadman.c:556
-msgid "Automatic Height"
-msgstr "Automatická výška"
-
-#: src/bin/e_gadman.c:509
-msgid "Automatic Width"
-msgstr "Automatická šířka"
-
-#: src/modules/battery/e_mod_main.c:903
-msgid "BAD DRIVER"
-msgstr "ŠPATNÝ OVLADAČ"
-
-#: src/modules/battery/e_mod_main.c:89
-msgid "Battery"
-msgstr "Baterie"
-
-#: src/modules/battery/e_mod_main.c:686
-msgid "Battery Running Low"
-msgstr "Baterie "
-
-#: src/modules/cpufreq/e_mod_main.c:107
-msgid "CPU Frequency Controller Module"
-msgstr "Modul pro ovládání frekvence CPU"
-
-#: src/modules/cpufreq/e_mod_main.c:266
-#: src/modules/cpufreq/e_mod_main.c:283
-msgid "CPU Frequency ERROR"
-msgstr "CHYBA frekvence CPU"
-
-#: src/bin/e_gadman.c:538
-msgid "Center Horizontally"
-msgstr "Vystředit horizontálně"
-
-#: src/bin/e_gadman.c:584
-msgid "Center Vertically"
-msgstr "Vystředit vertikálně"
-
-#: src/modules/battery/e_mod_main.c:999
-msgid "Charging"
-msgstr ""
-
-#: src/modules/cpufreq/e_mod_main.c:384
-msgid "Check Fast (0.5 sec)"
-msgstr "Rychle (0,5 s)"
-
-#: src/modules/battery/e_mod_main.c:430
-msgid "Check Fast (1 sec)"
-msgstr "Rychle (1 s)"
-
-#: src/modules/temperature/e_mod_main.c:184
-#: src/modules/temperature/e_mod_main.c:610
-msgid "Check Interval"
-msgstr "Aktualizovat"
-
-#: src/modules/cpufreq/e_mod_main.c:391
-msgid "Check Medium (1 sec)"
-msgstr "Středně rychle (1 s)"
-
-#: src/modules/battery/e_mod_main.c:437
-msgid "Check Medium (5 sec)"
-msgstr "Středně rychle (5 s)"
-
-#: src/modules/battery/e_mod_main.c:444
-msgid "Check Normal (10 sec)"
-msgstr "Normálně (10 s)"
-
-#: src/modules/cpufreq/e_mod_main.c:398
-msgid "Check Normal (2 sec)"
-msgstr "Normálně (2 s)"
-
-#: src/modules/battery/e_mod_main.c:451
-msgid "Check Slow (30 sec)"
-msgstr "Pomalu (30 s)"
-
-#: src/modules/cpufreq/e_mod_main.c:405
-msgid "Check Slow (5 sec)"
-msgstr "Pomalu (5 s)"
-
-#: src/modules/cpufreq/e_mod_main.c:412
-msgid "Check Very Slow (30 sec)"
-msgstr "Velmi pomalu (30 s)"
-
-#: src/modules/battery/e_mod_main.c:458
-msgid "Check Very Slow (60 sec)"
-msgstr "Velmi pomalu (60 s)"
-
-#: src/bin/e_int_menus.c:501
-msgid "Cleanup Windows"
-msgstr "Vyčistit okna"
-
-#: src/modules/clock/e_mod_main.c:86
-msgid "Clock"
-msgstr "Hodiny"
-
-#: src/bin/e_border.c:3797
-msgid "Close"
-msgstr "Zavřít"
-
-#: src/bin/e_module.c:399
-msgid "Configuration"
-msgstr "Nastavení"
-
-#: src/bin/e_config.c:977
-msgid "Configuration Upgraded"
-msgstr "Nastavení aktualizováno"
-
-#: src/bin/e_config.c:157
-msgid ""
-"Configuration data needed upgrading. Your old configuration\n"
-"has been wiped and a new set of defaults initialized. This\n"
-"will happen regularly during development, so don't report a\n"
-"bug. This simply means Enlightenment needs new confiugration\n"
-"data by default for usable functionality that your old\n"
-"configuration simply lacks. This new set of defaults will fix\n"
-"that by adding it in. You can re-configure things now to your\n"
-"liking. Sorry for the hiccup in your configuration.\n"
+"Configuration data needed upgrading. Your old configuration<br>has been "
+"wiped and a new set of defaults initialized. This<br>will happen regularly "
+"during development, so don't report a<br>bug. This simply means "
+"Enlightenment needs new configuration<br>data by default for usable "
+"functionality that your old<br>configuration simply lacks. This new set of "
+"defaults will fix<br>that by adding it in. You can re-configure things now "
+"to your<br>liking. Sorry for the hiccup in your configuration.<br>"
 msgstr ""
 "Data nastavení je třeba aktualizovat. Vaše staré nastavení\n"
 "bylo odstraněno a nová sada standardních nastavení byla načtena.\n"
 "Bude se to dít pravidelně při vývoji, takže neposílejte hlášení chyb.\n"
 "Znamená to, že Enlightenment potřebuje zavést nastavení nových\n"
-"vlastností, které ve vašem starém nastavení prostě není. Nová sada nastavení\n"
-"je doplní. Nyní můžete si můžete nastavit Enlightenment zpět k obrazu svému.\n"
+"vlastností, které ve vašem starém nastavení prostě není. Nová sada "
+"nastavení\n"
+"je doplní. Nyní můžete si můžete nastavit Enlightenment zpět k obrazu "
+"svému.\n"
 "Omlouváme se za způsobené potíže.\n"
 
-#: src/bin/e_container.c:102
+#: src/bin/e_config.c:530
+#, fuzzy
+msgid ""
+"Your configuration is NEWER than Enlightenment. This is very<br>strange. "
+"This should not happen unless you downgraded<br>Enlightenment or copied the "
+"configuration from a place where<br>a newer version of Enlightenment was "
+"running. This is bad and<br>as a precaution your configuration has been now "
+"restored to<br>defaults. Sorry for the inconvenience.<br>"
+msgstr ""
+"Vaše nastavení je NOVĚJŠÍ než Enlightenment. To je hoodně\n"
+"zvláštní. Nemělo by se to stát, pokud jste ovšem nedowngradovali\n"
+"Enlightenment nebo nekopírovali soubory s nastavením z místa, kde\n"
+"běžela novější verze Enlightenmentu. Je to zlé a jako protiopatření\n"
+"bylo vaše nastavení vráceno do původních hodnot.\n"
+"Omlouvám se za nepohodlí.\n"
+
+#: src/bin/e_config.c:553
+#, fuzzy, c-format
+msgid "Desktop %i, %i"
+msgstr "Plocha %d, %d"
+
+#: src/bin/e_config.c:1962
+msgid "Configuration Upgraded"
+msgstr "Nastavení aktualizováno"
+
+#: src/bin/e_config.c:1977
+#, c-format
+msgid ""
+"An error occured while saving Enlightenment's<br>configuration to disk. The "
+"error could not be<br>deterimined.<br><br>The file where the error occured "
+"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+msgstr ""
+
+#: src/bin/e_config.c:1988
+#, c-format
+msgid ""
+"Enlightenment's configuration files are too big<br>for the file system they "
+"are being saved to.<br>This error is very strange as the files should<br>be "
+"extremely small. Please check the settings<br>for your home directory."
+"<br><br>The file where the error occured was:<br>%s<br><br>This file has "
+"been deleted to avoid corrupt data.<br>"
+msgstr ""
+
+#: src/bin/e_config.c:2001
+#, c-format
+msgid ""
+"An output error occured when writing the configuration<br>files for "
+"Enlightenment. Your disk is having troubles<br>and possibly needs "
+"replacement.<br><br>The file where the error occured was:<br>%s<br><br>This "
+"file has been deleted to avoid corrupt data.<br>"
+msgstr ""
+
+#: src/bin/e_config.c:2012
+#, c-format
+msgid ""
+"Enlightenment cannot write its configuration file<br>because it ran out of "
+"space to write the file.<br>You have either run out of disk space or "
+"have<br>gone over your quota limit.<br><br>The file where the error occured "
+"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+msgstr ""
+
+#: src/bin/e_config.c:2024
+#, c-format
+msgid ""
+"Enlightenment unexpectedly had the configuration file<br>it was writing "
+"closed on it. This is very unusual.<br><br>The file where the error occured "
+"was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+msgstr ""
+
+#: src/bin/e_config.c:2040
+#, fuzzy
+msgid "Enlightenment Configration Write Problems"
+msgstr "Modul baterie Enlightenment"
+
+#: src/bin/e_container.c:118
 #, c-format
 msgid "Container %d"
 msgstr "Kontejner %i"
 
-#: src/modules/cpufreq/e_mod_main.c:98
-msgid "CpuFreq"
-msgstr "CpuFreq"
-
-#: src/bin/e_border.c:3901
-msgid "Create Icon"
-msgstr "Vytvořit ikonu"
-
-#: src/modules/battery/e_mod_main.c:995
-msgid "Danger"
-msgstr "Nebezpečí"
-
-#: src/modules/dropshadow/e_mod_main.c:316
-msgid "Dark"
-msgstr "Tmavé"
-
-#: src/bin/e_desk.c:44
+#: src/bin/e_init.c:46
 #, c-format
-msgid "Desktop %d, %d"
-msgstr "Plocha %d, %d"
+msgid "X reports there are no root windows and %i screens!\n"
+msgstr "X hlásí, že tu nejsou žádná root-okna a %i obrazovek!\n"
 
-#: src/bin/e_int_menus.c:83
-msgid "Desktops"
-msgstr "Plochy"
-
-#: src/modules/dropshadow/e_mod_main.c:139
-msgid "Dropshadow"
-msgstr "Stíny"
-
-#: src/bin/e_border.c:3875
-msgid "Edit Icon"
-msgstr "Upravit ikonu"
-
-#: src/bin/e_int_menus.c:565
-#: src/modules/battery/e_mod_main.c:561
-#: src/modules/clock/e_mod_main.c:309
-#: src/modules/cpufreq/e_mod_main.c:810
-#: src/modules/ibar/e_mod_main.c:574
-#: src/modules/ibox/e_mod_main.c:444
-#: src/modules/pager/e_mod_main.c:435
-#: src/modules/start/e_mod_main.c:235
-#: src/modules/temperature/e_mod_main.c:723
-msgid "Edit Mode"
-msgstr "Režim úprav"
-
-#: src/bin/e_module.c:388
-msgid "Enabled"
-msgstr "Povoleno"
-
-#: src/bin/e_gadman.c:596
-msgid "End Edit Mode"
-msgstr "Ukončit režim úprav"
-
-#: src/bin/e_main.c:422
-msgid "Enlightenment"
-msgstr "Enlightenment"
-
-#: src/modules/battery/e_mod_main.c:98
-msgid "Enlightenment Battery Module"
-msgstr "Modul baterie Enlightenment"
-
-#: src/modules/clock/e_mod_main.c:95
-msgid "Enlightenment Clock Module"
-msgstr "Modul hodin Enlightenment"
-
-#: src/modules/dropshadow/e_mod_main.c:148
-msgid "Enlightenment Dropshadow Module"
-msgstr "Modul stínů Enlightenment"
-
-#: src/modules/ibar/e_mod_main.c:167
-msgid "Enlightenment IBar Module"
-msgstr "Modul IBar Enlightenment"
-
-#: src/modules/ibox/e_mod_main.c:157
-msgid "Enlightenment IBox Module"
-msgstr "Modul IBox Enlightenment"
-
-#: src/bin/e_main.c:405
-msgid "Enlightenment IPC setup error!"
-msgstr "Modul  Enlightenment"
-
-#: src/modules/pager/e_mod_main.c:140
-msgid "Enlightenment Pager Module"
-msgstr "Modul pageru Enlightenment"
-
-#: src/modules/start/e_mod_main.c:81
-msgid "Enlightenment Start Module"
-msgstr "Modul Start Enlightenment"
-
-#: src/bin/e_main.c:424
-msgid "Enlightenment Starting. Please wait."
-msgstr "Enlightenment startuje. Prosím čekejte."
-
-#: src/modules/temperature/e_mod_main.c:96
-msgid "Enlightenment Temperature Module"
-msgstr "Modul teploty Enlightenment"
-
-#: src/modules/test/e_mod_main.c:66
-msgid "Enlightenment Test Module"
-msgstr "Zkušební modul Enlightenment"
-
-#: src/bin/e_main.c:192
-msgid ""
-"Enlightenment cannot Initialize Ecore!\n"
-"Perhaps you are out of memory?"
+#: src/bin/e_init.c:110
+msgid "Disable this splash screen in the future?"
 msgstr ""
-"Enlightenmentu se nepodařilo spustit Ecore!\n"
-"Možná došla paměť?"
 
-#: src/bin/e_main.c:285
-msgid ""
-"Enlightenment cannot create directories in your home directory.\n"
-"Perhaps you have no home directory or the disk is full?"
-msgstr ""
-"Enlightenment nemůže vytvářet adresáře ve vašem domovském adresáři.\n"
-"Možná žádný nemáte nebo je disk plný?"
+#: src/bin/e_int_menus.c:81
+#, fuzzy
+msgid "Main"
+msgstr "Ruční"
 
-#: src/bin/e_main.c:219
-msgid ""
-"Enlightenment cannot initialize its X connection.\n"
-"Have you set your DISPLAY variable?"
-msgstr ""
-"Enlightenmentu se nepodařilo spojit s X serverem.\n"
-"Máte nastavenou proměnnou DISPLAY?"
-
-#: src/bin/e_main.c:258
-msgid ""
-"Enlightenment cannot initialize the Evas system.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenmentu se nepodařilo spustit systém Evas!\n"
-"Možná došla paměť?"
-
-#: src/bin/e_main.c:273
-msgid ""
-"Enlightenment cannot initialize the File system.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenmentu se nepodařilo inicializovat souborový systém.\n"
-"Možná došla paměť?"
-
-#: src/bin/e_main.c:250
-msgid ""
-"Enlightenment cannot initialize the IPC system.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenmentu se nepodařilo spustit systém IPC.\n"
-"Možná došla paměť?"
-
-#: src/bin/e_main.c:242
-msgid ""
-"Enlightenment cannot initialize the connections system.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenmentu se nepodařilo spustit systém spojení.\n"
-"Možná došla paměť?"
-
-#: src/bin/e_main.c:208
-msgid ""
-"Enlightenment cannot set up a HUP signal handler.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenmentu se nepodařilo spustit handler signálu HUP.\n"
-"Možná došla paměť?"
-
-#: src/bin/e_main.c:202
-msgid ""
-"Enlightenment cannot set up an exit signal handler.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenmentu se nepodařilo spustit handler signálu exit.\n"
-"Možná došla paměť?"
-
-#: src/bin/e_main.c:343
-msgid ""
-"Enlightenment cannot set up init screen.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenmentu se nepodařilo spustit úvodní obrazovku.\n"
-"Možná došla paměť?"
-
-#: src/bin/e_main.c:308
-msgid "Enlightenment cannot set up its actions system."
-msgstr "Enlightenmentu se nepodařilo spustit systém akcí."
-
-#: src/bin/e_main.c:359
-msgid "Enlightenment cannot set up its app system."
-msgstr "Enlightenmentu se nepodařilo spustit systém aplikací."
-
-#: src/bin/e_main.c:315
-msgid "Enlightenment cannot set up its bindings system."
-msgstr "Enlightenmentu se nepodařilo spustit systém klávesových zkratek."
-
-#: src/bin/e_main.c:293
-msgid "Enlightenment cannot set up its config system."
-msgstr "Enlightenmentu se nepodařilo spustit systém nastavení."
-
-#: src/bin/e_main.c:399
-msgid "Enlightenment cannot set up its dnd system."
-msgstr "Enlightenmentu se nepodařilo spustit systém dnd."
-
-#: src/bin/e_main.c:333
-msgid "Enlightenment cannot set up its font system."
-msgstr "Enlightenmentu se nepodařilo spustit systém fontů."
-
-#: src/bin/e_main.c:391
-msgid "Enlightenment cannot set up its module system."
-msgstr "Enlightenmentu se nepodařilo spustit systém modulů."
-
-#: src/bin/e_main.c:322
-msgid "Enlightenment cannot set up its popup system."
-msgstr "Enlightenmentu se nepodařilo spustit systém pop-upů."
-
-#: src/bin/e_main.c:366
-msgid "Enlightenment cannot set up its theme system."
-msgstr "Enlightenmentu se nepodařilo spustit systém témat."
-
-#: src/bin/e_main.c:300
-msgid ""
-"Enlightenment cannot set up paths for finding files.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenmentu se nepodařilo nastavit cesty k vyhledávání souborů.\n"
-"Možná došla paměť?"
-
-#: src/bin/e_main.c:378
-#: src/bin/e_main.c:406
-msgid ""
-"Enlightenment cannot set up the IPC socket.\n"
-"It likely is already in use by an exisiting copy of Enlightenment.\n"
-"Double check to see if Enlightenment is not already on this display,\n"
-"but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
-"and try running again."
-msgstr ""
-"Enlightenmentu se nepodařilo otevřít svůj IPC socket.\n"
-"Je pravděpodobné, že je již používán běžící kopií Enlightenmentu.\n"
-"Zkontrolujte, zda Enlightenment již neběží na této obrazovce,\n"
-"pokud ne, smažte všechny soubory ~/.ecore/enlightenment-*\n"
-"a zkuste spustit znova."
-
-#: src/bin/e_main.c:226
-msgid ""
-"Enlightenment cannot setup xinerama wrapping.\n"
-"This should not happen."
-msgstr ""
-"Enlightenmentu se nepodařilo nastavit xinerama wrapping.\n"
-"Tohle by se nemělo stávat."
-
-#: src/bin/e_main.c:264
-msgid ""
-"Enlightenment found ecore_evas doesnt support Software X11\n"
-"rendering in Evas. Please check your installation of Evas and\n"
-"Ecore and check they support Software X11 rendering."
-msgstr ""
-"Enlightenment zjistil, že ecore_evas nepodporuje softwarové X11\n"
-"vykreslování v Evas-u. Prosím zjistěte, zda Evas a Ecore podporují\n"
-"softwarové X11 vykreslování."
-
-#: src/bin/e_main.c:351
-msgid ""
-"Enlightenment set up window management for all the screens on your system\n"
-"failed. Perhaps another window manager is running?\n"
-msgstr ""
-"Nastavení manažeru okna na všech obrazovkách v systému selhalo.\n"
-"Neběží už jiný okenní manažer?\n"
-
-#: src/bin/e_error.c:364
-msgid "Enlightenment: Error!"
-msgstr "Enlightenment: Chyba!"
-
-#: src/modules/ibar/e_mod_main.c:802
-#: src/modules/ibox/e_mod_main.c:662
-msgid "Enormous"
-msgstr "Obrovský"
-
-#: src/modules/battery/e_mod_main.c:46
-#, c-format
-msgid ""
-"Error initializing Module: Battery\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"Chyba nahrávání modulu: Baterie\n"
-"Je zapotřebí API modul s verzí minimálně %i.\n"
-"API modul v Enlightenmentu má verzi %i.\n"
-"Ukončuji modul."
-
-#: src/modules/clock/e_mod_main.c:41
-#, c-format
-msgid ""
-"Error initializing Module: Clock\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Zastavuji module."
-msgstr ""
-"Chyba nahrávání modulu: Hodiny\n"
-"Je zapotřebí API modul s verzí minimálně %i.\n"
-"API modul v Enlightenmentu má verzi %i.\n"
-"Ukončuji modul."
-
-#: src/modules/dropshadow/e_mod_main.c:92
-#, c-format
-msgid ""
-"Error initializing Module: Dropshadow\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"Chyba nahrávání modulu: Stíny\n"
-"Je zapotřebí API modul s verzí minimálně %i.\n"
-"API modul v Enlightenmentu má verzi %i.\n"
-"Ukončuji modul."
-
-#: src/modules/ibar/e_mod_main.c:115
-#, c-format
-msgid ""
-"Error initializing Module: IBar\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"Chyba nahrávání modulu: IBar\n"
-"Je zapotřebí API modul s verzí minimálně %i.\n"
-"API modul v Enlightenmentu má verzi %i.\n"
-"Ukončuji modul."
-
-#: src/modules/ibox/e_mod_main.c:104
-#, c-format
-msgid ""
-"Error initializing Module: IBox\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"Chyba nahrávání modulu: Ibox\n"
-"Je zapotřebí API modul s verzí minimálně %i.\n"
-"API modul v Enlightenmentu má verzi %i.\n"
-"Ukončuji modul."
-
-#: src/modules/pager/e_mod_main.c:85
-#, c-format
-msgid ""
-"Error initializing Module: Pager\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"Chyba nahrávání modulu: Pager\n"
-"Je zapotřebí API modul s verzí minimálně %i.\n"
-"API modul v Enlightenmentu má verzi %i.\n"
-"Ukončuji modul."
-
-#: src/modules/temperature/e_mod_main.c:44
-#, c-format
-msgid ""
-"Error initializing Module: Temperature\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"Chyba nahrávání modulu: Teplota\n"
-"Je zapotřebí API modul s verzí minimálně %i.\n"
-"API modul v Enlightenmentu má verzi %i.\n"
-"Ukončuji modul."
-
-
-#: src/modules/cpufreq/e_mod_main.c:58
-#, c-format
-msgid ""
-"Error initializing Module: cpufreq\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is %i.\n"
-"Aborting module."
-msgstr ""
-"Chyba nahrávání modulu: CpuFreq\n"
-"Je zapotřebí API modul s verzí minimálně %i.\n"
-"API modul v Enlightenmentu má verzi %i.\n"
-"Ukončuji modul."
-
-
-#: src/modules/start/e_mod_main.c:29
-#, c-format
-msgid ""
-"Error initializing Module: start\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"Chyba nahrávání modulu: Start\n"
-"Je zapotřebí API modul s verzí minimálně %i.\n"
-"API modul v Enlightenmentu má verzi %i.\n"
-"Ukončuji modul."
-
-
-#: src/modules/test/e_mod_main.c:10
-#, c-format
-msgid ""
-"Error initializing Module: test\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"Chyba nahrávání modulu: test\n"
-"Je zapotřebí API modul s verzí minimálně %i.\n"
-"API modul v Enlightenmentu má verzi %i.\n"
-"Ukončuji modul."
-
-
-#: src/bin/e_module.c:100
-#: src/bin/e_module.c:111
-#: src/bin/e_module.c:133
-msgid "Error loading Module"
-msgstr "Chyba nahrávání modulu"
-
-#: src/bin/e_border.c:3978
-msgid ""
-"Error starting icon editor\n"
-"\n"
-"please install e_util_eapp_edit\n"
-"or make sure it is in your PATH\n"
-msgstr ""
-"Chyba při spouštění editoru ikon\n"
-"\n"
-"prosím nainstalujte e_util_eapp_edit\n"
-"nebo zajistěte, aby byl ve vaší PATH\n"
-
-#: src/bin/e_int_menus.c:137
-msgid "Exit Enlightenment"
-msgstr "Opustit Enlightenment"
-
-#: src/modules/start/e_mod_main.c:82
-msgid "Experimental Button module for E17"
-msgstr "Experimentální hlavní nabídka pro E17"
-
-#: src/modules/ibar/e_mod_main.c:788
-#: src/modules/ibox/e_mod_main.c:648
-msgid "Extremely Large"
-msgstr "Hodně velký"
-
-#: src/modules/dropshadow/e_mod_main.c:382
-msgid "Extremely Near"
-msgstr "Extrémně blízké"
-
-#: src/modules/battery/e_mod_main.c:927
-msgid "FULL"
-msgstr "PLNO"
-
-#: src/modules/dropshadow/e_mod_main.c:355
-msgid "Far"
-msgstr "Vzdálené"
-
-#: src/modules/temperature/e_mod_main.c:462
-msgid "Fast (1 sec)"
-msgstr "Rychle (1 s)"
-
-#: src/bin/e_int_menus.c:62
+#: src/bin/e_int_menus.c:90
 msgid "Favorite Applications"
 msgstr "Oblíbené aplikace"
 
-#: src/bin/e_gadman.c:573
-msgid "Full Screen Height"
-msgstr "Výška přes celou obrazovku"
+#: src/bin/e_int_menus.c:97 src/bin/e_int_menus.c:766
+#: src/bin/e_configure.c:115 src/bin/e_int_config_apps.c:81
+#, fuzzy
+msgid "Applications"
+msgstr "(Žádné aplikace)"
 
-#: src/bin/e_gadman.c:526
-msgid "Full Screen Width"
-msgstr "Šířka přes celou obrazovku"
-
-#: src/modules/dropshadow/e_mod_main.c:268
-msgid "Fuzzy"
-msgstr "Neostré"
-
-#: src/bin/e_int_menus.c:101
-msgid "Gadgets"
-msgstr "Vychytávky"
-
-#: src/modules/ibar/e_mod_main.c:809
-#: src/modules/ibox/e_mod_main.c:669
-msgid "Gigantic"
-msgstr "Gigantický"
-
-#: src/bin/e_gadman.c:567
-msgid "Half Screen Height"
-msgstr "Šířka přes polovinu obrazovky"
-
-#: src/bin/e_gadman.c:520
-msgid "Half Screen Width"
-msgstr "Výška přes polovinu obrazovky"
-
-#: src/modules/battery/e_mod_main.c:987
-msgid "High"
-msgstr "Vysoký"
-
-#: src/modules/temperature/e_mod_main.c:192
-#: src/modules/temperature/e_mod_main.c:618
-msgid "High Temperature"
-msgstr "Horní mez teploty"
-
-#: src/modules/ibar/e_mod_main.c:795
-#: src/modules/ibox/e_mod_main.c:655
-msgid "Huge"
-msgstr "Mohutný"
-
-#: src/modules/ibar/e_mod_main.c:158
-msgid "IBar"
-msgstr "IBar"
-
-#: src/modules/ibox/e_mod_main.c:147
-msgid "IBox"
-msgstr "IBox"
-
-#: src/bin/e_border.c:3977
-msgid "Icon Edit Error"
-msgstr "Chyba editoru ikon"
-
-#: src/bin/e_border.c:3805
-msgid "Iconify"
-msgstr "Ikonifikovat"
-
-#: src/modules/dropshadow/e_mod_main.c:391
-msgid "Immediately Underneath"
-msgstr "Těsně pod"
-
-#: src/modules/ibar/e_mod_main.c:774
-#: src/modules/ibox/e_mod_main.c:634
-msgid "Large"
-msgstr "Větší"
-
-#: src/modules/dropshadow/e_mod_main.c:325
-msgid "Light"
-msgstr "Světlé"
-
-#: src/modules/battery/e_mod_main.c:991
-msgid "Low"
-msgstr "Nízké"
-
-#: src/modules/temperature/e_mod_main.c:188
-#: src/modules/temperature/e_mod_main.c:614
-msgid "Low Temperature"
-msgstr "Dolní mez teploty"
-
-#: src/modules/cpufreq/e_mod_main.c:428
-msgid "Manual"
-msgstr "Ruční"
-
-#: src/bin/e_border.c:3826
-msgid "Maximized"
-msgstr "Maximalizovaný"
-
-#: src/modules/cpufreq/e_mod_main.c:434
-msgid "Maximum Speed"
-msgstr "Maximální rychlost"
-
-#: src/modules/dropshadow/e_mod_main.c:277
-#: src/modules/ibar/e_mod_main.c:767
-#: src/modules/ibox/e_mod_main.c:627
-msgid "Medium"
-msgstr "Střední"
-
-#: src/modules/temperature/e_mod_main.c:469
-msgid "Medium (5 sec)"
-msgstr "Střední (5 s)"
-
-#: src/modules/ibar/e_mod_main.c:739
-#: src/modules/ibox/e_mod_main.c:599
-msgid "Microscopic"
-msgstr "Mikroskopický"
-
-#: src/modules/cpufreq/e_mod_main.c:432
-msgid "Minimum Speed"
-msgstr "Minimální rychlost"
-
-#: src/modules/battery/e_mod_main.c:45
-#: src/modules/clock/e_mod_main.c:40
-#: src/modules/cpufreq/e_mod_main.c:57
-#: src/modules/dropshadow/e_mod_main.c:91
-#: src/modules/ibar/e_mod_main.c:114
-#: src/modules/ibox/e_mod_main.c:103
-#: src/modules/pager/e_mod_main.c:84
-#: src/modules/start/e_mod_main.c:28
-#: src/modules/temperature/e_mod_main.c:43
-#: src/modules/test/e_mod_main.c:9
-msgid "Module API Error"
-msgstr "Chyba API modulu"
-
-#: src/modules/test/e_mod_main.c:24
-msgid "Module Config Menu Item 1"
+#: src/bin/e_int_menus.c:102
+msgid "Files"
 msgstr ""
 
-#: src/modules/test/e_mod_main.c:26
-msgid "Module Config Menu Item 2"
+#: src/bin/e_int_menus.c:107 src/bin/e_configure.c:124
+msgid "Run Command"
 msgstr ""
 
-#: src/modules/test/e_mod_main.c:28
-msgid "Module Config Menu Item 3"
+#: src/bin/e_int_menus.c:117 src/bin/e_actions.c:1859 src/bin/e_actions.c:1860
+#: src/bin/e_actions.c:1861 src/bin/e_actions.c:1862 src/bin/e_actions.c:1863
+#: src/bin/e_actions.c:1868 src/bin/e_actions.c:1873 src/bin/e_actions.c:1878
+#: src/bin/e_actions.c:1883 src/bin/e_actions.c:1885 src/bin/e_actions.c:1887
+#: src/bin/e_actions.c:1889 src/bin/e_actions.c:1891 src/bin/e_actions.c:1893
+#: src/bin/e_actions.c:1895 src/bin/e_actions.c:1897 src/bin/e_actions.c:1899
+#: src/bin/e_actions.c:1901 src/bin/e_actions.c:1903 src/bin/e_actions.c:1905
+#: src/bin/e_actions.c:1907 src/bin/e_actions.c:2021 src/bin/e_actions.c:2025
+#: src/modules/ibox/e_mod_config.c:142
+#, fuzzy
+msgid "Desktop"
+msgstr "Plochy"
+
+#: src/bin/e_int_menus.c:125
+msgid "Windows"
+msgstr "Okna"
+
+#: src/bin/e_int_menus.c:142 src/bin/e_main.c:792 src/bin/e_actions.c:1989
+#: src/bin/e_actions.c:1992 src/bin/e_actions.c:1995 src/bin/e_actions.c:1998
+#: src/bin/e_about.c:51
+msgid "Enlightenment"
+msgstr "Enlightenment"
+
+#: src/bin/e_int_menus.c:148 src/bin/e_int_config_modules.c:280
+#, fuzzy
+msgid "About"
+msgstr "O aplikaci..."
+
+#: src/bin/e_int_menus.c:153 src/bin/e_int_menus.c:751
+#: src/bin/e_configure.c:93
+#, fuzzy
+msgid "Theme"
+msgstr "Témata"
+
+#: src/bin/e_int_menus.c:161 src/bin/e_actions.c:1989
+#, fuzzy
+msgid "Restart"
+msgstr "Start"
+
+#: src/bin/e_int_menus.c:166 src/bin/e_actions.c:1992
+msgid "Exit"
 msgstr ""
 
-#: src/bin/e_int_menus.c:74
+#: src/bin/e_int_menus.c:176 src/bin/e_module.c:474
+#: src/modules/battery/e_mod_main.c:175 src/modules/ibar/e_mod_main.c:294
+#: src/modules/ibar/e_mod_main.c:919 src/modules/ibox/e_mod_main.c:286
+#: src/modules/ibox/e_mod_main.c:674 src/modules/pager/e_mod_main.c:624
+#: src/modules/temperature/e_mod_main.c:145 src/modules/itray/e_mod_main.c:417
+msgid "Configuration"
+msgstr "Nastavení"
+
+#: src/bin/e_int_menus.c:186 src/bin/e_actions.c:2001 src/bin/e_actions.c:2004
+#: src/bin/e_actions.c:2007 src/bin/e_actions.c:2010
+#: src/bin/e_int_config_theme.c:362 src/bin/e_int_config_startup.c:274
+#: src/bin/e_int_config_desklock.c:566 src/bin/e_int_config_wallpaper.c:458
+#: src/bin/e_int_config_wallpaper.c:614
+msgid "System"
+msgstr ""
+
+#: src/bin/e_int_menus.c:218
+msgid "Virtual"
+msgstr ""
+
+#: src/bin/e_int_menus.c:226 src/bin/e_int_menus.c:761
+#: src/bin/e_configure.c:101
+#, fuzzy
+msgid "Shelves"
+msgstr "Témata"
+
+#: src/bin/e_int_menus.c:236
+msgid "Show/Hide All Windows"
+msgstr ""
+
+#: src/bin/e_int_menus.c:562
+msgid "(No Applications)"
+msgstr "(Žádné aplikace)"
+
+#: src/bin/e_int_menus.c:678
+msgid "Configure Virtual Desktops"
+msgstr ""
+
+#: src/bin/e_int_menus.c:738 src/bin/e_configure.c:88
+#, fuzzy
+msgid "Configuration Panel"
+msgstr "Nastavení"
+
+#: src/bin/e_int_menus.c:746 src/bin/e_configure.c:92
+msgid "Wallpaper"
+msgstr ""
+
+#: src/bin/e_int_menus.c:756 src/bin/e_configure.c:128
+#: src/bin/e_int_config_modules.c:245 src/bin/e_int_config_paths.c:88
+#: src/bin/e_int_config_color_classes.c:83
 msgid "Modules"
 msgstr "Moduly"
 
-#: src/bin/e_main.c:440
-msgid "Most features do not work yet, and those that do are buggy."
-msgstr "Většina věcí ještě nefunguje, a ty které ano jdou špatně."
+#: src/bin/e_int_menus.c:815
+msgid "Lock Screen"
+msgstr ""
 
-#: src/modules/battery/e_mod_main.c:879
-msgid "NO BAT"
-msgstr "ŽÍDNÝ BAT"
+#: src/bin/e_int_menus.c:830 src/bin/e_actions.c:2007
+msgid "Suspend"
+msgstr ""
 
-#: src/modules/battery/e_mod_main.c:748
-msgid "NO INFO"
-msgstr "ŽÁDNÉ INFO"
+#: src/bin/e_int_menus.c:837
+msgid "Hibernate"
+msgstr ""
 
-#: src/modules/dropshadow/e_mod_main.c:364
-msgid "Near"
-msgstr "Blízké"
+#: src/bin/e_int_menus.c:844 src/bin/e_actions.c:2004
+msgid "Reboot"
+msgstr ""
 
-#: src/bin/e_int_menus.c:394
-msgid "New Column of Desktops"
-msgstr "Nový sloupec ploch"
+#: src/bin/e_int_menus.c:851 src/bin/e_actions.c:2001
+msgid "Shut Down"
+msgstr ""
 
-#: src/bin/e_int_menus.c:386
-msgid "New Row of Desktops"
-msgstr "Nový řádek ploch"
+#: src/bin/e_int_menus.c:860
+msgid "Logout"
+msgstr ""
 
-#: src/modules/temperature/e_mod_main.c:476
-msgid "Normal (10 sec)"
-msgstr "Normální (10 s)"
+#: src/bin/e_int_menus.c:906 src/bin/e_int_menus.c:1066
+msgid "(No Windows)"
+msgstr "(Žádná okna)"
 
-#: src/bin/e_error.c:209
-#: src/bin/e_error.c:218
-msgid "OK"
-msgstr "OK"
+#: src/bin/e_int_menus.c:936 src/bin/e_actions.c:2025
+msgid "Cleanup Windows"
+msgstr "Vyčistit okna"
 
-#: src/modules/ibar/e_mod_main.c:275
-#: src/modules/ibar/e_mod_main.c:817
-#: src/modules/ibox/e_mod_main.c:677
-msgid "Options"
-msgstr "Nastavení"
+#: src/bin/e_int_menus.c:950
+#, fuzzy
+msgid "Lost Windows"
+msgstr "(Žádná okna)"
 
-#: src/bin/e_main.c:140
+#: src/bin/e_int_menus.c:971 src/bin/e_int_menus.c:1080
+msgid "No name!!"
+msgstr ""
+
+#: src/bin/e_int_menus.c:1186
+msgid "(No Shelves)"
+msgstr ""
+
+#: src/bin/e_int_menus.c:1254
+msgid "Add A Shelf"
+msgstr ""
+
+#: src/bin/e_int_menus.c:1258
+msgid "Delete A Shelf"
+msgstr ""
+
+#: src/bin/e_ipc.c:48
 #, c-format
+msgid ""
+"Possible IPC Hack Attempt. The IPC socket\n"
+"directory already exists BUT has permissions\n"
+"that are too leanient (must only be readable\n"
+"and writable by the owner, and nobody else)\n"
+"or is not owned by you. Please check:\n"
+"%s/enlightenment-%s\n"
+msgstr ""
+
+#: src/bin/e_ipc.c:62
+#, c-format
+msgid ""
+"The IPC socket directory cannot be created or\n"
+"examined.\n"
+"Please check:\n"
+"%s/enlightenment-%s\n"
+msgstr ""
+
+#: src/bin/e_main.c:249
+#, fuzzy, c-format
 msgid ""
 "Options:\n"
 "\t-display DISPLAY\n"
@@ -929,7 +367,11 @@ msgid ""
 "\t\tgiven the geometry. Add as many as you like. They all\n"
 "\t\treplace the real xinerama screens, if any. This can\n"
 "\t\tbe used to simulate xinerama.\n"
-"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
+"+0\n"
+"\t-profile CONF_PROFILE\n"
+"\t\tUse the configuration profile CONF_PROFILE instead of the user selected "
+"default or just \"default\".\n"
 "\t-good\n"
 "\t\tBe good.\n"
 "\t-evil\n"
@@ -946,7 +388,8 @@ msgstr ""
 "\t\ts danou geometrií. Můžete ořidat kolik chcete. Všecny\n"
 "\t\tnahrazují reálné obrazovky xinerama, pokud nějaké jsou.\n"
 "\t\tPoužitelné k simulaci xineramy.\n"
-"\t\tpř: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
+"\t\tpř: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
+"+0\n"
 "\t-good\n"
 "\t\tBýt dobrý.\n"
 "\t-evil\n"
@@ -954,115 +397,318 @@ msgstr ""
 "\t-psychotic\n"
 "\t\tBýt psychotický.\n"
 
-#: src/modules/pager/e_mod_main.c:131
-msgid "Pager"
-msgstr "Pager"
-
-#: src/bin/e_int_menus.c:398
-msgid "Remove Column of Desktops"
-msgstr "Odstranit sloupec ploch"
-
-#: src/bin/e_int_menus.c:390
-msgid "Remove Row of Desktops"
-msgstr "Odstranit řádek ploch"
-
-#: src/bin/e_int_menus.c:130
-msgid "Restart Enlightenment"
-msgstr "Restartovat Enlightenment"
-
-#: src/bin/e_border.c:3859
-msgid "Send To"
-msgstr "Poslat na"
-
-#: src/modules/battery/e_mod_main.c:194
-#: src/modules/battery/e_mod_main.c:473
-msgid "Set Alarm"
-msgstr "Nastavit alarm"
-
-#: src/modules/cpufreq/e_mod_main.c:198
-#: src/modules/cpufreq/e_mod_main.c:480
-msgid "Set Controller"
-msgstr "Nastavit ovladač"
-
-#: src/modules/battery/e_mod_main.c:190
-#: src/modules/battery/e_mod_main.c:469
-#: src/modules/cpufreq/e_mod_main.c:191
-#: src/modules/cpufreq/e_mod_main.c:474
-msgid "Set Poll Time"
-msgstr "Aktualizovat"
-
-#: src/modules/cpufreq/e_mod_main.c:206
-#: src/modules/cpufreq/e_mod_main.c:487
-msgid "Set Speed"
-msgstr "Nastavit rychlost"
-
-#: src/bin/e_border.c:3816
-msgid "Shaded"
-msgstr "Stínované"
-
-#: src/modules/dropshadow/e_mod_main.c:286
-msgid "Sharp"
-msgstr "Ostré"
-
-#: src/modules/ibar/e_mod_main.c:279
-#: src/modules/ibar/e_mod_main.c:821
-#: src/modules/ibox/e_mod_main.c:681
-msgid "Size"
-msgstr "Velikost"
-
-#: src/modules/temperature/e_mod_main.c:483
-msgid "Slow (30 sec)"
-msgstr "Pomalu (30 s)"
-
-#: src/modules/ibar/e_mod_main.c:760
-#: src/modules/ibox/e_mod_main.c:620
-msgid "Small"
-msgstr "Malý"
-
-#: src/modules/test/e_mod_main.c:32
-msgid "Something Else"
-msgstr "Něco jiného"
-
-#: src/modules/start/e_mod_main.c:72
-msgid "Start"
-msgstr "Start"
-
-#: src/bin/e_border.c:3836
-msgid "Sticky"
-msgstr "Sticky"
-
-#: src/modules/temperature/e_mod_main.c:87
-msgid "Temperature"
-msgstr "Teplota"
-
-#: src/modules/test/e_mod_main.c:59
-msgid "Test!!!"
-msgstr "Test!!!"
-
-#: src/bin/e_int_menus.c:110
-msgid "Themes"
-msgstr "Témata"
-
-#: src/bin/e_module.c:101
-#, c-format
+#: src/bin/e_main.c:317
 msgid ""
-"There was an error loading module named: %s\n"
-"No module named %s could be found in the\n"
-"module search directories\n"
+"Enlightenment cannot Initialize Ecore!\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenmentu se nepodařilo spustit Ecore!\n"
+"Možná došla paměť?"
+
+#: src/bin/e_main.c:331
+msgid ""
+"Enlightenment cannot initialize the File system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenmentu se nepodařilo inicializovat souborový systém.\n"
+"Možná došla paměť?"
+
+#: src/bin/e_main.c:343
+msgid ""
+"Enlightenment cannot set up an exit signal handler.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenmentu se nepodařilo spustit handler signálu exit.\n"
+"Možná došla paměť?"
+
+#: src/bin/e_main.c:349
+msgid ""
+"Enlightenment cannot set up a HUP signal handler.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenmentu se nepodařilo spustit handler signálu HUP.\n"
+"Možná došla paměť?"
+
+#: src/bin/e_main.c:361
+msgid ""
+"Enlightenment cannot initialize its X connection.\n"
+"Have you set your DISPLAY variable?"
+msgstr ""
+"Enlightenmentu se nepodařilo spojit s X serverem.\n"
+"Máte nastavenou proměnnou DISPLAY?"
+
+#: src/bin/e_main.c:369
+#, fuzzy
+msgid ""
+"Enlightenment cannot initialize its emergency alert system.\n"
+"Have you set your DISPLAY variable?"
+msgstr ""
+"Enlightenmentu se nepodařilo spojit s X serverem.\n"
+"Máte nastavenou proměnnou DISPLAY?"
+
+#: src/bin/e_main.c:389
+msgid ""
+"Enlightenment cannot setup xinerama wrapping.\n"
+"This should not happen."
+msgstr ""
+"Enlightenmentu se nepodařilo nastavit xinerama wrapping.\n"
+"Tohle by se nemělo stávat."
+
+#: src/bin/e_main.c:408
+msgid ""
+"Enlightenment cannot initialize the connections system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenmentu se nepodařilo spustit systém spojení.\n"
+"Možná došla paměť?"
+
+#: src/bin/e_main.c:416
+msgid ""
+"Enlightenment cannot initialize the IPC system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenmentu se nepodařilo spustit systém IPC.\n"
+"Možná došla paměť?"
+
+#: src/bin/e_main.c:427
+#, fuzzy
+msgid ""
+"Enlightenment cannot initialize the FDO desktop system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenmentu se nepodařilo inicializovat souborový systém.\n"
+"Možná došla paměť?"
+
+#: src/bin/e_main.c:448
+msgid ""
+"Enlightenment cannot initialize the Evas system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenmentu se nepodařilo spustit systém Evas!\n"
+"Možná došla paměť?"
+
+#: src/bin/e_main.c:454
+#, fuzzy
+msgid ""
+"Enlightenment found ecore_evas doesn't support the Software X11\n"
+"rendering in Evas. Please check your installation of Evas and\n"
+"Ecore and check they support the Software X11 rendering engine."
+msgstr ""
+"Enlightenment zjistil, že ecore_evas nepodporuje softwarové X11\n"
+"vykreslování v Evas-u. Prosím zjistěte, zda Evas a Ecore podporují\n"
+"softwarové X11 vykreslování."
+
+#: src/bin/e_main.c:461
+#, fuzzy
+msgid ""
+"Enlightenment found ecore_evas doesn't support the Software Buffer\n"
+"rendering in Evas. Please check your installation of Evas and\n"
+"Ecore and check they support the Software Buffer rendering engine."
+msgstr ""
+"Enlightenment zjistil, že ecore_evas nepodporuje softwarové X11\n"
+"vykreslování v Evas-u. Prosím zjistěte, zda Evas a Ecore podporují\n"
+"softwarové X11 vykreslování."
+
+#: src/bin/e_main.c:475
+msgid ""
+"Enlightenment found Evas can't create a buffer canvas. Please check\n"
+"Evas has Software Buffer engine support.\n"
+msgstr ""
+
+#: src/bin/e_main.c:485
+msgid ""
+"Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
+"loader support.\n"
+msgstr ""
+
+#: src/bin/e_main.c:494
+msgid ""
+"Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
+"loader support.\n"
+msgstr ""
+
+#: src/bin/e_main.c:503
+msgid ""
+"Enlightenment found Evas can't load EET files. Check Evas has EET\n"
+"loader support.\n"
+msgstr ""
+
+#: src/bin/e_main.c:517
+#, fuzzy
+msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
+msgstr "Enlightenmentu se nepodařilo spustit systém klávesových zkratek."
+
+#: src/bin/e_main.c:526
+#, fuzzy
+msgid "Enlightenment cannot initialize the System Command system.\n"
+msgstr "Enlightenmentu se nepodařilo spustit systém dnd."
+
+#: src/bin/e_main.c:538
+#, fuzzy
+msgid "Enlightenment cannot initialize the File manager.\n"
+msgstr ""
+"Enlightenmentu se nepodařilo inicializovat souborový systém.\n"
+"Možná došla paměť?"
+
+#: src/bin/e_main.c:546
+msgid ""
+"Enlightenment cannot create directories in your home directory.\n"
+"Perhaps you have no home directory or the disk is full?"
+msgstr ""
+"Enlightenment nemůže vytvářet adresáře ve vašem domovském adresáři.\n"
+"Možná žádný nemáte nebo je disk plný?"
+
+#: src/bin/e_main.c:555
+#, fuzzy
+msgid "Enlightenment cannot set up its file registry system."
+msgstr "Enlightenmentu se nepodařilo spustit systém nastavení."
+
+#: src/bin/e_main.c:563
+msgid "Enlightenment cannot set up its config system."
+msgstr "Enlightenmentu se nepodařilo spustit systém nastavení."
+
+#: src/bin/e_main.c:571
+msgid ""
+"Enlightenment cannot set up paths for finding files.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenmentu se nepodařilo nastavit cesty k vyhledávání souborů.\n"
+"Možná došla paměť?"
+
+#: src/bin/e_main.c:580
+#, fuzzy
+msgid "Enlightenment cannot set up its intl system."
+msgstr "Enlightenmentu se nepodařilo spustit systém fontů."
+
+#: src/bin/e_main.c:588
+msgid "Enlightenment cannot set up its actions system."
+msgstr "Enlightenmentu se nepodařilo spustit systém akcí."
+
+#: src/bin/e_main.c:596
+msgid "Enlightenment cannot set up its bindings system."
+msgstr "Enlightenmentu se nepodařilo spustit systém klávesových zkratek."
+
+#: src/bin/e_main.c:604
+msgid "Enlightenment cannot set up its popup system."
+msgstr "Enlightenmentu se nepodařilo spustit systém pop-upů."
+
+#: src/bin/e_main.c:616
+msgid "Enlightenment cannot set up its font system."
+msgstr "Enlightenmentu se nepodařilo spustit systém fontů."
+
+#: src/bin/e_main.c:627
+msgid "Enlightenment cannot set up its theme system."
+msgstr "Enlightenmentu se nepodařilo spustit systém témat."
+
+#: src/bin/e_main.c:635
+#, fuzzy
+msgid "Enlightenment cannot set up its desktop background system."
+msgstr "Enlightenmentu se nepodařilo spustit systém dnd."
+
+#: src/bin/e_main.c:645
+msgid ""
+"Enlightenment cannot set up init screen.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenmentu se nepodařilo spustit úvodní obrazovku.\n"
+"Možná došla paměť?"
+
+#: src/bin/e_main.c:655
+msgid ""
+"Enlightenment set up window management for all the screens on your system\n"
+"failed. Perhaps another window manager is running?\n"
+msgstr ""
+"Nastavení manažeru okna na všech obrazovkách v systému selhalo.\n"
+"Neběží už jiný okenní manažer?\n"
+
+#: src/bin/e_main.c:664
+msgid "Enlightenment cannot set up its app system."
+msgstr "Enlightenmentu se nepodařilo spustit systém aplikací."
+
+#: src/bin/e_main.c:672
+#, fuzzy
+msgid "Enlightenment cannot setup remember settings."
+msgstr "Enlightenmentu se nepodařilo spustit systém témat."
+
+#: src/bin/e_main.c:689
+#, fuzzy
+msgid "Enlightenment cannot set up its msg system."
+msgstr "Enlightenmentu se nepodařilo spustit systém témat."
+
+#: src/bin/e_main.c:697
+msgid "Enlightenment cannot set up its dnd system."
+msgstr "Enlightenmentu se nepodařilo spustit systém dnd."
+
+#: src/bin/e_main.c:705
+#, fuzzy
+msgid "Enlightenment cannot set up its input grab handling system."
+msgstr "Enlightenmentu se nepodařilo spustit systém klávesových zkratek."
+
+#: src/bin/e_main.c:713
+msgid "Enlightenment cannot set up its module system."
+msgstr "Enlightenmentu se nepodařilo spustit systém modulů."
+
+#: src/bin/e_main.c:721
+#, fuzzy
+msgid "Enlightenment cannot set up its window list system."
+msgstr "Enlightenmentu se nepodařilo spustit systém klávesových zkratek."
+
+#: src/bin/e_main.c:729
+#, fuzzy
+msgid "Enlightenment cannot set up its color class system."
+msgstr "Enlightenmentu se nepodařilo spustit systém akcí."
+
+#: src/bin/e_main.c:741
+msgid ""
+"Enlightenment crashed early on start and has<br>been restarted. All modules "
+"have been disabled<br>and will not be loaded to help remove any "
+"problem<br>modules from your configuration. The module<br>configuration "
+"dialog should let you select your<br>modules again."
+msgstr ""
+
+#: src/bin/e_main.c:753
+#, fuzzy
+msgid "Enlightenment cannot set up its gadget control system."
+msgstr "Enlightenmentu se nepodařilo spustit systém fontů."
+
+#: src/bin/e_main.c:761
+#, fuzzy
+msgid "Enlightenment cannot set up its shelf system."
+msgstr "Enlightenmentu se nepodařilo spustit systém témat."
+
+#: src/bin/e_main.c:769
+#, fuzzy
+msgid "Enlightenment cannot set up its exebuf system."
+msgstr "Enlightenmentu se nepodařilo spustit systém témat."
+
+#: src/bin/e_main.c:778
+#, fuzzy
+msgid "Enlightenment cannot set up its desk locking system."
+msgstr "Enlightenmentu se nepodařilo spustit systém dnd."
+
+#: src/bin/e_main.c:794
+msgid "Enlightenment Starting. Please wait."
+msgstr "Enlightenment startuje. Prosím čekejte."
+
+#: src/bin/e_module.c:113
+#, fuzzy, c-format
+msgid ""
+"There was an error loading module named: %s<br>No module named %s could be "
+"found in the<br>module search directories.<br>"
 msgstr ""
 "Došlo k chybě při načítání modulu %s.\n"
 "Žádný modul s názvem %s nebyl nazelen\n"
 "v adresářích pro hledání modulů\n"
 
-#: src/bin/e_module.c:112
-#: src/bin/e_module.c:134
-#, c-format
+#: src/bin/e_module.c:117 src/bin/e_module.c:130 src/bin/e_module.c:159
+msgid "Error loading Module"
+msgstr "Chyba nahrávání modulu"
+
+#: src/bin/e_module.c:124 src/bin/e_module.c:153
+#, fuzzy, c-format
 msgid ""
-"There was an error loading module named: %s\n"
-"The full path to this module is:\n"
-"%s\n"
-"The error reported was:\n"
-"%s"
+"There was an error loading module named: %s<br>The full path to this module "
+"is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
 "Došlo k chybě při načítání modulu %s.\n"
 "Plná cesta k modulu je:\n"
@@ -1070,150 +716,5941 @@ msgstr ""
 "Nahlášená chyba je:\n"
 "%s"
 
-#: src/modules/cpufreq/e_mod_main.c:267
-msgid ""
-"There was an error trying to set the cpu frequency\n"
-"governor via the module's setfreq utility."
+#: src/bin/e_module.c:158
+msgid "Module does not contain all needed functions"
 msgstr ""
-"Došlo k chybě při pokusu nastavit frekvenci CPU\n"
-"pomocí utility setfreq modulu."
 
-#: src/bin/e_int_menus.c:243
+#: src/bin/e_module.c:174
+#, fuzzy, c-format
+msgid ""
+"Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
+"module API version of: %i.<br>The module API advertized by Enlightenment is: "
+"%i.<br>"
+msgstr ""
+"Chyba nahrávání modulu: Start\n"
+"Je zapotřebí API modul s verzí minimálně %i.\n"
+"API modul v Enlightenmentu má verzi %i.\n"
+"Ukončuji modul."
+
+#: src/bin/e_module.c:179
+#, fuzzy, c-format
+msgid "Enlightenment %s Module"
+msgstr "Zkušební modul Enlightenment"
+
+#: src/bin/e_module.c:459
+msgid "About..."
+msgstr "O aplikaci..."
+
+#: src/bin/e_module.c:463 src/bin/e_int_config_modules.c:262
+#: src/bin/e_int_config_color_classes.c:349
+#: src/bin/e_int_config_color_classes.c:357
+#: src/bin/e_int_config_color_classes.c:365
+#: src/bin/e_int_config_color_classes.c:450
+msgid "Enabled"
+msgstr "Povoleno"
+
+#: src/bin/e_module.c:544
+msgid "Would you like to unload this module?<br>"
+msgstr ""
+
+#: src/bin/e_module.c:549 src/bin/e_actions.c:1419 src/bin/e_actions.c:1480
+#: src/bin/e_actions.c:1529 src/bin/e_actions.c:1578 src/bin/e_actions.c:1627
+#: src/bin/e_actions.c:1676 src/bin/e_int_config_display.c:176
+#: src/bin/e_confirm_dialog.c:69 src/bin/e_fm.c:4748
+msgid "Yes"
+msgstr ""
+
+#: src/bin/e_module.c:550 src/bin/e_actions.c:1421 src/bin/e_actions.c:1482
+#: src/bin/e_actions.c:1531 src/bin/e_actions.c:1580 src/bin/e_actions.c:1629
+#: src/bin/e_actions.c:1678 src/bin/e_int_config_display.c:177
+#: src/bin/e_confirm_dialog.c:70 src/bin/e_fm.c:4749
+msgid "No"
+msgstr ""
+
+#: src/bin/e_startup.c:67
+#, fuzzy, c-format
+msgid "Starting %s"
+msgstr "Start"
+
+#: src/bin/e_utils.c:237
+#, c-format
+msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
+msgstr ""
+
+#: src/bin/e_utils.c:281
+msgid "Cannot exit - immortal windows."
+msgstr ""
+
+#: src/bin/e_utils.c:282
+msgid ""
+"Some windows are left still around with the Lifespan lock enabled. This "
+"means<br>that Enlightenment will not allow itself to exit until these "
+"windows have<br>been closed or have the lifespan lock removed.<br>"
+msgstr ""
+
+#: src/bin/e_intl.c:353
+#, fuzzy
+msgid "Input Method Error"
+msgstr "Chyba editoru ikon"
+
+#: src/bin/e_intl.c:354
+msgid ""
+"Error starting the input method executable<br><br>please make sure that your "
+"input<br>method configuration is correct and<br>that your "
+"configuration's<br>executable is in your PATH<br>"
+msgstr ""
+
+#: src/bin/e_actions.c:1412
+msgid "Are you sure you want to exit?"
+msgstr ""
+
+#: src/bin/e_actions.c:1414
+msgid ""
+"You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
+msgstr ""
+
+#: src/bin/e_actions.c:1473
+msgid "Are you sure you want to log out?"
+msgstr ""
+
+#: src/bin/e_actions.c:1475
+msgid "You are about to log out.<br><br>Are you sure you want to do this?"
+msgstr ""
+
+#: src/bin/e_actions.c:1522 src/bin/e_actions.c:1620
+msgid "Are you sure you want to turn off?"
+msgstr ""
+
+#: src/bin/e_actions.c:1524
+msgid ""
+"You requested to turn off your Computer.<br><br>Are you sure you want to "
+"shut down?"
+msgstr ""
+
+#: src/bin/e_actions.c:1571
+msgid "Are you sure you want to reboot?"
+msgstr ""
+
+#: src/bin/e_actions.c:1573
+msgid ""
+"You requested to reboot your Computer.<br><br>Are you sure you want to "
+"restart it?"
+msgstr ""
+
+#: src/bin/e_actions.c:1622
+msgid ""
+"You requested to suspend your Computer.<br><br>Are you sure you want to "
+"suspend?"
+msgstr ""
+
+#: src/bin/e_actions.c:1669
+msgid "Are you sure you want to hibernate?"
+msgstr ""
+
+#: src/bin/e_actions.c:1671
+msgid ""
+"You requested to hibernate your Computer.<br><br>Are you sure you want to "
+"suspend to disk?"
+msgstr ""
+
+#: src/bin/e_actions.c:1758 src/bin/e_actions.c:1767 src/bin/e_actions.c:1783
+#: src/bin/e_actions.c:1787 src/bin/e_actions.c:1791 src/bin/e_actions.c:1795
+#: src/bin/e_actions.c:1929 src/bin/e_actions.c:1933 src/bin/e_actions.c:1938
+#: src/bin/e_actions.c:1943
+#, fuzzy
+msgid "Window : Actions"
+msgstr "Okna"
+
+#: src/bin/e_actions.c:1758
+msgid "Move"
+msgstr ""
+
+#: src/bin/e_actions.c:1767
+#, fuzzy
+msgid "Resize"
+msgstr "Velikost"
+
+#: src/bin/e_actions.c:1776 src/bin/e_actions.c:1962 src/bin/e_actions.c:1963
+#: src/bin/e_actions.c:1964 src/bin/e_actions.c:1965 src/bin/e_actions.c:1966
+#: src/bin/e_int_config_mousebindings.c:375
+#, fuzzy
+msgid "Menu"
+msgstr "Střední"
+
+#: src/bin/e_actions.c:1776
+#, fuzzy
+msgid "Window Menu"
+msgstr "Okna"
+
+#: src/bin/e_actions.c:1783 src/bin/e_int_border_menu.c:318
+msgid "Raise"
+msgstr ""
+
+#: src/bin/e_actions.c:1787 src/bin/e_int_border_menu.c:326
+#, fuzzy
+msgid "Lower"
+msgstr "Nízké"
+
+#: src/bin/e_actions.c:1791 src/bin/e_configure.c:136
+#: src/bin/e_config_dialog.c:206 src/bin/e_int_border_menu.c:301
+#: src/bin/e_fwin.c:776
+msgid "Close"
+msgstr "Zavřít"
+
+#: src/bin/e_actions.c:1795 src/bin/e_int_border_menu.c:290
+msgid "Kill"
+msgstr ""
+
+#: src/bin/e_actions.c:1799 src/bin/e_actions.c:1806 src/bin/e_actions.c:1813
+#: src/bin/e_actions.c:1820 src/bin/e_actions.c:1822 src/bin/e_actions.c:1824
+#: src/bin/e_actions.c:1826 src/bin/e_actions.c:1828 src/bin/e_actions.c:1830
+#: src/bin/e_actions.c:1832 src/bin/e_actions.c:1839 src/bin/e_actions.c:1841
+#: src/bin/e_actions.c:1843 src/bin/e_actions.c:1845 src/bin/e_actions.c:1847
+#: src/bin/e_actions.c:1854
+msgid "Window : State"
+msgstr ""
+
+#: src/bin/e_actions.c:1799
+msgid "Sticky Mode Toggle"
+msgstr ""
+
+#: src/bin/e_actions.c:1806
+msgid "Iconic Mode Toggle"
+msgstr ""
+
+#: src/bin/e_actions.c:1813
+#, fuzzy
+msgid "Fullscreen Mode Toggle"
+msgstr "Výška přes celou obrazovku"
+
+#: src/bin/e_actions.c:1820 src/bin/e_int_border_menu.c:96
+#: src/bin/e_int_border_menu.c:202
+#, fuzzy
+msgid "Maximize"
+msgstr "Maximalizovaný"
+
+#: src/bin/e_actions.c:1822
+#, fuzzy
+msgid "Maximize Vertically"
+msgstr "Vystředit vertikálně"
+
+#: src/bin/e_actions.c:1824
+#, fuzzy
+msgid "Maximize Horizontally"
+msgstr "Vystředit horizontálně"
+
+#: src/bin/e_actions.c:1826
+msgid "Maximize Fullscreen"
+msgstr ""
+
+#: src/bin/e_actions.c:1828
+#, fuzzy
+msgid "Maximize Mode \"Smart\""
+msgstr "Maximalizovaný"
+
+#: src/bin/e_actions.c:1830
+msgid "Maximize Mode \"Expand\""
+msgstr ""
+
+#: src/bin/e_actions.c:1832
+#, fuzzy
+msgid "Maximize Mode \"Fill\""
+msgstr "Maximalizovaný"
+
+#: src/bin/e_actions.c:1839
+msgid "Shade Up Mode Toggle"
+msgstr ""
+
+#: src/bin/e_actions.c:1841
+msgid "Shade Down Mode Toggle"
+msgstr ""
+
+#: src/bin/e_actions.c:1843
+msgid "Shade Left Mode Toggle"
+msgstr ""
+
+#: src/bin/e_actions.c:1845
+msgid "Shade Right Mode Toggle"
+msgstr ""
+
+#: src/bin/e_actions.c:1847
+msgid "Shade Mode Toggle"
+msgstr ""
+
+#: src/bin/e_actions.c:1854
+msgid "Toggle Borderless State"
+msgstr ""
+
+#: src/bin/e_actions.c:1859
+msgid "Flip Desktop Left"
+msgstr ""
+
+#: src/bin/e_actions.c:1860
+msgid "Flip Desktop Right"
+msgstr ""
+
+#: src/bin/e_actions.c:1861
+#, fuzzy
+msgid "Flip Desktop Up"
+msgstr "Plochy"
+
+#: src/bin/e_actions.c:1862
+msgid "Flip Desktop Down"
+msgstr ""
+
+#: src/bin/e_actions.c:1863
+msgid "Flip Desktop By..."
+msgstr ""
+
+#: src/bin/e_actions.c:1868
+#, fuzzy
+msgid "Show The Desktop"
+msgstr "Nový řádek ploch"
+
+#: src/bin/e_actions.c:1873
+msgid "Flip Desktop To..."
+msgstr ""
+
+#: src/bin/e_actions.c:1878
+msgid "Flip Desktop Linearly..."
+msgstr ""
+
+#: src/bin/e_actions.c:1883
+msgid "Switch To Desktop 0"
+msgstr ""
+
+#: src/bin/e_actions.c:1885
+msgid "Switch To Desktop 1"
+msgstr ""
+
+#: src/bin/e_actions.c:1887
+msgid "Switch To Desktop 2"
+msgstr ""
+
+#: src/bin/e_actions.c:1889
+msgid "Switch To Desktop 3"
+msgstr ""
+
+#: src/bin/e_actions.c:1891
+msgid "Switch To Desktop 4"
+msgstr ""
+
+#: src/bin/e_actions.c:1893
+msgid "Switch To Desktop 5"
+msgstr ""
+
+#: src/bin/e_actions.c:1895
+msgid "Switch To Desktop 6"
+msgstr ""
+
+#: src/bin/e_actions.c:1897
+msgid "Switch To Desktop 7"
+msgstr ""
+
+#: src/bin/e_actions.c:1899
+msgid "Switch To Desktop 8"
+msgstr ""
+
+#: src/bin/e_actions.c:1901
+msgid "Switch To Desktop 9"
+msgstr ""
+
+#: src/bin/e_actions.c:1903
+msgid "Switch To Desktop 10"
+msgstr ""
+
+#: src/bin/e_actions.c:1905
+msgid "Switch To Desktop 11"
+msgstr ""
+
+#: src/bin/e_actions.c:1907
+msgid "Switch To Desktop..."
+msgstr ""
+
+#: src/bin/e_actions.c:1912 src/bin/e_actions.c:1914 src/bin/e_actions.c:1916
+#: src/bin/e_actions.c:1920 src/bin/e_actions.c:1922 src/bin/e_actions.c:1924
+#: src/bin/e_configure.c:103
+msgid "Screen"
+msgstr ""
+
+#: src/bin/e_actions.c:1912
+msgid "Send Mouse To Screen 0"
+msgstr ""
+
+#: src/bin/e_actions.c:1914
+msgid "Send Mouse To Screen 1"
+msgstr ""
+
+#: src/bin/e_actions.c:1916
+msgid "Send Mouse To Screen..."
+msgstr ""
+
+#: src/bin/e_actions.c:1920
+msgid "Send Mouse Forward 1 Screen"
+msgstr ""
+
+#: src/bin/e_actions.c:1922
+msgid "Send Mouse Back 1 Screen"
+msgstr ""
+
+#: src/bin/e_actions.c:1924
+msgid "Send Mouse Forward/Back Screens..."
+msgstr ""
+
+#: src/bin/e_actions.c:1948 src/bin/e_actions.c:1950 src/bin/e_actions.c:1952
+#: src/bin/e_actions.c:1957
+msgid "Window : Moving"
+msgstr ""
+
+#: src/bin/e_actions.c:1948
+#, fuzzy
+msgid "To Next Desktop"
+msgstr "Plochy"
+
+#: src/bin/e_actions.c:1950
+msgid "To Previous Desktop"
+msgstr ""
+
+#: src/bin/e_actions.c:1952
+#, fuzzy
+msgid "By Desktop #..."
+msgstr "Plochy"
+
+#: src/bin/e_actions.c:1957
+#, fuzzy
+msgid "To Desktop..."
+msgstr "Plochy"
+
+#: src/bin/e_actions.c:1962
+msgid "Show Main Menu"
+msgstr ""
+
+#: src/bin/e_actions.c:1963
+msgid "Show Favorites Menu"
+msgstr ""
+
+#: src/bin/e_actions.c:1964
+#, fuzzy
+msgid "Show All Applications Menu"
+msgstr "(Žádné aplikace)"
+
+#: src/bin/e_actions.c:1965
+msgid "Show Clients Menu"
+msgstr ""
+
+#: src/bin/e_actions.c:1966
+msgid "Show Menu..."
+msgstr ""
+
+#: src/bin/e_actions.c:1973 src/bin/e_actions.c:1978 src/bin/e_actions.c:2017
+msgid "Launch"
+msgstr ""
+
+#: src/bin/e_actions.c:1973
+msgid "Defined Command"
+msgstr ""
+
+#: src/bin/e_actions.c:1978
+#, fuzzy
+msgid "Application"
+msgstr "(Žádné aplikace)"
+
+#: src/bin/e_actions.c:1983 src/bin/e_actions.c:1984
+#, fuzzy
+msgid "Window : List"
+msgstr "Okna"
+
+#: src/bin/e_actions.c:1983
+#, fuzzy
+msgid "Next Window"
+msgstr "(Žádná okna)"
+
+#: src/bin/e_actions.c:1984
+#, fuzzy
+msgid "Previous Window"
+msgstr "Vyčistit okna"
+
+#: src/bin/e_actions.c:1995
+msgid "Log Out"
+msgstr ""
+
+#: src/bin/e_actions.c:1998
+msgid "Exit Immediately"
+msgstr ""
+
+#: src/bin/e_actions.c:2010
+msgid "Suspend to Disk"
+msgstr ""
+
+#: src/bin/e_actions.c:2017
+msgid "Run Command Dialog"
+msgstr ""
+
+#: src/bin/e_actions.c:2021
+#, fuzzy
+msgid "Desktop Lock"
+msgstr "Plochy"
+
+#: src/bin/e_winlist.c:134
+#, fuzzy
+msgid "Select a window"
+msgstr "Vyčistit okna"
+
+#: src/bin/e_configure.c:70
+#, fuzzy
+msgid "Enlightenment Configuration"
+msgstr "Enlightenment: Chyba!"
+
+#: src/bin/e_configure.c:91 src/bin/e_gadcon.c:1136
+msgid "Appearance"
+msgstr ""
+
+#: src/bin/e_configure.c:94 src/bin/e_int_config_color_classes.c:124
+#, fuzzy
+msgid "Colors"
+msgstr "Zavřít"
+
+#: src/bin/e_configure.c:95 src/bin/e_int_config_fonts.c:321
+#: src/bin/e_int_config_paths.c:80
+msgid "Fonts"
+msgstr ""
+
+#: src/bin/e_configure.c:96 src/bin/e_int_border_menu.c:164
+msgid "Borders"
+msgstr ""
+
+#: src/bin/e_configure.c:97 src/bin/e_eap_editor.c:420
+#: src/bin/e_int_config_icon_themes.c:213
+#, fuzzy
+msgid "Icon Theme"
+msgstr "Témata"
+
+#: src/bin/e_configure.c:98
+msgid "Mouse Cursor"
+msgstr ""
+
+#: src/bin/e_configure.c:99 src/bin/e_int_config_window_display.c:52
+#, fuzzy
+msgid "Window Display"
+msgstr "Okna"
+
+#: src/bin/e_configure.c:100 src/bin/e_int_config_transitions.c:136
+msgid "Transitions"
+msgstr ""
+
+#: src/bin/e_configure.c:104
+#, fuzzy
+msgid "Virtual Desktops"
+msgstr "Plochy"
+
+#: src/bin/e_configure.c:105
+msgid "Screen Resolution"
+msgstr ""
+
+#: src/bin/e_configure.c:106
+msgid "Screen Lock"
+msgstr ""
+
+#: src/bin/e_configure.c:108
+msgid "Behavior"
+msgstr ""
+
+#: src/bin/e_configure.c:109
+#, fuzzy
+msgid "Window Focus"
+msgstr "Okna"
+
+#: src/bin/e_configure.c:110 src/bin/e_int_config_keybindings.c:223
+msgid "Key Bindings"
+msgstr ""
+
+#: src/bin/e_configure.c:111 src/bin/e_int_config_mousebindings.c:304
+msgid "Mouse Bindings"
+msgstr ""
+
+#: src/bin/e_configure.c:112
+msgid "Menus"
+msgstr ""
+
+#: src/bin/e_configure.c:114
+msgid "Miscellaneous"
+msgstr ""
+
+#: src/bin/e_configure.c:116
+msgid "Performance"
+msgstr ""
+
+#: src/bin/e_configure.c:117
+#, fuzzy
+msgid "Configuration Dialogs"
+msgstr "Nastavení"
+
+#: src/bin/e_configure.c:118
+msgid "Language Settings"
+msgstr ""
+
+#: src/bin/e_configure.c:120 src/bin/e_config_dialog.c:169
+msgid "Advanced"
+msgstr ""
+
+#: src/bin/e_configure.c:121 src/bin/e_int_config_transitions.c:129
+#, fuzzy
+msgid "Startup"
+msgstr "Start"
+
+#: src/bin/e_configure.c:122
+#, fuzzy
+msgid "Window List"
+msgstr "Okna"
+
+#: src/bin/e_configure.c:123 src/bin/e_int_config_window_manipulation.c:51
+msgid "Window Manipulation"
+msgstr ""
+
+#: src/bin/e_configure.c:125
+msgid "Search Directories"
+msgstr ""
+
+#: src/bin/e_configure.c:127
+msgid "Extensions"
+msgstr ""
+
+#: src/bin/e_about.c:42
+msgid "About Enlightenment"
+msgstr "O Enlightenmentu"
+
+#: src/bin/e_about.c:56
+msgid ""
+"Copyright &copy; 1999-2006, by the Enlightenment Development Team.<br><br>We "
+"hope you enjoy using this software as much as we enjoyed writing it."
+"<br><br>This software is provided as-is with no explicit or implied "
+"warranty. This software is governed by licensing conditions, so please see "
+"the COPYING and COPYING-PLAIN licence files installed on your system."
+"<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it "
+"is not stable. Many features are incomplete or even non-existant yet and may "
+"have many bugs. You have been <hilight>WARNED!</hilight>"
+msgstr ""
+
+#: src/bin/e_about.c:81
+msgid "<title>The Team</title>"
+msgstr ""
+
+#: src/bin/e_theme_about.c:42
+#, fuzzy
+msgid "About This Theme"
+msgstr "O Enlightenmentu"
+
+#: src/bin/e_int_config_intl.c:104 src/bin/e_int_config_intl.c:139
+msgid "Bulgarian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:105
+msgid "Chinese (Simplified)"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:106
+msgid "Chinese (Traditional)"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:107 src/bin/e_int_config_intl.c:146
+msgid "Czech"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:108 src/bin/e_int_config_intl.c:148
+msgid "Danish"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:109 src/bin/e_int_config_intl.c:212
+msgid "Dutch"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:110 src/bin/e_int_config_intl.c:154
+msgid "English"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:111 src/bin/e_int_config_intl.c:160
+msgid "Finnish"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:112 src/bin/e_int_config_intl.c:162
+msgid "French"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:113 src/bin/e_int_config_intl.c:149
+msgid "German"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:114 src/bin/e_int_config_intl.c:175
+msgid "Hungarian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:115 src/bin/e_int_config_intl.c:181
+msgid "Italian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:116 src/bin/e_int_config_intl.c:184
+msgid "Japanese"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:117 src/bin/e_int_config_intl.c:194
+msgid "Korean"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:118 src/bin/e_int_config_intl.c:210
+msgid "Norwegian Bokmål"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:119 src/bin/e_int_config_intl.c:222
+msgid "Polish"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:120 src/bin/e_int_config_intl.c:224
+msgid "Portuguese"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:121 src/bin/e_int_config_intl.c:226
+msgid "Russian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:122 src/bin/e_int_config_intl.c:232
+msgid "Slovak"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:123 src/bin/e_int_config_intl.c:233
+msgid "Slovenian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:124 src/bin/e_int_config_intl.c:156
+msgid "Spanish"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:125 src/bin/e_int_config_intl.c:239
+msgid "Swedish"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:130
+msgid "Afar"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:131
+msgid "Afrikaans"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:132
+msgid "Akan"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:133
+#, fuzzy
+msgid "Amharic"
+msgstr "Automatický"
+
+#: src/bin/e_int_config_intl.c:134
+msgid "Aragonese"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:135
+msgid "Arabic"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:136
+msgid "Assamese"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:137
+msgid "Azerbaijani"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:138
+msgid "Belarusian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:140
+msgid "Bengali"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:141
+msgid "Breton"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:142
+msgid "Bosnian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:143
+msgid "Blin"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:144
+msgid "Catalan"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:145
+msgid "Atsam"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:147
+msgid "Welsh"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:150
+msgid "Divehi"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:151
+msgid "Dzongkha"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:152
+msgid "Ewe"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:153
+msgid "Greek"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:155
+msgid "Esperanto"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:157
+msgid "Estonian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:158
+msgid "Basque"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:159
+msgid "Persian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:161
+#, fuzzy
+msgid "Faroese"
+msgstr "Vzdálené"
+
+#: src/bin/e_int_config_intl.c:163
+msgid "Friulian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:164
+msgid "Irish"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:165
+msgid "Ga"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:166
+msgid "Geez"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:167
+msgid "Galician"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:168
+msgid "Gujarati"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:169
+#, fuzzy
+msgid "Manx"
+msgstr "Ruční"
+
+#: src/bin/e_int_config_intl.c:170
+msgid "Hausa"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:171
+msgid "Hawaiian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:172 src/bin/e_int_config_intl.c:183
+msgid "Hebrew"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:173
+msgid "Hindi"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:174
+msgid "Croatian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:176
+msgid "Armenian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:177
+msgid "Interlingua"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:178
+msgid "Indonesian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:179
+msgid "Igbo"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:180
+msgid "Icelandic"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:182
+msgid "Inuktitut"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:185
+msgid "Georgian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:186
+msgid "Jju"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:187
+msgid "Kamba"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:188
+msgid "Tyap"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:189
+msgid "Koro"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:190
+msgid "Kazakh"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:191
+msgid "Kalaallisut"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:192
+msgid "Khmer"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:193
+msgid "Kannada"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:195
+msgid "Konkani"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:196
+msgid "Kurdish"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:197
+msgid "Cornish"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:198
+msgid "Kirghiz"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:199
+msgid "Lingala"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:200
+#, fuzzy
+msgid "Lao"
+msgstr "Nízké"
+
+#: src/bin/e_int_config_intl.c:201
+msgid "Lithuanian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:202
+msgid "Latvian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:203
+msgid "Maori"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:204
+msgid "Macedonian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:205
+msgid "Malayalam"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:206
+msgid "Mongolian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:207
+msgid "Marathi"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:208
+msgid "Malay"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:209
+msgid "Maltese"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:211
+#, fuzzy
+msgid "Nepali"
+msgstr "Blízké"
+
+#: src/bin/e_int_config_intl.c:213
+msgid "Norwegian Nynorsk"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:214
+msgid "Norwegian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:215
+msgid "South Ndebele"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:216
+msgid "Northern Sotho"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:217
+msgid "Nyanja; Chichewa; Chewa"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:218
+msgid "Occitan"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:219
+msgid "Oromo"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:220
+msgid "Oriya"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:221
+msgid "Punjabi"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:223
+msgid "Pashto"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:225
+msgid "Romanian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:227
+msgid "Kinyarwanda"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:228
+#, fuzzy
+msgid "Sanskrit"
+msgstr "Start"
+
+#: src/bin/e_int_config_intl.c:229
+msgid "Northern Sami"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:230
+msgid "Serbo-Croatian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:231
+msgid "Sidamo"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:234
+#, fuzzy
+msgid "Somali"
+msgstr "Malý"
+
+#: src/bin/e_int_config_intl.c:235
+msgid "Albanian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:236
+msgid "Serbian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:237
+#, fuzzy
+msgid "Swati"
+msgstr "Start"
+
+#: src/bin/e_int_config_intl.c:238
+msgid "Southern Sotho"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:240
+msgid "Swahili"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:241
+msgid "Syriac"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:242
+msgid "Tamil"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:243
+msgid "Telugu"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:244
+msgid "Tajik"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:245
+msgid "Thai"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:246
+#, fuzzy
+msgid "Tigrinya"
+msgstr "Drobný"
+
+#: src/bin/e_int_config_intl.c:247
+msgid "Tigre"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:248
+msgid "Tagalog"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:249
+msgid "Tswana"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:250
+msgid "Turkish"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:251
+msgid "Tsonga"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:252
+#, fuzzy
+msgid "Tatar"
+msgstr "Start"
+
+#: src/bin/e_int_config_intl.c:253
+msgid "Ukrainian"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:254
+msgid "Urdu"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:255
+msgid "Uzbek"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:256
+msgid "Venda"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:257
+msgid "Vietnamese"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:258
+msgid "Walloon"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:259
+msgid "Walamo"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:260
+msgid "Xhosa"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:261
+msgid "Yiddish"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:262
+msgid "Yoruba"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:263
+msgid "Chinese"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:264
+msgid "Zulu"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:269
+msgid "Afghanistan"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:270
+msgid "Åland Islands"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:271
+msgid "Albania"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:272
+msgid "Algeria"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:273
+msgid "American Samoa"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:274
+msgid "Andorra"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:275
+msgid "Angola"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:276
+msgid "Anguilla"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:277
+#, fuzzy
+msgid "Antarctica"
+msgstr "Automatický"
+
+#: src/bin/e_int_config_intl.c:278
+msgid "Antigua and Barbuda"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:279
+msgid "Argentina"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:280
+msgid "Armenia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:281
+msgid "Aruba"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:282
+msgid "Australia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:283
+msgid "Austria"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:284
+msgid "Azerbaijan"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:285
+msgid "Bahamas"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:286
+msgid "Bahrain"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:287
+msgid "Bangladesh"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:288
+msgid "Barbados"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:289
+msgid "Belarus"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:290
+#, fuzzy
+msgid "Belgium"
+msgstr "Střední"
+
+#: src/bin/e_int_config_intl.c:291
+#, fuzzy
+msgid "Belize"
+msgstr "Velikost"
+
+#: src/bin/e_int_config_intl.c:292
+msgid "Benin"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:293
+msgid "Bermuda"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:294
+msgid "Bhutan"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:295
+msgid "Bolivia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:296
+msgid "Bosnia and Herzegovina"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:297
+msgid "Botswana"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:298
+msgid "Bouvet Island"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:299
+msgid "Brazil"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:300
+msgid "British Indian Ocean Territory"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:301
+msgid "Brunei Darussalam"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:302
+msgid "Bulgaria"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:303
+msgid "Burkina Faso"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:304
+msgid "Burundi"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:305
+msgid "Cambodia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:306
+msgid "Cameroon"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:307
+msgid "Canada"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:308
+msgid "Cape Verde"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:309
+msgid "Cayman Islands"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:310
+msgid "Central African Republic"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:311
+#, fuzzy
+msgid "Chad"
+msgstr "Stínované"
+
+#: src/bin/e_int_config_intl.c:312
+#, fuzzy
+msgid "Chile"
+msgstr "Zavřít"
+
+#: src/bin/e_int_config_intl.c:313
+msgid "China"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:314
+msgid "Christmas Island"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:315
+msgid "Cocos (keeling) Islands"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:316
+msgid "Colombia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:317
+msgid "Comoros"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:318 src/bin/e_int_config_intl.c:319
+msgid "Congo"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:320
+msgid "Cook Islands"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:321
+msgid "Costa Rica"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:322
+msgid "Cote D'ivoire"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:323
+msgid "Croatia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:324
+msgid "Cuba"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:325
+msgid "Cyprus"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:326
+msgid "Czech Republic"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:327
+#, fuzzy
+msgid "Denmark"
+msgstr "Tmavé"
+
+#: src/bin/e_int_config_intl.c:328
+msgid "Djibouti"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:329
+msgid "Dominica"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:330
+msgid "Dominican Republic"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:331
+msgid "Ecuador"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:332
+msgid "Egypt"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:333
+msgid "El Salvador"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:334
+msgid "Equatorial Guinea"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:335
+msgid "Eritrea"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:336
+msgid "Estonia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:337
+msgid "Ethiopia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:338
+msgid "Falkland Islands (malvinas)"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:339
+msgid "Faroe Islands"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:340
+msgid "Fiji"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:341
+msgid "Finland"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:342
+msgid "France"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:343
+msgid "French Guiana"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:344
+msgid "French Polynesia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:345
+msgid "French Southern Territories"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:346
+msgid "Gabon"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:347
+msgid "Gambia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:348
+msgid "Georgia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:349
+msgid "Germany"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:350
+msgid "Ghana"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:351
+msgid "Gibraltar"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:352
+msgid "Greece"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:353
+msgid "Greenland"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:354
+msgid "Grenada"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:355
+msgid "Guadeloupe"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:356
+msgid "Guam"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:357
+msgid "Guatemala"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:358
+msgid "Guernsey"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:359
+msgid "Guinea"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:360
+msgid "Guinea-bissau"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:361
+msgid "Guyana"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:362
+msgid "Haiti"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:363
+msgid "Heard Island and Mcdonald Islands"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:364
+msgid "Holy See (vatican City State)"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:365
+msgid "Honduras"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:366
+msgid "Hong Kong"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:367
+msgid "Hungary"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:368
+msgid "Iceland"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:369
+msgid "India"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:370
+msgid "Indonesia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:371
+msgid "Iran"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:372
+msgid "Iraq"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:373
+msgid "Ireland"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:374
+msgid "Isle Of Man"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:375
+msgid "Israel"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:376
+msgid "Italy"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:377
+msgid "Jamaica"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:378
+msgid "Japan"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:379
+msgid "Jersey"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:380
+msgid "Jordan"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:381
+msgid "Kazakhstan"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:382
+msgid "Kenya"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:383
+msgid "Kiribati"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:384 src/bin/e_int_config_intl.c:385
+msgid "Korea"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:386
+msgid "Kuwait"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:387
+msgid "Kyrgyzstan"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:388
+msgid "Lao People's Democratic Republic"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:389
+msgid "Latvia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:390
+msgid "Lebanon"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:391
+msgid "Lesotho"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:392
+msgid "Liberia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:393
+msgid "Libyan Arab Jamahiriya"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:394
+msgid "Liechtenstein"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:395
+msgid "Lithuania"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:396
+msgid "Luxembourg"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:397
+msgid "Macao"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:398
+msgid "Macedonia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:399
+msgid "Madagascar"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:400
+msgid "Malawi"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:401
+msgid "Malaysia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:402
+msgid "Maldives"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:403
+#, fuzzy
+msgid "Mali"
+msgstr "Ruční"
+
+#: src/bin/e_int_config_intl.c:404
+msgid "Malta"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:405
+msgid "Marshall Islands"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:406
+msgid "Martinique"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:407
+msgid "Mauritania"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:408
+msgid "Mauritius"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:409
+msgid "Mayotte"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:410
+msgid "Mexico"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:411
+#, fuzzy
+msgid "Micronesia"
+msgstr "Mikroskopický"
+
+#: src/bin/e_int_config_intl.c:412
+msgid "Moldova"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:413
+msgid "Monaco"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:414
+msgid "Mongolia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:415
+msgid "Montserrat"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:416
+msgid "Morocco"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:417
+msgid "Mozambique"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:418
+#, fuzzy
+msgid "Myanmar"
+msgstr "Ruční"
+
+#: src/bin/e_int_config_intl.c:419
+msgid "Namibia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:420
+#, fuzzy
+msgid "Nauru"
+msgstr "Blízké"
+
+#: src/bin/e_int_config_intl.c:421
+#, fuzzy
+msgid "Nepal"
+msgstr "Blízké"
+
+#: src/bin/e_int_config_intl.c:422
+msgid "Netherlands"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:423
+msgid "Netherlands Antilles"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:424
+msgid "New Caledonia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:425
+msgid "New Zealand"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:426
+msgid "Nicaragua"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:427
+#, fuzzy
+msgid "Niger"
+msgstr "Blízké"
+
+#: src/bin/e_int_config_intl.c:428
+msgid "Nigeria"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:429
+msgid "Niue"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:430
+msgid "Norfolk Island"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:431
+msgid "Northern Mariana Islands"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:432
+msgid "Norway"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:433
+msgid "Oman"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:434
+msgid "Pakistan"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:435
+msgid "Palau"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:436
+msgid "Palestinian Territory"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:437
+msgid "Panama"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:438
+msgid "Papua New Guinea"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:439
+msgid "Paraguay"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:440
+#, fuzzy
+msgid "Peru"
+msgstr "Pager"
+
+#: src/bin/e_int_config_intl.c:441
+msgid "Philippines"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:442
+msgid "Pitcairn"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:443
+msgid "Poland"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:444
+msgid "Portugal"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:445
+msgid "Puerto Rico"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:446
+#, fuzzy
+msgid "Qatar"
+msgstr "Start"
+
+#: src/bin/e_int_config_intl.c:447
+msgid "Reunion"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:448
+msgid "Romania"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:449
+msgid "Russian Federation"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:450
+msgid "Rwanda"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:451
+msgid "Saint Helena"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:452
+msgid "Saint Kitts and Nevis"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:453
+msgid "Saint Lucia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:454
+msgid "Saint Pierre and Miquelon"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:455
+msgid "Saint Vincent and the Grenadines"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:456
+#, fuzzy
+msgid "Samoa"
+msgstr "Malý"
+
+#: src/bin/e_int_config_intl.c:457
+msgid "San Marino"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:458
+msgid "Sao Tome and Principe"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:459
+msgid "Saudi Arabia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:460
+msgid "Senegal"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:461
+msgid "Serbia and Montenegro"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:462
+msgid "Seychelles"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:463
+msgid "Sierra Leone"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:464
+msgid "Singapore"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:465
+msgid "Slovakia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:466
+msgid "Slovenia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:467
+msgid "Solomon Islands"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:468
+#, fuzzy
+msgid "Somalia"
+msgstr "Malý"
+
+#: src/bin/e_int_config_intl.c:469
+msgid "South Africa"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:470
+msgid "South Georgia and the South Sandwich Islands"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:471
+msgid "Spain"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:472
+msgid "Sri Lanka"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:473
+msgid "Sudan"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:474
+msgid "Suriname"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:475
+msgid "Svalbard and Jan Mayen"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:476
+msgid "Swaziland"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:477
+msgid "Sweden"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:478
+msgid "Switzerland"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:479
+msgid "Syrian Arab Republic"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:480
+#, fuzzy
+msgid "Taiwan"
+msgstr "Drobný"
+
+#: src/bin/e_int_config_intl.c:481
+msgid "Tajikistan"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:482
+msgid "Tanzania"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:483
+msgid "Thailand"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:484
+msgid "Timor-leste"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:485
+msgid "Togo"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:486
+msgid "Tokelau"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:487
+msgid "Tonga"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:488
+msgid "Trinidad and Tobago"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:489
+msgid "Tunisia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:490
+msgid "Turkey"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:491
+msgid "Turkmenistan"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:492
+msgid "Turks and Caicos Islands"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:493
+msgid "Tuvalu"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:494
+msgid "Uganda"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:495
+msgid "Ukraine"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:496
+msgid "United Arab Emirates"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:497
+msgid "United Kingdom"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:498
+msgid "United States"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:499
+msgid "United States Minor Outlying Islands"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:500
+msgid "Uruguay"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:501
+msgid "Uzbekistan"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:502
+#, fuzzy
+msgid "Vanuatu"
+msgstr "Ruční"
+
+#: src/bin/e_int_config_intl.c:503
+msgid "Venezuela"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:504
+msgid "Viet Nam"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:505 src/bin/e_int_config_intl.c:506
+msgid "Virgin Islands"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:507
+msgid "Wallis and Futuna"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:508
+msgid "Western Sahara"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:509
+msgid "Yemen"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:510
+msgid "Zambia"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:511
+msgid "Zimbabwe"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:581
+#, fuzzy
+msgid "Language Configuration"
+msgstr "Nastavení"
+
+#: src/bin/e_int_config_intl.c:897 src/bin/e_int_config_intl.c:972
+msgid "Language Selector"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:938 src/bin/e_int_config_intl.c:1034
+msgid "Locale Selected"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:940 src/bin/e_int_config_intl.c:1036
+msgid "Locale"
+msgstr ""
+
+#: src/bin/e_config_dialog.c:184
+msgid "Basic"
+msgstr ""
+
+#: src/bin/e_config_dialog.c:199
+msgid "Apply"
+msgstr ""
+
+#: src/bin/e_int_config_focus.c:49
+msgid "Focus Settings"
+msgstr ""
+
+#: src/bin/e_int_config_focus.c:159
+msgid "Click Window to Focus"
+msgstr ""
+
+#: src/bin/e_int_config_focus.c:161
+msgid "Window under the Mouse"
+msgstr ""
+
+#: src/bin/e_int_config_focus.c:163
+msgid "Most recent Window under the Mouse"
+msgstr ""
+
+#: src/bin/e_int_config_focus.c:177
+msgid "Focus"
+msgstr ""
+
+#: src/bin/e_int_config_focus.c:179
+msgid "Click to focus"
+msgstr ""
+
+#: src/bin/e_int_config_focus.c:181
+msgid "Pointer focus"
+msgstr ""
+
+#: src/bin/e_int_config_focus.c:183
+msgid "Sloppy focus"
+msgstr ""
+
+#: src/bin/e_int_config_focus.c:187
+#, fuzzy
+msgid "New Window Focus"
+msgstr "(Žádná okna)"
+
+#: src/bin/e_int_config_focus.c:189
+msgid "No new windows get focus"
+msgstr ""
+
+#: src/bin/e_int_config_focus.c:191
+msgid "All new windows get focus"
+msgstr ""
+
+#: src/bin/e_int_config_focus.c:193
+msgid "Only new dialogs get focus"
+msgstr ""
+
+#: src/bin/e_int_config_focus.c:195
+msgid "Only new dialogs get focus if the parent has focus"
+msgstr ""
+
+#: src/bin/e_int_config_focus.c:199
+msgid "Other Settings"
+msgstr ""
+
+#: src/bin/e_int_config_focus.c:200
+msgid "Always pass on caught click events to programs"
+msgstr ""
+
+#: src/bin/e_int_config_focus.c:202
+msgid "A click on a window always raises it"
+msgstr ""
+
+#: src/bin/e_int_config_focus.c:204
+msgid "A click in a window always focuses it"
+msgstr ""
+
+#: src/bin/e_int_config_focus.c:206
+msgid "Refocus last focused window on desktop switch"
+msgstr ""
+
+#: src/bin/e_int_config_focus.c:208
+msgid "Revert focus when hiding or closing a window"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:67 src/bin/e_int_border_menu.c:148
+#, fuzzy
+msgid "Window Locks"
+msgstr "Okna"
+
+#: src/bin/e_int_border_locks.c:285
+msgid "Generic Locks"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:286
+msgid "Lock the Window so it does only what I tell it to"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:288
+msgid "Protect this window from me accidentally changing it"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:290
+msgid ""
+"Protect this window from being accidentally closed because it is important"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:292
+msgid "Do not allow the border to change on this window"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:295
+msgid "Remember these Locks for this window next time it appears"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:308
+msgid "Lock program changing:"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:309 src/bin/e_int_border_locks.c:328
+#: src/bin/e_int_border_remember.c:486
+msgid "Position"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
+#: src/bin/e_int_border_remember.c:488 src/bin/e_int_shelf_config.c:402
+#: src/bin/e_int_shelf_config.c:483
+msgid "Size"
+msgstr "Velikost"
+
+#: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
+#: src/bin/e_int_border_remember.c:490 src/bin/e_int_border_menu.c:190
+#: src/bin/e_int_shelf_config.c:439
+msgid "Stacking"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:315 src/bin/e_int_border_locks.c:334
+msgid "Iconified state"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:317 src/bin/e_int_border_locks.c:336
+#: src/bin/e_int_border_remember.c:496
+#, fuzzy
+msgid "Stickiness"
+msgstr "Sticky"
+
+#: src/bin/e_int_border_locks.c:319 src/bin/e_int_border_locks.c:338
+#: src/bin/e_int_border_remember.c:500
+#, fuzzy
+msgid "Shaded state"
+msgstr "Stínované"
+
+#: src/bin/e_int_border_locks.c:321 src/bin/e_int_border_locks.c:340
+#, fuzzy
+msgid "Maximized state"
+msgstr "Maximalizovaný"
+
+#: src/bin/e_int_border_locks.c:323 src/bin/e_int_border_locks.c:342
+#, fuzzy
+msgid "Fullscreen state"
+msgstr "Šířka přes celou obrazovku"
+
+#: src/bin/e_int_border_locks.c:327
+msgid "Lock me from changing:"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:344 src/bin/e_int_border_remember.c:494
+msgid "Border style"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:348
+msgid "Stop me from:"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:349
+msgid "Closing the window"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:351
+msgid "Exiting my login with this window open"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:355
+msgid "Remember these Locks"
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:70
+msgid "Window Remember"
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:231
+msgid "Window properties are not a unique match"
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:234
+msgid ""
+"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"as size, location, border style etc.) to<br>a window that <hilight>does not "
+"have unique properties</hilight>.<br><br>This means it shares Name/Class, "
+"Transience, Role etc. properties<br>with more than 1 other window on the "
+"screen and remembering<br>properties for this window will apply to all other "
+"windows<br>that match these properties.<br><br>This is just a warning in "
+"case you did not intend this to happen.<br>If you did, simply press "
+"<hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your "
+"settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
+"sure and nothing will be affected."
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:314 src/bin/e_int_border_remember.c:344
+msgid "No match properties set"
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:317
+msgid ""
+"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"as size, location, border style etc.) to<br>a window <hilight>without "
+"specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
+"way of remembering this window."
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:347
+msgid ""
+"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"as size, location, border style etc.) to<br>a window that <hilight>does not "
+"have unique properties</hilight>.<br><br>This means it shares Name/Class, "
+"Transience, Role etc. properties<br>with more than 1 other window on the "
+"screen and remembering<br>properties for this window will apply to all other "
+"windows<br>that match these properties.<br><br>You may wish to enable the "
+"<hilight>Match only one window</hilight> option if<br>you only intend one "
+"instance of this window to be modified, with<br>additional instances not "
+"being modified.<br><br>This is just a warning in case you did not intend "
+"this to happen.<br>If you did, simply press <hilight>Apply</hilight> or "
+"<hilight>OK</hilight> buttons<br>and your settings will be accepted. Press "
+"<hilight>Cancel</hilight> if you<br>are not sure and nothing will be "
+"affected."
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:418
+msgid "Nothing"
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:420
+msgid "Size and Position"
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:422 src/bin/e_int_border_remember.c:492
+#, fuzzy
+msgid "Locks"
+msgstr "Hodiny"
+
+#: src/bin/e_int_border_remember.c:424
+msgid "Size, Position and Locks"
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:426
+msgid "Everything"
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:439
+msgid "Remember using"
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:445
+msgid "Window name and class"
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:455 src/bin/e_int_border_prop.c:319
+msgid "Title"
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:465 src/bin/e_eap_editor.c:411
+#, fuzzy
+msgid "Window Role"
+msgstr "Okna"
+
+#: src/bin/e_int_border_remember.c:474
+#, fuzzy
+msgid "Window type"
+msgstr "Okna"
+
+#: src/bin/e_int_border_remember.c:481
+msgid "Transience"
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:485
+msgid "Properties to remember"
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:498
+#, fuzzy
+msgid "Virtual Desktop"
+msgstr "Plochy"
+
+#: src/bin/e_int_border_remember.c:502
+msgid "Screen zone"
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:504
+#, fuzzy
+msgid "Window list skip"
+msgstr "Okna"
+
+#: src/bin/e_int_border_remember.c:508
+msgid "Match only one window"
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:513
+msgid "Start this program on login"
+msgstr ""
+
+#: src/bin/e_eap_editor.c:87
+#, fuzzy
+msgid "Application Editor"
+msgstr "(Žádné aplikace)"
+
+#: src/bin/e_eap_editor.c:316 src/bin/e_int_config_fonts.c:77
+#, fuzzy
+msgid "Icon"
+msgstr "Ikonifikovat"
+
+#: src/bin/e_eap_editor.c:332
+msgid "Basic Info"
+msgstr ""
+
+#: src/bin/e_eap_editor.c:333 src/bin/e_int_border_prop.c:320
+msgid "Name"
+msgstr ""
+
+#: src/bin/e_eap_editor.c:342
+msgid "Executable"
+msgstr ""
+
+#: src/bin/e_eap_editor.c:366
+msgid "General"
+msgstr ""
+
+#: src/bin/e_eap_editor.c:369
+msgid "Generic Info"
+msgstr ""
+
+#: src/bin/e_eap_editor.c:378
+msgid "Comment"
+msgstr ""
+
+#: src/bin/e_eap_editor.c:388
+#, fuzzy
+msgid "Window"
+msgstr "Okna"
+
+#: src/bin/e_eap_editor.c:390
+#, fuzzy
+msgid "Window Name"
+msgstr "Okna"
+
+#: src/bin/e_eap_editor.c:399
+#, fuzzy
+msgid "Window Class"
+msgstr "Okna"
+
+#: src/bin/e_eap_editor.c:405
+#, fuzzy
+msgid "Window Title"
+msgstr "Okna"
+
+#: src/bin/e_eap_editor.c:422
+msgid "Use Icon Theme"
+msgstr ""
+
+#: src/bin/e_eap_editor.c:429
+msgid "Icon Class"
+msgstr ""
+
+#: src/bin/e_eap_editor.c:443
+msgid "Misc"
+msgstr ""
+
+#: src/bin/e_eap_editor.c:444
+msgid "Startup Notify"
+msgstr ""
+
+#: src/bin/e_eap_editor.c:447
+msgid "Wait Exit"
+msgstr ""
+
+#: src/bin/e_eap_editor.c:472
+msgid "Select an Icon"
+msgstr ""
+
+#: src/bin/e_eap_editor.c:499 src/bin/e_entry_dialog.c:57
+#: src/bin/e_int_config_wallpaper_import.c:184
+#: src/bin/e_int_config_wallpaper_gradient.c:200
+#: src/bin/e_int_config_theme_import.c:117
+msgid "Cancel"
+msgstr ""
+
+#: src/bin/e_int_config_borders.c:28
+msgid "Default Border Style"
+msgstr ""
+
+#: src/bin/e_int_config_borders.c:43
+msgid "Window Border Selection"
+msgstr ""
+
+#: src/bin/e_int_config_borders.c:213
+msgid "Remember this Border for this window next time it appears"
+msgstr ""
+
+#: src/bin/e_int_border_menu.c:53
+msgid "Always On Top"
+msgstr "Vždy navrchu"
+
+#: src/bin/e_int_border_menu.c:64 src/bin/e_int_config_fonts.c:81
+#: src/modules/temperature/e_mod_config.c:174
+msgid "Normal"
+msgstr ""
+
+#: src/bin/e_int_border_menu.c:75
+#, fuzzy
+msgid "Always Below"
+msgstr "Vždy navrchu"
+
+#: src/bin/e_int_border_menu.c:107
+#, fuzzy
+msgid "Maximize vertically"
+msgstr "Vystředit vertikálně"
+
+#: src/bin/e_int_border_menu.c:118
+#, fuzzy
+msgid "Maximize horizontally"
+msgstr "Vystředit horizontálně"
+
+#: src/bin/e_int_border_menu.c:129
+#, fuzzy
+msgid "Unmaximize"
+msgstr "Maximalizovaný"
+
+#: src/bin/e_int_border_menu.c:155
+msgid "Remember"
+msgstr ""
+
+#: src/bin/e_int_border_menu.c:178
+#, fuzzy
+msgid "Send to Desktop"
+msgstr "Nový sloupec ploch"
+
+#: src/bin/e_int_border_menu.c:211 src/bin/e_int_border_prop.c:333
+#: src/bin/e_int_config_color_classes.c:447
+#, fuzzy
+msgid "State"
+msgstr "Start"
+
+#: src/bin/e_int_border_menu.c:239
+#, fuzzy
+msgid "Skip Window List"
+msgstr "Okna"
+
+#: src/bin/e_int_border_menu.c:257
+msgid "Edit Icon"
+msgstr "Upravit ikonu"
+
+#: src/bin/e_int_border_menu.c:264
+msgid "Create Icon"
+msgstr "Vytvořit ikonu"
+
+#: src/bin/e_int_border_menu.c:268
+msgid "Add App To Launcher"
+msgstr ""
+
+#: src/bin/e_int_border_menu.c:277 src/bin/e_int_border_prop.c:73
+msgid "Window Properties"
+msgstr ""
+
+#: src/bin/e_int_border_menu.c:337
+msgid "Iconify"
+msgstr "Ikonifikovat"
+
+#: src/bin/e_int_border_menu.c:593
+msgid "Incomplete Window Properties"
+msgstr ""
+
+#: src/bin/e_int_border_menu.c:594
+msgid ""
+"The window you are creating an icon for<br>does not contain window name and "
+"class<br>properties, so the needed properties for<br>the icon so that it "
+"will be used for this<br>window cannot be guessed. You will need to<br>use "
+"the window title instead. This will only<br>work if the window title is the "
+"same at<br>the time the window starts up, and does not<br>change."
+msgstr ""
+
+#: src/bin/e_int_border_menu.c:884
+msgid "Shaded"
+msgstr "Stínované"
+
+#: src/bin/e_int_border_menu.c:897
+msgid "Sticky"
+msgstr "Sticky"
+
+#: src/bin/e_int_border_menu.c:910
+#: src/bin/e_int_config_window_manipulation.c:148
+#: src/bin/e_int_config_window_manipulation.c:207
+#, fuzzy
+msgid "Fullscreen"
+msgstr "Šířka přes celou obrazovku"
+
+#: src/bin/e_int_config_desks.c:56
+#, fuzzy
+msgid "Desktop Settings"
+msgstr "Plochy"
+
+#: src/bin/e_int_config_desks.c:190 src/bin/e_int_config_desks.c:230
+#, fuzzy
+msgid "Number of Desktops"
+msgstr "Nový řádek ploch"
+
+#: src/bin/e_int_config_desks.c:198 src/bin/e_int_config_desks.c:202
+#: src/bin/e_int_config_desks.c:237 src/bin/e_int_config_desks.c:241
+#: src/bin/e_int_config_desklock.c:715 src/bin/e_int_config_exebuf.c:112
+#: src/bin/e_int_config_exebuf.c:116 src/bin/e_int_config_exebuf.c:120
+#: src/bin/e_int_config_exebuf.c:168 src/bin/e_int_config_exebuf.c:172
+#: src/bin/e_int_config_exebuf.c:176
+#, c-format
+msgid "%1.0f"
+msgstr ""
+
+#: src/bin/e_int_config_desks.c:209
+#, fuzzy
+msgid "Desktop Flip"
+msgstr "Plochy"
+
+#: src/bin/e_int_config_desks.c:210
+msgid "Flip desktops when mouse at screen edge"
+msgstr ""
+
+#: src/bin/e_int_config_desks.c:212
+msgid "Animated flip"
+msgstr ""
+
+#: src/bin/e_int_config_desks.c:248
+#, fuzzy
+msgid "Desktop Mouse Flip"
+msgstr "Plochy"
+
+#: src/bin/e_int_config_desks.c:249
+msgid "Flip when moving mouse to the screen edge"
+msgstr ""
+
+#: src/bin/e_int_config_desks.c:251
+msgid "Flip when dragging objects to the screen edge"
+msgstr ""
+
+#: src/bin/e_int_config_desks.c:253
+msgid "Time the mouse is at the edge before flipping:"
+msgstr ""
+
+#: src/bin/e_int_config_desks.c:255 src/bin/e_int_config_desks.c:269
+#: src/bin/e_int_config_window_manipulation.c:176
+#, c-format
+msgid "%1.1f sec"
+msgstr ""
+
+#: src/bin/e_int_config_desks.c:257
+msgid "Wrap desktops around when flipping"
+msgstr ""
+
+#: src/bin/e_int_config_desks.c:261
+msgid "Flip Animation"
+msgstr ""
+
+#: src/bin/e_int_config_desks.c:263
+msgid "Off"
+msgstr ""
+
+#: src/bin/e_int_config_desks.c:265
+#, fuzzy
+msgid "Pane"
+msgstr "Pager"
+
+#: src/bin/e_int_config_desks.c:267
+msgid "Zoom"
+msgstr ""
+
+#: src/bin/e_int_config_window_display.c:149
+msgid "Display"
+msgstr ""
+
+#: src/bin/e_int_config_window_display.c:150
+msgid "Show window geometry information when moving or resizing"
+msgstr ""
+
+#: src/bin/e_int_config_window_display.c:152
+#: src/bin/e_int_config_window_display.c:210
+msgid "Animate the shading and unshading of windows"
+msgstr ""
+
+#: src/bin/e_int_config_window_display.c:156
+#: src/bin/e_int_config_window_display.c:225
+#, fuzzy
+msgid "Automatic New Window Placement"
+msgstr "Automatická šířka"
+
+#: src/bin/e_int_config_window_display.c:158
+#: src/bin/e_int_config_window_display.c:228
+msgid "Smart Placement"
+msgstr ""
+
+#: src/bin/e_int_config_window_display.c:160
+#: src/bin/e_int_config_window_display.c:230
+msgid "Don't hide Gadgets"
+msgstr ""
+
+#: src/bin/e_int_config_window_display.c:162
+#: src/bin/e_int_config_window_display.c:232
+msgid "Place at mouse pointer"
+msgstr ""
+
+#: src/bin/e_int_config_window_display.c:164
+#: src/bin/e_int_config_window_display.c:234
+msgid "Place manually with the mouse"
+msgstr ""
+
+#: src/bin/e_int_config_window_display.c:192
+msgid "Window Move Geometry"
+msgstr ""
+
+#: src/bin/e_int_config_window_display.c:194
+#: src/bin/e_int_config_window_display.c:202
+msgid "Display information"
+msgstr ""
+
+#: src/bin/e_int_config_window_display.c:196
+msgid "Follow the window as it moves"
+msgstr ""
+
+#: src/bin/e_int_config_window_display.c:200
+msgid "Window Resize Geometry"
+msgstr ""
+
+#: src/bin/e_int_config_window_display.c:204
+msgid "Follow the window as it resizes"
+msgstr ""
+
+#: src/bin/e_int_config_window_display.c:208
+msgid "Window Shading"
+msgstr ""
+
+#: src/bin/e_int_config_window_display.c:212 src/bin/e_int_config_menus.c:160
+#, c-format
+msgid "%4.0f pixels/sec"
+msgstr ""
+
+#: src/bin/e_int_config_window_display.c:215
+#, fuzzy
+msgid "Linear"
+msgstr "Blízké"
+
+#: src/bin/e_int_config_window_display.c:217
+msgid "Smooth accelerate and decelerate"
+msgstr ""
+
+#: src/bin/e_int_config_window_display.c:219
+msgid "Accelerate"
+msgstr ""
+
+#: src/bin/e_int_config_window_display.c:221
+msgid "Decelerate"
+msgstr ""
+
+#: src/bin/e_int_config_window_display.c:238
+#, fuzzy
+msgid "Window Frame"
+msgstr "Okna"
+
+#: src/bin/e_int_config_window_display.c:240
+msgid "Use application provided icon instead"
+msgstr ""
+
+#: src/bin/e_int_config_window_manipulation.c:139
+#: src/bin/e_int_config_menus.c:153
+msgid "Miscellaneous Options"
+msgstr ""
+
+#: src/bin/e_int_config_window_manipulation.c:140
+#: src/bin/e_int_config_window_manipulation.c:172
+msgid "Automatically raise windows on mouse over"
+msgstr ""
+
+#: src/bin/e_int_config_window_manipulation.c:142
+msgid "When moving or resizing windows, resist at the boundaries"
+msgstr ""
+
+#: src/bin/e_int_config_window_manipulation.c:146
+#: src/bin/e_int_config_window_manipulation.c:205
+#, fuzzy
+msgid "Maximize Policy"
+msgstr "Maximalizovaný"
+
+#: src/bin/e_int_config_window_manipulation.c:150
+#: src/bin/e_int_config_window_manipulation.c:209
+msgid "Smart expansion"
+msgstr ""
+
+#: src/bin/e_int_config_window_manipulation.c:152
+#: src/bin/e_int_config_window_manipulation.c:211
+msgid "Expand the window"
+msgstr ""
+
+#: src/bin/e_int_config_window_manipulation.c:154
+#: src/bin/e_int_config_window_manipulation.c:213
+msgid "Fill available space"
+msgstr ""
+
+#: src/bin/e_int_config_window_manipulation.c:171
+#, fuzzy
+msgid "Autoraise"
+msgstr "Automatický"
+
+#: src/bin/e_int_config_window_manipulation.c:174
+msgid "Delay before raising:"
+msgstr ""
+
+#: src/bin/e_int_config_window_manipulation.c:180
+#, fuzzy
+msgid "Raise Window"
+msgstr "Okna"
+
+#: src/bin/e_int_config_window_manipulation.c:182
+msgid "Raise when starting to move or resize"
+msgstr ""
+
+#: src/bin/e_int_config_window_manipulation.c:184
+msgid "Raise when clicking to focus"
+msgstr ""
+
+#: src/bin/e_int_config_window_manipulation.c:188
+msgid "Resistance"
+msgstr ""
+
+#: src/bin/e_int_config_window_manipulation.c:189
+msgid "Resist moving or resizing a window over an obstacle"
+msgstr ""
+
+#: src/bin/e_int_config_window_manipulation.c:191
+msgid "Resistance between windows:"
+msgstr ""
+
+#: src/bin/e_int_config_window_manipulation.c:193
+#: src/bin/e_int_config_window_manipulation.c:197
+#: src/bin/e_int_config_window_manipulation.c:201
+#: src/bin/e_int_config_menus.c:145 src/bin/e_int_config_menus.c:149
+#, c-format
+msgid "%2.0f pixels"
+msgstr ""
+
+#: src/bin/e_int_config_window_manipulation.c:195
+msgid "Resistance at the edge of the screen:"
+msgstr ""
+
+#: src/bin/e_int_config_window_manipulation.c:199
+msgid "Resistance to desktop gadgets:"
+msgstr ""
+
+#: src/bin/e_int_config_window_manipulation.c:217
+msgid "Both directions"
+msgstr ""
+
+#: src/bin/e_int_config_window_manipulation.c:219
+#: src/bin/e_int_config_wallpaper_gradient.c:168
+#, fuzzy
+msgid "Horizontal"
+msgstr "Vystředit horizontálně"
+
+#: src/bin/e_int_config_window_manipulation.c:221
+#: src/bin/e_int_config_wallpaper_gradient.c:173
+#, fuzzy
+msgid "Vertical"
+msgstr "Vystředit vertikálně"
+
+#: src/bin/e_int_config_window_manipulation.c:224
+msgid "Allow window manipulation"
+msgstr ""
+
+#: src/bin/e_int_config_menus.c:41 src/bin/e_int_config_menus.c:92
+#: src/bin/e_int_config_menus.c:133
+msgid "Menu Settings"
+msgstr ""
+
+#: src/bin/e_int_config_menus.c:93 src/bin/e_int_config_menus.c:134
+msgid "Show Name In Menu"
+msgstr ""
+
+#: src/bin/e_int_config_menus.c:95 src/bin/e_int_config_menus.c:136
+msgid "Show Comment In Menu"
+msgstr ""
+
+#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:138
+msgid "Show Generic In Menu"
+msgstr ""
+
+#: src/bin/e_int_config_menus.c:142
+msgid "Autoscroll Settings"
+msgstr ""
+
+#: src/bin/e_int_config_menus.c:143
+msgid "Autoscroll Margin"
+msgstr ""
+
+#: src/bin/e_int_config_menus.c:147
+msgid "Autoscroll Cursor Margin"
+msgstr ""
+
+#: src/bin/e_int_config_menus.c:154
+#, fuzzy
+msgid "Menu Scroll Speed"
+msgstr "Minimální rychlost"
+
+#: src/bin/e_int_config_menus.c:156
+#, c-format
+msgid "%5.0f pixels/sec"
+msgstr ""
+
+#: src/bin/e_int_config_menus.c:158
+msgid "Fast Mouse Move Threshhold"
+msgstr ""
+
+#: src/bin/e_int_config_menus.c:162
+msgid "Click Drag Timeout"
+msgstr ""
+
+#: src/bin/e_int_config_menus.c:164
+#, c-format
+msgid "%2.1f seconds"
+msgstr ""
+
+#: src/bin/e_int_config_modules.c:65
+#, fuzzy
+msgid "Module Settings"
+msgstr "Moduly"
+
+#: src/bin/e_int_config_modules.c:257
+#, fuzzy
+msgid "Module State"
+msgstr "Moduly"
+
+#: src/bin/e_int_config_modules.c:267 src/bin/e_int_config_color_classes.c:351
+#: src/bin/e_int_config_color_classes.c:359
+#: src/bin/e_int_config_color_classes.c:367
+#: src/bin/e_int_config_color_classes.c:455
+#, fuzzy
+msgid "Disabled"
+msgstr "Povoleno"
+
+#: src/bin/e_int_config_modules.c:275
+#, fuzzy
+msgid "Module Actions"
+msgstr "Moduly"
+
+#: src/bin/e_int_config_modules.c:276 src/bin/e_int_config_shelf.c:85
+#, fuzzy
+msgid "Configure"
+msgstr "Nastavení"
+
+#: src/bin/e_int_config_theme.c:45
+msgid "Theme Selector"
+msgstr ""
+
+#: src/bin/e_int_config_theme.c:357 src/bin/e_int_config_startup.c:269
+#: src/bin/e_int_config_desklock.c:561 src/bin/e_int_config_wallpaper.c:453
+#: src/bin/e_int_config_wallpaper.c:609
+msgid "Personal"
+msgstr ""
+
+#: src/bin/e_int_config_theme.c:370 src/bin/e_int_config_startup.c:282
+#: src/bin/e_int_config_desklock.c:574 src/bin/e_widget_fsel.c:294
+#: src/bin/e_int_config_wallpaper.c:466 src/bin/e_int_config_wallpaper.c:622
+#: src/bin/e_int_config_icon_themes.c:221 src/bin/e_int_config_apps.c:510
+#: src/bin/e_int_config_apps.c:598
+msgid "Go up a Directory"
+msgstr ""
+
+#: src/bin/e_int_config_theme.c:428
+msgid "Import..."
+msgstr ""
+
+#: src/bin/e_int_config_startup.c:39
+msgid "Startup Settings"
+msgstr ""
+
+#: src/bin/e_int_config_startup.c:345
+msgid "Show Splash Screen on Login"
+msgstr ""
+
+#: src/bin/e_int_config_performance.c:39
+msgid "Performance Settings"
+msgstr ""
+
+#: src/bin/e_int_config_performance.c:89
+#: src/bin/e_int_config_performance.c:121 src/bin/e_int_config_winlist.c:125
+#: src/bin/e_int_config_exebuf.c:109 src/bin/e_int_config_exebuf.c:165
+#: src/modules/ibox/e_mod_config.c:96 src/modules/pager/e_mod_config.c:77
+msgid "General Settings"
+msgstr ""
+
+#: src/bin/e_int_config_performance.c:90
+#: src/bin/e_int_config_performance.c:122
+#, fuzzy
+msgid "Framerate"
+msgstr "Teplota"
+
+#: src/bin/e_int_config_performance.c:92
+#: src/bin/e_int_config_performance.c:124
+#, c-format
+msgid "%1.0f fps"
+msgstr ""
+
+#: src/bin/e_int_config_performance.c:128
+msgid "Cache Settings"
+msgstr ""
+
+#: src/bin/e_int_config_performance.c:129
+#, fuzzy
+msgid "Cache Flush Interval"
+msgstr "Aktualizovat"
+
+#: src/bin/e_int_config_performance.c:131 src/bin/e_int_config_desklock.c:472
+#: src/bin/e_int_config_desklock.c:782
+#, c-format
+msgid "%1.0f seconds"
+msgstr ""
+
+#: src/bin/e_int_config_performance.c:134
+msgid "Size Of Font Cache"
+msgstr ""
+
+#: src/bin/e_int_config_performance.c:136
+#, c-format
+msgid "%1.1f MB"
+msgstr ""
+
+#: src/bin/e_int_config_performance.c:139
+msgid "Size Of Image Cache"
+msgstr ""
+
+#: src/bin/e_int_config_performance.c:141
+#, c-format
+msgid "%1.0f MB"
+msgstr ""
+
+#: src/bin/e_int_config_performance.c:144
+msgid "Number Of Edje Files To Cache"
+msgstr ""
+
+#: src/bin/e_int_config_performance.c:146
+#, c-format
+msgid "%1.0f files"
+msgstr ""
+
+#: src/bin/e_int_config_performance.c:149
+msgid "Number Of Edje Collections To Cache"
+msgstr ""
+
+#: src/bin/e_int_config_performance.c:151
+#, c-format
+msgid "%1.0f collections"
+msgstr ""
+
+#: src/bin/e_int_config_winlist.c:53
+msgid "Window List Settings"
+msgstr ""
+
+#: src/bin/e_int_config_winlist.c:126
+msgid "Show iconified windows"
+msgstr ""
+
+#: src/bin/e_int_config_winlist.c:128
+msgid "Show windows from other desks"
+msgstr ""
+
+#: src/bin/e_int_config_winlist.c:130
+msgid "Show windows from other screens"
+msgstr ""
+
+#: src/bin/e_int_config_winlist.c:134 src/bin/e_int_config_winlist.c:206
+msgid "Selection Settings"
+msgstr ""
+
+#: src/bin/e_int_config_winlist.c:135 src/bin/e_int_config_winlist.c:207
+msgid "Focus window while selecting"
+msgstr ""
+
+#: src/bin/e_int_config_winlist.c:137 src/bin/e_int_config_winlist.c:209
+msgid "Raise window while selecting"
+msgstr ""
+
+#: src/bin/e_int_config_winlist.c:139 src/bin/e_int_config_winlist.c:211
+msgid "Warp mouse to window while selecting"
+msgstr ""
+
+#: src/bin/e_int_config_winlist.c:141 src/bin/e_int_config_winlist.c:213
+msgid "Uncover windows while selecting"
+msgstr ""
+
+#: src/bin/e_int_config_winlist.c:143 src/bin/e_int_config_winlist.c:215
+msgid "Jump to desk while selecting"
+msgstr ""
+
+#: src/bin/e_int_config_winlist.c:147 src/bin/e_int_config_winlist.c:219
+msgid "Warp Settings"
+msgstr ""
+
+#: src/bin/e_int_config_winlist.c:148 src/bin/e_int_config_winlist.c:220
+msgid "Warp At End"
+msgstr ""
+
+#: src/bin/e_int_config_winlist.c:152 src/bin/e_int_config_winlist.c:228
+#: src/bin/e_int_config_exebuf.c:124 src/bin/e_int_config_exebuf.c:180
+msgid "Scroll Settings"
+msgstr ""
+
+#: src/bin/e_int_config_winlist.c:153 src/bin/e_int_config_winlist.c:229
+#: src/bin/e_int_config_exebuf.c:125 src/bin/e_int_config_exebuf.c:181
+msgid "Scroll Animate"
+msgstr ""
+
+#: src/bin/e_int_config_winlist.c:222
+#, fuzzy
+msgid "Warp Speed"
+msgstr "Nastavit rychlost"
+
+#: src/bin/e_int_config_winlist.c:224 src/bin/e_int_config_winlist.c:233
+#: src/bin/e_int_config_winlist.c:240 src/bin/e_int_config_winlist.c:244
+#: src/bin/e_int_config_exebuf.c:185 src/bin/e_int_config_exebuf.c:218
+#: src/bin/e_int_config_exebuf.c:222
+#, c-format
+msgid "%1.2f"
+msgstr ""
+
+#: src/bin/e_int_config_winlist.c:231 src/bin/e_int_config_exebuf.c:183
+#, fuzzy
+msgid "Scroll Speed"
+msgstr "Nastavit rychlost"
+
+#: src/bin/e_int_config_winlist.c:237 src/bin/e_int_config_exebuf.c:215
+msgid "Position Settings"
+msgstr ""
+
+#: src/bin/e_int_config_winlist.c:238 src/bin/e_int_config_exebuf.c:216
+#, fuzzy
+msgid "X-Axis Alignment"
+msgstr "Opustit Enlightenment"
+
+#: src/bin/e_int_config_winlist.c:242 src/bin/e_int_config_exebuf.c:220
+#, fuzzy
+msgid "Y-Axis Alignment"
+msgstr "Opustit Enlightenment"
+
+#: src/bin/e_int_config_winlist.c:248 src/bin/e_int_config_exebuf.c:196
+msgid "Size Settings"
+msgstr ""
+
+#: src/bin/e_int_config_winlist.c:249 src/bin/e_int_config_exebuf.c:197
+#, fuzzy
+msgid "Minimum Width"
+msgstr "Minimální rychlost"
+
+#: src/bin/e_int_config_winlist.c:251 src/bin/e_int_config_winlist.c:255
+#: src/bin/e_int_config_winlist.c:259 src/bin/e_int_config_winlist.c:263
+#: src/bin/e_int_config_exebuf.c:199 src/bin/e_int_config_exebuf.c:203
+#: src/bin/e_int_config_exebuf.c:207 src/bin/e_int_config_exebuf.c:211
+#, c-format
+msgid "%4.0f"
+msgstr ""
+
+#: src/bin/e_int_config_winlist.c:253 src/bin/e_int_config_exebuf.c:201
+#, fuzzy
+msgid "Minimum Height"
+msgstr "Minimální rychlost"
+
+#: src/bin/e_int_config_winlist.c:257 src/bin/e_int_config_exebuf.c:205
+#, fuzzy
+msgid "Maximum Width"
+msgstr "Maximální rychlost"
+
+#: src/bin/e_int_config_winlist.c:261 src/bin/e_int_config_exebuf.c:209
+#, fuzzy
+msgid "Maximum Height"
+msgstr "Maximální rychlost"
+
+#: src/bin/e_apps_error.c:37
+msgid "Application Execution Error"
+msgstr ""
+
+#: src/bin/e_apps_error.c:51
+#, c-format
+msgid "%s stopped running unexpectedly."
+msgstr ""
+
+#: src/bin/e_apps_error.c:57
+#, c-format
+msgid "An exit code of %i was returned from %s"
+msgstr ""
+
+#: src/bin/e_apps_error.c:64
+#, c-format
+msgid "%s was interrupted by an Interrupt Signal"
+msgstr ""
+
+#: src/bin/e_apps_error.c:66
+#, c-format
+msgid "%s was interrupted by a Quit Signal"
+msgstr ""
+
+#: src/bin/e_apps_error.c:70
+#, c-format
+msgid "%s was interrupted by an Abort Signal"
+msgstr ""
+
+#: src/bin/e_apps_error.c:73
+#, c-format
+msgid "%s was interrupted by a Floating Point Error"
+msgstr ""
+
+#: src/bin/e_apps_error.c:76
+#, c-format
+msgid "%s was interrupted by an Uninterruptable Kill Signal"
+msgstr ""
+
+#: src/bin/e_apps_error.c:79
+#, c-format
+msgid "%s was interrupted by a Segmentation Fault"
+msgstr ""
+
+#: src/bin/e_apps_error.c:82
+#, c-format
+msgid "%s was interrupted by a Broken Pipe"
+msgstr ""
+
+#: src/bin/e_apps_error.c:85
+#, c-format
+msgid "%s was interrupted by a Termination Singal"
+msgstr ""
+
+#: src/bin/e_apps_error.c:88
+#, c-format
+msgid "%s was interrupted by a Bus Error"
+msgstr ""
+
+#: src/bin/e_apps_error.c:91
+#, c-format
+msgid "%s was interrupted by the signal number %i"
+msgstr ""
+
+#: src/bin/e_apps_error.c:222 src/bin/e_apps_error.c:291
+#: src/bin/e_apps_error.c:297
+msgid "Error Logs"
+msgstr ""
+
+#: src/bin/e_apps_error.c:227 src/bin/e_apps_error.c:298
+msgid "There was no error message."
+msgstr ""
+
+#: src/bin/e_apps_error.c:231 src/bin/e_apps_error.c:305
+msgid "Save This Message"
+msgstr ""
+
+#: src/bin/e_apps_error.c:256
+#, fuzzy
+msgid "Error Information"
+msgstr "Nastavení"
+
+#: src/bin/e_apps_error.c:264
+msgid "Error Signal Information"
+msgstr ""
+
+#: src/bin/e_apps_error.c:275 src/bin/e_apps_error.c:281
+msgid "Output Data"
+msgstr ""
+
+#: src/bin/e_apps_error.c:282
+msgid "There was no output."
+msgstr ""
+
+#: src/bin/e_int_config_cursor.c:35 src/bin/e_int_config_cursor.c:97
+#: src/bin/e_int_config_cursor.c:146
+msgid "Cursor Settings"
+msgstr ""
+
+#: src/bin/e_int_config_cursor.c:99 src/bin/e_int_config_cursor.c:148
+#, fuzzy
+msgid "Use Enlightenment Cursor"
+msgstr "Enlightenment: Chyba!"
+
+#: src/bin/e_int_config_cursor.c:101 src/bin/e_int_config_cursor.c:150
+msgid "Use X Cursor"
+msgstr ""
+
+#: src/bin/e_int_config_cursor.c:152
+msgid "Cursor Size"
+msgstr ""
+
+#: src/bin/e_int_config_cursor.c:154
+#, c-format
+msgid "%1.0f pixels"
+msgstr ""
+
+#: src/bin/e_gadcon.c:1116
+msgid "Plain"
+msgstr ""
+
+#: src/bin/e_gadcon.c:1125
+msgid "Inset"
+msgstr ""
+
+#: src/bin/e_gadcon.c:1142
+msgid "Automatically scroll contents"
+msgstr ""
+
+#: src/bin/e_gadcon.c:1149
+msgid "Able to be resized"
+msgstr ""
+
+#: src/bin/e_gadcon.c:1161
+msgid "Move/Resize this gadget"
+msgstr ""
+
+#: src/bin/e_gadcon.c:1167
+msgid "Remove this gadget"
+msgstr ""
+
+#: src/bin/e_gadcon.c:1530
+msgid "Stop editing"
+msgstr ""
+
+#: src/bin/e_desklock.c:179
+msgid "Lock Failed"
+msgstr ""
+
+#: src/bin/e_desklock.c:180
+msgid ""
+"Locking the desktop failed because some application<br>has grabbed either "
+"the keyboard or the mouse or both<br>and their grab is unable to be broken."
+msgstr ""
+
+#: src/bin/e_desklock.c:266
+msgid "Please enter your unlock password"
+msgstr ""
+
+#: src/bin/e_desklock.c:559
+msgid "Authentication System Error"
+msgstr ""
+
+#: src/bin/e_desklock.c:560
 #, c-format
 msgid ""
-"This is Enlightenment %s.\n"
-"Copyright © 1999-2005, by the Enlightenment Dev Team.\n"
-"\n"
-"We hope you enjoy using this software as much as we enjoyed writing it.\n"
-"\n"
-"Please think of the aardvarks. They need some love too."
+"Authentication via PAM had errors setting up the<br>authentication session. "
+"The error code was <hilight>%i</hilight>.<br>This is bad and should not be "
+"happening. Please report this bug."
 msgstr ""
-"Enlightenment %s.\n"
-"Copyright © 1999-2005, Enlightenment Dev Team.\n"
-"\n"
-"Doufáme, že se vám tento software bude líbit stejně, jako nás baví jej psát.\n"
-"\n"
-"Please think of the aardvarks. They need some love too."
 
-#: src/bin/e_main.c:439
-msgid "This is development code, so be warned."
-msgstr "Tohle je vývojový kód, byli jste varováni..."
+#: src/bin/e_int_config_cfgdialogs.c:36
+msgid "Config Dialog Settings"
+msgstr ""
 
-#: src/modules/ibar/e_mod_main.c:168
+#: src/bin/e_int_config_cfgdialogs.c:89 src/bin/e_int_config_cfgdialogs.c:125
+msgid "Default Dialog Mode"
+msgstr ""
+
+#: src/bin/e_int_config_cfgdialogs.c:92 src/bin/e_int_config_cfgdialogs.c:128
+#, fuzzy
+msgid "Basic Mode"
+msgstr "Režim úprav"
+
+#: src/bin/e_int_config_cfgdialogs.c:94 src/bin/e_int_config_cfgdialogs.c:130
+msgid "Advanced Mode"
+msgstr ""
+
+#: src/bin/e_int_config_desklock.c:114
+msgid "Screen Lock Settings"
+msgstr ""
+
+#: src/bin/e_int_config_desklock.c:458 src/bin/e_int_config_desklock.c:767
+#, fuzzy
+msgid "Automatic Locking"
+msgstr "Automatická výška"
+
+#: src/bin/e_int_config_desklock.c:461 src/bin/e_int_config_desklock.c:771
+msgid "Enable screensaver"
+msgstr ""
+
+#: src/bin/e_int_config_desklock.c:465 src/bin/e_int_config_desklock.c:775
+msgid "Lock when the screensaver starts"
+msgstr ""
+
+#: src/bin/e_int_config_desklock.c:469 src/bin/e_int_config_desklock.c:779
+msgid "Time until screensaver starts"
+msgstr ""
+
+#: src/bin/e_int_config_desklock.c:626
+msgid "Wallpaper Mode"
+msgstr ""
+
+#: src/bin/e_int_config_desklock.c:630
+msgid "Theme Defined"
+msgstr ""
+
+#: src/bin/e_int_config_desklock.c:635
+msgid "Theme Wallpaper"
+msgstr ""
+
+#: src/bin/e_int_config_desklock.c:640
+msgid "Custom"
+msgstr ""
+
+#: src/bin/e_int_config_desklock.c:691
+msgid "Login Box Settings"
+msgstr ""
+
+#: src/bin/e_int_config_desklock.c:694
+msgid "Show on all screen zones"
+msgstr ""
+
+#: src/bin/e_int_config_desklock.c:701
+msgid "Show on current screen zone"
+msgstr ""
+
+#: src/bin/e_int_config_desklock.c:708
+msgid "Show on screen zone #:"
+msgstr ""
+
+#: src/bin/e_int_config_display.c:112
+#, c-format
 msgid ""
-"This is the IBar Application Launcher bar module for Enlightenment.\n"
-"It is a first example module and is being used to flesh out several\n"
-"Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
-"so expect it to break often and change as it improves."
+"Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
+"<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
+"will be restored in %d seconds."
+msgstr ""
+
+#: src/bin/e_int_config_display.c:121
+#, c-format
+msgid ""
+"Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
+"<br>If you do not press a button, the old resolution of<br>%dx%d at %d Hz "
+"will be restored <hilight>IMMEDIATELY</hilight>."
+msgstr ""
+
+#: src/bin/e_int_config_display.c:173
+msgid "Resolution change"
+msgstr ""
+
+#: src/bin/e_int_config_display.c:204
+msgid "Display Settings"
+msgstr ""
+
+#: src/bin/e_int_config_display.c:361
+msgid "Resolution"
+msgstr ""
+
+#: src/bin/e_int_config_display.c:369
+msgid "Restore on login"
+msgstr ""
+
+#: src/bin/e_int_config_display.c:376
+msgid "Refresh"
+msgstr ""
+
+#: src/bin/e_int_config_display.c:459
+msgid "Rotation"
+msgstr ""
+
+#: src/bin/e_int_config_display.c:481
+msgid "Mirroring"
+msgstr ""
+
+#: src/bin/e_int_config_display.c:536
+msgid "Missing Features"
+msgstr ""
+
+#: src/bin/e_int_config_display.c:537
+msgid ""
+"Your X Display Server is missing support for<br>the <hilight>XRandr</"
+"hilight> (X Resize and Rotate) extension.<br>You cannot change screen "
+"resolutions without<br>the support of this extension. It could also "
+"be<br>that at the time <hilight>ecore</hilight> was built, there<br>was no "
+"XRandr support detected."
+msgstr ""
+
+#: src/bin/e_int_config_exebuf.c:46
+msgid "Run Command Settings"
+msgstr ""
+
+#: src/bin/e_int_config_exebuf.c:110 src/bin/e_int_config_exebuf.c:166
+msgid "Maximum Number of Matched Eaps to List"
+msgstr ""
+
+#: src/bin/e_int_config_exebuf.c:114 src/bin/e_int_config_exebuf.c:170
+msgid "Maximum Number of Matched Exes to List"
+msgstr ""
+
+#: src/bin/e_int_config_exebuf.c:118 src/bin/e_int_config_exebuf.c:174
+msgid "Maximum History to List"
+msgstr ""
+
+#: src/bin/e_int_config_exebuf.c:189
+msgid "Terminal Settings"
+msgstr ""
+
+#: src/bin/e_int_config_exebuf.c:190
+msgid "Terminal Command"
+msgstr ""
+
+#: src/bin/e_int_config_keybindings.c:3 src/bin/e_int_config_keybindings.c:7
+#: src/bin/e_int_config_mousebindings.c:4
+msgid "<None>"
+msgstr ""
+
+#: src/bin/e_int_config_keybindings.c:4
+msgid ""
+"Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
+msgstr ""
+
+#: src/bin/e_int_config_keybindings.c:93
+msgid "Key Binding Settings"
+msgstr ""
+
+#: src/bin/e_int_config_keybindings.c:232
+msgid "Add Key"
+msgstr ""
+
+#: src/bin/e_int_config_keybindings.c:236
+msgid "Delete Key"
+msgstr ""
+
+#: src/bin/e_int_config_keybindings.c:244
+msgid "Modify Key"
+msgstr ""
+
+#: src/bin/e_int_config_keybindings.c:249
+#: src/bin/e_int_config_mousebindings.c:332
+msgid "Delete All"
+msgstr ""
+
+#: src/bin/e_int_config_keybindings.c:255
+msgid "Restore Key Binding Defaults"
+msgstr ""
+
+#: src/bin/e_int_config_keybindings.c:261
+#: src/bin/e_int_config_mousebindings.c:346
+#, fuzzy
+msgid "Action"
+msgstr "Nastavení"
+
+#: src/bin/e_int_config_keybindings.c:269
+#: src/bin/e_int_config_mousebindings.c:354
+msgid "Action Params"
+msgstr ""
+
+#: src/bin/e_int_config_keybindings.c:930
+msgid "Key Binding Sequence"
+msgstr ""
+
+#: src/bin/e_int_config_keybindings.c:1121
+#, c-format
+msgid ""
+"The binding key sequence, that you choose, is already used by <br><hilight>%"
+"s</hilight> action.<br>Please choose another binding key sequence."
+msgstr ""
+
+#: src/bin/e_int_config_keybindings.c:1125 src/bin/e_widget_fsel.c:748
+msgid "Unknown"
+msgstr ""
+
+#: src/bin/e_int_config_keybindings.c:1126
+msgid "Binding Key Error"
+msgstr ""
+
+#: src/bin/e_int_config_keybindings.c:1266
+msgid "CTRL"
+msgstr ""
+
+#: src/bin/e_int_config_keybindings.c:1271
+msgid "ALT"
+msgstr ""
+
+#: src/bin/e_int_config_keybindings.c:1277
+msgid "SHIFT"
+msgstr ""
+
+#: src/bin/e_int_config_keybindings.c:1283
+msgid "WIN"
+msgstr ""
+
+#: src/bin/e_shelf.c:807 src/bin/e_int_shelf_config.c:62
+#, fuzzy
+msgid "Shelf Configuration"
+msgstr "Nastavení"
+
+#: src/bin/e_shelf.c:813
+msgid "Stop Moving/Resizing Items"
+msgstr ""
+
+#: src/bin/e_shelf.c:815
+msgid "Begin Moving/Resizing Items"
+msgstr ""
+
+#: src/bin/e_shelf.c:820
+msgid "Configure Shelf Contents"
+msgstr ""
+
+#: src/bin/e_shelf.c:825
+msgid "Delete this Shelf"
+msgstr ""
+
+#: src/bin/e_shelf.c:903 src/bin/e_int_config_shelf.c:257
+msgid "Are you sure you want to delete this shelf?"
+msgstr ""
+
+#: src/bin/e_shelf.c:904
+msgid ""
+"You requested to delete this shelf.<br><br>Are you sure you want to delete "
+"it?"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:41 src/bin/e_int_config_color_classes.c:44
+msgid "Window Manager"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:42
+msgid "Title Bar"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:43 src/bin/e_int_config_color_classes.c:52
+msgid "Menu Item"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:44 src/bin/e_int_config_color_classes.c:50
+msgid "Menu Title"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:45
+msgid "Textblock Plain"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:46
+msgid "Textblock Light"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:47
+msgid "Textblock Big"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:48 src/bin/e_int_config_color_classes.c:54
+msgid "Move Text"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:49 src/bin/e_int_config_color_classes.c:55
+msgid "Resize Text"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:50 src/bin/e_int_config_color_classes.c:58
+msgid "Winlist Title"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:51
+#, fuzzy
+msgid "Configure Heading"
+msgstr "Nastavení"
+
+#: src/bin/e_int_config_fonts.c:52
+#, fuzzy
+msgid "About Title"
+msgstr "O Enlightenmentu"
+
+#: src/bin/e_int_config_fonts.c:53
+msgid "About Version"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:54
+msgid "About Text"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:55
+msgid "Desklock Title"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:56
+msgid "Desklock Password"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:57
+msgid "Dialog Error"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:58
+msgid "Exebuf Command"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:59
+msgid "Splash Title"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:60
+msgid "Splash Text"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:61
+msgid "Splash Version"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:63
+#, fuzzy
+msgid "Widget"
+msgstr "Vychytávky"
+
+#: src/bin/e_int_config_fonts.c:64
+msgid "Entry"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:65
+msgid "Frame"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:66
+#, fuzzy
+msgid "Label"
+msgstr "Větší"
+
+#: src/bin/e_int_config_fonts.c:67
+msgid "Buttons"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:68
+#, fuzzy
+msgid "Slider"
+msgstr "Velikost"
+
+#: src/bin/e_int_config_fonts.c:69
+msgid "Radio Buttons"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:70
+msgid "Check Buttons"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:71
+msgid "Text List Item"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:72
+msgid "List Item"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:73 src/bin/e_int_config_color_classes.c:73
+msgid "List Header"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:75
+msgid "EFM"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:76
+msgid "Typebuf"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:79
+#, fuzzy
+msgid "Module"
+msgstr "Moduly"
+
+#: src/bin/e_int_config_fonts.c:80 src/bin/e_int_shelf_config.c:406
+msgid "Small"
+msgstr "Malý"
+
+#: src/bin/e_int_config_fonts.c:82 src/bin/e_int_shelf_config.c:410
+msgid "Large"
+msgstr "Větší"
+
+#: src/bin/e_int_config_fonts.c:83
+msgid "Small Styled"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:84
+msgid "Normal Styled"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:85
+msgid "Large Styled"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:142
+msgid "Font Settings"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:296
+msgid "Font Classes"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:305 src/bin/e_int_config_fonts.c:430
+msgid "Enable Font Class"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:310
+msgid "Font Size:"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:313 src/bin/e_int_config_fonts.c:450
+#, c-format
+msgid "%2.1f pixels"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:422
+#, fuzzy
+msgid "Font Class Configuration"
+msgstr "Nastavení"
+
+#: src/bin/e_int_config_fonts.c:436
+msgid "Font"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:446
+#, fuzzy
+msgid "Font Size"
+msgstr "Velikost"
+
+#: src/bin/e_int_config_fonts.c:459
+msgid "Hinting"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:464
+msgid "Bytecode"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:469 src/modules/cpufreq/e_mod_main.c:214
+msgid "Automatic"
+msgstr "Automatický"
+
+#: src/bin/e_int_config_fonts.c:474 src/bin/e_int_config_mousebindings.c:409
+#: src/bin/e_int_config_transitions.c:141
+#: src/bin/e_int_config_transitions.c:193
+#: src/bin/e_int_config_transitions.c:225
+msgid "None"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:481
+msgid "Font Fallbacks"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:484
+msgid "Fallback Name"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:499
+msgid "Enable Fallbacks"
+msgstr ""
+
+#: src/bin/e_widget_config_list.c:57
+msgid "Move Up"
+msgstr ""
+
+#: src/bin/e_widget_config_list.c:66
+msgid "Move Down"
+msgstr ""
+
+#: src/bin/e_widget_config_list.c:101 src/bin/e_int_config_shelf.c:81
+#: src/modules/ibar/e_mod_config.c:107
+msgid "Add"
+msgstr ""
+
+#: src/bin/e_widget_config_list.c:109
+msgid "Remove"
+msgstr ""
+
+#: src/bin/e_fwin.c:243
+msgid "Go to Parent Directory"
+msgstr ""
+
+#: src/bin/e_fwin.c:269 src/bin/e_fwin.c:774
+msgid "Open"
+msgstr ""
+
+#: src/bin/e_fwin.c:276 src/bin/e_fwin.c:772
+msgid "Open with..."
+msgstr ""
+
+#: src/bin/e_fwin.c:792
+#, fuzzy
+msgid "Specific Applications"
+msgstr "(Žádné aplikace)"
+
+#: src/bin/e_fwin.c:812
+#, fuzzy
+msgid "All Applications"
+msgstr "(Žádné aplikace)"
+
+#: src/bin/e_int_config_paths.c:65
+#, fuzzy
+msgid "Search Path Configuration"
+msgstr "Nastavení"
+
+#: src/bin/e_int_config_paths.c:76
+msgid "Data"
+msgstr ""
+
+#: src/bin/e_int_config_paths.c:78
+#, fuzzy
+msgid "Images"
+msgstr "Vychytávky"
+
+#: src/bin/e_int_config_paths.c:82
+msgid "Themes"
+msgstr "Témata"
+
+#: src/bin/e_int_config_paths.c:84
+msgid "Init"
+msgstr ""
+
+#: src/bin/e_int_config_paths.c:86
+#, fuzzy
+msgid "Icons"
+msgstr "Ikonifikovat"
+
+#: src/bin/e_int_config_paths.c:90
+msgid "Backgrounds"
+msgstr ""
+
+#: src/bin/e_int_config_paths.c:92
+msgid "Input Methods"
+msgstr ""
+
+#: src/bin/e_int_config_paths.c:94
+msgid "Messages"
+msgstr ""
+
+#: src/bin/e_int_config_paths.c:179
+msgid "E Paths"
+msgstr ""
+
+#: src/bin/e_int_config_paths.c:200
+msgid "Default Directories"
+msgstr ""
+
+#: src/bin/e_int_config_paths.c:207
+msgid "User Defined Directories"
+msgstr ""
+
+#: src/bin/e_int_config_paths.c:209 src/bin/e_fm.c:4230 src/bin/e_fm.c:4358
+msgid "New Directory"
+msgstr ""
+
+#: src/bin/e_int_config_shelf.c:45
+msgid "Shelf Settings"
+msgstr ""
+
+#: src/bin/e_int_config_shelf.c:73
+msgid "Configured Shelves"
+msgstr ""
+
+#: src/bin/e_int_config_shelf.c:83 src/bin/e_fm.c:4422
+#: src/modules/ibar/e_mod_config.c:109
+msgid "Delete"
+msgstr ""
+
+#: src/bin/e_int_config_shelf.c:253
+#, c-format
+msgid ""
+"You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
+"shelf?"
+msgstr ""
+
+#: src/bin/e_int_shelf_config.c:386 src/bin/e_int_shelf_config.c:451
+msgid "Layout"
+msgstr ""
+
+#: src/bin/e_int_shelf_config.c:404
+msgid "Tiny"
+msgstr "Drobný"
+
+#: src/bin/e_int_shelf_config.c:408 src/modules/dropshadow/e_mod_config.c:122
+msgid "Medium"
+msgstr "Střední"
+
+#: src/bin/e_int_shelf_config.c:412
+msgid "Huge"
+msgstr "Mohutný"
+
+#: src/bin/e_int_shelf_config.c:418 src/bin/e_int_shelf_config.c:525
+msgid "Configure Contents..."
+msgstr ""
+
+#: src/bin/e_int_shelf_config.c:441
+msgid "Above Everything"
+msgstr ""
+
+#: src/bin/e_int_shelf_config.c:443
+#, fuzzy
+msgid "Below Windows"
+msgstr "(Žádná okna)"
+
+#: src/bin/e_int_shelf_config.c:445
+msgid "Below Everything"
+msgstr ""
+
+#: src/bin/e_int_shelf_config.c:447
+msgid "Allow windows to overlap the shelf"
+msgstr ""
+
+#: src/bin/e_int_shelf_config.c:484
+msgid "Shrink to Content Size"
+msgstr ""
+
+#: src/bin/e_int_shelf_config.c:488
+msgid "Shelf Size"
+msgstr ""
+
+#: src/bin/e_int_shelf_config.c:490
+#, c-format
+msgid "%3.0f pixels"
+msgstr ""
+
+#: src/bin/e_int_shelf_config.c:494
+msgid "Styles"
+msgstr ""
+
+#: src/bin/e_int_gadcon_config.c:40
+msgid "Shelf Contents"
+msgstr ""
+
+#: src/bin/e_int_gadcon_config.c:221
+msgid "Available Gadgets"
+msgstr ""
+
+#: src/bin/e_int_gadcon_config.c:231
+#, fuzzy
+msgid "Add Gadget"
+msgstr "Vychytávky"
+
+#: src/bin/e_int_gadcon_config.c:238
+#, fuzzy
+msgid "Selected Gadgets"
+msgstr "Vychytávky"
+
+#: src/bin/e_int_gadcon_config.c:247
+#, fuzzy
+msgid "Remove Gadget"
+msgstr "Vychytávky"
+
+#: src/bin/e_int_border_prop.c:317
+msgid "ICCCM"
+msgstr ""
+
+#: src/bin/e_int_border_prop.c:321
+#, fuzzy
+msgid "Class"
+msgstr "Zavřít"
+
+#: src/bin/e_int_border_prop.c:322
+msgid "Icon Name"
+msgstr ""
+
+#: src/bin/e_int_border_prop.c:323
+msgid "Machine"
+msgstr ""
+
+#: src/bin/e_int_border_prop.c:324
+msgid "Role"
+msgstr ""
+
+#: src/bin/e_int_border_prop.c:326
+#, fuzzy
+msgid "Minimum Size"
+msgstr "Minimální rychlost"
+
+#: src/bin/e_int_border_prop.c:327
+#, fuzzy
+msgid "Maximum Size"
+msgstr "Maximální rychlost"
+
+#: src/bin/e_int_border_prop.c:328
+#, fuzzy
+msgid "Base Size"
+msgstr "Velikost"
+
+#: src/bin/e_int_border_prop.c:329
+msgid "Resize Steps"
+msgstr ""
+
+#: src/bin/e_int_border_prop.c:331
+msgid "Aspect Ratio"
+msgstr ""
+
+#: src/bin/e_int_border_prop.c:332
+msgid "Initial State"
+msgstr ""
+
+#: src/bin/e_int_border_prop.c:334
+#, fuzzy
+msgid "Window ID"
+msgstr "Okna"
+
+#: src/bin/e_int_border_prop.c:335
+#, fuzzy
+msgid "Window Group"
+msgstr "Okna"
+
+#: src/bin/e_int_border_prop.c:336
+msgid "Transient For"
+msgstr ""
+
+#: src/bin/e_int_border_prop.c:337
+msgid "Client Leader"
+msgstr ""
+
+#: src/bin/e_int_border_prop.c:338
+msgid "Gravity"
+msgstr ""
+
+#: src/bin/e_int_border_prop.c:339
+msgid "Command"
+msgstr ""
+
+#: src/bin/e_int_border_prop.c:341
+msgid "Take Focus"
+msgstr ""
+
+#: src/bin/e_int_border_prop.c:342
+msgid "Accepts Focus"
+msgstr ""
+
+#: src/bin/e_int_border_prop.c:343
+msgid "Urgent"
+msgstr ""
+
+#: src/bin/e_int_border_prop.c:344
+msgid "Request Delete"
+msgstr ""
+
+#: src/bin/e_int_border_prop.c:345
+msgid "Request Position"
+msgstr ""
+
+#: src/bin/e_sys.c:266
+msgid "Logout problems"
+msgstr ""
+
+#: src/bin/e_sys.c:269
+msgid ""
+"Logout is taking too long. Some<br>applications refuse to close.<br>Do you "
+"want to finish the logout<br>anyway without closing these<br>applications "
+"first?"
+msgstr ""
+
+#: src/bin/e_sys.c:275
+msgid "Logout now"
+msgstr ""
+
+#: src/bin/e_sys.c:276
+msgid "Wait longer"
+msgstr ""
+
+#: src/bin/e_sys.c:277
+msgid "Cancel Logout"
+msgstr ""
+
+#: src/bin/e_sys.c:315
+msgid "Logout in progress"
+msgstr ""
+
+#: src/bin/e_sys.c:318
+msgid "Logout is currently in progress.<br><hilight>Please wait.</hilight>"
+msgstr ""
+
+#: src/bin/e_sys.c:347 src/bin/e_sys.c:407
+#, fuzzy
+msgid "Enlightenment is busy with another request"
+msgstr "Enlightenmentu se nepodařilo spustit systém témat."
+
+#: src/bin/e_sys.c:353
+msgid ""
+"Enlightenment is busy logging out<br>You cannot perform other system "
+"actions<br>once a logout has begun."
+msgstr ""
+
+#: src/bin/e_sys.c:360
+msgid ""
+"Enlightenment is shutting the system down.<br>You cannot do any other system "
+"actions<br>once a shutdown has been started."
+msgstr ""
+
+#: src/bin/e_sys.c:367
+msgid ""
+"Enlightenment is rebooting the system.<br>You cannot do any other system "
+"actions<br>once a reboot has begun."
+msgstr ""
+
+#: src/bin/e_sys.c:374
+msgid ""
+"Enlightenment is suspending the system.<br>Until suspend is complete you "
+"cannot perform<br>any other system actions."
+msgstr ""
+
+#: src/bin/e_sys.c:381
+msgid ""
+"Enlightenment is hibernating the system.<br>You cannot perform an other "
+"system actions<br>until this is complete."
+msgstr ""
+
+#: src/bin/e_sys.c:388 src/bin/e_sys.c:433
+msgid "EEK! This should not happen"
+msgstr ""
+
+#: src/bin/e_sys.c:413
+msgid "Shutting down of your system failed."
+msgstr ""
+
+#: src/bin/e_sys.c:418
+msgid "Rebooting your system failed."
+msgstr ""
+
+#: src/bin/e_sys.c:423
+msgid "Suspend of your system failed."
+msgstr ""
+
+#: src/bin/e_sys.c:428
+msgid "Hibernating your system failed."
+msgstr ""
+
+#: src/bin/e_sys.c:478
+msgid "Shutting down"
+msgstr ""
+
+#: src/bin/e_sys.c:481
+msgid "Shutting down your Computer.<br><hilight>Please wait.</hilight>"
+msgstr ""
+
+#: src/bin/e_sys.c:505
+msgid "Rebooting"
+msgstr ""
+
+#: src/bin/e_sys.c:508
+msgid "Rebooting your Computer.<br><hilight>Please wait.</hilight>"
+msgstr ""
+
+#: src/bin/e_sys.c:531
+msgid "Suspending"
+msgstr ""
+
+#: src/bin/e_sys.c:534
+msgid "Suspending your Computer.<br><hilight>Please wait.</hilight>"
+msgstr ""
+
+#: src/bin/e_sys.c:557
+msgid "Hibernating"
+msgstr ""
+
+#: src/bin/e_sys.c:560
+msgid "Hibernating your Computer.<br><hilight>Please wait.</hilight>"
+msgstr ""
+
+#: src/bin/e_fm.c:1093
+#, c-format
+msgid "%i Files"
+msgstr ""
+
+#: src/bin/e_fm.c:4188 src/bin/e_fm.c:4316
+msgid "Refresh View"
+msgstr ""
+
+#: src/bin/e_fm.c:4199 src/bin/e_fm.c:4327
+msgid "Show Hidden Files"
+msgstr ""
+
+#: src/bin/e_fm.c:4212 src/bin/e_fm.c:4340
+msgid "Remember Ordering"
+msgstr ""
+
+#: src/bin/e_fm.c:4433
+msgid "Rename"
+msgstr ""
+
+#: src/bin/e_fm.c:4541
+msgid "Create a new Directory"
+msgstr ""
+
+#: src/bin/e_fm.c:4542
+msgid "New Directory Name:"
+msgstr ""
+
+#: src/bin/e_fm.c:4585 src/bin/e_fm.c:4698 src/bin/e_fm.c:4823
+#: src/bin/e_fm.c:4861
+msgid "Error"
+msgstr ""
+
+#: src/bin/e_fm.c:4587
+#, c-format
+msgid "Could not create directory:<br><hilight>%s</hilight>"
+msgstr ""
+
+#: src/bin/e_fm.c:4642
+#, c-format
+msgid "Rename %s to:"
+msgstr ""
+
+#: src/bin/e_fm.c:4644
+msgid "Rename File"
+msgstr ""
+
+#: src/bin/e_fm.c:4700
+#, c-format
+msgid "Could not rename from <hilight>%s</hilight> to <hilight>%s</hilight>"
+msgstr ""
+
+#: src/bin/e_fm.c:4751
+msgid "Confirm Delete"
+msgstr ""
+
+#: src/bin/e_fm.c:4755
+#, c-format
+msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
+msgstr ""
+
+#: src/bin/e_fm.c:4761
+#, c-format
+msgid ""
+"Are you sure you want to delete<br>the selected files in:<br><hilight>%s</"
+"hilight> ?"
+msgstr ""
+
+#: src/bin/e_fm.c:4825 src/bin/e_fm.c:4863
+#, c-format
+msgid "Could not delete <br><hilight>%s</hilight>"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:288
+msgid "Add to Favorites"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:302 src/bin/e_int_config_wallpaper_gradient.c:155
+#: src/bin/e_int_config_transitions.c:154
+msgid "Preview"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:323
+#, fuzzy
+msgid "Size:"
+msgstr "Velikost"
+
+#: src/bin/e_widget_fsel.c:338
+msgid "Owner:"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:353
+msgid "Permissions:"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:368
+msgid "Modified:"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:606
+#, c-format
+msgid "%'.0f Bytes"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:611
+#, c-format
+msgid "%'.0f KB"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:616
+#, c-format
+msgid "%'.0f MB"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:620
+#, c-format
+msgid "%'.1f GB"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:634
+#, c-format
+msgid "You"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:683
+#, c-format
+msgid "Protected"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:685 src/bin/e_widget_fsel.c:694
+#: src/bin/e_widget_fsel.c:703
+#, c-format
+msgid "Read Only"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:692 src/bin/e_widget_fsel.c:701
+#, c-format
+msgid "Forbidden"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:710
+msgid "Read-Write"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:725
+#, c-format
+msgid "In the Future"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:730
+#, c-format
+msgid "In the last Minute"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:732
+#, c-format
+msgid "%li Years ago"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:734
+#, c-format
+msgid "%li Months ago"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:736
+#, c-format
+msgid "%li Weeks ago"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:738
+#, c-format
+msgid "%li Days ago"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:740
+#, c-format
+msgid "%li Hours ago"
+msgstr ""
+
+#: src/bin/e_widget_fsel.c:742
+#, c-format
+msgid "%li Minutes ago"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper.c:90
+msgid "Wallpaper Settings"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper.c:524 src/bin/e_int_config_wallpaper.c:677
+msgid "Use Theme Wallpaper"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper.c:531 src/bin/e_int_config_wallpaper.c:684
+msgid "Picture..."
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper.c:534 src/bin/e_int_config_wallpaper.c:687
+msgid "Gradient..."
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper.c:702
+msgid "Where to place the Wallpaper"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper.c:706
+#, fuzzy
+msgid "All Desktops"
+msgstr "Plochy"
+
+#: src/bin/e_int_config_wallpaper.c:708
+#, fuzzy
+msgid "This Desktop"
+msgstr "Plochy"
+
+#: src/bin/e_int_config_wallpaper.c:710
+msgid "This Screen"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper_import.c:95
+msgid "Select a Picture..."
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper_import.c:147
+msgid "Fill and Stretch Options"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper_import.c:150
+#, fuzzy
+msgid "Stretch"
+msgstr "Start"
+
+#: src/bin/e_int_config_wallpaper_import.c:153
+#, fuzzy
+msgid "Center"
+msgstr "Aktualizovat"
+
+#: src/bin/e_int_config_wallpaper_import.c:156
+msgid "Tile"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper_import.c:159
+msgid "Within"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper_import.c:162
+msgid "Fill"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper_import.c:167
+msgid "File Quality"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper_import.c:169
+#, c-format
+msgid "%3.0f%%"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper_import.c:457
+msgid "Picture Import Error"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper_import.c:458
+msgid ""
+"Enlightenment was unable to import the picture<br>due to conversion errors."
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper_import.c:532
+#: src/bin/e_int_config_wallpaper_import.c:548
+msgid "Wallpaper Import Error"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper_import.c:533
+msgid "Enlightenment was unable to import the wallpaper<br>due to a copy error"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper_import.c:549
+msgid ""
+"Enlightenment was unable to import the wallpaper.<br><br>Are you sure this "
+"is a valid wallpaper?"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:45
+msgid "About Dialog Title"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:46
+msgid "About Dialog Version"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:47
+msgid "Border Title"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:48
+msgid "Configure Dialog Title"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:49
+msgid "Error Text"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:51
+msgid "Menu Title Active"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:53
+msgid "Menu Item Active"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:56
+msgid "Winlist Item"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:57
+msgid "Winlist Label"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:64
+#, fuzzy
+msgid "Widgets"
+msgstr "Vychytávky"
+
+#: src/bin/e_int_config_color_classes.c:65
+msgid "Button Text"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:66
+msgid "Button Text Disabled"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:67
+msgid "Check Text"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:68
+msgid "Check Text Disabled"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:69
+msgid "Entry Text"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:70
+msgid "Label Text"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:71
+msgid "List Item Text"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:72
+msgid "List Item Odd Text"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:74
+msgid "Radio Text"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:75
+msgid "Radio Text Disabled"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:76
+msgid "Slider Text"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:77
+msgid "Slider Text Disabled"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:84
+#, fuzzy
+msgid "Module Label"
+msgstr "Moduly"
+
+#: src/bin/e_int_config_color_classes.c:347
+msgid "Window Manager Colors"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:355
+msgid "Widget Colors"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:363
+#, fuzzy
+msgid "Module Colors"
+msgstr "Moduly"
+
+#: src/bin/e_int_config_color_classes.c:414
+msgid "Color Classes"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:423
+msgid "Object Color"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:431
+msgid "Outline Color"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:439
+msgid "Shadow Color"
+msgstr ""
+
+#: src/bin/e_int_config_color_classes.c:462
+msgid "Defaults"
+msgstr ""
+
+#: src/bin/e_int_config_icon_themes.c:59
+msgid "Icon Theme Settings"
+msgstr ""
+
+#: src/bin/e_int_config_icon_themes.c:175
+#, fuzzy
+msgid "Icon Themes"
+msgstr "Témata"
+
+#: src/bin/e_int_config_mousebindings.c:10
+msgid ""
+"Please hold any modifier you want<br>and press any button on your mouse,<br> "
+"or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
+"highlight> to abort."
+msgstr ""
+
+#: src/bin/e_int_config_mousebindings.c:119
+msgid "Mouse Binding Settings"
+msgstr ""
+
+#: src/bin/e_int_config_mousebindings.c:313
+msgid "Add Mouse"
+msgstr ""
+
+#: src/bin/e_int_config_mousebindings.c:318
+msgid "Delete Mouse"
+msgstr ""
+
+#: src/bin/e_int_config_mousebindings.c:326
+#, fuzzy
+msgid "Modify"
+msgstr "Ikonifikovat"
+
+#: src/bin/e_int_config_mousebindings.c:339
+msgid "Restore Mouse and Wheel Binding Defaults"
+msgstr ""
+
+#: src/bin/e_int_config_mousebindings.c:361
+msgid "Action Context"
+msgstr ""
+
+#: src/bin/e_int_config_mousebindings.c:365
+msgid "Any"
+msgstr ""
+
+#: src/bin/e_int_config_mousebindings.c:370
+msgid "Border"
+msgstr ""
+
+#: src/bin/e_int_config_mousebindings.c:382
+msgid "Win List"
+msgstr ""
+
+#: src/bin/e_int_config_mousebindings.c:387
+msgid "Popup"
+msgstr ""
+
+#: src/bin/e_int_config_mousebindings.c:392
+#: src/modules/ibox/e_mod_config.c:111
+msgid "Zone"
+msgstr ""
+
+#: src/bin/e_int_config_mousebindings.c:399
+#, fuzzy
+msgid "Container"
+msgstr "Kontejner %i"
+
+#: src/bin/e_int_config_mousebindings.c:404
+#, fuzzy
+msgid "Manager"
+msgstr "Nebezpečí"
+
+#: src/bin/e_int_config_mousebindings.c:1336
+msgid "Mouse Binding Sequence"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper_gradient.c:98
+msgid "Create a gradient..."
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper_gradient.c:121
+msgid "Name:"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper_gradient.c:125
+msgid "Color 1:"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper_gradient.c:129
+msgid "Color 2:"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper_gradient.c:165
+#, fuzzy
+msgid "Fill Options"
+msgstr "Nastavení"
+
+#: src/bin/e_int_config_wallpaper_gradient.c:178
+msgid "Diagonal Up"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper_gradient.c:183
+msgid "Diagonal Down"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper_gradient.c:188
+msgid "Radial"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper_gradient.c:370
+msgid "Gradient Creation Error"
+msgstr ""
+
+#: src/bin/e_int_config_wallpaper_gradient.c:371
+msgid "For some reason, Enlightenment was unable to create a gradient."
+msgstr ""
+
+#: src/bin/e_int_config_apps.c:376
+#, fuzzy
+msgid "Edit Application"
+msgstr "Oblíbené aplikace"
+
+#: src/bin/e_int_config_apps.c:508
+#, fuzzy
+msgid "Available Applications"
+msgstr "Oblíbené aplikace"
+
+#: src/bin/e_int_config_apps.c:564
+#, fuzzy
+msgid "Sort applications"
+msgstr "Oblíbené aplikace"
+
+#: src/bin/e_int_config_apps.c:573
+#, fuzzy
+msgid "Add application..."
+msgstr "(Žádné aplikace)"
+
+#: src/bin/e_int_config_apps.c:579
+#, fuzzy
+msgid "Create a new application"
+msgstr "Oblíbené aplikace"
+
+#: src/bin/e_int_config_apps.c:586
+#, fuzzy
+msgid "Regenerate \"Applications\" Menu"
+msgstr "Oblíbené aplikace"
+
+#: src/bin/e_int_config_apps.c:596
+msgid "Bars, Menus, etc."
+msgstr ""
+
+#: src/bin/e_int_config_apps.c:651
+#, fuzzy
+msgid "Move application up"
+msgstr "(Žádné aplikace)"
+
+#: src/bin/e_int_config_apps.c:657
+#, fuzzy
+msgid "Move application down"
+msgstr "(Žádné aplikace)"
+
+#: src/bin/e_int_config_theme_import.c:65
+msgid "Select a Theme..."
+msgstr ""
+
+#: src/bin/e_int_config_theme_import.c:268
+#: src/bin/e_int_config_theme_import.c:277
+msgid "Theme Import Error"
+msgstr ""
+
+#: src/bin/e_int_config_theme_import.c:269
+msgid ""
+"Enlightenment was unable to import the theme.<br><br>Are you sure this is "
+"really a valid theme?"
+msgstr ""
+
+#: src/bin/e_int_config_theme_import.c:278
+msgid "Enlightenment was unable to import the theme<br>due to a copy error."
+msgstr ""
+
+#: src/bin/e_int_config_transitions.c:44
+msgid "Transition Settings"
+msgstr ""
+
+#: src/bin/e_int_config_transitions.c:125
+msgid "Events"
+msgstr ""
+
+#: src/bin/e_int_config_transitions.c:130
+msgid "Desk Change"
+msgstr ""
+
+#: src/bin/e_int_config_transitions.c:131
+msgid "Background Change"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:136
+msgid "Battery"
+msgstr "Baterie"
+
+#: src/modules/battery/e_mod_main.c:303
+#, fuzzy
+msgid ""
+"Battery Running Low<br>Your battery is running low.<br>You may wish to "
+"switch to an AC source."
+msgstr ""
+"Vaše baterie je už skoro prázdná.\n"
+"Možná budete chtít přepnout na síťový zdroj."
+
+#: src/modules/battery/e_mod_main.c:349
+msgid "NO INFO"
+msgstr "ŽÁDNÉ INFO"
+
+#: src/modules/battery/e_mod_main.c:545 src/modules/battery/e_mod_main.c:858
+#: src/modules/battery/e_mod_main.c:1012
+msgid "NO BAT"
+msgstr "ŽÍDNÝ BAT"
+
+#: src/modules/battery/e_mod_main.c:569 src/modules/battery/e_mod_main.c:1037
+msgid "BAD DRIVER"
+msgstr "ŠPATNÝ OVLADAČ"
+
+#: src/modules/battery/e_mod_main.c:593 src/modules/battery/e_mod_main.c:894
+#: src/modules/battery/e_mod_main.c:1061
+msgid "FULL"
+msgstr "PLNO"
+
+#: src/modules/battery/e_mod_main.c:654 src/modules/battery/e_mod_main.c:1122
+msgid "High"
+msgstr "Vysoký"
+
+#: src/modules/battery/e_mod_main.c:658 src/modules/battery/e_mod_main.c:1126
+msgid "Low"
+msgstr "Nízké"
+
+#: src/modules/battery/e_mod_main.c:662 src/modules/battery/e_mod_main.c:1130
+msgid "Danger"
+msgstr "Nebezpečí"
+
+#: src/modules/battery/e_mod_main.c:666 src/modules/battery/e_mod_main.c:1134
+#: src/modules/battery/e_mod_main.c:1301
+msgid "Charging"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:1457
+msgid "Enlightenment Battery Module"
+msgstr "Modul baterie Enlightenment"
+
+#: src/modules/battery/e_mod_main.c:1458
+#, fuzzy
+msgid ""
+"A basic battery meter that uses either<hilight>ACPI</hilight> or "
+"<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
+"adaptor<br>status. This will work under Linux and FreeBSD and is only<br>as "
+"accurate as your BIOS or kernel drivers."
+msgstr ""
+"Základní měřič stavu baterie a zdroje, který používá buď\n"
+" ACPI nebo APM. Funguje pouze na Linuxu a je tak přesný,\n"
+"jak přesné jsou vaše jaderné ovladače nebo ovladač BIOSu."
+
+#: src/modules/battery/e_mod_config.c:37
+#, fuzzy
+msgid "Battery Monitor Configuration"
+msgstr "Nastavení"
+
+#: src/modules/battery/e_mod_config.c:79
+msgid "Basic Settings"
+msgstr ""
+
+#: src/modules/battery/e_mod_config.c:80
+#: src/modules/battery/e_mod_config.c:114
+msgid "Show alert when battery is low"
+msgstr ""
+
+#: src/modules/battery/e_mod_config.c:106
+msgid "Advanced Settings"
+msgstr ""
+
+#: src/modules/battery/e_mod_config.c:108
+msgid "Check battery every:"
+msgstr ""
+
+#: src/modules/battery/e_mod_config.c:111 src/modules/pager/e_mod_config.c:110
+#: src/modules/temperature/e_mod_config.c:335
+#, c-format
+msgid "%1.1f seconds"
+msgstr ""
+
+#: src/modules/battery/e_mod_config.c:117
+msgid "Alert when battery is down to:"
+msgstr ""
+
+#: src/modules/battery/e_mod_config.c:120
+#, c-format
+msgid "%1.0f minutes"
+msgstr ""
+
+#: src/modules/clock/e_mod_main.c:90
+msgid "Clock"
+msgstr "Hodiny"
+
+#: src/modules/clock/e_mod_main.c:150
+msgid "Enlightenment Clock Module"
+msgstr "Modul hodin Enlightenment"
+
+#: src/modules/clock/e_mod_main.c:151
+msgid "A simple module to give E17 a clock."
+msgstr "Jednoduchý modul, který dává E17 hodiny."
+
+#: src/modules/dropshadow/e_mod_main.c:157
+msgid "Enlightenment Dropshadow Module"
+msgstr "Modul stínů Enlightenment"
+
+#: src/modules/dropshadow/e_mod_main.c:158
+#, fuzzy
+msgid ""
+"This is the dropshadow module that allows dropshadows to be cast<br>on the "
+"desktop background - without special X-Server extensions<br>or hardware "
+"acceleration."
+msgstr ""
+"Modul, který umožňuje oknům vrhat stíny bez potřeby speciálních\n"
+"rozšíření X serveru nebo hardwarové akcelerace."
+
+#: src/modules/dropshadow/e_mod_config.c:37
+#, fuzzy
+msgid "Dropshadow Configuration"
+msgstr "Nastavení"
+
+#: src/modules/dropshadow/e_mod_config.c:104
+msgid "Quality"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_config.c:107
+msgid "High Quality"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_config.c:109
+#, fuzzy
+msgid "Medium Quality"
+msgstr "Střední"
+
+#: src/modules/dropshadow/e_mod_config.c:111
+msgid "Low Quality"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_config.c:115
+msgid "Blur Type"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_config.c:118
+msgid "Very Fuzzy"
+msgstr "Velmi neostré"
+
+#: src/modules/dropshadow/e_mod_config.c:120
+msgid "Fuzzy"
+msgstr "Neostré"
+
+#: src/modules/dropshadow/e_mod_config.c:124
+msgid "Sharp"
+msgstr "Ostré"
+
+#: src/modules/dropshadow/e_mod_config.c:126
+msgid "Very Sharp"
+msgstr "Velmi ostré"
+
+#: src/modules/dropshadow/e_mod_config.c:130
+msgid "Shadow Distance"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_config.c:133
+msgid "Very Far"
+msgstr "Velmi vzdálené"
+
+#: src/modules/dropshadow/e_mod_config.c:135
+msgid "Far"
+msgstr "Vzdálené"
+
+#: src/modules/dropshadow/e_mod_config.c:137
+#: src/modules/dropshadow/e_mod_config.c:141
+msgid "Near"
+msgstr "Blízké"
+
+#: src/modules/dropshadow/e_mod_config.c:139
+msgid "Very Near"
+msgstr "Velmi blízké"
+
+#: src/modules/dropshadow/e_mod_config.c:143
+#, fuzzy
+msgid "Underneath"
+msgstr "Těsně pod"
+
+#: src/modules/dropshadow/e_mod_config.c:147
+msgid "Shadow Darkness"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_config.c:150
+msgid "Very Dark"
+msgstr "Velmi tmavé"
+
+#: src/modules/dropshadow/e_mod_config.c:152
+msgid "Dark"
+msgstr "Tmavé"
+
+#: src/modules/dropshadow/e_mod_config.c:154
+msgid "Light"
+msgstr "Světlé"
+
+#: src/modules/dropshadow/e_mod_config.c:156
+msgid "Very Light"
+msgstr "Velmi světlé"
+
+#: src/modules/ibar/e_mod_main.c:212
+msgid "IBar"
+msgstr "IBar"
+
+#: src/modules/ibar/e_mod_main.c:841
+msgid "Add to IBar"
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:906
+msgid "Change Icon Properties"
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:911
+#, fuzzy
+msgid "Remove Icon"
+msgstr "Vytvořit ikonu"
+
+#: src/modules/ibar/e_mod_main.c:924
+#, fuzzy
+msgid "Add Application"
+msgstr "(Žádné aplikace)"
+
+#: src/modules/ibar/e_mod_main.c:1220
+msgid "Cannot add icon"
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:1222
+msgid ""
+"You tried to drop an icon of an application that<br>does not have a matching "
+"application file.<br><br>The icon cannot be added to IBar."
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:1393
+msgid "Enlightenment IBar Module"
+msgstr "Modul IBar Enlightenment"
+
+#: src/modules/ibar/e_mod_main.c:1394
+#, fuzzy
+msgid ""
+"This is the IBar Application Launcher bar module for Enlightenment.<br>It is "
+"a first example module and is being used to flesh out several<br>interfaces "
+"in Enlightenment 0.17.0. It is under heavy development,<br>so expect it to "
+"<hilight>break often</hilight> and change as it improves."
 msgstr ""
 "Toto je IBar - lišta pro spouštění aplikací pro Enlightenment.\n"
 "Je to první ukázkový modul a používá se k předvedení mnoha\n"
 "rozhraní v Enlightenment 0.17.0. Probíhá na něm intenzívní vývoj,\n"
 "takže očekávejte hodně chyb a změny k lepšímu."
 
-#: src/modules/ibox/e_mod_main.c:158
-msgid ""
-"This is the IBox Application Launcher box module for Enlightenment.\n"
-"It is a first example module and is being used to flesh out several\n"
-"Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
-"so expect it to break often and change as it improves."
+#: src/modules/ibar/e_mod_config.c:52
+#, fuzzy
+msgid "IBar Configuration"
+msgstr "Nastavení"
+
+#: src/modules/ibar/e_mod_config.c:97
+msgid "Selected Bar Source"
 msgstr ""
-"Toto je IBox - lišta pro spouštění aplikací pro Enlightenment.\n"
-"Je to první ukázkový modul a používá se k předvedení mnoha\n"
-"rozhraní v Enlightenment 0.17.0. Probíhá na něm intenzívní vývoj,\n"
-"takže očekávejte hodně chyb a změny k lepšímu."
 
-#: src/modules/dropshadow/e_mod_main.c:149
-msgid ""
-"This is the dropshadow module that allows dropshadows to be cast\n"
-"on the desktop background - without special X-Server extensions\n"
-"or hardware acceleration."
+#: src/modules/ibar/e_mod_config.c:114
+msgid "Icon Labels"
 msgstr ""
-"Modul, který umožňuje oknům vrhat stíny bez potřeby speciálních\n"
-"rozšíření X serveru nebo hardwarové akcelerace."
 
-#: src/modules/test/e_mod_main.c:67
-msgid ""
-"This module is VERY simple and is only used to test the basic\n"
-"interface of the Enlightenment 0.17.0 module system. Please\n"
-"Ignore this module unless you are working on the module system."
+#: src/modules/ibar/e_mod_config.c:115 src/modules/ibox/e_mod_config.c:97
+msgid "Show Icon Label"
 msgstr ""
-"Tenhle modul je VELMi jednoduchý a slouží pouze ke zkoušení základního\n"
-"rozhraní modulového systému Enlightenment 0.17.0. Prosím ignorujte jej,\n"
-"pokud se ovšem nezabýváte vývojem systému modulů."
 
-#: src/modules/ibar/e_mod_main.c:746
-#: src/modules/ibox/e_mod_main.c:606
-msgid "Tiny"
-msgstr "Drobný"
+#: src/modules/ibar/e_mod_config.c:121
+msgid "Display Eap Name"
+msgstr ""
 
-#: src/modules/dropshadow/e_mod_main.c:307
-msgid "Very Dark"
-msgstr "Velmi tmavé"
+#: src/modules/ibar/e_mod_config.c:125
+msgid "Display Eap Comment"
+msgstr ""
 
-#: src/modules/dropshadow/e_mod_main.c:346
-msgid "Very Far"
-msgstr "Velmi vzdálené"
+#: src/modules/ibar/e_mod_config.c:129
+msgid "Display Eap Generic"
+msgstr ""
 
-#: src/modules/dropshadow/e_mod_main.c:259
-msgid "Very Fuzzy"
-msgstr "Velmi neostré"
+#: src/modules/ibar/e_mod_config.c:160
+msgid "Create new ibar source"
+msgstr ""
 
-#: src/modules/ibar/e_mod_main.c:781
-#: src/modules/ibox/e_mod_main.c:641
-msgid "Very Large"
-msgstr "Velký"
+#: src/modules/ibar/e_mod_config.c:161
+msgid "Enter a name for this new source"
+msgstr ""
 
-#: src/modules/dropshadow/e_mod_main.c:334
-msgid "Very Light"
-msgstr "Velmi světlé"
+#: src/modules/ibar/e_mod_config.c:172
+#, c-format
+msgid ""
+"You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
+"bar source?"
+msgstr ""
 
-#: src/modules/dropshadow/e_mod_main.c:373
-msgid "Very Near"
-msgstr "Velmi blízké"
+#: src/modules/ibar/e_mod_config.c:177
+msgid "Are you sure you want to delete this bar source?"
+msgstr ""
 
-#: src/modules/dropshadow/e_mod_main.c:295
-msgid "Very Sharp"
-msgstr "Velmi ostré"
+#: src/modules/ibox/e_mod_main.c:221
+msgid "IBox"
+msgstr "IBox"
 
-#: src/modules/temperature/e_mod_main.c:490
-msgid "Very Slow (60 sec)"
-msgstr "Velmi pomalu (60 s)"
+#: src/modules/ibox/e_mod_main.c:1436
+msgid "Enlightenment IBox Module"
+msgstr "Modul IBox Enlightenment"
 
-#: src/modules/ibar/e_mod_main.c:753
-#: src/modules/ibox/e_mod_main.c:613
-msgid "Very Small"
+#: src/modules/ibox/e_mod_main.c:1437
+msgid ""
+"This is the IBox Iconified Application module for Enlightenment.<br>It will "
+"hold minimized applications"
+msgstr ""
+
+#: src/modules/ibox/e_mod_config.c:51
+#, fuzzy
+msgid "IBox Configuration"
+msgstr "Nastavení"
+
+#: src/modules/ibox/e_mod_config.c:100
+msgid "Display Name"
+msgstr ""
+
+#: src/modules/ibox/e_mod_config.c:102
+msgid "Display Title"
+msgstr ""
+
+#: src/modules/ibox/e_mod_config.c:104
+msgid "Display Class"
+msgstr ""
+
+#: src/modules/ibox/e_mod_config.c:106
+msgid "Display Icon Name"
+msgstr ""
+
+#: src/modules/ibox/e_mod_config.c:131
+msgid "Show windows from all zones"
+msgstr ""
+
+#: src/modules/ibox/e_mod_config.c:136
+msgid "Show windows from current zone"
+msgstr ""
+
+#: src/modules/ibox/e_mod_config.c:145
+msgid "Show windows from all desktops"
+msgstr ""
+
+#: src/modules/ibox/e_mod_config.c:150
+msgid "Show windows from active desktop"
+msgstr ""
+
+#: src/modules/pager/e_mod_main.c:218
+msgid "Pager"
+msgstr "Pager"
+
+#: src/modules/pager/e_mod_main.c:1820
+msgid "Enlightenment Pager Module"
+msgstr "Modul pageru Enlightenment"
+
+#: src/modules/pager/e_mod_main.c:1821
+msgid "A pager module to navigate virtual desktops."
+msgstr "Modul pageru pro pohyb mezi virtuálními plochami."
+
+#: src/modules/pager/e_mod_config.c:37
+#, fuzzy
+msgid "Pager Configuration"
+msgstr "Nastavení"
+
+#: src/modules/pager/e_mod_config.c:78 src/modules/pager/e_mod_config.c:106
+msgid "Show Popup"
+msgstr ""
+
+#: src/modules/pager/e_mod_config.c:100
+msgid "Resistance to Dragging Windows:"
+msgstr ""
+
+#: src/modules/pager/e_mod_config.c:101
+#, c-format
+msgid "%.0f px"
+msgstr ""
+
+#: src/modules/pager/e_mod_config.c:105
+msgid "Popup Settings"
+msgstr ""
+
+#: src/modules/pager/e_mod_config.c:108
+#, fuzzy
+msgid "Popup Speed"
+msgstr "Nastavit rychlost"
+
+#: src/modules/temperature/e_mod_main.c:106
+msgid "Temperature"
+msgstr "Teplota"
+
+#: src/modules/temperature/e_mod_main.c:468
+msgid "Enlightenment Temperature Module"
+msgstr "Modul teploty Enlightenment"
+
+#: src/modules/temperature/e_mod_main.c:469
+#, fuzzy
+msgid ""
+"A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux."
+"<br>It is especially useful for modern Laptops with high speed<br>CPUs that "
+"generate a lot of heat."
+msgstr ""
+"Modul využívající ACPI senzor k měření teploty na Linuxu.\n"
+"Největší uplatnění najde na moderních laptopech osazených rychlými CPU,\n"
+"které produkují mnoho tepla."
+
+#: src/modules/temperature/e_mod_config.c:61
+#, fuzzy
+msgid "Temperature Configuration"
+msgstr "Nastavení"
+
+#: src/modules/temperature/e_mod_config.c:162
+#: src/modules/temperature/e_mod_config.c:265
+msgid "Display Units"
+msgstr ""
+
+#: src/modules/temperature/e_mod_config.c:164
+#: src/modules/temperature/e_mod_config.c:267
+msgid "Celsius"
+msgstr ""
+
+#: src/modules/temperature/e_mod_config.c:166
+#: src/modules/temperature/e_mod_config.c:269
+msgid "Fahrenheit"
+msgstr ""
+
+#: src/modules/temperature/e_mod_config.c:170
+#: src/modules/temperature/e_mod_config.c:334
+msgid "Check Interval"
+msgstr "Aktualizovat"
+
+#: src/modules/temperature/e_mod_config.c:172
+msgid "Fast"
+msgstr ""
+
+#: src/modules/temperature/e_mod_config.c:176
+msgid "Slow"
+msgstr ""
+
+#: src/modules/temperature/e_mod_config.c:178
+#, fuzzy
+msgid "Very Slow"
 msgstr "Velmi malý"
 
-#: src/bin/e_int_menus.c:92
-msgid "Windows"
-msgstr "Okna"
+#: src/modules/temperature/e_mod_config.c:185
+#: src/modules/temperature/e_mod_config.c:209
+#: src/modules/temperature/e_mod_config.c:355
+#: src/modules/temperature/e_mod_config.c:367
+msgid "High Temperature"
+msgstr "Horní mez teploty"
 
-#: src/bin/e_init.c:35
+#: src/modules/temperature/e_mod_config.c:188
+msgid "200 F"
+msgstr ""
+
+#: src/modules/temperature/e_mod_config.c:190
+msgid "150 F"
+msgstr ""
+
+#: src/modules/temperature/e_mod_config.c:192
+#: src/modules/temperature/e_mod_config.c:201
+msgid "110 F"
+msgstr ""
+
+#: src/modules/temperature/e_mod_config.c:196
+#: src/modules/temperature/e_mod_config.c:220
+#: src/modules/temperature/e_mod_config.c:360
+#: src/modules/temperature/e_mod_config.c:372
+msgid "Low Temperature"
+msgstr "Dolní mez teploty"
+
+#: src/modules/temperature/e_mod_config.c:199
+msgid "130 F"
+msgstr ""
+
+#: src/modules/temperature/e_mod_config.c:203
+msgid "90 F"
+msgstr ""
+
+#: src/modules/temperature/e_mod_config.c:212
+msgid "93 C"
+msgstr ""
+
+#: src/modules/temperature/e_mod_config.c:214
+msgid "65 C"
+msgstr ""
+
+#: src/modules/temperature/e_mod_config.c:216
+#: src/modules/temperature/e_mod_config.c:225
+msgid "43 C"
+msgstr ""
+
+#: src/modules/temperature/e_mod_config.c:223
+msgid "55 C"
+msgstr ""
+
+#: src/modules/temperature/e_mod_config.c:227
+msgid "32 C"
+msgstr ""
+
+#: src/modules/temperature/e_mod_config.c:297
+msgid "Sensors"
+msgstr ""
+
+#: src/modules/temperature/e_mod_config.c:299
+msgid "Temp 1"
+msgstr ""
+
+#: src/modules/temperature/e_mod_config.c:301
+msgid "Temp 2"
+msgstr ""
+
+#: src/modules/temperature/e_mod_config.c:303
+msgid "Temp 3"
+msgstr ""
+
+#: src/modules/temperature/e_mod_config.c:316
+#, fuzzy
+msgid "ACPI Temperature"
+msgstr "Teplota"
+
+#: src/modules/temperature/e_mod_config.c:356
+#: src/modules/temperature/e_mod_config.c:361
 #, c-format
-msgid "X reports there are no root windows and %i screens!\n"
-msgstr "X hlásí, že tu nejsou žádná root-okna a %i obrazovek!\n"
-
-#: src/modules/battery/e_mod_main.c:687
-msgid ""
-"Your battery is running low.\n"
-"You may wish to switch to an AC source."
+msgid "%1.0f F"
 msgstr ""
-"Vaše baterie je už skoro prázdná.\n"
-"Možná budete chtít přepnout na síťový zdroj."
 
-#: src/bin/e_config.c:171
-msgid ""
-"Your configuration is NEWER than Enlightenment. This is very\n"
-"strange. This should not happen unless you downgraded\n"
-"Enlightenment or copied the configuration from a place where\n"
-"a newer version of Enlightenment was running. This is bad and\n"
-"as a precaution your confiugration has been now restored to\n"
-"defaults. Sorry for the inconvenience.\n"
+#: src/modules/temperature/e_mod_config.c:368
+#: src/modules/temperature/e_mod_config.c:373
+#, fuzzy, c-format
+msgid "%1.0f C"
+msgstr "10 °C"
+
+#: src/modules/cpufreq/e_mod_main.c:129
+#, fuzzy
+msgid "Cpufreq"
+msgstr "CpuFreq"
+
+#: src/modules/cpufreq/e_mod_main.c:169
+#, fuzzy
+msgid "Fast (0.5 sec)"
+msgstr "Rychle (1 s)"
+
+#: src/modules/cpufreq/e_mod_main.c:176
+#, fuzzy
+msgid "Medium (1 sec)"
+msgstr "Střední (5 s)"
+
+#: src/modules/cpufreq/e_mod_main.c:183
+#, fuzzy
+msgid "Normal (2 sec)"
+msgstr "Normální (10 s)"
+
+#: src/modules/cpufreq/e_mod_main.c:190
+#, fuzzy
+msgid "Slow (5 sec)"
+msgstr "Pomalu (30 s)"
+
+#: src/modules/cpufreq/e_mod_main.c:197
+#, fuzzy
+msgid "Very Slow (30 sec)"
+msgstr "Velmi pomalu (60 s)"
+
+#: src/modules/cpufreq/e_mod_main.c:212
+msgid "Manual"
+msgstr "Ruční"
+
+#: src/modules/cpufreq/e_mod_main.c:216
+#, fuzzy
+msgid "Lower Power Automatic"
+msgstr "Automatický"
+
+#: src/modules/cpufreq/e_mod_main.c:218
+msgid "Minimum Speed"
+msgstr "Minimální rychlost"
+
+#: src/modules/cpufreq/e_mod_main.c:220
+msgid "Maximum Speed"
+msgstr "Maximální rychlost"
+
+#: src/modules/cpufreq/e_mod_main.c:242
+#, fuzzy, c-format
+msgid "%i MHz"
+msgstr "%i MHz"
+
+#: src/modules/cpufreq/e_mod_main.c:244
+#, fuzzy, c-format
+msgid "%i.%i GHz"
+msgstr "%i.%i GHz"
+
+#: src/modules/cpufreq/e_mod_main.c:261
+msgid "Time Between Updates"
 msgstr ""
-"Vaše nastavení je NOVĚJŠÍ než Enlightenment. To je hoodně\n"
-"zvláštní. Nemělo by se to stát, pokud jste ovšem nedowngradovali\n"
-"Enlightenment nebo nekopírovali soubory s nastavením z místa, kde\n"
-"běžela novější verze Enlightenmentu. Je to zlé a jako protiopatření\n"
-"bylo vaše nastavení vráceno do původních hodnot.\n"
-"Omlouvám se za nepohodlí.\n"
+
+#: src/modules/cpufreq/e_mod_main.c:267
+msgid "Restore CPU Power Policy"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:273
+msgid "Set CPU Power Policy"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:280
+#, fuzzy
+msgid "Set CPU Speed"
+msgstr "Nastavit rychlost"
+
+#: src/modules/cpufreq/e_mod_main.c:331
+#, fuzzy
+msgid ""
+"There was an error trying to set the<br>cpu frequency governor via the "
+"module's<br>setfreq utility."
+msgstr ""
+"Došlo k chybě při pokusu nastavit frekvenci CPU\n"
+"pomocí utility setfreq modulu."
+
+#: src/modules/cpufreq/e_mod_main.c:357
+msgid ""
+"Your kernel does not support setting the<br>CPU frequency at all. You may be "
+"missing<br>Kernel modules or features, or your CPU<br>simply does not "
+"support this feature."
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:377
+#, fuzzy
+msgid ""
+"There was an error trying to set the<br>cpu frequency setting via the "
+"module's<br>setfreq utility."
+msgstr ""
+"Došlo k chybě při pokusu nastavit frekvenci CPU\n"
+"pomocí utility setfreq modulu."
+
+#: src/modules/cpufreq/e_mod_main.c:942
+msgid "CPU Frequency Controller Module"
+msgstr "Modul pro ovládání frekvence CPU"
+
+#: src/modules/cpufreq/e_mod_main.c:943
+msgid ""
+"A simple module to control the frequency of the system CPU.<br>This is "
+"especially useful to save power on laptops."
+msgstr ""
+
+#: src/modules/start/e_mod_main.c:102
+msgid "Start"
+msgstr "Start"
+
+#: src/modules/start/e_mod_main.c:258
+msgid "Enlightenment Start Module"
+msgstr "Modul Start Enlightenment"
+
+#: src/modules/start/e_mod_main.c:259
+msgid "Experimental Button module for E17"
+msgstr "Experimentální hlavní nabídka pro E17"
+
+#: src/modules/itray/e_mod_config.c:45
+#, fuzzy
+msgid "ITray Configuration"
+msgstr "Nastavení"
+
+#: src/modules/itray/e_mod_config.c:106
+msgid "Number of Rows"
+msgstr ""
+
+#: src/modules/itray/e_mod_config.c:107
+#, c-format
+msgid "%3.0f"
+msgstr ""
+
+#: src/modules/itray/e_mod_main.c:161
+#, fuzzy
+msgid "Enlightenment ITray Module"
+msgstr "Modul IBar Enlightenment"
+
+#: src/modules/itray/e_mod_main.c:162
+msgid ""
+"This is the ITray system tray module for Enlightenment.<br>It will hold "
+"system tray icons.<br>Beware that this can be buggy due to many systray "
+"providing<br>applications not handling the protocol properly, and the "
+"way<br>systray icons work being very limiting and hacky. Do not use<br>this "
+"module unless you absolutely must, and if you do, beware<br>of issues that "
+"will appear."
+msgstr ""
+
+#: src/modules/itray/e_mod_main.c:423
+msgid "Edit Mode"
+msgstr "Režim úprav"
+
+#~ msgid "(Empty)"
+#~ msgstr "(Prázdné)"
+
+#~ msgid "(Unused)"
+#~ msgstr "(Nepoužito)"
+
+#~ msgid "1 hour"
+#~ msgstr "1 hodina"
+
+#~ msgid "100C"
+#~ msgstr "100 °C"
+
+#~ msgid "20C"
+#~ msgstr "20 °C"
+
+#~ msgid "30C"
+#~ msgstr "30 °C"
+
+#~ msgid "40C"
+#~ msgstr "40 °C"
+
+#~ msgid "50C"
+#~ msgstr "50 °C"
+
+#~ msgid "60C"
+#~ msgstr "60 °C"
+
+#~ msgid "70C"
+#~ msgstr "70 °C"
+
+#~ msgid "80C"
+#~ msgstr "80 °C"
+
+#~ msgid "90C"
+#~ msgstr "90 °C"
+
+#~ msgid "Artificially slowing startup so you can see it all."
+#~ msgstr "Uměle brzdím start aby bylo všecko vidět."
+
+#~ msgid "Auto fit icons"
+#~ msgstr "Automaticky zvětšovat ikony"
+
+#~ msgid "Battery Running Low"
+#~ msgstr "Baterie "
+
+#~ msgid "CPU Frequency ERROR"
+#~ msgstr "CHYBA frekvence CPU"
+
+#~ msgid "Check Fast (0.5 sec)"
+#~ msgstr "Rychle (0,5 s)"
+
+#~ msgid "Check Fast (1 sec)"
+#~ msgstr "Rychle (1 s)"
+
+#~ msgid "Check Medium (1 sec)"
+#~ msgstr "Středně rychle (1 s)"
+
+#~ msgid "Check Medium (5 sec)"
+#~ msgstr "Středně rychle (5 s)"
+
+#~ msgid "Check Normal (10 sec)"
+#~ msgstr "Normálně (10 s)"
+
+#~ msgid "Check Normal (2 sec)"
+#~ msgstr "Normálně (2 s)"
+
+#~ msgid "Check Slow (30 sec)"
+#~ msgstr "Pomalu (30 s)"
+
+#~ msgid "Check Slow (5 sec)"
+#~ msgstr "Pomalu (5 s)"
+
+#~ msgid "Check Very Slow (30 sec)"
+#~ msgstr "Velmi pomalu (30 s)"
+
+#~ msgid "Check Very Slow (60 sec)"
+#~ msgstr "Velmi pomalu (60 s)"
+
+#~ msgid "Dropshadow"
+#~ msgstr "Stíny"
+
+#~ msgid "End Edit Mode"
+#~ msgstr "Ukončit režim úprav"
+
+#~ msgid "Enlightenment IPC setup error!"
+#~ msgstr "Modul  Enlightenment"
+
+#~ msgid ""
+#~ "Enlightenment cannot set up the IPC socket.\n"
+#~ "It likely is already in use by an exisiting copy of Enlightenment.\n"
+#~ "Double check to see if Enlightenment is not already on this display,\n"
+#~ "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
+#~ "and try running again."
+#~ msgstr ""
+#~ "Enlightenmentu se nepodařilo otevřít svůj IPC socket.\n"
+#~ "Je pravděpodobné, že je již používán běžící kopií Enlightenmentu.\n"
+#~ "Zkontrolujte, zda Enlightenment již neběží na této obrazovce,\n"
+#~ "pokud ne, smažte všechny soubory ~/.ecore/enlightenment-*\n"
+#~ "a zkuste spustit znova."
+
+#~ msgid "Enormous"
+#~ msgstr "Obrovský"
+
+#~ msgid ""
+#~ "Error initializing Module: Battery\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "Chyba nahrávání modulu: Baterie\n"
+#~ "Je zapotřebí API modul s verzí minimálně %i.\n"
+#~ "API modul v Enlightenmentu má verzi %i.\n"
+#~ "Ukončuji modul."
+
+#~ msgid ""
+#~ "Error initializing Module: Clock\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Zastavuji module."
+#~ msgstr ""
+#~ "Chyba nahrávání modulu: Hodiny\n"
+#~ "Je zapotřebí API modul s verzí minimálně %i.\n"
+#~ "API modul v Enlightenmentu má verzi %i.\n"
+#~ "Ukončuji modul."
+
+#~ msgid ""
+#~ "Error initializing Module: Dropshadow\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "Chyba nahrávání modulu: Stíny\n"
+#~ "Je zapotřebí API modul s verzí minimálně %i.\n"
+#~ "API modul v Enlightenmentu má verzi %i.\n"
+#~ "Ukončuji modul."
+
+#~ msgid ""
+#~ "Error initializing Module: IBar\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "Chyba nahrávání modulu: IBar\n"
+#~ "Je zapotřebí API modul s verzí minimálně %i.\n"
+#~ "API modul v Enlightenmentu má verzi %i.\n"
+#~ "Ukončuji modul."
+
+#~ msgid ""
+#~ "Error initializing Module: IBox\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "Chyba nahrávání modulu: Ibox\n"
+#~ "Je zapotřebí API modul s verzí minimálně %i.\n"
+#~ "API modul v Enlightenmentu má verzi %i.\n"
+#~ "Ukončuji modul."
+
+#~ msgid ""
+#~ "Error initializing Module: Pager\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "Chyba nahrávání modulu: Pager\n"
+#~ "Je zapotřebí API modul s verzí minimálně %i.\n"
+#~ "API modul v Enlightenmentu má verzi %i.\n"
+#~ "Ukončuji modul."
+
+#~ msgid ""
+#~ "Error initializing Module: Temperature\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "Chyba nahrávání modulu: Teplota\n"
+#~ "Je zapotřebí API modul s verzí minimálně %i.\n"
+#~ "API modul v Enlightenmentu má verzi %i.\n"
+#~ "Ukončuji modul."
+
+#~ msgid ""
+#~ "Error initializing Module: cpufreq\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "Chyba nahrávání modulu: CpuFreq\n"
+#~ "Je zapotřebí API modul s verzí minimálně %i.\n"
+#~ "API modul v Enlightenmentu má verzi %i.\n"
+#~ "Ukončuji modul."
+
+#~ msgid ""
+#~ "Error initializing Module: test\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "Chyba nahrávání modulu: test\n"
+#~ "Je zapotřebí API modul s verzí minimálně %i.\n"
+#~ "API modul v Enlightenmentu má verzi %i.\n"
+#~ "Ukončuji modul."
+
+#~ msgid ""
+#~ "Error starting icon editor\n"
+#~ "\n"
+#~ "please install e_util_eapp_edit\n"
+#~ "or make sure it is in your PATH\n"
+#~ msgstr ""
+#~ "Chyba při spouštění editoru ikon\n"
+#~ "\n"
+#~ "prosím nainstalujte e_util_eapp_edit\n"
+#~ "nebo zajistěte, aby byl ve vaší PATH\n"
+
+#~ msgid "Extremely Large"
+#~ msgstr "Hodně velký"
+
+#~ msgid "Extremely Near"
+#~ msgstr "Extrémně blízké"
+
+#~ msgid "Gigantic"
+#~ msgstr "Gigantický"
+
+#~ msgid "Half Screen Height"
+#~ msgstr "Šířka přes polovinu obrazovky"
+
+#~ msgid "Half Screen Width"
+#~ msgstr "Výška přes polovinu obrazovky"
+
+#~ msgid "Module API Error"
+#~ msgstr "Chyba API modulu"
+
+#~ msgid "Most features do not work yet, and those that do are buggy."
+#~ msgstr "Většina věcí ještě nefunguje, a ty které ano jdou špatně."
+
+#~ msgid "Remove Column of Desktops"
+#~ msgstr "Odstranit sloupec ploch"
+
+#~ msgid "Remove Row of Desktops"
+#~ msgstr "Odstranit řádek ploch"
+
+#~ msgid "Restart Enlightenment"
+#~ msgstr "Restartovat Enlightenment"
+
+#~ msgid "Send To"
+#~ msgstr "Poslat na"
+
+#~ msgid "Set Alarm"
+#~ msgstr "Nastavit alarm"
+
+#~ msgid "Set Controller"
+#~ msgstr "Nastavit ovladač"
+
+#~ msgid "Set Poll Time"
+#~ msgstr "Aktualizovat"
+
+#~ msgid "Something Else"
+#~ msgstr "Něco jiného"
+
+#~ msgid "Test!!!"
+#~ msgstr "Test!!!"
+
+#~ msgid ""
+#~ "This is Enlightenment %s.\n"
+#~ "Copyright © 1999-2005, by the Enlightenment Dev Team.\n"
+#~ "\n"
+#~ "We hope you enjoy using this software as much as we enjoyed writing it.\n"
+#~ "\n"
+#~ "Please think of the aardvarks. They need some love too."
+#~ msgstr ""
+#~ "Enlightenment %s.\n"
+#~ "Copyright © 1999-2005, Enlightenment Dev Team.\n"
+#~ "\n"
+#~ "Doufáme, že se vám tento software bude líbit stejně, jako nás baví jej "
+#~ "psát.\n"
+#~ "\n"
+#~ "Please think of the aardvarks. They need some love too."
+
+#~ msgid "This is development code, so be warned."
+#~ msgstr "Tohle je vývojový kód, byli jste varováni..."
+
+#~ msgid ""
+#~ "This is the IBox Application Launcher box module for Enlightenment.\n"
+#~ "It is a first example module and is being used to flesh out several\n"
+#~ "Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
+#~ "so expect it to break often and change as it improves."
+#~ msgstr ""
+#~ "Toto je IBox - lišta pro spouštění aplikací pro Enlightenment.\n"
+#~ "Je to první ukázkový modul a používá se k předvedení mnoha\n"
+#~ "rozhraní v Enlightenment 0.17.0. Probíhá na něm intenzívní vývoj,\n"
+#~ "takže očekávejte hodně chyb a změny k lepšímu."
+
+#~ msgid ""
+#~ "This module is VERY simple and is only used to test the basic\n"
+#~ "interface of the Enlightenment 0.17.0 module system. Please\n"
+#~ "Ignore this module unless you are working on the module system."
+#~ msgstr ""
+#~ "Tenhle modul je VELMi jednoduchý a slouží pouze ke zkoušení základního\n"
+#~ "rozhraní modulového systému Enlightenment 0.17.0. Prosím ignorujte jej,\n"
+#~ "pokud se ovšem nezabýváte vývojem systému modulů."
+
+#~ msgid "Very Large"
+#~ msgstr "Velký"

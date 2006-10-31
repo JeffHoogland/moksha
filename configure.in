@@ -138,8 +138,6 @@ AC_CHECK_HEADERS(CFBase.h,
     cf_cflags="-I /System/Library/Frameworks/CoreFoundation.framework/Headers"
     cf_cflags="${cf_cflags} -I /System/Library/Frameworks/IOKit.framework/Headers"
     cf_libs="-framework 'CoreFoundation' -framework 'IOKit'"
-  ],[
-    AC_MSG_WARN([Cannot find CoreFoundation headers and libraries.])
   ]
 )
 CPPFLAGS="${PCPPFLAGS}"
@@ -150,8 +148,8 @@ AC_SUBST(cf_libs)
 ALL_LINGUAS="bg de eo es fi fr ja pt ru zh_CN hu sl it cs da sk sv nb nl zh_TW"
 AC_SUBST(ALL_LINGUAS)
 
-AM_GNU_GETTEXT
-AM_GNU_GETTEXT_VERSION(0.12.1)
+AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([0.14.6])
 if test "x$LIBINTL" = "x"; then
   LIBINTL="$INTLLIBS"
 fi
@@ -298,7 +296,6 @@ data/etc/Makefile
 data/icons/Makefile
 doc/Makefile
 po/Makefile.in
-intl/Makefile
 enlightenment-config
 debian/changelog
 ],[
