@@ -58,6 +58,9 @@ Some of the things (in very short form) that need to be done to E17...
   CLEANUPS
 -------------------------------------------------------------------------------
 
+* need a config to add new mime types (or edit existing ones).
+* e app editor needs to be able to let users select what mime types that app
+  can handle :)
 * applications config dialog is good - but "complex". people ask simple
   questions like "how do i add an app to my launcher bar", "how do i run an
   app on startup?". nice and generic tho the app config is - maybe it needs
