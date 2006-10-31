@@ -17,6 +17,10 @@ Some of the things (in very short form) that need to be done to E17...
 -------------------------------------------------------------------------------
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
+
+* fm2 needs recursive deletes, moves, etc. that run in the "background"
+  (idlers, etc.) and might pop up a progress dialog (or display progress in
+  the fm2 view somehow).
 * fm2 needs a right-click file properties dialog
 * fm2 needs a way to set custom backgrounds and handle scrolling
 * fm2 needs to display symlink info on files somehow
