@@ -32,6 +32,8 @@ Some of the things (in very short form) that need to be done to E17...
   (disable/enable rename/delete/refresh etc.)
 * fm2 needs a mime filter
 * fwin: multi-mime open is too simplisitc. fix in fwin.c line 590 or so.
+* full fm2 support as an icon fm needs work - beyond fsel needs and for icons
+  on the desktop etc. etc.
 * middle mouse on gadgets as a quick move/resize thing?
 * language packs: need to have a tool to load/setup a language pack (which
   means .mo compiled files from a .po, an optional font and a config file that
@@ -56,6 +58,8 @@ Some of the things (in very short form) that need to be done to E17...
   CLEANUPS
 -------------------------------------------------------------------------------
 
+* emit more signals to window borders when window move starts, stops, resize
+  starts, stops, on raise, lower, etc. etc.
 * client list menu could do with work on ordering, using separators to demark
   this desktop and other desktops, sorting by recently used, separate
   section for iconified apps etc. etc - configurable.
@@ -94,8 +98,6 @@ Some of the things (in very short form) that need to be done to E17...
 * enlightenment_remote cmd's for logout, hibernate, reboot, suspend.
 * nice to have a menu item for a window for "add keyboard shortcut to run this
   app" would be nice usability
-* full fm2 support as an icon fm needs work - beyond fsel needs and for icons
-  on the desktop etc. etc.
 * switch to desktop of a new window if it opens on another desktop than the
   current one (optional too)
 * emit signal to submenu entries if they have a submenu shown for them or not
@@ -105,7 +107,6 @@ Some of the things (in very short form) that need to be done to E17...
 * add non-opaque move/resize (use shaped windows with canvases etc.)
 * add "osd" subsystem for things like volume controls on keybboards, etc.
   that overlay the screen
-* file icons on the desktop (people ask for it) - xdnd for these
 * pager should be able to be configured to control more than the current zone
   (select which zone they control)
 * icons for all config panel items
@@ -124,8 +125,8 @@ Some of the things (in very short form) that need to be done to E17...
   that it could share in cache, and then punt the original back to cache.
 * evas could support 8bbp alpha only images for dropshadow
 * on disk app cache for .desktop files, icons and paths
-* new fm code's file scanning isn't insanely fast - icon size calcs etc. speed
+* new fm2 code's file scanning isn't insanely fast - icon size calcs etc. speed
   up for special cases like list view?
-* new fm code re-lays-out a dir every time the queue is processed - maybe try
+* new fm2 code re-lays-out a dir every time the queue is processed - maybe try
   to speed this up
 ]]]
