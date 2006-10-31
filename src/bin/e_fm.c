@@ -617,6 +617,30 @@ e_fm2_icon_menu_end_extend_callback_set(Evas_Object *obj, void (*func) (void *da
 }
 
 EAPI void
+e_fm2_icon_menu_flags_set(Evas_Object *obj, E_Fm2_Menu_Flags flags)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+   sd->icon_menu.flags = flags;
+}
+
+EAPI E_Fm2_Menu_Flags
+e_fm2_icon_menu_flags_get(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return 0; // safety
+   if (!evas_object_type_get(obj)) return 0; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return 0; // safety
+   return sd->icon_menu.flags;
+}
+
+EAPI void
 e_fm2_window_object_set(Evas_Object *obj, E_Object *eobj)
 {
    E_Fm2_Smart_Data *sd;
@@ -4265,7 +4289,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
    E_Container *con;
    E_Zone *zone;
    Evas_List *sel;
-   int x, y, can_w, can_w2, protected;
+   int x, y, can_w, can_w2, protect;
    char buf[4096];
    
    sd = ic->sd;
@@ -4382,12 +4406,12 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	if ((!sel) || evas_list_count(sel) == 1)
 	  {
 	     snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, ic->info.file);
-	     protected = e_filereg_file_protected(buf);
+	     protect = e_filereg_file_protected(buf);
 	  }
 	else
-	protected = 0;
+	  protect = 0;
 	
-	if ((can_w) && (can_w2) && !(protected))
+	if ((can_w) && (can_w2) && !(protect))
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_separator_set(mi, 1);

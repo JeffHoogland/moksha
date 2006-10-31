@@ -533,6 +533,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    fmc_all.selection.single = 1;
    fmc_all.selection.windows_modifiers = 0;
    e_fm2_config_set(mt, &fmc_all);
+   e_fm2_icon_menu_flags_set(mt, E_FM2_MENU_NO_SHOW_HIDDEN);
    evas_object_smart_callback_add(mt, "dir_changed",
 					_cb_files_dir_changed_all, cfdata);
    evas_object_smart_callback_add(mt, "selected",
@@ -620,6 +621,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
          fmc.selection.single = 1;
          fmc.selection.windows_modifiers = 0;
          e_fm2_config_set(mt, &fmc);
+	 e_fm2_icon_menu_flags_set(mt, E_FM2_MENU_NO_SHOW_HIDDEN);
          evas_object_smart_callback_add(mt, "dir_changed",
 					_cb_files_dir_changed, cfdata);
          evas_object_smart_callback_add(mt, "selection_change",

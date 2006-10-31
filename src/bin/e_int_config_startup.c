@@ -310,6 +310,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    fmc.selection.single = 1;
    fmc.selection.windows_modifiers = 0;
    e_fm2_config_set(o, &fmc);
+   e_fm2_icon_menu_flags_set(o, E_FM2_MENU_NO_SHOW_HIDDEN);
    evas_object_smart_callback_add(o, "dir_changed",
 				  _cb_files_changed, cfdata);
    evas_object_smart_callback_add(o, "selection_change",
