@@ -1072,31 +1072,7 @@ e_config_init(void)
 	//FIXME: If new wheel binding are added/changed/modified, then do not
 	//forget to reflect those changes in e_int_config_mousebinding.c in
 	//_restore_defaults_cb function
-	
-	CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 0, -1,
-		      E_BINDING_MODIFIER_NONE, 1,
-		      "desk_linear_flip_by", "-1");
-	CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 1, -1,
-		      E_BINDING_MODIFIER_NONE, 1,
-		      "desk_linear_flip_by", "-1");
-	CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 0, 1,
-		      E_BINDING_MODIFIER_NONE, 1,
-		      "desk_linear_flip_by", "1");
-	CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 1, 1,
-		      E_BINDING_MODIFIER_NONE, 1,
-		      "desk_linear_flip_by", "1");
-	CFG_WHEELBIND(E_BINDING_CONTEXT_POPUP, 0, -1,
-		      E_BINDING_MODIFIER_NONE, 1,
-		      "desk_linear_flip_by", "-1");
-	CFG_WHEELBIND(E_BINDING_CONTEXT_POPUP, 1, -1,
-		      E_BINDING_MODIFIER_NONE, 1,
-		      "desk_linear_flip_by", "-1");
-	CFG_WHEELBIND(E_BINDING_CONTEXT_POPUP, 0, 1,
-		      E_BINDING_MODIFIER_NONE, 1,
-		      "desk_linear_flip_by", "1");
-	CFG_WHEELBIND(E_BINDING_CONTEXT_POPUP, 1, 1,
-		      E_BINDING_MODIFIER_NONE, 1,
-		      "desk_linear_flip_by", "1");
+
 	CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 0, -1,
 		      E_BINDING_MODIFIER_ALT, 0,
 		      "desk_linear_flip_by", "-1");

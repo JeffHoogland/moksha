@@ -665,22 +665,6 @@ _restore_mouse_binding_defaults_cb(void *data, void *data2)
    bw->params = _params == NULL ? NULL : evas_stringshare_add(_params); \
    cfdata->binding.wheel = evas_list_append(cfdata->binding.wheel, bw) 
    
-   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_CONTAINER, 0, -1, E_BINDING_MODIFIER_NONE, 1, 
-	 "desk_linear_flip_by", "-1"); 
-   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_CONTAINER, 1, -1, E_BINDING_MODIFIER_NONE, 1, 
-	 "desk_linear_flip_by", "-1"); 
-   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_CONTAINER, 0, 1, E_BINDING_MODIFIER_NONE, 1, 
-	 "desk_linear_flip_by", "1"); 
-   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_CONTAINER, 1, 1, E_BINDING_MODIFIER_NONE, 1, 
-	 "desk_linear_flip_by", "1"); 
-   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_POPUP, 0, -1, E_BINDING_MODIFIER_NONE, 1, 
-	 "desk_linear_flip_by", "-1"); 
-   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_POPUP, 1, -1, E_BINDING_MODIFIER_NONE, 1, 
-	 "desk_linear_flip_by", "-1"); 
-   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_POPUP, 0, 1, E_BINDING_MODIFIER_NONE, 1, 
-	 "desk_linear_flip_by", "1"); 
-   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_POPUP, 1, 1, E_BINDING_MODIFIER_NONE, 1, 
-	 "desk_linear_flip_by", "1"); 
    CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_CONTAINER, 0, -1, E_BINDING_MODIFIER_ALT, 0, 
 	 "desk_linear_flip_by", "-1"); 
    CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_CONTAINER, 1, -1, E_BINDING_MODIFIER_ALT, 0, 

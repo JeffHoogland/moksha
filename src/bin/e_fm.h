@@ -14,7 +14,15 @@ typedef enum _E_Fm2_View_Mode
    E_FM2_VIEW_MODE_CUSTOM_SMART_GRID_ICONS, /* icons go anywhere u drop them but try align to icons nearby */
    E_FM2_VIEW_MODE_LIST /* vertical fileselector list */
 } E_Fm2_View_Mode;
-
+typedef enum _E_Fm2_Menu_Flags
+{
+   E_FM2_MENU_NO_REFRESH           = (1 << 0),
+   E_FM2_MENU_NO_SHOW_HIDDEN       = (1 << 1),
+   E_FM2_MENU_NO_REMEMBER_ORDERING = (1 << 2),
+   E_FM2_MENU_NO_NEW_DIRECTORY     = (1 << 3),
+   E_FM2_MENU_NO_DELETE            = (1 << 4),
+   E_FM2_MENU_NO_RENAME            = (1 << 5)
+} E_Fm2_Menu_Flags;
 typedef struct _E_Fm2_Config    E_Fm2_Config;
 typedef struct _E_Fm2_Icon_Info E_Fm2_Icon_Info;
 
@@ -118,6 +126,7 @@ EAPI Evas_List            *e_fm2_selected_list_get(Evas_Object *obj);
 EAPI Evas_List            *e_fm2_all_list_get(Evas_Object *obj);
 EAPI void                  e_fm2_select_set(Evas_Object *obj, const char *file, int select);
 EAPI void                  e_fm2_file_show(Evas_Object *obj, const char *file);
+EAPI void                  e_fm2_icon_menu_replace_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info), void *data);
 EAPI void                  e_fm2_icon_menu_start_extend_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info), void *data);
 EAPI void                  e_fm2_icon_menu_end_extend_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info), void *data);
 EAPI void                  e_fm2_window_object_set(Evas_Object *obj, E_Object *eobj);
