@@ -23,4 +23,3 @@ ltmain.sh
 config.guess
 config.sub
 enlightenment.spec
-config.rpath
