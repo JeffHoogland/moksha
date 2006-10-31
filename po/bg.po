@@ -1,11 +1,11 @@
-# English translation of PACKAGE.
+# English translation of Enlightenment.
 # This file is put in the public domain.
 # Viktor Kojouharov <vkojouharov@abv.bg>, 2006.
 # 
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-10-22 17:40+0300\n"
 "PO-Revision-Date: 2006-10-24 00:25+0300\n"
@@ -475,13 +475,13 @@ msgstr "Грешка при изпълнение"
 #: src/bin/e_apps.c:656
 #, c-format
 msgid "Enlightenment was unable to process a command line:<br><br>%s %s<br>"
-msgstr "Enlightenment не е могъл да обработи командата:<br><br>%s<br>"
+msgstr "Enlightenment не е могъл да обработи командата:<br><br>%s %s<br>"
 
 #: src/bin/e_apps.c:669
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s %s<br>"
 msgstr ""
-"Enlightenment не е могъл да създаде отделен дъщерен процес:<br><br>%s<br>"
+"Enlightenment не е могъл да създаде отделен дъщерен процес:<br><br>%s %s<br>"
 
 #: src/bin/e_apps.c:2839
 msgid "Application run error"

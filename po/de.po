@@ -3,15 +3,14 @@
 # vandango <vandango@toenda.com>, 2005, 2005/07/10
 # Azundris <edevel@azundris.com>, 2005/06/08.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2005-04-17 14:47+0200\n"
 "PO-Revision-Date: 2005-04-17 14:54+GMZ\n"
 "Last-Translator: Jonathan Naumann <vandango@toenda.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: E17-de <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"

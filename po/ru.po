@@ -1,8 +1,6 @@
 # Russian translation of Enlightenment.
 # This file is put in the public domain.
 # Denis Klykvin <nikon@altlinux.ru>, 2005.
-# , fuzzy
-# 
 # 
 msgid ""
 msgstr ""

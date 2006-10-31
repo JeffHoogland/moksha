@@ -2,15 +2,14 @@
 # This file is put in the public domain.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2005-04-12 06:59+0900\n"
 "PO-Revision-Date: 2005-11-19 21:00+0100\n"
 "Last-Translator: Maxime BRUNEL <maxtoo@gentoofr.org>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: E17-fr <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
