@@ -831,7 +831,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
    fmc.selection.single = 1;
    fmc.selection.windows_modifiers = 0;
    e_fm2_config_set(mt, &fmc);
-   e_fm2_icon_menu_flags_set(mt, E_FM2_MENU_NO_SHOW_HIDDEN);
+   e_fm2_icon_menu_flags_set(mt, E_FM2_MENU_NO_SHOW_HIDDEN | E_FM2_MENU_NO_REMEMBER_ORDERING | E_FM2_MENU_NO_NEW_DIRECTORY | E_FM2_MENU_NO_RENAME | E_FM2_MENU_NO_DELETE);
    evas_object_smart_callback_add(mt, "selection_change",
 				  _e_fwin_cb_fm_selection_change, fad);
    evas_object_smart_callback_add(mt, "selected",

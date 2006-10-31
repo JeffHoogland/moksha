@@ -4182,7 +4182,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	     e_menu_item_separator_set(mi, 1);
 	  }
 
-	if (!sd->icon_menu.flags & E_FM2_MENU_NO_REFRESH)
+	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REFRESH))
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("Refresh View"));
@@ -4193,7 +4193,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	     e_menu_item_callback_set(mi, _e_fm2_refresh, sd);
 	  }
 	
-	if (!sd->icon_menu.flags & E_FM2_MENU_NO_SHOW_HIDDEN)
+	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_SHOW_HIDDEN))
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("Show Hidden Files"));
@@ -4206,7 +4206,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	     e_menu_item_callback_set(mi, _e_fm2_toggle_hidden_files, sd);
 	  }
 	
-	if (!sd->icon_menu.flags & E_FM2_MENU_NO_REMEMBER_ORDERING)
+	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REMEMBER_ORDERING))
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("Remember Ordering"));
@@ -4219,7 +4219,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	     e_menu_item_callback_set(mi, _e_fm2_toggle_ordering, sd);
 	  }
 	
-	if (!sd->icon_menu.flags & E_FM2_MENU_NO_NEW_DIRECTORY)
+	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_NEW_DIRECTORY))
 	  {
 	     if (ecore_file_can_write(sd->realpath))
 	       {
@@ -4310,7 +4310,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	     e_menu_item_separator_set(mi, 1);
 	  }
 
-	if (!sd->icon_menu.flags & E_FM2_MENU_NO_REFRESH)
+	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REFRESH))
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("Refresh View"));
@@ -4321,7 +4321,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	     e_menu_item_callback_set(mi, _e_fm2_refresh, sd);
 	  }
 	
-	if (!sd->icon_menu.flags & E_FM2_MENU_NO_SHOW_HIDDEN)
+	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_SHOW_HIDDEN))
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("Show Hidden Files"));
@@ -4334,7 +4334,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	     e_menu_item_callback_set(mi, _e_fm2_toggle_hidden_files, sd);
 	  }
 	
-	if (!sd->icon_menu.flags & E_FM2_MENU_NO_REMEMBER_ORDERING)
+	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REMEMBER_ORDERING))
 	  {
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_label_set(mi, _("Remember Ordering"));
@@ -4347,7 +4347,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	     e_menu_item_callback_set(mi, _e_fm2_toggle_ordering, sd);
 	  }
 	
-	if (!sd->icon_menu.flags & E_FM2_MENU_NO_NEW_DIRECTORY)
+	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_NEW_DIRECTORY))
 	  {
 	     if (ecore_file_can_write(sd->realpath))
 	       {
@@ -4416,7 +4416,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	     mi = e_menu_item_new(mn);
 	     e_menu_item_separator_set(mi, 1);
 	     
-	     if (!sd->icon_menu.flags & E_FM2_MENU_NO_DELETE)
+	     if (!(sd->icon_menu.flags & E_FM2_MENU_NO_DELETE))
 	       {
 		  mi = e_menu_item_new(mn);
 		  e_menu_item_label_set(mi, _("Delete"));
@@ -4427,7 +4427,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 		  e_menu_item_callback_set(mi, _e_fm2_file_delete, ic);
 	       }
 	     
-	     if (!sd->icon_menu.flags & E_FM2_MENU_NO_RENAME)
+	     if (!(sd->icon_menu.flags & E_FM2_MENU_NO_RENAME))
 	       {
 		  mi = e_menu_item_new(mn);
 		  e_menu_item_label_set(mi, _("Rename"));
