@@ -105,6 +105,8 @@ Some of the things (in very short form) that need to be done to E17...
   "NICE TO HAVE" FEATURES
 -------------------------------------------------------------------------------
 
+* for startup - apps that say "wait for me befofe running the next app" have
+  a timeout so if they never complete - complain and continue anyway.
 * enlightenment_remote cmd's for logout, hibernate, reboot, suspend.
 * nice to have a menu item for a window for "add keyboard shortcut to run this
   app" would be nice usability
