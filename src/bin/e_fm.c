@@ -725,6 +725,44 @@ e_fm2_pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
    if (h) *h = sd->max.h;
 }
 
+EAPI void
+e_fm2_fop_delete_add(Evas_Object *obj, E_Fm2_Icon_Info *ici)
+{
+   E_Fm2_Smart_Data *sd;
+
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+   /* if no obj fop struct, create fop struct and add idler */
+   /* append fop node for delete and this file to the fop */
+   
+   /* if obj is deleted what to do to fop: */
+   /* if obj is deleted, detach fop and let it run on its own till end */
+   /* if obj changes dir detach fop obj */
+   
+   /* on fop queue empty - deete idler and free fop */
+   /* in fop idler go to the item on the head of the fop queue. if it is
+    * a file or a symlink, delete it directly. if it is a dir then
+    * opendir it in the fop entry (fope->dir != NULL now) and if dir is
+    * not null, readdir till end (when at end remove item) and per item
+    * if it is a file or link - delete it directly, if it is a dir, prepend to
+    * fop queue.
+    */
+}
+
+/* FIXME: not so easy with .orders etc. */
+EAPI void
+e_fm2_fop_move_add(Evas_Object *obj, E_Fm2_Icon_Info *ici, Evas_Object *obj2, const char *fname)
+{
+   E_Fm2_Smart_Data *sd;
+
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+}
+
 /* local subsystem functions */
 static const char *
 _e_fm2_dev_path_map(const char *dev, const char *path)

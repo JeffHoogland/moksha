@@ -23,6 +23,7 @@ typedef enum _E_Fm2_Menu_Flags
    E_FM2_MENU_NO_DELETE            = (1 << 4),
    E_FM2_MENU_NO_RENAME            = (1 << 5)
 } E_Fm2_Menu_Flags;
+
 typedef struct _E_Fm2_Config    E_Fm2_Config;
 typedef struct _E_Fm2_Icon_Info E_Fm2_Icon_Info;
 
