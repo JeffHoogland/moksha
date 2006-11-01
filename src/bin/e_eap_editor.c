@@ -86,7 +86,8 @@ e_eap_edit_show(E_Container *con, E_App *a)
    editor->cfd = e_config_dialog_new(con,
 				     _("Application Editor"), 
 				     "E", "_eap_editor_dialog",
-				     NULL, 0, v, editor);
+				     "enlightenment/applications", 0, 
+				     v, editor);
    return editor;
 }
 
