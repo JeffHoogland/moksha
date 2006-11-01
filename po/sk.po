@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-11-01 08:22+0900\n"
+"POT-Creation-Date: 2006-11-01 09:02+0900\n"
 "PO-Revision-Date: 2006-07-01 16:45+0100\n"
 "Last-Translator: hrobar <0367742402@karneval.cz>\n"
 "Language-Team: Slovakian\n"
@@ -245,7 +245,7 @@ msgstr "Ukončiť"
 #: src/modules/battery/e_mod_main.c:175 src/modules/ibar/e_mod_main.c:294
 #: src/modules/ibar/e_mod_main.c:919 src/modules/ibox/e_mod_main.c:286
 #: src/modules/ibox/e_mod_main.c:674 src/modules/pager/e_mod_main.c:624
-#: src/modules/temperature/e_mod_main.c:145 src/modules/itray/e_mod_main.c:417
+#: src/modules/temperature/e_mod_main.c:145
 msgid "Configuration"
 msgstr "Konfigurácia"
 
@@ -6462,42 +6462,36 @@ msgstr "Modul Start pre Enlightenment"
 msgid "Experimental Button module for E17"
 msgstr "Experimentálny Tlačítkový modul pre E17"
 
-#: src/modules/itray/e_mod_config.c:45
-msgid "ITray Configuration"
-msgstr "Konfigurácia ITray"
+#~ msgid "ITray Configuration"
+#~ msgstr "Konfigurácia ITray"
 
-#: src/modules/itray/e_mod_config.c:106
-msgid "Number of Rows"
-msgstr "Počet Riadkov"
+#~ msgid "Number of Rows"
+#~ msgstr "Počet Riadkov"
 
-#: src/modules/itray/e_mod_config.c:107
-#, c-format
-msgid "%3.0f"
-msgstr "%3.0f"
+#~ msgid "%3.0f"
+#~ msgstr "%3.0f"
 
-#: src/modules/itray/e_mod_main.c:161
-msgid "Enlightenment ITray Module"
-msgstr "Enlightenment ITray Modul"
+#~ msgid "Enlightenment ITray Module"
+#~ msgstr "Enlightenment ITray Modul"
 
-#: src/modules/itray/e_mod_main.c:162
-msgid ""
-"This is the ITray system tray module for Enlightenment.<br>It will hold "
-"system tray icons.<br>Beware that this can be buggy due to many systray "
-"providing<br>applications not handling the protocol properly, and the "
-"way<br>systray icons work being very limiting and hacky. Do not use<br>this "
-"module unless you absolutely must, and if you do, beware<br>of issues that "
-"will appear."
-msgstr ""
-"Toto je ITray, systémový tray modul pre Enlightenment.<br>Sú doňho "
-"umiestnené systémové tray ikony.<br>Varovanie tento modul môže vykazovať "
-"chyby, pretože veľa aplikácií<br> je nedostatočne naprogramovaných pre "
-"umiestnenie do systray a spôsob<br>akým systray funguje má isté obmedzenia a "
-"nedostatky. Nepoužívajte<br>tento modul pokiaľ to nie je skutočne nutné a v "
-"prípade, že ho použijete pozor<br>na chyby, ktoré sa objavia."
+#~ msgid ""
+#~ "This is the ITray system tray module for Enlightenment.<br>It will hold "
+#~ "system tray icons.<br>Beware that this can be buggy due to many systray "
+#~ "providing<br>applications not handling the protocol properly, and the "
+#~ "way<br>systray icons work being very limiting and hacky. Do not "
+#~ "use<br>this module unless you absolutely must, and if you do, "
+#~ "beware<br>of issues that will appear."
+#~ msgstr ""
+#~ "Toto je ITray, systémový tray modul pre Enlightenment.<br>Sú doňho "
+#~ "umiestnené systémové tray ikony.<br>Varovanie tento modul môže vykazovať "
+#~ "chyby, pretože veľa aplikácií<br> je nedostatočne naprogramovaných pre "
+#~ "umiestnenie do systray a spôsob<br>akým systray funguje má isté "
+#~ "obmedzenia a nedostatky. Nepoužívajte<br>tento modul pokiaľ to nie je "
+#~ "skutočne nutné a v prípade, že ho použijete pozor<br>na chyby, ktoré sa "
+#~ "objavia."
 
-#: src/modules/itray/e_mod_main.c:423
-msgid "Edit Mode"
-msgstr "Mód Úprav"
+#~ msgid "Edit Mode"
+#~ msgstr "Mód Úprav"
 
 #~ msgid "To Desktop 0"
 #~ msgstr "Na Plochu 0"

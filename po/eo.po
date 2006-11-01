@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eo\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-11-01 08:22+0900\n"
+"POT-Creation-Date: 2006-11-01 09:02+0900\n"
 "PO-Revision-Date: 2006-09-20 16:36+0100\n"
 "Last-Translator: Olivier Maury\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
@@ -225,7 +225,7 @@ msgstr "Eliri"
 #: src/modules/battery/e_mod_main.c:175 src/modules/ibar/e_mod_main.c:294
 #: src/modules/ibar/e_mod_main.c:919 src/modules/ibox/e_mod_main.c:286
 #: src/modules/ibox/e_mod_main.c:674 src/modules/pager/e_mod_main.c:624
-#: src/modules/temperature/e_mod_main.c:145 src/modules/itray/e_mod_main.c:417
+#: src/modules/temperature/e_mod_main.c:145
 msgid "Configuration"
 msgstr "Konfiguraĵo"
 
@@ -6304,42 +6304,35 @@ msgstr "Enlightenment-a KomencoModulo"
 msgid "Experimental Button module for E17"
 msgstr "Modulo de eksperimenta Butono por E17"
 
-#: src/modules/itray/e_mod_config.c:45
-msgid "ITray Configuration"
-msgstr "Konfiguraĵo de \"ITray\""
+#~ msgid "ITray Configuration"
+#~ msgstr "Konfiguraĵo de \"ITray\""
 
-#: src/modules/itray/e_mod_config.c:106
-msgid "Number of Rows"
-msgstr "Nombro da Vicoj :"
+#~ msgid "Number of Rows"
+#~ msgstr "Nombro da Vicoj :"
 
-#: src/modules/itray/e_mod_config.c:107
-#, c-format
-msgid "%3.0f"
-msgstr "%3.0f"
+#~ msgid "%3.0f"
+#~ msgstr "%3.0f"
 
-#: src/modules/itray/e_mod_main.c:161
-msgid "Enlightenment ITray Module"
-msgstr "\"Enlightenment ITray\" Modulo"
+#~ msgid "Enlightenment ITray Module"
+#~ msgstr "\"Enlightenment ITray\" Modulo"
 
-#: src/modules/itray/e_mod_main.c:162
-msgid ""
-"This is the ITray system tray module for Enlightenment.<br>It will hold "
-"system tray icons.<br>Beware that this can be buggy due to many systray "
-"providing<br>applications not handling the protocol properly, and the "
-"way<br>systray icons work being very limiting and hacky. Do not use<br>this "
-"module unless you absolutely must, and if you do, beware<br>of issues that "
-"will appear."
-msgstr ""
-"Tiu estas la \"ITray\" sistema piktogramobreta modulo<br>por Enlightenment. "
-"Ĝi enhavos sistemajn piktogramojn.<br>Attentu ! Tiu povas misfunkci "
-"ĉar<br>multo da \"systray\" de aplikaĵoj ne uzas la protokolon bone,<br>kaj "
-"la maniero, kiel \"systray\"-piktogramoj funkcias, estas ege limita kaj "
-"\"hacky\".<br>Ne uzi tiun modulon almenaŭ vi certege devas uzi lin,<br>kaj "
-"se vi agas tiel, attentu pri okazuntaj eraroj."
+#~ msgid ""
+#~ "This is the ITray system tray module for Enlightenment.<br>It will hold "
+#~ "system tray icons.<br>Beware that this can be buggy due to many systray "
+#~ "providing<br>applications not handling the protocol properly, and the "
+#~ "way<br>systray icons work being very limiting and hacky. Do not "
+#~ "use<br>this module unless you absolutely must, and if you do, "
+#~ "beware<br>of issues that will appear."
+#~ msgstr ""
+#~ "Tiu estas la \"ITray\" sistema piktogramobreta modulo<br>por "
+#~ "Enlightenment. Ĝi enhavos sistemajn piktogramojn.<br>Attentu ! Tiu povas "
+#~ "misfunkci ĉar<br>multo da \"systray\" de aplikaĵoj ne uzas la protokolon "
+#~ "bone,<br>kaj la maniero, kiel \"systray\"-piktogramoj funkcias, estas ege "
+#~ "limita kaj \"hacky\".<br>Ne uzi tiun modulon almenaŭ vi certege devas uzi "
+#~ "lin,<br>kaj se vi agas tiel, attentu pri okazuntaj eraroj."
 
-#: src/modules/itray/e_mod_main.c:423
-msgid "Edit Mode"
-msgstr "Redaktomoduso"
+#~ msgid "Edit Mode"
+#~ msgstr "Redaktomoduso"
 
 #~ msgid "Desktops"
 #~ msgstr "Labortabloj"

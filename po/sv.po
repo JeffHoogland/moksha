@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment E17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-11-01 08:22+0900\n"
+"POT-Creation-Date: 2006-11-01 09:02+0900\n"
 "PO-Revision-Date: 2006-08-10 11:04+0200\n"
 "Last-Translator: Anders Trobäck <enlightenment@troback.com>\n"
 "Language-Team: Swedish\n"
@@ -225,7 +225,7 @@ msgstr "Avsluta"
 #: src/modules/battery/e_mod_main.c:175 src/modules/ibar/e_mod_main.c:294
 #: src/modules/ibar/e_mod_main.c:919 src/modules/ibox/e_mod_main.c:286
 #: src/modules/ibox/e_mod_main.c:674 src/modules/pager/e_mod_main.c:624
-#: src/modules/temperature/e_mod_main.c:145 src/modules/itray/e_mod_main.c:417
+#: src/modules/temperature/e_mod_main.c:145
 msgid "Configuration"
 msgstr "Konfiguration"
 
@@ -6383,36 +6383,20 @@ msgstr "Enlightenment Startmodul"
 msgid "Experimental Button module for E17"
 msgstr "Experimentell Knappmodul för E17"
 
-#: src/modules/itray/e_mod_config.c:45
-msgid "ITray Configuration"
-msgstr "ITray konfiguration"
+#~ msgid "ITray Configuration"
+#~ msgstr "ITray konfiguration"
 
-#: src/modules/itray/e_mod_config.c:106
-msgid "Number of Rows"
-msgstr "Antal rader"
+#~ msgid "Number of Rows"
+#~ msgstr "Antal rader"
 
-#: src/modules/itray/e_mod_config.c:107
-#, c-format
-msgid "%3.0f"
-msgstr "%3.0f"
+#~ msgid "%3.0f"
+#~ msgstr "%3.0f"
 
-#: src/modules/itray/e_mod_main.c:161
-msgid "Enlightenment ITray Module"
-msgstr "Enlightenment modul ITray"
+#~ msgid "Enlightenment ITray Module"
+#~ msgstr "Enlightenment modul ITray"
 
-#: src/modules/itray/e_mod_main.c:162
-msgid ""
-"This is the ITray system tray module for Enlightenment.<br>It will hold "
-"system tray icons.<br>Beware that this can be buggy due to many systray "
-"providing<br>applications not handling the protocol properly, and the "
-"way<br>systray icons work being very limiting and hacky. Do not use<br>this "
-"module unless you absolutely must, and if you do, beware<br>of issues that "
-"will appear."
-msgstr ""
-
-#: src/modules/itray/e_mod_main.c:423
-msgid "Edit Mode"
-msgstr "Redigeringsläge"
+#~ msgid "Edit Mode"
+#~ msgstr "Redigeringsläge"
 
 #~ msgid "To Desktop 0"
 #~ msgstr "Till skrivbord 0"

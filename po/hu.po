@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-11-01 08:22+0900\n"
+"POT-Creation-Date: 2006-11-01 09:02+0900\n"
 "PO-Revision-Date: 2006-05-13 14:34+0200\n"
 "Last-Translator: Peter Parkanyi \n"
 "Language-Team: Hungarian <HU@li.org>\n"
@@ -227,7 +227,7 @@ msgstr "Kkilépés"
 #: src/modules/battery/e_mod_main.c:175 src/modules/ibar/e_mod_main.c:294
 #: src/modules/ibar/e_mod_main.c:919 src/modules/ibox/e_mod_main.c:286
 #: src/modules/ibox/e_mod_main.c:674 src/modules/pager/e_mod_main.c:624
-#: src/modules/temperature/e_mod_main.c:145 src/modules/itray/e_mod_main.c:417
+#: src/modules/temperature/e_mod_main.c:145
 msgid "Configuration"
 msgstr "Beállítás"
 
@@ -6453,40 +6453,33 @@ msgstr "Start modul"
 msgid "Experimental Button module for E17"
 msgstr "Start gomb az Enlightenmenthez"
 
-#: src/modules/itray/e_mod_config.c:45
-msgid "ITray Configuration"
-msgstr "ITray tulajdonságok"
+#~ msgid "ITray Configuration"
+#~ msgstr "ITray tulajdonságok"
 
-#: src/modules/itray/e_mod_config.c:106
-msgid "Number of Rows"
-msgstr "Sorok száma"
+#~ msgid "Number of Rows"
+#~ msgstr "Sorok száma"
 
-#: src/modules/itray/e_mod_config.c:107
-#, c-format
-msgid "%3.0f"
-msgstr "%3.0f"
+#~ msgid "%3.0f"
+#~ msgstr "%3.0f"
 
-#: src/modules/itray/e_mod_main.c:161
-msgid "Enlightenment ITray Module"
-msgstr "ITray modul"
+#~ msgid "Enlightenment ITray Module"
+#~ msgstr "ITray modul"
 
-#: src/modules/itray/e_mod_main.c:162
-msgid ""
-"This is the ITray system tray module for Enlightenment.<br>It will hold "
-"system tray icons.<br>Beware that this can be buggy due to many systray "
-"providing<br>applications not handling the protocol properly, and the "
-"way<br>systray icons work being very limiting and hacky. Do not use<br>this "
-"module unless you absolutely must, and if you do, beware<br>of issues that "
-"will appear."
-msgstr ""
-"Ez az ITray modul az Enlightenmenthez.<br>A rendszer-tálca ikonok helye."
-"<br>Vigyázz, mert sok hiba lehet benne a sok rendszer-tálcát "
-"használó<br>alkalmazás miatt, amik nem kezelik rendesen ezt a protokollt."
-"<br>Ne használd ezt a modult, ha csak nincs rá feltétlen szükséged.<br>"
+#~ msgid ""
+#~ "This is the ITray system tray module for Enlightenment.<br>It will hold "
+#~ "system tray icons.<br>Beware that this can be buggy due to many systray "
+#~ "providing<br>applications not handling the protocol properly, and the "
+#~ "way<br>systray icons work being very limiting and hacky. Do not "
+#~ "use<br>this module unless you absolutely must, and if you do, "
+#~ "beware<br>of issues that will appear."
+#~ msgstr ""
+#~ "Ez az ITray modul az Enlightenmenthez.<br>A rendszer-tálca ikonok helye."
+#~ "<br>Vigyázz, mert sok hiba lehet benne a sok rendszer-tálcát "
+#~ "használó<br>alkalmazás miatt, amik nem kezelik rendesen ezt a protokollt."
+#~ "<br>Ne használd ezt a modult, ha csak nincs rá feltétlen szükséged.<br>"
 
-#: src/modules/itray/e_mod_main.c:423
-msgid "Edit Mode"
-msgstr "Kütyük rendezése"
+#~ msgid "Edit Mode"
+#~ msgstr "Kütyük rendezése"
 
 #~ msgid "To Desktop 0"
 #~ msgstr "0 asztalra"

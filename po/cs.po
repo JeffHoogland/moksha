@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DR17 \n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-11-01 08:22+0900\n"
+"POT-Creation-Date: 2006-11-01 09:02+0900\n"
 "PO-Revision-Date: 2005-05-25 18:29+0100\n"
 "Last-Translator: Martin Sekera <trancelis@centrum.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -233,7 +233,7 @@ msgstr ""
 #: src/modules/battery/e_mod_main.c:175 src/modules/ibar/e_mod_main.c:294
 #: src/modules/ibar/e_mod_main.c:919 src/modules/ibox/e_mod_main.c:286
 #: src/modules/ibox/e_mod_main.c:674 src/modules/pager/e_mod_main.c:624
-#: src/modules/temperature/e_mod_main.c:145 src/modules/itray/e_mod_main.c:417
+#: src/modules/temperature/e_mod_main.c:145
 msgid "Configuration"
 msgstr "Nastavení"
 
@@ -6319,38 +6319,16 @@ msgstr "Modul Start Enlightenment"
 msgid "Experimental Button module for E17"
 msgstr "Experimentální hlavní nabídka pro E17"
 
-#: src/modules/itray/e_mod_config.c:45
 #, fuzzy
-msgid "ITray Configuration"
-msgstr "Nastavení"
+#~ msgid "ITray Configuration"
+#~ msgstr "Nastavení"
 
-#: src/modules/itray/e_mod_config.c:106
-msgid "Number of Rows"
-msgstr ""
-
-#: src/modules/itray/e_mod_config.c:107
-#, c-format
-msgid "%3.0f"
-msgstr ""
-
-#: src/modules/itray/e_mod_main.c:161
 #, fuzzy
-msgid "Enlightenment ITray Module"
-msgstr "Modul IBar Enlightenment"
+#~ msgid "Enlightenment ITray Module"
+#~ msgstr "Modul IBar Enlightenment"
 
-#: src/modules/itray/e_mod_main.c:162
-msgid ""
-"This is the ITray system tray module for Enlightenment.<br>It will hold "
-"system tray icons.<br>Beware that this can be buggy due to many systray "
-"providing<br>applications not handling the protocol properly, and the "
-"way<br>systray icons work being very limiting and hacky. Do not use<br>this "
-"module unless you absolutely must, and if you do, beware<br>of issues that "
-"will appear."
-msgstr ""
-
-#: src/modules/itray/e_mod_main.c:423
-msgid "Edit Mode"
-msgstr "Režim úprav"
+#~ msgid "Edit Mode"
+#~ msgstr "Režim úprav"
 
 #~ msgid "(Empty)"
 #~ msgstr "(Prázdné)"
