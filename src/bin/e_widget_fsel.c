@@ -328,6 +328,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
                                      0, 0, 1, 1, 1, 1, 1, 1);
 
         o = e_widget_entry_add(evas, &(wd->preview_size_text));
+	e_widget_entry_readonly_set(o, 1);
         wd->o_preview_size_entry = o;
         e_widget_sub_object_add(obj, o);
         e_widget_min_size_set(o, 100, -1);
@@ -343,6 +344,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
                                      0, 1, 1, 1, 1, 1, 1, 1);
 
         o = e_widget_entry_add(evas, &(wd->preview_owner_text));
+	e_widget_entry_readonly_set(o, 1);
         wd->o_preview_owner_entry = o;
         e_widget_sub_object_add(obj, o);
         e_widget_min_size_set(o, 100, -1);
@@ -358,6 +360,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
                                      0, 2, 1, 1, 1, 1, 1, 1);
 	
         o = e_widget_entry_add(evas, &(wd->preview_perms_text));
+	e_widget_entry_readonly_set(o, 1);
         wd->o_preview_perms_entry = o;
         e_widget_sub_object_add(obj, o);
         e_widget_min_size_set(o, 100, -1);
@@ -373,6 +376,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
                                      0, 3, 1, 1, 1, 1, 1, 1);
 
         o = e_widget_entry_add(evas, &(wd->preview_time_text));
+	e_widget_entry_readonly_set(o, 1);
         wd->o_preview_time_entry = o;
         e_widget_sub_object_add(obj, o); 
         e_widget_min_size_set(o, 100, -1);
