@@ -2156,7 +2156,7 @@ e_action_predef_name_del(const char *act_grp, const char *act_name)
 	actd = l->data;
 	if (!strcmp(actd->act_name, act_name))
 	  {
-	     actg->acts = evas_list_remove_list(actg->acts, l);
+	     actg->acts = evas_list_remove(actg->acts, actd);
 
 	     if (actd->act_name) evas_stringshare_del(actd->act_name);
 	     if (actd->act_cmd) evas_stringshare_del(actd->act_cmd);
@@ -2167,7 +2167,7 @@ e_action_predef_name_del(const char *act_grp, const char *act_name)
 	     
 	     if (!evas_list_count(actg->acts)) 
 	       { 
-		  action_groups = evas_list_remove_list(action_groups, l); 
+		  action_groups = evas_list_remove(action_groups, actg); 
 		  if (actg->act_grp) evas_stringshare_del(actg->act_grp);
 		  E_FREE(actg);
 	       }
