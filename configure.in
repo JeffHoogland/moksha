@@ -295,7 +295,7 @@ data/backgrounds/Makefile
 data/etc/Makefile
 data/icons/Makefile
 doc/Makefile
-po/Makefile.in
+po/Makefile
 enlightenment-config
 debian/changelog
 ],[
