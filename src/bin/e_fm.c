@@ -748,6 +748,8 @@ e_fm2_fop_delete_add(Evas_Object *obj, E_Fm2_Icon_Info *ici)
     * not null, readdir till end (when at end remove item) and per item
     * if it is a file or link - delete it directly, if it is a dir, prepend to
     * fop queue.
+    * per fop item processed, if obj is attached to fop - report status usig
+    * the status overlay for the fm edj obj.
     */
 }
 
