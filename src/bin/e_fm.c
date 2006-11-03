@@ -1953,9 +1953,7 @@ _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (vo
 		  if ((p) && (!strcmp(p, ".edj")))
 		    {
 		       oic = edje_object_add(evas_object_evas_get(o));
-		       if (!e_theme_edje_object_set(oic, 
-						    "base/theme/fileman",
-						    icon))
+		       if (!edje_object_file_set(oic, icon, "icon"))
 			 e_theme_edje_object_set(oic, "base/theme/fileman",
 						 "e/icons/fileman/file");
 		    }
