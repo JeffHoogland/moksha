@@ -151,11 +151,14 @@ _fill_list(E_Config_Dialog_Data *cfdata)
 	E_Config_Mime_Icon *mi;
 	Evas_Object *icon;
 	const char *tmp;
+	int is_edj = 0;
 	
 	mi = l->data;
 	if (!mi) continue;
 	if (mi->icon)
 	  if (!strcmp(mi->icon, "DESKTOP")) continue;
+
+	icon = edje_object_add(evas_object_evas_get(cfdata->gui.list));
 	
 	tmp = e_fm_mime_icon_get(mi->mime);
 	if (!tmp) 
@@ -170,12 +173,19 @@ _fill_list(E_Config_Dialog_Data *cfdata)
 	     
 	     p = strrchr(tmp, '.');
 	     if ((p) && (!strcmp(p, ".edj"))) 
-	       snprintf(buf, sizeof(buf), "%s", tmp);
+	       is_edj = 1;
 	  }
-	icon = edje_object_add(evas_object_evas_get(cfdata->gui.list));
-	if (!e_theme_edje_object_set(icon, "base/theme/fileman", buf))
-	  e_theme_edje_object_set(icon, "base/theme/fileman", "e/icons/fileman/file");
-	e_widget_ilist_append(cfdata->gui.list, icon, mi->mime, _list_cb_sel, cfdata, NULL);
+	if (is_edj) 
+	  {
+	     if (!e_theme_edje_object_set(icon, tmp, "icon"))
+	       e_theme_edje_object_set(icon, "base/theme/fileman", "e/icons/fileman/file");
+	  }
+	else 
+	  {
+	     if (!e_theme_edje_object_set(icon, "base/theme/fileman", buf))
+	       e_theme_edje_object_set(icon, "base/theme/fileman", "e/icons/fileman/file");
+	  }
+	e_widget_ilist_append(cfdata->gui.list, icon, mi->mime, _list_cb_sel, cfdata, NULL);	
      }
    e_widget_ilist_go(cfdata->gui.list);
    e_widget_min_size_get(cfdata->gui.list, &w, &h);
