@@ -268,9 +268,9 @@ precache(void)
    else
      snprintf(buf, sizeof(buf), "/tmp/.e-precache");
    f = fopen(buf, "r");
-   if (!f) return;
+   if (!f) exit(0);
    unlink(buf);
-   if (fork()) return;
+   if (fork()) exit(0);
    while (fgets(buf, sizeof(buf), f));
    rewind(f);
    while (fgets(buf, sizeof(buf), f))
