@@ -5209,6 +5209,8 @@ _e_border_eval(E_Border *bd)
 		  if (bd->client.shaped)
 		    {
 		       bd->client.shaped = 0;
+		       if (!bd->bordername)
+			 bd->client.border.changed = 1;
 		    }
 	       }
 	     else
@@ -5216,12 +5218,18 @@ _e_border_eval(E_Border *bd)
 		  if (!bd->client.shaped)
 		    {
 		       bd->client.shaped = 1;
+		       if (!bd->bordername)
+			 bd->client.border.changed = 1;
 		    }
 	       }
 	     free(rects);
 	  }
 	else
-	  bd->client.shaped = 0;
+	  {
+	     bd->client.shaped = 0;
+	     if (!bd->bordername) 
+	       bd->client.border.changed = 1;
+	  }
 	bd->need_shape_merge = 1;
      }
    if (bd->client.mwm.fetch.hints)
