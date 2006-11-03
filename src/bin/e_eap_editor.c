@@ -312,6 +312,9 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dial
    editor->evas = evas;
    eap = editor->eap;
 
+   if (cfdata->themed)
+     cfdata->themed = NULL;
+   
    ol = e_widget_table_add(evas, 0);
 
    o = e_widget_frametable_add(evas, _("Icon"), 0);
@@ -474,9 +477,8 @@ _e_eap_editor_cb_icon_select(void *data1, void *data2)
    dia->data = cfdata;
 
    if (cfdata->icon_path)
-      {
-         dir = ecore_file_get_dir(cfdata->icon_path);
-      }
+     dir = ecore_file_get_dir(cfdata->icon_path);
+   
    if (dir)
      {
         o = e_widget_fsel_add(dia->win->evas, dir, "/", NULL, NULL,
