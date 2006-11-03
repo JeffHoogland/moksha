@@ -11,6 +11,7 @@ static void         _cb_type        (void *data, Evas_Object *obj, void *event_i
 static void         _cb_fsel_sel    (void *data, Evas_Object *obj);
 static void         _cb_fsel_ok     (void *data, E_Dialog *dia);
 static void         _cb_fsel_cancel (void *data, E_Dialog *dia);
+static void         _cb_file_change (void *data);
 
 typedef enum _Icon_Type Icon_Type;
 enum _Icon_Type 
@@ -25,9 +26,11 @@ struct _E_Config_Dialog_Data
    char *mime;
    char *icon;
    int type;
+
+   char *file;
    struct 
      {
-	Evas_Object *icon;
+	Evas_Object *icon, *fsel_wid;
 	E_Dialog *fsel;
      } gui;
 };
@@ -90,7 +93,6 @@ _fill_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      cfdata->type = THUMB;
    else
      {
-	printf("Icon: %s\n", cfdata->icon);
 	p = strrchr(cfdata->icon, '.');
 	if ((p) && (!strcmp(p, ".edj"))) 
 	  cfdata->type = EDJ;
@@ -102,6 +104,8 @@ _fill_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
+   if (cfdata->gui.fsel) e_object_del(E_OBJECT(cfdata->gui.fsel));
+   IFFREE(cfdata->file);
    IFFREE(cfdata->mime);
    IFFREE(cfdata->icon);
    E_FREE(cfdata);
@@ -190,7 +194,8 @@ _cb_icon_sel(void *data, void *data2)
    else
      o = e_widget_fsel_add(dia->win->evas, "~/", "/", NULL, NULL,
 			   _cb_fsel_sel, cfdata, NULL, cfdata, 1);
-     
+
+   cfdata->gui.fsel_wid = o;
    evas_object_show(o);
    e_widget_min_size_get(o, &w, &h);
    e_dialog_content_set(dia, o, w, h);
@@ -272,17 +277,22 @@ _cb_fsel_sel(void *data, Evas_Object *obj)
    
    cfdata = data;
    if (!cfdata) return;
-   
 }
 
 static void 
 _cb_fsel_ok(void *data, E_Dialog *dia) 
 {
    E_Config_Dialog_Data *cfdata;
+   const char *file;
    
    cfdata = data;
    if (!cfdata) return;
+   
+   file = e_widget_fsel_selection_path_get(cfdata->gui.fsel_wid);
+   IFDUP(file, cfdata->file);
    _cb_fsel_cancel(data, dia);
+   if (cfdata->file)
+     _cb_file_change(cfdata);
 }
 
 static void 
@@ -295,3 +305,26 @@ _cb_fsel_cancel(void *data, E_Dialog *dia)
    cfdata->gui.fsel = NULL;
 }
 
+static void 
+_cb_file_change(void *data) 
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data;
+   if (!cfdata) return;
+   if (!cfdata->file) return;
+   switch (cfdata->type) 
+     {
+      case EDJ:
+	if (!strstr(cfdata->file, ".edj")) return;
+//	if (!edje_file_group_exists(cfdata->file, "")) return;
+	break;
+      case IMAGE:
+	break;
+      default:
+	return;
+	break;
+     }
+   
+   printf("File: %s\n", cfdata->file);
+}
