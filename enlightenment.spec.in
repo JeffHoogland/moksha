@@ -58,7 +58,7 @@ test "x$RPM_BUILD_ROOT" != "x/" && rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS COPYING COPYING-PLAIN README
 %{_bindir}/enlightenment
 %{_bindir}/enlightenment_*
-%{_bindir}/eap_to_desktop
+#%{_bindir}/eap_to_desktop
 %{_libdir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/locale/*
