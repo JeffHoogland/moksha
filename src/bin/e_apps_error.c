@@ -345,7 +345,7 @@ _dialog_save_cb(void *data, void *data2)
      {
 	tlen = 0;
 	for (i = 0; app->read->lines[i].line != NULL; i++)
-	  tlen += app->read->lines[i].size + 1;
+	  tlen += app->read->lines[i].size + 2;
 	text = alloca(tlen + 1);
 	if (text)
 	  {
