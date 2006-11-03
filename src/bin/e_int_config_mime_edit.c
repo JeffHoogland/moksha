@@ -17,8 +17,8 @@ typedef enum _Icon_Type Icon_Type;
 enum _Icon_Type 
 {
      THUMB,
-     EDJ,
-     IMAGE
+     THEME,
+     EDJ
 };
 
 struct _E_Config_Dialog_Data 
@@ -97,7 +97,7 @@ _fill_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if ((p) && (!strcmp(p, ".edj"))) 
 	  cfdata->type = EDJ;
 	else
-	  cfdata->type = IMAGE;
+	  cfdata->type = THEME;
      }
 }
 
@@ -124,6 +124,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ob = e_widget_label_add(evas, _("Mime:"));
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
    ob = e_widget_entry_add(evas, &(cfdata->mime));
+   e_widget_entry_readonly_set(ob, 1);
    e_widget_min_size_set(ob, 100, 1);
    e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
@@ -133,12 +134,13 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ob = e_widget_radio_add(evas, _("Use Generated Thumbnail"), THUMB, rg);
    evas_object_smart_callback_add(ob, "changed", _cb_type, cfdata);
    e_widget_frametable_object_append(of, ob, 0, 0, 3, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_add(evas, _("Use Edje File"), EDJ, rg);
+   ob = e_widget_radio_add(evas, _("Use Theme Icon"), THEME, rg);
    evas_object_smart_callback_add(ob, "changed", _cb_type, cfdata);
    e_widget_frametable_object_append(of, ob, 0, 1, 3, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_add(evas, _("Use Image"), IMAGE, rg);
+   ob = e_widget_radio_add(evas, _("Use Edje File"), EDJ, rg);
    evas_object_smart_callback_add(ob, "changed", _cb_type, cfdata);
    e_widget_frametable_object_append(of, ob, 0, 2, 3, 1, 1, 1, 1, 1);
+   e_widget_disabled_set(ob, 1);
    
    oi = e_widget_button_add(evas, "", NULL, _cb_icon_sel, cfdata, cfd);
    cfdata->gui.icon = oi;
@@ -159,6 +161,31 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
+   E_Config_Mime_Icon *mime;
+   char buf[4096];
+   
+   mime = cfd->data;
+   if (!mime) return 0;
+   
+   if (mime->mime)
+     evas_stringshare_del(mime->mime);
+   mime->mime = evas_stringshare_add(cfdata->mime);
+   
+   if (mime->icon)
+     evas_stringshare_del(mime->icon);
+   
+   switch (cfdata->type) 
+     {
+      case THUMB:
+	mime->icon = evas_stringshare_add("THUMB");
+	break;
+      case THEME:
+      case EDJ:
+	snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", cfdata->mime);
+	mime->icon = evas_stringshare_add(buf);
+	break;
+     }
+   e_config_save_queue();
    return 1;
 }
 
@@ -170,7 +197,6 @@ _cb_icon_sel(void *data, void *data2)
    E_Dialog *dia;
    Evas_Object *o;
    Evas_Coord w, h;
-   char *dir = NULL;
    
    cfdata = data;
    if (!cfdata) return;
@@ -183,17 +209,8 @@ _cb_icon_sel(void *data, void *data2)
    if (!dia) return;
    e_dialog_title_set(dia, _("Select an Icon"));
    dia->data = cfdata;
-   if (cfdata->icon)
-     dir = (char *)e_fm_mime_icon_get(cfdata->icon);
-   if ((dir) && (cfdata->type != THUMB))
-     {
-	o = e_widget_fsel_add(dia->win->evas, dir, "/", NULL, NULL,
-			      _cb_fsel_sel, cfdata, NULL, cfdata, 1);
-	free(dir);
-     }
-   else
-     o = e_widget_fsel_add(dia->win->evas, "~/", "/", NULL, NULL,
-			   _cb_fsel_sel, cfdata, NULL, cfdata, 1);
+   o = e_widget_fsel_add(dia->win->evas, "~/", "/", NULL, NULL,
+			 _cb_fsel_sel, cfdata, NULL, cfdata, 1);
 
    cfdata->gui.fsel_wid = o;
    evas_object_show(o);
@@ -227,6 +244,10 @@ _get_icon(void *data)
    switch (cfdata->type) 
      {
       case THUMB:
+	icon = edje_object_add(evas_object_evas_get(cfdata->gui.icon));
+	e_theme_edje_object_set(icon, "base/theme/fileman", "e/icons/fileman/file");
+	break;
+      case THEME:
 	snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", cfdata->mime);
 	icon = edje_object_add(evas_object_evas_get(cfdata->gui.icon));
 	if (!e_theme_edje_object_set(icon, "base/theme/fileman", buf))
@@ -234,13 +255,8 @@ _get_icon(void *data)
 	break;
       case EDJ:
 	icon = edje_object_add(evas_object_evas_get(cfdata->gui.icon));
-	if (!e_theme_edje_object_set(icon, "base/theme/fileman", cfdata->icon))
+	if (!e_theme_edje_object_set(icon, "base/theme/fileman", tmp))
 	  e_theme_edje_object_set(icon, "base/theme/fileman", "e/icons/fileman/file");
-	e_widget_disabled_set(cfdata->gui.icon, 0);
-	break;
-      case IMAGE:
-	icon = e_icon_add(evas_object_evas_get(cfdata->gui.icon));
-	e_icon_file_set(icon, cfdata->icon);
 	e_widget_disabled_set(cfdata->gui.icon, 0);
 	break;
       default:
@@ -262,10 +278,10 @@ _cb_type(void *data, Evas_Object *obj, void *event_info)
       case THUMB:
 	e_widget_disabled_set(cfdata->gui.icon, 1);
 	break;
-      case EDJ:
-	e_widget_disabled_set(cfdata->gui.icon, 0);
+      case THEME:
+	e_widget_disabled_set(cfdata->gui.icon, 1);
 	break;
-      case IMAGE:
+      case EDJ:
 	e_widget_disabled_set(cfdata->gui.icon, 0);
 	break;
       default:
@@ -321,9 +337,6 @@ _cb_file_change(void *data)
       case EDJ:
 	if (!strstr(cfdata->file, ".edj")) return;
 //	if (!edje_file_group_exists(cfdata->file, "")) return;
-	break;
-      case IMAGE:
-	break;
       default:
 	return;
 	break;

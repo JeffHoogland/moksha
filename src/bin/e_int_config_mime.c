@@ -11,7 +11,7 @@ static void         _list_cb_sel  (void *data);
 
 static void         _cb_confirm_yes     (void *data);
 static void         _cb_confirm_destroy (void *data);
-
+static void         _cb_entry_ok        (char *text, void *data);
 
 struct _E_Config_Dialog_Data 
 {
@@ -46,6 +46,21 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
    Evas_List *l;
+
+   while (cfdata->mimes) 
+     {
+	E_Config_Mime_Icon *mi;
+	
+	mi = cfdata->mimes->data;
+	if (!mi) continue;
+	if (mi->mime)
+	  evas_stringshare_del(mi->mime);
+	if (mi->icon)
+	  evas_stringshare_del(mi->icon);
+	E_FREE(mi);
+	
+	cfdata->mimes = evas_list_remove_list(cfdata->mimes, cfdata->mimes);
+     }
    
    for (l = e_config->mime_icons; l; l = l->next) 
      {
@@ -139,13 +154,16 @@ _fill_list(E_Config_Dialog_Data *cfdata)
 	
 	mi = l->data;
 	if (!mi) continue;
+	if (mi->icon)
+	  if (!strcmp(mi->icon, "DESKTOP")) continue;
+	
 	tmp = e_fm_mime_icon_get(mi->mime);
 	if (!tmp) 
 	  snprintf(buf, sizeof(buf), "e/icons/fileman/file");
 	else if (!strcmp(tmp, "THUMB")) 
 	  snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", mi->mime);
 	else if (!strncmp(tmp, "e/icons/fileman/mime/", 21)) 
-	  snprintf(buf, sizeof(buf), "%s", tmp);
+	  snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", mi->mime);
 	else 
 	  {
 	     char *p;
@@ -167,7 +185,14 @@ _fill_list(E_Config_Dialog_Data *cfdata)
 static void
 _cb_add(void *data, void *data2) 
 {
+   E_Config_Dialog_Data *cfdata;
    
+   cfdata = data;
+   if (!cfdata) return;
+   
+   e_entry_dialog_show(_("Create new mime type"), "enlightenment/e",
+		       _("Enter a name for this new mime type"), "", 
+		       NULL, NULL, _cb_entry_ok, NULL, cfdata);
 }
 
 static void
@@ -242,9 +267,14 @@ _cb_confirm_yes(void *data)
 	mi = l->data;
 	if (!mi) continue;
 	if (strcmp(mi->mime, cfdata->sel_mt)) continue;
-	cfdata->mimes = evas_list_remove(cfdata->mimes, mi);
+	if (mi->mime)
+	  evas_stringshare_del(mi->mime);
+	if (mi->icon)
+	  evas_stringshare_del(mi->icon);
 	e_config->mime_icons = evas_list_remove(e_config->mime_icons, mi);
      }
+   _fill_data(cfdata);
+   _fill_list(cfdata);
 }
 
 static void
@@ -254,5 +284,30 @@ _cb_confirm_destroy(void *data)
    
    cfdata = data;
    if (!cfdata) return;
+   _fill_list(cfdata);
+}
+
+static void 
+_cb_entry_ok(char *text, void *data) 
+{
+   E_Config_Dialog_Data *cfdata;
+   E_Config_Mime_Icon *mime;
+   char buf[4096];
+
+   cfdata = data;
+   if (!cfdata) return;
+   if (!text) return;
+   if (!strstr(text, "/")) return;
+   
+   snprintf(buf, sizeof(buf), "%s", text);
+   mime = E_NEW(E_Config_Mime_Icon, 1);
+   mime->mime = evas_stringshare_add(buf);
+//   snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", text);
+   mime->icon = evas_stringshare_add("THUMB");
+
+   e_config->mime_icons = evas_list_append(e_config->mime_icons, mime);
+   e_config_save_queue();
+
+   _fill_data(cfdata);
    _fill_list(cfdata);
 }
