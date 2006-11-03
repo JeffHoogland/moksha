@@ -133,6 +133,7 @@ e_int_config_exebuf.h \
 e_int_config_apps.h \
 e_int_config_cfgdialogs.h \
 e_int_config_color_classes.h \
+e_int_config_mime.h \
 e_deskpreview.h \
 e_exebuf.h \
 e_desklock.h \
@@ -284,6 +285,7 @@ e_int_config_apps.c \
 e_int_config_cfgdialogs.c \
 e_int_config_intl.c \
 e_int_config_color_classes.c \
+e_int_config_mime.c \
 e_deskpreview.c \
 e_exebuf.c \
 e_desklock.c \
