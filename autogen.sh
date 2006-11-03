@@ -4,6 +4,7 @@ rm -rf autom4te.cache
 rm -f aclocal.m4 ltmain.sh
 
 touch README
+touch ABOUT-NLS
 
 # no more autopoint. cuases too many hassles. too bad gentoo users - go back
 # to automake 1.9 :(
