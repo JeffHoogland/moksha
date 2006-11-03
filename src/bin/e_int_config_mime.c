@@ -128,15 +128,36 @@ _fill_list(E_Config_Dialog_Data *cfdata)
 {
    Evas_List *l;
    Evas_Coord w, h;
+   char buf[4096];
    
    e_widget_ilist_clear(cfdata->gui.list);
    for (l = cfdata->mimes; l; l = l->next) 
      {
 	E_Config_Mime_Icon *mi;
+	Evas_Object *icon;
+	const char *tmp;
 	
 	mi = l->data;
 	if (!mi) continue;
-	e_widget_ilist_append(cfdata->gui.list, NULL, mi->mime, _list_cb_sel, cfdata, NULL);
+	tmp = e_fm_mime_icon_get(mi->mime);
+	if (!tmp) 
+	  snprintf(buf, sizeof(buf), "e/icons/fileman/file");
+	else if (!strcmp(tmp, "THUMB")) 
+	  snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", mi->mime);
+	else if (!strncmp(tmp, "e/icons/fileman/mime/", 21)) 
+	  snprintf(buf, sizeof(buf), "%s", tmp);
+	else 
+	  {
+	     char *p;
+	     
+	     p = strrchr(tmp, '.');
+	     if ((p) && (!strcmp(p, ".edj"))) 
+	       snprintf(buf, sizeof(buf), "%s", tmp);
+	  }
+	icon = edje_object_add(evas_object_evas_get(cfdata->gui.list));
+	if (!e_theme_edje_object_set(icon, "base/theme/fileman", buf))
+	  e_theme_edje_object_set(icon, "base/theme/fileman", "e/icons/fileman/file");
+	e_widget_ilist_append(cfdata->gui.list, icon, mi->mime, _list_cb_sel, cfdata, NULL);
      }
    e_widget_ilist_go(cfdata->gui.list);
    e_widget_min_size_get(cfdata->gui.list, &w, &h);

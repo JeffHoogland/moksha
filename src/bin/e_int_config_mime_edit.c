@@ -216,7 +216,8 @@ _get_icon(void *data)
    E_Config_Dialog_Data *cfdata;
    Evas_Object *icon = NULL;
    const char *tmp;
-
+   char buf[4096];
+   
    cfdata = data;
    if (!cfdata) return icon;
 
@@ -226,8 +227,10 @@ _get_icon(void *data)
    switch (cfdata->type) 
      {
       case THUMB:
+	snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", cfdata->mime);
 	icon = edje_object_add(evas_object_evas_get(cfdata->gui.icon));
-	e_theme_edje_object_set(icon, "base/theme/fileman", "e/icons/fileman/file");
+	if (!e_theme_edje_object_set(icon, "base/theme/fileman", buf))
+	  e_theme_edje_object_set(icon, "base/theme/fileman", "e/icons/fileman/file");
 	break;
       case EDJ:
 	icon = edje_object_add(evas_object_evas_get(cfdata->gui.icon));
