@@ -10,9 +10,13 @@ static void         _cb_del       (void *data, void *data2);
 static void         _cb_config    (void *data, void *data2);
 static void         _list_cb_sel  (void *data);
 
+static void         _cb_confirm_yes     (void *data);
+static void         _cb_confirm_destroy (void *data);
+
 struct _E_Config_Dialog_Data 
 {
    Evas_List *mimes;
+   const char *sel_mt;
    struct 
      {
 	Evas_Object *list;
@@ -155,7 +159,17 @@ _cb_add(void *data, void *data2)
 static void
 _cb_del(void *data, void *data2) 
 {
+   E_Config_Dialog_Data *cfdata;
+   char buf[4096];
    
+   cfdata = data;
+   if (!cfdata) return;
+
+   snprintf(buf, sizeof(buf), _("You requested to delete \"%s\".<br><br>"
+				"Are you sure you want to delete this mime type?"), cfdata->sel_mt);
+   e_confirm_dialog_show(_("Are you sure you want to delete this mime type?"),
+			 "enlightenment/exit", buf, NULL, NULL, _cb_confirm_yes,
+			 NULL, cfdata, NULL, _cb_confirm_destroy, NULL);
 }
 
 static void
@@ -171,7 +185,42 @@ _list_cb_sel(void *data)
    
    cfdata = data;
    if (!cfdata) return;
+
+   cfdata->sel_mt = e_widget_ilist_selected_label_get(cfdata->gui.list);
+   if (!cfdata->sel_mt) return;
    
    e_widget_disabled_set(cfdata->gui.del, 0);
    e_widget_disabled_set(cfdata->gui.config, 0);
+}
+
+static void
+_cb_confirm_yes(void *data) 
+{
+   E_Config_Dialog_Data *cfdata;
+   Evas_List *l;
+   
+   cfdata = data;
+   if (!cfdata) return;
+   if (!cfdata->sel_mt) return;
+   
+   for (l = e_config->mime_icons; l; l = l->next) 
+     {
+	E_Config_Mime_Icon *mi;
+	
+	mi = l->data;
+	if (!mi) continue;
+	if (strcmp(mi->mime, cfdata->sel_mt)) continue;
+	cfdata->mimes = evas_list_remove(cfdata->mimes, mi);
+	e_config->mime_icons = evas_list_remove(e_config->mime_icons, mi);
+     }
+}
+
+static void
+_cb_confirm_destroy(void *data) 
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data;
+   if (!cfdata) return;
+   _fill_list(cfdata);
 }
