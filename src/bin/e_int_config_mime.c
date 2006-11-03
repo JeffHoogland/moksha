@@ -12,6 +12,7 @@ static void         _list_cb_sel  (void *data);
 static void         _cb_confirm_yes     (void *data);
 static void         _cb_confirm_destroy (void *data);
 
+
 struct _E_Config_Dialog_Data 
 {
    Evas_List *mimes;
