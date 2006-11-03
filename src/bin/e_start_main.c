@@ -268,9 +268,9 @@ precache(void)
    else
      snprintf(buf, sizeof(buf), "/tmp/.e-precache");
    f = fopen(buf, "r");
-   if (!f) exit(0);
+   if (!f) return;
    unlink(buf);
-   if (fork()) exit(0);
+   if (fork()) return;
    while (fgets(buf, sizeof(buf), f));
    rewind(f);
    while (fgets(buf, sizeof(buf), f))
@@ -358,6 +358,7 @@ main(int argc, char **argv)
      {
 	void *lib, *func;
 	
+	do_precache = 0;
 	/* sanity checks - if precache might fail - check here first */
 	lib = dlopen("libevas.so", RTLD_GLOBAL | RTLD_LAZY);
 	if (!lib) dlopen("libevas.so.1", RTLD_GLOBAL | RTLD_LAZY);
