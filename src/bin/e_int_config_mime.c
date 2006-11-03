@@ -2,7 +2,6 @@
 
 static void        *_create_data  (E_Config_Dialog *cfd);
 static void         _free_data    (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int          _basic_apply  (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void         _fill_list    (E_Config_Dialog_Data *cfdata);
 static void         _cb_add       (void *data, void *data2);
@@ -35,7 +34,6 @@ e_int_config_mime(E_Container *con)
    v = E_NEW(E_Config_Dialog_View, 1);
    v->create_cfdata = _create_data;
    v->free_cfdata = _free_data;
-   v->basic.apply_cfdata = _basic_apply;
    v->basic.create_widgets = _basic_create;
    
    cfd = e_config_dialog_new(con, _("Mime Types"), "E", "_config_mime_dialog",
@@ -90,12 +88,6 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      }
    
    E_FREE(cfdata);
-}
-
-static int
-_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
-{
-   return 1;
 }
 
 static Evas_Object *
@@ -175,7 +167,25 @@ _cb_del(void *data, void *data2)
 static void
 _cb_config(void *data, void *data2) 
 {
+   E_Config_Dialog_Data *cfdata;
+   E_Config_Mime_Icon *mi;
+   Evas_List *l;
+   int found = 0;
    
+   cfdata = data;
+   if (!cfdata) return;
+   if (!cfdata->sel_mt) return;
+
+   for (l = cfdata->mimes; l; l = l->next) 
+     {
+	mi = l->data;
+	if (!mi) continue;
+	if (strcmp(mi->mime, cfdata->sel_mt)) continue;
+	found = 1;
+	break;
+     }
+   if (!found) return;
+   e_int_config_mime_edit(mi);
 }
 
 static void 
