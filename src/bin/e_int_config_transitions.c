@@ -72,6 +72,12 @@ _create_data(E_Config_Dialog *cfd)
 static void 
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
+   if(cfdata->transition_start)
+       E_FREE(cfdata->transition_start);
+   if(cfdata->transition_desk)
+       E_FREE(cfdata->transition_desk);
+   if(cfdata->transition_change)
+       E_FREE(cfdata->transition_change);
    free(cfdata);
 }
 
