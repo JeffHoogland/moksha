@@ -3,6 +3,8 @@
  */
 #include "e.h"
 
+#define MAX_OUTPUT_CHARACTERS 5000
+
 struct _E_Config_Dialog_Data
 {
    char *label;
@@ -173,7 +175,8 @@ _dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *li
    int i;
    Evas_Object *obj, *os;
    char *text;
-   int tlen;
+   char *trunc_note = _("***The remaining output has been truncated. Save the output to view.***\n");
+   int tlen, max_lines;
 
    os = e_widget_framelist_add(evas, _(title), 0);
 
@@ -181,16 +184,34 @@ _dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *li
 
    tlen = 0;
    for (i = 0; lines[i].line != NULL; i++)
-     tlen += lines[i].size + 1;
+     {
+	tlen += lines[i].size + 1;
+	/* When the program output is extraordinarily long, it can cause
+	 * significant delays during text rendering. Limit to a fixed
+	 * number of characters. */
+	if (tlen > MAX_OUTPUT_CHARACTERS)
+	  {
+	     tlen -= lines[i].size + 1;
+	     tlen += strlen(trunc_note);
+	     break;
+	  }
+     }
+   max_lines = i;
    text = alloca(tlen + 1);
+
    if (text)
      {
 	text[0] = 0;
-	for (i = 0; lines[i].line != NULL; i++)
+	for (i = 0; i < max_lines; i++)
 	  {
 	     strcat(text, lines[i].line);
 	     strcat(text, "\n");
 	  }
+
+	/* Append the warning about truncated output. */
+	if (lines[max_lines].line != NULL)
+	  strcat(text, trunc_note);
+
 	e_widget_textblock_plain_set(obj, text);
      }
    e_widget_min_size_set(obj, 240, 120);
