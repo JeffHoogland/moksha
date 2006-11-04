@@ -286,6 +286,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	  evas_stringshare_del(cfc->name);
 	if (cfc->key)
 	  evas_stringshare_del(cfc->key);
+        E_FREE(cfc);
 	
 	cfdata->classes = evas_list_remove_list(cfdata->classes, cfdata->classes);
      }
