@@ -85,6 +85,7 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
+   E_FREE(cfdata->term_cmd);
    free(cfdata);
 }
 
