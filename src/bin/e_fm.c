@@ -107,6 +107,7 @@ struct _E_Fm2_Smart_Data
    } typebuf;
    
    E_Fm2_Fop          *fop;
+   int                 busy_count;
    
    E_Object           *eobj;
    E_Drop_Handler     *drop_handler;
@@ -168,6 +169,7 @@ struct _E_Fm2_Fop
    const char  *dir;
    Evas_List   *items;
    Ecore_Idler *idler;
+   Ecore_Timer *timer;
 };
 
 struct _E_Fm2_Fop_Item
@@ -295,6 +297,13 @@ static int _e_fm2_cb_live_idler(void *data);
 static int _e_fm2_cb_live_timer(void *data);
 static void _e_fm2_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path);
 
+static E_Fm2_Fop *_e_fm2_fop_add(E_Fm2_Smart_Data *sd);
+static void _e_fm2_fop_del(E_Fm2_Fop *fop);
+static void _e_fm2_fop_detach(E_Fm2_Smart_Data *sd);
+static int _e_fm2_fop_process(E_Fm2_Fop *fop);
+static int _e_fm2_cb_fop_idler(void *data);
+static int _e_fm2_cb_fop_timer(void *data);
+
 static char *_e_fm2_meta_path = NULL;
 static Evas_Smart *_e_fm2_smart = NULL;
 static Evas_List *_e_fm2_list = NULL;
@@ -352,6 +361,8 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
    if (!evas_object_type_get(obj)) return; // safety
    if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
 
+   _e_fm2_fop_detach(sd);
+   
    /* internal config for now - don't see a pont making this configurable */
    sd->regions.member_max = 64;
 
@@ -759,173 +770,6 @@ e_fm2_all_icons_update(void)
    /* FIXME: implement - update all icons as config changes */
 }
 
-static E_Fm2_Fop *_e_fm2_fop_add(E_Fm2_Smart_Data *sd);
-static void _e_fm2_fop_del(E_Fm2_Fop *fop);
-static void _e_fm2_fop_detach(E_Fm2_Smart_Data *sd);
-static int _e_fm2_fop_process(E_Fm2_Fop *fop);
-static int _e_fm2_cb_fop_idler(void *data);
-static int _e_fm2_cb_fop_timer(void *data);
-
-static E_Fm2_Fop *
-_e_fm2_fop_add(E_Fm2_Smart_Data *sd)
-{
-   if (!sd->fop)
-     {
-	sd->fop = E_NEW(E_Fm2_Fop, 1);
-	if (!sd->fop) return NULL;
-	sd->fop->obj = sd->obj;
-	sd->fop->dir = evas_stringshare_add(e_fm2_real_path_get(sd->obj));
-	if (!sd->fop->dir)
-	  {
-	     free(sd->fop);
-	     sd->fop = NULL;
-	     return NULL;
-	  }
-	sd->fop->idler = ecore_idler_add(_e_fm2_cb_fop_idler, sd->fop);
-	if (!sd->fop->idler)
-	  {
-	     evas_stringshare_del(sd->fop->dir);
-	     free(sd->fop);
-	     sd->fop = NULL;
-	     return NULL;
-	  }
-	/* FIXME: add a timer that updates the fop->obj to the current
-	 * file being deleted and spin the wheel
-	 */
-     }
-   _e_fm2_fop_list = evas_list_append(_e_fm2_fop_list, sd->fop);
-   return sd->fop;
-}
-
-static void
-_e_fm2_fop_del(E_Fm2_Fop *fop)
-{
-   if (fop->idler)
-     {
-	ecore_idler_del(fop->idler);
-	fop->idler = NULL;
-     } 
-   /* FIXME: delete timer */
-   if (fop->dir)
-     {
-	evas_stringshare_del(fop->dir);
-	fop->dir = NULL;
-     }
-   if (fop->obj)
-     {
-	E_Fm2_Smart_Data *sd;
-	
-	sd = evas_object_smart_data_get(fop->obj);
-	if (sd) sd->fop = NULL;
-	fop->obj = NULL;
-     }
-   _e_fm2_fop_list = evas_list_remove(_e_fm2_fop_list, fop);
-  free(fop);
-}
-
-static void
-_e_fm2_fop_detach(E_Fm2_Smart_Data *sd)
-{
-   if (!sd->fop) return;
-   sd->fop->obj = NULL;
-   sd->fop = NULL;
-}
-
-static int
-_e_fm2_fop_process(E_Fm2_Fop *fop)
-{
-   E_Fm2_Fop_Item *fi, *fi2;
-   char buf[4096];
-   struct dirent *dp;
-   
-   if (fop->items) return 0;
-   fi = fop->items->data;
-   switch (fi->type)
-     {
-      case FOP_DELETE:
-	if (fi->dir)
-	  {
-	     dp = readdir(fi->dir);
-	     if (!dp)
-	       {
-		  snprintf(buf, sizeof(buf), "%s/%s", fi->fop->dir, fi->file);
-		  ecore_file_rmdir(buf);
-	       }
-	     else
-	       {
-		  if ((!strcmp(dp->d_name, ".")) || (!strcmp(dp->d_name, ".."))) return 1;
-		  fi2 = E_NEW(E_Fm2_Fop_Item, 1);
-		  fi2->fop = fop;
-		  fi2->type = FOP_DELETE;
-		  snprintf(buf, sizeof(buf), "%s/%s/%s", fi->fop->dir, fi->file, dp->d_name);
-		  fi2->is_dir = ecore_file_is_dir(buf);
-		  snprintf(buf, sizeof(buf), "%s/%s", fi->file, dp->d_name);
-		  fi2->file = evas_stringshare_add(buf);
-		  fi->fop->items = evas_list_prepend(fi->fop->items, fi2);
-		  return 1;
-	       }
-	  }
-	else if (fi->is_dir)
-	  {
-	     snprintf(buf, sizeof(buf), "%s/%s", fi->fop->dir, fi->file);
-	     fi->dir = opendir(buf);
-	     if (!fi->dir)
-	       ecore_file_rmdir(buf);
-	     else
-	       return 1;
-	  }
-	else
-	  {
-	     snprintf(buf, sizeof(buf), "%s/%s", fi->fop->dir, fi->file);
-	     ecore_file_unlink(buf);
-	  }
-	break;
-      case FOP_MOVE:
-	/* FIXME: */
-	break;
-      default:
-	break;
-     }
-   /* remove and free */
-   fop->items = evas_list_remove_list(fop->items, fop->items);
-   if (fi->file)
-     {
-	evas_stringshare_del(fi->file);
-	fi->file = NULL;
-     }
-   if (fi->dir)
-     {
-	closedir(fi->dir);
-	fi->dir = NULL;
-     }
-   free(fi);
-   if (fop->items) return 0;
-   return 1;
-}
-
-static int
-_e_fm2_cb_fop_idler(void *data)
-{
-   E_Fm2_Fop *fop;
-   
-   fop = data;
-   if (!_e_fm2_fop_process(fop))
-     {
-	_e_fm2_fop_del(fop);
-	return 0;
-     }
-   return 1;
-}
-
-static int
-_e_fm2_cb_fop_timer(void *data)
-{
-   E_Fm2_Fop *fop;
-   
-   fop = data;
-   return 1;
-}
-
 EAPI void
 e_fm2_fop_delete_add(Evas_Object *obj, E_Fm2_Icon_Info *ici)
 {
@@ -961,8 +805,10 @@ e_fm2_fop_delete_add(Evas_Object *obj, E_Fm2_Icon_Info *ici)
    fi->fop = fop;
    fi->type = FOP_DELETE;
    fi->file = evas_stringshare_add(ici->file);
-   if (S_ISDIR(ici->statinfo.st_mode)) fi->is_dir = 1;
+   if ((S_ISDIR(ici->statinfo.st_mode)) && (!ici->real_link))
+     fi->is_dir = 1;
    fi->fop->items = evas_list_append(fi->fop->items, fi);
+   printf("ADD0: %s\n", fi->file);
 }
 
 /* FIXME: not so easy with .orders etc. */
@@ -1188,7 +1034,9 @@ _e_fm2_scan_start(Evas_Object *obj)
    sd->monitor.monitor = ecore_file_monitor_add(sd->realpath, _e_fm2_cb_file_monitor, obj);
    sd->scan_idler = ecore_idler_add(_e_fm2_cb_scan_idler, obj);
    sd->scan_timer = ecore_timer_add(0.2, _e_fm2_cb_scan_timer, obj);
-   edje_object_signal_emit(sd->overlay, "e,state,busy,start", "e");
+   sd->busy_count++;
+   if (sd->busy_count == 1)
+     edje_object_signal_emit(sd->overlay, "e,state,busy,start", "e");
 }
 
 static void
@@ -1199,7 +1047,11 @@ _e_fm2_scan_stop(Evas_Object *obj)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if ((sd->dir) || (sd->order))
-     edje_object_signal_emit(sd->overlay, "e,state,busy,stop", "e");
+     {
+	sd->busy_count--;
+	if (sd->busy_count == 0)
+	  edje_object_signal_emit(sd->overlay, "e,state,busy,stop", "e");
+     }
    /* stop the scan idler, the sort timer and free the queue */
    if (sd->dir)
      {
@@ -4233,7 +4085,9 @@ _e_fm2_smart_del(Evas_Object *obj)
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-  
+
+   _e_fm2_fop_detach(sd);
+   
    if (sd->monitor.monitor)
      {
 	ecore_file_monitor_del(sd->monitor.monitor);
@@ -5056,6 +4910,8 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
 		  if (e_filereg_file_protected(buf)) continue;
 		  
 		  /* FIXME: recursive rm might block - need to get smart */
+		  e_fm2_fop_delete_add(ic->sd->obj, ici);
+/*		  
 		  if (!(ecore_file_recursive_rm(buf)))
 		    {
 		       char text[4096 + 256];
@@ -5081,7 +4937,10 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
 			      }
 			 }
 		    }
-		  else ici->deleted = 1;
+		  else
+ */
+//		  ici->deleted = 1;
+		  ok = 0;
 	       }
 	     else ici->deleted = 1;
 	     if (ok) _e_fm2_live_file_del(ic->sd->obj, ici->file);
@@ -5096,6 +4955,8 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
 	     if (e_filereg_file_protected(buf)) return;
 
 	     /* FIXME: recursive rm might block - need to get smart */
+	     e_fm2_fop_delete_add(ic->sd->obj, &(ic->info));
+/*	     
 	     if (!(ecore_file_recursive_rm(buf)))
 	       {
 		  char text[4096 + 256];
@@ -5118,9 +4979,13 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
 		  // e_object_del(E_OBJECT(dialog));
 		  return;
 	       }
+ */
 	  }
-	_e_fm2_live_file_del(ic->sd->obj, ic->info.file);
-	ic->info.deleted = 1;
+	else
+	  {
+	     ic->info.deleted = 1;
+	     _e_fm2_live_file_del(ic->sd->obj, ic->info.file);
+	  }
      }
    
 //   if (ic->sd->order_file) _e_fm2_order_file_rewrite(ic->sd->obj);
@@ -5388,4 +5253,289 @@ _e_fm2_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event even
 	     evas_object_smart_callback_call(sd->obj, "dir_deleted", NULL);
 	  }
      }
+}
+
+static E_Fm2_Fop *
+_e_fm2_fop_add(E_Fm2_Smart_Data *sd)
+{
+   if (!sd->fop)
+     {
+	sd->fop = E_NEW(E_Fm2_Fop, 1);
+	if (!sd->fop) return NULL;
+	sd->fop->obj = sd->obj;
+	sd->fop->dir = evas_stringshare_add(e_fm2_real_path_get(sd->obj));
+	if (!sd->fop->dir)
+	  {
+	     free(sd->fop);
+	     sd->fop = NULL;
+	     return NULL;
+	  }
+	sd->fop->idler = ecore_idler_add(_e_fm2_cb_fop_idler, sd->fop);
+	if (!sd->fop->idler)
+	  {
+	     evas_stringshare_del(sd->fop->dir);
+	     free(sd->fop);
+	     sd->fop = NULL;
+	     return NULL;
+	  }
+	sd->fop->timer = ecore_timer_add(0.2, _e_fm2_cb_fop_timer, sd->fop);
+	sd->busy_count++;
+	if (sd->busy_count == 1)
+	  edje_object_signal_emit(sd->overlay, "e,state,busy,start", "e");
+     }
+   _e_fm2_fop_list = evas_list_append(_e_fm2_fop_list, sd->fop);
+   return sd->fop;
+}
+
+static void
+_e_fm2_fop_del(E_Fm2_Fop *fop)
+{
+   if (fop->idler)
+     {
+	ecore_idler_del(fop->idler);
+	fop->idler = NULL;
+     } 
+   if (fop->timer)
+     {
+	_e_fm2_cb_fop_timer(fop);
+	ecore_timer_del(fop->timer);
+	fop->timer = NULL;
+     } 
+   if (fop->dir)
+     {
+	evas_stringshare_del(fop->dir);
+	fop->dir = NULL;
+     }
+   if (fop->obj)
+     {
+	E_Fm2_Smart_Data *sd;
+	
+	sd = evas_object_smart_data_get(fop->obj);
+	if (sd) sd->fop = NULL;
+	fop->obj = NULL;
+	sd->busy_count--;
+	if (sd->busy_count == 0)
+	  edje_object_signal_emit(sd->overlay, "e,state,busy,stop", "e");
+     }
+   _e_fm2_fop_list = evas_list_remove(_e_fm2_fop_list, fop);
+  free(fop);
+}
+
+static void
+_e_fm2_fop_detach(E_Fm2_Smart_Data *sd)
+{
+   if (!sd->fop) return;
+   sd->fop->obj = NULL;
+   sd->fop = NULL;
+   sd->busy_count--;
+   if (sd->busy_count == 0)
+     edje_object_signal_emit(sd->overlay, "e,state,busy,stop", "e");
+}
+
+static int
+_e_fm2_fop_process(E_Fm2_Fop *fop)
+{
+   E_Fm2_Fop_Item *fi, *fi2;
+   char buf[4096];
+   struct dirent *dp;
+   E_Manager *man;
+   E_Container *con;
+   E_Dialog *dialog;
+   
+   if (!fop->items) return 0;
+   fi = fop->items->data;
+   switch (fi->type)
+     {
+      case FOP_DELETE:
+	if (fi->dir)
+	  {
+	     dp = readdir(fi->dir);
+	     if (!dp)
+	       {
+		  snprintf(buf, sizeof(buf), "%s/%s", fi->fop->dir, fi->file);
+		  if (ecore_file_rmdir(buf))
+		    {
+		       if ((fi->fop->obj) && (!strchr(fi->file, '/')))
+			 _e_fm2_live_file_del(fi->fop->obj, fi->file);
+		    }
+		  /* FIXME: if deletign vast dirs and lots of errors happen
+		   * we need a central dialog that just collects all of them
+		   * and not have dozens or 100's of dialogs */
+		  else
+		    {
+		       char text[4096 + 256];
+		     
+		       man = e_manager_current_get();
+		       if (man)
+			 {
+			    con = e_container_current_get(man);
+			    if (con)
+			      {
+				 dialog = e_dialog_new(con, "E", "_fm_file_delete_error_dialog");
+				 e_dialog_button_add(dialog, _("OK"), NULL, NULL, NULL);
+				 e_dialog_button_focus_num(dialog, 1);
+				 e_dialog_title_set(dialog, _("Error"));
+				 snprintf(text, sizeof(text),
+					  _("Could not delete <br>"
+					    "<hilight>%s</hilight>"), buf);
+				 e_dialog_text_set(dialog, text);
+				 e_win_centered_set(dialog->win, 1);
+				 e_dialog_show(dialog);
+				 // e_object_del(E_OBJECT(dialog));
+			      }
+			 }
+		    }
+	       }
+	     else
+	       {
+		  if ((!strcmp(dp->d_name, ".")) || (!strcmp(dp->d_name, ".."))) return 1;
+		  fi2 = E_NEW(E_Fm2_Fop_Item, 1);
+		  fi2->fop = fop;
+		  fi2->type = FOP_DELETE;
+		  snprintf(buf, sizeof(buf), "%s/%s/%s", fi->fop->dir, fi->file, dp->d_name);
+		  if (ecore_file_is_dir(buf))
+		    {
+		       char *lnk;
+		       
+		       lnk = ecore_file_readlink(buf);
+		       if (lnk) free(lnk);
+		       else fi2->is_dir = 1;
+		    }
+		  snprintf(buf, sizeof(buf), "%s/%s", fi->file, dp->d_name);
+		  fi2->file = evas_stringshare_add(buf);
+		  fi->fop->items = evas_list_prepend(fi->fop->items, fi2);
+		  printf("ADD: %s\n", fi2->file);
+		  return 1;
+	       }
+	  }
+	else if (fi->is_dir)
+	  {
+	     snprintf(buf, sizeof(buf), "%s/%s", fi->fop->dir, fi->file);
+	     fi->dir = opendir(buf);
+	     if (!fi->dir)
+	       {
+		  if (ecore_file_rmdir(buf))
+		    {
+		       if ((fi->fop->obj) && (!strchr(fi->file, '/')))
+			 _e_fm2_live_file_del(fi->fop->obj, fi->file);
+		    }
+		  /* FIXME: if deletign vast dirs and lots of errors happen
+		   * we need a central dialog that just collects all of them
+		   * and not have dozens or 100's of dialogs */
+		  else
+		    {
+		       char text[4096 + 256];
+		     
+		       man = e_manager_current_get();
+		       if (man)
+			 {
+			    con = e_container_current_get(man);
+			    if (con)
+			      {
+				 dialog = e_dialog_new(con, "E", "_fm_file_delete_error_dialog");
+				 e_dialog_button_add(dialog, _("OK"), NULL, NULL, NULL);
+				 e_dialog_button_focus_num(dialog, 1);
+				 e_dialog_title_set(dialog, _("Error"));
+				 snprintf(text, sizeof(text),
+					  _("Could not delete <br>"
+					    "<hilight>%s</hilight>"), buf);
+				 e_dialog_text_set(dialog, text);
+				 e_win_centered_set(dialog->win, 1);
+				 e_dialog_show(dialog);
+				 // e_object_del(E_OBJECT(dialog));
+			      }
+			 }
+		    }
+	       }
+	     else
+	       return 1;
+	  }
+	else
+	  {
+	     snprintf(buf, sizeof(buf), "%s/%s", fi->fop->dir, fi->file);
+	     if (ecore_file_unlink(buf))
+	       {
+		  if ((fi->fop->obj) && (!strchr(fi->file, '/')))
+		    _e_fm2_live_file_del(fi->fop->obj, fi->file);
+	       }
+	     /* FIXME: if deletign vast dirs and lots of errors happen
+	      * we need a central dialog that just collects all of them
+	      * and not have dozens or 100's of dialogs */
+	     else
+	       {
+		  char text[4096 + 256];
+		  
+		  man = e_manager_current_get();
+		  if (man)
+		    {
+		       con = e_container_current_get(man);
+		       if (con)
+			 {
+			    dialog = e_dialog_new(con, "E", "_fm_file_delete_error_dialog");
+			    e_dialog_button_add(dialog, _("OK"), NULL, NULL, NULL);
+			    e_dialog_button_focus_num(dialog, 1);
+			    e_dialog_title_set(dialog, _("Error"));
+			    snprintf(text, sizeof(text),
+				     _("Could not delete <br>"
+				       "<hilight>%s</hilight>"), buf);
+			    e_dialog_text_set(dialog, text);
+			    e_win_centered_set(dialog->win, 1);
+			    e_dialog_show(dialog);
+			    // e_object_del(E_OBJECT(dialog));
+			 }
+		    }
+	       }
+	  }
+	break;
+      case FOP_MOVE:
+	/* FIXME: handle moves */
+	break;
+      default:
+	break;
+     }
+   /* remove and free */
+   printf("DONE: %s\n", fi->file);
+   fop->items = evas_list_remove_list(fop->items, fop->items);
+   if (fi->file)
+     {
+	evas_stringshare_del(fi->file);
+	fi->file = NULL;
+     }
+   if (fi->dir)
+     {
+	closedir(fi->dir);
+	fi->dir = NULL;
+     }
+   free(fi);
+   if (!fop->items) return 0;
+   return 1;
+}
+
+static int
+_e_fm2_cb_fop_idler(void *data)
+{
+   E_Fm2_Fop *fop;
+   
+   fop = data;
+   if (!_e_fm2_fop_process(fop))
+     {
+	_e_fm2_fop_del(fop);
+	return 0;
+     }
+   return 1;
+}
+
+static int
+_e_fm2_cb_fop_timer(void *data)
+{
+   E_Fm2_Fop *fop;
+   E_Fm2_Smart_Data *sd;
+   char buf[4096];
+   
+   fop = data;
+   if (!fop->obj) return 1;
+   sd = evas_object_smart_data_get(fop->obj);
+   snprintf(buf, sizeof(buf), _("%i Queued"), evas_list_count(fop->items));
+   edje_object_part_text_set(sd->overlay, "e.text.busy_label", buf);
+   return 1;
 }

@@ -140,5 +140,8 @@ EAPI void                  e_fm2_pan_max_get(Evas_Object *obj, Evas_Coord *x, Ev
 EAPI void                  e_fm2_pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h);
 
 EAPI void                  e_fm2_all_icons_update(void);
+
+EAPI void                  e_fm2_fop_delete_add(Evas_Object *obj, E_Fm2_Icon_Info *ici);
+    
 #endif
 #endif
