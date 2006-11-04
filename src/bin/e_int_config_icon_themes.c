@@ -333,6 +333,7 @@ _ilist_cb_change(void *data, Evas_Object *obj)
    E_Config_Dialog_Data *cfdata;
    const char *v;
    Ecore_Desktop_Icon_Theme *theme;
+   char * dir;
 
    cfdata = data;
    v = cfdata->themename;
@@ -347,7 +348,7 @@ _ilist_cb_change(void *data, Evas_Object *obj)
          length = strlen(theme->comment) + strlen(theme->path) + 16;
 	 if (theme->inherits)
 	    length += strlen(theme->inherits) + 32;
-	 text = malloc(length);
+	 text = alloca(length);
 	 if (text)
 	    {
 	       if (theme->inherits)
@@ -356,7 +357,9 @@ _ilist_cb_change(void *data, Evas_Object *obj)
 	          sprintf(text, "%s\npath = %s", theme->comment, theme->path);
                e_widget_textblock_plain_set(cfdata->gui.comment, text);
 	    }
-         e_fm2_path_set(cfdata->gui.o_fm, ecore_file_get_dir(theme->path), "/");
+	 dir = ecore_file_get_dir(theme->path);
+         e_fm2_path_set(cfdata->gui.o_fm, dir, "/");
+	 E_FREE(dir);
       }
 }
 
