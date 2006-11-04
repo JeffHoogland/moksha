@@ -808,7 +808,7 @@ e_fm2_fop_delete_add(Evas_Object *obj, E_Fm2_Icon_Info *ici)
    if ((S_ISDIR(ici->statinfo.st_mode)) && (!ici->real_link))
      fi->is_dir = 1;
    fi->fop->items = evas_list_append(fi->fop->items, fi);
-   printf("ADD0: %s\n", fi->file);
+//   printf("ADD0: %s\n", fi->file);
 }
 
 /* FIXME: not so easy with .orders etc. */
@@ -5381,7 +5381,6 @@ _e_fm2_fop_process(E_Fm2_Fop *fop)
 				 e_dialog_text_set(dialog, text);
 				 e_win_centered_set(dialog->win, 1);
 				 e_dialog_show(dialog);
-				 // e_object_del(E_OBJECT(dialog));
 			      }
 			 }
 		    }
@@ -5404,7 +5403,7 @@ _e_fm2_fop_process(E_Fm2_Fop *fop)
 		  snprintf(buf, sizeof(buf), "%s/%s", fi->file, dp->d_name);
 		  fi2->file = evas_stringshare_add(buf);
 		  fi->fop->items = evas_list_prepend(fi->fop->items, fi2);
-		  printf("ADD: %s\n", fi2->file);
+//		  printf("ADD: %s\n", fi2->file);
 		  return 1;
 	       }
 	  }
@@ -5442,7 +5441,6 @@ _e_fm2_fop_process(E_Fm2_Fop *fop)
 				 e_dialog_text_set(dialog, text);
 				 e_win_centered_set(dialog->win, 1);
 				 e_dialog_show(dialog);
-				 // e_object_del(E_OBJECT(dialog));
 			      }
 			 }
 		    }
@@ -5481,7 +5479,6 @@ _e_fm2_fop_process(E_Fm2_Fop *fop)
 			    e_dialog_text_set(dialog, text);
 			    e_win_centered_set(dialog->win, 1);
 			    e_dialog_show(dialog);
-			    // e_object_del(E_OBJECT(dialog));
 			 }
 		    }
 	       }
@@ -5494,7 +5491,7 @@ _e_fm2_fop_process(E_Fm2_Fop *fop)
 	break;
      }
    /* remove and free */
-   printf("DONE: %s\n", fi->file);
+//   printf("DONE: %s\n", fi->file);
    fop->items = evas_list_remove_list(fop->items, fop->items);
    if (fi->file)
      {
