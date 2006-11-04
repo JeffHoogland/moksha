@@ -14,17 +14,25 @@
  * custom frames or icons yet
  */
 
-typedef enum
+typedef enum _E_Fm2_Action_Type
 {
    FILE_ADD,
      FILE_DEL,
      FILE_CHANGE
 } E_Fm2_Action_Type;
-    
+
+typedef enum _E_Fm2_Fop_Type
+{
+   FOP_DELETE,
+     FOP_MOVE
+} E_Fm2_Fop_Type;
+
 typedef struct _E_Fm2_Smart_Data E_Fm2_Smart_Data;
 typedef struct _E_Fm2_Region     E_Fm2_Region;
 typedef struct _E_Fm2_Icon       E_Fm2_Icon;
 typedef struct _E_Fm2_Action     E_Fm2_Action;
+typedef struct _E_Fm2_Fop        E_Fm2_Fop;
+typedef struct _E_Fm2_Fop_Item   E_Fm2_Fop_Item;
 
 struct _E_Fm2_Smart_Data
 {
@@ -98,6 +106,8 @@ struct _E_Fm2_Smart_Data
       char            *buf;
    } typebuf;
    
+   E_Fm2_Fop          *fop;
+   
    E_Object           *eobj;
    E_Drop_Handler     *drop_handler;
    E_Fm2_Icon         *drop_icon;
@@ -150,6 +160,23 @@ struct _E_Fm2_Action
    char              *file;
    char              *file2;
    int                flags;
+};
+
+struct _E_Fm2_Fop
+{
+   Evas_Object *obj;
+   const char  *dir;
+   Evas_List   *items;
+   Ecore_Idler *idler;
+};
+
+struct _E_Fm2_Fop_Item
+{
+   E_Fm2_Fop_Type  type;
+   E_Fm2_Fop      *fop;
+   const char     *file;
+   DIR            *dir;
+   unsigned char   is_dir : 1;
 };
 
 static const char *_e_fm2_dev_path_map(const char *dev, const char *path);
@@ -271,6 +298,7 @@ static void _e_fm2_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_Fil
 static char *_e_fm2_meta_path = NULL;
 static Evas_Smart *_e_fm2_smart = NULL;
 static Evas_List *_e_fm2_list = NULL;
+static Evas_List *_e_fm2_fop_list = NULL;
 
 /* externally accessible functions */
 EAPI int
@@ -726,10 +754,185 @@ e_fm2_pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 }
 
 EAPI void
+e_fm2_all_icons_update(void)
+{
+   /* FIXME: implement - update all icons as config changes */
+}
+
+static E_Fm2_Fop *_e_fm2_fop_add(E_Fm2_Smart_Data *sd);
+static void _e_fm2_fop_del(E_Fm2_Fop *fop);
+static void _e_fm2_fop_detach(E_Fm2_Smart_Data *sd);
+static int _e_fm2_fop_process(E_Fm2_Fop *fop);
+static int _e_fm2_cb_fop_idler(void *data);
+static int _e_fm2_cb_fop_timer(void *data);
+
+static E_Fm2_Fop *
+_e_fm2_fop_add(E_Fm2_Smart_Data *sd)
+{
+   if (!sd->fop)
+     {
+	sd->fop = E_NEW(E_Fm2_Fop, 1);
+	if (!sd->fop) return NULL;
+	sd->fop->obj = sd->obj;
+	sd->fop->dir = evas_stringshare_add(e_fm2_real_path_get(sd->obj));
+	if (!sd->fop->dir)
+	  {
+	     free(sd->fop);
+	     sd->fop = NULL;
+	     return NULL;
+	  }
+	sd->fop->idler = ecore_idler_add(_e_fm2_cb_fop_idler, sd->fop);
+	if (!sd->fop->idler)
+	  {
+	     evas_stringshare_del(sd->fop->dir);
+	     free(sd->fop);
+	     sd->fop = NULL;
+	     return NULL;
+	  }
+	/* FIXME: add a timer that updates the fop->obj to the current
+	 * file being deleted and spin the wheel
+	 */
+     }
+   _e_fm2_fop_list = evas_list_append(_e_fm2_fop_list, sd->fop);
+   return sd->fop;
+}
+
+static void
+_e_fm2_fop_del(E_Fm2_Fop *fop)
+{
+   if (fop->idler)
+     {
+	ecore_idler_del(fop->idler);
+	fop->idler = NULL;
+     } 
+   /* FIXME: delete timer */
+   if (fop->dir)
+     {
+	evas_stringshare_del(fop->dir);
+	fop->dir = NULL;
+     }
+   if (fop->obj)
+     {
+	E_Fm2_Smart_Data *sd;
+	
+	sd = evas_object_smart_data_get(fop->obj);
+	if (sd) sd->fop = NULL;
+	fop->obj = NULL;
+     }
+   _e_fm2_fop_list = evas_list_remove(_e_fm2_fop_list, fop);
+  free(fop);
+}
+
+static void
+_e_fm2_fop_detach(E_Fm2_Smart_Data *sd)
+{
+   if (!sd->fop) return;
+   sd->fop->obj = NULL;
+   sd->fop = NULL;
+}
+
+static int
+_e_fm2_fop_process(E_Fm2_Fop *fop)
+{
+   E_Fm2_Fop_Item *fi, *fi2;
+   char buf[4096];
+   struct dirent *dp;
+   
+   if (fop->items) return 0;
+   fi = fop->items->data;
+   switch (fi->type)
+     {
+      case FOP_DELETE:
+	if (fi->dir)
+	  {
+	     dp = readdir(fi->dir);
+	     if (!dp)
+	       {
+		  snprintf(buf, sizeof(buf), "%s/%s", fi->fop->dir, fi->file);
+		  ecore_file_rmdir(buf);
+	       }
+	     else
+	       {
+		  if ((!strcmp(dp->d_name, ".")) || (!strcmp(dp->d_name, ".."))) return 1;
+		  fi2 = E_NEW(E_Fm2_Fop_Item, 1);
+		  fi2->fop = fop;
+		  fi2->type = FOP_DELETE;
+		  snprintf(buf, sizeof(buf), "%s/%s/%s", fi->fop->dir, fi->file, dp->d_name);
+		  fi2->is_dir = ecore_file_is_dir(buf);
+		  snprintf(buf, sizeof(buf), "%s/%s", fi->file, dp->d_name);
+		  fi2->file = evas_stringshare_add(buf);
+		  fi->fop->items = evas_list_prepend(fi->fop->items, fi2);
+		  return 1;
+	       }
+	  }
+	else if (fi->is_dir)
+	  {
+	     snprintf(buf, sizeof(buf), "%s/%s", fi->fop->dir, fi->file);
+	     fi->dir = opendir(buf);
+	     if (!fi->dir)
+	       ecore_file_rmdir(buf);
+	     else
+	       return 1;
+	  }
+	else
+	  {
+	     snprintf(buf, sizeof(buf), "%s/%s", fi->fop->dir, fi->file);
+	     ecore_file_unlink(buf);
+	  }
+	break;
+      case FOP_MOVE:
+	/* FIXME: */
+	break;
+      default:
+	break;
+     }
+   /* remove and free */
+   fop->items = evas_list_remove_list(fop->items, fop->items);
+   if (fi->file)
+     {
+	evas_stringshare_del(fi->file);
+	fi->file = NULL;
+     }
+   if (fi->dir)
+     {
+	closedir(fi->dir);
+	fi->dir = NULL;
+     }
+   free(fi);
+   if (fop->items) return 0;
+   return 1;
+}
+
+static int
+_e_fm2_cb_fop_idler(void *data)
+{
+   E_Fm2_Fop *fop;
+   
+   fop = data;
+   if (!_e_fm2_fop_process(fop))
+     {
+	_e_fm2_fop_del(fop);
+	return 0;
+     }
+   return 1;
+}
+
+static int
+_e_fm2_cb_fop_timer(void *data)
+{
+   E_Fm2_Fop *fop;
+   
+   fop = data;
+   return 1;
+}
+
+EAPI void
 e_fm2_fop_delete_add(Evas_Object *obj, E_Fm2_Icon_Info *ici)
 {
    E_Fm2_Smart_Data *sd;
-
+   E_Fm2_Fop *fop;
+   E_Fm2_Fop_Item *fi;
+   
    sd = evas_object_smart_data_get(obj);
    if (!sd) return; // safety
    if (!evas_object_type_get(obj)) return; // safety
@@ -751,6 +954,15 @@ e_fm2_fop_delete_add(Evas_Object *obj, E_Fm2_Icon_Info *ici)
     * per fop item processed, if obj is attached to fop - report status usig
     * the status overlay for the fm edj obj.
     */
+   fop = _e_fm2_fop_add(sd);
+   if (!fop) return;
+   
+   fi = E_NEW(E_Fm2_Fop_Item, 1);
+   fi->fop = fop;
+   fi->type = FOP_DELETE;
+   fi->file = evas_stringshare_add(ici->file);
+   if (S_ISDIR(ici->statinfo.st_mode)) fi->is_dir = 1;
+   fi->fop->items = evas_list_append(fi->fop->items, fi);
 }
 
 /* FIXME: not so easy with .orders etc. */

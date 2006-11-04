@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-11-01 09:02+0900\n"
+"POT-Creation-Date: 2006-11-04 10:35+0900\n"
 "PO-Revision-Date: 2006-03-21 02:50+0100\n"
 "Last-Translator: Perat Tomaž <pithlit@gmail.com>\n"
 "Language-Team:  <pithlit@gmail.com>\n"
@@ -43,9 +43,9 @@ msgstr ""
 #: src/bin/e_apps.c:2867 src/bin/e_module.c:405 src/bin/e_utils.c:576
 #: src/bin/e_config_dialog.c:198 src/bin/e_int_border_remember.c:248
 #: src/bin/e_int_border_remember.c:323 src/bin/e_int_border_remember.c:365
-#: src/bin/e_eap_editor.c:498 src/bin/e_sys.c:392 src/bin/e_sys.c:437
-#: src/bin/e_entry_dialog.c:56 src/bin/e_fm.c:4583 src/bin/e_fm.c:4696
-#: src/bin/e_fm.c:4821 src/bin/e_fm.c:4859
+#: src/bin/e_eap_editor.c:501 src/bin/e_sys.c:392 src/bin/e_sys.c:437
+#: src/bin/e_entry_dialog.c:56 src/bin/e_fm.c:4827 src/bin/e_fm.c:4940
+#: src/bin/e_fm.c:5065 src/bin/e_fm.c:5103
 #: src/bin/e_int_config_wallpaper_import.c:181
 #: src/bin/e_int_config_wallpaper_gradient.c:199
 #: src/bin/e_int_config_theme_import.c:113
@@ -271,7 +271,7 @@ msgstr "Nastavitvena plošča"
 msgid "Wallpaper"
 msgstr ""
 
-#: src/bin/e_int_menus.c:756 src/bin/e_configure.c:128
+#: src/bin/e_int_menus.c:756 src/bin/e_configure.c:129
 #: src/bin/e_int_config_modules.c:245 src/bin/e_int_config_paths.c:88
 #: src/bin/e_int_config_color_classes.c:83
 msgid "Modules"
@@ -741,15 +741,15 @@ msgstr "Bi radi razbremenili ta modul?<br>"
 
 #: src/bin/e_module.c:549 src/bin/e_actions.c:1419 src/bin/e_actions.c:1480
 #: src/bin/e_actions.c:1529 src/bin/e_actions.c:1578 src/bin/e_actions.c:1627
-#: src/bin/e_actions.c:1676 src/bin/e_int_config_display.c:176
-#: src/bin/e_confirm_dialog.c:69 src/bin/e_fm.c:4748
+#: src/bin/e_actions.c:1676 src/bin/e_int_config_display.c:215
+#: src/bin/e_confirm_dialog.c:69 src/bin/e_fm.c:4992
 msgid "Yes"
 msgstr "Da"
 
 #: src/bin/e_module.c:550 src/bin/e_actions.c:1421 src/bin/e_actions.c:1482
 #: src/bin/e_actions.c:1531 src/bin/e_actions.c:1580 src/bin/e_actions.c:1629
-#: src/bin/e_actions.c:1678 src/bin/e_int_config_display.c:177
-#: src/bin/e_confirm_dialog.c:70 src/bin/e_fm.c:4749
+#: src/bin/e_actions.c:1678 src/bin/e_int_config_display.c:216
+#: src/bin/e_confirm_dialog.c:70 src/bin/e_fm.c:4993
 msgid "No"
 msgstr "Ne"
 
@@ -897,7 +897,7 @@ msgstr ""
 msgid "Lower"
 msgstr "Nizko"
 
-#: src/bin/e_actions.c:1791 src/bin/e_configure.c:136
+#: src/bin/e_actions.c:1791 src/bin/e_configure.c:137
 #: src/bin/e_config_dialog.c:206 src/bin/e_int_border_menu.c:301
 #: src/bin/e_fwin.c:776
 msgid "Close"
@@ -1254,7 +1254,7 @@ msgstr "Ikone"
 msgid "Borders"
 msgstr "Okvirji"
 
-#: src/bin/e_configure.c:97 src/bin/e_eap_editor.c:420
+#: src/bin/e_configure.c:97 src/bin/e_eap_editor.c:424
 #: src/bin/e_int_config_icon_themes.c:213
 #, fuzzy
 msgid "Icon Theme"
@@ -1354,7 +1354,7 @@ msgstr "Rokovanje z Okni"
 msgid "Search Directories"
 msgstr ""
 
-#: src/bin/e_configure.c:127
+#: src/bin/e_configure.c:128
 msgid "Extensions"
 msgstr ""
 
@@ -3253,7 +3253,7 @@ msgstr "Ime in Razred Okna"
 msgid "Title"
 msgstr "Naslov"
 
-#: src/bin/e_int_border_remember.c:465 src/bin/e_eap_editor.c:411
+#: src/bin/e_int_border_remember.c:465 src/bin/e_eap_editor.c:415
 msgid "Window Role"
 msgstr "Vloga Okna"
 
@@ -3295,77 +3295,77 @@ msgstr "Obnovi ločljivost pri vstopu v sistem"
 msgid "Application Editor"
 msgstr "Napaka pri pogonu programa"
 
-#: src/bin/e_eap_editor.c:316 src/bin/e_int_config_fonts.c:77
+#: src/bin/e_eap_editor.c:320 src/bin/e_int_config_fonts.c:77
 msgid "Icon"
 msgstr "Ikona"
 
-#: src/bin/e_eap_editor.c:332
+#: src/bin/e_eap_editor.c:336
 msgid "Basic Info"
 msgstr "Osnovni podatki"
 
-#: src/bin/e_eap_editor.c:333 src/bin/e_int_border_prop.c:320
+#: src/bin/e_eap_editor.c:337 src/bin/e_int_border_prop.c:320
 #, fuzzy
 msgid "Name"
 msgstr "Po imenu"
 
-#: src/bin/e_eap_editor.c:342
+#: src/bin/e_eap_editor.c:346
 msgid "Executable"
 msgstr "Zagonska datoteka"
 
-#: src/bin/e_eap_editor.c:366
+#: src/bin/e_eap_editor.c:370
 msgid "General"
 msgstr "Splošno"
 
-#: src/bin/e_eap_editor.c:369
+#: src/bin/e_eap_editor.c:373
 msgid "Generic Info"
 msgstr "Splošni podatki"
 
-#: src/bin/e_eap_editor.c:378
+#: src/bin/e_eap_editor.c:382
 msgid "Comment"
 msgstr "Komentar"
 
-#: src/bin/e_eap_editor.c:388
+#: src/bin/e_eap_editor.c:392
 msgid "Window"
 msgstr "Okno"
 
-#: src/bin/e_eap_editor.c:390
+#: src/bin/e_eap_editor.c:394
 msgid "Window Name"
 msgstr "Ime Okna"
 
-#: src/bin/e_eap_editor.c:399
+#: src/bin/e_eap_editor.c:403
 msgid "Window Class"
 msgstr "Razred Okna"
 
-#: src/bin/e_eap_editor.c:405
+#: src/bin/e_eap_editor.c:409
 msgid "Window Title"
 msgstr "Naslov Okna"
 
-#: src/bin/e_eap_editor.c:422
+#: src/bin/e_eap_editor.c:426
 msgid "Use Icon Theme"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:429
+#: src/bin/e_eap_editor.c:433
 msgid "Icon Class"
 msgstr "Razred Ikone"
 
-#: src/bin/e_eap_editor.c:443
+#: src/bin/e_eap_editor.c:447
 msgid "Misc"
 msgstr "Različno"
 
-#: src/bin/e_eap_editor.c:444
+#: src/bin/e_eap_editor.c:448
 msgid "Startup Notify"
 msgstr "Obvestilo ob zagonu"
 
-#: src/bin/e_eap_editor.c:447
+#: src/bin/e_eap_editor.c:451
 msgid "Wait Exit"
 msgstr "Počakaj z izhodom"
 
-#: src/bin/e_eap_editor.c:472
+#: src/bin/e_eap_editor.c:476
 #, fuzzy
 msgid "Select an Icon"
 msgstr "Izberi okno"
 
-#: src/bin/e_eap_editor.c:499 src/bin/e_entry_dialog.c:57
+#: src/bin/e_eap_editor.c:502 src/bin/e_entry_dialog.c:57
 #: src/bin/e_int_config_wallpaper_import.c:184
 #: src/bin/e_int_config_wallpaper_gradient.c:200
 #: src/bin/e_int_config_theme_import.c:117
@@ -4298,7 +4298,7 @@ msgstr "Prikaži na trenutni zaslonski coni"
 msgid "Show on screen zone #:"
 msgstr "prikazi na zaslonski coni :"
 
-#: src/bin/e_int_config_display.c:112
+#: src/bin/e_int_config_display.c:133
 #, fuzzy, c-format
 msgid ""
 "Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
@@ -4309,7 +4309,18 @@ msgstr ""
 "Ne, če ni.<br>Če ne pritisnete gumba se bo stara ločljivost <br>%dx%d pri %d "
 "Hz shranila v %d sekundah."
 
-#: src/bin/e_int_config_display.c:121
+#: src/bin/e_int_config_display.c:140
+#, fuzzy, c-format
+msgid ""
+"Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
+"<br>If you do not press a button, the old resolution of<br>%dx%d at will be "
+"restored in %d seconds."
+msgstr ""
+"Izgleda to v redu? Pritisnite <hilight>Da</hilight>, če je temu tako, ali "
+"Ne, če ni.<br>Če ne pritisnete gumba se bo stara ločljivost <br>%dx%d pri %d "
+"Hz shranila v %d sekundah."
+
+#: src/bin/e_int_config_display.c:151
 #, fuzzy, c-format
 msgid ""
 "Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
@@ -4320,47 +4331,71 @@ msgstr ""
 "Ne, če ni.<br>Če ne pritisnete gumba se bo stara ločljivost <br>%dx%d pri %d "
 "Hz shranila v %d sekundah."
 
-#: src/bin/e_int_config_display.c:173
+#: src/bin/e_int_config_display.c:158
+#, fuzzy, c-format
+msgid ""
+"Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
+"<br>If you do not press a button, the old resolution of<br>%dx%d at will be "
+"restored <hilight>IMMEDIATELY</hilight>."
+msgstr ""
+"Izgleda to v redu? Pritisnite <hilight>Da</hilight>, če je temu tako, ali "
+"Ne, če ni.<br>Če ne pritisnete gumba se bo stara ločljivost <br>%dx%d pri %d "
+"Hz shranila v %d sekundah."
+
+#: src/bin/e_int_config_display.c:212
 msgid "Resolution change"
 msgstr "Sprememba ločljivosti"
 
-#: src/bin/e_int_config_display.c:204
+#: src/bin/e_int_config_display.c:243
 msgid "Display Settings"
 msgstr "Nastavitve Prikazovalnika"
 
-#: src/bin/e_int_config_display.c:361
+#: src/bin/e_int_config_display.c:388
 msgid "Resolution"
 msgstr "Ločljivost"
 
-#: src/bin/e_int_config_display.c:369
+#: src/bin/e_int_config_display.c:396
 #, fuzzy
 msgid "Restore on login"
 msgstr "Obnovi ločljivost pri vstopu v sistem"
 
-#: src/bin/e_int_config_display.c:376
+#: src/bin/e_int_config_display.c:403
 msgid "Refresh"
 msgstr "Osveži"
 
-#: src/bin/e_int_config_display.c:459
+#: src/bin/e_int_config_display.c:490
 #, fuzzy
 msgid "Rotation"
 msgstr "Ločljivost"
 
-#: src/bin/e_int_config_display.c:481
+#: src/bin/e_int_config_display.c:512
 msgid "Mirroring"
 msgstr ""
 
-#: src/bin/e_int_config_display.c:536
+#: src/bin/e_int_config_display.c:591
 msgid "Missing Features"
 msgstr ""
 
-#: src/bin/e_int_config_display.c:537
+#: src/bin/e_int_config_display.c:592
 msgid ""
 "Your X Display Server is missing support for<br>the <hilight>XRandr</"
 "hilight> (X Resize and Rotate) extension.<br>You cannot change screen "
 "resolutions without<br>the support of this extension. It could also "
 "be<br>that at the time <hilight>ecore</hilight> was built, there<br>was no "
 "XRandr support detected."
+msgstr ""
+
+#: src/bin/e_int_config_display.c:604
+msgid "No Refresh Rates Found"
+msgstr ""
+
+#: src/bin/e_int_config_display.c:605
+msgid ""
+"No refresh rates were reported by your X Display Server.<br>If you are "
+"running a nested X Display Server, then<br>this is to be expected. However, "
+"if you are not, then<br>the current refresh rate will be used when "
+"setting<br>the resolution, which may cause <hilight>damage</hilight> to your "
+"screen."
 msgstr ""
 
 #: src/bin/e_int_config_exebuf.c:46
@@ -4458,7 +4493,7 @@ msgstr ""
 "Zaporedje tipk, ki ste ga izbrali, je že v uporabi.<br>Izberite si novo "
 "zaporedje."
 
-#: src/bin/e_int_config_keybindings.c:1125 src/bin/e_widget_fsel.c:748
+#: src/bin/e_int_config_keybindings.c:1125 src/bin/e_widget_fsel.c:752
 msgid "Unknown"
 msgstr "Neznan"
 
@@ -4858,7 +4893,7 @@ msgstr "Privzeto Namizje"
 msgid "User Defined Directories"
 msgstr ""
 
-#: src/bin/e_int_config_paths.c:209 src/bin/e_fm.c:4230 src/bin/e_fm.c:4358
+#: src/bin/e_int_config_paths.c:209 src/bin/e_fm.c:4474 src/bin/e_fm.c:4602
 #, fuzzy
 msgid "New Directory"
 msgstr "Mapa"
@@ -4873,7 +4908,7 @@ msgstr "Nastavitev velikosti"
 msgid "Configured Shelves"
 msgstr "Nastavitve"
 
-#: src/bin/e_int_config_shelf.c:83 src/bin/e_fm.c:4422
+#: src/bin/e_int_config_shelf.c:83 src/bin/e_fm.c:4666
 #: src/modules/ibar/e_mod_config.c:109
 msgid "Delete"
 msgstr "Izbriši"
@@ -5190,81 +5225,81 @@ msgstr "Brez Mehčanja"
 msgid "Hibernating your Computer.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
-#: src/bin/e_fm.c:1093
+#: src/bin/e_fm.c:1339
 #, fuzzy, c-format
 msgid "%i Files"
 msgstr "%1.0f files"
 
-#: src/bin/e_fm.c:4188 src/bin/e_fm.c:4316
+#: src/bin/e_fm.c:4432 src/bin/e_fm.c:4560
 #, fuzzy
 msgid "Refresh View"
 msgstr "Stopnja osveževanja"
 
-#: src/bin/e_fm.c:4199 src/bin/e_fm.c:4327
+#: src/bin/e_fm.c:4443 src/bin/e_fm.c:4571
 msgid "Show Hidden Files"
 msgstr ""
 
-#: src/bin/e_fm.c:4212 src/bin/e_fm.c:4340
+#: src/bin/e_fm.c:4456 src/bin/e_fm.c:4584
 #, fuzzy
 msgid "Remember Ordering"
 msgstr "Zapomni si uporabo"
 
-#: src/bin/e_fm.c:4433
+#: src/bin/e_fm.c:4677
 msgid "Rename"
 msgstr "Preimenuj"
 
-#: src/bin/e_fm.c:4541
+#: src/bin/e_fm.c:4785
 msgid "Create a new Directory"
 msgstr ""
 
-#: src/bin/e_fm.c:4542
+#: src/bin/e_fm.c:4786
 #, fuzzy
 msgid "New Directory Name:"
 msgstr "Mapa"
 
-#: src/bin/e_fm.c:4585 src/bin/e_fm.c:4698 src/bin/e_fm.c:4823
-#: src/bin/e_fm.c:4861
+#: src/bin/e_fm.c:4829 src/bin/e_fm.c:4942 src/bin/e_fm.c:5067
+#: src/bin/e_fm.c:5105
 msgid "Error"
 msgstr "Napaka"
 
-#: src/bin/e_fm.c:4587
+#: src/bin/e_fm.c:4831
 #, fuzzy, c-format
 msgid "Could not create directory:<br><hilight>%s</hilight>"
 msgstr "Neuspešno brisanje <br><b>%s</b>"
 
-#: src/bin/e_fm.c:4642
+#: src/bin/e_fm.c:4886
 #, fuzzy, c-format
 msgid "Rename %s to:"
 msgstr "Preimenuj"
 
-#: src/bin/e_fm.c:4644
+#: src/bin/e_fm.c:4888
 #, fuzzy
 msgid "Rename File"
 msgstr "Preimenuj"
 
-#: src/bin/e_fm.c:4700
+#: src/bin/e_fm.c:4944
 #, c-format
 msgid "Could not rename from <hilight>%s</hilight> to <hilight>%s</hilight>"
 msgstr ""
 
-#: src/bin/e_fm.c:4751
+#: src/bin/e_fm.c:4995
 #, fuzzy
 msgid "Confirm Delete"
 msgstr "Potrdi"
 
-#: src/bin/e_fm.c:4755
+#: src/bin/e_fm.c:4999
 #, fuzzy, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Ste prepričani, da hočete pobrisati <br><b>%s</b> ?"
 
-#: src/bin/e_fm.c:4761
+#: src/bin/e_fm.c:5005
 #, fuzzy, c-format
 msgid ""
 "Are you sure you want to delete<br>the selected files in:<br><hilight>%s</"
 "hilight> ?"
 msgstr "Ste prepričani, da hočete pobrisati <br><b>%s</b> ?"
 
-#: src/bin/e_fm.c:4825 src/bin/e_fm.c:4863
+#: src/bin/e_fm.c:5069 src/bin/e_fm.c:5107
 #, fuzzy, c-format
 msgid "Could not delete <br><hilight>%s</hilight>"
 msgstr "Neuspešno brisanje <br><b>%s</b>"
@@ -5282,100 +5317,100 @@ msgstr ""
 msgid "Size:"
 msgstr "Velikost:"
 
-#: src/bin/e_widget_fsel.c:338
+#: src/bin/e_widget_fsel.c:339
 msgid "Owner:"
 msgstr "Lastnik:"
 
-#: src/bin/e_widget_fsel.c:353
+#: src/bin/e_widget_fsel.c:355
 msgid "Permissions:"
 msgstr "Dovoljenja:"
 
-#: src/bin/e_widget_fsel.c:368
+#: src/bin/e_widget_fsel.c:371
 #, fuzzy
 msgid "Modified:"
 msgstr "Zadnja sprememba:"
 
-#: src/bin/e_widget_fsel.c:606
+#: src/bin/e_widget_fsel.c:610
 #, fuzzy, c-format
 msgid "%'.0f Bytes"
 msgstr "%1.0f minut"
 
-#: src/bin/e_widget_fsel.c:611
+#: src/bin/e_widget_fsel.c:615
 #, fuzzy, c-format
 msgid "%'.0f KB"
 msgstr "%1.0f MB"
 
-#: src/bin/e_widget_fsel.c:616
+#: src/bin/e_widget_fsel.c:620
 #, fuzzy, c-format
 msgid "%'.0f MB"
 msgstr "%1.0f MB"
 
-#: src/bin/e_widget_fsel.c:620
+#: src/bin/e_widget_fsel.c:624
 #, fuzzy, c-format
 msgid "%'.1f GB"
 msgstr "%1.1f MB"
 
-#: src/bin/e_widget_fsel.c:634
+#: src/bin/e_widget_fsel.c:638
 #, c-format
 msgid "You"
 msgstr ""
 
-#: src/bin/e_widget_fsel.c:683
+#: src/bin/e_widget_fsel.c:687
 #, fuzzy, c-format
 msgid "Protected"
 msgstr "Lastnosti"
 
-#: src/bin/e_widget_fsel.c:685 src/bin/e_widget_fsel.c:694
-#: src/bin/e_widget_fsel.c:703
+#: src/bin/e_widget_fsel.c:689 src/bin/e_widget_fsel.c:698
+#: src/bin/e_widget_fsel.c:707
 #, fuzzy, c-format
 msgid "Read Only"
 msgstr "Ime"
 
-#: src/bin/e_widget_fsel.c:692 src/bin/e_widget_fsel.c:701
+#: src/bin/e_widget_fsel.c:696 src/bin/e_widget_fsel.c:705
 #, c-format
 msgid "Forbidden"
 msgstr ""
 
-#: src/bin/e_widget_fsel.c:710
+#: src/bin/e_widget_fsel.c:714
 msgid "Read-Write"
 msgstr ""
 
-#: src/bin/e_widget_fsel.c:725
+#: src/bin/e_widget_fsel.c:729
 #, c-format
 msgid "In the Future"
 msgstr ""
 
-#: src/bin/e_widget_fsel.c:730
+#: src/bin/e_widget_fsel.c:734
 #, c-format
 msgid "In the last Minute"
 msgstr ""
 
-#: src/bin/e_widget_fsel.c:732
+#: src/bin/e_widget_fsel.c:736
 #, c-format
 msgid "%li Years ago"
 msgstr ""
 
-#: src/bin/e_widget_fsel.c:734
+#: src/bin/e_widget_fsel.c:738
 #, c-format
 msgid "%li Months ago"
 msgstr ""
 
-#: src/bin/e_widget_fsel.c:736
+#: src/bin/e_widget_fsel.c:740
 #, c-format
 msgid "%li Weeks ago"
 msgstr ""
 
-#: src/bin/e_widget_fsel.c:738
+#: src/bin/e_widget_fsel.c:742
 #, c-format
 msgid "%li Days ago"
 msgstr ""
 
-#: src/bin/e_widget_fsel.c:740
+#: src/bin/e_widget_fsel.c:744
 #, c-format
 msgid "%li Hours ago"
 msgstr ""
 
-#: src/bin/e_widget_fsel.c:742
+#: src/bin/e_widget_fsel.c:746
 #, c-format
 msgid "%li Minutes ago"
 msgstr ""

@@ -139,5 +139,6 @@ EAPI void                  e_fm2_pan_get(Evas_Object *obj, Evas_Coord *x, Evas_C
 EAPI void                  e_fm2_pan_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
 EAPI void                  e_fm2_pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h);
 
+EAPI void                  e_fm2_all_icons_update(void);
 #endif
 #endif

@@ -69,20 +69,10 @@ e_fm_mime_icon_get(const char *mime)
    const char *homedir = NULL;
    Evas_List *l;
    E_Config_Mime_Icon *mi;
-   Evas_List *freelist = NULL;
    
-   /* 0.0 clean out hash cache once it has mroe than 256 entried in it */
-   if (evas_hash_size(icon_map) > 256)
-     {
-	evas_hash_foreach(icon_map, _e_fm_mime_icon_foreach, &freelist);
-	while (freelist)
-	  {
-	     evas_stringshare_del(freelist->data);
-	     freelist = evas_list_remove_list(freelist, freelist);
-	  }
-	evas_hash_free(icon_map);
-	icon_map = NULL;
-     }
+   /* 0.0 clean out hash cache once it has mroe than 512 entries in it */
+   if (evas_hash_size(icon_map) > 512) e_fm_mime_icon_cache_flush();
+   
    /* 0. look in mapping cache */
    val = evas_hash_find(icon_map, mime);
    if (val) return val;
@@ -149,6 +139,21 @@ e_fm_mime_icon_get(const char *mime)
    icon_map = evas_hash_add(icon_map, mime, val);
    return val;
    
+}
+
+EAPI void
+e_fm_mime_icon_cache_flush(void)
+{
+   Evas_List *freelist = NULL;
+   
+   evas_hash_foreach(icon_map, _e_fm_mime_icon_foreach, &freelist);
+   while (freelist)
+     {
+	evas_stringshare_del(freelist->data);
+	freelist = evas_list_remove_list(freelist, freelist);
+     }
+   evas_hash_free(icon_map);
+   icon_map = NULL;
 }
 
 /* local subsystem functions */

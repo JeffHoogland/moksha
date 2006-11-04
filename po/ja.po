@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-11-01 09:02+0900\n"
+"POT-Creation-Date: 2006-11-04 10:35+0900\n"
 "PO-Revision-Date: 2006-10-23 01:00+0900\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: E17-jp <LL@li.org>\n"
@@ -47,9 +47,9 @@ msgstr ""
 #: src/bin/e_apps.c:2867 src/bin/e_module.c:405 src/bin/e_utils.c:576
 #: src/bin/e_config_dialog.c:198 src/bin/e_int_border_remember.c:248
 #: src/bin/e_int_border_remember.c:323 src/bin/e_int_border_remember.c:365
-#: src/bin/e_eap_editor.c:498 src/bin/e_sys.c:392 src/bin/e_sys.c:437
-#: src/bin/e_entry_dialog.c:56 src/bin/e_fm.c:4583 src/bin/e_fm.c:4696
-#: src/bin/e_fm.c:4821 src/bin/e_fm.c:4859
+#: src/bin/e_eap_editor.c:501 src/bin/e_sys.c:392 src/bin/e_sys.c:437
+#: src/bin/e_entry_dialog.c:56 src/bin/e_fm.c:4827 src/bin/e_fm.c:4940
+#: src/bin/e_fm.c:5065 src/bin/e_fm.c:5103
 #: src/bin/e_int_config_wallpaper_import.c:181
 #: src/bin/e_int_config_wallpaper_gradient.c:199
 #: src/bin/e_int_config_theme_import.c:113
@@ -288,7 +288,7 @@ msgstr "設定パネル"
 msgid "Wallpaper"
 msgstr "壁紙"
 
-#: src/bin/e_int_menus.c:756 src/bin/e_configure.c:128
+#: src/bin/e_int_menus.c:756 src/bin/e_configure.c:129
 #: src/bin/e_int_config_modules.c:245 src/bin/e_int_config_paths.c:88
 #: src/bin/e_int_config_color_classes.c:83
 msgid "Modules"
@@ -765,15 +765,15 @@ msgstr "このモジュールをアンロードしますか？<br>"
 
 #: src/bin/e_module.c:549 src/bin/e_actions.c:1419 src/bin/e_actions.c:1480
 #: src/bin/e_actions.c:1529 src/bin/e_actions.c:1578 src/bin/e_actions.c:1627
-#: src/bin/e_actions.c:1676 src/bin/e_int_config_display.c:176
-#: src/bin/e_confirm_dialog.c:69 src/bin/e_fm.c:4748
+#: src/bin/e_actions.c:1676 src/bin/e_int_config_display.c:215
+#: src/bin/e_confirm_dialog.c:69 src/bin/e_fm.c:4992
 msgid "Yes"
 msgstr "はい"
 
 #: src/bin/e_module.c:550 src/bin/e_actions.c:1421 src/bin/e_actions.c:1482
 #: src/bin/e_actions.c:1531 src/bin/e_actions.c:1580 src/bin/e_actions.c:1629
-#: src/bin/e_actions.c:1678 src/bin/e_int_config_display.c:177
-#: src/bin/e_confirm_dialog.c:70 src/bin/e_fm.c:4749
+#: src/bin/e_actions.c:1678 src/bin/e_int_config_display.c:216
+#: src/bin/e_confirm_dialog.c:70 src/bin/e_fm.c:4993
 msgid "No"
 msgstr "いいえ"
 
@@ -905,7 +905,7 @@ msgstr "上げる"
 msgid "Lower"
 msgstr "下げる"
 
-#: src/bin/e_actions.c:1791 src/bin/e_configure.c:136
+#: src/bin/e_actions.c:1791 src/bin/e_configure.c:137
 #: src/bin/e_config_dialog.c:206 src/bin/e_int_border_menu.c:301
 #: src/bin/e_fwin.c:776
 msgid "Close"
@@ -1218,7 +1218,7 @@ msgstr "フォント"
 msgid "Borders"
 msgstr "ボーダー"
 
-#: src/bin/e_configure.c:97 src/bin/e_eap_editor.c:420
+#: src/bin/e_configure.c:97 src/bin/e_eap_editor.c:424
 #: src/bin/e_int_config_icon_themes.c:213
 msgid "Icon Theme"
 msgstr "アイコンのテーマ"
@@ -1303,7 +1303,7 @@ msgstr "ウィンドウの動作"
 msgid "Search Directories"
 msgstr "検索パス"
 
-#: src/bin/e_configure.c:127
+#: src/bin/e_configure.c:128
 msgid "Extensions"
 msgstr "拡張機能"
 
@@ -3151,7 +3151,7 @@ msgstr "ウィンドウの名前とクラス"
 msgid "Title"
 msgstr "タイトル"
 
-#: src/bin/e_int_border_remember.c:465 src/bin/e_eap_editor.c:411
+#: src/bin/e_int_border_remember.c:465 src/bin/e_eap_editor.c:415
 msgid "Window Role"
 msgstr "ウィンドウの役割"
 
@@ -3192,75 +3192,75 @@ msgid "Application Editor"
 msgstr "アプリケーションエディタ"
 
 #
-#: src/bin/e_eap_editor.c:316 src/bin/e_int_config_fonts.c:77
+#: src/bin/e_eap_editor.c:320 src/bin/e_int_config_fonts.c:77
 msgid "Icon"
 msgstr "アイコン"
 
-#: src/bin/e_eap_editor.c:332
+#: src/bin/e_eap_editor.c:336
 msgid "Basic Info"
 msgstr "基本情報"
 
-#: src/bin/e_eap_editor.c:333 src/bin/e_int_border_prop.c:320
+#: src/bin/e_eap_editor.c:337 src/bin/e_int_border_prop.c:320
 msgid "Name"
 msgstr "名前"
 
-#: src/bin/e_eap_editor.c:342
+#: src/bin/e_eap_editor.c:346
 msgid "Executable"
 msgstr "実行ファイル名"
 
-#: src/bin/e_eap_editor.c:366
+#: src/bin/e_eap_editor.c:370
 msgid "General"
 msgstr "一般"
 
-#: src/bin/e_eap_editor.c:369
+#: src/bin/e_eap_editor.c:373
 msgid "Generic Info"
 msgstr "一般情報"
 
-#: src/bin/e_eap_editor.c:378
+#: src/bin/e_eap_editor.c:382
 msgid "Comment"
 msgstr "注釈"
 
-#: src/bin/e_eap_editor.c:388
+#: src/bin/e_eap_editor.c:392
 msgid "Window"
 msgstr "ウィンドウ"
 
-#: src/bin/e_eap_editor.c:390
+#: src/bin/e_eap_editor.c:394
 msgid "Window Name"
 msgstr "ウィンドウ名"
 
-#: src/bin/e_eap_editor.c:399
+#: src/bin/e_eap_editor.c:403
 msgid "Window Class"
 msgstr "ウィンドウクラス"
 
-#: src/bin/e_eap_editor.c:405
+#: src/bin/e_eap_editor.c:409
 msgid "Window Title"
 msgstr "ウィンドウタイトル"
 
-#: src/bin/e_eap_editor.c:422
+#: src/bin/e_eap_editor.c:426
 msgid "Use Icon Theme"
 msgstr "アイコンテーマを使う"
 
-#: src/bin/e_eap_editor.c:429
+#: src/bin/e_eap_editor.c:433
 msgid "Icon Class"
 msgstr "アイコンクラス"
 
-#: src/bin/e_eap_editor.c:443
+#: src/bin/e_eap_editor.c:447
 msgid "Misc"
 msgstr "その他"
 
-#: src/bin/e_eap_editor.c:444
+#: src/bin/e_eap_editor.c:448
 msgid "Startup Notify"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:447
+#: src/bin/e_eap_editor.c:451
 msgid "Wait Exit"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:472
+#: src/bin/e_eap_editor.c:476
 msgid "Select an Icon"
 msgstr "アイコンを選択する"
 
-#: src/bin/e_eap_editor.c:499 src/bin/e_entry_dialog.c:57
+#: src/bin/e_eap_editor.c:502 src/bin/e_entry_dialog.c:57
 #: src/bin/e_int_config_wallpaper_import.c:184
 #: src/bin/e_int_config_wallpaper_gradient.c:200
 #: src/bin/e_int_config_theme_import.c:117
@@ -4174,7 +4174,7 @@ msgstr "現在のスクリーンゾーンに表示する"
 msgid "Show on screen zone #:"
 msgstr "以下のスクリーンゾーンに表示する :"
 
-#: src/bin/e_int_config_display.c:112
+#: src/bin/e_int_config_display.c:133
 #, c-format
 msgid ""
 "Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
@@ -4185,7 +4185,18 @@ msgstr ""
 "て下さい.<br>ボタンを押さない場合は,<br>元の解像度 %dx%d とリフレッシュレー"
 "ト %d Hz<br>にあと %d 秒で復帰します."
 
-#: src/bin/e_int_config_display.c:121
+#: src/bin/e_int_config_display.c:140
+#, fuzzy, c-format
+msgid ""
+"Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
+"<br>If you do not press a button, the old resolution of<br>%dx%d at will be "
+"restored in %d seconds."
+msgstr ""
+"これで良いですか.<br>良ければ <hilight>はい</hilight>, 駄目なら いいえ を押し"
+"て下さい.<br>ボタンを押さない場合は,<br>元の解像度 %dx%d とリフレッシュレー"
+"ト %d Hz<br>にあと %d 秒で復帰します."
+
+#: src/bin/e_int_config_display.c:151
 #, c-format
 msgid ""
 "Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
@@ -4196,39 +4207,50 @@ msgstr ""
 "て下さい.<br>ボタンを押さない場合は,<br>元の解像度 %dx%d とリフレッシュレー"
 "ト %d Hz<br>に <hilight>ただちに</hilight> 復帰します."
 
-#: src/bin/e_int_config_display.c:173
+#: src/bin/e_int_config_display.c:158
+#, fuzzy, c-format
+msgid ""
+"Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
+"<br>If you do not press a button, the old resolution of<br>%dx%d at will be "
+"restored <hilight>IMMEDIATELY</hilight>."
+msgstr ""
+"これで良いですか.<br>良ければ <hilight>はい</hilight>, 駄目なら いいえ を押し"
+"て下さい.<br>ボタンを押さない場合は,<br>元の解像度 %dx%d とリフレッシュレー"
+"ト %d Hz<br>に <hilight>ただちに</hilight> 復帰します."
+
+#: src/bin/e_int_config_display.c:212
 msgid "Resolution change"
 msgstr "解像度の変更"
 
-#: src/bin/e_int_config_display.c:204
+#: src/bin/e_int_config_display.c:243
 msgid "Display Settings"
 msgstr "ディスプレイの設定"
 
-#: src/bin/e_int_config_display.c:361
+#: src/bin/e_int_config_display.c:388
 msgid "Resolution"
 msgstr "解像度"
 
-#: src/bin/e_int_config_display.c:369
+#: src/bin/e_int_config_display.c:396
 msgid "Restore on login"
 msgstr "ログイン時に解像度復帰"
 
-#: src/bin/e_int_config_display.c:376
+#: src/bin/e_int_config_display.c:403
 msgid "Refresh"
 msgstr "更新"
 
-#: src/bin/e_int_config_display.c:459
+#: src/bin/e_int_config_display.c:490
 msgid "Rotation"
 msgstr "回転"
 
-#: src/bin/e_int_config_display.c:481
+#: src/bin/e_int_config_display.c:512
 msgid "Mirroring"
 msgstr "反転"
 
-#: src/bin/e_int_config_display.c:536
+#: src/bin/e_int_config_display.c:591
 msgid "Missing Features"
 msgstr "機能が不足しています"
 
-#: src/bin/e_int_config_display.c:537
+#: src/bin/e_int_config_display.c:592
 msgid ""
 "Your X Display Server is missing support for<br>the <hilight>XRandr</"
 "hilight> (X Resize and Rotate) extension.<br>You cannot change screen "
@@ -4240,6 +4262,19 @@ msgstr ""
 "ズ・アンド・ローテート) 拡張機能がサポートされていません.<br>この拡張機能が使"
 "えないと画面の解像度は変更できません.<br><hilight>ecore</hilight> の構築時"
 "に, XRandr サポートが検出されなかった<br>可能性もあります."
+
+#: src/bin/e_int_config_display.c:604
+msgid "No Refresh Rates Found"
+msgstr ""
+
+#: src/bin/e_int_config_display.c:605
+msgid ""
+"No refresh rates were reported by your X Display Server.<br>If you are "
+"running a nested X Display Server, then<br>this is to be expected. However, "
+"if you are not, then<br>the current refresh rate will be used when "
+"setting<br>the resolution, which may cause <hilight>damage</hilight> to your "
+"screen."
+msgstr ""
 
 #: src/bin/e_int_config_exebuf.c:46
 msgid "Run Command Settings"
@@ -4325,7 +4360,7 @@ msgstr ""
 "そのキーシーケンスはすでに以下のアクションで使われています.<br><hilight>%s</"
 "hilight><br>他のキーシーケンスを選んで下さい."
 
-#: src/bin/e_int_config_keybindings.c:1125 src/bin/e_widget_fsel.c:748
+#: src/bin/e_int_config_keybindings.c:1125 src/bin/e_widget_fsel.c:752
 msgid "Unknown"
 msgstr "不明"
 
@@ -4691,7 +4726,7 @@ msgstr "デフォルトのディレクトリ"
 msgid "User Defined Directories"
 msgstr "ユーザー定義ディレクトリ"
 
-#: src/bin/e_int_config_paths.c:209 src/bin/e_fm.c:4230 src/bin/e_fm.c:4358
+#: src/bin/e_int_config_paths.c:209 src/bin/e_fm.c:4474 src/bin/e_fm.c:4602
 msgid "New Directory"
 msgstr "新しいディレクトリ"
 
@@ -4703,7 +4738,7 @@ msgstr "シェルフの設定"
 msgid "Configured Shelves"
 msgstr "利用可能なシェルフ"
 
-#: src/bin/e_int_config_shelf.c:83 src/bin/e_fm.c:4422
+#: src/bin/e_int_config_shelf.c:83 src/bin/e_fm.c:4666
 #: src/modules/ibar/e_mod_config.c:109
 msgid "Delete"
 msgstr "削除"
@@ -5006,79 +5041,79 @@ msgstr "ハイバネート中"
 msgid "Hibernating your Computer.<br><hilight>Please wait.</hilight>"
 msgstr "ハイバネート中です.<br><hilight>しばらくお待ち下さい.</hilight>"
 
-#: src/bin/e_fm.c:1093
+#: src/bin/e_fm.c:1339
 #, c-format
 msgid "%i Files"
 msgstr "ファイル数 %i"
 
-#: src/bin/e_fm.c:4188 src/bin/e_fm.c:4316
+#: src/bin/e_fm.c:4432 src/bin/e_fm.c:4560
 msgid "Refresh View"
 msgstr "内容を更新する"
 
-#: src/bin/e_fm.c:4199 src/bin/e_fm.c:4327
+#: src/bin/e_fm.c:4443 src/bin/e_fm.c:4571
 msgid "Show Hidden Files"
 msgstr "隠しファイルを表示する"
 
-#: src/bin/e_fm.c:4212 src/bin/e_fm.c:4340
+#: src/bin/e_fm.c:4456 src/bin/e_fm.c:4584
 msgid "Remember Ordering"
 msgstr "順序をを覚える"
 
-#: src/bin/e_fm.c:4433
+#: src/bin/e_fm.c:4677
 msgid "Rename"
 msgstr "名前変更"
 
-#: src/bin/e_fm.c:4541
+#: src/bin/e_fm.c:4785
 msgid "Create a new Directory"
 msgstr "ディレクトリを新規作成する"
 
-#: src/bin/e_fm.c:4542
+#: src/bin/e_fm.c:4786
 msgid "New Directory Name:"
 msgstr "新しいディレクトリ名"
 
 #
-#: src/bin/e_fm.c:4585 src/bin/e_fm.c:4698 src/bin/e_fm.c:4823
-#: src/bin/e_fm.c:4861
+#: src/bin/e_fm.c:4829 src/bin/e_fm.c:4942 src/bin/e_fm.c:5067
+#: src/bin/e_fm.c:5105
 msgid "Error"
 msgstr "エラー"
 
-#: src/bin/e_fm.c:4587
+#: src/bin/e_fm.c:4831
 #, c-format
 msgid "Could not create directory:<br><hilight>%s</hilight>"
 msgstr "以下のディレクトリが作成できません.<br><hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:4642
+#: src/bin/e_fm.c:4886
 #, c-format
 msgid "Rename %s to:"
 msgstr "名前を %s から変更:"
 
-#: src/bin/e_fm.c:4644
+#: src/bin/e_fm.c:4888
 msgid "Rename File"
 msgstr "ファイル名を変更する"
 
-#: src/bin/e_fm.c:4700
+#: src/bin/e_fm.c:4944
 #, c-format
 msgid "Could not rename from <hilight>%s</hilight> to <hilight>%s</hilight>"
 msgstr ""
 "名前を <hilight>%s</hilight> から <hilight>%s</hilight> に変更できません."
 
 #
-#: src/bin/e_fm.c:4751
+#: src/bin/e_fm.c:4995
 msgid "Confirm Delete"
 msgstr "削除確認"
 
-#: src/bin/e_fm.c:4755
+#: src/bin/e_fm.c:4999
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "以下を本当に削除しますか.<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:4761
+#: src/bin/e_fm.c:5005
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the selected files in:<br><hilight>%s</"
 "hilight> ?"
 msgstr "<br><hilight>%s</hilight> で選択したファイルを本当に削除しますか ?"
 
-#: src/bin/e_fm.c:4825 src/bin/e_fm.c:4863
+#: src/bin/e_fm.c:5069 src/bin/e_fm.c:5107
 #, c-format
 msgid "Could not delete <br><hilight>%s</hilight>"
 msgstr "以下が削除できません.<br><hilight>%s</hilight>"
@@ -5096,99 +5131,99 @@ msgstr "プレビュー"
 msgid "Size:"
 msgstr "サイズ"
 
-#: src/bin/e_widget_fsel.c:338
+#: src/bin/e_widget_fsel.c:339
 msgid "Owner:"
 msgstr "所有者"
 
-#: src/bin/e_widget_fsel.c:353
+#: src/bin/e_widget_fsel.c:355
 msgid "Permissions:"
 msgstr "許可情報"
 
-#: src/bin/e_widget_fsel.c:368
+#: src/bin/e_widget_fsel.c:371
 msgid "Modified:"
 msgstr "最終更新日"
 
-#: src/bin/e_widget_fsel.c:606
+#: src/bin/e_widget_fsel.c:610
 #, c-format
 msgid "%'.0f Bytes"
 msgstr "%'.0f バイト"
 
-#: src/bin/e_widget_fsel.c:611
+#: src/bin/e_widget_fsel.c:615
 #, c-format
 msgid "%'.0f KB"
 msgstr ""
 
-#: src/bin/e_widget_fsel.c:616
+#: src/bin/e_widget_fsel.c:620
 #, c-format
 msgid "%'.0f MB"
 msgstr ""
 
-#: src/bin/e_widget_fsel.c:620
+#: src/bin/e_widget_fsel.c:624
 #, c-format
 msgid "%'.1f GB"
 msgstr ""
 
-#: src/bin/e_widget_fsel.c:634
+#: src/bin/e_widget_fsel.c:638
 #, c-format
 msgid "You"
 msgstr "本人"
 
-#: src/bin/e_widget_fsel.c:683
+#: src/bin/e_widget_fsel.c:687
 #, c-format
 msgid "Protected"
 msgstr "保護"
 
-#: src/bin/e_widget_fsel.c:685 src/bin/e_widget_fsel.c:694
-#: src/bin/e_widget_fsel.c:703
+#: src/bin/e_widget_fsel.c:689 src/bin/e_widget_fsel.c:698
+#: src/bin/e_widget_fsel.c:707
 #, c-format
 msgid "Read Only"
 msgstr "読込専用"
 
-#: src/bin/e_widget_fsel.c:692 src/bin/e_widget_fsel.c:701
+#: src/bin/e_widget_fsel.c:696 src/bin/e_widget_fsel.c:705
 #, c-format
 msgid "Forbidden"
 msgstr "禁止"
 
-#: src/bin/e_widget_fsel.c:710
+#: src/bin/e_widget_fsel.c:714
 msgid "Read-Write"
 msgstr "読書両用"
 
-#: src/bin/e_widget_fsel.c:725
+#: src/bin/e_widget_fsel.c:729
 #, c-format
 msgid "In the Future"
 msgstr "未来"
 
-#: src/bin/e_widget_fsel.c:730
+#: src/bin/e_widget_fsel.c:734
 #, c-format
 msgid "In the last Minute"
 msgstr "直前"
 
-#: src/bin/e_widget_fsel.c:732
+#: src/bin/e_widget_fsel.c:736
 #, c-format
 msgid "%li Years ago"
 msgstr "%li 年前"
 
-#: src/bin/e_widget_fsel.c:734
+#: src/bin/e_widget_fsel.c:738
 #, c-format
 msgid "%li Months ago"
 msgstr "%li ヶ月前"
 
-#: src/bin/e_widget_fsel.c:736
+#: src/bin/e_widget_fsel.c:740
 #, c-format
 msgid "%li Weeks ago"
 msgstr "%li 週間前"
 
-#: src/bin/e_widget_fsel.c:738
+#: src/bin/e_widget_fsel.c:742
 #, c-format
 msgid "%li Days ago"
 msgstr "%li 日前"
 
-#: src/bin/e_widget_fsel.c:740
+#: src/bin/e_widget_fsel.c:744
 #, c-format
 msgid "%li Hours ago"
 msgstr "%li 時間前"
 
-#: src/bin/e_widget_fsel.c:742
+#: src/bin/e_widget_fsel.c:746
 #, c-format
 msgid "%li Minutes ago"
 msgstr "%li 分前"

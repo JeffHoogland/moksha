@@ -277,14 +277,15 @@ _cb_confirm_yes(void *data)
 	mi = l->data;
 	if (!mi) continue;
 	if (strcmp(mi->mime, cfdata->sel_mt)) continue;
-	if (mi->mime)
-	  evas_stringshare_del(mi->mime);
-	if (mi->icon)
-	  evas_stringshare_del(mi->icon);
-	e_config->mime_icons = evas_list_remove_list(e_config->mime_icons, 
-						     e_config->mime_icons);
+	if (mi->mime) evas_stringshare_del(mi->mime);
+	if (mi->icon) evas_stringshare_del(mi->icon);
+	e_config->mime_icons = evas_list_remove_list(e_config->mime_icons, l);
 	break;
      }
+   e_config_save_queue();
+   e_fm_mime_icon_cache_flush();
+   e_fm2_all_icons_update();
+   
    _fill_data(cfdata);
    _fill_list(cfdata);
 }
@@ -319,6 +320,8 @@ _cb_entry_ok(char *text, void *data)
 
    e_config->mime_icons = evas_list_append(e_config->mime_icons, mime);
    e_config_save_queue();
+   e_fm_mime_icon_cache_flush();
+   e_fm2_all_icons_update();
 
    _fill_data(cfdata);
    _fill_list(cfdata);
