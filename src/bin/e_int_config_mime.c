@@ -281,7 +281,9 @@ _cb_confirm_yes(void *data)
 	  evas_stringshare_del(mi->mime);
 	if (mi->icon)
 	  evas_stringshare_del(mi->icon);
-	e_config->mime_icons = evas_list_remove(e_config->mime_icons, mi);
+	e_config->mime_icons = evas_list_remove_list(e_config->mime_icons, 
+						     e_config->mime_icons);
+	break;
      }
    _fill_data(cfdata);
    _fill_list(cfdata);
