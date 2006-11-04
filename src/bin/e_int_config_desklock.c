@@ -362,8 +362,6 @@ _create_data(E_Config_Dialog *cfd)
   E_Config_Dialog_Data *cfdata;
 
   cfdata = E_NEW(E_Config_Dialog_Data, 1);
-  cfdata->desklock_passwd = strdup("");
-  cfdata->desklock_passwd_cp = strdup("");
   cfdata->cfd = cfd;
 
   _fill_data(cfdata);
