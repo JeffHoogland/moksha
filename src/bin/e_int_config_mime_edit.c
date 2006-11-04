@@ -131,13 +131,13 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    
    of = e_widget_frametable_add(evas, _("Icon"), 0);
    rg = e_widget_radio_group_new(&cfdata->type);
-   ob = e_widget_radio_add(evas, _("Use Generated Thumbnail"), THUMB, rg);
+   ob = e_widget_radio_add(evas, _("Use Generated Thumbnail"), 0, rg);
    evas_object_smart_callback_add(ob, "changed", _cb_type, cfdata);
    e_widget_frametable_object_append(of, ob, 0, 0, 3, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_add(evas, _("Use Theme Icon"), THEME, rg);
+   ob = e_widget_radio_add(evas, _("Use Theme Icon"), 1, rg);
    evas_object_smart_callback_add(ob, "changed", _cb_type, cfdata);
    e_widget_frametable_object_append(of, ob, 0, 1, 3, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_add(evas, _("Use Edje File"), EDJ, rg);
+   ob = e_widget_radio_add(evas, _("Use Edje File"), 2, rg);
    evas_object_smart_callback_add(ob, "changed", _cb_type, cfdata);
    e_widget_frametable_object_append(of, ob, 0, 2, 3, 1, 1, 1, 1, 1);
    e_widget_disabled_set(ob, 1);
@@ -162,27 +162,31 @@ static int
 _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    E_Config_Mime_Icon *mime;
+   Evas_List *l;
    char buf[4096];
    
-   mime = cfd->data;
-   if (!mime) return 0;
-   
-   if (mime->mime)
-     evas_stringshare_del(mime->mime);
-   mime->mime = evas_stringshare_add(cfdata->mime);
-   
-   if (mime->icon)
-     evas_stringshare_del(mime->icon);
-   
-   switch (cfdata->type) 
+   for (l = e_config->mime_icons; l; l = l->next) 
      {
-      case THUMB:
-	mime->icon = evas_stringshare_add("THUMB");
-	break;
-      case THEME:
-      case EDJ:
-	snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", cfdata->mime);
-	mime->icon = evas_stringshare_add(buf);
+	mime = l->data;
+	if (!mime) continue;
+	if (strcmp(mime->mime, cfdata->mime)) continue;
+	if (mime->mime)
+	  evas_stringshare_del(mime->mime);
+	mime->mime = evas_stringshare_add(cfdata->mime);
+	if (mime->icon)
+	  evas_stringshare_del(mime->icon);
+	switch (cfdata->type) 
+	  {
+	   case THUMB:
+	     mime->icon = evas_stringshare_add("THUMB");
+	     break;
+	   case THEME:
+	     snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", cfdata->mime);
+	     mime->icon = evas_stringshare_add(buf);
+	     break;
+	   case EDJ:
+	     break;
+	  }
 	break;
      }
    e_config_save_queue();
