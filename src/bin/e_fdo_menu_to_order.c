@@ -226,7 +226,10 @@ _e_fdo_menu_to_order_cb_desktop_foreach(void *list_data, void *data)
          desktop = ecore_desktop_get(path, NULL);
          /* Check if we process */
          if (!desktop) return;
-         if ( (!desktop->hidden) && (!desktop->no_display) && ((desktop->type == NULL) || (strcmp(desktop->type, "Application") == 0)) )
+         if ( (!desktop->hidden) && (!desktop->no_display) 
+	    && ((desktop->type == NULL) || (strcmp(desktop->type, "Application") == 0)) 
+	    && ((desktop->OnlyShowIn == NULL) ||(ecore_hash_get(desktop->OnlyShowIn, "Enlightenment") != NULL))
+	    && ((desktop->NotShowIn == NULL) ||(ecore_hash_get(desktop->NotShowIn, "Enlightenment") == NULL)) )
             {
                char *category;
 	       Ecore_Hash *menu;
