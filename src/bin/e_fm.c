@@ -1906,7 +1906,7 @@ _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (vo
 {
    Evas_Object *oic;
    char buf[4096], *p;
-   
+
    if (ic->info.icon)
      {
 	/* custom icon */
@@ -2057,7 +2057,8 @@ _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (vo
 						 gen_func, data);
 		  _e_fm2_icon_thumb(ic, oic, force_gen);
 	       }
-	     else if ((e_util_glob_case_match(ic->info.file, "*.desktop")) || (e_util_glob_case_match(ic->info.file, "*.directory")))
+	     else if ((e_util_glob_case_match(ic->info.file, "*.desktop")) || 
+		      (e_util_glob_case_match(ic->info.file, "*.directory")))
 	       {
 		  E_App *app;
 		  
@@ -2216,11 +2217,13 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 	     char *v;
 	     
 	     /* FIXME: Use a real icon size. */
-	     v = (char *)ecore_desktop_icon_find(desktop->icon, NULL, e_config->icon_theme);
+	     v = desktop->icon_path;
+// make it consistent and use the same icon everywhere	     
+//	     v = ecore_desktop_icon_find(desktop->icon, NULL, e_config->icon_theme);
 	     if (v)
 	       {
 		  ic->info.icon = evas_stringshare_add(v);
-		  free(v);
+//		  free(v);
 	       }
 	  }
 	
@@ -5080,6 +5083,7 @@ _e_fm2_live_process_begin(Evas_Object *obj)
    if (!sd->live.actions) return;
    if ((sd->live.idler) || (sd->live.timer) ||
        (sd->scan_idler) || (sd->scan_timer)) return;
+   printf("live idler and timer add!\n");
    sd->live.idler = ecore_idler_add(_e_fm2_cb_live_idler, obj);
    sd->live.timer = ecore_timer_add(0.2, _e_fm2_cb_live_timer, obj);
 }
@@ -5123,6 +5127,7 @@ _e_fm2_live_process(Evas_Object *obj)
    if (!sd->live.actions) return;
    a = sd->live.actions->data;
    sd->live.actions = evas_list_remove_list(sd->live.actions, sd->live.actions);
+   printf("live: %i\n", a->type);
    switch (a->type)
      {
       case FILE_ADD:
@@ -5170,6 +5175,7 @@ _e_fm2_cb_live_idler(void *data)
    double t;
    
    sd = evas_object_smart_data_get(data);
+   if (!sd) return NULL;
    t = ecore_time_get();
    do
      {
@@ -5180,7 +5186,9 @@ _e_fm2_cb_live_idler(void *data)
    if (sd->live.actions) return 1;
    _e_fm2_live_process_end(data);
    _e_fm2_cb_live_timer(data);
+   printf("write changes %i\n", sd->order_file);
    if (sd->order_file) _e_fm2_order_file_rewrite(data);
+   sd->live.idler = NULL;
    return 0;
 }
 
@@ -5194,13 +5202,16 @@ _e_fm2_cb_live_timer(void *data)
    if (sd->queue) _e_fm2_queue_process(data);
    else if (sd->iconlist_changed)
      {
+	printf("queue update\n");
 	if (sd->resize_job) ecore_job_del(sd->resize_job);
 	sd->resize_job = ecore_job_add(_e_fm2_cb_resize_job, sd->obj);
      }
    else
      {
+	printf("else...\n");
 	if (sd->live.deletions)
 	  {
+	     printf("queu update\n");
 	     sd->iconlist_changed = 1;
 	     if (sd->resize_job) ecore_job_del(sd->resize_job);
 	     sd->resize_job = ecore_job_add(_e_fm2_cb_resize_job, sd->obj);

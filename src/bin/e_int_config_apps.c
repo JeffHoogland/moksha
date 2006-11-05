@@ -262,8 +262,8 @@ _cb_editor_del(void *obj)
    cfdata->editor = NULL;
    e_object_del_attach_func_set(obj, NULL);
    e_object_data_set(obj, NULL);
-   e_fm2_refresh(cfdata->gui.o_fm);
-   e_fm2_refresh(cfdata->gui.o_fm_all);
+//   e_fm2_refresh(cfdata->gui.o_fm);
+//   e_fm2_refresh(cfdata->gui.o_fm_all);
 }
 
 static void
@@ -296,6 +296,38 @@ _cb_files_selected_all(void *data, Evas_Object *obj, void *event_info)
    if (!selected) return;
    ici = selected->data;
    realpath = e_fm2_real_path_get(cfdata->gui.o_fm_all);
+   if (!strcmp(realpath, "/"))
+     snprintf(buf, sizeof(buf), "/%s", ici->file);
+   else
+     snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+   evas_list_free(selected);
+   if (ecore_file_is_dir(buf)) return;
+   a = e_app_new(buf, 0);
+   if (a)
+     {
+	if (cfdata->editor) e_object_del(E_OBJECT(cfdata->editor));
+	cfdata->editor = e_eap_edit_show(cfdata->cfd->con, a);
+	e_object_data_set(E_OBJECT(cfdata->editor), cfdata);
+	e_object_del_attach_func_set(E_OBJECT(cfdata->editor), _cb_editor_del);
+     }
+}
+
+static void
+_cb_files_selected_all2(void *data, Evas_Object *obj, void *event_info)
+{
+   E_Config_Dialog_Data *cfdata;
+   Evas_List *selected;
+   E_Fm2_Icon_Info *ici;
+   const char *realpath;
+   char buf[4096];
+   E_App *a;
+   
+   cfdata = data;
+   if (!cfdata->gui.o_fm) return;
+   selected = e_fm2_selected_list_get(cfdata->gui.o_fm);
+   if (!selected) return;
+   ici = selected->data;
+   realpath = e_fm2_real_path_get(cfdata->gui.o_fm);
    if (!strcmp(realpath, "/"))
      snprintf(buf, sizeof(buf), "/%s", ici->file);
    else
@@ -437,7 +469,7 @@ _cb_button_add(void *data1, void *data2)
          _append_to_order(realpath, ecore_file_get_file(buf));
       }
 
-   e_fm2_refresh(cfdata->gui.o_fm);
+//   e_fm2_refresh(cfdata->gui.o_fm);
 }
 
 static void
@@ -535,7 +567,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_fm2_config_set(mt, &fmc_all);
    e_fm2_icon_menu_flags_set(mt, E_FM2_MENU_NO_SHOW_HIDDEN);
    evas_object_smart_callback_add(mt, "dir_changed",
-					_cb_files_dir_changed_all, cfdata);
+				  _cb_files_dir_changed_all, cfdata);
    evas_object_smart_callback_add(mt, "selected",
 				  _cb_files_selected_all, cfdata);
    evas_object_smart_callback_add(mt, "selection_change",
@@ -560,12 +592,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 			  150, 220, /* min */
 			  99999, 99999 /* max */
 			  );
-
+/*
    mt = e_widget_check_add(evas, _("Sort applications"), &(cfdata->sorted));
    evas_object_smart_callback_add(mt, "changed",
 				  _cb_files_sorted_changed, cfdata);
    e_widget_framelist_object_append(of, mt);
-
+*/
    if (once)
       mt = e_widget_button_add(evas, _(once->label), "enlightenment/e",
 			   _cb_button_add, cfdata, NULL);
@@ -573,6 +605,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
       mt = e_widget_button_add(evas, _("Add application..."), "enlightenment/e",
 			   _cb_button_add, cfdata, NULL);
    cfdata->gui.o_add_button = mt;
+
    e_widget_framelist_object_append(of, mt);
    e_widget_disabled_set(mt, 1);
 
@@ -624,6 +657,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	 e_fm2_icon_menu_flags_set(mt, E_FM2_MENU_NO_SHOW_HIDDEN);
          evas_object_smart_callback_add(mt, "dir_changed",
 					_cb_files_dir_changed, cfdata);
+	 evas_object_smart_callback_add(mt, "selected",
+					_cb_files_selected_all2, cfdata);
          evas_object_smart_callback_add(mt, "selection_change",
 					_cb_files_selection_change, cfdata);
          evas_object_smart_callback_add(mt, "changed",
@@ -647,7 +682,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 			  150, 220, /* min */
 			  99999, 99999 /* max */
 			  );
-
+/*
          mt = e_widget_button_add(evas, _("Move application up"), "widget/up_arrow",
 			   _cb_button_move_up, cfdata, NULL);
          cfdata->gui.o_move_up_button = mt;
@@ -659,7 +694,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
          cfdata->gui.o_move_down_button = mt;
          e_widget_framelist_object_append(of, mt);
 	 e_widget_disabled_set(cfdata->gui.o_move_down_button, 1);
-
+*/
          e_widget_table_object_append(ot, of, 2, 0, 2, 4, 1, 1, 1, 1);
       }
 

@@ -321,7 +321,8 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dial
 
    _e_eap_editor_icon_show(cfdata);
 
-   if (editor->img_widget) evas_object_del(editor->img_widget);
+// when flipping from advanced to basic - this will already be destroyed.
+//   if (editor->img_widget) evas_object_del(editor->img_widget);
    editor->img_widget = e_widget_button_add(evas, "", NULL,
 					    _e_eap_editor_cb_icon_select, cfdata, editor);
    if (editor->img)
