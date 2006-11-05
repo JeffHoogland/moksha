@@ -6,7 +6,7 @@
 main=$DISPLAY
 display=" -display :1"
 tmp='mktemp' || exit 1
-echo -e "run\nbt\nq\ny" > $tmp
+/bin/echo -e "run\nbt\nq\ny" > $tmp
 
 case "$@" in
 	"")	action="gdb -x $tmp" ; main=":1" ; display=""  ;;
