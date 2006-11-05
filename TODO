@@ -13,7 +13,8 @@ Some of the things (in very short form) that need to be done to E17...
 * dnd to ibox, ibar, pager if module gagdets have "autoscroll" on makes the
   dnd area the WHOLE region of the gadget object - not just the visible part,
   so the dnd region is waay too big and may overlap eachother etc.
-
+* IBar will resize itself down to single icon size on start/restart under some 
+  circumstances.
 ]]]
 
 [[[
@@ -101,6 +102,7 @@ Some of the things (in very short form) that need to be done to E17...
 * desktop flip animations need to allow control over accel/decel and
   have a better ui - add wobble and controls etc. etc.
 * internal windows (config dialogs, etc) should re-open after a restart
+* .order file handling needs some going over, there is at least one bug.
 ]]]
 
 [[[
