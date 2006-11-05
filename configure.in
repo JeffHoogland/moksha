@@ -151,7 +151,7 @@ ALL_LINGUAS="bg ja ru hu sl it"
 AC_SUBST(ALL_LINGUAS)
 
 AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION([0.14.6])
+AM_GNU_GETTEXT_VERSION([0.12.1])
 if test "x$LIBINTL" = "x"; then
   LIBINTL="$INTLLIBS"
 fi
