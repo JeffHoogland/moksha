@@ -1857,14 +1857,14 @@ _e_app_localized_val_get(Eet_File *ef, const char *lang, const char *field, int 
 
    if (lang)
      {
-	s = e_intl_locale_canonic_get(lang, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+	s = e_intl_locale_parts_get(lang, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
 	snprintf(buf, sizeof(buf), "%s[%s]", field, s);
 	free(s);
 	v = eet_read(ef, buf, size);
 	if (v)
 	  return v;
 
-	s = e_intl_locale_canonic_get(lang, E_INTL_LOC_LANG);
+	s = e_intl_locale_parts_get(lang, E_INTL_LOC_LANG);
 	snprintf(buf, sizeof(buf), "%s[%s]", field, s);
 	free(s);
 	v = eet_read(ef, buf, size);

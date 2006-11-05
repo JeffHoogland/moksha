@@ -611,7 +611,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	     char *language;
 	     char *basic_language;
 
-	     basic_language = e_intl_locale_canonic_get(line, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+	     basic_language = e_intl_locale_parts_get(line, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
 	     if (basic_language)
 	       {
 		  int i;
@@ -632,7 +632,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	       }
 	     E_FREE(basic_language);
 	     
-	     language = e_intl_locale_canonic_get(line, E_INTL_LOC_LANG);
+	     language = e_intl_locale_parts_get(line, E_INTL_LOC_LANG);
 	     
 	     /* If the language is a valid ll_RR[.enc[@mod]] locale add it to the hash */
 	     if (language) 
@@ -644,9 +644,9 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 		  char *modifier;
 
 		  /* Separate out ll RR enc and mod parts */
-		  region = e_intl_locale_canonic_get(line, E_INTL_LOC_REGION);
-		  codeset = e_intl_locale_canonic_get(line, E_INTL_LOC_CODESET);
-		  modifier = e_intl_locale_canonic_get(line, E_INTL_LOC_MODIFIER);
+		  region = e_intl_locale_parts_get(line, E_INTL_LOC_REGION);
+		  codeset = e_intl_locale_parts_get(line, E_INTL_LOC_CODESET);
+		  modifier = e_intl_locale_parts_get(line, E_INTL_LOC_MODIFIER);
    
 		  /* Add the language to the new locale properties to the hash */
 		  /* First check if the LANGUAGE exists in there already */
@@ -904,7 +904,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    if (cfdata->cur_language)
      {
-	cur_sig_loc = e_intl_locale_canonic_get(cfdata->cur_language, 
+	cur_sig_loc = e_intl_locale_parts_get(cfdata->cur_language, 
 	      E_INTL_LOC_LANG | E_INTL_LOC_REGION);
      }
    else
@@ -930,7 +930,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    e_widget_ilist_go(ob);
    e_widget_frametable_object_append(of, ob, 0, 0, 2, 6, 1, 1, 1, 1);
-    
+   e_widget_ilist_selected_set(ob, e_widget_ilist_selected_get(ob));
+   
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
    /* Locale selector */
@@ -993,7 +994,9 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_ilist_go(ob);
    e_widget_min_size_set(ob, 140, 200);
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 4, 1, 1, 1, 1);
-   
+   e_widget_ilist_selected_set(ob, e_widget_ilist_selected_get(ob));
+  
+
    /* Region List */
    //ob = e_widget_label_add(evas, _("Region"));
    //e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1); 
@@ -1004,7 +1007,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_ilist_go(ob);
    e_widget_min_size_set(ob, 100, 100);
    e_widget_frametable_object_append(of, ob, 1, 0, 1, 4, 1, 1, 1, 1);
- 
+   e_widget_ilist_selected_set(ob, e_widget_ilist_selected_get(ob));
+   
    /* Codeset List */
    //ob = e_widget_label_add(evas, _("Codeset"));
    //e_widget_frametable_object_append(of, ob, 2, 0, 1, 1, 1, 1, 1, 1); 
@@ -1294,13 +1298,13 @@ _intl_current_locale_setup(E_Config_Dialog_Data *cfdata)
    
    if (cfdata->cur_language) 
      { 
-	language = e_intl_locale_canonic_get(cfdata->cur_language, 
+	language = e_intl_locale_parts_get(cfdata->cur_language, 
 	      E_INTL_LOC_LANG);
-	region = e_intl_locale_canonic_get(cfdata->cur_language, 
+	region = e_intl_locale_parts_get(cfdata->cur_language, 
 	      E_INTL_LOC_REGION);
-     	codeset = e_intl_locale_canonic_get(cfdata->cur_language, 
+     	codeset = e_intl_locale_parts_get(cfdata->cur_language, 
 	      E_INTL_LOC_CODESET);
-     	modifier = e_intl_locale_canonic_get(cfdata->cur_language, 
+     	modifier = e_intl_locale_parts_get(cfdata->cur_language, 
      	      E_INTL_LOC_MODIFIER);
      }
    
