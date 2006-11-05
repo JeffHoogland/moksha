@@ -350,6 +350,11 @@ main(int argc, char **argv)
 	       ("Options:\n"
 		"\t-no-precache\n"
 		"\t\tDisable pre-caching of files\n"
+		"\n"
+		"Please run:\n"
+		"\tenlightenment %s\n"
+		"for more options.\n",
+		argv[i]
 		);
 	     exit(0);
 	  }
@@ -380,6 +385,7 @@ main(int argc, char **argv)
 	snprintf(buf, sizeof(buf), "%s/lib/enlightenment/preload/e_precache.so", _prefix_path);
 	env_set("LD_PRELOAD", buf);
 	precache();
+	do_precache = 0;
 	break;
      }
    
