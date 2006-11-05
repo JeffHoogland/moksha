@@ -7,7 +7,6 @@
  * More filtering/sorting of left side to make managing thousands of apps easy.
  *
  * These things require support from e_fm -
- * DND from left side to righ side, and to ibar etc.
  * Stop user from deleting standard directories on right side.
  * Stop user from creating new directories on left side.
  */
@@ -592,22 +591,27 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 			  150, 220, /* min */
 			  99999, 99999 /* max */
 			  );
-/*
    mt = e_widget_check_add(evas, _("Sort applications"), &(cfdata->sorted));
    evas_object_smart_callback_add(mt, "changed",
 				  _cb_files_sorted_changed, cfdata);
    e_widget_framelist_object_append(of, mt);
-*/
+
+   mt = NULL;
    if (once)
       mt = e_widget_button_add(evas, _(once->label), "enlightenment/e",
 			   _cb_button_add, cfdata, NULL);
+/*
    else
       mt = e_widget_button_add(evas, _("Add application..."), "enlightenment/e",
 			   _cb_button_add, cfdata, NULL);
-   cfdata->gui.o_add_button = mt;
+*/
+   if (mt)
+     {
+        cfdata->gui.o_add_button = mt;
 
-   e_widget_framelist_object_append(of, mt);
-   e_widget_disabled_set(mt, 1);
+        e_widget_framelist_object_append(of, mt);
+        e_widget_disabled_set(mt, 1);
+     }
 
    mt = e_widget_button_add(evas, _("Create a new application"), "enlightenment/e",
 			   _cb_button_create, cfdata, NULL);
