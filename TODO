@@ -15,6 +15,8 @@ Some of the things (in very short form) that need to be done to E17...
   so the dnd region is waay too big and may overlap eachother etc.
 * IBar will resize itself down to single icon size on start/restart under some 
   circumstances.
+* e_apps wont pick up changes in favorite menu dirs made by the applications
+  config dialog after a while (i think once u get 1 app in it stops listening)
 ]]]
 
 [[[
