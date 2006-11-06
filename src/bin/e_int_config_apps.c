@@ -512,17 +512,61 @@ _cb_button_move_down(void *data1, void *data2)
    e_fm2_refresh(cfdata->gui.o_fm);
 }
 
+static E_Dialog *_e_int_config_apps_regen_dialog = NULL;
+
+static void
+_e_int_config_apps_cb_regen_dialog_ok(void *data, E_Dialog *dia)
+{
+   e_object_del(E_OBJECT(_e_int_config_apps_regen_dialog));
+   _e_int_config_apps_regen_dialog = NULL;
+   e_fdo_menu_to_order();
+//   if (cfdata->gui.o_fm_all)   e_fm2_refresh(cfdata->gui.o_fm_all);
+//   if (cfdata->gui.o_fm)       e_fm2_refresh(cfdata->gui.o_fm);
+}
+
+static void
+_e_int_config_apps_cb_regen_dialog_cancel(void *data, E_Dialog *dia)
+{
+   e_object_del(E_OBJECT(_e_int_config_apps_regen_dialog));
+   _e_int_config_apps_regen_dialog = NULL;
+}
+
+static void
+_e_int_config_apps_cb_regen_dialog_delete(E_Win *win)
+{
+   E_Dialog *dia;
+
+   dia = win->data;
+   _e_int_config_apps_cb_regen_dialog_cancel(NULL, dia);
+}
+
 static void
 _cb_button_regen(void *data1, void *data2)
 {
    E_Config_Dialog_Data *cfdata;
 
    cfdata = data1;
-   e_fdo_menu_to_order();
-   if (cfdata->gui.o_fm_all)   e_fm2_refresh(cfdata->gui.o_fm_all);
-   if (cfdata->gui.o_fm)       e_fm2_refresh(cfdata->gui.o_fm);
+   if (_e_int_config_apps_regen_dialog) e_object_del(E_OBJECT(_e_int_config_apps_regen_dialog));
+   _e_int_config_apps_regen_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_menu_regen_dialog");
+   if (!_e_int_config_apps_regen_dialog) return;
+   e_win_delete_callback_set(_e_int_config_apps_regen_dialog->win, _e_int_config_apps_cb_regen_dialog_delete);
+   e_dialog_title_set(_e_int_config_apps_regen_dialog, _("Are you sure you want to regenerate your Applications menus?"));
+   e_dialog_text_set(_e_int_config_apps_regen_dialog,
+		     _("You are about to regenerate your Applications menus.<br>"
+		       "This will delete any customizations you have made.<br>"
+		       "This will replace the Applications menu with the system menus.<br>"
+		       "<br>"
+		       "Are you sure you want to do this?"
+		       ));
+   e_dialog_icon_set(_e_int_config_apps_regen_dialog, "enlightenment/regen", 64);
+   e_dialog_button_add(_e_int_config_apps_regen_dialog, _("Yes"), NULL,
+		       _e_int_config_apps_cb_regen_dialog_ok, NULL);
+   e_dialog_button_add(_e_int_config_apps_regen_dialog, _("No"), NULL,
+		       _e_int_config_apps_cb_regen_dialog_cancel, NULL);
+   e_dialog_button_focus_num(_e_int_config_apps_regen_dialog, 1);
+   e_win_centered_set(_e_int_config_apps_regen_dialog->win, 1);
+   e_dialog_show(_e_int_config_apps_regen_dialog);
 }
-
 
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
@@ -619,14 +663,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->gui.o_create_button = mt;
    e_widget_framelist_object_append(of, mt);
 
-   if (!once)
-      {
-         mt = e_widget_button_add(evas, _("Regenerate \"Applications\" Menu"), "enlightenment/e",
-			   _cb_button_regen, cfdata, NULL);
-         cfdata->gui.o_regen_button = mt;
-         e_widget_framelist_object_append(of, mt);
-      }
-
    e_widget_table_object_append(ot, of, 0, 0, 2, 4, 1, 1, 1, 1);
 
    if (!once)
@@ -700,6 +736,14 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
          e_widget_framelist_object_append(of, mt);
 	 e_widget_disabled_set(cfdata->gui.o_move_down_button, 1);
 */
+   if (!once)
+      {
+         mt = e_widget_button_add(evas, _("Regenerate \"Applications\" Menu"), "enlightenment/e",
+			   _cb_button_regen, cfdata, NULL);
+         cfdata->gui.o_regen_button = mt;
+         e_widget_framelist_object_append(of, mt);
+      }
+
          e_widget_table_object_append(ot, of, 2, 0, 2, 4, 1, 1, 1, 1);
       }
 
