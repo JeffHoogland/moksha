@@ -468,7 +468,8 @@ _cb_button_add(void *data1, void *data2)
          _append_to_order(realpath, ecore_file_get_file(buf));
       }
 
-//   e_fm2_refresh(cfdata->gui.o_fm);
+// FIXME: When fm is fixed to create the .order files for us, then we can remove this.
+   e_fm2_refresh(cfdata->gui.o_fm);
 }
 
 static void
@@ -600,11 +601,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    if (once)
       mt = e_widget_button_add(evas, _(once->label), "enlightenment/e",
 			   _cb_button_add, cfdata, NULL);
-/*
+/* Put this back in temporarily until raster fixes fm. */ 
    else
-      mt = e_widget_button_add(evas, _("Add application..."), "enlightenment/e",
+      mt = e_widget_button_add(evas, _("Add application ->"), "enlightenment/e",
 			   _cb_button_add, cfdata, NULL);
-*/
+/* */
    if (mt)
      {
         cfdata->gui.o_add_button = mt;
@@ -845,32 +846,35 @@ _append_to_order(const char *order, const char *file)
    FILE *f;
 
    snprintf(buf, sizeof(buf), "%s/.order", order);
-   if (!ecore_file_exists(buf)) return;
-   f = fopen(buf, "rb");
-   if (!f) return;
-
-   while (fgets(buf, sizeof(buf), f))
+   if (ecore_file_exists(buf))
      {
-	int len;
-
-	len = strlen(buf);
-	if (len > 0)
+        f = fopen(buf, "r");
+	if (f)
 	  {
-	     if (buf[len - 1] == '\n')
-	       {
-		  buf[len - 1] = 0;
-		  len--;
-	       }
-             list = evas_list_append(list, strdup(buf));
+             while (fgets(buf, sizeof(buf), f))
+               {
+	          int len;
+
+	          len = strlen(buf);
+	          if (len > 0)
+	            {
+	               if (buf[len - 1] == '\n')
+	                 {
+		            buf[len - 1] = 0;
+		            len--;
+	                 }
+                       list = evas_list_append(list, strdup(buf));
+	            }
+               }
+             fclose(f);
 	  }
+        snprintf(buf, sizeof(buf), "%s/.order", order);
+        ecore_file_unlink(buf);
      }
-   fclose(f);
 
    list = evas_list_append(list, strdup(file));
 
-   snprintf(buf, sizeof(buf), "%s/.order", order);
-   ecore_file_unlink(buf);
-   f = fopen(buf, "wb");
+   f = fopen(buf, "w");
    if (!f) return;
    for (l = list; l; l = l->next)
      {
@@ -882,9 +886,6 @@ _append_to_order(const char *order, const char *file)
      }
    fclose(f);
    evas_list_free(list);
-
-   snprintf(buf, sizeof(buf), "%s/.eap.cache.cfg", order);
-   ecore_file_unlink(buf);
 
    return;
 }
