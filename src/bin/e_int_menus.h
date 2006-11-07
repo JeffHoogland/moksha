@@ -21,7 +21,9 @@ EAPI E_Menu *e_int_menus_main_new(void);
 EAPI E_Menu *e_int_menus_desktops_new(void);
 EAPI E_Menu *e_int_menus_clients_new(void);
 EAPI E_Menu *e_int_menus_apps_new(const char *dir);
+#ifdef ENABLE_FAVORITES
 EAPI E_Menu *e_int_menus_favorite_apps_new(void);
+#endif
 EAPI E_Menu *e_int_menus_all_apps_new(void);
 EAPI E_Menu *e_int_menus_config_new(void);
 EAPI E_Menu *e_int_menus_lost_clients_new(void);

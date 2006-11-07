@@ -651,8 +651,9 @@ _restore_mouse_binding_defaults_cb(void *data, void *data2)
    CFG_MOUSEBIND_DFLT(E_BINDING_CONTEXT_BORDER, 3, E_BINDING_MODIFIER_ALT, 0, "window_menu", NULL); 
    CFG_MOUSEBIND_DFLT(E_BINDING_CONTEXT_ZONE, 1, 0, 0, "menu_show", "main"); 
    CFG_MOUSEBIND_DFLT(E_BINDING_CONTEXT_ZONE, 2, 0, 0, "menu_show", "clients"); 
+#ifdef ENABLE_FAVORITES
    CFG_MOUSEBIND_DFLT(E_BINDING_CONTEXT_ZONE, 3, 0, 0, "menu_show", "favorites");
-
+#endif
 
 #define CFG_WHEELBIND_DFLT(_context, _direction, _z, _modifiers, _anymod, _action, _params) \
    bw = E_NEW(E_Config_Binding_Wheel, 1); \

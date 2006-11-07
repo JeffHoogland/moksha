@@ -159,6 +159,26 @@ fi
 AC_CHECK_LIB(dl, dlopen, dlopen_libs=-ldl)
 AC_SUBST(dlopen_libs)
 
+AC_MSG_CHECKING([whether to enable Favorite Applications menu])
+AC_ARG_ENABLE([favorites],
+   AS_HELP_STRING([--enable-favorites],[enable Favorite Applications menu @<:@yes@:>@]),
+   [e_cv_enable_favorites=$enableval],
+   AC_CACHE_VAL([e_cv_enable_favorites], [e_cv_enable_favorites=yes]))
+if test "[${e_cv_enable_favorites}]" = yes; then
+   AC_DEFINE_UNQUOTED([ENABLE_FAVORITES],[1],[enable Favorite Applications menu])
+fi
+AC_MSG_RESULT([$e_cv_enable_favorites])
+
+AC_MSG_CHECKING([whether to enable Files menu item])
+AC_ARG_ENABLE([files],
+   AS_HELP_STRING([--enable-files],[enable Files menu item @<:@yes@:>@]),
+   [e_cv_enable_files=$enableval],
+   AC_CACHE_VAL([e_cv_enable_files], [e_cv_enable_files=yes]))
+if test "[${e_cv_enable_files}]" = yes; then
+   AC_DEFINE_UNQUOTED([ENABLE_FILES],[1],[enable Files menu item])
+fi
+AC_MSG_RESULT([$e_cv_enable_files])
+
 AC_ARG_WITH(evas-config,
 [  --with-evas-config=EVAS_CONFIG    use evas-config specified ],
 [

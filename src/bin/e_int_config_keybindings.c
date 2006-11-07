@@ -563,18 +563,22 @@ _restore_key_binding_defaults_cb(void *data, void *data2)
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "m",
       	 E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
       	 "menu_show", "main");
+#ifdef ENABLE_FAVORITES
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "a",
       	 E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
       	 "menu_show", "favorites");
+#endif
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "Menu",
       	 0, 0,
       	 "menu_show", "main");
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "Menu",
       	 E_BINDING_MODIFIER_CTRL, 0,
       	 "menu_show", "clients");
+#ifdef ENABLE_FAVORITES
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "Menu",
       	 E_BINDING_MODIFIER_ALT, 0,
       	 "menu_show", "favorites");
+#endif
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "Insert",
       	 E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
       	 "exec", "Eterm");

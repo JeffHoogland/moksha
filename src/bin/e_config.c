@@ -766,9 +766,11 @@ e_config_init(void)
 	CFG_MOUSEBIND(E_BINDING_CONTEXT_ZONE, 2,
 		      0, 0, 
 		      "menu_show", "clients");
+#ifdef ENABLE_FAVORITES
 	CFG_MOUSEBIND(E_BINDING_CONTEXT_ZONE, 3,
 		      0, 0, 
 		      "menu_show", "favorites");
+#endif
      }
      {
 	E_Config_Binding_Key *eb;
@@ -877,18 +879,22 @@ e_config_init(void)
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "m",
 		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
 		    "menu_show", "main");
+#ifdef ENABLE_FAVORITES
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "a",
 		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
 		    "menu_show", "favorites");
+#endif
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Menu",
 		    0, 0,
 		    "menu_show", "main");
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Menu",
 		    E_BINDING_MODIFIER_CTRL, 0,
 		    "menu_show", "clients");
+#ifdef ENABLE_FAVORITES
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Menu",
 		    E_BINDING_MODIFIER_ALT, 0,
 		    "menu_show", "favorites");
+#endif
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Insert",
 		    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
 		    "exec", "Eterm");
