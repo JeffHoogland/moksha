@@ -162,7 +162,9 @@ e_app_init(void)
 	  }
         ecore_list_destroy(_e_apps_all_filenames);
      }
+#if DEBUG
    printf("INITIAL APP SCAN %3.3f\n", ecore_time_get() - begin);
+#endif
    ecore_desktop_instrumentation_print();
    ecore_desktop_instrumentation_reset();
    _e_apps_hash_idler.begin = ecore_time_get();
@@ -212,9 +214,11 @@ _e_apps_hash_idler_cb(void *data)
      }
    if (idler->apps == NULL)
      {
+#if DEBUG
         printf("\nIDLE APP FILLING SCAN %3.3f\n", ecore_time_get() - idler->begin);
 #if CLEVER_BORDERS
         printf("APP BORDER SETUP %3.6f (average %2.6f) %d globs\n", border_setup_time, border_setup_time / border_setup_count, glob_count);
+#endif
 #endif
 	idler->idler = NULL;
         ecore_desktop_instrumentation_print();
@@ -1464,6 +1468,7 @@ e_app_border_find(E_Border *bd)
    border_count++;
    border_time += time;
    border_clever_time += clever_time;
+#if DEBUG
 #if CLEVER_BORDERS && OLD_BORDERS
    printf("APP BORDER SCAN NEW - %2.6f, OLD - %2.6f (average %2.6f, %2.6f) FOUND %s AND %s\n",
           clever_time, time, border_clever_time / border_count, border_time / border_count, 
@@ -1478,6 +1483,7 @@ e_app_border_find(E_Border *bd)
    printf("APP BORDER SCAN OLD - %2.6f (average %2.6f) FOUND %s\n",
           time, border_time / border_count, 
 	  ((a_match == NULL) ? "NOTHING" : a_match->path));
+#endif
 #endif
 #endif
    return a_match;
