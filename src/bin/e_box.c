@@ -45,7 +45,7 @@ static E_Box_Item *_e_box_smart_adopt(E_Smart_Data *sd, Evas_Object *obj);
 static void        _e_box_smart_disown(Evas_Object *obj);
 static void        _e_box_smart_item_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void        _e_box_smart_reconfigure(E_Smart_Data *sd);
-static void        _e_box_smart_extents_calcuate(E_Smart_Data *sd);
+static void        _e_box_smart_extents_calculate(E_Smart_Data *sd);
 
 static void _e_box_smart_init(void);
 static void _e_box_smart_add(Evas_Object *obj);
@@ -281,7 +281,7 @@ e_box_min_size_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-   if (sd->changed) _e_box_smart_extents_calcuate(sd);
+   if (sd->changed) _e_box_smart_extents_calculate(sd);
    if (minw) *minw = sd->min.w;
    if (minh) *minh = sd->min.h;
 }
@@ -293,7 +293,7 @@ e_box_max_size_get(Evas_Object *obj, Evas_Coord *maxw, Evas_Coord *maxh)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-   if (sd->changed) _e_box_smart_extents_calcuate(sd);
+   if (sd->changed) _e_box_smart_extents_calculate(sd);
    if (maxw) *maxw = sd->max.w;
    if (maxh) *maxh = sd->max.h;
 }
@@ -397,7 +397,7 @@ _e_box_smart_reconfigure(E_Smart_Data *sd)
    w = sd->w;
    h = sd->h;
 
-   _e_box_smart_extents_calcuate(sd);
+   _e_box_smart_extents_calculate(sd);
    minw = sd->min.w;
    minh = sd->min.h;
    count = evas_list_count(sd->items);
@@ -555,7 +555,7 @@ _e_box_smart_reconfigure(E_Smart_Data *sd)
 }
 
 static void
-_e_box_smart_extents_calcuate(E_Smart_Data *sd)
+_e_box_smart_extents_calculate(E_Smart_Data *sd)
 {
    Evas_List *l;
    int minw, minh;
