@@ -4447,15 +4447,18 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	
 	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REMEMBER_ORDERING))
 	  {
-	     mi = e_menu_item_new(mn);
-	     e_menu_item_label_set(mi, _("Remember Ordering"));
-	     e_menu_item_icon_edje_set(mi,
-				       e_theme_edje_file_get("base/theme/fileman",
-							     "e/fileman/button/ordering"),
-				       "e/fileman/button/ordering");
-	     e_menu_item_check_set(mi, 1);
-	     e_menu_item_toggle_set(mi, sd->order_file);
-	     e_menu_item_callback_set(mi, _e_fm2_toggle_ordering, sd);
+	     if (!sd->config->view.always_order)
+	       {
+		  mi = e_menu_item_new(mn);
+		  e_menu_item_label_set(mi, _("Remember Ordering"));
+		  e_menu_item_icon_edje_set(mi,
+					    e_theme_edje_file_get("base/theme/fileman",
+								  "e/fileman/button/ordering"),
+					    "e/fileman/button/ordering");
+		  e_menu_item_check_set(mi, 1);
+		  e_menu_item_toggle_set(mi, sd->order_file);
+		  e_menu_item_callback_set(mi, _e_fm2_toggle_ordering, sd);
+	       }
 	  }
 	
 	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_NEW_DIRECTORY))

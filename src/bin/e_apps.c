@@ -2056,6 +2056,7 @@ e_app_dir_file_list_get(E_App *a)
    char buf[PATH_MAX];
    
    snprintf(buf, sizeof(buf), "%s/.order", a->path);
+//   printf("APX: LOAD %s\n", buf);
    files = ecore_file_ls(a->path);
    f = fopen(buf, "rb");
    if (f)
@@ -2512,6 +2513,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
    _e_app_print(path, event);
 #endif
 
+//   printf("APX: CHG %s\n", path);
    file = (char *)ecore_file_get_file(path);
    if (!strcmp(file, ".order"))
      {
