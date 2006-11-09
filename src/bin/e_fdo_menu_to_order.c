@@ -45,6 +45,7 @@ e_fdo_menu_to_order(void)
       {
          struct category_data cat_data;
 
+         printf("Not enough applications found in the system menus, creating fallback menus.\n");
          /* search out all .desktop files and generate menus ala e17genmenu. */
          ecore_desktop_instrumentation_reset();
          cat_data.menus = ecore_hash_new(ecore_str_hash, ecore_str_compare);

@@ -646,11 +646,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    if (once)
       mt = e_widget_button_add(evas, _(once->label), "enlightenment/e",
 			   _cb_button_add, cfdata, NULL);
-/* Put this back in temporarily until raster fixes fm. */ 
+/*
    else
       mt = e_widget_button_add(evas, _("Add application ->"), "enlightenment/e",
 			   _cb_button_add, cfdata, NULL);
-/* */
+*/
    if (mt)
      {
         cfdata->gui.o_add_button = mt;
