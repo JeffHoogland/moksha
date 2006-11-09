@@ -1043,8 +1043,8 @@ _e_intl_locale_validate(const char *locale)
 			      e_intl_locale_charset_canonic_get(locale_cs_next);
 			    if (locale_cs_canonic_next)
 			      {
-				 if (!strcmp(locale_cs_canonic, 
-					  locale_cs_canonic_next))
+				 if (locale_cs_canonic && 
+				       !strcmp(locale_cs_canonic, locale_cs_canonic_next))
 				   {
 				      /* Lang/Resion and charsets in canonic 
 				       * form match 
@@ -1055,7 +1055,8 @@ _e_intl_locale_validate(const char *locale)
 			      }
 			    else
 			      {
-				 if (!strcmp(locale_cs_canonic, locale_cs_next))
+				 if (locale_cs_canonic && 
+				       !strcmp(locale_cs_canonic, locale_cs_next))
 				   {
 				      /* Lang/Resion and charsets in canonic 
 				       * form match 
