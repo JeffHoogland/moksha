@@ -4256,6 +4256,7 @@ _e_fm2_order_file_rewrite(Evas_Object *obj)
 	if (!ic->info.deleted)
 	  fprintf(f, "%s\n", ic->info.file);
      }
+   if (!sd->order_file) sd->order_file = 1;
    fclose(f);
 }
 
@@ -4315,15 +4316,18 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	
 	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REMEMBER_ORDERING))
 	  {
-	     mi = e_menu_item_new(mn);
-	     e_menu_item_label_set(mi, _("Remember Ordering"));
-	     e_menu_item_icon_edje_set(mi,
-				       e_theme_edje_file_get("base/theme/fileman",
-							     "e/fileman/button/ordering"),
-				       "e/fileman/button/ordering");
-	     e_menu_item_check_set(mi, 1);
-	     e_menu_item_toggle_set(mi, sd->order_file);
-	     e_menu_item_callback_set(mi, _e_fm2_toggle_ordering, sd);
+	     if (!sd->config->view.always_order)
+	       {
+		  mi = e_menu_item_new(mn);
+		  e_menu_item_label_set(mi, _("Remember Ordering"));
+		  e_menu_item_icon_edje_set(mi,
+					    e_theme_edje_file_get("base/theme/fileman",
+								  "e/fileman/button/ordering"),
+					    "e/fileman/button/ordering");
+		  e_menu_item_check_set(mi, 1);
+		  e_menu_item_toggle_set(mi, sd->order_file);
+		  e_menu_item_callback_set(mi, _e_fm2_toggle_ordering, sd);
+	       }
 	  }
 	
 	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_NEW_DIRECTORY))
@@ -5186,8 +5190,9 @@ _e_fm2_cb_live_idler(void *data)
    if (sd->live.actions) return 1;
    _e_fm2_live_process_end(data);
    _e_fm2_cb_live_timer(data);
-   printf("write changes %i\n", sd->order_file);
-   if (sd->order_file) _e_fm2_order_file_rewrite(data);
+   printf("write changes %i | %i\n", sd->order_file, sd->config->view.always_order);
+   if ((sd->order_file) || (sd->config->view.always_order))
+     _e_fm2_order_file_rewrite(data);
    sd->live.idler = NULL;
    return 0;
 }

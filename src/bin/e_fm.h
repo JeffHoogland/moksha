@@ -36,12 +36,13 @@ struct _E_Fm2_Config
    /* general view mode */
    struct {
       E_Fm2_View_Mode mode;
+      const char     *extra_file_source;
       unsigned char   open_dirs_in_place;
       unsigned char   selector;
       unsigned char   single_click;
       unsigned char   no_subdir_jump;
       unsigned char   no_subdir_drop;
-      const char     *extra_file_source;
+      unsigned char   always_order;
    } view;
    /* display of icons */
    struct {
@@ -83,15 +84,6 @@ struct _E_Fm2_Config
       const char      *icons;
       unsigned char    fixed;
    } theme;
-   /* used internally only - used to save to disk only and laod from disk */
-   /* FIXME: not implemented yet */
-   struct {
-      int              x, y, w, h;
-      struct {
-	 int           w, h;
-      } res;
-      int              screen;
-   } geometry;
 };
 
 struct _E_Fm2_Icon_Info
