@@ -2,6 +2,7 @@
 
 #export REDRAW_DEBUG=1        # To cause redraw- to happen slovly and obviously.
 #export ECORE_ERROR_ABORT=1   # To cause ecore to abort on errors.
+#export EVAS_NOCLEAN=1        # To cause evas to not unload modules.
 
 main=$DISPLAY
 display=" -display :1"
