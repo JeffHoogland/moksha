@@ -558,7 +558,8 @@ _cb_button_regen(void *data1, void *data2)
 		       "<br>"
 		       "Are you sure you want to do this?"
 		       ));
-   e_dialog_icon_set(_e_int_config_apps_regen_dialog, "enlightenment/regen", 64);
+   e_dialog_border_icon_set(_e_int_config_apps_regen_dialog,"enlightenment/regenerate_menus");
+   e_dialog_icon_set(_e_int_config_apps_regen_dialog, "enlightenment/regenerate_menus", 64);
    e_dialog_button_add(_e_int_config_apps_regen_dialog, _("Yes"), NULL,
 		       _e_int_config_apps_cb_regen_dialog_ok, NULL);
    e_dialog_button_add(_e_int_config_apps_regen_dialog, _("No"), NULL,
@@ -740,7 +741,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 */
    if (!once)
       {
-         mt = e_widget_button_add(evas, _("Regenerate \"Applications\" Menu"), "enlightenment/e",
+         mt = e_widget_button_add(evas, _("Regenerate \"Applications\" Menu"), "enlightenment/regenerate_menus",
 			   _cb_button_regen, cfdata, NULL);
          cfdata->gui.o_regen_button = mt;
          e_widget_framelist_object_append(of, mt);
