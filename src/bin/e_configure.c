@@ -123,7 +123,7 @@ e_configure_show(E_Container *con)
    e_configure_standard_item_add(eco, "enlightenment/window_manipulation", _("Window Manipulation"), e_int_config_window_manipulation);
    e_configure_standard_item_add(eco, "enlightenment/run", _("Run Command"), e_int_config_exebuf);
    e_configure_standard_item_add(eco, "enlightenment/directories", _("Search Directories"), e_int_config_paths);
-//   e_configure_standard_item_add(eco, "enlightenment/e", _("Mime Types"), e_int_config_mime);
+   e_configure_standard_item_add(eco, "enlightenment/e", _("Mime Types"), e_int_config_mime);
 
    e_configure_header_item_add(eco, "enlightenment/extensions", _("Extensions"));
    e_configure_standard_item_add(eco, "enlightenment/modules", _("Modules"), e_int_config_modules);
