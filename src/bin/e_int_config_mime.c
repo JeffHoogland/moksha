@@ -432,30 +432,28 @@ _cb_config(void *data, void *data2)
    Evas_List *l;
    E_Config_Dialog_Data *cfdata;
    E_Config_Mime_Icon *mi = NULL;
-   const char *m;
+   char *m;
    int found = 0;
    
    cfdata = data;
    if (!cfdata) return;
-   m = e_widget_ilist_selected_label_get(cfdata->gui.list);
+   m = (char *)e_widget_ilist_selected_label_get(cfdata->gui.list);
    if (!m) return;
+   
    for (l = e_config->mime_icons; l; l = l->next) 
      {
 	mi = l->data;
 	if (!mi) continue;
+	if (!mi->mime) continue;
 	if (strcmp(mi->mime, m)) continue;
 	found = 1;
 	break;
      }
-   if (found) 
-     e_int_config_mime_edit(mi);
-   else 
+   if (!found) 
      {
 	mi = E_NEW(E_Config_Mime_Icon, 1);
 	mi->mime = evas_stringshare_add(m);
-	mi->icon = evas_stringshare_add("THUMB");
-	e_config->mime_icons = evas_list_append(e_config->mime_icons, mi);
-	e_config_save_queue();
-	e_int_config_mime_edit(mi);
      }
+   
+   e_int_config_mime_edit(mi);
 }

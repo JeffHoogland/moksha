@@ -40,7 +40,7 @@ struct _E_Config_Dialog_Data
 #define IFFREE(src) if (src) free(src); src = NULL;
 
 EAPI E_Config_Dialog *
-e_int_config_mime_edit(E_Config_Mime_Icon *mime) 
+e_int_config_mime_edit(E_Config_Mime_Icon *data) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
@@ -55,10 +55,10 @@ e_int_config_mime_edit(E_Config_Mime_Icon *mime)
    v->free_cfdata = _free_data;
    v->basic.create_widgets = _basic_create;
    v->basic.apply_cfdata = _basic_apply;
-   
+
    cfd = e_config_dialog_new(con, _("Mime Settings"), "E", 
 			     "_config_mime_edit_dialog", "enlightenment/e", 
-			     0, v, mime);
+			     0, v, data);
    return cfd;
 }
 
@@ -75,37 +75,40 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _fill_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   E_Config_Mime_Icon *mime;
-   char *p;
-   
-   if (!cfd->data) return;
+   E_Config_Mime_Icon *mi;
 
-   mime = cfd->data;
-   if (!mime) return;
-   IFDUP(mime->mime, cfdata->mime);
-   IFDUP(mime->icon, cfdata->icon);
-   if (!cfdata->icon) 
-     {
-	cfdata->type = THUMB;
-	return;
-     }
+   mi = (E_Config_Mime_Icon *)cfd->data;
+
+   IFDUP(mi->mime, cfdata->mime);
+   IFDUP(mi->icon, cfdata->icon);
    
-   if (!strcmp(cfdata->icon, "THUMB")) 
-     cfdata->type = THUMB;
-   else
+   if (!cfdata->icon)
+     cfdata->type = DEFAULT;
+   else 
      {
-	p = strrchr(cfdata->icon, '.');
-	if ((p) && (!strcmp(p, ".edj"))) 
-	  cfdata->type = EDJ;
-	else
+	if (!strcmp(cfdata->icon, "THUMB"))
+	  cfdata->type = THUMB;
+	else if (!strncmp(cfdata->icon, "e/icons/fileman/mime", 20))
 	  cfdata->type = THEME;
+	else 
+	  {
+	     char *p;
+	     
+	     p = strrchr(cfdata->icon, '.');
+	     if ((p) && (!strcmp(p, ".edj")))
+	       cfdata->type = EDJ;
+	     else
+	       cfdata->type = DEFAULT;
+	  }
      }
 }
 
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   if (cfdata->gui.fsel) e_object_del(E_OBJECT(cfdata->gui.fsel));
+   if (cfdata->gui.fsel) 
+     e_object_del(E_OBJECT(cfdata->gui.fsel));
+   
    IFFREE(cfdata->file);
    IFFREE(cfdata->mime);
    IFFREE(cfdata->icon);
@@ -129,7 +132,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_min_size_set(ob, 100, 1);
    e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
+      
    of = e_widget_frametable_add(evas, _("Icon"), 0);
    rg = e_widget_radio_group_new(&cfdata->type);
    ob = e_widget_radio_add(evas, _("Use Generated Thumbnail"), 0, rg);
@@ -140,11 +143,12 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_frametable_object_append(of, ob, 0, 1, 3, 1, 1, 1, 1, 1);
    ob = e_widget_radio_add(evas, _("Use Edje File"), 2, rg);
    evas_object_smart_callback_add(ob, "changed", _cb_type, cfdata);
+   e_widget_disabled_set(ob, 1);
    e_widget_frametable_object_append(of, ob, 0, 2, 3, 1, 1, 1, 1, 1);   
    ob = e_widget_radio_add(evas, _("Use Default"), 3, rg);
    evas_object_smart_callback_add(ob, "changed", _cb_type, cfdata);
    e_widget_frametable_object_append(of, ob, 0, 3, 3, 1, 1, 1, 1, 1);
-   
+
    oi = e_widget_button_add(evas, "", NULL, _cb_icon_sel, cfdata, cfd);
    cfdata->gui.icon = oi;
    if (cfdata->icon) 
@@ -153,50 +157,72 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 	if (icon)
 	  e_widget_button_icon_set(oi, icon);
      }
-   
    e_widget_min_size_set(oi, 48, 48);
    e_widget_frametable_object_append(of, oi, 1, 4, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-      
+
+   switch (cfdata->type) 
+     {
+      case EDJ:
+	e_widget_disabled_set(cfdata->gui.icon, 0);
+	break;
+      default:
+	e_widget_disabled_set(cfdata->gui.icon, 1);
+	break;
+     }
+   
    return o;
 }
 
 static int
 _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   E_Config_Mime_Icon *mime;
    Evas_List *l;
+   E_Config_Mime_Icon *mi;
    char buf[4096];
+   int found = 0;
    
    for (l = e_config->mime_icons; l; l = l->next) 
      {
-	mime = l->data;
-	if (!mime) continue;
-	if (strcmp(mime->mime, cfdata->mime)) continue;
-	if (mime->mime)
-	  evas_stringshare_del(mime->mime);
-	mime->mime = evas_stringshare_add(cfdata->mime);
-	if (mime->icon)
-	  evas_stringshare_del(mime->icon);
-	switch (cfdata->type) 
-	  {
-	   case THUMB:
-	     mime->icon = evas_stringshare_add("THUMB");
-	     break;
-	   case THEME:
-	     snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", cfdata->mime);
-	     mime->icon = evas_stringshare_add(buf);
-	     break;
-	   case EDJ:
-	     break;
-	   case DEFAULT:
-	     e_config->mime_icons = evas_list_remove(e_config->mime_icons, mime);
-	     break;
-	   default:
-	     break;
-	  }
+	mi = l->data;
+	if (!mi) continue;
+	if (strcmp(mi->mime, cfdata->mime)) continue;
+	found = 1;
 	break;
      }
+   
+   if (found) 
+     {
+	if (mi->icon)
+	  evas_stringshare_del(mi->icon);
+     }
+   else 
+     {
+	if (cfdata->type == DEFAULT) return 1;
+	mi = E_NEW(E_Config_Mime_Icon, 1);
+	mi->mime = evas_stringshare_add(cfdata->mime);
+     }
+
+   switch (cfdata->type) 
+     {
+      case THUMB:
+	mi->icon = evas_stringshare_add("THUMB");
+	break;
+      case THEME:
+	snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", cfdata->mime);
+	mi->icon = evas_stringshare_add(buf);
+	break;
+      case EDJ:
+	break;
+      case DEFAULT:
+	if (found)
+	  e_config->mime_icons = evas_list_remove(e_config->mime_icons, mi);
+	break;
+     }
+
+   if (!found)
+     e_config->mime_icons = evas_list_append(e_config->mime_icons, mi);
+   
    e_config_save_queue();
    return 1;
 }
@@ -251,22 +277,24 @@ _get_icon(void *data)
    if (!cfdata) return icon;
 
    e_widget_disabled_set(cfdata->gui.icon, 1);
+   if (cfdata->type == DEFAULT) return NULL;
    
-   tmp = e_fm_mime_icon_get(cfdata->icon);
+   icon = edje_object_add(evas_object_evas_get(cfdata->gui.icon));
    switch (cfdata->type) 
      {
       case THUMB:
-	icon = edje_object_add(evas_object_evas_get(cfdata->gui.icon));
 	e_theme_edje_object_set(icon, "base/theme/fileman", "e/icons/fileman/file");
 	break;
       case THEME:
 	snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", cfdata->mime);
-	icon = edje_object_add(evas_object_evas_get(cfdata->gui.icon));
 	if (!e_theme_edje_object_set(icon, "base/theme/fileman", buf))
 	  e_theme_edje_object_set(icon, "base/theme/fileman", "e/icons/fileman/file");
 	break;
       case EDJ:
-	icon = edje_object_add(evas_object_evas_get(cfdata->gui.icon));
+	if (cfdata->icon)
+	  tmp = e_fm_mime_icon_get(cfdata->icon);
+	if (!tmp)
+	  tmp = strdup("e/icons/fileman/file");
 	if (!e_theme_edje_object_set(icon, "base/theme/fileman", tmp))
 	  e_theme_edje_object_set(icon, "base/theme/fileman", "e/icons/fileman/file");
 	e_widget_disabled_set(cfdata->gui.icon, 0);
@@ -287,16 +315,11 @@ _cb_type(void *data, Evas_Object *obj, void *event_info)
    if (!cfdata) return;
    switch (cfdata->type) 
      {
-      case THUMB:
-	e_widget_disabled_set(cfdata->gui.icon, 1);
-	break;
-      case THEME:
-	e_widget_disabled_set(cfdata->gui.icon, 1);
-	break;
       case EDJ:
 	e_widget_disabled_set(cfdata->gui.icon, 0);
 	break;
       default:
+	e_widget_disabled_set(cfdata->gui.icon, 1);
 	break;
      }
 }
