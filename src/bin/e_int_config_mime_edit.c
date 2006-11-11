@@ -19,6 +19,7 @@ enum _Icon_Type
      THUMB,
      THEME,
      EDJ,
+     IMG,
      DEFAULT
 };
 
@@ -98,7 +99,7 @@ _fill_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     if ((p) && (!strcmp(p, ".edj")))
 	       cfdata->type = EDJ;
 	     else
-	       cfdata->type = DEFAULT;
+	       cfdata->type = IMG;
 	  }
      }
 }
@@ -144,10 +145,14 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ob = e_widget_radio_add(evas, _("Use Edje File"), 2, rg);
    evas_object_smart_callback_add(ob, "changed", _cb_type, cfdata);
    e_widget_disabled_set(ob, 1);
-   e_widget_frametable_object_append(of, ob, 0, 2, 3, 1, 1, 1, 1, 1);   
-   ob = e_widget_radio_add(evas, _("Use Default"), 3, rg);
+   e_widget_frametable_object_append(of, ob, 0, 2, 3, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_add(evas, _("Use Image"), 3, rg);
    evas_object_smart_callback_add(ob, "changed", _cb_type, cfdata);
+   e_widget_disabled_set(ob, 1);
    e_widget_frametable_object_append(of, ob, 0, 3, 3, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_add(evas, _("Use Default"), 4, rg);
+   evas_object_smart_callback_add(ob, "changed", _cb_type, cfdata);
+   e_widget_frametable_object_append(of, ob, 0, 4, 3, 1, 1, 1, 1, 1);
 
    oi = e_widget_button_add(evas, "", NULL, _cb_icon_sel, cfdata, cfd);
    cfdata->gui.icon = oi;
@@ -158,12 +163,13 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 	  e_widget_button_icon_set(oi, icon);
      }
    e_widget_min_size_set(oi, 48, 48);
-   e_widget_frametable_object_append(of, oi, 1, 4, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, oi, 1, 5, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    switch (cfdata->type) 
      {
       case EDJ:
+      case IMG:
 	e_widget_disabled_set(cfdata->gui.icon, 0);
 	break;
       default:
@@ -213,6 +219,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	mi->icon = evas_stringshare_add(buf);
 	break;
       case EDJ:
+      case IMG:
 	break;
       case DEFAULT:
 	if (found)
@@ -245,7 +252,11 @@ _cb_icon_sel(void *data, void *data2)
    
    dia = e_dialog_new(cfd->con, "E", "_mime_icon_select_dialog");
    if (!dia) return;
-   e_dialog_title_set(dia, _("Select an Icon"));
+   if (cfdata->type == EDJ)
+     e_dialog_title_set(dia, _("Select an Edj File"));
+   else if (cfdata->type == IMG)
+     e_dialog_title_set(dia, _("Select an Image"));
+     
    dia->data = cfdata;
    o = e_widget_fsel_add(dia->win->evas, "~/", "/", NULL, NULL,
 			 _cb_fsel_sel, cfdata, NULL, cfdata, 1);
@@ -291,12 +302,9 @@ _get_icon(void *data)
 	  e_theme_edje_object_set(icon, "base/theme/fileman", "e/icons/fileman/file");
 	break;
       case EDJ:
-	if (cfdata->icon)
-	  tmp = e_fm_mime_icon_get(cfdata->icon);
-	if (!tmp)
-	  tmp = strdup("e/icons/fileman/file");
-	if (!e_theme_edje_object_set(icon, "base/theme/fileman", tmp))
-	  e_theme_edje_object_set(icon, "base/theme/fileman", "e/icons/fileman/file");
+	e_widget_disabled_set(cfdata->gui.icon, 0);
+	break;
+      case IMG:
 	e_widget_disabled_set(cfdata->gui.icon, 0);
 	break;
       default:
@@ -316,6 +324,7 @@ _cb_type(void *data, Evas_Object *obj, void *event_info)
    switch (cfdata->type) 
      {
       case EDJ:
+      case IMG:
 	e_widget_disabled_set(cfdata->gui.icon, 0);
 	break;
       default:
