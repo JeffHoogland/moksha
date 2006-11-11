@@ -18,7 +18,8 @@ enum _Icon_Type
 {
      THUMB,
      THEME,
-     EDJ
+     EDJ,
+     DEFAULT
 };
 
 struct _E_Config_Dialog_Data 
@@ -139,8 +140,10 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_frametable_object_append(of, ob, 0, 1, 3, 1, 1, 1, 1, 1);
    ob = e_widget_radio_add(evas, _("Use Edje File"), 2, rg);
    evas_object_smart_callback_add(ob, "changed", _cb_type, cfdata);
-   e_widget_frametable_object_append(of, ob, 0, 2, 3, 1, 1, 1, 1, 1);
-   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 0, 2, 3, 1, 1, 1, 1, 1);   
+   ob = e_widget_radio_add(evas, _("Use Default"), 3, rg);
+   evas_object_smart_callback_add(ob, "changed", _cb_type, cfdata);
+   e_widget_frametable_object_append(of, ob, 0, 3, 3, 1, 1, 1, 1, 1);
    
    oi = e_widget_button_add(evas, "", NULL, _cb_icon_sel, cfdata, cfd);
    cfdata->gui.icon = oi;
@@ -152,7 +155,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
      }
    
    e_widget_min_size_set(oi, 48, 48);
-   e_widget_frametable_object_append(of, oi, 1, 3, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, oi, 1, 4, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
       
    return o;
@@ -185,6 +188,11 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     mime->icon = evas_stringshare_add(buf);
 	     break;
 	   case EDJ:
+	     break;
+	   case DEFAULT:
+	     e_config->mime_icons = evas_list_remove(e_config->mime_icons, mime);
+	     break;
+	   default:
 	     break;
 	  }
 	break;
@@ -332,6 +340,7 @@ static void
 _cb_file_change(void *data) 
 {
    E_Config_Dialog_Data *cfdata;
+   Evas_Object *icon;
    
    cfdata = data;
    if (!cfdata) return;
@@ -340,7 +349,6 @@ _cb_file_change(void *data)
      {
       case EDJ:
 	if (!strstr(cfdata->file, ".edj")) return;
-//	if (!edje_file_group_exists(cfdata->file, "")) return;
       default:
 	return;
 	break;

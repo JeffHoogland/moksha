@@ -1,28 +1,46 @@
 #include "e.h"
 
-static void        *_create_data  (E_Config_Dialog *cfd);
-static void         _free_data    (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static void         _fill_list    (E_Config_Dialog_Data *cfdata);
-static void         _cb_add       (void *data, void *data2);
-static void         _cb_del       (void *data, void *data2);
-static void         _cb_config    (void *data, void *data2);
-static void         _list_cb_sel  (void *data);
-
-static void         _cb_confirm_yes     (void *data);
-static void         _cb_confirm_destroy (void *data);
-static void         _cb_entry_ok        (char *text, void *data);
-
+typedef struct _Config_Glob Config_Glob;
+typedef struct _Config_Mime Config_Mime;
+typedef struct _Config_Type Config_Type;
+struct _Config_Glob 
+{
+   const char *name;
+};
+struct _Config_Mime 
+{
+   const char *mime;
+   Evas_List *globs;
+};
+struct _Config_Type 
+{
+   const char *name;
+   const char *type;
+};
 struct _E_Config_Dialog_Data 
 {
    Evas_List *mimes;
-   const char *sel_mt;
+   char *cur_type;
    struct 
      {
-	Evas_Object *list;
-	Evas_Object *add, *del, *config;
+	Evas_Object *tlist, *list;
      } gui;
 };
+
+static void        *_create_data     (E_Config_Dialog *cfd);
+static void         _free_data       (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create    (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static void         _fill_list       (E_Config_Dialog_Data *cfdata, char *mtype);
+static void         _fill_tlist      (E_Config_Dialog_Data *cfdata);
+static void         _load_mimes      (E_Config_Dialog_Data *cfdata, char *file);
+static void         _fill_types      (E_Config_Dialog_Data *cfdata);
+static void         _tlist_cb_change (void *data);
+static int          _sort_mimes      (void *data1, void *data2);
+static Config_Mime *_find_mime       (E_Config_Dialog_Data *cfdata, char *mime);
+static Config_Glob *_find_glob       (Config_Mime *mime, char *glob);
+static void         _cb_config       (void *data, void *data2);
+
+Evas_List *types = NULL;
 
 EAPI E_Config_Dialog *
 e_int_config_mime(E_Container *con) 
@@ -45,34 +63,29 @@ e_int_config_mime(E_Container *con)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
-   Evas_List *l;
+   const char *homedir;
+   char buf[4096];
 
-   while (cfdata->mimes) 
-     {
-	E_Config_Mime_Icon *mi;
-	
-	mi = cfdata->mimes->data;
-	if (!mi) continue;
-	if (mi->mime)
-	  evas_stringshare_del(mi->mime);
-	if (mi->icon)
-	  evas_stringshare_del(mi->icon);
-	E_FREE(mi);
-	
-	cfdata->mimes = evas_list_remove_list(cfdata->mimes, cfdata->mimes);
-     }
+   if (!cfdata) return;
+   homedir = e_user_homedir_get();
+
+   snprintf(buf, sizeof(buf), "/usr/local/share/mime/globs");
+   if (ecore_file_exists(buf))
+     _load_mimes(cfdata, buf);
+
+   snprintf(buf, sizeof(buf), "/usr/share/mime/globs");
+   if (ecore_file_exists(buf))
+     _load_mimes(cfdata, buf);
+
+   snprintf(buf, sizeof(buf), "%s/.local/share/mime/globs", homedir);
+   if (ecore_file_exists(buf))
+     _load_mimes(cfdata, buf);
+
+   if (cfdata->mimes)
+     cfdata->mimes = evas_list_sort(cfdata->mimes, 
+				    evas_list_count(cfdata->mimes), _sort_mimes);
    
-   for (l = e_config->mime_icons; l; l = l->next) 
-     {
-	E_Config_Mime_Icon *mi, *mi2;
-	
-	mi = l->data;
-	if (!mi) continue;
-	mi2 = E_NEW(E_Config_Mime_Icon, 1);
-	mi2->mime = evas_stringshare_add(mi->mime);
-	mi2->icon = evas_stringshare_add(mi->icon);
-	cfdata->mimes = evas_list_append(cfdata->mimes, mi2);
-     }
+   _fill_types(cfdata);
 }
 
 static void *
@@ -88,19 +101,42 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
+   while (types) 
+     {
+	Config_Type *t;
+	
+	t = types->data;
+	if (!t) continue;
+	if (t->name)
+	  evas_stringshare_del(t->name);
+	if (t->type)
+	  evas_stringshare_del(t->type);
+	types = evas_list_remove_list(types, types);
+	E_FREE(t);
+     }
+
    while (cfdata->mimes) 
      {
-	E_Config_Mime_Icon *mi;
+	Config_Mime *m;
 	
-	mi = cfdata->mimes->data;
-	if (!mi) continue;
-	if (mi->mime)
-	  evas_stringshare_del(mi->mime);
-	if (mi->icon)
-	  evas_stringshare_del(mi->icon);
-	E_FREE(mi);
+	m = cfdata->mimes->data;
+	if (!m) continue;
+	while (m->globs) 
+	  {
+	     Config_Glob *g;
+	     
+	     g = m->globs->data;
+	     if (!g) continue;
+	     if (g->name)
+	       evas_stringshare_del(g->name);
+	     m->globs = evas_list_remove_list(m->globs, m->globs);
+	     E_FREE(g);
+	  }
+	if (m->mime)
+	  evas_stringshare_del(m->mime);
 	
 	cfdata->mimes = evas_list_remove_list(cfdata->mimes, cfdata->mimes);
+	E_FREE(m);
      }
    
    E_FREE(cfdata);
@@ -113,69 +149,63 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    Evas_Object *ot, *ob;
    
    o = e_widget_list_add(evas, 0, 1);
-   of = e_widget_framelist_add(evas, _("Mime Types"), 0);
-   ol = e_widget_ilist_add(evas, 16, 16, NULL);
-   cfdata->gui.list = ol;
-   _fill_list(cfdata);
+   of  = e_widget_framelist_add(evas, _("Categories"), 0);
+   ol = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_type));
+   cfdata->gui.tlist = ol;
+   _fill_tlist(cfdata);
    e_widget_framelist_object_append(of, ol);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
-   ot = e_widget_table_add(evas, 0);
-   ob = e_widget_button_add(evas, _("Add"), "widget/add", _cb_add, cfdata, NULL);
-   cfdata->gui.add = ob;
-   e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 1, 1, 0);
-   ob = e_widget_button_add(evas, _("Delete"), "widget/del", _cb_del, cfdata, NULL);
-   cfdata->gui.del = ob;
-   e_widget_table_object_append(ot, ob, 0, 1, 1, 1, 1, 1, 1, 0);
+
+   of = e_widget_frametable_add(evas, _("Mime Types"), 0);
+   ol = e_widget_ilist_add(evas, 16, 16, NULL);
+   cfdata->gui.list = ol;
+   e_widget_ilist_go(ol);
+   e_widget_min_size_set(cfdata->gui.list, 250, 200);
+   e_widget_frametable_object_append(of, ol, 0, 0, 3, 1, 1, 1, 1, 0);
+
    ob = e_widget_button_add(evas, _("Configure"), "widget/config", _cb_config, cfdata, NULL);
-   cfdata->gui.config = ob;
-   e_widget_table_object_append(ot, ob, 0, 2, 1, 1, 1, 1, 1, 0);
-   
-   e_widget_disabled_set(cfdata->gui.del, 1);
-   e_widget_disabled_set(cfdata->gui.config, 1);
-   
-   e_widget_list_object_append(o, ot, 1, 1, 0.0);
+   e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 0);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+
    return o;
 }
 
 static void 
-_fill_list(E_Config_Dialog_Data *cfdata) 
+_fill_list(E_Config_Dialog_Data *cfdata, char *mtype) 
 {
    Evas_List *l;
    Evas_Coord w, h;
-   char buf[4096];
-   
+
    e_widget_ilist_clear(cfdata->gui.list);
    for (l = cfdata->mimes; l; l = l->next) 
      {
-	E_Config_Mime_Icon *mi;
+	Config_Mime *m;
 	Evas_Object *icon;
 	const char *tmp;
-	int is_edj = 0;
+	char buf[4096];
+	int edj = 0;
 	
-	mi = l->data;
-	if (!mi) continue;
-	if (mi->icon)
-	  if (!strcmp(mi->icon, "DESKTOP")) continue;
-
+	m = l->data;
+	if (!m) return;
+	if (!strcasestr(m->mime, mtype)) continue;
+	
 	icon = edje_object_add(evas_object_evas_get(cfdata->gui.list));
-	
-	tmp = e_fm_mime_icon_get(mi->mime);
+	tmp = e_fm_mime_icon_get(m->mime);
 	if (!tmp) 
 	  snprintf(buf, sizeof(buf), "e/icons/fileman/file");
-	else if (!strcmp(tmp, "THUMB")) 
-	  snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", mi->mime);
-	else if (!strncmp(tmp, "e/icons/fileman/mime/", 21)) 
-	  snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", mi->mime);
+	else if (!strcmp(tmp, "THUMB"))
+	  snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", m->mime);
+	else if (!strncmp(tmp, "e/icons/fileman/mime/", 21))
+	  snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", m->mime);
 	else 
 	  {
 	     char *p;
 	     
 	     p = strrchr(tmp, '.');
-	     if ((p) && (!strcmp(p, ".edj"))) 
-	       is_edj = 1;
+	     if ((p) && (!strcmp(p, ".edj")))
+	       edj = 1;
 	  }
-	if (is_edj) 
+	if (edj) 
 	  {
 	     if (!e_theme_edje_object_set(icon, tmp, "icon"))
 	       e_theme_edje_object_set(icon, "base/theme/fileman", "e/icons/fileman/file");
@@ -185,144 +215,247 @@ _fill_list(E_Config_Dialog_Data *cfdata)
 	     if (!e_theme_edje_object_set(icon, "base/theme/fileman", buf))
 	       e_theme_edje_object_set(icon, "base/theme/fileman", "e/icons/fileman/file");
 	  }
-	e_widget_ilist_append(cfdata->gui.list, icon, mi->mime, _list_cb_sel, cfdata, NULL);	
+	e_widget_ilist_append(cfdata->gui.list, icon, m->mime, NULL, NULL, NULL);
      }
    e_widget_ilist_go(cfdata->gui.list);
    e_widget_min_size_get(cfdata->gui.list, &w, &h);
-   e_widget_min_size_set(cfdata->gui.list, w, 250);
+   e_widget_min_size_set(cfdata->gui.list, w, 200);
 }
 
-static void
-_cb_add(void *data, void *data2) 
+static void 
+_fill_tlist(E_Config_Dialog_Data *cfdata) 
 {
-   E_Config_Dialog_Data *cfdata;
+   Evas_List *l;
+   Evas_Coord w, h;
+
+   e_widget_ilist_clear(cfdata->gui.tlist);
+   for (l = types; l; l = l->next) 
+     {
+	Config_Type *tmp;
+	Evas_Object *icon;
+	char buf[4096];
+	char *t;
+	
+	tmp = l->data;
+	if (!tmp) continue;
+	t = strdup(tmp->name);
+	t[0] = tolower(t[0]);
+	icon = edje_object_add(evas_object_evas_get(cfdata->gui.tlist));
+	snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", t);
+	if (!e_theme_edje_object_set(icon, "base/theme/fileman", buf))
+	  e_theme_edje_object_set(icon, "base/theme/fileman", "e/icons/fileman/file");
+	e_widget_ilist_append(cfdata->gui.tlist, icon, tmp->name, _tlist_cb_change, cfdata, tmp->type);
+     }
    
-   cfdata = data;
+   e_widget_ilist_go(cfdata->gui.tlist);
+   e_widget_min_size_get(cfdata->gui.tlist, &w, &h);
+   e_widget_min_size_set(cfdata->gui.tlist, w, 225);
+}
+
+static void 
+_load_mimes(E_Config_Dialog_Data *cfdata, char *file) 
+{
+   FILE *f;
+   char buf[4096], mimetype[4096], ext[4096];
+   char *p, *pp;
+   Config_Mime *mime;
+   Config_Glob *glob;
+
    if (!cfdata) return;
    
-   e_entry_dialog_show(_("Create new mime type"), "enlightenment/e",
-		       _("Enter a name for this new mime type"), "", 
-		       NULL, NULL, _cb_entry_ok, NULL, cfdata);
+   f = fopen(file, "rb");
+   if (!f) return;
+   while (fgets(buf, sizeof(buf), f))
+     {
+	p = buf;
+	while (isblank(*p) && (*p != 0) && (*p != '\n')) p++;
+	if (*p == '#') continue;
+	if ((*p == '\n') || (*p == 0)) continue;
+	pp = p;
+	while ((*p != ':') && (*p != 0) && (*p != '\n')) p++;
+	if ((*p == '\n') || (*p == 0)) continue;
+	strncpy(mimetype, pp, (p - pp));
+	mimetype[p - pp] = 0;
+	p++;
+	pp = ext;
+	while ((*p != 0) && (*p != '\n')) 
+	  {
+	     *pp = *p;
+	     pp++;
+	     p++;
+	  }
+	*pp = 0;
+	mime = _find_mime(cfdata, mimetype);
+	if (!mime) 
+	  {
+	     mime = E_NEW(Config_Mime, 1);
+	     if (mime)
+	       {
+		  mime->mime = evas_stringshare_add(mimetype);
+		  if (!mime->mime) 
+		    free(mime);
+		  else 
+		    {
+		       glob = E_NEW(Config_Glob, 1);
+		       glob->name = evas_stringshare_add(ext);
+		       mime->globs = evas_list_append(mime->globs, glob);
+		       cfdata->mimes = evas_list_append(cfdata->mimes, mime);
+		    }
+	       }
+	  }
+	else 
+	  {
+	     glob = _find_glob(mime, ext);
+	     if (!glob) 
+	       {
+		  glob = E_NEW(Config_Glob, 1);
+		  glob->name = evas_stringshare_add(ext);
+		  mime->globs = evas_list_append(mime->globs, glob);
+	       }
+	  }
+     }
+   fclose(f);
 }
 
 static void
-_cb_del(void *data, void *data2) 
+_fill_types(E_Config_Dialog_Data *cfdata) 
+{
+   Evas_List *l, *ll;
+
+   for (l = cfdata->mimes; l; l = l->next) 
+     {
+	Config_Type *tmp;	
+	Config_Mime *m;
+	char *tok;
+	int found = 0;
+	
+	m = l->data;
+	if (!m) continue;
+	tok = strtok(strdup(m->mime), "/");
+	if (!tok) continue;
+	for (ll = types; ll; ll = ll->next) 
+	  {
+	     tmp = ll->data;
+	     if (!tmp) continue;
+	     
+	     if (strcmp(tmp->type, tok) >= 0) 
+	       {
+		  found = 1;
+		  break;
+	       }
+	  }
+	if (!found) 
+	  {
+	     tmp = E_NEW(Config_Type, 1);
+	     tmp->type = evas_stringshare_add(tok);
+	     tok[0] = toupper(tok[0]);
+	     tmp->name = evas_stringshare_add(tok);
+	     
+	     types = evas_list_append(types, tmp);
+	  }
+     }
+}
+
+static void 
+_tlist_cb_change(void *data) 
 {
    E_Config_Dialog_Data *cfdata;
-   char buf[4096];
-   
+   Evas_List *l;
+
    cfdata = data;
    if (!cfdata) return;
-
-   snprintf(buf, sizeof(buf), _("You requested to delete \"%s\".<br><br>"
-				"Are you sure you want to delete this mime type?"), cfdata->sel_mt);
-   e_confirm_dialog_show(_("Are you sure you want to delete this mime type?"),
-			 "enlightenment/exit", buf, NULL, NULL, _cb_confirm_yes,
-			 NULL, cfdata, NULL, _cb_confirm_destroy, NULL);
+   for (l = types; l; l = l->next) 
+     {
+	Config_Type *t;
+	
+	t = l->data;
+	if (!t) continue;
+	if (strcasecmp(t->name, cfdata->cur_type)) continue;
+	_fill_list(cfdata, (char *)t->type);
+	break;
+     }
 }
 
-static void
+static int 
+_sort_mimes(void *data1, void *data2) 
+{
+   Config_Mime *m1, *m2;
+   
+   if (!data1) return 1;
+   if (!data2) return -1;
+   
+   m1 = data1;
+   m2 = data2;
+   
+   return (strcmp((const char *)m1->mime, (const char *)m2->mime));
+}
+
+static Config_Mime *
+_find_mime(E_Config_Dialog_Data *cfdata, char *mime) 
+{
+   Evas_List *l;
+   
+   if (!cfdata) return NULL;
+   for (l = cfdata->mimes; l; l = l->next) 
+     {
+	Config_Mime *cm;
+	
+	cm = l->data;
+	if (!cm) continue;
+	if (strcmp(cm->mime, mime)) continue;
+	return cm;
+     }
+   return NULL;
+}
+
+static Config_Glob *
+_find_glob(Config_Mime *mime, char *glob) 
+{
+   Evas_List *l;
+   
+   if (!mime) return NULL;
+   for (l = mime->globs; l; l = l->next) 
+     {
+	Config_Glob *g;
+	
+	g = l->data;
+	if (!g) continue;
+	if (strcmp(g->name, glob)) continue;
+	return g;
+     }
+   return NULL;
+}
+
+static void 
 _cb_config(void *data, void *data2) 
 {
-   E_Config_Dialog_Data *cfdata;
-   E_Config_Mime_Icon *mi;
    Evas_List *l;
+   E_Config_Dialog_Data *cfdata;
+   E_Config_Mime_Icon *mi = NULL;
+   const char *m;
    int found = 0;
    
    cfdata = data;
    if (!cfdata) return;
-   if (!cfdata->sel_mt) return;
-
-   for (l = cfdata->mimes; l; l = l->next) 
+   m = e_widget_ilist_selected_label_get(cfdata->gui.list);
+   if (!m) return;
+   for (l = e_config->mime_icons; l; l = l->next) 
      {
 	mi = l->data;
 	if (!mi) continue;
-	if (strcmp(mi->mime, cfdata->sel_mt)) continue;
+	if (strcmp(mi->mime, m)) continue;
 	found = 1;
 	break;
      }
-   if (!found) return;
-   e_int_config_mime_edit(mi);
-}
-
-static void 
-_list_cb_sel(void *data) 
-{
-   E_Config_Dialog_Data *cfdata;
-   
-   cfdata = data;
-   if (!cfdata) return;
-
-   cfdata->sel_mt = e_widget_ilist_selected_label_get(cfdata->gui.list);
-   if (!cfdata->sel_mt) return;
-   
-   e_widget_disabled_set(cfdata->gui.del, 0);
-   e_widget_disabled_set(cfdata->gui.config, 0);
-}
-
-static void
-_cb_confirm_yes(void *data) 
-{
-   E_Config_Dialog_Data *cfdata;
-   Evas_List *l;
-   
-   cfdata = data;
-   if (!cfdata) return;
-   if (!cfdata->sel_mt) return;
-   
-   for (l = e_config->mime_icons; l; l = l->next) 
+   if (found) 
+     e_int_config_mime_edit(mi);
+   else 
      {
-	E_Config_Mime_Icon *mi;
-	
-	mi = l->data;
-	if (!mi) continue;
-	if (strcmp(mi->mime, cfdata->sel_mt)) continue;
-	if (mi->mime) evas_stringshare_del(mi->mime);
-	if (mi->icon) evas_stringshare_del(mi->icon);
-	e_config->mime_icons = evas_list_remove_list(e_config->mime_icons, l);
-	break;
+	mi = E_NEW(E_Config_Mime_Icon, 1);
+	mi->mime = evas_stringshare_add(m);
+	mi->icon = evas_stringshare_add("THUMB");
+	e_config->mime_icons = evas_list_append(e_config->mime_icons, mi);
+	e_config_save_queue();
+	e_int_config_mime_edit(mi);
      }
-   e_config_save_queue();
-   e_fm_mime_icon_cache_flush();
-   e_fm2_all_icons_update();
-   
-   _fill_data(cfdata);
-   _fill_list(cfdata);
-}
-
-static void
-_cb_confirm_destroy(void *data) 
-{
-   E_Config_Dialog_Data *cfdata;
-   
-   cfdata = data;
-   if (!cfdata) return;
-   _fill_list(cfdata);
-}
-
-static void 
-_cb_entry_ok(char *text, void *data) 
-{
-   E_Config_Dialog_Data *cfdata;
-   E_Config_Mime_Icon *mime;
-   char buf[4096];
-
-   cfdata = data;
-   if (!cfdata) return;
-   if (!text) return;
-   if (!strstr(text, "/")) return;
-   
-   snprintf(buf, sizeof(buf), "%s", text);
-   mime = E_NEW(E_Config_Mime_Icon, 1);
-   mime->mime = evas_stringshare_add(buf);
-//   snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", text);
-   mime->icon = evas_stringshare_add("THUMB");
-
-   e_config->mime_icons = evas_list_append(e_config->mime_icons, mime);
-   e_config_save_queue();
-   e_fm_mime_icon_cache_flush();
-   e_fm2_all_icons_update();
-
-   _fill_data(cfdata);
-   _fill_list(cfdata);
 }
