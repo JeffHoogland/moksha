@@ -558,7 +558,6 @@ _cb_button_regen(void *data1, void *data2)
 		       "<br>"
 		       "Are you sure you want to do this?"
 		       ));
-   e_dialog_border_icon_set(_e_int_config_apps_regen_dialog,"enlightenment/regenerate_menus");
    e_dialog_icon_set(_e_int_config_apps_regen_dialog, "enlightenment/regenerate_menus", 64);
    e_dialog_button_add(_e_int_config_apps_regen_dialog, _("Yes"), NULL,
 		       _e_int_config_apps_cb_regen_dialog_ok, NULL);
@@ -567,6 +566,7 @@ _cb_button_regen(void *data1, void *data2)
    e_dialog_button_focus_num(_e_int_config_apps_regen_dialog, 1);
    e_win_centered_set(_e_int_config_apps_regen_dialog->win, 1);
    e_dialog_show(_e_int_config_apps_regen_dialog);
+   e_dialog_border_icon_set(_e_int_config_apps_regen_dialog,"enlightenment/regenerate_menus");
 }
 
 static Evas_Object *
