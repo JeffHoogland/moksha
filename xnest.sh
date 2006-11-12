@@ -15,6 +15,7 @@ case "$@" in
 	"-d")	action="ddd -display $main" ; display="" ;;
 	"-e")	action="" ;;
 	"-g")	action="gdb" ; main=":1" ; display=""  ;;
+	"-c")	action="cgdb" ; main=":1" ; display=""  ;;
 	"-l")	action="valgrind --tool=memcheck --leak-check=yes --show-reachable=yes --log-file=valgrind_log" ;;
 	"-m")	action="valgrind --tool=memcheck --log-file=valgrind_log" ;;
 	"-p")	action="memprof --display=$main" ; main=":1" ; display="" ;;
