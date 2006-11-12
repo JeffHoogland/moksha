@@ -8,6 +8,7 @@ static void _e_init_cb_signal_disable(void *data, Evas_Object *obj, const char *
 static void _e_init_cb_signal_enable(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_init_cb_signal_done_ok(void *data, Evas_Object *obj, const char *emission, const char *source);
 static int _e_init_cb_window_configure(void *data, int ev_type, void *ev);
+static int _e_init_cb_timeout(void *data);
 
 /* local subsystem globals */
 static Ecore_X_Window  _e_init_root_win = 0;
@@ -17,8 +18,9 @@ static Evas           *_e_init_evas = NULL;
 static Evas_Object    *_e_init_object = NULL;
 static Evas_Object    *_e_init_icon_box = NULL;
 static E_Pointer      *_e_init_pointer = NULL;
-static Ecore_Event_Handler *e_init_configure_handler = NULL;
-
+static Ecore_Event_Handler *_e_init_configure_handler = NULL;
+static Ecore_Timer         *_e_init_timeout_timer = NULL;
+  
 /* startup icons */
 static Evas_Coord _e_init_icon_size = 0;
 static Evas_List *_e_init_icon_list = NULL;
@@ -35,7 +37,7 @@ e_init_init(void)
    Evas_List *l, *screens;
    const char *s;
 
-   e_init_configure_handler = 
+   _e_init_configure_handler = 
      ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE, 
 			     _e_init_cb_window_configure, NULL);
    
@@ -121,8 +123,8 @@ e_init_init(void)
 EAPI int
 e_init_shutdown(void)
 {
-   ecore_event_handler_del(e_init_configure_handler);
-   e_init_configure_handler = NULL;
+   ecore_event_handler_del(_e_init_configure_handler);
+   _e_init_configure_handler = NULL;
    e_init_hide();
    e_canvas_cache_flush();
    return 1;
@@ -192,7 +194,8 @@ EAPI void
 e_init_done(void)
 {
    if (!_e_init_object) return;
-   edje_object_signal_emit(_e_init_object, "e.state.done", "");
+   edje_object_signal_emit(_e_init_object, "e,state,done", "e");
+   _e_init_timeout_timer = ecore_timer_add(30.0, _e_init_cb_timeout, NULL);
 }
 
 EAPI void
@@ -275,6 +278,11 @@ static void
 _e_init_cb_signal_done_ok(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    e_init_hide();
+   if (_e_init_timeout_timer)
+     {
+	ecore_timer_del(_e_init_timeout_timer);
+	_e_init_timeout_timer = NULL;
+     }
 }
 
 static int
@@ -289,4 +297,18 @@ _e_init_cb_window_configure(void *data, int ev_type, void *ev)
    ecore_evas_resize(_e_init_ecore_evas, e->w, e->h);
    evas_object_resize(_e_init_object, e->w, e->h);
    return 1;
+}
+
+static int
+_e_init_cb_timeout(void *data)
+{
+   e_init_hide();
+   _e_init_timeout_timer = NULL;
+   e_util_dialog_internal(_("Theme Bug Detected"),
+			  _("The theme you are using for your init splash<br>"
+			    "has a bug. It does not respond to signals when<br>"
+			    "startup is complete. You should use an init<br>"
+			    "splash theme that is correctly made or fix the<br>"
+			    "one you use."));
+   return 0;
 }

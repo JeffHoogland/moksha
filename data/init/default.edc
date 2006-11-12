@@ -1336,8 +1336,8 @@ collections {
 
 	 program {
 	    name: "done1";
-	    signal: "e.state.done";
-	    source: "";
+	    signal: "e,state,done";
+	    source: "e";
 	    script {
 	       new val;
 	       
