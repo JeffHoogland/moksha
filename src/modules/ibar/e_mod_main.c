@@ -146,7 +146,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    
    evas_object_geometry_get(o, &x, &y, &w, &h);
    inst->drop_handler =
-     e_drop_handler_add(E_OBJECT(inst->gcc->gadcon), inst,
+     e_drop_handler_add(E_OBJECT(inst->gcc), inst,
 			_ibar_inst_cb_enter, _ibar_inst_cb_move,
 			_ibar_inst_cb_leave, _ibar_inst_cb_drop,
 			drop, 3, x, y, w,  h);
@@ -1067,6 +1067,7 @@ _ibar_inst_cb_enter(void *data, const char *type, void *event_info)
    Evas_Object *o, *o2;
    IBar_Icon *ic;
    Evas_Coord xx, yy;
+   int x, y;
    
    ev = event_info;
    inst = data;
@@ -1084,7 +1085,8 @@ _ibar_inst_cb_enter(void *data, const char *type, void *event_info)
    evas_object_show(o);
    evas_object_show(o2);
    evas_object_geometry_get(inst->ibar->o_box, &xx, &yy, NULL, NULL);
-   ic = _ibar_icon_at_coord(inst->ibar, ev->x + xx, ev->y + yy);
+   e_box_align_pixel_offset_get(inst->gcc->o_box, &x, &y);
+   ic = _ibar_icon_at_coord(inst->ibar, ev->x + xx + x, ev->y + yy + y);
    inst->ibar->ic_drop_before = ic;
    if (ic)
      {
@@ -1116,6 +1118,7 @@ _ibar_inst_cb_enter(void *data, const char *type, void *event_info)
 			  );
    _ibar_resize_handle(inst->ibar);
    _gc_orient(inst->gcc);
+   e_gadcon_client_autoscroll_update(inst->gcc, ev->x, ev->y);
 }
 
 static void
@@ -1125,12 +1128,14 @@ _ibar_inst_cb_move(void *data, const char *type, void *event_info)
    Instance *inst;
    IBar_Icon *ic;
    Evas_Coord xx, yy;
+   int x, y;
    
    ev = event_info;
    inst = data;
    e_box_unpack(inst->ibar->o_drop);
    evas_object_geometry_get(inst->ibar->o_box, &xx, &yy, NULL, NULL);
-   ic = _ibar_icon_at_coord(inst->ibar, ev->x + xx, ev->y + yy);
+   e_box_align_pixel_offset_get(inst->gcc->o_box, &x, &y);
+   ic = _ibar_icon_at_coord(inst->ibar, ev->x + xx + x, ev->y + yy + y);
    inst->ibar->ic_drop_before = ic;
    if (ic)
      {
@@ -1162,6 +1167,7 @@ _ibar_inst_cb_move(void *data, const char *type, void *event_info)
 			  );
    _ibar_resize_handle(inst->ibar);
    _gc_orient(inst->gcc);
+   e_gadcon_client_autoscroll_update(inst->gcc, ev->x, ev->y);
 }
 
 static void

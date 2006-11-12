@@ -323,6 +323,20 @@ e_box_align_set(Evas_Object *obj, double ax, double ay)
    if (sd->frozen <= 0) _e_box_smart_reconfigure(sd);
 }
 
+/*
+ * Returns the number of pixels that are hidden on the left/top side.
+ */
+EAPI void
+e_box_align_pixel_offset_get(Evas_Object *obj, int *x, int *y)
+{
+   E_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   if (x) *x = (sd->min.w - sd->w) * (1.0 - sd->align.x);
+   if (y) *y = (sd->min.h - sd->h) * (1.0 - sd->align.y);
+}
+
 /* local subsystem functions */
 static E_Box_Item *
 _e_box_smart_adopt(E_Smart_Data *sd, Evas_Object *obj)

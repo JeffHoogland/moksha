@@ -1348,6 +1348,7 @@ _e_gadcon_cb_client_scroll_animator(void *data)
 	gcc->scroll_animator = NULL;
 	return 0;
      }
+
    return 1;
 }
 
@@ -1356,17 +1357,26 @@ _e_gadcon_cb_client_frame_mouse_move(void *data, Evas *e, Evas_Object *obj, void
 {
    Evas_Event_Mouse_Move *ev;
    E_Gadcon_Client *gcc;
-   Evas_Coord x, y, w, h;
+   Evas_Coord x, y;
    
    ev = event_info;
    gcc = data;
+   evas_object_geometry_get(gcc->o_box, &x, &y, NULL, NULL);
+   e_gadcon_client_autoscroll_update(gcc, ev->cur.output.x - x, ev->cur.output.y - y);
+}
+
+/*
+ * NOTE: x & y are relative to the o_box of the gadcon.
+ */
+EAPI void
+e_gadcon_client_autoscroll_update(E_Gadcon_Client *gcc, Evas_Coord x, Evas_Coord y)
+{
    if (gcc->autoscroll)
      {
+	Evas_Coord w, h;
 	double d;
 	
-	evas_object_geometry_get(gcc->o_box, &x, &y, &w, &h);
-	x = ev->cur.output.x - x;
-	y = ev->cur.output.y - y;
+	evas_object_geometry_get(gcc->o_box, NULL, NULL, &w, &h);
         if (e_box_orientation_get(gcc->o_box))
 	  {
  	     if (w > 1) d = (double)x / (double)(w - 1);

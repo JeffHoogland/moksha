@@ -506,6 +506,9 @@ _e_drag_coords_update(E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh)
 	   case E_GADCON_TYPE:
 	     e_gadcon_canvas_zone_geometry_get((E_Gadcon *)(h->obj), &px, &py, NULL, NULL);
 	     break;
+	   case E_GADCON_CLIENT_TYPE:
+	     evas_object_geometry_get(((E_Gadcon_Client *)(h->obj))->o_box, dx, dy, dw, dh);
+	     break;
 	   case E_WIN_TYPE:
 	     px = ((E_Win *)(h->obj))->x;
 	     py = ((E_Win *)(h->obj))->y;
@@ -518,7 +521,7 @@ _e_drag_coords_update(E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh)
 	     px = ((E_Popup *)(h->obj))->x;
 	     py = ((E_Popup *)(h->obj))->y;
 	     break;
-	     /* FIXME: add mroe types as needed */
+	     /* FIXME: add more types as needed */
 	   default:
 	     break;
 	  }
@@ -539,6 +542,9 @@ _e_drag_win_matches(E_Drop_Handler *h, Ecore_X_Window win)
 	   case E_GADCON_TYPE:
 	     hwin = e_gadcon_dnd_window_get((E_Gadcon *)(h->obj));
 	     break;
+	   case E_GADCON_CLIENT_TYPE:
+	     hwin = e_gadcon_dnd_window_get(((E_Gadcon_Client *)(h->obj))->gadcon);
+	     break;
 	   case E_WIN_TYPE:
 	     hwin = ((E_Win *)(h->obj))->evas_win;
 	     break;
@@ -548,7 +554,7 @@ _e_drag_win_matches(E_Drop_Handler *h, Ecore_X_Window win)
 	   case E_POPUP_TYPE:
 	     hwin = ((E_Popup *)(h->obj))->evas_win;
 	     break;
-	     /* FIXME: add mroe types as needed */
+	     /* FIXME: add more types as needed */
 	   default:
 	     break;
 	  }
