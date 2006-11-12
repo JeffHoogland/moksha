@@ -19,6 +19,7 @@ case "$@" in
 	"-m")	action="valgrind --tool=memcheck --log-file=valgrind_log" ;;
 	"-p")	action="memprof --display=$main" ; main=":1" ; display="" ;;
 	"-r")	action="memprof_raster --display=$main" ; main=":1" ; display="" ;;
+	"-s")	action="strace -F -o strace_log" ;;
 	"-v")	action="valkyrie -display $main" ; main=":1" ; display="" ;;
 	*)      echo -e "Usage : xnest.sh [option]"
 		echo -e "\tdefault option is -b"
@@ -30,6 +31,7 @@ case "$@" in
 		echo -e "\t-m memory check\t\t\t\t\tvalgrind"
 		echo -e "\t-p memory profiling\t\t\t\tmemprof"
 		echo -e "\t-r raster's memory profiling\t\t\tmemprof_raster"
+		echo -e "\t-s show syscalls\t\t\t\tstrace"
 		echo -e "\t-v GUI memory check\t\t\t\tvalkyrie"
 		echo -e ""
 		echo -e "You need to add \"-display :1\" as the run arguments for the GUI debugger."
