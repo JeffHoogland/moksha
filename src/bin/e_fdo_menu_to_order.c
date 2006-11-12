@@ -125,7 +125,10 @@ _e_fdo_menu_to_order_dump_each_hash_node(void *value, void *user_data)
    desktop = ecore_desktop_get(file, NULL);
    /* Check if we process */
    if (!desktop) return;
-   if ( (!desktop->hidden) && (!desktop->no_display) && ((desktop->type == NULL) || (strcmp(desktop->type, "Application") == 0)) )
+   if ( (!desktop->hidden) && (!desktop->no_display) 
+      && ((desktop->type == NULL) || (strcmp(desktop->type, "Application") == 0)) 
+      && ((desktop->OnlyShowIn == NULL) ||(ecore_hash_get(desktop->OnlyShowIn, "Enlightenment") != NULL))
+      && ((desktop->NotShowIn == NULL) ||(ecore_hash_get(desktop->NotShowIn, "Enlightenment") == NULL)) )
       {
          char path2[PATH_MAX];
 
