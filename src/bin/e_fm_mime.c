@@ -189,6 +189,8 @@ _e_fm_mime_update(void)
    char buf[4096];
    const char *homedir;
    int reload = 0;
+   time_t ch_times[6] = {0, 0, 0, 0, 0, 0};
+   time_t ch;
    
    /* load /etc/mime.types
     * load /usr/share/mime/
@@ -198,90 +200,50 @@ _e_fm_mime_update(void)
     */
    t = ecore_time_get();
    if ((t - last_t) < 1.0) return;
-
-   homedir = e_user_homedir_get();
- 
-     {
-	static time_t last_changed = 0;
-	time_t ch;
-	
-	snprintf(buf, sizeof(buf), "/etc/mime.types");
-	ch = ecore_file_mod_time(buf);
-	if ((ch != last_changed) || (reload))
-	  {
-	     _e_fm_mime_all_free();
-	     last_changed = ch;
-	     _e_fm_mime_mime_types_load(buf);
-	     reload = 1;
-	  }
-     }
-
-     {
-	static time_t last_changed = 0;
-	time_t ch;
-	
-	snprintf(buf, sizeof(buf), "/usr/local/etc/mime.types");
-	ch = ecore_file_mod_time(buf);
-	if ((ch != last_changed) || (reload))
-	  {
-	     _e_fm_mime_all_free();
-	     last_changed = ch;
-	     _e_fm_mime_mime_types_load(buf);
-	     reload = 1;
-	  }
-     }
-
-     {
-	static time_t last_changed = 0;
-	time_t ch;
-	
-	snprintf(buf, sizeof(buf), "/usr/local/share/mime/globs");
-	ch = ecore_file_mod_time(buf);
-	if ((ch != last_changed) || (reload))
-	  {
-	     last_changed = ch;
-	     _e_fm_mime_shared_mimeinfo_globs_load(buf);
-	  }
-     }
-
-     {
-	static time_t last_changed = 0;
-	time_t ch;
-	
-	snprintf(buf, sizeof(buf), "/usr/share/mime/globs");
-	ch = ecore_file_mod_time(buf);
-	if ((ch != last_changed) || (reload))
-	  {
-	     last_changed = ch;
-	     _e_fm_mime_shared_mimeinfo_globs_load(buf);
-	  }
-     }
-
-     {
-	static time_t last_changed = 0;
-	time_t ch;
-	
-	snprintf(buf, sizeof(buf), "%s/.mime.types", homedir);
-	ch = ecore_file_mod_time(buf);
-	if ((ch != last_changed) || (reload))
-	  {
-	     last_changed = ch;
-	     _e_fm_mime_mime_types_load(buf);
-	  }
-     }
+   last_t = t;
    
-     {
-	static time_t last_changed = 0;
-	time_t ch;
-	
-	snprintf(buf, sizeof(buf), "%s/.local/share/mime/globs", homedir);
-	ch = ecore_file_mod_time(buf);
-	if ((ch != last_changed) || (reload))
-	  {
-	     last_changed = ch;
-	     _e_fm_mime_shared_mimeinfo_globs_load(buf);
-	  }
-     }
+   homedir = e_user_homedir_get();
+  
+   snprintf(buf, sizeof(buf), "usr/local/etc/mime.types");
+   ch = ecore_file_mod_time(buf);
+   if (ch != ch_times[0]) reload = 1;
+   ch_times[0] = ch;
+   snprintf(buf, sizeof(buf), "/etc/mime.types");
+   ch = ecore_file_mod_time(buf);
+   if (ch != ch_times[1]) reload = 1;
+   ch_times[1] = ch;
+   snprintf(buf, sizeof(buf), "/usr/local/share/mime/globs");
+   ch = ecore_file_mod_time(buf);
+   if (ch != ch_times[2]) reload = 1;
+   ch_times[2] = ch;
+   snprintf(buf, sizeof(buf), "/usr/share/mime/globs");
+   ch = ecore_file_mod_time(buf);
+   if (ch != ch_times[3]) reload = 1;
+   ch_times[3] = ch;
+   snprintf(buf, sizeof(buf), "%s/.mime.types", homedir);
+   ch = ecore_file_mod_time(buf);
+   if (ch != ch_times[4]) reload = 1;
+   ch_times[4] = ch;
+   snprintf(buf, sizeof(buf), "%s/.local/share/mime/globs", homedir);
+   ch = ecore_file_mod_time(buf);
+   if (ch != ch_times[5]) reload = 1;
+   ch_times[5] = ch;
+   
+   if (!reload) return;
+
+   _e_fm_mime_all_free();
+   snprintf(buf, sizeof(buf), "/usr/local/etc/mime.types");
+   _e_fm_mime_mime_types_load(buf);
+   snprintf(buf, sizeof(buf), "/etc/mime.types");
+   _e_fm_mime_mime_types_load(buf);
+   snprintf(buf, sizeof(buf), "/usr/local/share/mime/globs");
+   _e_fm_mime_shared_mimeinfo_globs_load(buf);
+   snprintf(buf, sizeof(buf), "/usr/share/mime/globs");
+   _e_fm_mime_shared_mimeinfo_globs_load(buf);
+   snprintf(buf, sizeof(buf), "%s/.mime.types", homedir);
+   _e_fm_mime_mime_types_load(buf);
+   snprintf(buf, sizeof(buf), "%s/.local/share/mime/globs", homedir);
+   _e_fm_mime_shared_mimeinfo_globs_load(buf);
 }
 
 static int
