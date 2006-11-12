@@ -967,8 +967,8 @@ _e_fm2_file_add(Evas_Object *obj, char *file, int unique, char *file_rel, int af
 		  ic2 = l->data;
 		  if (!strcmp(ic2->info.file, file_rel))
 		    {
-		       printf("ADD %s rel: %s after=%i\n", 
-			      ic->info.file, ic2->info.file, after);
+//		       printf("ADD %s rel: %s after=%i\n", 
+//			      ic->info.file, ic2->info.file, after);
 		       if (after)
 			 sd->icons = evas_list_append_relative(sd->icons, ic, ic2);
 		       else
@@ -3269,9 +3269,6 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers)
 	       }
 	  }
      }
-   printf("multi_sel=%i, selected=%i up=%i, dnd=%i\n", 
-	  multi_sel, (ic->selected),
-	  up, (int)ic->drag.dnd);
    if ((multi_sel) && (ic->selected))
      {
 	if ((up) && (!ic->drag.dnd) && (!ic->down_sel))
@@ -3520,7 +3517,6 @@ _e_fm2_cb_icon_thumb_dnd_gen(void *data, Evas_Object *obj, void *event_info)
    int have_alpha;
    
    o = data;
-   printf("dnd gen\n");
    e_icon_size_get(obj, &w, &h);
    have_alpha = e_icon_alpha_get(obj);
 //   if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
@@ -3541,7 +3537,6 @@ _e_fm2_cb_icon_thumb_gen(void *data, Evas_Object *obj, void *event_info)
    E_Fm2_Icon *ic;
    
    ic = data;
-   printf("GEN!\n");
    if (ic->realized)
      {
 	Evas_Coord w = 0, h = 0;
@@ -5090,7 +5085,6 @@ _e_fm2_live_process_begin(Evas_Object *obj)
    if (!sd->live.actions) return;
    if ((sd->live.idler) || (sd->live.timer) ||
        (sd->scan_idler) || (sd->scan_timer)) return;
-   printf("live idler and timer add!\n");
    sd->live.idler = ecore_idler_add(_e_fm2_cb_live_idler, obj);
    sd->live.timer = ecore_timer_add(0.2, _e_fm2_cb_live_timer, obj);
 }
@@ -5134,7 +5128,6 @@ _e_fm2_live_process(Evas_Object *obj)
    if (!sd->live.actions) return;
    a = sd->live.actions->data;
    sd->live.actions = evas_list_remove_list(sd->live.actions, sd->live.actions);
-   printf("live: %i\n", a->type);
    switch (a->type)
      {
       case FILE_ADD:
@@ -5193,7 +5186,6 @@ _e_fm2_cb_live_idler(void *data)
    if (sd->live.actions) return 1;
    _e_fm2_live_process_end(data);
    _e_fm2_cb_live_timer(data);
-   printf("write changes %i | %i\n", sd->order_file, sd->config->view.always_order);
    if ((sd->order_file) || (sd->config->view.always_order))
      _e_fm2_order_file_rewrite(data);
    sd->live.idler = NULL;
@@ -5210,16 +5202,13 @@ _e_fm2_cb_live_timer(void *data)
    if (sd->queue) _e_fm2_queue_process(data);
    else if (sd->iconlist_changed)
      {
-	printf("queue update\n");
 	if (sd->resize_job) ecore_job_del(sd->resize_job);
 	sd->resize_job = ecore_job_add(_e_fm2_cb_resize_job, sd->obj);
      }
    else
      {
-	printf("else...\n");
 	if (sd->live.deletions)
 	  {
-	     printf("queu update\n");
 	     sd->iconlist_changed = 1;
 	     if (sd->resize_job) ecore_job_del(sd->resize_job);
 	     sd->resize_job = ecore_job_add(_e_fm2_cb_resize_job, sd->obj);
