@@ -3,6 +3,8 @@
 //#define DEBUG 1
 
 
+// FIXME: If there is only one top level menu, likely called "Applications", then throw it away.  The top level is already called "Applications".
+
 struct order_data
 {
    char order_path[PATH_MAX];
