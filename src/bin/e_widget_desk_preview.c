@@ -32,7 +32,7 @@ struct _E_Widget_Desk_Data
 
 static void _e_wid_reconfigure(E_Widget_Data *wd);
 static void _e_wid_desk_cb_menu(void *data, Evas_Object *obj, const char *signal, const char *source);
-static void _e_wid_cb_bg_update(void *data, int type, void *event);
+static int  _e_wid_cb_bg_update(void *data, int type, void *event);
 
 static void
 _e_wid_del_hook(Evas_Object *obj)
@@ -264,14 +264,14 @@ _e_wid_desk_cb_menu(void *data, Evas_Object *obj, const char *signal, const char
    e_int_config_wallpaper_desk(dd->container, dd->zone, dd->x, dd->y);
 }
 
-static void
+static int
 _e_wid_cb_bg_update(void *data, int type, void *event)
 {
    E_Event_Bg_Update *ev;
    E_Widget_Data *wd;
    Evas_List *l;
 
-   if (type != E_EVENT_BG_UPDATE) return;
+   if (type != E_EVENT_BG_UPDATE) return 1;
 
    wd = data;
    ev = event;
@@ -296,4 +296,5 @@ _e_wid_cb_bg_update(void *data, int type, void *event)
 	     e_thumb_icon_rethumb(dd->thumb);
 	  }
      }
+   return 1;
 }
