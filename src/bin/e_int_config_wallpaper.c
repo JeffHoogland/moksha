@@ -48,7 +48,6 @@ struct _E_Config_Dialog_Data
 EAPI E_Config_Dialog *
 e_int_config_wallpaper(E_Container *con)
 {
-   E_Zone *zone;
    return e_int_config_wallpaper_desk(-1, -1, -1, -1);
 }
 
@@ -138,7 +137,6 @@ e_int_config_wallpaper_gradient_done(E_Config_Dialog *dia)
    cfdata = dia->cfdata;
    cfdata->dia_gradient = NULL;
 }
-
 
 static void
 _cb_button_up(void *data1, void *data2)
@@ -333,10 +331,9 @@ _cb_import(void *data1, void *data2)
    
    cfdata = data1;
    if (cfdata->win_import)
-     {
-	e_win_raise(cfdata->win_import);
-     }
-   else cfdata->win_import = e_int_config_wallpaper_import(cfdata->cfd);
+     e_win_raise(cfdata->win_import);
+   else 
+     cfdata->win_import = e_int_config_wallpaper_import(cfdata->cfd);
 }
 
 static void
@@ -346,10 +343,9 @@ _cb_gradient(void *data1, void *data2)
    
    cfdata = data1;
    if (cfdata->dia_gradient)
-     {
-	e_win_raise(cfdata->dia_gradient->win);
-     }
-   else cfdata->dia_gradient = e_int_config_wallpaper_gradient(cfdata->cfd);
+     e_win_raise(cfdata->dia_gradient->win);
+   else 
+     cfdata->dia_gradient = e_int_config_wallpaper_gradient(cfdata->cfd);
 }
 
 static void
@@ -424,8 +420,10 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   if (cfdata->win_import) e_int_config_wallpaper_del(cfdata->win_import);
-   if (cfdata->dia_gradient) e_int_config_wallpaper_gradient_del(cfdata->dia_gradient);
+   if (cfdata->win_import) 
+     e_int_config_wallpaper_del(cfdata->win_import);
+   if (cfdata->dia_gradient) 
+     e_int_config_wallpaper_gradient_del(cfdata->dia_gradient);
    E_FREE(cfdata->bg);
    E_FREE(cfd->data);
    free(cfdata);
@@ -580,7 +578,6 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
 	cfdata->all_this_desk_screen = 0;
      }
-   
 
    e_bg_update();
    e_config_save_queue();
