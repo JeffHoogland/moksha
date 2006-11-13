@@ -25,6 +25,7 @@ struct _E_Config_Dialog_Data
      {
 	Evas_Object *tlist, *list;
      } gui;
+   E_Config_Dialog *cfd, *edit_dlg;
 };
 
 static void        *_create_data     (E_Config_Dialog *cfd);
@@ -58,6 +59,17 @@ e_int_config_mime(E_Container *con)
    cfd = e_config_dialog_new(con, _("Mime Types"), "E", "_config_mime_dialog",
 			     "enlightenment/e", 0, v, NULL);
    return cfd;
+}
+
+EAPI void
+e_int_config_mime_edit_done(void *data) 
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data;
+   if (!cfdata) return;
+   if (cfdata->edit_dlg)
+     cfdata->edit_dlg = NULL;
 }
 
 static void
@@ -94,6 +106,7 @@ _create_data(E_Config_Dialog *cfd)
    E_Config_Dialog_Data *cfdata;
    
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   cfdata->cfd = cfd;
    _fill_data(cfdata);
    return cfdata;
 }
@@ -101,6 +114,12 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
+   if (cfdata->edit_dlg) 
+     {
+	e_object_del(E_OBJECT(cfdata->edit_dlg));
+	cfdata->edit_dlg = NULL;
+     }
+   
    while (types) 
      {
 	Config_Type *t;
@@ -432,6 +451,7 @@ _cb_config(void *data, void *data2)
    Evas_List *l;
    E_Config_Dialog_Data *cfdata;
    E_Config_Mime_Icon *mi = NULL;
+   E_Config_Dialog *edit_dlg;
    char *m;
    int found = 0;
    
@@ -455,5 +475,5 @@ _cb_config(void *data, void *data2)
 	mi->mime = evas_stringshare_add(m);
      }
    
-   e_int_config_mime_edit(mi);
+   cfdata->edit_dlg = e_int_config_mime_edit(mi, cfdata);
 }

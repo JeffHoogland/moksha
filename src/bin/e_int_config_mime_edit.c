@@ -36,17 +36,24 @@ struct _E_Config_Dialog_Data
 	Evas_Object *icon_wid, *fsel_wid;
 	E_Dialog *fsel;
      } gui;
+   E_Config_Mime_Icon *data;
+   void *data2;
 };
 
 #define IFDUP(src, dst) if (src) dst = strdup(src); else dst = NULL;
 #define IFFREE(src) if (src) free(src); src = NULL;
 
 EAPI E_Config_Dialog *
-e_int_config_mime_edit(E_Config_Mime_Icon *data) 
+e_int_config_mime_edit(E_Config_Mime_Icon *data, void *data2) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    E_Container *con;
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   cfdata->data = data;
+   cfdata->data2 = data2;
    
    if (e_config_dialog_find("E", "_config_mime_edit_dialog")) return NULL;
 
@@ -60,18 +67,15 @@ e_int_config_mime_edit(E_Config_Mime_Icon *data)
 
    cfd = e_config_dialog_new(con, _("Mime Settings"), "E", 
 			     "_config_mime_edit_dialog", "enlightenment/e", 
-			     0, v, data);
+			     0, v, cfdata);
    return cfd;
 }
 
 static void *
 _create_data(E_Config_Dialog *cfd) 
 {
-   E_Config_Dialog_Data *cfdata;
-   
-   cfdata = E_NEW(E_Config_Dialog_Data, 1);
-   _fill_data(cfd, cfdata);
-   return cfdata;
+   _fill_data(cfd, cfd->data);
+   return cfd->data;
 }
 
 static void
@@ -79,7 +83,7 @@ _fill_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    E_Config_Mime_Icon *mi;
 
-   mi = (E_Config_Mime_Icon *)cfd->data;
+   mi = (E_Config_Mime_Icon *)cfdata->data;
 
    IFDUP(mi->mime, cfdata->mime);
    IFDUP(mi->icon, cfdata->icon);
@@ -115,6 +119,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    IFFREE(cfdata->file);
    IFFREE(cfdata->mime);
    IFFREE(cfdata->icon);
+   e_int_config_mime_edit_done(cfdata->data2);
    E_FREE(cfdata);
 }
 
