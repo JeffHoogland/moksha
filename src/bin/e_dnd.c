@@ -508,6 +508,7 @@ _e_drag_coords_update(E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh)
 	     break;
 	   case E_GADCON_CLIENT_TYPE:
 	     evas_object_geometry_get(((E_Gadcon_Client *)(h->obj))->o_box, dx, dy, dw, dh);
+	     e_gadcon_canvas_zone_geometry_get(((E_Gadcon_Client *)(h->obj))->gadcon, &px, &py, NULL, NULL);
 	     break;
 	   case E_WIN_TYPE:
 	     px = ((E_Win *)(h->obj))->x;
@@ -911,7 +912,6 @@ _e_dnd_cb_event_dnd_enter(void *data, int type, void *event)
    if (ev->source == _drag_win) return 1;
    id = _e_dnd_winid_str_get(ev->win);
    if (!evas_hash_find(_drop_win_hash, id)) return 1;
-   printf("Xdnd enter\n");
    for (l = _drop_handlers; l; l = l->next)
      {
 	E_Drop_Handler *h;
