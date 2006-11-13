@@ -70,6 +70,7 @@ e_int_config_mime_edit_done(void *data)
    if (!cfdata) return;
    if (cfdata->edit_dlg)
      cfdata->edit_dlg = NULL;
+   _tlist_cb_change(cfdata);
 }
 
 static void
@@ -194,7 +195,9 @@ _fill_list(E_Config_Dialog_Data *cfdata, char *mtype)
 {
    Evas_List *l;
    Evas_Coord w, h;
+   Evas *evas;
 
+   evas = evas_object_evas_get(cfdata->gui.list);
    e_widget_ilist_clear(cfdata->gui.list);
    for (l = cfdata->mimes; l; l = l->next) 
      {
@@ -202,13 +205,12 @@ _fill_list(E_Config_Dialog_Data *cfdata, char *mtype)
 	Evas_Object *icon;
 	const char *tmp;
 	char buf[4096];
-	int edj = 0;
+	int edj = 0, img = 0;
 	
 	m = l->data;
 	if (!m) return;
 	if (!strstr(m->mime, mtype)) continue;
 	
-	icon = edje_object_add(evas_object_evas_get(cfdata->gui.list));
 	tmp = e_fm_mime_icon_get(m->mime);
 	if (!tmp) 
 	  snprintf(buf, sizeof(buf), "e/icons/fileman/file");
@@ -223,14 +225,20 @@ _fill_list(E_Config_Dialog_Data *cfdata, char *mtype)
 	     p = strrchr(tmp, '.');
 	     if ((p) && (!strcmp(p, ".edj")))
 	       edj = 1;
+	     else if (p)
+	       img = 1;
 	  }
 	if (edj) 
 	  {
+	     icon = edje_object_add(evas);
 	     if (!e_theme_edje_object_set(icon, tmp, "icon"))
 	       e_theme_edje_object_set(icon, "base/theme/fileman", "e/icons/fileman/file");
 	  }
+	else if (img) 
+	  icon = e_widget_image_add_from_file(evas, (char *)tmp, 16, 16);
 	else 
 	  {
+	     icon = edje_object_add(evas);
 	     if (!e_theme_edje_object_set(icon, "base/theme/fileman", buf))
 	       e_theme_edje_object_set(icon, "base/theme/fileman", "e/icons/fileman/file");
 	  }
