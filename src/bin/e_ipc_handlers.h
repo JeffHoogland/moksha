@@ -5353,7 +5353,7 @@ break;
 #elif (TYPE == E_REMOTE_OUT)
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
-   SEND_INT(e_config->use_e_cursor, E_IPC_OP_CURSOR_SIZE_GET_REPLY, HDL);
+   SEND_INT(e_config->use_e_cursor, E_IPC_OP_USE_E_CURSOR_GET_REPLY, HDL);
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
