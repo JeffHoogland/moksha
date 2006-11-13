@@ -69,7 +69,7 @@ main(int argc, char **argv)
    char buf[PATH_MAX];
    char *s;
    struct sigaction action;
-   double t, tstart, begin;
+   double t, tstart;
 
 #ifdef TS_DO
    t0 = t1 = t2 = ecore_time_get();   
@@ -421,7 +421,6 @@ main(int argc, char **argv)
 
    TS("ecore_desktop");
    /* init FDO desktop */
-   begin = ecore_time_get();
    if (!ecore_desktop_init())
      {
 	e_error_message_show(_("Enlightenment cannot initialize the FDO desktop system.\n"
@@ -438,7 +437,6 @@ main(int argc, char **argv)
    ecore_desktop_paths_append_system(ECORE_DESKTOP_PATHS_ICONS, buf);
    ecore_desktop_paths_regen();
 
-   printf("SETUP FDO %3.3f\n", ecore_time_get() - begin);
    TS("ecore_desktop paths done");
 
    TS("ecore_evas init");
