@@ -187,7 +187,7 @@ _fill_list(E_Config_Dialog_Data *cfdata, char *mtype)
 	
 	m = l->data;
 	if (!m) return;
-	if (!strcasestr(m->mime, mtype)) continue;
+	if (!strstr(m->mime, mtype)) continue;
 	
 	icon = edje_object_add(evas_object_evas_get(cfdata->gui.list));
 	tmp = e_fm_mime_icon_get(m->mime);
