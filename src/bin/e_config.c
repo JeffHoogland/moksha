@@ -360,6 +360,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, evas_engine_drag, INT); /**/
    E_CONFIG_VAL(D, T, evas_engine_win, INT); /**/
    E_CONFIG_VAL(D, T, evas_engine_zone, INT); /**/
+   E_CONFIG_VAL(D, T, use_composite, INT); /**/
    E_CONFIG_VAL(D, T, language, STR); /**/
    E_CONFIG_LIST(D, T, modules, _e_config_module_edd); /**/
    E_CONFIG_LIST(D, T, font_fallbacks, _e_config_font_fallback_edd); /**/
@@ -579,6 +580,7 @@ e_config_init(void)
    e_config->evas_engine_drag = E_EVAS_ENGINE_DEFAULT;
    e_config->evas_engine_win = E_EVAS_ENGINE_DEFAULT;
    e_config->evas_engine_zone = E_EVAS_ENGINE_DEFAULT;
+   e_config->use_composite = 0;
    e_config->language = NULL;
    e_config->window_placement_policy = E_WINDOW_PLACEMENT_SMART;
    e_config->focus_policy = E_FOCUS_SLOPPY;

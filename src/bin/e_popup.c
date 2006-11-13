@@ -169,7 +169,14 @@ e_popup_edje_bg_object_set(E_Popup *pop, Evas_Object *o)
 	  pop->shaped = 1;
 	else
 	  pop->shaped = 0;
-	ecore_evas_shaped_set(pop->ecore_evas, pop->shaped);
+	if (e_config->use_composite)
+	  {
+	     ecore_evas_alpha_set(pop->ecore_evas, pop->shaped);
+	     pop->evas_win = ecore_evas_software_x11_window_get(pop->ecore_evas);
+	     e_container_window_raise(pop->zone->container, pop->evas_win, pop->layer);
+	  }
+	else
+	  ecore_evas_shaped_set(pop->ecore_evas, pop->shaped);
      }
 }
 
