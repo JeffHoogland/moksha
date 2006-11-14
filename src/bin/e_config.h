@@ -256,7 +256,7 @@ struct _E_Config
 
    const char *theme_default_border_style; // GUI
    
-   Evas_List *mime_icons;
+   Evas_List *mime_icons; // GUI
 };
 
 struct _E_Config_Module
