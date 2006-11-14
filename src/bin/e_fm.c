@@ -273,6 +273,7 @@ static void _e_fm2_icon_menu_post_cb(void *data, E_Menu *m);
 static void _e_fm2_refresh(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_toggle_hidden_files(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_toggle_ordering(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_sort(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_new_directory(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_new_directory_delete_cb(void *obj);
 static void _e_fm2_new_directory_yes_cb(char *text, void *data);
@@ -1033,7 +1034,7 @@ _e_fm2_scan_start(Evas_Object *obj)
    if (sd->monitor.monitor) ecore_file_monitor_del(sd->monitor.monitor);
    sd->monitor.monitor = ecore_file_monitor_add(sd->realpath, _e_fm2_cb_file_monitor, obj);
    sd->scan_idler = ecore_idler_add(_e_fm2_cb_scan_idler, obj);
-   sd->scan_timer = ecore_timer_add(0.2, _e_fm2_cb_scan_timer, obj);
+   sd->scan_timer = ecore_timer_add(0.5, _e_fm2_cb_scan_timer, obj);
    sd->busy_count++;
    if (sd->busy_count == 1)
      edje_object_signal_emit(sd->overlay, "e,state,busy,start", "e");
@@ -4323,6 +4324,16 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 		  e_menu_item_toggle_set(mi, sd->order_file);
 		  e_menu_item_callback_set(mi, _e_fm2_toggle_ordering, sd);
 	       }
+	     if ((sd->order_file) || (sd->config->view.always_order))
+	       {
+		  mi = e_menu_item_new(mn);
+		  e_menu_item_label_set(mi, _("Sort Now"));
+		  e_menu_item_icon_edje_set(mi,
+					    e_theme_edje_file_get("base/theme/fileman",
+								  "e/fileman/button/ordering"),
+					    "e/fileman/button/sort");
+		  e_menu_item_callback_set(mi, _e_fm2_sort, sd);
+	       }
 	  }
 	
 	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_NEW_DIRECTORY))
@@ -4453,6 +4464,16 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 		  e_menu_item_check_set(mi, 1);
 		  e_menu_item_toggle_set(mi, sd->order_file);
 		  e_menu_item_callback_set(mi, _e_fm2_toggle_ordering, sd);
+	       }
+	     if ((sd->order_file) || (sd->config->view.always_order))
+	       {
+		  mi = e_menu_item_new(mn);
+		  e_menu_item_label_set(mi, _("Sort Now"));
+		  e_menu_item_icon_edje_set(mi,
+					    e_theme_edje_file_get("base/theme/fileman",
+								  "e/fileman/button/ordering"),
+					    "e/fileman/button/sort");
+		  e_menu_item_callback_set(mi, _e_fm2_sort, sd);
 	       }
 	  }
 	
@@ -4629,6 +4650,18 @@ _e_fm2_toggle_ordering(void *data, E_Menu *m, E_Menu_Item *mi)
      }
    else
      _e_fm2_order_file_rewrite(sd->obj);
+   _e_fm2_refresh(data, m, mi);
+}
+
+static void
+_e_fm2_sort(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = data;
+   sd->icons = evas_list_sort(sd->icons, evas_list_count(sd->icons),
+			      _e_fm2_cb_icon_sort);
+   _e_fm2_order_file_rewrite(sd->obj);
    _e_fm2_refresh(data, m, mi);
 }
 
