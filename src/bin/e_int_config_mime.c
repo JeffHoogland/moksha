@@ -56,7 +56,7 @@ e_int_config_mime(E_Container *con)
    v->free_cfdata = _free_data;
    v->basic.create_widgets = _basic_create;
    
-   cfd = e_config_dialog_new(con, _("Mime Types"), "E", "_config_mime_dialog",
+   cfd = e_config_dialog_new(con, _("File Associations"), "E", "_config_mime_dialog",
 			     "enlightenment/e", 0, v, NULL);
    return cfd;
 }
@@ -176,7 +176,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_framelist_object_append(of, ol);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   of = e_widget_frametable_add(evas, _("Mime Types"), 0);
+   of = e_widget_frametable_add(evas, _("File Associations"), 0);
    ol = e_widget_ilist_add(evas, 16, 16, NULL);
    cfdata->gui.list = ol;
    e_widget_ilist_go(ol);

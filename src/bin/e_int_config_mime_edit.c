@@ -65,7 +65,7 @@ e_int_config_mime_edit(E_Config_Mime_Icon *data, void *data2)
    v->basic.create_widgets = _basic_create;
    v->basic.apply_cfdata = _basic_apply;
 
-   cfd = e_config_dialog_new(con, _("Mime Settings"), "E", 
+   cfd = e_config_dialog_new(con, _("File Association"), "E", 
 			     "_config_mime_edit_dialog", "enlightenment/e", 
 			     0, v, cfdata);
    return cfd;
