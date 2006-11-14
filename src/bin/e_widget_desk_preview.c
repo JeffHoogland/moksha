@@ -88,7 +88,6 @@ e_widget_deskpreview_desk_add(Evas *evas, E_Zone *zone, int x, int y, int tw, in
    const char *bgfile;
    E_Widget_Desk_Data *dd = NULL;
 
-
    bgfile = e_bg_file_get(zone->container->num, zone->num, x, y);
 
    /* wrap desks in a widget (to set min size) */
@@ -120,7 +119,6 @@ e_widget_deskpreview_desk_add(Evas *evas, E_Zone *zone, int x, int y, int tw, in
    evas_object_show(o);
    e_widget_sub_object_add(obj, o);
    dd->thumb = o;
-
 
    return obj;
 }

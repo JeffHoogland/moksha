@@ -391,18 +391,23 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	     cfdata->bg = strdup(cfbg->file);
 	  }
      }
-
-   if (!cfdata->bg && e_config->desktop_default_background)
+   
+   if ((!cfdata->bg) && e_config->desktop_default_background) 
      cfdata->bg = strdup(e_config->desktop_default_background);
-   else
-     cfdata->use_theme_bg = 1;
-
+   
    if (cfdata->bg)
      {
+	const char *f;
+
+	f = e_theme_edje_file_get("base/theme/backgrounds", "e/desktop/background");
+	if (!strcmp(cfdata->bg, f))
+	  cfdata->use_theme_bg = 1;
 	snprintf(path, sizeof(path), "%s/data/backgrounds", e_prefix_data_get());
 	if (!strncmp(cfdata->bg, path, strlen(path)))
 	  cfdata->fmdir = 1;
      }
+   else
+     cfdata->use_theme_bg = 1;
 }
 
 static void *
