@@ -3,7 +3,9 @@
 //#define DEBUG 1
 
 
+// FIXME: Scan through ~/.e/e/applications/all, nuke any dangling links.  Start simple, add smarts later.
 // FIXME: If there is only one top level menu, likely called "Applications", then throw it away.  The top level is already called "Applications".
+
 
 struct order_data
 {
@@ -28,22 +30,27 @@ static void  _e_fdo_menu_to_order_dump_each_hash_node2(void *value, void *user_d
 
 static int menu_count;
 static int item_count;
+static int _do_nuke;
 
 EAPI void
-e_fdo_menu_to_order(void)
+e_fdo_menu_to_order(int do_nuke)
 {
    char dir[PATH_MAX];
 
-   ecore_desktop_instrumentation_reset();
-   /* Nuke the old menus. */
-   snprintf(dir, sizeof(dir), "%s/.e/e/applications/menu/all/", e_user_homedir_get());
-   ecore_file_recursive_rm(dir);
    menu_count = 0;
    item_count = 0;
+   _do_nuke = do_nuke;
+   ecore_desktop_instrumentation_reset();
+   if (do_nuke)
+     {
+        /* Nuke the old menus. */
+        snprintf(dir, sizeof(dir), "%s/.e/e/applications/menu/all/", e_user_homedir_get());
+        ecore_file_recursive_rm(dir);
+     }
    ecore_desktop_menu_for_each(_e_fdo_menu_to_order_make_apps);
    ecore_desktop_instrumentation_print();
    /* This is a hueristic to guess if there are not enough apps.  Feel free to tweak it. */
-   if ((item_count < 50) || (menu_count > (item_count * 3)))
+   if ((do_nuke) && ((item_count < 50) || (menu_count > (item_count * 3))) )
       {
          struct category_data cat_data;
 
@@ -119,12 +126,22 @@ _e_fdo_menu_to_order_dump_each_hash_node(void *value, void *user_data)
    Ecore_Hash_Node *node;
    Ecore_Desktop *desktop;
    const char *file, *key;
+   char path2[PATH_MAX];
+   int do_add, exists = 0;
 
    order_data = (struct order_data *)user_data;
    node = (Ecore_Hash_Node *) value;
    key = (char *)node->key;
    file = (char *)node->value;
-   desktop = ecore_desktop_get(file, NULL);
+   do_add = _do_nuke;
+   snprintf(path2, sizeof(path2), "%s/.e/e/applications/all/%s", e_user_homedir_get(), key);
+   if (ecore_file_exists(path2))
+     {
+        desktop = ecore_desktop_get(path2, NULL);
+	exists = 1;
+     }
+   else
+      desktop = ecore_desktop_get(file, NULL);
    /* Check if we process */
    if (!desktop) return;
    if ( (!desktop->hidden) && (!desktop->no_display) 
@@ -132,16 +149,17 @@ _e_fdo_menu_to_order_dump_each_hash_node(void *value, void *user_data)
       && ((desktop->OnlyShowIn == NULL) ||(ecore_hash_get(desktop->OnlyShowIn, "Enlightenment") != NULL))
       && ((desktop->NotShowIn == NULL) ||(ecore_hash_get(desktop->NotShowIn, "Enlightenment") == NULL)) )
       {
-         char path2[PATH_MAX];
-
-#ifdef DEBUG
-         printf("MAKING MENU ITEM %s -> %s  (%s)\n", order_data->order_path, file, key);
-#endif
          item_count++;
-         snprintf(path2, sizeof(path2), "%s/.e/e/applications/all/%s", e_user_homedir_get(), key);
-         if (!ecore_file_exists(path2))
-            ecore_file_symlink(file, path2);
-         ecore_sheap_insert(order_data->sheap, strdup(key));
+         if (!exists)
+	   {
+#ifdef DEBUG
+              printf("MAKING MENU ITEM %s -> %s  (%s)\n", order_data->order_path, file, key);
+#endif
+              ecore_file_symlink(file, path2);
+	      do_add = 1;
+	   }
+	 if (do_add)
+            ecore_sheap_insert(order_data->sheap, strdup(key));
      }
 }
 

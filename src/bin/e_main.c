@@ -996,13 +996,8 @@ _e_main_dirs_init(void)
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/menu/all/.order", homedir);
    if (!ecore_file_exists(buf))
      {
-        e_fdo_menu_to_order();
+        e_fdo_menu_to_order(1);
      }
-   /* FIXME: Add another temporary hack to keep the users happy.
-    * Move ~/.e/e/applications/all/*.eap to ~/.e/e/icons/*.edj
-    * Read the non .edj info from them and construct a matching ~/.e/e/applications/all/*.desktop
-    * Add an icon path to these .desktop files that points to the ~/.e/e/icons/*.edj files.
-    */
    /* FIXME: THIS is to get people started - shoudl be in a wizard */
    snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites", homedir);
    if (!ecore_file_exists(buf))

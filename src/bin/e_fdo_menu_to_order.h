@@ -6,7 +6,7 @@
 #ifndef E_FDO_MENU_TO_ORDER_H
 #define E_FDO_MENU_TO_ORDER_H
 
-EAPI void e_fdo_menu_to_order(void);
+EAPI void e_fdo_menu_to_order(int do_nuke);
 
 #endif
 #endif
