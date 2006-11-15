@@ -22,17 +22,14 @@ struct _E_Widget_Data
 typedef struct _E_Widget_Desk_Data E_Widget_Desk_Data;
 struct _E_Widget_Desk_Data
 {
-   E_Menu *menu;
    Evas_Object *thumb;
    int container, zone;
    int x, y;
 };
 
 static void _e_wid_reconfigure(E_Widget_Data *wd);
-static void _e_wid_desk_cb_menu(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_wid_desk_cb_config(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static int  _e_wid_cb_bg_update(void *data, int type, void *event);
-static void _menu_cb_post(void *data, E_Menu *m);
-static void _menu_cb_wallpaper(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static void
 _e_wid_del_hook(Evas_Object *obj)
@@ -108,7 +105,7 @@ e_widget_deskpreview_desk_add(Evas *evas, E_Zone *zone, int x, int y, int tw, in
    evas_object_show(o);
    e_widget_sub_object_add(obj, o);
    overlay = o;
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_desk_cb_menu, dd);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_desk_cb_config, dd);
 
    o = e_thumb_icon_add(evas);
    e_icon_fill_inside_set(o, 0);
@@ -252,42 +249,21 @@ e_widget_desk_preview_add(Evas *evas, int nx, int ny)
 }
 
 static void 
-_e_wid_desk_cb_menu(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_e_wid_desk_cb_config(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    E_Widget_Desk_Data *dd;
    Evas_Event_Mouse_Down *ev;
    
    dd = data;
    ev = event_info;
-   if ((ev->button == 3) && (!dd->menu)) 
+   if (ev->button == 1) 
      {
-	E_Zone *zone;
-	E_Menu *m;
-	E_Menu_Item *mi;
-	int x, y;
+	E_Container *con;
 	
-	m = e_menu_new();
-	e_menu_post_deactivate_callback_set(m, _menu_cb_post, dd);
-	dd->menu = m;
+	con = e_container_current_get(e_manager_current_get());
+	e_int_config_desk(con, dd->container, dd->zone, dd->x, dd->y);
 	
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Set Wallpaper"));
-	e_util_menu_item_edje_icon_set(mi, "enlightenment/background");
-	e_menu_item_callback_set(mi, _menu_cb_wallpaper, dd);
-
-	/*
-	e_menu_item_label_set(mi, _("Set Desk Name"));
-	e_util_menu_item_edje_icon_set(mi, "enlightenment/desktops");
-	*/
-	
-	zone = e_util_zone_current_get(e_manager_current_get());
-	ecore_x_pointer_xy_get(zone->container->win, &x, &y);
-	
-	e_menu_activate_mouse(m, zone,
-			      x, y, 1, 1,
-			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
-	e_util_evas_fake_mouse_up_later(evas_object_evas_get(dd->thumb), 
-					ev->button);
+//	e_int_config_wallpaper_desk(dd->container, dd->zone, dd->x, dd->y);
      }
 }
 
@@ -324,25 +300,4 @@ _e_wid_cb_bg_update(void *data, int type, void *event)
 	  }
      }
    return 1;
-}
-
-static void 
-_menu_cb_post(void *data, E_Menu *m) 
-{
-   E_Widget_Desk_Data *dd;
-
-   dd = data;
-   if (!dd->menu) return;
-   e_object_del(E_OBJECT(dd->menu));
-   dd->menu = NULL;
-}
-
-static void 
-_menu_cb_wallpaper(void *data, E_Menu *m, E_Menu_Item *mi) 
-{
-   E_Widget_Desk_Data *dd;
-
-   dd = data;
-   if (!dd) return;
-   e_int_config_wallpaper_desk(dd->container, dd->zone, dd->x, dd->y);
 }
