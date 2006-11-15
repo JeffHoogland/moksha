@@ -57,6 +57,7 @@ struct _IBox
    int		   show_desk;
    int             icon_label;
    E_Zone          *zone;
+   Evas_Coord      dnd_x, dnd_y;
 };
 
 struct _IBox_Icon
@@ -108,6 +109,8 @@ static void _ibox_inst_cb_enter(void *data, const char *type, void *event_info);
 static void _ibox_inst_cb_move(void *data, const char *type, void *event_info);
 static void _ibox_inst_cb_leave(void *data, const char *type, void *event_info);
 static void _ibox_inst_cb_drop(void *data, const char *type, void *event_info);
+static void _ibox_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y);
+static void _ibox_inst_cb_scroll(void *data);
 static int _ibox_cb_event_border_add(void *data, int type, void *event);
 static int _ibox_cb_event_border_remove(void *data, int type, void *event);
 static int _ibox_cb_event_border_iconify(void *data, int type, void *event);
@@ -813,6 +816,65 @@ _ibox_cb_drop_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
+_ibox_inst_cb_scroll(void *data)
+{
+   Instance *inst;
+
+   /* Update the position of the dnd to handle for autoscrolling
+    * gadgets. */
+   inst = data;
+   _ibox_drop_position_update(inst, inst->ibox->dnd_x, inst->ibox->dnd_y);
+}
+
+static void
+_ibox_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y)
+{
+   Evas_Coord xx, yy;
+   int ox, oy;
+   IBox_Icon *ic;
+
+   inst->ibox->dnd_x = x;
+   inst->ibox->dnd_y = y;
+
+   if (inst->ibox->o_drop)
+      e_box_unpack(inst->ibox->o_drop);
+   evas_object_geometry_get(inst->ibox->o_box, &xx, &yy, NULL, NULL);
+   e_box_align_pixel_offset_get(inst->gcc->o_box, &ox, &oy);
+   ic = _ibox_icon_at_coord(inst->ibox, x + xx + ox, y + yy + oy);
+   inst->ibox->ic_drop_before = ic;
+   if (ic)
+     {
+	Evas_Coord ix, iy, iw, ih;
+	int before = 0;
+	
+	evas_object_geometry_get(ic->o_holder, &ix, &iy, &iw, &ih);
+	if (e_box_orientation_get(inst->ibox->o_box))
+	  {
+	     if ((x + xx) < (ix + (iw / 2))) before = 1;
+	  }
+	else
+	  {
+	     if ((y + yy) < (iy + (ih / 2))) before = 1;
+	  }
+	if (before)
+	  e_box_pack_before(inst->ibox->o_box, inst->ibox->o_drop, ic->o_holder);
+	else
+	  e_box_pack_after(inst->ibox->o_box, inst->ibox->o_drop, ic->o_holder);
+	inst->ibox->drop_before = before;
+     }
+   else e_box_pack_end(inst->ibox->o_box, inst->ibox->o_drop);
+   e_box_pack_options_set(inst->ibox->o_drop,
+			  1, 1, /* fill */
+			  0, 0, /* expand */
+			  0.5, 0.5, /* align */
+			  1, 1, /* min */
+			  -1, -1 /* max */
+			  );
+   _ibox_resize_handle(inst->ibox);
+   _gc_orient(inst->gcc);
+}
+
+static void
 _ibox_inst_cb_enter(void *data, const char *type, void *event_info)
 {
    E_Event_Dnd_Enter *ev;
@@ -837,40 +899,8 @@ _ibox_inst_cb_enter(void *data, const char *type, void *event_info)
    evas_object_layer_set(o2, 19999);
    evas_object_show(o);
    evas_object_show(o2);
-   evas_object_geometry_get(inst->ibox->o_box, &xx, &yy, NULL, NULL);
-   e_box_align_pixel_offset_get(inst->gcc->o_box, &x, &y);
-   ic = _ibox_icon_at_coord(inst->ibox, ev->x + xx + x, ev->y + yy + y);
-   inst->ibox->ic_drop_before = ic;
-   if (ic)
-     {
-	Evas_Coord ix, iy, iw, ih;
-	int before = 0;
-	
-	evas_object_geometry_get(ic->o_holder, &ix, &iy, &iw, &ih);
-	if (e_box_orientation_get(inst->ibox->o_box))
-	  {
-	     if ((ev->x + xx) < (ix + (iw / 2))) before = 1;
-	  }
-	else
-	  {
-	     if ((ev->y + yy) < (iy + (ih / 2))) before = 1;
-	  }
-	if (before)
-	  e_box_pack_before(inst->ibox->o_box, inst->ibox->o_drop, ic->o_holder);
-	else
-	  e_box_pack_after(inst->ibox->o_box, inst->ibox->o_drop, ic->o_holder);
-	inst->ibox->drop_before = before;
-     }
-   else e_box_pack_end(inst->ibox->o_box, o);
-   e_box_pack_options_set(o,
-			  1, 1, /* fill */
-			  0, 0, /* expand */
-			  0.5, 0.5, /* align */
-			  1, 1, /* min */
-			  -1, -1 /* max */
-			  );
-   _ibox_resize_handle(inst->ibox);
-   _gc_orient(inst->gcc);
+   _ibox_drop_position_update(inst, ev->x, ev->y);
+   e_gadcon_client_autoscroll_cb_set(inst->gcc, _ibox_inst_cb_scroll, inst);
    e_gadcon_client_autoscroll_update(inst->gcc, ev->x, ev->y);
 }
 
@@ -885,41 +915,7 @@ _ibox_inst_cb_move(void *data, const char *type, void *event_info)
    
    ev = event_info;
    inst = data;
-   e_box_unpack(inst->ibox->o_drop);
-   evas_object_geometry_get(inst->ibox->o_box, &xx, &yy, NULL, NULL);
-   e_box_align_pixel_offset_get(inst->gcc->o_box, &x, &y);
-   ic = _ibox_icon_at_coord(inst->ibox, ev->x + xx + x, ev->y + yy + y);
-   inst->ibox->ic_drop_before = ic;
-   if (ic)
-     {
-	Evas_Coord ix, iy, iw, ih;
-	int before = 0;
-	
-	evas_object_geometry_get(ic->o_holder, &ix, &iy, &iw, &ih);
-	if (e_box_orientation_get(inst->ibox->o_box))
-	  {
-	     if ((ev->x + xx) < (ix + (iw / 2))) before = 1;
-	  }
-	else
-	  {
-	     if ((ev->y + yy) < (iy + (ih / 2))) before = 1;
-	  }
-	if (before)
-	  e_box_pack_before(inst->ibox->o_box, inst->ibox->o_drop, ic->o_holder);
-	else
-	  e_box_pack_after(inst->ibox->o_box, inst->ibox->o_drop, ic->o_holder);
-	inst->ibox->drop_before = before;
-     }
-   else e_box_pack_end(inst->ibox->o_box, inst->ibox->o_drop);
-   e_box_pack_options_set(inst->ibox->o_drop,
-			  1, 1, /* fill */
-			  0, 0, /* expand */
-			  0.5, 0.5, /* align */
-			  1, 1, /* min */
-			  -1, -1 /* max */
-			  );
-   _ibox_resize_handle(inst->ibox);
-   _gc_orient(inst->gcc);
+   _ibox_drop_position_update(inst, ev->x, ev->y);
    e_gadcon_client_autoscroll_update(inst->gcc, ev->x, ev->y);
 }
 
@@ -936,6 +932,7 @@ _ibox_inst_cb_leave(void *data, const char *type, void *event_info)
    inst->ibox->o_drop = NULL;
    evas_object_del(inst->ibox->o_drop_over);
    inst->ibox->o_drop_over = NULL;
+   e_gadcon_client_autoscroll_cb_set(inst->gcc, NULL, NULL);
    _ibox_resize_handle(inst->ibox);
    _gc_orient(inst->gcc);
 }
@@ -1002,6 +999,7 @@ _ibox_inst_cb_drop(void *data, const char *type, void *event_info)
    evas_object_del(inst->ibox->o_drop_over);
    inst->ibox->o_drop_over = NULL;
    _ibox_empty_handle(b);
+   e_gadcon_client_autoscroll_cb_set(inst->gcc, NULL, NULL);
    _ibox_resize_handle(inst->ibox);
    _gc_orient(inst->gcc);
 }

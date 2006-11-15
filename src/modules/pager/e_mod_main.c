@@ -55,6 +55,7 @@ struct _Pager
    E_Drag          *drag;
    unsigned char    dragging : 1;
    unsigned char    just_dragged : 1;
+   Evas_Coord       dnd_x, dnd_y;
 };
 
 struct _Pager_Desk
@@ -124,6 +125,8 @@ static void _pager_inst_cb_enter(void *data, const char *type, void *event_info)
 static void _pager_inst_cb_move(void *data, const char *type, void *event_info);
 static void _pager_inst_cb_leave(void *data, const char *type, void *event_info);
 static void _pager_inst_cb_drop(void *data, const char *type, void *event_info);
+static void _pager_inst_cb_scroll(void *data);
+static void _pager_update_drop_position(Instance *inst, Evas_Coord x, Evas_Coord y);
 static void _pager_desk_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _pager_desk_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _pager_desk_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -1503,30 +1506,27 @@ _pager_window_cb_drag_finished(E_Drag *drag, int dropped)
 }
 
 static void
-_pager_inst_cb_enter(void *data, const char *type, void *event_info)
+_pager_inst_cb_scroll(void *data)
 {
-   E_Event_Dnd_Enter *ev;
-   Instance *inst;
+   Instance * inst;
 
-   ev = event_info;
    inst = data;
+   _pager_update_drop_position(inst, inst->pager->dnd_x, inst->pager->dnd_y);
 }
 
 static void
-_pager_inst_cb_move(void *data, const char *type, void *event_info)
+_pager_update_drop_position(Instance *inst, Evas_Coord x, Evas_Coord y)
 {
-   E_Event_Dnd_Move *ev;
-   Instance *inst;
    Pager_Desk *pd, *pd2;
-   Evas_List *l;
    Evas_Coord xx, yy;
-   int x, y;
+   int ox, oy;
+   Evas_List *l;
 
-   ev = event_info;
-   inst = data;
+   inst->pager->dnd_x = x;
+   inst->pager->dnd_y = y;
    evas_object_geometry_get(inst->pager->o_table, &xx, &yy, NULL, NULL);
-   e_box_align_pixel_offset_get(inst->gcc->o_box, &x, &y);
-   pd = _pager_desk_at_coord(inst->pager, ev->x + xx + x, ev->y + yy + y);
+   e_box_align_pixel_offset_get(inst->gcc->o_box, &ox, &oy);
+   pd = _pager_desk_at_coord(inst->pager, x + xx + ox, y + yy + oy);
    /* FIXME: keep track which one its over so we only emit drag in/out
     * when it actually goes form one desk to another */
    for (l = inst->pager->desks; l; l = l->next)
@@ -1537,6 +1537,30 @@ _pager_inst_cb_move(void *data, const char *type, void *event_info)
 	else
 	  edje_object_signal_emit(pd2->o_desk, "e,action,drag,out", "e");
      }
+}
+
+static void
+_pager_inst_cb_enter(void *data, const char *type, void *event_info)
+{
+   E_Event_Dnd_Enter *ev;
+   Instance *inst;
+
+   ev = event_info;
+   inst = data;
+   _pager_update_drop_position(inst, ev->x, ev->y);
+   e_gadcon_client_autoscroll_cb_set(inst->gcc, _pager_inst_cb_scroll, inst);
+   e_gadcon_client_autoscroll_update(inst->gcc, ev->x, ev->y);
+}
+
+static void
+_pager_inst_cb_move(void *data, const char *type, void *event_info)
+{
+   E_Event_Dnd_Move *ev;
+   Instance *inst;
+
+   ev = event_info;
+   inst = data;
+   _pager_update_drop_position(inst, ev->x, ev->y);
    e_gadcon_client_autoscroll_update(inst->gcc, ev->x, ev->y);
 }
 
@@ -1558,6 +1582,8 @@ _pager_inst_cb_leave(void *data, const char *type, void *event_info)
 	pd = l->data;
 	edje_object_signal_emit(pd->o_desk, "e,action,drag,out", "e");
      }
+
+   e_gadcon_client_autoscroll_cb_set(inst->gcc, NULL, NULL);
 }
 
 static void
@@ -1627,6 +1653,8 @@ _pager_inst_cb_drop(void *data, const char *type, void *event_info)
 	pd = l->data;
 	edje_object_signal_emit(pd->o_desk, "e,action,drag,out", "e");
      }
+
+   e_gadcon_client_autoscroll_cb_set(inst->gcc, NULL, NULL);
 }
 
 static void

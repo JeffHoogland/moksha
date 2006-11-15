@@ -56,6 +56,7 @@ struct _IBar
    Evas_List      *icons;
    int             show_label;
    int             eap_label;
+   Evas_Coord	   dnd_x, dnd_y;
 };
 
 struct _IBar_Icon
@@ -110,6 +111,8 @@ static void _ibar_inst_cb_enter(void *data, const char *type, void *event_info);
 static void _ibar_inst_cb_move(void *data, const char *type, void *event_info);
 static void _ibar_inst_cb_leave(void *data, const char *type, void *event_info);
 static void _ibar_inst_cb_drop(void *data, const char *type, void *event_info);
+static void _ibar_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y);
+static void _ibar_inst_cb_scroll(void *data);
 
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_item_edd = NULL;
@@ -1060,82 +1063,31 @@ _ibar_cb_drop_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
-_ibar_inst_cb_enter(void *data, const char *type, void *event_info)
+_ibar_inst_cb_scroll(void *data)
 {
-   E_Event_Dnd_Enter *ev;
    Instance *inst;
-   Evas_Object *o, *o2;
-   IBar_Icon *ic;
-   Evas_Coord xx, yy;
-   int x, y;
-   
-   ev = event_info;
+
+   /* Update the position of the dnd to handle for autoscrolling
+    * gadgets. */
    inst = data;
-   o = edje_object_add(evas_object_evas_get(inst->ibar->o_box));
-   inst->ibar->o_drop = o;
-   o2 = edje_object_add(evas_object_evas_get(inst->ibar->o_box));
-   inst->ibar->o_drop_over = o2;
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOVE, _ibar_cb_drop_move, inst->ibar);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_RESIZE, _ibar_cb_drop_resize, inst->ibar);
-   e_theme_edje_object_set(o, "base/theme/modules/ibar",
-			   "e/modules/ibar/drop");
-   e_theme_edje_object_set(o2, "base/theme/modules/ibar",
-			   "e/modules/ibar/drop_overlay");
-   evas_object_layer_set(o2, 19999);
-   evas_object_show(o);
-   evas_object_show(o2);
-   evas_object_geometry_get(inst->ibar->o_box, &xx, &yy, NULL, NULL);
-   e_box_align_pixel_offset_get(inst->gcc->o_box, &x, &y);
-   ic = _ibar_icon_at_coord(inst->ibar, ev->x + xx + x, ev->y + yy + y);
-   inst->ibar->ic_drop_before = ic;
-   if (ic)
-     {
-	Evas_Coord ix, iy, iw, ih;
-	int before = 0;
-	
-	evas_object_geometry_get(ic->o_holder, &ix, &iy, &iw, &ih);
-	if (e_box_orientation_get(inst->ibar->o_box))
-	  {
-	     if ((ev->x + xx) < (ix + (iw / 2))) before = 1;
-	  }
-	else
-	  {
-	     if ((ev->y + yy) < (iy + (ih / 2))) before = 1;
-	  }
-	if (before)
-	  e_box_pack_before(inst->ibar->o_box, inst->ibar->o_drop, ic->o_holder);
-	else
-	  e_box_pack_after(inst->ibar->o_box, inst->ibar->o_drop, ic->o_holder);
-	inst->ibar->drop_before = before;
-     }
-   else e_box_pack_end(inst->ibar->o_box, o);
-   e_box_pack_options_set(o,
-			  1, 1, /* fill */
-			  0, 0, /* expand */
-			  0.5, 0.5, /* align */
-			  1, 1, /* min */
-			  -1, -1 /* max */
-			  );
-   _ibar_resize_handle(inst->ibar);
-   _gc_orient(inst->gcc);
-   e_gadcon_client_autoscroll_update(inst->gcc, ev->x, ev->y);
+   _ibar_drop_position_update(inst, inst->ibar->dnd_x, inst->ibar->dnd_y);
 }
 
 static void
-_ibar_inst_cb_move(void *data, const char *type, void *event_info)
+_ibar_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y)
 {
-   E_Event_Dnd_Move *ev;
-   Instance *inst;
-   IBar_Icon *ic;
    Evas_Coord xx, yy;
-   int x, y;
-   
-   ev = event_info;
-   inst = data;
-   e_box_unpack(inst->ibar->o_drop);
+   int ox, oy;
+   IBar_Icon *ic;
+
+   inst->ibar->dnd_x = x;
+   inst->ibar->dnd_y = y;
+
+   if (inst->ibar->o_drop)
+      e_box_unpack(inst->ibar->o_drop);
    evas_object_geometry_get(inst->ibar->o_box, &xx, &yy, NULL, NULL);
-   e_box_align_pixel_offset_get(inst->gcc->o_box, &x, &y);
-   ic = _ibar_icon_at_coord(inst->ibar, ev->x + xx + x, ev->y + yy + y);
+   e_box_align_pixel_offset_get(inst->gcc->o_box, &ox, &oy);
+   ic = _ibar_icon_at_coord(inst->ibar, x + xx + ox, y + yy + oy);
    inst->ibar->ic_drop_before = ic;
    if (ic)
      {
@@ -1145,11 +1097,11 @@ _ibar_inst_cb_move(void *data, const char *type, void *event_info)
 	evas_object_geometry_get(ic->o_holder, &ix, &iy, &iw, &ih);
 	if (e_box_orientation_get(inst->ibar->o_box))
 	  {
-	     if ((ev->x + xx) < (ix + (iw / 2))) before = 1;
+	     if ((x + xx) < (ix + (iw / 2))) before = 1;
 	  }
 	else
 	  {
-	     if ((ev->y + yy) < (iy + (ih / 2))) before = 1;
+	     if ((y + yy) < (iy + (ih / 2))) before = 1;
 	  }
 	if (before)
 	  e_box_pack_before(inst->ibar->o_box, inst->ibar->o_drop, ic->o_holder);
@@ -1167,6 +1119,50 @@ _ibar_inst_cb_move(void *data, const char *type, void *event_info)
 			  );
    _ibar_resize_handle(inst->ibar);
    _gc_orient(inst->gcc);
+}
+
+static void
+_ibar_inst_cb_enter(void *data, const char *type, void *event_info)
+{
+   E_Event_Dnd_Enter *ev;
+   Instance *inst;
+   Evas_Object *o, *o2;
+   
+   ev = event_info;
+   inst = data;
+   o = edje_object_add(evas_object_evas_get(inst->ibar->o_box));
+   inst->ibar->o_drop = o;
+   o2 = edje_object_add(evas_object_evas_get(inst->ibar->o_box));
+   inst->ibar->o_drop_over = o2;
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOVE, _ibar_cb_drop_move, inst->ibar);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_RESIZE, _ibar_cb_drop_resize, inst->ibar);
+   e_theme_edje_object_set(o, "base/theme/modules/ibar",
+			   "e/modules/ibar/drop");
+   e_theme_edje_object_set(o2, "base/theme/modules/ibar",
+			   "e/modules/ibar/drop_overlay");
+   evas_object_layer_set(o2, 19999);
+   evas_object_show(o);
+   evas_object_show(o2);
+
+   _ibar_drop_position_update(inst, ev->x, ev->y);
+   e_gadcon_client_autoscroll_cb_set(inst->gcc, _ibar_inst_cb_scroll, inst);
+   e_gadcon_client_autoscroll_update(inst->gcc, ev->x, ev->y);
+}
+
+static void
+_ibar_inst_cb_move(void *data, const char *type, void *event_info)
+{
+   E_Event_Dnd_Move *ev;
+   Instance *inst;
+   IBar_Icon *ic;
+   Evas_Coord xx, yy;
+   int x, y;
+   int wx, wy;
+   
+   ev = event_info;
+   inst = data;
+
+   _ibar_drop_position_update(inst, ev->x, ev->y);
    e_gadcon_client_autoscroll_update(inst->gcc, ev->x, ev->y);
 }
 
@@ -1184,6 +1180,7 @@ _ibar_inst_cb_leave(void *data, const char *type, void *event_info)
    evas_object_del(inst->ibar->o_drop_over);
    inst->ibar->o_drop_over = NULL;
    _ibar_resize_handle(inst->ibar);
+   e_gadcon_client_autoscroll_cb_set(inst->gcc, NULL, NULL);
    _gc_orient(inst->gcc);
 }
 
@@ -1198,6 +1195,7 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
    
    ev = event_info;
    inst = data;
+
    if (!strcmp(type, "enlightenment/eapp"))
      {
 	app = ev->data;
@@ -1282,9 +1280,11 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
    inst->ibar->o_drop = NULL;
    evas_object_del(inst->ibar->o_drop_over);
    inst->ibar->o_drop_over = NULL;
+   e_gadcon_client_autoscroll_cb_set(inst->gcc, NULL, NULL);
    _ibar_empty_handle(inst->ibar);
    _ibar_resize_handle(inst->ibar);
    _gc_orient(inst->gcc);
+
 }
 
 /***************************************************************************/

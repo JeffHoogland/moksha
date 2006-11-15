@@ -1349,6 +1349,9 @@ _e_gadcon_cb_client_scroll_animator(void *data)
 	return 0;
      }
 
+   if (gcc->scroll_cb.func)
+     gcc->scroll_cb.func(gcc->scroll_cb.data);
+
    return 1;
 }
 
@@ -1395,6 +1398,13 @@ e_gadcon_client_autoscroll_update(E_Gadcon_Client *gcc, Evas_Coord x, Evas_Coord
 	  gcc->scroll_animator = ecore_animator_add(_e_gadcon_cb_client_scroll_animator, gcc);
 	gcc->scroll_wanted = d;
      }
+}
+
+EAPI void
+e_gadcon_client_autoscroll_cb_set(E_Gadcon_Client *gcc, void (*func)(void *data), void *data)
+{
+   gcc->scroll_cb.func = func;
+   gcc->scroll_cb.data = data;
 }
 
 static void

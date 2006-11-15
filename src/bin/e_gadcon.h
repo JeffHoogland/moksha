@@ -131,6 +131,11 @@ struct _E_Gadcon_Client
    Ecore_Animator        *scroll_animator;
    double                 scroll_pos;
    double                 scroll_wanted;
+   struct {
+	void *data;
+	void (*func) (void *data);
+   } scroll_cb;
+
    E_Menu                *menu;
    const char            *style;
    unsigned char          autoscroll : 1;
@@ -139,6 +144,7 @@ struct _E_Gadcon_Client
    unsigned char          moving : 1;
    unsigned char          resizing : 1;
    Evas_Coord             dx, dy;
+
 };
 
 EAPI int              e_gadcon_init(void);
@@ -176,6 +182,7 @@ EAPI void             e_gadcon_client_min_size_set(E_Gadcon_Client *gcc, Evas_Co
 EAPI void             e_gadcon_client_aspect_set(E_Gadcon_Client *gcc, int w, int h);
 EAPI void             e_gadcon_client_autoscroll_set(E_Gadcon_Client *gcc, int autoscroll);
 EAPI void             e_gadcon_client_autoscroll_update(E_Gadcon_Client *gcc, int mx, int my);
+EAPI void             e_gadcon_client_autoscroll_cb_set(E_Gadcon_Client *gcc, void (*func)(void *data), void *data);
 EAPI void             e_gadcon_client_resizable_set(E_Gadcon_Client *gcc, int resizable);
 
 EAPI void             e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int flags);
