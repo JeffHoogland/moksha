@@ -80,7 +80,7 @@ struct _E_Config
    const char *desktop_default_background; // GUI
    Evas_List  *desktop_backgrounds; // GUI
    const char *desktop_default_name;
-   Evas_List  *desktop_names;
+   Evas_List  *desktop_names; // GUI
    double      menus_scroll_speed; // GUI
    double      menus_fast_mouse_move_threshhold; // GUI
    double      menus_click_drag_timeout; // GUI
