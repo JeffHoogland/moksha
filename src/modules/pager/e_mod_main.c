@@ -174,7 +174,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    evas_object_geometry_get(o, &x, &y, &w, &h);
    inst->drop_handler =
-     e_drop_handler_add(E_OBJECT(inst->gcc->gadcon), inst,
+     e_drop_handler_add(E_OBJECT(inst->gcc), inst,
 			_pager_inst_cb_enter, _pager_inst_cb_move,
 			_pager_inst_cb_leave, _pager_inst_cb_drop,
 			drop, 2, x, y, w, h);
@@ -1520,11 +1520,13 @@ _pager_inst_cb_move(void *data, const char *type, void *event_info)
    Pager_Desk *pd, *pd2;
    Evas_List *l;
    Evas_Coord xx, yy;
+   int x, y;
 
    ev = event_info;
    inst = data;
    evas_object_geometry_get(inst->pager->o_table, &xx, &yy, NULL, NULL);
-   pd = _pager_desk_at_coord(inst->pager, ev->x + xx, ev->y + yy);
+   e_box_align_pixel_offset_get(inst->gcc->o_box, &x, &y);
+   pd = _pager_desk_at_coord(inst->pager, ev->x + xx + x, ev->y + yy + y);
    /* FIXME: keep track which one its over so we only emit drag in/out
     * when it actually goes form one desk to another */
    for (l = inst->pager->desks; l; l = l->next)
@@ -1535,6 +1537,7 @@ _pager_inst_cb_move(void *data, const char *type, void *event_info)
 	else
 	  edje_object_signal_emit(pd2->o_desk, "e,action,drag,out", "e");
      }
+   e_gadcon_client_autoscroll_update(inst->gcc, ev->x, ev->y);
 }
 
 static void
@@ -1568,12 +1571,14 @@ _pager_inst_cb_drop(void *data, const char *type, void *event_info)
    int dx = 0, dy = 0;
    Pager_Win *pw = NULL;
    Evas_Coord xx, yy;
+   int x, y;
 
    ev = event_info;
    inst = data;
 
    evas_object_geometry_get(inst->pager->o_table, &xx, &yy, NULL, NULL);
-   pd = _pager_desk_at_coord(inst->pager, ev->x + xx, ev->y + yy);
+   e_box_align_pixel_offset_get(inst->gcc->o_box, &x, &y);
+   pd = _pager_desk_at_coord(inst->pager, ev->x + xx + x, ev->y + yy + y);
    if (pd)
      {
 	if (!strcmp(type, "enlightenment/pager_win"))
@@ -1608,8 +1613,8 @@ _pager_inst_cb_drop(void *data, const char *type, void *event_info)
 	     if ((!pw) || ((pw) && (!pw->drag.no_place)))
 	       {
 		  e_layout_coord_canvas_to_virtual(pd->o_layout, 
-						   ev->x + xx + dx,
-						   ev->y + yy + dy,
+						   ev->x + xx + x + dx,
+						   ev->y + yy + y + dy,
 						   &nx, &ny);
 		  e_border_move(bd, nx + pd->desk->zone->x, ny + pd->desk->zone->y);
 	       }
