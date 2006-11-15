@@ -112,7 +112,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    char name[40];
    
-   if (!cfdata->name) 
+   if (!cfdata->name[0]) 
      {
 	snprintf(name, sizeof(name), _(e_config->desktop_default_name), cfdata->desk_x, cfdata->desk_y);
 	cfdata->name = strdup(name);
