@@ -3,7 +3,6 @@
 //#define DEBUG 1
 
 
-// FIXME: Scan through ~/.e/e/applications/all, nuke any dangling links.  Start simple, add smarts later.
 // FIXME: If there is only one top level menu, likely called "Applications", then throw it away.  The top level is already called "Applications".
 
 
@@ -35,18 +34,51 @@ static int _do_nuke;
 EAPI void
 e_fdo_menu_to_order(int do_nuke)
 {
+   Ecore_List  *files;
+   const char *home;
    char dir[PATH_MAX];
 
    menu_count = 0;
    item_count = 0;
    _do_nuke = do_nuke;
    ecore_desktop_instrumentation_reset();
+   home = e_user_homedir_get();
    if (do_nuke)
      {
         /* Nuke the old menus. */
-        snprintf(dir, sizeof(dir), "%s/.e/e/applications/menu/all/", e_user_homedir_get());
+        snprintf(dir, sizeof(dir), "%s/.e/e/applications/menu/all/", home);
         ecore_file_recursive_rm(dir);
      }
+   /* Scan through ~/.e/e/applications/all, nuke any dangling links.  
+    * Start simple, add smarts later.
+    */
+   snprintf(dir, sizeof(dir), "%s/.e/e/applications/all", home);
+   files = ecore_file_ls(dir);
+   if (files)
+     {
+        const char *file;
+
+        while ((file = ecore_list_next(files)))
+	  {
+             char *real_file;
+
+             snprintf(dir, sizeof(dir), "%s/.e/e/applications/all/%s", home, file);
+             /* If it's not a link, readlink returns NULL.
+	      * There are other failures that can result in NULL, we don't care about those.
+	      */
+	     real_file = ecore_file_readlink(dir);
+	     if (real_file)
+	       {
+	          if ((do_nuke) || (!ecore_file_exists(real_file)) )
+		    {
+                       /* FIXME: Should also remove that item from any menus it is in. */
+	               ecore_file_unlink(dir);
+		    }
+	          free(real_file);
+	       }
+	  }
+     }
+
    ecore_desktop_menu_for_each(_e_fdo_menu_to_order_make_apps);
    ecore_desktop_instrumentation_print();
    /* This is a hueristic to guess if there are not enough apps.  Feel free to tweak it. */
