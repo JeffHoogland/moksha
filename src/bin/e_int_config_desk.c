@@ -110,6 +110,14 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
+   char name[40];
+   
+   if (!cfdata->name) 
+     {
+	snprintf(name, sizeof(name), _(e_config->desktop_default_name), cfdata->desk_x, cfdata->desk_y);
+	cfdata->name = strdup(name);
+     }
+
    e_desk_name_del(cfdata->con_num, cfdata->zone_num, cfdata->desk_x, cfdata->desk_y);
    e_desk_name_add(cfdata->con_num, cfdata->zone_num, cfdata->desk_x, cfdata->desk_y, cfdata->name);
    e_desk_name_update();
