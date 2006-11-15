@@ -113,9 +113,6 @@ e_int_config_wallpaper_update(E_Config_Dialog *dia, char *file)
      e_fm2_path_set(cfdata->o_fm, path, "/");
    if (cfdata->o_preview)
      e_widget_preview_edje_set(cfdata->o_preview, cfdata->bg, "e/desktop/background");
-   if (cfdata->o_theme_bg)
-     e_widget_check_checked_set(cfdata->o_theme_bg, 0);
-   cfdata->use_theme_bg = 0;
    if (cfdata->o_frame)
      e_widget_change(cfdata->o_frame);
 }
@@ -291,6 +288,8 @@ _cb_theme_wallpaper(void *data, Evas_Object *obj, void *event_info)
    if (cfdata->use_theme_bg)
      {
 	f = e_theme_edje_file_get("base/theme/backgrounds", "e/desktop/background");
+	E_FREE(cfdata->bg);
+	cfdata->bg = strdup(f);
 	if (cfdata->o_preview)
 	  e_widget_preview_edje_set(cfdata->o_preview, f, "e/desktop/background");
      }
