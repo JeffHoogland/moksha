@@ -25,7 +25,7 @@ struct _E_Config_Dialog_Data
    E_Config_Dialog *cfd;
    E_Fm2_Icon_Info *info;
    char *selected;
-   char path_all[4096], path_everything[4096], path[4096], *homedir;
+   char path_all[PATH_MAX], path_menu[PATH_MAX], path_everything[PATH_MAX], path[PATH_MAX], *homedir;
    int sorted;
    struct {
       Evas_Object *o_fm_all;
@@ -103,6 +103,11 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    snprintf(cfdata->path_everything, sizeof(cfdata->path_everything), "%s/.e/e/applications/all", cfdata->homedir);
    snprintf(cfdata->path, sizeof(cfdata->path), "%s/.e/e/applications", cfdata->homedir);
    snprintf(cfdata->path_all, sizeof(cfdata->path_all), "%s/.e/e/applications/menu/all", cfdata->homedir);
+#ifdef ENABLE_FAVORITES
+   snprintf(cfdata->path_menu, sizeof(cfdata->path_all), "%s/.e/e/applications/menu", cfdata->homedir);
+#else
+   snprintf(cfdata->path_menu, sizeof(cfdata->path_all), "%s/.e/e/applications/menu/all", cfdata->homedir);
+#endif
    return;
 }
 
@@ -651,7 +656,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 			  150, 220, /* min */
 			  99999, 99999 /* max */
 			  );
-   mt = e_widget_check_add(evas, _("Sort applications"), &(cfdata->sorted));
+   mt = e_widget_check_add(evas, _("All applications"), &(cfdata->sorted));
    evas_object_smart_callback_add(mt, "changed",
 				  _cb_files_sorted_changed, cfdata);
    e_widget_framelist_object_append(of, mt);
@@ -673,7 +678,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
         e_widget_disabled_set(mt, 1);
      }
 
-   mt = e_widget_button_add(evas, _("Create a new application"), "enlightenment/e",
+   mt = e_widget_button_add(evas, _("Create a new Application"), "enlightenment/e",
 			   _cb_button_create, cfdata, NULL);
    cfdata->gui.o_create_button = mt;
    e_widget_framelist_object_append(of, mt);
@@ -685,7 +690,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	 if ((once) && (once->title))
             of = e_widget_framelist_add(evas, once->title, 0);
 	 else
-            of = e_widget_framelist_add(evas, _("Bars, Menus, etc."), 0);
+#ifdef ENABLE_FAVORITES
+            of = e_widget_framelist_add(evas, _("Menus"), 0);
+#else
+            of = e_widget_framelist_add(evas, _("Menu"), 0);
+#endif
 
          mt = e_widget_button_add(evas, _("Go up a Directory"), "widget/up_dir",
 			   _cb_button_up, cfdata, NULL);
@@ -727,7 +736,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	 if ((once) && (once->path))
             e_fm2_path_set(cfdata->gui.o_fm, once->path, "/");
 	 else
-            e_fm2_path_set(cfdata->gui.o_fm, cfdata->path, "/");
+            e_fm2_path_set(cfdata->gui.o_fm, cfdata->path_menu, "/");
 	 e_fm2_window_object_set(cfdata->gui.o_fm, E_OBJECT(cfd->dia->win));
 
          ob = e_widget_scrollframe_pan_add(evas, mt,
@@ -758,10 +767,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
          e_widget_framelist_object_append(of, mt);
 	 e_widget_disabled_set(cfdata->gui.o_move_down_button, 1);
 */
-         mt = e_widget_button_add(evas, _("Regenerate/update \"Applications\" Menu"), "enlightenment/regenerate_menus",
-			   _cb_button_regen, cfdata, NULL);
-         cfdata->gui.o_regen_button = mt;
-         e_widget_framelist_object_append(of, mt);
+         if (!once)
+	   {
+              mt = e_widget_button_add(evas, _("Regenerate/update \"Applications\" Menu"), "enlightenment/regenerate_menus",
+			               _cb_button_regen, cfdata, NULL);
+              cfdata->gui.o_regen_button = mt;
+              e_widget_framelist_object_append(of, mt);
+	   }
 
          e_widget_table_object_append(ot, of, 2, 0, 2, 4, 1, 1, 1, 1);
       }

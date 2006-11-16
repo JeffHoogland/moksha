@@ -112,7 +112,11 @@ e_configure_show(E_Container *con)
    e_configure_standard_item_add(eco, "enlightenment/menus", _("Menus"), e_int_config_menus);
    
    e_configure_header_item_add(eco, "enlightenment/misc", _("Miscellaneous"));
-   e_configure_standard_item_add(eco, "enlightenment/applications", _("Applications"), e_int_config_apps);
+#ifdef ENABLE_FAVORITES
+   e_configure_standard_item_add(eco, "enlightenment/applications", _("Application Menus"), e_int_config_apps);
+#else
+   e_configure_standard_item_add(eco, "enlightenment/applications", _("Applications Menu"), e_int_config_apps);
+#endif
    e_configure_standard_item_add(eco, "enlightenment/performance", _("Performance"), e_int_config_performance);
    e_configure_standard_item_add(eco, "enlightenment/configuration", _("Configuration Dialogs"), e_int_config_cfgdialogs);
    e_configure_standard_item_add(eco, "enlightenment/intl", _("Language Settings"), e_int_config_intl);

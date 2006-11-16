@@ -774,7 +774,11 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    e_menu_item_callback_set(mi, _e_int_menus_shelf_item_cb, NULL);
    
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Applications"));
+#ifdef ENABLE_FAVORITES
+   e_menu_item_label_set(mi, _("Application Menus"));
+#else
+   e_menu_item_label_set(mi, _("Applications Menu"));
+#endif
    e_util_menu_item_edje_icon_set(mi, "enlightenment/applications");
    e_menu_item_callback_set(mi, _e_int_menus_applications_item_cb, NULL);
 
