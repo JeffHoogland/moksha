@@ -608,155 +608,151 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	char line[32];
 	while (fscanf(output, "%[^\n]\n", line) == 1)
 	  {
-	     char *language;
-	     char *basic_language;
+	     E_Locale_Parts *locale_parts;
 
-	     basic_language = e_intl_locale_parts_get(line, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
-	     if (basic_language)
+	     locale_parts = e_intl_locale_parts_get(line);
+
+	     if (locale_parts)
 	       {
-		  int i;
+		  char *basic_language;
 
-		  i = 0;
-		  while (basic_language_predefined_pairs[i].locale_key)
+		  basic_language = e_intl_locale_parts_combine(locale_parts, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+		  if (basic_language)
 		    {
-		       /* if basic language is supported by E and System*/
-		       if (!strncmp(basic_language_predefined_pairs[i].locale_key, 
-				basic_language, strlen(basic_language)))
-			 {
-			    if (!evas_list_find(cfdata->blang_list, &basic_language_predefined_pairs[i]))
-			       cfdata->blang_list = evas_list_append(cfdata->blang_list, &basic_language_predefined_pairs[i]);
-			    break;
-			 }
-		       i++;
-		    }
-	       }
-	     E_FREE(basic_language);
-	     
-	     language = e_intl_locale_parts_get(line, E_INTL_LOC_LANG);
-	     
-	     /* If the language is a valid ll_RR[.enc[@mod]] locale add it to the hash */
-	     if (language) 
-	       {
-		  E_Intl_Language_Node *lang_node;
-		  E_Intl_Region_Node  *region_node;
-		  char *region;
-		  char *codeset;
-		  char *modifier;
-
-		  /* Separate out ll RR enc and mod parts */
-		  region = e_intl_locale_parts_get(line, E_INTL_LOC_REGION);
-		  codeset = e_intl_locale_parts_get(line, E_INTL_LOC_CODESET);
-		  modifier = e_intl_locale_parts_get(line, E_INTL_LOC_MODIFIER);
-   
-		  /* Add the language to the new locale properties to the hash */
-		  /* First check if the LANGUAGE exists in there already */
-		  lang_node  = evas_hash_find(cfdata->locale_hash, language);
-		  if (lang_node == NULL) 
-		    {
-		       Evas_List *next;
 		       int i;
 		       
-		       /* create new node */
-		       lang_node = E_NEW(E_Intl_Language_Node, 1);
-
-		       lang_node->lang_code = evas_stringshare_add(language);
-
-		       /* Check if the language list exists */
-		       /* Linear Search */
-		       for (next = e_lang_list; next; next = next->next) 
-			 {
-			    char *e_lang;
-
-			    e_lang = next->data;
-			    if (!strncmp(e_lang, language, 2) || !strcmp("en", language)) 
-			      {
-				 lang_node->lang_available = 1;
-				 break;
-			      }
-			 }
-		       
-		       /* Search for translation */
-		       /* Linear Search */
 		       i = 0;
-		       while (language_predefined_pairs[i].locale_key)
+		       while (basic_language_predefined_pairs[i].locale_key)
 			 {
-			    if (!strcmp(language_predefined_pairs[i].locale_key, language))
+			    /* if basic language is supported by E and System*/
+			    if (!strncmp(basic_language_predefined_pairs[i].locale_key, 
+				     basic_language, strlen(basic_language)))
 			      {
-				 lang_node->lang_name = _(language_predefined_pairs[i].locale_translation);
+				 if (!evas_list_find(cfdata->blang_list, &basic_language_predefined_pairs[i]))
+				   cfdata->blang_list = evas_list_append(cfdata->blang_list, &basic_language_predefined_pairs[i]);
 				 break;
 			      }
 			    i++;
 			 }
-		       
-		       cfdata->locale_hash = evas_hash_add(cfdata->locale_hash, language, lang_node);
 		    }
-
-		  /* We now have the current language hash node, lets see if there is
-		     region data that needs to be added. 
-		   */
-		  if (region)
+		  E_FREE(basic_language);
+	     
+		  /* If the language is a valid ll_RR[.enc[@mod]] locale add it to the hash */
+		  if (locale_parts->lang) 
 		    {
-		       region_node = evas_hash_find(lang_node->region_hash, region);
-
-		       if (region_node == NULL)
-			 {
-			    int i;
-			    
-			    /* create new node */
-			    region_node = E_NEW(E_Intl_Region_Node, 1);
-			    region_node->region_code = evas_stringshare_add(region);
+		       E_Intl_Language_Node *lang_node;
+		       E_Intl_Region_Node  *region_node;
+   
+		       /* Add the language to the new locale properties to the hash */
+		       /* First check if the LANGUAGE exists in there already */
 		       
-			    /* Get the region translation */
+		       lang_node  = evas_hash_find(cfdata->locale_hash, locale_parts->lang);
+		       if (lang_node == NULL) 
+			 {
+			    Evas_List *next;
+			    int i;
+		       
+			    /* create new node */
+			    lang_node = E_NEW(E_Intl_Language_Node, 1);
+
+		            lang_node->lang_code = evas_stringshare_add(locale_parts->lang);
+
+		            /* Check if the language list exists */
+		            /* Linear Search */
+		            for (next = e_lang_list; next; next = next->next) 
+			      {
+				 char *e_lang;
+
+				 e_lang = next->data;
+     				 if (!strncmp(e_lang, locale_parts->lang, 2) || !strcmp("en", locale_parts->lang)) 
+				   {
+				      lang_node->lang_available = 1;
+				      break;
+				   }
+			      }
+		       
+			    /* Search for translation */
 			    /* Linear Search */
 			    i = 0;
-			    while (region_predefined_pairs[i].locale_key)
+			    while (language_predefined_pairs[i].locale_key)
 			      {
-				 if (!strcmp(region_predefined_pairs[i].locale_key, region))
+				 if (!strcmp(language_predefined_pairs[i].locale_key, locale_parts->lang))
 				   {
-				      region_node->region_name = _(region_predefined_pairs[i].locale_translation);
+				      lang_node->lang_name = _(language_predefined_pairs[i].locale_translation);
 				      break;
 				   }
 				 i++;
 			      }
-			    lang_node->region_hash = evas_hash_add(lang_node->region_hash, region, region_node);
+		       
+			    cfdata->locale_hash = evas_hash_add(cfdata->locale_hash, locale_parts->lang, lang_node);
 			 }
-
-		       /* We now have the current region hash node */
-		       /* Add codeset to the region hash node if it exists */
-		       if (codeset)
-			 {
-			    const char * cs;
-			    const char * cs_trans;
-			    
-			    cs_trans = _intl_charset_upper_get(codeset);
-			    if (cs_trans == NULL) 
-			      cs = evas_stringshare_add(codeset);
-			    else 
-			      cs = evas_stringshare_add(cs_trans);
-			    /* Exclusive */
-			    /* Linear Search */
-			    if (!evas_list_find(region_node->available_codesets, cs))
-			      region_node->available_codesets = evas_list_append(region_node->available_codesets, cs);
-			 }
-
-		       /* Add modifier to the region hash node if it exists */
-		       if (modifier)
-			 {
-			    const char * mod;
-			    
-			    /* Find only works here because we are using stringshare*/
-			    mod = evas_stringshare_add(modifier);
-			    /* Exclusive */
-			    /* Linear Search */
-			    if (!evas_list_find(region_node->available_modifiers, mod))
-			      region_node->available_modifiers = evas_list_append(region_node->available_modifiers, mod);
-			 }
-		       free(region);
-		    }
 		  
-		  E_FREE(codeset);
-		  E_FREE(modifier);
-		  free(language);
+		       /* We now have the current language hash node, lets see if there is
+			  region data that needs to be added. 
+			*/
+		  
+		       if (locale_parts->region)
+			 {
+			    region_node = evas_hash_find(lang_node->region_hash, locale_parts->region);
+
+			    if (region_node == NULL)
+			      {
+				 int i;
+			    
+				 /* create new node */
+				 region_node = E_NEW(E_Intl_Region_Node, 1);
+				 region_node->region_code = evas_stringshare_add(locale_parts->region);
+		       
+				 /* Get the region translation */
+				 /* Linear Search */
+				 i = 0;
+				 while (region_predefined_pairs[i].locale_key)
+				   {
+				      if (!strcmp(region_predefined_pairs[i].locale_key, locale_parts->region))
+					{
+					   region_node->region_name = _(region_predefined_pairs[i].locale_translation);
+					   break;
+					}
+				      i++;
+				   }
+				 lang_node->region_hash = evas_hash_add(lang_node->region_hash, locale_parts->region, region_node);
+			      }
+
+			    /* We now have the current region hash node */
+		            /* Add codeset to the region hash node if it exists */
+			    if (locale_parts->codeset)
+			      {
+				 const char * cs;
+				 const char * cs_trans;
+			    
+				 cs_trans = _intl_charset_upper_get(locale_parts->codeset);
+				 if (cs_trans == NULL) 
+				   cs = evas_stringshare_add(locale_parts->codeset);
+				 else 
+				   cs = evas_stringshare_add(cs_trans);
+			    
+				 /* Exclusive */
+				 /* Linear Search */
+				 if (!evas_list_find(region_node->available_codesets, cs))
+				   region_node->available_codesets = evas_list_append(region_node->available_codesets, cs);
+			      }
+
+			    /* Add modifier to the region hash node if it exists */
+			    if (locale_parts->modifier)
+			      {
+				 const char *mod;
+
+				 mod = evas_stringshare_add(locale_parts->modifier);
+				 /* Find only works here because we are using stringshare*/
+			    
+				 /* Exclusive */
+				 /* Linear Search */
+				 if (!evas_list_find(region_node->available_modifiers, mod))
+				   region_node->available_modifiers = evas_list_append(region_node->available_modifiers, mod);
+			      }
+			 }
+		    }
+		  e_intl_locale_parts_free(locale_parts);
 	       }
 	  }
 	
@@ -904,8 +900,17 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    if (cfdata->cur_language)
      {
-	cur_sig_loc = e_intl_locale_parts_get(cfdata->cur_language, 
-	      E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+	E_Locale_Parts *locale_parts;
+	locale_parts = e_intl_locale_parts_get(cfdata->cur_language);
+	if (locale_parts)
+	  {
+	     cur_sig_loc = e_intl_locale_parts_combine(locale_parts,
+		   E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+
+	     e_intl_locale_parts_free(locale_parts);
+	  }
+	else
+	  cur_sig_loc = NULL;
      }
    else
      cur_sig_loc = NULL;
@@ -1276,11 +1281,6 @@ _region_hash_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
 void 
 _intl_current_locale_setup(E_Config_Dialog_Data *cfdata)
 {
-   char *language;
-   char *region;
-   char *codeset;
-   char *modifier;
-   
    E_FREE(cfdata->cur_lang);
    E_FREE(cfdata->cur_reg);
    E_FREE(cfdata->cur_cs);
@@ -1291,45 +1291,32 @@ _intl_current_locale_setup(E_Config_Dialog_Data *cfdata)
    cfdata->cur_cs = NULL;
    cfdata->cur_mod = NULL;
  
-   language = NULL;
-   region = NULL;   
-   codeset = NULL;
-   modifier = NULL;
-   
-   if (cfdata->cur_language) 
-     { 
-	language = e_intl_locale_parts_get(cfdata->cur_language, 
-	      E_INTL_LOC_LANG);
-	region = e_intl_locale_parts_get(cfdata->cur_language, 
-	      E_INTL_LOC_REGION);
-     	codeset = e_intl_locale_parts_get(cfdata->cur_language, 
-	      E_INTL_LOC_CODESET);
-     	modifier = e_intl_locale_parts_get(cfdata->cur_language, 
-     	      E_INTL_LOC_MODIFIER);
-     }
-   
-   if (language) 
-     cfdata->cur_lang = strdup(language);
-   if (region) 
-     cfdata->cur_reg = strdup(region);
-   if (codeset) 
+   if (cfdata->cur_language)
      {
-	const char *cs_trans;
+	E_Locale_Parts *locale_parts;
+ 
+	locale_parts = e_intl_locale_parts_get(cfdata->cur_language);
+	if (locale_parts)
+	  {	  
+	     if (locale_parts->lang) 
+	       cfdata->cur_lang = strdup(locale_parts->lang);
+	     if (locale_parts->region) 
+	       cfdata->cur_reg = strdup(locale_parts->region);
+	     if (locale_parts->codeset) 
+	       {
+		  const char *cs_trans;
 	
-	cs_trans = _intl_charset_upper_get(codeset);
-	if (cs_trans == NULL)
-	  cfdata->cur_cs = strdup(codeset);
-	else 
-	  cfdata->cur_cs = strdup(cs_trans);
+		  cs_trans = _intl_charset_upper_get(locale_parts->codeset);
+		  if (cs_trans == NULL)
+		    cfdata->cur_cs = strdup(locale_parts->codeset);
+		  else 
+		    cfdata->cur_cs = strdup(cs_trans);
+	       }
+	     if (locale_parts->modifier) 
+	       cfdata->cur_mod = strdup(locale_parts->modifier);
+	  }
+	e_intl_locale_parts_free(locale_parts);
      }
-   if (modifier) 
-     cfdata->cur_mod = strdup(modifier);
-  
-   E_FREE(language);
-   E_FREE(region);
-   E_FREE(codeset);
-   E_FREE(modifier);
-
    cfdata->lang_dirty = 1;
 }
 

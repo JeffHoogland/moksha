@@ -13,6 +13,7 @@
 
 typedef struct _E_Input_Method_Config E_Input_Method_Config;
 typedef struct _E_Language_Pack E_Language_Pack;
+typedef struct _E_Locale_Parts E_Locale_Parts;
 
 #else
 #ifndef E_INTL_H
@@ -45,6 +46,15 @@ struct _E_Input_Method_Config
    char *e_im_exec;
 };
 
+struct _E_Locale_Parts
+{
+   int mask;
+   const char *lang;
+   const char *region;
+   const char *codeset;
+   const char *modifier;
+};
+
 EAPI int		 e_intl_init(void);
 EAPI int		 e_intl_shutdown(void);
 EAPI int		 e_intl_post_init(void);
@@ -62,8 +72,9 @@ EAPI E_Input_Method_Config *e_intl_input_method_config_read (Eet_File *imc_file)
 EAPI int		 e_intl_input_method_config_write (Eet_File *imc_file, E_Input_Method_Config *imc);
 EAPI void		 e_intl_input_method_config_free (E_Input_Method_Config *imc);
 /* Getting locale */
-EAPI char		*e_intl_locale_parts_get(const char *locale, int ret_mask);
-EAPI int		 e_intl_locale_mask_last_get(void);
+EAPI E_Locale_Parts	*e_intl_locale_parts_get(const char *locale);
+EAPI void		 e_intl_locale_parts_free(E_Locale_Parts *locale_parts);
+EAPI char               *e_intl_locale_parts_combine(E_Locale_Parts *locale_parts, int mask);
 EAPI char		*e_intl_locale_charset_canonic_get(const char *charset);
 #endif
 #endif

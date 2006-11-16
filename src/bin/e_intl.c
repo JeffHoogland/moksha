@@ -20,7 +20,6 @@ static char *_e_intl_orig_gtk_im_module = NULL;
 static char *_e_intl_input_method = NULL;
 
 static Eet_Data_Descriptor *_e_intl_input_method_config_edd = NULL;
-static int _e_intl_loc_mask;
 
 #define E_EXE_STOP(EXE) if (EXE != NULL) { ecore_exe_terminate(EXE); ecore_exe_free(EXE); EXE = NULL; }
 #define E_EXE_IS_VALID(EXE) (!((EXE == NULL) || (EXE[0] == 0)))
@@ -167,7 +166,7 @@ e_intl_language_set(const char *lang)
 	
 	set_envars = 0;
      }
- 
+   
    E_FREE(_e_intl_language_alias);
    _e_intl_language_alias = _e_intl_locale_alias_get(lang);  
    E_FREE(_e_intl_language);
@@ -176,12 +175,12 @@ e_intl_language_set(const char *lang)
      _e_intl_language = strdup(lang);
    else
      _e_intl_language = NULL;
-
+ 
    if (!_e_intl_locale_validate(_e_intl_language_alias))
      {
 	fprintf(stderr, "The locale '%s' cannot be found on your "
 	       "system. Please install this locale or try "
-               "something else.\n", _e_intl_language_alias);
+               "something else.", _e_intl_language_alias);
      }
    else
      {
@@ -193,7 +192,7 @@ e_intl_language_set(const char *lang)
 	     e_util_env_set("LC_ALL", _e_intl_language);
 	     e_util_env_set("LC_MESSAGES", _e_intl_language);
 	  }
-	
+ 
     	setlocale(LC_ALL, _e_intl_language);
         if (_e_intl_language)
 	  {
@@ -202,32 +201,38 @@ e_intl_language_set(const char *lang)
              locale_path = _e_intl_language_path_find(_e_intl_language_alias);
              if (locale_path == NULL)
 	       {
-		  char *match_lang;
+		  E_Locale_Parts *locale_parts;
 
-		  match_lang = e_intl_locale_parts_get(_e_intl_language_alias, E_INTL_LOC_LANG);
-		  
+		  locale_parts = e_intl_locale_parts_get(_e_intl_language_alias);
+   
 		  /* If locale is C or some form of en don't report an error */
-		  if ( match_lang == NULL && strcmp (_e_intl_language_alias, "C") )
+		  if ( locale_parts == NULL && strcmp (_e_intl_language_alias, "C") )
 		    {
-		       fprintf(stderr, "The locale you have chosen '%s' "
-			     "appears to be an alias, however, it can not be "
-			     "resloved. Please make sure you have a "
-			     "'locale.aliases' file in your 'messages' path "
-			     "which can resolve this alias.\n"
-			     "\n"
+		       fprintf(stderr, 
+			     "An error occurred setting your locale. \n\n"
+			     
+			     "The locale you have chosen '%s' appears to \n"
+			     "be an alias, however, it can not be resloved.\n"
+			     "Please make sure you have a 'locale.alias' \n"
+			     "file in your 'messages' path which can resolve\n"
+			     "this alias.\n\n"
+			     
 			     "Enlightenment will not be translated.\n", 
 			     _e_intl_language_alias);
 		    }
-		  else if ( match_lang != NULL && strcmp(match_lang, "en") ) 
+		  else if ( locale_parts && locale_parts->lang && strcmp(locale_parts->lang, "en") ) 
 		    {
-		       fprintf(stderr, "The translation files for the "
-			     "locale you have chosen (%s) cannot be found in "
-			     "your 'messages' path.\n"
-			     "\n"
+		       fprintf(stderr, 
+			     "An error occurred setting your locale. \n\n"
+				
+			     "The translation files for the locale you \n"
+			     "have chosen (%s) cannot be found in your \n"
+			     "'messages' path. \n\n"
+			     
 			     "Enlightenment will not be translated.\n", 
 			     _e_intl_language_alias);
 		    }
-		  E_FREE(match_lang);
+		  e_intl_locale_parts_free(locale_parts);
 	       }
 	     else
 	       {
@@ -586,24 +591,17 @@ static char *
 _e_intl_locale_alias_get(const char *language)
 {
    Evas_Hash *alias_hash;
-   char *canonic;
    char *alias;
    
    if (language == NULL || !strncmp(language, "POSIX", strlen("POSIX")))
      return strdup("C");
-  
-   canonic = e_intl_locale_parts_get(language, E_INTL_LOC_ALL);
    
    alias_hash = _e_intl_locale_alias_hash_get();
    if (alias_hash == NULL) /* No alias file available */
-     {
-	if (canonic == NULL)
-	  return strdup(language);
-	else 
-	  return canonic;
+     {  
+	return strdup(language);
      }
 
-   if (canonic == NULL) /* Should be an alias */
      {
 	char *lower_language;
 	int i;
@@ -616,19 +614,10 @@ _e_intl_locale_alias_get(const char *language)
 	alias = evas_hash_find(alias_hash, lower_language);
 	free(lower_language);
      }
-   else /* check for alias */
-     {
-	alias = evas_hash_find(alias_hash, canonic);
-     }
    
    if (alias) 
      {
 	alias = strdup(alias);
-	if (canonic) free(canonic);
-     }
-   else if (canonic) 
-     {
-	alias = canonic;
      }
    else 
      {
@@ -694,25 +683,22 @@ _e_intl_locale_alias_hash_get(void)
 /*
  * Not canonic, just gets the parts 
  */
-EAPI char *
-e_intl_locale_parts_get(const char *locale, int ret_mask)
+EAPI E_Locale_Parts *
+e_intl_locale_parts_get(const char *locale)
 {
-   char *clean_locale;
-   int   clean_e_intl_locale_size;
+   /* Parse Results */
+   E_Locale_Parts *locale_parts;
    char  language[4];
    char  territory[4];
    char  codeset[32];
    char  modifier[32];
 
+   /* Parse State */
    int   state = 0; /* start out looking for the language */
    int   locale_idx;
    int   tmp_idx = 0;
- 
-   /* Stores the parts of the locale found */ 
-   _e_intl_loc_mask = 0; 
    
-   /* Seperators are _ . @ */
-
+   /* Parse Loop - Seperators are _ . @ */
    for ( locale_idx = 0; locale_idx < strlen(locale); locale_idx++ )
      {
 	char locale_char;
@@ -808,63 +794,100 @@ e_intl_locale_parts_get(const char *locale, int ret_mask)
 	 modifier[tmp_idx] = 0;
      }
    
-   /* Construct the clean locale string */
-
-   /* determine the size */
-   clean_e_intl_locale_size =	strlen(language) + 1;
-   
-   if ((ret_mask & E_INTL_LOC_REGION) && territory[0] != 0)
-     clean_e_intl_locale_size += strlen(territory) + 1;
-   
-   if ((ret_mask & E_INTL_LOC_CODESET) && codeset[0] != 0)
-     clean_e_intl_locale_size += strlen(codeset) + 1;
-	
-   if ((ret_mask & E_INTL_LOC_MODIFIER) && (modifier[0] != 0))
-     clean_e_intl_locale_size += strlen(modifier) + 1;     
-
-   /* Allocate memory */
-   clean_locale = (char *) malloc(clean_e_intl_locale_size);
-   clean_locale[0] = 0;
+   locale_parts = E_NEW(E_Locale_Parts, 1);
    
    /* Put the parts of the string together */
-   if ((ret_mask & E_INTL_LOC_LANG) && language[0] != 0)
+   if (language[0] != 0)
      {
-	_e_intl_loc_mask |= E_INTL_LOC_LANG;
-	strcat(clean_locale, language);
+	locale_parts->mask |= E_INTL_LOC_LANG;
+	locale_parts->lang = evas_stringshare_add(language);
      }
-   if ((ret_mask & E_INTL_LOC_REGION) && territory[0] != 0)
+   if (territory[0] != 0)
      {
-	_e_intl_loc_mask |= E_INTL_LOC_REGION;
-	if (clean_locale[0] != 0) strcat(clean_locale, "_");
-	strcat(clean_locale, territory);
+	locale_parts->mask |= E_INTL_LOC_REGION;
+	locale_parts->region = evas_stringshare_add(territory);
      }	
-   if ((ret_mask & E_INTL_LOC_CODESET) && codeset[0] != 0)	  
+   if (codeset[0] != 0)	  
      {
-	_e_intl_loc_mask |= E_INTL_LOC_CODESET;
-	if (clean_locale[0] != 0) strcat(clean_locale, ".");
-	strcat(clean_locale, codeset);	  
+	locale_parts->mask |= E_INTL_LOC_CODESET;
+	locale_parts->codeset = evas_stringshare_add(codeset);
      }	
-   if ((ret_mask & E_INTL_LOC_MODIFIER) && (modifier[0] != 0))     
+   if (modifier[0] != 0)     
      {	       
-	_e_intl_loc_mask |= E_INTL_LOC_MODIFIER;
-	if (clean_locale[0] != 0) strcat(clean_locale, "@");
-	strcat(clean_locale, modifier);     
-     }
-
-   if (clean_locale[0] == 0)
-     {
-	free(clean_locale);
-	return NULL;
+	locale_parts->mask |= E_INTL_LOC_MODIFIER;
+	locale_parts->modifier = evas_stringshare_add(modifier);
      }
    
-   return clean_locale;
+   return locale_parts;
 }
 
-/* Get the mask of locale parts returned from last call to locale_parts_get */
-EAPI int
-e_intl_locale_mask_last_get()
+EAPI void
+e_intl_locale_parts_free(E_Locale_Parts *locale_parts)
 {
-   return _e_intl_loc_mask;
+   if (locale_parts != NULL)
+     {
+	if (locale_parts->lang) evas_stringshare_del(locale_parts->lang);
+	if (locale_parts->region) evas_stringshare_del(locale_parts->region);
+	if (locale_parts->codeset) evas_stringshare_del(locale_parts->codeset);
+	if (locale_parts->modifier) evas_stringshare_del(locale_parts->modifier);
+	E_FREE(locale_parts);
+     }
+}
+
+EAPI char *
+e_intl_locale_parts_combine(E_Locale_Parts *locale_parts, int mask)
+{
+   int locale_size;
+   char *locale;
+
+   if (!locale_parts) return NULL;
+   
+   if ((mask & locale_parts->mask) != mask) return NULL;
+
+   
+   /* Construct the clean locale string */
+   
+   /* determine the size */
+   if (mask & E_INTL_LOC_LANG)
+     locale_size =  strlen(locale_parts->lang) + 1;
+   
+   if (mask & E_INTL_LOC_REGION)
+     locale_size += strlen(locale_parts->region) + 1;
+   
+   if (mask & E_INTL_LOC_CODESET)
+     locale_size += strlen(locale_parts->codeset) + 1;
+    
+   if (mask & E_INTL_LOC_MODIFIER)
+     locale_size += strlen(locale_parts->modifier) + 1;
+   
+   /* Allocate memory */
+   locale = (char *) malloc(locale_size);
+   locale[0] = 0;
+   
+   if (mask & E_INTL_LOC_LANG)
+     {
+	strcat(locale, locale_parts->lang);
+     }
+  
+   if (mask & E_INTL_LOC_REGION)
+     {
+	if (locale[0] != 0) strcat(locale, "_");
+	strcat(locale, locale_parts->region);
+      }
+   
+   if (mask & E_INTL_LOC_CODESET)
+      {
+	 if (locale[0] != 0) strcat(locale, ".");
+	 strcat(locale, locale_parts->codeset);
+      }
+   
+   if (mask & E_INTL_LOC_MODIFIER)
+     {
+	if (locale[0] != 0) strcat(locale, "@");
+	strcat(locale, locale_parts->modifier);	          
+     }
+
+   return locale;
 }
 
 EAPI char *
@@ -892,58 +915,6 @@ e_intl_locale_charset_canonic_get(const char *charset)
    
    return strdup(charset_canonic);
 }
-
-EAPI char *
-e_intl_locale_locale_canonic_get(const char *locale)
-{
-   char *locale_lr;
-   char *locale_cs;
-   char *locale_cs_canonic;
-   char *locale_mod;
-   char *locale_ret;
-   
-   locale_lr = e_intl_locale_parts_get(locale, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
-   if (!locale_lr)
-     {
-	return NULL;
-     }
-   
-   locale_cs = e_intl_locale_parts_get(locale, E_INTL_LOC_CODESET);
-   if (locale_cs)
-     {
-	locale_cs_canonic = e_intl_locale_charset_canonic_get(locale_cs);
-	if (locale_cs_canonic == NULL)
-	  {
-	     /* incoming locale already canonic return NULL */
-	     free(locale_cs);
-	     free(locale_lr);
-	     return NULL;
-	  }
-     }
-   else
-     {
-	/* no charset info, locale canonic return NULL */
-	free(locale_lr);
-	return NULL;
-     }
-   locale_mod = e_intl_locale_parts_get(locale, E_INTL_LOC_MODIFIER);
-
-   /** Concat parts **/
-   locale_ret = calloc(sizeof(char), 64);
-   
-   strcat(locale_ret, locale_lr);
-   strcat(locale_ret, ".");
-   strncat(locale_ret, locale_cs, 64 - 1 - 6); /* en_US. */
-   if (locale_mod)
-     {
-	strncat(locale_ret, "@", 64 - 1 - strlen(locale_ret));
-	strncat(locale_ret, locale_mod, 64 - 1 - strlen(locale_ret));
-     }
-
-   return locale_ret;
-}
-
-
 
 static Evas_List *
 _e_intl_locale_system_locales_get(void)
@@ -973,28 +944,28 @@ static int
 _e_intl_locale_validate(const char *locale)
 {
    Evas_List *all_locales;
+   E_Locale_Parts *locale_parts; 
    char *locale_lr;
-   char *locale_cs;
    char *locale_cs_canonic;
    int   found;
    
    found = 0;
 
+   locale_parts = e_intl_locale_parts_get(locale);
+   
    /* Gather the search information */
-   locale_lr = e_intl_locale_parts_get(locale, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+   locale_lr = e_intl_locale_parts_combine(locale_parts, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
   
    if ( locale_lr == NULL )
      {
 	/* Not valid locale, maybe its an alias */
 	locale_lr = strdup(locale); 
-	locale_cs = NULL;
 	locale_cs_canonic = NULL;
      }
    else
-     {   
-	locale_cs = e_intl_locale_parts_get(locale, E_INTL_LOC_CODESET);
-	if ( locale_cs ) 
-	  locale_cs_canonic = e_intl_locale_charset_canonic_get(locale_cs);
+     {
+	if ( locale_parts && locale_parts->codeset ) 
+	  locale_cs_canonic = e_intl_locale_charset_canonic_get(locale_parts->codeset);
 	else
 	  locale_cs_canonic = NULL;
      }
@@ -1010,41 +981,41 @@ _e_intl_locale_validate(const char *locale)
 
 	if (found == 0)
 	  {
+	     E_Locale_Parts *locale_parts_next;
 	     char * locale_lr_next; 
 	     
-	     locale_lr_next = e_intl_locale_parts_get(locale_next, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
-	     if (locale_lr_next && !strcmp(locale_lr, locale_lr_next)) 
+	     locale_parts_next = e_intl_locale_parts_get(locale_next);
+	     locale_lr_next = e_intl_locale_parts_combine(locale_parts_next, 
+		   E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+	     
+	     if (locale_parts && locale_lr_next && !strcmp(locale_lr, locale_lr_next)) 
 	       {
-		  char *locale_cs_next;
 		  /* Matched lang/region part, now if CS matches */
-		       
-		  locale_cs_next = 
-		     e_intl_locale_parts_get(locale_next, E_INTL_LOC_CODESET);     
-		  if ((locale_cs == NULL) && (locale_cs_next == NULL))
+		  if ((locale_parts->codeset == NULL) && (locale_parts_next->codeset == NULL))
 		    {
 		       /* Lang/Region parts match and no charsets, 
 			* we have a match 
 			*/	    
 		       found = 1;
 		    }
-		  else if (locale_cs && locale_cs_next)
+		  else if (locale_parts->codeset && locale_parts_next->codeset)
 		    {
-		       if (!strcmp(locale_cs, locale_cs_next))
+		       if (!strcmp(locale_parts->codeset, locale_parts_next->codeset))
 			 {
 			    /* Lang/Region and charsets match */
 			    found = 1;
 			 }
-		       else 
+		       else if (locale_cs_canonic) 
 			 {
 			    char *locale_cs_canonic_next;
 			    /* try to match charsets in canonic form */
 			    
 			    locale_cs_canonic_next = 
-			      e_intl_locale_charset_canonic_get(locale_cs_next);
+			       e_intl_locale_charset_canonic_get(locale_parts_next->codeset);
+			    
 			    if (locale_cs_canonic_next)
 			      {
-				 if (locale_cs_canonic && 
-				       !strcmp(locale_cs_canonic, locale_cs_canonic_next))
+				 if (!strcmp(locale_cs_canonic, locale_cs_canonic_next))
 				   {
 				      /* Lang/Resion and charsets in canonic 
 				       * form match 
@@ -1055,8 +1026,7 @@ _e_intl_locale_validate(const char *locale)
 			      }
 			    else
 			      {
-				 if (locale_cs_canonic && 
-				       !strcmp(locale_cs_canonic, locale_cs_next))
+				 if (!strcmp(locale_cs_canonic, locale_parts_next->codeset))
 				   {
 				      /* Lang/Resion and charsets in canonic 
 				       * form match 
@@ -1065,7 +1035,6 @@ _e_intl_locale_validate(const char *locale)
 				   }
 			      }
 			 }
-		       free(locale_cs_next);
 		    }
 	       }
 	     else
@@ -1073,14 +1042,15 @@ _e_intl_locale_validate(const char *locale)
 		  /* Its an alias */
 		  if (!strcmp(locale_lr, locale_next)) found = 1;
 	       }
+	     e_intl_locale_parts_free(locale_parts_next);
 	     E_FREE(locale_lr_next);
 	  }
 	
 	all_locales = evas_list_remove_list(all_locales, all_locales);
 	free(locale_next);
      }
+   e_intl_locale_parts_free(locale_parts);
    free(locale_lr);
-   E_FREE(locale_cs);
    E_FREE(locale_cs_canonic);
    return found; 
 }
@@ -1098,20 +1068,24 @@ static Evas_List *
 _e_intl_locale_search_order_get(const char *locale)
 {
    Evas_List *search_list;
+   E_Locale_Parts *locale_parts;
    char *masked_locale;
    int mask;
+   
+   locale_parts = e_intl_locale_parts_get(locale);
+   if (locale_parts == NULL) return NULL;
    
    search_list = NULL;
    for ( mask = E_INTL_LOC_ALL; mask >= E_INTL_LOC_LANG; mask-- )
      {
-	masked_locale = e_intl_locale_parts_get(locale, mask);
-	/* Only append if the Locale returned is the Locale asked for */
-       
-	if (_e_intl_loc_mask == mask) 
-	  search_list = evas_list_append(search_list, masked_locale);
-	else
-	  free(masked_locale);
+	if ((mask & locale_parts->mask) == mask)
+	  {
+	     /* Only append if the mask we need is available */
+	     masked_locale = e_intl_locale_parts_combine(locale_parts, mask);
+	     search_list = evas_list_append(search_list, masked_locale);
+	  }
      } 
+   e_intl_locale_parts_free(locale_parts);
    return search_list;
 }
 

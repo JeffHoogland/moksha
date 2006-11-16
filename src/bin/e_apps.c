@@ -1858,24 +1858,30 @@ e_app_fields_fill(E_App *a, const char *path)
 static char *
 _e_app_localized_val_get(Eet_File *ef, const char *lang, const char *field, int *size)
 {
+   E_Locale_Parts *locale_parts;
    char *s, *v;
    char buf[PATH_MAX];
 
    if (lang)
      {
-	s = e_intl_locale_parts_get(lang, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
-	snprintf(buf, sizeof(buf), "%s[%s]", field, s);
-	free(s);
-	v = eet_read(ef, buf, size);
-	if (v)
-	  return v;
+	locale_parts = e_intl_locale_parts_get(lang);
 
-	s = e_intl_locale_parts_get(lang, E_INTL_LOC_LANG);
-	snprintf(buf, sizeof(buf), "%s[%s]", field, s);
-	free(s);
-	v = eet_read(ef, buf, size);
-	if (v)
-	  return v;
+	if (locale_parts)
+	  {	  
+	     s = e_intl_locale_parts_combine(locale_parts, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+	     snprintf(buf, sizeof(buf), "%s[%s]", field, s);
+	     free(s);
+	     v = eet_read(ef, buf, size);
+	     if (v)
+	       return v;
+
+	     snprintf(buf, sizeof(buf), "%s[%s]", field, locale_parts->lang);
+	     v = eet_read(ef, buf, size);
+	     if (v)
+	       return v;
+
+	     e_intl_locale_parts_free(locale_parts);
+	  }
      }
    /* Fall back to default locale */
    return eet_read(ef, field, size);
