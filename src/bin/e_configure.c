@@ -94,7 +94,7 @@ e_configure_show(E_Container *con)
    e_configure_standard_item_add(eco, "enlightenment/colors", _("Colors"), e_int_config_color_classes);
    e_configure_standard_item_add(eco, "enlightenment/fonts", _("Fonts"), e_int_config_fonts);
    e_configure_standard_item_add(eco, "enlightenment/windows", _("Borders"), e_int_config_borders);
-   e_configure_standard_item_add(eco, "enlightenment/icon_themes", _("Icon Theme"), e_int_config_icon_themes);
+   e_configure_standard_item_add(eco, "enlightenment/icon_theme", _("Icon Theme"), e_int_config_icon_themes);
    e_configure_standard_item_add(eco, "enlightenment/mouse", _("Mouse Cursor"), e_int_config_cursor);
    e_configure_standard_item_add(eco, "enlightenment/windows", _("Window Display"), e_int_config_window_display);
    e_configure_standard_item_add(eco, "enlightenment/transitions", _("Transitions"), e_int_config_transitions);
