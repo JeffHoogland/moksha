@@ -46,14 +46,16 @@ struct _E_Config_Dialog_Data
 
 struct _E_Config_Once
 {
+   const char *title;
    const char *label;
+   const char *path;
    int (*func) (void *data, const char *path);
    void *data;
 };
 
 
 EAPI E_Config_Dialog *
-e_int_config_apps_once(E_Container *con, const char *label, int (*func) (void *data, const char *path), void *data)
+e_int_config_apps_once(E_Container *con, const char *title, const char *label, const char *path, int (*func) (void *data, const char *path), void *data)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
@@ -65,12 +67,14 @@ e_int_config_apps_once(E_Container *con, const char *label, int (*func) (void *d
    v->free_cfdata             = _free_data;
    v->basic.create_widgets    = _basic_create_widgets;
 
-   if (func)
+   if ((path) || (func))
       {
          once = E_NEW(struct _E_Config_Once, 1);
 	 if (once)
 	    {
+	       once->title = title;
 	       once->label = label;
+	       once->path = path;
 	       once->func = func;
 	       once->data = data;
 	    }
@@ -87,7 +91,7 @@ EAPI E_Config_Dialog *
 e_int_config_apps(E_Container *con)
 {
    if (e_config_dialog_find("E", "_config_applications_dialog")) return NULL;
-   return e_int_config_apps_once(con, NULL, NULL, NULL);
+   return e_int_config_apps_once(con, NULL, NULL, NULL, NULL, NULL);
 }
 
 static void
@@ -429,6 +433,7 @@ _cb_button_add(void *data1, void *data2)
    E_Fm2_Icon_Info *ici;
    const char *realpath;
    char buf[4096];
+   int do_it = 1;
 
    cfdata = data1;
    if (!cfdata->gui.o_fm_all) return;
@@ -454,9 +459,13 @@ _cb_button_add(void *data1, void *data2)
          struct _E_Config_Once *once = NULL;
 
          once = cfdata->cfd->data;
-	 once->func(once->data, buf);
+	 if (once->func)
+	   {
+	      once->func(once->data, buf);
+	      do_it = 0;
+	   }
       }
-   else
+   if (do_it)
       {
          if (!cfdata->gui.o_fm) return;
 
@@ -648,7 +657,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, mt);
 
    mt = NULL;
-   if (once)
+   if ((once) && (once->label))
       mt = e_widget_button_add(evas, _(once->label), "enlightenment/e",
 			   _cb_button_add, cfdata, NULL);
 /*
@@ -671,9 +680,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    e_widget_table_object_append(ot, of, 0, 0, 2, 4, 1, 1, 1, 1);
 
-   if (!once)
+   if ((!once) || (once->path))
       {
-         of = e_widget_framelist_add(evas, _("Bars, Menus, etc."), 0);
+	 if ((once) && (once->title))
+            of = e_widget_framelist_add(evas, once->title, 0);
+	 else
+            of = e_widget_framelist_add(evas, _("Bars, Menus, etc."), 0);
 
          mt = e_widget_button_add(evas, _("Go up a Directory"), "widget/up_dir",
 			   _cb_button_up, cfdata, NULL);
@@ -712,7 +724,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
          evas_object_smart_callback_add(mt, "changed",
 					_cb_files_changed, cfdata);
 	 e_fm2_icon_menu_start_extend_callback_set(mt, _cb_files_add_edited, cfdata);
-         e_fm2_path_set(cfdata->gui.o_fm, cfdata->path, "/");
+	 if ((once) && (once->path))
+            e_fm2_path_set(cfdata->gui.o_fm, once->path, "/");
+	 else
+            e_fm2_path_set(cfdata->gui.o_fm, cfdata->path, "/");
 	 e_fm2_window_object_set(cfdata->gui.o_fm, E_OBJECT(cfd->dia->win));
 
          ob = e_widget_scrollframe_pan_add(evas, mt,
@@ -743,13 +758,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
          e_widget_framelist_object_append(of, mt);
 	 e_widget_disabled_set(cfdata->gui.o_move_down_button, 1);
 */
-   if (!once)
-      {
          mt = e_widget_button_add(evas, _("Regenerate/update \"Applications\" Menu"), "enlightenment/regenerate_menus",
 			   _cb_button_regen, cfdata, NULL);
          cfdata->gui.o_regen_button = mt;
          e_widget_framelist_object_append(of, mt);
-      }
 
          e_widget_table_object_append(ot, of, 2, 0, 2, 4, 1, 1, 1, 1);
       }
