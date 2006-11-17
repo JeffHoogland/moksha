@@ -1112,7 +1112,7 @@ _ibar_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y)
    else e_box_pack_end(inst->ibar->o_box, inst->ibar->o_drop);
    e_box_pack_options_set(inst->ibar->o_drop,
 			  1, 1, /* fill */
-			  0, 0, /* expand */
+			  1, 1, /* expand */
 			  0.5, 0.5, /* align */
 			  1, 1, /* min */
 			  -1, -1 /* max */
