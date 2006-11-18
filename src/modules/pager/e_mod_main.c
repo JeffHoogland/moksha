@@ -56,6 +56,7 @@ struct _Pager
    unsigned char    dragging : 1;
    unsigned char    just_dragged : 1;
    Evas_Coord       dnd_x, dnd_y;
+   Pager_Desk      *active_drop_pd;
 };
 
 struct _Pager_Desk
@@ -1527,16 +1528,15 @@ _pager_update_drop_position(Instance *inst, Evas_Coord x, Evas_Coord y)
    evas_object_geometry_get(inst->pager->o_table, &xx, &yy, NULL, NULL);
    e_box_align_pixel_offset_get(inst->gcc->o_box, &ox, &oy);
    pd = _pager_desk_at_coord(inst->pager, x + xx + ox, y + yy + oy);
-   /* FIXME: keep track which one its over so we only emit drag in/out
-    * when it actually goes form one desk to another */
    for (l = inst->pager->desks; l; l = l->next)
      {
 	pd2 = l->data;
 	if (pd == pd2)
-	  edje_object_signal_emit(pd2->o_desk, "e,action,drag,in", "e");
-	else
+	     edje_object_signal_emit(pd2->o_desk, "e,action,drag,in", "e");
+	else if (pd2 == inst->pager->active_drop_pd)
 	  edje_object_signal_emit(pd2->o_desk, "e,action,drag,out", "e");
      }
+   inst->pager->active_drop_pd = pd;
 }
 
 static void
@@ -1573,14 +1573,17 @@ _pager_inst_cb_leave(void *data, const char *type, void *event_info)
 
    ev = event_info;
    inst = data;
-   /* FIXME: keep track which one its over so we only emit drag in/out
-    * when it actually goes form one desk to another */
-   for (l = inst->pager->desks; l; l = l->next)
+
+   for (l = inst->pager->desks; l && inst->pager->active_drop_pd; l = l->next)
      {
 	Pager_Desk *pd;
 	
 	pd = l->data;
-	edje_object_signal_emit(pd->o_desk, "e,action,drag,out", "e");
+	if (pd == inst->pager->active_drop_pd)
+	  {
+	     edje_object_signal_emit(pd->o_desk, "e,action,drag,out", "e");
+	     inst->pager->active_drop_pd = NULL;
+	  }
      }
 
    e_gadcon_client_autoscroll_cb_set(inst->gcc, NULL, NULL);
@@ -1646,12 +1649,15 @@ _pager_inst_cb_drop(void *data, const char *type, void *event_info)
 	       }
 	  }
      }
-   /* FIXME: keep track which one its over so we only emit drag in/out
-    * when it actually goes form one desk to another */
-   for (l = inst->pager->desks; l; l = l->next)
+
+   for (l = inst->pager->desks; l && inst->pager->active_drop_pd; l = l->next)
      {
 	pd = l->data;
-	edje_object_signal_emit(pd->o_desk, "e,action,drag,out", "e");
+	if (pd == inst->pager->active_drop_pd)
+	  {
+	     edje_object_signal_emit(pd->o_desk, "e,action,drag,out", "e");
+	     inst->pager->active_drop_pd = NULL;
+	  }
      }
 
    e_gadcon_client_autoscroll_cb_set(inst->gcc, NULL, NULL);
