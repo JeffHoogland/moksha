@@ -171,6 +171,8 @@ src/bin/e_deskpreview.c
 src/bin/e_deskpreview.h
 src/bin/e_exebuf.c
 src/bin/e_exebuf.h
+src/bin/e_int_config_desk.c
+src/bin/e_int_config_desk.h
 src/bin/e_int_config_desks.c
 src/bin/e_int_config_desks.h
 src/bin/e_int_config_window_display.c
