@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-11-11 12:30+0100\n"
-"PO-Revision-Date: 2006-11-11 18:32+0100\n"
+"POT-Creation-Date: 2006-11-18 13:55+0100\n"
+"PO-Revision-Date: 2006-11-18 14:13+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@inwind.it>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -27,13 +27,13 @@ msgstr "Mensole configurate"
 msgid "Add"
 msgstr "Aggiungi"
 
-#: src/bin/e_int_config_shelf.c:83 src/bin/e_fm.c:4536
+#: src/bin/e_int_config_shelf.c:83 src/bin/e_fm.c:4552
 #: src/modules/ibar/e_mod_config.c:109
 msgid "Delete"
 msgstr "Elimina"
 
 #: src/bin/e_int_config_shelf.c:85 src/bin/e_int_config_modules.c:276
-#: src/bin/e_int_config_mime.c:166
+#: src/bin/e_int_config_mime.c:186 src/bin/e_int_config_desk.c:155
 msgid "Configure"
 msgstr "Configura"
 
@@ -272,8 +272,7 @@ msgstr "Principale"
 msgid "Favorite Applications"
 msgstr "Applicazioni preferite"
 
-#: src/bin/e_int_menus.c:102 src/bin/e_int_menus.c:777
-#: src/bin/e_configure.c:115 src/bin/e_int_config_apps.c:80
+#: src/bin/e_int_menus.c:102 src/bin/e_int_config_apps.c:84
 msgid "Applications"
 msgstr "Applicazioni"
 
@@ -281,7 +280,7 @@ msgstr "Applicazioni"
 msgid "Files"
 msgstr "File e directory"
 
-#: src/bin/e_int_menus.c:114 src/bin/e_configure.c:124
+#: src/bin/e_int_menus.c:114 src/bin/e_configure.c:128
 msgid "Run Command"
 msgstr "Esegui comando"
 
@@ -301,7 +300,7 @@ msgstr "Desktop"
 msgid "Windows"
 msgstr "Lista finestre"
 
-#: src/bin/e_int_menus.c:149 src/bin/e_main.c:792 src/bin/e_actions.c:1993
+#: src/bin/e_int_menus.c:149 src/bin/e_main.c:790 src/bin/e_actions.c:1993
 #: src/bin/e_actions.c:1996 src/bin/e_actions.c:1999 src/bin/e_actions.c:2002
 #: src/bin/e_about.c:51
 msgid "Enlightenment"
@@ -325,16 +324,16 @@ msgid "Exit"
 msgstr "Esci"
 
 #: src/bin/e_int_menus.c:183 src/bin/e_module.c:474
-#: src/modules/ibar/e_mod_main.c:294 src/modules/ibar/e_mod_main.c:919
-#: src/modules/ibox/e_mod_main.c:286 src/modules/ibox/e_mod_main.c:674
-#: src/modules/pager/e_mod_main.c:624 src/modules/temperature/e_mod_main.c:145
+#: src/modules/ibar/e_mod_main.c:297 src/modules/ibar/e_mod_main.c:922
+#: src/modules/ibox/e_mod_main.c:289 src/modules/ibox/e_mod_main.c:677
+#: src/modules/pager/e_mod_main.c:628 src/modules/temperature/e_mod_main.c:145
 #: src/modules/battery/e_mod_main.c:175
 msgid "Configuration"
 msgstr "Configurazione"
 
 #: src/bin/e_int_menus.c:193 src/bin/e_int_config_theme.c:362
-#: src/bin/e_int_config_wallpaper.c:458 src/bin/e_int_config_wallpaper.c:614
-#: src/bin/e_int_config_startup.c:274 src/bin/e_actions.c:2005
+#: src/bin/e_int_config_wallpaper.c:460 src/bin/e_int_config_wallpaper.c:615
+#: src/bin/e_int_config_startup.c:298 src/bin/e_actions.c:2005
 #: src/bin/e_actions.c:2008 src/bin/e_actions.c:2011 src/bin/e_actions.c:2014
 #: src/bin/e_int_config_desklock.c:564
 msgid "System"
@@ -369,61 +368,69 @@ msgstr "Pannello di configurazione"
 msgid "Wallpaper"
 msgstr "Sfondo"
 
-#: src/bin/e_int_menus.c:767 src/bin/e_configure.c:129
+#: src/bin/e_int_menus.c:767 src/bin/e_configure.c:133
 #: src/bin/e_int_config_modules.c:245 src/bin/e_int_config_color_classes.c:83
 #: src/bin/e_int_config_paths.c:88
 msgid "Modules"
 msgstr "Moduli"
 
-#: src/bin/e_int_menus.c:826
+#: src/bin/e_int_menus.c:778 src/bin/e_configure.c:116
+msgid "Application Menus"
+msgstr "Menù applicazioni"
+
+#: src/bin/e_int_menus.c:780 src/bin/e_configure.c:118
+msgid "Applications Menu"
+msgstr "Menù applicazioni"
+
+#: src/bin/e_int_menus.c:830
 msgid "Lock Screen"
 msgstr "Blocca schermo"
 
-#: src/bin/e_int_menus.c:841 src/bin/e_actions.c:2011
+#: src/bin/e_int_menus.c:845 src/bin/e_actions.c:2011
 msgid "Suspend"
 msgstr "Sospendi"
 
-#: src/bin/e_int_menus.c:848
+#: src/bin/e_int_menus.c:852
 msgid "Hibernate"
 msgstr "Iberna"
 
-#: src/bin/e_int_menus.c:855 src/bin/e_actions.c:2008
+#: src/bin/e_int_menus.c:859 src/bin/e_actions.c:2008
 msgid "Reboot"
 msgstr "Riavvia"
 
-#: src/bin/e_int_menus.c:862 src/bin/e_actions.c:2005
+#: src/bin/e_int_menus.c:866 src/bin/e_actions.c:2005
 msgid "Shut Down"
 msgstr "Arresta"
 
-#: src/bin/e_int_menus.c:871
+#: src/bin/e_int_menus.c:875
 msgid "Logout"
 msgstr "Chiudi sessione"
 
-#: src/bin/e_int_menus.c:917 src/bin/e_int_menus.c:1077
+#: src/bin/e_int_menus.c:921 src/bin/e_int_menus.c:1081
 msgid "(No Windows)"
 msgstr "(Nessuna Finestra)"
 
-#: src/bin/e_int_menus.c:947 src/bin/e_actions.c:2029
+#: src/bin/e_int_menus.c:951 src/bin/e_actions.c:2029
 msgid "Cleanup Windows"
 msgstr "Ordina Finestre"
 
-#: src/bin/e_int_menus.c:961
+#: src/bin/e_int_menus.c:965
 msgid "Lost Windows"
 msgstr "Finestre perse"
 
-#: src/bin/e_int_menus.c:982 src/bin/e_int_menus.c:1091
+#: src/bin/e_int_menus.c:986 src/bin/e_int_menus.c:1095
 msgid "No name!!"
 msgstr "Nessun nome!!"
 
-#: src/bin/e_int_menus.c:1197
+#: src/bin/e_int_menus.c:1201
 msgid "(No Shelves)"
 msgstr "(Nessuna mensola)"
 
-#: src/bin/e_int_menus.c:1265
+#: src/bin/e_int_menus.c:1269
 msgid "Add A Shelf"
 msgstr "Aggiungi mensola"
 
-#: src/bin/e_int_menus.c:1269
+#: src/bin/e_int_menus.c:1273
 msgid "Delete A Shelf"
 msgstr "Elimina mensola"
 
@@ -431,17 +438,17 @@ msgstr "Elimina mensola"
 msgid "Theme Selector"
 msgstr "Selettore temi"
 
-#: src/bin/e_int_config_theme.c:357 src/bin/e_int_config_wallpaper.c:453
-#: src/bin/e_int_config_wallpaper.c:609 src/bin/e_int_config_startup.c:269
+#: src/bin/e_int_config_theme.c:357 src/bin/e_int_config_wallpaper.c:455
+#: src/bin/e_int_config_wallpaper.c:610 src/bin/e_int_config_startup.c:293
 #: src/bin/e_int_config_desklock.c:559
 msgid "Personal"
 msgstr "Personali"
 
-#: src/bin/e_int_config_theme.c:370 src/bin/e_int_config_wallpaper.c:466
-#: src/bin/e_int_config_wallpaper.c:622 src/bin/e_int_config_startup.c:282
+#: src/bin/e_int_config_theme.c:370 src/bin/e_int_config_wallpaper.c:468
+#: src/bin/e_int_config_wallpaper.c:623 src/bin/e_int_config_startup.c:306
 #: src/bin/e_int_config_icon_themes.c:221 src/bin/e_widget_fsel.c:294
-#: src/bin/e_int_config_desklock.c:572 src/bin/e_int_config_apps.c:586
-#: src/bin/e_int_config_apps.c:673
+#: src/bin/e_int_config_desklock.c:572 src/bin/e_int_config_apps.c:605
+#: src/bin/e_int_config_apps.c:699
 msgid "Go up a Directory"
 msgstr "Directory superiore"
 
@@ -565,11 +572,11 @@ msgstr ""
 "Enlightenment non ha potuto fare il fork di un processo figlio:<br><br>%s %"
 "s<br>"
 
-#: src/bin/e_apps.c:2865
+#: src/bin/e_apps.c:2871
 msgid "Application run error"
 msgstr "Errore d'esecuzione dell'applicazione"
 
-#: src/bin/e_apps.c:2867
+#: src/bin/e_apps.c:2873
 #, c-format
 msgid ""
 "Enlightenment was unable to run the application:<br><br>%s<br><br>The "
@@ -578,16 +585,16 @@ msgstr ""
 "Enlightenment non ha potuto avviare l'applicazione:<br><br>%"
 "s<br><br>L'applicazione non è partita"
 
-#: src/bin/e_apps.c:2875 src/bin/e_sys.c:392 src/bin/e_sys.c:437
+#: src/bin/e_apps.c:2881 src/bin/e_sys.c:392 src/bin/e_sys.c:437
 #: src/bin/e_int_border_remember.c:248 src/bin/e_int_border_remember.c:323
 #: src/bin/e_int_border_remember.c:365 src/bin/e_config_dialog.c:198
-#: src/bin/e_module.c:405 src/bin/e_entry_dialog.c:56 src/bin/e_fm.c:4697
-#: src/bin/e_fm.c:4810 src/bin/e_fm.c:5394 src/bin/e_fm.c:5454
-#: src/bin/e_fm.c:5492 src/bin/e_eap_editor.c:502
-#: src/bin/e_int_config_wallpaper_import.c:181
-#: src/bin/e_int_config_mime_edit.c:232 src/bin/e_utils.c:576
+#: src/bin/e_module.c:405 src/bin/e_entry_dialog.c:56 src/bin/e_fm.c:4725
+#: src/bin/e_fm.c:4838 src/bin/e_fm.c:5416 src/bin/e_fm.c:5476
+#: src/bin/e_fm.c:5514 src/bin/e_eap_editor.c:502
+#: src/bin/e_int_config_wallpaper_import.c:187
+#: src/bin/e_int_config_mime_edit.c:277 src/bin/e_utils.c:576
 #: src/bin/e_int_config_wallpaper_gradient.c:199
-#: src/bin/e_int_config_theme_import.c:113 src/modules/ibar/e_mod_main.c:1227
+#: src/bin/e_int_config_theme_import.c:113 src/modules/ibar/e_mod_main.c:1252
 #: src/modules/cpufreq/e_mod_main.c:334 src/modules/cpufreq/e_mod_main.c:361
 #: src/modules/cpufreq/e_mod_main.c:380 src/modules/battery/e_mod_main.c:306
 msgid "OK"
@@ -665,7 +672,7 @@ msgstr "Combinazioni della tastiera"
 msgid "Mouse Bindings"
 msgstr "Combinazioni del mouse"
 
-#: src/bin/e_configure.c:112
+#: src/bin/e_configure.c:112 src/bin/e_int_config_apps.c:694
 msgid "Menus"
 msgstr "Menù"
 
@@ -673,43 +680,48 @@ msgstr "Menù"
 msgid "Miscellaneous"
 msgstr "Varie"
 
-#: src/bin/e_configure.c:116
+#: src/bin/e_configure.c:120
 msgid "Performance"
 msgstr "Prestazioni"
 
-#: src/bin/e_configure.c:117
+#: src/bin/e_configure.c:121
 msgid "Configuration Dialogs"
 msgstr "Dialoghi di configurazione"
 
-#: src/bin/e_configure.c:118
+#: src/bin/e_configure.c:122
 msgid "Language Settings"
 msgstr "Lingua"
 
-#: src/bin/e_configure.c:120 src/bin/e_config_dialog.c:169
+#: src/bin/e_configure.c:124 src/bin/e_config_dialog.c:169
 msgid "Advanced"
 msgstr "Avanzate"
 
-#: src/bin/e_configure.c:121 src/bin/e_int_config_transitions.c:135
+#: src/bin/e_configure.c:125 src/bin/e_int_config_transitions.c:135
 msgid "Startup"
 msgstr "Avvio"
 
-#: src/bin/e_configure.c:122
+#: src/bin/e_configure.c:126
 msgid "Window List"
 msgstr "Lista finestre"
 
-#: src/bin/e_configure.c:123 src/bin/e_int_config_window_manipulation.c:51
+#: src/bin/e_configure.c:127 src/bin/e_int_config_window_manipulation.c:51
 msgid "Window Manipulation"
 msgstr "Manipolazione finestre"
 
-#: src/bin/e_configure.c:125
+#: src/bin/e_configure.c:129
 msgid "Search Directories"
 msgstr "Directory predefinite"
 
-#: src/bin/e_configure.c:128
+#: src/bin/e_configure.c:130 src/bin/e_int_config_mime.c:59
+#: src/bin/e_int_config_mime.c:179
+msgid "File Associations"
+msgstr "Associazioni tipi di file"
+
+#: src/bin/e_configure.c:132
 msgid "Extensions"
 msgstr "Estensioni"
 
-#: src/bin/e_configure.c:137 src/bin/e_fwin.c:777
+#: src/bin/e_configure.c:141 src/bin/e_fwin.c:777
 #: src/bin/e_config_dialog.c:206 src/bin/e_int_border_menu.c:301
 #: src/bin/e_actions.c:1793
 msgid "Close"
@@ -817,35 +829,35 @@ msgstr "Disabilitato"
 msgid "Module Actions"
 msgstr "Azioni del modulo"
 
-#: src/bin/e_int_config_wallpaper.c:90
+#: src/bin/e_int_config_wallpaper.c:89
 msgid "Wallpaper Settings"
 msgstr "Impostazioni sfondo"
 
-#: src/bin/e_int_config_wallpaper.c:524 src/bin/e_int_config_wallpaper.c:677
+#: src/bin/e_int_config_wallpaper.c:526 src/bin/e_int_config_wallpaper.c:678
 msgid "Use Theme Wallpaper"
 msgstr "Usa sfondo del tema"
 
-#: src/bin/e_int_config_wallpaper.c:531 src/bin/e_int_config_wallpaper.c:684
+#: src/bin/e_int_config_wallpaper.c:533 src/bin/e_int_config_wallpaper.c:685
 msgid "Picture..."
 msgstr "Immagine..."
 
-#: src/bin/e_int_config_wallpaper.c:534 src/bin/e_int_config_wallpaper.c:687
+#: src/bin/e_int_config_wallpaper.c:536 src/bin/e_int_config_wallpaper.c:688
 msgid "Gradient..."
 msgstr "Gradiente..."
 
-#: src/bin/e_int_config_wallpaper.c:702
+#: src/bin/e_int_config_wallpaper.c:703
 msgid "Where to place the Wallpaper"
 msgstr "Posizionamento dello sfondo"
 
-#: src/bin/e_int_config_wallpaper.c:706
+#: src/bin/e_int_config_wallpaper.c:707
 msgid "All Desktops"
 msgstr "Tutti i desktop"
 
-#: src/bin/e_int_config_wallpaper.c:708
+#: src/bin/e_int_config_wallpaper.c:709
 msgid "This Desktop"
 msgstr "Questo desktop"
 
-#: src/bin/e_int_config_wallpaper.c:710
+#: src/bin/e_int_config_wallpaper.c:711
 msgid "This Screen"
 msgstr "Questo schermo"
 
@@ -1123,7 +1135,7 @@ msgid "Typebuf"
 msgstr "Casella immissione testo"
 
 #: src/bin/e_int_config_fonts.c:77 src/bin/e_eap_editor.c:320
-#: src/bin/e_int_config_mime_edit.c:133
+#: src/bin/e_int_config_mime_edit.c:144
 msgid "Icon"
 msgstr "Icona"
 
@@ -3002,32 +3014,47 @@ msgstr "Zimbabwe"
 msgid "Language Configuration"
 msgstr "Configurazione lingua"
 
-#: src/bin/e_int_config_intl.c:897 src/bin/e_int_config_intl.c:973
+#: src/bin/e_int_config_intl.c:893 src/bin/e_int_config_intl.c:978
 msgid "Language Selector"
 msgstr "Selettore lingua"
 
-#: src/bin/e_int_config_intl.c:939 src/bin/e_int_config_intl.c:1038
+#: src/bin/e_int_config_intl.c:944 src/bin/e_int_config_intl.c:1043
 msgid "Locale Selected"
 msgstr "Localizzazione selezionata"
 
-#: src/bin/e_int_config_intl.c:941 src/bin/e_int_config_intl.c:1040
+#: src/bin/e_int_config_intl.c:946 src/bin/e_int_config_intl.c:1045
 msgid "Locale"
 msgstr "Localizzazione"
 
-#: src/bin/e_init.c:46
+#: src/bin/e_init.c:48
 #, c-format
 msgid "X reports there are no root windows and %i screens!\n"
 msgstr "X sostiene che non vi è root window e schermi %i!\n"
 
-#: src/bin/e_init.c:110
+#: src/bin/e_init.c:112
 msgid "Disable this splash screen in the future?"
 msgstr "Disabilitare questo splash screen nel futuro?"
 
-#: src/bin/e_intl.c:352
+#: src/bin/e_init.c:307
+msgid "Theme Bug Detected"
+msgstr "Rilevato bug del tema"
+
+#: src/bin/e_init.c:308
+msgid ""
+"The theme you are using for your init splash<br>has a bug. It does not "
+"respond to signals when<br>startup is complete. You should use an "
+"init<br>splash theme that is correctly made or fix the<br>one you use."
+msgstr ""
+"Il tema che state usando per lo spash screen<br>di avvio ha un bug. "
+"Non risponde ai segnali<br>quando l'avvio viene completato. Dovreste "
+"usare<br>un tema corretto per lo splash screen o sistemare<br>quello "
+"che state usando."
+
+#: src/bin/e_intl.c:357
 msgid "Input Method Error"
 msgstr "Errore del metodo di input"
 
-#: src/bin/e_intl.c:353
+#: src/bin/e_intl.c:358
 msgid ""
 "Error starting the input method executable<br><br>please make sure that your "
 "input<br>method configuration is correct and<br>that your "
@@ -3155,7 +3182,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare il sistema IPC.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:427
+#: src/bin/e_main.c:426
 msgid ""
 "Enlightenment cannot initialize the FDO desktop system.\n"
 "Perhaps you are out of memory?"
@@ -3163,7 +3190,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare il sistema desktop FDO.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:448
+#: src/bin/e_main.c:446
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -3171,7 +3198,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare il sistema Evas.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:454
+#: src/bin/e_main.c:452
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -3181,7 +3208,7 @@ msgstr ""
 "software X11 in Evas. Controllate le vostre installazioni di Evas e\n"
 "Ecore e il loro supporto per il motore di rendering software X11."
 
-#: src/bin/e_main.c:461
+#: src/bin/e_main.c:459
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -3191,7 +3218,7 @@ msgstr ""
 "software Buffer in Evas. Controllate le vostre installazioni di Evas e\n"
 "Ecore e il loro supporto per il motore di rendering software Buffer."
 
-#: src/bin/e_main.c:475
+#: src/bin/e_main.c:473
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -3200,7 +3227,7 @@ msgstr ""
 "buffer. Controllare che Evas abbia il supporto per il motore di\n"
 "rendering software Buffer.\n"
 
-#: src/bin/e_main.c:485
+#: src/bin/e_main.c:483
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
@@ -3208,7 +3235,7 @@ msgstr ""
 "Enlightenment ha riscontrato che Evas non può caricare file PNG.\n"
 "Controllare che Evas abbia il supporto per il loader PNG.\n"
 
-#: src/bin/e_main.c:494
+#: src/bin/e_main.c:492
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
@@ -3216,7 +3243,7 @@ msgstr ""
 "Enlightenment ha riscontrato che Evas non può caricare file JPEG.\n"
 "Controllare che Evas abbia il supporto per il loader JPEG.\n"
 
-#: src/bin/e_main.c:503
+#: src/bin/e_main.c:501
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
@@ -3224,23 +3251,23 @@ msgstr ""
 "Enlightenment ha riscontrato che Evas non può caricare file EET.\n"
 "Controllare che Evas abbia il supporto per il loader EET.\n"
 
-#: src/bin/e_main.c:517
+#: src/bin/e_main.c:515
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di thumbnailing (anteprime).\n"
 
-#: src/bin/e_main.c:526
+#: src/bin/e_main.c:524
 msgid "Enlightenment cannot initialize the System Command system.\n"
 msgstr ""
 "Enlightenment non riesce a il sistema di comandi di sistema.\n"
 "\n"
 
-#: src/bin/e_main.c:538
+#: src/bin/e_main.c:536
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment non riesce ad inizializzare il File manager.\n"
 
-#: src/bin/e_main.c:546
+#: src/bin/e_main.c:544
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -3248,19 +3275,19 @@ msgstr ""
 "Enlightenment non riesce a creare directory nella vostra home.\n"
 "Forse non avete home directory, o il disco è pieno?"
 
-#: src/bin/e_main.c:555
+#: src/bin/e_main.c:553
 msgid "Enlightenment cannot set up its file registry system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di file registry."
 
-#: src/bin/e_main.c:563
+#: src/bin/e_main.c:561
 msgid "Enlightenment cannot set up its config system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di configurazione."
 
-#: src/bin/e_main.c:571
+#: src/bin/e_main.c:569
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -3268,49 +3295,49 @@ msgstr ""
 "Enlightenment non riesce a configurare i percorsi per la\n"
 "ricerca dei file. Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:580
+#: src/bin/e_main.c:578
 msgid "Enlightenment cannot set up its intl system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di intl (internazionalizzazione)."
 
-#: src/bin/e_main.c:588
+#: src/bin/e_main.c:586
 msgid "Enlightenment cannot set up its actions system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di azioni."
 
-#: src/bin/e_main.c:596
+#: src/bin/e_main.c:594
 msgid "Enlightenment cannot set up its bindings system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di binding (associazioni)."
 
-#: src/bin/e_main.c:604
+#: src/bin/e_main.c:602
 msgid "Enlightenment cannot set up its popup system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di popup."
 
-#: src/bin/e_main.c:616
+#: src/bin/e_main.c:614
 msgid "Enlightenment cannot set up its font system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di font."
 
-#: src/bin/e_main.c:627
+#: src/bin/e_main.c:625
 msgid "Enlightenment cannot set up its theme system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di temi."
 
-#: src/bin/e_main.c:635
+#: src/bin/e_main.c:633
 msgid "Enlightenment cannot set up its desktop background system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di sfondi del desktop."
 
-#: src/bin/e_main.c:645
+#: src/bin/e_main.c:643
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -3318,7 +3345,7 @@ msgstr ""
 "Enlightenment non riesce a configurare la schermata d'avvio.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:655
+#: src/bin/e_main.c:653
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -3327,55 +3354,55 @@ msgstr ""
 "da parte di Enlightenment è fallita. Forse c'è un altro window\n"
 "manager in esecuzione?\n"
 
-#: src/bin/e_main.c:664
+#: src/bin/e_main.c:662
 msgid "Enlightenment cannot set up its app system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di applicazioni."
 
-#: src/bin/e_main.c:672
+#: src/bin/e_main.c:670
 msgid "Enlightenment cannot setup remember settings."
 msgstr ""
 "Enlightenment non riesce a configurare le\n"
 "impostazioni da ricordare."
 
-#: src/bin/e_main.c:689
+#: src/bin/e_main.c:687
 msgid "Enlightenment cannot set up its msg system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di messaggi."
 
-#: src/bin/e_main.c:697
+#: src/bin/e_main.c:695
 msgid "Enlightenment cannot set up its dnd system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di 'drag & drop'."
 
-#: src/bin/e_main.c:705
+#: src/bin/e_main.c:703
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di gestione dell'input catturato."
 
-#: src/bin/e_main.c:713
+#: src/bin/e_main.c:711
 msgid "Enlightenment cannot set up its module system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di moduli."
 
-#: src/bin/e_main.c:721
+#: src/bin/e_main.c:719
 msgid "Enlightenment cannot set up its window list system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di window list (lista finestre)."
 
-#: src/bin/e_main.c:729
+#: src/bin/e_main.c:727
 msgid "Enlightenment cannot set up its color class system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di classi colore."
 
-#: src/bin/e_main.c:741
+#: src/bin/e_main.c:739
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
@@ -3388,31 +3415,31 @@ msgstr ""
 "finestra di configurazione<br>dei moduli dovrebbe permettervi di "
 "selezionare<br>nuovamente i vostri moduli."
 
-#: src/bin/e_main.c:753
+#: src/bin/e_main.c:751
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di controllo dei gadget."
 
-#: src/bin/e_main.c:761
+#: src/bin/e_main.c:759
 msgid "Enlightenment cannot set up its shelf system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di mensole portamoduli."
 
-#: src/bin/e_main.c:769
+#: src/bin/e_main.c:767
 msgid "Enlightenment cannot set up its exebuf system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema exebuf (riga di comando)."
 
-#: src/bin/e_main.c:778
+#: src/bin/e_main.c:776
 msgid "Enlightenment cannot set up its desk locking system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di blocco dello schermo."
 
-#: src/bin/e_main.c:794
+#: src/bin/e_main.c:792
 msgid "Enlightenment Starting. Please wait."
 msgstr "Avvio di Enlightenment. Attendere prego."
 
@@ -3420,9 +3447,17 @@ msgstr "Avvio di Enlightenment. Attendere prego."
 msgid "Startup Settings"
 msgstr "Avvio di Enlightenment"
 
-#: src/bin/e_int_config_startup.c:345
+#: src/bin/e_int_config_startup.c:369
 msgid "Show Splash Screen on Login"
 msgstr "Mostra splash screen al login"
+
+#: src/bin/e_int_config_startup.c:373
+msgid "Add startup Application"
+msgstr "Applicazioni eseguite all'avvio"
+
+#: src/bin/e_int_config_startup.c:377
+msgid "Add restart Application"
+msgstr "Applicazioni eseguite al riavvio"
 
 #: src/bin/e_int_config_color_classes.c:45
 msgid "About Dialog Title"
@@ -3647,23 +3682,23 @@ msgstr "Informazioni su..."
 msgid "Would you like to unload this module?<br>"
 msgstr "Volete disattivare questo modulo?<br>"
 
-#: src/bin/e_module.c:549 src/bin/e_fm.c:4862 src/bin/e_confirm_dialog.c:69
+#: src/bin/e_module.c:549 src/bin/e_fm.c:4890 src/bin/e_confirm_dialog.c:69
 #: src/bin/e_actions.c:1421 src/bin/e_actions.c:1482 src/bin/e_actions.c:1531
 #: src/bin/e_actions.c:1580 src/bin/e_actions.c:1629 src/bin/e_actions.c:1678
-#: src/bin/e_int_config_display.c:215 src/bin/e_int_config_apps.c:562
+#: src/bin/e_int_config_display.c:215
 msgid "Yes"
 msgstr "Sì"
 
-#: src/bin/e_module.c:550 src/bin/e_fm.c:4863 src/bin/e_confirm_dialog.c:70
+#: src/bin/e_module.c:550 src/bin/e_fm.c:4891 src/bin/e_confirm_dialog.c:70
 #: src/bin/e_actions.c:1423 src/bin/e_actions.c:1484 src/bin/e_actions.c:1533
 #: src/bin/e_actions.c:1582 src/bin/e_actions.c:1631 src/bin/e_actions.c:1680
-#: src/bin/e_int_config_display.c:216 src/bin/e_int_config_apps.c:564
+#: src/bin/e_int_config_display.c:216
 msgid "No"
 msgstr "No"
 
 #: src/bin/e_entry_dialog.c:57 src/bin/e_eap_editor.c:503
-#: src/bin/e_int_config_wallpaper_import.c:184
-#: src/bin/e_int_config_mime_edit.c:233
+#: src/bin/e_int_config_wallpaper_import.c:190
+#: src/bin/e_int_config_mime_edit.c:278
 #: src/bin/e_int_config_wallpaper_gradient.c:200
 #: src/bin/e_int_config_theme_import.c:117
 msgid "Cancel"
@@ -3702,74 +3737,78 @@ msgstr ""
 msgid "Starting %s"
 msgstr "Avvio di %s"
 
-#: src/bin/e_fm.c:1197
+#: src/bin/e_fm.c:1198
 #, c-format
 msgid "%i Files"
 msgstr "%i File"
 
-#: src/bin/e_fm.c:4296 src/bin/e_fm.c:4427
+#: src/bin/e_fm.c:4292 src/bin/e_fm.c:4433
 msgid "Refresh View"
 msgstr "Aggiorna vista"
 
-#: src/bin/e_fm.c:4307 src/bin/e_fm.c:4438
+#: src/bin/e_fm.c:4303 src/bin/e_fm.c:4444
 msgid "Show Hidden Files"
 msgstr "Mostra file nascosti"
 
-#: src/bin/e_fm.c:4322 src/bin/e_fm.c:4453
+#: src/bin/e_fm.c:4318 src/bin/e_fm.c:4459
 msgid "Remember Ordering"
 msgstr "Ricorda ordinamento"
 
-#: src/bin/e_fm.c:4341 src/bin/e_fm.c:4472 src/bin/e_int_config_paths.c:209
+#: src/bin/e_fm.c:4330 src/bin/e_fm.c:4471
+msgid "Sort Now"
+msgstr "Ordina adesso"
+
+#: src/bin/e_fm.c:4347 src/bin/e_fm.c:4488 src/bin/e_int_config_paths.c:209
 msgid "New Directory"
 msgstr "Nuova directory"
 
-#: src/bin/e_fm.c:4547
+#: src/bin/e_fm.c:4563
 msgid "Rename"
 msgstr "Rinomina"
 
-#: src/bin/e_fm.c:4655
+#: src/bin/e_fm.c:4683
 msgid "Create a new Directory"
 msgstr "Crea nuova directory"
 
-#: src/bin/e_fm.c:4656
+#: src/bin/e_fm.c:4684
 msgid "New Directory Name:"
 msgstr "Nome directory:"
 
-#: src/bin/e_fm.c:4699 src/bin/e_fm.c:4812 src/bin/e_fm.c:5396
-#: src/bin/e_fm.c:5456 src/bin/e_fm.c:5494
+#: src/bin/e_fm.c:4727 src/bin/e_fm.c:4840 src/bin/e_fm.c:5418
+#: src/bin/e_fm.c:5478 src/bin/e_fm.c:5516
 msgid "Error"
 msgstr "Errore"
 
-#: src/bin/e_fm.c:4701
+#: src/bin/e_fm.c:4729
 #, c-format
 msgid "Could not create directory:<br><hilight>%s</hilight>"
 msgstr "Impossibile creare la directory:<br><hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:4756
+#: src/bin/e_fm.c:4784
 #, c-format
 msgid "Rename %s to:"
 msgstr "Rinomina %s in:"
 
-#: src/bin/e_fm.c:4758
+#: src/bin/e_fm.c:4786
 msgid "Rename File"
 msgstr "Rinomina file"
 
-#: src/bin/e_fm.c:4814
+#: src/bin/e_fm.c:4842
 #, c-format
 msgid "Could not rename from <hilight>%s</hilight> to <hilight>%s</hilight>"
 msgstr ""
 "Impossibile rinominare da <hilight>%s</hilight> a <hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:4865
+#: src/bin/e_fm.c:4893
 msgid "Confirm Delete"
 msgstr "Conferma eliminazione"
 
-#: src/bin/e_fm.c:4869
+#: src/bin/e_fm.c:4897
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Siete sicuri di voler eliminare<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:4875
+#: src/bin/e_fm.c:4903
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the selected files in:<br><hilight>%s</"
@@ -3778,12 +3817,12 @@ msgstr ""
 "Siete sicuri di voler eliminare<br>i file selezionati in:<br><hilight>%s</"
 "hilight> ?"
 
-#: src/bin/e_fm.c:5398 src/bin/e_fm.c:5458 src/bin/e_fm.c:5496
+#: src/bin/e_fm.c:5420 src/bin/e_fm.c:5480 src/bin/e_fm.c:5518
 #, c-format
 msgid "Could not delete <br><hilight>%s</hilight>"
 msgstr "Impossibile eliminare <br><hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:5554
+#: src/bin/e_fm.c:5576
 #, c-format
 msgid "%i Queued"
 msgstr "%i in coda"
@@ -4131,7 +4170,7 @@ msgstr "Ridimensiona"
 
 #: src/bin/e_actions.c:1778 src/bin/e_actions.c:1964 src/bin/e_actions.c:1966
 #: src/bin/e_actions.c:1968 src/bin/e_actions.c:1969 src/bin/e_actions.c:1970
-#: src/bin/e_int_config_mousebindings.c:375
+#: src/bin/e_int_config_mousebindings.c:375 src/bin/e_int_config_apps.c:696
 msgid "Menu"
 msgstr "Menù"
 
@@ -4401,7 +4440,7 @@ msgstr "Dialogo \"Esegui comando\""
 msgid "Desktop Lock"
 msgstr "Blocco schermo"
 
-#: src/bin/e_config.c:516
+#: src/bin/e_config.c:517
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -4421,7 +4460,7 @@ msgstr ""
 "funzionalità.<br>Adesso è possibile riconfigurare le cose a proprio "
 "piacimento.<br>Ci scusiamo per il disagio.<br>"
 
-#: src/bin/e_config.c:530
+#: src/bin/e_config.c:531
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very<br>strange. "
 "This should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -4436,16 +4475,16 @@ msgstr ""
 "male, quindi la vostra configurazione è<br>stata ripristinata a scopo "
 "precauzionale ai valori predefiniti. Ci<br>scusiamo per l'inconveniente.<br>"
 
-#: src/bin/e_config.c:553
+#: src/bin/e_config.c:554
 #, c-format
 msgid "Desktop %i, %i"
 msgstr "Desktop %i, %i"
 
-#: src/bin/e_config.c:1968
+#: src/bin/e_config.c:1970
 msgid "Configuration Upgraded"
 msgstr "Aggiornamento configurazione"
 
-#: src/bin/e_config.c:1983
+#: src/bin/e_config.c:1985
 #, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>configuration to disk. The "
@@ -4457,7 +4496,7 @@ msgstr ""
 "dove è avvenuto l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:1994
+#: src/bin/e_config.c:1996
 #, c-format
 msgid ""
 "Enlightenment's configuration files are too big<br>for the file system they "
@@ -4473,7 +4512,7 @@ msgstr ""
 "avvenuto l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:2007
+#: src/bin/e_config.c:2009
 #, c-format
 msgid ""
 "An output error occured when writing the configuration<br>files for "
@@ -4487,7 +4526,7 @@ msgstr ""
 "l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:2018
+#: src/bin/e_config.c:2020
 #, c-format
 msgid ""
 "Enlightenment cannot write its configuration file<br>because it ran out of "
@@ -4501,7 +4540,7 @@ msgstr ""
 "l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:2030
+#: src/bin/e_config.c:2032
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the configuration file<br>it was writing "
@@ -4513,7 +4552,7 @@ msgstr ""
 "avvenuto l'errore è:<br>%s<br><br>Questo file è stato cancellato per "
 "evitare<br>corruzione di dati.<br>"
 
-#: src/bin/e_config.c:2046
+#: src/bin/e_config.c:2048
 msgid "Enlightenment Configration Write Problems"
 msgstr "Problemi scrittura configurazione di Enlightenment"
 
@@ -4521,7 +4560,7 @@ msgstr "Problemi scrittura configurazione di Enlightenment"
 msgid "Application Editor"
 msgstr "Editor delle applicazioni"
 
-#: src/bin/e_eap_editor.c:337 src/bin/e_int_config_mime_edit.c:124
+#: src/bin/e_eap_editor.c:337 src/bin/e_int_config_mime_edit.c:135
 msgid "Basic Info"
 msgstr "Informazioni di base"
 
@@ -4577,7 +4616,7 @@ msgstr "Notifica avvio"
 msgid "Wait Exit"
 msgstr "Attesa uscita"
 
-#: src/bin/e_eap_editor.c:477 src/bin/e_int_config_mime_edit.c:222
+#: src/bin/e_eap_editor.c:477
 msgid "Select an Icon"
 msgstr "Seleziona un'icona"
 
@@ -4705,66 +4744,70 @@ msgstr "Impostazioni di base"
 msgid "Advanced Mode"
 msgstr "Impostazioni avanzate"
 
-#: src/bin/e_int_config_wallpaper_import.c:95
+#: src/bin/e_int_config_wallpaper_import.c:98
 msgid "Select a Picture..."
 msgstr "Selezionare un'immmagine..."
 
-#: src/bin/e_int_config_wallpaper_import.c:147
+#: src/bin/e_int_config_wallpaper_import.c:150
 msgid "Fill and Stretch Options"
 msgstr "Opzioni di riempimento e stiramento"
 
-#: src/bin/e_int_config_wallpaper_import.c:150
+#: src/bin/e_int_config_wallpaper_import.c:153
 msgid "Stretch"
 msgstr "Stirata"
 
-#: src/bin/e_int_config_wallpaper_import.c:153
+#: src/bin/e_int_config_wallpaper_import.c:156
 msgid "Center"
 msgstr "Centrata"
 
-#: src/bin/e_int_config_wallpaper_import.c:156
+#: src/bin/e_int_config_wallpaper_import.c:159
 msgid "Tile"
 msgstr "Affiancata"
 
-#: src/bin/e_int_config_wallpaper_import.c:159
+#: src/bin/e_int_config_wallpaper_import.c:162
 msgid "Within"
 msgstr "All'interno"
 
-#: src/bin/e_int_config_wallpaper_import.c:162
+#: src/bin/e_int_config_wallpaper_import.c:165
 msgid "Fill"
 msgstr "Riempimento"
 
-#: src/bin/e_int_config_wallpaper_import.c:167
+#: src/bin/e_int_config_wallpaper_import.c:170
 msgid "File Quality"
 msgstr "Qualità del file"
 
-#: src/bin/e_int_config_wallpaper_import.c:169
+#: src/bin/e_int_config_wallpaper_import.c:172
+msgid "Use original file"
+msgstr "Usa file originale"
+
+#: src/bin/e_int_config_wallpaper_import.c:175
 #, c-format
 msgid "%3.0f%%"
 msgstr "%3.0f%%"
 
-#: src/bin/e_int_config_wallpaper_import.c:457
+#: src/bin/e_int_config_wallpaper_import.c:472
 msgid "Picture Import Error"
 msgstr "Errore importazione immagine"
 
-#: src/bin/e_int_config_wallpaper_import.c:458
+#: src/bin/e_int_config_wallpaper_import.c:473
 msgid ""
 "Enlightenment was unable to import the picture<br>due to conversion errors."
 msgstr ""
 "Enlightenment non ha potuto importare l'immagine<br>a causa di errori di "
 "conversione."
 
-#: src/bin/e_int_config_wallpaper_import.c:532
-#: src/bin/e_int_config_wallpaper_import.c:548
+#: src/bin/e_int_config_wallpaper_import.c:547
+#: src/bin/e_int_config_wallpaper_import.c:563
 msgid "Wallpaper Import Error"
 msgstr "Errore importazione sfondo"
 
-#: src/bin/e_int_config_wallpaper_import.c:533
+#: src/bin/e_int_config_wallpaper_import.c:548
 msgid "Enlightenment was unable to import the wallpaper<br>due to a copy error"
 msgstr ""
 "Enlightenment non ha potuto importare lo sfondo<br>a causa di un errore di "
 "copia."
 
-#: src/bin/e_int_config_wallpaper_import.c:549
+#: src/bin/e_int_config_wallpaper_import.c:564
 msgid ""
 "Enlightenment was unable to import the wallpaper.<br><br>Are you sure this "
 "is a valid wallpaper?"
@@ -4917,7 +4960,7 @@ msgstr "Sposta/ridimensiona questo gadget"
 msgid "Remove this gadget"
 msgstr "Elimina questo gadget"
 
-#: src/bin/e_gadcon.c:1530
+#: src/bin/e_gadcon.c:1550
 msgid "Stop editing"
 msgstr "Fine modifica"
 
@@ -5264,37 +5307,45 @@ msgstr "Numero di collezioni edje in cache"
 msgid "%1.0f collections"
 msgstr "%1.0f collezioni"
 
-#: src/bin/e_int_config_mime.c:58 src/bin/e_int_config_mime.c:159
-msgid "Mime Types"
-msgstr "Tipi mime"
-
-#: src/bin/e_int_config_mime.c:152
+#: src/bin/e_int_config_mime.c:172
 msgid "Categories"
 msgstr "Categorie"
 
-#: src/bin/e_int_config_mime_edit.c:59
-msgid "Mime Settings"
-msgstr "Impostazione tipi mime"
+#: src/bin/e_int_config_mime_edit.c:68
+msgid "File Association"
+msgstr "Associazione tipo di file"
 
-#: src/bin/e_int_config_mime_edit.c:125
+#: src/bin/e_int_config_mime_edit.c:136
 msgid "Mime:"
 msgstr "Mime:"
 
-#: src/bin/e_int_config_mime_edit.c:135
+#: src/bin/e_int_config_mime_edit.c:146
 msgid "Use Generated Thumbnail"
 msgstr "Usa anteprime generate"
 
-#: src/bin/e_int_config_mime_edit.c:138
+#: src/bin/e_int_config_mime_edit.c:149
 msgid "Use Theme Icon"
 msgstr "Usa icona del tema"
 
-#: src/bin/e_int_config_mime_edit.c:141
+#: src/bin/e_int_config_mime_edit.c:152
 msgid "Use Edje File"
 msgstr "Usa file edje"
 
-#: src/bin/e_int_config_mime_edit.c:144
+#: src/bin/e_int_config_mime_edit.c:155
+msgid "Use Image"
+msgstr "Usa immagine"
+
+#: src/bin/e_int_config_mime_edit.c:158
 msgid "Use Default"
 msgstr "Usa valori predefiniti"
+
+#: src/bin/e_int_config_mime_edit.c:264
+msgid "Select an Edj File"
+msgstr "Seleziona file edj"
+
+#: src/bin/e_int_config_mime_edit.c:266
+msgid "Select an Image"
+msgstr "Seleziona un'immagine"
 
 #: src/bin/e_winlist.c:134
 msgid "Select a window"
@@ -5571,6 +5622,23 @@ msgstr "Mostra sulla zona corrente"
 msgid "Show on screen zone #:"
 msgstr "Mostra sulla zona #:"
 
+#: src/bin/e_int_config_desk.c:46
+msgid "Desk Settings"
+msgstr "Impostazioni desktop"
+
+#: src/bin/e_int_config_desk.c:142
+msgid "Desktop Name"
+msgstr "Nome desktop"
+
+#: src/bin/e_int_config_desk.c:143
+#: src/bin/e_int_config_wallpaper_gradient.c:121
+msgid "Name:"
+msgstr "Nome:"
+
+#: src/bin/e_int_config_desk.c:149
+msgid "Desktop Wallpaper"
+msgstr "Sfondo desktop"
+
 #: src/bin/e_int_config_mousebindings.c:10
 msgid ""
 "Please hold any modifier you want<br>and press any button on your mouse,<br> "
@@ -5642,10 +5710,6 @@ msgstr "Sequenza associazione del mouse"
 msgid "Create a gradient..."
 msgstr "Crea gradiente..."
 
-#: src/bin/e_int_config_wallpaper_gradient.c:121
-msgid "Name:"
-msgstr "Nome:"
-
 #: src/bin/e_int_config_wallpaper_gradient.c:125
 msgid "Color 1:"
 msgstr "Colore 1:"
@@ -5678,44 +5742,52 @@ msgstr "Errore creazione gradiente"
 msgid "For some reason, Enlightenment was unable to create a gradient."
 msgstr "Per qualche ragione Enlightenment non ha potuto creare il gradiente."
 
-#: src/bin/e_int_config_apps.c:407
+#: src/bin/e_int_config_apps.c:416
 msgid "Edit Application"
 msgstr "Modifica applicazione"
 
-#: src/bin/e_int_config_apps.c:553
-msgid "Are you sure you want to regenerate your Applications menus?"
-msgstr "Siete sicuri di voler rigenerare il menù \"Applicazioni\"?"
+#: src/bin/e_int_config_apps.c:569
+msgid "Regenerate or update your Applications menu?"
+msgstr "Rigenerare o aggiornare menù \"Applicazioni\"?"
 
-#: src/bin/e_int_config_apps.c:555
+#: src/bin/e_int_config_apps.c:571
 msgid ""
-"You are about to regenerate your Applications menus.<br>This will delete any "
+"You can regenerate your Applications menu.<br>This will delete any "
 "customizations you have made.<br>This will replace the Applications menu "
-"with the system menus.<br><br>Are you sure you want to do this?"
+"with the system menu.<br><br>Or you could just update your Applications menu."
+"<br>This will add any new Applications, and remove any old ones from<br>your "
+"Applications menu.  Customizations you have made will remain."
 msgstr ""
-"State per rigenerare il menù \"Applicazioni\".<br>\n"
-"Questo rimuoverà tutte le personalizzazioni che avete<br>\n"
-"fatto e sostituirà il menù con quello di sistema.<br><br>\n"
-"Siete sicuri di volerlo fare?"
+"Potete rigenerare il vostro menù \"Applicazioni\".<br>Questo rimuoverà "
+"tutte le personalizzazioni che avete<br>fatto e sostituirà il menù con "
+"quello di sistema.<br><br>Oppure potete semplicemente aggiornare il vostro<br>"
+"menù \"Applicazioni\". Questo aggiungerà qualunque<brnuova applicazione e "
+"rimuoverà quelle vecchie dal<br>menù attuale, e le vostre personalizzazioni"
+"<br>saranno mantenute."
 
-#: src/bin/e_int_config_apps.c:584
+#: src/bin/e_int_config_apps.c:580
+msgid "Regenerate"
+msgstr "Rigenera"
+
+#: src/bin/e_int_config_apps.c:582
+msgid "Update"
+msgstr "Aggiorna"
+
+#: src/bin/e_int_config_apps.c:603
 msgid "Available Applications"
 msgstr "Applicazioni disponibili"
 
-#: src/bin/e_int_config_apps.c:640
-msgid "Sort applications"
-msgstr "Ordina applicazioni"
+#: src/bin/e_int_config_apps.c:659
+msgid "All applications"
+msgstr "Tutte le applicazioni"
 
-#: src/bin/e_int_config_apps.c:662
-msgid "Create a new application"
+#: src/bin/e_int_config_apps.c:681
+msgid "Create a new Application"
 msgstr "Crea nuova applicazione"
 
-#: src/bin/e_int_config_apps.c:671
-msgid "Bars, Menus, etc."
-msgstr "Barre, menù, ecc."
-
-#: src/bin/e_int_config_apps.c:743
-msgid "Regenerate \"Applications\" Menu"
-msgstr "Rigenera menù \"Applicazioni\""
+#: src/bin/e_int_config_apps.c:772
+msgid "Regenerate/update \"Applications\" Menu"
+msgstr "Rigenera/aggiorna menù \"Applicazioni\""
 
 #: src/bin/e_int_config_theme_import.c:65
 msgid "Select a Theme..."
@@ -5805,31 +5877,31 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Siete sicuri di voler rimuovere questa sorgente per Ibar?"
 
-#: src/modules/ibar/e_mod_main.c:212
+#: src/modules/ibar/e_mod_main.c:215
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:841
+#: src/modules/ibar/e_mod_main.c:844
 msgid "Add to IBar"
 msgstr "Aggiungi ad IBar"
 
-#: src/modules/ibar/e_mod_main.c:906
+#: src/modules/ibar/e_mod_main.c:909
 msgid "Change Icon Properties"
 msgstr "Cambia proprietà dell'icona"
 
-#: src/modules/ibar/e_mod_main.c:911
+#: src/modules/ibar/e_mod_main.c:914
 msgid "Remove Icon"
 msgstr "Elimina icona"
 
-#: src/modules/ibar/e_mod_main.c:924
+#: src/modules/ibar/e_mod_main.c:927
 msgid "Add Application"
 msgstr "Aggiungi applicazione"
 
-#: src/modules/ibar/e_mod_main.c:1220
+#: src/modules/ibar/e_mod_main.c:1245
 msgid "Cannot add icon"
 msgstr "Impossibile aggiungere icona"
 
-#: src/modules/ibar/e_mod_main.c:1222
+#: src/modules/ibar/e_mod_main.c:1247
 msgid ""
 "You tried to drop an icon of an application that<br>does not have a matching "
 "application file.<br><br>The icon cannot be added to IBar."
@@ -5837,11 +5909,11 @@ msgstr ""
 "Avete tentato di inserire l'icona di un'applicazione<br>che non ha un file "
 "corrispondente.<br><br>L'icona non può essere inserita in IBar."
 
-#: src/modules/ibar/e_mod_main.c:1393
+#: src/modules/ibar/e_mod_main.c:1420
 msgid "Enlightenment IBar Module"
 msgstr "Modulo IBar di Enlightenment"
 
-#: src/modules/ibar/e_mod_main.c:1394
+#: src/modules/ibar/e_mod_main.c:1421
 msgid ""
 "This is the IBar Application Launcher bar module for Enlightenment.<br>It is "
 "a first example module and is being used to flesh out several<br>interfaces "
@@ -5889,15 +5961,15 @@ msgstr "Mostra finestre di tutti i desktop"
 msgid "Show windows from active desktop"
 msgstr "Mostra finestre del desktop attivo"
 
-#: src/modules/ibox/e_mod_main.c:221
+#: src/modules/ibox/e_mod_main.c:224
 msgid "IBox"
 msgstr "IBox"
 
-#: src/modules/ibox/e_mod_main.c:1436
+#: src/modules/ibox/e_mod_main.c:1440
 msgid "Enlightenment IBox Module"
 msgstr "Modulo IBox di Enlightenment"
 
-#: src/modules/ibox/e_mod_main.c:1437
+#: src/modules/ibox/e_mod_main.c:1441
 msgid ""
 "This is the IBox Iconified Application module for Enlightenment.<br>It will "
 "hold minimized applications"
@@ -6053,15 +6125,15 @@ msgstr "Velocità del popup"
 msgid "%1.1f seconds"
 msgstr "%1.1f secondi"
 
-#: src/modules/pager/e_mod_main.c:218
+#: src/modules/pager/e_mod_main.c:222
 msgid "Pager"
 msgstr "Pager"
 
-#: src/modules/pager/e_mod_main.c:1820
+#: src/modules/pager/e_mod_main.c:1859
 msgid "Enlightenment Pager Module"
 msgstr "Modulo Pager di Enlightenment"
 
-#: src/modules/pager/e_mod_main.c:1821
+#: src/modules/pager/e_mod_main.c:1860
 msgid "A pager module to navigate virtual desktops."
 msgstr "Un modulo per navigare i desktop virtuali."
 
@@ -6272,13 +6344,16 @@ msgid "Far"
 msgstr "Lontana"
 
 #: src/modules/dropshadow/e_mod_config.c:137
-#: src/modules/dropshadow/e_mod_config.c:141
 msgid "Near"
 msgstr "Vicina"
 
 #: src/modules/dropshadow/e_mod_config.c:139
 msgid "Very Near"
 msgstr "Molto vicina"
+
+#: src/modules/dropshadow/e_mod_config.c:141
+msgid "Extremely Near"
+msgstr "Estremamente vicina"
 
 #: src/modules/dropshadow/e_mod_config.c:143
 msgid "Underneath"
