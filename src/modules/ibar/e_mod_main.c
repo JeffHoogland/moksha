@@ -531,7 +531,7 @@ _ibar_icon_at_coord(IBar *b, Evas_Coord x, Evas_Coord y)
 {
    Evas_List *l;
    IBar_Icon *ic;
-   
+
    for (l = b->icons; l; l = l->next)
      {
         Evas_Coord dx, dy, dw, dh;
@@ -1088,6 +1088,27 @@ _ibar_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y)
    evas_object_geometry_get(inst->ibar->o_box, &xx, &yy, NULL, NULL);
    e_box_align_pixel_offset_get(inst->gcc->o_box, &ox, &oy);
    ic = _ibar_icon_at_coord(inst->ibar, x + xx + ox, y + yy + oy);
+
+   /* This handles autoscrolling bars that would otherwise prevent us
+    * from dropping in the very last spot in the ibar. This is not
+    * necessarily a good way to solve the problem however it is by far
+    * the simplest. */
+   if (inst->gcc->autoscroll && ic)
+     {
+	 Evas_Coord ix, iy, iw, ih;
+	 double ax,ay;
+
+	 e_box_align_get(inst->gcc->o_box, &ax, &ay);
+	 if (e_box_orientation_get(inst->ibar->o_box))
+	   {
+	      if (ax < .01) ic = NULL;
+	   }
+	 else
+	   {
+	      if (ay < .01) ic = NULL;
+	   }
+     }
+
    inst->ibar->ic_drop_before = ic;
    if (ic)
      {
