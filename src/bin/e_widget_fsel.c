@@ -398,6 +398,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    fmc.view.no_subdir_jump = 1;
    fmc.view.no_subdir_drop = 1;
    fmc.view.extra_file_source = NULL;
+   fmc.view.link_drop = 1;
    fmc.icon.list.w = 24;
    fmc.icon.list.h = 24;
    fmc.icon.fixed.w = 1;

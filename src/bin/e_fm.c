@@ -24,7 +24,9 @@ typedef enum _E_Fm2_Action_Type
 typedef enum _E_Fm2_Fop_Type
 {
    FOP_DELETE,
-     FOP_MOVE
+     FOP_MOVE,
+     FOP_LINK,
+     FOP_ADD
 } E_Fm2_Fop_Type;
 
 typedef struct _E_Fm2_Smart_Data E_Fm2_Smart_Data;
@@ -177,8 +179,12 @@ struct _E_Fm2_Fop_Item
    E_Fm2_Fop_Type  type;
    E_Fm2_Fop      *fop;
    const char     *file;
+   const char     *file2;
+   const char     *file3;
+   int             after;
    DIR            *dir;
    unsigned char   is_dir : 1;
+   unsigned char   file_add : 1;
 };
 
 static const char *_e_fm2_dev_path_map(const char *dev, const char *path);
@@ -768,7 +774,7 @@ e_fm2_pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 EAPI void
 e_fm2_all_icons_update(void)
 {
-   /* FIXME: implement - update all icons as config changes */
+   /* FIXME: implement - update all icons in all fm2's as config changed */
 }
 
 EAPI void
@@ -812,16 +818,71 @@ e_fm2_fop_delete_add(Evas_Object *obj, E_Fm2_Icon_Info *ici)
 //   printf("ADD0: %s\n", fi->file);
 }
 
-/* FIXME: not so easy with .orders etc. */
-EAPI void
-e_fm2_fop_move_add(Evas_Object *obj, E_Fm2_Icon_Info *ici, Evas_Object *obj2, const char *fname)
+EAPI void 
+e_fm2_fop_move_add(Evas_Object *obj, const char *src, const char *dst, const char *rel, int after, int file_add)
 {
    E_Fm2_Smart_Data *sd;
-
+   E_Fm2_Fop *fop;
+   E_Fm2_Fop_Item *fi;
+   
    sd = evas_object_smart_data_get(obj);
    if (!sd) return; // safety
    if (!evas_object_type_get(obj)) return; // safety
    if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+   fop = _e_fm2_fop_add(sd);
+   if (!fop) return;
+   fi = E_NEW(E_Fm2_Fop_Item, 1);
+   fi->fop = fop;
+   fi->type = FOP_MOVE;
+   fi->file = evas_stringshare_add(src);
+   fi->file2 = evas_stringshare_add(dst);
+   if (rel) fi->file3 = evas_stringshare_add(rel);
+   fi->after = after;
+   fi->file_add = file_add;
+   fi->fop->items = evas_list_append(fi->fop->items, fi);
+}
+
+EAPI void 
+e_fm2_fop_link_add(Evas_Object *obj, const char *src, const char *dst)
+{
+   E_Fm2_Smart_Data *sd;
+   E_Fm2_Fop *fop;
+   E_Fm2_Fop_Item *fi;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+   fop = _e_fm2_fop_add(sd);
+   if (!fop) return;
+   fi = E_NEW(E_Fm2_Fop_Item, 1);
+   fi->fop = fop;
+   fi->type = FOP_LINK;
+   fi->file = evas_stringshare_add(src);
+   fi->file2 = evas_stringshare_add(dst);
+   fi->fop->items = evas_list_append(fi->fop->items, fi);
+}
+
+EAPI void 
+e_fm2_fop_add_add(Evas_Object *obj, const char *file, const char *rel, int after)
+{
+   E_Fm2_Smart_Data *sd;
+   E_Fm2_Fop *fop;
+   E_Fm2_Fop_Item *fi;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+   fop = _e_fm2_fop_add(sd);
+   if (!fop) return;
+   fi = E_NEW(E_Fm2_Fop_Item, 1);
+   fi->fop = fop;
+   fi->type = FOP_ADD;
+   fi->file = evas_stringshare_add(file);
+   if (rel) fi->file3 = evas_stringshare_add(rel);
+   fi->after = after;
+   fi->fop->items = evas_list_append(fi->fop->items, fi);
 }
 
 /* local subsystem functions */
@@ -968,8 +1029,6 @@ _e_fm2_file_add(Evas_Object *obj, char *file, int unique, char *file_rel, int af
 		  ic2 = l->data;
 		  if (!strcmp(ic2->info.file, file_rel))
 		    {
-//		       printf("ADD %s rel: %s after=%i\n", 
-//			      ic->info.file, ic2->info.file, after);
 		       if (after)
 			 sd->icons = evas_list_append_relative(sd->icons, ic, ic2);
 		       else
@@ -1780,10 +1839,6 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
    edje_object_freeze(ic->obj);
    evas_object_smart_member_add(ic->obj, ic->sd->obj);
    evas_object_stack_below(ic->obj, ic->sd->drop);
-//   evas_object_stack_below(ic->sd->drop, ic->sd->overlay);
-//   evas_object_stack_below(ic->sd->drop_in, ic->sd->overlay);
-   /* FIXME: this is currently a hack just to get a display working - go back
-    * and do proper icon stuff later */
    if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
      {
         if (ic->sd->config->icon.fixed.w)
@@ -1911,13 +1966,6 @@ _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (vo
    if (ic->info.icon)
      {
 	/* custom icon */
-	/* FIXME:
-	 * if ic->info.icon == blah then use theme icon
-	 * if ic->info.icon == blah/blah2 then use theme icon
-	 * if ic->info.icon == /blah/blah2.xxx then use full path
-	 * if ic->info.icon == blah.xxx then use relative path to icon dirs
-	 * if ic->info.icon == blah/blah2.xxx then use relative path to icon dirs
-	 */
 	if (ic->info.icon[0] == '/')
 	   {
 	      /* path to icon file */
@@ -1979,29 +2027,12 @@ _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (vo
 		    snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
 		  else
 		    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
-		  /* FIXME FIXME FIXME: e_app_new() is SLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOW. it can
-		   * be a complete hog. this destroys performance in fm2. :(:(:(
-		   */
 		  app = e_app_new(buf, 0);
 		  if (app)
 		    {
-		       /* FIXME: Actually, I think it's the icon searching that is slowing things down a lot.
-			* thumbnailing won't work - animated edj icons :)
-			* need to actually fix the icon searching :) throw in
-			* a hash cache. they work like a charm - also look
-			* at improving the search algo :)
-			*/
 		       oic = e_app_icon_add(evas_object_evas_get(o), app);
 		       e_object_unref(E_OBJECT(app));
 		    }
-/* thumbnailing will work only on non-edj animated icons
-		  oic = e_thumb_icon_add(evas_object_evas_get(o));
-		  e_thumb_icon_file_set(oic, buf, e_config->icon_theme);
-		  e_thumb_icon_size_set(oic, 128, 128);
-		  evas_object_smart_callback_add(oic, "e_thumb_gen",
-						 gen_func, data);
-		  _e_fm2_icon_thumb(ic, oic, force_gen);
- */
 	       }
 	     else if (!strncmp(icon, "e/icons/fileman/mime/", 21))
 	       {
@@ -2063,29 +2094,12 @@ _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (vo
 	       {
 		  E_App *app;
 		  
-		  /* FIXME FIXME FIXME: e_app_new() is SLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOW. it can
-		   * be a complete hog. this destroys performance in fm2. :(:(:(
-		   */
 		  app = e_app_new(buf, 0);
 		  if (app)
 		    {
-		       /* FIXME: Actually, I think it's the icon searching that is slowing things down a lot.
-			* thumbnailing won't work - animated edj icons :)
-			* need to actually fix the icon searching :) throw in
-			* a hash cache. they work like a charm - also look
-			* at improving the search algo :)
-			*/
 		       oic = e_app_icon_add(evas_object_evas_get(o), app);
 		       e_object_unref(E_OBJECT(app));
 		    }
-/* thumbnailing will work only on non-edj animated icons
-		  oic = e_thumb_icon_add(evas_object_evas_get(o));
-		  e_thumb_icon_file_set(oic, buf, e_config->icon_theme);
-		  e_thumb_icon_size_set(oic, 128, 96);
-		  evas_object_smart_callback_add(oic, "e_thumb_gen", 
-						 gen_func, data);
-		  _e_fm2_icon_thumb(ic, oic, force_gen);
- */
 	       }
 	     else if (S_ISCHR(ic->info.statinfo.st_mode))
 	       {
@@ -3026,57 +3040,51 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 			    /* move the file into the subdir */
 			    snprintf(buf, sizeof(buf), "%s/%s",
 				     sd->realpath, ecore_file_get_file(ll->data));
-			    if (ecore_file_exists(buf))
-			      {
-				 /* FIXME: error - file exists */
-			      }
-			    else
-			      {
-				 if (ecore_file_mv(ll->data, buf))
-				   _e_fm2_live_file_add(sd->obj,
-							ecore_file_get_file(ll->data),
-							NULL, 0);
-			      }
-			 }
-		       else
-			 {
-			    _e_fm2_live_file_add(sd->obj,
-						 ecore_file_get_file(ll->data),
-						 NULL, 0);
-//			    snprintf(buf, sizeof(buf), "%s/.order",
-//				     sd->realpath);
-//			    f = fopen(buf, "a");
-//			    if (f)
+			    e_fm2_fop_move_add(sd->obj,
+					       ll->data, buf,
+					       NULL, 0, 1);
+//			    if (ecore_file_exists(buf))
 //			      {
-//				 fprintf(f, "%s\n", ecore_file_get_file(ll->data));
-//				 fclose(f);
+//				 /* FIXME: error - file exists */
+//			      }
+//			    else
+//			      {
+/*FOPME*/
+//				 if (ecore_file_mv(ll->data, buf))
+//				   _e_fm2_live_file_add(sd->obj,
+//							ecore_file_get_file(ll->data),
+//							NULL, 0);
 //			      }
 			 }
+		       else
+			 _e_fm2_live_file_add(sd->obj,
+					      ecore_file_get_file(ll->data),
+					      NULL, 0);
 		    }
 		  else
 		    {
 		       /* file is in target dir - move into subdir */
 		       snprintf(buf, sizeof(buf), "%s/%s",
 				sd->realpath, ecore_file_get_file(ll->data));
-		       if (ecore_file_exists(buf))
-			 {
-			    /* FIXME: error - file exists */
-			 }
-		       else
-			 {
-			    if (ecore_file_mv(ll->data, buf))
-			      _e_fm2_live_file_add(sd->obj,
-						   ecore_file_get_file(ll->data),
-						   NULL, 0);
-			 }
+		       e_fm2_fop_move_add(sd->obj,
+					  ll->data, buf,
+					  NULL, 0, 1);
+//		       if (ecore_file_exists(buf))
+//			 {
+//			    /* FIXME: error - file exists */
+//			 }
+//		       else
+//			 {
+/*FOPME*/
+//			    if (ecore_file_mv(ll->data, buf))
+//			      _e_fm2_live_file_add(sd->obj,
+//						   ecore_file_get_file(ll->data),
+//						   NULL, 0);
+//			 }
 		    }
 		  free(d);
 	       }
 	  }
-	/* FIXME: disable refresh - modify icons in-place */
-//	refresh = 1; /* refresh src fm */
-	/* FIXME: disable refresh - modify icons in-place */
-//	e_fm2_refresh(sd->obj); /* refresh dst fm */
      }
    else if (sd->drop_icon) /* inot or before/after an icon */
      {
@@ -3090,17 +3098,16 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		  snprintf(buf, sizeof(buf), "%s/%s/%s",
 			   sd->realpath, sd->drop_icon->info.file, ecore_file_get_file(ll->data));
 		  printf("mv %s %s\n", ll->data, buf);
-		  if (ecore_file_exists(buf))
-		    {
-		       /* FIXME: error - file exists */
-		    }
-		  else
-		    ecore_file_mv(ll->data, buf);
+		  e_fm2_fop_move_add(sd->obj,
+				     ll->data, buf,
+				     NULL, 0, 0);
+//		  if (ecore_file_exists(buf))
+//		    {
+//		       /* FIXME: error - file exists */
+//		    }
+//		  else
+///*FOPME*/		    ecore_file_mv(ll->data, buf);
 	       }
-	     /* FIXME: disable refresh - modify icons in-place */
-//	     refresh = 1; /* refresh src fm */
-	     /* FIXME: disable refresh - modify icons in-place */
-//	     e_fm2_refresh(sd->obj); /* refresh dst fm */
 	  }
 	else
 	  {
@@ -3110,80 +3117,95 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		    {
 		       for (ll = fsel; ll; ll = ll->next)
 			 {
+			    snprintf(buf, sizeof(buf), "%s/%s",
+				     sd->realpath, ecore_file_get_file(ll->data));
 			    d = ecore_file_get_dir(ll->data);
 			    if (d)
 			      {
-				 if (!strcmp(d, sd->realpath))
+				 if (!strcmp(sd->realpath, d))
 				   {
-				      printf("listrm %s\n", ecore_file_get_file(ll->data));
-				      _e_fm2_live_file_del(sd->obj, ecore_file_get_file(ll->data));
+				      _e_fm2_live_file_del(sd->obj,
+							   ecore_file_get_file(ll->data));
 				   }
 				 else
 				   {
-				      snprintf(buf, sizeof(buf), "%s/%s",
-					       sd->realpath, ecore_file_get_file(ll->data));
-				      ecore_file_symlink(ll->data, buf);
+				      if (sd->config->view.link_drop)
+					e_fm2_fop_link_add(sd->obj, ll->data, buf);
+				      else
+					e_fm2_fop_move_add(sd->obj,
+							   ll->data, buf,
+							   NULL, 0, 0);
 				   }
 				 free(d);
 			      }
+//			    d = ecore_file_get_dir(ll->data);
+//			    if (d)
+//			      {
+//				 if (!strcmp(d, sd->realpath))
+//				   {
+//				      printf("listrm %s\n", ecore_file_get_file(ll->data));
+//				      _e_fm2_live_file_del(sd->obj, ecore_file_get_file(ll->data));
+//				   }
+//				 else
+//				   {
+///*FOPME*/				      ecore_file_symlink(ll->data, buf);
+//				   }
+//				 free(d);
+//			      }
 			 }
 		       if (sd->drop_after == 0)
 			 {
 			    for (ll = evas_list_last(fsel); ll; ll = ll->prev)
 			      {
-				 printf("listadd %s, before %s\n", ecore_file_get_file(ll->data), sd->drop_icon->info.file);
-				 _e_fm2_live_file_add(sd->obj,
-						      ecore_file_get_file(ll->data),
-						      sd->drop_icon->info.file, 0);
+				 e_fm2_fop_add_add(sd->obj, ll->data, sd->drop_icon->info.file, 0);
+//				 printf("listadd %s, before %s\n", ecore_file_get_file(ll->data), sd->drop_icon->info.file);
+//				 _e_fm2_live_file_add(sd->obj,
+//						      ecore_file_get_file(ll->data),
+//						      sd->drop_icon->info.file, 0);
 			      }
 			 }
 		       else
 			 {
 			    for (ll = fsel; ll; ll = ll->next)
 			      {
-				 printf("listadd %s, after %s\n", ecore_file_get_file(ll->data), sd->drop_icon->info.file);
-				 _e_fm2_live_file_add(sd->obj,
-						      ecore_file_get_file(ll->data),
-						      sd->drop_icon->info.file, 1);
+				 e_fm2_fop_add_add(sd->obj, ll->data, sd->drop_icon->info.file, 1);
+//				 printf("listadd %s, after %s\n", ecore_file_get_file(ll->data), sd->drop_icon->info.file);
+//				 _e_fm2_live_file_add(sd->obj,
+//						      ecore_file_get_file(ll->data),
+//						      sd->drop_icon->info.file, 1);
 			      }
 			 }
-		       /* FIXME: disable refresh - modify icons in-place */
-//		       e_fm2_refresh(sd->obj); /* refresh dst fm */
 		    }
 		  else /* no order file */
 		    {
-		       /* shouldnt happen */
 		       for (ll = fsel; ll; ll = ll->next)
 			 {
 			    /* move the file into the subdir */
 			    snprintf(buf, sizeof(buf), "%s/%s",
 				     sd->realpath, ecore_file_get_file(ll->data));
 			    printf("mv %s %s\n", ll->data, buf);
-			    if (ecore_file_exists(buf))
-			      {
-				 /* FIXME: error - file exists */
-			      }
-			    else
-			      {
-				 if (ecore_file_mv(ll->data, buf))
-				   _e_fm2_live_file_add(sd->obj,
-							ecore_file_get_file(ll->data),
-							NULL, 0);
-			      }
+			    e_fm2_fop_move_add(sd->obj,
+					       ll->data, buf,
+					       NULL, 0, 1);
+//			    if (ecore_file_exists(buf))
+//			      {
+//				 /* FIXME: error - file exists */
+//			      }
+//			    else
+//			      {
+///*FOPME*/				 if (ecore_file_mv(ll->data, buf))
+//				   _e_fm2_live_file_add(sd->obj,
+//							ecore_file_get_file(ll->data),
+//							NULL, 0);
+//			      }
 			 }
-		       /* FIXME: disable refresh - modify icons in-place */
-//		       refresh = 1; /* refresh src fm */
-		       /* FIXME: disable refresh - modify icons in-place */
-//		       e_fm2_refresh(sd->obj); /* refresh dst fm */
 		    }
 	       }
 	  }
      }
    _e_fm2_dnd_drop_hide(sd->obj);
    _e_fm2_dnd_drop_all_hide(sd->obj);
-   /* FIXME: disable refresh */
    for (l = _e_fm2_list; l; l = l->next)
-//     _e_fm2_dnd_finish(l->data, refresh);
      _e_fm2_dnd_finish(l->data, 0);
 }
 
@@ -5527,17 +5549,55 @@ _e_fm2_fop_process(E_Fm2_Fop *fop)
 	break;
       case FOP_MOVE:
 	/* FIXME: handle moves */
+	if (ecore_file_exists(fi->file2))
+	  {
+	     /* FIXME: error - file exists */
+	  }
+	else
+	  {
+	     if (ecore_file_mv(fi->file, fi->file2))
+	       {
+		  if ((fi->fop->obj) && (fi->file_add))
+		    _e_fm2_live_file_add(fi->fop->obj,
+					 fi->file, fi->file3, fi->after);
+	       }
+	     else
+	       {
+		  /* FIXME: error - move failed */
+	       }
+	  }
+	break;
+      case FOP_LINK:
+	if (!ecore_file_symlink(fi->file, fi->file2))
+	  {
+	     /* FIXME: error - symlink failed */
+	  }
+	break;
+      case FOP_ADD:
+	if (fi->fop->obj)
+	  _e_fm2_live_file_add(fi->fop->obj,
+			       ecore_file_get_file(fi->file),
+			       fi->file3, fi->after);
 	break;
       default:
 	break;
      }
    /* remove and free */
-//   printf("DONE: %s\n", fi->file);
    fop->items = evas_list_remove_list(fop->items, fop->items);
    if (fi->file)
      {
 	evas_stringshare_del(fi->file);
 	fi->file = NULL;
+     }
+   if (fi->file2)
+     {
+	evas_stringshare_del(fi->file2);
+	fi->file2 = NULL;
+     }
+   if (fi->file3)
+     {
+	evas_stringshare_del(fi->file3);
+	fi->file3 = NULL;
      }
    if (fi->dir)
      {

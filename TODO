@@ -14,8 +14,6 @@ Some of the things (in very short form) that need to be done to E17...
   circumstances.
 * e_apps wont pick up changes in favorite menu dirs made by the applications
   config dialog after a while (i think once u get 1 app in it stops listening)
-* fm2 will not create a .order file when it needs to, like when DND to an empty
-  ~./e/e/applications/startup directory.
 ]]]
 
 [[[
@@ -23,22 +21,21 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
-* fm2 needs recursive deletes, moves, etc. that run in the "background"
-  (idlers, etc.) and might pop up a progress dialog (or display progress in
-  the fm2 view somehow).
 * fm2 needs a right-click file properties dialog
 * fm2 needs a way to set custom backgrounds and handle scrolling
 * fm2 needs to display symlink info on files somehow
 * fm2 needs to display more than 1 file being dragged (if more than 1 is being
   dragged)
-* fm2 needs a way of mapping a mimetype to 1 or more commands to execute or
-  internal e actions to do (like add as wallpaper etc.)
+* fm2 needs a way of mapping a internal e actions to do (like add as
+  wallpaper etc.)
 * fm2 needs a way to use custom icons per dir/file
 * fm2 needs a way to bypass thumb gen anim on just a unrealize/realize as well
   as change state instantly if it already was selected
 * fm2 needs a mime filter
+* fm2: implement e_fm2_all_icons_update()
+* fm2 will pop up tonnes of error dialogs if u try delete a lot of files in a
+  tree you can't delete - fix to make this a dialog with a log etc.
 * dnd needs to do xdnd properly.
-* fwin: multi-mime open is too simplisitc. fix in fwin.c line 590 or so.
 * fm2 needs icon views (auto-arrange, snap to grid and free placement), for
   fwin windows and the desktop
 * middle mouse on gadgets as a quick move/resize thing?

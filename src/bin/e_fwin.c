@@ -101,7 +101,6 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
    fmc.view.selector = 0;
    fmc.view.single_click = 0;
    fmc.view.no_subdir_jump = 0;
-   fmc.view.always_order = 1;
    fmc.icon.list.w = 24;
    fmc.icon.list.h = 24;
    fmc.icon.fixed.w = 1;

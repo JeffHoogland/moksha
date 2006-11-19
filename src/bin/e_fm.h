@@ -43,6 +43,7 @@ struct _E_Fm2_Config
       unsigned char   no_subdir_jump;
       unsigned char   no_subdir_drop;
       unsigned char   always_order;
+      unsigned char   link_drop;
    } view;
    /* display of icons */
    struct {
@@ -134,6 +135,9 @@ EAPI void                  e_fm2_pan_child_size_get(Evas_Object *obj, Evas_Coord
 EAPI void                  e_fm2_all_icons_update(void);
 
 EAPI void                  e_fm2_fop_delete_add(Evas_Object *obj, E_Fm2_Icon_Info *ici);
+EAPI void                  e_fm2_fop_move_add(Evas_Object *obj, const char *src, const char *dst, const char *rel, int after, int file_add);
+EAPI void                  e_fm2_fop_link_add(Evas_Object *obj, const char *src, const char *dst);
+EAPI void                  e_fm2_fop_add_add(Evas_Object *obj, const char *file, const char *rel, int after);
     
 #endif
 #endif
