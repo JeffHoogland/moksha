@@ -8,7 +8,7 @@ disp_num=":1"                 # Which display do you want the xnest to be on?
 
 main=$DISPLAY
 display=" -display $disp_num"
-tmp='mktemp' || exit 1
+tmp=`mktemp` || exit 1
 /bin/echo -e "run\nbt\nq\ny" > $tmp
 
 case "$@" in
