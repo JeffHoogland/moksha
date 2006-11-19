@@ -33,6 +33,10 @@ struct _Config
    Evas_List       *instances;
    E_Menu          *menu;
    Evas_List       *handlers;
+
+   unsigned char    btn_drag;
+   unsigned char    btn_noplace;
+   unsigned int     flip_desk;
 };
 
 struct _Config_Item

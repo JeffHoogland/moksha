@@ -62,6 +62,10 @@ Some of the things (in very short form) that need to be done to E17...
   CLEANUPS
 -------------------------------------------------------------------------------
 
+* make e internal windows (config panel, dialogs, config windows etc.) use
+  special border styles by default
+* accidental DND removals of icons from ibar - make it harder by not removing
+  if you do not drag it far enough away (put the icon back where it was).
 * e app editor needs to be able to let users select what mime types that app
   can handle :)
 * applications config dialog is good - but "complex". people ask simple
@@ -107,6 +111,11 @@ Some of the things (in very short form) that need to be done to E17...
   "NICE TO HAVE" FEATURES
 -------------------------------------------------------------------------------
 
+* insets in shelf needs to rottate with shelf
+* maybe look at improving config panel layout - list is getting VERY long
+* a way for modules to add config panel items
+* a way for external apps to register config panel items (and be executed)
+* option for svg icon render resolution size
 * for startup - apps that say "wait for me befofe running the next app" have
   a timeout so if they never complete - complain and continue anyway.
 * enlightenment_remote cmd's for logout, hibernate, reboot, suspend.

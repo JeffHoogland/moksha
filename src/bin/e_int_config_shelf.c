@@ -125,8 +125,8 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
 	if (!es) continue;
 	
 	label = es->name;
-	if (!label) label = "shelf";
-	snprintf(buf, sizeof(buf), "%s #%i", label, es->id);
+	if (!label) label = _("Shelf #");
+	snprintf(buf, sizeof(buf), "%s %i", label, es->id);
 	
 	ob = edje_object_add(evas);
         switch(es->cfg->orient)

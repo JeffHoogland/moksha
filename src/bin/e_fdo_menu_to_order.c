@@ -333,60 +333,60 @@ _e_fdo_menu_to_order_find_category(char *category)
                       {
                          if (strstr(token, "Development") != NULL)
                            {
-                              cat = "Programming";
+                              cat = _("Programming");
                            }
                          else if (strstr(token, "Game") != NULL)
                            {
-                              cat = "Games";
+                              cat = _("Games");
                            }
                          else if ((strstr(token, "AudioVideo") != NULL) ||
                                   (strstr(token, "Sound") != NULL) || (strstr(token, "Video") != NULL) || (strstr(token, "Multimedia") != NULL))
                            {
-                              cat = "Multimedia";
+                              cat = _("Multimedia");
                            }
                          else if (strstr(token, "Net") != NULL)
                            {
-                              cat = "Internet";
+                              cat = _("Internet");
                            }
                          else if (strstr(token, "Education") != NULL)
                            {
-                              cat = "Edutainment";
+                              cat = _("Edutainment");
                            }
                          else if (strstr(token, "Amusement") != NULL)
                            {
-                              cat = "Toys";
+                              cat = _("Toys");
                            }
                          else if (strstr(token, "System") != NULL)
                            {
-                              cat = "System";
+                              cat = _("System");
                            }
                          else if ((strstr(token, "Shells") != NULL) || (strstr(token, "Utility") != NULL) || (strstr(token, "Tools") != NULL))
                            {
-                              cat = "Utilities";
+                              cat = _("Utilities");
                            }
                          else if ((strstr(token, "Viewers") != NULL) || (strstr(token, "Editors") != NULL) || (strstr(token, "Text") != NULL))
                            {
-                              cat = "Editors";
+                              cat = _("Editors");
                            }
                          else if (strstr(token, "Graphics") != NULL)
                            {
-                              cat = "Graphics";
+                              cat = _("Graphics");
                            }
                          else if ((strstr(token, "WindowManagers") != NULL) || (strstr(token, "Core") != NULL))
                            {
-                              cat = "Core";
+                              cat = _("Core");
                            }
                          else if ((strstr(token, "Settings") != NULL) || (strstr(token, "Accessibility") != NULL))
                            {
-                              cat = "Settings";
+                              cat = _("Settings");
                            }
                          else if (strstr(token, "Office") != NULL)
                            {
-                              cat = "Office";
+                              cat = _("Office");
                            }
                          else
                            {
-                              cat = "Core";
+                              cat = _("Core");
                            }
                       }
                     token = strtok(NULL, ":");
@@ -397,7 +397,7 @@ _e_fdo_menu_to_order_find_category(char *category)
 	    }
       }
    if (!cat)
-      cat = "Core";
+      cat = _("Core");
    return strdup(cat);
 }
 

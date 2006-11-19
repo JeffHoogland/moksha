@@ -56,41 +56,41 @@ _fill_data(E_App_Autopsy *app, E_Config_Dialog_Data *cfdata)
    if ((app->del.exited) && (!cfdata->exit))
      {
 	snprintf(buf, sizeof(buf), 
-		 _("An exit code of %i was returned from %s"), app->del.exit_code, app->app->exe);
+		 _("An exit code of %i was returned from %s."), app->del.exit_code, app->app->exe);
 	cfdata->exit = strdup(buf);
      }
    if ((app->del.signalled) && (!cfdata->signal))
      {
 	if (app->del.exit_signal == SIGINT)
 	  snprintf(buf, sizeof(buf),
-		   _("%s was interrupted by an Interrupt Signal"), app->app->exe);
+		   _("%s was interrupted by an Interrupt Signal."), app->app->exe);
 	else if (app->del.exit_signal == SIGQUIT)
-	  snprintf(buf, sizeof(buf), _("%s was interrupted by a Quit Signal"),
+	  snprintf(buf, sizeof(buf), _("%s was interrupted by a Quit Signal."),
 		   app->app->exe);
 	else if (app->del.exit_signal == SIGABRT)
 	  snprintf(buf, sizeof(buf),
-		   _("%s was interrupted by an Abort Signal"), app->app->exe);
+		   _("%s was interrupted by an Abort Signal."), app->app->exe);
 	else if (app->del.exit_signal == SIGFPE)
 	  snprintf(buf, sizeof(buf),
-		   _("%s was interrupted by a Floating Point Error"), app->app->exe);
+		   _("%s was interrupted by a Floating Point Error."), app->app->exe);
 	else if (app->del.exit_signal == SIGKILL)
 	  snprintf(buf, sizeof(buf),
-		   _("%s was interrupted by an Uninterruptable Kill Signal"), app->app->exe);
+		   _("%s was interrupted by an Uninterruptable Kill Signal."), app->app->exe);
 	else if (app->del.exit_signal == SIGSEGV)
 	  snprintf(buf, sizeof(buf),
-		   _("%s was interrupted by a Segmentation Fault"), app->app->exe);
+		   _("%s was interrupted by a Segmentation Fault."), app->app->exe);
 	else if (app->del.exit_signal == SIGPIPE)
 	  snprintf(buf, sizeof(buf), 
-		   _("%s was interrupted by a Broken Pipe"), app->app->exe);
+		   _("%s was interrupted by a Broken Pipe."), app->app->exe);
 	else if (app->del.exit_signal == SIGTERM)
 	  snprintf(buf, sizeof(buf),
-		   _("%s was interrupted by a Termination Singal"), app->app->exe);
+		   _("%s was interrupted by a Termination Signal."), app->app->exe);
 	else if (app->del.exit_signal == SIGBUS)
 	  snprintf(buf, sizeof(buf), 
-		   _("%s was interrupted by a Bus Error"), app->app->exe);
+		   _("%s was interrupted by a Bus Error."), app->app->exe);
 	else
 	  snprintf(buf, sizeof(buf),
-		   _("%s was interrupted by the signal number %i"),
+		   _("%s was interrupted by the signal number %i."),
 		   app->app->exe, app->del.exit_signal);
 	cfdata->signal = strdup(buf);
 	/* FIXME: Add  sigchld_info stuff

@@ -350,7 +350,7 @@ _e_sys_current_action(void)
      {
       case E_SYS_LOGOUT:
 	e_dialog_text_set(dia, 
-			  _("Enlightenment is busy logging out<br>"
+			  _("Enlightenment is busy logging out.<br>"
 			    "You cannot perform other system actions<br>"
 			    "once a logout has begun.")
 			  );

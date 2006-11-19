@@ -99,6 +99,7 @@ static void _pager_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void
 static void _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _menu_cb_post(void *data, E_Menu *m);
 static void _pager_inst_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _pager_inst_cb_menu_virtual_desktops_dialog(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _pager_instance_drop_zone_recalc(Instance *inst);
 static int _pager_cb_event_border_resize(void *data, int type, void *event);
 static int _pager_cb_event_border_move(void *data, int type, void *event);
@@ -629,6 +630,11 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
 	e_menu_item_callback_set(mi, _pager_inst_cb_menu_configure, NULL);
 	
+	mi = e_menu_item_new(mn);
+	e_menu_item_label_set(mi, _("Virtual Desktops Configuration"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/desktops");
+	e_menu_item_callback_set(mi, _pager_inst_cb_menu_virtual_desktops_dialog, inst);
+	
 	e_gadcon_client_util_menu_items_append(inst->gcc, mn, 0);
 	
 	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
@@ -659,6 +665,13 @@ _pager_inst_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
    if (pager_config->config_dialog) return;
    /* FIXME: pass zone config item */
    _config_pager_module(NULL);
+}
+
+static void _pager_inst_cb_menu_virtual_desktops_dialog(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Instance *inst;
+   inst = data;
+   e_int_config_desks(inst->gcc->gadcon->zone->container);
 }
 
 static void
@@ -1319,8 +1332,8 @@ _pager_window_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_i
    pw = data;
    if (!pw) return;
    if (pw->border->lock_user_location) return;
-   /* FIXME: make this configurable */
-   if ((ev->button == 1) || (ev->button == 2))
+   if ((ev->button == pager_config->btn_drag) || 
+       (ev->button == pager_config->btn_noplace))
      {
 	Evas_Coord ox, oy;
 
@@ -1333,7 +1346,8 @@ _pager_window_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_i
 	pw->drag.start = 1;
 	pw->drag.no_place = 0;
 	pw->drag.button = ev->button;
-	if (ev->button == 2) pw->drag.no_place = 1;
+	if (ev->button == pager_config->btn_noplace) 
+	  pw->drag.no_place = 1;
      }
 }
 
@@ -1346,8 +1360,8 @@ _pager_window_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_inf
    ev = event_info;
    pw = data;
    if (!pw) return;
-   /* FIXME: make this configurable as above */
-   if ((ev->button == 1) || (ev->button == 2))
+   if ((ev->button == pager_config->btn_drag) ||
+       (ev->button ==pager_config->btn_noplace))
      {  
 	if (!pw->drag.from_pager)
 	  {
@@ -1712,7 +1726,7 @@ _pager_desk_cb_mouse_wheel(void *data, Evas *e, Evas_Object *obj, void *event_in
    ev = event_info;
    pd = data;
 
-   e_zone_desk_linear_flip_by(pd->desk->zone, ev->z);
+   if (pager_config->flip_desk) e_zone_desk_linear_flip_by(pd->desk->zone, ev->z);
 }
 
 static int
@@ -1747,6 +1761,9 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, drag_resist, UINT);
    E_CONFIG_VAL(D, T, scale, UCHAR);
    E_CONFIG_VAL(D, T, resize, UCHAR);
+   E_CONFIG_VAL(D, T, btn_drag, UCHAR);
+   E_CONFIG_VAL(D, T, btn_noplace, UCHAR);
+   E_CONFIG_VAL(D, T, flip_desk, UINT);
 
    pager_config = e_config_domain_load("module.pager", conf_edd);
 
@@ -1758,12 +1775,18 @@ e_modapi_init(E_Module *m)
 	pager_config->drag_resist = 3;
 	pager_config->scale = 1;
 	pager_config->resize = PAGER_RESIZE_BOTH;
+	pager_config->btn_drag = 1;
+	pager_config->btn_noplace = 2;
+	pager_config->flip_desk = 0;
      }
    E_CONFIG_LIMIT(pager_config->popup_speed, 0.1, 10.0);
    E_CONFIG_LIMIT(pager_config->popup, 0, 1);
    E_CONFIG_LIMIT(pager_config->drag_resist, 0, 50);
-   E_CONFIG_LIMIT(pager_config->scale, 0, 1);
    E_CONFIG_LIMIT(pager_config->resize, PAGER_RESIZE_HORZ, PAGER_RESIZE_BOTH);
+   E_CONFIG_LIMIT(pager_config->flip_desk, 0, 1);
+   E_CONFIG_LIMIT(pager_config->scale, 0, 1);
+   E_CONFIG_LIMIT(pager_config->btn_drag, 1, 32);
+   E_CONFIG_LIMIT(pager_config->btn_noplace, 1, 32);
 
    pager_config->handlers = evas_list_append
      (pager_config->handlers, ecore_event_handler_add

@@ -1,11 +1,37 @@
 #include "e.h"
 #include "e_mod_main.h"
 
+typedef enum _Pager_Grab_Button Pager_Grab_Button;
+enum _Pager_Grab_Button
+{
+   GRAB_BUTTON_DRAG,
+   GRAB_BUTTON_NOPLACE
+};
+
 struct _E_Config_Dialog_Data
 {
    int show_popup;
    double popup_speed;
    int drag_resist;
+   unsigned char btn_drag;
+   unsigned char btn_noplace;
+   int flip_desk;
+
+   struct
+     {
+	Ecore_X_Window bind_win;
+	E_Dialog *dia;
+	Evas_List *handlers;
+
+	unsigned char *button1;
+	unsigned char *button2;
+     } grab;
+
+   struct
+     {
+	Evas_Object *o_btn1;
+	Evas_Object *o_btn2;
+     } gui;
 };
 
 /* Protos */
@@ -15,6 +41,11 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Co
 static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void _advanced_update_button_label(E_Config_Dialog_Data *cfdata);
+static void _grab_wnd_show(void *data1, void *data2);
+static void _grab_wnd_hide(E_Config_Dialog_Data *cfdata);
+static int _grab_mouse_down_cb(void *data, int type, void *event);
+static int _grab_key_down_cb(void *data, int type, void *event);
 
 void 
 _config_pager_module(Config_Item *ci)
@@ -47,6 +78,9 @@ _fill_data(Config_Item *ci, E_Config_Dialog_Data *cfdata)
    cfdata->show_popup = pager_config->popup;
    cfdata->popup_speed = pager_config->popup_speed;
    cfdata->drag_resist = pager_config->drag_resist;
+   cfdata->btn_drag = pager_config->btn_drag;
+   cfdata->btn_noplace = pager_config->btn_noplace;
+   cfdata->flip_desk = pager_config->flip_desk;
 }
 
 static void *
@@ -111,6 +145,25 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);   
 
+   of = e_widget_frametable_add(evas, _("Buttons Settings"), 0);
+   ob = e_widget_label_add(evas, _("Drag and select button"));
+   e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_label_add(evas, _("Drag no place button"));
+   e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_button_add(evas, _("Click to set"), NULL, _grab_wnd_show, (void *)GRAB_BUTTON_DRAG, cfdata);
+   e_widget_frametable_object_append(of, ob, 2, 1, 1, 1, 1, 1, 0, 0);
+   cfdata->gui.o_btn1 = ob;
+   ob = e_widget_button_add(evas, _("Click to set"), NULL, _grab_wnd_show, (void *)GRAB_BUTTON_NOPLACE, cfdata);
+   e_widget_frametable_object_append(of, ob, 2, 2, 1, 1, 1, 1, 0, 0);
+   cfdata->gui.o_btn2 = ob;
+   _advanced_update_button_label(cfdata);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);   
+   
+   of = e_widget_framelist_add(evas, _("Wheel callback"), 0);   
+   ob = e_widget_check_add(evas, _("Flip desktop on mouse wheel"), &(cfdata->flip_desk));
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);   
+
    return o;
 }
 
@@ -120,7 +173,135 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    pager_config->popup = cfdata->show_popup;
    pager_config->popup_speed = cfdata->popup_speed;
    pager_config->drag_resist = cfdata->drag_resist;
+   pager_config->btn_drag = cfdata->btn_drag;
+   pager_config->btn_noplace = cfdata->btn_noplace;
+   pager_config->flip_desk = cfdata->flip_desk;
    _pager_cb_config_updated();
    e_config_save_queue();
+   return 1;
+}
+
+static void
+_advanced_update_button_label(E_Config_Dialog_Data *cfdata)
+{
+   char label[256] = "";
+   
+   if (cfdata->btn_drag)
+     snprintf(label, sizeof(label), _("Button %i"), cfdata->btn_drag);
+   else
+     snprintf(label, sizeof(label), _("Click to set"));
+   e_widget_button_label_set(cfdata->gui.o_btn1, label);
+   
+   if (cfdata->btn_noplace)
+     snprintf(label, sizeof(label), _("Button %i"), cfdata->btn_noplace);
+   else
+     snprintf(label, sizeof(label), _("Click to set"));
+   e_widget_button_label_set(cfdata->gui.o_btn2, label);
+}
+
+static void
+_grab_wnd_show(void *data1, void *data2)
+{
+   E_Manager *man;
+   E_Config_Dialog_Data *cfdata;
+
+   man = e_manager_current_get();
+   cfdata = data2;
+
+   if ((Pager_Grab_Button)data1 == GRAB_BUTTON_DRAG)
+     {
+	cfdata->grab.button1 = &(cfdata->btn_drag);
+	cfdata->grab.button2 = &(cfdata->btn_noplace);
+     }
+   else
+     {
+	cfdata->grab.button1 = &(cfdata->btn_noplace);
+	cfdata->grab.button2 = &(cfdata->btn_drag);
+     }
+
+   cfdata->grab.dia = e_dialog_new(e_container_current_get(man), "Pager", "_pager_button_grab_dialog");
+   if (!cfdata->grab.dia) return;
+   e_dialog_title_set(cfdata->grab.dia, _("Pager Button Grab"));
+   e_dialog_icon_set(cfdata->grab.dia, "enlightenment/mouse_clean", 48);
+   e_dialog_text_set(cfdata->grab.dia, _("Please press a mouse button<br>"
+					 "Press <hilight>Escape</hilight> to abort.<br>"
+					 "Or <hilight>Del</hilight> to reset the button."));
+   e_win_centered_set(cfdata->grab.dia->win, 1);
+   e_win_borderless_set(cfdata->grab.dia->win, 1);
+
+   cfdata->grab.bind_win = ecore_x_window_input_new(man->root, 0, 0, 1, 1);
+   ecore_x_window_show(cfdata->grab.bind_win);
+   e_grabinput_get(cfdata->grab.bind_win, 0, cfdata->grab.bind_win);
+
+   cfdata->grab.handlers = evas_list_append(cfdata->grab.handlers,
+			    ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,
+				 _grab_key_down_cb, cfdata));
+   cfdata->grab.handlers = evas_list_append(cfdata->grab.handlers,
+			      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN,
+				 _grab_mouse_down_cb, cfdata));
+
+   e_dialog_show(cfdata->grab.dia);
+}
+
+static void
+_grab_wnd_hide(E_Config_Dialog_Data *cfdata)
+{
+   while (cfdata->grab.handlers)
+     {
+	ecore_event_handler_del(cfdata->grab.handlers->data);
+	cfdata->grab.handlers = evas_list_remove_list(cfdata->grab.handlers, cfdata->grab.handlers);
+     }
+   cfdata->grab.handlers = NULL;
+   e_grabinput_release(cfdata->grab.bind_win, cfdata->grab.bind_win);
+   ecore_x_window_del(cfdata->grab.bind_win);
+   cfdata->grab.bind_win = 0;
+
+   e_object_del(E_OBJECT(cfdata->grab.dia));
+   cfdata->grab.dia = NULL;
+   _advanced_update_button_label(cfdata);
+}
+
+static int
+_grab_mouse_down_cb(void *data, int type, void *event)
+{
+   E_Config_Dialog_Data *cfdata;
+   Ecore_X_Event_Mouse_Button_Down *ev;
+   
+   ev = event;
+   cfdata = data;
+
+   if (ev->button != 3)
+     {
+	if (ev->button == *(cfdata->grab.button2))
+	  {
+	     *(cfdata->grab.button2) = *(cfdata->grab.button1);
+	     *(cfdata->grab.button1) = ev->button;
+	  }
+	else
+	  {
+	     *(cfdata->grab.button1) = ev->button;
+	  } 
+     }
+
+   _grab_wnd_hide(cfdata);
+   return 1;
+}
+
+static int
+_grab_key_down_cb(void *data, int type, void *event)
+{
+   E_Config_Dialog_Data *cfdata;
+   Ecore_X_Event_Key_Down *ev = event;
+
+   cfdata = data;
+
+   if (ev->win != cfdata->grab.bind_win) return 1;
+
+   if (!strcmp(ev->keyname, "Escape")) _grab_wnd_hide(cfdata);
+   if (!strcmp(ev->keyname, "Delete"))
+     {
+	*(cfdata->grab.button1) = 0;
+	_grab_wnd_hide(cfdata);
+     }
    return 1;
 }

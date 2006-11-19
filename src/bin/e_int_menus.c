@@ -1213,8 +1213,8 @@ _e_int_menus_shelves_pre_cb(void *data, E_Menu *m)
 	if (s->cfg->container != con->num) continue;
 	
 	name = s->name;
-	if (!name) name = "shelf";	
-	snprintf(buf, sizeof(buf), "%s #%i", name, s->id);
+	if (!name) name = _("Shelf #");	
+	snprintf(buf, sizeof(buf), "%s %i", name, s->id);
 
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, buf);

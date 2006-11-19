@@ -413,6 +413,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
    _e_fm2_queue_free(obj);
    _e_fm2_regions_free(obj);
    _e_fm2_icons_free(obj);
+   edje_object_part_text_set(sd->overlay, "e.text.busy_label", "");
    
    _e_fm2_scan_start(obj);
    evas_object_smart_callback_call(obj, "dir_changed", NULL);
@@ -4923,8 +4924,9 @@ _e_fm2_file_delete(void *data, E_Menu *m, E_Menu_Item *mi)
      {
 	snprintf(text, sizeof(text), 
 		 _("Are you sure you want to delete<br>"
-		   "the selected files in:<br>"
+		   "the %d selected files in:<br>"
 		   "<hilight>%s</hilight> ?"),
+		 evas_list_count(sel),
 		 ic->sd->realpath);
      }
    if (sel) evas_list_free(sel);

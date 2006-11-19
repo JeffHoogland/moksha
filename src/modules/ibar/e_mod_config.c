@@ -118,15 +118,15 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    rg = e_widget_radio_group_new(&(cfdata->eap_label));
 
-   cfdata->radio_name = e_widget_radio_add(evas, _("Display Eap Name"), 0, rg);
+   cfdata->radio_name = e_widget_radio_add(evas, _("Display App Name"), 0, rg);
    e_widget_framelist_object_append(of, cfdata->radio_name);
    if (!cfdata->show_label) e_widget_disabled_set(cfdata->radio_name, 1);
 
-   cfdata->radio_comment = e_widget_radio_add(evas, _("Display Eap Comment"), 1, rg);
+   cfdata->radio_comment = e_widget_radio_add(evas, _("Display App Comment"), 1, rg);
    e_widget_framelist_object_append(of, cfdata->radio_comment);
    if (!cfdata->show_label) e_widget_disabled_set(cfdata->radio_comment, 1);
    
-   cfdata->radio_generic = e_widget_radio_add(evas, _("Display Eap Generic"), 2, rg);
+   cfdata->radio_generic = e_widget_radio_add(evas, _("Display App Generic"), 2, rg);
    e_widget_framelist_object_append(of, cfdata->radio_generic);
    if (!cfdata->show_label) e_widget_disabled_set(cfdata->radio_generic, 1);
    
@@ -157,8 +157,8 @@ _cb_add(void *data, void *data2)
    E_Config_Dialog_Data *cfdata;
    
    cfdata = data;
-   e_entry_dialog_show(_("Create new ibar source"), "enlightenment/e",
-		       _("Enter a name for this new source"), "", NULL, NULL,
+   e_entry_dialog_show(_("Create new IBar source"), "enlightenment/e",
+		       _("Enter a name for this new source:"), "", NULL, NULL,
 		       _cb_entry_ok, NULL, cfdata);
 }
 

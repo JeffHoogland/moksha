@@ -547,7 +547,7 @@ _import_cb_ok(void *data, void *data2)
 		       e_util_dialog_show(_("Wallpaper Import Error"),
 					  _("Enlightenment was unable to "
 					    "import the wallpaper<br>due to a "
-					    "copy error"));
+					    "copy error."));
 		       return;
 		    }
 		  else 
