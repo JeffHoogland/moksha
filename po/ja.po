@@ -3998,9 +3998,8 @@ msgstr "%s が突然停止しました"
 
 #: src/bin/e_apps_error.c:59
 #, c-format
-# FIXME - something wrong here...
-# msgid "An exit code of %i was returned from %s."
-# msgstr "%s から終了コード %i が返りました"
+msgid "An exit code of %i was returned from %s."
+msgstr "%2$s から終了コード %1$i が返りました" 
 
 #: src/bin/e_apps_error.c:66
 #, c-format
