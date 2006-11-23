@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include "e.h"
 
 typedef struct _Config_Glob Config_Glob;
@@ -82,11 +85,23 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    if (!cfdata) return;
    homedir = e_user_homedir_get();
 
+   snprintf(buf, sizeof(buf), "/usr/local/etc/mime.types");
+   if (ecore_file_exists(buf))
+     _load_mimes(cfdata, buf);
+
+   snprintf(buf, sizeof(buf), "/etc/mime.types");
+   if (ecore_file_exists(buf))
+     _load_mimes(cfdata, buf);
+
    snprintf(buf, sizeof(buf), "/usr/local/share/mime/globs");
    if (ecore_file_exists(buf))
      _load_mimes(cfdata, buf);
 
    snprintf(buf, sizeof(buf), "/usr/share/mime/globs");
+   if (ecore_file_exists(buf))
+     _load_mimes(cfdata, buf);
+
+   snprintf(buf, sizeof(buf), "%s/.mime.types", homedir);
    if (ecore_file_exists(buf))
      _load_mimes(cfdata, buf);
 
