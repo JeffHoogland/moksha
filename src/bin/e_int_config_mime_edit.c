@@ -287,6 +287,7 @@ _cb_icon_sel(void *data, void *data2)
 static Evas_Object *
 _get_icon(void *data) 
 {
+   Evas *evas;
    E_Config_Dialog_Data *cfdata;
    Evas_Object *icon = NULL;
    const char *tmp;
@@ -302,26 +303,26 @@ _get_icon(void *data)
    
    if (cfdata->type == DEFAULT) return NULL;
 
+   evas = evas_object_evas_get(cfdata->gui.icon_wid);
    switch (cfdata->type) 
      {
       case THUMB:
-	icon = edje_object_add(evas_object_evas_get(cfdata->gui.icon_wid));
+	icon = edje_object_add(evas);
 	e_theme_edje_object_set(icon, "base/theme/fileman", "e/icons/fileman/file");
 	break;
       case THEME:
-	icon = edje_object_add(evas_object_evas_get(cfdata->gui.icon_wid));
+	icon = edje_object_add(evas);
 	snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", cfdata->mime);
 	if (!e_theme_edje_object_set(icon, "base/theme/fileman", buf))
 	  e_theme_edje_object_set(icon, "base/theme/fileman", "e/icons/fileman/file");
 	break;
       case EDJ:
-	icon = edje_object_add(evas_object_evas_get(cfdata->gui.icon_wid));
+	icon = edje_object_add(evas);
 	edje_object_file_set(icon, cfdata->file, "icon");
 	e_widget_disabled_set(cfdata->gui.icon_wid, 0);
 	break;
       case IMG:
-	icon = e_widget_image_add_from_file(evas_object_evas_get(cfdata->gui.icon_wid),
-					    cfdata->file, 48, 48);
+	icon = e_widget_image_add_from_file(evas, cfdata->file, 48, 48);
 	e_widget_disabled_set(cfdata->gui.icon_wid, 0);
 	break;
       default:
