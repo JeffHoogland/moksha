@@ -305,42 +305,45 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 							"e/widgets/border/default/close"), 
 				  "e/widgets/border/default/close");
      }
-
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
    
-   /* Only allow to change layer for windows in "normal" layers */
-
-   if ((!bd->lock_user_stacking) && (!bd->internal) &&
-       ((bd->layer == 50) || (bd->layer == 100) || (bd->layer == 150)))
+   if (!bd->internal) 
      {
 	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Raise"));
-	e_menu_item_callback_set(mi, _e_border_menu_cb_raise, bd);
-	e_menu_item_icon_edje_set(mi,
-				  e_theme_edje_file_get("base/theme/borders",
-							"e/widgets/border/default/stack_on_top"),
-				  "e/widgets/border/default/stack_on_top");
+	e_menu_item_separator_set(mi, 1);
 
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Lower"));
-	e_menu_item_callback_set(mi, _e_border_menu_cb_lower, bd);
-	e_menu_item_icon_edje_set(mi,
-				  e_theme_edje_file_get("base/theme/borders",
-							"e/widgets/border/default/stack_on_top"),
-				  "e/widgets/border/default/stack_below");
-     }
+	/* Only allow to change layer for windows in "normal" layers */
+	if ((!bd->lock_user_stacking) && 
+	    ((bd->layer == 50) || (bd->layer == 100) || (bd->layer == 150)))
+	  {
+	     mi = e_menu_item_new(m);
+	     e_menu_item_label_set(mi, _("Raise"));
+	     e_menu_item_callback_set(mi, _e_border_menu_cb_raise, bd);
+	     e_menu_item_icon_edje_set(mi,
+				       e_theme_edje_file_get("base/theme/borders",
+							     "e/widgets/border/default/stack_on_top"),
+				       "e/widgets/border/default/stack_on_top");
+	     
+	     mi = e_menu_item_new(m);
+	     e_menu_item_label_set(mi, _("Lower"));
+	     e_menu_item_callback_set(mi, _e_border_menu_cb_lower, bd);
+	     e_menu_item_icon_edje_set(mi,
+				       e_theme_edje_file_get("base/theme/borders",
+							     "e/widgets/border/default/stack_on_top"),
+				       "e/widgets/border/default/stack_below");
+	  }
 
-   if ((!bd->lock_user_iconify) && (!bd->fullscreen))
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Iconify"));
-	e_menu_item_callback_set(mi, _e_border_menu_cb_iconify, bd);
-	e_menu_item_icon_edje_set(mi,
-				  e_theme_edje_file_get("base/theme/borders",
-							"e/widgets/border/default/minimize"),
-				  "e/widgets/border/default/minimize");
+	if ((!bd->lock_user_iconify) && (!bd->fullscreen))
+	  {
+	     mi = e_menu_item_new(m);
+	     e_menu_item_label_set(mi, _("Iconify"));
+	     e_menu_item_callback_set(mi, _e_border_menu_cb_iconify, bd);
+	     e_menu_item_icon_edje_set(mi,
+				       e_theme_edje_file_get("base/theme/borders",
+							     "e/widgets/border/default/minimize"),
+				       "e/widgets/border/default/minimize");
+	  }
      }
+   
    
    if (key)
      e_menu_activate_key(m, bd->zone, x, y, 1, 1,
