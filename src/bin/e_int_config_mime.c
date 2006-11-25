@@ -37,6 +37,7 @@ static Evas_Object *_basic_create    (E_Config_Dialog *cfd, Evas *evas, E_Config
 static void         _fill_list       (E_Config_Dialog_Data *cfdata, char *mtype);
 static void         _fill_tlist      (E_Config_Dialog_Data *cfdata);
 static void         _load_mimes      (E_Config_Dialog_Data *cfdata, char *file);
+static void         _load_globs      (E_Config_Dialog_Data *cfdata, char *file);
 static void         _fill_types      (E_Config_Dialog_Data *cfdata);
 static void         _tlist_cb_change (void *data);
 static int          _sort_mimes      (void *data1, void *data2);
@@ -95,11 +96,11 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
    snprintf(buf, sizeof(buf), "/usr/local/share/mime/globs");
    if (ecore_file_exists(buf))
-     _load_mimes(cfdata, buf);
+     _load_globs(cfdata, buf);
 
    snprintf(buf, sizeof(buf), "/usr/share/mime/globs");
    if (ecore_file_exists(buf))
-     _load_mimes(cfdata, buf);
+     _load_globs(cfdata, buf);
 
    snprintf(buf, sizeof(buf), "%s/.mime.types", homedir);
    if (ecore_file_exists(buf))
@@ -107,7 +108,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
    snprintf(buf, sizeof(buf), "%s/.local/share/mime/globs", homedir);
    if (ecore_file_exists(buf))
-     _load_mimes(cfdata, buf);
+     _load_globs(cfdata, buf);
 
    if (cfdata->mimes)
      cfdata->mimes = evas_list_sort(cfdata->mimes, 
@@ -296,6 +297,63 @@ _fill_tlist(E_Config_Dialog_Data *cfdata)
 
 static void 
 _load_mimes(E_Config_Dialog_Data *cfdata, char *file) 
+{
+   FILE *f;
+   char buf[4096], mimetype[4096], ext[4096];
+   char *p, *pp;
+   Config_Mime *mime;
+   Config_Glob *glob;
+
+   if (!cfdata) return;
+   
+   f = fopen(file, "rb");
+   if (!f) return;
+   while (fgets(buf, sizeof(buf), f))
+     {
+	p = buf;
+	while (isblank(*p) && (*p != 0) && (*p != '\n')) p++;
+	if (*p == '#') continue;
+	if ((*p == '\n') || (*p == 0)) continue;
+	pp = p;
+	while (!isblank(*p) && (*p != 0) && (*p != '\n')) p++;
+//	while ((*p != ':') && (*p != 0) && (*p != '\n')) p++;
+	if ((*p == '\n') || (*p == 0)) continue;
+	strncpy(mimetype, pp, (p - pp));
+	mimetype[p - pp] = 0;
+	do 
+	  {
+	     while (isblank(*p) && (*p != 0) && (*p != '\n')) p++;
+	     if ((*p == '\n') || (*p == 0)) continue;
+	     pp = p;
+	     while (!isblank(*p) && (*p != 0) && (*p != '\n')) p++;
+	     strncpy(ext, pp, (p - pp));
+	     ext[p - pp] = 0;
+	     mime = _find_mime(cfdata, mimetype);
+	     if (!mime) 
+	       {
+		  mime = E_NEW(Config_Mime, 1);
+		  if (mime)
+		    {
+		       mime->mime = evas_stringshare_add(mimetype);
+		       if (!mime->mime) 
+			 free(mime);
+		       else 
+			 {
+			    glob = E_NEW(Config_Glob, 1);
+			    glob->name = evas_stringshare_add(ext);
+			    mime->globs = evas_list_append(mime->globs, glob);
+			    cfdata->mimes = evas_list_append(cfdata->mimes, mime);
+			 }
+		    }
+	       }
+	  }
+	while ((*p != '\n') && (*p != 0));
+     }
+   fclose(f);
+}
+
+static void 
+_load_globs(E_Config_Dialog_Data *cfdata, char *file) 
 {
    FILE *f;
    char buf[4096], mimetype[4096], ext[4096];
