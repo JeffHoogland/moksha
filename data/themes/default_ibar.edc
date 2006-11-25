@@ -212,6 +212,7 @@ group {
 	    }
 	    color: 255 255 255 0;
 	    color3: 0 0 0 0;
+            color_class: "module_label";
 	    text {
 	       text: "";
 	       font: "Edje-Vera-Bold";

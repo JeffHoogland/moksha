@@ -1001,7 +1001,12 @@ _grab_key_down_cb(void *data, int type, void *event)
      }
    else
      {
-	printf("'%s' '%s' '%s'\n", ev->keyname, ev->keysymbol, ev->key_compose);
+	if ((ev->keyname) && (ev->keysymbol) && (ev->key_compose))
+	  printf("'%s' '%s' '%s'\n", ev->keyname, ev->keysymbol, ev->key_compose);
+	else if ((ev->keyname) && (ev->keysymbol))
+	  printf("'%s' '%s'\n", ev->keyname, ev->keysymbol);
+	else
+	  printf("unknown key!!!!\n");
 	if (!strcmp(ev->keyname, "Control_L") || !strcmp(ev->keyname, "Control_R") ||
 	    !strcmp(ev->keyname, "Shift_L") || !strcmp(ev->keyname, "Shift_R") ||
 	    !strcmp(ev->keyname, "Alt_L") || !strcmp(ev->keyname, "Alt_R") ||
