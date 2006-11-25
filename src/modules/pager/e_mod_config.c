@@ -241,6 +241,7 @@ _grab_wnd_show(void *data1, void *data2)
 				 _grab_mouse_down_cb, cfdata));
 
    e_dialog_show(cfdata->grab.dia);
+   ecore_x_icccm_transient_for_set(cfdata->grab.dia->win->evas_win, pager_config->config_dialog->dia->win->evas_win);
 }
 
 static void
