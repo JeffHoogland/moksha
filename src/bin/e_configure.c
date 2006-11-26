@@ -18,6 +18,7 @@ e_configure_show(E_Container *con)
    E_Configure_Category *cat;
    E_Manager *man;
    Evas_Coord ew, eh, mw, mh;
+   Evas_Object *of;
    
    if (_e_configure) 
      {
@@ -77,13 +78,19 @@ e_configure_show(E_Container *con)
    edje_object_part_swallow(eco->edje, "e.swallow.content", eco->o_list);
 
    /* Category List */
+   of = e_widget_framelist_add(eco->evas, _("Categories"), 1);
    eco->cat_list = e_widget_ilist_add(eco->evas, 32, 32, NULL);
-   e_widget_list_object_append(eco->o_list, eco->cat_list, 1, 1, 0.5);
+   e_widget_min_size_get(eco->cat_list, &mw, &mh);
+   edje_extern_object_min_size_set(eco->cat_list, mw, mh);
+   e_widget_framelist_object_append(of, eco->cat_list);
+   e_widget_list_object_append(eco->o_list, of, 1, 1, 0.5);
    
    /* Item List */
+   of = e_widget_framelist_add(eco->evas, _("Configuration Items"), 1);
    eco->item_list = e_widget_ilist_add(eco->evas, 32, 32, NULL);
    e_widget_ilist_selector_set(eco->item_list, 1);
-   e_widget_list_object_append(eco->o_list, eco->item_list, 1, 1, 0.5);
+   e_widget_framelist_object_append(of, eco->item_list);   
+   e_widget_list_object_append(eco->o_list, of, 1, 1, 0.5);
    
    /* Add "Categories" & "Items" Here */
    cat = _e_configure_category_add(eco, _("Appearance"), "enlightenment/appearance");
@@ -138,10 +145,6 @@ e_configure_show(E_Container *con)
     * 
     * cat = _e_configure_category_add(eco, _("Extension Configuration"), "enlightenment/extension_config");
     */
-   
-   /* Resize the "Category" list */
-   e_widget_min_size_get(eco->cat_list, &mw, &mh);
-   edje_extern_object_min_size_set(eco->cat_list, mw, mh);
    
    /* Close Button */
    eco->close = e_widget_button_add(eco->evas, _("Close"), NULL, 
@@ -251,7 +254,7 @@ _e_configure_category_add(E_Configure *eco, char *label, char *icon)
 	e_util_edje_icon_set(o, icon);
      }
    eco->cats = evas_list_append(eco->cats, cat);
-   
+
    e_widget_ilist_append(eco->cat_list, o, label, _e_configure_category_cb, cat, NULL);
    return cat;
 }
