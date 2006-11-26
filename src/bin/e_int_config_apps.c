@@ -688,7 +688,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    if ((!once) || (once->path))
       {
 	 if ((once) && (once->title))
-            of = e_widget_framelist_add(evas, once->title, 0);
+            of = e_widget_framelist_add(evas, (char *)once->title, 0);
 	 else
 #ifdef ENABLE_FAVORITES
             of = e_widget_framelist_add(evas, _("Menus"), 0);
