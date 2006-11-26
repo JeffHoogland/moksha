@@ -656,7 +656,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 			  150, 220, /* min */
 			  99999, 99999 /* max */
 			  );
-   mt = e_widget_check_add(evas, _("All applications"), &(cfdata->sorted));
+   mt = e_widget_check_add(evas, _("All Applications"), &(cfdata->sorted));
    evas_object_smart_callback_add(mt, "changed",
 				  _cb_files_sorted_changed, cfdata);
    e_widget_framelist_object_append(of, mt);
@@ -667,7 +667,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 			   _cb_button_add, cfdata, NULL);
 /*
    else
-      mt = e_widget_button_add(evas, _("Add application ->"), "enlightenment/e",
+      mt = e_widget_button_add(evas, _("Add Application ->"), "enlightenment/e",
 			   _cb_button_add, cfdata, NULL);
 */
    if (mt)
@@ -756,13 +756,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 			  99999, 99999 /* max */
 			  );
 /*
-         mt = e_widget_button_add(evas, _("Move application up"), "widget/up_arrow",
+         mt = e_widget_button_add(evas, _("Move Application up"), "widget/up_arrow",
 			   _cb_button_move_up, cfdata, NULL);
          cfdata->gui.o_move_up_button = mt;
          e_widget_framelist_object_append(of, mt);
 	 e_widget_disabled_set(cfdata->gui.o_move_up_button, 1);
 
-         mt = e_widget_button_add(evas, _("Move application down"), "widget/down_arrow",
+         mt = e_widget_button_add(evas, _("Move Application down"), "widget/down_arrow",
 			   _cb_button_move_down, cfdata, NULL);
          cfdata->gui.o_move_down_button = mt;
          e_widget_framelist_object_append(of, mt);
