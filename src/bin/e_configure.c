@@ -82,6 +82,7 @@ e_configure_show(E_Container *con)
    
    /* Item List */
    eco->item_list = e_widget_ilist_add(eco->evas, 32, 32, NULL);
+   e_widget_ilist_selector_set(eco->item_list, 1);
    e_widget_list_object_append(eco->o_list, eco->item_list, 1, 1, 0.5);
    
    /* Add "Categories" & "Items" Here */
