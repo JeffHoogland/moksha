@@ -17,21 +17,17 @@ struct _E_Config_Dialog_Data
    unsigned char btn_noplace;
    int flip_desk;
 
-   struct
-     {
-	Ecore_X_Window bind_win;
-	E_Dialog *dia;
-	Evas_List *handlers;
-
-	unsigned char *button1;
-	unsigned char *button2;
-     } grab;
-
-   struct
-     {
-	Evas_Object *o_btn1;
-	Evas_Object *o_btn2;
-     } gui;
+   struct {
+      Ecore_X_Window bind_win;
+      E_Dialog *dia;
+      Evas_List *handlers;
+      int btn;
+   } grab;
+   
+   struct {
+      Evas_Object *o_btn1;
+      Evas_Object *o_btn2;
+   } gui;
 };
 
 /* Protos */
@@ -209,15 +205,9 @@ _grab_wnd_show(void *data1, void *data2)
    cfdata = data2;
 
    if ((Pager_Grab_Button)data1 == GRAB_BUTTON_DRAG)
-     {
-	cfdata->grab.button1 = &(cfdata->btn_drag);
-	cfdata->grab.button2 = &(cfdata->btn_noplace);
-     }
+     cfdata->grab.btn = 1;
    else
-     {
-	cfdata->grab.button1 = &(cfdata->btn_noplace);
-	cfdata->grab.button2 = &(cfdata->btn_drag);
-     }
+     cfdata->grab.btn = 0;
 
    cfdata->grab.dia = e_dialog_new(e_container_current_get(man), "Pager", "_pager_button_grab_dialog");
    if (!cfdata->grab.dia) return;
@@ -229,7 +219,7 @@ _grab_wnd_show(void *data1, void *data2)
    e_win_centered_set(cfdata->grab.dia->win, 1);
    e_win_borderless_set(cfdata->grab.dia->win, 1);
 
-   cfdata->grab.bind_win = ecore_x_window_input_new(man->root, 0, 0, 1, 1);
+   cfdata->grab.bind_win = ecore_x_window_input_new(man->root, 0, 0, man->w, man->h);
    ecore_x_window_show(cfdata->grab.bind_win);
    e_grabinput_get(cfdata->grab.bind_win, 0, cfdata->grab.bind_win);
 
@@ -273,15 +263,17 @@ _grab_mouse_down_cb(void *data, int type, void *event)
 
    if (ev->button != 3)
      {
-	if (ev->button == *(cfdata->grab.button2))
-	  {
-	     *(cfdata->grab.button2) = *(cfdata->grab.button1);
-	     *(cfdata->grab.button1) = ev->button;
-	  }
+	if (cfdata->grab.btn == 1)
+	  cfdata->btn_drag = ev->button;
 	else
-	  {
-	     *(cfdata->grab.button1) = ev->button;
-	  } 
+	  cfdata->btn_noplace = ev->button;
+     }
+   else
+     {
+	e_util_dialog_show(_("Error - Invalid Button"),
+			   _("You cannot use the right mouse button<br>"
+			     "for this as it is already taken by internal<br>"
+			     "code for context menus."));
      }
 
    _grab_wnd_hide(cfdata);
@@ -301,8 +293,10 @@ _grab_key_down_cb(void *data, int type, void *event)
    if (!strcmp(ev->keyname, "Escape")) _grab_wnd_hide(cfdata);
    if (!strcmp(ev->keyname, "Delete"))
      {
-	*(cfdata->grab.button1) = 0;
-	_grab_wnd_hide(cfdata);
+	if (cfdata->grab.btn == 1)
+	  cfdata->btn_drag = 0;
+	else
+	  cfdata->btn_noplace = 0;
      }
    return 1;
 }
