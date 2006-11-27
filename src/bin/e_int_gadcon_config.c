@@ -267,10 +267,12 @@ _load_available_gadgets(void *data)
    
    oi = cfdata->o_avail;
    evas = evas_object_evas_get(oi);
+
+   evas_event_freeze(evas);
+   edje_freeze();
+   e_widget_ilist_freeze(oi);
    
    e_widget_ilist_clear(oi);
-   e_widget_ilist_go(oi);
-   
    for (l = e_gadcon_provider_list(); l; l = l->next)
      {
 	E_Gadcon_Client_Class *cc;
@@ -286,6 +288,9 @@ _load_available_gadgets(void *data)
 	e_widget_ilist_append(oi, icon, label, _cb_select_client, cfdata, cc->name);
      }
    e_widget_ilist_go(oi);
+   e_widget_ilist_thaw(oi);
+   edje_thaw();
+   evas_event_thaw(evas);
 }
 
 static void 
@@ -302,9 +307,11 @@ _load_selected_gadgets(void *data)
    oi = cfdata->o_instances;
    evas = evas_object_evas_get(oi);
 
-   e_widget_ilist_clear(oi);
-   e_widget_ilist_go(oi);
+   evas_event_freeze(evas);
+   edje_freeze();
+   e_widget_ilist_freeze(oi);
    
+   e_widget_ilist_clear(oi);
    for (l = cfdata->cf_gc->clients; l; l = l->next)
      {
 	E_Config_Gadcon_Client *cf_gcc;
@@ -330,5 +337,8 @@ _load_selected_gadgets(void *data)
 	       }
 	  }
      }
-   e_widget_ilist_go(oi);   
+   e_widget_ilist_go(oi);
+   e_widget_ilist_thaw(oi);
+   edje_thaw();
+   evas_event_thaw(evas);
 }
