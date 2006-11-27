@@ -180,6 +180,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    borders = e_theme_border_list();
    orect = evas_object_rectangle_add(evas);
    evas_object_color_set(orect, 0, 0, 0, 128);
+   
+   evas_event_freeze(evas_object_evas_get(ol));
+   edje_freeze();
+   e_widget_ilist_freeze(ol);
    e_widget_ilist_append(ol, orect, "borderless", NULL, NULL, "borderless");
    
    for (n = 1, l = borders; l; l = l->next, n++) 
@@ -206,6 +210,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    e_widget_ilist_go(ol);
    e_widget_ilist_selected_set(ol, sel);
+   e_widget_ilist_thaw(ol);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(ol));
    
    e_widget_list_object_append(o, ol, 1, 1, 0.5);
    if (cfdata->border) 
