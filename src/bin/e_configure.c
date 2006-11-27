@@ -180,7 +180,7 @@ e_configure_show(E_Container *con)
 
    evas_object_show(eco->edje);
    e_win_show(eco->win);
-   eco->win->border->internal_icon = evas_stringshare_add("enlightenment/configuration");
+   e_win_border_icon_set(eco->win, "enlightenment/configuration");
 
    e_widget_focus_set(eco->cat_list, 1);
    e_widget_ilist_go(eco->cat_list);
