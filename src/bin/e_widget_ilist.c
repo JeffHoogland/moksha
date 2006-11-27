@@ -266,6 +266,24 @@ e_widget_ilist_nth_is_header(Evas_Object *obj, int n)
    return e_ilist_nth_is_header(wd->o_ilist, n);
 }
 
+EAPI void
+e_widget_ilist_freeze(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   e_ilist_freeze(wd->o_ilist);
+}
+
+EAPI void
+e_widget_ilist_thaw(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   e_ilist_thaw(wd->o_ilist);
+}
+
 static void
 _e_wid_del_hook(Evas_Object *obj)
 {

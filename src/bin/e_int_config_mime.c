@@ -213,12 +213,15 @@ _fill_list(E_Config_Dialog_Data *cfdata, char *mtype)
    Evas_Coord w, h;
    Evas *evas;
 
+   evas_event_freeze(evas_object_evas_get(cfdata->gui.list));
+   edje_freeze();
+   e_widget_ilist_freeze(cfdata->gui.list);
    evas = evas_object_evas_get(cfdata->gui.list);
    e_widget_ilist_clear(cfdata->gui.list);
    for (l = cfdata->mimes; l; l = l->next) 
      {
 	Config_Mime *m;
-	Evas_Object *icon;
+	Evas_Object *icon = NULL;
 	const char *tmp;
 	char buf[4096];
 	int edj = 0, img = 0;
@@ -226,7 +229,6 @@ _fill_list(E_Config_Dialog_Data *cfdata, char *mtype)
 	m = l->data;
 	if (!m) return;
 	if (!strstr(m->mime, mtype)) continue;
-	
 	tmp = e_fm_mime_icon_get(m->mime);
 	if (!tmp) 
 	  snprintf(buf, sizeof(buf), "e/icons/fileman/file");
@@ -263,6 +265,9 @@ _fill_list(E_Config_Dialog_Data *cfdata, char *mtype)
    e_widget_ilist_go(cfdata->gui.list);
    e_widget_min_size_get(cfdata->gui.list, &w, &h);
    e_widget_min_size_set(cfdata->gui.list, w, 200);
+   e_widget_ilist_thaw(cfdata->gui.list);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(cfdata->gui.list));
 }
 
 static void 
@@ -271,6 +276,9 @@ _fill_tlist(E_Config_Dialog_Data *cfdata)
    Evas_List *l;
    Evas_Coord w, h;
 
+   evas_event_freeze(evas_object_evas_get(cfdata->gui.tlist));
+   edje_freeze();
+   e_widget_ilist_freeze(cfdata->gui.tlist);
    e_widget_ilist_clear(cfdata->gui.tlist);
    for (l = types; l; l = l->next) 
      {
@@ -293,6 +301,9 @@ _fill_tlist(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_go(cfdata->gui.tlist);
    e_widget_min_size_get(cfdata->gui.tlist, &w, &h);
    e_widget_min_size_set(cfdata->gui.tlist, w, 225);
+   e_widget_ilist_thaw(cfdata->gui.tlist);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(cfdata->gui.tlist));
 }
 
 static void 

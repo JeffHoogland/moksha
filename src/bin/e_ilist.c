@@ -127,6 +127,7 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, const char *label, int heade
    si->header = header;
    sd->items = evas_list_append(sd->items, si);
    edje_object_size_min_calc(si->base_obj, &mw, &mh);
+   e_box_freeze(sd->box_obj);
    e_box_pack_end(sd->box_obj, si->base_obj);
    e_box_pack_options_set(si->base_obj,
 			  1, 1, /* fill */
@@ -135,6 +136,7 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, const char *label, int heade
 			  mw, mh, /* min */
 			  99999, 99999 /* max */
 			  );
+   e_box_thaw(sd->box_obj);
    evas_object_lower(si->base_obj);
    evas_object_event_callback_add(si->base_obj, EVAS_CALLBACK_MOUSE_DOWN, _e_smart_event_mouse_down, si);
    evas_object_event_callback_add(si->base_obj, EVAS_CALLBACK_MOUSE_UP, _e_smart_event_mouse_up, si);
@@ -392,7 +394,7 @@ e_ilist_count(Evas_Object *obj)
 EAPI void
 e_ilist_clear(Evas_Object *obj) 
 {
-   INTERNAL_ENTRY;
+   API_ENTRY return;
    while (sd->items)
      {
 	E_Smart_Item *si;
@@ -416,6 +418,20 @@ e_ilist_nth_is_header(Evas_Object *obj, int n)
    si = evas_list_nth(sd->items, n);
    if (si) return si->header;
    return 0;
+}
+
+EAPI void
+e_ilist_freeze(Evas_Object *obj)
+{
+   API_ENTRY return;
+   e_box_freeze(sd->box_obj);
+}
+
+EAPI void
+e_ilist_thaw(Evas_Object *obj)
+{
+   API_ENTRY return;
+   e_box_thaw(sd->box_obj);
 }
 
 /* local subsystem functions */
