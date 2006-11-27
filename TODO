@@ -21,6 +21,8 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
+* add ilist freeze/thaw to all ilist population code - especially key and
+  mouse bindings and anything that adds lots of things to ilist
 * fm2 needs a right-click file properties dialog
 * fm2 needs a way to set custom backgrounds and handle scrolling
 * fm2 needs to display symlink info on files somehow
