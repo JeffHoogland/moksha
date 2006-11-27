@@ -72,7 +72,7 @@ e_theme_about_show(E_Theme_About *about)
 	e_win_size_max_set(about->win, mw, mh);
      }
    e_win_show(about->win);
-   about->win->border->internal_icon = evas_stringshare_add("enlightenment/themes");
+   e_win_border_icon_set(about->win, "enlightenment/themes");
 }
 
 /* local subsystem functions */
