@@ -770,7 +770,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 */
          if (!once)
 	   {
-              mt = e_widget_button_add(evas, _("Regenerate/update \"Applications\" Menu"), "enlightenment/regenerate_menus",
+              mt = e_widget_button_add(evas, _("Regenerate / Update \"Applications\" Menu"), "enlightenment/regenerate_menus",
 			               _cb_button_regen, cfdata, NULL);
               cfdata->gui.o_regen_button = mt;
               e_widget_framelist_object_append(of, mt);
