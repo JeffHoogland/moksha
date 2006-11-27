@@ -493,6 +493,10 @@ _fill_list(E_Config_Dialog_Data *cfdata)
    char buf[4096];
 
    if (!cfdata->gui.list) return;
+
+   evas_event_freeze(evas_object_evas_get(cfdata->gui.list));
+   edje_freeze();
+   e_widget_ilist_freeze(cfdata->gui.list);
    
    e_widget_ilist_clear(cfdata->gui.list);
    e_widget_ilist_go(cfdata->gui.list);
@@ -527,4 +531,7 @@ _fill_list(E_Config_Dialog_Data *cfdata)
      }
 
    e_widget_ilist_go(cfdata->gui.list);
+   e_widget_ilist_thaw(cfdata->gui.list);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(cfdata->gui.list));
 }
