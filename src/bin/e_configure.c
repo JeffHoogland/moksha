@@ -10,6 +10,7 @@ static E_Configure_Item *_e_configure_item_add(E_Configure_Category *cat, char *
 static void _e_configure_item_cb(void *data);
 static void _e_configure_focus_cb(void *data, Evas_Object *obj);
 static void _e_configure_keydown_cb(void *data, Evas *e, Evas_Object *obj, void *event);
+static void _e_configure_fill_cat_list(void *data);
 
 static E_Configure *_e_configure = NULL;
 
@@ -17,7 +18,6 @@ EAPI E_Configure *
 e_configure_show(E_Container *con) 
 {
    E_Configure *eco;
-   E_Configure_Category *cat;
    E_Manager *man;
    Evas_Coord ew, eh, mw, mh;
    Evas_Object *o, *of;
@@ -95,82 +95,28 @@ e_configure_show(E_Container *con)
    /* Category List */
    of = e_widget_framelist_add(eco->evas, _("Categories"), 1);
    eco->cat_list = e_widget_ilist_add(eco->evas, 32, 32, NULL);
+   _e_configure_fill_cat_list(eco);
    e_widget_on_focus_hook_set(eco->cat_list, _e_configure_focus_cb, eco->win);
-   e_widget_min_size_get(eco->cat_list, &mw, &mh);
-   edje_extern_object_min_size_set(eco->cat_list, 150, mh);
-   e_widget_min_size_set(eco->cat_list, 150, mh);
    e_widget_framelist_object_append(of, eco->cat_list);
    e_widget_list_object_append(eco->o_list, of, 1, 1, 0.5);
    
    /* Item List */
    of = e_widget_framelist_add(eco->evas, _("Configuration Items"), 1);
    eco->item_list = e_widget_ilist_add(eco->evas, 32, 32, NULL);
+   e_widget_ilist_selector_set(eco->item_list, 1);
+   e_widget_ilist_go(eco->item_list);
    e_widget_on_focus_hook_set(eco->item_list, _e_configure_focus_cb, eco->win);
+   e_widget_min_size_get(eco->item_list, &mw, &mh);
    edje_extern_object_min_size_set(eco->item_list, 150, mh);
    e_widget_min_size_set(eco->item_list, 150, mh);
-   e_widget_ilist_selector_set(eco->item_list, 1);
    e_widget_framelist_object_append(of, eco->item_list);   
    e_widget_list_object_append(eco->o_list, of, 1, 1, 0.5);
-   
-   /* Add "Categories" & "Items" Here */
-   cat = _e_configure_category_add(eco, _("Appearance"), "enlightenment/appearance");
-   _e_configure_item_add(cat, _("Wallpaper"), "enlightenment/background", e_int_config_wallpaper);
-   _e_configure_item_add(cat, _("Theme"), "enlightenment/themes", e_int_config_theme);
-   _e_configure_item_add(cat, _("Colors"), "enlightenment/colors", e_int_config_color_classes);
-   _e_configure_item_add(cat, _("Fonts"), "enlightenment/fonts", e_int_config_fonts);
-   _e_configure_item_add(cat, _("Borders"), "enlightenment/windows", e_int_config_borders);
-   _e_configure_item_add(cat, _("Icon Theme"), "enlightenment/icon_theme", e_int_config_icon_themes);
-   _e_configure_item_add(cat, _("Mouse Cursor"), "enlightenment/mouse", e_int_config_cursor);
-   _e_configure_item_add(cat, _("Window Display"), "enlightenment/windows", e_int_config_window_display);
-   _e_configure_item_add(cat, _("Transitions"), "enlightenment/transitions", e_int_config_transitions);
-   _e_configure_item_add(cat, _("Shelves"), "enlightenment/shelf", e_int_config_shelf);
-
-   /* Preselect "Appearance" */
-   e_widget_ilist_selected_set(eco->cat_list, 0);
-   _e_configure_category_cb(cat);
-
-   cat = _e_configure_category_add(eco, _("Screen"), "enlightenment/screen_setup");
-   _e_configure_item_add(cat, _("Virtual Desktops"), "enlightenment/desktops", e_int_config_desks);
-   _e_configure_item_add(cat, _("Screen Resolution"), "enlightenment/screen_resolution", e_int_config_display);
-   _e_configure_item_add(cat, _("Screen Lock"), "enlightenment/desklock", e_int_config_desklock);
-
-   cat = _e_configure_category_add(eco, _("Behavior"), "enlightenment/behavior");
-   _e_configure_item_add(cat, _("Window Focus"), "enlightenment/focus", e_int_config_focus);
-   _e_configure_item_add(cat, _("Key Bindings"), "enlightenment/keys", e_int_config_keybindings);
-   _e_configure_item_add(cat, _("Mouse Bindings"), "enlightenment/mouse_clean", e_int_config_mousebindings);
-   _e_configure_item_add(cat, _("Menus"), "enlightenment/menus", e_int_config_menus);
-
-   cat = _e_configure_category_add(eco, _("Miscellaneous"), "enlightenment/misc");
-#ifdef ENABLE_FAVORITES
-   _e_configure_item_add(cat, _("Application Menus"), "enlightenment/applications", e_int_config_apps);
-#else
-   _e_configure_item_add(cat, _("Applications Menu"), "enlightenment/applications", e_int_config_apps);
-#endif
-   _e_configure_item_add(cat, _("Performance"), "enlightenment/performance", e_int_config_performance);
-   _e_configure_item_add(cat, _("Configuration Dialogs"), "enlightenment/configuration", e_int_config_cfgdialogs);
-   _e_configure_item_add(cat, _("Language Settings"), "enlightenment/intl", e_int_config_intl);
-
-   cat = _e_configure_category_add(eco, _("Advanced"), "enlightenment/advanced");
-   _e_configure_item_add(cat, _("Startup"), "enlightenment/startup", e_int_config_startup);
-   _e_configure_item_add(cat, _("Window List"), "enlightenment/winlist", e_int_config_winlist);
-   _e_configure_item_add(cat, _("Window Manipulation"), "enlightenment/window_manipulation", e_int_config_window_manipulation);
-   _e_configure_item_add(cat, _("Run Command"), "enlightenment/run", e_int_config_exebuf);
-   _e_configure_item_add(cat, _("Search Directories"), "enlightenment/directories", e_int_config_paths);
-   _e_configure_item_add(cat, _("File Associations"), "enlightenment/e", e_int_config_mime);
-
-   cat = _e_configure_category_add(eco, _("Extensions"), "enlightenment/extensions");
-   _e_configure_item_add(cat, _("Modules"), "enlightenment/modules", e_int_config_modules);
-
-   /* FIXME: we should have a way for modules to hook in here and add their own entries 
-    * 
-    * cat = _e_configure_category_add(eco, _("Extension Configuration"), "enlightenment/extension_config");
-    */
    
    /* Close Button */
    eco->close = e_widget_button_add(eco->evas, _("Close"), NULL, 
 				    _e_configure_cb_close, eco, NULL);
-   e_widget_min_size_get(eco->close, &mw, &mh);
    e_widget_on_focus_hook_set(eco->close, _e_configure_focus_cb, eco->win);
+   e_widget_min_size_get(eco->close, &mw, &mh);
    edje_extern_object_min_size_set(eco->close, mw, mh);
    edje_object_part_swallow(eco->edje, "e.swallow.button", eco->close);
    
@@ -182,8 +128,9 @@ e_configure_show(E_Container *con)
    e_win_show(eco->win);
    e_win_border_icon_set(eco->win, "enlightenment/configuration");
 
+   /* Preselect "Appearance" */
    e_widget_focus_set(eco->cat_list, 1);
-   e_widget_ilist_go(eco->cat_list);
+   e_widget_ilist_selected_set(eco->cat_list, 0);
    
    _e_configure = eco;
    return eco;
@@ -286,11 +233,15 @@ _e_configure_category_cb(void *data)
    E_Configure_Category *cat;
    E_Configure *eco;
    Evas_List *l;
+   Evas_Coord w, h;
    
    cat = data;
    if (!cat) return;
    eco = cat->eco;
-   
+
+   evas_event_freeze(evas_object_evas_get(eco->item_list));
+   edje_freeze();
+   e_widget_ilist_freeze(eco->item_list);
    e_widget_ilist_clear(eco->item_list);
    for (l = cat->items; l; l = l->next) 
      {
@@ -307,6 +258,11 @@ _e_configure_category_cb(void *data)
 	e_widget_ilist_append(eco->item_list, o, ci->label, _e_configure_item_cb, ci, NULL);
      }
    e_widget_ilist_go(eco->item_list);
+   e_widget_min_size_get(eco->item_list, &w, &h);
+   e_widget_min_size_set(eco->item_list, w, h);
+   e_widget_ilist_thaw(eco->item_list);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(eco->item_list));
 }
 
 static E_Configure_Item *
@@ -420,4 +376,77 @@ _e_configure_keydown_cb(void *data, Evas *e, Evas_Object *obj, void *event)
 	     e_widget_activate(o);
 	  }
      }
+}
+
+static void 
+_e_configure_fill_cat_list(void *data) 
+{
+   E_Configure *eco;
+   Evas_Coord mw, mh;
+   E_Configure_Category *cat;
+
+   eco = data;
+   if (!eco) return;
+
+   evas_event_freeze(evas_object_evas_get(eco->cat_list));
+   edje_freeze();
+   e_widget_ilist_freeze(eco->cat_list);
+   
+   /* Add "Categories" & "Items" Here */
+   cat = _e_configure_category_add(eco, _("Appearance"), "enlightenment/appearance");
+   _e_configure_item_add(cat, _("Wallpaper"), "enlightenment/background", e_int_config_wallpaper);
+   _e_configure_item_add(cat, _("Theme"), "enlightenment/themes", e_int_config_theme);
+   _e_configure_item_add(cat, _("Colors"), "enlightenment/colors", e_int_config_color_classes);
+   _e_configure_item_add(cat, _("Fonts"), "enlightenment/fonts", e_int_config_fonts);
+   _e_configure_item_add(cat, _("Borders"), "enlightenment/windows", e_int_config_borders);
+   _e_configure_item_add(cat, _("Icon Theme"), "enlightenment/icon_theme", e_int_config_icon_themes);
+   _e_configure_item_add(cat, _("Mouse Cursor"), "enlightenment/mouse", e_int_config_cursor);
+   _e_configure_item_add(cat, _("Window Display"), "enlightenment/windows", e_int_config_window_display);
+   _e_configure_item_add(cat, _("Transitions"), "enlightenment/transitions", e_int_config_transitions);
+   _e_configure_item_add(cat, _("Shelves"), "enlightenment/shelf", e_int_config_shelf);
+
+   cat = _e_configure_category_add(eco, _("Screen"), "enlightenment/screen_setup");
+   _e_configure_item_add(cat, _("Virtual Desktops"), "enlightenment/desktops", e_int_config_desks);
+   _e_configure_item_add(cat, _("Screen Resolution"), "enlightenment/screen_resolution", e_int_config_display);
+   _e_configure_item_add(cat, _("Screen Lock"), "enlightenment/desklock", e_int_config_desklock);
+
+   cat = _e_configure_category_add(eco, _("Behavior"), "enlightenment/behavior");
+   _e_configure_item_add(cat, _("Window Focus"), "enlightenment/focus", e_int_config_focus);
+   _e_configure_item_add(cat, _("Key Bindings"), "enlightenment/keys", e_int_config_keybindings);
+   _e_configure_item_add(cat, _("Mouse Bindings"), "enlightenment/mouse_clean", e_int_config_mousebindings);
+   _e_configure_item_add(cat, _("Menus"), "enlightenment/menus", e_int_config_menus);
+
+   cat = _e_configure_category_add(eco, _("Miscellaneous"), "enlightenment/misc");
+#ifdef ENABLE_FAVORITES
+   _e_configure_item_add(cat, _("Application Menus"), "enlightenment/applications", e_int_config_apps);
+#else
+   _e_configure_item_add(cat, _("Applications Menu"), "enlightenment/applications", e_int_config_apps);
+#endif
+   _e_configure_item_add(cat, _("Performance"), "enlightenment/performance", e_int_config_performance);
+   _e_configure_item_add(cat, _("Configuration Dialogs"), "enlightenment/configuration", e_int_config_cfgdialogs);
+   _e_configure_item_add(cat, _("Language Settings"), "enlightenment/intl", e_int_config_intl);
+
+   cat = _e_configure_category_add(eco, _("Advanced"), "enlightenment/advanced");
+   _e_configure_item_add(cat, _("Startup"), "enlightenment/startup", e_int_config_startup);
+   _e_configure_item_add(cat, _("Window List"), "enlightenment/winlist", e_int_config_winlist);
+   _e_configure_item_add(cat, _("Window Manipulation"), "enlightenment/window_manipulation", e_int_config_window_manipulation);
+   _e_configure_item_add(cat, _("Run Command"), "enlightenment/run", e_int_config_exebuf);
+   _e_configure_item_add(cat, _("Search Directories"), "enlightenment/directories", e_int_config_paths);
+   _e_configure_item_add(cat, _("File Associations"), "enlightenment/e", e_int_config_mime);
+
+   cat = _e_configure_category_add(eco, _("Extensions"), "enlightenment/extensions");
+   _e_configure_item_add(cat, _("Modules"), "enlightenment/modules", e_int_config_modules);
+
+   /* FIXME: we should have a way for modules to hook in here and add their own entries 
+    * 
+    * cat = _e_configure_category_add(eco, _("Extension Configuration"), "enlightenment/extension_config");
+    */
+   
+   e_widget_ilist_go(eco->cat_list);
+   e_widget_min_size_get(eco->cat_list, &mw, &mh);
+   edje_extern_object_min_size_set(eco->cat_list, 150, mh);
+   e_widget_min_size_set(eco->cat_list, 150, mh);
+   e_widget_ilist_thaw(eco->cat_list);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(eco->cat_list));
 }
