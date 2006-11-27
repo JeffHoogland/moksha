@@ -290,6 +290,10 @@ _fill_actions_list(E_Config_Dialog_Data *cfdata)
    E_Action_Description *actd;
    int g, a;
 
+   evas_event_freeze(evas_object_evas_get(cfdata->gui.o_action_list));
+   edje_freeze();
+   e_widget_ilist_freeze(cfdata->gui.o_action_list);
+   
    e_widget_ilist_clear(cfdata->gui.o_action_list);
    for (l = e_action_groups_get(), g = 0; l; l = l->next, g++)
      {
@@ -309,6 +313,9 @@ _fill_actions_list(E_Config_Dialog_Data *cfdata)
 	  }
      }
    e_widget_ilist_go(cfdata->gui.o_action_list);
+   e_widget_ilist_thaw(cfdata->gui.o_action_list);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(cfdata->gui.o_action_list));
 }
 
 /**************** Callbacks *********/
@@ -823,6 +830,10 @@ _update_key_binding_list(E_Config_Dialog_Data *cfdata)
    Evas_List *l;
    E_Config_Binding_Key *bi;
 
+   evas_event_freeze(evas_object_evas_get(cfdata->gui.o_binding_list));
+   edje_freeze();
+   e_widget_ilist_freeze(cfdata->gui.o_binding_list);
+   
    e_widget_ilist_clear(cfdata->gui.o_binding_list);
    e_widget_ilist_go(cfdata->gui.o_binding_list);
 
@@ -851,6 +862,10 @@ _update_key_binding_list(E_Config_Dialog_Data *cfdata)
      }
    e_widget_ilist_go(cfdata->gui.o_binding_list);
 
+   e_widget_ilist_thaw(cfdata->gui.o_binding_list);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(cfdata->gui.o_binding_list));
+   
    if (evas_list_count(cfdata->binding.key))
      e_widget_disabled_set(cfdata->gui.o_del_all, 0);
    else
@@ -860,7 +875,6 @@ _update_key_binding_list(E_Config_Dialog_Data *cfdata)
 static void
 _update_buttons(E_Config_Dialog_Data *cfdata)
 {
-
    if (e_widget_ilist_count(cfdata->gui.o_binding_list)) 
      e_widget_disabled_set(cfdata->gui.o_del_all, 0);
    else
