@@ -132,10 +132,18 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    il = e_widget_ilist_add(evas, 48, 48, NULL);
    cfdata->event_list = il;
    e_widget_min_size_set(il, 160, 245);
+   
+   evas_event_freeze(evas_object_evas_get(il));
+   edje_freeze();
+   e_widget_ilist_freeze(il);
    e_widget_ilist_append(il, NULL, _("Startup"), _event_cb_changed, cfdata, NULL);
    e_widget_ilist_append(il, NULL, _("Desk Change"), _event_cb_changed, cfdata, NULL);
    e_widget_ilist_append(il, NULL, _("Background Change"), _event_cb_changed, cfdata, NULL);
    e_widget_ilist_go(il);
+   e_widget_ilist_thaw(il);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(il));
+   
    e_widget_framelist_object_append(of, il);
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
 
@@ -143,7 +151,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    il = e_widget_ilist_add(evas, 48, 48, NULL);
    cfdata->trans_list = il;
    e_widget_min_size_set(il, 160, 245);
-
+   
+   evas_event_freeze(evas_object_evas_get(il));
+   edje_freeze();
+   e_widget_ilist_freeze(il);
+   
    e_widget_ilist_append(il, NULL, _("None"), _trans_cb_changed, cfdata, NULL);
    l = e_theme_transition_list();
    for (l = e_theme_transition_list(); l; l = l->next) 
@@ -153,6 +165,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	e_widget_ilist_append(il, NULL, t, _trans_cb_changed, cfdata, NULL);
      }
    e_widget_ilist_go(il);
+   e_widget_ilist_thaw(il);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(il));
    
    e_widget_framelist_object_append(of, il);
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
