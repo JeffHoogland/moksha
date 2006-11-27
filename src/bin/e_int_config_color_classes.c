@@ -474,7 +474,10 @@ _load_color_classes(Evas_Object *obj, E_Config_Dialog_Data *cfdata)
 {
    Evas_List *l;
    Evas_Coord w, h;
-   
+
+   evas_event_freeze(evas_object_evas_get(obj));
+   edje_freeze();
+   e_widget_ilist_freeze(obj);
    e_widget_ilist_clear(obj);
    for (l = cfdata->classes; l; l = l->next) 
      {
@@ -501,6 +504,9 @@ _load_color_classes(Evas_Object *obj, E_Config_Dialog_Data *cfdata)
    e_widget_ilist_go(obj);
    e_widget_min_size_get(obj, &w, &h);
    e_widget_min_size_set(obj, w, 300);
+   e_widget_ilist_thaw(obj);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(obj));
 }
 
 static void 
