@@ -111,6 +111,10 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
    
    if (e_widget_ilist_count(cfdata->o_list) > 0) 
      n = e_widget_ilist_selected_get(cfdata->o_list);
+
+   evas_event_freeze(evas);
+   edje_freeze();
+   e_widget_ilist_freeze(cfdata->o_list);
    
    e_widget_ilist_clear(cfdata->o_list);
    e_widget_ilist_go(cfdata->o_list);
@@ -176,6 +180,11 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
    
    e_widget_min_size_set(cfdata->o_list, 155, 250);
    e_widget_ilist_go(cfdata->o_list);
+
+   e_widget_ilist_thaw(cfdata->o_list);
+   edje_thaw();
+   evas_event_thaw(evas);
+   
    if (n > -1) 
      {
 	e_widget_disabled_set(cfdata->o_delete, 0);
