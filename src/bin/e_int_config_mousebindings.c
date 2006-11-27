@@ -430,6 +430,10 @@ _fill_actions_list(E_Config_Dialog_Data *cfdata)
    E_Action_Description *actd;
    int g, a;
 
+   evas_event_freeze(evas_object_evas_get(cfdata->gui.o_action_list));
+   edje_freeze();
+   e_widget_ilist_freeze(cfdata->gui.o_action_list);
+   
    e_widget_ilist_clear(cfdata->gui.o_action_list);
    for (l = e_action_groups_get(), g = 0; l; l = l->next, g++)
      {
@@ -449,6 +453,9 @@ _fill_actions_list(E_Config_Dialog_Data *cfdata)
 	  }
      }
    e_widget_ilist_go(cfdata->gui.o_action_list);
+   e_widget_ilist_thaw(cfdata->gui.o_action_list);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(cfdata->gui.o_action_list));
 }
 
 /******************* Callbacks *************/
@@ -776,6 +783,10 @@ _update_mouse_binding_list(E_Config_Dialog_Data *cfdata)
    E_Config_Binding_Mouse *eb;
    E_Config_Binding_Wheel *bw;
 
+   evas_event_freeze(evas_object_evas_get(cfdata->gui.o_binding_list));
+   edje_freeze();
+   e_widget_ilist_freeze(cfdata->gui.o_binding_list);
+   
    e_widget_ilist_clear(cfdata->gui.o_binding_list);
 
    if (cfdata->binding.mouse) 
@@ -852,6 +863,9 @@ _update_mouse_binding_list(E_Config_Dialog_Data *cfdata)
      }
 
    e_widget_ilist_go(cfdata->gui.o_binding_list);
+   e_widget_ilist_thaw(cfdata->gui.o_binding_list);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(cfdata->gui.o_binding_list));
 
    if (evas_list_count(cfdata->binding.mouse) + evas_list_count(cfdata->binding.wheel))
      e_widget_disabled_set(cfdata->gui.o_del_all, 0);
