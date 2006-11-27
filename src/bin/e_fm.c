@@ -6,7 +6,6 @@
 #define OVERCLIP 128
 
 /* FIXME: use edje messages & embryo for scrolling of bg's */
-/* FIXME: put in code to allow for custom icons per file/dir somehow */
 
 /* FIXME: this is NOT complete. dnd not complete (started). only list view
  * works. in icon view it needs to be much better about placement of icons and
@@ -709,6 +708,28 @@ e_fm2_window_object_set(Evas_Object *obj, E_Object *eobj)
 }
 
 EAPI void
+e_fm2_icons_update(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   Evas_List *l;
+   E_Fm2_Icon *ic;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+   for (l = sd->icons; l; l = l->next)
+     {
+	ic = l->data;
+	if (ic->realized)
+	  {
+	     _e_fm2_icon_unrealize(ic);
+	     _e_fm2_icon_realize(ic);
+	  }
+     }
+}
+
+EAPI void
 e_fm2_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 {
    E_Fm2_Smart_Data *sd;
@@ -775,7 +796,10 @@ e_fm2_pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 EAPI void
 e_fm2_all_icons_update(void)
 {
-   /* FIXME: implement - update all icons in all fm2's as config changed */
+   Evas_List *l;
+   
+   for (l = _e_fm2_list; l; l = l->next)
+     e_fm2_icons_update(l->data);
 }
 
 EAPI void
