@@ -181,6 +181,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->gui.path_list = ob;
    e_widget_min_size_set(ob, 100, 100);
 
+   evas_event_freeze(evas_object_evas_get(cfdata->gui.path_list));
+   edje_freeze();
+   e_widget_ilist_freeze(cfdata->gui.path_list);
+   
    /* Fill In Ilist */
    for (i = 0; cfdata->paths_available[i].path; i++)
      {
@@ -194,6 +198,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      }
 
    e_widget_ilist_go(ob);
+   e_widget_ilist_thaw(cfdata->gui.path_list);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(cfdata->gui.path_list));
+   
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(o, of, 0, 0, 1, 1, 1, 1, 1, 1);
 
@@ -226,7 +234,11 @@ _ilist_path_cb_change(void *data)
    pcd = data;
    default_list = pcd->path->default_dir_list;
 
-   /* Update Default List */   
+   /* Update Default List */
+   evas_event_freeze(evas_object_evas_get(pcd->cfdata->gui.default_list));
+   edje_freeze();
+   e_widget_ilist_freeze(pcd->cfdata->gui.default_list);
+   
    e_widget_ilist_clear(pcd->cfdata->gui.default_list);
    for (l = default_list; l; l = l->next)
      {
@@ -237,10 +249,14 @@ _ilist_path_cb_change(void *data)
      }
    e_widget_ilist_go(pcd->cfdata->gui.default_list);
 
+   e_widget_ilist_thaw(pcd->cfdata->gui.default_list);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(pcd->cfdata->gui.default_list));
+   
    _ilist_update(	pcd->cfdata->gui.user_list,
 			pcd->cfdata->cur_pcd, //Path data to save
 			pcd); //New Path to show
-
+   
    pcd->cfdata->cur_pcd = pcd;
 }
 
