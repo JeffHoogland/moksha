@@ -898,6 +898,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_on_change_hook_set(ob, _ilist_basic_language_cb_change, cfdata);
    cfdata->gui.blang_list = ob;
 
+   evas_event_freeze(evas_object_evas_get(ob));
+   edje_freeze();
+   e_widget_ilist_freeze(ob);
+   
    if (cfdata->cur_language)
      {
 	E_Locale_Parts *locale_parts;
@@ -934,6 +938,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    E_FREE(cur_sig_loc);
    
    e_widget_ilist_go(ob);
+   e_widget_ilist_thaw(ob);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(ob));
+
    e_widget_frametable_object_append(of, ob, 0, 0, 2, 6, 1, 1, 1, 1);
    e_widget_ilist_selected_set(ob, e_widget_ilist_selected_get(ob));
    
@@ -1167,6 +1175,12 @@ _cfdata_language_go(const char *lang, const char *region, const char *codeset, c
    /* Check what changed */
    lang_update = 0;
    region_update = 0;
+
+   evas_event_freeze(evas_object_evas_get(cfdata->gui.cs_list));
+   evas_event_freeze(evas_object_evas_get(cfdata->gui.mod_list));
+   edje_freeze();
+   e_widget_ilist_freeze(cfdata->gui.cs_list);
+   e_widget_ilist_freeze(cfdata->gui.mod_list);
    
    if (cfdata->lang_dirty || (lang && !region)) 
      {
@@ -1246,8 +1260,14 @@ _cfdata_language_go(const char *lang, const char *region, const char *codeset, c
 		  e_widget_ilist_go(cfdata->gui.mod_list);
 	       }
 	  }
-	e_widget_ilist_go(cfdata->gui.reg_list);
      }
+   e_widget_ilist_thaw(cfdata->gui.cs_list);
+   e_widget_ilist_thaw(cfdata->gui.mod_list);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(cfdata->gui.cs_list));
+   evas_event_thaw(evas_object_evas_get(cfdata->gui.mod_list));
+
+   e_widget_ilist_go(cfdata->gui.reg_list);
 }
 
 static Evas_Bool
@@ -1352,6 +1372,10 @@ _lang_list_load(void *data)
 
    cfdata = data;
    if (!cfdata->lang_list) return;
+
+   evas_event_freeze(evas_object_evas_get(cfdata->gui.lang_list));
+   edje_freeze();
+   e_widget_ilist_freeze(cfdata->gui.lang_list);
    
    for (l = cfdata->lang_list; l; l = l->next) 
      {
@@ -1384,6 +1408,9 @@ _lang_list_load(void *data)
 	     e_widget_ilist_selected_set(cfdata->gui.lang_list, count - 1);
 	  }
      }
+   e_widget_ilist_thaw(cfdata->gui.lang_list);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(cfdata->gui.lang_list));
 }
 
 static int 
@@ -1419,6 +1446,10 @@ _region_list_load(void *data)
    cfdata = data;
    if (!cfdata->region_list) return;
 
+   evas_event_freeze(evas_object_evas_get(cfdata->gui.reg_list));
+   edje_freeze();
+   e_widget_ilist_freeze(cfdata->gui.reg_list);
+   
    for (l = cfdata->region_list; l; l = l->next) 
      {
 	E_Intl_Region_Node *rn;
@@ -1441,6 +1472,9 @@ _region_list_load(void *data)
 	     e_widget_ilist_selected_set(cfdata->gui.reg_list, count - 1);
 	  }
      }
+   e_widget_ilist_thaw(cfdata->gui.reg_list);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(cfdata->gui.reg_list));
 }
 
 static int 
