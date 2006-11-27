@@ -320,7 +320,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    of = e_widget_framelist_add(evas, _("Fonts"), 0);
    cfdata->gui.font_list = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_font));
-
+   evas_event_freeze(evas_object_evas_get(cfdata->gui.font_list));
+   edje_freeze();
+   e_widget_ilist_freeze(cfdata->gui.font_list);
    for (fonts = evas_font_available_list(evas); fonts; fonts = fonts->next) 
      {
 	char *f;
@@ -344,6 +346,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    e_widget_ilist_go(cfdata->gui.font_list);
    e_widget_min_size_set(cfdata->gui.font_list, 100, 200);
+   e_widget_ilist_thaw(cfdata->gui.font_list);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(cfdata->gui.font_list));
    e_widget_framelist_object_append(of, cfdata->gui.font_list);
    e_widget_table_object_append(ot, of, 1, 1, 2, 4, 1, 1, 1, 1);
    
@@ -517,6 +522,9 @@ _fill_ilist(E_Config_Dialog_Data *cfdata)
    
    if (!cfdata->gui.class_list) return;
    evas = evas_object_evas_get(cfdata->gui.class_list);
+   evas_event_freeze(evas);
+   edje_freeze();
+   e_widget_ilist_freeze(cfdata->gui.class_list);
    e_widget_ilist_clear(cfdata->gui.class_list);
    
    /* Fill In Ilist */
@@ -543,7 +551,10 @@ _fill_ilist(E_Config_Dialog_Data *cfdata)
 	       e_widget_ilist_header_append(cfdata->gui.class_list, NULL, tc->class_description);
 	  }
      }
-   e_widget_ilist_go(cfdata->gui.class_list);   
+   e_widget_ilist_go(cfdata->gui.class_list);
+   e_widget_ilist_thaw(cfdata->gui.class_list);
+   edje_thaw();
+   evas_event_thaw(evas);
 }
 
 static void
