@@ -155,12 +155,16 @@ EAPI void
 e_dialog_border_icon_set(E_Dialog *dia, const char *icon) 
 {
    E_Border *border;
-
-   if (!icon) return;
    
    border = dia->win->border;
    if (!border) return;
-   border->internal_icon = evas_stringshare_add(icon);
+   if (border->internal_icon)
+     {
+	evas_stringshare_del(border->internal_icon);
+	border->internal_icon = NULL;
+     }
+   if (icon)
+     border->internal_icon = evas_stringshare_add(icon);
 }
 
 EAPI void

@@ -370,10 +370,15 @@ e_win_border_icon_set(E_Win *win, const char *icon)
 {
    E_Border *border;
    
-   if (!icon) return;
    border = win->border;
    if (!border) return;
-   border->internal_icon = evas_stringshare_add(icon);
+   if (border->internal_icon)
+     {
+	evas_stringshare_del(border->internal_icon);
+	border->internal_icon = NULL;
+     }
+   if (icon)
+     border->internal_icon = evas_stringshare_add(icon);
 }
 
 /* local subsystem functions */
