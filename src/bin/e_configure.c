@@ -8,6 +8,8 @@ static E_Configure_Category *_e_configure_category_add(E_Configure *eco, char *l
 static void _e_configure_category_cb(void *data);
 static E_Configure_Item *_e_configure_item_add(E_Configure_Category *cat, char *label, char *icon, E_Config_Dialog *(*func) (E_Container *con));
 static void _e_configure_item_cb(void *data);
+static void _e_configure_focus_cb(void *data, Evas_Object *obj);
+static void _e_configure_keydown_cb(void *data, Evas *e, Evas_Object *obj, void *event);
 
 static E_Configure *_e_configure = NULL;
 
@@ -18,7 +20,8 @@ e_configure_show(E_Container *con)
    E_Configure_Category *cat;
    E_Manager *man;
    Evas_Coord ew, eh, mw, mh;
-   Evas_Object *of;
+   Evas_Object *o, *of;
+   Evas_Modifier_Mask mask;
    
    if (_e_configure) 
      {
@@ -77,17 +80,34 @@ e_configure_show(E_Container *con)
    eco->o_list = e_widget_list_add(eco->evas, 0, 1);
    edje_object_part_swallow(eco->edje, "e.swallow.content", eco->o_list);
 
+   /* Event Obj for keydown */
+   o = evas_object_rectangle_add(eco->evas);
+   mask = 0;
+   evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   mask = evas_key_modifier_mask_get(e_win_evas_get(eco->win), "Shift");
+   evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   mask = 0;
+   evas_object_key_grab(o, "Return", mask, ~mask, 0);
+   mask = 0;
+   evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _e_configure_keydown_cb, eco->win);
+   
    /* Category List */
    of = e_widget_framelist_add(eco->evas, _("Categories"), 1);
    eco->cat_list = e_widget_ilist_add(eco->evas, 32, 32, NULL);
+   e_widget_on_focus_hook_set(eco->cat_list, _e_configure_focus_cb, eco->win);
    e_widget_min_size_get(eco->cat_list, &mw, &mh);
-   edje_extern_object_min_size_set(eco->cat_list, mw, mh);
+   edje_extern_object_min_size_set(eco->cat_list, 150, mh);
+   e_widget_min_size_set(eco->cat_list, 150, mh);
    e_widget_framelist_object_append(of, eco->cat_list);
    e_widget_list_object_append(eco->o_list, of, 1, 1, 0.5);
    
    /* Item List */
    of = e_widget_framelist_add(eco->evas, _("Configuration Items"), 1);
    eco->item_list = e_widget_ilist_add(eco->evas, 32, 32, NULL);
+   e_widget_on_focus_hook_set(eco->item_list, _e_configure_focus_cb, eco->win);
+   edje_extern_object_min_size_set(eco->item_list, 150, mh);
+   e_widget_min_size_set(eco->item_list, 150, mh);
    e_widget_ilist_selector_set(eco->item_list, 1);
    e_widget_framelist_object_append(of, eco->item_list);   
    e_widget_list_object_append(eco->o_list, of, 1, 1, 0.5);
@@ -150,6 +170,7 @@ e_configure_show(E_Container *con)
    eco->close = e_widget_button_add(eco->evas, _("Close"), NULL, 
 				    _e_configure_cb_close, eco, NULL);
    e_widget_min_size_get(eco->close, &mw, &mh);
+   e_widget_on_focus_hook_set(eco->close, _e_configure_focus_cb, eco->win);
    edje_extern_object_min_size_set(eco->close, mw, mh);
    edje_object_part_swallow(eco->edje, "e.swallow.button", eco->close);
    
@@ -319,4 +340,84 @@ _e_configure_item_cb(void *data)
    if (!ci) return;
    cb = ci->cb;
    cb->func(cb->eco->con);
+}
+
+static void 
+_e_configure_focus_cb(void *data, Evas_Object *obj) 
+{
+   E_Win *win;
+   E_Configure *eco;
+   
+   win = data;
+   eco = win->data;
+   if (!eco) return;
+   if (obj == eco->close) 
+     {
+	e_widget_focused_object_clear(eco->item_list);
+	e_widget_focused_object_clear(eco->cat_list);
+     }
+   else if (obj == eco->item_list) 
+     {
+	e_widget_focused_object_clear(eco->cat_list);
+	e_widget_focused_object_clear(eco->close);
+     }
+   else if (obj == eco->cat_list) 
+     {
+	e_widget_focused_object_clear(eco->item_list);
+	e_widget_focused_object_clear(eco->close);
+     }
+}
+
+static void 
+_e_configure_keydown_cb(void *data, Evas *e, Evas_Object *obj, void *event) 
+{
+   Evas_Event_Key_Down *ev;
+   E_Win *win;
+   E_Configure *eco;
+   
+   ev = event;
+   win = data;
+   eco = win->data;
+
+   if (!strcmp(ev->keyname, "Tab")) 
+     {
+	if (evas_key_modifier_is_set(evas_key_modifier_get(e_win_evas_get(win)), "Shift"))
+	  {
+	     if (e_widget_focus_get(eco->close)) 
+	       e_widget_focus_set(eco->item_list, 0);
+	     else if (e_widget_focus_get(eco->item_list))
+	       e_widget_focus_set(eco->cat_list, 1);
+	     else if (e_widget_focus_get(eco->cat_list))
+	       e_widget_focus_set(eco->close, 0);
+	  }
+	else 
+	  {
+	     if (e_widget_focus_get(eco->close)) 
+	       e_widget_focus_set(eco->cat_list, 1);
+	     else if (e_widget_focus_get(eco->item_list))
+	       e_widget_focus_set(eco->close, 0);
+	     else if (e_widget_focus_get(eco->cat_list))
+	       e_widget_focus_set(eco->item_list, 0);
+	  }
+     }
+   else if (((!strcmp(ev->keyname, "Return")) || 
+	    (!strcmp(ev->keyname, "KP_Enter")) || 
+	    (!strcmp(ev->keyname, "space"))))
+     {
+	Evas_Object *o = NULL;
+
+	if (e_widget_focus_get(eco->cat_list))
+	  o = eco->cat_list;
+	else if (e_widget_focus_get(eco->item_list))
+	  o = eco->item_list;
+	else if (e_widget_focus_get(eco->close))
+	  o = eco->close;
+	
+	if (o) 
+	  {
+	     o = e_widget_focused_object_get(o);
+	     if (!o) return;
+	     e_widget_activate(o);
+	  }
+     }
 }
