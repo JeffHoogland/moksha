@@ -177,6 +177,10 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    cfdata->gui.list = ilist;
    e_widget_on_change_hook_set(ilist, _ilist_cb_change, cfdata);
 
+   evas_event_freeze(evas_object_evas_get(ilist));
+   edje_freeze();
+   e_widget_ilist_freeze(ilist);
+   
    cfdata->state = -1;
    i = 0;
    for (l = cfdata->icon_themes; l; l = l->next)
@@ -207,6 +211,10 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    e_widget_ilist_go(ilist);
    e_widget_min_size_set(of, 160, 160);
+   e_widget_ilist_thaw(ilist);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(ilist));
+   
    e_widget_framelist_object_append(of, ilist);
    e_widget_table_object_append(ot, of, 0, 0, 2, 4, 1, 1, 1, 1);
 
@@ -288,6 +296,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->gui.list = ilist;
    e_widget_on_change_hook_set(ilist, _ilist_cb_change, cfdata);
 
+   evas_event_freeze(evas_object_evas_get(ilist));
+   edje_freeze();
+   e_widget_ilist_freeze(ilist);
+   
    cfdata->state = -1;
    i = 0;
    for (l = cfdata->icon_themes; l; l = l->next)
@@ -318,6 +330,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    e_widget_ilist_go(ilist);
    e_widget_min_size_set(ilist, 200, 240);
+   e_widget_ilist_thaw(ilist);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(ilist));
+   
    e_widget_list_object_append(o, ilist, 1, 1, 0.5);
 
    e_dialog_resizable_set(cfd->dia, 1);
