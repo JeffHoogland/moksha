@@ -457,6 +457,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	      evas_list_count(cfdata->resolutions), _sort_resolutions);
 
 
+	evas_event_freeze(evas_object_evas_get(ol));
+	edje_freeze();
+	e_widget_ilist_freeze(ol);
 	i = 0;
 	for (l = cfdata->resolutions; l; l = l->next)
 	  {
@@ -483,7 +486,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      E_FREE(sizes);
 
    e_widget_ilist_go(ol);
-   e_widget_ilist_go(rl);
+   e_widget_ilist_thaw(ol);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(ol));
+
+//   e_widget_ilist_go(rl);
    
    if (cfdata->can_rotate)
      {
@@ -522,8 +529,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      }
    
    e_widget_list_object_append(o, o2, 0, 0, 0.0);
-
-
    
    return o;
 }
@@ -550,6 +555,10 @@ _load_rates(E_Config_Dialog_Data *cfdata)
    char buf[16];
    Evas_List *l;
 
+   evas_event_freeze(evas_object_evas_get(cfdata->rate_list));
+   edje_freeze();
+   e_widget_ilist_freeze(cfdata->rate_list);
+   
    e_widget_ilist_clear(cfdata->rate_list);
 
    r = e_widget_ilist_selected_get(cfdata->res_list);
@@ -577,6 +586,9 @@ _load_rates(E_Config_Dialog_Data *cfdata)
    
    e_widget_ilist_go(cfdata->rate_list);
    e_widget_ilist_selected_set(cfdata->rate_list, k);
+   e_widget_ilist_thaw(cfdata->rate_list);
+   edje_thaw();
+   evas_event_thaw(evas_object_evas_get(cfdata->rate_list));
 }
 
 static void
