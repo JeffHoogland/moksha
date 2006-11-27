@@ -297,7 +297,7 @@ _e_wid_focus_hook(Evas_Object *obj)
      }
    else
      {
-	edje_object_signal_emit(e_scrollframe_edje_object_get(wd->o_scrollframe), "focus_out", "e");
+	edje_object_signal_emit(e_scrollframe_edje_object_get(wd->o_scrollframe), "e,state,unfocused", "e");
 	evas_object_focus_set(wd->o_ilist, 0);
      }
 }
