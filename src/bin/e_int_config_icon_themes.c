@@ -110,7 +110,6 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    free(cfdata);
 }
 
-
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
@@ -125,7 +124,6 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
    return 1; /* Apply was OK */
 }
-
 
 static void
 _cb_button_up(void *data1, void *data2)
@@ -159,7 +157,6 @@ _cb_files_changed(void *data, Evas_Object *obj, void *event_info)
    if (cfdata->gui.o_frame)
      e_widget_scrollframe_child_pos_set(cfdata->gui.o_frame, 0, 0);
 }
-
 
 static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
@@ -283,15 +280,15 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    return o;
 }
 
-
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *ilist;
+   Evas_Object *o, *ilist, *of;
    Evas_List *l;
    int i;
 
    o = e_widget_list_add(evas, 1, 0);
+   of = e_widget_framelist_add(evas, _("Icon Themes"), 0);
    ilist = e_widget_ilist_add(evas, 24, 24, &(cfdata->themename));
    cfdata->gui.list = ilist;
    e_widget_on_change_hook_set(ilist, _ilist_cb_change, cfdata);
@@ -333,8 +330,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_ilist_thaw(ilist);
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(ilist));
-   
-   e_widget_list_object_append(o, ilist, 1, 1, 0.5);
+
+   e_widget_framelist_object_append(of, ilist);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    e_dialog_resizable_set(cfd->dia, 1);
 
@@ -401,7 +399,6 @@ _add_theme(void *value, void *user_data)
 	 cfdata->icon_themes = evas_list_append(cfdata->icon_themes, m);
       }
 }
-
 
 static int
 _sort_icon_themes(void *data1, void *data2)
