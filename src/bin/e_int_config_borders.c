@@ -27,7 +27,7 @@ e_int_config_borders(E_Container *con)
    if (!v) return NULL;
    cfd = e_config_dialog_new(con, _("Default Border Style"), 
 			     "E", "_config_border_style_dialog", 
-			     NULL, 0, v, con);
+			     "enlightenment/windows", 0, v, con);
    return cfd;
 }
 
