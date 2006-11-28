@@ -164,7 +164,7 @@ _basic_apply_border(E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_Object *o, *ol, *ob, *oj, *orect;
+   Evas_Object *o, *ol, *ob, *oj, *orect, *of;
    Evas_Coord w, h;
    Evas_List *borders, *l;
    int n, sel = 0;
@@ -176,6 +176,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      tmp = strdup(e_config->theme_default_border_style);
    
    o = e_widget_list_add(evas, 0, 0);
+   of = e_widget_framelist_add(evas, _("Default Border Style"), 0);
    ol = e_widget_ilist_add(evas, 80, 48, &(cfdata->bordername));
    borders = e_theme_border_list();
    orect = evas_object_rectangle_add(evas);
@@ -213,13 +214,16 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_ilist_thaw(ol);
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(ol));
-   
-   e_widget_list_object_append(o, ol, 1, 1, 0.5);
+
+   e_widget_framelist_object_append(of, ol);
    if (cfdata->border) 
      {
 	ob = e_widget_check_add(evas, _("Remember this Border for this window next time it appears"), &(cfdata->remember_border));
 	e_widget_list_object_append(o, ob, 0, 0, 1.0);
+	e_widget_framelist_object_append(of, ob);
      }
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   
    E_FREE(tmp);
    return o;
 }
