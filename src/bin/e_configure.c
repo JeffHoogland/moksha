@@ -106,9 +106,6 @@ e_configure_show(E_Container *con)
    e_widget_ilist_selector_set(eco->item_list, 1);
    e_widget_ilist_go(eco->item_list);
    e_widget_on_focus_hook_set(eco->item_list, _e_configure_focus_cb, eco->win);
-   e_widget_min_size_get(eco->item_list, &mw, &mh);
-   edje_extern_object_min_size_set(eco->item_list, 150, mh);
-   e_widget_min_size_set(eco->item_list, 150, mh);
    e_widget_framelist_object_append(of, eco->item_list);   
    e_widget_list_object_append(eco->o_list, of, 1, 1, 0.5);
    
@@ -450,7 +447,6 @@ _e_configure_fill_cat_list(void *data)
    
    e_widget_ilist_go(eco->cat_list);
    e_widget_min_size_get(eco->cat_list, &mw, &mh);
-   edje_extern_object_min_size_set(eco->cat_list, mw, mh);
    e_widget_min_size_set(eco->cat_list, mw, mh);
    e_widget_ilist_thaw(eco->cat_list);
    edje_thaw();
