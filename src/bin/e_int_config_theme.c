@@ -425,7 +425,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_list_add(evas, 0, 0);
 
    il = e_widget_list_add(evas, 0, 1);
-   o = e_widget_button_add(evas, _("Import..."), "enlightenment/theme",
+   o = e_widget_button_add(evas, _("Import..."), "enlightenment/themes",
 			   _cb_import, cfdata, NULL);
    e_widget_list_object_append(il, o, 1, 0, 0.5);
    e_widget_list_object_append(of, il, 1, 0, 0.0);
@@ -447,8 +447,12 @@ static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    E_Action *a;
+   E_Config_Theme *ct;
    
    /* Actually take our cfdata settings and apply them in real life */
+   ct = e_theme_config_get("theme");
+   if (!strcmp(ct->file, cfdata->theme)) return 1;
+   
    e_theme_config_set("theme", cfdata->theme);
    e_config_save_queue();
    
