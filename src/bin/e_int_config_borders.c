@@ -41,8 +41,8 @@ e_int_config_borders_border(E_Border *bd)
    if (!v) return NULL;
    cfd = e_config_dialog_new(bd->zone->container, 
 			     _("Window Border Selection"), 
-			     "E", "_config_border_style_dialog", 
-			     NULL, 0, v, bd);
+			     "E", "_config_border_border_style_dialog", 
+			     "enlightenment/windows", 0, v, bd);
    bd->border_border_dialog = cfd;
    return cfd;
 }
@@ -216,13 +216,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    evas_event_thaw(evas_object_evas_get(ol));
 
    e_widget_framelist_object_append(of, ol);
+   e_widget_list_object_append(o, of, 1, 1, 0.0);
+
    if (cfdata->border) 
      {
 	ob = e_widget_check_add(evas, _("Remember this Border for this window next time it appears"), &(cfdata->remember_border));
-	e_widget_list_object_append(o, ob, 0, 0, 1.0);
-	e_widget_framelist_object_append(of, ob);
+	e_widget_list_object_append(o, ob, 1, 1, 1.0);
      }
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
    
    E_FREE(tmp);
    return o;
