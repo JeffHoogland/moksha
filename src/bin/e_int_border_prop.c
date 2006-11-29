@@ -1,19 +1,19 @@
-/*
- * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
- */
 #include "e.h"
 
-/* PROTOTYPES - same all the time */
-static void *_create_data(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-
-/* Actual config data we will be playing with whil the dialog is active */
 #define MODE_NOTHING        0
 #define MODE_GEOMETRY       1
 #define MODE_LOCKS          2
 #define MODE_GEOMETRY_LOCKS 3
 #define MODE_ALL            4
+
+static void _bd_cb_dialog_del(void *obj);
+static void _bd_cb_dialog_close(void *data, E_Dialog *dia);
+static Evas_Object *_bd_icccm_create(E_Dialog *dia, void *data);
+static Evas_Object *_bd_netwm_create(E_Dialog *dia, void *data);
+static void _bd_go(void *data, void *data2);
+static void _create_data(E_Dialog *cfd, E_Border *bd);
+static void _free_data(E_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+
 struct _E_Config_Dialog_Data
 {
    E_Border *border;
@@ -47,41 +47,61 @@ struct _E_Config_Dialog_Data
       int delete_request;
       int request_pos;
    } icccm;
+   
+   struct 
+     {
+	char *name;
+	char *icon_name;
+	int modal;
+	int sticky;
+	int shaded;
+	int skip_taskbar;
+	int skip_pager;
+	int hidden;
+	int fullscreen;
+	char *stacking;
+     } netwm;
 };
 
-/* a nice easy setup function that does the dirty work */
 EAPI void
-e_int_border_prop(E_Border *bd)
+e_int_border_prop(E_Border *bd) 
 {
-   E_Config_Dialog *cfd;
-   E_Config_Dialog_View *v;
+   E_Dialog *dia;
+   Evas_Object *o, *ob;
+   Evas_Coord w, h;
    
-   v = E_NEW(E_Config_Dialog_View, 1);
-   if (v)
-     {
-	/* methods */
-	v->create_cfdata           = _create_data;
-	v->free_cfdata             = _free_data;
-	v->basic.create_widgets    = _basic_create_widgets;
-	v->override_auto_apply = 1;
-	
-	/* create config dialog for bd object/data */
-	cfd = e_config_dialog_new(bd->zone->container,
-				  _("Window Properties"),
-				  "E", "_border_properties_dialog",
-				  "enlightenment/windows", 0, v, bd);
-     }
+   dia = e_dialog_new(bd->zone->container, "E", "_window_props");
+   e_object_del_attach_func_set(E_OBJECT(dia), _bd_cb_dialog_del);
+   e_dialog_title_set(dia, _("Window Properties"));
+
+   _create_data(dia, bd);
+   
+   o = e_widget_list_add(e_win_evas_get(dia->win), 0, 0);
+   ob = _bd_icccm_create(dia, NULL);
+   e_widget_list_object_append(o, ob, 1, 1, 0.0);
+   
+   ob = e_widget_button_add(e_win_evas_get(dia->win), _("NetWM"), "widget/new_dialog",
+			    _bd_go, dia, (void *)1);
+   e_widget_list_object_append(o, ob, 0, 0, 1.0);
+   
+   e_widget_min_size_get(o, &w, &h);
+   e_dialog_content_set(dia, o, w, h);
+   
+   e_dialog_button_add(dia, _("Close"), NULL, _bd_cb_dialog_close, dia);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
+   e_dialog_border_icon_set(dia, "enlightenment/windows");
+   e_dialog_resizable_set(dia, 1);
 }
 
-/**--CREATE--**/
-static void *
-_create_data(E_Config_Dialog *cfd)
+static void
+_create_data(E_Dialog *cfd, E_Border *bd)
 {
    E_Config_Dialog_Data *cfdata;
    char buf[4096];
    
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
-   cfdata->border = cfd->data;
+   cfdata->border = bd;
    
 #define IFDUP(prop, dest) \
    if (cfdata->border->prop) cfdata->dest = strdup(cfdata->border->prop)
@@ -249,12 +269,34 @@ _create_data(E_Config_Dialog *cfd)
    cfdata->icccm.urgent = cfdata->border->client.icccm.urgent;
    cfdata->icccm.delete_request = cfdata->border->client.icccm.delete_request;
    cfdata->icccm.request_pos = cfdata->border->client.icccm.request_pos;
-   
-   return cfdata;
+
+   IFDUP(client.netwm.name, netwm.name);
+   IFDUP(client.netwm.icon_name, netwm.icon_name);
+   cfdata->netwm.modal = cfdata->border->client.netwm.state.modal;
+   cfdata->netwm.sticky = cfdata->border->client.netwm.state.sticky;
+   cfdata->netwm.shaded = cfdata->border->client.netwm.state.shaded;
+   cfdata->netwm.skip_taskbar = cfdata->border->client.netwm.state.skip_taskbar;
+   cfdata->netwm.skip_pager = cfdata->border->client.netwm.state.skip_pager;
+   cfdata->netwm.hidden = cfdata->border->client.netwm.state.hidden;
+   cfdata->netwm.fullscreen = cfdata->border->client.netwm.state.fullscreen;
+   switch (cfdata->border->client.netwm.state.stacking) 
+     {
+      case 0:
+	cfdata->netwm.stacking = strdup("None");
+	break;
+      case 1:
+	cfdata->netwm.stacking = strdup("Above");	
+	break;
+      case 2:
+	cfdata->netwm.stacking = strdup("Below");
+	break;
+     }
+      
+   cfd->data = cfdata;
 }
 
 static void
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_free_data(E_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    /* Free the cfdata */
 #define IFREE(x) E_FREE(cfdata->x)
@@ -277,18 +319,72 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    IFREE(icccm.client_leader);
    IFREE(icccm.gravity);
    IFREE(icccm.command);
+   
+   IFREE(netwm.name);
+   IFREE(netwm.icon_name);
+   IFREE(netwm.stacking);
+   
    free(cfdata);
+   cfd->data = NULL;
 }
 
-/**--GUI--**/
-static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+static void 
+_bd_cb_dialog_del(void *obj) 
 {
-   /* generate the core widget layout for a basic dialog */
-   Evas_Object *o, *ob, *of;
+   E_Dialog *dia;
    
-   o = e_widget_table_add(evas, 0);
+   dia = obj;
+   if (dia->data)
+     _free_data(dia, dia->data);
+}
+
+static void 
+_bd_cb_dialog_close(void *data, E_Dialog *dia) 
+{
+   if (dia->data)
+     _free_data(dia, dia->data);
+   e_object_del(E_OBJECT(dia));
+}
+
+static void 
+_bd_go(void *data, void *data2) 
+{
+   E_Dialog *dia;
+   Evas_Object *c, *o, *ob;
+   Evas_Coord w, h;
+   int type;
    
+   dia = data;
+   if (!dia) return;
+   type = (int)data2;
+   
+   if (dia->content_object)
+     evas_object_del(dia->content_object);
+   
+   c = e_widget_list_add(e_win_evas_get(dia->win), 0, 0);
+   
+   if (type == 0) 
+     {
+	o = _bd_icccm_create(dia, NULL);
+	e_widget_list_object_append(c, o, 1, 1, 0.0);
+	ob = e_widget_button_add(e_win_evas_get(dia->win), _("NetWM"), "widget/new_dialog",
+				 _bd_go, dia, (void *)1);
+     }
+   else 
+     {
+	o = _bd_netwm_create(dia, NULL);
+	e_widget_list_object_append(c, o, 1, 1, 0.0);
+	ob = e_widget_button_add(e_win_evas_get(dia->win), _("ICCCM"), "widget/new_dialog",
+				 _bd_go, dia, (void *)0);
+     }
+   
+   e_widget_list_object_append(c, ob, 0, 0, 1.0);
+   
+   e_widget_min_size_get(c, &w, &h);
+   e_dialog_content_set(dia, c, w, h);
+   e_dialog_show(dia);
+}
+
 #define STR_ENTRY(label, x, y, val) \
    { \
       Evas_Coord mw, mh; \
@@ -310,9 +406,23 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
       e_widget_disabled_set(ob, 1); \
       e_widget_frametable_object_append(of, ob, x + 1, y, 1, 1,    1, 1, 1, 1); \
    }
-   
-   of = e_widget_frametable_add(evas, _("ICCCM"), 0);
 
+static Evas_Object *
+_bd_icccm_create(E_Dialog *dia, void *data) 
+{
+   Evas *evas;
+   Evas_Object *o, *ob, *of;
+   E_Config_Dialog_Data *cfdata;
+
+   if (!dia) return NULL;
+   cfdata = dia->data;
+   
+   if (dia->content_object)
+     evas_object_del(dia->content_object);
+   
+   evas = e_win_evas_get(dia->win);
+   o = e_widget_list_add(evas, 0, 0);
+   of = e_widget_frametable_add(evas, _("ICCCM Properties"), 0);
    STR_ENTRY(_("Title"),          0, 0,    icccm.title);
    STR_ENTRY(_("Name"),           0, 1,    icccm.name);
    STR_ENTRY(_("Class"),          0, 2,    icccm.class);
@@ -341,7 +451,38 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    CHK_ENTRY(_("Request Delete"),   2, 11, icccm.delete_request);
    CHK_ENTRY(_("Request Position"), 2, 12, icccm.request_pos);
    
-   e_widget_table_object_append(o, of, 0, 0, 1, 1,    1, 1, 1, 1);
+   e_widget_list_object_append(o, of, 1, 1, 0.0);
+   return o;
+}
+
+static Evas_Object *
+_bd_netwm_create(E_Dialog *dia, void *data) 
+{
+   Evas *evas;
+   Evas_Object *o, *of, *ob;
+   E_Config_Dialog_Data *cfdata;
    
+   if (!dia) return NULL;
+   cfdata = dia->data;
+
+   if (dia->content_object)
+     evas_object_del(dia->content_object);
+   
+   evas = e_win_evas_get(dia->win);
+   o = e_widget_list_add(evas, 0, 0);
+   of = e_widget_frametable_add(evas, _("NetWM Properties"), 0);
+   STR_ENTRY(_("Name"),         0, 1,    netwm.name);
+   STR_ENTRY(_("Icon Name"),    0, 2,    netwm.icon_name);
+   STR_ENTRY(_("Stacking"),     0, 3,    netwm.stacking);
+
+   CHK_ENTRY(_("Modal"),        0, 4, netwm.modal);
+   CHK_ENTRY(_("Sticky"),       0, 5, netwm.sticky);
+   CHK_ENTRY(_("Shaded"),       0, 6, netwm.shaded);
+   CHK_ENTRY(_("Skip Taskbar"), 0, 7, netwm.skip_taskbar);
+   CHK_ENTRY(_("Skip Pager"),   0, 8, netwm.skip_pager);
+   CHK_ENTRY(_("Hidden"),       0, 9, netwm.hidden);
+   CHK_ENTRY(_("Fullscreen"),   0, 10, netwm.fullscreen);
+   
+   e_widget_list_object_append(o, of, 1, 1, 0.0);
    return o;
 }
