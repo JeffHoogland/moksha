@@ -22,7 +22,8 @@ e_int_config_borders(E_Container *con)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-   
+
+   if (e_config_dialog_find("E", "_config_border_style_dialog")) return NULL;
    v = _config_view_new();
    if (!v) return NULL;
    cfd = e_config_dialog_new(con, _("Default Border Style"), 
@@ -36,7 +37,8 @@ e_int_config_borders_border(E_Border *bd)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-   
+
+   if (e_config_dialog_find("E", "_config_border_border_style_dialog")) return NULL;
    v = _config_view_new();
    if (!v) return NULL;
    cfd = e_config_dialog_new(bd->zone->container, 
