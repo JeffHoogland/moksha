@@ -3809,7 +3809,7 @@ _e_gadcon_layout_smart_gadcons_position(E_Smart_Data *sd, Evas_List **list)
    else
      {
 	bi_moving->gcc->config.pos = bi_moving->ask.pos = bi_moving->y;
-	bi_moving->gcc->config.size = bi_moving->w;
+	bi_moving->gcc->config.size = bi_moving->h;
      }
 }
 
