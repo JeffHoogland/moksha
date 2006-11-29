@@ -667,7 +667,8 @@ _pager_inst_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
    _config_pager_module(NULL);
 }
 
-static void _pager_inst_cb_menu_virtual_desktops_dialog(void *data, E_Menu *m, E_Menu_Item *mi)
+static void 
+_pager_inst_cb_menu_virtual_desktops_dialog(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    Instance *inst;
    inst = data;
