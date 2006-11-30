@@ -180,7 +180,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    Evas_List *borders, *l;
    int n, sel = 0;
    char *tmp;
-   char buf[4096];
    
    if (cfdata->border)
      tmp = strdup(cfdata->border->client.border.name);
