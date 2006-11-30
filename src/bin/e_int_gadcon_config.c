@@ -166,14 +166,12 @@ _cb_add_instance(void *data, void *data2)
 static void
 _cb_remove_instance(void *data, void *data2)
 {
-   int i;
    E_Config_Dialog_Data *cfdata;
    Evas_List *l;
-   const char *name;
+   int i;
    
    cfdata = data;
    i = e_widget_ilist_selected_get(cfdata->o_instances);
-   name = e_widget_ilist_selected_label_get(cfdata->o_instances);
    
    for (l = cfdata->cf_gc->clients; l; l = l->next) 
      {
@@ -182,7 +180,7 @@ _cb_remove_instance(void *data, void *data2)
 	cf_gcc = l->data;
 	if (!cf_gcc) continue;
 	if (!cf_gcc->name) continue;
-	if (!strcasecmp(cf_gcc->name, name)) 
+	if (!strcmp(cf_gcc->name, cfdata->ciname))
 	  {
 	     if (cf_gcc->name) evas_stringshare_del(cf_gcc->name);
 	     if (cf_gcc->id) evas_stringshare_del(cf_gcc->id);
