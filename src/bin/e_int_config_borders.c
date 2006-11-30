@@ -38,7 +38,16 @@ e_int_config_borders_border(E_Border *bd)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "_config_border_border_style_dialog")) return NULL;
+   cfd = e_config_dialog_get("E", "_config_border_border_style_dialog");
+   if (cfd) 
+     {
+	E_Border *bd2;
+	
+	bd2 = cfd->data;
+	if (!e_util_strcmp(e_border_name_get(bd2), e_border_name_get(bd)))
+	  return NULL;
+     }
+   
    v = _config_view_new();
    if (!v) return NULL;
    cfd = e_config_dialog_new(bd->zone->container, 
@@ -171,12 +180,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    Evas_List *borders, *l;
    int n, sel = 0;
    char *tmp;
+   char buf[4096];
    
    if (cfdata->border)
      tmp = strdup(cfdata->border->client.border.name);
    else
      tmp = strdup(e_config->theme_default_border_style);
-   
+
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Default Border Style"), 0);
    ol = e_widget_ilist_add(evas, 80, 48, &(cfdata->bordername));
