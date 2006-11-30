@@ -75,7 +75,9 @@ e_int_border_prop(E_Border *bd)
    e_dialog_title_set(dia, _("Window Properties"));
 
    _create_data(dia, bd);
-   
+
+   _bd_go(dia, (void *)0);
+/*   
    o = e_widget_list_add(e_win_evas_get(dia->win), 0, 0);
    ob = _bd_icccm_create(dia, NULL);
    e_widget_list_object_append(o, ob, 1, 1, 0.0);
@@ -86,6 +88,7 @@ e_int_border_prop(E_Border *bd)
    
    e_widget_min_size_get(o, &w, &h);
    e_dialog_content_set(dia, o, w, h);
+*/
    
    e_dialog_button_add(dia, _("Close"), NULL, _bd_cb_dialog_close, dia);
    e_win_centered_set(dia->win, 1);
@@ -361,7 +364,7 @@ _bd_go(void *data, void *data2)
    dia = data;
    if (!dia) return;
    type = (int)data2;
-   
+
    if (dia->content_object)
      evas_object_del(dia->content_object);
    
