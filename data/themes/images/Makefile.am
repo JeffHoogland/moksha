@@ -506,6 +506,7 @@ e17_icon_hibernate.png \
 e17_icon_suspend.png \
 e17_icon_halt.png \
 e17_icon_reboot.png \
+e17_icon_screen_setup.png \
 e17_trans1.png \
 e17_trans2.png \
 e17_icon_regenerate_menus.png \
