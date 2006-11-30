@@ -538,6 +538,8 @@ _ibox_icon_fill(IBox_Icon *ic)
      {
       case 0:
 	label = ic->border->client.netwm.name;
+	if (!label)
+	  label = ic->border->client.icccm.name;
 	break;
       case 1:
 	label = ic->border->client.icccm.title;
@@ -547,7 +549,8 @@ _ibox_icon_fill(IBox_Icon *ic)
 	break;
       case 3:
 	label = ic->border->client.netwm.icon_name;
-	if (!label) label = ic->border->client.icccm.icon_name;
+	if (!label) 
+	  label = ic->border->client.icccm.icon_name;
 	break;
      }
    
