@@ -412,7 +412,6 @@ struct _E_Border
    E_Config_Dialog *border_locks_dialog;
    E_Config_Dialog *border_remember_dialog;
    E_Config_Dialog *border_border_dialog;
-   E_Config_Dialog *border_icon_dialog;
    E_Dialog *border_prop_dialog;
    E_Menu *border_stacking_menu;
    E_Menu *border_maximize_menu;
