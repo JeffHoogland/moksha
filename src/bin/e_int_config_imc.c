@@ -58,10 +58,9 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->imc_basic_list = evas_list_sort(cfdata->imc_basic_list, 
 	 evas_list_count(cfdata->imc_basic_list), 
 	 _basic_list_sort_cb);
-   
-   cfdata->imc_current = strdup(e_config->input_method);
-   
-   return;
+
+   if (e_config->input_method)
+     cfdata->imc_current = strdup(e_config->input_method);
 }
 
 static void *
@@ -78,13 +77,13 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-
    E_FREE(cfdata->imc_current);
    
-   while (cfdata->imc_basic_list) { 
+   while (cfdata->imc_basic_list) 
+     { 
 	free(cfdata->imc_basic_list->data); 
 	cfdata->imc_basic_list = evas_list_remove_list(cfdata->imc_basic_list, cfdata->imc_basic_list);
-   }
+     }
 
    free(cfdata);
 }
@@ -92,9 +91,10 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {	
-   printf("Setting input method to %s\n", cfdata->imc_current); 
    if (cfdata->imc_current)
      {
+	printf("Setting input method to %s\n", cfdata->imc_current); 
+
 	if (e_config->input_method) evas_stringshare_del(e_config->input_method);
 	e_config->input_method = evas_stringshare_add(cfdata->imc_current);
 	e_intl_input_method_set(e_config->input_method);
@@ -168,7 +168,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    e_dialog_resizable_set(cfd->dia, 1);
    return o;
-
 }
 
 static int
