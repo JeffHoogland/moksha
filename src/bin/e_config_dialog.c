@@ -112,6 +112,26 @@ e_config_dialog_find(const char *name, const char *class)
    return 0;
 }
 
+EAPI E_Config_Dialog *
+e_config_dialog_get(const char *name, const char *class) 
+{
+   Evas_List *l;
+   
+   for (l = _e_config_dialog_list; l; l = l->next)
+     {
+	E_Config_Dialog *cfd;
+	
+	cfd = l->data;
+	if (!cfd) continue;
+	if ((!e_util_strcmp(name, cfd->name)) &&
+	    (!e_util_strcmp(class, cfd->class)))
+	  {
+	     return cfd;
+	  }
+     }
+   return NULL;
+}
+
 /* local subsystem functions */
 
 static void
