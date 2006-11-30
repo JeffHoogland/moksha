@@ -102,6 +102,7 @@ _create_data(E_Dialog *cfd, E_Border *bd)
    
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->border = bd;
+   bd->border_prop_dialog = cfd;
    
 #define IFDUP(prop, dest) \
    if (cfdata->border->prop) cfdata->dest = strdup(cfdata->border->prop)
@@ -298,6 +299,9 @@ _create_data(E_Dialog *cfd, E_Border *bd)
 static void
 _free_data(E_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
+   if (cfdata->border)
+     cfdata->border->border_prop_dialog = NULL;
+   
    /* Free the cfdata */
 #define IFREE(x) E_FREE(cfdata->x)
    IFREE(icccm.title);
