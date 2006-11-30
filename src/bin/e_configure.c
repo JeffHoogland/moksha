@@ -425,6 +425,7 @@ _e_configure_fill_cat_list(void *data)
 
    cat = _e_configure_category_add(eco, _("Language"), "enlightenment/intl");
    _e_configure_item_add(cat, _("Language Settings"), "enlightenment/intl", e_int_config_intl);
+   _e_configure_item_add(cat, _("Input Method Settings"), "enlightenment/imc", e_int_config_imc);
    
    cat = _e_configure_category_add(eco, _("Miscellaneous"), "enlightenment/misc");
    _e_configure_item_add(cat, _("Configuration Dialogs"), "enlightenment/configuration", e_int_config_cfgdialogs);

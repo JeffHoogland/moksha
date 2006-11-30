@@ -855,6 +855,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {	 
    if (cfdata->cur_language)
      {
+	if (e_config->language) evas_stringshare_del(e_config->language);
 	e_config->language = evas_stringshare_add(cfdata->cur_language);
 	e_intl_language_set(e_config->language);
      }
@@ -868,7 +869,8 @@ static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {	 
    if (cfdata->cur_language)
-     {
+     {	
+	if (e_config->language) evas_stringshare_del(e_config->language);
 	e_config->language = evas_stringshare_add(cfdata->cur_language);
 	e_intl_language_set(e_config->language);
      }
