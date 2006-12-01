@@ -37,16 +37,6 @@ e_int_config_borders_border(E_Border *bd)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-
-   cfd = e_config_dialog_get("E", "_config_border_border_style_dialog");
-   if (cfd) 
-     {
-	E_Border *bd2;
-	
-	bd2 = cfd->data;
-	if (!e_util_strcmp(e_border_name_get(bd2), e_border_name_get(bd)))
-	  return NULL;
-     }
    
    v = _config_view_new();
    if (!v) return NULL;
