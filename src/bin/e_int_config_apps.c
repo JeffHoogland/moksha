@@ -53,7 +53,6 @@ struct _E_Config_Once
    void *data;
 };
 
-
 EAPI E_Config_Dialog *
 e_int_config_apps_once(E_Container *con, const char *title, const char *label, const char *path, int (*func) (void *data, const char *path), void *data)
 {
@@ -92,6 +91,24 @@ e_int_config_apps(E_Container *con)
 {
    if (e_config_dialog_find("E", "_config_applications_dialog")) return NULL;
    return e_int_config_apps_once(con, NULL, NULL, NULL, NULL, NULL);
+}
+
+EAPI E_Config_Dialog *
+e_int_config_apps_restart(E_Container *con) 
+{
+   char path[4096];
+   
+   snprintf(path, sizeof(path), "%s/.e/e/applications/restart", e_user_homedir_get());
+   return e_int_config_apps_once(con, _("Restart"), NULL, path, NULL, NULL);
+}
+
+EAPI E_Config_Dialog *
+e_int_config_apps_startup(E_Container *con) 
+{
+   char path[4096];
+   
+   snprintf(path, sizeof(path), "%s/.e/e/applications/startup", e_user_homedir_get());
+   return e_int_config_apps_once(con, _("Startup"), NULL, path, NULL, NULL);
 }
 
 static void

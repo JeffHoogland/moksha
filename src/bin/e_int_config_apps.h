@@ -8,6 +8,8 @@
 
 EAPI E_Config_Dialog *e_int_config_apps(E_Container *con);
 EAPI E_Config_Dialog *e_int_config_apps_once(E_Container *con, const char *title, const char *label, const char *path, int (*func) (void *data, const char *path), void *data);
+EAPI E_Config_Dialog *e_int_config_apps_restart(E_Container *con);
+EAPI E_Config_Dialog *e_int_config_apps_startup(E_Container *con);
 
 #endif
 #endif

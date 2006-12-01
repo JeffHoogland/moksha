@@ -110,7 +110,6 @@ _cb_files_selected(void *data, Evas_Object *obj, void *event_info)
    E_Config_Dialog_Data *cfdata;
    
    cfdata = data;
-   printf("SEL\n");
 }
 
 static void
@@ -163,30 +162,6 @@ _cb_dir(void *data, Evas_Object *obj, void *event_info)
 	snprintf(path, sizeof(path), "%s/.e/e/init", homedir);
      }
    e_fm2_path_set(cfdata->o_fm, path, "/");
-}
-
-static void
-_cb_button_add_startup(void *data1, void *data2)
-{
-   const char *homedir;
-   char path[PATH_MAX];
-   
-   homedir = e_user_homedir_get();
-   snprintf(path, sizeof(path), "%s/.e/e/applications/startup", homedir);
-   e_int_config_apps_once(e_container_current_get(e_manager_current_get()), 
-                          "Startup", NULL, path, NULL, NULL);
-}
-
-static void
-_cb_button_add_restart(void *data1, void *data2)
-{
-   const char *homedir;
-   char path[PATH_MAX];
-   
-   homedir = e_user_homedir_get();
-   snprintf(path, sizeof(path), "%s/.e/e/applications/restart", homedir);
-   e_int_config_apps_once(e_container_current_get(e_manager_current_get()), 
-                          "Restart", NULL, path, NULL, NULL);
 }
 
 static void
@@ -369,14 +344,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_check_add(evas, _("Show Splash Screen on Login"), 
 			  &(cfdata->show_splash));
    e_widget_table_object_append(ot, o, 1, 3, 1, 1, 1, 0, 0, 0);
-
-   o = e_widget_button_add(evas, _("Add startup Application"), "enlightenment/e",
-			   _cb_button_add_startup, cfdata, NULL);
-   e_widget_table_object_append(ot, o, 0, 3, 1, 1, 1, 0, 0, 0);
-
-   o = e_widget_button_add(evas, _("Add restart Application"), "enlightenment/e",
-			   _cb_button_add_restart, cfdata, NULL);
-   e_widget_table_object_append(ot, o, 0, 4, 1, 1, 1, 0, 0, 0);
 
    return ot;
 }

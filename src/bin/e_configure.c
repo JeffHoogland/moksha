@@ -401,6 +401,10 @@ _e_configure_fill_cat_list(void *data)
    _e_configure_item_add(cat, _("Transitions"), "enlightenment/transitions", e_int_config_transitions);
    _e_configure_item_add(cat, _("Startup"), "enlightenment/startup", e_int_config_startup);
 
+   cat = _e_configure_category_add(eco, _("Applications"), "enlightenment/applications");
+   _e_configure_item_add(cat, _("Restart Applications"), "enlightenment/applications", e_int_config_apps_restart);
+   _e_configure_item_add(cat, _("Startup Applications"), "enlightenment/applications", e_int_config_apps_startup);
+   
    cat = _e_configure_category_add(eco, _("Screen"), "enlightenment/screen_setup");
    _e_configure_item_add(cat, _("Virtual Desktops"), "enlightenment/desktops", e_int_config_desks);
    _e_configure_item_add(cat, _("Screen Resolution"), "enlightenment/screen_resolution", e_int_config_display);
