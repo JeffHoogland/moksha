@@ -97,7 +97,8 @@ EAPI E_Config_Dialog *
 e_int_config_apps_ibar(E_Container *con) 
 {
    char path[4096];
-   
+
+   if (e_config_dialog_find("E", "_config_applications_dialog")) return NULL;
    snprintf(path, sizeof(path), "%s/.e/e/applications/bar", e_user_homedir_get());
    return e_int_config_apps_once(con, _("IBar"), NULL, path, NULL, NULL);
 }
@@ -106,7 +107,8 @@ EAPI E_Config_Dialog *
 e_int_config_apps_restart(E_Container *con) 
 {
    char path[4096];
-   
+
+   if (e_config_dialog_find("E", "_config_applications_dialog")) return NULL;
    snprintf(path, sizeof(path), "%s/.e/e/applications/restart", e_user_homedir_get());
    return e_int_config_apps_once(con, _("Restart"), NULL, path, NULL, NULL);
 }
@@ -115,7 +117,8 @@ EAPI E_Config_Dialog *
 e_int_config_apps_startup(E_Container *con) 
 {
    char path[4096];
-   
+
+   if (e_config_dialog_find("E", "_config_applications_dialog")) return NULL;
    snprintf(path, sizeof(path), "%s/.e/e/applications/startup", e_user_homedir_get());
    return e_int_config_apps_once(con, _("Startup"), NULL, path, NULL, NULL);
 }
