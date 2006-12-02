@@ -1239,21 +1239,50 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
 	  }
 	if (!app)
 	  {
-	     E_Dialog *dia;
+	     char *bname = NULL, *bclass = NULL;
+	     char path[4096];
+	     const char *homedir;
+	     
+	     homedir = e_user_homedir_get();
 
-	     dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_e_mod_ibar_error_icon_add_dialog");
-	     e_dialog_title_set(dia, _("Cannot add icon"));
-	     e_dialog_text_set(dia,
-			       _("You tried to drop an icon of an application that<br>"
-				 "does not have a matching application file.<br>"
-				 "<br>"
-				 "The icon cannot be added to IBar."
-				 ));
-	     e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
-	     e_dialog_button_focus_num(dia, 1);
-	     e_win_centered_set(dia->win, 1);
-	     e_dialog_show(dia);
-	     goto clean;
+	     /* Create a new application icon */
+	     bname = bd->client.icccm.name;
+	     if ((bname) && (bname[0] == 0)) bname = NULL;
+	     bclass = bd->client.icccm.class;
+	     if ((bclass) && (bclass[0] == 0)) bclass = NULL;
+
+	     if (bname) 
+	       {
+		  snprintf(path, sizeof(path), "%s/.e/e/applications/all/%s.desktop", homedir, bname);
+		  app = e_app_empty_new(path);
+	       }
+
+	     if (app)
+	       {	     
+		  if (bd->client.netwm.icons)
+		    {
+		       char icon_path[4096];
+
+		       snprintf(icon_path, sizeof(icon_path), "%s/.e/e/icons/%s-%.6f.png", homedir, bname, ecore_time_get());
+		       if (e_util_icon_save(&(bd->client.netwm.icons[0]), icon_path))
+			 {
+			    app->icon_path = evas_stringshare_add(icon_path);
+			    app->width = bd->client.netwm.icons[0].width;
+			    app->height = bd->client.netwm.icons[0].height;
+			 }
+		    }
+		  if (bname) app->win_name = evas_stringshare_add(bname);
+		  if (bclass) app->win_class = evas_stringshare_add(bclass);
+		  if (bd->client.icccm.window_role)
+		    app->win_role = evas_stringshare_add(bd->client.icccm.window_role);
+		  if (bclass) app->name = evas_stringshare_add(bclass);
+		  if (bname) app->exe = evas_stringshare_add(bname);
+		  if (bd->client.netwm.startup_id > 0)
+		    app->startup_notify = 1;
+
+		  e_app_fields_save(app);
+		  e_eap_edit_show(e_container_current_get(e_manager_current_get()), app);
+	       }
 	  }
      }
    else if (!strcmp(type, "text/uri-list"))
