@@ -1,19 +1,19 @@
 # English translation of Enlightenment.
 # This file is put in the public domain.
 # Viktor Kojouharov <vkojouharov@abv.bg>, 2006.
-# 
-# 
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-11-30 20:57+0200\n"
-"PO-Revision-Date: 2006-11-30 21:25+0200\n"
+"PO-Revision-Date: 2006-12-02 00:54+0200\n"
 "Last-Translator: Viktor Kojouharov <vkojouharov@abv.bg>\n"
 "Language-Team: English <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: src/bin/e_apps.c:676 src/bin/e_apps.c:689 src/bin/e_utils.c:236
 msgid "Run Error"
@@ -4190,7 +4190,7 @@ msgid ""
 msgstr ""
 "Това изглежда ли добре? Натиснете <hilight>Да</hilight> ако е така, или Не, "
 "ако не е.<br>Ако не натиснете нищо, старата разделителна способност от <br>%"
-"dx%d·при %d·Hz·ще бъде възстановена след %d·секунди."
+"dx%d·ще бъде възстановена след %d·секунди."
 
 #: src/bin/e_int_config_display.c:151
 #, c-format
@@ -4212,7 +4212,7 @@ msgid ""
 msgstr ""
 "Това изглежда ли добре? Натиснете <hilight>Да</hilight> ако е така, или Не, "
 "ако не е.<br>Ако не натиснете нищо, старата разделителна способност от <br>%"
-"dx%d·при %d·Hz·ще бъде възстановена <hilight>ВЕДНАГА</hilight>."
+"dx%d·ще бъде възстановена <hilight>ВЕДНАГА</hilight>."
 
 #: src/bin/e_int_config_display.c:212
 msgid "Resolution change"
@@ -5132,7 +5132,7 @@ msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
 "hilight> ?"
 msgstr ""
-"Сигурни ли сте, че искате да изтриете <br>избраните файлове в:<br><hilight>%"
+"Сигурни ли сте, че искате да изтриете <br>%d избрани файла в:<br><hilight>%"
 "s</hilight>?"
 
 #: src/bin/e_fm.c:5468 src/bin/e_fm.c:5528 src/bin/e_fm.c:5566
@@ -6194,7 +6194,8 @@ msgid ""
 "Please press a mouse button<br>Press <hilight>Escape</hilight> to abort."
 "<br>Or <hilight>Del</hilight> to reset the button."
 msgstr ""
-"Натиснете клавишна комбинация,<br>или <hilight>Escape</hilight>за отказ,<br>или <hilight>Del</hilight> за връщане."
+"Натиснете клавишна комбинация,<br>или <hilight>Escape</hilight>за отказ,"
+"<br>или <hilight>Del</hilight> за връщане."
 
 #: src/modules/pager/e_mod_config.c:273
 msgid "Error - Invalid Button"
