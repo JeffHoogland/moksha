@@ -47,10 +47,8 @@ static void _e_exebuf_backspace(void);
 static void _e_exebuf_matches_update(void);
 static void _e_exebuf_hist_update(void);
 static void _e_exebuf_hist_clear(void);
-static void _e_exebuf_cb_eap_item_mouse_in(void *data, Evas *evas,
-      Evas_Object *obj, void *event_info);
-static void _e_exebuf_cb_exe_item_mouse_in(void *data, Evas *evas,
-      Evas_Object *obj, void *event_info);
+static void _e_exebuf_cb_eap_item_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static void _e_exebuf_cb_exe_item_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static int _e_exebuf_cb_key_down(void *data, int type, void *event);
 static int _e_exebuf_cb_mouse_down(void *data, int type, void *event);
 static int _e_exebuf_cb_mouse_up(void *data, int type, void *event);
@@ -60,6 +58,7 @@ static int _e_exebuf_exe_scroll_timer(void *data);
 static int _e_exebuf_eap_scroll_timer(void *data);
 static int _e_exebuf_animator(void *data);
 static int _e_exebuf_idler(void *data);
+static int _e_exebuf_update_timer(void *data);
 
 /* local subsystem globals */
 static E_Config_DD *exelist_exe_edd = NULL;
@@ -95,8 +94,10 @@ static int eap_scroll_to = 0;
 static double eap_scroll_align_to = 0.0;
 static double eap_scroll_align = 0.0;
 static Ecore_Timer *eap_scroll_timer = NULL;
-static Ecore_Timer *animator = NULL;
- 
+static Ecore_Animator *animator = NULL;
+static Ecore_Timer *update_timer = NULL;
+
+#define MATCH_LAG 0.33
 #define EXEBUFLEN 2048
 
 /* externally accessible functions */
@@ -289,6 +290,8 @@ e_exebuf_hide(void)
    if (eap_scroll_timer) ecore_timer_del(eap_scroll_timer);
    eap_scroll_timer = NULL;
    if (animator) ecore_animator_del(animator);
+   if (update_timer) ecore_timer_del(update_timer);
+   update_timer = NULL;
    animator = NULL;
    exe_scroll_to = 0;
    exe_scroll_align_to = 0.0;
@@ -811,7 +814,9 @@ _e_exebuf_complete(void)
    if (clear_hist)
      _e_exebuf_hist_clear();
    _e_exebuf_update();
-   _e_exebuf_matches_update();
+   if (!update_timer)
+     update_timer = ecore_timer_add(MATCH_LAG, _e_exebuf_update_timer, NULL);
+//   _e_exebuf_matches_update();
 }
 
 static void
@@ -827,7 +832,9 @@ _e_exebuf_backspace(void)
 	  {
 	     cmd_buf[pos] = 0;
 	     _e_exebuf_update();
-	     _e_exebuf_matches_update();
+	     if (!update_timer)
+	       update_timer = ecore_timer_add(MATCH_LAG, _e_exebuf_update_timer, NULL);
+//	     _e_exebuf_matches_update();
 	  }
      }
 }
@@ -1223,7 +1230,9 @@ _e_exebuf_cb_key_down(void *data, int type, void *event)
 		    _e_exebuf_hist_clear();
 		  strcat(cmd_buf, ev->key_compose);
 		  _e_exebuf_update();
-		  _e_exebuf_matches_update();
+		  if (!update_timer)
+		    update_timer = ecore_timer_add(MATCH_LAG, _e_exebuf_update_timer, NULL);
+//		  _e_exebuf_matches_update();
 	       }
 	  }
      }
@@ -1467,4 +1476,12 @@ _e_exebuf_idler(void *data)
      }
    /* we have mroe scannign to do */
    return 1;
+}
+
+static int
+_e_exebuf_update_timer(void *data)
+{
+   _e_exebuf_matches_update();
+   update_timer = NULL;
+   return 0;
 }
