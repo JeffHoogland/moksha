@@ -49,9 +49,6 @@ Some of the things (in very short form) that need to be done to E17...
 * gui config dialogs for all config
 * make it possible to disable border buttons/actions (tell theme what is
   disabled) like close, maximize, etc. etc. buttons.
-* Dragging a non-desktop icon from a border to the ibar should automatically
-  create the icon and add that (instead of warning the user that this can't be
-  done)
 ]]]
 
 [[[
