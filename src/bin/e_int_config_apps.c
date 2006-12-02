@@ -94,6 +94,15 @@ e_int_config_apps(E_Container *con)
 }
 
 EAPI E_Config_Dialog *
+e_int_config_apps_ibar(E_Container *con) 
+{
+   char path[4096];
+   
+   snprintf(path, sizeof(path), "%s/.e/e/applications/bar", e_user_homedir_get());
+   return e_int_config_apps_once(con, _("IBar"), NULL, path, NULL, NULL);
+}
+
+EAPI E_Config_Dialog *
 e_int_config_apps_restart(E_Container *con) 
 {
    char path[4096];

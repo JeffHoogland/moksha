@@ -402,6 +402,7 @@ _e_configure_fill_cat_list(void *data)
    _e_configure_item_add(cat, _("Startup"), "enlightenment/startup", e_int_config_startup);
 
    cat = _e_configure_category_add(eco, _("Applications"), "enlightenment/applications");
+   _e_configure_item_add(cat, _("IBar Applications"), "enlightenment/applications", e_int_config_apps_ibar);   
    _e_configure_item_add(cat, _("Restart Applications"), "enlightenment/applications", e_int_config_apps_restart);
    _e_configure_item_add(cat, _("Startup Applications"), "enlightenment/applications", e_int_config_apps_startup);
    
