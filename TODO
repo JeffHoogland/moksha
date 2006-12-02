@@ -62,11 +62,6 @@ Some of the things (in very short form) that need to be done to E17...
   if you do not drag it far enough away (put the icon back where it was).
 * e app editor needs to be able to let users select what mime types that app
   can handle :)
-* applications config dialog is good - but "complex". people ask simple
-  questions like "how do i add an app to my launcher bar", "how do i run an
-  app on startup?". nice and generic tho the app config is - maybe it needs
-  to somehow become mroe specific for each scenario? ie a dilog that ONLY
-  handled adding an app (creating it or dnd/linking it in from existing apps).
 * emit more signals to window borders when window move starts, stops, resize
   starts, stops, on raise, lower, etc. etc.
 * client list menu could do with work on ordering, using separators to demark
