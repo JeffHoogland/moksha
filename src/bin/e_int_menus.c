@@ -91,6 +91,7 @@ e_int_menus_main_new(void)
    subm = e_int_menus_favorite_apps_new();
    dat->apps = subm;
    mi = e_menu_item_new(m);
+
    e_menu_item_label_set(mi, _("Favorite Applications"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/favorites");
    e_menu_item_submenu_set(mi, subm);
@@ -914,6 +915,9 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 	  borders = evas_list_append(borders, border);
      }
 
+   dat = (Main_Data *)e_object_data_get(E_OBJECT(m));
+   if (!dat) e_menu_title_set(m, _("Windows"));
+
    if (!borders)
      { 
 	/* FIXME here we want nothing, but that crashes!!! */
@@ -952,7 +956,6 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
    e_util_menu_item_edje_icon_set(mi, "enlightenment/windows");
    e_menu_item_callback_set(mi, _e_int_menus_clients_cleanup_cb, zone);
 
-   dat = (Main_Data *)e_object_data_get(E_OBJECT(m));
    if (dat)
      {
 	mi = e_menu_item_new(m);
