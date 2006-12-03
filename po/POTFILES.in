@@ -145,6 +145,8 @@ src/bin/e_widget_label.h
 src/bin/e_widget_table.c
 src/bin/e_widget_table.h
 src/bin/e_imc_main.c
+src/bin/e_int_config_imc.c
+src/bin/e_int_config_imc.h
 src/bin/e_int_border_locks.c
 src/bin/e_int_border_locks.h
 src/bin/e_int_border_remember.c
