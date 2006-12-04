@@ -287,6 +287,7 @@ static void _e_fm2_file_rename(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_file_rename_delete_cb(void *obj);
 static void _e_fm2_file_rename_yes_cb(char *text, void *data);
 static void _e_fm2_file_rename_no_cb(void *data);
+static void _e_fm2_file_properties(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_file_delete(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_file_delete_delete_cb(void *obj);
 static void _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog);
@@ -1634,6 +1635,7 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, char *file)
    
    /* create icon */
    ic = E_NEW(E_Fm2_Icon, 1);
+   ic->info.fm = sd->obj;
    ic->info.file = evas_stringshare_add(file);
    ic->sd = sd;
    if (!_e_fm2_icon_fill(ic))
@@ -1664,9 +1666,10 @@ _e_fm2_icon_unfill(E_Fm2_Icon *ic)
    ic->info.link = NULL;
    ic->info.real_link = NULL;
    ic->info.pseudo_dir = NULL;
-   ic->info.broken_link = 0;
-   ic->info.pseudo_link = 0;
    ic->info.mount = 0;
+   ic->info.pseudo_link = 0;
+   ic->info.deleted = 0;
+   ic->info.broken_link = 0;
 }
 
 static int
@@ -4616,6 +4619,14 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	       }
 	  }
 	
+	mi = e_menu_item_new(mn);
+	e_menu_item_label_set(mi, _("Properties"));
+	e_menu_item_icon_edje_set(mi,
+				  e_theme_edje_file_get("base/theme/fileman",
+							"e/fileman/button/properties"),
+				  "e/fileman/button/properties");
+	e_menu_item_callback_set(mi, _e_fm2_file_properties, ic);
+	
 	if (sd->icon_menu.end.func)
 	  {
 	     mi = e_menu_item_new(mn);
@@ -4911,6 +4922,26 @@ _e_fm2_file_rename_no_cb(void *data)
    
    ic = data;
    ic->entry_dialog = NULL;
+}
+
+static void
+_e_fm2_file_properties(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Fm2_Icon *ic;
+   E_Manager *man;
+   E_Container *con;
+   char text[PATH_MAX + 256];
+   
+   ic = data;
+   if (ic->entry_dialog) return;
+   
+   man = e_manager_current_get();
+   if (!man) return;
+   con = e_container_current_get(man);
+   if (!con) return;
+
+   /* FIXME: get and store properties dialog into icon */
+   e_fm_prop_file(con, &(ic->info));
 }
 
 static void

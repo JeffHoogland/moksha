@@ -179,7 +179,8 @@ e_widget_aspect.h \
 e_filereg.h \
 e_widget_desk_preview.h \
 e_int_config_borders.h \
-e_int_config_desk.h
+e_int_config_desk.h \
+e_fm_prop.h
  
 enlightenment_src = \
 e_user.c \
@@ -335,6 +336,7 @@ e_widget_desk_preview.c \
 e_filereg.c \
 e_int_config_borders.c \
 e_int_config_desk.c \
+e_fm_prop.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \

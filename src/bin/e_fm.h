@@ -89,6 +89,7 @@ struct _E_Fm2_Config
 
 struct _E_Fm2_Icon_Info
 {
+   Evas_Object      *fm;
    const char       *file;
    const char       *mime;
    const char       *label;
