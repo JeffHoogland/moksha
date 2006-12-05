@@ -603,30 +603,7 @@ _e_wid_fsel_preview_file(E_Widget_Data *wd)
 static char *
 _e_wid_file_size_get(off_t st_size)
 {
-   double dsize;
-   char size[256];
-
-   dsize = (double)st_size;
-   if (dsize < 1024.0)
-      snprintf(size, sizeof(size), _("%'.0f Bytes"), dsize);
-   else
-     {
-       dsize /= 1024.0;
-       if (dsize < 1024) 
-          snprintf(size, sizeof(size), _("%'.0f KB"), dsize);
-       else
-         {
-           dsize /= 1024.0;
-           if (dsize < 1024) 
-              snprintf(size, sizeof(size), _("%'.0f MB"), dsize);
-           else
-             {
-               dsize /= 1024.0;
-               snprintf(size, sizeof(size), _("%'.1f GB"), dsize);
-             }
-         }
-     }
-   return strdup(size); 
+   return e_util_size_string_get(st_size);
 }
 
 static char * 
@@ -718,40 +695,7 @@ _e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t st_gid)
 static char * 
 _e_wid_file_time_get(time_t st_modtime)
 {
-   time_t diff;
-   time_t ltime;
-   char modtime[256];
-   char *motime;   
-
-   ltime = time(NULL);
-   diff = ltime - st_modtime;
-   if (st_modtime > ltime)
-     {
-	snprintf(modtime, sizeof(modtime), _("In the Future"));
-     }
-   else
-     {
-	if (diff <= 60) 
-	  snprintf(modtime, sizeof(modtime), _("In the last Minute"));
-	else if (diff >= 31526000) 
-	  snprintf(modtime, sizeof(modtime), _("%li Years ago"), (diff / 31526000));
-	else if (diff >= 2592000) 
-	  snprintf(modtime, sizeof(modtime), _("%li Months ago"), (diff / 2592000));
-	else if (diff >= 604800) 
-	  snprintf(modtime, sizeof(modtime), _("%li Weeks ago"), (diff / 604800));
-	else if (diff >= 86400)
-	  snprintf(modtime, sizeof(modtime), _("%li Days ago"), (diff / 86400));
-	else if (diff >= 3600) 
-	  snprintf(modtime, sizeof(modtime), _("%li Hours ago"), (diff / 3600));
-	else if (diff > 60) 
-	  snprintf(modtime, sizeof(modtime), _("%li Minutes ago"), (diff / 60));
-     }
- 
-   if (modtime) 
-      motime = strdup(modtime);
-   else 
-      motime = strdup(_("Unknown"));
-   return motime;
+   return e_util_file_time_get(st_modtime);
 }
 
 static void

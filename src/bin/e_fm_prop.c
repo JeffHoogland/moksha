@@ -6,20 +6,20 @@
 /* FIXME:
  * 
  * basic -
- * * show file
- * * show size
- * * show modified date
- * * show permissions
- * * show preview
+ * + show file 
+ * + show size
+ * + show modified date
+ * + show mimetype
+ * + show permissions (others read, others write)
+ * + show preview
  * * show icon
  * * show symlink/fifo/socket/etc. status
  * * show broken link status
  * * change icon for mime type
  * * change icon for just this file
- * * change permissions
+ * * change permissions (others read, others write)
  * 
  * advanced (extra) -
- * * change app to open THIS file with
  * * show access date
  * * show change date
  * * show pseudolink status
@@ -29,6 +29,7 @@
  * * show mount status
  * * show link destination (if symlink or link)
  * * change link destination
+ * * change app to open THIS file with (or dir)
  * 
  */
 
@@ -46,6 +47,12 @@ struct _E_Config_Dialog_Data
 {
    E_Fm2_Icon_Info *fi;
    /*- BASIC -*/
+   char *file;
+   char *size;
+   char *mod_date;
+   char *mime;
+   int others_read;
+   int others_write;
    /*- ADVANCED -*/
 };
 
@@ -77,7 +84,15 @@ e_fm_prop_file(E_Container *con, E_Fm2_Icon_Info *fi)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata, E_Fm2_Icon_Info *fi)
 {
+   char buf[4096];
+   
    cfdata->fi = fi;
+   if (fi->file) cfdata->file = strdup(fi->file);
+   cfdata->size = e_util_size_string_get(fi->statinfo.st_size);
+   cfdata->mod_date = e_util_file_time_get(fi->statinfo.st_mtime);
+   if (fi->mime) cfdata->mime = strdup(fi->mime);
+   if (fi->statinfo.st_mode & S_IROTH) cfdata->others_read = 1;
+   if (fi->statinfo.st_mode & S_IWOTH) cfdata->others_write = 1;
 }
 
 static void *
@@ -98,6 +113,10 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    /* Free the cfdata */
+   E_FREE(cfdata->file);
+   E_FREE(cfdata->size);
+   E_FREE(cfdata->mod_date);
+   E_FREE(cfdata->mime);
    free(cfdata);
 }
 
@@ -119,7 +138,7 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for a basic dialog */
-   Evas_Object *o, *ot, *ob;
+   Evas_Object *o, *ot, *ob, *of;
    char buf[4096];
    
    snprintf(buf, sizeof(buf), "%s/%s", 
@@ -130,18 +149,39 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    ob = e_widget_label_add(evas, _("File:"));
    e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 0, 1, 0);
-   ob = e_widget_entry_add(evas, NULL);
-   e_widget_min_size_set(ob, 80, -1);
+   ob = e_widget_entry_add(evas, &(cfdata->file));
+   e_widget_min_size_set(ob, 140, -1);
    e_widget_entry_readonly_set(ob, 1);
    e_widget_table_object_append(ot, ob, 1, 0, 1, 1, 1, 0, 1, 0);
    
    ob = e_widget_label_add(evas, _("Size:"));
    e_widget_table_object_append(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0);
-   ob = e_widget_entry_add(evas, NULL);
-   e_widget_min_size_set(ob, 80, -1);
+   ob = e_widget_entry_add(evas, &(cfdata->size));
+   e_widget_min_size_set(ob, 140, -1);
    e_widget_entry_readonly_set(ob, 1);
    e_widget_table_object_append(ot, ob, 1, 1, 1, 1, 1, 0, 1, 0);
 
+   ob = e_widget_label_add(evas, _("Last Modified:"));
+   e_widget_table_object_append(ot, ob, 0, 2, 1, 1, 1, 0, 1, 0);
+   ob = e_widget_entry_add(evas, &(cfdata->mod_date));
+   e_widget_min_size_set(ob, 140, -1);
+   e_widget_entry_readonly_set(ob, 1);
+   e_widget_table_object_append(ot, ob, 1, 2, 1, 1, 1, 0, 1, 0);
+
+   ob = e_widget_label_add(evas, _("File Type:"));
+   e_widget_table_object_append(ot, ob, 0, 3, 1, 1, 1, 0, 1, 0);
+   ob = e_widget_entry_add(evas, &(cfdata->mime));
+   e_widget_min_size_set(ob, 140, -1);
+   e_widget_entry_readonly_set(ob, 1);
+   e_widget_table_object_append(ot, ob, 1, 3, 1, 1, 1, 0, 1, 0);
+
+   of = e_widget_framelist_add(evas, _("Permissions"), 0);
+   ob = e_widget_check_add(evas, _("Others can read"), &(cfdata->others_read));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Others can write"), &(cfdata->others_write));
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(ot, of, 0, 4, 2, 1, 1, 0, 1, 0);
+   
    e_widget_table_object_append(o, ot, 0, 0, 1, 1, 1, 1, 1, 1);
    
    ot = e_widget_table_add(evas, 0);

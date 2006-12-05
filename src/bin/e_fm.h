@@ -14,6 +14,7 @@ typedef enum _E_Fm2_View_Mode
    E_FM2_VIEW_MODE_CUSTOM_SMART_GRID_ICONS, /* icons go anywhere u drop them but try align to icons nearby */
    E_FM2_VIEW_MODE_LIST /* vertical fileselector list */
 } E_Fm2_View_Mode;
+
 typedef enum _E_Fm2_Menu_Flags
 {
    E_FM2_MENU_NO_REFRESH           = (1 << 0),

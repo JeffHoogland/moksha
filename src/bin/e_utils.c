@@ -716,6 +716,71 @@ e_util_shell_env_path_eval(char *path)
    return strdup(buf);
 }
 
+EAPI char *
+e_util_size_string_get(off_t size)
+{
+   double dsize;
+   char buf[256];
+   
+   dsize = (double)size;
+   if (dsize < 1024.0) snprintf(buf, sizeof(buf), _("%'.0f Bytes"), dsize);
+   else
+     {
+	dsize /= 1024.0;
+	if (dsize < 1024) snprintf(buf, sizeof(buf), _("%'.0f KB"), dsize);
+	else
+	  {
+	     dsize /= 1024.0;
+	     if (dsize < 1024) snprintf(buf, sizeof(buf), _("%'.0f MB"), dsize);
+	     else
+	       {
+		  dsize /= 1024.0;
+		  snprintf(buf, sizeof(buf), _("%'.1f GB"), dsize);
+	       }
+	  }
+     }
+   return strdup(buf);
+}
+
+EAPI char *
+e_util_file_time_get(time_t ftime)
+{
+   time_t diff;
+   time_t ltime;
+   char buf[256];
+   char *s = NULL;
+
+   ltime = time(NULL);
+   diff = ltime - ftime;
+   if (ftime > ltime)
+     {
+	snprintf(buf, sizeof(buf), _("In the Future"));
+     }
+   else
+     {
+	if (diff <= 60) 
+	  snprintf(buf, sizeof(buf), _("In the last Minute"));
+	else if (diff >= 31526000) 
+	  snprintf(buf, sizeof(buf), _("%li Years ago"), (diff / 31526000));
+	else if (diff >= 2592000) 
+	  snprintf(buf, sizeof(buf), _("%li Months ago"), (diff / 2592000));
+	else if (diff >= 604800) 
+	  snprintf(buf, sizeof(buf), _("%li Weeks ago"), (diff / 604800));
+	else if (diff >= 86400)
+	  snprintf(buf, sizeof(buf), _("%li Days ago"), (diff / 86400));
+	else if (diff >= 3600) 
+	  snprintf(buf, sizeof(buf), _("%li Hours ago"), (diff / 3600));
+	else if (diff > 60) 
+	  snprintf(buf, sizeof(buf), _("%li Minutes ago"), (diff / 60));
+     }
+ 
+   if (buf) 
+     s = strdup(buf);
+   else 
+     s = strdup(_("Unknown"));
+   return s;
+}
+
 /* local subsystem functions */
 static void
 _e_util_container_fake_mouse_up_cb(void *data)
