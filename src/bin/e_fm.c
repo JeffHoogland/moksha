@@ -3243,8 +3243,7 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers)
 {
    Evas_List *l;
    E_Fm2_Icon *ic2;
-   
-   int multi_sel = 0, range_sel = 0, seen = 0;
+   int multi_sel = 0, range_sel = 0, seen = 0, sel_change = 0;
 
    if (ic->sd->config->selection.windows_modifiers)
      {
@@ -3280,6 +3279,7 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers)
 		       for (; (l) && (l->data != ic); l = l->prev)
 			 {
 			    ic2 = l->data;
+			    if (!ic2->selected) sel_change = 1;
 			    _e_fm2_icon_select(ic2);
 			    ic2->last_selected = 0;
 			 }
@@ -3289,6 +3289,7 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers)
 		       for (; (l) && (l->data != ic); l = l->next)
 			 {
 			    ic2 = l->data;
+			    if (!ic2->selected) sel_change = 1;
 			    _e_fm2_icon_select(ic2);
 			    ic2->last_selected = 0;
 			 }
@@ -3305,7 +3306,11 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers)
 	     ic2 = l->data;
 	     if (ic2 != ic)
 	       {
-		  if (ic2->selected) _e_fm2_icon_deselect(ic2);
+		  if (ic2->selected)
+		    {
+		       _e_fm2_icon_deselect(ic2);
+		       sel_change = 1;
+		    }
 	       }
 	  }
      }
@@ -3323,18 +3328,24 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers)
    if ((multi_sel) && (ic->selected))
      {
 	if ((up) && (!ic->drag.dnd) && (!ic->down_sel))
-	  _e_fm2_icon_deselect(ic);
+	  {
+	     sel_change = 1;
+	     _e_fm2_icon_deselect(ic);
+	  }
      }
    else
      {
 	if (!up)
 	  {
+	     if (!ic->selected) sel_change = 1;
 	     _e_fm2_icon_select(ic);
 	     ic->down_sel = 1;
 	     ic->last_selected = 1;
 	  }
+
      }
-   evas_object_smart_callback_call(ic->sd->obj, "selection_change", NULL);
+   if (sel_change)
+     evas_object_smart_callback_call(ic->sd->obj, "selection_change", NULL);
    if ((!(S_ISDIR(ic->info.statinfo.st_mode)) ||
 	(ic->sd->config->view.no_subdir_jump)) &&
        (ic->sd->config->view.single_click)
