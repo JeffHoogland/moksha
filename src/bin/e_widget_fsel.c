@@ -560,10 +560,8 @@ static void
 _e_wid_fsel_preview_update(void *data, Evas_Object *obj, void *event_info)
 {
    E_Widget_Data *wd;
-   Evas_Coord w = 0, h = 0;
    
    wd = data;
-   evas_object_geometry_get(obj, NULL, NULL, &w, &h);
    e_widget_table_object_repack(wd->o_preview_preview_table,
 				wd->o_preview_preview,
 				0, 0, 1, 1, 0, 0, 1, 1);
