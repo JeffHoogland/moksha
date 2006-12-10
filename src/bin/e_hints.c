@@ -92,15 +92,51 @@ e_hints_init(void)
 
 	for (i = 0; i < num; i++)
 	  {
-	     Ecore_X_Window win;
+	     Ecore_X_Window win, twin;
+	     int nwins;
+	     char *name;
+	     double ts;
+	     
+	     /* check for previous netwm wm and wait for it to die */
+	     ts = ecore_time_get();
+	     nwins = ecore_x_window_prop_window_get(roots[i], 
+						    ECORE_X_ATOM_NET_SUPPORTING_WM_CHECK, 
+						    &win, 1);
+	     if (nwins > 0)
+	       {
+		  for (;;)
+		    {
+		       nwins = ecore_x_window_prop_window_get(win, 
+							      ECORE_X_ATOM_NET_SUPPORTING_WM_CHECK, 
+							      &twin, 1);
+		       if (nwins < 1) break;
+		       if (twin != win) break;
+		       if (ecore_x_netwm_name_get(win, &name))
+			 {
+			    if (strcmp(name, "Enlightenment"))
+			      {
+				 free(name);
+				 break;
+			      }
+			    free(name);
+			 }
+		       ecore_x_sync();
+		       if ((ecore_time_get() - ts) > 2.0)
+			 {
+			    e_error_message_show(_("A previous instance of Enlightenment is still active\n"
+						   "on this screen. Aborting startup.\n"));
+			    exit(-1);
+			 }
+		    }
+	       }
 
 	     win = ecore_x_window_new(roots[i], -200, -200, 5, 5);
 /*	     
- * I don't FUCKING believe it. if we PRETENT we are Kwin - java is happy.
+ * I don't FUCKING believe it. if we PRETEND we are Kwin - java is happy.
  * why? it expects a double reparenting wm then. java insists on finding this
  * out when it should be irrelevant! stupid code! I can't believe the time we
  * just wasted hunting a bug that wasn't and that is due to sheer stupid
- * coding.
+ * coding (in java's awt layer that swing also uses).
  */
 /* Now for more stupidity... Openoffice.org will change its look and feel 
  * depending on what wm it thinks there is... so if we pretend to be Kwin...
