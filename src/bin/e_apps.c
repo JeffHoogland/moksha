@@ -2198,9 +2198,10 @@ _e_app_icon_type(E_App *a)
                     	           }
                     	         a->dirty_icon = 1;
                     	         free(v);
+
+				 /* Copy the new found icon data to the original. */
+				 _e_app_fields_save_others(a);
                     	      }
-                            /* Copy the new found icon data to the original. */
-                            _e_app_fields_save_others(a);
                           }
                     }
 
