@@ -188,13 +188,15 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
 
    of = e_widget_framelist_add(evas, _("Terminal Settings"), 0);      
+   e_widget_framelist_content_align_set(of, 0.5, 0.0);
    ob = e_widget_label_add(evas, _("Terminal Command"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_entry_add(evas, &(cfdata->term_cmd));
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
 
-   of = e_widget_framelist_add(evas, _("Size Settings"), 0);      
+   of = e_widget_framelist_add(evas, _("Size Settings"), 0);
+   e_widget_framelist_content_align_set(of, 0.5, 0.0);
    ob = e_widget_label_add(evas, _("Minimum Width"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%4.0f"), 0, 4000, 50, 0, NULL, &(cfdata->pos_min_w), 200);
@@ -211,7 +213,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%4.0f"), 0, 4000, 50, 0, NULL, &(cfdata->pos_max_h), 200);
    e_widget_framelist_object_append(of, ob);   
-   e_widget_table_object_append(ot, of, 1, 0, 1, 2, 1, 0, 1, 0);
+   e_widget_table_object_append(ot, of, 1, 0, 1, 2, 1, 1, 1, 1);
 
    of = e_widget_framelist_add(evas, _("Position Settings"), 0);   
    ob = e_widget_label_add(evas, _("X-Axis Alignment"));
