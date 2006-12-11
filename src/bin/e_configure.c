@@ -164,6 +164,10 @@ _e_configure_free(E_Configure *eco)
 	eco->cats = evas_list_remove_list(eco->cats, eco->cats);
 	E_FREE(cat);
      }
+   evas_object_del(eco->close);
+   evas_object_del(eco->cat_list);
+   evas_object_del(eco->item_list);
+   evas_object_del(eco->o_list);
    evas_object_del(eco->edje);
    e_object_del(E_OBJECT(eco->win));
    free(eco);
