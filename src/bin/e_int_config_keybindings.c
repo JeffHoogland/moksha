@@ -910,7 +910,7 @@ _key_binding_sort_cb(void *d1, void *d2)
    if (bi2->modifiers & E_BINDING_MODIFIER_ALT) j++;
    if (bi2->modifiers & E_BINDING_MODIFIER_SHIFT) j++;
    if (bi2->modifiers & E_BINDING_MODIFIER_WIN) j++;
-
+   
    if (i < j) return -1;
    else if (i > j) return 1; 
    
@@ -1004,7 +1004,7 @@ _grab_key_down_cb(void *data, int type, void *event)
    cfdata = data;
 
    if (ev->win != cfdata->locals.bind_win) return 1;
-
+   
    if (!strcmp(ev->keyname, "Escape") &&
        !(ev->modifiers & ECORE_X_MODIFIER_SHIFT) &&
        !(ev->modifiers & ECORE_X_MODIFIER_CTRL) &&
@@ -1041,7 +1041,9 @@ _grab_key_down_cb(void *data, int type, void *event)
 	       mod |= E_BINDING_MODIFIER_ALT;
 	     if (ev->modifiers & ECORE_X_MODIFIER_WIN)
 	       mod |= E_BINDING_MODIFIER_WIN;
-
+	     if (ev->modifiers & ECORE_X_LOCK_NUM) 
+	       mod |= ECORE_X_LOCK_NUM;
+	     
 	     if (cfdata->locals.add)
 	       {
 		  found = 0;
@@ -1305,7 +1307,7 @@ _key_binding_text_get(E_Config_Binding_Key *bi)
 	if (b[0]) strcat(b, " + ");
 	strcat(b, _("WIN"));
      }
-
+   
    if (bi->key && bi->key[0])
      {
 	char *l;
@@ -1317,6 +1319,12 @@ _key_binding_text_get(E_Config_Binding_Key *bi)
 	free(l);
      }
 
+   if (bi->modifiers & ECORE_X_LOCK_NUM) 
+     {
+	if (b[0]) strcat(b, " ");
+	strcat(b, _("OFF"));
+     }
+   
    if (!b[0]) return strdup(TEXT_NONE_ACTION_KEY);
    return strdup(b);
 }
