@@ -131,11 +131,11 @@ group {
 	    rel1 {
 	       to_y: "logo";
 	       relative: 0.0 1.0;
-	       offset: 16 5;
+	       offset: 24 5;
 	    }
 	    rel2 {
 	       relative: 1.0 1.0;
-	       offset:   -17 -35;
+	       offset:   -25 -35;
 	    }
 	 }
       }
