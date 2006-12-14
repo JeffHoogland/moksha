@@ -368,7 +368,9 @@ e_bindings_key_grab(E_Binding_Context ctxt, Ecore_X_Window win)
 	     if (bind->mod & E_BINDING_MODIFIER_CTRL) mod |= ECORE_X_MODIFIER_CTRL;
 	     if (bind->mod & E_BINDING_MODIFIER_ALT) mod |= ECORE_X_MODIFIER_ALT;
 	     if (bind->mod & E_BINDING_MODIFIER_WIN) mod |= ECORE_X_MODIFIER_WIN;
+	     /* see comment in e_bindings on numlock
 	     if (bind->mod & ECORE_X_LOCK_NUM) mod |= ECORE_X_LOCK_NUM;
+	      */
 	     ecore_x_window_key_grab(win, bind->key,
 				     mod, bind->any_mod);
 	  }
@@ -394,7 +396,9 @@ e_bindings_key_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
 	     if (bind->mod & E_BINDING_MODIFIER_CTRL) mod |= ECORE_X_MODIFIER_CTRL;
 	     if (bind->mod & E_BINDING_MODIFIER_ALT) mod |= ECORE_X_MODIFIER_ALT;
 	     if (bind->mod & E_BINDING_MODIFIER_WIN) mod |= ECORE_X_MODIFIER_WIN;
+	     /* see comment in e_bindings on numlock
 	     if (bind->mod & ECORE_X_LOCK_NUM) mod |= ECORE_X_LOCK_NUM;
+	      */
 	     ecore_x_window_key_ungrab(win, bind->key,
 				       mod, bind->any_mod);
 	  }
@@ -411,7 +415,22 @@ e_bindings_key_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_
    if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
    if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
    if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
+   /* FIXME: there is a good reason numlock was ignored. sometimes people
+    * have it on, sometimes they don't, and often they have no idea. waaaay
+    * back in E 0.1->0.13 or so days this caused issues thus numlock,
+    * scrollock and capslock are not usable modifiers.
+    * 
+    * if we REALLY want to be able to use numlock we need to add more binding
+    * flags and config that says "REALLY pay attention to numlock for this
+    * binding" field in the binding (like there is a "any_mod" flag - we need a
+    * "num_lock_respect" field)
+    * 
+    * also it should be an E_BINDING_MODIFIER_LOCK_NUM as the ecore lock flag
+    * may vary from system to system as different xservers may have differing
+    * modifier masks for numlock (it is queried at startup).
+    * 
    if (ev->modifiers & ECORE_X_LOCK_NUM) mod |= ECORE_X_LOCK_NUM;
+    */
    for (l = key_bindings; l; l = l->next)
      {
 	E_Binding_Key *bind;
@@ -450,7 +469,9 @@ e_bindings_key_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Ev
    if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
    if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
    if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
+   /* see comment in e_bindings on numlock
    if (ev->modifiers & ECORE_X_LOCK_NUM) mod |= ECORE_X_LOCK_NUM;
+    */
    for (l = key_bindings; l; l = l->next)
      {
 	E_Binding_Key *bind;

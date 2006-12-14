@@ -1037,9 +1037,10 @@ _grab_key_down_cb(void *data, int type, void *event)
 	       mod |= E_BINDING_MODIFIER_ALT;
 	     if (ev->modifiers & ECORE_X_MODIFIER_WIN)
 	       mod |= E_BINDING_MODIFIER_WIN;
+	     /* see comment in e_bindings on numlock
 	     if (ev->modifiers & ECORE_X_LOCK_NUM) 
 	       mod |= ECORE_X_LOCK_NUM;
-	     
+	      */
 	     if (cfdata->locals.add)
 	       {
 		  found = 0;
@@ -1315,11 +1316,13 @@ _key_binding_text_get(E_Config_Binding_Key *bi)
 	free(l);
      }
 
+   /* see comment in e_bindings on numlock
    if (bi->modifiers & ECORE_X_LOCK_NUM) 
      {
 	if (b[0]) strcat(b, " ");
 	strcat(b, _("OFF"));
      }
+   */
    
    if (!b[0]) return strdup(TEXT_NONE_ACTION_KEY);
    return strdup(b);
