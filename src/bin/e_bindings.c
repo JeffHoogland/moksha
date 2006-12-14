@@ -368,6 +368,7 @@ e_bindings_key_grab(E_Binding_Context ctxt, Ecore_X_Window win)
 	     if (bind->mod & E_BINDING_MODIFIER_CTRL) mod |= ECORE_X_MODIFIER_CTRL;
 	     if (bind->mod & E_BINDING_MODIFIER_ALT) mod |= ECORE_X_MODIFIER_ALT;
 	     if (bind->mod & E_BINDING_MODIFIER_WIN) mod |= ECORE_X_MODIFIER_WIN;
+	     if (bind->mod & ECORE_X_LOCK_NUM) mod |= ECORE_X_LOCK_NUM;
 	     ecore_x_window_key_grab(win, bind->key,
 				     mod, bind->any_mod);
 	  }
@@ -393,6 +394,7 @@ e_bindings_key_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
 	     if (bind->mod & E_BINDING_MODIFIER_CTRL) mod |= ECORE_X_MODIFIER_CTRL;
 	     if (bind->mod & E_BINDING_MODIFIER_ALT) mod |= ECORE_X_MODIFIER_ALT;
 	     if (bind->mod & E_BINDING_MODIFIER_WIN) mod |= ECORE_X_MODIFIER_WIN;
+	     if (bind->mod & ECORE_X_LOCK_NUM) mod |= ECORE_X_LOCK_NUM;
 	     ecore_x_window_key_ungrab(win, bind->key,
 				       mod, bind->any_mod);
 	  }
@@ -409,6 +411,7 @@ e_bindings_key_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_
    if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
    if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
    if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
+   if (ev->modifiers & ECORE_X_LOCK_NUM) mod |= ECORE_X_LOCK_NUM;
    for (l = key_bindings; l; l = l->next)
      {
 	E_Binding_Key *bind;
@@ -447,6 +450,7 @@ e_bindings_key_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Ev
    if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
    if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
    if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
+   if (ev->modifiers & ECORE_X_LOCK_NUM) mod |= ECORE_X_LOCK_NUM;
    for (l = key_bindings; l; l = l->next)
      {
 	E_Binding_Key *bind;
