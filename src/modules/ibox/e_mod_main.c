@@ -883,10 +883,7 @@ _ibox_inst_cb_enter(void *data, const char *type, void *event_info)
    E_Event_Dnd_Enter *ev;
    Instance *inst;
    Evas_Object *o, *o2;
-   IBox_Icon *ic;
-   Evas_Coord xx, yy;
-   int x, y;
-   
+
    ev = event_info;
    inst = data;
    o = edje_object_add(evas_object_evas_get(inst->ibox->o_box));
@@ -912,10 +909,7 @@ _ibox_inst_cb_move(void *data, const char *type, void *event_info)
 {
    E_Event_Dnd_Move *ev;
    Instance *inst;
-   IBox_Icon *ic;
-   Evas_Coord xx, yy;
-   int x, y;
-   
+
    ev = event_info;
    inst = data;
    _ibox_drop_position_update(inst, ev->x, ev->y);
