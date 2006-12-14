@@ -125,7 +125,6 @@ Evas_Object *
 e_widget_color_well_add(Evas *evas, E_Color *color, int show_color_dialog)
 {
    Evas_Object *obj, *o;
-   Evas_Coord mw, mh;
    E_Widget_Data *wd;
    E_Win *win;
 

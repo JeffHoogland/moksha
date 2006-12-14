@@ -350,7 +350,6 @@ _cb_gradient(void *data1, void *data2)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
-   Evas_List *l;
    char path[4096];
    E_Config_Wallpaper *cw;
    const E_Config_Desktop_Background *cfbg;

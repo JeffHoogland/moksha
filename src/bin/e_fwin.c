@@ -709,7 +709,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	 */
 	if (evas_list_count(mlist) <= 1)
 	  {
-	     char pcwd[4096], buf[4096], *cmd;
+	     char pcwd[4096], *cmd;
 	     Ecore_List *files_list = NULL, *cmds = NULL;
 	   
 	     need_dia = 1;
