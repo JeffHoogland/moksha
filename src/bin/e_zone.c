@@ -596,7 +596,7 @@ e_zone_flip_win_restore(void)
 }
 
 EAPI int
-e_zone_exec(E_Zone *zone, char *exe)
+e_zone_exec(E_Zone *zone, const char *exe)
 {
    int ret = 0;
    char *p1, *p2;
