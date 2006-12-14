@@ -290,7 +290,6 @@ _get_icon(void *data)
    Evas *evas;
    E_Config_Dialog_Data *cfdata;
    Evas_Object *icon = NULL;
-   const char *tmp;
    char buf[4096];
    
    cfdata = data;

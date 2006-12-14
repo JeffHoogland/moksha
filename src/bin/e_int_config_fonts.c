@@ -282,8 +282,7 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob, *ot, *ott;
-   Evas_List *next, *fonts, *l = NULL;
-   int option_enable;
+   Evas_List *fonts, *l = NULL;
 
    cfdata->cur_index = -1;
    cfdata->evas = evas;

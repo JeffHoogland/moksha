@@ -67,8 +67,6 @@ EAPI void
 e_int_border_prop(E_Border *bd) 
 {
    E_Dialog *dia;
-   Evas_Object *o, *ob;
-   Evas_Coord w, h;
 
    if (bd->border_prop_dialog) return;
    

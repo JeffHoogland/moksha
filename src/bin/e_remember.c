@@ -403,9 +403,7 @@ _e_remember_find(E_Border *bd, int check_usable)
 #endif
 #if REMEMBER_HIERARCHY
    Evas_List *l;
-   E_Remember *best_rem;
-   int best_score = 0;
-   
+
    /* This search method finds the best possible match available and is
     * based on the fact that the list is sorted, with those remembers
     * with the most possible matches at the start of the list. This
@@ -415,7 +413,6 @@ _e_remember_find(E_Border *bd, int check_usable)
      {
 	 E_Remember *rem;
 	 const char *title = "";
-	 int score = 0;
 
 	 rem = l->data;
 	 if (check_usable && !e_remember_usable_get(rem))

@@ -182,7 +182,7 @@ static Evas_Object *
 _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *o, *of, *ol;
-   Evas_Object *ot, *ob;
+   Evas_Object *ob;
    
    o = e_widget_list_add(evas, 0, 1);
    of  = e_widget_framelist_add(evas, _("Categories"), 0);
@@ -542,7 +542,6 @@ _cb_config(void *data, void *data2)
    Evas_List *l;
    E_Config_Dialog_Data *cfdata;
    E_Config_Mime_Icon *mi = NULL;
-   E_Config_Dialog *edit_dlg;
    char *m;
    int found = 0;
    

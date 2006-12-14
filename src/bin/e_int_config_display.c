@@ -316,7 +316,6 @@ static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    const char *sel_res, *sel_rate;
-   int i, n, k, rr;
    Ecore_X_Screen_Size size;
    Ecore_X_Screen_Refresh_Rate rate;
    E_Manager *man;
@@ -419,8 +418,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    else
      {
 	Evas_List *l;
-	Ecore_X_Screen_Refresh_Rate c_rate;
-	Ecore_X_Screen_Size c_size;
 
 	cfdata->orig_size = ecore_x_randr_current_screen_size_get(man->root);
 	cfdata->orig_rate = ecore_x_randr_current_screen_refresh_rate_get(man->root);
@@ -550,8 +547,6 @@ static void
 _load_rates(E_Config_Dialog_Data *cfdata)
 {
    int r, k = 0, sel = 0;
-   Ecore_X_Screen_Refresh_Rate rt;
-   Ecore_X_Screen_Refresh_Rate *rts;
    char buf[16];
    Evas_List *l;
 

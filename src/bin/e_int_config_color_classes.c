@@ -407,8 +407,7 @@ _adv_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfda
 {
    Evas_Object *o, *of, *ob, *ot;
    E_Radio_Group *rg;
-   Evas_List *l;
-      
+
    o = e_widget_list_add(evas, 0, 0);
    ot = e_widget_table_add(evas, 0);
    

@@ -272,8 +272,7 @@ static void
 _cb_dialog_yes(void *data) 
 {
    Shelf_Del_Confirm_Data *d;
-   E_Shelf *es;
-   
+
    d = data;
    if (!data) return;
 
