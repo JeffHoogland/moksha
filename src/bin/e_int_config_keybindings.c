@@ -644,9 +644,6 @@ static void
 _update_action_list(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Binding_Key *bi;
-   E_Action_Group *actg;
-   E_Action_Description *actd;
-   Evas_List *l, *l2;
    int j = -1, i, n;
    const char *action, *params;
 
@@ -996,7 +993,6 @@ _grab_wnd_hide(E_Config_Dialog_Data *cfdata)
 static int
 _grab_key_down_cb(void *data, int type, void *event)
 {
-   E_Config_Binding_Key *bi;
    E_Config_Dialog_Data *cfdata;
    Ecore_X_Event_Key_Down *ev;
 

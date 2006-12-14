@@ -708,9 +708,6 @@ _update_action_list(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Binding_Mouse *eb;
    E_Config_Binding_Wheel *bw;
-   E_Action_Group *actg;
-   E_Action_Description *actd;
-   Evas_List *l, *l2;
    const char *action, *params;
    int j = -1, i, n;
 
@@ -933,7 +930,7 @@ _update_action_params(E_Config_Dialog_Data *cfdata)
 	action = eb->action;
 	params = eb->params;
      }
-   else if (cfdata->locals.cur[0] = 'w')
+   else if (cfdata->locals.cur[0] == 'w')
      {
 	sscanf(cfdata->locals.cur, "w%d", &b);
 	bw = evas_list_nth(cfdata->binding.wheel, b);
