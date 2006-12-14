@@ -12,7 +12,6 @@ static void _e_shelf_cb_menu_config(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_shelf_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_shelf_cb_menu_contents(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_shelf_cb_confirm_dialog_yes(void *data);
-static void _e_shelf_cb_confirm_dialog_no(void *data);
 static void _e_shelf_cb_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_shelf_menu_append(E_Shelf *es, E_Menu *mn);
 static void _e_shelf_cb_menu_items_append(void *data, E_Menu *mn);

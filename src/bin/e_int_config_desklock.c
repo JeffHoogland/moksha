@@ -29,8 +29,6 @@ static Evas_Object  *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas,
 /******************************************************************************************/
 
 static int  _e_desklock_zone_num_get(void);
-static void _load_bgs(E_Config_Dialog_Data *cfdata);
-static void _ibg_list_cb_bg_selected(void *data);
 
 static void _e_desklock_cb_show_passwd(void *data, Evas_Object *obj);
 static void _e_desklock_cb_lb_show_change(void *data, Evas_Object *obj);

@@ -52,8 +52,6 @@ static void _import_cb_close(void *data, E_Dialog *dia);
 static void _import_cb_ok(void *data, E_Dialog *dia);
 static void _import_config_save(Import *import);
 static void _import_cb_dia_del(void *obj);
-static void _preview_widget_grad_resize(void *data, Evas_Object *obj,
-					Evas_Coord w, Evas_Coord h);
 static Evas_Object *_preview_widget_add(Evas *evas);
 static void _import_cb_on_change(void *data, Evas_Object *obj);
 static void _import_cb_color_swap(void *data, void *data2);
