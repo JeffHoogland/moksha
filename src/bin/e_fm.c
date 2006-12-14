@@ -159,8 +159,8 @@ struct _E_Fm2_Icon
 struct _E_Fm2_Action
 {
    E_Fm2_Action_Type  type;
-   char              *file;
-   char              *file2;
+   const char        *file;
+   const char        *file2;
    int                flags;
 };
 
@@ -187,8 +187,8 @@ struct _E_Fm2_Fop_Item
 };
 
 static const char *_e_fm2_dev_path_map(const char *dev, const char *path);
-static void _e_fm2_file_add(Evas_Object *obj, char *file, int unique, char *file_rel, int after);
-static void _e_fm2_file_del(Evas_Object *obj, char *file);
+static void _e_fm2_file_add(Evas_Object *obj, const char *file, int unique, const char *file_rel, int after);
+static void _e_fm2_file_del(Evas_Object *obj, const char *file);
 static void _e_fm2_scan_start(Evas_Object *obj);
 static void _e_fm2_scan_stop(Evas_Object *obj);
 static void _e_fm2_queue_process(Evas_Object *obj); 
@@ -200,7 +200,7 @@ static void _e_fm2_icons_free(Evas_Object *obj);
 static void _e_fm2_regions_eval(Evas_Object *obj);
 static void _e_fm2_config_free(E_Fm2_Config *cfg);
 
-static E_Fm2_Icon *_e_fm2_icon_new(E_Fm2_Smart_Data *sd, char *file);
+static E_Fm2_Icon *_e_fm2_icon_new(E_Fm2_Smart_Data *sd, const char *file);
 static void _e_fm2_icon_unfill(E_Fm2_Icon *ic);
 static int _e_fm2_icon_fill(E_Fm2_Icon *ic);
 static void _e_fm2_icon_free(E_Fm2_Icon *ic);
@@ -294,8 +294,8 @@ static void _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog);
 static void _e_fm2_file_delete_no_cb(void *data, E_Dialog *dialog);
 static void _e_fm2_refresh_job_cb(void *data);
 
-static void _e_fm2_live_file_add(Evas_Object *obj, char *file, char *file_rel, int after);
-static void _e_fm2_live_file_del(Evas_Object *obj, char *file);
+static void _e_fm2_live_file_add(Evas_Object *obj, const char *file, const char *file_rel, int after);
+static void _e_fm2_live_file_del(Evas_Object *obj, const char *file);
 static void _e_fm2_live_file_changed(Evas_Object *obj, char *file);
 static void _e_fm2_live_process_begin(Evas_Object *obj);
 static void _e_fm2_live_process_end(Evas_Object *obj);
@@ -992,7 +992,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
 }
 
 static void
-_e_fm2_file_add(Evas_Object *obj, char *file, int unique, char *file_rel, int after)
+_e_fm2_file_add(Evas_Object *obj, const char *file, int unique, const char *file_rel, int after)
 {
    E_Fm2_Smart_Data *sd;
    E_Fm2_Icon *ic, *ic2;
@@ -1070,7 +1070,7 @@ _e_fm2_file_add(Evas_Object *obj, char *file, int unique, char *file_rel, int af
 }
 
 static void
-_e_fm2_file_del(Evas_Object *obj, char *file)
+_e_fm2_file_del(Evas_Object *obj, const char *file)
 {
    E_Fm2_Smart_Data *sd;
    E_Fm2_Icon *ic;
@@ -1629,7 +1629,7 @@ _e_fm2_config_free(E_Fm2_Config *cfg)
 /**************************/
 
 static E_Fm2_Icon *
-_e_fm2_icon_new(E_Fm2_Smart_Data *sd, char *file)
+_e_fm2_icon_new(E_Fm2_Smart_Data *sd, const char *file)
 {
    E_Fm2_Icon *ic;
    
@@ -3025,12 +3025,9 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 {
    E_Fm2_Smart_Data *sd;
    E_Event_Dnd_Drop *ev;
-   E_Fm2_Icon *ic;
    Evas_List *fsel, *l, *ll;
-   int i, refresh = 0;
    char buf[4096], *fl, *d;
-   FILE *f;
-   
+
    sd = data;
    if (!type) return;
    if (strcmp(type, "text/uri-list")) return;
@@ -3125,7 +3122,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		  /* move the file into the subdir */
 		  snprintf(buf, sizeof(buf), "%s/%s/%s",
 			   sd->realpath, sd->drop_icon->info.file, ecore_file_get_file(ll->data));
-		  printf("mv %s %s\n", ll->data, buf);
+		  printf("mv %s %s\n", (char *)ll->data, buf);
 		  e_fm2_fop_move_add(sd->obj,
 				     ll->data, buf,
 				     NULL, 0, 0);
@@ -3211,7 +3208,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 			    /* move the file into the subdir */
 			    snprintf(buf, sizeof(buf), "%s/%s",
 				     sd->realpath, ecore_file_get_file(ll->data));
-			    printf("mv %s %s\n", ll->data, buf);
+			    printf("mv %s %s\n", (char *)ll->data, buf);
 			    e_fm2_fop_move_add(sd->obj,
 					       ll->data, buf,
 					       NULL, 0, 1);
@@ -3359,10 +3356,8 @@ static void
 _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
-   E_Fm2_Icon *ic, *ic2;
-   int multi_sel = 0, range_sel = 0, seen = 0;
-   Evas_List *l;
-   
+   E_Fm2_Icon *ic;
+
    ic = data;
    ev = event_info;
    if ((ev->button == 1) && (ev->flags & EVAS_BUTTON_DOUBLE_CLICK))
@@ -4941,8 +4936,7 @@ _e_fm2_file_properties(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Fm2_Icon *ic;
    E_Manager *man;
    E_Container *con;
-   char text[PATH_MAX + 256];
-   
+ 
    ic = data;
    if (ic->entry_dialog) return;
    
@@ -5013,8 +5007,6 @@ _e_fm2_file_delete_delete_cb(void *obj)
 static void
 _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
 {
-   E_Manager *man;
-   E_Container *con;
    E_Fm2_Icon *ic;
    char buf[4096];
    Evas_List *sel, *l;
@@ -5149,7 +5141,7 @@ _e_fm2_refresh_job_cb(void *data)
 
 
 static void
-_e_fm2_live_file_add(Evas_Object *obj, char *file, char *file_rel, int after)
+_e_fm2_live_file_add(Evas_Object *obj, const char *file, const char *file_rel, int after)
 {
    E_Fm2_Smart_Data *sd;
    E_Fm2_Action *a;
@@ -5167,7 +5159,7 @@ _e_fm2_live_file_add(Evas_Object *obj, char *file, char *file_rel, int after)
 }
 
 static void
-_e_fm2_live_file_del(Evas_Object *obj, char *file)
+_e_fm2_live_file_del(Evas_Object *obj, const char *file)
 {
    E_Fm2_Smart_Data *sd;
    E_Fm2_Action *a;
@@ -5298,7 +5290,7 @@ _e_fm2_cb_live_idler(void *data)
    double t;
    
    sd = evas_object_smart_data_get(data);
-   if (!sd) return NULL;
+   if (!sd) return 0;
    t = ecore_time_get();
    do
      {
@@ -5349,9 +5341,7 @@ _e_fm2_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event even
 {
    E_Fm2_Smart_Data *sd;
    char *file;
-   Evas_List *l;
-   E_Fm2_Icon *ic;
-   
+
    sd = evas_object_smart_data_get(data);
    if (!sd) return;
    file = (char *)ecore_file_get_file(path);
