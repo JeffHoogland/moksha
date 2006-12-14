@@ -269,14 +269,15 @@ _temperature_cb_check(void *data)
      }
    else
      {
-	char *name;
+	const char *name;
 
-	ret = 1;
-	while ((name = ecore_list_next(therms)))
+	ret = 0;
+	name = temperature_config->acpi_sel;
+	if (!name) name = ecore_list_next(therms);
+	if (name)
 	  {
 	     char *p, *q;
 	     FILE *f;
-	     name = temperature_config->acpi_sel;
 	     snprintf(buf, sizeof(buf), "/proc/acpi/thermal_zone/%s/temperature", name);
 	     f = fopen(buf, "rb");
 	     if (f)
@@ -284,16 +285,15 @@ _temperature_cb_check(void *data)
 		  fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
 		  fclose(f);
 		  p = strchr(buf, ':');
-		  if (!p)
+		  if (p)
 		    {
-		       ret = 0;
-		       continue;
+		       p++;
+		       while (*p == ' ') p++;
+		       q = strchr(p, ' ');
+		       if (q) *q = 0;
+		       temp = atoi(p);
+		       ret = 1;
 		    }
-		  p++;
-		  while (*p == ' ') p++;
-		  q = strchr(p, ' ');
-		  if (q) *q = 0;
-		  temp = atoi(p);
 	       }
 	  }
 	ecore_list_destroy(therms);
@@ -414,7 +414,7 @@ e_modapi_init(E_Module *m)
 	temperature_config->high = 80;
 	temperature_config->sensor_name = evas_stringshare_add("temp1");
 	temperature_config->units = CELCIUS;
-	temperature_config->acpi_sel = evas_stringshare_add("TZ1");
+	temperature_config->acpi_sel = NULL;
      }
    E_CONFIG_LIMIT(temperature_config->poll_time, 0.5, 1000.0);
    E_CONFIG_LIMIT(temperature_config->low, 0, 100);
