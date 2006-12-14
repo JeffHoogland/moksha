@@ -127,6 +127,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_bg_update();
 
    e_config_save_queue();
+   return 1;
 }
 
 static Evas_Object *
