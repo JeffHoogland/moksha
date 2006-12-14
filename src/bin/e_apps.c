@@ -50,7 +50,6 @@ struct _E_App_Hash_Idler
    double       begin, pass;
 };
 
-static Evas_Bool _e_apps_hash_cb_init      (Evas_Hash *hash, const char *key, void *data, void *fdata);
 static int       _e_apps_hash_idler_cb     (void *data);
 static void      _e_app_free               (E_App *a);
 static E_App     *_e_app_subapp_file_find  (E_App *a, const char *file);
@@ -199,8 +198,6 @@ _e_apps_hash_idler_cb(void *data)
 #if IDLE_ICONS
         if ((!a->idle_icon) && (a->icon_type == E_APP_ICON_UNKNOWN))
           {
-             int theme_match = 0;
-
              a->idle_icon = 1;
              _e_app_icon_type(a);
           }
@@ -1266,6 +1263,7 @@ _e_apps_winners_hash_cb_check_free(Evas_Hash *hash, const char *key, void *data,
 	winner->ok = (*count);
      }
    free(count);
+   return 1;
 }
 #endif
 
@@ -1273,8 +1271,8 @@ _e_apps_winners_hash_cb_check_free(Evas_Hash *hash, const char *key, void *data,
 EAPI E_App *
 e_app_border_find(E_Border *bd)
 {
-   Evas_List *l, *l_match = NULL;
-   int ok, match = 0;
+   Evas_List *l;
+   int ok;
    E_App *a = NULL, *a_match = NULL, *clever_match = NULL;
    char *title;
    double begin, time, clever_time = 0.0;
@@ -1781,9 +1779,7 @@ e_app_mime_list(const char *mime)
 EAPI void
 e_app_fields_fill(E_App *a, const char *path)
 {
-   char *str, *v;
    const char *lang;
-   int size;
    
    /* get our current language */
    lang = e_intl_language_alias_get();
@@ -1892,7 +1888,7 @@ EAPI void
 e_app_fields_save(E_App *a)
 {
    char buf[PATH_MAX];
-   const char *lang, *ext = NULL;
+   const char *ext = NULL;
    int new_eap = 0;
 
    E_OBJECT_CHECK(a);
@@ -1982,7 +1978,6 @@ static void
 _e_app_fields_save_others(E_App *a)
 {
    Evas_List *l;
-   char buf[PATH_MAX];
 
    for (l = a->references; l; l = l->next)
      {
