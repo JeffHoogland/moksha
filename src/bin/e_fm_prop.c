@@ -101,7 +101,6 @@ e_fm_prop_file(E_Container *con, E_Fm2_Icon_Info *fi)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata, E_Fm2_Icon_Info *fi)
 {
-   char buf[4096];
    struct passwd *pw;
    
    cfdata->fi = fi;

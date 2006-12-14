@@ -124,7 +124,6 @@ static void
 _e_wid_reconfigure(E_Widget_Data *wd)
 {
    Evas_List *l, *delete = NULL;
-   Evas_Object *o;
    int x, y;
    int aw, ah; /* available */
    int mw, mh; /* min size for each desk */
@@ -218,7 +217,6 @@ e_widget_desk_preview_add(Evas *evas, int nx, int ny)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
-   Evas_Coord iw, ih;
    E_Zone *zone;
 
    obj = e_widget_add(evas);

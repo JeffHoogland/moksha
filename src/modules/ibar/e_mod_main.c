@@ -1095,7 +1095,6 @@ _ibar_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y)
     * the simplest. */
    if (inst->gcc->autoscroll && ic)
      {
-	 Evas_Coord ix, iy, iw, ih;
 	 double ax,ay;
 
 	 e_box_align_get(inst->gcc->o_box, &ax, &ay);
@@ -1175,11 +1174,7 @@ _ibar_inst_cb_move(void *data, const char *type, void *event_info)
 {
    E_Event_Dnd_Move *ev;
    Instance *inst;
-   IBar_Icon *ic;
-   Evas_Coord xx, yy;
-   int x, y;
-   int wx, wy;
-   
+
    ev = event_info;
    inst = data;
 
@@ -1325,7 +1320,6 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
 	       e_app_files_list_append(fl, inst->ibar->apps);
 	  }
      }
-   clean:
    evas_object_del(inst->ibar->o_drop);
    inst->ibar->o_drop = NULL;
    evas_object_del(inst->ibar->o_drop_over);
