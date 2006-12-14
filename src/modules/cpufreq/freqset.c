@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -9,12 +12,11 @@
 #include <sys/sysctl.h>
 #endif
 
+static int sys_cpu_setall(const char *control, const char *value);
+
 int
 main(int argc, char *argv[])
 {
-   int new_frequency = 0;
-   FILE *f;
-   
    if (argc != 3)
      {
         fprintf(stderr, "Invalid command. Syntax:\n");
@@ -53,7 +55,7 @@ main(int argc, char *argv[])
 #else   
    if (!strcmp(argv[1], "frequency"))
      {
-	if(sys_cpu_setall("scaling_setspeed", argv[2]) == 0)
+	if (sys_cpu_setall("scaling_setspeed", argv[2]) == 0)
           {
              fprintf(stderr, "Unable to open frequency interface for writing.\n");
              return 1;
@@ -63,7 +65,7 @@ main(int argc, char *argv[])
      }
    else if (!strcmp(argv[1], "governor"))
      {
-	if(sys_cpu_setall("scaling_governor", argv[2]) == 0)
+	if (sys_cpu_setall("scaling_governor", argv[2]) == 0)
           {
              fprintf(stderr, "Unable to open governor interface for writing.\n");
              return 1;
@@ -81,22 +83,25 @@ main(int argc, char *argv[])
    seteuid(-1);
 }
 
-int sys_cpu_setall(const char *control, const char *value)
+static int
+sys_cpu_setall(const char *control, const char *value)
 {
-	int	num = 0;
-	char	filename[4096];
-	FILE	*f;
-	
-	while(1){
-		snprintf(filename, sizeof(filename), "/sys/devices/system/cpu/cpu%i/cpufreq/%s", num, control);
-		f = fopen(filename, "w");
-		
-		if(!f){
-			return(num);
-		}
-		fprintf(f, "%s\n", value);
-		fclose(f);
-		num++;
-	}
-	return -1;
+   int	num = 0;
+   char	filename[4096];
+   FILE	*f;
+
+   while (1)
+     {
+	snprintf(filename, sizeof(filename), "/sys/devices/system/cpu/cpu%i/cpufreq/%s", num, control);
+	f = fopen(filename, "w");
+
+	if (!f)
+	  {
+	     return(num);
+	  }
+	fprintf(f, "%s\n", value);
+	fclose(f);
+	num++;
+     }
+   return -1;
 }
