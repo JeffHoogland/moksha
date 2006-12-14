@@ -226,7 +226,7 @@ e_exehist_mime_app_get(const char *mime)
    
    if (!mime) return NULL;
    _e_exehist_load();
-   if (!_e_exehist) return;
+   if (!_e_exehist) return NULL;
    for (l = _e_exehist->mimes; l; l = l->next)
      {
 	ei = l->data;
