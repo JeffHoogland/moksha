@@ -119,19 +119,25 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	else if (!strcmp(temperature_config->sensor_name, "temp3")) 
 	  cfdata->sensor = 2;
      }
-   cfdata->acpizone= 0;
+   cfdata->acpizone = 0;
    if (temperature_config->acpi_sel)
      {
        therms = ecore_file_ls("/proc/acpi/thermal_zone");
-       char *tzone;
-       int n = 0;
-       while ((tzone = ecore_list_next(therms)))
-         {
-	   if (!strcmp(temperature_config->acpi_sel, tzone))
-	     cfdata->acpizone = n;
-	   else n++;
+       if (therms)
+	 {
+	    char *tzone;
+	    int n = 0;
+	    while ((tzone = ecore_list_next(therms)))
+	      {
+		 if (!strcmp(temperature_config->acpi_sel, tzone))
+		   {
+		      cfdata->acpizone = n;
+		      break;
+		   }
+		 else n++;
+	      }
+	    ecore_list_destroy(therms);
 	 }
-       ecore_list_destroy(therms);
      }
 }
 
@@ -290,45 +296,36 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 	if (!f)
 	  {
 	     therms = ecore_file_ls("/sys/bus/i2c/devices");
-	     if (therms)
+	     if ((therms) && (!ecore_list_is_empty(therms)))
 	       {
-		  if (!ecore_list_is_empty(therms))
-		    {
-		       of = e_widget_framelist_add(evas, _("Sensors"), 0);
-		       rg = e_widget_radio_group_new(&(cfdata->sensor));
-		       ob = e_widget_radio_add(evas, _("Temp 1"), 0, rg);
-		       e_widget_framelist_object_append(of, ob);
-		       ob = e_widget_radio_add(evas, _("Temp 2"), 1, rg);
-		       e_widget_framelist_object_append(of, ob);
-		       ob = e_widget_radio_add(evas, _("Temp 3"), 2, rg);
-		       e_widget_framelist_object_append(of, ob);   
-		       e_widget_list_object_append(o, of, 1, 1, 0.5);
-		    }
-		  ecore_list_destroy(therms);
-		  therms = NULL;
+		  of = e_widget_framelist_add(evas, _("Sensors"), 0);
+		  rg = e_widget_radio_group_new(&(cfdata->sensor));
+		  ob = e_widget_radio_add(evas, _("Temp 1"), 0, rg);
+		  e_widget_framelist_object_append(of, ob);
+		  ob = e_widget_radio_add(evas, _("Temp 2"), 1, rg);
+		  e_widget_framelist_object_append(of, ob);
+		  ob = e_widget_radio_add(evas, _("Temp 3"), 2, rg);
+		  e_widget_framelist_object_append(of, ob);   
+		  e_widget_list_object_append(o, of, 1, 1, 0.5);
 	       }
+	     if (therms) ecore_list_destroy(therms);
 	  }
      }
    else
      {
-	if (!ecore_list_is_empty(therms))
+	of = e_widget_framelist_add(evas, _("ACPI Temperature"), 0);
+	rg = e_widget_radio_group_new(&(cfdata->acpizone));
+	char *tzone;
+	int n = 0;
+	while ((tzone = ecore_list_next(therms)))
 	  {
-	     of = e_widget_framelist_add(evas, _("ACPI Temperature"), 0);
-	     rg = e_widget_radio_group_new(&(cfdata->acpizone));
-	     char *tzone;
-	     int n = 0;
-	     while ((tzone = ecore_list_next(therms)))
-	       {
-		  ob = e_widget_radio_add(evas, _(tzone), n, rg);
-		  e_widget_framelist_object_append(of, ob);
-		  n++;
-	       }
-	     e_widget_list_object_append(o, of, 1, 1, 0.5);
-	     ecore_list_destroy(therms);
-	     therms = NULL;
+	     ob = e_widget_radio_add(evas, _(tzone), n, rg);
+	     e_widget_framelist_object_append(of, ob);
+	     n++;
 	  }
+	e_widget_list_object_append(o, of, 1, 1, 0.5);
+	ecore_list_destroy(therms);
      }
-   if (therms) ecore_list_destroy(therms);
 #endif
 
    of = e_widget_framelist_add(evas, _("Check Interval"), 0);
@@ -381,6 +378,10 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
+   int n = 0;
+   Ecore_List *therms;
+   char *tzone;
+
    if (cfdata->unit_method != temperature_config->units)
      {
 	if (cfdata->unit_method == 0)
@@ -419,20 +420,20 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (temperature_config->acpi_sel)
      evas_stringshare_del(temperature_config->acpi_sel);
    temperature_config->acpi_sel = NULL;
-   int n = 0;
-   Ecore_List *therms;
-   char *tzone;
    therms = ecore_file_ls("/proc/acpi/thermal_zone");
-   if ((therms) || !ecore_list_is_empty(therms))
+   if (therms)
      {
        while ((tzone = ecore_list_next(therms)))
          {
 	   if (n == cfdata->acpizone)
-	     temperature_config->acpi_sel = evas_stringshare_add(tzone);
+	     {
+		temperature_config->acpi_sel = evas_stringshare_add(tzone);
+		break;
+	     }
 	   n++;
 	 }
+       ecore_list_destroy(therms);  
      } 
-   ecore_list_destroy(therms);  
    _temperature_face_cb_config_updated();
    e_config_save_queue();
    return 1;
