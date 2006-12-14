@@ -42,6 +42,7 @@ e_filereg_shutdown(void)
      }
 
    _e_filereg = evas_list_free(_e_filereg);
+   return 1;
 }
 
 EAPI int
