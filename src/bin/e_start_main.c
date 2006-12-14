@@ -5,6 +5,7 @@
 #include <string.h>
 #include <dlfcn.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <sys/stat.h>
 #include <sys/utsname.h>
 #include <fcntl.h>

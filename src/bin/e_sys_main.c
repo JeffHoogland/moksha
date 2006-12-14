@@ -11,6 +11,7 @@
 #include <pwd.h>
 #include <grp.h>
 #include <fnmatch.h>
+#include <ctype.h>
 #ifdef HAVE_ALLOCA_H
 #include <alloca.h>
 #endif
