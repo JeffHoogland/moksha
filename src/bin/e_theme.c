@@ -244,12 +244,17 @@ e_theme_edje_file_get(const char *category, const char *group)
 			 }
 		       if (coll) edje_file_collection_list_free(coll);
 		    }
-		  ok = evas_hash_find(res->quickfind, group);
 		  /* save in the group cache hash */
-		  if (ok)
-		    group_cache = evas_hash_add(group_cache, buf, res);
+		  if (evas_hash_find(res->quickfind, group))
+		    {
+		       group_cache = evas_hash_add(group_cache, buf, res);
+		       ok = 1;
+		    }
 		  else
-		    group_cache = evas_hash_add(group_cache, buf, (void *)1);
+		    {
+		       group_cache = evas_hash_add(group_cache, buf, (void *)1);
+		       ok = 0;
+		    }
 	       }
 	     else if (tres == (void *)1) /* special pointer "1" == not there */
 	       ok = 0;
@@ -274,7 +279,6 @@ EAPI void
 e_theme_file_set(const char *category, const char *file)
 {
    E_Theme_Result *res;
-   char buf[4096];
 
    if (group_cache)
      {
