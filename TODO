@@ -119,6 +119,8 @@ Some of the things (in very short form) that need to be done to E17...
   that overlay the screen
 * pager should be able to be configured to control more than the current zone
   (select which zone they control)
+* temperature module should allow a different sensor to be monitored
+  per-instance
 * icons for all config panel items
 * icons for most mime types
 ]]]
