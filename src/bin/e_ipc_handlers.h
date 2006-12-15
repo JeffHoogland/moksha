@@ -3868,6 +3868,86 @@ break;
 #undef HDL
 
 /****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_LIST_SHOW_OTHER_DESK_ICONIFIED_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-list-show-other-desk-iconified-set", 1, "Set whether winlist (alt+tab) will show iconfied windows from other desks", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(policy, HDL);
+   e_config->winlist_list_show_other_desk_iconified = policy;
+   E_CONFIG_LIMIT(e_config->winlist_list_show_other_desk_iconified, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_LIST_SHOW_OTHER_DESK_ICONIFIED_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-list-show-other-desk-iconified-get", 0, "Get whether winlist (alt+tab) will show iconfied windows from other desks", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->winlist_list_show_other_desk_iconified, E_IPC_OP_WINLIST_LIST_SHOW_OTHER_DESK_ICONIFIED_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_LIST_SHOW_OTHER_DESK_ICONIFIED_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: POLICY=%d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_LIST_SHOW_OTHER_SCREEN_ICONIFIED_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-list-show-other-screen-iconified-set", 1, "Set whether winlist (alt+tab) will show iconfied windows from other screens", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(policy, HDL);
+   e_config->winlist_list_show_other_screen_iconified = policy;
+   E_CONFIG_LIMIT(e_config->winlist_list_show_other_screen_iconified, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_LIST_SHOW_OTHER_SCREEN_ICONIFIED_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-list-show-other-screen-iconified-get", 0, "Get whether winlist (alt+tab) will show iconfied windows from other screens", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->winlist_list_show_other_screen_iconified, E_IPC_OP_WINLIST_LIST_SHOW_OTHER_SCREEN_ICONIFIED_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_LIST_SHOW_OTHER_SCREEN_ICONIFIED_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: POLICY=%d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
 #define HDL E_IPC_OP_WINLIST_LIST_SHOW_OTHER_DESK_WINDOWS_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-winlist-list-show-other-desk-windows-set", 1, "Set whether winlist (alt+tab) will show other desk windows", 0, HDL)

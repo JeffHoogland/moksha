@@ -51,7 +51,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need top be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0103
+#define E_CONFIG_FILE_GENERATION 0x0104
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT      0
@@ -148,6 +148,8 @@ struct _E_Config
    int         winlist_scroll_animate; // GUI
    double      winlist_scroll_speed; // GUI
    int         winlist_list_show_iconified; // GUI
+   int         winlist_list_show_other_desk_iconified; // GUI
+   int         winlist_list_show_other_screen_iconified; // GUI
    int         winlist_list_show_other_desk_windows; // GUI
    int         winlist_list_show_other_screen_windows; // GUI
    int         winlist_list_uncover_while_selecting; // GUI

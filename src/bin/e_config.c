@@ -397,6 +397,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, winlist_scroll_animate, INT); /**/
    E_CONFIG_VAL(D, T, winlist_scroll_speed, DOUBLE); /**/
    E_CONFIG_VAL(D, T, winlist_list_show_iconified, INT); /**/
+   E_CONFIG_VAL(D, T, winlist_list_show_other_desk_iconified, INT); /**/
+   E_CONFIG_VAL(D, T, winlist_list_show_other_screen_iconified, INT); /**/
    E_CONFIG_VAL(D, T, winlist_list_show_other_desk_windows, INT); /**/
    E_CONFIG_VAL(D, T, winlist_list_show_other_screen_windows, INT); /**/
    E_CONFIG_VAL(D, T, winlist_list_uncover_while_selecting, INT); /**/
@@ -601,6 +603,8 @@ e_config_init(void)
    e_config->winlist_scroll_animate = 1;
    e_config->winlist_scroll_speed = 0.1;
    e_config->winlist_list_show_iconified = 1;
+   e_config->winlist_list_show_other_desk_iconified = 1;
+   e_config->winlist_list_show_other_screen_iconified = 0;
    e_config->winlist_list_show_other_desk_windows = 0;
    e_config->winlist_list_show_other_screen_windows = 0;
    e_config->winlist_list_uncover_while_selecting = 0;
@@ -1314,6 +1318,8 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->winlist_scroll_animate, 0, 1);
    E_CONFIG_LIMIT(e_config->winlist_scroll_speed, 0.0, 1.0);
    E_CONFIG_LIMIT(e_config->winlist_list_show_iconified, 0, 1);
+   E_CONFIG_LIMIT(e_config->winlist_list_show_other_desk_iconified, 0, 1);
+   E_CONFIG_LIMIT(e_config->winlist_list_show_other_screen_iconified, 0, 1);
    E_CONFIG_LIMIT(e_config->winlist_list_show_other_desk_windows, 0, 1);
    E_CONFIG_LIMIT(e_config->winlist_list_show_other_screen_windows, 0, 1);
    E_CONFIG_LIMIT(e_config->winlist_list_uncover_while_selecting, 0, 1);

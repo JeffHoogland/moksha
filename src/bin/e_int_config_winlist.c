@@ -13,6 +13,8 @@ struct _E_Config_Dialog_Data
    int warp_at_end;
    int scroll_animate;
    int list_show_iconified;
+   int list_show_other_desk_iconified;
+   int list_show_other_screen_iconified;
    int list_show_other_desk_windows;
    int list_show_other_screen_windows;
    int list_uncover_while_selecting;
@@ -65,6 +67,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->scroll_animate = e_config->winlist_scroll_animate;
    cfdata->scroll_speed = e_config->winlist_scroll_speed;
    cfdata->list_show_iconified = e_config->winlist_list_show_iconified;
+   cfdata->list_show_other_desk_iconified = e_config->winlist_list_show_other_desk_iconified;
+   cfdata->list_show_other_screen_iconified = e_config->winlist_list_show_other_screen_iconified;
    cfdata->list_show_other_desk_windows = e_config->winlist_list_show_other_desk_windows;
    cfdata->list_show_other_screen_windows = e_config->winlist_list_show_other_screen_windows;
    cfdata->list_uncover_while_selecting = e_config->winlist_list_uncover_while_selecting;
@@ -101,6 +105,8 @@ static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    e_config->winlist_list_show_iconified = cfdata->list_show_iconified;
+   e_config->winlist_list_show_other_desk_iconified = cfdata->list_show_other_desk_iconified;
+   e_config->winlist_list_show_other_screen_iconified = cfdata->list_show_other_screen_iconified;
    e_config->winlist_list_show_other_desk_windows = cfdata->list_show_other_desk_windows;
    e_config->winlist_list_show_other_screen_windows = cfdata->list_show_other_screen_windows;
    e_config->winlist_list_uncover_while_selecting = cfdata->list_uncover_while_selecting;
@@ -125,6 +131,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
    ob = e_widget_check_add(evas, _("Show iconified windows"), &(cfdata->list_show_iconified));
    e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Show iconified windows from other desks"), &(cfdata->list_show_other_desk_iconified));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Show iconified windows from other screens"), &(cfdata->list_show_other_screen_iconified));
+   e_widget_framelist_object_append(of, ob);	
    ob = e_widget_check_add(evas, _("Show windows from other desks"), &(cfdata->list_show_other_desk_windows));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Show windows from other screens"), &(cfdata->list_show_other_screen_windows));
@@ -161,6 +171,8 @@ static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    e_config->winlist_list_show_iconified = cfdata->list_show_iconified;
+   e_config->winlist_list_show_other_desk_iconified = cfdata->list_show_other_desk_iconified;
+   e_config->winlist_list_show_other_screen_iconified = cfdata->list_show_other_screen_iconified;
    e_config->winlist_list_show_other_desk_windows = cfdata->list_show_other_desk_windows;
    e_config->winlist_list_show_other_screen_windows = cfdata->list_show_other_screen_windows;
    e_config->winlist_list_uncover_while_selecting = cfdata->list_uncover_while_selecting;

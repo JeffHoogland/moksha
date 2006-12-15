@@ -401,7 +401,9 @@ _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
      {
 	if (!e_config->winlist_list_show_iconified) ok = 0;
 	if ((bd->zone != zone) &&
-	    (!e_config->winlist_list_show_other_screen_windows)) ok = 0;
+	    (!e_config->winlist_list_show_other_screen_iconified)) ok = 0;	
+	if ((bd->desk != desk) &&
+	    (!e_config->winlist_list_show_other_desk_iconified)) ok = 0;
      }
    else
      {
@@ -948,4 +950,3 @@ _e_winlist_cb_item_mouse_in(void *data, Evas *evas, Evas_Object *obj,
    _e_winlist_show_active();
    _e_winlist_activate();
 }
-
