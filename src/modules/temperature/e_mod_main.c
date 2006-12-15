@@ -44,7 +44,8 @@ struct _Instance
 
 static void _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _menu_cb_post(void *data, E_Menu *m);
-static int _temperature_cb_check(void *data);
+static void _temperature_sensor_init(void);
+static int  _temperature_cb_check(void *data);
 static void _temperature_face_level_set(Instance *inst, double level);
 static void _temperature_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
 
@@ -169,138 +170,249 @@ _menu_cb_post(void *data, E_Menu *m)
    temperature_config->menu = NULL;
 }
 
+static void
+_temperature_sensor_init(void)
+{
+   Ecore_List *therms;
+   char        path[PATH_MAX];
+#ifdef __FreeBSD__
+   int         len;
+#endif
+
+   if ((!temperature_config->sensor_type) || (!temperature_config->sensor_name))
+     {
+	if (temperature_config->sensor_name) evas_stringshare_del(temperature_config->sensor_name);
+	if (temperature_config->sensor_path) evas_stringshare_del(temperature_config->sensor_path);
+	temperature_config->sensor_path = NULL;
+#ifdef __FreeBSD__
+	/* TODO: FreeBSD can also have more temperature sensors! */
+	temperature_config->sensor_type = SENSOR_TYPE_FREEBSD;
+	temperature_config->sensor_name = evas_stringshare_add("tz0");
+#else  
+# ifdef HAVE_OMNIBOOK
+	/* TODO: This does not have to be a define */
+	temperature_config->sensor_type = SENSOR_TYPE_OMNIBOOK;
+	temperature_config->sensor_name = evas_stringshare_add("dummy");
+# else
+	therms = ecore_file_ls("/proc/acpi/thermal_zone");
+	if ((therms) && (!ecore_list_is_empty(therms)))
+	  {
+	     char *name;
+
+	     name = ecore_list_next(therms);
+	     temperature_config->sensor_type = SENSOR_TYPE_LINUX_ACPI;
+	     temperature_config->sensor_name = evas_stringshare_add(name);
+
+	     ecore_list_destroy(therms);
+	  }
+	else
+	  {
+	     FILE *f;
+
+	     if (therms) ecore_list_destroy(therms);
+
+	     f = fopen("/sys/devices/temperatures/cpu_temperature", "rb");
+	     if (f)
+	       {
+		  temperature_config->sensor_type = SENSOR_TYPE_LINUX_MACMINI;
+		  temperature_config->sensor_name = evas_stringshare_add("dummy");
+	       }
+	     else
+	       {
+		  /* TODO: Is there I2C devices with more than 3 temperature sensors? */
+		  /* TODO: What to do when there is more than one tempX? */
+		  therms = ecore_file_ls("/sys/bus/i2c/devices");
+		  if (therms)
+		    {
+		       char *name;
+
+		       while ((name = ecore_list_next(therms)))
+			 {
+			    char *sensors[] = { "temp1", "temp2", "temp3" };
+			    int i;
+
+			    for (i = 0; i < 3; i++)
+			      {
+				 sprintf(path, "/sys/bus/i2c/devices/%s/%s_input",
+				       name, sensors[i]);
+				 if (ecore_file_exists(path))
+				   {
+				      temperature_config->sensor_type = SENSOR_TYPE_LINUX_I2C;
+				      temperature_config->sensor_name = evas_stringshare_add(sensors[i]);
+				      break;
+				   }
+			      }
+			    if (temperature_config->sensor_type) break;
+			 }
+		       ecore_list_destroy(therms);
+		    }
+	       }
+	  }
+     }
+# endif
+#endif
+   if ((temperature_config->sensor_type) &&
+       (temperature_config->sensor_name) && 
+       (!temperature_config->sensor_path))
+     {
+	switch (temperature_config->sensor_type)
+	  {
+	   case SENSOR_TYPE_NONE:
+	      break;
+	   case SENSOR_TYPE_FREEBSD:
+#ifdef __FreeBSD__
+	      snprintf(path, sizeof(path), "hw.acpi.thermal.%s.temperature",
+		       temperature_config->sensor_name);
+	      temperature_config->sensor_path = evas_stringshare_add(path);
+
+	      len = 5;
+	      sysctlnametomib(temperature_config->sensor_path, temperature_config->mib, &len);
+#endif
+	      break;
+	   case SENSOR_TYPE_OMNIBOOK:
+	      temperature_config->sensor_path = evas_stringshare_add("/proc/omnibook/temperature");
+	      break;
+	   case SENSOR_TYPE_LINUX_MACMINI:
+		  temperature_config->sensor_path = evas_stringshare_add("/sys/devices/temperatures/cpu_temperature");
+	      break;
+	   case SENSOR_TYPE_LINUX_I2C:
+	      therms = ecore_file_ls("/sys/bus/i2c/devices");
+	      if (therms)
+		{
+		   char *name;
+
+		   while ((name = ecore_list_next(therms)))
+		     {
+			sprintf(path, "/sys/bus/i2c/devices/%s/%s_input",
+			      name, temperature_config->sensor_name);
+			if (ecore_file_exists(path))
+			  {
+			     temperature_config->sensor_path = evas_stringshare_add(path);
+			     break;
+			  }
+		     }
+		   ecore_list_destroy(therms);
+		}
+	      break;
+	   case SENSOR_TYPE_LINUX_ACPI:
+	      snprintf(path, sizeof(path), "/proc/acpi/thermal_zone/%s/temperature",
+		       temperature_config->sensor_name);
+	      temperature_config->sensor_path = evas_stringshare_add(path);
+	      break;
+	  }
+     }
+}
+
 static int
 _temperature_cb_check(void *data)
 {
+   FILE *f;
    int ret = 0;
    Instance *inst;
-   Ecore_List *therms;
    Evas_List *l;
    int temp = 0;
    char buf[4096];
 #ifdef __FreeBSD__
-   static int mib[5] = {-1};
    int len;
 #endif
 
+   _temperature_sensor_init();
+
+   /* TODO: Make standard parser. Seems to be two types of temperature string:
+    * - Somename: <temp> C
+    * - <temp>
+    */
+   switch (temperature_config->sensor_type)
+     {
+      case SENSOR_TYPE_NONE:
+	 /* TODO: Slow down timer? */
+	 break;
+      case SENSOR_TYPE_FREEBSD:
 #ifdef __FreeBSD__
-   if (mib[0] == -1)
-     {
-	len = 5;
-	sysctlnametomib("hw.acpi.thermal.tz0.temperature", mib, &len);
+	 len = sizeof(temp);
+	 if (sysctl(mib, 5, &temp, &len, NULL, 0) != -1)
+	   {
+	      temp = (temp - 2732) / 10;
+	      ret = 1;
+	   }
+	 else
+	   goto error;
+#endif
+	 break;
+      case SENSOR_TYPE_OMNIBOOK:
+	 f = fopen(temperature_config->sensor_path, "r");
+	 if (f) 
+	   {
+	      char dummy[4096];
+
+	      fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
+	      if (sscanf(buf, "%s %s %i", dummy, dummy, &temp) == 3)
+		ret = 1;
+	      else
+		goto error;
+	      fclose(f);
+	   }
+	 else
+	   goto error;
+	 break;
+      case SENSOR_TYPE_LINUX_MACMINI:
+	 f = fopen(temperature_config->sensor_path, "rb");
+	 if (f)
+	   {
+	      fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
+	      if (sscanf(buf, "%i", &temp) == 1)
+		ret = 1;
+	      else
+		goto error;
+	      fclose(f);
+	   }
+	 else
+	   goto error;
+	 break;
+      case SENSOR_TYPE_LINUX_I2C:
+	 f = fopen(temperature_config->sensor_path, "r");
+	 if (f)
+	   {
+	      fgets(buf, sizeof(buf), f);
+	      buf[sizeof(buf) - 1] = 0;
+
+	      /* actuallty read the temp */
+	      if (sscanf(buf, "%i", &temp) == 1)
+		ret = 1;
+	      else
+		goto error;
+	      /* Hack for temp */
+	      temp = temp / 1000;
+	      fclose(f);
+	   }
+	 else
+	   goto error;
+	 break;
+      case SENSOR_TYPE_LINUX_ACPI:
+	 f = fopen(temperature_config->sensor_path, "r");
+	 if (f)
+	   {
+	      char *p, *q;
+	      fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
+	      fclose(f);
+	      p = strchr(buf, ':');
+	      if (p)
+		{
+		   p++;
+		   while (*p == ' ') p++;
+		   q = strchr(p, ' ');
+		   if (q) *q = 0;
+		   temp = atoi(p);
+		   ret = 1;
+		}
+	      else
+		goto error;
+	   }
+	 else
+	   goto error;
+	 break;
      }
-   
-   if (mib[0] != -1)
-     {
-	len = sizeof(temp);
-        if (sysctl(mib, 5, &temp, &len, NULL, 0) != -1)
-	  {
-	     temp = (temp - 2732) / 10;
-	     ret = 1;
-	  }
-     }
-#else  
-# ifdef HAVE_OMNIBOOK
-   FILE *f;
-   char dummy[256];
-   
-   f = fopen("/proc/omnibook/temperature", "r");
-   if (f) 
-     {
-	fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
-	if (sscanf(buf, "%s %s %i", dummy, dummy, &temp) == 3)
-	  ret = 1;
-	fclose(f);
-     }
-# else
-   therms = ecore_file_ls("/proc/acpi/thermal_zone");
-   if ((!therms) || ecore_list_is_empty(therms))
-     {
-	FILE *f;
 
-	if (therms) ecore_list_destroy(therms);
-
-	f = fopen("/sys/devices/temperatures/cpu_temperature", "rb");
-	if (f)
-	  {
-	     fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
-	     if (sscanf(buf, "%i", &temp) == 1)
-	       ret = 1;
-	     fclose(f);
-	  }
-	else
-	  {
-	     therms = ecore_file_ls("/sys/bus/i2c/devices");
-	     if (therms)
-	       {
-		  const char *name, *sensor;
-
-		  sensor = temperature_config->sensor_name;
-		  if (!sensor) sensor = "temp1";
-
-		  while ((name = ecore_list_next(therms)))
-		    {
-		       char fname[1024];
-
-		       sprintf(fname, "/sys/bus/i2c/devices/%s/%s_input",
-			       name, sensor);
-		       if (ecore_file_exists(fname))
-			 {
-			    FILE *f;
-
-			    f = fopen(fname,"r");
-			    if (f) 
-			      {
-				 fgets(buf, sizeof(buf), f);
-				 buf[sizeof(buf) - 1] = 0;
-
-				 /* actuallty read the temp */
-				 if (sscanf(buf, "%i", &temp) == 1)
-				   ret = 1;
-				 /* Hack for temp */
-				 temp = temp / 1000;
-				 fclose(f);
-			      }
-			 }
-		    }
-		  ecore_list_destroy(therms);
-	       }
-	  }
-     }
-   else
-     {
-	const char *name;
-
-	ret = 0;
-	name = temperature_config->acpi_sel;
-	if (!name) name = ecore_list_next(therms);
-	if (name)
-	  {
-	     char *p, *q;
-	     FILE *f;
-	     snprintf(buf, sizeof(buf), "/proc/acpi/thermal_zone/%s/temperature", name);
-	     f = fopen(buf, "rb");
-	     if (f)
-	       {
-		  fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
-		  fclose(f);
-		  p = strchr(buf, ':');
-		  if (p)
-		    {
-		       p++;
-		       while (*p == ' ') p++;
-		       q = strchr(p, ' ');
-		       if (q) *q = 0;
-		       temp = atoi(p);
-		       ret = 1;
-		    }
-	       }
-	  }
-	ecore_list_destroy(therms);
-     }
-# endif
-#endif   
-   
    if (temperature_config->units == FAHRENHEIT)
      temp = (temp * 9.0 / 5.0) + 32;
 
@@ -351,6 +463,17 @@ _temperature_cb_check(void *data)
 	  }
      }
    return 1;
+   
+error:
+   /* TODO: Error count? Might be a temporary problem */
+   /* TODO: Error dialog */
+   /* TODO: This should be further up, so that it will affect the gadcon */
+   temperature_config->sensor_type = SENSOR_TYPE_NONE;
+   if (temperature_config->sensor_name) evas_stringshare_del(temperature_config->sensor_name);
+   temperature_config->sensor_name = NULL;
+   if (temperature_config->sensor_path) evas_stringshare_del(temperature_config->sensor_path);
+   temperature_config->sensor_path = NULL;
+   return 1;
 }
 
 static void
@@ -377,8 +500,7 @@ _temperature_face_cb_config_updated(void)
 {
    ecore_timer_del(temperature_config->temperature_check_timer);
    temperature_config->temperature_check_timer = 
-     ecore_timer_add(temperature_config->poll_time, _temperature_cb_check, 
-		     NULL);
+     ecore_timer_add(temperature_config->poll_time, _temperature_cb_check, NULL);
 }
 
 /***************************************************************************/
@@ -401,9 +523,9 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, poll_time, DOUBLE);
    E_CONFIG_VAL(D, T, low, INT);
    E_CONFIG_VAL(D, T, high, INT);
+   E_CONFIG_VAL(D, T, sensor_type, INT);
    E_CONFIG_VAL(D, T, sensor_name, STR);
    E_CONFIG_VAL(D, T, units, INT);
-   E_CONFIG_VAL(D, T, acpi_sel, STR);
 
    temperature_config = e_config_domain_load("module.temperature", conf_edd);
    if (!temperature_config)
@@ -412,9 +534,10 @@ e_modapi_init(E_Module *m)
 	temperature_config->poll_time = 10.0;
 	temperature_config->low = 30;
 	temperature_config->high = 80;
-	temperature_config->sensor_name = evas_stringshare_add("temp1");
+	temperature_config->sensor_type = SENSOR_TYPE_NONE;
+	temperature_config->sensor_name = NULL;
+	temperature_config->sensor_path = NULL;
 	temperature_config->units = CELCIUS;
-	temperature_config->acpi_sel = NULL;
      }
    E_CONFIG_LIMIT(temperature_config->poll_time, 0.5, 1000.0);
    E_CONFIG_LIMIT(temperature_config->low, 0, 100);
@@ -449,6 +572,8 @@ e_modapi_shutdown(E_Module *m)
      ecore_timer_del(temperature_config->temperature_check_timer);
    if (temperature_config->sensor_name)
      evas_stringshare_del(temperature_config->sensor_name);
+   if (temperature_config->sensor_path)
+     evas_stringshare_del(temperature_config->sensor_path);
    free(temperature_config);
    temperature_config = NULL;
    E_CONFIG_DD_FREE(conf_edd);

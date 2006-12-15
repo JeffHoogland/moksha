@@ -29,7 +29,7 @@ struct _E_Config_Dialog_Data
    int high_temp;
 
    int sensor;
-   int acpizone;
+   Ecore_List *sensors;
 };
 
 /* Protos */
@@ -67,8 +67,9 @@ _config_temperature_module(void)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
-   double p;
+   double      p;
    Ecore_List *therms;
+   char       *name;
    
    cfdata->units = temperature_config->units;
    if (temperature_config->units == CELCIUS) 
@@ -110,34 +111,46 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      cfdata->high_method = TEMP_HIGH_HIGH;
    
    cfdata->sensor = 0;
-   if (temperature_config->sensor_name)
+   switch (temperature_config->sensor_type)
      {
-	if (!strcmp(temperature_config->sensor_name, "temp1")) 
-	  cfdata->sensor = 0;
-	else if (!strcmp(temperature_config->sensor_name, "temp2")) 
-	  cfdata->sensor = 1;
-	else if (!strcmp(temperature_config->sensor_name, "temp3")) 
-	  cfdata->sensor = 2;
-     }
-   cfdata->acpizone = 0;
-   if (temperature_config->acpi_sel)
-     {
-       therms = ecore_file_ls("/proc/acpi/thermal_zone");
-       if (therms)
-	 {
-	    char *tzone;
-	    int n = 0;
-	    while ((tzone = ecore_list_next(therms)))
-	      {
-		 if (!strcmp(temperature_config->acpi_sel, tzone))
-		   {
-		      cfdata->acpizone = n;
-		      break;
-		   }
-		 else n++;
-	      }
-	    ecore_list_destroy(therms);
-	 }
+      case SENSOR_TYPE_NONE:
+	 break;
+      case SENSOR_TYPE_FREEBSD:
+	 break;
+      case SENSOR_TYPE_OMNIBOOK:
+	 break;
+      case SENSOR_TYPE_LINUX_MACMINI:
+	 break;
+      case SENSOR_TYPE_LINUX_I2C:
+	 ecore_list_append(cfdata->sensors, strdup("temp1"));
+	 ecore_list_append(cfdata->sensors, strdup("temp2"));
+	 ecore_list_append(cfdata->sensors, strdup("temp3"));
+	 ecore_list_goto_first(cfdata->sensors);
+	 while ((name = ecore_list_next(cfdata->sensors)))
+	   {
+	      if (!strcmp(temperature_config->sensor_name, name)) 
+		break;
+	      cfdata->sensor++;
+	   }
+	 break;
+      case SENSOR_TYPE_LINUX_ACPI:
+	 therms = ecore_file_ls("/proc/acpi/thermal_zone");
+	 if (therms)
+	   {
+	      int n = 0;
+
+	      while ((name = ecore_list_next(therms)))
+		{
+		   ecore_list_append(cfdata->sensors, strdup(name));
+		   if (!strcmp(temperature_config->sensor_name, name))
+		     {
+			cfdata->sensor = n;
+		     }
+		   n++;
+		}
+	      ecore_list_destroy(therms);
+	   }
+	 break;
      }
 }
 
@@ -147,6 +160,8 @@ _create_data(E_Config_Dialog *cfd)
    E_Config_Dialog_Data *cfdata;
    
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   cfdata->sensors = ecore_list_new();
+   ecore_list_set_free_cb(cfdata->sensors, free);
    _fill_data(cfdata);
    return cfdata;
 }
@@ -155,6 +170,8 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    temperature_config->config_dialog = NULL;
+   if (cfdata->sensors) ecore_list_destroy(cfdata->sensors);
+   cfdata->sensors = NULL;
    free(cfdata);
 }
 
@@ -276,57 +293,24 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-#ifndef __FreeBSD__
-   Ecore_List *therms;
-
-   therms = ecore_file_ls("/proc/acpi/thermal_zone");
-   if ((!therms) || (ecore_list_is_empty(therms)))
+   if (!ecore_list_is_empty(cfdata->sensors))
      {
-	FILE *f;
-	
-	if (therms)
-	  {
-	     ecore_list_destroy(therms);
-	     therms = NULL;
-	  }
+	/* TODO: Notify user which thermal system is in use */
+	/* TODO: Let the user choose the wanted thermal system */
+	char *name;
+	int   n = 0;
 
-	f = fopen("/sys/devices/temperatures/cpu_temperature", "rb");
-	if (f) fclose(f);
-	
-	if (!f)
+	of = e_widget_framelist_add(evas, _("Sensors"), 0);
+	rg = e_widget_radio_group_new(&(cfdata->sensor));
+	ecore_list_goto_first(cfdata->sensors);
+	while ((name = ecore_list_next(cfdata->sensors)))
 	  {
-	     therms = ecore_file_ls("/sys/bus/i2c/devices");
-	     if ((therms) && (!ecore_list_is_empty(therms)))
-	       {
-		  of = e_widget_framelist_add(evas, _("Sensors"), 0);
-		  rg = e_widget_radio_group_new(&(cfdata->sensor));
-		  ob = e_widget_radio_add(evas, _("Temp 1"), 0, rg);
-		  e_widget_framelist_object_append(of, ob);
-		  ob = e_widget_radio_add(evas, _("Temp 2"), 1, rg);
-		  e_widget_framelist_object_append(of, ob);
-		  ob = e_widget_radio_add(evas, _("Temp 3"), 2, rg);
-		  e_widget_framelist_object_append(of, ob);   
-		  e_widget_list_object_append(o, of, 1, 1, 0.5);
-	       }
-	     if (therms) ecore_list_destroy(therms);
-	  }
-     }
-   else
-     {
-	of = e_widget_framelist_add(evas, _("ACPI Temperature"), 0);
-	rg = e_widget_radio_group_new(&(cfdata->acpizone));
-	char *tzone;
-	int n = 0;
-	while ((tzone = ecore_list_next(therms)))
-	  {
-	     ob = e_widget_radio_add(evas, _(tzone), n, rg);
+	     ob = e_widget_radio_add(evas, _(name), n, rg);
 	     e_widget_framelist_object_append(of, ob);
 	     n++;
 	  }
 	e_widget_list_object_append(o, of, 1, 1, 0.5);
-	ecore_list_destroy(therms);
      }
-#endif
 
    of = e_widget_framelist_add(evas, _("Check Interval"), 0);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.1f seconds"), 0.5, 1000.0, 0.5, 0, &(cfdata->poll_time), NULL, 200);
@@ -378,10 +362,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   int n = 0;
-   Ecore_List *therms;
-   char *tzone;
-
    if (cfdata->unit_method != temperature_config->units)
      {
 	if (cfdata->unit_method == 0)
@@ -404,36 +384,12 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    temperature_config->high = cfdata->high_temp;
    if (temperature_config->sensor_name)
      evas_stringshare_del(temperature_config->sensor_name);
-   temperature_config->sensor_name = NULL;
-   switch (cfdata->sensor) 
-     {
-      case 0:
-	temperature_config->sensor_name = evas_stringshare_add("temp1");
-	break;
-      case 1:
-	temperature_config->sensor_name = evas_stringshare_add("temp2");
-	break;
-      case 2:
-	temperature_config->sensor_name = evas_stringshare_add("temp3");
-	break;
-     }
-   if (temperature_config->acpi_sel)
-     evas_stringshare_del(temperature_config->acpi_sel);
-   temperature_config->acpi_sel = NULL;
-   therms = ecore_file_ls("/proc/acpi/thermal_zone");
-   if (therms)
-     {
-       while ((tzone = ecore_list_next(therms)))
-         {
-	   if (n == cfdata->acpizone)
-	     {
-		temperature_config->acpi_sel = evas_stringshare_add(tzone);
-		break;
-	     }
-	   n++;
-	 }
-       ecore_list_destroy(therms);  
-     } 
+   temperature_config->sensor_name =
+     evas_stringshare_add(ecore_list_goto_index(cfdata->sensors, cfdata->sensor));
+   if (temperature_config->sensor_path)
+     evas_stringshare_del(temperature_config->sensor_path);
+   temperature_config->sensor_path = NULL;
+
    _temperature_face_cb_config_updated();
    e_config_save_queue();
    return 1;

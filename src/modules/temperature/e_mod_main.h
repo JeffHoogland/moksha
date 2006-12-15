@@ -12,13 +12,24 @@ typedef enum _Unit
    FAHRENHEIT
 } Unit;
 
+typedef enum _Sensor_Type
+{
+   SENSOR_TYPE_NONE,
+   SENSOR_TYPE_FREEBSD,
+   SENSOR_TYPE_OMNIBOOK,
+   SENSOR_TYPE_LINUX_MACMINI,
+   SENSOR_TYPE_LINUX_I2C,
+   SENSOR_TYPE_LINUX_ACPI
+} Sensor_Type;
+
 struct _Config
 {
    /* saved * loaded config values */
    double           poll_time;
    int              low, high;
+   Sensor_Type      sensor_type;
    const char      *sensor_name;
-   const char	   *acpi_sel;
+   const char      *sensor_path;
    Unit             units;
    /* just config state */
    E_Module        *module;
@@ -27,6 +38,9 @@ struct _Config
    E_Menu          *menu;
    Ecore_Timer     *temperature_check_timer;
    unsigned char    have_temp;
+#ifdef __FreeBSD__
+   int              mib[5];
+#endif
 };
 
 EAPI extern E_Module_Api e_modapi;
