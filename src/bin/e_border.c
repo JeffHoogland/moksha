@@ -5897,8 +5897,7 @@ _e_border_eval(E_Border *bd)
 	     bd->placed = 1;
 	  }
 
-	/* always remember internal windows - config */
-	if ((bd->internal) && (!bd->remember) && (1)) /* FIXME: config value */
+	if ((bd->internal) && (!bd->remember) && (e_config->remember_internal_windows))
 	  {
 	     E_Remember *rem;
 	     

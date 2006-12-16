@@ -424,6 +424,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, transition_desk, STR); /**/
    E_CONFIG_VAL(D, T, transition_change, STR); /**/
    E_CONFIG_LIST(D, T, remembers, _e_config_remember_edd);
+   E_CONFIG_VAL(D, T, remember_internal_windows, INT);
    E_CONFIG_VAL(D, T, move_info_follows, INT); /**/
    E_CONFIG_VAL(D, T, resize_info_follows, INT); /**/
    E_CONFIG_VAL(D, T, move_info_visible, INT); /**/
@@ -603,8 +604,6 @@ e_config_init(void)
    e_config->winlist_scroll_animate = 1;
    e_config->winlist_scroll_speed = 0.1;
    e_config->winlist_list_show_iconified = 1;
-   e_config->winlist_list_show_other_desk_iconified = 1;
-   e_config->winlist_list_show_other_screen_iconified = 0;
    e_config->winlist_list_show_other_desk_windows = 0;
    e_config->winlist_list_show_other_screen_windows = 0;
    e_config->winlist_list_uncover_while_selecting = 0;
@@ -687,7 +686,7 @@ e_config_init(void)
    e_config->display_res_height = 0;
    e_config->display_res_hz = 0;
    e_config->display_res_rotation = 0;
-   
+
      {
 	E_Config_Module *em;
 
@@ -1274,6 +1273,15 @@ e_config_init(void)
    IFCFG(0x00103);
    e_config->theme_default_border_style = evas_stringshare_add("default");
    IFCFGEND;
+
+   IFCFG(0x00104);
+   e_config->winlist_list_show_other_desk_iconified = 1;
+   e_config->winlist_list_show_other_screen_iconified = 0;
+   IFCFGEND;
+   
+   IFCFG(0x00105);
+   e_config->remember_internal_windows = 1;
+   IFCFGEND;
    
 #if 0 /* example of new config */
    IFCFG(0x0090); /* the version # where this value(s) was introduced */
@@ -1369,6 +1377,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->border_raise_on_mouse_action, 0, 1);
    E_CONFIG_LIMIT(e_config->border_raise_on_focus, 0, 1);
    E_CONFIG_LIMIT(e_config->desk_flip_wrap, 0, 1);
+   E_CONFIG_LIMIT(e_config->remember_internal_windows, 0, 1);
    
    /* FIXME: disabled auto apply because it causes problems */
    e_config->cfgdlg_auto_apply = 0;

@@ -51,7 +51,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need top be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0104
+#define E_CONFIG_FILE_GENERATION 0x0105
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT      0
@@ -175,6 +175,7 @@ struct _E_Config
    const char *transition_desk; // GUI
    const char *transition_change; // GUI
    Evas_List  *remembers;
+   int         remember_internal_windows;
    int         move_info_follows; // GUI
    int         resize_info_follows; // GUI
    int         move_info_visible; // GUI
