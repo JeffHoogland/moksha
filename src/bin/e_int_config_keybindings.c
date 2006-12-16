@@ -215,70 +215,55 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *ol, *ol2, *of;
+   Evas_Object *o, *ot, *of, *ob;
 
    cfdata->evas = evas;
-
-   ol = e_widget_list_add(evas, 0, 1);
-   of = e_widget_framelist_add(evas, _("Key Bindings"), 0);
-
-   o = e_widget_ilist_add(evas, 32, 32, &(cfdata->locals.binding));
-   cfdata->gui.o_binding_list = o;
-   e_widget_min_size_set(o, 250, 280);
-   e_widget_ilist_go(o);
-   e_widget_framelist_object_append(of, o);
-
-   ol2 = e_widget_list_add(evas, 1, 1);
-   o = e_widget_button_add(evas, _("Add Key"), "enlightenment/e", _add_key_binding_cb, cfdata, NULL);
-   cfdata->gui.o_add = o;
-   e_widget_list_object_append(ol2, o, 1, 1, 0.5);
-
-   o = e_widget_button_add(evas, _("Delete Key"), "enlightenment/e", _delete_key_binding_cb, cfdata, NULL);
-   cfdata->gui.o_del = o;
-   e_widget_disabled_set(o, 1);
-   e_widget_list_object_append(ol2, o, 1, 1, 0.5);
-   e_widget_framelist_object_append(of, ol2);
-
-
-   ol2 = e_widget_list_add(evas, 1, 1);
-   o = e_widget_button_add(evas, _("Modify Key"), "enlightenment/e", _modify_key_binding_cb, cfdata, NULL);
-   cfdata->gui.o_mod = o;
-   e_widget_disabled_set(o, 1);
-   e_widget_list_object_append(ol2, o, 1, 1, 0.5);
-
-   o = e_widget_button_add(evas, _("Delete All"), "enlightenment/e", _delete_all_key_binding_cb, cfdata, NULL);
-   cfdata->gui.o_del_all = o;
-   e_widget_disabled_set(o, 1);
-   e_widget_list_object_append(ol2, o, 1, 1, 0.5);
-   e_widget_framelist_object_append(of, ol2);
-
-   o = e_widget_button_add(evas, _("Restore Key Binding Defaults"), "enlightenment/e",
-			   _restore_key_binding_defaults_cb, cfdata, NULL);
-   e_widget_framelist_object_append(of, o);
-   e_widget_list_object_append(ol, of, 1, 1, 0.5);
-
-   ol2 = e_widget_list_add(evas, 0, 0);
-   of = e_widget_framelist_add(evas, _("Action"), 0);
-   o = e_widget_ilist_add(evas, 24, 24, &(cfdata->locals.action));
-   cfdata->gui.o_action_list = o;
-   e_widget_min_size_set(o, 250, 290);
-   e_widget_ilist_go(o);
-   e_widget_framelist_object_append(of, o);
-   e_widget_list_object_append(ol2, of, 1, 1, 0.5);
-
-   of = e_widget_framelist_add(evas, _("Action Params"), 0);
-   o = e_widget_entry_add(evas, &(cfdata->locals.params));
-   e_widget_disabled_set(o, 1);
-   cfdata->gui.o_params = o;
-   e_widget_framelist_object_append(of, o);
-   e_widget_list_object_append(ol2, of, 1, 1, 0.5);
-
-   e_widget_list_object_append(ol, ol2, 1, 1, 0.5); 
+   o = e_widget_list_add(evas, 0, 1);
    
+   of = e_widget_frametable_add(evas, _("Key Bindings"), 0);
+   ob = e_widget_ilist_add(evas, 32, 32, &(cfdata->locals.binding));
+   cfdata->gui.o_binding_list = ob;   
+   e_widget_min_size_set(ob, 250, 280);
+   e_widget_frametable_object_append(of, ob, 0, 0, 2, 1, 1, 1, 1, 1);
+   ob = e_widget_button_add(evas, _("Add Key"), NULL, _add_key_binding_cb, cfdata, NULL);
+   cfdata->gui.o_add = ob;
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_button_add(evas, _("Delete Key"), NULL, _delete_key_binding_cb, cfdata, NULL);
+   cfdata->gui.o_del = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_button_add(evas, _("Modify Key"), NULL, _modify_key_binding_cb, cfdata, NULL);
+   cfdata->gui.o_mod = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_button_add(evas, _("Delete All"), NULL, _delete_all_key_binding_cb, cfdata, NULL);
+   cfdata->gui.o_del_all = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_button_add(evas, _("Restore Default Bindings"), "enlightenment/e", _restore_key_binding_defaults_cb, cfdata, NULL);
+   e_widget_frametable_object_append(of, ob, 0, 3, 2, 1, 1, 1, 1, 1);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   
+   ot = e_widget_table_add(evas, 0);
+   of = e_widget_framelist_add(evas, _("Action"), 0);
+   ob = e_widget_ilist_add(evas, 24, 24, &(cfdata->locals.action));
+   cfdata->gui.o_action_list = ob;
+   e_widget_min_size_set(ob, 250, 325);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
+   
+   of = e_widget_framelist_add(evas, _("Action Params"), 0);
+   ob = e_widget_entry_add(evas, &(cfdata->locals.params));
+   cfdata->gui.o_params = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_list_object_append(o, ot, 1, 1, 0.5);
+
    _update_key_binding_list(cfdata);
    _fill_actions_list(cfdata);
 
-   return ol;
+   return o;
 }
 
 static void
