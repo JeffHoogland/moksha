@@ -270,6 +270,8 @@ e17_battery_ac.png \
 e17_pager_desk.png \
 e17_pager_desk_sel.png \
 e17_pager_window.png \
+e17_preview_bg.png \
+e17_preview_bg_over.png \
 e17_temperature_base.png \
 e17_temperature_mid.png \
 e17_temperature_overlay.png \
@@ -317,6 +319,8 @@ e17_winlist_bottom.png \
 e17_pager_window_shaded.png \
 e17_transition_vswipe_gap.png \
 e17_icon_configuration.png \
+e17_icon_gadget.png \
+e17_icon_icon_theme.png \
 e17_icon_intl.png \
 e17_icon_system.png \
 e17_icon_desktop.png \
@@ -509,5 +513,4 @@ e17_icon_reboot.png \
 e17_icon_screen_setup.png \
 e17_trans1.png \
 e17_trans2.png \
-e17_icon_regenerate_menus.png \
-e17_icon_icon_theme.png 
+e17_icon_regenerate_menus.png
