@@ -227,21 +227,21 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_frametable_object_append(of, ob, 0, 0, 2, 1, 1, 1, 1, 1);
    ob = e_widget_button_add(evas, _("Add Key"), NULL, _add_key_binding_cb, cfdata, NULL);
    cfdata->gui.o_add = ob;
-   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 0, 1, 0);
    ob = e_widget_button_add(evas, _("Delete Key"), NULL, _delete_key_binding_cb, cfdata, NULL);
    cfdata->gui.o_del = ob;
    e_widget_disabled_set(ob, 1);
-   e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 0, 1, 0);
    ob = e_widget_button_add(evas, _("Modify Key"), NULL, _modify_key_binding_cb, cfdata, NULL);
    cfdata->gui.o_mod = ob;
    e_widget_disabled_set(ob, 1);
-   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 0, 1, 0);
    ob = e_widget_button_add(evas, _("Delete All"), NULL, _delete_all_key_binding_cb, cfdata, NULL);
    cfdata->gui.o_del_all = ob;
    e_widget_disabled_set(ob, 1);
-   e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 0, 1, 0);
    ob = e_widget_button_add(evas, _("Restore Default Bindings"), "enlightenment/e", _restore_key_binding_defaults_cb, cfdata, NULL);
-   e_widget_frametable_object_append(of, ob, 0, 3, 2, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, ob, 0, 3, 2, 1, 1, 0, 1, 0);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
    ot = e_widget_table_add(evas, 0);

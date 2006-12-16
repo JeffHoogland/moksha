@@ -299,29 +299,29 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_frametable_object_append(ot, ob, 0, 0, 2, 1, 1, 1, 1, 1);
 
    ob = e_widget_button_add(evas, _("Add Binding"), NULL, _add_mouse_binding_cb, cfdata, NULL);
-   e_widget_frametable_object_append(ot, ob, 0, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0);
    ob = e_widget_button_add(evas, _("Delete Binding"), NULL, _delete_mouse_binding_cb, cfdata, NULL);
    cfdata->gui.o_del = ob;
    e_widget_disabled_set(ob, 1);
-   e_widget_frametable_object_append(ot, ob, 1, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(ot, ob, 1, 1, 1, 1, 1, 0, 1, 0);
    ob = e_widget_button_add(evas, _("Modify Binding"), NULL, _modify_mouse_binding_cb, cfdata, NULL);
    cfdata->gui.o_mod = ob;
    e_widget_disabled_set(ob, 1);
-   e_widget_frametable_object_append(ot, ob, 0, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(ot, ob, 0, 2, 1, 1, 1, 0, 1, 0);
    ob = e_widget_button_add(evas, _("Delete All"), NULL, _delete_all_mouse_binding_cb, cfdata, NULL);
    cfdata->gui.o_del_all = ob;
    e_widget_disabled_set(ob, 1);
-   e_widget_frametable_object_append(ot, ob, 1, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(ot, ob, 1, 2, 1, 1, 1, 0, 1, 0);
    ob = e_widget_button_add(evas, _("Restore Mouse and Wheel Binding Defaults"), "enlightenment/e",
 			    _restore_mouse_binding_defaults_cb, cfdata, NULL);
-   e_widget_frametable_object_append(ot, ob, 0, 3, 2, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(ot, ob, 0, 3, 2, 1, 1, 0, 1, 0);
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
 
    ot = e_widget_table_add(evas, 0);
    of = e_widget_framelist_add(evas, _("Action"), 0);
    ob = e_widget_ilist_add(evas, 24, 24, &(cfdata->locals.action));
    cfdata->gui.o_action_list = ob;
-   e_widget_min_size_set(ob, 250, 210);
+   e_widget_min_size_set(ob, 250, 250);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 0, 3, 1, 1, 1, 1, 1);
    
