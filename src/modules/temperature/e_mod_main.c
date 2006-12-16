@@ -248,9 +248,9 @@ _temperature_sensor_init(void)
 		    }
 	       }
 	  }
-     }
 # endif
 #endif
+     }
    if ((temperature_config->sensor_type) &&
        (temperature_config->sensor_name) && 
        (!temperature_config->sensor_path))
@@ -330,7 +330,7 @@ _temperature_cb_check(void *data)
       case SENSOR_TYPE_FREEBSD:
 #ifdef __FreeBSD__
 	 len = sizeof(temp);
-	 if (sysctl(mib, 5, &temp, &len, NULL, 0) != -1)
+	 if (sysctl(temperature_config->mib, 5, &temp, &len, NULL, 0) != -1)
 	   {
 	      temp = (temp - 2732) / 10;
 	      ret = 1;
