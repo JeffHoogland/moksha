@@ -82,12 +82,10 @@ struct _E_Config_Dialog_Data
     { 
        Evas_Object *o_binding_list;
        Evas_Object *o_action_list;
-       Evas_Object *o_add;
-       Evas_Object *o_mod;
-       Evas_Object *o_del;
-       Evas_Object *o_del_all;
        Evas_Object *o_params;
-
+       Evas_Object *o_del;
+       Evas_Object *o_mod;
+       Evas_Object *o_del_all;
        struct {
 	 Evas_Object *o_any, *o_border, *o_menu, *o_winlist, *o_popup, *o_zone,
 		     *o_container, *o_manager, *o_none;
@@ -301,7 +299,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_frametable_object_append(ot, ob, 0, 0, 2, 1, 1, 1, 1, 1);
 
    ob = e_widget_button_add(evas, _("Add Binding"), NULL, _add_mouse_binding_cb, cfdata, NULL);
-   cfdata->gui.o_add = ob;
    e_widget_frametable_object_append(ot, ob, 0, 1, 1, 1, 1, 1, 1, 1);
    ob = e_widget_button_add(evas, _("Delete Binding"), NULL, _delete_mouse_binding_cb, cfdata, NULL);
    cfdata->gui.o_del = ob;
