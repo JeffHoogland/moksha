@@ -289,130 +289,96 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *ol, *ol2, *ol3, *of;
+   Evas_Object *o, *of, *ot, *ob;
    E_Radio_Group *rg;
-
+   
    cfdata->evas = evas;
+   o = e_widget_list_add(evas, 0, 1);
+   ot = e_widget_frametable_add(evas, _("Mouse Bindings"), 0);
+   ob = e_widget_ilist_add(evas, 32, 32, &(cfdata->locals.binding));
+   cfdata->gui.o_binding_list = ob;
+   e_widget_min_size_set(ob, 250, 280);
+   e_widget_frametable_object_append(ot, ob, 0, 0, 2, 1, 1, 1, 1, 1);
 
-   ol = e_widget_list_add(evas, 0, 1);
-   of = e_widget_framelist_add(evas, _("Mouse Bindings"), 0);
+   ob = e_widget_button_add(evas, _("Add Binding"), NULL, _add_mouse_binding_cb, cfdata, NULL);
+   cfdata->gui.o_add = ob;
+   e_widget_frametable_object_append(ot, ob, 0, 1, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_button_add(evas, _("Delete Binding"), NULL, _delete_mouse_binding_cb, cfdata, NULL);
+   cfdata->gui.o_del = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(ot, ob, 1, 1, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_button_add(evas, _("Modify Binding"), NULL, _modify_mouse_binding_cb, cfdata, NULL);
+   cfdata->gui.o_mod = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(ot, ob, 0, 2, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_button_add(evas, _("Delete All"), NULL, _delete_all_mouse_binding_cb, cfdata, NULL);
+   cfdata->gui.o_del_all = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(ot, ob, 1, 2, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_button_add(evas, _("Restore Mouse and Wheel Binding Defaults"), "enlightenment/e",
+			    _restore_mouse_binding_defaults_cb, cfdata, NULL);
+   e_widget_frametable_object_append(ot, ob, 0, 3, 2, 1, 1, 1, 1, 1);
+   e_widget_list_object_append(o, ot, 1, 1, 0.5);
 
-   o = e_widget_ilist_add(evas, 32, 32, &(cfdata->locals.binding));
-   cfdata->gui.o_binding_list = o;
-   e_widget_min_size_set(o, 250, 280);
-   e_widget_ilist_go(o);
-   e_widget_framelist_object_append(of, o);
-
-   ol2 = e_widget_list_add(evas, 1, 1);
-   o = e_widget_button_add(evas, _("Add Binding"), NULL,
-			   _add_mouse_binding_cb, cfdata, NULL);
-   cfdata->gui.o_add = o;
-   e_widget_list_object_append(ol2, o, 1, 1, 0.5);
-
-   o = e_widget_button_add(evas, _("Delete Binding"), NULL,
-			   _delete_mouse_binding_cb, cfdata, NULL);
-   cfdata->gui.o_del = o;
-   e_widget_disabled_set(o, 1);
-   e_widget_list_object_append(ol2, o, 1, 1, 0.5);
-   e_widget_framelist_object_append(of, ol2);
-
-   ol2 = e_widget_list_add(evas, 1, 1);
-   o = e_widget_button_add(evas, _("Modify Binding"), NULL,
-			   _modify_mouse_binding_cb, cfdata, NULL);
-   cfdata->gui.o_mod = o;
-   e_widget_disabled_set(o, 1);
-   e_widget_list_object_append(ol2, o, 1, 1, 0.5);
-
-   o = e_widget_button_add(evas, _("Delete All"), NULL,
-			   _delete_all_mouse_binding_cb, cfdata, NULL);
-   cfdata->gui.o_del_all = o;
-   e_widget_disabled_set(o, 1);
-   e_widget_list_object_append(ol2, o, 1, 1, 0.5);
-   e_widget_framelist_object_append(of, ol2);
-
-   o = e_widget_button_add(evas, _("Restore Mouse and Wheel Binding Defaults"), "enlightenment/e",
-			   _restore_mouse_binding_defaults_cb, cfdata, NULL);
-   e_widget_framelist_object_append(of, o);
-   e_widget_list_object_append(ol, of, 1, 1, 0.5);
-
-
-   ol2 = e_widget_list_add(evas, 0, 0);
+   ot = e_widget_table_add(evas, 0);
    of = e_widget_framelist_add(evas, _("Action"), 0);
-   o = e_widget_ilist_add(evas, 24, 24, &(cfdata->locals.action));
-   cfdata->gui.o_action_list = o;
-   e_widget_min_size_set(o, 250, 210); 
-   e_widget_ilist_go(o);
-   e_widget_framelist_object_append(of, o);
-   e_widget_list_object_append(ol2, of, 1, 1, 0.5);
-
+   ob = e_widget_ilist_add(evas, 24, 24, &(cfdata->locals.action));
+   cfdata->gui.o_action_list = ob;
+   e_widget_min_size_set(ob, 250, 210);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(ot, of, 0, 0, 3, 1, 1, 1, 1, 1);
+   
    of = e_widget_framelist_add(evas, _("Action Params"), 0);
-   o = e_widget_entry_add(evas, &(cfdata->locals.params));
-   e_widget_disabled_set(o, 1);
-   cfdata->gui.o_params = o;
-   e_widget_framelist_object_append(of, o);
-   e_widget_list_object_append(ol2, of, 1, 1, 0.5);
+   ob = e_widget_entry_add(evas, &(cfdata->locals.params));
+   e_widget_disabled_set(ob, 1);
+   cfdata->gui.o_params = ob;
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(ot, of, 0, 1, 3, 1, 1, 1, 1, 1);
 
-   of = e_widget_framelist_add(evas, _("Action Context"), 1);
+   of = e_widget_frametable_add(evas, _("Action Context"), 1);
    rg = e_widget_radio_group_new(&(cfdata->locals.context));
-   ol3 = e_widget_list_add(evas, 0, 0);
-
-   o = e_widget_radio_add(evas, _("Any"), E_BINDING_CONTEXT_ANY, rg);
-   cfdata->gui.context.o_any = o;
-   e_widget_disabled_set(o, 1);
-   e_widget_list_object_append(ol3, o, 1, 1, 0.5);
-
-   o = e_widget_radio_add(evas, _("Border"), E_BINDING_CONTEXT_BORDER, rg);
-   cfdata->gui.context.o_border = o;
-   e_widget_disabled_set(o, 1);
-   e_widget_list_object_append(ol3, o, 1, 1, 0.5);
-
-   o = e_widget_radio_add(evas, _("Menu"), E_BINDING_CONTEXT_MENU, rg);
-   cfdata->gui.context.o_menu = o;
-   e_widget_disabled_set(o, 1);
-   e_widget_list_object_append(ol3, o, 1, 1, 0.5);
-   e_widget_framelist_object_append(of, ol3);
-
-   ol3 = e_widget_list_add(evas, 0, 0);
-   o = e_widget_radio_add(evas, _("Win List"), E_BINDING_CONTEXT_WINLIST, rg);
-   cfdata->gui.context.o_winlist = o;
-   e_widget_disabled_set(o, 1);
-   e_widget_list_object_append(ol3, o, 1, 1, 0.5);
-
-   o = e_widget_radio_add(evas, _("Popup"), E_BINDING_CONTEXT_POPUP, rg);
-   cfdata->gui.context.o_popup = o;
-   e_widget_disabled_set(o, 1);
-   e_widget_list_object_append(ol3, o, 1, 1, 0.5);
-
-   o = e_widget_radio_add(evas, _("Zone"), E_BINDING_CONTEXT_ZONE, rg);
-   cfdata->gui.context.o_zone = o;
-   e_widget_disabled_set(o, 1);
-   e_widget_list_object_append(ol3, o, 1, 1, 0.5);
-   e_widget_framelist_object_append(of, ol3);
-
-   ol3 = e_widget_list_add(evas, 0, 0);
-   o = e_widget_radio_add(evas, _("Container"), E_BINDING_CONTEXT_CONTAINER, rg);
-   cfdata->gui.context.o_container = o;
-   e_widget_disabled_set(o, 1);
-
-   e_widget_list_object_append(ol3, o, 1, 1, 0.5);
-   o = e_widget_radio_add(evas, _("Manager"), E_BINDING_CONTEXT_MANAGER, rg);
-   cfdata->gui.context.o_manager = o;
-   e_widget_disabled_set(o, 1);
-   e_widget_list_object_append(ol3, o, 1, 1, 0.5);
-
-   o = e_widget_radio_add(evas, _("None"), E_BINDING_CONTEXT_NONE, rg);
-   cfdata->gui.context.o_none = o;
-   e_widget_disabled_set(o, 1);
-   e_widget_list_object_append(ol3, o, 1, 1, 0.5);
-   e_widget_framelist_object_append(of, ol3);
-   e_widget_list_object_append(ol2, of, 1, 1, 0.5);
-
-   e_widget_list_object_append(ol, ol2, 1, 1, 0.5);
-
+   ob = e_widget_radio_add(evas, _("Any"), E_BINDING_CONTEXT_ANY, rg);
+   cfdata->gui.context.o_any = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_add(evas, _("Border"), E_BINDING_CONTEXT_BORDER, rg);
+   cfdata->gui.context.o_border = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_add(evas, _("Menu"), E_BINDING_CONTEXT_MENU, rg);
+   cfdata->gui.context.o_menu = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_add(evas, _("Win List"), E_BINDING_CONTEXT_WINLIST, rg);
+   cfdata->gui.context.o_winlist = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_add(evas, _("Popup"), E_BINDING_CONTEXT_POPUP, rg);
+   cfdata->gui.context.o_popup = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_add(evas, _("Zone"), E_BINDING_CONTEXT_ZONE, rg);
+   cfdata->gui.context.o_zone = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_add(evas, _("Container"), E_BINDING_CONTEXT_CONTAINER, rg);
+   cfdata->gui.context.o_container = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 2, 0, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_add(evas, _("Manager"), E_BINDING_CONTEXT_MANAGER, rg);
+   cfdata->gui.context.o_manager = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 2, 1, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_radio_add(evas, _("None"), E_BINDING_CONTEXT_NONE, rg);
+   cfdata->gui.context.o_none = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 2, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ot, of, 0, 2, 3, 1, 1, 1, 1, 1);
+   e_widget_list_object_append(o, ot, 1, 1, 0.5);
+   
    _update_mouse_binding_list(cfdata);
    _fill_actions_list(cfdata);
-
-   return ol;
+   return o;
 }
 
 static void
