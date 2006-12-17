@@ -34,34 +34,45 @@ static const E_Gadcon_Client_Class _gadcon_class =
 /**/
 /* actual module specifics */
 
-typedef struct _Instance Instance;
-
-struct _Instance
-{
-   E_Gadcon_Client *gcc;
-   Evas_Object     *o_temp;
-};
-
-static void _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _menu_cb_post(void *data, E_Menu *m);
-static void _temperature_sensor_init(void);
+static void _temperature_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _temperature_face_cb_post_menu(void *data, E_Menu *m);
+static void _temperature_sensor_init(Config_Face *inst);
 static int  _temperature_cb_check(void *data);
-static void _temperature_face_level_set(Instance *inst, double level);
+static void _temperature_face_level_set(Config_Face *inst, double level);
 static void _temperature_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
 
-static E_Config_DD *conf_edd = NULL;
+static Evas_Bool _temperature_face_shutdown(Evas_Hash *hash, const char *key, void *hdata, void *fdata);
 
-Config *temperature_config = NULL;
+static E_Config_DD *conf_edd = NULL;
+static E_Config_DD *conf_face_edd = NULL;
+
+static Config *temperature_config = NULL;
 
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 {
    Evas_Object *o;
    E_Gadcon_Client *gcc;
-   Instance *inst;
-   
-   inst = E_NEW(Instance, 1);
-   
+   Config_Face *inst;
+
+   inst = evas_hash_find(temperature_config->faces, id);
+   if (!inst)
+     {
+	inst = E_NEW(Config_Face, 1);
+	temperature_config->faces = evas_hash_add(temperature_config->faces, id, inst);
+	inst->poll_time = 10.0;
+	inst->low = 30;
+	inst->high = 80;
+	inst->sensor_type = SENSOR_TYPE_NONE;
+	inst->sensor_name = NULL;
+	inst->sensor_path = NULL;
+	inst->units = CELCIUS;
+     }
+   E_CONFIG_LIMIT(inst->poll_time, 0.5, 1000.0);
+   E_CONFIG_LIMIT(inst->low, 0, 100);
+   E_CONFIG_LIMIT(inst->high, 0, 220);
+   E_CONFIG_LIMIT(inst->units, CELCIUS, FAHRENHEIT);
+
    o = edje_object_add(gc->evas);
    e_theme_edje_object_set(o, "base/theme/modules/temperature",
 			   "e/modules/temperature/main");
@@ -71,30 +82,39 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    
    inst->gcc = gcc;
    inst->o_temp = o;
+   inst->module = temperature_config->module;
+   inst->have_temp = -1;
+   inst->temperature_check_timer = 
+     ecore_timer_add(inst->poll_time, _temperature_cb_check, inst);
+ 
    
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
-				  _button_cb_mouse_down, inst);
-   temperature_config->instances = evas_list_append(temperature_config->instances, inst);
-   temperature_config->have_temp = -1;
-   _temperature_cb_check(NULL);
+				  _temperature_face_cb_mouse_down, inst);
+   _temperature_sensor_init(inst);
+   _temperature_cb_check(inst);
    return gcc;
 }
 
 static void
 _gc_shutdown(E_Gadcon_Client *gcc)
 {
-   Instance *inst;
+   Config_Face *inst;
    
    inst = gcc->data;
-   temperature_config->instances = evas_list_remove(temperature_config->instances, inst);
-   evas_object_del(inst->o_temp);
-   free(inst);
+   if (inst->temperature_check_timer) ecore_timer_del(inst->temperature_check_timer);
+   inst->temperature_check_timer = NULL;
+   if (inst->o_temp) evas_object_del(inst->o_temp);
+   inst->o_temp = NULL;
+   if (inst->config_dialog) e_object_del(E_OBJECT(inst->config_dialog));
+   inst->config_dialog = NULL;
+   if (inst->menu) e_object_del(E_OBJECT(inst->menu));
+   inst->menu = NULL;
 }
 
 static void
 _gc_orient(E_Gadcon_Client *gcc)
 {
-   Instance *inst;
+   Config_Face *inst;
    
    inst = gcc->data;
    e_gadcon_client_aspect_set(gcc, 16, 16);
@@ -125,27 +145,27 @@ _gc_icon(Evas *evas)
 /***************************************************************************/
 /**/
 static void
-_button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_temperature_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   Instance *inst;
+   Config_Face *inst;
    Evas_Event_Mouse_Down *ev;
    
    inst = data;
    ev = event_info;
-   if ((ev->button == 3) && (!temperature_config->menu))
+   if ((ev->button == 3) && (!inst->menu))
      {
 	E_Menu *mn;
 	E_Menu_Item *mi;
 	int cx, cy, cw, ch;
 	
 	mn = e_menu_new();
-	e_menu_post_deactivate_callback_set(mn, _menu_cb_post, inst);
-	temperature_config->menu = mn;
+	e_menu_post_deactivate_callback_set(mn, _temperature_face_cb_post_menu, inst);
+	inst->menu = mn;
 	
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("Configuration"));
 	e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
-	e_menu_item_callback_set(mi, _temperature_face_cb_menu_configure, NULL);
+	e_menu_item_callback_set(mi, _temperature_face_cb_menu_configure, inst);
 	
 	e_gadcon_client_util_menu_items_append(inst->gcc, mn, 0);
 	
@@ -157,21 +177,23 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
 	e_util_evas_fake_mouse_up_later(inst->gcc->gadcon->evas,
 					ev->button);
-//	evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
-//				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
 }
 
 static void
-_menu_cb_post(void *data, E_Menu *m)
+_temperature_face_cb_post_menu(void *data, E_Menu *m)
 {
-   if (!temperature_config->menu) return;
-   e_object_del(E_OBJECT(temperature_config->menu));
-   temperature_config->menu = NULL;
+   Config_Face *inst;
+
+   inst = data;
+
+   if (!inst->menu) return;
+   e_object_del(E_OBJECT(inst->menu));
+   inst->menu = NULL;
 }
 
 static void
-_temperature_sensor_init(void)
+_temperature_sensor_init(Config_Face *inst)
 {
    Ecore_List *therms;
    char        path[PATH_MAX];
@@ -179,43 +201,40 @@ _temperature_sensor_init(void)
    int         len;
 #endif
 
-   if ((!temperature_config->sensor_type) || (!temperature_config->sensor_name))
+   if ((!inst->sensor_type) || (!inst->sensor_name))
      {
-	if (temperature_config->sensor_name) evas_stringshare_del(temperature_config->sensor_name);
-	if (temperature_config->sensor_path) evas_stringshare_del(temperature_config->sensor_path);
-	temperature_config->sensor_path = NULL;
+	if (inst->sensor_name) evas_stringshare_del(inst->sensor_name);
+	if (inst->sensor_path) evas_stringshare_del(inst->sensor_path);
+	inst->sensor_path = NULL;
 #ifdef __FreeBSD__
 	/* TODO: FreeBSD can also have more temperature sensors! */
-	temperature_config->sensor_type = SENSOR_TYPE_FREEBSD;
-	temperature_config->sensor_name = evas_stringshare_add("tz0");
+	inst->sensor_type = SENSOR_TYPE_FREEBSD;
+	inst->sensor_name = evas_stringshare_add("tz0");
 #else  
-# ifdef HAVE_OMNIBOOK
-	/* TODO: This does not have to be a define */
-	temperature_config->sensor_type = SENSOR_TYPE_OMNIBOOK;
-	temperature_config->sensor_name = evas_stringshare_add("dummy");
-# else
 	therms = ecore_file_ls("/proc/acpi/thermal_zone");
 	if ((therms) && (!ecore_list_is_empty(therms)))
 	  {
 	     char *name;
 
 	     name = ecore_list_next(therms);
-	     temperature_config->sensor_type = SENSOR_TYPE_LINUX_ACPI;
-	     temperature_config->sensor_name = evas_stringshare_add(name);
+	     inst->sensor_type = SENSOR_TYPE_LINUX_ACPI;
+	     inst->sensor_name = evas_stringshare_add(name);
 
 	     ecore_list_destroy(therms);
 	  }
 	else
 	  {
-	     FILE *f;
-
 	     if (therms) ecore_list_destroy(therms);
 
-	     f = fopen("/sys/devices/temperatures/cpu_temperature", "rb");
-	     if (f)
+	     if (ecore_file_exists("/proc/omnibook/temperature"))
 	       {
-		  temperature_config->sensor_type = SENSOR_TYPE_LINUX_MACMINI;
-		  temperature_config->sensor_name = evas_stringshare_add("dummy");
+		  inst->sensor_type = SENSOR_TYPE_OMNIBOOK;
+		  inst->sensor_name = evas_stringshare_add("dummy");
+	       }
+	     else if (ecore_file_exists("/sys/devices/temperatures/cpu_temperature"))
+	       {
+		  inst->sensor_type = SENSOR_TYPE_LINUX_MACMINI;
+		  inst->sensor_name = evas_stringshare_add("dummy");
 	       }
 	     else
 	       {
@@ -237,43 +256,42 @@ _temperature_sensor_init(void)
 				       name, sensors[i]);
 				 if (ecore_file_exists(path))
 				   {
-				      temperature_config->sensor_type = SENSOR_TYPE_LINUX_I2C;
-				      temperature_config->sensor_name = evas_stringshare_add(sensors[i]);
+				      inst->sensor_type = SENSOR_TYPE_LINUX_I2C;
+				      inst->sensor_name = evas_stringshare_add(sensors[i]);
 				      break;
 				   }
 			      }
-			    if (temperature_config->sensor_type) break;
+			    if (inst->sensor_type) break;
 			 }
 		       ecore_list_destroy(therms);
 		    }
 	       }
 	  }
-# endif
 #endif
      }
-   if ((temperature_config->sensor_type) &&
-       (temperature_config->sensor_name) && 
-       (!temperature_config->sensor_path))
+   if ((inst->sensor_type) &&
+       (inst->sensor_name) && 
+       (!inst->sensor_path))
      {
-	switch (temperature_config->sensor_type)
+	switch (inst->sensor_type)
 	  {
 	   case SENSOR_TYPE_NONE:
 	      break;
 	   case SENSOR_TYPE_FREEBSD:
 #ifdef __FreeBSD__
 	      snprintf(path, sizeof(path), "hw.acpi.thermal.%s.temperature",
-		       temperature_config->sensor_name);
-	      temperature_config->sensor_path = evas_stringshare_add(path);
+		       inst->sensor_name);
+	      inst->sensor_path = evas_stringshare_add(path);
 
 	      len = 5;
-	      sysctlnametomib(temperature_config->sensor_path, temperature_config->mib, &len);
+	      sysctlnametomib(inst->sensor_path, inst->mib, &len);
 #endif
 	      break;
 	   case SENSOR_TYPE_OMNIBOOK:
-	      temperature_config->sensor_path = evas_stringshare_add("/proc/omnibook/temperature");
+	      inst->sensor_path = evas_stringshare_add("/proc/omnibook/temperature");
 	      break;
 	   case SENSOR_TYPE_LINUX_MACMINI:
-		  temperature_config->sensor_path = evas_stringshare_add("/sys/devices/temperatures/cpu_temperature");
+		  inst->sensor_path = evas_stringshare_add("/sys/devices/temperatures/cpu_temperature");
 	      break;
 	   case SENSOR_TYPE_LINUX_I2C:
 	      therms = ecore_file_ls("/sys/bus/i2c/devices");
@@ -284,10 +302,10 @@ _temperature_sensor_init(void)
 		   while ((name = ecore_list_next(therms)))
 		     {
 			sprintf(path, "/sys/bus/i2c/devices/%s/%s_input",
-			      name, temperature_config->sensor_name);
+			      name, inst->sensor_name);
 			if (ecore_file_exists(path))
 			  {
-			     temperature_config->sensor_path = evas_stringshare_add(path);
+			     inst->sensor_path = evas_stringshare_add(path);
 			     break;
 			  }
 		     }
@@ -296,8 +314,8 @@ _temperature_sensor_init(void)
 	      break;
 	   case SENSOR_TYPE_LINUX_ACPI:
 	      snprintf(path, sizeof(path), "/proc/acpi/thermal_zone/%s/temperature",
-		       temperature_config->sensor_name);
-	      temperature_config->sensor_path = evas_stringshare_add(path);
+		       inst->sensor_name);
+	      inst->sensor_path = evas_stringshare_add(path);
 	      break;
 	  }
      }
@@ -308,21 +326,20 @@ _temperature_cb_check(void *data)
 {
    FILE *f;
    int ret = 0;
-   Instance *inst;
-   Evas_List *l;
+   Config_Face *inst;
    int temp = 0;
    char buf[4096];
 #ifdef __FreeBSD__
    int len;
 #endif
 
-   _temperature_sensor_init();
+   inst = data;
 
    /* TODO: Make standard parser. Seems to be two types of temperature string:
     * - Somename: <temp> C
     * - <temp>
     */
-   switch (temperature_config->sensor_type)
+   switch (inst->sensor_type)
      {
       case SENSOR_TYPE_NONE:
 	 /* TODO: Slow down timer? */
@@ -330,7 +347,7 @@ _temperature_cb_check(void *data)
       case SENSOR_TYPE_FREEBSD:
 #ifdef __FreeBSD__
 	 len = sizeof(temp);
-	 if (sysctl(temperature_config->mib, 5, &temp, &len, NULL, 0) != -1)
+	 if (sysctl(inst->mib, 5, &temp, &len, NULL, 0) != -1)
 	   {
 	      temp = (temp - 2732) / 10;
 	      ret = 1;
@@ -340,7 +357,7 @@ _temperature_cb_check(void *data)
 #endif
 	 break;
       case SENSOR_TYPE_OMNIBOOK:
-	 f = fopen(temperature_config->sensor_path, "r");
+	 f = fopen(inst->sensor_path, "r");
 	 if (f) 
 	   {
 	      char dummy[4096];
@@ -356,7 +373,7 @@ _temperature_cb_check(void *data)
 	   goto error;
 	 break;
       case SENSOR_TYPE_LINUX_MACMINI:
-	 f = fopen(temperature_config->sensor_path, "rb");
+	 f = fopen(inst->sensor_path, "rb");
 	 if (f)
 	   {
 	      fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
@@ -370,7 +387,7 @@ _temperature_cb_check(void *data)
 	   goto error;
 	 break;
       case SENSOR_TYPE_LINUX_I2C:
-	 f = fopen(temperature_config->sensor_path, "r");
+	 f = fopen(inst->sensor_path, "r");
 	 if (f)
 	   {
 	      fgets(buf, sizeof(buf), f);
@@ -389,7 +406,7 @@ _temperature_cb_check(void *data)
 	   goto error;
 	 break;
       case SENSOR_TYPE_LINUX_ACPI:
-	 f = fopen(temperature_config->sensor_path, "r");
+	 f = fopen(inst->sensor_path, "r");
 	 if (f)
 	   {
 	      char *p, *q;
@@ -413,53 +430,41 @@ _temperature_cb_check(void *data)
 	 break;
      }
 
-   if (temperature_config->units == FAHRENHEIT)
+   if (inst->units == FAHRENHEIT)
      temp = (temp * 9.0 / 5.0) + 32;
 
    if (ret)
      {
 	char *utf8;
 
-	if (temperature_config->have_temp != 1)
+	if (inst->have_temp != 1)
 	  {
 	     /* enable therm object */
-	     for (l = temperature_config->instances; l; l = l->next)
-	       {
-		  inst = l->data;
-		  edje_object_signal_emit(inst->o_temp, "e,state,known", "");
-	       }
-	     temperature_config->have_temp = 1;
+	     edje_object_signal_emit(inst->o_temp, "e,state,known", "");
+	     inst->have_temp = 1;
 	  }
 
-	if (temperature_config->units == FAHRENHEIT) 
+	if (inst->units == FAHRENHEIT) 
 	  snprintf(buf, sizeof(buf), "%i°F", temp);
 	else
 	  snprintf(buf, sizeof(buf), "%i°C", temp);               
 	utf8 = ecore_txt_convert("iso-8859-1", "utf-8", buf);
 
-	for (l = temperature_config->instances; l; l = l->next)
-	  {
-	     inst = l->data;
-	     _temperature_face_level_set(inst,
-					 (double)(temp - temperature_config->low) /
-					 (double)(temperature_config->high - temperature_config->low));
-	     edje_object_part_text_set(inst->o_temp, "e.text.reading", utf8);
-	  }
+        _temperature_face_level_set(inst,
+				    (double)(temp - inst->low) /
+				    (double)(inst->high - inst->low));
+	edje_object_part_text_set(inst->o_temp, "e.text.reading", utf8);
 	free(utf8);
      }
    else
      {
-	if (temperature_config->have_temp != 0)
+	if (inst->have_temp != 0)
 	  {
 	     /* disable therm object */
-	     for (l = temperature_config->instances; l; l = l->next)
-	       {
-		  inst = l->data;
-		  edje_object_signal_emit(inst->o_temp, "e,state,unknown", "");
-		  edje_object_part_text_set(inst->o_temp, "e.text.reading", "NO TEMP");
-		  _temperature_face_level_set(inst, 0.5);
-	       }
-	     temperature_config->have_temp = 0;
+	     edje_object_signal_emit(inst->o_temp, "e,state,unknown", "");
+	     edje_object_part_text_set(inst->o_temp, "e.text.reading", "NO TEMP");
+	     _temperature_face_level_set(inst, 0.5);
+	     inst->have_temp = 0;
 	  }
      }
    return 1;
@@ -468,16 +473,16 @@ error:
    /* TODO: Error count? Might be a temporary problem */
    /* TODO: Error dialog */
    /* TODO: This should be further up, so that it will affect the gadcon */
-   temperature_config->sensor_type = SENSOR_TYPE_NONE;
-   if (temperature_config->sensor_name) evas_stringshare_del(temperature_config->sensor_name);
-   temperature_config->sensor_name = NULL;
-   if (temperature_config->sensor_path) evas_stringshare_del(temperature_config->sensor_path);
-   temperature_config->sensor_path = NULL;
+   inst->sensor_type = SENSOR_TYPE_NONE;
+   if (inst->sensor_name) evas_stringshare_del(inst->sensor_name);
+   inst->sensor_name = NULL;
+   if (inst->sensor_path) evas_stringshare_del(inst->sensor_path);
+   inst->sensor_path = NULL;
    return 1;
 }
 
 static void
-_temperature_face_level_set(Instance *inst, double level)
+_temperature_face_level_set(Config_Face *inst, double level)
 {
    Edje_Message_Float msg;
 
@@ -490,17 +495,38 @@ _temperature_face_level_set(Instance *inst, double level)
 static void
 _temperature_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   if (!temperature_config) return;
-   if (temperature_config->config_dialog) return;
-   _config_temperature_module();
+   Config_Face *inst;
+
+   inst = data;
+   if (inst->config_dialog) return;
+   config_temperature_module(inst);
+}
+
+static Evas_Bool
+_temperature_face_shutdown(Evas_Hash *hash, const char *key, void *hdata, void *fdata)
+{
+   Config_Face *inst;
+
+   inst = hdata;
+
+   if (inst->sensor_name) evas_stringshare_del(inst->sensor_name);
+   if (inst->sensor_path) evas_stringshare_del(inst->sensor_path);
+   free(inst);
+   return 1;
 }
 
 void 
-_temperature_face_cb_config_updated(void)
+temperature_face_update_config(Config_Face *inst)
 {
-   ecore_timer_del(temperature_config->temperature_check_timer);
-   temperature_config->temperature_check_timer = 
-     ecore_timer_add(temperature_config->poll_time, _temperature_cb_check, NULL);
+   if (inst->sensor_path)
+     evas_stringshare_del(inst->sensor_path);
+   inst->sensor_path = NULL;
+
+   _temperature_sensor_init(inst);
+
+   if (inst->temperature_check_timer) ecore_timer_del(inst->temperature_check_timer);
+   inst->temperature_check_timer = 
+     ecore_timer_add(inst->poll_time, _temperature_cb_check, inst);
 }
 
 /***************************************************************************/
@@ -515,11 +541,11 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   conf_edd = E_CONFIG_DD_NEW("Temperature_Config", Config);
+   conf_face_edd = E_CONFIG_DD_NEW("Temperature_Config_Face", Config_Face);
 #undef T
 #undef D
-#define T Config
-#define D conf_edd
+#define T Config_Face
+#define D conf_face_edd
    E_CONFIG_VAL(D, T, poll_time, DOUBLE);
    E_CONFIG_VAL(D, T, low, INT);
    E_CONFIG_VAL(D, T, high, INT);
@@ -527,28 +553,18 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, sensor_name, STR);
    E_CONFIG_VAL(D, T, units, INT);
 
+   conf_edd = E_CONFIG_DD_NEW("Temperature_Config", Config);
+#undef T
+#undef D
+#define T Config
+#define D conf_edd
+   E_CONFIG_HASH(D, T, faces, conf_face_edd);
+
    temperature_config = e_config_domain_load("module.temperature", conf_edd);
    if (!temperature_config)
      {
 	temperature_config = E_NEW(Config, 1);
-	temperature_config->poll_time = 10.0;
-	temperature_config->low = 30;
-	temperature_config->high = 80;
-	temperature_config->sensor_type = SENSOR_TYPE_NONE;
-	temperature_config->sensor_name = NULL;
-	temperature_config->sensor_path = NULL;
-	temperature_config->units = CELCIUS;
      }
-   E_CONFIG_LIMIT(temperature_config->poll_time, 0.5, 1000.0);
-   E_CONFIG_LIMIT(temperature_config->low, 0, 100);
-   E_CONFIG_LIMIT(temperature_config->high, 0, 220);
-   E_CONFIG_LIMIT(temperature_config->units, CELCIUS, FAHRENHEIT);
-
-   temperature_config->have_temp = -1;
-   temperature_config->temperature_check_timer = 
-     ecore_timer_add(temperature_config->poll_time, _temperature_cb_check, 
-		     NULL);
-   
    temperature_config->module = m;
    
    e_gadcon_provider_register(&_gadcon_class);
@@ -560,22 +576,11 @@ e_modapi_shutdown(E_Module *m)
 {
    e_gadcon_provider_unregister(&_gadcon_class);
    
-   if (temperature_config->config_dialog) 
-     e_object_del(E_OBJECT(temperature_config->config_dialog));
-   if (temperature_config->menu)
-     {
-	e_menu_post_deactivate_callback_set(temperature_config->menu , NULL, NULL);
-	e_object_del(E_OBJECT(temperature_config->menu));
-	temperature_config->menu = NULL;
-     }
-   if (temperature_config->temperature_check_timer)
-     ecore_timer_del(temperature_config->temperature_check_timer);
-   if (temperature_config->sensor_name)
-     evas_stringshare_del(temperature_config->sensor_name);
-   if (temperature_config->sensor_path)
-     evas_stringshare_del(temperature_config->sensor_path);
+   evas_hash_foreach(temperature_config->faces, _temperature_face_shutdown, NULL);
+   evas_hash_free(temperature_config->faces);
    free(temperature_config);
    temperature_config = NULL;
+   E_CONFIG_DD_FREE(conf_face_edd);
    E_CONFIG_DD_FREE(conf_edd);
    return 1;
 }
@@ -597,13 +602,5 @@ e_modapi_about(E_Module *m)
    return 1;
 }
 
-EAPI int
-e_modapi_config(E_Module *m)
-{
-   if (!temperature_config) return 0;
-   if (temperature_config->config_dialog) return 0;
-   _config_temperature_module();
-   return 1;
-}
 /**/
 /***************************************************************************/

@@ -5,6 +5,7 @@
 #define E_MOD_MAIN_H
 
 typedef struct _Config           Config;
+typedef struct _Config_Face      Config_Face;
 	
 typedef enum _Unit
 {
@@ -22,7 +23,7 @@ typedef enum _Sensor_Type
    SENSOR_TYPE_LINUX_ACPI
 } Sensor_Type;
 
-struct _Config
+struct _Config_Face
 {
    /* saved * loaded config values */
    double           poll_time;
@@ -31,10 +32,13 @@ struct _Config
    const char      *sensor_name;
    const char      *sensor_path;
    Unit             units;
-   /* just config state */
+   /* config state */
+   E_Gadcon_Client *gcc;
+   Evas_Object     *o_temp;
+
    E_Module        *module;
+
    E_Config_Dialog *config_dialog;
-   Evas_List       *instances;
    E_Menu          *menu;
    Ecore_Timer     *temperature_check_timer;
    unsigned char    have_temp;
@@ -43,17 +47,23 @@ struct _Config
 #endif
 };
 
+struct _Config
+{
+   /* saved * loaded config values */
+   Evas_Hash       *faces;
+   /* config state */
+   E_Module        *module;
+};
+
 EAPI extern E_Module_Api e_modapi;
 
 EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
 EAPI int   e_modapi_about    (E_Module *m);
-EAPI int   e_modapi_config   (E_Module *m);
 
-void _config_temperature_module(void);
-void _temperature_face_cb_config_updated(void);
-extern Config *temperature_config;
+void config_temperature_module(Config_Face *inst);
+void temperature_face_update_config(Config_Face *inst);
 
 
 #endif

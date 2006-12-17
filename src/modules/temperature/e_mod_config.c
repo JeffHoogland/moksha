@@ -30,6 +30,8 @@ struct _E_Config_Dialog_Data
 
    int sensor;
    Ecore_List *sensors;
+
+   Config_Face *inst;
 };
 
 /* Protos */
@@ -41,7 +43,7 @@ static Evas_Object   *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas,
 static int           _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 
 void
-_config_temperature_module(void) 
+config_temperature_module(Config_Face *inst) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
@@ -56,12 +58,12 @@ _config_temperature_module(void)
    v->advanced.apply_cfdata = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
 
-   snprintf(buf, sizeof(buf), "%s/module.edj", e_module_dir_get(temperature_config->module));
+   snprintf(buf, sizeof(buf), "%s/module.edj", e_module_dir_get(inst->module));
    cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()),
 			     _("Temperature Configuration"),
 			     "E", "_e_mod_temperature_config_dialog",
-			     buf, 0, v, NULL);
-   temperature_config->config_dialog = cfd;
+			     buf, 0, v, inst);
+   inst->config_dialog = cfd;
 }
 
 static void
@@ -71,13 +73,13 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    Ecore_List *therms;
    char       *name;
    
-   cfdata->units = temperature_config->units;
-   if (temperature_config->units == CELCIUS) 
+   cfdata->units = cfdata->inst->units;
+   if (cfdata->inst->units == CELCIUS) 
      cfdata->unit_method = 0;
    else 
      cfdata->unit_method = 1;
    
-   p = temperature_config->poll_time;
+   p = cfdata->inst->poll_time;
    cfdata->poll_time = p;
    if ((p >= 0) && (p <= 5)) 
      cfdata->poll_method = 1; //Fast
@@ -88,7 +90,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    else if (p > 30) 
      cfdata->poll_method = 60; //Very Slow
    
-   p = temperature_config->low;
+   p = cfdata->inst->low;
    if (cfdata->units == FAHRENHEIT)
      p = FAR_2_CEL(p - 1); // -1 so the conversion doesn't make mid go hi
    cfdata->low_temp = p;
@@ -99,7 +101,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    else if (p > TEMP_LOW_MID) 
      cfdata->low_method = TEMP_LOW_HIGH;
 
-   p = temperature_config->high;
+   p = cfdata->inst->high;
    if (cfdata->units == FAHRENHEIT)
      p = FAR_2_CEL(p - 1);
    cfdata->high_temp = p;
@@ -111,7 +113,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      cfdata->high_method = TEMP_HIGH_HIGH;
    
    cfdata->sensor = 0;
-   switch (temperature_config->sensor_type)
+   switch (cfdata->inst->sensor_type)
      {
       case SENSOR_TYPE_NONE:
 	 break;
@@ -128,7 +130,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	 ecore_list_goto_first(cfdata->sensors);
 	 while ((name = ecore_list_next(cfdata->sensors)))
 	   {
-	      if (!strcmp(temperature_config->sensor_name, name)) 
+	      if (!strcmp(cfdata->inst->sensor_name, name)) 
 		break;
 	      cfdata->sensor++;
 	   }
@@ -142,7 +144,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	      while ((name = ecore_list_next(therms)))
 		{
 		   ecore_list_append(cfdata->sensors, strdup(name));
-		   if (!strcmp(temperature_config->sensor_name, name))
+		   if (!strcmp(cfdata->inst->sensor_name, name))
 		     {
 			cfdata->sensor = n;
 		     }
@@ -160,6 +162,7 @@ _create_data(E_Config_Dialog *cfd)
    E_Config_Dialog_Data *cfdata;
    
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   cfdata->inst = cfd->data;
    cfdata->sensors = ecore_list_new();
    ecore_list_set_free_cb(cfdata->sensors, free);
    _fill_data(cfdata);
@@ -169,7 +172,7 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   temperature_config->config_dialog = NULL;
+   cfdata->inst->config_dialog = NULL;
    if (cfdata->sensors) ecore_list_destroy(cfdata->sensors);
    cfdata->sensors = NULL;
    free(cfdata);
@@ -259,21 +262,21 @@ static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    if (cfdata->unit_method == 0) 
-     temperature_config->units = CELCIUS;	
+     cfdata->inst->units = CELCIUS;	
    else 
-     temperature_config->units = FAHRENHEIT;
-   temperature_config->poll_time = (double)cfdata->poll_method;
-   if (temperature_config->units == FAHRENHEIT)
+     cfdata->inst->units = FAHRENHEIT;
+   cfdata->inst->poll_time = (double)cfdata->poll_method;
+   if (cfdata->inst->units == FAHRENHEIT)
      {
-	temperature_config->low = CEL_2_FAR(cfdata->low_method);
-	temperature_config->high = CEL_2_FAR(cfdata->high_method);
+	cfdata->inst->low = CEL_2_FAR(cfdata->low_method);
+	cfdata->inst->high = CEL_2_FAR(cfdata->high_method);
      }
    else
      {
-	temperature_config->low = cfdata->low_method;
-	temperature_config->high = cfdata->high_method;
+	cfdata->inst->low = cfdata->low_method;
+	cfdata->inst->high = cfdata->high_method;
      }
-   _temperature_face_cb_config_updated();
+   temperature_face_update_config(cfdata->inst);
    e_config_save_queue();
    return 1;
 }
@@ -317,8 +320,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-//   cfdata->low_temp = temperature_config->low;
-//   cfdata->high_temp = temperature_config->high;
+//   cfdata->low_temp = cfdata->inst->low;
+//   cfdata->high_temp = cfdata->inst->high;
 
    if (cfdata->units == FAHRENHEIT)
      {
@@ -362,7 +365,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   if (cfdata->unit_method != temperature_config->units)
+   if (cfdata->unit_method != cfdata->inst->units)
      {
 	if (cfdata->unit_method == 0)
 	  {
@@ -376,21 +379,18 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	  }
      }
    if (cfdata->unit_method == 0) 
-     temperature_config->units = CELCIUS;	
+     cfdata->inst->units = CELCIUS;	
    else 
-     temperature_config->units = FAHRENHEIT;
-   temperature_config->poll_time = cfdata->poll_time;
-   temperature_config->low = cfdata->low_temp;
-   temperature_config->high = cfdata->high_temp;
-   if (temperature_config->sensor_name)
-     evas_stringshare_del(temperature_config->sensor_name);
-   temperature_config->sensor_name =
+     cfdata->inst->units = FAHRENHEIT;
+   cfdata->inst->poll_time = cfdata->poll_time;
+   cfdata->inst->low = cfdata->low_temp;
+   cfdata->inst->high = cfdata->high_temp;
+   if (cfdata->inst->sensor_name)
+     evas_stringshare_del(cfdata->inst->sensor_name);
+   cfdata->inst->sensor_name =
      evas_stringshare_add(ecore_list_goto_index(cfdata->sensors, cfdata->sensor));
-   if (temperature_config->sensor_path)
-     evas_stringshare_del(temperature_config->sensor_path);
-   temperature_config->sensor_path = NULL;
 
-   _temperature_face_cb_config_updated();
+   temperature_face_update_config(cfdata->inst);
    e_config_save_queue();
    return 1;
 }
