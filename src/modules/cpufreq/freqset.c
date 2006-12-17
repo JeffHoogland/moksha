@@ -32,7 +32,7 @@ main(int argc, char *argv[])
 #ifdef __FreeBSD__
    if (!strcmp(argv[1], "frequency"))
      {
-        new_frequency = atoi(argv[2]);
+        int new_frequency = atoi(argv[2]);
 	int len = 4;	
         if (sysctlbyname("dev.cpu.0.freq", NULL, 0, &new_frequency, &len) == -1)
           {
