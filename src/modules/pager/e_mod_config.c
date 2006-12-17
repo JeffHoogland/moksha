@@ -297,6 +297,7 @@ _grab_key_down_cb(void *data, int type, void *event)
 	  cfdata->btn_drag = 0;
 	else
 	  cfdata->btn_noplace = 0;
+	_grab_wnd_hide(cfdata);
      }
    return 1;
 }
