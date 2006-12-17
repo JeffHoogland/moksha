@@ -150,7 +150,8 @@ e_int_config_theme_del(E_Win *win)
    
    e_object_del(E_OBJECT(import->win));
    e_int_config_theme_import_done(import->parent);
-   
+  
+   E_FREE(import->cfdata->file); 
    E_FREE(import->cfdata);
    E_FREE(import);
    
@@ -212,13 +213,17 @@ _theme_import_cb_changed(void *data, Evas_Object *obj)
 
    if (import->cfdata->file) 
      {
+	char *strip; 
+	
 	file = ecore_file_get_file(import->cfdata->file);
-	if (!ecore_file_strip_ext(file)) 
+	strip = ecore_file_strip_ext(file);
+	if (!strip) 
 	  {
 	     E_FREE(import->cfdata->file);
 	     e_widget_disabled_set(import->ok_obj, 1);	     
 	     return;
 	  }
+	free(strip);
 	if (!e_util_glob_case_match(file, "*.edj")) 
 	  {
 	     E_FREE(import->cfdata->file);
@@ -254,11 +259,16 @@ _theme_import_cb_ok(void *data, void *data2)
    
    if (import->cfdata->file) 
      {
+	char *strip;
+	
 	file = ecore_file_get_file(import->cfdata->file);
 	snprintf(buf, sizeof(buf), "%s/.e/e/themes/%s", homedir, file);
 
-	if (!ecore_file_strip_ext(file)) 
+	strip = ecore_file_strip_ext(file);
+	if (!strip) 
 	  return;
+	free(strip);
+	
 	if (!e_util_glob_case_match(file, "*.edj")) 
 	  return;
 
