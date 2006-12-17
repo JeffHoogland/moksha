@@ -448,7 +448,6 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, menu_eap_comment_show, INT); /**/
    E_CONFIG_VAL(D, T, fullscreen_policy, INT); /**/
    E_CONFIG_VAL(D, T, input_method, STR); /**/
-   E_CONFIG_LIST(D, T, path_append_input_methods, _e_config_path_append_edd); /**/
    E_CONFIG_LIST(D, T, path_append_messages, _e_config_path_append_edd); /**/
    E_CONFIG_VAL(D, T, exebuf_max_exe_list, INT);
    E_CONFIG_VAL(D, T, exebuf_max_eap_list, INT);
@@ -1917,14 +1916,6 @@ _e_config_free(void)
 	     E_Path_Dir *epd;
 	     epd = e_config->path_append_backgrounds->data;
 	     e_config->path_append_backgrounds = evas_list_remove_list(e_config->path_append_backgrounds, e_config->path_append_backgrounds);
-	     if (epd->dir) evas_stringshare_del(epd->dir);
-	     E_FREE(epd);
-	  }
-	while (e_config->path_append_input_methods)
-	  {
-	     E_Path_Dir *epd;
-	     epd = e_config->path_append_input_methods->data;
-	     e_config->path_append_input_methods = evas_list_remove_list(e_config->path_append_input_methods, e_config->path_append_input_methods);
 	     if (epd->dir) evas_stringshare_del(epd->dir);
 	     E_FREE(epd);
 	  }

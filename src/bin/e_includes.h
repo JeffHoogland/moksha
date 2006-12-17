@@ -106,6 +106,7 @@
 #include "e_int_config_cfgdialogs.h"
 #include "e_int_config_intl.h"
 #include "e_int_config_imc.h"
+#include "e_int_config_imc_import.h"
 #include "e_int_config_color_classes.h"
 #include "e_int_config_mime.h"
 #include "e_int_config_mime_edit.h"

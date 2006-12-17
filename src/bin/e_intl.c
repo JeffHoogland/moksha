@@ -17,7 +17,9 @@ static char *_e_intl_language_alias = NULL;
 static char *_e_intl_orig_xmodifiers = NULL;
 static char *_e_intl_orig_qt_im_module = NULL; 
 static char *_e_intl_orig_gtk_im_module = NULL;
-static char *_e_intl_input_method = NULL;
+
+static const char *_e_intl_imc_personal_path = NULL;
+static const char *_e_intl_imc_system_path = NULL;
 
 static Eet_Data_Descriptor *_e_intl_input_method_config_edd = NULL;
 
@@ -51,10 +53,7 @@ static Evas_Bool 	 _e_intl_locale_hash_free_cb(Evas_Hash *hash, const char *key,
 
 /* Input Method Configuration and Management */
 static int 		 _e_intl_cb_exit(void *data, int type, void *event);
-static Evas_List 	*_e_intl_imc_path_scan(E_Path *path);
 static Evas_List 	*_e_intl_imc_dir_scan(const char *dir);
-static E_Input_Method_Config *_e_intl_imc_find(Evas_List *imc_list, char *name);
-
 
 EAPI int
 e_intl_init(void)
@@ -94,6 +93,11 @@ e_intl_shutdown(void)
    E_FREE(_e_intl_orig_gtk_im_module);
    E_FREE(_e_intl_orig_qt_im_module);
    E_FREE(_e_intl_orig_xmodifiers);
+
+   if (_e_intl_imc_personal_path)
+     evas_stringshare_del(_e_intl_imc_personal_path); 
+   if (_e_intl_imc_system_path)
+     evas_stringshare_del(_e_intl_imc_system_path);
    
    E_CONFIG_DD_FREE(_e_intl_input_method_config_edd);
   
@@ -317,11 +321,9 @@ _e_intl_language_list_find(Evas_List *language_list, char *language)
 }
 
 EAPI void
-e_intl_input_method_set(const char *method)
+e_intl_input_method_set(const char *imc_path)
 {
-   if (_e_intl_input_method) free(_e_intl_input_method);
-
-   if (!method)
+   if (!imc_path)
      {
 	E_EXE_STOP(_e_intl_input_method_exec); 
 	e_util_env_set("GTK_IM_MODULE", _e_intl_orig_gtk_im_module);
@@ -329,16 +331,17 @@ e_intl_input_method_set(const char *method)
         e_util_env_set("XMODIFIERS", _e_intl_orig_xmodifiers);
      }	
    
-   if (method) 
+   if (imc_path) 
      {   
-	Evas_List *input_methods;
+	Eet_File *imc_ef;
 	E_Input_Method_Config *imc;
 
-	input_methods = _e_intl_imc_path_scan(path_input_methods);
-	_e_intl_input_method = strdup(method);
-	
-	imc = _e_intl_imc_find(input_methods, _e_intl_input_method);	
-	
+	imc_ef = eet_open(imc_path, EET_FILE_MODE_READ);
+	if (imc_ef)
+	  {
+	     imc = e_intl_input_method_config_read(imc_ef);
+	     eet_close(imc_ef);
+	     
 	     if (imc) 	  
 	       {	     
 	          e_util_env_set("GTK_IM_MODULE", imc->gtk_im_module);
@@ -362,28 +365,10 @@ e_intl_input_method_set(const char *method)
 					       "that your configuration's<br>"
 					       "executable is in your PATH<br>"));  
 		    }
-	       }	
-
-	/* Free up the directory listing */
-       	while (input_methods)
-	  {
-	     E_Input_Method_Config *imc;
-	     
-	     imc = input_methods->data;	     
-	     input_methods = evas_list_remove_list(input_methods,input_methods);
-	     e_intl_input_method_config_free(imc); 
+		  e_intl_input_method_config_free(imc);
+	       }
 	  }
      }   
-   else
-     {
-	_e_intl_input_method = NULL;
-     }   
-}
-
-EAPI const char *
-e_intl_input_method_get(void)
-{
-   return _e_intl_input_method;   
 }
 
 EAPI Evas_List *
@@ -392,27 +377,64 @@ e_intl_input_method_list(void)
    Evas_List *input_methods;
    Evas_List *im_list;
    Evas_List *l;
-   E_Input_Method_Config *imc;
+   char *imc_path;
 
    im_list = NULL;
-   
-   input_methods = _e_intl_imc_path_scan(path_input_methods);
+ 
+   /* Personal Path */  
+   input_methods = _e_intl_imc_dir_scan(e_intl_imc_personal_path_get());
    for (l = input_methods; l; l = l->next)
      {
-	imc = l->data;
-	im_list = evas_list_append(im_list, strdup(imc->e_im_name));
+	imc_path = l->data;
+	im_list = evas_list_append(im_list, imc_path);
      }
 
-   /* Need to free up the directory listing */
    while (input_methods)
      {
-	E_Input_Method_Config *imc;
-	     
-	imc = input_methods->data;	     
 	input_methods = evas_list_remove_list(input_methods, input_methods);
-	e_intl_input_method_config_free(imc);
      }
+
+   /* System Path */
+   input_methods = _e_intl_imc_dir_scan(e_intl_imc_system_path_get());
+   for (l = input_methods; l; l = l->next)
+     {
+	imc_path = l->data;
+	im_list = evas_list_append(im_list, imc_path);
+     }
+
+   while (input_methods)
+     {
+	input_methods = evas_list_remove_list(input_methods, input_methods);
+     }
+
    return im_list;
+}
+
+const char *
+e_intl_imc_personal_path_get(void)
+{
+   if (_e_intl_imc_personal_path == NULL)
+     {
+	char buf[4096];
+	
+	snprintf(buf, sizeof(buf), "%s/.e/e/input_methods", e_user_homedir_get());
+	_e_intl_imc_personal_path = evas_stringshare_add(buf);
+     }
+   return _e_intl_imc_personal_path;
+}
+
+const char *
+e_intl_imc_system_path_get(void)
+{
+   if (_e_intl_imc_system_path == NULL)
+     {
+	char buf[4096];
+	
+	snprintf(buf, sizeof(buf), "%s/data/input_methods", e_prefix_data_get());
+	_e_intl_imc_system_path = evas_stringshare_add(buf);
+     }
+   return _e_intl_imc_system_path;
+
 }
 
 /* Get the input method configuration from the file */
@@ -843,9 +865,9 @@ e_intl_locale_parts_combine(E_Locale_Parts *locale_parts, int mask)
    if (!locale_parts) return NULL;
    
    if ((mask & locale_parts->mask) != mask) return NULL;
-
-   
+ 
    /* Construct the clean locale string */
+   locale_size = 0;
    
    /* determine the size */
    if (mask & E_INTL_LOC_LANG)
@@ -1088,51 +1110,6 @@ _e_intl_locale_search_order_get(const char *locale)
    e_intl_locale_parts_free(locale_parts);
    return search_list;
 }
-
-static Evas_List *
-_e_intl_imc_path_scan(E_Path *path)
-{
-
-   Evas_List *next;
-   Evas_List *dir_list;
-   Evas_List *all_imcs;
-  
-   if (!path) return NULL; 
-   
-   all_imcs = NULL; 
-   dir_list = e_path_dir_list_get(path);
-   
-   for (next = dir_list ; next ; next = next->next)
-     {
-	E_Path_Dir *epd;
-	Evas_List *dir_imcs;
-	
-	epd = next->data;
-
-	dir_imcs = _e_intl_imc_dir_scan(epd->dir);
-	
-	while (dir_imcs)
-	  {
-	     E_Input_Method_Config *imc;
-
-	     imc = dir_imcs->data;
-	     dir_imcs = evas_list_remove_list(dir_imcs, dir_imcs);
-
-	     if (_e_intl_imc_find(all_imcs, imc->e_im_name))
-	       {
-		  e_intl_input_method_config_free(imc);
-	       }
-	     else
-	       {
-		  all_imcs = evas_list_append(all_imcs, imc);
-	       }
-	  }
-     }
-   
-   e_path_dir_list_free(dir_list);  
-
-   return all_imcs;
-}
    
 static Evas_List *
 _e_intl_imc_dir_scan(const char *dir)
@@ -1151,20 +1128,12 @@ _e_intl_imc_dir_scan(const char *dir)
      {
 	while ((file = ecore_list_next(files)))
 	  {
-	     E_Input_Method_Config *imc;
-	     Eet_File *imc_file;
-	     char buf[PATH_MAX]; 
-	     
-	     snprintf(buf, sizeof(buf), "%s/%s", dir, file);	     
-	     imc_file = eet_open(buf, EET_FILE_MODE_READ);
-	     if (imc_file)
+	     if (strstr(file, ".imc") != NULL)
 	       {
-		  imc = e_intl_input_method_config_read(imc_file);
-		  if (imc)
-		    {
-		       imcs = evas_list_append(imcs, imc);
-		    }
-		  eet_close(imc_file);
+		  char buf[PATH_MAX]; 
+	     
+		  snprintf(buf, sizeof(buf), "%s/%s", dir, file);	
+		  imcs = evas_list_append(imcs, strdup(buf));
 	       }
 	  }
 	ecore_list_destroy(files);
@@ -1172,21 +1141,3 @@ _e_intl_imc_dir_scan(const char *dir)
    return imcs;
 }
 
-static E_Input_Method_Config *
-_e_intl_imc_find(Evas_List *imc_list, char *name)
-{
-   Evas_List *l;
-   
-   if (!imc_list) return NULL;
-   if (!name) return NULL;
-
-   for (l = imc_list; l; l = l->next)
-     {
-	E_Input_Method_Config *imc;
-
-	imc = l->data;
-	if (!strcmp(imc->e_im_name, name)) return imc;
-     }
-   
-   return NULL;
-}

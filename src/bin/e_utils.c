@@ -11,7 +11,6 @@ EAPI E_Path *path_init    = NULL;
 EAPI E_Path *path_icons   = NULL;
 EAPI E_Path *path_modules = NULL;
 EAPI E_Path *path_backgrounds = NULL;
-EAPI E_Path *path_input_methods = NULL;
 EAPI E_Path *path_messages = NULL;
 EAPI int     restart      = 0;
 EAPI int     good         = 0;

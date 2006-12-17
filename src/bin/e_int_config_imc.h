@@ -7,6 +7,8 @@
 #define E_INT_CONFIG_IMC_H
 
 EAPI E_Config_Dialog *e_int_config_imc(E_Container *con);
+EAPI void e_int_config_imc_import_done(E_Config_Dialog *dia);
+EAPI void e_int_config_imc_update(E_Config_Dialog *dia, const char *file);
 
 #endif
 #endif

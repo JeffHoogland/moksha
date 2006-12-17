@@ -71,6 +71,9 @@ EAPI Evas_List		*e_intl_input_method_list(void);
 EAPI E_Input_Method_Config *e_intl_input_method_config_read (Eet_File *imc_file);
 EAPI int		 e_intl_input_method_config_write (Eet_File *imc_file, E_Input_Method_Config *imc);
 EAPI void		 e_intl_input_method_config_free (E_Input_Method_Config *imc);
+EAPI const char		*e_intl_imc_personal_path_get(void);
+EAPI const char		*e_intl_imc_system_path_get(void);
+
 /* Getting locale */
 EAPI E_Locale_Parts	*e_intl_locale_parts_get(const char *locale);
 EAPI void		 e_intl_locale_parts_free(E_Locale_Parts *locale_parts);

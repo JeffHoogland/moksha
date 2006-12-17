@@ -1218,17 +1218,6 @@ _e_main_path_init(void)
    e_path_default_path_append(path_backgrounds, "~/.e/e/backgrounds");
    e_path_user_path_set(path_backgrounds, &(e_config->path_append_backgrounds));
 
-   path_input_methods = e_path_new();
-   if (!path_input_methods) 
-     {
-	e_error_message_show("Cannot allocate path for path_input_methods\n");
-	return 0;
-     }
-   e_path_default_path_append(path_input_methods, "~/.e/e/input_methods");
-   snprintf(buf, sizeof(buf), "%s/data/input_methods", e_prefix_data_get());
-   e_path_default_path_append(path_input_methods, buf);
-   e_path_user_path_set(path_input_methods, &(e_config->path_append_input_methods));
-
    path_messages = e_path_new();
    if (!path_messages) 
      {
@@ -1284,11 +1273,6 @@ _e_main_path_shutdown(void)
      {
 	e_object_del(E_OBJECT(path_backgrounds));
         path_backgrounds = NULL;
-     }
-   if (path_input_methods)
-     {
-	e_object_del(E_OBJECT(path_input_methods));
-        path_input_methods = NULL;
      }
    if (path_messages)
      {

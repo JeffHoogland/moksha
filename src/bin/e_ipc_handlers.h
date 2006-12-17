@@ -895,8 +895,6 @@ break;
      __path = path_modules; \
    else if (!strcmp(__str, "backgrounds")) \
      __path = path_backgrounds; \
-   else if (!strcmp(__str, "input_methods")) \
-     __path = path_input_methods; \
    else if (!strcmp(__str, "messages")) \
      __path = path_messages; 
 

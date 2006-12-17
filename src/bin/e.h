@@ -148,7 +148,6 @@ extern EAPI E_Path *path_icons;
 extern EAPI E_Path *path_init;
 extern EAPI E_Path *path_modules;
 extern EAPI E_Path *path_backgrounds;
-extern EAPI E_Path *path_input_methods;
 extern EAPI E_Path *path_messages;
 extern EAPI int     restart;
 extern EAPI int     good;

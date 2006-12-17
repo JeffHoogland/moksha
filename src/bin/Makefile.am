@@ -100,6 +100,7 @@ e_int_config_focus.h \
 e_int_config_desks.h \
 e_int_config_intl.h \
 e_int_config_imc.h \
+e_int_config_imc_import.h \
 e_configure.h \
 e_int_border_locks.h \
 e_thumb.h \
@@ -289,6 +290,7 @@ e_int_config_apps.c \
 e_int_config_cfgdialogs.c \
 e_int_config_intl.c \
 e_int_config_imc.c \
+e_int_config_imc_import.c \
 e_int_config_color_classes.c \
 e_int_config_mime.c \
 e_int_config_mime_edit.c \

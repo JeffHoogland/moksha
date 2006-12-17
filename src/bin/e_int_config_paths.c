@@ -88,12 +88,10 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->paths_available[6].path_description =	_("Modules");
    cfdata->paths_available[7].path =			path_backgrounds;
    cfdata->paths_available[7].path_description =	_("Backgrounds");
-   cfdata->paths_available[8].path =			path_input_methods;
-   cfdata->paths_available[8].path_description =	_("Input Methods");
-   cfdata->paths_available[9].path =			path_messages;
-   cfdata->paths_available[9].path_description =	_("Messages");
-   cfdata->paths_available[10].path =			 NULL;
-   cfdata->paths_available[10].path_description =	 NULL;
+   cfdata->paths_available[8].path =			path_messages;
+   cfdata->paths_available[8].path_description =	_("Messages");
+   cfdata->paths_available[9].path =			 NULL;
+   cfdata->paths_available[9].path_description =	 NULL;
    
    return;
 }

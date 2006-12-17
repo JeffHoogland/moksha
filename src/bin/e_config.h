@@ -49,7 +49,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
  */
 #define E_CONFIG_FILE_EPOCH      0x0001
 /* increment this whenever a new set of config values are added but the users
- * config doesn't need top be wiped - simply new values need to be put in
+ * config doesn't need to be wiped - simply new values need to be put in
  */
 #define E_CONFIG_FILE_GENERATION 0x0105
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
@@ -127,7 +127,6 @@ struct _E_Config
    Evas_List  *path_append_icons; // GUI
    Evas_List  *path_append_modules; // GUI
    Evas_List  *path_append_backgrounds; // GUI
-   Evas_List  *path_append_input_methods; // GUI
    Evas_List  *path_append_messages; // GUI
    int         window_placement_policy; // GUI
    int         focus_policy; // GUI
