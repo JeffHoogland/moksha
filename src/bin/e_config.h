@@ -175,7 +175,7 @@ struct _E_Config
    const char *transition_desk; // GUI
    const char *transition_change; // GUI
    Evas_List  *remembers;
-   int         remember_internal_windows;
+   int         remember_internal_windows; // GUI
    int         move_info_follows; // GUI
    int         resize_info_follows; // GUI
    int         move_info_visible; // GUI

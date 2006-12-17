@@ -28,6 +28,7 @@ struct _E_Config_Dialog_Data
    int border_shade_transition;
    double border_shade_speed;
    int use_app_icon;
+   int remember_internal_windows;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -71,6 +72,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
        cfdata->resize_info_visible) cfdata->move_resize_info = 1;
    if (cfdata->border_shade_animate) cfdata->animate_shading = 1;
    cfdata->use_app_icon = e_config->use_app_icon;
+   cfdata->remember_internal_windows = e_config->remember_internal_windows;
 }
 
 static void *
@@ -132,6 +134,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->border_shade_transition = cfdata->border_shade_transition;
    e_config->border_shade_speed = cfdata->border_shade_speed;
    e_config->use_app_icon = cfdata->use_app_icon;
+   e_config->remember_internal_windows = cfdata->remember_internal_windows;
    e_config_save_queue();
    return 1; /* Apply was OK */
 }
@@ -240,6 +243,12 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_check_add(evas, _("Use application provided icon instead"), &(cfdata->use_app_icon));
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
+
+   of = e_widget_framelist_add(evas, _("Internal Windows"), 0);
+   e_widget_framelist_content_align_set(of, 0.0, 0.0);
+   ob = e_widget_check_add(evas, _("Always remember internal windows"), &(cfdata->remember_internal_windows));
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(ot, of, 1, 2, 1, 1, 1, 1, 1, 1);
    
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
    
