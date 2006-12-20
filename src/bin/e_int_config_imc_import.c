@@ -70,7 +70,7 @@ e_int_config_imc_import(E_Config_Dialog *parent)
 
    o = edje_object_add(evas);
    import->bg_obj = o;
-   e_theme_edje_object_set(o, "base/imc/dialog", "e/widgets/dialog/main");
+   e_theme_edje_object_set(o, "base/theme/dialog", "e/widgets/dialog/main");
    evas_object_move(o, 0, 0);
    evas_object_show(o);
 
