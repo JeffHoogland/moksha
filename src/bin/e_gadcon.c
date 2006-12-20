@@ -654,13 +654,11 @@ e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id, const char *
    gc->clients = evas_list_append(gc->clients, gcc);
    if ((gc->frame_request.func) && (style))
      {
-	gcc->o_frame = gc->frame_request.func(gc->frame_request.data, gcc,
-					      style);
+	gcc->o_frame = gc->frame_request.func(gc->frame_request.data, gcc, style);
 	gcc->style = evas_stringshare_add(style);
 	if (gcc->o_frame)
 	  {
-	     edje_object_size_min_calc(gcc->o_frame,
-				       &(gcc->pad.w), &(gcc->pad.h));
+	     edje_object_size_min_calc(gcc->o_frame, &(gcc->pad.w), &(gcc->pad.h));
 	     gcc->o_box = e_box_add(gcc->gadcon->evas);
 	     switch (gcc->gadcon->orient)
 	       {
@@ -731,8 +729,7 @@ e_gadcon_client_edit_begin(E_Gadcon_Client *gcc)
      evas_object_geometry_get(gcc->o_base, &x, &y, &w, &h);
    evas_object_move(gcc->o_control, x, y);
    evas_object_resize(gcc->o_control, w, h);
-   e_theme_edje_object_set(gcc->o_control, "base/theme/gadman",
-			   "e/gadman/control");
+   e_theme_edje_object_set(gcc->o_control, "base/theme/gadman", "e/gadman/control");
 
    if ((gcc->autoscroll) || (gcc->resizable))
      {
@@ -1196,6 +1193,7 @@ _e_gadcon_client_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *even
    
    ev = event_info;
    gcc = data;
+   
    if (gcc->menu) return;
    if (ev->button == 3)
      {
@@ -1541,9 +1539,7 @@ _e_gadcon_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_in
 	gcc->menu = mn;
 	
 	if (gcc->gadcon->menu_attach.func)
-	  {
-	     gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, mn);
-	  }
+	  gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, mn);
 	else
 	  {
 	     mi = e_menu_item_new(mn);
@@ -1784,24 +1780,16 @@ _e_gadcon_cb_signal_resize_left_go(void *data, Evas_Object *obj, const char *emi
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
      {
 	if (x > 0)
-	  {
-	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MIN_END_INC;
-	  }
+	  gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MIN_END_INC;
 	else if (x < 0)
-	  {
-	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MIN_END_DEC;
-	  }
+	  gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MIN_END_DEC;
      }
    else
      {
 	if (y > 0)
-	  {
-	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MIN_END_INC;
-	  }
+	  gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MIN_END_INC;
 	else if (y < 0)
-	  {
-	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MIN_END_DEC;
-	  }
+	  gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MIN_END_DEC;
      }
 
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
@@ -1871,24 +1859,16 @@ _e_gadcon_cb_signal_resize_right_go(void *data, Evas_Object *obj, const char *em
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
      {
 	if (x > 0)
-	  { 
-	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MAX_END_INC;
-	  }
+	  gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MAX_END_INC;
 	else if (x < 0)
-	  {
-	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MAX_END_DEC;
-	  }
+	  gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MAX_END_DEC;
      }
    else
      {
 	if (y > 0)
-	  {
-	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MAX_END_INC;
-	  }
+	  gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MAX_END_INC;
 	else if (y < 0)
-	  {
-	     gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MAX_END_INC;
-	  }
+	  gcc->state_info.state = E_LAYOUT_ITEM_STATE_SIZE_MAX_END_INC;
      }
 
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
@@ -1920,8 +1900,6 @@ _e_gadcon_cb_signal_resize_right_go(void *data, Evas_Object *obj, const char *em
    gcc->dx += x;
    gcc->dy += y;
 }
-
-
 
 /* a smart object JUST for gadcon */
 
@@ -2090,7 +2068,6 @@ e_gadcon_layout_asked_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
    E_Smart_Data *sd;
    Evas_Coord tw = 0, th = 0;
 
-
    if (!obj) return;
    
    sd = evas_object_smart_data_get(obj);
@@ -2183,9 +2160,7 @@ e_gadcon_layout_pack_size_set(Evas_Object *obj, int size)
 		  bi->ask.size = size;
 	       }
 	     else
-	       {
-		  bi->ask.size = size;
-	       }
+	       bi->ask.size = size;
 	  }
         bi->ask.size = size;
      }
@@ -2922,9 +2897,7 @@ _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
 	     need = max_size - sd->w;
 	  }
 	else
-	  { 
-	     return;
-	  }
+	  return;
      }
    else
      {
@@ -2937,10 +2910,7 @@ _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
 	     need = max_size - sd->h;
 	  }
 	else
-	  { 
-	     return;
-	  }
-
+	  return;
      } 
 
    sd->items = evas_list_sort(sd->items, evas_list_count(sd->items), 
@@ -3031,7 +3001,6 @@ _e_gadcon_layout_smart_gadcons_width_adjust(E_Smart_Data *sd, int min, int cur)
 	  }
      }
 }
-
 
 static int 
 _e_gadcon_layout_smart_sort_by_sequence_number_cb(void *d1, void *d2)
@@ -4197,9 +4166,6 @@ _e_gadcon_layout_smart_containers_position_adjust(E_Smart_Data *sd, E_Layout_Ite
 	     create_new = 1; 
 	     new_state = E_LAYOUT_ITEM_CONTAINER_STATE_POS_LOCKED;
 	  }
-	else
-	  {
-	  }
      }
 
    if (create_new)
@@ -4345,8 +4311,6 @@ _e_gadcon_layout_smart_restore_gadcons_position_before_move(E_Smart_Data *sd, E_
    E_Gadcon_Layout_Item *bi, *bi2;
    E_Layout_Item_Container *lc, *lc2, *lc3;
 
-
-
    (*lc_moving)->pos = (*lc_moving)->prev_pos;
    if (((*lc_moving)->state == E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MIN_END_INC) || 
        ((*lc_moving)->state == E_LAYOUT_ITEM_CONTAINER_STATE_SIZE_MIN_END_DEC) || 
@@ -4364,7 +4328,6 @@ _e_gadcon_layout_smart_restore_gadcons_position_before_move(E_Smart_Data *sd, E_
    _e_gadcon_layout_smart_position_items_inside_container(sd, (*lc_moving));
    (*lc_moving)->state = E_LAYOUT_ITEM_CONTAINER_STATE_POS_LOCKED;
    _e_gadcon_layout_smart_gadcons_position_static(sd, con_list);
-
 
    lc2 = NULL;
    lc3 = NULL;

@@ -804,7 +804,7 @@ _e_shelf_menu_append(E_Shelf *es, E_Menu *mn)
    
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Shelf Configuration"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/config");
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/shelf");
    e_menu_item_callback_set(mi, _e_shelf_cb_menu_config, es);
    
    mi = e_menu_item_new(mn);
@@ -817,7 +817,7 @@ _e_shelf_menu_append(E_Shelf *es, E_Menu *mn)
    
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Configure Shelf Contents"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/config");
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/shelf");
    e_menu_item_callback_set(mi, _e_shelf_cb_menu_contents, es);
    
    mi = e_menu_item_new(mn);
