@@ -105,7 +105,6 @@ Some of the things (in very short form) that need to be done to E17...
 * option for svg icon render resolution size
 * for startup - apps that say "wait for me befofe running the next app" have
   a timeout so if they never complete - complain and continue anyway.
-* enlightenment_remote cmd's for logout, hibernate, reboot, suspend.
 * nice to have a menu item for a window for "add keyboard shortcut to run this
   app" would be nice usability
 * switch to desktop of a new window if it opens on another desktop than the
