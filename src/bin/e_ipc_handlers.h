@@ -4845,9 +4845,7 @@ break;
 	{
 		Evas_List *m;
 		E_Manager *man;
-		E_Action
-			*act
-		;
+		E_Action  *act;
 
 		man = NULL;
 
@@ -7748,5 +7746,73 @@ break;
    START_INT(val, HDL);
    printf("REPLY: %d\n", val);
    END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_LOGOUT
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-logout", 0, "Logout your user", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   GENERIC(HDL);
+   E_Action  *act;
+   act = e_action_find("logout");
+   if (act && act->func.go)
+      act->func.go(NULL, NULL);
+   END_GENERIC();
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_HIBERNATE
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-hibernate", 0, "Hibernate the computer", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   GENERIC(HDL);
+   E_Action  *act;
+   act = e_action_find("hibernate");
+   if (act && act->func.go)
+      act->func.go(NULL, NULL);
+   END_GENERIC();
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_REBOOT
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-reboot", 0, "Reboot the computer", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   GENERIC(HDL);
+   E_Action  *act;
+   act = e_action_find("reboot");
+   if (act && act->func.go)
+      act->func.go(NULL, NULL);
+   END_GENERIC();
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_SUSPEND
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-suspend", 0, "Suspend the computer", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   GENERIC(HDL);
+   E_Action  *act;
+   act = e_action_find("suspend");
+   if (act && act->func.go)
+      act->func.go(NULL, NULL);
+   END_GENERIC();
+#elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
