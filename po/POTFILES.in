@@ -147,6 +147,8 @@ src/bin/e_widget_table.h
 src/bin/e_imc_main.c
 src/bin/e_int_config_imc.c
 src/bin/e_int_config_imc.h
+src/bin/e_int_config_imc_import.c
+src/bin/e_int_config_imc_import.h
 src/bin/e_int_border_locks.c
 src/bin/e_int_border_locks.h
 src/bin/e_int_border_remember.c
@@ -257,8 +259,10 @@ src/bin/e_entry_dialog.c
 src/bin/e_entry_dialog.h
 src/bin/e_widget_csel.c
 src/bin/e_fm.c
-src/bin/e_thumb_main.c
 src/bin/e_fm.h
+src/bin/e_fm_prop.c
+src/bin/e_fm_prop.h
+src/bin/e_thumb_main.c
 src/bin/e_sys.h
 src/bin/e_sha1.c
 src/bin/e_sha1.h
