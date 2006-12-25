@@ -1232,9 +1232,8 @@ msgid "Categories"
 msgstr "カテゴリ"
 
 #: src/bin/e_configure.c:104
-#, fuzzy
 msgid "Configuration Items"
-msgstr "設定"
+msgstr "設定項目"
 
 #: src/bin/e_configure.c:393 src/bin/e_gadcon.c:1136
 msgid "Appearance"
@@ -1272,19 +1271,16 @@ msgid "Startup"
 msgstr "起動時"
 
 #: src/bin/e_configure.c:405
-#, fuzzy
 msgid "IBar Applications"
-msgstr "アプリケーション"
+msgstr "IBarアプリケーション"
 
 #: src/bin/e_configure.c:406
-#, fuzzy
 msgid "Restart Applications"
-msgstr "再起動アプリケーションを追加..."
+msgstr "再起動アプリケーション"
 
 #: src/bin/e_configure.c:407
-#, fuzzy
 msgid "Startup Applications"
-msgstr "スタートアップアプリケーションを追加..."
+msgstr "スタートアップアプリケーション"
 
 #: src/bin/e_configure.c:410
 msgid "Virtual Desktops"
@@ -1300,7 +1296,7 @@ msgstr "スクリーンロック"
 
 #: src/bin/e_configure.c:414
 msgid "Keyboard & Mouse"
-msgstr ""
+msgstr "キーボード & マウス"
 
 #: src/bin/e_configure.c:415 src/bin/e_int_config_keybindings.c:223
 msgid "Key Bindings"
@@ -1332,18 +1328,16 @@ msgid "Menu Settings"
 msgstr "メニューの設定"
 
 #: src/bin/e_configure.c:431
-#, fuzzy
 msgid "Language"
-msgstr "マネージャ"
+msgstr "言語"
 
 #: src/bin/e_configure.c:432
 msgid "Language Settings"
 msgstr "言語の設定"
 
 #: src/bin/e_configure.c:433
-#, fuzzy
 msgid "Input Method Settings"
-msgstr "入力方式"
+msgstr "入力方式の設定"
 
 #: src/bin/e_configure.c:435
 msgid "Miscellaneous"
@@ -1370,9 +1364,8 @@ msgid "Search Directories"
 msgstr "検索パス"
 
 #: src/bin/e_configure.c:443 src/bin/e_int_config_mime.c:63
-#, fuzzy
 msgid "File Icons"
-msgstr "ファイル情報"
+msgstr "ファイルアイコン"
 
 #: src/bin/e_configure.c:445
 msgid "Extensions"
@@ -3010,14 +3003,12 @@ msgid "Revert focus when hiding or closing a window"
 msgstr "ウィンドウが隠れたり閉じられたらフォーカスを戻す"
 
 #: src/bin/e_int_config_imc.c:46
-#, fuzzy
 msgid "Input Method Configuration"
-msgstr "Start モジュールの設定"
+msgstr "入力方式の設定"
 
 #: src/bin/e_int_config_imc.c:130
-#, fuzzy
 msgid "Input Method Selector"
-msgstr "インプットメソッドエラー"
+msgstr "入力方式の選択"
 
 #: src/bin/e_int_border_locks.c:67 src/bin/e_int_border_menu.c:148
 msgid "Window Locks"
@@ -4095,7 +4086,7 @@ msgstr "%s にシグナル番号 %i の割り込みが入りました"
 #: src/bin/e_apps_error.c:178
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
-msgstr ""
+msgstr "***残りは切り捨てられました. 出力を保存してから参照してください.***\n"
 
 #
 #: src/bin/e_apps_error.c:243 src/bin/e_apps_error.c:312
@@ -4937,9 +4928,8 @@ msgid "ICCCM"
 msgstr ""
 
 #: src/bin/e_int_border_prop.c:422
-#, fuzzy
 msgid "ICCCM Properties"
-msgstr "ウィンドウプロパティ"
+msgstr "ICCCMプロパティ"
 
 #: src/bin/e_int_border_prop.c:425
 msgid "Class"
@@ -5026,28 +5016,24 @@ msgid "Request Position"
 msgstr ""
 
 #: src/bin/e_int_border_prop.c:470
-#, fuzzy
 msgid "NetWM Properties"
-msgstr "ウィンドウプロパティ"
+msgstr "NetWMプロパティ"
 
 #: src/bin/e_int_border_prop.c:475
-#, fuzzy
 msgid "Modal"
-msgstr "モジュール"
+msgstr "モーダル"
 
 #: src/bin/e_int_border_prop.c:478
 msgid "Skip Taskbar"
-msgstr ""
+msgstr "タスクバースキップ"
 
 #: src/bin/e_int_border_prop.c:479
-#, fuzzy
 msgid "Skip Pager"
-msgstr "ページャ"
+msgstr "ページャスキップ"
 
 #: src/bin/e_int_border_prop.c:480
-#, fuzzy
 msgid "Hidden"
-msgstr "禁止"
+msgstr "隠蔽"
 
 #: src/bin/e_sys.c:266
 msgid "Logout problems"
@@ -5204,9 +5190,8 @@ msgid "Rename"
 msgstr "名前変更"
 
 #: src/bin/e_fm.c:4623
-#, fuzzy
 msgid "Properties"
-msgstr "ウィンドウプロパティ"
+msgstr "プロパティ"
 
 #: src/bin/e_fm.c:4741
 msgid "Create a new Directory"
@@ -5382,14 +5367,12 @@ msgid "%li Minutes ago"
 msgstr "%li 分前"
 
 #: src/bin/e_int_config_mime.c:195
-#, fuzzy
 msgid "File Types"
-msgstr "ファイル"
+msgstr "ファイルタイプ"
 
 #: src/bin/e_int_config_mime_edit.c:68
-#, fuzzy
 msgid "File Icon"
-msgstr "ファイル情報"
+msgstr "ファイルアイコン"
 
 #: src/bin/e_int_config_mime_edit.c:136
 msgid "Mime:"
@@ -5853,9 +5836,8 @@ msgid "Create a new Application"
 msgstr "新しいアプリケーションを登録する"
 
 #: src/bin/e_int_config_apps.c:802
-#, fuzzy
 msgid "Regenerate / Update \"Applications\" Menu"
-msgstr "\"アプリケーション\"メニューを再作成, または更新する"
+msgstr "\"アプリケーション\"メニューを再作成/更新する"
 
 #: src/bin/e_int_config_theme_import.c:65
 msgid "Select a Theme..."
@@ -6329,15 +6311,16 @@ msgstr ""
 "キーを押してください."
 
 #: src/modules/pager/e_mod_config.c:273
-#, fuzzy
 msgid "Error - Invalid Button"
-msgstr "エラー情報"
+msgstr "エラー - 不正なボタン"
 
 #: src/modules/pager/e_mod_config.c:274
 msgid ""
 "You cannot use the right mouse button<br>for this as it is already taken by "
 "internal<br>code for context menus."
 msgstr ""
+"マウスの右ボタンは使用できません.<br>"
+"すでに内部コードでコンテキストメニュー用に確保されています."
 
 #: src/modules/temperature/e_mod_main.c:106
 msgid "Temperature"
