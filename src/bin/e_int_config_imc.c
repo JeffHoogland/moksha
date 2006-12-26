@@ -761,21 +761,21 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    
    ol = e_widget_frametable_add(evas, _("Exported Environment Variables"), 1);
    
-   o = e_widget_label_add(evas, _("GTK_IM_MODULE"));
+   o = e_widget_label_add(evas, "GTK_IM_MODULE");
    e_widget_frametable_object_append(ol, o, 0, 0, 1, 1, 1, 1, 1, 1);
    o = e_widget_entry_add(evas, &(cfdata->imc.gtk_im_module));
    e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
    cfdata->gui.gtk_im_module = o;
    e_widget_frametable_object_append(ol, o, 1, 0, 1, 1, 1, 1, 1, 1);
    
-   o = e_widget_label_add(evas, _("QT_IM_MODULE"));
+   o = e_widget_label_add(evas, "QT_IM_MODULE");
    e_widget_frametable_object_append(ol, o, 0, 1, 1, 1, 1, 1, 1, 1);
    o = e_widget_entry_add(evas, &(cfdata->imc.qt_im_module));
    e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
    cfdata->gui.qt_im_module = o;
    e_widget_frametable_object_append(ol, o, 1, 1, 1, 1, 1, 1, 1, 1);
    
-   o = e_widget_label_add(evas, _("XMODIFIERS"));
+   o = e_widget_label_add(evas, "XMODIFIERS");
    e_widget_frametable_object_append(ol, o, 0, 2, 1, 1, 1, 1, 1, 1);
    o = e_widget_entry_add(evas, &(cfdata->imc.xmodifiers));
    e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
