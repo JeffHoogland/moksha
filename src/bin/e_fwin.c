@@ -601,7 +601,8 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
    E_Fwin_Apps_Dialog *fad;
    E_Fm2_Config fmc;
    E_Fm2_Icon_Info *ici;
-   char buf[4096], *f;
+   char buf[4096];
+   const char *f;
    int need_dia = 0;
    Evas_Hash *mimes = NULL;
    Evas_List *mlist = NULL;
