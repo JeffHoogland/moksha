@@ -19,11 +19,13 @@ struct _Module_Menu_Data
 
 /* local subsystem functions */
 static void _e_module_free(E_Module *m);
+#if 0
 static E_Menu *_e_module_control_menu_new(E_Module *mod);
 static void _e_module_menu_free(void *obj);
 static void _e_module_control_menu_about(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_module_control_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_module_control_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
+#endif
 static void _e_module_dialog_disable_show(const char *title, const char *body, E_Module *m);
 static void _e_module_cb_dialog_disable(void *data, E_Dialog *dia);
 static void _e_module_dialog_icon_set(E_Dialog *dia, const char *icon);
@@ -445,6 +447,7 @@ _e_module_free(E_Module *m)
    free(m);
 }
 
+#if 0
 static E_Menu *
 _e_module_control_menu_new(E_Module *mod)
 {
@@ -530,6 +533,7 @@ _e_module_control_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
    
    e_menu_item_toggle_set(mi, e_module_enabled_get(mod));
 }
+#endif
 
 static void
 _e_module_dialog_disable_show(const char *title, const char *body, E_Module *m)

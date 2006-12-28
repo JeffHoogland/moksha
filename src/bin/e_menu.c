@@ -58,7 +58,9 @@ static void _e_menu_activate_next                 (void);
 static void _e_menu_activate_previous             (void);
 static void _e_menu_activate_first                (void);
 static void _e_menu_activate_last                 (void);
+#if 0
 static void _e_menu_activate_nth                  (int n);
+#endif
 static E_Menu *_e_menu_active_get                 (void);
 static E_Menu_Item *_e_menu_item_active_get       (void);
 static Evas_List * _e_menu_list_item_active_get   (void);
@@ -2239,6 +2241,7 @@ _e_menu_activate_last(void)
    _e_menu_item_ensure_onscreen(mi);
 }
 
+#if 0
 static void
 _e_menu_activate_nth(int n)
 {
@@ -2269,6 +2272,7 @@ _e_menu_activate_nth(int n)
 	  }
      }
 }
+#endif
 
 static E_Menu *
 _e_menu_active_get(void)

@@ -1038,6 +1038,7 @@ else { \
 }
 
 /***************************************************************************/
+#if 0
 ACT_FN_GO(zone_desk_flip_by)
 {
    if (params)
@@ -1052,8 +1053,10 @@ ACT_FN_GO(zone_desk_flip_by)
 	  }
      }
 }
+#endif
 
 /***************************************************************************/
+#if 0
 ACT_FN_GO(zone_desk_flip_to)
 {
    if (params)
@@ -1068,8 +1071,10 @@ ACT_FN_GO(zone_desk_flip_to)
 	  }
      }
 }
+#endif
 
 /***************************************************************************/
+#if 0
 ACT_FN_GO(zone_desk_linear_flip_by)
 {
    if (params)
@@ -1084,8 +1089,10 @@ ACT_FN_GO(zone_desk_linear_flip_by)
 	  }
      }
 }
+#endif
 
 /***************************************************************************/
+#if 0
 ACT_FN_GO(zone_desk_linear_flip_to)
 {
    if (params)
@@ -1100,6 +1107,7 @@ ACT_FN_GO(zone_desk_linear_flip_to)
 	  }
      }
 }
+#endif
 
 /***************************************************************************/
 static void

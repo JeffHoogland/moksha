@@ -33,8 +33,10 @@ static int _e_winlist_cb_mouse_move(void *data, int type, void *event);
 static int _e_winlist_scroll_timer(void *data);
 static int _e_winlist_warp_timer(void *data);
 static int _e_winlist_animator(void *data);
+#if 0
 static void _e_winlist_cb_item_mouse_in(void *data, Evas *evas,
       Evas_Object *obj, void *event_info);
+#endif
 
 /* local subsystem globals */
 static E_Popup *winlist = NULL;
@@ -932,6 +934,7 @@ _e_winlist_animator(void *data)
    return 0;
 }
 
+#if 0
 static void 
 _e_winlist_cb_item_mouse_in(void *data, Evas *evas, Evas_Object *obj, 
       void *event_info)
@@ -950,3 +953,4 @@ _e_winlist_cb_item_mouse_in(void *data, Evas *evas, Evas_Object *obj,
    _e_winlist_show_active();
    _e_winlist_activate();
 }
+#endif

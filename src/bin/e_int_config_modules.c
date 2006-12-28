@@ -419,6 +419,8 @@ _dir_cb_monitor(void *data, Ecore_File_Monitor *mon, Ecore_File_Event event, con
 	     _fill_list(cfdata);
 	  }
 	break;
+      default:
+	break;
      }
 }
 

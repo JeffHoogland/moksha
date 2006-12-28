@@ -15,8 +15,10 @@
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+#if 0
 static void _move_file_up_in_order(const char *order, const char *file);
 static void _move_file_down_in_order(const char *order, const char *file);
+#endif
 static void _append_to_order(const char *order, const char *file);
 
 struct _E_Config_Dialog_Data
@@ -514,6 +516,7 @@ _cb_button_add(void *data1, void *data2)
    e_fm2_refresh(cfdata->gui.o_fm);
 }
 
+#if 0
 static void
 _cb_button_move_up(void *data1, void *data2)
 {
@@ -553,6 +556,7 @@ _cb_button_move_down(void *data1, void *data2)
    _move_file_down_in_order(realpath, ici->file);
    e_fm2_refresh(cfdata->gui.o_fm);
 }
+#endif
 
 static E_Dialog *_e_int_config_apps_regen_dialog = NULL;
 
@@ -813,6 +817,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    return o;
 }
 
+#if 0
 static void
 _move_file_up_in_order(const char *order, const char *file)
 {
@@ -939,6 +944,7 @@ _move_file_down_in_order(const char *order, const char *file)
 
    return;
 }
+#endif
 
 
 
