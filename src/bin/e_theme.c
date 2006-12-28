@@ -201,6 +201,7 @@ e_theme_edje_file_get(const char *category, const char *group)
 {
    E_Theme_Result *res;
    char buf[4096];
+   const char *q;
    char *p;
 
    /* find category -> edje mapping */
@@ -239,8 +240,8 @@ e_theme_edje_file_get(const char *category, const char *group)
 		       coll = edje_file_collection_list(str);
 		       for (l = coll; l; l = l->next)
 			 {
-			    p = evas_stringshare_add(l->data);
-			    res->quickfind = evas_hash_direct_add(res->quickfind, p, p);
+			    q = evas_stringshare_add(l->data);
+			    res->quickfind = evas_hash_direct_add(res->quickfind, q, q);
 			 }
 		       if (coll) edje_file_collection_list_free(coll);
 		    }
