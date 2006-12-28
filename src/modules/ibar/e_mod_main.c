@@ -596,11 +596,11 @@ _ibar_icon_free(IBar_Icon *ic)
 static void
 _ibar_icon_fill(IBar_Icon *ic)
 {
-   ic->o_icon = e_app_icon_add(evas_object_evas_get(ic->ibar->o_box), ic->app);
+   ic->o_icon = e_app_icon_add(ic->app, evas_object_evas_get(ic->ibar->o_box));
    edje_object_part_swallow(ic->o_holder, "e.swallow.content", ic->o_icon);
    evas_object_pass_events_set(ic->o_icon, 1);
    evas_object_show(ic->o_icon);
-   ic->o_icon2 = e_app_icon_add(evas_object_evas_get(ic->ibar->o_box), ic->app);
+   ic->o_icon2 = e_app_icon_add(ic->app, evas_object_evas_get(ic->ibar->o_box));
    edje_object_part_swallow(ic->o_holder2, "e.swallow.content", ic->o_icon2);
    evas_object_pass_events_set(ic->o_icon2, 1);
    evas_object_show(ic->o_icon2);
@@ -990,7 +990,7 @@ _ibar_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 	     d = e_drag_new(ic->ibar->inst->gcc->gadcon->zone->container,
 			    x, y, drag_types, 1,
 			    ic->app, -1, _ibar_cb_drag_finished);
-             o = e_app_icon_add(e_drag_evas_get(d), ic->app);
+             o = e_app_icon_add(ic->app, e_drag_evas_get(d));
 	     e_drag_object_set(d, o);
 
 	     e_drag_resize(d, w, h);

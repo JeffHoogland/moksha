@@ -2222,7 +2222,7 @@ _e_app_icon_type(E_App *a)
 }
 
 EAPI Evas_Object *
-e_app_icon_add(Evas *evas, E_App *a)
+e_app_icon_add(E_App *a, Evas *evas)
 {
    Evas_Object *o = NULL;
    E_App_Icon_Type type;
@@ -2281,7 +2281,7 @@ printf("e_app_icon_add(%s)   %s   %s   %s\n", a->path, a->icon_class, e_config->
  */
 
 EAPI void
-e_app_icon_add_to_menu_item(E_Menu_Item *mi, E_App *a)
+e_app_icon_add_to_menu_item(E_App *a, E_Menu_Item *mi)
 {
    E_App_Icon_Type type;
 

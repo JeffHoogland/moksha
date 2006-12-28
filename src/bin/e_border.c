@@ -2565,7 +2565,7 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 	       {
 		  /* Free the aborted object first. */
 		  if (o)   evas_object_del(o);
-		  o = e_app_icon_add(evas, a);
+		  o = e_app_icon_add(a, evas);
 		  bd->app = a;
 		  e_object_ref(E_OBJECT(bd->app));
 	       }
@@ -2613,7 +2613,7 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 	  }
 	if (a)
 	  {
-	     o = e_app_icon_add(evas, a);
+	     o = e_app_icon_add(a, evas);
 	     bd->app = a;
 	     e_object_ref(E_OBJECT(bd->app));
 	  }
@@ -4708,24 +4708,7 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 					      bd->y + bd->fx.y + y,
 					      drag_types, 1, bd, -1, NULL);
 			    edje_object_file_get(bd->icon_object, &file, &part);
-			    if ((file) && (part))
-			      {
-				 o = edje_object_add(drag->evas);
-				 edje_object_file_set(o, file, part);
-			      }
-			    else
-			      {
-				 int iw, ih;
-				 void *data;
-				 
-				 data = e_icon_data_get(bd->icon_object, &iw, &ih);
-				 if (data)
-				   {
-				      o = e_icon_add(drag->evas);
-				      e_icon_data_set(o, data, iw, ih);
-				      e_icon_alpha_set(o, 1);
-				   }
-			      }
+			    o = e_border_icon_add(bd, drag->evas);
 			    if (!o)
 			      {
 				 /* FIXME: fallback icon for drag */
@@ -4737,9 +4720,6 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 			    e_drag_resize(drag, w, h);
 			    e_drag_start(drag, bd->drag.x, bd->drag.y);
 			    e_util_evas_fake_mouse_up_later(bd->bg_evas, 1);
-//			    evas_event_feed_mouse_up(bd->bg_evas, 1,
-//						     EVAS_BUTTON_NONE, ev->time, 
-//						     NULL);
 			 }
 		       bd->drag.start = 0;
 		    }

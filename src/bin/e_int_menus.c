@@ -556,7 +556,7 @@ _e_int_menus_apps_scan(E_Menu *m)
 		  else if (opt == 0x1) snprintf(label, sizeof(label), "%s", a->comment);
 		  else snprintf(label, sizeof(label), "%s", a->name);
 		  e_menu_item_label_set(mi, label);
-                  e_app_icon_add_to_menu_item(mi, a);
+                  e_app_icon_add_to_menu_item(a, mi);
 		  if (a->exe)
 		    {
 		       e_menu_item_callback_set(mi, _e_int_menus_apps_run, a);
@@ -641,7 +641,7 @@ _e_int_menus_apps_drag(void *data, E_Menu *m, E_Menu_Item *mi)
 	 drag = e_drag_new(m->zone->container, x, y,
 			      drag_types, 1, a, -1, _e_int_menus_apps_drag_finished);
 
-         o = e_app_icon_add(e_drag_evas_get(drag), a);
+         o = e_app_icon_add(a, e_drag_evas_get(drag));
 	 e_drag_object_set(drag, o);
          e_drag_resize(drag, w, h);
          e_object_ref(E_OBJECT(a));
@@ -1101,7 +1101,7 @@ _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
 //	e_object_breadcrumb_add(E_OBJECT(bd), "lost_clients_menu");
 	e_menu_item_callback_set(mi, _e_int_menus_lost_clients_item_cb, bd);
 	a = bd->app;
-	if (a) e_app_icon_add_to_menu_item(mi, a);
+	if (a) e_app_icon_add_to_menu_item(a, mi);
      }
    e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_lost_clients_free_hook);
    e_object_data_set(E_OBJECT(m), borders);

@@ -2058,7 +2058,7 @@ _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (vo
 		  app = e_app_new(buf, 0);
 		  if (app)
 		    {
-		       oic = e_app_icon_add(evas_object_evas_get(o), app);
+		       oic = e_app_icon_add(app, evas_object_evas_get(o));
 		       e_object_unref(E_OBJECT(app));
 		    }
 	       }
@@ -2125,7 +2125,7 @@ _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (vo
 		  app = e_app_new(buf, 0);
 		  if (app)
 		    {
-		       oic = e_app_icon_add(evas_object_evas_get(o), app);
+		       oic = e_app_icon_add(app, evas_object_evas_get(o));
 		       e_object_unref(E_OBJECT(app));
 		    }
 	       }

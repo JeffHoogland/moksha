@@ -231,7 +231,7 @@ e_init_icons_app_add(E_App *app)
 	evas_object_show(o);
      }
    
-   o = e_app_icon_add(_e_init_evas, app);
+   o = e_app_icon_add(app, _e_init_evas);
    evas_object_resize(o, _e_init_icon_size, _e_init_icon_size);
    e_box_pack_end(_e_init_icon_box, o);
    e_box_pack_options_set(o, 

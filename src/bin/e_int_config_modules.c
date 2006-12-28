@@ -522,7 +522,7 @@ _fill_list(E_Config_Dialog_Data *cfdata)
 	     a = e_app_new(buf, 1);
 	     if (a)
 	       {
-                  oc = e_app_icon_add(cfdata->evas, a);
+                  oc = e_app_icon_add(a, cfdata->evas);
 		  e_widget_ilist_append(cfdata->gui.list, oc, a->name, 
 					NULL, NULL, cm->name);
 		  e_object_unref(E_OBJECT(a));

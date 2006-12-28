@@ -411,7 +411,7 @@ _e_exebuf_update(void)
    if (!a) a = e_app_generic_find(cmd_buf);
    if (a)
      {
-	o = e_app_icon_add(exebuf->evas, a);
+	o = e_app_icon_add(a, exebuf->evas);
 	icon_object = o;
 	edje_object_part_swallow(bg_object, "e.swallow.icons", o);
 	evas_object_show(o);
@@ -1019,7 +1019,7 @@ _e_exebuf_matches_update(void)
 	evas_object_show(o);
 	if (edje_object_part_exists(exe->bg_object, "e.swallow.icons"))
 	  {
-	     o = e_app_icon_add(exebuf->evas, exe->app);
+	     o = e_app_icon_add(exe->app, exebuf->evas);
 	     exe->icon_object = o;
 	     edje_object_part_swallow(exe->bg_object, "e.swallow.icons", o);
 	     evas_object_show(o);
@@ -1067,7 +1067,7 @@ _e_exebuf_matches_update(void)
 	     a = e_app_exe_find(exe->file);
 	     if (a)
 	       {
-		  o = e_app_icon_add(exebuf->evas, a);
+		  o = e_app_icon_add(a, exebuf->evas);
 		  exe->icon_object = o;
 		  edje_object_part_swallow(exe->bg_object, "e.swallow.icons", o);
 		  evas_object_show(o);
@@ -1120,7 +1120,7 @@ _e_exebuf_hist_update(void)
 	     a = e_app_exe_find(exe->file);
 	     if (a)
 	       {
-		  o = e_app_icon_add(exebuf->evas, a);
+		  o = e_app_icon_add(a, exebuf->evas);
 		  exe->icon_object = o;
 		  edje_object_part_swallow(exe->bg_object, "e.swallow.icons", o);
 		  evas_object_show(o);

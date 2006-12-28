@@ -382,7 +382,7 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
               app = e_app_new(eap, 0);
 	      if (app)
 	         {
-	            dia->icon_object = e_app_icon_add(e_win_evas_get(dia->win), app);
+	            dia->icon_object = e_app_icon_add(app, e_win_evas_get(dia->win));
                     edje_extern_object_min_size_set(dia->icon_object, 64, 64);
                     edje_object_part_swallow(dia->bg_object, "e.swallow.icon", dia->icon_object);
                     evas_object_show(dia->icon_object);

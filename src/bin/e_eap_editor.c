@@ -586,5 +586,5 @@ _e_eap_editor_icon_show(E_Config_Dialog_Data *cfdata)
       cfdata->eap.icon_type = E_APP_ICON_PATH;
    else
       cfdata->eap.icon_type = E_APP_ICON_UNKNOWN;
-   cfdata->editor->img = e_app_icon_add(cfdata->editor->evas, &(cfdata->eap));
+   cfdata->editor->img = e_app_icon_add(&(cfdata->eap), cfdata->editor->evas);
 }

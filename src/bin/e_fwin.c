@@ -795,7 +795,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	for (l = apps; l; l = l->next)
 	  {
 	     a = l->data;
-	     oi = e_app_icon_add(evas, a);
+	     oi = e_app_icon_add(a, evas);
 	     e_widget_ilist_append(o, oi, a->name,
 				   _e_fwin_cb_ilist_change, fad, 
 				   ecore_file_get_file(a->path));
