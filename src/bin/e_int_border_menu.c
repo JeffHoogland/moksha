@@ -23,7 +23,6 @@ static void _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_normal(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_below(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_border_menu_cb_borderless(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_fullscreen(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_skip_winlist(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -214,24 +213,7 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 			     e_theme_edje_file_get("base/theme/borders",
 						   "e/widgets/border/default/stick"),
 			     "e/widgets/border/default/stick");
-   
-   
-   /* Removed as Borderless is in the Borders dialog also */
-   /*
-   if ((!bd->shaded) && (!bd->fullscreen) && (!bd->lock_border))
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Borderless"));
-	e_menu_item_check_set(mi, 1);
-	e_menu_item_toggle_set(mi, ((bd->client.border.name) && !strcmp("borderless", bd->client.border.name)));
-	e_menu_item_callback_set(mi, _e_border_menu_cb_borderless, bd);
-	e_menu_item_icon_edje_set(mi,
-				  e_theme_edje_file_get("base/theme/borders",
-							"e/widgets/border/default/borderless"),
-				  "e/widgets/border/default/borderless");
-     }
-   */
-   
+
    if ((bd->client.icccm.accepts_focus || bd->client.icccm.take_focus) &&
        (!bd->client.netwm.state.skip_taskbar))
      {
@@ -731,34 +713,6 @@ _e_border_menu_cb_normal(void *data, E_Menu *m, E_Menu_Item *mi)
      {
 	e_border_layer_set(bd, 100);
 	e_hints_window_stacking_set(bd, E_STACKING_NONE);
-     }
-}
-
-static void
-_e_border_menu_cb_borderless(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Border *bd;
-   int toggle;
-
-   bd = data;
-   if (!bd) return;
-   
-   if (!bd->lock_border)
-     {
-	toggle = e_menu_item_toggle_get(mi);
-	if (toggle)
-	  {
-	     bd->borderless = 1;
-	     ecore_x_mwm_borderless_set(bd->client.win, 1);
-	  }
-	else
-	  {
-	     bd->borderless = 0;
-	     ecore_x_mwm_borderless_set(bd->client.win, 0);
-	  }
-	  
-	bd->client.border.changed = 1;
-	bd->changed = 1;
      }
 }
 
