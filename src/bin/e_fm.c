@@ -1465,6 +1465,7 @@ _e_fm2_icons_place_custom_icons(E_Fm2_Smart_Data *sd)
      }
 }
 
+#if 0
 static void
 _e_fm2_icons_place_custom_grid_icons(E_Fm2_Smart_Data *sd)
 {
@@ -1484,6 +1485,7 @@ _e_fm2_icons_place_custom_grid_icons(E_Fm2_Smart_Data *sd)
 	if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
      }
 }
+#endif
 
 static void
 _e_fm2_icons_place_custom_smart_grid_icons(E_Fm2_Smart_Data *sd)
