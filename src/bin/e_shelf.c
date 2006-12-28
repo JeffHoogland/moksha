@@ -22,7 +22,6 @@ static void _e_shelf_cb_mouse_out(void *data, Evas *evas, Evas_Object *obj, void
 static int  _e_shelf_cb_id_sort(void *data1, void *data2);
 
 static Evas_List *shelves = NULL;
-static Evas_Bool _del_confirm_active = 0;
 
 /* externally accessible functions */
 EAPI int
