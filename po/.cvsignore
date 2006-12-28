@@ -4,6 +4,7 @@ Makefile.in.in
 Makevars.template
 enlightenment.pot
 *.gmo
+*.mo
 POTFILES
 Rules-quot
 boldquot.sed
