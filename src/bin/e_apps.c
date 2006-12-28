@@ -64,8 +64,6 @@ static void      _e_app_fields_save_others(E_App *a);
 static void      _e_app_save_order         (E_App *app);
 static int       _e_app_cb_event_border_add(void *data, int type, void *event);
 static int       _e_app_cb_expire_timer    (void *data);
-static int       _e_app_exe_valid_get      (const char *exe);
-static char     *_e_app_localized_val_get  (Eet_File *ef, const char *lang, const char *field, int *size);
 #if DEBUG
 static void      _e_app_print              (const char *path, Ecore_File_Event event);
 #endif
@@ -1851,39 +1849,6 @@ e_app_fields_fill(E_App *a, const char *path)
 #endif
 }
 
-static char *
-_e_app_localized_val_get(Eet_File *ef, const char *lang, const char *field, int *size)
-{
-   E_Locale_Parts *locale_parts;
-   char *s, *v;
-   char buf[PATH_MAX];
-
-   if (lang)
-     {
-	locale_parts = e_intl_locale_parts_get(lang);
-
-	if (locale_parts)
-	  {	  
-	     s = e_intl_locale_parts_combine(locale_parts, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
-	     snprintf(buf, sizeof(buf), "%s[%s]", field, s);
-	     free(s);
-	     v = eet_read(ef, buf, size);
-	     if (v)
-	       return v;
-
-	     snprintf(buf, sizeof(buf), "%s[%s]", field, locale_parts->lang);
-	     v = eet_read(ef, buf, size);
-	     if (v)
-	       return v;
-
-	     e_intl_locale_parts_free(locale_parts);
-	  }
-     }
-   /* Fall back to default locale */
-   return eet_read(ef, field, size);
-}
-
-
 EAPI void
 e_app_fields_save(E_App *a)
 {
@@ -2574,35 +2539,16 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 		  e_app_fields_fill(a, path);
 		  if (a->filled)
 		    {
-/* allow invalid apps
-		       if (!_e_app_exe_valid_get(a->exe))
+		       _e_app_change(a, E_APP_CHANGE);
+		       for (l = a->references; l; l = l->next)
 			 {
-			    a->deleted = 1;
-			    for (l = a->references; l;)
-			      {
-				 E_App *a2;
-				 
-				 a2 = l->data;
-				 l = l->next;
-				 if (a2->parent)
-				   _e_app_subdir_rescan(a2->parent);
-			      }
-			    _e_app_subdir_rescan(app);
+			    E_App *a2;
+
+			    a2 = l->data;
+			    if (_e_app_copy(a2, a))
+			      _e_app_change(a2, E_APP_CHANGE);
 			 }
-		       else
- */
-			 {
-			    _e_app_change(a, E_APP_CHANGE);
-			    for (l = a->references; l; l = l->next)
-			      {
-				 E_App *a2;
-				 
-				 a2 = l->data;
-				 if (_e_app_copy(a2, a))
-				   _e_app_change(a2, E_APP_CHANGE);
-			      }
-			    _e_app_subdir_rescan(app);
-			 }
+		       _e_app_subdir_rescan(app);
 		    }
 	       }
 	  }
@@ -2975,14 +2921,6 @@ _e_app_cb_expire_timer(void *data)
      }
    _e_app_change(a, E_APP_READY_EXPIRE);
    return 0;
-}
-
-
-static int
-_e_app_exe_valid_get(const char *exe)
-{
-   if ((!exe) || (!exe[0])) return 0;
-   return 1;
 }
 
 #if DEBUG
