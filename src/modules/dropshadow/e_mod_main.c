@@ -63,9 +63,7 @@ static void        _tilebuf_setup(Tilebuf *tb);
 static Tilebuf    *_tilebuf_new(int w, int h);
 static void        _tilebuf_free(Tilebuf *tb);
 static void        _tilebuf_set_tile_size(Tilebuf *tb, int tw, int th);
-static void        _tilebuf_get_tile_size(Tilebuf *tb, int *tw, int *th);
 static int         _tilebuf_add_redraw(Tilebuf *tb, int x, int y, int w, int h);
-static void        _tilebuf_clear(Tilebuf *tb);
 static Evas_List  *_tilebuf_get_render_rects(Tilebuf *tb);
 static void        _tilebuf_free_render_rects(Evas_List *rects);
 
@@ -2072,13 +2070,6 @@ _tilebuf_set_tile_size(Tilebuf *tb, int tw, int th)
    _tilebuf_setup(tb);
 }
 
-static void
-_tilebuf_get_tile_size(Tilebuf *tb, int *tw, int *th)
-{
-   if (tw) *tw = tb->tile_size.w;
-   if (th) *th = tb->tile_size.h;
-}
-
 static int
 _tilebuf_add_redraw(Tilebuf *tb, int x, int y, int w, int h)
 {
@@ -2103,13 +2094,6 @@ _tilebuf_add_redraw(Tilebuf *tb, int x, int y, int w, int h)
 	  }
      }
    return num;
-}
-
-static void
-_tilebuf_clear(Tilebuf *tb)
-{
-   if (!tb->tiles.tiles) return;
-   memset(tb->tiles.tiles, 0, tb->tiles.w * tb->tiles.h * sizeof(Tilebuf_Tile));
 }
 
 static Evas_List *
