@@ -8,8 +8,6 @@ static void _e_bg_signal(void *data, Evas_Object *obj, const char *emission, con
 static void _e_bg_event_bg_update_free(void *data, void *event);
 
 /* local subsystem globals */
-static int _e_bg_reg_files = 0;
-
 EAPI int E_EVENT_BG_UPDATE = 0;
 
 /* externally accessible functions */
