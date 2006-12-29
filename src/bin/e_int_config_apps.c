@@ -45,21 +45,21 @@ struct _E_Config_Dialog_Data
    E_App_Edit *editor;
 };
 
-struct _E_Config_Once
+typedef struct _E_Config_Once
 {
    const char *title;
    const char *label;
    const char *path;
    int (*func) (void *data, const char *path);
    void *data;
-};
+} E_Config_Once;
 
 EAPI E_Config_Dialog *
 e_int_config_apps_once(E_Container *con, const char *title, const char *label, const char *path, int (*func) (void *data, const char *path), void *data)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-   struct _E_Config_Once *once = NULL;
+   E_Config_Once *once = NULL;
 
    v = E_NEW(E_Config_Dialog_View, 1);
 
@@ -69,7 +69,7 @@ e_int_config_apps_once(E_Container *con, const char *title, const char *label, c
 
    if ((path) || (func))
       {
-         once = E_NEW(struct _E_Config_Once, 1);
+         once = E_NEW(E_Config_Once, 1);
 	 if (once)
 	    {
 	       once->title = title;
@@ -491,7 +491,7 @@ _cb_button_add(void *data1, void *data2)
 
    if (cfdata->cfd->data)
       {
-         struct _E_Config_Once *once = NULL;
+         E_Config_Once *once = NULL;
 
          once = cfdata->cfd->data;
 	 if (once->func)
@@ -622,7 +622,7 @@ _cb_button_regen(void *data1, void *data2)
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   struct _E_Config_Once *once = NULL;
+   E_Config_Once *once = NULL;
    Evas_Object *o, *of, *ob, *ot, *mt;
    E_Fm2_Config fmc_all, fmc;
 
