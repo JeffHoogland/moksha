@@ -4698,7 +4698,6 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 			    E_Drag *drag;
 			    Evas_Object *o = NULL;
 			    Evas_Coord x, y, w, h;
-			    const char *file = NULL, *part = NULL;
 			    const char *drag_types[] = { "enlightenment/border" };
 
 			    evas_object_geometry_get(bd->icon_object,
@@ -4707,7 +4706,6 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 					      bd->x + bd->fx.x + x, 
 					      bd->y + bd->fx.y + y,
 					      drag_types, 1, bd, -1, NULL);
-			    edje_object_file_get(bd->icon_object, &file, &part);
 			    o = e_border_icon_add(bd, drag->evas);
 			    if (!o)
 			      {
