@@ -216,6 +216,16 @@ e_drag_object_set(E_Drag *drag, Evas_Object *object)
 }
 
 EAPI void
+e_drag_move(E_Drag *drag, int x, int y)
+{
+   if ((drag->x == x) && (drag->y == y)) return;
+   drag->x = x;
+   drag->y = y;
+   ecore_evas_move(drag->ecore_evas, drag->x, drag->y);
+   e_container_shape_move(drag->shape, drag->x, drag->y);
+}
+
+EAPI void
 e_drag_resize(E_Drag *drag, int w, int h)
 {
    if ((drag->w == w) && (drag->h == h)) return;

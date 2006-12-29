@@ -109,6 +109,7 @@ EAPI E_Drag *e_drag_new(E_Container *container, int x, int y,
 			void (*finished_cb)(E_Drag *drag, int dropped));
 EAPI Evas   *e_drag_evas_get(E_Drag *drag);
 EAPI void    e_drag_object_set(E_Drag *drag, Evas_Object *object);
+EAPI void    e_drag_move(E_Drag *drag, int x, int y);
 EAPI void    e_drag_resize(E_Drag *drag, int w, int h);
 EAPI void    e_drag_idler_before(void);
 
