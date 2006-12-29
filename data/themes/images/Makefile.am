@@ -515,5 +515,8 @@ e17_trans1.png \
 e17_trans2.png \
 e17_icon_regenerate_menus.png \
 e17_icon_behavior.png \
-e17_icon_advanced.png
+e17_icon_appearance.png \
+e17_icon_extensions.png \
+e17_icon_advanced.png \
+e17_icon_imc.png
 
