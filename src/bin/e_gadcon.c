@@ -1662,6 +1662,7 @@ _e_gadcon_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
      {
 	// TODO: Configure this value
+#if 0
 	if (abs((y + gcc->dy) - gcc->drag.y) > 10)
 	  {
 	     E_Drag *drag;
@@ -1688,7 +1689,9 @@ _e_gadcon_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
 	     e_util_evas_fake_mouse_up_later(gcc->gadcon->evas, 1);
 	     return;
 	  }
-	else if (x > 0)
+	else
+#endif
+	if (x > 0)
 	  {
 	     if (gcc->state_info.state != E_LAYOUT_ITEM_STATE_POS_INC)
 	       gcc->state_info.resist = 0;
