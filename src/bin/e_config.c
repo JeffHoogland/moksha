@@ -1975,7 +1975,7 @@ _e_config_free(void)
 	if (e_config->wallpaper_import_last_dev) evas_stringshare_del(e_config->wallpaper_import_last_dev);
 	if (e_config->wallpaper_import_last_path) evas_stringshare_del(e_config->wallpaper_import_last_path);
 	if (e_config->theme_default_border_style) evas_stringshare_del(e_config->theme_default_border_style);
-   if (e_config->desklock_custom_screensaver_cmd) evas_stringshare_del(e_config->desklock_custom_screensaver_cmd);
+	if (e_config->desklock_custom_screensaver_cmd) evas_stringshare_del(e_config->desklock_custom_screensaver_cmd);
 	E_FREE(e_config);
      }
 }
