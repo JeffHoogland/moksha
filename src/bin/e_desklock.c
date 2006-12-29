@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include "e.h"
 #ifdef HAVE_PAM
 # include <security/pam_appl.h>
@@ -88,7 +91,7 @@ e_desklock_init(void)
 	if (e_config->desklock_use_timeout)
 	  ecore_x_screensaver_timeout_set(e_config->desklock_timeout);   
      }
-     
+
    /*
     * Effectively hide the X screensaver yet allow
     * it to generate the timer events for us.
@@ -97,7 +100,7 @@ e_desklock_init(void)
    ecore_x_screensaver_expose_set(!e_config->desklock_use_custom_screensaver);
      
    if (e_config->desklock_background)
-       e_filereg_register(e_config->desklock_background);
+     e_filereg_register(e_config->desklock_background);
    
    return 1;
 }
@@ -107,7 +110,7 @@ e_desklock_shutdown(void)
 {
    e_desklock_hide();
    if (e_config->desklock_background)
-       e_filereg_deregister(e_config->desklock_background);
+     e_filereg_deregister(e_config->desklock_background);
 
    return 1;
 }
@@ -315,7 +318,7 @@ e_desklock_show(void)
 		       edd->elock_wnd_list = evas_list_append(edd->elock_wnd_list, edp);
 		    }
 
-		  zone_counter ++;
+		  zone_counter++;
 	       }
 	  }
      }
@@ -351,10 +354,10 @@ e_desklock_hide(void)
    if ((!edd) && (!_e_custom_saver_exe)) return;
 
    if (e_config->desklock_use_custom_screensaver)
-   {
-      _e_custom_saver_exe = NULL;
-      return;
-   }
+     {
+	_e_custom_saver_exe = NULL;
+	return;
+     }
    
    if (edd->elock_grab_break_wnd)
      ecore_x_window_show(edd->elock_grab_break_wnd);
@@ -776,9 +779,9 @@ _e_desklock_cb_custom_saver_exit(void *data, int type, void *event)
    if (ev->exe != _e_custom_saver_exe) return 1;
    
    if (ev->exit_code != 0)
-   {
-	      /* do something profound here... like notify someone */
-   }
+     {
+	/* do something profound here... like notify someone */
+     }
    
    /*
     * Miserable HACK alert!!!
