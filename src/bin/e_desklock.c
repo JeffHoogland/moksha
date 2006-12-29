@@ -49,6 +49,8 @@ static	E_Zone		   *last_active_zone = NULL;
 static Ecore_Event_Handler *_e_desklock_exit_handler = NULL;
 static pid_t                _e_desklock_child_pid = -1;
 #endif
+static Ecore_Exe *_e_custom_saver_exe = NULL;
+static Ecore_Event_Handler *_e_custom_saver_exe_handler = NULL;
 
 /***********************************************************************/
 
@@ -57,6 +59,7 @@ static int _e_desklock_cb_mouse_down(void *data, int type, void *event);
 static int _e_desklock_cb_mouse_up(void *data, int type, void *event);
 static int _e_desklock_cb_mouse_wheel(void *data, int type, void *event);
 static int _e_desklock_cb_mouse_move(void *data, int type, void *event);
+static int _e_desklock_cb_custom_saver_exit(void *data, int type, void *event);
 
 static void _e_desklock_passwd_update();
 static void _e_desklock_backspace();
@@ -77,17 +80,25 @@ static char *_desklock_auth_get_current_host(void);
 EAPI int
 e_desklock_init(void)
 {
+   
    if (e_config->desklock_disable_screensaver)
      ecore_x_screensaver_timeout_set(0);
    else
      {
 	if (e_config->desklock_use_timeout)
-	  ecore_x_screensaver_timeout_set(e_config->desklock_timeout);
+	  ecore_x_screensaver_timeout_set(e_config->desklock_timeout);   
      }
-
+     
+   /*
+    * Effectively hide the X screensaver yet allow
+    * it to generate the timer events for us.
+    */
+   ecore_x_screensaver_blank_set(!e_config->desklock_use_custom_screensaver);
+   ecore_x_screensaver_expose_set(!e_config->desklock_use_custom_screensaver);
+     
    if (e_config->desklock_background)
        e_filereg_register(e_config->desklock_background);
-
+   
    return 1;
 }
 
@@ -110,9 +121,23 @@ e_desklock_show(void)
    E_Zone		  *current_zone;
    int			  zone_counter;
    int			  total_zone_num;
-
-   if (edd) return 0;
    
+
+   if (_e_custom_saver_exe) return 0;
+
+   if (e_config->desklock_use_custom_screensaver)
+     {
+	_e_custom_saver_exe_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL, 
+							      _e_desklock_cb_custom_saver_exit, 
+							      NULL);
+        e_util_library_path_strip();
+	_e_custom_saver_exe = ecore_exe_run(e_config->desklock_custom_screensaver_cmd, NULL);
+        e_util_library_path_restore();
+	return 1;
+     }      
+   
+   if (edd) return 0;
+
 #ifdef HAVE_PAM
    if (e_config->desklock_auth_method == 1)
      {
@@ -323,8 +348,14 @@ e_desklock_hide(void)
 {
    E_Desklock_Popup_Data	*edp;
    
-   if (!edd) return;
+   if ((!edd) && (!_e_custom_saver_exe)) return;
 
+   if (e_config->desklock_use_custom_screensaver)
+   {
+      _e_custom_saver_exe = NULL;
+      return;
+   }
+   
    if (edd->elock_grab_break_wnd)
      ecore_x_window_show(edd->elock_grab_break_wnd);
    while (edd->elock_wnd_list)
@@ -735,3 +766,30 @@ _desklock_auth_get_current_host(void)
    return strdup("localhost");
 }
 #endif
+
+static int
+_e_desklock_cb_custom_saver_exit(void *data, int type, void *event)
+{
+   Ecore_Exe_Event_Del *ev;
+  
+   ev = event;
+   if (ev->exe != _e_custom_saver_exe) return 1;
+   
+   if (ev->exit_code != 0)
+   {
+	      /* do something profound here... like notify someone */
+   }
+   
+   /*
+    * Miserable HACK alert!!!
+    * Seems I must reset this.  Some reason yet unknown, my
+    * intended values are getting reset!?! 
+    */
+   ecore_x_screensaver_timeout_set(e_config->desklock_timeout);   
+   ecore_x_screensaver_blank_set(!e_config->desklock_use_custom_screensaver);
+   ecore_x_screensaver_expose_set(!e_config->desklock_use_custom_screensaver);
+   
+   e_desklock_hide();
+   
+   return 0;
+}

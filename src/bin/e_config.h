@@ -52,7 +52,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0105
+#define E_CONFIG_FILE_GENERATION 0x0106
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT      0
@@ -231,7 +231,9 @@ struct _E_Config
    int         desklock_use_timeout; // GUI
    double      desklock_timeout; // GUI
    int         desklock_disable_screensaver; // GUI
-
+   int         desklock_use_custom_screensaver; //GUI
+   const char *desklock_custom_screensaver_cmd; // GUI
+   
    int         display_res_restore; // GUI
    int         display_res_width; // GUI
    int         display_res_height; // GUI

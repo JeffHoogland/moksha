@@ -1225,8 +1225,10 @@ ACT_FN_GO(exec)
    if (params)
      {
 	Ecore_Exe *exe;
-	
+
+	e_util_library_path_strip();
 	exe = ecore_exe_run(params, NULL);
+	e_util_library_path_restore();
 	e_exehist_add("action/exec", params);
 	if (exe) ecore_exe_free(exe);
      }

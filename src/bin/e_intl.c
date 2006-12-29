@@ -352,7 +352,9 @@ e_intl_input_method_set(const char *imc_path)
 		  
 		  if (E_EXE_IS_VALID(imc->e_im_exec)) 
 		    {
+		       e_util_library_path_strip();
 		       _e_intl_input_method_exec = ecore_exe_run(imc->e_im_exec, NULL);
+		       e_util_library_path_restore();
 		       ecore_exe_tag_set(_e_intl_input_method_exec,"E/im_exec");
 	       	       
 		       if (  !_e_intl_input_method_exec || 

@@ -478,6 +478,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, desklock_use_timeout, INT);
    E_CONFIG_VAL(D, T, desklock_timeout, DOUBLE);
    E_CONFIG_VAL(D, T, desklock_disable_screensaver, INT);
+   E_CONFIG_VAL(D, T, desklock_use_custom_screensaver, INT);
+   E_CONFIG_VAL(D, T, desklock_custom_screensaver_cmd, STR);
    E_CONFIG_VAL(D, T, display_res_restore, INT);
    E_CONFIG_VAL(D, T, display_res_width, INT);
    E_CONFIG_VAL(D, T, display_res_height, INT);
@@ -1282,6 +1284,12 @@ e_config_init(void)
    e_config->remember_internal_windows = 1;
    IFCFGEND;
    
+     
+   IFCFG(0x00106);
+   e_config->desklock_use_custom_screensaver = 0;
+   e_config->desklock_custom_screensaver_cmd = NULL;     
+   IFCFGEND;
+     
 #if 0 /* example of new config */
    IFCFG(0x0090); /* the version # where this value(s) was introduced */
    e_config->new_value = 10; /* set the value(s) */
@@ -1366,8 +1374,9 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->desklock_login_box_zone, -2, 1000);
    E_CONFIG_LIMIT(e_config->desklock_autolock, 0, 1);
    E_CONFIG_LIMIT(e_config->desklock_use_timeout, 0, 1);
-   E_CONFIG_LIMIT(e_config->desklock_timeout, 1.0, 600.0);
+   E_CONFIG_LIMIT(e_config->desklock_timeout, 1.0, 5400.0);
    E_CONFIG_LIMIT(e_config->desklock_disable_screensaver, 0, 1);
+   E_CONFIG_LIMIT(e_config->desklock_use_custom_screensaver, 0, 1);
    E_CONFIG_LIMIT(e_config->display_res_restore, 0, 1);
    E_CONFIG_LIMIT(e_config->display_res_width, 1, 8192);
    E_CONFIG_LIMIT(e_config->display_res_height, 1, 8192);
@@ -1966,6 +1975,7 @@ _e_config_free(void)
 	if (e_config->wallpaper_import_last_dev) evas_stringshare_del(e_config->wallpaper_import_last_dev);
 	if (e_config->wallpaper_import_last_path) evas_stringshare_del(e_config->wallpaper_import_last_path);
 	if (e_config->theme_default_border_style) evas_stringshare_del(e_config->theme_default_border_style);
+   if (e_config->desklock_custom_screensaver_cmd) evas_stringshare_del(e_config->desklock_custom_screensaver_cmd);
 	E_FREE(e_config);
      }
 }

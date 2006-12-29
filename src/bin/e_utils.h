@@ -47,6 +47,8 @@ EAPI int          e_util_icon_save(Ecore_X_Icon *icon, const char *filename);
 EAPI char        *e_util_shell_env_path_eval(char *path);
 EAPI char        *e_util_size_string_get(off_t size);
 EAPI char        *e_util_file_time_get(time_t ftime);
+EAPI void         e_util_library_path_strip(void);
+EAPI void         e_util_library_path_restore(void);
     
 #endif
 #endif

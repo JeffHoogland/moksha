@@ -14,7 +14,6 @@
 #define DEF_DESKLOCK_BACKGROUND	"theme_desklock_background"
 #define DEF_THEME_BACKGROUND	"theme_background"
 
-
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int  _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -60,6 +59,9 @@ struct _E_Config_Dialog_Data
    int login_box_zone; // in e_config;
    int specific_lb_zone; // local variable
    int specific_lb_zone_backup; // used to have smart iface
+   
+   int use_custom_screensaver;
+   char *custom_screensaver_cmd;
    
    int zone_count; // local variable;
 
@@ -290,7 +292,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    
    cfdata->autolock = e_config->desklock_autolock;
    cfdata->use_timeout = e_config->desklock_use_timeout;
-   cfdata->timeout = e_config->desklock_timeout;
+   cfdata->timeout = e_config->desklock_timeout / 60;
    
    /* should be taken from e_config */
    //cfdata->login_box_on_zone = -1;
@@ -347,6 +349,10 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->auth_method = e_config->desklock_auth_method;
 #endif
    
+   cfdata->use_custom_screensaver = e_config->desklock_use_custom_screensaver;
+   if (e_config->desklock_custom_screensaver_cmd)
+      cfdata->custom_screensaver_cmd = strdup(e_config->desklock_custom_screensaver_cmd);
+     
    //vertical_lb_align = e_config->desklock_login
 }
 
@@ -385,14 +391,16 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->desklock_personal_passwd = evas_stringshare_add(cfdata->desklock_passwd_cp);
    e_config->desklock_autolock = cfdata->autolock;
    e_config->desklock_use_timeout = cfdata->use_timeout;
-   e_config->desklock_timeout = cfdata->timeout;
+   e_config->desklock_timeout = cfdata->timeout * 60;
 #ifdef HAVE_PAM
    e_config->desklock_auth_method = cfdata->auth_method;
 #endif
    if (e_config->desklock_use_timeout)
-     {
-	ecore_x_screensaver_timeout_set(e_config->desklock_timeout);
-     }
+	  ecore_x_screensaver_timeout_set(e_config->desklock_timeout);
+       
+   ecore_x_screensaver_blank_set(!e_config->desklock_use_custom_screensaver);
+   ecore_x_screensaver_expose_set(!e_config->desklock_use_custom_screensaver);        
+     
    e_config_save_queue();
   return 1;
 }
@@ -417,8 +425,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_label_add(evas, _("Time until screensaver starts"));
    e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f seconds"),
-			    1.0, 600.0,
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"),
+			    1.0, 90.0,
 			    1.0, 0, &(cfdata->timeout), NULL,
 			    200);
    e_widget_framelist_object_append(of, ob);
@@ -467,14 +475,25 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    e_config->desklock_autolock = cfdata->autolock;
    e_config->desklock_use_timeout = cfdata->use_timeout;
-   e_config->desklock_timeout = cfdata->timeout;
+   e_config->desklock_timeout = cfdata->timeout * 60;
 #ifdef HAVE_PAM
    e_config->desklock_auth_method = cfdata->auth_method;
 #endif
 
    if (e_config->desklock_use_timeout)
-     ecore_x_screensaver_timeout_set(e_config->desklock_timeout);
+     ecore_x_screensaver_timeout_set(e_config->desklock_timeout);        
+     
+   e_config->desklock_use_custom_screensaver = cfdata->use_custom_screensaver;
+   if (cfdata->custom_screensaver_cmd) 
+      {
+   if (e_config->desklock_custom_screensaver_cmd)
+	   evas_stringshare_del(e_config->desklock_custom_screensaver_cmd);
+   e_config->desklock_custom_screensaver_cmd = evas_stringshare_add(cfdata->custom_screensaver_cmd);
+      }
    
+   ecore_x_screensaver_blank_set(!e_config->desklock_use_custom_screensaver);
+   ecore_x_screensaver_expose_set(!e_config->desklock_use_custom_screensaver);
+      
    e_config_save_queue();
    return 1;
 }
@@ -713,7 +732,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    
    e_widget_disabled_set(of, !ecore_x_screensaver_event_available_get());
    
-   ob = e_widget_check_add(evas, _("Enable screensaver"), &(cfdata->use_timeout));
+   ob = e_widget_check_add(evas, _("Enable X screensaver"), &(cfdata->use_timeout));
    e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
    e_widget_framelist_object_append(of, ob);
    
@@ -724,8 +743,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_label_add(evas, _("Time until screensaver starts"));
    e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f seconds"),
-			    1.0, 600.0,
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"),
+			    1.0, 90.0,
 			    1.0, 0, &(cfdata->timeout), NULL,
 			    100);
    e_widget_framelist_object_append(of, ob);
@@ -733,6 +752,23 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_table_object_append(ot, of, 1, 2, 1, 2 ,1 ,1 ,1 ,1);
 #else
    e_widget_table_object_append(ot, of, 1, 2, 1, 1 ,1 ,1 ,1 ,1);
+#endif
+
+   /* 
+    * Allow Custom Screen Saver
+    *   Useful, for example, for those of us who prefer
+    *   to use things like xscreensaver, kscreesaver, etc...
+    */
+   of = e_widget_framelist_add(evas, _("Custom Screensaver"), 0);
+   ob = e_widget_check_add(evas, _("Use custom screensaver/desklock"), 
+                           &(cfdata->use_custom_screensaver));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_entry_add(evas, &(cfdata->custom_screensaver_cmd));
+   e_widget_framelist_object_append(of, ob);
+#ifdef HAVE_PAM
+   e_widget_table_object_append(ot, of, 0, 4, 2, 1, 1, 1, 1, 1);
+#else
+   e_widget_table_object_append(ot, of, 0, 4, 2, 1, 1, 1, 1, 1);
 #endif
    
    e_dialog_resizable_set(cfd->dia, 0);

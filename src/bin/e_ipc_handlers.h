@@ -7816,3 +7816,83 @@ break;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DESKLOCK_USE_CUSTOM_SCREENSAVER_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-desklock-use-custom-screensaver-set", 1, "Set whether a custom screensaver will be utilized", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(policy, HDL);
+   e_config->desklock_use_custom_screensaver = policy;
+   E_CONFIG_LIMIT(e_config->desklock_use_custom_screensaver, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DESKLOCK_USE_CUSTOM_SCREENSAVER_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-desklock-use-custom-screensaver-get", 0, "Get whether a custom screen saver is being used", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->desklock_use_custom_screensaver, E_IPC_OP_DESKLOCK_USE_CUSTOM_SCREENSAVER_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DESKLOCK_USE_CUSTOM_SCREENSAVER_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: POLICY=%d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DESKLOCK_CUSTOM_SCREENSAVER_CMD_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-desklock-custom-screensaver-cmd-set", 1, "Set the current custom screensaver command to OPT1", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING(params[0], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING(s, HDL);
+   if (e_config->desklock_custom_screensaver_cmd)
+	   evas_stringshare_del(e_config->desklock_custom_screensaver_cmd);
+   e_config->desklock_custom_screensaver_cmd = evas_stringshare_add(s);   
+   END_STRING(s);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DESKLOCK_CUSTOM_SCREENSAVER_CMD_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-desklock-custom-screensaver-cmd-get", 0, "Get the current custom screensaver command", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_STRING(e_config->desklock_custom_screensaver_cmd, E_IPC_OP_PROFILE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+     
+/****************************************************************************/
+#define HDL E_IPC_OP_DESKLOCK_CUSTOM_SCREENSAVER_CMD_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   STRING(s, HDL);
+   printf("REPLY: \"%s\"\n", s);
+   END_STRING(s);
+#endif
+#undef HDL
