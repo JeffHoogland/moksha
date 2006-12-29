@@ -145,6 +145,9 @@ struct _E_Gadcon_Client
    unsigned char          resizing : 1;
    Evas_Coord             dx, dy;
 
+   struct {
+	int x, y;
+   } drag;
 };
 
 EAPI int              e_gadcon_init(void);

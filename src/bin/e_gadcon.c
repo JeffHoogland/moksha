@@ -31,6 +31,7 @@ static void _e_gadcon_cb_signal_resize_left_go(void *data, Evas_Object *obj, con
 static void _e_gadcon_cb_signal_resize_right_start(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_gadcon_cb_signal_resize_right_stop(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_gadcon_cb_signal_resize_right_go(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _e_gadcon_cb_drag_finished(E_Drag *drag, int dropped);
 
 static Evas_Object *e_gadcon_layout_add(Evas *evas);
 static void e_gadcon_layout_orientation_set(Evas_Object *obj, int horizontal);
@@ -1626,6 +1627,8 @@ _e_gadcon_cb_signal_move_start(void *data, Evas_Object *obj, const char *emissio
    evas_object_stack_below(gcc->o_control, gcc->o_event);
    gcc->moving = 1;
    evas_pointer_canvas_xy_get(gcc->gadcon->evas, &gcc->dx, &gcc->dy);
+   gcc->drag.x = gcc->dx;
+   gcc->drag.y = gcc->dy;
    gcc->state_info.resist = 0;
 }
 
@@ -1658,7 +1661,34 @@ _e_gadcon_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
    _e_gadcon_client_current_position_sync(gcc);
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
      {
-	if (x > 0)
+	// TODO: Configure this value
+	if (abs((y + gcc->dy) - gcc->drag.y) > 10)
+	  {
+	     E_Drag *drag;
+	     Evas_Object *o = NULL;
+	     Evas_Coord w, h;
+	     const char *drag_types[] = { "enlightenment/gadcon_client" };
+
+	     e_object_ref(E_OBJECT(gcc));
+	     drag = e_drag_new(gcc->gadcon->zone->container, gcc->drag.x, gcc->drag.y,
+			       drag_types, 1, gcc, -1, _e_gadcon_cb_drag_finished);
+	     o = gcc->client_class->func.icon(drag->evas);
+	     evas_object_geometry_get(o, NULL, NULL, &w, &h);
+	     if (!o)
+	       {
+		  /* FIXME: fallback icon for drag */
+		  o = evas_object_rectangle_add(drag->evas);
+		  evas_object_color_set(o, 255, 255, 255, 255);
+	       }
+	     e_drag_object_set(drag, o);
+
+	     e_drag_move(drag, gcc->drag.x - w/2, gcc->drag.y - h/2);
+	     e_drag_resize(drag, w, h);
+	     e_drag_start(drag, gcc->drag.x, gcc->drag.y);
+	     e_util_evas_fake_mouse_up_later(gcc->gadcon->evas, 1);
+	     return;
+	  }
+	else if (x > 0)
 	  {
 	     if (gcc->state_info.state != E_LAYOUT_ITEM_STATE_POS_INC)
 	       gcc->state_info.resist = 0;
@@ -1673,7 +1703,11 @@ _e_gadcon_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
      }
    else
      {
-	if (y > 0)
+	if (abs((x + gcc->dx) - gcc->drag.x) > 10)
+	  {
+	     printf("Drag start x\n");
+	  }
+	else if (y > 0)
 	  {
 	     if (gcc->state_info.state != E_LAYOUT_ITEM_STATE_POS_INC)
 	       gcc->state_info.resist = 0;
@@ -1899,6 +1933,60 @@ _e_gadcon_cb_signal_resize_right_go(void *data, Evas_Object *obj, const char *em
      }
    gcc->dx += x;
    gcc->dy += y;
+}
+
+static void
+_e_gadcon_cb_drag_finished(E_Drag *drag, int dropped)
+{
+   // TODO: Need to check if we drop on the same gadcon as the drag begins.
+   //       This should result in a reorder, not a remove.
+#if 0
+   E_Gadcon_Client *gcc;
+   E_Gadcon        *gc;
+   Evas_List *l;
+   int ok;
+   E_Config_Gadcon *cf_gc = NULL;
+   E_Config_Gadcon_Client *cf_gcc;
+   
+   gcc = drag->data;
+   gc = gcc->gadcon;
+   ok = 0;
+   for (l = e_config->gadcons; l; l = l->next)
+     {
+	cf_gc = l->data;
+	if ((!strcmp(cf_gc->name, gc->name)) &&
+	    (!strcmp(cf_gc->id, gc->id)))
+	  {
+	     ok = 1;
+	     break;
+	  }
+     }
+   if (ok)
+     {
+	for (l = cf_gc->clients; l; l = l->next) 
+	  {
+	     E_Config_Gadcon_Client *cf_gcc;
+
+	     cf_gcc = l->data;
+	     if (!cf_gcc) continue;
+	     if (!cf_gcc->name) continue;
+	     if ((!strcmp(cf_gcc->name, gcc->name)) && (!strcmp(cf_gcc->id, gcc->id)))
+	       {
+		  if (cf_gcc->name) evas_stringshare_del(cf_gcc->name);
+		  if (cf_gcc->id) evas_stringshare_del(cf_gcc->id);
+		  if (cf_gcc->style) evas_stringshare_del(cf_gcc->style);
+		  cf_gc->clients = evas_list_remove(cf_gc->clients, cf_gcc);
+		  free(cf_gcc);
+		  break;
+	       }	
+	  }
+     }
+
+   e_gadcon_unpopulate(gc);
+   e_gadcon_populate(gc);
+   e_config_save_queue();
+#endif
+   e_object_unref(E_OBJECT(drag->data));
 }
 
 /* a smart object JUST for gadcon */
