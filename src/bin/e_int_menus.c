@@ -1202,7 +1202,6 @@ _e_int_menus_shelves_pre_cb(void *data, E_Menu *m)
 	/* FIXME here we want nothing, but that crashes!!! */
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("(No Shelves)"));
-	return;
      }
    for (l = shelves; l; l = l->next)
      {
@@ -1272,9 +1271,12 @@ _e_int_menus_shelves_pre_cb(void *data, E_Menu *m)
    e_menu_item_label_set(mi, _("Add A Shelf"));
    e_menu_item_callback_set(mi, _e_int_menus_shelves_add_cb, NULL);
 
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Delete A Shelf"));
-   e_menu_item_callback_set(mi, _e_int_menus_shelves_del_cb, NULL);
+   if (shelves)
+     { 
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Delete A Shelf"));
+	e_menu_item_callback_set(mi, _e_int_menus_shelves_del_cb, NULL);
+     }	
 }
 
 static void 
