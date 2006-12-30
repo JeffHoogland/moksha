@@ -93,23 +93,12 @@ _cb_select_client_instance(void *data)
 static void
 _cb_add_instance(void *data, void *data2)
 {
-   char buf[1024];
-   int id = 0;
    E_Config_Dialog_Data *cfdata;
-   E_Config_Gadcon_Client *cf_gcc;
-   Evas_List *l;
 
    cfdata = data;
    if (!cfdata) return;
    
-   for (l = cfdata->cf_gc->clients; l; l = l->next)
-     {
-	cf_gcc = l->data;
-	if (!strcmp(cfdata->name_add, cf_gcc->name)) id++;
-     }
-   snprintf(buf, sizeof(buf), "%s.%s.%i", cfdata->cf_gc->id, cfdata->name_add, id);
-
-   e_gadcon_client_config_get(cfdata->gc, cfdata->name_add, buf);
+   e_gadcon_client_config_new(cfdata->gc, cfdata->name_add);
  
    e_gadcon_unpopulate(cfdata->gc);
    e_gadcon_populate(cfdata->gc);
@@ -124,29 +113,12 @@ static void
 _cb_remove_instance(void *data, void *data2)
 {
    E_Config_Dialog_Data *cfdata;
-   Evas_List *l;
    int i;
    
    cfdata = data;
    i = e_widget_ilist_selected_get(cfdata->o_instances);
-   
-   for (l = cfdata->cf_gc->clients; l; l = l->next) 
-     {
-	E_Config_Gadcon_Client *cf_gcc;
 
-	cf_gcc = l->data;
-	if (!cf_gcc) continue;
-	if (!cf_gcc->name) continue;
-	if (!strcmp(cf_gcc->id, cfdata->id_remove))
-	  {
-	     if (cf_gcc->name) evas_stringshare_del(cf_gcc->name);
-	     if (cf_gcc->id) evas_stringshare_del(cf_gcc->id);
-	     if (cf_gcc->style) evas_stringshare_del(cf_gcc->style);
-	     cfdata->cf_gc->clients = evas_list_remove(cfdata->cf_gc->clients, cf_gcc);
-	     free(cf_gcc);
-	     break;
-	  }	
-     }
+   e_gadcon_client_config_del(cfdata->gc, cfdata->id_remove);
 
    _load_selected_gadgets(cfdata);
 

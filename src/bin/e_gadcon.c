@@ -632,11 +632,13 @@ e_gadcon_dnd_window_get(E_Gadcon *gc)
 }
 
 EAPI E_Config_Gadcon_Client *
-e_gadcon_client_config_get(E_Gadcon *gc, const char *name, const char *id)
+e_gadcon_client_config_new(E_Gadcon *gc, const char *name)
 {
    Evas_List              *l;
-   E_Config_Gadcon        *cf_gc = NULL;
-   E_Config_Gadcon_Client *cf_gcc = NULL;
+   E_Config_Gadcon        *cf_gc;
+   E_Config_Gadcon_Client *cf_gcc;
+   int                     id = 0;
+   char                    buf[256];
 
    E_OBJECT_CHECK_RETURN(gc, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(gc, E_GADCON_TYPE, NULL);
@@ -647,12 +649,46 @@ e_gadcon_client_config_get(E_Gadcon *gc, const char *name, const char *id)
    for (l = cf_gc->clients; l; l = l->next)
      {
 	cf_gcc = l->data;
-	if ((!strcmp(cf_gcc->name, name)) &&
-	    (!strcmp(cf_gcc->id, id)))
+	if (!strcmp(name, cf_gcc->name)) id++;
+     }
+   snprintf(buf, sizeof(buf), "%s.%s.%i", cf_gc->id, name, id);
+
+   cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
+   if (!cf_gcc) return NULL;
+   cf_gcc->name = evas_stringshare_add(name);
+   cf_gcc->id = evas_stringshare_add(buf);
+   cf_gcc->geom.res = 800;
+   cf_gcc->geom.size = 80;
+   cf_gcc->geom.pos = cf_gcc->geom.res - cf_gcc->geom.size;
+   cf_gcc->style = NULL;
+   cf_gcc->autoscroll = 0;
+   cf_gcc->resizable = 0;
+   cf_gc->clients = evas_list_append(cf_gc->clients, cf_gcc);
+   e_config_save_queue();
+   return cf_gcc;
+}
+
+EAPI E_Config_Gadcon_Client *
+e_gadcon_client_config_get(E_Gadcon *gc, const char *name, const char *id)
+{
+   Evas_List              *l;
+   E_Config_Gadcon        *cf_gc = NULL;
+   E_Config_Gadcon_Client *cf_gcc = NULL;
+
+   E_OBJECT_CHECK_RETURN(gc, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(gc, E_GADCON_TYPE, NULL);
+
+   cf_gc = e_gadcon_config_get(gc->name, gc->id);
+   if (!cf_gc) return NULL;
+   for (l = cf_gc->clients; l; l = l->next)
+     {
+	cf_gcc = l->data;
+	if (!strcmp(cf_gcc->id, id))
 	  {
 	     return cf_gcc;
 	  }
      }
+   if (!name) return NULL;
 
    cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
    if (!cf_gcc) return NULL;
@@ -669,6 +705,27 @@ e_gadcon_client_config_get(E_Gadcon *gc, const char *name, const char *id)
    return cf_gcc;
 }
  
+EAPI void
+e_gadcon_client_config_del(E_Gadcon *gc, const char *id)
+{
+   E_Config_Gadcon *cf_gc;
+   E_Config_Gadcon_Client *cf_gcc;
+
+   cf_gc = e_gadcon_config_get(gc->name, gc->id);
+   if (cf_gc)
+     {
+	cf_gcc = e_gadcon_client_config_get(gc, NULL, id);
+	if (cf_gcc)
+	  {
+	     if (cf_gcc->name) evas_stringshare_del(cf_gcc->name);
+	     if (cf_gcc->id) evas_stringshare_del(cf_gcc->id);
+	     if (cf_gcc->style) evas_stringshare_del(cf_gcc->style);
+	     cf_gc->clients = evas_list_remove(cf_gc->clients, cf_gcc);
+	     free(cf_gcc);
+	  }
+     }
+}
+
 EAPI E_Gadcon_Client *
 e_gadcon_client_new(E_Gadcon *gc, const char *style, Evas_Object *base_obj)
 {
@@ -1903,29 +1960,16 @@ _e_gadcon_cb_drag_finished(E_Drag *drag, int dropped)
    //       This should result in a reorder, not a remove.
    E_Gadcon_Client *gcc;
    E_Gadcon        *gc;
-   E_Config_Gadcon *cf_gc = NULL;
-   E_Config_Gadcon_Client *cf_gcc;
-   
+
    gcc = drag->data;
    gc = gcc->gadcon;
-   cf_gc = e_gadcon_config_get(gc->name, gc->id);
-   if (cf_gc)
-     {
-	cf_gcc = e_gadcon_client_config_get(gc, gcc->name, gcc->id);
-	if (cf_gcc)
-	  {
-	     if (cf_gcc->name) evas_stringshare_del(cf_gcc->name);
-	     if (cf_gcc->id) evas_stringshare_del(cf_gcc->id);
-	     if (cf_gcc->style) evas_stringshare_del(cf_gcc->style);
-	     cf_gc->clients = evas_list_remove(cf_gc->clients, cf_gcc);
-	     free(cf_gcc);
-	  }
-     }
+   e_gadcon_client_config_del(gc, gcc->id);
    e_object_unref(E_OBJECT(drag->data));
 
    e_gadcon_unpopulate(gc);
    e_gadcon_populate(gc);
    e_config_save_queue();
+   e_gadcon_edit_begin(gc);
 }
 
 /* a smart object JUST for gadcon */
