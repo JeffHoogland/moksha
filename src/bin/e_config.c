@@ -1156,10 +1156,13 @@ e_config_init(void)
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
 		  1, 0, "default", 40, 0);
      }
+   IFCFGEND;
+   IFCFG(0x0107); /* the version # where this value(s) was introduced */
      {
 	E_Config_Gadcon *cf_gc;
 	E_Config_Gadcon_Client *cf_gcc;
 
+	e_config->gadcons = NULL;
 #define CFG_GADCON(_name, _id) \
    cf_gc = E_NEW(E_Config_Gadcon, 1);\
    cf_gc->name = evas_stringshare_add(_name); \

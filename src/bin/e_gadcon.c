@@ -32,6 +32,10 @@ static void _e_gadcon_cb_signal_resize_right_start(void *data, Evas_Object *obj,
 static void _e_gadcon_cb_signal_resize_right_stop(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_gadcon_cb_signal_resize_right_go(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_gadcon_cb_drag_finished(E_Drag *drag, int dropped);
+static void _e_gadcon_cb_dnd_enter(void *data, const char *type, void *event);
+static void _e_gadcon_cb_dnd_move(void *data, const char *type, void *event);
+static void _e_gadcon_cb_dnd_leave(void *data, const char *type, void *event);
+static void _e_gadcon_cb_drop(void *data, const char *type, void *event);
 
 static Evas_Object *e_gadcon_layout_add(Evas *evas);
 static void e_gadcon_layout_orientation_set(Evas_Object *obj, int horizontal);
@@ -249,6 +253,8 @@ EAPI E_Gadcon *
 e_gadcon_swallowed_new(const char *name, char *id, Evas_Object *obj, char *swallow_name)
 {
    E_Gadcon    *gc;
+   Evas_Coord   x, y, w, h;
+   const char  *drop_types[] = { "enlightenment/gadcon_client" };
    
    gc = E_OBJECT_ALLOC(E_Gadcon, E_GADCON_TYPE, _e_gadcon_free);
    if (!gc) return NULL;
@@ -263,6 +269,12 @@ e_gadcon_swallowed_new(const char *name, char *id, Evas_Object *obj, char *swall
    gc->orient = E_GADCON_ORIENT_HORIZ;
    gc->evas = evas_object_evas_get(obj);
    gc->o_container = e_gadcon_layout_add(gc->evas);
+   evas_object_geometry_get(gc->o_container, &x, &y, &w, &h);
+   gc->drop_handler = e_drop_handler_add(E_OBJECT(gc), gc,
+					 _e_gadcon_cb_dnd_enter, _e_gadcon_cb_dnd_move,
+					 _e_gadcon_cb_dnd_leave, _e_gadcon_cb_drop,
+					 drop_types, 1,
+					 x, y, w, h);
    evas_object_smart_callback_add(gc->o_container, "size_request",
 				  _e_gadcon_cb_size_request, gc);
    evas_object_smart_callback_add(gc->o_container, "min_size_request",
@@ -1325,6 +1337,7 @@ _e_gadcon_free(E_Gadcon *gc)
    evas_stringshare_del(gc->id);
    evas_stringshare_del(gc->edje.swallow_name);
    if (gc->config_dialog) e_object_del(E_OBJECT(gc->config_dialog));
+   if (gc->drop_handler) e_drop_handler_del(gc->drop_handler);
    free(gc);
 }
 
@@ -1525,8 +1538,9 @@ _e_gadcon_cb_min_size_request(void *data, Evas_Object *obj, void *event_info)
 static void
 _e_gadcon_cb_size_request(void *data, Evas_Object *obj, void *event_info)
 {
-   E_Gadcon *gc;
-   
+   E_Gadcon   *gc;
+   Evas_Coord  x, y, w, h;
+ 
    gc = data;
    if (gc->resize_request.func)
      {
@@ -1536,6 +1550,8 @@ _e_gadcon_cb_size_request(void *data, Evas_Object *obj, void *event_info)
 	
 	gc->resize_request.func(gc->resize_request.data, gc, w, h);
      }
+   evas_object_geometry_get(gc->o_container, &x, &y, &w, &h);
+   e_drop_handler_geometry_set(gc->drop_handler, x, y, w, h);
 }
 
 static void
@@ -1970,6 +1986,42 @@ _e_gadcon_cb_drag_finished(E_Drag *drag, int dropped)
    e_gadcon_populate(gc);
    e_config_save_queue();
    e_gadcon_edit_begin(gc);
+}
+
+static void
+_e_gadcon_cb_dnd_enter(void *data, const char *type, void *event)
+{
+   // TODO: Need a marker to show where the drop is going to be
+}
+
+static void
+_e_gadcon_cb_dnd_move(void *data, const char *type, void *event)
+{
+   // TODO: Need a marker to show where the drop is going to be
+}
+
+static void
+_e_gadcon_cb_dnd_leave(void *data, const char *type, void *event)
+{
+   // TODO: Need a marker to show where the drop is going to be
+}
+
+static void
+_e_gadcon_cb_drop(void *data, const char *type, void *event)
+{
+   // TODO: Need to place the gadget where the user dropped it, not at the end.
+   E_Event_Dnd_Drop *ev;
+   E_Gadcon         *gc;
+   E_Gadcon_Client  *gcc;
+
+   ev = event;
+   gc = data;
+   gcc = ev->data;
+
+   e_gadcon_client_config_new(gc, gcc->name);
+   e_gadcon_unpopulate(gc);
+   e_gadcon_populate(gc);
+   e_config_save_queue();
 }
 
 /* a smart object JUST for gadcon */

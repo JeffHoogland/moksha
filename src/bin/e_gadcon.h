@@ -81,6 +81,8 @@ struct _E_Gadcon
    E_Config_Dialog    *config_dialog;
    unsigned char       editing : 1;
    Ecore_X_Window      dnd_win;
+
+   E_Drop_Handler *drop_handler;
 };
 
 #define GADCON_CLIENT_CLASS_VERSION 1
