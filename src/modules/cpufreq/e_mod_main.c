@@ -86,7 +86,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    edje_object_signal_callback_add(o, "e,action,frequency,increase", "*", _cpufreq_face_cb_set_frequency, NULL);
    edje_object_signal_callback_add(o, "e,action,frequency,decrease", "*", _cpufreq_face_cb_set_frequency, NULL);
    
-   gcc = e_gadcon_client_new(gc, style, o);
+   gcc = e_gadcon_client_new(gc, name, id, style, o);
    gcc->data = inst;
    
    inst->gcc = gcc;

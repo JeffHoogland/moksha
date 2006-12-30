@@ -171,7 +171,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    p->inst = inst;
    inst->pager = p;
    o = p->o_table;
-   gcc = e_gadcon_client_new(gc, style, o);
+   gcc = e_gadcon_client_new(gc, name, id, style, o);
    gcc->data = inst;
    
    inst->gcc = gcc;

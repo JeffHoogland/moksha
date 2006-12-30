@@ -183,7 +183,7 @@ EAPI Ecore_X_Window   e_gadcon_dnd_window_get(E_Gadcon *gc);
 EAPI E_Config_Gadcon_Client *e_gadcon_client_config_new(E_Gadcon *gc, const char *name);
 EAPI E_Config_Gadcon_Client *e_gadcon_client_config_get(E_Gadcon *gc, const char *name, const char *id);
 EAPI void             e_gadcon_client_config_del(E_Gadcon *gc, const char *id);
-EAPI E_Gadcon_Client *e_gadcon_client_new(E_Gadcon *gc, const char *style, Evas_Object *base_obj);
+EAPI E_Gadcon_Client *e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id, const char *style, Evas_Object *base_obj);
 EAPI void             e_gadcon_client_edit_begin(E_Gadcon_Client *gcc);
 EAPI void             e_gadcon_client_edit_end(E_Gadcon_Client *gcc);
 EAPI void             e_gadcon_client_size_request(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h);

@@ -371,8 +371,10 @@ e_gadcon_populate(E_Gadcon *gc)
 
 	     if (gcc)
 	       {
+#if 0
 		  gcc->name = evas_stringshare_add(cf_gcc->name);
 		  gcc->id = evas_stringshare_add(cf_gcc->id);
+#endif
 		  gcc->client_class = cc;
 		  gcc->config.pos = cf_gcc->geom.pos;
 		  gcc->config.size = cf_gcc->geom.size;
@@ -440,8 +442,10 @@ e_gadcon_populate_class(E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
 				 cf_gcc->style);
 	     if (gcc)
 	       {
+#if 0
 		  gcc->name = evas_stringshare_add(cf_gcc->name);
 		  gcc->id = evas_stringshare_add(cf_gcc->id);
+#endif
 		  gcc->client_class = cc;
 		  gcc->config.pos = cf_gcc->geom.pos;
 		  gcc->config.size = cf_gcc->geom.size;
@@ -739,7 +743,7 @@ e_gadcon_client_config_del(E_Gadcon *gc, const char *id)
 }
 
 EAPI E_Gadcon_Client *
-e_gadcon_client_new(E_Gadcon *gc, const char *style, Evas_Object *base_obj)
+e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id, const char *style, Evas_Object *base_obj)
 {
    E_Gadcon_Client *gcc;
    
@@ -747,6 +751,8 @@ e_gadcon_client_new(E_Gadcon *gc, const char *style, Evas_Object *base_obj)
    E_OBJECT_TYPE_CHECK_RETURN(gc, E_GADCON_TYPE, NULL);
    gcc = E_OBJECT_ALLOC(E_Gadcon_Client, E_GADCON_CLIENT_TYPE, _e_gadcon_client_free);
    if (!gcc) return NULL;
+   gcc->name = evas_stringshare_add(name);
+   gcc->id = evas_stringshare_add(id);
    gcc->gadcon = gc;
    gcc->o_base = base_obj;
    gc->clients = evas_list_append(gc->clients, gcc);
@@ -1547,7 +1553,6 @@ _e_gadcon_cb_size_request(void *data, Evas_Object *obj, void *event_info)
 	Evas_Coord w, h;
 
 	e_gadcon_layout_asked_size_get(gc->o_container, &w, &h);
-	
 	gc->resize_request.func(gc->resize_request.data, gc, w, h);
      }
    evas_object_geometry_get(gc->o_container, &x, &y, &w, &h);
