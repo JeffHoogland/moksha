@@ -1623,7 +1623,6 @@ _e_gadcon_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
      {
 	// TODO: Configure this value
-#if 0
 	if (abs((y + gcc->dy) - gcc->drag.y) > 10)
 	  {
 	     E_Drag *drag;
@@ -1650,9 +1649,7 @@ _e_gadcon_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
 	     e_util_evas_fake_mouse_up_later(gcc->gadcon->evas, 1);
 	     return;
 	  }
-	else
-#endif
-	if (x > 0)
+	else if (x > 0)
 	  {
 	     if (gcc->state_info.state != E_LAYOUT_ITEM_STATE_POS_INC)
 	       gcc->state_info.resist = 0;
@@ -1904,53 +1901,31 @@ _e_gadcon_cb_drag_finished(E_Drag *drag, int dropped)
 {
    // TODO: Need to check if we drop on the same gadcon as the drag begins.
    //       This should result in a reorder, not a remove.
-#if 0
    E_Gadcon_Client *gcc;
    E_Gadcon        *gc;
-   Evas_List *l;
-   int ok;
    E_Config_Gadcon *cf_gc = NULL;
    E_Config_Gadcon_Client *cf_gcc;
    
    gcc = drag->data;
    gc = gcc->gadcon;
-   ok = 0;
-   for (l = e_config->gadcons; l; l = l->next)
+   cf_gc = e_gadcon_config_get(gc->name, gc->id);
+   if (cf_gc)
      {
-	cf_gc = l->data;
-	if ((!strcmp(cf_gc->name, gc->name)) &&
-	    (!strcmp(cf_gc->id, gc->id)))
+	cf_gcc = e_gadcon_client_config_get(gc, gcc->name, gcc->id);
+	if (cf_gcc)
 	  {
-	     ok = 1;
-	     break;
+	     if (cf_gcc->name) evas_stringshare_del(cf_gcc->name);
+	     if (cf_gcc->id) evas_stringshare_del(cf_gcc->id);
+	     if (cf_gcc->style) evas_stringshare_del(cf_gcc->style);
+	     cf_gc->clients = evas_list_remove(cf_gc->clients, cf_gcc);
+	     free(cf_gcc);
 	  }
      }
-   if (ok)
-     {
-	for (l = cf_gc->clients; l; l = l->next) 
-	  {
-	     E_Config_Gadcon_Client *cf_gcc;
-
-	     cf_gcc = l->data;
-	     if (!cf_gcc) continue;
-	     if (!cf_gcc->name) continue;
-	     if ((!strcmp(cf_gcc->name, gcc->name)) && (!strcmp(cf_gcc->id, gcc->id)))
-	       {
-		  if (cf_gcc->name) evas_stringshare_del(cf_gcc->name);
-		  if (cf_gcc->id) evas_stringshare_del(cf_gcc->id);
-		  if (cf_gcc->style) evas_stringshare_del(cf_gcc->style);
-		  cf_gc->clients = evas_list_remove(cf_gc->clients, cf_gcc);
-		  free(cf_gcc);
-		  break;
-	       }	
-	  }
-     }
+   e_object_unref(E_OBJECT(drag->data));
 
    e_gadcon_unpopulate(gc);
    e_gadcon_populate(gc);
    e_config_save_queue();
-#endif
-   e_object_unref(E_OBJECT(drag->data));
 }
 
 /* a smart object JUST for gadcon */
