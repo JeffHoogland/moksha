@@ -14,8 +14,8 @@ static void _load_selected_gadgets(void *data);
 struct _E_Config_Dialog_Data
 {
    E_Gadcon *gc;
-   char *cname;
-   char *ciname;
+   char *name_add;
+   char *id_remove;
    Evas_Object *o_add, *o_remove, *o_instances, *o_avail;
 
    E_Config_Gadcon *cf_gc;
@@ -47,24 +47,9 @@ e_int_gadcon_config(E_Gadcon *gc)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
-   Evas_List *l;
-
-   cfdata->cname = NULL;
-   cfdata->ciname = NULL;
-   cfdata->cf_gc = NULL;
-
-   for (l = e_config->gadcons; l; l = l->next)
-     {
-	cfdata->cf_gc = l->data;
-        if ((!cfdata->cf_gc->name) || (!cfdata->cf_gc->id) ||
-	    (!cfdata->gc->name) || (!cfdata->gc->id)) continue;
-	if ((!strcmp(cfdata->cf_gc->name, cfdata->gc->name)) &&
-	    (!strcmp(cfdata->cf_gc->id, cfdata->gc->id)))
-	  {
-	     break;
-	  }
-	cfdata->cf_gc = NULL;
-     }
+   cfdata->name_add = NULL;
+   cfdata->id_remove = NULL;
+   cfdata->cf_gc = e_gadcon_config_get(cfdata->gc->name, cfdata->gc->id);
 }
 
 static void *
@@ -82,8 +67,8 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    cfdata->gc->config_dialog = NULL;
-   if (cfdata->cname) free(cfdata->cname);
-   if (cfdata->ciname) free(cfdata->ciname);
+   if (cfdata->name_add) free(cfdata->name_add);
+   if (cfdata->id_remove) free(cfdata->id_remove);
    free(cfdata);
 }
 
@@ -108,52 +93,24 @@ _cb_select_client_instance(void *data)
 static void
 _cb_add_instance(void *data, void *data2)
 {
-   char buf[256];
-   int i, ok;
+   char buf[1024];
+   int id = 0;
    E_Config_Dialog_Data *cfdata;
-   E_Config_Gadcon *cf_gc;
    E_Config_Gadcon_Client *cf_gcc;
-   Evas_List *l, *l2;
+   Evas_List *l;
 
    cfdata = data;
    if (!cfdata) return;
    
-   snprintf(buf, sizeof(buf), "default");
-   for (i = 0; ; i++) 
+   for (l = cfdata->cf_gc->clients; l; l = l->next)
      {
-	ok = 1;
-	for (l = e_config->gadcons; l; l = l->next) 
-	  {
-	     cf_gc = l->data;
-	     for (l2 = cf_gc->clients; l2; l2 = l2->next)
-	       {
-		  cf_gcc = l2->data;
-		  if ((!cf_gcc->name) || (!cf_gcc->id)) continue;
-		  if ((!strcmp(cf_gcc->name, cfdata->cname)) && 
-		      (!strcmp(cf_gcc->id, buf)))
-		    {
-		       ok = 0;
-		       goto done;
-		    }
-	       }
-	  }
-	if (ok) break;
-	done:
-	snprintf(buf, sizeof(buf), "other-%i", i);
+	cf_gcc = l->data;
+	if (!strcmp(cfdata->name_add, cf_gcc->name)) id++;
      }
+   snprintf(buf, sizeof(buf), "%s.%s.%i", cfdata->cf_gc->id, cfdata->name_add, id);
 
-   cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
-   cf_gcc->name = evas_stringshare_add(cfdata->cname);
-   cf_gcc->id = evas_stringshare_add(buf);
-   cf_gcc->geom.res = 800;
-   cf_gcc->geom.size = 80;
-   cf_gcc->geom.pos = cf_gcc->geom.res - cf_gcc->geom.size;
-   cf_gcc->style = NULL;
-   cf_gcc->autoscroll = 0;
-   cf_gcc->resizable = 0;
-   
-   cfdata->cf_gc->clients = evas_list_append(cfdata->cf_gc->clients, cf_gcc);
-   
+   e_gadcon_client_config_get(cfdata->gc, cfdata->name_add, buf);
+ 
    e_gadcon_unpopulate(cfdata->gc);
    e_gadcon_populate(cfdata->gc);
    e_config_save_queue();
@@ -180,7 +137,7 @@ _cb_remove_instance(void *data, void *data2)
 	cf_gcc = l->data;
 	if (!cf_gcc) continue;
 	if (!cf_gcc->name) continue;
-	if (!strcmp(cf_gcc->name, cfdata->ciname))
+	if (!strcmp(cf_gcc->id, cfdata->id_remove))
 	  {
 	     if (cf_gcc->name) evas_stringshare_del(cf_gcc->name);
 	     if (cf_gcc->id) evas_stringshare_del(cf_gcc->id);
@@ -218,7 +175,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    of = e_widget_framelist_add(evas, _("Available Gadgets"), 0);
 
-   oi = e_widget_ilist_add(evas, 24, 24, &(cfdata->cname));
+   oi = e_widget_ilist_add(evas, 24, 24, &(cfdata->name_add));
    cfdata->o_avail = oi;
    _load_available_gadgets(cfdata);
    e_widget_min_size_get(oi, &wmw, &wmh);
@@ -234,7 +191,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Selected Gadgets"), 0);
-   oi = e_widget_ilist_add(evas, 24, 24, &(cfdata->ciname));
+   oi = e_widget_ilist_add(evas, 24, 24, &(cfdata->id_remove));
    cfdata->o_instances = oi;
    _load_selected_gadgets(cfdata);
    e_widget_min_size_get(oi, &wmw, &wmh);
@@ -331,7 +288,7 @@ _load_selected_gadgets(void *data)
 		  if (!label) label = cc->name;
 		  if (cc->func.icon) icon = cc->func.icon(evas);
 		  e_widget_ilist_append(oi, icon, label, _cb_select_client_instance,
-					cfdata, cf_gcc->name);
+					cfdata, cf_gcc->id);
 	       }
 	  }
      }

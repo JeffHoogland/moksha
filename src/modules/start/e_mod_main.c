@@ -56,7 +56,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    e_theme_edje_object_set(o, "base/theme/modules/start", "e/modules/start/main");
    edje_object_signal_emit(o, "e,state,unfocused", "e");
    
-   gcc = e_gadcon_client_new(gc, name, id, style, o);
+   gcc = e_gadcon_client_new(gc, style, o);
    gcc->data = inst;
    
    inst->gcc = gcc;
