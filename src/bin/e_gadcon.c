@@ -670,7 +670,11 @@ e_gadcon_client_config_new(E_Gadcon *gc, const char *name)
 	for (l = cf_gc->clients; l; l = l->next)
 	  {
 	     cf_gcc = l->data;
-	     if (!strcmp(buf, cf_gcc->id)) ok = 0;
+	     if (!strcmp(buf, cf_gcc->id))
+	       {
+		  ok = 0;
+		  break;
+	       }
 	  }
 	id++;
      }
