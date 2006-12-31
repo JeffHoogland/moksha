@@ -548,8 +548,7 @@ e_config_init(void)
 	e_config->config_version = (E_CONFIG_FILE_EPOCH << 16);
      }
 #define IFCFG(v) \
-   if ((e_config->config_version & 0xffff) < (v)) { \
-      e_config->config_version = (e_config->config_version & 0xffff0000) | (v)
+   if ((e_config->config_version & 0xffff) < (v)) {
 #define IFCFGEND }
    IFCFG(0x008d);
    e_config->show_splash = 1;
@@ -1293,7 +1292,9 @@ e_config_init(void)
 			  800 - 32, NULL, 0, 0);
      }
    IFCFGEND;
-     
+
+   e_config->config_version = E_CONFIG_FILE_VERSION;
+
 #if 0 /* example of new config */
    IFCFG(0x0090); /* the version # where this value(s) was introduced */
    e_config->new_value = 10; /* set the value(s) */
