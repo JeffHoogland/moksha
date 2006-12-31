@@ -1569,7 +1569,7 @@ _e_gadcon_cb_size_request(void *data, Evas_Object *obj, void *event_info)
 	gc->resize_request.func(gc->resize_request.data, gc, w, h);
      }
    evas_object_geometry_get(gc->o_container, &x, &y, &w, &h);
-   e_drop_handler_geometry_set(gc->drop_handler, x, y, w, h);
+   if (gc->drop_handler) e_drop_handler_geometry_set(gc->drop_handler, x, y, w, h);
 }
 
 static void
