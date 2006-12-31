@@ -1157,70 +1157,6 @@ e_config_init(void)
 		  1, 0, "default", 40, 0);
      }
    IFCFGEND;
-   IFCFG(0x0107); /* the version # where this value(s) was introduced */
-     {
-	E_Config_Gadcon *cf_gc;
-	E_Config_Gadcon_Client *cf_gcc;
-
-	e_config->gadcons = NULL;
-#define CFG_GADCON(_name, _id) \
-   cf_gc = E_NEW(E_Config_Gadcon, 1);\
-   cf_gc->name = evas_stringshare_add(_name); \
-   cf_gc->id = evas_stringshare_add(_id); \
-   e_config->gadcons = evas_list_append(e_config->gadcons, cf_gc)
-#define CFG_GADCON_CLIENT(_name, _id, _res, _size, _pos, _style, _autoscr, _resizable) \
-   cf_gcc = E_NEW(E_Config_Gadcon_Client, 1); \
-   cf_gcc->name = evas_stringshare_add(_name); \
-   cf_gcc->id = evas_stringshare_add(_id); \
-   cf_gcc->geom.res = _res; \
-   cf_gcc->geom.size = _size; \
-   cf_gcc->geom.pos = _pos; \
-   cf_gcc->state_info.seq = 0; \
-   cf_gcc->state_info.flags = 0; \
-   if (_style) cf_gcc->style = evas_stringshare_add(_style); \
-   else cf_gcc->style = NULL; \
-   cf_gcc->autoscroll = _autoscr; \
-   cf_gcc->resizable = _resizable; \
-   cf_gc->clients = evas_list_append(cf_gc->clients, cf_gcc)
-
-	/* the default shelf on the default head/zone */
-	CFG_GADCON("shelf", "0");
-	CFG_GADCON_CLIENT("start", "0.start.0", 800, 32,
-			  0, NULL, 0, 0);
-	CFG_GADCON_CLIENT("pager", "0.pager.0", 800, 120,
-			  32, NULL, 0, 0);
-	CFG_GADCON_CLIENT("ibox", "0.ibox.0", 800, 32,
-			  32 + 120, NULL, 0, 0);
-	CFG_GADCON_CLIENT("ibar", "0.ibar.0", 800, 200,
-			  (800 / 2) - (100 / 2), NULL, 0, 0);
-	CFG_GADCON_CLIENT("temperature", "0.temperature.0", 800, 32,
-			  800 - 128, NULL, 0, 0);
-	CFG_GADCON_CLIENT("cpufreq", "0.cpufreq.0", 800, 32,
-			  800 - 96, NULL, 0, 0);
-	CFG_GADCON_CLIENT("battery", "0.battery.0", 800, 32,
-			  800 - 64, NULL, 0, 0);
-	CFG_GADCON_CLIENT("clock", "0.clock.0", 800, 32,
-			  800 - 32, NULL, 0, 0);
-	/* additional shelves for up to 3 more heads by default */
-	CFG_GADCON("shelf", "1");
-	CFG_GADCON_CLIENT("pager", "1.pager.0", 800, 120,
-			  0, NULL, 0, 0);
-	CFG_GADCON_CLIENT("ibox", "1.ibox.0", 800, 32,
-			  800 - 32, NULL, 0, 0);
-	
-	CFG_GADCON("shelf", "2");
-	CFG_GADCON_CLIENT("pager", "2.pager.0", 800, 120,
-			  0, NULL, 0, 0);
-	CFG_GADCON_CLIENT("ibox", "2.ibox.0", 800, 32,
-			  800 - 32, NULL, 0, 0);
-	
-	CFG_GADCON("shelf", "3");
-	CFG_GADCON_CLIENT("pager", "3.pager.0", 800, 120,
-			  0, NULL, 0, 0);
-	CFG_GADCON_CLIENT("ibox", "3.ibox.0", 800, 32,
-			  800 - 32, NULL, 0, 0);
-     }
-   IFCFGEND;
    
    IFCFG(0x0094); /* the version # where this value(s) was introduced */
    e_config->border_raise_on_mouse_action = 1;
@@ -1291,6 +1227,71 @@ e_config_init(void)
    IFCFG(0x00106);
    e_config->desklock_use_custom_screensaver = 0;
    e_config->desklock_custom_screensaver_cmd = NULL;     
+   IFCFGEND;
+
+   IFCFG(0x0107); /* the version # where this value(s) was introduced */
+     {
+	E_Config_Gadcon *cf_gc;
+	E_Config_Gadcon_Client *cf_gcc;
+
+	e_config->gadcons = NULL;
+#define CFG_GADCON(_name, _id) \
+   cf_gc = E_NEW(E_Config_Gadcon, 1);\
+   cf_gc->name = evas_stringshare_add(_name); \
+   cf_gc->id = evas_stringshare_add(_id); \
+   e_config->gadcons = evas_list_append(e_config->gadcons, cf_gc)
+#define CFG_GADCON_CLIENT(_name, _id, _res, _size, _pos, _style, _autoscr, _resizable) \
+   cf_gcc = E_NEW(E_Config_Gadcon_Client, 1); \
+   cf_gcc->name = evas_stringshare_add(_name); \
+   cf_gcc->id = evas_stringshare_add(_id); \
+   cf_gcc->geom.res = _res; \
+   cf_gcc->geom.size = _size; \
+   cf_gcc->geom.pos = _pos; \
+   cf_gcc->state_info.seq = 0; \
+   cf_gcc->state_info.flags = 0; \
+   if (_style) cf_gcc->style = evas_stringshare_add(_style); \
+   else cf_gcc->style = NULL; \
+   cf_gcc->autoscroll = _autoscr; \
+   cf_gcc->resizable = _resizable; \
+   cf_gc->clients = evas_list_append(cf_gc->clients, cf_gcc)
+
+	/* the default shelf on the default head/zone */
+	CFG_GADCON("shelf", "0");
+	CFG_GADCON_CLIENT("start", "0.start.0", 800, 32,
+			  0, NULL, 0, 0);
+	CFG_GADCON_CLIENT("pager", "0.pager.0", 800, 120,
+			  32, NULL, 0, 0);
+	CFG_GADCON_CLIENT("ibox", "0.ibox.0", 800, 32,
+			  32 + 120, NULL, 0, 0);
+	CFG_GADCON_CLIENT("ibar", "0.ibar.0", 800, 200,
+			  (800 / 2) - (100 / 2), NULL, 0, 0);
+	CFG_GADCON_CLIENT("temperature", "0.temperature.0", 800, 32,
+			  800 - 128, NULL, 0, 0);
+	CFG_GADCON_CLIENT("cpufreq", "0.cpufreq.0", 800, 32,
+			  800 - 96, NULL, 0, 0);
+	CFG_GADCON_CLIENT("battery", "0.battery.0", 800, 32,
+			  800 - 64, NULL, 0, 0);
+	CFG_GADCON_CLIENT("clock", "0.clock.0", 800, 32,
+			  800 - 32, NULL, 0, 0);
+	/* additional shelves for up to 3 more heads by default */
+	CFG_GADCON("shelf", "1");
+	CFG_GADCON_CLIENT("pager", "1.pager.0", 800, 120,
+			  0, NULL, 0, 0);
+	CFG_GADCON_CLIENT("ibox", "1.ibox.0", 800, 32,
+			  800 - 32, NULL, 0, 0);
+	
+	CFG_GADCON("shelf", "2");
+	CFG_GADCON_CLIENT("pager", "2.pager.0", 800, 120,
+			  0, NULL, 0, 0);
+	CFG_GADCON_CLIENT("ibox", "2.ibox.0", 800, 32,
+			  800 - 32, NULL, 0, 0);
+	
+	CFG_GADCON("shelf", "3");
+	CFG_GADCON_CLIENT("pager", "3.pager.0", 800, 120,
+			  0, NULL, 0, 0);
+	CFG_GADCON_CLIENT("ibox", "3.ibox.0", 800, 32,
+			  800 - 32, NULL, 0, 0);
+     }
    IFCFGEND;
      
 #if 0 /* example of new config */
