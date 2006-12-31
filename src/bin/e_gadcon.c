@@ -270,11 +270,13 @@ e_gadcon_swallowed_new(const char *name, char *id, Evas_Object *obj, char *swall
    gc->evas = evas_object_evas_get(obj);
    gc->o_container = e_gadcon_layout_add(gc->evas);
    evas_object_geometry_get(gc->o_container, &x, &y, &w, &h);
+#if 0
    gc->drop_handler = e_drop_handler_add(E_OBJECT(gc), gc,
 					 _e_gadcon_cb_dnd_enter, _e_gadcon_cb_dnd_move,
 					 _e_gadcon_cb_dnd_leave, _e_gadcon_cb_drop,
 					 drop_types, 1,
 					 x, y, w, h);
+#endif
    evas_object_smart_callback_add(gc->o_container, "size_request",
 				  _e_gadcon_cb_size_request, gc);
    evas_object_smart_callback_add(gc->o_container, "min_size_request",
