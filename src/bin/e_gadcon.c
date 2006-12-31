@@ -655,6 +655,7 @@ e_gadcon_client_config_new(E_Gadcon *gc, const char *name)
    E_Config_Gadcon_Client *cf_gcc;
    int                     id = 0;
    char                    buf[256];
+   int                     ok;
 
    E_OBJECT_CHECK_RETURN(gc, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(gc, E_GADCON_TYPE, NULL);
@@ -662,12 +663,18 @@ e_gadcon_client_config_new(E_Gadcon *gc, const char *name)
 
    cf_gc = e_gadcon_config_get(gc->name, gc->id);
    if (!cf_gc) return NULL;
-   for (l = cf_gc->clients; l; l = l->next)
+   do
      {
-	cf_gcc = l->data;
-	if (!strcmp(name, cf_gcc->name)) id++;
+	ok = 1;
+	snprintf(buf, sizeof(buf), "%s.%s.%i", cf_gc->id, name, id);
+	for (l = cf_gc->clients; l; l = l->next)
+	  {
+	     cf_gcc = l->data;
+	     if (!strcmp(buf, cf_gcc->id)) ok = 0;
+	  }
+	id++;
      }
-   snprintf(buf, sizeof(buf), "%s.%s.%i", cf_gc->id, name, id);
+   while (!ok);
 
    cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
    if (!cf_gcc) return NULL;
