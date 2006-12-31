@@ -1712,7 +1712,7 @@ _e_gadcon_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
      {
 	// TODO: Configure this value
-	if (abs((y + gcc->dy) - gcc->drag.y) > 10)
+	if (abs((y + gcc->dy) - gcc->drag.y) > 100)
 	  {
 	     E_Drag *drag;
 	     Evas_Object *o = NULL;
