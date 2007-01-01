@@ -2032,11 +2032,16 @@ _e_gadcon_cb_drop(void *data, const char *type, void *event)
    E_Gadcon         *gc;
    E_Gadcon_Client  *gcc;
 
+   E_Config_Gadcon_Client *cf_gcc;
+
    ev = event;
    gc = data;
    gcc = ev->data;
 
-   e_gadcon_client_config_new(gc, gcc->name);
+   cf_gcc = e_gadcon_client_config_new(gc, gcc->name);
+   if (!cf_gcc) return;
+   if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container)) cf_gcc->geom.pos = ev->x;
+   else cf_gcc->geom.pos = ev->y;
    e_gadcon_unpopulate(gc);
    e_gadcon_populate(gc);
    e_config_save_queue();
