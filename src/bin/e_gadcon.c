@@ -416,6 +416,7 @@ e_gadcon_unpopulate(E_Gadcon *gc)
 	     e_object_del(E_OBJECT(gcc->menu));
 	     gcc->menu = NULL;
 	  }
+	gc->clients = evas_list_remove_list(gc->clients, gc->clients);
 	e_object_del(E_OBJECT(gc->clients->data));
      }
 }
@@ -1713,8 +1714,7 @@ _e_gadcon_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
    _e_gadcon_client_current_position_sync(gcc);
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
      {
-	// TODO: Configure this value
-	if (abs((y + gcc->dy) - gcc->drag.y) > 100)
+	if (abs((y + gcc->dy) - gcc->drag.y) > e_config->drag_resist)
 	  {
 	     E_Drag *drag;
 	     Evas_Object *o = NULL;
@@ -1755,7 +1755,7 @@ _e_gadcon_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
      }
    else
      {
-	if (abs((x + gcc->dx) - gcc->drag.x) > 10)
+	if (abs((x + gcc->dx) - gcc->drag.x) > e_config->drag_resist)
 	  {
 	     printf("Drag start x\n");
 	  }
