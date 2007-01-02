@@ -52,7 +52,6 @@ struct _Pager
    int              xnum, ynum;
    Evas_List       *desks;
    Pager_Popup     *popup;
-   E_Drag          *drag;
    unsigned char    dragging : 1;
    unsigned char    just_dragged : 1;
    Evas_Coord       dnd_x, dnd_y;
@@ -256,7 +255,6 @@ _pager_new(Evas *evas, E_Zone *zone)
 static void
 _pager_free(Pager *p)
 {
-   if (p->drag) e_object_del(E_OBJECT(p->drag));
    _pager_empty(p);
    evas_object_del(p->o_table);
    free(p);
@@ -476,9 +474,6 @@ _pager_window_free(Pager_Win *pw)
 {
    if ((pw->drag.from_pager) && (pw->desk->pager->dragging))
      {
-	if (pw->desk->pager->drag)
-	  e_object_del(E_OBJECT(pw->desk->pager->drag));
-	pw->desk->pager->drag = NULL;
 	pw->desk->pager->dragging = 0;
      }
    if (pw->o_window) evas_object_del(pw->o_window);
@@ -824,9 +819,6 @@ _pager_cb_event_border_iconify(void *data, int type, void *event)
 	       {
 		  if ((pw->drag.from_pager) && (pw->desk->pager->dragging))
 		    {
-		       if (pw->desk->pager->drag)
-			 e_object_del(E_OBJECT(pw->desk->pager->drag));
-		       pw->desk->pager->drag = NULL;
 		       pw->desk->pager->dragging = 0;
 		    }
 		  evas_object_hide(pw->o_window);
@@ -1438,8 +1430,7 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
 	     drag = e_drag_new(pw->desk->pager->inst->gcc->gadcon->zone->container,
 			       x, y, drag_types, 1, pw, -1,
 			       _pager_window_cb_drag_finished);
-	     pw->desk->pager->drag = drag;
-	     
+
 	     o = edje_object_add(drag->evas);
 	     edje_object_file_get(pw->o_window, &file, &part);
 	     edje_object_file_set(o, file, part);
@@ -1474,7 +1465,6 @@ _pager_window_cb_drag_finished(E_Drag *drag, int dropped)
    pw = drag->data;
    if (!pw) return;
    evas_object_show(pw->o_window);
-   pw->desk->pager->drag = NULL;
    if (!dropped)
      {
 	/* wasn't dropped (on pager). move it to position of mouse on screen */
