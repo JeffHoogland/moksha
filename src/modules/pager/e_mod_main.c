@@ -1507,7 +1507,6 @@ _pager_window_cb_drag_finished(E_Drag *drag, int dropped)
      }
    if (pw && pw->drag.from_pager) pw->drag.from_pager->dragging = 0;
    pw->drag.from_pager = NULL;
-   pw->drag.in_pager = 0;
 }
 
 static void
