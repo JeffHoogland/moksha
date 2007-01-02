@@ -417,7 +417,7 @@ e_gadcon_unpopulate(E_Gadcon *gc)
 	     gcc->menu = NULL;
 	  }
 	gc->clients = evas_list_remove_list(gc->clients, gc->clients);
-	e_object_del(E_OBJECT(gc->clients->data));
+	e_object_del(E_OBJECT(gcc));
      }
 }
 
