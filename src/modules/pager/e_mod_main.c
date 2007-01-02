@@ -1354,7 +1354,7 @@ _pager_window_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_inf
    pw = data;
    if (!pw) return;
    if ((ev->button == pager_config->btn_drag) ||
-       (ev->button ==pager_config->btn_noplace))
+       (ev->button == pager_config->btn_noplace))
      {  
 	if (!pw->drag.from_pager)
 	  {
