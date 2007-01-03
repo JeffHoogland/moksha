@@ -1512,6 +1512,7 @@ _e_gadcon_client_save(E_Gadcon_Client *gcc)
    cf_gc = e_gadcon_config_get(gcc->gadcon->name, gcc->gadcon->id);
    if (!cf_gc) return;
    cf_gcc = e_gadcon_client_config_get(gcc->gadcon, gcc->id);
+   if (!cf_gcc) e_gadcon_client_config_new(gcc->gadcon, gcc->name);
    if (!cf_gcc) return;
 
    cf_gcc->geom.pos = gcc->config.pos;
