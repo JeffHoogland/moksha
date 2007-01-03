@@ -71,11 +71,12 @@ struct _E_Drop_Handler
    E_Object      *obj;
    char         **types;
    unsigned int   num_types;
-   const char    *type;
 
    int x, y, w, h;
-   unsigned char active : 1;
-   unsigned char entered : 1;
+
+   unsigned char  active : 1;
+   unsigned char  entered : 1;
+   const char    *active_type;
 };
 
 struct _E_Event_Dnd_Enter

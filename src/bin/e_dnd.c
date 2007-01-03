@@ -273,7 +273,7 @@ e_drag_start(E_Drag *drag, int x, int y)
 	h = l->data;
 	
 	h->active = 0;
-	h->type = NULL;
+	h->active_type = NULL;
 	for (i = 0; i < h->num_types; i++)
 	  {
 	     for (j = 0; j < drag->num_types; j++)
@@ -281,7 +281,7 @@ e_drag_start(E_Drag *drag, int x, int y)
 		  if (!strcmp(h->types[i], drag->types[j]))
 		    {
 		       h->active = 1;
-		       h->type = h->types[i];
+		       h->active_type = h->types[i];
 		       break;
 		    }
 	       }
@@ -632,18 +632,18 @@ _e_drag_update(int x, int y)
 		  if (!h->entered)
 		    {
 		       if (h->cb.enter)
-			 h->cb.enter(h->cb.data, h->type, &enter_ev);
+			 h->cb.enter(h->cb.data, h->active_type, &enter_ev);
 		       h->entered = 1;
 		    }
 		  if (h->cb.move)
-		    h->cb.move(h->cb.data, h->type, &move_ev);
+		    h->cb.move(h->cb.data, h->active_type, &move_ev);
 	       }
 	     else
 	       {
 		  if (h->entered)
 		    {
 		       if (h->cb.leave)
-			 h->cb.leave(h->cb.data, h->type, &leave_ev);
+			 h->cb.leave(h->cb.data, h->active_type, &leave_ev);
 		       h->entered = 0;
 		    }
 	       }
@@ -670,18 +670,18 @@ _e_drag_update(int x, int y)
 		  if (!h->entered)
 		    {
 		       if (h->cb.enter)
-			 h->cb.enter(h->cb.data, h->type, &enter_ev);
+			 h->cb.enter(h->cb.data, h->active_type, &enter_ev);
 		       h->entered = 1;
 		    }
 		  if (h->cb.move)
-		    h->cb.move(h->cb.data, h->type, &move_ev);
+		    h->cb.move(h->cb.data, h->active_type, &move_ev);
 	       }
 	     else
 	       {
 		  if (h->entered)
 		    {
 		       if (h->cb.leave)
-			 h->cb.leave(h->cb.data, h->type, &leave_ev);
+			 h->cb.leave(h->cb.data, h->active_type, &leave_ev);
 		       h->entered = 0;
 		    }
 	       }
@@ -746,11 +746,11 @@ _e_drag_end(int x, int y)
 		  if (_drag_current->cb.convert)
 		    {
 		       ev.data = _drag_current->cb.convert(_drag_current,
-							   h->type);
+							   h->active_type);
 		    }
 		  else
 		    ev.data = _drag_current->data;
-		  h->cb.drop(h->cb.data, h->type, &ev);
+		  h->cb.drop(h->cb.data, h->active_type, &ev);
 		  dropped = 1;
 	       }
 	  }
@@ -780,7 +780,7 @@ _e_drag_end(int x, int y)
 	     if (h->entered)
 	       {
 		  if (h->cb.leave)
-		    h->cb.leave(h->cb.data, h->type, &leave_ev);
+		    h->cb.leave(h->cb.data, h->active_type, &leave_ev);
 		  h->entered = 0;
 	       }
 	  }
@@ -826,7 +826,7 @@ _e_drag_xdnd_end(int x, int y)
 		 ((h->cb.drop) &&
 		  (E_INSIDE(x, y, dx, dy, dw, dh))))
 	       {
-		  h->cb.drop(h->cb.data, h->type, &ev);
+		  h->cb.drop(h->cb.data, h->active_type, &ev);
 		  dropped = 1;
 	       }
 	  }
@@ -852,7 +852,7 @@ _e_drag_xdnd_end(int x, int y)
 	     if (h->entered)
 	       {
 		  if (h->cb.leave)
-		    h->cb.leave(h->cb.data, h->type, &leave_ev);
+		    h->cb.leave(h->cb.data, h->active_type, &leave_ev);
 		  h->entered = 0;
 	       }
 	  }
@@ -942,7 +942,7 @@ _e_dnd_cb_event_dnd_enter(void *data, int type, void *event)
 	h = l->data;
 
 	h->active = 0;
-	h->type = NULL;
+	h->active_type = NULL;
 	h->entered = 0;
      }
    for (i = 0; i < ev->num_types; i++)
@@ -959,13 +959,13 @@ _e_dnd_cb_event_dnd_enter(void *data, int type, void *event)
 		  h = l->data;
 
 		  h->active = 0;
-		  h->type = NULL;
+		  h->active_type = NULL;
 		  for (j = 0; j < h->num_types; j++)
 		    {
 		       if (!strcmp(h->types[j], _xdnd->type))
 			 {
 			    h->active = 1;
-			    h->type = _xdnd->type;
+			    h->active_type = _xdnd->type;
 			    break;
 			 }
 		    }
@@ -1029,7 +1029,7 @@ _e_dnd_cb_event_dnd_leave(void *data, int type, void *event)
 	     if (h->entered)
 	       {
 		  if (h->cb.leave)
-		    h->cb.leave(h->cb.data, h->type, leave_ev);
+		    h->cb.leave(h->cb.data, h->active_type, leave_ev);
 		  h->entered = 0;
 	       }
 	  }
