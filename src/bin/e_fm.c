@@ -3504,6 +3504,7 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	       {
 		  ici = l->data;
 		  /* FIXME: URI - needs to be file:/..... (can't remember 1 or 2 /'s) */
+		  /* file:///path is correct file://<host>/<path> with null <host> */
 		  if (ici->pseudo_link)
 		    snprintf(buf, sizeof(buf), "%s/%s", ici->pseudo_dir, ici->file);
 		  else
