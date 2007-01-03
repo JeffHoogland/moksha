@@ -33,7 +33,6 @@ e_zone_init(void)
 {
    E_EVENT_ZONE_DESK_COUNT_SET = ecore_event_type_new();
    E_EVENT_POINTER_WARP = ecore_event_type_new();
-
    return 1;
 }
 
@@ -131,7 +130,6 @@ e_zone_new(E_Container *con, int num, int x, int y, int w, int h)
 			 e_config->zone_desks_y_count);
 
    _e_zone_update_flip(zone);
-
    return zone;
 }
 
@@ -414,13 +412,9 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
 
    moved = 0;
    if (zone->desk_x_current >= xx)
-     {
-	moved = 1;
-     }
+     moved = 1;
    if (zone->desk_y_current >= yy)
-     {
-	moved = 1;
-     }
+     moved = 1;
    if (moved)
      e_desk_show(e_desk_at_xy_get(zone, xx - 1, yy - 1));
    else
@@ -478,7 +472,6 @@ e_zone_update_flip_all(void)
 	  }
      }
 }
-
 
 EAPI void
 e_zone_desk_flip_by(E_Zone *zone, int dx, int dy)
@@ -1092,7 +1085,6 @@ _e_zone_update_flip(E_Zone *zone)
 	  }
 	else
 	  ecore_x_window_hide(zone->flip.bottom);
-	
      }
    else
      {
