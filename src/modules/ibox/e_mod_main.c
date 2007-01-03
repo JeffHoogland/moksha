@@ -752,7 +752,7 @@ _ibox_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 	     evas_object_geometry_get(ic->o_icon, &x, &y, &w, &h);
 	     d = e_drag_new(ic->ibox->inst->gcc->gadcon->zone->container,
 			    x, y, drag_types, 1,
-			    ic->border, -1, _ibox_cb_drag_finished);
+			    ic->border, -1, NULL, _ibox_cb_drag_finished);
 	     o = e_border_icon_add(ic->border, e_drag_evas_get(d));
 	     e_drag_object_set(d, o);
 

@@ -4705,7 +4705,7 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 			    drag = e_drag_new(bd->zone->container,
 					      bd->x + bd->fx.x + x, 
 					      bd->y + bd->fx.y + y,
-					      drag_types, 1, bd, -1, NULL);
+					      drag_types, 1, bd, -1, NULL, NULL);
 			    o = e_border_icon_add(bd, drag->evas);
 			    if (!o)
 			      {

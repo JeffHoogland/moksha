@@ -989,7 +989,7 @@ _ibar_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 	     evas_object_geometry_get(ic->o_icon, &x, &y, &w, &h);
 	     d = e_drag_new(ic->ibar->inst->gcc->gadcon->zone->container,
 			    x, y, drag_types, 1,
-			    ic->app, -1, _ibar_cb_drag_finished);
+			    ic->app, -1, NULL, _ibar_cb_drag_finished);
              o = e_app_icon_add(ic->app, e_drag_evas_get(d));
 	     e_drag_object_set(d, o);
 

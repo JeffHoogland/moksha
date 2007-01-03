@@ -1723,7 +1723,7 @@ _e_gadcon_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
 
 	     e_object_ref(E_OBJECT(gcc));
 	     drag = e_drag_new(gcc->gadcon->zone->container, gcc->drag.x, gcc->drag.y,
-			       drag_types, 1, gcc, -1, _e_gadcon_cb_drag_finished);
+			       drag_types, 1, gcc, -1, NULL, _e_gadcon_cb_drag_finished);
 	     o = gcc->client_class->func.icon(drag->evas);
 	     evas_object_geometry_get(o, NULL, NULL, &w, &h);
 	     if (!o)

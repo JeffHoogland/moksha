@@ -121,6 +121,7 @@ static void _pager_window_cb_mouse_out(void *data, Evas *e, Evas_Object *obj, vo
 static void _pager_window_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _pager_window_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void *_pager_window_cb_drag_convert(E_Drag *drag, const char *type);
 static void _pager_window_cb_drag_finished(E_Drag *drag, int dropped);
 static void _pager_inst_cb_enter(void *data, const char *type, void *event_info);
 static void _pager_inst_cb_move(void *data, const char *type, void *event_info);
@@ -162,7 +163,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    E_Gadcon_Client *gcc;
    Instance *inst;
    Evas_Coord x, y, w, h;
-   const char *drop[] = { "enlightenment/border", "enlightenment/pager_win" };
+   const char *drop[] = { "enlightenment/pager_win", "enlightenment/border" };
    
    inst = E_NEW(Instance, 1);
    
@@ -1422,13 +1423,14 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
 	     Evas_Object *o, *oo;
 	     Evas_Coord x, y, w, h;
 	     const char *file = NULL, *part = NULL;
-	     const char *drag_types[] = { "enlightenment/pager_win" };
+	     const char *drag_types[] = { "enlightenment/pager_win", "enlightenment/border" };
 	     
 	     evas_object_geometry_get(pw->o_window, &x, &y, &w, &h);
 	     evas_object_hide(pw->o_window);
 	     
 	     drag = e_drag_new(pw->desk->pager->inst->gcc->gadcon->zone->container,
-			       x, y, drag_types, 1, pw, -1,
+			       x, y, drag_types, 2, pw, -1,
+			       _pager_window_cb_drag_convert,
 			       _pager_window_cb_drag_finished);
 
 	     o = edje_object_add(drag->evas);
@@ -1455,6 +1457,17 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
 //				      ecore_x_current_time_get(), NULL);
 	  }
      }
+}
+
+static void *
+_pager_window_cb_drag_convert(E_Drag *drag, const char *type)
+{
+   Pager_Win *pw;
+
+   pw = drag->data;
+   if (!strcmp(type, "enlightenment/pager_win")) return pw;
+   if (!strcmp(type, "enlightenment/border")) return pw->border;
+   return NULL;
 }
 
 static void

@@ -639,7 +639,8 @@ _e_int_menus_apps_drag(void *data, E_Menu *m, E_Menu_Item *mi)
 	 evas_object_geometry_get(mi->icon_object,
 				     &x, &y, &w, &h);
 	 drag = e_drag_new(m->zone->container, x, y,
-			      drag_types, 1, a, -1, _e_int_menus_apps_drag_finished);
+			      drag_types, 1, a, -1,
+			      NULL, _e_int_menus_apps_drag_finished);
 
          o = e_app_icon_add(a, e_drag_evas_get(drag));
 	 e_drag_object_set(drag, o);

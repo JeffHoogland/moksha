@@ -3518,7 +3518,7 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     evas_list_free(sl);
 	     d = e_drag_new(con,
 			    x, y, drag_types, 1,
-			    fsel, -1, _e_fm2_cb_drag_finished);
+			    fsel, -1, NULL, _e_fm2_cb_drag_finished);
 	     o = edje_object_add(e_drag_evas_get(d));
 	     if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
 	       {

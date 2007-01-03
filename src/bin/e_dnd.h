@@ -36,7 +36,8 @@ struct _E_Drag
    E_Drag_Type    type;
 
    struct {
-	void (*finished)(E_Drag *drag, int dropped);
+	void *(*convert)(E_Drag *drag, const char *type);
+	void  (*finished)(E_Drag *drag, int dropped);
    } cb;
 
    E_Container       *container;
@@ -70,6 +71,7 @@ struct _E_Drop_Handler
    E_Object      *obj;
    char         **types;
    unsigned int   num_types;
+   const char    *type;
 
    int x, y, w, h;
    unsigned char active : 1;
@@ -106,6 +108,7 @@ EAPI int  e_dnd_active(void);
 EAPI E_Drag *e_drag_new(E_Container *container, int x, int y,
 			const char **types, unsigned int num_types,
 			void *data, int size,
+			void *(*convert_cb)(E_Drag *drag, const char *type),
 			void (*finished_cb)(E_Drag *drag, int dropped));
 EAPI Evas   *e_drag_evas_get(E_Drag *drag);
 EAPI void    e_drag_object_set(E_Drag *drag, Evas_Object *object);
