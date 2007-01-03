@@ -6,6 +6,7 @@ web_browser.png \
 audio_player.png \
 mail_client.png \
 video_player.png \
-text_editor.png
+text_editor.png \
+audio_player2.png
 
 EXTRA_DIST = $(files_DATA)
