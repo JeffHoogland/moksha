@@ -37,7 +37,8 @@ e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, char **value)
    
    e_widget_del_hook_set(obj, _e_wid_del_hook);
    e_widget_focus_hook_set(obj, _e_wid_focus_hook);
-   wd = calloc(1, sizeof(E_Widget_Data));
+   wd = E_NEW(E_Widget_Data, 1);
+   if (!wd) return NULL;
    e_widget_data_set(obj, wd);
 
    wd->value = value;
