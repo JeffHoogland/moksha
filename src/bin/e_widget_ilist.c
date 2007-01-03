@@ -73,6 +73,7 @@ e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, const char *label, vo
    
    wd = e_widget_data_get(obj);
    wcb = E_NEW(E_Widget_Callback, 1);
+   if (!wcb) return;
    wcb->func = func;
    wcb->data = data;
    if (val) wcb->value = strdup(val);
