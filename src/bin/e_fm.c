@@ -3503,16 +3503,14 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     for (l = sl, i = 0; l; l = l->next, i++)
 	       {
 		  ici = l->data;
-		  /* FIXME: URI - needs to be file:/..... (can't remember 1 or 2 /'s) */
-		  /* file:///path is correct file://<host>/<path> with null <host> */
 		  if (ici->pseudo_link)
-		    snprintf(buf, sizeof(buf), "%s/%s", ici->pseudo_dir, ici->file);
+		    snprintf(buf, sizeof(buf), "file://%s/%s", ici->pseudo_dir, ici->file);
 		  else
 		    {
 		       if (!strcmp(realpath, "/"))
-			 snprintf(buf, sizeof(buf), "/%s", ici->file);
+			 snprintf(buf, sizeof(buf), "file:///%s", ici->file);
 		       else
-			 snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+			 snprintf(buf, sizeof(buf), "file://%s/%s", realpath, ici->file);
 		    }
 		  fsel = evas_list_append(fsel, strdup(buf));
 	       }
