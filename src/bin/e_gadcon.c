@@ -15,12 +15,13 @@ static void _e_gadcon_client_save(E_Gadcon_Client *gcc);
 
 static void _e_gadcon_cb_min_size_request(void *data, Evas_Object *obj, void *event_info);
 static void _e_gadcon_cb_size_request(void *data, Evas_Object *obj, void *event_info);
-static void _e_gadcon_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
-static void _e_gadcon_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info);
-static void _e_gadcon_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info);
-static void _e_gadcon_cb_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info);
-static void _e_gadcon_cb_move(void *data, Evas *evas, Evas_Object *obj, void *event_info);
-static void _e_gadcon_cb_resize(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static void _e_gadcon_cb_moveresize(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static void _e_gadcon_cb_client_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static void _e_gadcon_cb_client_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static void _e_gadcon_cb_client_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static void _e_gadcon_cb_client_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static void _e_gadcon_cb_client_move(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static void _e_gadcon_cb_client_resize(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 
 static void _e_gadcon_cb_signal_move_start(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_gadcon_cb_signal_move_stop(void *data, Evas_Object *obj, const char *emission, const char *source);
@@ -277,6 +278,10 @@ e_gadcon_swallowed_new(const char *name, char *id, Evas_Object *obj, char *swall
 					 drop_types, 1,
 					 x, y, w, h);
 #endif
+   evas_object_event_callback_add(gc->o_container, EVAS_CALLBACK_MOVE,
+				  _e_gadcon_cb_moveresize, gc);
+   evas_object_event_callback_add(gc->o_container, EVAS_CALLBACK_RESIZE,
+				  _e_gadcon_cb_moveresize, gc);
    evas_object_smart_callback_add(gc->o_container, "size_request",
 				  _e_gadcon_cb_size_request, gc);
    evas_object_smart_callback_add(gc->o_container, "min_size_request",
@@ -901,20 +906,20 @@ e_gadcon_client_edit_begin(E_Gadcon_Client *gcc)
    edje_object_signal_callback_add(gcc->o_control, "e,action,resize,down,go", "",
 				   _e_gadcon_cb_signal_resize_right_go, gcc);
    
-   evas_object_event_callback_add(gcc->o_event, EVAS_CALLBACK_MOUSE_DOWN, _e_gadcon_cb_mouse_down, gcc);
-   evas_object_event_callback_add(gcc->o_event, EVAS_CALLBACK_MOUSE_UP, _e_gadcon_cb_mouse_up, gcc);
-   evas_object_event_callback_add(gcc->o_event, EVAS_CALLBACK_MOUSE_IN, _e_gadcon_cb_mouse_in, gcc);
-   evas_object_event_callback_add(gcc->o_event, EVAS_CALLBACK_MOUSE_OUT, _e_gadcon_cb_mouse_out, gcc);
+   evas_object_event_callback_add(gcc->o_event, EVAS_CALLBACK_MOUSE_DOWN, _e_gadcon_cb_client_mouse_down, gcc);
+   evas_object_event_callback_add(gcc->o_event, EVAS_CALLBACK_MOUSE_UP, _e_gadcon_cb_client_mouse_up, gcc);
+   evas_object_event_callback_add(gcc->o_event, EVAS_CALLBACK_MOUSE_IN, _e_gadcon_cb_client_mouse_in, gcc);
+   evas_object_event_callback_add(gcc->o_event, EVAS_CALLBACK_MOUSE_OUT, _e_gadcon_cb_client_mouse_out, gcc);
 
    if (gcc->o_frame)
      {
-	evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_MOVE, _e_gadcon_cb_move, gcc);
-	evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_RESIZE, _e_gadcon_cb_resize, gcc);
+	evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_MOVE, _e_gadcon_cb_client_move, gcc);
+	evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_RESIZE, _e_gadcon_cb_client_resize, gcc);
      }
    else
      {
-	evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_MOVE, _e_gadcon_cb_move, gcc);
-	evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_RESIZE, _e_gadcon_cb_resize, gcc);
+	evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_MOVE, _e_gadcon_cb_client_move, gcc);
+	evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_RESIZE, _e_gadcon_cb_client_resize, gcc);
      }
    
    evas_object_show(gcc->o_event);
@@ -931,13 +936,13 @@ e_gadcon_client_edit_end(E_Gadcon_Client *gcc)
    
    if (gcc->o_frame)
      {
-	evas_object_event_callback_del(gcc->o_frame, EVAS_CALLBACK_MOVE, _e_gadcon_cb_move);
-	evas_object_event_callback_del(gcc->o_frame, EVAS_CALLBACK_RESIZE, _e_gadcon_cb_resize);
+	evas_object_event_callback_del(gcc->o_frame, EVAS_CALLBACK_MOVE, _e_gadcon_cb_client_move);
+	evas_object_event_callback_del(gcc->o_frame, EVAS_CALLBACK_RESIZE, _e_gadcon_cb_client_resize);
      }
    else
      {
-	evas_object_event_callback_del(gcc->o_base, EVAS_CALLBACK_MOVE, _e_gadcon_cb_move);
-	evas_object_event_callback_del(gcc->o_base, EVAS_CALLBACK_RESIZE, _e_gadcon_cb_resize);
+	evas_object_event_callback_del(gcc->o_base, EVAS_CALLBACK_MOVE, _e_gadcon_cb_client_move);
+	evas_object_event_callback_del(gcc->o_base, EVAS_CALLBACK_RESIZE, _e_gadcon_cb_client_resize);
      }
    
    if (gcc->moving)
@@ -1559,7 +1564,6 @@ static void
 _e_gadcon_cb_size_request(void *data, Evas_Object *obj, void *event_info)
 {
    E_Gadcon   *gc;
-   Evas_Coord  x, y, w, h;
  
    gc = data;
    if (gc->resize_request.func)
@@ -1569,12 +1573,22 @@ _e_gadcon_cb_size_request(void *data, Evas_Object *obj, void *event_info)
 	e_gadcon_layout_asked_size_get(gc->o_container, &w, &h);
 	gc->resize_request.func(gc->resize_request.data, gc, w, h);
      }
+}
+
+static void
+_e_gadcon_cb_moveresize(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+{
+   E_Gadcon *gc;
+   Evas_Coord x, y, w, h;
+
+   gc = data;
+   
    evas_object_geometry_get(gc->o_container, &x, &y, &w, &h);
    if (gc->drop_handler) e_drop_handler_geometry_set(gc->drop_handler, x, y, w, h);
 }
 
 static void
-_e_gadcon_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+_e_gadcon_cb_client_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
    E_Gadcon_Client *gcc;
@@ -1615,7 +1629,7 @@ _e_gadcon_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_in
 }
 
 static void
-_e_gadcon_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+_e_gadcon_cb_client_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Up *ev;
    E_Gadcon_Client *gcc;
@@ -1625,7 +1639,7 @@ _e_gadcon_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info
 }
 
 static void
-_e_gadcon_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+_e_gadcon_cb_client_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_In *ev;
    E_Gadcon_Client *gcc;
@@ -1636,7 +1650,7 @@ _e_gadcon_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info
 }
 
 static void
-_e_gadcon_cb_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+_e_gadcon_cb_client_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Out *ev;
    E_Gadcon_Client *gcc;
@@ -1647,7 +1661,7 @@ _e_gadcon_cb_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_inf
 }
 
 static void
-_e_gadcon_cb_move(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+_e_gadcon_cb_client_move(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 {
    E_Gadcon_Client *gcc;
    Evas_Coord x, y;
@@ -1659,7 +1673,7 @@ _e_gadcon_cb_move(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 }
 
 static void
-_e_gadcon_cb_resize(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+_e_gadcon_cb_client_resize(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 {
    E_Gadcon_Client *gcc;
    Evas_Coord w, h;
@@ -2040,6 +2054,7 @@ _e_gadcon_cb_drop(void *data, const char *type, void *event)
 
    cf_gcc = e_gadcon_client_config_new(gc, gcc->name);
    if (!cf_gcc) return;
+   // FIXME: This does not seem right
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container)) cf_gcc->geom.pos = ev->x;
    else cf_gcc->geom.pos = ev->y;
    e_gadcon_unpopulate(gc);
