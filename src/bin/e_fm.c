@@ -3503,6 +3503,7 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     for (l = sl, i = 0; l; l = l->next, i++)
 	       {
 		  ici = l->data;
+		  /* file:///path is correct: file://<host>/<path> with null <host> */
 		  if (ici->pseudo_link)
 		    snprintf(buf, sizeof(buf), "file://%s/%s", ici->pseudo_dir, ici->file);
 		  else
