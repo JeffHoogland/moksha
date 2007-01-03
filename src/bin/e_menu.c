@@ -1227,29 +1227,29 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     
              /* FIXME: Not sure why there are two different tries to get the icon size, surely only the last one si needed. */
              /* FIXME: Do it this way later, when e_app_icon_add() just registers a request for an icon to be filled in when it's ready.
-             if (mi->app)
-	        {
-		   o = e_app_icon_add(mi->menu->evas, mi->app);
-		   mi->icon_object = o;
-	           e_icon_size_get(mi->icon_object, &icon_w, &icon_h);
-		}
+	     if (mi->app)
+	       {
+		  o = e_app_icon_add(mi->menu->evas, mi->app);
+		  mi->icon_object = o;
+		  e_icon_size_get(mi->icon_object, &icon_w, &icon_h);
+	       }
 	     else
              */
-             if (mi->icon)
+	     if (mi->icon)
 	       {
-	          /* This is done this way to match up with how e_app_icon_add does it. */
+		  /* This is done this way to match up with how e_app_icon_add does it. */
 		  if (mi->icon_key)
 		    {
 		       Evas_Coord iww, ihh;
 
 		       o = edje_object_add(mi->menu->evas);
 		       if (edje_object_file_set(o, mi->icon, mi->icon_key))
-		          {
-		             mi->icon_object = o;
-		             edje_object_size_max_get(o, &iww, &ihh);
-		             icon_w = iww;
-		             icon_h = ihh;
-			  }
+			 {
+			    mi->icon_object = o;
+			    edje_object_size_max_get(o, &iww, &ihh);
+			    icon_w = iww;
+			    icon_h = ihh;
+			 }
 		    }
 		  if (!mi->icon_object)
 		    {
@@ -2549,18 +2549,18 @@ _e_menu_cb_item_out(void *data, Evas *evas, Evas_Object *obj, void *event_info)
    ev = event_info;
    e_menu_item_active_set(mi, 0);
    if (_e_menu_activate_maybe_drag)
-      {
-	 if (mi->drag_cb.func)
-	    {
-               /* User is dragging a draggable item elsewhere. */
-	       mi->drag.x = ev->output.x - (ev->output.x - mi->x);
-	       mi->drag.y = ev->output.y - (ev->output.y - mi->y);
-               _e_menu_deactivate_all();
-	       mi->drag_cb.func(mi->drag_cb.data, mi->menu, mi);
-	    }
-         /* Either way, the maybe drag stops here. */
-         _e_menu_activate_maybe_drag = 0;
-      }
+     {
+	if (mi->drag_cb.func)
+	  {
+	     /* User is dragging a draggable item elsewhere. */
+	     mi->drag.x = ev->output.x - (ev->output.x - mi->x);
+	     mi->drag.y = ev->output.y - (ev->output.y - mi->y);
+	     _e_menu_deactivate_all();
+	     mi->drag_cb.func(mi->drag_cb.data, mi->menu, mi);
+	  }
+	/* Either way, the maybe drag stops here. */
+	_e_menu_activate_maybe_drag = 0;
+     }
 }
 
 static int
@@ -2654,7 +2654,7 @@ _e_menu_cb_mouse_down(void *data, int type, void *event)
     * to start a drag is much more complex.
     */
    if (_e_menu_activate_floating)
-         _e_menu_activate_maybe_drag = 1;
+     _e_menu_activate_maybe_drag = 1;
 
    return 1;
 }
@@ -2678,11 +2678,11 @@ _e_menu_cb_mouse_up(void *data, int type, void *event)
      }
 
    if (_e_menu_activate_dragging)
-      {
-         /* FIXME: This is a drop, which is not allowed for now.
-	  * Once dragging is working, this will be subject to some experimenattion.
-	  */
-      }
+     {
+	/* FIXME: This is a drop, which is not allowed for now.
+	 * Once dragging is working, this will be subject to some experimenattion.
+	 */
+     }
    else
       ret = _e_menu_active_call();
    _e_menu_activate_maybe_drag = 0;
