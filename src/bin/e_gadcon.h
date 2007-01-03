@@ -181,7 +181,7 @@ EAPI void             e_gadcon_dnd_window_set(E_Gadcon *gc, Ecore_X_Window win);
 EAPI Ecore_X_Window   e_gadcon_dnd_window_get(E_Gadcon *gc);
     
 EAPI E_Config_Gadcon_Client *e_gadcon_client_config_new(E_Gadcon *gc, const char *name);
-EAPI E_Config_Gadcon_Client *e_gadcon_client_config_get(E_Gadcon *gc, const char *name, const char *id);
+EAPI E_Config_Gadcon_Client *e_gadcon_client_config_get(E_Gadcon *gc, const char *id);
 EAPI void             e_gadcon_client_config_del(E_Gadcon *gc, const char *id);
 EAPI E_Gadcon_Client *e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id, const char *style, Evas_Object *base_obj);
 EAPI void             e_gadcon_client_edit_begin(E_Gadcon_Client *gcc);
@@ -197,7 +197,7 @@ EAPI void             e_gadcon_client_resizable_set(E_Gadcon_Client *gcc, int re
 EAPI void             e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int flags);
 EAPI void             e_gadcon_client_util_menu_attach(E_Gadcon_Client *gcc);
 
-EAPI E_Gadcon_Client *e_gadcon_client_find(E_Gadcon *gc, char *name, char *id);
+EAPI E_Gadcon_Client *e_gadcon_client_find(E_Gadcon *gc, const char *name, const char *id);
     
 #endif
 #endif
