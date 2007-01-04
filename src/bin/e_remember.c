@@ -11,13 +11,11 @@ static void _e_remember_free(E_Remember *rem);
 static int _e_remember_sort_list(void * d1, void * d2);
 static E_Remember  *_e_remember_find(E_Border *bd, int check_usable);
 
-
 /* FIXME: match netwm window type */
 
 /* local subsystem globals */
 
 /* externally accessible functions */
-
 EAPI int
 e_remember_init(E_Startup_Mode mode)
 {
@@ -31,12 +29,8 @@ e_remember_init(E_Startup_Mode mode)
 	     E_Remember *rem;
 
 	     rem = l->data;
-	     if ((rem->apply & E_REMEMBER_APPLY_RUN) && 
-		 (rem->prop.command))
-	       {
-		  printf("REMEMBER CMD: \"%s\"\n", rem->prop.command);
-		  e_util_head_exec(rem->prop.head, rem->prop.command);
-	       }
+	     if ((rem->apply & E_REMEMBER_APPLY_RUN) && (rem->prop.command))
+	       e_util_head_exec(rem->prop.head, rem->prop.command);
 	  }
      }
 
@@ -342,7 +336,6 @@ e_remember_update(E_Remember *rem, E_Border *bd)
 	rem->prop.command = evas_stringshare_add(buf);
      }
    
-   
    e_config_save_queue();
 }
 
@@ -397,7 +390,7 @@ _e_remember_find(E_Border *bd, int check_usable)
 	     ((!rem->transient) && (bd->client.icccm.transient_for == 0))))
 	  matches++;
 	 if ((matches >= required_matches) && (!rem->delete_me))
-		return rem;
+	  return rem;
      }
    return NULL;
 #endif

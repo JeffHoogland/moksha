@@ -42,54 +42,49 @@ struct _E_Remember
    unsigned char  transient;
    int            apply;
    int		  max_score;
-   struct {
-      int           pos_x, pos_y;
-      int           res_x, res_y;
-      int           pos_w, pos_h;
+   struct 
+     {
+	int           pos_x, pos_y;
+	int           res_x, res_y;
+	int           pos_w, pos_h;
+	int           w, h;      
+	int           layer;
       
-      int           w, h;
+	unsigned char lock_user_location; 
+	unsigned char lock_client_location; 
+	unsigned char lock_user_size; 
+	unsigned char lock_client_size; 
+	unsigned char lock_user_stacking; 
+	unsigned char lock_client_stacking; 
+	unsigned char lock_user_iconify; 
+	unsigned char lock_client_iconify; 
+	unsigned char lock_user_desk;
+	unsigned char lock_client_desk;
+	unsigned char lock_user_sticky; 
+	unsigned char lock_client_sticky; 
+	unsigned char lock_user_shade; 
+	unsigned char lock_client_shade; 
+	unsigned char lock_user_maximize; 
+	unsigned char lock_client_maximize; 
+	unsigned char lock_user_fullscreen; 
+	unsigned char lock_client_fullscreen; 
+	unsigned char lock_border; 
+	unsigned char lock_close; 
+	unsigned char lock_focus_in; 
+	unsigned char lock_focus_out; 
+	unsigned char lock_life;
       
-      int           layer;
+	const char   *border;
       
-      unsigned char lock_user_location; 
-      unsigned char lock_client_location; 
-      unsigned char lock_user_size; 
-      unsigned char lock_client_size; 
-      unsigned char lock_user_stacking; 
-      unsigned char lock_client_stacking; 
-      unsigned char lock_user_iconify; 
-      unsigned char lock_client_iconify; 
-      unsigned char lock_user_desk;
-      unsigned char lock_client_desk;
-      unsigned char lock_user_sticky; 
-      unsigned char lock_client_sticky; 
-      unsigned char lock_user_shade; 
-      unsigned char lock_client_shade; 
-      unsigned char lock_user_maximize; 
-      unsigned char lock_client_maximize; 
-      unsigned char lock_user_fullscreen; 
-      unsigned char lock_client_fullscreen; 
-      unsigned char lock_border; 
-      unsigned char lock_close; 
-      unsigned char lock_focus_in; 
-      unsigned char lock_focus_out; 
-      unsigned char lock_life;
+	unsigned char sticky;
+	unsigned char shaded;
+	unsigned char skip_winlist;
       
-      const char   *border;
-      
-      unsigned char sticky;
-      
-      unsigned char shaded;
-      
-      unsigned char skip_winlist;
-      
-      int           desk_x, desk_y;
-      
-      int           zone;
-      
-      int           head;
-      const char   *command;
-   } prop;
+	int           desk_x, desk_y;
+	int           zone;
+	int           head;
+	const char   *command;
+     } prop;
 };
 
 EAPI int          e_remember_init(E_Startup_Mode mode);
