@@ -198,9 +198,9 @@ _cb_entry_ok(char *text, void *data)
 	if (f) 
 	  {
 	     /* Populate this .order file with some defaults */
-	     snprintf(tmp, sizeof(tmp), "xterm.eap\n" "sylpheed.eap\n" 
-		      "firefox.eap\n" "openoffice.eap\n" "xchat.eap\n"
-		      "gimp.eap\n" "xmms.eap\n");
+	     snprintf(tmp, sizeof(tmp), "xterm.desktop\n" "sylpheed.desktop\n" 
+		      "firefox.desktop\n" "openoffice.desktop\n" "xchat.desktop\n"
+		      "gimp.desktop\n" "xmms.desktop\n");
 	     fwrite(tmp, sizeof(char), strlen(tmp), f);
 	     fclose(f);
 	  }
