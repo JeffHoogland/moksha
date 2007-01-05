@@ -61,7 +61,7 @@ e_int_config_mime(E_Container *con)
    v->basic.create_widgets = _basic_create;
    
    cfd = e_config_dialog_new(con, _("File Icons"), "E", "_config_mime_dialog",
-			     "enlightenment/e", 0, v, NULL);
+			     "enlightenment/file_icons", 0, v, NULL);
    return cfd;
 }
 
@@ -213,10 +213,11 @@ _fill_list(E_Config_Dialog_Data *cfdata, char *mtype)
    Evas_Coord w, h;
    Evas *evas;
 
-   evas_event_freeze(evas_object_evas_get(cfdata->gui.list));
+   evas = evas_object_evas_get(cfdata->gui.list);
+   evas_event_freeze(evas);
    edje_freeze();
    e_widget_ilist_freeze(cfdata->gui.list);
-   evas = evas_object_evas_get(cfdata->gui.list);
+
    e_widget_ilist_clear(cfdata->gui.list);
    for (l = cfdata->mimes; l; l = l->next) 
      {
@@ -267,7 +268,7 @@ _fill_list(E_Config_Dialog_Data *cfdata, char *mtype)
    e_widget_min_size_set(cfdata->gui.list, w, 200);
    e_widget_ilist_thaw(cfdata->gui.list);
    edje_thaw();
-   evas_event_thaw(evas_object_evas_get(cfdata->gui.list));
+   evas_event_thaw(evas);
 }
 
 static void 
