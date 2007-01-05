@@ -14,6 +14,8 @@ static Evas_Object *_advanced_create_widgets (E_Config_Dialog *cfd, Evas *evas, 
 
 /* Basic Callbacks */
 static int	    _basic_list_sort_cb	     (void *d1, void *d2);
+static void	    _e_imc_disable_change_cb (void *data, Evas_Object *obj);
+static void	    _e_imc_list_change_cb    (void *data, Evas_Object *obj);
 
 /* Advanced Callbacks */
 static void         _cb_dir                  (void *data, Evas_Object *obj);
@@ -47,7 +49,8 @@ struct _E_Config_Dialog_Data
    Evas_Object *o_frame; /* scrollpane for file manager*/
    
    char *imc_current;
-   
+  
+   int imc_disable; /* 0=enable, 1=disable */ 
    int fmdir; /* 0=Local, 1=System*/
    struct
      {
@@ -67,7 +70,8 @@ struct _E_Config_Dialog_Data
    struct
      {
 	Evas_Object     *imc_basic_list;
-
+	Evas_Object     *imc_basic_disable;
+	
 	Evas_Object *e_im_name;
 	Evas_Object *e_im_exec;
 	Evas_Object *gtk_im_module;
@@ -117,6 +121,12 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	  {
 	     cfdata->fmdir = 1;
 	  }
+
+	cfdata->imc_disable = 0;
+     }
+   else
+     {
+	cfdata->imc_disable = 1;
      }
 }
 
@@ -172,9 +182,18 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {	
    if (cfdata->imc_current)
      {
-	if (e_config->input_method) evas_stringshare_del(e_config->input_method);
-	e_config->input_method = evas_stringshare_add(cfdata->imc_current);
-	e_intl_input_method_set(e_config->input_method);
+	if (e_config->input_method) 
+	  {
+	     evas_stringshare_del(e_config->input_method);
+	     e_config->input_method = NULL;
+	  }
+	
+	
+	if (!cfdata->imc_disable)
+	  {
+	     e_config->input_method = evas_stringshare_add(cfdata->imc_current);
+	     e_intl_input_method_set(e_config->input_method);
+	  }
      }
    
    e_config_save_queue();
@@ -191,6 +210,24 @@ _basic_list_sort_cb(void *d1, void *d2)
    return (strcmp((const char*)d1, (const char*)d2));
 }
 
+static void
+_e_imc_disable_change_cb(void *data, Evas_Object *obj) 
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data;
+
+}
+
+static void
+_e_imc_list_change_cb(void *data, Evas_Object *obj) 
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data;
+   e_widget_check_checked_set(cfdata->gui.imc_basic_disable, 0);
+}
+
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
@@ -199,11 +236,21 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    Evas_List *imc_basic_list;
    
    o = e_widget_list_add(evas, 0, 0);
-  
+     
    of = e_widget_frametable_add(evas, _("Input Method Selector"), 1);
-  
+ 
+   /* Disable everything checkbox */
+   ob = e_widget_check_add(evas, _("Use no Input Method"), &(cfdata->imc_disable));
+   e_widget_disabled_set(ob, 0);
+   e_widget_on_change_hook_set(ob, _e_imc_disable_change_cb, cfdata);
+   e_widget_check_checked_set(ob, cfdata->imc_disable);
+   e_widget_change(ob);
+   cfdata->gui.imc_basic_disable = ob;
+    e_widget_frametable_object_append(of, ob, 0, 0, 2, 1, 1, 1, 1, 1);
+   
    /* Input method List */ 
    ob = e_widget_ilist_add(evas, 16, 16, &(cfdata->imc_current));
+   e_widget_on_change_hook_set(ob, _e_imc_list_change_cb, cfdata);
    e_widget_min_size_set(ob, 175, 175);
    cfdata->gui.imc_basic_list = ob;
 
@@ -249,8 +296,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(ob));
 
-   e_widget_frametable_object_append(of, ob, 0, 0, 2, 6, 1, 1, 1, 1);
-   e_widget_ilist_selected_set(ob, e_widget_ilist_selected_get(ob));
+   e_widget_frametable_object_append(of, ob, 0, 1, 2, 6, 1, 1, 1, 1);
    
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
    
