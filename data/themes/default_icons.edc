@@ -97,6 +97,7 @@ images {
    image: "e17_icon_appearance.png" COMP;
    image: "e17_icon_extensions.png" COMP;
    image: "e17_icon_imc.png" COMP;
+   image: "e17_icon_file_icons.png" COMP;
 }
 
 group {
@@ -2067,7 +2068,8 @@ group {
          }
       }
    }
-}group {
+}
+group {
    name: "e/icons/enlightenment/imc";
    max:  64 64;
    parts {
@@ -2086,6 +2088,27 @@ group {
       }
    }
 }
+group {
+   name: "e/icons/enlightenment/file_icons";
+   max:  64 64;
+   parts {
+      part {      
+         name:          "icon";
+         mouse_events:  0;
+         description {
+            state:    "default" 0.0;
+            aspect:   1.0 1.0;
+            aspect_preference: BOTH;
+            max:      64 64;
+            image {   
+               normal: "e17_icon_file_icons.png";
+            }
+         }
+      }
+   }
+}
+
+
 
 
 
