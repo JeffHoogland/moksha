@@ -192,8 +192,9 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if (!cfdata->imc_disable)
 	  {
 	     e_config->input_method = evas_stringshare_add(cfdata->imc_current);
-	     e_intl_input_method_set(e_config->input_method);
 	  }
+	
+	e_intl_input_method_set(e_config->input_method);
      }
    
    e_config_save_queue();
