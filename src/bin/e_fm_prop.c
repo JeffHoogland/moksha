@@ -163,9 +163,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    Evas_Object *o, *ot, *ob, *of, *oi;
    E_Radio_Group *rg;
    char buf[4096];
+   E_Fm2_Config *cfg;
+   const char *itype = NULL;
    
    snprintf(buf, sizeof(buf), "%s/%s", 
 	    e_fm2_real_path_get(cfdata->fi->fm), cfdata->fi->file);
+   cfg = e_fm2_config_get(cfdata->fi->fm);
    o = e_widget_table_add(evas, 0);
 
    ot = e_widget_table_add(evas, 0);
@@ -236,33 +239,46 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    ob = e_widget_button_add(evas, "", NULL, _cb_icon_sel, cfdata, cfd);   
    cfdata->gui.icon_wid = ob;
-   if (0) /* FIXME: find icon */
+   oi = e_fm2_icon_get(evas, e_fm2_real_path_get(cfdata->fi->fm),
+		       NULL, cfdata->fi, 
+		       cfg->icon.key_hint,
+		       NULL, NULL, 0, &itype);
+   e_widget_button_icon_set(ob, oi);
+   e_widget_frametable_object_append(ot, ob, 0, 0, 1, 3, 0, 1, 0, 1);
+
+   if (itype)
      {
-	oi = NULL;
-	e_widget_button_icon_set(ob, oi);
+	if ((!strcmp(itype, "THEME_ICON")) ||
+	    (!strcmp(itype, "DESKTOP")) ||
+	    (!strcmp(itype, "FILE_TYPE")))
+	  {
+	     e_widget_disabled_set(ob, 1);
+	     cfdata->icon_type = 0;
+	  }
+	else if (!strcmp(itype, "THUMB"))
+	  {
+	     cfdata->icon_type = 1;
+	     e_widget_disabled_set(ob, 1);
+	  }
+	else if (!strcmp(itype, "CUSTOM"))
+	  cfdata->icon_type = 2;
      }
-   e_widget_disabled_set(ob, 1);
-   e_widget_frametable_object_append(ot, ob, 0, 0, 1, 3, 1, 1, 1, 1);
+   else
+     cfdata->icon_type = 0;
    
    rg = e_widget_radio_group_new(&cfdata->icon_type);
-   ob = e_widget_radio_add(evas, _("Thumbnail"), 0, rg);
+   ob = e_widget_radio_add(evas, _("Default"), 0, rg);
    evas_object_smart_callback_add(ob, "changed", _cb_type, cfdata);
    e_widget_frametable_object_append(ot, ob, 1, 0, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_add(evas, _("Theme Icon"), 1, rg);
+   ob = e_widget_radio_add(evas, _("Thumbnail"), 1, rg);
    evas_object_smart_callback_add(ob, "changed", _cb_type, cfdata);
    e_widget_frametable_object_append(ot, ob, 1, 1, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_add(evas, _("Edje File"), 2, rg);
+   ob = e_widget_radio_add(evas, _("Custom"), 2, rg);
    evas_object_smart_callback_add(ob, "changed", _cb_type, cfdata);
    e_widget_frametable_object_append(ot, ob, 1, 2, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_add(evas, _("Image"), 3, rg);
-   evas_object_smart_callback_add(ob, "changed", _cb_type, cfdata);
-   e_widget_frametable_object_append(ot, ob, 2, 0, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_add(evas, _("Default"), 4, rg);
-   evas_object_smart_callback_add(ob, "changed", _cb_type, cfdata);
-   e_widget_frametable_object_append(ot, ob, 2, 1, 1, 1, 1, 1, 1, 1);
    
-   ob = e_widget_check_add(evas, _("Use this icon for files of this type"), &(cfdata->icon_mime));
-   e_widget_frametable_object_append(ot, ob, 0, 3, 3, 1, 1, 1, 1, 1);
+   ob = e_widget_check_add(evas, _("Use this icon for all files of this type"), &(cfdata->icon_mime));
+   e_widget_frametable_object_append(ot, ob, 0, 3, 2, 1, 1, 1, 1, 1);
    
    e_widget_table_object_append(o, ot, 0, 1, 2, 1, 1, 1, 1, 1);
    
@@ -298,7 +314,7 @@ _cb_type(void *data, Evas_Object *obj, void *event_info)
    E_Config_Dialog_Data *cfdata;
    
    cfdata = data;
-   if ((cfdata->icon_type == 2) || (cfdata->icon_type == 3))
+   if (cfdata->icon_type == 2)
      e_widget_disabled_set(cfdata->gui.icon_wid, 0);
    else
      e_widget_disabled_set(cfdata->gui.icon_wid, 1);

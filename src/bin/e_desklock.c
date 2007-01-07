@@ -694,9 +694,9 @@ _desklock_pam_init(E_Desklock_Auth *da)
    /* try other pam profiles - and system-auth (login for fbsd users) is a fallback */
    pam_prof = "login";
    if (ecore_file_exists("/etc/pam.d/enlightenment")) pam_prof = "enlightenment";
-   if (ecore_file_exists("/etc/pam.d/xscreensaver")) pam_prof = "xscreensaver";
-   if (ecore_file_exists("/etc/pam.d/kscreensaver")) pam_prof = "kscreensaver";
-   if (ecore_file_exists("/etc/pam.d/system-auth")) pam_prof = "system-auth";
+   else if (ecore_file_exists("/etc/pam.d/xscreensaver")) pam_prof = "xscreensaver";
+   else if (ecore_file_exists("/etc/pam.d/kscreensaver")) pam_prof = "kscreensaver";
+   else if (ecore_file_exists("/etc/pam.d/system-auth")) pam_prof = "system-auth";
    
    if ((pamerr = pam_start(pam_prof, da->user, &(da->pam.conv),
 			   &(da->pam.handle))) != PAM_SUCCESS)

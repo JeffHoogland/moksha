@@ -26,6 +26,7 @@ typedef enum _E_Fm2_Menu_Flags
 } E_Fm2_Menu_Flags;
 
 typedef struct _E_Fm2_Config    E_Fm2_Config;
+typedef struct _E_Fm2_Icon      E_Fm2_Icon;
 typedef struct _E_Fm2_Icon_Info E_Fm2_Icon_Info;
 
 #else
@@ -141,6 +142,13 @@ EAPI void                  e_fm2_fop_delete_add(Evas_Object *obj, E_Fm2_Icon_Inf
 EAPI void                  e_fm2_fop_move_add(Evas_Object *obj, const char *src, const char *dst, const char *rel, int after, int file_add);
 EAPI void                  e_fm2_fop_link_add(Evas_Object *obj, const char *src, const char *dst);
 EAPI void                  e_fm2_fop_add_add(Evas_Object *obj, const char *file, const char *rel, int after);
-    
+
+EAPI Evas_Object *
+  e_fm2_icon_get(Evas *evas, const char *realpath,
+		 E_Fm2_Icon *ic, E_Fm2_Icon_Info *ici,
+		 const char *keyhint,
+		 void (*gen_func) (void *data, Evas_Object *obj, void *event_info),
+		 void *data, int force_gen, const char **type_ret);
+
 #endif
 #endif

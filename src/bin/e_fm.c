@@ -30,7 +30,6 @@ typedef enum _E_Fm2_Fop_Type
 
 typedef struct _E_Fm2_Smart_Data E_Fm2_Smart_Data;
 typedef struct _E_Fm2_Region     E_Fm2_Region;
-typedef struct _E_Fm2_Icon       E_Fm2_Icon;
 typedef struct _E_Fm2_Action     E_Fm2_Action;
 typedef struct _E_Fm2_Fop        E_Fm2_Fop;
 typedef struct _E_Fm2_Fop_Item   E_Fm2_Fop_Item;
@@ -911,6 +910,225 @@ e_fm2_fop_add_add(Evas_Object *obj, const char *file, const char *rel, int after
    fi->fop->items = evas_list_append(fi->fop->items, fi);
 }
 
+EAPI Evas_Object *
+e_fm2_icon_get(Evas *evas, const char *realpath, 
+	       E_Fm2_Icon *ic, E_Fm2_Icon_Info *ici,
+	       const char *keyhint,
+	       void (*gen_func) (void *data, Evas_Object *obj, void *event_info),
+	       void *data, int force_gen, const char **type_ret)
+{
+   Evas_Object *oic;
+   char buf[4096], *p;
+   
+   if (ici->icon)
+     {
+	/* custom icon */
+	if (ici->icon[0] == '/')
+	  {
+	     /* path to icon file */
+	     p = strrchr(ici->icon, '.');
+	     if ((p) && (!strcmp(p, ".edj")))
+	       {
+		  oic = edje_object_add(evas);
+		  if (!edje_object_file_set(oic, ici->icon, "icon"))
+		    e_theme_edje_object_set(oic, "base/theme/fileman",
+					    "e/icons/fileman/file");
+	       }
+	     else
+	       {
+		  oic = e_icon_add(evas);
+		  e_icon_file_set(oic, ici->icon);
+		  e_icon_fill_inside_set(oic, 1);
+	       }
+	     if (type_ret) *type_ret = "CUSTOM";
+	  }
+	else
+	  {
+	     /* theme icon */
+	     oic = edje_object_add(evas);
+	     e_util_edje_icon_set(oic, ici->icon);
+	     if (type_ret) *type_ret = "THEME_ICON";
+	  }
+	return oic;
+     }
+   if (S_ISDIR(ici->statinfo.st_mode))
+     {
+	oic = edje_object_add(evas);
+	e_theme_edje_object_set(oic, "base/theme/fileman",
+				"e/icons/fileman/folder");
+     }
+   else
+     {
+	if (ici->mime)
+	  {
+	     const char *icon;
+	     
+	     icon = e_fm_mime_icon_get(ici->mime);
+	     /* use mime type to select icon */
+	     if (!icon)
+	       {
+		  oic = edje_object_add(evas);
+		  e_theme_edje_object_set(oic, "base/theme/fileman",
+					  "e/icons/fileman/file");
+	       }
+	     else if (!strcmp(icon, "THUMB"))
+	       {
+		  if (ici->pseudo_link)
+		    snprintf(buf, sizeof(buf), "%s/%s", ici->pseudo_dir, ici->file);
+		  else
+		    snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+		  
+		  oic = e_thumb_icon_add(evas);
+		  e_thumb_icon_file_set(oic, buf, NULL);
+		  e_thumb_icon_size_set(oic, 128, 128);
+		  if (gen_func) evas_object_smart_callback_add(oic, 
+							       "e_thumb_gen",
+							       gen_func, data);
+		  if (!ic)
+		    e_thumb_icon_begin(oic);
+		  else
+		    _e_fm2_icon_thumb(ic, oic, force_gen);
+		  if (type_ret) *type_ret = "THUMB";
+	       }
+	     else if (!strcmp(icon, "DESKTOP"))
+	       {
+		  E_App *app;
+		  
+		  if (ici->pseudo_link)
+		    snprintf(buf, sizeof(buf), "%s/%s", ici->pseudo_dir, ici->file);
+		  else
+		    snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+		  app = e_app_new(buf, 0);
+		  if (app)
+		    {
+		       oic = e_app_icon_add(app, evas);
+		       e_object_unref(E_OBJECT(app));
+		    }
+		  if (type_ret) *type_ret = "DESKTOP";
+	       }
+	     else if (!strncmp(icon, "e/icons/fileman/mime/", 21))
+	       {
+		  oic = edje_object_add(evas);
+		  if (!e_theme_edje_object_set(oic, 
+					       "base/theme/fileman",
+					       icon))
+		    e_theme_edje_object_set(oic, "base/theme/fileman",
+					    "e/icons/fileman/file");
+		  if (type_ret) *type_ret = "THEME";
+	       }
+	     else
+	       {
+		  p = strrchr(icon, '.');
+		  if ((p) && (!strcmp(p, ".edj")))
+		    {
+		       oic = edje_object_add(evas);
+		       if (!edje_object_file_set(oic, icon, "icon"))
+			 e_theme_edje_object_set(oic, "base/theme/fileman",
+						 "e/icons/fileman/file");
+		    }
+		  else
+		    {
+		       oic = e_icon_add(evas);
+		       e_icon_file_set(oic, icon);
+		       e_icon_fill_inside_set(oic, 1);
+		    }
+		  if (type_ret) *type_ret = "CUSTOM";
+	       }
+	  }
+	else
+	  {
+	     if (ici->pseudo_link)
+	       snprintf(buf, sizeof(buf), "%s/%s", ici->pseudo_dir, ici->file);
+	     else
+	       snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+	     /* fallback */
+	     if (
+		 (e_util_glob_case_match(ici->file, "*.edj"))
+		 )
+	       {
+		  oic = e_thumb_icon_add(evas);
+		  if (keyhint)
+		    e_thumb_icon_file_set(oic, buf, keyhint);
+		  else
+		    {
+		       /* FIXME: There is probably a quicker way of doing this. */
+		       if (edje_file_group_exists(buf, "icon"))
+			 e_thumb_icon_file_set(oic, buf, "icon");
+		       else if (edje_file_group_exists(buf, "e/desktop/background"))
+			 e_thumb_icon_file_set(oic, buf, "e/desktop/background");
+		       else if (edje_file_group_exists(buf, "e/init/splash"))
+			 e_thumb_icon_file_set(oic, buf, "e/init/splash");
+		    }
+		  e_thumb_icon_size_set(oic, 128, 96);
+		  if (gen_func) evas_object_smart_callback_add(oic,
+							       "e_thumb_gen",
+							       gen_func, data);
+		  if (!ic)
+		    e_thumb_icon_begin(oic);
+		  else
+		    _e_fm2_icon_thumb(ic, oic, force_gen);
+		  if (type_ret) *type_ret = "THUMB";
+	       }
+	     else if ((e_util_glob_case_match(ici->file, "*.desktop")) || 
+		      (e_util_glob_case_match(ici->file, "*.directory")))
+	       {
+		  E_App *app;
+		  
+		  app = e_app_new(buf, 0);
+		  if (app)
+		    {
+		       oic = e_app_icon_add(app, evas);
+		       e_object_unref(E_OBJECT(app));
+		    }
+		  if (type_ret) *type_ret = "DESKTOP";
+	       }
+	     else if (S_ISCHR(ici->statinfo.st_mode))
+	       {
+		  oic = edje_object_add(evas);
+		  e_theme_edje_object_set(oic, "base/theme/fileman",
+					  "e/icons/fileman/file");
+		  if (type_ret) *type_ret = "FILE_TYPE";
+	       }
+	     else if (S_ISBLK(ici->statinfo.st_mode))
+	       {
+		  oic = edje_object_add(evas);
+		  e_theme_edje_object_set(oic, "base/theme/fileman",
+					  "e/icons/fileman/file");
+		  if (type_ret) *type_ret = "FILE_TYPE";
+	       }
+	     else if (S_ISFIFO(ici->statinfo.st_mode))
+	       {
+		  oic = edje_object_add(evas);
+		  e_theme_edje_object_set(oic, "base/theme/fileman",
+					  "e/icons/fileman/file");
+		  if (type_ret) *type_ret = "FILE_TYPE";
+	       }
+	     else if (S_ISSOCK(ici->statinfo.st_mode))
+	       {
+		  oic = edje_object_add(evas);
+		  e_theme_edje_object_set(oic, "base/theme/fileman",
+					  "e/icons/fileman/file");
+		  if (type_ret) *type_ret = "FILE_TYPE";
+	       }
+	     else if (ecore_file_can_exec(buf))
+	       {
+		  oic = edje_object_add(evas);
+		  e_theme_edje_object_set(oic, "base/theme/fileman",
+					  "e/icons/fileman/file");
+		  if (type_ret) *type_ret = "FILE_TYPE";
+	       }
+	     else
+	       {
+		  oic = edje_object_add(evas);
+		  e_theme_edje_object_set(oic, "base/theme/fileman",
+					  "e/icons/fileman/file");
+		  if (type_ret) *type_ret = "FILE_TYPE";
+	       }
+	  }
+     }
+   return oic;
+}
+
 /* local subsystem functions */
 static const char *
 _e_fm2_dev_path_map(const char *dev, const char *path)
@@ -1465,7 +1683,6 @@ _e_fm2_icons_place_custom_icons(E_Fm2_Smart_Data *sd)
      }
 }
 
-#if 0
 static void
 _e_fm2_icons_place_custom_grid_icons(E_Fm2_Smart_Data *sd)
 {
@@ -1485,7 +1702,6 @@ _e_fm2_icons_place_custom_grid_icons(E_Fm2_Smart_Data *sd)
 	if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
      }
 }
-#endif
 
 static void
 _e_fm2_icons_place_custom_smart_grid_icons(E_Fm2_Smart_Data *sd)
@@ -1560,7 +1776,7 @@ _e_fm2_icons_place(Evas_Object *obj)
 	_e_fm2_icons_place_custom_icons(sd);
 	break;
       case E_FM2_VIEW_MODE_CUSTOM_GRID_ICONS:
-	_e_fm2_icons_place_custom_smart_grid_icons(sd);
+	_e_fm2_icons_place_custom_grid_icons(sd);
 	break;
       case E_FM2_VIEW_MODE_CUSTOM_SMART_GRID_ICONS:
 	_e_fm2_icons_place_custom_smart_grid_icons(sd);
@@ -1993,183 +2209,13 @@ _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (vo
    Evas_Object *oic;
    char buf[4096], *p;
 
-   if (ic->info.icon)
+   oic = e_fm2_icon_get(evas_object_evas_get(o), ic->sd->realpath,
+			ic, &(ic->info), ic->sd->config->icon.key_hint,
+			gen_func, data, force_gen, NULL);
+   if (oic)
      {
-	/* custom icon */
-	if (ic->info.icon[0] == '/')
-	   {
-	      /* path to icon file */
-	       oic = e_icon_add(evas_object_evas_get(o));
-	       e_icon_file_set(oic, ic->info.icon);
-	       e_icon_fill_inside_set(oic, 1);
-	   }
-	else
-	   {
-	      /* theme icon */
-	      oic = edje_object_add(evas_object_evas_get(o));
-              e_util_edje_icon_set(oic, ic->info.icon);
-	   }
 	edje_object_part_swallow(o, "e.swallow.icon", oic);
         evas_object_show(oic);
-	return oic;
-     }
-   if (S_ISDIR(ic->info.statinfo.st_mode))
-     {
-	oic = edje_object_add(evas_object_evas_get(o));
-	e_theme_edje_object_set(oic, "base/theme/fileman",
-				"e/icons/fileman/folder");
-	edje_object_part_swallow(o, "e.swallow.icon", oic);
-	evas_object_show(oic);
-     }
-   else
-     {
-	if (ic->info.mime)
-	  {
-	     const char *icon;
-	     
-	     icon = e_fm_mime_icon_get(ic->info.mime);
-	     /* use mime type to select icon */
-	     if (!icon)
-	       {
-		  oic = edje_object_add(evas_object_evas_get(o));
-		  e_theme_edje_object_set(oic, "base/theme/fileman",
-					  "e/icons/fileman/file");
-	       }
-	     else if (!strcmp(icon, "THUMB"))
-	       {
-		  if (ic->info.pseudo_link)
-		    snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
-		  else
-		    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
-		  
-		  oic = e_thumb_icon_add(evas_object_evas_get(o));
-		  e_thumb_icon_file_set(oic, buf, NULL);
-		  e_thumb_icon_size_set(oic, 128, 128);
-		  evas_object_smart_callback_add(oic, "e_thumb_gen",
-						 gen_func, data);
-		  _e_fm2_icon_thumb(ic, oic, force_gen);
-	       }
-	     else if (!strcmp(icon, "DESKTOP"))
-	       {
-		  E_App *app;
-		  
-		  if (ic->info.pseudo_link)
-		    snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
-		  else
-		    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
-		  app = e_app_new(buf, 0);
-		  if (app)
-		    {
-		       oic = e_app_icon_add(app, evas_object_evas_get(o));
-		       e_object_unref(E_OBJECT(app));
-		    }
-	       }
-	     else if (!strncmp(icon, "e/icons/fileman/mime/", 21))
-	       {
-		  oic = edje_object_add(evas_object_evas_get(o));
-		  if (!e_theme_edje_object_set(oic, 
-					       "base/theme/fileman",
-					       icon))
-		    e_theme_edje_object_set(oic, "base/theme/fileman",
-					    "e/icons/fileman/file");
-	       }
-	     else
-	       {
-		  p = strrchr(icon, '.');
-		  if ((p) && (!strcmp(p, ".edj")))
-		    {
-		       oic = edje_object_add(evas_object_evas_get(o));
-		       if (!edje_object_file_set(oic, icon, "icon"))
-			 e_theme_edje_object_set(oic, "base/theme/fileman",
-						 "e/icons/fileman/file");
-		    }
-		  else
-		    {
-		       oic = e_icon_add(evas_object_evas_get(o));
-		       e_icon_file_set(oic, icon);
-		    }
-	       }
-	  }
-	else
-	  {
-	     if (ic->info.pseudo_link)
-	       snprintf(buf, sizeof(buf), "%s/%s", ic->info.pseudo_dir, ic->info.file);
-	     else
-	       snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
-	     /* fallback */
-	     if (
-		 (e_util_glob_case_match(ic->info.file, "*.edj"))
-		 )
-	       {
-		  oic = e_thumb_icon_add(evas_object_evas_get(o));
-		  if (ic->sd->config->icon.key_hint)
-		    e_thumb_icon_file_set(oic, buf, ic->sd->config->icon.key_hint);
-		  else
-		    {
-		       /* FIXME: There is probably a quicker way of doing this. */
-		       if (edje_file_group_exists(buf, "icon"))
-			 e_thumb_icon_file_set(oic, buf, "icon");
-		       else if (edje_file_group_exists(buf, "e/desktop/background"))
-			 e_thumb_icon_file_set(oic, buf, "e/desktop/background");
-		       else if (edje_file_group_exists(buf, "e/init/splash"))
-			 e_thumb_icon_file_set(oic, buf, "e/init/splash");
-		    }
-		  e_thumb_icon_size_set(oic, 128, 96);
-		  evas_object_smart_callback_add(oic, "e_thumb_gen",
-						 gen_func, data);
-		  _e_fm2_icon_thumb(ic, oic, force_gen);
-	       }
-	     else if ((e_util_glob_case_match(ic->info.file, "*.desktop")) || 
-		      (e_util_glob_case_match(ic->info.file, "*.directory")))
-	       {
-		  E_App *app;
-		  
-		  app = e_app_new(buf, 0);
-		  if (app)
-		    {
-		       oic = e_app_icon_add(app, evas_object_evas_get(o));
-		       e_object_unref(E_OBJECT(app));
-		    }
-	       }
-	     else if (S_ISCHR(ic->info.statinfo.st_mode))
-	       {
-		  oic = edje_object_add(evas_object_evas_get(o));
-		  e_theme_edje_object_set(oic, "base/theme/fileman",
-					  "e/icons/fileman/file");
-	       }
-	     else if (S_ISBLK(ic->info.statinfo.st_mode))
-	       {
-		  oic = edje_object_add(evas_object_evas_get(o));
-		  e_theme_edje_object_set(oic, "base/theme/fileman",
-					  "e/icons/fileman/file");
-	       }
-	     else if (S_ISFIFO(ic->info.statinfo.st_mode))
-	       {
-		  oic = edje_object_add(evas_object_evas_get(o));
-		  e_theme_edje_object_set(oic, "base/theme/fileman",
-					  "e/icons/fileman/file");
-	       }
-	     else if (S_ISSOCK(ic->info.statinfo.st_mode))
-	       {
-		  oic = edje_object_add(evas_object_evas_get(o));
-		  e_theme_edje_object_set(oic, "base/theme/fileman",
-					  "e/icons/fileman/file");
-	       }
-	     else if (ecore_file_can_exec(buf))
-	       {
-		  oic = edje_object_add(evas_object_evas_get(o));
-		  e_theme_edje_object_set(oic, "base/theme/fileman",
-					  "e/icons/fileman/file");
-	       }
-	     else
-	       {
-		  oic = edje_object_add(evas_object_evas_get(o));
-		  e_theme_edje_object_set(oic, "base/theme/fileman",
-					  "e/icons/fileman/file");
-	       }
-	  }
-	edje_object_part_swallow(o, "e.swallow.icon", oic);
-	evas_object_show(oic);
      }
    return oic;
 }
