@@ -81,6 +81,7 @@ struct _E_Drop_Handler
 
 struct _E_Event_Dnd_Enter
 {
+   void *data;
    int x, y;
 };
 
@@ -130,6 +131,7 @@ EAPI E_Drop_Handler *e_drop_handler_add(E_Object *obj,
 				       	const char **types, unsigned int num_types,
 					int x, int y, int w, int h);
 EAPI void e_drop_handler_geometry_set(E_Drop_Handler *handler, int x, int y, int w, int h);
+EAPI int  e_drop_inside(E_Drop_Handler *handler, int x, int y);
 EAPI void e_drop_handler_del(E_Drop_Handler *handler);
 EAPI int  e_drop_xdnd_register_set(Ecore_X_Window win, int reg);
 

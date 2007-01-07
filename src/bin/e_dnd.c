@@ -148,7 +148,7 @@ e_drag_new(E_Container *container, int x, int y,
    int i;
 
    /* No need to create a drag object without type */
-   if (!num_types) return NULL;
+   if ((!types) || (!num_types)) return NULL;
    drag = E_OBJECT_ALLOC(E_Drag, E_DRAG_TYPE, _e_drag_free);
    if (!drag) return NULL;
 
@@ -367,6 +367,15 @@ e_drop_handler_geometry_set(E_Drop_Handler *handler, int x, int y, int w, int h)
    handler->y = y;
    handler->w = w;
    handler->h = h;
+}
+
+EAPI int
+e_drop_inside(E_Drop_Handler *handler, int x, int y)
+{
+   int dx, dy, dw, dh;
+
+   _e_drag_coords_update(handler, &dx, &dy, &dw, &dh);
+   return E_INSIDE(x, y, dx, dy, dw, dh);
 }
 
 EAPI void
@@ -611,7 +620,7 @@ _e_drag_update(int x, int y)
 	_e_drag_move(_drag_current, x, y);
      }
 
-   if ((_drag_current) && (_drag_current->types))
+   if (_drag_current)
      {
 	for (l = _drop_handlers; l; l = l->next)
 	  {
@@ -622,6 +631,7 @@ _e_drag_update(int x, int y)
 	     _e_drag_coords_update(h, &dx, &dy, &dw, &dh);
 	     enter_ev.x = x - dx;
 	     enter_ev.y = y - dy;
+	     enter_ev.data = NULL;
 	     move_ev.x = x - dx;
 	     move_ev.y = y - dy;
 	     leave_ev.x = x - dx;
@@ -632,7 +642,16 @@ _e_drag_update(int x, int y)
 		  if (!h->entered)
 		    {
 		       if (h->cb.enter)
-			 h->cb.enter(h->cb.data, h->active_type, &enter_ev);
+			 {
+			    if (_drag_current->cb.convert)
+			      {
+				 enter_ev.data = _drag_current->cb.convert(_drag_current,
+									   h->active_type);
+			      }
+			    else
+			      enter_ev.data = _drag_current->data;
+			    h->cb.enter(h->cb.data, h->active_type, &enter_ev);
+			 }
 		       h->entered = 1;
 		    }
 		  if (h->cb.move)
