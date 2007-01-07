@@ -2502,7 +2502,7 @@ e_gadcon_layout_pack(Evas_Object *obj, Evas_Object *child)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    _e_gadcon_layout_smart_adopt(sd, child);
-   sd->items = evas_list_append(sd->items, child);
+   sd->items = evas_list_prepend(sd->items, child);
    _e_gadcon_layout_smart_reconfigure(sd);
    return 0;
 }
