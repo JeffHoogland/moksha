@@ -509,6 +509,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, theme_default_border_style, STR);
    
    E_CONFIG_LIST(D, T, mime_icons, _e_config_mime_icon_edd); /**/
+
+   E_CONFIG_VAL(D, T, desk_auto_switch, INT);
    
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -1221,7 +1223,6 @@ e_config_init(void)
    IFCFG(0x00105);
    e_config->remember_internal_windows = 1;
    IFCFGEND;
-   
      
    IFCFG(0x00106);
    e_config->desklock_use_custom_screensaver = 0;
@@ -1293,6 +1294,10 @@ e_config_init(void)
      }
    IFCFGEND;
 
+   IFCFG(0x0108);
+   e_config->desk_auto_switch = 0;
+   IFCFGEND;
+   
    e_config->config_version = E_CONFIG_FILE_VERSION;
 
 #if 0 /* example of new config */
@@ -1391,6 +1396,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->border_raise_on_focus, 0, 1);
    E_CONFIG_LIMIT(e_config->desk_flip_wrap, 0, 1);
    E_CONFIG_LIMIT(e_config->remember_internal_windows, 0, 1);
+   E_CONFIG_LIMIT(e_config->desk_auto_switch, 0, 1);
    
    /* FIXME: disabled auto apply because it causes problems */
    e_config->cfgdlg_auto_apply = 0;
@@ -1401,7 +1407,6 @@ e_config_init(void)
    e_config->desklock_personal_passwd = NULL;
    
    e_config_save_queue();
-   
    return 1;
 }
 
@@ -1530,8 +1535,7 @@ e_config_profile_add(char *prof)
    const char *homedir;
    
    homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", 
-	    homedir, prof);
+   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", homedir, prof);
    ecore_file_mkdir(buf);
 }
 
@@ -1625,8 +1629,7 @@ e_config_profile_save(void)
 
    /* FIXME: check for other sessions fo E running */
    homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/config/profile.cfg",
-	    homedir);
+   snprintf(buf, sizeof(buf), "%s/.e/e/config/profile.cfg", homedir);
    snprintf(buf2, sizeof(buf2), "%s.tmp", buf);
 
    ef = eet_open(buf2, EET_FILE_MODE_WRITE);
@@ -1988,8 +1991,7 @@ _e_config_free(void)
 static int
 _e_config_cb_timer(void *data)
 {
-   e_util_dialog_show(_("Configuration Upgraded"),
-		      data);
+   e_util_dialog_show(_("Configuration Upgraded"), data);
    return 0;
 }
 

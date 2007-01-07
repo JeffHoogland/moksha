@@ -18,7 +18,8 @@ struct _E_Config_Dialog_Data
    int move_resize_info;
    int animate_shading;
    int window_placement_policy;
-
+   int desk_auto_switch;
+   
    /*- ADVANCED -*/
    int move_info_visible;
    int move_info_follows;
@@ -73,6 +74,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    if (cfdata->border_shade_animate) cfdata->animate_shading = 1;
    cfdata->use_app_icon = e_config->use_app_icon;
    cfdata->remember_internal_windows = e_config->remember_internal_windows;
+   cfdata->desk_auto_switch = e_config->desk_auto_switch;
 }
 
 static void *
@@ -117,6 +119,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      }
    e_config->window_placement_policy = cfdata->window_placement_policy;
    e_config->border_shade_animate = cfdata->animate_shading;
+   e_config->desk_auto_switch = cfdata->desk_auto_switch;
    e_config_save_queue();
    return 1; /* Apply was OK */
 }
@@ -135,6 +138,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->border_shade_speed = cfdata->border_shade_speed;
    e_config->use_app_icon = cfdata->use_app_icon;
    e_config->remember_internal_windows = cfdata->remember_internal_windows;
+   e_config->desk_auto_switch = cfdata->desk_auto_switch;
    e_config_save_queue();
    return 1; /* Apply was OK */
 }
@@ -165,6 +169,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_radio_add(evas, _("Place at mouse pointer"), E_WINDOW_PLACEMENT_CURSOR, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Place manually with the mouse"), E_WINDOW_PLACEMENT_MANUAL, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Automatically switch to desktop of new window"), &(cfdata->desk_auto_switch));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
@@ -235,6 +241,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_radio_add(evas, _("Place at mouse pointer"), E_WINDOW_PLACEMENT_CURSOR, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Place manually with the mouse"), E_WINDOW_PLACEMENT_MANUAL, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Automatically switch to desktop of new window"), &(cfdata->desk_auto_switch));
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
    

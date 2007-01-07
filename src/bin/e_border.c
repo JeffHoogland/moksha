@@ -5332,8 +5332,12 @@ _e_border_eval(E_Border *bd)
 		  E_Desk *desk;
 		  
 		  desk = e_desk_at_xy_get(bd->zone, rem->prop.desk_x, rem->prop.desk_y);
-		  if (desk)
-		    e_border_desk_set(bd, desk);
+		  if (desk) 
+		    {
+		       e_border_desk_set(bd, desk);
+		       if (e_config->desk_auto_switch)
+			 e_desk_show(desk);
+		    }
 	       }
 	     if (rem->apply & E_REMEMBER_APPLY_SIZE)
 	       {
