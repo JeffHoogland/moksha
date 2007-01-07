@@ -6,7 +6,7 @@ static void _e_configure_cb_resize(E_Win *win);
 static void _e_configure_cb_close(void *data, void *data2);
 static E_Configure_Category *_e_configure_category_add(E_Configure *eco, char *label, char *icon);
 static void _e_configure_category_cb(void *data);
-static E_Configure_Item *_e_configure_item_add(E_Configure_Category *cat, char *label, char *icon, E_Config_Dialog *(*func) (E_Container *con));
+static void _e_configure_item_add(E_Configure_Category *cat, char *label, char *icon, E_Config_Dialog *(*func) (E_Container *con));
 static void _e_configure_item_cb(void *data);
 static void _e_configure_focus_cb(void *data, Evas_Object *obj);
 static void _e_configure_keydown_cb(void *data, Evas *e, Evas_Object *obj, void *event);
@@ -266,14 +266,13 @@ _e_configure_category_cb(void *data)
    evas_event_thaw(evas_object_evas_get(eco->item_list));
 }
 
-static E_Configure_Item *
+static void
 _e_configure_item_add(E_Configure_Category *cat, char *label, char *icon, E_Config_Dialog *(*func) (E_Container *con))
 {
    E_Configure_Item *ci;
    E_Configure_CB *cb;
    
-   if (!cat) return NULL;
-   if (!label) return NULL;
+   if ((!cat) || (!label)) return;
    
    ci = E_NEW(E_Configure_Item, 1);
    cb = E_NEW(E_Configure_CB, 1);
@@ -284,7 +283,6 @@ _e_configure_item_add(E_Configure_Category *cat, char *label, char *icon, E_Conf
    if (icon)
      ci->icon = evas_stringshare_add(icon);
    cat->items = evas_list_append(cat->items, ci);
-   return ci;
 }
 
 static void 
