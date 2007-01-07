@@ -276,7 +276,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_radio_add(evas, _("Custom"), 2, rg);
    evas_object_smart_callback_add(ob, "changed", _cb_type, cfdata);
    e_widget_frametable_object_append(ot, ob, 1, 2, 1, 1, 1, 1, 1, 1);
-   
+
+   cfdata->icon_mime = 1;
+   if ((cfdata->fi->icon) || ((itype) && (!strcmp(itype, "DESKTOP"))))
+     cfdata->icon_mime = 0;
    ob = e_widget_check_add(evas, _("Use this icon for all files of this type"), &(cfdata->icon_mime));
    e_widget_frametable_object_append(ot, ob, 0, 3, 2, 1, 1, 1, 1, 1);
    

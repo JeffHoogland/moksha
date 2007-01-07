@@ -970,6 +970,7 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 		  oic = edje_object_add(evas);
 		  e_theme_edje_object_set(oic, "base/theme/fileman",
 					  "e/icons/fileman/file");
+		  if (type_ret) *type_ret = "FILE_TYPE";
 	       }
 	     else if (!strcmp(icon, "THUMB"))
 	       {
