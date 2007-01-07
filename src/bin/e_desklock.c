@@ -126,6 +126,12 @@ e_desklock_show(void)
    int			  total_zone_num;
    
 
+#ifndef HAVE_PAM
+   e_util_dialog_show(_("Error - no PAM support"),
+		      _("No PAM support was built into Enlightenment, so<br>"
+			"desk locking is disabled."));
+   return 0;
+#endif   
    if (_e_custom_saver_exe) return 0;
 
    if (e_config->desklock_use_custom_screensaver)
@@ -697,6 +703,7 @@ _desklock_pam_init(E_Desklock_Auth *da)
    else if (ecore_file_exists("/etc/pam.d/xscreensaver")) pam_prof = "xscreensaver";
    else if (ecore_file_exists("/etc/pam.d/kscreensaver")) pam_prof = "kscreensaver";
    else if (ecore_file_exists("/etc/pam.d/system-auth")) pam_prof = "system-auth";
+   else if (ecore_file_exists("/etc/pam.d/system")) pam_prof = "system";
    
    if ((pamerr = pam_start(pam_prof, da->user, &(da->pam.conv),
 			   &(da->pam.handle))) != PAM_SUCCESS)
