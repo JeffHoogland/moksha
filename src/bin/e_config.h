@@ -186,7 +186,7 @@ struct _E_Config
    int         cursor_size; //GUI
    int         menu_autoscroll_margin; // GUI
    int         menu_autoscroll_cursor_margin; // GUI
-   const char *input_method;
+   const char *input_method; // GUI
    struct {
 	int    move;
 	int    resize;
