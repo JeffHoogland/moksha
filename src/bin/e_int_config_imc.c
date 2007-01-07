@@ -118,16 +118,11 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
 	path = e_intl_imc_system_path_get();
 	if(!strncmp(cfdata->imc_current, path, strlen(path)))
-	  {
-	     cfdata->fmdir = 1;
-	  }
-
+	  cfdata->fmdir = 1;
 	cfdata->imc_disable = 0;
      }
    else
-     {
-	cfdata->imc_disable = 1;
-     }
+     cfdata->imc_disable = 1;
 }
 
 static void *
@@ -148,7 +143,6 @@ _change_hash_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
 
    imc = data;
    e_intl_input_method_config_free(imc);
-   
    return 1;
 }
 
@@ -188,17 +182,13 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     e_config->input_method = NULL;
 	  }
 	
-	
 	if (!cfdata->imc_disable)
-	  {
-	     e_config->input_method = evas_stringshare_add(cfdata->imc_current);
-	  }
+	  e_config->input_method = evas_stringshare_add(cfdata->imc_current);
 	
 	e_intl_input_method_set(e_config->input_method);
      }
    
    e_config_save_queue();
-   
    return 1;
 }
 
@@ -217,7 +207,6 @@ _e_imc_disable_change_cb(void *data, Evas_Object *obj)
    E_Config_Dialog_Data *cfdata;
    
    cfdata = data;
-
 }
 
 static void
@@ -262,8 +251,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    imc_basic_list = e_intl_input_method_list();
    /* Sort basic input method list */	
    imc_basic_list = evas_list_sort(imc_basic_list, 
-	 evas_list_count(imc_basic_list), 
-	 _basic_list_sort_cb);
+	 evas_list_count(imc_basic_list), _basic_list_sort_cb);
 
    i = 0;
    while(imc_basic_list) 
@@ -325,7 +313,6 @@ _change_hash_apply_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
 	eet_close(ef);
      }
    e_intl_input_method_config_free(imc);
-    
    return 1;
 }
 
@@ -342,9 +329,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config_save_queue();
    
    if (cfdata->imc_current) 
-     {
-	_e_imc_change_enqueue(cfdata);
-     }
+     _e_imc_change_enqueue(cfdata);
 
    if (cfdata->imc_change_map)
      {
@@ -352,7 +337,6 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	evas_hash_free(cfdata->imc_change_map);
      }
    cfdata->imc_change_map = NULL;
-    
    return 1;
 }
 
@@ -367,13 +351,9 @@ _cb_dir(void *data, Evas_Object *obj)
    
    cfdata = data;
    if (cfdata->fmdir == 1)
-     {
-	path = e_intl_imc_system_path_get();
-     }
+     path = e_intl_imc_system_path_get();
    else
-     {
-	path = e_intl_imc_personal_path_get();
-     }
+     path = e_intl_imc_personal_path_get();
    e_fm2_path_set(cfdata->o_fm, path, "/");
 }
 
@@ -649,9 +629,7 @@ _e_imc_file_name_new_get(void)
 	snprintf(path, sizeof(path), "%s/new_input_method-%02d.imc",
 	      e_intl_imc_personal_path_get(), i);
 	if (!ecore_file_exists(path)) 
-	  {
-	     return evas_stringshare_add(path);
-	  }
+	  return evas_stringshare_add(path);
      }
    
    return NULL;
