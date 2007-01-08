@@ -27,6 +27,11 @@ EAPI void e_widget_ilist_clear(Evas_Object *obj);
 EAPI int e_widget_ilist_nth_is_header(Evas_Object *obj, int n);
 EAPI void e_widget_ilist_freeze(Evas_Object *obj);
 EAPI void e_widget_ilist_thaw(Evas_Object *obj);
-    
+EAPI void e_widget_ilist_multi_select_set(Evas_Object *obj, int multi);
+EAPI int e_widget_ilist_multi_select_get(Evas_Object *obj);
+EAPI Evas_List *e_widget_ilist_items_get(Evas_Object *obj);
+EAPI void e_widget_ilist_multi_select(Evas_Object *obj, int n);
+EAPI void e_widget_ilist_range_select(Evas_Object *obj, int n);
+
 #endif
 #endif

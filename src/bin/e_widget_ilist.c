@@ -59,7 +59,6 @@ e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, char **value)
    evas_object_show(o);
    evas_object_smart_callback_add(o, "selected", _e_wid_cb_selected, obj);
    
-   
    evas_object_resize(obj, 32, 32);
    e_widget_min_size_set(obj, 32, 32);
    return obj;
@@ -157,9 +156,7 @@ e_widget_ilist_go(Evas_Object *obj)
 	e_widget_min_size_set(obj, mw + (w - vw), wmh);
      }
    else if (mw < vw)
-     {
-	evas_object_resize(wd->o_ilist, vw,mh);
-     }
+     evas_object_resize(wd->o_ilist, vw,mh);
 }
 
 EAPI void
@@ -284,6 +281,51 @@ e_widget_ilist_thaw(Evas_Object *obj)
    
    wd = e_widget_data_get(obj);
    e_ilist_thaw(wd->o_ilist);
+}
+
+EAPI void 
+e_widget_ilist_multi_select_set(Evas_Object *obj, int multi) 
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   e_ilist_multi_select_set(wd->o_ilist, multi);
+}
+
+EAPI int 
+e_widget_ilist_multi_select_get(Evas_Object *obj) 
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   return e_ilist_multi_select_get(wd->o_ilist);
+}
+
+EAPI Evas_List *
+e_widget_ilist_items_get(Evas_Object *obj) 
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   return e_ilist_items_get(wd->o_ilist);
+}
+
+EAPI void 
+e_widget_ilist_multi_select(Evas_Object *obj, int n) 
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   e_ilist_multi_select(wd->o_ilist, n);
+}
+
+EAPI void 
+e_widget_ilist_range_select(Evas_Object *obj, int n) 
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   e_ilist_range_select(wd->o_ilist, n);
 }
 
 static void
