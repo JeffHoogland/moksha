@@ -4764,7 +4764,6 @@ _e_border_eval(E_Border *bd)
    int rem_change = 0;
    int send_event = 1;
    
-   
    /* fetch any info queued to be fetched */
    if (bd->client.icccm.fetch.client_leader)
      {
@@ -4892,9 +4891,8 @@ _e_border_eval(E_Border *bd)
      {
 	e_hints_window_type_get(bd);
 	if ((!bd->lock_border) || (!bd->client.border.name))
-	  {
-	     bd->client.border.changed = 1;
-	  }
+	  bd->client.border.changed = 1;
+
 	if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK)
 	  {
 	     /* TODO: Make this user options */
@@ -4909,7 +4907,6 @@ _e_border_eval(E_Border *bd)
 		  bd->client.netwm.update.state = 1;
 	       }
 	  }
-
 	bd->client.netwm.fetch.type = 0;
      }
    if (bd->client.icccm.fetch.machine)
@@ -5079,9 +5076,7 @@ _e_border_eval(E_Border *bd)
 	     bd->parent = bd_parent;
 	     e_border_layer_set(bd, bd->parent->layer);
 	     if ((e_config->modal_windows) && (bd->client.netwm.state.modal))
-	       {
-		  bd->parent->modal = bd;
-	       }
+	       bd->parent->modal = bd;
 	     if (bd->parent->focused)
 	       e_border_focus_set(bd, 1, 1);
 	  }
@@ -5099,7 +5094,6 @@ _e_border_eval(E_Border *bd)
      {
 	if (bd->client.icccm.icon_name) free(bd->client.icccm.icon_name);
 	bd->client.icccm.icon_name = ecore_x_icccm_icon_name_get(bd->client.win);
-
 	bd->client.icccm.fetch.icon_name = 0;
 	rem_change = 1;
      }
@@ -5107,7 +5101,6 @@ _e_border_eval(E_Border *bd)
      {
 	if (bd->client.netwm.icon_name) free(bd->client.netwm.icon_name);
 	ecore_x_netwm_icon_name_get(bd->client.win, &bd->client.netwm.icon_name);
-
 	bd->client.netwm.fetch.icon_name = 0;
 	rem_change = 1;
      }
@@ -5124,7 +5117,7 @@ _e_border_eval(E_Border *bd)
 	if (!ecore_x_netwm_icons_get(bd->client.win,
 				     &bd->client.netwm.icons, &bd->client.netwm.num_icons))
 	  {
-	     printf("ERROR: Fetch icon from client\n");
+//	     printf("ERROR: Fetch icon from client\n");
 	     bd->client.netwm.icons = NULL;
 	     bd->client.netwm.num_icons = 0;
 	  }
@@ -5135,7 +5128,6 @@ _e_border_eval(E_Border *bd)
    if (bd->client.netwm.fetch.user_time)
      {
 	ecore_x_netwm_user_time_get(bd->client.win, &bd->client.netwm.user_time);
-
 	bd->client.netwm.fetch.user_time = 0;
      }
    if (bd->client.netwm.fetch.strut)
@@ -5167,7 +5159,6 @@ _e_border_eval(E_Border *bd)
 	     bd->client.netwm.strut.bottom_start_x = 0;
 	     bd->client.netwm.strut.bottom_end_x = 0;
 	  }
-
 	bd->client.netwm.fetch.strut = 0;
      }
    if (bd->changes.shape)
@@ -5242,9 +5233,7 @@ _e_border_eval(E_Border *bd)
 	if (bd->client.mwm.borderless != pb)
 	  {
 	     if ((!bd->lock_border) || (!bd->client.border.name))
-	       {
-		  bd->client.border.changed = 1;
-	       }
+	       bd->client.border.changed = 1;
 	  }
 	bd->client.mwm.fetch.hints = 0;
 	rem_change = 1;
@@ -5303,9 +5292,7 @@ _e_border_eval(E_Border *bd)
 	ecore_event_add(E_EVENT_BORDER_ADD, ev, _e_border_event_border_add_free, NULL);
 
 	if ((!bd->lock_border) || (!bd->client.border.name))
-	  {
-	     bd->client.border.changed = 1;
-	  }
+	  bd->client.border.changed = 1;
 	if (!bd->remember)
 	  {
 	     rem = e_remember_find_usable(bd);
@@ -5525,9 +5512,7 @@ _e_border_eval(E_Border *bd)
 		  bd->lock_life = rem->prop.lock_life;
 	       }
 	     if (rem->apply & E_REMEMBER_APPLY_SKIP_WINLIST)
-	       {
-		  bd->user_skip_winlist = rem->prop.skip_winlist;
-	       }
+	       bd->user_skip_winlist = rem->prop.skip_winlist;
 	  }
      }
    
@@ -5710,9 +5695,7 @@ _e_border_eval(E_Border *bd)
 		  edje_object_part_swallow(bd->bg_object, "e.swallow.icon", bd->icon_object);
 	       }
 	     else
-	       {
-		  evas_object_hide(bd->icon_object);
-	       }
+	       evas_object_hide(bd->icon_object);
 	  }
      }
    
@@ -6198,9 +6181,7 @@ _e_border_eval(E_Border *bd)
 	     
 	     twin = ecore_x_window_override_new(bd->win, 0, 0, bd->w, bd->h);
 	     if (bd->shaped)
-	       {
-		  ecore_x_window_shape_window_set(twin, bd->bg_win);
-	       }
+	       ecore_x_window_shape_window_set(twin, bd->bg_win);
 	     else
 	       {
 		  Ecore_X_Rectangle rects[4];
@@ -6248,9 +6229,7 @@ _e_border_eval(E_Border *bd)
 	     ecore_x_window_del(twin);
 	  }
 	else
-	  {
-	     ecore_x_window_shape_mask_set(bd->win, 0);
-	  }
+	  ecore_x_window_shape_mask_set(bd->win, 0);
 //	bd->need_shape_export = 1;
 	bd->need_shape_merge = 0;
      }
@@ -6400,9 +6379,7 @@ _e_border_eval(E_Border *bd)
 	     edje_object_part_swallow(bd->bg_object, "e.swallow.icon", bd->icon_object);
 	  }
 	else
-	  {
-	     evas_object_hide(bd->icon_object);
-	  }
+	  evas_object_hide(bd->icon_object);
 
 	  {
 	     E_Event_Border_Icon_Change *ev;
@@ -6433,9 +6410,7 @@ _e_border_eval(E_Border *bd)
      }
    
    bd->new_client = 0;
-   
    bd->changed = 0;
-
    bd->changes.stack = 0;
    bd->changes.prop = 0;
    bd->changes.border = 0;
@@ -6460,9 +6435,7 @@ _e_border_eval(E_Border *bd)
 			e_border_focused_get())))
 		    {
 		       if (!bd->lock_focus_out)
-			 {
-			    e_border_focus_set(bd, 1, 1);
-			 }
+			 e_border_focus_set(bd, 1, 1);
 		    }
 	       }
 	  }
@@ -6654,9 +6627,7 @@ _e_border_shade_animator(void *data)
    else if (bd->shade.val > .999) bd->shade.val = 1.0;
 
    if (bd->shade.dir == E_DIRECTION_UP)
-     {
-	bd->h = bd->client_inset.t + bd->client_inset.b + bd->client.h * bd->shade.val;
-     }
+     bd->h = bd->client_inset.t + bd->client_inset.b + bd->client.h * bd->shade.val;
    else if (bd->shade.dir == E_DIRECTION_DOWN)
      {
 	bd->h = bd->client_inset.t + bd->client_inset.b + bd->client.h * bd->shade.val;
@@ -6664,9 +6635,7 @@ _e_border_shade_animator(void *data)
 	bd->changes.pos = 1;
      }
    else if (bd->shade.dir == E_DIRECTION_LEFT)
-     {
-	bd->w = bd->client_inset.l + bd->client_inset.r + bd->client.w * bd->shade.val;
-     }
+     bd->w = bd->client_inset.l + bd->client_inset.r + bd->client.w * bd->shade.val;
    else if (bd->shade.dir == E_DIRECTION_RIGHT)
      {
 	bd->w = bd->client_inset.l + bd->client_inset.r + bd->client.w * bd->shade.val;
@@ -6697,13 +6666,10 @@ _e_border_shade_animator(void *data)
 	bd->shade.anim = NULL;
 
 	if (bd->shaded)
-	  {
-	     edje_object_signal_emit(bd->bg_object, "e,state,shaded", "e");
-	  }
+	  edje_object_signal_emit(bd->bg_object, "e,state,shaded", "e");
 	else
-	  {
-	     edje_object_signal_emit(bd->bg_object, "e,state,unshaded", "e");
-	  }
+	  edje_object_signal_emit(bd->bg_object, "e,state,unshaded", "e");
+
 	ecore_x_window_gravity_set(bd->client.win, ECORE_X_GRAVITY_NW);
 	ev = calloc(1, sizeof(E_Event_Border_Resize));
 	ev->border = bd;
@@ -6712,7 +6678,6 @@ _e_border_shade_animator(void *data)
 	ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
 	return 0;
      }
-
    return 1;
 }
 
