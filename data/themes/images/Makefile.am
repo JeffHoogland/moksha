@@ -519,5 +519,6 @@ e17_icon_appearance.png \
 e17_icon_extensions.png \
 e17_icon_advanced.png \
 e17_icon_file_icons.png \
-e17_icon_imc.png
+e17_icon_imc.png \
+e17_icon_menu_settings.png 
 
