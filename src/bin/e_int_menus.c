@@ -830,7 +830,7 @@ _e_int_menus_sys_pre_cb(void *data, E_Menu *m)
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Lock Screen"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/desklock");
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/desklock_menu");
    e_menu_item_callback_set(mi, _e_int_menus_main_lock, NULL);
    
    mi = e_menu_item_new(m);
