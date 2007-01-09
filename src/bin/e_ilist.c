@@ -222,9 +222,26 @@ e_ilist_selected_set(Evas_Object *obj, int n)
 EAPI int 
 e_ilist_selected_get(Evas_Object *obj) 
 {
+   Evas_List *l;
+   int i, j;
+   
    API_ENTRY return -1;
    if (!sd->items) return -1;
-   return sd->selected;
+   if (!sd->multi_select)
+     return sd->selected;
+   else
+     {
+	j = -1;
+	for (i = 0, l = sd->items; l; l = l->next, i++) 
+	  {
+	     E_Ilist_Item *li;
+	     
+	     li = l->data;
+	     if (!li) continue;
+	     if (li->selected) j = i;
+	  }
+	return j;
+     }
 }
 
 EAPI const char *
@@ -468,6 +485,9 @@ e_ilist_multi_select(Evas_Object *obj, int n)
      {
 	edje_object_signal_emit(si->o_base, "e,state,unselected", "e");
 	si->selected = 0;
+	if (si->func_hilight) si->func_hilight(si->data, si->data2);
+	if (sd->selector) return;
+	if (si->func) si->func(si->data, si->data2);
 	return;
      }
    si->selected = 1;

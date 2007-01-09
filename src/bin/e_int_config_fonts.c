@@ -573,13 +573,23 @@ _ilist_font_cb_change(void *data, Evas_Object *obj)
      }
    
    indx = e_widget_ilist_selected_get(cfdata->gui.class_list);
+   if (indx < 0) 
+     {
+	e_widget_disabled_set(cfdata->gui.enabled, 1);
+	e_widget_disabled_set(cfdata->gui.font, 1);
+	e_widget_disabled_set(cfdata->gui.size, 1);
+	e_widget_check_checked_set(cfdata->gui.enabled, 0);
+	if (cfdata->gui.font_list)
+	  e_widget_ilist_unselect(cfdata->gui.font_list);
+	return;
+     }
+   
    tc = evas_list_nth(cfdata->text_classes, indx);
    cfdata->cur_index = indx;
 
    e_widget_disabled_set(cfdata->gui.enabled, 0);
    e_widget_disabled_set(cfdata->gui.font, !tc->enabled);
    e_widget_disabled_set(cfdata->gui.size, !tc->enabled);
-   
    e_widget_check_checked_set(cfdata->gui.enabled, tc->enabled);
    if (cfdata->gui.font_list) 
      {	
