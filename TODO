@@ -12,6 +12,8 @@ Some of the things (in very short form) that need to be done to E17...
   newlines on every word (maybe the utf8 decode patch? for evas?)
 * e_apps wont pick up changes in favorite menu dirs made by the applications
   config dialog after a while (i think once u get 1 app in it stops listening)
+* Need global unique identifier for gadcons, so that their config will move
+  with them from one shelf to another.
 ]]]
 
 [[[
