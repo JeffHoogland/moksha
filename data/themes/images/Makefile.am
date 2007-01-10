@@ -520,5 +520,8 @@ e17_icon_extensions.png \
 e17_icon_advanced.png \
 e17_icon_file_icons.png \
 e17_icon_imc.png \
-e17_icon_menu_settings.png 
+e17_icon_menu_settings.png \
+e17_icon_ibar_applications.png \
+e17_icon_restart_applications.png \
+e17_icon_startup_applications.png
 

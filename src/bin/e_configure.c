@@ -404,9 +404,9 @@ _e_configure_fill_cat_list(void *data)
    _e_configure_item_add(cat, _("Startup"), "enlightenment/startup", e_int_config_startup);
 
    cat = _e_configure_category_add(eco, _("Applications"), "enlightenment/applications");
-   _e_configure_item_add(cat, _("IBar Applications"), "enlightenment/applications", e_int_config_apps_ibar);   
-   _e_configure_item_add(cat, _("Restart Applications"), "enlightenment/applications", e_int_config_apps_restart);
-   _e_configure_item_add(cat, _("Startup Applications"), "enlightenment/applications", e_int_config_apps_startup);
+   _e_configure_item_add(cat, _("IBar Applications"), "enlightenment/ibar_applications", e_int_config_apps_ibar);   
+   _e_configure_item_add(cat, _("Restart Applications"), "enlightenment/restart_applications", e_int_config_apps_restart);
+   _e_configure_item_add(cat, _("Startup Applications"), "enlightenment/startup_applications", e_int_config_apps_startup);
    
    cat = _e_configure_category_add(eco, _("Screen"), "enlightenment/screen_setup");
    _e_configure_item_add(cat, _("Virtual Desktops"), "enlightenment/desktops", e_int_config_desks);
@@ -428,7 +428,7 @@ _e_configure_fill_cat_list(void *data)
 #else
    _e_configure_item_add(cat, _("Applications Menu"), "enlightenment/applications", e_int_config_apps);
 #endif
-   _e_configure_item_add(cat, _("Menu Settings"), "enlightenment/menus", e_int_config_menus);
+   _e_configure_item_add(cat, _("Menu Settings"), "enlightenment/menu_settings", e_int_config_menus);
 
    cat = _e_configure_category_add(eco, _("Language"), "enlightenment/intl");
    _e_configure_item_add(cat, _("Language Settings"), "enlightenment/intl", e_int_config_intl);
@@ -440,7 +440,7 @@ _e_configure_fill_cat_list(void *data)
    _e_configure_item_add(cat, _("Window List"), "enlightenment/winlist", e_int_config_winlist);
    _e_configure_item_add(cat, _("Run Command"), "enlightenment/run", e_int_config_exebuf);
    _e_configure_item_add(cat, _("Search Directories"), "enlightenment/directories", e_int_config_paths);
-   _e_configure_item_add(cat, _("File Icons"), "enlightenment/e", e_int_config_mime);
+   _e_configure_item_add(cat, _("File Icons"), "enlightenment/file_icons", e_int_config_mime);
 
    cat = _e_configure_category_add(eco, _("Extensions"), "enlightenment/extensions");
    _e_configure_item_add(cat, _("Modules"), "enlightenment/modules", e_int_config_modules);
