@@ -5470,7 +5470,8 @@ _e_border_eval(E_Border *bd)
 		  if (rem->prop.border)
 		    {
 		       if (bd->bordername) evas_stringshare_del(bd->bordername);
-		       bd->bordername = evas_stringshare_add(rem->prop.border);
+		       if (rem->prop.border) bd->bordername = evas_stringshare_add(rem->prop.border);
+		       else bd->bordername = NULL;
 		       bd->client.border.changed = 1;
 		    }
 	       }
@@ -5557,6 +5558,7 @@ _e_border_eval(E_Border *bd)
 	  bordername = "skipped";
 	else 
 	  bordername = e_config->theme_default_border_style;
+	if (!bordername) bordername = "default";
 
 	if ((!bd->client.border.name) || (strcmp(bd->client.border.name, bordername)))
 	  {

@@ -87,8 +87,8 @@ e_fm_prop_file(E_Container *con, E_Fm2_Icon_Info *fi)
    v->free_cfdata             = _free_data;
    v->basic.apply_cfdata      = _basic_apply_data;
    v->basic.create_widgets    = _basic_create_widgets;
-   v->advanced.apply_cfdata   = _advanced_apply_data;
-   v->advanced.create_widgets = _advanced_create_widgets;
+//   v->advanced.apply_cfdata   = _advanced_apply_data;
+//   v->advanced.create_widgets = _advanced_create_widgets;
    /* create config diaolg for NULL object/data */
    cfd = e_config_dialog_new(con,
 			     _("File Properties"),
@@ -146,14 +146,38 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
+   char buf[4096];
+   int fperm = 0;
+   
+   if (((fi->statinfo.st_mode & S_IRUSR) && (cfdata->owner_read)) ||
+       ((!fi->statinfo.st_mode & S_IRUSR) && (!cfdata->owner_read)))
+     fperm = 1;
+   if (((fi->statinfo.st_mode & S_IWUSR) && (cfdata->owner_write)) ||
+       ((!fi->statinfo.st_mode & S_IWUSR) && (!cfdata->owner_write)))
+     fperm = 1;
+   if (((fi->statinfo.st_mode & S_IROTH) && (cfdata->others_read)) ||
+       ((!fi->statinfo.st_mode & S_IROTH) && (!cfdata->others_read)))
+     fperm = 1;
+   if (((fi->statinfo.st_mode & S_IWOTH) && (cfdata->others_write)) ||
+       ((!fi->statinfo.st_mode & S_IWOTH) && (!cfdata->others_write)))
+     fperm = 1;
+   snprintf(buf, sizeof(buf), "%s/%s", 
+	    e_fm2_real_path_get(cfdata->fi->fm), cfdata->fi->file);
+   if (fperm)
+     {
+	/* FIXME: modify st_mode */
+	chmod(buf, fi->statinfo.st_mode);
+     }
    return 1; /* Apply was OK */
 }
 
+#if 0
 static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    return 1; /* Apply was OK */
 }
+#endif
 
 /**--GUI--**/
 static Evas_Object *
@@ -288,6 +312,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    return o;
 }
 
+#if 0
 static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
@@ -297,7 +322,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    o = e_widget_table_add(evas, 0);
    return o;
 }
-
+#endif
 
 
 
