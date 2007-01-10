@@ -149,24 +149,24 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    char buf[4096];
    int fperm = 0;
    
-   if (((fi->statinfo.st_mode & S_IRUSR) && (cfdata->owner_read)) ||
-       ((!fi->statinfo.st_mode & S_IRUSR) && (!cfdata->owner_read)))
+   if (((cfdata->fi->statinfo.st_mode & S_IRUSR) && (cfdata->owner_read)) ||
+       ((!cfdata->fi->statinfo.st_mode & S_IRUSR) && (!cfdata->owner_read)))
      fperm = 1;
-   if (((fi->statinfo.st_mode & S_IWUSR) && (cfdata->owner_write)) ||
-       ((!fi->statinfo.st_mode & S_IWUSR) && (!cfdata->owner_write)))
+   if (((cfdata->fi->statinfo.st_mode & S_IWUSR) && (cfdata->owner_write)) ||
+       ((!cfdata->fi->statinfo.st_mode & S_IWUSR) && (!cfdata->owner_write)))
      fperm = 1;
-   if (((fi->statinfo.st_mode & S_IROTH) && (cfdata->others_read)) ||
-       ((!fi->statinfo.st_mode & S_IROTH) && (!cfdata->others_read)))
+   if (((cfdata->fi->statinfo.st_mode & S_IROTH) && (cfdata->others_read)) ||
+       ((!cfdata->fi->statinfo.st_mode & S_IROTH) && (!cfdata->others_read)))
      fperm = 1;
-   if (((fi->statinfo.st_mode & S_IWOTH) && (cfdata->others_write)) ||
-       ((!fi->statinfo.st_mode & S_IWOTH) && (!cfdata->others_write)))
+   if (((cfdata->fi->statinfo.st_mode & S_IWOTH) && (cfdata->others_write)) ||
+       ((!cfdata->fi->statinfo.st_mode & S_IWOTH) && (!cfdata->others_write)))
      fperm = 1;
    snprintf(buf, sizeof(buf), "%s/%s", 
 	    e_fm2_real_path_get(cfdata->fi->fm), cfdata->fi->file);
    if (fperm)
      {
 	/* FIXME: modify st_mode */
-	chmod(buf, fi->statinfo.st_mode);
+	chmod(buf, cfdata->fi->statinfo.st_mode);
      }
    return 1; /* Apply was OK */
 }
