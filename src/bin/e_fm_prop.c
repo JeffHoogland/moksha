@@ -68,8 +68,12 @@ struct _E_Config_Dialog_Data
    int owner_write;
    int others_read;
    int others_write;
+   int picon_type;
+   int picon_mime;
+   int picon_changed;
    int icon_type;
    int icon_mime;
+   char *icon;
    /*- ADVANCED -*/
 };
 
@@ -87,8 +91,10 @@ e_fm_prop_file(E_Container *con, E_Fm2_Icon_Info *fi)
    v->free_cfdata             = _free_data;
    v->basic.apply_cfdata      = _basic_apply_data;
    v->basic.create_widgets    = _basic_create_widgets;
-//   v->advanced.apply_cfdata   = _advanced_apply_data;
-//   v->advanced.create_widgets = _advanced_create_widgets;
+#if 0   
+   v->advanced.apply_cfdata   = _advanced_apply_data;
+   v->advanced.create_widgets = _advanced_create_widgets;
+#endif   
    /* create config diaolg for NULL object/data */
    cfd = e_config_dialog_new(con,
 			     _("File Properties"),
@@ -139,6 +145,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    E_FREE(cfdata->mod_date);
    E_FREE(cfdata->mime);
    E_FREE(cfdata->owner);
+   E_FREE(cfdata->icon);
    free(cfdata);
 }
 
@@ -149,6 +156,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    char buf[4096];
    int fperm = 0;
    
+   snprintf(buf, sizeof(buf), "%s/%s", 
+	    e_fm2_real_path_get(cfdata->fi->fm), cfdata->fi->file);
    if (((cfdata->fi->statinfo.st_mode & S_IRUSR) && (cfdata->owner_read)) ||
        ((!cfdata->fi->statinfo.st_mode & S_IRUSR) && (!cfdata->owner_read)))
      fperm = 1;
@@ -161,13 +170,57 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (((cfdata->fi->statinfo.st_mode & S_IWOTH) && (cfdata->others_write)) ||
        ((!cfdata->fi->statinfo.st_mode & S_IWOTH) && (!cfdata->others_write)))
      fperm = 1;
-   snprintf(buf, sizeof(buf), "%s/%s", 
-	    e_fm2_real_path_get(cfdata->fi->fm), cfdata->fi->file);
    if (fperm)
      {
-	/* FIXME: modify st_mode */
-	chmod(buf, cfdata->fi->statinfo.st_mode);
+	mode_t pmode;
+	
+	pmode = cfdata->fi->statinfo.st_mode;
+	if (cfdata->owner_read) cfdata->fi->statinfo.st_mode |= S_IRUSR;
+	else cfdata->fi->statinfo.st_mode &= ~S_IRUSR;
+	if (cfdata->owner_write) cfdata->fi->statinfo.st_mode |= S_IWUSR;
+	else cfdata->fi->statinfo.st_mode &= ~S_IWUSR;
+	if (cfdata->others_read) cfdata->fi->statinfo.st_mode |= S_IROTH;
+	else cfdata->fi->statinfo.st_mode &= ~S_IROTH;
+	if (cfdata->others_write) cfdata->fi->statinfo.st_mode |= S_IWOTH;
+	else cfdata->fi->statinfo.st_mode &= ~S_IWOTH;
+	if (chmod(buf, cfdata->fi->statinfo.st_mode) == -1)
+	  {
+	     /* FIXME: error dialog */
+	     cfdata->fi->statinfo.st_mode = pmode;
+	  }
      }
+   if ((cfdata->picon_type != cfdata->icon_type) ||
+       (cfdata->picon_mime != cfdata->icon_mime) ||
+       (cfdata->picon_changed))
+     {
+	if (cfdata->icon_mime) /* modify mimetype */
+	  {
+	     if (!cfdata->picon_mime) /* remove previous custom icon info */
+	       e_fm2_custom_file_del(buf);
+	     /* FIXME: modify mime info */
+	  }
+	else /* custom for this file */
+	  {
+	     E_Fm2_Custom_File *cf, cf0;
+
+	     cf = e_fm2_custom_file_get(buf);
+	     if (!cf)
+	       {
+		  memset(cf, 0, sizeof(E_Fm2_Custom_File));
+		  cf = &cf0;
+	       }
+	     cf->icon.type = cfdata->icon_type;
+	     if (cf->icon.icon)
+	       evas_stringshare_del(cf->icon.icon);
+	     cf->icon.icon = NULL;
+	     if (cfdata->icon)
+	       cf->icon.icon = evas_stringshare_add(cfdata->icon);
+	     cf->icon.valid = 1;
+	     e_fm2_custom_file_set(buf, &cf);
+	  }
+	e_fm2_all_icons_update();
+     }
+	  
    return 1; /* Apply was OK */
 }
 
@@ -204,7 +257,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_entry_readonly_set(ob, 1);
    e_widget_table_object_append(ot, ob, 1, 0, 1, 1, 1, 0, 1, 0);
    
-   ob = e_widget_label_add(evas, _("Size:"));
+  ob = e_widget_label_add(evas, _("Size:"));
    e_widget_table_object_append(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0);
    ob = e_widget_entry_add(evas, &(cfdata->size));
    e_widget_min_size_set(ob, 140, -1);
@@ -289,6 +342,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      }
    else
      cfdata->icon_type = 0;
+   cfdata->picon_type = cfdata->icon_type;
    
    rg = e_widget_radio_group_new(&cfdata->icon_type);
    ob = e_widget_radio_add(evas, _("Default"), 0, rg);
@@ -304,6 +358,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->icon_mime = 1;
    if ((cfdata->fi->icon) || ((itype) && (!strcmp(itype, "DESKTOP"))))
      cfdata->icon_mime = 0;
+   cfdata->picon_mime = cfdata->icon_mime;
    ob = e_widget_check_add(evas, _("Use this icon for all files of this type"), &(cfdata->icon_mime));
    e_widget_frametable_object_append(ot, ob, 0, 3, 2, 1, 1, 1, 1, 1);
    

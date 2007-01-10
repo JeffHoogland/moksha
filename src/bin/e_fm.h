@@ -25,9 +25,10 @@ typedef enum _E_Fm2_Menu_Flags
    E_FM2_MENU_NO_RENAME            = (1 << 5)
 } E_Fm2_Menu_Flags;
 
-typedef struct _E_Fm2_Config    E_Fm2_Config;
-typedef struct _E_Fm2_Icon      E_Fm2_Icon;
-typedef struct _E_Fm2_Icon_Info E_Fm2_Icon_Info;
+typedef struct _E_Fm2_Config      E_Fm2_Config;
+typedef struct _E_Fm2_Icon        E_Fm2_Icon;
+typedef struct _E_Fm2_Icon_Info   E_Fm2_Icon_Info;
+typedef struct _E_Fm2_Custom_File E_Fm2_Custom_File;
 
 #else
 #ifndef E_FM_H
@@ -102,11 +103,34 @@ struct _E_Fm2_Icon_Info
    const char       *real_link;
    const char       *pseudo_dir;
    struct stat       statinfo;
+   unsigned char     icon_type;
    unsigned char     mount : 1;
    unsigned char     pseudo_link : 1;
    unsigned char     deleted : 1;
    unsigned char     broken_link : 1;
 };
+
+struct _E_Fm2_Custom_File
+{
+   struct {
+      int            x, y, w, h;
+      int            res_w, res_h;
+      unsigned char  valid;
+   } geom;
+   struct {
+      int            type;
+      const char    *icon;
+      unsigned char  valid;
+   } icon;
+   const char       *label;
+   /* FIXME: this will have more added */
+};
+
+EAPI E_Fm2_Custom_File    *e_fm2_custom_file_get(const char *path);
+EAPI void                  e_fm2_custom_file_set(const char *path, E_Fm2_Custom_File *cf);
+EAPI void                  e_fm2_custom_file_del(const char *path);
+EAPI void                  e_fm2_custom_file_rename(const char *path, const char *new_path);
+EAPI void                  e_fm2_custom_file_flush(void);
 
 EAPI int                   e_fm2_init(void);
 EAPI int                   e_fm2_shutdown(void);

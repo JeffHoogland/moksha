@@ -316,6 +316,38 @@ static Evas_List *_e_fm2_list = NULL;
 static Evas_List *_e_fm2_fop_list = NULL;
 
 /* externally accessible functions */
+EAPI E_Fm2_Custom_File *
+e_fm2_custom_file_get(const char *path)
+{
+   /* get any custom info for the path in our metadata - if non exists,
+    * return NULL. This may mean loading upa chunk of metadata off disk
+    * on demand and caching it */
+   return NULL;
+}
+
+EAPI void
+e_fm2_custom_file_set(const char *path, E_Fm2_Custom_File *cf)
+{
+   /* set custom metadata for a file path - save it to the metadata (or queue it) */
+}
+
+EAPI void e_fm2_custom_file_del(const char *path)
+{
+   /* delete a custom metadata entry for a path - save changes (or queue it) */
+}
+
+EAPI void e_fm2_custom_file_rename(const char *path, const char *new_path)
+{
+   /* rename file path a to file paht b in the metadata - if the path exists */
+}
+
+EAPI void e_fm2_custom_file_flush(void)
+{
+   /* free any loaded custom file data, sync changes to disk etc. */
+}
+
+/***/
+
 EAPI int
 e_fm2_init(void)
 {
@@ -959,7 +991,26 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
      }
    else
      {
-	if (ici->mime)
+	if (ici->icon_type == 1)
+	  {
+	     if (ici->pseudo_link)
+	       snprintf(buf, sizeof(buf), "%s/%s", ici->pseudo_dir, ici->file);
+	     else
+	       snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+	     
+	     oic = e_thumb_icon_add(evas);
+	     e_thumb_icon_file_set(oic, buf, NULL);
+	     e_thumb_icon_size_set(oic, 128, 128);
+	     if (gen_func) evas_object_smart_callback_add(oic, 
+							  "e_thumb_gen",
+							  gen_func, data);
+	     if (!ic)
+	       e_thumb_icon_begin(oic);
+	     else
+	       _e_fm2_icon_thumb(ic, oic, force_gen);
+	     if (type_ret) *type_ret = "THUMB";
+	  }
+	else if (ici->mime)
 	  {
 	     const char *icon;
 	     
@@ -1355,7 +1406,10 @@ _e_fm2_scan_stop(Evas_Object *obj)
      {
 	sd->busy_count--;
 	if (sd->busy_count == 0)
-	  edje_object_signal_emit(sd->overlay, "e,state,busy,stop", "e");
+	  {
+	     edje_object_signal_emit(sd->overlay, "e,state,busy,stop", "e");
+	     e_fm2_custom_file_flush();
+	  }
      }
    /* stop the scan idler, the sort timer and free the queue */
    if (sd->dir)
@@ -1898,8 +1952,10 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic)
    Evas_Object *obj, *obj2;
    char buf[4096], *lnk;
    const char *mime;
+   E_Fm2_Custom_File *cf;
    
    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
+   cf = e_fm2_custom_file_get(buf);
    lnk = ecore_file_readlink(buf);
    if (stat(buf, &(ic->info.statinfo)) == -1)
      {
@@ -1952,6 +2008,21 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic)
    if ((e_util_glob_case_match(ic->info.file, "*.desktop")) ||
        (e_util_glob_case_match(ic->info.file, "*.directory")))
      _e_fm2_icon_desktop_load(ic);
+
+   if (cf)
+     {
+	if (cf->icon.valid)
+	  {
+	     if (cf->icon.icon)
+	       {
+		  if (ic->info.icon) evas_stringshare_del(ic->info.icon);
+		  ic->info.icon = NULL;
+		  ic->info.icon = evas_stringshare_add(cf->icon.icon);
+	       }
+	     ic->info.icon_type = cf->icon.type;
+	  }
+     }
+   
    evas_event_freeze(evas_object_evas_get(ic->sd->obj));
    edje_freeze();
    switch (ic->sd->config->view.mode)
@@ -4232,6 +4303,7 @@ _e_fm2_smart_del(Evas_Object *obj)
    if (sd->drop_handler) e_drop_handler_del(sd->drop_handler);
    _e_fm2_list = evas_list_remove(_e_fm2_list, sd->obj);
    free(sd);
+   e_fm2_custom_file_flush();
 }
 
 static void
@@ -4959,6 +5031,7 @@ _e_fm2_file_rename_yes_cb(char *text, void *data)
 	     e_dialog_show(dialog);
 	     return;
 	  }
+	e_fm2_custom_file_rename(oldpath, newpath);
 	_e_fm2_live_file_del(ic->sd->obj, ic->info.file);
 	_e_fm2_live_file_add(ic->sd->obj, text, NULL, 0);
 //	evas_stringshare_del(ic->info.file);
@@ -5623,6 +5696,7 @@ _e_fm2_fop_process(E_Fm2_Fop *fop)
 	     snprintf(buf, sizeof(buf), "%s/%s", fi->fop->dir, fi->file);
 	     if (ecore_file_unlink(buf))
 	       {
+		  e_fm2_custom_file_del(buf);
 		  if ((fi->fop->obj) && (!strchr(fi->file, '/')))
 		    _e_fm2_live_file_del(fi->fop->obj, fi->file);
 	       }
@@ -5664,6 +5738,7 @@ _e_fm2_fop_process(E_Fm2_Fop *fop)
 	  {
 	     if (ecore_file_mv(fi->file, fi->file2))
 	       {
+		  e_fm2_custom_file_rename(fi->file, fi->file2);
 		  if ((fi->fop->obj) && (fi->file_add))
 		    _e_fm2_live_file_add(fi->fop->obj,
 					 fi->file, fi->file3, fi->after);
