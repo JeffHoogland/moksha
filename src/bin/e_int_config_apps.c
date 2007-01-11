@@ -60,7 +60,7 @@ e_int_config_apps_once(E_Container *con, const char *title, const char *label, c
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    E_Config_Once *once = NULL;
-
+   
    v = E_NEW(E_Config_Dialog_View, 1);
 
    v->create_cfdata           = _create_data;
@@ -80,11 +80,46 @@ e_int_config_apps_once(E_Container *con, const char *title, const char *label, c
 	    }
       }
 
-   cfd = e_config_dialog_new(con,
-			     _("Applications"),
-			     "E", "_config_applications_dialog",
-			     "enlightenment/applications", 0, v, once);
-   return cfd;
+   if (!path) 
+     {
+	cfd = e_config_dialog_new(con,
+				  _("Applications"),
+				  "E", "_config_applications_dialog",
+				  "enlightenment/applications", 0, v, once);
+	return cfd;
+     }
+   else 
+     {
+	char buf[4096];
+	
+	snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar", e_user_homedir_get());
+	if (!strcmp(path, buf))
+	  {
+	     cfd = e_config_dialog_new(con,
+				       _("Applications"),
+				       "E", "_config_applications_dialog",
+				       "enlightenment/ibar_applications", 0, v, once);
+	     return cfd;
+	  }
+	snprintf(buf, sizeof(buf), "%s/.e/e/applications/startup", e_user_homedir_get());
+	if (!strcmp(path, buf)) 
+	  {
+	     cfd = e_config_dialog_new(con,
+				       _("Applications"),
+				       "E", "_config_applications_dialog",
+				       "enlightenment/startup_applications", 0, v, once);
+	     return cfd;
+	  }
+	snprintf(buf, sizeof(buf), "%s/.e/e/applications/restart", e_user_homedir_get());
+	if (!strcmp(path, buf)) 
+	  {
+	     cfd = e_config_dialog_new(con,
+				       _("Applications"),
+				       "E", "_config_applications_dialog",
+				       "enlightenment/restart_applications", 0, v, once);
+	     return cfd;
+	  }
+     }
 }
 
 EAPI E_Config_Dialog *
