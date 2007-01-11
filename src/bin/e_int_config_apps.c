@@ -86,40 +86,29 @@ e_int_config_apps_once(E_Container *con, const char *title, const char *label, c
 				  _("Applications"),
 				  "E", "_config_applications_dialog",
 				  "enlightenment/applications", 0, v, once);
-	return cfd;
      }
-   else 
+   else if (strstr(path, "bar"))
      {
-	char buf[4096];
-	
-	snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar", e_user_homedir_get());
-	if (!strcmp(path, buf))
-	  {
 	     cfd = e_config_dialog_new(con,
 				       _("Applications"),
 				       "E", "_config_applications_dialog",
 				       "enlightenment/ibar_applications", 0, v, once);
-	     return cfd;
-	  }
-	snprintf(buf, sizeof(buf), "%s/.e/e/applications/startup", e_user_homedir_get());
-	if (!strcmp(path, buf)) 
-	  {
-	     cfd = e_config_dialog_new(con,
-				       _("Applications"),
-				       "E", "_config_applications_dialog",
-				       "enlightenment/startup_applications", 0, v, once);
-	     return cfd;
-	  }
-	snprintf(buf, sizeof(buf), "%s/.e/e/applications/restart", e_user_homedir_get());
-	if (!strcmp(path, buf)) 
-	  {
-	     cfd = e_config_dialog_new(con,
-				       _("Applications"),
-				       "E", "_config_applications_dialog",
-				       "enlightenment/restart_applications", 0, v, once);
-	     return cfd;
-	  }
      }
+   else if (strstr(path, "startup"))
+     {
+	cfd = e_config_dialog_new(con,
+				  _("Applications"),
+				  "E", "_config_applications_dialog",
+				  "enlightenment/startup_applications", 0, v, once);
+     }
+   else if (strstr(path, "restart"))
+     {
+	cfd = e_config_dialog_new(con,
+				  _("Applications"),
+				  "E", "_config_applications_dialog",
+				  "enlightenment/restart_applications", 0, v, once);
+     }
+   return cfd;
 }
 
 EAPI E_Config_Dialog *
