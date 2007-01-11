@@ -90,21 +90,21 @@ e_int_config_apps_once(E_Container *con, const char *title, const char *label, c
    else if (strstr(path, "bar"))
      {
 	     cfd = e_config_dialog_new(con,
-				       _("Applications"),
+				       _("IBar Applications"),
 				       "E", "_config_applications_dialog",
 				       "enlightenment/ibar_applications", 0, v, once);
      }
    else if (strstr(path, "startup"))
      {
 	cfd = e_config_dialog_new(con,
-				  _("Applications"),
+				  _("Startup Applications"),
 				  "E", "_config_applications_dialog",
 				  "enlightenment/startup_applications", 0, v, once);
      }
    else if (strstr(path, "restart"))
      {
 	cfd = e_config_dialog_new(con,
-				  _("Applications"),
+				  _("Restart Applications"),
 				  "E", "_config_applications_dialog",
 				  "enlightenment/restart_applications", 0, v, once);
      }
