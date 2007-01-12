@@ -460,7 +460,7 @@ e_ilist_icon_size_set(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 EAPI Evas_List *
 e_ilist_items_get(Evas_Object *obj) 
 {
-   API_ENTRY return;
+   API_ENTRY return NULL;
    return sd->items;
 }
 
@@ -502,7 +502,6 @@ EAPI void
 e_ilist_range_select(Evas_Object *obj, int n) 
 {
    E_Ilist_Item *si;
-   Evas_List *l;
    int i, j, dir;
    
    API_ENTRY return;
