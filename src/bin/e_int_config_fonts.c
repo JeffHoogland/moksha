@@ -661,7 +661,6 @@ _size_cb_change(void *data, Evas_Object *obj)
    for (n = 0, l = e_widget_ilist_items_get(cfdata->gui.class_list); l; l = l->next, n++) 
      {
 	E_Ilist_Item *i;
-	Evas_Object *icon = NULL;
 	CFText_Class *tc;
 
 	i = l->data;
@@ -686,7 +685,6 @@ _font_cb_change(void *data, Evas_Object *obj)
    for (n = 0, l = e_widget_ilist_items_get(cfdata->gui.class_list); l; l = l->next, n++) 
      {
 	E_Ilist_Item *i;
-	Evas_Object *icon = NULL;
 	CFText_Class *tc;
 
 	i = l->data;
@@ -718,5 +716,5 @@ _sort_fonts(void *data1, void *data2)
    if (!data1) return 1;
    if (!data2) return -1;
    
-   return e_util_strcmp((const char *)data1, (const char *)data2);
+   return e_util_strcmp(data1, data2);
 }
