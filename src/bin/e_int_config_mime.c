@@ -34,7 +34,7 @@ struct _E_Config_Dialog_Data
 static void        *_create_data     (E_Config_Dialog *cfd);
 static void         _free_data       (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create    (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static void         _fill_list       (E_Config_Dialog_Data *cfdata, char *mtype);
+static void         _fill_list       (E_Config_Dialog_Data *cfdata, const char *mtype);
 static void         _fill_tlist      (E_Config_Dialog_Data *cfdata);
 static void         _load_mimes      (E_Config_Dialog_Data *cfdata, char *file);
 static void         _load_globs      (E_Config_Dialog_Data *cfdata, char *file);
@@ -207,7 +207,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 }
 
 static void 
-_fill_list(E_Config_Dialog_Data *cfdata, char *mtype) 
+_fill_list(E_Config_Dialog_Data *cfdata, const char *mtype) 
 {
    Evas_List *l;
    Evas_Coord w, h;
@@ -254,7 +254,7 @@ _fill_list(E_Config_Dialog_Data *cfdata, char *mtype)
 	       e_theme_edje_object_set(icon, "base/theme/fileman", "e/icons/fileman/file");
 	  }
 	else if (img) 
-	  icon = e_widget_image_add_from_file(evas, (char *)tmp, 16, 16);
+	  icon = e_widget_image_add_from_file(evas, tmp, 16, 16);
 	else 
 	  {
 	     icon = edje_object_add(evas);
@@ -482,7 +482,7 @@ _tlist_cb_change(void *data)
 	t = l->data;
 	if (!t) continue;
 	if (strcasecmp(t->name, cfdata->cur_type)) continue;
-	_fill_list(cfdata, (char *)t->type);
+	_fill_list(cfdata, t->type);
 	break;
      }
 }
@@ -543,12 +543,12 @@ _cb_config(void *data, void *data2)
    Evas_List *l;
    E_Config_Dialog_Data *cfdata;
    E_Config_Mime_Icon *mi = NULL;
-   char *m;
+   const char *m;
    int found = 0;
    
    cfdata = data;
    if (!cfdata) return;
-   m = (char *)e_widget_ilist_selected_label_get(cfdata->gui.list);
+   m = e_widget_ilist_selected_label_get(cfdata->gui.list);
    if (!m) return;
    
    for (l = e_config->mime_icons; l; l = l->next) 
