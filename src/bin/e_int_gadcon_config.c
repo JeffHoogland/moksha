@@ -69,7 +69,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    cfdata->gc->config_dialog = NULL;
    if (cfdata->name_add) free(cfdata->name_add);
    if (cfdata->id_remove) free(cfdata->id_remove);
-   free(cfdata);
+   E_FREE(cfdata);
 }
 
 static void
