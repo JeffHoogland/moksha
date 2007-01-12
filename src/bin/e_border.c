@@ -4305,7 +4305,7 @@ _e_border_cb_signal_bind(void *data, Evas_Object *obj, const char *emission, con
    bd = data;
    if (e_dnd_active()) return;
    e_bindings_signal_handle(E_BINDING_CONTEXT_BORDER, E_OBJECT(bd), 
-			    (char *)emission, (char *)source);
+			    emission, source);
 }
 
 static int
