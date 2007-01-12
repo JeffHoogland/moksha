@@ -118,10 +118,10 @@ _e_fdo_menu_to_order_make_apps(const char *name, const char *path, const char *d
          if ((order_data.sheap->size) && (!ecore_file_exists(order_data.order_path)))
             {
                Ecore_Sheap *sheap;
-               const char *temp;
+               char *temp;
 
                sheap = ecore_sheap_new(ecore_str_compare, 100);
-               temp = ecore_file_get_dir((const char *) order_data.order_path);
+               temp = ecore_file_get_dir(order_data.order_path);
 	       if ((sheap) && (temp))
 	          {
                      ecore_sheap_set_free_cb(sheap, free);
@@ -130,7 +130,7 @@ _e_fdo_menu_to_order_make_apps(const char *name, const char *path, const char *d
                      /* If we create a dir, we add it to the parents .order file. */
                      _e_fdo_menu_to_order_add_sheap(sheap, temp, ecore_file_get_file(order_data.order_path));
 		  }
-	       if (temp)    free((char *) temp);
+	       if (temp)    free(temp);
                if (sheap)   ecore_sheap_destroy(sheap);
             }
 
