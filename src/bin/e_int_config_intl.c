@@ -1361,7 +1361,7 @@ _lang_list_sort(void *data1, void *data2)
    if (!ln2->lang_name) return -1;
    trans2 = ln2->lang_name;
    
-   return (strcmp((const char *)trans1, (const char *)trans2));
+   return (strcmp(trans1, trans2));
 }
 
 static void 
@@ -1434,7 +1434,7 @@ _region_list_sort(void *data1, void *data2)
    if (!rn2->region_name) return -1;
    trans2 = rn2->region_name;
    
-   return (strcmp((const char *)trans1, (const char *)trans2));
+   return (strcmp(trans1, trans2));
 }
 
 static void 
@@ -1498,7 +1498,7 @@ _basic_lang_list_sort(void *data1, void *data2)
    if (!ln2->locale_translation) return -1;
    trans2 = ln2->locale_translation;
    
-   return (strcmp((const char *)trans1, (const char *)trans2));
+   return (strcmp(trans1, trans2));
 }
 
 const char *

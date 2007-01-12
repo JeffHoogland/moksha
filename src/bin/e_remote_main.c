@@ -45,7 +45,7 @@ main(int argc, char **argv)
    int i;
    
    /* handle some command-line parameters */
-   display_name = (const char *)getenv("DISPLAY");
+   display_name = getenv("DISPLAY");
    for (i = 1; i < argc; i++)
      {
 	if ((!strcmp(argv[i], "-h")) ||

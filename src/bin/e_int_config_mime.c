@@ -498,7 +498,7 @@ _sort_mimes(void *data1, void *data2)
    m1 = data1;
    m2 = data2;
    
-   return (strcmp((const char *)m1->mime, (const char *)m2->mime));
+   return (strcmp(m1->mime, m2->mime));
 }
 
 static Config_Mime *
