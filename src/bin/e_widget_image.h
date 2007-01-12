@@ -7,7 +7,7 @@
 #define E_WIDGET_IMAGE_H
 
 EAPI Evas_Object     *e_widget_image_add_from_object(Evas *evas, Evas_Object *object, int minw, int minh);
-EAPI Evas_Object     *e_widget_image_add_from_file(Evas *evas, char *file, int minw, int minh);
+EAPI Evas_Object     *e_widget_image_add_from_file(Evas *evas, const char *file, int minw, int minh);
 EAPI void             e_widget_image_edje_set(Evas_Object *obj, char *file, char *part);
 EAPI void             e_widget_image_file_set(Evas_Object *obj, char *file);
 EAPI void             e_widget_image_file_key_set(Evas_Object *obj, char *file, char *key);

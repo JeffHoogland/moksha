@@ -39,7 +39,7 @@ e_widget_image_add_from_object(Evas *evas, Evas_Object *object, int minw, int mi
 }
 
 EAPI Evas_Object *
-e_widget_image_add_from_file(Evas *evas, char *file, int minw, int minh)
+e_widget_image_add_from_file(Evas *evas, const char *file, int minw, int minh)
 {   
    Evas_Object *obj, *o, *o2;
    E_Widget_Data *wd;
