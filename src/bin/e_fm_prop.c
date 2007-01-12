@@ -216,7 +216,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     if (cfdata->icon)
 	       cf->icon.icon = evas_stringshare_add(cfdata->icon);
 	     cf->icon.valid = 1;
-	     e_fm2_custom_file_set(buf, &cf);
+	     e_fm2_custom_file_set(buf, cf);
 	  }
 	e_fm2_all_icons_update();
      }
