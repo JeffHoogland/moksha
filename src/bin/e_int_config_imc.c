@@ -599,11 +599,11 @@ _e_imc_change_enqueue(E_Config_Dialog_Data *cfdata)
 	imc_update->version = E_INTL_INPUT_METHOD_CONFIG_VERSION;
 	
 	/* TODO: need to only add if the string is not empty */
-	imc_update->e_im_name = (char *) evas_stringshare_add(cfdata->imc.e_im_name);
-	imc_update->e_im_exec = (char *) evas_stringshare_add(cfdata->imc.e_im_exec);
-        imc_update->gtk_im_module = (char *) evas_stringshare_add(cfdata->imc.gtk_im_module);
-        imc_update->qt_im_module = (char *) evas_stringshare_add(cfdata->imc.qt_im_module);
-        imc_update->xmodifiers = (char *) evas_stringshare_add(cfdata->imc.xmodifiers);
+	imc_update->e_im_name = evas_stringshare_add(cfdata->imc.e_im_name);
+	imc_update->e_im_exec = evas_stringshare_add(cfdata->imc.e_im_exec);
+	imc_update->gtk_im_module = evas_stringshare_add(cfdata->imc.gtk_im_module);
+	imc_update->qt_im_module = evas_stringshare_add(cfdata->imc.qt_im_module);
+	imc_update->xmodifiers = evas_stringshare_add(cfdata->imc.xmodifiers);
 
 	/* look for changes to this file and remove them */
 	imc_update_old = evas_hash_find(cfdata->imc_change_map, cfdata->imc_current);
