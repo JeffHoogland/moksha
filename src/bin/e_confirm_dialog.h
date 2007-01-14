@@ -13,8 +13,8 @@
  * @text - the text show in the dialog
  * @button_text - "yes" button text
  * @button2_text - "no" button text
- * func - the function is called if yes is pressed
- * func2 - the function is called if no is pressed
+ * func - the function to call if yes is pressed
+ * func2 - the function to call if no is pressed
  * data - the pointer passed to func
  * data2 - the pointer passed to func2
  */
