@@ -154,7 +154,6 @@ e_int_config_theme_del(E_Win *win)
    E_FREE(import->cfdata->file); 
    E_FREE(import->cfdata);
    E_FREE(import);
-   
    return;
 }
 

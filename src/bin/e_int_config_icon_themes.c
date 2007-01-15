@@ -107,7 +107,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         E_FREE(m);
      }
    E_FREE(cfdata->themename);
-   free(cfdata);
+   E_FREE(cfdata);
 }
 
 static int
@@ -200,8 +200,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 		      }
 		}
              e_widget_ilist_append(ilist, oc, cm->theme->name, NULL, NULL, cm->name);
-	     if (strcmp(cfdata->themename, cm->name) == 0)
-		e_widget_ilist_selected_set(ilist, i);
+	     if (!strcmp(cfdata->themename, cm->name))
+	       e_widget_ilist_selected_set(ilist, i);
 	     i++;
 	  }
      }
@@ -272,11 +272,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    e_widget_table_object_append(ot, of, 2, 0, 2, 4, 1, 1, 1, 1);
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
-
    e_dialog_resizable_set(cfd->dia, 1);
-
    _ilist_cb_change(cfdata, ilist);
-
    return o;
 }
 
@@ -333,11 +330,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    e_widget_framelist_object_append(of, ilist);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-
    e_dialog_resizable_set(cfd->dia, 1);
-
    _ilist_cb_change(cfdata, ilist);
-
    return o;
 }
 
@@ -352,7 +346,7 @@ _ilist_cb_change(void *data, Evas_Object *obj)
    cfdata = data;
    v = cfdata->themename;
    if (!v) return;
-   if (!cfdata->gui.comment)   return;
+   if (!cfdata->gui.comment) return;
 
    if ((theme = ecore_desktop_icon_theme_get(v, NULL)))
       {
@@ -361,14 +355,14 @@ _ilist_cb_change(void *data, Evas_Object *obj)
 
          length = strlen(theme->comment) + strlen(theme->path) + 16;
 	 if (theme->inherits)
-	    length += strlen(theme->inherits) + 32;
+	   length += strlen(theme->inherits) + 32;
 	 text = alloca(length);
 	 if (text)
 	    {
 	       if (theme->inherits)
-	          sprintf(text, "%s\npath = %s\ninherits from %s", theme->comment, theme->path, theme->inherits);
+		 sprintf(text, "%s\npath = %s\ninherits from %s", theme->comment, theme->path, theme->inherits);
 	       else
-	          sprintf(text, "%s\npath = %s", theme->comment, theme->path);
+		 sprintf(text, "%s\npath = %s", theme->comment, theme->path);
                e_widget_textblock_plain_set(cfdata->gui.comment, text);
 	    }
 	 dir = ecore_file_get_dir(theme->path);
@@ -393,11 +387,11 @@ _add_theme(void *value, void *user_data)
 
    m = E_NEW(CFIconTheme, 1);
    if (m)
-      {
-	 m->name = strdup(key);
-	 m->theme = theme;
-	 cfdata->icon_themes = evas_list_append(cfdata->icon_themes, m);
-      }
+     {
+	m->name = strdup(key);
+	m->theme = theme;
+	cfdata->icon_themes = evas_list_append(cfdata->icon_themes, m);
+     }
 }
 
 static int

@@ -35,7 +35,6 @@ static const char*  _e_imc_file_name_new_get (void);
 static Evas_Bool    _change_hash_free_cb     (Evas_Hash *hash, const char *key, void *data, void *fdata);
 static Evas_Bool    _change_hash_apply_cb    (Evas_Hash *hash, const char *key, void *data, void *fdata);
 
-   
 struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
@@ -44,41 +43,34 @@ struct _E_Config_Dialog_Data
    Evas_Object *o_personal;
    Evas_Object *o_system;
    Evas_Object *o_up_button;
-   
    Evas_Object *o_fm; /* File manager */
    Evas_Object *o_frame; /* scrollpane for file manager*/
    
    char *imc_current;
-  
    int imc_disable; /* 0=enable, 1=disable */ 
    int fmdir; /* 0=Local, 1=System*/
    struct
      {
-	int dirty;
-	
+	int dirty;	
 	char *e_im_name;
-	char *e_im_exec;
-	
+	char *e_im_exec;	
 	char *gtk_im_module;
 	char *qt_im_module;
 	char *xmodifiers;
-     }
-   imc;
+     } imc;
    
    Evas_Hash *imc_change_map;
    
    struct
      {
-	Evas_Object     *imc_basic_list;
-	Evas_Object     *imc_basic_disable;
-	
+	Evas_Object *imc_basic_list;
+	Evas_Object *imc_basic_disable;
 	Evas_Object *e_im_name;
 	Evas_Object *e_im_exec;
 	Evas_Object *gtk_im_module;
 	Evas_Object *qt_im_module;
 	Evas_Object *xmodifiers;
-     } 
-   gui;
+     } gui;
 
    E_Win *win_import;
 };
@@ -165,12 +157,10 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    E_FREE(cfdata->imc.gtk_im_module);
    E_FREE(cfdata->imc.qt_im_module);
    E_FREE(cfdata->imc.xmodifiers);
-  
-   free(cfdata);
+   E_FREE(cfdata);
 } 
 
 /*** Start Basic Dialog Logic ***/
-
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {	
@@ -251,7 +241,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    imc_basic_list = e_intl_input_method_list();
    /* Sort basic input method list */	
    imc_basic_list = evas_list_sort(imc_basic_list, 
-	 evas_list_count(imc_basic_list), _basic_list_sort_cb);
+				   evas_list_count(imc_basic_list), 
+				   _basic_list_sort_cb);
 
    i = 0;
    while(imc_basic_list) 
@@ -286,19 +277,14 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    evas_event_thaw(evas_object_evas_get(ob));
 
    e_widget_frametable_object_append(of, ob, 0, 1, 2, 6, 1, 1, 1, 1);
-   
-   e_widget_framelist_content_align_set(of, 0.0, 0.0);
-   
+   e_widget_framelist_content_align_set(of, 0.0, 0.0);   
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-
    e_dialog_resizable_set(cfd->dia, 1);
    return o;
 }
-
 /*** End Basic Dialog Logic ***/
 
 /*** Start Advanced Dialog Logic ***/
-
 static Evas_Bool 
 _change_hash_apply_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
 {
@@ -627,7 +613,7 @@ _e_imc_file_name_new_get(void)
    for (i = 0; i < 32; i++)
      {
 	snprintf(path, sizeof(path), "%s/new_input_method-%02d.imc",
-	      e_intl_imc_personal_path_get(), i);
+		 e_intl_imc_personal_path_get(), i);
 	if (!ecore_file_exists(path)) 
 	  return evas_stringshare_add(path);
      }
@@ -808,14 +794,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_frametable_object_append(ol, o, 1, 2, 1, 1, 1, 1, 1, 1);
  
    e_widget_list_object_append(of, ol, 0, 1, 0.5);
-   
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
-   
-   e_dialog_resizable_set(cfd->dia, 1);	
-
+   e_dialog_resizable_set(cfd->dia, 1);
    _e_imc_form_fill(cfdata);
-	
    return ot;
 }
-
-/*** End Advanced Dialog Logic ***/

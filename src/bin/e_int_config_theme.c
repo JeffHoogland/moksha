@@ -4,11 +4,11 @@
 
 #include "e.h"
 
-static void        *_create_data                (E_Config_Dialog *cfd);
-static void         _free_data                  (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static void         _fill_data                  (E_Config_Dialog_Data *cfdata);
-static int          _basic_apply_data           (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create_widgets       (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static void        *_create_data          (E_Config_Dialog *cfd);
+static void         _free_data            (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void         _fill_data            (E_Config_Dialog_Data *cfdata);
+static int          _basic_apply_data     (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create_widgets (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 struct _E_Config_Dialog_Data
 {
@@ -168,7 +168,6 @@ _cb_files_selected(void *data, Evas_Object *obj, void *event_info)
    E_Config_Dialog_Data *cfdata;
    
    cfdata = data;
-   printf("SEL\n");
 }
 
 static void
@@ -332,7 +331,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      e_int_config_theme_del(cfdata->win_import);
    
    E_FREE(cfdata->theme);
-   free(cfdata);
+   E_FREE(cfdata);
 }
 
 static Evas_Object *

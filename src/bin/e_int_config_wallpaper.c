@@ -4,13 +4,13 @@
 
 #include "e.h"
 
-static void        *_create_data                (E_Config_Dialog *cfd);
-static void         _free_data                  (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static void         _fill_data                  (E_Config_Dialog_Data *cfdata);
-static int          _basic_apply_data           (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create_widgets       (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int          _advanced_apply_data        (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_advanced_create_widgets    (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static void        *_create_data             (E_Config_Dialog *cfd);
+static void         _free_data               (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void         _fill_data               (E_Config_Dialog_Data *cfdata);
+static int          _basic_apply_data        (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create_widgets    (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int          _advanced_apply_data     (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_advanced_create_widgets (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 #define E_CONFIG_WALLPAPER_ALL 0
 #define E_CONFIG_WALLPAPER_DESK 1
@@ -429,7 +429,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      e_int_config_wallpaper_gradient_del(cfdata->dia_gradient);
    E_FREE(cfdata->bg);
    E_FREE(cfd->data);
-   free(cfdata);
+   E_FREE(cfdata);
 }
 
 static Evas_Object *
@@ -453,13 +453,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    rg = e_widget_radio_group_new(&(cfdata->fmdir));
    o = e_widget_radio_add(evas, _("Personal"), 0, rg);
    cfdata->o_personal = o;
-   evas_object_smart_callback_add(o, "changed",
-				  _cb_dir, cfdata);
+   evas_object_smart_callback_add(o, "changed", _cb_dir, cfdata);
    e_widget_table_object_append(il, o, 0, 0, 1, 1, 1, 1, 0, 0);
    o = e_widget_radio_add(evas, _("System"), 1, rg);
    cfdata->o_system = o;
-   evas_object_smart_callback_add(o, "changed",
-				  _cb_dir, cfdata);
+   evas_object_smart_callback_add(o, "changed", _cb_dir, cfdata);
    e_widget_table_object_append(il, o, 1, 0, 1, 1, 1, 1, 0, 0);
    
    e_widget_table_object_append(ol, il, 0, 0, 1, 1, 0, 0, 0, 0);
@@ -524,8 +522,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    il = e_widget_list_add(evas, 0, 1);
    o = e_widget_check_add(evas, _("Use Theme Wallpaper"), &cfdata->use_theme_bg);
    cfdata->o_theme_bg = o;
-   evas_object_smart_callback_add(o, "changed",
-				  _cb_theme_wallpaper, cfdata);
+   evas_object_smart_callback_add(o, "changed", _cb_theme_wallpaper, cfdata);
    e_widget_list_object_append(il, o, 1, 0, 0.5);
 
    ol = e_widget_list_add(evas, 1, 1);
@@ -608,13 +605,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    rg = e_widget_radio_group_new(&(cfdata->fmdir));
    o = e_widget_radio_add(evas, _("Personal"), 0, rg);
    cfdata->o_personal = o;
-   evas_object_smart_callback_add(o, "changed",
-				  _cb_dir, cfdata);
+   evas_object_smart_callback_add(o, "changed", _cb_dir, cfdata);
    e_widget_table_object_append(il, o, 0, 0, 1, 1, 1, 1, 0, 0);
    o = e_widget_radio_add(evas, _("System"), 1, rg);
    cfdata->o_system = o;
-   evas_object_smart_callback_add(o, "changed",
-				  _cb_dir, cfdata);
+   evas_object_smart_callback_add(o, "changed", _cb_dir, cfdata);
    e_widget_table_object_append(il, o, 1, 0, 1, 1, 1, 1, 0, 0);
    
    e_widget_table_object_append(ol, il, 0, 0, 1, 1, 0, 0, 0, 0);
@@ -676,8 +671,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    il = e_widget_list_add(evas, 0, 1);
    o = e_widget_check_add(evas, _("Use Theme Wallpaper"), &cfdata->use_theme_bg);
    cfdata->o_theme_bg = o;
-   evas_object_smart_callback_add(o, "changed",
-				  _cb_theme_wallpaper, cfdata);
+   evas_object_smart_callback_add(o, "changed", _cb_theme_wallpaper, cfdata);
    e_widget_list_object_append(il, o, 1, 0, 0.5);
 
    ol = e_widget_list_add(evas, 1, 1);

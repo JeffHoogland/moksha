@@ -93,7 +93,7 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    /* Free the cfdata */
-   free(cfdata);
+   E_FREE(cfdata);
 }
 
 /**--APPLY--**/

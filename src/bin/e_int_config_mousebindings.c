@@ -206,7 +206,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->locals.action) free(cfdata->locals.action);
    if (cfdata->locals.params) free(cfdata->locals.params);
    if (cfdata->locals.cur) free(cfdata->locals.cur);
-   free(cfdata);
+   E_FREE(cfdata);
 }
 
 static int

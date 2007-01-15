@@ -44,7 +44,6 @@ e_int_config_transitions(E_Container *con)
    cfd = e_config_dialog_new(con, _("Transition Settings"),
 			     "E", "_config_transitions_dialog",
 			     "enlightenment/transitions", 0, v, NULL);
-   if (!cfd) return NULL;
    return cfd;
 }
 
@@ -72,13 +71,10 @@ _create_data(E_Config_Dialog *cfd)
 static void 
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   if(cfdata->transition_start)
-       E_FREE(cfdata->transition_start);
-   if(cfdata->transition_desk)
-       E_FREE(cfdata->transition_desk);
-   if(cfdata->transition_change)
-       E_FREE(cfdata->transition_change);
-   free(cfdata);
+   E_FREE(cfdata->transition_start);
+   E_FREE(cfdata->transition_desk);
+   E_FREE(cfdata->transition_change);
+   E_FREE(cfdata);
 }
 
 static int 

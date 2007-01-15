@@ -572,8 +572,8 @@ e_int_config_intl(E_Container *con)
    
    v->create_cfdata           = _create_data;
    v->free_cfdata             = _free_data;
-   v->advanced.create_widgets    = _advanced_create_widgets;
-   v->advanced.apply_cfdata      = _advanced_apply_data;
+   v->advanced.create_widgets = _advanced_create_widgets;
+   v->advanced.apply_cfdata   = _advanced_apply_data;
    v->basic.create_widgets    = _basic_create_widgets;
    v->basic.apply_cfdata      = _basic_apply_data;
    
@@ -804,7 +804,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    cfdata->region_list = evas_list_free(cfdata->region_list);
    cfdata->blang_list = evas_list_free(cfdata->blang_list);
    
-   free(cfdata);
+   E_FREE(cfdata);
 }
 
 static Evas_Bool 
@@ -861,7 +861,6 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      }
    
    e_config_save_queue();
-   
    return 1;
 }
 
@@ -876,7 +875,6 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      }
    
    e_config_save_queue();
-   
    return 1;
 }
 
@@ -968,10 +966,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
    
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-
    e_dialog_resizable_set(cfd->dia, 1);
    return o;
-
 }
    
 static Evas_Object *
@@ -1099,56 +1095,56 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 static void
 _ilist_basic_language_cb_change(void *data, Evas_Object *obj)
 {
-    E_Config_Dialog_Data * cfdata;
+   E_Config_Dialog_Data * cfdata;
     
-    cfdata = data;
+   cfdata = data;
 
-    e_widget_entry_text_set(cfdata->gui.locale_entry, cfdata->cur_blang);
+   e_widget_entry_text_set(cfdata->gui.locale_entry, cfdata->cur_blang);
 }
 
 static void
 _ilist_language_cb_change(void *data, Evas_Object *obj)
 {
-    E_Config_Dialog_Data * cfdata;
-    
-    cfdata = data;
+   E_Config_Dialog_Data * cfdata;
    
-    _cfdata_language_go(cfdata->cur_lang, NULL, NULL, NULL, cfdata);
-
-    e_widget_entry_text_set(cfdata->gui.locale_entry, cfdata->cur_lang);
-    E_FREE(cfdata->cur_cs);
-    E_FREE(cfdata->cur_mod);
+   cfdata = data;
+   
+   _cfdata_language_go(cfdata->cur_lang, NULL, NULL, NULL, cfdata);
+   
+   e_widget_entry_text_set(cfdata->gui.locale_entry, cfdata->cur_lang);
+   E_FREE(cfdata->cur_cs);
+   E_FREE(cfdata->cur_mod);
 }
 
 static void
 _ilist_region_cb_change(void *data, Evas_Object *obj)
 {
-    E_Config_Dialog_Data * cfdata;
-    char locale[32];
+   E_Config_Dialog_Data * cfdata;
+   char locale[32];
     
-    cfdata = data;
+   cfdata = data;
     
-    _cfdata_language_go(cfdata->cur_lang, cfdata->cur_reg, NULL, NULL, cfdata);
+   _cfdata_language_go(cfdata->cur_lang, cfdata->cur_reg, NULL, NULL, cfdata);
     
-    sprintf(locale, "%s_%s", cfdata->cur_lang, cfdata->cur_reg);
-    e_widget_entry_text_set(cfdata->gui.locale_entry, locale);
-    E_FREE(cfdata->cur_cs);
-    E_FREE(cfdata->cur_mod);
+   sprintf(locale, "%s_%s", cfdata->cur_lang, cfdata->cur_reg);
+   e_widget_entry_text_set(cfdata->gui.locale_entry, locale);
+   E_FREE(cfdata->cur_cs);
+   E_FREE(cfdata->cur_mod);
 }
 
 static void 
 _ilist_codeset_cb_change(void *data, Evas_Object *obj)
 {
-    E_Config_Dialog_Data * cfdata;
-    char locale[32];
-
-    cfdata = data;
-
-    if (cfdata->cur_mod)
+   E_Config_Dialog_Data * cfdata;
+   char locale[32];
+   
+   cfdata = data;
+   
+   if (cfdata->cur_mod)
      sprintf(locale, "%s_%s.%s@%s", cfdata->cur_lang, cfdata->cur_reg, cfdata->cur_cs, cfdata->cur_mod);
-    else
+   else
      sprintf(locale, "%s_%s.%s", cfdata->cur_lang, cfdata->cur_reg, cfdata->cur_cs);
-
+   
    e_widget_entry_text_set(cfdata->gui.locale_entry, locale);
 }
 
@@ -1163,7 +1159,7 @@ _ilist_modifier_cb_change(void *data, Evas_Object *obj)
      sprintf(locale, "%s_%s.%s@%s", cfdata->cur_lang, cfdata->cur_reg, cfdata->cur_cs, cfdata->cur_mod);
    else
      sprintf(locale, "%s_%s@%s", cfdata->cur_lang, cfdata->cur_reg, cfdata->cur_mod);
-    
+   
    e_widget_entry_text_set(cfdata->gui.locale_entry, locale);
 }
 
@@ -1282,7 +1278,6 @@ _lang_hash_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
    lang_node = data;
    
    cfdata->lang_list = evas_list_append(cfdata->lang_list, lang_node);
-   
    return 1;
 }
 
@@ -1296,7 +1291,6 @@ _region_hash_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
    reg_node = data;
 
    cfdata->region_list = evas_list_append(cfdata->region_list, reg_node);
-   
    return 1;
 }
 
@@ -1515,6 +1509,5 @@ _intl_charset_upper_get(const char *charset)
 	  }			 
 	i++;			      
      }
-
    return NULL;
 }

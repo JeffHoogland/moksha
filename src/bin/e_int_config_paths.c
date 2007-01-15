@@ -127,18 +127,16 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	cfdata->pcd_list = evas_list_remove_list(cfdata->pcd_list, cfdata->pcd_list);
      }
    free(cfdata->paths_available);
-   free(cfdata);
+   E_FREE(cfdata);
 }
 
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {	 
-   Evas_List	*l;
-   Evas_List	*ll;
+   Evas_List *l;
+   Evas_List *ll;
    
-   _ilist_update(	cfdata->gui.user_list,
-			cfdata->cur_pcd,
-			NULL);
+   _ilist_update(cfdata->gui.user_list, cfdata->cur_pcd, NULL);
 
    for (l = cfdata->pcd_list; l; l = l->next)
      {
@@ -157,12 +155,9 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	       }
 	  }
 	else if (*(pcd->path->user_dir_list) && pcd->dirty)
-	  {
-	     e_path_user_path_clear(pcd->path);
-	  }
+	  e_path_user_path_clear(pcd->path);
      }
    e_config_save_queue();
-   
    return 1;
 }
 
@@ -218,7 +213,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    
    e_widget_table_object_append(o, of, 0, 1, 3, 1, 1, 1, 1, 1);
-   
    return o;
 }
 
@@ -251,9 +245,9 @@ _ilist_path_cb_change(void *data)
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(pcd->cfdata->gui.default_list));
    
-   _ilist_update(	pcd->cfdata->gui.user_list,
-			pcd->cfdata->cur_pcd, //Path data to save
-			pcd); //New Path to show
+   _ilist_update(pcd->cfdata->gui.user_list,
+		 pcd->cfdata->cur_pcd, //Path data to save
+		 pcd); //New Path to show
    
    pcd->cfdata->cur_pcd = pcd;
 }
@@ -321,4 +315,3 @@ _ilist_update(Evas_Object *obj, CFPath_Change_Data *old, CFPath_Change_Data *new
 	  }
      } 
 }
-
