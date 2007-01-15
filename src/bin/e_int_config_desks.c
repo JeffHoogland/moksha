@@ -93,8 +93,7 @@ _create_data(E_Config_Dialog *cdd)
 static void
 _free_data(E_Config_Dialog *cdd, E_Config_Dialog_Data *cfdata)
 {
-   /* Free the cfdata */
-   free(cfdata);
+   E_FREE(cfdata);
 }
 
 /**--APPLY--**/
@@ -128,7 +127,7 @@ _basic_apply_data(E_Config_Dialog *cdd, E_Config_Dialog_Data *cfdata)
 	e_config->desk_flip_animate_interpolation = 0;
 	e_config->desk_flip_animate_time  = 0.5;
      }
-else
+   else
      {
 	cfdata->flip_mode = 0;
 	e_config->desk_flip_animate_mode = 0;
@@ -206,7 +205,7 @@ _basic_create_widgets(E_Config_Dialog *cdd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ot);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
     
-   of = e_widget_framelist_add(evas, _("Desktop Flip"), 0);
+   of = e_widget_framelist_add(evas, _("Desktop Mouse Flip"), 0);
    ob = e_widget_check_add(evas, _("Flip desktops when mouse at screen edge"), &(cfdata->edge_flip_basic));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Animated flip"), &(cfdata->flip_animate));
