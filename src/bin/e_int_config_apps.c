@@ -179,9 +179,9 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   if (cfdata->selected)   free(cfdata->selected);
-   if (cfdata->cfd->data)  free(cfdata->cfd->data);
-   free(cfdata);
+   if (cfdata->selected) free(cfdata->selected);
+   if (cfdata->cfd->data) free(cfdata->cfd->data);
+   E_FREE(cfdata);
 }
 
 static void
@@ -231,7 +231,7 @@ _cb_files_dir_changed(void *data, Evas_Object *obj, void *event_info)
      e_widget_disabled_set(cfdata->gui.o_move_down_button, 1);
    if (cfdata->gui.o_frame)
      e_widget_scrollframe_child_pos_set(cfdata->gui.o_frame, 0, 0);
-   if (cfdata->selected)   free(cfdata->selected);
+   if (cfdata->selected) free(cfdata->selected);
    cfdata->selected = NULL;
 }
 
@@ -271,7 +271,7 @@ _cb_files_selection_change(void *data, Evas_Object *obj, void *event_info)
    if (selected)   ici = selected->data;
    realpath = e_fm2_real_path_get(cfdata->gui.o_fm);
    snprintf(buf, sizeof(buf), "%s/.order", realpath);
-   if (cfdata->selected)   free(cfdata->selected);
+   if (cfdata->selected) free(cfdata->selected);
    cfdata->selected = NULL;
    if (ecore_file_exists(buf))
      {
@@ -729,7 +729,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    if (mt)
      {
         cfdata->gui.o_add_button = mt;
-
         e_widget_framelist_object_append(of, mt);
         e_widget_disabled_set(mt, 1);
      }
@@ -831,7 +830,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
               cfdata->gui.o_regen_button = mt;
               e_widget_framelist_object_append(of, mt);
 	   }
-
          e_widget_table_object_append(ot, of, 2, 0, 2, 4, 1, 1, 1, 1);
       }
 
