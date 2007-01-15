@@ -115,6 +115,9 @@ group {
    data {
       //	 item: "item_list", "item item2 item3";
    }
+   script {
+      public urgent;
+   }
    parts {
       part {
 	 name:          "base";
@@ -287,6 +290,11 @@ group {
 	 source:  "";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "background";
+	 script {
+	     if (get_int(urgent) == 1) {
+		 run_program(PROGRAM:"go_urgent");
+	     }
+	 }
       }
       program {
 	 name:    "go_big";
@@ -324,6 +332,60 @@ group {
 	 signal:  "e,action,stop";
 	 source:  "e";
 //	 action:  SIGNAL_EMIT "active" 0.0;
+      }
+      program {
+	 name: "init";
+	 signal: "load";
+	 source: "";
+	 script {
+	    set_int(urgent, 0);
+	 }
+      }
+      program {
+	 name: "set_urgent";
+	 signal: "e,state,urgent";
+	 source: "e";
+	 script {
+	    set_int(urgent, 1);
+	 }
+      }
+      program {
+	 name:    "go_urgent";
+	 signal:  "e,state,urgent";
+	 source:  "e";
+	 action:  STATE_SET "visible" 0.0;
+	 target:  "background";
+	 after:   "go_urgent2";
+      }
+      program {
+	 name:    "go_urgent2";
+	 action:  STATE_SET "hidden" 0.0;
+	 transition: LINEAR 0.5;
+	 target:  "background";
+	 after:   "go_urgent";
+      }
+      program {
+	 name: "unset_urgent";
+	 signal: "e,state,not_urgent";
+	 source: "e";
+	 script {
+	    set_int(urgent, 0);
+	 }
+      }
+      program {
+	 name:    "go_unurgent";
+	 signal:  "e,state,not_urgent";
+	 source:  "e";
+	 action:  ACTION_STOP;
+	 target:  "go_urgent";
+	 target:  "go_urgent2";
+	 after:   "go_unurgent2";
+      }
+      program {
+	 name:    "go_unurgent2";
+	 action:  STATE_SET "default" 0.0;
+	 transition: SINUSOIDAL 0.3;
+	 target:  "background";
       }
    }
 }

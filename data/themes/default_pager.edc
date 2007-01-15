@@ -638,6 +638,17 @@ group {
 	       border: 6 13 7 5;
 	    }
 	 }
+	 description {
+	    state: "urgent" 0.0;
+	    inherit: "default" 0.0;
+	    rel1 {
+	       relative: -0.5  -0.5;
+	    }
+	    rel2 {
+	       relative: 1.5  1.5;
+	    }
+	    color: 255 255 255 0;
+	 }
       }
       part {
 	 name:           "icon";
@@ -657,6 +668,38 @@ group {
 	    }
 	    color:       0 0 0 0;
 	 }
+      }
+   }
+   programs {
+      program {
+	 name:    "go_urgent_pre";
+	 signal:  "e,state,urgent";
+	 source:  "e";
+	 action:  STATE_SET "default" 0.0;
+	 target:  "overlay";
+	 after:   "go_urgent";
+      }
+      program {
+	 name:    "go_urgent";
+	 action:  STATE_SET "urgent" 0.0;
+	 transition: LINEAR 0.5;
+	 target:  "overlay";
+	 after:   "go_urgent_pre";
+      }
+      program {
+	 name:    "go_unurgent";
+	 signal:  "e,state,not_urgent";
+	 source:  "e";
+	 action:  ACTION_STOP;
+	 target:  "go_urgent_pre";
+	 target:  "go_urgent";
+	 after:   "go_unurgent2";
+      } 
+      program {
+	 name:    "go_unurgent2";
+	 action:  STATE_SET "default" 0.0;
+	 transition: SINUSOIDAL 0.3;
+	 target:  "overlay";
       }
    }
 }
