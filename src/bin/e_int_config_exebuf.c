@@ -86,7 +86,7 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    E_FREE(cfdata->term_cmd);
-   free(cfdata);
+   E_FREE(cfdata);
 }
 
 static int
@@ -147,11 +147,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      evas_stringshare_del(e_config->exebuf_term_cmd);
    e_config->exebuf_term_cmd = NULL;
    if (cfdata->term_cmd) 
-     {
-	  e_config->exebuf_term_cmd = evas_stringshare_add(cfdata->term_cmd);
-     }
+     e_config->exebuf_term_cmd = evas_stringshare_add(cfdata->term_cmd);
    e_config_save_queue();
-
    return 1;
 }
 

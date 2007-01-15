@@ -3,9 +3,6 @@
  */
 #include "e.h"
 
-#define ILIST_ICON_WITH_DEFINED_FONT	"enlightenment/e"
-#define ILIST_ICON_WITHOUT_DEFINED_FONT ""
-
 typedef struct _E_Text_Class_Pair E_Text_Class_Pair;
 typedef struct _CFText_Class CFText_Class;
 
@@ -238,7 +235,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      }
    
    E_FREE(cfdata->cur_font);
-   free(cfdata);
+   E_FREE(cfdata);
 }
 
 static int
@@ -536,7 +533,7 @@ _fill_ilist(E_Config_Dialog_Data *cfdata)
 		  if (tc->enabled)
 		    {
 		       ic = edje_object_add(evas);
-		       e_util_edje_icon_set(ic, ILIST_ICON_WITH_DEFINED_FONT);
+		       e_util_edje_icon_set(ic, "enlightenment/e");
 		    }
 		  else
 		    ic = NULL;
@@ -642,7 +639,7 @@ _enabled_font_cb_change(void *data, Evas_Object *obj)
 	if (cfdata->cur_enabled) 
 	  {
 	     icon = edje_object_add(cfdata->evas);
-	     e_util_edje_icon_set(icon, ILIST_ICON_WITH_DEFINED_FONT);
+	     e_util_edje_icon_set(icon, "enlightenment/e");
 	  }
 	e_widget_ilist_nth_icon_set(cfdata->gui.class_list, n, icon);
      }
