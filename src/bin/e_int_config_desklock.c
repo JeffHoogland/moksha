@@ -28,7 +28,6 @@ static Evas_Object  *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas,
 /******************************************************************************************/
 
 static int  _e_desklock_zone_num_get(void);
-
 static void _e_desklock_cb_lb_show_change(void *data, Evas_Object *obj);
 
 /*******************************************************************************************/
@@ -73,19 +72,19 @@ struct _E_Config_Dialog_Data
    int auth_method;
 #endif
    
-   struct {
-      Evas_Object *passwd_field;
-//      Evas_Object *bg_list;
-
-      Evas_Object *show_passwd_check;
-      
-      struct {
-	 Evas_Object *show_all_screens;
-	 Evas_Object *show_current_screen;
-	 Evas_Object *show_specific_screen;
-	 Evas_Object *screen_slider;
-      } loginbox_obj;
-   } gui;
+   struct 
+     {
+	Evas_Object *passwd_field;
+	//      Evas_Object *bg_list;
+	Evas_Object *show_passwd_check;	
+	struct 
+	  {
+	     Evas_Object *show_all_screens;
+	     Evas_Object *show_current_screen;
+	     Evas_Object *show_specific_screen;
+	     Evas_Object *screen_slider;
+	  } loginbox_obj;
+     } gui;
 };
 
 EAPI E_Config_Dialog *
@@ -112,7 +111,6 @@ e_int_config_desklock(E_Container *con)
 			     "enlightenment/desklock", 0, v, NULL);
    return cfd;
 }
-
 
 static void
 _cb_button_up(void *data1, void *data2)
@@ -183,7 +181,6 @@ _cb_files_selected(void *data, Evas_Object *obj, void *event_info)
    E_Config_Dialog_Data *cfdata;
    
    cfdata = data;
-   printf("SEL\n");
 }
 
 static void
@@ -227,10 +224,8 @@ _cb_dir(void *data, Evas_Object *obj, void *event_info)
    
    cfdata = data;
    if (cfdata->fmdir == 1)
-     {
-	snprintf(path, sizeof(path), "%s/data/backgrounds", e_prefix_data_get());
-     }
-   else
+     snprintf(path, sizeof(path), "%s/data/backgrounds", e_prefix_data_get());
+   else 
      {
 	homedir = e_user_homedir_get();
 	snprintf(path, sizeof(path), "%s/.e/e/backgrounds", homedir);
@@ -270,8 +265,6 @@ _bg_mode(void *data, Evas_Object *obj, void *event_info)
      }
 }
 
-
-
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
@@ -310,7 +303,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      }
    
    cfdata->zone_count = _e_desklock_zone_num_get();
-   
    cfdata->show_password = 0;
  
    if ((!e_config->desklock_background) ||
@@ -359,25 +351,22 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 static void *
 _create_data(E_Config_Dialog *cfd)
 {
-  E_Config_Dialog_Data *cfdata;
+   E_Config_Dialog_Data *cfdata;
 
-  cfdata = E_NEW(E_Config_Dialog_Data, 1);
-  cfdata->cfd = cfd;
-
+   cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   cfdata->cfd = cfd;
   _fill_data(cfdata);
-
   return cfdata;
 }
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-  if (!cfdata) return;
+   if (!cfdata) return;
 
-  E_FREE(cfdata->desklock_passwd);
-  E_FREE(cfdata->desklock_passwd_cp);
-  E_FREE(cfdata->bg);
-
-  free(cfdata);
+   E_FREE(cfdata->desklock_passwd);
+   E_FREE(cfdata->desklock_passwd_cp);
+   E_FREE(cfdata->bg);
+   E_FREE(cfdata);
 }
 
 static int
@@ -396,7 +385,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->desklock_auth_method = cfdata->auth_method;
 #endif
    if (e_config->desklock_use_timeout)
-	  ecore_x_screensaver_timeout_set(e_config->desklock_timeout);
+     ecore_x_screensaver_timeout_set(e_config->desklock_timeout);
        
    ecore_x_screensaver_blank_set(!e_config->desklock_use_custom_screensaver);
    ecore_x_screensaver_expose_set(!e_config->desklock_use_custom_screensaver);        
@@ -430,16 +419,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 			    1.0, 0, &(cfdata->timeout), NULL,
 			    200);
    e_widget_framelist_object_append(of, ob);
-   
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
    e_dialog_resizable_set(cfd->dia, 0);
-   
    return o;
 }
 
 /* advanced window */
-
 static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
@@ -485,15 +470,14 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      
    e_config->desklock_use_custom_screensaver = cfdata->use_custom_screensaver;
    if (cfdata->custom_screensaver_cmd) 
-      {
-   if (e_config->desklock_custom_screensaver_cmd)
-	   evas_stringshare_del(e_config->desklock_custom_screensaver_cmd);
-   e_config->desklock_custom_screensaver_cmd = evas_stringshare_add(cfdata->custom_screensaver_cmd);
-      }
+     {
+	if (e_config->desklock_custom_screensaver_cmd)
+	  evas_stringshare_del(e_config->desklock_custom_screensaver_cmd);
+	e_config->desklock_custom_screensaver_cmd = evas_stringshare_add(cfdata->custom_screensaver_cmd);
+     }
    
    ecore_x_screensaver_blank_set(!e_config->desklock_use_custom_screensaver);
    ecore_x_screensaver_expose_set(!e_config->desklock_use_custom_screensaver);
-      
    e_config_save_queue();
    return 1;
 }
@@ -529,8 +513,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_table_object_append(il, o, 0, 0, 1, 1, 1, 1, 0, 0);
    o = e_widget_radio_add(evas, _("System"), 1, rg);
    cfdata->o_system = o;
-   evas_object_smart_callback_add(o, "changed",
-				  _cb_dir, cfdata);
+   evas_object_smart_callback_add(o, "changed", _cb_dir, cfdata);
    e_widget_table_object_append(il, o, 1, 0, 1, 1, 1, 1, 0, 0);
    
    e_widget_table_object_append(ol, il, 0, 0, 1, 1, 0, 0, 0, 0);
@@ -593,20 +576,16 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    rg = e_widget_radio_group_new(&(cfdata->bg_mode));
    o = e_widget_radio_add(evas, _("Theme Defined"), 0, rg);
    cfdata->o_bg_mode_theme = o;
-   evas_object_smart_callback_add(o, "changed",
-				  _bg_mode, cfdata);
+   evas_object_smart_callback_add(o, "changed", _bg_mode, cfdata);
    e_widget_framelist_object_append(of, o);
    o = e_widget_radio_add(evas, _("Theme Wallpaper"), 1, rg);
    cfdata->o_bg_mode_bg = o;
-   evas_object_smart_callback_add(o, "changed",
-				  _bg_mode, cfdata);
+   evas_object_smart_callback_add(o, "changed", _bg_mode, cfdata);
    e_widget_framelist_object_append(of, o);
    o = e_widget_radio_add(evas, _("Custom"), 2, rg);
    cfdata->o_bg_mode_custom = o;
-   evas_object_smart_callback_add(o, "changed",
-				  _bg_mode, cfdata);
+   evas_object_smart_callback_add(o, "changed", _bg_mode, cfdata);
    e_widget_framelist_object_append(of, o);
-   
    
 #ifdef HAVE_PAM
    e_widget_table_object_append(ot, of, 0, 2, 1, 2 ,1 ,1 ,1 ,1);
@@ -775,9 +754,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    return ot;
 }
 
-
 /* general functionality/callbacks */
-
 static int
 _e_desklock_zone_num_get(void)
 {
