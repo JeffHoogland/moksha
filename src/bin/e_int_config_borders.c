@@ -103,7 +103,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      cfdata->border->border_border_dialog = NULL;
 
    E_FREE(cfdata->bordername);
-   free(cfdata);
+   E_FREE(cfdata);
 }
 
 static int 
