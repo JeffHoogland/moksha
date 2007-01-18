@@ -134,6 +134,7 @@ e_box_pack_start(Evas_Object *obj, Evas_Object *child)
 {
    E_Smart_Data *sd;
    
+   if (!child) return;
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    _e_box_smart_adopt(sd, child);
@@ -148,6 +149,7 @@ e_box_pack_end(Evas_Object *obj, Evas_Object *child)
 {
    E_Smart_Data *sd;
    
+   if (!child) return;
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    _e_box_smart_adopt(sd, child);
@@ -164,6 +166,7 @@ e_box_pack_before(Evas_Object *obj, Evas_Object *child, Evas_Object *before)
    int i = 0;
    Evas_List *l;
    
+   if (!child) return;
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    _e_box_smart_adopt(sd, child);
@@ -184,6 +187,7 @@ e_box_pack_after(Evas_Object *obj, Evas_Object *child, Evas_Object *after)
    int i = 0;
    Evas_List *l;
    
+   if (!child) return;
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    _e_box_smart_adopt(sd, child);
@@ -264,6 +268,7 @@ e_box_unpack(Evas_Object *obj)
    E_Box_Item *bi;
    E_Smart_Data *sd;
    
+   if (!obj) return;
    bi = evas_object_data_get(obj, "e_box_data");
    if (!bi) return;
    sd = bi->sd;
