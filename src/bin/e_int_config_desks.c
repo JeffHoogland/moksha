@@ -53,7 +53,7 @@ e_int_config_desks(E_Container *con)
    v->advanced.create_widgets = _advanced_create_widgets;
    /* create config diaolg for NULL object/data */
    cfd = e_config_dialog_new(con,
-			     _("Desktop Settings"),
+			     _("Virtual Desktops Settings"),
 			    "E", "_config_desks_dialog",
 			     "enlightenment/desktops", 0, v, NULL);
    return cfd;

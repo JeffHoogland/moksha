@@ -240,7 +240,7 @@ e_int_config_display(E_Container *con)
    v->override_auto_apply = 1;
    
    cfd = e_config_dialog_new(con,
-			     _("Display Settings"),
+			     _("Screen Resolution Settings"),
 			    "E", "_config_display_dialog",
 			     "enlightenment/screen_resolution", 0, v, NULL);
    return cfd;
@@ -451,6 +451,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	/* Sort the list */
 	cfdata->resolutions = evas_list_sort(cfdata->resolutions, 
 	      evas_list_count(cfdata->resolutions), _sort_resolutions);
+	cfdata->resolutions = evas_list_reverse(cfdata->resolutions);
 
 	evas_event_freeze(evas_object_evas_get(ol));
 	edje_freeze();
