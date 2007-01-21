@@ -1701,7 +1701,7 @@ _pager_desk_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ev = event_info;
    pd = data;
    /* FIXME: pd->pager->dragging is 0 when finishing a drag from desk to desk */
-   if ((ev->button == pager_config->btn_drag) && (!pd->pager->dragging) &&
+   if ((ev->button == 1) && (!pd->pager->dragging) &&
        (!pd->pager->just_dragged))
      {
 	e_desk_show(pd->desk);
