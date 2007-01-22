@@ -24,6 +24,7 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Co
 static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static void _cb_add(void *data, void *data2);
 static void _cb_del(void *data, void *data2);
+static void _cb_config(void *data, void *data2);
 static void _cb_entry_ok(char *text, void *data);
 static void _cb_confirm_dialog_yes(void *data);
 static void _load_tlist(E_Config_Dialog_Data *cfdata);
@@ -83,7 +84,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->dir) free(cfdata->dir);
    ibar_config->config_dialog = NULL;
-   free(cfdata);
+   E_FREE(cfdata);
 }
 
 static Evas_Object *
@@ -99,8 +100,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->tlist = ol;
    _load_tlist(cfdata);
    e_widget_min_size_set(ol, 140, 140);
-//   e_widget_framelist_object_append(of, ol);
-   
    e_widget_frametable_object_append(of, ol, 0, 0, 1, 2, 1, 1, 1, 0);
    
    ot = e_widget_table_add(evas, 0);
@@ -108,6 +107,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 1, 1, 0);
    ob = e_widget_button_add(evas, _("Delete"), "widget/del", _cb_del, cfdata, NULL);
    e_widget_table_object_append(ot, ob, 0, 1, 1, 1, 1, 1, 1, 0);
+   ob = e_widget_button_add(evas, _("Configure"), "widget/config", _cb_config, cfdata, NULL);
+   e_widget_table_object_append(ot, ob, 0, 2, 1, 1, 1, 1, 1, 0);
+   
    e_widget_frametable_object_append(of, ot, 1, 0, 1, 1, 1, 1, 1, 0);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
@@ -131,7 +133,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    if (!cfdata->show_label) e_widget_disabled_set(cfdata->radio_generic, 1);
    
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-
    return o;
 }
 
@@ -169,14 +170,26 @@ _cb_del(void *data, void *data2)
    E_Config_Dialog_Data *cfdata;
    
    cfdata = data;
-   snprintf(buf, sizeof(buf), _("You requested to delete \"%s\".<br>"
-				"<br>"
+   snprintf(buf, sizeof(buf), _("You requested to delete \"%s\".<br><br>"
 				"Are you sure you want to delete this bar source?"),
 	    cfdata->dir);
    
    e_confirm_dialog_show(_("Are you sure you want to delete this bar source?"),
-			 "enlightenment/exit", buf, NULL, NULL, _cb_confirm_dialog_yes, NULL, cfdata, NULL,
-			 NULL, NULL);
+			 "enlightenment/exit", buf, NULL, NULL, 
+			 _cb_confirm_dialog_yes, NULL, cfdata, NULL, NULL, NULL);
+}
+
+static void 
+_cb_config(void *data, void *data2) 
+{
+   char path[4096];
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data;
+   snprintf(path, sizeof(path), "%s/.e/e/applications/bar/%s", 
+	    e_user_homedir_get(), cfdata->dir);
+   e_int_config_apps_once(e_container_current_get(e_manager_current_get()), 
+			  _("IBar"), NULL, path, NULL, NULL);
 }
 
 static void
