@@ -19,8 +19,8 @@ static void _e_wid_del_hook(Evas_Object *obj);
 struct _E_Widget_Data
 {
    /* Current Data */
-   char		*cur_entry;
-   int		 cur_enabled;
+   char *cur_entry;
+   int   cur_enabled;
    
    struct
      {
@@ -54,65 +54,45 @@ e_widget_config_list_add(Evas *evas, Evas_Object* (*func_entry_add) (Evas *evas,
    wd->gui.table = o;
    e_widget_sub_object_add(obj, o);
       
-   o = e_widget_button_add(evas, _("Move Up"), "widget/up_arrow", _button_cb_up, wd, NULL);
+   o = e_widget_button_add(evas, _("Move Up"), "widget/up_arrow", 
+			   _button_cb_up, wd, NULL);
    wd->gui.up = o;
    e_widget_disabled_set(o, 1);
-   e_widget_table_object_append(	wd->gui.table, 
-					o, 
-					2, 0, 1, 1,
-					1, 1, 1, 1);
+   e_widget_table_object_append(wd->gui.table, o, 2, 0, 1, 1, 1, 1, 1, 1);
    
    
-   o = e_widget_button_add(evas, _("Move Down"), "widget/down_arrow", _button_cb_down, wd, NULL); 
+   o = e_widget_button_add(evas, _("Move Down"), "widget/down_arrow", 
+			   _button_cb_down, wd, NULL); 
    wd->gui.down = o;
    e_widget_disabled_set(o, 1);
-   e_widget_table_object_append(	wd->gui.table, 
-					o, 
-					2, 3, 1, 1,
-					1, 1, 1, 1);
-   
-   
+   e_widget_table_object_append(wd->gui.table, o, 2, 3, 1, 1, 1, 1, 1, 1);
+      
    o = e_widget_ilist_add(evas, 0, 0, NULL);
    wd->gui.list = o;
    e_widget_disabled_set(o, 1);
    e_widget_min_size_set(o, 100, 100);
    e_widget_on_change_hook_set(o, _list_cb_change, wd);
    e_widget_ilist_go(o);
-   e_widget_table_object_append(	wd->gui.table, 
-					o, 
-					3, 0, listspan, 4,
-					1, 1, 1, 1);
+   e_widget_table_object_append(wd->gui.table, o, 3, 0, listspan, 4, 1, 1, 1, 1);
   
    o = e_widget_label_add(evas, label);
-   e_widget_table_object_append(	wd->gui.table, 
-					o, 
-					0, 0, 2, 1,
-					1, 1, 1, 1); 
+   e_widget_table_object_append(wd->gui.table, o, 0, 0, 2, 1, 1, 1, 1, 1); 
    
    o = func_entry_add(evas, &(wd->cur_entry));
    wd->gui.entry = o;
    e_widget_disabled_set(o, 1);
    e_widget_min_size_set(o, 100, 25);
-   e_widget_table_object_append(	wd->gui.table,
-					o, 
-					0, 1, 2, 1, 
-					1, 1, 1, 1);
+   e_widget_table_object_append(wd->gui.table, o, 0, 1, 2, 1, 1, 1, 1, 1);
 
    o = e_widget_button_add(evas, _("Add"), NULL, _button_cb_add, wd, obj); 
    wd->gui.add = o;
    e_widget_disabled_set(o, 1);
-   e_widget_table_object_append(	wd->gui.table, 
-					o, 
-					2, 1, 1, 1,
-					1, 1, 1, 1);
+   e_widget_table_object_append(wd->gui.table, o, 2, 1, 1, 1, 1, 1, 1, 1);
    
    o = e_widget_button_add(evas, _("Remove"), NULL, _button_cb_remove, wd, obj);
    wd->gui.remove = o;
    e_widget_disabled_set(o, 1);
-   e_widget_table_object_append(	wd->gui.table, 
-					o, 
-					2, 2, 1, 1,
-					1, 1, 1, 1);
+   e_widget_table_object_append(wd->gui.table, o, 2, 2, 1, 1, 1, 1, 1, 1);
  
    e_widget_min_size_get(wd->gui.table, &mw, &mh);
    e_widget_min_size_set(obj, mw, mh);
@@ -168,11 +148,14 @@ e_widget_config_list_object_append(Evas_Object *obj, Evas_Object *sobj, int col,
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
-   e_widget_table_object_append(wd->gui.table, sobj, col, row, colspan, rowspan, fill_w, fill_h, expand_w, expand_h);
+   e_widget_table_object_append(wd->gui.table, sobj, col, row, 
+				colspan, rowspan, fill_w, fill_h, 
+				expand_w, expand_h);
 }
 
 /* Private Function defs */
-static void _list_cb_change(void *data, Evas_Object *obj)
+static void 
+_list_cb_change(void *data, Evas_Object *obj)
 {
    int indx;
    E_Widget_Data *wd;
@@ -184,8 +167,8 @@ static void _list_cb_change(void *data, Evas_Object *obj)
    _list_select_num(wd, indx);
 }
 
-
-static void _button_cb_add(void *data, void *obj)
+static void 
+_button_cb_add(void *data, void *obj)
 {
    E_Widget_Data *wd;
    Evas_Object *o;
@@ -215,7 +198,8 @@ static void _button_cb_add(void *data, void *obj)
      }
 }
 
-static void _button_cb_remove(void *data, void *obj)
+static void 
+_button_cb_remove(void *data, void *obj)
 {
    int indx;
    int count;
@@ -232,12 +216,11 @@ static void _button_cb_remove(void *data, void *obj)
    e_widget_ilist_go(wd->gui.list);	
    e_widget_ilist_selected_set(wd->gui.list, indx);
    if (count == 1)
-     {
-	_list_select_num(wd, -1);
-     }   
+     _list_select_num(wd, -1);
 }
 
-static void _button_cb_up(void *data, void *obj)
+static void 
+_button_cb_up(void *data, void *obj)
 {
    E_Widget_Data *wd;
    int idx_sel;
@@ -258,7 +241,8 @@ static void _button_cb_up(void *data, void *obj)
    e_widget_ilist_selected_set(wd->gui.list, idx_sel - 1);
 }
 
-static void _button_cb_down(void *data, void *obj)
+static void 
+_button_cb_down(void *data, void *obj)
 {
    E_Widget_Data *wd;
    int idx_sel;
@@ -279,7 +263,8 @@ static void _button_cb_down(void *data, void *obj)
    e_widget_ilist_selected_set(wd->gui.list, idx_sel + 1);
 }
 
-static void _list_select_num(E_Widget_Data *wd, int indx)
+static void 
+_list_select_num(E_Widget_Data *wd, int indx)
 {
    int count;
 
@@ -289,15 +274,11 @@ static void _list_select_num(E_Widget_Data *wd, int indx)
    count = e_widget_ilist_count(wd->gui.list);
  
    if (count == 0 || indx < 0)
-     {
-	e_widget_disabled_set(wd->gui.remove, 1);
-     }
+     e_widget_disabled_set(wd->gui.remove, 1);
    else 
-     {
-	e_widget_disabled_set(wd->gui.remove, 0);
-     }
-   
-   if (count == 1 || indx < 0)
+     e_widget_disabled_set(wd->gui.remove, 0);
+
+  if (count == 1 || indx < 0)
      {
 	e_widget_disabled_set(wd->gui.up, 1);
 	e_widget_disabled_set(wd->gui.down, 1);
@@ -354,4 +335,3 @@ _e_wid_disable_hook(Evas_Object *obj)
 	e_widget_disabled_set(wd->gui.add, 1);
      }
 }
-
