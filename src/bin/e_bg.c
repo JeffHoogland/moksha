@@ -22,11 +22,11 @@ e_bg_init(void)
 
    for (l = e_config->desktop_backgrounds; l; l = l->next)
      {
-       E_Config_Desktop_Background *cfbg;
-       cfbg = l->data;
-       e_filereg_register(cfbg->file);
+	E_Config_Desktop_Background *cfbg;
+	cfbg = l->data;
+	e_filereg_register(cfbg->file);
      }
-
+   
    E_EVENT_BG_UPDATE = ecore_event_type_new();
    return 1;
 }
@@ -350,7 +350,17 @@ _e_bg_signal(void *data, Evas_Object *obj, const char *emission, const char *sou
    evas_object_move(zone->bg_object, zone->x, zone->y);
    evas_object_resize(zone->bg_object, zone->w, zone->h);
    evas_object_layer_set(zone->bg_object, -1);
+///   printf("CLIP...\n");
    evas_object_clip_set(zone->bg_object, zone->bg_clip_object);
+     {
+	Evas_Coord x, y, w, h;
+	
+	evas_object_geometry_get(zone->bg_clip_object, &x, &y, &w, &h);
+///	printf("END: clip %p to %p [%ix%i+%i+%i]\n",
+///	       zone->bg_object,
+///	       zone->bg_clip_object,
+///	       w, h, x, y);
+     }
    evas_object_show(zone->bg_object);
 }
 
