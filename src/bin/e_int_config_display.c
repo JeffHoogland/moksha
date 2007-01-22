@@ -375,7 +375,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    E_Radio_Group *rg;
    E_Manager *man;
    Ecore_X_Screen_Size *sizes;
-   int i, s;
+   int i, s, sel;
    
    _fill_data(cfdata);
    
@@ -466,12 +466,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	     snprintf(buf, sizeof(buf), "%ix%i", res->size.width, res->size.height);
 	     e_widget_ilist_append(ol, NULL, buf, _ilist_item_change, cfdata, NULL);
 
-	     if (res->size.width == cfdata->orig_size.width 
-		   && res->size.height == cfdata->orig_size.height)
-	       {
-		  e_widget_ilist_selected_set(ol, i);
-		  _load_rates(cfdata);
-	       }
+	     if (res->size.width == cfdata->orig_size.width &&
+		 res->size.height == cfdata->orig_size.height)
+		   sel = res->id;
 	  }
 
 	if (!cfdata->has_rates)
@@ -482,6 +479,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      E_FREE(sizes);
 
    e_widget_ilist_go(ol);
+   e_widget_ilist_selected_set(ol, sel);
+   _load_rates(cfdata);
    e_widget_ilist_thaw(ol);
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(ol));
