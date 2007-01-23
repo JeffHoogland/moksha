@@ -267,6 +267,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      }
 
    e_font_apply();
+   e_config_save_queue();
    return 1;
 }
 
