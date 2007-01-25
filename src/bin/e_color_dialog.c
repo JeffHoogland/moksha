@@ -25,7 +25,7 @@ e_color_dialog_new(E_Container *con, const E_Color *color)
 
    dia = E_OBJECT_ALLOC(E_Color_Dialog, E_COLOR_DIALOG_TYPE, _e_color_dialog_free);
    if(!dia) return NULL;
-   dia->dia = e_dialog_new(con, "E", "_test");
+   dia->dia = e_dialog_new(con, "E", "_color_dialog");
    e_dialog_title_set(dia->dia, "Color Selector");
    
    dia->color = calloc(1, sizeof(E_Color));
@@ -82,7 +82,6 @@ e_color_dialog_cancel_callback_set(E_Color_Dialog *dia, void (*func)(E_Color_Dia
    dia->cancel_func = func;
    dia->cancel_data = data;
 }
-
 
 EAPI void
 e_color_dialog_change_callback_set(E_Color_Dialog *dia, void (*func)(E_Color_Dialog *dia, E_Color *color, void *data), void *data)
