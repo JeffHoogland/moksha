@@ -113,7 +113,3 @@ e_widget_aspect_child_set(Evas_Object *obj, Evas_Object *child)
    wd->child = child;
    _e_wid_reconfigure(wd);
 }
-
-
-
-
