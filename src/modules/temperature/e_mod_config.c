@@ -127,6 +127,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	 ecore_list_append(cfdata->sensors, strdup("temp1"));
 	 ecore_list_append(cfdata->sensors, strdup("temp2"));
 	 ecore_list_append(cfdata->sensors, strdup("temp3"));
+	 ecore_list_append(cfdata->sensors, strdup("temp4"));
 	 ecore_list_goto_first(cfdata->sensors);
 	 while ((name = ecore_list_next(cfdata->sensors)))
 	   {
