@@ -18,11 +18,10 @@ main(int argc, char **argv)
    E_Input_Method_Config *write_imc = NULL;
    E_Input_Method_Config *read_imc = NULL;
    
-   int del_name = 0;
-   int del_exe = 0;
    char *file = NULL;
    char *set_name = NULL;
    char *set_exe = NULL;
+   char *set_setup = NULL;
    char *set_gtk_im_module = NULL;
    char *set_qt_im_module = NULL;
    char *set_xmodifiers = NULL;
@@ -45,6 +44,13 @@ main(int argc, char **argv)
              valid_args++;
              write_ops++;
 	  }
+	else if ((!strcmp(argv[i], "-set-setup")) && (i < (argc - 1)))
+	  {
+	     i++;
+	     set_setup = argv[i];
+             valid_args++;
+             write_ops++;
+	  }
 	else if ((!strcmp(argv[i], "-set-gtk-im-module")) && (i < (argc - 1)))
 	  {
 	     i++;
@@ -63,25 +69,6 @@ main(int argc, char **argv)
 	  {
 	     i++;
 	     set_xmodifiers = argv[i];
-             valid_args++;
-             write_ops++;
-	  }
-	else if ((!strcmp(argv[i], "-del-all")))
-	  {
-	     del_name = 1;
-	     del_exe = 1;
-             valid_args++;
-             write_ops++;
-	  }
-	else if ((!strcmp(argv[i], "-del-name")))
-	  {
-	     del_name = 1;
-             valid_args++;
-             write_ops++;
-	  }
-	else if ((!strcmp(argv[i], "-del-exe")))
-	  {
-	     del_exe = 1;
              valid_args++;
              write_ops++;
 	  }
@@ -144,23 +131,16 @@ main(int argc, char **argv)
      {
 	int write_ok;
 	
-	write_imc = malloc(sizeof(E_Input_Method_Config));
+	write_imc = calloc(sizeof(E_Input_Method_Config), 1);
 	write_imc->version = E_INTL_INPUT_METHOD_CONFIG_VERSION;
-	if (read_imc == NULL)
-	  {
-	     write_imc->e_im_name = NULL;
-	     write_imc->gtk_im_module = NULL;
-	     write_imc->qt_im_module = NULL;
-	     write_imc->xmodifiers = NULL;
-	     write_imc->e_im_exec = NULL;
-	  }
-	else
+	if (read_imc != NULL)
 	  {
 	     write_imc->e_im_name = read_imc->e_im_name;
 	     write_imc->gtk_im_module = read_imc->gtk_im_module;
 	     write_imc->qt_im_module = read_imc->qt_im_module;
 	     write_imc->xmodifiers = read_imc->xmodifiers;
 	     write_imc->e_im_exec = read_imc->e_im_exec;
+	     write_imc->e_im_setup_exec = read_imc->e_im_setup_exec;
 	  }
 	     
 	if (set_name != NULL)	
@@ -173,7 +153,9 @@ main(int argc, char **argv)
 	  write_imc->xmodifiers = set_xmodifiers;
 	if (set_exe != NULL)
 	  write_imc->e_im_exec = set_exe;
-	
+	if (set_setup != NULL)
+	  write_imc->e_im_setup_exec = set_setup;
+
 	
 	/* write imc to file */
 	write_ok = e_intl_input_method_config_write (ef, write_imc);
@@ -186,6 +168,7 @@ main(int argc, char **argv)
 	printf("Config Version:\t%d\n", read_imc->version);
 	printf("Config Name:\t%s\n", read_imc->e_im_name);
 	printf("Command Line:\t%s\n", read_imc->e_im_exec);
+	printf("Setup Line:\t%s\n", read_imc->e_im_setup_exec);
 	printf("gtk_im_module:\t%s\n", read_imc->gtk_im_module);
 	printf("qt_im_module:\t%s\n", read_imc->qt_im_module);
 	printf("xmodifiers:\t%s\n", read_imc->xmodifiers);
@@ -206,11 +189,10 @@ _e_help(void)
    printf("OPTIONS:\n"
 	  "  -set-name NAME             Set the application name\n"
 	  "  -set-exe EXE               Set the application execute line\n"
-	  "  -set-gtk-im-module		Set the gtk_im_module env var\n"
-	  "  -set-qt-im-module		Set the qt_im_module env var\n"
-	  "  -set-xmodifiers		Set the xmodifiers env var\n"
-	  "  -del-name                  Delete the application name\n"
-	  "  -del-exe                   Delete the application execute line\n"
-	  "  -list			List Contents of Input Method Config file\n"
+	  "  -set-setup EXE             Set the setup application execute line\n"
+	  "  -set-gtk-im-module         Set the gtk_im_module env var\n"
+	  "  -set-qt-im-module          Set the qt_im_module env var\n"
+	  "  -set-xmodifiers            Set the xmodifiers env var\n"
+	  "  -list                      List Contents of Input Method Config file\n"
 	  );
 }

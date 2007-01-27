@@ -39,12 +39,12 @@ struct _E_Language_Pack
 struct _E_Input_Method_Config
 {
    int version;
-   char *e_im_name;
-   char *gtk_im_module;
-   char *qt_im_module;
-   char *xmodifiers;
-   char *e_im_exec;
-   char *e_im_setup_exec;
+   const char *e_im_name;
+   const char *gtk_im_module;
+   const char *qt_im_module;
+   const char *xmodifiers;
+   const char *e_im_exec;
+   const char *e_im_setup_exec;
 };
 
 struct _E_Locale_Parts
