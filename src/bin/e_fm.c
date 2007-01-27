@@ -1045,7 +1045,8 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 	     else if (!strcmp(icon, "DESKTOP"))
 	       {
 		  E_App *app;
-		  
+		 
+		  oic = NULL; 
 		  if (ici->pseudo_link)
 		    snprintf(buf, sizeof(buf), "%s/%s", ici->pseudo_dir, ici->file);
 		  else
@@ -1125,7 +1126,8 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 		      (e_util_glob_case_match(ici->file, "*.directory")))
 	       {
 		  E_App *app;
-		  
+		
+		  oic = NULL;  
 		  app = e_app_new(buf, 0);
 		  if (app)
 		    {
@@ -1133,6 +1135,43 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 		       e_object_unref(E_OBJECT(app));
 		    }
 		  if (type_ret) *type_ret = "DESKTOP";
+	       }
+	     else if (e_util_glob_case_match(ici->file, "*.imc"))
+	       {	  
+		  E_Input_Method_Config *imc;
+		  Eet_File *imc_ef;
+	
+		  oic = NULL;
+		  imc_ef = eet_open(buf, EET_FILE_MODE_READ);	     
+	
+		  if (imc_ef)
+		    {
+		       imc = e_intl_input_method_config_read(imc_ef);
+		       eet_close(imc_ef);
+	
+		       if (imc->e_im_setup_exec) 
+			 {
+			    E_App *app;
+			    app = e_app_exe_find(imc->e_im_setup_exec);
+			    if (app) 
+			      {
+				 oic = e_app_icon_add(app, evas);
+			      }
+			 }
+		       e_intl_input_method_config_free(imc);
+		    }
+		  
+		  if (oic == NULL) 
+		    {
+		       oic = edje_object_add(evas);	    
+		       e_theme_edje_object_set(oic, "base/theme/fileman",
+				         "e/icons/fileman/file");
+		       if (type_ret) *type_ret = "FILE_TYPE";
+		    }
+		  else
+		    {
+		       if (type_ret) *type_ret = "IMC";
+		    }
 	       }
 	     else if (S_ISCHR(ici->statinfo.st_mode))
 	       {
@@ -2279,7 +2318,6 @@ static Evas_Object *
 _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (void *data, Evas_Object *obj, void *event_info), void *data, int force_gen)
 {
    Evas_Object *oic;
-   char buf[4096], *p;
 
    oic = e_fm2_icon_get(evas_object_evas_get(o), ic->sd->realpath,
 			ic, &(ic->info), ic->sd->config->icon.key_hint,
