@@ -20,7 +20,7 @@ typedef struct _E_Locale_Parts E_Locale_Parts;
 #define E_INTL_H
 
 #define E_INTL_LANGUAGE_PACK_VERSION 1
-#define E_INTL_INPUT_METHOD_CONFIG_VERSION 1
+#define E_INTL_INPUT_METHOD_CONFIG_VERSION 2
 
 #define E_INTL_LOC_CODESET   1 << 0
 #define E_INTL_LOC_REGION    1 << 1
@@ -39,11 +39,12 @@ struct _E_Language_Pack
 struct _E_Input_Method_Config
 {
    int version;
-   const char *e_im_name;
-   const char *gtk_im_module;
-   const char *qt_im_module;
-   const char *xmodifiers;
-   const char *e_im_exec;
+   char *e_im_name;
+   char *gtk_im_module;
+   char *qt_im_module;
+   char *xmodifiers;
+   char *e_im_exec;
+   char *e_im_setup_exec;
 };
 
 struct _E_Locale_Parts

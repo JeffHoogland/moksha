@@ -67,7 +67,7 @@ e_intl_init(void)
    E_CONFIG_VAL(_e_intl_input_method_config_edd, E_Input_Method_Config, qt_im_module, STR);
    E_CONFIG_VAL(_e_intl_input_method_config_edd, E_Input_Method_Config, xmodifiers, STR);
    E_CONFIG_VAL(_e_intl_input_method_config_edd, E_Input_Method_Config, e_im_exec, STR);
-   
+   E_CONFIG_VAL(_e_intl_input_method_config_edd, E_Input_Method_Config, e_im_setup_exec, STR); 
 
    if ((s = getenv("LC_MESSAGES"))) _e_intl_orig_lc_messages = strdup(s);
    if ((s = getenv("LANGUAGE"))) _e_intl_orig_language = strdup(s);
@@ -476,6 +476,7 @@ e_intl_input_method_config_free(E_Input_Method_Config *imc)
 	if (imc->qt_im_module) evas_stringshare_del(imc->qt_im_module);
 	if (imc->xmodifiers) evas_stringshare_del(imc->xmodifiers);
 	if (imc->e_im_exec) evas_stringshare_del(imc->e_im_exec);
+	if (imc->e_im_setup_exec) evas_stringshare_del(imc->e_im_setup_exec);
 	E_FREE(imc);
      }
 }

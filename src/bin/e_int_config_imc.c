@@ -16,6 +16,7 @@ static Evas_Object *_advanced_create_widgets (E_Config_Dialog *cfd, Evas *evas, 
 static int	    _basic_list_sort_cb	     (void *d1, void *d2);
 static void	    _e_imc_disable_change_cb (void *data, Evas_Object *obj);
 static void	    _e_imc_list_change_cb    (void *data, Evas_Object *obj);
+static void	    _e_imc_setup_cb          (void *data, void *data2);
 
 /* Advanced Callbacks */
 static void         _cb_dir                  (void *data, Evas_Object *obj);
@@ -27,6 +28,7 @@ static void         _cb_files_selection_change(void *data, Evas_Object *obj, voi
 static void         _cb_files_files_changed  (void *data, Evas_Object *obj, void *event_info);
 static void	    _cb_files_selected       (void *data, Evas_Object *obj, void *event_info);
 static void         _cb_files_files_deleted  (void *data, Evas_Object *obj, void *event_info);
+static void         _e_imc_adv_setup_cb      (void *data, void *data2);
 
 static void         _e_imc_change_enqueue    (E_Config_Dialog_Data *cfdata);
 static void         _e_imc_entry_change_cb   (void *data, Evas_Object *obj);
@@ -47,13 +49,17 @@ struct _E_Config_Dialog_Data
    Evas_Object *o_frame; /* scrollpane for file manager*/
    
    char *imc_current;
+   Evas_Hash *imc_basic_map;
+   
    int imc_disable; /* 0=enable, 1=disable */ 
    int fmdir; /* 0=Local, 1=System*/
    struct
      {
 	int dirty;	
 	char *e_im_name;
-	char *e_im_exec;	
+	char *e_im_exec;
+	char *e_im_setup_exec;
+	
 	char *gtk_im_module;
 	char *qt_im_module;
 	char *xmodifiers;
@@ -65,8 +71,14 @@ struct _E_Config_Dialog_Data
      {
 	Evas_Object *imc_basic_list;
 	Evas_Object *imc_basic_disable;
+	Evas_Object *imc_basic_setup;
+
+	Evas_Object *imc_advanced_disable;
+	Evas_Object *imc_advanced_setup;
+	
 	Evas_Object *e_im_name;
 	Evas_Object *e_im_exec;
+	Evas_Object *e_im_setup_exec;
 	Evas_Object *gtk_im_module;
 	Evas_Object *qt_im_module;
 	Evas_Object *xmodifiers;
@@ -144,7 +156,13 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->win_import) 
      e_int_config_imc_import_del(cfdata->win_import); 
    E_FREE(cfdata->imc_current);
- 
+
+   if (cfdata->imc_basic_map)
+     {
+	evas_hash_foreach(cfdata->imc_basic_map, _change_hash_free_cb, NULL);
+	evas_hash_free(cfdata->imc_basic_map);
+     }
+   
    if (cfdata->imc_change_map)
      {
 	evas_hash_foreach(cfdata->imc_change_map, _change_hash_free_cb, NULL);
@@ -154,6 +172,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
  
    E_FREE(cfdata->imc.e_im_name);
    E_FREE(cfdata->imc.e_im_exec);
+   E_FREE(cfdata->imc.e_im_setup_exec);
    E_FREE(cfdata->imc.gtk_im_module);
    E_FREE(cfdata->imc.qt_im_module);
    E_FREE(cfdata->imc.xmodifiers);
@@ -199,13 +218,73 @@ _e_imc_disable_change_cb(void *data, Evas_Object *obj)
    cfdata = data;
 }
 
+void
+_e_imc_setup_button_toggle(Evas_Object *button, E_Input_Method_Config *imc)
+{	
+   if (imc) 
+     {
+	int flag;
+	
+	flag = ( imc->e_im_setup_exec == NULL ) ||
+	   ( imc->e_im_setup_exec[0] == 0 );
+	e_widget_disabled_set(button, flag);
+     } 
+   else
+     {	
+	e_widget_disabled_set(button, 1);
+     }
+  
+}
+
 static void
 _e_imc_list_change_cb(void *data, Evas_Object *obj) 
 {
    E_Config_Dialog_Data *cfdata;
+   E_Input_Method_Config *imc;
    
    cfdata = data;
    e_widget_check_checked_set(cfdata->gui.imc_basic_disable, 0);
+   
+   if (cfdata->imc_current)
+     {
+	imc = evas_hash_find(cfdata->imc_basic_map, cfdata->imc_current);
+	_e_imc_setup_button_toggle(cfdata->gui.imc_basic_setup, imc);
+     }
+}
+
+static void
+_e_imc_setup_cb(void *data, void *data2)
+{
+   E_Config_Dialog_Data *cfdata;
+  
+   cfdata = data; 
+   if (cfdata->imc_current && cfdata->imc_basic_map)
+     {
+	E_Input_Method_Config *imc;
+	
+	imc = evas_hash_find(cfdata->imc_basic_map, cfdata->imc_current);
+	
+	if (imc && imc->e_im_setup_exec)
+	  {
+	     Ecore_Exe *exe;
+	     char *cmd;
+	     
+	     cmd = imc->e_im_setup_exec;
+
+	     e_util_library_path_strip();
+	     exe = ecore_exe_run(cmd, NULL);
+	     e_util_library_path_restore();
+		  
+	     if (!exe)
+	       {
+   		  e_util_dialog_show(_("Run Error"),
+		_( "Enlightenment was unable to fork a child process:<br>"
+	   	   "<br>"
+		   "%s<br>"),
+		   cmd);
+	       }
+	  }
+     }	
 }
 
 static Evas_Object *
@@ -219,15 +298,16 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      
    of = e_widget_frametable_add(evas, _("Input Method Selector"), 1);
  
-   /* Disable everything checkbox */
-   ob = e_widget_check_add(evas, _("Use no Input Method"), &(cfdata->imc_disable));
-   e_widget_disabled_set(ob, 0);
-   e_widget_on_change_hook_set(ob, _e_imc_disable_change_cb, cfdata);
-   e_widget_check_checked_set(ob, cfdata->imc_disable);
-   e_widget_change(ob);
-   cfdata->gui.imc_basic_disable = ob;
-    e_widget_frametable_object_append(of, ob, 0, 0, 2, 1, 1, 1, 1, 1);
-   
+   /* Disable imc checkbox */
+   ob = e_widget_check_add(evas, _("Use No Input Method"), &(cfdata->imc_disable));
+   cfdata->gui.imc_basic_disable = ob; 
+   e_widget_frametable_object_append(of, ob, 0, 0, 2, 1, 1, 1, 1, 1);
+      
+   /* Configure imc button */
+   ob = e_widget_button_add(evas, _("Setup Selected Input Method"), "widget/setup", _e_imc_setup_cb, cfdata, NULL);
+   cfdata->gui.imc_basic_setup = ob;
+   e_widget_frametable_object_append(of, ob, 0, 7, 2, 1, 1, 1, 1, 1);
+ 
    /* Input method List */ 
    ob = e_widget_ilist_add(evas, 16, 16, &(cfdata->imc_current));
    e_widget_on_change_hook_set(ob, _e_imc_list_change_cb, cfdata);
@@ -244,6 +324,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 				   evas_list_count(imc_basic_list), 
 				   _basic_list_sort_cb);
 
+   if (cfdata->imc_basic_map)
+     {
+	evas_hash_foreach(cfdata->imc_basic_map, _change_hash_free_cb, NULL);
+	evas_hash_free(cfdata->imc_basic_map);
+	cfdata->imc_basic_map = NULL;
+     }
+   
    i = 0;
    while(imc_basic_list) 
      {
@@ -260,17 +347,31 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	
 	     if (imc && imc->e_im_name)
 	       {
-		  e_widget_ilist_append(cfdata->gui.imc_basic_list, NULL, imc->e_im_name, NULL, NULL, imc_path);
+		  Evas_Object *icon;
+		  
+		  icon = NULL;
+		  if (imc->e_im_setup_exec) 
+		    {
+		       E_App *eap;
+		       eap = e_app_exe_find(imc->e_im_setup_exec);
+		       if (eap)
+			 icon = e_app_icon_add(eap, evas);
+		    }
+		  
+		  e_widget_ilist_append(cfdata->gui.imc_basic_list, icon, imc->e_im_name, NULL, NULL, imc_path);
 		  if (cfdata->imc_current && !strncmp(imc_path, cfdata->imc_current, strlen(cfdata->imc_current)))
 		    e_widget_ilist_selected_set(cfdata->gui.imc_basic_list, i);
 		  i++;
+		  
+		  cfdata->imc_basic_map = evas_hash_add(cfdata->imc_basic_map, imc_path, imc);
 	       }
-	     e_intl_input_method_config_free(imc);
 	  }
 	free(imc_path);
 	imc_basic_list = evas_list_remove_list(imc_basic_list, imc_basic_list);	
      }
-   
+      	
+   _e_imc_setup_button_toggle(cfdata->gui.imc_basic_setup, evas_hash_find(cfdata->imc_basic_map, cfdata->imc_current));
+
    e_widget_ilist_go(ob);
    e_widget_ilist_thaw(ob);
    edje_thaw();
@@ -292,28 +393,29 @@ _change_hash_apply_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
    Eet_File *ef;
 
    imc = data;   
-   ef = eet_open(key, EET_FILE_MODE_WRITE);
-   if (ef)
+
+   if (ecore_file_exists(key))
      {
-	e_intl_input_method_config_write(ef, imc);
-	eet_close(ef);
+	ef = eet_open(key, EET_FILE_MODE_WRITE);
+	if (ef)
+	  {
+	     e_intl_input_method_config_write(ef, imc);
+	     eet_close(ef);
+	  }
      }
+   
    e_intl_input_method_config_free(imc);
+
    return 1;
 }
 
 static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {	  
-   if (cfdata->imc_current)
-     {
-	if (e_config->input_method) evas_stringshare_del(e_config->input_method);
-	e_config->input_method = evas_stringshare_add(cfdata->imc_current);
-	e_intl_input_method_set(e_config->input_method);
-     }
+   /* inherit basic apply functionality */
+   _basic_apply_data(cfd, cfdata);
    
-   e_config_save_queue();
-   
+   /* Save all file changes */
    if (cfdata->imc_current) 
      _e_imc_change_enqueue(cfdata);
 
@@ -393,6 +495,35 @@ _cb_new(void *data, void *data2)
      }
    free(imc_new);
 }
+
+static void
+_e_imc_adv_setup_cb(void *data, void *data2)
+{
+   E_Config_Dialog_Data *cfdata;
+  
+   cfdata = data; 
+   if (cfdata->imc.e_im_setup_exec)
+     {
+	     Ecore_Exe *exe;
+	     char *cmd;
+	     
+	     cmd = cfdata->imc.e_im_setup_exec;
+
+	     e_util_library_path_strip();
+	     exe = ecore_exe_run(cmd, NULL);
+	     e_util_library_path_restore();
+		  
+	     if (!exe)
+	       {
+   		  e_util_dialog_show(_("Run Error"),
+		_( "Enlightenment was unable to fork a child process:<br>"
+	   	   "<br>"
+		   "%s<br>"),
+		   cmd);
+	       }
+     }	
+}
+
 /** End Button Callbacks **/
 
 /** Start IMC FM2 Callbacks **/
@@ -537,7 +668,11 @@ _e_imc_form_fill(E_Config_Dialog_Data *cfdata)
    E_Input_Method_Config *imc;
    int imc_free;
    
-   if (!cfdata->imc_current) return;
+   if (!cfdata->imc_current) 
+     {
+	e_widget_disabled_set(cfdata->gui.imc_advanced_setup, 1);
+	return;
+     }
   
    imc_free = 0;
    imc = evas_hash_find(cfdata->imc_change_map, cfdata->imc_current); 
@@ -552,22 +687,27 @@ _e_imc_form_fill(E_Config_Dialog_Data *cfdata)
 	     eet_close(imc_file);
 	  }
      }
-
+   
+   _e_imc_setup_button_toggle(cfdata->gui.imc_advanced_setup, imc);
+   
    if (imc)
      {
 	e_widget_entry_text_set(cfdata->gui.e_im_name, imc->e_im_name); 
 	e_widget_entry_text_set(cfdata->gui.e_im_exec, imc->e_im_exec);
+	e_widget_entry_text_set(cfdata->gui.e_im_setup_exec, imc->e_im_setup_exec);
 	e_widget_entry_text_set(cfdata->gui.gtk_im_module, imc->gtk_im_module);
 	e_widget_entry_text_set(cfdata->gui.qt_im_module, imc->qt_im_module);
 	e_widget_entry_text_set(cfdata->gui.xmodifiers, imc->xmodifiers);
 
 	e_widget_entry_readonly_set(cfdata->gui.e_im_name, cfdata->fmdir);
 	e_widget_entry_readonly_set(cfdata->gui.e_im_exec, cfdata->fmdir);
+	e_widget_entry_readonly_set(cfdata->gui.e_im_setup_exec, cfdata->fmdir);
 	e_widget_entry_readonly_set(cfdata->gui.gtk_im_module, cfdata->fmdir);
 	e_widget_entry_readonly_set(cfdata->gui.qt_im_module, cfdata->fmdir);
 	e_widget_entry_readonly_set(cfdata->gui.xmodifiers, cfdata->fmdir);
 	if (imc_free) e_intl_input_method_config_free(imc);
      }
+   e_widget_check_checked_set(cfdata->gui.imc_advanced_disable, 0);
    cfdata->imc.dirty = 0;
 }
 
@@ -585,17 +725,18 @@ _e_imc_change_enqueue(E_Config_Dialog_Data *cfdata)
 	imc_update->version = E_INTL_INPUT_METHOD_CONFIG_VERSION;
 	
 	/* TODO: need to only add if the string is not empty */
-	imc_update->e_im_name = evas_stringshare_add(cfdata->imc.e_im_name);
-	imc_update->e_im_exec = evas_stringshare_add(cfdata->imc.e_im_exec);
-	imc_update->gtk_im_module = evas_stringshare_add(cfdata->imc.gtk_im_module);
-	imc_update->qt_im_module = evas_stringshare_add(cfdata->imc.qt_im_module);
-	imc_update->xmodifiers = evas_stringshare_add(cfdata->imc.xmodifiers);
+	imc_update->e_im_name = (char *) evas_stringshare_add(cfdata->imc.e_im_name);
+	imc_update->e_im_exec = (char *) evas_stringshare_add(cfdata->imc.e_im_exec);
+	imc_update->e_im_setup_exec = (char *) evas_stringshare_add(cfdata->imc.e_im_setup_exec);
+	imc_update->gtk_im_module = (char *) evas_stringshare_add(cfdata->imc.gtk_im_module);
+        imc_update->qt_im_module = (char *) evas_stringshare_add(cfdata->imc.qt_im_module);
+        imc_update->xmodifiers = (char *) evas_stringshare_add(cfdata->imc.xmodifiers);
 
 	/* look for changes to this file and remove them */
 	imc_update_old = evas_hash_find(cfdata->imc_change_map, cfdata->imc_current);
 	if (imc_update_old)
 	  {
-	     evas_hash_del(cfdata->imc_change_map, cfdata->imc_current, NULL);
+	     cfdata->imc_change_map = evas_hash_del(cfdata->imc_change_map, cfdata->imc_current, NULL);
 	     e_intl_input_method_config_free(imc_update_old);
 	     
 	  }
@@ -744,13 +885,24 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_table_object_append(ot, ol, 0, 0, 1, 1, 1, 1, 1, 1);
    
    of = e_widget_list_add(evas, 0, 0);
+
+   /* Disable imc checkbox */
+   /* il( o[Check], ol( o[Button], o[Button] ) ) */
+   il = e_widget_list_add(evas, 0, 1);
+   
+   o = e_widget_check_add(evas, _("Use No Input Method"), &(cfdata->imc_disable));
+   e_widget_on_change_hook_set(o, _e_imc_disable_change_cb, cfdata);
+   cfdata->gui.imc_advanced_disable = o; 
+   e_widget_list_object_append(il, o, 1, 0, 0.5);
+ 
    ol = e_widget_list_add(evas, 1, 1);
    
    o = e_widget_button_add(evas, _("New"), "enlightenment/new", _cb_new, cfdata, NULL);
    e_widget_list_object_append(ol, o, 1, 0, 0.5);
-   o = e_widget_button_add(evas, _("Import..."), "enlightenment/import", _cb_import, cfdata, NULL);
+   o = e_widget_button_add(evas, _("Import..."), "enlightenment/imc", _cb_import, cfdata, NULL);
    e_widget_list_object_append(ol, o, 1, 0, 0.5);
-   e_widget_list_object_append(of, ol, 1, 0, 0.0);
+   e_widget_list_object_append(il, ol, 1, 0, 0.5);
+   e_widget_list_object_append(of, il, 1, 0, 0.0);
    
    ol = e_widget_frametable_add(evas, _("Input Method Parameters"), 1);
    
@@ -767,6 +919,13 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
    cfdata->gui.e_im_exec = o;
    e_widget_frametable_object_append(ol, o, 1, 1, 1, 1, 1, 1, 1, 1);
+ 
+   o = e_widget_label_add(evas, _("Setup Command"));
+   e_widget_frametable_object_append(ol, o, 0, 2, 1, 1, 1, 1, 1, 1);
+   o = e_widget_entry_add(evas, &(cfdata->imc.e_im_setup_exec));
+   e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
+   cfdata->gui.e_im_setup_exec = o;
+   e_widget_frametable_object_append(ol, o, 1, 2, 1, 1, 1, 1, 1, 1);
    
    e_widget_list_object_append(of, ol, 0, 1, 0.5);
    
@@ -795,7 +954,13 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
  
    e_widget_list_object_append(of, ol, 0, 1, 0.5);
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
-   e_dialog_resizable_set(cfd->dia, 1);
+      
+   o = e_widget_button_add(evas, _("Setup Selected Input Method"), "widget/setup", _e_imc_adv_setup_cb, cfdata, NULL);
+   e_widget_table_object_append(ot, o, 0, 1, 1, 1, 1, 1, 1, 1);
+   cfdata->gui.imc_advanced_setup = o;
+ 
+   e_dialog_resizable_set(cfd->dia, 1);	
+
    _e_imc_form_fill(cfdata);
    return ot;
 }
