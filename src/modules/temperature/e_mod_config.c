@@ -72,6 +72,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    double      p;
    Ecore_List *therms;
    char       *name;
+   char        path[PATH_MAX];
    
    cfdata->units = cfdata->inst->units;
    if (cfdata->inst->units == CELCIUS) 
@@ -124,10 +125,29 @@ _fill_data(E_Config_Dialog_Data *cfdata)
       case SENSOR_TYPE_LINUX_MACMINI:
 	 break;
       case SENSOR_TYPE_LINUX_I2C:
-	 ecore_list_append(cfdata->sensors, strdup("temp1"));
-	 ecore_list_append(cfdata->sensors, strdup("temp2"));
-	 ecore_list_append(cfdata->sensors, strdup("temp3"));
-	 ecore_list_append(cfdata->sensors, strdup("temp4"));
+	 therms = ecore_file_ls("/sys/bus/i2c/devices");
+	 if (therms)
+	    {
+	       char *therm_name;
+
+	       while ((therm_name = ecore_list_next(therms)))
+		 {
+		    int i;
+
+                    /* If there are ever more than 9 temperatures, then just increase this number. */
+		    for (i = 0; i < 9; i++)
+		      {
+			 sprintf(path, "/sys/bus/i2c/devices/%s/temp%d_input", therm_name, i);
+			 if (ecore_file_exists(path))
+			   {
+			      sprintf(path, "temp%d", i);
+	                      ecore_list_append(cfdata->sensors, strdup(path));
+			   }
+		      }
+		 }
+	       ecore_list_destroy(therms);
+	    }
+
 	 ecore_list_goto_first(cfdata->sensors);
 	 while ((name = ecore_list_next(cfdata->sensors)))
 	   {

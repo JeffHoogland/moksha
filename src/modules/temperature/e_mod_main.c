@@ -238,8 +238,6 @@ _temperature_sensor_init(Config_Face *inst)
 	       }
 	     else
 	       {
-		  /* TODO: Is there I2C devices with more than 3 temperature sensors?  Yes, mine has 4. */
-		  /* TODO: What to do when there is more than one tempX? */
 		  therms = ecore_file_ls("/sys/bus/i2c/devices");
 		  if (therms)
 		    {
@@ -247,17 +245,17 @@ _temperature_sensor_init(Config_Face *inst)
 
 		       while ((name = ecore_list_next(therms)))
 			 {
-			    char *sensors[] = { "temp1", "temp2", "temp3", "temp4" };
 			    int i;
 
-			    for (i = 0; i < 4; i++)
+                            /* If there are ever more than 9 temperatures, then just increase this number. */
+			    for (i = 0; i < 9; i++)
 			      {
-				 sprintf(path, "/sys/bus/i2c/devices/%s/%s_input",
-				       name, sensors[i]);
+				 sprintf(path, "/sys/bus/i2c/devices/%s/temp%d_input", name, i);
 				 if (ecore_file_exists(path))
 				   {
+				      sprintf(path, "temp%d", i);
 				      inst->sensor_type = SENSOR_TYPE_LINUX_I2C;
-				      inst->sensor_name = evas_stringshare_add(sensors[i]);
+				      inst->sensor_name = evas_stringshare_add(path);
 				      break;
 				   }
 			      }
