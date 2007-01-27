@@ -8,7 +8,7 @@ MAINTAINERCLEANFILES = Makefile.in aclocal.m4 config.guess \
 
 bin_SCRIPTS = enlightenment-config
 
-EXTRA_DIST = mkinstalldirs  config.rpath  config.rpath mkinstalldirs  mkinstalldirs  config.rpath mkinstalldirs  config.rpath  config.rpath mkinstalldirs  config.rpath  README AUTHORS COPYING COPYING-PLAIN \
+EXTRA_DIST = config.rpath  README AUTHORS COPYING COPYING-PLAIN \
              enlightenment.spec.in enlightenment.spec \
 	     debian/changelog \
 	     debian/changelog.in \
