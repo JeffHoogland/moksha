@@ -53,7 +53,7 @@ e_about_new(E_Container *con)
    edje_object_part_text_set
      (about->bg_object, "e.textblock.about",
       _(
-	"Copyright &copy; 1999-2006, by the Enlightenment Development Team.<br>"
+	"Copyright &copy; 1999-2007, by the Enlightenment Development Team.<br>"
 	"<br>"
 	"We hope you enjoy using this software as much as we enjoyed "
 	"writing it.<br>"
