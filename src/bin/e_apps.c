@@ -676,7 +676,9 @@ e_app_exec(E_App *a, int launch_id)
 	return 0;
      }
    /* We want the stdout and stderr as lines for the error dialog if it exits abnormally. */
+   e_util_library_path_strip();
    exe = ecore_exe_pipe_run(command, ECORE_EXE_PIPE_AUTO | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR | ECORE_EXE_PIPE_READ_LINE_BUFFERED | ECORE_EXE_PIPE_ERROR_LINE_BUFFERED, inst);
+   e_util_library_path_restore();
    if (!exe)
      {
 	free(command);

@@ -619,6 +619,8 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	     ici = l->data;
 	     if ((ici->link) && (ici->mount))
 	       e_fwin_new(fwin->win->container, ici->link, "/");
+	     else if ((ici->link) && (ici->removable))
+	       e_fwin_new(fwin->win->container, ici->link, "/");
 	     else if (ici->link)
 	       {
 		  if (S_ISDIR(ici->statinfo.st_mode))

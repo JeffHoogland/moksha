@@ -5763,6 +5763,7 @@ images
    image: "e17_icon_fileman_file_clicked.png" COMP;
    image: "e17_icon_fileman_home.png" COMP;
    image: "e17_icon_fileman_desktop.png" COMP;   
+   image: "e17_icon_fileman_hd.png" COMP;   
    
    image: "e17_icon_fileman_pdf.png" COMP;
    image: "e17_icon_fileman_c.png" COMP;
@@ -5816,6 +5817,7 @@ FILEMAN_ICON_CLICKABLE("folder");
 FILEMAN_ICON_CLICKABLE("file");
 FILEMAN_ICON("home");
 FILEMAN_ICON("desktop");
+FILEMAN_ICON("hd");
 
 FILEMAN_MIME("application/pdf","pdf");
 FILEMAN_MIME("text/x-csrc","c");

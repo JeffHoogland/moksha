@@ -651,7 +651,9 @@ e_zone_exec(E_Zone *zone, const char *exe)
 	if (!inst) return 0;
      }
 
+   e_util_library_path_strip();
    ex = ecore_exe_pipe_run(exe, ECORE_EXE_PIPE_AUTO | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR | ECORE_EXE_PIPE_READ_LINE_BUFFERED | ECORE_EXE_PIPE_ERROR_LINE_BUFFERED, inst);
+   e_util_library_path_restore();
    if (!ex)
      {
 	if (inst) free(inst);

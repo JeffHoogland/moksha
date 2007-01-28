@@ -310,10 +310,31 @@ static int _e_fm2_fop_process(E_Fm2_Fop *fop);
 static int _e_fm2_cb_fop_idler(void *data);
 static int _e_fm2_cb_fop_timer(void *data);
 
+static const char *_e_fm2_removable_dev_label_get(const char *uuid);
+static void _e_fm2_removable_dev_add(const char *uuid);
+static void _e_fm2_removable_dev_del(const char *uuid);
+static void _e_fm2_removable_path_mount(const char *path);
+static void _e_fm2_removable_path_umount(const char *path);
+static void _e_fm2_removable_dev_mount(const char *uuid);
+static void _e_fm2_removable_dev_umount(const char *uuid);
+static void _e_fm2_removable_dev_label_set(const char *uuid, const char *label);
+static int _e_fm2_cb_dbus_event_server_add(void *data, int ev_type, void *ev);
+static int _e_fm2_cb_dbus_event_server_del(void *data, int ev_type, void *ev);
+static int _e_fm2_cb_dbus_event_server_signal(void *data, int ev_type, void *ev);
+static int _e_fm2_cb_dbus_event_child_exit(void *data, int ev_type, void *ev);
+static void _e_fm2_cb_dbus_method_name_has_owner(void *data, Ecore_DBus_Method_Return *reply);
+static void _e_fm2_cb_dbus_method_add_match(void *data, Ecore_DBus_Method_Return *reply);
+static void _e_fm2_cb_dbus_method_error(void *data, const char *error);
+
+static Ecore_DBus_Server *_e_fm2_dbus = NULL;
+static Evas_List *_e_fm2_dbus_handlers = NULL;
 static char *_e_fm2_meta_path = NULL;
 static Evas_Smart *_e_fm2_smart = NULL;
 static Evas_List *_e_fm2_list = NULL;
 static Evas_List *_e_fm2_fop_list = NULL;
+
+EAPI int E_EVENT_REMOVABLE_ADD = 0;
+EAPI int E_EVENT_REMOVABLE_DEL = 0;
 
 /* externally accessible functions */
 EAPI E_Fm2_Custom_File *
@@ -371,12 +392,47 @@ e_fm2_init(void)
 				 _e_fm2_smart_clip_set, /* clip_set */
 				 _e_fm2_smart_clip_unset, /* clip_unset */
 				 NULL); /* data*/
+   ecore_dbus_init();
+   _e_fm2_dbus = ecore_dbus_server_system_connect(NULL);
+   if (_e_fm2_dbus)
+     {
+	_e_fm2_dbus_handlers = evas_list_append
+	  (_e_fm2_dbus_handlers, 
+	   ecore_event_handler_add(ECORE_DBUS_EVENT_SERVER_ADD,
+				   _e_fm2_cb_dbus_event_server_add, NULL));
+	_e_fm2_dbus_handlers = evas_list_append
+	  (_e_fm2_dbus_handlers, 
+	   ecore_event_handler_add(ECORE_DBUS_EVENT_SERVER_DEL,
+				   _e_fm2_cb_dbus_event_server_del, NULL));
+	_e_fm2_dbus_handlers = evas_list_append
+	  (_e_fm2_dbus_handlers, 
+	   ecore_event_handler_add(ECORE_DBUS_EVENT_SIGNAL,
+				   _e_fm2_cb_dbus_event_server_signal, NULL));
+	_e_fm2_dbus_handlers = evas_list_append
+	  (_e_fm2_dbus_handlers, 
+	   ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
+				   _e_fm2_cb_dbus_event_child_exit, NULL));
+	
+	E_EVENT_REMOVABLE_ADD = ecore_event_type_new();
+	E_EVENT_REMOVABLE_DEL = ecore_event_type_new();
+     }
    return 1;
 }
 
 EAPI int
 e_fm2_shutdown(void)
 {
+   if (_e_fm2_dbus)
+     {
+	while (_e_fm2_dbus_handlers)
+	  {
+	     if (_e_fm2_dbus_handlers->data) ecore_event_handler_del(_e_fm2_dbus_handlers->data);
+	     _e_fm2_dbus_handlers = evas_list_remove_list(_e_fm2_dbus_handlers, _e_fm2_dbus_handlers);
+	  }
+	ecore_dbus_server_del(_e_fm2_dbus);
+	_e_fm2_dbus = NULL;
+     }
+   ecore_dbus_shutdown();
    evas_smart_free(_e_fm2_smart);
    _e_fm2_smart = NULL;
    E_FREE(_e_fm2_meta_path);
@@ -434,11 +490,16 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
    
    if (sd->dev) evas_stringshare_del(sd->dev);
    if (sd->path) evas_stringshare_del(sd->path);
-   if (sd->realpath) evas_stringshare_del(sd->realpath);
+   if (sd->realpath)
+     {
+	_e_fm2_removable_path_umount(sd->realpath);
+	evas_stringshare_del(sd->realpath);
+     }
    sd->dev = sd->path = sd->realpath = NULL;
    if (dev) sd->dev = evas_stringshare_add(dev);
    sd->path = evas_stringshare_add(path);
    sd->realpath = _e_fm2_dev_path_map(sd->dev, sd->path);
+   _e_fm2_removable_path_mount(sd->realpath);
    
    _e_fm2_scan_stop(obj);
    _e_fm2_queue_free(obj);
@@ -1979,6 +2040,7 @@ _e_fm2_icon_unfill(E_Fm2_Icon *ic)
    ic->info.real_link = NULL;
    ic->info.pseudo_dir = NULL;
    ic->info.mount = 0;
+   ic->info.removable = 0;
    ic->info.pseudo_link = 0;
    ic->info.deleted = 0;
    ic->info.broken_link = 0;
@@ -2433,6 +2495,12 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 	     if (!strcmp(desktop->type, "Mount"))
 	       {
 		  ic->info.mount = 1;
+		  if (desktop->URL)
+		    ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->URL);
+	       }
+	     else if (!strcmp(desktop->type, "Removable"))
+	       {
+		  ic->info.removable = 1;
 		  if (desktop->URL)
 		    ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->URL);
 	       }
@@ -4327,7 +4395,11 @@ _e_fm2_smart_del(Evas_Object *obj)
    if (sd->refresh_job) ecore_job_del(sd->refresh_job);
    if (sd->dev) evas_stringshare_del(sd->dev);
    if (sd->path) evas_stringshare_del(sd->path);
-   if (sd->realpath) evas_stringshare_del(sd->realpath);
+   if (sd->realpath)
+     {
+	_e_fm2_removable_path_umount(sd->realpath);
+	evas_stringshare_del(sd->realpath);
+     }
    sd->dev = sd->path = sd->realpath = NULL;
    if (sd->config) _e_fm2_config_free(sd->config);
    
@@ -5856,4 +5928,415 @@ _e_fm2_cb_fop_timer(void *data)
    snprintf(buf, sizeof(buf), _("%i Queued"), evas_list_count(fop->items));
    edje_object_part_text_set(sd->overlay, "e.text.busy_label", buf);
    return 1;
+}
+
+typedef struct _E_Fm2_Removable E_Fm2_Removable;
+
+struct _E_Fm2_Removable
+{
+   const char *uuid;
+   const char *label;
+   const char *mount;
+   int mounts;
+};
+
+static Evas_List *_e_fm2_removables = NULL;
+
+static const char *
+_e_fm2_removable_dev_label_get(const char *uuid)
+{
+   const char *lab = NULL;
+   char *rp1, *rp2, *file;
+   char buf[4096];
+   Ecore_List *files;
+   
+   // FIXME: 1. look in config - is there a mapping from uuid -> label
+   // FIXME: 2. look at dev info to get its label
+   snprintf(buf, sizeof(buf), "/dev/disk/by-uuid/%s", uuid);
+   rp1 = ecore_file_realpath(buf);
+   files = ecore_file_ls("/dev/disk/by-label");
+   if (files)
+     {
+	ecore_list_goto_first(files);
+	while ((file = ecore_list_current(files)))
+	  {
+	     snprintf(buf, sizeof(buf), "/dev/disk/by-label/%s", file);
+	     rp2 = ecore_file_realpath(buf);
+	     printf("%s (%s) == %s\n", rp2, file, rp1);
+	     if ((rp1) && (rp2))
+	       {
+		  if (!strcmp(rp1, rp2))
+		    {
+		       lab = evas_stringshare_add(file);
+		       E_FREE(rp2);
+		       break;
+		    }
+	       }
+	     E_FREE(rp2);
+	     ecore_list_next(files);
+	  }
+	ecore_list_destroy(files);
+     }
+   E_FREE(rp1);
+   if (lab) return lab;
+   // FIXME: 3. use uuid
+   return evas_stringshare_add(uuid);
+}
+
+static void
+_e_fm2_event_removable_add_free(void *data, void *ev)
+{
+   E_Fm2_Removable_Add *e;
+   
+   e = ev;
+   evas_stringshare_del(e->uuid);
+   evas_stringshare_del(e->label);
+   evas_stringshare_del(e->mount);
+   free(e);
+}
+
+static void
+_e_fm2_event_removable_del_free(void *data, void *ev)
+{
+   E_Fm2_Removable_Del *e;
+   
+   e = ev;
+   evas_stringshare_del(e->uuid);
+   evas_stringshare_del(e->label);
+   evas_stringshare_del(e->mount);
+   free(e);
+}
+
+static void
+_e_fm2_removable_dev_add(const char *uuid)
+{
+   E_Fm2_Removable *rem;
+   const char *lab;
+   FILE *f;
+   char buf[4096];
+   
+   /* remove it - in case, so we don't add it twice */
+   _e_fm2_removable_dev_del(uuid);
+   printf("ADD DEV ------- %s\n", uuid);
+   rem = E_NEW(E_Fm2_Removable, 1);
+   rem->uuid = evas_stringshare_add(uuid);
+   rem->label = _e_fm2_removable_dev_label_get(uuid);
+   snprintf(buf, sizeof(buf), "/media/disk_by-uuid_%s", uuid);
+   rem->mount = evas_stringshare_add(buf);
+   snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/|%s.desktop",
+	    e_user_homedir_get(), uuid);
+   _e_fm2_removables = evas_list_append(_e_fm2_removables, rem);
+   f = fopen(buf, "w");
+   if (f)
+     {
+	// FIXME: need to be able to find right icon - this means lookup
+	// custom icon based on uuid, label, etc. in user config
+	fprintf(f, 
+		"[Desktop Entry]\n"
+		"Encoding=UTF-8\n"
+		"Name=Desktop\n"
+		"Type=Removable\n"
+		"Name=%s\n"
+		"X-Enlightenment-IconClass=%s\n"
+		"Comment=%s\n"
+		"URL=file:%s"
+		,
+		rem->label,
+		"fileman/hd", 
+		_("Removable Device"),
+		rem->mount);
+	fclose(f);
+     }
+   // FIXME: need to maybe have some popup, dialog or other indicator pop up
+   // and maybe allow to click to open new removable device - maybe event
+   // and broadcast as below then have a module listen and pop up a popup
+   // like the pager module does - this popup could have a "open device"
+   // button or something to then browse it...
+     {
+	E_Fm2_Removable_Add *ev;
+	
+	ev = E_NEW(E_Fm2_Removable_Add, 1);
+	ev->uuid = evas_stringshare_add(rem->uuid);
+	ev->label = evas_stringshare_add(rem->label);
+	ev->mount = evas_stringshare_add(rem->mount);
+	ecore_event_add(E_EVENT_REMOVABLE_ADD, ev, _e_fm2_event_removable_add_free, NULL);
+     }
+}
+
+static void
+_e_fm2_removable_dev_del(const char *uuid)
+{
+   E_Fm2_Removable *rem;
+   Evas_List *l;
+   char buf[4096];
+   
+   printf("DEL DEV ------- %s\n", uuid);
+   // FIXME: need to find all fm views for this dev and close them
+   _e_fm2_removable_dev_umount(uuid);
+   snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/|%s.desktop",
+	    e_user_homedir_get(), uuid);
+   ecore_file_unlink(buf);
+   for (l = _e_fm2_removables; l; l = l->next)
+     {
+	rem = l->data;
+	if (!strcmp(uuid, rem->uuid))
+	  {
+	     // FIXME: need to display popup or some other status here maybe
+	     // using module to listen to the below event?
+	       {
+		  E_Fm2_Removable_Del *ev;
+		  
+		  ev = E_NEW(E_Fm2_Removable_Del, 1);
+		  ev->uuid = evas_stringshare_add(rem->uuid);
+		  ev->label = evas_stringshare_add(rem->label);
+		  ev->mount = evas_stringshare_add(rem->mount);
+		  ecore_event_add(E_EVENT_REMOVABLE_DEL, ev, _e_fm2_event_removable_del_free, NULL);
+	       }
+	     evas_stringshare_del(rem->uuid);
+	     evas_stringshare_del(rem->label);
+	     evas_stringshare_del(rem->mount);
+	     free(rem);
+	     _e_fm2_removables = evas_list_remove_list(_e_fm2_removables, l);
+	     break;
+	  }
+     }
+}
+
+static void
+_e_fm2_removable_path_mount(const char *path)
+{
+   E_Fm2_Removable *rem;
+   Evas_List *l;
+
+   for (l = _e_fm2_removables; l; l = l->next)
+     {
+	rem = l->data;
+	if (!strcmp(path, rem->mount))
+	  {
+	     _e_fm2_removable_dev_mount(rem->uuid);
+	     break;
+	  }
+     }
+}
+
+static void
+_e_fm2_removable_path_umount(const char *path)
+{
+   E_Fm2_Removable *rem;
+   Evas_List *l;
+
+   for (l = _e_fm2_removables; l; l = l->next)
+     {
+	rem = l->data;
+	if (!strcmp(path, rem->mount))
+	  {
+	     _e_fm2_removable_dev_umount(rem->uuid);
+	     break;
+	  }
+     }
+}
+
+static void
+_e_fm2_removable_dev_mount(const char *uuid)
+{
+   // FIXME: this is hardcoded to use pmount - maybe allow other methods?
+   E_Fm2_Removable *rem;
+   Evas_List *l;
+   char buf[4096];
+   
+   for (l = _e_fm2_removables; l; l = l->next)
+     {
+	rem = l->data;
+	if (!strcmp(uuid, rem->uuid))
+	  {
+	     rem->mounts++;
+	     if (rem->mounts == 1)
+	       {
+		  Ecore_Exe *ex;
+		  
+		  snprintf(buf, sizeof(buf),
+			   "pmount -A /dev/disk/by-uuid/%s", uuid);
+		  e_util_library_path_strip();
+		  ex = ecore_exe_run(buf, NULL);
+		  snprintf(buf, sizeof(buf), "EFM/%s", rem->mount);
+		  ecore_exe_tag_set(ex, buf);
+		  e_util_library_path_restore();
+		  //// FIXME: set exe child handler - if exe tag is EFM/*
+		  //// then find efm view(s) for the mount path and
+		  //// refresh them
+	       }
+	     break;
+	  }
+     }
+}
+
+static void
+_e_fm2_removable_dev_umount(const char *uuid)
+{
+   // FIXME: this is hardcoded to use pmount - maybe allow other methods?
+   E_Fm2_Removable *rem;
+   Evas_List *l;
+   char buf[4096];
+   
+   for (l = _e_fm2_removables; l; l = l->next)
+     {
+	rem = l->data;
+	if (!strcmp(uuid, rem->uuid))
+	  {
+	     if (rem->mounts > 0) rem->mounts--;
+	     if (rem->mounts == 0)
+	       {
+		  snprintf(buf, sizeof(buf),
+			   "pumount /dev/disk/by-uuid/%s", uuid);
+		  e_util_library_path_strip();
+		  ecore_exe_run(buf, NULL);
+		  e_util_library_path_restore();
+	       }
+	     break;
+	  }
+     }
+}
+
+static void
+_e_fm2_removable_dev_label_set(const char *uuid, const char *label)
+{
+   // FIXME: save uuid -> label mapping in config
+}
+
+static int
+_e_fm2_cb_dbus_event_server_add(void *data, int ev_type, void *ev)
+{
+   Ecore_DBus_Event_Server_Add *event;
+   
+   event = ev;
+   if (event->server == _e_fm2_dbus)
+     {
+	ecore_dbus_method_name_has_owner(event->server, "org.freedesktop.Hal",
+					 _e_fm2_cb_dbus_method_name_has_owner,
+					 _e_fm2_cb_dbus_method_error, NULL);
+     }
+   return 1;
+}
+
+static int
+_e_fm2_cb_dbus_event_server_del(void *data, int ev_type, void *ev)
+{
+   Ecore_DBus_Event_Server_Del *event;
+   
+   event = ev;
+   if (event->server == _e_fm2_dbus)
+     {
+	while (_e_fm2_dbus_handlers)
+	  {
+	     if (_e_fm2_dbus_handlers->data) ecore_event_handler_del(_e_fm2_dbus_handlers->data);
+	     _e_fm2_dbus_handlers = evas_list_remove_list(_e_fm2_dbus_handlers, _e_fm2_dbus_handlers);
+	  }
+	_e_fm2_dbus = NULL;
+     }
+   return 1;
+}
+
+static int
+_e_fm2_cb_dbus_event_server_signal(void *data, int ev_type, void *ev)
+{
+   Ecore_DBus_Event_Signal *event;
+   
+   event = ev;
+   if (event->server == _e_fm2_dbus)
+     {
+	const char *bstr = "/org/freedesktop/Hal/devices/volume_uuid_";
+	int blen;
+	
+	blen = strlen(bstr);
+	if (!strcmp(event->header.member, "DeviceAdded"))
+	  {
+	     printf("E FM: DBus dev add:\n %s\n",
+		    (char *)event->args[0].value);
+	     if (!strncmp((char *)event->args[0].value, bstr, blen))
+	       {
+		  char *uuid, *p;
+		  
+		  uuid = strdup(((char *)event->args[0].value) + blen);
+		  for (p = uuid; *p; p++)
+		    {
+		       if (*p == '_') *p = '-';
+		    }
+		  _e_fm2_removable_dev_add(uuid);
+		  free(uuid);
+	       }
+	  }
+	else if (!strcmp(event->header.member, "DeviceRemoved"))
+	  {
+	     printf("E FM: DBus dev del:\n %s\n",
+		    (char *)event->args[0].value);
+	     if (!strncmp((char *)event->args[0].value, bstr, blen))
+	       {
+		  char *uuid, *p;
+		  
+		  uuid = strdup(((char *)event->args[0].value) + blen);
+		  for (p = uuid; *p; p++)
+		    {
+		       if (*p == '_') *p = '-';
+		    }
+		  _e_fm2_removable_dev_del(uuid);
+		  free(uuid);
+	       }
+	  }
+     }
+   return 1;
+}
+
+static int
+_e_fm2_cb_dbus_event_child_exit(void *data, int ev_type, void *ev)
+{
+   Ecore_Exe_Event_Del *event;
+   char *path;
+   Evas_List *l;
+   
+   event = ev;
+   if (!event->exe) return 1;
+   if (!(ecore_exe_tag_get(event->exe) &&
+	 (!strncmp(ecore_exe_tag_get(event->exe), "EFM/", 4)))) return 1;
+   path = ecore_exe_tag_get(event->exe) + 4;
+   for (l = _e_fm2_list; l; l = l->next)
+     {
+	if (!strcmp(e_fm2_real_path_get(l->data), path))
+	  e_fm2_refresh(l->data);
+     }
+   return 1;
+}
+
+static void
+_e_fm2_cb_dbus_method_name_has_owner(void *data, Ecore_DBus_Method_Return *reply)
+{
+   unsigned int *exists;
+   
+   exists = reply->args[0].value;
+   if ((!exists) || (!*exists))
+     {
+	printf("E FM: DBus No HAL\n");
+     }
+   else
+     {
+	printf("E FM: DBus Add listener for devices\n");
+	ecore_dbus_method_add_match(reply->server,
+				    "type='signal',"
+				    "interface='org.freedesktop.Hal.Manager',"
+				    "sender='org.freedesktop.Hal',"
+				    "path='/org/freedesktop/Hal/Manager'",
+				    _e_fm2_cb_dbus_method_add_match,
+				    _e_fm2_cb_dbus_method_error, NULL);
+     }
+}
+
+static void
+_e_fm2_cb_dbus_method_add_match(void *data, Ecore_DBus_Method_Return *reply)
+{
+   printf("E FM: DBus Should be listening for device changes!\n");
+}
+
+static void
+_e_fm2_cb_dbus_method_error(void *data, const char *error)
+{
+   printf("E FM: DBus Error: %s\n", error);
 }
