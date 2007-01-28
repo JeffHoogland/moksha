@@ -125,28 +125,27 @@ _fill_data(E_Config_Dialog_Data *cfdata)
       case SENSOR_TYPE_LINUX_MACMINI:
 	 break;
       case SENSOR_TYPE_LINUX_I2C:
-	 therms = ecore_file_ls("/sys/bus/i2c/devices");
+	 therms = temperature_get_i2c_files();
 	 if (therms)
-	    {
-	       char *therm_name;
+	   {
+              char *name;
 
-	       while ((therm_name = ecore_list_next(therms)))
-		 {
-		    int i;
+	      while ((name = ecore_list_next(therms)))
+	        {
+		   if (ecore_file_exists(name))
+		     {
+		        int len;
 
-                    /* If there are ever more than 9 temperatures, then just increase this number. */
-		    for (i = 0; i < 9; i++)
-		      {
-			 sprintf(path, "/sys/bus/i2c/devices/%s/temp%d_input", therm_name, i);
-			 if (ecore_file_exists(path))
-			   {
-			      sprintf(path, "temp%d", i);
-	                      ecore_list_append(cfdata->sensors, strdup(path));
-			   }
-		      }
-		 }
-	       ecore_list_destroy(therms);
-	    }
+			sprintf(path, "%s", ecore_file_get_file(name));
+			len = strlen(path);
+			if (len > 6)
+			   path[len - 6] = '\0';
+	                ecore_list_append(cfdata->sensors, strdup(path));
+			/* TODO: Track down the user friendly names and display them instead. */
+		     }
+		}
+	      ecore_list_destroy(therms);
+	   }
 
 	 ecore_list_goto_first(cfdata->sensors);
 	 while ((name = ecore_list_next(cfdata->sensors)))

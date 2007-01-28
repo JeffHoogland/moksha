@@ -238,28 +238,25 @@ _temperature_sensor_init(Config_Face *inst)
 	       }
 	     else
 	       {
-		  therms = ecore_file_ls("/sys/bus/i2c/devices");
+                  therms = temperature_get_i2c_files();
 		  if (therms)
 		    {
 		       char *name;
 
-		       while ((name = ecore_list_next(therms)))
-			 {
-			    int i;
-
-                            /* If there are ever more than 9 temperatures, then just increase this number. */
-			    for (i = 0; i < 9; i++)
-			      {
-				 sprintf(path, "/sys/bus/i2c/devices/%s/temp%d_input", name, i);
-				 if (ecore_file_exists(path))
+		       if ((name = ecore_list_next(therms)))
+		         {
+				 if (ecore_file_exists(name))
 				   {
-				      sprintf(path, "temp%d", i);
+				      int len;
+
+				      sprintf(path, "%s", ecore_file_get_file(name));
+				      len = strlen(path);
+				      if (len > 6)
+				         path[len - 6] = '\0';
 				      inst->sensor_type = SENSOR_TYPE_LINUX_I2C;
+			              inst->sensor_path = evas_stringshare_add(name);
 				      inst->sensor_name = evas_stringshare_add(path);
-				      break;
 				   }
-			      }
-			    if (inst->sensor_type) break;
 			 }
 		       ecore_list_destroy(therms);
 		    }
@@ -304,6 +301,7 @@ _temperature_sensor_init(Config_Face *inst)
 			if (ecore_file_exists(path))
 			  {
 			     inst->sensor_path = evas_stringshare_add(path);
+			     /* We really only care about the first one for the default. */
 			     break;
 			  }
 		     }
@@ -525,6 +523,58 @@ temperature_face_update_config(Config_Face *inst)
    if (inst->temperature_check_timer) ecore_timer_del(inst->temperature_check_timer);
    inst->temperature_check_timer = 
      ecore_timer_add(inst->poll_time, _temperature_cb_check, inst);
+}
+
+Ecore_List *
+temperature_get_i2c_files()
+{
+   Ecore_List *result;
+   Ecore_List *therms;
+   char        path[PATH_MAX];
+
+   result = ecore_list_new();
+   if (result)
+     {
+        ecore_list_set_free_cb(result, free);
+
+        /* Look through all the i2c devices. */
+        therms = ecore_file_ls("/sys/bus/i2c/devices");
+        if (therms)
+          {
+             char *name;
+
+	     while ((name = ecore_list_next(therms)))
+	       {
+                  Ecore_List *files;
+
+                  /* Search each device for temp*_input, these should be i2c temperature devices. */
+	          sprintf(path, "/sys/bus/i2c/devices/%s", name);
+	          files = ecore_file_ls(path);
+	          if (files)
+	            {
+                       char *file;
+
+	               while ((file = ecore_list_next(files)))
+	                 {
+		    	    if ((strncmp("temp", file, 4) == 0) && (strcmp("_input", &file[strlen(file) - 6]) == 0))
+			      {
+			         char *f;
+
+	                         sprintf(path, "/sys/bus/i2c/devices/%s/%s", name, file);
+	                         f = strdup(path);
+			         if (f)
+	                            ecore_list_append(result, f);
+			      }
+	                 }
+	               ecore_list_destroy(files);
+		    }
+	       }
+	     ecore_list_destroy(therms);
+          }
+        ecore_list_goto_first(result);
+     }
+
+   return result;
 }
 
 /***************************************************************************/

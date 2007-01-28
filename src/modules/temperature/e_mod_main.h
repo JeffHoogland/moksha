@@ -64,6 +64,7 @@ EAPI int   e_modapi_about    (E_Module *m);
 
 void config_temperature_module(Config_Face *inst);
 void temperature_face_update_config(Config_Face *inst);
+Ecore_List *temperature_get_i2c_files(void);
 
 
 #endif
