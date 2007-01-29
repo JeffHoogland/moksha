@@ -124,7 +124,7 @@ main(int argc, char **argv)
      }
 
    /* If File Exists, Try to read imc */
-   read_imc = e_intl_input_method_config_read (ef);
+   read_imc = e_intl_input_method_config_read(ef);
    
    /* else create new imc */
    if (write_ops != 0)
@@ -158,7 +158,7 @@ main(int argc, char **argv)
 
 	
 	/* write imc to file */
-	write_ok = e_intl_input_method_config_write (ef, write_imc);
+	write_ok = e_intl_input_method_config_write(ef, write_imc);
      }
 
 
