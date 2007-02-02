@@ -6,7 +6,7 @@ rm -f aclocal.m4 ltmain.sh
 touch README
 touch ABOUT-NLS
 
-echo "Running autopoint..." ; autopoint -f || exit 1
+echo "Running autopoint..." ; autopoint -f || :
 echo "Running aclocal..." ; aclocal $ACLOCAL_FLAGS -I m4 || exit 1
 echo "Running autoconf..." ; autoconf || exit 1
 echo "Running autoheader..." ; autoheader || exit 1
