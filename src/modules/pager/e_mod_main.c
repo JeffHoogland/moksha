@@ -46,27 +46,27 @@ struct _Instance
 
 struct _Pager
 {
-   Instance        *inst;
-   Evas_Object     *o_table;
-   E_Zone          *zone;
-   int              xnum, ynum;
-   Evas_List       *desks;
-   Pager_Popup     *popup;
-   unsigned char    dragging : 1;
-   unsigned char    just_dragged : 1;
-   Evas_Coord       dnd_x, dnd_y;
-   Pager_Desk      *active_drop_pd;
+   Instance     *inst;
+   Evas_Object  *o_table;
+   E_Zone       *zone;
+   int           xnum, ynum;
+   Evas_List    *desks;
+   Pager_Popup  *popup;
+   unsigned char dragging : 1;
+   unsigned char just_dragged : 1;
+   Evas_Coord    dnd_x, dnd_y;
+   Pager_Desk   *active_drop_pd;
 };
 
 struct _Pager_Desk
 {
-   Pager           *pager;
-   E_Desk          *desk;
-   Evas_List       *wins;
-   Evas_Object     *o_desk;
-   Evas_Object     *o_layout;
-   int              xpos, ypos;
-   int              current : 1;
+   Pager       *pager;
+   E_Desk      *desk;
+   Evas_List   *wins;
+   Evas_Object *o_desk;
+   Evas_Object *o_layout;
+   int          xpos, ypos;
+   int          current : 1;
 };
 
 struct _Pager_Win
@@ -202,7 +202,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    pager_config->instances = evas_list_remove(pager_config->instances, inst);
    e_drop_handler_del(inst->drop_handler);
    _pager_free(inst->pager);
-   free(inst);
+   E_FREE(inst);
 }
 
 static void
@@ -359,7 +359,8 @@ _pager_desk_free(Pager_Desk *pd)
 
    evas_object_del(pd->o_desk);
    evas_object_del(pd->o_layout);
-   for (l = pd->wins; l; l = l->next) _pager_window_free(l->data);
+   for (l = pd->wins; l; l = l->next) 
+     _pager_window_free(l->data);
    evas_list_free(pd->wins);
    e_object_unref(E_OBJECT(pd->desk));
    free(pd);
@@ -474,9 +475,7 @@ static void
 _pager_window_free(Pager_Win *pw)
 {
    if ((pw->drag.from_pager) && (pw->desk->pager->dragging))
-     {
-	pw->desk->pager->dragging = 0;
-     }
+     pw->desk->pager->dragging = 0;
    if (pw->o_window) evas_object_del(pw->o_window);
    if (pw->o_icon) evas_object_del(pw->o_icon);
    e_object_unref(E_OBJECT(pw->border));
@@ -489,9 +488,7 @@ _pager_window_move(Pager_Win *pw)
    e_layout_child_move(pw->o_window,
 		       pw->border->x - pw->desk->desk->zone->x,
 		       pw->border->y - pw->desk->desk->zone->y);
-   e_layout_child_resize(pw->o_window,
-			 pw->border->w,
-			 pw->border->h);
+   e_layout_child_resize(pw->o_window, pw->border->w, pw->border->h);
 }
 
 static Pager_Win *
@@ -633,14 +630,12 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	
 	e_gadcon_client_util_menu_items_append(inst->gcc, mn, 0);
 	
-	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
-					  &cx, &cy, &cw, &ch);
+	e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy, &cw, &ch);
 	e_menu_activate_mouse(mn,
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
-	e_util_evas_fake_mouse_up_later(inst->gcc->gadcon->evas,
-					ev->button);
+	e_util_evas_fake_mouse_up_later(inst->gcc->gadcon->evas, ev->button);
 //	evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
 //				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
@@ -667,6 +662,7 @@ static void
 _pager_inst_cb_menu_virtual_desktops_dialog(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    Instance *inst;
+
    inst = data;
    e_int_config_desks(inst->gcc->gadcon->zone->container);
 }
@@ -819,9 +815,7 @@ _pager_cb_event_border_iconify(void *data, int type, void *event)
 	     if (pw)
 	       {
 		  if ((pw->drag.from_pager) && (pw->desk->pager->dragging))
-		    {
-		       pw->desk->pager->dragging = 0;
-		    }
+		    pw->desk->pager->dragging = 0;
 		  evas_object_hide(pw->o_window);
 	       }
 	  }
@@ -929,9 +923,9 @@ _pager_cb_event_border_desk_set(void *data, int type, void *event)
    ev = event;
    for (l = pager_config->instances; l; l = l->next)
      {
-	Instance              *inst;
-	Pager_Win               *pw;
-	Pager_Desk              *pd;
+	Instance   *inst;
+	Pager_Win  *pw;
+	Pager_Desk *pd;
 
 	inst = l->data;
 	/* if this pager is not for the zone of the border */
@@ -1159,7 +1153,7 @@ static int
 _pager_cb_event_border_urgent_change(void *data, int type, void *event)
 {
    E_Event_Border_Urgent_Change  *ev;
-   Evas_List                   *l, *l2;
+   Evas_List                     *l, *l2;
 
    ev = event;
    for (l = pager_config->instances; l; l = l->next)
@@ -1181,17 +1175,17 @@ _pager_cb_event_border_urgent_change(void *data, int type, void *event)
 		    {
 		       if (!(ev->border->iconic))
 			 edje_object_signal_emit(pd->o_desk, 
-			       "e,state,urgent", "e");
+						 "e,state,urgent", "e");
 		       edje_object_signal_emit(pw->o_window, 
-			     "e,state,urgent", "e");
+					       "e,state,urgent", "e");
 		    }
 		  else
 		    {
 		       if (!(ev->border->iconic))
 			 edje_object_signal_emit(pd->o_desk, 
-			       "e,state,not_urgent", "e");
+						 "e,state,not_urgent", "e");
 		       edje_object_signal_emit(pw->o_window, 
-			     "e,state,not_urgent", "e");
+					       "e,state,not_urgent", "e");
 		    }
 	       }
 	  }
@@ -1203,7 +1197,7 @@ static int
 _pager_cb_event_zone_desk_count_set(void *data, int type, void *event)
 {
    Evas_List *l;
-   Instance *inst;
+   Instance  *inst;
 
    for (l = pager_config->instances; l; l = l->next)
      {
@@ -1219,7 +1213,7 @@ static int
 _pager_cb_event_desk_show(void *data, int type, void *event)
 {
    E_Event_Desk_Show *ev;
-   Evas_List *l;
+   Evas_List         *l;
 
    ev = event;
    for (l = pager_config->instances; l; l = l->next)
@@ -1250,7 +1244,7 @@ static int
 _pager_cb_event_desk_name_change(void *data, int type, void *event)
 {
    E_Event_Desk_Name_Change *ev;
-   Evas_List *l;
+   Evas_List                *l;
 
    ev = event;
    for (l = pager_config->instances; l; l = l->next)
@@ -1271,7 +1265,7 @@ static int
 _pager_cb_event_container_resize(void *data, int type, void *event)
 {
    E_Event_Container_Resize *ev;
-   Evas_List *l, *l2;
+   Evas_List                *l, *l2;
 
    ev = event;
    for (l = pager_config->instances; l; l = l->next)
@@ -1285,8 +1279,7 @@ _pager_cb_event_container_resize(void *data, int type, void *event)
 	     Pager_Desk *pd;
 	     
 	     pd = l2->data;
-	     e_layout_virtual_size_set(pd->o_layout, 
-				       pd->desk->zone->w,
+	     e_layout_virtual_size_set(pd->o_layout, pd->desk->zone->w,
 				       pd->desk->zone->h);
 	  }
 	_gc_orient(inst->gcc);
@@ -1298,7 +1291,7 @@ static void
 _pager_window_cb_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_In *ev;
-   Pager_Win *pw;
+   Pager_Win           *pw;
 
    ev = event_info;
    pw = data;
@@ -1309,7 +1302,7 @@ static void
 _pager_window_cb_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Out *ev;
-   Pager_Win *pw;
+   Pager_Win            *pw;
 
    ev = event_info;
    pw = data;
@@ -1548,7 +1541,7 @@ _pager_update_drop_position(Instance *inst, Evas_Coord x, Evas_Coord y)
      {
 	pd2 = l->data;
 	if (pd == pd2)
-	     edje_object_signal_emit(pd2->o_desk, "e,action,drag,in", "e");
+	  edje_object_signal_emit(pd2->o_desk, "e,action,drag,in", "e");
 	else if (pd2 == inst->pager->active_drop_pd)
 	  edje_object_signal_emit(pd2->o_desk, "e,action,drag,out", "e");
      }
@@ -1687,9 +1680,6 @@ _pager_desk_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 
    ev = event_info;
    pd = data;
-   if (ev->button == 1)
-     {
-     }
 }
 
 static void
@@ -1728,7 +1718,8 @@ _pager_desk_cb_mouse_wheel(void *data, Evas *e, Evas_Object *obj, void *event_in
    ev = event_info;
    pd = data;
 
-   if (pager_config->flip_desk) e_zone_desk_linear_flip_by(pd->desk->zone, ev->z);
+   if (pager_config->flip_desk) 
+     e_zone_desk_linear_flip_by(pd->desk->zone, ev->z);
 }
 
 static int
@@ -1865,8 +1856,7 @@ e_modapi_shutdown(E_Module *m)
 	e_object_del(E_OBJECT(pager_config->menu));
 	pager_config->menu = NULL;
      }
-   free(pager_config);
-   pager_config = NULL;
+   E_FREE(pager_config);
    E_CONFIG_DD_FREE(conf_edd);
    return 1;
 }
