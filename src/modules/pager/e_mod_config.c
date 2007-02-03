@@ -95,7 +95,7 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    pager_config->config_dialog = NULL;
-   free(cfdata);
+   E_FREE(cfdata);
 }
 
 static Evas_Object *
