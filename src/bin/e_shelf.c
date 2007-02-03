@@ -20,6 +20,8 @@ static void _e_shelf_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void 
 static void _e_shelf_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_shelf_cb_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static int  _e_shelf_cb_id_sort(void *data1, void *data2);
+static void _e_shelf_menu_del_hook(void *data);
+static void _e_shelf_menu_pre_cb(void *data, E_Menu *m);
 
 static Evas_List *shelves = NULL;
 
@@ -800,29 +802,21 @@ static void
 _e_shelf_menu_append(E_Shelf *es, E_Menu *mn)
 {
    E_Menu_Item *mi;
+   E_Menu *subm;
+   const char *name;
+   char buf[256];
    
+   name = es->name;
+   if (!name) name = _("Shelf #");
+   snprintf(buf, sizeof(buf), "%s %i", name, es->id);
+   
+   subm = e_menu_new();
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Shelf Configuration"));
+   e_menu_item_label_set(mi, buf);
    e_util_menu_item_edje_icon_set(mi, "enlightenment/shelf");
-   e_menu_item_callback_set(mi, _e_shelf_cb_menu_config, es);
-   
-   mi = e_menu_item_new(mn);
-   if (es->gadcon->editing)
-     e_menu_item_label_set(mi, _("Stop Moving/Resizing Items"));
-   else
-     e_menu_item_label_set(mi, _("Begin Moving/Resizing Items"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/edit");
-   e_menu_item_callback_set(mi, _e_shelf_cb_menu_edit, es);
-   
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Configure Shelf Contents"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/shelf");
-   e_menu_item_callback_set(mi, _e_shelf_cb_menu_contents, es);
-   
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Delete this Shelf"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/delete");
-   e_menu_item_callback_set(mi, _e_shelf_cb_menu_delete, es);
+   e_menu_pre_activate_callback_set(subm, _e_shelf_menu_pre_cb, es);
+   e_object_free_attach_func_set(E_OBJECT(subm), _e_shelf_menu_del_hook);
+   e_menu_item_submenu_set(mi, subm);
 }
 
 static void
@@ -988,4 +982,56 @@ _e_shelf_cb_id_sort(void *data1, void *data2)
    es1 = data1;
    es2 = data2;
    return (es1->id) > (es2->id);
+}
+
+static void 
+_e_shelf_menu_del_hook(void *data) 
+{
+   E_Menu *m;
+   Evas_List *l;
+   
+   m = data;
+   for (l = m->items; l; l = l->next) 
+     {
+	E_Menu_Item *mi;
+	
+	mi = l->data;
+	if (mi->submenu) e_object_del(E_OBJECT(mi->submenu));
+     }
+}
+
+static void 
+_e_shelf_menu_pre_cb(void *data, E_Menu *m) 
+{
+   E_Shelf *es;
+   E_Menu_Item *mi;
+
+   es = data;
+   e_menu_pre_activate_callback_set(m, NULL, NULL);
+   
+   mi = e_menu_item_new(m);
+   if (es->gadcon->editing)
+     e_menu_item_label_set(mi, _("Stop Moving/Resizing Items"));
+   else
+     e_menu_item_label_set(mi, _("Begin Moving/Resizing Items"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/edit");
+   e_menu_item_callback_set(mi, _e_shelf_cb_menu_edit, es);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Shelf Configuration"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/shelf");
+   e_menu_item_callback_set(mi, _e_shelf_cb_menu_config, es);
+   
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Configure Shelf Contents"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/shelf");
+   e_menu_item_callback_set(mi, _e_shelf_cb_menu_contents, es);
+   
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Delete this Shelf"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/delete");
+   e_menu_item_callback_set(mi, _e_shelf_cb_menu_delete, es);   
 }
