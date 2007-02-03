@@ -171,8 +171,6 @@ src/bin/e_livethumb.c
 src/bin/e_livethumb.h
 src/bin/e_widget_ilist.c
 src/bin/e_widget_ilist.h
-src/bin/e_deskpreview.c
-src/bin/e_deskpreview.h
 src/bin/e_exebuf.c
 src/bin/e_exebuf.h
 src/bin/e_int_config_desk.c
