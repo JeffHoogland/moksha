@@ -72,13 +72,15 @@ main(int argc, char **argv)
    ecore_file_init();
    ecore_ipc_init();
 
+/* DON'T need this - .desktop files support removed   
    ecore_desktop_init();
    ecore_desktop_paths_extras_clear();
    ecore_desktop_paths_prepend_user(ECORE_DESKTOP_PATHS_ICONS, "~/.e/e/icons");
-//   snprintf(buf, sizeof(buf), "%s/data/icons", e_prefix_data_get());
+   snprintf(buf, sizeof(buf), "%s/data/icons", e_prefix_data_get());
    ecore_desktop_paths_append_system(ECORE_DESKTOP_PATHS_ICONS, buf);
    ecore_desktop_paths_regen();
-
+*/
+   
    snprintf(_thumbdir, sizeof(_thumbdir), "%s/.e/e/fileman/thumbnails",
 	    getenv("HOME"));
    ecore_file_mkpath(_thumbdir);
@@ -91,7 +93,9 @@ main(int argc, char **argv)
 	_e_ipc_server = NULL;
      }
 
+/* DON'T need this - .desktop support removed   
    ecore_desktop_shutdown();
+ */
    ecore_ipc_shutdown();
    ecore_file_shutdown();
    ecore_evas_shutdown();
@@ -283,7 +287,9 @@ _e_thumb_generate(E_Thumb *eth)
 	alpha = 1;
 	ext = strrchr(eth->file, '.');
 
-	if ( (ext) && ((!strcasecmp(ext, ".desktop")) || (!strcasecmp(ext, ".directory"))) )
+/* DON'T need this - shoudl just be using the icon set for the .desktop file
+ * directly with no thumbnailing
+	if ((ext) && ((!strcasecmp(ext, ".desktop")) || (!strcasecmp(ext, ".directory"))) )
 	  {
 	     Ecore_Desktop *desktop;
 
@@ -315,7 +321,8 @@ _e_thumb_generate(E_Thumb *eth)
 		      }
 		}
 	  }
-
+*/
+	
 	if ((ext) && (eth->key) &&
 	    ((!strcasecmp(ext, ".edj")) ||
 	     (!strcasecmp(ext, ".eap")))
