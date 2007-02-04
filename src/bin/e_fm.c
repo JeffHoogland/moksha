@@ -3253,6 +3253,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
    E_Event_Dnd_Drop *ev;
    Evas_List *fsel, *l, *ll;
    char buf[4096], *fl, *d;
+   const char *fp;
 
    sd = data;
    if (!type) return;
@@ -3278,7 +3279,9 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	/* move file into this fm dir */
 	for (ll = fsel; ll; ll = ll->next)
 	  {
-	     d = ecore_file_get_dir(ll->data);
+	     fp = _e_fm2_icon_desktop_url_eval(ll->data);
+	     if (!fp) continue;
+	     d = ecore_file_get_dir(fp);
 	     /* get the dir of each file */
 	     if (d)
 	       {
@@ -3290,9 +3293,9 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 			 {
 			    /* move the file into the subdir */
 			    snprintf(buf, sizeof(buf), "%s/%s",
-				     sd->realpath, ecore_file_get_file(ll->data));
+				     sd->realpath, ecore_file_get_file(fp));
 			    e_fm2_fop_move_add(sd->obj,
-					       ll->data, buf,
+					       fp, buf,
 					       NULL, 0, 1);
 //			    if (ecore_file_exists(buf))
 //			      {
@@ -3301,24 +3304,24 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 //			    else
 //			      {
 /*FOPME*/
-//				 if (ecore_file_mv(ll->data, buf))
+//				 if (ecore_file_mv(fp, buf))
 //				   _e_fm2_live_file_add(sd->obj,
-//							ecore_file_get_file(ll->data),
+//							ecore_file_get_file(fp),
 //							NULL, 0);
 //			      }
 			 }
 		       else
 			 _e_fm2_live_file_add(sd->obj,
-					      ecore_file_get_file(ll->data),
+					      ecore_file_get_file(fp),
 					      NULL, 0);
 		    }
 		  else
 		    {
 		       /* file is in target dir - move into subdir */
 		       snprintf(buf, sizeof(buf), "%s/%s",
-				sd->realpath, ecore_file_get_file(ll->data));
+				sd->realpath, ecore_file_get_file(fp));
 		       e_fm2_fop_move_add(sd->obj,
-					  ll->data, buf,
+					  fp, buf,
 					  NULL, 0, 1);
 //		       if (ecore_file_exists(buf))
 //			 {
@@ -3327,14 +3330,15 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 //		       else
 //			 {
 /*FOPME*/
-//			    if (ecore_file_mv(ll->data, buf))
+//			    if (ecore_file_mv(fp, buf))
 //			      _e_fm2_live_file_add(sd->obj,
-//						   ecore_file_get_file(ll->data),
+//						   ecore_file_get_file(fp),
 //						   NULL, 0);
 //			 }
 		    }
 		  free(d);
 	       }
+	     evas_stringshare_del(fp);
 	  }
      }
    else if (sd->drop_icon) /* inot or before/after an icon */
@@ -3345,19 +3349,22 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	     /* move file into dir that this icon is for */
 	     for (ll = fsel; ll; ll = ll->next)
 	       {
+		  fp = _e_fm2_icon_desktop_url_eval(ll->data);
+		  if (!fp) continue;
 		  /* move the file into the subdir */
 		  snprintf(buf, sizeof(buf), "%s/%s/%s",
-			   sd->realpath, sd->drop_icon->info.file, ecore_file_get_file(ll->data));
-		  printf("mv %s %s\n", (char *)ll->data, buf);
+			   sd->realpath, sd->drop_icon->info.file, ecore_file_get_file(fp));
+		  printf("mv %s %s\n", (char *)fp, buf);
 		  e_fm2_fop_move_add(sd->obj,
-				     ll->data, buf,
+				     fp, buf,
 				     NULL, 0, 0);
 //		  if (ecore_file_exists(buf))
 //		    {
 //		       /* FIXME: error - file exists */
 //		    }
 //		  else
-///*FOPME*/		    ecore_file_mv(ll->data, buf);
+///*FOPME*/		    ecore_file_mv(fp, buf);
+		  evas_stringshare_del(fp);
 	       }
 	  }
 	else
@@ -3368,62 +3375,71 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		    {
 		       for (ll = fsel; ll; ll = ll->next)
 			 {
+			    fp = _e_fm2_icon_desktop_url_eval(ll->data);
+			    if (!fp) continue;
 			    snprintf(buf, sizeof(buf), "%s/%s",
-				     sd->realpath, ecore_file_get_file(ll->data));
-			    d = ecore_file_get_dir(ll->data);
+				     sd->realpath, ecore_file_get_file(fp));
+			    d = ecore_file_get_dir(fp);
 			    if (d)
 			      {
 				 if (!strcmp(sd->realpath, d))
 				   {
 				      _e_fm2_live_file_del(sd->obj,
-							   ecore_file_get_file(ll->data));
+							   ecore_file_get_file(fp));
 				   }
 				 else
 				   {
 				      if (sd->config->view.link_drop)
-					e_fm2_fop_link_add(sd->obj, ll->data, buf);
+					e_fm2_fop_link_add(sd->obj, fp, buf);
 				      else
 					e_fm2_fop_move_add(sd->obj,
-							   ll->data, buf,
+							   fp, buf,
 							   NULL, 0, 0);
 				   }
 				 free(d);
 			      }
-//			    d = ecore_file_get_dir(ll->data);
+//			    d = ecore_file_get_dir(fp);
 //			    if (d)
 //			      {
 //				 if (!strcmp(d, sd->realpath))
 //				   {
-//				      printf("listrm %s\n", ecore_file_get_file(ll->data));
-//				      _e_fm2_live_file_del(sd->obj, ecore_file_get_file(ll->data));
+//				      printf("listrm %s\n", ecore_file_get_file(fp));
+//				      _e_fm2_live_file_del(sd->obj, ecore_file_get_file(fp));
 //				   }
 //				 else
 //				   {
-///*FOPME*/				      ecore_file_symlink(ll->data, buf);
+///*FOPME*/				      ecore_file_symlink(fp, buf);
 //				   }
 //				 free(d);
 //			      }
+			    evas_stringshare_del(fp);
 			 }
 		       if (sd->drop_after == 0)
 			 {
 			    for (ll = evas_list_last(fsel); ll; ll = ll->prev)
 			      {
-				 e_fm2_fop_add_add(sd->obj, ll->data, sd->drop_icon->info.file, 0);
-//				 printf("listadd %s, before %s\n", ecore_file_get_file(ll->data), sd->drop_icon->info.file);
+				 fp = _e_fm2_icon_desktop_url_eval(ll->data);
+				 if (!fp) continue;
+				 e_fm2_fop_add_add(sd->obj, fp, sd->drop_icon->info.file, 0);
+//				 printf("listadd %s, before %s\n", ecore_file_get_file(fp), sd->drop_icon->info.file);
 //				 _e_fm2_live_file_add(sd->obj,
-//						      ecore_file_get_file(ll->data),
+//						      ecore_file_get_file(fp),
 //						      sd->drop_icon->info.file, 0);
+				 evas_stringshare_del(fp);
 			      }
 			 }
 		       else
 			 {
 			    for (ll = fsel; ll; ll = ll->next)
 			      {
-				 e_fm2_fop_add_add(sd->obj, ll->data, sd->drop_icon->info.file, 1);
-//				 printf("listadd %s, after %s\n", ecore_file_get_file(ll->data), sd->drop_icon->info.file);
+				 fp = _e_fm2_icon_desktop_url_eval(ll->data);
+				 if (!fp) continue;
+				 e_fm2_fop_add_add(sd->obj, fp, sd->drop_icon->info.file, 1);
+//				 printf("listadd %s, after %s\n", ecore_file_get_file(fp), sd->drop_icon->info.file);
 //				 _e_fm2_live_file_add(sd->obj,
-//						      ecore_file_get_file(ll->data),
+//						      ecore_file_get_file(fp),
 //						      sd->drop_icon->info.file, 1);
+				 evas_stringshare_del(fp);
 			      }
 			 }
 		    }
@@ -3431,12 +3447,14 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		    {
 		       for (ll = fsel; ll; ll = ll->next)
 			 {
+			    fp = _e_fm2_icon_desktop_url_eval(ll->data);
+			    if (!fp) continue;
 			    /* move the file into the subdir */
 			    snprintf(buf, sizeof(buf), "%s/%s",
-				     sd->realpath, ecore_file_get_file(ll->data));
-			    printf("mv %s %s\n", (char *)ll->data, buf);
+				     sd->realpath, ecore_file_get_file(fp));
+			    printf("mv %s %s\n", (char *)fp, buf);
 			    e_fm2_fop_move_add(sd->obj,
-					       ll->data, buf,
+					       fp, buf,
 					       NULL, 0, 1);
 //			    if (ecore_file_exists(buf))
 //			      {
@@ -3444,11 +3462,12 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 //			      }
 //			    else
 //			      {
-///*FOPME*/				 if (ecore_file_mv(ll->data, buf))
+///*FOPME*/				 if (ecore_file_mv(fp, buf))
 //				   _e_fm2_live_file_add(sd->obj,
-//							ecore_file_get_file(ll->data),
+//							ecore_file_get_file(fp),
 //							NULL, 0);
 //			      }
+			    evas_stringshare_del(fp);
 			 }
 		    }
 	       }
@@ -6039,7 +6058,7 @@ _e_fm2_removable_dev_add(const char *uuid)
 		"Name=%s\n"
 		"X-Enlightenment-IconClass=%s\n"
 		"Comment=%s\n"
-		"URL=file:%s"
+		"URL=file:/%s"
 		,
 		rem->label,
 		"fileman/hd", 
