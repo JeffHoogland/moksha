@@ -44,8 +44,9 @@ static char _thumbdir[4096] = "";
 int
 main(int argc, char **argv)
 {
-   char buf[4096];
+//   char buf[4096];
    int i;
+   char *home;
 
 /* FIXME: make this configurable */
 //   nice(20);
@@ -80,9 +81,10 @@ main(int argc, char **argv)
    ecore_desktop_paths_append_system(ECORE_DESKTOP_PATHS_ICONS, buf);
    ecore_desktop_paths_regen();
 */
-   
-   snprintf(_thumbdir, sizeof(_thumbdir), "%s/.e/e/fileman/thumbnails",
-	    getenv("HOME"));
+  
+   home = getenv("HOME");
+   if (!home) home = "/tmp";
+   snprintf(_thumbdir, sizeof(_thumbdir), "%s/.e/e/fileman/thumbnails", home);
    ecore_file_mkpath(_thumbdir);
    
    if (_e_ipc_init()) ecore_main_loop_begin();
