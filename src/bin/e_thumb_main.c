@@ -46,7 +46,6 @@ main(int argc, char **argv)
 {
 //   char buf[4096];
    int i;
-   char *home;
 
 /* FIXME: make this configurable */
 //   nice(20);
@@ -82,9 +81,8 @@ main(int argc, char **argv)
    ecore_desktop_paths_regen();
 */
   
-   home = getenv("HOME");
-   if (!home) home = "/tmp";
-   snprintf(_thumbdir, sizeof(_thumbdir), "%s/.e/e/fileman/thumbnails", home);
+   snprintf(_thumbdir, sizeof(_thumbdir), "%s/.e/e/fileman/thumbnails", 
+	    e_user_homedir_get());
    ecore_file_mkpath(_thumbdir);
    
    if (_e_ipc_init()) ecore_main_loop_begin();

@@ -367,6 +367,7 @@ enlightenment_start_LDFLAGS = @dlopen_libs@
 enlightenment_thumb_SOURCES = \
 e.h \
 e_thumb_main.c \
+e_user.c \
 e_sha1.c
 
 enlightenment_thumb_LDFLAGS = @e_libs@ @dlopen_libs@
