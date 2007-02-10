@@ -728,6 +728,90 @@ ACT_FN_GO(window_resize_by)
 }
 
 /***************************************************************************/
+ACT_FN_GO(window_push)
+{
+   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (obj->type != E_BORDER_TYPE)
+     {
+       obj = E_OBJECT(e_border_focused_get());
+       if (!obj) return;
+     }
+   
+   if (params)
+     {
+        E_Border *bd, *cur;
+        E_Border_List *bd_list;
+        E_Direction dir;
+        int x, y;
+
+        if (strcmp(params, "left") == 0)
+          dir = E_DIRECTION_LEFT;
+        else if (strcmp(params, "right") == 0)
+          dir = E_DIRECTION_RIGHT;
+        else if (strcmp(params, "up") == 0)
+          dir = E_DIRECTION_UP;
+        else if (strcmp(params, "down") == 0)
+          dir = E_DIRECTION_DOWN;
+        else
+          return;
+
+        bd = (E_Border *)obj;
+
+        /* Target x and y. */
+        x = bd->x;
+        y = bd->y;
+
+        if (dir == E_DIRECTION_LEFT)
+          x = 0;
+        else if (dir == E_DIRECTION_RIGHT)
+          x = bd->zone->w - bd->w;
+        else if (dir == E_DIRECTION_UP)
+          y = 0;
+        else // dir == E_DIRECTION_DOWN
+          y = bd->zone->h - bd->h;
+
+        bd_list = e_container_border_list_first(bd->zone->container);
+        cur = e_container_border_list_next(bd_list);
+
+        while (cur != NULL)
+          {
+            if ((bd->desk == cur->desk) && (bd != cur))
+               {
+                  if ((dir == E_DIRECTION_LEFT)
+                      && (cur->x + cur->w < bd->x)
+                      && (E_SPANS_COMMON(bd->y, bd->h, cur->y, cur->h)))
+                    x = MAX(x, cur->x + cur->w);
+                  else if ((dir == E_DIRECTION_RIGHT)
+                           && (cur->x > bd->x + bd->w)
+                           && (E_SPANS_COMMON(bd->y, bd->h, cur->y, cur->h)))
+                    x = MIN(x, cur->x - bd->w);
+                  else if ((dir == E_DIRECTION_UP)
+                           && (cur->y + cur->h < bd->y)
+                           && (E_SPANS_COMMON(bd->x, bd->w, cur->x, cur->w)))
+                    y = MAX(y, cur->y + cur->h);
+                  else if ((dir == E_DIRECTION_DOWN)
+                           && (cur->y > bd->y + bd->h)
+                           && (E_SPANS_COMMON(bd->x, bd->w, cur->x, cur->w)))
+                    y = MIN(y, cur->y - bd->h);
+               }
+             cur = e_container_border_list_next(bd_list);
+          }
+        e_container_border_list_free(bd_list);
+        
+	if ((x != bd->x) || (y != bd->y))
+	  {
+             e_border_move(bd, x, y);
+
+	     if (e_config->focus_policy != E_FOCUS_CLICK)
+	       ecore_x_pointer_warp(bd->zone->container->win,
+				    bd->x + (bd->w / 2),
+				    bd->y + (bd->h / 2));
+	  }
+     }
+}
+
+/***************************************************************************/
 ACT_FN_GO(window_drag_icon)
 {
    if (!obj) obj = E_OBJECT(e_border_focused_get());
@@ -1949,6 +2033,11 @@ e_actions_init(void)
    ACT_GO(window_resize_by);
    e_action_predef_name_set(_("Window : Actions"), "Resize By...", "window_resize_by", NULL,
 	 "syntax: W H, example: 100 150", 1);
+
+   /* window_push */
+   ACT_GO(window_push);
+   e_action_predef_name_set(_("Window : Actions"), "Push in Direction...", "window_push", NULL,
+	 "syntax: direction, example: up, down, left, right", 1);
    
    /* window_drag_icon */
    ACT_GO(window_drag_icon);

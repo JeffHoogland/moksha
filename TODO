@@ -8,6 +8,16 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* shelves seem to get confused with their contents if you have 3 shelves over
+  2 screens/zones - when you go back to 1 screen form 2, one of the shelves
+  gts the contents from the now non-existant shelf.
+* gkrellm options to "dont show in pager or taskber" only work if gkrellem is
+  moved to one monitor and back again - doesn't seem to work on e boot/start
+  if it is started at e start time
+* pane flip animation doesn't work right - left screen slides diagonally
+  instead of in a straight line
+* exebuf on other zones doesn't allow mouse to work properly (only
+  zone/screen 0 works properly)
 * sometimes file monitoring for file changes, adds, deletes on a dir stops
   working all of a sudden - unknown what causes it and why right now.
 * e_apps wont pick up changes in favorite menu dirs made by the applications
@@ -22,6 +32,8 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
+* fm2 needs its fops to become async (in slave process and ipc to it)
+* fm2 needs its file listing/stat()ing etc. to go into slave proc
 * fm2 needs a right-click file properties dialog
 * fm2 needs to display symlink info on files somehow
 * fm2 needs to display more than 1 file being dragged (if more than 1 is being
