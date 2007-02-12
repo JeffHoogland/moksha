@@ -81,6 +81,8 @@ e_shelf_config_init(void)
 EAPI Evas_List *
 e_shelf_list(void)
 {
+   shelves = evas_list_sort(shelves, evas_list_count(shelves), 
+			    _e_shelf_cb_id_sort);
    return shelves;
 }
 
