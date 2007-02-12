@@ -315,7 +315,6 @@ e_int_menus_sys_new(void)
    
    m = e_menu_new();
    e_menu_pre_activate_callback_set(m, _e_int_menus_sys_pre_cb, NULL);
-
    return m;
 }
 
@@ -357,11 +356,13 @@ e_int_menus_menu_augmentation_del(const char *menu, E_Int_Menu_Augmentation *mau
 	 * We should always add the list to the hash, in case the list
 	 * becomes empty, or the first element is removed.
 	 */
-	_e_int_menus_augmentation = evas_hash_del(_e_int_menus_augmentation, menu, l);
+	_e_int_menus_augmentation = evas_hash_del(_e_int_menus_augmentation, 
+						  menu, l);
 
 	l = evas_list_remove(l, maug);
 	if (l)
-	  _e_int_menus_augmentation = evas_hash_add(_e_int_menus_augmentation, menu, l);
+	  _e_int_menus_augmentation = evas_hash_add(_e_int_menus_augmentation, 
+						    menu, l);
      }
    free(maug);
 }
@@ -636,10 +637,8 @@ _e_int_menus_apps_drag(void *data, E_Menu *m, E_Menu_Item *mi)
 	 Evas_Coord x, y, w, h;
 	 const char *drag_types[] = { "enlightenment/eapp" };
 
-	 evas_object_geometry_get(mi->icon_object,
-				     &x, &y, &w, &h);
-	 drag = e_drag_new(m->zone->container, x, y,
-			      drag_types, 1, a, -1,
+	 evas_object_geometry_get(mi->icon_object, &x, &y, &w, &h);
+	 drag = e_drag_new(m->zone->container, x, y, drag_types, 1, a, -1,
 			      NULL, _e_int_menus_apps_drag_finished);
 
          o = e_app_icon_add(a, e_drag_evas_get(drag));
@@ -978,9 +977,10 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 	       }
 	     _e_int_menus_clients_item_create(bd, m);
 	  }
-	mi = e_menu_item_new(m);
-	e_menu_item_separator_set(mi, 1);
      }
+
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
    
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Cleanup Windows"));
@@ -1064,8 +1064,7 @@ _e_int_menus_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
      {
 	if (e_config->focus_policy != E_FOCUS_CLICK)
 	  ecore_x_pointer_warp(bd->zone->container->win,
-			       bd->x + (bd->w / 2),
-			       bd->y + (bd->h / 2));
+			       bd->x + (bd->w / 2), bd->y + (bd->h / 2));
 	e_border_focus_set(bd, 1, 1);
      }
 }
@@ -1134,7 +1133,8 @@ _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
 	a = bd->app;
 	if (a) e_app_icon_add_to_menu_item(a, mi);
      }
-   e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_lost_clients_free_hook);
+   e_object_free_attach_func_set(E_OBJECT(m), 
+				 _e_int_menus_lost_clients_free_hook);
    e_object_data_set(E_OBJECT(m), borders);
 }
 
@@ -1157,7 +1157,6 @@ _e_int_menus_lost_clients_free_hook(void *obj)
      }
 }
 
-
 static void 
 _e_int_menus_lost_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
@@ -1166,7 +1165,8 @@ _e_int_menus_lost_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    E_OBJECT_CHECK(bd);
    if (bd->iconic) e_border_uniconify(bd);
    if (bd->desk) e_desk_show(bd->desk);
-   e_border_move(bd, bd->zone->x + ((bd->zone->w - bd->w) / 2), bd->zone->y + ((bd->zone->h - bd->h) / 2));
+   e_border_move(bd, bd->zone->x + ((bd->zone->w - bd->w) / 2), 
+		 bd->zone->y + ((bd->zone->h - bd->h) / 2));
    e_border_raise(bd);
    e_border_focus_set(bd, 1, 1);
 }
