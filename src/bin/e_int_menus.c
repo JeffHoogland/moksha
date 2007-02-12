@@ -890,12 +890,33 @@ _e_int_menus_sys_free_hook(void *obj)
    _e_int_menus_augmentation_del(m, evas_hash_find(_e_int_menus_augmentation, "sys"));
 }
 
+static int
+_e_int_menus_clients_sort_border_cb(void *d1, void *d2)
+{
+   E_Border *bd1;
+   E_Border *bd2;
+   int j,k;
+
+   if (!d1) return 1;
+   if (!d2) return -1;
+
+   bd1 = d1;
+   bd2 = d2;
+
+   j = bd1->desk->y * 12 + bd1->desk->x;
+   k = bd2->desk->y * 12 + bd2->desk->x;
+
+   if (j > k) return 1;
+   if (j < k) return -1;
+   if (j = k) return 0;
+}
+
 static void
 _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 {
    E_Menu *subm;
    E_Menu_Item *mi;
-   Evas_List *l, *borders = NULL, *alt = NULL;
+   Evas_List *l = NULL, *borders = NULL, *alt = NULL;
    E_Zone *zone = NULL;
    E_Desk *desk = NULL;
    Main_Data *dat;
@@ -924,12 +945,12 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 	/* FIXME here we want nothing, but that crashes!!! */
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("(No Windows)"));
-//	return;
      }
    for (l = borders; l; l = l->next)
      {
-	E_Border *bd = l->data;
-
+	E_Border *bd;
+	
+	bd = l->data;
 	if (bd->desk != desk)
 	  {
 	     alt = evas_list_append(alt, bd);
@@ -937,15 +958,24 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 	  }
 	_e_int_menus_clients_item_create(bd, m);
      }
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
 
+   alt = evas_list_sort(alt, evas_list_count(alt), 
+                        _e_int_menus_clients_sort_border_cb);
+
+   desk = NULL;
    if (evas_list_count(alt) > 0) 
      {
 	for (l = alt; l; l = l->next)
 	  {
-	     E_Border *bd = l->data;
+	     E_Border *bd;
 	     
+	     bd = l->data;
+	     if (bd->desk != desk)
+	       { 
+		  mi = e_menu_item_new(m); 
+		  e_menu_item_separator_set(mi, 1); 
+		  desk = bd->desk;
+	       }
 	     _e_int_menus_clients_item_create(bd, m);
 	  }
 	mi = e_menu_item_new(m);
