@@ -52,8 +52,10 @@ static	E_Zone		   *last_active_zone = NULL;
 static Ecore_Event_Handler *_e_desklock_exit_handler = NULL;
 static pid_t                _e_desklock_child_pid = -1;
 #endif
-static Ecore_Exe *_e_custom_saver_exe = NULL;
-static Ecore_Event_Handler *_e_custom_saver_exe_handler = NULL;
+static Ecore_Exe *_e_custom_desklock_exe = NULL;
+static Ecore_Event_Handler *_e_custom_desklock_exe_handler = NULL;
+static Ecore_Timer *_e_desklock_idle_timer = NULL;
+static int _e_desklock_user_idle = 0;
 
 /***********************************************************************/
 
@@ -62,7 +64,8 @@ static int _e_desklock_cb_mouse_down(void *data, int type, void *event);
 static int _e_desklock_cb_mouse_up(void *data, int type, void *event);
 static int _e_desklock_cb_mouse_wheel(void *data, int type, void *event);
 static int _e_desklock_cb_mouse_move(void *data, int type, void *event);
-static int _e_desklock_cb_custom_saver_exit(void *data, int type, void *event);
+static int _e_desklock_cb_custom_desklock_exit(void *data, int type, void *event);
+static int _e_desklock_cb_idle_timer(void *data, int type, void *event);
 
 static void _e_desklock_passwd_update();
 static void _e_desklock_backspace();
@@ -84,20 +87,10 @@ EAPI int
 e_desklock_init(void)
 {
    
-   if (e_config->desklock_disable_screensaver)
-     ecore_x_screensaver_timeout_set(0);
-   else
-     {
-	if (e_config->desklock_use_timeout)
-	  ecore_x_screensaver_timeout_set(e_config->desklock_timeout);   
-     }
-
-   /*
-    * Effectively hide the X screensaver yet allow
-    * it to generate the timer events for us.
-    */
-   ecore_x_screensaver_blank_set(!e_config->desklock_use_custom_screensaver);
-   ecore_x_screensaver_expose_set(!e_config->desklock_use_custom_screensaver);
+   /* A timer to tick every second, watching for an idle user */
+   _e_desklock_idle_timer = ecore_timer_add(1.0,
+					    _e_desklock_cb_idle_timer,
+					    NULL);
      
    if (e_config->desklock_background)
      e_filereg_register(e_config->desklock_background);
@@ -125,6 +118,18 @@ e_desklock_show(void)
    int			  zone_counter;
    int			  total_zone_num;
    
+   if (_e_custom_desklock_exe) return 0;
+
+   if (e_config->desklock_use_custom_desklock)
+     {
+	_e_custom_desklock_exe_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL, 
+							      _e_desklock_cb_custom_desklock_exit, 
+							      NULL);
+        e_util_library_path_strip();
+	_e_custom_desklock_exe = ecore_exe_run(e_config->desklock_custom_desklock_cmd, NULL);
+        e_util_library_path_restore();
+	return 1;
+     }      
 
 #ifndef HAVE_PAM
    e_util_dialog_show(_("Error - no PAM support"),
@@ -132,19 +137,7 @@ e_desklock_show(void)
 			"desk locking is disabled."));
    return 0;
 #endif   
-   if (_e_custom_saver_exe) return 0;
-
-   if (e_config->desklock_use_custom_screensaver)
-     {
-	_e_custom_saver_exe_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL, 
-							      _e_desklock_cb_custom_saver_exit, 
-							      NULL);
-        e_util_library_path_strip();
-	_e_custom_saver_exe = ecore_exe_run(e_config->desklock_custom_screensaver_cmd, NULL);
-        e_util_library_path_restore();
-	return 1;
-     }      
-   
+     
    if (edd) return 0;
 
 #ifdef HAVE_PAM
@@ -357,16 +350,17 @@ e_desklock_hide(void)
 {
    E_Desklock_Popup_Data	*edp;
    
-   if ((!edd) && (!_e_custom_saver_exe)) return;
+   if ((!edd) && (!_e_custom_desklock_exe)) return;
 
-   if (e_config->desklock_use_custom_screensaver)
+   if (e_config->desklock_use_custom_desklock)
      {
-	_e_custom_saver_exe = NULL;
+	_e_custom_desklock_exe = NULL;
 	return;
      }
    
    if (edd->elock_grab_break_wnd)
      ecore_x_window_show(edd->elock_grab_break_wnd);
+   
    while (edd->elock_wnd_list)
      {
 	edp = edd->elock_wnd_list->data;
@@ -778,28 +772,65 @@ _desklock_auth_get_current_host(void)
 #endif
 
 static int
-_e_desklock_cb_custom_saver_exit(void *data, int type, void *event)
+_e_desklock_cb_custom_desklock_exit(void *data, int type, void *event)
 {
    Ecore_Exe_Event_Del *ev;
   
    ev = event;
-   if (ev->exe != _e_custom_saver_exe) return 1;
+   if (ev->exe != _e_custom_desklock_exe) return 1;
    
    if (ev->exit_code != 0)
      {
 	/* do something profound here... like notify someone */
      }
    
-   /*
-    * Miserable HACK alert!!!
-    * Seems I must reset this.  Some reason yet unknown, my
-    * intended values are getting reset!?! 
-    */
-   ecore_x_screensaver_timeout_set(e_config->desklock_timeout);   
-   ecore_x_screensaver_blank_set(!e_config->desklock_use_custom_screensaver);
-   ecore_x_screensaver_expose_set(!e_config->desklock_use_custom_screensaver);
-   
    e_desklock_hide();
    
    return 0;
+}
+
+static int 
+_e_desklock_cb_idle_timer(void *data, int type, void *event)
+{
+   static double time_of_last_event = 0;
+   static unsigned int xtime_of_last_user_activity = 0;
+
+   if ( ecore_x_current_user_activity_time_get() > xtime_of_last_user_activity )
+     {
+        xtime_of_last_user_activity = ecore_x_current_user_activity_time_get();
+        time_of_last_event = ecore_time_get();
+     }
+
+   if (e_config->desklock_autolock_idle)
+     {
+	/* If a desklock is already up, bail */
+        if ((_e_custom_desklock_exe) || (edd)) return 1;
+
+	/* If we have exceeded our idle time... */
+        double t = ecore_time_get();
+        if (t - time_of_last_event >= e_config->desklock_autolock_idle_timeout)
+	  {
+	     /*
+	      * Unfortunately, not all "desklocks" stay up for as long as
+	      * the user is idle or until it is unlocked.  
+	      *
+	      * 'xscreensaver-command -lock' for example sends a command 
+	      * to xscreensaver and then terminates.  So, we have another 
+	      * check (_e_desklock_user_idle) which lets us know that we 
+	      * have locked the screen due to idleness.
+	      */
+	     if (!_e_desklock_user_idle)
+	       {
+	          _e_desklock_user_idle = 1;
+                  e_desklock_show();
+	       }
+	  }
+	else
+	  {
+	     _e_desklock_user_idle = 0;
+	  }
+     }
+
+   /* Make sure our timer persists. */
+   return 1;
 }

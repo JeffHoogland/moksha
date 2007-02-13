@@ -138,8 +138,12 @@ e_int_config_cfgdialogs.h \
 e_int_config_color_classes.h \
 e_int_config_mime.h \
 e_int_config_mime_edit.h \
+e_int_config_screensaver.h \
+e_int_config_dpms.h \
 e_exebuf.h \
 e_desklock.h \
+e_screensaver.h \
+e_dpms.h \
 e_int_config_modules.h \
 e_exehist.h \
 e_color_class.h \
@@ -295,8 +299,12 @@ e_int_config_imc_import.c \
 e_int_config_color_classes.c \
 e_int_config_mime.c \
 e_int_config_mime_edit.c \
+e_int_config_screensaver.c \
+e_int_config_dpms.c \
 e_exebuf.c \
 e_desklock.c \
+e_screensaver.c \
+e_dpms.c \
 e_int_config_modules.c \
 e_exehist.c \
 e_color_class.c \

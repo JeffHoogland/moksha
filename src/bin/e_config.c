@@ -41,7 +41,6 @@ static E_Config_DD *_e_config_gadcon_client_edd = NULL;
 static E_Config_DD *_e_config_shelf_edd = NULL;
 static E_Config_DD *_e_config_mime_icon_edd = NULL;
 
-
 /* externally accessible functions */
 EAPI int
 e_config_init(void)
@@ -168,7 +167,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, enabled, UCHAR);
 
    _e_config_font_default_edd = E_CONFIG_DD_NEW("E_Font_Default", 
-						 E_Font_Default);   
+						E_Font_Default);
 #undef T
 #undef D
 #define T E_Font_Default
@@ -178,14 +177,15 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, size, INT);
 
    _e_config_font_fallback_edd = E_CONFIG_DD_NEW("E_Font_Fallback", 
-						  E_Font_Fallback);   
+						  E_Font_Fallback);
 #undef T
 #undef D
 #define T E_Font_Fallback
 #define D _e_config_font_fallback_edd
    E_CONFIG_VAL(D, T, name, STR);
 
-   _e_config_bindings_mouse_edd = E_CONFIG_DD_NEW("E_Config_Binding_Mouse", E_Config_Binding_Mouse);
+   _e_config_bindings_mouse_edd = E_CONFIG_DD_NEW("E_Config_Binding_Mouse", 
+						  E_Config_Binding_Mouse);
 #undef T
 #undef D
 #define T E_Config_Binding_Mouse
@@ -197,7 +197,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, button, UCHAR);
    E_CONFIG_VAL(D, T, any_mod, UCHAR);
 
-   _e_config_bindings_key_edd = E_CONFIG_DD_NEW("E_Config_Binding_Key", E_Config_Binding_Key);
+   _e_config_bindings_key_edd = E_CONFIG_DD_NEW("E_Config_Binding_Key", 
+						E_Config_Binding_Key);
 #undef T
 #undef D
 #define T E_Config_Binding_Key
@@ -209,7 +210,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, params, STR);
    E_CONFIG_VAL(D, T, any_mod, UCHAR);
 
-   _e_config_bindings_signal_edd = E_CONFIG_DD_NEW("E_Config_Binding_Signal", E_Config_Binding_Signal);
+   _e_config_bindings_signal_edd = E_CONFIG_DD_NEW("E_Config_Binding_Signal", 
+						   E_Config_Binding_Signal);
 #undef T
 #undef D
 #define T E_Config_Binding_Signal
@@ -222,7 +224,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, action, STR);
    E_CONFIG_VAL(D, T, params, STR);
 
-   _e_config_bindings_wheel_edd = E_CONFIG_DD_NEW("E_Config_Binding_Wheel", E_Config_Binding_Wheel);
+   _e_config_bindings_wheel_edd = E_CONFIG_DD_NEW("E_Config_Binding_Wheel", 
+						  E_Config_Binding_Wheel);
 #undef T
 #undef D
 #define T E_Config_Binding_Wheel
@@ -311,7 +314,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, b3, INT);
    E_CONFIG_VAL(D, T, a3, INT);
 
-   _e_config_mime_icon_edd = E_CONFIG_DD_NEW("E_Config_Mime_Icon", E_Config_Mime_Icon);
+   _e_config_mime_icon_edd = E_CONFIG_DD_NEW("E_Config_Mime_Icon", 
+					     E_Config_Mime_Icon);
 #undef T
 #undef D
 #define T E_Config_Mime_Icon
@@ -474,17 +478,30 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, desklock_background, STR);
    E_CONFIG_VAL(D, T, desklock_auth_method, INT);
    E_CONFIG_VAL(D, T, desklock_login_box_zone, INT);
-   E_CONFIG_VAL(D, T, desklock_autolock, INT);
-   E_CONFIG_VAL(D, T, desklock_use_timeout, INT);
-   E_CONFIG_VAL(D, T, desklock_timeout, DOUBLE);
-   E_CONFIG_VAL(D, T, desklock_disable_screensaver, INT);
-   E_CONFIG_VAL(D, T, desklock_use_custom_screensaver, INT);
-   E_CONFIG_VAL(D, T, desklock_custom_screensaver_cmd, STR);
+   E_CONFIG_VAL(D, T, desklock_autolock_screensaver, INT);
+   E_CONFIG_VAL(D, T, desklock_autolock_idle, INT);
+   E_CONFIG_VAL(D, T, desklock_autolock_idle_timeout, DOUBLE);
+   E_CONFIG_VAL(D, T, desklock_use_custom_desklock, INT);
+   E_CONFIG_VAL(D, T, desklock_custom_desklock_cmd, STR);
    E_CONFIG_VAL(D, T, display_res_restore, INT);
    E_CONFIG_VAL(D, T, display_res_width, INT);
    E_CONFIG_VAL(D, T, display_res_height, INT);
    E_CONFIG_VAL(D, T, display_res_hz, INT);
    E_CONFIG_VAL(D, T, display_res_rotation, INT);
+   
+   E_CONFIG_VAL(D, T, screensaver_enable, INT);
+   E_CONFIG_VAL(D, T, screensaver_timeout, INT);
+   E_CONFIG_VAL(D, T, screensaver_interval, INT);
+   E_CONFIG_VAL(D, T, screensaver_blanking, INT);
+   E_CONFIG_VAL(D, T, screensaver_expose, INT);
+   
+   E_CONFIG_VAL(D, T, dpms_enable, INT);
+   E_CONFIG_VAL(D, T, dpms_standby_enable, INT);
+   E_CONFIG_VAL(D, T, dpms_suspend_enable, INT);
+   E_CONFIG_VAL(D, T, dpms_off_enable, INT);
+   E_CONFIG_VAL(D, T, dpms_standby_timeout, INT);
+   E_CONFIG_VAL(D, T, dpms_suspend_timeout, INT);
+   E_CONFIG_VAL(D, T, dpms_off_timeout, INT);
    
    E_CONFIG_VAL(D, T, border_raise_on_mouse_action, INT);
    E_CONFIG_VAL(D, T, border_raise_on_focus, INT);
@@ -678,10 +695,9 @@ e_config_init(void)
    e_config->desklock_background = NULL;
    e_config->desklock_auth_method = 0;
    e_config->desklock_login_box_zone = -1;
-   e_config->desklock_autolock = 0;
-   e_config->desklock_use_timeout = 0;
-   e_config->desklock_timeout = 300.0;
-   e_config->desklock_disable_screensaver = 0;
+   e_config->desklock_autolock_screensaver = 0;
+   e_config->desklock_autolock_idle = 0;
+   e_config->desklock_autolock_idle_timeout = 300.0;
    
    e_config->display_res_restore = 0;
    e_config->display_res_width = 0;
@@ -759,24 +775,15 @@ e_config_init(void)
 	//_restore_defaults_cb function
 	
 	CFG_MOUSEBIND(E_BINDING_CONTEXT_BORDER, 1,
-		      E_BINDING_MODIFIER_ALT, 0, 
-		      "window_move", NULL);
+		      E_BINDING_MODIFIER_ALT, 0, "window_move", NULL);
 	CFG_MOUSEBIND(E_BINDING_CONTEXT_BORDER, 2,
-		      E_BINDING_MODIFIER_ALT, 0, 
-		      "window_resize", NULL);
+		      E_BINDING_MODIFIER_ALT, 0, "window_resize", NULL);
 	CFG_MOUSEBIND(E_BINDING_CONTEXT_BORDER, 3,
-		      E_BINDING_MODIFIER_ALT, 0, 
-		      "window_menu", NULL);
-	CFG_MOUSEBIND(E_BINDING_CONTEXT_ZONE, 1,
-		      0, 0, 
-		      "menu_show", "main");
-	CFG_MOUSEBIND(E_BINDING_CONTEXT_ZONE, 2,
-		      0, 0, 
-		      "menu_show", "clients");
+		      E_BINDING_MODIFIER_ALT, 0, "window_menu", NULL);
+	CFG_MOUSEBIND(E_BINDING_CONTEXT_ZONE, 1, 0, 0, "menu_show", "main");
+	CFG_MOUSEBIND(E_BINDING_CONTEXT_ZONE, 2, 0, 0, "menu_show", "clients");
 #ifdef ENABLE_FAVORITES
-	CFG_MOUSEBIND(E_BINDING_CONTEXT_ZONE, 3,
-		      0, 0, 
-		      "menu_show", "favorites");
+	CFG_MOUSEBIND(E_BINDING_CONTEXT_ZONE, 3, 0, 0, "menu_show", "favorites");
 #endif
      }
      {
@@ -1225,8 +1232,8 @@ e_config_init(void)
    IFCFGEND;
      
    IFCFG(0x00106);
-   e_config->desklock_use_custom_screensaver = 0;
-   e_config->desklock_custom_screensaver_cmd = NULL;     
+   e_config->desklock_use_custom_desklock = 0;
+   e_config->desklock_custom_desklock_cmd = NULL;     
    IFCFGEND;
 
    IFCFG(0x0107); /* the version # where this value(s) was introduced */
@@ -1297,9 +1304,24 @@ e_config_init(void)
    IFCFG(0x0108);
    e_config->desk_auto_switch = 0;
    IFCFGEND;
-   
-   e_config->config_version = E_CONFIG_FILE_VERSION;
 
+   IFCFG(0x0109);
+   e_config->dpms_enable = 0;
+   e_config->dpms_standby_enable = 0;
+   e_config->dpms_suspend_enable = 0;
+   e_config->dpms_off_enable = 0;
+   e_config->dpms_standby_timeout = 0;
+   e_config->dpms_suspend_timeout = 0;
+   e_config->dpms_off_timeout = 0;
+   e_config->screensaver_enable = 0;
+   e_config->screensaver_timeout = 0;
+   e_config->screensaver_interval = 5;
+   e_config->screensaver_blanking = 2;
+   e_config->screensaver_expose = 2;
+   IFCFGEND;
+     
+   e_config->config_version = E_CONFIG_FILE_VERSION;   
+     
 #if 0 /* example of new config */
    IFCFG(0x0090); /* the version # where this value(s) was introduced */
    e_config->new_value = 10; /* set the value(s) */
@@ -1382,11 +1404,10 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->cfgdlg_default_mode, 0, 1);
    E_CONFIG_LIMIT(e_config->font_hinting, 0, 2);
    E_CONFIG_LIMIT(e_config->desklock_login_box_zone, -2, 1000);
-   E_CONFIG_LIMIT(e_config->desklock_autolock, 0, 1);
-   E_CONFIG_LIMIT(e_config->desklock_use_timeout, 0, 1);
-   E_CONFIG_LIMIT(e_config->desklock_timeout, 1.0, 5400.0);
-   E_CONFIG_LIMIT(e_config->desklock_disable_screensaver, 0, 1);
-   E_CONFIG_LIMIT(e_config->desklock_use_custom_screensaver, 0, 1);
+   E_CONFIG_LIMIT(e_config->desklock_autolock_screensaver, 0, 1);
+   E_CONFIG_LIMIT(e_config->desklock_autolock_idle, 0, 1);
+   E_CONFIG_LIMIT(e_config->desklock_autolock_idle_timeout, 1.0, 5400.0);
+   E_CONFIG_LIMIT(e_config->desklock_use_custom_desklock, 0, 1);
    E_CONFIG_LIMIT(e_config->display_res_restore, 0, 1);
    E_CONFIG_LIMIT(e_config->display_res_width, 1, 8192);
    E_CONFIG_LIMIT(e_config->display_res_height, 1, 8192);
@@ -1397,6 +1418,19 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->desk_flip_wrap, 0, 1);
    E_CONFIG_LIMIT(e_config->remember_internal_windows, 0, 1);
    E_CONFIG_LIMIT(e_config->desk_auto_switch, 0, 1);
+
+   E_CONFIG_LIMIT(e_config->dpms_enable, 0, 1);
+   E_CONFIG_LIMIT(e_config->dpms_standby_enable, 0, 1);
+   E_CONFIG_LIMIT(e_config->dpms_suspend_enable, 0, 1);
+   E_CONFIG_LIMIT(e_config->dpms_off_enable, 0, 1);
+   E_CONFIG_LIMIT(e_config->dpms_standby_timeout, 0, 5400);
+   E_CONFIG_LIMIT(e_config->dpms_suspend_timeout, 0, 5400);
+   E_CONFIG_LIMIT(e_config->dpms_off_timeout, 0, 5400);
+
+   E_CONFIG_LIMIT(e_config->screensaver_timeout, 0, 5400);
+   E_CONFIG_LIMIT(e_config->screensaver_interval, 0, 5400);
+   E_CONFIG_LIMIT(e_config->screensaver_blanking, 0, 2);
+   E_CONFIG_LIMIT(e_config->screensaver_expose, 0, 2);
    
    /* FIXME: disabled auto apply because it causes problems */
    e_config->cfgdlg_auto_apply = 0;
@@ -1983,7 +2017,7 @@ _e_config_free(void)
 	if (e_config->wallpaper_import_last_dev) evas_stringshare_del(e_config->wallpaper_import_last_dev);
 	if (e_config->wallpaper_import_last_path) evas_stringshare_del(e_config->wallpaper_import_last_path);
 	if (e_config->theme_default_border_style) evas_stringshare_del(e_config->theme_default_border_style);
-	if (e_config->desklock_custom_screensaver_cmd) evas_stringshare_del(e_config->desklock_custom_screensaver_cmd);
+	if (e_config->desklock_custom_desklock_cmd) evas_stringshare_del(e_config->desklock_custom_desklock_cmd);
 	E_FREE(e_config);
      }
 }

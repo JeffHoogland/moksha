@@ -769,6 +769,22 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_exebuf_shutdown);
 
+   TS("dpms");     
+   /* setup dpms */
+   if (!e_dpms_init())
+     {
+       e_error_message_show(_("Enlightenment cannot configure the DPMS settings."));
+       _e_main_shutdown(-1);
+     }
+    
+   TS("screensaver");
+   /* setup screensaver */
+   if (!e_screensaver_init())
+     {
+       e_error_message_show(_("Enlightenment cannot configure the X screensaver."));
+       _e_main_shutdown(-1);
+     }
+     
    TS("desklock");
    /* setup desklock */
    if (!e_desklock_init())

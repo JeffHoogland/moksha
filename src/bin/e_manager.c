@@ -754,7 +754,7 @@ _e_manager_cb_screensaver_notify(void *data, int ev_type __UNUSED__, void *ev)
    
    if (e->on)
      {
-	if ((e_config->desklock_autolock) || (e_config->desklock_use_custom_screensaver))
+	if (e_config->desklock_autolock_screensaver)
 	  e_desklock_show();
      }
    return 1;
