@@ -907,7 +907,7 @@ _e_int_menus_clients_sort_border_cb(void *d1, void *d2)
 
    if (j > k) return 1;
    if (j < k) return -1;
-   if (j == k) return 0;
+   return 0;
 }
 
 static void

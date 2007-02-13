@@ -14,6 +14,7 @@
 #include <Eet.h>
 #include <Edje.h>
 #include "e_sha1.h"
+#include "e_user.h"
 
 typedef struct _E_Thumb E_Thumb;
 
