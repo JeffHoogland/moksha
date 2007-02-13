@@ -146,7 +146,7 @@ e_flowlayout_flowdirection_get(Evas_Object *obj, int *right, int *bottom)
    E_Smart_Data *sd;
    
    sd = evas_object_smart_data_get(obj);
-   if (!sd) return 0;
+   if (!sd) return;
    if (right) *right = sd->flowright;
    if (bottom) *bottom = sd->flowright; 
 }
@@ -722,7 +722,7 @@ static void
 _e_flowlayout_smart_extents_calcuate(E_Smart_Data *sd)
 {
    Evas_List *l;
-   int minw, minh, totalw, totalh, count;
+   int minw, minh, count;
 
    /* FIXME: need to calc max */
    sd->max.w = -1; /* max < 0 == unlimited */
