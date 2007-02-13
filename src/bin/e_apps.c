@@ -1277,9 +1277,8 @@ e_app_border_find(E_Border *bd)
    char *title;
    double begin, time, clever_time = 0.0;
 
-   /* FIXME: Should that be (bd->client.netwm.name) or (!bd->client.netwm.name) like everything else ? */
    if ((!bd->client.icccm.name) && (!bd->client.icccm.class) &&
-       (!bd->client.icccm.title) && (bd->client.netwm.name) &&
+       (!bd->client.icccm.title) && (!bd->client.netwm.name) &&
        (!bd->client.icccm.window_role) && (!bd->client.icccm.command.argv))
      return NULL;
 
