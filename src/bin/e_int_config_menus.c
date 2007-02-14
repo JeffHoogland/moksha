@@ -161,7 +161,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Click Drag Timeout"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%2.1f seconds"), 0.0, 10.0, 0.5, 0, &(cfdata->menus_click_drag_timeout), NULL, 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%2.2f seconds"), 0.0, 10.0, 0.25, 0, &(cfdata->menus_click_drag_timeout), NULL, 200);
    e_widget_framelist_object_append(of, ob);
    
    e_widget_list_object_append(o, of, 1, 1, 0.5);   
