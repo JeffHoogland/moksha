@@ -141,7 +141,12 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 			if (len > 6)
 			   path[len - 6] = '\0';
 	                ecore_list_append(cfdata->sensors, strdup(path));
-			/* TODO: Track down the user friendly names and display them instead. */
+			/* TODO: Track down the user friendly names and display them instead.
+			 * User friendly names are not available on the system, lm-sensors 
+			 * contains a database in /etc/sensors.conf, but the format may change,
+			 * so the best way to use that database is thru libsensors, but we 
+			 * don't want to add any more library dependencies. 
+			 */
 		     }
 		}
 	      ecore_list_destroy(therms);
