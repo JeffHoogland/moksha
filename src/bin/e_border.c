@@ -5786,11 +5786,13 @@ _e_border_eval(E_Border *bd)
 		       bd->changes.pos = 1;
 		       bd->placed = 1;
 		    }
-		  if (bd->leader)
+#if 0
+		  else if ((bd->leader) && (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG))
 		    {
 		       /* TODO: Place in center of group */
 		    }
-		  if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)
+#endif
+		  else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)
 		    {
 		       bd->x = bd->zone->x + ((bd->zone->w - bd->w) / 2);
 		       bd->y = bd->zone->y + ((bd->zone->h - bd->h) / 2);
