@@ -962,8 +962,11 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
                         _e_int_menus_clients_sort_border_cb);
 
    desk = NULL;
+   subm = NULL;
    if (evas_list_count(alt) > 0) 
      {
+	mi = e_menu_item_new(m);
+	e_menu_item_separator_set(mi, 1);
 	for (l = alt; l; l = l->next)
 	  {
 	     E_Border *bd;
@@ -971,12 +974,18 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 	     bd = l->data;
 	     if (bd->desk != desk)
 	       { 
-		  mi = e_menu_item_new(m); 
-		  e_menu_item_separator_set(mi, 1); 
+		  if (subm && mi) 
+		    e_menu_item_submenu_set(mi, subm);
+		  mi = e_menu_item_new(m);
+                  e_menu_item_label_set(mi, bd->desk->name);
+		  e_util_menu_item_edje_icon_set(mi, "enlightenment/desktops");
+		  subm = e_menu_new();
 		  desk = bd->desk;
 	       }
-	     _e_int_menus_clients_item_create(bd, m);
+	     _e_int_menus_clients_item_create(bd, subm);
 	  }
+	if (subm && mi) 
+	  e_menu_item_submenu_set(mi, subm);
      }
 
    mi = e_menu_item_new(m);
