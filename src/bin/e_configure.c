@@ -431,6 +431,7 @@ _e_configure_fill_cat_list(void *data)
    _e_configure_item_add(cat, _("Applications Menu"), "enlightenment/applications", e_int_config_apps);
 #endif
    _e_configure_item_add(cat, _("Menu Settings"), "enlightenment/menu_settings", e_int_config_menus);
+   _e_configure_item_add(cat, _("Client List Menu"), "enlightenment/windows", e_int_config_clientlist);
 
    cat = _e_configure_category_add(eco, _("Language"), "enlightenment/intl");
    _e_configure_item_add(cat, _("Language Settings"), "enlightenment/intl", e_int_config_intl);

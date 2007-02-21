@@ -161,4 +161,5 @@
 #include "e_widget_desk_preview.h"
 #include "e_int_config_borders.h"
 #include "e_int_config_desk.h"
+#include "e_int_config_clientlist.h"
 #include "e_fm_prop.h"

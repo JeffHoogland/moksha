@@ -77,7 +77,8 @@ e_config_init(void)
 	else
 	  _e_config_profile = strdup("default");
      }
-   else _e_config_profile = strdup(_e_config_profile);
+   else 
+     _e_config_profile = strdup(_e_config_profile);
 
    _e_config_gadcon_client_edd = E_CONFIG_DD_NEW("E_Config_Gadcon_Client", E_Config_Gadcon_Client);
 #undef T
@@ -502,6 +503,12 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, dpms_standby_timeout, INT);
    E_CONFIG_VAL(D, T, dpms_suspend_timeout, INT);
    E_CONFIG_VAL(D, T, dpms_off_timeout, INT);
+   
+   E_CONFIG_VAL(D, T, clientlist_group_by, INT);
+   E_CONFIG_VAL(D, T, clientlist_separate_with, INT);
+   E_CONFIG_VAL(D, T, clientlist_sort_by, INT);
+   E_CONFIG_VAL(D, T, clientlist_separate_iconified_apps, INT);
+   E_CONFIG_VAL(D, T, clientlist_warp_to_iconified_desktop, INT);
    
    E_CONFIG_VAL(D, T, border_raise_on_mouse_action, INT);
    E_CONFIG_VAL(D, T, border_raise_on_focus, INT);
@@ -1319,7 +1326,15 @@ e_config_init(void)
    e_config->screensaver_blanking = 2;
    e_config->screensaver_expose = 2;
    IFCFGEND;
-     
+    
+   IFCFG(0x0110);
+   e_config->clientlist_group_by = 0;
+   e_config->clientlist_separate_with = 0;
+   e_config->clientlist_sort_by = 0;
+   e_config->clientlist_separate_iconified_apps = 0;
+   e_config->clientlist_warp_to_iconified_desktop = 0;
+   IFCFGEND;
+
    e_config->config_version = E_CONFIG_FILE_VERSION;   
      
 #if 0 /* example of new config */
@@ -1431,6 +1446,12 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->screensaver_interval, 0, 5400);
    E_CONFIG_LIMIT(e_config->screensaver_blanking, 0, 2);
    E_CONFIG_LIMIT(e_config->screensaver_expose, 0, 2);
+   
+   E_CONFIG_LIMIT(e_config->clientlist_group_by, 0, 2);
+   E_CONFIG_LIMIT(e_config->clientlist_separate_with, 0, 2);
+   E_CONFIG_LIMIT(e_config->clientlist_sort_by, 0, 3);
+   E_CONFIG_LIMIT(e_config->clientlist_separate_iconified_apps, 0, 2);
+   E_CONFIG_LIMIT(e_config->clientlist_warp_to_iconified_desktop, 0, 1);
    
    /* FIXME: disabled auto apply because it causes problems */
    e_config->cfgdlg_auto_apply = 0;

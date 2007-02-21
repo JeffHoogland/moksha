@@ -890,7 +890,7 @@ _e_int_menus_sys_free_hook(void *obj)
 }
 
 static int
-_e_int_menus_clients_sort_border_cb(void *d1, void *d2)
+_e_int_menus_clients_group_desk_cb(void *d1, void *d2)
 {
    E_Border *bd1;
    E_Border *bd2;
@@ -907,7 +907,150 @@ _e_int_menus_clients_sort_border_cb(void *d1, void *d2)
 
    if (j > k) return 1;
    if (j < k) return -1;
+   return -1;   /* Returning '-1' on equal is intentional */
+}
+
+static int
+_e_int_menus_clients_group_class_cb(void *d1, void *d2)
+{
+   E_Border *bd1;
+   E_Border *bd2;
+
+   if (!d1) return 1;
+   if (!d2) return -1;
+
+   bd1 = d1;
+   bd2 = d2;
+   
+   if (strcmp((const char*)bd1->client.icccm.class, (const char*)bd2->client.icccm.class) > 0) return 1;
+   if (strcmp((const char*)bd1->client.icccm.class, (const char*)bd2->client.icccm.class) < 0) return -1;
+   return -1;   /* Returning '-1' on equal is intentional */
+}
+
+static int
+_e_int_menus_clients_sort_alpha_cb(void *d1, void *d2)
+{
+   E_Border *bd1;
+   E_Border *bd2;
+
+   if (!d1) return 1;
+   if (!d2) return -1;
+
+   bd1 = d1;
+   bd2 = d2;
+
+   if (strcasecmp(e_border_name_get(bd1), e_border_name_get(bd2)) > 0) return 1;
+   if (strcasecmp(e_border_name_get(bd1), e_border_name_get(bd2)) < 0) return -1;
    return 0;
+}
+
+static void
+_e_int_menus_clients_add_by_class(Evas_List *borders, E_Menu *m)
+{
+   Evas_List *l = NULL;
+   E_Menu *subm = NULL;
+   E_Menu_Item *mi;
+   char *class = NULL;
+
+   class = strdup("");
+   for (l = borders; l; l = l->next) 
+     { 
+	E_Border *bd; 
+	bd = l->data; 
+	if ( strcmp(class, bd->client.icccm.class) != 0 && e_config->clientlist_separate_with != E_CLIENTLIST_GROUP_SEP_NONE) 
+	  { 
+	     if (e_config->clientlist_separate_with == E_CLIENTLIST_GROUP_SEP_MENU) 
+	       { 
+		  if (subm && mi) 
+		    e_menu_item_submenu_set(mi, subm); 
+		  mi = e_menu_item_new(m); 
+		  e_menu_item_label_set(mi, bd->client.icccm.class); 
+		  e_util_menu_item_edje_icon_set(mi, "enlightenment/windows"); 
+		  subm = e_menu_new(); 
+	       } 
+	     else 
+	       { 
+		  mi = e_menu_item_new(m); 
+		  e_menu_item_separator_set(mi, 1); 
+	       } 
+	     class = strdup(bd->client.icccm.class); 
+	  } 
+	if (e_config->clientlist_separate_with == E_CLIENTLIST_GROUP_SEP_MENU) 
+	  _e_int_menus_clients_item_create(bd, subm); 
+	else  
+	  _e_int_menus_clients_item_create(bd, m); 
+     } 
+   if (e_config->clientlist_separate_with == E_CLIENTLIST_GROUP_SEP_MENU && subm && mi) 
+     e_menu_item_submenu_set(mi, subm);
+}
+
+static void
+_e_int_menus_clients_add_by_desk(E_Desk *curr_desk, Evas_List *borders, E_Menu *m)
+{
+   E_Desk *desk = NULL;
+   Evas_List *l = NULL, *alt = NULL;
+   E_Menu *subm;
+   E_Menu_Item *mi;
+
+   /* Deal with present desk first */
+   for (l = borders; l; l = l->next)
+     {
+	E_Border *bd;
+	
+	bd = l->data;
+	if (bd->desk != curr_desk)
+	  {
+	     if (!bd->iconic || 
+	        (bd->iconic && e_config->clientlist_separate_iconified_apps == E_CLIENTLIST_GROUPICONS_OWNER))
+	       { 
+		  alt = evas_list_append(alt, bd); 
+		  continue;
+	       }
+	  }
+	_e_int_menus_clients_item_create(bd, m);
+     }
+
+   desk = NULL;
+   subm = NULL;
+   if (evas_list_count(alt) > 0) 
+     {
+	if (e_config->clientlist_separate_with == E_CLIENTLIST_GROUP_SEP_MENU)
+	  {
+	     mi = e_menu_item_new(m);
+	     e_menu_item_separator_set(mi, 1);
+	  }
+	
+	for (l = alt; l; l = l->next)
+	  { 
+	     E_Border *bd;
+	     
+	     bd = l->data;
+	     if ( bd->desk != desk && e_config->clientlist_separate_with != E_CLIENTLIST_GROUP_SEP_NONE)
+	       {
+		  if (e_config->clientlist_separate_with == E_CLIENTLIST_GROUP_SEP_MENU)
+		    { 
+		       if (subm && mi) 
+			 e_menu_item_submenu_set(mi, subm); 
+		       mi = e_menu_item_new(m); 
+		       e_menu_item_label_set(mi, bd->desk->name); 
+		       e_util_menu_item_edje_icon_set(mi, "enlightenment/desktops"); 
+		       subm = e_menu_new(); 
+		    }
+		    else
+		    { 
+		       mi = e_menu_item_new(m); 
+		       e_menu_item_separator_set(mi, 1);
+		    }
+		  desk = bd->desk;
+	       } 
+	     if (e_config->clientlist_separate_with == E_CLIENTLIST_GROUP_SEP_MENU) 
+	       _e_int_menus_clients_item_create(bd, subm); 
+	     else  
+	       _e_int_menus_clients_item_create(bd, m);
+	  }
+	if (e_config->clientlist_separate_with == E_CLIENTLIST_GROUP_SEP_MENU && subm && mi) 
+	  e_menu_item_submenu_set(mi, subm);
+     }
 }
 
 static void
@@ -922,8 +1065,7 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
    /* get the current clients */
-   zone =
-      e_zone_current_get(e_container_current_get(e_manager_current_get()));
+   zone = e_zone_current_get(e_container_current_get(e_manager_current_get()));
    desk = e_desk_current_get(zone);
    for (l = e_border_client_list(); l; l = l->next)
      {
@@ -945,49 +1087,37 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("(No Windows)"));
      }
-   for (l = borders; l; l = l->next)
+
+   if (borders) 
      {
-	E_Border *bd;
+	if (e_config->clientlist_sort_by == E_CLIENTLIST_SORT_ALPHA)
+          borders = evas_list_sort(borders, evas_list_count(borders), 
+                              _e_int_menus_clients_sort_alpha_cb);
+
+        if (e_config->clientlist_group_by == E_CLIENTLIST_GROUP_DESK)
+	  { 
+            borders = evas_list_sort(borders, evas_list_count(borders), 
+                          _e_int_menus_clients_group_desk_cb);
+            _e_int_menus_clients_add_by_desk(desk, borders, m);
+	  }
+        if (e_config->clientlist_group_by == E_CLIENTLIST_GROUP_CLASS) 
+	  {
+            borders = evas_list_sort(borders, evas_list_count(borders), 
+                          _e_int_menus_clients_group_class_cb);
+            _e_int_menus_clients_add_by_class(borders, m);
+	  }
+	if (e_config->clientlist_group_by == E_CLIENTLIST_GROUP_NONE)
+	  {
+            for (l = borders; l; l = l->next)
+              {
+	         E_Border *bd;
 	
-	bd = l->data;
-	if (bd->desk != desk)
-	  {
-	     alt = evas_list_append(alt, bd);
-	     continue;
+	         bd = l->data;
+	         _e_int_menus_clients_item_create(bd, m);
+              }
 	  }
-	_e_int_menus_clients_item_create(bd, m);
      }
-
-   alt = evas_list_sort(alt, evas_list_count(alt), 
-                        _e_int_menus_clients_sort_border_cb);
-
-   desk = NULL;
-   subm = NULL;
-   if (evas_list_count(alt) > 0) 
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_separator_set(mi, 1);
-	for (l = alt; l; l = l->next)
-	  {
-	     E_Border *bd;
-	     
-	     bd = l->data;
-	     if (bd->desk != desk)
-	       { 
-		  if (subm && mi) 
-		    e_menu_item_submenu_set(mi, subm);
-		  mi = e_menu_item_new(m);
-                  e_menu_item_label_set(mi, bd->desk->name);
-		  e_util_menu_item_edje_icon_set(mi, "enlightenment/desktops");
-		  subm = e_menu_new();
-		  desk = bd->desk;
-	       }
-	     _e_int_menus_clients_item_create(bd, subm);
-	  }
-	if (subm && mi) 
-	  e_menu_item_submenu_set(mi, subm);
-     }
-
+   
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
    
@@ -1061,12 +1191,18 @@ _e_int_menus_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    
    bd = data;
    E_OBJECT_CHECK(bd);
+
    if (bd->iconic)
      {
+        if (e_config->clientlist_warp_to_iconified_desktop == 1)
+          e_desk_show(bd->desk);
+
 	if (!bd->lock_user_iconify)
 	  e_border_uniconify(bd);
      }
-   e_desk_show(bd->desk);
+
+   if (!bd->iconic) e_desk_show(bd->desk);
+
    if (!bd->lock_user_stacking)
      e_border_raise(bd);
    if (!bd->lock_focus_out)
