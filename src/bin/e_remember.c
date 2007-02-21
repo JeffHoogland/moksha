@@ -206,6 +206,7 @@ e_remember_default_match(E_Border *bd)
 EAPI void
 e_remember_update(E_Remember *rem, E_Border *bd)
 {
+   if (!rem) return;
    if (bd->new_client) return;
    if (rem->name) evas_stringshare_del(rem->name);
    if (rem->class) evas_stringshare_del(rem->class);

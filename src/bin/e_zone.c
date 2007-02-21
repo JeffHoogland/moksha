@@ -440,8 +440,8 @@ e_zone_desk_count_get(E_Zone *zone, int *x_count, int *y_count)
    E_OBJECT_CHECK(zone);
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    
-   *x_count = zone->desk_x_count;
-   *y_count = zone->desk_y_count;
+   if (x_count) *x_count = zone->desk_x_count;
+   if (y_count) *y_count = zone->desk_y_count;
 }
 
 EAPI void
