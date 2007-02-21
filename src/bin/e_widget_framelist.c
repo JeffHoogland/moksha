@@ -87,6 +87,15 @@ e_widget_framelist_content_align_set(Evas_Object *obj, double halign, double val
    e_box_align_set(wd->o_box, halign, valign);
 }
 
+EAPI void
+e_widget_framelist_label_set(Evas_Object *obj, char *label)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   edje_object_part_text_set(wd->o_frame, "e.text.label", label);
+}
+
 
 static void
 _e_wid_del_hook(Evas_Object *obj)

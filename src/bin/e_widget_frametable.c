@@ -77,6 +77,24 @@ e_widget_frametable_object_append(Evas_Object *obj, Evas_Object *sobj, int col, 
    evas_object_show(sobj);
 }
 
+EAPI void
+e_widget_frametable_content_align_set(Evas_Object *obj, double halign, double valign)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   e_table_align_set(wd->o_table, halign, valign);
+}
+
+EAPI void
+e_widget_frametable_label_set(Evas_Object *obj, char *label)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   edje_object_part_text_set(wd->o_frame, "e.text.label", label);
+}
+
 static void
 _e_wid_del_hook(Evas_Object *obj)
 {

@@ -9,6 +9,7 @@
 EAPI Evas_Object *e_widget_framelist_add(Evas *evas, char *label, int horiz);
 EAPI void e_widget_framelist_object_append(Evas_Object *obj, Evas_Object *sobj);
 EAPI void e_widget_framelist_content_align_set(Evas_Object *obj, double halign, double valign);
+EAPI void e_widget_framelist_label_set(Evas_Object *obj, char *label);
 
 #endif
 #endif
