@@ -79,8 +79,7 @@ Some of the things (in very short form) that need to be done to E17...
   can handle :)
 * emit more signals to window borders when window move starts, stops, resize
   starts, stops, on raise, lower, etc. etc.
-* client list menu could do with work on ordering, using separators to demark
-  this desktop and other desktops, sorting by recently used, separate
+* client list menu could do with work on ordering, sorting by recently used, separate
   section for iconified apps etc. etc - configurable.
 * remove a lot of ipc commands that should be done via the gui now
 * remove config items marked for removal
