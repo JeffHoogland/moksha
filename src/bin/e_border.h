@@ -351,6 +351,7 @@ struct _E_Border
    unsigned int    need_maximize : 1;
    E_Maximize      maximized;
    unsigned int    borderless : 1;
+   unsigned int    pinned_to_desktop : 1;
    const char     *bordername;
 
    unsigned int    lock_user_location : 1; /*DONE*/
