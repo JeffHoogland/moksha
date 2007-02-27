@@ -351,7 +351,6 @@ struct _E_Border
    unsigned int    need_maximize : 1;
    E_Maximize      maximized;
    unsigned int    borderless : 1;
-   unsigned int    pinned_to_desktop : 1;
    const char     *bordername;
 
    unsigned int    lock_user_location : 1; /*DONE*/
@@ -594,6 +593,7 @@ EAPI void      e_border_iconify(E_Border *bd);
 EAPI void      e_border_uniconify(E_Border *bd);
 EAPI void      e_border_stick(E_Border *bd);
 EAPI void      e_border_unstick(E_Border *bd);
+EAPI void      e_border_pinned_set(E_Border *bd, int set);
 
 EAPI E_Border *e_border_find_by_client_window(Ecore_X_Window win);
 EAPI E_Border *e_border_find_by_frame_window(Ecore_X_Window win);

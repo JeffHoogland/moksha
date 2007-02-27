@@ -2239,6 +2239,35 @@ e_border_unstick(E_Border *bd)
      e_remember_update(bd->remember, bd);
 }
 
+EAPI void
+e_border_pinned_set(E_Border *bd, int set) 
+{
+  int layer;
+  int stacking; 
+
+   if (bd) 
+     { 
+	bd->borderless = set; 
+	bd->user_skip_winlist = set; 
+	if (set) 
+	  { 
+	     layer = 50;
+	     stacking = E_STACKING_BELOW;
+	  } 
+	else 
+	  { 
+	     layer = 100;
+	     stacking = E_STACKING_NONE;
+	  } 
+	
+	e_border_layer_set(bd, layer); 
+	e_hints_window_stacking_set(bd, stacking); 
+
+	bd->client.border.changed = 1; 
+	bd->changed = 1; 
+     } 
+} 
+
 EAPI E_Border *
 e_border_find_by_client_window(Ecore_X_Window win)
 {
