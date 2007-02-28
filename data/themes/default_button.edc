@@ -339,6 +339,13 @@ group {
 	 target: "e.swallow.icon";
       }
       program {
+	 name:   "icon_invisible";
+	 signal: "e,action,hide,icon";
+	 source: "e";
+	 action: STATE_SET "default" 0.0;
+	 target: "e.swallow.icon";
+      }
+      program {
 	 name: "button_in";
 	 signal: "mouse,in";
 	 source: "button_image";
