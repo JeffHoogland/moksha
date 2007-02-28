@@ -383,9 +383,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
         e_widget_table_object_append(wd->o_preview_table,
 				     wd->o_preview_time_entry,
 				     1, 3, 1, 1, 1, 1, 1, 1);
-
      }
-
 
    o = e_fm2_add(evas);
    wd->o_favorites_fm = o;

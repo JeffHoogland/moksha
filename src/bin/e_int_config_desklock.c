@@ -19,18 +19,11 @@ static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int  _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object  *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas,
 					   E_Config_Dialog_Data *cfdata);
-
 static int  _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object  *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas,
 					      E_Config_Dialog_Data *cfdata);
-
-
-/******************************************************************************************/
-
 static int  _e_desklock_zone_num_get(void);
 static void _e_desklock_cb_lb_show_change(void *data, Evas_Object *obj);
-
-/*******************************************************************************************/
 
 struct _E_Config_Dialog_Data
 {
@@ -63,7 +56,8 @@ struct _E_Config_Dialog_Data
    char *custom_desklock_cmd;
    
    int zone_count; // local variable;
-
+   int use_xscreensaver; // local
+   
    int bg_mode; // config
    char *bg; // config
    Evas_Object *preview_image; // local variable
@@ -244,8 +238,9 @@ _bg_mode(void *data, Evas_Object *obj, void *event_info)
      {
         f = e_theme_edje_file_get("base/theme/desklock", "e/desklock/background");
 	if (cfdata->o_preview)
-	  e_widget_preview_edje_set(cfdata->o_preview, f, "e/desktop/background");
+	  e_widget_preview_edje_set(cfdata->o_preview, f, "e/desklock/background");
 	E_FREE(cfdata->bg);
+	cfdata->bg = strdup("theme_desklock_background");
      }
    else if (cfdata->bg_mode == 1)
      {
@@ -257,11 +252,29 @@ _bg_mode(void *data, Evas_Object *obj, void *event_info)
      }
    else if (cfdata->bg_mode == 2)
      {
-	if (cfdata->bg)
-	  {
-	     if (cfdata->o_preview)
-	       e_widget_preview_edje_set(cfdata->o_preview, cfdata->bg, "e/desktop/background");
-	  }
+	Evas_List *l;
+	E_Fm2_Icon_Info *ic;
+	char buf[4096];
+	const char *realpath;
+       	
+	l = e_fm2_selected_list_get(cfdata->o_fm);
+	if (!l)
+	  l = e_fm2_all_list_get(cfdata->o_fm);
+	ic = evas_list_nth(l, 0);
+	
+	e_fm2_select_set(cfdata->o_fm, ic->file, 1);
+	realpath = e_fm2_real_path_get(cfdata->o_fm);
+	if (!strcmp(realpath, "/"))
+	  snprintf(buf, sizeof(buf), "/%s", ic->file);
+	else
+	  snprintf(buf, sizeof(buf), "%s/%s", realpath, ic->file);
+	evas_list_free(l);
+	if (ecore_file_is_dir(buf)) return;
+	E_FREE(cfdata->bg);
+	cfdata->bg = strdup(buf);
+	if (cfdata->o_preview)
+	  e_widget_preview_edje_set(cfdata->o_preview, buf, 
+				    "e/desktop/background");
      }
 }
 
@@ -303,6 +316,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      }
    
    cfdata->zone_count = _e_desklock_zone_num_get();
+   cfdata->use_xscreensaver = ecore_x_screensaver_event_available_get();
    cfdata->show_password = 0;
  
    if ((!e_config->desklock_background) ||
@@ -398,24 +412,23 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Automatic Locking"), 0);
-   e_widget_disabled_set(of, !ecore_x_screensaver_event_available_get());
+   e_widget_disabled_set(of, !cfdata->use_xscreensaver);
    
    ob = e_widget_check_add(evas, _("Lock when X screensaver activates"), 
                            &(cfdata->autolock_screensaver));
-   e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
-   e_widget_framelist_object_append(of, ob);   
+   e_widget_disabled_set(ob, !cfdata->use_xscreensaver);
+   e_widget_framelist_object_append(of, ob);
    
-   ob = e_widget_check_add(evas, _("Lock when idle time exceeded"), &(cfdata->autolock));
-   e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
+   ob = e_widget_check_add(evas, _("Lock when idle time exceeded"), 
+			   &(cfdata->autolock));
+   e_widget_disabled_set(ob, !cfdata->use_xscreensaver);
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_label_add(evas, _("Idle time to exceed"));
-   e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
+   e_widget_disabled_set(ob, !cfdata->use_xscreensaver);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"),
-			    1.0, 90.0,
-			    1.0, 0, &(cfdata->timeout), NULL,
-			    200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"), 1.0, 90.0, 1.0, 0, 
+			    &(cfdata->timeout), NULL, 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    e_dialog_resizable_set(cfd->dia, 0);
@@ -438,10 +451,10 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->bg)
      {
 	if (e_config->desklock_background)
-        {
-          e_filereg_deregister(e_config->desklock_background);
-	  evas_stringshare_del(e_config->desklock_background);
-        }
+	  {
+	     e_filereg_deregister(e_config->desklock_background);
+	     evas_stringshare_del(e_config->desklock_background);
+	  }
 	e_config->desklock_background = evas_stringshare_add(cfdata->bg);
         e_filereg_register(e_config->desklock_background);
      }
@@ -486,11 +499,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    E_Fm2_Config fmc;
    E_Zone *z;
    E_Radio_Group *rg;
-
+   
    homedir = e_user_homedir_get();
 
-   z = e_zone_current_get(cfd->con);
-   
+   z = e_zone_current_get(cfd->con);   
+ 
    cfdata->o_fm = NULL;
    cfdata->o_frame = NULL;
    
@@ -579,23 +592,23 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    cfdata->o_bg_mode_custom = o;
    evas_object_smart_callback_add(o, "changed", _bg_mode, cfdata);
    e_widget_framelist_object_append(of, o);
-   
+
 #ifdef HAVE_PAM
    e_widget_table_object_append(ot, of, 0, 2, 1, 2 ,1 ,1 ,1 ,1);
 #else
    e_widget_table_object_append(ot, of, 0, 2, 1, 1 ,1 ,1 ,1 ,1);
 #endif
-
-   of = e_widget_list_add(evas, 0, 0);
    
+   of = e_widget_list_add(evas, 0, 0);
    o = e_widget_preview_add(evas, 200, (200 * z->h) / z->w);
    cfdata->o_preview = o;
    if (cfdata->bg_mode == 0)
      {
         f = e_theme_edje_file_get("base/theme/desklock", "e/desklock/background");
 	if (cfdata->o_preview)
-	  e_widget_preview_edje_set(cfdata->o_preview, f, "e/desktop/background");
+	  e_widget_preview_edje_set(cfdata->o_preview, f, "e/desklock/background");
 	E_FREE(cfdata->bg);
+	cfdata->bg = strdup("theme_desklock_background");
      }
    else if (cfdata->bg_mode == 1)
      {
@@ -607,11 +620,21 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
      }
    else if (cfdata->bg_mode == 2)
      {
-	f = cfdata->bg;
-	e_widget_preview_edje_set(o, f, "e/desktop/background");
+	if (cfdata->bg) 
+	  {
+	     f = cfdata->bg;
+	     e_widget_preview_edje_set(o, f, "e/desktop/background");
+	  }
+	else
+	  {
+	     f = e_theme_edje_file_get("base/theme/backgrounds", "e/desktop/background");
+	     if (cfdata->o_preview)
+	       e_widget_preview_edje_set(cfdata->o_preview, f, "e/desktop/background");
+	     E_FREE(cfdata->bg);
+	     cfdata->bg = strdup("theme_background");
+	  }
      }
    e_widget_list_object_append(of, o, 1, 0, 0.5);
-   
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
    
    /* start: login box options */
@@ -620,15 +643,17 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
     * this options will be seen only for those peoples who has xinerama.
     * Otherwise, all the other world will not even know about them.
     * Let the world know about them. Maybe in the feature somebody will turn this if
+    * 
+    * Use: if (ecore_x_xinerama_screen_count_get() > 0) to determine if 
+    * xinerama is available
     */
-   
    if ((1) || (_e_desklock_zone_num_get() > 1))
      {
 	of = e_widget_framelist_add(evas, _("Login Box Settings"), 0);
-	rg = e_widget_radio_group_new((int *)(&(cfdata->login_box_zone)));
+	rg = e_widget_radio_group_new(&(cfdata->login_box_zone));
 	
-	ob = e_widget_radio_add(evas, _("Show on all screen zones"), LOGINBOX_SHOW_ALL_SCREENS,
-				rg);
+	ob = e_widget_radio_add(evas, _("Show on all screen zones"), 
+				LOGINBOX_SHOW_ALL_SCREENS, rg);
 	e_widget_on_change_hook_set(ob, _e_desklock_cb_lb_show_change, cfdata);
 	cfdata->gui.loginbox_obj.show_all_screens = ob;
 	if (cfdata->zone_count == 1) e_widget_disabled_set(ob, 1);
@@ -641,21 +666,27 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 	if (cfdata->zone_count == 1) e_widget_disabled_set(ob, 1);
 	e_widget_framelist_object_append(of, ob);
 	
-	ob = e_widget_radio_add(evas, _("Show on screen zone #:"), LOGINBOX_SHOW_SPECIFIC_SCREEN,
-				rg);
+	ob = e_widget_radio_add(evas, _("Show on screen zone #:"), 
+				LOGINBOX_SHOW_SPECIFIC_SCREEN, rg);
 	e_widget_on_change_hook_set(ob, _e_desklock_cb_lb_show_change, cfdata);
 	cfdata->gui.loginbox_obj.show_specific_screen = ob;
 	if (cfdata->zone_count == 1) e_widget_disabled_set(ob, 1);
 	e_widget_framelist_object_append(of, ob);
 	
-	ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 0.0, (double)(cfdata->zone_count - 1),
-				 1.0, 0, NULL, &(cfdata->specific_lb_zone), 100);
+	ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 0.0, 
+				 (double)(cfdata->zone_count - 1),
+				 1.0, 0, NULL, &(cfdata->specific_lb_zone), 
+				 100);
 	cfdata->gui.loginbox_obj.screen_slider = ob;
-	if (cfdata->zone_count == 1 || cfdata->login_box_zone == LOGINBOX_SHOW_ALL_SCREENS)
+	if ((cfdata->zone_count == 1) || 
+	    (cfdata->login_box_zone == LOGINBOX_SHOW_ALL_SCREENS))
 	  e_widget_disabled_set(ob, 1);
 	e_widget_framelist_object_append(of, ob);
 	e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
      }
+   else 
+     cfdata->login_box_zone = LOGINBOX_SHOW_CURRENT_SCREENS;
+   
    /* end: login box options */
 
    /*
@@ -704,19 +735,19 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    ob = e_widget_check_add(evas, _("Lock when X screensaver activates"), 
                            &(cfdata->autolock_screensaver));
-   e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
+   e_widget_disabled_set(ob, !cfdata->use_xscreensaver);
    e_widget_framelist_object_append(of, ob);
 
-   ob = e_widget_check_add(evas, _("Lock when idle time exceeded"), &(cfdata->autolock));
+   ob = e_widget_check_add(evas, _("Lock when idle time exceeded"), 
+			   &(cfdata->autolock));
    e_widget_framelist_object_append(of, ob);
    
    ob = e_widget_label_add(evas, _("Idle time to exceed"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"),
-			    1.0, 90.0,
-			    1.0, 0, &(cfdata->timeout), NULL,
-			    100);
+			    1.0, 90.0, 1.0, 0, &(cfdata->timeout), NULL, 100);
    e_widget_framelist_object_append(of, ob);
+
 #ifdef HAVE_PAM
    e_widget_table_object_append(ot, of, 1, 2, 1, 2 ,1 ,1 ,1 ,1);
 #else
@@ -735,12 +766,13 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_entry_add(evas, &(cfdata->custom_desklock_cmd));
    e_widget_framelist_object_append(of, ob);
+
 #ifdef HAVE_PAM
    e_widget_table_object_append(ot, of, 0, 4, 2, 1, 1, 1, 1, 1);
 #else
    e_widget_table_object_append(ot, of, 0, 4, 2, 1, 1, 1, 1, 1);
 #endif
-   
+
    e_dialog_resizable_set(cfd->dia, 0);
    return ot;
 }

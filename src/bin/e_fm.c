@@ -1299,7 +1299,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
 #define CMP(x) (e_util_glob_case_match(dev, x))   
 #define PRT(args...) snprintf(buf, sizeof(buf), ##args)
    
-   if      (CMP("/")) {
+   if (CMP("/")) {
       PRT("%s", path);
    }
    else if (CMP("~/")) {
