@@ -56,7 +56,7 @@ _e_int_config_dpms_capable()
    e_dialog_text_set(dpms_dialog, _("The current display server does not <br>"
 				    "have the DPMS extension."));
    e_dialog_icon_set(dpms_dialog, "enlightenment/dpms", 64);
-   e_dialog_button_add(dpms_dialog, _("Ok"), NULL, _cb_dpms_dialog_ok, NULL);
+   e_dialog_button_add(dpms_dialog, _("OK"), NULL, _cb_dpms_dialog_ok, NULL);
    e_dialog_button_focus_num(dpms_dialog, 1);
    e_win_centered_set(dpms_dialog->win, 1);
    e_dialog_show(dpms_dialog);
@@ -211,7 +211,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    
    of = e_widget_framelist_add(evas, _("DPMS Timer(s)"), 0);
 
-   ob = e_widget_check_add(evas, _("Standby"), &(cfdata->enable_standby));
+   ob = e_widget_check_add(evas, _("Standby time"), &(cfdata->enable_standby));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"), 1.0, 90.0, 1.0, 0, 
 			    &(cfdata->standby_timeout), NULL, 200);
@@ -219,7 +219,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    cfdata->standby_slider = ob;
    e_widget_framelist_object_append(of, ob);
    
-   ob = e_widget_check_add(evas, _("Suspend"), &(cfdata->enable_suspend));
+   ob = e_widget_check_add(evas, _("Suspend time"), &(cfdata->enable_suspend));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"), 1.0, 90.0, 1.0, 0, 
 			    &(cfdata->suspend_timeout), NULL, 200);
@@ -227,7 +227,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    cfdata->suspend_slider = ob;
    e_widget_framelist_object_append(of, ob);
 
-   ob = e_widget_check_add(evas, _("Off"), &(cfdata->enable_off));
+   ob = e_widget_check_add(evas, _("Off time"), &(cfdata->enable_off));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"), 1.0, 90.0, 1.0, 0, 
 			    &(cfdata->off_timeout), NULL, 200);
