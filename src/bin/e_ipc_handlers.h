@@ -7435,11 +7435,8 @@ break;
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
    ENCODE_START();
-   Evas_List *cc;
-   cc = edje_color_class_list();
-   ENCODE(cc, e_ipc_codec_str_list_enc);
+   ENCODE(edje_color_class_list(), e_ipc_codec_str_list_enc);
    SEND_DATA(E_IPC_OP_COLOR_CLASS_LIST_REPLY);
-   FREE_LIST(cc); 
    END_GENERIC();
 #elif (TYPE == E_REMOTE_IN)
 #endif
