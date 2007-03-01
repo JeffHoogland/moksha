@@ -198,6 +198,8 @@ src/bin/e_int_config_performance.c
 src/bin/e_int_config_performance.h
 src/bin/e_int_config_winlist.c
 src/bin/e_int_config_winlist.h
+src/bin/e_int_config_clientlist.c
+src/bin/e_int_config_clientlist.h
 src/bin/e_color_class.c
 src/bin/e_color_class.h
 src/bin/e_apps_error.c
@@ -221,6 +223,10 @@ src/bin/e_int_config_cfgdialogs.c
 src/bin/e_int_config_cfgdialogs.h
 src/bin/e_int_config_desklock.c
 src/bin/e_int_config_desklock.h
+src/bin/e_int_config_screensaver.c
+src/bin/e_int_config_screensaver.h
+src/bin/e_int_config_dpms.c
+src/bin/e_int_config_dpms.h
 src/bin/e_int_config_display.c
 src/bin/e_int_config_display.h
 src/bin/e_int_config_exebuf.c
