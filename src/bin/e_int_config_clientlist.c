@@ -81,11 +81,12 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_Object *o, *of, *ob;
+   Evas_Object *o, *of, *ob, *ot;
    E_Radio_Group *rg;
 
    o = e_widget_list_add(evas, 0, 0);
-   
+   ot = e_widget_table_add(evas, 0);
+
    of = e_widget_framelist_add(evas, _("Group By"), 0);
    rg = e_widget_radio_group_new(&(cfdata->group_by));
    ob = e_widget_radio_add(evas, _("None"), E_CLIENTLIST_GROUP_NONE, rg);
@@ -94,7 +95,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Window Class"), E_CLIENTLIST_GROUP_CLASS, rg);
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   //e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
    
    of = e_widget_framelist_add(evas, _("Separate Groups By"), 0);
    rg = e_widget_radio_group_new(&(cfdata->separate_with));
@@ -104,21 +106,21 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Using menus"), E_CLIENTLIST_GROUP_SEP_MENU, rg);
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   //e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
    
-   of = e_widget_framelist_add(evas, _("Sort Order"), 0);
+   of = e_widget_framelist_add(evas, _("Client Sort Order"), 0);
    rg = e_widget_radio_group_new(&(cfdata->sort_by));
    ob = e_widget_radio_add(evas, _("None"), E_CLIENTLIST_SORT_NONE, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Alphabetical"), E_CLIENTLIST_SORT_ALPHA, rg);
    e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Window stacking layer"), E_CLIENTLIST_SORT_ZORDER, rg);
+   e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Most recently used"), E_CLIENTLIST_SORT_MOST_RECENT, rg);
-   e_widget_disabled_set(ob, 1);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Z-Order"), E_CLIENTLIST_SORT_ZORDER, rg);
-   e_widget_disabled_set(ob, 1);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   //e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
    
    of = e_widget_framelist_add(evas, _("Iconified Windows"), 0);
    rg = e_widget_radio_group_new(&(cfdata->separate_iconified_apps));
@@ -127,11 +129,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_radio_add(evas, _("Group with current desktop"), E_CLIENTLIST_GROUPICONS_CURRENT, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Separate group"), E_CLIENTLIST_GROUPICONS_SEP, rg);
-   e_widget_disabled_set(ob, 1);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Warp to owning desktop"), &(cfdata->warp_to_iconified_desktop));
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
+   //e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
+
+   e_widget_list_object_append(o, ot, 1, 1, 0.5); 
+
    return o;
 }
