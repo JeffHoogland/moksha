@@ -323,6 +323,7 @@ e_shelf_save(E_Shelf *es)
 	cf_es->fit_along = es->fit_along;
 	cf_es->fit_size = es->fit_size;
 	cf_es->overlap = 0;
+	cf_es->autohide = 0; 
 	es->cfg = cf_es;
      }
    e_config_save_queue();
@@ -520,6 +521,11 @@ e_shelf_popup_set(E_Shelf *es, int popup)
 static void
 _e_shelf_free(E_Shelf *es)
 {
+   if (es->hide_timer)
+     {
+	ecore_timer_del(es->hide_timer);
+	es->hide_timer = NULL;
+     }
    if (es->menu)
      {
 	e_menu_post_deactivate_callback_set(es->menu, NULL, NULL);
@@ -963,6 +969,37 @@ _e_shelf_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info)
    es = data;
    ev = event_info;
    edje_object_signal_emit(es->o_base, "e,state,focused", "e");
+   if (es->cfg->autohide)
+     {
+	if (es->hidden)
+	  {
+	     es->hidden = 0;
+	     edje_object_signal_emit(es->o_base, "e,state,visible", "e");
+	  }
+     }
+   if (es->hide_timer)
+     {
+	ecore_timer_del(es->hide_timer);
+	es->hide_timer = NULL;
+     }
+}
+
+static int
+_e_shelf_cb_hide_timer(void *data)
+{
+   E_Shelf *es;
+   
+   es = data;
+   if (!e_menu_grab_window_get())
+     {
+	if (!es->hidden)
+	  {
+	     edje_object_signal_emit(es->o_base, "e,state,hidden", "e");
+	  }
+     }
+   es->hide_timer = NULL;
+   es->hidden = 1;
+   return 0;
 }
 
 static void
@@ -973,6 +1010,17 @@ _e_shelf_cb_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info
    
    es = data;
    ev = event_info;
+   if (es->cfg->autohide)
+     {
+	Evas_Coord x, y, w, h;
+	
+	evas_object_geometry_get(es->o_base, &x, &y, &w, &h);
+	if (!E_INSIDE(ev->canvas.x, ev->canvas.y, x, y, w, h))
+	  {
+	     if (es->hide_timer) ecore_timer_del(es->hide_timer);
+	     es->hide_timer = ecore_timer_add(0.25, _e_shelf_cb_hide_timer, es);
+	  }
+     }
    edje_object_signal_emit(es->o_base, "e,state,unfocused", "e");
 }
 

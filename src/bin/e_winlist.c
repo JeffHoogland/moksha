@@ -45,6 +45,10 @@ static Evas_Object *list_object = NULL;
 static Evas_Object *icon_object = NULL;
 static Evas_List *wins = NULL;
 static Evas_List *win_selected = NULL;
+static E_Desk *last_desk = NULL;
+static int last_pointer_x = 0;
+static int last_pointer_y = 0;
+static E_Border *last_border = NULL;
 static int hold_count = 0;
 static int hold_mod = 0;
 static Evas_List *handlers = NULL;
@@ -82,7 +86,6 @@ e_winlist_show(E_Zone *zone)
    Evas_Object *o;
    Evas_List *l;
    E_Desk *desk;
-   E_Border *bd;
    
    E_OBJECT_CHECK_RETURN(zone, 0);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
@@ -152,12 +155,20 @@ e_winlist_show(E_Zone *zone)
 	e_winlist_hide();
 	return 1;
      }
-   
-   bd = e_border_focused_get();
-   if (bd)
+
+   if (e_config->winlist_list_show_other_desk_windows ||
+       e_config->winlist_list_show_other_screen_windows)
+     last_desk = e_desk_current_get(winlist->zone);
+   if (e_config->winlist_warp_while_selecting)
+     ecore_x_pointer_xy_get(winlist->zone->container->win,
+                            &last_pointer_x, &last_pointer_y);
+   last_border = e_border_focused_get();
+   if (last_border)
      {
-	if (!bd->lock_focus_out)
-	  e_border_focus_set(bd, 0, 0);
+        if (!last_border->lock_focus_out)
+	   e_border_focus_set(last_border, 0, 0);
+        else
+          last_border = NULL;
      }
    _e_winlist_activate_nth(1);
    evas_event_thaw(winlist->evas);
@@ -485,6 +496,7 @@ _e_winlist_border_del(E_Border *bd)
 {
    Evas_List *l;
    
+   if (bd == last_border) last_border = NULL;
    for (l = wins; l; l = l->next)
      {
 	E_Winlist_Win *ww;
@@ -694,6 +706,26 @@ _e_winlist_show_active(void)
      }
 }
 
+static void
+_e_winlist_restore_desktop(void)
+{
+   if (last_desk &&
+       (e_config->winlist_list_show_other_desk_windows ||
+        e_config->winlist_list_show_other_screen_windows))
+     e_desk_show(last_desk);
+   if (e_config->winlist_warp_while_selecting)
+     ecore_x_pointer_warp(winlist->zone->container->win,
+                          last_pointer_x, last_pointer_y);
+   _e_winlist_deactivate();
+   win_selected = NULL;
+   e_winlist_hide();
+   if (last_border)
+     {
+        e_border_focus_set(last_border, 1, 1);
+        last_border = NULL;
+     }
+}
+
 static int
 _e_winlist_cb_event_border_add(void *data, int type,  void *event)
 {
@@ -737,7 +769,7 @@ _e_winlist_cb_key_down(void *data, int type, void *event)
    else if (!strcmp(ev->keysymbol, "space"))
      e_winlist_hide();
    else if (!strcmp(ev->keysymbol, "Escape"))
-     e_winlist_hide();
+     _e_winlist_restore_desktop();
    else if (!strcmp(ev->keysymbol, "1"))
      _e_winlist_activate_nth(0);
    else if (!strcmp(ev->keysymbol, "2"))

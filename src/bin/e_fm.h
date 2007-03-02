@@ -56,7 +56,6 @@ struct _E_Fm2_Config
    /* general view mode */
    struct {
       E_Fm2_View_Mode mode;
-      const char     *extra_file_source;
       unsigned char   open_dirs_in_place;
       unsigned char   selector;
       unsigned char   single_click;
@@ -118,12 +117,10 @@ struct _E_Fm2_Icon_Info
    const char       *icon;
    const char       *link;
    const char       *real_link;
-   const char       *pseudo_dir;
    struct stat       statinfo;
    unsigned char     icon_type;
    unsigned char     mount : 1;
    unsigned char     removable : 1;
-   unsigned char     pseudo_link : 1;
    unsigned char     deleted : 1;
    unsigned char     broken_link : 1;
 };
@@ -180,10 +177,12 @@ EAPI void                  e_fm2_pan_child_size_get(Evas_Object *obj, Evas_Coord
 
 EAPI void                  e_fm2_all_icons_update(void);
 
+/*
 EAPI void                  e_fm2_fop_delete_add(Evas_Object *obj, E_Fm2_Icon_Info *ici);
 EAPI void                  e_fm2_fop_move_add(Evas_Object *obj, const char *src, const char *dst, const char *rel, int after, int file_add);
 EAPI void                  e_fm2_fop_link_add(Evas_Object *obj, const char *src, const char *dst);
 EAPI void                  e_fm2_fop_add_add(Evas_Object *obj, const char *file, const char *rel, int after);
+*/
 
 EAPI Evas_Object *
   e_fm2_icon_get(Evas *evas, const char *realpath,
@@ -192,6 +191,9 @@ EAPI Evas_Object *
 		 void (*gen_func) (void *data, Evas_Object *obj, void *event_info),
 		 void *data, int force_gen, const char **type_ret);
 
+EAPI void        e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e);
+EAPI void        e_fm2_client_del(Ecore_Ipc_Event_Client_Del *e);
+    
 extern EAPI int E_EVENT_REMOVABLE_ADD;
 extern EAPI int E_EVENT_REMOVABLE_DEL;
 

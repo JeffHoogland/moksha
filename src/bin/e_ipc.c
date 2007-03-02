@@ -117,6 +117,7 @@ _e_ipc_cb_client_del(void *data __UNUSED__, int type __UNUSED__, void *event)
    if (ecore_ipc_client_server_get(e->client) != _e_ipc_server) return 1;
    /* delete client sruct */
    e_thumb_client_del(e);
+   e_fm2_client_del(e);
    ecore_ipc_client_del(e->client);
    return 1;
 }
@@ -145,6 +146,9 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	break;
       case E_IPC_DOMAIN_THUMB:
 	e_thumb_client_data(e);
+	break;
+      case E_IPC_DOMAIN_FM:
+	e_fm2_client_data(e);
 	break;
       default:
 	break;

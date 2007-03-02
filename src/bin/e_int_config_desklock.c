@@ -218,7 +218,6 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    fmc.view.selector = 1;
    fmc.view.single_click = 0;
    fmc.view.no_subdir_jump = 0;
-   fmc.view.extra_file_source = NULL;
    fmc.icon.list.w = 48;
    fmc.icon.list.h = 48;
    fmc.icon.fixed.w = 1;

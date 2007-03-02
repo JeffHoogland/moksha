@@ -572,10 +572,7 @@ _e_fwin_file_exec(E_Fwin *fwin, E_Fm2_Icon_Info *ici, E_Fwin_Exec_Type ext)
 	e_zone_exec(fwin->win->border->zone, buf);
 	break;
       case E_FWIN_EXEC_DESKTOP:
-	if (ici->pseudo_link)
-	  snprintf(buf, sizeof(buf), "%s/%s", ici->pseudo_dir, ici->file);
-	else
-	  snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(fwin->fm_obj), ici->file);
+	snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(fwin->fm_obj), ici->file);
 	a = e_app_new(buf, 0);
 	if (a)
 	  {
@@ -821,7 +818,6 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
    fmc.view.selector = 1;
    fmc.view.single_click = 0;
    fmc.view.no_subdir_jump = 1;
-   fmc.view.extra_file_source = NULL;
    fmc.icon.list.w = 24;
    fmc.icon.list.h = 24;
    fmc.icon.fixed.w = 1;

@@ -121,6 +121,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, style, STR);
    E_CONFIG_VAL(D, T, size, INT);
    E_CONFIG_VAL(D, T, overlap, INT);
+   E_CONFIG_VAL(D, T, autohide, INT);
    
    _e_config_desktop_bg_edd = E_CONFIG_DD_NEW("E_Config_Desktop_Background", E_Config_Desktop_Background);
 #undef T
@@ -1133,7 +1134,7 @@ e_config_init(void)
      {
 	E_Config_Shelf *cf_es;
 	
-#define CFG_SHELF(_name, _con, _zone, _pop, _lay, _orient, _fita, _fits, _style, _size, _overlap) \
+#define CFG_SHELF(_name, _con, _zone, _pop, _lay, _orient, _fita, _fits, _style, _size, _overlap, _autohide) \
    cf_es = E_NEW(E_Config_Shelf, 1); \
    cf_es->name = evas_stringshare_add(_name); \
    cf_es->container = _con; \
@@ -1146,30 +1147,31 @@ e_config_init(void)
    cf_es->style = evas_stringshare_add(_style); \
    cf_es->size = _size; \
    cf_es->overlap = _overlap; \
+   cf_es->autohide = _autohide; \
    e_config->shelves = evas_list_append(e_config->shelves, cf_es)
 	/* shelves for 4 zones on head 0 by default */
 	CFG_SHELF("shelf", 0, 0,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0);
+		  1, 0, "default", 40, 0, 0);
 	CFG_SHELF("shelf", 0, 1,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0);
+		  1, 0, "default", 40, 0, 0);
 	CFG_SHELF("shelf", 0, 2,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0);
+		  1, 0, "default", 40, 0, 0);
 	CFG_SHELF("shelf", 0, 3,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0);
+		  1, 0, "default", 40, 0, 0);
 	/* shelves for heada 1, 2, and 3 by default */
 	CFG_SHELF("shelf", 1, 0,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0);
+		  1, 0, "default", 40, 0, 0);
 	CFG_SHELF("shelf", 2, 0,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0);
+		  1, 0, "default", 40, 0, 0);
 	CFG_SHELF("shelf", 3, 0,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0);
+		  1, 0, "default", 40, 0, 0);
      }
    IFCFGEND;
    

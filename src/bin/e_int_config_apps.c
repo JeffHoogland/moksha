@@ -440,9 +440,9 @@ _cb_files_edited(void *data, E_Menu *m, E_Menu_Item *mi)
 
    realpath = e_fm2_real_path_get(cfdata->gui.o_fm_all);
 
-   if (info->pseudo_link)
-     snprintf(buf, sizeof(buf), "%s/%s", info->link, info->file);
-   else
+//   if (info->pseudo_link)
+//     snprintf(buf, sizeof(buf), "%s/%s", info->link, info->file);
+//   else
      snprintf(buf, sizeof(buf), "%s/%s", realpath, info->file);
 
    if (ecore_file_is_dir(buf)) return;
@@ -671,7 +671,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    fmc_all.view.selector = 1;
    fmc_all.view.single_click = 0;
    fmc_all.view.no_subdir_jump = 0;
-   fmc_all.view.extra_file_source = cfdata->path_everything;
    fmc_all.view.always_order = 1;
    fmc_all.icon.list.w = 24;
    fmc_all.icon.list.h = 24;
@@ -764,7 +763,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
          fmc.view.selector = 1;
          fmc.view.single_click = 0;
          fmc.view.no_subdir_jump = 0;
-	 fmc.view.extra_file_source = cfdata->path_everything;
 	 fmc.view.always_order = 1;
 	 fmc.view.link_drop = 1;
 	 fmc.icon.list.w = 24;

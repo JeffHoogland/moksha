@@ -35,7 +35,7 @@ static Evas_List *_thumb_queue = NULL;
 static int _objid = 0;
 static Evas_Hash *_thumbs = NULL;
 static int _pending = 0;
-static int _num_thumbnailers = 2;
+static int _num_thumbnailers = 1;
 static Ecore_Event_Handler *_exe_del_handler = NULL;
 static Ecore_Timer *_kill_timer = NULL;
 

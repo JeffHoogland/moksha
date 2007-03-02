@@ -236,6 +236,7 @@ _cb_add(void *data, void *data2)
    cfg->style = evas_stringshare_add("default");
    cfg->size = 40;
    cfg->overlap = 0;
+   cfg->autohide = 0;
    e_config->shelves = evas_list_append(e_config->shelves, cfg);
    e_config_save_queue();
 

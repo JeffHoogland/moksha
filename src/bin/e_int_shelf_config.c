@@ -35,6 +35,7 @@ struct _E_Config_Dialog_Data
    int size;
    int layering;
    int overlapping;
+   int autohiding;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -115,6 +116,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->fit_size = cfdata->escfg->fit_size;
    cfdata->size = cfdata->escfg->size;
    cfdata->overlapping = cfdata->escfg->overlap;
+   cfdata->autohiding = cfdata->escfg->autohide;
    if (cfdata->size <= 24)
      cfdata->basic_size = 24;
    else if (cfdata->size <= 32)
@@ -335,7 +337,18 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      }
 
    cfdata->escfg->overlap = cfdata->overlapping;
-
+   cfdata->escfg->autohide = cfdata->autohiding;
+   if (cfdata->escfg->autohide)
+     {
+	edje_object_signal_emit(cfdata->es->o_base, "e,state,hidden", "e");
+	cfdata->es->hidden = 1;
+     }
+   else
+     {
+	edje_object_signal_emit(cfdata->es->o_base, "e,state,visible", "e");
+	cfdata->es->hidden = 0;
+     }
+   
    if (restart) 
      {
 	zone = cfdata->es->zone;
@@ -445,6 +458,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_radio_add(evas, _("Below Everything"), 0, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Allow windows to overlap the shelf"), &(cfdata->overlapping));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Auto-hide the shelf"), &(cfdata->autohiding));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o2, of, 1, 1, 0.5);
    

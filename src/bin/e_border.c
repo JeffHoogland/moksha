@@ -422,6 +422,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
 
    bd->resize_mode = RESIZE_NONE;
    bd->layer = 100;
+   bd->saved.layer = bd->layer;
    bd->changes.icon = 1;
    bd->changes.size = 1;
    bd->changes.shape = 1;
@@ -974,6 +975,7 @@ e_border_layer_set(E_Border *bd, int layer)
 
    raise = e_config->transient.raise;
    
+   bd->saved.layer = bd->layer;
    bd->layer = layer;
    if (e_config->transient.layer)
      {
@@ -2071,7 +2073,7 @@ e_border_unfullscreen(E_Border *bd)
 	e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
 
 	/* FIXME: Find right layer */
-	e_border_layer_set(bd, 100);
+	e_border_layer_set(bd, bd->saved.layer);
 
 	e_hints_window_fullscreen_set(bd, 0);
 	bd->client.border.changed = 1;

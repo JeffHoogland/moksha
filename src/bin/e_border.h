@@ -389,6 +389,7 @@ struct _E_Border
    
    struct {
       int x, y, w, h;
+      unsigned int layer;
    } saved;
 
    struct {

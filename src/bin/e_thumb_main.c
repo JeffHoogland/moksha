@@ -139,7 +139,10 @@ _e_ipc_cb_server_add(void *data, int type, void *event)
    Ecore_Ipc_Event_Server_Add *e;
    
    e = event;
-   ecore_ipc_server_send(e->server, 5, 1, 0, 0, 0, NULL, 0); /* send hello */
+   ecore_ipc_server_send(e->server, 
+			 5/*E_IPC_DOMAIN_THUMB*/, 
+			 1/*hello*/, 
+			 0, 0, 0, NULL, 0); /* send hello */
    return 1;
 }
 
@@ -164,7 +167,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
    char *key = NULL;
    
    e = event;
-   if (e->major != 5) return 1;
+   if (e->major != 5/*E_IPC_DOMAIN_THUMB*/) return 1;
    switch (e->minor)
      {
       case 1:
@@ -187,7 +190,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		  eth->file = strdup(file);
 		  if (key) eth->key = strdup(key);
 		  _thumblist = evas_list_append(_thumblist, eth);
-		  if (!_timer) _timer = ecore_timer_add(0.000001, _e_cb_timer, NULL);
+		  if (!_timer) _timer = ecore_timer_add(0.01, _e_cb_timer, NULL);
 	       }
 	  }
 	break;
@@ -234,7 +237,7 @@ _e_cb_timer(void *data)
 	if (eth->key) free(eth->key);
 	free(eth);
 
-	if (_thumblist) _timer = ecore_timer_add(0.000001, _e_cb_timer, NULL);
+	if (_thumblist) _timer = ecore_timer_add(0.01, _e_cb_timer, NULL);
 	else _timer = NULL;
      }
    else

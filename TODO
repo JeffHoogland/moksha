@@ -8,6 +8,16 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* shelf autohide uses mouse in/out events for the shelf object. this is not all
+  good as it conflicts with edge flip for desktops (if shelves slide off the
+  screen) also it doesn't account for window placement and sizing when the
+  shelf is hidden so you cant maximize to the now available region when the
+  shelf hides. i think hiding needs to be done noutside of the theme and by
+  the shelf itself. e will still emit signals to let the theme do things, but
+  e will also handle the hide/show based on a unified edge mouse event trap or
+  trap on the region the shelf would normally be in. also need a way to lock
+  the gadcon and thus gadcon asks shelf to lock in (stay visible) for things
+  like popping up menus, popups etc.
 * shelves seem to get confused with their contents if you have 3 shelves over
   2 screens/zones - when you go back to 1 screen form 2, one of the shelves
   gts the contents from the now non-existant shelf.

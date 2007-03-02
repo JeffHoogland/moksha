@@ -390,6 +390,7 @@ struct _E_Config_Shelf
    const char   *style;
    int           size;
    int           overlap;
+   int		 autohide;
 };
 
 struct _E_Config_Mime_Icon

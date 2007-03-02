@@ -19,7 +19,8 @@ enlightenment_remote \
 enlightenment_imc \
 enlightenment_start \
 enlightenment_thumb \
-enlightenment_sys
+enlightenment_sys \
+enlightenment_fm
 
 ENLIGHTENMENTHEADERS = \
 e.h \
@@ -377,12 +378,18 @@ e_start_main.c
 enlightenment_start_LDFLAGS = @dlopen_libs@
 
 enlightenment_thumb_SOURCES = \
-e.h \
 e_thumb_main.c \
 e_user.c \
 e_sha1.c
 
 enlightenment_thumb_LDFLAGS = @e_libs@ @dlopen_libs@
+
+enlightenment_fm_SOURCES = \
+e_fm_main.c \
+e_user.c \
+e_sha1.c
+
+enlightenment_fm_LDFLAGS = @e_libs@ @dlopen_libs@
 
 enlightenment_sys_SOURCES = \
 e_sys_main.c

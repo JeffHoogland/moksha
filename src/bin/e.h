@@ -18,7 +18,6 @@
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/param.h>
-#include <pwd.h>
 #include <dlfcn.h>
 #include <math.h>
 #include <fnmatch.h>

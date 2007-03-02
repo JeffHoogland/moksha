@@ -23,8 +23,6 @@
  * advanced (extra) -
  * * show access date
  * * show change date
- * * show pseudolink status
- * * show pseudolink src
  * * show comment
  * * show generic
  * * show mount status

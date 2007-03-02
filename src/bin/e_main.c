@@ -529,14 +529,6 @@ main(int argc, char **argv)
    
    /*** Finished loading subsystems, Loading WM Specifics ***/
 	 
-   TS("fm2");
-   /* init the enlightenment file manager */
-   if (!e_fm2_init())
-    {
-       e_error_message_show(_("Enlightenment cannot initialize the File manager.\n"));
-       _e_main_shutdown(-1);
-    }
-   _e_main_shutdown_push(e_fm2_shutdown);
    TS("dirs");
    /* setup directories we will be using for configurations storage etc. */
    if (!_e_main_dirs_init())
@@ -680,6 +672,14 @@ main(int argc, char **argv)
    if (_e_main_ipc_init())
      _e_main_shutdown_push(_e_main_ipc_shutdown);
 
+   TS("fm2");
+   /* init the enlightenment file manager */
+   if (!e_fm2_init())
+    {
+       e_error_message_show(_("Enlightenment cannot initialize the File manager.\n"));
+       _e_main_shutdown(-1);
+    }
+   _e_main_shutdown_push(e_fm2_shutdown);
    TS("msg");
    /* setup generic msg handling etc */
    if (!e_msg_init())
