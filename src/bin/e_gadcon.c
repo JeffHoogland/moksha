@@ -1128,6 +1128,22 @@ e_gadcon_client_resizable_set(E_Gadcon_Client *gcc, int resizable)
      }
 }
 
+EAPI int
+e_gadcon_client_geometry_get(E_Gadcon_Client *gcc, int *x, int *y, int *w, int *h)
+{
+   int gx = 0, gy = 0;
+
+   E_OBJECT_CHECK(gcc);
+   E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
+   if (!e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &gx, &gy, NULL, NULL)) return 0;
+
+   evas_object_geometry_get(gcc->o_base, x, y, w, h);
+   if (x) *x += gx;
+   if (y) *y += gy;
+
+   return 1;
+}
+
 static void
 _e_gadcon_client_cb_menu_style_plain(void *data, E_Menu *m, E_Menu_Item *mi)
 {
