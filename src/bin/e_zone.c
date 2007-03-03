@@ -350,6 +350,7 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
    yy = y_count;
    if (yy < 1) yy = 1;
 
+   /* Orphaned window catcher; in case desk count gets reset */
    moved = 0;
    if (zone->desk_x_current >= xx) moved = 1;
    if (zone->desk_y_current >= yy) moved = 1;
@@ -359,17 +360,7 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
 	ny = zone->desk_y_current;
 	if (zone->desk_x_current >= xx) nx = xx - 1;
 	if (zone->desk_y_current >= yy) ny = yy - 1;
-	printf("show desk %i,%i\n", nx, ny);
 	e_desk_show(e_desk_at_xy_get(zone, nx, ny));
-     }
-   else
-     {
-	desk = e_desk_current_get(zone);
-	if (desk)
-	  {
-	     desk->visible = 0;
-	     e_desk_show(desk);
-	  }
      }
    
    new_desks = malloc(xx * yy * sizeof(E_Desk *));
@@ -431,10 +422,20 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
    
    zone->desk_x_count = xx;
    zone->desk_y_count = yy;
-
    e_config->zone_desks_x_count = xx;
    e_config->zone_desks_y_count = yy;
    e_config_save_queue();
+
+   /* Cannot call desk_current_get until the zone desk counts have been set 
+    * or else we end up with a "white background" because desk_current_get will
+    * return NULL.
+    */
+   desk = e_desk_current_get(zone);
+   if (desk)
+     {
+	desk->visible = 0;
+	e_desk_show(desk);
+     }
 
    ev = E_NEW(E_Event_Zone_Desk_Count_Set, 1);
    if (!ev) return;
