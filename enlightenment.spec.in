@@ -56,6 +56,8 @@ test "x$RPM_BUILD_ROOT" != "x/" && rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-, root, root)
 %doc AUTHORS COPYING COPYING-PLAIN README
+%dir %{_sysconfdir}/enlightenment
+%config(noreplace) %{_sysconfdir}/enlightenment/*
 %{_bindir}/enlightenment
 %{_bindir}/enlightenment_*
 #%{_bindir}/eap_to_desktop
@@ -63,11 +65,10 @@ test "x$RPM_BUILD_ROOT" != "x/" && rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}
 %{_datadir}/locale/*
 %{_datadir}/xsessions/%{name}.desktop
-%config(noreplace) %{_sysconfdir}/enlightenment/*
 
 %files devel
 %defattr(-, root, root)
 %{_bindir}/enlightenment-config
-%{_includedir}/enlightenment/*.h
+%{_includedir}/enlightenment
 
 %changelog
