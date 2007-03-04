@@ -459,11 +459,14 @@ _e_border_menu_cb_iconify(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_border_menu_cb_kill(void *data, E_Menu *m, E_Menu_Item *mi)
 {
+   E_Action *a;
    E_Border *bd;
 
    bd = data;
-   if ((!bd->lock_close) && (!bd->internal))
-     e_border_act_kill_begin(bd);
+   if ((bd->lock_close) || (bd->internal)) return;
+
+   a = e_action_find("window_kill");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
 
 static void

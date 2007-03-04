@@ -249,8 +249,41 @@ ACT_FN_GO(window_close)
 }
 
 /***************************************************************************/
+static E_Dialog *kill_dialog = NULL;
+
+static void
+_e_actions_cb_kill_dialog_ok(void *data, E_Dialog *dia)
+{
+   E_Object *obj;
+
+   obj = data;
+   e_object_del(E_OBJECT(kill_dialog));
+   kill_dialog = NULL;
+   if ((!((E_Border *)obj)->lock_close) && (!((E_Border *)obj)->internal)) 
+     e_border_act_kill_begin((E_Border *)obj);
+}
+
+static void
+_e_actions_cb_kill_dialog_cancel(void *data, E_Dialog *dia)
+{
+   e_object_del(E_OBJECT(kill_dialog));
+   kill_dialog = NULL;
+}
+
+static void
+_e_actions_cb_kill_dialog_delete(E_Win *win)
+{
+   E_Dialog *dia;
+
+   dia = win->data;
+   _e_actions_cb_kill_dialog_cancel(NULL, dia);
+}
+
 ACT_FN_GO(window_kill)
 {
+   E_Border *bd;
+   char dialog_text[1024];
+
    if (!obj) obj = E_OBJECT(e_border_focused_get());
    if (!obj) return;
    if (obj->type != E_BORDER_TYPE)
@@ -258,8 +291,31 @@ ACT_FN_GO(window_kill)
 	obj = E_OBJECT(e_border_focused_get());
 	if (!obj) return;
      }
-   if (!((E_Border *)obj)->lock_close)
-     e_border_act_kill_begin((E_Border *)obj);
+   bd = (E_Border *)obj;
+   snprintf(dialog_text, sizeof(dialog_text),
+	    "You are about to kill %s.<br><br>"
+	    "Please keep in mind that all data of this window,<br>"
+	    "which has not been saved yet will be lost!<br><br>"
+	    "Are you sure you want to kill this window?", 
+	    bd->client.icccm.name);
+
+   if (kill_dialog) e_object_del(E_OBJECT(kill_dialog));
+   kill_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), 
+			      "E", "_kill_dialog");
+   if (!kill_dialog) return;
+   e_win_delete_callback_set(kill_dialog->win, 
+			     _e_actions_cb_kill_dialog_delete);
+   e_dialog_title_set(kill_dialog, 
+		      _("Are you sure you want to kill this window?"));
+   e_dialog_text_set(kill_dialog, _(dialog_text));
+   e_dialog_icon_set(kill_dialog, "enlightenment/exit", 64);
+   e_dialog_button_add(kill_dialog, _("Yes"), NULL,
+		       _e_actions_cb_kill_dialog_ok, obj);
+   e_dialog_button_add(kill_dialog, _("No"), NULL,
+		       _e_actions_cb_kill_dialog_cancel, NULL);
+   e_dialog_button_focus_num(kill_dialog, 1);
+   e_win_centered_set(kill_dialog->win, 1);
+   e_dialog_show(kill_dialog);
 }
 
 /***************************************************************************/
