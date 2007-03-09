@@ -46,7 +46,7 @@ _cb_dpms_dialog_ok(void *data, E_Dialog *dia)
 static int
 _e_int_config_dpms_capable()
 {
-   if (ecore_x_dpms_capable()) return 1;
+   if (ecore_x_dpms_capable_get()) return 1;
    
    if (dpms_dialog) e_object_del(E_OBJECT(dpms_dialog));
    dpms_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_dpms_dialog");
