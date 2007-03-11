@@ -1139,8 +1139,6 @@ static void
 _e_int_menus_clients_add_by_none(Evas_List *borders, E_Menu *m)
 {
    Evas_List *l = NULL, *ico = NULL;
-   E_Menu *subm;
-   E_Menu_Item *mi;
    
    for (l = borders; l; l = l->next)
      {
@@ -1163,7 +1161,7 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 {
    E_Menu *subm;
    E_Menu_Item *mi;
-   Evas_List *l = NULL, *borders = NULL, *alt = NULL;
+   Evas_List *l = NULL, *borders = NULL;
    E_Zone *zone = NULL;
    E_Desk *desk = NULL;
    Main_Data *dat;

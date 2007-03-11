@@ -39,9 +39,11 @@
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+#if 0
+static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+#endif
 
 static void _cb_icon_sel(void *data, void *data2);
 static void _cb_type(void *data, Evas_Object *obj, void *event_info);

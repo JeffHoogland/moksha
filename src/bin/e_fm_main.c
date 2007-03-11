@@ -243,7 +243,6 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		  Evas_List *files = NULL;
 		  struct dirent *dp;
 		  int dot_order = 0;
-		  char *file;
 		  char buf[4096];
 		  FILE *f;
 		  

@@ -1287,7 +1287,6 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	struct stat st;
 	int broken_link;
 	E_Fm2_Smart_Data *sd;
-	void **sdat;
 	
 	dir = e_fm2_real_path_get(l->data);
 	sd = evas_object_smart_data_get(l->data);
@@ -5477,7 +5476,6 @@ static void
 _e_fm2_removable_dev_add(const char *uuid)
 {
    E_Fm2_Removable *rem;
-   const char *lab;
    FILE *f;
    char buf[4096];
    

@@ -2,9 +2,6 @@
 
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int  _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object  *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas,
-					   E_Config_Dialog_Data *cfdata);
 static int  _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object  *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas,
 					      E_Config_Dialog_Data *cfdata);
@@ -144,53 +141,6 @@ _apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config_save_queue();
 }
 
-static int
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
-{
-   /*
-    * NOTE:  Since the BASIC interface does not allow you to manipulate
-    *   the suspend and off features,  I have decided to have them disabled
-    *   when applying changes from this dialog.
-    *
-    *   I do this because the timeouts must always satisfy the following:
-    *       standby <= suspend <= off
-    *   and if you use the basic dialog, and increase the standby timeout
-    *   you might very well unknowingly push it right up to the off timout. 
-    *   at which point, you monitor will turn off, instead of going into 
-    *   standby.  Which could be annoying.  
-    */  
-   cfdata->enable_suspend = 0;
-   cfdata->enable_off = 0;
-
-   _apply_data(cfd, cfdata);
-   return 1;
-}
-
-static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
-{
-   Evas_Object *o, *of, *ob;
-   o = e_widget_list_add(evas, 0, 0);
-
-   ob = e_widget_check_add(evas, _("Enable DPMS"), &(cfdata->enable_dpms));
-   e_widget_list_object_append(o, ob, 1, 1 ,0);   
-   
-   of = e_widget_framelist_add(evas, _("DPMS Timer(s)"), 0);
-
-   ob = e_widget_check_add(evas, _("Standby"), &(cfdata->enable_standby));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"),
-			    1.0, 90.0, 1.0, 0, &(cfdata->standby_timeout), 
-			    NULL, 200);
-   e_widget_on_change_hook_set(ob, _cb_standby_slider_change, cfdata);
-   cfdata->standby_slider = ob;
-   e_widget_framelist_object_append(of, ob);
-   
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-   e_dialog_resizable_set(cfd->dia, 0);
-   return o;
-}
-
 /* advanced window */
 static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
@@ -203,7 +153,7 @@ static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob;
-   E_Radio_Group *rg;
+
    o = e_widget_list_add(evas, 0, 0);
 
    ob = e_widget_check_add(evas, _("Enable DPMS"), &(cfdata->enable_dpms));
