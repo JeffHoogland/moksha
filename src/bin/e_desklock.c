@@ -12,17 +12,17 @@
 #define PASSWD_LEN 256
 
 /**************************** private data ******************************/
-typedef struct _E_Desklock_Data		E_Desklock_Data;
-typedef struct _E_Desklock_Popup_Data	E_Desklock_Popup_Data;
+typedef struct _E_Desklock_Data	      E_Desklock_Data;
+typedef struct _E_Desklock_Popup_Data E_Desklock_Popup_Data;
 #ifdef HAVE_PAM
-typedef struct _E_Desklock_Auth         E_Desklock_Auth;
+typedef struct _E_Desklock_Auth       E_Desklock_Auth;
 #endif
 
 struct _E_Desklock_Popup_Data
 {
-   E_Popup	*popup_wnd;
-   Evas_Object	*bg_object;
-   Evas_Object	*login_box;
+   E_Popup     *popup_wnd;
+   Evas_Object *bg_object;
+   Evas_Object *login_box;
 };
 
 struct _E_Desklock_Data
@@ -31,7 +31,7 @@ struct _E_Desklock_Data
    Ecore_X_Window  elock_wnd;
    Evas_List	  *handlers;
    Ecore_X_Window  elock_grab_break_wnd;
-   char		  passwd[PASSWD_LEN];
+   char		   passwd[PASSWD_LEN];
 };
 #ifdef HAVE_PAM
 struct _E_Desklock_Auth
@@ -46,11 +46,11 @@ struct _E_Desklock_Auth
 };
 #endif
 
-static	E_Desklock_Data	   *edd = NULL;
-static	E_Zone		   *last_active_zone = NULL;
+static	E_Desklock_Data *edd = NULL;
+static	E_Zone *last_active_zone = NULL;
 #ifdef HAVE_PAM
 static Ecore_Event_Handler *_e_desklock_exit_handler = NULL;
-static pid_t                _e_desklock_child_pid = -1;
+static pid_t _e_desklock_child_pid = -1;
 #endif
 static Ecore_Exe *_e_custom_desklock_exe = NULL;
 static Ecore_Event_Handler *_e_custom_desklock_exe_handler = NULL;
@@ -65,13 +65,12 @@ static int _e_desklock_cb_mouse_up(void *data, int type, void *event);
 static int _e_desklock_cb_mouse_wheel(void *data, int type, void *event);
 static int _e_desklock_cb_mouse_move(void *data, int type, void *event);
 static int _e_desklock_cb_custom_desklock_exit(void *data, int type, void *event);
-static int _e_desklock_cb_idle_timer(void *data, int type, void *event);
+static int _e_desklock_cb_idle_timer(void *data);
 
 static void _e_desklock_passwd_update();
 static void _e_desklock_backspace();
 static void _e_desklock_delete();
 static int  _e_desklock_zone_num_get();
-
 static int _e_desklock_check_auth();
 
 #ifdef HAVE_PAM
@@ -86,11 +85,9 @@ static char *_desklock_auth_get_current_host(void);
 EAPI int
 e_desklock_init(void)
 {
-   
    /* A timer to tick every second, watching for an idle user */
    _e_desklock_idle_timer = ecore_timer_add(1.0,
-					    _e_desklock_cb_idle_timer,
-					    NULL);
+					    _e_desklock_cb_idle_timer, NULL);
      
    if (e_config->desklock_background)
      e_filereg_register(e_config->desklock_background);
@@ -184,8 +181,8 @@ e_desklock_show(void)
 		  for (i = 0; i < wnum; i++)
 		    {
 		       Ecore_X_Window_Attributes att;
+
 		       memset(&att, 0, sizeof(Ecore_X_Window_Attributes));
-		       
 		       ecore_x_window_attributes_get(windows[i], &att);
 		       if (att.visible)
 			 {
@@ -275,9 +272,9 @@ e_desklock_show(void)
 							 "e/desktop/background"))
 				 {
 				   edje_object_file_set(edp->bg_object,
-						      e_theme_edje_file_get("base/theme/desklock",
-									    "e/desklock/background"),
-									    "e/desklock/background");
+							e_theme_edje_file_get("base/theme/desklock",
+									      "e/desklock/background"),
+							"e/desklock/background");
 				 }
 			     }
 			 }
@@ -294,15 +291,15 @@ e_desklock_show(void)
 		       edje_object_part_swallow(edp->bg_object, "e.swallow.login_box", edp->login_box);
 		       edje_object_size_min_calc(edp->login_box, &mw, &mh);
 		       evas_object_move(edp->login_box, (int)((zone->w - mw)/2),
-						    (int)((zone->h - mh)/2));
+					(int)((zone->h - mh)/2));
 		       
 		       if (total_zone_num > 1)
 			 {
 			    if (e_config->desklock_login_box_zone == -1)
 			      evas_object_show(edp->login_box);
-			    else if(e_config->desklock_login_box_zone == -2 && zone == current_zone)
+			    else if (e_config->desklock_login_box_zone == -2 && zone == current_zone)
 			      evas_object_show(edp->login_box);
-			    else if(e_config->desklock_login_box_zone == zone_counter )
+			    else if (e_config->desklock_login_box_zone == zone_counter )
 			      evas_object_show(edp->login_box);
 			 }
 		       else
@@ -348,7 +345,7 @@ e_desklock_show(void)
 EAPI void
 e_desklock_hide(void)
 {
-   E_Desklock_Popup_Data	*edp;
+   E_Desklock_Popup_Data *edp;
    
    if ((!edd) && (!_e_custom_desklock_exe)) return;
 
@@ -399,9 +396,9 @@ _e_desklock_cb_key_down(void *data, int type, void *event)
    
    ev = event;
    if (ev->win != edd->elock_wnd) return 1;
-   
+
    if (!strcmp(ev->keysymbol, "Escape"))
-    ;
+     ;
    else if (!strcmp(ev->keysymbol, "KP_Enter"))
      _e_desklock_check_auth();
    else if (!strcmp(ev->keysymbol, "Return"))
@@ -447,7 +444,7 @@ _e_desklock_cb_mouse_wheel(void *data, int type, void *event)
 static int
 _e_desklock_cb_mouse_move(void *data, int type, void *event)
 {
-   E_Desklock_Popup_Data	*edp;
+   E_Desklock_Popup_Data *edp;
    E_Zone *current_zone;
    Evas_List *l;
    
@@ -475,18 +472,20 @@ static void
 _e_desklock_passwd_update()
 {
    char passwd_hidden[PASSWD_LEN] = "", *p, *pp;
-   E_Desklock_Popup_Data	*edp;
+   E_Desklock_Popup_Data *edp;
    Evas_List *l;
    
    if (!edd) return;
    
-   for (p = edd->passwd, pp = passwd_hidden; *p; p++, pp++) *pp = '*';
+   for (p = edd->passwd, pp = passwd_hidden; *p; p++, pp++) 
+     *pp = '*';
    *pp = 0;
    
    for (l = edd->elock_wnd_list; l; l = l->next)
      {
 	edp = l->data;
-	edje_object_part_text_set(edp->login_box, "e.text.password", passwd_hidden);
+	edje_object_part_text_set(edp->login_box, "e.text.password", 
+				  passwd_hidden);
      }
 }
 
@@ -693,11 +692,16 @@ _desklock_pam_init(E_Desklock_Auth *da)
 
    /* try other pam profiles - and system-auth (login for fbsd users) is a fallback */
    pam_prof = "login";
-   if (ecore_file_exists("/etc/pam.d/enlightenment")) pam_prof = "enlightenment";
-   else if (ecore_file_exists("/etc/pam.d/xscreensaver")) pam_prof = "xscreensaver";
-   else if (ecore_file_exists("/etc/pam.d/kscreensaver")) pam_prof = "kscreensaver";
-   else if (ecore_file_exists("/etc/pam.d/system-auth")) pam_prof = "system-auth";
-   else if (ecore_file_exists("/etc/pam.d/system")) pam_prof = "system";
+   if (ecore_file_exists("/etc/pam.d/enlightenment")) 
+     pam_prof = "enlightenment";
+   else if (ecore_file_exists("/etc/pam.d/xscreensaver")) 
+     pam_prof = "xscreensaver";
+   else if (ecore_file_exists("/etc/pam.d/kscreensaver")) 
+     pam_prof = "kscreensaver";
+   else if (ecore_file_exists("/etc/pam.d/system-auth")) 
+     pam_prof = "system-auth";
+   else if (ecore_file_exists("/etc/pam.d/system")) 
+     pam_prof = "system";
    
    if ((pamerr = pam_start(pam_prof, da->user, &(da->pam.conv),
 			   &(da->pam.handle))) != PAM_SUCCESS)
@@ -705,16 +709,14 @@ _desklock_pam_init(E_Desklock_Auth *da)
 
    current_user = _desklock_auth_get_current_user();
 
-   if ((pamerr = pam_set_item(da->pam.handle, PAM_USER,
-			      current_user)) != PAM_SUCCESS)
+   if ((pamerr = pam_set_item(da->pam.handle, PAM_USER, current_user)) != PAM_SUCCESS)
      {
        free(current_user);
        return pamerr;
      }
    
    current_host = _desklock_auth_get_current_host();
-   if ((pamerr = pam_set_item(da->pam.handle, PAM_RHOST,
-			      current_host)) != PAM_SUCCESS)
+   if ((pamerr = pam_set_item(da->pam.handle, PAM_RHOST, current_host)) != PAM_SUCCESS)
      {
        free(current_user);
        free(current_host);
@@ -790,7 +792,7 @@ _e_desklock_cb_custom_desklock_exit(void *data, int type, void *event)
 }
 
 static int 
-_e_desklock_cb_idle_timer(void *data, int type, void *event)
+_e_desklock_cb_idle_timer(void *data)
 {
    static double time_of_last_event = 0;
    static unsigned int xtime_of_last_user_activity = 0;
@@ -826,9 +828,7 @@ _e_desklock_cb_idle_timer(void *data, int type, void *event)
 	       }
 	  }
 	else
-	  {
-	     _e_desklock_user_idle = 0;
-	  }
+	  _e_desklock_user_idle = 0;
      }
 
    /* Make sure our timer persists. */
