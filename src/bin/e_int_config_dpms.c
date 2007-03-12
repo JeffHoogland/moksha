@@ -46,9 +46,10 @@ _e_int_config_dpms_capable()
    if (ecore_x_dpms_capable_get()) return 1;
    
    if (dpms_dialog) e_object_del(E_OBJECT(dpms_dialog));
-   dpms_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_dpms_dialog");
+   dpms_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), 
+			      "E", "_dpms_dialog");
    if (!dpms_dialog) return 0;
-      
+
    e_dialog_title_set(dpms_dialog, _("Display Power Management Signaling"));
    e_dialog_text_set(dpms_dialog, _("The current display server does not <br>"
 				    "have the DPMS extension."));
@@ -186,8 +187,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
-   e_dialog_resizable_set(cfd->dia, 0);
    return o;   
 }
 
