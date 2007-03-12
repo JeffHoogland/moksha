@@ -7,24 +7,23 @@
 disp_num=":1"                 # Which display do you want the xnest to be on?
 
 main=$DISPLAY
-display=" -display $disp_num"
 tmp=`mktemp` || exit 1
-/bin/echo -e "run\nbt\nq\ny" > $tmp
+echo -e "run\nbt\nq\ny" > $tmp
 
-case "$@" in
-	"")	action="gdb -x $tmp" ; main=$disp_num ; display=""  ;;
-	"-b")	action="gdb -x $tmp" ; main=$disp_num ; display=""  ;;
-	"-c")	action="cgdb" ; main=$disp_num ; display=""  ;;
-	"-d")	action="ddd -display $main" ; display="" ;;
-	"-e")	action="" ;;
-	"-g")	action="gdb" ; main=$disp_num ; display=""  ;;
+case "$1" in
+	"")		action="gdb -x $tmp --args" ; main=$disp_num ;;
+	"-b")	action="gdb -x $tmp --args" ; main=$disp_num ;;
+	"-c")	action="cgdb" ; main=$disp_num ;;
+	"-d")	action="ddd -display $main --args" ;;
+	"-e")	action="" ; e_args="-display $disp_num" ;;
+	"-g")	action="gdb --args" ; main=$disp_num ;;
 	"-l")	action="valgrind --tool=memcheck --leak-check=yes --show-reachable=yes --log-file=valgrind_log" ;;
 	"-m")	action="valgrind --tool=memcheck --log-file=valgrind_log" ;;
-	"-p")	action="memprof --display=$main" ; main=$disp_num ; display="" ;;
-	"-r")	action="memprof_raster --display=$main" ; main=$disp_num ; display="" ;;
+	"-p")	action="memprof --display=$main" ; main=$disp_num ;;
+	"-r")	action="memprof_raster --display=$main" ; main=$disp_num ;;
 	"-s")	action="strace -F -o strace_log" ;;
-	"-v")	action="valkyrie -display $main" ; main=$disp_num ; display="" ;;
-	*)      echo -e "Usage : xnest.sh [option]"
+	"-v")	action="valkyrie -display $main" ; main=$disp_num ;;
+	*)	echo -e "Usage : xnest.sh [debugger] ([enlightenment options])"
 		echo -e "\tdefault option is -b"
 		echo -e "\t-b use text debugger with auto backtrace\tgdb"
 		echo -e "\t-c use curses debugger\t\t\t\tcgdb"
@@ -38,19 +37,18 @@ case "$@" in
 		echo -e "\t-s show syscalls\t\t\t\tstrace"
 		echo -e "\t-v GUI memory check\t\t\t\tvalkyrie"
 		echo -e ""
-		echo -e "You need to add \"-display $disp_num\" as the run arguments for the GUI debugger."
 		echo -e "When you have finished with the text debugger, use the q command to quit."
 		echo -e "The valgrind options will leave a log file with a name beginning with valgrind_log"
 		exit
 		;;
 esac
-
+e_args="`echo -- $@ | cut -d' ' -f2-` $e_args"
 
 Xnest $disp_num -ac &
 
 sleep 2   # Someone reported that it starts E before X has started properly.
 
-export DISPLAY=$main; export E_START="enlightenment_start"; $action enlightenment $display
+export DISPLAY=$main; export E_START="enlightenment_start"; $action enlightenment $e_args
 
 rm -f $tmp
 killall -TERM Xnest
