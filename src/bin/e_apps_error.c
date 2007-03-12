@@ -17,11 +17,11 @@ static void        *_create_data(E_Config_Dialog *cfd);
 static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *lines);
+static void         _dialog_save_cb(void *data, void *data2);
 #if 0
 static void         _dialog_resize(void *data, Evas *e, Evas_Object *obj, void *event_info);
 #endif
-static Evas_Object *_dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *lines);
-static void         _dialog_save_cb(void *data, void *data2);
 
 EAPI void
 e_app_error_dialog(E_Container *con, E_App_Autopsy *app)
@@ -228,6 +228,7 @@ _dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *li
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
+   char buf[4096];
    int error_length = 0;
    Evas_Object *o, *ob, *os;
    E_App_Autopsy *app;
@@ -253,8 +254,14 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	e_widget_list_object_append(o, ob, 1, 1, 0.5);
      }
 
-   ob = e_widget_button_add(evas, _("Save This Message"), "enlightenment/run", _dialog_save_cb, app, cfdata);
+   ob = e_widget_button_add(evas, _("Save This Message"), "enlightenment/run", 
+			    _dialog_save_cb, app, cfdata);
    e_widget_list_object_append(o, ob, 0, 0, 0.5);
+   
+   snprintf(buf, sizeof(buf), _("This error log will be saved as %s/%s.log"), 
+	    e_user_homedir_get(), app->app->name);
+   ob = e_widget_label_add(evas, buf);
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
 
    return o;
 }
@@ -262,6 +269,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
+   char buf[4096];
    int read_length = 0;
    int error_length = 0;
    Evas_Object *o, *of, *ob, *ot;
@@ -329,6 +337,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    ob = e_widget_button_add(evas, _("Save This Message"), "enlightenment/run", _dialog_save_cb, app, cfdata);
    e_widget_list_object_append(o, ob, 0, 0, 0.5);
+
+   snprintf(buf, sizeof(buf), _("This error log will be saved as %s/%s.log"), 
+	    e_user_homedir_get(), app->app->name);
+   ob = e_widget_label_add(evas, buf);
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
 
    return o;
 }
