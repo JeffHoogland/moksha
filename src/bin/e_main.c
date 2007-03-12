@@ -742,6 +742,13 @@ main(int argc, char **argv)
 	     "modules from your configuration. The module<br>"
 	     "configuration dialog should let you select your<br>"
 	     "modules again."));
+	e_util_dialog_show
+	  (_("Enlightenment crashed early on start and has been restarted"),
+	   _("Enlightenment crashed early on start and has been restarted.<br>"
+	     "All modules have been disabled and will not be loaded to help<br>"
+	     "remove any problem modules from your configuration.<br><br>"
+	     "The module configuration dialog should let you select your<br>"
+	     "modules again."));
 	e_config_save_queue();
      }
    TS("gadcon");
