@@ -12,6 +12,7 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Co
 struct _E_Config_Dialog_Data 
 {
    int group_by;
+   int include_all_zones;
    int separate_with;
    int sort_by;
    int separate_iconified_apps;
@@ -44,6 +45,7 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
    cfdata->group_by = e_config->clientlist_group_by;
+   cfdata->include_all_zones = e_config->clientlist_include_all_zones;
    cfdata->separate_with = e_config->clientlist_separate_with;
    cfdata->sort_by = e_config->clientlist_sort_by;
    cfdata->separate_iconified_apps = e_config->clientlist_separate_iconified_apps;
@@ -70,6 +72,7 @@ static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    e_config->clientlist_group_by = cfdata->group_by;
+   e_config->clientlist_include_all_zones = cfdata->include_all_zones;
    e_config->clientlist_separate_with = cfdata->separate_with;
    e_config->clientlist_sort_by = cfdata->sort_by;
    e_config->clientlist_separate_iconified_apps = cfdata->separate_iconified_apps;
@@ -94,6 +97,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_radio_add(evas, _("Desktop"), E_CLIENTLIST_GROUP_DESK, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Window Class"), E_CLIENTLIST_GROUP_CLASS, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Include windows from other screens"), &(cfdata->include_all_zones));
    e_widget_framelist_object_append(of, ob);
    //e_widget_list_object_append(o, of, 1, 1, 0.5);
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);

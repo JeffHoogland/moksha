@@ -1182,7 +1182,8 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 	border = l->data;
 	if (border->client.netwm.state.skip_taskbar) continue;
 	if (border->user_skip_winlist) continue;
-	if ((border->zone == zone) || (border->iconic))
+	if ((border->zone == zone) || (border->iconic) ||
+	    (border->zone != zone && e_config->clientlist_include_all_zones))
 	  borders = evas_list_append(borders, border);
      }
 

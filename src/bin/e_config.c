@@ -506,6 +506,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, dpms_off_timeout, INT);
    
    E_CONFIG_VAL(D, T, clientlist_group_by, INT);
+   E_CONFIG_VAL(D, T, clientlist_include_all_zones, INT);
    E_CONFIG_VAL(D, T, clientlist_separate_with, INT);
    E_CONFIG_VAL(D, T, clientlist_sort_by, INT);
    E_CONFIG_VAL(D, T, clientlist_separate_iconified_apps, INT);
@@ -1337,6 +1338,10 @@ e_config_init(void)
    e_config->clientlist_warp_to_iconified_desktop = 0;
    IFCFGEND;
 
+   IFCFG(0x0111);
+   e_config->clientlist_include_all_zones = 0;
+   IFCFGEND;
+
    e_config->config_version = E_CONFIG_FILE_VERSION;   
      
 #if 0 /* example of new config */
@@ -1450,6 +1455,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->screensaver_expose, 0, 2);
    
    E_CONFIG_LIMIT(e_config->clientlist_group_by, 0, 2);
+   E_CONFIG_LIMIT(e_config->clientlist_include_all_zones, 0, 1);
    E_CONFIG_LIMIT(e_config->clientlist_separate_with, 0, 2);
    E_CONFIG_LIMIT(e_config->clientlist_sort_by, 0, 3);
    E_CONFIG_LIMIT(e_config->clientlist_separate_iconified_apps, 0, 2);

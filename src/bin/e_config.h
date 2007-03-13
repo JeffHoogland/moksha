@@ -52,7 +52,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0110
+#define E_CONFIG_FILE_GENERATION 0x0111
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT      0
@@ -248,6 +248,7 @@ struct _E_Config
    int         dpms_off_timeout;
 
    int         clientlist_group_by;
+   int         clientlist_include_all_zones;
    int         clientlist_separate_with;
    int         clientlist_sort_by;
    int         clientlist_separate_iconified_apps;
