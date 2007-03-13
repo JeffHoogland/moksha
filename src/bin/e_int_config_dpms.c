@@ -165,6 +165,7 @@ _apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_dpms_init();
  
    e_config_save_queue();
+   return 1;
 }
 
 /* advanced window */

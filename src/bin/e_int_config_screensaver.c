@@ -92,6 +92,7 @@ _apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    /* Apply settings */
    e_screensaver_init();
+   return 1;
 }
 
 static int
