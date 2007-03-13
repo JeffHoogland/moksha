@@ -258,7 +258,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		    ped->mon_ref++;
 		  _e_dirs = evas_list_append(_e_dirs, ed);
 		  
-		  while (dp = readdir(dir))
+		  while ((dp = readdir(dir)))
 		    {
 		       if ((!strcmp(dp->d_name, ".")) || (!strcmp(dp->d_name, "..")))
 			 continue;
@@ -268,7 +268,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		  closedir(dir);
 		  if (dot_order)
 		    {
-		       snprintf(buf, sizeof(buf), "%s/.order", e->data);
+		       snprintf(buf, sizeof(buf), "%s/.order", (char *)e->data);
 		       f = fopen(buf, "r");
 		       if (f)
 			 {
@@ -305,7 +305,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		       if (!strcmp(e->data, "/"))
 			 snprintf(buf, sizeof(buf), "/.order");
 		       else
-			 snprintf(buf, sizeof(buf), "%s/.order", e->data);
+			 snprintf(buf, sizeof(buf), "%s/.order", (char *)e->data);
 		       if (evas_list_count(files) == 1)
 			 _e_file_add(ed->id, buf, 2);
 		       else
