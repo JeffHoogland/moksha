@@ -9,6 +9,9 @@ static void _cb_standby_slider_change(void *data, Evas_Object *obj);
 static void _cb_suspend_slider_change(void *data, Evas_Object *obj);
 static void _cb_off_slider_change(void *data, Evas_Object *obj);
 
+static int _e_int_config_dpms_available();
+static int _e_int_config_dpms_capable();
+
 struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
@@ -47,7 +50,28 @@ _e_int_config_dpms_capable()
    
    if (dpms_dialog) e_object_del(E_OBJECT(dpms_dialog));
    dpms_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), 
-			      "E", "_dpms_dialog");
+			      "E", "_dpms_capable_dialog");
+   if (!dpms_dialog) return 0;
+
+   e_dialog_title_set(dpms_dialog, _("Display Power Management Signaling"));
+   e_dialog_text_set(dpms_dialog, _("The current display server is not <br>"
+				    "DPMS capable."));
+   e_dialog_icon_set(dpms_dialog, "enlightenment/dpms", 64);
+   e_dialog_button_add(dpms_dialog, _("OK"), NULL, _cb_dpms_dialog_ok, NULL);
+   e_dialog_button_focus_num(dpms_dialog, 1);
+   e_win_centered_set(dpms_dialog->win, 1);
+   e_dialog_show(dpms_dialog);
+   return 0;
+}
+
+static int
+_e_int_config_dpms_available()
+{
+   if (ecore_x_dpms_query()) return 1;
+   
+   if (dpms_dialog) e_object_del(E_OBJECT(dpms_dialog));
+   dpms_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), 
+			      "E", "_dpms_available_dialog");
    if (!dpms_dialog) return 0;
 
    e_dialog_title_set(dpms_dialog, _("Display Power Management Signaling"));
@@ -67,7 +91,8 @@ e_int_config_dpms(E_Container *con)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    
-   if ((e_config_dialog_find("E", "_config_dpms_dialog")) || 
+   if ((e_config_dialog_find("E", "_config_dpms_dialog")) ||
+       (!_e_int_config_dpms_available()) || 		   
        (!_e_int_config_dpms_capable()))
      return NULL;
 
