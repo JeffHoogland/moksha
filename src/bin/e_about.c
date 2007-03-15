@@ -8,6 +8,8 @@ static void _e_about_free(E_About *about);
 static void _e_about_cb_delete(E_Win *win);
 static void _e_about_cb_close(void *data, Evas_Object *obj, const char *emission, const char *source);
 
+static E_About *_e_about = NULL;
+
 /* local subsystem globals */
 
 /* externally accessible functions */
@@ -15,9 +17,31 @@ static void _e_about_cb_close(void *data, Evas_Object *obj, const char *emission
 EAPI E_About *
 e_about_new(E_Container *con)
 {
-   E_About *about;
    E_Manager *man;
    Evas_Object *o;
+   E_About *about;
+   
+   if (_e_about) 
+     {
+	E_Zone *z, *z2;
+	
+	about = _e_about;
+	z = e_util_zone_current_get(e_manager_current_get());
+	z2 = about->win->border->zone;
+	e_win_show(about->win);
+	e_win_raise(about->win);
+	if (z->container == z2->container)
+	  e_border_desk_set(about->win->border, e_desk_current_get(z));
+	else 
+	  {
+	     if (!about->win->border->sticky)
+	       e_desk_show(about->win->border->desk);
+	     ecore_x_pointer_warp(z2->container->win,
+				  z2->x + (z2->w / 2), z2->y + (z2->h / 2));
+	  }
+	e_border_unshade(about->win->border, E_DIRECTION_DOWN);
+	return NULL;
+     }
    
    if (!con)
      {
@@ -43,8 +67,7 @@ e_about_new(E_Container *con)
    
    o = edje_object_add(e_win_evas_get(about->win));
    about->bg_object = o;
-   e_theme_edje_object_set(o, "base/theme/about",
-			   "e/widgets/about/main");
+   e_theme_edje_object_set(o, "base/theme/about", "e/widgets/about/main");
    evas_object_move(o, 0, 0);
    evas_object_show(o);
    
@@ -122,6 +145,7 @@ e_about_new(E_Container *con)
 	  }
      }
    e_win_centered_set(about->win, 1);
+   _e_about = about;
    return about;
 }
 
@@ -152,6 +176,7 @@ e_about_show(E_About *about)
 static void
 _e_about_free(E_About *about)
 {
+   _e_about = NULL;
    if (about->bg_object) evas_object_del(about->bg_object);
    e_object_del(E_OBJECT(about->win));
    free(about);
@@ -163,6 +188,7 @@ _e_about_cb_delete(E_Win *win)
    E_About *about;
    
    about = win->data;
+   if (!about) return;
    e_object_del(E_OBJECT(about));
 }
 
@@ -172,5 +198,6 @@ _e_about_cb_close(void *data, Evas_Object *obj, const char *emission, const char
    E_About *about;
    
    about = data;
+   if (!about) return;
    e_object_del(E_OBJECT(about));
 }
