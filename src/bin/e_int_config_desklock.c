@@ -97,8 +97,10 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->use_xscreensaver = ecore_x_screensaver_event_available_get();
    cfdata->zone_count = _zone_count_get();
    
-   if (e_config->desklock_custom_desklock_cmd)
+   cfdata->custom_lock = e_config->desklock_use_custom_desklock;
+   if (e_config->desklock_custom_desklock_cmd) 
      cfdata->custom_lock_cmd = strdup(e_config->desklock_custom_desklock_cmd);
+
    cfdata->auto_lock = e_config->desklock_autolock_idle;
    cfdata->screensaver_lock = e_config->desklock_autolock_screensaver;
    cfdata->idle_time = e_config->desklock_autolock_idle_timeout / 60;
@@ -360,6 +362,7 @@ _adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	else
 	  e_config->desklock_login_box_zone = cfdata->login_zone;
      }
+
    e_config->desklock_use_custom_desklock = cfdata->custom_lock;
    if (cfdata->custom_lock_cmd) 
      {
