@@ -143,11 +143,11 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    of = e_widget_framelist_add(evas, _("Automatic Locking"), 0);
    e_widget_disabled_set(of, !cfdata->use_xscreensaver);
    ow = e_widget_check_add(evas, _("Lock when X screensaver activates"), 
-			   &cfdata->auto_lock);
+			   &cfdata->screensaver_lock);
    e_widget_disabled_set(ow, !cfdata->use_xscreensaver);
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_check_add(evas, _("Lock when idle time exceeded"), 
-			   &cfdata->screensaver_lock);
+			   &cfdata->auto_lock);
    e_widget_disabled_set(ow, !cfdata->use_xscreensaver);
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_label_add(evas, _("Idle time to exceed"));
