@@ -413,7 +413,7 @@ _e_configure_fill_cat_list(void *data)
    _e_configure_item_add(cat, _("Screen Resolution"), "enlightenment/screen_resolution", e_int_config_display);
    _e_configure_item_add(cat, _("Screen Lock"), "enlightenment/desklock", e_int_config_desklock);
    _e_configure_item_add(cat, _("Screen Saver"), "enlightenment/screensaver", e_int_config_screensaver);
-   _e_configure_item_add(cat, _("DPMS Settings"), "enlightenment/dpms", e_int_config_dpms);
+   _e_configure_item_add(cat, _("Power Management"), "enlightenment/dpms", e_int_config_dpms);
 
    cat = _e_configure_category_add(eco, _("Keyboard & Mouse"), "enlightenment/behavior");
    _e_configure_item_add(cat, _("Key Bindings"), "enlightenment/keys", e_int_config_keybindings);

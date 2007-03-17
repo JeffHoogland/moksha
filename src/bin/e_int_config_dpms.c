@@ -104,7 +104,7 @@ e_int_config_dpms(E_Container *con)
    v->basic.create_widgets = _advanced_create_widgets;
    v->override_auto_apply = 1;
    
-   cfd = e_config_dialog_new(con, _("DPMS Settings"), "E", 
+   cfd = e_config_dialog_new(con, _("Display Power Management Settings"), "E", 
 			     "_config_dpms_dialog", "enlightenment/dpms", 
 			     0, v, NULL);
    return cfd;
@@ -183,10 +183,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    o = e_widget_list_add(evas, 0, 0);
 
-   ob = e_widget_check_add(evas, _("Enable DPMS"), &(cfdata->enable_dpms));
+   ob = e_widget_check_add(evas, _("Enable Display Power Management"), 
+			   &(cfdata->enable_dpms));
    e_widget_list_object_append(o, ob, 1, 1, 0);   
    
-   of = e_widget_framelist_add(evas, _("DPMS Timer(s)"), 0);
+   of = e_widget_framelist_add(evas, _("Timer(s)"), 0);
 
    ob = e_widget_check_add(evas, _("Standby time"), &(cfdata->enable_standby));
    e_widget_framelist_object_append(of, ob);
@@ -227,14 +228,16 @@ _cb_standby_slider_change(void *data, Evas_Object *obj)
      {
 	cfdata->suspend_timeout = cfdata->standby_timeout;
 	if (cfdata->suspend_slider)
-	  e_widget_slider_value_double_set(cfdata->suspend_slider, cfdata->suspend_timeout);
+	  e_widget_slider_value_double_set(cfdata->suspend_slider, 
+					   cfdata->suspend_timeout);
 	
 	if (cfdata->suspend_timeout > cfdata->off_timeout)
 	  {
 	     cfdata->off_timeout = cfdata->suspend_timeout;
 	     if (cfdata->off_slider)
-	       e_widget_slider_value_double_set(cfdata->off_slider, cfdata->off_timeout);
-	  }      
+	       e_widget_slider_value_double_set(cfdata->off_slider, 
+						cfdata->off_timeout);
+	  }
      }
 }
 
@@ -248,13 +251,15 @@ _cb_suspend_slider_change(void *data, Evas_Object *obj)
      {
 	cfdata->off_timeout = cfdata->suspend_timeout;
 	if (cfdata->off_slider)
-	  e_widget_slider_value_double_set(cfdata->off_slider, cfdata->off_timeout);
+	  e_widget_slider_value_double_set(cfdata->off_slider, 
+					   cfdata->off_timeout);
      }
    if (cfdata->suspend_timeout < cfdata->standby_timeout)
      {   
 	cfdata->standby_timeout = cfdata->suspend_timeout;
 	if (cfdata->standby_slider)
-	  e_widget_slider_value_double_set(cfdata->standby_slider, cfdata->standby_timeout);
+	  e_widget_slider_value_double_set(cfdata->standby_slider, 
+					   cfdata->standby_timeout);
      }
 }
 
@@ -268,13 +273,15 @@ _cb_off_slider_change(void *data, Evas_Object *obj)
      {
 	cfdata->suspend_timeout = cfdata->off_timeout;
 	if (cfdata->suspend_slider)
-	  e_widget_slider_value_double_set(cfdata->suspend_slider, cfdata->suspend_timeout);
+	  e_widget_slider_value_double_set(cfdata->suspend_slider, 
+					   cfdata->suspend_timeout);
 	
 	if (cfdata->suspend_timeout < cfdata->standby_timeout)
 	  {   
 	     cfdata->standby_timeout = cfdata->suspend_timeout;
 	     if (cfdata->standby_slider)
-	       e_widget_slider_value_double_set(cfdata->standby_slider, cfdata->standby_timeout);
+	       e_widget_slider_value_double_set(cfdata->standby_slider, 
+						cfdata->standby_timeout);
 	  }
      }
 }
