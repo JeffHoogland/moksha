@@ -1017,9 +1017,11 @@ _ibox_cb_event_border_add(void *data, int type, void *event)
    E_Event_Border_Add *ev;
    IBox *b;
    IBox_Icon *ic;
+   E_Desk *desk;
 
    ev = event;
    /* add if iconic */
+   desk = e_desk_current_get(ev->border->zone);
    if (ev->border->iconic)
      {
 	Evas_List *l, *ibox;
@@ -1028,6 +1030,7 @@ _ibox_cb_event_border_add(void *data, int type, void *event)
 	  {
 	     b = l->data;
 	     if (_ibox_icon_find(b, ev->border)) continue;
+	     if ((b->show_desk) && (ev->border->desk != desk)) continue;
 	     ic = _ibox_icon_new(b, ev->border);
 	     if (!ic) continue;
 	     b->icons = evas_list_append(b->icons, ic);
@@ -1078,15 +1081,18 @@ _ibox_cb_event_border_iconify(void *data, int type, void *event)
    IBox *b;
    IBox_Icon *ic;
    Evas_List *l, *ibox;
+   E_Desk *desk;
 
    ev = event;
    /* add icon for ibox for right zone */
    /* do some sort of anim when iconifying */
+   desk = e_desk_current_get(ev->border->zone);
    ibox = _ibox_zone_find(ev->border->zone);
    for (l = ibox; l; l = l->next)
      {
 	b = l->data;
 	if (_ibox_icon_find(b, ev->border)) continue;
+	if ((b->show_desk) && (ev->border->desk != desk)) continue;
 	ic = _ibox_icon_new(b, ev->border);
 	if (!ic) continue;
 	b->icons = evas_list_append(b->icons, ic);
