@@ -163,3 +163,5 @@
 #include "e_int_config_desk.h"
 #include "e_int_config_clientlist.h"
 #include "e_fm_prop.h"
+#include "e_mouse.h"
+#include "e_int_config_mouse.h"

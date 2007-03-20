@@ -418,6 +418,7 @@ _e_configure_fill_cat_list(void *data)
    cat = _e_configure_category_add(eco, _("Keyboard & Mouse"), "enlightenment/behavior");
    _e_configure_item_add(cat, _("Key Bindings"), "enlightenment/keys", e_int_config_keybindings);
    _e_configure_item_add(cat, _("Mouse Bindings"), "enlightenment/mouse_clean", e_int_config_mousebindings);
+   _e_configure_item_add(cat, _("Mouse Acceleration"), "enlightenment/mouse_clean", e_int_config_mouse);
 
    cat = _e_configure_category_add(eco, _("Windows"), "enlightenment/windows");
    _e_configure_item_add(cat, _("Window Display"), "enlightenment/windows", e_int_config_window_display);

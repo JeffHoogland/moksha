@@ -512,6 +512,10 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, clientlist_separate_iconified_apps, INT);
    E_CONFIG_VAL(D, T, clientlist_warp_to_iconified_desktop, INT);
    
+   E_CONFIG_VAL(D, T, mouse_accel_numerator, INT);
+   E_CONFIG_VAL(D, T, mouse_accel_denominator, INT);
+   E_CONFIG_VAL(D, T, mouse_accel_threshold, INT);
+
    E_CONFIG_VAL(D, T, border_raise_on_mouse_action, INT);
    E_CONFIG_VAL(D, T, border_raise_on_focus, INT);
    E_CONFIG_VAL(D, T, desk_flip_wrap, INT);
@@ -1342,6 +1346,12 @@ e_config_init(void)
    e_config->clientlist_include_all_zones = 0;
    IFCFGEND;
 
+   IFCFG(0x0112);
+   e_config->mouse_accel_numerator = 2;
+   e_config->mouse_accel_denominator = 1;
+   e_config->mouse_accel_threshold = 4;
+   IFCFGEND;
+
    e_config->config_version = E_CONFIG_FILE_VERSION;   
      
 #if 0 /* example of new config */
@@ -1461,6 +1471,10 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->clientlist_separate_iconified_apps, 0, 2);
    E_CONFIG_LIMIT(e_config->clientlist_warp_to_iconified_desktop, 0, 1);
    
+   E_CONFIG_LIMIT(e_config->mouse_accel_numerator, 1, 10);
+   E_CONFIG_LIMIT(e_config->mouse_accel_denominator, 1, 10);
+   E_CONFIG_LIMIT(e_config->mouse_accel_threshold, 1, 10);
+
    /* FIXME: disabled auto apply because it causes problems */
    e_config->cfgdlg_auto_apply = 0;
    /* FIXME: desklock personalized password id disabled for security reasons */

@@ -11,7 +11,8 @@ INCLUDES = -I$(top_srcdir) \
 	   -DPACKAGE_LIB_DIR=\"@PACKAGE_LIB_DIR@\" \
 	   -DPACKAGE_DATA_DIR=\"@PACKAGE_DATA_DIR@\" \
 	   -DLOCALE_DIR=\"@LOCALE_DIR@\" \
-	   -DPACKAGE_SYSCONF_DIR=\"@PACKAGE_SYSCONF_DIR@\"
+	   -DPACKAGE_SYSCONF_DIR=\"@PACKAGE_SYSCONF_DIR@\" \
+	   -Wno-unused
 
 bin_PROGRAMS = \
 enlightenment \
@@ -187,7 +188,9 @@ e_widget_desk_preview.h \
 e_int_config_borders.h \
 e_int_config_desk.h \
 e_int_config_clientlist.h \
-e_fm_prop.h
+e_fm_prop.h \
+e_int_config_mouse.h \
+e_mouse.h
  
 enlightenment_src = \
 e_user.c \
@@ -350,6 +353,8 @@ e_int_config_borders.c \
 e_int_config_desk.c \
 e_fm_prop.c \
 e_int_config_clientlist.c \
+e_int_config_mouse.c \
+e_mouse.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \

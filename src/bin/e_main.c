@@ -792,6 +792,14 @@ main(int argc, char **argv)
        _e_main_shutdown(-1);
      }
      
+   TS("mouse");     
+   /* setup mouse accel */
+   if (!e_mouse_init())
+     {
+       e_error_message_show(_("Enlightenment cannot configure the mouse acceleration settings."));
+       _e_main_shutdown(-1);
+     }
+
    TS("desklock");
    /* setup desklock */
    if (!e_desklock_init())
