@@ -11,8 +11,7 @@ INCLUDES = -I$(top_srcdir) \
 	   -DPACKAGE_LIB_DIR=\"@PACKAGE_LIB_DIR@\" \
 	   -DPACKAGE_DATA_DIR=\"@PACKAGE_DATA_DIR@\" \
 	   -DLOCALE_DIR=\"@LOCALE_DIR@\" \
-	   -DPACKAGE_SYSCONF_DIR=\"@PACKAGE_SYSCONF_DIR@\" \
-	   -Wno-unused
+	   -DPACKAGE_SYSCONF_DIR=\"@PACKAGE_SYSCONF_DIR@\"
 
 bin_PROGRAMS = \
 enlightenment \
