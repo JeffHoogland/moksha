@@ -233,30 +233,30 @@ struct _E_Config
    int         desklock_use_custom_desklock; //GUI
    const char *desklock_custom_desklock_cmd; // GUI
    
-   int         screensaver_enable;
-   int         screensaver_timeout;
-   int         screensaver_interval;
-   int         screensaver_blanking;
-   int         screensaver_expose;
+   int         screensaver_enable; //GUI
+   int         screensaver_timeout; //GUI
+   int         screensaver_interval; //GUI
+   int         screensaver_blanking; //GUI
+   int         screensaver_expose; //GUI
   
-   int         dpms_enable;
-   int         dpms_standby_enable;
-   int         dpms_standby_timeout;
-   int         dpms_suspend_enable;
-   int         dpms_suspend_timeout;
-   int         dpms_off_enable;
-   int         dpms_off_timeout;
+   int         dpms_enable; //GUI
+   int         dpms_standby_enable; //GUI
+   int         dpms_standby_timeout; //GUI
+   int         dpms_suspend_enable; //GUI
+   int         dpms_suspend_timeout; //GUI
+   int         dpms_off_enable; //GUI
+   int         dpms_off_timeout; //GUI
 
-   int         clientlist_group_by;
-   int         clientlist_include_all_zones;
-   int         clientlist_separate_with;
-   int         clientlist_sort_by;
-   int         clientlist_separate_iconified_apps;
-   int         clientlist_warp_to_iconified_desktop;
+   int         clientlist_group_by; //GUI
+   int         clientlist_include_all_zones; //GUI
+   int         clientlist_separate_with; //GUI
+   int         clientlist_sort_by; //GUI
+   int         clientlist_separate_iconified_apps; //GUI
+   int         clientlist_warp_to_iconified_desktop; //GUI
 
-   int         mouse_accel_numerator;
-   int         mouse_accel_denominator;
-   int         mouse_accel_threshold;
+   int         mouse_accel_numerator; //GUI
+   int         mouse_accel_denominator; //GUI
+   int         mouse_accel_threshold; //GUI
    
    int         display_res_restore; // GUI
    int         display_res_width; // GUI
