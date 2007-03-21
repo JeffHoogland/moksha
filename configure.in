@@ -174,72 +174,21 @@ if test "[${e_cv_enable_files}]" = yes; then
 fi
 AC_MSG_RESULT([$e_cv_enable_files])
 
-AC_ARG_WITH(evas-config,
-[  --with-evas-config=EVAS_CONFIG    use evas-config specified ],
-[
-  EVAS_CONFIG=$withval;
-  echo "using "$EVAS_CONFIG" for evas-config";
-],[
-  PROG="evas-config";
-  AC_PATH_PROG(EVAS_CONFIG, $PROG, "", $PATH)
+PKG_CHECK_MODULES(E, [
+  evas
+  ecore
+  ecore-evas
+  ecore-config
+  ecore-dbus
+  ecore-file
+  ecore-desktop
+  edje
+  eet
+  embryo
 ])
-evas_cflags=`$EVAS_CONFIG --cflags`
-evas_libs=`$EVAS_CONFIG --libs`
-AC_SUBST(evas_cflags)
-AC_SUBST(evas_libs)
 
-AC_ARG_WITH(ecore-config,
-[  --with-ecore-config=ECORE_CONFIG  use ecore-config specified ],
-[
-  ECORE_CONFIG=$withval;
-  echo "using "$ECORE_CONFIG" for ecore-config";
-],[
-  PROG="ecore-config";
-  AC_PATH_PROG(ECORE_CONFIG, $PROG, "", $PATH)
-])
-ecore_cflags=`$ECORE_CONFIG --cflags`
-ecore_libs=`$ECORE_CONFIG --libs`
-AC_SUBST(ecore_cflags)
-AC_SUBST(ecore_libs)
-
-AC_ARG_WITH(edje-config,
-[  --with-edje-config=EDJE_CONFIG    use edje-config specified ],
-[
-  EDJE_CONFIG=$withval;
-  echo "using "$EDJE_CONFIG" for edje-config";
-],[
-  PROG="edje-config";
-  AC_PATH_PROG(EDJE_CONFIG, $PROG, "", $PATH)
-])
-edje_cflags=`$EDJE_CONFIG --cflags`
-edje_libs=`$EDJE_CONFIG --libs`
-
-AC_ARG_WITH(eet-config,
-[  --with-eet-config=EET_CONFIG      use eet-config specified ],
-[
-  EET_CONFIG=$withval;
-  echo "using "$EET_CONFIG" for eet-config";
-],[
-  PROG="eet-config";
-  AC_PATH_PROG(EET_CONFIG, $PROG, "", $PATH)
-])
-eet_cflags=`$EET_CONFIG --cflags`
-eet_libs=`$EET_CONFIG --libs`
-
-AC_ARG_WITH(embryo-config,
-[  --with-embryo-config=EMBRYO_CONFIG use embryo-config specified ],
-[
-  EMBRYO_CONFIG=$withval;
-  echo "using "$EMBRYO_CONFIG" for embryo-config";
-],[
-  PROG="embryo-config";
-  AC_PATH_PROG(EMBRYO_CONFIG, $PROG, "", $PATH)
-])
-embryo_cflags=`$EMBRYO_CONFIG --cflags`
-embryo_libs=`$EMBRYO_CONFIG --libs`
-
-e_libs=$evas_libs" "$ecore_libs" "$edje_libs" "$eet_libs" "$embryo_libs" "$LIBINTL" "$fnmatch_libs" "
-e_cflags="-DUSE_E_CONFIG_H "$evas_cflags" "$ecore_cflags" "$edje_cflags" "$eet_cflags" "$embryo_cflags" "
+e_libs=$E_LIBS" "$LIBINTL" "$fnmatch_libs" "
+e_cflags="-DUSE_E_CONFIG_H "$E_CFLAGS" "
 AC_SUBST(e_libs)
 AC_SUBST(e_cflags)
 
@@ -259,7 +208,6 @@ EDJE_DEF="-DLOWRES_PDA=1 -DMEDIUMRES_PDA=2 -DHIRES_PDA=3 -DSLOW_PC=4 -DMEDIUM_PC
 EDJE_DEF=$EDJE_DEF" -DE17_PROFILE"=$profile
 AC_SUBST(EDJE_DEF)
 
-edje_cc="`$EDJE_CONFIG --prefix`/bin/edje_cc"
 AC_ARG_WITH(edje-cc,
 [  --with-edje-cc=PATH              specify a specific path to edje_cc],
 [
@@ -267,7 +215,7 @@ AC_ARG_WITH(edje-cc,
   edje_cc=$v
   echo "  Enlightenment edje_cc explicitly set to "$edje_cc;
 ],[
-  edje_cc="`$EDJE_CONFIG --prefix`/bin/edje_cc"
+  edje_cc=$(pkg-config --variable=prefix edje)/bin/edje_cc
 ])
 AC_SUBST(edje_cc)
 
