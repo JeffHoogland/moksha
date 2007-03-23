@@ -3,7 +3,7 @@ Section: x11
 Priority: optional
 Maintainer: E17 Debian Team <debian@edevelop.org>
 Build-Depends: libevas-dev, libecore-dev, libeet-dev, libedje-dev, edje-bin, libembryo-dev, libx11-dev, x-dev, libxext-dev, automake1.7 | automaken, libtool, debhelper (>= 4.0)
-Standards-Version: 3.6.2.2
+Standards-Version: 3.7.2
 
 Package: enlightenment
 Architecture: any
@@ -49,7 +49,7 @@ Description: Virtual package providing the libraries needed by E17
 Package: e17
 Architecture: any
 Section: x11
-Depends: enlightenment, e17-libs, e17-modules, eutils 
+Depends: enlightenment, e17-libs, e17-modules
 Suggests: e17-extras
 Description: Virtual package providing the E17 desktop shell 
  Enlightenment is an advanced window manager for X11. Unique
@@ -89,7 +89,7 @@ Description: Virtual package providing additional E17 dev packages
 Package: e17-extras
 Architecture: any
 Section: x11
-Depends: exhibit, entropy, edje-viewer, empower, extrackt, estickies, ephoto, entice, engage, entrance, entrance-edit-gui
+Depends: exhibit, entropy, edje-viewer, empower, extrackt, emphasis, ephoto, entrance, entrance-edit-gui
 Suggests: enlightenment
 Description: Virtual package providing extras for the E17 window manager
  Enlightenment is an advanced window manager for X11. Unique
@@ -104,16 +104,14 @@ Description: Virtual package providing extras for the E17 window manager
   * edje-viewer - A simple viewer for edje files
   * empower - graphical sudo tool
   * extrackt - an audio CD ripper and encoder
-  * estickies - A sticky notes application based on Etk
+  * emphasis - MPD client
   * ephoto - A slideshow creator with audio-support
-  * entice - Image viewer based on libeet
-  * engage - Enlightenment dock-like app
   * entrance - The Enlightened Login Manager & tools.
 
 Package: e17-desktop
 Architecture: any
 Section: x11
-Depends: e17, e17-modules, eutils, entrance, entrance-edit-gui
+Depends: e17, e17-modules, entrance, entrance-edit-gui
 Suggests: e17-extras
 Description: Virtual package providing the E17 desktop environment
  Enlightenment is an advanced window manager for X11. Unique
