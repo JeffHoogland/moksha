@@ -375,30 +375,30 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
    e_dialog_title_set(dia, title);
    if (m)
      {
-        /* Lots of fallbacks coz we are in a transition period, and the modules are still suffering from the last API change. */
+	/* Lots of fallbacks coz we are in a transition period, and the modules are still suffering from the last API change. */
 	snprintf(eap, sizeof(eap), "%s/module.desktop", e_module_dir_get(m));
 	if (ecore_file_exists(eap))
-	   {
-              E_App *app;
+	  {
+	     E_App *app;
 
-              app = e_app_new(eap, 0);
-	      if (app)
-	         {
-	            dia->icon_object = e_app_icon_add(app, e_win_evas_get(dia->win));
-                    edje_extern_object_min_size_set(dia->icon_object, 64, 64);
-                    edje_object_part_swallow(dia->bg_object, "e.swallow.icon", dia->icon_object);
-                    evas_object_show(dia->icon_object);
-	            e_object_unref(E_OBJECT(app));
-		 }
-	   }
+	     app = e_app_new(eap, 0);
+	     if (app)
+	       {
+		  dia->icon_object = e_app_icon_add(app, e_win_evas_get(dia->win));
+		  edje_extern_object_min_size_set(dia->icon_object, 64, 64);
+		  edje_object_part_swallow(dia->bg_object, "e.swallow.icon", dia->icon_object);
+		  evas_object_show(dia->icon_object);
+		  e_object_unref(E_OBJECT(app));
+	       }
+	  }
 	else   /* FIXME: Remove the fallbacks when everything in cvs is converted.  B-) */
-	   {
-	      snprintf(eap, sizeof(eap), "%s/module.edj", e_module_dir_get(m));
-	      if (ecore_file_exists(eap))
-	         {
-	            _e_module_dialog_icon_set(dia, eap);
-		 }
-	   }
+	  {
+	     snprintf(eap, sizeof(eap), "%s/module.edj", e_module_dir_get(m));
+	     if (ecore_file_exists(eap))
+	       {
+		  _e_module_dialog_icon_set(dia, eap);
+	       }
+	  }
      }
    else
      e_dialog_icon_set(dia, "enlightenment/modules", 64);
