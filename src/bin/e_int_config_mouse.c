@@ -15,15 +15,6 @@ struct _E_Config_Dialog_Data
    double threshold;
 };
 
-static E_Dialog *mouse_dialog = NULL;
-
-static void
-_cb_mouse_dialog_ok(void *data, E_Dialog *dia)
-{
-   e_object_del(E_OBJECT(mouse_dialog));
-   mouse_dialog = NULL;
-}
-
 EAPI E_Config_Dialog *
 e_int_config_mouse(E_Container *con)
 {
@@ -95,7 +86,6 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob;
-   E_Radio_Group *rg;
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Mouse Acceleration"), 0);
