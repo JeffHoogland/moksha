@@ -1352,6 +1352,8 @@ e_config_init(void)
    e_config->mouse_accel_threshold = 4;
    IFCFGEND;
 
+   if (!e_config->icon_theme) e_config->icon_theme = evas_stringshare_add("hicolor");
+
    e_config->config_version = E_CONFIG_FILE_VERSION;   
      
 #if 0 /* example of new config */
