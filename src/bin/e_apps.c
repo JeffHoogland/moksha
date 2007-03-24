@@ -354,6 +354,7 @@ e_app_shutdown(void)
 EAPI void
 e_app_unmonitor_all(void)
 {
+#if 0
    Evas_List *l;
    
    for (l = _e_apps_all->subapps; l; l = l->next)
@@ -367,16 +368,7 @@ e_app_unmonitor_all(void)
 	     a->monitor = NULL;
 	  }
      }
-}
-
-/* FIXME: Not actualy used anywhere, should we nuke it or should we use it everywhere that an E_App is allocated? */
-EAPI E_App *
-e_app_raw_new(void)
-{
-   E_App *a;
-   
-   a = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
-   return a;
+#endif
 }
 
 EAPI E_App *
@@ -3049,7 +3041,6 @@ _e_app_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
    e_util_env_set("DESKTOP_STARTUP_ID", buf);
 
    e_util_library_path_strip();
-   printf("exec: %s\n", exec);
    exe = ecore_exe_pipe_run(exec,
 			    ECORE_EXE_PIPE_AUTO | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR |
 			    ECORE_EXE_PIPE_READ_LINE_BUFFERED | ECORE_EXE_PIPE_ERROR_LINE_BUFFERED,
