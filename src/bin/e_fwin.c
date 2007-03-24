@@ -537,9 +537,9 @@ static void
 _e_fwin_file_exec(E_Fwin *fwin, E_Fm2_Icon_Info *ici, E_Fwin_Exec_Type ext)
 {
    char buf[4096];
-   E_App *a;
+   Efreet_Desktop *desktop;
    
-   /* FIXME: execute file ici with either a temrinal, the shell, or directly
+   /* FIXME: execute file ici with either a terminal, the shell, or directly
     * or open the .desktop and exec it */
    switch (ext)
      {
@@ -562,12 +562,8 @@ _e_fwin_file_exec(E_Fwin *fwin, E_Fm2_Icon_Info *ici, E_Fwin_Exec_Type ext)
 	break;
       case E_FWIN_EXEC_DESKTOP:
 	snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(fwin->fm_obj), ici->file);
-	a = e_app_new(buf, 0);
-	if (a)
-	  {
-	     e_app_exec(fwin->win->border->zone, a, NULL, NULL, NULL);
-	     e_object_unref(E_OBJECT(a));
-	  }
+	desktop = efreet_desktop_get(buf);
+	if (desktop) e_exec(fwin->win->border->zone, desktop, NULL, NULL, NULL);
 	break;
       default:
 	break;
