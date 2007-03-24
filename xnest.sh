@@ -11,14 +11,14 @@ tmp=`mktemp` || exit 1
 echo -e "run\nbt\nq\ny" > $tmp
 
 case "$1" in
-	"")		action="gdb -x $tmp --args" ; main=$disp_num ;;
+	"")	action="gdb -x $tmp --args" ; main=$disp_num ;;
 	"-b")	action="gdb -x $tmp --args" ; main=$disp_num ;;
 	"-c")	action="cgdb" ; main=$disp_num ;;
 	"-d")	action="ddd -display $main --args" ;;
 	"-e")	action="" ; e_args="-display $disp_num" ;;
 	"-g")	action="gdb --args" ; main=$disp_num ;;
-	"-l")	action="valgrind --tool=memcheck --leak-check=yes --show-reachable=yes --log-file=valgrind_log" ;;
-	"-m")	action="valgrind --tool=memcheck --log-file=valgrind_log" ;;
+	"-l")	action="valgrind --tool=memcheck --leak-check=yes --show-reachable=yes --log-file=valgrind_log" ; main=$disp_num ;;
+	"-m")	action="valgrind --tool=memcheck --log-file=valgrind_log" ; main=$disp_num ;;
 	"-p")	action="memprof --display=$main" ; main=$disp_num ;;
 	"-r")	action="memprof_raster --display=$main" ; main=$disp_num ;;
 	"-s")	action="strace -F -o strace_log" ;;
@@ -48,6 +48,7 @@ Xnest $disp_num -ac &
 
 sleep 2   # Someone reported that it starts E before X has started properly.
 
+echo "export DISPLAY=$main; export E_START="enlightenment_start"; $action enlightenment $e_args"
 export DISPLAY=$main; export E_START="enlightenment_start"; $action enlightenment $e_args
 
 rm -f $tmp
