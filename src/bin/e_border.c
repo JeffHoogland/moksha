@@ -2591,30 +2591,18 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 	  e_util_edje_icon_set(o, "enlightenment/e");
 	else
 	  {
-	     a = e_app_new(bd->internal_icon, 0);
-	     if (a)
-	       {
-		  /* Free the aborted object first. */
-		  if (o)   evas_object_del(o);
-		  o = e_app_icon_add(a, evas);
-		  bd->app = a;
-		  e_object_ref(E_OBJECT(bd->app));
-	       }
-	     else
-	       {
-		  char *ext;
+	     char *ext;
 
-		  ext = strrchr(bd->internal_icon, '.');
-		  if ((ext) && ((!strcmp(ext, ".edj"))))
-		    {
-		       if (!edje_object_file_set(o, bd->internal_icon, "icon"))
-			 e_util_edje_icon_set(o, "enlightenment/e");	       
-		    }
-		  else 
-		    {
-		       if (!e_util_edje_icon_set(o, bd->internal_icon))
-			 e_util_edje_icon_set(o, "enlightenment/e"); 
-		    }
+	     ext = strrchr(bd->internal_icon, '.');
+	     if ((ext) && ((!strcmp(ext, ".edj"))))
+	       {
+		  if (!edje_object_file_set(o, bd->internal_icon, "icon"))
+		    e_util_edje_icon_set(o, "enlightenment/e");	       
+	       }
+	     else 
+	       {
+		  if (!e_util_edje_icon_set(o, bd->internal_icon))
+		    e_util_edje_icon_set(o, "enlightenment/e"); 
 	       }
 	  }
 	if (o)
