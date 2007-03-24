@@ -35,6 +35,14 @@ e_shelf_init(void)
 EAPI int
 e_shelf_shutdown(void)
 {
+   while (shelves)
+     {
+	E_Shelf *es;
+
+	es = shelves->data;
+	e_object_del(E_OBJECT(es));
+     }
+
    return 1;
 }
 
@@ -42,7 +50,7 @@ EAPI void
 e_shelf_config_init(void)
 {
    Evas_List *l;
-   
+
    while (shelves)
      {
 	E_Shelf *es;
