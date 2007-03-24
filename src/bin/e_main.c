@@ -681,6 +681,14 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_app_shutdown);
+   TS("exec");
+   /* init app system */
+   if (!e_exec_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its exec system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_exec_shutdown);
    TS("remember");
    /* do remember stuff */
    if (!e_remember_init(after_restart ? E_STARTUP_RESTART: E_STARTUP_START))

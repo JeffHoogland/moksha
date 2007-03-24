@@ -7,5 +7,9 @@
 #ifndef E_EXEC_H
 #define E_EXEC_H
 
+EAPI int  e_exec_init(void);
+EAPI int  e_exec_shutdown(void);
+EAPI int  e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec, Ecore_List *files, const char *launch_method);
+
 #endif
 #endif
