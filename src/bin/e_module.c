@@ -19,16 +19,8 @@ struct _Module_Menu_Data
 
 /* local subsystem functions */
 static void _e_module_free(E_Module *m);
-#if 0
-static E_Menu *_e_module_control_menu_new(E_Module *mod);
-static void _e_module_menu_free(void *obj);
-static void _e_module_control_menu_about(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_module_control_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_module_control_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
-#endif
 static void _e_module_dialog_disable_show(const char *title, const char *body, E_Module *m);
 static void _e_module_cb_dialog_disable(void *data, E_Dialog *dia);
-static void _e_module_dialog_icon_set(E_Dialog *dia, const char *icon);
 
 /* local subsystem globals */
 static Evas_List *_e_modules = NULL;
@@ -375,7 +367,6 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
    e_dialog_title_set(dia, title);
    if (m)
      {
-	/* Lots of fallbacks coz we are in a transition period, and the modules are still suffering from the last API change. */
 	snprintf(eap, sizeof(eap), "%s/module.desktop", e_module_dir_get(m));
 	if (ecore_file_exists(eap))
 	  {
@@ -389,14 +380,6 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
 		  edje_object_part_swallow(dia->bg_object, "e.swallow.icon", dia->icon_object);
 		  evas_object_show(dia->icon_object);
 		  e_object_unref(E_OBJECT(app));
-	       }
-	  }
-	else   /* FIXME: Remove the fallbacks when everything in cvs is converted.  B-) */
-	  {
-	     snprintf(eap, sizeof(eap), "%s/module.edj", e_module_dir_get(m));
-	     if (ecore_file_exists(eap))
-	       {
-		  _e_module_dialog_icon_set(dia, eap);
 	       }
 	  }
      }
@@ -447,94 +430,6 @@ _e_module_free(E_Module *m)
    free(m);
 }
 
-#if 0
-static E_Menu *
-_e_module_control_menu_new(E_Module *mod)
-{
-   E_Menu *m;
-   E_Menu_Item *mi;
-
-   if (mod->error) return NULL;
-   
-   m = e_menu_new();
-   
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("About..."));
-   e_menu_item_callback_set(mi, _e_module_control_menu_about, mod);
-   
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Enabled"));
-   e_menu_item_check_set(mi, 1);
-   if (mod->enabled) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _e_module_control_menu_enabled, mod);
-
-   if (mod->func.config)
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_separator_set(mi, 1);
-	
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Configuration"));
-	e_menu_item_callback_set(mi, _e_module_control_menu_configuration, mod);
-     }
-   return m;
-}
-
-static void
-_e_module_menu_free(void *obj)
-{
-   Module_Menu_Data *dat;
-   
-   dat = e_object_data_get(E_OBJECT(obj));
-   while (dat->submenus)
-     {
-	E_Menu *subm;
-	
-	subm = dat->submenus->data;
-	dat->submenus = evas_list_remove_list(dat->submenus, dat->submenus);
-	e_object_del(E_OBJECT(subm));
-     }
-   free(dat);
-}
-
-static void
-_e_module_control_menu_about(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Module *mod;
-   
-   mod = data;
-   mod->func.about(mod);
-}
-
-static void
-_e_module_control_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Module *mod;
-   
-   mod = data;
-   mod->func.config(mod);
-}
-
-static void
-_e_module_control_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Module *mod;
-   int enabled;
-   
-   mod = data;
-   enabled = e_menu_item_toggle_get(mi);
-   if ((mod->enabled) && (!enabled))
-     {
-	e_module_save(mod);
-	e_module_disable(mod);
-     }
-   else if ((!mod->enabled) && (enabled))
-     e_module_enable(mod);
-   
-   e_menu_item_toggle_set(mi, e_module_enabled_get(mod));
-}
-#endif
-
 static void
 _e_module_dialog_disable_show(const char *title, const char *body, E_Module *m)
 {
@@ -566,18 +461,4 @@ _e_module_cb_dialog_disable(void *data, E_Dialog *dia)
    e_object_del(E_OBJECT(m));
    e_object_del(E_OBJECT(dia));
    e_config_save_queue();
-}
-
-static void 
-_e_module_dialog_icon_set(E_Dialog *dia, const char *icon) 
-{
-   /* These should never happen, but just in case */
-   if (!dia) return;
-   if (!icon) return;
-
-   dia->icon_object = edje_object_add(e_win_evas_get(dia->win));
-   edje_object_file_set(dia->icon_object, icon, "icon");
-   edje_extern_object_min_size_set(dia->icon_object, 64, 64);
-   edje_object_part_swallow(dia->bg_object, "e.swallow.icon", dia->icon_object);
-   evas_object_show(dia->icon_object);
 }
