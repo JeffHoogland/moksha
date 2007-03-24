@@ -32,7 +32,7 @@ _config_battery_module(void)
    v->advanced.apply_cfdata = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
 
-   snprintf(buf, sizeof(buf), "%s/module.edj", e_module_dir_get(battery_config->module));
+   snprintf(buf, sizeof(buf), "%s/e-module-battery.edj", e_module_dir_get(battery_config->module));
    cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()),
 			     _("Battery Monitor Configuration"), 
 			     "E", "_e_mod_battery_config_dialog",

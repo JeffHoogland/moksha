@@ -32,7 +32,7 @@ _config_dropshadow_module(E_Container *con, Dropshadow *ds)
    v->basic.apply_cfdata = _basic_apply_data;
    v->basic.create_widgets = _basic_create_widgets;
 
-   snprintf(buf, sizeof(buf), "%s/module.edj", e_module_dir_get(ds->module));
+   snprintf(buf, sizeof(buf), "%s/e-module-dropshadow.edj", e_module_dir_get(ds->module));
    cfd = e_config_dialog_new(con,
 			     _("Dropshadow Configuration"),
 			     "E", "_e_mod_dropshadow_config_dialog",

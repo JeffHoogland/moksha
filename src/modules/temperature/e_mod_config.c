@@ -58,7 +58,7 @@ config_temperature_module(Config_Face *inst)
    v->advanced.apply_cfdata = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
 
-   snprintf(buf, sizeof(buf), "%s/module.edj", e_module_dir_get(inst->module));
+   snprintf(buf, sizeof(buf), "%s/e-module-temperature.edj", e_module_dir_get(inst->module));
    cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()),
 			     _("Temperature Configuration"),
 			     "E", "_e_mod_temperature_config_dialog",

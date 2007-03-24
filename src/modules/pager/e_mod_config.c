@@ -59,7 +59,7 @@ _config_pager_module(Config_Item *ci)
    v->advanced.apply_cfdata = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
 
-   snprintf(buf, sizeof(buf), "%s/module.edj", e_module_dir_get(pager_config->module));
+   snprintf(buf, sizeof(buf), "%s/e-module-pager.edj", e_module_dir_get(pager_config->module));
    cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()),
 			     _("Pager Configuration"),
 			     "E", "_e_mod_pager_config_dialog",

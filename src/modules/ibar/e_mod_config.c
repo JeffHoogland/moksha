@@ -47,7 +47,7 @@ _config_ibar_module(Config_Item *ci)
    v->advanced.apply_cfdata = NULL;
    v->advanced.create_widgets = NULL;
 
-   snprintf(buf, sizeof(buf), "%s/module.edj", e_module_dir_get(ibar_config->module));
+   snprintf(buf, sizeof(buf), "%s/e-module-ibar.edj", e_module_dir_get(ibar_config->module));
    /* Create The Dialog */
    cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()),
 			     _("IBar Configuration"),
