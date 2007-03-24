@@ -2,7 +2,7 @@ Source: enlightenment
 Section: x11
 Priority: optional
 Maintainer: E17 Debian Team <debian@edevelop.org>
-Build-Depends: libevas-dev, libecore-dev, libeet-dev, libedje-dev, edje-bin, libembryo-dev, libx11-dev, x-dev, libxext-dev, automake1.7 | automaken, libtool, debhelper (>= 4.0)
+Build-Depends: libevas-dev, libecore-dev, libeet-dev, libedje-dev, edje-bin, libembryo-dev, libefreet-dev, libx11-dev, x-dev, libxext-dev, automake1.7 | automaken, libtool, debhelper (>= 4.0)
 Standards-Version: 3.7.2
 
 Package: enlightenment
@@ -10,7 +10,7 @@ Architecture: any
 Section: x11
 Recommends: libevas-engine-xrender
 Suggests: entrance
-Depends: ${shlibs:Depends}, libevas, libecore, libecore-con, libecore-evas, libecore-file, libecore-ipc, libecore-job, libecore-txt, libecore-x, libeet, libembryo, embryo-bin, edje-bin, libedje, libevas-loader-eet, libevas-loader-jpeg, libevas-loader-png, libevas-saver-eet, libevas-saver-jpeg, libevas-saver-png, libevas-engine-buffer, libevas-engine-software-x11
+Depends: ${shlibs:Depends}, libevas, libecore, libecore-con, libecore-evas, libecore-file, libecore-ipc, libecore-job, libecore-txt, libecore-x, libeet, libembryo, embryo-bin, edje-bin, libedje, libevas-loader-eet, libevas-loader-jpeg, libevas-loader-png, libevas-saver-eet, libevas-saver-jpeg, libevas-saver-png, libevas-engine-buffer, libevas-engine-software-x11, libefreet
 Provides: e17-core
 Description: Enlightenment themes, etc.
  Enlightenment is an advanced window manager for X11. Unique
