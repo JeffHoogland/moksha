@@ -70,6 +70,7 @@ main(int argc, char **argv)
    char *s;
    struct sigaction action;
    double t, tstart;
+   Ecore_List *list;
 
 #ifdef TS_DO
    t0 = t1 = t2 = ecore_time_get();   
@@ -418,6 +419,30 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(ecore_ipc_shutdown);
+
+   TS("efreet");
+   /* init FDO desktop */
+   if (!efreet_init())
+     {
+        e_error_message_show(_("Enlightenment cannot initialize the FDO desktop system.\n"
+                               "Perhaps you are out of memory?"));
+        _e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(efreet_shutdown);
+   TS("efreet done");
+
+   TS("efreet paths");
+   /* TODO: The list manipulation should be done in efreet */
+   list = efreet_data_dirs_get();
+   if (list)
+     {
+        snprintf(buf, sizeof(buf), "%s/data", e_prefix_data_get());
+        ecore_list_prepend(list, (void *)ecore_string_instance(buf));
+        snprintf(buf, sizeof(buf), "%s/.e/e", e_user_homedir_get());
+        ecore_list_prepend(list, (void *)ecore_string_instance(buf));
+     }
+   efreet_icon_extension_add(".edj");
+   TS("efreet paths done");
 
    TS("ecore_desktop");
    /* init FDO desktop */
