@@ -1043,16 +1043,6 @@ _e_main_dirs_init(void)
 		 homedir);
 	system(buf);
      }
-   /* FIXME: THIS is a hack to get people started!!!
-    * Soon to be replaced with fancy background converting and resyncing code.
-    * Currently this is likely to be done each time E is started up on some systems.
-    * On the other hand, some of those systems wont have FDO menus, so this should not take long.
-    */
-   snprintf(buf, sizeof(buf), "%s/.e/e/applications/menu/all/.order", homedir);
-   if (!ecore_file_exists(buf))
-     {
-        e_fdo_menu_to_order(1);
-     }
    /* FIXME: THIS is to get people started - shoudl be in a wizard */
    snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites", homedir);
    if (!ecore_file_exists(buf))
