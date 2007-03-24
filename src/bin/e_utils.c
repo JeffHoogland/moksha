@@ -821,6 +821,31 @@ e_util_library_path_restore(void)
    E_FREE(prev_path);
 }
 
+EAPI Evas_Object *
+e_util_icon_add(const char *path, Evas *evas)
+{
+   Evas_Object *o = NULL;
+   const char *ext;
+
+   if (!path) return NULL;
+   if (!ecore_file_exists(path)) return NULL;
+
+   o = e_icon_add(evas);
+   ext = strrchr(path, '.');
+   if (ext)
+     {
+	if (!strcmp(ext, ".edj"))
+	  e_icon_file_edje_set(o, path, "icon");
+	else
+	  e_icon_file_set(o, path);
+     }
+   else
+     e_icon_file_set(o, path);
+   e_icon_fill_inside_set(o, 1);
+
+   return o;
+}
+
 /* local subsystem functions */
 static void
 _e_util_container_fake_mouse_up_cb(void *data)

@@ -49,6 +49,7 @@ EAPI char        *e_util_size_string_get(off_t size);
 EAPI char        *e_util_file_time_get(time_t ftime);
 EAPI void         e_util_library_path_strip(void);
 EAPI void         e_util_library_path_restore(void);
-    
+EAPI Evas_Object *e_util_icon_add(const char *path, Evas *evas);
+
 #endif
 #endif
