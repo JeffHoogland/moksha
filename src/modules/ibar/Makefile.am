@@ -4,7 +4,7 @@ MODULE = ibar
 # data files for the module
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)
 files_DATA = \
-module.edj module.desktop
+e-module-$(MODULE).edj module.desktop
 
 EXTRA_DIST = $(files_DATA)
 

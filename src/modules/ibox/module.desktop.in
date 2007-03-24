@@ -1,5 +1,4 @@
 [Desktop Entry]
+Type=Link
 Name=IBox
-Exec=enlightenment
-X-Enlightenment-IconClass=ibox,gadget
-Icon=./module.edj
+Icon=e-module-ibox

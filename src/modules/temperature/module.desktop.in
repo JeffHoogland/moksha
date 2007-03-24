@@ -1,5 +1,4 @@
 [Desktop Entry]
+Type=Link
 Name=Temperature
-Exec=enlightenment
-X-Enlightenment-IconClass=temperature,gadget
-Icon=./module.edj
+Icon=e-module-temperature

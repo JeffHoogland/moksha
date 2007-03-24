@@ -1,5 +1,4 @@
 [Desktop Entry]
+Type=Link
 Name=Battery
-Exec=enlightenment
-X-Enlightenment-IconClass=battery,gadget
-Icon=./module.edj
+Icon=e-module-battery

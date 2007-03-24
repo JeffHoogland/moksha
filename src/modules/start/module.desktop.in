@@ -1,5 +1,4 @@
 [Desktop Entry]
+Type=Link
 Name=Start
-Exec=enlightenment
-X-Enlightenment-IconClass=start,gadget
-Icon=./module.edj
+Icon=e-module-start

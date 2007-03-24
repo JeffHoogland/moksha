@@ -1,5 +1,4 @@
 [Desktop Entry]
+Type=Link
 Name=Dropshadow
-Exec=enlightenment
-X-Enlightenment-IconClass=dropshadow,gadget
-Icon=./module.edj
+Icon=e-module-dropshadow

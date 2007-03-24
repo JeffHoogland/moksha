@@ -1,5 +1,4 @@
 [Desktop Entry]
+Type=Link
 Name=IBar
-Exec=enlightenment
-X-Enlightenment-IconClass=ibar,gadget
-Icon=./module.edj
+Icon=e-module-ibar

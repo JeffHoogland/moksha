@@ -1,5 +1,4 @@
 [Desktop Entry]
+Type=Link
 Name=Pager
-Exec=enlightenment
-X-Enlightenment-IconClass=pager,gadget
-Icon=./module.edj
+Icon=e-module-pager
