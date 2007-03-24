@@ -279,7 +279,6 @@ e_app_shutdown(void)
    _e_apps_start_pending = evas_list_free(_e_apps_start_pending);
    if (_e_apps_all)
      {
-        list = _e_apps_all->subapps;
 	e_object_unref(E_OBJECT(_e_apps_all));
 	_e_apps_all = NULL;
      }
