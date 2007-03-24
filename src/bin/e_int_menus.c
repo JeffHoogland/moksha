@@ -32,9 +32,10 @@ static void _e_int_menus_main_halt           (void *data, E_Menu *m, E_Menu_Item
 static void _e_int_menus_main_reboot         (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_suspend        (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_hibernate      (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_apps_scan           (E_Menu *m);
+static void _e_int_menus_apps_scan           (E_Menu *m, Efreet_Menu *menu);
 static void _e_int_menus_apps_start          (void *data, E_Menu *m);
 static void _e_int_menus_apps_free_hook      (void *obj);
+static void _e_int_menus_apps_free_hook2     (void *obj);
 static void _e_int_menus_apps_run            (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_apps_drag           (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_apps_drag_finished  (E_Drag *drag, int dropped);
@@ -206,11 +207,9 @@ EAPI E_Menu *
 e_int_menus_apps_new(const char *dir)
 {
    E_Menu *m;
-   E_App *a;
-   
+ 
    m = e_menu_new();
-   a = e_app_new(dir, 0);
-   e_object_data_set(E_OBJECT(m), a);
+   if (dir) e_object_data_set(E_OBJECT(m), strdup(dir));
    e_menu_pre_activate_callback_set(m, _e_int_menus_apps_start, NULL);
    e_object_del_attach_func_set(E_OBJECT(m), _e_int_menus_items_del_hook);
    e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_apps_free_hook);
@@ -261,7 +260,7 @@ e_int_menus_favorite_apps_new(void)
    const char *homedir;
    
    homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/applications/menu/favorite", homedir);
+   snprintf(buf, sizeof(buf), "%s/.e/e/applications/menu/favorite.menu", homedir);
    m = e_int_menus_apps_new(buf);
    return m;
 }
@@ -270,12 +269,7 @@ EAPI E_Menu *
 e_int_menus_all_apps_new(void)
 {
    E_Menu *m;
-   char buf[4096];
-   const char *homedir;
-   
-   homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/applications/menu/all", homedir);
-   m = e_int_menus_apps_new(buf);
+   m = e_int_menus_apps_new(NULL);
    return m;
 }
 
@@ -523,64 +517,79 @@ _e_int_menus_main_hibernate(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_int_menus_apps_scan(E_Menu *m)
+_e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
 {
    E_Menu_Item *mi;
-   E_App *a;
-   Evas_List *l;
-   int app_count = 0;
-   
-   ecore_desktop_instrumentation_reset();
-   a = e_object_data_get(E_OBJECT(m));
-   if (a)
+
+   if (menu->entries)
      {
-	e_app_subdir_scan(a, 0);
-	for (l = a->subapps; l; l = l->next)
+	Efreet_Menu *entry;
+
+        ecore_list_goto_first(menu->entries);
+	while ((entry = ecore_list_next(menu->entries)))
 	  {
-	     a = l->data;
-	     
-//             if (e_app_valid_exe_get(a) || (!a->exe))
+	     mi = e_menu_item_new(m);
+	     if (entry->name) e_menu_item_label_set(mi, entry->name);
+	     if (entry->icon)
 	       {
-		  int opt = 0;
-		  char label[4096];
-		  
-		  mi = e_menu_item_new(m);
-		  if (e_config->menu_eap_name_show && a->name) opt |= 0x4;
-		  if (e_config->menu_eap_generic_show && a->generic) opt |= 0x2;
-		  if (e_config->menu_eap_comment_show && a->comment) opt |= 0x1;
-		  if      (opt == 0x7) snprintf(label, sizeof(label), "%s (%s) [%s]", a->name, a->generic, a->comment);
-		  else if (opt == 0x6) snprintf(label, sizeof(label), "%s (%s)", a->name, a->generic);
-		  else if (opt == 0x5) snprintf(label, sizeof(label), "%s [%s]", a->name, a->comment);
-		  else if (opt == 0x4) snprintf(label, sizeof(label), "%s", a->name);
-		  else if (opt == 0x3) snprintf(label, sizeof(label), "%s [%s]", a->generic, a->comment);
-		  else if (opt == 0x2) snprintf(label, sizeof(label), "%s", a->generic);
-		  else if (opt == 0x1) snprintf(label, sizeof(label), "%s", a->comment);
-		  else snprintf(label, sizeof(label), "%s", a->name);
-		  e_menu_item_label_set(mi, label);
-                  e_app_icon_add_to_menu_item(a, mi);
-		  if (a->exe)
-		    {
-		       e_menu_item_callback_set(mi, _e_int_menus_apps_run, a);
-		       e_menu_item_drag_callback_set(mi, _e_int_menus_apps_drag, a);
-		    }
-		  else
-		     e_menu_item_submenu_set(mi, e_int_menus_apps_new(a->path));
-	          app_count++;
+		  const char *file;
+
+		  if (entry->icon[0] == '/') file = entry->icon;
+		  else file = efreet_icon_path_find(e_config->icon_theme, entry->icon, "24x24");
+		  e_menu_item_icon_file_set(mi, file);
 	       }
+	     if (entry->type == EFREET_MENU_ENTRY_SEPARATOR)
+	       e_menu_item_separator_set(mi, 1);
+	     else if (entry->type == EFREET_MENU_ENTRY_DESKTOP)
+	       {
+		  E_App *a;
+
+		  a = e_app_new(entry->desktop->orig_path, 0);
+		  e_menu_item_callback_set(mi, _e_int_menus_apps_run, a);
+		  e_menu_item_drag_callback_set(mi, _e_int_menus_apps_drag, a);
+	       }
+	     else if (entry->type == EFREET_MENU_ENTRY_MENU)
+	       {
+		  E_Menu *subm;
+
+		  subm = e_menu_new();
+		  e_menu_pre_activate_callback_set(subm, _e_int_menus_apps_start, entry);
+		  e_object_del_attach_func_set(E_OBJECT(subm), _e_int_menus_items_del_hook);
+		  e_menu_item_submenu_set(mi, subm);
+	       }
+	     /* TODO: Highlight header
+	     else if (entry->type == EFREET_MENU_ENTRY_HEADER)
+	     */
 	  }
      }
-   if (app_count == 0)
+   else
      {
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("(No Applications)"));
      }
-   ecore_desktop_instrumentation_print();
 }
 
 static void
 _e_int_menus_apps_start(void *data, E_Menu *m)
 {
-   _e_int_menus_apps_scan(m);
+   Efreet_Menu *menu;
+
+   menu = data;
+   if (!menu)
+     {
+	char *dir;
+	
+	dir = e_object_data_get(E_OBJECT(m));
+	if (dir)
+	  {
+	     menu = efreet_menu_parse(dir);
+	     free(dir);
+	  }
+	else menu = efreet_menu_get();
+	e_object_data_set(E_OBJECT(m), menu);
+	e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_apps_free_hook2);
+     }
+   if (menu) _e_int_menus_apps_scan(m, menu);
    e_menu_pre_activate_callback_set(m, NULL, NULL);
 }
 
@@ -604,12 +613,22 @@ static void
 _e_int_menus_apps_free_hook(void *obj)
 {
    E_Menu *m;
-   E_App *a;
+   char *dir;
    
    m = obj;
-   a = e_object_data_get(E_OBJECT(m));
-   /* note: app objects are shared so we ALWAYS unref not del! */
-   if (a) e_object_unref(E_OBJECT(a));
+   dir = e_object_data_get(E_OBJECT(m));
+   E_FREE(dir);
+}
+
+static void
+_e_int_menus_apps_free_hook2(void *obj)
+{
+   E_Menu *m;
+   Efreet_Menu *menu;
+   
+   m = obj;
+   menu = e_object_data_get(E_OBJECT(m));
+   if (menu) efreet_menu_free(menu);
 }
 
 static void
