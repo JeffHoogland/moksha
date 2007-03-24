@@ -23,7 +23,6 @@
 #include <Ecore_Evas.h>
 #include <Ecore_Ipc.h>
 #include <Ecore_File.h>
-#include <Ecore_Desktop.h>
 #include <Evas.h>
 #include <Eet.h>
 #include <Edje.h>

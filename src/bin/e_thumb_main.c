@@ -9,7 +9,6 @@
 #include <Ecore_Evas.h>
 #include <Ecore_Ipc.h>
 #include <Ecore_File.h>
-#include <Ecore_Desktop.h>
 #include <Evas.h>
 #include <Eet.h>
 #include <Edje.h>
@@ -291,42 +290,6 @@ _e_thumb_generate(E_Thumb *eth)
 	alpha = 1;
 	ext = strrchr(eth->file, '.');
 
-/* DON'T need this - shoudl just be using the icon set for the .desktop file
- * directly with no thumbnailing
-	if ((ext) && ((!strcasecmp(ext, ".desktop")) || (!strcasecmp(ext, ".directory"))) )
-	  {
-	     Ecore_Desktop *desktop;
-
-             desktop = ecore_desktop_get(eth->file, NULL);
-             free(eth->file);
-	     eth->file = NULL;
-	     if (desktop)
-	        {
-		   if (desktop->icon_path)
-		      eth->file = strdup(desktop->icon_path);
-		   else
-	              eth->file = (char *)ecore_desktop_icon_find(desktop->icon_class, NULL, eth->key);
-                   free(eth->key);
-	           eth->key = NULL;
-		   if (eth->file)
-		      {
-	                 ext = strrchr(eth->file, '.');
-	                 if ((ext) &&
-	                     ((!strcasecmp(ext, ".edj")) ||
-	                      (!strcasecmp(ext, ".eap")))
-	                     )
-		            {
-		               eth->key = strdup("icon");
-		            }
-		      }
-		   else
-		      {
-		         return;
-		      }
-		}
-	  }
-*/
-	
 	if ((ext) && (eth->key) &&
 	    ((!strcasecmp(ext, ".edj")) ||
 	     (!strcasecmp(ext, ".eap")))
