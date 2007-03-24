@@ -152,7 +152,6 @@ e_app_init(void)
 #if CLEVER_BORDERS
 #endif
    /* Prefill with empty E_Apps from the all directory. */
-   ecore_desktop_instrumentation_reset();
    begin = ecore_time_get();
    _e_apps_all = e_app_new(_e_apps_path_all, 0);
    _e_apps_all_filenames = ecore_file_ls(_e_apps_path_all);
@@ -183,8 +182,6 @@ e_app_init(void)
 #if DEBUG
    printf("INITIAL APP SCAN %3.3f\n", ecore_time_get() - begin);
 #endif
-   ecore_desktop_instrumentation_print();
-   ecore_desktop_instrumentation_reset();
    _e_apps_hash_idler.begin = ecore_time_get();
    _e_apps_hash_idler.idler = ecore_idler_add(_e_apps_hash_idler_cb, &_e_apps_hash_idler);
    return 1;
@@ -237,7 +234,6 @@ _e_apps_hash_idler_cb(void *data)
 #endif
 #endif
 	idler->idler = NULL;
-        ecore_desktop_instrumentation_print();
         return 0;
      }
    return 1;
