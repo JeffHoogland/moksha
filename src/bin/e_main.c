@@ -309,6 +309,7 @@ main(int argc, char **argv)
    
    /* init edje and set it up in frozen mode */
    edje_init();
+   _e_main_shutdown_push(edje_shutdown);
    edje_freeze();
    
    TS("ecore init");
