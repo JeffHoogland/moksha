@@ -38,7 +38,7 @@ e_util_container_fake_mouse_up_later(E_Container *con, int button)
 {
    E_OBJECT_CHECK(con);
    E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
-   
+
    e_util_evas_fake_mouse_up_later(con->bg_evas, button);
 }
 
@@ -47,7 +47,7 @@ e_util_container_fake_mouse_up_all_later(E_Container *con)
 {
    E_OBJECT_CHECK(con);
    E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
-   
+
    e_util_container_fake_mouse_up_later(con, 1);
    e_util_container_fake_mouse_up_later(con, 2);
    e_util_container_fake_mouse_up_later(con, 3);
@@ -57,7 +57,7 @@ EAPI void
 e_util_evas_fake_mouse_up_later(Evas *e, int button)
 {
    E_Util_Fake_Mouse_Up_Info *info;
-   
+
    info = calloc(1, sizeof(E_Util_Fake_Mouse_Up_Info));
    if (info)
      {
@@ -79,25 +79,25 @@ e_util_env_set(const char *var, const char *val)
 {
    if (val)
      {
-#ifdef HAVE_SETENV	
+#ifdef HAVE_SETENV
 	setenv(var, val, 1);
 #else
 	char buf[8192];
-	
+
 	snprintf(buf, sizeof(buf), "%s=%s", var, val);
 	if (getenv(var))
 	  putenv(buf);
 	else
 	  putenv(strdup(buf));
-#endif	
+#endif
      }
    else
      {
-#ifdef HAVE_UNSETENV	
+#ifdef HAVE_UNSETENV
 	unsetenv(var);
 #else
 	if (getenv(var)) putenv(var);
-#endif	
+#endif
      }
 }
 
@@ -105,14 +105,14 @@ EAPI E_Zone *
 e_util_zone_current_get(E_Manager *man)
 {
    E_Container *con;
-   
+
    E_OBJECT_CHECK_RETURN(man, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(man, E_MANAGER_TYPE, NULL);
    con = e_container_current_get(man);
    if (con)
      {
 	E_Zone *zone;
-	
+
 	zone = e_zone_current_get(con);
 	return zone;
      }
@@ -126,7 +126,7 @@ e_util_utils_installed(void)
 }
 
 EAPI int
-e_util_app_installed(char *app) 
+e_util_app_installed(char *app)
 {
    return ecore_file_app_installed(app);
 }
@@ -151,7 +151,7 @@ e_util_glob_case_match(const char *str, const char *glob)
 {
    const char *p;
    char *tstr, *tglob, *tp;
-   
+
    if (glob[0] == 0)
      {
 	if (str[0] == 0) return 1;
@@ -172,12 +172,12 @@ EAPI E_Container *
 e_util_container_number_get(int num)
 {
    Evas_List *l;
-   
+
    for (l = e_manager_list(); l; l = l->next)
      {
 	E_Manager *man;
 	E_Container *con;
-	
+
 	man = l->data;
 	con = e_container_number_get(man, num);
 	if (con) return con;
@@ -189,7 +189,7 @@ EAPI E_Zone *
 e_util_container_zone_number_get(int con_num, int zone_num)
 {
    E_Container *con;
-   
+
    con = e_util_container_number_get(con_num);
    if (!con) return NULL;
    return e_container_zone_number_get(con, zone_num);
@@ -203,7 +203,7 @@ e_util_head_exec(int head, const char *cmd)
    char buf[4096], buf2[32];
    int ok = 0;
    Ecore_Exe *exe;
-   
+
    penv_display = getenv("DISPLAY");
    if (penv_display) penv_display = strdup(penv_display);
    /* set env vars */
@@ -227,7 +227,7 @@ e_util_head_exec(int head, const char *cmd)
      }
    else
      strcpy(buf, penv_display);
-   
+
    ok = 1;
    e_util_library_path_strip();
    exe = ecore_exe_run(cmd, NULL);
@@ -241,7 +241,7 @@ e_util_head_exec(int head, const char *cmd)
 			   cmd);
 	ok = 0;
      }
-   
+
    /* reset env vars */
    if (penv_display)
      {
@@ -263,7 +263,7 @@ EAPI int
 e_util_both_str_empty(const char *s1, const char *s2)
 {
    int empty = 0;
-   
+
    if ((!s1) && (!s2)) return 1;
    if ((!s1) || ((s1) && (s1[0] == 0))) empty++;
    if ((!s2) || ((s2) && (s2[0] == 0))) empty++;
@@ -275,7 +275,7 @@ EAPI int
 e_util_immortal_check(void)
 {
    Evas_List *wins;
-   
+
    wins = e_border_immortal_windows_get();
    if (wins)
      {
@@ -298,7 +298,7 @@ e_util_edje_icon_list_check(const char *list)
    char *buf;
    const char *p;
    const char *c;
-   
+
    if ((!list) || (!list[0])) return 0;
    buf = alloca(strlen(list) + 1);
    p = list;
@@ -329,7 +329,7 @@ e_util_edje_icon_list_set(Evas_Object *obj, const char *list)
    char *buf;
    const char *p;
    const char *c;
-   
+
    if ((!list) || (!list[0])) return 0;
    buf = alloca(strlen(list) + 1);
    p = list;
@@ -360,7 +360,7 @@ e_util_menu_item_edje_icon_list_set(E_Menu_Item *mi, const char *list)
    char *buf;
    const char *p;
    char *c;
-   
+
    if ((!list) || (!list[0])) return 0;
    buf = alloca(strlen(list) + 1);
    p = list;
@@ -421,7 +421,7 @@ e_util_menu_item_edje_icon_set(E_Menu_Item *mi, const char *name)
 {
    const char *file;
    char buf[4096];
-   
+
    if ((!name) || (!name[0])) return 0;
    snprintf(buf, sizeof(buf), "e/icons/%s", name);
    file = e_theme_edje_file_get("base/theme/icons", buf);
@@ -441,14 +441,14 @@ e_util_container_window_find(Ecore_X_Window win)
    for (l = e_manager_list(); l; l = l->next)
      {
 	E_Manager *man;
-	
+
 	man = l->data;
 	for (ll = man->containers; ll; ll = ll->next)
           {
 	     E_Container *con;
-	     
+
 	     con = ll->data;
-	     if ((con->win == win) || (con->bg_win == win) || 
+	     if ((con->win == win) || (con->bg_win == win) ||
 		 (con->event_win == win))
 	       return con;
 	  }
@@ -465,7 +465,7 @@ e_util_desk_border_above(E_Border *bd)
 
    E_OBJECT_CHECK_RETURN(bd, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(bd, E_BORDER_TYPE, NULL);
-   
+
    if (bd->layer == 0) pos = 0;
    else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
    else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
@@ -508,7 +508,7 @@ e_util_desk_border_below(E_Border *bd)
 
    E_OBJECT_CHECK_RETURN(bd, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(bd, E_BORDER_TYPE, NULL);
-   
+
    if (bd->layer == 0) pos = 0;
    else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
    else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
@@ -550,7 +550,7 @@ EAPI int
 e_util_edje_collection_exists(const char *file, const char *coll)
 {
    Evas_List *clist, *l;
-   
+
    clist = edje_file_collection_list(file);
    for (l = clist; l; l = l->next)
      {
@@ -568,7 +568,7 @@ EAPI void
 e_util_dialog_internal(const char *title, const char *txt)
 {
    E_Dialog *dia;
-   
+
    dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_error_dialog");
    if (!dia) return;
    e_dialog_title_set(dia, title);
@@ -586,7 +586,7 @@ e_util_filename_escape(const char *filename)
    const char *p;
    char *q;
    static char buf[4096];
-   
+
    p = filename;
    q = buf;
    while (*p)
@@ -722,7 +722,7 @@ e_util_size_string_get(off_t size)
 {
    double dsize;
    char buf[256];
-   
+
    dsize = (double)size;
    if (dsize < 1024.0) snprintf(buf, sizeof(buf), _("%'.0f Bytes"), dsize);
    else
@@ -759,25 +759,25 @@ e_util_file_time_get(time_t ftime)
      }
    else
      {
-	if (diff <= 60) 
+	if (diff <= 60)
 	  snprintf(buf, sizeof(buf), _("In the last Minute"));
-	else if (diff >= 31526000) 
+	else if (diff >= 31526000)
 	  snprintf(buf, sizeof(buf), _("%li Years ago"), (diff / 31526000));
-	else if (diff >= 2592000) 
+	else if (diff >= 2592000)
 	  snprintf(buf, sizeof(buf), _("%li Months ago"), (diff / 2592000));
-	else if (diff >= 604800) 
+	else if (diff >= 604800)
 	  snprintf(buf, sizeof(buf), _("%li Weeks ago"), (diff / 604800));
 	else if (diff >= 86400)
 	  snprintf(buf, sizeof(buf), _("%li Days ago"), (diff / 86400));
-	else if (diff >= 3600) 
+	else if (diff >= 3600)
 	  snprintf(buf, sizeof(buf), _("%li Hours ago"), (diff / 3600));
-	else if (diff > 60) 
+	else if (diff > 60)
 	  snprintf(buf, sizeof(buf), _("%li Minutes ago"), (diff / 60));
      }
- 
-   if (buf) 
+
+   if (buf)
      s = strdup(buf);
-   else 
+   else
      s = strdup(_("Unknown"));
    return s;
 }
@@ -789,7 +789,7 @@ EAPI void
 e_util_library_path_strip(void)
 {
    char *p, *p2;
-   
+
    p = getenv("LD_LIBRARY_PATH");
    E_FREE(prev_ld_library_path);
    if (p)
@@ -851,7 +851,7 @@ static void
 _e_util_container_fake_mouse_up_cb(void *data)
 {
    E_Util_Fake_Mouse_Up_Info *info;
-   
+
    info = data;
    if (info)
      {

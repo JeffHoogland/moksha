@@ -88,7 +88,7 @@ EAPI int
 e_sys_action_do(E_Sys_Action a, char *param)
 {
    int ret;
-   
+
    if (_e_sys_action_current != E_SYS_NONE)
      {
 	_e_sys_current_action();
@@ -124,7 +124,7 @@ _e_sys_cb_timer(void *data)
     * things
     */
    char buf[4096];
-   
+
    snprintf(buf, sizeof(buf), "%s/enlightenment_sys -t halt", e_prefix_bin_get());
    _e_sys_halt_check_exe = ecore_exe_run(buf, NULL);
    snprintf(buf, sizeof(buf), "%s/enlightenment_sys -t reboot", e_prefix_bin_get());
@@ -242,11 +242,11 @@ _e_sys_cb_logout_timer(void *data)
 {
    Evas_List *l;
    int pending = 0;
-   
+
    for (l = e_border_client_list(); l; l = l->next)
      {
 	E_Border *bd;
-	
+
 	bd = l->data;
 	if (!bd->internal) pending++;
      }
@@ -259,13 +259,13 @@ _e_sys_cb_logout_timer(void *data)
 	if ((ecore_time_get() - _e_sys_logout_begin_time) > 15.0)
 	  {
 	     E_Dialog *dia;
-	     
+
 	     dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_sys_error_logout_slow");
 	     if (dia)
 	       {
 		  e_dialog_title_set(dia, _("Logout problems"));
 		  e_dialog_icon_set(dia, "enlightenment/logout", 64);
-		  e_dialog_text_set(dia, 
+		  e_dialog_text_set(dia,
 				    _("Logout is taking too long. Some<br>"
 				      "applications refuse to close.<br>"
 				      "Do you want to finish the logout<br>"
@@ -309,9 +309,9 @@ _e_sys_logout_begin(E_Sys_Action a_after)
 {
    Evas_List *l;
    E_Obj_Dialog *od;
-   
+
    /* start logout - at end do the a_after action */
-   od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()), 
+   od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()),
 			 _("Logout in progress"), "E", "_sys_logout");
    e_obj_dialog_obj_theme_set(od, "base/theme/sys", "e/sys/logout");
    e_obj_dialog_obj_part_text_set(od, "e.textblock.message",
@@ -325,7 +325,7 @@ _e_sys_logout_begin(E_Sys_Action a_after)
    for (l = e_border_client_list(); l; l = l->next)
      {
 	E_Border *bd;
-	
+
 	bd = l->data;
 	e_border_act_close_begin(bd);
      }
@@ -343,48 +343,48 @@ _e_sys_current_action(void)
 
    dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_sys_error_action_busy");
    if (!dia) return;
-   
+
    e_dialog_title_set(dia, _("Enlightenment is busy with another request"));
    e_dialog_icon_set(dia, "enlightenment/sys", 64);
    switch (_e_sys_action_current)
      {
       case E_SYS_LOGOUT:
-	e_dialog_text_set(dia, 
+	e_dialog_text_set(dia,
 			  _("Enlightenment is busy logging out.<br>"
 			    "You cannot perform other system actions<br>"
 			    "once a logout has begun.")
 			  );
 	break;
       case E_SYS_HALT:
-	e_dialog_text_set(dia, 
+	e_dialog_text_set(dia,
 			  _("Enlightenment is shutting the system down.<br>"
 			    "You cannot do any other system actions<br>"
 			    "once a shutdown has been started.")
 			  );
 	break;
       case E_SYS_REBOOT:
-	e_dialog_text_set(dia, 
+	e_dialog_text_set(dia,
 			  _("Enlightenment is rebooting the system.<br>"
 			    "You cannot do any other system actions<br>"
 			    "once a reboot has begun.")
 			  );
 	break;
       case E_SYS_SUSPEND:
-	e_dialog_text_set(dia, 
+	e_dialog_text_set(dia,
 			  _("Enlightenment is suspending the system.<br>"
 			    "Until suspend is complete you cannot perform<br>"
 			    "any other system actions.")
 			  );
 	break;
       case E_SYS_HIBERNATE:
-	e_dialog_text_set(dia, 
+	e_dialog_text_set(dia,
 			  _("Enlightenment is hibernating the system.<br>"
 			    "You cannot perform an other system actions<br>"
 			    "until this is complete.")
 			  );
 	break;
       default:
-	e_dialog_text_set(dia, 
+	e_dialog_text_set(dia,
 			  _("EEK! This should not happen")
 			  );
 	break;
@@ -403,33 +403,33 @@ _e_sys_action_failed(void)
 
    dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_sys_error_action_failed");
    if (!dia) return;
-   
+
    e_dialog_title_set(dia, _("Enlightenment is busy with another request"));
    e_dialog_icon_set(dia, "enlightenment/sys", 64);
    switch (_e_sys_action_current)
      {
       case E_SYS_HALT:
-	e_dialog_text_set(dia, 
+	e_dialog_text_set(dia,
 			  _("Shutting down of your system failed.")
 			  );
 	break;
       case E_SYS_REBOOT:
-	e_dialog_text_set(dia, 
+	e_dialog_text_set(dia,
 			  _("Rebooting your system failed.")
 			  );
 	break;
       case E_SYS_SUSPEND:
-	e_dialog_text_set(dia, 
+	e_dialog_text_set(dia,
 			  _("Suspend of your system failed.")
 			  );
 	break;
       case E_SYS_HIBERNATE:
-	e_dialog_text_set(dia, 
+	e_dialog_text_set(dia,
 			  _("Hibernating your system failed.")
 			  );
 	break;
       default:
-	e_dialog_text_set(dia, 
+	e_dialog_text_set(dia,
 			  _("EEK! This should not happen")
 			  );
 	break;
@@ -445,7 +445,7 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 {
    char buf[4096];
    E_Obj_Dialog *od;
-   
+
    switch (a)
      {
       case E_SYS_EXIT:
@@ -474,7 +474,7 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 	else
 	  {
 	     _e_sys_exe = ecore_exe_run(buf, NULL);
-	     od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()), 
+	     od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()),
 				   _("Shutting down"), "E", "_sys_halt");
 	     e_obj_dialog_obj_theme_set(od, "base/theme/sys", "e/sys/halt");
 	     e_obj_dialog_obj_part_text_set(od, "e.textblock.message",
@@ -501,7 +501,7 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 	else
 	  {
 	     _e_sys_exe = ecore_exe_run(buf, NULL);
-	     od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()), 
+	     od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()),
 				   _("Rebooting"), "E", "_sys_reboot");
 	     e_obj_dialog_obj_theme_set(od, "base/theme/sys", "e/sys/reboot");
 	     e_obj_dialog_obj_part_text_set(od, "e.textblock.message",
@@ -527,7 +527,7 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 	else
 	  {
 	     _e_sys_exe = ecore_exe_run(buf, NULL);
-	     od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()), 
+	     od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()),
 				   _("Suspending"), "E", "_sys_suspend");
 	     e_obj_dialog_obj_theme_set(od, "base/theme/sys", "e/sys/suspend");
 	     e_obj_dialog_obj_part_text_set(od, "e.textblock.message",
@@ -553,7 +553,7 @@ _e_sys_action_do(E_Sys_Action a, char *param)
 	else
 	  {
 	     _e_sys_exe = ecore_exe_run(buf, NULL);
-	     od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()), 
+	     od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()),
 				   _("Hibernating"), "E", "_sys_hibernate");
 	     e_obj_dialog_obj_theme_set(od, "base/theme/sys", "e/sys/hibernate");
 	     e_obj_dialog_obj_part_text_set(od, "e.textblock.message",

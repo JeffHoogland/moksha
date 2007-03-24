@@ -93,7 +93,7 @@ EAPI void
 e_thumb_icon_file_set(Evas_Object *obj, const char *file, const char *key)
 {
    E_Thumb *eth;
-   
+
    eth = evas_object_data_get(obj, "e_thumbdata");
    if (!eth) return;
    if (eth->file) evas_stringshare_del(eth->file);
@@ -108,7 +108,7 @@ EAPI void
 e_thumb_icon_size_set(Evas_Object *obj, int w, int h)
 {
    E_Thumb *eth;
-   
+
    eth = evas_object_data_get(obj, "e_thumbdata");
    if (!eth) return;
    if ((w < 1) || (h <1)) return;
@@ -121,7 +121,7 @@ e_thumb_icon_begin(Evas_Object *obj)
 {
    E_Thumb *eth, *eth2;
    char buf[4096];
-   
+
    eth = evas_object_data_get(obj, "e_thumbdata");
    if (!eth) return;
    if (eth->queued) return;
@@ -133,7 +133,7 @@ e_thumb_icon_begin(Evas_Object *obj)
 	while (evas_list_count(_thumbnailers_exe) < _num_thumbnailers)
 	  {
 	     Ecore_Exe *exe;
-	     
+
 	     snprintf(buf, sizeof(buf), "%s/enlightenment_thumb", e_prefix_bin_get());
 	     exe = ecore_exe_run(buf, NULL);
 	     _thumbnailers_exe = evas_list_append(_thumbnailers_exe, exe);
@@ -162,7 +162,7 @@ EAPI void
 e_thumb_icon_end(Evas_Object *obj)
 {
    E_Thumb *eth;
-   
+
    eth = evas_object_data_get(obj, "e_thumbdata");
    if (!eth) return;
    if (eth->queued)
@@ -200,7 +200,7 @@ e_thumb_client_data(Ecore_Ipc_Event_Client_Data *e)
    char *icon;
    E_Thumb *eth;
    Evas_Object *obj;
-   
+
    if (!evas_list_find(_thumbnailers, e->client))
      _thumbnailers = evas_list_prepend(_thumbnailers, e->client);
    if (e->minor == 2)
@@ -277,7 +277,7 @@ _e_thumb_gen_end(int objid)
 {
    Evas_List *l;
    Ecore_Ipc_Client *cli;
-   
+
    /* send thumb cancel */
    for (l = _thumbnailers; l; l = l->next)
      {
@@ -290,7 +290,7 @@ static void
 _e_thumb_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    E_Thumb *eth;
-   
+
    eth = evas_object_data_get(obj, "e_thumbdata");
    if (!eth) return;
    evas_object_data_del(obj, "e_thumbdata");
@@ -313,7 +313,7 @@ static void
 _e_thumb_hash_add(int objid, Evas_Object *obj)
 {
    char buf[32];
-   
+
    snprintf(buf, sizeof(buf), "%i", objid);
    _thumbs = evas_hash_add(_thumbs, buf, obj);
 }
@@ -322,7 +322,7 @@ static void
 _e_thumb_hash_del(int objid)
 {
    char buf[32];
-   
+
    snprintf(buf, sizeof(buf), "%i", objid);
    _thumbs = evas_hash_del(_thumbs, buf, NULL);
    if ((!_thumbs) && (!_thumbnailers)) _objid = 0;
@@ -332,7 +332,7 @@ static Evas_Object *
 _e_thumb_hash_find(int objid)
 {
    char buf[32];
-   
+
    snprintf(buf, sizeof(buf), "%i", objid);
    return evas_hash_find(_thumbs, buf);
 }
@@ -355,7 +355,7 @@ static int
 _e_thumb_cb_kill(void *data)
 {
    Evas_List *l;
-   
+
    for (l = _thumbnailers_exe; l; l = l->next)
      ecore_exe_terminate(l->data);
    _kill_timer = NULL;
@@ -367,7 +367,7 @@ _e_thumb_cb_exe_event_del(void *data, int type, void *event)
 {
    Ecore_Exe_Event_Del *ev;
    Evas_List *l;
-   
+
    ev = event;
    for (l = _thumbnailers_exe; l; l = l->next)
      {
