@@ -846,6 +846,21 @@ e_util_icon_add(const char *path, Evas *evas)
    return o;
 }
 
+EAPI Evas_Object *
+e_util_desktop_icon_add(Efreet_Desktop *desktop, const char *size, Evas *evas)
+{
+   if ((!desktop) || (!desktop->icon)) return NULL;
+
+   if (desktop->icon[0] == '/') return e_util_icon_add(desktop->icon, evas);
+   else
+     {
+	const char *path;
+	path = efreet_icon_path_find(e_config->icon_theme, desktop->icon, size);
+	if (path) return e_util_icon_add(path, evas);
+     }
+   return NULL;
+}
+
 /* local subsystem functions */
 static void
 _e_util_container_fake_mouse_up_cb(void *data)

@@ -225,15 +225,11 @@ _e_imc_setup_button_toggle(Evas_Object *button, E_Input_Method_Config *imc)
      {
 	int flag;
 	
-	flag = ( imc->e_im_setup_exec == NULL ) ||
-	   ( imc->e_im_setup_exec[0] == 0 );
+	flag = (!imc->e_im_setup_exec) || (!imc->e_im_setup_exec[0]);
 	e_widget_disabled_set(button, flag);
      } 
    else
-     {	
-	e_widget_disabled_set(button, 1);
-     }
-  
+     e_widget_disabled_set(button, 1);
 }
 
 static void
@@ -264,7 +260,7 @@ _e_imc_setup_cb(void *data, void *data2)
 	
 	imc = evas_hash_find(cfdata->imc_basic_map, cfdata->imc_current);
 	
-	if (imc && imc->e_im_setup_exec)
+	if ((imc) && (imc->e_im_setup_exec))
 	  {
 	     Ecore_Exe *exe;
 	     const char *cmd;

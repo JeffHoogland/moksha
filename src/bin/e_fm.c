@@ -976,16 +976,12 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 	       }
 	     else if (!strcmp(icon, "DESKTOP"))
 	       {
-		  E_App *app;
+		  Efreet_Desktop *ef;
 		 
 		  oic = NULL; 
 		  snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
-		  app = e_app_new(buf, 0);
-		  if (app)
-		    {
-		       oic = e_app_icon_add(app, evas);
-		       e_object_unref(E_OBJECT(app));
-		    }
+		  ef = efreet_desktop_get(buf);
+		  if (ef) oic = e_util_desktop_icon_add(ef, "24x24", evas);
 		  if (type_ret) *type_ret = "DESKTOP";
 	       }
 	     else if (!strncmp(icon, "e/icons/fileman/mime/", 21))
@@ -1021,9 +1017,7 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 	  {
 	     snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
 	     /* fallback */
-	     if (
-		 (e_util_glob_case_match(ici->file, "*.edj"))
-		 )
+	     if ((e_util_glob_case_match(ici->file, "*.edj")))
 	       {
 		  oic = e_thumb_icon_add(evas);
 		  if (keyhint)
@@ -1051,15 +1045,11 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 	     else if ((e_util_glob_case_match(ici->file, "*.desktop")) || 
 		      (e_util_glob_case_match(ici->file, "*.directory")))
 	       {
-		  E_App *app;
-		
-		  oic = NULL;  
-		  app = e_app_new(buf, 0);
-		  if (app)
-		    {
-		       oic = e_app_icon_add(app, evas);
-		       e_object_unref(E_OBJECT(app));
-		    }
+		  Efreet_Desktop *ef;
+
+		  oic = NULL; 
+		  ef = efreet_desktop_get(buf);
+		  if (ef) oic = e_util_desktop_icon_add(ef, "24x24", evas);
 		  if (type_ret) *type_ret = "DESKTOP";
 	       }
 	     else if (e_util_glob_case_match(ici->file, "*.imc"))
