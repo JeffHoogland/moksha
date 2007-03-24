@@ -38,7 +38,6 @@ static void _e_int_menus_apps_free_hook      (void *obj);
 static void _e_int_menus_apps_free_hook2     (void *obj);
 static void _e_int_menus_apps_run            (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_apps_drag           (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_apps_drag_finished  (E_Drag *drag, int dropped);
 static void _e_int_menus_config_pre_cb       (void *data, E_Menu *m);
 static void _e_int_menus_config_free_hook    (void *obj);
 static void _e_int_menus_config_item_cb      (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -542,11 +541,8 @@ _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
 	       e_menu_item_separator_set(mi, 1);
 	     else if (entry->type == EFREET_MENU_ENTRY_DESKTOP)
 	       {
-		  E_App *a;
-
-		  a = e_app_new(entry->desktop->orig_path, 0);
-		  e_menu_item_callback_set(mi, _e_int_menus_apps_run, a);
-		  e_menu_item_drag_callback_set(mi, _e_int_menus_apps_drag, a);
+		  e_menu_item_callback_set(mi, _e_int_menus_apps_run, entry->desktop);
+		  e_menu_item_drag_callback_set(mi, _e_int_menus_apps_drag, entry->desktop);
 	       }
 	     else if (entry->type == EFREET_MENU_ENTRY_MENU)
 	       {
@@ -634,18 +630,18 @@ _e_int_menus_apps_free_hook2(void *obj)
 static void
 _e_int_menus_apps_run(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_App *a;
+   Efreet_Desktop *desktop;
    
-   a = data;
-   e_app_exec(m->zone, a, NULL, NULL, "menu/apps");
+   desktop = data;
+   e_exec(m->zone, desktop, NULL, NULL, "menu/apps");
 }
 
 static void
 _e_int_menus_apps_drag(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_App *a;
+   Efreet_Desktop *desktop;
    
-   a = data;
+   desktop = data;
 
    /* start drag! */
    if (mi->icon_object)
@@ -653,24 +649,19 @@ _e_int_menus_apps_drag(void *data, E_Menu *m, E_Menu_Item *mi)
 	 E_Drag *drag;
 	 Evas_Object *o = NULL;
 	 Evas_Coord x, y, w, h;
-	 const char *drag_types[] = { "enlightenment/eapp" };
+	 const char *drag_types[] = { "enlightenment/desktop" };
+	 char buf[128];
 
 	 evas_object_geometry_get(mi->icon_object, &x, &y, &w, &h);
-	 drag = e_drag_new(m->zone->container, x, y, drag_types, 1, a, -1,
-			      NULL, _e_int_menus_apps_drag_finished);
+	 drag = e_drag_new(m->zone->container, x, y, drag_types, 1, desktop, -1,
+			      NULL, NULL);
 
-         o = e_app_icon_add(a, e_drag_evas_get(drag));
+	 snprintf(buf, sizeof(buf), "%dx%d", w, h);
+         o = e_util_desktop_icon_add(desktop, buf, e_drag_evas_get(drag));
 	 e_drag_object_set(drag, o);
          e_drag_resize(drag, w, h);
-         e_object_ref(E_OBJECT(a));
 	 e_drag_start(drag, mi->drag.x + w, mi->drag.y + h);
       }
-}
-
-static void
-_e_int_menus_apps_drag_finished(E_Drag *drag, int dropped)
-{
-   e_object_unref(E_OBJECT(drag->data));
 }
 
 static void
