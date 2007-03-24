@@ -10,6 +10,7 @@
 
 static void _e_order_free       (E_Order *eo);
 static void _e_order_cb_monitor (void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path);
+static void _e_order_save       (E_Order *eo);
 
 EAPI E_Order *
 e_order_new(const char *path)
@@ -68,4 +69,33 @@ static void
 _e_order_cb_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path)
 {
    /* TODO */
+}
+
+static void
+_e_order_save(E_Order *eo)
+{
+   FILE *f;
+   Evas_List *l;
+
+   f = fopen(eo->path, "wb");
+   if (!f) return;
+
+   for (l = eo->desktops; l; l = l->next)
+     {
+	Efreet_Desktop *desktop;
+	char *id, *path;
+
+	/* TODO: This only allows us to save .desktop files which are in
+	 * the default paths. If it isn't, we should copy it to the users
+	 * application directory */
+	desktop = l->data;
+	path = efreet_util_path_in_default("applications", desktop->orig_path);
+	if (!path) continue;
+	id = efreet_util_path_to_file_id(path, desktop->orig_path);
+	fprintf(f, "%s\n", id);
+	free(id);
+	free(path);
+     }
+
+   fclose(f);
 }
