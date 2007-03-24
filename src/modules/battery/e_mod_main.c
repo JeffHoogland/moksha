@@ -1358,7 +1358,7 @@ _battery_string_get(char *buf)
    p++;
    while (*p == ' ') p++;
    q = p;
-   while ((*q != ' ') && (*q != '\n')) q++;
+   while ((*q) && (*q != ' ') && (*q != '\n')) q++;
    if (q) *q = 0;
    return strdup(p);
 }
