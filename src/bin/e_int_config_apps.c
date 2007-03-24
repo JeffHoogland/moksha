@@ -157,11 +157,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    snprintf(cfdata->path_everything, sizeof(cfdata->path_everything), "%s/.e/e/applications/all", cfdata->homedir);
    snprintf(cfdata->path, sizeof(cfdata->path), "%s/.e/e/applications", cfdata->homedir);
    snprintf(cfdata->path_all, sizeof(cfdata->path_all), "%s/.e/e/applications/menu/all", cfdata->homedir);
-#ifdef ENABLE_FAVORITES
    snprintf(cfdata->path_menu, sizeof(cfdata->path_all), "%s/.e/e/applications/menu", cfdata->homedir);
-#else
-   snprintf(cfdata->path_menu, sizeof(cfdata->path_all), "%s/.e/e/applications/menu/all", cfdata->homedir);
-#endif
    return;
 }
 
@@ -683,11 +679,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	 if ((once) && (once->title))
             of = e_widget_framelist_add(evas, (char *)once->title, 0);
 	 else
-#ifdef ENABLE_FAVORITES
             of = e_widget_framelist_add(evas, _("Menus"), 0);
-#else
-            of = e_widget_framelist_add(evas, _("Menu"), 0);
-#endif
 
          mt = e_widget_button_add(evas, _("Go up a Directory"), "widget/up_dir",
 			   _cb_button_up, cfdata, NULL);

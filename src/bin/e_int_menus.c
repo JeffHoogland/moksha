@@ -8,9 +8,7 @@ typedef struct _Main_Data Main_Data;
 struct _Main_Data
 {
    E_Menu *menu;
-#ifdef ENABLE_FAVORITES
    E_Menu *apps;
-#endif
    E_Menu *all_apps;
    E_Menu *desktops;
    E_Menu *clients;
@@ -95,7 +93,6 @@ e_int_menus_main_new(void)
    
    e_menu_category_set(m, "main");
 
-#ifdef ENABLE_FAVORITES
    subm = e_int_menus_favorite_apps_new();
    dat->apps = subm;
    mi = e_menu_item_new(m);
@@ -103,7 +100,6 @@ e_int_menus_main_new(void)
    e_menu_item_label_set(mi, _("Favorite Applications"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/favorites");
    e_menu_item_submenu_set(mi, subm);
-#endif
 
    subm = e_int_menus_all_apps_new();
    dat->all_apps = subm;
@@ -257,7 +253,6 @@ e_int_menus_desktops_new(void)
    return m;
 }
 
-#ifdef ENABLE_FAVORITES
 EAPI E_Menu *
 e_int_menus_favorite_apps_new(void)
 {
@@ -270,7 +265,6 @@ e_int_menus_favorite_apps_new(void)
    m = e_int_menus_apps_new(buf);
    return m;
 }
-#endif
 
 EAPI E_Menu *
 e_int_menus_all_apps_new(void)
@@ -386,9 +380,7 @@ _e_int_menus_main_del_hook(void *obj)
    dat = e_object_data_get(E_OBJECT(obj));
    if (dat)
      {
-#ifdef ENABLE_FAVORITES
 	e_object_del(E_OBJECT(dat->apps));
-#endif
 	e_object_del(E_OBJECT(dat->all_apps));
 	e_object_del(E_OBJECT(dat->desktops));
 	e_object_del(E_OBJECT(dat->clients));
@@ -782,11 +774,7 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    e_menu_item_callback_set(mi, _e_int_menus_shelf_item_cb, NULL);
    
    mi = e_menu_item_new(m);
-#ifdef ENABLE_FAVORITES
    e_menu_item_label_set(mi, _("Application Menus"));
-#else
-   e_menu_item_label_set(mi, _("Applications Menu"));
-#endif
    e_util_menu_item_edje_icon_set(mi, "enlightenment/applications");
    e_menu_item_callback_set(mi, _e_int_menus_applications_item_cb, NULL);
 

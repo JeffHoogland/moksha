@@ -426,11 +426,7 @@ _e_configure_fill_cat_list(void *data)
    _e_configure_item_add(cat, _("Window Manipulation"), "enlightenment/window_manipulation", e_int_config_window_manipulation);
 
    cat = _e_configure_category_add(eco, _("Menus"), "enlightenment/menus");
-#ifdef ENABLE_FAVORITES
    _e_configure_item_add(cat, _("Application Menus"), "enlightenment/applications", e_int_config_apps);
-#else
-   _e_configure_item_add(cat, _("Applications Menu"), "enlightenment/applications", e_int_config_apps);
-#endif
    _e_configure_item_add(cat, _("Menu Settings"), "enlightenment/menu_settings", e_int_config_menus);
    _e_configure_item_add(cat, _("Client List Menu"), "enlightenment/windows", e_int_config_clientlist);
 

@@ -1283,9 +1283,7 @@ static E_Menu *
 _e_actions_menu_find(const char *name)
 {
    if (!strcmp(name, "main")) return e_int_menus_main_new();
-#ifdef ENABLE_FAVORITES
    else if (!strcmp(name, "favorites")) return e_int_menus_favorite_apps_new();
-#endif
    else if (!strcmp(name, "all")) return e_int_menus_all_apps_new();
    else if (!strcmp(name, "clients")) return e_int_menus_clients_new();
    else if (!strcmp(name, "lost_clients")) return e_int_menus_lost_clients_new();
@@ -2169,10 +2167,8 @@ e_actions_init(void)
    ACT_GO(menu_show);
    e_action_predef_name_set(_("Menu"), _("Show Main Menu"), 
 			    "menu_show", "main", NULL, 0);
-#ifdef ENABLE_FAVORITES
    e_action_predef_name_set(_("Menu"), _("Show Favorites Menu"), "menu_show", 
 			    "favorites", NULL, 0);
-#endif
    e_action_predef_name_set(_("Menu"), _("Show All Applications Menu"), 
 			    "menu_show", "all", NULL, 0);
    e_action_predef_name_set(_("Menu"), _("Show Clients Menu"), "menu_show", 
