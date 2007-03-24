@@ -65,6 +65,7 @@
 #include <Ecore_DBus.h>
 #include <Eet.h>
 #include <Edje.h>
+#include <Efreet.h>
 
 #if HAVE___ATTRIBUTE__
 #define __UNUSED__ __attribute__((unused))

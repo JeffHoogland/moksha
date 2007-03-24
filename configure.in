@@ -185,6 +185,7 @@ PKG_CHECK_MODULES(E, [
   edje
   eet
   embryo
+  efreet
 ])
 
 e_libs=$E_LIBS" "$LIBINTL" "$fnmatch_libs" "
