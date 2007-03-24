@@ -48,7 +48,6 @@ Xnest $disp_num -ac &
 
 sleep 2   # Someone reported that it starts E before X has started properly.
 
-echo "export DISPLAY=$main; export E_START="enlightenment_start"; $action enlightenment $e_args"
 export DISPLAY=$main; export E_START="enlightenment_start"; $action enlightenment $e_args
 
 rm -f $tmp
