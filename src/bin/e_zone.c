@@ -26,8 +26,6 @@ EAPI int E_EVENT_POINTER_WARP = 0;
 #define E_ZONE_FLIP_UP(zone)    ((e_config->desk_flip_wrap && ((zone)->desk_y_count > 1)) || ((zone)->desk_y_current > 0))
 #define E_ZONE_FLIP_DOWN(zone)  ((e_config->desk_flip_wrap && ((zone)->desk_y_count > 1)) || (((zone)->desk_y_current + 1) < (zone)->desk_y_count))
 
-static int startup_id = 0;
-
 EAPI int
 e_zone_init(void)
 {
@@ -39,9 +37,6 @@ e_zone_init(void)
 EAPI int
 e_zone_shutdown(void)
 {
-   char buf[256];
-   snprintf(buf, sizeof(buf), "%i", startup_id);
-   e_util_env_set("E_STARTUP_ID", buf);
    return 1;
 }
 
@@ -596,159 +591,6 @@ e_zone_flip_win_restore(void)
 	       }
 	  }
      }
-}
-
-EAPI int
-e_zone_exec(E_Zone *zone, const char *exe)
-{
-   int ret = 0;
-   char *p1, *p2;
-   char *penv_display;
-   char buf[4096], buf2[32];
-   Ecore_Exe *ex;
-   E_App_Instance *inst = NULL;
-   E_App *a;
-   
-   E_OBJECT_CHECK_RETURN(zone, 0);
-   E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
-   
-   if (startup_id == 0)
-     {
-	p1 = getenv("E_STARTUP_ID");
-	if (p1) startup_id = atoi(p1);
-     }
-   if (++startup_id < 1) startup_id = 1;
-   /* save previous env vars we need to save */
-   penv_display = getenv("DISPLAY");
-   if (penv_display) penv_display = strdup(penv_display);
-   
-   /* set env vars */
-   p1 = strrchr(penv_display, ':');
-   p2 = strrchr(penv_display, '.');
-   if ((p1) && (p2) && (p2 > p1)) /* "blah:x.y" */
-     {
-	/* yes it could overflow... but who will overflow DISPLAY eh? why? to
-	 * "exploit" your own applications running as you?
-	 */
-	strcpy(buf, penv_display);
-	buf[p2 - penv_display + 1] = 0;
-	snprintf(buf2, sizeof(buf2), "%i", zone->container->manager->num);
-	strcat(buf, buf2);
-     }
-   else if (p1) /* "blah:x */
-     {
-	strcpy(buf, penv_display);
-	snprintf(buf2, sizeof(buf2), ".%i", zone->container->manager->num);
-	strcat(buf, buf2);
-     }
-   else
-     strcpy(buf, penv_display);
-   e_util_env_set("DISPLAY", buf);
-   snprintf(buf, sizeof(buf), "E_START|%i", startup_id);
-   e_util_env_set("DESKTOP_STARTUP_ID", buf);
-   /* execute */
-   a = e_app_exe_find(exe);
-   if (!a) 
-     {
-//	a = E_NEW(E_App, 1);
-//	a->name = strdup(exe);
-//	a->exe = strdup(exe);
-     }
-
-   if (a)
-     {
-	inst = E_NEW(E_App_Instance, 1);
-	if (!inst) return 0;
-     }
-
-   e_util_library_path_strip();
-   ex = ecore_exe_pipe_run(exe, ECORE_EXE_PIPE_AUTO | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR | ECORE_EXE_PIPE_READ_LINE_BUFFERED | ECORE_EXE_PIPE_ERROR_LINE_BUFFERED, inst);
-   e_util_library_path_restore();
-   if (!ex)
-     {
-	if (inst) free(inst);
-	ret = 0;
-     }
-   /* reset env vars */
-   else ret = 1;
-   if (penv_display)
-     {
-	e_util_env_set("DISPLAY", penv_display);
-	free(penv_display);
-     }
-   /* 20 lines at start and end, 20x100 limit on bytes at each end. */
-   ecore_exe_auto_limits_set(ex, 2000, 2000, 20, 20);
-   if (a)
-     {
-	ecore_exe_tag_set(ex, "E/app");
-	inst->app = a;
-	inst->exe = ex;
-	inst->launch_id = startup_id;
-	inst->launch_time = ecore_time_get();
-	a->instances = evas_list_append(a->instances, inst);
-	if (a->startup_notify) a->starting = 1;
-     }
-   else
-     ecore_exe_free(ex);
-   return ret;
-}
-
-EAPI int
-e_zone_app_exec(E_Zone *zone, E_App *a)
-{
-   int ret;
-   char *p1, *p2;
-   char *penv_display;
-   char buf[4096], buf2[32];
-   
-   E_OBJECT_CHECK_RETURN(zone, 0);
-   E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
-   
-   if (!a) return 0;
-   if (startup_id == 0)
-     {
-	p1 = getenv("E_STARTUP_ID");
-	if (p1) startup_id = atoi(p1);
-     }
-   if (++startup_id < 1) startup_id = 1;
-   /* save previous env vars we need to save */
-   penv_display = getenv("DISPLAY");
-   if (penv_display) penv_display = strdup(penv_display);
-   
-   /* set env vars */
-   p1 = strrchr(penv_display, ':');
-   p2 = strrchr(penv_display, '.');
-   if ((p1) && (p2) && (p2 > p1)) /* "blah:x.y" */
-     {
-	/* yes it could overflow... but who will overflow DISPLAY eh? why? to
-	 * "exploit" your own applications running as you?
-	 */
-	strcpy(buf, penv_display);
-	buf[p2 - penv_display + 1] = 0;
-	snprintf(buf2, sizeof(buf2), "%i", zone->container->manager->num);
-	strcat(buf, buf2);
-     }
-   else if (p1) /* "blah:x */
-     {
-	strcpy(buf, penv_display);
-	snprintf(buf2, sizeof(buf2), ".%i", zone->container->manager->num);
-	strcat(buf, buf2);
-     }
-   else
-     strcpy(buf, penv_display);
-   e_util_env_set("DISPLAY", buf);
-   snprintf(buf, sizeof(buf), "E_START|%i", startup_id);
-   e_util_env_set("DESKTOP_STARTUP_ID", buf);
-   /* execute */
-   ret = e_app_exec(a, startup_id);
- 
-   /* reset env vars */
-   if (penv_display)
-     {
-	e_util_env_set("DISPLAY", penv_display);
-	free(penv_display);
-     }
-   return ret;
 }
 
 /* local subsystem functions */

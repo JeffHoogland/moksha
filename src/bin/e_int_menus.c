@@ -626,8 +626,7 @@ _e_int_menus_apps_run(void *data, E_Menu *m, E_Menu_Item *mi)
    E_App *a;
    
    a = data;
-   e_zone_app_exec(m->zone, a);
-   e_exehist_add("menu/apps", a->exe);
+   e_app_exec(m->zone, a, NULL, NULL, "menu/apps");
 }
 
 static void

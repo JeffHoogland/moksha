@@ -1426,10 +1426,7 @@ ACT_FN_GO(app)
 		  else if (!strcmp(p2, "exe:"))
 		    a = e_app_exe_find(p + 1);
 		  if (a)
-		    {
-		       e_zone_app_exec(zone, a);
-		       e_exehist_add("action/app", a->exe);
-		    }
+		    e_app_exec(zone, a, NULL, NULL, "action/app");
 	       }
 	  }
      }

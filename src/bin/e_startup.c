@@ -63,7 +63,7 @@ _e_startup(void)
 	e_init_done();
 	return;
      }
-   e_app_exec(a, 0);
+   e_app_exec(NULL, a, NULL, NULL, NULL);
    snprintf(buf, sizeof(buf), _("Starting %s"), a->name);
    e_init_status_set(buf);   
    e_init_icons_app_add(a);

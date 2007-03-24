@@ -25,6 +25,8 @@
 /* local subsystem functions */
 typedef struct _E_App_Change_Info E_App_Change_Info;
 typedef struct _E_App_Callback    E_App_Callback;
+typedef struct _E_App_Launch      E_App_Launch;
+typedef struct _E_App_Instance E_App_Instance;
 
 struct _E_App_Change_Info
 {
@@ -37,6 +39,22 @@ struct _E_App_Callback
    void (*func) (void *data, E_App *a, E_App_Change ch);
    void  *data;
    unsigned char delete_me : 1;
+};
+
+struct _E_App_Launch
+{
+   E_App      *app;
+   E_Zone     *zone;
+   const char *launch_method;
+};
+
+struct _E_App_Instance
+{
+   E_App       *app;
+   Ecore_Exe   *exe;
+   int          launch_id;
+   double       launch_time;
+   Ecore_Timer *expire_timer;
 };
 
 struct _E_App_Hash_Idler
@@ -70,6 +88,7 @@ static void      _e_app_print              (const char *path, Ecore_File_Event e
 static void      _e_app_check_order        (const char *file);
 static int       _e_app_order_contains     (E_App *a, const char *file);
 static void      _e_app_resolve_file_name  (char *buf, size_t size, const char *path, const char *file);
+static void      _e_app_cb_exec            (void *data, Efreet_Desktop *desktop, char *exec, int remaining);
 
 /* local subsystem globals */
 static int          _e_apps_callbacks_walking = 0;
@@ -83,6 +102,8 @@ static const char  *_e_apps_path_trash = NULL;
 static Evas_List   *_e_apps_start_pending = NULL;
 static Evas_Hash   *_e_apps_every_app = NULL;
 static struct _E_App_Hash_Idler _e_apps_hash_idler;
+
+static int startup_id = 0;
 
 #if CLEVER_BORDERS
 struct _E_App_Glob_List_Entry
@@ -239,6 +260,16 @@ EAPI int
 e_app_shutdown(void)
 {
    Evas_List *list;
+   char buf[256];
+
+   snprintf(buf, sizeof(buf), "%i", startup_id);
+   e_util_env_set("E_STARTUP_ID", buf);
+
+   while (_e_apps_change_callbacks)
+     {
+	free(_e_apps_change_callbacks->data);
+	_e_apps_change_callbacks = evas_list_remove_list(_e_apps_change_callbacks, _e_apps_change_callbacks);
+     }
 
    if (_e_apps_hash_idler.idler)
      {
@@ -264,16 +295,6 @@ e_app_shutdown(void)
      }
    evas_stringshare_del(_e_apps_path_trash);
    evas_stringshare_del(_e_apps_path_all);
-     {
-	Evas_List *l;
-
-	for (l = list; l; l = l->next)
-	  {
-	     E_App *a;
-	     a = l->data;
-	     printf("BUG: References %d %s\n", E_OBJECT(a)->references, a->path);
-	  }
-     }
    evas_hash_free(_e_apps_every_app);
    _e_apps_every_app = NULL;
 #if CLEVER_BORDERS
@@ -621,102 +642,46 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 }
 
 EAPI int
-e_app_exec(E_App *a, int launch_id)
+e_app_exec(E_Zone *zone, E_App *a, const char *exec, Ecore_List *files, const char *launch_method)
 {
-   Ecore_Exe *exe;
-   E_App *original;
-   E_App_Instance *inst;
-   Evas_List *l;
-   char *command;
-   
-   E_OBJECT_CHECK_RETURN(a, 0);
-   E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, 0);
-   if (!a->exe) return 0;
+   E_App_Launch *launch;
 
-  /* no exe field, don't exe it. */
-//   if (!_e_app_exe_valid_get(a->exe))
-//     return 0;
-   
-   /* FIXME: set up locale, encoding and input method env vars if they are in
-    * the eapp file */
-   inst = E_NEW(E_App_Instance, 1);
-   if (!inst) return 0;
-   
-   if (a->orig)
-     original = a->orig;
-   else
-     original = a;
-   
-   if (a->desktop)
+   if ((!a) && (!exec)) return 0;
+   launch = E_NEW(E_App_Launch, 1);
+   if (!launch) return 0;
+   if (zone)
      {
-        Ecore_List *commands;
+	launch->zone = zone;
+	e_object_ref(E_OBJECT(launch->zone));
+     }
+   if (launch_method) launch->launch_method = evas_stringshare_add(launch_method);
 
-        /* We are not passing a list of files, so we only expect one command. */
-        commands = ecore_desktop_get_command(a->desktop, NULL, 1);
-	if (commands)
+   if (a)
+     {
+	if (a->orig) a = a->orig;
+	launch->app = a;
+	e_object_ref(E_OBJECT(launch->app));
+	if (exec)
+	  _e_app_cb_exec(launch, NULL, strdup(exec), 0);
+	else
 	  {
-	     char *temp;
+	     Ecore_List *commands;
 
-	     temp = ecore_list_first(commands);
-	     if (temp)
-	        command = strdup(temp);
-	     ecore_list_destroy(commands);
+	     commands = ecore_desktop_get_command(a->desktop, files, 1);
+	     if (commands)
+	       {
+		  char *command;
+
+		  while ((command = ecore_list_remove_first(commands)))
+		    _e_app_cb_exec(launch, NULL, command, ecore_list_nodes(commands));
+		  ecore_list_destroy(commands);
+	       }
 	  }
      }
    else
-     command = strdup(a->exe);
-   if (!command)
      {
-	free(inst);
-	e_util_dialog_show(_("Run Error"),
-			   _("Enlightenment was unable to process a command line:<br>"
-			     "<br>"
-			     "%s %s<br>"),
-			   a->exe, (a->exe_params != NULL) ? a->exe_params : "" );
-	return 0;
+	_e_app_cb_exec(launch, NULL, strdup(exec), 0);
      }
-   /* We want the stdout and stderr as lines for the error dialog if it exits abnormally. */
-   e_util_library_path_strip();
-   exe = ecore_exe_pipe_run(command, ECORE_EXE_PIPE_AUTO | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR | ECORE_EXE_PIPE_READ_LINE_BUFFERED | ECORE_EXE_PIPE_ERROR_LINE_BUFFERED, inst);
-   e_util_library_path_restore();
-   if (!exe)
-     {
-	free(command);
-	free(inst);
-	e_util_dialog_show(_("Run Error"),
-			   _("Enlightenment was unable to fork a child process:<br>"
-			     "<br>"
-			     "%s %s<br>"),
-			   a->exe, (a->exe_params != NULL) ? a->exe_params : "" );
-	return 0;
-     }
-   /* 20 lines at start and end, 20x100 limit on bytes at each end. */
-   ecore_exe_auto_limits_set(exe, 2000, 2000, 20, 20);
-   ecore_exe_tag_set(exe, "E/app");
-   inst->app = original;
-   inst->exe = exe;
-   inst->launch_id = launch_id;
-   inst->launch_time = ecore_time_get();
-   inst->expire_timer = ecore_timer_add(10.0, _e_app_cb_expire_timer, inst);
-
-   if (original->parent == _e_apps_all)
-     {
-	_e_apps_all->subapps = evas_list_remove(_e_apps_all->subapps, original);
-	_e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, original);
-     }
-
-   original->instances = evas_list_append(original->instances, inst);
-   _e_apps_start_pending = evas_list_append(_e_apps_start_pending, original);
-   if (original->startup_notify) original->starting = 1;
-   for (l = original->references; l; l = l->next)
-     {
-	E_App *a2;
-	
-	a2 = l->data;
-	_e_app_change(a2, E_APP_EXEC);
-     }
-   _e_app_change(original, E_APP_EXEC);
-   free(command);
    return 1;
 }
 
@@ -2793,7 +2758,7 @@ _e_apps_cb_exit(void *data, int type, void *event)
    ev = event;
    if (!ev->exe) return 1;
    if (!(ecore_exe_tag_get(ev->exe) && 
-	 (!strcmp(ecore_exe_tag_get(ev->exe), "E/app")))) return 1;
+	(!strcmp(ecore_exe_tag_get(ev->exe), "E/app")))) return 1;
    ai = ecore_exe_data_get(ev->exe);
    if (!ai) return 1;
    a = ai->app;
@@ -3008,7 +2973,6 @@ _e_app_order_contains(E_App *a, const char *file)
    return ret;
 }
 
-
 static void
 _e_app_resolve_file_name(char *buf, size_t size, const char *path, const char *file)
 {
@@ -3021,4 +2985,133 @@ _e_app_resolve_file_name(char *buf, size_t size, const char *path, const char *f
       snprintf(buf, size, "%s%s", path, file);
    else
       snprintf(buf, size, "%s/%s", path, file);
+}
+
+static void
+_e_app_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
+{
+   E_App_Instance *inst = NULL;
+   E_App_Launch *launch;
+   Ecore_Exe *exe;
+   const char *penv_display;
+   char buf[4096];
+
+   launch = data;
+   if (launch->app)
+     {
+	inst = E_NEW(E_App_Instance, 1);
+	if (!inst) return;
+     }
+
+   if (startup_id == 0)
+     {
+	const char *p;
+	p = getenv("E_STARTUP_ID");
+	if (p) startup_id = atoi(p);
+	e_util_env_set("E_STARTUP_ID", NULL);
+     }
+   if (++startup_id < 1) startup_id = 1;
+   /* save previous env vars we need to save */
+   penv_display = getenv("DISPLAY");
+   if (penv_display) penv_display = strdup(penv_display);
+   if ((penv_display) && (launch->zone))
+     {
+	const char *p1, *p2;
+	char buf2[32];
+	int head;
+
+	head = launch->zone->container->manager->num;
+
+	/* set env vars */
+	p1 = strrchr(penv_display, ':');
+	p2 = strrchr(penv_display, '.');
+	if ((p1) && (p2) && (p2 > p1)) /* "blah:x.y" */
+	  {
+	     /* yes it could overflow... but who will overflow DISPLAY eh? why? to
+	      * "exploit" your own applications running as you?
+	      */
+	     strcpy(buf, penv_display);
+	     buf[p2 - penv_display + 1] = 0;
+	     snprintf(buf2, sizeof(buf2), "%i", head);
+	     strcat(buf, buf2);
+	  }
+	else if (p1) /* "blah:x */
+	  {
+	     strcpy(buf, penv_display);
+	     snprintf(buf2, sizeof(buf2), ".%i", head);
+	     strcat(buf, buf2);
+	  }
+	else
+	  strcpy(buf, penv_display);
+	e_util_env_set("DISPLAY", buf);
+     }
+   snprintf(buf, sizeof(buf), "E_START|%i", startup_id);
+   e_util_env_set("DESKTOP_STARTUP_ID", buf);
+
+   e_util_library_path_strip();
+   printf("exec: %s\n", exec);
+   exe = ecore_exe_pipe_run(exec,
+			    ECORE_EXE_PIPE_AUTO | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR |
+			    ECORE_EXE_PIPE_READ_LINE_BUFFERED | ECORE_EXE_PIPE_ERROR_LINE_BUFFERED,
+			    inst);
+   e_util_library_path_restore();
+   if (penv_display)
+     {
+       	e_util_env_set("DISPLAY", penv_display);
+	free(penv_display);
+     }
+   if (!exe)
+     {
+	E_FREE(inst);
+	e_util_dialog_show(_("Run Error"),
+			   _("Enlightenment was unable to fork a child process:<br>"
+			     "<br>"
+			     "%s<br>"),
+			   exec);
+	return;
+     }
+   /* reset env vars */
+   if (launch->launch_method) e_exehist_add(launch->launch_method, exec);
+   free(exec);
+   /* 20 lines at start and end, 20x100 limit on bytes at each end. */
+   ecore_exe_auto_limits_set(exe, 2000, 2000, 20, 20);
+   ecore_exe_tag_set(exe, "E/app");
+
+   if (launch->app)
+     {
+	Evas_List *l;
+
+	inst->app = launch->app;
+	inst->exe = exe;
+	inst->launch_id = startup_id;
+	inst->launch_time = ecore_time_get();
+	inst->expire_timer = ecore_timer_add(10.0, _e_app_cb_expire_timer, inst);
+
+	if (inst->app->parent == _e_apps_all)
+	  {
+	     _e_apps_all->subapps = evas_list_remove(_e_apps_all->subapps, inst->app);
+	     _e_apps_all->subapps = evas_list_prepend(_e_apps_all->subapps, inst->app);
+	  }
+
+	inst->app->instances = evas_list_append(inst->app->instances, inst);
+	_e_apps_start_pending = evas_list_append(_e_apps_start_pending, inst->app);
+	if (inst->app->startup_notify) inst->app->starting = 1;
+	for (l = inst->app->references; l; l = l->next)
+	  {
+	     E_App *a2;
+
+	     a2 = l->data;
+	     _e_app_change(a2, E_APP_EXEC);
+	  }
+	_e_app_change(inst->app, E_APP_EXEC);
+     }
+   else
+     ecore_exe_free(exe);
+   if (!remaining)
+     {
+	if (launch->launch_method) evas_stringshare_del(launch->launch_method);
+	if (launch->zone) e_object_unref(E_OBJECT(launch->zone));
+	if (launch->app) e_object_unref(E_OBJECT(launch->app));
+       	free(launch);
+     }
 }

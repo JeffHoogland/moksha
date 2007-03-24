@@ -424,21 +424,12 @@ _e_exebuf_exec(void)
    if (exe_sel)
      {
 	if (exe_sel->app)
-	  {
-	     e_zone_app_exec(exebuf->zone, exe_sel->app);
-	     e_exehist_add("exebuf", exe_sel->app->exe);
-	  }
+	  e_app_exec(exebuf->zone, exe_sel->app, NULL, NULL, "exebuf");
 	else
-	  {
-	     e_zone_exec(exebuf->zone, exe_sel->file);
-	     e_exehist_add("exebuf", exe_sel->file);
-	  }
+	  e_app_exec(exebuf->zone, NULL, exe_sel->file, NULL, "exebuf");
      }
    else
-     {
-	e_zone_exec(exebuf->zone, cmd_buf);
-	e_exehist_add("exebuf", cmd_buf);
-     }
+     e_app_exec(exebuf->zone, NULL, cmd_buf, NULL, "exebuf");
    
    e_exebuf_hide();
 }
@@ -456,10 +447,7 @@ _e_exebuf_exec_term(void)
 	     if (exe_sel->app->exe)
 	       active_cmd = exe_sel->app->exe;
 	     else
-	       {
-		  e_zone_app_exec(exebuf->zone, exe_sel->app);
-		  e_exehist_add("exebuf", exe_sel->app->exe);
-	       }
+	       e_app_exec(exebuf->zone, exe_sel->app, NULL, NULL, "exebuf");
 	  }
 	else 
 	  active_cmd = exe_sel->file;
@@ -467,13 +455,12 @@ _e_exebuf_exec_term(void)
    else
      active_cmd = cmd_buf;
 
-   if (strlen(active_cmd) > 0)
+   if (active_cmd[0])
      {
 	/* Copy the terminal command to the start of the string...
 	 * making sure it has a null terminator if greater than EXEBUFLEN */
 	snprintf(tmp, EXEBUFLEN, "%s %s", e_config->exebuf_term_cmd, active_cmd);
-	e_zone_exec(exebuf->zone, tmp);
-	e_exehist_add("exebuf", tmp);
+	e_app_exec(exebuf->zone, NULL, tmp, NULL, "exebuf");
      }
 
    e_exebuf_hide();

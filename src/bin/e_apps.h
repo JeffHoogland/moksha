@@ -27,7 +27,6 @@ typedef enum _E_App_Icon_Type
 
 
 typedef struct _E_App          E_App;
-typedef struct _E_App_Instance E_App_Instance;
 typedef struct _E_App_Autopsy  E_App_Autopsy;
 
 #else
@@ -97,15 +96,6 @@ struct _E_App
    unsigned char       tmpfile : 1;
 };
 
-struct _E_App_Instance
-{
-   E_App       *app;
-   Ecore_Exe   *exe;
-   int          launch_id;
-   double       launch_time;
-   Ecore_Timer *expire_timer;
-};
-
 struct _E_App_Autopsy
 {
    E_App       *app;
@@ -126,7 +116,7 @@ EAPI void        e_app_image_size_set                    (E_App *a, int w, int h
 EAPI int         e_app_is_parent                         (E_App *parent, E_App *app);
 EAPI int         e_app_equals                            (E_App *app1, E_App *app2);
 EAPI void        e_app_subdir_scan                       (E_App *a, int scan_subdirs);
-EAPI int         e_app_exec                              (E_App *a, int launch_id);
+EAPI int         e_app_exec                              (E_Zone *zone, E_App *a, const char *exec, Ecore_List *files, const char *launch_method);
 EAPI int         e_app_starting_get                      (E_App *a);
 EAPI int         e_app_running_get                       (E_App *a);
 EAPI void        e_app_list_prepend_relative             (E_App *add, E_App *before);

@@ -951,8 +951,7 @@ _ibar_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ic = data;
    if ((ev->button == 1) && (!ic->drag.dnd) && (ic->mouse_down == 1))
      {
-	e_zone_app_exec(ic->ibar->inst->gcc->gadcon->zone, ic->app);
-	e_exehist_add("ibar", ic->app->exe);
+	e_app_exec(ic->ibar->inst->gcc->gadcon->zone, ic->app, NULL, NULL, "ibar");
 	ic->drag.start = 0;
 	ic->drag.dnd = 0;
 	ic->mouse_down = 0;
