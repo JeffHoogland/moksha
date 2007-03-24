@@ -43,7 +43,7 @@ e_order_new(const char *path)
 		    {
 		       Efreet_Desktop *desktop;
 		       desktop = efreet_util_desktop_by_file_id_get(buf);
-		       if (desktop) evas_list_append(eo->desktops, desktop);
+		       if (desktop) eo->desktops = evas_list_append(eo->desktops, desktop);
 		    }
 	       }
 	  }

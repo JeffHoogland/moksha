@@ -3,18 +3,18 @@
  */
 #include "e.h"
 
+/* TODO:
+ * - Need some kind of "wait for exit" system, maybe register with
+ *   e_config? startup and restart apps could also be in e_config
+ */
+
 /* local subsystem functions */
 static void _e_startup(void);
-static int  _e_startup_timeout_cb(void *data);
-static int  _e_startup_next_cb(void *data);
-static void _e_startup_app_exit_cb(void *data, E_App *a, E_App_Change ch);
+static void _e_startup_next_cb(void *data);
 
 /* local subsystem globals */
-static E_App       *startup_apps = NULL;
-static int          start_app_pos = -1;
-static Ecore_Timer *next_timer = NULL;
-static Ecore_Timer *timeout_timer = NULL;
-static E_App       *waiting_app = NULL;
+static E_Order        *startup_apps = NULL;
+static int             start_app_pos = -1;
 
 /* externally accessible functions */
 EAPI void
@@ -25,16 +25,15 @@ e_startup(E_Startup_Mode mode)
    
    homedir = e_user_homedir_get();
    if (mode == E_STARTUP_START)
-     snprintf(buf, sizeof(buf), "%s/.e/e/applications/startup", homedir);
+     snprintf(buf, sizeof(buf), "%s/.e/e/applications/startup/.order", homedir);
    else if (mode == E_STARTUP_RESTART)
-     snprintf(buf, sizeof(buf), "%s/.e/e/applications/restart", homedir);
-   startup_apps = e_app_new(buf, 1);
+     snprintf(buf, sizeof(buf), "%s/.e/e/applications/restart/.order", homedir);
+   startup_apps = e_order_new(buf);
    if (!startup_apps)
      {
 //	e_init_hide();
 	return;
      }
-   e_app_change_callback_add(_e_startup_app_exit_cb, NULL);
    start_app_pos = 0;
    _e_startup();
 }
@@ -43,7 +42,7 @@ e_startup(E_Startup_Mode mode)
 static void
 _e_startup(void)
 {
-   E_App *a;
+   Efreet_Desktop *desktop;
    char buf[4096];
    
    if (!startup_apps)
@@ -51,66 +50,25 @@ _e_startup(void)
 	e_init_done();
 	return;
      }
-   a = evas_list_nth(startup_apps->subapps, start_app_pos);
+   desktop = evas_list_nth(startup_apps->desktops, start_app_pos);
    start_app_pos++;
-   if (!a)
+   if (!desktop)
      {
-	e_object_unref(E_OBJECT(startup_apps));
+	e_object_del(E_OBJECT(startup_apps));
 	startup_apps = NULL;
 	start_app_pos = -1;
-	waiting_app = NULL;
-	e_app_change_callback_del(_e_startup_app_exit_cb, NULL);
 	e_init_done();
 	return;
      }
-   e_app_exec(NULL, a, NULL, NULL, NULL);
-   snprintf(buf, sizeof(buf), _("Starting %s"), a->name);
+   e_exec(NULL, desktop, NULL, NULL, NULL);
+   snprintf(buf, sizeof(buf), _("Starting %s"), desktop->name);
    e_init_status_set(buf);   
-   e_init_icons_app_add(a);
-   if (a->wait_exit)
-     {
-	timeout_timer = ecore_timer_add(10.0, _e_startup_timeout_cb, NULL);
-	waiting_app = a;
-     }
-   else
-     {
-	timeout_timer = ecore_timer_add(0.0, _e_startup_next_cb, NULL);
-	waiting_app = NULL;
-     }
-}
-
-static int
-_e_startup_timeout_cb(void *data)
-{
-   timeout_timer = NULL;
-   waiting_app = NULL;
-   /* FIXME: error dialog or log etc..... */
-   _e_startup();
-   return 0;
-}
-
-static int
-_e_startup_next_cb(void *data)
-{
-   next_timer = NULL;
-   _e_startup();
-   return 0;
+   e_init_icons_desktop_add(desktop);
+   ecore_job_add(_e_startup_next_cb, NULL);
 }
 
 static void
-_e_startup_app_exit_cb(void *data, E_App *a, E_App_Change ch)
+_e_startup_next_cb(void *data)
 {
-   if (ch == E_APP_EXIT)
-     {
-	if (a == waiting_app)
-	  {
-	     waiting_app = NULL;
-	     if (timeout_timer)
-	       {
-		  ecore_timer_del(timeout_timer);
-		  timeout_timer = NULL;
-	       }
-	     _e_startup();
-	  }
-     }
+   _e_startup();
 }

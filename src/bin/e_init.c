@@ -199,12 +199,10 @@ e_init_done(void)
 }
 
 EAPI void
-e_init_icons_app_add(E_App *app)
+e_init_icons_desktop_add(Efreet_Desktop *desktop)
 {
    Evas_Object *o;
-
-   E_OBJECT_CHECK(app);
-   E_OBJECT_TYPE_CHECK(app, E_APP_TYPE);
+   char buf[128];
 
    if (!_e_init_evas) return;
    
@@ -231,17 +229,21 @@ e_init_icons_app_add(E_App *app)
 	evas_object_show(o);
      }
    
-   o = e_app_icon_add(app, _e_init_evas);
-   evas_object_resize(o, _e_init_icon_size, _e_init_icon_size);
-   e_box_pack_end(_e_init_icon_box, o);
-   e_box_pack_options_set(o, 
-			  0, 0, 
-			  0, 0, 
-			  0.5, 0.5,
-			  _e_init_icon_size, _e_init_icon_size,
-			  _e_init_icon_size, _e_init_icon_size);
-   evas_object_show(o);
-   _e_init_icon_list = evas_list_append(_e_init_icon_list, o);
+   snprintf(buf, sizeof(buf), "%dx%d", _e_init_icon_size, _e_init_icon_size);
+   o = e_util_desktop_icon_add(desktop, buf, _e_init_evas);
+   if (o)
+     {
+	evas_object_resize(o, _e_init_icon_size, _e_init_icon_size);
+	e_box_pack_end(_e_init_icon_box, o);
+	e_box_pack_options_set(o, 
+			       0, 0, 
+			       0, 0, 
+			       0.5, 0.5,
+			       _e_init_icon_size, _e_init_icon_size,
+			       _e_init_icon_size, _e_init_icon_size);
+	evas_object_show(o);
+	_e_init_icon_list = evas_list_append(_e_init_icon_list, o);
+     }
 }
 
 static void
