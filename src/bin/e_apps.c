@@ -2253,7 +2253,6 @@ e_app_icon_add_to_menu_item(E_App *a, E_Menu_Item *mi)
 
    if (a->orig)
       a = a->orig;
-   mi->app = a;
 
 #if DEBUG
 printf("e_app_icon_add_to_menu_item(%s)   %s   %s   %s\n", a->path, a->icon_class, e_config->icon_theme, a->icon_path);
