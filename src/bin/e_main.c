@@ -307,11 +307,6 @@ main(int argc, char **argv)
    
    TS("edje init");
    
-   /* init edje and set it up in frozen mode */
-   edje_init();
-   _e_main_shutdown_push(edje_shutdown);
-   edje_freeze();
-   
    TS("ecore init");
    /* basic ecore init */
    if (!ecore_init())
@@ -321,6 +316,11 @@ main(int argc, char **argv)
 	exit(-1);
      }
    _e_main_shutdown_push(ecore_shutdown);
+
+   /* init edje and set it up in frozen mode */
+   edje_init();
+   edje_freeze();
+   _e_main_shutdown_push(edje_shutdown);
    
    _e_cacheburst++;
 /* eet_cacheburst(_e_cacheburst); */
@@ -833,7 +833,7 @@ main(int argc, char **argv)
        e_error_message_show(_("Enlightenment cannot set up its desk locking system."));
        _e_main_shutdown(-1);
      }
-/* _e_main_shutdown_push(e_desklock_shutdown); */
+   _e_main_shutdown_push(e_desklock_shutdown);
 
    TS("add idle enterers");
    /* add in a handler that just before we go idle we flush x */
@@ -887,13 +887,11 @@ main(int argc, char **argv)
    /* Store current selected desktops */
    _e_main_desk_save();
 
-#if 0 /* disabled due to segv's on shutdown/restart - not everyone will see them */
    /* unroll our stack of shutdown functions with exit code of 0 */
    _e_main_shutdown(0);
    
    e_intl_shutdown();
-#endif
-   
+
    /* if we were flagged to restart, then  restart. */
    if (restart)
      {
