@@ -9,6 +9,7 @@
  * - Clear e_exec_instances on shutdown
  * - Clear e_exec_start_pending on shutdown
  * - Create border add handler
+ * - Launch .desktop in terminal if .desktop requires it
  */
 
 typedef struct _E_Exec_Launch   E_Exec_Launch;
