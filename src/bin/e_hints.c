@@ -130,6 +130,7 @@ e_hints_init(void)
 		    }
 	       }
 
+	     /* TODO: Remember this window and close it on shutdown */
 	     win = ecore_x_window_new(roots[i], -200, -200, 5, 5);
 /*	     
  * I don't FUCKING believe it. if we PRETEND we are Kwin - java is happy.
