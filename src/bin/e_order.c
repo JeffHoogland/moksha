@@ -49,6 +49,7 @@ e_order_new(const char *path)
 	  }
 	fclose(f);
      }
+   eo->path = evas_stringshare_add(path);
    eo->monitor = ecore_file_monitor_add(path, _e_order_cb_monitor, eo);
 
    return eo;
@@ -58,6 +59,7 @@ static void
 _e_order_free(E_Order *eo)
 {
    evas_list_free(eo->desktops);
+   if (eo->path) evas_stringshare_del(eo->path);
    if (eo->monitor) ecore_file_monitor_del(eo->monitor);
    free(eo);
 }
