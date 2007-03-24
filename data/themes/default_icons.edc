@@ -1043,7 +1043,7 @@ group {
    }
 }
 group {
-       name: "e/icons/enlightenment/transitions";
+   name: "e/icons/enlightenment/transitions";
    max: 64 64;
    parts { 
       part {
