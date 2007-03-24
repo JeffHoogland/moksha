@@ -56,6 +56,63 @@ e_order_new(const char *path)
    return eo;
 }
 
+EAPI void
+e_order_remove(E_Order *eo, Efreet_Desktop *desktop)
+{
+   eo->desktops = evas_list_remove(eo->desktops, desktop);
+   _e_order_save(eo);
+}
+
+EAPI void
+e_order_append(E_Order *eo, Efreet_Desktop *desktop)
+{
+   eo->desktops = evas_list_append(eo->desktops, desktop);
+   _e_order_save(eo);
+}
+
+EAPI void
+e_order_prepend_relative(E_Order *eo, Efreet_Desktop *desktop, Efreet_Desktop *before)
+{
+   eo->desktops = evas_list_prepend_relative(eo->desktops, desktop, before);
+   _e_order_save(eo);
+}
+
+EAPI void
+e_order_files_append(E_Order *eo, Evas_List *files)
+{
+   Evas_List *l;
+
+   for (l = files; l ; l = l->next)
+     {
+	Efreet_Desktop *desktop;
+	const char *file;
+
+	file = l->data;
+	desktop = efreet_desktop_get(file);
+	if (!desktop) continue;
+	eo->desktops = evas_list_append(eo->desktops, desktop);
+     }
+   _e_order_save(eo);
+}
+
+EAPI void
+e_order_files_prepend_relative(E_Order *eo, Evas_List *files, Efreet_Desktop *before)
+{
+   Evas_List *l;
+
+   for (l = files; l ; l = l->next)
+     {
+	Efreet_Desktop *desktop;
+	const char *file;
+
+	file = l->data;
+	desktop = efreet_desktop_get(file);
+	if (!desktop) continue;
+	eo->desktops = evas_list_prepend_relative(eo->desktops, desktop, before);
+     }
+   _e_order_save(eo);
+}
+
 static void
 _e_order_free(E_Order *eo)
 {
@@ -87,7 +144,7 @@ _e_order_save(E_Order *eo)
 
 	/* TODO: This only allows us to save .desktop files which are in
 	 * the default paths. If it isn't, we should copy it to the users
-	 * application directory */
+	 * application directory. Or store the full path in the .order file */
 	desktop = l->data;
 	path = efreet_util_path_in_default("applications", desktop->orig_path);
 	if (!path) continue;

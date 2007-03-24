@@ -22,5 +22,11 @@ struct _E_Order
 
 EAPI E_Order *e_order_new(const char *path);
 
+EAPI void e_order_remove(E_Order *eo, Efreet_Desktop *desktop);
+EAPI void e_order_append(E_Order *eo, Efreet_Desktop *desktop);
+EAPI void e_order_prepend_relative(E_Order *eo, Efreet_Desktop *desktop, Efreet_Desktop *before);
+EAPI void e_order_files_append(E_Order *eo, Evas_List *files);
+EAPI void e_order_files_prepend_relative(E_Order *eo, Evas_List *files, Efreet_Desktop *before);
+
 #endif
 #endif
