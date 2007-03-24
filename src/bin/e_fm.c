@@ -2516,56 +2516,34 @@ static int
 _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 {
    char buf[4096];
-   Ecore_Desktop *desktop;
+   Efreet_Desktop *desktop;
    
    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 
-   desktop = ecore_desktop_get(buf, NULL);
+   desktop = efreet_desktop_get(buf);
    if (desktop)
      {
-	if (desktop->name)     ic->info.label   = evas_stringshare_add(desktop->name);
-	if (desktop->generic)  ic->info.generic = evas_stringshare_add(desktop->generic);
-	if (desktop->comment)  ic->info.comment = evas_stringshare_add(desktop->comment);
+	if (desktop->name)         ic->info.label   = evas_stringshare_add(desktop->name);
+	if (desktop->generic_name) ic->info.generic = evas_stringshare_add(desktop->generic_name);
+	if (desktop->comment)      ic->info.comment = evas_stringshare_add(desktop->comment);
 	
-	if (desktop->icon)
+	if (desktop->icon) ic->info.icon = evas_stringshare_add(desktop->icon);
+
+	if (desktop->type == EFREET_DESKTOP_TYPE_LINK)
 	  {
-	     char *v;
-	     
-	     /* FIXME: Use a real icon size. */
-	     v = desktop->icon_path;
-// make it consistent and use the same icon everywhere	     
-//	     v = ecore_desktop_icon_find(desktop->icon, NULL, e_config->icon_theme);
-	     if (v)
+	     if (desktop->url)
+	       ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->url);
+	     if (desktop->x)
 	       {
-		  ic->info.icon = evas_stringshare_add(v);
-//		  free(v);
+		  const char *type;
+		  
+		  type = ecore_hash_get(desktop->x, "X-Enlightenment-Type");
+		  if (type)
+		    {
+		       if (!strcmp(type, "Mount")) ic->info.mount = 1;
+		       else if (!strcmp(type, "Removable")) ic->info.removable = 1;
+		    }
 	       }
-	  }
-	
-	if (desktop->type)
-	  {
-	     if (!strcmp(desktop->type, "Mount"))
-	       {
-		  ic->info.mount = 1;
-		  if (desktop->URL)
-		    ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->URL);
-	       }
-	     else if (!strcmp(desktop->type, "Removable"))
-	       {
-		  ic->info.removable = 1;
-		  if (desktop->URL)
-		    ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->URL);
-	       }
-	     else if (!strcmp(desktop->type, "Link"))
-	       {
-		  if (desktop->URL)
-		    ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->URL);
-	       }
-	     else if (!strcmp(desktop->type, "Application"))
-	       {
-	       }
-	     else
-	       goto error;
 	  }
      }
    
