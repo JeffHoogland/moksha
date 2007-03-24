@@ -2984,7 +2984,7 @@ _e_app_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
    E_App_Instance *inst = NULL;
    E_App_Launch *launch;
    Ecore_Exe *exe;
-   const char *penv_display;
+   char *penv_display;
    char buf[4096];
 
    launch = data;
