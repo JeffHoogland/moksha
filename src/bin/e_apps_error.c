@@ -146,12 +146,9 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	  ecore_exe_event_data_free(app->read);
 	free(app);
      }
-   if (cfdata->signal)
-     free(cfdata->signal);
-   if (cfdata->exit)
-     free(cfdata->exit);
-   if (cfdata->label)
-     free(cfdata->label);
+   E_FREE(cfdata->signal);
+   E_FREE(cfdata->exit);
+   E_FREE(cfdata->label);
 
    free(cfdata);
 }
