@@ -359,7 +359,8 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
 {
    E_Dialog *dia;
    E_Border *bd;
-   char eap[4096];
+   char buf[PATH_MAX];
+   const char *icon = NULL;
 
    dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_module_dialog");
    if (!dia) return;
@@ -367,20 +368,24 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
    e_dialog_title_set(dia, title);
    if (m)
      {
-	snprintf(eap, sizeof(eap), "%s/module.desktop", e_module_dir_get(m));
-	if (ecore_file_exists(eap))
-	  {
-	     E_App *app;
+	Efreet_Desktop *desktop;
 
-	     app = e_app_new(eap, 0);
-	     if (app)
+	snprintf(buf, sizeof(buf), "%s/module.desktop", e_module_dir_get(m));
+
+	desktop = efreet_desktop_get(buf);
+	if ((desktop) && (desktop->icon))
+	  {
+	     icon = efreet_icon_path_find(e_config->icon_theme, desktop->icon, "64x64");
+	     if (!icon)
 	       {
-		  dia->icon_object = e_app_icon_add(app, e_win_evas_get(dia->win));
-		  edje_extern_object_min_size_set(dia->icon_object, 64, 64);
-		  edje_object_part_swallow(dia->bg_object, "e.swallow.icon", dia->icon_object);
-		  evas_object_show(dia->icon_object);
-		  e_object_unref(E_OBJECT(app));
+		  snprintf(buf, sizeof(buf), "%s/%s.edj",
+			e_module_dir_get(m), desktop->icon);
+		  icon = buf;
 	       }
+	     dia->icon_object = e_util_icon_add(icon, e_win_evas_get(dia->win));
+	     edje_extern_object_min_size_set(dia->icon_object, 64, 64);
+	     edje_object_part_swallow(dia->bg_object, "e.swallow.icon", dia->icon_object);
+	     evas_object_show(dia->icon_object);
 	  }
      }
    else
@@ -394,7 +399,7 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
    if (!m) return;
    bd = dia->win->border;
    if (!bd) return;
-   bd->internal_icon = evas_stringshare_add(eap);
+   bd->internal_icon = evas_stringshare_add(icon);
 }
 
 /* local subsystem functions */
