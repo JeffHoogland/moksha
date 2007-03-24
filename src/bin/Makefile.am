@@ -188,7 +188,9 @@ e_int_config_desk.h \
 e_int_config_clientlist.h \
 e_fm_prop.h \
 e_int_config_mouse.h \
-e_mouse.h
+e_mouse.h \
+e_order.h \
+e_exec.h
  
 enlightenment_src = \
 e_user.c \
@@ -352,6 +354,8 @@ e_fm_prop.c \
 e_int_config_clientlist.c \
 e_int_config_mouse.c \
 e_mouse.c \
+e_order.c \
+e_exec.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \

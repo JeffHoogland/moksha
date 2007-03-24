@@ -164,3 +164,5 @@
 #include "e_fm_prop.h"
 #include "e_mouse.h"
 #include "e_int_config_mouse.h"
+#include "e_order.h"
+#include "e_exec.h"
