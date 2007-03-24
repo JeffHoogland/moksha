@@ -15,14 +15,7 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Co
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 static void _ilist_cb_change(void *data, Evas_Object *obj);
-static void _add_theme(void *value, void *user_data);
 static int _sort_icon_themes(void *data1, void *data2);
-
-struct _CFIconTheme
-{
-   char *name;
-   Ecore_Desktop_Icon_Theme *theme;
-};
 
 struct _E_Config_Dialog_Data
 {
@@ -65,18 +58,21 @@ e_int_config_icon_themes(E_Container *con)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
-   Ecore_Hash *icon_themes = NULL;
+   Ecore_List *icon_themes;
 
-   if ((icon_themes = ecore_desktop_icon_theme_list()))
-      ecore_hash_for_each_node(icon_themes, _add_theme, cfdata);
+   icon_themes = efreet_icon_theme_list_get();
+   if (icon_themes)
+     {
+	Efreet_Icon_Theme *theme;
 
-   if (cfdata->icon_themes)
-     cfdata->icon_themes = evas_list_sort(cfdata->icon_themes, evas_list_count(cfdata->icon_themes), _sort_icon_themes);
-
-   if (e_config->icon_theme)
-      cfdata->themename = strdup(e_config->icon_theme);
-   else
-      cfdata->themename = strdup("hicolor");
+	ecore_list_goto_first(icon_themes);
+	while ((theme = ecore_list_next(icon_themes)))
+	  cfdata->icon_themes = evas_list_append(cfdata->icon_themes, theme);
+	cfdata->icon_themes = evas_list_sort(cfdata->icon_themes,
+					     evas_list_count(cfdata->icon_themes),
+					     _sort_icon_themes);
+     }
+   cfdata->themename = strdup(e_config->icon_theme);
 
    return;
 }
@@ -95,17 +91,7 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   Evas_List *l;
-
-   while ((l = cfdata->icon_themes))
-     {
-        CFIconTheme *m;
-
-        m = l->data;
-        cfdata->icon_themes = evas_list_remove_list(cfdata->icon_themes, l);
-        free(m->name);
-        E_FREE(m);
-     }
+   evas_list_free(cfdata->icon_themes);
    E_FREE(cfdata->themename);
    E_FREE(cfdata);
 }
@@ -182,28 +168,26 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    i = 0;
    for (l = cfdata->icon_themes; l; l = l->next)
      {
-	CFIconTheme *cm;
+	Efreet_Icon_Theme *theme;
 	Evas_Object *oc = NULL;
-	
-	cm = l->data;
-	if (cm)
+
+	theme = l->data;
+	if (theme->example_icon)
 	  {
-	     if (cm->theme)
-	        {
-	           if (!cm->theme->example_path)
-                      cm->theme->example_path = (char *) ecore_desktop_icon_find(cm->theme->example, "24x24", cm->name);
-	           if (cm->theme->example_path)
-		      {
-                         oc = e_icon_add(evas);
-	                 e_icon_file_set(oc, cm->theme->example_path);
-	                 e_icon_fill_inside_set(oc, 1);
-		      }
-		}
-             e_widget_ilist_append(ilist, oc, cm->theme->name, NULL, NULL, cm->name);
-	     if (!strcmp(cfdata->themename, cm->name))
-	       e_widget_ilist_selected_set(ilist, i);
-	     i++;
+	     const char *path;
+
+	     path = efreet_icon_path_find(theme->name.internal, theme->example_icon, "24x24");
+	     if (path)
+	       {
+		  oc = e_icon_add(evas);
+		  e_icon_file_set(oc, path);
+		  e_icon_fill_inside_set(oc, 1);
+	       }
 	  }
+	e_widget_ilist_append(ilist, oc, theme->name.name, NULL, NULL, theme->name.internal);
+	if (!strcmp(cfdata->themename, theme->name.internal))
+	  e_widget_ilist_selected_set(ilist, i);
+	i++;
      }
 
    e_widget_ilist_go(ilist);
@@ -297,28 +281,26 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    i = 0;
    for (l = cfdata->icon_themes; l; l = l->next)
      {
-	CFIconTheme *cm;
+	Efreet_Icon_Theme *theme;
 	Evas_Object *oc = NULL;
-	
-	cm = l->data;
-	if (cm)
+
+	theme = l->data;
+	if (theme->example_icon)
 	  {
-	     if (cm->theme)
-	        {
-	           if (!cm->theme->example_path)
-                      cm->theme->example_path = (char *) ecore_desktop_icon_find(cm->theme->example, "24x24", cm->name);
-	           if (cm->theme->example_path)
-		      {
-                         oc = e_icon_add(evas);
-	                 e_icon_file_set(oc, cm->theme->example_path);
-	                 e_icon_fill_inside_set(oc, 1);
-		      }
-		}
-             e_widget_ilist_append(ilist, oc, cm->theme->name, NULL, NULL, cm->name);
-	     if (strcmp(cfdata->themename, cm->name) == 0)
-		e_widget_ilist_selected_set(ilist, i);
-	     i++;
+	     const char *path;
+
+	     path = efreet_icon_path_find(theme->name.internal, theme->example_icon, "24x24");
+	     if (path)
+	       {
+		  oc = e_icon_add(evas);
+		  e_icon_file_set(oc, path);
+		  e_icon_fill_inside_set(oc, 1);
+	       }
 	  }
+	e_widget_ilist_append(ilist, oc, theme->name.name, NULL, NULL, theme->name.internal);
+	if (!strcmp(cfdata->themename, theme->name.internal))
+	  e_widget_ilist_selected_set(ilist, i);
+	i++;
      }
 
    e_widget_ilist_go(ilist);
@@ -338,78 +320,121 @@ static void
 _ilist_cb_change(void *data, Evas_Object *obj)
 {
    E_Config_Dialog_Data *cfdata;
-   const char *v;
-   Ecore_Desktop_Icon_Theme *theme;
-   char * dir;
+   Efreet_Icon_Theme *theme;
+   char *dir = NULL;
+   char *text;
+   size_t length = 0, size = 4096;
 
    cfdata = data;
-   v = cfdata->themename;
-   if (!v) return;
    if (!cfdata->gui.comment) return;
+   theme = efreet_icon_theme_find(cfdata->themename);
+   if (!theme) return;
 
-   if ((theme = ecore_desktop_icon_theme_get(v, NULL)))
-      {
-         char *text;
-	 size_t length;
-
-         length = strlen(theme->comment) + strlen(theme->path) + 16;
-	 if (theme->inherits)
-	   length += strlen(theme->inherits) + 32;
-	 text = alloca(length);
-	 if (text)
-	    {
-	       if (theme->inherits)
-		 sprintf(text, "%s\npath = %s\ninherits from %s", theme->comment, theme->path, theme->inherits);
-	       else
-		 sprintf(text, "%s\npath = %s", theme->comment, theme->path);
-               e_widget_textblock_plain_set(cfdata->gui.comment, text);
-	    }
-	 dir = ecore_file_get_dir(theme->path);
-         e_fm2_path_set(cfdata->gui.o_fm, dir, "/");
-	 E_FREE(dir);
-      }
-}
-
-static void
-_add_theme(void *value, void *user_data)
-{
-   Ecore_Hash_Node    *node;
-   E_Config_Dialog_Data *cfdata;
-   const char           *key;
-   Ecore_Desktop_Icon_Theme *theme;
-   CFIconTheme *m;
-
-   cfdata = user_data;
-   node = (Ecore_Hash_Node *) value;
-   key = node->key;
-   theme = (Ecore_Desktop_Icon_Theme *)node->value;
-
-   m = E_NEW(CFIconTheme, 1);
-   if (m)
+   text = malloc(4096);
+   text[0] = 0;
+   if (theme->comment)
      {
-	m->name = strdup(key);
-	m->theme = theme;
-	cfdata->icon_themes = evas_list_append(cfdata->icon_themes, m);
+	length += strlen(theme->comment) + 1;
+	while (length >= size)
+	  {
+	     size += 4096;
+	     text = realloc(text, size);
+	  }
+	strcat(text, theme->comment);
+	strcat(text, "\n");
+     }
+   if (theme->paths.count == 1)
+     {
+	length += strlen(theme->paths.path) + 8;
+	while (length >= size)
+	  {
+	     size += 4096;
+	     text = realloc(text, size);
+	  }
+	dir = theme->paths.path;
+	strcat(text, "path = ");
+	strcat(text, dir);
+	strcat(text, "\n");
+     }
+   else if (theme->paths.count > 1)
+     {
+	char *path;
+	int first = 1;
+
+	ecore_list_goto_first(theme->paths.path);
+	while ((path = ecore_list_next(theme->paths.path)))
+	  {
+	     length += strlen(theme->paths.path) + 16;
+	     while (length >= size)
+	       {
+		  size += 4096;
+		  text = realloc(text, size);
+	       }
+	     if (first)
+	       {
+		  dir = path;
+		  strcat(text, "paths = ");
+		  strcat(text, path);
+		  first = 0;
+	       }
+	     else
+	       {
+		  strcat(text, ", ");
+		  strcat(text, path);
+	       }
+	  }
+	strcat(text, "\n");
+     }
+   if (theme->inherits)
+     {
+	const char *inherit;
+	int first = 1;
+
+	ecore_list_goto_first(theme->inherits);
+	while ((inherit = ecore_list_next(theme->inherits)))
+	  {
+	     length += strlen(theme->paths.path) + 32;
+	     while (length >= size)
+	       {
+		  size += 4096;
+		  text = realloc(text, size);
+	       }
+	     if (first)
+	       {
+		  strcat(text, "inherits =  ");
+		  strcat(text, inherit);
+		  first = 0;
+	       }
+	     else
+	       {
+		  strcat(text, ", ");
+		  strcat(text, inherit);
+	       }
+	  }
+	strcat(text, "\n");
+     }
+   e_widget_textblock_plain_set(cfdata->gui.comment, text);
+   free(text);
+   if (dir)
+     {
+	dir = ecore_file_get_dir(dir);
+	e_fm2_path_set(cfdata->gui.o_fm, dir, "/");
+	free(dir);
      }
 }
 
 static int
 _sort_icon_themes(void *data1, void *data2)
 {
-   CFIconTheme *m1, *m2;
+   Efreet_Icon_Theme *m1, *m2;
 
-   if (!data1) return 1;
    if (!data2) return -1;
 
    m1 = data1;
    m2 = data2;
 
-   /* These are supposed to be required strings.  Be paranoid pending further investigation. */
-   if (!m1->theme) return 1;
-   if (!m2->theme) return -1;
+   if (!m1->name.name) return 1;
+   if (!m2->name.name) return -1;
 
-   if (!m1->theme->name) return 1;
-   if (!m2->theme->name) return -1;
-
-   return (strcmp((const char*)m1->theme->name, (const char*)m2->theme->name));
+   return (strcmp(m1->name.name, m2->name.name));
 }
