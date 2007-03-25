@@ -185,18 +185,16 @@ _e_order_save(E_Order *eo)
    for (l = eo->desktops; l; l = l->next)
      {
 	Efreet_Desktop *desktop;
-	char *id, *path;
+	char *id;
 
 	/* TODO: This only allows us to save .desktop files which are in
 	 * the default paths. If it isn't, we should copy it to the users
 	 * application directory. Or store the full path in the .order file */
 	desktop = l->data;
-	path = efreet_util_path_in_default("applications", desktop->orig_path);
-	if (!path) continue;
-	id = efreet_util_path_to_file_id(path, desktop->orig_path);
+	id = efreet_util_path_to_file_id(desktop->orig_path);
+	if (!id) continue;
 	fprintf(f, "%s\n", id);
 	free(id);
-	free(path);
      }
 
    fclose(f);
