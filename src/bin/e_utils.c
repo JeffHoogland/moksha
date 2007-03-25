@@ -120,18 +120,6 @@ e_util_zone_current_get(E_Manager *man)
 }
 
 EAPI int
-e_util_utils_installed(void)
-{
-   return ecore_file_app_installed("emblem");
-}
-
-EAPI int
-e_util_app_installed(char *app)
-{
-   return ecore_file_app_installed(app);
-}
-
-EAPI int
 e_util_glob_match(const char *str, const char *glob)
 {
    if (!str || !glob)

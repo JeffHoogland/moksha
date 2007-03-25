@@ -10,10 +10,10 @@ typedef struct _E_Exebuf_Exe E_Exebuf_Exe;
    
 struct _E_Exebuf_Exe
 {
-   Evas_Object *bg_object;
-   Evas_Object *icon_object;
-   E_App       *app;
-   char        *file;
+   Evas_Object    *bg_object;
+   Evas_Object    *icon_object;
+   Efreet_Desktop *desktop;
+   char           *file;
 };
 
 typedef struct _E_Exe E_Exe;
@@ -354,7 +354,6 @@ e_exebuf_hide(void)
 static void
 _e_exebuf_exe_free(E_Exebuf_Exe *exe)
 {
-   if (exe->app) e_object_unref(E_OBJECT(exe->app));
    evas_object_del(exe->bg_object);
    if (exe->icon_object) evas_object_del(exe->icon_object);
    free(exe);
@@ -400,18 +399,18 @@ _e_exebuf_matches_clear(void)
 static void
 _e_exebuf_update(void)
 {
-   E_App *a;
+   Efreet_Desktop *desktop;
    Evas_Object *o;
    
    edje_object_part_text_set(bg_object, "e.text.label", cmd_buf);
    if (icon_object) evas_object_del(icon_object);
    icon_object = NULL;
-   a = e_app_exe_find(cmd_buf);
-   if (!a) a = e_app_name_find(cmd_buf);
-   if (!a) a = e_app_generic_find(cmd_buf);
-   if (a)
+   desktop = efreet_util_desktop_exec_find(cmd_buf);
+   if (!desktop) desktop = efreet_util_desktop_name_find(cmd_buf);
+   if (!desktop) desktop = efreet_util_desktop_generic_name_find(cmd_buf);
+   if (desktop)
      {
-	o = e_app_icon_add(a, exebuf->evas);
+	o = e_util_desktop_icon_add(desktop, "24x24", exebuf->evas);
 	icon_object = o;
 	edje_object_part_swallow(bg_object, "e.swallow.icons", o);
 	evas_object_show(o);
@@ -423,13 +422,13 @@ _e_exebuf_exec(void)
 {
    if (exe_sel)
      {
-	if (exe_sel->app)
-	  e_app_exec(exebuf->zone, exe_sel->app, NULL, NULL, "exebuf");
+	if (exe_sel->desktop)
+	  e_exec(exebuf->zone, exe_sel->desktop, NULL, NULL, "exebuf");
 	else
-	  e_app_exec(exebuf->zone, NULL, exe_sel->file, NULL, "exebuf");
+	  e_exec(exebuf->zone, NULL, exe_sel->file, NULL, "exebuf");
      }
    else
-     e_app_exec(exebuf->zone, NULL, cmd_buf, NULL, "exebuf");
+     e_exec(exebuf->zone, NULL, cmd_buf, NULL, "exebuf");
    
    e_exebuf_hide();
 }
@@ -442,13 +441,8 @@ _e_exebuf_exec_term(void)
 
    if (exe_sel)
      {
-	if (exe_sel->app)
-	  {
-	     if (exe_sel->app->exe)
-	       active_cmd = exe_sel->app->exe;
-	     else
-	       e_app_exec(exebuf->zone, exe_sel->app, NULL, NULL, "exebuf");
-	  }
+	if (exe_sel->desktop)
+	  e_exec(exebuf->zone, exe_sel->desktop, NULL, NULL, "exebuf");
 	else 
 	  active_cmd = exe_sel->file;
      }
@@ -460,7 +454,7 @@ _e_exebuf_exec_term(void)
 	/* Copy the terminal command to the start of the string...
 	 * making sure it has a null terminator if greater than EXEBUFLEN */
 	snprintf(tmp, EXEBUFLEN, "%s %s", e_config->exebuf_term_cmd, active_cmd);
-	e_app_exec(exebuf->zone, NULL, tmp, NULL, "exebuf");
+	e_exec(exebuf->zone, NULL, tmp, NULL, "exebuf");
      }
 
    e_exebuf_hide();
@@ -743,14 +737,17 @@ _e_exebuf_complete(void)
      clear_hist = 1;
    if (exe_sel)
      {
-	if (exe_sel->app)
+	if (exe_sel->desktop)
 	  {
-	     if (exe_sel->app->exe_params)
-	       snprintf(cmd_buf, EXEBUFLEN - 1, "%s %s", 
-		     exe_sel->app->exe, exe_sel->app->exe_params);
-	     else
-	       strncpy(cmd_buf, exe_sel->app->exe, EXEBUFLEN - 1);
-	     cmd_buf[EXEBUFLEN - 1] = 0;
+	     char *exe;
+
+	     exe = ecore_file_app_exe_get(exe_sel->desktop->exec);
+	     if (exe)
+	       {
+		  strncpy(cmd_buf, exe, EXEBUFLEN - 1);
+		  cmd_buf[EXEBUFLEN - 1] = 0;
+		  free(exe);
+	       }
 	  }
 	else if (exe_sel->file)
 	  {
@@ -829,13 +826,16 @@ _e_exebuf_backspace(void)
 static int
 _e_exebuf_cb_sort_eap(void *data1, void *data2)
 {
-   E_App *a1, *a2;
+   Efreet_Desktop *a1, *a2;
+   const char *e1, *e2;
    double t1, t2;
    
    a1 = data1;
    a2 = data2;
-   t1 = e_exehist_newest_run_get(a1->exe);
-   t2 = e_exehist_newest_run_get(a2->exe);
+   e1 = efreet_util_path_to_file_id(a1->orig_path);
+   e2 = efreet_util_path_to_file_id(a2->orig_path);
+   t1 = e_exehist_newest_run_get(e1);
+   t2 = e_exehist_newest_run_get(e2);
    return (int)(t2 - t1);
 }
 
@@ -857,86 +857,112 @@ _e_exebuf_matches_update(void)
 {
    char *path, *file, buf[4096];
    Evas_Hash *added = NULL;
-   Evas_List *l, *list;
+   Ecore_List *list;
+   Evas_List *l;
    int i, max;
    
    _e_exebuf_matches_clear();
    if (!cmd_buf[0]) return;
    
    snprintf(buf, sizeof(buf), "*%s*", cmd_buf);
-   list = e_app_name_glob_list(buf);
-   for (l = list; l; l = l->next)
+   list = efreet_util_desktop_name_glob_list(buf);
+   if (list)
      {
-	E_App *a;
-	
-	a = l->data;
-	if (a->exe)
+	Efreet_Desktop *desktop;
+
+	ecore_list_goto_first(list);
+	while ((desktop = ecore_list_next(list)))
 	  {
-	     if (!evas_hash_find(added, a->exe))
+	     char *exe;
+
+	     exe = ecore_file_app_exe_get(desktop->exec);
+	     if (exe)
 	       {
-		  e_object_ref(E_OBJECT(a));
-		  eap_matches = evas_list_append(eap_matches, a);
-		  added = evas_hash_direct_add(added, a->exe, a->exe);
+		  if (!evas_hash_find(added, exe))
+		    {
+		       eap_matches = evas_list_append(eap_matches, desktop);
+		       added = evas_hash_add(added, exe, desktop);
+		    }
+		  free(exe);
 	       }
 	  }
+	ecore_list_destroy(list);
      }
-   evas_list_free(list);
+
    snprintf(buf, sizeof(buf), "%s*", cmd_buf);
-   list = e_app_exe_glob_list(buf);
-   for (l = list; l; l = l->next)
+   list = efreet_util_desktop_exec_glob_list(buf);
+   if (list)
      {
-	E_App *a;
-	
-	a = l->data;
-	if (a->exe)
+	Efreet_Desktop *desktop;
+
+	ecore_list_goto_first(list);
+	while ((desktop = ecore_list_next(list)))
 	  {
-	     if (!evas_hash_find(added, a->exe))
+	     char *exe;
+
+	     exe = ecore_file_app_exe_get(desktop->exec);
+	     if (exe)
 	       {
-		  e_object_ref(E_OBJECT(a));
-		  eap_matches = evas_list_append(eap_matches, a);
-		  added = evas_hash_direct_add(added, a->exe, a->exe);
+		  if (!evas_hash_find(added, exe))
+		    {
+		       eap_matches = evas_list_append(eap_matches, desktop);
+		       added = evas_hash_add(added, exe, desktop);
+		    }
+		  free(exe);
 	       }
 	  }
+	ecore_list_destroy(list);
      }
-   evas_list_free(list);
-   
+ 
    snprintf(buf, sizeof(buf), "*%s*", cmd_buf);
-   list = e_app_generic_glob_list(buf);
-   for (l = list; l; l = l->next)
+   list = efreet_util_desktop_generic_name_glob_list(buf);
+   if (list)
      {
-	E_App *a;
-	
-	a = l->data;
-	if (a->exe)
+	Efreet_Desktop *desktop;
+
+	ecore_list_goto_first(list);
+	while ((desktop = ecore_list_next(list)))
 	  {
-	     if (!evas_hash_find(added, a->exe))
+	     char *exe;
+
+	     exe = ecore_file_app_exe_get(desktop->exec);
+	     if (exe)
 	       {
-		  e_object_ref(E_OBJECT(a));
-		  eap_matches = evas_list_append(eap_matches, a);
-		  added = evas_hash_direct_add(added, a->exe, a->exe);
+		  if (!evas_hash_find(added, exe))
+		    {
+		       eap_matches = evas_list_append(eap_matches, desktop);
+		       added = evas_hash_add(added, exe, desktop);
+		    }
+		  free(exe);
 	       }
 	  }
+	ecore_list_destroy(list);
      }
-   evas_list_free(list);
-   
+ 
    snprintf(buf, sizeof(buf), "*%s*", cmd_buf);
-   list = e_app_comment_glob_list(buf);
-   for (l = list; l; l = l->next)
+   list = efreet_util_desktop_comment_glob_list(buf);
+   if (list)
      {
-	E_App *a;
-	
-	a = l->data;
-	if (a->exe)
+	Efreet_Desktop *desktop;
+
+	ecore_list_goto_first(list);
+	while ((desktop = ecore_list_next(list)))
 	  {
-	     if (!evas_hash_find(added, a->exe))
+	     char *exe;
+
+	     exe = ecore_file_app_exe_get(desktop->exec);
+	     if (exe)
 	       {
-		  e_object_ref(E_OBJECT(a));
-		  eap_matches = evas_list_append(eap_matches, a);
-		  added = evas_hash_direct_add(added, a->exe, a->exe);
+		  if (!evas_hash_find(added, exe))
+		    {
+		       eap_matches = evas_list_append(eap_matches, desktop);
+		       added = evas_hash_add(added, exe, desktop);
+		    }
+		  free(exe);
 	       }
 	  }
+	ecore_list_destroy(list);
      }
-   evas_list_free(list);
 
    if (added) evas_hash_free(added);
    added = NULL;
@@ -983,30 +1009,29 @@ _e_exebuf_matches_update(void)
 	
 	exe = calloc(1, sizeof(E_Exebuf_Exe));
         eaps = evas_list_append(eaps, exe);
-	exe->app = l->data;
-	e_object_ref(E_OBJECT(exe->app));
+	exe->desktop = l->data;
 	o = edje_object_add(exebuf->evas);
         exe->bg_object = o;
 	e_theme_edje_object_set(o, "base/theme/exebuf",
 				"e/widgets/exebuf/item");
-	if (e_config->menu_eap_name_show && exe->app->name) opt |= 0x4;
-	if (e_config->menu_eap_generic_show && exe->app->generic) opt |= 0x2;
-	if (e_config->menu_eap_comment_show && exe->app->comment) opt |= 0x1;
-	if      (opt == 0x7) snprintf(buf, sizeof(buf), "%s (%s) [%s]", exe->app->name, exe->app->generic, exe->app->comment);
-	else if (opt == 0x6) snprintf(buf, sizeof(buf), "%s (%s)", exe->app->name, exe->app->generic);
-	else if (opt == 0x5) snprintf(buf, sizeof(buf), "%s [%s]", exe->app->name, exe->app->comment);
-	else if (opt == 0x4) snprintf(buf, sizeof(buf), "%s", exe->app->name);
-	else if (opt == 0x3) snprintf(buf, sizeof(buf), "%s [%s]", exe->app->generic, exe->app->comment);
-	else if (opt == 0x2) snprintf(buf, sizeof(buf), "%s", exe->app->generic);
-	else if (opt == 0x1) snprintf(buf, sizeof(buf), "%s", exe->app->comment);
-	else snprintf(buf, sizeof(buf), "%s", exe->app->name);
+	if (e_config->menu_eap_name_show && exe->desktop->name) opt |= 0x4;
+	if (e_config->menu_eap_generic_show && exe->desktop->generic_name) opt |= 0x2;
+	if (e_config->menu_eap_comment_show && exe->desktop->comment) opt |= 0x1;
+	if      (opt == 0x7) snprintf(buf, sizeof(buf), "%s (%s) [%s]", exe->desktop->name, exe->desktop->generic_name, exe->desktop->comment);
+	else if (opt == 0x6) snprintf(buf, sizeof(buf), "%s (%s)", exe->desktop->name, exe->desktop->generic_name);
+	else if (opt == 0x5) snprintf(buf, sizeof(buf), "%s [%s]", exe->desktop->name, exe->desktop->comment);
+	else if (opt == 0x4) snprintf(buf, sizeof(buf), "%s", exe->desktop->name);
+	else if (opt == 0x3) snprintf(buf, sizeof(buf), "%s [%s]", exe->desktop->generic_name, exe->desktop->comment);
+	else if (opt == 0x2) snprintf(buf, sizeof(buf), "%s", exe->desktop->generic_name);
+	else if (opt == 0x1) snprintf(buf, sizeof(buf), "%s", exe->desktop->comment);
+	else snprintf(buf, sizeof(buf), "%s", exe->desktop->name);
 	edje_object_part_text_set(o, "e.text.title", buf);
 	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN,
 	      _e_exebuf_cb_eap_item_mouse_in, exe);
 	evas_object_show(o);
 	if (edje_object_part_exists(exe->bg_object, "e.swallow.icons"))
 	  {
-	     o = e_app_icon_add(exe->app, exebuf->evas);
+	     o = e_util_desktop_icon_add(exe->desktop, "24x24", exebuf->evas);
 	     exe->icon_object = o;
 	     edje_object_part_swallow(exe->bg_object, "e.swallow.icons", o);
 	     evas_object_show(o);
@@ -1049,17 +1074,16 @@ _e_exebuf_matches_update(void)
 	evas_object_show(o);
 	if (edje_object_part_exists(exe->bg_object, "e.swallow.icons"))
 	  {
-	     E_App *a;
+	     Efreet_Desktop *desktop;
 	     
-	     a = e_app_exe_find(exe->file);
-	     if (a)
+	     desktop = efreet_util_desktop_exec_find(exe->file);
+	     if (desktop)
 	       {
-		  o = e_app_icon_add(a, exebuf->evas);
+		  o = e_util_desktop_icon_add(desktop, "24x24", exebuf->evas);
 		  exe->icon_object = o;
 		  edje_object_part_swallow(exe->bg_object, "e.swallow.icons", o);
 		  evas_object_show(o);
-		  exe->app = a;
-		  e_object_ref(E_OBJECT(exe->app));
+		  exe->desktop = desktop;
 	       }
 	  }
 	edje_object_size_min_calc(exe->bg_object, &mw, &mh);
@@ -1102,17 +1126,16 @@ _e_exebuf_hist_update(void)
 	evas_object_show(o);
 	if (edje_object_part_exists(exe->bg_object, "e.swallow.icons"))
 	  {
-	     E_App *a;
-	     
-	     a = e_app_exe_find(exe->file);
-	     if (a)
+	     Efreet_Desktop *desktop;
+
+	     desktop = efreet_util_desktop_exec_find(exe->file);
+	     if (desktop)
 	       {
-		  o = e_app_icon_add(a, exebuf->evas);
+		  o = e_util_desktop_icon_add(desktop, "24x24", exebuf->evas);
 		  exe->icon_object = o;
 		  edje_object_part_swallow(exe->bg_object, "e.swallow.icons", o);
 		  evas_object_show(o);
-		  exe->app = a;
-		  e_object_ref(E_OBJECT(exe->app));
+		  exe->desktop = desktop;
 	       }
 	  }
 	edje_object_size_min_calc(exe->bg_object, &mw, &mh);
