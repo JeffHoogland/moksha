@@ -1,6 +1,4 @@
 src/bin/e.h
-src/bin/e_apps.c
-src/bin/e_apps.h
 src/bin/e_atoms.c
 src/bin/e_atoms.h
 src/bin/e_border.c
@@ -202,13 +200,11 @@ src/bin/e_int_config_clientlist.c
 src/bin/e_int_config_clientlist.h
 src/bin/e_color_class.c
 src/bin/e_color_class.h
-src/bin/e_apps_error.c
 src/bin/e_tlist.c
 src/bin/e_tlist.h
 src/bin/e_widget_tlist.c
 src/bin/e_widget_tlist.h
 src/bin/e_stolen.c
-src/bin/e_apps_error.h
 src/bin/e_int_config_cursor.c
 src/bin/e_int_config_cursor.h
 src/bin/e_int_config_startup.h
