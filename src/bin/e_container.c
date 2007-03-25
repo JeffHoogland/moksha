@@ -296,16 +296,6 @@ e_container_raise(E_Container *con)
 {
    E_OBJECT_CHECK(con);
    E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
-#if 0
-   if (con->win != con->manager->win)
-     {
-	ecore_x_window_raise(con->win);
-     }
-   else
-     {
-	ecore_x_window_lower(con->bg_win);
-     }
-#endif
 }
 
 EAPI void
@@ -313,14 +303,6 @@ e_container_lower(E_Container *con)
 {
    E_OBJECT_CHECK(con);
    E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
-#if 0
-   if (con->win != con->manager->win)
-     ecore_x_window_lower(con->win);
-   else
-     {
-	ecore_x_window_lower(con->bg_win);
-     }
-#endif
 }
 
 EAPI E_Zone *

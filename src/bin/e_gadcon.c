@@ -378,10 +378,6 @@ e_gadcon_populate(E_Gadcon *gc)
 
 	     if (gcc)
 	       {
-#if 0
-		  gcc->name = evas_stringshare_add(cf_gcc->name);
-		  gcc->id = evas_stringshare_add(cf_gcc->id);
-#endif
 		  gcc->client_class = cc;
 		  gcc->config.pos = cf_gcc->geom.pos;
 		  gcc->config.size = cf_gcc->geom.size;
@@ -451,10 +447,6 @@ e_gadcon_populate_class(E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
 				 cf_gcc->style);
 	     if (gcc)
 	       {
-#if 0
-		  gcc->name = evas_stringshare_add(cf_gcc->name);
-		  gcc->id = evas_stringshare_add(cf_gcc->id);
-#endif
 		  gcc->client_class = cc;
 		  gcc->config.pos = cf_gcc->geom.pos;
 		  gcc->config.size = cf_gcc->geom.size;
