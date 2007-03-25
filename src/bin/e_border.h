@@ -454,7 +454,7 @@ struct _E_Border
    E_Border  *parent;
    Evas_List *transients;
 
-   E_App *app;
+   Efreet_Desktop *desktop;
    E_Pointer *pointer;
 };
 

@@ -1368,7 +1368,6 @@ _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
    for (l = borders; l; l = l->next)
      {
 	E_Border *bd = l->data;
-	E_App *a;
 	const char *title = "";
 	
 	title = e_border_name_get(bd);
@@ -1381,8 +1380,7 @@ _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
 	e_object_ref(E_OBJECT(bd));
 //	e_object_breadcrumb_add(E_OBJECT(bd), "lost_clients_menu");
 	e_menu_item_callback_set(mi, _e_int_menus_lost_clients_item_cb, bd);
-	a = bd->app;
-	if (a) e_app_icon_add_to_menu_item(a, mi);
+	if (bd->desktop) e_util_desktop_menu_item_icon_add(bd->desktop, "24x24", mi);
      }
    e_object_free_attach_func_set(E_OBJECT(m), 
 				 _e_int_menus_lost_clients_free_hook);

@@ -1083,23 +1083,14 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
      {
 	app = ev->data;
      }
-#if 0
    else if (!strcmp(type, "enlightenment/border"))
      {
 	E_Border *bd;
 
 	bd = ev->data;
-	app = bd->app;
+	app = bd->desktop;
 
-	if (!app)
-	  {
-	     app = e_app_border_find(bd);
-	  }
-	if (!app)
-	  {
-	     app = e_app_launch_id_pid_find(bd->client.netwm.startup_id,
-					    bd->client.netwm.pid);
-	  }
+#if 0
 	if (!app)
 	  {
 	     char *bname = NULL, *bclass = NULL;
@@ -1147,8 +1138,8 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
 		  e_eap_edit_show(e_container_current_get(e_manager_current_get()), app);
 	       }
 	  }
-     }
 #endif
+     }
    else if (!strcmp(type, "text/uri-list"))
      {
 	fl = ev->data;

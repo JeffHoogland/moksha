@@ -169,7 +169,9 @@ e_border_init(void)
 
    handlers = evas_list_append(handlers, ecore_event_handler_add(E_EVENT_POINTER_WARP, _e_border_cb_pointer_warp, NULL));
 
+#if 0
    e_app_change_callback_add(_e_border_app_change, NULL);
+#endif
 
    E_EVENT_BORDER_ADD = ecore_event_type_new();
    E_EVENT_BORDER_REMOVE = ecore_event_type_new();
@@ -205,7 +207,9 @@ e_border_shutdown(void)
 	ecore_event_handler_del(h);
      }
    
+#if 0
    e_app_change_callback_del(_e_border_app_change, NULL);
+#endif
    
    return 1;
 }
@@ -2572,15 +2576,9 @@ EAPI Evas_Object *
 e_border_icon_add(E_Border *bd, Evas *evas)
 {
    Evas_Object *o;
-   E_App *a = NULL;
-   
+ 
    E_OBJECT_CHECK_RETURN(bd, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(bd, E_BORDER_TYPE, NULL);
-   if (bd->app)
-     {
-	e_object_unref(E_OBJECT(bd->app));
-	bd->app = NULL;
-     }
 
    o = NULL;
    if (bd->internal)
@@ -2620,20 +2618,9 @@ e_border_icon_add(E_Border *bd, Evas *evas)
      }
    if (!o)
      {
-	if ((bd->client.icccm.name) && (bd->client.icccm.class))
+	if (bd->desktop)
 	  {
-	     a = e_app_border_find(bd);
-	  }
-	if (!a)
-	  {
-	     a = e_app_launch_id_pid_find(bd->client.netwm.startup_id,
-					  bd->client.netwm.pid);
-	  }
-	if (a)
-	  {
-	     o = e_app_icon_add(a, evas);
-	     bd->app = a;
-	     e_object_ref(E_OBJECT(bd->app));
+	     o = e_util_desktop_icon_add(bd->desktop, "24x24", evas);
 	  }
 	else if (bd->client.netwm.icons)
 	  {
@@ -3062,12 +3049,7 @@ _e_border_free(E_Border *bd)
 	e_object_unref(E_OBJECT(bd->cur_mouse_action));
 	bd->cur_mouse_action = NULL;
      }
-   if (bd->app)
-     {
-	e_object_unref(E_OBJECT(bd->app));
-	bd->app = NULL;
-     }
-   
+
    E_FREE(bd->shape_rects);
    bd->shape_rects_num = 0;
 /*   
@@ -6403,6 +6385,11 @@ _e_border_eval(E_Border *bd)
 	     evas_object_del(bd->icon_object);
 	     bd->icon_object = NULL;
 	  }
+	bd->desktop = efreet_util_desktop_wm_class_find(bd->client.icccm.name,
+							bd->client.icccm.class);
+	if (!bd->desktop)
+	  bd->desktop = e_exec_startup_id_pid_find(bd->client.netwm.startup_id,
+						   bd->client.netwm.pid);
 	bd->icon_object = e_border_icon_add(bd, bd->bg_evas);
 	if ((bd->focused) && (bd->icon_object))
 	  edje_object_signal_emit(bd->icon_object, "e,state,focused", "e");
@@ -7187,6 +7174,7 @@ _e_border_winid_str_get(Ecore_X_Window win)
    return id;
 }
 
+#if 0
 static void
 _e_border_app_change(void *data, E_App *app, E_App_Change change)
 {
@@ -7223,6 +7211,7 @@ _e_border_app_change(void *data, E_App *app, E_App_Change change)
 	break;
      }
 }
+#endif
 
 static void
 _e_border_pointer_resize_begin(E_Border *bd)

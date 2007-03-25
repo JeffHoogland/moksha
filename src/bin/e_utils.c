@@ -861,6 +861,33 @@ e_util_desktop_icon_add(Efreet_Desktop *desktop, const char *size, Evas *evas)
    return NULL;
 }
 
+EAPI void
+e_util_desktop_menu_item_icon_add(Efreet_Desktop *desktop, const char *size, E_Menu_Item *mi)
+{
+   const char *path = NULL;
+
+   if ((!desktop) || (!desktop->icon)) return;
+
+   if (desktop->icon[0] == '/') path = desktop->icon;
+   else path = efreet_icon_path_find(e_config->icon_theme, desktop->icon, size);
+
+   if (path)
+     {
+	const char *ext;
+
+	ext = strrchr(path, '.');
+	if (ext)
+	  {
+	     if (strcmp(ext, ".edj") == 0)
+	       e_menu_item_icon_edje_set(mi, path, "icon");
+	     else
+	       e_menu_item_icon_file_set(mi, path);
+	  }
+	else
+	  e_menu_item_icon_file_set(mi, path);
+     }
+}
+
 /* local subsystem functions */
 static void
 _e_util_container_fake_mouse_up_cb(void *data)

@@ -769,7 +769,7 @@ EAPI void
 e_fm2_window_object_set(Evas_Object *obj, E_Object *eobj)
 {
    E_Fm2_Smart_Data *sd;
-   const char *drop[] = { "enlightenment/eapp", "enlightenment/border", "text/uri-list" };
+   const char *drop[] = { "enlightenment/desktop", "enlightenment/border", "text/uri-list" };
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return; // safety
