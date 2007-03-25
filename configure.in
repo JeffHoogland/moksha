@@ -171,7 +171,6 @@ PKG_CHECK_MODULES(E, [
   ecore-config
   ecore-dbus
   ecore-file
-  ecore-desktop
   edje
   eet
   embryo
