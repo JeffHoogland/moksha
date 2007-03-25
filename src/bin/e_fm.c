@@ -1068,7 +1068,7 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 		       if (imc->e_im_setup_exec) 
 			 {
 			    Efreet_Desktop *desktop;
-			    desktop = efreet_util_desktop_by_exec_get(imc->e_im_setup_exec);
+			    desktop = efreet_util_desktop_exec_find(imc->e_im_setup_exec);
 			    if (desktop) 
 			      oic = e_util_desktop_icon_add(desktop, "24x24", evas);
 			 }
