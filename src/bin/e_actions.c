@@ -1406,7 +1406,7 @@ ACT_FN_GO(app)
      {
 	if (params)
 	  {
-	     E_App *a = NULL;
+	     Efreet_Desktop *desktop = NULL;
 	     char *p, *p2;
 	     
 	     p2 = alloca(strlen(params) + 1);
@@ -1416,15 +1416,15 @@ ACT_FN_GO(app)
 	       {
 		  *p = 0;
 		  if (!strcmp(p2, "file:"))
-		    a = e_app_file_find(p + 1);
+		    desktop = efreet_util_desktop_file_id_find(p + 1);
 		  else if (!strcmp(p2, "name:"))
-		    a = e_app_name_find(p + 1);
+		    desktop = efreet_util_desktop_name_find(p + 1);
 		  else if (!strcmp(p2, "generic:"))
-		    a = e_app_generic_find(p + 1);
+		    desktop = efreet_util_desktop_generic_name_find(p + 1);
 		  else if (!strcmp(p2, "exe:"))
-		    a = e_app_exe_find(p + 1);
-		  if (a)
-		    e_app_exec(zone, a, NULL, NULL, "action/app");
+		    desktop = efreet_util_desktop_exec_find(p + 1);
+		  if (desktop)
+		    e_exec(zone, desktop, NULL, NULL, "action/app");
 	       }
 	  }
      }
