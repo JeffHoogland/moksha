@@ -173,18 +173,19 @@ e_exehist_list_get(void)
 }
 
 EAPI void
-e_exehist_mime_app_add(const char *mime, E_App *a)
+e_exehist_mime_desktop_add(const char *mime, Efreet_Desktop *desktop)
 {
    const char *f;
    E_Exehist_Item *ei;
    Evas_List *l;
    
-   if ((!mime) || (!a)) return;
-   if (!a->path) return;
+   if ((!mime) || (!desktop)) return;
+   if (!desktop->orig_path) return;
    _e_exehist_load();
    if (!_e_exehist) return;
    
-   f = ecore_file_get_file(a->path);
+   f = efreet_util_path_to_file_id(desktop->orig_path);
+   if (!f) return;
    for (l = _e_exehist->mimes; l; l = l->next)
      {
 	ei = l->data;
@@ -217,10 +218,10 @@ e_exehist_mime_app_add(const char *mime, E_App *a)
    _e_exehist_unload_queue();
 }
 
-EAPI E_App *
-e_exehist_mime_app_get(const char *mime)
+EAPI Efreet_Desktop *
+e_exehist_mime_desktop_get(const char *mime)
 {
-   E_App *a;
+   Efreet_Desktop *desktop;
    E_Exehist_Item *ei;
    Evas_List *l;
    
@@ -232,10 +233,13 @@ e_exehist_mime_app_get(const char *mime)
 	ei = l->data;
 	if ((ei->launch_method) && (!strcmp(mime, ei->launch_method)))
 	  {
-	     a = NULL;
-	     if (ei->exe) a = e_app_file_find(ei->exe);
-	     _e_exehist_unload_queue();
-	     return a;
+	     desktop = NULL;
+	     if (ei->exe) desktop = efreet_util_desktop_file_id_find(ei->exe);
+	     if (desktop)
+	       {
+		  _e_exehist_unload_queue();
+		  return desktop;
+	       }
 	  }
      }
    _e_exehist_unload_queue();
