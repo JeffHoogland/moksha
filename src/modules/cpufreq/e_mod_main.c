@@ -923,6 +923,7 @@ e_modapi_shutdown(E_Module *m)
      }
    if (cpufreq_config->governor)
      evas_stringshare_del(cpufreq_config->governor);
+   if (cpufreq_config->status) _cpufreq_status_free(cpufreq_config->status);
    free(cpufreq_config);
    cpufreq_config = NULL;
    E_CONFIG_DD_FREE(conf_edd);
