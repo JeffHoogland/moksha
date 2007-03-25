@@ -42,6 +42,7 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
+* create a good app repository where the user can get applications from to ibar
 * fm2 needs its fops to become async (in slave process and ipc to it)
 * fm2 needs its file listing/stat()ing etc. to go into slave proc
 * fm2 needs a right-click file properties dialog
