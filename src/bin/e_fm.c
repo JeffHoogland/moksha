@@ -2509,32 +2509,27 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 
    desktop = efreet_desktop_get(buf);
-   if (desktop)
-     {
-	if (desktop->name)         ic->info.label   = evas_stringshare_add(desktop->name);
-	if (desktop->generic_name) ic->info.generic = evas_stringshare_add(desktop->generic_name);
-	if (desktop->comment)      ic->info.comment = evas_stringshare_add(desktop->comment);
-	
-	if (desktop->icon) ic->info.icon = evas_stringshare_add(desktop->icon);
+   if (!desktop) goto error;
+   if (desktop->type != EFREET_DESKTOP_TYPE_LINK) goto error;
 
-	if (desktop->type == EFREET_DESKTOP_TYPE_LINK)
+   if (desktop->name)         ic->info.label   = evas_stringshare_add(desktop->name);
+   if (desktop->generic_name) ic->info.generic = evas_stringshare_add(desktop->generic_name);
+   if (desktop->comment)      ic->info.comment = evas_stringshare_add(desktop->comment);
+   if (desktop->icon) ic->info.icon = evas_stringshare_add(desktop->icon);
+   if (desktop->url)
+     ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->url);
+   if (desktop->x)
+     {
+	const char *type;
+
+	type = ecore_hash_get(desktop->x, "X-Enlightenment-Type");
+	if (type)
 	  {
-	     if (desktop->url)
-	       ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->url);
-	     if (desktop->x)
-	       {
-		  const char *type;
-		  
-		  type = ecore_hash_get(desktop->x, "X-Enlightenment-Type");
-		  if (type)
-		    {
-		       if (!strcmp(type, "Mount")) ic->info.mount = 1;
-		       else if (!strcmp(type, "Removable")) ic->info.removable = 1;
-		    }
-	       }
+	     if (!strcmp(type, "Mount")) ic->info.mount = 1;
+	     else if (!strcmp(type, "Removable")) ic->info.removable = 1;
 	  }
      }
-   
+ 
    return 1;
    error:
    if (ic->info.label) evas_stringshare_del(ic->info.label);
