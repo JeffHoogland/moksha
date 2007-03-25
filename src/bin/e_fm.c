@@ -1067,12 +1067,10 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 	
 		       if (imc->e_im_setup_exec) 
 			 {
-			    E_App *app;
-			    app = e_app_exe_find(imc->e_im_setup_exec);
-			    if (app) 
-			      {
-				 oic = e_app_icon_add(app, evas);
-			      }
+			    Efreet_Desktop *desktop;
+			    desktop = efreet_util_desktop_by_exec_get(imc->e_im_setup_exec);
+			    if (desktop) 
+			      oic = e_util_desktop_icon_add(desktop, "24x24", evas);
 			 }
 		       e_intl_input_method_config_free(imc);
 		    }
