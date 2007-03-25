@@ -93,7 +93,6 @@ static void _ibox_icon_fill(IBox_Icon *ic);
 static void _ibox_icon_fill_label(IBox_Icon *ic);
 static void _ibox_icon_empty(IBox_Icon *ic);
 static void _ibox_icon_signal_emit(IBox_Icon *ic, char *sig, char *src);
-//static IBox *_ibox_zone_find(E_Zone *zone);
 static Evas_List *_ibox_zone_find(E_Zone *zone);
 static void _ibox_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _ibox_cb_menu_post(void *data, E_Menu *m);
@@ -303,8 +302,6 @@ _ibox_cb_empty_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
 	e_util_evas_fake_mouse_up_later(b->inst->gcc->gadcon->evas, ev->button);
-//	evas_event_feed_mouse_up(b->inst->gcc->gadcon->evas, ev->button,
-//				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
 }
 
@@ -704,8 +701,6 @@ _ibox_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
 	e_util_evas_fake_mouse_up_later(ic->ibox->inst->gcc->gadcon->evas,
 					ev->button);
-//	evas_event_feed_mouse_up(ic->ibox->inst->gcc->gadcon->evas, ev->button,
-//				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
 }
 
@@ -760,9 +755,6 @@ _ibox_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 	     e_drag_start(d, ic->drag.x, ic->drag.y);
 	     e_util_evas_fake_mouse_up_later(ic->ibox->inst->gcc->gadcon->evas,
 					     1);
-//	     evas_event_feed_mouse_up(ic->ibox->inst->gcc->gadcon->evas,
-//				      1, EVAS_BUTTON_NONE,
-//				      ecore_x_current_time_get(), NULL);
 	     e_object_ref(E_OBJECT(ic->border));
 	     ic->ibox->icons = evas_list_remove(ic->ibox->icons, ic);
 	     _ibox_resize_handle(ic->ibox);

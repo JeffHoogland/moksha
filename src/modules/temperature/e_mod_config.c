@@ -83,17 +83,17 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    p = cfdata->inst->poll_time;
    cfdata->poll_time = p;
    if ((p >= 0) && (p <= 5)) 
-     cfdata->poll_method = 1; //Fast
+     cfdata->poll_method = 1; /* Fast */
    else if ((p > 5) && (p <= 10)) 
-     cfdata->poll_method = 10; //Normal
+     cfdata->poll_method = 10; /* Normal */
    else if ((p > 10) && (p <= 30)) 
-     cfdata->poll_method = 30; //Slow
+     cfdata->poll_method = 30; /* Slow */
    else if (p > 30) 
-     cfdata->poll_method = 60; //Very Slow
+     cfdata->poll_method = 60; /* Very Slow */
    
    p = cfdata->inst->low;
    if (cfdata->units == FAHRENHEIT)
-     p = FAR_2_CEL(p - 1); // -1 so the conversion doesn't make mid go hi
+     p = FAR_2_CEL(p - 1); /* -1 so the conversion doesn't make mid go hi */
    cfdata->low_temp = p;
    if ((p >= 0) && (p <= TEMP_LOW_LOW)) 
      cfdata->low_method = TEMP_LOW_LOW;
@@ -344,9 +344,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_slider_add(evas, 1, 0, _("%1.1f seconds"), 0.5, 1000.0, 0.5, 0, &(cfdata->poll_time), NULL, 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-
-//   cfdata->low_temp = cfdata->inst->low;
-//   cfdata->high_temp = cfdata->inst->high;
 
    if (cfdata->units == FAHRENHEIT)
      {

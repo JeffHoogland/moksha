@@ -15,7 +15,7 @@ struct _Config
    E_Menu          *menu;
    Evas_List       *handlers;
    Evas_List       *items;
-   Evas_List	   *config_dialog;//E_Config_Dialog *;
+   Evas_List	   *config_dialog;
 };
 
 struct _Config_Item 

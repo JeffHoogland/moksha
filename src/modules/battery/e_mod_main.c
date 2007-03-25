@@ -186,8 +186,6 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
 	e_util_evas_fake_mouse_up_later(inst->gcc->gadcon->evas,
 					ev->button);
-//	evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
-//				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
 }
 
@@ -483,7 +481,6 @@ _battery_linux_acpi_check(void)
 			 }
 		       else if (!strcmp(charging_state, "charged"))
 			 {
-//			    level = last_full;
 			    rate_unknown--;
 			 }
 		       free(charging_state);

@@ -39,7 +39,7 @@ typedef struct _Pager_Popup Pager_Popup;
 struct _Instance
 {
    E_Gadcon_Client *gcc;
-   Evas_Object     *o_pager; // table
+   Evas_Object     *o_pager; /* table */
    Pager           *pager;
    E_Drop_Handler  *drop_handler;
 };
@@ -636,8 +636,6 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
 	e_util_evas_fake_mouse_up_later(inst->gcc->gadcon->evas, ev->button);
-//	evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
-//				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
 }
 
@@ -1445,9 +1443,6 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
 	     pw->drag.in_pager = 0;
 	     e_util_evas_fake_mouse_up_later(evas_object_evas_get(pw->desk->pager->o_table),
 					     pw->drag.button);
-//	     evas_event_feed_mouse_up(evas_object_evas_get(pw->desk->pager->o_table),
-//				      pw->drag.button, EVAS_BUTTON_NONE, 
-//				      ecore_x_current_time_get(), NULL);
 	  }
      }
 }
