@@ -95,7 +95,7 @@ static int  _e_border_cb_kill_timer(void *data);
 
 static char *_e_border_winid_str_get(Ecore_X_Window win);
 
-static void _e_border_app_change(void *data, E_App *app, E_App_Change change);
+static void _e_border_desktop_change(void *data, Efreet_Desktop *desktop);
 
 static void _e_border_pointer_resize_begin(E_Border *bd);
 static void _e_border_pointer_resize_end(E_Border *bd);
@@ -6385,8 +6385,9 @@ _e_border_eval(E_Border *bd)
 	     evas_object_del(bd->icon_object);
 	     bd->icon_object = NULL;
 	  }
-	bd->desktop = efreet_util_desktop_wm_class_find(bd->client.icccm.name,
-							bd->client.icccm.class);
+	if (!bd->desktop)
+	  bd->desktop = efreet_util_desktop_wm_class_find(bd->client.icccm.name,
+							  bd->client.icccm.class);
 	if (!bd->desktop)
 	  bd->desktop = e_exec_startup_id_pid_find(bd->client.netwm.startup_id,
 						   bd->client.netwm.pid);
@@ -7174,44 +7175,16 @@ _e_border_winid_str_get(Ecore_X_Window win)
    return id;
 }
 
-#if 0
 static void
-_e_border_app_change(void *data, E_App *app, E_App_Change change)
+_e_border_desktop_change(void *data, Efreet_Desktop *desktop)
 {
-   Evas_List *l;
+   E_Border *bd;
 
-   switch (change)
-     {
-      case E_APP_ADD:
-      case E_APP_DEL:
-      case E_APP_CHANGE:
-	for (l = borders; l; l = l->next)
-	  {
-	     E_Border *bd;
-	     
-	     bd = l->data;
-//	     if (e_app_equals(bd->app, app))
-	       {
-		  if (bd->app)
-		    {
-		       e_object_unref(E_OBJECT(bd->app));
-		       bd->app = NULL;
-		    }
-		  
-		  bd->changes.icon = 1;
-		  bd->changed = 1;
-	       }
-	  }
-	break;
-      case E_APP_EXEC:
-      case E_APP_READY:
-      case E_APP_READY_EXPIRE:
-      case E_APP_EXIT:
-      default:
-	break;
-     }
+   bd = data;
+   bd->desktop = desktop;
+   bd->changes.icon = 1;
+   bd->changed = 1;
 }
-#endif
 
 static void
 _e_border_pointer_resize_begin(E_Border *bd)
