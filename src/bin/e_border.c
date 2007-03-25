@@ -2568,7 +2568,6 @@ e_border_act_kill_begin(E_Border *bd)
    e_border_hide(bd, 0);
 }
 
-/* FIXME: Prefer app icon or own icon? */
 EAPI Evas_Object *
 e_border_icon_add(E_Border *bd, Evas *evas)
 {
