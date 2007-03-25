@@ -164,7 +164,7 @@ _e_order_read(E_Order *eo)
 		  if (len > 0)
 		    {
 		       Efreet_Desktop *desktop;
-		       desktop = efreet_util_desktop_by_file_id_get(buf);
+		       desktop = efreet_util_desktop_file_id_find(buf);
 		       if (desktop) eo->desktops = evas_list_append(eo->desktops, desktop);
 		    }
 	       }
@@ -185,7 +185,7 @@ _e_order_save(E_Order *eo)
    for (l = eo->desktops; l; l = l->next)
      {
 	Efreet_Desktop *desktop;
-	char *id;
+	const char *id;
 
 	/* TODO: This only allows us to save .desktop files which are in
 	 * the default paths. If it isn't, we should copy it to the users
@@ -194,7 +194,6 @@ _e_order_save(E_Order *eo)
 	id = efreet_util_path_to_file_id(desktop->orig_path);
 	if (!id) continue;
 	fprintf(f, "%s\n", id);
-	free(id);
      }
 
    fclose(f);
