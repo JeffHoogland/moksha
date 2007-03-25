@@ -44,6 +44,7 @@ struct _E_Config_Dialog_Data
    char *signal;
 };
 
+/* local subsystem functions */
 static void _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining);
 static int  _e_exec_cb_expire_timer(void *data);
 static int  _e_exec_cb_exit(void *data, int type, void *event);
@@ -57,6 +58,7 @@ static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E
 static Evas_Object *_dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *lines);
 static void         _dialog_save_cb(void *data, void *data2);
 
+/* local subsystem globals */
 static Evas_List   *e_exec_start_pending = NULL;
 static Evas_Hash   *e_exec_instances = NULL;
 static int          startup_id = 0;
@@ -64,6 +66,7 @@ static int          startup_id = 0;
 static Ecore_Event_Handler *_e_exec_exit_handler = NULL;
 static Ecore_Event_Handler *_e_exec_border_add_handler = NULL;
 
+/* externally accessible functions */
 EAPI int
 e_exec_init(void)
 {
@@ -119,6 +122,7 @@ e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
    return 1;
 }
 
+/* local subsystem functions */
 static void
 _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 {

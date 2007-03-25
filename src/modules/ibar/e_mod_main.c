@@ -4,6 +4,10 @@
 #include "e.h"
 #include "e_mod_main.h"
 
+/* TODO:
+ * - Track execution status
+ */
+
 /***************************************************************************/
 /**/
 /* gadcon requirements */
@@ -52,7 +56,7 @@ struct _IBar
    Evas_Object    *o_empty;
    IBar_Icon      *ic_drop_before;
    int             drop_before;
-   E_App          *apps;
+   E_Order        *apps;
    Evas_List      *icons;
    int             show_label;
    int             eap_label;
@@ -61,13 +65,13 @@ struct _IBar
 
 struct _IBar_Icon
 {
-   IBar        *ibar;
-   Evas_Object *o_holder;
-   Evas_Object *o_icon;
-   Evas_Object *o_holder2;
-   Evas_Object *o_icon2;
-   E_App       *app;
-   int          mouse_down;
+   IBar           *ibar;
+   Evas_Object    *o_holder;
+   Evas_Object    *o_icon;
+   Evas_Object    *o_holder2;
+   Evas_Object    *o_icon2;
+   Efreet_Desktop *app;
+   int             mouse_down;
    struct {
       unsigned char  start : 1;
       unsigned char  dnd : 1;
@@ -86,14 +90,13 @@ static void _ibar_orient_set(IBar *b, int horizontal);
 static void _ibar_resize_handle(IBar *b);
 static void _ibar_instance_drop_zone_recalc(Instance *inst);
 static Config_Item *_ibar_config_item_get(const char *id);
-static IBar_Icon *_ibar_icon_find(IBar *b, E_App *a);
 static IBar_Icon *_ibar_icon_at_coord(IBar *b, Evas_Coord x, Evas_Coord y);
-static IBar_Icon *_ibar_icon_new(IBar *b, E_App *a);
+static IBar_Icon *_ibar_icon_new(IBar *b, Efreet_Desktop *desktop);
 static void _ibar_icon_free(IBar_Icon *ic);
 static void _ibar_icon_fill(IBar_Icon *ic);
 static void _ibar_icon_empty(IBar_Icon *ic);
 static void _ibar_icon_signal_emit(IBar_Icon *ic, char *sig, char *src);
-static void _ibar_cb_app_change(void *data, E_App *a, E_App_Change ch);
+static void _ibar_cb_app_change(void *data, E_Order *eo);
 static void _ibar_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _ibar_cb_menu_icon_properties(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _ibar_cb_menu_icon_remove(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -106,7 +109,6 @@ static void _ibar_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *
 static void _ibar_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _ibar_cb_icon_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _ibar_cb_icon_resize(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _ibar_cb_drag_finished(E_Drag *drag, int dropped);
 static void _ibar_inst_cb_enter(void *data, const char *type, void *event_info);
 static void _ibar_inst_cb_move(void *data, const char *type, void *event_info);
 static void _ibar_inst_cb_leave(void *data, const char *type, void *event_info);
@@ -127,7 +129,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    E_Gadcon_Client *gcc;
    Instance *inst;
    Evas_Coord x, y, w, h;
-   const char *drop[] = { "enlightenment/eapp", "enlightenment/border", "text/uri-list" };
+   const char *drop[] = { "enlightenment/desktop", "enlightenment/border", "text/uri-list" };
    Config_Item *ci;
    
    inst = E_NEW(Instance, 1);
@@ -222,7 +224,7 @@ _gc_icon(Evas *evas)
    char buf[4096];
    
    o = edje_object_add(evas);
-   snprintf(buf, sizeof(buf), "%s/module.edj",
+   snprintf(buf, sizeof(buf), "%s/e-module-ibar.edj",
 	    e_module_dir_get(ibar_config->module));
    edje_object_file_set(o, buf, "icon");
    return o;
@@ -249,13 +251,12 @@ _ibar_new(Evas *evas, const char *dir)
 	const char *homedir;
 
 	homedir = e_user_homedir_get();
-	snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s", homedir, dir);
+	snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s/.order", homedir, dir);
      }
    else
      snprintf(buf, sizeof(buf), dir);
-   b->apps = e_app_new(buf, 0);
-   if (b->apps) e_app_subdir_scan(b->apps, 0);
-   e_app_change_callback_add(_ibar_cb_app_change, b);
+   b->apps = e_order_new(buf);
+   e_order_update_callback_set(b->apps, _ibar_cb_app_change, b);
    _ibar_fill(b);
    return b;
 }
@@ -268,8 +269,8 @@ _ibar_free(IBar *b)
    if (b->o_drop) evas_object_del(b->o_drop);
    if (b->o_drop_over) evas_object_del(b->o_drop_over);
    if (b->o_empty) evas_object_del(b->o_empty);
-   if (b->apps) e_object_unref(E_OBJECT(b->apps));
-   e_app_change_callback_del(_ibar_cb_app_change, b);
+   e_order_update_callback_set(b->apps, NULL, NULL);
+   if (b->apps) e_object_del(E_OBJECT(b->apps));
    free(b);
 }
 
@@ -353,16 +354,16 @@ static void
 _ibar_fill(IBar *b)
 {
    IBar_Icon *ic;
-   Evas_List *l;
-   E_App *a;
 
    if (b->apps)
      {
-	for (l = b->apps->subapps; l; l = l->next)
+	Efreet_Desktop *desktop;
+	Evas_List *l;
+
+	for (l = b->apps->desktops; l; l = l->next)
 	  {
-	     a = l->data;
-	     if (!e_app_valid_exe_get(a))  continue;
-	     ic = _ibar_icon_new(b, a);
+	     desktop = l->data;
+	     ic = _ibar_icon_new(b, desktop);
 	     b->icons = evas_list_append(b->icons, ic);
 	     e_box_pack_end(b->o_box, ic->o_holder);
 	  }
@@ -466,18 +467,17 @@ _ibar_config_update(void)
 	     inst->dir = evas_stringshare_add(ci->dir);
 	     _ibar_empty(inst->ibar);
 	     if (inst->ibar->apps)
-	       e_object_unref(E_OBJECT(inst->ibar->apps));
+	       e_object_del(E_OBJECT(inst->ibar->apps));
 	     if (inst->dir[0] != '/')
 	       {
 		  const char *homedir;
 		  
 		  homedir = e_user_homedir_get();
-		  snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s", homedir, inst->dir);
+		  snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s/.order", homedir, inst->dir);
 	       }
 	     else
 	       snprintf(buf, sizeof(buf), inst->dir);
-	     inst->ibar->apps = e_app_new(buf, 0);
-	     if (inst->ibar->apps) e_app_subdir_scan(inst->ibar->apps, 0);
+	     inst->ibar->apps = e_order_new(buf);
 	     _ibar_fill(inst->ibar);
 	     _ibar_resize_handle(inst->ibar);
 	     _gc_orient(inst->gcc);
@@ -501,27 +501,12 @@ _ibar_config_update(void)
 		  edje_object_part_text_set(ic->o_holder2, "e.text.label", ic->app->comment);
 		  break;
 		case 2:
-		  edje_object_part_text_set(ic->o_holder, "e.text.label", ic->app->generic);
-		  edje_object_part_text_set(ic->o_holder2, "e.text.label", ic->app->generic);
+		  edje_object_part_text_set(ic->o_holder, "e.text.label", ic->app->generic_name);
+		  edje_object_part_text_set(ic->o_holder2, "e.text.label", ic->app->generic_name);
 		  break;
 	       }
 	  }
      }
-}
-
-static IBar_Icon *
-_ibar_icon_find(IBar *b, E_App *a)
-{
-   Evas_List *l;
-   IBar_Icon *ic;
-   
-   for (l = b->icons; l; l = l->next)
-     {
-	ic = l->data;
-	
-	if (ic->app == a) return ic;
-     }
-   return NULL;
 }
 
 static IBar_Icon *
@@ -542,14 +527,13 @@ _ibar_icon_at_coord(IBar *b, Evas_Coord x, Evas_Coord y)
 }
 
 static IBar_Icon *
-_ibar_icon_new(IBar *b, E_App *a)
+_ibar_icon_new(IBar *b, Efreet_Desktop *desktop)
 {
    IBar_Icon *ic;
    
    ic = E_NEW(IBar_Icon, 1);
-   e_object_ref(E_OBJECT(a));
    ic->ibar = b;
-   ic->app = a;
+   ic->app = desktop;
    ic->o_holder = edje_object_add(evas_object_evas_get(b->o_box));
    e_theme_edje_object_set(ic->o_holder, "base/theme/modules/ibar",
 			   "e/modules/ibar/icon");
@@ -587,18 +571,18 @@ _ibar_icon_free(IBar_Icon *ic)
    _ibar_icon_empty(ic);
    evas_object_del(ic->o_holder);
    evas_object_del(ic->o_holder2);
-   e_object_unref(E_OBJECT(ic->app));
    free(ic);
 }
 
 static void
 _ibar_icon_fill(IBar_Icon *ic)
 {
-   ic->o_icon = e_app_icon_add(ic->app, evas_object_evas_get(ic->ibar->o_box));
+   /* TODO: Correct icon size! */
+   ic->o_icon = e_util_desktop_icon_add(ic->app, "48x48", evas_object_evas_get(ic->ibar->o_box));
    edje_object_part_swallow(ic->o_holder, "e.swallow.content", ic->o_icon);
    evas_object_pass_events_set(ic->o_icon, 1);
    evas_object_show(ic->o_icon);
-   ic->o_icon2 = e_app_icon_add(ic->app, evas_object_evas_get(ic->ibar->o_box));
+   ic->o_icon2 = e_util_desktop_icon_add(ic->app, "48x48", evas_object_evas_get(ic->ibar->o_box));
    edje_object_part_swallow(ic->o_holder2, "e.swallow.content", ic->o_icon2);
    evas_object_pass_events_set(ic->o_icon2, 1);
    evas_object_show(ic->o_icon2);
@@ -614,8 +598,8 @@ _ibar_icon_fill(IBar_Icon *ic)
 	edje_object_part_text_set(ic->o_holder2, "e.text.label", ic->app->comment);
 	break;	
       case 2: /* Eap Generic */
-	edje_object_part_text_set(ic->o_holder, "e.text.label", ic->app->generic);
-	edje_object_part_text_set(ic->o_holder2, "e.text.label", ic->app->generic);
+	edje_object_part_text_set(ic->o_holder, "e.text.label", ic->app->generic_name);
+	edje_object_part_text_set(ic->o_holder2, "e.text.label", ic->app->generic_name);
 	break;	
      }
 }
@@ -643,126 +627,17 @@ _ibar_icon_signal_emit(IBar_Icon *ic, char *sig, char *src)
 }
 
 static void
-_ibar_cb_app_change(void *data, E_App *a, E_App_Change ch)
+_ibar_cb_app_change(void *data, E_Order *eo)
 {
    IBar *b;
 
    b = data;
    if (!b->apps) return;
-   switch (ch)
-     {
-      case E_APP_ADD:
-	if (e_app_is_parent(b->apps, a))
-	  {
-	     E_App *a2, *a_before = NULL;
-	     IBar_Icon *ic2 = NULL, *ic;
-	     Evas_List *l;
-	     
-	     ic = _ibar_icon_find(b, a);
-	     if (!ic)
-	       {
-		  for (l = b->apps->subapps; l; l = l->next)
-		    {
-		       a2 = l->data;
-		       if ((a2 == a) && (l->next))
-			 {
-			    a_before = l->next->data;
-			    break;
-			 }
-		    }
-		  ic = _ibar_icon_new(b, a);
-		  if (a_before) ic2 = _ibar_icon_find(b, a_before);
-		  if (ic2)
-		    {
-		       b->icons = evas_list_prepend_relative(b->icons, ic, ic2);
-		       e_box_pack_before(b->o_box, ic->o_holder, ic2->o_holder);
-		    }
-		  else
-		    {
-		       b->icons = evas_list_append(b->icons, ic);
-		       e_box_pack_end(b->o_box, ic->o_holder);
-		    }
-		  _ibar_empty_handle(b);
-		  _ibar_resize_handle(b);
-		  _gc_orient(b->inst->gcc);
-	       }
-	     else
-	       {
-		  /* FIXME: complain */
-	       }
-	  }
-	break;
-      case E_APP_DEL:
-	if (e_app_is_parent(b->apps, a))
-	  {
-	     IBar_Icon *ic;
-	     
-	     ic = _ibar_icon_find(b, a);
-	     if (ic)
-	       {
-		  b->icons = evas_list_remove(b->icons, ic);
-		  _ibar_icon_free(ic);
-	       }
-	     _ibar_empty_handle(b);
-	     _ibar_resize_handle(b);
-	     _gc_orient(b->inst->gcc);
-	  }
-	break;
-      case E_APP_CHANGE:
-	if (e_app_is_parent(b->apps, a))
-	  {
-	     IBar_Icon *ic;
-	     
-	     ic = _ibar_icon_find(b, a);
-	     if (ic)
-	       {
-		  _ibar_icon_empty(ic);
-		  _ibar_icon_fill(ic);
-	       }
-	     _ibar_resize_handle(b);
-	     if (b->inst)
-	        _gc_orient(b->inst->gcc);
-	  }
-	break;
-      case E_APP_ORDER:
-	if (a == b->apps)
-	  {
-	     _ibar_empty(b);
-	     _ibar_fill(b);
-	     _ibar_resize_handle(b);
-	     if (b->inst)
-                _gc_orient(b->inst->gcc);
-	  }
-	break;
-      case E_APP_EXEC:
-	if (e_app_is_parent(b->apps, a))
-	  {
-	     IBar_Icon *ic;
-	     
-	     ic = _ibar_icon_find(b, a);
-	     if (ic)
-	       {
-		  if (a->startup_notify)
-		    _ibar_icon_signal_emit(ic, "e,action,start", "e");
-		  else
-		    _ibar_icon_signal_emit(ic, "e,action,exec", "e");
-	       }
-	  }
-	break;
-      case E_APP_READY:
-      case E_APP_READY_EXPIRE:
-      case E_APP_EXIT:
-	if (e_app_is_parent(b->apps, a))
-	  {
-	     IBar_Icon *ic;
-	     
-	     ic = _ibar_icon_find(b, a);
-	     if (ic) _ibar_icon_signal_emit(ic, "e,action,stop", "e");
-	  }
-	break;
-      default:
-	break;
-     }
+   _ibar_empty(b);
+   _ibar_fill(b);
+   _ibar_resize_handle(b);
+   if (b->inst)
+     _gc_orient(b->inst->gcc);
 }
 
 static void
@@ -775,6 +650,7 @@ _ibar_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info)
    _ibar_instance_drop_zone_recalc(inst);
 }
 
+#if 0
 static void
 _ibar_cb_menu_icon_properties(void *data, E_Menu *m, E_Menu_Item *mi)
 {
@@ -788,6 +664,7 @@ _ibar_cb_menu_icon_properties(void *data, E_Menu *m, E_Menu_Item *mi)
      e_eap_edit_show(ic->ibar->inst->gcc->gadcon->zone->container,
 		     ic->app);
 }
+#endif
 
 static void
 _ibar_cb_menu_icon_remove(void *data, E_Menu *m, E_Menu_Item *mi)
@@ -798,7 +675,7 @@ _ibar_cb_menu_icon_remove(void *data, E_Menu *m, E_Menu_Item *mi)
    ic->ibar->icons = evas_list_remove(ic->ibar->icons, ic);
    _ibar_resize_handle(ic->ibar);
    _gc_orient(ic->ibar->inst->gcc);
-   e_app_remove(ic->app);
+   e_order_remove(ic->ibar->apps, ic->app);
    _ibar_icon_free(ic);
 }
 
@@ -817,15 +694,11 @@ static int
 _ibar_cb_menu_add_application_cb(void *data, const char *path)
 {
    IBar *b;
-   E_App *a;
+   Efreet_Desktop *desktop;
    
    b = data;
-   a = e_app_new(path, 0);
-   if (a)
-      {
-         e_app_list_append(a, b->apps);
-         e_object_unref(E_OBJECT(a));
-      }
+   desktop = efreet_desktop_get(path);
+   if (desktop) e_order_append(b->apps, desktop);
    _ibar_empty_handle(b);
    _ibar_resize_handle(b);
    _gc_orient(b->inst->gcc);
@@ -903,10 +776,12 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 	ibar_config->menu = mn;
 
 	/* FIXME: other icon options go here too */
+#if 0
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("Change Icon Properties"));
 	e_util_menu_item_edje_icon_set(mi, "enlightenment/properties");
 	e_menu_item_callback_set(mi, _ibar_cb_menu_icon_properties, ic);
+#endif
 	
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("Remove Icon"));
@@ -951,7 +826,7 @@ _ibar_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ic = data;
    if ((ev->button == 1) && (!ic->drag.dnd) && (ic->mouse_down == 1))
      {
-	e_app_exec(ic->ibar->inst->gcc->gadcon->zone, ic->app, NULL, NULL, "ibar");
+	e_exec(ic->ibar->inst->gcc->gadcon->zone, ic->app, NULL, NULL, "ibar");
 	ic->drag.start = 0;
 	ic->drag.dnd = 0;
 	ic->mouse_down = 0;
@@ -978,7 +853,8 @@ _ibar_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 	     E_Drag *d;
 	     Evas_Object *o;
 	     Evas_Coord x, y, w, h;
-	     const char *drag_types[] = { "enlightenment/eapp" };
+	     const char *drag_types[] = { "enlightenment/desktop" };
+	     char buf[128];
 
 	     ic->drag.dnd = 1;
 	     ic->drag.start = 0;
@@ -986,8 +862,9 @@ _ibar_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 	     evas_object_geometry_get(ic->o_icon, &x, &y, &w, &h);
 	     d = e_drag_new(ic->ibar->inst->gcc->gadcon->zone->container,
 			    x, y, drag_types, 1,
-			    ic->app, -1, NULL, _ibar_cb_drag_finished);
-             o = e_app_icon_add(ic->app, e_drag_evas_get(d));
+			    ic->app, -1, NULL, NULL);
+	     snprintf(buf, sizeof(buf), "%dx%d", w, h);
+             o = e_util_desktop_icon_add(ic->app, buf, e_drag_evas_get(d));
 	     e_drag_object_set(d, o);
 
 	     e_drag_resize(d, w, h);
@@ -997,11 +874,10 @@ _ibar_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 //	     evas_event_feed_mouse_up(ic->ibar->inst->gcc->gadcon->evas,
 //				      1, EVAS_BUTTON_NONE, 
 //				      ecore_x_current_time_get(), NULL);
-	     e_object_ref(E_OBJECT(ic->app));
 	     ic->ibar->icons = evas_list_remove(ic->ibar->icons, ic);
 	     _ibar_resize_handle(ic->ibar);
 	     _gc_orient(ic->ibar->inst->gcc);
-	     e_app_remove(ic->app);
+	     e_order_remove(ic->ibar->apps, ic->app);
 	     _ibar_icon_free(ic);
 	  }
      }
@@ -1029,12 +905,6 @@ _ibar_cb_icon_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
    evas_object_geometry_get(ic->o_holder, NULL, NULL, &w, &h);
    evas_object_resize(ic->o_holder2, w, h);
    evas_object_raise(ic->o_holder2);
-}
-
-static void
-_ibar_cb_drag_finished(E_Drag *drag, int dropped)
-{
-   e_object_unref(E_OBJECT(drag->data));
 }
 
 static void
@@ -1202,17 +1072,18 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
 {
    E_Event_Dnd_Drop *ev;
    Instance *inst;
-   E_App *app = NULL;
+   Efreet_Desktop *app = NULL;
    Evas_List *l, *fl = NULL;
    IBar_Icon *ic;
    
    ev = event_info;
    inst = data;
 
-   if (!strcmp(type, "enlightenment/eapp"))
+   if (!strcmp(type, "enlightenment/desktop"))
      {
 	app = ev->data;
      }
+#if 0
    else if (!strcmp(type, "enlightenment/border"))
      {
 	E_Border *bd;
@@ -1277,6 +1148,7 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
 	       }
 	  }
      }
+#endif
    else if (!strcmp(type, "text/uri-list"))
      {
 	fl = ev->data;
@@ -1302,9 +1174,9 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
 	  }
 	if (!ic) goto atend;
 	if (app)
-	  e_app_list_prepend_relative(app, ic->app);
+	  e_order_prepend_relative(ic->ibar->apps, app, ic->app);
 	else if (fl)
-	  e_app_files_list_prepend_relative(fl, ic->app);
+	  e_order_files_prepend_relative(ic->ibar->apps, fl, ic->app);
      }
    else
      {
@@ -1312,9 +1184,9 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
 	if (inst->ibar->apps)
 	  {
 	     if (app)
-	       e_app_list_append(app, inst->ibar->apps);
+	       e_order_append(inst->ibar->apps, app);
 	     else if (fl)
-	       e_app_files_list_append(fl, inst->ibar->apps);
+	       e_order_files_append(inst->ibar->apps, fl);
 	  }
      }
    evas_object_del(inst->ibar->o_drop);

@@ -18,9 +18,15 @@ struct _E_Order
    const char         *path;
    Evas_List          *desktops; /* A list of Efreet_Desktop files this .order contains */
    Ecore_File_Monitor *monitor; /* Check for changes int the .order file */
+
+   struct {
+	void (*update)(void *data, E_Order *eo);
+	void *data;
+   } cb;
 };
 
 EAPI E_Order *e_order_new(const char *path);
+EAPI void     e_order_update_callback_set(E_Order *eo, void (*cb)(void *data, E_Order *eo), void *data);
 
 EAPI void e_order_remove(E_Order *eo, Efreet_Desktop *desktop);
 EAPI void e_order_append(E_Order *eo, Efreet_Desktop *desktop);
