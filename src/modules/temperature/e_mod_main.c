@@ -244,19 +244,19 @@ _temperature_sensor_init(Config_Face *inst)
 		       char *name;
 
 		       if ((name = ecore_list_next(therms)))
-		         {
-				 if (ecore_file_exists(name))
-				   {
-				      int len;
+			 {
+			    if (ecore_file_exists(name))
+			      {
+				 int len;
 
-				      sprintf(path, "%s", ecore_file_get_file(name));
-				      len = strlen(path);
-				      if (len > 6)
-				         path[len - 6] = '\0';
-				      inst->sensor_type = SENSOR_TYPE_LINUX_I2C;
-			              inst->sensor_path = evas_stringshare_add(name);
-				      inst->sensor_name = evas_stringshare_add(path);
-				   }
+				 sprintf(path, "%s", ecore_file_get_file(name));
+				 len = strlen(path);
+				 if (len > 6)
+				   path[len - 6] = '\0';
+				 inst->sensor_type = SENSOR_TYPE_LINUX_I2C;
+				 inst->sensor_path = evas_stringshare_add(name);
+				 inst->sensor_name = evas_stringshare_add(path);
+			      }
 			 }
 		       ecore_list_destroy(therms);
 		    }
