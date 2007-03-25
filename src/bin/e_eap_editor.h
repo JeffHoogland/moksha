@@ -1,6 +1,7 @@
 /*
   * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
   */
+#if 0
 #ifdef E_TYPEDEFS
 
 typedef struct _E_App_Edit E_App_Edit;
@@ -29,5 +30,6 @@ struct _E_App_Edit
 
 EAPI E_App_Edit *e_eap_edit_show(E_Container *con, E_App *a);
 
+#endif
 #endif
 #endif

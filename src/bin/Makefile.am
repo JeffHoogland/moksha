@@ -47,7 +47,6 @@ e_box.h \
 e_flowlayout.h \
 e_int_menus.h \
 e_module.h \
-e_apps.h \
 e_atoms.h \
 e_utils.h \
 e_canvas.h \
@@ -149,7 +148,6 @@ e_int_config_modules.h \
 e_exehist.h \
 e_color_class.h \
 e_widget_textblock.h \
-e_apps_error.h \
 e_stolen.h \
 e_gadcon.h \
 e_shelf.h \
@@ -212,7 +210,6 @@ e_box.c \
 e_flowlayout.c \
 e_int_menus.c \
 e_module.c \
-e_apps.c \
 e_atoms.c \
 e_utils.c \
 e_canvas.c \
@@ -314,7 +311,6 @@ e_int_config_modules.c \
 e_exehist.c \
 e_color_class.c \
 e_widget_textblock.c \
-e_apps_error.c \
 e_stolen.c \
 e_gadcon.c \
 e_shelf.c \

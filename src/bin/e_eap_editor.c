@@ -1,6 +1,7 @@
 /*
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
+#if 0
 #include "e.h"
 
 struct _E_Config_Dialog_Data
@@ -588,3 +589,4 @@ _e_eap_editor_icon_show(E_Config_Dialog_Data *cfdata)
       cfdata->eap.icon_type = E_APP_ICON_UNKNOWN;
    cfdata->editor->img = e_app_icon_add(&(cfdata->eap), cfdata->editor->evas);
 }
+#endif

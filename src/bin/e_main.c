@@ -445,26 +445,6 @@ main(int argc, char **argv)
    efreet_icon_extension_add(".edj");
    TS("efreet paths done");
 
-   TS("ecore_desktop");
-   /* init FDO desktop */
-   if (!ecore_desktop_init())
-     {
-	e_error_message_show(_("Enlightenment cannot initialize the FDO desktop system.\n"
-			       "Perhaps you are out of memory?"));
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(ecore_desktop_shutdown);
-   TS("ecore_desktop done");
-
-   TS("ecore_desktop paths");
-   ecore_desktop_paths_extras_clear();
-   ecore_desktop_paths_prepend_user(ECORE_DESKTOP_PATHS_ICONS, "~/.e/e/icons");
-   snprintf(buf, sizeof(buf), "%s/data/icons", e_prefix_data_get());
-   ecore_desktop_paths_append_system(ECORE_DESKTOP_PATHS_ICONS, buf);
-   ecore_desktop_paths_regen();
-
-   TS("ecore_desktop paths done");
-
    TS("ecore_evas init");
    /* init the evas wrapper */
    if (!ecore_evas_init())
@@ -673,14 +653,6 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(_e_main_screens_shutdown);
-   TS("apps");
-   /* init app system */
-   if (!e_app_init())
-     {
-	e_error_message_show(_("Enlightenment cannot set up its app system."));
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_app_shutdown);
    TS("exec");
    /* init app system */
    if (!e_exec_init())
@@ -904,7 +876,6 @@ main(int argc, char **argv)
    if (restart)
      {
 	/* selected shutdown */
-	e_app_unmonitor_all();
 	e_ipc_shutdown();
 	ecore_file_shutdown();
 	e_util_env_set("E_RESTART_OK", "1");
