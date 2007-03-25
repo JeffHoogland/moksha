@@ -300,8 +300,6 @@ src/bin/e_int_config_color_classes.h
 src/bin/e_filereg.c
 src/bin/e_color_dialog.c
 src/bin/e_color_dialog.h
-src/bin/e_fdo_menu_to_order.c
-src/bin/e_fdo_menu_to_order.h
 src/bin/e_int_config_icon_themes.c
 src/bin/e_int_config_icon_themes.h
 src/bin/e_int_config_mousebindings.c
