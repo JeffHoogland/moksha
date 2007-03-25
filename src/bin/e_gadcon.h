@@ -120,7 +120,7 @@ struct _E_Gadcon_Client
    } config; 
 
    struct { 
-     int seq, flags; // goes to save
+     int seq, flags; /* goes to save */
      int state, resist;
      int prev_pos, prev_size;
      int want_save : 1;

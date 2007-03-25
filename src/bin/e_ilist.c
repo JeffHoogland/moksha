@@ -197,7 +197,6 @@ e_ilist_selected_set(Evas_Object *obj, int n)
    i = evas_list_count(sd->items);
    if (n >= i) n = i - 1;
    else if (n < 0) n = 0;
-//   if (sd->selected == n) return;
 
    for (l = sd->items; l; l = l->next) 
      {
@@ -307,7 +306,6 @@ e_ilist_selected_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y, Ev
    
    API_ENTRY return;
    if (!sd->items) return;
-//   if (sd->multi_select) return;
    if (sd->selected < 0) return;
    si = evas_list_nth(sd->items, sd->selected);
    if (!si) return;

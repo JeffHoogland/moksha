@@ -96,7 +96,7 @@ e_widget_spectrum_update(Evas_Object *obj, int redraw)
    double vx, vy;
    
    wd = e_widget_data_get(obj);
-   // redraw spectrum
+   /* redraw spectrum */
    if (redraw)
      e_spectrum_update(wd->o_spectrum);
 

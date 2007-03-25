@@ -472,20 +472,20 @@ _e_flowlayout_smart_reconfigure(E_Smart_Data *sd)
 
    if (!sd->changed) return;
    
-   // local variables
+   /* local variables */
    x = sd->x;
    y = sd->y;
    w = sd->w;
    h = sd->h;
 
-   // Calculate extents
+   /* Calculate extents */
    _e_flowlayout_smart_extents_calcuate(sd);
    minw = sd->min.w;
    minh = sd->min.h;
    count = evas_list_count(sd->items);
    expand = 0;
 
-   // Too small? move a little
+   /* Too small? move a little */
    if (w < minw)
      {
 	x = x + ((w - minw) * (1.0 - sd->align.x));
@@ -497,7 +497,7 @@ _e_flowlayout_smart_reconfigure(E_Smart_Data *sd)
 	h = minh;
      }
 
-   // Some odd expanding counter
+   /* Some odd expanding counter */
    for (l = sd->items; l; l = l->next)
      {
 	E_Flowlayout_Item *bi;
@@ -518,7 +518,7 @@ _e_flowlayout_smart_reconfigure(E_Smart_Data *sd)
 	  }
      }
 
-   // If no expansion, w is minw, h is minh
+   /* If no expansion, w is minw, h is minh */
    if (expand == 0)
      {
 	if (sd->horizontal)
@@ -533,7 +533,7 @@ _e_flowlayout_smart_reconfigure(E_Smart_Data *sd)
 	  }
      }
    
-   // Some calculations
+   /* Some calculations */
    wdif = w - minw;
    hdif = h - minh;
    if (sd->flowright)
@@ -547,7 +547,7 @@ _e_flowlayout_smart_reconfigure(E_Smart_Data *sd)
    cr = 0;
    cc = 0;
 
-   // Now for the real deal
+   /* Now for the real deal */
    for (l = sd->items; l; l = l->next)
      {
 	E_Flowlayout_Item *bi;
@@ -557,10 +557,10 @@ _e_flowlayout_smart_reconfigure(E_Smart_Data *sd)
 	bi = evas_object_data_get(obj, "e_flowlayout_data");
 	if (bi)
 	  {
-	     // Horiziontal
+	     /* Horiziontal */
 	     if (sd->horizontal)
 	       {
-		  // Homogenous
+		  /* Homogenous */
 		  if (sd->homogenous)
 		    {
 		       Evas_Coord ww, hh, ow, oh;
@@ -635,7 +635,7 @@ _e_flowlayout_smart_reconfigure(E_Smart_Data *sd)
 		    {
 		    }
 	       }
-	     // Vertical
+	     /* Vertical */
 	     else
 	       {
 		  if (sd->homogenous)

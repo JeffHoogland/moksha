@@ -73,7 +73,7 @@ e_widget_cslider_add(Evas *evas, E_Color_Component mode, E_Color *color, int ver
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_focus_steal, obj);
    e_widget_resize_object_set(obj, o);
 
-   // add gradient obj
+   /* add gradient obj */
    o = evas_object_gradient_add(evas);
    e_widget_sub_object_add(obj, o);
 

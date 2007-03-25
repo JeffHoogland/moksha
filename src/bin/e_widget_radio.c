@@ -153,23 +153,19 @@ e_widget_radio_toggle_set(Evas_Object *obj, int toggle)
    if (toggle)
      {
 	Evas_List *l;
-	//int toggled = 0;
 	
 	for (l = wd->group->radios; l; l = l->next)
 	  {
-	     //wd = e_widget_data_get(l->data);
 	     if (l->data != obj)
 	       {
 		  wd = e_widget_data_get(l->data);
 		  if (wd->valnum == *(wd->group->valptr))
 		    {
 		       edje_object_signal_emit(wd->o_radio, "e,state,off", "e");
-		       //toggled = 1;
 		       break;
 		    }
 	       }
 	  }
-	//if (!toggled) return;
 	wd = e_widget_data_get(obj);
 	*(wd->group->valptr) = wd->valnum;
 	edje_object_signal_emit(wd->o_radio, "e,state,on", "e");

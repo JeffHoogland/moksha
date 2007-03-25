@@ -28,7 +28,7 @@ struct _E_Config_Dialog_Data
 	 int size;
 	 int stacking;
 	 int iconify;
-	 int desk; // unused atm
+	 int desk; /* unused atm */
 	 int sticky;
 	 int shade;
 	 int maximize;
@@ -36,8 +36,8 @@ struct _E_Config_Dialog_Data
       } user, client;
       int border;
       int close;
-      int focus_in; // unused atm
-      int focus_out; // unised atm
+      int focus_in; /* unused atm */
+      int focus_out; /* unused atm */
       int life;
       
       int remember;

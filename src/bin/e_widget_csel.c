@@ -58,7 +58,7 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
 
    wd->changing = 1;
 
-   // entry changed
+   /* entry changed */
    for(l = wd->entries, i = 0; l; l = l->next, i++)
      {
 	if (o == l->data)
@@ -115,7 +115,7 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
      e_widget_cslider_update(wd->vert);
 
 
-   // update the sliders
+   /* update the sliders */
    for (l = wd->sliders, i = 0; l; l = l->next, i++)
      {
 	Evas_Object *so = l->data;
@@ -129,7 +129,7 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
 	  }
      }
 
-   // update the spectrum
+   /* update the spectrum */
    if (o != wd->spectrum && changed != -1)
      {
 	if (wd->mode == changed ||
@@ -142,7 +142,7 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
 
    e_widget_color_well_update(wd->well);
 
-   // now update the text fields to show current values
+   /* now update the text fields to show current values */
    for(l = wd->entries, i = 0; l; l = l->next, i++)
      {
 	char buf[10];

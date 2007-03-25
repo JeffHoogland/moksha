@@ -90,8 +90,6 @@ e_int_config_theme_import(E_Config_Dialog *parent)
    mask = 0;
    evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
    mask = 0;
-//   evas_object_key_grab(o, "space", mask, ~mask, 0);
-//   mask = 0;
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, 
 				  _theme_import_cb_key_down, import);
 

@@ -1026,13 +1026,9 @@ _e_container_cb_mouse_down(void *data, int type, void *event)
 
 	e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_CONTAINER,
 					   E_OBJECT(con), ev);
-//	if (!e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_CONTAINER,
-//						E_OBJECT(con), ev))
-	  {
-	     if (ev->double_click) flags |= EVAS_BUTTON_DOUBLE_CLICK;
-	     if (ev->triple_click) flags |= EVAS_BUTTON_TRIPLE_CLICK;
-	     evas_event_feed_mouse_down(con->bg_evas, ev->button, flags, ev->time, NULL);
-	  }
+	if (ev->double_click) flags |= EVAS_BUTTON_DOUBLE_CLICK;
+	if (ev->triple_click) flags |= EVAS_BUTTON_TRIPLE_CLICK;
+	evas_event_feed_mouse_down(con->bg_evas, ev->button, flags, ev->time, NULL);
      }
    return 1;
 }

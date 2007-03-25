@@ -846,7 +846,6 @@ main(int argc, char **argv)
    e_test();
 
    /* FIXME: for testing only */
-//   
    TS("shelf config init");
    e_shelf_config_init();
    
@@ -1325,7 +1324,6 @@ _e_main_cb_x_fatal(void *data __UNUSED__)
 {
    e_error_message_show("Lost X connection.");
    ecore_main_loop_quit();
-//   _e_main_shutdown(-1);
 }
 
 static int

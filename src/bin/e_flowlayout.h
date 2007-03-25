@@ -30,7 +30,7 @@ EAPI void         e_flowlayout_min_size_get      (Evas_Object *obj, Evas_Coord *
 EAPI void         e_flowlayout_max_size_get      (Evas_Object *obj, Evas_Coord *maxw, Evas_Coord *maxh);
 EAPI void         e_flowlayout_align_get         (Evas_Object *obj, double *ax, double *ay);
 EAPI void         e_flowlayout_align_set         (Evas_Object *obj, double ax, double ay);
-// This function only works if homogenous is set
+/* This function only works if homogenous is set */
 EAPI int          e_flowlayout_max_children      (Evas_Object *obj);
 
 #endif

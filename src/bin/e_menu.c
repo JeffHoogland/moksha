@@ -267,12 +267,10 @@ e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int d
 	m->cur.y = y;
 	if ((m->cur.y + m->cur.h) > (m->zone->y + m->zone->h))
 	  m->cur.y = y + h - m->cur.h;
-//	_e_menu_activate_first();
 	break;
       case E_MENU_POP_DIRECTION_RIGHT:
 	m->cur.x = x + w;
 	m->cur.y = y;
-//	_e_menu_activate_first();
 	break;
       case E_MENU_POP_DIRECTION_UP:
 	_e_menu_realize(m);
@@ -280,7 +278,6 @@ e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int d
 	if ((m->cur.x + m->cur.w) > (m->zone->x + m->zone->w))
 	  m->cur.x = x + w - m->cur.w;
 	m->cur.y = y - m->cur.h;
-//	_e_menu_activate_last();
 	break;
       case E_MENU_POP_DIRECTION_DOWN:
 	_e_menu_realize(m);
@@ -290,7 +287,6 @@ e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int d
 	m->cur.y = y + h;
 	if ((m->cur.y + m->cur.h) > (m->zone->y + m->zone->h))
 	  m->cur.y = y + h - m->cur.h;
-//	_e_menu_activate_first();
 	break;
       case E_MENU_POP_DIRECTION_AUTO:
 	_e_menu_auto_place(m, x, y, w, h);
@@ -888,8 +884,6 @@ e_menu_idler_before(void)
 		  m->prev.h = m->cur.h;
 		  ecore_evas_resize(m->ecore_evas, m->cur.w, m->cur.h);
 		  e_container_shape_resize(m->shape, m->cur.w, m->cur.h);
-//		  evas_obscured_clear(m->evas);
-//		  evas_obscured_rectangle_add(m->evas, 0, 0, m->cur.w, m->cur.h);
 	       }
 	     if (((m->cur.x) != (m->prev.x)) ||
 		 ((m->cur.y) != (m->prev.y)))
@@ -2720,8 +2714,6 @@ _e_menu_cb_mouse_move(void *data, int type, void *event)
    dt = dt * dt;
    if ((dt > 0.0) && ((d / dt) >= (fast_move_threshold * fast_move_threshold)))
      is_fast = 1;
-//   printf("d=%i dt=%3.9f fast_move_threshold=%3.3f ---> FAST=%i\n", 
-//	  d, dt, fast_move_threshold, is_fast);
 
    for (l = _e_active_menus; l; l = l->next)
      {

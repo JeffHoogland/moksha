@@ -299,7 +299,6 @@ _e_spectrum_redraw(void *d)
        for (j = 0; j < sp->iw; j++)
 	 {
 	    vx = (float)j / sp->iw;
-	    //_e_spectrum_2d_color_at(sp, j, i, &r, &g, &b);
 	    _e_spectrum_color_calc(sp, vx, vy, vz, &r, &g, &b);
 	    data[(i * sp->iw) + j] =
 	      (sp->cv->a << 24) |

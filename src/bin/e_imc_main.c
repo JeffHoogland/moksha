@@ -3,7 +3,6 @@
  */
 #include "e.h"
 
-//extern int errno;
 static void _e_help(void);
 
 /* externally accessible functions */

@@ -67,7 +67,6 @@ struct _E_Object
    void                  (*del_att_func) (void *obj);
    void                   *data;
    unsigned char           deleted : 1;
-//   Evas_List              *crumbs;
 };
 
 EAPI void *e_object_alloc               (int size, int type, E_Object_Cleanup_Func cleanup_func);

@@ -34,7 +34,6 @@ e_int_config_screensaver(E_Container *con)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    
-   //e_widget_disabled_set(ob, !ecore_x_screensaver_event_available_get());
    if (e_config_dialog_find("E", "_config_screensaver_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    

@@ -440,7 +440,6 @@ e_hints_window_init(E_Border *bd)
      {
 	if (bd->client.netwm.desktop == 0xffffffff)
 	  {
-//	     printf("CLIENT asks for all desks!\n");
 	     e_border_stick(bd);
 	  }
 	else if (bd->client.netwm.desktop < (bd->zone->desk_x_count * bd->zone->desk_y_count))

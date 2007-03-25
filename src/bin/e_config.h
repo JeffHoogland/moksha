@@ -76,7 +76,7 @@ typedef enum _E_Engine_Context
 struct _E_Config
 {
    int         config_version; // INTERNAL
-   int         show_splash; //GUI
+   int         show_splash; // GUI
    const char *init_default_theme; // GUI
    const char *desktop_default_background; // GUI
    Evas_List  *desktop_backgrounds; // GUI
@@ -88,12 +88,12 @@ struct _E_Config
    int         border_shade_animate; // GUI
    int         border_shade_transition; // GUI
    double      border_shade_speed; // GUI
-   double      framerate; //GUI
-   int         image_cache; //GUI
-   int         font_cache; //GUI
-   int         edje_cache; //GUI
-   int         edje_collection_cache; //GUI
-   double      cache_flush_interval; //GUI
+   double      framerate; // GUI
+   int         image_cache; // GUI
+   int         font_cache; // GUI
+   int         edje_cache; // GUI
+   int         edje_collection_cache; // GUI
+   double      cache_flush_interval; // GUI
    int         zone_desks_x_count; // GUI
    int         zone_desks_y_count; // GUI
    int         use_virtual_roots; // NO GUI - maybe remove?
@@ -183,7 +183,7 @@ struct _E_Config
    int         focus_last_focused_per_desktop; // GUI
    int         focus_revert_on_hide_or_close; // GUI
    int         use_e_cursor; // GUI
-   int         cursor_size; //GUI
+   int         cursor_size; // GUI
    int         menu_autoscroll_margin; // GUI
    int         menu_autoscroll_cursor_margin; // GUI
    const char *input_method; // GUI
@@ -230,33 +230,33 @@ struct _E_Config
    int         desklock_autolock_screensaver; // GUI
    int         desklock_autolock_idle; // GUI
    double      desklock_autolock_idle_timeout; // GUI
-   int         desklock_use_custom_desklock; //GUI
+   int         desklock_use_custom_desklock; // GUI
    const char *desklock_custom_desklock_cmd; // GUI
    
-   int         screensaver_enable; //GUI
-   int         screensaver_timeout; //GUI
-   int         screensaver_interval; //GUI
-   int         screensaver_blanking; //GUI
-   int         screensaver_expose; //GUI
+   int         screensaver_enable; // GUI
+   int         screensaver_timeout; // GUI
+   int         screensaver_interval; // GUI
+   int         screensaver_blanking; // GUI
+   int         screensaver_expose; // GUI
   
-   int         dpms_enable; //GUI
-   int         dpms_standby_enable; //GUI
-   int         dpms_standby_timeout; //GUI
-   int         dpms_suspend_enable; //GUI
-   int         dpms_suspend_timeout; //GUI
-   int         dpms_off_enable; //GUI
-   int         dpms_off_timeout; //GUI
+   int         dpms_enable; // GUI
+   int         dpms_standby_enable; // GUI
+   int         dpms_standby_timeout; // GUI
+   int         dpms_suspend_enable; // GUI
+   int         dpms_suspend_timeout; // GUI
+   int         dpms_off_enable; // GUI
+   int         dpms_off_timeout; // GUI
 
-   int         clientlist_group_by; //GUI
-   int         clientlist_include_all_zones; //GUI
-   int         clientlist_separate_with; //GUI
-   int         clientlist_sort_by; //GUI
-   int         clientlist_separate_iconified_apps; //GUI
-   int         clientlist_warp_to_iconified_desktop; //GUI
+   int         clientlist_group_by; // GUI
+   int         clientlist_include_all_zones; // GUI
+   int         clientlist_separate_with; // GUI
+   int         clientlist_sort_by; // GUI
+   int         clientlist_separate_iconified_apps; // GUI
+   int         clientlist_warp_to_iconified_desktop; // GUI
 
-   int         mouse_accel_numerator; //GUI
-   int         mouse_accel_denominator; //GUI
-   int         mouse_accel_threshold; //GUI
+   int         mouse_accel_numerator; // GUI
+   int         mouse_accel_denominator; // GUI
+   int         mouse_accel_threshold; // GUI
    
    int         display_res_restore; // GUI
    int         display_res_width; // GUI

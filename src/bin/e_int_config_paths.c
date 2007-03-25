@@ -246,8 +246,8 @@ _ilist_path_cb_change(void *data)
    evas_event_thaw(evas_object_evas_get(pcd->cfdata->gui.default_list));
    
    _ilist_update(pcd->cfdata->gui.user_list,
-		 pcd->cfdata->cur_pcd, //Path data to save
-		 pcd); //New Path to show
+		 pcd->cfdata->cur_pcd, /* Path data to save */
+		 pcd); /* New Path to show */
    
    pcd->cfdata->cur_pcd = pcd;
 }

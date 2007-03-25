@@ -498,8 +498,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    of = e_widget_framelist_add(evas, _("Size"), 0);
    ob = e_widget_check_add(evas, _("Shrink to Content Size"), &(cfdata->fit_along));
    e_widget_framelist_object_append(of, ob);
-//   ob = e_widget_check_add(evas, _("Expand width to fit contents"), &(cfdata->fit_size));
-//   e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Shelf Size"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%3.0f pixels"), 4, 120, 4, 0, NULL, &(cfdata->size), 100);

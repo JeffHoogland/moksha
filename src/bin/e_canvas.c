@@ -39,9 +39,6 @@ e_canvas_add(Ecore_Evas *ee)
      }
    else if (e_config->font_hinting == 2)
      evas_font_hinting_set(e, EVAS_FONT_HINTING_NONE);
-   
-//   evas_image_cache_flush(e);
-//   evas_image_cache_reload(e);
 }
 
 EAPI void

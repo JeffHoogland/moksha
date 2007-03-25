@@ -367,7 +367,7 @@ _delete_all_key_binding_cb(void *data, void *data2)
 
    cfdata = data;
 
-   //FIXME: need confirmation dialog
+   /* FIXME: need confirmation dialog */
 
    while (cfdata->binding.key)
      {
@@ -408,7 +408,7 @@ _delete_key_binding_cb(void *data, void *data2)
 	n = cfdata->locals.binding;
 	l = evas_list_nth_list(cfdata->binding.key, atoi(++n));
 
-	//FIXME: need confirmation dialog
+	/* FIXME: need confirmation dialog */
 	if (l)
 	  {
 	     bi = l->data;

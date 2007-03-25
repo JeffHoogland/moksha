@@ -560,14 +560,12 @@ _e_file_add_mod(int id, const char *path, int op, int listing)
 static void
 _e_file_add(int id, const char *path, int listing)
 {
-//   printf("+++FADD %s\n", path);
    _e_file_add_mod(id, path, 3, listing);/*file add*/
 }
 
 static void
 _e_file_del(int id, const char *path)
 {
-//   printf("+++FDEL %s\n", path);
    ecore_ipc_server_send(_e_ipc_server,
 			 6/*E_IPC_DOMAIN_FM*/,
 			 4/*file del*/,
@@ -577,7 +575,6 @@ _e_file_del(int id, const char *path)
 static void
 _e_file_mod(int id, const char *path)
 {
-//   printf("+++FMOD %s\n", path);
    _e_file_add_mod(id, path, 5, 0);/*file change*/
 }
 
@@ -627,7 +624,6 @@ _e_cb_file_mon_list_idler(void *data)
 	       _e_file_add(ed->id, buf, 2);
 	     else
 	       _e_file_add(ed->id, buf, 1);
-//	     printf("+++ FLIST %s\n", buf);
 	  }
 	free(file);
 	ed->fq = evas_list_remove_list(ed->fq, ed->fq);

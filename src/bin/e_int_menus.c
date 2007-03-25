@@ -1285,7 +1285,6 @@ _e_int_menus_clients_free_hook(void *obj)
 	
 	bd = borders->data;
 	borders = evas_list_remove_list(borders, borders);
-//	e_object_breadcrumb_del(E_OBJECT(bd), "clients_menu");
 	e_object_unref(E_OBJECT(bd));
      }
 }
@@ -1378,7 +1377,6 @@ _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
 	  e_menu_item_label_set(mi, _("No name!!"));
 	/* ref the border as we implicitly unref it in the callback */
 	e_object_ref(E_OBJECT(bd));
-//	e_object_breadcrumb_add(E_OBJECT(bd), "lost_clients_menu");
 	e_menu_item_callback_set(mi, _e_int_menus_lost_clients_item_cb, bd);
 	if (bd->desktop) e_util_desktop_menu_item_icon_add(bd->desktop, "24x24", mi);
      }
@@ -1401,7 +1399,6 @@ _e_int_menus_lost_clients_free_hook(void *obj)
 	
 	bd = borders->data;
 	borders = evas_list_remove_list(borders, borders);
-//	e_object_breadcrumb_del(E_OBJECT(bd), "lost_clients_menu");
 	e_object_unref(E_OBJECT(bd));
      }
 }

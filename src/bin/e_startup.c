@@ -29,11 +29,7 @@ e_startup(E_Startup_Mode mode)
    else if (mode == E_STARTUP_RESTART)
      snprintf(buf, sizeof(buf), "%s/.e/e/applications/restart/.order", homedir);
    startup_apps = e_order_new(buf);
-   if (!startup_apps)
-     {
-//	e_init_hide();
-	return;
-     }
+   if (!startup_apps) return;
    start_app_pos = 0;
    _e_startup();
 }

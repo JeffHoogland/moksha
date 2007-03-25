@@ -800,7 +800,6 @@ _e_exebuf_complete(void)
    _e_exebuf_update();
    if (!update_timer)
      update_timer = ecore_timer_add(MATCH_LAG, _e_exebuf_update_timer, NULL);
-//   _e_exebuf_matches_update();
 }
 
 static void
@@ -818,7 +817,6 @@ _e_exebuf_backspace(void)
 	     _e_exebuf_update();
 	     if (!update_timer)
 	       update_timer = ecore_timer_add(MATCH_LAG, _e_exebuf_update_timer, NULL);
-//	     _e_exebuf_matches_update();
 	  }
      }
 }
@@ -1242,7 +1240,6 @@ _e_exebuf_cb_key_down(void *data, int type, void *event)
 		  _e_exebuf_update();
 		  if (!update_timer)
 		    update_timer = ecore_timer_add(MATCH_LAG, _e_exebuf_update_timer, NULL);
-//		  _e_exebuf_matches_update();
 	       }
 	  }
      }

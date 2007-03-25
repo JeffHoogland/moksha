@@ -325,8 +325,6 @@ _cb_editor_del(void *obj)
    cfdata->editor = NULL;
    e_object_del_attach_func_set(obj, NULL);
    e_object_data_set(obj, NULL);
-//   e_fm2_refresh(cfdata->gui.o_fm);
-//   e_fm2_refresh(cfdata->gui.o_fm_all);
 }
 #endif
 
@@ -445,10 +443,7 @@ _cb_files_edited(void *data, E_Menu *m, E_Menu_Item *mi)
 
    realpath = e_fm2_real_path_get(cfdata->gui.o_fm_all);
 
-//   if (info->pseudo_link)
-//     snprintf(buf, sizeof(buf), "%s/%s", info->link, info->file);
-//   else
-     snprintf(buf, sizeof(buf), "%s/%s", realpath, info->file);
+   snprintf(buf, sizeof(buf), "%s/%s", realpath, info->file);
 
    if (ecore_file_is_dir(buf)) return;
    a = e_app_new(buf, 0);
@@ -534,15 +529,11 @@ _cb_button_add(void *data1, void *data2)
       {
          if (!cfdata->gui.o_fm) return;
 
-//         a = e_app_new(buf, 0);
          realpath = e_fm2_real_path_get(cfdata->gui.o_fm);
-//         parent = e_app_new(realpath, 0);
-//         if (parent) e_app_subdir_scan(parent, 0);
-//         e_app_append(a, parent);
          _append_to_order(realpath, ecore_file_get_file(buf));
       }
 
-// FIXME: When fm is fixed to create the .order files for us, then we can remove this.
+   /* FIXME: When fm is fixed to create the .order files for us, then we can remove this. */
    e_fm2_refresh(cfdata->gui.o_fm);
 }
 

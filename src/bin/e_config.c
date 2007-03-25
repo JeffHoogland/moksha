@@ -737,18 +737,20 @@ e_config_init(void)
 	CFG_MODULE("temperature", 1);
 	CFG_MODULE("pager", 1);
      }
+#if 0
      {
-//	E_Font_Fallback* eff;
+	E_Font_Fallback* eff;
 	
 #define CFG_FONTFALLBACK(_name) \
    eff = E_NEW(E_Font_Fallback, 1); \
    eff->name = evas_stringshare_add(_name); \
    e_config->font_fallbacks = evas_list_append(e_config->font_fallbacks, eff)
 	
-//	CFG_FONTFALLBACK("New-Sung");
-//	CFG_FONTFALLBACK("Kochi-Gothic");
-//	CFG_FONTFALLBACK("Baekmuk-Dotum");
+	CFG_FONTFALLBACK("New-Sung");
+	CFG_FONTFALLBACK("Kochi-Gothic");
+	CFG_FONTFALLBACK("Baekmuk-Dotum");
      }
+#endif
      { 
 	E_Font_Default* efd;
 	
@@ -783,9 +785,12 @@ e_config_init(void)
    eb->params = _params == NULL ? NULL : evas_stringshare_add(_params); \
    e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb)
 
-	//FIXME: If new mouse binding are added/changed/modified, then do not
-	//forget to reflect those changes in e_int_config_mousebinding.c in
-	//_restore_defaults_cb function
+	/*
+	 * FIXME:
+	 * If new mouse binding are added/changed/modified, then do not
+	 * forget to reflect those changes in e_int_config_mousebinding.c in
+	 * _restore_defaults_cb function
+	 */
 	
 	CFG_MOUSEBIND(E_BINDING_CONTEXT_BORDER, 1,
 		      E_BINDING_MODIFIER_ALT, 0, "window_move", NULL);
@@ -810,9 +815,12 @@ e_config_init(void)
    eb->params = _params == NULL ? NULL : evas_stringshare_add(_params); \
    e_config->key_bindings = evas_list_append(e_config->key_bindings, eb)
 
-	//FIXME: If new key binding are added/changed/modified, then do not
-	//forget to reflect those changes in e_int_config_keybinding.c in
-	//_restore_key_binding_defaults_cb function
+	/*
+	 * FIXME:
+	 * If new key binding are added/changed/modified, then do not
+	 * forget to reflect those changes in e_int_config_keybinding.c in 
+	 * _restore_key_binding_defaults_cb function
+	 */
 
 	CFG_KEYBIND(E_BINDING_CONTEXT_ANY, "Left",
 		    E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT, 0,
@@ -1096,9 +1104,12 @@ e_config_init(void)
    eb->params = _params == NULL ? NULL : evas_stringshare_add(_params); \
    e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb)
 
-	//FIXME: If new wheel binding are added/changed/modified, then do not
-	//forget to reflect those changes in e_int_config_mousebinding.c in
-	//_restore_defaults_cb function
+	/*
+	 * FIXME:
+	 * If new wheel binding are added/changed/modified, then do not
+	 * forget to reflect those changes in e_int_config_mousebinding.c in
+	 * _restore_defaults_cb function
+	 */
 
 	CFG_WHEELBIND(E_BINDING_CONTEXT_CONTAINER, 0, -1,
 		      E_BINDING_MODIFIER_ALT, 0,
@@ -1221,8 +1232,6 @@ e_config_init(void)
 	CFG_MIME_ICON("image/tiff", "THUMB");
 
 	CFG_MIME_ICON("application/x-desktop", "DESKTOP");
-	
-//	CFG_MIME_ICON("image/*", "e/icons/fileman/mime/image");
      }
    IFCFGEND;
 
@@ -1645,11 +1654,15 @@ e_config_engine_list(void)
 {
    Evas_List *l = NULL;
    l = evas_list_append(l, strdup("SOFTWARE"));
-// DISABLE GL as an accessible engine - it does have problems, ESPECIALLY with
-// shaped windows (it can't do them), and multiple gl windows and shared
-// contexts, so for now just disable it. xrender is much more complete in
-// this regard.
-//   l = evas_list_append(l, strdup("GL"));
+   /*
+    * DISABLE GL as an accessible engine - it does have problems, ESPECIALLY with
+    * shaped windows (it can't do them), and multiple gl windows and shared
+    * contexts, so for now just disable it. xrender is much more complete in
+    * this regard.
+    */
+#if 0
+   l = evas_list_append(l, strdup("GL"));
+#endif
    l = evas_list_append(l, strdup("XRENDER"));
    return l;
 }

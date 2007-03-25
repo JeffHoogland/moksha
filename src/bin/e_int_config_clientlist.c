@@ -100,7 +100,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Include windows from other screens"), &(cfdata->include_all_zones));
    e_widget_framelist_object_append(of, ob);
-   //e_widget_list_object_append(o, of, 1, 1, 0.5);
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
    
    of = e_widget_framelist_add(evas, _("Separate Groups By"), 0);
@@ -111,7 +110,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Using menus"), E_CLIENTLIST_GROUP_SEP_MENU, rg);
    e_widget_framelist_object_append(of, ob);
-   //e_widget_list_object_append(o, of, 1, 1, 0.5);
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
    
    of = e_widget_framelist_add(evas, _("Client Sort Order"), 0);
@@ -124,7 +122,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Most recently used"), E_CLIENTLIST_SORT_MOST_RECENT, rg);
    e_widget_framelist_object_append(of, ob);
-   //e_widget_list_object_append(o, of, 1, 1, 0.5);
    e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
    
    of = e_widget_framelist_add(evas, _("Iconified Windows"), 0);
@@ -137,7 +134,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Warp to owning desktop"), &(cfdata->warp_to_iconified_desktop));
    e_widget_framelist_object_append(of, ob);
-   //e_widget_list_object_append(o, of, 1, 1, 0.5);
    e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
 
    e_widget_list_object_append(o, ot, 1, 1, 0.5); 

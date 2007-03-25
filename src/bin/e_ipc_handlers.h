@@ -5470,7 +5470,6 @@ break;
    START_INT(value, HDL);
    e_config->menu_autoscroll_cursor_margin = value;
    E_CONFIG_LIMIT(e_config->menu_autoscroll_cursor_margin, 0, 50);
-	 //   e_zone_update_flip_all();
    SAVE;
    END_INT;
 #elif (TYPE == E_REMOTE_IN)

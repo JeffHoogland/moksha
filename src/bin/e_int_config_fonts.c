@@ -323,7 +323,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	char *f;
 	
 	f = fonts->data;
-//	if (strstr(f, ":")) continue;
 	l = evas_list_append(l, strdup(f));
      }
    if (l) 

@@ -12,7 +12,7 @@ struct _E_Widget_Data
 
    E_Color_Dialog *dia;
    E_Color *color;
-   E_Container *con; // container to pop a color dialog up on
+   E_Container *con; /* container to pop a color dialog up on */
    int show_color_dialog;
 };
 

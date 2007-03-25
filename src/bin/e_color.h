@@ -21,7 +21,7 @@ enum _E_Color_Component
 #ifndef E_COLOR_HEADER
 #define E_COLOR_HEADER
 
-// used so that a single color struct can be shared by all elements of the color dialog
+/* used so that a single color struct can be shared by all elements of the color dialog */
 struct _E_Color
 {
    int r, g, b;

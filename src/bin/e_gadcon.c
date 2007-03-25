@@ -1348,8 +1348,6 @@ _e_gadcon_client_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *even
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
 	e_util_evas_fake_mouse_up_later(gcc->gadcon->evas,
 					ev->button);
-//	evas_event_feed_mouse_up(gcc->gadcon->evas, ev->button,
-//				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
 }
     
@@ -1761,8 +1759,6 @@ _e_gadcon_cb_client_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *e
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
 	e_util_evas_fake_mouse_up_later(gcc->gadcon->evas,
 					ev->button);
-//	evas_event_feed_mouse_up(gcc->gadcon->evas, ev->button,
-//				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
 }
 
@@ -1919,9 +1915,6 @@ _e_gadcon_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
 	else
 	  e_gadcon_layout_pack_request_set(gcc->o_base, gcc->config.pos + x, w);
 
-	//gcc->config.pos will be set in smart_recofigure
-	//gcc->config.size will be set in smart_reconfigure
-	//original: gcc->config.pos = gcc->sx + x;
 	gcc->config.size = w;
 	evas_object_geometry_get(gcc->gadcon->o_container, NULL, NULL, &w, &h);
 	gcc->config.res = w;
@@ -1933,9 +1926,6 @@ _e_gadcon_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
 	else
 	  e_gadcon_layout_pack_request_set(gcc->o_base, gcc->config.pos + y, h);
 
-	//gcc->config.pos will be set in smart_recofigure
-	//gcc->config.size will be set in smart_reconfigure
-	//original: gcc->config.pos = gcc->sy + y;
 	gcc->config.size = h;
 	evas_object_geometry_get(gcc->gadcon->o_container, NULL, NULL, &w, &h);
 	gcc->config.res = h;
@@ -2017,10 +2007,6 @@ _e_gadcon_cb_signal_resize_left_go(void *data, Evas_Object *obj, const char *emi
 	  e_gadcon_layout_pack_request_set(gcc->o_frame, gcc->config.pos + x, w - x);
 	else
 	  e_gadcon_layout_pack_request_set(gcc->o_base, gcc->config.pos + x, w - x);
-	//gcc->config.pos will be set in smart_reconfigure
-	//gcc->config.size will be set in smart_reconfigure
-	//original: gcc->config.pos = gcc->sx + x;
-	//original: gcc->config.size = gcc->sw - x;
 	evas_object_geometry_get(gcc->gadcon->o_container, NULL, NULL, &w, &h);
 	gcc->config.res = w;
      }
@@ -2030,10 +2016,6 @@ _e_gadcon_cb_signal_resize_left_go(void *data, Evas_Object *obj, const char *emi
 	  e_gadcon_layout_pack_request_set(gcc->o_frame, gcc->config.pos + y, h - y);
 	else
 	  e_gadcon_layout_pack_request_set(gcc->o_base, gcc->config.pos + y, h - y);
-	//gcc->config.pos will be set in smart_reconfigure
-	//gcc->config.size will be set in smart_reconfigure
-	//original: gcc->config.pos = gcc->sy + y;
-	//original: gcc->config.size = gcc->sh - y;
 	evas_object_geometry_get(gcc->gadcon->o_container, NULL, NULL, &w, &h);
 	gcc->config.res = h; 
 	
@@ -2096,10 +2078,6 @@ _e_gadcon_cb_signal_resize_right_go(void *data, Evas_Object *obj, const char *em
 	  e_gadcon_layout_pack_request_set(gcc->o_frame, gcc->config.pos, w + x);
 	else
 	  e_gadcon_layout_pack_request_set(gcc->o_base, gcc->config.pos, w + x);
-	//gcc->config.pos is set inside smart_reconfigure
-	//gcc->config.size is set inside smart_reconfigure
-	//original: gcc->config.pos = gcc->sx;
-	//original: gcc->config.size = gcc->sw + x;
 	evas_object_geometry_get(gcc->gadcon->o_container, NULL, NULL, &w, &h);
 	gcc->config.res = w;
      }
@@ -2109,10 +2087,6 @@ _e_gadcon_cb_signal_resize_right_go(void *data, Evas_Object *obj, const char *em
 	  e_gadcon_layout_pack_request_set(gcc->o_frame, gcc->config.pos, h + y);
 	else
 	  e_gadcon_layout_pack_request_set(gcc->o_base, gcc->config.pos, h + y);
-	//gcc->config.pos is set inside smart_reconfigure
-	//gcc->config.size is set inside smart_reconfigure
-	//original: gcc->config.pos = gcc->sy;
-	//original: gcc->config.size = gcc->sh + y;
 	evas_object_geometry_get(gcc->gadcon->o_container, NULL, NULL, &w, &h);
 	gcc->config.res = h;
      }
@@ -2518,9 +2492,11 @@ e_gadcon_layout_pack(Evas_Object *obj, Evas_Object *child)
 static void
 e_gadcon_layout_pack_size_set(Evas_Object *obj, int size)
 {
-   //FIXME: simplify this function until the 
-   //is redone _e_gadcon_layout_smart_gadcons_asked_position_set(E_Smart_Data *sd)
-   //
+   /*
+    * FIXME:
+    * simplify this function until the is redone
+    * _e_gadcon_layout_smart_gadcons_asked_position_set(E_Smart_Data *sd)
+    */
    E_Gadcon_Layout_Item *bi;
    int xx;
 
@@ -2764,13 +2740,10 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 	return;
      }
 
-   //x = sd->x; y = sd->y; w = sd->w; h = sd->h;
    min = mino = cur = 0;
 
    _e_gadcon_layout_smart_min_cur_size_calc(sd, &min, &mino, &cur); 
 
-   // update sd info about minw req etc
-   // here request for gadcon size !!
    if (sd->horizontal)
      {
 	if ((sd->minw != min) || (sd->minh != mino))
@@ -3107,7 +3080,6 @@ _e_gadcon_layout_smart_min_cur_size_calc(E_Smart_Data *sd, int *min, int *mino, 
    E_Gadcon_Layout_Item	*bi;
    Evas_List *l;
 
-   // how much space all the gadgets takes in the shelf
    for (l = sd->items; l; l = l->next)
      {
 	bi = evas_object_data_get(l->data, "e_gadcon_layout_data");
@@ -3152,7 +3124,6 @@ _e_gadcon_layout_smart_min_cur_size_calc(E_Smart_Data *sd, int *min, int *mino, 
 	       {
 		  *min += bi->min.w;
 		  if (bi->min.h > *mino) *mino = bi->min.h;
-		  //if (bi->min.w > *mino) *mino = bi->min.w;
 		  if (bi->ask.size < bi->min.w)
 		    *cur += bi->min.w;
 		  else
@@ -3161,7 +3132,6 @@ _e_gadcon_layout_smart_min_cur_size_calc(E_Smart_Data *sd, int *min, int *mino, 
 	     else
 	       {
 		  *min += bi->min.h;
-		  //if (bi->min.h > *mino) *mino = bi->min.h;
 		  if (bi->min.w > *mino) *mino = bi->min.w;
 		  if (bi->ask.size < bi->min.h)
 		    *cur += bi->min.h;
@@ -4170,7 +4140,6 @@ _e_gadcon_layout_smart_gadcons_position(E_Smart_Data *sd, Evas_List **list)
 	LC_FREE(lc_back);
      }
 
-   //set lc_moving->items->data->gcc->config.pos;
    if (sd->horizontal) 
      { 
 	bi_moving->gcc->config.pos = bi_moving->ask.pos = bi_moving->x; 
@@ -4431,8 +4400,6 @@ _e_gadcon_layout_smart_containers_position_adjust(E_Smart_Data *sd, E_Layout_Ite
 		  bi2->gcc->config.size = bi2->h;
 		  bi->y = bi2->y + bi2->h;
 	       }
-
-	     //bi->gcc->state_info.flags &= ~E_GADCON_LAYOUT_ITEM_LOCK_ABSOLUTE;
 
 	     t = bi->gcc->state_info.seq;
 	     bi->gcc->state_info.seq = bi2->gcc->state_info.seq;

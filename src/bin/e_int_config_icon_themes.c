@@ -236,7 +236,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_fm2_icon_menu_flags_set(o, E_FM2_MENU_NO_SHOW_HIDDEN);
    evas_object_smart_callback_add(mt, "dir_changed",
 				  _cb_files_changed, cfdata);
-//   e_fm2_path_set(cfdata->gui.o_fm, "/opt/kde3/share/icons/crystalsvg", "/");
 
    ob = e_widget_scrollframe_pan_add(evas, mt,
 				     e_fm2_pan_set,

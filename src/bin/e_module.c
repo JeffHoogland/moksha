@@ -138,10 +138,11 @@ e_module_new(const char *name)
        (!m->func.about) ||
        (!m->api) ||
        
-       // this is to more forcibly catch old/bad modules. will go - eventually,
-       // but for now is a good check to have
+       /*
+	* this is to more forcibly catch old/bad modules. will go - eventually,
+	* but for now is a good check to have
+	*/
        (dlsym(m->handle, "e_modapi_info"))
-       
        )
      {
 	snprintf(body, sizeof(body), _("There was an error loading module named: %s<br>"

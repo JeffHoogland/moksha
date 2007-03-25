@@ -71,11 +71,11 @@ static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    e_config->mouse_accel_numerator = cfdata->numerator;
-   // Force denominator to 1 for simplicity.
-   e_config->mouse_accel_denominator = 1; //cfdata->denominator;
+   /* Force denominator to 1 for simplicity. */
+   e_config->mouse_accel_denominator = 1;
    e_config->mouse_accel_threshold = cfdata->threshold;
 
-   // Apply the above settings
+   /* Apply the above settings */
    e_mouse_init();
 
    e_config_save_queue();

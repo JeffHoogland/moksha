@@ -752,16 +752,16 @@ ACT_FN_GO(window_move_to)
 
 	if (sscanf(params, "%c%i %c%i", &cx, &x, &cy, &y) == 4)
 	  {
-	     // Nothing, both x and y is updated.
+	     /* Nothing, both x and y is updated. */
 	  }
 	else if (sscanf(params, "* %c%i", &cy, &y) == 2)
 	  {
-	     // Updated y, reset x.
+	     /* Updated y, reset x. */
 	     x = bd->x;
 	  }
 	else if (sscanf(params, "%c%i *", &cx, &x) == 2)
 	  {
-	     // Updated x, reset y.
+	     /* Updated x, reset y. */
 	     y = bd->y;
 	  }
 
@@ -853,7 +853,7 @@ ACT_FN_GO(window_push)
           x = bd->zone->w - bd->w;
         else if (dir == E_DIRECTION_UP)
           y = 0;
-        else // dir == E_DIRECTION_DOWN
+        else /* dir == E_DIRECTION_DOWN */
           y = bd->zone->h - bd->h;
 
         bd_list = e_container_border_list_first(bd->zone->container);
@@ -944,7 +944,7 @@ ACT_FN_GO(window_desk_move_by)
 	to_y = dy + y;
 	while ((desk = e_desk_at_xy_get(bd->zone, to_x, to_y )) == NULL)
 	  {
-	     // here we are out of our desktop range
+	     /* here we are out of our desktop range */
 	     while (to_x >= bd->zone->desk_x_count)
 	       {
 		  to_x -= bd->zone->desk_x_count;
@@ -964,9 +964,9 @@ ACT_FN_GO(window_desk_move_by)
 	
 	if (desk)
 	  {
-	     // switch desktop. Quite usefull from the interface point of view.
+	     /* switch desktop. Quite usefull from the interface point of view. */
 	     e_zone_desk_flip_by(bd->zone, to_x - dx, to_y - dy);
-	     // send the border to the required desktop.
+	     /* send the border to the required desktop. */
 	     e_border_desk_set(bd, desk);
 	     e_border_focus_set(bd, 1, 1);
 	  }

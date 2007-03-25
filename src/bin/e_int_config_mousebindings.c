@@ -71,7 +71,7 @@ struct _E_Config_Dialog_Data
        int context;
 
        char *cur;
-       int add; //just to distinguesh among two buttons add/modify
+       int add; /*just to distinguesh among two buttons add/modify */
 
        E_Dialog *dia;
        Ecore_X_Window bind_win;
@@ -478,7 +478,7 @@ _delete_all_mouse_binding_cb(void *data, void *data2)
 
    cfdata = data;
 
-   //FIXME: need confirmation dialog
+   /* FIXME: need confirmation dialog */
    
    while (cfdata->binding.mouse)
      {
@@ -954,7 +954,7 @@ _update_binding_context(E_Config_Dialog_Data *cfdata)
    E_Config_Binding_Wheel *bw;
    E_Binding_Context ctxt;
 
-   // disable all the radios.
+   /* disable all the radios. */
    e_widget_radio_toggle_set(cfdata->gui.context.o_any, 1);
    e_widget_disabled_set(cfdata->gui.context.o_any, 1);
    e_widget_disabled_set(cfdata->gui.context.o_border, 1);

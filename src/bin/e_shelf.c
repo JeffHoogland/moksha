@@ -953,8 +953,6 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_inf
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
 	e_util_evas_fake_mouse_up_later(es->gadcon->evas, 
 					ev->button);
-//	evas_event_feed_mouse_up(es->gadcon->evas, ev->button,
-//				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
 }
 

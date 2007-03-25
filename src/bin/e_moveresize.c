@@ -116,8 +116,6 @@ e_move_begin(E_Zone *zone, int x, int y)
 	e_popup_edje_bg_object_set(_disp_pop, _obj);
      }
 
-//   e_move_update(x, y);
-   
    if (e_config->move_info_visible)
      {
 	e_popup_move_resize(_disp_pop,
@@ -126,10 +124,7 @@ e_move_begin(E_Zone *zone, int x, int y)
 	      (obj_y - _disp_pop->zone->y) +
 	      ((obj_h - eh) / 2),
 	      ew, eh);
-//   e_popup_show(_disp_pop);
      }
-
-//   visible = 1;
 }
 
 EAPI void

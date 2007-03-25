@@ -984,9 +984,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    of = e_widget_frametable_add(evas, _("Language Selector"), 1);
   
    /* Language List */ 
-   //ob = e_widget_label_add(evas, _("Language"));
-   //e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
-    
    ob = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_lang));
    cfdata->gui.lang_list = ob;
 
@@ -1009,9 +1006,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
   
 
    /* Region List */
-   //ob = e_widget_label_add(evas, _("Region"));
-   //e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1); 
-
    ob = e_widget_ilist_add(evas, 0, 0, &(cfdata->cur_reg));
    cfdata->gui.reg_list = ob;
  
@@ -1021,9 +1015,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_ilist_selected_set(ob, e_widget_ilist_selected_get(ob));
    
    /* Codeset List */
-   //ob = e_widget_label_add(evas, _("Codeset"));
-   //e_widget_frametable_object_append(of, ob, 2, 0, 1, 1, 1, 1, 1, 1); 
-
    ob = e_widget_ilist_add(evas, 0, 0, &(cfdata->cur_cs));
    cfdata->gui.cs_list = ob;
 
@@ -1032,9 +1023,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_frametable_object_append(of, ob, 2, 0, 1, 4, 1, 1, 1, 1);
    
    /* Modified List */
-   //ob = e_widget_label_add(evas, _("Modifier"));
-   //e_widget_frametable_object_append(of, ob, 3, 0, 1, 1, 1, 1, 1, 1); 
-   
    ob = e_widget_ilist_add(evas, 0, 0, &(cfdata->cur_mod));
    cfdata->gui.mod_list = ob;
 

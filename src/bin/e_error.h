@@ -3,7 +3,6 @@
  */
 #ifdef E_TYPEDEFS
 
-//#define print0(x, args...)      x ,print1(## args)
 #define e_error_message_show(args...) \
 { \
    char __tmpbuf[4096]; \

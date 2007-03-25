@@ -409,7 +409,7 @@ _e_desklock_cb_key_down(void *data, int type, void *event)
      _e_desklock_delete();
    else
      {
-	// here we have to grab a password
+	/* here we have to grab a password */
 	if (ev->key_compose)
 	  {
 	     if ((strlen(edd->passwd) < (PASSWD_LEN - strlen(ev->key_compose))))

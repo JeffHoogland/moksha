@@ -81,11 +81,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    o = e_widget_list_add(evas, 0, 0);
       
-//   of = e_widget_framelist_add(evas, _("General Settings"), 0);
-//   ob = e_widget_check_add(evas, _("Auto-Apply Configuration Changes"), &(cfdata->auto_apply));
-//   e_widget_framelist_object_append(of, ob);
-//   e_widget_list_object_append(o, of, 1, 1, 0.5);   
-   
    of = e_widget_framelist_add(evas, _("Default Dialog Mode"), 0);
    rg = e_widget_radio_group_new(&(cfdata->default_mode));
 
@@ -118,11 +113,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    
    o = e_widget_list_add(evas, 0, 0);
 
-//   of = e_widget_framelist_add(evas, _("General Settings"), 0);
-//   ob = e_widget_check_add(evas, _("Auto-Apply Configuration Changes"), &(cfdata->auto_apply));
-//   e_widget_framelist_object_append(of, ob);
-//   e_widget_list_object_append(o, of, 1, 1, 0.5);   
-   
    of = e_widget_framelist_add(evas, _("Default Dialog Mode"), 0);
    rg = e_widget_radio_group_new(&(cfdata->default_mode));
 

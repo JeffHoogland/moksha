@@ -65,20 +65,18 @@ EAPI void
 e_object_free(E_Object *obj)
 {
    E_OBJECT_CHECK(obj);
-/*   
-   if (obj->crumbs)
-     {
-	printf("EEEK obj type %x has crumbs still! ->\n", obj->type);
-	e_object_breadcrumb_debug(obj);
-     }
- */
    if (obj->free_att_func) obj->free_att_func(obj);
-// FIXME: although this is good - if during cleanup the cleanup func calls
-// other generic funcs to do cleanups on the same object... we get bitching.
-// disable for now (the final free of the struct should probably happen after
-// the cleanup func and be done byt he object system - set the magic after
-// cleanup :)  
-//   obj->magic = E_OBJECT_MAGIC_FREED;
+   /*
+    * FIXME:
+    * although this is good - if during cleanup the cleanup func calls
+    * other generic funcs to do cleanups on the same object... we get bitching.
+    * disable for now (the final free of the struct should probably happen after
+    * the cleanup func and be done byt he object system - set the magic after
+    * cleanup :)  
+    */
+#if 0
+   obj->magic = E_OBJECT_MAGIC_FREED;
+#endif
    obj->cleanup_func(obj);
 }
 
@@ -214,7 +212,6 @@ e_object_error(E_Object *obj)
      }
    /* display actual error message */
    e_error_message_show("%s", buf);
-//   abort();
    return 1;
 #else
    return 0;

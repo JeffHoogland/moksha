@@ -324,10 +324,7 @@ e_desk_last_focused_focus(E_Desk *desk)
      {
 	bd = l->data;
 	if ((!bd->iconic) && (bd->visible) &&
-	    (((bd->desk == desk)
-// Don't focus sticky windows as last focused win	       
-//	       || ((bd->sticky) && (bd->zone == desk->zone))
-	       )))
+	    (bd->desk == desk))
 	  {
 	     /* this was the window last focused in this desktop */
 	     e_border_focus_set(bd, 1, 1);
@@ -625,7 +622,7 @@ _e_desk_show_animator(void *data)
 		  dt = (t - bd->fx.start.t) / spd;
 		  if (dt > 1.0) dt = 1.0;
 		  dt = 1.0 - dt;
-		  dt *= dt; // decelerate - could be a better hack
+		  dt *= dt; /* decelerate - could be a better hack */
                   e_border_fx_offset(bd, 
 				     ((double)bd->fx.start.x * dt),
 				     ((double)bd->fx.start.y * dt));
@@ -768,9 +765,7 @@ _e_desk_hide_animator(void *data)
 	       {
 		  dt = (t - bd->fx.start.t) / spd;
 		  if (dt > 1.0) dt = 1.0;
-//		  dt = 1.0 - dt;
-		  dt *= dt; // decelerate - could be a better hack
-//		  dt = 1.0 - dt;
+		  dt *= dt; /* decelerate - could be a better hack */
 		  e_border_fx_offset(bd,
 				     ((double)bd->fx.start.x * dt),
 				     ((double)bd->fx.start.y * dt));

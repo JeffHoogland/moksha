@@ -352,11 +352,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	  cfdata->flip = cfdata->flip | ECORE_X_RANDR_FLIP_Y;
 	
 	rot = ecore_x_randr_screen_rotation_get(man->root);
-// FIXME: a bug in x where it returns that the current rotation is still
-// normal (none) when it isn't. so just blindly ask for a new rot anyway.
-//	if (rot != (cfdata->rotation | cfdata->flip))
-	  ecore_x_randr_screen_rotation_set(man->root,
-					    cfdata->rotation | cfdata->flip);
+	ecore_x_randr_screen_rotation_set(man->root,
+					  cfdata->rotation | cfdata->flip);
 	e_config->display_res_rotation = cfdata->rotation | cfdata->flip;
      }
    else
