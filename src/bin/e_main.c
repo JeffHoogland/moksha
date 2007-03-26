@@ -198,6 +198,7 @@ main(int argc, char **argv)
 
    TS("intl init");
    e_intl_init();
+   _e_main_shutdown_push(e_intl_shutdown);
    
    TS("parse args");
    /* handle some command-line parameters */
@@ -868,15 +869,15 @@ main(int argc, char **argv)
 
    /* unroll our stack of shutdown functions with exit code of 0 */
    _e_main_shutdown(0);
-   
-   e_intl_shutdown();
 
    /* if we were flagged to restart, then  restart. */
    if (restart)
      {
 	/* selected shutdown */
 	e_ipc_shutdown();
+#if 0
 	ecore_file_shutdown();
+#endif
 	e_util_env_set("E_RESTART_OK", "1");
 	ecore_app_restart();
      }
