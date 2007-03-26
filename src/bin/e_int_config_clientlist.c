@@ -77,7 +77,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->clientlist_sort_by = cfdata->sort_by;
    e_config->clientlist_separate_iconified_apps = cfdata->separate_iconified_apps;
    e_config->clientlist_warp_to_iconified_desktop = cfdata->warp_to_iconified_desktop;
-
+   e_config_save_queue();
    return 1;
 }
 
@@ -103,6 +103,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
    
    of = e_widget_framelist_add(evas, _("Separate Groups By"), 0);
+   e_widget_framelist_content_align_set(of, 0.0, 0.0);
    rg = e_widget_radio_group_new(&(cfdata->separate_with));
    ob = e_widget_radio_add(evas, _("None"), E_CLIENTLIST_GROUP_SEP_NONE, rg);
    e_widget_framelist_object_append(of, ob);
