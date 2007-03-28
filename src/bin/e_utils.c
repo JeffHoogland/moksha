@@ -839,11 +839,19 @@ e_util_desktop_icon_add(Efreet_Desktop *desktop, const char *size, Evas *evas)
 {
    if ((!desktop) || (!desktop->icon)) return NULL;
 
-   if (desktop->icon[0] == '/') return e_util_icon_add(desktop->icon, evas);
+   return e_util_icon_theme_icon_add(desktop->icon, size, evas);
+}
+
+EAPI Evas_Object *
+e_util_icon_theme_icon_add(const char *icon_name, const char *size, Evas *evas)
+{
+   if (!icon_name) return NULL;
+   if (icon_name[0] == '/') return e_util_icon_add(icon_name, evas);
    else
      {
 	const char *path;
-	path = efreet_icon_path_find(e_config->icon_theme, desktop->icon, size);
+	path = efreet_icon_path_find(e_config->icon_theme, icon_name, size);
+	printf("path: %s\n", path);
 	if (path) return e_util_icon_add(path, evas);
      }
    return NULL;

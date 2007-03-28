@@ -49,6 +49,7 @@ EAPI void         e_util_library_path_strip(void);
 EAPI void         e_util_library_path_restore(void);
 EAPI Evas_Object *e_util_icon_add(const char *path, Evas *evas);
 EAPI Evas_Object *e_util_desktop_icon_add(Efreet_Desktop *desktop, const char *size, Evas *evas);
+EAPI Evas_Object * e_util_icon_theme_icon_add(const char *icon_name, const char *size, Evas *evas);
 EAPI void         e_util_desktop_menu_item_icon_add(Efreet_Desktop *desktop, const char *size, E_Menu_Item *mi);
 
 #endif
