@@ -86,15 +86,17 @@ e_widget_button_icon_set(Evas_Object *obj, Evas_Object *icon)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
-   if (!icon)
+   if (wd->o_icon)
      {
+	e_widget_sub_object_del(obj, wd->o_icon);
 	evas_object_hide(wd->o_icon);
 	edje_object_signal_emit(wd->o_button, "e,action,hide,icon", "e");
 	edje_object_message_signal_process(wd->o_button);
 	edje_object_part_unswallow(wd->o_button, wd->o_icon);
 	evas_object_del(wd->o_icon);
+	wd->o_icon = NULL;
      }
-   else
+   if (icon)
      {
 	wd->o_icon = icon;
 	edje_object_part_swallow(wd->o_button, "e.swallow.icon", icon);
