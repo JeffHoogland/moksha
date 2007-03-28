@@ -1,7 +1,6 @@
 /*
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
-#if 1
 #include "e.h"
 
 struct _E_Config_Dialog_Data
@@ -507,4 +506,3 @@ _e_desktop_editor_icon_update(E_Config_Dialog_Data *cfdata)
    /* NB this takes care of freeing any previous icon object */
    e_widget_button_icon_set(cfdata->editor->img_widget, o);
 }
-#endif
