@@ -669,6 +669,18 @@ _e_test_internal(E_Container *con)
    e_color_dialog_select_callback_set(d, _e_test_cb_ok, NULL);
 }
 
+#elif 0
+
+static void
+_e_test_internal(E_Container *con)
+{
+   Efreet_Desktop *desktop;
+
+   desktop = efreet_desktop_get("/home/rephorm/inkscape.desktop");
+
+   e_desktop_edit_show(con, desktop);
+}
+
 #else
 static void
 _e_test_internal(E_Container *con)
