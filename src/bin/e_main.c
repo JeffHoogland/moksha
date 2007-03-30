@@ -70,7 +70,6 @@ main(int argc, char **argv)
    char *s;
    struct sigaction action;
    double t, tstart;
-   Ecore_List *list;
 
 #ifdef TS_DO
    t0 = t1 = t2 = ecore_time_get();   
@@ -434,15 +433,6 @@ main(int argc, char **argv)
    TS("efreet done");
 
    TS("efreet paths");
-   /* TODO: The list manipulation should be done in efreet */
-   list = efreet_data_dirs_get();
-   if (list)
-     {
-        snprintf(buf, sizeof(buf), "%s/data", e_prefix_data_get());
-        ecore_list_prepend(list, (void *)ecore_string_instance(buf));
-        snprintf(buf, sizeof(buf), "%s/.e/e", e_user_homedir_get());
-        ecore_list_prepend(list, (void *)ecore_string_instance(buf));
-     }
    efreet_icon_extension_add(".edj");
    TS("efreet paths done");
 
