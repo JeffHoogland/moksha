@@ -140,14 +140,16 @@ static void
 _e_order_read(E_Order *eo)
 {
    FILE *f;
+   char *dir;
 
    eo->desktops = evas_list_free(eo->desktops);
    if (!eo->path) return;
 
+   dir = ecore_file_get_dir(eo->path);
    f = fopen(eo->path, "rb");
    if (f)
      {
-	char buf[4096];
+	char buf[4096], buf2[PATH_MAX];
 
 	while (fgets(buf, sizeof(buf), f))
 	  {
@@ -164,13 +166,29 @@ _e_order_read(E_Order *eo)
 		  if (len > 0)
 		    {
 		       Efreet_Desktop *desktop;
-		       desktop = efreet_util_desktop_file_id_find(buf);
+		       
+		       desktop = NULL;
+		       if ((dir) && (buf[0] != '/'))
+			 {
+			    snprintf(buf2, sizeof(buf2), "%s/%s", dir, buf);
+			    desktop = efreet_desktop_get(buf2);
+			 }
+		       if (!desktop)
+			 {
+			    snprintf(buf2, sizeof(buf2), 
+				     "%s/.e/e/applications/all/%s",
+				     e_user_homedir_get(), buf);
+			    desktop = efreet_desktop_get(buf2);
+			 }
+		       if (!desktop)
+			 desktop = efreet_util_desktop_file_id_find(buf);
 		       if (desktop) eo->desktops = evas_list_append(eo->desktops, desktop);
 		    }
 	       }
 	  }
 	fclose(f);
      }
+   if (dir) free(dir);
 }
 
 static void
