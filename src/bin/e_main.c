@@ -433,6 +433,18 @@ main(int argc, char **argv)
    TS("efreet done");
 
    TS("efreet paths");
+     {
+	Ecore_List *list;
+	
+	list = efreet_icon_extra_list_get();
+	if (list)
+	  {
+	     snprintf(buf, sizeof(buf), "%s/.e/e/icons", e_user_homedir_get());
+	     ecore_list_prepend(list, (void *)ecore_string_instance(buf));
+	     snprintf(buf, sizeof(buf), "%s/data/icons", e_prefix_data_get());
+	     ecore_list_prepend(list, (void *)ecore_string_instance(buf));
+	  }
+     }
    efreet_icon_extension_add(".edj");
    TS("efreet paths done");
 
