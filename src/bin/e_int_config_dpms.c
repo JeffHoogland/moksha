@@ -161,10 +161,9 @@ _apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->dpms_standby_timeout = cfdata->standby_timeout * 60;
    e_config->dpms_suspend_timeout = cfdata->suspend_timeout * 60;
    e_config->dpms_off_timeout = cfdata->off_timeout * 60;
-   
-   e_dpms_init();
- 
+
    e_config_save_queue();
+   e_dpms_init();
    return 1;
 }
 
