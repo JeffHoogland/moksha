@@ -5459,10 +5459,10 @@ _e_fm2_removable_dev_add(const char *uuid)
 	fprintf(f, 
 		"[Desktop Entry]\n"
 		"Encoding=UTF-8\n"
-		"Name=Desktop\n"
-		"Type=Removable\n"
+		"Type=Link\n"
+		"X-Enlightenment-Type: Removable\n"
 		"Name=%s\n"
-		"X-Enlightenment-IconClass=%s\n"
+		"Icon=%s\n"
 		"Comment=%s\n"
 		"URL=file:/%s"
 		,
