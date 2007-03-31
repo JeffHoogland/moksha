@@ -44,6 +44,7 @@ static int _e_border_cb_window_state_request(void *data, int ev_type, void *ev);
 static int _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev);
 static int _e_border_cb_desktop_change(void *data, int ev_type, void *ev);
 static int _e_border_cb_sync_alarm(void *data, int ev_type, void *ev);
+static int _e_border_cb_util_desktop_list_change(void *data, int ev_type, void *ev);
 
 static int  _e_border_cb_pointer_warp(void *data, int ev_type, void *ev);
 static void _e_border_cb_signal_bind(void *data, Evas_Object *obj, const char *emission, const char *source);
@@ -165,10 +166,13 @@ e_border_init(void)
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_MOVE_RESIZE_REQUEST, _e_border_cb_window_move_resize_request, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_DESKTOP_CHANGE, _e_border_cb_desktop_change, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_SYNC_ALARM, _e_border_cb_sync_alarm, NULL));
+
    ecore_x_passive_grab_replay_func_set(_e_border_cb_grab_replay, NULL);
 
    handlers = evas_list_append(handlers, ecore_event_handler_add(E_EVENT_POINTER_WARP, _e_border_cb_pointer_warp, NULL));
 
+   handlers = evas_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_UTIL_DESKTOP_LIST_CHANGE, _e_border_cb_util_desktop_list_change, NULL));
+   
 #if 0
    e_app_change_callback_add(_e_border_app_change, NULL);
 #endif
@@ -4280,6 +4284,22 @@ _e_border_cb_sync_alarm(void *data, int ev_type, void *ev)
    if (bd->client.netwm.sync.wait <= 0)
      _e_border_resize_handle(bd);
    return 1;
+}
+
+static int
+_e_border_cb_util_desktop_list_change(void *data, int ev_type, void *ev)
+{
+   Evas_List *l;
+   
+   /* mark all borders for desktop/icon updates */
+   for (l = borders; l; l = l->next)
+     {
+	E_Border *bd;
+
+	bd = l->data;
+	bd->changes.icon = 1;
+	bd->changed = 1;
+     }
 }
 
 /* FIXME:
