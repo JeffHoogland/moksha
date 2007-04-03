@@ -173,10 +173,6 @@ e_border_init(void)
 
    handlers = evas_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_UTIL_DESKTOP_LIST_CHANGE, _e_border_cb_util_desktop_list_change, NULL));
    
-#if 0
-   e_app_change_callback_add(_e_border_app_change, NULL);
-#endif
-
    E_EVENT_BORDER_ADD = ecore_event_type_new();
    E_EVENT_BORDER_REMOVE = ecore_event_type_new();
    E_EVENT_BORDER_DESK_SET = ecore_event_type_new();
@@ -210,10 +206,6 @@ e_border_shutdown(void)
 	handlers = evas_list_remove_list(handlers, handlers);
 	ecore_event_handler_del(h);
      }
-   
-#if 0
-   e_app_change_callback_del(_e_border_app_change, NULL);
-#endif
    
    return 1;
 }
