@@ -826,6 +826,10 @@ _ibar_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	ic->drag.start = 0;
 	ic->drag.dnd = 0;
 	ic->mouse_down = 0;
+	/* TODO: bring back "e,action,start|stop" for the startup_notify apps
+	 *       when startup_notify is used again
+	 */
+	_ibar_icon_signal_emit(ic, "e,action,exec", "e");
      }
 }
 
