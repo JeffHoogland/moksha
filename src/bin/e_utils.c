@@ -851,7 +851,6 @@ e_util_icon_theme_icon_add(const char *icon_name, const char *size, Evas *evas)
      {
 	const char *path;
 	path = efreet_icon_path_find(e_config->icon_theme, icon_name, size);
-	printf("path: %s\n", path);
 	if (path) return e_util_icon_add(path, evas);
      }
    return NULL;
