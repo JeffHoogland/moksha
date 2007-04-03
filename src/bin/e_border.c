@@ -96,8 +96,6 @@ static int  _e_border_cb_kill_timer(void *data);
 
 static char *_e_border_winid_str_get(Ecore_X_Window win);
 
-static void _e_border_desktop_change(void *data, Efreet_Desktop *desktop);
-
 static void _e_border_pointer_resize_begin(E_Border *bd);
 static void _e_border_pointer_resize_end(E_Border *bd);
 static void _e_border_pointer_move_begin(E_Border *bd);
@@ -4292,6 +4290,7 @@ _e_border_cb_util_desktop_list_change(void *data, int ev_type, void *ev)
 	bd->changes.icon = 1;
 	bd->changed = 1;
      }
+   return 1;
 }
 
 /* FIXME:
@@ -7185,17 +7184,6 @@ _e_border_winid_str_get(Ecore_X_Window win)
    id[7] = vals[(val      ) & 0xf];
    id[8] = 0;
    return id;
-}
-
-static void
-_e_border_desktop_change(void *data, Efreet_Desktop *desktop)
-{
-   E_Border *bd;
-
-   bd = data;
-   bd->desktop = desktop;
-   bd->changes.icon = 1;
-   bd->changed = 1;
 }
 
 static void
