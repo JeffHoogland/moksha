@@ -514,7 +514,8 @@ main(int argc, char **argv)
 	evas_object_del(im);
 	ecore_evas_free(ee);
      }
-   _e_main_shutdown_push(ecore_evas_shutdown);        
+// segv's on restart if fm open.
+//   _e_main_shutdown_push(ecore_evas_shutdown);        
    TS("test done");
    
    TS("thumb init");
