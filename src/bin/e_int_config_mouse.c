@@ -96,12 +96,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 			    &(cfdata->numerator), NULL, 200);
    e_widget_framelist_object_append(of, ob);
    
-   /*ob = e_widget_label_add(evas, _("Denominator"));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 10.0, 1.0, 0, 
-			    &(cfdata->denominator), NULL, 200);
-   e_widget_framelist_object_append(of, ob);*/
-
    ob = e_widget_label_add(evas, _("Threshold"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 10.0, 1.0, 0, 
