@@ -54,6 +54,8 @@ static pid_t _e_desklock_child_pid = -1;
 #endif
 static Ecore_Exe *_e_custom_desklock_exe = NULL;
 static Ecore_Event_Handler *_e_custom_desklock_exe_handler = NULL;
+static Ecore_Timer *_e_desklock_idle_timer = NULL;
+static int _e_desklock_user_idle = 0;
 
 /***********************************************************************/
 
@@ -63,6 +65,7 @@ static int _e_desklock_cb_mouse_up(void *data, int type, void *event);
 static int _e_desklock_cb_mouse_wheel(void *data, int type, void *event);
 static int _e_desklock_cb_mouse_move(void *data, int type, void *event);
 static int _e_desklock_cb_custom_desklock_exit(void *data, int type, void *event);
+static int _e_desklock_cb_idle_timer(void *data);
 
 static void _e_desklock_passwd_update();
 static void _e_desklock_backspace();
@@ -82,8 +85,13 @@ static char *_desklock_auth_get_current_host(void);
 EAPI int
 e_desklock_init(void)
 {
+   /* A timer to tick every second, watching for an idle user */
+   _e_desklock_idle_timer = ecore_timer_add(1.0,
+					    _e_desklock_cb_idle_timer, NULL);
+     
    if (e_config->desklock_background)
      e_filereg_register(e_config->desklock_background);
+   
    return 1;
 }
 
@@ -781,4 +789,38 @@ _e_desklock_cb_custom_desklock_exit(void *data, int type, void *event)
    e_desklock_hide();
    
    return 0;
+}
+
+static int 
+_e_desklock_cb_idle_timer(void *data)
+{
+   if (e_config->desklock_autolock_idle)
+     {
+	/* If a desklock is already up, bail */
+        if ((_e_custom_desklock_exe) || (edd)) return 1;
+
+	/* If we have exceeded our idle time... */
+        if (ecore_x_screensaver_idle_time_get() >= e_config->desklock_autolock_idle_timeout)
+	  {
+	     /*
+	      * Unfortunately, not all "desklocks" stay up for as long as
+	      * the user is idle or until it is unlocked.  
+	      *
+	      * 'xscreensaver-command -lock' for example sends a command 
+	      * to xscreensaver and then terminates.  So, we have another 
+	      * check (_e_desklock_user_idle) which lets us know that we 
+	      * have locked the screen due to idleness.
+	      */
+	     if (!_e_desklock_user_idle)
+	       {
+	          _e_desklock_user_idle = 1;
+                  e_desklock_show();
+	       }
+	  }
+	else
+	  _e_desklock_user_idle = 0;
+     }
+
+   /* Make sure our timer persists. */
+   return 1;
 }
