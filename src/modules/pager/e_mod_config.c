@@ -12,6 +12,9 @@ struct _E_Config_Dialog_Data
 {
    int show_popup;
    double popup_speed;
+   int show_popup_urgent;
+   int popup_urgent_stick;
+   double popup_urgent_speed;
    int drag_resist;
    unsigned char btn_drag;
    unsigned char btn_noplace;
@@ -25,6 +28,8 @@ struct _E_Config_Dialog_Data
    } grab;
    
    struct {
+      Evas_Object *o_urgent_stick;
+      Evas_Object *o_urgent_speed;
       Evas_Object *o_btn1;
       Evas_Object *o_btn2;
    } gui;
@@ -42,6 +47,7 @@ static void _grab_wnd_show(void *data1, void *data2);
 static void _grab_wnd_hide(E_Config_Dialog_Data *cfdata);
 static int _grab_mouse_down_cb(void *data, int type, void *event);
 static int _grab_key_down_cb(void *data, int type, void *event);
+static void _check_urgent_stick_cb_change(void *data, Evas_Object *obj);
 
 void 
 _config_pager_module(Config_Item *ci)
@@ -73,6 +79,9 @@ _fill_data(Config_Item *ci, E_Config_Dialog_Data *cfdata)
    /* FIXME: configure zone config item */
    cfdata->show_popup = pager_config->popup;
    cfdata->popup_speed = pager_config->popup_speed;
+   cfdata->show_popup_urgent = pager_config->popup_urgent;
+   cfdata->popup_urgent_stick = pager_config->popup_urgent_stick;
+   cfdata->popup_urgent_speed = pager_config->popup_urgent_speed;
    cfdata->drag_resist = pager_config->drag_resist;
    cfdata->btn_drag = pager_config->btn_drag;
    cfdata->btn_noplace = pager_config->btn_noplace;
@@ -105,7 +114,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
-   ob = e_widget_check_add(evas, _("Show Popup"), &(cfdata->show_popup));
+   ob = e_widget_check_add(evas, _("Show Popup on desktop change"), &(cfdata->show_popup));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
@@ -124,7 +133,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *of, *ob;
+   Evas_Object *o, *of, *of2, *ob;
 
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Resistance to Dragging Windows:"), 0);
@@ -133,13 +142,29 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Popup Settings"), 0);   
-   ob = e_widget_check_add(evas, _("Show Popup"), &(cfdata->show_popup));
+   ob = e_widget_check_add(evas, _("Show Popup on desktop change"), &(cfdata->show_popup));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Popup Speed"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.1f seconds"), 0.1, 10.0, 0.1, 0, &(cfdata->popup_speed), NULL, 200);
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);   
+
+   of2 = e_widget_framelist_add(evas, _("Urgent window"), 0);
+   ob = e_widget_check_add(evas, _("Show Popup on urgent window"), &(cfdata->show_popup_urgent));
+   e_widget_framelist_object_append(of2, ob);
+   ob = e_widget_check_add(evas, _("Popup on urgent window sticks on the screen"), &(cfdata->popup_urgent_stick));
+   cfdata->gui.o_urgent_stick = ob;
+   e_widget_on_change_hook_set(ob, _check_urgent_stick_cb_change, cfdata);
+   e_widget_framelist_object_append(of2, ob);
+   ob = e_widget_label_add(evas, _("Popup Speed"));
+   e_widget_framelist_object_append(of2, ob);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f seconds"), 0.1, 10.0, 0.1, 0, &(cfdata->popup_urgent_speed), NULL, 200);
+   cfdata->gui.o_urgent_speed = ob;
+   _check_urgent_stick_cb_change(cfdata, cfdata->gui.o_urgent_stick);
+   e_widget_framelist_object_append(of2, ob);
+
+   e_widget_framelist_object_append(of, of2);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_frametable_add(evas, _("Buttons Settings"), 0);
    ob = e_widget_label_add(evas, _("Drag and select button"));
@@ -168,6 +193,9 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    pager_config->popup = cfdata->show_popup;
    pager_config->popup_speed = cfdata->popup_speed;
+   pager_config->popup_urgent = cfdata->show_popup_urgent;
+   pager_config->popup_urgent_stick = cfdata->popup_urgent_stick;
+   pager_config->popup_urgent_speed = cfdata->popup_urgent_speed;
    pager_config->drag_resist = cfdata->drag_resist;
    pager_config->btn_drag = cfdata->btn_drag;
    pager_config->btn_noplace = cfdata->btn_noplace;
@@ -300,4 +328,17 @@ _grab_key_down_cb(void *data, int type, void *event)
 	_grab_wnd_hide(cfdata);
      }
    return 1;
+}
+
+static void
+_check_urgent_stick_cb_change(void *data, Evas_Object *obj)
+{
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = data;
+
+   if (e_widget_check_checked_get(cfdata->gui.o_urgent_stick))
+     e_widget_disabled_set(cfdata->gui.o_urgent_speed, 1);
+   else
+     e_widget_disabled_set(cfdata->gui.o_urgent_speed, 0);
 }

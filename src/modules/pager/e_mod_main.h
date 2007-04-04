@@ -21,8 +21,11 @@ typedef struct _Config_Item Config_Item;
 struct _Config
 {
    /* saved * loaded config values */
-   double          popup_speed;
    unsigned int    popup;
+   double          popup_speed;
+   unsigned int    popup_urgent;
+   unsigned int    popup_urgent_stick;
+   double          popup_urgent_speed;
    unsigned int    drag_resist;
    unsigned char   scale;
    unsigned char   resize;
