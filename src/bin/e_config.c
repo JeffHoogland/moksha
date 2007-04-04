@@ -1358,7 +1358,7 @@ e_config_init(void)
 
    if (!e_config->icon_theme) e_config->icon_theme = evas_stringshare_add("hicolor");
 
-   IFCFG(0x111)
+   IFCFG(0x113)
    e_config->clientlist_max_caption_len = 0;
    IFCFGEND;
 
