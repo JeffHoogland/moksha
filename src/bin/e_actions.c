@@ -63,7 +63,6 @@
 
 /* local subsystem functions */
 static void _e_action_free(E_Action *act);
-static Evas_Bool _e_actions_cb_free(Evas_Hash *hash, const char *key, void *data, void *fdata);
 static E_Maximize _e_actions_maximize_parse(const char *maximize);
 static int _action_groups_sort_cb(void *d1, void *d2);
 
@@ -1915,6 +1914,7 @@ ACT_FN_GO(desk_lock)
 
 /* local subsystem globals */
 static Evas_Hash *actions = NULL;
+static Evas_List *action_list = NULL;
 static Evas_List *action_names = NULL;
 static Evas_List *action_groups = NULL;
 
@@ -2253,10 +2253,18 @@ e_actions_init(void)
 EAPI int
 e_actions_shutdown(void)
 {
+   Evas_List *l, *tmp;
+
    e_action_predef_name_all_del();
    action_names = evas_list_free(action_names);
-   while (actions)
-     evas_hash_foreach(actions, _e_actions_cb_free, NULL);
+   evas_hash_free(actions);
+   actions = NULL;
+   for (l = action_list; l;)
+     {
+	tmp = l;
+	l = l->next;
+	e_object_del(E_OBJECT(tmp->data));
+     }
    return 1;
 }
 
@@ -2279,6 +2287,7 @@ e_action_add(const char *name)
 	act->name = name;
 	actions = evas_hash_direct_add(actions, act->name, act);
 	action_names = evas_list_append(action_names, name);
+	action_list = evas_list_append(action_list, act);
      }
    return act;
 }
@@ -2442,15 +2451,8 @@ _e_action_free(E_Action *act)
 {
    actions = evas_hash_del(actions, act->name, act);
    action_names = evas_list_remove(action_names, act->name);
+   action_list = evas_list_remove(action_list, act);
    free(act);
-}
-
-static Evas_Bool
-_e_actions_cb_free(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
-		   void *data, void *fdata __UNUSED__)
-{
-   e_object_del(E_OBJECT(data));
-   return 0;
 }
 
 static E_Maximize
