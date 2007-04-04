@@ -253,6 +253,7 @@ struct _E_Config
    int         clientlist_sort_by; // GUI
    int         clientlist_separate_iconified_apps; // GUI
    int         clientlist_warp_to_iconified_desktop; // GUI
+   int         clientlist_max_caption_len;
 
    int         mouse_accel_numerator; // GUI
    int         mouse_accel_denominator; // GUI

@@ -17,6 +17,7 @@ struct _E_Config_Dialog_Data
    int sort_by;
    int separate_iconified_apps;
    int warp_to_iconified_desktop;
+   int max_caption_len;
 };
 
 EAPI E_Config_Dialog *
@@ -50,6 +51,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->sort_by = e_config->clientlist_sort_by;
    cfdata->separate_iconified_apps = e_config->clientlist_separate_iconified_apps;
    cfdata->warp_to_iconified_desktop = e_config->clientlist_warp_to_iconified_desktop;
+   cfdata->max_caption_len = e_config->clientlist_max_caption_len;
 }
 
 static void *
@@ -77,6 +79,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->clientlist_sort_by = cfdata->sort_by;
    e_config->clientlist_separate_iconified_apps = cfdata->separate_iconified_apps;
    e_config->clientlist_warp_to_iconified_desktop = cfdata->warp_to_iconified_desktop;
+   e_config->clientlist_max_caption_len = cfdata->max_caption_len;
    e_config_save_queue();
    return 1;
 }
@@ -136,6 +139,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_check_add(evas, _("Warp to owning desktop"), &(cfdata->warp_to_iconified_desktop));
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
+
+   of = e_widget_framelist_add(evas, _("Maximum Caption Length"), 0);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f Chars"), 0.0, E_CLIENTLIST_MAX_CAPTION_LEN, 2.0, 0, NULL, &(cfdata->max_caption_len), 200);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(ot, of, 0, 2, 2, 1, 1, 1, 1, 0);
 
    e_widget_list_object_append(o, ot, 1, 1, 0.5); 
 

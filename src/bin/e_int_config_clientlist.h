@@ -20,6 +20,8 @@
 #define E_CLIENTLIST_GROUPICONS_CURRENT 1
 #define E_CLIENTLIST_GROUPICONS_SEP 2
 
+#define E_CLIENTLIST_MAX_CAPTION_LEN 256
+
 EAPI E_Config_Dialog *e_int_config_clientlist(E_Container *con);
 
 #endif

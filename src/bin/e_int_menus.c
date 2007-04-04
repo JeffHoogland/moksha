@@ -55,6 +55,7 @@ static void _e_int_menus_clients_add_by_class   (Evas_List *borders, E_Menu *m);
 static void _e_int_menus_clients_add_by_desk    (E_Desk *curr_desk, Evas_List *borders, E_Menu *m);
 static void _e_int_menus_clients_add_by_none    (Evas_List *borders, E_Menu *m);
 static void _e_int_menus_clients_menu_add_iconified  (Evas_List *borders, E_Menu *m);
+static const char *_e_int_menus_clients_title_abbrv (const char *title);
 static void _e_int_menus_virtuals_pre_cb     (void *data, E_Menu *m);
 static void _e_int_menus_virtuals_item_cb    (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_themes_about        (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -1250,13 +1251,36 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
    e_object_data_set(E_OBJECT(m), borders);
 }
 
+static const char *
+_e_int_menus_clients_title_abbrv(const char *title)
+{
+   char *abbv, *left, *right;
+   int max_len;
+
+   max_len = e_config->clientlist_max_caption_len;
+   if ((max_len != 0) && (strlen(title) > max_len))
+     {
+	abbv = calloc(E_CLIENTLIST_MAX_CAPTION_LEN+4, sizeof(char));
+	left = title;
+	right = title + (strlen(title) - (max_len/2));
+		
+	strncpy(abbv, left, max_len/2);
+	strncat(abbv, "...", 3);
+	strncat(abbv, right, max_len/2);
+
+	return abbv;
+     }
+   else
+     return title;
+}
+
 static void
 _e_int_menus_clients_item_create(E_Border *bd, E_Menu *m)
 {
    E_Menu_Item *mi;
    const char *title;
 	
-   title = e_border_name_get(bd);
+   title = _e_int_menus_clients_title_abbrv(e_border_name_get(bd));
    mi = e_menu_item_new(m);
    e_menu_item_check_set(mi, 1);
    if ((title) && (title[0]))
