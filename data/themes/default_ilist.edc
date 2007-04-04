@@ -140,7 +140,6 @@ group {
       part {
 	 name:          "e.swallow.icon";
 	 type:          SWALLOW;
-	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
 	    align:    0.0 0.5;
@@ -608,7 +607,6 @@ group {
       part {
 	 name:          "e.swallow.icon";
 	 type:          SWALLOW;
-	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
 	    align:    0.0 0.5;
@@ -956,7 +954,6 @@ group {
       part {
 	 name:          "e.swallow.icon";
 	 type:          SWALLOW;
-	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
 	    align:    0.0 0.5;

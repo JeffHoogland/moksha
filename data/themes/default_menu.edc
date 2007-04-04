@@ -130,7 +130,6 @@ group {
       }
       part {
 	 name:          "e.swallow.content";
-	 mouse_events:  0;
 	 type:          SWALLOW;
 	 description {
 	    state:    "default" 0.0;

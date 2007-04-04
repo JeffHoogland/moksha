@@ -255,7 +255,6 @@ group {
       part {
 	 name:           "e.swallow.icon";
 	 type:           SWALLOW;
-	 mouse_events:   0;
 	 clip_to:        "icon_clip";
 	 description {
 	    state: "default" 0.0;

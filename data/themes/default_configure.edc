@@ -142,7 +142,6 @@ group {
       part {
 	 name: "e.swallow.button";
 	 type: SWALLOW;
-	 mouse_events:  1;
 	 description {
 	    state: "default" 0.0;
 	    color: 0 0 0 0;

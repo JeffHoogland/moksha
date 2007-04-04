@@ -587,7 +587,8 @@ main(int argc, char **argv)
 	e_error_message_show(_("Enlightenment cannot set up its actions system."));
 	_e_main_shutdown(-1);
      }
-   _e_main_shutdown_push(e_actions_shutdown);
+// seem to have gotten into an infitie loop here - disable for now.   
+//   _e_main_shutdown_push(e_actions_shutdown);
    TS("bindings");
    /* init bindings system */
    if (!e_bindings_init())
