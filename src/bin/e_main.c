@@ -819,6 +819,14 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_desklock_shutdown);
 
+   TS("order");
+   if (!e_order_init())
+     {
+       e_error_message_show(_("Enlightenment cannot set up its order file system."));
+       _e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_order_shutdown);
+
    TS("add idle enterers");
    /* add in a handler that just before we go idle we flush x */
    _e_main_idle_enterer_flusher = ecore_idle_enterer_add(_e_main_cb_x_flusher, NULL);

@@ -14,7 +14,29 @@ static void _e_order_cb_monitor (void *data, Ecore_File_Monitor *em, Ecore_File_
 static void _e_order_read       (E_Order *eo);
 static void _e_order_save       (E_Order *eo);
 
+static Evas_List *orders = NULL;
+
 /* externally accessible functions */
+EAPI int
+e_order_init(void)
+{
+   return 1;
+}
+
+EAPI int
+e_order_shutdown(void)
+{
+   Evas_List *l, *tmp;
+
+   for (l = orders; l;)
+     {
+	tmp = l;
+	l = l->next;
+	e_object_del(E_OBJECT(tmp->data));
+     }
+   return 1;
+}
+
 EAPI E_Order *
 e_order_new(const char *path)
 {
@@ -28,6 +50,8 @@ e_order_new(const char *path)
    eo->path = evas_stringshare_add(path);
    _e_order_read(eo);
    eo->monitor = ecore_file_monitor_add(path, _e_order_cb_monitor, eo);
+
+   orders = evas_list_append(orders, eo);
 
    return eo;
 }
@@ -121,6 +145,7 @@ _e_order_free(E_Order *eo)
    evas_list_free(eo->desktops);
    if (eo->path) evas_stringshare_del(eo->path);
    if (eo->monitor) ecore_file_monitor_del(eo->monitor);
+   orders = evas_list_remove(orders, eo);
    free(eo);
 }
 
