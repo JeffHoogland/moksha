@@ -224,7 +224,7 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 }
 
 EAPI void
-e_bg_default_set(char * file)
+e_bg_default_set(char *file)
 {
    E_Event_Bg_Update *ev;
 
