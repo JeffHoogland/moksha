@@ -38,7 +38,7 @@ e_order_new(const char *path)
    eo = E_OBJECT_ALLOC(E_Order, E_ORDER_TYPE, _e_order_free);
    if (!eo) return NULL;
 
-   eo->path = evas_stringshare_add(path);
+   if (path) eo->path = evas_stringshare_add(path);
    _e_order_read(eo);
    eo->monitor = ecore_file_monitor_add(path, _e_order_cb_monitor, eo);
 
