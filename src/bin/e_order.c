@@ -213,6 +213,7 @@ _e_order_save(E_Order *eo)
    FILE *f;
    Evas_List *l;
 
+   if (!eo->path) return;
    f = fopen(eo->path, "wb");
    if (!f) return;
 
