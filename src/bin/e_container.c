@@ -918,7 +918,7 @@ e_container_all_thaw(void)
 static void
 _e_container_free(E_Container *con)
 {
-   Evas_List *l, *tmp;
+   Evas_List *l;
 
    ecore_x_window_del(con->event_win);
    /* We can't use e_object_del here, because border adds a ref to itself
@@ -939,11 +939,12 @@ _e_container_free(E_Container *con)
 	  }
      }
  */   
-   for (l = con->zones; l;)
+   l = con->zones;
+   con->zones = NULL;
+   while (l)
      {
-	tmp = l;
-	l = l->next;
-	e_object_del(E_OBJECT(tmp->data));
+	e_object_del(E_OBJECT(l->data));
+	l = evas_list_remove_list(l, l);
      }
    con->manager->containers = evas_list_remove(con->manager->containers, con);
    e_canvas_del(con->bg_ecore_evas);

@@ -55,12 +55,14 @@ e_manager_init(void)
 EAPI int
 e_manager_shutdown(void)
 {
-   Evas_List *l, *tmp;
-   for (l = managers; l;)
+   Evas_List *l;
+
+   l = managers;
+   managers = NULL;
+   while (l)
      {
-	tmp = l;
-	l = l->next;
-	e_object_del(E_OBJECT(tmp->data));
+	e_object_del(E_OBJECT(l->data));
+	l = evas_list_remove_list(l, l);
      }
    if (frame_extents)
      {
@@ -491,7 +493,7 @@ e_managers_keys_ungrab(void)
 static void
 _e_manager_free(E_Manager *man)
 {
-   Evas_List *l, *tmp;
+   Evas_List *l;
 
    while (man->handlers)
      {
@@ -501,11 +503,12 @@ _e_manager_free(E_Manager *man)
 	man->handlers = evas_list_remove_list(man->handlers, man->handlers);
 	ecore_event_handler_del(h);
      }
-   for (l = man->containers; l;)
+   l = man->containers;
+   man->containers = NULL;
+   while (l)
      {
-	tmp = l;
-	l = l->next;
-	e_object_del(E_OBJECT(tmp->data));
+	e_object_del(E_OBJECT(l->data));
+	l = evas_list_remove_list(l, l);
      }
    if (man->root != man->win)
      {
