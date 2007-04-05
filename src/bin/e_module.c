@@ -35,7 +35,7 @@ e_module_init(void)
 EAPI int
 e_module_shutdown(void)
 {
-   Evas_List *l, *tmp;
+   Evas_List *l;
 
 #ifdef HAVE_VALGRIND
    /* do a leak check now before we dlclose() all those plugins, cause
@@ -44,11 +44,12 @@ e_module_shutdown(void)
    VALGRIND_DO_LEAK_CHECK
 #endif
 
-   for (l = _e_modules; l;)
+   l = _e_modules;
+   _e_modules = NULL;
+   while (l)
      {
-	tmp = l;
-	l = l->next;
-	e_object_del(E_OBJECT(tmp->data));
+	e_object_del(E_OBJECT(l->data));
+	l = evas_list_remove_list(l, l);
      }
    return 1;
 }

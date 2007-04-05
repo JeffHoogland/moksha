@@ -56,13 +56,14 @@ e_fwin_init(void)
 EAPI int
 e_fwin_shutdown(void)
 {
-   Evas_List *l, *tmp;
+   Evas_List *l;
    
-   for (l = fwins; l;)
+   l = fwins;
+   fwins = NULL;
+   while (l)
      {
-	tmp = l;
-	l = l->next;
-	e_object_del(E_OBJECT(tmp->data));
+	e_object_del(E_OBJECT(l->data));
+	l = evas_list_remove_list(l, l);
      }
    return 1;
 }

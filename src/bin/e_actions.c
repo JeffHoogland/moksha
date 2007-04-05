@@ -2253,17 +2253,19 @@ e_actions_init(void)
 EAPI int
 e_actions_shutdown(void)
 {
-   Evas_List *l, *tmp;
+   Evas_List *l;
 
    e_action_predef_name_all_del();
    action_names = evas_list_free(action_names);
    evas_hash_free(actions);
    actions = NULL;
-   for (l = action_list; l;)
+
+   l = action_list;
+   action_list = NULL;
+   while (l)
      {
-	tmp = l;
-	l = l->next;
-	e_object_del(E_OBJECT(tmp->data));
+	e_object_del(E_OBJECT(l->data));
+	l = evas_list_remove_list(l, l);
      }
    return 1;
 }
