@@ -83,7 +83,7 @@ e_ipc_init(void)
    return 1;
 }
 
-EAPI void
+EAPI int
 e_ipc_shutdown(void)
 {
 #ifdef USE_IPC  
@@ -93,7 +93,8 @@ e_ipc_shutdown(void)
 	ecore_ipc_server_del(_e_ipc_server);
 	_e_ipc_server = NULL;
      }
-#endif   
+#endif
+   return 1;
 }
 
 #ifdef USE_IPC  

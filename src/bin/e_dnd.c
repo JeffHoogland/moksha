@@ -124,13 +124,6 @@ e_dnd_shutdown(void)
    _event_handlers = NULL;
 
    evas_hash_free(_drop_win_hash);
-   for (l = _drop_handlers; l; l = l->next)
-     {
-	E_Drop_Handler *h;
-
-	h = l->data;
-	e_drop_handler_del(h);
-     }
    evas_list_free(_drop_handlers);
    _drop_handlers = NULL;
 

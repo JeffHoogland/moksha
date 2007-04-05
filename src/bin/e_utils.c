@@ -16,6 +16,7 @@ EAPI int     restart      = 0;
 EAPI int     good         = 0;
 EAPI int     evil         = 0;
 EAPI int     starting     = 1;
+EAPI int     stopping     = 0;
 
 typedef struct _E_Util_Fake_Mouse_Up_Info E_Util_Fake_Mouse_Up_Info;
 

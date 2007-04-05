@@ -157,5 +157,6 @@ extern EAPI int     restart;
 extern EAPI int     good;
 extern EAPI int     evil;
 extern EAPI int     starting;
+extern EAPI int     stopping;
 
 #endif

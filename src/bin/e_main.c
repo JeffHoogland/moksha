@@ -16,8 +16,6 @@ static int  _e_main_screens_init(void);
 static int  _e_main_screens_shutdown(void);
 static int  _e_main_path_init(void);
 static int  _e_main_path_shutdown(void);
-static int  _e_main_ipc_init(void);
-static int  _e_main_ipc_shutdown(void);
 
 static void _e_main_cb_x_fatal(void *data);
 static int  _e_main_cb_signal_exit(void *data, int ev_type, void *ev);
@@ -514,8 +512,7 @@ main(int argc, char **argv)
 	evas_object_del(im);
 	ecore_evas_free(ee);
      }
-// segv's on restart if fm open.
-//   _e_main_shutdown_push(ecore_evas_shutdown);        
+   _e_main_shutdown_push(ecore_evas_shutdown);        
    TS("test done");
    
    TS("thumb init");
@@ -679,8 +676,8 @@ main(int argc, char **argv)
    
    TS("ipc");
    /* setup e ipc service */
-   if (_e_main_ipc_init())
-     _e_main_shutdown_push(_e_main_ipc_shutdown);
+   if (e_ipc_init())
+     _e_main_shutdown_push(e_ipc_shutdown);
 
    TS("fm2");
    /* init the enlightenment file manager */
@@ -690,6 +687,13 @@ main(int argc, char **argv)
        _e_main_shutdown(-1);
     }
    _e_main_shutdown_push(e_fm2_shutdown);
+   TS("fwin");
+   if (!e_fwin_init())
+    {
+       e_error_message_show(_("Enlightenment cannot initialize the File manager.\n"));
+       _e_main_shutdown(-1);
+    }
+   _e_main_shutdown_push(e_fwin_shutdown);
    TS("msg");
    /* setup generic msg handling etc */
    if (!e_msg_init())
@@ -869,6 +873,7 @@ main(int argc, char **argv)
    starting = 0;
    /* start our main loop */
    ecore_main_loop_begin();
+   stopping = 1;
    
    /* ask all modules to save their config and then shutdown */
    /* NB: no need to do this as config shutdown will flush any saves */
@@ -885,8 +890,8 @@ main(int argc, char **argv)
    if (restart)
      {
 	/* selected shutdown */
-	e_ipc_shutdown();
 #if 0
+	e_ipc_shutdown();
 	ecore_file_shutdown();
 #endif
 	e_util_env_set("E_RESTART_OK", "1");
@@ -1314,20 +1319,6 @@ _e_main_path_shutdown(void)
 	e_object_del(E_OBJECT(path_messages));
 	path_messages = NULL;			          
      }
-   return 1;
-}
-
-static int
-_e_main_ipc_init(void)
-{
-   if (!e_ipc_init()) return 0;
-   return 1;
-}
-
-static int
-_e_main_ipc_shutdown(void)
-{
-   e_ipc_shutdown();
    return 1;
 }
 

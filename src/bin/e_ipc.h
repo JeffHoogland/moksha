@@ -25,8 +25,8 @@ typedef int E_Ipc_Op;
 #ifndef E_IPC_H
 #define E_IPC_H
 
-EAPI int  e_ipc_init(void);
-EAPI void e_ipc_shutdown(void);
+EAPI int e_ipc_init(void);
+EAPI int e_ipc_shutdown(void);
 
 #endif
 #endif
