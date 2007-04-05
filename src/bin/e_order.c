@@ -26,14 +26,7 @@ e_order_init(void)
 EAPI int
 e_order_shutdown(void)
 {
-   Evas_List *l, *tmp;
-
-   for (l = orders; l;)
-     {
-	tmp = l;
-	l = l->next;
-	e_object_del(E_OBJECT(tmp->data));
-     }
+   orders = evas_list_free(orders);
    return 1;
 }
 
