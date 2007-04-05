@@ -116,6 +116,8 @@ static void _ibar_inst_cb_drop(void *data, const char *type, void *event_info);
 static void _ibar_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y);
 static void _ibar_inst_cb_scroll(void *data);
 
+static int  _ibar_cb_config_icon_theme(void *data, int ev_type, void *ev);
+
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_item_edd = NULL;
 
@@ -576,10 +578,12 @@ static void
 _ibar_icon_fill(IBar_Icon *ic)
 {
    /* TODO: Correct icon size! */
+   if (ic->o_icon) evas_object_del(ic->o_icon);
    ic->o_icon = e_util_desktop_icon_add(ic->app, "48x48", evas_object_evas_get(ic->ibar->o_box));
    edje_object_part_swallow(ic->o_holder, "e.swallow.content", ic->o_icon);
    evas_object_pass_events_set(ic->o_icon, 1);
    evas_object_show(ic->o_icon);
+   if (ic->o_icon2) evas_object_del(ic->o_icon2);
    ic->o_icon2 = e_util_desktop_icon_add(ic->app, "48x48", evas_object_evas_get(ic->ibar->o_box));
    edje_object_part_swallow(ic->o_holder2, "e.swallow.content", ic->o_icon2);
    evas_object_pass_events_set(ic->o_icon2, 1);
@@ -1234,6 +1238,9 @@ e_modapi_init(E_Module *m)
      }
    
    ibar_config->module = m;
+
+   ibar_config->handlers = evas_list_append(ibar_config->handlers,
+					    ecore_event_handler_add(E_EVENT_CONFIG_ICON_THEME, _ibar_cb_config_icon_theme, NULL));
    
    e_gadcon_provider_register(&_gadcon_class);
    return m;
@@ -1302,6 +1309,27 @@ e_modapi_about(E_Module *m)
 			  "It is a first example module and is being used to flesh out several<br>"
 			  "interfaces in Enlightenment 0.17.0. It is under heavy development,<br>"
 			  "so expect it to <hilight>break often</hilight> and change as it improves."));
+   return 1;
+}
+
+static int
+_ibar_cb_config_icon_theme(void *data, int ev_type, void *ev)
+{
+   Evas_List *l, *l2;
+
+   for (l = ibar_config->instances; l; l = l->next)
+     {
+	Instance *inst;
+
+	inst = l->data;
+	for (l2 = inst->ibar->icons; l2; l2 = l2->next)
+	  {
+	     IBar_Icon *icon;
+
+	     icon = l2->data;
+	     _ibar_icon_fill(icon);
+	  }
+     }
    return 1;
 }
 
