@@ -714,7 +714,7 @@ _ibar_cb_menu_add(void *data, E_Menu *m, E_Menu_Item *mi)
    IBar *b;
    
    b = data;
-   e_int_config_apps_once(b->inst->gcc->gadcon->zone->container, "IBar", _("Add to IBar"), NULL, _ibar_cb_menu_add_application_cb, b);
+//   e_int_config_apps_once(b->inst->gcc->gadcon->zone->container, "IBar", _("Add to IBar"), NULL, _ibar_cb_menu_add_application_cb, b);
 }
 
 static void
