@@ -20,12 +20,9 @@
 #include <errno.h>
 #include <signal.h>
 #include <Ecore.h>
-#include <Ecore_Evas.h>
 #include <Ecore_Ipc.h>
 #include <Ecore_File.h>
 #include <Evas.h>
-#include <Eet.h>
-#include <Edje.h>
 
 /* FIXME: things to add to the slave enlightenment_fm process and ipc to e:
  * 
@@ -127,9 +124,6 @@ main(int argc, char **argv)
 
    ecore_init();
    ecore_app_args_set(argc, (const char **)argv);
-   eet_init();
-   evas_init();
-   edje_init();
    ecore_file_init();
    ecore_ipc_init();
 
@@ -143,10 +137,6 @@ main(int argc, char **argv)
 
    ecore_ipc_shutdown();
    ecore_file_shutdown();
-   ecore_evas_shutdown();
-   edje_shutdown();
-   evas_shutdown();
-   eet_shutdown();
    ecore_shutdown();
    
    return 0;
