@@ -112,21 +112,18 @@ e_editable_theme_set(Evas_Object *editable, const char *category, const char *gr
      return;
    if ((!category) || (!group))
      return;
+   obj_group = alloca(strlen(group) + strlen("/selection") + 1);
    
    /* Gets the theme for the text object */
-   obj_group = malloc(strlen(group) + strlen("/text") + 1);
    sprintf(obj_group, "%s/text", group);
    e_theme_edje_object_set(sd->text_object, category, obj_group);
-   free(obj_group);
    sd->average_char_w = -1;
    sd->average_char_h = -1;
    
    
    /* Gets the theme for the cursor */
-   obj_group = malloc(strlen(group) + strlen("/cursor") + 1);
    sprintf(obj_group, "%s/cursor", group);
    e_theme_edje_object_set(sd->cursor_object, category, obj_group);
-   free(obj_group);
    
    edje_object_size_min_get(sd->cursor_object, &sd->cursor_width, NULL);
    if (sd->cursor_width < 1)
@@ -134,10 +131,8 @@ e_editable_theme_set(Evas_Object *editable, const char *category, const char *gr
    
    
    /* Gets the theme for the selection */
-   obj_group = malloc(strlen(group) + strlen("/selection") + 1);
    sprintf(obj_group, "%s/selection", group);
    e_theme_edje_object_set(sd->selection_object, category, obj_group);
-   free(obj_group);
    
    data = edje_object_data_get(sd->selection_object, "on_foreground");
    if ((data) && (strcmp(data, "1") == 0))
