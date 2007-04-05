@@ -48,8 +48,6 @@ main(int argc, char **argv)
 
    for (i = 1; i < argc; i++)
      {
-	printf("arg: %d - '%s'\n", strlen(argv[i]), argv[i]);
-	printf("hm: %d\n", (!strncmp(argv[i], "--nice=", 7)));
 	if ((!strcmp(argv[i], "-h")) ||
 	    (!strcmp(argv[i], "-help")) ||
 	    (!strcmp(argv[i], "--help")))
