@@ -1254,19 +1254,21 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 static const char *
 _e_int_menus_clients_title_abbrv(const char *title)
 {
-   char *abbv, *left, *right;
    int max_len;
 
    max_len = e_config->clientlist_max_caption_len;
    if ((max_len != 0) && (strlen(title) > max_len))
      {
-	abbv = calloc(E_CLIENTLIST_MAX_CAPTION_LEN+4, sizeof(char));
+	char *abbv;
+	const char *left, *right;
+
+	abbv = malloc(E_CLIENTLIST_MAX_CAPTION_LEN + 4);
 	left = title;
-	right = title + (strlen(title) - (max_len/2));
-		
-	strncpy(abbv, left, max_len/2);
+	right = title + (strlen(title) - (max_len / 2));
+
+	strncpy(abbv, left, max_len / 2);
 	strncat(abbv, "...", 3);
-	strncat(abbv, right, max_len/2);
+	strncat(abbv, right, max_len / 2);
 
 	return abbv;
      }
