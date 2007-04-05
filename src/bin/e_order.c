@@ -35,8 +35,6 @@ e_order_new(const char *path)
 {
    E_Order *eo;
  
-   if ((!path) || (!ecore_file_exists(path))) return NULL;
-
    eo = E_OBJECT_ALLOC(E_Order, E_ORDER_TYPE, _e_order_free);
    if (!eo) return NULL;
 
