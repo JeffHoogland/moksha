@@ -170,7 +170,7 @@ e_border_init(void)
 
    handlers = evas_list_append(handlers, ecore_event_handler_add(E_EVENT_POINTER_WARP, _e_border_cb_pointer_warp, NULL));
 
-   handlers = evas_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_UTIL_DESKTOP_LIST_CHANGE, _e_border_cb_util_desktop_list_change, NULL));
+   handlers = evas_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_DESKTOP_LIST_CHANGE, _e_border_cb_util_desktop_list_change, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(E_EVENT_CONFIG_ICON_THEME, _e_border_cb_config_icon_theme, NULL));
    
    E_EVENT_BORDER_ADD = ecore_event_type_new();
