@@ -6,6 +6,7 @@
 typedef struct _E_Font_Default E_Font_Default;
 typedef struct _E_Font_Fallback E_Font_Fallback;
 typedef struct _E_Font_Available E_Font_Available;
+typedef struct _E_Font_Properties E_Font_Properties;
 
 #else
 #ifndef E_FONT_H
@@ -28,11 +29,22 @@ struct _E_Font_Available
    const char *name;
 };
 
+struct _E_Font_Properties 
+{
+   const char *name;
+   Evas_List *styles;
+};
+
 EAPI int		e_font_init(void);
 EAPI int		e_font_shutdown(void);
 EAPI void		e_font_apply(void);
 EAPI Evas_List         *e_font_available_list(void);
 EAPI void		e_font_available_list_free(Evas_List *available);
+EAPI Evas_Hash         *e_font_available_list_parse(Evas_List *list);
+EAPI void               e_font_available_hash_free(Evas_Hash *hash);
+EAPI E_Font_Properties *e_font_fontconfig_name_parse(const char *font);
+EAPI const char        *e_font_fontconfig_name_get(const char *name, const char *style);
+EAPI void               e_font_properties_free(E_Font_Properties *efp);
 
 /* global font fallbacks */
 EAPI void		e_font_fallback_clear(void);

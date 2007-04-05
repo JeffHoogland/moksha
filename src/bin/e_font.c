@@ -3,11 +3,11 @@
  */
 #include "e.h"
 
-/* TODO List:
- * - export to libe
- * - use e_path to search for available fonts
- */
+#define E_TOK_STYLE ":style="
 
+static Evas_Bool _font_hash_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata);
+static Evas_Hash *_e_font_available_hash_add(Evas_Hash *font_hash, const char *full_name);
+static E_Font_Properties *_e_font_fontconfig_name_parse(Evas_Hash **font_hash, E_Font_Properties *efp, const char *font);
 static char _fn_buf[1024];
 
 EAPI int
@@ -132,6 +132,173 @@ e_font_available_list_free(Evas_List *available)
 	if (efa->name) evas_stringshare_del(efa->name);
 	E_FREE(efa);
     }
+}
+
+EAPI void
+e_font_properties_free(E_Font_Properties *efp)
+{
+   while (efp->styles)
+     {
+        const char *str;
+
+        str = efp->styles->data;
+        if (str) evas_stringshare_del(str);
+        efp->styles = evas_list_remove_list(efp->styles, efp->styles);
+
+     }
+   if (efp->name) evas_stringshare_del(efp->name);
+   free(efp);
+}
+
+static Evas_Bool
+_font_hash_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
+{
+   E_Font_Properties *efp;
+   efp = data;
+   e_font_properties_free(efp);
+
+   return 1;
+}
+
+EAPI void
+e_font_available_hash_free(Evas_Hash *hash)
+{
+   evas_hash_foreach(hash, _font_hash_free_cb, NULL);
+   evas_hash_free(hash);
+}
+
+EAPI E_Font_Properties *
+e_font_fontconfig_name_parse(const char *font)
+{
+   if (font == NULL) return NULL;
+   return _e_font_fontconfig_name_parse(NULL, NULL, font);
+}
+
+static E_Font_Properties *
+_e_font_fontconfig_name_parse(Evas_Hash **font_hash, E_Font_Properties *efp, const char *font)
+{
+        char *s1;
+
+        s1 = strchr(font, ':');
+        if (s1)
+          {
+             char *s2;
+             char *name;
+             char *style;
+             int len;
+	     
+	     len = s1 - font;
+
+             name = calloc(sizeof(char), len + 1);
+             strncpy(name, font, len);
+
+	     /* Get subname (should be english)  */
+             s2 = strchr(name, ',');
+             if (s2)
+               {
+                  len = s2 - name;
+
+                  name = realloc(name, sizeof(char) * len + 1);
+                  memset(name, 0, sizeof(char) * len + 1);
+                  strncpy(name, font, len);
+               }
+
+             if (strncmp(s1, E_TOK_STYLE, strlen(E_TOK_STYLE)) == 0)
+               {
+                  style = s1 + strlen(E_TOK_STYLE);
+
+		  if (font_hash) efp = evas_hash_find(*font_hash, name);
+                  if (efp == NULL)
+                    {
+                       efp = calloc(1, sizeof(E_Font_Properties));
+                       efp->name = evas_stringshare_add(name);
+                       if (font_hash) *font_hash = evas_hash_add(*font_hash, name, efp);
+                    }
+		  s2 = strchr(style, ',');
+		  if (s2)
+		    {
+		       char *style_old;
+		       len = s2 - style;
+
+		       style_old = style;
+		       style = calloc(sizeof(char), len + 1);
+		       strncpy(style, style_old, len);
+		       efp->styles = evas_list_append(efp->styles, evas_stringshare_add(style));
+		       free(style);
+		    }
+		  else
+		    {
+		       efp->styles = evas_list_append(efp->styles, evas_stringshare_add(style));
+		    }
+               }
+
+             free(name);
+          }
+	else 
+	  {
+	     if (font_hash) efp = evas_hash_find(*font_hash, font);
+	     if (efp == NULL)
+	       {
+		  efp = calloc(1, sizeof(E_Font_Properties));
+		  efp->name = evas_stringshare_add(font);
+		  if (font_hash) *font_hash = evas_hash_add(*font_hash, font, efp);
+	       }
+	  }
+        return efp;
+}
+
+
+static Evas_Hash *
+_e_font_available_hash_add(Evas_Hash *font_hash, const char *full_name)
+{
+   _e_font_fontconfig_name_parse(&font_hash, NULL, full_name);
+
+   return font_hash;
+}
+
+EAPI Evas_Hash *
+e_font_available_list_parse(Evas_List *list)
+{
+   Evas_Hash *font_hash;
+   Evas_List *next;
+
+   font_hash = NULL;
+
+   /* Populate Default Font Families */
+   font_hash = _e_font_available_hash_add(font_hash, "Sans:style=Regular");
+   font_hash = _e_font_available_hash_add(font_hash, "Sans:style=Bold");
+   font_hash = _e_font_available_hash_add(font_hash, "Sans:style=Oblique");
+   font_hash = _e_font_available_hash_add(font_hash, "Sans:style=Bold Oblique");
+
+   font_hash = _e_font_available_hash_add(font_hash, "Serif:style=Regular");
+   font_hash = _e_font_available_hash_add(font_hash, "Serif:style=Bold");
+   font_hash = _e_font_available_hash_add(font_hash, "Serif:style=Oblique");
+   font_hash = _e_font_available_hash_add(font_hash, "Serif:style=Bold Oblique");
+
+   font_hash = _e_font_available_hash_add(font_hash, "Monospace:style=Regular");
+   font_hash = _e_font_available_hash_add(font_hash, "Monospace:style=Bold");
+   font_hash = _e_font_available_hash_add(font_hash, "Monospace:style=Oblique");
+   font_hash = _e_font_available_hash_add(font_hash, "Monospace:style=Bold Oblique");
+
+   for (next = list; next; next = next->next)
+     {
+        font_hash = _e_font_available_hash_add(font_hash, next->data);
+     }
+
+   return font_hash;
+}
+
+
+EAPI const char *
+e_font_fontconfig_name_get(const char *name, const char *style)
+{
+   char buf[256];
+   if (name == NULL) return NULL;
+   if (style == NULL || style[0] == 0) return evas_stringshare_add(name);
+
+   snprintf(buf, 256, "%s"E_TOK_STYLE"%s", name, style);
+   return evas_stringshare_add(buf);
+
 }
 
 EAPI void
