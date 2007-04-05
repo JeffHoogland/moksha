@@ -134,7 +134,8 @@ e_thumb_icon_begin(Evas_Object *obj)
 	  {
 	     Ecore_Exe *exe;
 
-	     snprintf(buf, sizeof(buf), "%s/enlightenment_thumb", e_prefix_bin_get());
+	     snprintf(buf, sizeof(buf), "%s/enlightenment_thumb --nice=%d", e_prefix_bin_get(),
+		      e_config->thumb_nice);
 	     exe = ecore_exe_run(buf, NULL);
 	     _thumbnailers_exe = evas_list_append(_thumbnailers_exe, exe);
 	  }

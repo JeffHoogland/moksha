@@ -44,13 +44,12 @@ static char _thumbdir[4096] = "";
 int
 main(int argc, char **argv)
 {
-//   char buf[4096];
    int i;
 
-/* FIXME: make this configurable */
-//   nice(20);
    for (i = 1; i < argc; i++)
      {
+	printf("arg: %d - '%s'\n", strlen(argv[i]), argv[i]);
+	printf("hm: %d\n", (!strncmp(argv[i], "--nice=", 7)));
 	if ((!strcmp(argv[i], "-h")) ||
 	    (!strcmp(argv[i], "-help")) ||
 	    (!strcmp(argv[i], "--help")))
@@ -60,6 +59,14 @@ main(int argc, char **argv)
 		    "do not use it.\n"
 		    );
 	     exit(0);
+	  }
+	else if (!strncmp(argv[i], "--nice=", 7))
+	  {
+	     const char *val;
+
+	     val = argv[i] + 7;
+	     if (*val)
+	       nice(atoi(val));
 	  }
      }
    
@@ -359,7 +366,6 @@ _e_thumb_generate(E_Thumb *eth)
    ecore_ipc_server_send(_e_ipc_server, 5, 2, eth->objid, 0, 0, buf, strlen(buf) + 1);
 }
 
-/* FIXME: should use md5 or sha1 sum of the path */
 static char *
 _e_thumb_file_id(char *file, char *key)
 {

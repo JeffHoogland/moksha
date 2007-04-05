@@ -41,10 +41,14 @@ static E_Config_DD *_e_config_gadcon_client_edd = NULL;
 static E_Config_DD *_e_config_shelf_edd = NULL;
 static E_Config_DD *_e_config_mime_icon_edd = NULL;
 
+EAPI int E_EVENT_CONFIG_ICON_THEME = 0;
+
 /* externally accessible functions */
 EAPI int
 e_config_init(void)
 {
+   E_EVENT_CONFIG_ICON_THEME = ecore_event_type_new();
+
    _e_config_profile = getenv("E_CONF_PROFILE");
    if (!_e_config_profile)
      {
@@ -542,6 +546,8 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, mime_icons, _e_config_mime_icon_edd); /**/
 
    E_CONFIG_VAL(D, T, desk_auto_switch, INT);
+
+   E_CONFIG_VAL(D, T, thumb_nice, INT);
    
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -1360,6 +1366,10 @@ e_config_init(void)
 
    IFCFG(0x113)
    e_config->clientlist_max_caption_len = 0;
+   IFCFGEND;
+
+   IFCFG(0x114)
+   e_config->thumb_nice = 0;
    IFCFGEND;
 
    e_config->config_version = E_CONFIG_FILE_VERSION;   

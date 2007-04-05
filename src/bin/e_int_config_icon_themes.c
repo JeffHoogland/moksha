@@ -99,16 +99,18 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   E_Action *a;
+   E_Event_Config_Icon_Theme *ev;
    
    /* Actually take our cfdata settings and apply them in real life */
    e_config->icon_theme = evas_stringshare_add(cfdata->themename);
    e_config_save_queue();
 
-   /* If it's good enough for themes, it's good enough for icon themes, but ICK!. */                                                                       
-   a = e_action_find("restart");                                               
-   if ((a) && (a->func.go)) a->func.go(NULL, NULL); 
-
+   ev = E_NEW(E_Event_Config_Icon_Theme, 1);
+   if (ev)
+     {
+	ev->icon_theme = e_config->icon_theme;
+	ecore_event_add(E_EVENT_CONFIG_ICON_THEME, ev, NULL, NULL);
+     }
    return 1; /* Apply was OK */
 }
 

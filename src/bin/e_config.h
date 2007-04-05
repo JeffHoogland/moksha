@@ -39,6 +39,8 @@ typedef struct _E_Config_Gadcon_Client      E_Config_Gadcon_Client;
 typedef struct _E_Config_Shelf              E_Config_Shelf;
 typedef struct _E_Config_Mime_Icon          E_Config_Mime_Icon;
 
+typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
+
 typedef Eet_Data_Descriptor                 E_Config_DD;
 
 #else
@@ -52,7 +54,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0113
+#define E_CONFIG_FILE_GENERATION 0x0114
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT      0
@@ -288,6 +290,8 @@ struct _E_Config
    
    Evas_List *mime_icons; // GUI
    int desk_auto_switch; // GUI;
+
+   int thumb_nice;
 };
 
 struct _E_Config_Module
@@ -405,6 +409,11 @@ struct _E_Config_Mime_Icon
    const char *icon;
 };
 
+struct _E_Event_Config_Icon_Theme
+{
+   const char *icon_theme;
+};
+
 EAPI int        e_config_init(void);
 EAPI int        e_config_shutdown(void);
 
@@ -435,6 +444,8 @@ EAPI E_Config_Binding_Signal *e_config_binding_signal_match(E_Config_Binding_Sig
 EAPI E_Config_Binding_Wheel  *e_config_binding_wheel_match(E_Config_Binding_Wheel *eb_in);
     
 extern EAPI E_Config *e_config;
+
+extern EAPI int E_EVENT_CONFIG_ICON_THEME;
 
 #endif
 #endif

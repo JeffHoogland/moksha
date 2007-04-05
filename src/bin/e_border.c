@@ -45,6 +45,7 @@ static int _e_border_cb_window_move_resize_request(void *data, int ev_type, void
 static int _e_border_cb_desktop_change(void *data, int ev_type, void *ev);
 static int _e_border_cb_sync_alarm(void *data, int ev_type, void *ev);
 static int _e_border_cb_util_desktop_list_change(void *data, int ev_type, void *ev);
+static int _e_border_cb_config_icon_theme(void *data, int ev_type, void *ev);
 
 static int  _e_border_cb_pointer_warp(void *data, int ev_type, void *ev);
 static void _e_border_cb_signal_bind(void *data, Evas_Object *obj, const char *emission, const char *source);
@@ -170,6 +171,7 @@ e_border_init(void)
    handlers = evas_list_append(handlers, ecore_event_handler_add(E_EVENT_POINTER_WARP, _e_border_cb_pointer_warp, NULL));
 
    handlers = evas_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_UTIL_DESKTOP_LIST_CHANGE, _e_border_cb_util_desktop_list_change, NULL));
+   handlers = evas_list_append(handlers, ecore_event_handler_add(E_EVENT_CONFIG_ICON_THEME, _e_border_cb_config_icon_theme, NULL));
    
    E_EVENT_BORDER_ADD = ecore_event_type_new();
    E_EVENT_BORDER_REMOVE = ecore_event_type_new();
@@ -4277,6 +4279,23 @@ _e_border_cb_sync_alarm(void *data, int ev_type, void *ev)
 
 static int
 _e_border_cb_util_desktop_list_change(void *data, int ev_type, void *ev)
+{
+   Evas_List *l;
+   
+   /* mark all borders for desktop/icon updates */
+   for (l = borders; l; l = l->next)
+     {
+	E_Border *bd;
+
+	bd = l->data;
+	bd->changes.icon = 1;
+	bd->changed = 1;
+     }
+   return 1;
+}
+
+static int
+_e_border_cb_config_icon_theme(void *data, int ev_type, void *ev)
 {
    Evas_List *l;
    
