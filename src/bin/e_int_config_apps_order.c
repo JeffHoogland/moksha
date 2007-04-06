@@ -288,15 +288,13 @@ _cb_add(void *data, void *data2)
    once = data2;
 
    if (e_widget_ilist_selected_get(cfdata->o_apps) < 0) return;
+   desk = efreet_desktop_get(cfdata->app);
+   if (!desk) return;
  
    evas = evas_object_evas_get(cfdata->o_list);
    evas_event_freeze(evas);
    edje_freeze();
    e_widget_ilist_freeze(cfdata->o_list);
-   
-   desk = efreet_desktop_get(cfdata->app);
-   if (!desk) return;
-
    e_util_desktop_icon_add(desk, "24x24", evas);
    e_widget_ilist_append(cfdata->o_list, icon, desk->name, 
 			 _list_cb_selected, cfdata, cfdata->app);
