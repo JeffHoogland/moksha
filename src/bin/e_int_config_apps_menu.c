@@ -53,6 +53,7 @@ _create_data(E_Config_Dialog *cfd)
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/menu/favorite.menu", 
 	    e_user_homedir_get());
    cfdata->menu = efreet_menu_parse(buf);
+   /* TODO: If there is no menu, create an empty one */
    return cfdata;
 }
 
