@@ -12,6 +12,7 @@ static void _apps_cb_selected(void *data);
 static void _list_cb_selected(void *data);
 static void _cb_add(void *data, void *data2);
 static void _cb_del(void *data, void *data2);
+static void _create_fav_menu(const char *path);
 
 struct _E_Config_Dialog_Data 
 {
@@ -53,7 +54,11 @@ _create_data(E_Config_Dialog *cfd)
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/menu/favorite.menu", 
 	    e_user_homedir_get());
    cfdata->menu = efreet_menu_parse(buf);
-   /* TODO: If there is no menu, create an empty one */
+   if (!cfdata->menu) 
+     {
+	_create_fav_menu(buf);
+	cfdata->menu = efreet_menu_parse(buf);
+     }
    return cfdata;
 }
 
@@ -169,7 +174,11 @@ _fill_list(E_Config_Dialog_Data *cfdata)
    Efreet_Menu *menu, *entry;
 
    menu = cfdata->menu;
-   if ((!menu) || (!menu->entries)) return;
+   if ((!menu) || (!menu->entries))  
+     {
+	e_widget_min_size_set(cfdata->o_list, 200, 200);
+	return;
+     }
 
    evas = evas_object_evas_get(cfdata->o_list);
    evas_event_freeze(evas);
@@ -277,4 +286,35 @@ _cb_del(void *data, void *data2)
    desk = efreet_desktop_get(cfdata->fav);
    if (!desk) return;
    efreet_menu_desktop_remove(cfdata->menu, desk);
+}
+
+static void 
+_create_fav_menu(const char *path) 
+{
+   FILE *f;
+   
+   if (ecore_file_exists(path)) return;
+   
+   f = fopen(path, "w");
+   if (!f) return;
+   
+   fprintf(f, "<?xml version=\"1.0\"?>\n");
+   fprintf(f, "<!DOCTYPE Menu PUBLIC \"-//freedesktop//DTD Menu 1.0//EN\" "
+	   "\"http://standards.freedesktop.org/menu-spec/menu-1.0.dtd\">\n");
+   fprintf(f, "<Menu>\n");
+   fprintf(f, "  <Name>Favorites</Name>\n");
+   fprintf(f, "  <DefaultAppDirs/>\n");
+   fprintf(f, "  <DefaultDirectoryDirs/>\n");
+   fprintf(f, "  <Layout>\n");
+   fprintf(f, "    <Filename>xterm.desktop</Filename>\n");
+   fprintf(f, "    <Filename>firefox.desktop</Filename>\n");
+   fprintf(f, "    <Filename>xmms.desktop</Filename>\n");
+   fprintf(f, "  </Layout>\n");
+   fprintf(f, "  <Include>\n");
+   fprintf(f, "    <Filename>xterm.desktop</Filename>\n");
+   fprintf(f, "    <Filename>firefox.desktop</Filename>\n");
+   fprintf(f, "    <Filename>xmms.desktop</Filename>\n");
+   fprintf(f, "  </Include>\n");
+   fprintf(f, "</Menu>\n");
+   fclose(f);
 }
