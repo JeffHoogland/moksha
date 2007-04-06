@@ -44,7 +44,8 @@ static int _e_border_cb_window_state_request(void *data, int ev_type, void *ev);
 static int _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev);
 static int _e_border_cb_desktop_change(void *data, int ev_type, void *ev);
 static int _e_border_cb_sync_alarm(void *data, int ev_type, void *ev);
-static int _e_border_cb_util_desktop_list_change(void *data, int ev_type, void *ev);
+static int _e_border_cb_efreet_desktop_list_change(void *data, int ev_type, void *ev);
+static int _e_border_cb_efreet_desktop_change(void *data, int ev_type, void *ev);
 static int _e_border_cb_config_icon_theme(void *data, int ev_type, void *ev);
 
 static int  _e_border_cb_pointer_warp(void *data, int ev_type, void *ev);
@@ -170,7 +171,9 @@ e_border_init(void)
 
    handlers = evas_list_append(handlers, ecore_event_handler_add(E_EVENT_POINTER_WARP, _e_border_cb_pointer_warp, NULL));
 
-   handlers = evas_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_DESKTOP_LIST_CHANGE, _e_border_cb_util_desktop_list_change, NULL));
+   handlers = evas_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_DESKTOP_LIST_CHANGE, _e_border_cb_efreet_desktop_list_change, NULL));
+   handlers = evas_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_DESKTOP_CHANGE, _e_border_cb_efreet_desktop_change, NULL));
+
    handlers = evas_list_append(handlers, ecore_event_handler_add(E_EVENT_CONFIG_ICON_THEME, _e_border_cb_config_icon_theme, NULL));
    
    E_EVENT_BORDER_ADD = ecore_event_type_new();
@@ -4278,7 +4281,7 @@ _e_border_cb_sync_alarm(void *data, int ev_type, void *ev)
 }
 
 static int
-_e_border_cb_util_desktop_list_change(void *data, int ev_type, void *ev)
+_e_border_cb_efreet_desktop_list_change(void *data, int ev_type, void *ev)
 {
    Evas_List *l;
    
@@ -4290,6 +4293,59 @@ _e_border_cb_util_desktop_list_change(void *data, int ev_type, void *ev)
 	bd = l->data;
 	bd->changes.icon = 1;
 	bd->changed = 1;
+     }
+   return 1;
+}
+
+static int
+_e_border_cb_efreet_desktop_change(void *data, int ev_type, void *ev)
+{
+   Efreet_Event_Desktop_Change *event;
+   Evas_List *l;
+
+   event = ev;
+   switch (event->change)
+     {
+      case EFREET_DESKTOP_CHANGE_ADD:
+	 /* If a desktop is added, make the borders without icon retry */
+	 for (l = borders; l; l = l->next)
+	   {
+	      E_Border *bd;
+
+	      bd = l->data;
+	      if (!bd->desktop)
+		{
+		   bd->changes.icon = 1;
+		   bd->changed = 1;
+		}
+	   }
+	 break;
+      case EFREET_DESKTOP_CHANGE_REMOVE:
+	 /* If a desktop is removed, drop the .desktop pointer */
+	 for (l = borders; l; l = l->next)
+	   {
+	      E_Border *bd;
+
+	      bd = l->data;
+	      if (bd->desktop == event->current)
+		bd->desktop = NULL;
+	   }
+	 break;
+      case EFREET_DESKTOP_CHANGE_UPDATE:
+	 /* If a desktop is updated, point to the new desktop and update the icon */
+	 for (l = borders; l; l = l->next)
+	   {
+	      E_Border *bd;
+
+	      bd = l->data;
+	      if (bd->desktop == event->previous)
+		{
+		   bd->desktop = event->current;
+		   bd->changes.icon = 1;
+		   bd->changed = 1;
+		}
+	   }
+	 break;
      }
    return 1;
 }
