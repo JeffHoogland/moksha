@@ -113,13 +113,15 @@ _fill_apps(E_Config_Dialog_Data *cfdata)
    Evas *evas;
    Evas_Coord w;
    Efreet_Menu *menu;
+
+   menu = efreet_menu_get();
+   if (!menu) return;
    
    evas = evas_object_evas_get(cfdata->o_apps);
    evas_event_freeze(evas);
    edje_freeze();
    e_widget_ilist_freeze(cfdata->o_apps);
    
-   menu = efreet_menu_get();
    if (menu->entries) 
      {
 	Efreet_Menu *entry;
@@ -153,7 +155,7 @@ _fill_apps(E_Config_Dialog_Data *cfdata)
    edje_thaw();
    evas_event_thaw(evas);
    
-   if (menu) efreet_menu_free(menu);
+   efreet_menu_free(menu);
 }
 
 static void
