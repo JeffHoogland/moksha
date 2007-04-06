@@ -1266,7 +1266,7 @@ _e_int_menus_clients_title_abbrv(const char *title)
 	char *abbv;
 	const char *left, *right;
 
-	abbv = malloc(E_CLIENTLIST_MAX_CAPTION_LEN + 4);
+	abbv = calloc(E_CLIENTLIST_MAX_CAPTION_LEN + 4, sizeof(char));
 	left = title;
 	right = title + (strlen(title) - (max_len / 2));
 
