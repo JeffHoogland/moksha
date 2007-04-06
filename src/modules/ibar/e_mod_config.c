@@ -186,10 +186,9 @@ _cb_config(void *data, void *data2)
    E_Config_Dialog_Data *cfdata;
    
    cfdata = data;
-   snprintf(path, sizeof(path), "%s/.e/e/applications/bar/%s", 
+   snprintf(path, sizeof(path), "%s/.e/e/applications/bar/%s/.order", 
 	    e_user_homedir_get(), cfdata->dir);
-//   e_int_config_apps_once(e_container_current_get(e_manager_current_get()), 
-//			  _("IBar"), NULL, path, NULL, NULL);
+   e_int_config_apps_ibar_other(e_container_current_get(e_manager_current_get()), path);
 }
 
 static void
