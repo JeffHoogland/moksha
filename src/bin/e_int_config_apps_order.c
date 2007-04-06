@@ -295,7 +295,7 @@ _cb_add(void *data, void *data2)
    evas_event_freeze(evas);
    edje_freeze();
    e_widget_ilist_freeze(cfdata->o_list);
-   e_util_desktop_icon_add(desk, "24x24", evas);
+   icon = e_util_desktop_icon_add(desk, "24x24", evas);
    e_widget_ilist_append(cfdata->o_list, icon, desk->name, 
 			 _list_cb_selected, cfdata, cfdata->app);
    e_widget_ilist_go(cfdata->o_list);
