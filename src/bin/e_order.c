@@ -14,12 +14,17 @@ static void _e_order_cb_monitor (void *data, Ecore_File_Monitor *em, Ecore_File_
 static void _e_order_read       (E_Order *eo);
 static void _e_order_save       (E_Order *eo);
 
+static int  _e_order_cb_efreet_desktop_change(void *data, int ev_type, void *ev);
+
 static Evas_List *orders = NULL;
+static Evas_List *handlers = NULL;
 
 /* externally accessible functions */
 EAPI int
 e_order_init(void)
 {
+   handlers = evas_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_DESKTOP_CHANGE, _e_order_cb_efreet_desktop_change, NULL));
+
    return 1;
 }
 
@@ -27,6 +32,12 @@ EAPI int
 e_order_shutdown(void)
 {
    orders = evas_list_free(orders);
+
+   while (handlers)
+     {
+	ecore_event_handler_del(handlers->data);
+	handlers = evas_list_remove_list(handlers, handlers);
+     }
    return 1;
 }
 
@@ -232,4 +243,68 @@ _e_order_save(E_Order *eo)
      }
 
    fclose(f);
+}
+
+static int
+_e_order_cb_efreet_desktop_change(void *data, int ev_type, void *ev)
+{
+   Efreet_Event_Desktop_Change *event;
+   Evas_List *l;
+
+   event = ev;
+   switch (event->change)
+     {
+      case EFREET_DESKTOP_CHANGE_ADD:
+	 /* If a desktop is added, reread all .order files */
+	 for (l = orders; l; l = l->next)
+	   {
+	      E_Order *eo;
+
+	      eo = l->data;
+	      _e_order_read(eo);
+	      if (eo->cb.update) eo->cb.update(eo->cb.data, eo);
+	   }
+	 break;
+      case EFREET_DESKTOP_CHANGE_REMOVE:
+	 /* If a desktop is removed, drop the .desktop pointer */
+	 for (l = orders; l; l = l->next)
+	   {
+	      E_Order   *eo;
+	      Evas_List *l2;
+	      int changed = 0;
+
+	      eo = l->data;
+	      for (l2 = eo->desktops; l2; l2 = l2->next)
+		{
+		   if (l2->data == event->current)
+		     {
+			eo->desktops = evas_list_remove_list(eo->desktops, l2);
+			changed = 1;
+		     }
+		}
+	      if ((changed) && (eo->cb.update)) eo->cb.update(eo->cb.data, eo);
+	   }
+	 break;
+      case EFREET_DESKTOP_CHANGE_UPDATE:
+	 /* If a desktop is updated, point to the new desktop and update */
+	 for (l = orders; l; l = l->next)
+	   {
+	      E_Order *eo;
+	      Evas_List *l2;
+	      int changed = 0;
+
+	      eo = l->data;
+	      for (l2 = eo->desktops; l2; l2 = l2->next)
+		{
+		   if (l2->data == event->previous)
+		     {
+			l2->data = event->current;
+			changed = 1;
+		     }
+		}
+	      if ((changed) && (eo->cb.update)) eo->cb.update(eo->cb.data, eo);
+	   }
+	 break;
+     }
+   return 1;
 }
