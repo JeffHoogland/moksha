@@ -224,7 +224,13 @@ _fill_list(E_Config_Once *once, E_Config_Dialog_Data *cfdata)
    Evas *evas;
    Evas_Coord w;
    Evas_List *l;
-   
+
+   if ((!once->order) || (!once->order->desktops)) 
+     {
+	e_widget_min_size_set(cfdata->o_list, 100, 200);
+	return;
+     }
+
    evas = evas_object_evas_get(cfdata->o_list);
    evas_event_freeze(evas);
    edje_freeze();
