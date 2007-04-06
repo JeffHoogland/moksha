@@ -338,16 +338,10 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    cfdata->escfg->overlap = cfdata->overlapping;
    cfdata->escfg->autohide = cfdata->autohiding;
-   if (cfdata->escfg->autohide)
-     {
-	edje_object_signal_emit(cfdata->es->o_base, "e,state,hidden", "e");
-	cfdata->es->hidden = 1;
-     }
-   else
-     {
-	edje_object_signal_emit(cfdata->es->o_base, "e,state,visible", "e");
-	cfdata->es->hidden = 0;
-     }
+   if (cfdata->escfg->autohide && !cfdata->es->hidden)
+     e_shelf_toggle(cfdata->es, 0);
+   else if (!cfdata->escfg->autohide && cfdata->es->hidden)
+     e_shelf_toggle(cfdata->es, 1);
    
    if (restart) 
      {

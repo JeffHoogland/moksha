@@ -83,6 +83,7 @@ e_shelf_config_init(void)
 		  e_shelf_position_calc(es);
 		  e_shelf_populate(es);
 		  e_shelf_show(es);
+		  e_shelf_toggle(es, 0);
 	       }
 	  }
      }
@@ -192,6 +193,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    shelves = evas_list_append(shelves, es);
    shelves = evas_list_sort(shelves, -1, _e_shelf_cb_id_sort);
    
+   es->hidden = 0;
    es->hide_step = 0;
    es->hide_timer = NULL;
    es->hide_animator = NULL;
@@ -253,6 +255,31 @@ e_shelf_hide(E_Shelf *es)
      {
 	evas_object_hide(es->o_event);
 	evas_object_hide(es->o_base);
+     }
+}
+
+EAPI void
+e_shelf_toggle(E_Shelf *es, int show)
+{
+   E_OBJECT_CHECK(es);
+   E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
+   if (show && es->hidden)
+     {  
+	es->hidden = 0;
+	edje_object_signal_emit(es->o_base, "e,state,visible", "e");
+	if(!es->hide_animator)
+	  es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
+	if (es->hide_timer)
+	  {
+	     ecore_timer_del(es->hide_timer);
+	     es->hide_timer = NULL;
+	  }
+     }
+   else if (!show && es->cfg->autohide && !es->hidden)
+     {
+	es->hidden = 1; 
+	if(!es->hide_timer)
+	  es->hide_timer = ecore_timer_add(1.0, _e_shelf_cb_hide_timer, es);
      }
 }
 
@@ -1009,21 +1036,7 @@ _e_shelf_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info)
    es = data;
    ev = event_info;
    edje_object_signal_emit(es->o_base, "e,state,focused", "e");
-   if (es->cfg->autohide)
-     {
-	if (es->hidden) 
-	  {  
-	     es->hidden = 0;
-	     edje_object_signal_emit(es->o_base, "e,state,visible", "e");
-	     if(!es->hide_animator)
-	       es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
-	     if (es->hide_timer)
-	       {    
-		  ecore_timer_del(es->hide_timer);
-		  es->hide_timer = NULL;
-	       }
-	  }
-     }
+   e_shelf_toggle(es, 1);
 }
 
 static void
@@ -1040,14 +1053,7 @@ _e_shelf_cb_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info
 
 	evas_object_geometry_get(es->o_base, &x, &y, &w, &h);
 	if (!E_INSIDE(ev->canvas.x, ev->canvas.y, x, y, w, h))
-	  {
-	     if(!es->hidden)
-	       {	
-		  es->hidden = 1; 
-		  if(!es->hide_timer)
-		    es->hide_timer = ecore_timer_add(1.0, _e_shelf_cb_hide_timer, es);
-	       }
-	  }
+	  e_shelf_toggle(es, 0);
      }
    edje_object_signal_emit(es->o_base, "e,state,unfocused", "e");
 }

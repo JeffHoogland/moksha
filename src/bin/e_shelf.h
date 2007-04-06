@@ -49,6 +49,7 @@ EAPI void             e_shelf_zone_move_resize_handle(E_Zone *zone);
 EAPI void             e_shelf_populate(E_Shelf *es);
 EAPI void             e_shelf_show(E_Shelf *es);
 EAPI void             e_shelf_hide(E_Shelf *es);
+EAPI void             e_shelf_toggle(E_Shelf *es, int show);
 EAPI void             e_shelf_move(E_Shelf *es, int x, int y);
 EAPI void             e_shelf_resize(E_Shelf *es, int w, int h);
 EAPI void             e_shelf_move_resize(E_Shelf *es, int x, int y, int w, int h);
