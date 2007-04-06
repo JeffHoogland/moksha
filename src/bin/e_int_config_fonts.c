@@ -322,49 +322,49 @@ _font_hash_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *of, *ob, *ot, *ott;
+   Evas_Object *ot, *ob, *of, *ott;
+   Evas_Coord w;
 
    cfdata->cur_index = -1;
    cfdata->evas = evas;
    cfdata->gui.font = NULL;
-
-   o = e_widget_list_add(evas, 0, 0);
-   ot = e_widget_table_add(evas, 1);
    
-   /* Create Font Class Widgets */ 
+   ot = e_widget_table_add(evas, 0);
+
    of = e_widget_framelist_add(evas, _("Font Classes"), 0);
-   cfdata->gui.class_list = e_widget_ilist_add(evas, 16, 16, NULL);
-   e_widget_ilist_multi_select_set(cfdata->gui.class_list, 1);
-   e_widget_min_size_set(cfdata->gui.class_list, 80, 250);
-   e_widget_on_change_hook_set(cfdata->gui.class_list, _ilist_font_cb_change, cfdata);
+   ob = e_widget_ilist_add(evas, 16, 16, NULL);
+   cfdata->gui.class_list = ob;
+   e_widget_ilist_multi_select_set(ob, 1);
+   e_widget_min_size_get(ob, &w, NULL);
+   e_widget_min_size_set(ob, w, 250);
+   e_widget_on_change_hook_set(ob, _ilist_font_cb_change, cfdata);
    _fill_ilist(cfdata);
-   e_widget_framelist_object_append(of, cfdata->gui.class_list);
-   e_widget_table_object_append(ot, of, 0, 0, 1, 5, 1, 1, 1, 1);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 0, 1, 0);
 
    ott = e_widget_table_add(evas, 0);
-   cfdata->gui.enabled = e_widget_check_add(evas, _("Enable Font Class"), &(cfdata->cur_enabled));
-   e_widget_disabled_set(cfdata->gui.enabled, 1);
-   e_widget_table_object_append(ott, cfdata->gui.enabled, 0, 0, 3, 1, 1, 0, 1, 0);
-   e_widget_on_change_hook_set(cfdata->gui.enabled, _enabled_font_cb_change, cfdata);
-
+   ob = e_widget_check_add(evas, _("Enable Font Class"), &(cfdata->cur_enabled));
+   cfdata->gui.enabled = ob;
+   e_widget_on_change_hook_set(ob, _enabled_font_cb_change, cfdata);
+   e_widget_disabled_set(ob, 1);
+   e_widget_table_object_append(ott, ob, 0, 0, 2, 1, 1, 0, 1, 0);
    ob = e_widget_label_add(evas, _("Font Size:"));
    e_widget_table_object_append(ott, ob, 0, 1, 1, 1, 1, 0, 1, 0);
-   
-   cfdata->gui.size = e_widget_slider_add(evas, 1, 0, _("%2.1f pixels"), 5.0, 25.0, 0.5, 0, &(cfdata->cur_size), NULL, 25);
-   e_widget_disabled_set(cfdata->gui.size, 1);
-   e_widget_min_size_set(cfdata->gui.size, 80, 25);
-   e_widget_on_change_hook_set(cfdata->gui.size, _size_cb_change, cfdata);
-   e_widget_table_object_append(ott, cfdata->gui.size, 
-				1, 1, 2, 1, 1, 0, 1, 0);
-   e_widget_table_object_append(ot, ott, 
-				1, 0, 2, 1, 1, 1, 1, 1);
-   /* Font List */
+   ob = e_widget_slider_add(evas, 1, 0, _("%2.1f pixels"), 5.0, 25.0, 0.5, 0, 
+			    &(cfdata->cur_size), NULL, 25);
+   cfdata->gui.size = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_on_change_hook_set(ob, _size_cb_change, cfdata);
+   e_widget_table_object_append(ott, ob, 1, 1, 2, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(ot, ott, 1, 0, 2, 1, 1, 0, 1, 0);
+
    of = e_widget_framelist_add(evas, _("Fonts"), 1);
-   cfdata->gui.font_list = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_font));
-   e_widget_on_change_hook_set(cfdata->gui.font_list, _font_cb_change, cfdata);
-   evas_event_freeze(evas_object_evas_get(cfdata->gui.font_list));
+   ob = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_font));
+   cfdata->gui.font_list = ob;
+   e_widget_on_change_hook_set(ob, _font_cb_change, cfdata);
+   evas_event_freeze(evas_object_evas_get(ob));
    edje_freeze();
-   e_widget_ilist_freeze(cfdata->gui.font_list);
+   e_widget_ilist_freeze(ob);
 
    if (cfdata->font_hash == NULL)
      {
@@ -376,8 +376,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	if (cfdata->font_list)
 	  {
 	     cfdata->font_list = evas_list_sort(cfdata->font_list, 
-		   evas_list_count(cfdata->font_list), 
-		   _sort_fonts);
+						evas_list_count(cfdata->font_list), 
+						_sort_fonts);
 	  }
 	evas_font_available_list_free(evas, fonts);
      }
@@ -391,30 +391,30 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	     char *f;
 	     
 	     f = next->data;
-	     e_widget_ilist_append(cfdata->gui.font_list, NULL, f, NULL, NULL, f);
+	     e_widget_ilist_append(ob, NULL, f, NULL, NULL, f);
 	  }
      }
    
-   e_widget_ilist_go(cfdata->gui.font_list);
-   e_widget_min_size_set(cfdata->gui.font_list, 75, 200);
-   e_widget_ilist_thaw(cfdata->gui.font_list);
+   e_widget_ilist_go(ob);
+   e_widget_min_size_get(ob, &w, NULL);
+   e_widget_min_size_set(ob, w, 250);
+   e_widget_ilist_thaw(ob);
    edje_thaw();
-   evas_event_thaw(evas_object_evas_get(cfdata->gui.font_list));
-   e_widget_framelist_object_append(of, cfdata->gui.font_list);
-   e_widget_table_object_append(ot, of, 1, 1, 1, 4, 1, 1, 1, 1);
+   evas_event_thaw(evas_object_evas_get(ob));
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 0, 1, 0);
 
-   /* Empty Style List */
    of = e_widget_framelist_add(evas, _("Styles"), 1);
-   cfdata->gui.style_list = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_style));
-   e_widget_on_change_hook_set(cfdata->gui.style_list, _style_cb_change, cfdata);
-   e_widget_ilist_go(cfdata->gui.style_list);
-   e_widget_min_size_set(cfdata->gui.style_list, 75, 200);
-   e_widget_framelist_object_append(of, cfdata->gui.style_list);
-
-   e_widget_table_object_append(ot, of, 2, 1, 1, 4, 1, 1, 1, 1);
+   ob = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_style));
+   cfdata->gui.style_list = ob;
+   e_widget_on_change_hook_set(ob, _style_cb_change, cfdata);
+   e_widget_ilist_go(ob);
+   e_widget_min_size_get(ob, &w, NULL);
+   e_widget_min_size_set(ob, 125, 250);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(ot, of, 2, 1, 1, 1, 1, 0, 1, 0);
    
-   e_widget_list_object_append(o, ot, 1, 1, 0.5);
-   return o;
+   return ot;
 }
 
 static int
