@@ -692,22 +692,6 @@ _ibar_cb_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi)
    _config_ibar_module(ci);
 }
 
-static int
-_ibar_cb_menu_add_application_cb(void *data, const char *path)
-{
-   IBar *b;
-   Efreet_Desktop *desktop;
-   
-   b = data;
-   desktop = efreet_desktop_get(path);
-   if (desktop) e_order_append(b->apps, desktop);
-   _ibar_empty_handle(b);
-   _ibar_resize_handle(b);
-   _gc_orient(b->inst->gcc);
-   return 1;
-}
-
-
 static void
 _ibar_cb_menu_add(void *data, E_Menu *m, E_Menu_Item *mi)
 {
