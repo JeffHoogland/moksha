@@ -28,12 +28,16 @@ struct _E_Shelf
    const char          *style;
    E_Config_Shelf      *cfg;
    unsigned char        fit_along : 1;
-   unsigned char        fit_size : 1;
-   unsigned char        hidden : 1;
+   unsigned char        fit_size  : 1;
+   unsigned char        hidden    : 1;
    int                  size;
    E_Config_Dialog     *config_dialog;
    E_Menu              *menu;
    Ecore_Timer         *hide_timer;
+   Ecore_Animator      *hide_animator;
+   int                  hide_step;
+   int                  hidden_state_size;
+   int			hide_origin;
 };
 
 EAPI int              e_shelf_init(void);

@@ -20,6 +20,8 @@ static void _e_shelf_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void 
 static void _e_shelf_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_shelf_cb_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static int  _e_shelf_cb_id_sort(void *data1, void *data2);
+static int  _e_shelf_cb_hide_timer(void *data);
+static int  _e_shelf_cb_hide_animator(void *data);
 static void _e_shelf_menu_del_hook(void *data);
 static void _e_shelf_menu_pre_cb(void *data, E_Menu *m);
 
@@ -98,6 +100,7 @@ EAPI E_Shelf *
 e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, int layer, int id)
 {
    E_Shelf *es;
+   const char *option;
    char buf[1024];
    
    es = E_OBJECT_ALLOC(E_Shelf, E_SHELF_TYPE, _e_shelf_free);
@@ -134,7 +137,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    evas_object_event_callback_add(es->o_event, EVAS_CALLBACK_MOUSE_UP, _e_shelf_cb_mouse_up, es);
    evas_object_event_callback_add(es->o_event, EVAS_CALLBACK_MOUSE_IN, _e_shelf_cb_mouse_in, es);
    evas_object_event_callback_add(es->o_event, EVAS_CALLBACK_MOUSE_OUT, _e_shelf_cb_mouse_out, es);
-   
+
    es->o_base = edje_object_add(es->evas);
    es->name = evas_stringshare_add(name);
    snprintf(buf, sizeof(buf), "e/shelf/%s/base", es->style);
@@ -165,6 +168,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    e_gadcon_min_size_request_callback_set(es->gadcon,
 					  _e_shelf_gadcon_min_size_request,
 					  es);
+
    e_gadcon_size_request_callback_set(es->gadcon,
 				      _e_shelf_gadcon_size_request,
 				      es);
@@ -187,6 +191,19 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    
    shelves = evas_list_append(shelves, es);
    shelves = evas_list_sort(shelves, -1, _e_shelf_cb_id_sort);
+   
+   es->hide_step = 0;
+   es->hide_timer = NULL;
+   es->hide_animator = NULL;
+  
+   option =  edje_object_data_get(es->o_base, "hidden_state_size");
+   if (option)
+     es->hidden_state_size = atoi(option);
+   else
+     es->hidden_state_size = 4;
+
+   es->hide_origin = -1;
+   
    return es;
 }
 
@@ -468,12 +485,15 @@ e_shelf_position_calc(E_Shelf *es)
       default:
 	break;
      }
+   es->hide_step = 0;
+   
    e_shelf_move_resize(es, es->x, es->y, es->w, es->h);
 }
 
 EAPI void 
 e_shelf_style_set(E_Shelf *es, const char *style) 
 {
+   const char *option;
    char buf[1024];
    
    E_OBJECT_CHECK(es);
@@ -493,6 +513,14 @@ e_shelf_style_set(E_Shelf *es, const char *style)
    if (!e_theme_edje_object_set(es->o_base, "base/theme/shelf", buf))
      e_theme_edje_object_set(es->o_base, "base/theme/shelf", 
 			     "e/shelf/default/base");
+   
+   option =  edje_object_data_get(es->o_base, "hidden_state_size");
+   if (option)
+     es->hidden_state_size = atoi(option);
+   else
+     es->hidden_state_size = 4;
+   
+   es->hide_origin = -1;
    e_gadcon_unpopulate(es->gadcon);
    e_gadcon_populate(es->gadcon);
 }
@@ -534,6 +562,12 @@ _e_shelf_free(E_Shelf *es)
 	ecore_timer_del(es->hide_timer);
 	es->hide_timer = NULL;
      }
+   if (es->hide_animator)
+     {
+	ecore_animator_del(es->hide_animator);
+	es->hide_animator = NULL;
+     }
+   
    if (es->menu)
      {
 	e_menu_post_deactivate_callback_set(es->menu, NULL, NULL);
@@ -689,7 +723,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	if (nw > es->zone->w) nw = es->zone->w;
 	if (nh > es->zone->h) nh = es->zone->h;
 	if (nh != es->h) ny = (es->zone->h - nh) / 2;
-	nx = 0;
+	// nx = 0;
 	break;
       case E_GADCON_ORIENT_RIGHT:
 	if (!es->fit_along) nh = es->h;
@@ -697,7 +731,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	if (nw > es->zone->w) nw = es->zone->w;
 	if (nh > es->zone->h) nh = es->zone->h;
 	if (nh != es->h) ny = (es->zone->h - nh) / 2;
-	nx = es->zone->w - nw;
+	// nx = es->zone->w - nw;
 	break;
       case E_GADCON_ORIENT_TOP:
 	if (!es->fit_along) nw = es->w;
@@ -705,7 +739,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	if (nw > es->zone->w) nw = es->zone->w;
 	if (nh > es->zone->h) nh = es->zone->h;
 	if (nw != es->w) nx = (es->zone->w - nw) / 2;
-	ny = 0;
+	// ny = 0;
 	break;
       case E_GADCON_ORIENT_BOTTOM:
 	if (!es->fit_along) nw = es->w;
@@ -713,7 +747,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	if (nw > es->zone->w) nw = es->zone->w;
 	if (nh > es->zone->h) nh = es->zone->h;
 	if (nw != es->w) nx = (es->zone->w - nw) / 2;
-	ny = es->zone->h - nh;
+	//ny = es->zone->h - nh;
 	break;
       case E_GADCON_ORIENT_CORNER_TL:
 	if (!es->fit_along) nw = es->w;
@@ -721,7 +755,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	if (nw > es->zone->w) nw = es->zone->w;
 	if (nh > es->zone->h) nh = es->zone->h;
 	if (nw != es->w) nx = 0;
-	ny = 0;
+	// ny = 0;
 	break;
       case E_GADCON_ORIENT_CORNER_TR:
 	if (!es->fit_along) nw = es->w;
@@ -729,7 +763,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	if (nw > es->zone->w) nw = es->zone->w;
 	if (nh > es->zone->h) nh = es->zone->h;
 	nx = es->zone->w - nw;
-	ny = 0;
+	// ny = 0;
 	break;
       case E_GADCON_ORIENT_CORNER_BL:
 	if (!es->fit_along) nw = es->w;
@@ -737,7 +771,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	if (nw > es->zone->w) nw = es->zone->w;
 	if (nh > es->zone->h) nh = es->zone->h;
 	if (nw != es->w) nx = 0;
-	ny = es->zone->h - nh;
+	// ny = es->zone->h - nh;
 	break;
       case E_GADCON_ORIENT_CORNER_BR:
 	if (!es->fit_along) nw = es->w;
@@ -745,7 +779,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	if (nw > es->zone->w) nw = es->zone->w;
 	if (nh > es->zone->h) nh = es->zone->h;
 	nx = es->zone->w - nw;
-	ny = es->zone->h - nh;
+	//ny = es->zone->h - nh;
 	break;
       case E_GADCON_ORIENT_CORNER_LT:
 	if (!es->fit_along) nh = es->h;
@@ -753,7 +787,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	if (nw > es->zone->w) nw = es->zone->w;
 	if (nh > es->zone->h) nh = es->zone->h;
 	if (nh != es->h) ny = 0;
-	nx = 0;
+	// nx = 0;
 	break;
       case E_GADCON_ORIENT_CORNER_RT:
 	if (!es->fit_along) nh = es->h;
@@ -761,7 +795,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	if (nw > es->zone->w) nw = es->zone->w;
 	if (nh > es->zone->h) nh = es->zone->h;
 	if (nh != es->h) ny = 0;
-	nx = es->zone->w - nw;
+	// nx = es->zone->w - nw;
 	break;
       case E_GADCON_ORIENT_CORNER_LB:
 	if (!es->fit_along) nh = es->h;
@@ -769,7 +803,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	if (nw > es->zone->w) nw = es->zone->w;
 	if (nh > es->zone->h) nh = es->zone->h;
 	if (nh != es->h) ny = es->zone->h - nh;
-	nx = 0;
+	// nx = 0;
 	break;
       case E_GADCON_ORIENT_CORNER_RB:
 	if (!es->fit_along) nh = es->h;
@@ -777,7 +811,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
 	if (nw > es->zone->w) nw = es->zone->w;
 	if (nh > es->zone->h) nh = es->zone->h;
 	if (nh != es->h) ny = es->zone->h - nh;
-	nx = es->zone->w - nw;
+	// nx = es->zone->w - nw;
 	break;
       default:
 	break;
@@ -971,41 +1005,25 @@ _e_shelf_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_In *ev;
    E_Shelf *es;
-   
+
    es = data;
    ev = event_info;
    edje_object_signal_emit(es->o_base, "e,state,focused", "e");
    if (es->cfg->autohide)
      {
-	if (es->hidden)
-	  {
+	if (es->hidden) 
+	  {  
 	     es->hidden = 0;
 	     edje_object_signal_emit(es->o_base, "e,state,visible", "e");
+	     if(!es->hide_animator)
+	       es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
+	     if (es->hide_timer)
+	       {    
+		  ecore_timer_del(es->hide_timer);
+		  es->hide_timer = NULL;
+	       }
 	  }
      }
-   if (es->hide_timer)
-     {
-	ecore_timer_del(es->hide_timer);
-	es->hide_timer = NULL;
-     }
-}
-
-static int
-_e_shelf_cb_hide_timer(void *data)
-{
-   E_Shelf *es;
-   
-   es = data;
-   if (!e_menu_grab_window_get())
-     {
-	if (!es->hidden)
-	  {
-	     edje_object_signal_emit(es->o_base, "e,state,hidden", "e");
-	  }
-     }
-   es->hide_timer = NULL;
-   es->hidden = 1;
-   return 0;
 }
 
 static void
@@ -1013,18 +1031,22 @@ _e_shelf_cb_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info
 {
    Evas_Event_Mouse_Out *ev;
    E_Shelf *es;
-   
+
    es = data;
    ev = event_info;
    if (es->cfg->autohide)
      {
 	Evas_Coord x, y, w, h;
-	
+
 	evas_object_geometry_get(es->o_base, &x, &y, &w, &h);
 	if (!E_INSIDE(ev->canvas.x, ev->canvas.y, x, y, w, h))
 	  {
-	     if (es->hide_timer) ecore_timer_del(es->hide_timer);
-	     es->hide_timer = ecore_timer_add(0.25, _e_shelf_cb_hide_timer, es);
+	     if(!es->hidden)
+	       {	
+		  es->hidden = 1; 
+		  if(!es->hide_timer)
+		    es->hide_timer = ecore_timer_add(1.0, _e_shelf_cb_hide_timer, es);
+	       }
 	  }
      }
    edje_object_signal_emit(es->o_base, "e,state,unfocused", "e");
@@ -1038,6 +1060,217 @@ _e_shelf_cb_id_sort(void *data1, void *data2)
    es1 = data1;
    es2 = data2;
    return (es1->id) > (es2->id);
+}
+
+static int
+_e_shelf_cb_hide_timer(void *data)
+{
+   E_Shelf *es;
+
+   es = data;
+
+   if(!es->hide_animator)
+     es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
+
+   edje_object_signal_emit(es->o_base, "e,state,hidden", "e");
+   if(es->hide_timer)
+     {    
+	ecore_timer_del(es->hide_timer);
+	es->hide_timer = NULL;
+     }
+   return 1;
+}
+
+static int
+_e_shelf_cb_hide_animator(void *data)
+{
+   E_Shelf *es;
+   int step = 2, move = 0;
+
+   es = data;
+
+   switch(es->gadcon->orient)
+     {
+      case E_GADCON_ORIENT_TOP:
+      case E_GADCON_ORIENT_CORNER_TL:
+      case E_GADCON_ORIENT_CORNER_TR:
+	 /* TODO: step coefficient needs to be configurable */
+	 step = ((es->h - es->hidden_state_size) / e_config->framerate) * 2;
+	 if(es->hidden)
+	   {
+	      if (es->hide_origin == -1) es->hide_origin = es->y;
+	      if (es->hide_step < es->h - es->hidden_state_size)
+		{
+		   if (es->hide_step + step > es->h - es->hidden_state_size)
+		     {
+			move = es->hide_origin - es->h + es->hidden_state_size;
+			es->hide_step = es->h - es->hidden_state_size;
+		     }
+		   else
+		     {
+			move = es->y - step;
+			es->hide_step += step;
+		     }
+		   e_shelf_move(es, es->x, move);
+		}
+	      else goto end;
+	   }
+	 else
+	   {
+	      if(es->hide_step > 0)
+		{
+		   if (es->hide_step < step)
+		     {
+			move = es->hide_origin;
+			es->hide_step = 0;
+		     }
+		   else
+		     {
+			move = es->y + step;
+			es->hide_step -= step;	       
+		     }
+		   e_shelf_move(es, es->x, move);
+		}
+	      else goto end;
+	   }
+	 break;
+      case E_GADCON_ORIENT_BOTTOM:
+      case E_GADCON_ORIENT_CORNER_BL:
+      case E_GADCON_ORIENT_CORNER_BR:
+	 step = ((es->h - es->hidden_state_size) / e_config->framerate) * 2;
+	 if(es->hidden)
+	   {
+	      if (es->hide_origin == -1) es->hide_origin = es->y;
+	      if (es->hide_step < es->h - es->hidden_state_size)
+		{
+		   if (es->hide_step + step > es->h - es->hidden_state_size)
+		     {
+			move = es->hide_origin + es->h - es->hidden_state_size;
+			es->hide_step = es->h - es->hidden_state_size;
+		     }
+		   else
+		     {
+			move = es->y + step;
+			es->hide_step += step;
+		     }
+		   e_shelf_move(es, es->x, move);
+		}
+	      else goto end;
+	   }
+	 else
+	   {
+	      if(es->hide_step > 0)
+		{
+		   if (es->hide_step < step)
+		     {
+			move = es->hide_origin;
+			es->hide_step = 0;
+		     }
+		   else
+		     {
+			move = es->y - step;
+			es->hide_step -= step;	       
+		     }
+		   e_shelf_move(es, es->x, move);
+		}
+	      else goto end;
+	   }
+
+	 break;
+      case E_GADCON_ORIENT_LEFT:
+      case E_GADCON_ORIENT_CORNER_LB:
+      case E_GADCON_ORIENT_CORNER_LT:
+	 step = ((es->w - es->hidden_state_size) / e_config->framerate) * 2;
+	 if(es->hidden)
+	   {
+	      if (es->hide_origin == -1) es->hide_origin = es->x;
+	      if (es->hide_step < es->w - es->hidden_state_size)
+		{
+		   if (es->hide_step + step > es->w - es->hidden_state_size)
+		     {
+			move = es->hide_origin - es->w + es->hidden_state_size;
+			es->hide_step = es->w - es->hidden_state_size;
+		     }
+		   else
+		     {
+			move = es->x - step;
+			es->hide_step += step;
+		     }
+		   e_shelf_move(es, move, es->y);
+		}
+	      else goto end;
+	   }
+	 else
+	   {
+	      if (es->hide_step > 0)
+		{
+		   if (es->hide_step < step)
+		     {
+			move = es->hide_origin;
+			es->hide_step = 0;
+		     }
+		   else
+		     {
+			move = es->x + step;
+			es->hide_step -= step;	       
+		     }
+		   e_shelf_move(es, move, es->y);
+		}
+	      else goto end;
+	   }
+
+	 break; 
+      case E_GADCON_ORIENT_RIGHT:
+      case E_GADCON_ORIENT_CORNER_RB:
+      case E_GADCON_ORIENT_CORNER_RT:
+	 step = ((es->w - es->hidden_state_size) / e_config->framerate) * 2;
+	 if(es->hidden)
+	   {
+	      if (es->hide_origin == -1) es->hide_origin = es->x;
+	      if (es->hide_step < es->w - es->hidden_state_size)
+		{
+		   if (es->hide_step + step > es->w - es->hidden_state_size)
+		     {
+			move = es->hide_origin + es->w - es->hidden_state_size;
+			es->hide_step = es->w - es->hidden_state_size;
+		     }
+		   else
+		     {
+			move = es->x + step;
+			es->hide_step += step;
+		     }
+		   e_shelf_move(es, move, es->y);
+		}
+	      else goto end;
+	   }
+	 else
+	   {
+	      if (es->hide_step > 0)
+		{
+		   if (es->hide_step < step)
+		     {
+			move = es->hide_origin;
+			es->hide_step = 0;
+		     }
+		   else
+		     {
+			move = es->x - step;
+			es->hide_step -= step;	       
+		     }
+		   e_shelf_move(es, move, es->y);
+		}
+	      else goto end;
+	   }
+	 break; 
+      default:
+	 break;
+     }
+   return 1;
+
+end:
+   ecore_animator_del(es->hide_animator);
+   es->hide_animator = NULL;
+   return 1;
 }
 
 static void 

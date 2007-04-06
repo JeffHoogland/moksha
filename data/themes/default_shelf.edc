@@ -11,105 +11,16 @@ group {
    name: "e/shelf/default/base";
    data {
       // this tells e the border is shaped
-      item: "shaped" "1";
+      //item: "shaped" "1";
+        item: "hidden_state_size" "6";
    }
    parts {
-      part {
-	 name:          "item_clip_bottom";
-	 type:          RECT;
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    color: 255 255 255 0;
-	 }
-	 description {
-	    state:    "hidden" 0.0;
-	    inherit: "default" 0.0;
-	    rel1 {
-	       relative: 0.0 1.0;
-	       offset: 0 -2;
-	    }
-	    rel2 {
-	       relative: 1.0 2.0;
-	       offset: -1 -3;
-	    }
-	 }
-      }
-      part {
-	 name:          "item_clip_top";
-	 type:          RECT;
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    color: 255 255 255 0;
-	 }
-	 description {
-	    state:    "hidden" 0.0;
-	    inherit: "default" 0.0;
-	    rel1 {
-	       relative: 0.0 -1.0;
-	       offset: 0 2;
-	    }
-	    rel2 {
-	       relative: 1.0 0.0;
-	       offset: -1 1;
-	    }
-	 }
-      }
-      part {
-	 name:          "item_clip_left";
-	 type:          RECT;
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    color: 255 255 255 0;
-	 }
-	 description {
-	    state:    "hidden" 0.0;
-	    inherit: "default" 0.0;
-	    rel1 {
-	       relative: -1.0 0.0;
-	       offset: 2 0;
-	    }
-	    rel2 {
-	       relative: 0.0 1.0;
-	       offset: 1 -1;
-	    }
-	 }
-      }
-      part {
-	 name:          "item_clip_right";
-	 type:          RECT;
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    color: 255 255 255 0;
-	 }
-	 description {
-	    state:    "hidden" 0.0;
-	    inherit: "default" 0.0;
-	    rel1 {
-	       relative: 1.0 0.0;
-	       offset: -2 0;
-	    }
-	    rel2 {
-	       relative: 2.0 1.0;
-	       offset: -3 -1;
-	    }
-	 }
-      }
+     
       part {
 	 name:          "base";
 	 mouse_events:  0;
-//	 clip_to:       "item_clip";
 	 description {
 	    state:    "default" 0.0;
-	    rel1 {
-	       to: "item_clip_top";
-	    }
-	    rel2 {
-	       to: "item_clip_top";
-	    }
 	    image {
 	       normal: "e17_shelf_bg_h.png";
 	       border: 19 19 9 9;
@@ -126,12 +37,6 @@ group {
 	 description {
 	    state:    "top_left" 0.0;
 	    inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_top";
-	    }
-	    rel2 {
-	       to: "item_clip_top";
-	    }
 	    fill {
 	       origin {
 		  offset: -16 -6;
@@ -144,12 +49,6 @@ group {
 	 description {
 	    state:    "top_right" 0.0;
 	    inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_top";
-	    }
-	    rel2 {
-	       to: "item_clip_top";
-	    }
 	    fill {
 	       origin {
 		  offset: 0 -6;
@@ -162,12 +61,6 @@ group {
 	 description {
 	    state:    "bottom" 0.0;
 	    inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_bottom";
-	    }
-	    rel2 {
-	       to: "item_clip_bottom";
-	    }
 	    fill {
 	       origin {
 		  offset: 0 0;
@@ -180,12 +73,6 @@ group {
 	 description {
 	    state:    "bottom_left" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_bottom";
-	    }
-	    rel2 {
-	       to: "item_clip_bottom";
-	    }
 	    fill {
 	       origin {
 		  offset: -16 0;
@@ -198,12 +85,6 @@ group {
 	 description {
 	    state:    "bottom_right" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_bottom";
-	    }
-	    rel2 {
-	       to: "item_clip_bottom";
-	    }
 	    fill {
 	       origin {
 		  offset: 0 0;
@@ -216,12 +97,6 @@ group {
 	 description {
 	    state:    "left" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_left";
-	    }
-	    rel2 {
-	       to: "item_clip_left";
-	    }
 	    image {
 	       normal: "e17_shelf_bg_v.png";
 	       border: 9 9 19 19;
@@ -238,12 +113,6 @@ group {
 	 description {
 	    state:    "left_top" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_left";
-	    }
-	    rel2 {
-	       to: "item_clip_left";
-	    }
 	    image {
 	       normal: "e17_shelf_bg_v.png";
 	       border: 9 9 19 19;
@@ -260,12 +129,6 @@ group {
 	 description {
 	    state:    "left_bottom" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_left";
-	    }
-	    rel2 {
-	       to: "item_clip_left";
-	    }
 	    image {
 	       normal: "e17_shelf_bg_v.png";
 	       border: 9 9 19 19;
@@ -282,12 +145,6 @@ group {
 	 description {
 	    state:    "right" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_right";
-	    }
-	    rel2 {
-	       to: "item_clip_right";
-	    }
 	    image {
 	       normal: "e17_shelf_bg_v.png";
 	       border: 9 9 19 19;
@@ -304,12 +161,6 @@ group {
 	 description {
 	    state:    "right_top" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_right";
-	    }
-	    rel2 {
-	       to: "item_clip_right";
-	    }
 	    image {
 	       normal: "e17_shelf_bg_v.png";
 	       border: 9 9 19 19;
@@ -326,12 +177,6 @@ group {
 	 description {
 	    state:    "right_bottom" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_right";
-	    }
-	    rel2 {
-	       to: "item_clip_right";
-	    }
 	    image {
 	       normal: "e17_shelf_bg_v.png";
 	       border: 9 9 19 19;
@@ -353,12 +198,10 @@ group {
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       to: "item_clip_top";
 	       relative: 0.0  0.0;
 	       offset:   18   2;
 	    }
 	    rel2 {
-	       to: "item_clip_top";
 	       relative: 1.0  1.0;
 	       offset:   -19   -3;
 	    }
@@ -367,12 +210,10 @@ group {
 	    state:    "top_left" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_top";
 	       relative: 0.0  0.0;
 	       offset:   2    2;
 	    }
 	    rel2 {
-	       to: "item_clip_top";
 	       relative: 1.0  1.0;
 	       offset:   -19   -3;
 	    }
@@ -381,12 +222,10 @@ group {
 	    state:    "top_right" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_top";
 	       relative: 0.0  0.0;
 	       offset:   18   2;
 	    }
 	    rel2 {
-	       to: "item_clip_top";
 	       relative: 1.0  1.0;
 	       offset:   -3   -3;
 	    }
@@ -395,12 +234,10 @@ group {
 	    state:    "bottom" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_bottom";
 	       relative: 0.0  0.0;
 	       offset:   18   2;
 	    }
 	    rel2 {
-	       to: "item_clip_bottom";
 	       relative: 1.0  1.0;
 	       offset:   -19   -3;
 	    }
@@ -409,12 +246,10 @@ group {
 	    state:    "bottom_left" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_bottom";
 	       relative: 0.0  0.0;
 	       offset:   2   2;
 	    }
 	    rel2 {
-	       to: "item_clip_bottom";
 	       relative: 1.0  1.0;
 	       offset:   -19   -3;
 	    }
@@ -423,12 +258,10 @@ group {
 	    state:    "bottom_right" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_bottom";
 	       relative: 0.0  0.0;
 	       offset:   18   2;
 	    }
 	    rel2 {
-	       to: "item_clip_bottom";
 	       relative: 1.0  1.0;
 	       offset:   -3   -3;
 	    }
@@ -437,12 +270,10 @@ group {
 	    state:    "left" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_left";
 	       relative: 0.0  0.0;
 	       offset:   2    18;
 	    }
 	    rel2 {
-	       to: "item_clip_left";
 	       relative: 1.0  1.0;
 	       offset:   -3   -19;
 	    }
@@ -451,12 +282,10 @@ group {
 	    state:    "left_top" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_left";
 	       relative: 0.0  0.0;
 	       offset:   2    2;
 	    }
 	    rel2 {
-	       to: "item_clip_left";
 	       relative: 1.0  1.0;
 	       offset:   -3   -19;
 	    }
@@ -465,12 +294,10 @@ group {
 	    state:    "left_bottom" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_left";
 	       relative: 0.0  0.0;
 	       offset:   2    18;
 	    }
 	    rel2 {
-	       to: "item_clip_left";
 	       relative: 1.0  1.0;
 	       offset:   -3   -3;
 	    }
@@ -479,12 +306,10 @@ group {
 	    state:    "right" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_right";
 	       relative: 0.0  0.0;
 	       offset:   2    18;
 	    }
 	    rel2 {
-	       to: "item_clip_right";
 	       relative: 1.0  1.0;
 	       offset:   -3   -19;
 	    }
@@ -493,12 +318,10 @@ group {
 	    state:    "right_top" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_right";
 	       relative: 0.0  0.0;
 	       offset:   2    2;
 	    }
 	    rel2 {
-	       to: "item_clip_right";
 	       relative: 1.0  1.0;
 	       offset:   -3   -19;
 	    }
@@ -507,12 +330,10 @@ group {
 	    state:    "right_bottom" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_right";
 	       relative: 0.0  0.0;
 	       offset:   2    18;
 	    }
 	    rel2 {
-	       to: "item_clip_right";
 	       relative: 1.0  1.0;
 	       offset:   -3   -3;
 	    }
@@ -520,28 +341,7 @@ group {
       }
    }
    programs {
-      program {
-	 name:    "hide";
-	 signal:  "e,state,hidden";
-	 source:  "e";
-	 action:  STATE_SET "hidden" 0.0;
-	 transition: ACCELERATE 0.3;
-	 target:  "item_clip_bottom";
-	 target:  "item_clip_top";
-	 target:  "item_clip_left";
-	 target:  "item_clip_right";
-      }
-      program {
-	 name:    "show";
-	 signal:  "e,state,visible";
-	 source:  "e";
-	 transition: DECELERATE 0.3;
-	 action:  STATE_SET "default" 0.0;
-	 target:  "item_clip_bottom";
-	 target:  "item_clip_top";
-	 target:  "item_clip_left";
-	 target:  "item_clip_right";
-      }
+
       program {
 	 name:    "orient1";
 	 signal:  "e,state,orientation,top";
@@ -777,104 +577,15 @@ group {
    data {
       // this tells e the border is shaped
       item: "shaped" "1";
+      item: "hidden_state_size" "6";
    }
    parts {
-      part {
-	 name:          "item_clip_bottom";
-	 type:          RECT;
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    color: 255 255 255 0;
-	 }
-	 description {
-	    state:    "hidden" 0.0;
-	    inherit: "default" 0.0;
-	    rel1 {
-	       relative: 0.0 1.0;
-	       offset: 0 -2;
-	    }
-	    rel2 {
-	       relative: 1.0 2.0;
-	       offset: -1 -3;
-	    }
-	 }
-      }
-      part {
-	 name:          "item_clip_top";
-	 type:          RECT;
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    color: 255 255 255 0;
-	 }
-	 description {
-	    state:    "hidden" 0.0;
-	    inherit: "default" 0.0;
-	    rel1 {
-	       relative: 0.0 -1.0;
-	       offset: 0 2;
-	    }
-	    rel2 {
-	       relative: 1.0 0.0;
-	       offset: -1 1;
-	    }
-	 }
-      }
-      part {
-	 name:          "item_clip_left";
-	 type:          RECT;
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    color: 255 255 255 0;
-	 }
-	 description {
-	    state:    "hidden" 0.0;
-	    inherit: "default" 0.0;
-	    rel1 {
-	       relative: -1.0 0.0;
-	       offset: 2 0;
-	    }
-	    rel2 {
-	       relative: 0.0 1.0;
-	       offset: 1 -1;
-	    }
-	 }
-      }
-      part {
-	 name:          "item_clip_right";
-	 type:          RECT;
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    color: 255 255 255 0;
-	 }
-	 description {
-	    state:    "hidden" 0.0;
-	    inherit: "default" 0.0;
-	    rel1 {
-	       relative: 1.0 0.0;
-	       offset: -2 0;
-	    }
-	    rel2 {
-	       relative: 2.0 1.0;
-	       offset: -3 -1;
-	    }
-	 }
-      }
+     
       part {
 	 name:          "base";
 	 mouse_events:  0;
-//	 clip_to:       "item_clip";
 	 description {
 	    state:    "default" 0.0;
-	    rel1 {
-	       to: "item_clip_top";
-	    }
-	    rel2 {
-	       to: "item_clip_top";
-	    }
 	    image {
 	       normal: "e17_shelf_bg2_h.png";
 	       border: 19 19 9 9;
@@ -891,12 +602,6 @@ group {
 	 description {
 	    state:    "top_left" 0.0;
 	    inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_top";
-	    }
-	    rel2 {
-	       to: "item_clip_top";
-	    }
 	    fill {
 	       origin {
 		  offset: -16 -6;
@@ -909,12 +614,6 @@ group {
 	 description {
 	    state:    "top_right" 0.0;
 	    inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_top";
-	    }
-	    rel2 {
-	       to: "item_clip_top";
-	    }
 	    fill {
 	       origin {
 		  offset: 0 -6;
@@ -927,12 +626,6 @@ group {
 	 description {
 	    state:    "bottom" 0.0;
 	    inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_bottom";
-	    }
-	    rel2 {
-	       to: "item_clip_bottom";
-	    }
 	    fill {
 	       origin {
 		  offset: 0 0;
@@ -945,12 +638,6 @@ group {
 	 description {
 	    state:    "bottom_left" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_bottom";
-	    }
-	    rel2 {
-	       to: "item_clip_bottom";
-	    }
 	    fill {
 	       origin {
 		  offset: -16 0;
@@ -963,12 +650,6 @@ group {
 	 description {
 	    state:    "bottom_right" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_bottom";
-	    }
-	    rel2 {
-	       to: "item_clip_bottom";
-	    }
 	    fill {
 	       origin {
 		  offset: 0 0;
@@ -981,12 +662,6 @@ group {
 	 description {
 	    state:    "left" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_left";
-	    }
-	    rel2 {
-	       to: "item_clip_left";
-	    }
 	    image {
 	       normal: "e17_shelf_bg2_v.png";
 	       border: 9 9 19 19;
@@ -1003,12 +678,6 @@ group {
 	 description {
 	    state:    "left_top" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_left";
-	    }
-	    rel2 {
-	       to: "item_clip_left";
-	    }
 	    image {
 	       normal: "e17_shelf_bg2_v.png";
 	       border: 9 9 19 19;
@@ -1025,12 +694,6 @@ group {
 	 description {
 	    state:    "left_bottom" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_left";
-	    }
-	    rel2 {
-	       to: "item_clip_left";
-	    }
 	    image {
 	       normal: "e17_shelf_bg2_v.png";
 	       border: 9 9 19 19;
@@ -1047,12 +710,6 @@ group {
 	 description {
 	    state:    "right" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_right";
-	    }
-	    rel2 {
-	       to: "item_clip_right";
-	    }
 	    image {
 	       normal: "e17_shelf_bg2_v.png";
 	       border: 9 9 19 19;
@@ -1069,12 +726,6 @@ group {
 	 description {
 	    state:    "right_top" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_right";
-	    }
-	    rel2 {
-	       to: "item_clip_right";
-	    }
 	    image {
 	       normal: "e17_shelf_bg2_v.png";
 	       border: 9 9 19 19;
@@ -1091,12 +742,6 @@ group {
 	 description {
 	    state:    "right_bottom" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_right";
-	    }
-	    rel2 {
-	       to: "item_clip_right";
-	    }
 	    image {
 	       normal: "e17_shelf_bg2_v.png";
 	       border: 9 9 19 19;
@@ -1114,16 +759,13 @@ group {
       part {
 	 name:          "e.swallow.content";
 	 type:          SWALLOW;
-//	 clip_to:       "item_clip";
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       to: "item_clip_top";
 	       relative: 0.0  0.0;
 	       offset:   18   2;
 	    }
 	    rel2 {
-	       to: "item_clip_top";
 	       relative: 1.0  1.0;
 	       offset:   -19   -3;
 	    }
@@ -1132,12 +774,10 @@ group {
 	    state:    "top_left" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_top";
 	       relative: 0.0  0.0;
 	       offset:   2    2;
 	    }
 	    rel2 {
-	       to: "item_clip_top";
 	       relative: 1.0  1.0;
 	       offset:   -19   -3;
 	    }
@@ -1146,12 +786,10 @@ group {
 	    state:    "top_right" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_top";
 	       relative: 0.0  0.0;
 	       offset:   18   2;
 	    }
-	    rel2 {
-	       to: "item_clip_top";
+	    rel2 {;
 	       relative: 1.0  1.0;
 	       offset:   -3   -3;
 	    }
@@ -1160,12 +798,10 @@ group {
 	    state:    "bottom" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_bottom";
 	       relative: 0.0  0.0;
 	       offset:   18   2;
 	    }
 	    rel2 {
-	       to: "item_clip_bottom";
 	       relative: 1.0  1.0;
 	       offset:   -19   -3;
 	    }
@@ -1174,12 +810,10 @@ group {
 	    state:    "bottom_left" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_bottom";
 	       relative: 0.0  0.0;
 	       offset:   2   2;
 	    }
 	    rel2 {
-	       to: "item_clip_bottom";
 	       relative: 1.0  1.0;
 	       offset:   -19   -3;
 	    }
@@ -1188,12 +822,10 @@ group {
 	    state:    "bottom_right" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_bottom";
 	       relative: 0.0  0.0;
 	       offset:   18   2;
 	    }
 	    rel2 {
-	       to: "item_clip_bottom";
 	       relative: 1.0  1.0;
 	       offset:   -3   -3;
 	    }
@@ -1202,12 +834,10 @@ group {
 	    state:    "left" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_left";
 	       relative: 0.0  0.0;
 	       offset:   2    18;
 	    }
 	    rel2 {
-	       to: "item_clip_left";
 	       relative: 1.0  1.0;
 	       offset:   -3   -19;
 	    }
@@ -1216,12 +846,10 @@ group {
 	    state:    "left_top" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_left";
 	       relative: 0.0  0.0;
 	       offset:   2    2;
 	    }
 	    rel2 {
-	       to: "item_clip_left";
 	       relative: 1.0  1.0;
 	       offset:   -3   -19;
 	    }
@@ -1230,12 +858,10 @@ group {
 	    state:    "left_bottom" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_left";
 	       relative: 0.0  0.0;
 	       offset:   2    18;
 	    }
 	    rel2 {
-	       to: "item_clip_left";
 	       relative: 1.0  1.0;
 	       offset:   -3   -3;
 	    }
@@ -1244,12 +870,10 @@ group {
 	    state:    "right" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_right";
 	       relative: 0.0  0.0;
 	       offset:   2    18;
 	    }
 	    rel2 {
-	       to: "item_clip_right";
 	       relative: 1.0  1.0;
 	       offset:   -3   -19;
 	    }
@@ -1258,12 +882,10 @@ group {
 	    state:    "right_top" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_right";
 	       relative: 0.0  0.0;
 	       offset:   2    2;
 	    }
 	    rel2 {
-	       to: "item_clip_right";
 	       relative: 1.0  1.0;
 	       offset:   -3   -19;
 	    }
@@ -1272,12 +894,10 @@ group {
 	    state:    "right_bottom" 0.0;
 	    inherit:  "default" 0.0;
 	    rel1 {
-	       to: "item_clip_right";
 	       relative: 0.0  0.0;
 	       offset:   2    18;
 	    }
 	    rel2 {
-	       to: "item_clip_right";
 	       relative: 1.0  1.0;
 	       offset:   -3   -3;
 	    }
@@ -1285,7 +905,7 @@ group {
       }
    }
    programs {
-      program {
+    /*  program {
 	 name:    "hide";
 	 signal:  "e,state,hidden";
 	 source:  "e";
@@ -1306,7 +926,7 @@ group {
 	 target:  "item_clip_top";
 	 target:  "item_clip_left";
 	 target:  "item_clip_right";
-      }
+      }*/
       program {
 	 name:    "orient1";
 	 signal:  "e,state,orientation,top";
@@ -1531,96 +1151,13 @@ group {
    data {
       // this tells e the border is shaped
       item: "shaped" "1";
+      item: "hidden_state_size" "6";
    }
    parts {
-      part {
-	 name:          "item_clip_bottom";
-	 type:          RECT;
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    color: 255 255 255 0;
-	 }
-	 description {
-	    state:    "hidden" 0.0;
-	    inherit: "default" 0.0;
-	    rel1 {
-	       relative: 0.0 1.0;
-	       offset: 0 -2;
-	    }
-	    rel2 {
-	       relative: 1.0 2.0;
-	       offset: -1 -3;
-	    }
-	 }
-      }
-      part {
-	 name:          "item_clip_top";
-	 type:          RECT;
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    color: 255 255 255 0;
-	 }
-	 description {
-	    state:    "hidden" 0.0;
-	    inherit: "default" 0.0;
-	    rel1 {
-	       relative: 0.0 -1.0;
-	       offset: 0 2;
-	    }
-	    rel2 {
-	       relative: 1.0 0.0;
-	       offset: -1 1;
-	    }
-	 }
-      }
-      part {
-	 name:          "item_clip_left";
-	 type:          RECT;
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    color: 255 255 255 0;
-	 }
-	 description {
-	    state:    "hidden" 0.0;
-	    inherit: "default" 0.0;
-	    rel1 {
-	       relative: -1.0 0.0;
-	       offset: 2 0;
-	    }
-	    rel2 {
-	       relative: 0.0 1.0;
-	       offset: 1 -1;
-	    }
-	 }
-      }
-      part {
-	 name:          "item_clip_right";
-	 type:          RECT;
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    color: 255 255 255 0;
-	 }
-	 description {
-	    state:    "hidden" 0.0;
-	    inherit: "default" 0.0;
-	    rel1 {
-	       relative: 1.0 0.0;
-	       offset: -2 0;
-	    }
-	    rel2 {
-	       relative: 2.0 1.0;
-	       offset: -3 -1;
-	    }
-	 }
-      }
+    
       part {
 	 name:          "e.swallow.content";
 	 type:          SWALLOW;
-//	 clip_to:       "item_clip";
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
@@ -1636,131 +1173,58 @@ group {
 	 mouse_events:  1;
 	 type:          RECT;
 	 repeat_events: 1;
-//	 clip_to:       "item_clip";
 	 description {
 	    state:    "default" 0.0;
 	    color:    255 255 255 0;
-	    rel1 {
-	       to: "item_clip_top";
-	    }
-	    rel2 {
-	       to: "item_clip_top";
-	    }
 	 }
 	 description {
 	    state:    "top_left" 0.0;
 	    inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_top";
-	    }
-	    rel2 {
-	       to: "item_clip_top";
-	    }
 	 }
 	 description {
 	    state:    "top_right" 0.0;
 	    inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_top";
-	    }
-	    rel2 {
-	       to: "item_clip_top";
-	    }
 	 }
 	 description {
 	    state:    "bottom" 0.0;
 	    inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_bottom";
-	    }
-	    rel2 {
-	       to: "item_clip_bottom";
-	    }
 	 }
 	 description {
 	    state:    "bottom_left" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_bottom";
-	    }
-	    rel2 {
-	       to: "item_clip_bottom";
-	    }
 	 }
 	 description {
 	    state:    "bottom_right" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_bottom";
-	    }
-	    rel2 {
-	       to: "item_clip_bottom";
-	    }
 	 }
 	 description {
 	    state:    "left" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_left";
-	    }
-	    rel2 {
-	       to: "item_clip_left";
-	    }
 	 }
 	 description {
 	    state:    "left_top" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_left";
-	    }
-	    rel2 {
-	       to: "item_clip_left";
-	    }
 	 }
 	 description {
 	    state:    "left_bottom" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_left";
-	    }
-	    rel2 {
-	       to: "item_clip_left";
-	    }
 	 }
 	 description {
 	    state:    "right" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_right";
-	    }
-	    rel2 {
-	       to: "item_clip_right";
-	    }
 	 }
 	 description {
 	    state:    "right_top" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_right";
-	    }
-	    rel2 {
-	       to: "item_clip_right";
-	    }
 	 }
 	 description {
 	    state:    "right_bottom" 0.0;
             inherit:  "default" 0.0;
-	    rel1 {
-	       to: "item_clip_right";
-	    }
-	    rel2 {
-	       to: "item_clip_right";
-	    }
 	 }
       }
    }
    programs {
-      program {
+     /* program {
 	 name:    "hide";
 	 signal:  "e,state,hidden";
 	 source:  "e";
@@ -1781,7 +1245,7 @@ group {
 	 target:  "item_clip_top";
 	 target:  "item_clip_left";
 	 target:  "item_clip_right";
-      }
+      }*/
       program {
 	 name:    "orient1";
 	 signal:  "e,state,orientation,top";
