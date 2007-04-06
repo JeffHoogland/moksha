@@ -745,7 +745,9 @@ _e_int_menus_shelf_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_int_menus_applications_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
+#if 0
    e_int_config_apps(m->zone->container);
+#endif
 }
 
 static void
