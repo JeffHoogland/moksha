@@ -786,11 +786,13 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    e_util_menu_item_edje_icon_set(mi, "enlightenment/shelf");
    e_menu_item_callback_set(mi, _e_int_menus_shelf_item_cb, NULL);
    
+   #if 0
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Application Menus"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/applications");
    e_menu_item_callback_set(mi, _e_int_menus_applications_item_cb, NULL);
-
+   #endif
+   
    l = evas_hash_find(_e_int_menus_augmentation, "config");
    if (l)
      {
