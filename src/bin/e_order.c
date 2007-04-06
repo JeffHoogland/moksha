@@ -3,11 +3,6 @@
  */
 #include "e.h"
 
-/*
- * TODO:
- * - Update E_Order object if a .desktop file becomes available
- */
-
 /* local subsystem functions */
 static void _e_order_free       (E_Order *eo);
 static void _e_order_cb_monitor (void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path);
@@ -233,13 +228,17 @@ _e_order_save(E_Order *eo)
 	Efreet_Desktop *desktop;
 	const char *id;
 
-	/* TODO: This only allows us to save .desktop files which are in
-	 * the default paths. If it isn't, we should copy it to the users
-	 * application directory. Or store the full path in the .order file */
 	desktop = l->data;
 	id = efreet_util_path_to_file_id(desktop->orig_path);
-	if (!id) continue;
-	fprintf(f, "%s\n", id);
+	if (id)
+	  {
+	     fprintf(f, "%s\n", id);
+	  }
+	else
+	  {
+	     /* TODO: Check if the file is in ~/.e/e/applications/all */
+	     fprintf(f, "%s\n", desktop->orig_path);
+	  }
      }
 
    fclose(f);
