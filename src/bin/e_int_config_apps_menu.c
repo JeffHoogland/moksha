@@ -138,19 +138,7 @@ _fill_apps(E_Config_Dialog_Data *cfdata)
 		  Evas_Object *icon = NULL;
 		  
 		  if (sub->type != EFREET_MENU_ENTRY_DESKTOP) continue;
-		  if (sub->icon) 
-		    {
-		       const char *file;
-		       
-		       if (sub->icon[0] == '/') file = sub->icon;
-		       else 
-			 file = efreet_icon_path_find(e_config->icon_theme,
-						      sub->icon, "24x24");
-		       
-		       icon = e_icon_add(evas);
-		       e_icon_file_set(icon, file);
-		       e_icon_fill_inside_set(icon, 1);
-		    }
+		  icon = e_util_icon_theme_icon_add(sub->icon, "24x24", evas);
 		  e_widget_ilist_append(cfdata->o_apps, icon, sub->name, 
 					_apps_cb_selected, cfdata, 
 					sub->desktop->orig_path);
@@ -187,21 +175,10 @@ _fill_list(E_Config_Dialog_Data *cfdata)
    while ((entry = ecore_list_next(menu->entries))) 
      {
 	Evas_Object *icon = NULL;
-	const char *file;
 
 	if (entry->type != EFREET_MENU_ENTRY_DESKTOP) continue;
 
-	if (entry->icon) 
-	  {
-	     if (entry->icon[0] == '/') file = entry->icon;
-	     else 
-	       file = efreet_icon_path_find(e_config->icon_theme, 
-					    entry->icon, "24x24");
-	     
-	     icon = e_icon_add(evas);
-	     e_icon_file_set(icon, file);
-	     e_icon_fill_inside_set(icon, 1);
-	  }
+	icon = e_util_icon_theme_icon_add(entry->icon, "24x24", evas);
 	e_widget_ilist_append(cfdata->o_list, icon, entry->name, 
 			      _list_cb_selected, cfdata, 
 			      entry->desktop->orig_path);
@@ -241,8 +218,7 @@ _cb_add(void *data, void *data2)
    Efreet_Desktop *desk;
    Evas *evas;
    Evas_Coord w;
-   const char *file;
-   
+ 
    cfdata = data;
    if (e_widget_ilist_selected_get(cfdata->o_apps) < 0) return;
 
@@ -253,17 +229,7 @@ _cb_add(void *data, void *data2)
 
    desk = efreet_desktop_get(cfdata->app);
    if (!desk) return;
-   if (desk->icon) 
-     {
-	if (desk->icon[0] == '/') file = desk->icon;
-	else 
-	  file = efreet_icon_path_find(e_config->icon_theme,
-				       desk->icon, "24x24");
-
-	icon = e_icon_add(evas_object_evas_get(cfdata->o_list));
-	e_icon_file_set(icon, file);
-	e_icon_fill_inside_set(icon, 1);
-     }
+   icon = e_util_desktop_icon_add(desk, "24x24", evas_object_evas_get(cfdata->o_list));
    e_widget_ilist_append(cfdata->o_list, icon, desk->name, 
 			 _list_cb_selected, cfdata, cfdata->app);
    e_widget_ilist_go(cfdata->o_list);
