@@ -4291,8 +4291,11 @@ _e_border_cb_efreet_desktop_list_change(void *data, int ev_type, void *ev)
 	E_Border *bd;
 
 	bd = l->data;
-	bd->changes.icon = 1;
-	bd->changed = 1;
+	if (!bd->desktop)
+	  {
+	     bd->changes.icon = 1;
+	     bd->changed = 1;
+	  }
      }
    return 1;
 }
