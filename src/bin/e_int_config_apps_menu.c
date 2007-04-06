@@ -100,7 +100,9 @@ static int
 _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    char buf[4096];
-   
+ 
+   if (!cfdata->menu) return 1;
+
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/menu/favorite.menu", 
 	    e_user_homedir_get());
    efreet_menu_save(cfdata->menu, buf);
@@ -166,7 +168,7 @@ _fill_list(E_Config_Dialog_Data *cfdata)
    Efreet_Menu *menu, *entry;
 
    menu = cfdata->menu;
-   if (!menu->entries) return;
+   if ((!menu) || (!menu->entries)) return;
 
    evas = evas_object_evas_get(cfdata->o_list);
    evas_event_freeze(evas);
@@ -222,6 +224,7 @@ _cb_add(void *data, void *data2)
    Evas_Coord w;
  
    cfdata = data;
+   if (!cfdata->menu) return;
    if (e_widget_ilist_selected_get(cfdata->o_apps) < 0) return;
 
    evas = evas_object_evas_get(cfdata->o_list);
@@ -254,6 +257,7 @@ _cb_del(void *data, void *data2)
    int num;
    
    cfdata = data;
+   if (!cfdata->menu) return;
    num = e_widget_ilist_selected_get(cfdata->o_list);
    if (num < 0) return;
 
