@@ -237,6 +237,7 @@ _e_order_save(E_Order *eo)
 	else
 	  {
 	     /* TODO: Check if the file is in ~/.e/e/applications/all */
+	     /* TODO: Consider copying the file to $XDG_DATA_HOME/applications */
 	     fprintf(f, "%s\n", desktop->orig_path);
 	  }
      }
