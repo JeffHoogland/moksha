@@ -11,8 +11,8 @@ group {
    name: "e/shelf/default/base";
    data {
       // this tells e the border is shaped
-      //item: "shaped" "1";
-        item: "hidden_state_size" "6";
+      item: "shaped" "1";
+      item: "hidden_state_size" "6";
    }
    parts {
      
