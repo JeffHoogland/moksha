@@ -73,7 +73,8 @@ src/bin/e_widget_config_list.c
 src/bin/e_widget_fsel.c
 src/bin/e_winlist.c
 src/bin/e_utils.c
-src/bin/e_int_config_apps.c
+src/bin/e_int_config_apps_menu.c
+src/bin/e_int_config_apps_order.c
 src/bin/e_int_config_modules.c
 src/bin/e_exec.c
 src/modules/battery/e_mod_config.c
