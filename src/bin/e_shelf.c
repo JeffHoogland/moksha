@@ -22,6 +22,7 @@ static void _e_shelf_cb_mouse_out(void *data, Evas *evas, Evas_Object *obj, void
 static int  _e_shelf_cb_id_sort(void *data1, void *data2);
 static int  _e_shelf_cb_hide_timer(void *data);
 static int  _e_shelf_cb_hide_animator(void *data);
+static int  _e_shelf_cb_instant_hide_timer(void *data);
 static void _e_shelf_menu_del_hook(void *data);
 static void _e_shelf_menu_pre_cb(void *data, E_Menu *m);
 
@@ -203,6 +204,11 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
      es->hidden_state_size = atoi(option);
    else
      es->hidden_state_size = 4;
+   option =  edje_object_data_get(es->o_base, "instant_delay");
+   if (option)
+     es->instant_delay = atof(option);
+   else
+     es->instant_delay = -1.0;
 
    es->hide_origin = -1;
    
@@ -263,12 +269,20 @@ e_shelf_toggle(E_Shelf *es, int show)
 {
    E_OBJECT_CHECK(es);
    E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
-   if (show && es->hidden)
+   if (show && es->hidden && !es->instant_timer)
      {  
 	es->hidden = 0;
 	edje_object_signal_emit(es->o_base, "e,state,visible", "e");
-	if(!es->hide_animator)
-	  es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
+	if (es->instant_delay >= 0.0)
+	  {
+	     if (!es->instant_timer)
+	       _e_shelf_cb_instant_hide_timer(es);
+	  }
+	else
+	  {
+	     if(!es->hide_animator)
+	       es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
+	  }
 	if (es->hide_timer)
 	  {
 	     ecore_timer_del(es->hide_timer);
@@ -277,7 +291,6 @@ e_shelf_toggle(E_Shelf *es, int show)
      }
    else if (!show && es->cfg->autohide && !es->hidden)
      {
-	es->hidden = 1; 
 	if(!es->hide_timer)
 	  es->hide_timer = ecore_timer_add(1.0, _e_shelf_cb_hide_timer, es);
      }
@@ -546,6 +559,11 @@ e_shelf_style_set(E_Shelf *es, const char *style)
      es->hidden_state_size = atoi(option);
    else
      es->hidden_state_size = 4;
+   option =  edje_object_data_get(es->o_base, "instant_delay");
+   if (option)
+     es->instant_delay = atof(option);
+   else
+     es->instant_delay = -1.0;
    
    es->hide_origin = -1;
    e_gadcon_unpopulate(es->gadcon);
@@ -593,6 +611,11 @@ _e_shelf_free(E_Shelf *es)
      {
 	ecore_animator_del(es->hide_animator);
 	es->hide_animator = NULL;
+     }
+   if (es->instant_timer)
+     {
+	ecore_timer_del(es->instant_timer);
+	es->instant_timer = NULL;
      }
    
    if (es->menu)
@@ -1075,15 +1098,24 @@ _e_shelf_cb_hide_timer(void *data)
 
    es = data;
 
-   if(!es->hide_animator)
-     es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
-
+   es->hidden = 1; 
    edje_object_signal_emit(es->o_base, "e,state,hidden", "e");
-   if(es->hide_timer)
+   if (es->instant_delay >= 0.0)
+     {
+	if (!es->instant_timer)
+	  es->instant_timer = ecore_timer_add(es->instant_delay, _e_shelf_cb_instant_hide_timer, es);
+     }
+   else
+     {
+	if(!es->hide_animator)
+	  es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
+     }
+   if (es->hide_timer)
      {    
 	ecore_timer_del(es->hide_timer);
 	es->hide_timer = NULL;
      }
+
    return 1;
 }
 
@@ -1276,6 +1308,59 @@ _e_shelf_cb_hide_animator(void *data)
 end:
    ecore_animator_del(es->hide_animator);
    es->hide_animator = NULL;
+   return 1;
+}
+
+static int
+_e_shelf_cb_instant_hide_timer(void *data)
+{
+   E_Shelf *es;
+
+   es = data;
+
+   switch(es->gadcon->orient)
+     {
+      case E_GADCON_ORIENT_TOP:
+      case E_GADCON_ORIENT_CORNER_TL:
+      case E_GADCON_ORIENT_CORNER_TR:
+	 /* TODO: step coefficient needs to be configurable */
+	 if(es->hidden)
+	   e_shelf_move(es, es->x, es->y - es->h + es->hidden_state_size);
+	 else
+	   e_shelf_move(es, es->x, es->y + es->h - es->hidden_state_size);
+	 break;
+      case E_GADCON_ORIENT_BOTTOM:
+      case E_GADCON_ORIENT_CORNER_BL:
+      case E_GADCON_ORIENT_CORNER_BR:
+	 if(es->hidden)
+	   e_shelf_move(es, es->x, es->y + es->h - es->hidden_state_size);
+	 else
+	   e_shelf_move(es, es->x, es->y - es->h + es->hidden_state_size);
+	 break;
+      case E_GADCON_ORIENT_LEFT:
+      case E_GADCON_ORIENT_CORNER_LB:
+      case E_GADCON_ORIENT_CORNER_LT:
+	 if(es->hidden)
+	   e_shelf_move(es, es->x - es->w + es->hidden_state_size, es->y);
+	 else
+	   e_shelf_move(es, es->x + es->w - es->hidden_state_size, es->y);
+	 break; 
+      case E_GADCON_ORIENT_RIGHT:
+      case E_GADCON_ORIENT_CORNER_RB:
+      case E_GADCON_ORIENT_CORNER_RT:
+	 if(es->hidden)
+	   e_shelf_move(es, es->x + es->w - es->hidden_state_size, es->y);
+	 else
+	   e_shelf_move(es, es->x - es->w + es->hidden_state_size, es->y);
+	 break; 
+      default:
+	 break;
+     }
+   if (es->instant_timer)
+     {
+	ecore_timer_del(es->instant_timer);
+	es->instant_timer = NULL;
+     }
    return 1;
 }
 
