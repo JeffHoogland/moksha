@@ -269,7 +269,7 @@ _e_spectrum_redraw(void *d)
        return 0;
     }
 
-  switch(sp->mode)
+  switch (sp->mode)
     {
      case E_COLOR_COMPONENT_R:
 	vz = (float)sp->cv->r / 255;

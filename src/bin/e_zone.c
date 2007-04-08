@@ -635,7 +635,7 @@ _e_zone_free(E_Zone *zone)
    /* free desks */
    for (x = 0; x < zone->desk_x_count; x++)
      {
-	for(y = 0; y < zone->desk_y_count; y++)
+	for (y = 0; y < zone->desk_y_count; y++)
 	  e_object_del(E_OBJECT(zone->desks[x + (y * zone->desk_x_count)]));
      }
    free(zone->desks);

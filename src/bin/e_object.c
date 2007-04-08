@@ -162,7 +162,7 @@ e_object_error(E_Object *obj)
 	  {
 	     /* try access magic value */
 	     magic = obj->magic;
-	     /* if pointer is bogus we'd segv and so jump to the if() above */
+	     /* if pointer is bogus we'd segv and so jump to the if () above */
 	     /* contents, and thus reset segv handler and set segv flag. */
 	     /* if not we just continue moving along here and reset handler */
 	     sigaction(SIGSEGV, &oact, NULL);

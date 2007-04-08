@@ -280,7 +280,7 @@ e_shelf_toggle(E_Shelf *es, int show)
 	  }
 	else
 	  {
-	     if(!es->hide_animator)
+	     if (!es->hide_animator)
 	       es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
 	  }
 	if (es->hide_timer)
@@ -291,7 +291,7 @@ e_shelf_toggle(E_Shelf *es, int show)
      }
    else if (!show && es->cfg->autohide && !es->hidden)
      {
-	if(!es->hide_timer)
+	if (!es->hide_timer)
 	  es->hide_timer = ecore_timer_add(1.0, _e_shelf_cb_hide_timer, es);
      }
 }
@@ -1107,7 +1107,7 @@ _e_shelf_cb_hide_timer(void *data)
      }
    else
      {
-	if(!es->hide_animator)
+	if (!es->hide_animator)
 	  es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
      }
    if (es->hide_timer)
@@ -1127,14 +1127,14 @@ _e_shelf_cb_hide_animator(void *data)
 
    es = data;
 
-   switch(es->gadcon->orient)
+   switch (es->gadcon->orient)
      {
       case E_GADCON_ORIENT_TOP:
       case E_GADCON_ORIENT_CORNER_TL:
       case E_GADCON_ORIENT_CORNER_TR:
 	 /* TODO: step coefficient needs to be configurable */
 	 step = ((es->h - es->hidden_state_size) / e_config->framerate) * 2;
-	 if(es->hidden)
+	 if (es->hidden)
 	   {
 	      if (es->hide_origin == -1) es->hide_origin = es->y;
 	      if (es->hide_step < es->h - es->hidden_state_size)
@@ -1155,7 +1155,7 @@ _e_shelf_cb_hide_animator(void *data)
 	   }
 	 else
 	   {
-	      if(es->hide_step > 0)
+	      if (es->hide_step > 0)
 		{
 		   if (es->hide_step < step)
 		     {
@@ -1176,7 +1176,7 @@ _e_shelf_cb_hide_animator(void *data)
       case E_GADCON_ORIENT_CORNER_BL:
       case E_GADCON_ORIENT_CORNER_BR:
 	 step = ((es->h - es->hidden_state_size) / e_config->framerate) * 2;
-	 if(es->hidden)
+	 if (es->hidden)
 	   {
 	      if (es->hide_origin == -1) es->hide_origin = es->y;
 	      if (es->hide_step < es->h - es->hidden_state_size)
@@ -1197,7 +1197,7 @@ _e_shelf_cb_hide_animator(void *data)
 	   }
 	 else
 	   {
-	      if(es->hide_step > 0)
+	      if (es->hide_step > 0)
 		{
 		   if (es->hide_step < step)
 		     {
@@ -1219,7 +1219,7 @@ _e_shelf_cb_hide_animator(void *data)
       case E_GADCON_ORIENT_CORNER_LB:
       case E_GADCON_ORIENT_CORNER_LT:
 	 step = ((es->w - es->hidden_state_size) / e_config->framerate) * 2;
-	 if(es->hidden)
+	 if (es->hidden)
 	   {
 	      if (es->hide_origin == -1) es->hide_origin = es->x;
 	      if (es->hide_step < es->w - es->hidden_state_size)
@@ -1262,7 +1262,7 @@ _e_shelf_cb_hide_animator(void *data)
       case E_GADCON_ORIENT_CORNER_RB:
       case E_GADCON_ORIENT_CORNER_RT:
 	 step = ((es->w - es->hidden_state_size) / e_config->framerate) * 2;
-	 if(es->hidden)
+	 if (es->hidden)
 	   {
 	      if (es->hide_origin == -1) es->hide_origin = es->x;
 	      if (es->hide_step < es->w - es->hidden_state_size)
@@ -1318,13 +1318,13 @@ _e_shelf_cb_instant_hide_timer(void *data)
 
    es = data;
 
-   switch(es->gadcon->orient)
+   switch (es->gadcon->orient)
      {
       case E_GADCON_ORIENT_TOP:
       case E_GADCON_ORIENT_CORNER_TL:
       case E_GADCON_ORIENT_CORNER_TR:
 	 /* TODO: step coefficient needs to be configurable */
-	 if(es->hidden)
+	 if (es->hidden)
 	   e_shelf_move(es, es->x, es->y - es->h + es->hidden_state_size);
 	 else
 	   e_shelf_move(es, es->x, es->y + es->h - es->hidden_state_size);
@@ -1332,7 +1332,7 @@ _e_shelf_cb_instant_hide_timer(void *data)
       case E_GADCON_ORIENT_BOTTOM:
       case E_GADCON_ORIENT_CORNER_BL:
       case E_GADCON_ORIENT_CORNER_BR:
-	 if(es->hidden)
+	 if (es->hidden)
 	   e_shelf_move(es, es->x, es->y + es->h - es->hidden_state_size);
 	 else
 	   e_shelf_move(es, es->x, es->y - es->h + es->hidden_state_size);
@@ -1340,7 +1340,7 @@ _e_shelf_cb_instant_hide_timer(void *data)
       case E_GADCON_ORIENT_LEFT:
       case E_GADCON_ORIENT_CORNER_LB:
       case E_GADCON_ORIENT_CORNER_LT:
-	 if(es->hidden)
+	 if (es->hidden)
 	   e_shelf_move(es, es->x - es->w + es->hidden_state_size, es->y);
 	 else
 	   e_shelf_move(es, es->x + es->w - es->hidden_state_size, es->y);
@@ -1348,7 +1348,7 @@ _e_shelf_cb_instant_hide_timer(void *data)
       case E_GADCON_ORIENT_RIGHT:
       case E_GADCON_ORIENT_CORNER_RB:
       case E_GADCON_ORIENT_CORNER_RT:
-	 if(es->hidden)
+	 if (es->hidden)
 	   e_shelf_move(es, es->x + es->w - es->hidden_state_size, es->y);
 	 else
 	   e_shelf_move(es, es->x - es->w + es->hidden_state_size, es->y);

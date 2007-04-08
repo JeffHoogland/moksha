@@ -121,7 +121,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	const char *path;
 
 	path = e_intl_imc_system_path_get();
-	if(!strncmp(cfdata->imc_current, path, strlen(path)))
+	if (!strncmp(cfdata->imc_current, path, strlen(path)))
 	  cfdata->fmdir = 1;
 	cfdata->imc_disable = 0;
      }
@@ -328,7 +328,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      }
    
    i = 0;
-   while(imc_basic_list) 
+   while (imc_basic_list) 
      {
 	E_Input_Method_Config *imc;
 	Eet_File *imc_ef;

@@ -100,7 +100,7 @@ e_widget_spectrum_update(Evas_Object *obj, int redraw)
    if (redraw)
      e_spectrum_update(wd->o_spectrum);
 
-   switch(wd->mode)
+   switch (wd->mode)
      {
       case E_COLOR_COMPONENT_R:
 	 vy = wd->cv->g / 255.0;
@@ -235,7 +235,7 @@ _e_wid_mouse_handle(Evas_Object *obj, int mx, int my)
 
    edje_object_part_drag_value_set(wd->o_edje, "e.dragable.cursor", vx, vy);
 
-   switch(wd->mode)
+   switch (wd->mode)
      {
       case E_COLOR_COMPONENT_R:
 	 wd->cv->g = vy * 255;

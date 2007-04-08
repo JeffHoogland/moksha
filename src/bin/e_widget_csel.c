@@ -59,12 +59,12 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
    wd->changing = 1;
 
    /* entry changed */
-   for(l = wd->entries, i = 0; l; l = l->next, i++)
+   for (l = wd->entries, i = 0; l; l = l->next, i++)
      {
 	if (o == l->data)
 	  {
 	     changed = i;
-	     switch(i)
+	     switch (i)
 	       {
 		case E_COLOR_COMPONENT_R:
 		   wd->cv->r = atoi(wd->values[i]);
@@ -143,11 +143,11 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
    e_widget_color_well_update(wd->well);
 
    /* now update the text fields to show current values */
-   for(l = wd->entries, i = 0; l; l = l->next, i++)
+   for (l = wd->entries, i = 0; l; l = l->next, i++)
      {
 	char buf[10];
 	if (o == l->data) continue;
-	switch(i)
+	switch (i)
 	  {
 	   case E_COLOR_COMPONENT_R:
 	      snprintf(buf, 10, "%i", wd->cv->r);
@@ -205,10 +205,10 @@ e_widget_csel_add(Evas *evas, E_Color *color)
 
    wd->values = calloc(E_COLOR_COMPONENT_MAX, sizeof(char *));
 
-   for(i = 0; i < E_COLOR_COMPONENT_MAX; i++)
+   for (i = 0; i < E_COLOR_COMPONENT_MAX; i++)
      {
 	wd->values[i] = calloc(10, sizeof(char));
-	switch(i)
+	switch (i)
 	  {
 	   case E_COLOR_COMPONENT_R:
 	      snprintf(wd->values[i], 10, "%i", wd->cv->r);

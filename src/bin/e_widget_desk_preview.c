@@ -275,7 +275,7 @@ _e_wid_cb_bg_update(void *data, int type, void *event)
    wd = data;
    ev = event;
 
-   for(l = wd->desks; l; l = l->next)
+   for (l = wd->desks; l; l = l->next)
      {
 	Evas_Object *o;
 	E_Widget_Desk_Data *dd;

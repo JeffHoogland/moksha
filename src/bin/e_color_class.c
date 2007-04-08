@@ -1,5 +1,7 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include "e.h"
-
 
 EAPI int
 e_color_class_init(void)
@@ -7,19 +9,19 @@ e_color_class_init(void)
   Evas_List *l;
 
   for (l = e_config->color_classes; l; l = l->next)
-  {
-    E_Color_Class *cc;
+    {
+       E_Color_Class *cc;
 
-    cc = l->data;
-    if (!cc) continue;
+       cc = l->data;
+       if (!cc) continue;
 
-    printf("INIT CC: %s, %d %d %d %d\n", cc->name, cc->r, cc->g, cc->b, cc->a);
-    edje_color_class_set(cc->name,
-                         cc->r, cc->g, cc->b, cc->a,
-                         cc->r2, cc->g2, cc->b2, cc->a2,
-                         cc->r3, cc->g3, cc->b3, cc->a3);
+       printf("INIT CC: %s, %d %d %d %d\n", cc->name, cc->r, cc->g, cc->b, cc->a);
+       edje_color_class_set(cc->name,
+			    cc->r, cc->g, cc->b, cc->a,
+			    cc->r2, cc->g2, cc->b2, cc->a2,
+			    cc->r3, cc->g3, cc->b3, cc->a3);
 
-  }
+    }
   return 1;
 }
 
@@ -36,14 +38,14 @@ e_color_class_set(const char *color_class, int r, int g, int b, int a, int r2, i
 
   cc = e_color_class_find(color_class);
   if (!cc)
-  {
-    cc = E_NEW(E_Color_Class, 1);
-    e_config->color_classes = evas_list_append(e_config->color_classes, cc);
-    cc->name = evas_stringshare_add(color_class);
-    cc->r = cc->g = cc->b = cc->a = 255;
-    cc->r2 = cc->g2 = cc->b2 = cc->a2 = 255;
-    cc->r3 = cc->g3 = cc->b3 = cc->a3 = 255;
-  }
+    {
+       cc = E_NEW(E_Color_Class, 1);
+       e_config->color_classes = evas_list_append(e_config->color_classes, cc);
+       cc->name = evas_stringshare_add(color_class);
+       cc->r = cc->g = cc->b = cc->a = 255;
+       cc->r2 = cc->g2 = cc->b2 = cc->a2 = 255;
+       cc->r3 = cc->g3 = cc->b3 = cc->a3 = 255;
+    }
 
   if (r != -1) cc->r = E_CLAMP(r, 0, 255);
   if (g != -1) cc->g = E_CLAMP(g, 0, 255);
@@ -72,14 +74,14 @@ e_color_class_del(const char *name)
 
   cc = e_color_class_find(name);
   if (cc)
-  {
-    e_config->color_classes = evas_list_remove(e_config->color_classes, cc);
-    edje_color_class_del(cc->name);
-    evas_stringshare_del(cc->name);
-    E_FREE(cc);
+    {
+       e_config->color_classes = evas_list_remove(e_config->color_classes, cc);
+       edje_color_class_del(cc->name);
+       evas_stringshare_del(cc->name);
+       E_FREE(cc);
 
-    e_config_save_queue();
-  }
+       e_config_save_queue();
+    }
 }
 
 EAPI E_Color_Class *
@@ -88,17 +90,17 @@ e_color_class_find(const char *name)
   Evas_List *l;
   E_Color_Class *cc = NULL;
 
-  for(l = e_config->color_classes; l; l = l->next)
-  {
-    cc = l->data;
-    if (!cc) continue;
-
-    if (!strcmp(cc->name, name))
+  for (l = e_config->color_classes; l; l = l->next)
     {
-      return cc;
-      break;
+       cc = l->data;
+       if (!cc) continue;
+
+       if (!strcmp(cc->name, name))
+	 {
+	    return cc;
+	    break;
+	 }
     }
-  }
   return NULL;
 }
 

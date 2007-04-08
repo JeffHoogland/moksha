@@ -24,7 +24,7 @@ e_color_dialog_new(E_Container *con, const E_Color *color)
    Evas_Coord mw, mh;
 
    dia = E_OBJECT_ALLOC(E_Color_Dialog, E_COLOR_DIALOG_TYPE, _e_color_dialog_free);
-   if(!dia) return NULL;
+   if (!dia) return NULL;
    dia->dia = e_dialog_new(con, "E", "_color_dialog");
    e_dialog_title_set(dia->dia, "Color Selector");
    
@@ -105,7 +105,7 @@ _e_color_dialog_button1_click(void *data, E_Dialog *edia)
    E_Color_Dialog *dia;
    
    dia = data;
-   if(dia->select_func && dia->color)
+   if (dia->select_func && dia->color)
      dia->select_func(dia, dia->color, dia->select_data);
    _e_color_dialog_free(dia);
 }
@@ -116,7 +116,7 @@ _e_color_dialog_button2_click(void *data, E_Dialog *edia)
    E_Color_Dialog *dia;
 
    dia = data;
-   if(dia->cancel_func && dia->initial)
+   if (dia->cancel_func && dia->initial)
      dia->cancel_func(dia, dia->initial, dia->cancel_data);
    _e_color_dialog_free(data);     	
 }

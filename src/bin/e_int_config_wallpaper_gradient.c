@@ -442,7 +442,7 @@ _import_cb_on_change(void *data, Evas_Object *obj)
    evas_object_gradient_color_stop_add(grad, import->cfdata->color1->r, import->cfdata->color1->g, import->cfdata->color1->b, 255, 1);
    evas_object_gradient_color_stop_add(grad, import->cfdata->color2->r, import->cfdata->color2->g, import->cfdata->color2->b, 255, 1);
 
-   switch(import->cfdata->mode)
+   switch (import->cfdata->mode)
      {
       case GRAD_H:
 	 evas_object_gradient_type_set(grad, "linear", NULL);

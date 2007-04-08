@@ -367,7 +367,7 @@ e_int_border_menu_del(E_Border *bd)
 	bd->border_stacking_menu = NULL;
 	was_menu = 1;
      }
-   if( bd->border_maximize_menu )
+   if (bd->border_maximize_menu)
      {
 	e_object_del(E_OBJECT(bd->border_maximize_menu));
 	bd->border_maximize_menu = NULL;

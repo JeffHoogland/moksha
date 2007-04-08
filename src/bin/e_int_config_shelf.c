@@ -133,7 +133,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
 	snprintf(buf, sizeof(buf), "%s %i", label, es->id);
 	
 	ob = edje_object_add(evas);
-        switch(es->cfg->orient)
+        switch (es->cfg->orient)
           {
           case E_GADCON_ORIENT_LEFT:
              e_util_edje_icon_set(ob, "enlightenment/shelf_position_left");

@@ -123,7 +123,7 @@ _e_wid_value_set(Evas_Object *o, double vx)
    E_Widget_Data *wd;
    wd = e_widget_data_get(o);
 
-   switch(wd->mode)
+   switch (wd->mode)
      {
       case E_COLOR_COMPONENT_R:
 	 wd->color->r = 255 * vx;
@@ -207,7 +207,7 @@ _e_wid_update_standard(E_Widget_Data *wd)
 
    evas_object_gradient_clear(wd->o_grad);
 
-   switch(wd->mode) 
+   switch (wd->mode) 
      {
       case E_COLOR_COMPONENT_R:
 	 evas_object_gradient_color_stop_add(wd->o_grad, 0, wd->color->g, wd->color->b, 255, 1);
@@ -265,59 +265,59 @@ _e_wid_update_fixed(E_Widget_Data *wd)
   if (!wd) return;
 
   evas_object_gradient_clear(wd->o_grad);
-  switch(wd->mode)
-  {
-    case E_COLOR_COMPONENT_R:
-      evas_object_gradient_color_stop_add(wd->o_grad, 255, 0, 0, 255, 1);
-      evas_object_gradient_color_stop_add(wd->o_grad, 0, 0, 0, 255, 1);
-      vx = wd->color->r / 255.0;
-      break;
-    case E_COLOR_COMPONENT_G:
-      evas_object_gradient_color_stop_add(wd->o_grad, 0, 255, 0, 255, 1);
-      evas_object_gradient_color_stop_add(wd->o_grad, 0, 0, 0, 255, 1);
-      vx = wd->color->g / 255.0;
-      break;
-    case E_COLOR_COMPONENT_B:
-      evas_object_gradient_color_stop_add(wd->o_grad, 0, 0, 255, 255, 1);
-      evas_object_gradient_color_stop_add(wd->o_grad, 0, 0, 0, 255, 1);
-      vx = wd->color->b / 255.0;
-      break;
-    case E_COLOR_COMPONENT_H:
-/*
- * Color Stops:
- *   0 x n n
- *  60 x x n
- * 120 n x n
- * 180 n x x
- * 240 n n x
- * 300 x n x
- * 360 x n n
- */
-      min = 0;
-      max = 255;
+  switch (wd->mode)
+    {
+     case E_COLOR_COMPONENT_R:
+	evas_object_gradient_color_stop_add(wd->o_grad, 255, 0, 0, 255, 1);
+	evas_object_gradient_color_stop_add(wd->o_grad, 0, 0, 0, 255, 1);
+	vx = wd->color->r / 255.0;
+	break;
+     case E_COLOR_COMPONENT_G:
+	evas_object_gradient_color_stop_add(wd->o_grad, 0, 255, 0, 255, 1);
+	evas_object_gradient_color_stop_add(wd->o_grad, 0, 0, 0, 255, 1);
+	vx = wd->color->g / 255.0;
+	break;
+     case E_COLOR_COMPONENT_B:
+	evas_object_gradient_color_stop_add(wd->o_grad, 0, 0, 255, 255, 1);
+	evas_object_gradient_color_stop_add(wd->o_grad, 0, 0, 0, 255, 1);
+	vx = wd->color->b / 255.0;
+	break;
+     case E_COLOR_COMPONENT_H:
+	/*
+	 * Color Stops:
+	 *   0 x n n
+	 *  60 x x n
+	 * 120 n x n
+	 * 180 n x x
+	 * 240 n n x
+	 * 300 x n x
+	 * 360 x n n
+	 */
+	min = 0;
+	max = 255;
 
-      evas_object_gradient_color_stop_add(wd->o_grad, max, min, min, 255, 1);
-      evas_object_gradient_color_stop_add(wd->o_grad, max, min, max, 255, 1);
-      evas_object_gradient_color_stop_add(wd->o_grad, min, min, max, 255, 1);
-      evas_object_gradient_color_stop_add(wd->o_grad, min, max, max, 255, 1);
-      evas_object_gradient_color_stop_add(wd->o_grad, min, max, min, 255, 1);
-      evas_object_gradient_color_stop_add(wd->o_grad, max, max, min, 255, 1);
-      evas_object_gradient_color_stop_add(wd->o_grad, max, min, min, 255, 1);
-      vx = wd->color->h / 360.0;
-      break;
-    case E_COLOR_COMPONENT_S:
-      evas_object_gradient_color_stop_add(wd->o_grad, 255, 255, 255, 255, 1);
-      evas_object_gradient_color_stop_add(wd->o_grad, 0, 0, 0, 255, 1);
-      vx = wd->color->s; 
-      break;
-    case E_COLOR_COMPONENT_V:
-      evas_object_gradient_color_stop_add(wd->o_grad, 255, 255, 255, 255, 1);
-      evas_object_gradient_color_stop_add(wd->o_grad, 0, 0, 0, 255, 1);
-      vx = wd->color->v;
-      break;
-    case E_COLOR_COMPONENT_MAX:
-      break;
-  }
+	evas_object_gradient_color_stop_add(wd->o_grad, max, min, min, 255, 1);
+	evas_object_gradient_color_stop_add(wd->o_grad, max, min, max, 255, 1);
+	evas_object_gradient_color_stop_add(wd->o_grad, min, min, max, 255, 1);
+	evas_object_gradient_color_stop_add(wd->o_grad, min, max, max, 255, 1);
+	evas_object_gradient_color_stop_add(wd->o_grad, min, max, min, 255, 1);
+	evas_object_gradient_color_stop_add(wd->o_grad, max, max, min, 255, 1);
+	evas_object_gradient_color_stop_add(wd->o_grad, max, min, min, 255, 1);
+	vx = wd->color->h / 360.0;
+	break;
+     case E_COLOR_COMPONENT_S:
+	evas_object_gradient_color_stop_add(wd->o_grad, 255, 255, 255, 255, 1);
+	evas_object_gradient_color_stop_add(wd->o_grad, 0, 0, 0, 255, 1);
+	vx = wd->color->s; 
+	break;
+     case E_COLOR_COMPONENT_V:
+	evas_object_gradient_color_stop_add(wd->o_grad, 255, 255, 255, 255, 1);
+	evas_object_gradient_color_stop_add(wd->o_grad, 0, 0, 0, 255, 1);
+	vx = wd->color->v;
+	break;
+     case E_COLOR_COMPONENT_MAX:
+	break;
+    }
 
   edje_object_part_drag_value_set(wd->o_cslider, "e.dragable.cursor", vx, vx);
 }

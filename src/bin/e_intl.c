@@ -499,7 +499,7 @@ _e_intl_cb_exit(void *data, int type, void *event)
 static void
 _e_intl_locale_hash_free(Evas_Hash *locale_hash)
 {
-   if(!locale_hash) return;
+   if (!locale_hash) return;
    evas_hash_foreach(locale_hash, _e_intl_locale_hash_free_cb, NULL);
    evas_hash_free(locale_hash);
 }
@@ -730,11 +730,11 @@ e_intl_locale_parts_get(const char *locale)
 	locale_char = locale[locale_idx];
 
 	/* we have finished scanning the locale string */
-	if(locale_char == 0)
+	if (!locale_char)
 	  break;
 
 	/* scan this character based on the current start */
-	switch(state)
+	switch (state)
 	  {
 	   case 0: /* Gathering Language */
 	      if (tmp_idx == 2 && locale_char == '_')
@@ -759,14 +759,14 @@ e_intl_locale_parts_get(const char *locale)
 		   territory[tmp_idx] = 0;
 		   tmp_idx = 0;
 		}
-	      else if(tmp_idx == 2 && locale_char == '@')
+	      else if ((tmp_idx == 2) && (locale_char == '@'))
 		{
 		   state += 2;
 		   territory[tmp_idx] = 0;
 		   codeset[0] = 0;
 		   tmp_idx = 0;
 		}
-	      else if(tmp_idx < 2 && isupper(locale_char))
+	      else if ((tmp_idx < 2) && isupper(locale_char))
 		{
 		   territory[tmp_idx++] = locale_char;
 		}
@@ -999,7 +999,7 @@ _e_intl_locale_validate(const char *locale)
    all_locales = _e_intl_locale_system_locales_get();
 
    /* Match locale with one from the list */
-   while(all_locales)
+   while (all_locales)
      {
 	char *locale_next;
 	locale_next = all_locales->data;
