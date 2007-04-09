@@ -451,7 +451,7 @@ _ibar_config_update(void)
 {
    Evas_List *l;
    Evas_List *i;
-   
+
    for (l = ibar_config->instances; l; l = l->next)
      {
 	Instance *inst;
