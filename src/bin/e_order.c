@@ -10,7 +10,6 @@ static void _e_order_read       (E_Order *eo);
 static void _e_order_save       (E_Order *eo);
 
 static int  _e_order_cb_efreet_desktop_change(void *data, int ev_type, void *ev);
-static int  _e_order_cb_efreet_desktop_list_change(void *data, int ev_type, void *ev);
 
 static Evas_List *orders = NULL;
 static Evas_List *handlers = NULL;
@@ -20,7 +19,6 @@ EAPI int
 e_order_init(void)
 {
    handlers = evas_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_DESKTOP_CHANGE, _e_order_cb_efreet_desktop_change, NULL));
-   handlers = evas_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_DESKTOP_LIST_CHANGE, _e_order_cb_efreet_desktop_list_change, NULL));
 
    return 1;
 }
@@ -247,8 +245,6 @@ _e_order_save(E_Order *eo)
    fclose(f);
 }
 
-static int list_changed = 0;
-
 static int
 _e_order_cb_efreet_desktop_change(void *data, int ev_type, void *ev)
 {
@@ -256,7 +252,6 @@ _e_order_cb_efreet_desktop_change(void *data, int ev_type, void *ev)
    Evas_List *l;
 
    event = ev;
-   if (!list_changed) return 1;
    switch (event->change)
      {
       case EFREET_DESKTOP_CHANGE_ADD:
@@ -310,25 +305,6 @@ _e_order_cb_efreet_desktop_change(void *data, int ev_type, void *ev)
 	      if ((changed) && (eo->cb.update)) eo->cb.update(eo->cb.data, eo);
 	   }
 	 break;
-     }
-   return 1;
-}
-
-static int
-_e_order_cb_efreet_desktop_list_change(void *data, int ev_type, void *ev)
-{
-   Evas_List *l;
-   
-   if (!list_changed)
-     {
-	list_changed = 1;
-	for (l = orders; l; l = l->next)
-	  {
-	     E_Order *eo;
-	     
-	     eo = l->data;
-	     if (eo->cb.update) eo->cb.update(eo->cb.data, eo);
-	  }
      }
    return 1;
 }
