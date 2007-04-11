@@ -126,6 +126,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, size, INT);
    E_CONFIG_VAL(D, T, overlap, INT);
    E_CONFIG_VAL(D, T, autohide, INT);
+   E_CONFIG_VAL(D, T, hide_timeout, FLOAT);
+   E_CONFIG_VAL(D, T, hide_duration, FLOAT);
    
    _e_config_desktop_bg_edd = E_CONFIG_DD_NEW("E_Config_Desktop_Background", E_Config_Desktop_Background);
 #undef T
@@ -425,6 +427,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, winlist_pos_max_h, INT); /**/
    E_CONFIG_VAL(D, T, maximize_policy, INT); /**/
    E_CONFIG_VAL(D, T, allow_manip, INT); /**/
+   E_CONFIG_VAL(D, T, border_fix_on_shelf_toggle, INT); /**/
    E_CONFIG_VAL(D, T, kill_if_close_not_possible, INT); /**/
    E_CONFIG_VAL(D, T, kill_process, INT); /**/
    E_CONFIG_VAL(D, T, kill_timer_wait, DOUBLE); /**/
@@ -659,6 +662,7 @@ e_config_init(void)
    e_config->winlist_pos_max_h = 320;
    e_config->maximize_policy = E_MAXIMIZE_SMART | E_MAXIMIZE_BOTH;
    e_config->allow_manip = 0;
+   e_config->border_fix_on_shelf_toggle = 0;
    e_config->kill_if_close_not_possible = 1;
    e_config->kill_process = 1;
    e_config->kill_timer_wait = 10.0;
@@ -1151,7 +1155,7 @@ e_config_init(void)
      {
 	E_Config_Shelf *cf_es;
 	
-#define CFG_SHELF(_name, _con, _zone, _pop, _lay, _orient, _fita, _fits, _style, _size, _overlap, _autohide) \
+#define CFG_SHELF(_name, _con, _zone, _pop, _lay, _orient, _fita, _fits, _style, _size, _overlap, _autohide, _hide_timeout, _hide_duration) \
    cf_es = E_NEW(E_Config_Shelf, 1); \
    cf_es->name = evas_stringshare_add(_name); \
    cf_es->container = _con; \
@@ -1165,30 +1169,32 @@ e_config_init(void)
    cf_es->size = _size; \
    cf_es->overlap = _overlap; \
    cf_es->autohide = _autohide; \
+   cf_es->hide_timeout = _hide_timeout; \
+   cf_es->hide_duration = _hide_duration; \
    e_config->shelves = evas_list_append(e_config->shelves, cf_es)
 	/* shelves for 4 zones on head 0 by default */
 	CFG_SHELF("shelf", 0, 0,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0);
+		  1, 0, "default", 40, 0, 0, 1.0, 1.0);
 	CFG_SHELF("shelf", 0, 1,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0);
+		  1, 0, "default", 40, 0, 0, 1.0, 1.0);
 	CFG_SHELF("shelf", 0, 2,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0);
+		  1, 0, "default", 40, 0, 0, 1.0, 1.0);
 	CFG_SHELF("shelf", 0, 3,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0);
+		  1, 0, "default", 40, 0, 0, 1.0, 1.0);
 	/* shelves for heada 1, 2, and 3 by default */
 	CFG_SHELF("shelf", 1, 0,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0);
+		  1, 0, "default", 40, 0, 0, 1.0, 1.0);
 	CFG_SHELF("shelf", 2, 0,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0);
+		  1, 0, "default", 40, 0, 0, 1.0, 1.0);
 	CFG_SHELF("shelf", 3, 0,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0);
+		  1, 0, "default", 40, 0, 0, 1.0, 1.0);
      }
    IFCFGEND;
    
@@ -1433,6 +1439,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->winlist_pos_max_h, 8, 4000);
    E_CONFIG_LIMIT(e_config->maximize_policy, E_MAXIMIZE_FULLSCREEN, E_MAXIMIZE_DIRECTION);
    E_CONFIG_LIMIT(e_config->allow_manip, 0, 1);
+   E_CONFIG_LIMIT(e_config->border_fix_on_shelf_toggle, 0, 1);
    E_CONFIG_LIMIT(e_config->kill_if_close_not_possible, 0, 1);
    E_CONFIG_LIMIT(e_config->kill_process, 0, 1);
    E_CONFIG_LIMIT(e_config->kill_timer_wait, 0.0, 120.0);

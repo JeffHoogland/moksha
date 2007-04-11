@@ -408,6 +408,11 @@ struct _E_Border
       Ecore_Animator *anim;
    } shade;
    
+   struct {
+      int x, y;
+      int modified;
+   } shelf_fix;
+
    Evas_List *stick_desks;
    E_Menu *border_menu;
    E_Config_Dialog *border_locks_dialog;
@@ -636,7 +641,7 @@ EAPI int  e_border_resizing_get(E_Border *bd);
 EAPI void e_border_signal_resize_begin(E_Border *bd, const char *dir, const char *sig, const char *src);
 EAPI void e_border_signal_resize_end(E_Border *bd, const char *dir, const char *sig, const char *src);
 EAPI void e_border_resize_limit(E_Border *bd, int *w, int *h);
-    
+
 extern EAPI int E_EVENT_BORDER_RESIZE;
 extern EAPI int E_EVENT_BORDER_MOVE;
 extern EAPI int E_EVENT_BORDER_ADD;

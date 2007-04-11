@@ -25,6 +25,7 @@ struct _E_Config_Dialog_Data
    int window_resist;
    int gadget_resist;
    int allow_manip;
+   int border_fix_on_shelf_toggle;
    int border_raise_on_mouse_action;
    int border_raise_on_focus;
 };
@@ -71,6 +72,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    if (!cfdata->maximize_direction)
      cfdata->maximize_direction = E_MAXIMIZE_BOTH;
    cfdata->allow_manip = e_config->allow_manip;
+   cfdata->border_fix_on_shelf_toggle = e_config->border_fix_on_shelf_toggle;
    cfdata->border_raise_on_mouse_action = e_config->border_raise_on_mouse_action;
    cfdata->border_raise_on_focus = e_config->border_raise_on_focus;
 }
@@ -120,6 +122,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->gadget_resist = cfdata->gadget_resist;
    e_config->maximize_policy = cfdata->maximize_policy | cfdata->maximize_direction;
    e_config->allow_manip = cfdata->allow_manip;
+   e_config->border_fix_on_shelf_toggle = cfdata->border_fix_on_shelf_toggle;
    e_config->border_raise_on_mouse_action = cfdata->border_raise_on_mouse_action;
    e_config->border_raise_on_focus = cfdata->border_raise_on_focus;
    e_config_save_queue();
@@ -222,6 +225,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_check_add(evas, _("Allow window manipulation"), &(cfdata->allow_manip));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Automatically move/resize windows on shelf autohide"), &(cfdata->border_fix_on_shelf_toggle));
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
    

@@ -8,6 +8,7 @@ static const char *_e_shelf_orient_string_get(E_Shelf *es);
 static void _e_shelf_gadcon_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 static void _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 static Evas_Object *_e_shelf_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *style);
+static void _e_shelf_toggle_border_fix(E_Shelf *es);
 static void _e_shelf_cb_menu_config(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_shelf_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_shelf_cb_menu_contents(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -77,9 +78,12 @@ e_shelf_config_init(void)
 				   cf_es->popup, cf_es->layer, -1);
 	     if (es)
 	       {
+		  if (!cf_es->hide_timeout) cf_es->hide_timeout = 1.0; 
+		  if (!cf_es->hide_duration) cf_es->hide_duration = 1.0; 
 		  es->cfg = cf_es;
 		  es->fit_along = cf_es->fit_along;
 		  es->fit_size = cf_es->fit_size;
+
 		  e_shelf_orient(es, cf_es->orient);
 		  e_shelf_position_calc(es);
 		  e_shelf_populate(es);
@@ -269,30 +273,33 @@ e_shelf_toggle(E_Shelf *es, int show)
 {
    E_OBJECT_CHECK(es);
    E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
-   if (show && es->hidden && !es->instant_timer)
-     {  
-	es->hidden = 0;
-	edje_object_signal_emit(es->o_base, "e,state,visible", "e");
-	if (es->instant_delay >= 0.0)
-	  {
-	     if (!es->instant_timer)
-	       _e_shelf_cb_instant_hide_timer(es);
-	  }
-	else
-	  {
-	     if (!es->hide_animator)
-	       es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
-	  }
+   if (show)
+     {
 	if (es->hide_timer)
 	  {
 	     ecore_timer_del(es->hide_timer);
 	     es->hide_timer = NULL;
 	  }
+	if (es->hidden && !es->instant_timer)
+	  {  
+	     es->hidden = 0;
+	     edje_object_signal_emit(es->o_base, "e,state,visible", "e");
+	     if (es->instant_delay >= 0.0)
+	       {
+		  if (!es->instant_timer)
+		    _e_shelf_cb_instant_hide_timer(es);
+	       }
+	     else
+	       {
+		  if(!es->hide_animator)
+		    es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
+	       }
+	  }
      }
    else if (!show && es->cfg->autohide && !es->hidden)
      {
-	if (!es->hide_timer)
-	  es->hide_timer = ecore_timer_add(1.0, _e_shelf_cb_hide_timer, es);
+	if(!es->hide_timer)
+	  es->hide_timer = ecore_timer_add(es->cfg->hide_timeout, _e_shelf_cb_hide_timer, es);
      }
 }
 
@@ -389,6 +396,8 @@ e_shelf_save(E_Shelf *es)
 	cf_es->fit_size = es->fit_size;
 	cf_es->overlap = 0;
 	cf_es->autohide = 0; 
+	cf_es->hide_timeout = 1.0; 
+	cf_es->hide_duration = 1.0; 
 	es->cfg = cf_es;
      }
    e_config_save_queue();
@@ -565,7 +574,6 @@ e_shelf_style_set(E_Shelf *es, const char *style)
    else
      es->instant_delay = -1.0;
    
-   es->hide_origin = -1;
    e_gadcon_unpopulate(es->gadcon);
    e_gadcon_populate(es->gadcon);
 }
@@ -899,6 +907,85 @@ _e_shelf_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *styl
 }
 
 static void
+_e_shelf_toggle_border_fix(E_Shelf *es)
+{
+   Evas_List *l;
+
+   if (es->cfg->overlap || !e_config->border_fix_on_shelf_toggle)
+     return;
+
+   for (l = e_border_client_list(); l; l = l->next)
+     {
+	E_Border *bd;
+
+	bd = l->data;
+	if ((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_NONE)
+	  {
+	     if (bd->lock_client_location)
+	       continue;
+	     if (es->hidden)
+	       {
+		  if (!bd->shelf_fix.modified)
+		    continue;
+		  if (!--bd->shelf_fix.modified)
+		    {
+		       e_border_move(bd, bd->shelf_fix.x, bd->shelf_fix.y);
+		       continue;
+		    }
+	       }
+
+	     if (!E_INTERSECTS(bd->x, bd->y, bd->w, bd->h,
+		      es->x, es->y, es->w, es->h))
+	       continue;
+
+	     if (!es->hidden)
+	       {
+		  if (!bd->shelf_fix.modified++)
+		    bd->shelf_fix.x = bd->x;
+		    bd->shelf_fix.y = bd->y;
+	       }
+
+	     switch (es->gadcon->orient)
+	       {
+		case E_GADCON_ORIENT_TOP:
+		case E_GADCON_ORIENT_CORNER_TL:
+		case E_GADCON_ORIENT_CORNER_TR:
+		   if (!es->hidden)
+		     e_border_move(bd, bd->x, bd->y + es->h);
+		   break;
+		case E_GADCON_ORIENT_BOTTOM:
+		case E_GADCON_ORIENT_CORNER_BL:
+		case E_GADCON_ORIENT_CORNER_BR:
+		   if (!es->hidden)
+		     e_border_move(bd, bd->x, bd->y - es->h);
+		   break;
+		case E_GADCON_ORIENT_LEFT:
+		case E_GADCON_ORIENT_CORNER_LB:
+		case E_GADCON_ORIENT_CORNER_LT:
+		   if (!es->hidden)
+		     e_border_move(bd, bd->x + es->w, bd->y);
+		   break; 
+		case E_GADCON_ORIENT_RIGHT:
+		case E_GADCON_ORIENT_CORNER_RB:
+		case E_GADCON_ORIENT_CORNER_RT:
+		   if (!es->hidden)
+		     e_border_move(bd, bd->x - es->w, bd->y);
+		   break; 
+		default:
+		   break;
+	       }
+	  }
+	else
+	  {
+	     E_Maximize max;
+	     max = bd->maximized;
+	     e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
+	     e_border_maximize(bd, max);
+	  }
+     }
+}
+
+static void
 _e_shelf_menu_append(E_Shelf *es, E_Menu *mn)
 {
    E_Menu_Item *mi;
@@ -1110,13 +1197,9 @@ _e_shelf_cb_hide_timer(void *data)
 	if (!es->hide_animator)
 	  es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
      }
-   if (es->hide_timer)
-     {    
-	ecore_timer_del(es->hide_timer);
-	es->hide_timer = NULL;
-     }
+   es->hide_timer = NULL;
 
-   return 1;
+   return 0;
 }
 
 static int
@@ -1132,8 +1215,8 @@ _e_shelf_cb_hide_animator(void *data)
       case E_GADCON_ORIENT_TOP:
       case E_GADCON_ORIENT_CORNER_TL:
       case E_GADCON_ORIENT_CORNER_TR:
-	 /* TODO: step coefficient needs to be configurable */
-	 step = ((es->h - es->hidden_state_size) / e_config->framerate) * 2;
+	 step = ((es->h - es->hidden_state_size) / e_config->framerate) / es->cfg->hide_duration;
+	 if (!step) step = 1;
 	 if (es->hidden)
 	   {
 	      if (es->hide_origin == -1) es->hide_origin = es->y;
@@ -1175,7 +1258,8 @@ _e_shelf_cb_hide_animator(void *data)
       case E_GADCON_ORIENT_BOTTOM:
       case E_GADCON_ORIENT_CORNER_BL:
       case E_GADCON_ORIENT_CORNER_BR:
-	 step = ((es->h - es->hidden_state_size) / e_config->framerate) * 2;
+	 step = ((es->h - es->hidden_state_size) / e_config->framerate) / es->cfg->hide_duration;
+	 if (!step) step = 1;
 	 if (es->hidden)
 	   {
 	      if (es->hide_origin == -1) es->hide_origin = es->y;
@@ -1218,7 +1302,8 @@ _e_shelf_cb_hide_animator(void *data)
       case E_GADCON_ORIENT_LEFT:
       case E_GADCON_ORIENT_CORNER_LB:
       case E_GADCON_ORIENT_CORNER_LT:
-	 step = ((es->w - es->hidden_state_size) / e_config->framerate) * 2;
+	 step = ((es->w - es->hidden_state_size) / e_config->framerate) / es->cfg->hide_duration;
+	 if (!step) step = 1;
 	 if (es->hidden)
 	   {
 	      if (es->hide_origin == -1) es->hide_origin = es->x;
@@ -1261,7 +1346,8 @@ _e_shelf_cb_hide_animator(void *data)
       case E_GADCON_ORIENT_RIGHT:
       case E_GADCON_ORIENT_CORNER_RB:
       case E_GADCON_ORIENT_CORNER_RT:
-	 step = ((es->w - es->hidden_state_size) / e_config->framerate) * 2;
+	 step = ((es->w - es->hidden_state_size) / e_config->framerate) / es->cfg->hide_duration;
+	 if (!step) step = 1;
 	 if (es->hidden)
 	   {
 	      if (es->hide_origin == -1) es->hide_origin = es->x;
@@ -1306,9 +1392,9 @@ _e_shelf_cb_hide_animator(void *data)
    return 1;
 
 end:
-   ecore_animator_del(es->hide_animator);
    es->hide_animator = NULL;
-   return 1;
+   _e_shelf_toggle_border_fix(es);
+   return 0;
 }
 
 static int
@@ -1323,7 +1409,6 @@ _e_shelf_cb_instant_hide_timer(void *data)
       case E_GADCON_ORIENT_TOP:
       case E_GADCON_ORIENT_CORNER_TL:
       case E_GADCON_ORIENT_CORNER_TR:
-	 /* TODO: step coefficient needs to be configurable */
 	 if (es->hidden)
 	   e_shelf_move(es, es->x, es->y - es->h + es->hidden_state_size);
 	 else
@@ -1356,12 +1441,9 @@ _e_shelf_cb_instant_hide_timer(void *data)
       default:
 	 break;
      }
-   if (es->instant_timer)
-     {
-	ecore_timer_del(es->instant_timer);
-	es->instant_timer = NULL;
-     }
-   return 1;
+   es->instant_timer = NULL;
+   _e_shelf_toggle_border_fix(es);
+   return 0;
 }
 
 static void 

@@ -175,7 +175,7 @@ e_border_init(void)
    handlers = evas_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_DESKTOP_CHANGE, _e_border_cb_efreet_desktop_change, NULL));
 
    handlers = evas_list_append(handlers, ecore_event_handler_add(E_EVENT_CONFIG_ICON_THEME, _e_border_cb_config_icon_theme, NULL));
-   
+
    E_EVENT_BORDER_ADD = ecore_event_type_new();
    E_EVENT_BORDER_REMOVE = ecore_event_type_new();
    E_EVENT_BORDER_DESK_SET = ecore_event_type_new();
@@ -4743,6 +4743,9 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 					   x, y, bd->w, bd->h,
 					   &new_x, &new_y, &new_w, &new_h);
 	evas_list_free(skiplist);
+	bd->shelf_fix.x = 0;
+	bd->shelf_fix.y = 0;
+	bd->shelf_fix.modified = 0;
 	e_border_move(bd, new_x, new_y);
 	e_zone_flip_coords_handle(bd->zone, ev->root.x, ev->root.y);
      }

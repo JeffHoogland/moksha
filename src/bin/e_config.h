@@ -168,6 +168,7 @@ struct _E_Config
    int         winlist_pos_max_h; // GUI
    int         maximize_policy; // GUI
    int         allow_manip; // GUI
+   int         border_fix_on_shelf_toggle; // GUI
    int         kill_if_close_not_possible;
    int         kill_process;
    double      kill_timer_wait;
@@ -401,6 +402,8 @@ struct _E_Config_Shelf
    int           size;
    int           overlap;
    int		 autohide;
+   float	 hide_timeout;
+   float	 hide_duration;
 };
 
 struct _E_Config_Mime_Icon
