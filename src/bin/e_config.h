@@ -54,7 +54,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0114
+#define E_CONFIG_FILE_GENERATION 0x0115
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT      0
@@ -256,7 +256,8 @@ struct _E_Config
    int         clientlist_sort_by; // GUI
    int         clientlist_separate_iconified_apps; // GUI
    int         clientlist_warp_to_iconified_desktop; // GUI
-   int         clientlist_max_caption_len;
+   int         clientlist_limit_caption_len; // GUI
+   int         clientlist_max_caption_len; // GUI
 
    int         mouse_accel_numerator; // GUI
    int         mouse_accel_denominator; // GUI

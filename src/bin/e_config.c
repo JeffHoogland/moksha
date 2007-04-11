@@ -518,6 +518,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, clientlist_sort_by, INT);
    E_CONFIG_VAL(D, T, clientlist_separate_iconified_apps, INT);
    E_CONFIG_VAL(D, T, clientlist_warp_to_iconified_desktop, INT);
+   E_CONFIG_VAL(D, T, clientlist_limit_caption_len, INT);
    E_CONFIG_VAL(D, T, clientlist_max_caption_len, INT);
    
    E_CONFIG_VAL(D, T, mouse_accel_numerator, INT);
@@ -1378,6 +1379,10 @@ e_config_init(void)
    e_config->thumb_nice = 0;
    IFCFGEND;
 
+   IFCFG(0x0115);
+   e_config->clientlist_limit_caption_len = 0;
+   IFCFGEND;
+
    e_config->config_version = E_CONFIG_FILE_VERSION;   
      
 #if 0 /* example of new config */
@@ -1497,7 +1502,8 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->clientlist_sort_by, 0, 3);
    E_CONFIG_LIMIT(e_config->clientlist_separate_iconified_apps, 0, 2);
    E_CONFIG_LIMIT(e_config->clientlist_warp_to_iconified_desktop, 0, 1);
-   E_CONFIG_LIMIT(e_config->clientlist_max_caption_len, 0, E_CLIENTLIST_MAX_CAPTION_LEN);
+   E_CONFIG_LIMIT(e_config->clientlist_limit_caption_len, 0, 1);
+   E_CONFIG_LIMIT(e_config->clientlist_max_caption_len, 2, E_CLIENTLIST_MAX_CAPTION_LEN);
    
    E_CONFIG_LIMIT(e_config->mouse_accel_numerator, 1, 10);
    E_CONFIG_LIMIT(e_config->mouse_accel_denominator, 1, 10);

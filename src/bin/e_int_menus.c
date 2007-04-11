@@ -1261,7 +1261,7 @@ _e_int_menus_clients_title_abbrv(const char *title)
    int max_len;
 
    max_len = e_config->clientlist_max_caption_len;
-   if ((max_len != 0) && (strlen(title) > max_len))
+   if ((e_config->clientlist_limit_caption_len) && (strlen(title) > max_len))
      {
 	char *abbv;
 	const char *left, *right;
