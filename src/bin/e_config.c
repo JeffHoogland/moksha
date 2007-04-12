@@ -663,7 +663,6 @@ e_config_init(void)
    e_config->winlist_pos_max_h = 320;
    e_config->maximize_policy = E_MAXIMIZE_SMART | E_MAXIMIZE_BOTH;
    e_config->allow_manip = 0;
-   e_config->border_fix_on_shelf_toggle = 0;
    e_config->kill_if_close_not_possible = 1;
    e_config->kill_process = 1;
    e_config->kill_timer_wait = 10.0;
@@ -1383,6 +1382,10 @@ e_config_init(void)
    e_config->clientlist_limit_caption_len = 0;
    IFCFGEND;
 
+   IFCFG(0x0116);
+   e_config->border_fix_on_shelf_toggle = 0;
+   IFCFGEND;
+   
    e_config->config_version = E_CONFIG_FILE_VERSION;   
      
 #if 0 /* example of new config */
