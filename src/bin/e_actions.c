@@ -292,10 +292,10 @@ ACT_FN_GO(window_kill)
      }
    bd = (E_Border *)obj;
    snprintf(dialog_text, sizeof(dialog_text),
-	    "You are about to kill %s.<br><br>"
+	    _("You are about to kill %s.<br><br>"
 	    "Please keep in mind that all data of this window,<br>"
 	    "which has not been saved yet will be lost!<br><br>"
-	    "Are you sure you want to kill this window?", 
+	    "Are you sure you want to kill this window?"), 
 	    bd->client.icccm.name);
 
    if (kill_dialog) e_object_del(E_OBJECT(kill_dialog));
