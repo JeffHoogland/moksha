@@ -240,6 +240,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		  ed->dir = evas_stringshare_add(e->data);
 		  if (!ped)
 		    {
+		       printf("MON %s\n", ed->dir);
 		       ed->mon = ecore_file_monitor_add(ed->dir, _e_cb_file_monitor, ed);
 		       ed->mon_ref = 1;
 		    }
@@ -335,6 +336,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 					}
 				   }
 			      }
+			    printf("UNMON %s\n", ed->dir);
 			    ecore_file_monitor_del(ed->mon);
 			 }
 		       contdel:
@@ -368,9 +370,28 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	/* FIXME: send back file del + add if dir is monitored */
 	break;
       case 6: /* fop mv file/dir */
-	/* FIXME: send back file del + add if src and dest are monitored */
+	  {
+	     char buf[16384];
+             const char *src, *dst;
+	     
+	     src = e->data;
+	     dst = src + strlen(src) + 1;
+	     snprintf(buf, sizeof(buf), "mv '%s' '%s'", src, dst); 
+	     /* FIXME: this is so bad - implement wiht proper loops and syscalls */
+	     system(buf);
+	  }
 	break;
       case 7: /* fop cp file/dir */
+	  {
+	     char buf[16384];
+             const char *src, *dst;
+	     
+	     src = e->data;
+	     dst = src + strlen(src) + 1;
+	     snprintf(buf, sizeof(buf), "cp -a '%s' '%s'", src, dst); 
+	     /* FIXME: this is so bad - implement wiht proper loops and syscalls */
+	     system(buf);
+	  }
 	/* FIXME: send back file add if succeeded - and dest monitored */
 	break;
       case 8: /* fop mkdir */
@@ -419,6 +440,16 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	       }
 	  }
 	break;
+      case 13: /* dop ln -s */
+	  {
+             const char *src, *dst;
+	     
+	     src = e->data;
+	     dst = src + strlen(src) + 1;
+	     ecore_file_symlink(src, dst);
+             /* FIXME: send back file add if succeeded */
+	  }
+	break;
       default:
 	break;
      }
@@ -443,9 +474,11 @@ _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, c
 
    dir = ecore_file_get_dir(path);
    file = ecore_file_get_file(path);
+   /* FIXME: get no create events if dir is empty */
    if ((event == ECORE_FILE_EVENT_CREATED_FILE) ||
        (event == ECORE_FILE_EVENT_CREATED_DIRECTORY))
      {
+	printf("CREATE %s\n", path);
 	rp = ecore_file_realpath(dir);
 	for (l = _e_dirs; l; l = l->next)
 	  {
@@ -460,6 +493,7 @@ _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, c
    else if ((event == ECORE_FILE_EVENT_DELETED_FILE) ||
 	    (event == ECORE_FILE_EVENT_DELETED_DIRECTORY))
      {
+	printf("DEL %s\n", path);
 	rp = ecore_file_realpath(dir);
 	for (l = _e_dirs; l; l = l->next)
 	  {
