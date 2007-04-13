@@ -48,12 +48,71 @@ static void           _e_desktop_editor_icon_update(E_Config_Dialog_Data *cfdata
 
 /* externally accessible functions */
 
+EAPI Efreet_Desktop *
+e_desktop_border_create(E_Border *bd)
+{
+   Efreet_Desktop *desktop = NULL;
+   const char *desktop_dir, *icon_dir;
+   const char *bname, *bclass;
+   char path[PATH_MAX];
+
+   bname = bd->client.icccm.name;
+   if ((bname) && (bname[0] == 0)) bname = NULL;
+   bclass = bd->client.icccm.class;
+   if ((bclass) && (bclass[0] == 0)) bclass = NULL;
+
+   desktop_dir = e_user_desktop_dir_get();
+
+   if (!desktop_dir || !e_util_dir_check(desktop_dir)) return NULL;
+
+   icon_dir = e_user_icon_dir_get();
+   if (!icon_dir || !e_util_dir_check(icon_dir)) return NULL;
+
+   if (bname) 
+     {
+	snprintf(path, sizeof(path), "%s/%s.desktop", desktop_dir, bname);
+	desktop = efreet_desktop_empty_new(path);
+     }
+   else
+     desktop = efreet_desktop_empty_new(NULL);
+
+   if (!desktop)
+     {
+	//XXX out of memory?
+	return NULL;
+     }
+   if (bclass) desktop->name = strdup(bclass);
+   if (bclass) desktop->startup_wm_class = strdup(bclass);
+   if (bd->client.icccm.command.argc > 0)
+     // FIXME this should concat the entire argv array together
+     desktop->exec = strdup(bd->client.icccm.command.argv[0]);
+   else if (bname)
+     desktop->exec = strdup(bname); 
+
+   if (bd->client.netwm.startup_id > 0)
+     desktop->startup_notify = 1;
+   if (bd->client.netwm.icons)
+     {
+	/* FIXME
+	 * - Find the icon with the best size
+	 * - Should use mkstemp
+	 */
+	const char *tmp;
+
+	snprintf(path, sizeof(path), "%s/%s-%.6f.png", icon_dir, bname, ecore_time_get());
+	if (e_util_icon_save(&(bd->client.netwm.icons[0]), path))
+	  {
+	     desktop->icon = strdup(path);
+	  }
+	else
+	  fprintf(stderr, "Could not save file from ARGB: %s\n", path);
+     }
+   return desktop;
+}
 EAPI E_Desktop_Edit *
 e_desktop_border_edit(E_Container *con, E_Border *bd)
 {
    E_Desktop_Edit *editor;
-   const char *bname, *bclass;
-   char path[PATH_MAX];
 
    if (!con) return NULL;
    editor = E_OBJECT_ALLOC(E_Desktop_Edit, E_DESKTOP_EDIT_TYPE, _e_desktop_edit_free);
@@ -61,64 +120,13 @@ e_desktop_border_edit(E_Container *con, E_Border *bd)
    if (bd->desktop)
      editor->desktop = bd->desktop;
 
-   bname = bd->client.icccm.name;
-   if ((bname) && (bname[0] == 0)) bname = NULL;
-   bclass = bd->client.icccm.class;
-   if ((bclass) && (bclass[0] == 0)) bclass = NULL;
-
    /* the border does not yet have a desktop entry. add one and pre-populate
       it with values from the border */
    if (!editor->desktop)
      {
-	const char *desktop_dir, *icon_dir;
-
-	desktop_dir = e_user_desktop_dir_get();
-
-	if (!desktop_dir || !e_util_dir_check(desktop_dir)) return;
-
-	icon_dir = e_user_icon_dir_get();
-	if (!icon_dir || !e_util_dir_check(icon_dir)) return;
-
-	if (bname) 
-	  {
-	     snprintf(path, sizeof(path), "%s/%s.desktop", desktop_dir, bname);
-	     editor->desktop = efreet_desktop_empty_new(path);
-	  }
-	else
-	  editor->desktop = efreet_desktop_empty_new(NULL);
-
-	if (!editor->desktop)
-	  {
-	     //XXX out of memory?
-	     return;
-	  }
-	  if (bclass) editor->desktop->name = strdup(bclass);
-	  if (bclass) editor->desktop->startup_wm_class = strdup(bclass);
-	  if (bd->client.icccm.command.argc > 0)
-	    // FIXME this should concat the entire argv array together
-	    editor->desktop->exec = strdup(bd->client.icccm.command.argv[0]);
-	  else if (bname)
-	    editor->desktop->exec = strdup(bname); 
-
-	  if (bd->client.netwm.startup_id > 0)
-	    editor->desktop->startup_notify = 1;
-	  if (bd->client.netwm.icons)
-	    {
-	       /* FIXME
-		* - Find the icon with the best size
-		* - Should use mkstemp
-		*/
-	       const char *tmp;
-
-	       snprintf(path, sizeof(path), "%s/%s-%.6f.png", icon_dir, bname, ecore_time_get());
-	       if (e_util_icon_save(&(bd->client.netwm.icons[0]), path))
-		 {
-		    editor->tmp_image_path = strdup(path);
-		    editor->desktop->icon = strdup(path);
-		 }
-	       else
-		 fprintf(stderr, "Could not save file from ARGB: %s\n", path);
-	    }
+	editor->desktop = e_desktop_border_create(bd);
+	if (editor->desktop && editor->desktop->icon)
+	  editor->tmp_image_path = strdup(editor->desktop->icon);
      }
 
 #if 0
