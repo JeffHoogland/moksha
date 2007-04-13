@@ -884,7 +884,7 @@ e_util_desktop_menu_item_icon_add(Efreet_Desktop *desktop, const char *size, E_M
      }
 }
 
-int
+EAPI int
 e_util_dir_check(const char *dir)
 {
    if (!ecore_file_exists(dir))
