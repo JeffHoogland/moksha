@@ -4342,11 +4342,10 @@ _e_border_cb_efreet_desktop_change(void *data, int ev_type, void *ev)
 
 	      bd = l->data;
 	      if (bd->desktop == event->previous)
-		{
 		   bd->desktop = event->current;
-		   bd->changes.icon = 1;
-		   bd->changed = 1;
-		}
+	      /* check all borders. the updated icon may now apply to them (e.g. adding a StartupWMClass) */
+	      bd->changes.icon = 1;
+	      bd->changed = 1;
 	   }
 	 break;
      }
