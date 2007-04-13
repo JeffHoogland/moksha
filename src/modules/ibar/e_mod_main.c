@@ -652,21 +652,15 @@ _ibar_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info)
    _ibar_instance_drop_zone_recalc(inst);
 }
 
-#if 0
 static void
 _ibar_cb_menu_icon_properties(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    IBar_Icon *ic;
    
    ic = data;
-   if (ic->app->orig)
-     e_eap_edit_show(ic->ibar->inst->gcc->gadcon->zone->container,
-		     ic->app->orig);
-   else
-     e_eap_edit_show(ic->ibar->inst->gcc->gadcon->zone->container,
-		     ic->app);
+   e_desktop_edit(ic->ibar->inst->gcc->gadcon->zone->container,
+	 ic->app);
 }
-#endif
 
 static void
 _ibar_cb_menu_icon_remove(void *data, E_Menu *m, E_Menu_Item *mi)
@@ -763,12 +757,10 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 	ibar_config->menu = mn;
 
 	/* FIXME: other icon options go here too */
-#if 0
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("Change Icon Properties"));
 	e_util_menu_item_edje_icon_set(mi, "enlightenment/properties");
 	e_menu_item_callback_set(mi, _ibar_cb_menu_icon_properties, ic);
-#endif
 	
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("Remove Icon"));
