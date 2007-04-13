@@ -884,6 +884,28 @@ e_util_desktop_menu_item_icon_add(Efreet_Desktop *desktop, const char *size, E_M
      }
 }
 
+int
+e_util_dir_check(const char *dir)
+{
+   if (!ecore_file_exists(dir))
+     {
+	if (!ecore_file_mkdir(dir))
+	  {
+	     e_util_dialog_show("Error creating the directory: %s. Check that you have correct permissions set.", dir);
+	     return 0;
+	  }
+     }
+   else
+     {
+	if (!ecore_file_is_dir(dir))
+	  {
+	     e_util_dialog_show("Error creating the directory: %s. A file of that name already exists.", dir);
+	     return 0;
+	  }
+     }
+   return 1;
+}
+
 /* local subsystem functions */
 static void
 _e_util_container_fake_mouse_up_cb(void *data)
@@ -905,4 +927,5 @@ _e_util_wakeup_cb(void *data)
    _e_util_dummy_timer = NULL;
    return 0;
 }
+
 

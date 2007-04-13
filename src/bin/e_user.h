@@ -7,6 +7,8 @@
 #define E_USER_H
 
 EAPI const char *e_user_homedir_get(void);
+EAPI const char *e_user_desktop_dir_get(void);
+EAPI const char *e_user_icon_dir_get(void);
 
 #endif
 #endif

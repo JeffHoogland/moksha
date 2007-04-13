@@ -22,14 +22,12 @@ struct _E_Config_Dialog_Data
    int		 terminal;
    int		 show_in_menus;
 
-   int		 new_desktop;
-   int           saved; /* whether desktop has been saved or not */
-
    E_Desktop_Edit *editor;
 };
 
 /* local subsystem functions */
 
+static int            _e_desktop_edit_view_create(E_Desktop_Edit *editor, E_Container *con);
 static void           _e_desktop_edit_free(E_Desktop_Edit *editor);
 static void          *_e_desktop_edit_create_data(E_Config_Dialog *cfd);
 static void           _e_desktop_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *data);
@@ -51,25 +49,127 @@ static void           _e_desktop_editor_icon_update(E_Config_Dialog_Data *cfdata
 /* externally accessible functions */
 
 EAPI E_Desktop_Edit *
-e_desktop_edit_show(E_Container *con, Efreet_Desktop *desktop)
+e_desktop_border_edit(E_Container *con, E_Border *bd)
 {
-   E_Config_Dialog_View *v;
+   E_Desktop_Edit *editor;
+   const char *bname, *bclass;
+   char path[PATH_MAX];
+
+   if (!con) return NULL;
+   editor = E_OBJECT_ALLOC(E_Desktop_Edit, E_DESKTOP_EDIT_TYPE, _e_desktop_edit_free);
+   if (!editor) return NULL;
+   if (bd->desktop)
+     editor->desktop = bd->desktop;
+
+   bname = bd->client.icccm.name;
+   if ((bname) && (bname[0] == 0)) bname = NULL;
+   bclass = bd->client.icccm.class;
+   if ((bclass) && (bclass[0] == 0)) bclass = NULL;
+
+   /* the border does not yet have a desktop entry. add one and pre-populate
+      it with values from the border */
+   if (!editor->desktop)
+     {
+	const char *desktop_dir, *icon_dir;
+
+	desktop_dir = e_user_desktop_dir_get();
+
+	if (!desktop_dir || !e_util_dir_check(desktop_dir)) return;
+
+	icon_dir = e_user_icon_dir_get();
+	if (!icon_dir || !e_util_dir_check(icon_dir)) return;
+
+	if (bname) 
+	  {
+	     snprintf(path, sizeof(path), "%s/%s.desktop", desktop_dir, bname);
+	     editor->desktop = efreet_desktop_empty_new(path);
+	  }
+	else
+	  editor->desktop = efreet_desktop_empty_new(NULL);
+
+	if (!editor->desktop)
+	  {
+	     //XXX out of memory?
+	     return;
+	  }
+	  if (bclass) editor->desktop->name = strdup(bclass);
+	  if (bclass) editor->desktop->startup_wm_class = strdup(bclass);
+	  if (bd->client.icccm.command.argc > 0)
+	    // FIXME this should concat the entire argv array together
+	    editor->desktop->exec = strdup(bd->client.icccm.command.argv[0]);
+	  else if (bname)
+	    editor->desktop->exec = strdup(bname); 
+
+	  if (bd->client.netwm.startup_id > 0)
+	    editor->desktop->startup_notify = 1;
+	  if (bd->client.netwm.icons)
+	    {
+	       /* FIXME
+		* - Find the icon with the best size
+		* - Should use mkstemp
+		*/
+	       const char *tmp;
+
+	       snprintf(path, sizeof(path), "%s/%s-%.6f.png", icon_dir, bname, ecore_time_get());
+	       if (e_util_icon_save(&(bd->client.netwm.icons[0]), path))
+		 {
+		    editor->tmp_image_path = strdup(path);
+		    editor->desktop->icon = strdup(path);
+		 }
+	       else
+		 fprintf(stderr, "Could not save file from ARGB: %s\n", path);
+	    }
+     }
+
+#if 0
+   if ((!bname) && (!bclass))
+     {
+	e_util_dialog_show(_("Incomplete Window Properties"),
+			   _("The window you are creating an icon for<br>"
+			     "does not contain window name and class<br>"
+			     "properties, so the needed properties for<br>"
+			     "the icon so that it will be used for this<br>"
+			     "window cannot be guessed. You will need to<br>"
+			     "use the window title instead. This will only<br>"
+			     "work if the window title is the same at<br>"
+			     "the time the window starts up, and does not<br>"
+			     "change."));
+     }
+#endif 
+   if (!_e_desktop_edit_view_create(editor, con))
+     {
+	e_object_del(E_OBJECT(editor));
+	editor = NULL;
+     }
+   return editor;
+}
+
+EAPI E_Desktop_Edit *
+e_desktop_edit(E_Container *con, Efreet_Desktop *desktop)
+{
    E_Desktop_Edit *editor;
 
    if (!con) return NULL;
-
    editor = E_OBJECT_ALLOC(E_Desktop_Edit, E_DESKTOP_EDIT_TYPE, _e_desktop_edit_free);
    if (!editor) return NULL;
-   v = E_NEW(E_Config_Dialog_View, 1);
-   if (!v)
-     {
-	e_object_del(E_OBJECT(editor));
-	return NULL;
-     }
-
-   editor->img = NULL;
    if (desktop)
      editor->desktop = desktop;
+
+   if (!_e_desktop_edit_view_create(editor, con))
+     {
+	e_object_del(E_OBJECT(editor));
+	editor = NULL;
+     }
+   return editor;
+}
+
+static int
+_e_desktop_edit_view_create(E_Desktop_Edit *editor, E_Container *con)
+{
+   E_Config_Dialog_View *v;
+   v = E_NEW(E_Config_Dialog_View, 1);
+   if (!v)
+	return 0;
 
    /* view methods */
    v->create_cfdata           = _e_desktop_edit_create_data;
@@ -84,7 +184,7 @@ e_desktop_edit_show(E_Container *con, Efreet_Desktop *desktop)
 				     "E", "_desktop_editor_dialog",
 				     "enlightenment/desktop_editor", 0, 
 				     v, editor);
-   return editor;
+   return 1;
 }
 
 /* local subsystem functions */
@@ -94,6 +194,8 @@ _e_desktop_edit_free(E_Desktop_Edit *editor)
    if (!editor) return;
    E_OBJECT_CHECK(editor);
    E_OBJECT_TYPE_CHECK(editor, E_EAP_EDIT_TYPE);
+
+   IFFREE(editor->tmp_image_path);
 
    E_FREE(editor);
 }
@@ -107,8 +209,6 @@ _e_desktop_edit_create_data(E_Config_Dialog *cfd)
    E_Config_Dialog_Data *cfdata;
    Efreet_Desktop *desktop = NULL; 
    char path[PATH_MAX];
-
-   printf("create data\n");
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    if (!cfdata) return NULL;
@@ -153,7 +253,7 @@ _e_desktop_edit_create_data(E_Config_Dialog *cfd)
    if (!cfdata->desktop)
      {
 	cfdata->desktop = efreet_desktop_empty_new(path);
-	cfdata->new_desktop = 1;
+	cfdata->editor->new_desktop = 1;
      }
 
    if (!desktop) desktop = cfdata->desktop;
@@ -184,8 +284,19 @@ _e_desktop_edit_create_data(E_Config_Dialog *cfd)
 static void
 _e_desktop_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   if (cfdata->desktop && cfdata->new_desktop && !cfdata->saved)
-     efreet_desktop_free(cfdata->desktop);
+   if (cfdata->desktop && cfdata->editor->new_desktop && !cfdata->editor->saved)
+	efreet_desktop_free(cfdata->desktop);
+
+   if (cfdata->editor->tmp_image_path) 
+     {
+	if (!cfdata->desktop || !cfdata->editor->saved ||
+	    !cfdata->desktop->icon ||
+	    strcmp(cfdata->editor->tmp_image_path, cfdata->desktop->icon))
+	  {
+	     ecore_file_unlink(cfdata->editor->tmp_image_path);
+	  }
+     }
+     
 
    IFFREE(cfdata->name);
    IFFREE(cfdata->generic_name);
@@ -236,7 +347,7 @@ _e_desktop_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfd
    cfdata->desktop->no_display = !cfdata->show_in_menus;
 
    if (cfdata->desktop->orig_path && cfdata->desktop->orig_path[0])
-     cfdata->saved = efreet_desktop_save(cfdata->desktop);
+     cfdata->editor->saved = efreet_desktop_save(cfdata->desktop);
    else
      {
 	/* find a suitable name to save the desktop as */
@@ -272,7 +383,7 @@ _e_desktop_edit_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfd
 	     i++;
 	  }
 
-	cfdata->saved = efreet_desktop_save_as(cfdata->desktop, path);
+	cfdata->editor->saved = efreet_desktop_save_as(cfdata->desktop, path);
      }
    return 1;
 }
@@ -477,7 +588,6 @@ _e_desktop_edit_cb_icon_select_ok(void *data, E_Dialog *dia)
    cfdata = data;
    file = e_widget_fsel_selection_path_get(cfdata->editor->fsel);
 
-   printf("selected file: %s\n", file);
    IFFREE(cfdata->icon);
    IFDUP(file, cfdata->icon);
 

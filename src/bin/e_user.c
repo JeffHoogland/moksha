@@ -3,6 +3,8 @@
  */
 #include "e.h"
 
+static int _e_user_dir_check(const char *dir);
+
 /* externally accessible functions */
 EAPI const char *
 e_user_homedir_get(void)
@@ -20,3 +22,35 @@ e_user_homedir_get(void)
      }
    return homedir;
 }
+
+/**
+ * Return the directory where user .desktop files should be stored.
+ * If the directory does not exist, it will be created. If it cannot be
+ * created, a dialog will be displayed an NULL will be returned
+ */
+EAPI const char *
+e_user_desktop_dir_get(void)
+{
+   static char dir[PATH_MAX] = "";
+   if (!dir[0])
+     snprintf(dir, sizeof(dir), "%s/applications", efreet_data_home_get());	
+  
+   return dir;
+}
+
+/**
+ * Return the directory where user .icon files should be stored.
+ * If the directory does not exist, it will be created. If it cannot be
+ * created, a dialog will be displayed an NULL will be returned
+ */
+EAPI const char *
+e_user_icon_dir_get(void)
+{
+   static char dir[PATH_MAX] = "";
+   if (!dir[0])
+     snprintf(dir, sizeof(dir), "%s/icons", efreet_data_home_get());
+  
+   return dir;
+}
+
+

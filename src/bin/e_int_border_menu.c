@@ -252,18 +252,18 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 				  "e/widgets/border/default/skip_winlist");
      }
    
-#if 0
+#if 1
    if (!bd->internal) 
      {
 	mi = e_menu_item_new(m);
 	e_menu_item_separator_set(mi, 1);
 	
-	if (bd->app)
+	if (bd->desktop)
 	  {
 	     mi = e_menu_item_new(m);
 	     e_menu_item_label_set(mi, _("Edit Icon"));
 	     e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, bd);
-             e_app_icon_add_to_menu_item(bd->app, mi);
+             e_util_desktop_menu_item_icon_add(bd->desktop, "16x16", mi);
 	  }
 	else if (bd->client.icccm.class) /* icons with no class useless to borders */
 	  {
@@ -531,94 +531,14 @@ _e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi)
      }
 }
 
-#if 0
 static void
 _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_App *a;
    E_Border *bd;
-   char *bname = NULL, *bclass = NULL;
-   char path[4096];
    
    bd = data;
-   a = bd->app;
-   
-   bname = bd->client.icccm.name;
-   if ((bname) && (bname[0] == 0)) bname = NULL;
-   bclass = bd->client.icccm.class;
-   if ((bclass) && (bclass[0] == 0)) bclass = NULL;
-	     
-   if (!a)
-     {
-	if (bname) 
-	  {
-	     const char *homedir;
-
-	     homedir = e_user_homedir_get();
-	     snprintf(path, sizeof(path), "%s/.e/e/applications/all/%s.desktop", 
-		      homedir, bname);
-	     a = e_app_empty_new(path);
-	  }
-	else
-	  a = e_app_empty_new(NULL);
-
-	if (a)
-	  {	     
-	     if (bname) a->win_name = evas_stringshare_add(bname);
-	     if (bclass) a->win_class = evas_stringshare_add(bclass);
-	     if (bd->client.icccm.window_role)
-	       a->win_role = evas_stringshare_add(bd->client.icccm.window_role);
-	     if (bclass) a->icon_class = evas_stringshare_add(bclass);
-	     if (bclass) a->name = evas_stringshare_add(bclass);
-	     if (bname) a->exe = evas_stringshare_add(bname);
-	     if (bd->client.netwm.startup_id > 0)
-	       a->startup_notify = 1;
-	     if (bd->client.netwm.icons)
-	       {
-		  /* FIXME
-		   * - Find the icon with the best size
-		   * - Should use mkstemp
-		   */
-		  const char *tmp;
-
-		  tmp = getenv("TMPDIR");
-		  if (!tmp) tmp = getenv("TMP");
-		  if (!tmp) tmp = "/tmp";
-		  snprintf(path, sizeof(path), "%s/%s-%.6f.png", tmp, bname, ecore_time_get());
-		  if (e_util_icon_save(&(bd->client.netwm.icons[0]), path))
-		    {
-		       a->image = evas_stringshare_add(path);
-		       a->width = bd->client.netwm.icons[0].width;
-		       a->height = bd->client.netwm.icons[0].height;
-		       a->tmpfile = 1;
-		    }
-		  else
-		    fprintf(stderr, "Could not save file from ARGB: %s\n", path);
-	       }
-	     bd->app = a;
-	     e_object_ref(E_OBJECT(bd->app));
-	  }
-     }
-   if (!a) return;
-   if (a->orig)
-     e_eap_edit_show(m->zone->container, a->orig);
-   else
-     e_eap_edit_show(m->zone->container, a);
-   if ((!bname) && (!bclass))
-     {
-	e_util_dialog_show(_("Incomplete Window Properties"),
-			   _("The window you are creating an icon for<br>"
-			     "does not contain window name and class<br>"
-			     "properties, so the needed properties for<br>"
-			     "the icon so that it will be used for this<br>"
-			     "window cannot be guessed. You will need to<br>"
-			     "use the window title instead. This will only<br>"
-			     "work if the window title is the same at<br>"
-			     "the time the window starts up, and does not<br>"
-			     "change."));
-     }
+   e_desktop_border_edit(m->zone->container, bd);
 }
-#endif
 
 static void
 _e_border_menu_cb_prop(void *data, E_Menu *m, E_Menu_Item *mi)

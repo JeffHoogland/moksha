@@ -23,12 +23,17 @@ struct _E_Desktop_Edit
    Evas_Object *img_widget;
    Evas_Object *fsel;
    E_Dialog    *fsel_dia;
-   int          img_set;
+   //int          img_set;
+
+   char *tmp_image_path;
+   int new_desktop;
+   int saved; /* whether desktop has been saved or not */
    
    E_Config_Dialog *cfd;
 };
 
-EAPI E_Desktop_Edit *e_desktop_edit_show(E_Container *con, Efreet_Desktop *desktop);
+EAPI E_Desktop_Edit *e_desktop_border_edit(E_Container *con, E_Border *bd);
+EAPI E_Desktop_Edit *e_desktop_edit(E_Container *con, Efreet_Desktop *desktop);
 
 #endif
 #endif
