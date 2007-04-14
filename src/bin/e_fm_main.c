@@ -9,6 +9,7 @@
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/param.h>
+#include <utime.h>
 #include <math.h>
 #include <fnmatch.h>
 #include <limits.h>
@@ -39,20 +40,6 @@
 #define DEF_ROUND_TRIP 0.05
 #define DEF_ROUND_TRIP_TOLERANCE 0.01
 
-typedef enum _E_Fop_Type
-{
-   E_FOP_NONE,
-   E_FOP_DEL,
-   E_FOP_TRASH,
-   E_FOP_RENAME,
-   E_FOP_MV,
-   E_FOP_CP,
-   E_FOP_MKDIR,
-   E_FOP_MOUNT,
-   E_FOP_UMOUNT,
-   E_FOP_LAST
-} E_Fop_Type;
-
 typedef struct _E_Dir E_Dir;
 typedef struct _E_Fop E_Fop;
 
@@ -62,6 +49,7 @@ struct _E_Dir
    const char         *dir;
    Ecore_File_Monitor *mon;
    int                 mon_ref;
+   E_Dir              *mon_real;
    Evas_List          *fq;
    Ecore_Idler        *idler;
    int                 dot_order;
@@ -73,9 +61,10 @@ struct _E_Dir
 struct _E_Fop
 {
    int                 id;
-   E_Fop_Type          type;
    const char         *src;
    const char         *dst;
+   Ecore_Idler        *idler;
+   void               *data;
 };
 
 /* local subsystem functions */
@@ -94,12 +83,17 @@ static void _e_file_mon_dir_del(int id, const char *path);
 static void _e_file_mon_list_sync(E_Dir *ed);
 
 static int _e_cb_file_mon_list_idler(void *data);
+static int _e_cb_fop_rm_idler(void *data);
+static int _e_cb_fop_trash_idler(void *data);
+static int _e_cb_fop_mv_idler(void *data);
+static int _e_cb_fop_cp_idler(void *data);
 static char *_e_str_list_remove(Evas_List **list, char *str);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server = NULL;
 
 static Evas_List *_e_dirs = NULL;
+static Evas_List *_e_fops = NULL;
 static int _e_sync_num = 0;
 
 /* externally accessible functions */
@@ -208,9 +202,9 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	  {
 	     E_Dir *ed, *ped = NULL;
 	     DIR *dir;
-	     
 	     Evas_List *l;
 	     
+	     /* look for any previous dir entries monitoring this dir */
 	     for (l = _e_dirs; l; l = l->next)
 	       {
 		  E_Dir *ed;
@@ -218,13 +212,17 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		  ed = l->data;
 		  if ((ed->mon) && (!strcmp(ed->dir, e->data)))
 		    {
+		       /* found a previous dir - save it in ped */
 		       ped = ed;
 		       break;
 		    }
 	       }
+	     /* open the dir to list */
 	     dir = opendir(e->data);
 	     if (!dir)
 	       {
+		  /* we can't open the dir - tell E the dir is deleted as
+		   * we can't look in it */
 		  _e_file_mon_dir_del(e->ref, e->data);
 	       }
 	     else
@@ -235,19 +233,28 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		  char buf[4096];
 		  FILE *f;
 		  
+		  /* create a new dir entry */
 		  ed = calloc(1, sizeof(E_Dir));
 		  ed->id = e->ref;
 		  ed->dir = evas_stringshare_add(e->data);
 		  if (!ped)
 		    {
+		       /* if no previous monitoring dir exists - this one 
+			* becomes the master monitor enty */
 		       printf("MON %s\n", ed->dir);
 		       ed->mon = ecore_file_monitor_add(ed->dir, _e_cb_file_monitor, ed);
 		       ed->mon_ref = 1;
 		    }
 		  else
-		    ped->mon_ref++;
+		    {
+		       printf("REF ORIG\n");
+		       /* an existing monitor exists - ref it up */
+		       ed->mon_real = ped;
+		       ped->mon_ref++;
+		    }
 		  _e_dirs = evas_list_append(_e_dirs, ed);
 		  
+		  /* read everything except a .order, . and .. */
 		  while ((dp = readdir(dir)))
 		    {
 		       if ((!strcmp(dp->d_name, ".")) || (!strcmp(dp->d_name, "..")))
@@ -256,6 +263,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		       files = evas_list_append(files, strdup(dp->d_name));
 		    }
 		  closedir(dir);
+		  /* if there was a .order - we need to parse it */
 		  if (dot_order)
 		    {
 		       snprintf(buf, sizeof(buf), "%s/.order", (char *)e->data);
@@ -266,6 +274,8 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 			    int len;
 			    char *s;
 			    
+			    /* inset files in order if the existed in file 
+			     * list before */
 			    while (fgets(buf, sizeof(buf), f))
 			      {
 				 len = strlen(buf);
@@ -274,6 +284,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 				 if (s) f2 = evas_list_append(f2, s);
 			      }
 			    fclose(f);
+			    /* append whats left */
 			    while (files)
 			      {
 				 f2 = evas_list_append(f2, files->data);
@@ -289,9 +300,12 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		  /* FIXME: maybe one day we can sort files here and handle
 		   * .order file stuff here - but not today
 		   */
+		  /* note that we had a .order at all */
 		  ed->dot_order = dot_order;
 		  if (dot_order)
 		    {
+		       /* if we did - tell the E about this FIRST - it will
+			* decide what to do if it first sees a .order or not */
 		       if (!strcmp(e->data, "/"))
 			 snprintf(buf, sizeof(buf), "/.order");
 		       else
@@ -301,6 +315,9 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		       else
 			 _e_file_add(ed->id, buf, 1);
 		    }
+		  /* send empty file - indicate empty dir */
+		  if (!files) _e_file_add(ed->id, "", 2);
+		  /* and in an idler - list files, statting them etc. */
 		  ed->fq = files;
 		  ed->idler = ecore_idler_add(_e_cb_file_mon_list_idler, ed);
 		  ed->sync_num = DEF_SYNC_NUM;
@@ -315,39 +332,65 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	       {
 		  E_Dir *ed;
 	     
+		  /* look for the dire entry to stop monitoring */
 		  ed = l->data;
 		  if ((e->ref == ed->id) && (!strcmp(ed->dir, e->data)))
 		    {
-		       if (ed->mon)
+		       /* if this is not the real monitoring node - unref the
+			* real one */
+		       if (ed->mon_real)
 			 {
-			    if (ed->mon_ref > 1)
+			    printf("UNREF ORIG\n");
+			    /* unref original monitor node */
+			    ed->mon_real->mon_ref--;
+			    if (ed->mon_real->mon_ref == 0)
 			      {
-				 for (ll = _e_dirs; ll; ll = ll->next)
+				 printf("FREE ORIG\n");
+				 /* original is at 0 ref - free it */
+				 evas_stringshare_del(ed->mon_real->dir);
+				 if (ed->mon_real->idler)
+				   ecore_idler_del(ed->mon_real->idler);
+				 while (ed->mon_real->fq)
 				   {
-				      E_Dir *ped;
-				      
-				      ped = ll->data;
-				      if ((!ped->mon) &&
-					  (!strcmp(ped->dir, ed->dir)))
-					{
-					   ped->mon = ed->mon;
-					   ped->mon_ref = ed->mon_ref - 1;
-					   goto contdel;
-					}
+				      free(ed->mon_real->fq->data);
+				      ed->mon_real->fq = evas_list_remove_list(ed->mon_real->fq, ed->mon_real->fq);
 				   }
+				 free(ed->mon_real);
+				 ed->mon_real = NULL;
 			      }
-			    printf("UNMON %s\n", ed->dir);
-			    ecore_file_monitor_del(ed->mon);
+			    printf("FREE THIS\n");
+			    /* free this node */
+			    evas_stringshare_del(ed->dir);
+			    if (ed->idler) ecore_idler_del(ed->idler);
+			    while (ed->fq)
+			      {
+				 free(ed->fq->data);
+				 ed->fq = evas_list_remove_list(ed->fq, ed->fq);
+			      }
+			    free(ed);
 			 }
-		       contdel:
-		       evas_stringshare_del(ed->dir);
-		       if (ed->idler) ecore_idler_del(ed->idler);
-		       while (ed->fq)
+		       /* this is a core monitoring node - remove ref */
+		       else
 			 {
-			    free(ed->fq->data);
-			    ed->fq = evas_list_remove_list(ed->fq, ed->fq);
+			    printf("UNREF\n");
+			    ed->mon_ref--;
+			    /* we are the last ref - free */
+			    if (ed->mon_ref == 0)
+			      {
+				 printf("UNMON %s\n", ed->dir);
+				 ecore_file_monitor_del(ed->mon);
+				 evas_stringshare_del(ed->dir);
+				 if (ed->idler) ecore_idler_del(ed->idler);
+				 while (ed->fq)
+				   {
+				      free(ed->fq->data);
+				      ed->fq = evas_list_remove_list(ed->fq, ed->fq);
+				   }
+				 free(ed);
+			      }
 			 }
-		       free(ed);
+		       printf("REMOVE FROM LIST\n");
+		       /* remove from dirs list anyway */
 		       _e_dirs = evas_list_remove_list(_e_dirs, l);
 		       break;
 		    }
@@ -356,48 +399,84 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	break;
       case 3: /* fop delete file/dir */
 	  {
-	     ecore_file_recursive_rm(e->data);
-	     /* FIXME: send back file del if src is monitored */
+	     E_Fop *fop;
+	     
+	     fop = calloc(1, sizeof(E_Fop));
+	     if (fop)
+	       {
+		  fop->id = e->ref;
+		  fop->src = evas_stringshare_add(e->data);
+		  _e_fops = evas_list_append(_e_fops, fop);
+		  fop->idler = ecore_idler_add(_e_cb_fop_rm_idler, fop);
+	       }
 	  }
 	break;
       case 4: /* fop trash file/dir */
 	  {
-	     ecore_file_recursive_rm(e->data);
-	     /* FIXME: send back file del if src is monitored */
+	     E_Fop *fop;
+	     
+	     fop = calloc(1, sizeof(E_Fop));
+	     if (fop)
+	       {
+		  fop->id = e->ref;
+		  fop->src = evas_stringshare_add(e->data);
+		  _e_fops = evas_list_append(_e_fops, fop);
+		  fop->idler = ecore_idler_add(_e_cb_fop_trash_idler, fop);
+	       }
 	  }
 	break;
       case 5: /* fop rename file/dir */
-	/* FIXME: send back file del + add if dir is monitored */
-	break;
-      case 6: /* fop mv file/dir */
 	  {
-	     char buf[16384];
-             const char *src, *dst;
+	     const char *src, *dst;
 	     
 	     src = e->data;
 	     dst = src + strlen(src) + 1;
-	     snprintf(buf, sizeof(buf), "mv '%s' '%s'", src, dst); 
-	     /* FIXME: this is so bad - implement wiht proper loops and syscalls */
-	     system(buf);
+	     ecore_file_mv(src, dst);
+	     /* FIXME: send back if succeeded or failed - why */
+	  }
+	break;
+      case 6: /* fop mv file/dir */
+	  {
+	     E_Fop *fop;
+	     
+	     fop = calloc(1, sizeof(E_Fop));
+	     if (fop)
+	       {
+		  const char *src, *dst;
+		  
+		  src = e->data;
+		  dst = src + strlen(src) + 1;
+		  fop->id = e->ref;
+		  fop->src = evas_stringshare_add(src);
+		  fop->dst = evas_stringshare_add(dst);
+		  _e_fops = evas_list_append(_e_fops, fop);
+		  fop->idler = ecore_idler_add(_e_cb_fop_mv_idler, fop);
+	       }
 	  }
 	break;
       case 7: /* fop cp file/dir */
 	  {
-	     char buf[16384];
-             const char *src, *dst;
+	     E_Fop *fop;
 	     
-	     src = e->data;
-	     dst = src + strlen(src) + 1;
-	     snprintf(buf, sizeof(buf), "cp -a '%s' '%s'", src, dst); 
-	     /* FIXME: this is so bad - implement wiht proper loops and syscalls */
-	     system(buf);
+	     fop = calloc(1, sizeof(E_Fop));
+	     if (fop)
+	       {
+		  const char *src, *dst;
+		  
+		  src = e->data;
+		  dst = src + strlen(src) + 1;
+		  fop->id = e->ref;
+		  fop->src = evas_stringshare_add(src);
+		  fop->dst = evas_stringshare_add(dst);
+		  _e_fops = evas_list_append(_e_fops, fop);
+		  fop->idler = ecore_idler_add(_e_cb_fop_cp_idler, fop);
+	       }
 	  }
-	/* FIXME: send back file add if succeeded - and dest monitored */
 	break;
       case 8: /* fop mkdir */
 	  {
 	     ecore_file_mkdir(e->data);
-	     /* FIXME: send back file add if succeeded */
+	     /* FIXME: send back if succeeded or failed - why */
 	  }
 	break;
       case 9: /* fop mount fs */
@@ -485,7 +564,10 @@ _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, c
 	     ed = l->data;
 	     drp = ecore_file_realpath(ed->dir);
 	     if (!strcmp(rp, drp))
-	       _e_file_add(ed->id, path, 0);
+	       {
+		  printf("file add %s\n", path);
+		  _e_file_add(ed->id, path, 0);
+	       }
 	     free(drp);
 	  }
 	free(rp);
@@ -541,13 +623,13 @@ _e_file_add_mod(int id, const char *path, int op, int listing)
    unsigned char *p, buf
      /* file add/change format is as follows:
       * 
-      8 stat_info[stat size] + broken_link[1] + path[n]\0 + lnk[n]\0 + rlnk[n]\0 */
+      * stat_info[stat size] + broken_link[1] + path[n]\0 + lnk[n]\0 + rlnk[n]\0 */
      [sizeof(struct stat) + 1 + 4096 + 4096 + 4096];
    
    lnk = ecore_file_readlink(buf);
    if (stat(path, &st) == -1)
      {
-	if (lnk) broken_lnk = 1;
+	if ((path[0] == 0) || (lnk)) broken_lnk = 1;
 	else return;
      }
    if ((lnk) && (lnk[0] != '/')) rlnk = ecore_file_realpath(path);
@@ -664,6 +746,318 @@ _e_cb_file_mon_list_idler(void *data)
    ed->sync_time = 0.0;
    ed->idler = NULL;
    return 0;
+}
+
+static int
+_e_cb_fop_rm_idler(void *data)
+{
+   E_Fop *fop;
+   struct Fop_Data {
+      DIR *dir;
+      const char *path;
+   } *fd, *fd2;
+   struct dirent *dp = NULL;
+   char buf[PATH_MAX], *lnk;
+   
+   fop = (E_Fop *)data;
+   if (!fop->data)
+     {
+	snprintf(buf, sizeof(buf), "%s", fop->src);
+	lnk = ecore_file_readlink(buf);
+	if (!lnk)
+	  {
+	     if (ecore_file_is_dir(buf))
+	       {
+		  fd = calloc(1, sizeof(struct Fop_Data));
+		  if (fd)
+		    {
+		       fop->data = evas_list_prepend(fop->data, fd);
+		       fd->path = evas_stringshare_add(fop->src);
+		       fd->dir = opendir(fd->path);
+		    }
+	       }
+	     else
+	       {
+		  ecore_file_unlink(buf); /* FIXME: handle err */
+	       }
+	  }
+	else
+	  {
+	     ecore_file_unlink(buf); /* FIXME: handle err */
+	     free(lnk);
+	  }
+	
+     }
+   fd = evas_list_data(fop->data);
+   if (!fd) goto stop;
+   if (fd->dir) dp = readdir(fd->dir);
+   else
+     {
+	/* FIXME: handle err */
+     }
+   if (dp)
+     {
+	if (!((!strcmp(dp->d_name, ".")) || (!strcmp(dp->d_name, ".."))))
+	  {
+	     snprintf(buf, sizeof(buf), "%s/%s", fd->path, dp->d_name);
+	     lnk = ecore_file_readlink(buf);
+	     if (!lnk)
+	       {
+		  if (ecore_file_is_dir(buf))
+		    {
+		       fd2 = calloc(1, sizeof(struct Fop_Data));
+		       if (fd2)
+			 {
+			    fop->data = evas_list_prepend(fop->data, fd2);
+			    fd2->path = evas_stringshare_add(buf);
+			    fd2->dir = opendir(fd2->path);
+			 }
+		    }
+		  else
+		    {
+		       ecore_file_unlink(buf); /* FIXME: handle err */
+		    }
+	       }
+	     else
+	       {
+		  ecore_file_unlink(buf); /* FIXME: handle err */
+		  free(lnk);
+	       }
+	  }
+     }
+   else
+     {
+	if (fd->dir) closedir(fd->dir);
+	rmdir(fd->path); /* FIXME: handle err */
+	evas_stringshare_del(fd->path);
+	free(fd);
+	fop->data = evas_list_remove(fop->data, fd);
+	if (!fop->data) goto stop;
+     }
+   return 1;
+   stop:
+   evas_stringshare_del(fop->src);
+   free(fop);
+   _e_fops = evas_list_remove(_e_fops, fop);
+   return 0;
+   /* FIXME: send back if succeeded or failed - why */
+}
+
+static int
+_e_cb_fop_trash_idler(void *data)
+{
+   /* FIXME: for now trash == rm - later move to trash */
+   return _e_cb_fop_rm_idler(data);
+}
+
+static int
+_e_cb_fop_mv_idler(void *data)
+{
+   E_Fop *fop;
+   struct Fop_Data {
+      DIR *dir;
+      const char *path, *path2;
+   } *fd, *fd2;
+   struct dirent *dp = NULL;
+   char buf[PATH_MAX], buf2[PATH_MAX], *lnk;
+   
+   fop = (E_Fop *)data;
+   if (!fop->data)
+     {
+	if (rename(fop->src, fop->dst) != 0)
+	  {
+	     if (errno == EXDEV)
+	       {
+		  /* copy it */
+		  fop->idler = ecore_idler_add(_e_cb_fop_cp_idler, fop);
+		  return 0;
+	       }
+	     else
+	       {
+		  /* FIXME: handle error */
+	       }
+	  }
+     }
+   evas_stringshare_del(fop->src);
+   evas_stringshare_del(fop->dst);
+   free(fop);
+   _e_fops = evas_list_remove(_e_fops, fop);
+   return 0;
+   /* FIXME: send back if succeeded or failed - why */
+}
+
+static int
+_e_cb_fop_cp_idler(void *data)
+{
+   E_Fop *fop;
+   struct Fop_Data {
+      DIR *dir;
+      const char *path, *path2;
+   } *fd, *fd2;
+   struct stat st;
+   struct utimbuf ut;
+   struct dirent *dp = NULL;
+   char buf[PATH_MAX], buf2[PATH_MAX], *lnk;
+   
+   fop = (E_Fop *)data;
+   if (!fop->data)
+     {
+	fd = calloc(1, sizeof(struct Fop_Data));
+	if (fd)
+	  {
+	     fop->data = evas_list_append(fop->data, fd);
+	     fd->path = evas_stringshare_add(fop->src);
+	     fd->path2 = evas_stringshare_add(fop->dst);
+	     fd->dir = opendir(fd->path);
+	     snprintf(buf, sizeof(buf), "%s", fd->path);
+	     snprintf(buf2, sizeof(buf2), "%s", fd->path2);
+	     if (!lnk)
+	       {
+		  if (ecore_file_is_dir(buf))
+		    {
+		       if (stat(buf, &st) == 0)
+			 {
+			    /* mkdir at the other end - retain stat info */
+			    ecore_file_mkdir(buf2);
+			    chmod(buf2, st.st_mode);
+			    chown(buf2, st.st_uid, st.st_gid);
+			    ut.actime = st.st_atime;
+			    ut.modtime = st.st_mtime;
+			    utime(buf2, &ut);
+			 }
+		    }
+		  else
+		    {
+		       if (stat(buf, &st) == 0)
+			 {
+			    if (S_ISFIFO(st.st_mode))
+			      {
+				 /* create fifo at other end */
+				 mkfifo(buf2, st.st_mode);
+			      }
+			    else if (S_ISREG(st.st_mode))
+			      {
+				 /* copy file data - retain file mode and stat data */
+				 ecore_file_cp(buf, buf2); /* FIXME: this should be split up into the fop idler to do in idle time maybe 1 block or page at a time */
+			      }
+			    chmod(buf2, st.st_mode);
+			    chown(buf2, st.st_uid, st.st_gid);
+			    ut.actime = st.st_atime;
+			    ut.modtime = st.st_mtime;
+			    utime(buf2, &ut);
+			 }
+		    }
+	       }
+	     else
+	       {
+		  if (stat(buf, &st) == 0)
+		    {
+		       /* duplicate link - retain stat data */
+		       symlink(lnk, buf2);
+		       chmod(buf2, st.st_mode);
+		       chown(buf2, st.st_uid, st.st_gid);
+		       ut.actime = st.st_atime;
+		       ut.modtime = st.st_mtime;
+		       utime(buf2, &ut);
+		    }
+		  free(lnk);
+	       }
+	  }
+     }
+   fd = evas_list_data(evas_list_last(fop->data));
+   if (!fd) goto stop;
+   if (fd->dir) dp = readdir(fd->dir);
+   else
+     {
+	/* FIXME: handle err */
+     }
+   if (dp)
+     {
+	if (!((!strcmp(dp->d_name, ".")) || (!strcmp(dp->d_name, ".."))))
+	  {
+	     snprintf(buf, sizeof(buf), "%s/%s", fd->path, dp->d_name);
+	     snprintf(buf2, sizeof(buf2), "%s/%s", fd->path2, dp->d_name);
+	     lnk = ecore_file_readlink(buf);
+	     if (!lnk)
+	       {
+		  if (ecore_file_is_dir(buf))
+		    {
+		       /* mkdir at the other end - retain stat info */
+		       if (stat(buf, &st) == 0)
+			 {
+			    /* mkdir at the other end - retain stat info */
+			    ecore_file_mkdir(buf2);
+			    chmod(buf2, st.st_mode);
+			    chown(buf2, st.st_uid, st.st_gid);
+			    ut.actime = st.st_atime;
+			    ut.modtime = st.st_mtime;
+			    utime(buf2, &ut);
+			 }
+		       fd2 = calloc(1, sizeof(struct Fop_Data));
+		       if (fd2)
+			 {
+			    fop->data = evas_list_append(fop->data, fd2);
+			    fd2->path = evas_stringshare_add(buf);
+			    fd2->path2 = evas_stringshare_add(buf2);
+			    fd2->dir = opendir(fd2->path);
+			 }
+		    }
+		  else
+		    {
+		       if (stat(buf, &st) == 0)
+			 {
+			    if (S_ISFIFO(st.st_mode))
+			      {
+				 /* create fifo at other end */
+				 mkfifo(buf2, st.st_mode);
+			      }
+			    else if (S_ISREG(st.st_mode))
+			      {
+				 /* copy file data - retain file mode and stat data */
+				 ecore_file_cp(buf, buf2); /* FIXME: this should be split up into the fop idler to do in idle time maybe 1 block or page at a time */
+			      }
+			    chmod(buf2, st.st_mode);
+			    chown(buf2, st.st_uid, st.st_gid);
+			    ut.actime = st.st_atime;
+			    ut.modtime = st.st_mtime;
+			    utime(buf2, &ut);
+			 }
+		    }
+	       }
+	     else
+	       {
+		  if (stat(buf, &st) == 0)
+		    {
+		       /* duplicate link - retain stat data */
+		       symlink(lnk, buf2);
+		       chmod(buf2, st.st_mode);
+		       chown(buf2, st.st_uid, st.st_gid);
+		       ut.actime = st.st_atime;
+		       ut.modtime = st.st_mtime;
+		       utime(buf2, &ut);
+		    }
+		  free(lnk);
+	       }
+	  }
+     }
+   else
+     {
+	if (fd->dir) closedir(fd->dir);
+	evas_stringshare_del(fd->path);
+	evas_stringshare_del(fd->path2);
+	free(fd);
+	fop->data = evas_list_remove(fop->data, fd);
+	if (!fop->data) goto stop;
+     }
+   return 1;
+   
+   stop:
+   evas_stringshare_del(fop->src);
+   evas_stringshare_del(fop->dst);
+   free(fop);
+   _e_fops = evas_list_remove(_e_fops, fop);
+   return 0;
+   /* FIXME: send back if succeeded or failed - why */
 }
 
 static char *

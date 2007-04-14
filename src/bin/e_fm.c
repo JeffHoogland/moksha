@@ -1426,7 +1426,8 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 		  finf.rlnk = rlnk;
 		  
 		  evdir = ecore_file_get_dir(path);
-		  if ((sd->id == e->ref_to) && (!strcmp(dir, evdir)))
+		  if ((sd->id == e->ref_to) && 
+		      ((!strcmp(evdir, "") || (!strcmp(dir, evdir)))))
 		    {
 		       if (e->response == 0)/*live changes*/
 			 {
@@ -1457,16 +1458,19 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 				      if (sd->busy_count == 1)
 					edje_object_signal_emit(sd->overlay, "e,state,busy,start", "e");
 				   }
-				 file = ecore_file_get_file(path);
-				 if ((!strcmp(file, ".order")))
-				   sd->order_file = 1;
-				 else
-				   {
-				      if (!((file[0] == '.') && 
-					    (!sd->show_hidden_files)))
-					_e_fm2_file_add(l->data, file,
-							sd->order_file, 
-							NULL, 0, &finf);
+				 if (path[0] != 0)
+				   {			   
+				      file = ecore_file_get_file(path);
+				      if ((!strcmp(file, ".order")))
+					sd->order_file = 1;
+				      else
+					{
+					   if (!((file[0] == '.') && 
+						 (!sd->show_hidden_files)))
+					     _e_fm2_file_add(l->data, file,
+							     sd->order_file, 
+							     NULL, 0, &finf);
+					}
 				   }
 				 if (e->response == 2)/* end of scan */
 				   {
