@@ -27,12 +27,9 @@
 
 /* FIXME: things to add to the slave enlightenment_fm process and ipc to e:
  * 
- * * icon finding
- * * .desktop parsing
- * * file operations (fop's) (cp, mv, rm etc.)
- * * reporting results of fop's 
- * * dbus removable device monitoring
- * * mount/umount of removable devices
+ * * reporting results of fop's (current status - what has been don, what failed etc.)
+ * * dbus removable device monitoring (in e17 itself now via ecore_dbus - move to enlightenment_fm and ipc removable device add/del and anything else)
+ * * mount/umount of removable devices (to go along with removable device support - put it in here and message back mount success/failure and where it is now mounted - remove from e17 itself)
  * 
  */
 
