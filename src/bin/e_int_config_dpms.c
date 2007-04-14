@@ -56,7 +56,7 @@ _e_int_config_dpms_capable()
    e_dialog_title_set(dpms_dialog, _("Display Power Management Signaling"));
    e_dialog_text_set(dpms_dialog, _("The current display server is not <br>"
 				    "DPMS capable."));
-   e_dialog_icon_set(dpms_dialog, "enlightenment/dpms", 64);
+   e_dialog_icon_set(dpms_dialog, "enlightenment/power_management", 64);
    e_dialog_button_add(dpms_dialog, _("OK"), NULL, _cb_dpms_dialog_ok, NULL);
    e_dialog_button_focus_num(dpms_dialog, 1);
    e_win_centered_set(dpms_dialog->win, 1);
@@ -77,7 +77,7 @@ _e_int_config_dpms_available()
    e_dialog_title_set(dpms_dialog, _("Display Power Management Signaling"));
    e_dialog_text_set(dpms_dialog, _("The current display server does not <br>"
 				    "have the DPMS extension."));
-   e_dialog_icon_set(dpms_dialog, "enlightenment/dpms", 64);
+   e_dialog_icon_set(dpms_dialog, "enlightenment/power_management", 64);
    e_dialog_button_add(dpms_dialog, _("OK"), NULL, _cb_dpms_dialog_ok, NULL);
    e_dialog_button_focus_num(dpms_dialog, 1);
    e_win_centered_set(dpms_dialog->win, 1);
@@ -105,7 +105,7 @@ e_int_config_dpms(E_Container *con)
    v->override_auto_apply = 1;
    
    cfd = e_config_dialog_new(con, _("Display Power Management Settings"), "E", 
-			     "_config_dpms_dialog", "enlightenment/dpms", 
+			     "_config_dpms_dialog", "enlightenment/power_management", 
 			     0, v, NULL);
    return cfd;
 }
