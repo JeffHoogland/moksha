@@ -104,6 +104,7 @@ images {
    image: "e17_icon_restart_applications.png" COMP;
    image: "e17_icon_startup_applications.png" COMP;
    image: "e17_icon_power_management.png" COMP;
+   image: "e17_icon_screensaver.png" COMP;
 }
 
 group {
@@ -2228,7 +2229,25 @@ group {
       }
    }
 }
-
+group {
+   name: "e/icons/enlightenment/screensaver";
+   max:  64 64;
+   parts {
+      part {
+         name:          "icon";
+         mouse_events:  0;
+         description {
+            state:    "default" 0.0;
+            aspect:   1.0 1.0;
+            aspect_preference: BOTH;
+            max:      64 64;
+            image {
+               normal: "e17_icon_screensaver.png";
+            }
+         }
+      }
+   }
+}
 
 
 
