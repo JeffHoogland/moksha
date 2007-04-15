@@ -575,7 +575,7 @@ group {
 
 
 group {
-   name: "e/shelf/gold/base";
+   name: "e/shelf/alternate/base";
    data {
       // this tells e the border is shaped
       item: "shaped" "1";
@@ -1028,7 +1028,7 @@ group {
    }
 }
 group {
-   name: "e/shelf/gold/inset";
+   name: "e/shelf/alternate/inset";
    parts {
       part {
 	 name:          "background";
@@ -1100,7 +1100,7 @@ group {
    }
 }
 group {
-   name: "e/shelf/gold/plain";
+   name: "e/shelf/alternate/plain";
    parts {
       part {
 	 name:          "items_clip";
