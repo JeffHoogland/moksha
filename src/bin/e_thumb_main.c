@@ -182,7 +182,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		  eth->file = strdup(file);
 		  if (key) eth->key = strdup(key);
 		  _thumblist = evas_list_append(_thumblist, eth);
-		  if (!_timer) _timer = ecore_timer_add(0.01, _e_cb_timer, NULL);
+		  if (!_timer) _timer = ecore_timer_add(0.001, _e_cb_timer, NULL);
 	       }
 	  }
 	break;

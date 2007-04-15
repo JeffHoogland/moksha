@@ -2079,6 +2079,7 @@ _e_fm2_icons_place_list(E_Fm2_Smart_Data *sd)
    Evas_Coord x, y;
    int i;
 
+   printf("_e_fm2_icons_place_list()\n");
    x = y = 0;
    for (i = 0, l = sd->icons; l; l = l->next, i++)
      {
@@ -4300,6 +4301,10 @@ _e_fm2_obj_icons_place(E_Fm2_Smart_Data *sd)
 		  ic = ll->data;
 		  if (ic->realized)
 		    {
+		       if (!_e_fm2_icon_visible(ic))
+			 {
+			    e_thumb_icon_end(ic->obj_icon);
+			 }
 		       evas_object_move(ic->obj, 
 					sd->x + ic->x - sd->pos.x, 
 					sd->y + ic->y - sd->pos.y);
