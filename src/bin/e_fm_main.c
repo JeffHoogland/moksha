@@ -60,6 +60,9 @@ struct _E_Fop
    int                 id;
    const char         *src;
    const char         *dst;
+   const char         *rel;
+   int                 rel_to;
+   int                 x, y;
    Ecore_Idler        *idler;
    void               *data;
 };
@@ -85,6 +88,7 @@ static int _e_cb_fop_trash_idler(void *data);
 static int _e_cb_fop_mv_idler(void *data);
 static int _e_cb_fop_cp_idler(void *data);
 static char *_e_str_list_remove(Evas_List **list, char *str);
+static void _e_path_fix_order(const char *path, const char *rel, int rel_to, int x, int y);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server = NULL;
@@ -430,6 +434,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	     dst = src + strlen(src) + 1;
 	     ecore_file_mv(src, dst);
 	     /* FIXME: send back if succeeded or failed - why */
+	     _e_path_fix_order(dst, ecore_file_get_file(src), 2, -9999, -9999);
 	  }
 	break;
       case 6: /* fop mv file/dir */
@@ -439,13 +444,22 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	     fop = calloc(1, sizeof(E_Fop));
 	     if (fop)
 	       {
-		  const char *src, *dst;
+		  const char *src, *dst, *rel;
+		  int rel_to, x, y;
 		  
 		  src = e->data;
 		  dst = src + strlen(src) + 1;
+		  rel = dst + strlen(dst) + 1;
+		  memcpy(&rel_to, rel + strlen(rel) + 1, sizeof(int));
+		  memcpy(&x, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
+		  memcpy(&y, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
 		  fop->id = e->ref;
 		  fop->src = evas_stringshare_add(src);
 		  fop->dst = evas_stringshare_add(dst);
+		  fop->rel = evas_stringshare_add(rel);
+		  fop->rel_to = rel_to;
+		  fop->x = x;
+		  fop->y = y;
 		  _e_fops = evas_list_append(_e_fops, fop);
 		  fop->idler = ecore_idler_add(_e_cb_fop_mv_idler, fop);
 	       }
@@ -458,13 +472,22 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	     fop = calloc(1, sizeof(E_Fop));
 	     if (fop)
 	       {
-		  const char *src, *dst;
+		  const char *src, *dst, *rel;
+		  int rel_to, x, y;
 		  
 		  src = e->data;
 		  dst = src + strlen(src) + 1;
+		  rel = dst + strlen(dst) + 1;
+		  memcpy(&rel_to, rel + strlen(rel) + 1, sizeof(int));
+		  memcpy(&x, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
+		  memcpy(&y, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
 		  fop->id = e->ref;
 		  fop->src = evas_stringshare_add(src);
 		  fop->dst = evas_stringshare_add(dst);
+		  fop->rel = evas_stringshare_add(rel);
+		  fop->rel_to = rel_to;
+		  fop->x = x;
+		  fop->y = y;
 		  _e_fops = evas_list_append(_e_fops, fop);
 		  fop->idler = ecore_idler_add(_e_cb_fop_cp_idler, fop);
 	       }
@@ -472,8 +495,17 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	break;
       case 8: /* fop mkdir */
 	  {
-	     ecore_file_mkdir(e->data);
+	     const char *src, *rel;
+	     int rel_to, x, y;
+	     
+	     src = e->data;
+	     rel = src + strlen(src) + 1;
+	     memcpy(&rel_to, rel + strlen(rel) + 1, sizeof(int));
+	     memcpy(&x, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
+	     memcpy(&y, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
+	     ecore_file_mkdir(src);
 	     /* FIXME: send back if succeeded or failed - why */
+	     _e_path_fix_order(src, rel, rel_to, x, y);
 	  }
 	break;
       case 9: /* fop mount fs */
@@ -518,10 +550,15 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	break;
       case 13: /* dop ln -s */
 	  {
-             const char *src, *dst;
+	     const char *src, *dst, *rel;
+	     int rel_to, x, y;
 	     
 	     src = e->data;
 	     dst = src + strlen(src) + 1;
+	     rel = dst + strlen(dst) + 1;
+	     memcpy(&rel_to, rel + strlen(rel) + 1, sizeof(int));
+	     memcpy(&x, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
+	     memcpy(&y, rel + strlen(rel) + 1 + sizeof(int), sizeof(int));
 	     ecore_file_symlink(src, dst);
              /* FIXME: send back file add if succeeded */
 	  }
@@ -874,6 +911,7 @@ _e_cb_fop_mv_idler(void *data)
 		  /* FIXME: handle error */
 	       }
 	  }
+	_e_path_fix_order(fop->dst, fop->rel, fop->rel_to, fop->x, fop->y);
      }
    evas_stringshare_del(fop->src);
    evas_stringshare_del(fop->dst);
@@ -960,6 +998,7 @@ _e_cb_fop_cp_idler(void *data)
 		  free(lnk);
 	       }
 	  }
+	_e_path_fix_order(fop->dst, fop->rel, fop->rel_to, fop->x, fop->y);
      }
    fd = evas_list_data(evas_list_last(fop->data));
    if (!fd) goto stop;
@@ -1076,3 +1115,88 @@ _e_str_list_remove(Evas_List **list, char *str)
    return NULL;
 }
 
+static void
+_e_path_fix_order(const char *path, const char *rel, int rel_to, int x, int y)
+{
+   char *d, buf[PATH_MAX];
+   const char *f;
+   
+   if (!path) return;
+   if (!rel[0]) return;
+   f = ecore_file_get_file(path);
+   if (!f) return;
+   if (!strcmp(f, rel)) return;
+   d = ecore_file_get_dir(path);
+   if (!d) return;
+   printf("_e_path_fix_order(%s, %s, %i, %i, %i)\n", path, rel, rel_to, x, y);
+   snprintf(buf, sizeof(buf), "%s/.order", d);
+   if (ecore_file_exists(buf))
+     {
+	FILE *fh;
+	Evas_List *files = NULL, *l;
+	
+	printf(".order exists\n");
+	fh = fopen(buf, "r");
+	if (fh)
+	  {
+	     int len;
+	     
+	     /* inset files in order if the existed in file 
+	      * list before */
+	     while (fgets(buf, sizeof(buf), fh))
+	       {
+		  len = strlen(buf);
+		  if (len > 0) buf[len - 1] = 0;
+		  files = evas_list_append(files, strdup(buf));
+	       }
+	     fclose(fh);
+	  }
+	/* remove dest file from .order - if there */
+	for (l = files; l; l = l->next)
+	  {
+	     if (!strcmp(l->data, f))
+	       {
+		  printf("REMOVE\n");
+		  free(l->data);
+		  files = evas_list_remove_list(files, l);
+		  break;
+	       }
+	  }
+	/* now insert dest into list or replace entry */
+	for (l = files; l; l = l->next)
+	  {
+	     if (!strcmp(l->data, rel))
+	       {
+		  printf("INSERT %s\n", l->data);
+		  if (rel_to == 2) /* replace */
+		    {
+		       free(l->data);
+		       l->data = strdup(f);
+		    }
+		  else if (rel_to == 0) /* before */
+		    {
+		       files = evas_list_prepend_relative_list(files, strdup(f), l);
+		    }
+		  else if (rel_to == 1) /* after */
+		    {
+		       files = evas_list_append_relative_list(files, strdup(f), l);
+		    }
+		  break;
+	       }
+	  }
+	snprintf(buf, sizeof(buf), "%s/.order", d);
+	fh = fopen(buf, "w");
+	if (fh)
+	  {
+	     while (files)
+	       {
+		  printf("W %s\n", files->data);
+		  fprintf(fh, "%s\n", files->data);
+		  free(files->data);
+		  files = evas_list_remove_list(files, files);
+	       }
+	     fclose(fh);
+	  }
+     }
+   free(d);
+}
