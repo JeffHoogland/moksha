@@ -3,8 +3,6 @@
  */
 #include "e.h"
 
-static int _e_user_dir_check(const char *dir);
-
 /* externally accessible functions */
 EAPI const char *
 e_user_homedir_get(void)
