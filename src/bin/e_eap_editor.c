@@ -97,13 +97,9 @@ e_desktop_border_create(E_Border *bd)
 	 * - Find the icon with the best size
 	 * - Should use mkstemp
 	 */
-	const char *tmp;
-
 	snprintf(path, sizeof(path), "%s/%s-%.6f.png", icon_dir, bname, ecore_time_get());
 	if (e_util_icon_save(&(bd->client.netwm.icons[0]), path))
-	  {
-	     desktop->icon = strdup(path);
-	  }
+	  desktop->icon = strdup(path);
 	else
 	  fprintf(stderr, "Could not save file from ARGB: %s\n", path);
      }
