@@ -149,7 +149,9 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
     * a way to set an edje file directly
     */
    /* FIXME: allow specialised scrollframe obj per dir - get from e config,
-    * then look in the dir itself for a magic dot-file, if not - use theme
+    * then look in the dir itself for a magic dot-file, if not - use theme.
+    * same as currently done for bg & overlay. also add to fm2 the ability
+    * to specify the .edj files to get the list and icon theme stuff from
     */
    e_scrollframe_custom_theme_set(o, "base/theme/fileman",
 				  "e/fileman/scrollframe/default");
@@ -266,7 +268,18 @@ _e_fwin_changed(void *data, Evas_Object *obj, void *event_info)
 	evas_object_show(fwin->over_obj);
      }
    if (fwin->scrollframe_obj)
-     e_scrollframe_child_pos_set(fwin->scrollframe_obj, 0, 0);
+     {
+	snprintf(buf, sizeof(buf), "%s/.directory-scrollframe.edj",
+		 e_fm2_real_path_get(fwin->fm_obj));
+	if (e_util_edje_collection_exists(buf, "e/fileman/scrollframe/default"))
+	  e_scrollframe_custom_edje_file_set(fwin->scrollframe_obj, buf,
+					     "e/fileman/scrollframe/default");
+	else
+	  e_scrollframe_custom_theme_set(fwin->scrollframe_obj,
+					 "base/theme/fileman",
+					 "e/fileman/scrollframe/default");
+	e_scrollframe_child_pos_set(fwin->scrollframe_obj, 0, 0);
+     }
 }
 
 static void
