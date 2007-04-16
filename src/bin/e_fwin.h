@@ -27,8 +27,6 @@ struct _E_Fwin
    struct {
       Evas_Coord        x, y, max_x, max_y, w, h;
    } fm_pan, fm_pan_last;
-   unsigned char        under_tiled : 1;
-   unsigned char        over_tiled : 1;
 };
 
 struct _E_Fwin_Apps_Dialog
