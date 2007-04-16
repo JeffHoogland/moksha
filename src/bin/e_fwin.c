@@ -43,6 +43,12 @@ static E_Fwin_Exec_Type _e_fwin_file_is_exec(E_Fm2_Icon_Info *ici);
 static void _e_fwin_file_exec(E_Fwin *fwin, E_Fm2_Icon_Info *ici, E_Fwin_Exec_Type ext);
 static void _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always);
 
+static void _e_fwin_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
+static void _e_fwin_pan_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
+static void _e_fwin_pan_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
+static void _e_fwin_pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h);
+static void _e_fwin_pan_scroll_update(E_Fwin *fwin);
+    
 /* local subsystem globals */
 static Evas_List *fwins = NULL;
 
@@ -101,7 +107,7 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
 			   "e/fileman/window/main");
    evas_object_show(o);
    fwin->bg_obj = o;
-   
+
    o = e_fm2_add(e_win_evas_get(fwin->win));
    fwin->fm_obj = o;
    memset(&fmc, 0, sizeof(E_Fm2_Config));
@@ -128,7 +134,6 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
    evas_object_smart_callback_add(o, "selected",
 				  _e_fwin_selected, fwin);
    e_fm2_icon_menu_start_extend_callback_set(o, _e_fwin_cb_menu_extend_start, fwin);
-   e_fm2_path_set(o, dev, path);
    e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_menu_extend, fwin);
    evas_object_show(o);
    
@@ -143,21 +148,37 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
     * might be possible that we can have custom frames per dir later so need
     * a way to set an edje file directly
     */
+   /* FIXME: allow specialised scrollframe obj per dir - get from e config,
+    * then look in the dir itself for a magic dot-file, if not - use theme
+    */
    e_scrollframe_custom_theme_set(o, "base/theme/fileman",
 				  "e/fileman/scrollframe/default");
+   evas_object_data_set(fwin->fm_obj, "fwin", fwin);
    e_scrollframe_extern_pan_set(o, fwin->fm_obj,
-				e_fm2_pan_set,
-				e_fm2_pan_get,
-				e_fm2_pan_max_get,
-				e_fm2_pan_child_size_get);
+				_e_fwin_pan_set,
+				_e_fwin_pan_get,
+				_e_fwin_pan_max_get,
+				_e_fwin_pan_child_size_get);
    evas_object_propagate_events_set(fwin->fm_obj, 0);
    fwin->scrollframe_obj = o;
    evas_object_move(o, 0, 0);
    evas_object_show(o);
    
+   o = edje_object_add(e_win_evas_get(fwin->win));
+   edje_object_part_swallow(fwin->bg_obj, "e.swallow.bg", o);
+   evas_object_pass_events_set(o, 1);
+   fwin->under_obj = o;
+   
+   o = edje_object_add(e_win_evas_get(fwin->win));
+   edje_object_part_swallow(e_scrollframe_edje_object_get(fwin->scrollframe_obj), "e.swallow.overlay", o);
+   evas_object_pass_events_set(o, 1);
+   fwin->over_obj = o;
+   
    e_fm2_window_object_set(fwin->fm_obj, E_OBJECT(fwin->win));
    
    evas_object_focus_set(fwin->fm_obj, 1);
+
+   e_fm2_path_set(fwin->fm_obj, dev, path);
    
    snprintf(buf, sizeof(buf), "_fwin::/%s", e_fm2_real_path_get(fwin->fm_obj));
    e_win_name_class_set(fwin->win, "E", buf);
@@ -220,8 +241,30 @@ static void
 _e_fwin_changed(void *data, Evas_Object *obj, void *event_info)
 {
    E_Fwin *fwin;
+   char buf[PATH_MAX];
    
    fwin = data;
+   /* FIXME: first look in E config for a special override for this dir's bg
+    * or overlay
+    */
+   if (fwin->under_obj)
+     {
+	evas_object_hide(fwin->under_obj);
+	snprintf(buf, sizeof(buf), "%s/.directory-wallpaper.edj",
+		 e_fm2_real_path_get(fwin->fm_obj));
+	edje_object_file_set(fwin->under_obj, NULL, NULL);
+	edje_object_file_set(fwin->under_obj, buf, "e/desktop/background");
+	evas_object_show(fwin->under_obj);
+     }
+   if (fwin->over_obj)
+     {
+	evas_object_hide(fwin->over_obj);
+	snprintf(buf, sizeof(buf), "%s/.directory-overlay.edj",
+		 e_fm2_real_path_get(fwin->fm_obj));
+	edje_object_file_set(fwin->over_obj, NULL, NULL);
+	edje_object_file_set(fwin->over_obj, buf, "e/desktop/background");
+	evas_object_show(fwin->over_obj);
+     }
    if (fwin->scrollframe_obj)
      e_scrollframe_child_pos_set(fwin->scrollframe_obj, 0, 0);
 }
@@ -839,4 +882,93 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
    e_dialog_content_set(dia, ocon, mw, mh);
    
    e_dialog_show(dia);
+}
+
+static void
+_e_fwin_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
+{
+   E_Fwin *fwin;
+   
+   fwin = evas_object_data_get(obj, "fwin");
+   e_fm2_pan_set(obj, x, y);
+//   printf("PAN %p -> %i %i\n", fwin, x, y);
+   if (x > fwin->fm_pan.max_x) x = fwin->fm_pan.max_x;
+   if (y > fwin->fm_pan.max_y) y = fwin->fm_pan.max_y;
+   fwin->fm_pan.x = x;
+   fwin->fm_pan.y = y;
+   _e_fwin_pan_scroll_update(fwin);
+}
+
+static void
+_e_fwin_pan_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
+{
+   E_Fwin *fwin;
+   
+   fwin = evas_object_data_get(obj, "fwin");
+   e_fm2_pan_get(obj, x, y);
+//   printf("PAN %p == %i %i\n", fwin, *x, *y);
+   fwin->fm_pan.x = *x;
+   fwin->fm_pan.y = *y;
+}
+
+static void
+_e_fwin_pan_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
+{
+   E_Fwin *fwin;
+   
+   fwin = evas_object_data_get(obj, "fwin");
+   e_fm2_pan_max_get(obj, x, y);
+//   printf("PAN %p MAX == %i %i\n", fwin, *x, *y);
+   fwin->fm_pan.max_x = *x;
+   fwin->fm_pan.max_y = *y;
+   _e_fwin_pan_scroll_update(fwin);
+}
+
+static void
+_e_fwin_pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
+{
+   E_Fwin *fwin;
+   
+   fwin = evas_object_data_get(obj, "fwin");
+   e_fm2_pan_child_size_get(obj, w, h);
+//   printf("PAN %p SZ == %ix%i\n", fwin, *w, *h);
+   fwin->fm_pan.w = *w;
+   fwin->fm_pan.h = *h;
+   _e_fwin_pan_scroll_update(fwin);
+}
+
+static void
+_e_fwin_pan_scroll_update(E_Fwin *fwin)
+{
+   Edje_Message_Int_Set *msg;
+ 
+   if ((fwin->fm_pan.x == fwin->fm_pan_last.x) &&
+       (fwin->fm_pan.y == fwin->fm_pan_last.y) &&
+       (fwin->fm_pan.max_x == fwin->fm_pan_last.max_x) &&
+       (fwin->fm_pan.max_y == fwin->fm_pan_last.max_y) &&
+       (fwin->fm_pan.w == fwin->fm_pan_last.w) &&
+       (fwin->fm_pan.h == fwin->fm_pan_last.h)) return;
+   msg = alloca(sizeof(Edje_Message_Int_Set) -
+		sizeof(int) +
+		(6 * sizeof(int)));
+   msg->count = 6;
+   msg->val[0] = fwin->fm_pan.x;
+   msg->val[1] = fwin->fm_pan.y;
+   msg->val[2] = fwin->fm_pan.max_x;
+   msg->val[3] = fwin->fm_pan.max_y;
+   msg->val[4] = fwin->fm_pan.w;
+   msg->val[5] = fwin->fm_pan.h;
+//   printf("SEND MSG\n");
+   if (fwin->under_obj)
+     edje_object_message_send(fwin->under_obj, EDJE_MESSAGE_INT_SET, 1, msg);
+   if (fwin->over_obj)
+     edje_object_message_send(fwin->over_obj, EDJE_MESSAGE_INT_SET, 1, msg);
+   if (fwin->scrollframe_obj)
+     edje_object_message_send(e_scrollframe_edje_object_get(fwin->scrollframe_obj), EDJE_MESSAGE_INT_SET, 1, msg);
+   fwin->fm_pan_last.x = fwin->fm_pan.x;
+   fwin->fm_pan_last.y = fwin->fm_pan.y;
+   fwin->fm_pan_last.max_x = fwin->fm_pan.max_x;
+   fwin->fm_pan_last.max_y = fwin->fm_pan.max_y;
+   fwin->fm_pan_last.w = fwin->fm_pan.w;
+   fwin->fm_pan_last.h = fwin->fm_pan.h;
 }

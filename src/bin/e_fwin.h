@@ -21,6 +21,14 @@ struct _E_Fwin
    Evas_Object         *fm_obj;
    Evas_Object         *bg_obj;
    E_Fwin_Apps_Dialog  *fad;
+
+   Evas_Object         *under_obj;
+   Evas_Object         *over_obj;
+   struct {
+      Evas_Coord        x, y, max_x, max_y, w, h;
+   } fm_pan, fm_pan_last;
+   unsigned char        under_tiled : 1;
+   unsigned char        over_tiled : 1;
 };
 
 struct _E_Fwin_Apps_Dialog

@@ -2079,7 +2079,6 @@ _e_fm2_icons_place_list(E_Fm2_Smart_Data *sd)
    Evas_Coord x, y;
    int i;
 
-   printf("_e_fm2_icons_place_list()\n");
    x = y = 0;
    for (i = 0, l = sd->icons; l; l = l->next, i++)
      {
