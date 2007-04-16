@@ -31,6 +31,8 @@ static void _e_border_menu_cb_raise(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_lower(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_state_pre(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_fav_add(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_ibar_add_pre(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_ibar_add(void *data, E_Menu *m, E_Menu_Item *mi);
 
 EAPI void
 e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_Time timestamp)
@@ -270,6 +272,11 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	     e_menu_item_label_set(mi, _("Add To Favorites Menu"));
 	     e_menu_item_callback_set(mi, _e_border_menu_cb_fav_add, bd);
 	     e_util_menu_item_edje_icon_set(mi, "enlightenment/favorites");
+	     
+	     mi = e_menu_item_new(m);
+	     e_menu_item_label_set(mi, _("Add To Launcher"));
+	     e_menu_item_submenu_pre_callback_set(mi, _e_border_menu_cb_ibar_add_pre, bd);
+	     e_util_menu_item_edje_icon_set(mi, "enlightenment/ibar_applications");
 	  }
 	else if (bd->client.icccm.class) /* icons with no class useless to borders */
 	  {
@@ -802,4 +809,56 @@ _e_border_menu_cb_fav_add(void *data, E_Menu *m, E_Menu_Item *mi)
    efreet_menu_desktop_insert(menu, bd->desktop, -1);
    efreet_menu_save(menu, buf);
    efreet_menu_free(menu);
+}
+
+static void 
+_e_border_menu_cb_ibar_add_pre(void *data, E_Menu *m, E_Menu_Item *mi) 
+{
+   E_Menu *sm;
+   E_Border *bd;
+   Ecore_List *dirs;
+   char buf[4096], *file;
+   
+   bd = data;
+   if (!bd) return;
+   snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar", 
+	    e_user_homedir_get());
+   dirs = ecore_file_ls(buf);
+   if (!dirs) return;
+   
+   sm = e_menu_new();
+   while ((file = ecore_list_next(dirs))) 
+     {
+	E_Menu_Item *smi;
+	
+	if (file[0] == '.') continue;
+	snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s", 
+		 e_user_homedir_get(), file);
+	if (ecore_file_is_dir(buf)) 
+	  {
+	     smi = e_menu_item_new(sm);
+	     e_menu_item_label_set(smi, file);
+	     e_menu_item_callback_set(smi, _e_border_menu_cb_ibar_add, file);
+	  }
+     }
+   e_object_data_set(E_OBJECT(sm), bd);
+   e_menu_item_submenu_set(mi, sm);
+}
+
+static void 
+_e_border_menu_cb_ibar_add(void *data, E_Menu *m, E_Menu_Item *mi) 
+{
+   E_Order *od;
+   E_Border *bd;
+   char buf[4096];
+   
+   bd = e_object_data_get(E_OBJECT(m));
+   if (!bd) return;
+   if (!bd->desktop) return;
+   
+   snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s/.order", 
+	    e_user_homedir_get(), (char *)data);
+   od = e_order_new(buf);
+   if (!od) return;
+   e_order_append(od, bd->desktop);
 }
