@@ -30,6 +30,7 @@ static void _e_border_menu_cb_unpin(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_raise(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_lower(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_state_pre(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_fav_add(void *data, E_Menu *m, E_Menu_Item *mi);
 
 EAPI void
 e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_Time timestamp)
@@ -264,6 +265,11 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	     e_menu_item_label_set(mi, _("Edit Icon"));
 	     e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, bd);
              e_util_desktop_menu_item_icon_add(bd->desktop, "16x16", mi);
+
+	     mi = e_menu_item_new(m);
+	     e_menu_item_label_set(mi, _("Add To Favorites Menu"));
+	     e_menu_item_callback_set(mi, _e_border_menu_cb_fav_add, bd);
+	     e_util_menu_item_edje_icon_set(mi, "enlightenment/favorites");
 	  }
 	else if (bd->client.icccm.class) /* icons with no class useless to borders */
 	  {
@@ -273,7 +279,7 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	  }
      }
 #endif
-   
+
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
@@ -778,4 +784,22 @@ _e_border_menu_cb_state_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 							"e/widgets/border/default/fullscreen"),
 				  "e/widgets/border/default/fullscreen");
      }
+}
+
+static void 
+_e_border_menu_cb_fav_add(void *data, E_Menu *m, E_Menu_Item *mi) 
+{
+   E_Border *bd;
+   Efreet_Menu *menu;
+   char buf[4096];
+   
+   bd = data;
+   if (!bd) return;
+   snprintf(buf, sizeof(buf), "%s/.e/e/applications/menu/favorite.menu", 
+	    e_user_homedir_get());
+   menu = efreet_menu_parse(buf);
+   if (!menu) return;
+   efreet_menu_desktop_insert(menu, bd->desktop, -1);
+   efreet_menu_save(menu, buf);
+   efreet_menu_free(menu);
 }
