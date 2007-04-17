@@ -330,7 +330,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_disabled_set(ob, 1);
    cfdata->gui.o_params = ob;
    e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 0, 1, 3, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ot, of, 0, 1, 3, 1, 1, 1, 1, 0);
 
    of = e_widget_frametable_add(evas, _("Action Context"), 1);
    rg = e_widget_radio_group_new(&(cfdata->locals.context));
@@ -370,11 +370,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->gui.context.o_none = ob;
    e_widget_disabled_set(ob, 1);
    e_widget_frametable_object_append(of, ob, 2, 2, 1, 1, 1, 1, 1, 1);
-   e_widget_table_object_append(ot, of, 0, 2, 3, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ot, of, 0, 2, 3, 1, 1, 1, 1, 0);
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
    
    _update_mouse_binding_list(cfdata);
    _fill_actions_list(cfdata);
+   
+   e_dialog_resizable_set(cfd->dia, 1);
    return o;
 }
 
