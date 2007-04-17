@@ -257,12 +257,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->gui.o_params = ob;
    e_widget_disabled_set(ob, 1);
    e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 0);
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
 
    _update_key_binding_list(cfdata);
    _fill_actions_list(cfdata);
 
+   e_dialog_resizable_set(cfd->dia, 1);
    return o;
 }
 
