@@ -368,6 +368,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_radio_add(evas, _("Disabled"), 0, mg);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_dialog_resizable_set(cfd->dia, 0);
 
    return o;
 }
@@ -407,64 +408,72 @@ _adv_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfda
 {
    Evas_Object *o, *of, *ob, *ot;
    E_Radio_Group *rg;
-
-   o = e_widget_list_add(evas, 0, 0);
-   ot = e_widget_table_add(evas, 0);
    
+   o = e_widget_list_add(evas, 0, 1);
+
    of = e_widget_framelist_add(evas, _("Color Classes"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
    ob = e_widget_ilist_add(evas, 16, 16, NULL);
+   e_widget_ilist_selector_set(ob, 1);
    cfdata->gui.ilist = ob;
    e_widget_on_change_hook_set(ob, _list_cb_change, cfdata);
    _load_color_classes(ob, cfdata);
    e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 0, 0, 1, 4, 1, 1, 1, 1);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+
+   /* Pack the right side frames into a table for resizing*/
+   ot = e_widget_table_add(evas, 0);
    
-   of = e_widget_framelist_add(evas, _("Object Color"), 0);
-   ob = e_widget_color_well_add(evas, cfdata->color1, 1);
-   cfdata->gui.c1 = ob;
-   e_widget_on_change_hook_set(ob, _color1_cb_change, cfdata);
-   e_widget_disabled_set(ob, 1);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
-
-   of = e_widget_framelist_add(evas, _("Outline Color"), 0);
-   ob = e_widget_color_well_add(evas, cfdata->color2, 1);
-   cfdata->gui.c2 = ob;
-   e_widget_on_change_hook_set(ob, _color2_cb_change, cfdata);
-   e_widget_disabled_set(ob, 1);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 1, 2, 1, 1, 1, 1, 1, 1);
-
-   of = e_widget_framelist_add(evas, _("Shadow Color"), 0);
-   ob = e_widget_color_well_add(evas, cfdata->color3, 1);
-   cfdata->gui.c3 = ob;
-   e_widget_on_change_hook_set(ob, _color3_cb_change, cfdata);
-   e_widget_disabled_set(ob, 1);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 1, 3, 1, 1, 1, 1, 1, 1);
-
    of = e_widget_framelist_add(evas, _("State"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
    rg = e_widget_radio_group_new(&(cfdata->state));
    ob = e_widget_radio_add(evas, _("Enabled"), 1, rg);
    cfdata->gui.renable = ob;
    e_widget_disabled_set(ob, 1);
-   evas_object_smart_callback_add(ob, "changed", _radio_cb_change, cfdata);   
+   evas_object_smart_callback_add(ob, "changed", _radio_cb_change, cfdata);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Disabled"), 0, rg);
    cfdata->gui.rdisable = ob;
    e_widget_disabled_set(ob, 1);
    evas_object_smart_callback_add(ob, "changed", _radio_cb_change, cfdata);
    e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_button_add(evas, _("Defaults"), NULL, _button_cb, cfdata, NULL);
+   of = e_widget_framelist_add(evas, _("Object Color"), 0);
+   e_widget_framelist_content_align_set(of, 0.0, 0.0);
+   ob = e_widget_color_well_add(evas, cfdata->color1, 1);
+   cfdata->gui.c1 = ob;
+   e_widget_on_change_hook_set(ob, _color1_cb_change, cfdata);
+   e_widget_disabled_set(ob, 1);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
+
+   of = e_widget_framelist_add(evas, _("Outline Color"), 0);
+   e_widget_framelist_content_align_set(of, 0.0, 0.0);
+   ob = e_widget_color_well_add(evas, cfdata->color2, 1);
+   cfdata->gui.c2 = ob;
+   e_widget_on_change_hook_set(ob, _color2_cb_change, cfdata);
+   e_widget_disabled_set(ob, 1);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
+
+   of = e_widget_framelist_add(evas, _("Shadow Color"), 0);
+   e_widget_framelist_content_align_set(of, 0.0, 0.0);
+   ob = e_widget_color_well_add(evas, cfdata->color3, 1);
+   cfdata->gui.c3 = ob;
+   e_widget_on_change_hook_set(ob, _color3_cb_change, cfdata);
+   e_widget_disabled_set(ob, 1);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(ot, of, 0, 3, 1, 1, 1, 1, 1, 1);
+
+   ob = e_widget_button_add(evas, _("Defaults"), NULL, 
+			    _button_cb, cfdata, NULL);
    cfdata->gui.button = ob;
    e_widget_disabled_set(ob, 1);
-   e_widget_table_object_append(ot, ob, 1, 4, 1, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(ot, ob, 0, 4, 1, 1, 0, 0, 0, 0);
    
-   e_widget_list_object_append(o, ot, 1, 1, 0.5);   
+   e_widget_list_object_append(o, ot, 1, 1, 0.5);
+   e_dialog_resizable_set(cfd->dia, 1);
    return o;
 }
 
