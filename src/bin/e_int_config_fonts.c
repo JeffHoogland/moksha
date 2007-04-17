@@ -340,23 +340,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_min_size_set(ob, w, 250);
    e_widget_on_change_hook_set(ob, _ilist_font_cb_change, cfdata);
    e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
-
-   ott = e_widget_table_add(evas, 0);
-   ob = e_widget_check_add(evas, _("Enable Font Class"), &(cfdata->cur_enabled));
-   cfdata->gui.enabled = ob;
-   e_widget_on_change_hook_set(ob, _enabled_font_cb_change, cfdata);
-   e_widget_disabled_set(ob, 1);
-   e_widget_table_object_append(ott, ob, 0, 0, 2, 1, 1, 0, 1, 0);
-   ob = e_widget_label_add(evas, _("Font Size:"));
-   e_widget_table_object_append(ott, ob, 0, 1, 1, 1, 1, 0, 1, 0);
-   ob = e_widget_slider_add(evas, 1, 0, _("%2.1f pixels"), 5.0, 25.0, 0.5, 0, 
-			    &(cfdata->cur_size), NULL, 25);
-   cfdata->gui.size = ob;
-   e_widget_disabled_set(ob, 1);
-   e_widget_on_change_hook_set(ob, _size_cb_change, cfdata);
-   e_widget_table_object_append(ott, ob, 1, 1, 2, 1, 1, 0, 1, 0);
-   e_widget_table_object_append(ot, ott, 1, 0, 2, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
 
    of = e_widget_framelist_add(evas, _("Fonts"), 1);
    ob = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_font));
@@ -402,7 +386,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(ob));
    e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 0, 1, 0);
 
    of = e_widget_framelist_add(evas, _("Styles"), 1);
    ob = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_style));
@@ -411,8 +395,25 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_ilist_go(ob);
    e_widget_min_size_set(ob, 125, 250);
    e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 2, 1, 1, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(ot, of, 2, 0, 1, 1, 1, 0, 1, 0);
    
+   ob = e_widget_check_add(evas, _("Enable Font Class"), &(cfdata->cur_enabled));
+   cfdata->gui.enabled = ob;
+   e_widget_on_change_hook_set(ob, _enabled_font_cb_change, cfdata);
+   e_widget_disabled_set(ob, 1);
+   e_widget_table_object_append(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0);
+   ott = e_widget_table_add(evas, 1);
+   ob = e_widget_label_add(evas, _("Font Size:"));
+   e_widget_table_object_append(ott, ob, 0, 0, 1, 1, 1, 0, 1, 0);
+   ob = e_widget_slider_add(evas, 1, 0, _("%2.1f pixels"), 5.0, 25.0, 0.5, 0, 
+			    &(cfdata->cur_size), NULL, 25);
+   cfdata->gui.size = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_on_change_hook_set(ob, _size_cb_change, cfdata);
+   e_widget_table_object_append(ott, ob, 1, 0, 2, 1, 1, 0, 1, 0);
+
+   e_widget_table_object_append(ot, ott, 1, 1, 2, 1, 1, 0, 1, 0);
+
    return ot;
 }
 
@@ -477,7 +478,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *of, *ob, *ott, *oft;
+   Evas_Object *o, *of, *ob, *ott, *ot;
    Evas_List *next;
    E_Radio_Group *rg;
    int option_enable;
@@ -490,7 +491,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    o = e_widget_list_add(evas, 0, 0);
   
    /* Create Font Class Widgets */ 
-   oft = e_widget_frametable_add(evas, _("Font Class Configuration"), 0);
+   ot = e_widget_table_add(evas, 0);
+   of = e_widget_framelist_add(evas, _("Font Class"), 1);
    ob = e_widget_ilist_add(evas, 16, 16, NULL);
    cfdata->gui.class_list = ob;
    _fill_ilist(cfdata);
@@ -498,25 +500,9 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_min_size_get(ob, &w, NULL);
    e_widget_min_size_set(ob, w, 100);
    e_widget_on_change_hook_set(ob, _ilist_font_cb_change, cfdata);
-   e_widget_frametable_object_append(oft, ob, 0, 0, 1, 5, 1, 1, 1, 1);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(ot, of, 0, 0, 1, 5, 1, 1, 1, 1);
 
-   ott = e_widget_table_add(evas, 0);
-   cfdata->gui.enabled = e_widget_check_add(evas, _("Enable Font Class"), &(cfdata->cur_enabled));
-   e_widget_disabled_set(cfdata->gui.enabled, 1);
-   e_widget_table_object_append(ott, cfdata->gui.enabled, 0, 0, 3, 1, 1, 0, 1, 0);
-   e_widget_on_change_hook_set(cfdata->gui.enabled, _enabled_font_cb_change, cfdata);
-
-   ob = e_widget_label_add(evas, _("Font Size:"));
-   e_widget_table_object_append(ott, ob, 0, 1, 1, 1, 1, 0, 1, 0);
-   
-   cfdata->gui.size = e_widget_slider_add(evas, 1, 0, _("%2.1f pixels"), 5.0, 25.0, 0.5, 0, &(cfdata->cur_size), NULL, 25);
-   e_widget_disabled_set(cfdata->gui.size, 1);
-   e_widget_min_size_set(cfdata->gui.size, 80, 25);
-   e_widget_on_change_hook_set(cfdata->gui.size, _size_cb_change, cfdata);
-   e_widget_table_object_append(ott, cfdata->gui.size, 
-				1, 1, 2, 1, 1, 0, 1, 0);
-   e_widget_frametable_object_append(oft, ott, 
-				1, 0, 2, 1, 1, 1, 1, 1);
    /* Font List */
    of = e_widget_framelist_add(evas, _("Fonts"), 1);
    cfdata->gui.font_list = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_font));
@@ -542,7 +528,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 	evas_font_available_list_free(evas, fonts);
      }
 
-   if (cfdata->font_list) 
+   if (cfdata->font_list)
      {
 	for ( next = cfdata->font_list; next ; next = next->next) 
 	  {
@@ -560,7 +546,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(cfdata->gui.font_list));
    e_widget_framelist_object_append(of, cfdata->gui.font_list);
-   e_widget_frametable_object_append(oft, of, 1, 1, 1, 4, 1, 1, 1, 1);
+   e_widget_table_object_append(ot, of, 1, 0, 1, 5, 1, 1, 1, 1);
 
    /* Empty Style List */
    of = e_widget_framelist_add(evas, _("Styles"), 1);
@@ -569,9 +555,26 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_ilist_go(cfdata->gui.style_list);
    e_widget_min_size_set(cfdata->gui.style_list, 75, 100);
    e_widget_framelist_object_append(of, cfdata->gui.style_list);
+   e_widget_table_object_append(ot, of, 2, 0, 1, 5, 1, 1, 1, 1);
 
-   e_widget_frametable_object_append(oft, of, 2, 1, 1, 4, 1, 1, 1, 1);
-   e_widget_list_object_append(o, oft, 1, 1, 0.5);
+   cfdata->gui.enabled = e_widget_check_add(evas, _("Enable Font Class"), &(cfdata->cur_enabled));
+   e_widget_disabled_set(cfdata->gui.enabled, 1);
+   e_widget_table_object_append(ot, cfdata->gui.enabled, 0, 5, 1, 1, 1, 0, 1, 0);
+   e_widget_on_change_hook_set(cfdata->gui.enabled, _enabled_font_cb_change, cfdata);
+
+   ott = e_widget_table_add(evas, 1);
+   ob = e_widget_label_add(evas, _("Font Size:"));
+   e_widget_table_object_append(ott, ob, 0, 0, 1, 1, 1, 0, 1, 0);
+   
+   cfdata->gui.size = e_widget_slider_add(evas, 1, 0, _("%2.1f pixels"), 5.0, 25.0, 0.5, 0, &(cfdata->cur_size), NULL, 25);
+   e_widget_disabled_set(cfdata->gui.size, 1);
+   e_widget_min_size_set(cfdata->gui.size, 80, 25);
+   e_widget_on_change_hook_set(cfdata->gui.size, _size_cb_change, cfdata);
+   e_widget_table_object_append(ott, cfdata->gui.size, 
+				1, 0, 1, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(ot, ott, 1, 5, 2, 1, 1, 1, 1, 1);
+
+   e_widget_list_object_append(o, ot, 1, 1, 0.5);
 
    /* Create Hinting Widgets */
    of = e_widget_framelist_add(evas, _("Hinting"), 1);
