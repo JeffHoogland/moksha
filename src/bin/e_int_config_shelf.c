@@ -79,19 +79,20 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    ot = e_widget_table_add(evas, 0);
    ob = e_widget_button_add(evas, _("Add"), "widget/add", _cb_add, cfdata, NULL);
-   e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 1, 1, 0);
+   e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 1, 0, 0);
    cfdata->o_delete = e_widget_button_add(evas, _("Delete"), "widget/del", _cb_delete, cfdata, NULL);
-   e_widget_table_object_append(ot, cfdata->o_delete, 0, 1, 1, 1, 1, 1, 1, 0);
+   e_widget_table_object_append(ot, cfdata->o_delete, 0, 1, 1, 1, 1, 1, 0, 0);
    cfdata->o_config = e_widget_button_add(evas, _("Configure"), "widget/config", _cb_config, cfdata, NULL);
-   e_widget_table_object_append(ot, cfdata->o_config, 0, 2, 1, 1, 1, 1, 1, 0);
+   e_widget_table_object_append(ot, cfdata->o_config, 0, 2, 1, 1, 1, 1, 0, 0);
 
    e_widget_disabled_set(cfdata->o_delete, 1);
    e_widget_disabled_set(cfdata->o_config, 1);
    
-   e_widget_list_object_append(o, ot, 1, 1, 0.0);
+   e_widget_list_object_append(o, ot, 1, 0, 0.0);
    
    _ilist_fill(cfdata);
    
+   e_dialog_resizable_set(cfd->dia, 1);
    return o;
 }
 
