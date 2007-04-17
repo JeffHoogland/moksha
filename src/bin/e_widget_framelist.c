@@ -64,7 +64,7 @@ e_widget_framelist_object_append(Evas_Object *obj, Evas_Object *sobj)
    e_widget_min_size_get(sobj, &mw, &mh);
    e_box_pack_options_set(sobj,
 			  1, 1, /* fill */
-			  1, 0, /* expand */
+			  1, 1, /* expand */
 			  0.5, 0.5, /* align */
 			  mw, mh, /* min */
 			  99999, 99999 /* max */
