@@ -233,62 +233,49 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *of, *ob, *ot, *ilist, *mt;
+   Evas_Object *o, *of, *ob, *ot;
    E_Radio_Group *rg;
-
+   
    cfdata->evas = evas;
-   
-   o = e_widget_list_add(evas, 1, 0);
-   ot = e_widget_table_add(evas, 1);
-   
-   of = e_widget_framelist_add(evas, _("Modules"), 1);
-   ilist = e_widget_ilist_add(evas, 24, 24, &(cfdata->modname));
-   cfdata->gui.list = ilist;
-   e_widget_on_change_hook_set(ilist, _ilist_cb_change, cfdata);
-
    cfdata->state = -1;
 
-   _fill_list(cfdata);
-   
-   e_widget_framelist_object_append(of, ilist);
-   e_widget_table_object_append(ot, of, 0, 0, 1, 2, 1, 1, 1, 1);
+   o = e_widget_list_add(evas, 0, 1);
 
-   of = e_widget_framelist_add(evas, _("Module State"), 0);
-   mt = e_widget_table_add(evas, 0);
-   
+   of = e_widget_framelist_add(evas, _("Modules"), 1);
+   ob = e_widget_ilist_add(evas, 24, 24, &(cfdata->modname));
+   cfdata->gui.list = ob;
+   e_widget_on_change_hook_set(ob, _ilist_cb_change, cfdata);
+   _fill_list(cfdata);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+
+   ot = e_widget_table_add(evas, 1);
+   of = e_widget_frametable_add(evas, _("Module State"), 0);
    rg = e_widget_radio_group_new(&(cfdata->state));
 
    ob = e_widget_radio_add(evas, _("Enabled"), MOD_ENABLED, rg);
    cfdata->gui.enabled = ob;
    e_widget_disabled_set(ob, 1);
-   e_widget_table_object_append(mt, ob, 0, 0, 1, 1, 1, 0, 1, 0);
-
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 0, 1, 0);
    ob = e_widget_radio_add(evas, _("Disabled"), MOD_UNLOADED, rg);
    cfdata->gui.unloaded = ob;
    e_widget_disabled_set(ob, 1);
-   e_widget_table_object_append(mt, ob, 0, 1, 1, 1, 1, 0, 1, 0);
-   
-   e_widget_framelist_object_append(of, mt);
-   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
 
-   of = e_widget_framelist_add(evas, _("Module Actions"), 0);
-   mt = e_widget_table_add(evas, 0); 
-   
+   of = e_widget_frametable_add(evas, _("Module Actions"), 0);
    ob = e_widget_button_add(evas, _("Configure"), NULL, _module_configure, cfdata, NULL);
    cfdata->gui.configure = ob;
-   e_widget_table_object_append(mt, ob, 0, 0, 1, 1, 1, 0, 1, 0);
-   
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 0, 1, 0);
    ob = e_widget_button_add(evas, _("About"), NULL, _module_about, cfdata, NULL);
    cfdata->gui.about = ob;
-   e_widget_table_object_append(mt, ob, 0, 1, 1, 1, 1, 0, 1, 0);
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
 
-   e_widget_disabled_set(cfdata->gui.configure, 1);
-   e_widget_disabled_set(cfdata->gui.about, 1);
-
-   e_widget_framelist_object_append(of, mt);
-   e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
-   e_widget_list_object_append(o, ot, 1, 1, 0.5);
-
+   e_widget_list_object_append(o, ot, 1, 0, 0.5);
+   e_dialog_resizable_set(cfd->dia, 1);
    return o;
 }
 
@@ -491,6 +478,7 @@ _fill_list(E_Config_Dialog_Data *cfdata)
 {
    E_Module *m;
    Evas_List *l;
+   Evas_Coord w;
    char buf[4096];
 
    if (!cfdata->gui.list) return;
@@ -537,6 +525,8 @@ _fill_list(E_Config_Dialog_Data *cfdata)
      }
 
    e_widget_ilist_go(cfdata->gui.list);
+   e_widget_min_size_get(cfdata->gui.list, &w, NULL);
+   e_widget_min_size_set(cfdata->gui.list, w, 200);
    e_widget_ilist_thaw(cfdata->gui.list);
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(cfdata->gui.list));
