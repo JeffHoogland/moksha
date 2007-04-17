@@ -280,6 +280,12 @@ _e_fwin_changed(void *data, Evas_Object *obj, void *event_info)
 					 "e/fileman/scrollframe/default");
 	e_scrollframe_child_pos_set(fwin->scrollframe_obj, 0, 0);
      }
+   snprintf(buf, sizeof(buf), "%s/.directory-theme.edj",
+	    e_fm2_real_path_get(fwin->fm_obj));
+   if (ecore_file_exists(buf))
+     e_fm2_custom_theme_set(obj, buf);
+   else
+     e_fm2_custom_theme_set(obj, NULL);
 }
 
 static void
