@@ -368,7 +368,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_Object *o, *of, *ob, *ot;
+   Evas_Object *o, *of, *ob, *ot, *o2;
    E_Radio_Group *rg;
    E_Manager *man;
    Ecore_X_Screen_Size *sizes;
@@ -376,13 +376,18 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    o = e_widget_list_add(evas, 0, 1);
 
+   o2 = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Resolution"), 0);   
    ob = e_widget_ilist_add(evas, 24, 24, NULL);
    cfdata->res_list = ob;
    e_widget_min_size_set(ob, 170, 215);
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_list_object_append(o2, of, 1, 1, 0.5);
 
+   ob = e_widget_check_add(evas, _("Restore on login"), &cfdata->restore);
+   e_widget_list_object_append(o2, ob, 1, 0, 0.0);
+   e_widget_list_object_append(o, o2, 1, 1, 0.5);
+   
    ot = e_widget_table_add(evas, 0);
    of = e_widget_framelist_add(evas, _("Refresh"), 0);   
    ob = e_widget_ilist_add(evas, 24, 24, NULL);
@@ -434,9 +439,9 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	      evas_list_count(cfdata->resolutions), _sort_resolutions);
 	cfdata->resolutions = evas_list_reverse(cfdata->resolutions);
 
-	evas_event_freeze(evas_object_evas_get(ob));
+	evas_event_freeze(evas_object_evas_get(cfdata->res_list));
 	edje_freeze();
-	e_widget_ilist_freeze(ob);
+	e_widget_ilist_freeze(cfdata->res_list);
 	i = 0;
 	for (l = cfdata->resolutions; l; l = l->next)
 	  {
@@ -445,7 +450,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
 	     res->id = i++;
 	     snprintf(buf, sizeof(buf), "%ix%i", res->size.width, res->size.height);
-	     e_widget_ilist_append(ob, NULL, buf, _ilist_item_change, cfdata, NULL);
+	     e_widget_ilist_append(cfdata->res_list, NULL, buf, _ilist_item_change, cfdata, NULL);
 
 	     if (res->size.width == cfdata->orig_size.width &&
 		 res->size.height == cfdata->orig_size.height)
@@ -458,12 +463,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    E_FREE(sizes);
 
-   e_widget_ilist_go(ob);
-   e_widget_ilist_selected_set(ob, sel);
+   e_widget_ilist_go(cfdata->res_list);
+   e_widget_ilist_selected_set(cfdata->res_list, sel);
    _load_rates(cfdata);
-   e_widget_ilist_thaw(ob);
+   e_widget_ilist_thaw(cfdata->res_list);
    edje_thaw();
-   evas_event_thaw(evas_object_evas_get(ob));
+   evas_event_thaw(evas_object_evas_get(cfdata->res_list));
    
    if (cfdata->can_rotate)
      {
