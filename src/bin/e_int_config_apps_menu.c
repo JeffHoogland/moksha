@@ -81,24 +81,25 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->o_apps = ob;
    _fill_apps(cfdata);
    e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 0, 0, 1, 4, 1, 0, 1, 0);
+   e_widget_table_object_append(ot, of, 0, 0, 1, 4, 1, 1, 1, 1);
    
    ob = e_widget_button_add(evas, _("Add"), "widget/add", _cb_add, cfdata, NULL);
    cfdata->o_add = ob;
    e_widget_disabled_set(ob, 1);
-   e_widget_table_object_append(ot, ob, 1, 1, 1, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(ot, ob, 1, 1, 1, 1, 1, 0, 0, 0);
    ob = e_widget_button_add(evas, _("Delete"), "widget/del", _cb_del, cfdata, NULL);
    cfdata->o_del = ob;
    e_widget_disabled_set(ob, 1);
-   e_widget_table_object_append(ot, ob, 1, 2, 1, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(ot, ob, 1, 2, 1, 1, 1, 0, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Favorites"), 0);
    ob = e_widget_ilist_add(evas, 24, 24, &(cfdata->fav));
    cfdata->o_list = ob;
    _fill_list(cfdata);
    e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 2, 0, 1, 4, 1, 0, 1, 0);
-   
+   e_widget_table_object_append(ot, of, 2, 0, 1, 4, 1, 1, 1, 1);
+
+   e_dialog_resizable_set(cfd->dia, 1);
    return ot;
 }
 
