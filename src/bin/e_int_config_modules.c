@@ -251,7 +251,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    _fill_list(cfdata);
    
    e_widget_framelist_object_append(of, ilist);
-   e_widget_table_object_append(ot, of, 0, 0, 3, 3, 1, 1, 1, 1);
+   e_widget_table_object_append(ot, of, 0, 0, 1, 2, 1, 1, 1, 1);
 
    of = e_widget_framelist_add(evas, _("Module State"), 0);
    mt = e_widget_table_add(evas, 0);
@@ -266,10 +266,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_radio_add(evas, _("Disabled"), MOD_UNLOADED, rg);
    cfdata->gui.unloaded = ob;
    e_widget_disabled_set(ob, 1);
-   e_widget_table_object_append(mt, ob, 1, 0, 1, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(mt, ob, 0, 1, 1, 1, 1, 0, 1, 0);
    
    e_widget_framelist_object_append(of, mt);
-   e_widget_table_object_append(ot, of, 0, 3, 3, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
 
    of = e_widget_framelist_add(evas, _("Module Actions"), 0);
    mt = e_widget_table_add(evas, 0); 
@@ -280,13 +280,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    ob = e_widget_button_add(evas, _("About"), NULL, _module_about, cfdata, NULL);
    cfdata->gui.about = ob;
-   e_widget_table_object_append(mt, ob, 1, 0, 1, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(mt, ob, 0, 1, 1, 1, 1, 0, 1, 0);
 
    e_widget_disabled_set(cfdata->gui.configure, 1);
    e_widget_disabled_set(cfdata->gui.about, 1);
 
    e_widget_framelist_object_append(of, mt);
-   e_widget_table_object_append(ot, of, 0, 4, 3, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
 
    return o;
