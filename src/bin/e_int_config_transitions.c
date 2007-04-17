@@ -115,14 +115,13 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    E_Zone *zone;
-   Evas_Object *o, *of, *ot, *il, *ob;
+   Evas_Object *o, *of, *il;
    Evas_List *l;
    char *t;
 
    zone = e_zone_current_get(cfd->con);
    
-   o = e_widget_list_add(evas, 1, 0);
-   ot = e_widget_table_add(evas, 0);
+   o = e_widget_list_add(evas, 0, 1);
 
    of = e_widget_framelist_add(evas, _("Events"), 0);
    il = e_widget_ilist_add(evas, 48, 48, NULL);
@@ -139,9 +138,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_ilist_thaw(il);
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(il));
-   
    e_widget_framelist_object_append(of, il);
-   e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Transitions"), 0);
    il = e_widget_ilist_add(evas, 48, 48, NULL);
@@ -151,7 +149,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    evas_event_freeze(evas_object_evas_get(il));
    edje_freeze();
    e_widget_ilist_freeze(il);
-   
    e_widget_ilist_append(il, NULL, _("None"), _trans_cb_changed, cfdata, NULL);
    l = e_theme_transition_list();
    for (l = e_theme_transition_list(); l; l = l->next) 
@@ -164,18 +161,16 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_ilist_thaw(il);
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(il));
-   
    e_widget_framelist_object_append(of, il);
-   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Preview"), 0);
-   ob = _trans_preview_add(cfdata, evas, 300, ((300 * zone->h) / zone->w));
-   cfdata->tp = ob;
-   e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 2, 0, 1, 1, 1, 1, 1, 1);
-   
-   e_widget_list_object_append(o, ot, 1, 1, 0.5);
-   
+   il = _trans_preview_add(cfdata, evas, 300, ((300 * zone->h) / zone->w));
+   cfdata->tp = il;
+   e_widget_framelist_object_append(of, il);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+
+   e_dialog_resizable_set(cfd->dia, 1);
    return o;
 }
 
