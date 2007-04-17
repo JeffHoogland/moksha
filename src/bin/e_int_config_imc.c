@@ -292,17 +292,17 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    o = e_widget_list_add(evas, 0, 0);
      
-   of = e_widget_frametable_add(evas, _("Input Method Selector"), 1);
+   of = e_widget_frametable_add(evas, _("Input Method Selector"), 0);
  
    /* Disable imc checkbox */
    ob = e_widget_check_add(evas, _("Use No Input Method"), &(cfdata->imc_disable));
    cfdata->gui.imc_basic_disable = ob; 
-   e_widget_frametable_object_append(of, ob, 0, 0, 2, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 0, 1, 0);
       
    /* Configure imc button */
    ob = e_widget_button_add(evas, _("Setup Selected Input Method"), "widget/setup", _e_imc_setup_cb, cfdata, NULL);
    cfdata->gui.imc_basic_setup = ob;
-   e_widget_frametable_object_append(of, ob, 0, 7, 2, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 0);
  
    /* Input method List */ 
    ob = e_widget_ilist_add(evas, 16, 16, &(cfdata->imc_current));
@@ -373,7 +373,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(ob));
 
-   e_widget_frametable_object_append(of, ob, 0, 1, 2, 6, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);   
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    e_dialog_resizable_set(cfd->dia, 1);
@@ -899,59 +899,61 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_list_object_append(il, ol, 1, 0, 0.5);
    e_widget_list_object_append(of, il, 1, 0, 0.0);
    
-   ol = e_widget_frametable_add(evas, _("Input Method Parameters"), 1);
+   ol = e_widget_frametable_add(evas, _("Input Method Parameters"), 0);
+   e_widget_frametable_content_align_set(ol, 0.0, 0.0);
    
    o = e_widget_label_add(evas, _("Name"));
-   e_widget_frametable_object_append(ol, o, 0, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(ol, o, 0, 0, 1, 1, 1, 1, 0, 0);
    o = e_widget_entry_add(evas, &(cfdata->imc.e_im_name));
    e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
    cfdata->gui.e_im_name = o;
-   e_widget_frametable_object_append(ol, o, 1, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(ol, o, 1, 0, 1, 1, 1, 1, 1, 0);
 
    o = e_widget_label_add(evas, _("Execute Command"));
-   e_widget_frametable_object_append(ol, o, 0, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(ol, o, 0, 1, 1, 1, 1, 1, 0, 0);
    o = e_widget_entry_add(evas, &(cfdata->imc.e_im_exec));
    e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
    cfdata->gui.e_im_exec = o;
-   e_widget_frametable_object_append(ol, o, 1, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(ol, o, 1, 1, 1, 1, 1, 1, 1, 0);
  
    o = e_widget_label_add(evas, _("Setup Command"));
-   e_widget_frametable_object_append(ol, o, 0, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(ol, o, 0, 2, 1, 1, 1, 1, 0, 0);
    o = e_widget_entry_add(evas, &(cfdata->imc.e_im_setup_exec));
    e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
    cfdata->gui.e_im_setup_exec = o;
-   e_widget_frametable_object_append(ol, o, 1, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(ol, o, 1, 2, 1, 1, 1, 1, 1, 0);
    
    e_widget_list_object_append(of, ol, 0, 1, 0.5);
    
-   ol = e_widget_frametable_add(evas, _("Exported Environment Variables"), 1);
+   ol = e_widget_frametable_add(evas, _("Exported Environment Variables"), 0);
+   e_widget_frametable_content_align_set(ol, 0.0, 0.0);
    
    o = e_widget_label_add(evas, "GTK_IM_MODULE");
-   e_widget_frametable_object_append(ol, o, 0, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(ol, o, 0, 0, 1, 1, 1, 1, 0, 0);
    o = e_widget_entry_add(evas, &(cfdata->imc.gtk_im_module));
    e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
    cfdata->gui.gtk_im_module = o;
-   e_widget_frametable_object_append(ol, o, 1, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(ol, o, 1, 0, 1, 1, 1, 1, 1, 0);
    
    o = e_widget_label_add(evas, "QT_IM_MODULE");
-   e_widget_frametable_object_append(ol, o, 0, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(ol, o, 0, 1, 1, 1, 1, 1, 0, 0);
    o = e_widget_entry_add(evas, &(cfdata->imc.qt_im_module));
    e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
    cfdata->gui.qt_im_module = o;
-   e_widget_frametable_object_append(ol, o, 1, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(ol, o, 1, 1, 1, 1, 1, 1, 1, 0);
    
    o = e_widget_label_add(evas, "XMODIFIERS");
-   e_widget_frametable_object_append(ol, o, 0, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(ol, o, 0, 2, 1, 1, 1, 1, 0, 0);
    o = e_widget_entry_add(evas, &(cfdata->imc.xmodifiers));
    e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
    cfdata->gui.xmodifiers = o;
-   e_widget_frametable_object_append(ol, o, 1, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(ol, o, 1, 2, 1, 1, 1, 1, 1, 0);
  
    e_widget_list_object_append(of, ol, 0, 1, 0.5);
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
       
    o = e_widget_button_add(evas, _("Setup Selected Input Method"), "widget/setup", _e_imc_adv_setup_cb, cfdata, NULL);
-   e_widget_table_object_append(ot, o, 0, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ot, o, 0, 1, 1, 1, 1, 1, 1, 0);
    cfdata->gui.imc_advanced_setup = o;
  
    e_dialog_resizable_set(cfd->dia, 1);	
