@@ -43,10 +43,12 @@ e_int_config_icon_themes(E_Container *con)
    
    v->create_cfdata           = _create_data;
    v->free_cfdata             = _free_data;
-   v->advanced.create_widgets = _advanced_create_widgets;
-   v->advanced.apply_cfdata   = _basic_apply_data;
    v->basic.create_widgets    = _basic_create_widgets;
    v->basic.apply_cfdata      = _basic_apply_data;
+   /*
+   v->advanced.create_widgets = _advanced_create_widgets;
+   v->advanced.apply_cfdata   = _basic_apply_data;
+   */
    
    cfd = e_config_dialog_new(con,
 			     _("Icon Theme Settings"),
@@ -248,11 +250,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_min_size_set(ob, 200, 120);
    e_widget_framelist_object_append(of, ob);
    e_box_pack_options_set(ob,
-			  1, 1, /* fill */
-			  1, 1, /* expand */
-			  1, 1, /* align */
-			  200, 120, /* min */
-			  99999, 99999 /* max */
+			  1, 1,
+			  1, 1,
+			  1, 1,
+			  200, 120,
+			  99999, 99999
 			  );
 
    e_widget_table_object_append(ot, of, 2, 0, 2, 4, 1, 1, 1, 1);
@@ -269,7 +271,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    Evas_List *l;
    int i;
 
-   o = e_widget_list_add(evas, 1, 0);
+   o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Icon Themes"), 0);
    ilist = e_widget_ilist_add(evas, 24, 24, &(cfdata->themename));
    cfdata->gui.list = ilist;
