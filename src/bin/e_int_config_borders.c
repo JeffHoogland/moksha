@@ -178,6 +178,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Default Border Style"), 0);
+   e_widget_framelist_content_align_set(of, 0.0, 0.0);
    ol = e_widget_ilist_add(evas, 80, 48, &(cfdata->bordername));
    borders = e_theme_border_list();
    orect = evas_object_rectangle_add(evas);
@@ -217,7 +218,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    evas_event_thaw(evas_object_evas_get(ol));
 
    e_widget_framelist_object_append(of, ol);
-   e_widget_list_object_append(o, of, 1, 1, 0.0);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    if (cfdata->border) 
      {
@@ -226,5 +227,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
      }
    
    E_FREE(tmp);
+   e_dialog_resizable_set(cfd->dia, 1);
    return o;
 }
