@@ -470,6 +470,7 @@ _e_desktop_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Conf
    Efreet_Desktop *desktop;
    Evas_Object *ol, *o;
    Evas_Object *entry;
+   Evas_Object *fn;
 
    editor = cfdata->editor;
    desktop = editor->desktop;
@@ -517,6 +518,15 @@ _e_desktop_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Conf
 				     0, 2, 2, 1,
 				     1, 1, 1, 1);
    e_widget_table_object_append(ol, o, 1, 1, 1, 1, 1 ,1, 1, 1);
+
+   o = e_widget_frametable_add(evas, _("Desktop file"), 0);
+   e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Filename")), 
+				     0, 0, 1, 1, 0, 0, 0, 0);
+   fn = e_widget_entry_add(evas, &(cfdata->editor->desktop->orig_path)); 
+   e_widget_frametable_object_append(o, fn, 1, 0, 2, 1, 1, 1, 1, 1);
+   e_widget_disabled_set(fn, 1);
+   e_widget_table_object_append(ol, o, 0, 2, 2, 1, 1 ,1, 1, 1);
+
    return ol;
 }
 
