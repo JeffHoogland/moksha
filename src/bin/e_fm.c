@@ -3432,7 +3432,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
    E_Fm2_Smart_Data *sd;
    E_Event_Dnd_Drop *ev;
    Evas_List *fsel, *l, *ll;
-   char buf[4096], *fl, *d;
+   char buf[4096], *fl;
    const char *fp;
 
    sd = data;
@@ -5001,11 +5001,7 @@ static void
 _e_fm2_new_directory_yes_cb(char *text, void *data)
 {
    E_Fm2_Smart_Data *sd;
-   E_Dialog *dialog;
-   E_Manager *man;
-   E_Container *con;
    char buf[PATH_MAX];
-   char error[PATH_MAX + 256];
    
    sd = data;
    sd->entry_dialog = NULL;
@@ -5066,12 +5062,8 @@ static void
 _e_fm2_file_rename_yes_cb(char *text, void *data)
 {
    E_Fm2_Icon *ic;
-   E_Dialog *dialog;
-   E_Manager *man;
-   E_Container *con;
    char newpath[4096];
    char oldpath[4096];
-   char error[4096 + 256];
    
    ic = data;
    ic->entry_dialog = NULL;
