@@ -330,6 +330,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_table_object_append(ot, ol, 0, 0, 1, 1, 1, 1, 1, 1);
    
    of = e_widget_list_add(evas, 0, 0);
+
+   o = e_widget_check_add(evas, _("Show Splash Screen on Login"), 
+			  &(cfdata->show_splash));
+   e_widget_list_object_append(of, o, 1, 0, 0.0);
    
    o = e_widget_preview_add(evas, 320, (320 * z->h) / z->w);
    cfdata->o_preview = o;
@@ -338,12 +342,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_preview_edje_set(o, f, "e/init/splash");
    e_widget_list_object_append(of, o, 0, 0, 0.5);
    
-   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
-   
-   o = e_widget_check_add(evas, _("Show Splash Screen on Login"), 
-			  &(cfdata->show_splash));
-   e_widget_table_object_append(ot, o, 1, 3, 1, 1, 0, 0, 0, 0);
-
+   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 0, 0, 0, 0);
    e_dialog_resizable_set(cfd->dia, 1);
    return ot;
 }
