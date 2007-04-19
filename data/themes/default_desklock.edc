@@ -4,6 +4,7 @@ images {
    image: "e17_entry_cursor.png" COMP;
    image: "e17_logo.png" COMP;
    image: "e17_gadman_overlay.png" COMP;
+   image: "e17_desklock_error.png" COMP;
 }
 
 group {
@@ -37,7 +38,7 @@ group {
 }
 group 
   {
-    name, "e/desklock/login_box";
+    name: "e/desklock/login_box";
     parts 
       {
 	part 
@@ -89,9 +90,52 @@ group
 	  }
 	part
 	  {
+	     name: "pulse_clip";
+	     type: RECT;
+	     mouse_events: 0;
+	     description
+	       {
+		  state: "default" 0.0;
+		  rel1.to: "passwd_border";
+		  rel2.to: "passwd_border";
+	       }
+	     description
+	       {
+		  state: "pulse" 0.0;
+		  inherit: "default" 0.0;
+                  color: 255 255 255 128;
+	       }
+	    }
+	  part
+	    {
+	       name: "error";
+	       mouse_events: 0;
+               clip_to: "pulse_clip";
+	       description
+		 {
+		    state: "default" 0.0;
+                    color: 255 255 255 0;
+		    rel1.to: "passwd_border";
+		    rel2.to: "passwd_border";
+		    image
+		      {
+			 normal: "e17_desklock_error.png";
+			 border: 15 15 15 15;
+		      }
+		 }
+               description
+                 {
+                    state: "invalid" 0.0;
+                    inherit: "default" 0.0;
+                    color: 255 255 255 255;
+                 }
+	    }
+	part
+	  {
 	     name: "passwd_entry_clip";
 	     type: RECT;
 	     mouse_events: 0;
+             clip_to: "pulse_clip";
 	     description
 	       {
 		  state: "default" 0.0;
@@ -177,6 +221,7 @@ group
 	    {
 	       name: "passwd_border";
 	       mouse_events: 0;
+               clip_to: "pulse_clip";
 	       description
 		 {
 		    state: "default" 0.0;
@@ -198,7 +243,67 @@ group
 			 border: 15 15 15 15;
 		      }
 		 }
+	       description
+		 {
+		    state: "checking" 0.0;
+		    inherit: "default" 0.0;
+                    color: 255 255 255 128;
+                 }
 	    }
+      }
+    programs
+      {
+         program 
+         {
+            name: "pulse.1";
+            signal: "e,state,checking";
+            source: "e.desklock";
+            action: STATE_SET "pulse" 0.0;
+            target: "pulse_clip";
+            transition: SINUSOIDAL 0.5;
+            after: "pulse.2";
+         }
+         program 
+         {
+            name: "pulse.2";
+            action: STATE_SET "default" 0.0;
+            target: "pulse_clip";
+            transition: SINUSOIDAL 0.5;
+            after: "pulse.1";
+         }
+         program 
+         {
+            name: "pulse.stop";
+            signal: "e,state,invalid";
+            source: "e.desklock";
+            action: ACTION_STOP;
+            target: "pulse.1";
+            target: "pulse.2";
+            after: "pulse.reset";
+         }
+         program
+         {
+            name: "pulse.reset";
+            action: STATE_SET "default" 0.0;
+            target: "pulse_clip";
+            transition: SINUSOIDAL 0.5;
+         }
+         program 
+         {
+            name: "go_invalid";
+            signal: "e,state,invalid";
+            source: "e.desklock";
+            action: STATE_SET "invalid" 0.0;
+            target: "error";
+            transition: DECELERATE 0.5;
+         }
+         program 
+         {
+            name: "stop_invalid";
+            action: STATE_SET "default" 0.0;
+            target: "error";
+            transition: DECELERATE 1.5;
+         }
       }
   }
 

@@ -280,6 +280,7 @@ e17_cpufreq_freq09.png \
 e17_cpufreq_freq10.png \
 e17_cpufreq_increase1.png \
 e17_cpufreq_increase2.png \
+e17_desklock_error.png \
 e17_dialog_watermark.png \
 e17_entry_cursor.png \
 e17_fileman_bg.png \

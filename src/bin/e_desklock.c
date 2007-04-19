@@ -8,6 +8,10 @@
 # include <limits.h>
 #endif
 
+#define E_DESKLOCK_STATE_DEFAULT 0
+#define E_DESKLOCK_STATE_CHECKING 1
+#define E_DESKLOCK_STATE_INVALID 2
+
 #define ELOCK_POPUP_LAYER 10000
 #define PASSWD_LEN 256
 
@@ -32,6 +36,7 @@ struct _E_Desklock_Data
    Evas_List	  *handlers;
    Ecore_X_Window  elock_grab_break_wnd;
    char		   passwd[PASSWD_LEN];
+   int		   state;	
 };
 #ifdef HAVE_PAM
 struct _E_Desklock_Auth
@@ -72,6 +77,7 @@ static void _e_desklock_backspace();
 static void _e_desklock_delete();
 static int  _e_desklock_zone_num_get();
 static int _e_desklock_check_auth();
+static void _e_desklock_state_set(int state);
 
 #ifdef HAVE_PAM
 static int _e_desklock_cb_exit(void *data, int type, void *event);
@@ -395,7 +401,7 @@ _e_desklock_cb_key_down(void *data, int type, void *event)
    Ecore_X_Event_Key_Down *ev;
    
    ev = event;
-   if (ev->win != edd->elock_wnd) return 1;
+   if (ev->win != edd->elock_wnd || edd->state == E_DESKLOCK_STATE_CHECKING) return 1;
 
    if (!strcmp(ev->keysymbol, "Escape"))
      ;
@@ -560,11 +566,42 @@ _e_desklock_check_auth()
 #ifdef HAVE_PAM
      }
 #endif
-   /* passowrd is definitely wrong */
+   /* password is definitely wrong */
+   _e_desklock_state_set(E_DESKLOCK_STATE_INVALID);
    memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
    _e_desklock_passwd_update();
    return 0;
 }
+
+static void
+_e_desklock_state_set(int state)
+{
+   Evas_List *l;
+   const char *signal, *text;
+   if (!edd) return;
+
+   edd->state = state;
+   if (state == E_DESKLOCK_STATE_CHECKING)
+     {
+	signal = "e,state,checking";
+	text = "Authenticating...";
+     }
+   else if (state == E_DESKLOCK_STATE_INVALID)
+     {
+	signal = "e,state,invalid";
+	text = "The password you entered is invalid. Try again.";
+     }
+
+   for (l = edd->elock_wnd_list; l; l = l->next)
+     {
+	E_Desklock_Popup_Data *edp;
+	edp = l->data;
+	edje_object_signal_emit(edp->login_box, signal, "e.desklock");
+	edje_object_signal_emit(edp->bg_object, signal, "e.desklock");
+	edje_object_part_text_set(edp->login_box, "e.text.title", text);
+     }
+}
+
 
 #ifdef HAVE_PAM
 static int
@@ -598,6 +635,7 @@ _e_desklock_cb_exit(void *data, int type, void *event)
 	/* failed auth */
 	else
 	  {
+	     _e_desklock_state_set(E_DESKLOCK_STATE_INVALID);
 	     /* security - null out passwd string once we are done with it */
 	     memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
 	     _e_desklock_passwd_update();
@@ -611,6 +649,7 @@ _e_desklock_cb_exit(void *data, int type, void *event)
 static int
 _desklock_auth(char *passwd)
 {
+   _e_desklock_state_set(E_DESKLOCK_STATE_CHECKING);
    if ((_e_desklock_child_pid = fork()))
      {
 	/* parent */
