@@ -176,7 +176,6 @@ e_scrollframe_custom_theme_set(Evas_Object *obj, char *custom_category, char *cu
 EAPI void
 e_scrollframe_custom_edje_file_set(Evas_Object *obj, char *file, char *group)
 {
-   Evas_Coord w, h;
    API_ENTRY return;
 
    edje_object_file_set(sd->edje_obj, file, group);
