@@ -881,27 +881,25 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *of, *ob, *ot;
+   Evas_Object *o, *of, *ob;
    char *cur_sig_loc;
    Evas_List *next;
-   int i;
+   int i = 0;
    
    cfdata->evas = evas;
-   
-   o = e_widget_list_add(evas, 0, 0);
-  
-   of = e_widget_frametable_add(evas, _("Language Selector"), 1);
-  
-   /* Language List */ 
+   o = e_widget_table_add(evas, 0);
+   of = e_widget_framelist_add(evas, _("Language Selector"), 0);
    ob = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_blang));
    e_widget_min_size_set(ob, 175, 175);
    e_widget_on_change_hook_set(ob, _ilist_basic_language_cb_change, cfdata);
    cfdata->gui.blang_list = ob;
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(o, of, 0, 0, 1, 1, 1, 1, 1, 1);
 
+   /* Load languages */
    evas_event_freeze(evas_object_evas_get(ob));
    edje_freeze();
    e_widget_ilist_freeze(ob);
-   
    if (cfdata->cur_language)
      {
 	E_Locale_Parts *locale_parts;
@@ -919,7 +917,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    else
      cur_sig_loc = NULL;
 
-   i = 0;  
    for (next = cfdata->blang_list; next; next = next->next) 
      {
 	E_Intl_Pair *pair;
@@ -935,37 +932,23 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	
 	i++;
      }
-   E_FREE(cur_sig_loc);
-   
+   E_FREE(cur_sig_loc);   
    e_widget_ilist_go(ob);
    e_widget_ilist_thaw(ob);
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(ob));
 
-   e_widget_frametable_object_append(of, ob, 0, 0, 2, 6, 1, 1, 1, 1);
-   e_widget_ilist_selected_set(ob, e_widget_ilist_selected_get(ob));
-   
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
-   /* Locale selector */
-   ot = e_widget_table_add(evas, 0);
-   of = e_widget_framelist_add(evas, _("Locale Selected"), 0);
-  
+   of = e_widget_frametable_add(evas, _("Locale Selected"), 0);
    ob = e_widget_label_add(evas, _("Locale"));
-   e_widget_table_object_append(ot, ob, 
-				0, 0, 1, 1,
-				1, 1, 1, 1);
-   
-   cfdata->gui.locale_entry = e_widget_entry_add(evas, &(cfdata->cur_language));
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 0, 1, 0);
+   ob = e_widget_entry_add(evas, &(cfdata->cur_language));
+   cfdata->gui.locale_entry = ob;
    e_widget_disabled_set(cfdata->gui.locale_entry, 1);
    e_widget_min_size_set(cfdata->gui.locale_entry, 100, 25);
-   e_widget_table_object_append(ot, cfdata->gui.locale_entry, 
-				0, 1, 1, 1, 
-				1, 1, 1, 1);
-   e_widget_framelist_object_append(of, ot);
-   e_widget_framelist_content_align_set(of, 0.0, 0.0);
-   
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_frametable_object_append(of, cfdata->gui.locale_entry, 
+				     0, 1, 1, 1, 1, 1, 1, 0);
+   e_widget_table_object_append(o, of, 0, 1, 1, 1, 1, 0, 1, 0);
+
    e_dialog_resizable_set(cfd->dia, 1);
    return o;
 }
@@ -973,15 +956,16 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *of, *ob, *ot;
+   Evas_Object *o, *of, *ob;
    const char *lang, *reg, *cs, *mod;
+
    cfdata->evas = evas;
   
    _intl_current_locale_setup(cfdata);
    
-   o = e_widget_list_add(evas, 0, 0);
+   o = e_widget_table_add(evas, 0);
   
-   of = e_widget_frametable_add(evas, _("Language Selector"), 1);
+   of = e_widget_framelist_add(evas, _("Language Selector"), 1);
   
    /* Language List */ 
    ob = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_lang));
@@ -1001,17 +985,16 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    
    e_widget_ilist_go(ob);
    e_widget_min_size_set(ob, 140, 200);
-   e_widget_frametable_object_append(of, ob, 0, 0, 1, 4, 1, 1, 1, 1);
+   e_widget_framelist_object_append(of, ob);
    e_widget_ilist_selected_set(ob, e_widget_ilist_selected_get(ob));
-  
-
+   
    /* Region List */
    ob = e_widget_ilist_add(evas, 0, 0, &(cfdata->cur_reg));
    cfdata->gui.reg_list = ob;
  
    e_widget_ilist_go(ob);
    e_widget_min_size_set(ob, 100, 100);
-   e_widget_frametable_object_append(of, ob, 1, 0, 1, 4, 1, 1, 1, 1);
+   e_widget_framelist_object_append(of, ob);
    e_widget_ilist_selected_set(ob, e_widget_ilist_selected_get(ob));
    
    /* Codeset List */
@@ -1020,7 +1003,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    e_widget_ilist_go(ob);
    e_widget_min_size_set(ob, 100, 100);
-   e_widget_frametable_object_append(of, ob, 2, 0, 1, 4, 1, 1, 1, 1);
+   e_widget_framelist_object_append(of, ob);
    
    /* Modified List */
    ob = e_widget_ilist_add(evas, 0, 0, &(cfdata->cur_mod));
@@ -1028,29 +1011,22 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    e_widget_ilist_go(ob);
    e_widget_min_size_set(ob, 100, 100);
-   e_widget_frametable_object_append(of, ob, 3, 0, 1, 4, 1, 1, 1, 1);
-    
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_framelist_object_append(of, ob);
+
+   e_widget_table_object_append(o, of, 0, 0, 1, 1, 1, 1, 1, 1);
    
    /* Locale selector */
-   ot = e_widget_table_add(evas, 0);
-   of = e_widget_framelist_add(evas, _("Locale Selected"), 0);
-  
+   of = e_widget_frametable_add(evas, _("Locale Selected"), 0);
    ob = e_widget_label_add(evas, _("Locale"));
-   e_widget_table_object_append(ot, ob, 
-				0, 0, 1, 1,
-				1, 1, 1, 1);
-   
-   cfdata->gui.locale_entry = e_widget_entry_add(evas, &(cfdata->cur_language));
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 0, 1, 0);
+   ob = e_widget_entry_add(evas, &(cfdata->cur_language));
+   cfdata->gui.locale_entry = ob;
    e_widget_disabled_set(cfdata->gui.locale_entry, 1);
    e_widget_min_size_set(cfdata->gui.locale_entry, 100, 25);
-   e_widget_table_object_append(ot, cfdata->gui.locale_entry, 
-				0, 1, 1, 1, 
-				1, 1, 1, 1);
-   e_widget_framelist_object_append(of, ot);
-   e_widget_framelist_content_align_set(of, 0.0, 0.0);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-  
+   e_widget_frametable_object_append(of, cfdata->gui.locale_entry, 
+				     0, 1, 1, 1, 1, 1, 1, 0);
+   e_widget_table_object_append(o, of, 0, 1, 1, 1, 1, 0, 1, 0);
+
    /* all these cur_* values are not guaranteed to be const so we need to
     * copy them. 
     */
