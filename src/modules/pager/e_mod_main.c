@@ -1831,8 +1831,8 @@ e_modapi_init(E_Module *m)
    E_CONFIG_LIMIT(pager_config->resize, PAGER_RESIZE_HORZ, PAGER_RESIZE_BOTH);
    E_CONFIG_LIMIT(pager_config->flip_desk, 0, 1);
    E_CONFIG_LIMIT(pager_config->scale, 0, 1);
-   E_CONFIG_LIMIT(pager_config->btn_drag, 1, 32);
-   E_CONFIG_LIMIT(pager_config->btn_noplace, 1, 32);
+   E_CONFIG_LIMIT(pager_config->btn_drag, 0, 32);
+   E_CONFIG_LIMIT(pager_config->btn_noplace, 0, 32);
 
    pager_config->handlers = evas_list_append
      (pager_config->handlers, ecore_event_handler_add

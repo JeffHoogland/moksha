@@ -136,12 +136,28 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    Evas_Object *o, *of, *of2, *ob;
 
    o = e_widget_list_add(evas, 0, 0);
-   of = e_widget_framelist_add(evas, _("Resistance to Dragging Windows:"), 0);
+   
+   of = e_widget_frametable_add(evas, _("Pager Settings"), 0);
+   ob = e_widget_check_add(evas, _("Flip desktop on mouse wheel"), &(cfdata->flip_desk));
+   e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 0, 0);
+   ob = e_widget_label_add(evas, _("Select and Slide button"));
+   e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_label_add(evas, _("Drag and Drop button (Keeps rel. loc.)"));
+   e_widget_frametable_object_append(of, ob, 1, 3, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_button_add(evas, _("Click to set"), NULL, _grab_wnd_show, (void *)GRAB_BUTTON_DRAG, cfdata);
+   e_widget_frametable_object_append(of, ob, 2, 2, 1, 1, 1, 1, 0, 0);
+   cfdata->gui.o_btn1 = ob;
+   ob = e_widget_button_add(evas, _("Click to set"), NULL, _grab_wnd_show, (void *)GRAB_BUTTON_NOPLACE, cfdata);
+   e_widget_frametable_object_append(of, ob, 2, 3, 1, 1, 1, 1, 0, 0);
+   cfdata->gui.o_btn2 = ob;
+   _advanced_update_button_label(cfdata);
+   ob = e_widget_label_add(evas, _("Resistance to dragging"));
+   e_widget_frametable_object_append(of, ob, 1, 4, 1, 1, 1, 1, 0, 0);
    ob = e_widget_slider_add(evas, 1, 0, _("%.0f px"), 0.0, 10.0, 1.0, 0, NULL, &(cfdata->drag_resist), 200);
-   e_widget_framelist_object_append(of, ob);
+   e_widget_frametable_object_append(of, ob, 1, 5, 2, 1, 1, 1, 0, 0);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Popup Settings"), 0);   
+   of = e_widget_framelist_add(evas, _("Pager Popup Settings"), 0);   
    ob = e_widget_check_add(evas, _("Show Popup on desktop change"), &(cfdata->show_popup));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Popup Speed"));
@@ -165,25 +181,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    e_widget_framelist_object_append(of, of2);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-
-   of = e_widget_frametable_add(evas, _("Buttons Settings"), 0);
-   ob = e_widget_label_add(evas, _("Drag and select button"));
-   e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_label_add(evas, _("Drag no place button"));
-   e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_button_add(evas, _("Click to set"), NULL, _grab_wnd_show, (void *)GRAB_BUTTON_DRAG, cfdata);
-   e_widget_frametable_object_append(of, ob, 2, 1, 1, 1, 1, 1, 0, 0);
-   cfdata->gui.o_btn1 = ob;
-   ob = e_widget_button_add(evas, _("Click to set"), NULL, _grab_wnd_show, (void *)GRAB_BUTTON_NOPLACE, cfdata);
-   e_widget_frametable_object_append(of, ob, 2, 2, 1, 1, 1, 1, 0, 0);
-   cfdata->gui.o_btn2 = ob;
-   _advanced_update_button_label(cfdata);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);   
-   
-   of = e_widget_framelist_add(evas, _("Wheel callback"), 0);   
-   ob = e_widget_check_add(evas, _("Flip desktop on mouse wheel"), &(cfdata->flip_desk));
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);   
 
    return o;
 }
