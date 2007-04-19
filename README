@@ -18,6 +18,7 @@ The following Enlightenment Foundation Libraries are required by e17:
   * ecore
   * embryo
   * edje
+  * efreet
 
 
 NOTES:
