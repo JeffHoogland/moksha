@@ -343,36 +343,48 @@ _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	E_Menu_Item *mi;
 	E_Manager *man;
 	E_Container *con;
+        int selection_length;
 	int x, y;
-	
-	if (!sd->enabled) return;
-	
+
+        selection_length = e_editable_cursor_pos_get(sd->editable_object) - e_editable_selection_pos_get(sd->editable_object);
+        if (!selection_length && !sd->enabled) return;
+
 	man = e_manager_current_get();
 	con = e_container_current_get(man);
 	ecore_x_pointer_xy_get(con->win, &x, &y);
-	
+
 	/* Popup a menu */
 	sd->popup = e_menu_new();
 	e_menu_post_deactivate_callback_set(sd->popup, 
 					    _e_entry_cb_menu_post, sd);
-	mi = e_menu_item_new(sd->popup);
-	e_menu_item_label_set(mi, _("Cut"));
-	e_menu_item_icon_edje_set(mi, e_theme_edje_file_get("base/theme/fileman",
-							    "e/fileman/button/cut"),
-				  "e/fileman/button/cut");
-	e_menu_item_callback_set(mi, _e_entry_cb_cut, sd);
-	mi = e_menu_item_new(sd->popup);
-	e_menu_item_label_set(mi, _("Copy"));
-	e_menu_item_icon_edje_set(mi, e_theme_edje_file_get("base/theme/fileman",
-							    "e/fileman/button/copy"),
-				  "e/fileman/button/copy");
-	e_menu_item_callback_set(mi, _e_entry_cb_copy, sd);
-	mi = e_menu_item_new(sd->popup);
-	e_menu_item_label_set(mi, _("Paste"));
-	e_menu_item_icon_edje_set(mi, e_theme_edje_file_get("base/theme/fileman",
-							    "e/fileman/button/paste"),
-				  "e/fileman/button/paste");
-	e_menu_item_callback_set(mi, _e_entry_cb_paste, sd);
+        if (selection_length > 0)
+          {
+             if (sd->enabled)
+               {
+                  mi = e_menu_item_new(sd->popup);
+                  e_menu_item_label_set(mi, _("Cut"));
+                  e_menu_item_icon_edje_set(mi, e_theme_edje_file_get("base/theme/fileman",
+                                                                      "e/fileman/button/cut"),
+                                            "e/fileman/button/cut");
+                  e_menu_item_callback_set(mi, _e_entry_cb_cut, sd);
+               }
+
+             mi = e_menu_item_new(sd->popup);
+             e_menu_item_label_set(mi, _("Copy"));
+             e_menu_item_icon_edje_set(mi, e_theme_edje_file_get("base/theme/fileman",
+                                                                 "e/fileman/button/copy"),
+                                       "e/fileman/button/copy");
+             e_menu_item_callback_set(mi, _e_entry_cb_copy, sd);
+          }
+        if (sd->enabled)
+          {
+             mi = e_menu_item_new(sd->popup);
+             e_menu_item_label_set(mi, _("Paste"));
+             e_menu_item_icon_edje_set(mi, e_theme_edje_file_get("base/theme/fileman",
+                                                                 "e/fileman/button/paste"),
+                                       "e/fileman/button/paste");
+             e_menu_item_callback_set(mi, _e_entry_cb_paste, sd);
+          }
 
 	e_menu_activate_mouse(sd->popup, e_util_zone_current_get(man),
 			      x, y, 1, 1, 
