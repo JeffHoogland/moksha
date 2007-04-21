@@ -45,6 +45,8 @@ static void _e_entry_cb_menu_post(void *data, E_Menu *m);
 static void _e_entry_cb_cut(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_entry_cb_copy(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_entry_cb_paste(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_entry_cb_select_all(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_entry_cb_delete(void *data, E_Menu *m, E_Menu_Item *mi);
 
 /* local subsystem globals */
 static Evas_Smart *_e_entry_smart = NULL;
@@ -343,11 +345,18 @@ _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	E_Menu_Item *mi;
 	E_Manager *man;
 	E_Container *con;
-        int selection_length;
 	int x, y;
+	int cursor_pos, selection_pos;
+	int start_pos, end_pos;
+	int selecting;
 
-        selection_length = e_editable_cursor_pos_get(sd->editable_object) - e_editable_selection_pos_get(sd->editable_object);
-        if (!selection_length && !sd->enabled) return;
+	cursor_pos = e_editable_cursor_pos_get(sd->editable_object);
+	selection_pos = e_editable_selection_pos_get(sd->editable_object);
+	start_pos = (cursor_pos <= selection_pos) ? cursor_pos : selection_pos;
+	end_pos = (cursor_pos >= selection_pos) ? cursor_pos : selection_pos;
+	selecting = (start_pos != end_pos);
+	
+        if (!selecting && !sd->enabled) return;
 
 	man = e_manager_current_get();
 	con = e_container_current_get(man);
@@ -357,25 +366,39 @@ _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	sd->popup = e_menu_new();
 	e_menu_post_deactivate_callback_set(sd->popup, 
 					    _e_entry_cb_menu_post, sd);
-        if (selection_length > 0)
+        if (selecting)
           {
              if (sd->enabled)
                {
+		  if (e_editable_text_length_get(sd->editable_object)) 
+		    {
+		       mi = e_menu_item_new(sd->popup);
+		       e_menu_item_label_set(mi, _("Delete"));
+		       e_menu_item_icon_edje_set(mi, e_theme_edje_file_get("base/theme/fileman",
+									   "e/fileman/button/delete"),
+						 "e/fileman/button/delete");
+		       e_menu_item_callback_set(mi, _e_entry_cb_delete, sd);
+		       
+		       mi = e_menu_item_new(sd->popup);
+		       e_menu_item_separator_set(mi, 1);
+		    }
+		  
                   mi = e_menu_item_new(sd->popup);
                   e_menu_item_label_set(mi, _("Cut"));
                   e_menu_item_icon_edje_set(mi, e_theme_edje_file_get("base/theme/fileman",
                                                                       "e/fileman/button/cut"),
                                             "e/fileman/button/cut");
                   e_menu_item_callback_set(mi, _e_entry_cb_cut, sd);
+		  
+		  mi = e_menu_item_new(sd->popup);
+		  e_menu_item_label_set(mi, _("Copy"));
+		  e_menu_item_icon_edje_set(mi, e_theme_edje_file_get("base/theme/fileman",
+								      "e/fileman/button/copy"),
+					    "e/fileman/button/copy");
+		  e_menu_item_callback_set(mi, _e_entry_cb_copy, sd);
                }
-
-             mi = e_menu_item_new(sd->popup);
-             e_menu_item_label_set(mi, _("Copy"));
-             e_menu_item_icon_edje_set(mi, e_theme_edje_file_get("base/theme/fileman",
-                                                                 "e/fileman/button/copy"),
-                                       "e/fileman/button/copy");
-             e_menu_item_callback_set(mi, _e_entry_cb_copy, sd);
           }
+	
         if (sd->enabled)
           {
              mi = e_menu_item_new(sd->popup);
@@ -384,6 +407,16 @@ _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
                                                                  "e/fileman/button/paste"),
                                        "e/fileman/button/paste");
              e_menu_item_callback_set(mi, _e_entry_cb_paste, sd);
+	     
+	     if (e_editable_text_length_get(sd->editable_object)) 
+	       {
+		  mi = e_menu_item_new(sd->popup);
+		  e_menu_item_separator_set(mi, 1);
+		  
+		  mi = e_menu_item_new(sd->popup);
+		  e_menu_item_label_set(mi, _("Select All"));
+		  e_menu_item_callback_set(mi, _e_entry_cb_select_all, sd);
+	       }
           }
 
 	e_menu_activate_mouse(sd->popup, e_util_zone_current_get(man),
@@ -1046,4 +1079,46 @@ _e_entry_cb_paste(void *data, E_Menu *m, E_Menu_Item *mi)
    if ((win = e_win_evas_object_win_get(sd->entry_object)))
      ecore_x_selection_clipboard_request(win->evas_win,
 					 ECORE_X_SELECTION_TARGET_UTF8_STRING);
+}
+
+static void 
+_e_entry_cb_select_all(void *data, E_Menu *m, E_Menu_Item *mi) 
+{
+   E_Entry_Smart_Data *sd;
+   
+   sd = data;
+   if (!sd->enabled) return;
+   e_editable_select_all(sd->editable_object);
+   _e_entry_x_selection_update(sd->entry_object);
+}
+
+static void 
+_e_entry_cb_delete(void *data, E_Menu *m, E_Menu_Item *mi) 
+{
+   E_Entry_Smart_Data *sd;
+   Evas_Object *editable;
+   int cursor_pos, selection_pos;
+   int start_pos, end_pos;
+   int selecting;
+   char *range;
+   E_Win *win;
+
+   sd = data;
+   if (!sd->enabled) return;
+   
+   editable = sd->editable_object;
+   cursor_pos = e_editable_cursor_pos_get(editable);
+   selection_pos = e_editable_selection_pos_get(editable);
+   start_pos = (cursor_pos <= selection_pos) ? cursor_pos : selection_pos;
+   end_pos = (cursor_pos >= selection_pos) ? cursor_pos : selection_pos;
+   selecting = (start_pos != end_pos);
+   if (!selecting) return;
+   
+   range = e_editable_text_range_get(editable, start_pos, end_pos);
+   if (range)
+     {
+	e_editable_delete(editable, start_pos, end_pos);
+	evas_object_smart_callback_call(sd->entry_object, "changed", NULL);
+	free(range);
+     }
 }
