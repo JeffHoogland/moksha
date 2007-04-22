@@ -1757,8 +1757,15 @@ e_config_profile_save(void)
 		       strlen(_e_config_profile), 0);
 	if (_e_config_eet_close_handle(ef, buf2))
 	  {
-	     rename(buf2, buf);
-	     /* FIXME: get rename err */
+	     int ret;
+	     
+	     ret = rename(buf2, buf);
+	     if (ret < 0) 
+	       {
+		  /* FIXME: do we want to trap individual errno
+		   and provide a short blurp to the user? */
+		  perror("rename");
+	       }
 	  }
 	ecore_file_unlink(buf2);
      }
