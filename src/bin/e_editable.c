@@ -202,7 +202,9 @@ e_editable_text_set(Evas_Object *editable, const char *text)
    
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
-   
+  
+   if (sd->password_mode) 
+     memset(sd->text, 0, sd->char_length);
    free(sd->text);
    sd->text = NULL;
    sd->char_length = 0;
@@ -639,6 +641,48 @@ e_editable_unselect_all(Evas_Object *editable)
 }
 
 /**
+ * Selects the word at the provided character index
+ */
+EAPI void
+e_editable_select_word(Evas_Object *editable, int index)
+{
+   E_Editable_Smart_Data *sd;
+   int spos, epos, i, pos;
+
+   if (!editable || (!(sd = evas_object_smart_data_get(editable))))
+     return;
+
+   if (index < 0 || index >= sd->unicode_length)
+     return;
+
+   i = 0;
+   spos = 0;
+   epos = -1;
+   pos = 0;
+   while (i < sd->char_length)
+     {
+	if (sd->text[i] == ' ')
+	  {
+	     if (pos < index)
+	       spos = pos + 1;
+	     else if (pos > index)
+	       {
+		  epos = pos;
+		  break;
+	       }
+	  }
+
+	i = evas_string_char_next_get(sd->text, i, NULL);
+	pos++;
+     }
+   if (epos == -1)
+     epos = pos;
+
+   e_editable_selection_pos_set(editable, spos);
+   e_editable_cursor_pos_set(editable, epos);
+}
+
+/**
  * Shows the selection of the editable object
  *
  * @param editable an editable object
@@ -841,8 +885,20 @@ _e_editable_text_insert(Evas_Object *editable, int pos, const char *text)
    
    if (sd->char_length > sd->allocated_length)
      {
-        sd->text = realloc(sd->text,
+	if (sd->password_mode)
+	  {
+	     /* security -- copy contents into new buffer, and overwrite old contents */
+	     char *old = sd->text;
+	     sd->text = malloc(E_EDITABLE_SIZE_TO_ALLOC(sd->char_length) + 1);
+	     memcpy(sd->text, old, sd->char_length + 1);
+	     memset(old, 0, sd->char_length);
+	     free(old);
+	  }
+	else
+	  {
+	     sd->text = realloc(sd->text,
                            E_EDITABLE_SIZE_TO_ALLOC(sd->char_length) + 1);
+	  }
         sd->allocated_length = E_EDITABLE_SIZE_TO_ALLOC(sd->char_length);
      }
    
@@ -1181,7 +1237,7 @@ _e_editable_smart_del(Evas_Object *object)
    evas_object_del(sd->selection_object);
    /* Security - clear out memory that contained a password */
    if (sd->password_mode) 
-     memset(sd->text, 0, strlen(sd->text));
+     memset(sd->text, 0, sd->char_length);
    free(sd->text);
    free(sd);
    

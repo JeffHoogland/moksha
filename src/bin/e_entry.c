@@ -315,12 +315,18 @@ _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    pos = e_editable_pos_get_from_coords(sd->editable_object,
                                         event->canvas.x - ox,
                                         event->canvas.y - oy);
-   
+  
+   printf("MOUSE DOWN: %d\n", pos);
    if (event->button == 1)
      {
-        if (event->flags & EVAS_BUTTON_DOUBLE_CLICK)
+	if (event->flags & EVAS_BUTTON_TRIPLE_CLICK)
 	  {
 	     e_editable_select_all(sd->editable_object);
+	     _e_entry_x_selection_update(obj);
+	  }
+	else if (event->flags & EVAS_BUTTON_DOUBLE_CLICK)
+	  {
+	     e_editable_select_word(sd->editable_object, pos);
 	     _e_entry_x_selection_update(obj);
 	  }
         else
