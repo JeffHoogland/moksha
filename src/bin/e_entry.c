@@ -374,38 +374,41 @@ _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	sd->popup = e_menu_new();
 	e_menu_post_deactivate_callback_set(sd->popup, 
 					    _e_entry_cb_menu_post, sd);
-        if (selecting)
-          {
-             if (sd->enabled)
-               {
-		  if (e_editable_text_length_get(sd->editable_object)) 
-		    {
-		       mi = e_menu_item_new(sd->popup);
-		       e_menu_item_label_set(mi, _("Delete"));
-		       e_menu_item_icon_edje_set(mi, e_theme_edje_file_get("base/theme/fileman",
-									   "e/fileman/button/delete"),
-						 "e/fileman/button/delete");
-		       e_menu_item_callback_set(mi, _e_entry_cb_delete, sd);
-		       
-		       mi = e_menu_item_new(sd->popup);
-		       e_menu_item_separator_set(mi, 1);
-		    }
-		  
-                  mi = e_menu_item_new(sd->popup);
-                  e_menu_item_label_set(mi, _("Cut"));
-                  e_menu_item_icon_edje_set(mi, e_theme_edje_file_get("base/theme/fileman",
-                                                                      "e/fileman/button/cut"),
-                                            "e/fileman/button/cut");
-                  e_menu_item_callback_set(mi, _e_entry_cb_cut, sd);
-		  
+        if (selecting && sd->enabled)
+	  {
+	     if (e_editable_text_length_get(sd->editable_object)) 
+	       {
+		  mi = e_menu_item_new(sd->popup);
+		  e_menu_item_label_set(mi, _("Delete"));
+		  e_menu_item_icon_edje_set(mi,
+				e_theme_edje_file_get("base/theme/fileman",
+				"e/fileman/button/delete"),
+				"e/fileman/button/delete");
+		  e_menu_item_callback_set(mi, _e_entry_cb_delete, sd);
+
+		  mi = e_menu_item_new(sd->popup);
+		  e_menu_item_separator_set(mi, 1);
+	       }
+
+	     if (!e_editable_password_get(sd->editable_object))
+	       {
+		  mi = e_menu_item_new(sd->popup);
+		  e_menu_item_label_set(mi, _("Cut"));
+		  e_menu_item_icon_edje_set(mi,
+				e_theme_edje_file_get("base/theme/fileman",
+				"e/fileman/button/cut"),
+				"e/fileman/button/cut");
+		  e_menu_item_callback_set(mi, _e_entry_cb_cut, sd);
+
 		  mi = e_menu_item_new(sd->popup);
 		  e_menu_item_label_set(mi, _("Copy"));
-		  e_menu_item_icon_edje_set(mi, e_theme_edje_file_get("base/theme/fileman",
-								      "e/fileman/button/copy"),
-					    "e/fileman/button/copy");
+		  e_menu_item_icon_edje_set(mi, 
+				e_theme_edje_file_get("base/theme/fileman",
+				"e/fileman/button/copy"),
+				"e/fileman/button/copy");
 		  e_menu_item_callback_set(mi, _e_entry_cb_copy, sd);
-               }
-          }
+	       }
+	  }
 	
         if (sd->enabled)
           {
@@ -538,6 +541,8 @@ _e_entry_x_selection_update(Evas_Object *entry)
      return;
    
    editable = sd->editable_object;
+   if (e_editable_password_get(editable)) return;
+
    cursor_pos = e_editable_cursor_pos_get(editable);
    selection_pos = e_editable_selection_pos_get(editable);
    start_pos = (cursor_pos <= selection_pos) ? cursor_pos : selection_pos;
@@ -548,6 +553,7 @@ _e_entry_x_selection_update(Evas_Object *entry)
        (!(text = e_editable_text_range_get(editable, start_pos, end_pos))))
      return;
   
+
    ecore_x_selection_primary_set(win->evas_win, text, strlen(text) + 1);
    free(text);
 }
@@ -669,7 +675,7 @@ _e_entry_key_down_windows(Evas_Object *entry, Evas_Event_Key_Down *event)
         else if ((strcmp(event->keyname, "x") == 0) ||
                  (strcmp(event->keyname, "c") == 0))
           {
-             if (selecting)
+             if (!e_editable_password_get(editable) && selecting)
                {
                  range = e_editable_text_range_get(editable, start_pos, end_pos);
                  if (range)
@@ -811,7 +817,7 @@ _e_entry_key_down_emacs(Evas_Object *entry, Evas_Event_Key_Down *event)
 	     evas_key_modifier_is_set(event->modifiers, "Shift")) &&
 	    (strcmp(event->key, "w") == 0))
      {
-        if (selecting)
+	if (!e_editable_password_get(editable) && selecting)
           {
 	     range = e_editable_text_range_get(editable, start_pos, end_pos);
 	     if (range)
