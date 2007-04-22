@@ -316,7 +316,6 @@ _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
                                         event->canvas.x - ox,
                                         event->canvas.y - oy);
   
-   printf("MOUSE DOWN: %d\n", pos);
    if (event->button == 1)
      {
 	if (event->flags & EVAS_BUTTON_TRIPLE_CLICK)
