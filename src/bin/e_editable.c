@@ -1179,6 +1179,9 @@ _e_editable_smart_del(Evas_Object *object)
    evas_object_del(sd->text_object);
    evas_object_del(sd->cursor_object);
    evas_object_del(sd->selection_object);
+   /* Security - clear out memory that contained a password */
+   if (sd->password_mode) 
+     memset(sd->text, 0, strlen(sd->text));
    free(sd->text);
    free(sd);
    
