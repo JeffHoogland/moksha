@@ -3,8 +3,6 @@
  */
 #include "e.h"
 
-#include <math.h>
-
 typedef struct _E_Smart_Data E_Smart_Data;
 typedef struct _E_Flowlayout_Item   E_Flowlayout_Item;
 
