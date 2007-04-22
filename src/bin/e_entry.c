@@ -319,7 +319,10 @@ _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if (event->button == 1)
      {
         if (event->flags & EVAS_BUTTON_DOUBLE_CLICK)
-          e_editable_select_all(sd->editable_object);
+	  {
+	     e_editable_select_all(sd->editable_object);
+	     _e_entry_x_selection_update(obj);
+	  }
         else
           {
              e_editable_cursor_pos_set(sd->editable_object, pos);
@@ -535,11 +538,11 @@ _e_entry_x_selection_update(Evas_Object *entry)
    start_pos = (cursor_pos <= selection_pos) ? cursor_pos : selection_pos;
    end_pos = (cursor_pos >= selection_pos) ? cursor_pos : selection_pos;
    selecting = (start_pos != end_pos);
-   
+  
    if ((!selecting) ||
        (!(text = e_editable_text_range_get(editable, start_pos, end_pos))))
      return;
-   
+  
    ecore_x_selection_primary_set(win->evas_win, text, strlen(text) + 1);
    free(text);
 }
