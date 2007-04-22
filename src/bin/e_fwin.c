@@ -23,6 +23,7 @@ static void _e_fwin_free(E_Fwin *fwin);
 static void _e_fwin_cb_delete(E_Win *win);
 static void _e_fwin_cb_resize(E_Win *win);
 static void _e_fwin_deleted(void *data, Evas_Object *obj, void *event_info);
+static const char *_e_fwin_custom_file_path_eval(E_Fwin *fwin, Efreet_Desktop *ef, const char *prev_path, const char *key);
 static void _e_fwin_changed(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_selected(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_menu_extend(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info);
@@ -208,6 +209,10 @@ _e_fwin_free(E_Fwin *fwin)
      }
    e_object_del(E_OBJECT(fwin->win));
    fwins = evas_list_remove(fwins, fwin);
+   if (fwin->wallpaper_file) evas_stringshare_del(fwin->wallpaper_file);
+   if (fwin->overlay_file) evas_stringshare_del(fwin->overlay_file);
+   if (fwin->scrollframe_file) evas_stringshare_del(fwin->scrollframe_file);
+   if (fwin->theme_file) evas_stringshare_del(fwin->theme_file);
    free(fwin);
 }
 
@@ -239,40 +244,76 @@ _e_fwin_deleted(void *data, Evas_Object *obj, void *event_info)
    e_object_del(E_OBJECT(fwin));
 }
 
+static const char *
+_e_fwin_custom_file_path_eval(E_Fwin *fwin, Efreet_Desktop *ef, const char *prev_path, const char *key)
+{
+   char buf[PATH_MAX];
+   const char *res, *ret = NULL;
+   
+   /* get a X-something custom tage from the .desktop for the dir */
+   res = ecore_hash_get(ef->x, key);
+   /* free the old path */
+   if (prev_path) evas_stringshare_del(prev_path);
+   /* if there was no key found - return NULL */
+   if (!res) return NULL;
+   
+   /* it's a full path */
+   if (res[0] == '/')
+     ret = evas_stringshare_add(res);
+   /* relative path to the dir */
+   else
+     {
+	snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(fwin->fm_obj), res);
+	ret = evas_stringshare_add(buf);
+     }
+   return ret;
+}
+
 static void
 _e_fwin_changed(void *data, Evas_Object *obj, void *event_info)
 {
    E_Fwin *fwin;
+   Efreet_Desktop *ef;
    char buf[PATH_MAX];
    
    fwin = data;
    /* FIXME: first look in E config for a special override for this dir's bg
     * or overlay
     */
+   snprintf(buf, sizeof(buf), "%s/.directory.desktop", e_fm2_real_path_get(fwin->fm_obj));
+   ef = efreet_desktop_get(buf);
+   if (ef)
+     {
+	fwin->wallpaper_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->wallpaper_file, "X-Enlightenment-Directory-Wallpaper");
+	fwin->overlay_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->overlay_file, "X-Enlightenment-Directory-Overlay");
+	fwin->scrollframe_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->scrollframe_file, "X-Enlightenment-Directory-Scrollframe");
+	fwin->theme_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->theme_file, "X-Enlightenment-Directory-Theme");
+// FIXME: there is no way to just unref an efreet desktop - free completely
+// frees - doesnt just unref.
+// 	efreet_desktop_free(ef);
+     }
    if (fwin->under_obj)
      {
 	evas_object_hide(fwin->under_obj);
-	snprintf(buf, sizeof(buf), "%s/.directory-wallpaper.edj",
-		 e_fm2_real_path_get(fwin->fm_obj));
 	edje_object_file_set(fwin->under_obj, NULL, NULL);
-	edje_object_file_set(fwin->under_obj, buf, "e/desktop/background");
+	if (fwin->wallpaper_file)
+	  edje_object_file_set(fwin->under_obj, fwin->wallpaper_file, "e/desktop/background");
 	evas_object_show(fwin->under_obj);
      }
    if (fwin->over_obj)
      {
 	evas_object_hide(fwin->over_obj);
-	snprintf(buf, sizeof(buf), "%s/.directory-overlay.edj",
-		 e_fm2_real_path_get(fwin->fm_obj));
 	edje_object_file_set(fwin->over_obj, NULL, NULL);
-	edje_object_file_set(fwin->over_obj, buf, "e/desktop/background");
+	if (fwin->overlay_file)
+	  edje_object_file_set(fwin->over_obj, fwin->overlay_file, "e/desktop/background");
 	evas_object_show(fwin->over_obj);
      }
    if (fwin->scrollframe_obj)
      {
-	snprintf(buf, sizeof(buf), "%s/.directory-scrollframe.edj",
-		 e_fm2_real_path_get(fwin->fm_obj));
-	if (e_util_edje_collection_exists(buf, "e/fileman/scrollframe/default"))
-	  e_scrollframe_custom_edje_file_set(fwin->scrollframe_obj, buf,
+	if ((fwin->scrollframe_file) && 
+	    (e_util_edje_collection_exists(fwin->scrollframe_file, "e/fileman/scrollframe/default")))
+	  e_scrollframe_custom_edje_file_set(fwin->scrollframe_obj, 
+					     (char *)fwin->scrollframe_file,
 					     "e/fileman/scrollframe/default");
 	else
 	  e_scrollframe_custom_theme_set(fwin->scrollframe_obj,
@@ -280,10 +321,8 @@ _e_fwin_changed(void *data, Evas_Object *obj, void *event_info)
 					 "e/fileman/scrollframe/default");
 	e_scrollframe_child_pos_set(fwin->scrollframe_obj, 0, 0);
      }
-   snprintf(buf, sizeof(buf), "%s/.directory-theme.edj",
-	    e_fm2_real_path_get(fwin->fm_obj));
-   if (ecore_file_exists(buf))
-     e_fm2_custom_theme_set(obj, buf);
+   if ((fwin->theme_file) && (ecore_file_exists(fwin->theme_file)))
+     e_fm2_custom_theme_set(obj, fwin->theme_file);
    else
      e_fm2_custom_theme_set(obj, NULL);
 }

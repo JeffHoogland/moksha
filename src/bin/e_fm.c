@@ -1007,6 +1007,9 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 		  ef = efreet_desktop_get(buf);
 		  if (ef) oic = e_util_desktop_icon_add(ef, "24x24", evas);
 		  if (type_ret) *type_ret = "DESKTOP";
+// FIXME: there is no way to just unref an efreet desktop - free completely
+// frees - doesnt just unref.
+//		  if (ef) efreet_desktop_free(ef);
 	       }
 	     else if (!strncmp(icon, "e/icons/fileman/mime/", 21))
 	       {
@@ -1075,6 +1078,9 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 		  ef = efreet_desktop_get(buf);
 		  if (ef) oic = e_util_desktop_icon_add(ef, "24x24", evas);
 		  if (type_ret) *type_ret = "DESKTOP";
+// FIXME: there is no way to just unref an efreet desktop - free completely
+// frees - doesnt just unref.
+//		  if (ef) efreet_desktop_free(ef);
 	       }
 	     else if (e_util_glob_case_match(ici->file, "*.imc"))
 	       {	  
@@ -2701,7 +2707,10 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 	     else if (!strcmp(type, "Removable")) ic->info.removable = 1;
 	  }
      }
- 
+// FIXME: there is no way to just unref an efreet desktop - free completely
+// frees - doesnt just unref.
+//   efreet_desktop_free(desktop);
+//  
    return 1;
    error:
    if (ic->info.label) evas_stringshare_del(ic->info.label);

@@ -27,6 +27,11 @@ struct _E_Fwin
    struct {
       Evas_Coord        x, y, max_x, max_y, w, h;
    } fm_pan, fm_pan_last;
+   
+   const char         *wallpaper_file;
+   const char         *overlay_file;
+   const char         *scrollframe_file;
+   const char         *theme_file;
 };
 
 struct _E_Fwin_Apps_Dialog
