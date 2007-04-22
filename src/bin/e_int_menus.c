@@ -91,16 +91,19 @@ e_int_menus_main_new(void)
    dat->menu = m;
    e_object_data_set(E_OBJECT(m), dat);   
    e_object_del_attach_func_set(E_OBJECT(m), _e_int_menus_main_del_hook);
-   
+
    e_menu_category_set(m, "main");
 
    subm = e_int_menus_favorite_apps_new();
-   dat->apps = subm;
-   mi = e_menu_item_new(m);
+   if (subm)
+     {
+	dat->apps = subm; 
+	mi = e_menu_item_new(m);
 
-   e_menu_item_label_set(mi, _("Favorite Applications"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/favorites");
-   e_menu_item_submenu_set(mi, subm);
+	e_menu_item_label_set(mi, _("Favorite Applications"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/favorites");
+	e_menu_item_submenu_set(mi, subm);
+     }
 
    subm = e_int_menus_all_apps_new();
    dat->all_apps = subm;
@@ -108,7 +111,7 @@ e_int_menus_main_new(void)
    e_menu_item_label_set(mi, _("Applications"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/applications");
    e_menu_item_submenu_set(mi, subm);
-  
+
 #ifdef ENABLE_FILES
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Files"));
@@ -255,13 +258,15 @@ e_int_menus_desktops_new(void)
 EAPI E_Menu *
 e_int_menus_favorite_apps_new(void)
 {
-   E_Menu *m;
+   E_Menu *m = NULL;
    char buf[4096];
    const char *homedir;
    
    homedir = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/menu/favorite.menu", homedir);
-   m = e_int_menus_apps_new(buf);
+
+   if (ecore_file_exists(buf)) 
+     m = e_int_menus_apps_new(buf);
    return m;
 }
 
@@ -374,7 +379,7 @@ _e_int_menus_main_del_hook(void *obj)
    dat = e_object_data_get(E_OBJECT(obj));
    if (dat)
      {
-	e_object_del(E_OBJECT(dat->apps));
+	if (dat->apps) e_object_del(E_OBJECT(dat->apps));
 	e_object_del(E_OBJECT(dat->all_apps));
 	e_object_del(E_OBJECT(dat->desktops));
 	e_object_del(E_OBJECT(dat->clients));
