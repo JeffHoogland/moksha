@@ -63,6 +63,8 @@ struct _E_Fop
    const char         *rel;
    int                 rel_to;
    int                 x, y;
+   unsigned char       del_after : 1;
+   unsigned char       gone_bad : 1;
    Ecore_Idler        *idler;
    void               *data;
 };
@@ -827,7 +829,7 @@ _e_cb_fop_rm_idler(void *data)
    if (fd->dir) dp = readdir(fd->dir);
    else
      {
-	/* FIXME: handle err */
+	/* FIXME: handle err  - if fd->diir is not a dir */
      }
    if (dp)
      {
@@ -902,8 +904,9 @@ _e_cb_fop_mv_idler(void *data)
 	  {
 	     if (errno == EXDEV)
 	       {
-		  /* copy it */
+		  /* copy it instead - but del after cp */
 		  fop->idler = ecore_idler_add(_e_cb_fop_cp_idler, fop);
+		  fop->del_after = 1;
 		  return 0;
 	       }
 	     else
@@ -953,7 +956,8 @@ _e_cb_fop_cp_idler(void *data)
 		       if (stat(buf, &st) == 0)
 			 {
 			    /* mkdir at the other end - retain stat info */
-			    ecore_file_mkdir(buf2);
+			    if (!ecore_file_mkdir(buf2))
+			      fop->gone_bad = 1;
 			    chmod(buf2, st.st_mode);
 			    chown(buf2, st.st_uid, st.st_gid);
 			    ut.actime = st.st_atime;
@@ -968,12 +972,14 @@ _e_cb_fop_cp_idler(void *data)
 			    if (S_ISFIFO(st.st_mode))
 			      {
 				 /* create fifo at other end */
-				 mkfifo(buf2, st.st_mode);
+				 if (mkfifo(buf2, st.st_mode) != 0)
+				   fop->gone_bad = 1;
 			      }
 			    else if (S_ISREG(st.st_mode))
 			      {
 				 /* copy file data - retain file mode and stat data */
-				 ecore_file_cp(buf, buf2); /* FIXME: this should be split up into the fop idler to do in idle time maybe 1 block or page at a time */
+				 if (!ecore_file_cp(buf, buf2)) /* FIXME: this should be split up into the fop idler to do in idle time maybe 1 block or page at a time */
+				   fop->gone_bad = 1;
 			      }
 			    chmod(buf2, st.st_mode);
 			    chown(buf2, st.st_uid, st.st_gid);
@@ -988,7 +994,8 @@ _e_cb_fop_cp_idler(void *data)
 		  if (stat(buf, &st) == 0)
 		    {
 		       /* duplicate link - retain stat data */
-		       symlink(lnk, buf2);
+		       if (symlink(lnk, buf2) != 0)
+			 fop->gone_bad = 1;
 		       chmod(buf2, st.st_mode);
 		       chown(buf2, st.st_uid, st.st_gid);
 		       ut.actime = st.st_atime;
@@ -1022,7 +1029,8 @@ _e_cb_fop_cp_idler(void *data)
 		       if (stat(buf, &st) == 0)
 			 {
 			    /* mkdir at the other end - retain stat info */
-			    ecore_file_mkdir(buf2);
+			    if (!ecore_file_mkdir(buf2))
+			      fop->gone_bad = 1;
 			    chmod(buf2, st.st_mode);
 			    chown(buf2, st.st_uid, st.st_gid);
 			    ut.actime = st.st_atime;
@@ -1045,18 +1053,25 @@ _e_cb_fop_cp_idler(void *data)
 			    if (S_ISFIFO(st.st_mode))
 			      {
 				 /* create fifo at other end */
-				 mkfifo(buf2, st.st_mode);
+				 if (mkfifo(buf2, st.st_mode) != 0)
+				   fop->gone_bad = 1;
+				 /* FIXME: respect del_after flag */
 			      }
 			    else if (S_ISREG(st.st_mode))
 			      {
 				 /* copy file data - retain file mode and stat data */
-				 ecore_file_cp(buf, buf2); /* FIXME: this should be split up into the fop idler to do in idle time maybe 1 block or page at a time */
+				 if (!ecore_file_cp(buf, buf2)) /* FIXME: this should be split up into the fop idler to do in idle time maybe 1 block or page at a time */
+				   fop->gone_bad = 1;
+				 /* FIXME: respect del_after flag */
 			      }
 			    chmod(buf2, st.st_mode);
 			    chown(buf2, st.st_uid, st.st_gid);
 			    ut.actime = st.st_atime;
 			    ut.modtime = st.st_mtime;
 			    utime(buf2, &ut);
+			    /* respect del_after flag */
+			    if ((!fop->gone_bad) && (fop->del_after))
+			      unlink(buf);
 			 }
 		    }
 	       }
@@ -1065,12 +1080,16 @@ _e_cb_fop_cp_idler(void *data)
 		  if (stat(buf, &st) == 0)
 		    {
 		       /* duplicate link - retain stat data */
-		       symlink(lnk, buf2);
+		       if (symlink(lnk, buf2) != 0)
+			 fop->gone_bad = 1;
 		       chmod(buf2, st.st_mode);
 		       chown(buf2, st.st_uid, st.st_gid);
 		       ut.actime = st.st_atime;
 		       ut.modtime = st.st_mtime;
 		       utime(buf2, &ut);
+		       /* respect del_after flag */
+		       if ((!fop->gone_bad) && (fop->del_after))
+			 unlink(buf);
 		    }
 		  free(lnk);
 	       }
@@ -1078,16 +1097,32 @@ _e_cb_fop_cp_idler(void *data)
      }
    else
      {
+	/* respect del_after flag */
+	if ((!fop->gone_bad) && (fop->del_after))
+	  unlink(fd->path);
 	if (fd->dir) closedir(fd->dir);
 	evas_stringshare_del(fd->path);
 	evas_stringshare_del(fd->path2);
 	free(fd);
 	fop->data = evas_list_remove(fop->data, fd);
 	if (!fop->data) goto stop;
+	if (fop->gone_bad) goto stop;
      }
    return 1;
    
    stop:
+   while (fop->data)
+     {
+	fd = evas_list_data(fop->data);
+	if (fd)
+	  {
+	     if (fd->dir) closedir(fd->dir);
+	     evas_stringshare_del(fd->path);
+	     evas_stringshare_del(fd->path2);
+	     free(fd);
+	     fop->data = evas_list_remove(fop->data, fd);
+	  }
+     }
    evas_stringshare_del(fop->src);
    evas_stringshare_del(fop->dst);
    free(fop);
