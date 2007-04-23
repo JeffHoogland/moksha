@@ -240,6 +240,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_shelf_orient(cfdata->es, cfdata->escfg->orient);
    e_shelf_position_calc(cfdata->es);
    e_shelf_populate(cfdata->es);
+   e_shelf_toggle(cfdata->es, 1);
    e_shelf_show(cfdata->es);
    e_config_save_queue();
    cfdata->es->config_dialog = cfd;

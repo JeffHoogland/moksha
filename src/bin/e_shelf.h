@@ -40,6 +40,7 @@ struct _E_Shelf
    int			hide_origin;
    float                instant_delay;
    Ecore_Timer         *instant_timer;
+   double               last_in; /* last time the pointer was in the shelf */ 
 };
 
 EAPI int              e_shelf_init(void);
