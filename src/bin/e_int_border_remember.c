@@ -499,7 +499,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Shaded state"), &(cfdata->remember.apply_shade));
    e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_check_add(evas, _("Screen zone"), &(cfdata->remember.apply_zone));
+   ob = e_widget_check_add(evas, _("Current Screen"), &(cfdata->remember.apply_zone));
    e_widget_frametable_object_append(of, ob, 1, 3, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Skip Window List"), &(cfdata->remember.apply_skip_winlist));
    e_widget_frametable_object_append(of, ob, 1, 4, 1, 1, 1, 1, 1, 1);
