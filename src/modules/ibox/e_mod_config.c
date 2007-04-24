@@ -105,7 +105,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Zone"), 0);
+   of = e_widget_framelist_add(evas, _("Screen"), 0);
 
    zone_count = 0;
    for (l = e_manager_list(); l; l = l->next)
@@ -125,12 +125,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    if (zone_count <= 1) cfdata->zone_policy = 1;
 
    rg = e_widget_radio_group_new((int *)&(cfdata->zone_policy));
-   ob = e_widget_radio_add(evas, _("Show windows from all zones"), 0, rg);
+   ob = e_widget_radio_add(evas, _("Show windows from all screens"), 0, rg);
    e_widget_on_change_hook_set(ob, _cb_zone_policy_change, cfdata);
    e_widget_framelist_object_append(of, ob);
    if (zone_count <= 1) e_widget_disabled_set(ob, 1);
 
-   ob = e_widget_radio_add(evas, _("Show windows from current zone"), 1, rg);
+   ob = e_widget_radio_add(evas, _("Show windows from current screen"), 1, rg);
    e_widget_on_change_hook_set(ob, _cb_zone_policy_change, cfdata);
    e_widget_framelist_object_append(of, ob);
 
