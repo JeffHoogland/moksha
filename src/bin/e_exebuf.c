@@ -48,7 +48,9 @@ static void _e_exebuf_matches_update(void);
 static void _e_exebuf_hist_update(void);
 static void _e_exebuf_hist_clear(void);
 static void _e_exebuf_cb_eap_item_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static void _e_exebuf_cb_eap_item_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_exebuf_cb_exe_item_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static void _e_exebuf_cb_exe_item_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static int _e_exebuf_cb_key_down(void *data, int type, void *event);
 static int _e_exebuf_cb_mouse_down(void *data, int type, void *event);
 static int _e_exebuf_cb_mouse_up(void *data, int type, void *event);
@@ -96,6 +98,9 @@ static double eap_scroll_align = 0.0;
 static Ecore_Timer *eap_scroll_timer = NULL;
 static Ecore_Animator *animator = NULL;
 static Ecore_Timer *update_timer = NULL;
+static int ev_last_is_mouse = 1;
+static E_Exebuf_Exe *ev_last_mouse_exe = NULL;
+static int ev_last_which_list = NO_LIST;
 
 #define MATCH_LAG 0.33
 #define EXEBUFLEN 2048
@@ -354,6 +359,9 @@ e_exebuf_hide(void)
 static void
 _e_exebuf_exe_free(E_Exebuf_Exe *exe)
 {
+   if (ev_last_mouse_exe == exe)
+     ev_last_mouse_exe = NULL;
+
    evas_object_del(exe->bg_object);
    if (exe->icon_object) evas_object_del(exe->icon_object);
    free(exe);
@@ -647,6 +655,7 @@ _e_exebuf_prev(void)
 	  {
 	     _e_exebuf_hist_update();
 	     which_list = HIST_LIST;
+             ev_last_which_list = HIST_LIST;
 	     exe_sel = eaps->data;
 	     if (exe_sel)
 	       {
@@ -1026,6 +1035,8 @@ _e_exebuf_matches_update(void)
 	edje_object_part_text_set(o, "e.text.title", buf);
 	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN,
 	      _e_exebuf_cb_eap_item_mouse_in, exe);
+	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_OUT,
+	      _e_exebuf_cb_eap_item_mouse_out, exe);
 	evas_object_show(o);
 	if (edje_object_part_exists(exe->bg_object, "e.swallow.icons"))
 	  {
@@ -1069,6 +1080,8 @@ _e_exebuf_matches_update(void)
 	edje_object_part_text_set(o, "e.text.title", exe->file);
 	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN,
 	      _e_exebuf_cb_exe_item_mouse_in, exe);
+	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_OUT,
+	      _e_exebuf_cb_exe_item_mouse_out, exe);
 	evas_object_show(o);
 	if (edje_object_part_exists(exe->bg_object, "e.swallow.icons"))
 	  {
@@ -1121,6 +1134,8 @@ _e_exebuf_hist_update(void)
 	edje_object_part_text_set(o, "e.text.title", exe->file);
 	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN,
 				       _e_exebuf_cb_exe_item_mouse_in, exe);
+	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_OUT,
+				       _e_exebuf_cb_exe_item_mouse_out, exe);
 	evas_object_show(o);
 	if (edje_object_part_exists(exe->bg_object, "e.swallow.icons"))
 	  {
@@ -1176,6 +1191,10 @@ static void
 _e_exebuf_cb_eap_item_mouse_in(void *data, Evas *evas, Evas_Object *obj, 
       void *event_info)
 {
+   ev_last_mouse_exe = data;
+   ev_last_which_list = EAP_LIST;
+   if (!ev_last_is_mouse) return;
+
    if (exe_sel) _e_exebuf_exe_desel(exe_sel);
    if (!(exe_sel = data)) return;
    which_list = EAP_LIST;
@@ -1183,9 +1202,24 @@ _e_exebuf_cb_eap_item_mouse_in(void *data, Evas *evas, Evas_Object *obj,
 }
 
 static void 
+_e_exebuf_cb_eap_item_mouse_out(void *data, Evas *evas, Evas_Object *obj, 
+      void *event_info)
+{
+   ev_last_mouse_exe = NULL;
+}
+
+static void 
 _e_exebuf_cb_exe_item_mouse_in(void *data, Evas *evas, Evas_Object *obj, 
       void *event_info)
 {
+   ev_last_mouse_exe = data;
+
+   if (which_list == HIST_LIST)
+     ev_last_which_list = HIST_LIST;
+   else
+     ev_last_which_list = EXE_LIST;
+   if (!ev_last_is_mouse) return;
+
    if (exe_sel) _e_exebuf_exe_desel(exe_sel);
    if (!(exe_sel = data)) return;
    if (which_list != HIST_LIST)
@@ -1193,10 +1227,19 @@ _e_exebuf_cb_exe_item_mouse_in(void *data, Evas *evas, Evas_Object *obj,
    _e_exebuf_exe_sel(exe_sel);
 }
 
+static void 
+_e_exebuf_cb_exe_item_mouse_out(void *data, Evas *evas, Evas_Object *obj, 
+      void *event_info)
+{
+   ev_last_mouse_exe = NULL;
+}
+
 static int
 _e_exebuf_cb_key_down(void *data, int type, void *event)
 {
    Ecore_X_Event_Key_Down *ev;
+
+   ev_last_is_mouse = 0;
    
    ev = event;
    if (ev->win != input_window) return 1;
@@ -1253,10 +1296,14 @@ _e_exebuf_cb_mouse_down(void *data, int type, void *event)
    
    ev = event;
    if (ev->win != input_window) return 1;
-   if (ev->button == 1) 
-     _e_exebuf_exec();
-   else if (ev->button == 2)
-     _e_exebuf_complete();
+
+   if (ev_last_mouse_exe && (exe_sel != ev_last_mouse_exe))
+     {
+        if (exe_sel) _e_exebuf_exe_desel(exe_sel);
+        exe_sel = ev_last_mouse_exe;
+        _e_exebuf_exe_sel(exe_sel); 
+     }   
+
    return 1;
 }
 
@@ -1267,6 +1314,11 @@ _e_exebuf_cb_mouse_up(void *data, int type, void *event)
    
    ev = event;
    if (ev->win != input_window) return 1;
+   if (ev->button == 1) 
+     _e_exebuf_exec();
+   else if (ev->button == 2)
+     _e_exebuf_complete();
+
    return 1;
 }
 
@@ -1278,8 +1330,24 @@ _e_exebuf_cb_mouse_move(void *data, int type, void *event)
    ev = event;
    if (ev->win != input_window) return 1;
 
+   if (!ev_last_is_mouse)
+     {
+        ev_last_is_mouse = 1;
+        if (ev_last_mouse_exe)
+          {
+             if (exe_sel && (exe_sel != ev_last_mouse_exe))
+               _e_exebuf_exe_desel(exe_sel);
+             if (!exe_sel || (exe_sel != ev_last_mouse_exe))
+               {
+                  exe_sel = ev_last_mouse_exe;
+                  which_list = ev_last_which_list;
+                  _e_exebuf_exe_sel(exe_sel); 
+               }
+          }
+     }
+
    evas_event_feed_mouse_move(exebuf->evas, ev->x - exebuf->x +
-	 exebuf->zone->x, ev->y - exebuf->y + exebuf->zone->y, ev->time, NULL);
+        exebuf->zone->x, ev->y - exebuf->y + exebuf->zone->y, ev->time, NULL);
 
    return 1;
 }
@@ -1291,6 +1359,9 @@ _e_exebuf_cb_mouse_wheel(void *data, int type, void *event)
    
    ev = event;
    if (ev->win != input_window) return 1;
+
+   ev_last_is_mouse = 0;
+
    if (ev->z < 0) /* up */
      {
 	int i;
