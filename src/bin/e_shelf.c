@@ -272,43 +272,43 @@ e_shelf_toggle(E_Shelf *es, int show)
   E_OBJECT_CHECK(es);
   E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
 
-  if(!es->cfg->autohide && !es->hidden) return;
-   
+  if ((!es->cfg->autohide) && (!es->hidden)) return;
+
   if (show)
     {
 
-      if(!es->hide_timer) es->hide_timer = ecore_timer_add(0.1, _e_shelf_cb_hide_timer, es);
+       if (!es->hide_timer) es->hide_timer = ecore_timer_add(0.1, _e_shelf_cb_hide_timer, es);
 
-      if (es->hidden && !es->instant_timer)
-	{  
-	  es->hidden = 0;
-	  edje_object_signal_emit(es->o_base, "e,state,visible", "e");
-	  if (es->instant_delay >= 0.0)
-	    {
-	      if (!es->instant_timer)
-		_e_shelf_cb_instant_hide_timer(es);
-	    }
-	  else
-	    {
-	      if(!es->hide_animator)
-		es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
-	    }
-	}
+       if ((es->hidden) && (!es->instant_timer))
+	 {  
+	    es->hidden = 0;
+	    edje_object_signal_emit(es->o_base, "e,state,visible", "e");
+	    if (es->instant_delay >= 0.0)
+	      {
+		 if (!es->instant_timer)
+		   _e_shelf_cb_instant_hide_timer(es);
+	      }
+	    else
+	      {
+		 if (!es->hide_animator)
+		   es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
+	      }
+	 }
     }
-  else if (!show && es->cfg->autohide && !es->hidden)  
+  else if ((!show) && (es->cfg->autohide) && (!es->hidden))  
     {
-      es->hidden = 1; 
-      edje_object_signal_emit(es->o_base, "e,state,hidden", "e");
-      if (es->instant_delay >= 0.0)
-	{
-	  if (!es->instant_timer)
-	    es->instant_timer = ecore_timer_add(es->instant_delay, _e_shelf_cb_instant_hide_timer, es);
-	}
-      else
-	{
-	  if (!es->hide_animator)
-	    es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
-	}
+       es->hidden = 1; 
+       edje_object_signal_emit(es->o_base, "e,state,hidden", "e");
+       if (es->instant_delay >= 0.0)
+	 {
+	    if (!es->instant_timer)
+	      es->instant_timer = ecore_timer_add(es->instant_delay, _e_shelf_cb_instant_hide_timer, es);
+	 }
+       else
+	 {
+	    if (!es->hide_animator)
+	      es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
+	 }
     }
 }
 
@@ -1086,7 +1086,10 @@ _e_shelf_cb_confirm_dialog_yes(void *data)
 static void
 _e_shelf_cb_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Shelf * es = data;
+   E_Shelf *es;
+  
+   es = data;
+
    e_object_ref(E_OBJECT(es));
    e_confirm_dialog_show(_("Are you sure you want to delete this shelf?"), "enlightenment/e",
 			 _("You requested to delete this shelf.<br>"
@@ -1188,18 +1191,18 @@ _e_shelf_cb_hide_timer(void *data)
     }
   else
     {
-      if(es->last_in + es->cfg->hide_timeout < ecore_time_get()) 
-	{
-	  e_shelf_toggle(es, 0);
-          if(es->hide_timer)
-	    {    
-	      ecore_timer_del(es->hide_timer);
-	      es->hide_timer = NULL;
-	    }	  
-	  return 0;
-	}
-      else
-	return 1;
+       if ((es->last_in) + (es->cfg->hide_timeout < ecore_time_get())) 
+	 {
+	    e_shelf_toggle(es, 0);
+	    if (es->hide_timer)
+	      {    
+		 ecore_timer_del(es->hide_timer);
+		 es->hide_timer = NULL;
+	      }	  
+	    return 0;
+	 }
+       else
+	 return 1;
     }
 }
 
