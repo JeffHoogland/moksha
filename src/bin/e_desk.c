@@ -42,10 +42,10 @@ e_desk_shutdown(void)
 EAPI E_Desk *
 e_desk_new(E_Zone *zone, int x, int y)
 {
-   E_Desk      *desk;
-   char		name[40];
-   int ok;
+   E_Desk *desk;
    Evas_List *l;
+   char name[40];
+   int ok;
    
    E_OBJECT_CHECK_RETURN(zone, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, NULL);
@@ -57,9 +57,8 @@ e_desk_new(E_Zone *zone, int x, int y)
    desk->x = x;
    desk->y = y;
 
-/* Get current desktop's name */
+   /* Get current desktop's name */
    ok = 0;
-
    for (l = e_config->desktop_names; l; l = l->next)
      {
 	E_Config_Desktop_Name *cfname;
@@ -97,7 +96,8 @@ e_desk_name_set(E_Desk *desk, const char *name)
    ev = E_NEW(E_Event_Desk_Name_Change, 1);
    ev->desk = desk;
    e_object_ref(E_OBJECT(desk));
-   ecore_event_add(E_EVENT_DESK_NAME_CHANGE, ev, _e_border_event_desk_name_change_free, NULL);
+   ecore_event_add(E_EVENT_DESK_NAME_CHANGE, ev, 
+		   _e_border_event_desk_name_change_free, NULL);
 }
 
 EAPI void
@@ -128,7 +128,8 @@ e_desk_name_del(int container, int zone, int desk_x, int desk_y)
 	if ((cfname->container == container) && (cfname->zone == zone) &&
 	    (cfname->desk_x == desk_x) && (cfname->desk_y == desk_y))
 	  {
-	     e_config->desktop_names = evas_list_remove_list(e_config->desktop_names, l);
+	     e_config->desktop_names = 
+	       evas_list_remove_list(e_config->desktop_names, l);
 	     if (cfname->name) evas_stringshare_del(cfname->name);
 	     free(cfname);
 	     break;
@@ -172,7 +173,8 @@ e_desk_name_update(void)
 				     (con->num != cfname->container)) continue;
 				 if ((cfname->zone >= 0) &&
 	    			     (zone->num != cfname->zone)) continue;
-				 if ((cfname->desk_x != d_x) || (cfname->desk_y != d_y)) continue;
+				 if ((cfname->desk_x != d_x) || 
+				     (cfname->desk_y != d_y)) continue;
 				 e_desk_name_set(desk,cfname->name);
 				 ok = 1;
 				 break;
@@ -180,7 +182,9 @@ e_desk_name_update(void)
 
 			    if (!ok)
 			      {
-				 snprintf(name, sizeof(name), _(e_config->desktop_default_name), d_x, d_y);
+				 snprintf(name, sizeof(name), 
+					  _(e_config->desktop_default_name), 
+					  d_x, d_y);
 				 e_desk_name_set(desk,name);
 			      }
 			 }
@@ -195,9 +199,9 @@ e_desk_show(E_Desk *desk)
 {
    E_Border_List     *bl;
    E_Border          *bd;
+   E_Event_Desk_Show *ev;
    int                was_zone = 0;
    int                x, y, dx = 0, dy = 0;
-   E_Event_Desk_Show *ev;
 
    E_OBJECT_CHECK(desk);
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
@@ -216,7 +220,8 @@ e_desk_show(E_Desk *desk)
 		  dx = desk->x - desk2->x;
 		  dy = desk->y - desk2->y;
 		  if (e_config->desk_flip_animate_mode > 0)
-		    _e_desk_hide_begin(desk2, e_config->desk_flip_animate_mode, dx, dy);
+		    _e_desk_hide_begin(desk2, e_config->desk_flip_animate_mode, 
+				       dx, dy);
 		  break;
 	       }
 	  }
@@ -247,8 +252,7 @@ e_desk_show(E_Desk *desk)
 		    e_border_desk_set(bd, desk);
 		  else
 		    {
-		       if (bd->fullscreen)
-			 bd->want_fullscreen = 1;
+		       if (bd->fullscreen) bd->want_fullscreen = 1;
 		       e_border_hide(bd, 2);
 		    }
 	       }
@@ -311,7 +315,7 @@ e_desk_deskshow(E_Zone *zone)
    ev->desk = desk;
    e_object_ref(E_OBJECT(desk));
    ecore_event_add(E_EVENT_DESK_DESKSHOW, ev, 
-	 _e_border_event_desk_deskshow_free, NULL);
+		   _e_border_event_desk_deskshow_free, NULL);
 }
 
 EAPI void
@@ -323,8 +327,7 @@ e_desk_last_focused_focus(E_Desk *desk)
    for (l = e_border_focus_stack_get(); l; l = l->next)
      {
 	bd = l->data;
-	if ((!bd->iconic) && (bd->visible) &&
-	    (bd->desk == desk))
+	if ((!bd->iconic) && (bd->visible) && (bd->desk == desk))
 	  {
 	     /* this was the window last focused in this desktop */
 	     e_border_focus_set(bd, 1, 1);
@@ -409,13 +412,12 @@ e_desk_xy_get(E_Desk *desk, int *x, int *y)
 EAPI void
 e_desk_next(E_Zone *zone)
 {
-   int          x, y;
+   int x, y;
 
    E_OBJECT_CHECK(zone);
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    
-   if ((zone->desk_x_count < 2) && 
-       (zone->desk_y_count < 2))
+   if ((zone->desk_x_count < 2) && (zone->desk_y_count < 2))
      return;
    
    x = zone->desk_x_current;
@@ -435,13 +437,12 @@ e_desk_next(E_Zone *zone)
 EAPI void
 e_desk_prev(E_Zone *zone)
 {
-   int          x, y;
+   int x, y;
 
    E_OBJECT_CHECK(zone);
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
 
-   if ((zone->desk_x_count < 2) && 
-       (zone->desk_y_count < 2))
+   if ((zone->desk_x_count < 2) && (zone->desk_y_count < 2))
      return;
 
    x = zone->desk_x_current;
@@ -498,9 +499,9 @@ _e_border_event_desk_name_change_free(void *data, void *event)
 static void
 _e_desk_show_begin(E_Desk *desk, int mode, int dx, int dy)
 {
-   E_Border_List     *bl;
-   E_Border          *bd;
-   double             t;
+   E_Border_List *bl;
+   E_Border *bd;
+   double t;
 
    t = ecore_time_get();
    bl = e_container_border_list_first(desk->zone->container);
@@ -576,8 +577,8 @@ _e_desk_show_begin(E_Desk *desk, int mode, int dx, int dy)
 static void
 _e_desk_show_end(E_Desk *desk)
 {
-   E_Border_List     *bl;
-   E_Border          *bd;
+   E_Border_List *bl;
+   E_Border *bd;
 
    bl = e_container_border_list_first(desk->zone->container);
    while ((bd = e_container_border_list_next(bl)))
@@ -585,13 +586,9 @@ _e_desk_show_end(E_Desk *desk)
 	if ((bd->desk->zone == desk->zone) && (!bd->iconic))
 	  {
 	     if (bd->moving)
-	       {
-		  e_border_fx_offset(bd, 0, 0);
-	       }
+	       e_border_fx_offset(bd, 0, 0);
 	     else if ((bd->desk == desk) && (!bd->sticky))
-	       {
-		  e_border_fx_offset(bd, 0, 0);
-	       }
+	       e_border_fx_offset(bd, 0, 0);
 	  }
      }
    e_container_border_list_free(bl);
@@ -600,10 +597,10 @@ _e_desk_show_end(E_Desk *desk)
 static int
 _e_desk_show_animator(void *data)
 {
-   E_Desk            *desk;
-   E_Border_List     *bl;
-   E_Border          *bd;
-   double             t, dt, spd;
+   E_Desk        *desk;
+   E_Border_List *bl;
+   E_Border      *bd;
+   double         t, dt, spd;
 
    desk = data;
    t = ecore_time_get();
@@ -642,9 +639,9 @@ _e_desk_show_animator(void *data)
 static void
 _e_desk_hide_begin(E_Desk *desk, int mode, int dx, int dy)
 {
-   E_Border_List     *bl;
-   E_Border          *bd;
-   double             t;
+   E_Border_List *bl;
+   E_Border *bd;
+   double t;
 
    t = ecore_time_get();
    bl = e_container_border_list_first(desk->zone->container);
@@ -717,8 +714,8 @@ _e_desk_hide_begin(E_Desk *desk, int mode, int dx, int dy)
 static void
 _e_desk_hide_end(E_Desk *desk)
 {
-   E_Border_List     *bl;
-   E_Border          *bd;
+   E_Border_List *bl;
+   E_Border      *bd;
 
    bl = e_container_border_list_first(desk->zone->container);
    while ((bd = e_container_border_list_next(bl)))
@@ -726,14 +723,11 @@ _e_desk_hide_end(E_Desk *desk)
 	if ((bd->desk->zone == desk->zone) && (!bd->iconic))
 	  {
 	     if (bd->moving)
-	       {
-		  e_border_fx_offset(bd, 0, 0);
-	       }
+	       e_border_fx_offset(bd, 0, 0);
 	     else if ((bd->desk == desk) && (!bd->sticky))
 	       {
 		  e_border_fx_offset(bd, 0, 0);
-		  if (bd->fullscreen)
-		    bd->want_fullscreen = 1;
+		  if (bd->fullscreen) bd->want_fullscreen = 1;
 		  e_border_hide(bd, 2);
 	       }
 	  }
@@ -744,10 +738,10 @@ _e_desk_hide_end(E_Desk *desk)
 static int
 _e_desk_hide_animator(void *data)
 {
-   E_Desk            *desk;
-   E_Border_List     *bl;
-   E_Border          *bd;
-   double             t, dt, spd;
+   E_Desk        *desk;
+   E_Border_List *bl;
+   E_Border      *bd;
+   double         t, dt, spd;
 
    desk = data;
    t = ecore_time_get();
