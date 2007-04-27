@@ -276,8 +276,7 @@ e_shelf_toggle(E_Shelf *es, int show)
 
   if (show)
     {
-
-       if (!es->hide_timer) es->hide_timer = ecore_timer_add(0.1, _e_shelf_cb_hide_timer, es);
+       if (!es->hide_timer) es->hide_timer = ecore_timer_add(0.3, _e_shelf_cb_hide_timer, es);
 
        if ((es->hidden) && (!es->instant_timer))
 	 {  
@@ -295,7 +294,7 @@ e_shelf_toggle(E_Shelf *es, int show)
 	      }
 	 }
     }
-  else if ((!show) && (es->cfg->autohide) && (!es->hidden))  
+  else if ((!show) && (es->cfg->autohide) && (!es->hidden) && (!es->gadcon->editing))  
     {
        es->hidden = 1; 
        edje_object_signal_emit(es->o_base, "e,state,hidden", "e");
@@ -1040,9 +1039,15 @@ _e_shelf_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
    
    es = data;
    if (es->gadcon->editing)
-     e_gadcon_edit_end(es->gadcon);
+     {
+	e_gadcon_edit_end(es->gadcon);
+	e_shelf_toggle(es, 0);
+     }
    else
-     e_gadcon_edit_begin(es->gadcon);
+     {
+	e_shelf_toggle(es, 1);
+	e_gadcon_edit_begin(es->gadcon);
+     }
 }
 
 static void
@@ -1157,6 +1162,7 @@ _e_shelf_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 
    es = data;
    ev = event_info;
+   es->last_in = ecore_time_get();
    edje_object_signal_emit(es->o_base, "e,state,focused", "e");
    e_shelf_toggle(es, 1);
 }
@@ -1182,7 +1188,7 @@ _e_shelf_cb_hide_timer(void *data)
   if (es->popup)
     ecore_x_pointer_xy_get(es->popup->evas_win, &px, &py);
   else
-    evas_pointer_canvas_xy_get(es->evas, &px, &py);
+    ecore_x_pointer_xy_get(es->zone->black_win, &px, &py);
   
   if (E_INSIDE(px, py, x, y, w, h))
     {
@@ -1191,7 +1197,7 @@ _e_shelf_cb_hide_timer(void *data)
     }
   else
     {
-       if ((es->last_in) + (es->cfg->hide_timeout < ecore_time_get())) 
+       if ((es->last_in + es->cfg->hide_timeout) < ecore_time_get()) 
 	 {
 	    e_shelf_toggle(es, 0);
 	    if (es->hide_timer)
