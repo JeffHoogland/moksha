@@ -860,7 +860,7 @@ ACT_FN_GO(window_push)
 
         while (cur != NULL)
           {
-            if ((bd->desk == cur->desk) && (bd != cur))
+            if ((bd->desk == cur->desk) && (bd != cur) && (!cur->iconic))
                {
                   if ((dir == E_DIRECTION_LEFT)
                       && (cur->x + cur->w < bd->x)
