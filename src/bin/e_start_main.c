@@ -264,16 +264,14 @@ precache(void)
    int l, fd, children = 0, cret;
    
    home = getenv("HOME");
-   if (home)
-     snprintf(buf, sizeof(buf), "%s/.e-precache", home);
-   else
-     snprintf(buf, sizeof(buf), "/tmp/.e-precache");
+   if (home) snprintf(buf, sizeof(buf), "%s/.e-precache", home);
+   else snprintf(buf, sizeof(buf), "/tmp/.e-precache");
    f = fopen(buf, "r");
    if (!f) return;
    unlink(buf);
    if (fork()) return;
-   while (fgets(buf, sizeof(buf), f));
-   rewind(f);
+//   while (fgets(buf, sizeof(buf), f));
+//   rewind(f);
    while (fgets(buf, sizeof(buf), f))
      {
 	l = strlen(buf);
@@ -360,7 +358,8 @@ main(int argc, char **argv)
 	     exit(0);
 	  }
      }
-   while (do_precache)
+   printf("E - PID=%i, do_precache=%i\n", getpid(), do_precache);
+   if (do_precache)
      {
 	void *lib, *func;
 	
@@ -368,27 +367,27 @@ main(int argc, char **argv)
 	/* sanity checks - if precache might fail - check here first */
 	lib = dlopen("libevas.so", RTLD_GLOBAL | RTLD_LAZY);
 	if (!lib) dlopen("libevas.so.1", RTLD_GLOBAL | RTLD_LAZY);
-	if (!lib) break;
+	if (!lib) goto done;
 	func = dlsym(lib, "evas_init");
-	if (!func) break;
+	if (!func) goto done;
 	lib = dlopen("libecore_file.so", RTLD_GLOBAL | RTLD_LAZY);
 	if (!lib) dlopen("libecore_file.so.1", RTLD_GLOBAL | RTLD_LAZY);
-	if (!lib) break;
+	if (!lib) goto done;
 	func = dlsym(lib, "ecore_file_init");
-	if (!func) break;
+	if (!func) goto done;
 	lib = dlopen("libeet.so", RTLD_GLOBAL | RTLD_LAZY);
 	if (!lib) dlopen("libeet.so.0", RTLD_GLOBAL | RTLD_LAZY);
-	if (!lib) break;
+	if (!lib) goto done;
 	func = dlsym(lib, "eet_init");
-	if (!func) break;
+	if (!func) goto done;
 	/* precache SHOULD work */
-	printf("E PRECACHE ENABLED\n");
 	snprintf(buf, sizeof(buf), "%s/lib/enlightenment/preload/e_precache.so", _prefix_path);
 	env_set("LD_PRELOAD", buf);
+	printf("E - PRECACHE GOING NOW...\n");
+	fflush(stdout);
 	precache();
-	do_precache = 0;
-	break;
      }
+   done:
    
    args = alloca((argc + 1) * sizeof(char *));
    args[0] = "enlightenment";
