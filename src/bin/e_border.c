@@ -1767,7 +1767,6 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	     else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
 	       e_border_move_resize(bd, x1, bd->y, w, bd->h);
 
-	     max |= E_MAXIMIZE_BOTH;
 	     break;
 	   case E_MAXIMIZE_SMART:
 	   case E_MAXIMIZE_EXPAND:
