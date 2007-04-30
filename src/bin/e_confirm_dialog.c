@@ -3,47 +3,25 @@
  */
 #include "e.h"
 
-typedef struct _E_Confirm_Dialog E_Confirm_Dialog;
-
-struct _E_Confirm_Dialog
-{
-   struct 
-     {
-	void *data;
-	void (*func)(void *data);
-     } yes;
-
-   struct
-     {
-	void *data;
-	void (*func)(void *data);
-     } no;
-
-   struct
-     {
-	void *data;
-	void (*func)(void *data);
-     } del;
-   E_Dialog *dia;
-};
-
-
 /******** private function definitions **********/
+static void _e_confirm_dialog_free(E_Confirm_Dialog *cd);
 static void _e_confirm_dialog_delete(E_Win *win);
 static void _e_confirm_dialog_yes(void *data, E_Dialog *dia);
 static void _e_confirm_dialog_no(void *data, E_Dialog *dia);
 
 
 /********** externally accesible functions ****************/
-EAPI void 
+EAPI E_Confirm_Dialog *
 e_confirm_dialog_show(const char *title, const char *icon, const char *text,
-		      const char *button_text, const char *button2_text, void (*func)(void *data),
-		      void (*func2)(void *data), void *data, void *data2, void (*del_func)(void *data), void *del_data)
+		      const char *button_text, const char *button2_text,
+                      void (*func)(void *data), void (*func2)(void *data),
+                      void *data, void *data2,
+                      void (*del_func)(void *data), void *del_data)
 {
    E_Confirm_Dialog *cd; 
    E_Dialog *dia;
 
-   cd = E_NEW(E_Confirm_Dialog, 1);
+   cd = E_OBJECT_ALLOC(E_Confirm_Dialog, E_CONFIRM_DIALOG_TYPE, _e_confirm_dialog_free);
    cd->yes.func = func;
    cd->yes.data = data;
    cd->no.func = func2;
@@ -72,9 +50,22 @@ e_confirm_dialog_show(const char *title, const char *icon, const char *text,
    e_dialog_button_focus_num(dia, 1);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
+
+   return cd;
 }
 
 /********* private function bodies ************/
+static void
+_e_confirm_dialog_free(E_Confirm_Dialog *cd)
+{
+   E_Dialog *dia;
+   E_Win *win;
+
+   dia = cd->dia;
+   win = dia->win;
+   _e_confirm_dialog_delete(win);
+}
+
 static void
 _e_confirm_dialog_yes(void *data, E_Dialog *dia)
 {
@@ -84,6 +75,7 @@ _e_confirm_dialog_yes(void *data, E_Dialog *dia)
    if (cd->yes.func) cd->yes.func(cd->yes.data);
    _e_confirm_dialog_delete(cd->dia->win);
 }
+
 static void
 _e_confirm_dialog_no(void *data, E_Dialog *dia)
 {
@@ -93,6 +85,7 @@ _e_confirm_dialog_no(void *data, E_Dialog *dia)
    if (cd->no.func) cd->no.func(cd->no.data);
    _e_confirm_dialog_delete(cd->dia->win);
 }
+
 static void
 _e_confirm_dialog_delete(E_Win *win)
 {
