@@ -15,6 +15,7 @@ struct _E_Config_Dialog_Data
    Evas_Object *radio_name;
    Evas_Object *radio_comment;
    Evas_Object *radio_generic;
+   E_Confirm_Dialog *dialog_delete;
 };
 
 /* Protos */
@@ -27,6 +28,7 @@ static void _cb_del(void *data, void *data2);
 static void _cb_config(void *data, void *data2);
 static void _cb_entry_ok(char *text, void *data);
 static void _cb_confirm_dialog_yes(void *data);
+static void _cb_confirm_dialog_destroy(void *data);
 static void _load_tlist(E_Config_Dialog_Data *cfdata);
 static void _show_label_cb_change(void *data, Evas_Object *obj);
 
@@ -83,6 +85,7 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->dir) free(cfdata->dir);
+   if (cfdata->dialog_delete) e_object_del(cfdata->dialog_delete);
    ibar_config->config_dialog = NULL;
    E_FREE(cfdata);
 }
@@ -168,15 +171,20 @@ _cb_del(void *data, void *data2)
 {
    char buf[4096];
    E_Config_Dialog_Data *cfdata;
-   
-   cfdata = data;
+   E_Confirm_Dialog *dialog;
+
+   cfdata = data;   
+   if (cfdata->dialog_delete)
+     return;
+
    snprintf(buf, sizeof(buf), _("You requested to delete \"%s\".<br><br>"
 				"Are you sure you want to delete this bar source?"),
 	    cfdata->dir);
    
-   e_confirm_dialog_show(_("Are you sure you want to delete this bar source?"),
-			 "enlightenment/exit", buf, NULL, NULL, 
-			 _cb_confirm_dialog_yes, NULL, cfdata, NULL, NULL, NULL);
+   dialog = e_confirm_dialog_show(_("Are you sure you want to delete this bar source?"),
+                                  "enlightenment/exit", buf, NULL, NULL, 
+                                  _cb_confirm_dialog_yes, NULL, cfdata, NULL, _cb_confirm_dialog_destroy, cfdata);
+   cfdata->dialog_delete = dialog;
 }
 
 static void 
@@ -233,6 +241,15 @@ _cb_confirm_dialog_yes(void *data)
      ecore_file_recursive_rm(buf);
    
    _load_tlist(cfdata);
+}
+
+static void
+_cb_confirm_dialog_destroy(void *data) 
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data;
+   cfdata->dialog_delete = NULL;
 }
 
 static void 
