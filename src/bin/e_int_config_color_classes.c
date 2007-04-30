@@ -110,7 +110,7 @@ e_int_config_color_classes(E_Container *con)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    
-   if (e_config_dialog_find("E", "_config_color_classes")) return NULL;
+   if (e_config_dialog_find("E", "_config_color_classes_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    if (!v) return NULL;
    
@@ -121,7 +121,7 @@ e_int_config_color_classes(E_Container *con)
    v->advanced.apply_cfdata = _adv_apply_data;
    v->advanced.create_widgets = _adv_create_widgets;
    
-   cfd = e_config_dialog_new(con, _("Colors"), "E", "_config_color_classes",
+   cfd = e_config_dialog_new(con, _("Colors"), "E", "_config_color_classes_dialog",
 			     "enlightenment/colors", 0, v, NULL);
    return cfd;
 }

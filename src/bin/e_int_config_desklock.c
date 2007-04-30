@@ -55,7 +55,7 @@ e_int_config_desklock(E_Container *con)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    
-   if (e_config_dialog_find("E", "_config_desklock_dlg")) return NULL;
+   if (e_config_dialog_find("E", "_config_desklock_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    if (!v) return NULL;
    v->create_cfdata = _create_data;
@@ -69,7 +69,7 @@ e_int_config_desklock(E_Container *con)
    v->override_auto_apply = 1;
    
    cfd = e_config_dialog_new(con, _("Screen Lock Settings"), "E", 
-			     "_config_desklock_dlg", "enlightenment/desklock",
+			     "_config_desklock_dialog", "enlightenment/desklock",
 			     0, v, NULL);
    return cfd;
 }
