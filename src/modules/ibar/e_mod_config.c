@@ -85,7 +85,7 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->dir) free(cfdata->dir);
-   if (cfdata->dialog_delete) e_object_del(cfdata->dialog_delete);
+   if (cfdata->dialog_delete) e_object_del(E_OBJECT(cfdata->dialog_delete));
    ibar_config->config_dialog = NULL;
    E_FREE(cfdata);
 }
