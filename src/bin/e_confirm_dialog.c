@@ -32,8 +32,8 @@ e_confirm_dialog_show(const char *title, const char *icon, const char *text,
    dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_confirm_dialog");
    if (!dia)
      {
-	E_FREE(cd);
-	return;
+	e_object_del(E_OBJECT(cd));
+	return NULL;
      }
    dia->data = cd;
    cd->dia = dia;
@@ -58,12 +58,8 @@ e_confirm_dialog_show(const char *title, const char *icon, const char *text,
 static void
 _e_confirm_dialog_free(E_Confirm_Dialog *cd)
 {
-   E_Dialog *dia;
-   E_Win *win;
-
-   dia = cd->dia;
-   win = dia->win;
-   _e_confirm_dialog_delete(win);
+   if ((cd->dia) && (cd->dia->win))
+     _e_confirm_dialog_delete(cd->dia->win);
 }
 
 static void

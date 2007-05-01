@@ -1118,7 +1118,6 @@ _e_entry_cb_delete(void *data, E_Menu *m, E_Menu_Item *mi)
    int start_pos, end_pos;
    int selecting;
    char *range;
-   E_Win *win;
 
    sd = data;
    if (!sd->enabled) return;

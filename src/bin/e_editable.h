@@ -35,6 +35,7 @@ EAPI void         e_editable_selection_move_left     (Evas_Object *editable);
 EAPI void         e_editable_selection_move_right    (Evas_Object *editable);
 EAPI void         e_editable_select_all              (Evas_Object *editable);
 EAPI void         e_editable_unselect_all            (Evas_Object *editable);
+EAPI void         e_editable_select_word             (Evas_Object *editable, int index);
 EAPI void         e_editable_selection_show          (Evas_Object *editable);
 EAPI void         e_editable_selection_hide          (Evas_Object *editable);
 
