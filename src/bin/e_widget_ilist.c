@@ -115,8 +115,11 @@ e_widget_ilist_unselect(Evas_Object *obj)
    E_Widget_Data *wd;
    
    wd = e_widget_data_get(obj);
-   if (*(wd->value)) free(*(wd->value));
-   *(wd->value) = NULL;
+   if (wd->value && *(wd->value))
+       {
+          free(*(wd->value));
+          *(wd->value) = NULL;
+       }
    e_ilist_unselect(wd->o_ilist);
 }
 
