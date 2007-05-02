@@ -16,7 +16,6 @@ struct _E_Widget_Data
    double align_x, align_y;
 };
 
-
 static void
 _e_wid_del_hook(Evas_Object *obj)
 {
@@ -55,7 +54,6 @@ _e_wid_reconfigure(E_Widget_Data *wd)
    cx = px + (wd->align_x * (pw - cw));
    cy = py + (wd->align_y * (ph - ch));
 
-   printf("ASPECT RECONF -  p: %d,%d %dx%d c: %d,%d %dx%d\n", px, py, pw, ph, cx, cy, cw, ch);
    evas_object_resize(wd->child, cw, ch);
    evas_object_move(wd->child, cx, cy);
 }
