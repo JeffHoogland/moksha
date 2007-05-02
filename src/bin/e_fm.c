@@ -5,8 +5,6 @@
 
 #define OVERCLIP 128
 
-/* FIXME: use edje messages & embryo for scrolling of bg's */
-
 /* FIXME: this is NOT complete. dnd not complete (started). only list view
  * works. in icon view it needs to be much better about placement of icons and
  * being able to save/load icon placement. it doesn't support backgrounds or

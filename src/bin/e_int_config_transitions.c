@@ -1,6 +1,6 @@
 #include "e.h"
 
-static Evas_Object *_trans_preview_add(E_Config_Dialog_Data *cfdata, Evas *evas, int minw, int minh);
+static Evas_Object *_trans_preview_add(E_Config_Dialog_Data *cfdata, Evas *evas, int minw, int minh, Evas_Object **tp);
 static void         _e_wid_done(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void         _trans_preview_trans_set(E_Config_Dialog_Data *cfdata, const char *trans);
 
@@ -165,8 +165,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Preview"), 0);
-   il = _trans_preview_add(cfdata, evas, 300, ((300 * zone->h) / zone->w));
-   cfdata->tp = il;
+   il = _trans_preview_add(cfdata, evas, 300, ((300 * zone->h) / zone->w), &(cfdata->tp));
    e_widget_framelist_object_append(of, il);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
@@ -257,7 +256,7 @@ _trans_cb_changed(void *data)
 }
 
 Evas_Object *
-_trans_preview_add(E_Config_Dialog_Data *cfdata, Evas *evas, int minw, int minh) 
+_trans_preview_add(E_Config_Dialog_Data *cfdata, Evas *evas, int minw, int minh, Evas_Object **tp)
 {
    Evas_Object *obj, *o, *oa;
    
@@ -270,7 +269,8 @@ _trans_preview_add(E_Config_Dialog_Data *cfdata, Evas *evas, int minw, int minh)
    e_theme_edje_object_set(o, "base/theme/widgets", "e/transpreview/1");
    evas_object_show(o);
    e_widget_preview_extern_object_set(obj, o);
-   
+
+   *tp = obj;
    return oa;
 }
 
