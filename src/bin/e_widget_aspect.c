@@ -54,19 +54,15 @@ _e_wid_reconfigure(E_Widget_Data *wd)
    cx = px + ((pw - cw) / 2);
    cy = py + ((ph - ch) / 2);
 
+   printf("ASPECT RECONF -  p: %d,%d %dx%d c: %d,%d %dx%d\n", px, py, pw, ph, cx, cy, cw, ch);
    evas_object_resize(wd->child, cw, ch);
    evas_object_move(wd->child, cx, cy);
 }
 
 static void
-_e_wid_resize_intercept(void *data, Evas_Object *obj, int w, int h)
+_cb_reconfigure(void *data, Evas *a, Evas_Object *obj, void *event_info)
 {
-   E_Widget_Data *wd;
-
-   wd = e_widget_data_get(obj);
-   if (!wd) return;
-
-   evas_object_resize(obj, w, h);
+   E_Widget_Data *wd = data;
    _e_wid_reconfigure(wd);
 }
 
@@ -83,7 +79,8 @@ e_widget_aspect_add(Evas *evas, int w, int h)
    e_widget_data_set(obj, wd);
    e_widget_del_hook_set(obj, _e_wid_del_hook);
 
-   evas_object_intercept_resize_callback_add(obj, _e_wid_resize_intercept, wd);
+   evas_object_event_callback_add(obj, EVAS_CALLBACK_RESIZE, _cb_reconfigure, wd);
+   evas_object_event_callback_add(obj, EVAS_CALLBACK_MOVE, _cb_reconfigure, wd);
    e_widget_aspect_aspect_set(obj, w, h);
 
    return obj;
@@ -106,10 +103,14 @@ void
 e_widget_aspect_child_set(Evas_Object *obj, Evas_Object *child)
 {
    E_Widget_Data *wd;
+   int mw, mh;
 
    wd = e_widget_data_get(obj);
    if (!wd) return;
 
    wd->child = child;
+   e_widget_min_size_get(child, &mw, &mh);
+   e_widget_min_size_set(obj, mw, mh);
+   e_widget_sub_object_add(obj, child);
    _e_wid_reconfigure(wd);
 }
