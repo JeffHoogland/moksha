@@ -435,12 +435,13 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *ot, *of, *il, *ol;
+   Evas_Object *o, *ot, *of, *il, *ol, *oa;
    char path[4096];
    const char *f, *homedir;
    E_Fm2_Config fmc;
    E_Zone *z;
    E_Radio_Group *rg;
+   int mw, mh;
    
    homedir = e_user_homedir_get();
 
@@ -534,16 +535,20 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(il, ol, 1, 0, 0.5);
    e_widget_list_object_append(of, il, 1, 0, 0.0);
 
-   o = e_widget_preview_add(evas, 320, (320 * z->h) / z->w);
+   mw = 320;
+   mh = (320 * z->h) / z->w;
+   oa = e_widget_aspect_add(evas, mw, mh);
+   o = e_widget_preview_add(evas, mw, mh);
    cfdata->o_preview = o;
    if (cfdata->bg)
      f = cfdata->bg;
    else
      f = e_theme_edje_file_get("base/theme/backgrounds", "e/desktop/background");
    e_widget_preview_edje_set(o, f, "e/desktop/background");
-   e_widget_list_object_append(of, o, 0, 0, 0.5);
+   e_widget_aspect_child_set(oa, o);
+   e_widget_list_object_append(of, oa, 1, 1, 0.5);
    
-   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 0, 0, 0, 0);
+   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
    
    e_dialog_resizable_set(cfd->dia, 1);
    return ot;
