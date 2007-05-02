@@ -425,16 +425,26 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 			   _cb_import, cfdata, NULL);
    e_widget_list_object_append(il, o, 1, 0, 0.5);
    e_widget_list_object_append(of, il, 1, 0, 0.0);
-   
-   o = e_widget_preview_add(evas, 320, (320 * z->h) / z->w);
-   cfdata->o_preview = o;
-   if (cfdata->theme) 
-     {
-	f = cfdata->theme;
-	e_widget_preview_edje_set(o, f, "e/desktop/background");
-     }
-   e_widget_list_object_append(of, o, 0, 0, 0.5);
-   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 0, 0, 0, 0);
+ 
+   {
+      Evas_Object *oa;
+      int mw, mh;
+
+      mw = 320;
+      mh = (mw * z->h) / z->w;
+      oa = e_widget_aspect_add(evas, mw, mh);
+      o = e_widget_preview_add(evas, mw, mh);
+      cfdata->o_preview = o;
+      if (cfdata->theme) 
+	{
+	   f = cfdata->theme;
+	   e_widget_preview_edje_set(o, f, "e/desktop/background");
+	}
+      e_widget_aspect_child_set(oa, o);
+      e_widget_list_object_append(of, oa, 1, 1, 0);
+
+   }
+   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
    
    e_dialog_resizable_set(cfd->dia, 1);
    return ot;
