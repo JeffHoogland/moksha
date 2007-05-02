@@ -259,9 +259,11 @@ _trans_cb_changed(void *data)
 Evas_Object *
 _trans_preview_add(E_Config_Dialog_Data *cfdata, Evas *evas, int minw, int minh) 
 {
-   Evas_Object *obj, *o;
+   Evas_Object *obj, *o, *oa;
    
+   oa = e_widget_aspect_add(evas, minw, minh);
    obj = e_widget_preview_add(evas, minw, minh);
+   e_widget_aspect_child_set(oa, obj);
 
    o = edje_object_add(e_widget_preview_evas_get(obj));
    cfdata->o_prev_bg = o;
@@ -269,7 +271,7 @@ _trans_preview_add(E_Config_Dialog_Data *cfdata, Evas *evas, int minw, int minh)
    evas_object_show(o);
    e_widget_preview_extern_object_set(obj, o);
    
-   return obj;
+   return oa;
 }
 
 static void 
