@@ -369,7 +369,7 @@ e_font_fallback_list(void)
 }
 
 EAPI void
-e_font_default_set(const char *text_class, const char *font, int size)
+e_font_default_set(const char *text_class, const char *font, Evas_Font_Size size)
 {
    E_Font_Default *efd;
    Evas_List *next;
@@ -465,7 +465,7 @@ e_font_default_list(void)
  * we need a font name and size.
  */
 EAPI const char *
-e_font_default_string_get(const char *text_class, int *size_ret)
+e_font_default_string_get(const char *text_class, Evas_Font_Size *size_ret)
 {
    E_Font_Default *efd;
    Evas_List *next;

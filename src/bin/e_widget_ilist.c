@@ -218,6 +218,21 @@ e_widget_ilist_nth_icon_get(Evas_Object *obj, int n)
    return e_ilist_nth_icon_get(wd->o_ilist, n);
 }
 
+EAPI void *
+e_widget_ilist_nth_data_get(Evas_Object *obj, int n)
+{
+   E_Widget_Data *wd;
+   E_Widget_Callback *wcb;
+   
+   wd = e_widget_data_get(obj);
+   wcb = evas_list_nth(wd->callbacks, n);
+
+   if (!wcb) 
+     return NULL;
+   else 
+     return wcb->data;
+}
+
 EAPI Evas_Object *
 e_widget_ilist_selected_icon_get(Evas_Object *obj)
 {

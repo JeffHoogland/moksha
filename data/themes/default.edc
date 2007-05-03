@@ -76,5 +76,6 @@ collections {
 #include "default_color_well.edc"
 #include "default_sys.edc"
 #include "default_deskpreview.edc"
+#include "default_fontpreview.edc"
 }
 

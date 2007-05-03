@@ -914,7 +914,7 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 {
    Evas_Object *oic;
    char buf[4096], *p;
-   
+
    if (ici->icon)
      {
 	/* custom icon */

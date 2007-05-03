@@ -189,7 +189,8 @@ e_fm_prop.h \
 e_int_config_mouse.h \
 e_mouse.h \
 e_order.h \
-e_exec.h
+e_exec.h \
+e_widget_font_preview.h
  
 enlightenment_src = \
 e_user.c \
@@ -354,6 +355,7 @@ e_int_config_mouse.c \
 e_mouse.c \
 e_order.c \
 e_exec.c \
+e_widget_font_preview.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \

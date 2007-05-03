@@ -165,3 +165,4 @@
 #include "e_int_config_mouse.h"
 #include "e_order.h"
 #include "e_exec.h"
+#include "e_widget_font_preview.h"

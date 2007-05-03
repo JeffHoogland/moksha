@@ -14,9 +14,9 @@ typedef struct _E_Font_Properties E_Font_Properties;
 
 struct _E_Font_Default
 {
-   const char *text_class;
-   const char *font;
-   int         size;
+   const char     *text_class;
+   const char     *font;
+   Evas_Font_Size  size;
 };
 
 struct _E_Font_Fallback
@@ -54,11 +54,11 @@ EAPI void		e_font_fallback_remove(const char *font);
 EAPI Evas_List         *e_font_fallback_list(void);
 
 /* setup edje text classes */
-EAPI void		e_font_default_set(const char *text_class, const char *font, int size);
+EAPI void		e_font_default_set(const char *text_class, const char *font, Evas_Font_Size size);
 EAPI E_Font_Default    *e_font_default_get(const char *text_class);
 EAPI void		e_font_default_remove(const char *text_class);
 EAPI Evas_List         *e_font_default_list(void);
-EAPI const char        *e_font_default_string_get(const char *text_class, int *size_ret);
+EAPI const char        *e_font_default_string_get(const char *text_class, Evas_Font_Size *size_ret);
     
 #endif
 #endif
