@@ -694,7 +694,6 @@ _e_file_add_mod(int id, const char *path, int op, int listing)
    p += strlen(rlnk) + 1;
    
    bsz = p - buf;
-   printf("SEND +++ %s | %s | %s\n", path , lnk , rlnk);
    ecore_ipc_server_send(_e_ipc_server, 6/*E_IPC_DOMAIN_FM*/, op, 0, id,
 			 listing, buf, bsz);
    if (lnk) free(lnk);

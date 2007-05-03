@@ -13,12 +13,12 @@
  * + show permissions (others read, others write)
  * + show preview
  * + show owner
- * * show icon
+ * + show icon
  * * show symlink/fifo/socket/etc. status
  * * show broken link status
- * * change icon for mime type
+ * + change icon for mime type
  * * change icon for just this file
- * * change permissions (others read, others write)
+ * + change permissions (others read, others write)
  * 
  * advanced (extra) -
  * * show access date
