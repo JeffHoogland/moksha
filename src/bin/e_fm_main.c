@@ -662,13 +662,14 @@ _e_file_add_mod(int id, const char *path, int op, int listing)
       * stat_info[stat size] + broken_link[1] + path[n]\0 + lnk[n]\0 + rlnk[n]\0 */
      [sizeof(struct stat) + 1 + 4096 + 4096 + 4096];
    
-   lnk = ecore_file_readlink(buf);
+   lnk = ecore_file_readlink(path);
    if (stat(path, &st) == -1)
      {
 	if ((path[0] == 0) || (lnk)) broken_lnk = 1;
 	else return;
      }
    if ((lnk) && (lnk[0] != '/')) rlnk = ecore_file_realpath(path);
+   else if (lnk) rlnk = strdup(lnk);
    if (!lnk) lnk = strdup("");
    if (!rlnk) rlnk = strdup("");
 
@@ -693,6 +694,7 @@ _e_file_add_mod(int id, const char *path, int op, int listing)
    p += strlen(rlnk) + 1;
    
    bsz = p - buf;
+   printf("SEND +++ %s | %s | %s\n", path , lnk , rlnk);
    ecore_ipc_server_send(_e_ipc_server, 6/*E_IPC_DOMAIN_FM*/, op, 0, id,
 			 listing, buf, bsz);
    if (lnk) free(lnk);

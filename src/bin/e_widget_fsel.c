@@ -164,10 +164,11 @@ _e_wid_fsel_favorites_selected(void *data, Evas_Object *obj, void *event_info)
    selected = e_fm2_selected_list_get(wd->o_favorites_fm);
    if (!selected) return;
    ici = selected->data;
+   printf("SEL %s | %s | %s\n", ici->file, ici->real_link, ici->link);
    if ((ici->link) && (ici->mount))
      e_fm2_path_set(wd->o_files_fm, ici->link, "/");
-   else if (ici->link)
-     e_fm2_path_set(wd->o_files_fm, NULL, ici->link);
+   else if (ici->real_link)
+     e_fm2_path_set(wd->o_files_fm, NULL, ici->real_link);
    evas_list_free(selected);
    e_widget_scrollframe_child_pos_set(wd->o_files_frame, 0, 0);
    e_widget_entry_text_set(wd->o_entry, 

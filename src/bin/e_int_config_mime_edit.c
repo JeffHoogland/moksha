@@ -229,7 +229,12 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	break;
       case DEFAULT:
 	if (found)
-	  e_config->mime_icons = evas_list_remove(e_config->mime_icons, mi);
+	  {
+	     e_config->mime_icons = evas_list_remove(e_config->mime_icons, mi);
+	     if (mi->mime) evas_stringshare_del(mi->mime);
+	     if (mi->icon) evas_stringshare_del(mi->icon);
+	     free(mi);
+	  }
 	break;
      }
 

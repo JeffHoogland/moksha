@@ -5092,8 +5092,7 @@ _e_fm2_file_rename_yes_cb(char *text, void *data)
      {
 	snprintf(oldpath, sizeof(oldpath), "%s/%s", ic->sd->realpath, ic->info.file);
 	snprintf(newpath, sizeof(newpath), "%s/%s", ic->sd->realpath, text);
-//	if (e_filereg_file_protected(oldpath)) return;
-
+	if (e_filereg_file_protected(oldpath)) return;
 	_e_fm2_client_file_move(ic->sd->id, oldpath, newpath, "", 0, -9999, -9999);
      }
 }
@@ -5211,7 +5210,7 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
 	  {
 	     ici = l->data;
 	     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ici->file);
-//	     if (e_filereg_file_protected(buf)) continue;
+	     if (e_filereg_file_protected(buf)) continue;
 	     printf("rm -rf %s\n", buf);
 	     _e_fm2_client_file_del(ic->sd->id, buf);
 	  }
@@ -5220,7 +5219,7 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
    else
      {
 	snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
-//	if (e_filereg_file_protected(buf)) return;
+	if (e_filereg_file_protected(buf)) return;
 	printf("rm -rf %s\n", buf);
 	_e_fm2_client_file_del(ic->sd->id, buf);
      }

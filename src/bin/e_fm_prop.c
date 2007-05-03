@@ -48,6 +48,10 @@ static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E
 static void _cb_icon_sel(void *data, void *data2);
 static void _cb_type(void *data, Evas_Object *obj, void *event_info);
 static void _cb_preview_update(void *data, Evas_Object *obj, void *event_info);
+static void _cb_fsel_sel(void *data, Evas_Object *obj);
+static void _cb_fsel_ok(void *data, E_Dialog *dia);
+static void _cb_fsel_cancel(void *data, E_Dialog *dia);
+static void _cb_file_change(void *data);
 
 /* Actual config data we will be playing with whil the dialog is active */
 struct _E_Config_Dialog_Data
@@ -58,6 +62,8 @@ struct _E_Config_Dialog_Data
       Evas_Object *icon_wid;
       Evas_Object *preview;
       Evas_Object *preview_table;
+      Evas_Object *fsel_wid;
+      E_Dialog *fsel;
    } gui;
    /*- BASIC -*/
    char *file;
@@ -141,7 +147,8 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   /* Free the cfdata */
+   if (cfdata->gui.fsel)
+     e_object_del(E_OBJECT(cfdata->gui.fsel));
    E_FREE(cfdata->file);
    E_FREE(cfdata->size);
    E_FREE(cfdata->mod_date);
@@ -197,29 +204,77 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
 	if (cfdata->icon_mime) /* modify mimetype */
 	  {
+	     Evas_List *l;
+	     E_Config_Mime_Icon *mi = NULL;
+	     int found = 0;
+	     
 	     if (!cfdata->picon_mime) /* remove previous custom icon info */
 	       e_fm2_custom_file_del(buf);
+	     for (l = e_config->mime_icons; l; l = l->next)
+	       {
+		  mi = l->data;
+		  if (!mi) continue;
+		  if (strcmp(mi->mime, cfdata->mime)) continue;
+		  if (mi->icon)
+		    {
+		       evas_stringshare_del(mi->icon);
+		       mi->icon = NULL;
+		    }
+		  found = 1;
+		  break;
+	       }
+	     if ((!found) && (cfdata->icon_type != 0))
+	       {
+		  mi = E_NEW(E_Config_Mime_Icon, 1);
+		  mi->mime = evas_stringshare_add(cfdata->mime);
+		  e_config->mime_icons = evas_list_append(e_config->mime_icons, mi);
+	       }
 	     /* FIXME: modify mime info */
+	     if (cfdata->icon_type == 0)
+	       {
+		  if (found)
+		    {
+		       e_config->mime_icons = evas_list_remove(e_config->mime_icons, mi);
+		       if (mi->mime) evas_stringshare_del(mi->mime);
+		       if (mi->icon) evas_stringshare_del(mi->icon);
+		       free(mi);
+		    }
+	       }
+	     else if (cfdata->icon_type == 1)
+	       {
+		  mi->icon = evas_stringshare_add("THUMB");
+	       }
+	     else if (cfdata->icon_type == 2)
+	       {
+		  mi->icon = evas_stringshare_add(cfdata->icon);
+	       }
+	     e_config_save_queue();
+	     e_fm_mime_icon_cache_flush();
 	  }
 	else /* custom for this file */
 	  {
+	     /* FIXME: custom icons don't work yet */
 	     E_Fm2_Custom_File *cf, cf0;
 
 	     cf = e_fm2_custom_file_get(buf);
 	     if (!cf)
 	       {
-		  memset(cf, 0, sizeof(E_Fm2_Custom_File));
+		  memset(&cf0, 0, sizeof(E_Fm2_Custom_File));
 		  cf = &cf0;
 	       }
 	     cf->icon.type = cfdata->icon_type;
 	     if (cf->icon.icon)
 	       evas_stringshare_del(cf->icon.icon);
 	     cf->icon.icon = NULL;
-	     if (cfdata->icon)
-	       cf->icon.icon = evas_stringshare_add(cfdata->icon);
+// don't leak for now      
+//	     if (cfdata->icon)
+//	       cf->icon.icon = evas_stringshare_add(cfdata->icon);
 	     cf->icon.valid = 1;
 	     e_fm2_custom_file_set(buf, cf);
 	  }
+	cfdata->picon_type = cfdata->icon_type;
+	cfdata->picon_mime = cfdata->icon_mime;
+	
 	e_fm2_all_icons_update();
      }
 	  
@@ -388,9 +443,42 @@ static void
 _cb_icon_sel(void *data, void *data2)
 {
    E_Config_Dialog_Data *cfdata;
-   
+   E_Config_Dialog *cfd;
+   E_Dialog *dia;
+   Evas_Object *o;
+   Evas_Coord w, h;
+
    cfdata = data;
-   /* FIXME: select an icon */
+   if (!cfdata) return;
+   if (cfdata->gui.fsel) return;
+
+   cfd = data2;
+   if (!cfd) return;
+
+   dia = e_dialog_new(cfd->con, "E", "_fm2_file_properties_icon_select_dialog");
+   if (!dia) return;
+//   if (cfdata->type == EDJ)
+//     e_dialog_title_set(dia, _("Select an Edj File"));
+//   else if (cfdata->type == IMG)
+     e_dialog_title_set(dia, _("Select an Image"));
+             
+   dia->data = cfdata;
+   o = e_widget_fsel_add(dia->win->evas, "~/", "/", NULL, NULL,
+			 _cb_fsel_sel, cfdata, NULL, cfdata, 1);
+   
+   cfdata->gui.fsel_wid = o;
+   evas_object_show(o);
+   e_widget_min_size_get(o, &w, &h);
+   e_dialog_content_set(dia, o, w, h);
+   
+   e_dialog_button_add(dia, _("OK"), NULL, _cb_fsel_ok, cfdata);
+   e_dialog_button_add(dia, _("Cancel"), NULL, _cb_fsel_cancel, cfdata);
+   e_dialog_resizable_set(dia, 1);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
+   e_win_resize(dia->win, 475, 341);
+
+   cfdata->gui.fsel = dia;
 }
 
 static void
@@ -414,4 +502,57 @@ _cb_preview_update(void *data, Evas_Object *obj, void *event_info)
    e_widget_table_object_repack(cfdata->gui.preview_table,
 				cfdata->gui.preview,
 				0, 0, 1, 1, 0, 0, 1, 1);
+}
+
+static void
+_cb_fsel_sel(void *data, Evas_Object *obj)
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data;
+   if (!cfdata) return;
+}
+
+static void
+_cb_fsel_ok(void *data, E_Dialog *dia)
+{
+   E_Config_Dialog_Data *cfdata;
+   const char *file, *ext;
+   Evas_Object *icon = NULL;
+   
+   cfdata = data;
+   if (!cfdata) return;
+   
+   file = e_widget_fsel_selection_path_get(cfdata->gui.fsel_wid);
+   E_FREE(cfdata->icon);
+   if (file) cfdata->icon = strdup(file);
+   _cb_fsel_cancel(data, dia);
+   ext = strrchr(cfdata->icon, '.');
+   if (ext)
+     {
+	if (!strcasecmp(ext, ".edj"))
+	  {
+	     icon = edje_object_add( evas_object_evas_get(cfdata->gui.icon_wid));
+	     edje_object_file_set(icon, cfdata->file, "icon");
+	  }
+	else
+	  {
+	     icon = e_widget_image_add_from_file(evas_object_evas_get(cfdata->gui.icon_wid), cfdata->icon, 48, 48);
+	  }
+     }
+   else
+     {
+	icon = e_widget_image_add_from_file(evas_object_evas_get(cfdata->gui.icon_wid), cfdata->icon, 48, 48);
+     }
+   if (icon) e_widget_button_icon_set(cfdata->gui.icon_wid, icon);
+}
+
+static void
+_cb_fsel_cancel(void *data, E_Dialog *dia)
+{
+   E_Config_Dialog_Data *cfdata;
+   
+   cfdata = data;
+   e_object_del(E_OBJECT(dia));
+   cfdata->gui.fsel = NULL;
 }

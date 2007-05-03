@@ -712,10 +712,10 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	       e_fwin_new(fwin->win->container, ici->link, "/");
 	     else if ((ici->link) && (ici->removable))
 	       e_fwin_new(fwin->win->container, ici->link, "/");
-	     else if (ici->link)
+	     else if (ici->real_link)
 	       {
 		  if (S_ISDIR(ici->statinfo.st_mode))
-		    e_fwin_new(fwin->win->container, NULL, ici->link);
+		    e_fwin_new(fwin->win->container, NULL, ici->real_link);
 		  else
 		    need_dia = 1;
 	       }
