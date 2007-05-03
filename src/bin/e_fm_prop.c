@@ -52,6 +52,7 @@ static void _cb_preview_update(void *data, Evas_Object *obj, void *event_info);
 /* Actual config data we will be playing with whil the dialog is active */
 struct _E_Config_Dialog_Data
 {
+   E_Fm2_Icon *ic;
    E_Fm2_Icon_Info *fi;
    struct {
       Evas_Object *icon_wid;
@@ -79,7 +80,7 @@ struct _E_Config_Dialog_Data
 
 /* a nice easy setup function that does the dirty work */
 EAPI E_Config_Dialog *
-e_fm_prop_file(E_Container *con, E_Fm2_Icon_Info *fi)
+e_fm_prop_file(E_Container *con, E_Fm2_Icon *ic)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
@@ -99,27 +100,28 @@ e_fm_prop_file(E_Container *con, E_Fm2_Icon_Info *fi)
    cfd = e_config_dialog_new(con,
 			     _("File Properties"),
 			     "E", "_fm_prop",
-			     "enlightenment/file_properties", 0, v, fi);
+			     "enlightenment/file_properties", 0, v, ic);
    return cfd;
 }
 
 /**--CREATE--**/
 static void
-_fill_data(E_Config_Dialog_Data *cfdata, E_Fm2_Icon_Info *fi)
+_fill_data(E_Config_Dialog_Data *cfdata, E_Fm2_Icon *ic)
 {
    struct passwd *pw;
    
-   cfdata->fi = fi;
-   if (fi->file) cfdata->file = strdup(fi->file);
-   cfdata->size = e_util_size_string_get(fi->statinfo.st_size);
-   cfdata->mod_date = e_util_file_time_get(fi->statinfo.st_mtime);
-   if (fi->mime) cfdata->mime = strdup(fi->mime);
-   pw = getpwuid(fi->statinfo.st_uid);
+   cfdata->ic = ic;
+   cfdata->fi = e_fm2_icon_file_info_get(ic);
+   if (cfdata->fi->file) cfdata->file = strdup(cfdata->fi->file);
+   cfdata->size = e_util_size_string_get(cfdata->fi->statinfo.st_size);
+   cfdata->mod_date = e_util_file_time_get(cfdata->fi->statinfo.st_mtime);
+   if (cfdata->fi->mime) cfdata->mime = strdup(cfdata->fi->mime);
+   pw = getpwuid(cfdata->fi->statinfo.st_uid);
    if (pw) cfdata->owner = strdup(pw->pw_name);
-   if (fi->statinfo.st_mode & S_IRUSR) cfdata->owner_read = 1;
-   if (fi->statinfo.st_mode & S_IWUSR) cfdata->owner_write = 1;
-   if (fi->statinfo.st_mode & S_IROTH) cfdata->others_read = 1;
-   if (fi->statinfo.st_mode & S_IWOTH) cfdata->others_write = 1;
+   if (cfdata->fi->statinfo.st_mode & S_IRUSR) cfdata->owner_read = 1;
+   if (cfdata->fi->statinfo.st_mode & S_IWUSR) cfdata->owner_write = 1;
+   if (cfdata->fi->statinfo.st_mode & S_IROTH) cfdata->others_read = 1;
+   if (cfdata->fi->statinfo.st_mode & S_IWOTH) cfdata->others_write = 1;
 }
 
 static void *
@@ -317,7 +319,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_button_add(evas, "", NULL, _cb_icon_sel, cfdata, cfd);   
    cfdata->gui.icon_wid = ob;
    oi = e_fm2_icon_get(evas, e_fm2_real_path_get(cfdata->fi->fm),
-		       NULL, cfdata->fi, 
+		       cfdata->ic, cfdata->fi, 
 		       cfg->icon.key_hint,
 		       NULL, NULL, 0, &itype);
    e_widget_button_icon_set(ob, oi);

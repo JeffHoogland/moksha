@@ -122,6 +122,7 @@ struct _E_Fm2_Icon
    int               saved_rel;
    E_Menu           *menu;
    E_Entry_Dialog   *entry_dialog;
+   E_Config_Dialog  *prop_dialog;
    E_Dialog         *dialog;
 
    E_Fm2_Icon_Info   info;
@@ -261,6 +262,7 @@ static void _e_fm2_file_rename_delete_cb(void *obj);
 static void _e_fm2_file_rename_yes_cb(char *text, void *data);
 static void _e_fm2_file_rename_no_cb(void *data);
 static void _e_fm2_file_properties(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_fm2_file_properties_delete_cb(void *obj);
 static void _e_fm2_file_delete(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fm2_file_delete_delete_cb(void *obj);
 static void _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog);
@@ -1160,6 +1162,13 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 	  }
      }
    return oic;
+}
+
+EAPI E_Fm2_Icon_Info *
+e_fm2_icon_file_info_get(E_Fm2_Icon *ic)
+{
+   if (!ic) return NULL;
+   return &(ic->info);
 }
 
 /* FIXME: tmp delay - fix later */
@@ -2451,6 +2460,11 @@ _e_fm2_icon_free(E_Fm2_Icon *ic)
      {
 	e_object_del(E_OBJECT(ic->entry_dialog));
 	ic->entry_dialog = NULL;
+     }
+   if (ic->prop_dialog)
+     {
+	e_object_del(E_OBJECT(ic->prop_dialog));
+	ic->prop_dialog = NULL;
      }
    if (ic->info.file) evas_stringshare_del(ic->info.file);
    if (ic->info.mime) evas_stringshare_del(ic->info.mime);
@@ -5108,8 +5122,19 @@ _e_fm2_file_properties(void *data, E_Menu *m, E_Menu_Item *mi)
    con = e_container_current_get(man);
    if (!con) return;
 
-   /* FIXME: get and store properties dialog into icon */
-   e_fm_prop_file(con, &(ic->info));
+   if (ic->prop_dialog) e_object_del(E_OBJECT(ic->prop_dialog));
+   ic->prop_dialog = e_fm_prop_file(con, ic);
+   E_OBJECT(ic->prop_dialog)->data = ic;
+   e_object_del_attach_func_set(E_OBJECT(ic->prop_dialog), _e_fm2_file_properties_delete_cb);
+}
+
+static void
+_e_fm2_file_properties_delete_cb(void *obj)
+{
+   E_Fm2_Icon *ic;
+   
+   ic = E_OBJECT(obj)->data;
+   ic->prop_dialog = NULL;
 }
 
 static void
