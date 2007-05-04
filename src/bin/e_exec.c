@@ -99,6 +99,8 @@ e_exec_shutdown(void)
 
    if (_e_exec_exit_handler) ecore_event_handler_del(_e_exec_exit_handler);
    if (_e_exec_border_add_handler) ecore_event_handler_del(_e_exec_border_add_handler);
+   evas_hash_free(e_exec_instances);
+   evas_list_free(e_exec_start_pending);
    return 1;
 }
 
@@ -245,8 +247,16 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 	inst->expire_timer = ecore_timer_add(10.0, _e_exec_cb_expire_timer, inst);
 
 	l = evas_hash_find(e_exec_instances, desktop->orig_path);
-	l = evas_list_append(l, inst);
-	evas_hash_direct_add(e_exec_instances, desktop->orig_path, l);
+	if (l)
+	  {
+	     l = evas_list_append(l, inst);
+	     evas_hash_modify(e_exec_instances, desktop->orig_path, l);
+	  }
+	else
+	  {
+	     l = evas_list_append(l, inst);
+	     e_exec_instances = evas_hash_add(e_exec_instances, desktop->orig_path, l);
+	  }
 	e_exec_start_pending = evas_list_append(e_exec_start_pending, desktop);
      }
    else
@@ -320,8 +330,14 @@ _e_exec_cb_exit(void *data, int type, void *event)
 			     ecore_exe_event_data_get(ev->exe, ECORE_EXE_PIPE_READ));
      }
    instances = evas_hash_find(e_exec_instances, inst->desktop->orig_path);
-   instances = evas_list_remove(instances, inst);
-   evas_hash_direct_add(e_exec_instances, inst->desktop->orig_path, instances);
+   if (instances)
+     {
+	instances = evas_list_remove(instances, inst);
+	if (instances)
+	  evas_hash_modify(e_exec_instances, inst->desktop->orig_path, instances);
+	else
+	  e_exec_instances = evas_hash_del(e_exec_instances, inst->desktop->orig_path, NULL);
+     }
    e_exec_start_pending = evas_list_remove(e_exec_start_pending, inst->desktop);
    if (inst->expire_timer) ecore_timer_del(inst->expire_timer);
    free(inst);
@@ -342,7 +358,7 @@ _e_exec_startup_id_pid_find(Evas_Hash *hash, const char *key, void *value, void 
 
 	inst = l->data;
 	if (((search->startup_id > 0) && (search->startup_id == inst->startup_id)) ||
-	    ((search->pid > 1) && (search->pid == ecore_exe_pid_get(inst->exe))))
+	    ((inst->exe) && (search->pid > 1) && (search->pid == ecore_exe_pid_get(inst->exe))))
 	  {
 	     search->desktop = inst->desktop;
 	     return 0;
