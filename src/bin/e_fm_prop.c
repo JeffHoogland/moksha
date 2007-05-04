@@ -71,6 +71,8 @@ struct _E_Config_Dialog_Data
    char *mod_date;
    char *mime;
    char *owner;
+   char *link;
+   char *plink;
    int owner_read;
    int owner_write;
    int others_read;
@@ -124,6 +126,8 @@ _fill_data(E_Config_Dialog_Data *cfdata, E_Fm2_Icon *ic)
    if (cfdata->fi->mime) cfdata->mime = strdup(cfdata->fi->mime);
    pw = getpwuid(cfdata->fi->statinfo.st_uid);
    if (pw) cfdata->owner = strdup(pw->pw_name);
+   if (cfdata->fi->link) cfdata->link = strdup(cfdata->fi->link);
+   if (cfdata->fi->link) cfdata->plink = strdup(cfdata->fi->link);
    if (cfdata->fi->statinfo.st_mode & S_IRUSR) cfdata->owner_read = 1;
    if (cfdata->fi->statinfo.st_mode & S_IWUSR) cfdata->owner_write = 1;
    if (cfdata->fi->statinfo.st_mode & S_IROTH) cfdata->others_read = 1;
@@ -154,6 +158,8 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    E_FREE(cfdata->mod_date);
    E_FREE(cfdata->mime);
    E_FREE(cfdata->owner);
+   E_FREE(cfdata->link);
+   E_FREE(cfdata->plink);
    E_FREE(cfdata->icon);
    free(cfdata);
 }
@@ -198,6 +204,17 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     cfdata->fi->statinfo.st_mode = pmode;
 	  }
      }
+   if ((cfdata->link) && ((cfdata->fi->real_link) || (cfdata->fi->broken_link)))
+     {
+	if ((cfdata->link[0]) && (strcmp(cfdata->plink, cfdata->link)))
+	  {
+	     ecore_file_unlink(buf);
+	     ecore_file_symlink(cfdata->link, buf);
+	     free(cfdata->plink);
+	     cfdata->plink = strdup(cfdata->link);
+	  }
+     }
+   
    if ((cfdata->picon_type != cfdata->icon_type) ||
        (cfdata->picon_mime != cfdata->icon_mime) ||
        (cfdata->picon_changed))
@@ -416,11 +433,23 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    if ((cfdata->fi->icon) || ((itype) && (!strcmp(itype, "DESKTOP"))))
      cfdata->icon_mime = 0;
    cfdata->picon_mime = cfdata->icon_mime;
-   ob = e_widget_check_add(evas, _("Use this icon for all files of this type"), &(cfdata->icon_mime));
-   e_widget_frametable_object_append(ot, ob, 0, 3, 2, 1, 1, 1, 1, 1);
+   if (cfdata->mime)
+     {
+	ob = e_widget_check_add(evas, _("Use this icon for all files of this type"), &(cfdata->icon_mime));
+	e_widget_frametable_object_append(ot, ob, 0, 3, 2, 1, 1, 1, 1, 1);
+     }
    
-   e_widget_table_object_append(o, ot, 0, 1, 2, 1, 1, 1, 1, 1);
-   
+   e_widget_table_object_append(o, ot, 0, 1, 1, 1, 1, 1, 1, 1);
+
+   if ((cfdata->link) && ((cfdata->fi->real_link) || (cfdata->fi->broken_link)))
+     {
+	ot = e_widget_frametable_add(evas, _("Link Information"), 0);
+	
+	ob = e_widget_entry_add(evas, &(cfdata->link));
+	e_widget_frametable_object_append(ot, ob, 0, 0, 1, 1, 1, 0, 1, 0);
+	
+	e_widget_table_object_append(o, ot, 1, 1, 1, 1, 1, 1, 1, 1);
+     }
    return o;
 }
 
