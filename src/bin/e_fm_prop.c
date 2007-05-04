@@ -274,19 +274,23 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     E_Fm2_Custom_File *cf, cf0;
 
 	     cf = e_fm2_custom_file_get(buf);
-	     if (!cf)
+	     if (cf)
+	       {
+		  cf->icon.type = cfdata->icon_type;
+		  if (cf->icon.icon)
+		    evas_stringshare_del(cf->icon.icon);
+		  cf->icon.icon = NULL;
+		  cf->icon.icon = evas_stringshare_add(cfdata->icon);
+		  cf->icon.valid = 1;
+	       }
+	     else
 	       {
 		  memset(&cf0, 0, sizeof(E_Fm2_Custom_File));
 		  cf = &cf0;
+		  cf->icon.type = cfdata->icon_type;
+		  cf->icon.icon = cfdata->icon;
+		  cf->icon.valid = 1;
 	       }
-	     cf->icon.type = cfdata->icon_type;
-	     if (cf->icon.icon)
-	       evas_stringshare_del(cf->icon.icon);
-	     cf->icon.icon = NULL;
-// don't leak for now      
-//	     if (cfdata->icon)
-//	       cf->icon.icon = evas_stringshare_add(cfdata->icon);
-	     cf->icon.valid = 1;
 	     e_fm2_custom_file_set(buf, cf);
 	  }
 	cfdata->picon_type = cfdata->icon_type;
