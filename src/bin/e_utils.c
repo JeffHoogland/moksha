@@ -27,6 +27,7 @@ struct _E_Util_Fake_Mouse_Up_Info
 };
 
 /* local subsystem functions */
+static int _e_util_cb_delayed_del(void *data);
 static void _e_util_container_fake_mouse_up_cb(void *data);
 static int _e_util_wakeup_cb(void *data);
 
@@ -906,7 +907,20 @@ e_util_dir_check(const char *dir)
    return 1;
 }
 
+EAPI void
+e_util_defer_object_del(E_Object *obj)
+{
+   ecore_idle_enterer_add(_e_util_cb_delayed_del, obj);
+}
+
 /* local subsystem functions */
+static int
+_e_util_cb_delayed_del(void *data)
+{
+   e_object_del(E_OBJECT(data));
+   return 0;
+}
+
 static void
 _e_util_container_fake_mouse_up_cb(void *data)
 {

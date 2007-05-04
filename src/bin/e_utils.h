@@ -52,6 +52,7 @@ EAPI Evas_Object *e_util_desktop_icon_add(Efreet_Desktop *desktop, const char *s
 EAPI Evas_Object *e_util_icon_theme_icon_add(const char *icon_name, const char *size, Evas *evas);
 EAPI void         e_util_desktop_menu_item_icon_add(Efreet_Desktop *desktop, const char *size, E_Menu_Item *mi);
 EAPI int          e_util_dir_check(const char *dir);
-
+EAPI void         e_util_defer_object_del(E_Object *obj);
+    
 #endif
 #endif

@@ -202,7 +202,7 @@ _e_configure_cb_close(void *data, void *data2)
    
    eco = data;
    if (!eco) return;
-   e_object_del(E_OBJECT(eco));
+   e_util_defer_object_del(E_OBJECT(eco));
 }
 
 static E_Configure_Category *
