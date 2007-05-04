@@ -92,6 +92,6 @@ _e_confirm_dialog_delete(E_Win *win)
    cd = dia->data;
 
    if (cd->del.func) cd->del.func(cd->del.data);
-   e_object_del(E_OBJECT(dia));
+   e_util_defer_object_del(E_OBJECT(dia));
    free(cd);
 }

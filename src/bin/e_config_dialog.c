@@ -252,7 +252,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    if (pdia)
      {
 	e_object_del_attach_func_set(E_OBJECT(pdia), NULL);
-	e_object_del(E_OBJECT(pdia));
+	e_util_defer_object_del(E_OBJECT(pdia));
      }
 }
 

@@ -244,7 +244,7 @@ _e_dialog_free(E_Dialog *dia)
 static void
 _e_dialog_del_func_cb(void *data, E_Dialog *dia)
 {
-   e_object_del(E_OBJECT(dia));
+   e_util_defer_object_del(E_OBJECT(dia));
 }
 
 static void

@@ -136,5 +136,5 @@ _e_obj_dialog_cb_close(void *data, Evas_Object *obj, const char *emission, const
    od = data;
    if (od->cb_delete)
      od->cb_delete(od);
-   e_object_del(E_OBJECT(od));
+   e_util_defer_object_del(E_OBJECT(od));
 }

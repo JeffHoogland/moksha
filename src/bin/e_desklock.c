@@ -376,7 +376,7 @@ e_desklock_hide(void)
 	     evas_object_del(edp->login_box);
 	     evas_event_thaw(edp->popup_wnd->evas);
 	     
-	     e_object_del(E_OBJECT(edp->popup_wnd));
+	     e_util_defer_object_del(E_OBJECT(edp->popup_wnd));
 	     E_FREE(edp);
 	  }
 	edd->elock_wnd_list = evas_list_remove_list(edd->elock_wnd_list, edd->elock_wnd_list);

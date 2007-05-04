@@ -128,5 +128,5 @@ _e_theme_about_cb_close(void *data, Evas_Object *obj, const char *emission, cons
    
    about = data;
    if (!about) return;
-   e_object_del(E_OBJECT(about));
+   e_util_defer_object_del(E_OBJECT(about));
 }

@@ -614,7 +614,7 @@ _e_desktop_edit_cb_icon_select_cancel(void *data, E_Dialog *dia)
    E_Config_Dialog_Data *cfdata;
 
    cfdata = data;
-   e_object_del(E_OBJECT(dia));
+   e_util_defer_object_del(E_OBJECT(dia));
    cfdata->editor->fsel_dia = NULL;
    _e_desktop_editor_icon_update(cfdata);
 }
