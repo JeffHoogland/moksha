@@ -3746,6 +3746,7 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
      }
    else if (ev->button == 3)
      {
+	_e_fm2_mouse_1_handler(ic, 0, ev->modifiers);
 	_e_fm2_icon_menu(ic, ic->sd->obj, ev->timestamp);
 	e_util_evas_fake_mouse_up_later(evas_object_evas_get(ic->sd->obj),
 					ev->button);
