@@ -25,7 +25,7 @@ e_widget_scrollframe_simple_add(Evas *evas, Evas_Object *child)
    
    e_widget_del_hook_set(obj, _e_wid_del_hook);
    e_widget_focus_hook_set(obj, _e_wid_focus_hook);
-   wd = calloc(1, sizeof(wd));
+   wd = calloc(1, sizeof(E_Widget_Data));
    e_widget_data_set(obj, wd);
 
    o = e_scrollframe_add(evas);
