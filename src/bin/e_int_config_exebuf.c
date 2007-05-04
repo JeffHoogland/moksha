@@ -155,9 +155,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
-   Evas_Object *o, *of, *ob, *ot;
+   Evas_Object *of, *ob, *ot;
 
-   o = e_widget_list_add(evas, 0, 0);
    ot = e_widget_table_add(evas, 0);
 
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
@@ -185,7 +184,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
 
    of = e_widget_framelist_add(evas, _("Terminal Settings"), 0);      
-   e_widget_framelist_content_align_set(of, 0.5, 0.0);
    ob = e_widget_label_add(evas, _("Terminal Command (CTRL+RETURN to utilize)"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_entry_add(evas, &(cfdata->term_cmd));
@@ -193,7 +191,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
 
    of = e_widget_framelist_add(evas, _("Size Settings"), 0);
-   e_widget_framelist_content_align_set(of, 0.5, 0.0);
    ob = e_widget_label_add(evas, _("Minimum Width"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%4.0f"), 0, 4000, 50, 0, NULL, &(cfdata->pos_min_w), 200);
@@ -223,6 +220,5 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);   
    e_widget_table_object_append(ot, of, 1, 2, 1, 1, 1, 1, 1, 1);
 
-   e_widget_list_object_append(o, ot, 1, 1, 0.5);      
-   return o;   
+   return ot;
 }
