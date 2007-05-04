@@ -219,7 +219,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
        (cfdata->picon_mime != cfdata->icon_mime) ||
        (cfdata->picon_changed))
      {
-	if (cfdata->icon_mime) /* modify mimetype */
+	if ((cfdata->icon_mime) && (cfdata->mime)) /* modify mimetype */
 	  {
 	     Evas_List *l;
 	     E_Config_Mime_Icon *mi = NULL;
@@ -270,9 +270,8 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	  }
 	else /* custom for this file */
 	  {
-	     /* FIXME: custom icons don't work yet */
 	     E_Fm2_Custom_File *cf, cf0;
-
+	     
 	     cf = e_fm2_custom_file_get(buf);
 	     if (cf)
 	       {
@@ -280,18 +279,27 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 		  if (cf->icon.icon)
 		    evas_stringshare_del(cf->icon.icon);
 		  cf->icon.icon = NULL;
-		  cf->icon.icon = evas_stringshare_add(cfdata->icon);
-		  cf->icon.valid = 1;
+		  if (cfdata->icon_type == 2)
+		    cf->icon.icon = evas_stringshare_add(cfdata->icon);
+		  if (cfdata->icon_type == 0)
+		    cf->icon.valid = 0;
+		  else
+		    cf->icon.valid = 1;
 	       }
 	     else
 	       {
 		  memset(&cf0, 0, sizeof(E_Fm2_Custom_File));
 		  cf = &cf0;
 		  cf->icon.type = cfdata->icon_type;
-		  cf->icon.icon = cfdata->icon;
-		  cf->icon.valid = 1;
+		  if (cfdata->icon_type == 2)
+		    cf->icon.icon = cfdata->icon;
+		  if (cfdata->icon_type == 0)
+		    cf->icon.valid = 0;
+		  else
+		    cf->icon.valid = 1;
 	       }
 	     e_fm2_custom_file_set(buf, cf);
+	     e_fm2_custom_file_flush();
 	  }
 	cfdata->picon_type = cfdata->icon_type;
 	cfdata->picon_mime = cfdata->icon_mime;

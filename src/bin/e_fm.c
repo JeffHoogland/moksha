@@ -368,6 +368,7 @@ e_fm2_init(void)
 	E_EVENT_REMOVABLE_DEL = ecore_event_type_new();
      }
    _e_fm2_client_spawn();
+   e_fm2_custom_file_init();
    return 1;
 }
 
@@ -388,6 +389,7 @@ e_fm2_shutdown(void)
    evas_smart_free(_e_fm2_smart);
    _e_fm2_smart = NULL;
    E_FREE(_e_fm2_meta_path);
+   e_fm2_custom_file_shutdown();
    return 1;
 }
 
@@ -792,13 +794,40 @@ e_fm2_icons_update(Evas_Object *obj)
    if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
    for (l = sd->icons; l; l = l->next)
      {
+	E_Fm2_Custom_File *cf;
+	char buf[PATH_MAX];
+	
 	ic = l->data;
+	
+	if (ic->info.icon) evas_stringshare_del(ic->info.icon);
+	ic->info.icon = NULL;
+	ic->info.icon_type = 0;
+	
+	snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
+	if ((e_util_glob_case_match(ic->info.file, "*.desktop")) ||
+	    (e_util_glob_case_match(ic->info.file, "*.directory")))
+	  _e_fm2_icon_desktop_load(ic);
+	
+	cf = e_fm2_custom_file_get(buf);
+	if (cf)
+	  {
+	     if (cf->icon.valid)
+	       {
+		  if (ic->info.icon) evas_stringshare_del(ic->info.icon);
+		  ic->info.icon = NULL;
+		  if (cf->icon.icon)
+		    ic->info.icon = evas_stringshare_add(cf->icon.icon);
+		  ic->info.icon_type = cf->icon.type;
+	       }
+	  }
+	
 	if (ic->realized)
 	  {
 	     _e_fm2_icon_unrealize(ic);
 	     _e_fm2_icon_realize(ic);
 	  }
      }
+   e_fm2_custom_file_flush();
 }
 
 EAPI void
