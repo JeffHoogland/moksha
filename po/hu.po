@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-03-27 14:13+0300\n"
+"POT-Creation-Date: 2007-05-05 23:22+0900\n"
 "PO-Revision-Date: 2006-05-13 14:34+0200\n"
 "Last-Translator: Peter Parkanyi \n"
 "Language-Team: Hungarian <HU@li.org>\n"
@@ -19,8 +19,8 @@ msgid "About Enlightenment"
 msgstr "Az Enlightenmentrõl"
 
 #: src/bin/e_about.c:74 src/bin/e_actions.c:2201 src/bin/e_actions.c:2205
-#: src/bin/e_actions.c:2209 src/bin/e_actions.c:2213 src/bin/e_main.c:828
-#: src/bin/e_int_menus.c:154
+#: src/bin/e_actions.c:2209 src/bin/e_actions.c:2213 src/bin/e_main.c:851
+#: src/bin/e_int_menus.c:158
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
@@ -49,54 +49,62 @@ msgstr ""
 msgid "<title>The Team</title>"
 msgstr "<title>A Csapat<title><br>"
 
-#: src/bin/e_actions.c:309
+#: src/bin/e_actions.c:295
+#, c-format
+msgid ""
+"You are about to kill %s.<br><br>Please keep in mind that all data of this "
+"window,<br>which has not been saved yet will be lost!<br><br>Are you sure "
+"you want to kill this window?"
+msgstr ""
+
+#: src/bin/e_actions.c:308
 #, fuzzy
 msgid "Are you sure you want to kill this window?"
 msgstr "Tényleg ki akarsz lépni?"
 
-#: src/bin/e_actions.c:312 src/bin/e_actions.c:1590 src/bin/e_actions.c:1651
-#: src/bin/e_actions.c:1700 src/bin/e_actions.c:1749 src/bin/e_actions.c:1798
-#: src/bin/e_actions.c:1847 src/bin/e_confirm_dialog.c:69 src/bin/e_fm.c:5053
-#: src/bin/e_int_config_display.c:215 src/bin/e_module.c:454
+#: src/bin/e_actions.c:311 src/bin/e_actions.c:1589 src/bin/e_actions.c:1650
+#: src/bin/e_actions.c:1699 src/bin/e_actions.c:1748 src/bin/e_actions.c:1797
+#: src/bin/e_actions.c:1846 src/bin/e_confirm_dialog.c:47 src/bin/e_fm.c:5197
+#: src/bin/e_int_config_display.c:215 src/bin/e_module.c:455
 msgid "Yes"
 msgstr "Igen"
 
-#: src/bin/e_actions.c:314 src/bin/e_actions.c:1592 src/bin/e_actions.c:1653
-#: src/bin/e_actions.c:1702 src/bin/e_actions.c:1751 src/bin/e_actions.c:1800
-#: src/bin/e_actions.c:1849 src/bin/e_confirm_dialog.c:70 src/bin/e_fm.c:5054
-#: src/bin/e_int_config_display.c:216 src/bin/e_module.c:455
+#: src/bin/e_actions.c:313 src/bin/e_actions.c:1591 src/bin/e_actions.c:1652
+#: src/bin/e_actions.c:1701 src/bin/e_actions.c:1750 src/bin/e_actions.c:1799
+#: src/bin/e_actions.c:1848 src/bin/e_confirm_dialog.c:48 src/bin/e_fm.c:5198
+#: src/bin/e_int_config_display.c:216 src/bin/e_module.c:456
 msgid "No"
 msgstr "Nem"
 
-#: src/bin/e_actions.c:1583
+#: src/bin/e_actions.c:1582
 msgid "Are you sure you want to exit?"
 msgstr "Tényleg ki akarsz lépni?"
 
-#: src/bin/e_actions.c:1585
+#: src/bin/e_actions.c:1584
 msgid ""
 "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
 msgstr ""
 "Az Enlightenmentbõl való kilépést választottad.<br><br>Biztos, hogy ezt "
 "akarod?"
 
-#: src/bin/e_actions.c:1644
+#: src/bin/e_actions.c:1643
 #, fuzzy
 msgid "Are you sure you want to log out?"
 msgstr "Tényleg ki akarsz lépni?"
 
-#: src/bin/e_actions.c:1646
+#: src/bin/e_actions.c:1645
 #, fuzzy
 msgid "You are about to log out.<br><br>Are you sure you want to do this?"
 msgstr ""
 "Az Enlightenmentbõl való kilépést választottad.<br><br>Biztos, hogy ezt "
 "akarod?"
 
-#: src/bin/e_actions.c:1693 src/bin/e_actions.c:1791
+#: src/bin/e_actions.c:1692 src/bin/e_actions.c:1790
 #, fuzzy
 msgid "Are you sure you want to turn off?"
 msgstr "Tényleg ki akarsz lépni?"
 
-#: src/bin/e_actions.c:1695
+#: src/bin/e_actions.c:1694
 #, fuzzy
 msgid ""
 "You requested to turn off your Computer.<br><br>Are you sure you want to "
@@ -105,12 +113,12 @@ msgstr ""
 "Az Enlightenmentbõl való kilépést választottad.<br><br>Biztos, hogy ezt "
 "akarod?"
 
-#: src/bin/e_actions.c:1742
+#: src/bin/e_actions.c:1741
 #, fuzzy
 msgid "Are you sure you want to reboot?"
 msgstr "Tényleg ki akarsz lépni?"
 
-#: src/bin/e_actions.c:1744
+#: src/bin/e_actions.c:1743
 #, fuzzy
 msgid ""
 "You requested to reboot your Computer.<br><br>Are you sure you want to "
@@ -119,7 +127,7 @@ msgstr ""
 "Az Enlightenmentbõl való kilépést választottad.<br><br>Biztos, hogy ezt "
 "akarod?"
 
-#: src/bin/e_actions.c:1793
+#: src/bin/e_actions.c:1792
 #, fuzzy
 msgid ""
 "You requested to suspend your Computer.<br><br>Are you sure you want to "
@@ -128,12 +136,12 @@ msgstr ""
 "Az Enlightenmentbõl való kilépést választottad.<br><br>Biztos, hogy ezt "
 "akarod?"
 
-#: src/bin/e_actions.c:1840
+#: src/bin/e_actions.c:1839
 #, fuzzy
 msgid "Are you sure you want to hibernate?"
 msgstr "Tényleg ki akarsz lépni?"
 
-#: src/bin/e_actions.c:1842
+#: src/bin/e_actions.c:1841
 #, fuzzy
 msgid ""
 "You requested to hibernate your Computer.<br><br>Are you sure you want to "
@@ -169,21 +177,21 @@ msgstr "Menü"
 msgid "Window Menu"
 msgstr "Ablak menü"
 
-#: src/bin/e_actions.c:1957 src/bin/e_int_border_menu.c:323
+#: src/bin/e_actions.c:1957 src/bin/e_int_border_menu.c:336
 msgid "Raise"
 msgstr "Felemel"
 
-#: src/bin/e_actions.c:1962 src/bin/e_int_border_menu.c:331
+#: src/bin/e_actions.c:1962 src/bin/e_int_border_menu.c:344
 msgid "Lower"
 msgstr "Lejjebb helyez"
 
 #: src/bin/e_actions.c:1967 src/bin/e_config_dialog.c:226
-#: src/bin/e_configure.c:113 src/bin/e_fwin.c:754
-#: src/bin/e_int_border_menu.c:305 src/bin/e_int_border_prop.c:81
+#: src/bin/e_configure.c:113 src/bin/e_fwin.c:873
+#: src/bin/e_int_border_menu.c:318 src/bin/e_int_border_prop.c:81
 msgid "Close"
 msgstr "Bezárás"
 
-#: src/bin/e_actions.c:1972 src/bin/e_int_border_menu.c:294
+#: src/bin/e_actions.c:1972 src/bin/e_int_border_menu.c:307
 msgid "Kill"
 msgstr "Nyírd ki!"
 
@@ -209,8 +217,8 @@ msgstr "Ikon mód váltása"
 msgid "Fullscreen Mode Toggle"
 msgstr "Ikon mód váltása"
 
-#: src/bin/e_actions.c:1998 src/bin/e_int_border_menu.c:95
-#: src/bin/e_int_border_menu.c:225
+#: src/bin/e_actions.c:1998 src/bin/e_int_border_menu.c:98
+#: src/bin/e_int_border_menu.c:228
 msgid "Maximize"
 msgstr "Teljes méretû"
 
@@ -277,7 +285,7 @@ msgstr "Keret nélküli"
 #: src/bin/e_actions.c:2089 src/bin/e_actions.c:2091 src/bin/e_actions.c:2093
 #: src/bin/e_actions.c:2095 src/bin/e_actions.c:2097 src/bin/e_actions.c:2099
 #: src/bin/e_actions.c:2242 src/bin/e_actions.c:2247
-#: src/bin/e_int_config_clientlist.c:97 src/bin/e_int_menus.c:129
+#: src/bin/e_int_config_clientlist.c:103 src/bin/e_int_menus.c:133
 #: src/modules/ibox/e_mod_config.c:139
 msgid "Desktop"
 msgstr "Asztal"
@@ -369,7 +377,7 @@ msgstr "Váltás erre az asztalra..."
 
 #: src/bin/e_actions.c:2105 src/bin/e_actions.c:2107 src/bin/e_actions.c:2109
 #: src/bin/e_actions.c:2114 src/bin/e_actions.c:2116 src/bin/e_actions.c:2118
-#: src/bin/e_configure.c:411
+#: src/bin/e_configure.c:411 src/modules/ibox/e_mod_config.c:108
 msgid "Screen"
 msgstr "Képernyõ"
 
@@ -464,12 +472,11 @@ msgstr "Következő ablak"
 msgid "Previous Window"
 msgstr "Előző ablak"
 
-#: src/bin/e_actions.c:2201 src/bin/e_int_menus.c:173
-#: src/bin/e_int_config_apps.c:142
+#: src/bin/e_actions.c:2201 src/bin/e_int_menus.c:177
 msgid "Restart"
 msgstr "Újraindítás"
 
-#: src/bin/e_actions.c:2205 src/bin/e_int_menus.c:178
+#: src/bin/e_actions.c:2205 src/bin/e_int_menus.c:182
 msgid "Exit"
 msgstr "Kkilépés"
 
@@ -485,20 +492,20 @@ msgstr ""
 #: src/bin/e_actions.c:2217 src/bin/e_actions.c:2221 src/bin/e_actions.c:2225
 #: src/bin/e_actions.c:2229 src/bin/e_int_config_desklock.c:195
 #: src/bin/e_int_config_imc.c:821 src/bin/e_int_config_startup.c:273
-#: src/bin/e_int_config_theme.c:360 src/bin/e_int_config_wallpaper.c:458
-#: src/bin/e_int_config_wallpaper.c:609 src/bin/e_int_menus.c:198
+#: src/bin/e_int_config_theme.c:360 src/bin/e_int_config_wallpaper.c:459
+#: src/bin/e_int_config_wallpaper.c:614 src/bin/e_int_menus.c:202
 msgid "System"
 msgstr "Rendszer"
 
-#: src/bin/e_actions.c:2217 src/bin/e_int_menus.c:872
+#: src/bin/e_actions.c:2217 src/bin/e_int_menus.c:882
 msgid "Shut Down"
 msgstr ""
 
-#: src/bin/e_actions.c:2221 src/bin/e_int_menus.c:865
+#: src/bin/e_actions.c:2221 src/bin/e_int_menus.c:875
 msgid "Reboot"
 msgstr ""
 
-#: src/bin/e_actions.c:2225 src/bin/e_int_menus.c:851
+#: src/bin/e_actions.c:2225 src/bin/e_int_menus.c:861
 msgid "Suspend"
 msgstr ""
 
@@ -516,11 +523,11 @@ msgstr "Parancs futtatása"
 msgid "Desktop Lock"
 msgstr "Asztal zárolása"
 
-#: src/bin/e_actions.c:2247 src/bin/e_int_menus.c:1231
+#: src/bin/e_actions.c:2247 src/bin/e_int_menus.c:1241
 msgid "Cleanup Windows"
 msgstr "Ablakok tisztogatása"
 
-#: src/bin/e_config.c:553
+#: src/bin/e_config.c:564
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -538,7 +545,7 @@ msgstr ""
 "visszaállíthatsz,<br>ahogy neked tetszik. Az esetleges galibákért elnézést "
 "kérünk!<br>"
 
-#: src/bin/e_config.c:567
+#: src/bin/e_config.c:578
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very<br>strange. "
 "This should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -552,16 +559,16 @@ msgstr ""
 "Ez így nem túl jó, és figyelmez-<br>tetésként a beállítások visszaálltak az "
 "alapértelmezésre.<br>A galibákért elnézést kérünk!<br>"
 
-#: src/bin/e_config.c:589
+#: src/bin/e_config.c:600
 #, c-format
 msgid "Desktop %i, %i"
 msgstr "Asztal %i, %i"
 
-#: src/bin/e_config.c:2080
+#: src/bin/e_config.c:2119
 msgid "Configuration Upgraded"
 msgstr "A beállításokat frissítettem!"
 
-#: src/bin/e_config.c:2094
+#: src/bin/e_config.c:2133
 #, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>configuration to disk. The "
@@ -569,7 +576,7 @@ msgid ""
 "was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:2105
+#: src/bin/e_config.c:2144
 #, c-format
 msgid ""
 "Enlightenment's configuration files are too big<br>for the file system they "
@@ -579,7 +586,7 @@ msgid ""
 "been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:2118
+#: src/bin/e_config.c:2157
 #, c-format
 msgid ""
 "An output error occured when writing the configuration<br>files for "
@@ -588,7 +595,7 @@ msgid ""
 "file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:2129
+#: src/bin/e_config.c:2168
 #, c-format
 msgid ""
 "Enlightenment cannot write its configuration file<br>because it ran out of "
@@ -597,7 +604,7 @@ msgid ""
 "was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:2141
+#: src/bin/e_config.c:2180
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the configuration file<br>it was writing "
@@ -605,12 +612,12 @@ msgid ""
 "was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:2157
+#: src/bin/e_config.c:2196
 #, fuzzy
 msgid "Enlightenment Configration Write Problems"
 msgstr "Az Enlightenment beállítása"
 
-#: src/bin/e_config_dialog.c:189 src/bin/e_configure.c:437
+#: src/bin/e_config_dialog.c:189 src/bin/e_configure.c:440
 msgid "Advanced"
 msgstr "Haladó"
 
@@ -618,17 +625,17 @@ msgstr "Haladó"
 msgid "Basic"
 msgstr "Alap"
 
-#: src/bin/e_config_dialog.c:218 src/bin/e_eap_editor.c:501
-#: src/bin/e_entry_dialog.c:56 src/bin/e_fm.c:4898 src/bin/e_fm.c:4987
+#: src/bin/e_config_dialog.c:218 src/bin/e_eap_editor.c:579
+#: src/bin/e_entry_dialog.c:56 src/bin/e_fm_prop.c:515
 #: src/bin/e_int_border_remember.c:248 src/bin/e_int_border_remember.c:323
 #: src/bin/e_int_border_remember.c:365 src/bin/e_int_config_dpms.c:60
 #: src/bin/e_int_config_dpms.c:81 src/bin/e_int_config_imc_import.c:111
-#: src/bin/e_int_config_mime_edit.c:277
+#: src/bin/e_int_config_mime_edit.c:282
 #: src/bin/e_int_config_theme_import.c:111
 #: src/bin/e_int_config_wallpaper_gradient.c:197
-#: src/bin/e_int_config_wallpaper_import.c:185 src/bin/e_module.c:396
-#: src/bin/e_sys.c:392 src/bin/e_sys.c:437 src/bin/e_utils.c:565
-#: src/bin/e_exec.c:308 src/modules/battery/e_mod_main.c:304
+#: src/bin/e_int_config_wallpaper_import.c:185 src/bin/e_module.c:397
+#: src/bin/e_sys.c:392 src/bin/e_sys.c:437 src/bin/e_utils.c:567
+#: src/bin/e_exec.c:318 src/modules/battery/e_mod_main.c:304
 #: src/modules/cpufreq/e_mod_main.c:332 src/modules/cpufreq/e_mod_main.c:359
 #: src/modules/cpufreq/e_mod_main.c:378
 msgid "OK"
@@ -642,7 +649,8 @@ msgstr "Elfogadom"
 msgid "Enlightenment Configuration"
 msgstr "Az Enlightenment beállítása"
 
-#: src/bin/e_configure.c:96 src/bin/e_int_config_mime.c:188
+#: src/bin/e_configure.c:96 src/bin/e_eap_editor.c:499
+#: src/bin/e_eap_editor.c:510 src/bin/e_int_config_mime.c:188
 msgid "Categories"
 msgstr ""
 
@@ -655,12 +663,12 @@ msgstr "Beállítás"
 msgid "Appearance"
 msgstr "Kinézet"
 
-#: src/bin/e_configure.c:396 src/bin/e_int_menus.c:767
+#: src/bin/e_configure.c:396 src/bin/e_int_menus.c:775
 msgid "Wallpaper"
 msgstr ""
 
-#: src/bin/e_configure.c:397 src/bin/e_int_menus.c:165
-#: src/bin/e_int_menus.c:772
+#: src/bin/e_configure.c:397 src/bin/e_int_menus.c:169
+#: src/bin/e_int_menus.c:780
 msgid "Theme"
 msgstr "Téma"
 
@@ -669,17 +677,16 @@ msgstr "Téma"
 msgid "Colors"
 msgstr "Bezárás"
 
-#: src/bin/e_configure.c:399 src/bin/e_int_config_fonts.c:315
-#: src/bin/e_int_config_paths.c:80
+#: src/bin/e_configure.c:399 src/bin/e_int_config_fonts.c:452
+#: src/bin/e_int_config_fonts.c:647 src/bin/e_int_config_paths.c:80
 msgid "Fonts"
 msgstr "Betûtípusok"
 
-#: src/bin/e_configure.c:400 src/bin/e_int_border_menu.c:163
+#: src/bin/e_configure.c:400 src/bin/e_int_border_menu.c:166
 msgid "Borders"
 msgstr "Keretek"
 
-#: src/bin/e_configure.c:401 src/bin/e_eap_editor.c:424
-#: src/bin/e_int_config_icon_themes.c:203
+#: src/bin/e_configure.c:401 src/bin/e_int_config_icon_themes.c:207
 #, fuzzy
 msgid "Icon Theme"
 msgstr "Téma"
@@ -688,33 +695,32 @@ msgstr "Téma"
 msgid "Mouse Cursor"
 msgstr "Egérmutató"
 
-#: src/bin/e_configure.c:403 src/bin/e_int_config_transitions.c:146
+#: src/bin/e_configure.c:403 src/bin/e_int_config_transitions.c:144
 #, fuzzy
 msgid "Transitions"
 msgstr "Mulandóság"
 
-#: src/bin/e_configure.c:404 src/bin/e_int_config_transitions.c:135
-#: src/bin/e_int_config_apps.c:152
+#: src/bin/e_configure.c:404 src/bin/e_int_config_transitions.c:134
 msgid "Startup"
 msgstr "Indítás"
 
-#: src/bin/e_configure.c:406 src/bin/e_int_menus.c:107
-#: src/bin/e_int_config_apps.c:90
+#: src/bin/e_configure.c:406 src/bin/e_int_menus.c:111
 #, fuzzy
 msgid "Applications"
 msgstr "Alkalmazás"
 
-#: src/bin/e_configure.c:407 src/bin/e_int_config_apps.c:97
+#: src/bin/e_configure.c:407 src/bin/e_int_config_apps_order.c:39
+#: src/bin/e_int_config_apps_order.c:53
 #, fuzzy
 msgid "IBar Applications"
 msgstr "Alkalmazás"
 
-#: src/bin/e_configure.c:408 src/bin/e_int_config_apps.c:111
+#: src/bin/e_configure.c:408 src/bin/e_int_config_apps_order.c:89
 #, fuzzy
 msgid "Restart Applications"
 msgstr "Kedvencek"
 
-#: src/bin/e_configure.c:409 src/bin/e_int_config_apps.c:104
+#: src/bin/e_configure.c:409 src/bin/e_int_config_apps_order.c:71
 #, fuzzy
 msgid "Startup Applications"
 msgstr "Kedvencek"
@@ -758,8 +764,8 @@ msgstr "Billentyûkombinációk"
 msgid "Mouse Acceleration"
 msgstr "Modul mûveletek"
 
-#: src/bin/e_configure.c:423 src/bin/e_int_menus.c:137
-#: src/bin/e_int_menus.c:1188
+#: src/bin/e_configure.c:423 src/bin/e_int_menus.c:141
+#: src/bin/e_int_menus.c:1198
 msgid "Windows"
 msgstr "Ablakok"
 
@@ -771,81 +777,86 @@ msgstr "Ablak megjelenítés"
 msgid "Window Focus"
 msgstr "Fókusz"
 
-#: src/bin/e_configure.c:426 src/bin/e_int_config_window_manipulation.c:51
+#: src/bin/e_configure.c:426 src/bin/e_int_config_window_manipulation.c:52
 msgid "Window Manipulation"
 msgstr "Ablakváltozások"
 
-#: src/bin/e_configure.c:428 src/bin/e_int_config_apps.c:689
+#: src/bin/e_configure.c:428
 msgid "Menus"
 msgstr "Menük"
 
-#: src/bin/e_configure.c:429 src/bin/e_int_menus.c:787
+#: src/bin/e_configure.c:429 src/bin/e_int_config_apps_menu.c:40
+#, fuzzy
+msgid "Favorites Menu"
+msgstr "Kedvencek menü megjelenítése"
+
+#: src/bin/e_configure.c:431 src/bin/e_int_menus.c:796
 #, fuzzy
 msgid "Application Menus"
 msgstr "Alkalmazás"
 
-#: src/bin/e_configure.c:430 src/bin/e_int_config_menus.c:41
+#: src/bin/e_configure.c:433 src/bin/e_int_config_menus.c:41
 #: src/bin/e_int_config_menus.c:92 src/bin/e_int_config_menus.c:133
 msgid "Menu Settings"
 msgstr "Menü beállítások"
 
-#: src/bin/e_configure.c:431
+#: src/bin/e_configure.c:434
 #, fuzzy
 msgid "Client List Menu"
 msgstr "Ablakok menü megjelenítése"
 
-#: src/bin/e_configure.c:433
+#: src/bin/e_configure.c:436
 #, fuzzy
 msgid "Language"
 msgstr "Kezelõ"
 
-#: src/bin/e_configure.c:434
+#: src/bin/e_configure.c:437
 #, fuzzy
 msgid "Language Settings"
 msgstr "Menü beállítások"
 
-#: src/bin/e_configure.c:435
+#: src/bin/e_configure.c:438
 #, fuzzy
 msgid "Input Method Settings"
 msgstr "Beviteli mód hiba"
 
-#: src/bin/e_configure.c:438
+#: src/bin/e_configure.c:441
 msgid "Configuration Dialogs"
 msgstr "Konfigurációs ablakok"
 
-#: src/bin/e_configure.c:439
+#: src/bin/e_configure.c:442
 msgid "Performance"
 msgstr "Teljesítmény"
 
-#: src/bin/e_configure.c:440
+#: src/bin/e_configure.c:443
 msgid "Window List"
 msgstr "Ablaklista"
 
-#: src/bin/e_configure.c:441 src/bin/e_int_menus.c:119
+#: src/bin/e_configure.c:444 src/bin/e_int_menus.c:123
 msgid "Run Command"
 msgstr "Parancs futtatása"
 
-#: src/bin/e_configure.c:442
+#: src/bin/e_configure.c:445
 msgid "Search Directories"
 msgstr "Alapértelmezett könyvtárak"
 
-#: src/bin/e_configure.c:443 src/bin/e_int_config_mime.c:63
+#: src/bin/e_configure.c:446 src/bin/e_int_config_mime.c:63
 #, fuzzy
 msgid "File Icons"
 msgstr "Információk:"
 
-#: src/bin/e_configure.c:445
+#: src/bin/e_configure.c:448
 msgid "Extensions"
 msgstr "Kiterjesztések"
 
-#: src/bin/e_configure.c:446 src/bin/e_int_config_color_classes.c:83
-#: src/bin/e_int_config_paths.c:88 src/bin/e_int_menus.c:777
+#: src/bin/e_configure.c:449 src/bin/e_int_config_color_classes.c:83
+#: src/bin/e_int_config_paths.c:88 src/bin/e_int_menus.c:785
 #: src/bin/e_int_config_modules.c:244
 msgid "Modules"
 msgstr "Modulok"
 
-#: src/bin/e_configure.c:447 src/bin/e_int_menus.c:236
-#: src/bin/e_int_menus.c:782
+#: src/bin/e_configure.c:450 src/bin/e_int_menus.c:240
+#: src/bin/e_int_menus.c:790
 msgid "Shelves"
 msgstr "Polcok"
 
@@ -854,20 +865,20 @@ msgstr "Polcok"
 msgid "Container %d"
 msgstr "Tároló %d"
 
-#: src/bin/e_desklock.c:132
+#: src/bin/e_desklock.c:138
 msgid "Error - no PAM support"
 msgstr ""
 
-#: src/bin/e_desklock.c:133
+#: src/bin/e_desklock.c:139
 msgid ""
 "No PAM support was built into Enlightenment, so<br>desk locking is disabled."
 msgstr ""
 
-#: src/bin/e_desklock.c:203
+#: src/bin/e_desklock.c:209
 msgid "Lock Failed"
 msgstr "Nem tudtam zárolni a képernyõt!"
 
-#: src/bin/e_desklock.c:204
+#: src/bin/e_desklock.c:210
 msgid ""
 "Locking the desktop failed because some application<br>has grabbed either "
 "the keyboard or the mouse or both<br>and their grab is unable to be broken."
@@ -875,15 +886,15 @@ msgstr ""
 "Nem tudtam az aztalt zárolni, mert egy alkalmazás<br>használja az egeret "
 "vagy billentyûzetet, vagy mindkettõt<br>és nem tudom tõle elszakítani õket."
 
-#: src/bin/e_desklock.c:290
+#: src/bin/e_desklock.c:296
 msgid "Please enter your unlock password"
 msgstr "Kérlek írd be a jelszót"
 
-#: src/bin/e_desklock.c:592
+#: src/bin/e_desklock.c:629
 msgid "Authentication System Error"
 msgstr "Hiba az azonosítási rendszerben!"
 
-#: src/bin/e_desklock.c:593
+#: src/bin/e_desklock.c:630
 #, c-format
 msgid ""
 "Authentication via PAM had errors setting up the<br>authentication session. "
@@ -893,96 +904,98 @@ msgstr ""
 "A PAM azonosítás hibával járt.<br>A hibakód <highlight>%i</highlight>.<br>Ez "
 "így nem jó, és nem kellene megtörténnie. Kérlek jelentsd ezt a hibát!"
 
-#: src/bin/e_eap_editor.c:88
+#: src/bin/e_eap_editor.c:131
 #, fuzzy
-msgid "Application Editor"
-msgstr "Alkalmazás"
+msgid "Incomplete Window Properties"
+msgstr "Ikon tulajdonságainak megváltoztatása"
 
-#: src/bin/e_eap_editor.c:321 src/bin/e_fm_prop.c:315
-#: src/bin/e_int_config_fonts.c:76 src/bin/e_int_config_mime_edit.c:144
+#: src/bin/e_eap_editor.c:132
+msgid ""
+"The window you are creating an icon for<br>does not contain window name and "
+"class<br>properties, so the needed properties for<br>the icon so that it "
+"will be used for this<br>window cannot be guessed. You will need to<br>use "
+"the window title instead. This will only<br>work if the window title is the "
+"same at<br>the time the window starts up, and does not<br>change."
+msgstr ""
+
+#: src/bin/e_eap_editor.c:187
+msgid "Desktop Entry Editor"
+msgstr ""
+
+#: src/bin/e_eap_editor.c:422 src/bin/e_fm_prop.c:401
+#: src/bin/e_int_config_fonts.c:95 src/bin/e_int_config_mime_edit.c:144
 msgid "Icon"
 msgstr "Ikon"
 
-#: src/bin/e_eap_editor.c:336 src/bin/e_int_config_mime_edit.c:135
+#: src/bin/e_eap_editor.c:435 src/bin/e_int_config_mime_edit.c:135
 msgid "Basic Info"
 msgstr "Alap információk"
 
-#: src/bin/e_eap_editor.c:337 src/bin/e_int_border_prop.c:422
-#: src/bin/e_int_border_prop.c:469 src/bin/e_int_config_imc.c:904
+#: src/bin/e_eap_editor.c:436 src/bin/e_int_border_prop.c:422
+#: src/bin/e_int_border_prop.c:469 src/bin/e_int_config_imc.c:905
 #, fuzzy
 msgid "Name"
 msgstr "Név szerint"
 
-#: src/bin/e_eap_editor.c:346
+#: src/bin/e_eap_editor.c:445
 msgid "Executable"
 msgstr "Bináris"
 
-#: src/bin/e_eap_editor.c:370
-msgid "General"
-msgstr "Általános"
-
-#: src/bin/e_eap_editor.c:373
-msgid "Generic Info"
-msgstr "Általános információk"
-
-#: src/bin/e_eap_editor.c:382
+#: src/bin/e_eap_editor.c:452
 msgid "Comment"
 msgstr "Megjegyzés"
 
-#: src/bin/e_eap_editor.c:392
-msgid "Window"
-msgstr "Ablak"
+#: src/bin/e_eap_editor.c:480
+msgid "General"
+msgstr "Általános"
 
-#: src/bin/e_eap_editor.c:394
-msgid "Window Name"
-msgstr "Ablak neve"
+#: src/bin/e_eap_editor.c:483
+#, fuzzy
+msgid "Generic Name"
+msgstr "Általános információk"
 
-#: src/bin/e_eap_editor.c:403 src/bin/e_int_config_clientlist.c:99
+#: src/bin/e_eap_editor.c:492 src/bin/e_int_config_clientlist.c:105
 msgid "Window Class"
 msgstr "Ablak osztály"
 
-#: src/bin/e_eap_editor.c:409
-msgid "Window Title"
-msgstr "Ablak címe"
-
-#: src/bin/e_eap_editor.c:415 src/bin/e_int_border_remember.c:465
-msgid "Window Role"
-msgstr "Ablak szerepe"
-
-#: src/bin/e_eap_editor.c:426
-msgid "Use Icon Theme"
-msgstr ""
-
-#: src/bin/e_eap_editor.c:433
-msgid "Icon Class"
-msgstr "Ikon osztály"
-
-#: src/bin/e_eap_editor.c:447
-msgid "Misc"
-msgstr "Más"
-
-#: src/bin/e_eap_editor.c:448
+#: src/bin/e_eap_editor.c:511
 msgid "Startup Notify"
 msgstr "Indításkor figyelmeztet"
 
-#: src/bin/e_eap_editor.c:451
-msgid "Wait Exit"
-msgstr "Várjon a kilépésre"
+#: src/bin/e_eap_editor.c:514
+msgid "Run in Terminal"
+msgstr ""
 
-#: src/bin/e_eap_editor.c:476
+#: src/bin/e_eap_editor.c:517
+#, fuzzy
+msgid "Show in Menus"
+msgstr "Főmenü megjelenítése"
+
+#: src/bin/e_eap_editor.c:522
+#, fuzzy
+msgid "Desktop file"
+msgstr "Asztal"
+
+#: src/bin/e_eap_editor.c:523
+#, fuzzy
+msgid "Filename"
+msgstr "Átnevez"
+
+#: src/bin/e_eap_editor.c:550
 #, fuzzy
 msgid "Select an Icon"
 msgstr "Válassz egy ablakot!"
 
-#: src/bin/e_eap_editor.c:502 src/bin/e_entry_dialog.c:57
-#: src/bin/e_int_config_imc_import.c:115 src/bin/e_int_config_mime_edit.c:278
+#: src/bin/e_eap_editor.c:580 src/bin/e_entry_dialog.c:57
+#: src/bin/e_fm_prop.c:516 src/bin/e_int_config_imc_import.c:115
+#: src/bin/e_int_config_mime_edit.c:283
 #: src/bin/e_int_config_theme_import.c:115
 #: src/bin/e_int_config_wallpaper_gradient.c:198
 #: src/bin/e_int_config_wallpaper_import.c:188
 msgid "Cancel"
 msgstr "Mégse"
 
-#: src/bin/e_main.c:251
+#: src/bin/e_main.c:248
 #, c-format
 msgid ""
 "Options:\n"
@@ -1026,7 +1039,7 @@ msgstr ""
 "\t-psychotic\n"
 "\t\tPszichopata leszek.\n"
 
-#: src/bin/e_main.c:315
+#: src/bin/e_main.c:312
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -1034,7 +1047,7 @@ msgstr ""
 "Az e17 nemtudta elindítani az Ecore-t!\n"
 "Talán kevés a memória?"
 
-#: src/bin/e_main.c:334
+#: src/bin/e_main.c:332
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -1042,7 +1055,7 @@ msgstr ""
 "Az e17 nemtudta betölteni a fájlrendszert!\n"
 "Talán kevés a memória?"
 
-#: src/bin/e_main.c:346
+#: src/bin/e_main.c:344
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -1050,7 +1063,7 @@ msgstr ""
 "Az e17 nem tudta betölteni a kilépési signál kezelõt!\n"
 "Talán kevés a memória?"
 
-#: src/bin/e_main.c:352
+#: src/bin/e_main.c:350
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -1058,7 +1071,7 @@ msgstr ""
 "Az e17 nem tudta betölteni a HUP szignál kezelõt!\n"
 "Talán kevés a memória?"
 
-#: src/bin/e_main.c:364
+#: src/bin/e_main.c:362
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -1066,7 +1079,7 @@ msgstr ""
 "Az e17 nem tudott csatlakozni az X szerverhez.\n"
 "Be van állítva a DISPLAY változó?"
 
-#: src/bin/e_main.c:372
+#: src/bin/e_main.c:370
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -1074,7 +1087,7 @@ msgstr ""
 "Az e17 nem tudta elindítani a vészhelyzeti figyelmeztetõ rendszert!\n"
 "Be van állítva a DISPLAY változó?"
 
-#: src/bin/e_main.c:392
+#: src/bin/e_main.c:390
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -1082,7 +1095,7 @@ msgstr ""
 "Az e17 nem tudta beállítani a xinerama keretrendszert!\n"
 "Ennek nem kéne megtörténnie"
 
-#: src/bin/e_main.c:411
+#: src/bin/e_main.c:409
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -1090,7 +1103,7 @@ msgstr ""
 "Az e17 nem tudta elindítani a kapcsolódási rendszert!\n"
 "Talán kevés a memória?"
 
-#: src/bin/e_main.c:419
+#: src/bin/e_main.c:417
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -1098,7 +1111,7 @@ msgstr ""
 "Az e17 nem tudta elindítani az IPC rendszert!\n"
 "Talán kevés a memória?"
 
-#: src/bin/e_main.c:429
+#: src/bin/e_main.c:427 src/bin/e_main.c:434
 #, fuzzy
 msgid ""
 "Enlightenment cannot initialize the FDO desktop system.\n"
@@ -1107,7 +1120,7 @@ msgstr ""
 "Az e17 nemtudta betölteni a fájlrendszert!\n"
 "Talán kevés a memória?"
 
-#: src/bin/e_main.c:453
+#: src/bin/e_main.c:461
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -1115,7 +1128,7 @@ msgstr ""
 "Az e17 nem tudta elindítani az Evas-t!\n"
 "Talán kevés a memória?"
 
-#: src/bin/e_main.c:459
+#: src/bin/e_main.c:467
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -1125,7 +1138,7 @@ msgstr ""
 "Kérlek, ellenõrizd az Ecore, és Evas telepítéseket, hogy\n"
 "támogatják-e a fenti funkciót!"
 
-#: src/bin/e_main.c:466
+#: src/bin/e_main.c:474
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -1135,7 +1148,7 @@ msgstr ""
 "Kérlek, ellenõrizd az Ecore, és Evas telepítéseket, hogy\n"
 "támogatják-e a fenti funkciót!"
 
-#: src/bin/e_main.c:480
+#: src/bin/e_main.c:488
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -1143,7 +1156,7 @@ msgstr ""
 "Az Evas nem tudja megcsinálni a puffer vásznat. Kérlek ellenõrizd\n"
 "hogy az Evas támogatja-e a Software Buffer engine-t\n"
 
-#: src/bin/e_main.c:490
+#: src/bin/e_main.c:498
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
@@ -1151,7 +1164,7 @@ msgstr ""
 "Az Evas nem tudja betölteni a PNG fájlokat. Kérlek ellenõrizd,\n"
 "hogy az Evas támogatja-e a PNG töltõt.\n"
 
-#: src/bin/e_main.c:499
+#: src/bin/e_main.c:507
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
@@ -1159,7 +1172,7 @@ msgstr ""
 "Az Evas nem tudja betölteni a JPEG fájlokat. Kérlek ellenõrizd,\n"
 "hogy az Evas támogatja-e a JPEG töltõt.\n"
 
-#: src/bin/e_main.c:508
+#: src/bin/e_main.c:516
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
@@ -1167,16 +1180,16 @@ msgstr ""
 "Az Evas nem tudja betölteni a EET fájlokat. Kérlek ellenõrizd,\n"
 "hogy az Evas támogatja-e a EET töltõt.\n"
 
-#: src/bin/e_main.c:522
+#: src/bin/e_main.c:530
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "Az e17 nem tudta elindítani a elõkép-generátort!\n"
 
-#: src/bin/e_main.c:531
+#: src/bin/e_main.c:539
 #, fuzzy
 msgid "Enlightenment cannot initialize the System Command system.\n"
 msgstr "Az e17 nem tudta elindítani a elõkép-generátort!\n"
 
-#: src/bin/e_main.c:543
+#: src/bin/e_main.c:551
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -1184,16 +1197,16 @@ msgstr ""
 "Az e17 nem tudta létrehozni a könyvtárakat a könyvtáradban!\n"
 "Lehet, hogy nincs saját könyvtárad, vagy a lemez tele van."
 
-#: src/bin/e_main.c:552
+#: src/bin/e_main.c:560
 #, fuzzy
 msgid "Enlightenment cannot set up its file registry system."
 msgstr "Az e17 nem tudta beállítani konfigurációs rendszert."
 
-#: src/bin/e_main.c:560
+#: src/bin/e_main.c:568
 msgid "Enlightenment cannot set up its config system."
 msgstr "Az e17 nem tudta beállítani konfigurációs rendszert."
 
-#: src/bin/e_main.c:568
+#: src/bin/e_main.c:576
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -1201,36 +1214,36 @@ msgstr ""
 "Az e17 nem tudta felállítani a fájlok elérési útjait.\n"
 "Talán nincs elég memória?"
 
-#: src/bin/e_main.c:577
+#: src/bin/e_main.c:585
 msgid "Enlightenment cannot set up its intl system."
 msgstr "Az e17 nem tudta felállítani az intl rendszerét."
 
-#: src/bin/e_main.c:585
+#: src/bin/e_main.c:593
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Az e17 nem tudta elindítani az akció-rendszerét."
 
-#: src/bin/e_main.c:593
+#: src/bin/e_main.c:601
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Az e17 nem tudta felállítani a kombinációs rendszert."
 
-#: src/bin/e_main.c:601
+#: src/bin/e_main.c:609
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Az e17 nem tudta felállítani a felugró-ablak rendszert."
 
-#: src/bin/e_main.c:613
+#: src/bin/e_main.c:621
 msgid "Enlightenment cannot set up its font system."
 msgstr "Az e17 nem tudta elindítani a betütípus-rendszert."
 
-#: src/bin/e_main.c:624
+#: src/bin/e_main.c:632
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Az e17 nem tudta elindítani a témázó-rendszert."
 
-#: src/bin/e_main.c:632
+#: src/bin/e_main.c:640
 #, fuzzy
 msgid "Enlightenment cannot set up its desktop background system."
 msgstr "Az e17 nem tudta felállítani az asztalzár-rendszert."
 
-#: src/bin/e_main.c:642
+#: src/bin/e_main.c:650
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -1238,7 +1251,7 @@ msgstr ""
 "Az e17 nem tudta felállítani az induló képernyõt.\n"
 "Lehet, hogy kevés a memória?"
 
-#: src/bin/e_main.c:652
+#: src/bin/e_main.c:660
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -1246,44 +1259,44 @@ msgstr ""
 "Az e17 nem tudta elindítan az ablakkezelést. Lehet, hogy fut már egy másik\n"
 "ablakkezelõ?\n"
 
-#: src/bin/e_main.c:661
+#: src/bin/e_main.c:669
 #, fuzzy
 msgid "Enlightenment cannot set up its exec system."
 msgstr "Az e17 nem tudta elindítani a exebuf rendszert."
 
-#: src/bin/e_main.c:669
+#: src/bin/e_main.c:677
 msgid "Enlightenment cannot setup remember settings."
 msgstr "Az e17 nem tudta felállítani az emlékezési beállításokat."
 
-#: src/bin/e_main.c:686
+#: src/bin/e_main.c:694 src/bin/e_main.c:701
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Az e17 nem tudta elindítani a fájlkezelõt!\n"
 
-#: src/bin/e_main.c:694
+#: src/bin/e_main.c:709
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Az e17 nem tudta felállítani az üzenet-rendszert."
 
-#: src/bin/e_main.c:702
+#: src/bin/e_main.c:717
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Az e17 nem tudta felállítani a fogd-és-vidd rendszert."
 
-#: src/bin/e_main.c:710
+#: src/bin/e_main.c:725
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr "Az e17 nem tudta elindítani a bejövõ mozdulat-kezelõt."
 
-#: src/bin/e_main.c:718
+#: src/bin/e_main.c:733
 msgid "Enlightenment cannot set up its module system."
 msgstr "Az e17 nem tudta elindítani a modul rendszert."
 
-#: src/bin/e_main.c:726
+#: src/bin/e_main.c:741
 msgid "Enlightenment cannot set up its window list system."
 msgstr "Az e17 nem tudta elindítani az ablaklista rendszert."
 
-#: src/bin/e_main.c:734
+#: src/bin/e_main.c:749
 msgid "Enlightenment cannot set up its color class system."
 msgstr "Az e17 nem tudta elindítani a szín-osztály rendszert."
 
-#: src/bin/e_main.c:746
+#: src/bin/e_main.c:761
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
@@ -1291,11 +1304,11 @@ msgid ""
 "dialog should let you select your<br>modules again."
 msgstr ""
 
-#: src/bin/e_main.c:753
+#: src/bin/e_main.c:768
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr ""
 
-#: src/bin/e_main.c:754
+#: src/bin/e_main.c:769
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
@@ -1303,228 +1316,231 @@ msgid ""
 "should let you select your<br>modules again."
 msgstr ""
 
-#: src/bin/e_main.c:765
+#: src/bin/e_main.c:780
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr "Az e17 kütyü-kezelõt."
 
-#: src/bin/e_main.c:773
+#: src/bin/e_main.c:788
 msgid "Enlightenment cannot set up its shelf system."
 msgstr "Az e17 nem tudta elindítani a polc-rendszert."
 
-#: src/bin/e_main.c:781
+#: src/bin/e_main.c:796
 msgid "Enlightenment cannot set up its exebuf system."
 msgstr "Az e17 nem tudta elindítani a exebuf rendszert."
 
-#: src/bin/e_main.c:790
+#: src/bin/e_main.c:805
 #, fuzzy
 msgid "Enlightenment cannot configure the DPMS settings."
 msgstr "Az e17 nem tudta felállítani az emlékezési beállításokat."
 
-#: src/bin/e_main.c:798
+#: src/bin/e_main.c:813
 #, fuzzy
 msgid "Enlightenment cannot configure the X screensaver."
 msgstr "Az e17 nem tudta elindítani a fájlkezelõt!\n"
 
-#: src/bin/e_main.c:806
+#: src/bin/e_main.c:821
 #, fuzzy
 msgid "Enlightenment cannot configure the mouse acceleration settings."
 msgstr "Az e17 nem tudta felállítani az emlékezési beállításokat."
 
-#: src/bin/e_main.c:814
+#: src/bin/e_main.c:829
 msgid "Enlightenment cannot set up its desk locking system."
 msgstr "Az e17 nem tudta felállítani az asztalzár-rendszert."
 
-#: src/bin/e_main.c:830
+#: src/bin/e_main.c:837
+#, fuzzy
+msgid "Enlightenment cannot set up its order file system."
+msgstr "Az e17 nem tudta elindítani a modul rendszert."
+
+#: src/bin/e_main.c:853
 msgid "Enlightenment Starting. Please wait."
 msgstr "Az Enlightenment indul. Kérlek várj..."
 
-#: src/bin/e_fm.c:1704
+#: src/bin/e_fm.c:1887
 #, fuzzy, c-format
 msgid "%i Files"
 msgstr "Fájl"
 
-#: src/bin/e_fm.c:4461 src/bin/e_fm.c:4603
+#: src/bin/e_fm.c:4638 src/bin/e_fm.c:4780
 #, fuzzy
 msgid "Refresh View"
 msgstr "Fríssítési gyakoriság"
 
-#: src/bin/e_fm.c:4472 src/bin/e_fm.c:4614
+#: src/bin/e_fm.c:4649 src/bin/e_fm.c:4791
 msgid "Show Hidden Files"
 msgstr ""
 
-#: src/bin/e_fm.c:4487 src/bin/e_fm.c:4629
+#: src/bin/e_fm.c:4664 src/bin/e_fm.c:4806
 #, fuzzy
 msgid "Remember Ordering"
 msgstr "Ezek alapján emlékezz:"
 
-#: src/bin/e_fm.c:4499 src/bin/e_fm.c:4641
+#: src/bin/e_fm.c:4676 src/bin/e_fm.c:4818
 msgid "Sort Now"
 msgstr ""
 
-#: src/bin/e_fm.c:4517 src/bin/e_fm.c:4659 src/bin/e_int_config_paths.c:210
+#: src/bin/e_fm.c:4694 src/bin/e_fm.c:4836 src/bin/e_int_config_paths.c:210
 msgid "New Directory"
 msgstr "Új könyvtár"
 
-#: src/bin/e_fm.c:4715 src/bin/e_int_config_shelf.c:83
-#: src/modules/ibar/e_mod_config.c:108
+#: src/bin/e_fm.c:4895 src/bin/e_int_config_shelf.c:83
+#: src/bin/e_int_config_apps_menu.c:90 src/bin/e_int_config_apps_order.c:155
+#: src/bin/e_entry.c:386 src/modules/ibar/e_mod_config.c:111
 msgid "Delete"
 msgstr "Töröl"
 
-#: src/bin/e_fm.c:4726
+#: src/bin/e_fm.c:4906
 msgid "Rename"
 msgstr "Átnevez"
 
-#: src/bin/e_fm.c:4736
+#: src/bin/e_fm.c:4916
 #, fuzzy
 msgid "Properties"
 msgstr "Tulajdonságok"
 
-#: src/bin/e_fm.c:4855
+#: src/bin/e_fm.c:5040
 #, fuzzy
 msgid "Create a new Directory"
 msgstr "Új könyvtár"
 
-#: src/bin/e_fm.c:4856
+#: src/bin/e_fm.c:5041
 #, fuzzy
 msgid "New Directory Name:"
 msgstr "Új könyvtár"
 
-#: src/bin/e_fm.c:4900 src/bin/e_fm.c:4989
-msgid "Error"
-msgstr "Hiba"
-
-#: src/bin/e_fm.c:4902
-#, fuzzy, c-format
-msgid "Could not create directory:<br><hilight>%s</hilight>"
-msgstr "Nem tudtam törölni a <br><b>%s</b> fájlt!"
-
-#: src/bin/e_fm.c:4940
+#: src/bin/e_fm.c:5100
 #, fuzzy, c-format
 msgid "Rename %s to:"
 msgstr "Átnevez"
 
-#: src/bin/e_fm.c:4942
+#: src/bin/e_fm.c:5102
 #, fuzzy
 msgid "Rename File"
 msgstr "Átnevez"
 
-#: src/bin/e_fm.c:4991
-#, c-format
-msgid "Could not rename from <hilight>%s</hilight> to <hilight>%s</hilight>"
-msgstr ""
-
-#: src/bin/e_fm.c:5056
+#: src/bin/e_fm.c:5200
 #, fuzzy
 msgid "Confirm Delete"
 msgstr "Megerõsít"
 
-#: src/bin/e_fm.c:5060
+#: src/bin/e_fm.c:5204
 #, fuzzy, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Biztosan törölni akarod a <br><b>%s</b> nevû fájlt?"
 
-#: src/bin/e_fm.c:5066
+#: src/bin/e_fm.c:5210
 #, fuzzy, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
 "hilight> ?"
 msgstr "Biztosan törölni akarod a <br><b>%s</b> nevû fájlt?"
 
-#: src/bin/e_fm.c:5471
+#: src/bin/e_fm.c:5637
 msgid "Removable Device"
 msgstr ""
 
-#: src/bin/e_fm_prop.c:100
+#: src/bin/e_fm_prop.c:109
 #, fuzzy
 msgid "File Properties"
 msgstr "Tulajdonságok"
 
-#: src/bin/e_fm_prop.c:253
+#: src/bin/e_fm_prop.c:339
 msgid "File:"
 msgstr "Fájl:"
 
-#: src/bin/e_fm_prop.c:260 src/bin/e_widget_fsel.c:323
+#: src/bin/e_fm_prop.c:346 src/bin/e_widget_fsel.c:323
 msgid "Size:"
 msgstr "Méret:"
 
-#: src/bin/e_fm_prop.c:267
+#: src/bin/e_fm_prop.c:353
 #, fuzzy
 msgid "Last Modified:"
 msgstr "Utoljára módosítva:"
 
-#: src/bin/e_fm_prop.c:274
+#: src/bin/e_fm_prop.c:360
 #, fuzzy
 msgid "File Type:"
 msgstr "Fájl"
 
-#: src/bin/e_fm_prop.c:281
+#: src/bin/e_fm_prop.c:367
 #, fuzzy
 msgid "Permissions"
 msgstr "Jogok:"
 
-#: src/bin/e_fm_prop.c:282 src/bin/e_widget_fsel.c:339
+#: src/bin/e_fm_prop.c:368 src/bin/e_widget_fsel.c:339
 msgid "Owner:"
 msgstr "Tulajdonos:"
 
-#: src/bin/e_fm_prop.c:288
+#: src/bin/e_fm_prop.c:374
 msgid "Others can read"
 msgstr ""
 
-#: src/bin/e_fm_prop.c:290
+#: src/bin/e_fm_prop.c:376
 msgid "Others can write"
 msgstr ""
 
-#: src/bin/e_fm_prop.c:292
+#: src/bin/e_fm_prop.c:378
 msgid "Owner can read"
 msgstr ""
 
-#: src/bin/e_fm_prop.c:294
+#: src/bin/e_fm_prop.c:380
 msgid "Owner can write"
 msgstr ""
 
-#: src/bin/e_fm_prop.c:300 src/bin/e_int_config_transitions.c:171
+#: src/bin/e_fm_prop.c:386 src/bin/e_int_config_transitions.c:167
 #: src/bin/e_int_config_wallpaper_gradient.c:153 src/bin/e_widget_fsel.c:302
 msgid "Preview"
 msgstr ""
 
-#: src/bin/e_fm_prop.c:348 src/bin/e_int_config_screensaver.c:166
+#: src/bin/e_fm_prop.c:434 src/bin/e_int_config_screensaver.c:166
 #: src/bin/e_int_config_screensaver.c:176
 #, fuzzy
 msgid "Default"
 msgstr "Alapértelmezett asztal"
 
-#: src/bin/e_fm_prop.c:351
+#: src/bin/e_fm_prop.c:437
 msgid "Thumbnail"
 msgstr ""
 
-#: src/bin/e_fm_prop.c:354 src/bin/e_int_config_desklock.c:319
+#: src/bin/e_fm_prop.c:440 src/bin/e_int_config_desklock.c:319
 #, fuzzy
 msgid "Custom"
 msgstr "Kivág"
 
-#: src/bin/e_fm_prop.c:362
+#: src/bin/e_fm_prop.c:450
 msgid "Use this icon for all files of this type"
 msgstr ""
 
-#: src/bin/e_fwin.c:243
+#: src/bin/e_fm_prop.c:458
+#, fuzzy
+msgid "Link Information"
+msgstr "Hiba információ"
+
+#: src/bin/e_fm_prop.c:504 src/bin/e_int_config_mime_edit.c:271
+#, fuzzy
+msgid "Select an Image"
+msgstr "Másik kép kiválasztása"
+
+#: src/bin/e_fwin.c:362
 #, fuzzy
 msgid "Go to Parent Directory"
 msgstr "Új könyvtár"
 
-#: src/bin/e_fwin.c:269 src/bin/e_fwin.c:752
+#: src/bin/e_fwin.c:388 src/bin/e_fwin.c:871
 msgid "Open"
 msgstr ""
 
-#: src/bin/e_fwin.c:276 src/bin/e_fwin.c:750
+#: src/bin/e_fwin.c:395 src/bin/e_fwin.c:869
 msgid "Open with..."
 msgstr ""
 
-#: src/bin/e_fwin.c:770
+#: src/bin/e_fwin.c:889
 #, fuzzy
 msgid "Specific Applications"
 msgstr "Alkalmazás"
 
-#: src/bin/e_fwin.c:792 src/bin/e_int_config_apps.c:654
+#: src/bin/e_fwin.c:911 src/bin/e_int_config_apps_menu.c:79
+#: src/bin/e_int_config_apps_order.c:144
 #, fuzzy
 msgid "All Applications"
 msgstr "Alkalmazás"
@@ -1584,7 +1600,7 @@ msgid ""
 "init<br>splash theme that is correctly made or fix the<br>one you use."
 msgstr ""
 
-#: src/bin/e_int_border_locks.c:67 src/bin/e_int_border_menu.c:147
+#: src/bin/e_int_border_locks.c:67 src/bin/e_int_border_menu.c:150
 msgid "Window Locks"
 msgstr "Ablak szabályok"
 
@@ -1623,14 +1639,15 @@ msgid "Position"
 msgstr "Hely"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:488 src/bin/e_int_shelf_config.c:415
-#: src/bin/e_int_shelf_config.c:498
+#: src/bin/e_int_border_remember.c:488 src/bin/e_int_config_fonts.c:460
+#: src/bin/e_int_config_fonts.c:664 src/bin/e_int_shelf_config.c:417
+#: src/bin/e_int_shelf_config.c:511
 msgid "Size"
 msgstr "Méret"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
-#: src/bin/e_int_border_menu.c:213 src/bin/e_int_border_prop.c:471
-#: src/bin/e_int_border_remember.c:490 src/bin/e_int_shelf_config.c:452
+#: src/bin/e_int_border_menu.c:216 src/bin/e_int_border_prop.c:471
+#: src/bin/e_int_border_remember.c:490 src/bin/e_int_shelf_config.c:454
 msgid "Stacking"
 msgstr "Csoportosítás"
 
@@ -1680,104 +1697,99 @@ msgstr "Kijelentkezni, ha ez az ablak nyitva van"
 msgid "Remember these Locks"
 msgstr "Emlékezzen a szabályokra"
 
-#: src/bin/e_int_border_menu.c:52
+#: src/bin/e_int_border_menu.c:55
 msgid "Always On Top"
 msgstr "Mindig a legfelül"
 
-#: src/bin/e_int_border_menu.c:63 src/bin/e_int_config_fonts.c:80
-#: src/modules/temperature/e_mod_config.c:225
+#: src/bin/e_int_border_menu.c:66 src/bin/e_int_config_fonts.c:99
+#: src/bin/e_int_config_fonts.c:263 src/modules/temperature/e_mod_config.c:225
 msgid "Normal"
 msgstr "Általános"
 
-#: src/bin/e_int_border_menu.c:74
+#: src/bin/e_int_border_menu.c:77
 msgid "Always Below"
 msgstr "Mindig a legalul"
 
-#: src/bin/e_int_border_menu.c:106
+#: src/bin/e_int_border_menu.c:109
 #, fuzzy
 msgid "Maximize vertically"
 msgstr "Teljes méretû függõlegesen"
 
-#: src/bin/e_int_border_menu.c:117
+#: src/bin/e_int_border_menu.c:120
 #, fuzzy
 msgid "Maximize horizontally"
 msgstr "Teljes méretû vízszintesen"
 
-#: src/bin/e_int_border_menu.c:128
+#: src/bin/e_int_border_menu.c:131
 #, fuzzy
 msgid "Unmaximize"
 msgstr "Teljes méretû"
 
-#: src/bin/e_int_border_menu.c:154
+#: src/bin/e_int_border_menu.c:157
 msgid "Remember"
 msgstr "Emlékezés"
 
-#: src/bin/e_int_border_menu.c:177
+#: src/bin/e_int_border_menu.c:180
 msgid "Send to Desktop"
 msgstr "Küldd erre az asztalra"
 
-#: src/bin/e_int_border_menu.c:189
+#: src/bin/e_int_border_menu.c:192
 #, fuzzy
 msgid "Pin to Desktop"
 msgstr "Küldd erre az asztalra"
 
-#: src/bin/e_int_border_menu.c:201
+#: src/bin/e_int_border_menu.c:204
 #, fuzzy
 msgid "Unpin from Desktop"
 msgstr "Küldd erre az asztalra"
 
-#: src/bin/e_int_border_menu.c:234 src/bin/e_int_border_prop.c:435
-#: src/bin/e_int_config_color_classes.c:447
+#: src/bin/e_int_border_menu.c:237 src/bin/e_int_border_prop.c:435
+#: src/bin/e_int_config_color_classes.c:427
 #, fuzzy
 msgid "State"
 msgstr "Indítás"
 
-#: src/bin/e_int_border_menu.c:245 src/bin/e_int_border_remember.c:504
+#: src/bin/e_int_border_menu.c:248 src/bin/e_int_border_remember.c:504
 msgid "Skip Window List"
 msgstr "Hagyd ki az ablaklistából"
 
-#: src/bin/e_int_border_menu.c:264
+#: src/bin/e_int_border_menu.c:267
 msgid "Edit Icon"
 msgstr "Ikon módosítása"
 
-#: src/bin/e_int_border_menu.c:271
+#: src/bin/e_int_border_menu.c:272
+#, fuzzy
+msgid "Add To Favorites Menu"
+msgstr "Kedvencek menü megjelenítése"
+
+#: src/bin/e_int_border_menu.c:277
+msgid "Add To Launcher"
+msgstr ""
+
+#: src/bin/e_int_border_menu.c:284
 msgid "Create Icon"
 msgstr "Ikon készítése"
 
-#: src/bin/e_int_border_menu.c:281 src/bin/e_int_border_prop.c:75
+#: src/bin/e_int_border_menu.c:294 src/bin/e_int_border_prop.c:75
 #, fuzzy
 msgid "Window Properties"
 msgstr "Tulajdonságok"
 
-#: src/bin/e_int_border_menu.c:342
+#: src/bin/e_int_border_menu.c:355
 msgid "Iconify"
 msgstr "Ikonizáld"
 
-#: src/bin/e_int_border_menu.c:609
-#, fuzzy
-msgid "Incomplete Window Properties"
-msgstr "Ikon tulajdonságainak megváltoztatása"
-
-#: src/bin/e_int_border_menu.c:610
-msgid ""
-"The window you are creating an icon for<br>does not contain window name and "
-"class<br>properties, so the needed properties for<br>the icon so that it "
-"will be used for this<br>window cannot be guessed. You will need to<br>use "
-"the window title instead. This will only<br>work if the window title is the "
-"same at<br>the time the window starts up, and does not<br>change."
-msgstr ""
-
-#: src/bin/e_int_border_menu.c:826 src/bin/e_int_border_prop.c:475
+#: src/bin/e_int_border_menu.c:759 src/bin/e_int_border_prop.c:475
 msgid "Shaded"
 msgstr "Árnyékolt"
 
-#: src/bin/e_int_border_menu.c:839 src/bin/e_int_border_prop.c:474
+#: src/bin/e_int_border_menu.c:772 src/bin/e_int_border_prop.c:474
 msgid "Sticky"
 msgstr "Ragadós"
 
-#: src/bin/e_int_border_menu.c:852 src/bin/e_int_border_prop.c:479
-#: src/bin/e_int_config_window_manipulation.c:148
-#: src/bin/e_int_config_window_manipulation.c:207
+#: src/bin/e_int_border_menu.c:785 src/bin/e_int_border_prop.c:479
+#: src/bin/e_int_config_window_manipulation.c:151
+#: src/bin/e_int_config_window_manipulation.c:210
 msgid "Fullscreen"
 msgstr "Teljes képernyõs"
 
@@ -2020,6 +2032,10 @@ msgstr "Ezek alapján emlékezz:"
 msgid "Window name and class"
 msgstr "Az ablak neve és osztálya"
 
+#: src/bin/e_int_border_remember.c:465
+msgid "Window Role"
+msgstr "Ablak szerepe"
+
 #: src/bin/e_int_border_remember.c:474
 msgid "Window type"
 msgstr "Ablak típusa"
@@ -2037,8 +2053,9 @@ msgid "Virtual Desktop"
 msgstr "Virtuális asztal"
 
 #: src/bin/e_int_border_remember.c:502
-msgid "Screen zone"
-msgstr "Képernyõterület"
+#, fuzzy
+msgid "Current Screen"
+msgstr "Képernyõ zárolás"
 
 #: src/bin/e_int_border_remember.c:508
 msgid "Match only one window"
@@ -2058,7 +2075,7 @@ msgstr "Keret stílus"
 msgid "Window Border Selection"
 msgstr "Ablakkeret választása"
 
-#: src/bin/e_int_config_borders.c:224
+#: src/bin/e_int_config_borders.c:225
 msgid "Remember this Border for this window next time it appears"
 msgstr "Ha az ablak újra megjelenik, emlékezz majd a keretére"
 
@@ -2078,81 +2095,95 @@ msgstr "Alap"
 msgid "Advanced Mode"
 msgstr "Haladó"
 
-#: src/bin/e_int_config_clientlist.c:38
+#: src/bin/e_int_config_clientlist.c:40
 #, fuzzy
 msgid "Client List Settings"
 msgstr "Az ablaklista beállításai"
 
-#: src/bin/e_int_config_clientlist.c:93
+#: src/bin/e_int_config_clientlist.c:99
 #, fuzzy
 msgid "Group By"
 msgstr "Csoport:"
 
-#: src/bin/e_int_config_clientlist.c:95 src/bin/e_int_config_clientlist.c:108
-#: src/bin/e_int_config_clientlist.c:118 src/bin/e_int_config_fonts.c:472
+#: src/bin/e_int_config_clientlist.c:101 src/bin/e_int_config_clientlist.c:114
+#: src/bin/e_int_config_clientlist.c:124 src/bin/e_int_config_fonts.c:697
 #: src/bin/e_int_config_mousebindings.c:369
-#: src/bin/e_int_config_transitions.c:155
-#: src/bin/e_int_config_transitions.c:210
-#: src/bin/e_int_config_transitions.c:242
+#: src/bin/e_int_config_transitions.c:152
+#: src/bin/e_int_config_transitions.c:204
+#: src/bin/e_int_config_transitions.c:236
 msgid "None"
 msgstr "Nincs"
 
-#: src/bin/e_int_config_clientlist.c:101
+#: src/bin/e_int_config_clientlist.c:107
 #, fuzzy
 msgid "Include windows from other screens"
 msgstr "Minden ablak, minden képernyõrõl"
 
-#: src/bin/e_int_config_clientlist.c:105
+#: src/bin/e_int_config_clientlist.c:111
 msgid "Separate Groups By"
 msgstr ""
 
-#: src/bin/e_int_config_clientlist.c:110
+#: src/bin/e_int_config_clientlist.c:116
 msgid "Using separator bars"
 msgstr ""
 
-#: src/bin/e_int_config_clientlist.c:112
+#: src/bin/e_int_config_clientlist.c:118
 msgid "Using menus"
 msgstr ""
 
-#: src/bin/e_int_config_clientlist.c:116
+#: src/bin/e_int_config_clientlist.c:122
 msgid "Client Sort Order"
 msgstr ""
 
-#: src/bin/e_int_config_clientlist.c:120
+#: src/bin/e_int_config_clientlist.c:126
 msgid "Alphabetical"
-msgstr ""
-
-#: src/bin/e_int_config_clientlist.c:122
-#, fuzzy
-msgid "Window stacking layer"
-msgstr "Ablak neve"
-
-#: src/bin/e_int_config_clientlist.c:124
-msgid "Most recently used"
 msgstr ""
 
 #: src/bin/e_int_config_clientlist.c:128
 #, fuzzy
-msgid "Iconified Windows"
-msgstr "Ikonizált ablakok megjelenítése"
+msgid "Window stacking layer"
+msgstr "Ablak neve"
 
 #: src/bin/e_int_config_clientlist.c:130
-msgid "Group with owning desktop"
-msgstr ""
-
-#: src/bin/e_int_config_clientlist.c:132
-msgid "Group with current desktop"
+msgid "Most recently used"
 msgstr ""
 
 #: src/bin/e_int_config_clientlist.c:134
+#, fuzzy
+msgid "Iconified Windows"
+msgstr "Ikonizált ablakok megjelenítése"
+
+#: src/bin/e_int_config_clientlist.c:136
+msgid "Group with owning desktop"
+msgstr ""
+
+#: src/bin/e_int_config_clientlist.c:138
+msgid "Group with current desktop"
+msgstr ""
+
+#: src/bin/e_int_config_clientlist.c:140
 msgid "Separate group"
 msgstr ""
 
-#: src/bin/e_int_config_clientlist.c:136
+#: src/bin/e_int_config_clientlist.c:142
 msgid "Warp to owning desktop"
 msgstr ""
 
-#: src/bin/e_int_config_color_classes.c:44 src/bin/e_int_config_fonts.c:40
+#: src/bin/e_int_config_clientlist.c:146
+#, fuzzy
+msgid "Menu Item Captions"
+msgstr "Menü"
+
+#: src/bin/e_int_config_clientlist.c:147
+msgid "Limit caption length"
+msgstr ""
+
+#: src/bin/e_int_config_clientlist.c:149
+#, fuzzy, c-format
+msgid "%1.0f Chars"
+msgstr "%1.0f C"
+
+#: src/bin/e_int_config_color_classes.c:44 src/bin/e_int_config_fonts.c:59
 #, fuzzy
 msgid "Window Manager"
 msgstr "Ablak neve"
@@ -2180,7 +2211,7 @@ msgstr "Konfigurációs ablakok"
 msgid "Error Text"
 msgstr "Hiba"
 
-#: src/bin/e_int_config_color_classes.c:50 src/bin/e_int_config_fonts.c:43
+#: src/bin/e_int_config_color_classes.c:50 src/bin/e_int_config_fonts.c:62
 #, fuzzy
 msgid "Menu Title"
 msgstr "Cím"
@@ -2189,7 +2220,7 @@ msgstr "Cím"
 msgid "Menu Title Active"
 msgstr ""
 
-#: src/bin/e_int_config_color_classes.c:52 src/bin/e_int_config_fonts.c:42
+#: src/bin/e_int_config_color_classes.c:52 src/bin/e_int_config_fonts.c:61
 #, fuzzy
 msgid "Menu Item"
 msgstr "Menü"
@@ -2198,12 +2229,12 @@ msgstr "Menü"
 msgid "Menu Item Active"
 msgstr ""
 
-#: src/bin/e_int_config_color_classes.c:54 src/bin/e_int_config_fonts.c:47
+#: src/bin/e_int_config_color_classes.c:54 src/bin/e_int_config_fonts.c:66
 #, fuzzy
 msgid "Move Text"
 msgstr "Fel"
 
-#: src/bin/e_int_config_color_classes.c:55 src/bin/e_int_config_fonts.c:48
+#: src/bin/e_int_config_color_classes.c:55 src/bin/e_int_config_fonts.c:67
 msgid "Resize Text"
 msgstr ""
 
@@ -2216,7 +2247,7 @@ msgstr "Ablaklista"
 msgid "Winlist Label"
 msgstr ""
 
-#: src/bin/e_int_config_color_classes.c:58 src/bin/e_int_config_fonts.c:49
+#: src/bin/e_int_config_color_classes.c:58 src/bin/e_int_config_fonts.c:68
 #, fuzzy
 msgid "Winlist Title"
 msgstr "Ablak címe"
@@ -2259,7 +2290,7 @@ msgstr ""
 msgid "List Item Odd Text"
 msgstr ""
 
-#: src/bin/e_int_config_color_classes.c:73 src/bin/e_int_config_fonts.c:72
+#: src/bin/e_int_config_color_classes.c:73 src/bin/e_int_config_fonts.c:91
 msgid "List Header"
 msgstr ""
 
@@ -2292,14 +2323,14 @@ msgstr "Az ablak neve és osztálya"
 #: src/bin/e_int_config_color_classes.c:350
 #: src/bin/e_int_config_color_classes.c:358
 #: src/bin/e_int_config_color_classes.c:366
-#: src/bin/e_int_config_color_classes.c:450 src/bin/e_int_config_modules.c:261
+#: src/bin/e_int_config_color_classes.c:430 src/bin/e_int_config_modules.c:256
 msgid "Enabled"
 msgstr "Engedélyezett"
 
 #: src/bin/e_int_config_color_classes.c:352
 #: src/bin/e_int_config_color_classes.c:360
 #: src/bin/e_int_config_color_classes.c:368
-#: src/bin/e_int_config_color_classes.c:455 src/bin/e_int_config_modules.c:266
+#: src/bin/e_int_config_color_classes.c:435 src/bin/e_int_config_modules.c:260
 msgid "Disabled"
 msgstr "Nem engedélyezett"
 
@@ -2317,20 +2348,20 @@ msgstr "Modulok"
 msgid "Color Classes"
 msgstr "Ikon osztály"
 
-#: src/bin/e_int_config_color_classes.c:423
+#: src/bin/e_int_config_color_classes.c:442
 msgid "Object Color"
 msgstr ""
 
-#: src/bin/e_int_config_color_classes.c:431
+#: src/bin/e_int_config_color_classes.c:451
 msgid "Outline Color"
 msgstr ""
 
-#: src/bin/e_int_config_color_classes.c:439
+#: src/bin/e_int_config_color_classes.c:460
 #, fuzzy
 msgid "Shadow Color"
 msgstr "Követõ megjelenítése"
 
-#: src/bin/e_int_config_color_classes.c:462
+#: src/bin/e_int_config_color_classes.c:469
 #, fuzzy
 msgid "Defaults"
 msgstr "Alapértelmezett asztal"
@@ -2379,8 +2410,8 @@ msgid "Desktop Wallpaper"
 msgstr "Asztalváltás egérrel"
 
 #: src/bin/e_int_config_desk.c:156 src/bin/e_int_config_mime.c:202
-#: src/bin/e_int_config_shelf.c:85 src/bin/e_int_config_modules.c:275
-#: src/modules/ibar/e_mod_config.c:110
+#: src/bin/e_int_config_shelf.c:85 src/bin/e_int_config_modules.c:267
+#: src/modules/ibar/e_mod_config.c:113
 msgid "Configure"
 msgstr "Beállítás"
 
@@ -2406,8 +2437,8 @@ msgstr ""
 msgid "Idle time to exceed"
 msgstr ""
 
-#: src/bin/e_int_config_desklock.c:156 src/bin/e_int_config_dpms.c:194
-#: src/bin/e_int_config_dpms.c:202 src/bin/e_int_config_dpms.c:210
+#: src/bin/e_int_config_desklock.c:156 src/bin/e_int_config_dpms.c:193
+#: src/bin/e_int_config_dpms.c:201 src/bin/e_int_config_dpms.c:209
 #: src/bin/e_int_config_screensaver.c:119
 #: src/bin/e_int_config_screensaver.c:153
 #: src/modules/battery/e_mod_config.c:120
@@ -2417,15 +2448,14 @@ msgstr "%1.0f perc"
 
 #: src/bin/e_int_config_desklock.c:192 src/bin/e_int_config_imc.c:816
 #: src/bin/e_int_config_startup.c:268 src/bin/e_int_config_theme.c:356
-#: src/bin/e_int_config_wallpaper.c:454 src/bin/e_int_config_wallpaper.c:605
+#: src/bin/e_int_config_wallpaper.c:455 src/bin/e_int_config_wallpaper.c:610
 msgid "Personal"
 msgstr "Egyéni"
 
-#: src/bin/e_int_config_desklock.c:199 src/bin/e_int_config_icon_themes.c:211
+#: src/bin/e_int_config_desklock.c:199 src/bin/e_int_config_icon_themes.c:215
 #: src/bin/e_int_config_imc.c:828 src/bin/e_int_config_startup.c:281
-#: src/bin/e_int_config_theme.c:367 src/bin/e_int_config_wallpaper.c:465
-#: src/bin/e_int_config_wallpaper.c:616 src/bin/e_widget_fsel.c:294
-#: src/bin/e_int_config_apps.c:597 src/bin/e_int_config_apps.c:691
+#: src/bin/e_int_config_theme.c:367 src/bin/e_int_config_wallpaper.c:466
+#: src/bin/e_int_config_wallpaper.c:621 src/bin/e_widget_fsel.c:294
 #, fuzzy
 msgid "Go up a Directory"
 msgstr "Könyvtár"
@@ -2450,9 +2480,9 @@ msgstr "Megjelenítés ezen a képernyõn:"
 #: src/bin/e_int_config_desks.c:201 src/bin/e_int_config_desks.c:236
 #: src/bin/e_int_config_desks.c:240 src/bin/e_int_config_exebuf.c:113
 #: src/bin/e_int_config_exebuf.c:117 src/bin/e_int_config_exebuf.c:121
-#: src/bin/e_int_config_exebuf.c:166 src/bin/e_int_config_exebuf.c:170
-#: src/bin/e_int_config_exebuf.c:174 src/bin/e_int_config_mouse.c:95
-#: src/bin/e_int_config_mouse.c:107
+#: src/bin/e_int_config_exebuf.c:165 src/bin/e_int_config_exebuf.c:169
+#: src/bin/e_int_config_exebuf.c:173 src/bin/e_int_config_mouse.c:95
+#: src/bin/e_int_config_mouse.c:101
 #, c-format
 msgid "%1.0f"
 msgstr "%1.0f"
@@ -2515,7 +2545,7 @@ msgid "Time the mouse is at the edge before flipping:"
 msgstr "Ennyi ideig várj a váltás elõtt:"
 
 #: src/bin/e_int_config_desks.c:254 src/bin/e_int_config_desks.c:268
-#: src/bin/e_int_config_window_manipulation.c:176
+#: src/bin/e_int_config_window_manipulation.c:179
 #, c-format
 msgid "%1.1f sec"
 msgstr "%1.1f mp"
@@ -2596,32 +2626,32 @@ msgstr "Felbontás megváltoztatása"
 msgid "Screen Resolution Settings"
 msgstr "Felbontás"
 
-#: src/bin/e_int_config_display.c:383
+#: src/bin/e_int_config_display.c:380
 msgid "Resolution"
 msgstr "Felbontás"
 
-#: src/bin/e_int_config_display.c:391
+#: src/bin/e_int_config_display.c:387
 #, fuzzy
 msgid "Restore on login"
 msgstr "Állítsd vissza a felbontást indításkor!"
 
-#: src/bin/e_int_config_display.c:398
+#: src/bin/e_int_config_display.c:392
 msgid "Refresh"
 msgstr "Fríssíts"
 
-#: src/bin/e_int_config_display.c:487
+#: src/bin/e_int_config_display.c:475
 msgid "Rotation"
 msgstr "Forgatás"
 
-#: src/bin/e_int_config_display.c:509
+#: src/bin/e_int_config_display.c:494
 msgid "Mirroring"
 msgstr "Tükrözés"
 
-#: src/bin/e_int_config_display.c:591
+#: src/bin/e_int_config_display.c:574
 msgid "Missing Features"
 msgstr "Hiányzó képességek"
 
-#: src/bin/e_int_config_display.c:592
+#: src/bin/e_int_config_display.c:575
 #, fuzzy
 msgid ""
 "Your X Display Server is missing support for<br>the <hilight>XRandr</"
@@ -2634,11 +2664,11 @@ msgstr ""
 "(X Resize and Rotate). Enélkül<br>a kiterjesztésnélkül nem válthatsz "
 "felbontást!"
 
-#: src/bin/e_int_config_display.c:604
+#: src/bin/e_int_config_display.c:587
 msgid "No Refresh Rates Found"
 msgstr ""
 
-#: src/bin/e_int_config_display.c:605
+#: src/bin/e_int_config_display.c:588
 msgid ""
 "No refresh rates were reported by your X Display Server.<br>If you are "
 "running a nested X Display Server, then<br>this is to be expected. However, "
@@ -2664,24 +2694,24 @@ msgstr ""
 msgid "Display Power Management Settings"
 msgstr "Képernyõ beállításai"
 
-#: src/bin/e_int_config_dpms.c:186
+#: src/bin/e_int_config_dpms.c:185
 msgid "Enable Display Power Management"
 msgstr ""
 
-#: src/bin/e_int_config_dpms.c:190
+#: src/bin/e_int_config_dpms.c:189
 msgid "Timer(s)"
 msgstr ""
 
-#: src/bin/e_int_config_dpms.c:192
+#: src/bin/e_int_config_dpms.c:191
 msgid "Standby time"
 msgstr ""
 
-#: src/bin/e_int_config_dpms.c:200
+#: src/bin/e_int_config_dpms.c:199
 #, fuzzy
 msgid "Suspend time"
 msgstr "Küldd erre az asztalra"
 
-#: src/bin/e_int_config_dpms.c:208
+#: src/bin/e_int_config_dpms.c:207
 msgid "Off time"
 msgstr ""
 
@@ -2690,96 +2720,95 @@ msgstr ""
 msgid "Run Command Settings"
 msgstr "Parancs futtatása"
 
-#: src/bin/e_int_config_exebuf.c:110 src/bin/e_int_config_exebuf.c:163
+#: src/bin/e_int_config_exebuf.c:110 src/bin/e_int_config_exebuf.c:162
 #: src/bin/e_int_config_performance.c:89
 #: src/bin/e_int_config_performance.c:121 src/bin/e_int_config_winlist.c:131
-#: src/modules/ibox/e_mod_config.c:93 src/modules/pager/e_mod_config.c:107
+#: src/modules/ibox/e_mod_config.c:93 src/modules/pager/e_mod_config.c:116
 msgid "General Settings"
 msgstr "Általános beállítások"
 
-#: src/bin/e_int_config_exebuf.c:111 src/bin/e_int_config_exebuf.c:164
+#: src/bin/e_int_config_exebuf.c:111 src/bin/e_int_config_exebuf.c:163
 #, fuzzy
 msgid "Maximum Number of Matched Apps to List"
 msgstr "Maximálisan megjelenített Eapok"
 
-#: src/bin/e_int_config_exebuf.c:115 src/bin/e_int_config_exebuf.c:168
+#: src/bin/e_int_config_exebuf.c:115 src/bin/e_int_config_exebuf.c:167
 #, fuzzy
 msgid "Maximum Number of Matched Exes to List"
 msgstr "Maximálisan megjelenített futtathatók"
 
-#: src/bin/e_int_config_exebuf.c:119 src/bin/e_int_config_exebuf.c:172
+#: src/bin/e_int_config_exebuf.c:119 src/bin/e_int_config_exebuf.c:171
 msgid "Maximum History to List"
 msgstr ""
 
-#: src/bin/e_int_config_exebuf.c:125 src/bin/e_int_config_exebuf.c:178
+#: src/bin/e_int_config_exebuf.c:125 src/bin/e_int_config_exebuf.c:177
 #: src/bin/e_int_config_winlist.c:162 src/bin/e_int_config_winlist.c:240
 msgid "Scroll Settings"
 msgstr "Görgetési beállítások"
 
-#: src/bin/e_int_config_exebuf.c:126 src/bin/e_int_config_exebuf.c:179
+#: src/bin/e_int_config_exebuf.c:126 src/bin/e_int_config_exebuf.c:178
 #: src/bin/e_int_config_winlist.c:163 src/bin/e_int_config_winlist.c:241
 msgid "Scroll Animate"
 msgstr "Görgetés animálása"
 
-#: src/bin/e_int_config_exebuf.c:181 src/bin/e_int_config_winlist.c:243
+#: src/bin/e_int_config_exebuf.c:180 src/bin/e_int_config_winlist.c:243
 msgid "Scroll Speed"
 msgstr "Görgetés sebessége"
 
-#: src/bin/e_int_config_exebuf.c:183 src/bin/e_int_config_exebuf.c:218
-#: src/bin/e_int_config_exebuf.c:222 src/bin/e_int_config_winlist.c:236
+#: src/bin/e_int_config_exebuf.c:182 src/bin/e_int_config_exebuf.c:215
+#: src/bin/e_int_config_exebuf.c:219 src/bin/e_int_config_winlist.c:236
 #: src/bin/e_int_config_winlist.c:245 src/bin/e_int_config_winlist.c:252
 #: src/bin/e_int_config_winlist.c:256
 #, c-format
 msgid "%1.2f"
 msgstr "%1.2f"
 
-#: src/bin/e_int_config_exebuf.c:187
+#: src/bin/e_int_config_exebuf.c:186
 #, fuzzy
 msgid "Terminal Settings"
 msgstr "Általános beállítások"
 
-#: src/bin/e_int_config_exebuf.c:189
-#, fuzzy
-msgid "Terminal Command"
-msgstr "Parancs futtatása"
+#: src/bin/e_int_config_exebuf.c:187
+msgid "Terminal Command (CTRL+RETURN to utilize)"
+msgstr ""
 
-#: src/bin/e_int_config_exebuf.c:195 src/bin/e_int_config_winlist.c:260
+#: src/bin/e_int_config_exebuf.c:193 src/bin/e_int_config_winlist.c:260
 msgid "Size Settings"
 msgstr "Méret beállításai"
 
-#: src/bin/e_int_config_exebuf.c:197 src/bin/e_int_config_winlist.c:261
+#: src/bin/e_int_config_exebuf.c:194 src/bin/e_int_config_winlist.c:261
 msgid "Minimum Width"
 msgstr "Legkissebb szélesség"
 
-#: src/bin/e_int_config_exebuf.c:199 src/bin/e_int_config_exebuf.c:203
-#: src/bin/e_int_config_exebuf.c:207 src/bin/e_int_config_exebuf.c:211
+#: src/bin/e_int_config_exebuf.c:196 src/bin/e_int_config_exebuf.c:200
+#: src/bin/e_int_config_exebuf.c:204 src/bin/e_int_config_exebuf.c:208
 #: src/bin/e_int_config_winlist.c:263 src/bin/e_int_config_winlist.c:267
 #: src/bin/e_int_config_winlist.c:271 src/bin/e_int_config_winlist.c:275
 #, c-format
 msgid "%4.0f"
 msgstr "%4.0f"
 
-#: src/bin/e_int_config_exebuf.c:201 src/bin/e_int_config_winlist.c:265
+#: src/bin/e_int_config_exebuf.c:198 src/bin/e_int_config_winlist.c:265
 msgid "Minimum Height"
 msgstr "Legkissebb magasság"
 
-#: src/bin/e_int_config_exebuf.c:205 src/bin/e_int_config_winlist.c:269
+#: src/bin/e_int_config_exebuf.c:202 src/bin/e_int_config_winlist.c:269
 msgid "Maximum Width"
 msgstr "Legnagyobb szélesség"
 
-#: src/bin/e_int_config_exebuf.c:209 src/bin/e_int_config_winlist.c:273
+#: src/bin/e_int_config_exebuf.c:206 src/bin/e_int_config_winlist.c:273
 msgid "Maximum Height"
 msgstr "Legnagyobb magasság"
 
-#: src/bin/e_int_config_exebuf.c:215 src/bin/e_int_config_winlist.c:249
+#: src/bin/e_int_config_exebuf.c:212 src/bin/e_int_config_winlist.c:249
 msgid "Position Settings"
 msgstr "Elhelyezési beállítások"
 
-#: src/bin/e_int_config_exebuf.c:216 src/bin/e_int_config_winlist.c:250
+#: src/bin/e_int_config_exebuf.c:213 src/bin/e_int_config_winlist.c:250
 msgid "X-Axis Alignment"
 msgstr "Vízszintes elhelyezkedés"
 
-#: src/bin/e_int_config_exebuf.c:220 src/bin/e_int_config_winlist.c:254
+#: src/bin/e_int_config_exebuf.c:217 src/bin/e_int_config_winlist.c:254
 msgid "Y-Axis Alignment"
 msgstr "Függõleges elhelyezkedés"
 
@@ -2860,218 +2889,235 @@ msgstr "Asztalváltáskor az utolsó fókusz visszaadása"
 msgid "Revert focus when hiding or closing a window"
 msgstr "Fókusz visszatér egy ablak bezárásakor"
 
-#: src/bin/e_int_config_fonts.c:41
+#: src/bin/e_int_config_fonts.c:60
 #, fuzzy
 msgid "Title Bar"
 msgstr "Cím"
 
-#: src/bin/e_int_config_fonts.c:44
+#: src/bin/e_int_config_fonts.c:63
 msgid "Textblock Plain"
 msgstr ""
 
-#: src/bin/e_int_config_fonts.c:45
+#: src/bin/e_int_config_fonts.c:64
 msgid "Textblock Light"
 msgstr ""
 
-#: src/bin/e_int_config_fonts.c:46
+#: src/bin/e_int_config_fonts.c:65
 msgid "Textblock Big"
 msgstr ""
 
-#: src/bin/e_int_config_fonts.c:50
+#: src/bin/e_int_config_fonts.c:69
 #, fuzzy
 msgid "Configure Heading"
 msgstr "Beállítás"
 
-#: src/bin/e_int_config_fonts.c:51
+#: src/bin/e_int_config_fonts.c:70
 #, fuzzy
 msgid "About Title"
 msgstr "Errõl a témáról"
 
-#: src/bin/e_int_config_fonts.c:52
+#: src/bin/e_int_config_fonts.c:71
 msgid "About Version"
 msgstr ""
 
-#: src/bin/e_int_config_fonts.c:53
+#: src/bin/e_int_config_fonts.c:72
 #, fuzzy
 msgid "About Text"
 msgstr "Adatok"
 
-#: src/bin/e_int_config_fonts.c:54
+#: src/bin/e_int_config_fonts.c:73
 msgid "Desklock Title"
 msgstr ""
 
-#: src/bin/e_int_config_fonts.c:55
+#: src/bin/e_int_config_fonts.c:74
 #, fuzzy
 msgid "Desklock Password"
 msgstr "Egyéni jelszó:"
 
-#: src/bin/e_int_config_fonts.c:56
+#: src/bin/e_int_config_fonts.c:75
 msgid "Dialog Error"
 msgstr ""
 
-#: src/bin/e_int_config_fonts.c:57
+#: src/bin/e_int_config_fonts.c:76
 #, fuzzy
 msgid "Exebuf Command"
 msgstr "Parancs futtatása"
 
-#: src/bin/e_int_config_fonts.c:58
+#: src/bin/e_int_config_fonts.c:77
 msgid "Splash Title"
 msgstr ""
 
-#: src/bin/e_int_config_fonts.c:59
+#: src/bin/e_int_config_fonts.c:78
 msgid "Splash Text"
 msgstr ""
 
-#: src/bin/e_int_config_fonts.c:60
+#: src/bin/e_int_config_fonts.c:79
 msgid "Splash Version"
 msgstr ""
 
-#: src/bin/e_int_config_fonts.c:62
+#: src/bin/e_int_config_fonts.c:81
 #, fuzzy
 msgid "Widget"
 msgstr "Szélesség"
 
-#: src/bin/e_int_config_fonts.c:63
-msgid "Entry"
-msgstr ""
-
-#: src/bin/e_int_config_fonts.c:64
-#, fuzzy
-msgid "Frame"
-msgstr "Képek másodpercenként"
-
-#: src/bin/e_int_config_fonts.c:65
-msgid "Label"
-msgstr ""
-
-#: src/bin/e_int_config_fonts.c:66
-#, fuzzy
-msgid "Buttons"
-msgstr "Alul"
-
-#: src/bin/e_int_config_fonts.c:67
-#, fuzzy
-msgid "Slider"
-msgstr "Méret"
-
-#: src/bin/e_int_config_fonts.c:68
-msgid "Radio Buttons"
-msgstr ""
-
-#: src/bin/e_int_config_fonts.c:69
-msgid "Check Buttons"
-msgstr ""
-
-#: src/bin/e_int_config_fonts.c:70
-msgid "Text List Item"
-msgstr ""
-
-#: src/bin/e_int_config_fonts.c:71
-msgid "List Item"
-msgstr ""
-
-#: src/bin/e_int_config_fonts.c:74
-msgid "EFM"
-msgstr ""
-
-#: src/bin/e_int_config_fonts.c:75
-#, fuzzy
-msgid "Typebuf"
-msgstr "Típus:"
-
-#: src/bin/e_int_config_fonts.c:78
-#, fuzzy
-msgid "Module"
-msgstr "Modulok"
-
-#: src/bin/e_int_config_fonts.c:79 src/bin/e_int_shelf_config.c:419
-msgid "Small"
-msgstr ""
-
-#: src/bin/e_int_config_fonts.c:81 src/bin/e_int_shelf_config.c:423
-#, fuzzy
-msgid "Large"
-msgstr "Lapozó"
-
 #: src/bin/e_int_config_fonts.c:82
-msgid "Small Styled"
+msgid "Entry"
 msgstr ""
 
 #: src/bin/e_int_config_fonts.c:83
 #, fuzzy
+msgid "Frame"
+msgstr "Képek másodpercenként"
+
+#: src/bin/e_int_config_fonts.c:84
+msgid "Label"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:85
+#, fuzzy
+msgid "Buttons"
+msgstr "Alul"
+
+#: src/bin/e_int_config_fonts.c:86
+#, fuzzy
+msgid "Slider"
+msgstr "Méret"
+
+#: src/bin/e_int_config_fonts.c:87
+msgid "Radio Buttons"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:88
+msgid "Check Buttons"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:89
+msgid "Text List Item"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:90
+msgid "List Item"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:93
+msgid "EFM"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:94
+#, fuzzy
+msgid "Typebuf"
+msgstr "Típus:"
+
+#: src/bin/e_int_config_fonts.c:97
+#, fuzzy
+msgid "Module"
+msgstr "Modulok"
+
+#: src/bin/e_int_config_fonts.c:98 src/bin/e_int_config_fonts.c:257
+#: src/bin/e_int_shelf_config.c:421
+msgid "Small"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:100 src/bin/e_int_shelf_config.c:425
+#, fuzzy
+msgid "Large"
+msgstr "Lapozó"
+
+#: src/bin/e_int_config_fonts.c:101
+msgid "Small Styled"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:102
+#, fuzzy
 msgid "Normal Styled"
 msgstr "Általános"
 
-#: src/bin/e_int_config_fonts.c:84
+#: src/bin/e_int_config_fonts.c:103
 msgid "Large Styled"
 msgstr ""
 
-#: src/bin/e_int_config_fonts.c:141
+#: src/bin/e_int_config_fonts.c:170
 msgid "Font Settings"
 msgstr "Betûtípus beállítások"
 
-#: src/bin/e_int_config_fonts.c:288
+#: src/bin/e_int_config_fonts.c:251 src/bin/e_int_shelf_config.c:419
+msgid "Tiny"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:269
+msgid "Big"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:275
+msgid "Really Big"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:281 src/bin/e_int_shelf_config.c:427
+msgid "Huge"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:290
+#, fuzzy, c-format
+msgid "%d pixels"
+msgstr "%1.0f pixel"
+
+#: src/bin/e_int_config_fonts.c:446
+#, fuzzy
+msgid "Enable Custom Font Classes"
+msgstr "Egyedi betûk engedélyezése"
+
+#: src/bin/e_int_config_fonts.c:468
+msgid "Basic preview text: 123: 我的天空！"
+msgstr ""
+
+#: src/bin/e_int_config_fonts.c:636
 #, fuzzy
 msgid "Font Classes"
 msgstr "Ikon osztály"
 
-#: src/bin/e_int_config_fonts.c:298 src/bin/e_int_config_fonts.c:426
+#: src/bin/e_int_config_fonts.c:655 src/bin/e_int_shelf_config.c:520
+msgid "Styles"
+msgstr "Stílusok"
+
+#: src/bin/e_int_config_fonts.c:672
 msgid "Enable Font Class"
 msgstr "Egyedi betûk engedélyezése"
 
-#: src/bin/e_int_config_fonts.c:303
-#, fuzzy
-msgid "Font Size:"
-msgstr "Ikon méret"
+#: src/bin/e_int_config_fonts.c:678
+msgid "Advanced Preview Text.. 我真的会写中文"
+msgstr ""
 
-#: src/bin/e_int_config_fonts.c:306 src/bin/e_int_config_fonts.c:447
-#, c-format
-msgid "%2.1f pixels"
-msgstr "%2.1f pixel"
-
-#: src/bin/e_int_config_fonts.c:417
-msgid "Font Class Configuration"
-msgstr "Egyedi betûk"
-
-#: src/bin/e_int_config_fonts.c:432
-msgid "Font"
-msgstr "Betûtípus"
-
-#: src/bin/e_int_config_fonts.c:443
-msgid "Font Size"
-msgstr "Ikon méret"
-
-#: src/bin/e_int_config_fonts.c:457
+#: src/bin/e_int_config_fonts.c:686
 msgid "Hinting"
 msgstr "Nincs simítás"
 
-#: src/bin/e_int_config_fonts.c:462
+#: src/bin/e_int_config_fonts.c:689
 msgid "Bytecode"
 msgstr "Bájtkód"
 
-#: src/bin/e_int_config_fonts.c:467 src/modules/cpufreq/e_mod_main.c:214
+#: src/bin/e_int_config_fonts.c:693 src/modules/cpufreq/e_mod_main.c:214
 msgid "Automatic"
 msgstr "Automatikus"
 
-#: src/bin/e_int_config_fonts.c:479
+#: src/bin/e_int_config_fonts.c:703
 msgid "Font Fallbacks"
 msgstr "Háttér betûtípusok"
 
-#: src/bin/e_int_config_fonts.c:482
+#: src/bin/e_int_config_fonts.c:704
 msgid "Fallback Name"
 msgstr "Betûtípus neve"
 
-#: src/bin/e_int_config_fonts.c:497
+#: src/bin/e_int_config_fonts.c:717
 msgid "Enable Fallbacks"
 msgstr "Háttér betûtípusok engedélyezése"
 
-#: src/bin/e_int_config_icon_themes.c:52
+#: src/bin/e_int_config_icon_themes.c:54
 #, fuzzy
 msgid "Icon Theme Settings"
 msgstr "Gyorstár beállítások"
 
-#: src/bin/e_int_config_icon_themes.c:159
-#: src/bin/e_int_config_icon_themes.c:271
+#: src/bin/e_int_config_icon_themes.c:163
+#: src/bin/e_int_config_icon_themes.c:275
 #, fuzzy
 msgid "Icon Themes"
 msgstr "Téma"
@@ -3082,12 +3128,12 @@ msgid "Input Method Configuration"
 msgstr "IBox beállítások"
 
 #: src/bin/e_int_config_imc.c:276 src/bin/e_int_config_imc.c:514
-#: src/bin/e_utils.c:225 src/bin/e_exec.c:223
+#: src/bin/e_utils.c:227 src/bin/e_exec.c:225
 msgid "Run Error"
 msgstr "Futási hiba"
 
 #: src/bin/e_int_config_imc.c:277 src/bin/e_int_config_imc.c:515
-#: src/bin/e_utils.c:226 src/bin/e_exec.c:224
+#: src/bin/e_utils.c:228 src/bin/e_exec.c:226
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
 msgstr ""
@@ -3103,7 +3149,7 @@ msgstr "Beviteli mód hiba"
 msgid "Use No Input Method"
 msgstr "Beviteli mód hiba"
 
-#: src/bin/e_int_config_imc.c:303 src/bin/e_int_config_imc.c:953
+#: src/bin/e_int_config_imc.c:303 src/bin/e_int_config_imc.c:955
 msgid "Setup Selected Input Method"
 msgstr ""
 
@@ -3120,17 +3166,17 @@ msgstr ""
 msgid "Input Method Parameters"
 msgstr "Beviteli mód hiba"
 
-#: src/bin/e_int_config_imc.c:911
+#: src/bin/e_int_config_imc.c:912
 #, fuzzy
 msgid "Execute Command"
 msgstr "Parancs futtatása"
 
-#: src/bin/e_int_config_imc.c:918
+#: src/bin/e_int_config_imc.c:919
 #, fuzzy
 msgid "Setup Command"
 msgstr "Parancs futtatása"
 
-#: src/bin/e_int_config_imc.c:927
+#: src/bin/e_int_config_imc.c:928
 msgid "Exported Environment Variables"
 msgstr ""
 
@@ -4737,16 +4783,16 @@ msgstr ""
 msgid "Language Configuration"
 msgstr "Lapozó beállítások"
 
-#: src/bin/e_int_config_intl.c:893 src/bin/e_int_config_intl.c:984
+#: src/bin/e_int_config_intl.c:891 src/bin/e_int_config_intl.c:968
 #, fuzzy
 msgid "Language Selector"
 msgstr "Témakezelõ"
 
-#: src/bin/e_int_config_intl.c:952 src/bin/e_int_config_intl.c:1037
+#: src/bin/e_int_config_intl.c:941 src/bin/e_int_config_intl.c:1019
 msgid "Locale Selected"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:954 src/bin/e_int_config_intl.c:1039
+#: src/bin/e_int_config_intl.c:942 src/bin/e_int_config_intl.c:1020
 #, fuzzy
 msgid "Locale"
 msgstr "Nem tudtam zárolni a képernyõt!"
@@ -4804,12 +4850,12 @@ msgstr "Akció"
 msgid "Action Params"
 msgstr "Paraméterek"
 
-#: src/bin/e_int_config_keybindings.c:926
+#: src/bin/e_int_config_keybindings.c:927
 #, fuzzy
 msgid "Key Binding Sequence"
 msgstr "Billentyûkombináció"
 
-#: src/bin/e_int_config_keybindings.c:1124
+#: src/bin/e_int_config_keybindings.c:1125
 #, fuzzy, c-format
 msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>%"
@@ -4818,27 +4864,27 @@ msgstr ""
 "Ez a kombináció már használatban van.<br>Kérlek adj meg egy másik "
 "billenytûkombinációt"
 
-#: src/bin/e_int_config_keybindings.c:1128 src/bin/e_utils.c:769
+#: src/bin/e_int_config_keybindings.c:1129 src/bin/e_utils.c:771
 msgid "Unknown"
 msgstr "Ismeretlen"
 
-#: src/bin/e_int_config_keybindings.c:1129
+#: src/bin/e_int_config_keybindings.c:1130
 msgid "Binding Key Error"
 msgstr "Billentyűkombináció Hiba"
 
-#: src/bin/e_int_config_keybindings.c:1269
+#: src/bin/e_int_config_keybindings.c:1270
 msgid "CTRL"
 msgstr "CTRL"
 
-#: src/bin/e_int_config_keybindings.c:1274
+#: src/bin/e_int_config_keybindings.c:1275
 msgid "ALT"
 msgstr "ALT"
 
-#: src/bin/e_int_config_keybindings.c:1280
+#: src/bin/e_int_config_keybindings.c:1281
 msgid "SHIFT"
 msgstr "SHIFT"
 
-#: src/bin/e_int_config_keybindings.c:1286
+#: src/bin/e_int_config_keybindings.c:1287
 msgid "WIN"
 msgstr "WIN"
 
@@ -4863,9 +4909,9 @@ msgid "Autoscroll Margin"
 msgstr "Autoscroll margók"
 
 #: src/bin/e_int_config_menus.c:145 src/bin/e_int_config_menus.c:149
-#: src/bin/e_int_config_window_manipulation.c:193
-#: src/bin/e_int_config_window_manipulation.c:197
-#: src/bin/e_int_config_window_manipulation.c:201
+#: src/bin/e_int_config_window_manipulation.c:196
+#: src/bin/e_int_config_window_manipulation.c:200
+#: src/bin/e_int_config_window_manipulation.c:204
 #, c-format
 msgid "%2.0f pixels"
 msgstr "%2.0f pixel"
@@ -4875,7 +4921,7 @@ msgid "Autoscroll Cursor Margin"
 msgstr "Autoscroll mutató margók"
 
 #: src/bin/e_int_config_menus.c:153
-#: src/bin/e_int_config_window_manipulation.c:139
+#: src/bin/e_int_config_window_manipulation.c:142
 msgid "Miscellaneous Options"
 msgstr "Más opciók"
 
@@ -4944,15 +4990,10 @@ msgstr "Nyújtás"
 msgid "Use Default"
 msgstr "Alapértelmezett asztal"
 
-#: src/bin/e_int_config_mime_edit.c:264
+#: src/bin/e_int_config_mime_edit.c:269
 #, fuzzy
 msgid "Select an Edj File"
 msgstr "Válassz egy ablakot!"
-
-#: src/bin/e_int_config_mime_edit.c:266
-#, fuzzy
-msgid "Select an Image"
-msgstr "Másik kép kiválasztása"
 
 #: src/bin/e_int_config_mouse.c:35
 #, fuzzy
@@ -4964,7 +5005,7 @@ msgstr "Kijelölési beállítások"
 msgid "Acceleration"
 msgstr "Gyorsuló"
 
-#: src/bin/e_int_config_mouse.c:105
+#: src/bin/e_int_config_mouse.c:99
 msgid "Threshold"
 msgstr ""
 
@@ -5021,7 +5062,6 @@ msgid "Popup"
 msgstr "Felbukkanó ablak"
 
 #: src/bin/e_int_config_mousebindings.c:357
-#: src/modules/ibox/e_mod_config.c:108
 msgid "Zone"
 msgstr "Zóna"
 
@@ -5033,7 +5073,7 @@ msgstr "Tároló"
 msgid "Manager"
 msgstr "Kezelõ"
 
-#: src/bin/e_int_config_mousebindings.c:1294
+#: src/bin/e_int_config_mousebindings.c:1296
 #, fuzzy
 msgid "Mouse Binding Sequence"
 msgstr "Billentyûkombináció"
@@ -5213,17 +5253,18 @@ msgid "Configured Shelves"
 msgstr "Beállított polcok"
 
 #: src/bin/e_int_config_shelf.c:81 src/bin/e_widget_config_list.c:87
-#: src/modules/ibar/e_mod_config.c:106
+#: src/bin/e_int_config_apps_menu.c:86 src/bin/e_int_config_apps_order.c:151
+#: src/modules/ibar/e_mod_config.c:109
 msgid "Add"
 msgstr "Hozzáadás"
 
-#: src/bin/e_int_config_shelf.c:132 src/bin/e_int_menus.c:1495
-#: src/bin/e_shelf.c:826
+#: src/bin/e_int_config_shelf.c:133 src/bin/e_int_menus.c:1530
+#: src/bin/e_shelf.c:1005
 #, fuzzy
 msgid "Shelf #"
 msgstr "Polc mérete"
 
-#: src/bin/e_int_config_shelf.c:263
+#: src/bin/e_int_config_shelf.c:264
 #, fuzzy, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
@@ -5232,7 +5273,7 @@ msgstr ""
 "Az Enlightenmentbõl való kilépést választottad.<br><br>Biztos, hogy ezt "
 "akarod?"
 
-#: src/bin/e_int_config_shelf.c:267 src/bin/e_shelf.c:911
+#: src/bin/e_int_config_shelf.c:268 src/bin/e_shelf.c:1099
 #, fuzzy
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Biztosan törölni akarod a <br><b>%s</b> nevû fájlt?"
@@ -5241,7 +5282,7 @@ msgstr "Biztosan törölni akarod a <br><b>%s</b> nevû fájlt?"
 msgid "Startup Settings"
 msgstr "Indítási beállítások"
 
-#: src/bin/e_int_config_startup.c:343
+#: src/bin/e_int_config_startup.c:334
 #, fuzzy
 msgid "Show Splash Screen on Login"
 msgstr "Nyitókép megjelenítése indításkor"
@@ -5276,15 +5317,15 @@ msgstr ""
 msgid "Transition Settings"
 msgstr "Elhelyezési beállítások"
 
-#: src/bin/e_int_config_transitions.c:127
+#: src/bin/e_int_config_transitions.c:126
 msgid "Events"
 msgstr ""
 
-#: src/bin/e_int_config_transitions.c:136
+#: src/bin/e_int_config_transitions.c:135
 msgid "Desk Change"
 msgstr ""
 
-#: src/bin/e_int_config_transitions.c:137
+#: src/bin/e_int_config_transitions.c:136
 #, fuzzy
 msgid "Background Change"
 msgstr "Háttér"
@@ -5294,32 +5335,32 @@ msgstr "Háttér"
 msgid "Wallpaper Settings"
 msgstr "Terelési beállítások"
 
-#: src/bin/e_int_config_wallpaper.c:522 src/bin/e_int_config_wallpaper.c:670
+#: src/bin/e_int_config_wallpaper.c:523 src/bin/e_int_config_wallpaper.c:675
 msgid "Use Theme Wallpaper"
 msgstr ""
 
-#: src/bin/e_int_config_wallpaper.c:528 src/bin/e_int_config_wallpaper.c:676
+#: src/bin/e_int_config_wallpaper.c:529 src/bin/e_int_config_wallpaper.c:681
 #, fuzzy
 msgid "Picture..."
 msgstr "Beállítás..."
 
-#: src/bin/e_int_config_wallpaper.c:531 src/bin/e_int_config_wallpaper.c:679
+#: src/bin/e_int_config_wallpaper.c:532 src/bin/e_int_config_wallpaper.c:684
 msgid "Gradient..."
 msgstr ""
 
-#: src/bin/e_int_config_wallpaper.c:694
+#: src/bin/e_int_config_wallpaper.c:699
 msgid "Where to place the Wallpaper"
 msgstr ""
 
-#: src/bin/e_int_config_wallpaper.c:698
+#: src/bin/e_int_config_wallpaper.c:703
 msgid "All Desktops"
 msgstr "Minden asztal"
 
-#: src/bin/e_int_config_wallpaper.c:700
+#: src/bin/e_int_config_wallpaper.c:705
 msgid "This Desktop"
 msgstr "Ez az asztal"
 
-#: src/bin/e_int_config_wallpaper.c:702
+#: src/bin/e_int_config_wallpaper.c:707
 #, fuzzy
 msgid "This Screen"
 msgstr "Képernyõ"
@@ -5342,13 +5383,13 @@ msgid "Fill Options"
 msgstr "Beállítások"
 
 #: src/bin/e_int_config_wallpaper_gradient.c:166
-#: src/bin/e_int_config_window_manipulation.c:219
+#: src/bin/e_int_config_window_manipulation.c:222
 #, fuzzy
 msgid "Horizontal"
 msgstr "Vízszintesen"
 
 #: src/bin/e_int_config_wallpaper_gradient.c:171
-#: src/bin/e_int_config_window_manipulation.c:221
+#: src/bin/e_int_config_window_manipulation.c:224
 #, fuzzy
 msgid "Vertical"
 msgstr "Fuggõlegesen"
@@ -5551,87 +5592,92 @@ msgstr "Ablakok alatt"
 msgid "Always remember internal windows"
 msgstr ""
 
-#: src/bin/e_int_config_window_manipulation.c:140
-#: src/bin/e_int_config_window_manipulation.c:172
+#: src/bin/e_int_config_window_manipulation.c:143
+#: src/bin/e_int_config_window_manipulation.c:175
 msgid "Automatically raise windows on mouse over"
 msgstr "Automatikusan kerüljön felülre az ablak, ha az egér felette van"
 
-#: src/bin/e_int_config_window_manipulation.c:142
+#: src/bin/e_int_config_window_manipulation.c:145
 msgid "When moving or resizing windows, resist at the boundaries"
 msgstr ""
 "Amikor egy ablakot mozgat vagy átméretez, a határvonalakon ne engedje át"
 
-#: src/bin/e_int_config_window_manipulation.c:146
-#: src/bin/e_int_config_window_manipulation.c:205
+#: src/bin/e_int_config_window_manipulation.c:149
+#: src/bin/e_int_config_window_manipulation.c:208
 msgid "Maximize Policy"
 msgstr "Maximalizálási szabályok"
 
-#: src/bin/e_int_config_window_manipulation.c:150
-#: src/bin/e_int_config_window_manipulation.c:209
+#: src/bin/e_int_config_window_manipulation.c:153
+#: src/bin/e_int_config_window_manipulation.c:212
 msgid "Smart expansion"
 msgstr "Okos kiterjesztés"
 
-#: src/bin/e_int_config_window_manipulation.c:152
-#: src/bin/e_int_config_window_manipulation.c:211
+#: src/bin/e_int_config_window_manipulation.c:155
+#: src/bin/e_int_config_window_manipulation.c:214
 msgid "Expand the window"
 msgstr "Terjeszd ki az ablakot"
 
-#: src/bin/e_int_config_window_manipulation.c:154
-#: src/bin/e_int_config_window_manipulation.c:213
+#: src/bin/e_int_config_window_manipulation.c:157
+#: src/bin/e_int_config_window_manipulation.c:216
 msgid "Fill available space"
 msgstr "Elérhetõ hely kitöltése"
 
-#: src/bin/e_int_config_window_manipulation.c:171
+#: src/bin/e_int_config_window_manipulation.c:174
 msgid "Autoraise"
 msgstr "Automatikusan kiemelkedés"
 
-#: src/bin/e_int_config_window_manipulation.c:174
+#: src/bin/e_int_config_window_manipulation.c:177
 msgid "Delay before raising:"
 msgstr "Várj ennyit, mielõtt kiemeled:"
 
-#: src/bin/e_int_config_window_manipulation.c:180
+#: src/bin/e_int_config_window_manipulation.c:183
 #, fuzzy
 msgid "Raise Window"
 msgstr "Következő ablak"
 
-#: src/bin/e_int_config_window_manipulation.c:182
+#: src/bin/e_int_config_window_manipulation.c:185
 msgid "Raise when starting to move or resize"
 msgstr ""
 
-#: src/bin/e_int_config_window_manipulation.c:184
+#: src/bin/e_int_config_window_manipulation.c:187
 #, fuzzy
 msgid "Raise when clicking to focus"
 msgstr "Klikk a fókuszhoz"
 
-#: src/bin/e_int_config_window_manipulation.c:188
+#: src/bin/e_int_config_window_manipulation.c:191
 msgid "Resistance"
 msgstr "Ellenállás"
 
-#: src/bin/e_int_config_window_manipulation.c:189
+#: src/bin/e_int_config_window_manipulation.c:192
 msgid "Resist moving or resizing a window over an obstacle"
 msgstr "Ne engedd egy akadály felett átméretezni, vagy átvinni az ablakot"
 
-#: src/bin/e_int_config_window_manipulation.c:191
+#: src/bin/e_int_config_window_manipulation.c:194
 msgid "Resistance between windows:"
 msgstr "Ablakok közti ellenállás:"
 
-#: src/bin/e_int_config_window_manipulation.c:195
+#: src/bin/e_int_config_window_manipulation.c:198
 msgid "Resistance at the edge of the screen:"
 msgstr "Ellenállás a képernyõ szélén:"
 
-#: src/bin/e_int_config_window_manipulation.c:199
+#: src/bin/e_int_config_window_manipulation.c:202
 msgid "Resistance to desktop gadgets:"
 msgstr "Kütyük ellenállása:"
 
-#: src/bin/e_int_config_window_manipulation.c:217
+#: src/bin/e_int_config_window_manipulation.c:220
 #, fuzzy
 msgid "Both directions"
 msgstr "Modul mûveletek"
 
-#: src/bin/e_int_config_window_manipulation.c:224
+#: src/bin/e_int_config_window_manipulation.c:227
 #, fuzzy
 msgid "Allow window manipulation"
 msgstr "Ablakváltozások"
+
+#: src/bin/e_int_config_window_manipulation.c:229
+#, fuzzy
+msgid "Automatically move/resize windows on shelf autohide"
+msgstr "Automatikusan kerüljön felülre az ablak, ha az egér felette van"
 
 #: src/bin/e_int_config_winlist.c:55
 msgid "Window List Settings"
@@ -5720,155 +5766,162 @@ msgstr "Ikon-forrás"
 msgid "Remove Gadget"
 msgstr "Törlés"
 
-#: src/bin/e_int_menus.c:89
+#: src/bin/e_int_menus.c:90
 #, fuzzy
 msgid "Main"
 msgstr "Sima"
 
-#: src/bin/e_int_menus.c:100
+#: src/bin/e_int_menus.c:103
 msgid "Favorite Applications"
 msgstr "Kedvencek"
 
-#: src/bin/e_int_menus.c:113
+#: src/bin/e_int_menus.c:117
 #, fuzzy
 msgid "Files"
 msgstr "Fájl"
 
-#: src/bin/e_int_menus.c:160 src/bin/e_int_config_modules.c:279
+#: src/bin/e_int_menus.c:164 src/bin/e_int_config_modules.c:271
 msgid "About"
 msgstr "Adatok"
 
-#: src/bin/e_int_menus.c:188 src/modules/battery/e_mod_main.c:175
-#: src/modules/ibar/e_mod_main.c:296 src/modules/ibar/e_mod_main.c:793
+#: src/bin/e_int_menus.c:192 src/modules/battery/e_mod_main.c:175
+#: src/modules/ibar/e_mod_main.c:298 src/modules/ibar/e_mod_main.c:774
 #: src/modules/ibox/e_mod_main.c:289 src/modules/ibox/e_mod_main.c:687
-#: src/modules/pager/e_mod_main.c:622 src/modules/temperature/e_mod_main.c:166
+#: src/modules/pager/e_mod_main.c:643 src/modules/temperature/e_mod_main.c:166
 msgid "Configuration"
 msgstr "Beállítás"
 
-#: src/bin/e_int_menus.c:228
+#: src/bin/e_int_menus.c:232
 #, fuzzy
 msgid "Virtual"
 msgstr "Virtuális asztal"
 
-#: src/bin/e_int_menus.c:246
+#: src/bin/e_int_menus.c:250
 #, fuzzy
 msgid "Show/Hide All Windows"
 msgstr "Ikonizált ablakok megjelenítése"
 
-#: src/bin/e_int_menus.c:564
+#: src/bin/e_int_menus.c:570
 msgid "(No Applications)"
 msgstr "(Nincs alkalmazás)"
 
-#: src/bin/e_int_menus.c:699
+#: src/bin/e_int_menus.c:705
 #, fuzzy
 msgid "Configure Virtual Desktops"
 msgstr "Virtuális asztalok"
 
-#: src/bin/e_int_menus.c:759
+#: src/bin/e_int_menus.c:767
 msgid "Configuration Panel"
 msgstr "Konfigurációs panel"
 
-#: src/bin/e_int_menus.c:836
+#: src/bin/e_int_menus.c:846
 msgid "Lock Screen"
 msgstr "Képernyõ zárolása"
 
-#: src/bin/e_int_menus.c:858
+#: src/bin/e_int_menus.c:868
 msgid "Hibernate"
 msgstr ""
 
-#: src/bin/e_int_menus.c:881
+#: src/bin/e_int_menus.c:891
 #, fuzzy
 msgid "Logout"
 msgstr "Kinézet"
 
-#: src/bin/e_int_menus.c:1194 src/bin/e_int_menus.c:1364
+#: src/bin/e_int_menus.c:1204 src/bin/e_int_menus.c:1399
 msgid "(No Windows)"
 msgstr "(Nincsenek ablakok)"
 
-#: src/bin/e_int_menus.c:1244
+#: src/bin/e_int_menus.c:1254
 msgid "Lost Windows"
 msgstr "Elveszett ablakok"
 
-#: src/bin/e_int_menus.c:1265 src/bin/e_int_menus.c:1377
+#: src/bin/e_int_menus.c:1300 src/bin/e_int_menus.c:1412
 msgid "No name!!"
 msgstr "Nincs név!!!"
 
-#: src/bin/e_int_menus.c:1481
+#: src/bin/e_int_menus.c:1516
 #, fuzzy
 msgid "(No Shelves)"
 msgstr "Polcok"
 
-#: src/bin/e_int_menus.c:1548
+#: src/bin/e_int_menus.c:1583
 msgid "Add A Shelf"
 msgstr ""
 
-#: src/bin/e_int_menus.c:1554
+#: src/bin/e_int_menus.c:1589
 #, fuzzy
 msgid "Delete A Shelf"
 msgstr "Töröl"
 
-#: src/bin/e_int_shelf_config.c:63 src/bin/e_shelf.c:1080
+#: src/bin/e_int_shelf_config.c:65 src/bin/e_shelf.c:1496
 msgid "Shelf Configuration"
 msgstr "Polc beállítása"
 
-#: src/bin/e_int_shelf_config.c:399 src/bin/e_int_shelf_config.c:466
+#: src/bin/e_int_shelf_config.c:401 src/bin/e_int_shelf_config.c:466
 msgid "Layout"
 msgstr "Kinézet"
 
-#: src/bin/e_int_shelf_config.c:417
-msgid "Tiny"
-msgstr ""
-
-#: src/bin/e_int_shelf_config.c:421 src/modules/dropshadow/e_mod_config.c:122
+#: src/bin/e_int_shelf_config.c:423 src/modules/dropshadow/e_mod_config.c:122
 msgid "Medium"
 msgstr "Közepes"
 
-#: src/bin/e_int_shelf_config.c:425
-msgid "Huge"
-msgstr ""
-
-#: src/bin/e_int_shelf_config.c:431 src/bin/e_int_shelf_config.c:538
+#: src/bin/e_int_shelf_config.c:433 src/bin/e_int_shelf_config.c:551
 msgid "Configure Contents..."
 msgstr "Tartalom beállítása..."
 
-#: src/bin/e_int_shelf_config.c:454
+#: src/bin/e_int_shelf_config.c:456
 msgid "Above Everything"
 msgstr "Minden felett"
 
-#: src/bin/e_int_shelf_config.c:456
+#: src/bin/e_int_shelf_config.c:458
 msgid "Below Windows"
 msgstr "Ablakok alatt"
 
-#: src/bin/e_int_shelf_config.c:458
+#: src/bin/e_int_shelf_config.c:460
 msgid "Below Everything"
 msgstr "Minden alatt"
 
-#: src/bin/e_int_shelf_config.c:460
+#: src/bin/e_int_shelf_config.c:462
 #, fuzzy
 msgid "Allow windows to overlap the shelf"
 msgstr "Minden ablak, minden képernyõrõl"
 
-#: src/bin/e_int_shelf_config.c:462
+#: src/bin/e_int_shelf_config.c:494
+#, fuzzy
+msgid "Autohide"
+msgstr "Automatikusan kiemelkedés"
+
+#: src/bin/e_int_shelf_config.c:495
 msgid "Auto-hide the shelf"
 msgstr ""
 
-#: src/bin/e_int_shelf_config.c:499
+#: src/bin/e_int_shelf_config.c:497
+msgid "Hide timeout"
+msgstr ""
+
+#: src/bin/e_int_shelf_config.c:499 src/bin/e_int_shelf_config.c:503
+#, fuzzy, c-format
+msgid "%.1f seconds"
+msgstr "%1.1f másodperc"
+
+#: src/bin/e_int_shelf_config.c:501
+#, fuzzy
+msgid "Hide duration"
+msgstr "Nincs simítás"
+
+#: src/bin/e_int_shelf_config.c:512
 #, fuzzy
 msgid "Shrink to Content Size"
 msgstr "Összehúzás"
 
-#: src/bin/e_int_shelf_config.c:501
+#: src/bin/e_int_shelf_config.c:514
 msgid "Shelf Size"
 msgstr "Polc mérete"
 
-#: src/bin/e_int_shelf_config.c:503
+#: src/bin/e_int_shelf_config.c:516
 #, c-format
 msgid "%3.0f pixels"
 msgstr "%3.0f pixel"
-
-#: src/bin/e_int_shelf_config.c:507
-msgid "Styles"
-msgstr "Stílusok"
 
 #: src/bin/e_intl.c:362
 msgid "Input Method Error"
@@ -5904,7 +5957,7 @@ msgid ""
 "%s/enlightenment-%s\n"
 msgstr ""
 
-#: src/bin/e_module.c:107
+#: src/bin/e_module.c:108
 #, c-format
 msgid ""
 "There was an error loading module named: %s<br>No module named %s could be "
@@ -5912,11 +5965,11 @@ msgid ""
 msgstr ""
 "Hiba a %s modul betöltésekor<br>Nincs %s nevû modul a modulkönyvtárakban."
 
-#: src/bin/e_module.c:111 src/bin/e_module.c:124 src/bin/e_module.c:154
+#: src/bin/e_module.c:112 src/bin/e_module.c:125 src/bin/e_module.c:155
 msgid "Error loading Module"
 msgstr "Hiba a modul betöltésekor"
 
-#: src/bin/e_module.c:118 src/bin/e_module.c:148
+#: src/bin/e_module.c:119 src/bin/e_module.c:149
 #, c-format
 msgid ""
 "There was an error loading module named: %s<br>The full path to this module "
@@ -5925,11 +5978,11 @@ msgstr ""
 "Hiba a %s modul betöltésekor. A modul teljes elérési útja:<br>%s<br><br>A "
 "hiba:<br>%s<br>"
 
-#: src/bin/e_module.c:153
+#: src/bin/e_module.c:154
 msgid "Module does not contain all needed functions"
 msgstr "A modul nem tartalmazza az összes szükséges függvényt"
 
-#: src/bin/e_module.c:169
+#: src/bin/e_module.c:170
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -5939,16 +5992,16 @@ msgstr ""
 "Modul API hiba<br>Hiba a modul betöltésekor: %s<br> Ennek a modulnak "
 "legalább %i verziójú api kell<br>Az Enlightenment API verziója %i<br>"
 
-#: src/bin/e_module.c:174
+#: src/bin/e_module.c:175
 #, c-format
 msgid "Enlightenment %s Module"
 msgstr "Enlightenment %s modul"
 
-#: src/bin/e_module.c:449
+#: src/bin/e_module.c:450
 msgid "Would you like to unload this module?<br>"
 msgstr "Szeretnéd a modult kiüríteni a memóriából?<br>"
 
-#: src/bin/e_shelf.c:912
+#: src/bin/e_shelf.c:1100
 #, fuzzy
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
@@ -5957,22 +6010,22 @@ msgstr ""
 "Az Enlightenmentbõl való kilépést választottad.<br><br>Biztos, hogy ezt "
 "akarod?"
 
-#: src/bin/e_shelf.c:1070
+#: src/bin/e_shelf.c:1486
 #, fuzzy
 msgid "Stop Moving/Resizing Items"
 msgstr "Elemek szerkesztésének vége"
 
-#: src/bin/e_shelf.c:1072
+#: src/bin/e_shelf.c:1488
 #, fuzzy
 msgid "Begin Moving/Resizing Items"
 msgstr "Elemek szerkesztése"
 
-#: src/bin/e_shelf.c:1085
+#: src/bin/e_shelf.c:1501
 #, fuzzy
 msgid "Configure Shelf Contents"
 msgstr "Tartalom konfigurálása"
 
-#: src/bin/e_shelf.c:1090
+#: src/bin/e_shelf.c:1506
 msgid "Delete this Shelf"
 msgstr ""
 
@@ -6163,11 +6216,11 @@ msgstr ""
 msgid "Select a window"
 msgstr "Válassz egy ablakot!"
 
-#: src/bin/e_utils.c:270
+#: src/bin/e_utils.c:272
 msgid "Cannot exit - immortal windows."
 msgstr "Nemtudok kilépni - halhatatlan ablakok"
 
-#: src/bin/e_utils.c:271
+#: src/bin/e_utils.c:273
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
 "means<br>that Enlightenment will not allow itself to exit until these "
@@ -6177,210 +6230,214 @@ msgstr ""
 "Enlightenment nem tud addig kilépni, amíg ezek az ablakok nyitva "
 "vannak<br>vagy az Élettartam zár el nem lett távolítva<br>"
 
-#: src/bin/e_utils.c:715
+#: src/bin/e_utils.c:717
 #, fuzzy, c-format
 msgid "%'.0f Bytes"
 msgstr "%1.0f perc"
 
-#: src/bin/e_utils.c:719
+#: src/bin/e_utils.c:721
 #, fuzzy, c-format
 msgid "%'.0f KB"
 msgstr "%1.0f MB"
 
-#: src/bin/e_utils.c:723
+#: src/bin/e_utils.c:725
 #, fuzzy, c-format
 msgid "%'.0f MB"
 msgstr "%1.0f MB"
 
-#: src/bin/e_utils.c:727
+#: src/bin/e_utils.c:729
 #, fuzzy, c-format
 msgid "%'.1f GB"
 msgstr "%1.0f MB"
 
-#: src/bin/e_utils.c:746
+#: src/bin/e_utils.c:748
 #, c-format
 msgid "In the Future"
 msgstr ""
 
-#: src/bin/e_utils.c:751
+#: src/bin/e_utils.c:753
 #, c-format
 msgid "In the last Minute"
 msgstr ""
 
-#: src/bin/e_utils.c:753
+#: src/bin/e_utils.c:755
 #, c-format
 msgid "%li Years ago"
 msgstr ""
 
-#: src/bin/e_utils.c:755
+#: src/bin/e_utils.c:757
 #, c-format
 msgid "%li Months ago"
 msgstr ""
 
-#: src/bin/e_utils.c:757
+#: src/bin/e_utils.c:759
 #, c-format
 msgid "%li Weeks ago"
 msgstr ""
 
-#: src/bin/e_utils.c:759
+#: src/bin/e_utils.c:761
 #, c-format
 msgid "%li Days ago"
 msgstr ""
 
-#: src/bin/e_utils.c:761
+#: src/bin/e_utils.c:763
 #, c-format
 msgid "%li Hours ago"
 msgstr ""
 
-#: src/bin/e_utils.c:763
+#: src/bin/e_utils.c:765
 #, c-format
 msgid "%li Minutes ago"
 msgstr ""
 
-#: src/bin/e_int_config_apps.c:132 src/modules/ibar/e_mod_config.c:192
-#: src/modules/ibar/e_mod_main.c:217
-msgid "IBar"
-msgstr "IBar"
-
-#: src/bin/e_int_config_apps.c:470
+#: src/bin/e_int_config_apps_menu.c:95
 #, fuzzy
-msgid "Edit Application"
-msgstr "Alkalmazás"
-
-#: src/bin/e_int_config_apps.c:595
-#, fuzzy
-msgid "Available Applications"
-msgstr "Kedvencek"
-
-#: src/bin/e_int_config_apps.c:676
-#, fuzzy
-msgid "Create a new Application"
-msgstr "Kedvencek"
+msgid "Favorites"
+msgstr "Kedvencek menü megjelenítése"
 
 #: src/bin/e_int_config_modules.c:65
 msgid "Module Settings"
 msgstr "Modulbeállítások"
 
-#: src/bin/e_int_config_modules.c:256
+#: src/bin/e_int_config_modules.c:253
 msgid "Module State"
 msgstr "Modul állapot"
 
-#: src/bin/e_int_config_modules.c:274
+#: src/bin/e_int_config_modules.c:266
 msgid "Module Actions"
 msgstr "Modul mûveletek"
 
-#: src/bin/e_exec.c:299
+#: src/bin/e_exec.c:309
 msgid "Application run error"
 msgstr "Hiba az alkalmazás futtatásakor"
 
-#: src/bin/e_exec.c:301
+#: src/bin/e_exec.c:311
 #, c-format
 msgid ""
 "Enlightenment was unable to run the application:<br><br>%s<br><br>The "
 "application failed to start."
 msgstr "Az E17 nem tudta elindítani a következõ programot:<br><br>%s<br><br>"
 
-#: src/bin/e_exec.c:384
+#: src/bin/e_exec.c:400
 msgid "Application Execution Error"
 msgstr "Hiba az alkalmazás végrehajtásakor"
 
-#: src/bin/e_exec.c:396
+#: src/bin/e_exec.c:412
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "%s váratlanul befejezte mûködését."
 
-#: src/bin/e_exec.c:402
+#: src/bin/e_exec.c:418
 #, fuzzy, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "%i kilépési értékkel tért vissza a %s"
 
-#: src/bin/e_exec.c:409
+#: src/bin/e_exec.c:425
 #, fuzzy, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s futtatását megszakította egy Interrupt szignál"
 
-#: src/bin/e_exec.c:411
+#: src/bin/e_exec.c:427
 #, fuzzy, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s futtatását megszakította egy kilépés szignál"
 
-#: src/bin/e_exec.c:415
+#: src/bin/e_exec.c:431
 #, fuzzy, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s futtatását megszakította egy elvetõ szignál"
 
-#: src/bin/e_exec.c:418
+#: src/bin/e_exec.c:434
 #, fuzzy, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s futtatását megszakította egy lebegõpont hiba"
 
-#: src/bin/e_exec.c:421
+#: src/bin/e_exec.c:437
 #, fuzzy, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr "%s futtatását megszakította egy megszakíthatatlan gyilok szignál"
 
-#: src/bin/e_exec.c:424
+#: src/bin/e_exec.c:440
 #, fuzzy, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s futtatása megszakadt szegmenshiba miatt"
 
-#: src/bin/e_exec.c:427
+#: src/bin/e_exec.c:443
 #, fuzzy, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s futtatása megszakadt törött csõ miatt"
 
-#: src/bin/e_exec.c:430
+#: src/bin/e_exec.c:446
 #, fuzzy, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s futtatását megszakította egy vég szignál"
 
-#: src/bin/e_exec.c:433
+#: src/bin/e_exec.c:449
 #, fuzzy, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s futtatása megszakadt bus hiba miatt"
 
-#: src/bin/e_exec.c:436
+#: src/bin/e_exec.c:452
 #, fuzzy, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s futtatása megszakadt az %i számú szignál miatt"
 
-#: src/bin/e_exec.c:492
+#: src/bin/e_exec.c:508
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
 
-#: src/bin/e_exec.c:556 src/bin/e_exec.c:630 src/bin/e_exec.c:636
+#: src/bin/e_exec.c:572 src/bin/e_exec.c:646 src/bin/e_exec.c:652
 msgid "Error Logs"
 msgstr "Hiba Naplók"
 
-#: src/bin/e_exec.c:561 src/bin/e_exec.c:637
+#: src/bin/e_exec.c:577 src/bin/e_exec.c:653
 msgid "There was no error message."
 msgstr "Nem volt hibaüzenet"
 
-#: src/bin/e_exec.c:565 src/bin/e_exec.c:644
+#: src/bin/e_exec.c:581 src/bin/e_exec.c:660
 msgid "Save This Message"
 msgstr "Mentsd ezt az üzenetet"
 
-#: src/bin/e_exec.c:569 src/bin/e_exec.c:647
+#: src/bin/e_exec.c:585 src/bin/e_exec.c:663
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr ""
 
-#: src/bin/e_exec.c:595
+#: src/bin/e_exec.c:611
 msgid "Error Information"
 msgstr "Hiba információ"
 
-#: src/bin/e_exec.c:603
+#: src/bin/e_exec.c:619
 msgid "Error Signal Information"
 msgstr "Hiba szignál információk"
 
-#: src/bin/e_exec.c:614 src/bin/e_exec.c:620
+#: src/bin/e_exec.c:630 src/bin/e_exec.c:636
 msgid "Output Data"
 msgstr "Kimeneti adat"
 
-#: src/bin/e_exec.c:621
+#: src/bin/e_exec.c:637
 msgid "There was no output."
 msgstr "Nem volt kimenet"
+
+#: src/bin/e_entry.c:399
+#, fuzzy
+msgid "Cut"
+msgstr "Kivág"
+
+#: src/bin/e_entry.c:410
+msgid "Copy"
+msgstr "Másol"
+
+#: src/bin/e_entry.c:421
+#, fuzzy
+msgid "Paste"
+msgstr "Gyakran"
+
+#: src/bin/e_entry.c:433
+#, fuzzy
+msgid "Select All"
+msgstr "Töröl"
 
 #: src/modules/battery/e_mod_config.c:37
 msgid "Battery Monitor Configuration"
@@ -6403,7 +6460,8 @@ msgstr "Haladó beállítások"
 msgid "Check battery every:"
 msgstr "Telep állapotának ellenõrzése minden:"
 
-#: src/modules/battery/e_mod_config.c:111 src/modules/pager/e_mod_config.c:140
+#: src/modules/battery/e_mod_config.c:111 src/modules/pager/e_mod_config.c:165
+#: src/modules/pager/e_mod_config.c:177
 #: src/modules/temperature/e_mod_config.c:344
 #, c-format
 msgid "%1.1f seconds"
@@ -6689,48 +6747,48 @@ msgstr ""
 "Árnyékoló modul, ami lehetõvé teszi az ablakok árnyékolását<br>különleges X "
 "kiterjesztések -vagy hardveres gyorsítás- nélkül."
 
-#: src/modules/ibar/e_mod_config.c:53
+#: src/modules/ibar/e_mod_config.c:55
 msgid "IBar Configuration"
 msgstr "IBar tulajdonságok"
 
-#: src/modules/ibar/e_mod_config.c:98
+#: src/modules/ibar/e_mod_config.c:101
 msgid "Selected Bar Source"
 msgstr "Ikon-forrás"
 
-#: src/modules/ibar/e_mod_config.c:116
+#: src/modules/ibar/e_mod_config.c:119
 #, fuzzy
 msgid "Icon Labels"
 msgstr "Nevek megjelenítése"
 
-#: src/modules/ibar/e_mod_config.c:117 src/modules/ibox/e_mod_config.c:94
+#: src/modules/ibar/e_mod_config.c:120 src/modules/ibox/e_mod_config.c:94
 msgid "Show Icon Label"
 msgstr "Nevek megjelenítése"
 
-#: src/modules/ibar/e_mod_config.c:123
+#: src/modules/ibar/e_mod_config.c:126
 #, fuzzy
 msgid "Display App Name"
 msgstr "Képernyõ"
 
-#: src/modules/ibar/e_mod_config.c:127
+#: src/modules/ibar/e_mod_config.c:130
 #, fuzzy
 msgid "Display App Comment"
 msgstr "Mértékegység"
 
-#: src/modules/ibar/e_mod_config.c:131
+#: src/modules/ibar/e_mod_config.c:134
 #, fuzzy
 msgid "Display App Generic"
 msgstr "Mértékegység"
 
-#: src/modules/ibar/e_mod_config.c:161
+#: src/modules/ibar/e_mod_config.c:164
 #, fuzzy
 msgid "Create new IBar source"
 msgstr "Új könyvtár"
 
-#: src/modules/ibar/e_mod_config.c:162
+#: src/modules/ibar/e_mod_config.c:165
 msgid "Enter a name for this new source:"
 msgstr ""
 
-#: src/modules/ibar/e_mod_config.c:173
+#: src/modules/ibar/e_mod_config.c:180
 #, fuzzy, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
@@ -6739,33 +6797,33 @@ msgstr ""
 "Az Enlightenmentbõl való kilépést választottad.<br><br>Biztos, hogy ezt "
 "akarod?"
 
-#: src/modules/ibar/e_mod_config.c:177
+#: src/modules/ibar/e_mod_config.c:184
 #, fuzzy
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Biztosan törölni akarod a <br><b>%s</b> nevû fájlt?"
 
-#: src/modules/ibar/e_mod_main.c:713
-msgid "Add to IBar"
-msgstr ""
+#: src/modules/ibar/e_mod_main.c:219
+msgid "IBar"
+msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:779
+#: src/modules/ibar/e_mod_main.c:761
 msgid "Change Icon Properties"
 msgstr "Ikon tulajdonságainak megváltoztatása"
 
-#: src/modules/ibar/e_mod_main.c:785
+#: src/modules/ibar/e_mod_main.c:766
 msgid "Remove Icon"
 msgstr "Ikon eltávolítása"
 
-#: src/modules/ibar/e_mod_main.c:798
+#: src/modules/ibar/e_mod_main.c:779
 #, fuzzy
 msgid "Add Application"
 msgstr "Alkalmazás"
 
-#: src/modules/ibar/e_mod_main.c:1296
+#: src/modules/ibar/e_mod_main.c:1241
 msgid "Enlightenment IBar Module"
 msgstr "IBar modul"
 
-#: src/modules/ibar/e_mod_main.c:1297
+#: src/modules/ibar/e_mod_main.c:1242
 msgid ""
 "This is the IBar Application Launcher bar module for Enlightenment.<br>It is "
 "a first example module and is being used to flesh out several<br>interfaces "
@@ -6801,12 +6859,12 @@ msgstr "Mértékegység"
 
 #: src/modules/ibox/e_mod_config.c:128
 #, fuzzy
-msgid "Show windows from all zones"
-msgstr "Minden ablak, minden virtuális asztalról"
+msgid "Show windows from all screens"
+msgstr "Minden ablak, minden képernyõrõl"
 
 #: src/modules/ibox/e_mod_config.c:133
 #, fuzzy
-msgid "Show windows from current zone"
+msgid "Show windows from current screen"
 msgstr "Minden ablak, minden képernyõrõl"
 
 #: src/modules/ibox/e_mod_config.c:142
@@ -6833,70 +6891,83 @@ msgid ""
 "hold minimized applications"
 msgstr "IBox ikonizált alkalmazásokat tároló modul."
 
-#: src/modules/pager/e_mod_config.c:64
+#: src/modules/pager/e_mod_config.c:70
 msgid "Pager Configuration"
 msgstr "Lapozó beállítások"
 
-#: src/modules/pager/e_mod_config.c:108 src/modules/pager/e_mod_config.c:136
-msgid "Show Popup"
-msgstr "Felbukkanó ablak megjelenítése"
-
-#: src/modules/pager/e_mod_config.c:130
-msgid "Resistance to Dragging Windows:"
-msgstr "Ablakok közti ellenállás:"
-
-#: src/modules/pager/e_mod_config.c:131
-#, c-format
-msgid "%.0f px"
-msgstr "%.0f pixel"
-
-#: src/modules/pager/e_mod_config.c:135
-msgid "Popup Settings"
-msgstr "Felbukkanási beállítások"
-
-#: src/modules/pager/e_mod_config.c:138
-msgid "Popup Speed"
-msgstr "Felbukkanási sebesség"
-
-#: src/modules/pager/e_mod_config.c:144
-#, fuzzy
-msgid "Buttons Settings"
-msgstr "Betûtípus beállítások"
-
-#: src/modules/pager/e_mod_config.c:145
-msgid "Drag and select button"
+#: src/modules/pager/e_mod_config.c:117 src/modules/pager/e_mod_config.c:161
+msgid "Show Popup on desktop change"
 msgstr ""
 
-#: src/modules/pager/e_mod_config.c:147
-msgid "Drag no place button"
-msgstr ""
-
-#: src/modules/pager/e_mod_config.c:149 src/modules/pager/e_mod_config.c:152
-#: src/modules/pager/e_mod_config.c:188 src/modules/pager/e_mod_config.c:194
-#, fuzzy, c-format
-msgid "Click to set"
-msgstr "Klikk a fókuszhoz"
-
-#: src/modules/pager/e_mod_config.c:158
+#: src/modules/pager/e_mod_config.c:140
 #, fuzzy
-msgid "Wheel callback"
-msgstr "Háttér betûtípusok engedélyezése"
+msgid "Pager Settings"
+msgstr "Terelési beállítások"
 
-#: src/modules/pager/e_mod_config.c:159
+#: src/modules/pager/e_mod_config.c:141
 #, fuzzy
 msgid "Flip desktop on mouse wheel"
 msgstr "Válts asztalt, ha az egér a kép szélén van"
 
-#: src/modules/pager/e_mod_config.c:186 src/modules/pager/e_mod_config.c:192
+#: src/modules/pager/e_mod_config.c:143
+#, fuzzy
+msgid "Select and Slide button"
+msgstr "Válassz egy ablakot!"
+
+#: src/modules/pager/e_mod_config.c:145
+msgid "Drag and Drop button (Keeps rel. loc.)"
+msgstr ""
+
+#: src/modules/pager/e_mod_config.c:147 src/modules/pager/e_mod_config.c:150
+#: src/modules/pager/e_mod_config.c:213 src/modules/pager/e_mod_config.c:219
+#, fuzzy, c-format
+msgid "Click to set"
+msgstr "Klikk a fókuszhoz"
+
+#: src/modules/pager/e_mod_config.c:154
+#, fuzzy
+msgid "Resistance to dragging"
+msgstr "Ablakok közti ellenállás:"
+
+#: src/modules/pager/e_mod_config.c:156
+#, c-format
+msgid "%.0f px"
+msgstr "%.0f pixel"
+
+#: src/modules/pager/e_mod_config.c:160
+#, fuzzy
+msgid "Pager Popup Settings"
+msgstr "Felbukkanási beállítások"
+
+#: src/modules/pager/e_mod_config.c:163 src/modules/pager/e_mod_config.c:175
+msgid "Popup Speed"
+msgstr "Felbukkanási sebesség"
+
+#: src/modules/pager/e_mod_config.c:168
+#, fuzzy
+msgid "Urgent window"
+msgstr "Következő ablak"
+
+#: src/modules/pager/e_mod_config.c:169
+#, fuzzy
+msgid "Show Popup on urgent window"
+msgstr "Ikonizált ablakok megjelenítése"
+
+#: src/modules/pager/e_mod_config.c:171
+#, fuzzy
+msgid "Popup on urgent window sticks on the screen"
+msgstr "Minden ablak, minden képernyõrõl"
+
+#: src/modules/pager/e_mod_config.c:211 src/modules/pager/e_mod_config.c:217
 #, fuzzy, c-format
 msgid "Button %i"
 msgstr "Alul"
 
-#: src/modules/pager/e_mod_config.c:214
+#: src/modules/pager/e_mod_config.c:239
 msgid "Pager Button Grab"
 msgstr ""
 
-#: src/modules/pager/e_mod_config.c:216
+#: src/modules/pager/e_mod_config.c:241
 #, fuzzy
 msgid ""
 "Please press a mouse button<br>Press <hilight>Escape</hilight> to abort."
@@ -6905,31 +6976,31 @@ msgstr ""
 "Kérlek üsd le a billentyûkombinációt,<br> vagy a <highlight>Escape</"
 "highlight> gombot"
 
-#: src/modules/pager/e_mod_config.c:273
+#: src/modules/pager/e_mod_config.c:298
 #, fuzzy
 msgid "Error - Invalid Button"
 msgstr "Hiba információ"
 
-#: src/modules/pager/e_mod_config.c:274
+#: src/modules/pager/e_mod_config.c:299
 msgid ""
 "You cannot use the right mouse button<br>for this as it is already taken by "
 "internal<br>code for context menus."
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:223
+#: src/modules/pager/e_mod_main.c:225
 msgid "Pager"
 msgstr "Lapozó"
 
-#: src/modules/pager/e_mod_main.c:627
+#: src/modules/pager/e_mod_main.c:648
 #, fuzzy
 msgid "Virtual Desktops Configuration"
 msgstr "Virtuális asztalok"
 
-#: src/modules/pager/e_mod_main.c:1869
+#: src/modules/pager/e_mod_main.c:1927
 msgid "Enlightenment Pager Module"
 msgstr "Lapozó modul"
 
-#: src/modules/pager/e_mod_main.c:1870
+#: src/modules/pager/e_mod_main.c:1928
 msgid "A pager module to navigate virtual desktops."
 msgstr "Lapozõ modul, virtuális asztalok kezelésére."
 
@@ -7070,6 +7141,85 @@ msgstr ""
 "Egy module, ami az ACPI hõmérséklet-érzékelõ eredményeit közli "
 "Linuxon<br>Hasznos újabb hordozható gépek esetén, amik nagy "
 "sebességû<br>processzorral rendelkeznek és sok hõt termelnek."
+
+#, fuzzy
+#~ msgid "Application Editor"
+#~ msgstr "Alkalmazás"
+
+#~ msgid "Window"
+#~ msgstr "Ablak"
+
+#~ msgid "Window Name"
+#~ msgstr "Ablak neve"
+
+#~ msgid "Window Title"
+#~ msgstr "Ablak címe"
+
+#~ msgid "Icon Class"
+#~ msgstr "Ikon osztály"
+
+#~ msgid "Misc"
+#~ msgstr "Más"
+
+#~ msgid "Wait Exit"
+#~ msgstr "Várjon a kilépésre"
+
+#~ msgid "Error"
+#~ msgstr "Hiba"
+
+#, fuzzy
+#~ msgid "Could not create directory:<br><hilight>%s</hilight>"
+#~ msgstr "Nem tudtam törölni a <br><b>%s</b> fájlt!"
+
+#~ msgid "Screen zone"
+#~ msgstr "Képernyõterület"
+
+#, fuzzy
+#~ msgid "Terminal Command"
+#~ msgstr "Parancs futtatása"
+
+#, fuzzy
+#~ msgid "Font Size:"
+#~ msgstr "Ikon méret"
+
+#~ msgid "%2.1f pixels"
+#~ msgstr "%2.1f pixel"
+
+#~ msgid "Font Class Configuration"
+#~ msgstr "Egyedi betûk"
+
+#~ msgid "Font"
+#~ msgstr "Betûtípus"
+
+#~ msgid "Font Size"
+#~ msgstr "Ikon méret"
+
+#, fuzzy
+#~ msgid "Edit Application"
+#~ msgstr "Alkalmazás"
+
+#, fuzzy
+#~ msgid "Available Applications"
+#~ msgstr "Kedvencek"
+
+#, fuzzy
+#~ msgid "Create a new Application"
+#~ msgstr "Kedvencek"
+
+#, fuzzy
+#~ msgid "Show windows from all zones"
+#~ msgstr "Minden ablak, minden virtuális asztalról"
+
+#~ msgid "Show Popup"
+#~ msgstr "Felbukkanó ablak megjelenítése"
+
+#, fuzzy
+#~ msgid "Buttons Settings"
+#~ msgstr "Betûtípus beállítások"
+
+#, fuzzy
+#~ msgid "Wheel callback"
+#~ msgstr "Háttér betûtípusok engedélyezése"
 
 #, fuzzy
 #~ msgid "Enlightenment was unable to process a command line:<br><br>%s %s<br>"
@@ -7334,9 +7484,6 @@ msgstr ""
 
 #~ msgid "View"
 #~ msgstr "Nézet"
-
-#~ msgid "Copy"
-#~ msgstr "Másol"
 
 #~ msgid "Begin editing"
 #~ msgstr "Szerkesztés"

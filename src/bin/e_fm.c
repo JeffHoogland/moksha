@@ -2013,6 +2013,7 @@ _e_fm2_icons_place_icons(E_Fm2_Smart_Data *sd)
 	if (ic->h > rh) rh = ic->h;
 	if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
 	if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
+//	printf("BLAH %s - %i %i %ix%i\n", ic->info.file, ic->x, ic->y, ic->w, ic->h);
      }
 }
 
@@ -2372,25 +2373,36 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 	 * fileman/list_odd/fixed
 	 * fileman/list_odd/variable
 	 * 
-	 * and now list other things i will need
-	 * 
-	 * fileman/background
-	 * fileman/selection
-	 * fileman/scrollframe
-	 *
 	 */
+//	printf("CALC ICON\n");
 	if ((!ic->sd->config->icon.fixed.w) || (!ic->sd->config->icon.fixed.h))
 	  {
 	     obj = ic->sd->tmp.obj;
 	     if (!obj)
 	       {
 		  obj = edje_object_add(evas_object_evas_get(ic->sd->obj));
-		  _e_fm2_theme_edje_object_set(ic->sd, obj, "base/theme/fileman",
-					  "e/fileman/icon/variable");
+		  if ((ic->sd->config->icon.fixed.w) && (ic->sd->config->icon.fixed.h))
+		    _e_fm2_theme_edje_object_set(ic->sd, obj, "base/theme/fileman",
+						 "e/fileman/icon/fixed");
+		  else
+		    _e_fm2_theme_edje_object_set(ic->sd, obj, "base/theme/fileman",
+						 "e/fileman/icon/variable");
                   ic->sd->tmp.obj = obj;
+//		  printf("CALC OBJ %p\n", ic->sd->tmp.obj);
 	       }
 	     _e_fm2_icon_label_set(ic, obj);
+	     obj2 = ic->sd->tmp.obj2;
+	     if (!obj2)
+	       {
+		  obj2 = evas_object_rectangle_add(evas_object_evas_get(ic->sd->obj));
+		  ic->sd->tmp.obj2 = obj2;
+	       }
+	     /* FIXME: if icons are allowed to have their own size - use it */
+	     edje_extern_object_min_size_set(obj2, ic->sd->config->icon.icon.w, ic->sd->config->icon.icon.h);
+	     edje_extern_object_max_size_set(obj2, ic->sd->config->icon.icon.w, ic->sd->config->icon.icon.h);
+	     edje_object_part_swallow(obj, "e.swallow.icon", obj2);
 	     edje_object_size_min_calc(obj, &mw, &mh);
+//	     printf("CALC %ix%i\n", mw, mh);
 	  }
 	ic->w = mw;
 	ic->h = mh;
@@ -2405,12 +2417,13 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 	     if (!obj)
 	       {
 		  obj = edje_object_add(evas_object_evas_get(ic->sd->obj));
-		  if (ic->sd->config->icon.fixed.w)
+// vairable sized list items are pretty usless - ignore.		  
+//		  if (ic->sd->config->icon.fixed.w)
 		    _e_fm2_theme_edje_object_set(ic->sd, obj, "base/theme/fileman",
 					    "e/fileman/list/fixed");
-		  else
-		    _e_fm2_theme_edje_object_set(ic->sd, obj, "base/theme/fileman",
-					    "e/fileman/list/variable");
+//		  else
+//		    _e_fm2_theme_edje_object_set(ic->sd, obj, "base/theme/fileman",
+//					    "e/fileman/list/variable");
 		  ic->sd->tmp.obj = obj;
 	       }
 	     _e_fm2_icon_label_set(ic, obj);
@@ -2494,24 +2507,24 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
    evas_object_stack_below(ic->obj, ic->sd->drop);
    if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
      {
-        if (ic->sd->config->icon.fixed.w)
-	  {
+//        if (ic->sd->config->icon.fixed.w)
+//	  {
 	     if (ic->odd)
 	       _e_fm2_theme_edje_object_set(ic->sd, ic->obj, "base/theme/widgets",
 				       "e/fileman/list_odd/fixed");
 	     else
 	       _e_fm2_theme_edje_object_set(ic->sd, ic->obj, "base/theme/widgets",
 				       "e/fileman/list/fixed");
-	  }
-	else
-	  {
-	     if (ic->odd)
-	       _e_fm2_theme_edje_object_set(ic->sd, ic->obj, "base/theme/widgets",
-				       "e/fileman/list_odd/variable");
-	     else
-	       _e_fm2_theme_edje_object_set(ic->sd, ic->obj, "base/theme/widgets",
-				       "e/fileman/list/variable");
-	  }
+//	  }
+//	else
+//	  {
+//	     if (ic->odd)
+//	       _e_fm2_theme_edje_object_set(ic->sd, ic->obj, "base/theme/widgets",
+//				       "e/fileman/list_odd/variable");
+//	     else
+//	       _e_fm2_theme_edje_object_set(ic->sd, ic->obj, "base/theme/widgets",
+//				       "e/fileman/list/variable");
+//	  }
      }
    else
      {
@@ -3340,7 +3353,7 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
    if (strcmp(type, "text/uri-list")) return;
    ev = (E_Event_Dnd_Move *)event;
    printf("DND MOVE %i %i\n", ev->x, ev->y);
-   for (l = sd->icons; l; l = l->next)
+   for (l = sd->icons; l; l = l->next) /* FIXME: should only walk regions and skip non-visible ones */
      {
 	ic = l->data;
 	if (E_INSIDE(ev->x, ev->y, ic->x - ic->sd->pos.x, ic->y - ic->sd->pos.y, ic->w, ic->h))
@@ -3352,7 +3365,6 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 	       {
 		  /* if there is a .order file - we can re-order files */
 		  if (ic->sd->order_file)
-//		  if (1)
 		    {
 		       /* if dir: */
                        if ((S_ISDIR(ic->info.statinfo.st_mode)) &&
@@ -3398,7 +3410,12 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 	       }
 	     else
 	       {
-		  /* FIXME: icon view mode */
+		  /* if it's over a dir - hilight as it will be dropped in */
+		  if ((S_ISDIR(ic->info.statinfo.st_mode)) &&
+		      (!ic->sd->config->view.no_subdir_drop))
+		    _e_fm2_dnd_drop_show(ic, -1);
+		  else
+		    _e_fm2_dnd_drop_hide(sd->obj);
 	       }
 	     return;
 	  }
@@ -3428,7 +3445,7 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 	  }
 	else
 	  {
-	     /* FIXME: icon view mode */
+	     _e_fm2_dnd_drop_all_show(sd->obj);
 	  }
 	return;
      }
@@ -3573,6 +3590,20 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 			    _e_fm2_client_file_move(sd->id, fp, buf, "", 0, ev->x, ev->y);
 			    evas_stringshare_del(fp);
 			 }
+		    }
+	       }
+	     else
+	       {
+		  for (ll = fsel; ll; ll = ll->next)
+		    {
+		       fp = _e_fm2_icon_desktop_url_eval(ll->data);
+		       if (!fp) continue;
+		       /* move the file into the subdir */
+		       snprintf(buf, sizeof(buf), "%s/%s",
+				sd->realpath, ecore_file_get_file(fp));
+		       printf("mv %s %s\n", (char *)fp, buf);
+		       _e_fm2_client_file_move(sd->id, fp, buf, "", 0, ev->x, ev->y);
+		       evas_stringshare_del(fp);
 		    }
 	       }
 	  }
@@ -3944,7 +3975,7 @@ _e_fm2_cb_icon_thumb_gen(void *data, Evas_Object *obj, void *event_info)
 	
 	e_icon_size_get(obj, &w, &h);
 	have_alpha = e_icon_alpha_get(obj);
-	if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
+//	if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
 	  {
 	     edje_extern_object_aspect_set(obj,
 					   EDJE_ASPECT_CONTROL_BOTH, w, h);

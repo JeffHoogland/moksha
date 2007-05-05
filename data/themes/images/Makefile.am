@@ -418,6 +418,8 @@ e17_icon_window_focus.png \
 e17_icon_window_manipulation.png \
 e17_icon_windows.png \
 e17_icon_winlist.png \
+e17_icon_power_management.png \
+e17_icon_screensaver.png \
 e17_ilist_bg0.png \
 e17_ilist_bg1.png \
 e17_logo.png \

@@ -112,15 +112,24 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
    o = e_fm2_add(e_win_evas_get(fwin->win));
    fwin->fm_obj = o;
    memset(&fmc, 0, sizeof(E_Fm2_Config));
+#if 1   
    fmc.view.mode = E_FM2_VIEW_MODE_LIST;
-   fmc.view.open_dirs_in_place = 0;
-   fmc.view.selector = 0;
-   fmc.view.single_click = 0;
-   fmc.view.no_subdir_jump = 0;
    fmc.icon.list.w = 24;
    fmc.icon.list.h = 24;
    fmc.icon.fixed.w = 1;
    fmc.icon.fixed.h = 1;
+#else   
+   fmc.view.mode = E_FM2_VIEW_MODE_ICONS;
+   fmc.icon.icon.w = 48;
+   fmc.icon.icon.h = 48;
+   fmc.icon.fixed.w = 0;
+   fmc.icon.fixed.h = 0;
+#endif
+   
+   fmc.view.open_dirs_in_place = 0;
+   fmc.view.selector = 0;
+   fmc.view.single_click = 0;
+   fmc.view.no_subdir_jump = 0;
    fmc.icon.extension.show = 1;
    fmc.list.sort.no_case = 1;
    fmc.list.sort.dirs.first = 1;
@@ -952,6 +961,8 @@ _e_fwin_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 //   printf("PAN %p -> %i %i\n", fwin, x, y);
    if (x > fwin->fm_pan.max_x) x = fwin->fm_pan.max_x;
    if (y > fwin->fm_pan.max_y) y = fwin->fm_pan.max_y;
+   if (x < 0) x = 0;
+   if (y < 0) y = 0;
    fwin->fm_pan.x = x;
    fwin->fm_pan.y = y;
    _e_fwin_pan_scroll_update(fwin);
@@ -1016,7 +1027,10 @@ _e_fwin_pan_scroll_update(E_Fwin *fwin)
    msg->val[3] = fwin->fm_pan.max_y;
    msg->val[4] = fwin->fm_pan.w;
    msg->val[5] = fwin->fm_pan.h;
-//   printf("SEND MSG\n");
+//   printf("SEND MSG %i %i | %i %i | %ix%i\n",
+//	  fwin->fm_pan.x, fwin->fm_pan.y,
+//	  fwin->fm_pan.max_x, fwin->fm_pan.max_y,
+//	  fwin->fm_pan.w, fwin->fm_pan.h);
    if (fwin->under_obj)
      edje_object_message_send(fwin->under_obj, EDJE_MESSAGE_INT_SET, 1, msg);
    if (fwin->over_obj)
