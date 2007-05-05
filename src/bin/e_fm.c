@@ -1794,7 +1794,13 @@ _e_fm2_queue_process(Evas_Object *obj)
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-   if (!sd->queue) return;
+   if (!sd->queue)
+     {
+	if (sd->resize_job) ecore_job_del(sd->resize_job);
+	sd->resize_job = ecore_job_add(_e_fm2_cb_resize_job, obj);
+	evas_object_smart_callback_call(sd->obj, "changed", NULL);
+	return;
+     }
 //   double tt = ecore_time_get();
 //   int queued = evas_list_count(sd->queue);
    /* take unsorted and insert into the icon list - reprocess regions */
@@ -3691,7 +3697,8 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers)
        (ic->sd->config->view.single_click)
        )
      {
-	evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
+	if (!up)
+	  evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
      }
 }
 
