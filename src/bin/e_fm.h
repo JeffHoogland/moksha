@@ -10,8 +10,12 @@ typedef enum _E_Fm2_View_Mode
    E_FM2_VIEW_MODE_ICONS, /* regular layout row by row like text */
    E_FM2_VIEW_MODE_GRID_ICONS, /* regular grid layout */
    E_FM2_VIEW_MODE_CUSTOM_ICONS, /* icons go anywhere u drop them (desktop) */
+     
+     /* FIXME: not going to implement this at this stage */
    E_FM2_VIEW_MODE_CUSTOM_GRID_ICONS, /* icons go anywhere u drop them but align to a grid */
+     /* FIXME: not going to implement this at this stage */
    E_FM2_VIEW_MODE_CUSTOM_SMART_GRID_ICONS, /* icons go anywhere u drop them but try align to icons nearby */
+     /* FIXME: not going to implement this at this stage */
    E_FM2_VIEW_MODE_LIST /* vertical fileselector list */
 } E_Fm2_View_Mode;
 

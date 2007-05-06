@@ -2013,7 +2013,6 @@ _e_fm2_icons_place_icons(E_Fm2_Smart_Data *sd)
 	if (ic->h > rh) rh = ic->h;
 	if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
 	if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
-//	printf("BLAH %s - %i %i %ix%i\n", ic->info.file, ic->x, ic->y, ic->w, ic->h);
      }
 }
 
@@ -2023,7 +2022,8 @@ _e_fm2_icons_place_grid_icons(E_Fm2_Smart_Data *sd)
    Evas_List *l;
    E_Fm2_Icon *ic;
    Evas_Coord x, y, gw, gh;
-
+   int cols = 1, col;
+   
    gw = 0; gh = 0;
    for (l = sd->icons; l; l = l->next)
      {
@@ -2031,18 +2031,22 @@ _e_fm2_icons_place_grid_icons(E_Fm2_Smart_Data *sd)
 	if (ic->w > gw) gw = ic->w;
 	if (ic->h > gh) gh = ic->h;
      }
-   x = 0; y = 0;
+   if (gw > 0) cols = sd->w / gw;
+   if (cols < 1) cols = 1;
+   x = 0; y = 0; col = 0;
    for (l = sd->icons; l; l = l->next)
      {
 	ic = l->data;
-	if ((x > 0) && ((x + ic->w) > sd->w))
+	ic->x = x + ((gw - ic->w) / 2);
+	ic->y = y + (gh - ic->h);
+	x += gw;
+	col++;
+	if (col >= cols)
 	  {
+	     col = 0;
 	     x = 0;
 	     y += gh;
 	  }
-	ic->x = x + (gw - ic->w);
-	ic->y = y + (gh - ic->h);
-	x += gw;
 	if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
 	if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
      }
@@ -2061,6 +2065,8 @@ _e_fm2_icons_place_custom_icons(E_Fm2_Smart_Data *sd)
 	if (!ic->saved_pos)
 	  {
 	     /* FIXME: place using smart place fn */
+	     ic->x = rand() % 200;
+	     ic->y = rand() % 200;
 	  }
 	
 	if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
@@ -2071,6 +2077,7 @@ _e_fm2_icons_place_custom_icons(E_Fm2_Smart_Data *sd)
 static void
 _e_fm2_icons_place_custom_grid_icons(E_Fm2_Smart_Data *sd)
 {
+   /* FIXME: not going to implement this at this stage */
    Evas_List *l;
    E_Fm2_Icon *ic;
 
@@ -2091,6 +2098,7 @@ _e_fm2_icons_place_custom_grid_icons(E_Fm2_Smart_Data *sd)
 static void
 _e_fm2_icons_place_custom_smart_grid_icons(E_Fm2_Smart_Data *sd)
 {
+   /* FIXME: not going to implement this at this stage */
    Evas_List *l;
    E_Fm2_Icon *ic;
 
@@ -2161,9 +2169,11 @@ _e_fm2_icons_place(Evas_Object *obj)
 	_e_fm2_icons_place_custom_icons(sd);
 	break;
       case E_FM2_VIEW_MODE_CUSTOM_GRID_ICONS:
+	/* FIXME: not going to implement this at this stage */
 	_e_fm2_icons_place_custom_grid_icons(sd);
 	break;
       case E_FM2_VIEW_MODE_CUSTOM_SMART_GRID_ICONS:
+	/* FIXME: not going to implement this at this stage */
 	_e_fm2_icons_place_custom_smart_grid_icons(sd);
 	break;
       case E_FM2_VIEW_MODE_LIST:
@@ -3507,6 +3517,12 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		      sd->realpath, ecore_file_get_file(fp));
 	     printf("mv %s %s\n", (char *)fp, buf);
 	     _e_fm2_client_file_move(sd->id, fp, buf, "", 0, ev->x, ev->y);
+	     if (sd->config->view.mode == E_FM2_VIEW_MODE_CUSTOM_ICONS)
+	       {
+		  /* dnd doesnt tell me all the co-ords of the icons being dragged so i can't place them accurately.
+		   * need to fix this. ev->data probably needs to become more compelx than a list of url's
+		   */
+	       }
 	     evas_stringshare_del(fp);
 	  }
      }
@@ -4156,7 +4172,48 @@ _e_fm2_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    
    sd = data;
    ev = event_info;
-   if (ev->button == 3)
+   if (ev->button == 1)
+     {
+	Evas_List *l;
+	int multi_sel = 0, range_sel = 0, seen = 0, sel_change = 0;
+	
+	if (sd->config->selection.windows_modifiers)
+	  {
+	     if (evas_key_modifier_is_set(ev->modifiers, "Shift"))
+	       range_sel = 1;
+	     else if (evas_key_modifier_is_set(ev->modifiers, "Control"))
+	       multi_sel = 1;
+	  }
+	else
+	  {
+	     if (evas_key_modifier_is_set(ev->modifiers, "Control"))
+	       range_sel = 1;
+	     else if (evas_key_modifier_is_set(ev->modifiers, "Shift"))
+	       multi_sel = 1;
+	  }
+	if (sd->config->selection.single)
+	  {
+	     multi_sel = 0;
+	     range_sel = 0;
+	  }
+	if ((!multi_sel) && (!range_sel))
+	  {
+	     for (l = sd->icons; l; l = l->next)
+	       {
+		  E_Fm2_Icon *ic;
+		  
+		  ic = l->data;
+		  if (ic->selected)
+		    {
+		       _e_fm2_icon_deselect(ic);
+		       sel_change = 1;
+		    }
+	       }
+	  }
+	if (sel_change)
+	  evas_object_smart_callback_call(sd->obj, "selection_change", NULL);
+     }
+   else if (ev->button == 3)
      {
 	_e_fm2_menu(sd->obj, ev->timestamp);
 	e_util_evas_fake_mouse_up_later(evas_object_evas_get(sd->obj),
@@ -4227,15 +4284,20 @@ _e_fm2_cb_resize_job(void *data)
 	break;
       case E_FM2_VIEW_MODE_CUSTOM_ICONS:
 	_e_fm2_regions_eval(sd->obj);
-	_e_fm2_obj_icons_place(sd);
+	_e_fm2_icons_place(sd->obj);
+	_e_fm2_regions_populate(sd->obj);
 	break;
       case E_FM2_VIEW_MODE_CUSTOM_GRID_ICONS:
+	/* FIXME: not going to implement this at this stage */
 	_e_fm2_regions_eval(sd->obj);
-	_e_fm2_obj_icons_place(sd);
+	_e_fm2_icons_place(sd->obj);
+	_e_fm2_regions_populate(sd->obj);
 	break;
       case E_FM2_VIEW_MODE_CUSTOM_SMART_GRID_ICONS:
+	/* FIXME: not going to implement this at this stage */
 	_e_fm2_regions_eval(sd->obj);
-	_e_fm2_obj_icons_place(sd);
+	_e_fm2_icons_place(sd->obj);
+	_e_fm2_regions_populate(sd->obj);
 	break;
       case E_FM2_VIEW_MODE_LIST:
 	if (sd->iconlist_changed)

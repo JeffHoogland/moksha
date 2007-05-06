@@ -7,6 +7,11 @@
  * primitive BUT enough to test generic dnd and fm stuff more easily. don't
  * play with this unless u want to help with it. NOT COMPLETE! BEWARE!
  */
+/* FIXME: multiple selected files across different fwins - you can only dnd the
+ * ones in the 1 window src - not all selected ones. also selecting a new file
+ * in a new fwin doesnt deseclect other selections in other fwin's (unless
+ * multi-selecting)
+ */
 
 typedef enum
 {
@@ -112,14 +117,14 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
    o = e_fm2_add(e_win_evas_get(fwin->win));
    fwin->fm_obj = o;
    memset(&fmc, 0, sizeof(E_Fm2_Config));
-#if 1   
+#if 1
    fmc.view.mode = E_FM2_VIEW_MODE_LIST;
    fmc.icon.list.w = 24;
    fmc.icon.list.h = 24;
    fmc.icon.fixed.w = 1;
    fmc.icon.fixed.h = 1;
 #else   
-   fmc.view.mode = E_FM2_VIEW_MODE_ICONS;
+   fmc.view.mode = E_FM2_VIEW_MODE_CUSTOM_ICONS;
    fmc.icon.icon.w = 48;
    fmc.icon.icon.h = 48;
    fmc.icon.fixed.w = 0;
