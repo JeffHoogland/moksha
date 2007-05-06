@@ -51,7 +51,6 @@ static void _cb_preview_update(void *data, Evas_Object *obj, void *event_info);
 static void _cb_fsel_sel(void *data, Evas_Object *obj);
 static void _cb_fsel_ok(void *data, E_Dialog *dia);
 static void _cb_fsel_cancel(void *data, E_Dialog *dia);
-static void _cb_file_change(void *data);
 
 /* Actual config data we will be playing with whil the dialog is active */
 struct _E_Config_Dialog_Data

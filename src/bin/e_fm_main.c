@@ -329,7 +329,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	break;
       case 2: /* monitor dir end */
 	  {
-	     Evas_List *l, *ll;
+	     Evas_List *l;
 	     
 	     for (l = _e_dirs; l; l = l->next)
 	       {
@@ -684,13 +684,13 @@ _e_file_add_mod(int id, const char *path, int op, int listing)
    p[0] = broken_lnk;
    p += 1;
    
-   strcpy(p, path);
+   strcpy((char *)p, path);
    p += strlen(path) + 1;
    
-   strcpy(p, lnk);
+   strcpy((char *)p, lnk);
    p += strlen(lnk) + 1;
    
-   strcpy(p, rlnk);
+   strcpy((char *)p, rlnk);
    p += strlen(rlnk) + 1;
    
    bsz = p - buf;
@@ -891,13 +891,7 @@ static int
 _e_cb_fop_mv_idler(void *data)
 {
    E_Fop *fop;
-   struct Fop_Data {
-      DIR *dir;
-      const char *path, *path2;
-   } *fd, *fd2;
-   struct dirent *dp = NULL;
-   char buf[PATH_MAX], buf2[PATH_MAX], *lnk;
-   
+
    fop = (E_Fop *)data;
    if (!fop->data)
      {
@@ -1203,7 +1197,7 @@ _e_path_fix_order(const char *path, const char *rel, int rel_to, int x, int y)
 	  {
 	     if (!strcmp(l->data, rel))
 	       {
-		  printf("INSERT %s\n", l->data);
+		  printf("INSERT %s\n", (char *)l->data);
 		  if (rel_to == 2) /* replace */
 		    {
 		       free(l->data);
@@ -1226,8 +1220,8 @@ _e_path_fix_order(const char *path, const char *rel, int rel_to, int x, int y)
 	  {
 	     while (files)
 	       {
-		  printf("W %s\n", files->data);
-		  fprintf(fh, "%s\n", files->data);
+		  printf("W %s\n", (char *)files->data);
+		  fprintf(fh, "%s\n", (char *)files->data);
 		  free(files->data);
 		  files = evas_list_remove_list(files, files);
 	       }

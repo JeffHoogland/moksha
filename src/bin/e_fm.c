@@ -1473,13 +1473,13 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 		  broken_link = p[0];
 		  p += 1;
 		  
-		  path = p;
+		  path = (char *)p;
 		  p += strlen(path) + 1;
 
-		  lnk = p;
+		  lnk = (char *)p;
 		  p += strlen(lnk) + 1;
 		  
-		  rlnk = p;
+		  rlnk = (char *)p;
 		  p += strlen(rlnk) + 1;
 		  
 		  memcpy(&(finf.st), &st, sizeof(struct stat));
@@ -3804,8 +3804,6 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	_e_fm2_icon_menu(ic, ic->sd->obj, ev->timestamp);
 	e_util_evas_fake_mouse_up_later(evas_object_evas_get(ic->sd->obj),
 					ev->button);
-//	evas_event_feed_mouse_up(evas_object_evas_get(ic->sd->obj), ev->button,
-//				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
 }
     
@@ -3949,9 +3947,6 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     e_drag_start(d, ic->drag.x, ic->drag.y);
 	     e_util_evas_fake_mouse_up_later(evas_object_evas_get(ic->sd->obj),
 					     1);
-//	     evas_event_feed_mouse_up(evas_object_evas_get(ic->sd->obj),
-//				      1, EVAS_BUTTON_NONE,
-//				      ecore_x_current_time_get(), NULL);
 	  }
      }
 }
@@ -4175,7 +4170,7 @@ _e_fm2_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if (ev->button == 1)
      {
 	Evas_List *l;
-	int multi_sel = 0, range_sel = 0, seen = 0, sel_change = 0;
+	int multi_sel = 0, range_sel = 0, sel_change = 0;
 	
 	if (sd->config->selection.windows_modifiers)
 	  {
@@ -4218,8 +4213,6 @@ _e_fm2_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	_e_fm2_menu(sd->obj, ev->timestamp);
 	e_util_evas_fake_mouse_up_later(evas_object_evas_get(sd->obj),
 					ev->button);
-//	evas_event_feed_mouse_up(evas_object_evas_get(sd->obj), ev->button,
-//				 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
 }
     
