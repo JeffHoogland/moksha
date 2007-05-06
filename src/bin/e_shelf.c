@@ -17,8 +17,7 @@ static void _e_shelf_cb_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_shelf_menu_append(E_Shelf *es, E_Menu *mn);
 static void _e_shelf_cb_menu_items_append(void *data, E_Menu *mn);
 static void _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
-static void _e_shelf_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info);
-static void _e_shelf_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static void _e_shelf_cb_mouse_in(Ecore_Evas *ee);
 static int  _e_shelf_cb_id_sort(void *data1, void *data2);
 static int  _e_shelf_cb_hide_timer(void *data);
 static int  _e_shelf_cb_hide_animator(void *data);
@@ -122,6 +121,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 	e_popup_layer_set(es->popup, layer);
 	es->ee = es->popup->ecore_evas;
 	es->evas = es->popup->evas;
+	ecore_evas_data_set(es->ee, "e_shelf", es);
      }
    else
      {
@@ -139,8 +139,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    evas_object_resize(es->o_event, es->w, es->h);
    
    evas_object_event_callback_add(es->o_event, EVAS_CALLBACK_MOUSE_DOWN, _e_shelf_cb_mouse_down, es);
-   evas_object_event_callback_add(es->o_event, EVAS_CALLBACK_MOUSE_UP, _e_shelf_cb_mouse_up, es);
-   evas_object_event_callback_add(es->o_event, EVAS_CALLBACK_MOUSE_IN, _e_shelf_cb_mouse_in, es);
+   ecore_evas_callback_mouse_in_set(es->ee, _e_shelf_cb_mouse_in);
  
    es->o_base = edje_object_add(es->evas);
    es->name = evas_stringshare_add(name);
@@ -1145,23 +1144,12 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_inf
 }
 
 static void
-_e_shelf_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+_e_shelf_cb_mouse_in(Ecore_Evas *ee)
 {
-   Evas_Event_Mouse_Up *ev;
-   E_Shelf *es;
-   
-   es = data;
-   ev = event_info;
-}
-
-static void
-_e_shelf_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info)
-{
-   Evas_Event_Mouse_In *ev;
    E_Shelf *es;
 
-   es = data;
-   ev = event_info;
+   es = ecore_evas_data_get(ee, "e_shelf");
+   if (!es) return;
    es->last_in = ecore_time_get();
    edje_object_signal_emit(es->o_base, "e,state,focused", "e");
    e_shelf_toggle(es, 1);
