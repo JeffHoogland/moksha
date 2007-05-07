@@ -20,6 +20,8 @@ static void _e_drag_hide(E_Drag *drag);
 static void _e_drag_move(E_Drag *drag, int x, int y);
 static void _e_drag_coords_update(E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh);
 static int  _e_drag_win_matches(E_Drop_Handler *h, Ecore_X_Window win);
+static void _e_drag_win_show(E_Drop_Handler *h);
+static void _e_drag_win_hide(E_Drop_Handler *h);
 static void _e_drag_update(int x, int y);
 static void _e_drag_end(int x, int y);
 static void _e_drag_xdnd_end(int x, int y);
@@ -586,6 +588,46 @@ _e_drag_win_matches(E_Drop_Handler *h, Ecore_X_Window win)
 }
 
 static void
+_e_drag_win_show(E_Drop_Handler *h)
+{
+   if (h->obj)
+     {
+	switch (h->obj->type)
+	  {
+	   case E_GADCON_TYPE:
+	      e_shelf_toggle(e_gadcon_shelf_get((E_Gadcon *)(h->obj)), 1);
+	      break;
+	   case E_GADCON_CLIENT_TYPE:
+	      e_shelf_toggle(e_gadcon_shelf_get(((E_Gadcon_Client *)(h->obj))->gadcon), 1);
+	      break;
+	     /* FIXME: add more types as needed */
+	   default:
+	     break;
+	  }
+     }
+}
+
+static void
+_e_drag_win_hide(E_Drop_Handler *h)
+{
+   if (h->obj)
+     {
+	switch (h->obj->type)
+	  {
+	   case E_GADCON_TYPE:
+	      e_shelf_toggle(e_gadcon_shelf_get((E_Gadcon *)(h->obj)), 0);
+	      break;
+	   case E_GADCON_CLIENT_TYPE:
+	      e_shelf_toggle(e_gadcon_shelf_get(((E_Gadcon_Client *)(h->obj))->gadcon), 0);
+	      break;
+	     /* FIXME: add more types as needed */
+	   default:
+	     break;
+	  }
+     }
+}
+
+static void
 _e_drag_update(int x, int y)
 {
    Evas_List *l;
@@ -632,6 +674,7 @@ _e_drag_update(int x, int y)
 	       {
 		  if (!h->entered)
 		    {
+		       _e_drag_win_show(h);
 		       if (h->cb.enter)
 			 {
 			    if (_drag_current->cb.convert)
@@ -654,6 +697,7 @@ _e_drag_update(int x, int y)
 		    {
 		       if (h->cb.leave)
 			 h->cb.leave(h->cb.data, h->active_type, &leave_ev);
+		       _e_drag_win_hide(h);
 		       h->entered = 0;
 		    }
 	       }

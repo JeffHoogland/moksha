@@ -194,6 +194,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    edje_object_message_signal_process(es->o_base);
    e_gadcon_zone_set(es->gadcon, zone);
    e_gadcon_ecore_evas_set(es->gadcon, es->ee);
+   e_gadcon_shelf_set(es->gadcon, es);
    if (popup)
      {
 	e_gadcon_dnd_window_set(es->gadcon, es->popup->evas_win);

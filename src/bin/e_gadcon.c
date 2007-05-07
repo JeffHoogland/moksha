@@ -632,7 +632,7 @@ e_gadcon_util_menu_attach_func_set(E_Gadcon *gc,
    gc->menu_attach.func = func;
    gc->menu_attach.data = data;
 }
-							 
+
 EAPI void
 e_gadcon_dnd_window_set(E_Gadcon *gc, Ecore_X_Window win)
 {
@@ -647,6 +647,22 @@ e_gadcon_dnd_window_get(E_Gadcon *gc)
    E_OBJECT_CHECK_RETURN(gc, 0);
    E_OBJECT_TYPE_CHECK_RETURN(gc, E_GADCON_TYPE, 0);
    return gc->dnd_win;
+}
+
+EAPI void
+e_gadcon_shelf_set(E_Gadcon *gc, E_Shelf *shelf)
+{
+   E_OBJECT_CHECK(gc);
+   E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
+   gc->shelf = shelf;
+}
+							 
+EAPI E_Shelf *
+e_gadcon_shelf_get(E_Gadcon *gc)
+{
+   E_OBJECT_CHECK_RETURN(gc, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(gc, E_GADCON_TYPE, NULL);
+   return gc->shelf;
 }
 
 EAPI E_Config_Gadcon_Client *
