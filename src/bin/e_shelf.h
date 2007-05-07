@@ -21,6 +21,7 @@ struct _E_Shelf
    E_Zone              *zone; 
    Evas_Object         *o_base;
    Evas_Object         *o_event;
+   Evas_Object         *o_hide;
    Ecore_Evas          *ee;
    Evas                *evas;
    E_Gadcon            *gadcon;
