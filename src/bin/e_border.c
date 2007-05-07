@@ -96,8 +96,6 @@ static void _e_border_move_update(E_Border *bd);
 static int  _e_border_cb_ping_timer(void *data);
 static int  _e_border_cb_kill_timer(void *data);
 
-static char *_e_border_winid_str_get(Ecore_X_Window win);
-
 static void _e_border_pointer_resize_begin(E_Border *bd);
 static void _e_border_pointer_resize_end(E_Border *bd);
 static void _e_border_pointer_move_begin(E_Border *bd);
@@ -466,9 +464,9 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map, int internal)
    bd->desk = e_desk_current_get(bd->zone);
    e_container_border_add(bd);
    borders = evas_list_append(borders, bd);
-   borders_hash = evas_hash_add(borders_hash, _e_border_winid_str_get(bd->client.win), bd);
-   borders_hash = evas_hash_add(borders_hash, _e_border_winid_str_get(bd->bg_win), bd);
-   borders_hash = evas_hash_add(borders_hash, _e_border_winid_str_get(bd->win), bd);
+   borders_hash = evas_hash_add(borders_hash, e_util_winid_str_get(bd->client.win), bd);
+   borders_hash = evas_hash_add(borders_hash, e_util_winid_str_get(bd->bg_win), bd);
+   borders_hash = evas_hash_add(borders_hash, e_util_winid_str_get(bd->win), bd);
    managed = 1;
    ecore_x_window_prop_card32_set(win, E_ATOM_MANAGED, &managed, 1);
    ecore_x_window_prop_card32_set(win, E_ATOM_CONTAINER, &bd->zone->container->num, 1);
@@ -2278,7 +2276,7 @@ e_border_find_by_client_window(Ecore_X_Window win)
 {
    E_Border *bd;
    
-   bd = evas_hash_find(borders_hash, _e_border_winid_str_get(win));
+   bd = evas_hash_find(borders_hash, e_util_winid_str_get(win));
    if ((bd) && (!e_object_is_del(E_OBJECT(bd))) &&
        (bd->client.win == win))
      return bd;
@@ -2290,7 +2288,7 @@ e_border_find_by_frame_window(Ecore_X_Window win)
 {
    E_Border *bd;
    
-   bd = evas_hash_find(borders_hash, _e_border_winid_str_get(win));
+   bd = evas_hash_find(borders_hash, e_util_winid_str_get(win));
    if ((bd) && (!e_object_is_del(E_OBJECT(bd))) &&
        (bd->bg_win == win))
      return bd;
@@ -2302,7 +2300,7 @@ e_border_find_by_window(Ecore_X_Window win)
 {
    E_Border *bd;
    
-   bd = evas_hash_find(borders_hash, _e_border_winid_str_get(win));
+   bd = evas_hash_find(borders_hash, e_util_winid_str_get(win));
    if ((bd) && (!e_object_is_del(E_OBJECT(bd))) &&
        (bd->win == win))
      return bd;
@@ -3170,9 +3168,9 @@ _e_border_free(E_Border *bd)
    e_bindings_wheel_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
    ecore_x_window_del(bd->win);
 
-   borders_hash = evas_hash_del(borders_hash, _e_border_winid_str_get(bd->client.win), bd);
-   borders_hash = evas_hash_del(borders_hash, _e_border_winid_str_get(bd->bg_win), bd);
-   borders_hash = evas_hash_del(borders_hash, _e_border_winid_str_get(bd->win), bd);
+   borders_hash = evas_hash_del(borders_hash, e_util_winid_str_get(bd->client.win), bd);
+   borders_hash = evas_hash_del(borders_hash, e_util_winid_str_get(bd->bg_win), bd);
+   borders_hash = evas_hash_del(borders_hash, e_util_winid_str_get(bd->win), bd);
    borders = evas_list_remove(borders, bd);
    focus_stack = evas_list_remove(focus_stack, bd);
    
@@ -7253,26 +7251,6 @@ _e_border_cb_kill_timer(void *data)
      }
    bd->kill_timer = NULL;
    return 0;
-}
-
-static char *
-_e_border_winid_str_get(Ecore_X_Window win)
-{
-   const char *vals = "qWeRtYuIoP5-$&<~";
-   static char id[9];
-   unsigned int val;
-   
-   val = (unsigned int)win;
-   id[0] = vals[(val >> 28) & 0xf];
-   id[1] = vals[(val >> 24) & 0xf];
-   id[2] = vals[(val >> 20) & 0xf];
-   id[3] = vals[(val >> 16) & 0xf];
-   id[4] = vals[(val >> 12) & 0xf];
-   id[5] = vals[(val >>  8) & 0xf];
-   id[6] = vals[(val >>  4) & 0xf];
-   id[7] = vals[(val      ) & 0xf];
-   id[8] = 0;
-   return id;
 }
 
 static void

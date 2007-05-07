@@ -913,6 +913,26 @@ e_util_defer_object_del(E_Object *obj)
    ecore_idle_enterer_add(_e_util_cb_delayed_del, obj);
 }
 
+EAPI const char *
+e_util_winid_str_get(Ecore_X_Window win)
+{
+   const char *vals = "qWeRtYuIoP5-$&<~";
+   static char id[9];
+   unsigned int val;
+   
+   val = (unsigned int)win;
+   id[0] = vals[(val >> 28) & 0xf];
+   id[1] = vals[(val >> 24) & 0xf];
+   id[2] = vals[(val >> 20) & 0xf];
+   id[3] = vals[(val >> 16) & 0xf];
+   id[4] = vals[(val >> 12) & 0xf];
+   id[5] = vals[(val >>  8) & 0xf];
+   id[6] = vals[(val >>  4) & 0xf];
+   id[7] = vals[(val      ) & 0xf];
+   id[8] = 0;
+   return id;
+}
+
 /* local subsystem functions */
 static int
 _e_util_cb_delayed_del(void *data)

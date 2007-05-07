@@ -37,8 +37,6 @@ static int  _e_dnd_cb_event_dnd_finished(void *data, int type, void *event);
 static int  _e_dnd_cb_event_dnd_drop(void *data, int type, void *event);
 static int  _e_dnd_cb_event_dnd_selection(void *data, int type, void *event);
 
-static char *_e_dnd_winid_str_get(Ecore_X_Window win);
-
 /* local subsystem globals */
 
 typedef struct _XDnd XDnd;
@@ -391,7 +389,7 @@ e_drop_xdnd_register_set(Ecore_X_Window win, int reg)
 {
    const char *id;
 
-   id = _e_dnd_winid_str_get(win);
+   id = e_util_winid_str_get(win);
    if (reg)
      {
 	if (!evas_hash_find(_drop_win_hash, id))
@@ -945,7 +943,7 @@ _e_dnd_cb_event_dnd_enter(void *data, int type, void *event)
 
    ev = event;
    if (ev->source == _drag_win) return 1;
-   id = _e_dnd_winid_str_get(ev->win);
+   id = e_util_winid_str_get(ev->win);
    if (!evas_hash_find(_drop_win_hash, id)) return 1;
    for (l = _drop_handlers; l; l = l->next)
      {
@@ -1018,7 +1016,7 @@ _e_dnd_cb_event_dnd_leave(void *data, int type, void *event)
    ev = event;
 
    if (ev->source == _drag_win) return 1;
-   id = _e_dnd_winid_str_get(ev->win);
+   id = e_util_winid_str_get(ev->win);
    if (!evas_hash_find(_drop_win_hash, id)) return 1;
    printf("Xdnd leave\n");
 
@@ -1066,7 +1064,7 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
 
    ev = event;
    if (ev->source == _drag_win) return 1;
-   id = _e_dnd_winid_str_get(ev->win);
+   id = e_util_winid_str_get(ev->win);
    if (!evas_hash_find(_drop_win_hash, id)) return 1;
 
    rect.x = 0;
@@ -1137,7 +1135,7 @@ _e_dnd_cb_event_dnd_drop(void *data, int type, void *event)
 
    ev = event;
    if (ev->source == _drag_win) return 1;
-   id = _e_dnd_winid_str_get(ev->win);
+   id = e_util_winid_str_get(ev->win);
    if (!evas_hash_find(_drop_win_hash, id)) return 1;
    printf("Xdnd drop\n");
 
@@ -1156,7 +1154,7 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
    int i;
 
    ev = event;
-   id = _e_dnd_winid_str_get(ev->win);
+   id = e_util_winid_str_get(ev->win);
    if (!evas_hash_find(_drop_win_hash, id)) return 1;
    if (ev->selection != ECORE_X_SELECTION_XDND) return 1;
    printf("Xdnd selection\n");
@@ -1223,24 +1221,4 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
    free(_xdnd);
    _xdnd = NULL;
    return 1;
-}
-
-static char *
-_e_dnd_winid_str_get(Ecore_X_Window win)
-{
-   const char *vals = "qWeRtYuIoP5-$&<~";
-   static char id[9];
-   unsigned int val;
-
-   val = (unsigned int)win;
-   id[0] = vals[(val >> 28) & 0xf];
-   id[1] = vals[(val >> 24) & 0xf];
-   id[2] = vals[(val >> 20) & 0xf];
-   id[3] = vals[(val >> 16) & 0xf];
-   id[4] = vals[(val >> 12) & 0xf];
-   id[5] = vals[(val >>  8) & 0xf];
-   id[6] = vals[(val >>  4) & 0xf];
-   id[7] = vals[(val      ) & 0xf];
-   id[8] = 0;
-   return id;
 }
