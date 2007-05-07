@@ -275,7 +275,7 @@ e_shelf_toggle(E_Shelf *es, int show)
   E_OBJECT_CHECK(es);
   E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
 
-  if (!es->cfg->autohide) return;
+  if ((!es->popup) || (!es->cfg->autohide)) return;
 
   if ((show) && (es->hidden))
     {  
