@@ -27,6 +27,7 @@ static void _e_shelf_menu_del_hook(void *data);
 static void _e_shelf_menu_pre_cb(void *data, E_Menu *m);
 
 static Evas_List *shelves = NULL;
+static Evas_Hash *winid_shelves = NULL;
 
 /* externally accessible functions */
 EAPI int
@@ -187,7 +188,10 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    e_gadcon_zone_set(es->gadcon, zone);
    e_gadcon_ecore_evas_set(es->gadcon, es->ee);
    if (popup)
-     e_gadcon_dnd_window_set(es->gadcon, es->popup->evas_win);
+     {
+	e_gadcon_dnd_window_set(es->gadcon, es->popup->evas_win);
+	winid_shelves = evas_hash_add(winid_shelves, e_util_winid_str_get(es->popup->evas_win), es);
+     }
    else
      e_gadcon_dnd_window_set(es->gadcon, zone->container->event_win);
    e_gadcon_util_menu_attach_func_set(es->gadcon,
@@ -648,6 +652,7 @@ _e_shelf_free(E_Shelf *es)
    if (es->popup)
      {
 	e_drop_xdnd_register_set(es->popup->evas_win, 0);
+	winid_shelves = evas_hash_del(winid_shelves, e_util_winid_str_get(es->popup->evas_win), es);
 	e_object_del(E_OBJECT(es->popup));
      }
    free(es);
