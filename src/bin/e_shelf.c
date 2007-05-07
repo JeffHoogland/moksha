@@ -18,6 +18,7 @@ static void _e_shelf_menu_append(E_Shelf *es, E_Menu *mn);
 static void _e_shelf_cb_menu_items_append(void *data, E_Menu *mn);
 static void _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_shelf_cb_mouse_in(Ecore_Evas *ee);
+static void _e_shelf_cb_mouse_out(Ecore_Evas *ee);
 static int  _e_shelf_cb_id_sort(void *data1, void *data2);
 static int  _e_shelf_cb_hide_timer(void *data);
 static int  _e_shelf_cb_hide_animator(void *data);
@@ -140,6 +141,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    
    evas_object_event_callback_add(es->o_event, EVAS_CALLBACK_MOUSE_DOWN, _e_shelf_cb_mouse_down, es);
    ecore_evas_callback_mouse_in_set(es->ee, _e_shelf_cb_mouse_in);
+   ecore_evas_callback_mouse_out_set(es->ee, _e_shelf_cb_mouse_out);
  
    es->o_base = edje_object_add(es->evas);
    es->name = evas_stringshare_add(name);
@@ -271,29 +273,23 @@ e_shelf_toggle(E_Shelf *es, int show)
   E_OBJECT_CHECK(es);
   E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
 
-  if ((!es->cfg->autohide) && (!es->hidden)) return;
+  if (!es->cfg->autohide) return;
 
-  if (show)
-    {
-       if (!es->hide_timer) es->hide_timer = ecore_timer_add(0.3, _e_shelf_cb_hide_timer, es);
-
-       if ((es->hidden) && (!es->instant_timer))
-	 {  
-	    es->hidden = 0;
-	    edje_object_signal_emit(es->o_base, "e,state,visible", "e");
-	    if (es->instant_delay >= 0.0)
-	      {
-		 if (!es->instant_timer)
-		   _e_shelf_cb_instant_hide_timer(es);
-	      }
-	    else
-	      {
-		 if (!es->hide_animator)
-		   es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
-	      }
+  if ((show) && (es->hidden))
+    {  
+       es->hidden = 0;
+       edje_object_signal_emit(es->o_base, "e,state,visible", "e");
+       if (es->instant_delay >= 0.0)
+	 {
+	    _e_shelf_cb_instant_hide_timer(es);
+	 }
+       else
+	 {
+	    if (!es->hide_animator)
+	      es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
 	 }
     }
-  else if ((!show) && (es->cfg->autohide) && (!es->hidden) && (!es->gadcon->editing))  
+  else if ((!show) && (!es->hidden) && (!es->gadcon->editing))  
     {
        es->hidden = 1; 
        edje_object_signal_emit(es->o_base, "e,state,hidden", "e");
@@ -617,11 +613,6 @@ e_shelf_popup_set(E_Shelf *es, int popup)
 static void
 _e_shelf_free(E_Shelf *es)
 {
-   if (es->hide_timer)
-     {
-	ecore_timer_del(es->hide_timer);
-	es->hide_timer = NULL;
-     }
    if (es->hide_animator)
      {
 	ecore_animator_del(es->hide_animator);
@@ -632,7 +623,7 @@ _e_shelf_free(E_Shelf *es)
 	ecore_timer_del(es->instant_timer);
 	es->instant_timer = NULL;
      }
-   
+
    if (es->menu)
      {
 	e_menu_post_deactivate_callback_set(es->menu, NULL, NULL);
@@ -1150,9 +1141,18 @@ _e_shelf_cb_mouse_in(Ecore_Evas *ee)
 
    es = ecore_evas_data_get(ee, "e_shelf");
    if (!es) return;
-   es->last_in = ecore_time_get();
    edje_object_signal_emit(es->o_base, "e,state,focused", "e");
    e_shelf_toggle(es, 1);
+}
+
+static void 
+_e_shelf_cb_mouse_out(Ecore_Evas *ee)
+{
+   E_Shelf *es;
+
+   es = ecore_evas_data_get(ee, "e_shelf");
+   if (!es) return;
+   e_shelf_toggle(es, 0);
 }
 
 static int
@@ -1163,41 +1163,6 @@ _e_shelf_cb_id_sort(void *data1, void *data2)
    es1 = data1;
    es2 = data2;
    return (es1->id) > (es2->id);
-}
-
-static int 
-_e_shelf_cb_hide_timer(void *data)
-{
-  Evas_Coord x, y, w, h, px, py;
-
-  E_Shelf *es = data;
-
-  evas_object_geometry_get(es->o_base, &x, &y, &w, &h);
-  if (es->popup)
-    ecore_x_pointer_xy_get(es->popup->evas_win, &px, &py);
-  else
-    ecore_x_pointer_xy_get(es->zone->black_win, &px, &py);
-  
-  if (E_INSIDE(px, py, x, y, w, h))
-    {
-      es->last_in = ecore_time_get();
-      return 1;
-    }
-  else
-    {
-       if ((es->last_in + es->cfg->hide_timeout) < ecore_time_get()) 
-	 {
-	    e_shelf_toggle(es, 0);
-	    if (es->hide_timer)
-	      {    
-		 ecore_timer_del(es->hide_timer);
-		 es->hide_timer = NULL;
-	      }	  
-	    return 0;
-	 }
-       else
-	 return 1;
-    }
 }
 
 static int

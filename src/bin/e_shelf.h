@@ -37,10 +37,9 @@ struct _E_Shelf
    Ecore_Animator      *hide_animator;
    int                  hide_step;
    int                  hidden_state_size;
-   int			hide_origin;
+   int                  hide_origin;
    float                instant_delay;
    Ecore_Timer         *instant_timer;
-   double               last_in; /* last time the pointer was in the shelf */ 
 };
 
 EAPI int              e_shelf_init(void);
