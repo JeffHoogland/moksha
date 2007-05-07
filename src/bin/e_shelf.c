@@ -20,8 +20,8 @@ static void _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, voi
 static void _e_shelf_cb_mouse_in(Ecore_Evas *ee);
 static void _e_shelf_cb_mouse_out(Ecore_Evas *ee);
 static int  _e_shelf_cb_id_sort(void *data1, void *data2);
-static int  _e_shelf_cb_hide_timer(void *data);
 static int  _e_shelf_cb_hide_animator(void *data);
+static int  _e_shelf_cb_hide_animator_timer(void *data);
 static int  _e_shelf_cb_instant_hide_timer(void *data);
 static void _e_shelf_menu_del_hook(void *data);
 static void _e_shelf_menu_pre_cb(void *data, E_Menu *m);
@@ -199,9 +199,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    
    es->hidden = 0;
    es->hide_step = 0;
-   es->hide_timer = NULL;
-   es->hide_animator = NULL;
-  
+
    option =  edje_object_data_get(es->o_base, "hidden_state_size");
    if (option)
      es->hidden_state_size = atoi(option);
@@ -285,6 +283,11 @@ e_shelf_toggle(E_Shelf *es, int show)
 	 }
        else
 	 {
+	    if (es->hide_timer)
+	      {
+		 ecore_timer_del(es->hide_timer);
+		 es->hide_timer = NULL;
+	      }
 	    if (!es->hide_animator)
 	      es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
 	 }
@@ -300,8 +303,13 @@ e_shelf_toggle(E_Shelf *es, int show)
 	 }
        else
 	 {
-	    if (!es->hide_animator)
-	      es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
+	    if (es->hide_animator)
+	      {
+		 ecore_animator_del(es->hide_animator);
+		 es->hide_animator = NULL;
+	      }
+	    if (es->hide_timer) ecore_timer_del(es->hide_timer);
+	    es->hide_timer = ecore_timer_add(es->cfg->hide_timeout, _e_shelf_cb_hide_animator_timer, es);
 	 }
     }
 }
@@ -1357,6 +1365,18 @@ _e_shelf_cb_hide_animator(void *data)
 end:
    es->hide_animator = NULL;
    _e_shelf_toggle_border_fix(es);
+   return 0;
+}
+
+static int
+_e_shelf_cb_hide_animator_timer(void *data)
+{
+   E_Shelf *es;
+
+   es = data;
+   if (!es->hide_animator)
+     es->hide_animator = ecore_animator_add(_e_shelf_cb_hide_animator, es);
+   es->hide_timer = NULL;
    return 0;
 }
 
