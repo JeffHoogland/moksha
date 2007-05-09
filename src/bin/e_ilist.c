@@ -95,6 +95,7 @@ EAPI void
 e_ilist_clear(Evas_Object *obj) 
 {
    API_ENTRY return;
+   e_ilist_freeze(obj);
    while (sd->items) 
      {
 	E_Ilist_Item *si;
@@ -105,6 +106,7 @@ e_ilist_clear(Evas_Object *obj)
 	evas_object_del(si->o_base);
 	E_FREE(si);
      }
+   e_ilist_thaw(obj);
    sd->selected = -1;
 }
 
