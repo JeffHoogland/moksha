@@ -65,6 +65,24 @@ e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, char **value)
 }
 
 EAPI void
+e_widget_ilist_freeze(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   e_ilist_freeze(wd->o_ilist);
+}
+
+EAPI void
+e_widget_ilist_thaw(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   e_ilist_thaw(wd->o_ilist);
+}
+
+EAPI void
 e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, const char *label, void (*func) (void *data), void *data, const char *val)
 {
    E_Widget_Data *wd;
@@ -89,47 +107,6 @@ e_widget_ilist_header_append(Evas_Object *obj, Evas_Object *icon, const char *la
    wd = e_widget_data_get(obj);
    e_ilist_append(wd->o_ilist, icon, label, 1, NULL, NULL, NULL, NULL);
    if (icon) evas_object_show(icon);
-}
-
-EAPI void
-e_widget_ilist_selected_set(Evas_Object *obj, int n)
-{
-   E_Widget_Data *wd;
-   
-   wd = e_widget_data_get(obj);
-   e_ilist_selected_set(wd->o_ilist, n);
-}
-
-EAPI int
-e_widget_ilist_selected_get(Evas_Object *obj)
-{
-   E_Widget_Data *wd;
-   
-   wd = e_widget_data_get(obj);
-   return e_ilist_selected_get(wd->o_ilist);
-}
-
-EAPI void
-e_widget_ilist_unselect(Evas_Object *obj)
-{
-   E_Widget_Data *wd;
-   
-   wd = e_widget_data_get(obj);
-   if ((wd->value) && *(wd->value))
-       {
-          free(*(wd->value));
-          *(wd->value) = NULL;
-       }
-   e_ilist_unselect(wd->o_ilist);
-}
-
-EAPI const char *
-e_widget_ilist_selected_label_get(Evas_Object *obj)
-{
-   E_Widget_Data *wd;
-   
-   wd = e_widget_data_get(obj);
-   return e_ilist_selected_label_get(wd->o_ilist);
 }
 
 EAPI void
@@ -165,30 +142,38 @@ e_widget_ilist_go(Evas_Object *obj)
 }
 
 EAPI void
-e_widget_ilist_remove_num(Evas_Object *obj, int n)
+e_widget_ilist_clear(Evas_Object *obj) 
+{
+   E_Widget_Data *wd;
+   wd = e_widget_data_get(obj);
+   e_ilist_clear(wd->o_ilist);
+}
+
+EAPI int
+e_widget_ilist_count(Evas_Object *obj)
 {
    E_Widget_Data *wd;
    
    wd = e_widget_data_get(obj);
-   e_ilist_remove_num(wd->o_ilist, n);
+   return e_ilist_count(wd->o_ilist);
 }
 
-EAPI void
-e_widget_ilist_remove_label(Evas_Object *obj, const char *label)
+EAPI Evas_List *
+e_widget_ilist_items_get(Evas_Object *obj) 
 {
    E_Widget_Data *wd;
    
    wd = e_widget_data_get(obj);
-   e_ilist_remove_label(wd->o_ilist, label);
+   return e_ilist_items_get(wd->o_ilist);
 }
 
-EAPI const char *
-e_widget_ilist_nth_label_get(Evas_Object *obj, int n)
+EAPI int 
+e_widget_ilist_nth_is_header(Evas_Object *obj, int n) 
 {
-    E_Widget_Data *wd;
+   E_Widget_Data *wd;
    
    wd = e_widget_data_get(obj);
-   return e_ilist_nth_label_get(wd->o_ilist, n);
+   return e_ilist_nth_is_header(wd->o_ilist, n);
 }
 
 EAPI void
@@ -198,6 +183,15 @@ e_widget_ilist_nth_label_set(Evas_Object *obj, int n, const char *label)
    
    wd = e_widget_data_get(obj);
    e_ilist_nth_label_set(wd->o_ilist, n, label);
+}
+
+EAPI const char *
+e_widget_ilist_nth_label_get(Evas_Object *obj, int n)
+{
+    E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   return e_ilist_nth_label_get(wd->o_ilist, n);
 }
 
 EAPI void
@@ -233,6 +227,33 @@ e_widget_ilist_nth_data_get(Evas_Object *obj, int n)
      return wcb->data;
 }
 
+EAPI void
+e_widget_ilist_selected_set(Evas_Object *obj, int n)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   e_ilist_selected_set(wd->o_ilist, n);
+}
+
+EAPI int
+e_widget_ilist_selected_get(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   return e_ilist_selected_get(wd->o_ilist);
+}
+
+EAPI const char *
+e_widget_ilist_selected_label_get(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   return e_ilist_selected_label_get(wd->o_ilist);
+}
+
 EAPI Evas_Object *
 e_widget_ilist_selected_icon_get(Evas_Object *obj)
 {
@@ -242,48 +263,36 @@ e_widget_ilist_selected_icon_get(Evas_Object *obj)
    return e_ilist_selected_icon_get(wd->o_ilist);
 }
 
-EAPI int
-e_widget_ilist_count(Evas_Object *obj)
+EAPI void
+e_widget_ilist_unselect(Evas_Object *obj)
 {
    E_Widget_Data *wd;
    
    wd = e_widget_data_get(obj);
-   return e_ilist_count(wd->o_ilist);
+   if ((wd->value) && *(wd->value))
+       {
+          free(*(wd->value));
+          *(wd->value) = NULL;
+       }
+   e_ilist_unselect(wd->o_ilist);
 }
 
 EAPI void
-e_widget_ilist_clear(Evas_Object *obj) 
-{
-   E_Widget_Data *wd;
-   wd = e_widget_data_get(obj);
-   e_ilist_clear(wd->o_ilist);
-}
-
-EAPI int 
-e_widget_ilist_nth_is_header(Evas_Object *obj, int n) 
+e_widget_ilist_remove_num(Evas_Object *obj, int n)
 {
    E_Widget_Data *wd;
    
    wd = e_widget_data_get(obj);
-   return e_ilist_nth_is_header(wd->o_ilist, n);
+   e_ilist_remove_num(wd->o_ilist, n);
 }
 
 EAPI void
-e_widget_ilist_freeze(Evas_Object *obj)
+e_widget_ilist_remove_label(Evas_Object *obj, const char *label)
 {
    E_Widget_Data *wd;
    
    wd = e_widget_data_get(obj);
-   e_ilist_freeze(wd->o_ilist);
-}
-
-EAPI void
-e_widget_ilist_thaw(Evas_Object *obj)
-{
-   E_Widget_Data *wd;
-   
-   wd = e_widget_data_get(obj);
-   e_ilist_thaw(wd->o_ilist);
+   e_ilist_remove_label(wd->o_ilist, label);
 }
 
 EAPI void 
@@ -302,15 +311,6 @@ e_widget_ilist_multi_select_get(Evas_Object *obj)
    
    wd = e_widget_data_get(obj);
    return e_ilist_multi_select_get(wd->o_ilist);
-}
-
-EAPI Evas_List *
-e_widget_ilist_items_get(Evas_Object *obj) 
-{
-   E_Widget_Data *wd;
-   
-   wd = e_widget_data_get(obj);
-   return e_ilist_items_get(wd->o_ilist);
 }
 
 EAPI void 
