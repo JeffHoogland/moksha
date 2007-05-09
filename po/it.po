@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-05-05 23:22+0900\n"
-"PO-Revision-Date: 2007-04-21 10:17+0200\n"
+"POT-Creation-Date: 2007-05-08 22:12+0200\n"
+"PO-Revision-Date: 2007-05-07 19:50+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@inwind.it>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -66,14 +66,14 @@ msgstr "Siete sicuri di voler uccidere questa finestra?"
 
 #: src/bin/e_actions.c:311 src/bin/e_actions.c:1589 src/bin/e_actions.c:1650
 #: src/bin/e_actions.c:1699 src/bin/e_actions.c:1748 src/bin/e_actions.c:1797
-#: src/bin/e_actions.c:1846 src/bin/e_confirm_dialog.c:47 src/bin/e_fm.c:5197
+#: src/bin/e_actions.c:1846 src/bin/e_confirm_dialog.c:47 src/bin/e_fm.c:5252
 #: src/bin/e_int_config_display.c:215 src/bin/e_module.c:455
 msgid "Yes"
 msgstr "Sì"
 
 #: src/bin/e_actions.c:313 src/bin/e_actions.c:1591 src/bin/e_actions.c:1652
 #: src/bin/e_actions.c:1701 src/bin/e_actions.c:1750 src/bin/e_actions.c:1799
-#: src/bin/e_actions.c:1848 src/bin/e_confirm_dialog.c:48 src/bin/e_fm.c:5198
+#: src/bin/e_actions.c:1848 src/bin/e_confirm_dialog.c:48 src/bin/e_fm.c:5253
 #: src/bin/e_int_config_display.c:216 src/bin/e_module.c:456
 msgid "No"
 msgstr "No"
@@ -175,7 +175,7 @@ msgid "Lower"
 msgstr "Abbassa"
 
 #: src/bin/e_actions.c:1967 src/bin/e_config_dialog.c:226
-#: src/bin/e_configure.c:113 src/bin/e_fwin.c:873
+#: src/bin/e_configure.c:113 src/bin/e_fwin.c:878
 #: src/bin/e_int_border_menu.c:318 src/bin/e_int_border_prop.c:81
 msgid "Close"
 msgstr "Chiudi"
@@ -631,7 +631,7 @@ msgid "Basic"
 msgstr "Basilari"
 
 #: src/bin/e_config_dialog.c:218 src/bin/e_eap_editor.c:579
-#: src/bin/e_entry_dialog.c:56 src/bin/e_fm_prop.c:515
+#: src/bin/e_entry_dialog.c:56 src/bin/e_fm_prop.c:514
 #: src/bin/e_int_border_remember.c:248 src/bin/e_int_border_remember.c:323
 #: src/bin/e_int_border_remember.c:365 src/bin/e_int_config_dpms.c:60
 #: src/bin/e_int_config_dpms.c:81 src/bin/e_int_config_imc_import.c:111
@@ -663,7 +663,7 @@ msgstr "Categorie"
 msgid "Configuration Items"
 msgstr "Elementi"
 
-#: src/bin/e_configure.c:395 src/bin/e_gadcon.c:1267
+#: src/bin/e_configure.c:395 src/bin/e_gadcon.c:1283
 msgid "Appearance"
 msgstr "Aspetto"
 
@@ -918,7 +918,7 @@ msgstr ""
 msgid "Desktop Entry Editor"
 msgstr "Editor file desktop"
 
-#: src/bin/e_eap_editor.c:422 src/bin/e_fm_prop.c:401
+#: src/bin/e_eap_editor.c:422 src/bin/e_fm_prop.c:400
 #: src/bin/e_int_config_fonts.c:95 src/bin/e_int_config_mime_edit.c:144
 msgid "Icon"
 msgstr "Icona"
@@ -977,7 +977,7 @@ msgid "Select an Icon"
 msgstr "Seleziona un'icona"
 
 #: src/bin/e_eap_editor.c:580 src/bin/e_entry_dialog.c:57
-#: src/bin/e_fm_prop.c:516 src/bin/e_int_config_imc_import.c:115
+#: src/bin/e_fm_prop.c:515 src/bin/e_int_config_imc_import.c:115
 #: src/bin/e_int_config_mime_edit.c:283
 #: src/bin/e_int_config_theme_import.c:115
 #: src/bin/e_int_config_wallpaper_gradient.c:198
@@ -1410,67 +1410,67 @@ msgstr "Avvio di Enlightenment. Attendere prego."
 msgid "%i Files"
 msgstr "%i File"
 
-#: src/bin/e_fm.c:4638 src/bin/e_fm.c:4780
+#: src/bin/e_fm.c:4693 src/bin/e_fm.c:4835
 msgid "Refresh View"
 msgstr "Aggiorna vista"
 
-#: src/bin/e_fm.c:4649 src/bin/e_fm.c:4791
+#: src/bin/e_fm.c:4704 src/bin/e_fm.c:4846
 msgid "Show Hidden Files"
 msgstr "Mostra file nascosti"
 
-#: src/bin/e_fm.c:4664 src/bin/e_fm.c:4806
+#: src/bin/e_fm.c:4719 src/bin/e_fm.c:4861
 msgid "Remember Ordering"
 msgstr "Ricorda ordinamento"
 
-#: src/bin/e_fm.c:4676 src/bin/e_fm.c:4818
+#: src/bin/e_fm.c:4731 src/bin/e_fm.c:4873
 msgid "Sort Now"
 msgstr "Ordina adesso"
 
-#: src/bin/e_fm.c:4694 src/bin/e_fm.c:4836 src/bin/e_int_config_paths.c:210
+#: src/bin/e_fm.c:4749 src/bin/e_fm.c:4891 src/bin/e_int_config_paths.c:210
 msgid "New Directory"
 msgstr "Nuova directory"
 
-#: src/bin/e_fm.c:4895 src/bin/e_int_config_shelf.c:83
+#: src/bin/e_fm.c:4950 src/bin/e_int_config_shelf.c:83
 #: src/bin/e_int_config_apps_menu.c:90 src/bin/e_int_config_apps_order.c:155
 #: src/bin/e_entry.c:386 src/modules/ibar/e_mod_config.c:111
 msgid "Delete"
 msgstr "Elimina"
 
-#: src/bin/e_fm.c:4906
+#: src/bin/e_fm.c:4961
 msgid "Rename"
 msgstr "Rinomina"
 
-#: src/bin/e_fm.c:4916
+#: src/bin/e_fm.c:4971
 msgid "Properties"
 msgstr "Proprietà"
 
-#: src/bin/e_fm.c:5040
+#: src/bin/e_fm.c:5095
 msgid "Create a new Directory"
 msgstr "Crea nuova directory"
 
-#: src/bin/e_fm.c:5041
+#: src/bin/e_fm.c:5096
 msgid "New Directory Name:"
 msgstr "Nome directory:"
 
-#: src/bin/e_fm.c:5100
+#: src/bin/e_fm.c:5155
 #, c-format
 msgid "Rename %s to:"
 msgstr "Rinomina %s in:"
 
-#: src/bin/e_fm.c:5102
+#: src/bin/e_fm.c:5157
 msgid "Rename File"
 msgstr "Rinomina file"
 
-#: src/bin/e_fm.c:5200
+#: src/bin/e_fm.c:5255
 msgid "Confirm Delete"
 msgstr "Conferma eliminazione"
 
-#: src/bin/e_fm.c:5204
+#: src/bin/e_fm.c:5259
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Siete sicuri di voler eliminare<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:5210
+#: src/bin/e_fm.c:5265
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
@@ -1479,131 +1479,130 @@ msgstr ""
 "Siete sicuri di voler eliminare<br>i %d file selezionati in:<br><hilight>%s</"
 "hilight> ?"
 
-#: src/bin/e_fm.c:5637
+#: src/bin/e_fm.c:5692
 msgid "Removable Device"
 msgstr "Dispositivo rimovibile"
 
-#: src/bin/e_fm_prop.c:109
+#: src/bin/e_fm_prop.c:108
 msgid "File Properties"
 msgstr "Proprietà del file"
 
-#: src/bin/e_fm_prop.c:339
+#: src/bin/e_fm_prop.c:338
 msgid "File:"
 msgstr "File:"
 
-#: src/bin/e_fm_prop.c:346 src/bin/e_widget_fsel.c:323
+#: src/bin/e_fm_prop.c:345 src/bin/e_widget_fsel.c:323
 msgid "Size:"
 msgstr "Dimensione:"
 
-#: src/bin/e_fm_prop.c:353
+#: src/bin/e_fm_prop.c:352
 msgid "Last Modified:"
 msgstr "Modificato:"
 
-#: src/bin/e_fm_prop.c:360
+#: src/bin/e_fm_prop.c:359
 msgid "File Type:"
 msgstr "Tipo di file"
 
-#: src/bin/e_fm_prop.c:367
+#: src/bin/e_fm_prop.c:366
 msgid "Permissions"
 msgstr "Permessi"
 
-#: src/bin/e_fm_prop.c:368 src/bin/e_widget_fsel.c:339
+#: src/bin/e_fm_prop.c:367 src/bin/e_widget_fsel.c:339
 msgid "Owner:"
 msgstr "Proprietario:"
 
-#: src/bin/e_fm_prop.c:374
+#: src/bin/e_fm_prop.c:373
 msgid "Others can read"
 msgstr "Altri possono leggere"
 
-#: src/bin/e_fm_prop.c:376
+#: src/bin/e_fm_prop.c:375
 msgid "Others can write"
 msgstr "Altri possono scrivere"
 
-#: src/bin/e_fm_prop.c:378
+#: src/bin/e_fm_prop.c:377
 msgid "Owner can read"
 msgstr "Proprietario può leggere"
 
-#: src/bin/e_fm_prop.c:380
+#: src/bin/e_fm_prop.c:379
 msgid "Owner can write"
 msgstr "Proprietario può scrivere"
 
-#: src/bin/e_fm_prop.c:386 src/bin/e_int_config_transitions.c:167
+#: src/bin/e_fm_prop.c:385 src/bin/e_int_config_transitions.c:167
 #: src/bin/e_int_config_wallpaper_gradient.c:153 src/bin/e_widget_fsel.c:302
 msgid "Preview"
 msgstr "Anteprima"
 
-#: src/bin/e_fm_prop.c:434 src/bin/e_int_config_screensaver.c:166
+#: src/bin/e_fm_prop.c:433 src/bin/e_int_config_screensaver.c:166
 #: src/bin/e_int_config_screensaver.c:176
 msgid "Default"
 msgstr "Predefinito"
 
-#: src/bin/e_fm_prop.c:437
+#: src/bin/e_fm_prop.c:436
 msgid "Thumbnail"
 msgstr "Miniatura"
 
-#: src/bin/e_fm_prop.c:440 src/bin/e_int_config_desklock.c:319
+#: src/bin/e_fm_prop.c:439 src/bin/e_int_config_desklock.c:319
 msgid "Custom"
 msgstr "Personalizzata"
 
-#: src/bin/e_fm_prop.c:450
+#: src/bin/e_fm_prop.c:449
 msgid "Use this icon for all files of this type"
 msgstr "Usa questa icona per tutti i file di questo tipo"
 
-#: src/bin/e_fm_prop.c:458
-#, fuzzy
+#: src/bin/e_fm_prop.c:457
 msgid "Link Information"
-msgstr "Informazioni sull'errore"
+msgstr "Informazioni collegamento"
 
-#: src/bin/e_fm_prop.c:504 src/bin/e_int_config_mime_edit.c:271
+#: src/bin/e_fm_prop.c:503 src/bin/e_int_config_mime_edit.c:271
 msgid "Select an Image"
 msgstr "Seleziona un'immagine"
 
-#: src/bin/e_fwin.c:362
+#: src/bin/e_fwin.c:367
 msgid "Go to Parent Directory"
 msgstr "Directory superiore"
 
-#: src/bin/e_fwin.c:388 src/bin/e_fwin.c:871
+#: src/bin/e_fwin.c:393 src/bin/e_fwin.c:876
 msgid "Open"
 msgstr "Apri"
 
-#: src/bin/e_fwin.c:395 src/bin/e_fwin.c:869
+#: src/bin/e_fwin.c:400 src/bin/e_fwin.c:874
 msgid "Open with..."
 msgstr "Apri con..."
 
-#: src/bin/e_fwin.c:889
+#: src/bin/e_fwin.c:894
 msgid "Specific Applications"
 msgstr "Applicazioni specifiche"
 
-#: src/bin/e_fwin.c:911 src/bin/e_int_config_apps_menu.c:79
+#: src/bin/e_fwin.c:916 src/bin/e_int_config_apps_menu.c:79
 #: src/bin/e_int_config_apps_order.c:144
 msgid "All Applications"
 msgstr "Tutte le applicazioni"
 
-#: src/bin/e_gadcon.c:1247
+#: src/bin/e_gadcon.c:1263
 msgid "Plain"
 msgstr "Liscio"
 
-#: src/bin/e_gadcon.c:1256
+#: src/bin/e_gadcon.c:1272
 msgid "Inset"
 msgstr "Incassato"
 
-#: src/bin/e_gadcon.c:1273
+#: src/bin/e_gadcon.c:1289
 msgid "Automatically scroll contents"
 msgstr "Scorri automaticamente contenuto"
 
-#: src/bin/e_gadcon.c:1280
+#: src/bin/e_gadcon.c:1296
 msgid "Able to be resized"
 msgstr "Ridimensionabile"
 
-#: src/bin/e_gadcon.c:1292
+#: src/bin/e_gadcon.c:1308
 msgid "Begin move/resize this gadget"
 msgstr "Inizio spostamento/ridimensionamento di questo gadget"
 
-#: src/bin/e_gadcon.c:1298
+#: src/bin/e_gadcon.c:1314
 msgid "Remove this gadget"
 msgstr "Elimina questo gadget"
 
-#: src/bin/e_gadcon.c:1743
+#: src/bin/e_gadcon.c:1759
 msgid "Stop move/resize this gadget"
 msgstr "Fine spostamento/ridimensionamento di questo gadget"
 
@@ -2071,9 +2070,8 @@ msgid "Virtual Desktop"
 msgstr "Desktop virtuale"
 
 #: src/bin/e_int_border_remember.c:502
-#, fuzzy
 msgid "Current Screen"
-msgstr "Bloccaschermo personalizzato"
+msgstr "Schermo attuale"
 
 #: src/bin/e_int_border_remember.c:508
 msgid "Match only one window"
@@ -2746,7 +2744,7 @@ msgstr "Impostazioni del terminale"
 
 #: src/bin/e_int_config_exebuf.c:187
 msgid "Terminal Command (CTRL+RETURN to utilize)"
-msgstr ""
+msgstr "Comando del terminale (CTRL+INVIO per usarlo)"
 
 #: src/bin/e_int_config_exebuf.c:193 src/bin/e_int_config_winlist.c:260
 msgid "Size Settings"
@@ -3007,29 +3005,28 @@ msgstr "Piccolissima"
 
 #: src/bin/e_int_config_fonts.c:269
 msgid "Big"
-msgstr ""
+msgstr "Grande"
 
 #: src/bin/e_int_config_fonts.c:275
 msgid "Really Big"
-msgstr ""
+msgstr "Molto grande"
 
 #: src/bin/e_int_config_fonts.c:281 src/bin/e_int_shelf_config.c:427
 msgid "Huge"
 msgstr "Grandissima"
 
 #: src/bin/e_int_config_fonts.c:290
-#, fuzzy, c-format
+#, c-format
 msgid "%d pixels"
-msgstr "%2.0f pixel"
+msgstr "%d pixel"
 
 #: src/bin/e_int_config_fonts.c:446
-#, fuzzy
 msgid "Enable Custom Font Classes"
-msgstr "Abilita classe font"
+msgstr "Abilita classi font personalizzate"
 
 #: src/bin/e_int_config_fonts.c:468
 msgid "Basic preview text: 123: 我的天空！"
-msgstr ""
+msgstr "Testo anteprima di base: 123: 我的天空！"
 
 #: src/bin/e_int_config_fonts.c:636
 msgid "Font Classes"
@@ -3045,7 +3042,7 @@ msgstr "Abilita classe font"
 
 #: src/bin/e_int_config_fonts.c:678
 msgid "Advanced Preview Text.. 我真的会写中文"
-msgstr ""
+msgstr "Testo anteprima avanzato.. 我真的会写中文"
 
 #: src/bin/e_int_config_fonts.c:686
 msgid "Hinting"
@@ -5108,7 +5105,7 @@ msgid "Add"
 msgstr "Aggiungi"
 
 #: src/bin/e_int_config_shelf.c:133 src/bin/e_int_menus.c:1530
-#: src/bin/e_shelf.c:1005
+#: src/bin/e_shelf.c:1026
 msgid "Shelf #"
 msgstr "Mensola #"
 
@@ -5121,7 +5118,7 @@ msgstr ""
 "Avete chiesto di eliminare \"%s\".<br><br>Siete sicuri di voler eliminare "
 "questa mensola?"
 
-#: src/bin/e_int_config_shelf.c:268 src/bin/e_shelf.c:1099
+#: src/bin/e_int_config_shelf.c:268 src/bin/e_shelf.c:1120
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Siete sicuri di voler eliminare questa mensola?"
 
@@ -5666,7 +5663,7 @@ msgstr "Aggiungi mensola"
 msgid "Delete A Shelf"
 msgstr "Elimina mensola"
 
-#: src/bin/e_int_shelf_config.c:65 src/bin/e_shelf.c:1496
+#: src/bin/e_int_shelf_config.c:65 src/bin/e_shelf.c:1490
 msgid "Shelf Configuration"
 msgstr "Configurazione mensola portamoduli"
 
@@ -5821,7 +5818,7 @@ msgstr "Modulo %s di Enlightenment"
 msgid "Would you like to unload this module?<br>"
 msgstr "Volete disattivare questo modulo?<br>"
 
-#: src/bin/e_shelf.c:1100
+#: src/bin/e_shelf.c:1121
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
@@ -5829,19 +5826,19 @@ msgstr ""
 "Avete chiesto di eliminare questa mensola.<br><br>Siete sicuri di volerla "
 "eliminare?"
 
-#: src/bin/e_shelf.c:1486
+#: src/bin/e_shelf.c:1480
 msgid "Stop Moving/Resizing Items"
 msgstr "Fine spostamento/ridimensionamento oggetti"
 
-#: src/bin/e_shelf.c:1488
+#: src/bin/e_shelf.c:1482
 msgid "Begin Moving/Resizing Items"
 msgstr "Inizio spostamento/ridimensionamento oggetti"
 
-#: src/bin/e_shelf.c:1501
+#: src/bin/e_shelf.c:1495
 msgid "Configure Shelf Contents"
 msgstr "Configura contenuti della mensola"
 
-#: src/bin/e_shelf.c:1506
+#: src/bin/e_shelf.c:1500
 msgid "Delete this Shelf"
 msgstr "Elimina questa mensola"
 
@@ -6263,9 +6260,8 @@ msgid "Paste"
 msgstr "Incolla"
 
 #: src/bin/e_entry.c:433
-#, fuzzy
 msgid "Select All"
-msgstr "Cancella tutto"
+msgstr "Seleziona tutto"
 
 #: src/modules/battery/e_mod_config.c:37
 msgid "Battery Monitor Configuration"
@@ -6682,14 +6678,12 @@ msgid "Display Icon Name"
 msgstr "Mostra nome icona"
 
 #: src/modules/ibox/e_mod_config.c:128
-#, fuzzy
 msgid "Show windows from all screens"
-msgstr "Mostra finestre degli altri schermi"
+msgstr "Mostra finestre di tutti gli schermi"
 
 #: src/modules/ibox/e_mod_config.c:133
-#, fuzzy
 msgid "Show windows from current screen"
-msgstr "Mostra finestre della zona attuale"
+msgstr "Mostra finestre dello schermo attuale"
 
 #: src/modules/ibox/e_mod_config.c:142
 msgid "Show windows from all desktops"
@@ -6956,18 +6950,3 @@ msgstr ""
 "Un modulo per il <hilight>sensore termico ACPI</hilight> sotto Linux.<br>È "
 "utile specialmente sui portatili moderni con CPU<br>ad alta velocità che "
 "genera molto calore."
-
-#~ msgid "Font Size:"
-#~ msgstr "Dimensione:"
-
-#~ msgid "%2.1f pixels"
-#~ msgstr "%2.1f pixel"
-
-#~ msgid "Screen zone"
-#~ msgstr "Zona dello schermo"
-
-#~ msgid "Terminal Command"
-#~ msgstr "Comando del terminale"
-
-#~ msgid "Show windows from all zones"
-#~ msgstr "Mostra finestre di tutte le zone"
