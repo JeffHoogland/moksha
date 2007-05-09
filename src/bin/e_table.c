@@ -866,6 +866,7 @@ _e_table_smart_del(Evas_Object *obj)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
+   e_table_freeze(obj);
    while (sd->items)
      {
 	Evas_Object *child;
@@ -873,6 +874,7 @@ _e_table_smart_del(Evas_Object *obj)
 	child = sd->items->data;
 	e_table_unpack(child);
      }
+   e_table_thaw(obj);
    evas_object_del(sd->clip);
    free(sd);
 }

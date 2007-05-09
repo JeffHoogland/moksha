@@ -695,6 +695,7 @@ _e_box_smart_del(Evas_Object *obj)
    /* FIXME: this gets into an infinite loop when changin basic->advanced on
     * ibar config dialog
     */
+   e_box_freeze(obj);
    while (sd->items)
      {
 	Evas_Object *child;
@@ -702,6 +703,7 @@ _e_box_smart_del(Evas_Object *obj)
 	child = sd->items->data;
 	e_box_unpack(child);
      }
+   e_box_thaw(obj);
    evas_object_del(sd->clip);
    free(sd);
 }
