@@ -256,8 +256,11 @@ _e_actions_cb_kill_dialog_ok(void *data, E_Dialog *dia)
    E_Object *obj;
 
    obj = data;
-   e_object_del(E_OBJECT(kill_dialog));
-   kill_dialog = NULL;
+   if (dia)
+     {
+	e_object_del(E_OBJECT(kill_dialog));
+	kill_dialog = NULL;
+     }
    if ((!((E_Border *)obj)->lock_close) && (!((E_Border *)obj)->internal)) 
      e_border_act_kill_begin((E_Border *)obj);
 }
@@ -290,6 +293,14 @@ ACT_FN_GO(window_kill)
 	obj = E_OBJECT(e_border_focused_get());
 	if (!obj) return;
      }
+   if (kill_dialog) e_object_del(E_OBJECT(kill_dialog));
+
+   if (e_config->cnfmdlg_disabled)
+     {
+	_e_actions_cb_kill_dialog_ok (obj, NULL);
+	return;
+     }
+
    bd = (E_Border *)obj;
    snprintf(dialog_text, sizeof(dialog_text),
 	    _("You are about to kill %s.<br><br>"
@@ -298,7 +309,6 @@ ACT_FN_GO(window_kill)
 	    "Are you sure you want to kill this window?"), 
 	    bd->client.icccm.name);
 
-   if (kill_dialog) e_object_del(E_OBJECT(kill_dialog));
    kill_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), 
 			      "E", "_kill_dialog");
    if (!kill_dialog) return;
@@ -1552,8 +1562,11 @@ static E_Dialog *exit_dialog = NULL;
 static void
 _e_actions_cb_exit_dialog_ok(void *data, E_Dialog *dia)
 {
-   e_object_del(E_OBJECT(exit_dialog));
-   exit_dialog = NULL;
+   if (dia)
+     {
+	e_object_del(E_OBJECT(exit_dialog));
+	exit_dialog = NULL;
+     }
    e_sys_action_do(E_SYS_EXIT, NULL);
 }
 
@@ -1576,6 +1589,13 @@ _e_actions_cb_exit_dialog_delete(E_Win *win)
 ACT_FN_GO(exit)
 {
    if (exit_dialog) e_object_del(E_OBJECT(exit_dialog));
+
+   if (e_config->cnfmdlg_disabled)
+     {
+	_e_actions_cb_exit_dialog_ok (NULL, NULL);
+	return;
+     }
+
    exit_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_exit_dialog");
    if (!exit_dialog) return;
    e_win_delete_callback_set(exit_dialog->win, _e_actions_cb_exit_dialog_delete);
@@ -1613,8 +1633,11 @@ static E_Dialog *logout_dialog = NULL;
 static void
 _e_actions_cb_logout_dialog_ok(void *data, E_Dialog *dia)
 {
-   e_object_del(E_OBJECT(logout_dialog));
-   logout_dialog = NULL;
+   if (dia)
+     {
+	e_object_del(E_OBJECT(logout_dialog));
+	logout_dialog = NULL;
+     }
    e_sys_action_do(E_SYS_LOGOUT, NULL);
 }
 
@@ -1637,6 +1660,13 @@ _e_actions_cb_logout_dialog_delete(E_Win *win)
 ACT_FN_GO(logout)
 {
    if (logout_dialog) e_object_del(E_OBJECT(logout_dialog));
+   
+   if (e_config->cnfmdlg_disabled)
+     {
+	_e_actions_cb_logout_dialog_ok (NULL, NULL);
+	return;
+     }
+
    logout_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_logout_dialog");
    if (!logout_dialog) return;
    e_win_delete_callback_set(logout_dialog->win, _e_actions_cb_logout_dialog_delete);
@@ -1662,8 +1692,11 @@ static E_Dialog *halt_dialog = NULL;
 static void
 _e_actions_cb_halt_dialog_ok(void *data, E_Dialog *dia)
 {
-   e_object_del(E_OBJECT(halt_dialog));
-   halt_dialog = NULL;
+   if (dia)
+     {
+	e_object_del(E_OBJECT(halt_dialog));
+	halt_dialog = NULL;
+     }
    e_sys_action_do(E_SYS_HALT, NULL);
 }
 
@@ -1686,6 +1719,13 @@ _e_actions_cb_halt_dialog_delete(E_Win *win)
 ACT_FN_GO(halt)
 {
    if (halt_dialog) e_object_del(E_OBJECT(halt_dialog));
+
+   if (e_config->cnfmdlg_disabled)
+     {
+	_e_actions_cb_halt_dialog_ok (NULL, NULL);
+	return;
+     }
+
    halt_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_halt_dialog");
    if (!halt_dialog) return;
    e_win_delete_callback_set(halt_dialog->win, _e_actions_cb_halt_dialog_delete);
@@ -1711,8 +1751,11 @@ static E_Dialog *reboot_dialog = NULL;
 static void
 _e_actions_cb_reboot_dialog_ok(void *data, E_Dialog *dia)
 {
-   e_object_del(E_OBJECT(reboot_dialog));
-   reboot_dialog = NULL;
+   if (dia)
+     {
+	e_object_del(E_OBJECT(reboot_dialog));
+	reboot_dialog = NULL;
+     }
    e_sys_action_do(E_SYS_REBOOT, NULL);
 }
 
@@ -1735,6 +1778,13 @@ _e_actions_cb_reboot_dialog_delete(E_Win *win)
 ACT_FN_GO(reboot)
 {
    if (reboot_dialog) e_object_del(E_OBJECT(reboot_dialog));
+
+   if (e_config->cnfmdlg_disabled)
+     {
+	_e_actions_cb_reboot_dialog_ok (NULL, NULL);
+	return;
+     }
+
    reboot_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_reboot_dialog");
    if (!reboot_dialog) return;
    e_win_delete_callback_set(reboot_dialog->win, _e_actions_cb_reboot_dialog_delete);
@@ -1760,8 +1810,11 @@ static E_Dialog *suspend_dialog = NULL;
 static void
 _e_actions_cb_suspend_dialog_ok(void *data, E_Dialog *dia)
 {
-   e_object_del(E_OBJECT(suspend_dialog));
-   suspend_dialog = NULL;
+   if (dia)
+     {
+	e_object_del(E_OBJECT(suspend_dialog));
+	suspend_dialog = NULL;
+     }
    e_sys_action_do(E_SYS_SUSPEND, NULL);
 }
 
@@ -1784,6 +1837,13 @@ _e_actions_cb_suspend_dialog_delete(E_Win *win)
 ACT_FN_GO(suspend)
 {
    if (suspend_dialog) e_object_del(E_OBJECT(suspend_dialog));
+
+   if (e_config->cnfmdlg_disabled)
+     {
+	_e_actions_cb_suspend_dialog_ok (NULL, NULL);
+	return;
+     }
+
    suspend_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_suspend_dialog");
    if (!suspend_dialog) return;
    e_win_delete_callback_set(suspend_dialog->win, _e_actions_cb_suspend_dialog_delete);
@@ -1809,8 +1869,11 @@ static E_Dialog *hibernate_dialog = NULL;
 static void
 _e_actions_cb_hibernate_dialog_ok(void *data, E_Dialog *dia)
 {
-   e_object_del(E_OBJECT(hibernate_dialog));
-   hibernate_dialog = NULL;
+   if (dia)
+     {
+	e_object_del(E_OBJECT(hibernate_dialog));
+	hibernate_dialog = NULL;
+     }
    e_sys_action_do(E_SYS_HIBERNATE, NULL);
 }
 
@@ -1833,6 +1896,13 @@ _e_actions_cb_hibernate_dialog_delete(E_Win *win)
 ACT_FN_GO(hibernate)
 {
    if (hibernate_dialog) e_object_del(E_OBJECT(hibernate_dialog));
+
+   if (e_config->cnfmdlg_disabled)
+     {
+	_e_actions_cb_hibernate_dialog_ok (NULL, NULL);
+	return;
+     }
+
    hibernate_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_hibernate_dialog");
    if (!hibernate_dialog) return;
    e_win_delete_callback_set(hibernate_dialog->win, _e_actions_cb_hibernate_dialog_delete);

@@ -11,14 +11,13 @@ static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E
 
 struct _E_Config_Dialog_Data 
 {
-   int auto_apply;
-
-   /* Advanced */
-   int default_mode;
+   int cnfmdlg_disabled;
+   int cfgdlg_auto_apply;
+   int cfgdlg_default_mode;
 };
 
 EAPI E_Config_Dialog *
-e_int_config_cfgdialogs(E_Container *con) 
+e_int_config_dialogs(E_Container *con) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
@@ -33,7 +32,7 @@ e_int_config_cfgdialogs(E_Container *con)
    v->override_auto_apply = 1;
    
    cfd = e_config_dialog_new(con,
-			     _("Config Dialog Settings"),
+			     _("Dialog Settings"),
 			     "E", "_config_config_dialog_dialog",
 			     "enlightenment/configuration", 0, v, NULL);
    return cfd;
@@ -42,8 +41,9 @@ e_int_config_cfgdialogs(E_Container *con)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
-   cfdata->auto_apply = e_config->cfgdlg_auto_apply;
-   cfdata->default_mode = e_config->cfgdlg_default_mode;
+   cfdata->cnfmdlg_disabled = e_config->cnfmdlg_disabled;
+   cfdata->cfgdlg_auto_apply = e_config->cfgdlg_auto_apply;
+   cfdata->cfgdlg_default_mode = e_config->cfgdlg_default_mode;
 }
 
 static void *
@@ -65,10 +65,10 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
+   e_config->cnfmdlg_disabled = cfdata->cnfmdlg_disabled;
    /* Auto Apply is disabled in E for now */
-   /* (e_config->cfgdlg_auto_apply = cfdata->auto_apply; */
-
-   e_config->cfgdlg_default_mode = cfdata->default_mode;
+   /* (e_config->cfgdlg_auto_apply = cfdata->cfgdlg_auto_apply; */
+   e_config->cfgdlg_default_mode = cfdata->cfgdlg_default_mode;
    e_config_save_queue();
    return 1;
 }
@@ -80,9 +80,18 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    E_Radio_Group *rg;
    
    o = e_widget_list_add(evas, 0, 0);
-      
-   of = e_widget_framelist_add(evas, _("Default Dialog Mode"), 0);
-   rg = e_widget_radio_group_new(&(cfdata->default_mode));
+
+   of = e_widget_framelist_add(evas, _("General Settings"), 0);
+
+   ob = e_widget_check_add(evas, _("Disable Confirmation Dialogs"), &(cfdata->cnfmdlg_disabled));
+   e_widget_framelist_object_append(of, ob);
+//   ob = e_widget_check_add(evas, _("Auto-Apply Configuration Changes"), &(cfdata->cfgdlg_auto_apply));
+//   e_widget_framelist_object_append(of, ob);
+   
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+ 
+   of = e_widget_framelist_add(evas, _("Default Configuration Dialogs Mode"), 0);
+   rg = e_widget_radio_group_new(&(cfdata->cfgdlg_default_mode));
 
    ob = e_widget_radio_add(evas, _("Basic Mode"), E_CONFIG_DIALOG_CFDATA_TYPE_BASIC, rg);
    e_widget_framelist_object_append(of, ob);
@@ -90,6 +99,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    
    e_widget_list_object_append(o, of, 1, 1, 0.5);
+
    return o;
 }
 
@@ -113,6 +123,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    
    o = e_widget_list_add(evas, 0, 0);
 
+//   of = e_widget_framelist_add(evas, _("General Settings"), 0);
+//   ob = e_widget_check_add(evas, _("Auto-Apply Configuration Changes"), &(cfdata->auto_apply));
+//   e_widget_framelist_object_append(of, ob);
+//   e_widget_list_object_append(o, of, 1, 1, 0.5);   
+   
    of = e_widget_framelist_add(evas, _("Default Dialog Mode"), 0);
    rg = e_widget_radio_group_new(&(cfdata->default_mode));
 
@@ -125,3 +140,4 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    return o;
 }
 #endif
+

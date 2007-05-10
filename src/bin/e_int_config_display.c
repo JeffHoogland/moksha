@@ -93,8 +93,7 @@ _surebox_dialog_cb_yes(void *data, E_Dialog *dia)
    e_config_save_queue();
    sb->cfdata->orig_size = c_size;
    sb->cfdata->orig_rate = c_rate;
-   _surebox_dialog_cb_delete(dia->win);
-
+   if (dia) _surebox_dialog_cb_delete(dia->win);
 }
 
 static void
@@ -338,7 +337,17 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	else
 	   ecore_x_randr_screen_size_set(man->root, size);
 
-	_surebox_new(cfd, cfdata);
+	if (e_config->cnfmdlg_disabled)
+	  {
+	     SureBox *sb;
+	     
+	     sb = E_NEW(SureBox, 1);
+	     sb->cfd = cfd;
+	     sb->cfdata = cfdata;
+	     _surebox_dialog_cb_yes (sb, NULL);
+	  }
+	else
+	   _surebox_new(cfd, cfdata);
      }
 
    if ((cfdata->can_rotate) || (cfdata->can_flip))

@@ -438,7 +438,7 @@ _e_configure_fill_cat_list(void *data)
    _e_configure_item_add(cat, _("Input Method Settings"), "enlightenment/imc", e_int_config_imc);
 
    cat = _e_configure_category_add(eco, _("Advanced"), "enlightenment/advanced");
-   _e_configure_item_add(cat, _("Configuration Dialogs"), "enlightenment/configuration", e_int_config_cfgdialogs);
+   _e_configure_item_add(cat, _("Dialogs"), "enlightenment/configuration", e_int_config_dialogs);
    _e_configure_item_add(cat, _("Performance"), "enlightenment/performance", e_int_config_performance);   
    _e_configure_item_add(cat, _("Window List"), "enlightenment/winlist", e_int_config_winlist);
    _e_configure_item_add(cat, _("Run Command"), "enlightenment/run", e_int_config_exebuf);

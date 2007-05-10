@@ -478,6 +478,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, exebuf_term_cmd, STR);
    E_CONFIG_LIST(D, T, color_classes, _e_config_color_class_edd);
    E_CONFIG_VAL(D, T, use_app_icon, INT);
+   E_CONFIG_VAL(D, T, cnfmdlg_disabled, INT); /**/
    E_CONFIG_VAL(D, T, cfgdlg_auto_apply, INT); /**/
    E_CONFIG_VAL(D, T, cfgdlg_default_mode, INT); /**/
    E_CONFIG_LIST(D, T, gadcons, _e_config_gadcon_edd);
@@ -710,6 +711,7 @@ e_config_init(void)
    e_config->exebuf_term_cmd = evas_stringshare_add("xterm -hold -e");
    e_config->color_classes = NULL;
    e_config->use_app_icon = 0;
+   e_config->cnfmdlg_disabled = 0;
    e_config->cfgdlg_auto_apply = 0;
    e_config->cfgdlg_default_mode = 0;
    e_config->gadcons = NULL;
@@ -1386,6 +1388,10 @@ e_config_init(void)
    e_config->border_fix_on_shelf_toggle = 0;
    IFCFGEND;
    
+   IFCFG(0x0117);
+   e_config->cnfmdlg_disabled = 0;
+   IFCFGEND;
+   
    e_config->config_version = E_CONFIG_FILE_VERSION;   
      
 #if 0 /* example of new config */
@@ -1467,6 +1473,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->menu_eap_generic_show, 0, 1);
    E_CONFIG_LIMIT(e_config->menu_eap_comment_show, 0, 1);
    E_CONFIG_LIMIT(e_config->use_app_icon, 0, 1);
+   E_CONFIG_LIMIT(e_config->cnfmdlg_disabled, 0, 1);
    E_CONFIG_LIMIT(e_config->cfgdlg_auto_apply, 0, 1);
    E_CONFIG_LIMIT(e_config->cfgdlg_default_mode, 0, 1);
    E_CONFIG_LIMIT(e_config->font_hinting, 0, 2);

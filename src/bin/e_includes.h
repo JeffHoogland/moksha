@@ -106,7 +106,7 @@
 #include "e_int_config_exebuf.h"
 #include "e_int_config_apps_menu.h"
 #include "e_int_config_apps_order.h"
-#include "e_int_config_cfgdialogs.h"
+#include "e_int_config_dialogs.h"
 #include "e_int_config_intl.h"
 #include "e_int_config_imc.h"
 #include "e_int_config_imc_import.h"

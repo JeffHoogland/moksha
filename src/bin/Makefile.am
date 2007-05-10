@@ -135,7 +135,7 @@ e_int_config_desklock.h \
 e_int_config_exebuf.h \
 e_int_config_apps_menu.h \
 e_int_config_apps_order.h \
-e_int_config_cfgdialogs.h \
+e_int_config_dialogs.h \
 e_int_config_color_classes.h \
 e_int_config_mime.h \
 e_int_config_mime_edit.h \
@@ -298,7 +298,7 @@ e_int_config_desklock.c \
 e_int_config_exebuf.c \
 e_int_config_apps_menu.c \
 e_int_config_apps_order.c \
-e_int_config_cfgdialogs.c \
+e_int_config_dialogs.c \
 e_int_config_intl.c \
 e_int_config_imc.c \
 e_int_config_imc_import.c \
