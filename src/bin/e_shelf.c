@@ -285,6 +285,7 @@ e_shelf_toggle(E_Shelf *es, int show)
   E_OBJECT_CHECK(es);
   E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
 
+  es->interrupted = -1;
   if ((show) && (es->hidden))
     {  
        es->hidden = 0;
@@ -306,10 +307,10 @@ e_shelf_toggle(E_Shelf *es, int show)
     }
   else if ((!show) && (!es->hidden) && (!es->gadcon->editing) && (es->cfg->autohide))
     {
-       es->hidden = 1; 
        edje_object_signal_emit(es->o_base, "e,state,hidden", "e");
        if (es->instant_delay >= 0.0)
 	 {
+	    es->hidden = 1; 
 	    if (!es->instant_timer)
 	      es->instant_timer = ecore_timer_add(es->instant_delay, _e_shelf_cb_instant_hide_timer, es);
 	 }
@@ -317,9 +318,10 @@ e_shelf_toggle(E_Shelf *es, int show)
 	 {
 	    if (es->hide_animator)
 	      {
-		 ecore_animator_del(es->hide_animator);
-		 es->hide_animator = NULL;
+		 es->interrupted = show;
+		 return;
 	      }
+	    es->hidden = 1; 
 	    if (es->hide_timer) ecore_timer_del(es->hide_timer);
 	    es->hide_timer = ecore_timer_add(es->cfg->hide_timeout, _e_shelf_cb_hide_animator_timer, es);
 	 }
@@ -1385,7 +1387,10 @@ _e_shelf_cb_hide_animator(void *data)
 
 end:
    es->hide_animator = NULL;
-   _e_shelf_toggle_border_fix(es);
+   if (es->interrupted > -1)
+     e_shelf_toggle(es, es->interrupted);
+   else
+     _e_shelf_toggle_border_fix(es);
    return 0;
 }
 

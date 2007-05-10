@@ -39,6 +39,7 @@ struct _E_Shelf
    int                  hide_step;
    int                  hidden_state_size;
    int                  hide_origin;
+   int                  interrupted;
    float                instant_delay;
    Ecore_Timer         *instant_timer;
 };
