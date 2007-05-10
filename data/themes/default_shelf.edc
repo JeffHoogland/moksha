@@ -12,7 +12,7 @@ group {
    data {
       // this tells e the border is shaped
       item: "shaped" "1";
-      item: "hidden_state_size" "6";
+      item: "hidden_state_size" "1";
       // This makes the border hide instantly after the given amount of seconds
       // item: "instant_delay" "3.0";
    }
@@ -579,7 +579,7 @@ group {
    data {
       // this tells e the border is shaped
       item: "shaped" "1";
-      item: "hidden_state_size" "6";
+      item: "hidden_state_size" "1";
    }
    parts {
      
@@ -1153,7 +1153,7 @@ group {
    data {
       // this tells e the border is shaped
       item: "shaped" "1";
-      item: "hidden_state_size" "6";
+      item: "hidden_state_size" "1";
    }
    parts {
     
