@@ -22,7 +22,7 @@ src/bin/e_int_border_menu.c
 src/bin/e_int_border_prop.c
 src/bin/e_int_border_remember.c
 src/bin/e_int_config_borders.c
-src/bin/e_int_config_cfgdialogs.c
+src/bin/e_int_config_dialogs.c
 src/bin/e_int_config_clientlist.c
 src/bin/e_int_config_color_classes.c
 src/bin/e_int_config_cursor.c
