@@ -1,6 +1,5 @@
 # translation of nl.po to Nederlands
 # Nederlands translation of enlightenment.po to .
-# Copyright (C) 2005 Free Software Foundation, Inc.
 #
 # aboe <niels.abspoel@wanadoo.nl>, 2005.
 # Niels Abspoel <niels.abspoel@wanadoo.nl>, 2005.
