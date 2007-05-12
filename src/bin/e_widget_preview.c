@@ -128,8 +128,8 @@ _e_wid_preview_thumb_gen(void *data, Evas_Object *obj, void *event_info)
 {
    Evas_Coord w, h;
    E_Widget_Data *wd;
-   wd = data;
 
+   wd = data;
    e_icon_size_get(wd->img, &w, &h);
    edje_extern_object_min_size_set(wd->img, w, h);
    edje_extern_object_max_size_set(wd->img, w, h);
@@ -154,7 +154,6 @@ e_widget_preview_edje_set(Evas_Object *obj, const char *file, const char *group)
    e_livethumb_thumb_set(wd->img, wd->o_thumb);
    return ret;
 }
-
 
 static void
 _e_wid_del_hook(Evas_Object *obj)
