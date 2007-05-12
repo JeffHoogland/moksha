@@ -553,6 +553,9 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, desk_auto_switch, INT);
 
    E_CONFIG_VAL(D, T, thumb_nice, INT);
+
+   E_CONFIG_VAL(D, T, menu_favorites_show, INT);
+   E_CONFIG_VAL(D, T, menu_apps_show, INT);
    
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -1391,6 +1394,11 @@ e_config_init(void)
    IFCFG(0x0117);
    e_config->cnfmdlg_disabled = 0;
    IFCFGEND;
+
+   IFCFG(0x0118);
+   e_config->menu_favorites_show = 1;
+   e_config->menu_apps_show = 1;
+   IFCFGEND;
    
    e_config->config_version = E_CONFIG_FILE_VERSION;   
      
@@ -1519,6 +1527,9 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->mouse_accel_denominator, 1, 10);
    E_CONFIG_LIMIT(e_config->mouse_accel_threshold, 1, 10);
 
+   E_CONFIG_LIMIT(e_config->menu_favorites_show, 0, 1);
+   E_CONFIG_LIMIT(e_config->menu_apps_show, 0, 1);
+   
    /* FIXME: disabled auto apply because it causes problems */
    e_config->cfgdlg_auto_apply = 0;
    /* FIXME: desklock personalized password id disabled for security reasons */

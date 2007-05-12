@@ -54,7 +54,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0117
+#define E_CONFIG_FILE_GENERATION 0x0118
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 #define E_EVAS_ENGINE_DEFAULT      0
@@ -203,6 +203,8 @@ struct _E_Config
    int         menu_eap_name_show; // GUI
    int         menu_eap_generic_show; // GUI
    int         menu_eap_comment_show; // GUI
+   int         menu_favorites_show; // GUI
+   int         menu_apps_show; // GUI
    int         fullscreen_policy; // GUI
    int         exebuf_max_exe_list; // GUI
    int         exebuf_max_eap_list; // GUI

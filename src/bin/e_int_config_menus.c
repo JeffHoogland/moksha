@@ -9,6 +9,9 @@ static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E
 
 struct _E_Config_Dialog_Data 
 {
+   int menu_favorites_show;
+   int menu_apps_show;
+   
    int menu_eap_name_show;
    int menu_eap_generic_show;
    int menu_eap_comment_show;
@@ -47,6 +50,8 @@ e_int_config_menus(E_Container *con)
 static void 
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
+   cfdata->menu_favorites_show = e_config->menu_favorites_show;
+   cfdata->menu_apps_show = e_config->menu_apps_show;
    cfdata->menu_eap_name_show = e_config->menu_eap_name_show;
    cfdata->menu_eap_generic_show = e_config->menu_eap_generic_show;
    cfdata->menu_eap_comment_show = e_config->menu_eap_comment_show;
@@ -76,6 +81,8 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int 
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
+   e_config->menu_favorites_show = cfdata->menu_favorites_show;
+   e_config->menu_apps_show = cfdata->menu_apps_show;
    e_config->menu_eap_name_show = cfdata->menu_eap_name_show;
    e_config->menu_eap_generic_show = cfdata->menu_eap_generic_show;
    e_config->menu_eap_comment_show = cfdata->menu_eap_comment_show;
@@ -89,6 +96,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    Evas_Object *o, *of, *ob;
       
    o = e_widget_list_add(evas, 0, 0);
+   of = e_widget_framelist_add(evas, _("Main Menu Settings"), 0);
+   ob = e_widget_check_add(evas, _("Show Favorites In Main Menu"), &(cfdata->menu_favorites_show));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Show Applications In Main Menu"), &(cfdata->menu_apps_show));
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   
    of = e_widget_framelist_add(evas, _("Menu Settings"), 0);
    ob = e_widget_check_add(evas, _("Show Name In Menu"), &(cfdata->menu_eap_name_show));
    e_widget_framelist_object_append(of, ob);
@@ -103,6 +117,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 static int 
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
+   e_config->menu_favorites_show = cfdata->menu_favorites_show;
+   e_config->menu_apps_show = cfdata->menu_apps_show;
    e_config->menu_eap_name_show = cfdata->menu_eap_name_show;
    e_config->menu_eap_generic_show = cfdata->menu_eap_generic_show;
    e_config->menu_eap_comment_show = cfdata->menu_eap_comment_show;
@@ -130,6 +146,13 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    Evas_Object *o, *of, *ob;
    
    o = e_widget_list_add(evas, 0, 0);
+   of = e_widget_framelist_add(evas, _("Main Menu Settings"), 0);
+   ob = e_widget_check_add(evas, _("Show Favorites In Main Menu"), &(cfdata->menu_favorites_show));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Show Applications In Main Menu"), &(cfdata->menu_apps_show));
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+
    of = e_widget_framelist_add(evas, _("Menu Settings"), 0);
    ob = e_widget_check_add(evas, _("Show Name In Menu"), &(cfdata->menu_eap_name_show));
    e_widget_framelist_object_append(of, ob);

@@ -94,24 +94,29 @@ e_int_menus_main_new(void)
 
    e_menu_category_set(m, "main");
 
-   subm = e_int_menus_favorite_apps_new();
-   if (subm)
+   if (e_config->menu_favorites_show) 
      {
-	dat->apps = subm; 
+	subm = e_int_menus_favorite_apps_new();
+	if (subm)
+	  {
+	     dat->apps = subm; 
+	     mi = e_menu_item_new(m);
+	     e_menu_item_label_set(mi, _("Favorite Applications"));
+	     e_util_menu_item_edje_icon_set(mi, "enlightenment/favorites");
+	     e_menu_item_submenu_set(mi, subm);
+	  }
+     }
+   
+   if (e_config->menu_apps_show) 
+     {
+	subm = e_int_menus_all_apps_new();
+	dat->all_apps = subm;
 	mi = e_menu_item_new(m);
-
-	e_menu_item_label_set(mi, _("Favorite Applications"));
-	e_util_menu_item_edje_icon_set(mi, "enlightenment/favorites");
+	e_menu_item_label_set(mi, _("Applications"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/applications");
 	e_menu_item_submenu_set(mi, subm);
      }
-
-   subm = e_int_menus_all_apps_new();
-   dat->all_apps = subm;
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Applications"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/applications");
-   e_menu_item_submenu_set(mi, subm);
-
+   
 #ifdef ENABLE_FILES
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Files"));
@@ -380,7 +385,7 @@ _e_int_menus_main_del_hook(void *obj)
    if (dat)
      {
 	if (dat->apps) e_object_del(E_OBJECT(dat->apps));
-	e_object_del(E_OBJECT(dat->all_apps));
+	if (dat->all_apps) e_object_del(E_OBJECT(dat->all_apps));
 	e_object_del(E_OBJECT(dat->desktops));
 	e_object_del(E_OBJECT(dat->clients));
 	e_object_del(E_OBJECT(dat->config));
