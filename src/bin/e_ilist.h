@@ -39,7 +39,6 @@ EAPI void        *e_ilist_selected_data2_get    (Evas_Object *obj);
 EAPI Evas_Object *e_ilist_selected_icon_get     (Evas_Object *obj);
 EAPI void         e_ilist_selected_geometry_get (Evas_Object *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
 EAPI void         e_ilist_remove_num            (Evas_Object *obj, int n);
-EAPI void         e_ilist_remove_label          (Evas_Object *obj, const char *label);
 EAPI const char  *e_ilist_nth_label_get         (Evas_Object *obj, int n);
 EAPI void         e_ilist_nth_label_set         (Evas_Object *obj, int n, const char *label);
 EAPI Evas_Object *e_ilist_nth_icon_get          (Evas_Object *obj, int n);

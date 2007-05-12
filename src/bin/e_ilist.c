@@ -332,35 +332,6 @@ e_ilist_remove_num(Evas_Object *obj, int n)
    E_FREE(si);
 }
 
-EAPI void 
-e_ilist_remove_label(Evas_Object *obj, const char *label) 
-{
-   Evas_List *l;
-   
-   API_ENTRY return;
-   if (!sd->items) return;
-   if (!label) return;
-   for (l = sd->items; l; l = l->next) 
-     {
-	E_Ilist_Item *si;
-	char *t;
-	
-	si = l->data;
-	if (!si) continue;
-	t = strdup(edje_object_part_text_get(si->o_base, "e.text.label"));
-	if (!strcmp(t, label)) 
-	  {
-	     if (si->o_icon) evas_object_del(si->o_icon);
-	     evas_object_del(si->o_base);
-	     sd->items = evas_list_remove(sd->items, si);
-	     E_FREE(si);
-	     free(t);
-	     break;
-	  }
-	free(t);
-     }
-}
-
 EAPI const char *
 e_ilist_nth_label_get(Evas_Object *obj, int n) 
 {

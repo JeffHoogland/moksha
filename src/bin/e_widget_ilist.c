@@ -103,8 +103,12 @@ EAPI void
 e_widget_ilist_header_append(Evas_Object *obj, Evas_Object *icon, const char *label)
 {
    E_Widget_Data *wd;
+   E_Widget_Callback *wcb;
    
    wd = e_widget_data_get(obj);
+   wcb = E_NEW(E_Widget_Callback, 1);
+   if (!wcb) return;
+   wd->callbacks = evas_list_append(wd->callbacks, wcb);
    e_ilist_append(wd->o_ilist, icon, label, 1, NULL, NULL, NULL, NULL);
    if (icon) evas_object_show(icon);
 }
@@ -145,8 +149,18 @@ EAPI void
 e_widget_ilist_clear(Evas_Object *obj) 
 {
    E_Widget_Data *wd;
+
    wd = e_widget_data_get(obj);
    e_ilist_clear(wd->o_ilist);
+   while (wd->callbacks)
+     {
+	E_Widget_Callback *wcb;
+	
+	wcb = wd->callbacks->data;
+	if (wcb->value) free(wcb->value);
+	free(wcb);
+	wd->callbacks = evas_list_remove_list(wd->callbacks, wd->callbacks);
+     }
 }
 
 EAPI int
@@ -281,18 +295,15 @@ EAPI void
 e_widget_ilist_remove_num(Evas_Object *obj, int n)
 {
    E_Widget_Data *wd;
+   E_Widget_Callback *wcb;
    
    wd = e_widget_data_get(obj);
    e_ilist_remove_num(wd->o_ilist, n);
-}
-
-EAPI void
-e_widget_ilist_remove_label(Evas_Object *obj, const char *label)
-{
-   E_Widget_Data *wd;
-   
-   wd = e_widget_data_get(obj);
-   e_ilist_remove_label(wd->o_ilist, label);
+   wcb = evas_list_nth(wd->callbacks, n);
+   if (!wcb) return;
+   if (wcb->value) free(wcb->value);
+   free(wcb);
+   wd->callbacks = evas_list_remove(wd->callbacks, wcb);
 }
 
 EAPI void 
