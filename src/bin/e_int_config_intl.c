@@ -102,6 +102,7 @@ struct _E_Config_Dialog_Data
 
 const E_Intl_Pair basic_language_predefined_pairs[ ] = {
      {"bg_BG.UTF-8", N_("Bulgarian")},
+     {"ca_ES.UTF-8", N_("Catalan")},
      {"zh_CN.UTF-8", N_("Chinese (Simplified)")},
      {"zh_TW.UTF-8", N_("Chinese (Traditional)")},
      {"cs_CZ.UTF-8", N_("Czech")},
