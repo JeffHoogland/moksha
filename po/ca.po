@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Pau Bosch i Crespo i Marc Furti‡ i Puig\n"
+"Project-Id-Version: Pau Bosch i Crespo i Marc Furti√† i Puig\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-17 10:55+0200\n"
 "PO-Revision-Date: 2007-05-11 16:51+0100\n"
-"Last-Translator: Marc Furti‡ i Puig <marcfurti@yaoo.es>\n"
+"Last-Translator: Marc Furti√† i Puig <marcfurti@yaoo.es>\n"
 "Language-Team: Pau i Marc <paubcrespo@hotmail.com >\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: catal‡\n"
+"X-Poedit-Language: catal√†\n"
 
 #: src/bin/e_about.c:66
 msgid "About Enlightenment"
@@ -35,7 +35,7 @@ msgstr "<title>L'Equip</title>"
 
 #: src/bin/e_actions.c:308
 msgid "Are you sure you want to kill this window?"
-msgstr "Est‡ segur que vol matar aquesta finestra ?"
+msgstr "Est√† segur que vol matar aquesta finestra ?"
 
 #: src/bin/e_actions.c:311
 #: src/bin/e_actions.c:1589
@@ -67,48 +67,48 @@ msgstr "No"
 
 #: src/bin/e_actions.c:1582
 msgid "Are you sure you want to exit?"
-msgstr "Est‡ segur que vol sortir ?"
+msgstr "Est√† segur que vol sortir ?"
 
 #: src/bin/e_actions.c:1584
 msgid "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
-msgstr "Ha demanat sortir de l'Enlightenment,<br><br>Est‡ segur de quË vol sortir?"
+msgstr "Ha demanat sortir de l'Enlightenment,<br><br>Est√† segur de qu√® vol sortir?"
 
 #: src/bin/e_actions.c:1643
 msgid "Are you sure you want to log out?"
-msgstr "Est‡ segur que vol sortir ?"
+msgstr "Est√† segur que vol sortir ?"
 
 #: src/bin/e_actions.c:1645
 msgid "You are about to log out.<br><br>Are you sure you want to do this?"
-msgstr "VostË ha demanat sortir.<br><br> Est‡ segur de fer aixÚ ?"
+msgstr "Vost√® ha demanat sortir.<br><br> Est√† segur de fer aix√≤ ?"
 
 #: src/bin/e_actions.c:1692
 #: src/bin/e_actions.c:1790
 msgid "Are you sure you want to turn off?"
-msgstr "Est‡ segur que vol parar el computador ?"
+msgstr "Est√† segur que vol parar el computador ?"
 
 #: src/bin/e_actions.c:1694
 msgid "You requested to turn off your Computer.<br><br>Are you sure you want to shut down?"
-msgstr "VostË ha demanat parar el seu Computador.<br><br> Est‡ segur que el vol parar ?"
+msgstr "Vost√® ha demanat parar el seu Computador.<br><br> Est√† segur que el vol parar ?"
 
 #: src/bin/e_actions.c:1741
 msgid "Are you sure you want to reboot?"
-msgstr "Est‡ segur que vol Re-iniciar ?"
+msgstr "Est√† segur que vol Re-iniciar ?"
 
 #: src/bin/e_actions.c:1743
 msgid "You requested to reboot your Computer.<br><br>Are you sure you want to restart it?"
-msgstr "VostË ha demanat Re-iniciar el seu Computador.<br><br> Est‡ segur que el vol Re-iniciar ?"
+msgstr "Vost√® ha demanat Re-iniciar el seu Computador.<br><br> Est√† segur que el vol Re-iniciar ?"
 
 #: src/bin/e_actions.c:1792
 msgid "You requested to suspend your Computer.<br><br>Are you sure you want to suspend?"
-msgstr "VostË ha demanat Suspendre el seu Computador.<br><br> Est‡ segur que el vol Suspendre ?"
+msgstr "Vost√® ha demanat Suspendre el seu Computador.<br><br> Est√† segur que el vol Suspendre ?"
 
 #: src/bin/e_actions.c:1839
 msgid "Are you sure you want to hibernate?"
-msgstr "Est‡ segur que vol hibernar ?"
+msgstr "Est√† segur que vol hibernar ?"
 
 #: src/bin/e_actions.c:1841
 msgid "You requested to hibernate your Computer.<br><br>Are you sure you want to suspend to disk?"
-msgstr "VostË ha demanat Hibernar el seu Computador.<br><br> Est‡ segur que el vol suspendre a disc ?"
+msgstr "Vost√® ha demanat Hibernar el seu Computador.<br><br> Est√† segur que el vol suspendre a disc ?"
 
 #: src/bin/e_actions.c:1929
 #: src/bin/e_actions.c:1939
@@ -140,11 +140,11 @@ msgstr "Re-dimensiona"
 #: src/bin/e_actions.c:2176
 #: src/bin/e_int_config_mousebindings.c:345
 msgid "Menu"
-msgstr "Men˙"
+msgstr "Men√∫"
 
 #: src/bin/e_actions.c:1949
 msgid "Window Menu"
-msgstr "Men˙ de Finestra"
+msgstr "Men√∫ de Finestra"
 
 #: src/bin/e_actions.c:1957
 #: src/bin/e_int_border_menu.c:323
@@ -385,23 +385,23 @@ msgstr "Pantalla"
 
 #: src/bin/e_actions.c:2105
 msgid "Send Mouse To Screen 0"
-msgstr "Envia el RatolÌ A l'Escriptori 0"
+msgstr "Envia el Ratol√≠ A l'Escriptori 0"
 
 #: src/bin/e_actions.c:2107
 msgid "Send Mouse To Screen 1"
-msgstr "Envia el RatolÌ A l'Escriptori 1"
+msgstr "Envia el Ratol√≠ A l'Escriptori 1"
 
 #: src/bin/e_actions.c:2109
 msgid "Send Mouse To Screen..."
-msgstr "Envia el RatolÌ a la Pantalla ...."
+msgstr "Envia el Ratol√≠ a la Pantalla ...."
 
 #: src/bin/e_actions.c:2114
 msgid "Send Mouse Forward 1 Screen"
-msgstr "Envia el RatolÌ un Escriptori mÈs enll‡"
+msgstr "Envia el Ratol√≠ un Escriptori m√©s enll√†"
 
 #: src/bin/e_actions.c:2116
 msgid "Send Mouse Back 1 Screen"
-msgstr "Envia el RatolÌ un Escriptori previ"
+msgstr "Envia el Ratol√≠ un Escriptori previ"
 
 #: src/bin/e_actions.c:2118
 msgid "Send Mouse Forward/Back Screens..."
@@ -416,11 +416,11 @@ msgstr "Finestra : Moviment"
 
 #: src/bin/e_actions.c:2152
 msgid "To Next Desktop"
-msgstr "Seg¸ent Escriptori"
+msgstr "Seg√ºent Escriptori"
 
 #: src/bin/e_actions.c:2154
 msgid "To Previous Desktop"
-msgstr "Envia a la Pantalla prËvia"
+msgstr "Envia a la Pantalla pr√®via"
 
 #: src/bin/e_actions.c:2156
 msgid "By Desktop #..."
@@ -432,23 +432,23 @@ msgstr "A l'Escriptori"
 
 #: src/bin/e_actions.c:2168
 msgid "Show Main Menu"
-msgstr "Mostra el Men˙ Principal"
+msgstr "Mostra el Men√∫ Principal"
 
 #: src/bin/e_actions.c:2170
 msgid "Show Favorites Menu"
-msgstr "Mostra el Men˙ Favorits"
+msgstr "Mostra el Men√∫ Favorits"
 
 #: src/bin/e_actions.c:2172
 msgid "Show All Applications Menu"
-msgstr "Mostra Totes les Aplicaciones del Men˙"
+msgstr "Mostra Totes les Aplicaciones del Men√∫"
 
 #: src/bin/e_actions.c:2174
 msgid "Show Clients Menu"
-msgstr "Mostra el Men˙ Clients"
+msgstr "Mostra el Men√∫ Clients"
 
 #: src/bin/e_actions.c:2176
 msgid "Show Menu..."
-msgstr "Mostra Men˙ ..."
+msgstr "Mostra Men√∫ ..."
 
 #: src/bin/e_actions.c:2183
 #: src/bin/e_actions.c:2188
@@ -458,11 +458,11 @@ msgstr "Executa"
 
 #: src/bin/e_actions.c:2183
 msgid "Defined Command"
-msgstr "DefiniciÛ de Comanda"
+msgstr "Definici√≥ de Comanda"
 
 #: src/bin/e_actions.c:2188
 msgid "Application"
-msgstr "AplicaciÛ"
+msgstr "Aplicaci√≥"
 
 #: src/bin/e_actions.c:2193
 #: src/bin/e_actions.c:2195
@@ -471,11 +471,11 @@ msgstr "Finestra : Llista"
 
 #: src/bin/e_actions.c:2193
 msgid "Next Window"
-msgstr "Finestra Seg¸ent"
+msgstr "Finestra Seg√ºent"
 
 #: src/bin/e_actions.c:2195
 msgid "Previous Window"
-msgstr "Finestra PrËvia "
+msgstr "Finestra Pr√®via "
 
 #: src/bin/e_actions.c:2201
 #: src/bin/e_int_menus.c:174
@@ -530,7 +530,7 @@ msgstr "Suspendre a Disc l'ordinador"
 
 #: src/bin/e_actions.c:2237
 msgid "Run Command Dialog"
-msgstr "Executar Comanda de Di‡leg"
+msgstr "Executar Comanda de Di√†leg"
 
 #: src/bin/e_actions.c:2242
 msgid "Desktop Lock"
@@ -556,12 +556,12 @@ msgstr "Escriptori %i, %i"
 
 #: src/bin/e_config.c:2096
 msgid "Configuration Upgraded"
-msgstr "ConfiguraciÛ Updatejada"
+msgstr "Configuraci√≥ Updatejada"
 
 #: src/bin/e_config.c:2110
 #, c-format
 msgid "An error occured while saving Enlightenment's<br>configuration to disk. The error could not be<br>deterimined.<br><br>The file where the error occured was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
-msgstr "Ha succeÔt un error mentre Enlightenment<br> intentava guardar la configuraciÛ a disc <br> que no potser determinat.<br><br> El fitxer en el qual ha succeÔt l'error Ès <br>%s<br><br> Aquest fitxer ser‡ borrat"
+msgstr "Ha succe√Øt un error mentre Enlightenment<br> intentava guardar la configuraci√≥ a disc <br> que no potser determinat.<br><br> El fitxer en el qual ha succe√Øt l'error √©s <br>%s<br><br> Aquest fitxer ser√† borrat"
 
 #: src/bin/e_config.c:2121
 #, c-format
@@ -585,16 +585,16 @@ msgstr ""
 
 #: src/bin/e_config.c:2173
 msgid "Enlightenment Configration Write Problems"
-msgstr "Problemes al Escriure la ConfiguraciÛ de l'Enlightenment"
+msgstr "Problemes al Escriure la Configuraci√≥ de l'Enlightenment"
 
 #: src/bin/e_config_dialog.c:189
 #: src/bin/e_configure.c:440
 msgid "Advanced"
-msgstr "AvanÁat"
+msgstr "Avan√ßat"
 
 #: src/bin/e_config_dialog.c:204
 msgid "Basic"
-msgstr "B‡sic"
+msgstr "B√†sic"
 
 #: src/bin/e_config_dialog.c:218
 #: src/bin/e_eap_editor.c:454
@@ -629,7 +629,7 @@ msgstr "Aplica"
 
 #: src/bin/e_configure.c:70
 msgid "Enlightenment Configuration"
-msgstr "ConfiguraciÛ d'Enlightenment"
+msgstr "Configuraci√≥ d'Enlightenment"
 
 #: src/bin/e_configure.c:96
 #: src/bin/e_eap_editor.c:383
@@ -640,12 +640,12 @@ msgstr "Categories"
 
 #: src/bin/e_configure.c:104
 msgid "Configuration Items"
-msgstr "ConfiguraciÛ d'Items"
+msgstr "Configuraci√≥ d'Items"
 
 #: src/bin/e_configure.c:395
 #: src/bin/e_gadcon.c:1267
 msgid "Appearance"
-msgstr "AparenÁa"
+msgstr "Aparen√ßa"
 
 #: src/bin/e_configure.c:396
 #: src/bin/e_int_menus.c:770
@@ -682,7 +682,7 @@ msgstr "Tema d'Icones"
 
 #: src/bin/e_configure.c:402
 msgid "Mouse Cursor"
-msgstr "Cursor del RatolÌ"
+msgstr "Cursor del Ratol√≠"
 
 #: src/bin/e_configure.c:403
 #: src/bin/e_int_config_transitions.c:146
@@ -721,7 +721,7 @@ msgstr "Escriptoris Virtuals"
 
 #: src/bin/e_configure.c:413
 msgid "Screen Resolution"
-msgstr "ResoluciÛ de Pantalla"
+msgstr "Resoluci√≥ de Pantalla"
 
 #: src/bin/e_configure.c:414
 msgid "Screen Lock"
@@ -737,7 +737,7 @@ msgstr "Managament d'Energia"
 
 #: src/bin/e_configure.c:418
 msgid "Keyboard & Mouse"
-msgstr "Teclat i RatolÌ"
+msgstr "Teclat i Ratol√≠"
 
 #: src/bin/e_configure.c:419
 #: src/bin/e_int_config_keybindings.c:223
@@ -752,7 +752,7 @@ msgstr ""
 #: src/bin/e_configure.c:421
 #: src/bin/e_int_config_mouse.c:91
 msgid "Mouse Acceleration"
-msgstr "AcceleraciÛ del RatolÌ"
+msgstr "Acceleraci√≥ del Ratol√≠"
 
 #: src/bin/e_configure.c:423
 #: src/bin/e_int_menus.c:138
@@ -772,32 +772,32 @@ msgstr "Focus de Finestra"
 #: src/bin/e_configure.c:426
 #: src/bin/e_int_config_window_manipulation.c:51
 msgid "Window Manipulation"
-msgstr "ManipulaciÛ de Finestra"
+msgstr "Manipulaci√≥ de Finestra"
 
 #: src/bin/e_configure.c:428
 msgid "Menus"
-msgstr "Men˙s"
+msgstr "Men√∫s"
 
 #: src/bin/e_configure.c:429
 #: src/bin/e_int_config_apps_menu.c:40
 msgid "Favorites Menu"
-msgstr "Men˙ Favorits"
+msgstr "Men√∫ Favorits"
 
 #: src/bin/e_configure.c:431
 #: src/bin/e_int_menus.c:791
 msgid "Application Menus"
-msgstr "Men˙ d'Aplicacions"
+msgstr "Men√∫ d'Aplicacions"
 
 #: src/bin/e_configure.c:433
 #: src/bin/e_int_config_menus.c:41
 #: src/bin/e_int_config_menus.c:92
 #: src/bin/e_int_config_menus.c:133
 msgid "Menu Settings"
-msgstr "Par‡metres de Men˙"
+msgstr "Par√†metres de Men√∫"
 
 #: src/bin/e_configure.c:434
 msgid "Client List Menu"
-msgstr "Men˙ de Llista de Clients"
+msgstr "Men√∫ de Llista de Clients"
 
 #: src/bin/e_configure.c:436
 msgid "Language"
@@ -805,7 +805,7 @@ msgstr "Llengua"
 
 #: src/bin/e_configure.c:437
 msgid "Language Settings"
-msgstr "Par‡metres de Llengua"
+msgstr "Par√†metres de Llengua"
 
 #: src/bin/e_configure.c:438
 msgid "Input Method Settings"
@@ -813,11 +813,11 @@ msgstr ""
 
 #: src/bin/e_configure.c:441
 msgid "Configuration Dialogs"
-msgstr "ConfiguraciÛ de Di‡legs"
+msgstr "Configuraci√≥ de Di√†legs"
 
 #: src/bin/e_configure.c:442
 msgid "Performance"
-msgstr "RepresentaciÛ"
+msgstr "Representaci√≥"
 
 #: src/bin/e_configure.c:443
 msgid "Window List"
@@ -882,7 +882,7 @@ msgstr "Si us plau, introduiu el vostre password de desbloqueig"
 
 #: src/bin/e_desklock.c:592
 msgid "Authentication System Error"
-msgstr "Error del Sistema d'AutentificaciÛ"
+msgstr "Error del Sistema d'Autentificaci√≥"
 
 #: src/bin/e_desklock.c:593
 #, c-format
@@ -903,7 +903,7 @@ msgstr "Icona"
 #: src/bin/e_eap_editor.c:320
 #: src/bin/e_int_config_mime_edit.c:135
 msgid "Basic Info"
-msgstr "InformaciÛ B‡sica"
+msgstr "Informaci√≥ B√†sica"
 
 #: src/bin/e_eap_editor.c:321
 #: src/bin/e_int_border_prop.c:422
@@ -935,7 +935,7 @@ msgstr "Classe de Finestra"
 
 #: src/bin/e_eap_editor.c:395
 msgid "Startup Notify"
-msgstr "NotificaciÛ d'Inici"
+msgstr "Notificaci√≥ d'Inici"
 
 #: src/bin/e_eap_editor.c:398
 msgid "Run in Terminal"
@@ -957,7 +957,7 @@ msgstr "Seleccioneu una Icona"
 #: src/bin/e_int_config_wallpaper_gradient.c:198
 #: src/bin/e_int_config_wallpaper_import.c:188
 msgid "Cancel"
-msgstr "Anul∑la"
+msgstr "Anul¬∑la"
 
 #: src/bin/e_main.c:248
 #, c-format
@@ -1321,7 +1321,7 @@ msgstr ""
 
 #: src/bin/e_fm.c:5056
 msgid "Confirm Delete"
-msgstr "ConfirmaciÛ de Borrar"
+msgstr "Confirmaci√≥ de Borrar"
 
 #: src/bin/e_fm.c:5060
 #, c-format
@@ -1352,7 +1352,7 @@ msgstr "Mida"
 
 #: src/bin/e_fm_prop.c:267
 msgid "Last Modified:"
-msgstr "⁄ltima ModificaciÛ"
+msgstr "√öltima Modificaci√≥"
 
 #: src/bin/e_fm_prop.c:274
 msgid "File Type:"
@@ -1388,7 +1388,7 @@ msgstr "El Propietari pot escriure"
 #: src/bin/e_int_config_wallpaper_gradient.c:153
 #: src/bin/e_widget_fsel.c:302
 msgid "Preview"
-msgstr "Vista prËvia"
+msgstr "Vista pr√®via"
 
 #: src/bin/e_fm_prop.c:348
 #: src/bin/e_int_config_screensaver.c:166
@@ -1444,7 +1444,7 @@ msgstr ""
 #: src/bin/e_gadcon.c:1273
 #, fuzzy
 msgid "Automatically scroll contents"
-msgstr "Compila autom‡ticament el fitxer .mo en desar"
+msgstr "Compila autom√†ticament el fitxer .mo en desar"
 
 #: src/bin/e_gadcon.c:1280
 msgid "Able to be resized"
@@ -1522,7 +1522,7 @@ msgstr ""
 #: src/bin/e_int_border_locks.c:328
 #: src/bin/e_int_border_remember.c:486
 msgid "Position"
-msgstr "PosiciÛ"
+msgstr "Posici√≥"
 
 #: src/bin/e_int_border_locks.c:311
 #: src/bin/e_int_border_locks.c:330
@@ -1540,7 +1540,7 @@ msgstr ""
 #: src/bin/e_int_shelf_config.c:446
 #, fuzzy
 msgid "Stacking"
-msgstr "Par‡metres"
+msgstr "Par√†metres"
 
 #: src/bin/e_int_border_locks.c:315
 #: src/bin/e_int_border_locks.c:334
@@ -1707,7 +1707,7 @@ msgstr ""
 #: src/bin/e_int_border_prop.c:421
 #: src/bin/e_int_border_remember.c:455
 msgid "Title"
-msgstr "TÌtol"
+msgstr "T√≠tol"
 
 #: src/bin/e_int_border_prop.c:423
 msgid "Class"
@@ -1720,7 +1720,7 @@ msgstr ""
 
 #: src/bin/e_int_border_prop.c:425
 msgid "Machine"
-msgstr "M‡quina"
+msgstr "M√†quina"
 
 #: src/bin/e_int_border_prop.c:426
 msgid "Role"
@@ -1752,7 +1752,7 @@ msgstr ""
 
 #: src/bin/e_int_border_prop.c:436
 msgid "Window ID"
-msgstr "IdentificaciÛ de Finestra"
+msgstr "Identificaci√≥ de Finestra"
 
 #: src/bin/e_int_border_prop.c:437
 msgid "Window Group"
@@ -1761,7 +1761,7 @@ msgstr "Grup de Finestra"
 #: src/bin/e_int_border_prop.c:438
 #, fuzzy
 msgid "Transient For"
-msgstr "MemÚria de traducciÛ"
+msgstr "Mem√≤ria de traducci√≥"
 
 #: src/bin/e_int_border_prop.c:439
 msgid "Client Leader"
@@ -1882,7 +1882,7 @@ msgstr "Tipus de Finestra"
 #: src/bin/e_int_border_remember.c:481
 #, fuzzy
 msgid "Transience"
-msgstr "TraducciÛ"
+msgstr "Traducci√≥"
 
 #: src/bin/e_int_border_remember.c:485
 msgid "Properties to remember"
@@ -2023,7 +2023,7 @@ msgstr ""
 
 #: src/bin/e_int_config_color_classes.c:45
 msgid "About Dialog Title"
-msgstr "Quant al Di‡leg del TÌtol"
+msgstr "Quant al Di√†leg del T√≠tol"
 
 #: src/bin/e_int_config_color_classes.c:46
 msgid "About Dialog Version"
@@ -2195,7 +2195,7 @@ msgstr ""
 #: src/bin/e_int_config_cursor.c:97
 #: src/bin/e_int_config_cursor.c:146
 msgid "Cursor Settings"
-msgstr "Par‡metres de Cursor"
+msgstr "Par√†metres de Cursor"
 
 #: src/bin/e_int_config_cursor.c:99
 #: src/bin/e_int_config_cursor.c:148
@@ -2218,7 +2218,7 @@ msgstr ""
 
 #: src/bin/e_int_config_desk.c:46
 msgid "Desk Settings"
-msgstr "Par‡metres de Pantalla"
+msgstr "Par√†metres de Pantalla"
 
 #: src/bin/e_int_config_desk.c:143
 msgid "Desktop Name"
@@ -2239,7 +2239,7 @@ msgstr ""
 #: src/bin/e_int_config_modules.c:275
 #: src/modules/ibar/e_mod_config.c:110
 msgid "Configure"
-msgstr "ConfiguraciÛ "
+msgstr "Configuraci√≥ "
 
 #: src/bin/e_int_config_desklock.c:71
 msgid "Screen Lock Settings"
@@ -2247,7 +2247,7 @@ msgstr ""
 
 #: src/bin/e_int_config_desklock.c:143
 msgid "Automatic Locking"
-msgstr "Bloqueig Autom‡tic"
+msgstr "Bloqueig Autom√†tic"
 
 #: src/bin/e_int_config_desklock.c:145
 msgid "Lock when X screensaver activates"
@@ -2294,7 +2294,7 @@ msgstr ""
 
 #: src/bin/e_int_config_desklock.c:287
 msgid "Login Box Settings"
-msgstr "Par‡metres de ConfiguraciÛ de la Finestra d'Entrada"
+msgstr "Par√†metres de Configuraci√≥ de la Finestra d'Entrada"
 
 #: src/bin/e_int_config_desklock.c:291
 msgid "Show on all screen zones"
@@ -2392,7 +2392,7 @@ msgstr ""
 
 #: src/bin/e_int_config_desks.c:260
 msgid "Flip Animation"
-msgstr "AnimaciÛ"
+msgstr "Animaci√≥"
 
 #: src/bin/e_int_config_desks.c:262
 msgid "Off"
@@ -2401,7 +2401,7 @@ msgstr ""
 #: src/bin/e_int_config_desks.c:264
 #, fuzzy
 msgid "Pane"
-msgstr "Anul∑la"
+msgstr "Anul¬∑la"
 
 #: src/bin/e_int_config_desks.c:266
 msgid "Zoom"
@@ -2450,7 +2450,7 @@ msgstr "Refresca"
 #: src/bin/e_int_config_display.c:487
 #, fuzzy
 msgid "Rotation"
-msgstr "InvocaciÛ:"
+msgstr "Invocaci√≥:"
 
 #: src/bin/e_int_config_display.c:509
 msgid "Mirroring"
@@ -2543,7 +2543,7 @@ msgstr ""
 #: src/bin/e_int_config_winlist.c:162
 #: src/bin/e_int_config_winlist.c:240
 msgid "Scroll Settings"
-msgstr "Configuracions de la Roda del RatolÌ"
+msgstr "Configuracions de la Roda del Ratol√≠"
 
 #: src/bin/e_int_config_exebuf.c:126
 #: src/bin/e_int_config_exebuf.c:179
@@ -2570,7 +2570,7 @@ msgstr ""
 
 #: src/bin/e_int_config_exebuf.c:187
 msgid "Terminal Settings"
-msgstr "ConfiguraciÛ de la Terminal"
+msgstr "Configuraci√≥ de la Terminal"
 
 #: src/bin/e_int_config_exebuf.c:189
 msgid "Terminal Command"
@@ -2579,7 +2579,7 @@ msgstr ""
 #: src/bin/e_int_config_exebuf.c:195
 #: src/bin/e_int_config_winlist.c:260
 msgid "Size Settings"
-msgstr "ConfiguraciÛ de la Mida"
+msgstr "Configuraci√≥ de la Mida"
 
 #: src/bin/e_int_config_exebuf.c:197
 #: src/bin/e_int_config_winlist.c:261
@@ -2616,7 +2616,7 @@ msgstr ""
 #: src/bin/e_int_config_exebuf.c:215
 #: src/bin/e_int_config_winlist.c:249
 msgid "Position Settings"
-msgstr "ConfiguraciÛ de la PosiciÛ"
+msgstr "Configuraci√≥ de la Posici√≥"
 
 #: src/bin/e_int_config_exebuf.c:216
 #: src/bin/e_int_config_winlist.c:250
@@ -2630,7 +2630,7 @@ msgstr ""
 
 #: src/bin/e_int_config_focus.c:49
 msgid "Focus Settings"
-msgstr "ConfiguraciÛ del Focus"
+msgstr "Configuraci√≥ del Focus"
 
 #: src/bin/e_int_config_focus.c:159
 msgid "Click Window to Focus"
@@ -2723,15 +2723,15 @@ msgstr ""
 
 #: src/bin/e_int_config_fonts.c:52
 msgid "Configure Heading"
-msgstr "ConfiguraciÛ de CapÁalera "
+msgstr "Configuraci√≥ de Cap√ßalera "
 
 #: src/bin/e_int_config_fonts.c:53
 msgid "About Title"
-msgstr "Sobre el TÌtol"
+msgstr "Sobre el T√≠tol"
 
 #: src/bin/e_int_config_fonts.c:54
 msgid "About Version"
-msgstr "Sobre la VersiÛ"
+msgstr "Sobre la Versi√≥"
 
 #: src/bin/e_int_config_fonts.c:55
 msgid "About Text"
@@ -2772,7 +2772,7 @@ msgstr ""
 #: src/bin/e_int_config_fonts.c:65
 #, fuzzy
 msgid "Entry"
-msgstr "PaÌs:"
+msgstr "Pa√≠s:"
 
 #: src/bin/e_int_config_fonts.c:66
 msgid "Frame"
@@ -2842,7 +2842,7 @@ msgstr ""
 
 #: src/bin/e_int_config_fonts.c:150
 msgid "Font Settings"
-msgstr "ConfiguraciÛ de Font"
+msgstr "Configuraci√≥ de Font"
 
 #: src/bin/e_int_config_fonts.c:334
 msgid "Font Classes"
@@ -2872,7 +2872,7 @@ msgstr ""
 
 #: src/bin/e_int_config_fonts.c:493
 msgid "Font Class Configuration"
-msgstr "ConfiguraciÛ de les Classes de Font"
+msgstr "Configuraci√≥ de les Classes de Font"
 
 #: src/bin/e_int_config_fonts.c:577
 msgid "Hinting"
@@ -2885,7 +2885,7 @@ msgstr ""
 #: src/bin/e_int_config_fonts.c:587
 #: src/modules/cpufreq/e_mod_main.c:214
 msgid "Automatic"
-msgstr "Autom‡tic"
+msgstr "Autom√†tic"
 
 #: src/bin/e_int_config_fonts.c:599
 msgid "Font Fallbacks"
@@ -2910,7 +2910,7 @@ msgstr ""
 
 #: src/bin/e_int_config_imc.c:107
 msgid "Input Method Configuration"
-msgstr "ConfiguraciÛ del MËtode d'Entrada"
+msgstr "Configuraci√≥ del M√®tode d'Entrada"
 
 #: src/bin/e_int_config_imc.c:276
 #: src/bin/e_int_config_imc.c:514
@@ -3053,7 +3053,7 @@ msgstr ""
 
 #: src/bin/e_int_config_intl.c:118
 #: src/bin/e_int_config_intl.c:210
-msgid "Norwegian BokmÂl"
+msgid "Norwegian Bokm√•l"
 msgstr ""
 
 #: src/bin/e_int_config_intl.c:119
@@ -3145,7 +3145,7 @@ msgstr ""
 
 #: src/bin/e_int_config_intl.c:144
 msgid "Catalan"
-msgstr "Catal‡"
+msgstr "Catal√†"
 
 #: src/bin/e_int_config_intl.c:145
 msgid "Atsam"
@@ -3486,7 +3486,7 @@ msgstr ""
 #: src/bin/e_int_config_intl.c:248
 #, fuzzy
 msgid "Tagalog"
-msgstr "Cat‡leg"
+msgstr "Cat√†leg"
 
 #: src/bin/e_int_config_intl.c:249
 msgid "Tswana"
@@ -3547,7 +3547,7 @@ msgstr ""
 
 #: src/bin/e_int_config_intl.c:263
 msgid "Chinese"
-msgstr "XinÈs"
+msgstr "Xin√©s"
 
 #: src/bin/e_int_config_intl.c:264
 msgid "Zulu"
@@ -3558,7 +3558,7 @@ msgid "Afghanistan"
 msgstr ""
 
 #: src/bin/e_int_config_intl.c:270
-msgid "≈land Islands"
+msgid "√Öland Islands"
 msgstr ""
 
 #: src/bin/e_int_config_intl.c:271
@@ -3845,7 +3845,7 @@ msgstr ""
 
 #: src/bin/e_int_config_intl.c:342
 msgid "France"
-msgstr "FrancÈs"
+msgstr "Franc√©s"
 
 #: src/bin/e_int_config_intl.c:343
 msgid "French Guiana"
@@ -3981,7 +3981,7 @@ msgstr ""
 
 #: src/bin/e_int_config_intl.c:376
 msgid "Italy"
-msgstr "Itali‡"
+msgstr "Itali√†"
 
 #: src/bin/e_int_config_intl.c:377
 msgid "Jamaica"
@@ -4250,7 +4250,7 @@ msgstr ""
 
 #: src/bin/e_int_config_intl.c:444
 msgid "Portugal"
-msgstr "PortuguËs "
+msgstr "Portugu√®s "
 
 #: src/bin/e_int_config_intl.c:445
 msgid "Puerto Rico"
@@ -4453,7 +4453,7 @@ msgstr ""
 #: src/bin/e_int_config_intl.c:494
 #, fuzzy
 msgid "Uganda"
-msgstr "DesfÈs"
+msgstr "Desf√©s"
 
 #: src/bin/e_int_config_intl.c:495
 msgid "Ukraine"
@@ -4522,12 +4522,12 @@ msgstr ""
 
 #: src/bin/e_int_config_intl.c:581
 msgid "Language Configuration"
-msgstr "ConfiguraciÛ de Llenguatge"
+msgstr "Configuraci√≥ de Llenguatge"
 
 #: src/bin/e_int_config_intl.c:893
 #: src/bin/e_int_config_intl.c:984
 msgid "Language Selector"
-msgstr "SelecciÛ d'Idioma"
+msgstr "Selecci√≥ d'Idioma"
 
 #: src/bin/e_int_config_intl.c:952
 #: src/bin/e_int_config_intl.c:1037
@@ -4626,7 +4626,7 @@ msgstr ""
 #: src/bin/e_int_config_menus.c:95
 #: src/bin/e_int_config_menus.c:136
 msgid "Show Comment In Menu"
-msgstr "Mostra Comentaris en el Men˙ "
+msgstr "Mostra Comentaris en el Men√∫ "
 
 #: src/bin/e_int_config_menus.c:97
 #: src/bin/e_int_config_menus.c:138
@@ -4753,7 +4753,7 @@ msgstr ""
 
 #: src/bin/e_int_config_mousebindings.c:303
 msgid "Delete Binding"
-msgstr "Elimina CombinaciÛ de Tecles"
+msgstr "Elimina Combinaci√≥ de Tecles"
 
 #: src/bin/e_int_config_mousebindings.c:307
 msgid "Modify Binding"
@@ -4802,7 +4802,7 @@ msgstr ""
 
 #: src/bin/e_int_config_paths.c:65
 msgid "Search Path Configuration"
-msgstr "Cerca el Directori de ConfiguraciÛ"
+msgstr "Cerca el Directori de Configuraci√≥"
 
 #: src/bin/e_int_config_paths.c:76
 #, fuzzy
@@ -4863,7 +4863,7 @@ msgstr ""
 
 #: src/bin/e_int_config_performance.c:128
 msgid "Cache Settings"
-msgstr "ConfiguraciÛ de Cache"
+msgstr "Configuraci√≥ de Cache"
 
 #: src/bin/e_int_config_performance.c:129
 msgid "Cache Flush Interval"
@@ -4941,7 +4941,7 @@ msgstr ""
 #: src/bin/e_int_config_screensaver.c:168
 #, fuzzy
 msgid "Preferred"
-msgstr "PreferËncies"
+msgstr "Prefer√®ncies"
 
 #: src/bin/e_int_config_screensaver.c:170
 msgid "Not Preferred"
@@ -4961,7 +4961,7 @@ msgstr ""
 
 #: src/bin/e_int_config_shelf.c:45
 msgid "Shelf Settings"
-msgstr "ConfiguraciÛ de les LLeixes"
+msgstr "Configuraci√≥ de les LLeixes"
 
 #: src/bin/e_int_config_shelf.c:73
 msgid "Configured Shelves"
@@ -4989,11 +4989,11 @@ msgstr ""
 #: src/bin/e_int_config_shelf.c:267
 #: src/bin/e_shelf.c:995
 msgid "Are you sure you want to delete this shelf?"
-msgstr "Est‡s Segur que Vols Eliminar aquesta Lleixa?"
+msgstr "Est√†s Segur que Vols Eliminar aquesta Lleixa?"
 
 #: src/bin/e_int_config_startup.c:39
 msgid "Startup Settings"
-msgstr "Par‡metres d'Arrancada"
+msgstr "Par√†metres d'Arrancada"
 
 #: src/bin/e_int_config_startup.c:343
 msgid "Show Splash Screen on Login"
@@ -5010,7 +5010,7 @@ msgstr ""
 #: src/bin/e_int_config_theme_import.c:275
 #: src/bin/e_int_config_theme_import.c:284
 msgid "Theme Import Error"
-msgstr "Error en la ImportaciÛ del Tema"
+msgstr "Error en la Importaci√≥ del Tema"
 
 #: src/bin/e_int_config_theme_import.c:276
 msgid "Enlightenment was unable to import the theme.<br><br>Are you sure this is really a valid theme?"
@@ -5039,7 +5039,7 @@ msgstr ""
 
 #: src/bin/e_int_config_wallpaper.c:89
 msgid "Wallpaper Settings"
-msgstr "Par‡metres de Fons de Pantalla"
+msgstr "Par√†metres de Fons de Pantalla"
 
 #: src/bin/e_int_config_wallpaper.c:522
 #: src/bin/e_int_config_wallpaper.c:670
@@ -5254,7 +5254,7 @@ msgstr ""
 #: src/bin/e_int_config_window_display.c:224
 #, fuzzy
 msgid "Linear"
-msgstr "LÌnia"
+msgstr "L√≠nia"
 
 #: src/bin/e_int_config_window_display.c:226
 msgid "Smooth accelerate and decelerate"
@@ -5262,11 +5262,11 @@ msgstr ""
 
 #: src/bin/e_int_config_window_display.c:228
 msgid "Accelerate"
-msgstr "AcceleraciÛ"
+msgstr "Acceleraci√≥"
 
 #: src/bin/e_int_config_window_display.c:230
 msgid "Decelerate"
-msgstr "DesacceleraciÛ "
+msgstr "Desacceleraci√≥ "
 
 #: src/bin/e_int_config_window_display.c:249
 #, fuzzy
@@ -5290,7 +5290,7 @@ msgstr ""
 #: src/bin/e_int_config_window_manipulation.c:172
 #, fuzzy
 msgid "Automatically raise windows on mouse over"
-msgstr "Compila autom‡ticament el fitxer .mo en desar"
+msgstr "Compila autom√†ticament el fitxer .mo en desar"
 
 #: src/bin/e_int_config_window_manipulation.c:142
 msgid "When moving or resizing windows, resist at the boundaries"
@@ -5392,7 +5392,7 @@ msgstr ""
 #: src/bin/e_int_config_winlist.c:144
 #: src/bin/e_int_config_winlist.c:218
 msgid "Selection Settings"
-msgstr "Par‡metres de ConfiguraciÛ "
+msgstr "Par√†metres de Configuraci√≥ "
 
 #: src/bin/e_int_config_winlist.c:145
 #: src/bin/e_int_config_winlist.c:219
@@ -5423,7 +5423,7 @@ msgstr ""
 #: src/bin/e_int_config_winlist.c:231
 #, fuzzy
 msgid "Warp Settings"
-msgstr "Par‡metres"
+msgstr "Par√†metres"
 
 #: src/bin/e_int_config_winlist.c:158
 #: src/bin/e_int_config_winlist.c:232
@@ -5481,7 +5481,7 @@ msgstr "Quant a..."
 #: src/modules/pager/e_mod_main.c:643
 #: src/modules/temperature/e_mod_main.c:166
 msgid "Configuration"
-msgstr "ConfiguraciÛ"
+msgstr "Configuraci√≥"
 
 #: src/bin/e_int_menus.c:229
 msgid "Virtual"
@@ -5501,7 +5501,7 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:762
 msgid "Configuration Panel"
-msgstr "Panell de ConfiguraciÛ"
+msgstr "Panell de Configuraci√≥"
 
 #: src/bin/e_int_menus.c:841
 msgid "Lock Screen"
@@ -5544,7 +5544,7 @@ msgstr "Elimina la Lleixa"
 #: src/bin/e_int_shelf_config.c:63
 #: src/bin/e_shelf.c:1404
 msgid "Shelf Configuration"
-msgstr "ConfiguraciÛ de la Lleixa"
+msgstr "Configuraci√≥ de la Lleixa"
 
 #: src/bin/e_int_shelf_config.c:393
 #: src/bin/e_int_shelf_config.c:460
@@ -5605,7 +5605,7 @@ msgstr ""
 
 #: src/bin/e_intl.c:362
 msgid "Input Method Error"
-msgstr "Error del MËtode d'Entrada"
+msgstr "Error del M√®tode d'Entrada"
 
 #: src/bin/e_intl.c:363
 msgid "Error starting the input method executable<br><br>please make sure that your input<br>method configuration is correct and<br>that your configuration's<br>executable is in your PATH<br>"
@@ -5640,7 +5640,7 @@ msgstr ""
 #: src/bin/e_module.c:125
 #: src/bin/e_module.c:155
 msgid "Error loading Module"
-msgstr "Error Carregant el MÚdul "
+msgstr "Error Carregant el M√≤dul "
 
 #: src/bin/e_module.c:119
 #: src/bin/e_module.c:149
@@ -5709,7 +5709,7 @@ msgstr ""
 
 #: src/bin/e_sys.c:277
 msgid "Cancel Logout"
-msgstr "Anul∑la la Sortida"
+msgstr "Anul¬∑la la Sortida"
 
 #: src/bin/e_sys.c:315
 msgid "Logout in progress"
@@ -5930,7 +5930,7 @@ msgstr ""
 
 #: src/bin/e_int_config_modules.c:65
 msgid "Module Settings"
-msgstr "ConfiguraciÛ del MÛdul"
+msgstr "Configuraci√≥ del M√≥dul"
 
 #: src/bin/e_int_config_modules.c:256
 msgid "Module State"
@@ -6041,7 +6041,7 @@ msgstr ""
 
 #: src/bin/e_exec.c:595
 msgid "Error Information"
-msgstr "Error d'InformaciÛ"
+msgstr "Error d'Informaci√≥"
 
 #: src/bin/e_exec.c:603
 msgid "Error Signal Information"
@@ -6058,11 +6058,11 @@ msgstr ""
 
 #: src/modules/battery/e_mod_config.c:37
 msgid "Battery Monitor Configuration"
-msgstr "ConfiguraciÛ del Monitor de Bateria"
+msgstr "Configuraci√≥ del Monitor de Bateria"
 
 #: src/modules/battery/e_mod_config.c:79
 msgid "Basic Settings"
-msgstr "Configuracions B‡siques"
+msgstr "Configuracions B√†siques"
 
 #: src/modules/battery/e_mod_config.c:80
 #: src/modules/battery/e_mod_config.c:114
@@ -6071,7 +6071,7 @@ msgstr ""
 
 #: src/modules/battery/e_mod_config.c:106
 msgid "Advanced Settings"
-msgstr "Configuracions AvanÁades"
+msgstr "Configuracions Avan√ßades"
 
 #: src/modules/battery/e_mod_config.c:108
 msgid "Check battery every:"
@@ -6249,7 +6249,7 @@ msgstr ""
 #: src/modules/dropshadow/e_mod_config.c:37
 #, fuzzy
 msgid "Dropshadow Configuration"
-msgstr "ConfiguraciÛ"
+msgstr "Configuraci√≥"
 
 #: src/modules/dropshadow/e_mod_config.c:104
 msgid "Quality"
@@ -6347,7 +6347,7 @@ msgstr ""
 
 #: src/modules/ibar/e_mod_config.c:53
 msgid "IBar Configuration"
-msgstr "ConfiguraciÛ de l'iBar"
+msgstr "Configuraci√≥ de l'iBar"
 
 #: src/modules/ibar/e_mod_config.c:98
 msgid "Selected Bar Source"
@@ -6372,7 +6372,7 @@ msgstr ""
 
 #: src/modules/ibar/e_mod_config.c:131
 msgid "Display App Generic"
-msgstr "Mostra les Aplicacions GenËriques "
+msgstr "Mostra les Aplicacions Gen√®riques "
 
 #: src/modules/ibar/e_mod_config.c:161
 msgid "Create new IBar source"
@@ -6389,7 +6389,7 @@ msgstr ""
 
 #: src/modules/ibar/e_mod_config.c:177
 msgid "Are you sure you want to delete this bar source?"
-msgstr "Est‡s Segur que vols eliminar aquesta bar ?"
+msgstr "Est√†s Segur que vols eliminar aquesta bar ?"
 
 #: src/modules/ibar/e_mod_main.c:219
 msgid "IBar"
@@ -6417,7 +6417,7 @@ msgstr ""
 
 #: src/modules/ibox/e_mod_config.c:48
 msgid "IBox Configuration"
-msgstr "ConfiguraciÛ d'IBox"
+msgstr "Configuraci√≥ d'IBox"
 
 #: src/modules/ibox/e_mod_config.c:97
 msgid "Display Name"
@@ -6425,7 +6425,7 @@ msgstr "Mostra el Nom"
 
 #: src/modules/ibox/e_mod_config.c:99
 msgid "Display Title"
-msgstr "Mostra el TÌtol "
+msgstr "Mostra el T√≠tol "
 
 #: src/modules/ibox/e_mod_config.c:101
 msgid "Display Class"
@@ -6465,7 +6465,7 @@ msgstr ""
 
 #: src/modules/pager/e_mod_config.c:70
 msgid "Pager Configuration"
-msgstr "ConfiguraciÛ de PaginaciÛ "
+msgstr "Configuraci√≥ de Paginaci√≥ "
 
 #: src/modules/pager/e_mod_config.c:117
 #: src/modules/pager/e_mod_config.c:145
@@ -6484,7 +6484,7 @@ msgstr ""
 #: src/modules/pager/e_mod_config.c:144
 #, fuzzy
 msgid "Popup Settings"
-msgstr "Par‡metres"
+msgstr "Par√†metres"
 
 #: src/modules/pager/e_mod_config.c:147
 #: src/modules/pager/e_mod_config.c:159
@@ -6505,11 +6505,11 @@ msgstr ""
 
 #: src/modules/pager/e_mod_config.c:169
 msgid "Buttons Settings"
-msgstr "ConfiguraciÛ dels Botons "
+msgstr "Configuraci√≥ dels Botons "
 
 #: src/modules/pager/e_mod_config.c:170
 msgid "Drag and select button"
-msgstr "Arrasta i Selecciona BotÛ "
+msgstr "Arrasta i Selecciona Bot√≥ "
 
 #: src/modules/pager/e_mod_config.c:172
 msgid "Drag no place button"
@@ -6560,7 +6560,7 @@ msgstr "Analitzadors"
 
 #: src/modules/pager/e_mod_main.c:648
 msgid "Virtual Desktops Configuration"
-msgstr "ConfiguraciÛ d'Escriptoris Virtuals"
+msgstr "Configuraci√≥ d'Escriptoris Virtuals"
 
 #: src/modules/pager/e_mod_main.c:1927
 msgid "Enlightenment Pager Module"
@@ -6584,7 +6584,7 @@ msgstr ""
 
 #: src/modules/temperature/e_mod_config.c:63
 msgid "Temperature Configuration"
-msgstr "ConfiguraciÛ de Temperatura"
+msgstr "Configuraci√≥ de Temperatura"
 
 #: src/modules/temperature/e_mod_config.c:213
 #: src/modules/temperature/e_mod_config.c:316
