@@ -501,6 +501,18 @@ e_fm2_underlay_hide(Evas_Object *obj)
 }
 
 EAPI void
+e_fm2_all_unsel(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+   _e_fm2_icon_desel_any(obj);
+}
+
+EAPI void
 e_fm2_custom_theme_set(Evas_Object *obj, const char *path)
 {
    E_Fm2_Smart_Data *sd;
@@ -3723,7 +3735,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
    Evas_List *fsel, *l, *ll, *il, *isel;
    char buf[4096], *fl;
    const char *fp;
-   Evas_Coord dx, dy;
+   Evas_Coord dx, dy, ox, oy, x, y;
    int adjust_icons = 0;
    
    sd = data;
@@ -3740,14 +3752,21 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	printf("  %s\n", fl);
      }
    dx = 0; dy = 0;
+   ox = 0; oy = 0;
    for (l = isel; l; l = l->next)
      {
 	ic = l->data;
 	if (ic->drag.src)
 	  {
-	     dx = ev->x - ic->drag.x - ic->x + ic->sd->pos.x;
-	     dy = ev->y - ic->drag.y - ic->y + ic->sd->pos.y;
-	     printf("DND offset %i %i\n", dx, dy);
+	     ox = ic->x;
+	     oy = ic->y;
+	     dx = (ic->drag.x + ic->x - ic->sd->pos.x);
+	     dy = (ic->drag.y + ic->y - ic->sd->pos.y);
+	     printf("DND offset %i %i | %i %i | %i %i | %i %i\n", 
+		    dx, dy,
+		    ic->drag.x, ic->drag.y,
+		    ic->x, ic->y,
+		    ic->sd->pos.x, ic->sd->pos.y);
 	     break;
 	  }
      }
@@ -3775,17 +3794,23 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		  /* dnd doesnt tell me all the co-ords of the icons being dragged so i can't place them accurately.
 		   * need to fix this. ev->data probably needs to become more compelx than a list of url's
 		   */
-		  _e_fm2_client_file_move(sd->id, fp, buf, "", 0, ic->x + dx, ic->y + dy);
+		  x = ev->x + (ic->x - ox) - ic->drag.x + sd->pos.x;
+		  y = ev->y + (ic->y - oy) - ic->drag.y + sd->pos.y;//ic->y - oy - dy + ev->y + sd->pos.y;
+		  if (x < 0) x = 0;
+		  if (y < 0) y = 0;
+		  _e_fm2_client_file_move(sd->id, fp, buf, "", 0, x, y);
 		  if (ic->sd == sd)
 		    {
-		       ic->x += dx;
-		       ic->y += dy;
+		       ic->x = x;
+		       ic->y = y;
 		       ic->saved_pos = 1;
 		       adjust_icons = 1;
 		    }
 	       }
 	     else
-	       _e_fm2_client_file_move(sd->id, fp, buf, "", 0, -9999, -9999);
+	       {
+		  _e_fm2_client_file_move(sd->id, fp, buf, "", 0, -9999, -9999);
+	       }
 	     evas_stringshare_del(fp);
 	  }
 	if (adjust_icons)
@@ -3899,15 +3924,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		       snprintf(buf, sizeof(buf), "%s/%s",
 				sd->realpath, ecore_file_get_file(fp));
 		       printf("mv %s %s\n", (char *)fp, buf);
-		       if ((ic) && (sd->config->view.mode == E_FM2_VIEW_MODE_CUSTOM_ICONS))
-			 {
-			    /* dnd doesnt tell me all the co-ords of the icons being dragged so i can't place them accurately.
-			     * need to fix this. ev->data probably needs to become more compelx than a list of url's
-			     */
-			    _e_fm2_client_file_move(sd->id, fp, buf, "", 0, ic->x + dx, ic->y + dy);
-			 }
-		       else
-			 _e_fm2_client_file_move(sd->id, fp, buf, "", 0, ev->x, ev->y);
+		       _e_fm2_client_file_move(sd->id, fp, buf, "", 0, -9999, -9999);
 		       evas_stringshare_del(fp);
 		    }
 	       }

@@ -47,6 +47,7 @@ EAPI int     e_fwin_init             (void);
 EAPI int     e_fwin_shutdown         (void);
 EAPI E_Fwin *e_fwin_new              (E_Container *con, const char *dev, const char *path);
 EAPI E_Fwin *e_fwin_zone_new         (E_Zone *zone, const char *dev, const char *path);
-    
+EAPI void    e_fwin_all_unsel        (E_Fwin *fwin);   
+
 #endif
 #endif

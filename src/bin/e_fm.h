@@ -136,6 +136,7 @@ EAPI void                  e_fm2_path_set(Evas_Object *obj, const char *dev, con
 EAPI void                  e_fm2_custom_theme_set(Evas_Object *obj, const char *path);
 EAPI void                  e_fm2_underlay_show(Evas_Object *obj);
 EAPI void                  e_fm2_underlay_hide(Evas_Object *obj);
+EAPI void                  e_fm2_all_unsel(Evas_Object *obj);
 EAPI void                  e_fm2_path_get(Evas_Object *obj, const char **dev, const char **path);
 EAPI void                  e_fm2_refresh(Evas_Object *obj);
 EAPI const char           *e_fm2_real_path_get(Evas_Object *obj);

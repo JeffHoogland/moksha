@@ -31,6 +31,7 @@ static void _e_fwin_deleted(void *data, Evas_Object *obj, void *event_info);
 static const char *_e_fwin_custom_file_path_eval(E_Fwin *fwin, Efreet_Desktop *ef, const char *prev_path, const char *key);
 static void _e_fwin_changed(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_selected(void *data, Evas_Object *obj, void *event_info);
+static void _e_fwin_selection_change(void *data, Evas_Object *obj, void *event_info);
 static void _e_fwin_menu_extend(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info);
 static void _e_fwin_parent(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_fwin_cb_menu_extend_start(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *info);
@@ -145,6 +146,8 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
 				  _e_fwin_deleted, fwin);
    evas_object_smart_callback_add(o, "selected",
 				  _e_fwin_selected, fwin);
+   evas_object_smart_callback_add(o, "selection_change",
+				  _e_fwin_selection_change, fwin);
    e_fm2_icon_menu_start_extend_callback_set(o, _e_fwin_cb_menu_extend_start, fwin);
    e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_menu_extend, fwin);
    evas_object_show(o);
@@ -267,6 +270,8 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
 				  _e_fwin_deleted, fwin);
    evas_object_smart_callback_add(o, "selected",
 				  _e_fwin_selected, fwin);
+   evas_object_smart_callback_add(o, "selection_change",
+				  _e_fwin_selection_change, fwin);
    e_fm2_icon_menu_start_extend_callback_set(o, _e_fwin_cb_menu_extend_start, fwin);
    e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_menu_extend, fwin);
    e_fm2_underlay_hide(o);
@@ -336,6 +341,14 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
    e_win_show(fwin->win);
  */
    return fwin;
+}
+
+EAPI void
+e_fwin_all_unsel(E_Fwin *fwin)
+{
+   E_OBJECT_CHECK(fwin);
+   E_OBJECT_TYPE_CHECK(fwin, E_FWIN_TYPE);
+   e_fm2_all_unsel(fwin->fm_obj);
 }
 
 /* local subsystem functions */
@@ -487,6 +500,20 @@ _e_fwin_selected(void *data, Evas_Object *obj, void *event_info)
    if (!selected) return;
    _e_fwin_file_open_dialog(fwin, selected, 0);
    evas_list_free(selected);
+}
+
+static void
+_e_fwin_selection_change(void *data, Evas_Object *obj, void *event_info)
+{
+   Evas_List *l;
+   E_Fwin *fwin;
+   
+   fwin = data;
+   for (l = fwins; l; l = l->next)
+     {
+	if (l->data != fwin)
+	  e_fwin_all_unsel(l->data);
+     }
 }
 
 static void
