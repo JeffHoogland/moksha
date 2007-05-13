@@ -477,6 +477,30 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
 }
 
 EAPI void
+e_fm2_underlay_show(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+   evas_object_show(sd->underlay);
+}
+
+EAPI void
+e_fm2_underlay_hide(Evas_Object *obj)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+   evas_object_hide(sd->underlay);
+}
+
+EAPI void
 e_fm2_custom_theme_set(Evas_Object *obj, const char *path)
 {
    E_Fm2_Smart_Data *sd;

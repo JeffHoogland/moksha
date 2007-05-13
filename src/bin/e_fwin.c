@@ -269,6 +269,7 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
 				  _e_fwin_selected, fwin);
    e_fm2_icon_menu_start_extend_callback_set(o, _e_fwin_cb_menu_extend_start, fwin);
    e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_menu_extend, fwin);
+   e_fm2_underlay_hide(o);
    evas_object_show(o);
    
    o = e_scrollframe_add(zone->container->bg_evas);
