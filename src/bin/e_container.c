@@ -14,6 +14,7 @@
 static void _e_container_free(E_Container *con);
 
 static E_Container *_e_container_find_by_event_window(Ecore_X_Window win);
+static void _e_container_modifiers_update(Evas *evas, int modifiers);
 
 static int  _e_container_cb_mouse_in(void *data, int type, void *event);
 static int  _e_container_cb_mouse_out(void *data, int type, void *event);
@@ -980,6 +981,45 @@ _e_container_find_by_event_window(Ecore_X_Window win)
    return NULL;
 }
 
+static void
+_e_container_modifiers_update(Evas *evas, int modifiers)
+{
+   if (modifiers & ECORE_X_MODIFIER_SHIFT)
+     evas_key_modifier_on(evas, "Shift");
+   else
+     evas_key_modifier_off(evas, "Shift");
+   if (modifiers & ECORE_X_MODIFIER_CTRL)
+     evas_key_modifier_on(evas, "Control");
+   else
+     evas_key_modifier_off(evas, "Control");
+   if (modifiers & ECORE_X_MODIFIER_ALT)
+     evas_key_modifier_on(evas, "Alt");
+   else
+     evas_key_modifier_off(evas, "Alt");
+   if (modifiers & ECORE_X_MODIFIER_WIN)
+     {
+	evas_key_modifier_on(evas, "Super");
+	evas_key_modifier_on(evas, "Hyper");
+     }
+   else
+     {
+	evas_key_modifier_off(evas, "Super");
+	evas_key_modifier_off(evas, "Hyper");
+     }
+   if (modifiers & ECORE_X_LOCK_SCROLL)
+     evas_key_lock_on(evas, "Scroll_Lock");
+   else
+     evas_key_lock_off(evas, "Scroll_Lock");
+   if (modifiers & ECORE_X_LOCK_NUM)
+     evas_key_lock_on(evas, "Num_Lock");
+   else
+     evas_key_lock_off(evas, "Num_Lock");
+   if (modifiers & ECORE_X_LOCK_CAPS)
+     evas_key_lock_on(evas, "Caps_Lock");
+   else
+     evas_key_lock_off(evas, "Caps_Lock");
+}
+
 static int
 _e_container_cb_mouse_in(void *data, int type, void *event)
 {
@@ -993,6 +1033,7 @@ _e_container_cb_mouse_in(void *data, int type, void *event)
      {
 	bd = e_border_focused_get();
 	if (bd) e_focus_event_mouse_out(bd);
+	_e_container_modifiers_update(con->bg_evas, ev->modifiers);
 	evas_event_feed_mouse_in(con->bg_evas, ev->time, NULL);
      }
    return 1;
@@ -1008,6 +1049,7 @@ _e_container_cb_mouse_out(void *data, int type, void *event)
    con = _e_container_find_by_event_window(ev->event_win);
    if (con)
      {
+	_e_container_modifiers_update(con->bg_evas, ev->modifiers);
         evas_event_feed_mouse_out(con->bg_evas, ev->time, NULL);
      }
    return 1;
@@ -1029,6 +1071,7 @@ _e_container_cb_mouse_down(void *data, int type, void *event)
 					   E_OBJECT(con), ev);
 	if (ev->double_click) flags |= EVAS_BUTTON_DOUBLE_CLICK;
 	if (ev->triple_click) flags |= EVAS_BUTTON_TRIPLE_CLICK;
+	_e_container_modifiers_update(con->bg_evas, ev->modifiers);
 	evas_event_feed_mouse_down(con->bg_evas, ev->button, flags, ev->time, NULL);
      }
    return 1;
@@ -1045,6 +1088,7 @@ _e_container_cb_mouse_up(void *data, int type, void *event)
    if (con)
      {
         evas_event_feed_mouse_up(con->bg_evas, ev->button, EVAS_BUTTON_NONE, ev->time, NULL);
+	_e_container_modifiers_update(con->bg_evas, ev->modifiers);
 	e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_CONTAINER,
 					 E_OBJECT(con), ev);
      }
@@ -1061,6 +1105,7 @@ _e_container_cb_mouse_move(void *data, int type, void *event)
    con = _e_container_find_by_event_window(ev->event_win);
    if (con)
      {
+	_e_container_modifiers_update(con->bg_evas, ev->modifiers);
         evas_event_feed_mouse_move(con->bg_evas, ev->x, ev->y, ev->time, NULL);
      }
    return 1;
@@ -1078,7 +1123,10 @@ _e_container_cb_mouse_wheel(void *data, int type, void *event)
      {
 	if (!e_bindings_wheel_event_handle(E_BINDING_CONTEXT_CONTAINER,
 					   E_OBJECT(con), ev))
-	    evas_event_feed_mouse_wheel(con->bg_evas, ev->direction, ev->z, ev->time, NULL);
+	  {
+	     _e_container_modifiers_update(con->bg_evas, ev->modifiers);
+	     evas_event_feed_mouse_wheel(con->bg_evas, ev->direction, ev->z, ev->time, NULL);
+	  }
      }
    return 1;
 }

@@ -672,7 +672,8 @@ _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_i
    zone = data;
    if (e_menu_grab_window_get()) return;
 
-   if (zone->bg_fwin) e_fwin_all_unsel(zone->bg_fwin);
+   if (zone->bg_fwin)
+     e_fwin_all_unsel(zone->bg_fwin);
    
    if (!zone->cur_mouse_action)
      {

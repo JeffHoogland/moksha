@@ -3986,6 +3986,7 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers)
 	else if (evas_key_modifier_is_set(modifiers, "Shift"))
 	  multi_sel = 1;
      }
+   printf("MOUSE 1 range=%i multi=%i\n", range_sel, multi_sel);
    if (ic->sd->config->selection.single)
      {
 	multi_sel = 0;
