@@ -17,6 +17,7 @@ struct _E_Fwin
    E_Object             e_obj_inherit;
    
    E_Win               *win;
+   E_Zone              *zone;
    Evas_Object         *scrollframe_obj;
    Evas_Object         *fm_obj;
    Evas_Object         *bg_obj;
@@ -45,6 +46,7 @@ struct _E_Fwin_Apps_Dialog
 EAPI int     e_fwin_init             (void);
 EAPI int     e_fwin_shutdown         (void);
 EAPI E_Fwin *e_fwin_new              (E_Container *con, const char *dev, const char *path);
+EAPI E_Fwin *e_fwin_zone_new         (E_Zone *zone, const char *dev, const char *path);
     
 #endif
 #endif

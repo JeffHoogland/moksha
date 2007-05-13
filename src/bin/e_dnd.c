@@ -537,6 +537,10 @@ _e_drag_coords_update(E_Drop_Handler *h, int *dx, int *dy, int *dw, int *dh)
 	     px = ((E_Win *)(h->obj))->x;
 	     py = ((E_Win *)(h->obj))->y;
 	     break;
+	   case E_ZONE_TYPE:
+	     px = ((E_Zone *)(h->obj))->x;
+	     py = ((E_Zone *)(h->obj))->y;
+	     break;
 	   case E_BORDER_TYPE:
 	     px = ((E_Border *)(h->obj))->x + ((E_Border *)(h->obj))->fx.x;
 	     py = ((E_Border *)(h->obj))->y + ((E_Border *)(h->obj))->fx.y;
@@ -571,6 +575,9 @@ _e_drag_win_matches(E_Drop_Handler *h, Ecore_X_Window win)
 	     break;
 	   case E_WIN_TYPE:
 	     hwin = ((E_Win *)(h->obj))->evas_win;
+	     break;
+	   case E_ZONE_TYPE:
+	     hwin = ((E_Zone *)(h->obj))->container->event_win;
 	     break;
 	   case E_BORDER_TYPE:
 	     hwin = ((E_Border *)(h->obj))->event_win;

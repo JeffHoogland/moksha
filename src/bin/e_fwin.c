@@ -105,9 +105,6 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
    e_win_resize_callback_set(fwin->win, _e_fwin_cb_resize);
    fwin->win->data = fwin;
 
-   /* fm issues: */
-   /* FIXME: if file executable - run it */
-   
    o = edje_object_add(e_win_evas_get(fwin->win));
    e_theme_edje_object_set(o, "base/theme/fileman",
 			   "e/fileman/window/main");
@@ -117,7 +114,7 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
    o = e_fm2_add(e_win_evas_get(fwin->win));
    fwin->fm_obj = o;
    memset(&fmc, 0, sizeof(E_Fm2_Config));
-#if 1
+#if 0
    fmc.view.mode = E_FM2_VIEW_MODE_LIST;
    fmc.icon.list.w = 24;
    fmc.icon.list.h = 24;
@@ -212,6 +209,134 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
    return fwin;
 }
 
+EAPI E_Fwin *
+e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
+{
+   E_Fwin *fwin;
+   char buf[4096];
+   const char *file;
+   Evas_Object *o;
+   E_Fm2_Config fmc;
+   
+   fwin = E_OBJECT_ALLOC(E_Fwin, E_FWIN_TYPE, _e_fwin_free);
+   if (!fwin) return NULL;
+   fwin->zone = zone;
+   fwins = evas_list_append(fwins, fwin);
+/*   
+   e_win_resize_callback_set(fwin->win, _e_fwin_cb_resize);
+   fwin->win->data = fwin;
+
+   o = edje_object_add(e_win_evas_get(fwin->win));
+   e_theme_edje_object_set(o, "base/theme/fileman",
+			   "e/fileman/window/main");
+   evas_object_show(o);
+   fwin->bg_obj = o;
+*/
+   
+   o = e_fm2_add(zone->container->bg_evas);
+   fwin->fm_obj = o;
+   memset(&fmc, 0, sizeof(E_Fm2_Config));
+#if 0
+   fmc.view.mode = E_FM2_VIEW_MODE_LIST;
+   fmc.icon.list.w = 24;
+   fmc.icon.list.h = 24;
+   fmc.icon.fixed.w = 1;
+   fmc.icon.fixed.h = 1;
+#else   
+   fmc.view.mode = E_FM2_VIEW_MODE_CUSTOM_ICONS;
+   fmc.icon.icon.w = 48;
+   fmc.icon.icon.h = 48;
+   fmc.icon.fixed.w = 0;
+   fmc.icon.fixed.h = 0;
+#endif
+   
+   fmc.view.open_dirs_in_place = 0;
+   fmc.view.selector = 0;
+   fmc.view.single_click = 0;
+   fmc.view.no_subdir_jump = 0;
+   fmc.icon.extension.show = 1;
+   fmc.list.sort.no_case = 1;
+   fmc.list.sort.dirs.first = 1;
+   fmc.list.sort.dirs.last = 0;
+   fmc.selection.single = 0;
+   fmc.selection.windows_modifiers = 0;
+   e_fm2_config_set(o, &fmc);
+   evas_object_smart_callback_add(o, "dir_changed",
+				  _e_fwin_changed, fwin);
+   evas_object_smart_callback_add(o, "dir_deleted",
+				  _e_fwin_deleted, fwin);
+   evas_object_smart_callback_add(o, "selected",
+				  _e_fwin_selected, fwin);
+   e_fm2_icon_menu_start_extend_callback_set(o, _e_fwin_cb_menu_extend_start, fwin);
+   e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_menu_extend, fwin);
+   evas_object_show(o);
+   
+   o = e_scrollframe_add(zone->container->bg_evas);
+   /* FIXME: this theme object will have more versions and options later
+    * for things like swallowing widgets/buttons ot providing them - a
+    * gadcon for starters for fm widgets. need to register the owning 
+    * e_object of the gadcon so gadcon clients can get it and thus do
+    * things like find out what dirs/path the fwin is for etc. this will
+    * probably be how you add optional gadgets to fwin views like empty/full
+    * meters for disk usage, and other dir info/stats or controls. also it
+    * might be possible that we can have custom frames per dir later so need
+    * a way to set an edje file directly
+    */
+   /* FIXME: allow specialised scrollframe obj per dir - get from e config,
+    * then look in the dir itself for a magic dot-file, if not - use theme.
+    * same as currently done for bg & overlay. also add to fm2 the ability
+    * to specify the .edj files to get the list and icon theme stuff from
+    */
+   e_scrollframe_custom_theme_set(o, "base/theme/fileman",
+				  "e/fileman/scrollframe/default");
+   evas_object_data_set(fwin->fm_obj, "fwin", fwin);
+   e_scrollframe_extern_pan_set(o, fwin->fm_obj,
+				_e_fwin_pan_set,
+				_e_fwin_pan_get,
+				_e_fwin_pan_max_get,
+				_e_fwin_pan_child_size_get);
+   evas_object_propagate_events_set(fwin->fm_obj, 0);
+   fwin->scrollframe_obj = o;
+   evas_object_move(o, fwin->zone->x, fwin->zone->y);
+   evas_object_resize(fwin->scrollframe_obj, fwin->zone->w, fwin->zone->h);
+   evas_object_show(o);
+
+/*   
+   o = edje_object_add(e_win_evas_get(fwin->win));
+   edje_object_part_swallow(fwin->bg_obj, "e.swallow.bg", o);
+   evas_object_pass_events_set(o, 1);
+   fwin->under_obj = o;
+   
+   o = edje_object_add(e_win_evas_get(fwin->win));
+   edje_object_part_swallow(e_scrollframe_edje_object_get(fwin->scrollframe_obj), "e.swallow.overlay", o);
+   evas_object_pass_events_set(o, 1);
+   fwin->over_obj = o;
+ */
+   
+   e_fm2_window_object_set(fwin->fm_obj, E_OBJECT(fwin->zone));
+   
+   evas_object_focus_set(fwin->fm_obj, 1);
+
+   e_fm2_path_set(fwin->fm_obj, dev, path);
+
+/*   
+   snprintf(buf, sizeof(buf), "_fwin::/%s", e_fm2_real_path_get(fwin->fm_obj));
+   e_win_name_class_set(fwin->win, "E", buf);
+ */
+   file = ecore_file_get_file(e_fm2_real_path_get(fwin->fm_obj));
+   if (file)
+     snprintf(buf, sizeof(buf), "%s", file);
+   else
+     snprintf(buf, sizeof(buf), "%s", e_fm2_real_path_get(fwin->fm_obj));
+/*   
+   e_win_title_set(fwin->win, buf);
+   e_win_size_min_set(fwin->win, 24, 24);
+   e_win_resize(fwin->win, 280, 200);
+   e_win_show(fwin->win);
+ */
+   return fwin;
+}
+
 /* local subsystem functions */
 static void
 _e_fwin_free(E_Fwin *fwin)
@@ -221,7 +346,7 @@ _e_fwin_free(E_Fwin *fwin)
 	e_object_del(E_OBJECT(fwin->fad->dia));
 	fwin->fad = NULL;
      }
-   e_object_del(E_OBJECT(fwin->win));
+   if (fwin->win) e_object_del(E_OBJECT(fwin->win));
    fwins = evas_list_remove(fwins, fwin);
    if (fwin->wallpaper_file) evas_stringshare_del(fwin->wallpaper_file);
    if (fwin->overlay_file) evas_stringshare_del(fwin->overlay_file);
@@ -245,8 +370,17 @@ _e_fwin_cb_resize(E_Win *win)
    E_Fwin *fwin;
    
    fwin = win->data;
-   evas_object_resize(fwin->bg_obj, fwin->win->w, fwin->win->h);
-   evas_object_resize(fwin->scrollframe_obj, fwin->win->w, fwin->win->h);
+   if (fwin->bg_obj)
+     {
+	if (fwin->win)
+	  evas_object_resize(fwin->bg_obj, fwin->win->w, fwin->win->h);
+	else if (fwin->zone)
+	  evas_object_resize(fwin->bg_obj, fwin->zone->w, fwin->zone->h);
+     }
+   if (fwin->win)
+     evas_object_resize(fwin->scrollframe_obj, fwin->win->w, fwin->win->h);
+   else if (fwin->zone)
+     evas_object_resize(fwin->scrollframe_obj, fwin->zone->w, fwin->zone->h);
 }
 
 static void
@@ -540,7 +674,10 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 		    }
 	       }
 	     evas_list_free(selected);
-	     e_exec(fad->fwin->win->border->zone, desktop, NULL, files, "fwin");
+	     if (fad->fwin->win)
+	       e_exec(fad->fwin->win->border->zone, desktop, NULL, files, "fwin");
+	     else if (fad->fwin->zone)
+	       e_exec(fad->fwin->zone, desktop, NULL, files, "fwin");
 	     ecore_list_destroy(files);
 	  }
 	chdir(pcwd);
@@ -670,24 +807,42 @@ _e_fwin_file_exec(E_Fwin *fwin, E_Fm2_Icon_Info *ici, E_Fwin_Exec_Type ext)
       case E_FWIN_EXEC_NONE:
 	break;
       case E_FWIN_EXEC_DIRECT:
-	e_exec(fwin->win->border->zone, NULL, ici->file, NULL, "fwin");
+	if (fwin->win)
+	  e_exec(fwin->win->border->zone, NULL, ici->file, NULL, "fwin");
+	else if (fwin->zone)
+	  e_exec(fwin->zone, NULL, ici->file, NULL, "fwin");
 	break;
       case E_FWIN_EXEC_SH:
 	snprintf(buf, sizeof(buf), "/bin/sh %s", e_util_filename_escape(ici->file));
-	e_exec(fwin->win->border->zone, NULL, buf, NULL, NULL);
+	if (fwin->win)
+	  e_exec(fwin->win->border->zone, NULL, buf, NULL, NULL);
+	else if (fwin->zone)
+	  e_exec(fwin->zone, NULL, buf, NULL, NULL);
 	break;
       case E_FWIN_EXEC_TERMINAL_DIRECT:
 	snprintf(buf, sizeof(buf), "%s %s", e_config->exebuf_term_cmd, e_util_filename_escape(ici->file));
-	e_exec(fwin->win->border->zone, NULL, buf, NULL, NULL);
+	if (fwin->win)
+	  e_exec(fwin->win->border->zone, NULL, buf, NULL, NULL);
+	else if (fwin->zone)
+	  e_exec(fwin->zone, NULL, buf, NULL, NULL);
 	break;
       case E_FWIN_EXEC_TERMINAL_SH:
 	snprintf(buf, sizeof(buf), "%s /bin/sh %s", e_config->exebuf_term_cmd, e_util_filename_escape(ici->file));
-	e_exec(fwin->win->border->zone, NULL, buf, NULL, NULL);
+	if (fwin->win)
+	  e_exec(fwin->win->border->zone, NULL, buf, NULL, NULL);
+	else if (fwin->zone)
+	  e_exec(fwin->zone, NULL, buf, NULL, NULL);
 	break;
       case E_FWIN_EXEC_DESKTOP:
 	snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(fwin->fm_obj), ici->file);
 	desktop = efreet_desktop_get(buf);
-	if (desktop) e_exec(fwin->win->border->zone, desktop, NULL, NULL, NULL);
+	if (desktop)
+	  {
+	     if (fwin->win)
+	       e_exec(fwin->win->border->zone, desktop, NULL, NULL, NULL);
+	     else if (fwin->zone)
+	       e_exec(fwin->zone, desktop, NULL, NULL, NULL);
+	  }
 	break;
       default:
 	break;
@@ -723,13 +878,28 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	  {
 	     ici = l->data;
 	     if ((ici->link) && (ici->mount))
-	       e_fwin_new(fwin->win->container, ici->link, "/");
+	       {
+		  if (fwin->win)
+		    e_fwin_new(fwin->win->container, ici->link, "/");
+		  else if (fwin->zone)
+		    e_fwin_new(fwin->zone->container, ici->link, "/");
+	       }
 	     else if ((ici->link) && (ici->removable))
-	       e_fwin_new(fwin->win->container, ici->link, "/");
+	       {
+		  if (fwin->win)
+		    e_fwin_new(fwin->win->container, ici->link, "/");
+		  else if (fwin->zone)
+		    e_fwin_new(fwin->zone->container, ici->link, "/");
+	       }
 	     else if (ici->real_link)
 	       {
 		  if (S_ISDIR(ici->statinfo.st_mode))
-		    e_fwin_new(fwin->win->container, NULL, ici->real_link);
+		    {
+		       if (fwin->win)
+			 e_fwin_new(fwin->win->container, NULL, ici->real_link);
+		       else if (fwin->zone)
+			 e_fwin_new(fwin->zone->container, NULL, ici->real_link);
+		    }
 		  else
 		    need_dia = 1;
 	       }
@@ -738,7 +908,12 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 		  snprintf(buf, sizeof(buf), "%s/%s", 
 			   e_fm2_real_path_get(fwin->fm_obj), ici->file);
 		  if (S_ISDIR(ici->statinfo.st_mode))
-		    e_fwin_new(fwin->win->container, NULL, buf);
+		    {
+		       if (fwin->win)
+			 e_fwin_new(fwin->win->container, NULL, buf);
+		       else
+			 e_fwin_new(fwin->zone->container, NULL, buf);
+		    }
 		  else
 		    need_dia = 1;
 	       }
@@ -852,8 +1027,16 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	       }
 	     if (desktop)
 	       {
-		  if (e_exec(fwin->win->border->zone, desktop, NULL, files_list, "fwin"))
-		    need_dia = 0;
+		  if (fwin->win)
+		    {
+		       if (e_exec(fwin->win->border->zone, desktop, NULL, files_list, "fwin"))
+			 need_dia = 0;
+		    }
+		  else if (fwin->zone)
+		    {
+		       if (e_exec(fwin->zone, desktop, NULL, files_list, "fwin"))
+			 need_dia = 0;
+		    }
 	       }
 	     ecore_list_destroy(files_list);
 	     
@@ -869,8 +1052,12 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
    evas_list_free(mlist);
    
    fad = E_NEW(E_Fwin_Apps_Dialog, 1);
-   dia = e_dialog_new(fwin->win->border->zone->container, 
-		      "E", "_fwin_open_apps");
+   if (fwin->win)
+     dia = e_dialog_new(fwin->win->border->zone->container, 
+			"E", "_fwin_open_apps");
+   else if (fwin->zone)
+     dia = e_dialog_new(fwin->zone->container, 
+			"E", "_fwin_open_apps");
    e_dialog_title_set(dia, _("Open with..."));
    e_dialog_border_icon_set(dia, "enlightenment/applications");
    e_dialog_button_add(dia, _("Open"), "enlightenment/open",

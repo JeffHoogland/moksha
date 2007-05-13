@@ -33,6 +33,8 @@ struct _E_Zone
    Evas_Object         *prev_bg_object;
    Evas_Object         *transition_object;
    
+   E_Fwin              *bg_fwin;
+   
    int                  desk_x_count, desk_y_count;
    int                  desk_x_current, desk_y_current;
    E_Desk             **desks;
@@ -51,6 +53,7 @@ struct _E_Zone
    Ecore_Evas          *black_ecore_evas;
    Evas                *black_evas;
    Ecore_X_Window       black_win;
+   Ecore_Timer         *deferred_fm_timer;
 };
 
 struct _E_Event_Zone_Desk_Count_Set

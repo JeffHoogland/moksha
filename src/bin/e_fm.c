@@ -131,6 +131,7 @@ struct _E_Fm2_Icon
       Evas_Coord     x, y;
       unsigned char  start : 1;
       unsigned char  dnd : 1;
+      unsigned char  src : 1;
    } drag;
    
    unsigned char     realized : 1;
@@ -176,6 +177,10 @@ static void _e_fm2_icons_free(Evas_Object *obj);
 static void _e_fm2_regions_eval(Evas_Object *obj);
 static void _e_fm2_config_free(E_Fm2_Config *cfg);
 
+static Evas_Object *_e_fm2_file_fm2_find(const char *file);
+static E_Fm2_Icon *_e_fm2_icon_find(Evas_Object *obj, const char *file);
+static Evas_List *_e_fm2_uri_icon_list_get(Evas_List *uri);
+	   
 static E_Fm2_Icon *_e_fm2_icon_new(E_Fm2_Smart_Data *sd, const char *file, E_Fm2_Finfo *finf);
 static void _e_fm2_icon_unfill(E_Fm2_Icon *ic);
 static int _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf);
@@ -1326,6 +1331,29 @@ _e_fm2_client_file_move(int id, const char *path, const char *dest, const char *
 			 id, 0, 0, 
 			 (void *)d, l);
    cl->req++;
+   if ((x != -9999) && (y != -9999))
+     {
+	E_Fm2_Custom_File *cf, cf0;
+	
+	cf = e_fm2_custom_file_get(dest);
+	printf("CUSTOM SAVE %s %i %i\n", ecore_file_get_file(dest), x, y);
+	if (cf)
+	  {
+	     cf->geom.x = x;
+	     cf->geom.y = y;
+	     cf->geom.valid = 1;
+	  }
+	else
+	  {
+	     memset(&cf0, 0, sizeof(E_Fm2_Custom_File));
+	     cf = &cf0;
+	     cf->geom.x = x;
+	     cf->geom.y = y;
+	     cf->geom.valid = 1;
+	  }
+	e_fm2_custom_file_set(dest, cf);
+	e_fm2_custom_file_flush();
+     }
 }
 
 static void
@@ -1353,6 +1381,9 @@ _e_fm2_client_file_symlink(int id, const char *path, const char *dest, const cha
 			 id, 0, 0, 
 			 (void *)d, l);
    cl->req++;
+   if ((x != -9999) && (y != -9999))
+     {
+     }
 }
 
 static void
@@ -1380,6 +1411,9 @@ _e_fm2_client_file_copy(int id, const char *path, const char *dest, const char *
 			 id, 0, 0, 
 			 (void *)d, l);
    cl->req++;
+   if ((x != -9999) && (y != -9999))
+     {
+     }
 }
 
 static void
@@ -1640,6 +1674,22 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
        */
       s = (char *)e_user_homedir_get();
       PRT("%s/.e/e/fileman/favorites", s);
+   }
+   else if (CMP("desktop")) {
+      /* this is a virtual device - it's where your favorites list is 
+       * stored - a dir with 
+       .desktop files or symlinks (in fact anything
+       * you like
+       */
+      s = (char *)e_user_homedir_get();
+      if (!strcmp(path, "/"))
+	{
+	   PRT("%s/Desktop", s);
+	}
+      else
+	{
+	   PRT("%s/Desktop-%s", s, path);
+	}
    }
    else if (CMP("dvd") || CMP("dvd-*"))  {
       /* FIXME: find dvd mountpoint optionally for dvd no. X */
@@ -2052,6 +2102,87 @@ _e_fm2_icons_place_grid_icons(E_Fm2_Smart_Data *sd)
      }
 }
 
+static int
+_e_fm2_icons_icon_overlaps(E_Fm2_Icon *ic)
+{
+   Evas_List *l;
+   E_Fm2_Icon *ic2;
+
+   for (l = ic->sd->icons; l; l = l->next)
+     {
+	ic2 = l->data;
+	if ((ic2 != ic) && (ic2->saved_pos))
+	  {
+	     if (E_INTERSECTS(ic2->x, ic2->y, ic2->w, ic2->h,
+			      ic->x, ic->y, ic->w, ic->h))
+	       return 1;
+	  }
+     }
+   return 0;
+}
+
+static int
+_e_fm2_icons_icon_row_ok(E_Fm2_Icon *ic)
+{
+   if (ic->x + ic->w > ic->sd->w) return 0;
+   if (ic->x < 0) return 0;
+   if (ic->y < 0) return 0;
+   return 1;
+}
+
+static void
+_e_fm2_icon_place_relative(E_Fm2_Icon *ic, E_Fm2_Icon *icr, int xrel, int yrel, int xa, int ya)
+{
+   ic->x = icr->x;
+   ic->y = icr->y;
+   
+   if      (xrel > 0) ic->x += icr->w;
+   else if (xrel < 0) ic->x -= ic->w;
+   else if (xa == 1)  ic->x += icr->w - ic->w;
+   
+   if      (yrel > 0) ic->y += icr->h;
+   else if (yrel < 0) ic->y -= ic->h;
+   else if (ya == 1)  ic->y += icr->h - ic->h;
+}
+
+static void
+_e_fm2_icons_place_icon(E_Fm2_Icon *ic)
+{
+   Evas_List *l;
+   E_Fm2_Icon *ic2;
+   
+   ic->x = 0;
+   ic->y = 0;
+   ic->saved_pos = 1;
+   if (!_e_fm2_icons_icon_overlaps(ic)) return;
+   for (l = ic->sd->icons; l; l = l->next)
+     {
+	ic2 = l->data;
+	
+	if (ic2->saved_pos)
+	  {
+	     int x, y;
+	     
+	     _e_fm2_icon_place_relative(ic, ic2, -1, 0, 0, 0);
+	     if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
+	     _e_fm2_icon_place_relative(ic, ic2, -1, 0, 0, 1);
+	     if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
+	     _e_fm2_icon_place_relative(ic, ic2, 0, -1, 0, 0);
+	     if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
+	     _e_fm2_icon_place_relative(ic, ic2, 0, -1, 1, 0);
+	     if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
+	     _e_fm2_icon_place_relative(ic, ic2, 1, 0, 0, 0);
+	     if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
+	     _e_fm2_icon_place_relative(ic, ic2, 1, 0, 0, 1);
+	     if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
+	     _e_fm2_icon_place_relative(ic, ic2, 0, 1, 0, 0);
+	     if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
+	     _e_fm2_icon_place_relative(ic, ic2, 0, 1, 1, 0);
+	     if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
+	  }
+     }
+}
+
 static void
 _e_fm2_icons_place_custom_icons(E_Fm2_Smart_Data *sd)
 {
@@ -2065,8 +2196,9 @@ _e_fm2_icons_place_custom_icons(E_Fm2_Smart_Data *sd)
 	if (!ic->saved_pos)
 	  {
 	     /* FIXME: place using smart place fn */
-	     ic->x = rand() % 200;
-	     ic->y = rand() % 200;
+//	     ic->x = rand() % 200;
+//	     ic->y = rand() % 200;
+	     _e_fm2_icons_place_icon(ic);
 	  }
 	
 	if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
@@ -2238,6 +2370,72 @@ _e_fm2_config_free(E_Fm2_Config *cfg)
    free(cfg);
 }
 
+static Evas_Object *
+_e_fm2_file_fm2_find(const char *file)
+{
+   char *dir;
+   Evas_List *l;
+   
+   dir = ecore_file_get_dir(file);
+   if (!dir) return NULL;
+   for (l = _e_fm2_list; l; l = l->next)
+     {
+	if (!strcmp(e_fm2_real_path_get(l->data), dir))
+	  {
+	     free(dir);
+	     return l->data;
+	  }
+     }
+   free(dir);
+   return NULL;
+}
+
+static E_Fm2_Icon *
+_e_fm2_icon_find(Evas_Object *obj, const char *file)
+{
+   E_Fm2_Smart_Data *sd;
+   Evas_List *l;
+   E_Fm2_Icon *ic;
+
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return NULL;
+   for (l = sd->icons; l; l = l->next)
+     {
+	ic = l->data;
+	if (!strcmp(ic->info.file, file)) return ic;
+     }
+   return NULL;
+}
+
+static Evas_List *
+_e_fm2_uri_icon_list_get(Evas_List *uri)
+{
+   Evas_List *icons = NULL;
+   Evas_List *l;
+   
+   for (l = uri; l; l = l->next)
+     {
+	const char *u, *path, *file;
+	Evas_Object *fm;
+	E_Fm2_Icon *ic;
+	
+	u = l->data;
+	ic = NULL;
+	if (strlen(u) > 7)
+	  {
+	     path = u + 7;
+	     fm = _e_fm2_file_fm2_find(path);
+	     if (fm)
+	       {
+		  file = ecore_file_get_file(path);
+		  ic = _e_fm2_icon_find(fm, file);
+	       }
+	  }
+	icons = evas_list_append(icons, ic);
+     }
+   return icons;
+}
+
 /**************************/
 
 static E_Fm2_Icon *
@@ -2248,6 +2446,7 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, const char *file, E_Fm2_Finfo *finf)
    /* create icon */
    ic = E_NEW(E_Fm2_Icon, 1);
    ic->info.fm = sd->obj;
+   ic->info.ic = ic;
    ic->info.file = evas_stringshare_add(file);
    ic->sd = sd;
    if (!_e_fm2_icon_fill(ic, finf))
@@ -2362,6 +2561,16 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 		  ic->info.icon = evas_stringshare_add(cf->icon.icon);
 	       }
 	     ic->info.icon_type = cf->icon.type;
+	  }
+	if (cf->geom.valid)
+	  {
+	     ic->saved_pos = 1;
+	     ic->x = cf->geom.x;
+	     ic->y = cf->geom.y;
+	     printf("CUSTOM %s - %i %i - %ix%i\n", 
+		    ic->info.file, ic->x, ic->y, ic->w, ic->h);
+	     if (cf->geom.w > 0) ic->w = cf->geom.w;
+	     if (cf->geom.h > 0) ic->w = cf->geom.h;
 	  }
      }
    
@@ -3333,6 +3542,9 @@ _e_fm2_dnd_finish(Evas_Object *obj, int refresh)
      {
 	ic = l->data;
 	ic->drag.dnd = 0;
+	ic->drag.src = 0;
+	if (ic->obj) evas_object_show(ic->obj);
+	if (ic->obj_icon) evas_object_show(ic->obj_icon);
      }
    if (refresh) e_fm2_refresh(obj);
 }
@@ -3369,7 +3581,7 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 	if (E_INSIDE(ev->x, ev->y, ic->x - ic->sd->pos.x, ic->y - ic->sd->pos.y, ic->w, ic->h))
 	  {
 	     printf("OVER %s\n", ic->info.file);
-	     if (ic->drag.dnd) return;
+	     if (ic->drag.dnd) continue;
 	     /* if list view */
 	     if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
 	       {
@@ -3483,20 +3695,37 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 {
    E_Fm2_Smart_Data *sd;
    E_Event_Dnd_Drop *ev;
-   Evas_List *fsel, *l, *ll;
+   E_Fm2_Icon *ic;
+   Evas_List *fsel, *l, *ll, *il, *isel;
    char buf[4096], *fl;
    const char *fp;
-
+   Evas_Coord dx, dy;
+   int adjust_icons = 0;
+   
    sd = data;
    if (!type) return;
    if (strcmp(type, "text/uri-list")) return;
    ev = (E_Event_Dnd_Drop *)event;
    fsel = ev->data;
    printf("DROP: %i %i\n", ev->x, ev->y);
+   isel = _e_fm2_uri_icon_list_get(fsel);
+   if (!isel) return;
    for (l = fsel; l; l = l->next)
      {
 	fl = l->data;
 	printf("  %s\n", fl);
+     }
+   dx = 0; dy = 0;
+   for (l = isel; l; l = l->next)
+     {
+	ic = l->data;
+	if (ic->drag.src)
+	  {
+	     dx = ev->x - ic->drag.x - ic->x + ic->sd->pos.x;
+	     dy = ev->y - ic->drag.y - ic->y + ic->sd->pos.y;
+	     printf("DND offset %i %i\n", dx, dy);
+	     break;
+	  }
      }
    /* note - logic.
     * if drop file prefix path matches extra_file_source then it can be
@@ -3509,21 +3738,44 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
      {
 	printf("drop all\n");
 	/* move file into this fm dir */
-	for (ll = fsel; ll; ll = ll->next)
+	for (ll = fsel, il = isel; ll && il; ll = ll->next, il = il->next)
 	  {
+	     ic = il->data;
 	     fp = _e_fm2_icon_desktop_url_eval(ll->data);
 	     if (!fp) continue;
 	     snprintf(buf, sizeof(buf), "%s/%s",
 		      sd->realpath, ecore_file_get_file(fp));
 	     printf("mv %s %s\n", (char *)fp, buf);
-	     _e_fm2_client_file_move(sd->id, fp, buf, "", 0, ev->x, ev->y);
-	     if (sd->config->view.mode == E_FM2_VIEW_MODE_CUSTOM_ICONS)
+	     if ((ic) && (sd->config->view.mode == E_FM2_VIEW_MODE_CUSTOM_ICONS))
 	       {
 		  /* dnd doesnt tell me all the co-ords of the icons being dragged so i can't place them accurately.
 		   * need to fix this. ev->data probably needs to become more compelx than a list of url's
 		   */
+		  _e_fm2_client_file_move(sd->id, fp, buf, "", 0, ic->x + dx, ic->y + dy);
+		  if (ic->sd == sd)
+		    {
+		       ic->x += dx;
+		       ic->y += dy;
+		       ic->saved_pos = 1;
+		       adjust_icons = 1;
+		    }
 	       }
+	     else
+	       _e_fm2_client_file_move(sd->id, fp, buf, "", 0, -9999, -9999);
 	     evas_stringshare_del(fp);
+	  }
+	if (adjust_icons)
+	  {
+	     sd->max.w = 0;
+	     sd->max.h = 0;
+	     for (l = sd->icons; l; l = l->next)
+	       {
+		  ic = l->data;
+		  if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
+		  if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
+	       }
+	     _e_fm2_obj_icons_place(sd);
+	     evas_object_smart_callback_call(sd->obj, "changed", NULL);
 	  }
      }
    else if (sd->drop_icon) /* inot or before/after an icon */
@@ -3532,8 +3784,9 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	if (sd->drop_after == -1) /* put into subdir in icon */
 	  {
 	     /* move file into dir that this icon is for */
-	     for (ll = fsel; ll; ll = ll->next)
+	     for (ll = fsel, il = isel; ll && il; ll = ll->next, il = il->next)
 	       {
+		  ic = il->data;
 		  fp = _e_fm2_icon_desktop_url_eval(ll->data);
 		  if (!fp) continue;
 		  /* move the file into the subdir */
@@ -3552,8 +3805,9 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		    {
 		       if (sd->drop_after)
 			 {
-                            for (ll = evas_list_last(fsel); ll; ll = ll->prev)
+			    for (ll = fsel, il = isel; ll && il; ll = ll->next, il = il->next)
 			      {
+				 ic = il->data;
 				 fp = _e_fm2_icon_desktop_url_eval(ll->data);
 				 if (!fp) continue;
 				 snprintf(buf, sizeof(buf), "%s/%s",
@@ -3561,20 +3815,21 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 				 if (sd->config->view.link_drop)
 				   {
 				      printf("ln -s %s %s\n", (char *)fp, buf);
-				      _e_fm2_client_file_symlink(sd->id, buf, fp, sd->drop_icon->info.file, sd->drop_after, ev->x, ev->y);
+				      _e_fm2_client_file_symlink(sd->id, buf, fp, sd->drop_icon->info.file, sd->drop_after, -9999, -9999);
 				   }
 				 else
 				   {
 				      printf("mv %s %s\n", (char *)fp, buf);
-				      _e_fm2_client_file_move(sd->id, fp, buf, sd->drop_icon->info.file, sd->drop_after, ev->x, ev->y);
+				      _e_fm2_client_file_move(sd->id, fp, buf, sd->drop_icon->info.file, sd->drop_after, -9999, -9999);
 				   }
 				 evas_stringshare_del(fp);
 			      }
 			 }
 		       else
 			 {
-			    for (ll = fsel; ll; ll = ll->next)
+			    for (ll = fsel, il = isel; ll && il; ll = ll->next, il = il->next)
 			      {
+				 ic = il->data;
 				 fp = _e_fm2_icon_desktop_url_eval(ll->data);
 				 if (!fp) continue;
 				 snprintf(buf, sizeof(buf), "%s/%s",
@@ -3582,12 +3837,12 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 				 if (sd->config->view.link_drop)
 				   {
 				      printf("ln -s %s %s\n", (char *)fp, buf);
-				      _e_fm2_client_file_symlink(sd->id, buf, fp, sd->drop_icon->info.file, sd->drop_after, ev->x, ev->y);
+				      _e_fm2_client_file_symlink(sd->id, buf, fp, sd->drop_icon->info.file, sd->drop_after, -9999, -9999);
 				   }
 				 else
 				   {
 				      printf("mv %s %s\n", (char *)fp, buf);
-				      _e_fm2_client_file_move(sd->id, fp, buf, sd->drop_icon->info.file, sd->drop_after, ev->x, ev->y);
+				      _e_fm2_client_file_move(sd->id, fp, buf, sd->drop_icon->info.file, sd->drop_after, -9999, -9999);
 				   }
 				 evas_stringshare_del(fp);
 			      }
@@ -3595,30 +3850,40 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		    }
 		  else /* no order file */
 		    {
-		       for (ll = fsel; ll; ll = ll->next)
+		       for (ll = fsel, il = isel; ll && il; ll = ll->next, il = il->next)
 			 {
+			    ic = il->data;
 			    fp = _e_fm2_icon_desktop_url_eval(ll->data);
 			    if (!fp) continue;
 			    /* move the file into the subdir */
 			    snprintf(buf, sizeof(buf), "%s/%s",
 				     sd->realpath, ecore_file_get_file(fp));
 			    printf("mv %s %s\n", (char *)fp, buf);
-			    _e_fm2_client_file_move(sd->id, fp, buf, "", 0, ev->x, ev->y);
+			    _e_fm2_client_file_move(sd->id, fp, buf, "", 0, -9999, -9999);
 			    evas_stringshare_del(fp);
 			 }
 		    }
 	       }
 	     else
 	       {
-		  for (ll = fsel; ll; ll = ll->next)
+		  for (ll = fsel, il = isel; ll && il; ll = ll->next, il = il->next)
 		    {
+		       ic = il->data;
 		       fp = _e_fm2_icon_desktop_url_eval(ll->data);
 		       if (!fp) continue;
 		       /* move the file into the subdir */
 		       snprintf(buf, sizeof(buf), "%s/%s",
 				sd->realpath, ecore_file_get_file(fp));
 		       printf("mv %s %s\n", (char *)fp, buf);
-		       _e_fm2_client_file_move(sd->id, fp, buf, "", 0, ev->x, ev->y);
+		       if ((ic) && (sd->config->view.mode == E_FM2_VIEW_MODE_CUSTOM_ICONS))
+			 {
+			    /* dnd doesnt tell me all the co-ords of the icons being dragged so i can't place them accurately.
+			     * need to fix this. ev->data probably needs to become more compelx than a list of url's
+			     */
+			    _e_fm2_client_file_move(sd->id, fp, buf, "", 0, ic->x + dx, ic->y + dy);
+			 }
+		       else
+			 _e_fm2_client_file_move(sd->id, fp, buf, "", 0, ev->x, ev->y);
 		       evas_stringshare_del(fp);
 		    }
 	       }
@@ -3628,6 +3893,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
    _e_fm2_dnd_drop_all_hide(sd->obj);
    for (l = _e_fm2_list; l; l = l->next)
      _e_fm2_dnd_finish(l->data, 0);
+   evas_list_free(isel);
 }
 
 /* FIXME: prototype */
@@ -3791,10 +4057,12 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
      {
 	if ((ic->sd->eobj))
 	  {
-	     ic->drag.x = ev->output.x;
-	     ic->drag.y = ev->output.y;
+	     ic->drag.x = ev->output.x - ic->x - ic->sd->x + ic->sd->pos.x;
+	     ic->drag.y = ev->output.y - ic->y - ic->sd->y + ic->sd->pos.y;
+	     printf("DX: %i %i\n", ic->drag.x, ic->drag.y);
 	     ic->drag.start = 1;
 	     ic->drag.dnd = 0;
+	     ic->drag.src = 1;
 	  }
 	_e_fm2_mouse_1_handler(ic, 0, ev->modifiers);
      }
@@ -3820,6 +4088,7 @@ _e_fm2_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	_e_fm2_mouse_1_handler(ic, 1, ev->modifiers);
         ic->drag.start = 0;
 	ic->drag.dnd = 0;
+	ic->drag.src = 0;
      }
    ic->down_sel = 0;
 }
@@ -3852,8 +4121,8 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
      {     
 	int dx, dy;
 	
-	dx = ev->cur.output.x - ic->drag.x;
-	dy = ev->cur.output.y - ic->drag.y;
+	dx = ev->cur.output.x - (ic->drag.x + ic->x + ic->sd->x - ic->sd->pos.x);
+	dy = ev->cur.output.y - (ic->drag.y + ic->y + ic->sd->y - ic->sd->pos.y);
 	if (((dx * dx) + (dy * dy)) >
 	    (e_config->drag_resist * e_config->drag_resist))
 	  {
@@ -3874,6 +4143,9 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 		case E_WIN_TYPE:
 		  con = ((E_Win *)(ic->sd->eobj))->container;
 		  break;
+		case E_ZONE_TYPE:
+		  con = ((E_Zone *)(ic->sd->eobj))->container;
+		  break;
 		case E_BORDER_TYPE:
 		  con = ((E_Border *)(ic->sd->eobj))->zone->container;
 		  break;
@@ -3887,6 +4159,8 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     if (!con) return;
 	     ic->sd->drag = 1;
 	     ic->drag.dnd = 1;
+	     if (ic->obj) evas_object_hide(ic->obj);
+	     if (ic->obj_icon) evas_object_hide(ic->obj_icon);
 	     ic->drag.start = 0;
 	     evas_object_geometry_get(ic->obj, &x, &y, &w, &h);
 	     realpath = e_fm2_real_path_get(ic->sd->obj);
@@ -3900,6 +4174,9 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 		  else
 		    snprintf(buf, sizeof(buf), "file://%s/%s", realpath, ici->file);
 		  fsel = evas_list_append(fsel, strdup(buf));
+		  ici->ic->drag.dnd = 1;
+		  if (ici->ic->obj) evas_object_hide(ici->ic->obj);
+		  if (ici->ic->obj_icon) evas_object_hide(ici->ic->obj_icon);
 	       }
 	     evas_list_free(sl);
 	     d = e_drag_new(con,
@@ -3944,7 +4221,9 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     edje_object_signal_emit(o2, "e,state,selected", "e");
 	     e_drag_object_set(d, o);
 	     e_drag_resize(d, w, h);
-	     e_drag_start(d, ic->drag.x, ic->drag.y);
+	     e_drag_start(d,
+			  ic->drag.x + ic->x + ic->sd->x - ic->sd->pos.x,
+			  ic->drag.y + ic->y + ic->sd->y - ic->sd->pos.y);
 	     e_util_evas_fake_mouse_up_later(evas_object_evas_get(ic->sd->obj),
 					     1);
 	  }

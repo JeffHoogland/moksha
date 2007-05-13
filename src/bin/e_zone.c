@@ -8,6 +8,7 @@
  */
 
 static void _e_zone_free(E_Zone *zone);
+static void _e_zone_fm_add(E_Zone *zone, const char *dev, const char *path);
 static void _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_zone_cb_bg_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_zone_cb_bg_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event_info);
@@ -17,6 +18,7 @@ static int  _e_zone_cb_mouse_out(void *data, int type, void *event);
 static int  _e_zone_cb_timer(void *data);
 static int  _e_zone_cb_desk_show(void *data, int type, void *event);
 static void _e_zone_update_flip(E_Zone *zone);
+static int  _e_zone_fm_deferred(void *data);
 
 EAPI int E_EVENT_ZONE_DESK_COUNT_SET = 0;
 EAPI int E_EVENT_POINTER_WARP = 0;
@@ -123,6 +125,8 @@ e_zone_new(E_Container *con, int num, int x, int y, int w, int h)
    e_zone_desk_count_set(zone,
 			 e_config->zone_desks_x_count,
 			 e_config->zone_desks_y_count);
+   
+   zone->deferred_fm_timer = ecore_timer_add(2.0, _e_zone_fm_deferred, zone);
 
    _e_zone_update_flip(zone);
    return zone;
@@ -601,6 +605,16 @@ _e_zone_free(E_Zone *zone)
    Evas_List *l;
    int x, y;
 
+   if (zone->deferred_fm_timer)
+     {
+	ecore_timer_del(zone->deferred_fm_timer);
+	zone->deferred_fm_timer = NULL;
+     }
+   if (zone->bg_fwin)
+     {
+	e_object_del(E_OBJECT(zone->bg_fwin));
+	zone->bg_fwin = NULL;
+     }
    if (zone->black_ecore_evas)
      {
 	e_canvas_del(zone->black_ecore_evas);
@@ -640,6 +654,12 @@ _e_zone_free(E_Zone *zone)
      }
    free(zone->desks);
    free(zone);
+}
+
+static void
+_e_zone_fm_add(E_Zone *zone, const char *dev, const char *path)
+{
+   zone->bg_fwin = e_fwin_zone_new(zone, dev, path);
 }
 
 static void
@@ -947,4 +967,23 @@ _e_zone_update_flip(E_Zone *zone)
 	ecore_x_window_hide(zone->flip.top);
 	ecore_x_window_hide(zone->flip.bottom);
      }
+}
+
+static int
+_e_zone_fm_deferred(void *data)
+{
+   E_Zone *zone;
+   
+   zone = data;
+   if ((zone->container->num == 0) && (zone->num == 0))
+     _e_zone_fm_add(zone, "desktop", "/");
+   else
+     {
+	char buf[256];
+	
+	snprintf(buf, sizeof(buf), "%i", zone->container->num + zone->num);
+	_e_zone_fm_add(zone, "desktop", buf);
+     }
+   zone->deferred_fm_timer = NULL;
+   return 0;
 }

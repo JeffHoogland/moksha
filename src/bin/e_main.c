@@ -384,24 +384,6 @@ main(int argc, char **argv)
 	exit(-1);
      }
    
-   TS("xinerama");
-   if (!e_xinerama_init())
-     {
-	e_error_message_show(_("Enlightenment cannot setup xinerama wrapping.\n"
-			       "This should not happen."));
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_xinerama_shutdown);
-   
-/* ecore_x_grab(); */
-   
-   ecore_x_io_error_handler_set(_e_main_cb_x_fatal, NULL);
-
-   TS("x hints");
-   /* Init window manager hints */
-   e_hints_init();
-   TS("x hints done");
-   
    TS("ecore_con");
    /* init generic communications */
    if (!ecore_con_init())
@@ -420,6 +402,24 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(ecore_ipc_shutdown);
 
+   TS("xinerama");
+   if (!e_xinerama_init())
+     {
+	e_error_message_show(_("Enlightenment cannot setup xinerama wrapping.\n"
+			       "This should not happen."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_xinerama_shutdown);
+   
+/* ecore_x_grab(); */
+   
+   ecore_x_io_error_handler_set(_e_main_cb_x_fatal, NULL);
+
+   TS("x hints");
+   /* Init window manager hints */
+   e_hints_init();
+   TS("x hints done");
+   
    TS("efreet");
    /* init FDO desktop */
    if (!efreet_init())
