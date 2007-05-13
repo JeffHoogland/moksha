@@ -951,9 +951,10 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 	       void (*gen_func) (void *data, Evas_Object *obj, void *event_info),
 	       void *data, int force_gen, const char **type_ret)
 {
-   Evas_Object *oic;
-   char buf[4096], *p;
+   Evas_Object *oic = NULL;
+   char buf[PATH_MAX], *p;
 
+   printf("get icon %s\n", ici->file);
    if (ici->icon)
      {
 	/* custom icon */
@@ -978,10 +979,33 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 	  }
 	else
 	  {
-	     /* theme icon */
-	     oic = edje_object_add(evas);
-	     e_util_edje_icon_set(oic, ici->icon);
-	     if (type_ret) *type_ret = "THEME_ICON";
+	     if (ici->mime)
+	       {
+		  const char *icon;
+		  
+		  icon = e_fm_mime_icon_get(ici->mime);
+		  printf("type %s\n", icon);
+		  if (!strcmp(icon, "DESKTOP"))
+		    {
+		       Efreet_Desktop *ef;
+		       
+		       snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+		       ef = efreet_desktop_get(buf);
+		       if (ef) oic = e_util_desktop_icon_add(ef, "48x48", evas);
+		       if (type_ret) *type_ret = "DESKTOP";
+		       printf("oic = %p\n", oic);
+		       // FIXME: there is no way to just unref an efreet desktop - free completely
+		       // frees - doesnt just unref.
+		       // if (ef) efreet_desktop_free(ef);
+		    }
+	       }
+	     if (!oic)
+	       {
+		  /* theme icon */
+		  oic = edje_object_add(evas);
+		  e_util_edje_icon_set(oic, ici->icon);
+		  if (type_ret) *type_ret = "THEME_ICON";
+	       }
 	  }
 	return oic;
      }
@@ -1042,9 +1066,10 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 		  Efreet_Desktop *ef;
 		 
 		  oic = NULL; 
+		  printf("%s icon = %s\n", ici->file, icon);
 		  snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
 		  ef = efreet_desktop_get(buf);
-		  if (ef) oic = e_util_desktop_icon_add(ef, "24x24", evas);
+		  if (ef) oic = e_util_desktop_icon_add(ef, "48x48", evas);
 		  if (type_ret) *type_ret = "DESKTOP";
 // FIXME: there is no way to just unref an efreet desktop - free completely
 // frees - doesnt just unref.
@@ -1115,7 +1140,7 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 
 		  oic = NULL; 
 		  ef = efreet_desktop_get(buf);
-		  if (ef) oic = e_util_desktop_icon_add(ef, "24x24", evas);
+		  if (ef) oic = e_util_desktop_icon_add(ef, "48x48", evas);
 		  if (type_ret) *type_ret = "DESKTOP";
 // FIXME: there is no way to just unref an efreet desktop - free completely
 // frees - doesnt just unref.
@@ -2974,12 +2999,12 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 
    desktop = efreet_desktop_get(buf);
    if (!desktop) goto error;
-   if (desktop->type != EFREET_DESKTOP_TYPE_LINK) goto error;
+//   if (desktop->type != EFREET_DESKTOP_TYPE_LINK) goto error;
 
    if (desktop->name)         ic->info.label   = evas_stringshare_add(desktop->name);
    if (desktop->generic_name) ic->info.generic = evas_stringshare_add(desktop->generic_name);
    if (desktop->comment)      ic->info.comment = evas_stringshare_add(desktop->comment);
-   if (desktop->icon) ic->info.icon = evas_stringshare_add(desktop->icon);
+   if (desktop->icon)         ic->info.icon    = evas_stringshare_add(desktop->icon);
    if (desktop->url)
      ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->url);
    if (desktop->x)
