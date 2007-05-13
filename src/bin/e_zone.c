@@ -126,7 +126,7 @@ e_zone_new(E_Container *con, int num, int x, int y, int w, int h)
 			 e_config->zone_desks_x_count,
 			 e_config->zone_desks_y_count);
    
-   zone->deferred_fm_timer = ecore_timer_add(2.0, _e_zone_fm_deferred, zone);
+   zone->deferred_fm_timer = ecore_timer_add(0.1, _e_zone_fm_deferred, zone);
 
    _e_zone_update_flip(zone);
    return zone;

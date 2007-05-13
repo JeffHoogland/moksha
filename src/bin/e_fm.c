@@ -372,7 +372,7 @@ e_fm2_init(void)
 	E_EVENT_REMOVABLE_ADD = ecore_event_type_new();
 	E_EVENT_REMOVABLE_DEL = ecore_event_type_new();
      }
-   _e_fm2_client_spawn();
+//   _e_fm2_client_spawn();
    e_fm2_custom_file_init();
    return 1;
 }
@@ -1235,27 +1235,19 @@ e_fm2_icon_file_info_get(E_Fm2_Icon *ic)
    return &(ic->info);
 }
 
-/* FIXME: tmp delay - fix later */
-static int
-_e_fm2_cb_spawn_timer(void *data)
-{
-   Ecore_Exe *exe;
-   char buf[4096];
-   
-   snprintf(buf, sizeof(buf), "%s/enlightenment_fm", e_prefix_bin_get());
-   exe = ecore_exe_run(buf, NULL);
-   return 0;
-}
+/* FIXME: track real exe with exe del events etc. */
+static int _e_fm2_client_spawning = 0;
 
 static void
 _e_fm2_client_spawn(void)
 {
-   /* for now spawn the fm 1.0 seconds later making sure e is up - 
-    * in reality this needs to be be done on demand and queued - tracking exe
-    * as well as clients - so if client dies - we know (before it connects),
-    * and all requests need to be queued until slave is up.
-    */
-   ecore_timer_add(1.0, _e_fm2_cb_spawn_timer, NULL);
+   Ecore_Exe *exe;
+   char buf[4096];
+   
+   if (_e_fm2_client_spawning) return;
+   snprintf(buf, sizeof(buf), "%s/enlightenment_fm", e_prefix_bin_get());
+   exe = ecore_exe_run(buf, NULL);
+   _e_fm2_client_spawning = 1;
 }
 
 static E_Fm2_Client *
@@ -1268,7 +1260,7 @@ _e_fm2_client_get(void)
    /* if we don't have a slave - spane one */
    if (!_e_fm2_client_list)
      {
-//	_e_fm2_client_spawn();
+	_e_fm2_client_spawn();
 	return NULL;
      }
    for (l = _e_fm2_client_list; l; l = l->next)
@@ -1283,18 +1275,88 @@ _e_fm2_client_get(void)
    return cl_chosen;
 }
 
+typedef struct _E_Fm2_Message E_Fm2_Message;
+
+struct _E_Fm2_Message
+{
+   int major, minor, ref, ref_to, response;
+   void *data;
+   int size;
+};
+
+static Evas_List *_e_fm2_messages = NULL;
+
+static void
+_e_fm2_client_message_queue(int major, int minor, int ref, int ref_to, int response, const void *data, int size)
+{
+   E_Fm2_Message *msg;
+   
+   msg = E_NEW(E_Fm2_Message, 1);
+   if (!msg) return;
+   msg->major = major;
+   msg->minor = minor;
+   msg->ref = ref;
+   msg->ref_to = ref_to;
+   msg->response = response;
+   if (data)
+     {
+	msg->size = size;
+	msg->data = malloc(size);
+	if (msg->data)
+	  memcpy(msg->data, data, size);
+	else
+	  {
+	     free(msg);
+	     return;
+	  }
+     }
+   _e_fm2_messages = evas_list_append(_e_fm2_messages, msg);
+}
+
+static void
+_e_fm2_client_message_flush(E_Fm2_Client *cl, E_Fm2_Message *msg)
+{
+   _e_fm2_messages = evas_list_remove(_e_fm2_messages, msg);
+   ecore_ipc_client_send(cl->cl, msg->major, msg->minor, 
+			 msg->ref, msg->ref_to, msg->response, 
+			 msg->data, msg->size);
+   cl->req++;
+   free(msg->data);
+   free(msg);
+}
+
+static void
+_e_fm2_client_messages_flush(void)
+{
+   while (_e_fm2_messages)
+     {
+	E_Fm2_Client *cl;
+	
+	cl = _e_fm2_client_get();
+	if (!cl) break;
+	_e_fm2_client_message_flush(cl, _e_fm2_messages->data);
+     }
+}
+
 static void
 _e_fm2_client_monitor_add(int id, const char *path)
 {
    E_Fm2_Client *cl;
 
-   /* FIXME: for now if there is no client - abort the op entirely */
    cl = _e_fm2_client_get();
-   if (!cl) return;
-   ecore_ipc_client_send(cl->cl, E_IPC_DOMAIN_FM, 1, 
-			 id, 0, 0, 
-			 (void *)path, strlen(path) + 1);
-   cl->req++;
+   if (!cl)
+     {
+	_e_fm2_client_message_queue(E_IPC_DOMAIN_FM, 1, 
+				    id, 0, 0, 
+				    (void *)path, strlen(path) + 1);
+     }
+   else
+     {
+	ecore_ipc_client_send(cl->cl, E_IPC_DOMAIN_FM, 1, 
+			      id, 0, 0, 
+			      (void *)path, strlen(path) + 1);
+	cl->req++;
+     }
 }
 
 static void
@@ -1302,13 +1364,20 @@ _e_fm2_client_monitor_del(int id, const char *path)
 {
    E_Fm2_Client *cl;
    
-   /* FIXME: for now if there is no client - abort the op entirely */
    cl = _e_fm2_client_get();
-   if (!cl) return;
-   ecore_ipc_client_send(cl->cl, E_IPC_DOMAIN_FM, 2,
-			 id, 0, 0, 
-			 (void *)path, strlen(path) + 1);
-   cl->req++;
+   if (!cl)
+     {
+	_e_fm2_client_message_queue(E_IPC_DOMAIN_FM, 2,
+				    id, 0, 0, 
+				    (void *)path, strlen(path) + 1);
+     }
+   else
+     {
+	ecore_ipc_client_send(cl->cl, E_IPC_DOMAIN_FM, 2,
+			      id, 0, 0, 
+			      (void *)path, strlen(path) + 1);
+	cl->req++;
+     }
 }
 
 static void
@@ -1316,13 +1385,20 @@ _e_fm2_client_file_del(int id, const char *path)
 {
    E_Fm2_Client *cl;
    
-   /* FIXME: for now if there is no client - abort the op entirely */
    cl = _e_fm2_client_get();
-   if (!cl) return;
-   ecore_ipc_client_send(cl->cl, E_IPC_DOMAIN_FM, 3,
-			 id, 0, 0, 
-			 (void *)path, strlen(path) + 1);
-   cl->req++;
+   if (!cl)
+     {
+	_e_fm2_client_message_queue(E_IPC_DOMAIN_FM, 3,
+				    id, 0, 0, 
+				    (void *)path, strlen(path) + 1);
+     }
+   else
+     {
+	ecore_ipc_client_send(cl->cl, E_IPC_DOMAIN_FM, 3,
+			      id, 0, 0, 
+			      (void *)path, strlen(path) + 1);
+	cl->req++;
+     }
 }
 
 static void
@@ -1330,13 +1406,20 @@ _e_fm2_client_file_trash(int id, const char *path)
 {
    E_Fm2_Client *cl;
    
-   /* FIXME: for now if there is no client - abort the op entirely */
    cl = _e_fm2_client_get();
-   if (!cl) return;
-   ecore_ipc_client_send(cl->cl, E_IPC_DOMAIN_FM, 4,
-			 id, 0, 0, 
-			 (void *)path, strlen(path) + 1);
-   cl->req++;
+   if (!cl)
+     {
+	_e_fm2_client_message_queue(E_IPC_DOMAIN_FM, 4,
+				    id, 0, 0, 
+				    (void *)path, strlen(path) + 1);
+     }
+   else
+     {
+	ecore_ipc_client_send(cl->cl, E_IPC_DOMAIN_FM, 4,
+			      id, 0, 0, 
+			      (void *)path, strlen(path) + 1);
+	cl->req++;
+     }
 }
 
 static void
@@ -1346,9 +1429,6 @@ _e_fm2_client_file_mkdir(int id, const char *path, const char *rel, int rel_to, 
    char *d;
    int l1, l2, l;
    
-   /* FIXME: for now if there is no client - abort the op entirely */
-   cl = _e_fm2_client_get();
-   if (!cl) return;
    l1 = strlen(path);
    l2 = strlen(rel);
    l = l1 + 1 + l2 + 1 + (sizeof(int) * 3);
@@ -1358,13 +1438,20 @@ _e_fm2_client_file_mkdir(int id, const char *path, const char *rel, int rel_to, 
    memcpy(d + l1 + 1 + l2 + 1, &rel_to, sizeof(int));
    memcpy(d + l1 + 1 + l2 + 1 + sizeof(int), &x, sizeof(int));
    memcpy(d + l1 + 1 + l2 + 1 + (2 * sizeof(int)), &y, sizeof(int));
-   /* FIXME: for now if there is no client - abort the op entirely */
    cl = _e_fm2_client_get();
-   if (!cl) return;
-   ecore_ipc_client_send(cl->cl, E_IPC_DOMAIN_FM, 8,
-			 id, 0, 0, 
-			 (void *)d, l);
-   cl->req++;
+   if (!cl)
+     {
+	_e_fm2_client_message_queue(E_IPC_DOMAIN_FM, 8,
+				    id, 0, 0, 
+				    (void *)d, l);
+     }
+   else
+     {
+	ecore_ipc_client_send(cl->cl, E_IPC_DOMAIN_FM, 8,
+			      id, 0, 0, 
+			      (void *)d, l);
+	cl->req++;
+     }
 }
 
 static void
@@ -1374,9 +1461,6 @@ _e_fm2_client_file_move(int id, const char *path, const char *dest, const char *
    char *d;
    int l1, l2, l3, l;
    
-   /* FIXME: for now if there is no client - abort the op entirely */
-   cl = _e_fm2_client_get();
-   if (!cl) return;
    l1 = strlen(path);
    l2 = strlen(dest);
    l3 = strlen(rel);
@@ -1388,10 +1472,20 @@ _e_fm2_client_file_move(int id, const char *path, const char *dest, const char *
    memcpy(d + l1 + 1 + l2 + 1 + l3 + 1, &rel_to, sizeof(int));
    memcpy(d + l1 + 1 + l2 + 1 + l3 + 1 + sizeof(int), &x, sizeof(int));
    memcpy(d + l1 + 1 + l2 + 1 + l3 + 1 + (2 * sizeof(int)), &y, sizeof(int));
-   ecore_ipc_client_send(cl->cl, E_IPC_DOMAIN_FM, 6,
-			 id, 0, 0, 
-			 (void *)d, l);
-   cl->req++;
+   cl = _e_fm2_client_get();
+   if (!cl)
+     {
+	_e_fm2_client_message_queue(E_IPC_DOMAIN_FM, 6,
+				    id, 0, 0, 
+				    (void *)d, l);
+     }
+   else
+     {
+	ecore_ipc_client_send(cl->cl, E_IPC_DOMAIN_FM, 6,
+			      id, 0, 0, 
+			      (void *)d, l);
+	cl->req++;
+     }
    if ((x != -9999) && (y != -9999))
      {
 	E_Fm2_Custom_File *cf, cf0;
@@ -1424,9 +1518,6 @@ _e_fm2_client_file_symlink(int id, const char *path, const char *dest, const cha
    char *d;
    int l1, l2, l3, l;
    
-   /* FIXME: for now if there is no client - abort the op entirely */
-   cl = _e_fm2_client_get();
-   if (!cl) return;
    l1 = strlen(path);
    l2 = strlen(dest);
    l3 = strlen(rel);
@@ -1438,12 +1529,42 @@ _e_fm2_client_file_symlink(int id, const char *path, const char *dest, const cha
    memcpy(d + l1 + 1 + l2 + 1 + l3 + 1, &rel_to, sizeof(int));
    memcpy(d + l1 + 1 + l2 + 1 + l3 + 1 + sizeof(int), &x, sizeof(int));
    memcpy(d + l1 + 1 + l2 + 1 + l3 + 1 + (2 * sizeof(int)), &y, sizeof(int));
-   ecore_ipc_client_send(cl->cl, E_IPC_DOMAIN_FM, 13,
-			 id, 0, 0, 
-			 (void *)d, l);
-   cl->req++;
+   cl = _e_fm2_client_get();
+   if (!cl)
+     {
+	_e_fm2_client_message_queue(E_IPC_DOMAIN_FM, 13,
+				    id, 0, 0, 
+				    (void *)d, l);
+     }
+   else
+     {
+	ecore_ipc_client_send(cl->cl, E_IPC_DOMAIN_FM, 13,
+			      id, 0, 0, 
+			      (void *)d, l);
+	cl->req++;
+     }
    if ((x != -9999) && (y != -9999))
      {
+	E_Fm2_Custom_File *cf, cf0;
+	
+	cf = e_fm2_custom_file_get(dest);
+	printf("CUSTOM SAVE %s %i %i\n", ecore_file_get_file(dest), x, y);
+	if (cf)
+	  {
+	     cf->geom.x = x;
+	     cf->geom.y = y;
+	     cf->geom.valid = 1;
+	  }
+	else
+	  {
+	     memset(&cf0, 0, sizeof(E_Fm2_Custom_File));
+	     cf = &cf0;
+	     cf->geom.x = x;
+	     cf->geom.y = y;
+	     cf->geom.valid = 1;
+	  }
+	e_fm2_custom_file_set(dest, cf);
+	e_fm2_custom_file_flush();
      }
 }
 
@@ -1454,9 +1575,6 @@ _e_fm2_client_file_copy(int id, const char *path, const char *dest, const char *
    char *d;
    int l1, l2, l3, l;
    
-   /* FIXME: for now if there is no client - abort the op entirely */
-   cl = _e_fm2_client_get();
-   if (!cl) return;
    l1 = strlen(path);
    l2 = strlen(dest);
    l3 = strlen(rel);
@@ -1468,12 +1586,42 @@ _e_fm2_client_file_copy(int id, const char *path, const char *dest, const char *
    memcpy(d + l1 + 1 + l2 + 1 + l3 + 1, &rel_to, sizeof(int));
    memcpy(d + l1 + 1 + l2 + 1 + l3 + 1 + sizeof(int), &x, sizeof(int));
    memcpy(d + l1 + 1 + l2 + 1 + l3 + 1 + (2 * sizeof(int)), &y, sizeof(int));
-   ecore_ipc_client_send(cl->cl, E_IPC_DOMAIN_FM, 7,
-			 id, 0, 0, 
-			 (void *)d, l);
-   cl->req++;
+   cl = _e_fm2_client_get();
+   if (!cl)
+     {
+	_e_fm2_client_message_queue(E_IPC_DOMAIN_FM, 7,
+				    id, 0, 0, 
+				    (void *)d, l);
+     }
+   else
+     {
+	ecore_ipc_client_send(cl->cl, E_IPC_DOMAIN_FM, 7,
+			      id, 0, 0, 
+			      (void *)d, l);
+	cl->req++;
+     }
    if ((x != -9999) && (y != -9999))
      {
+	E_Fm2_Custom_File *cf, cf0;
+	
+	cf = e_fm2_custom_file_get(dest);
+	printf("CUSTOM SAVE %s %i %i\n", ecore_file_get_file(dest), x, y);
+	if (cf)
+	  {
+	     cf->geom.x = x;
+	     cf->geom.y = y;
+	     cf->geom.valid = 1;
+	  }
+	else
+	  {
+	     memset(&cf0, 0, sizeof(E_Fm2_Custom_File));
+	     cf = &cf0;
+	     cf->geom.x = x;
+	     cf->geom.y = y;
+	     cf->geom.valid = 1;
+	  }
+	e_fm2_custom_file_set(dest, cf);
+	e_fm2_custom_file_flush();
      }
 }
 
@@ -1532,6 +1680,9 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	cl = E_NEW(E_Fm2_Client, 1);
 	cl->cl = e->client;
 	_e_fm2_client_list = evas_list_prepend(_e_fm2_client_list, cl);
+	/* FIXME: new client - send queued msgs */
+	_e_fm2_client_spawning = 0;
+	_e_fm2_client_messages_flush();
      }
    
    for (l = _e_fm2_list; l; l = l->next)
