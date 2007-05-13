@@ -2491,6 +2491,7 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, const char *file, E_Fm2_Finfo *finf)
 	free(ic);
 	return NULL;
      }
+   printf("NEW IC %p %s\n", ic, ic->info.file);
    return ic;
 }
 
@@ -2710,6 +2711,7 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 static void
 _e_fm2_icon_free(E_Fm2_Icon *ic)
 {
+   printf("DEL IC %p %s\n", ic, ic->info.file);
    /* free icon, object data etc. etc. */
    if (ic->sd->drop_icon == ic)
      {
@@ -5979,7 +5981,7 @@ _e_fm2_removable_dev_add(const char *uuid)
 {
    E_Fm2_Removable *rem;
    FILE *f;
-   char buf[4096];
+   char buf[PATH_MAX], buf2[PATH_MAX];
    
    /* remove it - in case, so we don't add it twice */
    _e_fm2_removable_dev_del(uuid);
@@ -6013,6 +6015,9 @@ _e_fm2_removable_dev_add(const char *uuid)
 		rem->mount);
 	fclose(f);
      }
+   snprintf(buf2, sizeof(buf2), "%s/Desktop/|%s.desktop",
+	    e_user_homedir_get(), uuid);
+   ecore_file_symlink(buf, buf2);
    // FIXME: need to maybe have some popup, dialog or other indicator pop up
    // and maybe allow to click to open new removable device - maybe event
    // and broadcast as below then have a module listen and pop up a popup
@@ -6039,9 +6044,12 @@ _e_fm2_removable_dev_del(const char *uuid)
    printf("DEL DEV ------- %s\n", uuid);
    // FIXME: need to find all fm views for this dev and close them
    _e_fm2_removable_dev_umount(uuid);
+   /* FIXME: move to e_fm_main */
    snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/|%s.desktop",
 	    e_user_homedir_get(), uuid);
-   /* FIXME: move to e_fm_main */
+   ecore_file_unlink(buf);
+   snprintf(buf, sizeof(buf), "%s/Desktop/|%s.desktop",
+	    e_user_homedir_get(), uuid);
    ecore_file_unlink(buf);
    for (l = _e_fm2_removables; l; l = l->next)
      {
