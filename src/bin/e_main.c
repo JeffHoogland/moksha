@@ -520,7 +520,10 @@ main(int argc, char **argv)
 	evas_object_del(im);
 	ecore_evas_free(ee);
      }
-   _e_main_shutdown_push(ecore_evas_shutdown);        
+// ecore_evas closes evas - deletes objs - deletes fm widgets which tries to
+// ipc to slave to stop monitoring - but ipc has been shut down. dont shut
+// down.   
+//   _e_main_shutdown_push(ecore_evas_shutdown);        
    TS("test done");
    
    TS("thumb init");
@@ -1154,10 +1157,13 @@ _e_main_screens_shutdown(void)
    e_focus_shutdown();
    e_exehist_shutdown();
    e_menu_shutdown();
-   e_desk_shutdown();
-   e_zone_shutdown();
-   e_container_shutdown();
-   e_manager_shutdown();
+// ecore_evas closes evas - deletes objs - deletes fm widgets which tries to
+// ipc to slave to stop monitoring - but ipc has been shut down. dont shut
+// down.   
+//   e_desk_shutdown();
+//   e_zone_shutdown();
+//   e_container_shutdown();
+//   e_manager_shutdown();
    e_atoms_shutdown();
    return 1;
 }
