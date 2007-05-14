@@ -2011,10 +2011,15 @@ _e_fm2_file_add(Evas_Object *obj, const char *file, int unique, const char *file
 			 sd->icons = evas_list_append_relative(sd->icons, ic, ic2);
 		       else
 			 sd->icons = evas_list_prepend_relative(sd->icons, ic, ic2);
+		       printf("ICADD0 %p %s\n", ic, ic->info.file);
 		       break;
 		    }
 	       }
-	     if (!l) sd->icons = evas_list_append(sd->icons, ic);
+	     if (!l)
+	       {
+		  sd->icons = evas_list_append(sd->icons, ic);
+		  printf("ICADD1 %p %s\n", ic, ic->info.file);
+	       }
 	  }
 	sd->tmp.last_insert = NULL;
 	sd->iconlist_changed = 1;
@@ -2036,8 +2041,13 @@ _e_fm2_file_del(Evas_Object *obj, const char *file)
 	if (!strcmp(ic->info.file, file))
 	  {
 	     sd->icons = evas_list_remove_list(sd->icons, l);
+	     printf("ICREM0 %p %s\n", ic, ic->info.file);
 	     if (ic->region)
-	       ic->region->list = evas_list_remove(ic->region->list, ic);
+	       {
+		  ic->region->list = evas_list_remove(ic->region->list, ic);
+		  ic->region = NULL;
+		  printf("  REM REG\n");
+	       }
 	     _e_fm2_icon_free(ic);
 	     return;
 	  }
@@ -2061,6 +2071,7 @@ _e_fm2_queue_process(Evas_Object *obj)
 	if (sd->resize_job) ecore_job_del(sd->resize_job);
 	sd->resize_job = ecore_job_add(_e_fm2_cb_resize_job, obj);
 	evas_object_smart_callback_call(sd->obj, "changed", NULL);
+	sd->tmp.last_insert = NULL;
 	return;
      }
 //   double tt = ecore_time_get();
@@ -2127,15 +2138,23 @@ _e_fm2_queue_process(Evas_Object *obj)
 		  ic2 = l->data;
 		  if (_e_fm2_cb_icon_sort(ic, ic2) < 0)
 		    {
-		       sd->icons = evas_list_prepend_relative_list(sd->icons, ic, l);
+		       if (l == sd->icons)
+			 sd->icons = evas_list_prepend(sd->icons, ic);
+		       else
+			 sd->icons = evas_list_prepend_relative_list(sd->icons, 
+								     ic, l);
+		       printf("ICADD2 %p %s @ %p (->%p <-%p)\n", ic, ic->info.file,
+			      l, l->next, l->prev);
 		       sd->tmp.last_insert = l;
 		       break;
 		    }
 	       }
+	     printf("BORKED\n");
 	  }
 	if (!l)
 	  {
 	     sd->icons = evas_list_append(sd->icons, ic);
+	     printf("ICADD3 %p %s\n", ic, ic->info.file);
 	     sd->tmp.last_insert = evas_list_last(sd->icons);
 	  }
 	added++;
@@ -2541,6 +2560,7 @@ _e_fm2_icons_free(Evas_Object *obj)
    /* free all icons */
    while (sd->icons)
      {
+	printf("ICREM2 %p %s\n", sd->icons->data, ((E_Fm2_Icon *)sd->icons->data)->info.file);
 	_e_fm2_icon_free(sd->icons->data);
         sd->icons = evas_list_remove_list(sd->icons, sd->icons);
      }
@@ -2667,7 +2687,7 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, const char *file, E_Fm2_Finfo *finf)
 	free(ic);
 	return NULL;
      }
-   printf("NEW IC %p %s\n", ic, ic->info.file);
+   printf("NEW IC %p %p %s %s\n", ic, ic->sd, ic->info.file, ic->sd->realpath);
    return ic;
 }
 
@@ -2887,7 +2907,7 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 static void
 _e_fm2_icon_free(E_Fm2_Icon *ic)
 {
-   printf("DEL IC %p %s\n", ic, ic->info.file);
+   printf("DEL IC %p %p %s %s\n", ic, ic->sd, ic->info.file, ic->sd->realpath);
    /* free icon, object data etc. etc. */
    if (ic->sd->drop_icon == ic)
      {
@@ -5909,6 +5929,7 @@ _e_fm2_live_process_begin(Evas_Object *obj)
        (sd->listing) || (sd->scan_timer)) return;
    sd->live.idler = ecore_idler_add(_e_fm2_cb_live_idler, obj);
    sd->live.timer = ecore_timer_add(0.2, _e_fm2_cb_live_timer, obj);
+   sd->tmp.last_insert = NULL;
 }
 
 static void
@@ -5938,6 +5959,7 @@ _e_fm2_live_process_end(Evas_Object *obj)
 	ecore_timer_del(sd->live.timer);
 	sd->live.timer = NULL;
      }
+   sd->tmp.last_insert = NULL;
 }
 
 static void
