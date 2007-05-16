@@ -954,7 +954,6 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
    Evas_Object *oic = NULL;
    char buf[PATH_MAX], *p;
 
-   printf("get icon %s\n", ici->file);
    if (ici->icon)
      {
 	/* custom icon */
@@ -984,7 +983,6 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 		  const char *icon;
 		  
 		  icon = e_fm_mime_icon_get(ici->mime);
-		  printf("type %s\n", icon);
 		  if (!strcmp(icon, "DESKTOP"))
 		    {
 		       Efreet_Desktop *ef;
@@ -993,7 +991,6 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 		       ef = efreet_desktop_get(buf);
 		       if (ef) oic = e_util_desktop_icon_add(ef, "48x48", evas);
 		       if (type_ret) *type_ret = "DESKTOP";
-		       printf("oic = %p\n", oic);
 		       // FIXME: there is no way to just unref an efreet desktop - free completely
 		       // frees - doesnt just unref.
 		       // if (ef) efreet_desktop_free(ef);
@@ -1066,7 +1063,6 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 		  Efreet_Desktop *ef;
 		 
 		  oic = NULL; 
-		  printf("%s icon = %s\n", ici->file, icon);
 		  snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
 		  ef = efreet_desktop_get(buf);
 		  if (ef) oic = e_util_desktop_icon_add(ef, "48x48", evas);
@@ -1491,7 +1487,6 @@ _e_fm2_client_file_move(int id, const char *path, const char *dest, const char *
 	E_Fm2_Custom_File *cf, cf0;
 	
 	cf = e_fm2_custom_file_get(dest);
-	printf("CUSTOM SAVE %s %i %i\n", ecore_file_get_file(dest), x, y);
 	if (cf)
 	  {
 	     cf->geom.x = x;
@@ -1548,7 +1543,6 @@ _e_fm2_client_file_symlink(int id, const char *path, const char *dest, const cha
 	E_Fm2_Custom_File *cf, cf0;
 	
 	cf = e_fm2_custom_file_get(dest);
-	printf("CUSTOM SAVE %s %i %i\n", ecore_file_get_file(dest), x, y);
 	if (cf)
 	  {
 	     cf->geom.x = x;
@@ -1605,7 +1599,6 @@ _e_fm2_client_file_copy(int id, const char *path, const char *dest, const char *
 	E_Fm2_Custom_File *cf, cf0;
 	
 	cf = e_fm2_custom_file_get(dest);
-	printf("CUSTOM SAVE %s %i %i\n", ecore_file_get_file(dest), x, y);
 	if (cf)
 	  {
 	     cf->geom.x = x;
@@ -2011,14 +2004,12 @@ _e_fm2_file_add(Evas_Object *obj, const char *file, int unique, const char *file
 			 sd->icons = evas_list_append_relative(sd->icons, ic, ic2);
 		       else
 			 sd->icons = evas_list_prepend_relative(sd->icons, ic, ic2);
-		       printf("ICADD0 %p %s\n", ic, ic->info.file);
 		       break;
 		    }
 	       }
 	     if (!l)
 	       {
 		  sd->icons = evas_list_append(sd->icons, ic);
-		  printf("ICADD1 %p %s\n", ic, ic->info.file);
 	       }
 	  }
 	sd->tmp.last_insert = NULL;
@@ -2041,12 +2032,10 @@ _e_fm2_file_del(Evas_Object *obj, const char *file)
 	if (!strcmp(ic->info.file, file))
 	  {
 	     sd->icons = evas_list_remove_list(sd->icons, l);
-	     printf("ICREM0 %p %s\n", ic, ic->info.file);
 	     if (ic->region)
 	       {
 		  ic->region->list = evas_list_remove(ic->region->list, ic);
 		  ic->region = NULL;
-		  printf("  REM REG\n");
 	       }
 	     _e_fm2_icon_free(ic);
 	     return;
@@ -2143,18 +2132,14 @@ _e_fm2_queue_process(Evas_Object *obj)
 		       else
 			 sd->icons = evas_list_prepend_relative_list(sd->icons, 
 								     ic, l);
-		       printf("ICADD2 %p %s @ %p (->%p <-%p)\n", ic, ic->info.file,
-			      l, l->next, l->prev);
 		       sd->tmp.last_insert = l;
 		       break;
 		    }
 	       }
-	     printf("BORKED\n");
 	  }
 	if (!l)
 	  {
 	     sd->icons = evas_list_append(sd->icons, ic);
-	     printf("ICADD3 %p %s\n", ic, ic->info.file);
 	     sd->tmp.last_insert = evas_list_last(sd->icons);
 	  }
 	added++;
@@ -2560,7 +2545,6 @@ _e_fm2_icons_free(Evas_Object *obj)
    /* free all icons */
    while (sd->icons)
      {
-	printf("ICREM2 %p %s\n", sd->icons->data, ((E_Fm2_Icon *)sd->icons->data)->info.file);
 	_e_fm2_icon_free(sd->icons->data);
         sd->icons = evas_list_remove_list(sd->icons, sd->icons);
      }
@@ -2687,7 +2671,6 @@ _e_fm2_icon_new(E_Fm2_Smart_Data *sd, const char *file, E_Fm2_Finfo *finf)
 	free(ic);
 	return NULL;
      }
-   printf("NEW IC %p %p %s %s\n", ic, ic->sd, ic->info.file, ic->sd->realpath);
    return ic;
 }
 
@@ -2800,8 +2783,6 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 	     ic->saved_pos = 1;
 	     ic->x = cf->geom.x;
 	     ic->y = cf->geom.y;
-	     printf("CUSTOM %s - %i %i - %ix%i\n", 
-		    ic->info.file, ic->x, ic->y, ic->w, ic->h);
 	     if (cf->geom.w > 0) ic->w = cf->geom.w;
 	     if (cf->geom.h > 0) ic->w = cf->geom.h;
 	  }
@@ -2907,7 +2888,6 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 static void
 _e_fm2_icon_free(E_Fm2_Icon *ic)
 {
-   printf("DEL IC %p %p %s %s\n", ic, ic->sd, ic->info.file, ic->sd->realpath);
    /* free icon, object data etc. etc. */
    if (ic->sd->drop_icon == ic)
      {
@@ -4795,19 +4775,22 @@ _e_fm2_cb_resize_job(void *data)
 	_e_fm2_regions_populate(sd->obj);
 	break;
       case E_FM2_VIEW_MODE_CUSTOM_ICONS:
-	_e_fm2_regions_eval(sd->obj);
+        _e_fm2_regions_free(sd->obj);
+//	_e_fm2_regions_eval(sd->obj);
 	_e_fm2_icons_place(sd->obj);
 	_e_fm2_regions_populate(sd->obj);
 	break;
       case E_FM2_VIEW_MODE_CUSTOM_GRID_ICONS:
 	/* FIXME: not going to implement this at this stage */
-	_e_fm2_regions_eval(sd->obj);
+        _e_fm2_regions_free(sd->obj);
+//	_e_fm2_regions_eval(sd->obj);
 	_e_fm2_icons_place(sd->obj);
 	_e_fm2_regions_populate(sd->obj);
 	break;
       case E_FM2_VIEW_MODE_CUSTOM_SMART_GRID_ICONS:
 	/* FIXME: not going to implement this at this stage */
-	_e_fm2_regions_eval(sd->obj);
+        _e_fm2_regions_free(sd->obj);
+//	_e_fm2_regions_eval(sd->obj);
 	_e_fm2_icons_place(sd->obj);
 	_e_fm2_regions_populate(sd->obj);
 	break;
@@ -6130,7 +6113,6 @@ _e_fm2_removable_dev_label_get(const char *uuid)
 	     snprintf(buf, sizeof(buf), "/dev/disk/by-label/%s", file);
 	     /* FIXME: move to e_fm_main */
 	     rp2 = ecore_file_realpath(buf);
-	     printf("%s (%s) == %s\n", rp2, file, rp1);
 	     if ((rp1) && (rp2))
 	       {
 		  if (!strcmp(rp1, rp2))
