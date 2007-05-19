@@ -105,6 +105,7 @@ e_desktop_border_create(E_Border *bd)
      }
    return desktop;
 }
+
 EAPI E_Desktop_Edit *
 e_desktop_border_edit(E_Container *con, E_Border *bd)
 {

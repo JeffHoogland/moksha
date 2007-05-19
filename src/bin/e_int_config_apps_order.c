@@ -27,6 +27,38 @@ static void _cb_add(void *data, void *data2);
 static void _cb_del(void *data, void *data2);
 
 EAPI E_Config_Dialog *
+  e_int_config_apps_add(E_Container *con)
+{
+   E_Desktop_Edit *ed;
+   Efreet_Desktop *de = NULL;
+   char path[PATH_MAX];
+   const char *desktop_dir;
+   
+   desktop_dir = e_user_desktop_dir_get();
+   if (desktop_dir)
+     {
+	int i;
+	
+	for (i = 1; i < 65536; i++)
+	  {
+	     snprintf(path, sizeof(path), "%s/_new_app-%i.desktop",
+		      desktop_dir, i);
+	     if (!ecore_file_exists(path))
+	       {
+		  de = efreet_desktop_empty_new(path);
+		  break;
+	       }
+	  }
+	if (!de) de = efreet_desktop_empty_new(NULL);
+     }
+   else
+     de = efreet_desktop_empty_new(NULL);
+   if (!de) return NULL;
+   ed = e_desktop_edit(con, de);
+   return (E_Config_Dialog *)ed;
+}
+
+EAPI E_Config_Dialog *
 e_int_config_apps_ibar(E_Container *con) 
 {
    E_Config_Once *once;
