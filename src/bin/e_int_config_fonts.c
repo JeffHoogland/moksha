@@ -41,8 +41,8 @@ struct _E_Font_Size_Data
 
 struct _E_Text_Class_Pair
 {
-   const char	*class_name;
-   const char	*class_description;
+   const char *class_name;
+   const char *class_description;
 };
 
 struct _CFText_Class
@@ -52,59 +52,59 @@ struct _CFText_Class
    const char	  *font;
    const char     *style;
    Evas_Font_Size  size;
-   unsigned char enabled : 1;
+   unsigned char   enabled : 1;
 };
 
 const E_Text_Class_Pair text_class_predefined_names[ ] = {
-       {  NULL,		    N_("Window Manager")},
-       { "title_bar",	    N_("Title Bar")},
-       { "menu_item",	    N_("Menu Item")},
-       { "menu_title",	    N_("Menu Title")},   
-       { "tb_plain",	    N_("Textblock Plain")},
-       { "tb_light",        N_("Textblock Light")},
-       { "tb_big",          N_("Textblock Big")},
-       { "move_text",       N_("Move Text")},
-       { "resize_text",     N_("Resize Text")},
-       { "winlist_title",   N_("Winlist Title")},
-       { "configure",       N_("Configure Heading")},
-       { "about_title",     N_("About Title")},
-       { "about_version",   N_("About Version")},
-       { "button_text",     N_("About Text")},
-       { "desklock_title",  N_("Desklock Title")},
-       { "desklock_passwd", N_("Desklock Password")},
-       { "dialog_error",    N_("Dialog Error")},
-       { "exebuf_command",  N_("Exebuf Command")},
-       { "init_title",      N_("Splash Title")},
-       { "init_text",       N_("Splash Text")},
-       { "init_version",    N_("Splash Version")},
-       
-       {  NULL,		    N_("Widget")},
-       { "entry",           N_("Entry")},
-       { "frame",           N_("Frame")},
-       { "label",           N_("Label")},
-       { "button",   	    N_("Buttons")},
-       { "slider",	    N_("Slider")},
-       { "radio_button",    N_("Radio Buttons")},
-       { "check_button",    N_("Check Buttons")},
-       { "tlist",           N_("Text List Item")},
-       { "ilist_item",	    N_("List Item")},
-       { "ilist_header",    N_("List Header")},
-     
-       {  NULL,		    N_("EFM")},
-       { "fileman_typebuf", N_("Typebuf")},
-       { "fileman_icon",    N_("Icon")},
-       
-       {  NULL,		    N_("Module")},
-       { "module_small",    N_("Small")},
-       { "module_normal",   N_("Normal")},
-       { "module_large",    N_("Large")},
-       { "module_small_s",  N_("Small Styled")},
-       { "module_normal_s", N_("Normal Styled")},
-       { "module_large_s",  N_("Large Styled")},
-       
-       { NULL, NULL}
+     {  NULL,		  N_("Window Manager")},
+     { "title_bar",	  N_("Title Bar")},
+     { "menu_item",	  N_("Menu Item")},
+     { "menu_title",	  N_("Menu Title")},   
+     { "tb_plain",	  N_("Textblock Plain")},
+     { "tb_light",        N_("Textblock Light")},
+     { "tb_big",          N_("Textblock Big")},
+     { "move_text",       N_("Move Text")},
+     { "resize_text",     N_("Resize Text")},
+     { "winlist_title",   N_("Winlist Title")},
+     { "configure",       N_("Configure Heading")},
+     { "about_title",     N_("About Title")},
+     { "about_version",   N_("About Version")},
+     { "button_text",     N_("About Text")},
+     { "desklock_title",  N_("Desklock Title")},
+     { "desklock_passwd", N_("Desklock Password")},
+     { "dialog_error",    N_("Dialog Error")},
+     { "exebuf_command",  N_("Exebuf Command")},
+     { "init_title",      N_("Splash Title")},
+     { "init_text",       N_("Splash Text")},
+     { "init_version",    N_("Splash Version")},
+   
+     {  NULL,		  N_("Widget")},
+     { "entry",           N_("Entry")},
+     { "frame",           N_("Frame")},
+     { "label",           N_("Label")},
+     { "button",   	  N_("Buttons")},
+     { "slider",	  N_("Slider")},
+     { "radio_button",    N_("Radio Buttons")},
+     { "check_button",    N_("Check Buttons")},
+     { "tlist",           N_("Text List Item")},
+     { "ilist_item",	  N_("List Item")},
+     { "ilist_header",    N_("List Header")},
+   
+     {  NULL,		  N_("EFM")},
+     { "fileman_typebuf", N_("Typebuf")},
+     { "fileman_icon",    N_("Icon")},
+   
+     {  NULL,		  N_("Module")},
+     { "module_small",    N_("Small")},
+     { "module_normal",   N_("Normal")},
+     { "module_large",    N_("Large")},
+     { "module_small_s",  N_("Small Styled")},
+     { "module_normal_s", N_("Normal Styled")},
+     { "module_large_s",  N_("Large Styled")},
+   
+     { NULL, NULL}
 };
-     
+
 struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
@@ -130,7 +130,7 @@ struct _E_Config_Dialog_Data
    int		 cur_fallbacks_enabled;
    
    /* Font Hinting */
-   int hinting;
+   int           hinting;
    
    struct
      {
@@ -138,16 +138,13 @@ struct _E_Config_Dialog_Data
 	Evas_Object *class_list;
 	Evas_Object *font_list;
 	Evas_Object *style_list;
-
 	Evas_Object *size_list;
 	Evas_Object *enabled;
-
 	Evas_Object *preview;
 
 	/* Font Fallbacks */
 	Evas_Object *fallback_list; /* Selecting a list entry starts edit*/
-     }
-   gui;
+     } gui;
 };
 
 EAPI E_Config_Dialog *
@@ -166,8 +163,7 @@ e_int_config_fonts(E_Container *con)
    v->advanced.create_widgets = _advanced_create_widgets;
    v->advanced.apply_cfdata   = _advanced_apply_data;
    
-   cfd = e_config_dialog_new(con,
-			     _("Font Settings"),
+   cfd = e_config_dialog_new(con, _("Font Settings"),
 			     "E", "_config_fonts_dialog",
 			     "enlightenment/fonts", 0, v, NULL);
    return cfd;
@@ -207,6 +203,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 		       if (efd->font) 
 			 {
 			    E_Font_Properties *efp;
+
 			    efp = e_font_fontconfig_name_parse(efd->font);
 			    tc->font = evas_stringshare_add(efp->name);
 			    if (efp->styles) 
@@ -227,12 +224,12 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 		       if (efd->font) 
 			 {
 			    E_Font_Properties *efp;
+
 			    efp = e_font_fontconfig_name_parse(efd->font);
 			    tc->font = evas_stringshare_add(efp->name);
 			    if (efp->styles) 
 			      tc->style = evas_stringshare_add(efp->styles->data);
 			    e_font_properties_free(efp);
-
 			 }
 		       tc->size = efd->size;
 		    }
@@ -295,8 +292,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	size_data->size = i;
 	cfdata->font_px_list = evas_list_append(cfdata->font_px_list, size_data);
      }
-
-   return;
 }
 
 static void *
@@ -317,9 +312,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    e_font_available_hash_free(cfdata->font_hash);
    while (cfdata->font_list)
-     {
-	cfdata->font_list = evas_list_remove_list(cfdata->font_list, cfdata->font_list);
-     }
+     cfdata->font_list = evas_list_remove_list(cfdata->font_list, cfdata->font_list);
    
    while ((l = cfdata->text_classes))
      {
@@ -394,7 +387,6 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    e_font_apply();
    e_config_save_queue();
-
 
    /* Apply to advanced */
    for (next = cfdata->text_classes; next; next = next->next)
@@ -534,6 +526,7 @@ _basic_init_data_fill(E_Config_Dialog_Data *cfdata)
 	if (efd->font) 
 	  {
 	     E_Font_Properties *efp;
+
 	     efp = e_font_fontconfig_name_parse(efd->font);
 	     init_font = evas_stringshare_add(efp->name);
 	     e_font_properties_free(efp);
@@ -555,7 +548,6 @@ _basic_init_data_fill(E_Config_Dialog_Data *cfdata)
    
    /* Populate size list (Select current font) */
    _size_list_load(cfdata, cfdata->font_scale_list, init_size, 1);
-	
 }
 
 static int
@@ -580,12 +572,11 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    for (next = cfdata->text_classes; next; next = next->next)
      {
 	tc = next->data;
-
 	if (!tc->class_name) continue;
-	
 	if (tc->enabled && tc->font) 
 	  {
 	     const char *name;
+
 	     name = e_font_fontconfig_name_get(tc->font, tc->style);
 	     e_font_default_set(tc->class_name, name, tc->size);
 	     evas_stringshare_del(name);
@@ -602,6 +593,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	for (i = 0; i < e_widget_config_list_count(cfdata->gui.fallback_list); i++)
 	  {
 	     const char *fallback;
+
 	     fallback = e_widget_config_list_nth_get(cfdata->gui.fallback_list, i);
 	     if ((fallback) && (fallback[0]))
 	       e_font_fallback_append(fallback);
@@ -678,9 +670,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_font_preview_add(evas, _("Advanced Preview Text.. 我真的会写中文"));
    cfdata->gui.preview = ob;
    e_widget_table_object_append(ot, ob, 1, 2, 2, 1, 1, 0, 1, 0);
-
    e_widget_list_object_append(ol, ot, 1, 1, 0.5);
-
 
    /* Frame for Hinting Setup */
    of = e_widget_framelist_add(evas, _("Hinting"), 1);
@@ -935,7 +925,6 @@ _adv_font_cb_change(void *data, Evas_Object *obj)
 	  tc->font = evas_stringshare_add(cfdata->cur_font);
      }
 
-
    /* Load the style list */
    if (cfdata->cur_font)
      {
@@ -951,6 +940,7 @@ _adv_font_cb_change(void *data, Evas_Object *obj)
 	for (next = efp->styles; next; next = next->next)
 	  {
 	     const char *style;
+
 	     style = next->data;
 	     e_widget_ilist_append(cfdata->gui.style_list, NULL, style, NULL, NULL, style);
 	  }
@@ -981,7 +971,6 @@ _adv_font_cb_change(void *data, Evas_Object *obj)
    if (tc)
      {
 	cfdata->cur_size = tc->size;
-
 	_size_list_load(cfdata, cfdata->font_scale_list, tc->size, 1);
 	_size_list_load(cfdata, cfdata->font_px_list, tc->size, 0);
      }
@@ -1010,7 +999,7 @@ _size_list_load(E_Config_Dialog_Data *cfdata, Evas_List *size_list, Evas_Font_Si
 
 	size_data = next->data;
 	e_widget_ilist_append(ob, NULL, size_data->size_str, _size_cb_change, 
-	      size_data, NULL);     
+			      size_data, NULL);     
      }
 	
    e_widget_ilist_go(ob);	
@@ -1160,6 +1149,7 @@ _font_preview_update(E_Config_Dialog_Data *cfdata)
    if (cfdata->cur_font)
      {
 	const char *name;     
+
 	name = e_font_fontconfig_name_get(cfdata->cur_font, cfdata->cur_style);
 	e_widget_font_preview_font_set(cfdata->gui.preview, name, cfdata->cur_size);     
 	evas_stringshare_del(name);
