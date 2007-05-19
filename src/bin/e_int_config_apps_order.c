@@ -49,7 +49,12 @@ EAPI E_Config_Dialog *
 		  break;
 	       }
 	  }
-	if (!de) de = efreet_desktop_empty_new(NULL);
+	if (!de)
+	  {
+	     snprintf(path, sizeof(path), "%s/_rename_me-%i.desktop",
+		      desktop_dir, (int)ecore_time_get());
+	     de = efreet_desktop_empty_new(NULL);
+	  }
      }
    else
      de = efreet_desktop_empty_new(NULL);

@@ -74,7 +74,26 @@ e_desktop_border_create(E_Border *bd)
 	desktop = efreet_desktop_empty_new(path);
      }
    else
-     desktop = efreet_desktop_empty_new(NULL);
+     {
+        int i;
+	
+	for (i = 1; i < 65536; i++)
+	  {
+	     snprintf(path, sizeof(path), "%s/_new_app-%i.desktop",
+		      desktop_dir, i);
+	     if (!ecore_file_exists(path))
+	       {
+		  desktop = efreet_desktop_empty_new(path);
+		  break;
+	       }
+	  }
+	if (!desktop)
+	  {
+	     snprintf(path, sizeof(path), "%s/_rename_me-%i.desktop",
+		      desktop_dir, (int)ecore_time_get());
+	     desktop = efreet_desktop_empty_new(NULL);
+	  }
+     }
 
    if (!desktop)
      {
