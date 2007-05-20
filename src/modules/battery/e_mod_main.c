@@ -559,6 +559,8 @@ _battery_linux_acpi_check(void)
 	       {
 		  if (((hours * 60) + minutes) <= battery_config->alarm)
 		    stat->alarm = 1;
+		  if (bat_val <= battery_config->alarm_p)
+		    stat->alarm = 1;
 	       }
 	  }
 	if (level_unknown)
@@ -683,6 +685,8 @@ _battery_linux_apm_check(void)
 	if (stat->level < 0.1)
 	  {
 	     if (((hours * 60) + minutes) <= battery_config->alarm)
+	       stat->alarm = 1;
+	     if (bat_val <= battery_config->alarm_p)
 	       stat->alarm = 1;
 	  }
      }
@@ -859,22 +863,8 @@ _battery_linux_powerbook_check(void)
    else if ((charging) || (discharging))
      {
 	stat->has_battery = 1;
-        if (charging)
-          {
-	     stat->state = BATTERY_STATE_CHARGING;
-	     battery_config->alarm_triggered = 0;
-          }
-	else if (discharging)
-	  {
-	     stat->state = BATTERY_STATE_DISCHARGING;
-	     if (stat->level < 0.1)
-	       {
-		  if (((hours * 60) + minutes) <= battery_config->alarm)
-		    stat->alarm = 1;
-	       }
-	  }
 	stat->level = (double)charge / (double)max_charge;
-       if (stat->level > 1.0) stat->level = 1.0;
+	if (stat->level > 1.0) stat->level = 1.0;
 	tmp = (double)max_charge / 100;
 	tmp = (double)charge / tmp;
 	stat->level = (double)tmp / 100;
@@ -883,6 +873,22 @@ _battery_linux_powerbook_check(void)
 	stat->reading = strdup(buf);
 	snprintf(buf, sizeof(buf), "%i:%02i", hours, minutes);
 	stat->time = strdup(buf);
+	if (charging)
+	  {
+	     stat->state = BATTERY_STATE_CHARGING;
+	     battery_config->alarm_triggered = 0;
+	  }
+	else if (discharging)
+	  {
+	     stat->state = BATTERY_STATE_DISCHARGING;
+	     if (stat->level < 0.1)
+	       {
+		  if (((hours * 60) + minutes) <= battery_config->alarm)
+		    stat->alarm = 1;
+		  if (stat->level <= battery_config->alarm_p)
+		    stat->alarm = 1;
+	       }
+	  }
      }
    else
      {
@@ -1027,6 +1033,8 @@ _battery_bsd_acpi_check(void)
 	       {
 		  if (((hours * 60) + minutes) <= battery_config->alarm)
 		    stat->alarm = 1;
+		  if (bat_val <= battery_config->alarm_p)
+		    stat->alarm = 1;
 	       }
 	  }
 	if (level == -1)
@@ -1149,6 +1157,8 @@ _battery_bsd_apm_check(void)
 	if (stat->level < 0.1) /* Why this if condition? */
 	  {
 	     if (((hours * 60) + minutes) <= battery_config->alarm)
+	       stat->alarm = 1;
+	     if (bat_val <= battery_config->alarm_p)
 	       stat->alarm = 1;
 	  }
      }
@@ -1288,6 +1298,8 @@ _battery_darwin_check(void)
 	 */
 	if (currentval <= battery_config->alarm)
 	  stat->alarm = 1;
+	if (stat->level <= battery_config->alarm_p)
+	  stat->alarm = 1;
      }
    else
      {
@@ -1397,6 +1409,7 @@ e_modapi_init(E_Module *m)
 #define D conf_edd
    E_CONFIG_VAL(D, T, poll_time, DOUBLE);
    E_CONFIG_VAL(D, T, alarm, INT);
+   E_CONFIG_VAL(D, T, alarm_p, INT);
 
    battery_config = e_config_domain_load("module.battery", conf_edd);
    if (!battery_config)
@@ -1404,9 +1417,11 @@ e_modapi_init(E_Module *m)
        battery_config = E_NEW(Config, 1);
        battery_config->poll_time = 30.0;
        battery_config->alarm = 30;
+       battery_config->alarm_p = 10;
      }
    E_CONFIG_LIMIT(battery_config->poll_time, 0.5, 1000.0);
    E_CONFIG_LIMIT(battery_config->alarm, 0, 60);
+   E_CONFIG_LIMIT(battery_config->alarm_p, 0, 100);
    
    battery_config->battery_check_mode = CHECK_NONE;
    battery_config->battery_prev_drain = 1;

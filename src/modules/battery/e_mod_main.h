@@ -16,7 +16,8 @@ struct _Config
 {
    /* saved * loaded config values */
    double           poll_time;
-   int              alarm;
+   int              alarm;	/* Alarm on minutes remaining */
+   int	            alarm_p;    /* Alarm on percentage remaining */
    /* just config state */
    E_Module        *module;
    E_Config_Dialog *config_dialog;

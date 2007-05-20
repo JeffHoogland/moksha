@@ -6,6 +6,7 @@ struct _E_Config_Dialog_Data
    int show_alert;   
    double poll_time;   
    int alarm_time;
+   int alarm_percent;
 };
 
 /* Protos */
@@ -45,8 +46,9 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 {
    if (!battery_config) return;
    cfdata->alarm_time = battery_config->alarm;
+   cfdata->alarm_percent = battery_config->alarm_p;
    cfdata->poll_time = battery_config->poll_time;
-   if (cfdata->alarm_time > 0) 
+   if (cfdata->alarm_time > 0 || cfdata->alarm_percent > 0) 
      cfdata->show_alert = 1;
    else 
      cfdata->show_alert = 0;
@@ -87,10 +89,16 @@ static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    if (!battery_config) return 0;
-   if (cfdata->show_alert) 
+   if (cfdata->show_alert)
+   { 
      battery_config->alarm = cfdata->alarm_time;
-   else 
+     battery_config->alarm_p = cfdata->alarm_percent;
+   }
+   else
+   { 
      battery_config->alarm = 0;
+     battery_config->alarm_p = 0;
+   }
    _battery_config_updated();
    e_config_save_queue();
    return 1;
@@ -108,16 +116,19 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_label_add(evas, _("Check battery every:"));
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 0, 1, 0);
    
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f seconds"), 0.5, 1000.0, 0.5, 0, &(cfdata->poll_time), NULL, 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f seconds"), 0.5, 900.0, 0.5, 0, &(cfdata->poll_time), NULL, 200);
    e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 0, 1, 0);
    
    ob = e_widget_check_add(evas, _("Show alert when battery is low"), &(cfdata->show_alert));
-   e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 1, 1, 0);   
+   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 0);   
    
    ob = e_widget_label_add(evas, _("Alert when battery is down to:"));
-   e_widget_frametable_object_append(of, ob, 0, 4, 1, 1, 1, 0, 1, 1);
+   e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 0, 1, 1);
    
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"), 1, 60, 1, 0, NULL, &(cfdata->alarm_time), 200);
+   e_widget_frametable_object_append(of, ob, 0, 4, 1, 1, 1, 0, 1, 0);
+
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f percent"), 1, 100, 1, 0, NULL, &(cfdata->alarm_percent), 200);
    e_widget_frametable_object_append(of, ob, 0, 5, 1, 1, 1, 0, 1, 0);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
@@ -129,10 +140,16 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    if (!battery_config) return 0;
    battery_config->poll_time = cfdata->poll_time;
-   if (cfdata->show_alert) 
+   if (cfdata->show_alert)
+   { 
      battery_config->alarm = cfdata->alarm_time;
+     battery_config->alarm_p = cfdata->alarm_percent;
+   }
    else 
+   {
      battery_config->alarm = 0;
+     battery_config->alarm_p = 0;
+   }
    _battery_config_updated();
    e_config_save_queue();
    return 1;
