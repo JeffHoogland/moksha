@@ -225,16 +225,6 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
    if (!fwin) return NULL;
    fwin->zone = zone;
    fwins = evas_list_append(fwins, fwin);
-/*   
-   e_win_resize_callback_set(fwin->win, _e_fwin_cb_resize);
-   fwin->win->data = fwin;
-
-   o = edje_object_add(e_win_evas_get(fwin->win));
-   e_theme_edje_object_set(o, "base/theme/fileman",
-			   "e/fileman/window/main");
-   evas_object_show(o);
-   fwin->bg_obj = o;
-*/
    
    o = e_fm2_add(zone->container->bg_evas);
    fwin->fm_obj = o;
@@ -294,7 +284,7 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
     * to specify the .edj files to get the list and icon theme stuff from
     */
    e_scrollframe_custom_theme_set(o, "base/theme/fileman",
-				  "e/fileman/scrollframe/default");
+				  "e/fileman/scrollframe/desktop");
    evas_object_data_set(fwin->fm_obj, "fwin", fwin);
    e_scrollframe_extern_pan_set(o, fwin->fm_obj,
 				_e_fwin_pan_set,
@@ -307,39 +297,17 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
    evas_object_resize(fwin->scrollframe_obj, fwin->zone->w, fwin->zone->h);
    evas_object_show(o);
 
-/*   
-   o = edje_object_add(e_win_evas_get(fwin->win));
-   edje_object_part_swallow(fwin->bg_obj, "e.swallow.bg", o);
-   evas_object_pass_events_set(o, 1);
-   fwin->under_obj = o;
-   
-   o = edje_object_add(e_win_evas_get(fwin->win));
-   edje_object_part_swallow(e_scrollframe_edje_object_get(fwin->scrollframe_obj), "e.swallow.overlay", o);
-   evas_object_pass_events_set(o, 1);
-   fwin->over_obj = o;
- */
-   
    e_fm2_window_object_set(fwin->fm_obj, E_OBJECT(fwin->zone));
    
    evas_object_focus_set(fwin->fm_obj, 1);
 
    e_fm2_path_set(fwin->fm_obj, dev, path);
 
-/*   
-   snprintf(buf, sizeof(buf), "_fwin::/%s", e_fm2_real_path_get(fwin->fm_obj));
-   e_win_name_class_set(fwin->win, "E", buf);
- */
    file = ecore_file_get_file(e_fm2_real_path_get(fwin->fm_obj));
    if (file)
      snprintf(buf, sizeof(buf), "%s", file);
    else
      snprintf(buf, sizeof(buf), "%s", e_fm2_real_path_get(fwin->fm_obj));
-/*   
-   e_win_title_set(fwin->win, buf);
-   e_win_size_min_set(fwin->win, 24, 24);
-   e_win_resize(fwin->win, 280, 200);
-   e_win_show(fwin->win);
- */
    return fwin;
 }
 

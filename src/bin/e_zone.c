@@ -657,9 +657,21 @@ _e_zone_free(E_Zone *zone)
 }
 
 static void
+_e_zone_cb_fwin_del(void *obj)
+{
+   E_Zone *zone;
+   
+   zone = (E_Zone *)e_object_data_get(E_OBJECT(obj));
+   if (!zone) return;
+   zone->bg_fwin = NULL;
+}
+
+static void
 _e_zone_fm_add(E_Zone *zone, const char *dev, const char *path)
 {
    zone->bg_fwin = e_fwin_zone_new(zone, dev, path);
+   e_object_data_set(E_OBJECT(zone->bg_fwin), zone);
+   e_object_del_attach_func_set(E_OBJECT(zone->bg_fwin), _e_zone_cb_fwin_del);
 }
 
 static void

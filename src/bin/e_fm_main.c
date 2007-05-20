@@ -36,9 +36,11 @@
 #define DEF_SYNC_NUM 8
 #define DEF_ROUND_TRIP 0.05
 #define DEF_ROUND_TRIP_TOLERANCE 0.01
+#define DEF_MOD_BACKOFF 0.2
 
 typedef struct _E_Dir E_Dir;
 typedef struct _E_Fop E_Fop;
+typedef struct _E_Mod E_Mod;
 
 struct _E_Dir
 {
@@ -53,6 +55,9 @@ struct _E_Dir
    int                 sync;
    double              sync_time;
    int                 sync_num;
+   Evas_List          *recent_mods;
+   Ecore_Timer        *recent_clean;
+   unsigned char       cleaning : 1;
 };
 
 struct _E_Fop
@@ -69,6 +74,16 @@ struct _E_Fop
    void               *data;
 };
 
+struct _E_Mod
+{
+   const char    *path;
+   double         timestamp;
+   unsigned char  add : 1;
+   unsigned char  del : 1;
+   unsigned char  mod : 1;
+   unsigned char  done : 1;
+};
+
 /* local subsystem functions */
 static int _e_ipc_init(void);
 static int _e_ipc_cb_server_add(void *data, int type, void *event);
@@ -76,12 +91,13 @@ static int _e_ipc_cb_server_del(void *data, int type, void *event);
 static int _e_ipc_cb_server_data(void *data, int type, void *event);
 
 static void _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path);
+static int _e_cb_recent_clean(void *data);
 
-static void _e_file_add_mod(int id, const char *path, int op, int listing);
-static void _e_file_add(int id, const char *path, int listing);
-static void _e_file_del(int id, const char *path);
-static void _e_file_mod(int id, const char *path);
-static void _e_file_mon_dir_del(int id, const char *path);
+static void _e_file_add_mod(E_Dir *ed, const char *path, int op, int listing);
+static void _e_file_add(E_Dir *ed, const char *path, int listing);
+static void _e_file_del(E_Dir *ed, const char *path);
+static void _e_file_mod(E_Dir *ed, const char *path);
+static void _e_file_mon_dir_del(E_Dir *ed, const char *path);
 static void _e_file_mon_list_sync(E_Dir *ed);
 
 static int _e_cb_file_mon_list_idler(void *data);
@@ -91,6 +107,7 @@ static int _e_cb_fop_mv_idler(void *data);
 static int _e_cb_fop_cp_idler(void *data);
 static char *_e_str_list_remove(Evas_List **list, char *str);
 static void _e_path_fix_order(const char *path, const char *rel, int rel_to, int x, int y);
+static void _e_dir_del(E_Dir *ed);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server = NULL;
@@ -224,9 +241,13 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	     dir = opendir(e->data);
 	     if (!dir)
 	       {
+		  E_Dir ted;
+		  
 		  /* we can't open the dir - tell E the dir is deleted as
 		   * we can't look in it */
-		  _e_file_mon_dir_del(e->ref, e->data);
+		  memset(&ted, 0, sizeof(E_Dir));
+		  ted.id = e->ref;
+		  _e_file_mon_dir_del(&ted, e->data);
 	       }
 	     else
 	       {
@@ -244,13 +265,11 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		    {
 		       /* if no previous monitoring dir exists - this one 
 			* becomes the master monitor enty */
-		       printf("MON %s\n", ed->dir);
 		       ed->mon = ecore_file_monitor_add(ed->dir, _e_cb_file_monitor, ed);
 		       ed->mon_ref = 1;
 		    }
 		  else
 		    {
-		       printf("REF ORIG\n");
 		       /* an existing monitor exists - ref it up */
 		       ed->mon_real = ped;
 		       ped->mon_ref++;
@@ -296,6 +315,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 			    files = f2;
 			 }
 		    }
+		  ed->fq = files;
 		  /* FIXME: if .order file- load it, sort all items int it
 		   * that are in files then just append whatever is left in
 		   * alphabetical order
@@ -314,14 +334,13 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		       else
 			 snprintf(buf, sizeof(buf), "%s/.order", (char *)e->data);
 		       if (evas_list_count(files) == 1)
-			 _e_file_add(ed->id, buf, 2);
+			 _e_file_add(ed, buf, 2);
 		       else
-			 _e_file_add(ed->id, buf, 1);
+			 _e_file_add(ed, buf, 1);
 		    }
 		  /* send empty file - indicate empty dir */
-		  if (!files) _e_file_add(ed->id, "", 2);
+		  if (!files) _e_file_add(ed, "", 2);
 		  /* and in an idler - list files, statting them etc. */
-		  ed->fq = files;
 		  ed->idler = ecore_idler_add(_e_cb_file_mon_list_idler, ed);
 		  ed->sync_num = DEF_SYNC_NUM;
 	       }
@@ -343,56 +362,24 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 			* real one */
 		       if (ed->mon_real)
 			 {
-			    printf("UNREF ORIG\n");
 			    /* unref original monitor node */
 			    ed->mon_real->mon_ref--;
 			    if (ed->mon_real->mon_ref == 0)
 			      {
-				 printf("FREE ORIG\n");
 				 /* original is at 0 ref - free it */
-				 evas_stringshare_del(ed->mon_real->dir);
-				 if (ed->mon_real->idler)
-				   ecore_idler_del(ed->mon_real->idler);
-				 while (ed->mon_real->fq)
-				   {
-				      free(ed->mon_real->fq->data);
-				      ed->mon_real->fq = evas_list_remove_list(ed->mon_real->fq, ed->mon_real->fq);
-				   }
-				 free(ed->mon_real);
+				 _e_dir_del(ed->mon_real);
 				 ed->mon_real = NULL;
 			      }
-			    printf("FREE THIS\n");
 			    /* free this node */
-			    evas_stringshare_del(ed->dir);
-			    if (ed->idler) ecore_idler_del(ed->idler);
-			    while (ed->fq)
-			      {
-				 free(ed->fq->data);
-				 ed->fq = evas_list_remove_list(ed->fq, ed->fq);
-			      }
-			    free(ed);
+			    _e_dir_del(ed);
 			 }
 		       /* this is a core monitoring node - remove ref */
 		       else
 			 {
-			    printf("UNREF\n");
 			    ed->mon_ref--;
 			    /* we are the last ref - free */
-			    if (ed->mon_ref == 0)
-			      {
-				 printf("UNMON %s\n", ed->dir);
-				 ecore_file_monitor_del(ed->mon);
-				 evas_stringshare_del(ed->dir);
-				 if (ed->idler) ecore_idler_del(ed->idler);
-				 while (ed->fq)
-				   {
-				      free(ed->fq->data);
-				      ed->fq = evas_list_remove_list(ed->fq, ed->fq);
-				   }
-				 free(ed);
-			      }
+			    if (ed->mon_ref == 0) _e_dir_del(ed);
 			 }
-		       printf("REMOVE FROM LIST\n");
 		       /* remove from dirs list anyway */
 		       _e_dirs = evas_list_remove_list(_e_dirs, l);
 		       break;
@@ -593,17 +580,13 @@ _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, c
    if ((event == ECORE_FILE_EVENT_CREATED_FILE) ||
        (event == ECORE_FILE_EVENT_CREATED_DIRECTORY))
      {
-	printf("CREATE %s\n", path);
 	rp = ecore_file_realpath(dir);
 	for (l = _e_dirs; l; l = l->next)
 	  {
 	     ed = l->data;
 	     drp = ecore_file_realpath(ed->dir);
 	     if (!strcmp(rp, drp))
-	       {
-		  printf("file add %s\n", path);
-		  _e_file_add(ed->id, path, 0);
-	       }
+	       _e_file_add(ed, path, 0);
 	     free(drp);
 	  }
 	free(rp);
@@ -611,14 +594,13 @@ _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, c
    else if ((event == ECORE_FILE_EVENT_DELETED_FILE) ||
 	    (event == ECORE_FILE_EVENT_DELETED_DIRECTORY))
      {
-	printf("DEL %s\n", path);
 	rp = ecore_file_realpath(dir);
 	for (l = _e_dirs; l; l = l->next)
 	  {
 	     ed = l->data;
 	     drp = ecore_file_realpath(ed->dir);
 	     if (!strcmp(rp, drp))
-	       _e_file_del(ed->id, path);
+	       _e_file_del(ed, path);
 	  }
 	free(rp);
      }
@@ -630,7 +612,7 @@ _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, c
 	     ed = l->data;
 	     drp = ecore_file_realpath(ed->dir);
 	     if (!strcmp(rp, drp))
-	       _e_file_mod(ed->id, path);
+	       _e_file_mod(ed, path);
 	  }
 	free(rp);
      }
@@ -642,15 +624,46 @@ _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, c
 	     ed = l->data;
 	     drp = ecore_file_realpath(ed->dir);
 	     if (!strcmp(rp, drp))
-	       _e_file_mon_dir_del(ed->id, path);
+	       _e_file_mon_dir_del(ed, path);
 	  }
 	free(rp);
      }
    free(dir);
 }
 
+static int
+_e_cb_recent_clean(void *data)
+{
+   E_Dir *ed;
+   Evas_List *l, *pl;
+   E_Mod *m;
+   double t_now;
+   
+   ed = data;
+   ed->cleaning = 1;
+   t_now = ecore_time_get();
+   for (l = ed->recent_mods; l;)
+     {
+	m = l->data;
+	pl = l;
+	l = l->next;
+	if ((m->mod) && ((t_now - m->timestamp) >= DEF_MOD_BACKOFF))
+	  {
+	     ed->recent_mods = evas_list_remove_list(ed->recent_mods, pl);
+	     if (!m->done) _e_file_add_mod(ed, m->path, 5, 0);
+	     evas_stringshare_del(m->path);
+	     free(m);
+	  }
+     }
+   ed->cleaning = 0;
+   if (ed->recent_mods) return 1;
+   ed->recent_clean = NULL;
+   return 0;
+}
+			       
+
 static void
-_e_file_add_mod(int id, const char *path, int op, int listing)
+_e_file_add_mod(E_Dir *ed, const char *path, int op, int listing)
 {
    struct stat st;
    char *lnk = NULL, *rlnk = NULL;
@@ -661,7 +674,46 @@ _e_file_add_mod(int id, const char *path, int op, int listing)
       * 
       * stat_info[stat size] + broken_link[1] + path[n]\0 + lnk[n]\0 + rlnk[n]\0 */
      [sizeof(struct stat) + 1 + 4096 + 4096 + 4096];
-   
+
+   /* FIXME: handle BACKOFF */
+   if ((!listing) && (op == 5) && (!ed->cleaning)) /* 5 == mod */
+     {
+	Evas_List *l;
+	E_Mod *m;
+	double t_now;
+	int skip = 0;
+	
+	t_now = ecore_time_get();
+	for (l = ed->recent_mods; l; l = l->next)
+	  {
+	     m = l->data;
+	     if ((m->mod) && (!strcmp(m->path, path)))
+	       {
+		  if ((t_now - m->timestamp) < DEF_MOD_BACKOFF)
+		    {
+		       m->done = 0;
+		       skip = 1;
+		    }
+	       }
+	  }
+	if (!skip)
+	  {
+	     m = calloc(1, sizeof(E_Mod));
+	     m->path = evas_stringshare_add(path);
+	     m->mod = 1;
+	     m->done = 1;
+	     m->timestamp = t_now;
+	     ed->recent_mods = evas_list_append(ed->recent_mods, m);
+	  }
+	if ((!ed->recent_clean) && (ed->recent_mods))
+	  ed->recent_clean = ecore_timer_add(DEF_MOD_BACKOFF, _e_cb_recent_clean, ed);
+	if (skip)
+	  {
+//	     printf("SKIP MOD %s %3.3f\n", path, t_now);
+	     return;
+	  }
+     }
+//   printf("MOD %s %3.3f\n", path, ecore_time_get());
    lnk = ecore_file_readlink(path);
    if (stat(path, &st) == -1)
      {
@@ -694,40 +746,50 @@ _e_file_add_mod(int id, const char *path, int op, int listing)
    p += strlen(rlnk) + 1;
    
    bsz = p - buf;
-   ecore_ipc_server_send(_e_ipc_server, 6/*E_IPC_DOMAIN_FM*/, op, 0, id,
+   ecore_ipc_server_send(_e_ipc_server, 6/*E_IPC_DOMAIN_FM*/, op, 0, ed->id,
 			 listing, buf, bsz);
    if (lnk) free(lnk);
    if (rlnk) free(rlnk);
 }
 
 static void
-_e_file_add(int id, const char *path, int listing)
+_e_file_add(E_Dir *ed, const char *path, int listing)
 {
-   _e_file_add_mod(id, path, 3, listing);/*file add*/
+   if (!listing)
+     {
+	/* FIXME: handle BACKOFF */
+     }
+   _e_file_add_mod(ed, path, 3, listing);/*file add*/
 }
 
 static void
-_e_file_del(int id, const char *path)
+_e_file_del(E_Dir *ed, const char *path)
 {
+     {
+	/* FIXME: handle BACKOFF */
+     }
    ecore_ipc_server_send(_e_ipc_server,
 			 6/*E_IPC_DOMAIN_FM*/,
 			 4/*file del*/,
-			 0, id, 0, (void *)path, strlen(path) + 1);
+			 0, ed->id, 0, (void *)path, strlen(path) + 1);
 }
 
 static void
-_e_file_mod(int id, const char *path)
+_e_file_mod(E_Dir *ed, const char *path)
 {
-   _e_file_add_mod(id, path, 5, 0);/*file change*/
+     {
+	/* FIXME: handle BACKOFF */
+     }
+   _e_file_add_mod(ed, path, 5, 0);/*file change*/
 }
 
 static void
-_e_file_mon_dir_del(int id, const char *path)
+_e_file_mon_dir_del(E_Dir *ed, const char *path)
 {
    ecore_ipc_server_send(_e_ipc_server,
 			 6/*E_IPC_DOMAIN_FM*/,
 			 6/*mon dir del*/,
-			 0, id, 0, (void *)path, strlen(path) + 1);
+			 0, ed->id, 0, (void *)path, strlen(path) + 1);
 }
 
 static void
@@ -764,9 +826,9 @@ _e_cb_file_mon_list_idler(void *data)
 	     if ((!ed->fq->next) ||
 		 ((!strcmp(ed->fq->next->data, ".order")) &&
 		  (!ed->fq->next->next)))
-	       _e_file_add(ed->id, buf, 2);
+	       _e_file_add(ed, buf, 2);
 	     else
-	       _e_file_add(ed->id, buf, 1);
+	       _e_file_add(ed, buf, 1);
 	  }
 	free(file);
 	ed->fq = evas_list_remove_list(ed->fq, ed->fq);
@@ -1158,14 +1220,12 @@ _e_path_fix_order(const char *path, const char *rel, int rel_to, int x, int y)
    if (!strcmp(f, rel)) return;
    d = ecore_file_get_dir(path);
    if (!d) return;
-   printf("_e_path_fix_order(%s, %s, %i, %i, %i)\n", path, rel, rel_to, x, y);
    snprintf(buf, sizeof(buf), "%s/.order", d);
    if (ecore_file_exists(buf))
      {
 	FILE *fh;
 	Evas_List *files = NULL, *l;
 	
-	printf(".order exists\n");
 	fh = fopen(buf, "r");
 	if (fh)
 	  {
@@ -1186,7 +1246,6 @@ _e_path_fix_order(const char *path, const char *rel, int rel_to, int x, int y)
 	  {
 	     if (!strcmp(l->data, f))
 	       {
-		  printf("REMOVE\n");
 		  free(l->data);
 		  files = evas_list_remove_list(files, l);
 		  break;
@@ -1197,7 +1256,6 @@ _e_path_fix_order(const char *path, const char *rel, int rel_to, int x, int y)
 	  {
 	     if (!strcmp(l->data, rel))
 	       {
-		  printf("INSERT %s\n", (char *)l->data);
 		  if (rel_to == 2) /* replace */
 		    {
 		       free(l->data);
@@ -1220,7 +1278,6 @@ _e_path_fix_order(const char *path, const char *rel, int rel_to, int x, int y)
 	  {
 	     while (files)
 	       {
-		  printf("W %s\n", (char *)files->data);
 		  fprintf(fh, "%s\n", (char *)files->data);
 		  free(files->data);
 		  files = evas_list_remove_list(files, files);
@@ -1229,4 +1286,28 @@ _e_path_fix_order(const char *path, const char *rel, int rel_to, int x, int y)
 	  }
      }
    free(d);
+}
+
+static void
+_e_dir_del(E_Dir *ed)
+{
+   evas_stringshare_del(ed->dir);
+   if (ed->idler) ecore_idler_del(ed->idler);
+   if (ed->recent_clean)
+     ecore_timer_del(ed->recent_clean);
+   while (ed->recent_mods)
+     {
+	E_Mod *m;
+	
+	m = ed->recent_mods->data;
+	evas_stringshare_del(m->path);
+	free(m);
+	ed->recent_mods = evas_list_remove_list(ed->recent_mods, ed->recent_mods);
+     }
+   while (ed->fq)
+     {
+	free(ed->fq->data);
+	ed->fq = evas_list_remove_list(ed->fq, ed->fq);
+     }
+   free(ed);
 }

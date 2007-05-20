@@ -526,6 +526,12 @@ e_fm2_custom_theme_set(Evas_Object *obj, const char *path)
      sd->custom_theme = evas_stringshare_add(path);
    else
      sd->custom_theme = NULL;
+   _e_fm2_theme_edje_object_set(sd, sd->drop, "base/theme/fileman",
+				"e/fileman/list/drop_between");
+   _e_fm2_theme_edje_object_set(sd, sd->drop_in, "base/theme/fileman",
+				"e/fileman/list/drop_in");
+   _e_fm2_theme_edje_object_set(sd, sd->overlay, "base/theme/fileman",
+				"e/fileman/overlay");
 }
 
 EAPI void
@@ -1890,10 +1896,12 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
       if (!strcmp(path, "/"))
 	{
 	   PRT("%s/Desktop", s);
+	   ecore_file_mkpath(buf);
 	}
       else
 	{
 	   PRT("%s/Desktop-%s", s, path);
+	   ecore_file_mkpath(buf);
 	}
    }
    else if (CMP("dvd") || CMP("dvd-*"))  {
@@ -6502,7 +6510,6 @@ _e_fm2_theme_edje_object_set(E_Fm2_Smart_Data *sd, Evas_Object *o, const char *c
 {
    if (sd->custom_theme)
      {
-	/* FIXME: need a way of caching what elements are and are not in the custom theme */
 	if (edje_object_file_set(o, sd->custom_theme, group)) return 1;
      }
    if (sd->custom_theme)
