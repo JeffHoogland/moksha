@@ -268,6 +268,8 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
    evas_object_show(o);
    
    o = e_scrollframe_add(zone->container->bg_evas);
+   e_scrollframe_custom_theme_set(o, "base/theme/fileman",
+				  "e/fileman/scrollframe/desktop");
    /* FIXME: this theme object will have more versions and options later
     * for things like swallowing widgets/buttons ot providing them - a
     * gadcon for starters for fm widgets. need to register the owning 
@@ -283,8 +285,6 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
     * same as currently done for bg & overlay. also add to fm2 the ability
     * to specify the .edj files to get the list and icon theme stuff from
     */
-   e_scrollframe_custom_theme_set(o, "base/theme/fileman",
-				  "e/fileman/scrollframe/desktop");
    evas_object_data_set(fwin->fm_obj, "fwin", fwin);
    e_scrollframe_extern_pan_set(o, fwin->fm_obj,
 				_e_fwin_pan_set,
@@ -294,7 +294,7 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
    evas_object_propagate_events_set(fwin->fm_obj, 0);
    fwin->scrollframe_obj = o;
    evas_object_move(o, fwin->zone->x, fwin->zone->y);
-   evas_object_resize(fwin->scrollframe_obj, fwin->zone->w, fwin->zone->h);
+   evas_object_resize(o, fwin->zone->w, fwin->zone->h);
    evas_object_show(o);
 
    e_fm2_window_object_set(fwin->fm_obj, E_OBJECT(fwin->zone));
@@ -446,9 +446,16 @@ _e_fwin_changed(void *data, Evas_Object *obj, void *event_info)
 					     (char *)fwin->scrollframe_file,
 					     "e/fileman/scrollframe/default");
 	else
-	  e_scrollframe_custom_theme_set(fwin->scrollframe_obj,
-					 "base/theme/fileman",
-					 "e/fileman/scrollframe/default");
+	  {
+	     if (fwin->zone)
+	       e_scrollframe_custom_theme_set(fwin->scrollframe_obj,
+					      "base/theme/fileman",
+					      "e/fileman/scrollframe/desktop");
+	     else
+	       e_scrollframe_custom_theme_set(fwin->scrollframe_obj,
+					      "base/theme/fileman",
+					      "e/fileman/scrollframe/default");
+	  }
 	e_scrollframe_child_pos_set(fwin->scrollframe_obj, 0, 0);
      }
    if ((fwin->theme_file) && (ecore_file_exists(fwin->theme_file)))

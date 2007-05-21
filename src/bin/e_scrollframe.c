@@ -164,7 +164,7 @@ EAPI void
 e_scrollframe_custom_theme_set(Evas_Object *obj, char *custom_category, char *custom_group)
 {
    API_ENTRY return;
-   
+
    e_theme_edje_object_set(sd->edje_obj, custom_category, custom_group);
    if (sd->pan_obj)
      edje_object_part_swallow(sd->edje_obj, "e.swallow.content", sd->pan_obj);

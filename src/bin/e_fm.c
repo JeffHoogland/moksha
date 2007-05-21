@@ -284,8 +284,8 @@ static int _e_fm2_cb_live_idler(void *data);
 static int _e_fm2_cb_live_timer(void *data);
 
 static const char *_e_fm2_removable_dev_label_get(const char *uuid);
-static void _e_fm2_removable_dev_add(const char *uuid);
-static void _e_fm2_removable_dev_del(const char *uuid);
+static void _e_fm2_removable_dev_add(const char *uuid, const char *label);
+static void _e_fm2_removable_dev_del(const char *uuid, const char *label);
 static void _e_fm2_removable_path_mount(const char *path);
 static void _e_fm2_removable_path_umount(const char *path);
 static void _e_fm2_removable_dev_mount(const char *uuid);
@@ -971,8 +971,9 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 	       {
 		  oic = edje_object_add(evas);
 		  if (!edje_object_file_set(oic, ici->icon, "icon"))
-		    _e_fm2_theme_edje_object_set(ic->sd, oic, "base/theme/fileman",
-					    "e/icons/fileman/file");
+		    _e_fm2_theme_edje_object_set(ic->sd, oic,
+						 "base/theme/fileman",
+						 "e/icons/fileman/file");
 	       }
 	     else
 	       {
@@ -1015,8 +1016,9 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
    if (S_ISDIR(ici->statinfo.st_mode))
      {
 	oic = edje_object_add(evas);
-	_e_fm2_theme_edje_object_set(ic->sd, oic, "base/theme/fileman",
-				"e/icons/fileman/folder");
+	_e_fm2_theme_edje_object_set(ic->sd, oic,
+				     "base/theme/fileman",
+				     "e/icons/fileman/folder");
      }
    else
      {
@@ -1044,8 +1046,9 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 	     if (!icon)
 	       {
 		  oic = edje_object_add(evas);
-		  _e_fm2_theme_edje_object_set(ic->sd, oic, "base/theme/fileman",
-					  "e/icons/fileman/file");
+		  _e_fm2_theme_edje_object_set(ic->sd, oic,
+					       "base/theme/fileman",
+					       "e/icons/fileman/file");
 		  if (type_ret) *type_ret = "FILE_TYPE";
 	       }
 	     else if (!strcmp(icon, "THUMB"))
@@ -1083,8 +1086,9 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 		  if (!_e_fm2_theme_edje_object_set(ic->sd, oic, 
 					       "base/theme/fileman",
 					       icon))
-		    _e_fm2_theme_edje_object_set(ic->sd, oic, "base/theme/fileman",
-					    "e/icons/fileman/file");
+		    _e_fm2_theme_edje_object_set(ic->sd, oic,
+						 "base/theme/fileman",
+						 "e/icons/fileman/file");
 		  if (type_ret) *type_ret = "THEME";
 	       }
 	     else
@@ -1094,8 +1098,9 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 		    {
 		       oic = edje_object_add(evas);
 		       if (!edje_object_file_set(oic, icon, "icon"))
-			 _e_fm2_theme_edje_object_set(ic->sd, oic, "base/theme/fileman",
-						 "e/icons/fileman/file");
+			 _e_fm2_theme_edje_object_set(ic->sd, oic,
+						      "base/theme/fileman",
+						      "e/icons/fileman/file");
 		    }
 		  else
 		    {
@@ -1174,8 +1179,9 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 		  if (oic == NULL) 
 		    {
 		       oic = edje_object_add(evas);	    
-		       _e_fm2_theme_edje_object_set(ic->sd, oic, "base/theme/fileman",
-				         "e/icons/fileman/file");
+		       _e_fm2_theme_edje_object_set(ic->sd, oic,
+						    "base/theme/fileman",
+						    "e/icons/fileman/file");
 		       if (type_ret) *type_ret = "FILE_TYPE";
 		    }
 		  else
@@ -1186,43 +1192,49 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 	     else if (S_ISCHR(ici->statinfo.st_mode))
 	       {
 		  oic = edje_object_add(evas);
-		  _e_fm2_theme_edje_object_set(ic->sd, oic, "base/theme/fileman",
-					  "e/icons/fileman/file");
+		  _e_fm2_theme_edje_object_set(ic->sd, oic,
+					       "base/theme/fileman",
+					       "e/icons/fileman/file");
 		  if (type_ret) *type_ret = "FILE_TYPE";
 	       }
 	     else if (S_ISBLK(ici->statinfo.st_mode))
 	       {
 		  oic = edje_object_add(evas);
-		  _e_fm2_theme_edje_object_set(ic->sd, oic, "base/theme/fileman",
-					  "e/icons/fileman/file");
+		  _e_fm2_theme_edje_object_set(ic->sd, oic,
+					       "base/theme/fileman",
+					       "e/icons/fileman/file");
 		  if (type_ret) *type_ret = "FILE_TYPE";
 	       }
 	     else if (S_ISFIFO(ici->statinfo.st_mode))
 	       {
 		  oic = edje_object_add(evas);
-		  _e_fm2_theme_edje_object_set(ic->sd, oic, "base/theme/fileman",
-					  "e/icons/fileman/file");
+		  _e_fm2_theme_edje_object_set(ic->sd, oic,
+					       "base/theme/fileman",
+					       "e/icons/fileman/file");
 		  if (type_ret) *type_ret = "FILE_TYPE";
 	       }
 	     else if (S_ISSOCK(ici->statinfo.st_mode))
 	       {
 		  oic = edje_object_add(evas);
-		  _e_fm2_theme_edje_object_set(ic->sd, oic, "base/theme/fileman",
-					  "e/icons/fileman/file");
+		  _e_fm2_theme_edje_object_set(ic->sd, oic,
+					       "base/theme/fileman",
+					       "e/icons/fileman/file");
 		  if (type_ret) *type_ret = "FILE_TYPE";
 	       }
 	     else if (ecore_file_can_exec(buf))
 	       {
 		  oic = edje_object_add(evas);
-		  _e_fm2_theme_edje_object_set(ic->sd, oic, "base/theme/fileman",
-					  "e/icons/fileman/file");
+		  _e_fm2_theme_edje_object_set(ic->sd, oic,
+					       "base/theme/fileman",
+					       "e/icons/fileman/file");
 		  if (type_ret) *type_ret = "FILE_TYPE";
 	       }
 	     else
 	       {
 		  oic = edje_object_add(evas);
-		  _e_fm2_theme_edje_object_set(ic->sd, oic, "base/theme/fileman",
-					  "e/icons/fileman/file");
+		  _e_fm2_theme_edje_object_set(ic->sd, oic,
+					       "base/theme/fileman",
+					       "e/icons/fileman/file");
 		  if (type_ret) *type_ret = "FILE_TYPE";
 	       }
 	  }
@@ -2823,10 +2835,12 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 	       {
 		  obj = edje_object_add(evas_object_evas_get(ic->sd->obj));
 		  if ((ic->sd->config->icon.fixed.w) && (ic->sd->config->icon.fixed.h))
-		    _e_fm2_theme_edje_object_set(ic->sd, obj, "base/theme/fileman",
+		    _e_fm2_theme_edje_object_set(ic->sd, obj,
+						 "base/theme/fileman",
 						 "e/fileman/icon/fixed");
 		  else
-		    _e_fm2_theme_edje_object_set(ic->sd, obj, "base/theme/fileman",
+		    _e_fm2_theme_edje_object_set(ic->sd, obj,
+						 "base/theme/fileman",
 						 "e/fileman/icon/variable");
                   ic->sd->tmp.obj = obj;
 //		  printf("CALC OBJ %p\n", ic->sd->tmp.obj);
@@ -2860,8 +2874,9 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 		  obj = edje_object_add(evas_object_evas_get(ic->sd->obj));
 // vairable sized list items are pretty usless - ignore.		  
 //		  if (ic->sd->config->icon.fixed.w)
-		    _e_fm2_theme_edje_object_set(ic->sd, obj, "base/theme/fileman",
-					    "e/fileman/list/fixed");
+		    _e_fm2_theme_edje_object_set(ic->sd, obj,
+						 "base/theme/fileman",
+						 "e/fileman/list/fixed");
 //		  else
 //		    _e_fm2_theme_edje_object_set(ic->sd, obj, "base/theme/fileman",
 //					    "e/fileman/list/variable");
@@ -2950,11 +2965,13 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
      {
 //        if (ic->sd->config->icon.fixed.w)
 //	  {
-	     if (ic->odd)
-	       _e_fm2_theme_edje_object_set(ic->sd, ic->obj, "base/theme/widgets",
+	if (ic->odd)
+	  _e_fm2_theme_edje_object_set(ic->sd, ic->obj,
+				       "base/theme/widgets",
 				       "e/fileman/list_odd/fixed");
-	     else
-	       _e_fm2_theme_edje_object_set(ic->sd, ic->obj, "base/theme/widgets",
+	else
+	  _e_fm2_theme_edje_object_set(ic->sd, ic->obj,
+				       "base/theme/widgets",
 				       "e/fileman/list/fixed");
 //	  }
 //	else
@@ -2970,11 +2987,13 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
    else
      {
         if (ic->sd->config->icon.fixed.w)
-	  _e_fm2_theme_edje_object_set(ic->sd, ic->obj, "base/theme/fileman",
-				  "e/fileman/icon/fixed");
+	  _e_fm2_theme_edje_object_set(ic->sd, ic->obj,
+				       "base/theme/fileman",
+				       "e/fileman/icon/fixed");
 	else
-	  _e_fm2_theme_edje_object_set(ic->sd, ic->obj, "base/theme/fileman",
-				  "e/fileman/icon/variable");
+	  _e_fm2_theme_edje_object_set(ic->sd, ic->obj,
+				       "base/theme/fileman",
+				       "e/fileman/icon/variable");
      }
    _e_fm2_icon_label_set(ic, ic->obj);
    evas_object_clip_set(ic->obj, ic->sd->clip);
@@ -4416,30 +4435,36 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 		  if (ic->sd->config->icon.fixed.w)
 		    {
 		       if (ic->odd)
-			 _e_fm2_theme_edje_object_set(ic->sd, o, "base/theme/widgets",
-						 "e/fileman/list_odd/fixed");
+			 _e_fm2_theme_edje_object_set(ic->sd, o,
+						      "base/theme/widgets",
+						      "e/fileman/list_odd/fixed");
 		       else
-			 _e_fm2_theme_edje_object_set(ic->sd, o, "base/theme/widgets",
-						 "e/fileman/list/fixed");
+			 _e_fm2_theme_edje_object_set(ic->sd, o,
+						      "base/theme/widgets",
+						      "e/fileman/list/fixed");
 		    }
 		  else
 		    {
 		       if (ic->odd)
-			 _e_fm2_theme_edje_object_set(ic->sd, o, "base/theme/widgets",
-						 "e/fileman/list_odd/variable");
+			 _e_fm2_theme_edje_object_set(ic->sd, o,
+						      "base/theme/widgets",
+						      "e/fileman/list_odd/variable");
 		       else
-			 _e_fm2_theme_edje_object_set(ic->sd, o, "base/theme/widgets",
-						 "e/fileman/list/variable");
+			 _e_fm2_theme_edje_object_set(ic->sd, o,
+						      "base/theme/widgets",
+						      "e/fileman/list/variable");
 		    }
 	       }
 	     else
 	       {
 		  if (ic->sd->config->icon.fixed.w)
-		    _e_fm2_theme_edje_object_set(ic->sd, o, "base/theme/fileman",
-					    "e/fileman/icon/fixed");
+		    _e_fm2_theme_edje_object_set(ic->sd, o,
+						 "base/theme/fileman",
+						 "e/fileman/icon/fixed");
 		  else
-		    _e_fm2_theme_edje_object_set(ic->sd, o, "base/theme/fileman",
-					    "e/fileman/icon/variable");
+		    _e_fm2_theme_edje_object_set(ic->sd, o,
+						 "base/theme/fileman",
+						 "e/fileman/icon/variable");
 	       }
 	     _e_fm2_icon_label_set(ic, o);
 	     o2 = _e_fm2_icon_icon_direct_set(ic, o,
@@ -4989,22 +5014,25 @@ _e_fm2_smart_add(Evas_Object *obj)
    
    sd->drop = edje_object_add(evas_object_evas_get(obj));
    evas_object_clip_set(sd->drop, sd->clip);
-   _e_fm2_theme_edje_object_set(sd, sd->drop, "base/theme/fileman",
-			   "e/fileman/list/drop_between");
+   _e_fm2_theme_edje_object_set(sd, sd->drop,
+				"base/theme/fileman",
+				"e/fileman/list/drop_between");
    evas_object_smart_member_add(sd->drop, obj);
    evas_object_show(sd->drop);
    
    sd->drop_in = edje_object_add(evas_object_evas_get(obj));
    evas_object_clip_set(sd->drop_in, sd->clip);
-   _e_fm2_theme_edje_object_set(sd, sd->drop_in, "base/theme/fileman",
-			   "e/fileman/list/drop_in");
+   _e_fm2_theme_edje_object_set(sd, sd->drop_in,
+				"base/theme/fileman",
+				"e/fileman/list/drop_in");
    evas_object_smart_member_add(sd->drop_in, obj);
    evas_object_show(sd->drop_in);
    
    sd->overlay = edje_object_add(evas_object_evas_get(obj));
    evas_object_clip_set(sd->overlay, sd->clip);
-   _e_fm2_theme_edje_object_set(sd, sd->overlay, "base/theme/fileman",
-			   "e/fileman/overlay");
+   _e_fm2_theme_edje_object_set(sd, sd->overlay,
+				"base/theme/fileman",
+				"e/fileman/overlay");
    evas_object_smart_member_add(sd->overlay, obj);
    evas_object_show(sd->overlay);
    
@@ -6147,9 +6175,9 @@ _e_fm2_event_removable_add_free(void *data, void *ev)
    E_Fm2_Removable_Add *e;
    
    e = ev;
-   evas_stringshare_del(e->uuid);
-   evas_stringshare_del(e->label);
-   evas_stringshare_del(e->mount);
+   if (e->uuid) evas_stringshare_del(e->uuid);
+   if (e->label) evas_stringshare_del(e->label);
+   if (e->mount) evas_stringshare_del(e->mount);
    free(e);
 }
 
@@ -6166,22 +6194,40 @@ _e_fm2_event_removable_del_free(void *data, void *ev)
 }
 
 static void
-_e_fm2_removable_dev_add(const char *uuid)
+_e_fm2_removable_dev_add(const char *uuid, const char *label)
 {
    E_Fm2_Removable *rem;
    FILE *f;
    char buf[PATH_MAX], buf2[PATH_MAX];
    
    /* remove it - in case, so we don't add it twice */
-   _e_fm2_removable_dev_del(uuid);
-   printf("ADD DEV ------- %s\n", uuid);
+   _e_fm2_removable_dev_del(uuid, label);
+   printf("ADD DEV ------- %s %s\n", uuid, label);
    rem = E_NEW(E_Fm2_Removable, 1);
-   rem->uuid = evas_stringshare_add(uuid);
-   rem->label = _e_fm2_removable_dev_label_get(uuid);
-   snprintf(buf, sizeof(buf), "/media/disk_by-uuid_%s", uuid);
-   rem->mount = evas_stringshare_add(buf);
-   snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/|%s.desktop",
-	    e_user_homedir_get(), uuid);
+   if (uuid)
+     {
+	rem->uuid = evas_stringshare_add(uuid);
+	rem->label = _e_fm2_removable_dev_label_get(uuid);
+	snprintf(buf, sizeof(buf), "/media/disk_by-uuid_%s", uuid);
+	rem->mount = evas_stringshare_add(buf);
+	snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/|%s.desktop",
+		 e_user_homedir_get(), uuid);
+	snprintf(buf2, sizeof(buf2), "%s/Desktop/|%s.desktop",
+		 e_user_homedir_get(), uuid);
+	ecore_file_symlink(buf, buf2);
+     }
+   else if (label)
+     {
+	rem->uuid = NULL;
+	rem->label = evas_stringshare_add(label);
+	snprintf(buf, sizeof(buf), "/media/disk_by-label_%s", label);
+	rem->mount = evas_stringshare_add(buf);
+	snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/|%s.desktop",
+		 e_user_homedir_get(), label);
+	snprintf(buf2, sizeof(buf2), "%s/Desktop/|%s.desktop",
+		 e_user_homedir_get(), label);
+	ecore_file_symlink(buf, buf2);
+     }
    _e_fm2_removables = evas_list_append(_e_fm2_removables, rem);
    f = fopen(buf, "w");
    if (f)
@@ -6204,9 +6250,6 @@ _e_fm2_removable_dev_add(const char *uuid)
 		rem->mount);
 	fclose(f);
      }
-   snprintf(buf2, sizeof(buf2), "%s/Desktop/|%s.desktop",
-	    e_user_homedir_get(), uuid);
-   ecore_file_symlink(buf, buf2);
    // FIXME: need to maybe have some popup, dialog or other indicator pop up
    // and maybe allow to click to open new removable device - maybe event
    // and broadcast as below then have a module listen and pop up a popup
@@ -6216,21 +6259,21 @@ _e_fm2_removable_dev_add(const char *uuid)
 	E_Fm2_Removable_Add *ev;
 	
 	ev = E_NEW(E_Fm2_Removable_Add, 1);
-	ev->uuid = evas_stringshare_add(rem->uuid);
-	ev->label = evas_stringshare_add(rem->label);
-	ev->mount = evas_stringshare_add(rem->mount);
+	if (rem->uuid) ev->uuid = evas_stringshare_add(rem->uuid);
+	if (rem->label) ev->label = evas_stringshare_add(rem->label);
+	if (rem->mount) ev->mount = evas_stringshare_add(rem->mount);
 	ecore_event_add(E_EVENT_REMOVABLE_ADD, ev, _e_fm2_event_removable_add_free, NULL);
      }
 }
 
 static void
-_e_fm2_removable_dev_del(const char *uuid)
+_e_fm2_removable_dev_del(const char *uuid, const char *label)
 {
    E_Fm2_Removable *rem;
    Evas_List *l;
    char buf[4096];
    
-   printf("DEL DEV ------- %s\n", uuid);
+   printf("DEL DEV ------- %s %s\n", uuid, label);
    // FIXME: need to find all fm views for this dev and close them
    _e_fm2_removable_dev_umount(uuid);
    /* FIXME: move to e_fm_main */
@@ -6243,7 +6286,8 @@ _e_fm2_removable_dev_del(const char *uuid)
    for (l = _e_fm2_removables; l; l = l->next)
      {
 	rem = l->data;
-	if (!strcmp(uuid, rem->uuid))
+	if (((uuid) && (!strcmp(uuid, rem->uuid))) ||
+	    ((label) && (!strcmp(label, rem->label))))
 	  {
 	     // FIXME: need to display popup or some other status here maybe
 	     // using module to listen to the below event?
@@ -6251,14 +6295,14 @@ _e_fm2_removable_dev_del(const char *uuid)
 		  E_Fm2_Removable_Del *ev;
 		  
 		  ev = E_NEW(E_Fm2_Removable_Del, 1);
-		  ev->uuid = evas_stringshare_add(rem->uuid);
-		  ev->label = evas_stringshare_add(rem->label);
-		  ev->mount = evas_stringshare_add(rem->mount);
+		  if (rem->uuid) ev->uuid = evas_stringshare_add(rem->uuid);
+		  if (rem->label) ev->label = evas_stringshare_add(rem->label);
+		  if (rem->mount) ev->mount = evas_stringshare_add(rem->mount);
 		  ecore_event_add(E_EVENT_REMOVABLE_DEL, ev, _e_fm2_event_removable_del_free, NULL);
 	       }
-	     evas_stringshare_del(rem->uuid);
-	     evas_stringshare_del(rem->label);
-	     evas_stringshare_del(rem->mount);
+	     if (rem->uuid) evas_stringshare_del(rem->uuid);
+	     if (rem->label) evas_stringshare_del(rem->label);
+	     if (rem->mount) evas_stringshare_del(rem->mount);
 	     free(rem);
 	     _e_fm2_removables = evas_list_remove_list(_e_fm2_removables, l);
 	     break;
@@ -6409,9 +6453,14 @@ _e_fm2_cb_dbus_event_server_signal(void *data, int ev_type, void *ev)
    if (event->server == _e_fm2_dbus)
      {
 	const char *bstr = "/org/freedesktop/Hal/devices/volume_uuid_";
-	int blen;
+	const char *bstr2 = "/org/freedesktop/Hal/devices/volume_label_";
+	const char *bstr3 = "/org/freedesktop/Hal/devices/storage_serial_";
+	// /org/freedesktop/Hal/devices/storage_serial_PLEXTOR_DVDR_PX_740A_00D0A905301025695
+	int blen, blen2, blen3;
 	
 	blen = strlen(bstr);
+	blen2 = strlen(bstr2);
+	blen3 = strlen(bstr3);
 	if (!strcmp(event->header.member, "DeviceAdded"))
 	  {
 	     printf("E FM: DBus dev add:\n %s\n",
@@ -6421,13 +6470,36 @@ _e_fm2_cb_dbus_event_server_signal(void *data, int ev_type, void *ev)
 		  char *uuid, *p;
 		  
 		  uuid = strdup(((char *)event->args[0].value) + blen);
+		  printf("E FM: uuid = %s\n", uuid);
 		  for (p = uuid; *p; p++)
 		    {
 		       if (*p == '_') *p = '-';
 		    }
-		  _e_fm2_removable_dev_add(uuid);
+		  printf("E FM: uuid-post = %s\n", uuid);
+		  _e_fm2_removable_dev_add(uuid, NULL);
 		  free(uuid);
 	       }
+	     /* cd/dvd's turn up as volumes only when inserted. also abov
+	      * bstr3 is what the cd/dvd device itself turns up as
+	      * when plugged in but no disk is in yet. volume label bstr2
+	      * is what determinies that
+	      */
+/*	     
+	     else if (!strncmp((char *)event->args[0].value, bstr2, blen2))
+	       {
+		  char *label, *p;
+		  
+		  label = strdup(((char *)event->args[0].value) + blen2);
+		  printf("E FM: label = %s\n", label);
+		  for (p = label; *p; p++)
+		    {
+		       if (*p == '_') *p = '-';
+		    }
+		  printf("E FM: label-post = %s\n", label);
+		  _e_fm2_removable_dev_add(NULL, label);
+		  free(label);
+	       }
+ */
 	  }
 	else if (!strcmp(event->header.member, "DeviceRemoved"))
 	  {
@@ -6442,9 +6514,23 @@ _e_fm2_cb_dbus_event_server_signal(void *data, int ev_type, void *ev)
 		    {
 		       if (*p == '_') *p = '-';
 		    }
-		  _e_fm2_removable_dev_del(uuid);
+		  _e_fm2_removable_dev_del(uuid, NULL);
 		  free(uuid);
 	       }
+/*	     
+	     else if (!strncmp((char *)event->args[0].value, bstr2, blen2))
+	       {
+		  char *label, *p;
+		  
+		  label = strdup(((char *)event->args[0].value) + blen2);
+		  for (p = label; *p; p++)
+		    {
+		       if (*p == '_') *p = '-';
+		    }
+		  _e_fm2_removable_dev_del(NULL, label);
+		  free(label);
+	       }
+ */
 	  }
      }
    return 1;

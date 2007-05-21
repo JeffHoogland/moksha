@@ -37,11 +37,11 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
-* fm2 fwin windows need to use icon for that dir on window
+* fm2 fwin windows need to use icon for that dir on window border
 * fm2 needs to use different theme elements for desktop
 * fm2 theme needs to not suck
 * fm2 custom icon view mode needs to have cleanup,align etc.
-* fm2 custom icon view mode initial placement needs tome fixing
+* fm2 custom icon view mode initial placement needs some fixing
 * fm2 fwin needs options for view mode
 * fm2 needs a way to specify a multiplier, explicit size or "use original icon"
   config per icon and per dir
@@ -55,8 +55,7 @@ overlay - to exec or do things (eg go to parent)
 * fm2 on desktop needs option to turn off and select which dir on which zone
 * fm2 needs to show icons again if drag was aborted
 * fm2 needs to handle dnd of e apps too
-* fm2 slave needs to rate limit file changes/adds/dels
-* need a default desktop file setup
+* need a default desktop dir & file setup
 * fm2 needs to auto-scroll if dnd hovers on edge of fm2 for a while
 * fm2 needs spring-loaded folder opens
 * fm2 needs to be able to specify dir customisations other than magic dot file
@@ -66,11 +65,12 @@ the fs
 * fm2 needs to display symlink info on files somehow
 * fm2 needs to display more than 1 file being dragged (if more than 1 is being
   dragged)
+& fm2 needs to drag other files in mult-drag to the right location
 * fm2 needs a way of mapping a internal e actions to do (like add as
   wallpaper etc.)
 * fm2 needs a way to bypass thumb gen anim on just a unrealize/realize as well
   as change state instantly if it already was selected
-* fm2 needs to not unrealize then re-realize on resort/arraneg - keep objects
+* fm2 needs to not unrealize then re-realize on re-sort/arrange - keep objects
   around.
 * fm2 needs a mime/extension/glob filter
 * dnd needs to do xdnd properly.
