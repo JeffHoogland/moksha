@@ -910,7 +910,10 @@ e_util_dir_check(const char *dir)
 EAPI void
 e_util_defer_object_del(E_Object *obj)
 {
-   ecore_idle_enterer_add(_e_util_cb_delayed_del, obj);
+   if (stopping)
+     e_object_del(obj);
+   else
+     ecore_idle_enterer_add(_e_util_cb_delayed_del, obj);
 }
 
 EAPI const char *
