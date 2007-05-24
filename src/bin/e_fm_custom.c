@@ -3,9 +3,12 @@
  */
 #include "e.h"
 
+static Evas_Bool _e_fm2_custom_file_hash_foreach_list(Evas_Hash *hash, const char *key, void *data, void *fdata);
+static Evas_List *_e_fm2_custom_hash_key_base_list(Evas_Hash *hash, const char *str);
+static Evas_Bool _e_fm2_custom_file_hash_foreach_sub_list(Evas_Hash *hash, const char *key, void *data, void *fdata);
+static Evas_List *_e_fm2_custom_hash_key_sub_list(Evas_Hash *hash, const char *str);
 static Evas_Bool _e_fm2_custom_file_hash_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata);
 static Evas_Bool _e_fm2_custom_file_hash_foreach_save(Evas_Hash *hash, const char *key, void *data, void *fdata);
-static void _e_fm2_custom_file_info_clean(void);
 static void _e_fm2_custom_file_info_load(void);
 static void _e_fm2_custom_file_info_save(void);
 static void _e_fm2_custom_file_info_free(void);
@@ -18,13 +21,12 @@ static Evas_Hash *_e_fm2_custom_hash = NULL;
 static int _e_fm2_custom_writes = 0;
 
 
-/* FIXME: this is ery delicate. keeping the eet file open is a recipe
- * for distater. it already is. we need to ONLY open the file for writing when
- * writing - write to tmp file then atomically rename it to the real config.
- * also need to handle tree moves and deletes. if u rename or delete a
- * parent node - delete all children too.
-
+/* FIXME: this uses a flat path key for custom file info. this is fine as
+ * long as we only expect a limited number of custom info nodes. if we
+ * start to see whole dire trees stored this way things will suck. we need
+ * to use a tree struct to store this so deletes and renmes are sane.
  */
+
 /* externally accessible functions */
 EAPI int
 e_fm2_custom_file_init(void)
@@ -85,26 +87,8 @@ e_fm2_custom_file_get(const char *path)
    
    _e_fm2_custom_file_info_load();
    if (!_e_fm2_custom_file) return NULL;
-   /* get any custom info for the path in our metadata - if non exists,
-    * return NULL. This may mean loading upa chunk of metadata off disk
-    * on demand and caching it */
-   if (_e_fm2_flush_timer)
-     {
-	ecore_timer_del(_e_fm2_flush_timer);
-	_e_fm2_flush_timer = ecore_timer_add(1.0, _e_fm2_custom_file_cb_timer_save, NULL);
-     }
-//   printf("FIND CUSTOM %s\n", path);
+   if (_e_fm2_flush_timer) e_fm2_custom_file_flush();
    cf = evas_hash_find(_e_fm2_custom_hash, path);
-   if (cf) return cf;
-   cf = eet_data_read(_e_fm2_custom_file, _e_fm2_custom_file_edd, path);
-   if (cf)
-     _e_fm2_custom_hash = evas_hash_add(_e_fm2_custom_hash, path, cf);
-   if (cf)
-     {
-	printf("CUSTOM FILE for %s:\n"
-	       "  type=%i,icon=%s,valid=%i\n",
-	       path, cf->icon.type, cf->icon.icon, cf->icon.valid);
-     }
    return cf;
 }
 
@@ -113,12 +97,7 @@ e_fm2_custom_file_set(const char *path, E_Fm2_Custom_File *cf)
 {
    _e_fm2_custom_file_info_load();
    if (!_e_fm2_custom_file) return;
-   if (_e_fm2_flush_timer)
-     {
-	ecore_timer_del(_e_fm2_flush_timer);
-	_e_fm2_flush_timer = ecore_timer_add(1.0, _e_fm2_custom_file_cb_timer_save, NULL);
-     }
-   /* set custom metadata for a file path - save it to the metadata (or queue it) */
+   if (_e_fm2_flush_timer) e_fm2_custom_file_flush();
    if (evas_hash_find(_e_fm2_custom_hash, path) != cf)
      {
 	E_Fm2_Custom_File *cf2;
@@ -132,74 +111,92 @@ e_fm2_custom_file_set(const char *path, E_Fm2_Custom_File *cf)
 	     if (cf->label)
 	       cf2->label = evas_stringshare_add(cf->label);
 	     _e_fm2_custom_hash = evas_hash_add(_e_fm2_custom_hash, path, cf2);
-	     cf = cf2;
 	  }
      }
-/*   
-   printf("SET CUSTOM %s %p %s %i %i\n", 
-	  path, cf, cf->icon.icon, cf->icon.type, cf->icon.valid);
-   printf("_e_fm2_custom_file = %p, _e_fm2_custom_file_edd=%p\n",
-	  _e_fm2_custom_file, _e_fm2_custom_file_edd);
- */
-//   eet_data_write(_e_fm2_custom_file, _e_fm2_custom_file_edd, path, cf, 1);
    _e_fm2_custom_writes = 1;
 }
 
 EAPI void
 e_fm2_custom_file_del(const char *path)
 {
-   E_Fm2_Custom_File *cf;
-   
+   Evas_List *list, *l;
+   E_Fm2_Custom_File *cf2;
+	
    _e_fm2_custom_file_info_load();
    if (!_e_fm2_custom_file) return;
-   /* delete a custom metadata entry for a path - save changes (or queue it) */
-   if (_e_fm2_flush_timer)
+   if (_e_fm2_flush_timer) e_fm2_custom_file_flush();
+   
+   list = _e_fm2_custom_hash_key_base_list(_e_fm2_custom_hash, path);
+   if (list)
      {
-	ecore_timer_del(_e_fm2_flush_timer);
-	_e_fm2_flush_timer = ecore_timer_add(1.0, _e_fm2_custom_file_cb_timer_save, NULL);
+	for (l = list; l; l = l->next)
+	  {
+	     cf2 = evas_hash_find(_e_fm2_custom_hash, l->data);
+	     if (cf2)
+	       {
+		  _e_fm2_custom_hash = evas_hash_del(_e_fm2_custom_hash,
+						     l->data, cf2);
+		  if (cf2->icon.icon) evas_stringshare_del(cf2->icon.icon);
+		  if (cf2->label) evas_stringshare_del(cf2->label);
+		  free(cf2);
+	       }
+	  }
+	evas_list_free(list);
      }
-/*   printf("DEL CUSTOM %s\n",path);*/
-   cf = evas_hash_find(_e_fm2_custom_hash, path);
-   if (cf)
-     {
-	_e_fm2_custom_hash = evas_hash_del(_e_fm2_custom_hash, path, cf);
-	if (cf->icon.icon) evas_stringshare_del(cf->icon.icon);
-	if (cf->label) evas_stringshare_del(cf->label);
-	free(cf);
-     }
-   // FIXME: ad to changeset (delete set)
-//   eet_delete(_e_fm2_custom_file, path);
    _e_fm2_custom_writes = 1;
 }
 
 EAPI void
 e_fm2_custom_file_rename(const char *path, const char *new_path)
 {
-   E_Fm2_Custom_File *cf;
+   E_Fm2_Custom_File *cf, *cf2;
+   Evas_List *list, *l;
    void *dat;
    int size;
    
    _e_fm2_custom_file_info_load();
    if (!_e_fm2_custom_file) return;
-   /* rename file path a to file paht b in the metadata - if the path exists */
-   if (_e_fm2_flush_timer)
+   if (_e_fm2_flush_timer) e_fm2_custom_file_flush();
+   cf2 = evas_hash_find(_e_fm2_custom_hash, path);
+   if (cf2)
      {
-	ecore_timer_del(_e_fm2_flush_timer);
-	_e_fm2_flush_timer = ecore_timer_add(1.0, _e_fm2_custom_file_cb_timer_save, NULL);
+	_e_fm2_custom_hash = evas_hash_del(_e_fm2_custom_hash, path, cf2);
+	cf = evas_hash_find(_e_fm2_custom_hash, new_path);
+	if (cf)
+	  {
+	     if (cf->icon.icon) evas_stringshare_del(cf->icon.icon);
+	     if (cf->label) evas_stringshare_del(cf->label);
+	     free(cf);
+	  }
+	_e_fm2_custom_hash = evas_hash_add(_e_fm2_custom_hash, new_path, cf2);
      }
-   cf = evas_hash_find(_e_fm2_custom_hash, path);
-   if (cf)
+   list = _e_fm2_custom_hash_key_base_list(_e_fm2_custom_hash, path);
+   if (list)
      {
-	_e_fm2_custom_hash = evas_hash_del(_e_fm2_custom_hash, path, cf);
-	_e_fm2_custom_hash = evas_hash_add(_e_fm2_custom_hash, new_path, cf);
+	for (l = list; l; l = l->next)
+	  {
+	     cf2 = evas_hash_find(_e_fm2_custom_hash, l->data);
+	     if (cf2)
+	       {
+		  char buf[PATH_MAX];
+		  
+		  strcpy(buf, new_path);
+		  strcat(buf, l->data + strlen(path));
+		  _e_fm2_custom_hash = evas_hash_del(_e_fm2_custom_hash,
+						     l->data, cf2);
+		  cf = evas_hash_find(_e_fm2_custom_hash, buf);
+		  if (cf)
+		    {
+		       if (cf->icon.icon) evas_stringshare_del(cf->icon.icon);
+		       if (cf->label) evas_stringshare_del(cf->label);
+		       free(cf);
+		    }
+		  _e_fm2_custom_hash = evas_hash_add(_e_fm2_custom_hash,
+						     buf, cf2);
+	       }
+	  }
+	evas_list_free(list);
      }
-   // FIXME: ad to changeset (delete set)
-//   dat = eet_read(_e_fm2_custom_file, path, &size);
-//   if (dat)
-//     {
-//	eet_write(_e_fm2_custom_file, new_path, dat, size, 1);
-//	free(dat);
-//     }
    _e_fm2_custom_writes = 1;
 }
 
@@ -209,15 +206,63 @@ e_fm2_custom_file_flush(void)
    if (!_e_fm2_custom_file) return;
    if (_e_fm2_flush_timer) ecore_timer_del(_e_fm2_flush_timer);
    _e_fm2_flush_timer = ecore_timer_add(1.0, _e_fm2_custom_file_cb_timer_save, NULL);
-/*   
-   if (_e_fm2_flush_timer) ecore_timer_del(_e_fm2_flush_timer);
-   _e_fm2_flush_timer = ecore_timer_add(1.0, _e_fm2_custom_file_cb_timer_save, NULL);
-   _e_fm2_custom_file_info_save();
-   _e_fm2_custom_file_info_free();
- */
 }
 
 /**/
+
+struct _E_Custom_List
+{
+   Evas_List  *l;
+   const char *base;
+   int         base_len;
+};
+
+static Evas_Bool
+_e_fm2_custom_file_hash_foreach_list(Evas_Hash *hash, const char *key, void *data, void *fdata)
+{
+   struct _E_Custom_List *cl;
+   
+   cl = fdata;
+   if (!strncmp(cl->base, key, cl->base_len))
+     cl->l = evas_list_append(cl->l, key);
+   return 1;
+}
+    
+static Evas_List *
+_e_fm2_custom_hash_key_base_list(Evas_Hash *hash, const char *str)
+{
+   struct _E_Custom_List cl;
+   
+   cl.l = NULL;
+   cl.base = str;
+   cl.base_len = strlen(cl.base);
+   evas_hash_foreach(hash,
+		     _e_fm2_custom_file_hash_foreach_list, &cl);
+   return cl.l;
+}
+
+static Evas_Bool
+_e_fm2_custom_file_hash_foreach_sub_list(Evas_Hash *hash, const char *key, void *data, void *fdata)
+{
+   struct _E_Custom_List *cl;
+   
+   cl = fdata;
+   if (!strncmp(cl->base, key, strlen(key)))
+     cl->l = evas_list_append(cl->l, key);
+   return 1;
+}
+    
+static Evas_List *
+_e_fm2_custom_hash_key_sub_list(Evas_Hash *hash, const char *str)
+{
+   struct _E_Custom_List cl;
+   
+   cl.l = NULL;
+   cl.base = str;
+   evas_hash_foreach(hash,
+		     _e_fm2_custom_file_hash_foreach_sub_list, &cl);
+   return cl.l;
+}
 
 static Evas_Bool
 _e_fm2_custom_file_hash_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata)
@@ -239,30 +284,8 @@ _e_fm2_custom_file_hash_foreach_save(Evas_Hash *hash, const char *key, void *dat
    
    ef = fdata;
    cf = data;
-   printf("W NEW %s %p\n", key, ef);
    eet_data_write(ef, _e_fm2_custom_file_edd, key, cf, 1);
    return 1;
-}
-
-static void
-_e_fm2_custom_file_info_clean(void)
-{
-   char **list;
-   int i, num;
-
-   /* FIXME: this could be nasty on interactivity */
-   _e_fm2_custom_file_info_load();
-   if (!_e_fm2_custom_file) return;
-	
-   list = eet_list(_e_fm2_custom_file, "*", &num);
-   for (i = 0; i < num; i++)
-     {
-	if (!ecore_file_exists(list[i]))
-	  eet_delete(_e_fm2_custom_file, list[i]);
-     }
-   if (list) free(list);
-   
-   e_fm2_custom_file_flush();
 }
 
 static void
@@ -277,6 +300,26 @@ _e_fm2_custom_file_info_load(void)
    _e_fm2_custom_file = eet_open(buf, EET_FILE_MODE_READ);
    if (!_e_fm2_custom_file)
      _e_fm2_custom_file = eet_open(buf, EET_FILE_MODE_WRITE);
+   if (_e_fm2_custom_file)
+     {
+	E_Fm2_Custom_File *cf;
+	char **list;
+	int i, num;
+	
+	list = eet_list(_e_fm2_custom_file, "*", &num);
+	if (list)
+	  {
+	     for (i = 0; i < num; i++)
+	       {
+		  cf = eet_data_read(_e_fm2_custom_file,
+				     _e_fm2_custom_file_edd, list[i]);
+		  if (cf)
+		    _e_fm2_custom_hash = evas_hash_add(_e_fm2_custom_hash,
+						       list[i], cf);
+	       }
+	     free(list);
+	  }
+     }
 }
 
 static void
@@ -284,32 +327,14 @@ _e_fm2_custom_file_info_save(void)
 {
    Eet_File *ef;
    char buf[PATH_MAX], buf2[PATH_MAX];
-   char **list;
-   int i, num, ret;
+   int ret;
 
-   printf("_e_fm2_custom_file_info_save %p %i\n", _e_fm2_custom_file, _e_fm2_custom_writes);
    if (!_e_fm2_custom_file) return;
    if (!_e_fm2_custom_writes) return;
    snprintf(buf, sizeof(buf), "%s/.e/e/fileman/custom.cfg.tmp",
 	    e_user_homedir_get());
    ef = eet_open(buf, EET_FILE_MODE_WRITE);
-   printf("%p\n", ef);
    if (!ef) return;
-   list = eet_list(_e_fm2_custom_file, "*", &num);
-   for (i = 0; i < num; i++)
-     {
-	void *dat;
-	int size;
-	
-	dat = eet_read(_e_fm2_custom_file, list[i], &size);
-	if (dat)
-	  {
-	     printf("W OLD %s\n", list[i]);
-	     eet_write(ef, list[i], dat, size, 1);
-	     free(dat);
-	  }
-     }
-   if (list) free(list);
    evas_hash_foreach(_e_fm2_custom_hash,
 		     _e_fm2_custom_file_hash_foreach_save, ef);
    eet_close(ef);
@@ -317,7 +342,6 @@ _e_fm2_custom_file_info_save(void)
 	    e_user_homedir_get());
    eet_close(_e_fm2_custom_file);
    _e_fm2_custom_file = NULL;
-   printf("RENAME %s -> %s\n", buf, buf2);
    ret = rename(buf, buf2);
    if (ret < 0)
      {
@@ -338,7 +362,8 @@ _e_fm2_custom_file_info_free(void)
      }
    if (_e_fm2_custom_hash)
      {
-	evas_hash_foreach(_e_fm2_custom_hash, _e_fm2_custom_file_hash_foreach, NULL);
+	evas_hash_foreach(_e_fm2_custom_hash,
+			  _e_fm2_custom_file_hash_foreach, NULL);
 	evas_hash_free(_e_fm2_custom_hash);
 	_e_fm2_custom_hash = NULL;
      }

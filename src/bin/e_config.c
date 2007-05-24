@@ -1151,6 +1151,18 @@ e_config_init(void)
 	CFG_WHEELBIND(E_BINDING_CONTEXT_BORDER, 1, 1,
 		      E_BINDING_MODIFIER_ALT, 0,
 		      "desk_linear_flip_by", "1");
+	CFG_WHEELBIND(E_BINDING_CONTEXT_POPUP, 0, -1,
+		      E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_by", "-1");
+	CFG_WHEELBIND(E_BINDING_CONTEXT_POPUP, 1, -1,
+		      E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_by", "-1");
+	CFG_WHEELBIND(E_BINDING_CONTEXT_POPUP, 0, 1,
+		      E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_by", "1");
+	CFG_WHEELBIND(E_BINDING_CONTEXT_POPUP, 1, 1,
+		      E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_by", "1");
      }
    IFCFGEND;
    IFCFG(0x0093); /* the version # where this value(s) was introduced */
