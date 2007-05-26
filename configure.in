@@ -177,6 +177,12 @@ PKG_CHECK_MODULES(E, [
   efreet
 ])
 
+# ecore-txt is really only needed by the temperature module,
+# so we check for it separately.
+# in a perfect world, we'd also disable the temperate module here
+# if ecore-txt isn't available.
+PKG_CHECK_MODULES(ECORE_TXT, ecore-txt)
+
 e_libs=$E_LIBS" "$LIBINTL" "$fnmatch_libs" "
 e_cflags="-DUSE_E_CONFIG_H "$E_CFLAGS" "
 AC_SUBST(e_libs)
