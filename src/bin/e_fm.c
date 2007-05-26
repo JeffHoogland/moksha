@@ -27,7 +27,7 @@ typedef struct _E_Fm2_Client     E_Fm2_Client;
 struct _E_Fm2_Smart_Data
 {
    int               id;
-   Evas_Coord        x, y, w, h;
+   Evas_Coord        x, y, w, h, pw, ph;
    Evas_Object      *obj;
    Evas_Object      *clip;
    Evas_Object      *underlay;
@@ -307,10 +307,10 @@ static void _e_fm2_client_monitor_add(int id, const char *path);
 static void _e_fm2_client_monitor_del(int id, const char *path);
 static void _e_fm2_client_file_del(int id, const char *path);
 static void _e_fm2_client_file_trash(int id, const char *path);
-static void _e_fm2_client_file_mkdir(int id, const char *path, const char *rel, int rel_to, int x, int y);
-static void _e_fm2_client_file_move(int id, const char *path, const char *dest, const char *rel, int rel_to, int x, int y);
-static void _e_fm2_client_file_symlink(int id, const char *path, const char *dest, const char *rel, int rel_to, int x, int y);
-static void _e_fm2_client_file_copy(int id, const char *path, const char *dest, const char *rel, int rel_to, int x, int y);
+static void _e_fm2_client_file_mkdir(int id, const char *path, const char *rel, int rel_to, int x, int y, int res_w, int res_h);
+static void _e_fm2_client_file_move(int id, const char *path, const char *dest, const char *rel, int rel_to, int x, int y, int res_w, int res_h);
+static void _e_fm2_client_file_symlink(int id, const char *path, const char *dest, const char *rel, int rel_to, int x, int y, int res_w, int res_h);
+static void _e_fm2_client_file_copy(int id, const char *path, const char *dest, const char *rel, int rel_to, int x, int y, int res_w, int res_h);
 
 static Ecore_DBus_Server *_e_fm2_dbus = NULL;
 static Evas_List *_e_fm2_dbus_handlers = NULL;
@@ -1437,7 +1437,7 @@ _e_fm2_client_file_trash(int id, const char *path)
 }
 
 static void
-_e_fm2_client_file_mkdir(int id, const char *path, const char *rel, int rel_to, int x, int y)
+_e_fm2_client_file_mkdir(int id, const char *path, const char *rel, int rel_to, int x, int y, int res_w, int res_h)
 {
    E_Fm2_Client *cl;
    char *d;
@@ -1469,7 +1469,7 @@ _e_fm2_client_file_mkdir(int id, const char *path, const char *rel, int rel_to, 
 }
 
 static void
-_e_fm2_client_file_move(int id, const char *path, const char *dest, const char *rel, int rel_to, int x, int y)
+_e_fm2_client_file_move(int id, const char *path, const char *dest, const char *rel, int rel_to, int x, int y, int res_w, int res_h)
 {
    E_Fm2_Client *cl;
    char *d;
@@ -1505,27 +1505,23 @@ _e_fm2_client_file_move(int id, const char *path, const char *dest, const char *
 	E_Fm2_Custom_File *cf, cf0;
 	
 	cf = e_fm2_custom_file_get(dest);
-	if (cf)
-	  {
-	     cf->geom.x = x;
-	     cf->geom.y = y;
-	     cf->geom.valid = 1;
-	  }
-	else
+	if (!cf)
 	  {
 	     memset(&cf0, 0, sizeof(E_Fm2_Custom_File));
 	     cf = &cf0;
-	     cf->geom.x = x;
-	     cf->geom.y = y;
-	     cf->geom.valid = 1;
 	  }
+	cf->geom.x = x;
+	cf->geom.y = y;
+	cf->geom.res_w = res_w;
+	cf->geom.res_h = res_h;
+	cf->geom.valid = 1;
 	e_fm2_custom_file_set(dest, cf);
 	e_fm2_custom_file_flush();
      }
 }
 
 static void
-_e_fm2_client_file_symlink(int id, const char *path, const char *dest, const char *rel, int rel_to, int x, int y)
+_e_fm2_client_file_symlink(int id, const char *path, const char *dest, const char *rel, int rel_to, int x, int y, int res_w, int res_h)
 {
    E_Fm2_Client *cl;
    char *d;
@@ -1561,27 +1557,23 @@ _e_fm2_client_file_symlink(int id, const char *path, const char *dest, const cha
 	E_Fm2_Custom_File *cf, cf0;
 	
 	cf = e_fm2_custom_file_get(dest);
-	if (cf)
-	  {
-	     cf->geom.x = x;
-	     cf->geom.y = y;
-	     cf->geom.valid = 1;
-	  }
-	else
+	if (!cf)
 	  {
 	     memset(&cf0, 0, sizeof(E_Fm2_Custom_File));
 	     cf = &cf0;
-	     cf->geom.x = x;
-	     cf->geom.y = y;
-	     cf->geom.valid = 1;
 	  }
+	cf->geom.x = x;
+	cf->geom.y = y;
+	cf->geom.res_w = res_w;
+	cf->geom.res_h = res_h;
+	cf->geom.valid = 1;
 	e_fm2_custom_file_set(dest, cf);
 	e_fm2_custom_file_flush();
      }
 }
 
 static void
-_e_fm2_client_file_copy(int id, const char *path, const char *dest, const char *rel, int rel_to, int x, int y)
+_e_fm2_client_file_copy(int id, const char *path, const char *dest, const char *rel, int rel_to, int x, int y, int res_w, int res_h)
 {
    E_Fm2_Client *cl;
    char *d;
@@ -1617,20 +1609,16 @@ _e_fm2_client_file_copy(int id, const char *path, const char *dest, const char *
 	E_Fm2_Custom_File *cf, cf0;
 	
 	cf = e_fm2_custom_file_get(dest);
-	if (cf)
-	  {
-	     cf->geom.x = x;
-	     cf->geom.y = y;
-	     cf->geom.valid = 1;
-	  }
-	else
+	if (!cf)
 	  {
 	     memset(&cf0, 0, sizeof(E_Fm2_Custom_File));
 	     cf = &cf0;
-	     cf->geom.x = x;
-	     cf->geom.y = y;
-	     cf->geom.valid = 1;
 	  }
+	cf->geom.x = x;
+	cf->geom.y = y;
+	cf->geom.res_w = res_w;
+	cf->geom.res_h = res_h;
+	cf->geom.valid = 1;
 	e_fm2_custom_file_set(dest, cf);
 	e_fm2_custom_file_flush();
      }
@@ -2374,11 +2362,13 @@ _e_fm2_icon_place_relative(E_Fm2_Icon *ic, E_Fm2_Icon *icr, int xrel, int yrel, 
    
    if      (xrel > 0) ic->x += icr->w;
    else if (xrel < 0) ic->x -= ic->w;
-   else if (xa == 1)  ic->x += icr->w - ic->w;
+   else if (xa == 1)  ic->x += (icr->w - ic->w) / 2;
+   else if (xa == 2)  ic->x += icr->w - ic->w;
    
    if      (yrel > 0) ic->y += icr->h;
    else if (yrel < 0) ic->y -= ic->h;
-   else if (ya == 1)  ic->y += icr->h - ic->h;
+   else if (ya == 1)  ic->y += (icr->h - ic->h) / 2;
+   else if (ya == 2)  ic->y += icr->h - ic->h;
 }
 
 static void
@@ -2399,9 +2389,19 @@ _e_fm2_icons_place_icon(E_Fm2_Icon *ic)
 	  {
 	     int x, y;
 	     
-	     _e_fm2_icon_place_relative(ic, ic2, -1, 0, 0, 0);
-	     if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
-	     _e_fm2_icon_place_relative(ic, ic2, -1, 0, 0, 1);
+	     // ###_
+	     _e_fm2_icon_place_relative(ic, ic2, 1, 0, 0, 2); if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
+	     // ###
+	     //  |
+	     _e_fm2_icon_place_relative(ic, ic2, 0, 1, 1, 0); if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
+	     // ###
+	     // |
+	     _e_fm2_icon_place_relative(ic, ic2, 0, 1, 0, 0); if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
+	     // ###
+	     //   |
+	     _e_fm2_icon_place_relative(ic, ic2, 0, 1, 2, 0); if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
+/*	     
+	     _e_fm2_icon_place_relative(ic, ic2, 1, 0, 0, 2);
 	     if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
 	     _e_fm2_icon_place_relative(ic, ic2, 0, -1, 0, 0);
 	     if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
@@ -2415,6 +2415,7 @@ _e_fm2_icons_place_icon(E_Fm2_Icon *ic)
 	     if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
 	     _e_fm2_icon_place_relative(ic, ic2, 0, 1, 1, 0);
 	     if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
+ */
 	  }
      }
 }
@@ -2432,8 +2433,6 @@ _e_fm2_icons_place_custom_icons(E_Fm2_Smart_Data *sd)
 	if (!ic->saved_pos)
 	  {
 	     /* FIXME: place using smart place fn */
-//	     ic->x = rand() % 200;
-//	     ic->y = rand() % 200;
 	     _e_fm2_icons_place_icon(ic);
 	  }
 	
@@ -2717,6 +2716,29 @@ _e_fm2_icon_unfill(E_Fm2_Icon *ic)
    ic->info.broken_link = 0;
 }
 
+static void
+_e_fm2_icon_geom_adjust(E_Fm2_Icon *ic, int saved_x, int saved_y, int saved_w, int saved_h, int saved_res_w, int saved_res_h)
+{
+   int qx, qy, rx, ry, x, y;
+   
+   if (!((ic->sd->config->view.mode == E_FM2_VIEW_MODE_CUSTOM_ICONS) &&
+	 (ic->sd->config->view.fit_custom_pos) &&
+	 (saved_res_w > 0) &&
+	 (saved_res_h > 0)))
+     return;
+   if (saved_res_w >= 3) qx = saved_x / (saved_res_w / 3);
+   else qx = 0;
+   rx = saved_x - ((saved_res_w / 2) * qx);
+   x = ((ic->sd->w / 2) * qx) + rx;
+   ic->x = x;
+   
+   if (saved_res_h >= 3) qy = saved_y / (saved_res_h / 3);
+   else qy = 0;
+   ry = saved_y - ((saved_res_h / 2) * qy);
+   y = ((ic->sd->h / 2) * qy) + ry;
+   ic->y = y;
+}
+
 static int
 _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 {
@@ -2804,7 +2826,8 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 	     ic->x = cf->geom.x;
 	     ic->y = cf->geom.y;
 	     if (cf->geom.w > 0) ic->w = cf->geom.w;
-	     if (cf->geom.h > 0) ic->w = cf->geom.h;
+	     if (cf->geom.h > 0) ic->h = cf->geom.h;
+	     _e_fm2_icon_geom_adjust(ic, cf->geom.x, cf->geom.y, cf->geom.w, cf->geom.h, cf->geom.res_w, cf->geom.res_h);
 	  }
      }
    
@@ -4003,7 +4026,12 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		  y = ev->y + (ic->y - oy) - ic->drag.y + sd->pos.y;//ic->y - oy - dy + ev->y + sd->pos.y;
 		  if (x < 0) x = 0;
 		  if (y < 0) y = 0;
-		  _e_fm2_client_file_move(sd->id, fp, buf, "", 0, x, y);
+		  if (sd->config->view.fit_custom_pos)
+		    {
+		       if ((x + ic->w) > sd->w) x = (sd->w - ic->w);
+		       if ((y + ic->h) > sd->h) y = (sd->h - ic->h);
+		    }
+		  _e_fm2_client_file_move(sd->id, fp, buf, "", 0, x, y, sd->w, sd->h);
 		  if (ic->sd == sd)
 		    {
 		       ic->x = x;
@@ -4014,7 +4042,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	       }
 	     else
 	       {
-		  _e_fm2_client_file_move(sd->id, fp, buf, "", 0, -9999, -9999);
+		  _e_fm2_client_file_move(sd->id, fp, buf, "", 0, -9999, -9999, sd->w, sd->h);
 	       }
 	     evas_stringshare_del(fp);
 	  }
@@ -4047,7 +4075,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		  snprintf(buf, sizeof(buf), "%s/%s/%s",
 			   sd->realpath, sd->drop_icon->info.file, ecore_file_get_file(fp));
 		  printf("mv %s %s\n", (char *)fp, buf);
-		  _e_fm2_client_file_move(sd->id, fp, buf, "", 0, -9999, -9999);
+		  _e_fm2_client_file_move(sd->id, fp, buf, "", 0, -9999, -9999, sd->w, sd->h);
 		  evas_stringshare_del(fp);
 	       }
 	  }
@@ -4069,12 +4097,12 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 				 if (sd->config->view.link_drop)
 				   {
 				      printf("ln -s %s %s\n", (char *)fp, buf);
-				      _e_fm2_client_file_symlink(sd->id, buf, fp, sd->drop_icon->info.file, sd->drop_after, -9999, -9999);
+				      _e_fm2_client_file_symlink(sd->id, buf, fp, sd->drop_icon->info.file, sd->drop_after, -9999, -9999, sd->h, sd->h);
 				   }
 				 else
 				   {
 				      printf("mv %s %s\n", (char *)fp, buf);
-				      _e_fm2_client_file_move(sd->id, fp, buf, sd->drop_icon->info.file, sd->drop_after, -9999, -9999);
+				      _e_fm2_client_file_move(sd->id, fp, buf, sd->drop_icon->info.file, sd->drop_after, -9999, -9999, sd->w, sd->h);
 				   }
 				 evas_stringshare_del(fp);
 			      }
@@ -4091,12 +4119,12 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 				 if (sd->config->view.link_drop)
 				   {
 				      printf("ln -s %s %s\n", (char *)fp, buf);
-				      _e_fm2_client_file_symlink(sd->id, buf, fp, sd->drop_icon->info.file, sd->drop_after, -9999, -9999);
+				      _e_fm2_client_file_symlink(sd->id, buf, fp, sd->drop_icon->info.file, sd->drop_after, -9999, -9999, sd->w, sd->h);
 				   }
 				 else
 				   {
 				      printf("mv %s %s\n", (char *)fp, buf);
-				      _e_fm2_client_file_move(sd->id, fp, buf, sd->drop_icon->info.file, sd->drop_after, -9999, -9999);
+				      _e_fm2_client_file_move(sd->id, fp, buf, sd->drop_icon->info.file, sd->drop_after, -9999, -9999, sd->w, sd->h);
 				   }
 				 evas_stringshare_del(fp);
 			      }
@@ -4113,7 +4141,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 			    snprintf(buf, sizeof(buf), "%s/%s",
 				     sd->realpath, ecore_file_get_file(fp));
 			    printf("mv %s %s\n", (char *)fp, buf);
-			    _e_fm2_client_file_move(sd->id, fp, buf, "", 0, -9999, -9999);
+			    _e_fm2_client_file_move(sd->id, fp, buf, "", 0, -9999, -9999, sd->w, sd->h);
 			    evas_stringshare_del(fp);
 			 }
 		    }
@@ -4129,7 +4157,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		       snprintf(buf, sizeof(buf), "%s/%s",
 				sd->realpath, ecore_file_get_file(fp));
 		       printf("mv %s %s\n", (char *)fp, buf);
-		       _e_fm2_client_file_move(sd->id, fp, buf, "", 0, -9999, -9999);
+		       _e_fm2_client_file_move(sd->id, fp, buf, "", 0, -9999, -9999, sd->w, sd->h);
 		       evas_stringshare_del(fp);
 		    }
 	       }
@@ -4808,6 +4836,18 @@ _e_fm2_cb_resize_job(void *data)
 	_e_fm2_regions_populate(sd->obj);
 	break;
       case E_FM2_VIEW_MODE_CUSTOM_ICONS:
+	printf("CUSTOM ICONRESIZe HANDLE\n");
+	if (sd->config->view.fit_custom_pos)
+	  {
+	     for (l = sd->icons; l; l = l->next)
+	       {
+		  E_Fm2_Icon *ic;
+		  
+		  ic = l->data;
+		  ic->region = NULL;
+		  _e_fm2_icon_geom_adjust(ic, ic->x, ic->y, ic->w, ic->h, sd->pw, sd->ph);
+	       }
+	  }
         _e_fm2_regions_free(sd->obj);
 //	_e_fm2_regions_eval(sd->obj);
 	_e_fm2_icons_place(sd->obj);
@@ -4828,6 +4868,7 @@ _e_fm2_cb_resize_job(void *data)
 	_e_fm2_regions_populate(sd->obj);
 	break;
       case E_FM2_VIEW_MODE_LIST:
+	printf("LIST RESIZe HANDLE\n");
 	if (sd->iconlist_changed)
 	  {
 	     for (l = sd->icons; l; l = l->next)
@@ -4849,6 +4890,8 @@ _e_fm2_cb_resize_job(void *data)
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(sd->obj));
    sd->iconlist_changed = 0;
+   sd->pw = sd->w;
+   sd->ph = sd->h;
 }
 
 static int
@@ -5131,15 +5174,32 @@ _e_fm2_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    evas_object_resize(sd->clip, sd->w + (OVERCLIP * 2), sd->h + (OVERCLIP * 2));
 
    /* for automatic layout - do this - NB; we could put this on a timer delay */
-   if (wch)
+   if ((sd->config->view.mode == E_FM2_VIEW_MODE_LIST) ||
+       (sd->config->view.mode == E_FM2_VIEW_MODE_GRID_ICONS))
      {
-	if (sd->resize_job) ecore_job_del(sd->resize_job);
-	sd->resize_job = ecore_job_add(_e_fm2_cb_resize_job, obj);
+	if (wch)
+	  {
+	     if (sd->resize_job) ecore_job_del(sd->resize_job);
+	     sd->resize_job = ecore_job_add(_e_fm2_cb_resize_job, obj);
+	  }
+	else
+	  {
+	     if (sd->scroll_job) ecore_job_del(sd->scroll_job);
+	     sd->scroll_job = ecore_job_add(_e_fm2_cb_scroll_job, obj);
+	  }
      }
-   else
+   else if (sd->config->view.mode == E_FM2_VIEW_MODE_CUSTOM_ICONS)
      {
-	if (sd->scroll_job) ecore_job_del(sd->scroll_job);
-	sd->scroll_job = ecore_job_add(_e_fm2_cb_scroll_job, obj);
+	if (sd->config->view.fit_custom_pos)
+	  {
+	     if (sd->resize_job) ecore_job_del(sd->resize_job);
+	     sd->resize_job = ecore_job_add(_e_fm2_cb_resize_job, obj);
+	  }
+	else
+	  {
+	     if (sd->scroll_job) ecore_job_del(sd->scroll_job);
+	     sd->scroll_job = ecore_job_add(_e_fm2_cb_scroll_job, obj);
+	  }
      }
    if (sd->drop_handler)
      e_drop_handler_geometry_set(sd->drop_handler, sd->x, sd->y, sd->w, sd->h);
@@ -5660,7 +5720,7 @@ _e_fm2_new_directory_yes_cb(char *text, void *data)
      {
 	snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, text);
 
-	_e_fm2_client_file_mkdir(sd->id, buf, "", 0, 0, 0);
+	_e_fm2_client_file_mkdir(sd->id, buf, "", 0, 0, 0, sd->w, sd->h);
      }
 }
 
@@ -5723,7 +5783,7 @@ _e_fm2_file_rename_yes_cb(char *text, void *data)
 	snprintf(oldpath, sizeof(oldpath), "%s/%s", ic->sd->realpath, ic->info.file);
 	snprintf(newpath, sizeof(newpath), "%s/%s", ic->sd->realpath, text);
 	if (e_filereg_file_protected(oldpath)) return;
-	_e_fm2_client_file_move(ic->sd->id, oldpath, newpath, "", 0, -9999, -9999);
+	_e_fm2_client_file_move(ic->sd->id, oldpath, newpath, "", 0, -9999, -9999, ic->sd->w, ic->sd->h);
      }
 }
 

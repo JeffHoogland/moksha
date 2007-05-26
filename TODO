@@ -45,13 +45,11 @@ Some of the things (in very short form) that need to be done to E17...
 * fm2 fwin needs options for view mode
 * fm2 needs a way to specify a multiplier, explicit size or "use original icon"
   config per icon and per dir
-* fm2 needs to fix its custom file info
 * fm2 should remember scroll pos per dir
 * fwin should have option to display full path
 * fm2 thumbnails - should display an icon while generating thumb
 * fm2 needs to be able to handle signals from the fm fwin theme wallpaper and
 overlay - to exec or do things (eg go to parent)
-* fm2 needs option to scale custom pos for icons (eg desktop)
 * fm2 on desktop needs option to turn off and select which dir on which zone
 * fm2 needs to show icons again if drag was aborted
 * fm2 needs to handle dnd of e apps too
@@ -59,8 +57,6 @@ overlay - to exec or do things (eg go to parent)
 * fm2 needs to auto-scroll if dnd hovers on edge of fm2 for a while
 * fm2 needs spring-loaded folder opens
 * fm2 needs to be able to specify dir customisations other than magic dot file
-* fm2 needs to move, rename, delete etc. custom info correctly so it mimicks 
-the fs
 * fm2 needs rubber band select in icon mode
 * fm2 needs to display symlink info on files somehow
 * fm2 needs to display more than 1 file being dragged (if more than 1 is being

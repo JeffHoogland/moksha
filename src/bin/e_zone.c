@@ -153,6 +153,12 @@ e_zone_move(E_Zone *zone, int x, int y)
    evas_object_move(zone->bg_object, x, y);
    evas_object_move(zone->bg_event_object, x, y);
    evas_object_move(zone->bg_clip_object, x, y);
+   if (zone->bg_fwin)
+     {
+	if (zone->bg_fwin->bg_obj)
+	  evas_object_move(zone->bg_fwin->bg_obj, x, y);
+	evas_object_move(zone->bg_fwin->scrollframe_obj, x, y);
+     }
    
    ecore_x_window_move_resize(zone->flip.left, zone->x, zone->y, 1, zone->h);
    ecore_x_window_move_resize(zone->flip.right, zone->x + zone->w - 1, zone->y, 1, zone->h);
@@ -172,6 +178,12 @@ e_zone_resize(E_Zone *zone, int w, int h)
    evas_object_resize(zone->bg_object, w, h);
    evas_object_resize(zone->bg_event_object, w, h);
    evas_object_resize(zone->bg_clip_object, w, h);
+   if (zone->bg_fwin)
+     {
+	if (zone->bg_fwin->bg_obj)
+	  evas_object_resize(zone->bg_fwin->bg_obj, w, h);
+	evas_object_resize(zone->bg_fwin->scrollframe_obj, w, h);
+     }
 
    ecore_x_window_move_resize(zone->flip.left, zone->x, zone->y, 1, zone->h);
    ecore_x_window_move_resize(zone->flip.right, zone->x + zone->w - 1, zone->y, 1, zone->h);
@@ -199,6 +211,16 @@ e_zone_move_resize(E_Zone *zone, int x, int y, int w, int h)
    evas_object_resize(zone->bg_object, w, h);
    evas_object_resize(zone->bg_event_object, w, h);
    evas_object_resize(zone->bg_clip_object, w, h);
+   if (zone->bg_fwin)
+     {
+	if (zone->bg_fwin->bg_obj)
+	  {
+	     evas_object_move(zone->bg_fwin->bg_obj, x, y);
+	     evas_object_resize(zone->bg_fwin->bg_obj, w, h);
+	  }
+	evas_object_move(zone->bg_fwin->scrollframe_obj, x, y);
+	evas_object_resize(zone->bg_fwin->scrollframe_obj, w, h);
+     }
    
    ecore_x_window_move_resize(zone->flip.left, zone->x, zone->y, 1, zone->h);
    ecore_x_window_move_resize(zone->flip.right, zone->x + zone->w - 1, zone->y, 1, zone->h);

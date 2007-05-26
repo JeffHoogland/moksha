@@ -247,6 +247,7 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
    fmc.view.selector = 0;
    fmc.view.single_click = 0;
    fmc.view.no_subdir_jump = 0;
+   fmc.view.fit_custom_pos = 1;
    fmc.icon.extension.show = 1;
    fmc.list.sort.no_case = 1;
    fmc.list.sort.dirs.first = 1;

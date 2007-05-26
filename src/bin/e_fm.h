@@ -66,6 +66,7 @@ struct _E_Fm2_Config
       unsigned char   no_subdir_drop;
       unsigned char   always_order;
       unsigned char   link_drop;
+      unsigned char   fit_custom_pos;
    } view;
    /* display of icons */
    struct {
