@@ -9,5 +9,8 @@ EAPI int e_desklock_shutdown(void);
 EAPI int e_desklock_show(void);
 EAPI void e_desklock_hide(void);
 
+extern EAPI int E_EVENT_DESKLOCK_SHOW;
+extern EAPI int E_EVENT_DESKLOCK_HIDE;
+
 #endif
 #endif
