@@ -88,8 +88,7 @@ static char *_desklock_auth_get_current_user(void);
 static char *_desklock_auth_get_current_host(void);
 #endif
 
-EAPI int E_EVENT_DESKLOCK_SHOW = 0;
-EAPI int E_EVENT_DESKLOCK_HIDE = 0;
+EAPI int E_EVENT_DESKLOCK = 0;
 
 EAPI int
 e_desklock_init(void)
@@ -101,8 +100,7 @@ e_desklock_init(void)
    if (e_config->desklock_background)
      e_filereg_register(e_config->desklock_background);
    
-   E_EVENT_DESKLOCK_SHOW = ecore_event_type_new();
-   E_EVENT_DESKLOCK_HIDE = ecore_event_type_new();
+   E_EVENT_DESKLOCK = ecore_event_type_new();
 
    return 1;
 }
@@ -126,6 +124,7 @@ e_desklock_show(void)
    E_Zone		  *current_zone;
    int			  zone_counter;
    int			  total_zone_num;
+   E_Event_Desklock      *ev;
    
    if (_e_custom_desklock_exe) return 0;
 
@@ -351,7 +350,10 @@ e_desklock_show(void)
 							      _e_desklock_cb_mouse_move,
 							      NULL));
    _e_desklock_passwd_update();
-   ecore_event_add(E_EVENT_DESKLOCK_SHOW, NULL, NULL, NULL);
+
+   ev = E_NEW(E_Event_Desklock, 1);
+   ev->on = 1;
+   ecore_event_add(E_EVENT_DESKLOCK, ev, NULL, NULL);
    return 1;
 }
 
@@ -359,6 +361,7 @@ EAPI void
 e_desklock_hide(void)
 {
    E_Desklock_Popup_Data *edp;
+   E_Event_Desklock      *ev;
    
    if ((!edd) && (!_e_custom_desklock_exe)) return;
 
@@ -400,7 +403,10 @@ e_desklock_hide(void)
    
    E_FREE(edd);
    edd = NULL;
-   ecore_event_add(E_EVENT_DESKLOCK_HIDE, NULL, NULL, NULL);
+
+   ev = E_NEW(E_Event_Desklock, 1);
+   ev->on = 0;
+   ecore_event_add(E_EVENT_DESKLOCK, ev, NULL, NULL);
 }
 
 static int
