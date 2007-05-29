@@ -342,7 +342,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_entry_readonly_set(ob, 1);
    e_widget_table_object_append(ot, ob, 1, 0, 1, 1, 1, 0, 1, 0);
    
-  ob = e_widget_label_add(evas, _("Size:"));
+   ob = e_widget_label_add(evas, _("Size:"));
    e_widget_table_object_append(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0);
    ob = e_widget_entry_add(evas, &(cfdata->size));
    e_widget_min_size_set(ob, 140, -1);
@@ -401,9 +401,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    
    ob = e_widget_button_add(evas, "", NULL, _cb_icon_sel, cfdata, cfd);   
    cfdata->gui.icon_wid = ob;
-   oi = e_fm2_icon_get(evas, e_fm2_real_path_get(cfdata->fi->fm),
-		       cfdata->ic, cfdata->fi, 
-		       cfg->icon.key_hint,
+   oi = e_fm2_icon_get(evas,
+		       cfdata->ic,
 		       NULL, NULL, 0, &itype);
    e_widget_button_icon_set(ob, oi);
    e_widget_frametable_object_append(ot, ob, 0, 0, 1, 3, 0, 1, 0, 1);

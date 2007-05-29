@@ -428,6 +428,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, maximize_policy, INT); /**/
    E_CONFIG_VAL(D, T, allow_manip, INT); /**/
    E_CONFIG_VAL(D, T, border_fix_on_shelf_toggle, INT); /**/
+   E_CONFIG_VAL(D, T, allow_above_fullscreen, INT); /**/
    E_CONFIG_VAL(D, T, kill_if_close_not_possible, INT); /**/
    E_CONFIG_VAL(D, T, kill_process, INT); /**/
    E_CONFIG_VAL(D, T, kill_timer_wait, DOUBLE); /**/
@@ -1411,7 +1412,11 @@ e_config_init(void)
    e_config->menu_favorites_show = 1;
    e_config->menu_apps_show = 1;
    IFCFGEND;
-   
+
+   IFCFG(0x0119);
+   e_config->allow_above_fullscreen = 1;
+   IFCFGEND;
+
    e_config->config_version = E_CONFIG_FILE_VERSION;   
      
 #if 0 /* example of new config */
@@ -1474,6 +1479,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->maximize_policy, E_MAXIMIZE_FULLSCREEN, E_MAXIMIZE_DIRECTION);
    E_CONFIG_LIMIT(e_config->allow_manip, 0, 1);
    E_CONFIG_LIMIT(e_config->border_fix_on_shelf_toggle, 0, 1);
+   E_CONFIG_LIMIT(e_config->allow_above_fullscreen, 0, 1);
    E_CONFIG_LIMIT(e_config->kill_if_close_not_possible, 0, 1);
    E_CONFIG_LIMIT(e_config->kill_process, 0, 1);
    E_CONFIG_LIMIT(e_config->kill_timer_wait, 0.0, 120.0);

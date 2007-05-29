@@ -172,9 +172,7 @@ EAPI void                  e_fm2_fop_add_add(Evas_Object *obj, const char *file,
 */
 
 EAPI Evas_Object *
-  e_fm2_icon_get(Evas *evas, const char *realpath,
-		 E_Fm2_Icon *ic, E_Fm2_Icon_Info *ici,
-		 const char *keyhint,
+  e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 		 void (*gen_func) (void *data, Evas_Object *obj, void *event_info),
 		 void *data, int force_gen, const char **type_ret);
 EAPI E_Fm2_Icon_Info *e_fm2_icon_file_info_get(E_Fm2_Icon *ic);

@@ -1990,8 +1990,9 @@ e_border_fullscreen(E_Border *bd, E_Fullscreen policy)
 	bd->client_inset.b = 0;
 
 	/* e_zone_fullscreen_set(bd->zone, 1); */
+        if (!e_config->allow_above_fullscreen)
+	  e_border_layer_set(bd, 200);
 
-	e_border_layer_set(bd, 200);
 	if ((evas_list_count(bd->zone->container->zones) > 1) || (policy == E_FULLSCREEN_RESIZE))
 	  {
 	     e_border_move_resize(bd, bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h);

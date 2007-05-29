@@ -28,6 +28,7 @@ struct _E_Config_Dialog_Data
    int border_fix_on_shelf_toggle;
    int border_raise_on_mouse_action;
    int border_raise_on_focus;
+   int allow_above_fullscreen; 
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -75,6 +76,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->border_fix_on_shelf_toggle = e_config->border_fix_on_shelf_toggle;
    cfdata->border_raise_on_mouse_action = e_config->border_raise_on_mouse_action;
    cfdata->border_raise_on_focus = e_config->border_raise_on_focus;
+   cfdata->allow_above_fullscreen = e_config->allow_above_fullscreen;
 }
 
 static void *
@@ -125,6 +127,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config->border_fix_on_shelf_toggle = cfdata->border_fix_on_shelf_toggle;
    e_config->border_raise_on_mouse_action = cfdata->border_raise_on_mouse_action;
    e_config->border_raise_on_focus = cfdata->border_raise_on_focus;
+   e_config->allow_above_fullscreen = cfdata->allow_above_fullscreen;
    e_config_save_queue();
    return 1; /* Apply was OK */
 }
@@ -185,6 +188,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_check_add(evas, _("Raise when starting to move or resize"), &(cfdata->border_raise_on_mouse_action));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Raise when clicking to focus"), &(cfdata->border_raise_on_focus));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Allow windows to be above fullscreen window"), &(cfdata->allow_above_fullscreen));
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
    

@@ -753,29 +753,6 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_color_class_shutdown);
-   /* load modules */
-   TS("load modules");
-   if (!safe_mode)
-     e_module_all_load();
-   else
-     {
-	e_int_config_modules(e_container_current_get(e_manager_current_get()));
-	e_error_message_show
-	  (_("Enlightenment crashed early on start and has<br>"
-	     "been restarted. All modules have been disabled<br>"
-	     "and will not be loaded to help remove any problem<br>"
-	     "modules from your configuration. The module<br>"
-	     "configuration dialog should let you select your<br>"
-	     "modules again."));
-	e_util_dialog_show
-	  (_("Enlightenment crashed early on start and has been restarted"),
-	   _("Enlightenment crashed early on start and has been restarted.<br>"
-	     "All modules have been disabled and will not be loaded to help<br>"
-	     "remove any problem modules from your configuration.<br><br>"
-	     "The module configuration dialog should let you select your<br>"
-	     "modules again."));
-	e_config_save_queue();
-     }
    TS("gadcon");
    /* setup gadcon */
    if (!e_gadcon_init())
@@ -872,10 +849,33 @@ main(int argc, char **argv)
    /* run any testing code now we are set up */
    e_test();
 
-   /* FIXME: for testing only */
+   /* load modules */
+   TS("load modules");
+   if (!safe_mode)
+     e_module_all_load();
+   else
+     {
+	e_int_config_modules(e_container_current_get(e_manager_current_get()));
+	e_error_message_show
+	  (_("Enlightenment crashed early on start and has<br>"
+	     "been restarted. All modules have been disabled<br>"
+	     "and will not be loaded to help remove any problem<br>"
+	     "modules from your configuration. The module<br>"
+	     "configuration dialog should let you select your<br>"
+	     "modules again."));
+	e_util_dialog_show
+	  (_("Enlightenment crashed early on start and has been restarted"),
+	   _("Enlightenment crashed early on start and has been restarted.<br>"
+	     "All modules have been disabled and will not be loaded to help<br>"
+	     "remove any problem modules from your configuration.<br><br>"
+	     "The module configuration dialog should let you select your<br>"
+	     "modules again."));
+	e_config_save_queue();
+     }
+   
    TS("shelf config init");
    e_shelf_config_init();
-   
+
    /* an idle enterer to be called after all others */
    _e_main_idle_enterer_after = ecore_idle_enterer_add(_e_main_cb_idler_after, NULL);
 

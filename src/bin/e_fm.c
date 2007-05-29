@@ -951,26 +951,24 @@ e_fm2_all_icons_update(void)
 }
 
 EAPI Evas_Object *
-e_fm2_icon_get(Evas *evas, const char *realpath, 
-	       E_Fm2_Icon *ic, E_Fm2_Icon_Info *ici,
-	       const char *keyhint,
+e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 	       void (*gen_func) (void *data, Evas_Object *obj, void *event_info),
 	       void *data, int force_gen, const char **type_ret)
 {
    Evas_Object *oic = NULL;
    char buf[PATH_MAX], *p;
 
-   if (ici->icon)
+   if (ic->info.icon)
      {
 	/* custom icon */
-	if (ici->icon[0] == '/')
+	if (ic->info.icon[0] == '/')
 	  {
 	     /* path to icon file */
-	     p = strrchr(ici->icon, '.');
+	     p = strrchr(ic->info.icon, '.');
 	     if ((p) && (!strcmp(p, ".edj")))
 	       {
 		  oic = edje_object_add(evas);
-		  if (!edje_object_file_set(oic, ici->icon, "icon"))
+		  if (!edje_object_file_set(oic, ic->info.icon, "icon"))
 		    _e_fm2_theme_edje_object_set(ic->sd, oic,
 						 "base/theme/fileman",
 						 "e/icons/fileman/file");
@@ -978,23 +976,23 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 	     else
 	       {
 		  oic = e_icon_add(evas);
-		  e_icon_file_set(oic, ici->icon);
+		  e_icon_file_set(oic, ic->info.icon);
 		  e_icon_fill_inside_set(oic, 1);
 	       }
 	     if (type_ret) *type_ret = "CUSTOM";
 	  }
 	else
 	  {
-	     if (ici->mime)
+	     if (ic->info.mime)
 	       {
 		  const char *icon;
 		  
-		  icon = e_fm_mime_icon_get(ici->mime);
+		  icon = e_fm_mime_icon_get(ic->info.mime);
 		  if (!strcmp(icon, "DESKTOP"))
 		    {
 		       Efreet_Desktop *ef;
 		       
-		       snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+		       snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 		       ef = efreet_desktop_get(buf);
 		       if (ef) oic = e_util_desktop_icon_add(ef, "48x48", evas);
 		       if (type_ret) *type_ret = "DESKTOP";
@@ -1007,13 +1005,13 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 	       {
 		  /* theme icon */
 		  oic = edje_object_add(evas);
-		  e_util_edje_icon_set(oic, ici->icon);
+		  e_util_edje_icon_set(oic, ic->info.icon);
 		  if (type_ret) *type_ret = "THEME_ICON";
 	       }
 	  }
 	return oic;
      }
-   if (S_ISDIR(ici->statinfo.st_mode))
+   if (S_ISDIR(ic->info.statinfo.st_mode))
      {
 	oic = edje_object_add(evas);
 	_e_fm2_theme_edje_object_set(ic->sd, oic,
@@ -1022,9 +1020,9 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
      }
    else
      {
-	if (ici->icon_type == 1)
+	if (ic->info.icon_type == 1)
 	  {
-	     snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+	     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 	     oic = e_thumb_icon_add(evas);
 	     e_thumb_icon_file_set(oic, buf, NULL);
 	     e_thumb_icon_size_set(oic, 128, 128);
@@ -1037,11 +1035,11 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 	       _e_fm2_icon_thumb(ic, oic, force_gen);
 	     if (type_ret) *type_ret = "THUMB";
 	  }
-	else if (ici->mime)
+	else if (ic->info.mime)
 	  {
 	     const char *icon;
 	     
-	     icon = e_fm_mime_icon_get(ici->mime);
+	     icon = e_fm_mime_icon_get(ic->info.mime);
 	     /* use mime type to select icon */
 	     if (!icon)
 	       {
@@ -1053,7 +1051,7 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 	       }
 	     else if (!strcmp(icon, "THUMB"))
 	       {
-		  snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+		  snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 		  
 		  oic = e_thumb_icon_add(evas);
 		  e_thumb_icon_file_set(oic, buf, NULL);
@@ -1072,7 +1070,7 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 		  Efreet_Desktop *ef;
 		 
 		  oic = NULL; 
-		  snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+		  snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 		  ef = efreet_desktop_get(buf);
 		  if (ef) oic = e_util_desktop_icon_add(ef, "48x48", evas);
 		  if (type_ret) *type_ret = "DESKTOP";
@@ -1113,13 +1111,14 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 	  }
 	else
 	  {
-	     snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+	     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 	     /* fallback */
-	     if ((e_util_glob_case_match(ici->file, "*.edj")))
+	     if ((e_util_glob_case_match(ic->info.file, "*.edj")))
 	       {
 		  oic = e_thumb_icon_add(evas);
-		  if (keyhint)
-		    e_thumb_icon_file_set(oic, buf, keyhint);
+		  if (ic->sd->config->icon.key_hint)
+		    e_thumb_icon_file_set(oic, buf,
+					  ic->sd->config->icon.key_hint);
 		  else
 		    {
 		       /* FIXME: There is probably a quicker way of doing this. */
@@ -1140,8 +1139,8 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 		    _e_fm2_icon_thumb(ic, oic, force_gen);
 		  if (type_ret) *type_ret = "THUMB";
 	       }
-	     else if ((e_util_glob_case_match(ici->file, "*.desktop")) || 
-		      (e_util_glob_case_match(ici->file, "*.directory")))
+	     else if ((e_util_glob_case_match(ic->info.file, "*.desktop")) || 
+		      (e_util_glob_case_match(ic->info.file, "*.directory")))
 	       {
 		  Efreet_Desktop *ef;
 
@@ -1153,7 +1152,7 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 // frees - doesnt just unref.
 //		  if (ef) efreet_desktop_free(ef);
 	       }
-	     else if (e_util_glob_case_match(ici->file, "*.imc"))
+	     else if (e_util_glob_case_match(ic->info.file, "*.imc"))
 	       {	  
 		  E_Input_Method_Config *imc;
 		  Eet_File *imc_ef;
@@ -1189,7 +1188,7 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 		       if (type_ret) *type_ret = "IMC";
 		    }
 	       }
-	     else if (S_ISCHR(ici->statinfo.st_mode))
+	     else if (S_ISCHR(ic->info.statinfo.st_mode))
 	       {
 		  oic = edje_object_add(evas);
 		  _e_fm2_theme_edje_object_set(ic->sd, oic,
@@ -1197,7 +1196,7 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 					       "e/icons/fileman/file");
 		  if (type_ret) *type_ret = "FILE_TYPE";
 	       }
-	     else if (S_ISBLK(ici->statinfo.st_mode))
+	     else if (S_ISBLK(ic->info.statinfo.st_mode))
 	       {
 		  oic = edje_object_add(evas);
 		  _e_fm2_theme_edje_object_set(ic->sd, oic,
@@ -1205,7 +1204,7 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 					       "e/icons/fileman/file");
 		  if (type_ret) *type_ret = "FILE_TYPE";
 	       }
-	     else if (S_ISFIFO(ici->statinfo.st_mode))
+	     else if (S_ISFIFO(ic->info.statinfo.st_mode))
 	       {
 		  oic = edje_object_add(evas);
 		  _e_fm2_theme_edje_object_set(ic->sd, oic,
@@ -1213,7 +1212,7 @@ e_fm2_icon_get(Evas *evas, const char *realpath,
 					       "e/icons/fileman/file");
 		  if (type_ret) *type_ret = "FILE_TYPE";
 	       }
-	     else if (S_ISSOCK(ici->statinfo.st_mode))
+	     else if (S_ISSOCK(ic->info.statinfo.st_mode))
 	       {
 		  oic = edje_object_add(evas);
 		  _e_fm2_theme_edje_object_set(ic->sd, oic,
@@ -3113,8 +3112,7 @@ _e_fm2_icon_icon_direct_set(E_Fm2_Icon *ic, Evas_Object *o, void (*gen_func) (vo
 {
    Evas_Object *oic;
 
-   oic = e_fm2_icon_get(evas_object_evas_get(o), ic->sd->realpath,
-			ic, &(ic->info), ic->sd->config->icon.key_hint,
+   oic = e_fm2_icon_get(evas_object_evas_get(o), ic,
 			gen_func, data, force_gen, NULL);
    if (oic)
      {
