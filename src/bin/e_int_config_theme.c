@@ -854,7 +854,7 @@ _cb_adv_btn_assign(void *data1, void *data2)
 	t = themes->data;
 	if (!strcmp(t->category, newtheme->category))
 	  {
-	     if (t->file)
+	     if ((t->file) && (strcmp(t->file, newtheme->file)))
 	       {
 		  filename = strdup(t->file);
 		  free((void *)(t->file));
@@ -873,6 +873,8 @@ _cb_adv_btn_assign(void *data1, void *data2)
      }	
    if (!themes)
 	cfdata->theme_list = evas_list_append(cfdata->theme_list, newtheme);
+   else 
+        free(newtheme);
 
    return;
 }
