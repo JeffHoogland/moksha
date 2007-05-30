@@ -2797,6 +2797,10 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 	/* FIXME: end go away chunk */
      }
    
+   if(S_ISDIR(ic->info.statinfo.st_mode))
+     {
+       ic->info.mime = evas_stringshare_add("x-directory/normal");
+     }
    if (!ic->info.mime)
      {
 	mime = e_fm_mime_filename_get(ic->info.file);

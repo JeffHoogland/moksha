@@ -888,11 +888,14 @@ e_util_desktop_menu_item_icon_add(Efreet_Desktop *desktop, const char *size, E_M
 EAPI int
 e_util_dir_check(const char *dir)
 {
+   char msg[PATH_MAX];
+
    if (!ecore_file_exists(dir))
      {
-	if (!ecore_file_mkdir(dir))
+	if (!ecore_file_mkpath(dir))
 	  {
-	     e_util_dialog_show("Error creating the directory: %s. Check that you have correct permissions set.", dir);
+	     snprintf (msg, sizeof (msg), "Failed to create directory: %s .<br>Check that you have correct permissions set.", dir);
+	     e_util_dialog_show("Error creating directory", msg);
 	     return 0;
 	  }
      }
@@ -900,7 +903,8 @@ e_util_dir_check(const char *dir)
      {
 	if (!ecore_file_is_dir(dir))
 	  {
-	     e_util_dialog_show("Error creating the directory: %s. A file of that name already exists.", dir);
+	     snprintf (msg, sizeof (msg), "Failed to create directory: %s .<br>A file of that name already exists.", dir);
+	     e_util_dialog_show("Error creating directory", msg); 
 	     return 0;
 	  }
      }

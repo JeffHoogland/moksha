@@ -726,8 +726,7 @@ static E_Fwin_Exec_Type
 _e_fwin_file_is_exec(E_Fm2_Icon_Info *ici)
 {
    /* special file or dir - can't exec anyway */
-   if ((S_ISDIR(ici->statinfo.st_mode)) ||
-       (S_ISCHR(ici->statinfo.st_mode)) ||
+  if ((S_ISCHR(ici->statinfo.st_mode)) ||
        (S_ISBLK(ici->statinfo.st_mode)) ||
        (S_ISFIFO(ici->statinfo.st_mode)) ||
        (S_ISSOCK(ici->statinfo.st_mode)))
@@ -936,22 +935,16 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	       {
 		  if (ici->link)
 		    {
-		       if (!S_ISDIR(ici->statinfo.st_mode))
-			 {
-			    f = e_fm_mime_filename_get(ici->link);
-			    mimes = evas_hash_del(mimes, f, (void *)1);
-			    mimes = evas_hash_direct_add(mimes, f, (void *)1);
-			 }
+		      f = e_fm_mime_filename_get(ici->link);
+		      mimes = evas_hash_del(mimes, f, (void *)1);
+		      mimes = evas_hash_direct_add(mimes, f, (void *)1);
 		    }
 		  else
 		    {
-		       snprintf(buf, sizeof(buf), "%s/%s",
-				e_fm2_real_path_get(fwin->fm_obj), ici->file);
-		       if (!S_ISDIR(ici->statinfo.st_mode))
-			 {
-			    mimes = evas_hash_del(mimes, ici->mime, (void *)1);
-			    mimes = evas_hash_direct_add(mimes, ici->mime, (void *)1);
-			 }
+		      snprintf(buf, sizeof(buf), "%s/%s",
+			       e_fm2_real_path_get(fwin->fm_obj), ici->file);
+		      mimes = evas_hash_del(mimes, ici->mime, (void *)1);
+		      mimes = evas_hash_direct_add(mimes, ici->mime, (void *)1);
 		    }
 	       }
 	  }
