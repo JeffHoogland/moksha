@@ -592,9 +592,12 @@ _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, c
 	  {
 	     ed = l->data;
 	     drp = ecore_file_realpath(ed->dir);
-	     if (!strcmp(rp, drp))
-	       _e_file_add(ed, path, 0);
-	     free(drp);
+	     if (drp)
+	       {
+		  if (!strcmp(rp, drp))
+		    _e_file_add(ed, path, 0);
+		  free(drp);
+	       }
 	  }
 	free(rp);
      }
@@ -606,8 +609,12 @@ _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, c
 	  {
 	     ed = l->data;
 	     drp = ecore_file_realpath(ed->dir);
-	     if (!strcmp(rp, drp))
-	       _e_file_del(ed, path);
+	     if (drp)
+	       {
+		  if (!strcmp(rp, drp))
+		    _e_file_del(ed, path);
+		  free(drp);
+	       }
 	  }
 	free(rp);
      }
@@ -618,8 +625,12 @@ _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, c
 	  {
 	     ed = l->data;
 	     drp = ecore_file_realpath(ed->dir);
-	     if (!strcmp(rp, drp))
-	       _e_file_mod(ed, path);
+	     if (drp)
+	       {
+		  if (!strcmp(rp, drp))
+		    _e_file_mod(ed, path);
+		  free(drp);
+	       }
 	  }
 	free(rp);
      }
@@ -630,8 +641,12 @@ _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, c
 	  {
 	     ed = l->data;
 	     drp = ecore_file_realpath(ed->dir);
-	     if (!strcmp(rp, drp))
-	       _e_file_mon_dir_del(ed, path);
+	     if (drp)
+	       {
+		  if (!strcmp(rp, drp))
+		    _e_file_mon_dir_del(ed, path);
+		  free(drp);
+	       }
 	  }
 	free(rp);
      }
