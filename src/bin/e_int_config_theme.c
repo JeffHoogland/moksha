@@ -1097,8 +1097,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    _fill_files_ilist(cfdata); 
    _fill_categories_ilist(cfdata); 
 
-   e_widget_ilist_selected_set(cfdata->o_categories_ilist, 0);
    e_widget_ilist_selected_set(cfdata->o_files_ilist, 1);
+   e_widget_ilist_selected_set(cfdata->o_categories_ilist, 0);
 
    e_dialog_resizable_set(cfd->dia, 1);
    return ot;
