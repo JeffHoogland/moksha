@@ -114,7 +114,7 @@ evas_object_image_file_set(Evas_Object *obj, const char *file, const char *key)
    (*func) (obj, file, key);
 }
 
-time_t
+long long
 ecore_file_mod_time(const char *file)
 {
    static time_t (*func) (const char *file) = NULL;
@@ -125,7 +125,7 @@ ecore_file_mod_time(const char *file)
    return (*func) (file);
 }
 
-int
+long long
 ecore_file_size(const char *file)
 {
    static int (*func) (const char *file) = NULL;

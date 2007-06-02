@@ -1797,6 +1797,28 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 			      }
 			 }
 		    }
+		  else
+		    {
+		       if ((sd->id == e->ref_to) && (path[0] == 0))
+			 {
+			    if (e->response == 2)/* end of scan */
+			      {
+				 sd->listing = 0;
+				 if (sd->scan_timer)
+				   {
+				      ecore_timer_del(sd->scan_timer);
+				      sd->scan_timer =
+					ecore_timer_add(0.0001, 
+							_e_fm2_cb_scan_timer,
+							sd->obj);
+				   }
+				 else
+				   {
+				      _e_fm2_client_monitor_list_end(l->data);
+				   }
+			      }
+			 }
+		   }
 		  free(evdir);
 	       }
 	     break;

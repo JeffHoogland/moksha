@@ -1,6 +1,13 @@
 /*
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
+#ifndef _FILE_OFFSET_BITS
+#define _FILE_OFFSET_BITS  64
+#endif
+#ifndef __USE_FILE_OFFSET64 /* for large file support */
+#define __USE_FILE_OFFSET64
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -823,11 +830,14 @@ _e_cb_file_mon_list_idler(void *data)
 	       snprintf(buf, sizeof(buf), "/%s", file);
 	     else
 	       snprintf(buf, sizeof(buf), "%s/%s", ed->dir, file);
-	     if ((!ed->fq->next) ||
-		 ((!strcmp(ed->fq->next->data, ".order")) &&
-		  (!ed->fq->next->next)))
-	       _e_file_add(ed, buf, 2);
+/*	     
+	     if (//(!ed->fq->next) ||
+		 ((!strcmp(ed->fq->next->data, ".order"))
+		  //&& (!ed->fq->next->next)
+		  ))
+	       _e_file_add(ed, buf, 1);
 	     else
+ */
 	       _e_file_add(ed, buf, 1);
 	  }
 	free(file);
@@ -837,6 +847,7 @@ _e_cb_file_mon_list_idler(void *data)
 	  {
 	     _e_file_mon_list_sync(ed);
 	     ed->idler = NULL;
+	     if (!ed->fq) _e_file_add(ed, "", 2);
 	     return 0;
 	  }
      }
@@ -844,6 +855,7 @@ _e_cb_file_mon_list_idler(void *data)
    ed->sync = 0;
    ed->sync_time = 0.0;
    ed->idler = NULL;
+   if (!ed->fq) _e_file_add(ed, "", 2);
    return 0;
 }
 
