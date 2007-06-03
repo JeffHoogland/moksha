@@ -15,10 +15,8 @@
 #ifndef _FILE_OFFSET_BITS
 #define _FILE_OFFSET_BITS  64
 #endif
-#ifndef __USE_FILE_OFFSET64 /* for large file support */
-#define __USE_FILE_OFFSET64
-#endif
 
+#include <features.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
