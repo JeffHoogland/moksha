@@ -73,6 +73,7 @@ struct _E_Fm2_Smart_Data
 
    E_Fm2_Config     *config;
    const char       *custom_theme;
+   const char       *custom_theme_content;
 
    struct {
       Evas_Object      *obj, *obj2;
@@ -300,6 +301,7 @@ static void _e_fm2_cb_dbus_method_add_match(void *data, Ecore_DBus_Method_Return
 static void _e_fm2_cb_dbus_method_error(void *data, const char *error);
 
 static int _e_fm2_theme_edje_object_set(E_Fm2_Smart_Data *sd, Evas_Object *o, const char *category, const char *group);
+static int _e_fm2_theme_edje_icon_object_set(E_Fm2_Smart_Data *sd, Evas_Object *o, const char *category, const char *group);
 
 static void _e_fm2_client_spawn(void);
 static E_Fm2_Client *_e_fm2_client_get(void);
@@ -527,11 +529,33 @@ e_fm2_custom_theme_set(Evas_Object *obj, const char *path)
    else
      sd->custom_theme = NULL;
    _e_fm2_theme_edje_object_set(sd, sd->drop, "base/theme/fileman",
-				"e/fileman/list/drop_between");
+				"list/drop_between");
    _e_fm2_theme_edje_object_set(sd, sd->drop_in, "base/theme/fileman",
-				"e/fileman/list/drop_in");
+				"list/drop_in");
    _e_fm2_theme_edje_object_set(sd, sd->overlay, "base/theme/fileman",
-				"e/fileman/overlay");
+				"overlay");
+}
+
+EAPI void
+e_fm2_custom_theme_content_set(Evas_Object *obj, const char *content)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return; // safety
+   if (!evas_object_type_get(obj)) return; // safety
+   if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
+   if (sd->custom_theme) evas_stringshare_del(sd->custom_theme);
+   if (content)
+     sd->custom_theme_content = evas_stringshare_add(content);
+   else
+     sd->custom_theme_content = NULL;
+   _e_fm2_theme_edje_object_set(sd, sd->drop, "base/theme/fileman",
+				"list/drop_between");
+   _e_fm2_theme_edje_object_set(sd, sd->drop_in, "base/theme/fileman",
+				"list/drop_in");
+   _e_fm2_theme_edje_object_set(sd, sd->overlay, "base/theme/fileman",
+				"overlay");
 }
 
 EAPI void
@@ -969,9 +993,9 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 	       {
 		  oic = edje_object_add(evas);
 		  if (!edje_object_file_set(oic, ic->info.icon, "icon"))
-		    _e_fm2_theme_edje_object_set(ic->sd, oic,
-						 "base/theme/fileman",
-						 "e/icons/fileman/file");
+		    _e_fm2_theme_edje_icon_object_set(ic->sd, oic,
+						      "base/theme/fileman",
+						      "file");
 	       }
 	     else
 	       {
@@ -1014,9 +1038,9 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
    if (S_ISDIR(ic->info.statinfo.st_mode))
      {
 	oic = edje_object_add(evas);
-	_e_fm2_theme_edje_object_set(ic->sd, oic,
-				     "base/theme/fileman",
-				     "e/icons/fileman/folder");
+	_e_fm2_theme_edje_icon_object_set(ic->sd, oic,
+					  "base/theme/fileman",
+					  "folder");
      }
    else
      {
@@ -1044,9 +1068,9 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 	     if (!icon)
 	       {
 		  oic = edje_object_add(evas);
-		  _e_fm2_theme_edje_object_set(ic->sd, oic,
-					       "base/theme/fileman",
-					       "e/icons/fileman/file");
+		  _e_fm2_theme_edje_icon_object_set(ic->sd, oic,
+						    "base/theme/fileman",
+						    "file");
 		  if (type_ret) *type_ret = "FILE_TYPE";
 	       }
 	     else if (!strcmp(icon, "THUMB"))
@@ -1081,12 +1105,12 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 	     else if (!strncmp(icon, "e/icons/fileman/mime/", 21))
 	       {
 		  oic = edje_object_add(evas);
-		  if (!_e_fm2_theme_edje_object_set(ic->sd, oic, 
-					       "base/theme/fileman",
-					       icon))
-		    _e_fm2_theme_edje_object_set(ic->sd, oic,
-						 "base/theme/fileman",
-						 "e/icons/fileman/file");
+		  if (!_e_fm2_theme_edje_icon_object_set(ic->sd, oic, 
+							 "base/theme/fileman",
+							 icon + 21 - 5))
+		    _e_fm2_theme_edje_icon_object_set(ic->sd, oic,
+						      "base/theme/fileman",
+						      "file");
 		  if (type_ret) *type_ret = "THEME";
 	       }
 	     else
@@ -1096,9 +1120,9 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 		    {
 		       oic = edje_object_add(evas);
 		       if (!edje_object_file_set(oic, icon, "icon"))
-			 _e_fm2_theme_edje_object_set(ic->sd, oic,
-						      "base/theme/fileman",
-						      "e/icons/fileman/file");
+			 _e_fm2_theme_edje_icon_object_set(ic->sd, oic,
+							   "base/theme/fileman",
+							   "file");
 		    }
 		  else
 		    {
@@ -1178,9 +1202,9 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 		  if (oic == NULL) 
 		    {
 		       oic = edje_object_add(evas);	    
-		       _e_fm2_theme_edje_object_set(ic->sd, oic,
-						    "base/theme/fileman",
-						    "e/icons/fileman/file");
+		       _e_fm2_theme_edje_icon_object_set(ic->sd, oic,
+							 "base/theme/fileman",
+							 "file");
 		       if (type_ret) *type_ret = "FILE_TYPE";
 		    }
 		  else
@@ -1191,49 +1215,49 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 	     else if (S_ISCHR(ic->info.statinfo.st_mode))
 	       {
 		  oic = edje_object_add(evas);
-		  _e_fm2_theme_edje_object_set(ic->sd, oic,
-					       "base/theme/fileman",
-					       "e/icons/fileman/file");
+		  _e_fm2_theme_edje_icon_object_set(ic->sd, oic,
+						    "base/theme/fileman",
+						    "file");
 		  if (type_ret) *type_ret = "FILE_TYPE";
 	       }
 	     else if (S_ISBLK(ic->info.statinfo.st_mode))
 	       {
 		  oic = edje_object_add(evas);
-		  _e_fm2_theme_edje_object_set(ic->sd, oic,
-					       "base/theme/fileman",
-					       "e/icons/fileman/file");
+		  _e_fm2_theme_edje_icon_object_set(ic->sd, oic,
+						    "base/theme/fileman",
+						    "file");
 		  if (type_ret) *type_ret = "FILE_TYPE";
 	       }
 	     else if (S_ISFIFO(ic->info.statinfo.st_mode))
 	       {
 		  oic = edje_object_add(evas);
-		  _e_fm2_theme_edje_object_set(ic->sd, oic,
-					       "base/theme/fileman",
-					       "e/icons/fileman/file");
+		  _e_fm2_theme_edje_icon_object_set(ic->sd, oic,
+						    "base/theme/fileman",
+						    "file");
 		  if (type_ret) *type_ret = "FILE_TYPE";
 	       }
 	     else if (S_ISSOCK(ic->info.statinfo.st_mode))
 	       {
 		  oic = edje_object_add(evas);
-		  _e_fm2_theme_edje_object_set(ic->sd, oic,
-					       "base/theme/fileman",
-					       "e/icons/fileman/file");
+		  _e_fm2_theme_edje_icon_object_set(ic->sd, oic,
+						    "base/theme/fileman",
+						    "file");
 		  if (type_ret) *type_ret = "FILE_TYPE";
 	       }
 	     else if (ecore_file_can_exec(buf))
 	       {
 		  oic = edje_object_add(evas);
-		  _e_fm2_theme_edje_object_set(ic->sd, oic,
-					       "base/theme/fileman",
-					       "e/icons/fileman/file");
+		  _e_fm2_theme_edje_icon_object_set(ic->sd, oic,
+						    "base/theme/fileman",
+						    "file");
 		  if (type_ret) *type_ret = "FILE_TYPE";
 	       }
 	     else
 	       {
 		  oic = edje_object_add(evas);
-		  _e_fm2_theme_edje_object_set(ic->sd, oic,
-					       "base/theme/fileman",
-					       "e/icons/fileman/file");
+		  _e_fm2_theme_edje_icon_object_set(ic->sd, oic,
+						    "base/theme/fileman",
+						    "file");
 		  if (type_ret) *type_ret = "FILE_TYPE";
 	       }
 	  }
@@ -2819,7 +2843,7 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 	/* FIXME: end go away chunk */
      }
    
-   if(S_ISDIR(ic->info.statinfo.st_mode))
+   if (S_ISDIR(ic->info.statinfo.st_mode))
      {
        ic->info.mime = evas_stringshare_add("x-directory/normal");
      }
@@ -2885,11 +2909,11 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 		  if ((ic->sd->config->icon.fixed.w) && (ic->sd->config->icon.fixed.h))
 		    _e_fm2_theme_edje_object_set(ic->sd, obj,
 						 "base/theme/fileman",
-						 "e/fileman/icon/fixed");
+						 "icon/fixed");
 		  else
 		    _e_fm2_theme_edje_object_set(ic->sd, obj,
 						 "base/theme/fileman",
-						 "e/fileman/icon/variable");
+						 "icon/variable");
                   ic->sd->tmp.obj = obj;
 //		  printf("CALC OBJ %p\n", ic->sd->tmp.obj);
 	       }
@@ -2924,10 +2948,10 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 //		  if (ic->sd->config->icon.fixed.w)
 		    _e_fm2_theme_edje_object_set(ic->sd, obj,
 						 "base/theme/fileman",
-						 "e/fileman/list/fixed");
+						 "list/fixed");
 //		  else
 //		    _e_fm2_theme_edje_object_set(ic->sd, obj, "base/theme/fileman",
-//					    "e/fileman/list/variable");
+//					    "list/variable");
 		  ic->sd->tmp.obj = obj;
 	       }
 	     _e_fm2_icon_label_set(ic, obj);
@@ -3016,20 +3040,20 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
 	if (ic->odd)
 	  _e_fm2_theme_edje_object_set(ic->sd, ic->obj,
 				       "base/theme/widgets",
-				       "e/fileman/list_odd/fixed");
+				       "list_odd/fixed");
 	else
 	  _e_fm2_theme_edje_object_set(ic->sd, ic->obj,
 				       "base/theme/widgets",
-				       "e/fileman/list/fixed");
+				       "list/fixed");
 //	  }
 //	else
 //	  {
 //	     if (ic->odd)
 //	       _e_fm2_theme_edje_object_set(ic->sd, ic->obj, "base/theme/widgets",
-//				       "e/fileman/list_odd/variable");
+//				       "list_odd/variable");
 //	     else
 //	       _e_fm2_theme_edje_object_set(ic->sd, ic->obj, "base/theme/widgets",
-//				       "e/fileman/list/variable");
+//				       "list/variable");
 //	  }
      }
    else
@@ -3037,11 +3061,11 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
         if (ic->sd->config->icon.fixed.w)
 	  _e_fm2_theme_edje_object_set(ic->sd, ic->obj,
 				       "base/theme/fileman",
-				       "e/fileman/icon/fixed");
+				       "icon/fixed");
 	else
 	  _e_fm2_theme_edje_object_set(ic->sd, ic->obj,
 				       "base/theme/fileman",
-				       "e/fileman/icon/variable");
+				       "icon/variable");
      }
    _e_fm2_icon_label_set(ic, ic->obj);
    evas_object_clip_set(ic->obj, ic->sd->clip);
@@ -4489,22 +4513,22 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 		       if (ic->odd)
 			 _e_fm2_theme_edje_object_set(ic->sd, o,
 						      "base/theme/widgets",
-						      "e/fileman/list_odd/fixed");
+						      "list_odd/fixed");
 		       else
 			 _e_fm2_theme_edje_object_set(ic->sd, o,
 						      "base/theme/widgets",
-						      "e/fileman/list/fixed");
+						      "list/fixed");
 		    }
 		  else
 		    {
 		       if (ic->odd)
 			 _e_fm2_theme_edje_object_set(ic->sd, o,
 						      "base/theme/widgets",
-						      "e/fileman/list_odd/variable");
+						      "list_odd/variable");
 		       else
 			 _e_fm2_theme_edje_object_set(ic->sd, o,
 						      "base/theme/widgets",
-						      "e/fileman/list/variable");
+						      "list/variable");
 		    }
 	       }
 	     else
@@ -4512,11 +4536,11 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 		  if (ic->sd->config->icon.fixed.w)
 		    _e_fm2_theme_edje_object_set(ic->sd, o,
 						 "base/theme/fileman",
-						 "e/fileman/icon/fixed");
+						 "icon/fixed");
 		  else
 		    _e_fm2_theme_edje_object_set(ic->sd, o,
 						 "base/theme/fileman",
-						 "e/fileman/icon/variable");
+						 "icon/variable");
 	       }
 	     _e_fm2_icon_label_set(ic, o);
 	     o2 = _e_fm2_icon_icon_direct_set(ic, o,
@@ -5083,7 +5107,7 @@ _e_fm2_smart_add(Evas_Object *obj)
    evas_object_clip_set(sd->drop, sd->clip);
    _e_fm2_theme_edje_object_set(sd, sd->drop,
 				"base/theme/fileman",
-				"e/fileman/list/drop_between");
+				"list/drop_between");
    evas_object_smart_member_add(sd->drop, obj);
    evas_object_show(sd->drop);
    
@@ -5091,7 +5115,7 @@ _e_fm2_smart_add(Evas_Object *obj)
    evas_object_clip_set(sd->drop_in, sd->clip);
    _e_fm2_theme_edje_object_set(sd, sd->drop_in,
 				"base/theme/fileman",
-				"e/fileman/list/drop_in");
+				"list/drop_in");
    evas_object_smart_member_add(sd->drop_in, obj);
    evas_object_show(sd->drop_in);
    
@@ -5099,7 +5123,7 @@ _e_fm2_smart_add(Evas_Object *obj)
    evas_object_clip_set(sd->overlay, sd->clip);
    _e_fm2_theme_edje_object_set(sd, sd->overlay,
 				"base/theme/fileman",
-				"e/fileman/overlay");
+				"overlay");
    evas_object_smart_member_add(sd->overlay, obj);
    evas_object_show(sd->overlay);
    
@@ -5137,6 +5161,7 @@ _e_fm2_smart_del(Evas_Object *obj)
    if (sd->resize_job) ecore_job_del(sd->resize_job);
    if (sd->refresh_job) ecore_job_del(sd->refresh_job);
    if (sd->custom_theme) evas_stringshare_del(sd->custom_theme);
+   if (sd->custom_theme_content) evas_stringshare_del(sd->custom_theme_content);
    if (sd->dev) evas_stringshare_del(sd->dev);
    if (sd->path) evas_stringshare_del(sd->path);
    if (sd->realpath)
@@ -5315,8 +5340,8 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	     e_menu_item_label_set(mi, _("Refresh View"));
 	     e_menu_item_icon_edje_set(mi,
 				       e_theme_edje_file_get("base/theme/fileman",
-							     "e/fileman/button/refresh"),
-				       "e/fileman/button/refresh");
+							     "e/fileman/default/button/refresh"),
+				       "e/fileman/default/button/refresh");
 	     e_menu_item_callback_set(mi, _e_fm2_refresh, sd);
 	  }
 	
@@ -5326,8 +5351,8 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	     e_menu_item_label_set(mi, _("Show Hidden Files"));
 	     e_menu_item_icon_edje_set(mi,
 				       e_theme_edje_file_get("base/theme/fileman",
-							     "e/fileman/button/hidden_files"),
-				       "e/fileman/button/hidden_files");
+							     "e/fileman/default/button/hidden_files"),
+				       "e/fileman/default/button/hidden_files");
 	     e_menu_item_check_set(mi, 1);
 	     e_menu_item_toggle_set(mi, sd->show_hidden_files);
 	     e_menu_item_callback_set(mi, _e_fm2_toggle_hidden_files, sd);
@@ -5341,8 +5366,8 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 		  e_menu_item_label_set(mi, _("Remember Ordering"));
 		  e_menu_item_icon_edje_set(mi,
 					    e_theme_edje_file_get("base/theme/fileman",
-								  "e/fileman/button/ordering"),
-					    "e/fileman/button/ordering");
+								  "e/fileman/default/button/ordering"),
+					    "e/fileman/default/button/ordering");
 		  e_menu_item_check_set(mi, 1);
 		  e_menu_item_toggle_set(mi, sd->order_file);
 		  e_menu_item_callback_set(mi, _e_fm2_toggle_ordering, sd);
@@ -5353,8 +5378,8 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 		  e_menu_item_label_set(mi, _("Sort Now"));
 		  e_menu_item_icon_edje_set(mi,
 					    e_theme_edje_file_get("base/theme/fileman",
-								  "e/fileman/button/ordering"),
-					    "e/fileman/button/sort");
+								  "e/fileman/default/button/ordering"),
+					    "e/fileman/default/button/sort");
 		  e_menu_item_callback_set(mi, _e_fm2_sort, sd);
 	       }
 	  }
@@ -5371,8 +5396,8 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 		  e_menu_item_label_set(mi, _("New Directory"));
 		  e_menu_item_icon_edje_set(mi,
 					    e_theme_edje_file_get("base/theme/fileman",
-								  "e/fileman/button/new_dir"),
-					    "e/fileman/button/new_dir");
+								  "e/fileman/default/button/new_dir"),
+					    "e/fileman/default/button/new_dir");
 		  e_menu_item_callback_set(mi, _e_fm2_new_directory, sd);
 	       }
 	  }
@@ -5457,8 +5482,8 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	     e_menu_item_label_set(mi, _("Refresh View"));
 	     e_menu_item_icon_edje_set(mi,
 				       e_theme_edje_file_get("base/theme/fileman",
-							     "e/fileman/button/refresh"),
-				       "e/fileman/button/refresh");
+							     "e/fileman/default/button/refresh"),
+				       "e/fileman/default/button/refresh");
 	     e_menu_item_callback_set(mi, _e_fm2_refresh, sd);
 	  }
 	
@@ -5468,8 +5493,8 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	     e_menu_item_label_set(mi, _("Show Hidden Files"));
 	     e_menu_item_icon_edje_set(mi,
 				       e_theme_edje_file_get("base/theme/fileman",
-							     "e/fileman/button/hidden_files"),
-				       "e/fileman/button/hidden_files");
+							     "e/fileman/default/button/hidden_files"),
+				       "e/fileman/default/button/hidden_files");
 	     e_menu_item_check_set(mi, 1);
 	     e_menu_item_toggle_set(mi, sd->show_hidden_files);
 	     e_menu_item_callback_set(mi, _e_fm2_toggle_hidden_files, sd);
@@ -5483,8 +5508,8 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 		  e_menu_item_label_set(mi, _("Remember Ordering"));
 		  e_menu_item_icon_edje_set(mi,
 					    e_theme_edje_file_get("base/theme/fileman",
-								  "e/fileman/button/ordering"),
-					    "e/fileman/button/ordering");
+								  "e/fileman/default/button/ordering"),
+					    "e/fileman/default/button/ordering");
 		  e_menu_item_check_set(mi, 1);
 		  e_menu_item_toggle_set(mi, sd->order_file);
 		  e_menu_item_callback_set(mi, _e_fm2_toggle_ordering, sd);
@@ -5495,8 +5520,8 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 		  e_menu_item_label_set(mi, _("Sort Now"));
 		  e_menu_item_icon_edje_set(mi,
 					    e_theme_edje_file_get("base/theme/fileman",
-								  "e/fileman/button/ordering"),
-					    "e/fileman/button/sort");
+								  "e/fileman/default/button/ordering"),
+					    "e/fileman/default/button/sort");
 		  e_menu_item_callback_set(mi, _e_fm2_sort, sd);
 	       }
 	  }
@@ -5513,8 +5538,8 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 		  e_menu_item_label_set(mi, _("New Directory"));
 		  e_menu_item_icon_edje_set(mi,
 					    e_theme_edje_file_get("base/theme/fileman",
-								  "e/fileman/button/new_dir"),
-					    "e/fileman/button/new_dir");
+								  "e/fileman/default/button/new_dir"),
+					    "e/fileman/default/button/new_dir");
 		  e_menu_item_callback_set(mi, _e_fm2_new_directory, sd);
 	       }
 	  }
@@ -5572,8 +5597,8 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 		  e_menu_item_label_set(mi, _("Delete"));
 		  e_menu_item_icon_edje_set(mi,
 					    e_theme_edje_file_get("base/theme/fileman",
-								  "e/fileman/button/delete"),
-					    "e/fileman/button/delete");
+								  "e/fileman/default/button/delete"),
+					    "e/fileman/default/button/delete");
 		  e_menu_item_callback_set(mi, _e_fm2_file_delete, ic);
 	       }
 	     
@@ -5583,8 +5608,8 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 		  e_menu_item_label_set(mi, _("Rename"));
 		  e_menu_item_icon_edje_set(mi,
 					    e_theme_edje_file_get("base/theme/fileman",
-								  "e/fileman/button/rename"),
-					    "e/fileman/button/rename");
+								  "e/fileman/default/button/rename"),
+					    "e/fileman/default/button/rename");
 		  e_menu_item_callback_set(mi, _e_fm2_file_rename, ic);
 	       }
 	  }
@@ -5593,8 +5618,8 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	e_menu_item_label_set(mi, _("Properties"));
 	e_menu_item_icon_edje_set(mi,
 				  e_theme_edje_file_get("base/theme/fileman",
-							"e/fileman/button/properties"),
-				  "e/fileman/button/properties");
+							"e/fileman/default/button/properties"),
+				  "e/fileman/default/button/properties");
 	e_menu_item_callback_set(mi, _e_fm2_file_properties, ic);
 	
 	if (sd->icon_menu.end.func)
@@ -6678,9 +6703,17 @@ _e_fm2_cb_dbus_method_error(void *data, const char *error)
 static int
 _e_fm2_theme_edje_object_set(E_Fm2_Smart_Data *sd, Evas_Object *o, const char *category, const char *group)
 {
+   char buf[1024];
+   int ret;
+   
+   if (sd->custom_theme_content)
+     snprintf(buf, sizeof(buf), "e/fileman/%s/%s", sd->custom_theme_content, group);
+   else
+     snprintf(buf, sizeof(buf), "e/fileman/default/%s", group);
+   
    if (sd->custom_theme)
      {
-	if (edje_object_file_set(o, sd->custom_theme, group)) return 1;
+	if (edje_object_file_set(o, sd->custom_theme, buf)) return 1;
      }
    if (sd->custom_theme)
      {
@@ -6690,5 +6723,33 @@ _e_fm2_theme_edje_object_set(E_Fm2_Smart_Data *sd, Evas_Object *o, const char *c
 	     sd->custom_theme = NULL;
 	  }
      }
-   return e_theme_edje_object_set(o, category, group);
+   ret = e_theme_edje_object_set(o, category, buf);
+   return ret;
+}
+
+static int
+_e_fm2_theme_edje_icon_object_set(E_Fm2_Smart_Data *sd, Evas_Object *o, const char *category, const char *group)
+{
+   char buf[1024];
+   int ret;
+   
+//   if (sd->custom_theme_content)
+//     snprintf(buf, sizeof(buf), "e/icons/fileman/%s/%s", sd->custom_theme_content, group);
+//   else
+     snprintf(buf, sizeof(buf), "e/icons/fileman/%s", group);
+   
+   if (sd->custom_theme)
+     {
+	if (edje_object_file_set(o, sd->custom_theme, buf)) return 1;
+     }
+   if (sd->custom_theme)
+     {
+	if (!ecore_file_exists(sd->custom_theme))
+	  {
+	     evas_stringshare_del(sd->custom_theme);
+	     sd->custom_theme = NULL;
+	  }
+     }
+   ret = e_theme_edje_object_set(o, category, buf);
+   return ret;
 }

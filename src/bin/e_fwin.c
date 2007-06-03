@@ -108,7 +108,7 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
 
    o = edje_object_add(e_win_evas_get(fwin->win));
    e_theme_edje_object_set(o, "base/theme/fileman",
-			   "e/fileman/window/main");
+			   "e/fileman/default/window/main");
    evas_object_show(o);
    fwin->bg_obj = o;
 
@@ -169,7 +169,7 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
     * to specify the .edj files to get the list and icon theme stuff from
     */
    e_scrollframe_custom_theme_set(o, "base/theme/fileman",
-				  "e/fileman/scrollframe/default");
+				  "e/fileman/default/scrollframe");
    evas_object_data_set(fwin->fm_obj, "fwin", fwin);
    e_scrollframe_extern_pan_set(o, fwin->fm_obj,
 				_e_fwin_pan_set,
@@ -255,6 +255,7 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
    fmc.selection.single = 0;
    fmc.selection.windows_modifiers = 0;
    e_fm2_config_set(o, &fmc);
+   e_fm2_custom_theme_content_set(o, "desktop");
    evas_object_smart_callback_add(o, "dir_changed",
 				  _e_fwin_changed, fwin);
    evas_object_smart_callback_add(o, "dir_deleted",
@@ -270,7 +271,7 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
    
    o = e_scrollframe_add(zone->container->bg_evas);
    e_scrollframe_custom_theme_set(o, "base/theme/fileman",
-				  "e/fileman/scrollframe/desktop");
+				  "e/fileman/desktop/scrollframe");
    /* FIXME: this theme object will have more versions and options later
     * for things like swallowing widgets/buttons ot providing them - a
     * gadcon for starters for fm widgets. need to register the owning 
@@ -442,20 +443,20 @@ _e_fwin_changed(void *data, Evas_Object *obj, void *event_info)
    if (fwin->scrollframe_obj)
      {
 	if ((fwin->scrollframe_file) && 
-	    (e_util_edje_collection_exists(fwin->scrollframe_file, "e/fileman/scrollframe/default")))
+	    (e_util_edje_collection_exists(fwin->scrollframe_file, "e/fileman/default/scrollframe")))
 	  e_scrollframe_custom_edje_file_set(fwin->scrollframe_obj, 
 					     (char *)fwin->scrollframe_file,
-					     "e/fileman/scrollframe/default");
+					     "e/fileman/default/scrollframe");
 	else
 	  {
 	     if (fwin->zone)
 	       e_scrollframe_custom_theme_set(fwin->scrollframe_obj,
 					      "base/theme/fileman",
-					      "e/fileman/scrollframe/desktop");
+					      "e/fileman/desktop/scrollframe");
 	     else
 	       e_scrollframe_custom_theme_set(fwin->scrollframe_obj,
 					      "base/theme/fileman",
-					      "e/fileman/scrollframe/default");
+					      "e/fileman/default/scrollframe");
 	  }
 	e_scrollframe_child_pos_set(fwin->scrollframe_obj, 0, 0);
      }
@@ -505,8 +506,8 @@ _e_fwin_menu_extend(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *in
 	e_menu_item_label_set(mi, _("Go to Parent Directory"));
 	e_menu_item_icon_edje_set(mi,
 				  e_theme_edje_file_get("base/theme/fileman",
-							"e/fileman/button/parent"),
-				  "e/fileman/button/parent");
+							"e/fileman/default/button/parent"),
+				  "e/fileman/default/button/parent");
 	e_menu_item_callback_set(mi, _e_fwin_parent, obj);
      }
    /* FIXME: if info != null then check mime type and offer options based
@@ -531,15 +532,15 @@ _e_fwin_cb_menu_extend_start(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon
    e_menu_item_label_set(mi, _("Open"));
    e_menu_item_icon_edje_set(mi,
 			     e_theme_edje_file_get("base/theme/fileman",
-						   "e/fileman/button/open"),
-			     "e/fileman/button/open");
+						   "e/fileman/default/button/open"),
+			     "e/fileman/default/button/open");
    e_menu_item_callback_set(mi, _e_fwin_cb_menu_open, fwin);
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Open with..."));
    e_menu_item_icon_edje_set(mi,
 			     e_theme_edje_file_get("base/theme/fileman",
-						   "e/fileman/button/open"),
-			     "e/fileman/button/open");
+						   "e/fileman/default/button/open"),
+			     "e/fileman/default/button/open");
    e_menu_item_callback_set(mi, _e_fwin_cb_menu_open_with, fwin);
 }
 
