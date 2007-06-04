@@ -14,6 +14,7 @@ struct _E_Fm2_Custom_File
    struct {
       int            x, y, w, h;
       int            res_w, res_h;
+      double         scale;
       unsigned char  valid;
    } geom;
    struct {

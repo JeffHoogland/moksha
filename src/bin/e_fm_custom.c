@@ -58,6 +58,7 @@ e_fm2_custom_file_init(void)
    DAT("g.h", geom.h, EET_T_INT);
    DAT("g.rw", geom.res_w, EET_T_INT);
    DAT("g.rh", geom.res_h, EET_T_INT);
+   DAT("g.s", geom.scale, EET_T_DOUBLE);
    DAT("g.v", geom.valid, EET_T_UCHAR);
    
    DAT("i.t", icon.type, EET_T_INT);
