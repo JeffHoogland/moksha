@@ -536,7 +536,7 @@ _ibox_icon_fill(IBox_Icon *ic)
 static void
 _ibox_icon_fill_label(IBox_Icon *ic)
 {
-   char *label;
+   char *label = NULL;
 
    switch (ic->ibox->icon_label)
      {
