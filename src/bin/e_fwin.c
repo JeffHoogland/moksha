@@ -208,6 +208,13 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
    e_win_size_min_set(fwin->win, 24, 24);
    e_win_resize(fwin->win, 280, 200);
    e_win_show(fwin->win);
+   if (fwin->win->border)
+     {
+	if (fwin->win->border->internal_icon)
+	  evas_stringshare_del(fwin->win->border->internal_icon);
+	fwin->win->border->internal_icon = 
+	  evas_stringshare_add("enlightenment/fileman");
+     }
    
    return fwin;
 }
@@ -856,6 +863,7 @@ _e_fwin_file_exec(E_Fwin *fwin, E_Fm2_Icon_Info *ici, E_Fwin_Exec_Type ext)
 static void
 _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 {
+   E_Fwin *fwin2 = NULL;
    E_Dialog *dia;
    Evas_Coord mw, mh;
    Evas_Object *o, *ocon, *of, *oi, *mt;
@@ -884,25 +892,25 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	     if ((ici->link) && (ici->mount))
 	       {
 		  if (fwin->win)
-		    e_fwin_new(fwin->win->container, ici->link, "/");
+		    fwin2 = e_fwin_new(fwin->win->container, ici->link, "/");
 		  else if (fwin->zone)
-		    e_fwin_new(fwin->zone->container, ici->link, "/");
+		    fwin2 = e_fwin_new(fwin->zone->container, ici->link, "/");
 	       }
 	     else if ((ici->link) && (ici->removable))
 	       {
 		  if (fwin->win)
-		    e_fwin_new(fwin->win->container, ici->link, "/");
+		    fwin2 = e_fwin_new(fwin->win->container, ici->link, "/");
 		  else if (fwin->zone)
-		    e_fwin_new(fwin->zone->container, ici->link, "/");
+		    fwin2 = e_fwin_new(fwin->zone->container, ici->link, "/");
 	       }
 	     else if (ici->real_link)
 	       {
 		  if (S_ISDIR(ici->statinfo.st_mode))
 		    {
 		       if (fwin->win)
-			 e_fwin_new(fwin->win->container, NULL, ici->real_link);
+			 fwin2 = e_fwin_new(fwin->win->container, NULL, ici->real_link);
 		       else if (fwin->zone)
-			 e_fwin_new(fwin->zone->container, NULL, ici->real_link);
+			 fwin2 = e_fwin_new(fwin->zone->container, NULL, ici->real_link);
 		    }
 		  else
 		    need_dia = 1;
@@ -914,12 +922,55 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 		  if (S_ISDIR(ici->statinfo.st_mode))
 		    {
 		       if (fwin->win)
-			 e_fwin_new(fwin->win->container, NULL, buf);
+			 fwin2 = e_fwin_new(fwin->win->container, NULL, buf);
 		       else
-			 e_fwin_new(fwin->zone->container, NULL, buf);
+			 fwin2 = e_fwin_new(fwin->zone->container, NULL, buf);
 		    }
 		  else
 		    need_dia = 1;
+	       }
+	     if (fwin2)
+	       {
+		  if ((fwin2->win) && (fwin2->win->border))
+		    {
+		       Evas_Object *oic;
+		       const char *itype = NULL;
+		       
+		       oic = e_fm2_icon_get(evas_object_evas_get(fwin->fm_obj),
+					    ici->ic, NULL, NULL, 0, &itype);
+		       if (oic)
+			 {
+			    const char *file = NULL, *group = NULL;
+			    
+			    if (fwin2->win->border->internal_icon)
+			      evas_stringshare_del(fwin2->win->border->internal_icon);
+			    fwin2->win->border->internal_icon = NULL;
+			    if (fwin2->win->border->internal_icon_key)
+			      evas_stringshare_del(fwin2->win->border->internal_icon_key);
+			    fwin2->win->border->internal_icon_key = NULL;
+			    
+			    if (!strcmp(evas_object_type_get(oic), "edje"))
+			      {
+				 edje_object_file_get(oic, &file, &group);
+				 if (file)
+				   {
+				      fwin2->win->border->internal_icon = 
+					evas_stringshare_add(file);
+				      if (group)
+					fwin2->win->border->internal_icon_key = 
+					evas_stringshare_add(group);
+				   }
+			      }
+			    else
+			      {
+				 file = e_icon_file_get(oic);
+				 fwin2->win->border->internal_icon = 
+				   evas_stringshare_add(file);
+			      }
+			    evas_object_del(oic);
+			 }
+		    }
+		  fwin2 = NULL;
 	       }
 	  }
 	if (!need_dia) return;
