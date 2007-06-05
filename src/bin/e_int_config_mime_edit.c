@@ -66,7 +66,7 @@ e_int_config_mime_edit(E_Config_Mime_Icon *data, void *data2)
    v->basic.apply_cfdata = _basic_apply;
 
    cfd = e_config_dialog_new(con, _("File Icon"), "E", 
-			     "_config_mime_edit_dialog", "enlightenment/e", 
+			     "_config_mime_edit_dialog", "enlightenment/file_icons", 
 			     0, v, cfdata);
    return cfd;
 }
