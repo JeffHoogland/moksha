@@ -41,7 +41,6 @@ Some of the things (in very short form) that need to be done to E17...
   as well as mount and unmount (via dbus/hal)
 * fm2 needs to evaluate current mounted/device state on start.
 * fm2 removable storage neds to hande dvd/cd drives
-* fwin needs to be able to set title of sub-fwins based on lunching icon label
 * fm2 mv between fs's (removable to hd for example) doesn't work.
 * fm2 theme needs to not suck
 * fwin initial placement needs to be near icon that spawned the fwin
