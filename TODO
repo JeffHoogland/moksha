@@ -37,18 +37,25 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
+* fm2 removable device suport needs virtalizing and putting itno e_fm_main.c
+  as well as mount and unmount (via dbus/hal)
+* fm2 needs to evaluate current mounted/device state on start.
+* fm2 removable storage neds to hande dvd/cd drives
+* fwin needs to be able to set title of sub-fwins based on lunching icon label
 * fm2 mv between fs's (removable to hd for example) doesn't work.
 * fm2 theme needs to not suck
-* fm2 custom icon view mode needs to have cleanup,align etc.
-* fm2 custom icon view mode initial placement needs some fixing
+* fwin initial placement needs to be near icon that spawned the fwin
+* fm2 custom icon view mode needs to have cleanup, align etc.
+* fm2 custom icon view mode initial placement needs some fixing - better
+  placement, more efficient etc.
 * fm2 fwin needs options for view mode
 * fm2 needs a way to specify a multiplier, explicit size or "use original icon"
-  config per icon and per dir
+  config per icon and per dir, as well as globally.
 * fm2 should remember scroll pos per dir
-* fwin should have option to display full path
+* fwin should have option to display full path in window
 * fm2 thumbnails - should display an icon while generating thumb
 * fm2 needs to be able to handle signals from the fm fwin theme wallpaper and
-overlay - to exec or do things (eg go to parent)
+  overlay - to exec or do things (eg go to parent, close, refresh, top, bottom)
 * fm2 on desktop needs option to turn off and select which dir on which zone
 * fm2 needs to show icons again if drag was aborted
 * fm2 needs to handle dnd of e apps too
@@ -61,8 +68,8 @@ overlay - to exec or do things (eg go to parent)
 * fm2 needs to display more than 1 file being dragged (if more than 1 is being
   dragged)
 & fm2 needs to drag other files in mult-drag to the right location
-* fm2 needs a way of mapping a internal e actions to do (like add as
-  wallpaper etc.)
+* fm2 needs a way of mapping a internal e actions to do based on mime or
+  extension (like add as wallpaper etc.)
 * fm2 needs a way to bypass thumb gen anim on just a unrealize/realize as well
   as change state instantly if it already was selected
 * fm2 needs to not unrealize then re-realize on re-sort/arrange - keep objects
