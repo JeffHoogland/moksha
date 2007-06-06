@@ -246,9 +246,12 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 1);
    
-   of = e_widget_framelist_add(evas, _("Window Frame"), 0);
+   of = e_widget_framelist_add(evas, _("Window Border"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
-   ob = e_widget_check_add(evas, _("Use application provided icon instead"), &(cfdata->use_app_icon));
+   rg = e_widget_radio_group_new(&(cfdata->use_app_icon));
+   ob = e_widget_radio_add(evas, _("Prefer user defined icon"), 0, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Prefer application provided icon"), 1, rg);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
 
