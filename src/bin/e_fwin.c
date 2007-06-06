@@ -969,6 +969,10 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 			      }
 			    evas_object_del(oic);
 			 }
+		       if (ici->label)
+			 e_win_title_set(fwin2->win, ici->label);
+		       else if (ici->file)
+			 e_win_title_set(fwin2->win, ici->file);
 		    }
 		  fwin2 = NULL;
 	       }
