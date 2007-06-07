@@ -135,6 +135,17 @@ e_order_files_prepend_relative(E_Order *eo, Evas_List *files, Efreet_Desktop *be
    _e_order_save(eo);
 }
 
+EAPI void
+e_order_clear(E_Order *eo)
+{
+   E_OBJECT_CHECK(eo);
+   E_OBJECT_TYPE_CHECK(eo, E_ORDER_TYPE);
+
+   while (eo->desktops)
+     eo->desktops = evas_list_remove_list(eo->desktops, eo->desktops);
+   _e_order_save(eo);
+}
+
 /* local subsystem functions */
 static void
 _e_order_free(E_Order *eo)

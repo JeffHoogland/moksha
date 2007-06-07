@@ -152,6 +152,7 @@ e_widget_ilist_clear(Evas_Object *obj)
 
    wd = e_widget_data_get(obj);
    e_ilist_clear(wd->o_ilist);
+   e_scrollframe_child_pos_set(wd->o_scrollframe, 0, 0);
    while (wd->callbacks)
      {
 	E_Widget_Callback *wcb;
