@@ -242,6 +242,26 @@ e_widget_ilist_nth_data_get(Evas_Object *obj, int n)
      return wcb->data;
 }
 
+/**
+ * Show the nth element of an ilist
+ * @param obj the ilist
+ * @param n the number of the element to show
+ * @param top if true, place this item at the top, otherwise scroll just 
+ * enough to show the element (from the current position).
+ */
+EAPI void
+e_widget_ilist_nth_show(Evas_Object *obj, int n, int top)
+{
+   E_Widget_Data *wd;
+   Evas_Coord x, y, w, h;
+   wd = e_widget_data_get(obj);
+   e_ilist_nth_geometry_get(wd->o_ilist, n, &x, &y, &w, &h);
+   if (top)
+     e_scrollframe_child_pos_set(wd->o_scrollframe, x, y);
+   else
+     e_scrollframe_child_region_show(wd->o_scrollframe, x, y, w, h);
+}
+
 EAPI void
 e_widget_ilist_selected_set(Evas_Object *obj, int n)
 {

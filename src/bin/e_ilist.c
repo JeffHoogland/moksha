@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include "e.h"
 
 #define SMART_NAME "e_ilist"
@@ -401,6 +404,23 @@ e_ilist_nth_is_header(Evas_Object *obj, int n)
    si = evas_list_nth(sd->items, n);
    if (si) return si->header;
    return 0;
+}
+
+EAPI void
+e_ilist_nth_geometry_get(Evas_Object *obj, int n, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h)
+{
+  E_Ilist_Item *si;
+  int error;
+
+  API_ENTRY return;
+  if (!sd->items) return;
+
+  si = evas_list_nth(sd->items, n);
+  if (!si) return;
+
+  evas_object_geometry_get(si->o_base, x, y, w, h);
+  *x -= sd->x;
+  *y -= sd->y;
 }
 
 EAPI void 

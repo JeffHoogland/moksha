@@ -44,6 +44,7 @@ struct _E_Config_Dialog_Data
    Evas_Object *o_add, *o_del, *o_categories;
    Ecore_List *apps;
    const char *category;
+   int category_n;
    
    char *fav, *app;
 };
@@ -491,6 +492,7 @@ _category_cb_selected(void *data)
    
    cfdata = data;
 
+   cfdata->category_n = e_widget_ilist_selected_get(cfdata->o_apps);
    if (cfdata->category) ecore_string_release(cfdata->category);
    cfdata->category = ecore_string_instance(cfdata->app);
    _fill_apps(cfdata);
@@ -525,6 +527,8 @@ _cb_categories(void *data, void *data2)
    if (cfdata->category) ecore_string_release(cfdata->category);
    cfdata->category = NULL;
    _fill_categories(cfdata);
+   e_widget_ilist_nth_show(cfdata->o_apps, cfdata->category_n, 1);
+   cfdata->category_n = 0;
 }
 
 static void 
