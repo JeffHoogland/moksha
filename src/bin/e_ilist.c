@@ -410,7 +410,6 @@ EAPI void
 e_ilist_nth_geometry_get(Evas_Object *obj, int n, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h)
 {
   E_Ilist_Item *si;
-  int error;
 
   API_ENTRY return;
   if (!sd->items) return;

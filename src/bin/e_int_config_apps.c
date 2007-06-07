@@ -18,7 +18,6 @@ static void _list_cb_selected(void *data);
 static void _cb_categories(void *data, void *data2);
 static void _cb_add(void *data, void *data2);
 static void _cb_del(void *data, void *data2);
-static void _create_fav_menu(const char *path);
 static int _cb_desktop_name_sort(Efreet_Desktop *a, Efreet_Desktop *b);
 
 static int _save_menu(E_Config_Dialog_Data *cfdata);
@@ -176,7 +175,6 @@ _create_config_dialog(E_Container *con, E_Config_Once *once)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-   char buf[4096];
 
    if (e_config_dialog_find("E", once->dialog)) return NULL;
 
@@ -201,10 +199,10 @@ _create_data(E_Config_Dialog *cfd)
 
   cfdata = E_NEW(E_Config_Dialog_Data, 1);
   once = cfd->data;
-  if (!once->filename) return;
+  if (!once->filename) return NULL;
 
   ext = strrchr(once->filename, '.');
-  if (!ext) return;
+  if (!ext) return NULL;
 
   cfdata->once = once;
   if (!strcmp(ext, ".menu")) 
@@ -312,13 +310,13 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 static int 
 _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-  int ret;
+   int ret;
    char *ext;
  
    if (!cfdata->apps || !cfdata->once || !cfdata->once->filename) return 1;
 
    ext = strrchr(cfdata->once->filename, '.');
-   if (!ext) return;
+   if (!ext) return 0;
 
    if (!strcmp(ext, ".menu"))
      ret = _save_menu(cfdata);
@@ -383,13 +381,7 @@ _fill_categories(E_Config_Dialog_Data *cfdata)
    ecore_list_sort(cats, ECORE_COMPARE_CB(strcmp), ECORE_SORT_MIN);
    ecore_list_goto_first(cats);
    while ((category = ecore_list_next(cats))) 
-     {
-	Ecore_List *desktops;
-	Efreet_Desktop *desktop;
-
-	e_widget_ilist_append(cfdata->o_apps, NULL, category, _category_cb_selected, cfdata, category);
-
-     }
+     e_widget_ilist_append(cfdata->o_apps, NULL, category, _category_cb_selected, cfdata, category);
    ecore_list_destroy(cats);
 
    e_widget_ilist_go(cfdata->o_apps);
@@ -412,7 +404,6 @@ _fill_apps(E_Config_Dialog_Data *cfdata)
    Evas *evas;
    Evas_Coord w;
 
-   int i;
    Ecore_List *desktops;
    Efreet_Desktop *desktop;
    char buf[4096];
@@ -452,7 +443,6 @@ _fill_list(E_Config_Dialog_Data *cfdata)
 {
    Evas *evas;
    Evas_Coord w;
-   Ecore_List *apps;
    Efreet_Desktop *desktop;
 
    if ((!cfdata->apps)) 

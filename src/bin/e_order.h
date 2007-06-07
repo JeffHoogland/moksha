@@ -36,6 +36,7 @@ EAPI void e_order_append(E_Order *eo, Efreet_Desktop *desktop);
 EAPI void e_order_prepend_relative(E_Order *eo, Efreet_Desktop *desktop, Efreet_Desktop *before);
 EAPI void e_order_files_append(E_Order *eo, Evas_List *files);
 EAPI void e_order_files_prepend_relative(E_Order *eo, Evas_List *files, Efreet_Desktop *before);
+EAPI void e_order_clear(E_Order *eo);
 
 #endif
 #endif
