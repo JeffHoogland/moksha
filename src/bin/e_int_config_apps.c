@@ -297,7 +297,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_disabled_set(ob, 1);
    e_widget_table_object_append(ot, ob, 1, 2, 1, 1, 1, 0, 0, 0);
 
-   of = e_widget_framelist_add(evas, _("Favorites"), 0);
+   of = e_widget_framelist_add(evas, cfdata->once->title, 0);
    ob = e_widget_ilist_add(evas, 24, 24, &(cfdata->fav));
    cfdata->o_list = ob;
    _fill_list(cfdata);
@@ -414,6 +414,7 @@ _fill_apps(E_Config_Dialog_Data *cfdata)
    int i;
    Ecore_List *desktops;
    Efreet_Desktop *desktop;
+   char buf[4096];
 
    if (!cfdata->category) return;
    evas = evas_object_evas_get(cfdata->o_apps);
@@ -421,7 +422,8 @@ _fill_apps(E_Config_Dialog_Data *cfdata)
    edje_freeze();
    e_widget_ilist_freeze(cfdata->o_apps);
    e_widget_ilist_clear(cfdata->o_apps);
-   e_widget_framelist_label_set(cfdata->o_frame, _("Applications"));
+   snprintf(buf, sizeof(buf), "%s (%s)", _("Applications"), cfdata->category);
+   e_widget_framelist_label_set(cfdata->o_frame, buf);
 
    desktops = (Ecore_List *)efreet_util_desktop_category_list(cfdata->category);
    ecore_list_sort(desktops, ECORE_COMPARE_CB(_cb_desktop_name_sort), ECORE_SORT_MIN);
