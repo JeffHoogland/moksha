@@ -39,7 +39,7 @@ struct _E_Config_Dialog_Data
 {
    E_Config_Once *once;
 
-   Evas_Object *o_apps, *o_list, *o_frame;
+   Evas_Object *o_apps, *o_list;
    Evas_Object *o_add, *o_del, *o_categories;
    Ecore_List *apps;
    const char *category;
@@ -49,7 +49,7 @@ struct _E_Config_Dialog_Data
 };
 
 EAPI E_Config_Dialog *
-  e_int_config_apps_add(E_Container *con)
+e_int_config_apps_add(E_Container *con)
 {
    E_Desktop_Edit *ed;
    Efreet_Desktop *de = NULL;
@@ -92,7 +92,7 @@ e_int_config_apps_favs(E_Container *con)
    char buf[4096];
 
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/menu/favorite.menu", 
-	 e_user_homedir_get());
+	    e_user_homedir_get());
 
    once = E_NEW(E_Config_Once, 1);
    once->title = _("Favorites Menu");
@@ -193,24 +193,24 @@ _create_config_dialog(E_Container *con, E_Config_Once *once)
 static void *
 _create_data(E_Config_Dialog *cfd) 
 {
-  E_Config_Dialog_Data *cfdata;
-  E_Config_Once *once;
-  const char *ext;
+   E_Config_Dialog_Data *cfdata;
+   E_Config_Once *once;
+   const char *ext;
 
-  cfdata = E_NEW(E_Config_Dialog_Data, 1);
-  once = cfd->data;
-  if (!once->filename) return NULL;
+   cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   once = cfd->data;
+   if (!once->filename) return NULL;
 
-  ext = strrchr(once->filename, '.');
-  if (!ext) return NULL;
+   ext = strrchr(once->filename, '.');
+   if (!ext) return NULL;
 
-  cfdata->once = once;
-  if (!strcmp(ext, ".menu")) 
-    cfdata->apps = _load_menu(once->filename);
-  else if (!strcmp(ext, ".order"))
-    cfdata->apps = _load_order(once->filename);
-
-  return cfdata;
+   cfdata->once = once;
+   if (!strcmp(ext, ".menu")) 
+     cfdata->apps = _load_menu(once->filename);
+   else if (!strcmp(ext, ".order"))
+     cfdata->apps = _load_order(once->filename);
+   
+   return cfdata;
 }
 
 static Ecore_List *
@@ -237,16 +237,16 @@ _load_menu(const char *path)
 static Ecore_List *
 _load_order(const char *path)
 {
-  E_Order *order;
-  Evas_List *l;
-  Ecore_List *apps;
+   E_Order *order;
+   Evas_List *l;
+   Ecore_List *apps;
 
-  apps = ecore_list_new();
-  order = e_order_new(path);
-  for (l = order->desktops; l; l = l->next) 
-    ecore_list_append(apps, l->data);
+   apps = ecore_list_new();
+   order = e_order_new(path);
+   for (l = order->desktops; l; l = l->next) 
+     ecore_list_append(apps, l->data);
 
-  return apps;
+   return apps;
 }
 
 static void 
@@ -272,18 +272,18 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    
    ot = e_widget_table_add(evas, 0);
 
-   of = e_widget_framelist_add(evas, _("Application Categories"), 0);
-   cfdata->o_frame = of;
-
-   ob = e_widget_button_add(evas, _("Categories"), "widget/categories", _cb_categories, cfdata, NULL);
+   of = e_widget_frametable_add(evas, _("Application Categories"), 0);
+   ob = e_widget_button_add(evas, _("Categories"), "widget/categories", 
+			    _cb_categories, cfdata, NULL);
    cfdata->o_categories = ob;
    e_widget_disabled_set(ob, 1);
-   e_widget_framelist_object_append(of, ob);
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 0, 1, 0);
 
    ob = e_widget_ilist_add(evas, 24, 24, &(cfdata->app));
    cfdata->o_apps = ob;
    _fill_categories(cfdata);
-   e_widget_framelist_object_append(of, ob);
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
+   
    e_widget_table_object_append(ot, of, 0, 0, 1, 4, 1, 1, 1, 1);
   
    ob = e_widget_button_add(evas, _("Add"), "widget/add", _cb_add, cfdata, NULL);
@@ -365,7 +365,6 @@ _fill_categories(E_Config_Dialog_Data *cfdata)
 {
    Evas *evas;
    Evas_Coord w;
-
    Ecore_List *cats;
    char *category;
 
@@ -373,15 +372,14 @@ _fill_categories(E_Config_Dialog_Data *cfdata)
    evas_event_freeze(evas);
    edje_freeze();
    e_widget_ilist_freeze(cfdata->o_apps);
-
    e_widget_ilist_clear(cfdata->o_apps);
 
-   e_widget_framelist_label_set(cfdata->o_frame, _("Application Categories"));
    cats = efreet_util_desktop_categories_list();
    ecore_list_sort(cats, ECORE_COMPARE_CB(strcmp), ECORE_SORT_MIN);
    ecore_list_goto_first(cats);
    while ((category = ecore_list_next(cats))) 
-     e_widget_ilist_append(cfdata->o_apps, NULL, category, _category_cb_selected, cfdata, category);
+     e_widget_ilist_append(cfdata->o_apps, NULL, category, 
+			   _category_cb_selected, cfdata, category);
    ecore_list_destroy(cats);
 
    e_widget_ilist_go(cfdata->o_apps);
@@ -406,7 +404,6 @@ _fill_apps(E_Config_Dialog_Data *cfdata)
 
    Ecore_List *desktops;
    Efreet_Desktop *desktop;
-   char buf[4096];
 
    if (!cfdata->category) return;
    evas = evas_object_evas_get(cfdata->o_apps);
@@ -414,8 +411,7 @@ _fill_apps(E_Config_Dialog_Data *cfdata)
    edje_freeze();
    e_widget_ilist_freeze(cfdata->o_apps);
    e_widget_ilist_clear(cfdata->o_apps);
-   snprintf(buf, sizeof(buf), "%s (%s)", _("Applications"), cfdata->category);
-   e_widget_framelist_label_set(cfdata->o_frame, buf);
+   e_widget_ilist_header_append(cfdata->o_apps, NULL, cfdata->category);
 
    desktops = (Ecore_List *)efreet_util_desktop_category_list(cfdata->category);
    ecore_list_sort(desktops, ECORE_COMPARE_CB(_cb_desktop_name_sort), ECORE_SORT_MIN);
@@ -423,11 +419,10 @@ _fill_apps(E_Config_Dialog_Data *cfdata)
    while ((desktop = ecore_list_next(desktops))) 
      {
 	Evas_Object *icon;
+	
 	icon = e_util_desktop_icon_add(desktop, "24x24", evas);
-
 	e_widget_ilist_append(cfdata->o_apps, icon, desktop->name,
-	      _apps_cb_selected, cfdata, 
-	      desktop->orig_path);
+			      _apps_cb_selected, cfdata, desktop->orig_path);
      }
 
    e_widget_ilist_go(cfdata->o_apps);
@@ -463,8 +458,7 @@ _fill_list(E_Config_Dialog_Data *cfdata)
 
 	icon = e_util_desktop_icon_add(desktop, "24x24", evas);
 	e_widget_ilist_append(cfdata->o_list, icon, desktop->name, 
-	      _list_cb_selected, cfdata, 
-	      desktop->orig_path);
+			      _list_cb_selected, cfdata, desktop->orig_path);
      }
 
    e_widget_ilist_go(cfdata->o_list);
@@ -584,4 +578,3 @@ _cb_del(void *data, void *data2)
    if (ecore_list_goto(cfdata->apps, desk))
      ecore_list_remove(cfdata->apps);
 }
-
