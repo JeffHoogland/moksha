@@ -209,7 +209,8 @@ _e_order_read(E_Order *eo)
 		       if (!desktop)
 			 {
 			    snprintf(buf2, sizeof(buf2), 
-				     "%s/.e/e/applications/all/%s",
+				     "%s",
+//				     "%s/.e/e/applications/all/%s",
 				     e_user_homedir_get(), buf);
 			    desktop = efreet_desktop_get(buf2);
 			 }

@@ -146,6 +146,7 @@ e_winlist_show(E_Zone *zone)
 	E_Border *bd;
 	
 	bd = l->data;
+        
 	_e_winlist_border_add(bd, winlist->zone, desk);
      }
    e_box_thaw(list_object);
@@ -226,6 +227,8 @@ e_winlist_hide(void)
 	if (ww->icon_object) evas_object_del(ww->icon_object);
 	free(ww);
 	wins = evas_list_remove_list(wins, wins);
+	if ((!bd) || (ww->border != bd))
+	  e_object_unref(E_OBJECT(ww->border));	
      }
    e_box_thaw(list_object);
    win_selected = NULL;
@@ -295,6 +298,7 @@ e_winlist_hide(void)
 	  ecore_x_pointer_warp(bd->zone->container->win,
 			       warp_to_x, 
 			       warp_to_y);
+	e_object_unref(E_OBJECT(bd));
      }
 }
 
@@ -485,6 +489,7 @@ _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
 			       mw, mh, /* min */
 			       9999, mh /* max */
 			       );
+        e_object_ref(E_OBJECT(ww->border));
      }
 }
 
@@ -501,6 +506,7 @@ _e_winlist_border_del(E_Border *bd)
 	ww = l->data;
 	if (ww->border == bd)
 	  {
+             e_object_unref(E_OBJECT(ww->border));
 	     if (l == win_selected)
 	       {
 		  win_selected = l->next;
