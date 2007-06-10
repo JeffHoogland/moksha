@@ -201,21 +201,12 @@ _e_order_read(E_Order *eo)
 		       Efreet_Desktop *desktop;
 		       
 		       desktop = NULL;
-		       if ((dir) && (buf[0] != '/'))
-			 {
-			    snprintf(buf2, sizeof(buf2), "%s/%s", dir, buf);
-			    desktop = efreet_desktop_get(buf2);
-			 }
+		       if (buf[0] == '/')
+		         desktop = efreet_desktop_get(buf);
 		       if (!desktop)
-			 {
-			    snprintf(buf2, sizeof(buf2), 
-				     "%s",
-//				     "%s/.e/e/applications/all/%s",
-				     e_user_homedir_get(), buf);
-			    desktop = efreet_desktop_get(buf2);
-			 }
+		         desktop = efreet_desktop_get(ecore_file_get_file(buf));
 		       if (!desktop)
-			 desktop = efreet_util_desktop_file_id_find(buf);
+			 desktop = efreet_util_desktop_file_id_find(ecore_file_get_file(buf));
 		       if (desktop) eo->desktops = evas_list_append(eo->desktops, desktop);
 		    }
 	       }
