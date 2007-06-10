@@ -179,17 +179,15 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    snprintf(buf, sizeof(buf), "%i", es->id);
    es->gadcon = e_gadcon_swallowed_new(es->name, buf, es->o_base, "e.swallow.content");
    e_gadcon_min_size_request_callback_set(es->gadcon,
-					  _e_shelf_gadcon_min_size_request,
-					  es);
+					  _e_shelf_gadcon_min_size_request, es);
 
    e_gadcon_size_request_callback_set(es->gadcon,
-				      _e_shelf_gadcon_size_request,
-				      es);
+				      _e_shelf_gadcon_size_request, es);
    e_gadcon_frame_request_callback_set(es->gadcon,
-				       _e_shelf_gadcon_frame_request,
-				       es);
+				       _e_shelf_gadcon_frame_request, es);
    e_gadcon_orient(es->gadcon, E_GADCON_ORIENT_TOP);
-   snprintf(buf, sizeof(buf), "e,state,orientation,%s", _e_shelf_orient_string_get(es));
+   snprintf(buf, sizeof(buf), "e,state,orientation,%s", 
+	    _e_shelf_orient_string_get(es));
    edje_object_signal_emit(es->o_base, buf, "e");
    edje_object_message_signal_process(es->o_base);
    e_gadcon_zone_set(es->gadcon, zone);
@@ -203,8 +201,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    else
      e_gadcon_dnd_window_set(es->gadcon, zone->container->event_win);
    e_gadcon_util_menu_attach_func_set(es->gadcon,
-				      _e_shelf_cb_menu_items_append,
-				      es);
+				      _e_shelf_cb_menu_items_append, es);
    
    shelves = evas_list_append(shelves, es);
    shelves = evas_list_sort(shelves, -1, _e_shelf_cb_id_sort);
@@ -1143,18 +1140,21 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_inf
 {
    Evas_Event_Mouse_Down *ev;
    E_Shelf *es;
+   E_Menu *mn;
+   int cx, cy, cw, ch;
    
    es = data;
    ev = event_info;
-   if (ev->button == 3)
+   switch (ev->button)
      {
-        E_Menu *mn;
-	int cx, cy, cw, ch;
-	
+      case 1:
+	if (es->cfg->autohide_show_action) e_shelf_toggle (es, 1);
+	break;
+      case 3:
 	mn = e_menu_new();
 	e_menu_post_deactivate_callback_set(mn, _e_shelf_cb_menu_post, es);
 	es->menu = mn;
-
+	
 	_e_shelf_menu_append(es, mn);
 	
 	e_gadcon_canvas_zone_geometry_get(es->gadcon, &cx, &cy, &cw, &ch);
@@ -1162,8 +1162,8 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_inf
 			      e_util_zone_current_get(e_manager_current_get()),
 			      cx + ev->output.x, cy + ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
-	e_util_evas_fake_mouse_up_later(es->gadcon->evas, 
-					ev->button);
+	e_util_evas_fake_mouse_up_later(es->gadcon->evas, ev->button);
+	break;
      }
 }
 
@@ -1174,7 +1174,7 @@ _e_shelf_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 
    es = data;
    edje_object_signal_emit(es->o_base, "e,state,focused", "e");
-   e_shelf_toggle(es, 1);
+   if (!es->cfg->autohide_show_action) e_shelf_toggle (es, 1);
 }
 
 static void 

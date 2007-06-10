@@ -36,6 +36,7 @@ struct _E_Config_Dialog_Data
    int layering;
    int overlapping;
    int autohiding;
+   int autohiding_show_action;
    double hide_timeout;
    double hide_duration;
 };
@@ -119,6 +120,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->size = cfdata->escfg->size;
    cfdata->overlapping = cfdata->escfg->overlap;
    cfdata->autohiding = cfdata->escfg->autohide;
+   cfdata->autohiding_show_action = cfdata->escfg->autohide_show_action;
    cfdata->hide_timeout = cfdata->escfg->hide_timeout;
    cfdata->hide_duration = cfdata->escfg->hide_duration;
    if (cfdata->size <= 24)
@@ -344,6 +346,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    cfdata->escfg->overlap = cfdata->overlapping;
 
    cfdata->escfg->autohide = cfdata->autohiding;
+   cfdata->escfg->autohide_show_action = cfdata->autohiding_show_action;
    cfdata->escfg->hide_timeout = cfdata->hide_timeout;
    cfdata->escfg->hide_duration = cfdata->hide_duration;
    if (cfdata->escfg->autohide && !cfdata->es->hidden)
@@ -493,6 +496,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    
    of = e_widget_framelist_add(evas, _("Autohide"), 0);
    ob = e_widget_check_add(evas, _("Auto-hide the shelf"), &(cfdata->autohiding));
+   e_widget_framelist_object_append(of, ob);
+   rg = e_widget_radio_group_new(&(cfdata->autohiding_show_action));
+   ob = e_widget_radio_add(evas, _("Show on mouse in"), 0, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Show on mouse click"), 1, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_label_add(evas, _("Hide timeout"));
    e_widget_framelist_object_append(of, ob);

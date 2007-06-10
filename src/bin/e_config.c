@@ -126,6 +126,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, size, INT);
    E_CONFIG_VAL(D, T, overlap, INT);
    E_CONFIG_VAL(D, T, autohide, INT);
+   E_CONFIG_VAL(D, T, autohide_show_action, INT);
    E_CONFIG_VAL(D, T, hide_timeout, FLOAT);
    E_CONFIG_VAL(D, T, hide_duration, FLOAT);
    
@@ -1173,7 +1174,7 @@ e_config_init(void)
      {
 	E_Config_Shelf *cf_es;
 	
-#define CFG_SHELF(_name, _con, _zone, _pop, _lay, _orient, _fita, _fits, _style, _size, _overlap, _autohide, _hide_timeout, _hide_duration) \
+#define CFG_SHELF(_name, _con, _zone, _pop, _lay, _orient, _fita, _fits, _style, _size, _overlap, _autohide, _autohide_show_action, _hide_timeout, _hide_duration) \
    cf_es = E_NEW(E_Config_Shelf, 1); \
    cf_es->name = evas_stringshare_add(_name); \
    cf_es->container = _con; \
@@ -1187,32 +1188,33 @@ e_config_init(void)
    cf_es->size = _size; \
    cf_es->overlap = _overlap; \
    cf_es->autohide = _autohide; \
+   cf_es->autohide_show_action = _autohide_show_action; \
    cf_es->hide_timeout = _hide_timeout; \
    cf_es->hide_duration = _hide_duration; \
    e_config->shelves = evas_list_append(e_config->shelves, cf_es)
 	/* shelves for 4 zones on head 0 by default */
 	CFG_SHELF("shelf", 0, 0,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0, 1.0, 1.0);
+		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0);
 	CFG_SHELF("shelf", 0, 1,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0, 1.0, 1.0);
+		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0);
 	CFG_SHELF("shelf", 0, 2,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0, 1.0, 1.0);
+		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0);
 	CFG_SHELF("shelf", 0, 3,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0, 1.0, 1.0);
+		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0);
 	/* shelves for heada 1, 2, and 3 by default */
 	CFG_SHELF("shelf", 1, 0,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0, 1.0, 1.0);
+		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0);
 	CFG_SHELF("shelf", 2, 0,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0, 1.0, 1.0);
+		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0);
 	CFG_SHELF("shelf", 3, 0,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0, 1.0, 1.0);
+		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0);
      }
    IFCFGEND;
    
