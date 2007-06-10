@@ -391,6 +391,7 @@ struct _E_Border
    struct {
       int x, y, w, h;
       unsigned int layer;
+      int zone;
    } saved;
 
    struct {

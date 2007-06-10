@@ -1710,15 +1710,16 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	if (!(bd->maximized & E_MAXIMIZE_HORIZONTAL))
 	  {
 	     /* Horisontal hasn't been set */
-	     bd->saved.x = bd->x; 
+	     bd->saved.x = bd->x - bd->zone->x; 
 	     bd->saved.w = bd->w; 
 	  }
 	if (!(bd->maximized & E_MAXIMIZE_VERTICAL))
 	  {
 	     /* Vertical hasn't been set */
-	     bd->saved.y = bd->y; 
+	     bd->saved.y = bd->y - bd->zone->y; 
 	     bd->saved.h = bd->h;
 	  }
+	bd->saved.zone = bd->zone->num;
 	e_hints_window_size_set(bd);
 	
 	e_border_raise(bd);
@@ -1913,21 +1914,21 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 	     h = bd->saved.h;
 	     e_border_resize_limit(bd, &w, &h);
 	     e_border_resize_limit(bd, &w, &h);
-	     e_border_move_resize(bd, bd->x, bd->saved.y, w, h);
+	     e_border_move_resize(bd, bd->x, bd->saved.y + bd->zone->y, w, h);
 	     bd->saved.y = bd->saved.h = 0;
 	     e_hints_window_size_set(bd);
 	  }
 	else if (dir & E_MAXIMIZE_VERTICAL)
 	  {
 	     /* Remove horizontal */
-	     int w,h;
+	     int w, h;
 
 	     signal = 0;
 	     bd->maximized &= ~E_MAXIMIZE_HORIZONTAL;
 	     w = bd->saved.w;
 	     h = bd->h;
 	     e_border_resize_limit(bd, &w, &h);
-	     e_border_move_resize(bd, bd->saved.x, bd->y, w, h);
+	     e_border_move_resize(bd, bd->saved.x + bd->zone->x, bd->y, w, h);
 	     bd->saved.x = bd->saved.w = 0;
 	     e_hints_window_size_set(bd);
 	  }
@@ -1935,9 +1936,9 @@ e_border_unmaximize(E_Border *bd, E_Maximize max)
 	  {
 	     int x, y, w, h;
 	     /* Maybe some of the sizes has already been set to 0 */
-	     if (bd->saved.x) x = bd->saved.x;
+	     if (bd->saved.x) x = bd->saved.x + bd->zone->x;
 	     else x = bd->x;
-	     if (bd->saved.y) y = bd->saved.y;
+	     if (bd->saved.y) y = bd->saved.y + bd->zone->y;
 	     else y = bd->y;
 	     if (bd->saved.w) w = bd->saved.w;
 	     else w = bd->w;
@@ -1978,10 +1979,11 @@ e_border_fullscreen(E_Border *bd, E_Fullscreen policy)
      {
 	bd->pre_res_change.valid = 0;
 	
-	bd->saved.x = bd->x;
-	bd->saved.y = bd->y;
+	bd->saved.x = bd->x - bd->zone->x;
+	bd->saved.y = bd->y - bd->zone->y;
 	bd->saved.w = bd->client.w;
 	bd->saved.h = bd->client.h;
+	bd->saved.zone = bd->zone->num;
 	e_hints_window_size_set(bd);
 
 	bd->client_inset.l = 0;
@@ -2064,17 +2066,17 @@ e_border_unfullscreen(E_Border *bd)
 	bd->fullscreen = 0;
 	bd->need_fullscreen = 0;
 
-	/* e_zone_fullscreen_set(bd->zone, 0); */
-
 	if ((screen_size.width != -1) && (screen_size.height != -1))
 	  {
 	     ecore_x_randr_screen_size_set(bd->zone->container->manager->root, screen_size);
 	     screen_size.width = -1;
 	     screen_size.height = -1;
 	  }
-	e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
+	e_border_move_resize(bd, 
+			     bd->saved.x + bd->zone->x, 
+			     bd->saved.y + bd->zone->y, 
+			     bd->saved.w, bd->saved.h);
 
-	/* FIXME: Find right layer */
 	e_border_layer_set(bd, bd->saved.layer);
 
 	e_hints_window_fullscreen_set(bd, 0);
@@ -3476,8 +3478,8 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	       {
 		  if ((bd->maximized & E_MAXIMIZE_TYPE) != E_MAXIMIZE_NONE)
 		    {
-		       bd->saved.x = x;	
-		       bd->saved.y = y;
+		       bd->saved.x = x - bd->zone->x;
+		       bd->saved.y = y - bd->zone->y;
 		       bd->saved.w = w;
 		       bd->saved.h = h;
 		    }
@@ -3488,8 +3490,8 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	       {
 		  if ((bd->maximized & E_MAXIMIZE_TYPE) != E_MAXIMIZE_NONE)
 		    {
-		       bd->saved.x = x;	
-		       bd->saved.y = y;
+		       bd->saved.x = x - bd->zone->x;
+		       bd->saved.y = y - bd->zone->y;
 		    }
 		  else
 		    e_border_move(bd, x, y);
@@ -3532,8 +3534,8 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	       {
 		  if ((bd->maximized & E_MAXIMIZE_TYPE) != E_MAXIMIZE_NONE)
 		    {
-		       bd->saved.x = x;
-		       bd->saved.y = y;
+		       bd->saved.x = x - bd->zone->x;
+		       bd->saved.y = y - bd->zone->y;
 		    }
 		  else
 		    e_border_move(bd, x, y);
