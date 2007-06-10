@@ -407,6 +407,7 @@ struct _E_Config_Shelf
    int           size;
    int           overlap;
    int		 autohide;
+   int           autohide_show_action;
    float	 hide_timeout;
    float	 hide_duration;
 };
