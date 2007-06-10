@@ -57,6 +57,7 @@ struct _E_Fm2_Smart_Data
    } icon_menu;
    
    Evas_List        *icons;
+   Evas_List        *icons_place;
    Evas_List        *queue;
    Ecore_Timer      *scan_timer;
    Ecore_Timer      *sort_idler;
@@ -2064,6 +2065,7 @@ _e_fm2_file_add(Evas_Object *obj, const char *file, int unique, const char *file
 	       {
 		  sd->icons = evas_list_append(sd->icons, ic);
 	       }
+	     sd->icons_place = evas_list_append(sd->icons_place, ic);
 	  }
 	sd->tmp.last_insert = NULL;
 	sd->iconlist_changed = 1;
@@ -2085,6 +2087,7 @@ _e_fm2_file_del(Evas_Object *obj, const char *file)
 	if (!strcmp(ic->info.file, file))
 	  {
 	     sd->icons = evas_list_remove_list(sd->icons, l);
+	     sd->icons_place = evas_list_remove(sd->icons_place, ic);
 	     if (ic->region)
 	       {
 		  ic->region->list = evas_list_remove(ic->region->list, ic);
@@ -2195,6 +2198,7 @@ _e_fm2_queue_process(Evas_Object *obj)
 	     sd->icons = evas_list_append(sd->icons, ic);
 	     sd->tmp.last_insert = evas_list_last(sd->icons);
 	  }
+	sd->icons_place = evas_list_append(sd->icons_place, ic);
 	added++;
 	/* if we spent more than 1/20th of a second inserting - give up
 	 * for now */
@@ -2377,6 +2381,7 @@ _e_fm2_icons_icon_overlaps(E_Fm2_Icon *ic)
    Evas_List *l;
    E_Fm2_Icon *ic2;
 
+   /* this is really slow... when we have a lot of icons */
    for (l = ic->sd->icons; l; l = l->next)
      {
 	ic2 = l->data;
@@ -2419,50 +2424,79 @@ _e_fm2_icon_place_relative(E_Fm2_Icon *ic, E_Fm2_Icon *icr, int xrel, int yrel, 
 static void
 _e_fm2_icons_place_icon(E_Fm2_Icon *ic)
 {
-   Evas_List *l;
+   Evas_List *l, *pl;
    E_Fm2_Icon *ic2;
    
    ic->x = 0;
    ic->y = 0;
    ic->saved_pos = 1;
-   if (!_e_fm2_icons_icon_overlaps(ic)) return;
+   /* ### BLAH ### */
+//   if (!_e_fm2_icons_icon_overlaps(ic)) return;
+/*	     
+ _e_fm2_icon_place_relative(ic, ic2, 1, 0, 0, 2);
+ if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
+ _e_fm2_icon_place_relative(ic, ic2, 0, -1, 0, 0);
+ if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
+ _e_fm2_icon_place_relative(ic, ic2, 0, -1, 1, 0);
+ if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
+ _e_fm2_icon_place_relative(ic, ic2, 1, 0, 0, 0);
+ if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
+ _e_fm2_icon_place_relative(ic, ic2, 1, 0, 0, 1);
+ if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
+ _e_fm2_icon_place_relative(ic, ic2, 0, 1, 0, 0);
+ if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
+ _e_fm2_icon_place_relative(ic, ic2, 0, 1, 1, 0);
+ if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
+ */
+   printf("PLACE %s\n", ic->info.file);
+//   for (l = ic->sd->icons_place; l; l = l->next)
    for (l = ic->sd->icons; l; l = l->next)
      {
 	ic2 = l->data;
 	
-	if (ic2->saved_pos)
+	if ((ic2 != ic) && (ic2->saved_pos))
 	  {
-	     int x, y;
-	     
 	     // ###_
-	     _e_fm2_icon_place_relative(ic, ic2, 1, 0, 0, 2); if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
-	     // ###
-	     //  |
-	     _e_fm2_icon_place_relative(ic, ic2, 0, 1, 1, 0); if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
-	     // ###
-	     // |
-	     _e_fm2_icon_place_relative(ic, ic2, 0, 1, 0, 0); if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
-	     // ###
-	     //   |
-	     _e_fm2_icon_place_relative(ic, ic2, 0, 1, 2, 0); if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
-/*	     
 	     _e_fm2_icon_place_relative(ic, ic2, 1, 0, 0, 2);
-	     if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
-	     _e_fm2_icon_place_relative(ic, ic2, 0, -1, 0, 0);
-	     if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
-	     _e_fm2_icon_place_relative(ic, ic2, 0, -1, 1, 0);
-	     if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
-	     _e_fm2_icon_place_relative(ic, ic2, 1, 0, 0, 0);
-	     if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
-	     _e_fm2_icon_place_relative(ic, ic2, 1, 0, 0, 1);
-	     if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
-	     _e_fm2_icon_place_relative(ic, ic2, 0, 1, 0, 0);
-	     if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
-	     _e_fm2_icon_place_relative(ic, ic2, 0, 1, 1, 0);
-	     if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
- */
+	     if (_e_fm2_icons_icon_row_ok(ic) && 
+		 !_e_fm2_icons_icon_overlaps(ic)) goto done;
+	     // _###
+	     _e_fm2_icon_place_relative(ic, ic2, -1, 0, 0, 2);
+	     if (_e_fm2_icons_icon_row_ok(ic) && 
+		 !_e_fm2_icons_icon_overlaps(ic)) goto done;
 	  }
      }
+   
+//   for (l = ic->sd->icons_place; l;)
+   for (l = ic->sd->icons; l;)
+     {
+	ic2 = l->data;
+	
+	if ((ic2 != ic) && (ic2->saved_pos))
+	  {
+	     // ###
+	     //  |
+	     _e_fm2_icon_place_relative(ic, ic2, 0, 1, 1, 0);
+	     if (_e_fm2_icons_icon_row_ok(ic) && 
+		 !_e_fm2_icons_icon_overlaps(ic)) goto done;
+	     //  |
+	     // ###
+	     _e_fm2_icon_place_relative(ic, ic2, 0, -1, 1, 0);
+	     if (_e_fm2_icons_icon_row_ok(ic) && 
+		 !_e_fm2_icons_icon_overlaps(ic)) goto done;
+	  }
+	pl = l;
+	l = l->next;
+        if ((ic2 != ic) && (ic2->saved_pos))
+	  {
+//	     printf("REMOVE %p [%s]\n", 
+//		    pl->data, ((E_Fm2_Icon *)pl->data)->info.file);
+//	     ic->sd->icons_place = evas_list_remove_list(ic->sd->icons_place, pl);
+	  }
+     }
+   done:
+   printf("PLACED at %i %i\n", ic->x, ic->y);
+   return;
 }
 
 static void
@@ -2612,6 +2646,8 @@ _e_fm2_icons_free(Evas_Object *obj)
 	_e_fm2_icon_free(sd->icons->data);
         sd->icons = evas_list_remove_list(sd->icons, sd->icons);
      }
+   evas_list_free(sd->icons_place);
+   sd->icons_place = NULL;
    sd->tmp.last_insert = NULL;
    E_FREE(sd->tmp.list_index);
 }

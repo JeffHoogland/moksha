@@ -8,6 +8,11 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* screen res change with shaded windows that are bigger than the screen (eg
+  you go from 1600x1200 ro 800x600 and some windows are "temporarily resized"
+  down doesn't work right. shaded windows get resizes to widthx1 and unshaded
+  windows that u then shade and unshade seem to resize win but not border and
+  thus get garbage).
 * shelf autohide uses mouse in/out events for the shelf object. this is not all
   good as it conflicts with edge flip for desktops (if shelves slide off the
   screen) also it doesn't account for window placement and sizing when the
