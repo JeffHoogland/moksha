@@ -2421,21 +2421,19 @@ e_border_act_move_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (bd->lock_user_location) return;
-   if (!bd->moving)
+   if ((bd->resize_mode != RESIZE_NONE) || (bd->moving)) return;
+   if (!_e_border_move_begin(bd))
+     return;
+   
+   e_zone_flip_win_disable();
+   bd->moving = 1;
+   _e_border_pointer_move_begin(bd);
+   if (ev)
      {
-	if (!_e_border_move_begin(bd))
-	  return;
-
-	e_zone_flip_win_disable();
-	bd->moving = 1;
-	_e_border_pointer_move_begin(bd);
-	if (ev)
-	  {
-	     char source[256];
-	     
-	     snprintf(source, sizeof(source) - 1, "mouse,down,%i", ev->button);
-	     _e_border_moveinfo_gather(bd, source);
-	  }
+	char source[256];
+	
+	snprintf(source, sizeof(source) - 1, "mouse,down,%i", ev->button);
+	_e_border_moveinfo_gather(bd, source);
      }
 }
 
@@ -2458,44 +2456,42 @@ e_border_act_resize_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (bd->lock_user_size) return;
-   if (bd->resize_mode == RESIZE_NONE)
+   if ((bd->resize_mode != RESIZE_NONE) || (bd->moving)) return;
+   if (!_e_border_resize_begin(bd))
+     return;
+   if (bd->mouse.current.mx < (bd->x + bd-> w / 2))
      {
-	if (!_e_border_resize_begin(bd))
-	  return;
-	if (bd->mouse.current.mx < (bd->x + bd-> w / 2))
+	if (bd->mouse.current.my < (bd->y + bd->h / 2))
 	  {
-	     if (bd->mouse.current.my < (bd->y + bd->h / 2))
-	       {
-		  bd->resize_mode = RESIZE_TL;
-		  GRAV_SET(bd, ECORE_X_GRAVITY_SE);
-	       }
-	     else
-	       {
-		  bd->resize_mode = RESIZE_BL;
-		  GRAV_SET(bd, ECORE_X_GRAVITY_NE);
-	       }
+	     bd->resize_mode = RESIZE_TL;
+	     GRAV_SET(bd, ECORE_X_GRAVITY_SE);
 	  }
 	else
 	  {
-	     if (bd->mouse.current.my < (bd->y + bd->h / 2))
-	       {
-		  bd->resize_mode = RESIZE_TR;
-		  GRAV_SET(bd, ECORE_X_GRAVITY_SW);
-	       }
-	     else
-	       {
-		  bd->resize_mode = RESIZE_BR;
-		  GRAV_SET(bd, ECORE_X_GRAVITY_NW);
-	       }
+	     bd->resize_mode = RESIZE_BL;
+	     GRAV_SET(bd, ECORE_X_GRAVITY_NE);
 	  }
-	_e_border_pointer_resize_begin(bd);
-	if (ev)
+     }
+   else
+     {
+	if (bd->mouse.current.my < (bd->y + bd->h / 2))
 	  {
-	     char source[256];
-	     
-	     snprintf(source, sizeof(source) - 1, "mouse,down,%i", ev->button);
-	     _e_border_moveinfo_gather(bd, source);
+	     bd->resize_mode = RESIZE_TR;
+	     GRAV_SET(bd, ECORE_X_GRAVITY_SW);
 	  }
+	else
+	  {
+	     bd->resize_mode = RESIZE_BR;
+	     GRAV_SET(bd, ECORE_X_GRAVITY_NW);
+	  }
+     }
+   _e_border_pointer_resize_begin(bd);
+   if (ev)
+     {
+	char source[256];
+	
+	snprintf(source, sizeof(source) - 1, "mouse,down,%i", ev->button);
+	_e_border_moveinfo_gather(bd, source);
      }
 }
 
@@ -2864,6 +2860,7 @@ e_border_signal_move_begin(E_Border *bd, const char *sig, const char *src)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+   if ((bd->resize_mode != RESIZE_NONE) || (bd->moving)) return;   
    if (!_e_border_move_begin(bd)) return;
    bd->moving = 1;
    _e_border_pointer_move_begin(bd);
@@ -2901,6 +2898,8 @@ e_border_signal_resize_begin(E_Border *bd, const char *dir, const char *sig, con
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+   
+   if ((bd->resize_mode != RESIZE_NONE) || (bd->moving)) return;   
    if (!_e_border_resize_begin(bd))
      return;
    if (!strcmp(dir, "tl"))

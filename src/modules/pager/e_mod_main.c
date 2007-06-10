@@ -1303,7 +1303,6 @@ _pager_cb_event_border_property(void *data, int type, void *event)
                   Pager_Win *pw;
 		  
 		  pd = l2->data;
-		  /* create it and add it */
 		  pw = _pager_window_new(pd, ev->border);
 		  if (pw)
 		    {
