@@ -114,6 +114,7 @@ static int _pager_cb_event_border_desk_set(void *data, int type, void *event);
 static int _pager_cb_event_border_stack(void *data, int type, void *event);
 static int _pager_cb_event_border_icon_change(void *data, int type, void *event);
 static int _pager_cb_event_border_urgent_change(void *data, int type, void *event);
+static int _pager_cb_event_border_property(void *data, int type, void *event);
 static int _pager_cb_event_zone_desk_count_set(void *data, int type, void *event);
 static int _pager_cb_event_desk_show(void *data, int type, void *event);
 static int _pager_cb_event_desk_name_change(void *data, int type, void *event);
@@ -1225,6 +1226,106 @@ _pager_cb_event_border_urgent_change(void *data, int type, void *event)
    return 1;
 }
 
+static int 
+_pager_cb_event_border_property(void *data, int type, void *event) 
+{
+   E_Event_Border_Remove *ev;
+   Evas_List             *l, *l2;
+   int                    found = 0;
+   
+   ev = event;
+   for (l = pager_config->instances; l; l = l->next)
+     {
+	Instance *inst;
+
+	inst = l->data;
+	if (inst->pager->zone != ev->border->zone) continue;
+	for (l2 = inst->pager->desks; l2; l2 = l2->next)
+	  {
+	     Pager_Desk *pd;
+	     Pager_Win *pw;
+
+	     pd = l2->data;
+	     pw = _pager_desk_window_find(pd, ev->border);
+	     if (pw)
+	       {
+		  found = 1;
+		  if (ev->border->client.netwm.state.skip_pager) 
+		    {
+		       pd->wins = evas_list_remove(pd->wins, pw);
+		       _pager_window_free(pw);
+		    }
+	       }
+	  }
+     }
+   if (found) return 1;
+   
+   /* If we did not find this window in the pager, then add it because
+    * the skip_pager state may have changed to 1 */
+   for (l = pager_config->instances; l; l = l->next)
+     {
+	Instance *inst;
+	Pager_Desk *pd;
+
+	inst = l->data;
+	if ((inst->pager->zone != ev->border->zone) ||
+	    (_pager_window_find(inst->pager, ev->border)))
+	  continue;
+	if (!ev->border->sticky)
+	  {
+	     pd = _pager_desk_find(inst->pager, ev->border->desk);
+	     if (pd)
+	       {
+		  Pager_Win *pw;
+		  
+		  pw = _pager_window_new(pd, ev->border);
+		  if (pw)
+		    {
+		       Pager_Win *pw2 = NULL;
+		       E_Border *bd;
+		       
+		       pd->wins = evas_list_append(pd->wins, pw);
+		       bd = e_util_desk_border_above(pw->border);
+		       if (bd)
+			 pw2 = _pager_desk_window_find(pd, bd);
+		       if (pw2)
+			 e_layout_child_lower_below(pw->o_window, pw2->o_window);
+		       else
+			 e_layout_child_raise(pw->o_window);
+		       _pager_window_move(pw);
+		    }
+	       }
+	  }
+	else
+	  {
+	     for (l2 = inst->pager->desks; l2; l2 = l2->next)
+	       {
+                  Pager_Win *pw;
+		  
+		  pd = l2->data;
+		  /* create it and add it */
+		  pw = _pager_window_new(pd, ev->border);
+		  if (pw)
+		    {
+		       Pager_Win *pw2 = NULL;
+		       E_Border *bd;
+		       
+		       pd->wins = evas_list_append(pd->wins, pw);
+		       bd = e_util_desk_border_above(pw->border);
+		       if (bd)
+			 pw2 = _pager_desk_window_find(pd, bd);
+		       if (pw2)
+			 e_layout_child_lower_below(pw->o_window, pw2->o_window);
+		       else
+			 e_layout_child_raise(pw->o_window);
+		       _pager_window_move(pw);
+		    }
+	       }
+	  }
+     }
+   return 1;
+}
+
 static int
 _pager_cb_event_zone_desk_count_set(void *data, int type, void *event)
 {
@@ -1803,7 +1904,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, resize, UCHAR);
    E_CONFIG_VAL(D, T, btn_drag, UCHAR);
    E_CONFIG_VAL(D, T, btn_noplace, UCHAR);
-   E_CONFIG_VAL(D, T, flip_desk, UINT);
+   E_CONFIG_VAL(D, T, flip_desk, UCHAR);
 
    pager_config = e_config_domain_load("module.pager", conf_edd);
 
@@ -1871,6 +1972,9 @@ e_modapi_init(E_Module *m)
      (pager_config->handlers, ecore_event_handler_add
       (E_EVENT_BORDER_URGENT_CHANGE, 
        _pager_cb_event_border_urgent_change, NULL));
+   pager_config->handlers = evas_list_append
+     (pager_config->handlers, ecore_event_handler_add
+      (E_EVENT_BORDER_PROPERTY, _pager_cb_event_border_property, NULL));
    pager_config->handlers = evas_list_append
      (pager_config->handlers, ecore_event_handler_add
       (E_EVENT_ZONE_DESK_COUNT_SET, _pager_cb_event_zone_desk_count_set, NULL));
