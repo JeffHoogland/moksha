@@ -386,8 +386,8 @@ _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
                   e_menu_item_label_set(mi, _("Delete"));
                   e_menu_item_icon_edje_set(mi,
                                             e_theme_edje_file_get("base/theme/fileman",
-                                                                  "e/fileman/button/delete"),
-                                            "e/fileman/button/delete");
+                                                                  "e/fileman/default/button/delete"),
+                                            "e/fileman/default/button/delete");
                   e_menu_item_callback_set(mi, _e_entry_cb_delete, sd);
              
                   mi = e_menu_item_new(sd->popup);
@@ -399,8 +399,8 @@ _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
                        e_menu_item_label_set(mi, _("Cut"));
                        e_menu_item_icon_edje_set(mi,
                                                  e_theme_edje_file_get("base/theme/fileman",
-                                                                       "e/fileman/button/cut"),
-                                                 "e/fileman/button/cut");
+                                                                       "e/fileman/default/button/cut"),
+                                                 "e/fileman/default/button/cut");
                        e_menu_item_callback_set(mi, _e_entry_cb_cut, sd);
                     }
                }
@@ -410,8 +410,8 @@ _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 		  e_menu_item_label_set(mi, _("Copy"));
 		  e_menu_item_icon_edje_set(mi, 
                                             e_theme_edje_file_get("base/theme/fileman",
-                                                                  "e/fileman/button/copy"),
-                                            "e/fileman/button/copy");
+                                                                  "e/fileman/default/button/copy"),
+                                            "e/fileman/default/button/copy");
 		  e_menu_item_callback_set(mi, _e_entry_cb_copy, sd);
 	       }
 	  }
@@ -420,8 +420,8 @@ _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
              mi = e_menu_item_new(sd->popup);
              e_menu_item_label_set(mi, _("Paste"));
              e_menu_item_icon_edje_set(mi, e_theme_edje_file_get("base/theme/fileman",
-                                                                 "e/fileman/button/paste"),
-                                       "e/fileman/button/paste");
+                                                                 "e/fileman/default/button/paste"),
+                                       "e/fileman/default/button/paste");
              e_menu_item_callback_set(mi, _e_entry_cb_paste, sd);
           }
         if (!s_empty)
@@ -431,6 +431,9 @@ _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
              
              mi = e_menu_item_new(sd->popup);
              e_menu_item_label_set(mi, _("Select All"));
+             e_menu_item_icon_edje_set(mi, e_theme_edje_file_get("base/theme/fileman",
+                                                                 "e/fileman/default/button/select"),
+                                       "e/fileman/default/button/select");
              e_menu_item_callback_set(mi, _e_entry_cb_select_all, sd);
           }
 

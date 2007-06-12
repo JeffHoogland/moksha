@@ -9252,7 +9252,8 @@ images
    image: "e17_button_detail_refresh.png" COMP;
    image: "e17_button_detail_view_details.png" COMP;
    image: "e17_button_detail_view_name.png" COMP;
-   image: "e17_button_detail_view.png" COMP;     
+   image: "e17_button_detail_view.png" COMP;  
+   image: "e17_button_detail_select.png" COMP;     
 }
 
 FILEMAN_ICON_CLICKABLE("folder");
@@ -9314,4 +9315,5 @@ FULL_SIZE_FILEMAN_BUTTON("refresh");
 FULL_SIZE_FILEMAN_BUTTON("view_details");
 FULL_SIZE_FILEMAN_BUTTON("view_name");
 FULL_SIZE_FILEMAN_BUTTON("view");
+FULL_SIZE_FILEMAN_BUTTON("select");
 
