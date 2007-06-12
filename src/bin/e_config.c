@@ -1416,7 +1416,7 @@ e_config_init(void)
    IFCFGEND;
 
    IFCFG(0x0119);
-   e_config->allow_above_fullscreen = 1;
+   e_config->allow_above_fullscreen = 0;
    IFCFGEND;
 
    e_config->config_version = E_CONFIG_FILE_VERSION;   
