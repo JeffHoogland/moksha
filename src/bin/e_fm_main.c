@@ -712,6 +712,7 @@ e_volume_mount(E_Volume *v)
    static int mount_id = 1;
    char buf[4096];
    char *mount_point;
+   Ecore_List *opt;
    
    if (v->mount_point && v->mount_point[0])
      mount_point = v->mount_point;
@@ -730,8 +731,12 @@ e_volume_mount(E_Volume *v)
 	v->mount_point = strdup(mount_point);
      }
    printf("mount %s %s\n", v->udi, v->mount_point);
+// FIXME; need to mount AS the USER - not root!!! seems it mounts as root
+//   opt = ecore_list_new();
+//   ecore_list_append(opt, "user");
    e_hal_device_volume_mount(_e_dbus_conn, v->udi, v->mount_point,
 			     v->fstype, NULL, _e_dbus_cb_vol_mounted, v);
+//   ecore_list_destroy(opt);
 }
 
 static void
