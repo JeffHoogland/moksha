@@ -190,7 +190,8 @@ e_mouse.h \
 e_order.h \
 e_exec.h \
 e_widget_font_preview.h \
-e_fm_custom.h
+e_fm_custom.h \
+e_fm_shared.h
  
 enlightenment_src = \
 e_user.c \
@@ -395,7 +396,8 @@ e_fm_main.c \
 e_user.c \
 e_sha1.c
 
-enlightenment_fm_LDFLAGS = @e_libs@ @dlopen_libs@
+enlightenment_fm_LDFLAGS = @e_libs@ @dlopen_libs@ @E_DBUS_LIBS@ @E_HAL_LIBS@
+enlightenment_fm_CFLAGS = $(INCLUDES) @E_DBUS_CFLAGS@ @E_HAL_CFLAGS@
 
 enlightenment_sys_SOURCES = \
 e_sys_main.c
@@ -408,4 +410,3 @@ install-exec-hook:
 
 installed_headersdir = $(prefix)/include/enlightenment
 installed_headers_DATA = $(ENLIGHTENMENTHEADERS)
-

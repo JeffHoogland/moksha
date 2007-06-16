@@ -31,6 +31,14 @@
 #include <Ecore_Ipc.h>
 #include <Ecore_File.h>
 #include <Evas.h>
+#include <Eet.h>
+#include "config.h"
+
+/* E_DBUS support */
+#ifdef HAVE_EDBUS
+#include <E_DBus.h>
+#include <E_Hal.h>
+#endif
 
 /* FIXME: things to add to the slave enlightenment_fm process and ipc to e:
  * 
@@ -116,12 +124,65 @@ static char *_e_str_list_remove(Evas_List **list, char *str);
 static void _e_path_fix_order(const char *path, const char *rel, int rel_to, int x, int y);
 static void _e_dir_del(E_Dir *ed);
 
+#ifdef HAVE_EDBUS
+
+#ifndef EAPI
+#define EAPI
+#endif
+
+#define E_FM_SHARED_DATATYPES
+#include "e_fm_shared.h"
+#undef E_FM_SHARED_DATATYPES
+
+static void _e_dbus_cb_dev_all(void *user_data, void *reply_data, DBusError *error);
+static void _e_dbus_cb_dev_store(void *user_data, void *reply_data, DBusError *error);
+static void _e_dbus_cb_dev_vol(void *user_data, void *reply_data, DBusError *error);
+static void _e_dbus_cb_store_is(void *user_data, void *reply_data, DBusError *error);
+static void _e_dbus_cb_vol_is(void *user_data, void *reply_data, DBusError *error);
+static void _e_dbus_cb_dev_add(void *data, DBusMessage *msg);
+static void _e_dbus_cb_dev_del(void *data, DBusMessage *msg);
+static void _e_dbus_cb_cap_add(void *data, DBusMessage *msg);
+static void _e_dbus_cb_store_prop(void *data, void *reply_data, DBusError *error);
+static void _e_dbus_cb_vol_prop(void *data, void *reply_data, DBusError *error);
+static void _e_dbus_cb_vol_mounted(void *user_data, void *method_return, DBusError *error);
+static void _e_dbus_cb_vol_unmounted(void *user_data, void *method_return, DBusError *error);
+
+EAPI E_Storage *e_storage_add(const char *udi);
+EAPI void       e_storage_del(const char *udi);
+EAPI E_Storage *e_storage_find(const char *udi);
+
+EAPI E_Volume *e_volume_add(const char *udi);
+EAPI void      e_volume_del(const char *udi);
+EAPI E_Volume *e_volume_find(const char *udi);
+
+EAPI void      e_volume_mount(E_Volume *v);
+EAPI void      e_volume_unmount(E_Volume *v);
+#endif
+
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server = NULL;
 
 static Evas_List *_e_dirs = NULL;
 static Evas_List *_e_fops = NULL;
 static int _e_sync_num = 0;
+#ifdef HAVE_EDBUS
+static E_DBus_Connection *_e_dbus_conn = NULL;
+
+/* contains:
+ * _e_volume_edd
+ * _e_storage_edd
+ * _e_volume_free()
+ * _e_storage_free()
+ * _e_volume_edd_new()
+ * _e_storage_edd_new()
+ * _e_storage_volume_edd_init()
+ * _e_storage_volume_edd_shutdown()
+ */
+#define E_FM_SHARED_CODEC
+#include "e_fm_shared.h"
+#undef E_FM_SHARED_CODEC
+
+#endif
 
 /* externally accessible functions */
 int
@@ -144,10 +205,36 @@ main(int argc, char **argv)
      }
 
    ecore_init();
+   ecore_string_init();
    ecore_app_args_set(argc, (const char **)argv);
    ecore_file_init();
    ecore_ipc_init();
 
+#ifdef HAVE_EDBUS
+   _e_storage_volume_edd_init();
+   e_dbus_init();
+   _e_dbus_conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
+   
+   e_hal_manager_get_all_devices(_e_dbus_conn, _e_dbus_cb_dev_all, NULL);
+   e_hal_manager_find_device_by_capability(_e_dbus_conn, "storage",
+					   _e_dbus_cb_dev_store, NULL);
+   e_hal_manager_find_device_by_capability(_e_dbus_conn, "volume",
+					   _e_dbus_cb_dev_vol, NULL);
+   
+   e_dbus_signal_handler_add(_e_dbus_conn, "org.freedesktop.Hal",
+			     "/org/freedesktop/Hal/Manager",
+			     "org.freedesktop.Hal.Manager",
+			     "DeviceAdded", _e_dbus_cb_dev_add, NULL);
+   e_dbus_signal_handler_add(_e_dbus_conn, "org.freedesktop.Hal",
+			     "/org/freedesktop/Hal/Manager",
+			     "org.freedesktop.Hal.Manager",
+			     "DeviceRemoved", _e_dbus_cb_dev_del, NULL);
+   e_dbus_signal_handler_add(_e_dbus_conn, "org.freedesktop.Hal",
+			     "/org/freedesktop/Hal/Manager",
+			     "org.freedesktop.Hal.Manager",
+			     "NewCapability", _e_dbus_cb_cap_add, NULL);
+#endif
+   
    if (_e_ipc_init()) ecore_main_loop_begin();
    
    if (_e_ipc_server)
@@ -156,12 +243,525 @@ main(int argc, char **argv)
 	_e_ipc_server = NULL;
      }
 
+#ifdef HAVE_EDBUS
+   e_dbus_connection_unref(_e_dbus_conn);
+   e_dbus_shutdown();
+   _e_storage_volume_edd_shutdown();
+#endif
+   
    ecore_ipc_shutdown();
    ecore_file_shutdown();
+   ecore_string_shutdown();
    ecore_shutdown();
    
    return 0;
 }
+
+#ifdef HAVE_EDBUS
+static void
+_e_dbus_cb_dev_all(void *user_data, void *reply_data, DBusError *error)
+{
+   E_Hal_Manager_Get_All_Devices_Return *ret = reply_data;
+   char *device;
+   
+   if (!ret || !ret->strings) return;
+   
+   if (dbus_error_is_set(error))
+     {
+	dbus_error_free(error);
+	return;
+     }
+
+   ecore_list_goto_first(ret->strings);
+   while ((device = ecore_list_next(ret->strings)))
+     {
+//	printf("DB INIT DEV+: %s\n", device);
+	if (!strncmp(device, "/org/freedesktop/Hal/devices/storage_serial",
+		     strlen("/org/freedesktop/Hal/devices/storage_serial")))
+	  {
+	     char *udi;
+	     int ret;
+	     
+	     udi = device;
+	     ret = e_hal_device_query_capability(_e_dbus_conn, udi, "storage",
+						 _e_dbus_cb_store_is, strdup(udi));
+	     e_hal_device_query_capability(_e_dbus_conn, udi, "volume", 
+					   _e_dbus_cb_vol_is, strdup(udi));
+	  }
+     }
+}
+
+static void
+_e_dbus_cb_dev_store(void *user_data, void *reply_data, DBusError *error)
+{
+   E_Hal_Manager_Find_Device_By_Capability_Return *ret = reply_data;
+   char *device;
+   
+   if (!ret || !ret->strings) return;
+   
+   if (dbus_error_is_set(error))
+     {
+	dbus_error_free(error);
+	return;
+     }
+   
+   ecore_list_goto_first(ret->strings);
+   while ((device = ecore_list_next(ret->strings)))
+     {
+//	printf("DB STORE+: %s\n", device);
+	e_storage_add(device);
+     }
+}
+
+static void
+_e_dbus_cb_dev_vol(void *user_data, void *reply_data, DBusError *error)
+{
+   E_Hal_Manager_Find_Device_By_Capability_Return *ret = reply_data;
+   char *device;
+   
+   if (!ret || !ret->strings) return;
+   
+   if (dbus_error_is_set(error))
+     {
+	dbus_error_free(error);
+	return;
+     }
+   
+   ecore_list_goto_first(ret->strings);
+   while ((device = ecore_list_next(ret->strings)))
+     {
+//	printf("DB VOL+: %s\n", device);
+	e_volume_add(device);
+     }
+}
+
+static void
+_e_dbus_cb_store_is(void *user_data, void *reply_data, DBusError *error)
+{
+   char *udi = user_data;
+   E_Hal_Device_Query_Capability_Return *ret = reply_data;
+
+   if (dbus_error_is_set(error))
+     {
+	dbus_error_free(error);
+	goto error;
+     }
+   
+   if (ret && ret->boolean)
+     {
+//	printf("DB STORE IS+: %s\n", udi);
+	e_storage_add(udi);
+     }
+   
+   error:
+   free(udi);
+}
+
+static void
+_e_dbus_cb_vol_is(void *user_data, void *reply_data, DBusError *error)
+{
+   char *udi = user_data;
+   E_Hal_Device_Query_Capability_Return *ret = reply_data;
+   
+   if (dbus_error_is_set(error))
+     {
+	dbus_error_free(error);
+	goto error;
+     }
+   
+   if (ret && ret->boolean)
+     {
+//	printf("DB VOL IS+: %s\n", udi);
+	e_volume_add(udi);
+     }
+   
+   error:
+   free(udi);
+}
+
+static void
+_e_dbus_cb_dev_add(void *data, DBusMessage *msg)
+{
+   DBusError err;
+   char *udi;
+   int ret;
+   
+   dbus_error_init(&err);
+   dbus_message_get_args(msg, &err, DBUS_TYPE_STRING, &udi, DBUS_TYPE_INVALID);
+   udi = strdup(udi);
+//   printf("DB DEV+: %s\n", udi);
+   ret = e_hal_device_query_capability(_e_dbus_conn, udi, "storage", 
+				       _e_dbus_cb_store_is, strdup(udi));
+   e_hal_device_query_capability(_e_dbus_conn, udi, "volume",
+				 _e_dbus_cb_vol_is, strdup(udi));
+}
+
+static void
+_e_dbus_cb_dev_del(void *data, DBusMessage *msg)
+{
+   DBusError err;
+   char *udi;
+   
+   dbus_error_init(&err);
+   
+   dbus_message_get_args(msg, 
+			 &err, DBUS_TYPE_STRING, 
+			 &udi, DBUS_TYPE_INVALID);
+//   printf("DB DEV-: %s\n", udi);
+   e_storage_del(udi);
+   e_volume_del(udi);
+}
+
+static void
+_e_dbus_cb_cap_add(void *data, DBusMessage *msg)
+{
+   DBusError err;
+   char *udi, *capability;
+   
+   dbus_error_init(&err);
+   
+   dbus_message_get_args(msg, 
+			 &err, DBUS_TYPE_STRING,
+			 &udi, DBUS_TYPE_STRING, 
+			 &capability, DBUS_TYPE_INVALID);
+   if (!strcmp(capability, "storage"))
+     {
+//        printf("DB STORE CAP+: %s\n", udi);
+	e_storage_add(udi);
+     }
+}
+
+static void
+_e_dbus_cb_store_prop(void *data, void *reply_data, DBusError *error)
+{
+   E_Storage *s = data;
+   E_Hal_Properties *ret = reply_data;
+   int err = 0;
+
+   if (!ret) goto error;
+   if (dbus_error_is_set(error))
+     {
+	dbus_error_free(error);
+	goto error;
+     }
+   
+   s->bus = e_hal_property_string_get(ret, "storage.bus", &err);
+   if (err) goto error;
+   s->drive_type = e_hal_property_string_get(ret, "storage.drive_type", &err);
+   if (err) goto error;
+   s->model = e_hal_property_string_get(ret, "storage.model", &err);
+   if (err) goto error;
+   s->vendor = e_hal_property_string_get(ret, "storage.vendor", &err);
+   if (err) goto error;
+   s->serial = e_hal_property_string_get(ret, "storage.serial", &err);
+   
+   s->removable = e_hal_property_bool_get(ret, "storage.removable", &err);
+   if (err) goto error;
+   
+   if (s->removable)
+     {
+	s->media_available = e_hal_property_bool_get(ret, "storage.removable.media_available", &err);
+	s->media_size = e_hal_property_uint64_get(ret, "storage.removable.media_size", &err);
+     }
+   
+   s->requires_eject = e_hal_property_bool_get(ret, "storage.requires_eject", &err);
+   s->hotpluggable = e_hal_property_bool_get(ret, "storage.hotpluggable", &err);
+   s->media_check_enabled = e_hal_property_bool_get(ret, "storage.media_check_enabled", &err);
+   
+   s->icon.drive = e_hal_property_string_get(ret, "storage.icon.drive", &err);
+   s->icon.volume = e_hal_property_string_get(ret, "storage.icon.volume", &err);
+   
+   printf("++STO:\n  udi: %s\n  bus: %s\n  drive_type: %s\n  model: %s\n  vendor: %s\n  serial: %s\n  icon.drive: %s\n  icon.volume: %s\n\n", s->udi, s->bus, s->drive_type, s->model, s->vendor, s->serial, s->icon.drive, s->icon.volume);
+   s->validated = 1;
+     {
+	void *msg_data;
+	int msg_size;
+	
+	msg_data = eet_data_descriptor_encode(_e_storage_edd, s, &msg_size);
+	if (msg_data)
+	  {
+	     ecore_ipc_server_send(_e_ipc_server,
+				   6/*E_IPC_DOMAIN_FM*/,
+				   8/*storage add*/,
+				   0, 0, 0, msg_data, msg_size);
+	     free(msg_data);
+	  }
+     }
+   return;
+   
+   error: 
+   printf("ERR %s\n", s->udi);
+   e_storage_del(s->udi);
+}
+
+static Evas_List *_e_stores = NULL;
+
+EAPI E_Storage *
+e_storage_add(const char *udi)
+{
+   E_Storage *s;
+
+   if (!udi) return NULL;
+   if (e_storage_find(udi)) return NULL;
+   s = calloc(1, sizeof(E_Storage));
+   if (!s) return NULL;
+   s->udi = strdup(udi);
+   _e_stores = evas_list_append(_e_stores, s);
+   e_hal_device_get_all_properties(_e_dbus_conn, s->udi,
+				   _e_dbus_cb_store_prop, s);
+   return s;
+}
+
+EAPI void
+e_storage_del(const char *udi)
+{
+   E_Storage *s;
+
+   s = e_storage_find(udi);
+   if (!s) return;
+   if (s->validated)
+     {
+	printf("--STO %s\n", s->udi);
+	ecore_ipc_server_send(_e_ipc_server,
+			      6/*E_IPC_DOMAIN_FM*/,
+			      9/*storage del*/,
+			      0, 0, 0, s->udi, strlen(s->udi) + 1);
+     }
+   _e_stores = evas_list_remove(_e_stores, s);
+   _e_storage_free(s);
+}
+
+E_Storage *
+e_storage_find(const char *udi)
+{
+   Evas_List *l;
+   
+   for (l = _e_stores; l; l = l->next)
+     {
+	E_Storage  *s;
+	
+	s = l->data;
+	if (!strcmp(udi, s->udi)) return s;
+     }
+   return NULL;
+}
+
+static void
+_e_dbus_cb_vol_prop(void *data, void *reply_data, DBusError *error)
+{
+   E_Volume *v = data;
+   E_Storage *s = NULL;
+   E_Hal_Device_Get_All_Properties_Return *ret = reply_data;
+   int err = 0;
+   char *str = NULL;
+
+   if (!ret) goto error;
+   if (dbus_error_is_set(error))
+     {
+	dbus_error_free(error);
+	goto error;
+     }
+   
+   /* skip volumes with volume.ignore set */
+   if (e_hal_property_bool_get(ret, "volume.ignore", &err) || err)
+     goto error;
+   
+   /* skip volumes that aren't filesystems */
+   str = e_hal_property_string_get(ret, "volume.fsusage", &err);
+   if (err || !str) goto error;
+   if (strcmp(str, "filesystem")) goto error;
+   free(str);
+   str = NULL;
+   
+   v->uuid = e_hal_property_string_get(ret, "volume.uuid", &err);
+   if (err) goto error;
+   
+   v->label = e_hal_property_string_get(ret, "volume.label", &err);
+//   if (err) goto error;
+   
+   v->fstype = e_hal_property_string_get(ret, "volume.fstype", &err);
+//   if (err) goto error;
+   
+   v->mounted = e_hal_property_bool_get(ret, "volume.is_mounted", &err);
+   if (err) goto error;
+   
+   v->partition = e_hal_property_bool_get(ret, "volume.is_partition", &err);
+   if (err) goto error;
+   
+   v->mount_point = e_hal_property_string_get(ret, "volume.mount_point", &err);
+   if (err) goto error;
+   
+   if (v->partition)
+     {
+	v->partition_label = e_hal_property_string_get(ret, "volume.partition.label", &err);
+//	if (err) goto error;
+     }
+   
+   v->parent = e_hal_property_string_get(ret, "info.parent", &err);
+   if ((!err) && (v->parent))
+     {
+	s = e_storage_find(v->parent);
+	if (s)
+	  {
+	     v->storage = s;
+	     s->volumes = evas_list_append(s->volumes, v);
+	  }
+     }
+   
+   printf("++VOL:\n  udi: %s\n  uuid: %s\n  fstype: %s\n  label: %s\n  partition: %d\n  partition_label: %s\n  mounted: %d\n  mount_point: %s\n", v->udi, v->uuid, v->fstype,  v->label, v->partition, v->partition ? v->partition_label : "(not a partition)", v->mounted, v->mount_point);
+   if (s) printf("  for storage: %s\n", s->udi);
+   else printf("  storage unknown\n");
+   v->validated = 1;
+     {
+	void *msg_data;
+	int msg_size;
+	
+	msg_data = eet_data_descriptor_encode(_e_volume_edd, v, &msg_size);
+	if (msg_data)
+	  {
+	     ecore_ipc_server_send(_e_ipc_server,
+				   6/*E_IPC_DOMAIN_FM*/,
+				   10/*volume add*/,
+				   0, 0, 0, msg_data, msg_size);
+	     free(msg_data);
+	  }
+     }
+   return;
+   
+   error:
+   e_volume_del(v->udi);
+   return;
+}
+
+static Evas_List *_e_vols = NULL;
+
+EAPI E_Volume *
+e_volume_add(const char *udi)
+{
+   E_Volume *v;
+   
+   if (!udi) return NULL;
+   if (e_volume_find(udi)) return NULL;
+   v = calloc(1, sizeof(E_Volume));
+   if (!v) return NULL;
+//   printf("VOL+ %s\n", udi);
+   v->udi = strdup(udi);
+   _e_vols = evas_list_append(_e_vols, v);
+   e_hal_device_get_all_properties(_e_dbus_conn, v->udi,
+				   _e_dbus_cb_vol_prop, v);
+   return v;
+}
+
+EAPI void
+e_volume_del(const char *udi)
+{
+   E_Volume *v;
+   
+   v = e_volume_find(udi);
+   if (!v) return;
+   if (v->validated)
+     {
+	printf("--VOL %s\n", v->udi);
+	/* FIXME: send event of storage volume (disk) removed */
+	ecore_ipc_server_send(_e_ipc_server,
+			      6/*E_IPC_DOMAIN_FM*/,
+			      11/*volume del*/,
+			      0, 0, 0, v->udi, strlen(v->udi) + 1);
+     }
+   _e_vols = evas_list_remove(_e_vols, v);
+   _e_volume_free(v);
+}
+
+EAPI E_Volume *
+e_volume_find(const char *udi)
+{
+   Evas_List *l;
+   
+   for (l = _e_vols; l; l = l->next)
+     {
+	E_Volume *v;
+	
+	v = l->data;
+	if (!strcmp(udi, v->udi)) return v;
+     }
+   return NULL;
+}
+
+static void
+_e_dbus_cb_vol_mounted(void *user_data, void *method_return, DBusError *error)
+{
+   E_Volume *v = user_data;
+   char *buf;
+   int size;
+   
+   v->mounted = 1;
+   printf("MOUNT: %s from %s\n", v->udi, v->mount_point);
+   size = strlen(v->udi) + 1 + strlen(v->mount_point) + 1;
+   buf = alloca(size);
+   strcpy(buf, v->udi);
+   strcpy(buf + strlen(buf) + 1, v->mount_point);
+   ecore_ipc_server_send(_e_ipc_server,
+			 6/*E_IPC_DOMAIN_FM*/,
+			 12/*mount done*/,
+			 0, 0, 0, buf, size);
+}
+
+EAPI void
+e_volume_mount(E_Volume *v)
+{
+   static int mount_id = 1;
+   char buf[4096];
+   char *mount_point;
+   
+   if (v->mount_point && v->mount_point[0])
+     mount_point = v->mount_point;
+   else if (v->label && v->label[0])
+     mount_point = v->label;
+   else if (v->uuid && v->uuid[0])
+     mount_point = v->uuid;
+   else
+     {
+	snprintf(buf, sizeof(buf), "unknown-%i\n", mount_id++);
+	mount_point = buf;
+     }
+   if (v->mount_point != mount_point)
+     {
+	if (v->mount_point) free(v->mount_point);
+	v->mount_point = strdup(mount_point);
+     }
+   printf("mount %s %s\n", v->udi, v->mount_point);
+   e_hal_device_volume_mount(_e_dbus_conn, v->udi, v->mount_point,
+			     v->fstype, NULL, _e_dbus_cb_vol_mounted, v);
+}
+
+static void
+_e_dbus_cb_vol_unmounted(void *user_data, void *method_return, DBusError *error)
+{
+   E_Volume *v = user_data;
+   char *buf;
+   int size;
+
+   v->mounted = 0;
+   printf("UNMOUNT: %s from %s\n", v->udi, v->mount_point);
+   size = strlen(v->udi) + 1 + strlen(v->mount_point) + 1;
+   buf = alloca(size);
+   strcpy(buf, v->udi);
+   strcpy(buf + strlen(buf) + 1, v->mount_point);
+   ecore_ipc_server_send(_e_ipc_server,
+			 6/*E_IPC_DOMAIN_FM*/,
+			 13/*unmount done*/,
+			 0, 0, 0, buf, size);
+}
+
+EAPI void
+e_volume_unmount(E_Volume *v)
+{
+   printf("unmount %s %s\n", v->udi, v->mount_point);
+   e_hal_device_volume_unmount(_e_dbus_conn, v->udi, NULL,
+			       _e_dbus_cb_vol_unmounted, v);
+}
+
+#endif
 
 /* local subsystem functions */
 static int
@@ -456,6 +1056,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		  fop->rel_to = rel_to;
 		  fop->x = x;
 		  fop->y = y;
+		  printf("MV %s to %s\n", fop->src, fop->dst);
 		  _e_fops = evas_list_append(_e_fops, fop);
 		  fop->idler = ecore_idler_add(_e_cb_fop_mv_idler, fop);
 	       }
@@ -504,11 +1105,39 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	     _e_path_fix_order(src, rel, rel_to, x, y);
 	  }
 	break;
-      case 9: /* fop mount fs */
-	/* FIXME: implement later - for now in e */
+      case 9: /* mount udi mountpoint */
+	  {
+	     E_Volume *v;
+	     const char *udi, *mountpoint;
+	     
+	     udi = e->data;          
+	     mountpoint = udi + strlen(udi) + 1;
+	     v = e_volume_find(udi);
+	     if (v)
+	       {
+		  if (mountpoint[0])
+		    {
+		       if (v->mount_point) free(v->mount_point);
+		       v->mount_point = strdup(mountpoint);
+		    }
+		  printf("REQ M\n");
+		  e_volume_mount(v);
+	       }
+	  }
 	break;
-      case 10: /* fop umount fs */
-	/* FIXME: implement later - for now in e */
+      case 10:/* unmount udi */
+	  {
+	     E_Volume *v;
+	     const char *udi;
+	     
+	     udi = e->data;
+	     v = e_volume_find(udi);
+	     if (v)
+	       {
+		  printf("REQ UM\n");
+		  e_volume_unmount(v);
+	       }
+	  }
 	break;
       case 11: /* quit */
 	ecore_main_loop_quit();
@@ -986,8 +1615,10 @@ _e_cb_fop_mv_idler(void *data)
      {
 	if (rename(fop->src, fop->dst) != 0)
 	  {
+	     printf("rename %s -> %s err\n", fop->src, fop->dst);
 	     if (errno == EXDEV)
 	       {
+		  printf("copy instead\n");
 		  /* copy it instead - but del after cp */
 		  fop->idler = ecore_idler_add(_e_cb_fop_cp_idler, fop);
 		  fop->del_after = 1;
@@ -1033,6 +1664,7 @@ _e_cb_fop_cp_idler(void *data)
 	     fd->dir = opendir(fd->path);
 	     snprintf(buf, sizeof(buf), "%s", fd->path);
 	     snprintf(buf2, sizeof(buf2), "%s", fd->path2);
+	     lnk = ecore_file_readlink(buf);
 	     if (!lnk)
 	       {
 		  if (ecore_file_is_dir(buf))

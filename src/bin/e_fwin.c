@@ -429,7 +429,7 @@ _e_fwin_changed(void *data, Evas_Object *obj, void *event_info)
 	fwin->theme_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->theme_file, "X-Enlightenment-Directory-Theme");
 // FIXME: there is no way to just unref an efreet desktop - free completely
 // frees - doesnt just unref.
-// 	efreet_desktop_free(ef);
+ 	efreet_desktop_free(ef);
      }
    if (fwin->under_obj)
      {
@@ -873,7 +873,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
    E_Fwin_Apps_Dialog *fad;
    E_Fm2_Config fmc;
    E_Fm2_Icon_Info *ici;
-   char buf[4096];
+   char buf[PATH_MAX];
    const char *f;
    int need_dia = 0;
    Evas_Hash *mimes = NULL;
@@ -889,6 +889,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	for (l = files; l; l = l->next)
 	  {
 	     ici = l->data;
+	     printf("O: %s -- %i\n", ici->link, ici->removable);
 	     if ((ici->link) && (ici->mount))
 	       {
 		  if (fwin->win)
@@ -898,10 +899,11 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	       }
 	     else if ((ici->link) && (ici->removable))
 	       {
+		  snprintf(buf, sizeof(buf), "removable:%s", ici->link);
 		  if (fwin->win)
-		    fwin2 = e_fwin_new(fwin->win->container, ici->link, "/");
+		    fwin2 = e_fwin_new(fwin->win->container, buf, "/");
 		  else if (fwin->zone)
-		    fwin2 = e_fwin_new(fwin->zone->container, ici->link, "/");
+		    fwin2 = e_fwin_new(fwin->zone->container, buf, "/");
 	       }
 	     else if (ici->real_link)
 	       {

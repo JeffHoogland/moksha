@@ -33,26 +33,9 @@ typedef struct _E_Fm2_Config      E_Fm2_Config;
 typedef struct _E_Fm2_Icon        E_Fm2_Icon;
 typedef struct _E_Fm2_Icon_Info   E_Fm2_Icon_Info;
 
-typedef struct _E_Fm2_Removable_Add E_Fm2_Removable_Add;
-typedef struct _E_Fm2_Removable_Del E_Fm2_Removable_Del;
-
 #else
 #ifndef E_FM_H
 #define E_FM_H
-
-struct _E_Fm2_Removable_Add
-{
-   const char *uuid;
-   const char *label;
-   const char *mount;
-};
-
-struct _E_Fm2_Removable_Del
-{
-   const char *uuid;
-   const char *label;
-   const char *mount;
-};
 
 struct _E_Fm2_Config
 {
@@ -126,6 +109,7 @@ struct _E_Fm2_Icon_Info
    unsigned char     icon_type;
    unsigned char     mount : 1;
    unsigned char     removable : 1;
+   unsigned char     removable_full : 1;
    unsigned char     deleted : 1;
    unsigned char     broken_link : 1;
 };
@@ -174,8 +158,5 @@ EAPI E_Fm2_Icon_Info *e_fm2_icon_file_info_get(E_Fm2_Icon *ic);
 EAPI void        e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e);
 EAPI void        e_fm2_client_del(Ecore_Ipc_Event_Client_Del *e);
     
-extern EAPI int E_EVENT_REMOVABLE_ADD;
-extern EAPI int E_EVENT_REMOVABLE_DEL;
-
 #endif
 #endif

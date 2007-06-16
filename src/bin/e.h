@@ -27,6 +27,7 @@
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/param.h>
+#include <utime.h>
 #include <dlfcn.h>
 #include <math.h>
 #include <fnmatch.h>

@@ -9260,7 +9260,49 @@ FILEMAN_ICON_CLICKABLE("folder");
 FILEMAN_ICON_CLICKABLE("file");
 FILEMAN_ICON("home");
 FILEMAN_ICON("desktop");
-FILEMAN_ICON("hd");
+
+group {
+   name: "e/icons/fileman/hd";
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    aspect_preference: BOTH;
+            align: 0.5 0.0;
+            color: 255 255 255 128;
+	    image {
+	       normal: "e17_icon_fileman_hd.png";
+	    }
+	 }
+	 description {
+	    state:    "disabled" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 255;
+	 }
+      }
+   }
+   programs {
+      program {
+	 name:   "full";
+	 signal: "e,state,removable,full";
+	 source: "e";
+	 action: STATE_SET "disabled" 0.0;
+	 transition:  LINEAR 0.5;
+	 target: "icon";
+      }
+      program {
+	 name:   "empty";
+	 signal: "e,state,removable,empty";
+	 source: "e";
+	 action: STATE_SET "default" 0.0;
+	 transition:  LINEAR 0.5;
+	 target: "icon";
+      }
+   }
+}
 
 FILEMAN_MIME("application/pdf","pdf");
 FILEMAN_MIME("text/x-csrc","c");

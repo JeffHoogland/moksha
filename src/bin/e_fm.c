@@ -3,6 +3,10 @@
  */
 #include "e.h"
 
+#define E_FM_SHARED_DATATYPES
+#include "e_fm_shared.h"
+#undef E_FM_SHARED_DATATYPES
+
 #define OVERCLIP 128
 
 /* FIXME: this is NOT complete. dnd not complete (started). only list view
@@ -23,6 +27,7 @@ typedef struct _E_Fm2_Region     E_Fm2_Region;
 typedef struct _E_Fm2_Finfo      E_Fm2_Finfo;
 typedef struct _E_Fm2_Action     E_Fm2_Action;
 typedef struct _E_Fm2_Client     E_Fm2_Client;
+typedef struct _E_Fm2_Mount      E_Fm2_Mount;
 
 struct _E_Fm2_Smart_Data
 {
@@ -99,6 +104,7 @@ struct _E_Fm2_Smart_Data
    E_Object           *eobj;
    E_Drop_Handler     *drop_handler;
    E_Fm2_Icon         *drop_icon;
+   E_Fm2_Mount        *mount;
    char                drop_after;
    unsigned char       drop_show : 1;
    unsigned char       drop_in_show : 1;
@@ -142,6 +148,7 @@ struct _E_Fm2_Icon
    unsigned char     saved_pos : 1;
    unsigned char     odd : 1;
    unsigned char     down_sel : 1;
+   unsigned char     removable_state_change : 1;
 };
 
 struct _E_Fm2_Finfo
@@ -166,6 +173,26 @@ struct _E_Fm2_Client
    Ecore_Ipc_Client *cl;
    int req;
 };
+
+struct _E_Fm2_Mount
+{
+   const char   *udi;
+   const char   *mount_point;
+   
+   Ecore_Timer  *timeout;
+   void        (*mount_ok) (void *data);
+   void        (*mount_fail) (void *data);
+   void        (*unmount_ok) (void *data);
+   void        (*unmount_fail) (void *data);
+   void         *data;
+   
+   unsigned char delete_me : 1;
+};
+
+static E_Fm2_Mount *_e_fm2_mount(E_Volume *v, void (*mount_ok) (void *data), void (*mount_fail) (void *data), void (*unmount_ok) (void *data), void (*unmount_fail) (void *data), void *data);
+static void _e_fm2_unmount(E_Fm2_Mount *m);
+static E_Volume *e_volume_find(const char *udi);
+static E_Storage *e_storage_find(const char *udi);
 
 static const char *_e_fm2_dev_path_map(const char *dev, const char *path);
 static void _e_fm2_file_add(Evas_Object *obj, const char *file, int unique, const char *file_rel, int after, E_Fm2_Finfo *finf);
@@ -285,22 +312,6 @@ static void _e_fm2_live_process(Evas_Object *obj);
 static int _e_fm2_cb_live_idler(void *data);
 static int _e_fm2_cb_live_timer(void *data);
 
-static const char *_e_fm2_removable_dev_label_get(const char *uuid);
-static void _e_fm2_removable_dev_add(const char *uuid, const char *label);
-static void _e_fm2_removable_dev_del(const char *uuid, const char *label);
-static void _e_fm2_removable_path_mount(const char *path);
-static void _e_fm2_removable_path_umount(const char *path);
-static void _e_fm2_removable_dev_mount(const char *uuid);
-static void _e_fm2_removable_dev_umount(const char *uuid);
-static void _e_fm2_removable_dev_label_set(const char *uuid, const char *label);
-static int _e_fm2_cb_dbus_event_server_add(void *data, int ev_type, void *ev);
-static int _e_fm2_cb_dbus_event_server_del(void *data, int ev_type, void *ev);
-static int _e_fm2_cb_dbus_event_server_signal(void *data, int ev_type, void *ev);
-static int _e_fm2_cb_dbus_event_child_exit(void *data, int ev_type, void *ev);
-static void _e_fm2_cb_dbus_method_name_has_owner(void *data, Ecore_DBus_Method_Return *reply);
-static void _e_fm2_cb_dbus_method_add_match(void *data, Ecore_DBus_Method_Return *reply);
-static void _e_fm2_cb_dbus_method_error(void *data, const char *error);
-
 static int _e_fm2_theme_edje_object_set(E_Fm2_Smart_Data *sd, Evas_Object *o, const char *category, const char *group);
 static int _e_fm2_theme_edje_icon_object_set(E_Fm2_Smart_Data *sd, Evas_Object *o, const char *category, const char *group);
 
@@ -314,17 +325,34 @@ static void _e_fm2_client_file_mkdir(int id, const char *path, const char *rel, 
 static void _e_fm2_client_file_move(int id, const char *path, const char *dest, const char *rel, int rel_to, int x, int y, int res_w, int res_h);
 static void _e_fm2_client_file_symlink(int id, const char *path, const char *dest, const char *rel, int rel_to, int x, int y, int res_w, int res_h);
 static void _e_fm2_client_file_copy(int id, const char *path, const char *dest, const char *rel, int rel_to, int x, int y, int res_w, int res_h);
+static void _e_fm2_client_mount(const char *udi, const char *mountpoint);
+static void _e_fm2_client_unmount(const char *udi);
 
-static Ecore_DBus_Server *_e_fm2_dbus = NULL;
-static Evas_List *_e_fm2_dbus_handlers = NULL;
 static char *_e_fm2_meta_path = NULL;
 static Evas_Smart *_e_fm2_smart = NULL;
 static Evas_List *_e_fm2_list = NULL;
+static Evas_List *_e_fm2_list_remove = NULL;
+static int _e_fm2_list_walking = 0;
 static Evas_List *_e_fm2_client_list = NULL;
 static int _e_fm2_id = 0;
+static Evas_List *_e_stores = NULL;
+static Evas_List *_e_vols = NULL;
+static Evas_List *_e_fm2_mounts = NULL;
 
-EAPI int E_EVENT_REMOVABLE_ADD = 0;
-EAPI int E_EVENT_REMOVABLE_DEL = 0;
+
+/* contains:
+ * _e_volume_edd
+ * _e_storage_edd
+ * _e_volume_free()
+ * _e_storage_free()
+ * _e_volume_edd_new()
+ * _e_storage_edd_new()
+ * _e_storage_volume_edd_init()
+ * _e_storage_volume_edd_shutdown()
+ */
+#define E_FM_SHARED_CODEC
+#include "e_fm_shared.h"
+#undef E_FM_SHARED_CODEC
 
 /***/
 
@@ -334,6 +362,7 @@ e_fm2_init(void)
    const char *homedir;
    char  path[PATH_MAX];
 
+   _e_storage_volume_edd_init();
    homedir = e_user_homedir_get();
    snprintf(path, sizeof(path), "%s/.e/e/fileman/metadata", homedir);
    ecore_file_mkpath(path);
@@ -351,30 +380,6 @@ e_fm2_init(void)
 				 _e_fm2_smart_clip_set, /* clip_set */
 				 _e_fm2_smart_clip_unset, /* clip_unset */
 				 NULL); /* data*/
-   ecore_dbus_init();
-   _e_fm2_dbus = ecore_dbus_server_system_connect(NULL);
-   if (_e_fm2_dbus)
-     {
-	_e_fm2_dbus_handlers = evas_list_append
-	  (_e_fm2_dbus_handlers, 
-	   ecore_event_handler_add(ECORE_DBUS_EVENT_SERVER_ADD,
-				   _e_fm2_cb_dbus_event_server_add, NULL));
-	_e_fm2_dbus_handlers = evas_list_append
-	  (_e_fm2_dbus_handlers, 
-	   ecore_event_handler_add(ECORE_DBUS_EVENT_SERVER_DEL,
-				   _e_fm2_cb_dbus_event_server_del, NULL));
-	_e_fm2_dbus_handlers = evas_list_append
-	  (_e_fm2_dbus_handlers, 
-	   ecore_event_handler_add(ECORE_DBUS_EVENT_SIGNAL,
-				   _e_fm2_cb_dbus_event_server_signal, NULL));
-	_e_fm2_dbus_handlers = evas_list_append
-	  (_e_fm2_dbus_handlers, 
-	   ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
-				   _e_fm2_cb_dbus_event_child_exit, NULL));
-	
-	E_EVENT_REMOVABLE_ADD = ecore_event_type_new();
-	E_EVENT_REMOVABLE_DEL = ecore_event_type_new();
-     }
 //   _e_fm2_client_spawn();
    e_fm2_custom_file_init();
    return 1;
@@ -383,21 +388,11 @@ e_fm2_init(void)
 EAPI int
 e_fm2_shutdown(void)
 {
-   if (_e_fm2_dbus)
-     {
-	while (_e_fm2_dbus_handlers)
-	  {
-	     if (_e_fm2_dbus_handlers->data) ecore_event_handler_del(_e_fm2_dbus_handlers->data);
-	     _e_fm2_dbus_handlers = evas_list_remove_list(_e_fm2_dbus_handlers, _e_fm2_dbus_handlers);
-	  }
-	ecore_dbus_server_del(_e_fm2_dbus);
-	_e_fm2_dbus = NULL;
-     }
-   ecore_dbus_shutdown();
    evas_smart_free(_e_fm2_smart);
    _e_fm2_smart = NULL;
    E_FREE(_e_fm2_meta_path);
    e_fm2_custom_file_shutdown();
+   _e_storage_volume_edd_shutdown();
    return 1;
 }
 
@@ -405,6 +400,36 @@ EAPI Evas_Object *
 e_fm2_add(Evas *evas)
 {
    return evas_object_smart_add(evas, _e_fm2_smart);
+}
+
+static void
+_e_fm2_cb_mount_ok(void *data)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(data);
+   if (!sd) return; // safety
+   _e_fm2_client_monitor_add(sd->id, sd->realpath);
+   sd->listing = 1;
+   evas_object_smart_callback_call(data, "dir_changed", NULL);
+   sd->tmp.iter = 0;
+}
+
+static void
+_e_fm2_cb_mount_fail(void *data)
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(data);
+   if (!sd) return; // safety
+   /* FIXME; some dialog */
+   if (sd->mount)
+     {
+	printf("UM1\n");
+	_e_fm2_unmount(sd->mount);
+	sd->mount = NULL;
+	evas_object_smart_callback_call(data, "dir_deleted", NULL);
+     }
 }
 
 EAPI void
@@ -453,9 +478,14 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
    
    if (sd->dev) evas_stringshare_del(sd->dev);
    if (sd->path) evas_stringshare_del(sd->path);
+   if (sd->mount)
+     {
+	printf("UM2\n");
+	_e_fm2_unmount(sd->mount);
+	sd->mount = NULL;
+     }
    if (sd->realpath)
      {
-	_e_fm2_removable_path_umount(sd->realpath);
 	evas_stringshare_del(sd->realpath);
      }
    sd->dev = sd->path = sd->realpath = NULL;
@@ -465,15 +495,33 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
    if (dev) sd->dev = evas_stringshare_add(dev);
    sd->path = evas_stringshare_add(path);
    sd->realpath = _e_fm2_dev_path_map(sd->dev, sd->path);
-   _e_fm2_removable_path_mount(sd->realpath);
+   if ((sd->dev) && (!strncmp(sd->dev, "removable:", 10)))
+     {
+	E_Volume *v;
+	
+	v = e_volume_find(sd->dev + strlen("removable:"));
+	if (v)
+	  {
+	     sd->mount = _e_fm2_mount(v, 
+				      _e_fm2_cb_mount_ok,
+				      _e_fm2_cb_mount_fail,
+				      NULL,
+				      NULL,
+				      obj);
+	     printf("BEGIN MOUNT %p %s\n", sd->mount, v->mount_point);
+	  }
+     }
 
    _e_fm2_queue_free(obj);
    _e_fm2_regions_free(obj);
    _e_fm2_icons_free(obj);
    edje_object_part_text_set(sd->overlay, "e.text.busy_label", "");
    
-   _e_fm2_client_monitor_add(sd->id, sd->realpath);
-   sd->listing = 1;
+   if (!sd->mount)
+     {
+	_e_fm2_client_monitor_add(sd->id, sd->realpath);
+	sd->listing = 1;
+     }
    
    evas_object_smart_callback_call(obj, "dir_changed", NULL);
    sd->tmp.iter = 0;
@@ -971,8 +1019,22 @@ e_fm2_all_icons_update(void)
 {
    Evas_List *l;
    
+   _e_fm2_list_walking++;
    for (l = _e_fm2_list; l; l = l->next)
-     e_fm2_icons_update(l->data);
+     {
+	if ((_e_fm2_list_walking > 0) &&
+	    (evas_list_find(_e_fm2_list_remove, l->data))) continue;
+	e_fm2_icons_update(l->data);
+     }
+   _e_fm2_list_walking--;
+   if (_e_fm2_list_walking == 0)
+     {
+	while (_e_fm2_list_remove)
+	  {
+	     _e_fm2_list = evas_list_remove(_e_fm2_list, _e_fm2_list_remove->data);
+	     _e_fm2_list_remove = evas_list_remove_list(_e_fm2_list_remove, _e_fm2_list_remove);
+	  }
+     }
 }
 
 EAPI Evas_Object *
@@ -1023,7 +1085,7 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 		       if (type_ret) *type_ret = "DESKTOP";
 		       // FIXME: there is no way to just unref an efreet desktop - free completely
 		       // frees - doesnt just unref.
-		       // if (ef) efreet_desktop_free(ef);
+		       if (ef) efreet_desktop_free(ef);
 		    }
 	       }
 	     if (!oic)
@@ -1101,7 +1163,7 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 		  if (type_ret) *type_ret = "DESKTOP";
 // FIXME: there is no way to just unref an efreet desktop - free completely
 // frees - doesnt just unref.
-//		  if (ef) efreet_desktop_free(ef);
+		  if (ef) efreet_desktop_free(ef);
 	       }
 	     else if (!strncmp(icon, "e/icons/fileman/mime/", 21))
 	       {
@@ -1175,7 +1237,7 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 		  if (type_ret) *type_ret = "DESKTOP";
 // FIXME: there is no way to just unref an efreet desktop - free completely
 // frees - doesnt just unref.
-//		  if (ef) efreet_desktop_free(ef);
+		  if (ef) efreet_desktop_free(ef);
 	       }
 	     else if (e_util_glob_case_match(ic->info.file, "*.imc"))
 	       {	  
@@ -1271,6 +1333,192 @@ e_fm2_icon_file_info_get(E_Fm2_Icon *ic)
 {
    if (!ic) return NULL;
    return &(ic->info);
+}
+
+static int _e_fm2_mount_stack = 0;
+
+static void
+_e_fm2_mount_flush(void)
+{
+   E_Fm2_Mount *m;
+   Evas_List *l, *dels = NULL;
+
+   if (_e_fm2_mount_stack > 1) return;
+   for (l = _e_fm2_mounts; l; l = l->next)
+     {
+	m = l->data;
+	if (m->delete_me) dels = evas_list_append(dels, m);
+     }
+   while (dels)
+     {
+	m = dels->data;
+	_e_fm2_mounts = evas_list_remove(_e_fm2_mounts, m);
+	dels = evas_list_remove_list(dels, dels);
+	evas_stringshare_del(m->udi);
+	evas_stringshare_del(m->mount_point);
+	if (m->timeout) ecore_timer_del(m->timeout);
+	free(m);
+     }
+}
+
+static void
+_e_fm2_mount_del(E_Fm2_Mount *m)
+{
+   m->delete_me = 1;
+}
+
+static void
+_e_fm2_mount_ok(const char *udi)
+{
+   Evas_List *l;
+   E_Fm2_Mount *m;
+   
+   _e_fm2_mount_stack++;
+   for (l = _e_fm2_mounts; l; l = l->next)
+     {
+	m = l->data;
+	if ((!m->delete_me) && (!strcmp(m->udi, udi)) && (m->mount_ok))
+	  m->mount_ok(m->data);
+	if (m->timeout)
+	  {
+	     ecore_timer_del(m->timeout);
+	     m->timeout = NULL;
+	  }
+     }
+   _e_fm2_mount_flush();
+   _e_fm2_mount_stack--;
+}
+
+static void
+_e_fm2_mount_fail(const char *udi)
+{
+   Evas_List *l;
+   E_Fm2_Mount *m;
+   
+   _e_fm2_mount_stack++;
+   for (l = _e_fm2_mounts; l; l = l->next)
+     {
+	m = l->data;
+	if ((!m->delete_me) && (!strcmp(m->udi, udi)) && (m->mount_fail))
+	  m->mount_fail(m->data);
+	if (m->timeout)
+	  {
+	     ecore_timer_del(m->timeout);
+	     m->timeout = NULL;
+	  }
+     }
+   _e_fm2_mount_flush();
+   _e_fm2_mount_stack--;
+}
+
+static void
+_e_fm2_unmount_ok(const char *udi)
+{
+   Evas_List *l;
+   E_Fm2_Mount *m;
+   
+   _e_fm2_mount_stack++;
+   for (l = _e_fm2_mounts; l; l = l->next)
+     {
+	m = l->data;
+	if ((!m->delete_me) && (!strcmp(m->udi, udi)) && (m->unmount_ok))
+	  m->unmount_ok(m->data);
+	if (m->timeout)
+	  {
+	     ecore_timer_del(m->timeout);
+	     m->timeout = NULL;
+	  }
+     }
+   _e_fm2_mount_flush();
+   _e_fm2_mount_stack--;
+}
+
+static void
+_e_fm2_unmount_fail(const char *udi)
+{
+   Evas_List *l;
+   E_Fm2_Mount *m;
+   
+   _e_fm2_mount_stack++;
+   for (l = _e_fm2_mounts; l; l = l->next)
+     {
+	m = l->data;
+	if ((!m->delete_me) && (!strcmp(m->udi, udi)) && (m->unmount_fail))
+	  m->unmount_fail(m->data);
+	if (m->timeout)
+	  {
+	     ecore_timer_del(m->timeout);
+	     m->timeout = NULL;
+	  }
+     }
+   _e_fm2_mount_flush();
+   _e_fm2_mount_stack--;
+}
+
+static int
+_e_fm2_cb_mount_timeout(void *data)
+{
+   E_Fm2_Mount *m;
+   
+   m = data;
+   m->timeout = NULL;
+   _e_fm2_mount_fail(m->udi);
+   return 0;
+}
+			
+static E_Fm2_Mount *
+_e_fm2_mount(E_Volume *v, void (*mount_ok) (void *data), void (*mount_fail) (void *data), void (*unmount_ok) (void *data), void (*unmount_fail) (void *data), void *data)
+{
+   E_Fm2_Mount *m, *m2;
+   Evas_List *l;
+   int exists = 0;
+
+   m = calloc(1, sizeof(E_Fm2_Mount));
+   if (!m) return NULL;
+   for (l = _e_fm2_mounts; l; l = l->next)
+     {
+	m2 = l->data;
+	if (!strcmp(v->udi, m2->udi))
+	  {
+	     exists = 1;
+	     break;
+	  }
+     }
+   m->udi         = evas_stringshare_add(v->udi);
+   m->mount_point = evas_stringshare_add(v->mount_point);
+   m->mount_ok     = mount_ok;
+   m->mount_fail   = mount_fail;
+   m->data        = data;
+   if (!exists)
+     {
+	m->timeout = ecore_timer_add(10.0, _e_fm2_cb_mount_timeout, m);
+	_e_fm2_client_mount(m->udi, m->mount_point);
+     }
+   _e_fm2_mounts = evas_list_prepend(_e_fm2_mounts, m);
+   return m;
+}
+
+static void
+_e_fm2_unmount(E_Fm2_Mount *m)
+{
+   E_Fm2_Mount *m2;
+   Evas_List *l;
+   int exists = 0;
+
+   _e_fm2_mount_stack++;
+   for (l = _e_fm2_mounts; l; l = l->next)
+     {
+	m2 = l->data;
+	if (!strcmp(m->udi, m2->udi)) exists++;
+     }
+   if (exists == 1)
+     {
+	printf("_e_fm2_unmount UM\n");
+	_e_fm2_client_unmount(m->udi);
+     }
+   _e_fm2_mount_del(m);
+   _e_fm2_mount_flush();
+   _e_fm2_mount_stack--;
 }
 
 /* FIXME: track real exe with exe del events etc. */
@@ -1649,6 +1897,64 @@ _e_fm2_client_file_copy(int id, const char *path, const char *dest, const char *
 }
 
 static void
+_e_fm2_client_mount(const char *udi, const char *mountpoint)
+{
+   E_Fm2_Client *cl;
+   char *d;
+   int l, l1, l2;
+   
+   l1 = strlen(udi);
+   l2 = strlen(mountpoint);
+   l = l1 + 1 + l2 + 1;
+   d = alloca(l);
+   strcpy(d, udi);
+   strcpy(d + l1 + 1, mountpoint);
+   printf("SEND %s %s\n", udi, mountpoint);
+   cl = _e_fm2_client_get();
+   if (!cl)
+     {
+	_e_fm2_client_message_queue(E_IPC_DOMAIN_FM, 9,
+				    0, 0, 0, 
+				    (void *)d, l);
+     }
+   else
+     {
+	ecore_ipc_client_send(cl->cl, E_IPC_DOMAIN_FM, 9,
+			      0, 0, 0, 
+			      (void *)d, l);
+	cl->req++;
+     }
+}
+
+static void
+_e_fm2_client_unmount(const char *udi)
+{
+   E_Fm2_Client *cl;
+   char *d;
+   int l, l1;
+   
+   l1 = strlen(udi);
+   l = l1 + 1;
+   d = alloca(l);
+   strcpy(d, udi);
+   cl = _e_fm2_client_get();
+   printf("send UM %s\n", udi);
+   if (!cl)
+     {
+	_e_fm2_client_message_queue(E_IPC_DOMAIN_FM, 10,
+				    0, 0, 0, 
+				    (void *)d, l);
+     }
+   else
+     {
+	ecore_ipc_client_send(cl->cl, E_IPC_DOMAIN_FM, 10,
+			      0, 0, 0, 
+			      (void *)d, l);
+	cl->req++;
+     }
+}
+
+static void
 _e_fm2_client_monitor_list_end(Evas_Object *obj)
 {
    E_Fm2_Smart_Data *sd;
@@ -1686,10 +1992,196 @@ _e_fm2_client_monitor_list_end(Evas_Object *obj)
    _e_fm2_live_process_begin(obj);
 }
 
+static void
+_e_fm2_file_force_update(const char *path)
+{
+   char *dir;
+   Evas_List *l;
+   
+   dir = ecore_file_get_dir(path);
+   if (!dir) return;
+   for (l = _e_fm2_list; l; l = l->next)
+     {
+	if ((_e_fm2_list_walking > 0) &&
+	    (evas_list_find(_e_fm2_list_remove, l->data))) continue;
+	if (!strcmp(e_fm2_real_path_get(l->data), dir))
+	  {
+	     E_Fm2_Icon *ic;
+	     
+	     ic = _e_fm2_icon_find(l->data, ecore_file_get_file(path));
+	     if (ic)
+	       {
+		  E_Fm2_Finfo finf;
+		  
+		  memset(&finf, 0, sizeof(E_Fm2_Finfo));
+		  memcpy(&(finf.st), &(ic->info.statinfo),
+			 sizeof(struct stat));
+		  finf.broken_link = ic->info.broken_link;
+		  if (ic->info.link)
+		    finf.lnk = evas_stringshare_add(ic->info.link);
+		  if (ic->info.real_link)
+		    finf.rlnk = evas_stringshare_add(ic->info.real_link);
+		  ic->removable_state_change = 1;
+		  _e_fm2_live_file_changed(l->data, ecore_file_get_file(path),
+					   &finf);
+		  if (ic->info.link)
+		    evas_stringshare_del(ic->info.link);
+		  if (ic->info.real_link)
+		    evas_stringshare_del(ic->info.real_link);
+	       }
+	  }
+     }
+}
+
+static E_Volume *
+e_volume_find(const char *udi)
+{
+   Evas_List *l;
+   
+   for (l = _e_vols; l; l = l->next)
+     {
+	E_Volume *v;
+	
+	v = l->data;
+	if (!strcmp(udi, v->udi)) return v;
+     }
+   return NULL;
+}
+
+static E_Storage *
+e_storage_find(const char *udi)
+{
+   Evas_List *l;
+   
+   for (l = _e_stores; l; l = l->next)
+     {
+	E_Storage  *s;
+	
+	s = l->data;
+	if (!strcmp(udi, s->udi)) return s;
+     }
+   return NULL;
+}
+
+static void
+_e_storage_write(E_Storage *s)
+{
+   char buf[PATH_MAX], buf2[PATH_MAX];
+   FILE *f;
+   
+   printf("sto write %s\n", s->serial);
+   snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/|%s.desktop",
+	    e_user_homedir_get(), s->serial);
+//   ecore_file_unlink(buf);
+   f = fopen(buf, "w");
+   if (f)
+     {
+	fprintf(f,
+		"[Desktop Entry]\n"
+		"Encoding=UTF-8\n"
+		"Type=Link\n"
+		"X-Enlightenment-Type=Removable\n"
+		"X-Enlightenment-Removable-State=Empty\n"
+		"Name=%s %s\n"
+		"Icon=%s\n"
+		"Comment=%s\n"
+		"URL=file:/%s\n"
+		,
+		s->vendor, s->model,
+		"fileman/hd", /* FIXME different based on state and storage */
+		_("Removable Device"),
+		s->udi);
+	fclose(f);
+	snprintf(buf2, sizeof(buf2), "%s/Desktop/|%s.desktop",
+		 e_user_homedir_get(), s->serial);
+//	ecore_file_unlink(buf2);
+	ecore_file_symlink(buf, buf2);
+	/* FIXME: manipulate icon directly */
+	_e_fm2_file_force_update(buf);
+	_e_fm2_file_force_update(buf2);
+	efreet_desktop_cache_flush();
+     }
+}
+
+static void
+_e_storage_erase(E_Storage *s)
+{
+   char buf[PATH_MAX];
+   
+   snprintf(buf, sizeof(buf), "%s/Desktop/|%s.desktop",
+	    e_user_homedir_get(), s->serial);
+   ecore_file_unlink(buf);
+   snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/|%s.desktop",
+	    e_user_homedir_get(), s->serial);
+   ecore_file_unlink(buf);
+}
+
+static void
+_e_volume_write(E_Volume *v)
+{
+   char buf[PATH_MAX], buf2[PATH_MAX];
+   FILE *f;
+  
+   printf("vol write %s\n", v->storage->serial);
+   snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/|%s.desktop",
+	    e_user_homedir_get(), v->storage->serial);
+//   ecore_file_unlink(buf);
+   f = fopen(buf, "w");
+   if (f)
+     {
+	char label[1024];
+	
+	if (v->label)
+	  snprintf(label, sizeof(label), "%s", v->label);
+	else if (v->partition_label)
+	  snprintf(label, sizeof(label), "%s", v->partition_label);
+	else 
+	  snprintf(label, sizeof(label), "%s %s", v->storage->vendor, v->storage->model);
+	fprintf(f,
+		"[Desktop Entry]\n"
+		"Encoding=UTF-8\n"
+		"Type=Link\n"
+		"X-Enlightenment-Type=Removable\n"
+		"X-Enlightenment-Removable-State=Full\n"
+		"Name=%s\n"
+		"Icon=%s\n"
+		"Comment=%s\n"
+		"URL=file:/%s\n"
+		,
+		label,
+		"fileman/hd", /* FIXME different based on state and storage */
+		_("Removable Device"),
+		v->udi);
+	fclose(f);
+	snprintf(buf2, sizeof(buf2), "%s/Desktop/|%s.desktop",
+		 e_user_homedir_get(), v->storage->serial);
+//	ecore_file_unlink(buf2);
+	ecore_file_symlink(buf, buf2);
+	/* FIXME: manipulate icon directly */
+	_e_fm2_file_force_update(buf);
+	_e_fm2_file_force_update(buf2);
+	efreet_desktop_cache_flush();
+     }
+}
+
+static void
+_e_volume_erase(E_Volume *v)
+{
+   char buf[PATH_MAX];
+   
+   snprintf(buf, sizeof(buf), "%s/Desktop/|%s.desktop",
+	    e_user_homedir_get(), v->storage->serial);
+   ecore_file_unlink(buf);
+   snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/|%s.desktop",
+	    e_user_homedir_get(), v->storage->serial);
+   ecore_file_unlink(buf);
+   _e_storage_write(v->storage);
+}
+
 EAPI void
 e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 {
-   Evas_List *l;
+   Evas_List *l, *dels = NULL;
    E_Fm2_Client *cl;
    
    if (e->major != 6/*E_IPC_DOMAIN_FM*/) return;
@@ -1708,6 +2200,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	_e_fm2_client_messages_flush();
      }
    
+   _e_fm2_list_walking++;
    for (l = _e_fm2_list; l; l = l->next)
      {
 	unsigned char *p;
@@ -1716,9 +2209,13 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	struct stat st;
 	int broken_link;
 	E_Fm2_Smart_Data *sd;
+	Evas_Object *obj;
 	
-	dir = e_fm2_real_path_get(l->data);
-	sd = evas_object_smart_data_get(l->data);
+	obj = l->data;
+	if ((_e_fm2_list_walking > 0) &&
+	    (evas_list_find(_e_fm2_list_remove, l->data))) continue;
+	dir = e_fm2_real_path_get(obj);
+	sd = evas_object_smart_data_get(obj);
 	switch (e->minor)
 	  {  
 	   case 1:/*hello*/
@@ -1765,13 +2262,13 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 			    if (e->minor == 3)/*file add*/
 			      {
 				 _e_fm2_live_file_add
-				   (l->data, ecore_file_get_file(path),
+				   (obj, ecore_file_get_file(path),
 				    NULL, 0, &finf);
 			      }
 			    else if (e->minor == 5)/*file change*/
 			      {
 				 _e_fm2_live_file_changed
-				   (l->data, (char *)ecore_file_get_file(path),
+				   (obj, (char *)ecore_file_get_file(path),
 				    &finf);
 			      }
 			 }
@@ -1798,7 +2295,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 					{
 					   if (!((file[0] == '.') && 
 						 (!sd->show_hidden_files)))
-					     _e_fm2_file_add(l->data, file,
+					     _e_fm2_file_add(obj, file,
 							     sd->order_file, 
 							     NULL, 0, &finf);
 					}
@@ -1816,7 +2313,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 					}
 				      else
 					{
-					   _e_fm2_client_monitor_list_end(l->data);
+					   _e_fm2_client_monitor_list_end(obj);
 					}
 				   }
 			      }
@@ -1839,7 +2336,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 				   }
 				 else
 				   {
-				      _e_fm2_client_monitor_list_end(l->data);
+				      _e_fm2_client_monitor_list_end(obj);
 				   }
 			      }
 			 }
@@ -1853,7 +2350,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	     if ((sd->id == e->ref_to) && (!strcmp(dir, evdir)))
 	       {
 		  _e_fm2_live_file_del
-		    (l->data, ecore_file_get_file(path));
+		    (obj, ecore_file_get_file(path));
 	       }
 	     free(evdir);
 	     break;
@@ -1861,18 +2358,176 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	     path = e->data;
 	     if ((sd->id == e->ref_to) && (!strcmp(dir, path)))
 	       {
-		  evas_object_smart_callback_call(l->data, "dir_deleted", NULL);
+		  dels = evas_list_append(dels, obj);
 	       }
 	     break;
 	   default:
 	     break;
 	  }
      }
-   if (e->minor == 7)
+   while (dels)
      {
+	Evas_Object *obj;
+	
+	obj = dels->data;
+	dels = evas_list_remove_list(dels, dels);
+	if ((_e_fm2_list_walking > 0) &&
+	    (evas_list_find(_e_fm2_list_remove, obj))) continue;
+	evas_object_smart_callback_call(obj, "dir_deleted", NULL);
+     }
+   _e_fm2_list_walking--;
+   if (_e_fm2_list_walking == 0)
+     {
+	while (_e_fm2_list_remove)
+	  {
+	     _e_fm2_list = evas_list_remove(_e_fm2_list, _e_fm2_list_remove->data);
+	     _e_fm2_list_remove = evas_list_remove_list(_e_fm2_list_remove, _e_fm2_list_remove);
+	  }
+     }
+   switch (e->minor)
+     {
+      case 7:/*mon list sync*/
 	ecore_ipc_client_send(cl->cl, E_IPC_DOMAIN_FM, 12,
 			      0, 0, e->response, 
 			      NULL, 0);
+	break;
+	
+      case 8:/*storage add*/
+	if ((e->data) && (e->size > 0))
+	  {
+	     E_Storage *s;
+	     
+	     s = eet_data_descriptor_decode(_e_storage_edd, e->data, e->size);
+	     if (s)
+	       {
+		  s->validated = 1;
+		  _e_stores = evas_list_append(_e_stores, s);
+		  printf("STO+\n  udi: %s\n  bus: %s\n  drive_type: %s\n  model: %s\n  vendor: %s\n  serial: %s\n  removable: %i\n  media_available: %i\n  media_size: %lli\n  requires_eject: %i\n  hotpluggable: %i\n  media_check_enabled: %i\n  icon.drive: %s\n  icon.volume: %s\n\n", s->udi, s->bus, s->drive_type, s->model, s->vendor, s->serial, s->removable, s->media_available, s->media_size, s->requires_eject, s->hotpluggable, s->media_check_enabled, s->icon.drive, s->icon.volume);
+		  if ((s->removable == 0) &&
+		      (s->media_available == 0) &&
+		      (s->media_size == 0) &&
+		      (s->requires_eject == 0) &&
+		      (s->hotpluggable == 0) &&
+		      (s->media_check_enabled == 0))
+		    {
+		       printf("      Ignore this storage\n");
+		    }
+		  else
+		    {
+		       s->trackable = 1;
+		       _e_storage_write(s);
+		    }
+	       }
+	  }
+	break;
+      case 9:/*storage del*/
+	if ((e->data) && (e->size > 0))
+	  {
+	     char *udi;
+	     E_Storage *s;
+	     
+	     udi = e->data;
+	     s = e_storage_find(udi);
+	     if (s)
+	       {
+		  printf("STO- %s\n", s->udi);
+		  if (s->trackable)
+		    {
+		       _e_storage_erase(s);
+		    }
+		  _e_stores = evas_list_remove(_e_stores, s);
+		  _e_storage_free(s);
+	       }
+	  }
+	break;
+	
+      case 10:/*volume add*/
+	if ((e->data) && (e->size > 0))
+	  {
+	     E_Volume *v;
+	     
+	     v = eet_data_descriptor_decode(_e_volume_edd, e->data, e->size);
+	     if (v)
+	       {
+		  E_Storage *s;
+		  
+		  v->validated = 1;
+		  _e_vols = evas_list_append(_e_vols, v);
+		  printf("VOL+\n  udi: %s\n  uuid: %s\n  fstype: %s\n  label: %s\n  partition: %d\n  partition_label: %s\n  mounted: %d\n  mount_point: %s\n  parent: %s\n", v->udi, v->uuid, v->fstype,  v->label, v->partition, v->partition ? v->partition_label : "(not a partition)", v->mounted, v->mount_point, v->parent);
+		  s = e_storage_find(v->parent);
+		  if (!v->mount_point)
+		    v->mount_point = strdup(v->uuid);
+		  if (s)
+		    {
+		       v->storage = s;
+		       s->volumes = evas_list_append(s->volumes, v);
+		    }
+		  if ((v->storage) && (v->storage->trackable))
+		    {
+		       _e_volume_write(v);
+		    }
+	       }
+	  }
+	break;
+      case 11:/*volume del*/
+	if ((e->data) && (e->size > 0))
+	  {
+	     char *udi;
+             E_Volume *v;
+	     
+	     udi = e->data;
+             v = e_volume_find(udi);
+	     if (v)
+	       {
+		  printf("VOL- %s\n", v->udi);
+		  if ((v->storage) && (v->storage->trackable))
+		    {
+		       _e_storage_write(v->storage);
+		    }
+                  _e_vols = evas_list_remove(_e_vols, v);
+		  _e_volume_free(v);
+	       }
+	  }
+	break;
+	
+      case 12:/*mount done*/
+	if ((e->data) && (e->size > 1))
+	  {
+	     E_Volume *v;
+	     char *udi, *mountpoint;
+	     
+	     udi = e->data;
+	     mountpoint = udi + strlen(udi) + 1;
+	     v = e_volume_find(udi);
+	     if (v)
+	       {
+		  v->mounted = 1;
+		  if (v->mount_point) free(v->mount_point);
+		  v->mount_point = strdup(mountpoint);
+		  printf("MOUNT %s %s\n", udi, mountpoint);
+	       }
+	     _e_fm2_mount_ok(udi);
+	  }
+	break;
+      case 13:/*unmount done*/
+	if ((e->data) && (e->size > 1))
+	  {
+	     E_Volume *v;
+	     char *udi, *mountpoint;
+	     
+	     udi = e->data;
+	     mountpoint = udi + strlen(udi) + 1;
+	     v = e_volume_find(udi);
+	     if (v)
+	       {
+		  v->mounted = 0;
+		  printf("UNMOUNT %s %s\n", udi, mountpoint);
+	       }
+	     _e_fm2_unmount_ok(udi);
+	  }
+	break;
+      default:
+	break;
      }
 }
 
@@ -1909,7 +2564,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
     * maybe for home directory and root fs and other simple thngs */
    /* FIXME: also add other virtualized dirs like "backgrounds", "themes",
     * "favorites" */
-#define CMP(x) (e_util_glob_case_match(dev, x))   
+#define CMP(x) ((dev) && (e_util_glob_case_match(dev, x)))
 #define PRT(args...) snprintf(buf, sizeof(buf), ##args)
    
    if (CMP("/")) {
@@ -1948,6 +2603,15 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
 	{
 	   PRT("%s/Desktop-%s", s, path);
 	   ecore_file_mkpath(buf);
+	}
+   }
+   else if (CMP("removable:*")) {
+      E_Volume *v;
+      
+      v = e_volume_find(dev + strlen("removable:"));
+      if (v)
+	{
+	   snprintf(buf, sizeof(buf), "/media/%s", v->mount_point);
 	}
    }
    else if (CMP("dvd") || CMP("dvd-*"))  {
@@ -2696,6 +3360,8 @@ _e_fm2_file_fm2_find(const char *file)
    if (!dir) return NULL;
    for (l = _e_fm2_list; l; l = l->next)
      {
+	if ((_e_fm2_list_walking > 0) &&
+	    (evas_list_find(_e_fm2_list_remove, l->data))) continue;
 	if (!strcmp(e_fm2_real_path_get(l->data), dir))
 	  {
 	     free(dir);
@@ -2793,6 +3459,7 @@ _e_fm2_icon_unfill(E_Fm2_Icon *ic)
    ic->info.real_link = NULL;
    ic->info.mount = 0;
    ic->info.removable = 0;
+   ic->info.removable_full = 0;
    ic->info.deleted = 0;
    ic->info.broken_link = 0;
 }
@@ -2828,7 +3495,8 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
    char buf[4096], *lnk;
    const char *mime;
    E_Fm2_Custom_File *cf;
-   
+
+   printf("FILL %s\n", ic->info.file);
    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
    cf = e_fm2_custom_file_get(buf);
    if (finf)
@@ -3128,6 +3796,11 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
 	edje_object_signal_emit(ic->obj, "e,state,selected", "e");
 	edje_object_signal_emit(ic->obj_icon, "e,state,selected", "e");
      }
+   printf("realize %s full = %i\n", ic->info.file, (int)ic->info.removable_full);
+   if (ic->info.removable_full)
+     edje_object_signal_emit(ic->obj_icon, "e,state,removable,full", "e");
+//   else
+//     edje_object_signal_emit(ic->obj_icon, "e,state,removable,empty", "e");
 }
 
 static void
@@ -3286,6 +3959,8 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
    if (!desktop) goto error;
 //   if (desktop->type != EFREET_DESKTOP_TYPE_LINK) goto error;
 
+   ic->info.removable = 0;
+   ic->info.removable_full = 0;
    if (desktop->name)         ic->info.label   = evas_stringshare_add(desktop->name);
    if (desktop->generic_name) ic->info.generic = evas_stringshare_add(desktop->generic_name);
    if (desktop->comment)      ic->info.comment = evas_stringshare_add(desktop->comment);
@@ -3300,13 +3975,32 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 	if (type)
 	  {
 	     if (!strcmp(type, "Mount")) ic->info.mount = 1;
-	     else if (!strcmp(type, "Removable")) ic->info.removable = 1;
+	     else if (!strcmp(type, "Removable"))
+	       {
+		  ic->info.removable = 1;
+		  printf("REMOVABLE %s\n", ic->info.link);
+		  if ((!e_storage_find(ic->info.link)) &&
+		       (!e_volume_find(ic->info.link)))
+		    {
+		       printf("REMOVE IT\n");
+		       _e_fm2_live_file_del(ic->sd->obj, ic->info.file);
+		       efreet_desktop_free(desktop);
+		       goto error;
+		    }
+	       }
+	     type = ecore_hash_get(desktop->x, "X-Enlightenment-Removable-State");
+	     printf(" rem state type = %s\n", type);
+	     if (type)
+	       {
+		  if (!strcmp(type, "Full"))
+		    ic->info.removable_full = 1;
+	       }
 	  }
      }
 // FIXME: there is no way to just unref an efreet desktop - free completely
 // frees - doesnt just unref.
-//   efreet_desktop_free(desktop);
-//  
+   efreet_desktop_free(desktop);
+
    return 1;
    error:
    if (ic->info.label) evas_stringshare_del(ic->info.label);
@@ -4249,8 +4943,22 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
      }
    _e_fm2_dnd_drop_hide(sd->obj);
    _e_fm2_dnd_drop_all_hide(sd->obj);
+   _e_fm2_list_walking++;
    for (l = _e_fm2_list; l; l = l->next)
-     _e_fm2_dnd_finish(l->data, 0);
+     {
+	if ((_e_fm2_list_walking > 0) &&
+	    (evas_list_find(_e_fm2_list_remove, l->data))) continue;
+	_e_fm2_dnd_finish(l->data, 0);
+     }
+   _e_fm2_list_walking--;
+   if (_e_fm2_list_walking == 0)
+     {
+	while (_e_fm2_list_remove)
+	  {
+	     _e_fm2_list = evas_list_remove(_e_fm2_list, _e_fm2_list_remove->data);
+	     _e_fm2_list_remove = evas_list_remove_list(_e_fm2_list_remove, _e_fm2_list_remove);
+	  }
+     }
    evas_list_free(isel);
 }
 
@@ -5200,9 +5908,14 @@ _e_fm2_smart_del(Evas_Object *obj)
    if (sd->custom_theme_content) evas_stringshare_del(sd->custom_theme_content);
    if (sd->dev) evas_stringshare_del(sd->dev);
    if (sd->path) evas_stringshare_del(sd->path);
+   if (sd->mount)
+     {
+	printf("UM3\n");
+	_e_fm2_unmount(sd->mount);
+	sd->mount = NULL;
+     }
    if (sd->realpath)
      {
-	_e_fm2_removable_path_umount(sd->realpath);
 	evas_stringshare_del(sd->realpath);
      }
    sd->dev = sd->path = sd->realpath = NULL;
@@ -5216,7 +5929,10 @@ _e_fm2_smart_del(Evas_Object *obj)
    evas_object_del(sd->drop_in);
    evas_object_del(sd->clip);
    if (sd->drop_handler) e_drop_handler_del(sd->drop_handler);
-   _e_fm2_list = evas_list_remove(_e_fm2_list, sd->obj);
+   if (_e_fm2_list_walking == 0)
+     _e_fm2_list = evas_list_remove(_e_fm2_list, sd->obj);
+   else
+     _e_fm2_list_remove = evas_list_append(_e_fm2_list_remove, sd->obj);
    free(sd);
    e_fm2_custom_file_flush();
 }
@@ -6169,7 +6885,7 @@ _e_fm2_live_process(Evas_Object *obj)
       case FILE_CHANGE:
 	if (!strcmp(a->file, ".order"))
 	  {
-	     /* FIXME: reload fm view */
+	     /* FIXME: reload fm view - ignore for now */
 	  }
 	else
 	  {
@@ -6180,13 +6896,29 @@ _e_fm2_live_process(Evas_Object *obj)
 		       ic = l->data;
 		       if (!strcmp(ic->info.file, a->file))
 			 {
-			    int realized;
-			    
-			    realized = ic->realized;
-			    if (realized) _e_fm2_icon_unrealize(ic);
-			    _e_fm2_icon_unfill(ic);
-			    _e_fm2_icon_fill(ic, &(a->finf));
-			    if (realized) _e_fm2_icon_realize(ic);
+			    if (ic->removable_state_change)
+			      {
+				 _e_fm2_icon_unfill(ic);
+				 _e_fm2_icon_fill(ic, &(a->finf));
+				 ic->removable_state_change = 0;
+				 if ((ic->realized) && (ic->obj_icon))
+				   {
+				      if (ic->info.removable_full)
+					edje_object_signal_emit(ic->obj_icon, "e,state,removable,full", "e");
+				      else
+					edje_object_signal_emit(ic->obj_icon, "e,state,removable,empty", "e");
+				   }
+			      }
+			    else
+			      {
+				 int realized;
+				 
+				 realized = ic->realized;
+				 if (realized) _e_fm2_icon_unrealize(ic);
+				 _e_fm2_icon_unfill(ic);
+				 _e_fm2_icon_fill(ic, &(a->finf));
+				 if (realized) _e_fm2_icon_realize(ic);
+			      }
 			    break;
 			 }
 		    }
@@ -6257,483 +6989,6 @@ _e_fm2_cb_live_timer(void *data)
    if ((!sd->queue) && (!sd->live.idler)) return 0;
    sd->live.timer = ecore_timer_add(0.2, _e_fm2_cb_live_timer, data);
    return 0;
-}
-
-typedef struct _E_Fm2_Removable E_Fm2_Removable;
-
-struct _E_Fm2_Removable
-{
-   const char *uuid;
-   const char *label;
-   const char *mount;
-   int mounts;
-};
-
-static Evas_List *_e_fm2_removables = NULL;
-
-static const char *
-_e_fm2_removable_dev_label_get(const char *uuid)
-{
-   const char *lab = NULL;
-   char *rp1, *rp2, *file;
-   char buf[4096];
-   Ecore_List *files;
-   
-   // FIXME: 1. look in config - is there a mapping from uuid -> label
-   // FIXME: 2. look at dev info to get its label
-   snprintf(buf, sizeof(buf), "/dev/disk/by-uuid/%s", uuid);
-   /* FIXME: move to e_fm_main */
-   rp1 = ecore_file_realpath(buf);
-   /* FIXME: move to e_fm_main */
-   files = ecore_file_ls("/dev/disk/by-label");
-   if (files)
-     {
-	ecore_list_goto_first(files);
-	while ((file = ecore_list_current(files)))
-	  {
-	     snprintf(buf, sizeof(buf), "/dev/disk/by-label/%s", file);
-	     /* FIXME: move to e_fm_main */
-	     rp2 = ecore_file_realpath(buf);
-	     if ((rp1) && (rp2))
-	       {
-		  if (!strcmp(rp1, rp2))
-		    {
-		       lab = evas_stringshare_add(file);
-		       E_FREE(rp2);
-		       break;
-		    }
-	       }
-	     E_FREE(rp2);
-	     ecore_list_next(files);
-	  }
-	ecore_list_destroy(files);
-     }
-   E_FREE(rp1);
-   if (lab) return lab;
-   // FIXME: 3. use uuid
-   return evas_stringshare_add(uuid);
-}
-
-static void
-_e_fm2_event_removable_add_free(void *data, void *ev)
-{
-   E_Fm2_Removable_Add *e;
-   
-   e = ev;
-   if (e->uuid) evas_stringshare_del(e->uuid);
-   if (e->label) evas_stringshare_del(e->label);
-   if (e->mount) evas_stringshare_del(e->mount);
-   free(e);
-}
-
-static void
-_e_fm2_event_removable_del_free(void *data, void *ev)
-{
-   E_Fm2_Removable_Del *e;
-   
-   e = ev;
-   evas_stringshare_del(e->uuid);
-   evas_stringshare_del(e->label);
-   evas_stringshare_del(e->mount);
-   free(e);
-}
-
-static void
-_e_fm2_removable_dev_add(const char *uuid, const char *label)
-{
-   E_Fm2_Removable *rem;
-   FILE *f;
-   char buf[PATH_MAX], buf2[PATH_MAX];
-   
-   /* remove it - in case, so we don't add it twice */
-   _e_fm2_removable_dev_del(uuid, label);
-   printf("ADD DEV ------- %s %s\n", uuid, label);
-   rem = E_NEW(E_Fm2_Removable, 1);
-   if (uuid)
-     {
-	rem->uuid = evas_stringshare_add(uuid);
-	rem->label = _e_fm2_removable_dev_label_get(uuid);
-	snprintf(buf, sizeof(buf), "/media/disk_by-uuid_%s", uuid);
-	rem->mount = evas_stringshare_add(buf);
-	snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/|%s.desktop",
-		 e_user_homedir_get(), uuid);
-	snprintf(buf2, sizeof(buf2), "%s/Desktop/|%s.desktop",
-		 e_user_homedir_get(), uuid);
-	ecore_file_symlink(buf, buf2);
-     }
-   else if (label)
-     {
-	rem->uuid = NULL;
-	rem->label = evas_stringshare_add(label);
-	snprintf(buf, sizeof(buf), "/media/disk_by-label_%s", label);
-	rem->mount = evas_stringshare_add(buf);
-	snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/|%s.desktop",
-		 e_user_homedir_get(), label);
-	snprintf(buf2, sizeof(buf2), "%s/Desktop/|%s.desktop",
-		 e_user_homedir_get(), label);
-	ecore_file_symlink(buf, buf2);
-     }
-   _e_fm2_removables = evas_list_append(_e_fm2_removables, rem);
-   f = fopen(buf, "w");
-   if (f)
-     {
-	// FIXME: need to be able to find right icon - this means lookup
-	// custom icon based on uuid, label, etc. in user config
-	fprintf(f, 
-		"[Desktop Entry]\n"
-		"Encoding=UTF-8\n"
-		"Type=Link\n"
-		"X-Enlightenment-Type=Removable\n"
-		"Name=%s\n"
-		"Icon=%s\n"
-		"Comment=%s\n"
-		"URL=file:/%s"
-		,
-		rem->label,
-		"fileman/hd", 
-		_("Removable Device"),
-		rem->mount);
-	fclose(f);
-     }
-   // FIXME: need to maybe have some popup, dialog or other indicator pop up
-   // and maybe allow to click to open new removable device - maybe event
-   // and broadcast as below then have a module listen and pop up a popup
-   // like the pager module does - this popup could have a "open device"
-   // button or something to then browse it...
-     {
-	E_Fm2_Removable_Add *ev;
-	
-	ev = E_NEW(E_Fm2_Removable_Add, 1);
-	if (rem->uuid) ev->uuid = evas_stringshare_add(rem->uuid);
-	if (rem->label) ev->label = evas_stringshare_add(rem->label);
-	if (rem->mount) ev->mount = evas_stringshare_add(rem->mount);
-	ecore_event_add(E_EVENT_REMOVABLE_ADD, ev, _e_fm2_event_removable_add_free, NULL);
-     }
-}
-
-static void
-_e_fm2_removable_dev_del(const char *uuid, const char *label)
-{
-   E_Fm2_Removable *rem;
-   Evas_List *l;
-   char buf[4096];
-   
-   printf("DEL DEV ------- %s %s\n", uuid, label);
-   // FIXME: need to find all fm views for this dev and close them
-   _e_fm2_removable_dev_umount(uuid);
-   /* FIXME: move to e_fm_main */
-   snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/|%s.desktop",
-	    e_user_homedir_get(), uuid);
-   ecore_file_unlink(buf);
-   snprintf(buf, sizeof(buf), "%s/Desktop/|%s.desktop",
-	    e_user_homedir_get(), uuid);
-   ecore_file_unlink(buf);
-   for (l = _e_fm2_removables; l; l = l->next)
-     {
-	rem = l->data;
-	if (((uuid) && (!strcmp(uuid, rem->uuid))) ||
-	    ((label) && (!strcmp(label, rem->label))))
-	  {
-	     // FIXME: need to display popup or some other status here maybe
-	     // using module to listen to the below event?
-	       {
-		  E_Fm2_Removable_Del *ev;
-		  
-		  ev = E_NEW(E_Fm2_Removable_Del, 1);
-		  if (rem->uuid) ev->uuid = evas_stringshare_add(rem->uuid);
-		  if (rem->label) ev->label = evas_stringshare_add(rem->label);
-		  if (rem->mount) ev->mount = evas_stringshare_add(rem->mount);
-		  ecore_event_add(E_EVENT_REMOVABLE_DEL, ev, _e_fm2_event_removable_del_free, NULL);
-	       }
-	     if (rem->uuid) evas_stringshare_del(rem->uuid);
-	     if (rem->label) evas_stringshare_del(rem->label);
-	     if (rem->mount) evas_stringshare_del(rem->mount);
-	     free(rem);
-	     _e_fm2_removables = evas_list_remove_list(_e_fm2_removables, l);
-	     break;
-	  }
-     }
-}
-
-static void
-_e_fm2_removable_path_mount(const char *path)
-{
-   E_Fm2_Removable *rem;
-   Evas_List *l;
-
-   for (l = _e_fm2_removables; l; l = l->next)
-     {
-	rem = l->data;
-	if (!strcmp(path, rem->mount))
-	  {
-	     _e_fm2_removable_dev_mount(rem->uuid);
-	     break;
-	  }
-     }
-}
-
-static void
-_e_fm2_removable_path_umount(const char *path)
-{
-   E_Fm2_Removable *rem;
-   Evas_List *l;
-
-   for (l = _e_fm2_removables; l; l = l->next)
-     {
-	rem = l->data;
-	if (!strcmp(path, rem->mount))
-	  {
-	     _e_fm2_removable_dev_umount(rem->uuid);
-	     break;
-	  }
-     }
-}
-
-static void
-_e_fm2_removable_dev_mount(const char *uuid)
-{
-   // FIXME: this is hardcoded to use pmount - maybe allow other methods?
-   E_Fm2_Removable *rem;
-   Evas_List *l;
-   char buf[4096];
-   
-   for (l = _e_fm2_removables; l; l = l->next)
-     {
-	rem = l->data;
-	if (!strcmp(uuid, rem->uuid))
-	  {
-	     rem->mounts++;
-	     if (rem->mounts == 1)
-	       {
-		  Ecore_Exe *ex;
-		  
-		  snprintf(buf, sizeof(buf),
-			   "pmount -A /dev/disk/by-uuid/%s", uuid);
-		  e_util_library_path_strip();
-		  ex = ecore_exe_run(buf, NULL);
-		  snprintf(buf, sizeof(buf), "EFM/%s", rem->mount);
-		  ecore_exe_tag_set(ex, buf);
-		  e_util_library_path_restore();
-		  //// FIXME: set exe child handler - if exe tag is EFM/*
-		  //// then find efm view(s) for the mount path and
-		  //// refresh them
-	       }
-	     break;
-	  }
-     }
-}
-
-static void
-_e_fm2_removable_dev_umount(const char *uuid)
-{
-   // FIXME: this is hardcoded to use pmount - maybe allow other methods?
-   E_Fm2_Removable *rem;
-   Evas_List *l;
-   char buf[4096];
-   
-   for (l = _e_fm2_removables; l; l = l->next)
-     {
-	rem = l->data;
-	if (!strcmp(uuid, rem->uuid))
-	  {
-	     if (rem->mounts > 0) rem->mounts--;
-	     if (rem->mounts == 0)
-	       {
-		  snprintf(buf, sizeof(buf),
-			   "pumount /dev/disk/by-uuid/%s", uuid);
-		  e_util_library_path_strip();
-		  ecore_exe_run(buf, NULL);
-		  e_util_library_path_restore();
-	       }
-	     break;
-	  }
-     }
-}
-
-static void
-_e_fm2_removable_dev_label_set(const char *uuid, const char *label)
-{
-   // FIXME: save uuid -> label mapping in config
-}
-
-static int
-_e_fm2_cb_dbus_event_server_add(void *data, int ev_type, void *ev)
-{
-   Ecore_DBus_Event_Server_Add *event;
-   
-   event = ev;
-   if (event->server == _e_fm2_dbus)
-     {
-	ecore_dbus_method_name_has_owner(event->server, "org.freedesktop.Hal",
-					 _e_fm2_cb_dbus_method_name_has_owner,
-					 _e_fm2_cb_dbus_method_error, NULL);
-     }
-   return 1;
-}
-
-static int
-_e_fm2_cb_dbus_event_server_del(void *data, int ev_type, void *ev)
-{
-   Ecore_DBus_Event_Server_Del *event;
-   
-   event = ev;
-   if (event->server == _e_fm2_dbus)
-     {
-	while (_e_fm2_dbus_handlers)
-	  {
-	     if (_e_fm2_dbus_handlers->data) ecore_event_handler_del(_e_fm2_dbus_handlers->data);
-	     _e_fm2_dbus_handlers = evas_list_remove_list(_e_fm2_dbus_handlers, _e_fm2_dbus_handlers);
-	  }
-	_e_fm2_dbus = NULL;
-     }
-   return 1;
-}
-
-static int
-_e_fm2_cb_dbus_event_server_signal(void *data, int ev_type, void *ev)
-{
-   Ecore_DBus_Event_Signal *event;
-   
-   event = ev;
-   if (event->server == _e_fm2_dbus)
-     {
-	const char *bstr = "/org/freedesktop/Hal/devices/volume_uuid_";
-	const char *bstr2 = "/org/freedesktop/Hal/devices/volume_label_";
-	const char *bstr3 = "/org/freedesktop/Hal/devices/storage_serial_";
-	// /org/freedesktop/Hal/devices/storage_serial_PLEXTOR_DVDR_PX_740A_00D0A905301025695
-	int blen, blen2, blen3;
-	
-	blen = strlen(bstr);
-	blen2 = strlen(bstr2);
-	blen3 = strlen(bstr3);
-	if (!strcmp(event->header.member, "DeviceAdded"))
-	  {
-	     printf("E FM: DBus dev add:\n %s\n",
-		    (char *)event->args[0].value);
-	     if (!strncmp((char *)event->args[0].value, bstr, blen))
-	       {
-		  char *uuid, *p;
-		  
-		  uuid = strdup(((char *)event->args[0].value) + blen);
-		  printf("E FM: uuid = %s\n", uuid);
-		  for (p = uuid; *p; p++)
-		    {
-		       if (*p == '_') *p = '-';
-		    }
-		  printf("E FM: uuid-post = %s\n", uuid);
-		  _e_fm2_removable_dev_add(uuid, NULL);
-		  free(uuid);
-	       }
-	     /* cd/dvd's turn up as volumes only when inserted. also abov
-	      * bstr3 is what the cd/dvd device itself turns up as
-	      * when plugged in but no disk is in yet. volume label bstr2
-	      * is what determinies that
-	      */
-/*	     
-	     else if (!strncmp((char *)event->args[0].value, bstr2, blen2))
-	       {
-		  char *label, *p;
-		  
-		  label = strdup(((char *)event->args[0].value) + blen2);
-		  printf("E FM: label = %s\n", label);
-		  for (p = label; *p; p++)
-		    {
-		       if (*p == '_') *p = '-';
-		    }
-		  printf("E FM: label-post = %s\n", label);
-		  _e_fm2_removable_dev_add(NULL, label);
-		  free(label);
-	       }
- */
-	  }
-	else if (!strcmp(event->header.member, "DeviceRemoved"))
-	  {
-	     printf("E FM: DBus dev del:\n %s\n",
-		    (char *)event->args[0].value);
-	     if (!strncmp((char *)event->args[0].value, bstr, blen))
-	       {
-		  char *uuid, *p;
-		  
-		  uuid = strdup(((char *)event->args[0].value) + blen);
-		  for (p = uuid; *p; p++)
-		    {
-		       if (*p == '_') *p = '-';
-		    }
-		  _e_fm2_removable_dev_del(uuid, NULL);
-		  free(uuid);
-	       }
-/*	     
-	     else if (!strncmp((char *)event->args[0].value, bstr2, blen2))
-	       {
-		  char *label, *p;
-		  
-		  label = strdup(((char *)event->args[0].value) + blen2);
-		  for (p = label; *p; p++)
-		    {
-		       if (*p == '_') *p = '-';
-		    }
-		  _e_fm2_removable_dev_del(NULL, label);
-		  free(label);
-	       }
- */
-	  }
-     }
-   return 1;
-}
-
-static int
-_e_fm2_cb_dbus_event_child_exit(void *data, int ev_type, void *ev)
-{
-   Ecore_Exe_Event_Del *event;
-   char *path;
-   Evas_List *l;
-   
-   event = ev;
-   if (!event->exe) return 1;
-   if (!(ecore_exe_tag_get(event->exe) &&
-	 (!strncmp(ecore_exe_tag_get(event->exe), "EFM/", 4)))) return 1;
-   path = ecore_exe_tag_get(event->exe) + 4;
-   for (l = _e_fm2_list; l; l = l->next)
-     {
-	if (!strcmp(e_fm2_real_path_get(l->data), path))
-	  e_fm2_refresh(l->data);
-     }
-   return 1;
-}
-
-static void
-_e_fm2_cb_dbus_method_name_has_owner(void *data, Ecore_DBus_Method_Return *reply)
-{
-   unsigned int *exists;
-   
-   exists = reply->args[0].value;
-   if ((!exists) || (!*exists))
-     {
-	printf("E FM: DBus No HAL\n");
-     }
-   else
-     {
-	printf("E FM: DBus Add listener for devices\n");
-	ecore_dbus_method_add_match(reply->server,
-				    "type='signal',"
-				    "interface='org.freedesktop.Hal.Manager',"
-				    "sender='org.freedesktop.Hal',"
-				    "path='/org/freedesktop/Hal/Manager'",
-				    _e_fm2_cb_dbus_method_add_match,
-				    _e_fm2_cb_dbus_method_error, NULL);
-     }
-}
-
-static void
-_e_fm2_cb_dbus_method_add_match(void *data, Ecore_DBus_Method_Return *reply)
-{
-   printf("E FM: DBus Should be listening for device changes!\n");
-}
-
-static void
-_e_fm2_cb_dbus_method_error(void *data, const char *error)
-{
-   printf("E FM: DBus Error: %s\n", error);
 }
 
 static int

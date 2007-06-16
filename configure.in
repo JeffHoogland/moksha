@@ -188,6 +188,18 @@ e_cflags="-DUSE_E_CONFIG_H "$E_CFLAGS" "
 AC_SUBST(e_libs)
 AC_SUBST(e_cflags)
 
+PKG_CHECK_MODULES(E_DBUS, edbus, have_edbus=yes, have_edbus=no)
+PKG_CHECK_MODULES(E_HAL, ehal, have_ehal=yes, have_ehal=no)
+AC_SUBST(E_DBUS_LIBS)
+AC_SUBST(E_DBUS_CFLAGS)
+AC_SUBST(E_HAL_LIBS)
+AC_SUBST(E_HAL_CFLAGS)
+if test x$have_edbus = "xyes"; then
+  if test x$have_ehal = "xyes"; then
+    AC_DEFINE(HAVE_EDBUS, 1, [E_Dbus support])
+  fi
+fi
+
 profile="SLOW_PC"
 AC_ARG_WITH(profile,
 [  --with-profile=TARGET_PROFILE    specify a target format profile of:
