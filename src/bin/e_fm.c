@@ -186,6 +186,7 @@ struct _E_Fm2_Mount
    void        (*unmount_fail) (void *data);
    void         *data;
    
+   unsigned char mounted : 1;
    unsigned char delete_me : 1;
 };
 
@@ -495,6 +496,11 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
    if (dev) sd->dev = evas_stringshare_add(dev);
    sd->path = evas_stringshare_add(path);
    sd->realpath = _e_fm2_dev_path_map(sd->dev, sd->path);
+   _e_fm2_queue_free(obj);
+   _e_fm2_regions_free(obj);
+   _e_fm2_icons_free(obj);
+   edje_object_part_text_set(sd->overlay, "e.text.busy_label", "");
+   
    if ((sd->dev) && (!strncmp(sd->dev, "removable:", 10)))
      {
 	E_Volume *v;
@@ -512,12 +518,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
 	  }
      }
 
-   _e_fm2_queue_free(obj);
-   _e_fm2_regions_free(obj);
-   _e_fm2_icons_free(obj);
-   edje_object_part_text_set(sd->overlay, "e.text.busy_label", "");
-   
-   if (!sd->mount)
+   if ((!sd->mount) || (sd->mount->mounted))
      {
 	_e_fm2_client_monitor_add(sd->id, sd->realpath);
 	sd->listing = 1;
@@ -1378,11 +1379,14 @@ _e_fm2_mount_ok(const char *udi)
      {
 	m = l->data;
 	if ((!m->delete_me) && (!strcmp(m->udi, udi)) && (m->mount_ok))
-	  m->mount_ok(m->data);
-	if (m->timeout)
 	  {
-	     ecore_timer_del(m->timeout);
-	     m->timeout = NULL;
+	     m->mounted = 1;
+	     m->mount_ok(m->data);
+	     if (m->timeout)
+	       {
+		  ecore_timer_del(m->timeout);
+		  m->timeout = NULL;
+	       }
 	  }
      }
    _e_fm2_mount_flush();
@@ -1400,11 +1404,13 @@ _e_fm2_mount_fail(const char *udi)
      {
 	m = l->data;
 	if ((!m->delete_me) && (!strcmp(m->udi, udi)) && (m->mount_fail))
-	  m->mount_fail(m->data);
-	if (m->timeout)
 	  {
-	     ecore_timer_del(m->timeout);
-	     m->timeout = NULL;
+	     m->mount_fail(m->data);
+	     if (m->timeout)
+	       {
+		  ecore_timer_del(m->timeout);
+		  m->timeout = NULL;
+	       }
 	  }
      }
    _e_fm2_mount_flush();
@@ -1422,11 +1428,14 @@ _e_fm2_unmount_ok(const char *udi)
      {
 	m = l->data;
 	if ((!m->delete_me) && (!strcmp(m->udi, udi)) && (m->unmount_ok))
-	  m->unmount_ok(m->data);
-	if (m->timeout)
 	  {
-	     ecore_timer_del(m->timeout);
-	     m->timeout = NULL;
+	     m->mounted = 0;
+	     m->unmount_ok(m->data);
+	     if (m->timeout)
+	       {
+		  ecore_timer_del(m->timeout);
+		  m->timeout = NULL;
+	       }
 	  }
      }
    _e_fm2_mount_flush();
@@ -1444,11 +1453,13 @@ _e_fm2_unmount_fail(const char *udi)
      {
 	m = l->data;
 	if ((!m->delete_me) && (!strcmp(m->udi, udi)) && (m->unmount_fail))
-	  m->unmount_fail(m->data);
-	if (m->timeout)
 	  {
-	     ecore_timer_del(m->timeout);
-	     m->timeout = NULL;
+	     m->unmount_fail(m->data);
+	     if (m->timeout)
+	       {
+		  ecore_timer_del(m->timeout);
+		  m->timeout = NULL;
+	       }
 	  }
      }
    _e_fm2_mount_flush();
@@ -1472,6 +1483,7 @@ _e_fm2_mount(E_Volume *v, void (*mount_ok) (void *data), void (*mount_fail) (voi
    E_Fm2_Mount *m, *m2;
    Evas_List *l;
    int exists = 0;
+   int mounted = 0;
 
    m = calloc(1, sizeof(E_Fm2_Mount));
    if (!m) return NULL;
@@ -1481,14 +1493,18 @@ _e_fm2_mount(E_Volume *v, void (*mount_ok) (void *data), void (*mount_fail) (voi
 	if (!strcmp(v->udi, m2->udi))
 	  {
 	     exists = 1;
+	     mounted = m2->mounted;
 	     break;
 	  }
      }
-   m->udi         = evas_stringshare_add(v->udi);
-   m->mount_point = evas_stringshare_add(v->mount_point);
+   m->udi          = evas_stringshare_add(v->udi);
+   m->mount_point  = evas_stringshare_add(v->mount_point);
    m->mount_ok     = mount_ok;
    m->mount_fail   = mount_fail;
-   m->data        = data;
+   m->unmount_ok   = unmount_ok;
+   m->unmount_fail = unmount_fail;
+   m->data         = data;
+   m->mounted      = mounted;
    if (!exists)
      {
 	m->timeout = ecore_timer_add(10.0, _e_fm2_cb_mount_timeout, m);
