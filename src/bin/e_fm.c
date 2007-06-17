@@ -3956,9 +3956,11 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 
    desktop = efreet_desktop_get(buf);
+   printf("efreet_desktop_get(5s) = %p\n", buf, desktop);
    if (!desktop) goto error;
 //   if (desktop->type != EFREET_DESKTOP_TYPE_LINK) goto error;
 
+   printf("  mod time %lli\n", desktop->load_time);
    ic->info.removable = 0;
    ic->info.removable_full = 0;
    if (desktop->name)         ic->info.label   = evas_stringshare_add(desktop->name);
@@ -6907,6 +6909,7 @@ _e_fm2_live_process(Evas_Object *obj)
 					edje_object_signal_emit(ic->obj_icon, "e,state,removable,full", "e");
 				      else
 					edje_object_signal_emit(ic->obj_icon, "e,state,removable,empty", "e");
+				      _e_fm2_icon_label_set(ic, ic->obj);
 				   }
 			      }
 			    else
