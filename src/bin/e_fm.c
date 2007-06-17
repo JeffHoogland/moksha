@@ -2502,7 +2502,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 			 v->mount_point = strdup(v->uuid);
 		       else if (v->label)
 			 v->mount_point = strdup(v->label);
-		       else if (v->storage->serial)
+		       else if ((v->storage) && (v->storage->serial))
 			 v->mount_point = strdup(v->storage->serial);
 		       else
 			 {
