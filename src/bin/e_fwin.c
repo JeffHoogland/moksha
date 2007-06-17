@@ -420,7 +420,7 @@ _e_fwin_changed(void *data, Evas_Object *obj, void *event_info)
     * or overlay
     */
    snprintf(buf, sizeof(buf), "%s/.directory.desktop", e_fm2_real_path_get(fwin->fm_obj));
-   ef = efreet_desktop_get(buf);
+   ef = efreet_desktop_new(buf);
    if (ef)
      {
 	fwin->wallpaper_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->wallpaper_file, "X-Enlightenment-Directory-Wallpaper");
@@ -846,13 +846,14 @@ _e_fwin_file_exec(E_Fwin *fwin, E_Fm2_Icon_Info *ici, E_Fwin_Exec_Type ext)
 	break;
       case E_FWIN_EXEC_DESKTOP:
 	snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(fwin->fm_obj), ici->file);
-	desktop = efreet_desktop_get(buf);
+	desktop = efreet_desktop_new(buf);
 	if (desktop)
 	  {
 	     if (fwin->win)
 	       e_exec(fwin->win->border->zone, desktop, NULL, NULL, NULL);
 	     else if (fwin->zone)
 	       e_exec(fwin->zone, desktop, NULL, NULL, NULL);
+	     efreet_desktop_free(desktop);
 	  }
 	break;
       default:

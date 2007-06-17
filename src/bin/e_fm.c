@@ -1081,7 +1081,7 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 		       Efreet_Desktop *ef;
 		       
 		       snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
-		       ef = efreet_desktop_get(buf);
+		       ef = efreet_desktop_new(buf);
 		       if (ef) oic = e_util_desktop_icon_add(ef, "48x48", evas);
 		       if (type_ret) *type_ret = "DESKTOP";
 		       // FIXME: there is no way to just unref an efreet desktop - free completely
@@ -1159,7 +1159,7 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 		 
 		  oic = NULL; 
 		  snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
-		  ef = efreet_desktop_get(buf);
+		  ef = efreet_desktop_new(buf);
 		  if (ef) oic = e_util_desktop_icon_add(ef, "48x48", evas);
 		  if (type_ret) *type_ret = "DESKTOP";
 // FIXME: there is no way to just unref an efreet desktop - free completely
@@ -1233,7 +1233,7 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 		  Efreet_Desktop *ef;
 
 		  oic = NULL; 
-		  ef = efreet_desktop_get(buf);
+		  ef = efreet_desktop_new(buf);
 		  if (ef) oic = e_util_desktop_icon_add(ef, "48x48", evas);
 		  if (type_ret) *type_ret = "DESKTOP";
 // FIXME: there is no way to just unref an efreet desktop - free completely
@@ -2127,7 +2127,7 @@ _e_storage_write(E_Storage *s)
 	/* FIXME: manipulate icon directly */
 	_e_fm2_file_force_update(buf);
 	_e_fm2_file_force_update(buf2);
-	efreet_desktop_cache_flush();
+//	efreet_desktop_cache_flush();
      }
 }
 
@@ -2198,7 +2198,7 @@ _e_volume_write(E_Volume *v)
 	/* FIXME: manipulate icon directly */
 	_e_fm2_file_force_update(buf);
 	_e_fm2_file_force_update(buf2);
-	efreet_desktop_cache_flush();
+//	efreet_desktop_cache_flush();
      }
 }
 
@@ -4011,8 +4011,8 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
    
    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 
-   desktop = efreet_desktop_get(buf);
-   printf("efreet_desktop_get(%s) = %p\n", buf, desktop);
+   desktop = efreet_desktop_new(buf);
+   printf("efreet_desktop_new(%s) = %p\n", buf, desktop);
    if (!desktop) goto error;
 //   if (desktop->type != EFREET_DESKTOP_TYPE_LINK) goto error;
 
