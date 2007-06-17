@@ -1084,8 +1084,6 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 		       ef = efreet_desktop_new(buf);
 		       if (ef) oic = e_util_desktop_icon_add(ef, "48x48", evas);
 		       if (type_ret) *type_ret = "DESKTOP";
-		       // FIXME: there is no way to just unref an efreet desktop - free completely
-		       // frees - doesnt just unref.
 		       if (ef) efreet_desktop_free(ef);
 		    }
 	       }
@@ -1162,8 +1160,6 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 		  ef = efreet_desktop_new(buf);
 		  if (ef) oic = e_util_desktop_icon_add(ef, "48x48", evas);
 		  if (type_ret) *type_ret = "DESKTOP";
-// FIXME: there is no way to just unref an efreet desktop - free completely
-// frees - doesnt just unref.
 		  if (ef) efreet_desktop_free(ef);
 	       }
 	     else if (!strncmp(icon, "e/icons/fileman/mime/", 21))
@@ -1236,8 +1232,6 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 		  ef = efreet_desktop_new(buf);
 		  if (ef) oic = e_util_desktop_icon_add(ef, "48x48", evas);
 		  if (type_ret) *type_ret = "DESKTOP";
-// FIXME: there is no way to just unref an efreet desktop - free completely
-// frees - doesnt just unref.
 		  if (ef) efreet_desktop_free(ef);
 	       }
 	     else if (e_util_glob_case_match(ic->info.file, "*.imc"))
@@ -4056,8 +4050,6 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 	       }
 	  }
      }
-// FIXME: there is no way to just unref an efreet desktop - free completely
-// frees - doesnt just unref.
    efreet_desktop_free(desktop);
 
    return 1;
