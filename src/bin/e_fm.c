@@ -2078,24 +2078,34 @@ _e_storage_write(E_Storage *s)
    f = fopen(buf, "w");
    if (f)
      {
+        char label[1024];
+	
+	if ((s->vendor) && (s->model))
+	  snprintf(label, sizeof(label), "%s %s", s->vendor, s->model);
+	else if (s->model)
+	  snprintf(label, sizeof(label), "%s", s->model);
+	else if (s->vendor)
+	  snprintf(label, sizeof(label), "%s", s->vendor);
+	else
+	  snprintf(label, sizeof(label), _("Unknown Data"));
 	fprintf(f,
 		"[Desktop Entry]\n"
 		"Encoding=UTF-8\n"
 		"Type=Link\n"
 		"X-Enlightenment-Type=Removable\n"
 		"X-Enlightenment-Removable-State=Empty\n"
-		"Name=%s %s\n"
+		"Name=%s\n"
 		"Icon=%s\n"
 		"Comment=%s\n"
 		"URL=file:/%s\n"
 		,
-		s->vendor, s->model,
+		label,
 		"fileman/hd", /* FIXME different based on state and storage */
 		_("Removable Device"),
 		s->udi);
 	fclose(f);
 	snprintf(buf2, sizeof(buf2), "%s/Desktop/|%s.desktop",
-		 e_user_homedir_get(), s->serial);
+		 e_user_homedir_get(), id);
 //	ecore_file_unlink(buf2);
 	ecore_file_symlink(buf, buf2);
 	/* FIXME: manipulate icon directly */
@@ -2141,8 +2151,14 @@ _e_volume_write(E_Volume *v)
 	  snprintf(label, sizeof(label), "%s", v->label);
 	else if (v->partition_label)
 	  snprintf(label, sizeof(label), "%s", v->partition_label);
-	else 
+	else  if ((v->storage->vendor) && (v->storage->model))
 	  snprintf(label, sizeof(label), "%s %s", v->storage->vendor, v->storage->model);
+	else if (v->storage->model)
+	  snprintf(label, sizeof(label), "%s", v->storage->model);
+	else if (v->storage->vendor)
+	  snprintf(label, sizeof(label), "%s", v->storage->vendor);
+	else
+	  snprintf(label, sizeof(label), _("Unknown Data"));
 	fprintf(f,
 		"[Desktop Entry]\n"
 		"Encoding=UTF-8\n"
@@ -2160,7 +2176,7 @@ _e_volume_write(E_Volume *v)
 		v->udi);
 	fclose(f);
 	snprintf(buf2, sizeof(buf2), "%s/Desktop/|%s.desktop",
-		 e_user_homedir_get(), v->storage->serial);
+		 e_user_homedir_get(), id);
 //	ecore_file_unlink(buf2);
 	ecore_file_symlink(buf, buf2);
 	/* FIXME: manipulate icon directly */
