@@ -2456,7 +2456,23 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 		  printf("VOL+\n  udi: %s\n  uuid: %s\n  fstype: %s\n  label: %s\n  partition: %d\n  partition_label: %s\n  mounted: %d\n  mount_point: %s\n  parent: %s\n", v->udi, v->uuid, v->fstype,  v->label, v->partition, v->partition ? v->partition_label : "(not a partition)", v->mounted, v->mount_point, v->parent);
 		  s = e_storage_find(v->parent);
 		  if (!v->mount_point)
-		    v->mount_point = strdup(v->uuid);
+		    {
+		       if (v->uuid)
+			 v->mount_point = strdup(v->uuid);
+		       else if (v->label)
+			 v->mount_point = strdup(v->label);
+		       else if (v->storage->serial)
+			 v->mount_point = strdup(v->storage->serial);
+		       else
+			 {
+			    char buf[256];
+			    static int mount_count = 0;
+			    
+			    snprintf(buf, sizeof(buf), "unknown-%i\n", mount_count);
+			    mount_count++;
+			    v->mount_point = strdup(buf);
+			 }
+		    }
 		  if (s)
 		    {
 		       v->storage = s;
