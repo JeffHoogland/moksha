@@ -182,7 +182,7 @@ _e_order_read(E_Order *eo)
    f = fopen(eo->path, "rb");
    if (f)
      {
-	char buf[4096], buf2[PATH_MAX];
+	char buf[4096];
 
 	while (fgets(buf, sizeof(buf), f))
 	  {

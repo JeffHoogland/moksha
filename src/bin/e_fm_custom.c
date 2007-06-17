@@ -152,9 +152,7 @@ e_fm2_custom_file_rename(const char *path, const char *new_path)
 {
    E_Fm2_Custom_File *cf, *cf2;
    Evas_List *list, *l;
-   void *dat;
-   int size;
-   
+
    _e_fm2_custom_file_info_load();
    if (!_e_fm2_custom_file) return;
    if (_e_fm2_flush_timer) e_fm2_custom_file_flush();

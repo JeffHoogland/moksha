@@ -4012,11 +4012,11 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
 
    desktop = efreet_desktop_get(buf);
-   printf("efreet_desktop_get(5s) = %p\n", buf, desktop);
+   printf("efreet_desktop_get(%s) = %p\n", buf, desktop);
    if (!desktop) goto error;
 //   if (desktop->type != EFREET_DESKTOP_TYPE_LINK) goto error;
 
-   printf("  mod time %lli\n", desktop->load_time);
+   printf("  mod time %f\n", desktop->load_time);
    ic->info.removable = 0;
    ic->info.removable_full = 0;
    if (desktop->name)         ic->info.label   = evas_stringshare_add(desktop->name);
