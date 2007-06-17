@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-06-12 17:59+0900\n"
+"POT-Creation-Date: 2007-06-17 23:16+0900\n"
 "PO-Revision-Date: 2007-06-12 23:12+0900\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: E17-jp <LL@li.org>\n"
@@ -58,14 +58,14 @@ msgstr "本当にこのウィンドウを強制終了しますか"
 
 #: src/bin/e_actions.c:321 src/bin/e_actions.c:1609 src/bin/e_actions.c:1680
 #: src/bin/e_actions.c:1739 src/bin/e_actions.c:1798 src/bin/e_actions.c:1857
-#: src/bin/e_actions.c:1916 src/bin/e_confirm_dialog.c:47 src/bin/e_fm.c:5935
+#: src/bin/e_actions.c:1916 src/bin/e_confirm_dialog.c:47 src/bin/e_fm.c:6710
 #: src/bin/e_int_config_display.c:214 src/bin/e_module.c:455
 msgid "Yes"
 msgstr "はい"
 
 #: src/bin/e_actions.c:323 src/bin/e_actions.c:1611 src/bin/e_actions.c:1682
 #: src/bin/e_actions.c:1741 src/bin/e_actions.c:1800 src/bin/e_actions.c:1859
-#: src/bin/e_actions.c:1918 src/bin/e_confirm_dialog.c:48 src/bin/e_fm.c:5936
+#: src/bin/e_actions.c:1918 src/bin/e_confirm_dialog.c:48 src/bin/e_fm.c:6711
 #: src/bin/e_int_config_display.c:215 src/bin/e_module.c:456
 msgid "No"
 msgstr "いいえ"
@@ -158,7 +158,7 @@ msgid "Lower"
 msgstr "下げる"
 
 #: src/bin/e_actions.c:2037 src/bin/e_config_dialog.c:226
-#: src/bin/e_configure.c:113 src/bin/e_fwin.c:1118
+#: src/bin/e_configure.c:113 src/bin/e_fwin.c:1121
 #: src/bin/e_int_border_menu.c:318 src/bin/e_int_border_prop.c:81
 msgid "Close"
 msgstr "閉じる"
@@ -696,16 +696,15 @@ msgstr "アプリケーション"
 msgid "New Application"
 msgstr "新しいアプリケーション"
 
-#: src/bin/e_configure.c:408 src/bin/e_int_config_apps_order.c:76
-#: src/bin/e_int_config_apps_order.c:90
+#: src/bin/e_configure.c:408
 msgid "IBar Applications"
 msgstr "IBarアプリケーション"
 
-#: src/bin/e_configure.c:409 src/bin/e_int_config_apps_order.c:126
+#: src/bin/e_configure.c:409
 msgid "Restart Applications"
 msgstr "再起動アプリケーション"
 
-#: src/bin/e_configure.c:410 src/bin/e_int_config_apps_order.c:108
+#: src/bin/e_configure.c:410
 msgid "Startup Applications"
 msgstr "スタートアップアプリケーション"
 
@@ -766,7 +765,7 @@ msgstr "ウィンドウの動作"
 msgid "Menus"
 msgstr "メニュー"
 
-#: src/bin/e_configure.c:430 src/bin/e_int_config_apps_menu.c:40
+#: src/bin/e_configure.c:430
 msgid "Favorites Menu"
 msgstr "お気に入りメニュー"
 
@@ -1331,73 +1330,81 @@ msgid ""
 "should let you select your<br>modules again."
 msgstr ""
 
-#: src/bin/e_fm.c:2210
+#: src/bin/e_fm.c:2107 src/bin/e_fm.c:2178
+#, fuzzy, c-format
+msgid "Unknown Data"
+msgstr "不明"
+
+#: src/bin/e_fm.c:2121 src/bin/e_fm.c:2192
+msgid "Removable Device"
+msgstr "着脱可能媒体"
+
+#: src/bin/e_fm.c:2931
 #, c-format
 msgid "%i Files"
 msgstr "ファイル数 %i"
 
-#: src/bin/e_fm.c:5376 src/bin/e_fm.c:5518
+#: src/bin/e_fm.c:6151 src/bin/e_fm.c:6293
 msgid "Refresh View"
 msgstr "内容を更新する"
 
-#: src/bin/e_fm.c:5387 src/bin/e_fm.c:5529
+#: src/bin/e_fm.c:6162 src/bin/e_fm.c:6304
 msgid "Show Hidden Files"
 msgstr "隠しファイルを表示する"
 
-#: src/bin/e_fm.c:5402 src/bin/e_fm.c:5544
+#: src/bin/e_fm.c:6177 src/bin/e_fm.c:6319
 msgid "Remember Ordering"
 msgstr "順序をを記憶する"
 
-#: src/bin/e_fm.c:5414 src/bin/e_fm.c:5556
+#: src/bin/e_fm.c:6189 src/bin/e_fm.c:6331
 msgid "Sort Now"
 msgstr "ただちにソートする"
 
-#: src/bin/e_fm.c:5432 src/bin/e_fm.c:5574 src/bin/e_int_config_paths.c:210
+#: src/bin/e_fm.c:6207 src/bin/e_fm.c:6349 src/bin/e_int_config_paths.c:210
 msgid "New Directory"
 msgstr "新しいディレクトリ"
 
-#: src/bin/e_fm.c:5633 src/bin/e_int_config_shelf.c:83
-#: src/bin/e_int_config_apps_menu.c:90 src/bin/e_int_config_apps_order.c:192
-#: src/bin/e_entry.c:386 src/modules/ibar/e_mod_config.c:111
+#: src/bin/e_fm.c:6408 src/bin/e_int_config_shelf.c:83 src/bin/e_entry.c:386
+#: src/modules/ibar/e_mod_config.c:111
 msgid "Delete"
 msgstr "削除"
 
-#: src/bin/e_fm.c:5644
+#: src/bin/e_fm.c:6419
 msgid "Rename"
 msgstr "名前変更"
 
-#: src/bin/e_fm.c:5654
+#: src/bin/e_fm.c:6429
 msgid "Properties"
 msgstr "プロパティ"
 
-#: src/bin/e_fm.c:5778
+#: src/bin/e_fm.c:6553
 msgid "Create a new Directory"
 msgstr "ディレクトリを新規作成する"
 
-#: src/bin/e_fm.c:5779
+#: src/bin/e_fm.c:6554
 msgid "New Directory Name:"
 msgstr "新しいディレクトリ名"
 
-#: src/bin/e_fm.c:5838
+#: src/bin/e_fm.c:6613
 #, c-format
 msgid "Rename %s to:"
 msgstr "名前を %s から変更:"
 
-#: src/bin/e_fm.c:5840
+#: src/bin/e_fm.c:6615
 msgid "Rename File"
 msgstr "ファイル名を変更する"
 
 #
-#: src/bin/e_fm.c:5938
+#: src/bin/e_fm.c:6713
 msgid "Confirm Delete"
 msgstr "削除確認"
 
-#: src/bin/e_fm.c:5942
+#: src/bin/e_fm.c:6717
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "以下を本当に削除しますか.<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:5948
+#: src/bin/e_fm.c:6723
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
@@ -1405,10 +1412,6 @@ msgid ""
 msgstr ""
 "以下にある %d 個のファイルが選択されました.<br><hilight>%s</hilight><br>これ"
 "らを本当に削除しますか？"
-
-#: src/bin/e_fm.c:6394
-msgid "Removable Device"
-msgstr "着脱可能媒体"
 
 #: src/bin/e_fm_prop.c:108
 msgid "File Properties"
@@ -1489,20 +1492,19 @@ msgstr "画像を選択する"
 msgid "Go to Parent Directory"
 msgstr "上のディレクトリへ移動"
 
-#: src/bin/e_fwin.c:539 src/bin/e_fwin.c:1116
+#: src/bin/e_fwin.c:539 src/bin/e_fwin.c:1119
 msgid "Open"
 msgstr "開く"
 
-#: src/bin/e_fwin.c:546 src/bin/e_fwin.c:1114
+#: src/bin/e_fwin.c:546 src/bin/e_fwin.c:1117
 msgid "Open with..."
 msgstr "開くツール..."
 
-#: src/bin/e_fwin.c:1134
+#: src/bin/e_fwin.c:1137
 msgid "Specific Applications"
 msgstr "アプリケーション"
 
-#: src/bin/e_fwin.c:1156 src/bin/e_int_config_apps_menu.c:79
-#: src/bin/e_int_config_apps_order.c:181
+#: src/bin/e_fwin.c:1159
 msgid "All Applications"
 msgstr "全アプリケーション"
 
@@ -5060,7 +5062,6 @@ msgid "Configured Shelves"
 msgstr "利用可能なシェルフ"
 
 #: src/bin/e_int_config_shelf.c:81 src/bin/e_widget_config_list.c:87
-#: src/bin/e_int_config_apps_menu.c:86 src/bin/e_int_config_apps_order.c:188
 #: src/modules/ibar/e_mod_config.c:109
 msgid "Add"
 msgstr "追加"
@@ -6093,10 +6094,6 @@ msgstr "%li 時間前"
 msgid "%li Minutes ago"
 msgstr "%li 分前"
 
-#: src/bin/e_int_config_apps_menu.c:95
-msgid "Favorites"
-msgstr "お気に入り"
-
 #: src/bin/e_int_config_modules.c:65
 msgid "Module Settings"
 msgstr "モジュールの設定"
@@ -6937,6 +6934,9 @@ msgid ""
 msgstr ""
 "Linux の <hilight>ACPI 温度センサー</hilight>を読みとるモジュールです.<br>大"
 "量に発熱する高速 CPU を装備した最近のラップトップでは特に便利です."
+
+#~ msgid "Favorites"
+#~ msgstr "お気に入り"
 
 #~ msgid "Window Frame"
 #~ msgstr "ウィンドウフレーム"

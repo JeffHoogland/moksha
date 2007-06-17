@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-05-05 23:22+0900\n"
+"POT-Creation-Date: 2007-06-17 23:16+0900\n"
 "PO-Revision-Date: 2006-05-13 14:34+0200\n"
 "Last-Translator: Peter Parkanyi \n"
 "Language-Team: Hungarian <HU@li.org>\n"
@@ -18,9 +18,9 @@ msgstr ""
 msgid "About Enlightenment"
 msgstr "Az Enlightenmentrõl"
 
-#: src/bin/e_about.c:74 src/bin/e_actions.c:2201 src/bin/e_actions.c:2205
-#: src/bin/e_actions.c:2209 src/bin/e_actions.c:2213 src/bin/e_main.c:851
-#: src/bin/e_int_menus.c:158
+#: src/bin/e_about.c:74 src/bin/e_actions.c:2271 src/bin/e_actions.c:2275
+#: src/bin/e_actions.c:2279 src/bin/e_actions.c:2283 src/bin/e_main.c:831
+#: src/bin/e_int_menus.c:163
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
@@ -49,7 +49,7 @@ msgstr ""
 msgid "<title>The Team</title>"
 msgstr "<title>A Csapat<title><br>"
 
-#: src/bin/e_actions.c:295
+#: src/bin/e_actions.c:306
 #, c-format
 msgid ""
 "You are about to kill %s.<br><br>Please keep in mind that all data of this "
@@ -57,54 +57,54 @@ msgid ""
 "you want to kill this window?"
 msgstr ""
 
-#: src/bin/e_actions.c:308
+#: src/bin/e_actions.c:318
 #, fuzzy
 msgid "Are you sure you want to kill this window?"
 msgstr "Tényleg ki akarsz lépni?"
 
-#: src/bin/e_actions.c:311 src/bin/e_actions.c:1589 src/bin/e_actions.c:1650
-#: src/bin/e_actions.c:1699 src/bin/e_actions.c:1748 src/bin/e_actions.c:1797
-#: src/bin/e_actions.c:1846 src/bin/e_confirm_dialog.c:47 src/bin/e_fm.c:5197
-#: src/bin/e_int_config_display.c:215 src/bin/e_module.c:455
+#: src/bin/e_actions.c:321 src/bin/e_actions.c:1609 src/bin/e_actions.c:1680
+#: src/bin/e_actions.c:1739 src/bin/e_actions.c:1798 src/bin/e_actions.c:1857
+#: src/bin/e_actions.c:1916 src/bin/e_confirm_dialog.c:47 src/bin/e_fm.c:6710
+#: src/bin/e_int_config_display.c:214 src/bin/e_module.c:455
 msgid "Yes"
 msgstr "Igen"
 
-#: src/bin/e_actions.c:313 src/bin/e_actions.c:1591 src/bin/e_actions.c:1652
-#: src/bin/e_actions.c:1701 src/bin/e_actions.c:1750 src/bin/e_actions.c:1799
-#: src/bin/e_actions.c:1848 src/bin/e_confirm_dialog.c:48 src/bin/e_fm.c:5198
-#: src/bin/e_int_config_display.c:216 src/bin/e_module.c:456
+#: src/bin/e_actions.c:323 src/bin/e_actions.c:1611 src/bin/e_actions.c:1682
+#: src/bin/e_actions.c:1741 src/bin/e_actions.c:1800 src/bin/e_actions.c:1859
+#: src/bin/e_actions.c:1918 src/bin/e_confirm_dialog.c:48 src/bin/e_fm.c:6711
+#: src/bin/e_int_config_display.c:215 src/bin/e_module.c:456
 msgid "No"
 msgstr "Nem"
 
-#: src/bin/e_actions.c:1582
+#: src/bin/e_actions.c:1602
 msgid "Are you sure you want to exit?"
 msgstr "Tényleg ki akarsz lépni?"
 
-#: src/bin/e_actions.c:1584
+#: src/bin/e_actions.c:1604
 msgid ""
 "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
 msgstr ""
 "Az Enlightenmentbõl való kilépést választottad.<br><br>Biztos, hogy ezt "
 "akarod?"
 
-#: src/bin/e_actions.c:1643
+#: src/bin/e_actions.c:1673
 #, fuzzy
 msgid "Are you sure you want to log out?"
 msgstr "Tényleg ki akarsz lépni?"
 
-#: src/bin/e_actions.c:1645
+#: src/bin/e_actions.c:1675
 #, fuzzy
 msgid "You are about to log out.<br><br>Are you sure you want to do this?"
 msgstr ""
 "Az Enlightenmentbõl való kilépést választottad.<br><br>Biztos, hogy ezt "
 "akarod?"
 
-#: src/bin/e_actions.c:1692 src/bin/e_actions.c:1790
+#: src/bin/e_actions.c:1732 src/bin/e_actions.c:1850
 #, fuzzy
 msgid "Are you sure you want to turn off?"
 msgstr "Tényleg ki akarsz lépni?"
 
-#: src/bin/e_actions.c:1694
+#: src/bin/e_actions.c:1734
 #, fuzzy
 msgid ""
 "You requested to turn off your Computer.<br><br>Are you sure you want to "
@@ -113,12 +113,12 @@ msgstr ""
 "Az Enlightenmentbõl való kilépést választottad.<br><br>Biztos, hogy ezt "
 "akarod?"
 
-#: src/bin/e_actions.c:1741
+#: src/bin/e_actions.c:1791
 #, fuzzy
 msgid "Are you sure you want to reboot?"
 msgstr "Tényleg ki akarsz lépni?"
 
-#: src/bin/e_actions.c:1743
+#: src/bin/e_actions.c:1793
 #, fuzzy
 msgid ""
 "You requested to reboot your Computer.<br><br>Are you sure you want to "
@@ -127,7 +127,7 @@ msgstr ""
 "Az Enlightenmentbõl való kilépést választottad.<br><br>Biztos, hogy ezt "
 "akarod?"
 
-#: src/bin/e_actions.c:1792
+#: src/bin/e_actions.c:1852
 #, fuzzy
 msgid ""
 "You requested to suspend your Computer.<br><br>Are you sure you want to "
@@ -136,12 +136,12 @@ msgstr ""
 "Az Enlightenmentbõl való kilépést választottad.<br><br>Biztos, hogy ezt "
 "akarod?"
 
-#: src/bin/e_actions.c:1839
+#: src/bin/e_actions.c:1909
 #, fuzzy
 msgid "Are you sure you want to hibernate?"
 msgstr "Tényleg ki akarsz lépni?"
 
-#: src/bin/e_actions.c:1841
+#: src/bin/e_actions.c:1911
 #, fuzzy
 msgid ""
 "You requested to hibernate your Computer.<br><br>Are you sure you want to "
@@ -150,384 +150,385 @@ msgstr ""
 "Az Enlightenmentbõl való kilépést választottad.<br><br>Biztos, hogy ezt "
 "akarod?"
 
-#: src/bin/e_actions.c:1929 src/bin/e_actions.c:1939 src/bin/e_actions.c:1957
-#: src/bin/e_actions.c:1962 src/bin/e_actions.c:1967 src/bin/e_actions.c:1972
-#: src/bin/e_actions.c:2124 src/bin/e_actions.c:2129 src/bin/e_actions.c:2135
-#: src/bin/e_actions.c:2141 src/bin/e_actions.c:2147
+#: src/bin/e_actions.c:1999 src/bin/e_actions.c:2009 src/bin/e_actions.c:2027
+#: src/bin/e_actions.c:2032 src/bin/e_actions.c:2037 src/bin/e_actions.c:2042
+#: src/bin/e_actions.c:2194 src/bin/e_actions.c:2199 src/bin/e_actions.c:2205
+#: src/bin/e_actions.c:2211 src/bin/e_actions.c:2217
 msgid "Window : Actions"
 msgstr "Ablak : Akciók"
 
-#: src/bin/e_actions.c:1929
+#: src/bin/e_actions.c:1999
 #, fuzzy
 msgid "Move"
 msgstr "Fel"
 
-#: src/bin/e_actions.c:1939
+#: src/bin/e_actions.c:2009
 #, fuzzy
 msgid "Resize"
 msgstr "Ellenállás"
 
-#: src/bin/e_actions.c:1949 src/bin/e_actions.c:2168 src/bin/e_actions.c:2170
-#: src/bin/e_actions.c:2172 src/bin/e_actions.c:2174 src/bin/e_actions.c:2176
+#: src/bin/e_actions.c:2019 src/bin/e_actions.c:2238 src/bin/e_actions.c:2240
+#: src/bin/e_actions.c:2242 src/bin/e_actions.c:2244 src/bin/e_actions.c:2246
 #: src/bin/e_int_config_mousebindings.c:345
 msgid "Menu"
 msgstr "Menü"
 
-#: src/bin/e_actions.c:1949
+#: src/bin/e_actions.c:2019
 msgid "Window Menu"
 msgstr "Ablak menü"
 
-#: src/bin/e_actions.c:1957 src/bin/e_int_border_menu.c:336
+#: src/bin/e_actions.c:2027 src/bin/e_int_border_menu.c:336
 msgid "Raise"
 msgstr "Felemel"
 
-#: src/bin/e_actions.c:1962 src/bin/e_int_border_menu.c:344
+#: src/bin/e_actions.c:2032 src/bin/e_int_border_menu.c:344
 msgid "Lower"
 msgstr "Lejjebb helyez"
 
-#: src/bin/e_actions.c:1967 src/bin/e_config_dialog.c:226
-#: src/bin/e_configure.c:113 src/bin/e_fwin.c:873
+#: src/bin/e_actions.c:2037 src/bin/e_config_dialog.c:226
+#: src/bin/e_configure.c:113 src/bin/e_fwin.c:1121
 #: src/bin/e_int_border_menu.c:318 src/bin/e_int_border_prop.c:81
 msgid "Close"
 msgstr "Bezárás"
 
-#: src/bin/e_actions.c:1972 src/bin/e_int_border_menu.c:307
+#: src/bin/e_actions.c:2042 src/bin/e_int_border_menu.c:307
 msgid "Kill"
 msgstr "Nyírd ki!"
 
-#: src/bin/e_actions.c:1977 src/bin/e_actions.c:1984 src/bin/e_actions.c:1991
-#: src/bin/e_actions.c:1998 src/bin/e_actions.c:2000 src/bin/e_actions.c:2003
-#: src/bin/e_actions.c:2006 src/bin/e_actions.c:2008 src/bin/e_actions.c:2010
-#: src/bin/e_actions.c:2012 src/bin/e_actions.c:2019 src/bin/e_actions.c:2021
-#: src/bin/e_actions.c:2023 src/bin/e_actions.c:2025 src/bin/e_actions.c:2027
-#: src/bin/e_actions.c:2034 src/bin/e_actions.c:2039
+#: src/bin/e_actions.c:2047 src/bin/e_actions.c:2054 src/bin/e_actions.c:2061
+#: src/bin/e_actions.c:2068 src/bin/e_actions.c:2070 src/bin/e_actions.c:2073
+#: src/bin/e_actions.c:2076 src/bin/e_actions.c:2078 src/bin/e_actions.c:2080
+#: src/bin/e_actions.c:2082 src/bin/e_actions.c:2089 src/bin/e_actions.c:2091
+#: src/bin/e_actions.c:2093 src/bin/e_actions.c:2095 src/bin/e_actions.c:2097
+#: src/bin/e_actions.c:2104 src/bin/e_actions.c:2109
 msgid "Window : State"
 msgstr "Ablak : Állapot"
 
-#: src/bin/e_actions.c:1977
+#: src/bin/e_actions.c:2047
 msgid "Sticky Mode Toggle"
 msgstr "Ragadós mód váltása"
 
-#: src/bin/e_actions.c:1984
+#: src/bin/e_actions.c:2054
 msgid "Iconic Mode Toggle"
 msgstr "Ikon mód váltása"
 
-#: src/bin/e_actions.c:1991
+#: src/bin/e_actions.c:2061
 #, fuzzy
 msgid "Fullscreen Mode Toggle"
 msgstr "Ikon mód váltása"
 
-#: src/bin/e_actions.c:1998 src/bin/e_int_border_menu.c:98
+#: src/bin/e_actions.c:2068 src/bin/e_int_border_menu.c:98
 #: src/bin/e_int_border_menu.c:228
 msgid "Maximize"
 msgstr "Teljes méretû"
 
-#: src/bin/e_actions.c:2000
+#: src/bin/e_actions.c:2070
 msgid "Maximize Vertically"
 msgstr "Függõlegesen maximalizál"
 
-#: src/bin/e_actions.c:2003
+#: src/bin/e_actions.c:2073
 msgid "Maximize Horizontally"
 msgstr "Vízszintesen maximalizál"
 
-#: src/bin/e_actions.c:2006
+#: src/bin/e_actions.c:2076
 msgid "Maximize Fullscreen"
 msgstr "Teljes képernyõs"
 
-#: src/bin/e_actions.c:2008
+#: src/bin/e_actions.c:2078
 msgid "Maximize Mode \"Smart\""
 msgstr "Maximalizálási mód \"Okos\""
 
-#: src/bin/e_actions.c:2010
+#: src/bin/e_actions.c:2080
 msgid "Maximize Mode \"Expand\""
 msgstr "Maximalizálási mód \"Kiterjeszt\""
 
-#: src/bin/e_actions.c:2012
+#: src/bin/e_actions.c:2082
 msgid "Maximize Mode \"Fill\""
 msgstr "Maximalizálási mód \"Kitölt\""
 
-#: src/bin/e_actions.c:2019
+#: src/bin/e_actions.c:2089
 msgid "Shade Up Mode Toggle"
 msgstr "Felgördítés váltása"
 
-#: src/bin/e_actions.c:2021
+#: src/bin/e_actions.c:2091
 msgid "Shade Down Mode Toggle"
 msgstr "Legördítés váltása"
 
-#: src/bin/e_actions.c:2023
+#: src/bin/e_actions.c:2093
 msgid "Shade Left Mode Toggle"
 msgstr "Balraragördítés váltása"
 
-#: src/bin/e_actions.c:2025
+#: src/bin/e_actions.c:2095
 msgid "Shade Right Mode Toggle"
 msgstr "Jobbragördítés váltása"
 
-#: src/bin/e_actions.c:2027
+#: src/bin/e_actions.c:2097
 #, fuzzy
 msgid "Shade Mode Toggle"
 msgstr "Felgördítés váltása"
 
-#: src/bin/e_actions.c:2034
+#: src/bin/e_actions.c:2104
 #, fuzzy
 msgid "Toggle Borderless State"
 msgstr "Keret nélküli"
 
-#: src/bin/e_actions.c:2039
+#: src/bin/e_actions.c:2109
 #, fuzzy
 msgid "Toggle Pinned State"
 msgstr "Keret nélküli"
 
-#: src/bin/e_actions.c:2044 src/bin/e_actions.c:2046 src/bin/e_actions.c:2048
-#: src/bin/e_actions.c:2050 src/bin/e_actions.c:2052 src/bin/e_actions.c:2058
-#: src/bin/e_actions.c:2063 src/bin/e_actions.c:2069 src/bin/e_actions.c:2075
-#: src/bin/e_actions.c:2077 src/bin/e_actions.c:2079 src/bin/e_actions.c:2081
-#: src/bin/e_actions.c:2083 src/bin/e_actions.c:2085 src/bin/e_actions.c:2087
-#: src/bin/e_actions.c:2089 src/bin/e_actions.c:2091 src/bin/e_actions.c:2093
-#: src/bin/e_actions.c:2095 src/bin/e_actions.c:2097 src/bin/e_actions.c:2099
-#: src/bin/e_actions.c:2242 src/bin/e_actions.c:2247
-#: src/bin/e_int_config_clientlist.c:103 src/bin/e_int_menus.c:133
+#: src/bin/e_actions.c:2114 src/bin/e_actions.c:2116 src/bin/e_actions.c:2118
+#: src/bin/e_actions.c:2120 src/bin/e_actions.c:2122 src/bin/e_actions.c:2128
+#: src/bin/e_actions.c:2133 src/bin/e_actions.c:2139 src/bin/e_actions.c:2145
+#: src/bin/e_actions.c:2147 src/bin/e_actions.c:2149 src/bin/e_actions.c:2151
+#: src/bin/e_actions.c:2153 src/bin/e_actions.c:2155 src/bin/e_actions.c:2157
+#: src/bin/e_actions.c:2159 src/bin/e_actions.c:2161 src/bin/e_actions.c:2163
+#: src/bin/e_actions.c:2165 src/bin/e_actions.c:2167 src/bin/e_actions.c:2169
+#: src/bin/e_actions.c:2312 src/bin/e_actions.c:2317
+#: src/bin/e_int_config_clientlist.c:103 src/bin/e_int_menus.c:138
 #: src/modules/ibox/e_mod_config.c:139
 msgid "Desktop"
 msgstr "Asztal"
 
-#: src/bin/e_actions.c:2044
+#: src/bin/e_actions.c:2114
 msgid "Flip Desktop Left"
 msgstr "Váltás a bal oldali asztalra"
 
-#: src/bin/e_actions.c:2046
+#: src/bin/e_actions.c:2116
 msgid "Flip Desktop Right"
 msgstr "Váltás a jobb oldali asztalra"
 
-#: src/bin/e_actions.c:2048
+#: src/bin/e_actions.c:2118
 msgid "Flip Desktop Up"
 msgstr "Váltás a feljebbi sztalra"
 
-#: src/bin/e_actions.c:2050
+#: src/bin/e_actions.c:2120
 msgid "Flip Desktop Down"
 msgstr "Váltása a lejjebbi asztalra"
 
-#: src/bin/e_actions.c:2052
+#: src/bin/e_actions.c:2122
 msgid "Flip Desktop By..."
 msgstr "Asztalváltás ennyivel..."
 
-#: src/bin/e_actions.c:2058
+#: src/bin/e_actions.c:2128
 #, fuzzy
 msgid "Show The Desktop"
 msgstr "Ez az asztal"
 
-#: src/bin/e_actions.c:2063
+#: src/bin/e_actions.c:2133
 msgid "Flip Desktop To..."
 msgstr "Váltás erre az asztalra..."
 
-#: src/bin/e_actions.c:2069
+#: src/bin/e_actions.c:2139
 msgid "Flip Desktop Linearly..."
 msgstr "Lineáris asztalváltás"
 
-#: src/bin/e_actions.c:2075
+#: src/bin/e_actions.c:2145
 msgid "Switch To Desktop 0"
 msgstr "Váltás a 0 asztalra"
 
-#: src/bin/e_actions.c:2077
+#: src/bin/e_actions.c:2147
 msgid "Switch To Desktop 1"
 msgstr "Váltás a 1 asztalra"
 
-#: src/bin/e_actions.c:2079
+#: src/bin/e_actions.c:2149
 msgid "Switch To Desktop 2"
 msgstr "Váltás a 2 asztalra"
 
-#: src/bin/e_actions.c:2081
+#: src/bin/e_actions.c:2151
 msgid "Switch To Desktop 3"
 msgstr "Váltás a 3 asztalra"
 
-#: src/bin/e_actions.c:2083
+#: src/bin/e_actions.c:2153
 msgid "Switch To Desktop 4"
 msgstr "Váltás a 4 asztalra"
 
-#: src/bin/e_actions.c:2085
+#: src/bin/e_actions.c:2155
 msgid "Switch To Desktop 5"
 msgstr "Váltás a 5 asztalra"
 
-#: src/bin/e_actions.c:2087
+#: src/bin/e_actions.c:2157
 msgid "Switch To Desktop 6"
 msgstr "Váltás a 6 asztalra"
 
-#: src/bin/e_actions.c:2089
+#: src/bin/e_actions.c:2159
 msgid "Switch To Desktop 7"
 msgstr "Váltás a 7 asztalra"
 
-#: src/bin/e_actions.c:2091
+#: src/bin/e_actions.c:2161
 msgid "Switch To Desktop 8"
 msgstr "Váltás a 8 asztalra"
 
-#: src/bin/e_actions.c:2093
+#: src/bin/e_actions.c:2163
 msgid "Switch To Desktop 9"
 msgstr "Váltás a 9 asztalra"
 
-#: src/bin/e_actions.c:2095
+#: src/bin/e_actions.c:2165
 msgid "Switch To Desktop 10"
 msgstr "Váltás a 10 asztalra"
 
-#: src/bin/e_actions.c:2097
+#: src/bin/e_actions.c:2167
 msgid "Switch To Desktop 11"
 msgstr "Váltás a 11 asztalra"
 
-#: src/bin/e_actions.c:2099
+#: src/bin/e_actions.c:2169
 msgid "Switch To Desktop..."
 msgstr "Váltás erre az asztalra..."
 
-#: src/bin/e_actions.c:2105 src/bin/e_actions.c:2107 src/bin/e_actions.c:2109
-#: src/bin/e_actions.c:2114 src/bin/e_actions.c:2116 src/bin/e_actions.c:2118
-#: src/bin/e_configure.c:411 src/modules/ibox/e_mod_config.c:108
+#: src/bin/e_actions.c:2175 src/bin/e_actions.c:2177 src/bin/e_actions.c:2179
+#: src/bin/e_actions.c:2184 src/bin/e_actions.c:2186 src/bin/e_actions.c:2188
+#: src/bin/e_configure.c:412 src/modules/ibox/e_mod_config.c:108
 msgid "Screen"
 msgstr "Képernyõ"
 
-#: src/bin/e_actions.c:2105
+#: src/bin/e_actions.c:2175
 msgid "Send Mouse To Screen 0"
 msgstr ""
 
-#: src/bin/e_actions.c:2107
+#: src/bin/e_actions.c:2177
 msgid "Send Mouse To Screen 1"
 msgstr ""
 
-#: src/bin/e_actions.c:2109
+#: src/bin/e_actions.c:2179
 msgid "Send Mouse To Screen..."
 msgstr ""
 
-#: src/bin/e_actions.c:2114
+#: src/bin/e_actions.c:2184
 msgid "Send Mouse Forward 1 Screen"
 msgstr ""
 
-#: src/bin/e_actions.c:2116
+#: src/bin/e_actions.c:2186
 msgid "Send Mouse Back 1 Screen"
 msgstr ""
 
-#: src/bin/e_actions.c:2118
+#: src/bin/e_actions.c:2188
 msgid "Send Mouse Forward/Back Screens..."
 msgstr ""
 
-#: src/bin/e_actions.c:2152 src/bin/e_actions.c:2154 src/bin/e_actions.c:2156
-#: src/bin/e_actions.c:2162
+#: src/bin/e_actions.c:2222 src/bin/e_actions.c:2224 src/bin/e_actions.c:2226
+#: src/bin/e_actions.c:2232
 msgid "Window : Moving"
 msgstr "Ablak : Mozgás"
 
-#: src/bin/e_actions.c:2152
+#: src/bin/e_actions.c:2222
 msgid "To Next Desktop"
 msgstr "A következő asztalra"
 
-#: src/bin/e_actions.c:2154
+#: src/bin/e_actions.c:2224
 msgid "To Previous Desktop"
 msgstr "Az előző asztal"
 
-#: src/bin/e_actions.c:2156
+#: src/bin/e_actions.c:2226
 msgid "By Desktop #..."
 msgstr "Ehhez az aszatlhoz #..."
 
-#: src/bin/e_actions.c:2162
+#: src/bin/e_actions.c:2232
 msgid "To Desktop..."
 msgstr "Erre az asztalra..."
 
-#: src/bin/e_actions.c:2168
+#: src/bin/e_actions.c:2238
 msgid "Show Main Menu"
 msgstr "Főmenü megjelenítése"
 
-#: src/bin/e_actions.c:2170
+#: src/bin/e_actions.c:2240
 msgid "Show Favorites Menu"
 msgstr "Kedvencek menü megjelenítése"
 
-#: src/bin/e_actions.c:2172
+#: src/bin/e_actions.c:2242
 #, fuzzy
 msgid "Show All Applications Menu"
 msgstr "Ablakok menü megjelenítése"
 
-#: src/bin/e_actions.c:2174
+#: src/bin/e_actions.c:2244
 msgid "Show Clients Menu"
 msgstr "Ablakok menü megjelenítése"
 
-#: src/bin/e_actions.c:2176
+#: src/bin/e_actions.c:2246
 msgid "Show Menu..."
 msgstr "Menü megjelenítése..."
 
-#: src/bin/e_actions.c:2183 src/bin/e_actions.c:2188 src/bin/e_actions.c:2237
+#: src/bin/e_actions.c:2253 src/bin/e_actions.c:2258 src/bin/e_actions.c:2307
 msgid "Launch"
 msgstr ""
 
-#: src/bin/e_actions.c:2183
+#: src/bin/e_actions.c:2253
 #, fuzzy
 msgid "Defined Command"
 msgstr "Parancs futtatása"
 
-#: src/bin/e_actions.c:2188
+#: src/bin/e_actions.c:2258
 msgid "Application"
 msgstr "Alkalmazás"
 
-#: src/bin/e_actions.c:2193 src/bin/e_actions.c:2195
+#: src/bin/e_actions.c:2263 src/bin/e_actions.c:2265
 msgid "Window : List"
 msgstr "Ablak : Lista"
 
-#: src/bin/e_actions.c:2193
+#: src/bin/e_actions.c:2263
 msgid "Next Window"
 msgstr "Következő ablak"
 
-#: src/bin/e_actions.c:2195
+#: src/bin/e_actions.c:2265
 msgid "Previous Window"
 msgstr "Előző ablak"
 
-#: src/bin/e_actions.c:2201 src/bin/e_int_menus.c:177
+#: src/bin/e_actions.c:2271 src/bin/e_int_menus.c:182
 msgid "Restart"
 msgstr "Újraindítás"
 
-#: src/bin/e_actions.c:2205 src/bin/e_int_menus.c:182
+#: src/bin/e_actions.c:2275 src/bin/e_int_menus.c:187
 msgid "Exit"
 msgstr "Kkilépés"
 
-#: src/bin/e_actions.c:2209
+#: src/bin/e_actions.c:2279
 #, fuzzy
 msgid "Log Out"
 msgstr "Kinézet"
 
-#: src/bin/e_actions.c:2213
+#: src/bin/e_actions.c:2283
 msgid "Exit Immediately"
 msgstr ""
 
-#: src/bin/e_actions.c:2217 src/bin/e_actions.c:2221 src/bin/e_actions.c:2225
-#: src/bin/e_actions.c:2229 src/bin/e_int_config_desklock.c:195
+#: src/bin/e_actions.c:2287 src/bin/e_actions.c:2291 src/bin/e_actions.c:2295
+#: src/bin/e_actions.c:2299 src/bin/e_int_config_desklock.c:195
 #: src/bin/e_int_config_imc.c:821 src/bin/e_int_config_startup.c:273
-#: src/bin/e_int_config_theme.c:360 src/bin/e_int_config_wallpaper.c:459
-#: src/bin/e_int_config_wallpaper.c:614 src/bin/e_int_menus.c:202
+#: src/bin/e_int_config_theme.c:378 src/bin/e_int_config_theme.c:845
+#: src/bin/e_int_config_wallpaper.c:459 src/bin/e_int_config_wallpaper.c:614
+#: src/bin/e_int_menus.c:207
 msgid "System"
 msgstr "Rendszer"
 
-#: src/bin/e_actions.c:2217 src/bin/e_int_menus.c:882
+#: src/bin/e_actions.c:2287 src/bin/e_int_menus.c:887
 msgid "Shut Down"
 msgstr ""
 
-#: src/bin/e_actions.c:2221 src/bin/e_int_menus.c:875
+#: src/bin/e_actions.c:2291 src/bin/e_int_menus.c:880
 msgid "Reboot"
 msgstr ""
 
-#: src/bin/e_actions.c:2225 src/bin/e_int_menus.c:861
+#: src/bin/e_actions.c:2295 src/bin/e_int_menus.c:866
 msgid "Suspend"
 msgstr ""
 
-#: src/bin/e_actions.c:2229
+#: src/bin/e_actions.c:2299
 #, fuzzy
 msgid "Suspend to Disk"
 msgstr "Küldd erre az asztalra"
 
-#: src/bin/e_actions.c:2237
+#: src/bin/e_actions.c:2307
 #, fuzzy
 msgid "Run Command Dialog"
 msgstr "Parancs futtatása"
 
-#: src/bin/e_actions.c:2242
+#: src/bin/e_actions.c:2312
 msgid "Desktop Lock"
 msgstr "Asztal zárolása"
 
-#: src/bin/e_actions.c:2247 src/bin/e_int_menus.c:1241
+#: src/bin/e_actions.c:2317 src/bin/e_int_menus.c:1246
 msgid "Cleanup Windows"
 msgstr "Ablakok tisztogatása"
 
-#: src/bin/e_config.c:564
+#: src/bin/e_config.c:570
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -545,7 +546,7 @@ msgstr ""
 "visszaállíthatsz,<br>ahogy neked tetszik. Az esetleges galibákért elnézést "
 "kérünk!<br>"
 
-#: src/bin/e_config.c:578
+#: src/bin/e_config.c:584
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very<br>strange. "
 "This should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -559,16 +560,16 @@ msgstr ""
 "Ez így nem túl jó, és figyelmez-<br>tetésként a beállítások visszaálltak az "
 "alapértelmezésre.<br>A galibákért elnézést kérünk!<br>"
 
-#: src/bin/e_config.c:600
+#: src/bin/e_config.c:606
 #, c-format
 msgid "Desktop %i, %i"
 msgstr "Asztal %i, %i"
 
-#: src/bin/e_config.c:2119
+#: src/bin/e_config.c:2157
 msgid "Configuration Upgraded"
 msgstr "A beállításokat frissítettem!"
 
-#: src/bin/e_config.c:2133
+#: src/bin/e_config.c:2171
 #, c-format
 msgid ""
 "An error occured while saving Enlightenment's<br>configuration to disk. The "
@@ -576,7 +577,7 @@ msgid ""
 "was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:2144
+#: src/bin/e_config.c:2182
 #, c-format
 msgid ""
 "Enlightenment's configuration files are too big<br>for the file system they "
@@ -586,7 +587,7 @@ msgid ""
 "been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:2157
+#: src/bin/e_config.c:2195
 #, c-format
 msgid ""
 "An output error occured when writing the configuration<br>files for "
@@ -595,7 +596,7 @@ msgid ""
 "file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:2168
+#: src/bin/e_config.c:2206
 #, c-format
 msgid ""
 "Enlightenment cannot write its configuration file<br>because it ran out of "
@@ -604,7 +605,7 @@ msgid ""
 "was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:2180
+#: src/bin/e_config.c:2218
 #, c-format
 msgid ""
 "Enlightenment unexpectedly had the configuration file<br>it was writing "
@@ -612,12 +613,12 @@ msgid ""
 "was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:2196
+#: src/bin/e_config.c:2234
 #, fuzzy
 msgid "Enlightenment Configration Write Problems"
 msgstr "Az Enlightenment beállítása"
 
-#: src/bin/e_config_dialog.c:189 src/bin/e_configure.c:440
+#: src/bin/e_config_dialog.c:189 src/bin/e_configure.c:441
 msgid "Advanced"
 msgstr "Haladó"
 
@@ -625,8 +626,8 @@ msgstr "Haladó"
 msgid "Basic"
 msgstr "Alap"
 
-#: src/bin/e_config_dialog.c:218 src/bin/e_eap_editor.c:579
-#: src/bin/e_entry_dialog.c:56 src/bin/e_fm_prop.c:515
+#: src/bin/e_config_dialog.c:218 src/bin/e_eap_editor.c:599
+#: src/bin/e_entry_dialog.c:56 src/bin/e_fm_prop.c:513
 #: src/bin/e_int_border_remember.c:248 src/bin/e_int_border_remember.c:323
 #: src/bin/e_int_border_remember.c:365 src/bin/e_int_config_dpms.c:60
 #: src/bin/e_int_config_dpms.c:81 src/bin/e_int_config_imc_import.c:111
@@ -649,8 +650,8 @@ msgstr "Elfogadom"
 msgid "Enlightenment Configuration"
 msgstr "Az Enlightenment beállítása"
 
-#: src/bin/e_configure.c:96 src/bin/e_eap_editor.c:499
-#: src/bin/e_eap_editor.c:510 src/bin/e_int_config_mime.c:188
+#: src/bin/e_configure.c:96 src/bin/e_eap_editor.c:519
+#: src/bin/e_eap_editor.c:530 src/bin/e_int_config_mime.c:188
 msgid "Categories"
 msgstr ""
 
@@ -659,16 +660,16 @@ msgstr ""
 msgid "Configuration Items"
 msgstr "Beállítás"
 
-#: src/bin/e_configure.c:395 src/bin/e_gadcon.c:1267
+#: src/bin/e_configure.c:395 src/bin/e_gadcon.c:1283
 msgid "Appearance"
 msgstr "Kinézet"
 
-#: src/bin/e_configure.c:396 src/bin/e_int_menus.c:775
+#: src/bin/e_configure.c:396 src/bin/e_int_menus.c:780
 msgid "Wallpaper"
 msgstr ""
 
-#: src/bin/e_configure.c:397 src/bin/e_int_menus.c:169
-#: src/bin/e_int_menus.c:780
+#: src/bin/e_configure.c:397 src/bin/e_int_menus.c:174
+#: src/bin/e_int_menus.c:785
 msgid "Theme"
 msgstr "Téma"
 
@@ -677,8 +678,8 @@ msgstr "Téma"
 msgid "Colors"
 msgstr "Bezárás"
 
-#: src/bin/e_configure.c:399 src/bin/e_int_config_fonts.c:452
-#: src/bin/e_int_config_fonts.c:647 src/bin/e_int_config_paths.c:80
+#: src/bin/e_configure.c:399 src/bin/e_int_config_fonts.c:444
+#: src/bin/e_int_config_fonts.c:639 src/bin/e_int_config_paths.c:80
 msgid "Fonts"
 msgstr "Betûtípusok"
 
@@ -704,181 +705,185 @@ msgstr "Mulandóság"
 msgid "Startup"
 msgstr "Indítás"
 
-#: src/bin/e_configure.c:406 src/bin/e_int_menus.c:111
+#: src/bin/e_configure.c:406 src/bin/e_int_menus.c:115
 #, fuzzy
 msgid "Applications"
 msgstr "Alkalmazás"
 
-#: src/bin/e_configure.c:407 src/bin/e_int_config_apps_order.c:39
-#: src/bin/e_int_config_apps_order.c:53
+#: src/bin/e_configure.c:407
+#, fuzzy
+msgid "New Application"
+msgstr "Alkalmazás"
+
+#: src/bin/e_configure.c:408
 #, fuzzy
 msgid "IBar Applications"
 msgstr "Alkalmazás"
 
-#: src/bin/e_configure.c:408 src/bin/e_int_config_apps_order.c:89
+#: src/bin/e_configure.c:409
 #, fuzzy
 msgid "Restart Applications"
 msgstr "Kedvencek"
 
-#: src/bin/e_configure.c:409 src/bin/e_int_config_apps_order.c:71
+#: src/bin/e_configure.c:410
 #, fuzzy
 msgid "Startup Applications"
 msgstr "Kedvencek"
 
-#: src/bin/e_configure.c:412
+#: src/bin/e_configure.c:413
 msgid "Virtual Desktops"
 msgstr "Virtuális asztalok"
 
-#: src/bin/e_configure.c:413
+#: src/bin/e_configure.c:414
 msgid "Screen Resolution"
 msgstr "Felbontás"
 
-#: src/bin/e_configure.c:414
+#: src/bin/e_configure.c:415
 msgid "Screen Lock"
 msgstr "Képernyõ zárolás"
 
-#: src/bin/e_configure.c:415
+#: src/bin/e_configure.c:416
 #, fuzzy
 msgid "Screen Saver"
 msgstr "Képernyõterület"
 
-#: src/bin/e_configure.c:416
+#: src/bin/e_configure.c:417
 msgid "Power Management"
 msgstr ""
 
-#: src/bin/e_configure.c:418
+#: src/bin/e_configure.c:419
 msgid "Keyboard & Mouse"
 msgstr ""
 
-#: src/bin/e_configure.c:419 src/bin/e_int_config_keybindings.c:223
+#: src/bin/e_configure.c:420 src/bin/e_int_config_keybindings.c:223
 msgid "Key Bindings"
 msgstr "Billentyûkombinációk"
 
-#: src/bin/e_configure.c:420 src/bin/e_int_config_mousebindings.c:295
+#: src/bin/e_configure.c:421 src/bin/e_int_config_mousebindings.c:295
 #, fuzzy
 msgid "Mouse Bindings"
 msgstr "Billentyûkombinációk"
 
-#: src/bin/e_configure.c:421 src/bin/e_int_config_mouse.c:91
+#: src/bin/e_configure.c:422 src/bin/e_int_config_mouse.c:91
 #, fuzzy
 msgid "Mouse Acceleration"
 msgstr "Modul mûveletek"
 
-#: src/bin/e_configure.c:423 src/bin/e_int_menus.c:141
-#: src/bin/e_int_menus.c:1198
+#: src/bin/e_configure.c:424 src/bin/e_int_menus.c:146
+#: src/bin/e_int_menus.c:1203
 msgid "Windows"
 msgstr "Ablakok"
 
-#: src/bin/e_configure.c:424 src/bin/e_int_config_window_display.c:54
+#: src/bin/e_configure.c:425 src/bin/e_int_config_window_display.c:54
 msgid "Window Display"
 msgstr "Ablak megjelenítés"
 
-#: src/bin/e_configure.c:425
+#: src/bin/e_configure.c:426
 msgid "Window Focus"
 msgstr "Fókusz"
 
-#: src/bin/e_configure.c:426 src/bin/e_int_config_window_manipulation.c:52
+#: src/bin/e_configure.c:427 src/bin/e_int_config_window_manipulation.c:53
 msgid "Window Manipulation"
 msgstr "Ablakváltozások"
 
-#: src/bin/e_configure.c:428
+#: src/bin/e_configure.c:429
 msgid "Menus"
 msgstr "Menük"
 
-#: src/bin/e_configure.c:429 src/bin/e_int_config_apps_menu.c:40
+#: src/bin/e_configure.c:430
 #, fuzzy
 msgid "Favorites Menu"
 msgstr "Kedvencek menü megjelenítése"
 
-#: src/bin/e_configure.c:431 src/bin/e_int_menus.c:796
+#: src/bin/e_configure.c:432 src/bin/e_int_menus.c:801
 #, fuzzy
 msgid "Application Menus"
 msgstr "Alkalmazás"
 
-#: src/bin/e_configure.c:433 src/bin/e_int_config_menus.c:41
-#: src/bin/e_int_config_menus.c:92 src/bin/e_int_config_menus.c:133
+#: src/bin/e_configure.c:434 src/bin/e_int_config_menus.c:44
+#: src/bin/e_int_config_menus.c:106 src/bin/e_int_config_menus.c:156
 msgid "Menu Settings"
 msgstr "Menü beállítások"
 
-#: src/bin/e_configure.c:434
+#: src/bin/e_configure.c:435
 #, fuzzy
 msgid "Client List Menu"
 msgstr "Ablakok menü megjelenítése"
 
-#: src/bin/e_configure.c:436
+#: src/bin/e_configure.c:437
 #, fuzzy
 msgid "Language"
 msgstr "Kezelõ"
 
-#: src/bin/e_configure.c:437
+#: src/bin/e_configure.c:438
 #, fuzzy
 msgid "Language Settings"
 msgstr "Menü beállítások"
 
-#: src/bin/e_configure.c:438
+#: src/bin/e_configure.c:439
 #, fuzzy
 msgid "Input Method Settings"
 msgstr "Beviteli mód hiba"
 
-#: src/bin/e_configure.c:441
-msgid "Configuration Dialogs"
-msgstr "Konfigurációs ablakok"
-
 #: src/bin/e_configure.c:442
+msgid "Dialogs"
+msgstr ""
+
+#: src/bin/e_configure.c:443
 msgid "Performance"
 msgstr "Teljesítmény"
 
-#: src/bin/e_configure.c:443
+#: src/bin/e_configure.c:444
 msgid "Window List"
 msgstr "Ablaklista"
 
-#: src/bin/e_configure.c:444 src/bin/e_int_menus.c:123
+#: src/bin/e_configure.c:445 src/bin/e_int_menus.c:128
 msgid "Run Command"
 msgstr "Parancs futtatása"
 
-#: src/bin/e_configure.c:445
+#: src/bin/e_configure.c:446
 msgid "Search Directories"
 msgstr "Alapértelmezett könyvtárak"
 
-#: src/bin/e_configure.c:446 src/bin/e_int_config_mime.c:63
+#: src/bin/e_configure.c:447 src/bin/e_int_config_mime.c:63
 #, fuzzy
 msgid "File Icons"
 msgstr "Információk:"
 
-#: src/bin/e_configure.c:448
+#: src/bin/e_configure.c:449
 msgid "Extensions"
 msgstr "Kiterjesztések"
 
-#: src/bin/e_configure.c:449 src/bin/e_int_config_color_classes.c:83
-#: src/bin/e_int_config_paths.c:88 src/bin/e_int_menus.c:785
+#: src/bin/e_configure.c:450 src/bin/e_int_config_color_classes.c:83
+#: src/bin/e_int_config_paths.c:88 src/bin/e_int_menus.c:790
 #: src/bin/e_int_config_modules.c:244
 msgid "Modules"
 msgstr "Modulok"
 
-#: src/bin/e_configure.c:450 src/bin/e_int_menus.c:240
-#: src/bin/e_int_menus.c:790
+#: src/bin/e_configure.c:451 src/bin/e_int_menus.c:245
+#: src/bin/e_int_menus.c:795
 msgid "Shelves"
 msgstr "Polcok"
 
-#: src/bin/e_container.c:118
+#: src/bin/e_container.c:119
 #, c-format
 msgid "Container %d"
 msgstr "Tároló %d"
 
-#: src/bin/e_desklock.c:138
+#: src/bin/e_desklock.c:143
 msgid "Error - no PAM support"
 msgstr ""
 
-#: src/bin/e_desklock.c:139
+#: src/bin/e_desklock.c:144
 msgid ""
 "No PAM support was built into Enlightenment, so<br>desk locking is disabled."
 msgstr ""
 
-#: src/bin/e_desklock.c:209
+#: src/bin/e_desklock.c:214
 msgid "Lock Failed"
 msgstr "Nem tudtam zárolni a képernyõt!"
 
-#: src/bin/e_desklock.c:210
+#: src/bin/e_desklock.c:215
 msgid ""
 "Locking the desktop failed because some application<br>has grabbed either "
 "the keyboard or the mouse or both<br>and their grab is unable to be broken."
@@ -886,15 +891,15 @@ msgstr ""
 "Nem tudtam az aztalt zárolni, mert egy alkalmazás<br>használja az egeret "
 "vagy billentyûzetet, vagy mindkettõt<br>és nem tudom tõle elszakítani õket."
 
-#: src/bin/e_desklock.c:296
+#: src/bin/e_desklock.c:301
 msgid "Please enter your unlock password"
 msgstr "Kérlek írd be a jelszót"
 
-#: src/bin/e_desklock.c:629
+#: src/bin/e_desklock.c:643
 msgid "Authentication System Error"
 msgstr "Hiba az azonosítási rendszerben!"
 
-#: src/bin/e_desklock.c:630
+#: src/bin/e_desklock.c:644
 #, c-format
 msgid ""
 "Authentication via PAM had errors setting up the<br>authentication session. "
@@ -904,12 +909,12 @@ msgstr ""
 "A PAM azonosítás hibával járt.<br>A hibakód <highlight>%i</highlight>.<br>Ez "
 "így nem jó, és nem kellene megtörténnie. Kérlek jelentsd ezt a hibát!"
 
-#: src/bin/e_eap_editor.c:131
+#: src/bin/e_eap_editor.c:151
 #, fuzzy
 msgid "Incomplete Window Properties"
 msgstr "Ikon tulajdonságainak megváltoztatása"
 
-#: src/bin/e_eap_editor.c:132
+#: src/bin/e_eap_editor.c:152
 msgid ""
 "The window you are creating an icon for<br>does not contain window name and "
 "class<br>properties, so the needed properties for<br>the icon so that it "
@@ -918,76 +923,76 @@ msgid ""
 "same at<br>the time the window starts up, and does not<br>change."
 msgstr ""
 
-#: src/bin/e_eap_editor.c:187
+#: src/bin/e_eap_editor.c:207
 msgid "Desktop Entry Editor"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:422 src/bin/e_fm_prop.c:401
+#: src/bin/e_eap_editor.c:442 src/bin/e_fm_prop.c:400
 #: src/bin/e_int_config_fonts.c:95 src/bin/e_int_config_mime_edit.c:144
 msgid "Icon"
 msgstr "Ikon"
 
-#: src/bin/e_eap_editor.c:435 src/bin/e_int_config_mime_edit.c:135
+#: src/bin/e_eap_editor.c:455 src/bin/e_int_config_mime_edit.c:135
 msgid "Basic Info"
 msgstr "Alap információk"
 
-#: src/bin/e_eap_editor.c:436 src/bin/e_int_border_prop.c:422
+#: src/bin/e_eap_editor.c:456 src/bin/e_int_border_prop.c:422
 #: src/bin/e_int_border_prop.c:469 src/bin/e_int_config_imc.c:905
 #, fuzzy
 msgid "Name"
 msgstr "Név szerint"
 
-#: src/bin/e_eap_editor.c:445
+#: src/bin/e_eap_editor.c:465
 msgid "Executable"
 msgstr "Bináris"
 
-#: src/bin/e_eap_editor.c:452
+#: src/bin/e_eap_editor.c:472
 msgid "Comment"
 msgstr "Megjegyzés"
 
-#: src/bin/e_eap_editor.c:480
+#: src/bin/e_eap_editor.c:500
 msgid "General"
 msgstr "Általános"
 
-#: src/bin/e_eap_editor.c:483
+#: src/bin/e_eap_editor.c:503
 #, fuzzy
 msgid "Generic Name"
 msgstr "Általános információk"
 
-#: src/bin/e_eap_editor.c:492 src/bin/e_int_config_clientlist.c:105
+#: src/bin/e_eap_editor.c:512 src/bin/e_int_config_clientlist.c:105
 msgid "Window Class"
 msgstr "Ablak osztály"
 
-#: src/bin/e_eap_editor.c:511
+#: src/bin/e_eap_editor.c:531
 msgid "Startup Notify"
 msgstr "Indításkor figyelmeztet"
 
-#: src/bin/e_eap_editor.c:514
+#: src/bin/e_eap_editor.c:534
 msgid "Run in Terminal"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:517
+#: src/bin/e_eap_editor.c:537
 #, fuzzy
 msgid "Show in Menus"
 msgstr "Főmenü megjelenítése"
 
-#: src/bin/e_eap_editor.c:522
+#: src/bin/e_eap_editor.c:542
 #, fuzzy
 msgid "Desktop file"
 msgstr "Asztal"
 
-#: src/bin/e_eap_editor.c:523
+#: src/bin/e_eap_editor.c:543
 #, fuzzy
 msgid "Filename"
 msgstr "Átnevez"
 
-#: src/bin/e_eap_editor.c:550
+#: src/bin/e_eap_editor.c:570
 #, fuzzy
 msgid "Select an Icon"
 msgstr "Válassz egy ablakot!"
 
-#: src/bin/e_eap_editor.c:580 src/bin/e_entry_dialog.c:57
-#: src/bin/e_fm_prop.c:516 src/bin/e_int_config_imc_import.c:115
+#: src/bin/e_eap_editor.c:600 src/bin/e_entry_dialog.c:57
+#: src/bin/e_fm_prop.c:514 src/bin/e_int_config_imc_import.c:115
 #: src/bin/e_int_config_mime_edit.c:283
 #: src/bin/e_int_config_theme_import.c:115
 #: src/bin/e_int_config_wallpaper_gradient.c:198
@@ -1087,15 +1092,7 @@ msgstr ""
 "Az e17 nem tudta elindítani a vészhelyzeti figyelmeztetõ rendszert!\n"
 "Be van állítva a DISPLAY változó?"
 
-#: src/bin/e_main.c:390
-msgid ""
-"Enlightenment cannot setup xinerama wrapping.\n"
-"This should not happen."
-msgstr ""
-"Az e17 nem tudta beállítani a xinerama keretrendszert!\n"
-"Ennek nem kéne megtörténnie"
-
-#: src/bin/e_main.c:409
+#: src/bin/e_main.c:391
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -1103,13 +1100,21 @@ msgstr ""
 "Az e17 nem tudta elindítani a kapcsolódási rendszert!\n"
 "Talán kevés a memória?"
 
-#: src/bin/e_main.c:417
+#: src/bin/e_main.c:399
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
 "Az e17 nem tudta elindítani az IPC rendszert!\n"
 "Talán kevés a memória?"
+
+#: src/bin/e_main.c:408
+msgid ""
+"Enlightenment cannot setup xinerama wrapping.\n"
+"This should not happen."
+msgstr ""
+"Az e17 nem tudta beállítani a xinerama keretrendszert!\n"
+"Ennek nem kéne megtörténnie"
 
 #: src/bin/e_main.c:427 src/bin/e_main.c:434
 #, fuzzy
@@ -1180,16 +1185,16 @@ msgstr ""
 "Az Evas nem tudja betölteni a EET fájlokat. Kérlek ellenõrizd,\n"
 "hogy az Evas támogatja-e a EET töltõt.\n"
 
-#: src/bin/e_main.c:530
+#: src/bin/e_main.c:533
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "Az e17 nem tudta elindítani a elõkép-generátort!\n"
 
-#: src/bin/e_main.c:539
+#: src/bin/e_main.c:542
 #, fuzzy
 msgid "Enlightenment cannot initialize the System Command system.\n"
 msgstr "Az e17 nem tudta elindítani a elõkép-generátort!\n"
 
-#: src/bin/e_main.c:551
+#: src/bin/e_main.c:554
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -1197,16 +1202,16 @@ msgstr ""
 "Az e17 nem tudta létrehozni a könyvtárakat a könyvtáradban!\n"
 "Lehet, hogy nincs saját könyvtárad, vagy a lemez tele van."
 
-#: src/bin/e_main.c:560
+#: src/bin/e_main.c:563
 #, fuzzy
 msgid "Enlightenment cannot set up its file registry system."
 msgstr "Az e17 nem tudta beállítani konfigurációs rendszert."
 
-#: src/bin/e_main.c:568
+#: src/bin/e_main.c:571
 msgid "Enlightenment cannot set up its config system."
 msgstr "Az e17 nem tudta beállítani konfigurációs rendszert."
 
-#: src/bin/e_main.c:576
+#: src/bin/e_main.c:579
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -1214,36 +1219,36 @@ msgstr ""
 "Az e17 nem tudta felállítani a fájlok elérési útjait.\n"
 "Talán nincs elég memória?"
 
-#: src/bin/e_main.c:585
+#: src/bin/e_main.c:588
 msgid "Enlightenment cannot set up its intl system."
 msgstr "Az e17 nem tudta felállítani az intl rendszerét."
 
-#: src/bin/e_main.c:593
+#: src/bin/e_main.c:596
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Az e17 nem tudta elindítani az akció-rendszerét."
 
-#: src/bin/e_main.c:601
+#: src/bin/e_main.c:604
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Az e17 nem tudta felállítani a kombinációs rendszert."
 
-#: src/bin/e_main.c:609
+#: src/bin/e_main.c:612
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Az e17 nem tudta felállítani a felugró-ablak rendszert."
 
-#: src/bin/e_main.c:621
+#: src/bin/e_main.c:624
 msgid "Enlightenment cannot set up its font system."
 msgstr "Az e17 nem tudta elindítani a betütípus-rendszert."
 
-#: src/bin/e_main.c:632
+#: src/bin/e_main.c:635
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Az e17 nem tudta elindítani a témázó-rendszert."
 
-#: src/bin/e_main.c:640
+#: src/bin/e_main.c:643
 #, fuzzy
 msgid "Enlightenment cannot set up its desktop background system."
 msgstr "Az e17 nem tudta felállítani az asztalzár-rendszert."
 
-#: src/bin/e_main.c:650
+#: src/bin/e_main.c:653
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -1251,7 +1256,7 @@ msgstr ""
 "Az e17 nem tudta felállítani az induló képernyõt.\n"
 "Lehet, hogy kevés a memória?"
 
-#: src/bin/e_main.c:660
+#: src/bin/e_main.c:663
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -1259,44 +1264,84 @@ msgstr ""
 "Az e17 nem tudta elindítan az ablakkezelést. Lehet, hogy fut már egy másik\n"
 "ablakkezelõ?\n"
 
-#: src/bin/e_main.c:669
+#: src/bin/e_main.c:672
 #, fuzzy
 msgid "Enlightenment cannot set up its exec system."
 msgstr "Az e17 nem tudta elindítani a exebuf rendszert."
 
-#: src/bin/e_main.c:677
+#: src/bin/e_main.c:680
 msgid "Enlightenment cannot setup remember settings."
 msgstr "Az e17 nem tudta felállítani az emlékezési beállításokat."
 
-#: src/bin/e_main.c:694 src/bin/e_main.c:701
+#: src/bin/e_main.c:697 src/bin/e_main.c:704
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Az e17 nem tudta elindítani a fájlkezelõt!\n"
 
-#: src/bin/e_main.c:709
+#: src/bin/e_main.c:712
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Az e17 nem tudta felállítani az üzenet-rendszert."
 
-#: src/bin/e_main.c:717
+#: src/bin/e_main.c:720
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Az e17 nem tudta felállítani a fogd-és-vidd rendszert."
 
-#: src/bin/e_main.c:725
+#: src/bin/e_main.c:728
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr "Az e17 nem tudta elindítani a bejövõ mozdulat-kezelõt."
 
-#: src/bin/e_main.c:733
+#: src/bin/e_main.c:736
 msgid "Enlightenment cannot set up its module system."
 msgstr "Az e17 nem tudta elindítani a modul rendszert."
 
-#: src/bin/e_main.c:741
+#: src/bin/e_main.c:744
 msgid "Enlightenment cannot set up its window list system."
 msgstr "Az e17 nem tudta elindítani az ablaklista rendszert."
 
-#: src/bin/e_main.c:749
+#: src/bin/e_main.c:752
 msgid "Enlightenment cannot set up its color class system."
 msgstr "Az e17 nem tudta elindítani a szín-osztály rendszert."
 
-#: src/bin/e_main.c:761
+#: src/bin/e_main.c:760
+msgid "Enlightenment cannot set up its gadget control system."
+msgstr "Az e17 kütyü-kezelõt."
+
+#: src/bin/e_main.c:768
+msgid "Enlightenment cannot set up its shelf system."
+msgstr "Az e17 nem tudta elindítani a polc-rendszert."
+
+#: src/bin/e_main.c:776
+msgid "Enlightenment cannot set up its exebuf system."
+msgstr "Az e17 nem tudta elindítani a exebuf rendszert."
+
+#: src/bin/e_main.c:785
+#, fuzzy
+msgid "Enlightenment cannot configure the DPMS settings."
+msgstr "Az e17 nem tudta felállítani az emlékezési beállításokat."
+
+#: src/bin/e_main.c:793
+#, fuzzy
+msgid "Enlightenment cannot configure the X screensaver."
+msgstr "Az e17 nem tudta elindítani a fájlkezelõt!\n"
+
+#: src/bin/e_main.c:801
+#, fuzzy
+msgid "Enlightenment cannot configure the mouse acceleration settings."
+msgstr "Az e17 nem tudta felállítani az emlékezési beállításokat."
+
+#: src/bin/e_main.c:809
+msgid "Enlightenment cannot set up its desk locking system."
+msgstr "Az e17 nem tudta felállítani az asztalzár-rendszert."
+
+#: src/bin/e_main.c:817
+#, fuzzy
+msgid "Enlightenment cannot set up its order file system."
+msgstr "Az e17 nem tudta elindítani a modul rendszert."
+
+#: src/bin/e_main.c:833
+msgid "Enlightenment Starting. Please wait."
+msgstr "Az Enlightenment indul. Kérlek várj..."
+
+#: src/bin/e_main.c:860
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
@@ -1304,11 +1349,11 @@ msgid ""
 "dialog should let you select your<br>modules again."
 msgstr ""
 
-#: src/bin/e_main.c:768
+#: src/bin/e_main.c:867
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr ""
 
-#: src/bin/e_main.c:769
+#: src/bin/e_main.c:868
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
@@ -1316,260 +1361,224 @@ msgid ""
 "should let you select your<br>modules again."
 msgstr ""
 
-#: src/bin/e_main.c:780
-msgid "Enlightenment cannot set up its gadget control system."
-msgstr "Az e17 kütyü-kezelõt."
+#: src/bin/e_fm.c:2107 src/bin/e_fm.c:2178
+#, fuzzy, c-format
+msgid "Unknown Data"
+msgstr "Ismeretlen"
 
-#: src/bin/e_main.c:788
-msgid "Enlightenment cannot set up its shelf system."
-msgstr "Az e17 nem tudta elindítani a polc-rendszert."
+#: src/bin/e_fm.c:2121 src/bin/e_fm.c:2192
+msgid "Removable Device"
+msgstr ""
 
-#: src/bin/e_main.c:796
-msgid "Enlightenment cannot set up its exebuf system."
-msgstr "Az e17 nem tudta elindítani a exebuf rendszert."
-
-#: src/bin/e_main.c:805
-#, fuzzy
-msgid "Enlightenment cannot configure the DPMS settings."
-msgstr "Az e17 nem tudta felállítani az emlékezési beállításokat."
-
-#: src/bin/e_main.c:813
-#, fuzzy
-msgid "Enlightenment cannot configure the X screensaver."
-msgstr "Az e17 nem tudta elindítani a fájlkezelõt!\n"
-
-#: src/bin/e_main.c:821
-#, fuzzy
-msgid "Enlightenment cannot configure the mouse acceleration settings."
-msgstr "Az e17 nem tudta felállítani az emlékezési beállításokat."
-
-#: src/bin/e_main.c:829
-msgid "Enlightenment cannot set up its desk locking system."
-msgstr "Az e17 nem tudta felállítani az asztalzár-rendszert."
-
-#: src/bin/e_main.c:837
-#, fuzzy
-msgid "Enlightenment cannot set up its order file system."
-msgstr "Az e17 nem tudta elindítani a modul rendszert."
-
-#: src/bin/e_main.c:853
-msgid "Enlightenment Starting. Please wait."
-msgstr "Az Enlightenment indul. Kérlek várj..."
-
-#: src/bin/e_fm.c:1887
+#: src/bin/e_fm.c:2931
 #, fuzzy, c-format
 msgid "%i Files"
 msgstr "Fájl"
 
-#: src/bin/e_fm.c:4638 src/bin/e_fm.c:4780
+#: src/bin/e_fm.c:6151 src/bin/e_fm.c:6293
 #, fuzzy
 msgid "Refresh View"
 msgstr "Fríssítési gyakoriság"
 
-#: src/bin/e_fm.c:4649 src/bin/e_fm.c:4791
+#: src/bin/e_fm.c:6162 src/bin/e_fm.c:6304
 msgid "Show Hidden Files"
 msgstr ""
 
-#: src/bin/e_fm.c:4664 src/bin/e_fm.c:4806
+#: src/bin/e_fm.c:6177 src/bin/e_fm.c:6319
 #, fuzzy
 msgid "Remember Ordering"
 msgstr "Ezek alapján emlékezz:"
 
-#: src/bin/e_fm.c:4676 src/bin/e_fm.c:4818
+#: src/bin/e_fm.c:6189 src/bin/e_fm.c:6331
 msgid "Sort Now"
 msgstr ""
 
-#: src/bin/e_fm.c:4694 src/bin/e_fm.c:4836 src/bin/e_int_config_paths.c:210
+#: src/bin/e_fm.c:6207 src/bin/e_fm.c:6349 src/bin/e_int_config_paths.c:210
 msgid "New Directory"
 msgstr "Új könyvtár"
 
-#: src/bin/e_fm.c:4895 src/bin/e_int_config_shelf.c:83
-#: src/bin/e_int_config_apps_menu.c:90 src/bin/e_int_config_apps_order.c:155
-#: src/bin/e_entry.c:386 src/modules/ibar/e_mod_config.c:111
+#: src/bin/e_fm.c:6408 src/bin/e_int_config_shelf.c:83 src/bin/e_entry.c:386
+#: src/modules/ibar/e_mod_config.c:111
 msgid "Delete"
 msgstr "Töröl"
 
-#: src/bin/e_fm.c:4906
+#: src/bin/e_fm.c:6419
 msgid "Rename"
 msgstr "Átnevez"
 
-#: src/bin/e_fm.c:4916
+#: src/bin/e_fm.c:6429
 #, fuzzy
 msgid "Properties"
 msgstr "Tulajdonságok"
 
-#: src/bin/e_fm.c:5040
+#: src/bin/e_fm.c:6553
 #, fuzzy
 msgid "Create a new Directory"
 msgstr "Új könyvtár"
 
-#: src/bin/e_fm.c:5041
+#: src/bin/e_fm.c:6554
 #, fuzzy
 msgid "New Directory Name:"
 msgstr "Új könyvtár"
 
-#: src/bin/e_fm.c:5100
+#: src/bin/e_fm.c:6613
 #, fuzzy, c-format
 msgid "Rename %s to:"
 msgstr "Átnevez"
 
-#: src/bin/e_fm.c:5102
+#: src/bin/e_fm.c:6615
 #, fuzzy
 msgid "Rename File"
 msgstr "Átnevez"
 
-#: src/bin/e_fm.c:5200
+#: src/bin/e_fm.c:6713
 #, fuzzy
 msgid "Confirm Delete"
 msgstr "Megerõsít"
 
-#: src/bin/e_fm.c:5204
+#: src/bin/e_fm.c:6717
 #, fuzzy, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Biztosan törölni akarod a <br><b>%s</b> nevû fájlt?"
 
-#: src/bin/e_fm.c:5210
+#: src/bin/e_fm.c:6723
 #, fuzzy, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
 "hilight> ?"
 msgstr "Biztosan törölni akarod a <br><b>%s</b> nevû fájlt?"
 
-#: src/bin/e_fm.c:5637
-msgid "Removable Device"
-msgstr ""
-
-#: src/bin/e_fm_prop.c:109
+#: src/bin/e_fm_prop.c:108
 #, fuzzy
 msgid "File Properties"
 msgstr "Tulajdonságok"
 
-#: src/bin/e_fm_prop.c:339
+#: src/bin/e_fm_prop.c:338
 msgid "File:"
 msgstr "Fájl:"
 
-#: src/bin/e_fm_prop.c:346 src/bin/e_widget_fsel.c:323
+#: src/bin/e_fm_prop.c:345 src/bin/e_widget_fsel.c:323
 msgid "Size:"
 msgstr "Méret:"
 
-#: src/bin/e_fm_prop.c:353
+#: src/bin/e_fm_prop.c:352
 #, fuzzy
 msgid "Last Modified:"
 msgstr "Utoljára módosítva:"
 
-#: src/bin/e_fm_prop.c:360
+#: src/bin/e_fm_prop.c:359
 #, fuzzy
 msgid "File Type:"
 msgstr "Fájl"
 
-#: src/bin/e_fm_prop.c:367
+#: src/bin/e_fm_prop.c:366
 #, fuzzy
 msgid "Permissions"
 msgstr "Jogok:"
 
-#: src/bin/e_fm_prop.c:368 src/bin/e_widget_fsel.c:339
+#: src/bin/e_fm_prop.c:367 src/bin/e_widget_fsel.c:339
 msgid "Owner:"
 msgstr "Tulajdonos:"
 
-#: src/bin/e_fm_prop.c:374
+#: src/bin/e_fm_prop.c:373
 msgid "Others can read"
 msgstr ""
 
-#: src/bin/e_fm_prop.c:376
+#: src/bin/e_fm_prop.c:375
 msgid "Others can write"
 msgstr ""
 
-#: src/bin/e_fm_prop.c:378
+#: src/bin/e_fm_prop.c:377
 msgid "Owner can read"
 msgstr ""
 
-#: src/bin/e_fm_prop.c:380
+#: src/bin/e_fm_prop.c:379
 msgid "Owner can write"
 msgstr ""
 
-#: src/bin/e_fm_prop.c:386 src/bin/e_int_config_transitions.c:167
+#: src/bin/e_fm_prop.c:385 src/bin/e_int_config_theme.c:1085
+#: src/bin/e_int_config_transitions.c:167
 #: src/bin/e_int_config_wallpaper_gradient.c:153 src/bin/e_widget_fsel.c:302
 msgid "Preview"
 msgstr ""
 
-#: src/bin/e_fm_prop.c:434 src/bin/e_int_config_screensaver.c:166
+#: src/bin/e_fm_prop.c:432 src/bin/e_int_config_screensaver.c:166
 #: src/bin/e_int_config_screensaver.c:176
 #, fuzzy
 msgid "Default"
 msgstr "Alapértelmezett asztal"
 
-#: src/bin/e_fm_prop.c:437
+#: src/bin/e_fm_prop.c:435
 msgid "Thumbnail"
 msgstr ""
 
-#: src/bin/e_fm_prop.c:440 src/bin/e_int_config_desklock.c:319
+#: src/bin/e_fm_prop.c:438 src/bin/e_int_config_desklock.c:319
 #, fuzzy
 msgid "Custom"
 msgstr "Kivág"
 
-#: src/bin/e_fm_prop.c:450
+#: src/bin/e_fm_prop.c:448
 msgid "Use this icon for all files of this type"
 msgstr ""
 
-#: src/bin/e_fm_prop.c:458
+#: src/bin/e_fm_prop.c:456
 #, fuzzy
 msgid "Link Information"
 msgstr "Hiba információ"
 
-#: src/bin/e_fm_prop.c:504 src/bin/e_int_config_mime_edit.c:271
+#: src/bin/e_fm_prop.c:502 src/bin/e_int_config_mime_edit.c:271
 #, fuzzy
 msgid "Select an Image"
 msgstr "Másik kép kiválasztása"
 
-#: src/bin/e_fwin.c:362
+#: src/bin/e_fwin.c:513
 #, fuzzy
 msgid "Go to Parent Directory"
 msgstr "Új könyvtár"
 
-#: src/bin/e_fwin.c:388 src/bin/e_fwin.c:871
+#: src/bin/e_fwin.c:539 src/bin/e_fwin.c:1119
 msgid "Open"
 msgstr ""
 
-#: src/bin/e_fwin.c:395 src/bin/e_fwin.c:869
+#: src/bin/e_fwin.c:546 src/bin/e_fwin.c:1117
 msgid "Open with..."
 msgstr ""
 
-#: src/bin/e_fwin.c:889
+#: src/bin/e_fwin.c:1137
 #, fuzzy
 msgid "Specific Applications"
 msgstr "Alkalmazás"
 
-#: src/bin/e_fwin.c:911 src/bin/e_int_config_apps_menu.c:79
-#: src/bin/e_int_config_apps_order.c:144
+#: src/bin/e_fwin.c:1159
 #, fuzzy
 msgid "All Applications"
 msgstr "Alkalmazás"
 
-#: src/bin/e_gadcon.c:1247
+#: src/bin/e_gadcon.c:1263
 msgid "Plain"
 msgstr "Sima"
 
-#: src/bin/e_gadcon.c:1256
+#: src/bin/e_gadcon.c:1272
 msgid "Inset"
 msgstr "Beágyazott"
 
-#: src/bin/e_gadcon.c:1273
+#: src/bin/e_gadcon.c:1289
 msgid "Automatically scroll contents"
 msgstr "Tartalom automatikus görgetése"
 
-#: src/bin/e_gadcon.c:1280
+#: src/bin/e_gadcon.c:1296
 msgid "Able to be resized"
 msgstr "Átméretezhetõ"
 
-#: src/bin/e_gadcon.c:1292
+#: src/bin/e_gadcon.c:1308
 msgid "Begin move/resize this gadget"
 msgstr ""
 
-#: src/bin/e_gadcon.c:1298
+#: src/bin/e_gadcon.c:1314
 msgid "Remove this gadget"
 msgstr ""
 
-#: src/bin/e_gadcon.c:1743
+#: src/bin/e_gadcon.c:1759
 msgid "Stop move/resize this gadget"
 msgstr ""
 
@@ -1639,15 +1648,15 @@ msgid "Position"
 msgstr "Hely"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:488 src/bin/e_int_config_fonts.c:460
-#: src/bin/e_int_config_fonts.c:664 src/bin/e_int_shelf_config.c:417
-#: src/bin/e_int_shelf_config.c:511
+#: src/bin/e_int_border_remember.c:488 src/bin/e_int_config_fonts.c:452
+#: src/bin/e_int_config_fonts.c:656 src/bin/e_int_shelf_config.c:420
+#: src/bin/e_int_shelf_config.c:519
 msgid "Size"
 msgstr "Méret"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
 #: src/bin/e_int_border_menu.c:216 src/bin/e_int_border_prop.c:471
-#: src/bin/e_int_border_remember.c:490 src/bin/e_int_shelf_config.c:454
+#: src/bin/e_int_border_remember.c:490 src/bin/e_int_shelf_config.c:457
 msgid "Stacking"
 msgstr "Csoportosítás"
 
@@ -1702,7 +1711,7 @@ msgid "Always On Top"
 msgstr "Mindig a legfelül"
 
 #: src/bin/e_int_border_menu.c:66 src/bin/e_int_config_fonts.c:99
-#: src/bin/e_int_config_fonts.c:263 src/modules/temperature/e_mod_config.c:225
+#: src/bin/e_int_config_fonts.c:260 src/modules/temperature/e_mod_config.c:225
 msgid "Normal"
 msgstr "Általános"
 
@@ -1788,8 +1797,8 @@ msgid "Sticky"
 msgstr "Ragadós"
 
 #: src/bin/e_int_border_menu.c:785 src/bin/e_int_border_prop.c:479
-#: src/bin/e_int_config_window_manipulation.c:151
-#: src/bin/e_int_config_window_manipulation.c:210
+#: src/bin/e_int_config_window_manipulation.c:154
+#: src/bin/e_int_config_window_manipulation.c:215
 msgid "Fullscreen"
 msgstr "Teljes képernyõs"
 
@@ -2079,21 +2088,39 @@ msgstr "Ablakkeret választása"
 msgid "Remember this Border for this window next time it appears"
 msgstr "Ha az ablak újra megjelenik, emlékezz majd a keretére"
 
-#: src/bin/e_int_config_cfgdialogs.c:36
-msgid "Config Dialog Settings"
+#: src/bin/e_int_config_dialogs.c:35
+#, fuzzy
+msgid "Dialog Settings"
 msgstr "Beállítási párbeszédablak beállításai"
 
-#: src/bin/e_int_config_cfgdialogs.c:84 src/bin/e_int_config_cfgdialogs.c:116
-msgid "Default Dialog Mode"
-msgstr "Alapértelmezett párbeszédablak mód"
+#: src/bin/e_int_config_dialogs.c:84 src/bin/e_int_config_exebuf.c:110
+#: src/bin/e_int_config_exebuf.c:162 src/bin/e_int_config_performance.c:89
+#: src/bin/e_int_config_performance.c:121 src/bin/e_int_config_winlist.c:131
+#: src/modules/ibox/e_mod_config.c:93 src/modules/pager/e_mod_config.c:116
+msgid "General Settings"
+msgstr "Általános beállítások"
 
-#: src/bin/e_int_config_cfgdialogs.c:87 src/bin/e_int_config_cfgdialogs.c:119
+#: src/bin/e_int_config_dialogs.c:86
+#, fuzzy
+msgid "Disable Confirmation Dialogs"
+msgstr "Konfigurációs ablakok"
+
+#: src/bin/e_int_config_dialogs.c:93
+#, fuzzy
+msgid "Default Configuration Dialogs Mode"
+msgstr "Konfigurációs ablakok"
+
+#: src/bin/e_int_config_dialogs.c:96 src/bin/e_int_config_dialogs.c:134
 msgid "Basic Mode"
 msgstr "Alap"
 
-#: src/bin/e_int_config_cfgdialogs.c:89 src/bin/e_int_config_cfgdialogs.c:121
+#: src/bin/e_int_config_dialogs.c:98 src/bin/e_int_config_dialogs.c:136
 msgid "Advanced Mode"
 msgstr "Haladó"
+
+#: src/bin/e_int_config_dialogs.c:131
+msgid "Default Dialog Mode"
+msgstr "Alapértelmezett párbeszédablak mód"
 
 #: src/bin/e_int_config_clientlist.c:40
 #, fuzzy
@@ -2106,7 +2133,7 @@ msgid "Group By"
 msgstr "Csoport:"
 
 #: src/bin/e_int_config_clientlist.c:101 src/bin/e_int_config_clientlist.c:114
-#: src/bin/e_int_config_clientlist.c:124 src/bin/e_int_config_fonts.c:697
+#: src/bin/e_int_config_clientlist.c:124 src/bin/e_int_config_fonts.c:687
 #: src/bin/e_int_config_mousebindings.c:369
 #: src/bin/e_int_config_transitions.c:152
 #: src/bin/e_int_config_transitions.c:204
@@ -2441,20 +2468,21 @@ msgstr ""
 #: src/bin/e_int_config_dpms.c:201 src/bin/e_int_config_dpms.c:209
 #: src/bin/e_int_config_screensaver.c:119
 #: src/bin/e_int_config_screensaver.c:153
-#: src/modules/battery/e_mod_config.c:120
+#: src/modules/battery/e_mod_config.c:128
 #, c-format
 msgid "%1.0f minutes"
 msgstr "%1.0f perc"
 
 #: src/bin/e_int_config_desklock.c:192 src/bin/e_int_config_imc.c:816
-#: src/bin/e_int_config_startup.c:268 src/bin/e_int_config_theme.c:356
-#: src/bin/e_int_config_wallpaper.c:455 src/bin/e_int_config_wallpaper.c:610
+#: src/bin/e_int_config_startup.c:268 src/bin/e_int_config_theme.c:374
+#: src/bin/e_int_config_theme.c:839 src/bin/e_int_config_wallpaper.c:455
+#: src/bin/e_int_config_wallpaper.c:610
 msgid "Personal"
 msgstr "Egyéni"
 
 #: src/bin/e_int_config_desklock.c:199 src/bin/e_int_config_icon_themes.c:215
 #: src/bin/e_int_config_imc.c:828 src/bin/e_int_config_startup.c:281
-#: src/bin/e_int_config_theme.c:367 src/bin/e_int_config_wallpaper.c:466
+#: src/bin/e_int_config_theme.c:385 src/bin/e_int_config_wallpaper.c:466
 #: src/bin/e_int_config_wallpaper.c:621 src/bin/e_widget_fsel.c:294
 #, fuzzy
 msgid "Go up a Directory"
@@ -2545,7 +2573,7 @@ msgid "Time the mouse is at the edge before flipping:"
 msgstr "Ennyi ideig várj a váltás elõtt:"
 
 #: src/bin/e_int_config_desks.c:254 src/bin/e_int_config_desks.c:268
-#: src/bin/e_int_config_window_manipulation.c:179
+#: src/bin/e_int_config_window_manipulation.c:182
 #, c-format
 msgid "%1.1f sec"
 msgstr "%1.1f mp"
@@ -2573,7 +2601,7 @@ msgstr "Lapozó"
 msgid "Zoom"
 msgstr "Alul"
 
-#: src/bin/e_int_config_display.c:133
+#: src/bin/e_int_config_display.c:132
 #, c-format
 msgid ""
 "Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
@@ -2584,7 +2612,7 @@ msgstr ""
 "<br>vagy a Nem gombot, ha nem.<br>Ha nem nyomsz meg egyetlen gombot sem, az "
 "eredeti, %dx%d@%d felbontás visszaáll %d mp múlva"
 
-#: src/bin/e_int_config_display.c:140
+#: src/bin/e_int_config_display.c:139
 #, fuzzy, c-format
 msgid ""
 "Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
@@ -2595,7 +2623,7 @@ msgstr ""
 "<br>vagy a Nem gombot, ha nem.<br>Ha nem nyomsz meg egyetlen gombot sem, az "
 "eredeti, %dx%d@%d felbontás visszaáll %d mp múlva"
 
-#: src/bin/e_int_config_display.c:151
+#: src/bin/e_int_config_display.c:150
 #, c-format
 msgid ""
 "Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
@@ -2606,7 +2634,7 @@ msgstr ""
 "<br>vagy a Nem gombot, ha nem.<br>Ha nem nyomsz meg egyetlen gombot sem, az "
 "eredeti, %dx%d@%d felbontás <highlight>AZONNAL</highlight> visszaáll."
 
-#: src/bin/e_int_config_display.c:158
+#: src/bin/e_int_config_display.c:157
 #, fuzzy, c-format
 msgid ""
 "Does this look OK? Press <hilight>Yes</hilight> if it does, or No if not."
@@ -2617,41 +2645,41 @@ msgstr ""
 "<br>vagy a Nem gombot, ha nem.<br>Ha nem nyomsz meg egyetlen gombot sem, az "
 "eredeti, %dx%d@%d felbontás <highlight>AZONNAL</highlight> visszaáll."
 
-#: src/bin/e_int_config_display.c:212
+#: src/bin/e_int_config_display.c:211
 msgid "Resolution change"
 msgstr "Felbontás megváltoztatása"
 
-#: src/bin/e_int_config_display.c:243
+#: src/bin/e_int_config_display.c:242
 #, fuzzy
 msgid "Screen Resolution Settings"
 msgstr "Felbontás"
 
-#: src/bin/e_int_config_display.c:380
+#: src/bin/e_int_config_display.c:389
 msgid "Resolution"
 msgstr "Felbontás"
 
-#: src/bin/e_int_config_display.c:387
+#: src/bin/e_int_config_display.c:396
 #, fuzzy
 msgid "Restore on login"
 msgstr "Állítsd vissza a felbontást indításkor!"
 
-#: src/bin/e_int_config_display.c:392
+#: src/bin/e_int_config_display.c:401
 msgid "Refresh"
 msgstr "Fríssíts"
 
-#: src/bin/e_int_config_display.c:475
+#: src/bin/e_int_config_display.c:484
 msgid "Rotation"
 msgstr "Forgatás"
 
-#: src/bin/e_int_config_display.c:494
+#: src/bin/e_int_config_display.c:503
 msgid "Mirroring"
 msgstr "Tükrözés"
 
-#: src/bin/e_int_config_display.c:574
+#: src/bin/e_int_config_display.c:583
 msgid "Missing Features"
 msgstr "Hiányzó képességek"
 
-#: src/bin/e_int_config_display.c:575
+#: src/bin/e_int_config_display.c:584
 #, fuzzy
 msgid ""
 "Your X Display Server is missing support for<br>the <hilight>XRandr</"
@@ -2664,11 +2692,11 @@ msgstr ""
 "(X Resize and Rotate). Enélkül<br>a kiterjesztésnélkül nem válthatsz "
 "felbontást!"
 
-#: src/bin/e_int_config_display.c:587
+#: src/bin/e_int_config_display.c:596
 msgid "No Refresh Rates Found"
 msgstr ""
 
-#: src/bin/e_int_config_display.c:588
+#: src/bin/e_int_config_display.c:597
 msgid ""
 "No refresh rates were reported by your X Display Server.<br>If you are "
 "running a nested X Display Server, then<br>this is to be expected. However, "
@@ -2719,13 +2747,6 @@ msgstr ""
 #, fuzzy
 msgid "Run Command Settings"
 msgstr "Parancs futtatása"
-
-#: src/bin/e_int_config_exebuf.c:110 src/bin/e_int_config_exebuf.c:162
-#: src/bin/e_int_config_performance.c:89
-#: src/bin/e_int_config_performance.c:121 src/bin/e_int_config_winlist.c:131
-#: src/modules/ibox/e_mod_config.c:93 src/modules/pager/e_mod_config.c:116
-msgid "General Settings"
-msgstr "Általános beállítások"
 
 #: src/bin/e_int_config_exebuf.c:111 src/bin/e_int_config_exebuf.c:163
 #, fuzzy
@@ -3013,12 +3034,12 @@ msgstr "Típus:"
 msgid "Module"
 msgstr "Modulok"
 
-#: src/bin/e_int_config_fonts.c:98 src/bin/e_int_config_fonts.c:257
-#: src/bin/e_int_shelf_config.c:421
+#: src/bin/e_int_config_fonts.c:98 src/bin/e_int_config_fonts.c:254
+#: src/bin/e_int_shelf_config.c:424
 msgid "Small"
 msgstr ""
 
-#: src/bin/e_int_config_fonts.c:100 src/bin/e_int_shelf_config.c:425
+#: src/bin/e_int_config_fonts.c:100 src/bin/e_int_shelf_config.c:428
 #, fuzzy
 msgid "Large"
 msgstr "Lapozó"
@@ -3036,78 +3057,78 @@ msgstr "Általános"
 msgid "Large Styled"
 msgstr ""
 
-#: src/bin/e_int_config_fonts.c:170
+#: src/bin/e_int_config_fonts.c:166
 msgid "Font Settings"
 msgstr "Betûtípus beállítások"
 
-#: src/bin/e_int_config_fonts.c:251 src/bin/e_int_shelf_config.c:419
+#: src/bin/e_int_config_fonts.c:248 src/bin/e_int_shelf_config.c:422
 msgid "Tiny"
 msgstr ""
 
-#: src/bin/e_int_config_fonts.c:269
+#: src/bin/e_int_config_fonts.c:266
 msgid "Big"
 msgstr ""
 
-#: src/bin/e_int_config_fonts.c:275
+#: src/bin/e_int_config_fonts.c:272
 msgid "Really Big"
 msgstr ""
 
-#: src/bin/e_int_config_fonts.c:281 src/bin/e_int_shelf_config.c:427
+#: src/bin/e_int_config_fonts.c:278 src/bin/e_int_shelf_config.c:430
 msgid "Huge"
 msgstr ""
 
-#: src/bin/e_int_config_fonts.c:290
+#: src/bin/e_int_config_fonts.c:287
 #, fuzzy, c-format
 msgid "%d pixels"
 msgstr "%1.0f pixel"
 
-#: src/bin/e_int_config_fonts.c:446
+#: src/bin/e_int_config_fonts.c:438
 #, fuzzy
 msgid "Enable Custom Font Classes"
 msgstr "Egyedi betûk engedélyezése"
 
-#: src/bin/e_int_config_fonts.c:468
+#: src/bin/e_int_config_fonts.c:460
 msgid "Basic preview text: 123: 我的天空！"
 msgstr ""
 
-#: src/bin/e_int_config_fonts.c:636
+#: src/bin/e_int_config_fonts.c:628
 #, fuzzy
 msgid "Font Classes"
 msgstr "Ikon osztály"
 
-#: src/bin/e_int_config_fonts.c:655 src/bin/e_int_shelf_config.c:520
+#: src/bin/e_int_config_fonts.c:647 src/bin/e_int_shelf_config.c:528
 msgid "Styles"
 msgstr "Stílusok"
 
-#: src/bin/e_int_config_fonts.c:672
+#: src/bin/e_int_config_fonts.c:664
 msgid "Enable Font Class"
 msgstr "Egyedi betûk engedélyezése"
 
-#: src/bin/e_int_config_fonts.c:678
+#: src/bin/e_int_config_fonts.c:670
 msgid "Advanced Preview Text.. 我真的会写中文"
 msgstr ""
 
-#: src/bin/e_int_config_fonts.c:686
+#: src/bin/e_int_config_fonts.c:676
 msgid "Hinting"
 msgstr "Nincs simítás"
 
-#: src/bin/e_int_config_fonts.c:689
+#: src/bin/e_int_config_fonts.c:679
 msgid "Bytecode"
 msgstr "Bájtkód"
 
-#: src/bin/e_int_config_fonts.c:693 src/modules/cpufreq/e_mod_main.c:214
+#: src/bin/e_int_config_fonts.c:683 src/modules/cpufreq/e_mod_main.c:214
 msgid "Automatic"
 msgstr "Automatikus"
 
-#: src/bin/e_int_config_fonts.c:703
+#: src/bin/e_int_config_fonts.c:693
 msgid "Font Fallbacks"
 msgstr "Háttér betûtípusok"
 
-#: src/bin/e_int_config_fonts.c:704
+#: src/bin/e_int_config_fonts.c:694
 msgid "Fallback Name"
 msgstr "Betûtípus neve"
 
-#: src/bin/e_int_config_fonts.c:717
+#: src/bin/e_int_config_fonts.c:707
 msgid "Enable Fallbacks"
 msgstr "Háttér betûtípusok engedélyezése"
 
@@ -3157,7 +3178,7 @@ msgstr ""
 msgid "New"
 msgstr "Új"
 
-#: src/bin/e_int_config_imc.c:897 src/bin/e_int_config_theme.c:424
+#: src/bin/e_int_config_imc.c:897 src/bin/e_int_config_theme.c:443
 msgid "Import..."
 msgstr ""
 
@@ -3204,1595 +3225,1595 @@ msgid ""
 msgstr ""
 "Az Enlightenment képtelen volt új folyamatot elágaztatni:<br><br>%s<br>"
 
-#: src/bin/e_int_config_intl.c:104 src/bin/e_int_config_intl.c:139
+#: src/bin/e_int_config_intl.c:104 src/bin/e_int_config_intl.c:140
 msgid "Bulgarian"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:105
-msgid "Chinese (Simplified)"
+#: src/bin/e_int_config_intl.c:105 src/bin/e_int_config_intl.c:145
+msgid "Catalan"
 msgstr ""
 
 #: src/bin/e_int_config_intl.c:106
+msgid "Chinese (Simplified)"
+msgstr ""
+
+#: src/bin/e_int_config_intl.c:107
 msgid "Chinese (Traditional)"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:107 src/bin/e_int_config_intl.c:146
+#: src/bin/e_int_config_intl.c:108 src/bin/e_int_config_intl.c:147
 msgid "Czech"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:108 src/bin/e_int_config_intl.c:148
+#: src/bin/e_int_config_intl.c:109 src/bin/e_int_config_intl.c:149
 #, fuzzy
 msgid "Danish"
 msgstr "Részletes"
 
-#: src/bin/e_int_config_intl.c:109 src/bin/e_int_config_intl.c:212
+#: src/bin/e_int_config_intl.c:110 src/bin/e_int_config_intl.c:213
 msgid "Dutch"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:110 src/bin/e_int_config_intl.c:154
+#: src/bin/e_int_config_intl.c:111 src/bin/e_int_config_intl.c:155
 msgid "English"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:111 src/bin/e_int_config_intl.c:160
+#: src/bin/e_int_config_intl.c:112 src/bin/e_int_config_intl.c:161
 msgid "Finnish"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:112 src/bin/e_int_config_intl.c:162
+#: src/bin/e_int_config_intl.c:113 src/bin/e_int_config_intl.c:163
 #, fuzzy
 msgid "French"
 msgstr "Fahrenheit"
 
-#: src/bin/e_int_config_intl.c:113 src/bin/e_int_config_intl.c:149
+#: src/bin/e_int_config_intl.c:114 src/bin/e_int_config_intl.c:150
 #, fuzzy
 msgid "German"
 msgstr "Általános"
 
-#: src/bin/e_int_config_intl.c:114 src/bin/e_int_config_intl.c:175
+#: src/bin/e_int_config_intl.c:115 src/bin/e_int_config_intl.c:176
 msgid "Hungarian"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:115 src/bin/e_int_config_intl.c:181
+#: src/bin/e_int_config_intl.c:116 src/bin/e_int_config_intl.c:182
 msgid "Italian"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:116 src/bin/e_int_config_intl.c:184
+#: src/bin/e_int_config_intl.c:117 src/bin/e_int_config_intl.c:185
 msgid "Japanese"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:117 src/bin/e_int_config_intl.c:194
+#: src/bin/e_int_config_intl.c:118 src/bin/e_int_config_intl.c:195
 msgid "Korean"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:118 src/bin/e_int_config_intl.c:210
+#: src/bin/e_int_config_intl.c:119 src/bin/e_int_config_intl.c:211
 msgid "Norwegian Bokmål"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:119 src/bin/e_int_config_intl.c:222
+#: src/bin/e_int_config_intl.c:120 src/bin/e_int_config_intl.c:223
 msgid "Polish"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:120 src/bin/e_int_config_intl.c:224
+#: src/bin/e_int_config_intl.c:121 src/bin/e_int_config_intl.c:225
 #, fuzzy
 msgid "Portuguese"
 msgstr "Tulajdonságok"
 
-#: src/bin/e_int_config_intl.c:121 src/bin/e_int_config_intl.c:226
+#: src/bin/e_int_config_intl.c:122 src/bin/e_int_config_intl.c:227
 msgid "Russian"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:122 src/bin/e_int_config_intl.c:232
+#: src/bin/e_int_config_intl.c:123 src/bin/e_int_config_intl.c:233
 #, fuzzy
 msgid "Slovak"
 msgstr "Ritkán"
 
-#: src/bin/e_int_config_intl.c:123 src/bin/e_int_config_intl.c:233
+#: src/bin/e_int_config_intl.c:124 src/bin/e_int_config_intl.c:234
 msgid "Slovenian"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:124 src/bin/e_int_config_intl.c:156
+#: src/bin/e_int_config_intl.c:125 src/bin/e_int_config_intl.c:157
 msgid "Spanish"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:125 src/bin/e_int_config_intl.c:239
+#: src/bin/e_int_config_intl.c:126 src/bin/e_int_config_intl.c:240
 msgid "Swedish"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:130
+#: src/bin/e_int_config_intl.c:131
 msgid "Afar"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:131
+#: src/bin/e_int_config_intl.c:132
 msgid "Afrikaans"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:132
+#: src/bin/e_int_config_intl.c:133
 msgid "Akan"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:133
+#: src/bin/e_int_config_intl.c:134
 #, fuzzy
 msgid "Amharic"
 msgstr "Automatikus"
 
-#: src/bin/e_int_config_intl.c:134
+#: src/bin/e_int_config_intl.c:135
 #, fuzzy
 msgid "Aragonese"
 msgstr "Ikonok rendezése"
 
-#: src/bin/e_int_config_intl.c:135
+#: src/bin/e_int_config_intl.c:136
 msgid "Arabic"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:136
+#: src/bin/e_int_config_intl.c:137
 msgid "Assamese"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:137
+#: src/bin/e_int_config_intl.c:138
 msgid "Azerbaijani"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:138
+#: src/bin/e_int_config_intl.c:139
 msgid "Belarusian"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:140
+#: src/bin/e_int_config_intl.c:141
 msgid "Bengali"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:141
+#: src/bin/e_int_config_intl.c:142
 msgid "Breton"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:142
+#: src/bin/e_int_config_intl.c:143
 msgid "Bosnian"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:143
+#: src/bin/e_int_config_intl.c:144
 #, fuzzy
 msgid "Blin"
 msgstr "Sima"
 
-#: src/bin/e_int_config_intl.c:144
-msgid "Catalan"
-msgstr ""
-
-#: src/bin/e_int_config_intl.c:145
+#: src/bin/e_int_config_intl.c:146
 msgid "Atsam"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:147
+#: src/bin/e_int_config_intl.c:148
 msgid "Welsh"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:150
+#: src/bin/e_int_config_intl.c:151
 msgid "Divehi"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:151
+#: src/bin/e_int_config_intl.c:152
 msgid "Dzongkha"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:152
+#: src/bin/e_int_config_intl.c:153
 msgid "Ewe"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:153
+#: src/bin/e_int_config_intl.c:154
 msgid "Greek"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:155
+#: src/bin/e_int_config_intl.c:156
 msgid "Esperanto"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:157
+#: src/bin/e_int_config_intl.c:158
 msgid "Estonian"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:158
+#: src/bin/e_int_config_intl.c:159
 msgid "Basque"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:159
+#: src/bin/e_int_config_intl.c:160
 #, fuzzy
 msgid "Persian"
 msgstr "Egyéni"
 
-#: src/bin/e_int_config_intl.c:161
+#: src/bin/e_int_config_intl.c:162
 #, fuzzy
 msgid "Faroese"
 msgstr "Messzi"
 
-#: src/bin/e_int_config_intl.c:163
+#: src/bin/e_int_config_intl.c:164
 msgid "Friulian"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:164
+#: src/bin/e_int_config_intl.c:165
 msgid "Irish"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:165
+#: src/bin/e_int_config_intl.c:166
 msgid "Ga"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:166
+#: src/bin/e_int_config_intl.c:167
 msgid "Geez"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:167
+#: src/bin/e_int_config_intl.c:168
 msgid "Galician"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:168
+#: src/bin/e_int_config_intl.c:169
 msgid "Gujarati"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:169
+#: src/bin/e_int_config_intl.c:170
 #, fuzzy
 msgid "Manx"
 msgstr "Manuális"
 
-#: src/bin/e_int_config_intl.c:170
+#: src/bin/e_int_config_intl.c:171
 msgid "Hausa"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:171
+#: src/bin/e_int_config_intl.c:172
 msgid "Hawaiian"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:172 src/bin/e_int_config_intl.c:183
+#: src/bin/e_int_config_intl.c:173 src/bin/e_int_config_intl.c:184
 msgid "Hebrew"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:173
+#: src/bin/e_int_config_intl.c:174
 #, fuzzy
 msgid "Hindi"
 msgstr "Nincs simítás"
 
-#: src/bin/e_int_config_intl.c:174
+#: src/bin/e_int_config_intl.c:175
 #, fuzzy
 msgid "Croatian"
 msgstr "Forgatás"
 
-#: src/bin/e_int_config_intl.c:176
+#: src/bin/e_int_config_intl.c:177
 msgid "Armenian"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:177
+#: src/bin/e_int_config_intl.c:178
 msgid "Interlingua"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:178
+#: src/bin/e_int_config_intl.c:179
 msgid "Indonesian"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:179
+#: src/bin/e_int_config_intl.c:180
 msgid "Igbo"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:180
+#: src/bin/e_int_config_intl.c:181
 msgid "Icelandic"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:182
+#: src/bin/e_int_config_intl.c:183
 msgid "Inuktitut"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:185
+#: src/bin/e_int_config_intl.c:186
 msgid "Georgian"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:186
+#: src/bin/e_int_config_intl.c:187
 msgid "Jju"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:187
+#: src/bin/e_int_config_intl.c:188
 msgid "Kamba"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:188
+#: src/bin/e_int_config_intl.c:189
 #, fuzzy
 msgid "Tyap"
 msgstr "Típus:"
 
-#: src/bin/e_int_config_intl.c:189
+#: src/bin/e_int_config_intl.c:190
 msgid "Koro"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:190
+#: src/bin/e_int_config_intl.c:191
 msgid "Kazakh"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:191
+#: src/bin/e_int_config_intl.c:192
 msgid "Kalaallisut"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:192
+#: src/bin/e_int_config_intl.c:193
 #, fuzzy
 msgid "Khmer"
 msgstr "Más"
 
-#: src/bin/e_int_config_intl.c:193
+#: src/bin/e_int_config_intl.c:194
 msgid "Kannada"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:195
+#: src/bin/e_int_config_intl.c:196
 msgid "Konkani"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:196
+#: src/bin/e_int_config_intl.c:197
 msgid "Kurdish"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:197
+#: src/bin/e_int_config_intl.c:198
 msgid "Cornish"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:198
+#: src/bin/e_int_config_intl.c:199
 msgid "Kirghiz"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:199
+#: src/bin/e_int_config_intl.c:200
 #, fuzzy
 msgid "Lingala"
 msgstr "Lineáris"
 
-#: src/bin/e_int_config_intl.c:200
+#: src/bin/e_int_config_intl.c:201
 #, fuzzy
 msgid "Lao"
 msgstr "Alacsony"
 
-#: src/bin/e_int_config_intl.c:201
+#: src/bin/e_int_config_intl.c:202
 msgid "Lithuanian"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:202
+#: src/bin/e_int_config_intl.c:203
 msgid "Latvian"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:203
+#: src/bin/e_int_config_intl.c:204
 msgid "Maori"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:204
+#: src/bin/e_int_config_intl.c:205
 msgid "Macedonian"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:205
+#: src/bin/e_int_config_intl.c:206
 msgid "Malayalam"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:206
+#: src/bin/e_int_config_intl.c:207
 msgid "Mongolian"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:207
+#: src/bin/e_int_config_intl.c:208
 msgid "Marathi"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:208
+#: src/bin/e_int_config_intl.c:209
 msgid "Malay"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:209
+#: src/bin/e_int_config_intl.c:210
 msgid "Maltese"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:211
+#: src/bin/e_int_config_intl.c:212
 #, fuzzy
 msgid "Nepali"
 msgstr "Közeli"
 
-#: src/bin/e_int_config_intl.c:213
+#: src/bin/e_int_config_intl.c:214
 msgid "Norwegian Nynorsk"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:214
+#: src/bin/e_int_config_intl.c:215
 msgid "Norwegian"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:215
+#: src/bin/e_int_config_intl.c:216
 msgid "South Ndebele"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:216
+#: src/bin/e_int_config_intl.c:217
 msgid "Northern Sotho"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:217
+#: src/bin/e_int_config_intl.c:218
 msgid "Nyanja; Chichewa; Chewa"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:218
+#: src/bin/e_int_config_intl.c:219
 msgid "Occitan"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:219
+#: src/bin/e_int_config_intl.c:220
 msgid "Oromo"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:220
+#: src/bin/e_int_config_intl.c:221
 msgid "Oriya"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:221
+#: src/bin/e_int_config_intl.c:222
 msgid "Punjabi"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:223
+#: src/bin/e_int_config_intl.c:224
 #, fuzzy
 msgid "Pashto"
 msgstr "Gyakran"
 
-#: src/bin/e_int_config_intl.c:225
+#: src/bin/e_int_config_intl.c:226
 #, fuzzy
 msgid "Romanian"
 msgstr "Forgatás"
 
-#: src/bin/e_int_config_intl.c:227
+#: src/bin/e_int_config_intl.c:228
 msgid "Kinyarwanda"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:228
+#: src/bin/e_int_config_intl.c:229
 #, fuzzy
 msgid "Sanskrit"
 msgstr "Indítás"
 
-#: src/bin/e_int_config_intl.c:229
+#: src/bin/e_int_config_intl.c:230
 msgid "Northern Sami"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:230
+#: src/bin/e_int_config_intl.c:231
 msgid "Serbo-Croatian"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:231
+#: src/bin/e_int_config_intl.c:232
 msgid "Sidamo"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:234
+#: src/bin/e_int_config_intl.c:235
 #, fuzzy
 msgid "Somali"
 msgstr "Általános"
 
-#: src/bin/e_int_config_intl.c:235
+#: src/bin/e_int_config_intl.c:236
 #, fuzzy
 msgid "Albanian"
 msgstr "Sima"
 
-#: src/bin/e_int_config_intl.c:236
+#: src/bin/e_int_config_intl.c:237
 msgid "Serbian"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:237
+#: src/bin/e_int_config_intl.c:238
 #, fuzzy
 msgid "Swati"
 msgstr "Indítás"
 
-#: src/bin/e_int_config_intl.c:238
+#: src/bin/e_int_config_intl.c:239
 msgid "Southern Sotho"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:240
+#: src/bin/e_int_config_intl.c:241
 msgid "Swahili"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:241
+#: src/bin/e_int_config_intl.c:242
 msgid "Syriac"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:242
+#: src/bin/e_int_config_intl.c:243
 #, fuzzy
 msgid "Tamil"
 msgstr "Cím"
 
-#: src/bin/e_int_config_intl.c:243
+#: src/bin/e_int_config_intl.c:244
 msgid "Telugu"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:244
+#: src/bin/e_int_config_intl.c:245
 msgid "Tajik"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:245
+#: src/bin/e_int_config_intl.c:246
 msgid "Thai"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:246
+#: src/bin/e_int_config_intl.c:247
 msgid "Tigrinya"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:247
+#: src/bin/e_int_config_intl.c:248
 #, fuzzy
 msgid "Tigre"
 msgstr "Cím"
 
-#: src/bin/e_int_config_intl.c:248
+#: src/bin/e_int_config_intl.c:249
 msgid "Tagalog"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:249
+#: src/bin/e_int_config_intl.c:250
 msgid "Tswana"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:250
+#: src/bin/e_int_config_intl.c:251
 msgid "Turkish"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:251
+#: src/bin/e_int_config_intl.c:252
 msgid "Tsonga"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:252
+#: src/bin/e_int_config_intl.c:253
 #, fuzzy
 msgid "Tatar"
 msgstr "Indítás"
 
-#: src/bin/e_int_config_intl.c:253
+#: src/bin/e_int_config_intl.c:254
 msgid "Ukrainian"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:254
+#: src/bin/e_int_config_intl.c:255
 msgid "Urdu"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:255
+#: src/bin/e_int_config_intl.c:256
 msgid "Uzbek"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:256
+#: src/bin/e_int_config_intl.c:257
 msgid "Venda"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:257
+#: src/bin/e_int_config_intl.c:258
 #, fuzzy
 msgid "Vietnamese"
 msgstr "Átnevez"
 
-#: src/bin/e_int_config_intl.c:258
+#: src/bin/e_int_config_intl.c:259
 msgid "Walloon"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:259
+#: src/bin/e_int_config_intl.c:260
 msgid "Walamo"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:260
+#: src/bin/e_int_config_intl.c:261
 msgid "Xhosa"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:261
+#: src/bin/e_int_config_intl.c:262
 msgid "Yiddish"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:262
+#: src/bin/e_int_config_intl.c:263
 msgid "Yoruba"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:263
+#: src/bin/e_int_config_intl.c:264
 msgid "Chinese"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:264
+#: src/bin/e_int_config_intl.c:265
 msgid "Zulu"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:269
+#: src/bin/e_int_config_intl.c:270
 msgid "Afghanistan"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:270
+#: src/bin/e_int_config_intl.c:271
 msgid "Åland Islands"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:271
+#: src/bin/e_int_config_intl.c:272
 msgid "Albania"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:272
+#: src/bin/e_int_config_intl.c:273
 msgid "Algeria"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:273
+#: src/bin/e_int_config_intl.c:274
 msgid "American Samoa"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:274
+#: src/bin/e_int_config_intl.c:275
 msgid "Andorra"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:275
+#: src/bin/e_int_config_intl.c:276
 msgid "Angola"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:276
+#: src/bin/e_int_config_intl.c:277
 msgid "Anguilla"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:277
+#: src/bin/e_int_config_intl.c:278
 #, fuzzy
 msgid "Antarctica"
 msgstr "Automatikus"
 
-#: src/bin/e_int_config_intl.c:278
+#: src/bin/e_int_config_intl.c:279
 msgid "Antigua and Barbuda"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:279
+#: src/bin/e_int_config_intl.c:280
 msgid "Argentina"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:280
+#: src/bin/e_int_config_intl.c:281
 msgid "Armenia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:281
+#: src/bin/e_int_config_intl.c:282
 msgid "Aruba"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:282
+#: src/bin/e_int_config_intl.c:283
 #, fuzzy
 msgid "Australia"
 msgstr "Automatikusan kiemelkedés"
 
-#: src/bin/e_int_config_intl.c:283
+#: src/bin/e_int_config_intl.c:284
 #, fuzzy
 msgid "Austria"
 msgstr "Automatikusan kiemelkedés"
 
-#: src/bin/e_int_config_intl.c:284
+#: src/bin/e_int_config_intl.c:285
 msgid "Azerbaijan"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:285
+#: src/bin/e_int_config_intl.c:286
 #, fuzzy
 msgid "Bahamas"
 msgstr "Paraméterek"
 
-#: src/bin/e_int_config_intl.c:286
+#: src/bin/e_int_config_intl.c:287
 msgid "Bahrain"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:287
+#: src/bin/e_int_config_intl.c:288
 msgid "Bangladesh"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:288
+#: src/bin/e_int_config_intl.c:289
 msgid "Barbados"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:289
+#: src/bin/e_int_config_intl.c:290
 msgid "Belarus"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:290
+#: src/bin/e_int_config_intl.c:291
 #, fuzzy
 msgid "Belgium"
 msgstr "Közepes"
 
-#: src/bin/e_int_config_intl.c:291
+#: src/bin/e_int_config_intl.c:292
 #, fuzzy
 msgid "Belize"
 msgstr "Polc mérete"
 
-#: src/bin/e_int_config_intl.c:292
+#: src/bin/e_int_config_intl.c:293
 msgid "Benin"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:293
+#: src/bin/e_int_config_intl.c:294
 msgid "Bermuda"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:294
+#: src/bin/e_int_config_intl.c:295
 msgid "Bhutan"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:295
+#: src/bin/e_int_config_intl.c:296
 msgid "Bolivia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:296
+#: src/bin/e_int_config_intl.c:297
 msgid "Bosnia and Herzegovina"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:297
+#: src/bin/e_int_config_intl.c:298
 msgid "Botswana"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:298
+#: src/bin/e_int_config_intl.c:299
 msgid "Bouvet Island"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:299
+#: src/bin/e_int_config_intl.c:300
 msgid "Brazil"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:300
+#: src/bin/e_int_config_intl.c:301
 msgid "British Indian Ocean Territory"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:301
+#: src/bin/e_int_config_intl.c:302
 msgid "Brunei Darussalam"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:302
+#: src/bin/e_int_config_intl.c:303
 msgid "Bulgaria"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:303
+#: src/bin/e_int_config_intl.c:304
 msgid "Burkina Faso"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:304
+#: src/bin/e_int_config_intl.c:305
 msgid "Burundi"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:305
+#: src/bin/e_int_config_intl.c:306
 msgid "Cambodia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:306
+#: src/bin/e_int_config_intl.c:307
 msgid "Cameroon"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:307
+#: src/bin/e_int_config_intl.c:308
 msgid "Canada"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:308
+#: src/bin/e_int_config_intl.c:309
 msgid "Cape Verde"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:309
+#: src/bin/e_int_config_intl.c:310
 msgid "Cayman Islands"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:310
+#: src/bin/e_int_config_intl.c:311
 msgid "Central African Republic"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:311
+#: src/bin/e_int_config_intl.c:312
 #, fuzzy
 msgid "Chad"
 msgstr "Árnyékolt"
 
-#: src/bin/e_int_config_intl.c:312
+#: src/bin/e_int_config_intl.c:313
 #, fuzzy
 msgid "Chile"
 msgstr "Fájl"
 
-#: src/bin/e_int_config_intl.c:313
+#: src/bin/e_int_config_intl.c:314
 #, fuzzy
 msgid "China"
 msgstr "Töltés"
 
-#: src/bin/e_int_config_intl.c:314
+#: src/bin/e_int_config_intl.c:315
 msgid "Christmas Island"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:315
+#: src/bin/e_int_config_intl.c:316
 msgid "Cocos (keeling) Islands"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:316
+#: src/bin/e_int_config_intl.c:317
 msgid "Colombia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:317
+#: src/bin/e_int_config_intl.c:318
 msgid "Comoros"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:318 src/bin/e_int_config_intl.c:319
+#: src/bin/e_int_config_intl.c:319 src/bin/e_int_config_intl.c:320
 msgid "Congo"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:320
+#: src/bin/e_int_config_intl.c:321
 msgid "Cook Islands"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:321
+#: src/bin/e_int_config_intl.c:322
 msgid "Costa Rica"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:322
+#: src/bin/e_int_config_intl.c:323
 msgid "Cote d'Ivoire"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:323
+#: src/bin/e_int_config_intl.c:324
 msgid "Croatia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:324
+#: src/bin/e_int_config_intl.c:325
 msgid "Cuba"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:325
+#: src/bin/e_int_config_intl.c:326
 msgid "Cyprus"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:326
+#: src/bin/e_int_config_intl.c:327
 msgid "Czech Republic"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:327
+#: src/bin/e_int_config_intl.c:328
 #, fuzzy
 msgid "Denmark"
 msgstr "Sötét"
 
-#: src/bin/e_int_config_intl.c:328
+#: src/bin/e_int_config_intl.c:329
 #, fuzzy
 msgid "Djibouti"
 msgstr "Adatok"
 
-#: src/bin/e_int_config_intl.c:329
+#: src/bin/e_int_config_intl.c:330
 msgid "Dominica"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:330
+#: src/bin/e_int_config_intl.c:331
 msgid "Dominican Republic"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:331
+#: src/bin/e_int_config_intl.c:332
 msgid "Ecuador"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:332
+#: src/bin/e_int_config_intl.c:333
 msgid "Egypt"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:333
+#: src/bin/e_int_config_intl.c:334
 msgid "El Salvador"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:334
+#: src/bin/e_int_config_intl.c:335
 msgid "Equatorial Guinea"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:335
+#: src/bin/e_int_config_intl.c:336
 msgid "Eritrea"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:336
+#: src/bin/e_int_config_intl.c:337
 msgid "Estonia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:337
+#: src/bin/e_int_config_intl.c:338
 msgid "Ethiopia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:338
+#: src/bin/e_int_config_intl.c:339
 msgid "Falkland Islands (malvinas)"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:339
+#: src/bin/e_int_config_intl.c:340
 msgid "Faroe Islands"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:340
+#: src/bin/e_int_config_intl.c:341
 msgid "Fiji"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:341
+#: src/bin/e_int_config_intl.c:342
 msgid "Finland"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:342
+#: src/bin/e_int_config_intl.c:343
 #, fuzzy
 msgid "France"
 msgstr "Mégse"
 
-#: src/bin/e_int_config_intl.c:343
+#: src/bin/e_int_config_intl.c:344
 msgid "French Guiana"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:344
+#: src/bin/e_int_config_intl.c:345
 msgid "French Polynesia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:345
+#: src/bin/e_int_config_intl.c:346
 msgid "French Southern Territories"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:346
+#: src/bin/e_int_config_intl.c:347
 msgid "Gabon"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:347
+#: src/bin/e_int_config_intl.c:348
 msgid "Gambia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:348
+#: src/bin/e_int_config_intl.c:349
 msgid "Georgia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:349
+#: src/bin/e_int_config_intl.c:350
 msgid "Germany"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:350
+#: src/bin/e_int_config_intl.c:351
 msgid "Ghana"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:351
+#: src/bin/e_int_config_intl.c:352
 msgid "Gibraltar"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:352
+#: src/bin/e_int_config_intl.c:353
 msgid "Greece"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:353
+#: src/bin/e_int_config_intl.c:354
 msgid "Greenland"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:354
+#: src/bin/e_int_config_intl.c:355
 msgid "Grenada"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:355
+#: src/bin/e_int_config_intl.c:356
 msgid "Guadeloupe"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:356
+#: src/bin/e_int_config_intl.c:357
 msgid "Guam"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:357
+#: src/bin/e_int_config_intl.c:358
 msgid "Guatemala"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:358
+#: src/bin/e_int_config_intl.c:359
 msgid "Guernsey"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:359
+#: src/bin/e_int_config_intl.c:360
 #, fuzzy
 msgid "Guinea"
 msgstr "Lineáris"
 
-#: src/bin/e_int_config_intl.c:360
+#: src/bin/e_int_config_intl.c:361
 #, fuzzy
 msgid "Guinea-Bissau"
 msgstr "Lineáris"
 
-#: src/bin/e_int_config_intl.c:361
+#: src/bin/e_int_config_intl.c:362
 msgid "Guyana"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:362
+#: src/bin/e_int_config_intl.c:363
 #, fuzzy
 msgid "Haiti"
 msgstr "Nincs simítás"
 
-#: src/bin/e_int_config_intl.c:363
+#: src/bin/e_int_config_intl.c:364
 msgid "Heard Island and Mcdonald Islands"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:364
+#: src/bin/e_int_config_intl.c:365
 msgid "Holy See (Vatican City State)"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:365
+#: src/bin/e_int_config_intl.c:366
 msgid "Honduras"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:366
+#: src/bin/e_int_config_intl.c:367
 msgid "Hong Kong"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:367
+#: src/bin/e_int_config_intl.c:368
 msgid "Hungary"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:368
+#: src/bin/e_int_config_intl.c:369
 msgid "Iceland"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:369
+#: src/bin/e_int_config_intl.c:370
 msgid "India"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:370
+#: src/bin/e_int_config_intl.c:371
 msgid "Indonesia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:371
+#: src/bin/e_int_config_intl.c:372
 msgid "Iran"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:372
+#: src/bin/e_int_config_intl.c:373
 msgid "Iraq"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:373
+#: src/bin/e_int_config_intl.c:374
 msgid "Ireland"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:374
+#: src/bin/e_int_config_intl.c:375
 msgid "Isle Of Man"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:375
+#: src/bin/e_int_config_intl.c:376
 msgid "Israel"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:376
+#: src/bin/e_int_config_intl.c:377
 msgid "Italy"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:377
+#: src/bin/e_int_config_intl.c:378
 msgid "Jamaica"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:378
+#: src/bin/e_int_config_intl.c:379
 msgid "Japan"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:379
+#: src/bin/e_int_config_intl.c:380
 msgid "Jersey"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:380
+#: src/bin/e_int_config_intl.c:381
 msgid "Jordan"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:381
+#: src/bin/e_int_config_intl.c:382
 msgid "Kazakhstan"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:382
+#: src/bin/e_int_config_intl.c:383
 msgid "Kenya"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:383
+#: src/bin/e_int_config_intl.c:384
 msgid "Kiribati"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:384 src/bin/e_int_config_intl.c:385
+#: src/bin/e_int_config_intl.c:385 src/bin/e_int_config_intl.c:386
 msgid "Korea"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:386
+#: src/bin/e_int_config_intl.c:387
 #, fuzzy
 msgid "Kuwait"
 msgstr "Minõség"
 
-#: src/bin/e_int_config_intl.c:387
+#: src/bin/e_int_config_intl.c:388
 msgid "Kyrgyzstan"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:388
+#: src/bin/e_int_config_intl.c:389
 msgid "Lao People's Democratic Republic"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:389
+#: src/bin/e_int_config_intl.c:390
 msgid "Latvia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:390
+#: src/bin/e_int_config_intl.c:391
 msgid "Lebanon"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:391
+#: src/bin/e_int_config_intl.c:392
 msgid "Lesotho"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:392
+#: src/bin/e_int_config_intl.c:393
 #, fuzzy
 msgid "Liberia"
 msgstr "Lineáris"
 
-#: src/bin/e_int_config_intl.c:393
+#: src/bin/e_int_config_intl.c:394
 msgid "Libyan Arab Jamahiriya"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:394
+#: src/bin/e_int_config_intl.c:395
 msgid "Liechtenstein"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:395
+#: src/bin/e_int_config_intl.c:396
 msgid "Lithuania"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:396
+#: src/bin/e_int_config_intl.c:397
 msgid "Luxembourg"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:397
+#: src/bin/e_int_config_intl.c:398
 msgid "Macao"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:398
+#: src/bin/e_int_config_intl.c:399
 msgid "Macedonia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:399
+#: src/bin/e_int_config_intl.c:400
 msgid "Madagascar"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:400
+#: src/bin/e_int_config_intl.c:401
 msgid "Malawi"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:401
+#: src/bin/e_int_config_intl.c:402
 msgid "Malaysia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:402
+#: src/bin/e_int_config_intl.c:403
 msgid "Maldives"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:403
+#: src/bin/e_int_config_intl.c:404
 #, fuzzy
 msgid "Mali"
 msgstr "Manuális"
 
-#: src/bin/e_int_config_intl.c:404
+#: src/bin/e_int_config_intl.c:405
 msgid "Malta"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:405
+#: src/bin/e_int_config_intl.c:406
 msgid "Marshall Islands"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:406
+#: src/bin/e_int_config_intl.c:407
 msgid "Martinique"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:407
+#: src/bin/e_int_config_intl.c:408
 msgid "Mauritania"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:408
+#: src/bin/e_int_config_intl.c:409
 msgid "Mauritius"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:409
+#: src/bin/e_int_config_intl.c:410
 #, fuzzy
 msgid "Mayotte"
 msgstr "Kinézet"
 
-#: src/bin/e_int_config_intl.c:410
+#: src/bin/e_int_config_intl.c:411
 #, fuzzy
 msgid "Mexico"
 msgstr "Más"
 
-#: src/bin/e_int_config_intl.c:411
+#: src/bin/e_int_config_intl.c:412
 msgid "Micronesia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:412
+#: src/bin/e_int_config_intl.c:413
 msgid "Moldova"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:413
+#: src/bin/e_int_config_intl.c:414
 msgid "Monaco"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:414
+#: src/bin/e_int_config_intl.c:415
 msgid "Mongolia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:415
+#: src/bin/e_int_config_intl.c:416
 msgid "Montserrat"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:416
+#: src/bin/e_int_config_intl.c:417
 msgid "Morocco"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:417
+#: src/bin/e_int_config_intl.c:418
 msgid "Mozambique"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:418
+#: src/bin/e_int_config_intl.c:419
 #, fuzzy
 msgid "Myanmar"
 msgstr "Kezelõ"
 
-#: src/bin/e_int_config_intl.c:419
+#: src/bin/e_int_config_intl.c:420
 msgid "Namibia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:420
+#: src/bin/e_int_config_intl.c:421
 #, fuzzy
 msgid "Nauru"
 msgstr "Közeli"
 
-#: src/bin/e_int_config_intl.c:421
+#: src/bin/e_int_config_intl.c:422
 #, fuzzy
 msgid "Nepal"
 msgstr "Közeli"
 
-#: src/bin/e_int_config_intl.c:422
+#: src/bin/e_int_config_intl.c:423
 msgid "Netherlands"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:423
+#: src/bin/e_int_config_intl.c:424
 msgid "Netherlands Antilles"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:424
+#: src/bin/e_int_config_intl.c:425
 msgid "New Caledonia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:425
+#: src/bin/e_int_config_intl.c:426
 msgid "New Zealand"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:426
+#: src/bin/e_int_config_intl.c:427
 msgid "Nicaragua"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:427
+#: src/bin/e_int_config_intl.c:428
 #, fuzzy
 msgid "Niger"
 msgstr "Közeli"
 
-#: src/bin/e_int_config_intl.c:428
+#: src/bin/e_int_config_intl.c:429
 msgid "Nigeria"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:429
+#: src/bin/e_int_config_intl.c:430
 msgid "Niue"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:430
+#: src/bin/e_int_config_intl.c:431
 msgid "Norfolk Island"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:431
+#: src/bin/e_int_config_intl.c:432
 msgid "Northern Mariana Islands"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:432
+#: src/bin/e_int_config_intl.c:433
 #, fuzzy
 msgid "Norway"
 msgstr "Általános"
 
-#: src/bin/e_int_config_intl.c:433
+#: src/bin/e_int_config_intl.c:434
 msgid "Oman"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:434
+#: src/bin/e_int_config_intl.c:435
 #, fuzzy
 msgid "Pakistan"
 msgstr "Sima"
 
-#: src/bin/e_int_config_intl.c:435
+#: src/bin/e_int_config_intl.c:436
 #, fuzzy
 msgid "Palau"
 msgstr "Sima"
 
-#: src/bin/e_int_config_intl.c:436
+#: src/bin/e_int_config_intl.c:437
 msgid "Palestinian Territory"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:437
+#: src/bin/e_int_config_intl.c:438
 #, fuzzy
 msgid "Panama"
 msgstr "Paraméterek"
 
-#: src/bin/e_int_config_intl.c:438
+#: src/bin/e_int_config_intl.c:439
 msgid "Papua New Guinea"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:439
+#: src/bin/e_int_config_intl.c:440
 msgid "Paraguay"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:440
+#: src/bin/e_int_config_intl.c:441
 #, fuzzy
 msgid "Peru"
 msgstr "Lapozó"
 
-#: src/bin/e_int_config_intl.c:441
+#: src/bin/e_int_config_intl.c:442
 msgid "Philippines"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:442
+#: src/bin/e_int_config_intl.c:443
 #, fuzzy
 msgid "Pitcairn"
 msgstr "Hely"
 
-#: src/bin/e_int_config_intl.c:443
+#: src/bin/e_int_config_intl.c:444
 #, fuzzy
 msgid "Poland"
 msgstr "Sima"
 
-#: src/bin/e_int_config_intl.c:444
+#: src/bin/e_int_config_intl.c:445
 msgid "Portugal"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:445
+#: src/bin/e_int_config_intl.c:446
 msgid "Puerto Rico"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:446
+#: src/bin/e_int_config_intl.c:447
 #, fuzzy
 msgid "Qatar"
 msgstr "Indítás"
 
-#: src/bin/e_int_config_intl.c:447
+#: src/bin/e_int_config_intl.c:448
 #, fuzzy
 msgid "Reunion"
 msgstr "Felbontás"
 
-#: src/bin/e_int_config_intl.c:448
+#: src/bin/e_int_config_intl.c:449
 msgid "Romania"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:449
+#: src/bin/e_int_config_intl.c:450
 msgid "Russian Federation"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:450
+#: src/bin/e_int_config_intl.c:451
 msgid "Rwanda"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:451
+#: src/bin/e_int_config_intl.c:452
 msgid "Saint Helena"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:452
+#: src/bin/e_int_config_intl.c:453
 msgid "Saint Kitts and Nevis"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:453
+#: src/bin/e_int_config_intl.c:454
 msgid "Saint Lucia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:454
+#: src/bin/e_int_config_intl.c:455
 msgid "Saint Pierre and Miquelon"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:455
+#: src/bin/e_int_config_intl.c:456
 msgid "Saint Vincent and the Grenadines"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:456
+#: src/bin/e_int_config_intl.c:457
 msgid "Samoa"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:457
+#: src/bin/e_int_config_intl.c:458
 msgid "San Marino"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:458
+#: src/bin/e_int_config_intl.c:459
 msgid "Sao Tome and Principe"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:459
+#: src/bin/e_int_config_intl.c:460
 msgid "Saudi Arabia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:460
+#: src/bin/e_int_config_intl.c:461
 #, fuzzy
 msgid "Senegal"
 msgstr "Általános"
 
-#: src/bin/e_int_config_intl.c:461
+#: src/bin/e_int_config_intl.c:462
 msgid "Serbia and Montenegro"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:462
+#: src/bin/e_int_config_intl.c:463
 #, fuzzy
 msgid "Seychelles"
 msgstr "Polcok"
 
-#: src/bin/e_int_config_intl.c:463
+#: src/bin/e_int_config_intl.c:464
 msgid "Sierra Leone"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:464
+#: src/bin/e_int_config_intl.c:465
 msgid "Singapore"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:465
+#: src/bin/e_int_config_intl.c:466
 msgid "Slovakia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:466
+#: src/bin/e_int_config_intl.c:467
 msgid "Slovenia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:467
+#: src/bin/e_int_config_intl.c:468
 msgid "Solomon Islands"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:468
+#: src/bin/e_int_config_intl.c:469
 #, fuzzy
 msgid "Somalia"
 msgstr "Általános"
 
-#: src/bin/e_int_config_intl.c:469
+#: src/bin/e_int_config_intl.c:470
 msgid "South Africa"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:470
+#: src/bin/e_int_config_intl.c:471
 msgid "South Georgia and the South Sandwich Islands"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:471
+#: src/bin/e_int_config_intl.c:472
 #, fuzzy
 msgid "Spain"
 msgstr "Csoportosítás"
 
-#: src/bin/e_int_config_intl.c:472
+#: src/bin/e_int_config_intl.c:473
 msgid "Sri Lanka"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:473
+#: src/bin/e_int_config_intl.c:474
 msgid "Sudan"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:474
+#: src/bin/e_int_config_intl.c:475
 msgid "Suriname"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:475
+#: src/bin/e_int_config_intl.c:476
 msgid "Svalbard and Jan Mayen"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:476
+#: src/bin/e_int_config_intl.c:477
 msgid "Swaziland"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:477
+#: src/bin/e_int_config_intl.c:478
 #, fuzzy
 msgid "Sweden"
 msgstr "Képernyõ"
 
-#: src/bin/e_int_config_intl.c:478
+#: src/bin/e_int_config_intl.c:479
 msgid "Switzerland"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:479
+#: src/bin/e_int_config_intl.c:480
 msgid "Syrian Arab Republic"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:480
+#: src/bin/e_int_config_intl.c:481
 msgid "Taiwan"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:481
+#: src/bin/e_int_config_intl.c:482
 msgid "Tajikistan"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:482
+#: src/bin/e_int_config_intl.c:483
 msgid "Tanzania"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:483
+#: src/bin/e_int_config_intl.c:484
 msgid "Thailand"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:484
+#: src/bin/e_int_config_intl.c:485
 msgid "Timor-Leste"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:485
+#: src/bin/e_int_config_intl.c:486
 msgid "Togo"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:486
+#: src/bin/e_int_config_intl.c:487
 msgid "Tokelau"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:487
+#: src/bin/e_int_config_intl.c:488
 msgid "Tonga"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:488
+#: src/bin/e_int_config_intl.c:489
 msgid "Trinidad and Tobago"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:489
+#: src/bin/e_int_config_intl.c:490
 msgid "Tunisia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:490
+#: src/bin/e_int_config_intl.c:491
 msgid "Turkey"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:491
+#: src/bin/e_int_config_intl.c:492
 msgid "Turkmenistan"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:492
+#: src/bin/e_int_config_intl.c:493
 msgid "Turks and Caicos Islands"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:493
+#: src/bin/e_int_config_intl.c:494
 msgid "Tuvalu"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:494
+#: src/bin/e_int_config_intl.c:495
 msgid "Uganda"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:495
+#: src/bin/e_int_config_intl.c:496
 msgid "Ukraine"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:496
+#: src/bin/e_int_config_intl.c:497
 msgid "United Arab Emirates"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:497
+#: src/bin/e_int_config_intl.c:498
 msgid "United Kingdom"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:498
+#: src/bin/e_int_config_intl.c:499
 #, fuzzy
 msgid "United States"
 msgstr "Ikonizált állapot"
 
-#: src/bin/e_int_config_intl.c:499
+#: src/bin/e_int_config_intl.c:500
 msgid "United States Minor Outlying Islands"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:500
+#: src/bin/e_int_config_intl.c:501
 msgid "Uruguay"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:501
+#: src/bin/e_int_config_intl.c:502
 #, fuzzy
 msgid "Uzbekistan"
 msgstr "Ellenállás"
 
-#: src/bin/e_int_config_intl.c:502
+#: src/bin/e_int_config_intl.c:503
 #, fuzzy
 msgid "Vanuatu"
 msgstr "Manuális"
 
-#: src/bin/e_int_config_intl.c:503
+#: src/bin/e_int_config_intl.c:504
 msgid "Venezuela"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:504
+#: src/bin/e_int_config_intl.c:505
 msgid "Viet Nam"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:505 src/bin/e_int_config_intl.c:506
+#: src/bin/e_int_config_intl.c:506 src/bin/e_int_config_intl.c:507
 msgid "Virgin Islands"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:507
+#: src/bin/e_int_config_intl.c:508
 msgid "Wallis and Futuna"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:508
+#: src/bin/e_int_config_intl.c:509
 msgid "Western Sahara"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:509
+#: src/bin/e_int_config_intl.c:510
 #, fuzzy
 msgid "Yemen"
 msgstr "Téma"
 
-#: src/bin/e_int_config_intl.c:510
+#: src/bin/e_int_config_intl.c:511
 msgid "Zambia"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:511
+#: src/bin/e_int_config_intl.c:512
 msgid "Zimbabwe"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:581
+#: src/bin/e_int_config_intl.c:582
 #, fuzzy
 msgid "Language Configuration"
 msgstr "Lapozó beállítások"
 
-#: src/bin/e_int_config_intl.c:891 src/bin/e_int_config_intl.c:968
+#: src/bin/e_int_config_intl.c:892 src/bin/e_int_config_intl.c:969
 #, fuzzy
 msgid "Language Selector"
 msgstr "Témakezelõ"
 
-#: src/bin/e_int_config_intl.c:941 src/bin/e_int_config_intl.c:1019
+#: src/bin/e_int_config_intl.c:942 src/bin/e_int_config_intl.c:1020
 msgid "Locale Selected"
 msgstr ""
 
-#: src/bin/e_int_config_intl.c:942 src/bin/e_int_config_intl.c:1020
+#: src/bin/e_int_config_intl.c:943 src/bin/e_int_config_intl.c:1021
 #, fuzzy
 msgid "Locale"
 msgstr "Nem tudtam zárolni a képernyõt!"
@@ -4888,66 +4909,81 @@ msgstr "SHIFT"
 msgid "WIN"
 msgstr "WIN"
 
-#: src/bin/e_int_config_menus.c:93 src/bin/e_int_config_menus.c:134
+#: src/bin/e_int_config_menus.c:99 src/bin/e_int_config_menus.c:149
+#, fuzzy
+msgid "Main Menu Settings"
+msgstr "Menü beállítások"
+
+#: src/bin/e_int_config_menus.c:100 src/bin/e_int_config_menus.c:150
+#, fuzzy
+msgid "Show Favorites In Main Menu"
+msgstr "Kedvencek menü megjelenítése"
+
+#: src/bin/e_int_config_menus.c:102 src/bin/e_int_config_menus.c:152
+#, fuzzy
+msgid "Show Applications In Main Menu"
+msgstr "Ablakok menü megjelenítése"
+
+#: src/bin/e_int_config_menus.c:107 src/bin/e_int_config_menus.c:157
 msgid "Show Name In Menu"
 msgstr "Név mutatása a menüben"
 
-#: src/bin/e_int_config_menus.c:95 src/bin/e_int_config_menus.c:136
+#: src/bin/e_int_config_menus.c:109 src/bin/e_int_config_menus.c:159
 msgid "Show Comment In Menu"
 msgstr "Megjegyzés mutatása a menüben"
 
-#: src/bin/e_int_config_menus.c:97 src/bin/e_int_config_menus.c:138
+#: src/bin/e_int_config_menus.c:111 src/bin/e_int_config_menus.c:161
 msgid "Show Generic In Menu"
 msgstr "Általános infók mutatása a menüben"
 
-#: src/bin/e_int_config_menus.c:142
+#: src/bin/e_int_config_menus.c:165
 msgid "Autoscroll Settings"
 msgstr "Autoscroll beállítások"
 
-#: src/bin/e_int_config_menus.c:143
+#: src/bin/e_int_config_menus.c:166
 msgid "Autoscroll Margin"
 msgstr "Autoscroll margók"
 
-#: src/bin/e_int_config_menus.c:145 src/bin/e_int_config_menus.c:149
-#: src/bin/e_int_config_window_manipulation.c:196
-#: src/bin/e_int_config_window_manipulation.c:200
-#: src/bin/e_int_config_window_manipulation.c:204
+#: src/bin/e_int_config_menus.c:168 src/bin/e_int_config_menus.c:172
+#: src/bin/e_int_config_window_manipulation.c:201
+#: src/bin/e_int_config_window_manipulation.c:205
+#: src/bin/e_int_config_window_manipulation.c:209
 #, c-format
 msgid "%2.0f pixels"
 msgstr "%2.0f pixel"
 
-#: src/bin/e_int_config_menus.c:147
+#: src/bin/e_int_config_menus.c:170
 msgid "Autoscroll Cursor Margin"
 msgstr "Autoscroll mutató margók"
 
-#: src/bin/e_int_config_menus.c:153
-#: src/bin/e_int_config_window_manipulation.c:142
+#: src/bin/e_int_config_menus.c:176
+#: src/bin/e_int_config_window_manipulation.c:145
 msgid "Miscellaneous Options"
 msgstr "Más opciók"
 
-#: src/bin/e_int_config_menus.c:154
+#: src/bin/e_int_config_menus.c:177
 msgid "Menu Scroll Speed"
 msgstr "Menü gördítési sebessége"
 
-#: src/bin/e_int_config_menus.c:156
+#: src/bin/e_int_config_menus.c:179
 #, c-format
 msgid "%5.0f pixels/sec"
 msgstr "%5.0f pixel/mp"
 
-#: src/bin/e_int_config_menus.c:158
+#: src/bin/e_int_config_menus.c:181
 msgid "Fast Mouse Move Threshhold"
 msgstr "Gyors mutatómozgás küszöbe"
 
-#: src/bin/e_int_config_menus.c:160 src/bin/e_int_config_window_display.c:221
+#: src/bin/e_int_config_menus.c:183 src/bin/e_int_config_window_display.c:221
 #, c-format
 msgid "%4.0f pixels/sec"
 msgstr "%4.0f pixel/mp"
 
-#: src/bin/e_int_config_menus.c:162
+#: src/bin/e_int_config_menus.c:185
 msgid "Click Drag Timeout"
 msgstr "Klikk vontatás idõtúllépés"
 
-#: src/bin/e_int_config_menus.c:164
+#: src/bin/e_int_config_menus.c:187
 #, fuzzy, c-format
 msgid "%2.2f seconds"
 msgstr "%2.1f mp"
@@ -5091,7 +5127,7 @@ msgstr ""
 msgid "Images"
 msgstr "Mozaik"
 
-#: src/bin/e_int_config_paths.c:82
+#: src/bin/e_int_config_paths.c:82 src/bin/e_int_config_theme.c:1067
 #, fuzzy
 msgid "Themes"
 msgstr "Téma"
@@ -5253,13 +5289,12 @@ msgid "Configured Shelves"
 msgstr "Beállított polcok"
 
 #: src/bin/e_int_config_shelf.c:81 src/bin/e_widget_config_list.c:87
-#: src/bin/e_int_config_apps_menu.c:86 src/bin/e_int_config_apps_order.c:151
 #: src/modules/ibar/e_mod_config.c:109
 msgid "Add"
 msgstr "Hozzáadás"
 
-#: src/bin/e_int_config_shelf.c:133 src/bin/e_int_menus.c:1530
-#: src/bin/e_shelf.c:1005
+#: src/bin/e_int_config_shelf.c:133 src/bin/e_int_menus.c:1535
+#: src/bin/e_shelf.c:1025
 #, fuzzy
 msgid "Shelf #"
 msgstr "Polc mérete"
@@ -5273,7 +5308,7 @@ msgstr ""
 "Az Enlightenmentbõl való kilépést választottad.<br><br>Biztos, hogy ezt "
 "akarod?"
 
-#: src/bin/e_int_config_shelf.c:268 src/bin/e_shelf.c:1099
+#: src/bin/e_int_config_shelf.c:268 src/bin/e_shelf.c:1119
 #, fuzzy
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Biztosan törölni akarod a <br><b>%s</b> nevû fájlt?"
@@ -5287,9 +5322,28 @@ msgstr "Indítási beállítások"
 msgid "Show Splash Screen on Login"
 msgstr "Nyitókép megjelenítése indításkor"
 
-#: src/bin/e_int_config_theme.c:45
+#: src/bin/e_int_config_theme.c:59
 msgid "Theme Selector"
 msgstr "Témakezelõ"
+
+#: src/bin/e_int_config_theme.c:1058
+#, fuzzy
+msgid "Theme Categories"
+msgstr "Témakezelõ"
+
+#: src/bin/e_int_config_theme.c:1077
+msgid "Assign"
+msgstr ""
+
+#: src/bin/e_int_config_theme.c:1079
+#, fuzzy
+msgid "Clear"
+msgstr "Közeli"
+
+#: src/bin/e_int_config_theme.c:1081
+#, fuzzy
+msgid "Clear All"
+msgstr "Töröl"
 
 #: src/bin/e_int_config_theme_import.c:65
 msgid "Select a Theme..."
@@ -5383,13 +5437,13 @@ msgid "Fill Options"
 msgstr "Beállítások"
 
 #: src/bin/e_int_config_wallpaper_gradient.c:166
-#: src/bin/e_int_config_window_manipulation.c:222
+#: src/bin/e_int_config_window_manipulation.c:227
 #, fuzzy
 msgid "Horizontal"
 msgstr "Vízszintesen"
 
 #: src/bin/e_int_config_wallpaper_gradient.c:171
-#: src/bin/e_int_config_window_manipulation.c:224
+#: src/bin/e_int_config_window_manipulation.c:229
 #, fuzzy
 msgid "Vertical"
 msgstr "Fuggõlegesen"
@@ -5576,105 +5630,117 @@ msgid "Decelerate"
 msgstr "Lassuló"
 
 #: src/bin/e_int_config_window_display.c:249
-msgid "Window Frame"
-msgstr "Ablak keret"
+#, fuzzy
+msgid "Window Border"
+msgstr "Ablak szerepe"
 
-#: src/bin/e_int_config_window_display.c:251
-msgid "Use application provided icon instead"
+#: src/bin/e_int_config_window_display.c:252
+#, fuzzy
+msgid "Prefer user defined icon"
+msgstr "Felhasználói akciók"
+
+#: src/bin/e_int_config_window_display.c:254
+#, fuzzy
+msgid "Prefer application provided icon"
 msgstr "Az alkalmazás ikonjának használata"
 
-#: src/bin/e_int_config_window_display.c:255
+#: src/bin/e_int_config_window_display.c:258
 #, fuzzy
 msgid "Internal Windows"
 msgstr "Ablakok alatt"
 
-#: src/bin/e_int_config_window_display.c:257
+#: src/bin/e_int_config_window_display.c:260
 msgid "Always remember internal windows"
 msgstr ""
 
-#: src/bin/e_int_config_window_manipulation.c:143
-#: src/bin/e_int_config_window_manipulation.c:175
+#: src/bin/e_int_config_window_manipulation.c:146
+#: src/bin/e_int_config_window_manipulation.c:178
 msgid "Automatically raise windows on mouse over"
 msgstr "Automatikusan kerüljön felülre az ablak, ha az egér felette van"
 
-#: src/bin/e_int_config_window_manipulation.c:145
+#: src/bin/e_int_config_window_manipulation.c:148
 msgid "When moving or resizing windows, resist at the boundaries"
 msgstr ""
 "Amikor egy ablakot mozgat vagy átméretez, a határvonalakon ne engedje át"
 
-#: src/bin/e_int_config_window_manipulation.c:149
-#: src/bin/e_int_config_window_manipulation.c:208
+#: src/bin/e_int_config_window_manipulation.c:152
+#: src/bin/e_int_config_window_manipulation.c:213
 msgid "Maximize Policy"
 msgstr "Maximalizálási szabályok"
 
-#: src/bin/e_int_config_window_manipulation.c:153
-#: src/bin/e_int_config_window_manipulation.c:212
+#: src/bin/e_int_config_window_manipulation.c:156
+#: src/bin/e_int_config_window_manipulation.c:217
 msgid "Smart expansion"
 msgstr "Okos kiterjesztés"
 
-#: src/bin/e_int_config_window_manipulation.c:155
-#: src/bin/e_int_config_window_manipulation.c:214
+#: src/bin/e_int_config_window_manipulation.c:158
+#: src/bin/e_int_config_window_manipulation.c:219
 msgid "Expand the window"
 msgstr "Terjeszd ki az ablakot"
 
-#: src/bin/e_int_config_window_manipulation.c:157
-#: src/bin/e_int_config_window_manipulation.c:216
+#: src/bin/e_int_config_window_manipulation.c:160
+#: src/bin/e_int_config_window_manipulation.c:221
 msgid "Fill available space"
 msgstr "Elérhetõ hely kitöltése"
 
-#: src/bin/e_int_config_window_manipulation.c:174
+#: src/bin/e_int_config_window_manipulation.c:177
 msgid "Autoraise"
 msgstr "Automatikusan kiemelkedés"
 
-#: src/bin/e_int_config_window_manipulation.c:177
+#: src/bin/e_int_config_window_manipulation.c:180
 msgid "Delay before raising:"
 msgstr "Várj ennyit, mielõtt kiemeled:"
 
-#: src/bin/e_int_config_window_manipulation.c:183
+#: src/bin/e_int_config_window_manipulation.c:186
 #, fuzzy
 msgid "Raise Window"
 msgstr "Következő ablak"
 
-#: src/bin/e_int_config_window_manipulation.c:185
+#: src/bin/e_int_config_window_manipulation.c:188
 msgid "Raise when starting to move or resize"
 msgstr ""
 
-#: src/bin/e_int_config_window_manipulation.c:187
+#: src/bin/e_int_config_window_manipulation.c:190
 #, fuzzy
 msgid "Raise when clicking to focus"
 msgstr "Klikk a fókuszhoz"
 
-#: src/bin/e_int_config_window_manipulation.c:191
+#: src/bin/e_int_config_window_manipulation.c:192
+#, fuzzy
+msgid "Allow windows to be above fullscreen window"
+msgstr "Minden ablak, minden képernyõrõl"
+
+#: src/bin/e_int_config_window_manipulation.c:196
 msgid "Resistance"
 msgstr "Ellenállás"
 
-#: src/bin/e_int_config_window_manipulation.c:192
+#: src/bin/e_int_config_window_manipulation.c:197
 msgid "Resist moving or resizing a window over an obstacle"
 msgstr "Ne engedd egy akadály felett átméretezni, vagy átvinni az ablakot"
 
-#: src/bin/e_int_config_window_manipulation.c:194
+#: src/bin/e_int_config_window_manipulation.c:199
 msgid "Resistance between windows:"
 msgstr "Ablakok közti ellenállás:"
 
-#: src/bin/e_int_config_window_manipulation.c:198
+#: src/bin/e_int_config_window_manipulation.c:203
 msgid "Resistance at the edge of the screen:"
 msgstr "Ellenállás a képernyõ szélén:"
 
-#: src/bin/e_int_config_window_manipulation.c:202
+#: src/bin/e_int_config_window_manipulation.c:207
 msgid "Resistance to desktop gadgets:"
 msgstr "Kütyük ellenállása:"
 
-#: src/bin/e_int_config_window_manipulation.c:220
+#: src/bin/e_int_config_window_manipulation.c:225
 #, fuzzy
 msgid "Both directions"
 msgstr "Modul mûveletek"
 
-#: src/bin/e_int_config_window_manipulation.c:227
+#: src/bin/e_int_config_window_manipulation.c:232
 #, fuzzy
 msgid "Allow window manipulation"
 msgstr "Ablakváltozások"
 
-#: src/bin/e_int_config_window_manipulation.c:229
+#: src/bin/e_int_config_window_manipulation.c:234
 #, fuzzy
 msgid "Automatically move/resize windows on shelf autohide"
 msgstr "Automatikusan kerüljön felülre az ablak, ha az egér felette van"
@@ -5771,154 +5837,163 @@ msgstr "Törlés"
 msgid "Main"
 msgstr "Sima"
 
-#: src/bin/e_int_menus.c:103
+#: src/bin/e_int_menus.c:104
 msgid "Favorite Applications"
 msgstr "Kedvencek"
 
-#: src/bin/e_int_menus.c:117
+#: src/bin/e_int_menus.c:122
 #, fuzzy
 msgid "Files"
 msgstr "Fájl"
 
-#: src/bin/e_int_menus.c:164 src/bin/e_int_config_modules.c:271
+#: src/bin/e_int_menus.c:169 src/bin/e_int_config_modules.c:271
 msgid "About"
 msgstr "Adatok"
 
-#: src/bin/e_int_menus.c:192 src/modules/battery/e_mod_main.c:175
+#: src/bin/e_int_menus.c:197 src/modules/battery/e_mod_main.c:175
 #: src/modules/ibar/e_mod_main.c:298 src/modules/ibar/e_mod_main.c:774
 #: src/modules/ibox/e_mod_main.c:289 src/modules/ibox/e_mod_main.c:687
-#: src/modules/pager/e_mod_main.c:643 src/modules/temperature/e_mod_main.c:166
+#: src/modules/pager/e_mod_main.c:644 src/modules/temperature/e_mod_main.c:166
 msgid "Configuration"
 msgstr "Beállítás"
 
-#: src/bin/e_int_menus.c:232
+#: src/bin/e_int_menus.c:237
 #, fuzzy
 msgid "Virtual"
 msgstr "Virtuális asztal"
 
-#: src/bin/e_int_menus.c:250
+#: src/bin/e_int_menus.c:255
 #, fuzzy
 msgid "Show/Hide All Windows"
 msgstr "Ikonizált ablakok megjelenítése"
 
-#: src/bin/e_int_menus.c:570
+#: src/bin/e_int_menus.c:575
 msgid "(No Applications)"
 msgstr "(Nincs alkalmazás)"
 
-#: src/bin/e_int_menus.c:705
+#: src/bin/e_int_menus.c:710
 #, fuzzy
 msgid "Configure Virtual Desktops"
 msgstr "Virtuális asztalok"
 
-#: src/bin/e_int_menus.c:767
+#: src/bin/e_int_menus.c:772
 msgid "Configuration Panel"
 msgstr "Konfigurációs panel"
 
-#: src/bin/e_int_menus.c:846
+#: src/bin/e_int_menus.c:851
 msgid "Lock Screen"
 msgstr "Képernyõ zárolása"
 
-#: src/bin/e_int_menus.c:868
+#: src/bin/e_int_menus.c:873
 msgid "Hibernate"
 msgstr ""
 
-#: src/bin/e_int_menus.c:891
+#: src/bin/e_int_menus.c:896
 #, fuzzy
 msgid "Logout"
 msgstr "Kinézet"
 
-#: src/bin/e_int_menus.c:1204 src/bin/e_int_menus.c:1399
+#: src/bin/e_int_menus.c:1209 src/bin/e_int_menus.c:1404
 msgid "(No Windows)"
 msgstr "(Nincsenek ablakok)"
 
-#: src/bin/e_int_menus.c:1254
+#: src/bin/e_int_menus.c:1259
 msgid "Lost Windows"
 msgstr "Elveszett ablakok"
 
-#: src/bin/e_int_menus.c:1300 src/bin/e_int_menus.c:1412
+#: src/bin/e_int_menus.c:1305 src/bin/e_int_menus.c:1417
 msgid "No name!!"
 msgstr "Nincs név!!!"
 
-#: src/bin/e_int_menus.c:1516
+#: src/bin/e_int_menus.c:1521
 #, fuzzy
 msgid "(No Shelves)"
 msgstr "Polcok"
 
-#: src/bin/e_int_menus.c:1583
+#: src/bin/e_int_menus.c:1588
 msgid "Add A Shelf"
 msgstr ""
 
-#: src/bin/e_int_menus.c:1589
+#: src/bin/e_int_menus.c:1594
 #, fuzzy
 msgid "Delete A Shelf"
 msgstr "Töröl"
 
-#: src/bin/e_int_shelf_config.c:65 src/bin/e_shelf.c:1496
+#: src/bin/e_int_shelf_config.c:66 src/bin/e_shelf.c:1495
 msgid "Shelf Configuration"
 msgstr "Polc beállítása"
 
-#: src/bin/e_int_shelf_config.c:401 src/bin/e_int_shelf_config.c:466
+#: src/bin/e_int_shelf_config.c:404 src/bin/e_int_shelf_config.c:469
 msgid "Layout"
 msgstr "Kinézet"
 
-#: src/bin/e_int_shelf_config.c:423 src/modules/dropshadow/e_mod_config.c:122
+#: src/bin/e_int_shelf_config.c:426 src/modules/dropshadow/e_mod_config.c:122
 msgid "Medium"
 msgstr "Közepes"
 
-#: src/bin/e_int_shelf_config.c:433 src/bin/e_int_shelf_config.c:551
+#: src/bin/e_int_shelf_config.c:436 src/bin/e_int_shelf_config.c:559
 msgid "Configure Contents..."
 msgstr "Tartalom beállítása..."
 
-#: src/bin/e_int_shelf_config.c:456
+#: src/bin/e_int_shelf_config.c:459
 msgid "Above Everything"
 msgstr "Minden felett"
 
-#: src/bin/e_int_shelf_config.c:458
+#: src/bin/e_int_shelf_config.c:461
 msgid "Below Windows"
 msgstr "Ablakok alatt"
 
-#: src/bin/e_int_shelf_config.c:460
+#: src/bin/e_int_shelf_config.c:463
 msgid "Below Everything"
 msgstr "Minden alatt"
 
-#: src/bin/e_int_shelf_config.c:462
+#: src/bin/e_int_shelf_config.c:465
 #, fuzzy
 msgid "Allow windows to overlap the shelf"
 msgstr "Minden ablak, minden képernyõrõl"
 
-#: src/bin/e_int_shelf_config.c:494
+#: src/bin/e_int_shelf_config.c:497
 #, fuzzy
 msgid "Autohide"
 msgstr "Automatikusan kiemelkedés"
 
-#: src/bin/e_int_shelf_config.c:495
+#: src/bin/e_int_shelf_config.c:498
 msgid "Auto-hide the shelf"
 msgstr ""
 
-#: src/bin/e_int_shelf_config.c:497
+#: src/bin/e_int_shelf_config.c:501
+#, fuzzy
+msgid "Show on mouse in"
+msgstr "Megjelenítés ezen a képernyõn:"
+
+#: src/bin/e_int_shelf_config.c:503
+msgid "Show on mouse click"
+msgstr ""
+
+#: src/bin/e_int_shelf_config.c:505
 msgid "Hide timeout"
 msgstr ""
 
-#: src/bin/e_int_shelf_config.c:499 src/bin/e_int_shelf_config.c:503
+#: src/bin/e_int_shelf_config.c:507 src/bin/e_int_shelf_config.c:511
 #, fuzzy, c-format
 msgid "%.1f seconds"
 msgstr "%1.1f másodperc"
 
-#: src/bin/e_int_shelf_config.c:501
+#: src/bin/e_int_shelf_config.c:509
 #, fuzzy
 msgid "Hide duration"
 msgstr "Nincs simítás"
 
-#: src/bin/e_int_shelf_config.c:512
+#: src/bin/e_int_shelf_config.c:520
 #, fuzzy
 msgid "Shrink to Content Size"
 msgstr "Összehúzás"
 
-#: src/bin/e_int_shelf_config.c:514
+#: src/bin/e_int_shelf_config.c:522
 msgid "Shelf Size"
 msgstr "Polc mérete"
 
-#: src/bin/e_int_shelf_config.c:516
+#: src/bin/e_int_shelf_config.c:524
 #, c-format
 msgid "%3.0f pixels"
 msgstr "%3.0f pixel"
@@ -6001,7 +6076,7 @@ msgstr "Enlightenment %s modul"
 msgid "Would you like to unload this module?<br>"
 msgstr "Szeretnéd a modult kiüríteni a memóriából?<br>"
 
-#: src/bin/e_shelf.c:1100
+#: src/bin/e_shelf.c:1120
 #, fuzzy
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
@@ -6010,22 +6085,22 @@ msgstr ""
 "Az Enlightenmentbõl való kilépést választottad.<br><br>Biztos, hogy ezt "
 "akarod?"
 
-#: src/bin/e_shelf.c:1486
+#: src/bin/e_shelf.c:1485
 #, fuzzy
 msgid "Stop Moving/Resizing Items"
 msgstr "Elemek szerkesztésének vége"
 
-#: src/bin/e_shelf.c:1488
+#: src/bin/e_shelf.c:1487
 #, fuzzy
 msgid "Begin Moving/Resizing Items"
 msgstr "Elemek szerkesztése"
 
-#: src/bin/e_shelf.c:1501
+#: src/bin/e_shelf.c:1500
 #, fuzzy
 msgid "Configure Shelf Contents"
 msgstr "Tartalom konfigurálása"
 
-#: src/bin/e_shelf.c:1506
+#: src/bin/e_shelf.c:1505
 msgid "Delete this Shelf"
 msgstr ""
 
@@ -6290,11 +6365,6 @@ msgstr ""
 msgid "%li Minutes ago"
 msgstr ""
 
-#: src/bin/e_int_config_apps_menu.c:95
-#, fuzzy
-msgid "Favorites"
-msgstr "Kedvencek menü megjelenítése"
-
 #: src/bin/e_int_config_modules.c:65
 msgid "Module Settings"
 msgstr "Modulbeállítások"
@@ -6439,37 +6509,42 @@ msgstr "Gyakran"
 msgid "Select All"
 msgstr "Töröl"
 
-#: src/modules/battery/e_mod_config.c:37
+#: src/modules/battery/e_mod_config.c:38
 msgid "Battery Monitor Configuration"
 msgstr "Teleptöltöttség mérõ beállítások"
 
-#: src/modules/battery/e_mod_config.c:79
+#: src/modules/battery/e_mod_config.c:81
 msgid "Basic Settings"
 msgstr "Alap beállítások"
 
-#: src/modules/battery/e_mod_config.c:80
-#: src/modules/battery/e_mod_config.c:114
+#: src/modules/battery/e_mod_config.c:82
+#: src/modules/battery/e_mod_config.c:122
 msgid "Show alert when battery is low"
 msgstr "Jelenjen meg figyelmeztetés, ha a teleptöltöttség alacsony"
 
-#: src/modules/battery/e_mod_config.c:106
+#: src/modules/battery/e_mod_config.c:114
 msgid "Advanced Settings"
 msgstr "Haladó beállítások"
 
-#: src/modules/battery/e_mod_config.c:108
+#: src/modules/battery/e_mod_config.c:116
 msgid "Check battery every:"
 msgstr "Telep állapotának ellenõrzése minden:"
 
-#: src/modules/battery/e_mod_config.c:111 src/modules/pager/e_mod_config.c:165
+#: src/modules/battery/e_mod_config.c:119 src/modules/pager/e_mod_config.c:165
 #: src/modules/pager/e_mod_config.c:177
 #: src/modules/temperature/e_mod_config.c:344
 #, c-format
 msgid "%1.1f seconds"
 msgstr "%1.1f másodperc"
 
-#: src/modules/battery/e_mod_config.c:117
+#: src/modules/battery/e_mod_config.c:125
 msgid "Alert when battery is down to:"
 msgstr "Figyelmeztessen, ha a telep csak eddig bírja:"
+
+#: src/modules/battery/e_mod_config.c:131
+#, fuzzy, c-format
+msgid "%1.0f percent"
+msgstr "%1.0f mp"
 
 #: src/modules/battery/e_mod_main.c:136
 msgid "Battery"
@@ -6487,42 +6562,42 @@ msgstr ""
 msgid "NO INFO"
 msgstr "NINCS ADAT"
 
-#: src/modules/battery/e_mod_main.c:542 src/modules/battery/e_mod_main.c:855
-#: src/modules/battery/e_mod_main.c:1009
+#: src/modules/battery/e_mod_main.c:542 src/modules/battery/e_mod_main.c:859
+#: src/modules/battery/e_mod_main.c:1015
 msgid "NO BAT"
 msgstr "NINCS üTõ"
 
-#: src/modules/battery/e_mod_main.c:566 src/modules/battery/e_mod_main.c:1034
+#: src/modules/battery/e_mod_main.c:568 src/modules/battery/e_mod_main.c:1042
 msgid "BAD DRIVER"
 msgstr "ROSSZ MEGHAJTó"
 
-#: src/modules/battery/e_mod_main.c:590 src/modules/battery/e_mod_main.c:891
-#: src/modules/battery/e_mod_main.c:1058
+#: src/modules/battery/e_mod_main.c:592 src/modules/battery/e_mod_main.c:897
+#: src/modules/battery/e_mod_main.c:1066
 msgid "FULL"
 msgstr "Tele!!!"
 
-#: src/modules/battery/e_mod_main.c:651 src/modules/battery/e_mod_main.c:1119
+#: src/modules/battery/e_mod_main.c:653 src/modules/battery/e_mod_main.c:1127
 msgid "High"
 msgstr "Magas"
 
-#: src/modules/battery/e_mod_main.c:655 src/modules/battery/e_mod_main.c:1123
+#: src/modules/battery/e_mod_main.c:657 src/modules/battery/e_mod_main.c:1131
 msgid "Low"
 msgstr "Alacsony"
 
-#: src/modules/battery/e_mod_main.c:659 src/modules/battery/e_mod_main.c:1127
+#: src/modules/battery/e_mod_main.c:661 src/modules/battery/e_mod_main.c:1135
 msgid "Danger"
 msgstr "Veszélyes!!!"
 
-#: src/modules/battery/e_mod_main.c:663 src/modules/battery/e_mod_main.c:1131
-#: src/modules/battery/e_mod_main.c:1298
+#: src/modules/battery/e_mod_main.c:665 src/modules/battery/e_mod_main.c:1139
+#: src/modules/battery/e_mod_main.c:1310
 msgid "Charging"
 msgstr "Töltés"
 
-#: src/modules/battery/e_mod_main.c:1454
+#: src/modules/battery/e_mod_main.c:1469
 msgid "Enlightenment Battery Module"
 msgstr "Teleptöltöttség-mérõ modul"
 
-#: src/modules/battery/e_mod_main.c:1455
+#: src/modules/battery/e_mod_main.c:1470
 msgid ""
 "A basic battery meter that uses either<hilight>ACPI</hilight> or "
 "<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
@@ -6987,20 +7062,20 @@ msgid ""
 "internal<br>code for context menus."
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:225
+#: src/modules/pager/e_mod_main.c:226
 msgid "Pager"
 msgstr "Lapozó"
 
-#: src/modules/pager/e_mod_main.c:648
+#: src/modules/pager/e_mod_main.c:649
 #, fuzzy
 msgid "Virtual Desktops Configuration"
 msgstr "Virtuális asztalok"
 
-#: src/modules/pager/e_mod_main.c:1927
+#: src/modules/pager/e_mod_main.c:2030
 msgid "Enlightenment Pager Module"
 msgstr "Lapozó modul"
 
-#: src/modules/pager/e_mod_main.c:1928
+#: src/modules/pager/e_mod_main.c:2031
 msgid "A pager module to navigate virtual desktops."
 msgstr "Lapozõ modul, virtuális asztalok kezelésére."
 
@@ -7141,6 +7216,13 @@ msgstr ""
 "Egy module, ami az ACPI hõmérséklet-érzékelõ eredményeit közli "
 "Linuxon<br>Hasznos újabb hordozható gépek esetén, amik nagy "
 "sebességû<br>processzorral rendelkeznek és sok hõt termelnek."
+
+#, fuzzy
+#~ msgid "Favorites"
+#~ msgstr "Kedvencek menü megjelenítése"
+
+#~ msgid "Window Frame"
+#~ msgstr "Ablak keret"
 
 #, fuzzy
 #~ msgid "Application Editor"
@@ -7411,9 +7493,6 @@ msgstr ""
 
 #~ msgid "To Desktop 11"
 #~ msgstr "11 asztalra"
-
-#~ msgid "User Defined Actions"
-#~ msgstr "Felhasználói akciók"
 
 #~ msgid "Toggle Edit Mode"
 #~ msgstr "Kütyük rendezése"

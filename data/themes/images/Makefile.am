@@ -78,6 +78,7 @@ e17_button_detail_stick.png \
 e17_button_detail_view.png \
 e17_button_detail_view_details.png \
 e17_button_detail_view_name.png \
+e17_button_detail_select.png \
 e17_button_sm.png \
 e17_button_sm2.png \
 e17_button_sm_disabled.png \
