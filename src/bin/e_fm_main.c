@@ -1111,6 +1111,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	  }
 	break;
       case 9: /* mount udi mountpoint */
+#ifdef HAVE_EDBUS
 	  {
 	     E_Volume *v;
 	     const char *udi, *mountpoint;
@@ -1129,8 +1130,10 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		  e_volume_mount(v);
 	       }
 	  }
+#endif	
 	break;
       case 10:/* unmount udi */
+#ifdef HAVE_EDBUS
 	  {
 	     E_Volume *v;
 	     const char *udi;
@@ -1143,6 +1146,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		  e_volume_unmount(v);
 	       }
 	  }
+#endif	
 	break;
       case 11: /* quit */
 	ecore_main_loop_quit();
