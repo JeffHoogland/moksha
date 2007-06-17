@@ -2047,6 +2047,7 @@ _e_fm2_file_force_update(const char *path)
 	       }
 	  }
      }
+   free(dir);
 }
 
 static E_Volume *
