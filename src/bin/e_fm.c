@@ -2068,10 +2068,12 @@ _e_storage_write(E_Storage *s)
 {
    char buf[PATH_MAX], buf2[PATH_MAX];
    FILE *f;
+   const char *id;
    
-   printf("sto write %s\n", s->serial);
+   id = ecore_file_get_file(s->udi);
+   printf("sto write %s\n", id);
    snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/|%s.desktop",
-	    e_user_homedir_get(), s->serial);
+	    e_user_homedir_get(), id);
 //   ecore_file_unlink(buf);
    f = fopen(buf, "w");
    if (f)
@@ -2107,12 +2109,14 @@ static void
 _e_storage_erase(E_Storage *s)
 {
    char buf[PATH_MAX];
+   const char *id;
    
+   id = ecore_file_get_file(s->udi);
    snprintf(buf, sizeof(buf), "%s/Desktop/|%s.desktop",
-	    e_user_homedir_get(), s->serial);
+	    e_user_homedir_get(), id);
    ecore_file_unlink(buf);
    snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/|%s.desktop",
-	    e_user_homedir_get(), s->serial);
+	    e_user_homedir_get(), id);
    ecore_file_unlink(buf);
 }
 
@@ -2121,10 +2125,12 @@ _e_volume_write(E_Volume *v)
 {
    char buf[PATH_MAX], buf2[PATH_MAX];
    FILE *f;
+   const char *id;
   
-   printf("vol write %s\n", v->storage->serial);
+   id = ecore_file_get_file(v->storage->udi);
+   printf("vol write %s\n", id);
    snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/|%s.desktop",
-	    e_user_homedir_get(), v->storage->serial);
+	    e_user_homedir_get(), id);
 //   ecore_file_unlink(buf);
    f = fopen(buf, "w");
    if (f)
@@ -2168,12 +2174,14 @@ static void
 _e_volume_erase(E_Volume *v)
 {
    char buf[PATH_MAX];
-   
+   const char *id;
+  
+   id = ecore_file_get_file(v->storage->udi);
    snprintf(buf, sizeof(buf), "%s/Desktop/|%s.desktop",
-	    e_user_homedir_get(), v->storage->serial);
+	    e_user_homedir_get(), id);
    ecore_file_unlink(buf);
    snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/|%s.desktop",
-	    e_user_homedir_get(), v->storage->serial);
+	    e_user_homedir_get(), id);
    ecore_file_unlink(buf);
    _e_storage_write(v->storage);
 }
