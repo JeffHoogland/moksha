@@ -42,11 +42,7 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
-* fm2 removable device suport needs virtalizing and putting itno e_fm_main.c
-  as well as mount and unmount (via dbus/hal)
-* fm2 needs to evaluate current mounted/device state on start.
-* fm2 removable storage neds to hande dvd/cd drives
-* fm2 mv between fs's (removable to hd for example) doesn't work.
+* fm2 removable devices seem to be mounted as root, not user, thus no write
 * fm2 theme needs to not suck
 * fwin initial placement needs to be near icon that spawned the fwin
 * fm2 custom icon view mode needs to have cleanup, align etc.
