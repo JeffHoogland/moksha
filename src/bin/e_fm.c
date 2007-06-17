@@ -4017,7 +4017,7 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
    if (!desktop) goto error;
 //   if (desktop->type != EFREET_DESKTOP_TYPE_LINK) goto error;
 
-   printf("  mod time %f\n", desktop->load_time);
+   printf("  mod time %lli\n", desktop->load_time);
    ic->info.removable = 0;
    ic->info.removable_full = 0;
    if (desktop->name)         ic->info.label   = evas_stringshare_add(desktop->name);
