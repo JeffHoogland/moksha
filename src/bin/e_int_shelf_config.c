@@ -494,24 +494,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_frametable_object_append(of, ob, 4, 3, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o2, of, 1, 1, 0.5);
    
-   of = e_widget_framelist_add(evas, _("Autohide"), 0);
-   ob = e_widget_check_add(evas, _("Auto-hide the shelf"), &(cfdata->autohiding));
-   e_widget_framelist_object_append(of, ob);
-   rg = e_widget_radio_group_new(&(cfdata->autohiding_show_action));
-   ob = e_widget_radio_add(evas, _("Show on mouse in"), 0, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Show on mouse click"), 1, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_label_add(evas, _("Hide timeout"));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%.1f seconds"), 0.2, 6.0, 0.2, 0, &(cfdata->hide_timeout), NULL, 100);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_label_add(evas, _("Hide duration"));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%.1f seconds"), 0.1, 2.0, 0.1, 0, &(cfdata->hide_duration), NULL, 100);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o2, of, 1, 1, 0.5);
-
    e_widget_list_object_append(o, o2, 1, 1, 0.5);
    
    o2 = e_widget_list_add(evas, 0, 0);
@@ -559,6 +541,28 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_button_add(evas, _("Configure Contents..."), "widget/config", _cb_configure, cfdata, NULL);
    e_widget_list_object_append(o2, ob, 0, 0, 0.5);
    
+   e_widget_list_object_append(o, o2, 0, 0, 0.0);
+
+   o2 = e_widget_list_add(evas, 0, 0);
+   
+   of = e_widget_framelist_add(evas, _("Auto Hide"), 0);
+   ob = e_widget_check_add(evas, _("Auto-hide the shelf"), &(cfdata->autohiding));
+   e_widget_framelist_object_append(of, ob);
+   rg = e_widget_radio_group_new(&(cfdata->autohiding_show_action));
+   ob = e_widget_radio_add(evas, _("Show on mouse in"), 0, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Show on mouse click"), 1, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_label_add(evas, _("Hide timeout"));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(evas, 1, 0, _("%.1f seconds"), 0.2, 6.0, 0.2, 0, &(cfdata->hide_timeout), NULL, 60);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_label_add(evas, _("Hide duration"));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(evas, 1, 0, _("%.1f seconds"), 0.1, 2.0, 0.1, 0, &(cfdata->hide_duration), NULL, 60);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o2, of, 1, 1, 0.5);
+
    e_widget_list_object_append(o, o2, 0, 0, 0.0);
    
    return o;   

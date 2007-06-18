@@ -56,7 +56,7 @@ struct _CFText_Class
 };
 
 const E_Text_Class_Pair text_class_predefined_names[ ] = {
-     {  NULL,		  N_("Window Manager")},
+     {  NULL,		  N_("Core")},
      { "title_bar",	  N_("Title Bar")},
      { "menu_item",	  N_("Menu Item")},
      { "menu_title",	  N_("Menu Title")},   
@@ -78,7 +78,7 @@ const E_Text_Class_Pair text_class_predefined_names[ ] = {
      { "init_text",       N_("Splash Text")},
      { "init_version",    N_("Splash Version")},
    
-     {  NULL,		  N_("Widget")},
+     {  NULL,		  N_("Widgets")},
      { "entry",           N_("Entry")},
      { "frame",           N_("Frame")},
      { "label",           N_("Label")},
@@ -90,11 +90,11 @@ const E_Text_Class_Pair text_class_predefined_names[ ] = {
      { "ilist_item",	  N_("List Item")},
      { "ilist_header",    N_("List Header")},
    
-     {  NULL,		  N_("EFM")},
+     {  NULL,		  N_("Filemanager")},
      { "fileman_typebuf", N_("Typebuf")},
      { "fileman_icon",    N_("Icon")},
    
-     {  NULL,		  N_("Module")},
+     {  NULL,		  N_("Modules")},
      { "module_small",    N_("Small")},
      { "module_normal",   N_("Normal")},
      { "module_large",    N_("Large")},
@@ -611,7 +611,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *ot, *ob, *of, *ol;
+   Evas_Object *ot, *ob, *of, *ol, *ol2;
    Evas_Coord w;
    E_Radio_Group *rg;
    Evas_List *next;
@@ -621,7 +621,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    cfdata->evas = evas;
  
    /* Serup Section List */
-   ol = e_widget_list_add(evas, 0, 0);
+   ol = e_widget_list_add(evas, 0, 1);
 
    /* Table for Font Class Setup */ 
    ot = e_widget_table_add(evas, 0);
@@ -631,7 +631,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    _class_list_load(cfdata);
    e_widget_ilist_multi_select_set(ob, 1);
    e_widget_min_size_get(ob, &w, NULL);
-   e_widget_min_size_set(ob, w, 250);
+   e_widget_min_size_set(ob, w, 180);
    e_widget_on_change_hook_set(ob, _adv_class_cb_change, cfdata);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 0, 1, 2, 1, 1, 1, 1);
@@ -649,7 +649,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    cfdata->gui.style_list = ob;
    e_widget_on_change_hook_set(ob, _adv_style_cb_change, cfdata);
    e_widget_ilist_go(ob);
-   e_widget_min_size_set(ob, 125, 125);
+   e_widget_min_size_set(ob, 90, 90);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 2, 0, 1, 1, 1, 1, 1, 1);
   
@@ -657,7 +657,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_ilist_add(evas, 16, 16, NULL);
    cfdata->gui.size_list = ob;
    e_widget_ilist_go(ob);
-   e_widget_min_size_set(ob, 125, 125);
+   e_widget_min_size_set(ob, 90, 90);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 2, 1, 1, 1, 1, 1, 1, 1);
 
@@ -672,8 +672,10 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_table_object_append(ot, ob, 1, 2, 2, 1, 1, 0, 1, 0);
    e_widget_list_object_append(ol, ot, 1, 1, 0.5);
 
+   ol2 = e_widget_list_add(evas, 0, 0);
+   
    /* Frame for Hinting Setup */
-   of = e_widget_framelist_add(evas, _("Hinting"), 1);
+   of = e_widget_framelist_add(evas, _("Hinting"), 0);
    rg = e_widget_radio_group_new(&(cfdata->hinting));
    option_enable = evas_font_hinting_can_hint(evas, EVAS_FONT_HINTING_BYTECODE);
    ob = e_widget_radio_add(evas, _("Bytecode"), 0, rg);
@@ -687,7 +689,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_radio_add(evas, _("None"), 2, rg);
    e_widget_disabled_set(ob, !option_enable);
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(ol, of, 1, 1, 0.5);
+   e_widget_list_object_append(ol2, of, 1, 1, 0.5);
 
    /* Frame for Fallbacks Setup */
    of = e_widget_framelist_add(evas, _("Font Fallbacks"), 0);
@@ -706,12 +708,14 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    
    ob = e_widget_check_add(evas, _("Enable Fallbacks"), &(cfdata->cur_fallbacks_enabled));
    e_widget_config_list_object_append(cfdata->gui.fallback_list, ob, 
-				      0, 3, 2, 1, 1, 1, 1, 1);
+				      0, 0, 2, 1, 1, 1, 1, 1);
    e_widget_on_change_hook_set(ob, _adv_enabled_fallback_cb_change, cfdata);
    e_widget_check_checked_set(ob, option_enable);
    e_widget_change(ob);
-   e_widget_list_object_append(ol, of, 1, 1, 0.5);
+   e_widget_list_object_append(ol2, of, 1, 1, 0.5);
 
+   e_widget_list_object_append(ol, ol2, 1, 1, 0.5);
+   
    e_dialog_resizable_set(cfd->dia, 1);
    return ol;
 }
