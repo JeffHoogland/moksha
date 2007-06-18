@@ -23,6 +23,7 @@ static void _e_border_menu_cb_normal(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_below(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_fullscreen(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_skip_winlist(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_skip_pager(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_sendto(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_pin(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -30,6 +31,7 @@ static void _e_border_menu_cb_unpin(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_raise(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_lower(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_state_pre(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_skip(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_fav_add(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_ibar_add_pre(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_ibar_add(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -241,20 +243,14 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 						   "e/widgets/border/default/stick"),
 			     "e/widgets/border/default/stick");
 
-   if ((bd->client.icccm.accepts_focus || bd->client.icccm.take_focus) &&
-       (!bd->client.netwm.state.skip_taskbar))
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Skip Window List"));
-	e_menu_item_check_set(mi, 1);
-	e_menu_item_toggle_set(mi, bd->user_skip_winlist);
-	e_menu_item_callback_set(mi, _e_border_menu_cb_skip_winlist, bd);
-	e_menu_item_icon_edje_set(mi,
-				  e_theme_edje_file_get("base/theme/borders",
-							"e/widgets/border/default/skip_winlist"),
-				  "e/widgets/border/default/skip_winlist");
-     }
-   
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Skip"));
+   e_menu_item_submenu_pre_callback_set(mi, _e_border_menu_cb_skip, bd);
+   e_menu_item_icon_edje_set(mi,
+			     e_theme_edje_file_get("base/theme/borders",
+						   "e/widgets/border/default/skip"),
+			     "e/widgets/border/default/skip");
+
 #if 1
    if (!bd->internal) 
      {
@@ -652,6 +648,21 @@ _e_border_menu_cb_skip_winlist(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
+_e_border_menu_cb_skip_pager(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Border *bd;
+
+   bd = data;
+   if (!bd) return;
+   
+   if ((bd->client.icccm.accepts_focus || bd->client.icccm.take_focus))
+     bd->client.netwm.state.skip_pager = e_menu_item_toggle_get(mi);
+   else
+     bd->client.netwm.state.skip_pager = 0;
+   if (bd->remember) e_remember_update(bd->remember, bd);
+}
+
+static void
 _e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Menu *subm;
@@ -791,6 +802,41 @@ _e_border_menu_cb_state_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 							"e/widgets/border/default/fullscreen"),
 				  "e/widgets/border/default/fullscreen");
      }
+}
+
+static void 
+_e_border_menu_cb_skip(void *data, E_Menu *m, E_Menu_Item *mi) 
+{
+   E_Border *bd = data;
+   E_Menu *subm;
+   E_Menu_Item *submi;
+   
+   if (!bd) return;
+
+   subm = e_menu_new();
+   e_object_data_set(E_OBJECT(subm), bd);
+   e_menu_item_submenu_set(mi, subm);
+   
+
+   submi = e_menu_item_new(subm);
+   e_menu_item_label_set(submi, _("Window List"));
+   e_menu_item_check_set(submi, 1);
+   e_menu_item_toggle_set(submi, bd->user_skip_winlist);
+   e_menu_item_callback_set(submi, _e_border_menu_cb_skip_winlist, bd);
+   e_menu_item_icon_edje_set(submi,
+			     e_theme_edje_file_get("base/theme/borders",
+						   "e/widgets/border/default/skip_winlist"),
+			     "e/widgets/border/default/skip_winlist");
+
+   submi = e_menu_item_new(subm);
+   e_menu_item_label_set(submi, _("Pager"));
+   e_menu_item_check_set(submi, 1);
+   e_menu_item_toggle_set(submi, bd->client.netwm.state.skip_pager);
+   e_menu_item_callback_set(submi, _e_border_menu_cb_skip_pager, bd);
+   e_menu_item_icon_edje_set(submi,
+			     e_theme_edje_file_get("base/theme/borders",
+						   "e/widgets/border/default/skip_pager"),
+			     "e/widgets/border/default/skip_pager");
 }
 
 static void 
