@@ -791,7 +791,7 @@ group {
 	       relative: 0.0  0.0;
 	       offset:   18   2;
 	    }
-	    rel2 {;
+	    rel2 {
 	       relative: 1.0  1.0;
 	       offset:   -3   -3;
 	    }
