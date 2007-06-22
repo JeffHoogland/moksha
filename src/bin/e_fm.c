@@ -5679,7 +5679,7 @@ _e_fm2_cb_resize_job(void *data)
 	_e_fm2_regions_populate(sd->obj);
 	break;
       case E_FM2_VIEW_MODE_CUSTOM_ICONS:
-	printf("CUSTOM ICONRESIZe HANDLE\n");
+	printf("CUSTOM ICONRESIZE HANDLE\n");
 	if (sd->config->view.fit_custom_pos)
 	  {
 	     for (l = sd->icons; l; l = l->next)
@@ -5711,7 +5711,7 @@ _e_fm2_cb_resize_job(void *data)
 	_e_fm2_regions_populate(sd->obj);
 	break;
       case E_FM2_VIEW_MODE_LIST:
-	printf("LIST RESIZe HANDLE\n");
+	printf("LIST RESIZE HANDLE\n");
 	if (sd->iconlist_changed)
 	  {
 	     for (l = sd->icons; l; l = l->next)
