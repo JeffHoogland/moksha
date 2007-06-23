@@ -251,6 +251,8 @@ images {
    image: "e17_button_detail_stack_normal.png" COMP;
    image: "e17_button_detail_stack_on_top.png" COMP;
    image: "e17_button_detail_properties.png" COMP;
+   image: "e17_button_detail_skip.png" COMP;
+   image: "e17_button_detail_skip_pager.png" COMP;
    image: "e17_mini_button.png" COMP;
    image: "e17_mini_button_shadow1.png" COMP;
    image: "e17_mini_button_shadow2.png" COMP;
@@ -4907,6 +4909,8 @@ FULL_SIZE_BORDER_BUTTON("borderless")
 FULL_SIZE_BORDER_BUTTON("fullscreen")
 FULL_SIZE_BORDER_BUTTON("remember")
 FULL_SIZE_BORDER_BUTTON("skip_winlist")
+FULL_SIZE_BORDER_BUTTON("skip")
+FULL_SIZE_BORDER_BUTTON("skip_pager")
 FULL_SIZE_BORDER_BUTTON("sendto")
 FULL_SIZE_BORDER_BUTTON("stacking")
 FULL_SIZE_BORDER_BUTTON("stack_on_top")
