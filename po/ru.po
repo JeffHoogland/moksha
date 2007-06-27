@@ -2,14 +2,14 @@
 # This file is put in the public domain.
 # Denis Klykvin <nikon@altlinux.ru>, 2005.
 # , fuzzy
-# 
-# 
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-06-17 23:16+0900\n"
-"PO-Revision-Date: 2007-04-20 20:00+0300\n"
+"POT-Creation-Date: 2007-06-26 00:52+0300\n"
+"PO-Revision-Date: 2007-06-26 22:03+0200\n"
 "Last-Translator: Danny Moshnakov <admin@moshnakov.org>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -59,6 +59,8 @@ msgid ""
 "window,<br>which has not been saved yet will be lost!<br><br>Are you sure "
 "you want to kill this window?"
 msgstr ""
+"Вы сейчас убъёте %s.<br><br>Просьба учесть, что все не сохранённые<br>данные "
+"этого окна будут потеряны!<br><br>Вы действительно хотите убить это окно?"
 
 #: src/bin/e_actions.c:318
 msgid "Are you sure you want to kill this window?"
@@ -66,14 +68,14 @@ msgstr "Вы действительно хотите убить это окно?
 
 #: src/bin/e_actions.c:321 src/bin/e_actions.c:1609 src/bin/e_actions.c:1680
 #: src/bin/e_actions.c:1739 src/bin/e_actions.c:1798 src/bin/e_actions.c:1857
-#: src/bin/e_actions.c:1916 src/bin/e_confirm_dialog.c:47 src/bin/e_fm.c:6710
+#: src/bin/e_actions.c:1916 src/bin/e_confirm_dialog.c:47 src/bin/e_fm.c:6702
 #: src/bin/e_int_config_display.c:214 src/bin/e_module.c:455
 msgid "Yes"
 msgstr "Да"
 
 #: src/bin/e_actions.c:323 src/bin/e_actions.c:1611 src/bin/e_actions.c:1682
 #: src/bin/e_actions.c:1741 src/bin/e_actions.c:1800 src/bin/e_actions.c:1859
-#: src/bin/e_actions.c:1918 src/bin/e_confirm_dialog.c:48 src/bin/e_fm.c:6711
+#: src/bin/e_actions.c:1918 src/bin/e_confirm_dialog.c:48 src/bin/e_fm.c:6703
 #: src/bin/e_int_config_display.c:215 src/bin/e_module.c:456
 msgid "No"
 msgstr "Нет"
@@ -90,11 +92,11 @@ msgstr ""
 
 #: src/bin/e_actions.c:1673
 msgid "Are you sure you want to log out?"
-msgstr "Вы действительно хотите выйти из сессии?"
+msgstr "Вы действительно хотите завершить сессию?"
 
 #: src/bin/e_actions.c:1675
 msgid "You are about to log out.<br><br>Are you sure you want to do this?"
-msgstr "Вы запросили логаут.<br><br>Вы уверены, что Вы этого хотите?"
+msgstr "Вы запросили завершить сессию.<br><br>Вы уверены, что Вы этого хотите?"
 
 #: src/bin/e_actions.c:1732 src/bin/e_actions.c:1850
 msgid "Are you sure you want to turn off?"
@@ -162,21 +164,21 @@ msgstr "Меню"
 msgid "Window Menu"
 msgstr "Меню Окна"
 
-#: src/bin/e_actions.c:2027 src/bin/e_int_border_menu.c:336
+#: src/bin/e_actions.c:2027 src/bin/e_int_border_menu.c:332
 msgid "Raise"
 msgstr "Повысить"
 
-#: src/bin/e_actions.c:2032 src/bin/e_int_border_menu.c:344
+#: src/bin/e_actions.c:2032 src/bin/e_int_border_menu.c:340
 msgid "Lower"
 msgstr "Понизить"
 
 #: src/bin/e_actions.c:2037 src/bin/e_config_dialog.c:226
 #: src/bin/e_configure.c:113 src/bin/e_fwin.c:1121
-#: src/bin/e_int_border_menu.c:318 src/bin/e_int_border_prop.c:81
+#: src/bin/e_int_border_menu.c:314 src/bin/e_int_border_prop.c:81
 msgid "Close"
 msgstr "Закрыть"
 
-#: src/bin/e_actions.c:2042 src/bin/e_int_border_menu.c:307
+#: src/bin/e_actions.c:2042 src/bin/e_int_border_menu.c:303
 msgid "Kill"
 msgstr "Убить"
 
@@ -201,8 +203,8 @@ msgstr "Переключить Иконизированое Состояние"
 msgid "Fullscreen Mode Toggle"
 msgstr "Переключить Полноэкранный Режим "
 
-#: src/bin/e_actions.c:2068 src/bin/e_int_border_menu.c:98
-#: src/bin/e_int_border_menu.c:228
+#: src/bin/e_actions.c:2068 src/bin/e_int_border_menu.c:100
+#: src/bin/e_int_border_menu.c:230
 msgid "Maximize"
 msgstr "Увеличить"
 
@@ -220,15 +222,15 @@ msgstr "Увеличить на Полный Экран"
 
 #: src/bin/e_actions.c:2078
 msgid "Maximize Mode \"Smart\""
-msgstr "\"Умное\" Увеличеное Состояние"
+msgstr "Режим Увеличения \"Умный\""
 
 #: src/bin/e_actions.c:2080
 msgid "Maximize Mode \"Expand\""
-msgstr "Режим Увеличения \"Разширить\""
+msgstr "Режим Увеличения \"Разширение\""
 
 #: src/bin/e_actions.c:2082
 msgid "Maximize Mode \"Fill\""
-msgstr "Политика Увеличения \"Заполнить\""
+msgstr "Режим Увеличения \"Заполнить\""
 
 #: src/bin/e_actions.c:2089
 msgid "Shade Up Mode Toggle"
@@ -240,11 +242,11 @@ msgstr "Переключить Режим Свернуть Вниз"
 
 #: src/bin/e_actions.c:2093
 msgid "Shade Left Mode Toggle"
-msgstr "Переключить Левый Свёрнутый Режим"
+msgstr "Переключить Режим Свернуть Влево"
 
 #: src/bin/e_actions.c:2095
 msgid "Shade Right Mode Toggle"
-msgstr "Переключить Правый Свёрнутый Режим "
+msgstr "Переключить Режим Свернуть Вправо"
 
 #: src/bin/e_actions.c:2097
 msgid "Shade Mode Toggle"
@@ -273,23 +275,23 @@ msgstr "Рабочий стол"
 
 #: src/bin/e_actions.c:2114
 msgid "Flip Desktop Left"
-msgstr "Переключить Рабочий Стол На Лево"
+msgstr "Переключить Стол Влево"
 
 #: src/bin/e_actions.c:2116
 msgid "Flip Desktop Right"
-msgstr "Переключить Рабочий Стол На Право"
+msgstr "Переключить Стол Вправо"
 
 #: src/bin/e_actions.c:2118
 msgid "Flip Desktop Up"
-msgstr "Переключить Рабочий Стол Вверх"
+msgstr "Переключить Стол Вверх"
 
 #: src/bin/e_actions.c:2120
 msgid "Flip Desktop Down"
-msgstr "Переключить Рабочий Стол Вниз"
+msgstr "Переключить Стол Вниз"
 
 #: src/bin/e_actions.c:2122
 msgid "Flip Desktop By..."
-msgstr "Переключить Рабочий Стол на..."
+msgstr "Переключить Стол По..."
 
 #: src/bin/e_actions.c:2128
 msgid "Show The Desktop"
@@ -408,19 +410,19 @@ msgstr "На Рабочий Стол..."
 
 #: src/bin/e_actions.c:2238
 msgid "Show Main Menu"
-msgstr "Показать Основное Меню"
+msgstr "Показать Главное Меню"
 
 #: src/bin/e_actions.c:2240
 msgid "Show Favorites Menu"
-msgstr "Показать Меню \"Любимые Приложения\""
+msgstr "Показать Избранное Меню"
 
 #: src/bin/e_actions.c:2242
 msgid "Show All Applications Menu"
-msgstr "Показ \"Все Приложения\" в Меню"
+msgstr "Показать Меню \"Все Приложения\""
 
 #: src/bin/e_actions.c:2244
 msgid "Show Clients Menu"
-msgstr "Показать Клиентское Меню"
+msgstr "Показать Меню Клиента"
 
 #: src/bin/e_actions.c:2246
 msgid "Show Menu..."
@@ -473,7 +475,7 @@ msgstr "Выход Немедленно"
 #: src/bin/e_int_config_wallpaper.c:459 src/bin/e_int_config_wallpaper.c:614
 #: src/bin/e_int_menus.c:207
 msgid "System"
-msgstr "Системный"
+msgstr "Система"
 
 #: src/bin/e_actions.c:2287 src/bin/e_int_menus.c:887
 msgid "Shut Down"
@@ -645,13 +647,14 @@ msgid "Enlightenment Configuration"
 msgstr "Конфигурация Enlightenment"
 
 #: src/bin/e_configure.c:96 src/bin/e_eap_editor.c:519
-#: src/bin/e_eap_editor.c:530 src/bin/e_int_config_mime.c:188
+#: src/bin/e_eap_editor.c:530 src/bin/e_int_config_apps.c:276
+#: src/bin/e_int_config_mime.c:188
 msgid "Categories"
 msgstr "Категории"
 
 #: src/bin/e_configure.c:104
 msgid "Configuration Items"
-msgstr "Элементы Настройки"
+msgstr "Элементы Настроек"
 
 #: src/bin/e_configure.c:395 src/bin/e_gadcon.c:1283
 msgid "Appearance"
@@ -675,7 +678,7 @@ msgstr "Цвета"
 msgid "Fonts"
 msgstr "Шрифты"
 
-#: src/bin/e_configure.c:400 src/bin/e_int_border_menu.c:166
+#: src/bin/e_configure.c:400 src/bin/e_int_border_menu.c:168
 msgid "Borders"
 msgstr "Бордюры"
 
@@ -700,19 +703,19 @@ msgid "Applications"
 msgstr "Приложения"
 
 #: src/bin/e_configure.c:407
-#, fuzzy
 msgid "New Application"
-msgstr "Приложение"
+msgstr "Новое Приложение"
 
-#: src/bin/e_configure.c:408
+#: src/bin/e_configure.c:408 src/bin/e_int_config_apps.c:115
+#: src/bin/e_int_config_apps.c:129
 msgid "IBar Applications"
 msgstr "Приложения IBar"
 
-#: src/bin/e_configure.c:409
+#: src/bin/e_configure.c:409 src/bin/e_int_config_apps.c:165
 msgid "Restart Applications"
 msgstr "Перезапускаемые Приложения"
 
-#: src/bin/e_configure.c:410
+#: src/bin/e_configure.c:410 src/bin/e_int_config_apps.c:147
 msgid "Startup Applications"
 msgstr "Стартовые Приложения"
 
@@ -773,10 +776,9 @@ msgstr "Управление Окнами"
 msgid "Menus"
 msgstr "Меню"
 
-#: src/bin/e_configure.c:430
-#, fuzzy
+#: src/bin/e_configure.c:430 src/bin/e_int_config_apps.c:98
 msgid "Favorites Menu"
-msgstr "Показать Меню \"Любимые Приложения\""
+msgstr "Меню Избранное"
 
 #: src/bin/e_configure.c:432 src/bin/e_int_menus.c:801
 msgid "Application Menus"
@@ -805,13 +807,13 @@ msgstr "Настройки Метода Ввода"
 
 #: src/bin/e_configure.c:442
 msgid "Dialogs"
-msgstr ""
+msgstr "Диалоги"
 
 #: src/bin/e_configure.c:443
 msgid "Performance"
 msgstr "Производительность"
 
-#: src/bin/e_configure.c:444
+#: src/bin/e_configure.c:444 src/bin/e_int_border_menu.c:822
 msgid "Window List"
 msgstr "Список Окон"
 
@@ -832,8 +834,8 @@ msgid "Extensions"
 msgstr "Расширения"
 
 #: src/bin/e_configure.c:450 src/bin/e_int_config_color_classes.c:83
-#: src/bin/e_int_config_paths.c:88 src/bin/e_int_menus.c:790
-#: src/bin/e_int_config_modules.c:244
+#: src/bin/e_int_config_fonts.c:97 src/bin/e_int_config_paths.c:88
+#: src/bin/e_int_menus.c:790 src/bin/e_int_config_modules.c:244
 msgid "Modules"
 msgstr "Модули"
 
@@ -960,14 +962,12 @@ msgid "Show in Menus"
 msgstr "Показывать в Меню"
 
 #: src/bin/e_eap_editor.c:542
-#, fuzzy
 msgid "Desktop file"
-msgstr "Имя Стола"
+msgstr "Файл Desktop"
 
 #: src/bin/e_eap_editor.c:543
-#, fuzzy
 msgid "Filename"
-msgstr "Переименовать"
+msgstr "Имя Файла"
 
 #: src/bin/e_eap_editor.c:570
 msgid "Select an Icon"
@@ -1140,7 +1140,7 @@ msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
 msgstr ""
-"Enlightenment нашёл, что Evas не может создать буферный слой. Пожалуйста "
+"Enlightenment обнаружил, что Evas не может создать буферный слой. Пожалуйста "
 "проверьте,\n"
 "что Evas поддерживает движок Software Buffer.\n"
 
@@ -1149,7 +1149,7 @@ msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG\n"
 "loader support.\n"
 msgstr ""
-"Enlightenment нашёл, что Evas не может загружать файлы PNG. Проверьте,\n"
+"Enlightenment обнаружил, что Evas не может загружать файлы PNG. Проверьте,\n"
 "что Evas имеет поддержку загрузчика PNG.\n"
 
 #: src/bin/e_main.c:507
@@ -1157,7 +1157,7 @@ msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG\n"
 "loader support.\n"
 msgstr ""
-"Enlightenment нашёл, что Evas не может загружать файлы JPEG. Проверьте,\n"
+"Enlightenment обнаружил, что Evas не может загружать файлы JPEG. Проверьте,\n"
 "что Evas имеет поддержку загрузчика JPEG.\n"
 
 #: src/bin/e_main.c:516
@@ -1165,7 +1165,7 @@ msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET\n"
 "loader support.\n"
 msgstr ""
-"Enlightenment нашёл, что Evas не может загружать файлы EET. Проверьте,\n"
+"Enlightenment обнаружил, что Evas не может загружать файлы EET. Проверьте,\n"
 "что Evas имеет поддержку загрузчика EET.\n"
 
 #: src/bin/e_main.c:533
@@ -1241,7 +1241,7 @@ msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
-"Настройка управления окнами для всех экранов на вашей системе провалена.\n"
+"Настройка управления окнами для всех экранов на вашей системе не удалась.\n"
 "Возможно запущен другой менеджер окон?\n"
 
 #: src/bin/e_main.c:672
@@ -1310,13 +1310,12 @@ msgstr ""
 "Enlightenment не может настроить свою систему запирания рабочего стола."
 
 #: src/bin/e_main.c:817
-#, fuzzy
 msgid "Enlightenment cannot set up its order file system."
-msgstr "Enlightenment не может настроить свою систему модулей."
+msgstr "Enlightenment не может настроить свою систему очередей."
 
 #: src/bin/e_main.c:833
 msgid "Enlightenment Starting. Please wait."
-msgstr "Enlightenment Стартует. Пожалуйста, подождите."
+msgstr "Запуск Enlightenment. Пожалуйста подождите."
 
 #: src/bin/e_main.c:860
 msgid ""
@@ -1346,80 +1345,81 @@ msgstr ""
 "проблему с модулями в Вашей конфигурации.<br><br>Диалог конфигурации модулей "
 "позволит Вам выбрать нужные<br> модули заново."
 
-#: src/bin/e_fm.c:2107 src/bin/e_fm.c:2178
-#, fuzzy, c-format
+#: src/bin/e_fm.c:2101 src/bin/e_fm.c:2172
+#, c-format
 msgid "Unknown Data"
-msgstr "Не известный"
+msgstr "Не известные Данные"
 
-#: src/bin/e_fm.c:2121 src/bin/e_fm.c:2192
+#: src/bin/e_fm.c:2115 src/bin/e_fm.c:2186
 msgid "Removable Device"
 msgstr "Съёмное Устройство"
 
-#: src/bin/e_fm.c:2931
+#: src/bin/e_fm.c:2925
 #, c-format
 msgid "%i Files"
 msgstr "%i файлов"
 
-#: src/bin/e_fm.c:6151 src/bin/e_fm.c:6293
+#: src/bin/e_fm.c:6143 src/bin/e_fm.c:6285
 msgid "Refresh View"
 msgstr "Обновить Вид"
 
-#: src/bin/e_fm.c:6162 src/bin/e_fm.c:6304
+#: src/bin/e_fm.c:6154 src/bin/e_fm.c:6296
 msgid "Show Hidden Files"
 msgstr "Показать  Скрытые Файлы"
 
-#: src/bin/e_fm.c:6177 src/bin/e_fm.c:6319
+#: src/bin/e_fm.c:6169 src/bin/e_fm.c:6311
 msgid "Remember Ordering"
 msgstr "Запомнить Очередность"
 
-#: src/bin/e_fm.c:6189 src/bin/e_fm.c:6331
+#: src/bin/e_fm.c:6181 src/bin/e_fm.c:6323
 msgid "Sort Now"
 msgstr "Сортировать"
 
-#: src/bin/e_fm.c:6207 src/bin/e_fm.c:6349 src/bin/e_int_config_paths.c:210
+#: src/bin/e_fm.c:6199 src/bin/e_fm.c:6341 src/bin/e_int_config_paths.c:210
 msgid "New Directory"
 msgstr "Новый Каталог"
 
-#: src/bin/e_fm.c:6408 src/bin/e_int_config_shelf.c:83 src/bin/e_entry.c:386
+#: src/bin/e_fm.c:6400 src/bin/e_int_config_apps.c:294
+#: src/bin/e_int_config_shelf.c:83 src/bin/e_entry.c:386
 #: src/modules/ibar/e_mod_config.c:111
 msgid "Delete"
 msgstr "Стереть"
 
-#: src/bin/e_fm.c:6419
+#: src/bin/e_fm.c:6411
 msgid "Rename"
 msgstr "Переименовать"
 
-#: src/bin/e_fm.c:6429
+#: src/bin/e_fm.c:6421
 msgid "Properties"
 msgstr "Свойства"
 
-#: src/bin/e_fm.c:6553
+#: src/bin/e_fm.c:6545
 msgid "Create a new Directory"
 msgstr "Создать новый каталог"
 
-#: src/bin/e_fm.c:6554
+#: src/bin/e_fm.c:6546
 msgid "New Directory Name:"
-msgstr "Имя Нового Каталога"
+msgstr "Имя Нового Каталога:"
 
-#: src/bin/e_fm.c:6613
+#: src/bin/e_fm.c:6605
 #, c-format
 msgid "Rename %s to:"
 msgstr "Переименовать %s в:"
 
-#: src/bin/e_fm.c:6615
+#: src/bin/e_fm.c:6607
 msgid "Rename File"
 msgstr "Переименовать Файл"
 
-#: src/bin/e_fm.c:6713
+#: src/bin/e_fm.c:6705
 msgid "Confirm Delete"
 msgstr "Подтвердите Удаление"
 
-#: src/bin/e_fm.c:6717
+#: src/bin/e_fm.c:6709
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "Вы действительно хотите стереть <br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:6723
+#: src/bin/e_fm.c:6715
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
@@ -1454,7 +1454,7 @@ msgstr "Разрешения"
 
 #: src/bin/e_fm_prop.c:367 src/bin/e_widget_fsel.c:339
 msgid "Owner:"
-msgstr "Хозяин:"
+msgstr "Владелец:"
 
 #: src/bin/e_fm_prop.c:373
 msgid "Others can read"
@@ -1496,9 +1496,8 @@ msgid "Use this icon for all files of this type"
 msgstr "Использовать эту иконку для всех файлов этого типа"
 
 #: src/bin/e_fm_prop.c:456
-#, fuzzy
 msgid "Link Information"
-msgstr "Информация об Ошибке"
+msgstr "Информация о Ссылке"
 
 #: src/bin/e_fm_prop.c:502 src/bin/e_int_config_mime_edit.c:271
 msgid "Select an Image"
@@ -1583,7 +1582,7 @@ msgstr ""
 "неотвечает на сигналы<br>в конце загрузки. Вы должны использовать правильно "
 "сделаную<br>тему init заставки,  либо починить ту, которую<br>вы используете."
 
-#: src/bin/e_int_border_locks.c:67 src/bin/e_int_border_menu.c:150
+#: src/bin/e_int_border_locks.c:67 src/bin/e_int_border_menu.c:152
 msgid "Window Locks"
 msgstr "Замки Окна"
 
@@ -1624,12 +1623,12 @@ msgstr "Позицию"
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
 #: src/bin/e_int_border_remember.c:488 src/bin/e_int_config_fonts.c:452
 #: src/bin/e_int_config_fonts.c:656 src/bin/e_int_shelf_config.c:420
-#: src/bin/e_int_shelf_config.c:519
+#: src/bin/e_int_shelf_config.c:501
 msgid "Size"
 msgstr "Размер"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
-#: src/bin/e_int_border_menu.c:216 src/bin/e_int_border_prop.c:471
+#: src/bin/e_int_border_menu.c:218 src/bin/e_int_border_prop.c:471
 #: src/bin/e_int_border_remember.c:490 src/bin/e_int_shelf_config.c:457
 msgid "Stacking"
 msgstr "Уровень"
@@ -1680,95 +1679,97 @@ msgstr "Выйти из сессии когда это окно открыто"
 msgid "Remember these Locks"
 msgstr "Запомнить эти Замки"
 
-#: src/bin/e_int_border_menu.c:55
+#: src/bin/e_int_border_menu.c:57
 msgid "Always On Top"
 msgstr "Всегда Поверху"
 
-#: src/bin/e_int_border_menu.c:66 src/bin/e_int_config_fonts.c:99
+#: src/bin/e_int_border_menu.c:68 src/bin/e_int_config_fonts.c:99
 #: src/bin/e_int_config_fonts.c:260 src/modules/temperature/e_mod_config.c:225
 msgid "Normal"
 msgstr "Нормально"
 
-#: src/bin/e_int_border_menu.c:77
+#: src/bin/e_int_border_menu.c:79
 msgid "Always Below"
 msgstr "Всегда Понизу"
 
-#: src/bin/e_int_border_menu.c:109
+#: src/bin/e_int_border_menu.c:111
 msgid "Maximize vertically"
 msgstr "Увеличить вертикально"
 
-#: src/bin/e_int_border_menu.c:120
+#: src/bin/e_int_border_menu.c:122
 msgid "Maximize horizontally"
 msgstr "Увеличить горизонтально"
 
-#: src/bin/e_int_border_menu.c:131
+#: src/bin/e_int_border_menu.c:133
 msgid "Unmaximize"
-msgstr "Немаксимизировать"
+msgstr "Обычный размер"
 
-#: src/bin/e_int_border_menu.c:157
+#: src/bin/e_int_border_menu.c:159
 msgid "Remember"
 msgstr "Запомнить"
 
-#: src/bin/e_int_border_menu.c:180
+#: src/bin/e_int_border_menu.c:182
 msgid "Send to Desktop"
 msgstr "Переслать на"
 
-#: src/bin/e_int_border_menu.c:192
+#: src/bin/e_int_border_menu.c:194
 msgid "Pin to Desktop"
 msgstr "Прикрепить к Столу"
 
-#: src/bin/e_int_border_menu.c:204
+#: src/bin/e_int_border_menu.c:206
 msgid "Unpin from Desktop"
 msgstr "Открепить от Стола"
 
-#: src/bin/e_int_border_menu.c:237 src/bin/e_int_border_prop.c:435
+#: src/bin/e_int_border_menu.c:239 src/bin/e_int_border_prop.c:435
 #: src/bin/e_int_config_color_classes.c:427
 msgid "State"
 msgstr "Состояние"
 
-#: src/bin/e_int_border_menu.c:248 src/bin/e_int_border_remember.c:504
-msgid "Skip Window List"
-msgstr "Пропуск Окна"
+#: src/bin/e_int_border_menu.c:247
+msgid "Skip"
+msgstr "Пропускать"
 
-#: src/bin/e_int_border_menu.c:267
+#: src/bin/e_int_border_menu.c:263
 msgid "Edit Icon"
 msgstr "Редактировать Иконку"
 
-#: src/bin/e_int_border_menu.c:272
-#, fuzzy
+#: src/bin/e_int_border_menu.c:268
 msgid "Add To Favorites Menu"
 msgstr "Добавить в Избранное"
 
-#: src/bin/e_int_border_menu.c:277
-#, fuzzy
+#: src/bin/e_int_border_menu.c:273
 msgid "Add To Launcher"
-msgstr "Добавить в IBar"
+msgstr "Добавить в Панель Запуска"
 
-#: src/bin/e_int_border_menu.c:284
+#: src/bin/e_int_border_menu.c:280
 msgid "Create Icon"
 msgstr "Создать Иконку"
 
-#: src/bin/e_int_border_menu.c:294 src/bin/e_int_border_prop.c:75
+#: src/bin/e_int_border_menu.c:290 src/bin/e_int_border_prop.c:75
 msgid "Window Properties"
 msgstr "Свойства Окна"
 
-#: src/bin/e_int_border_menu.c:355
+#: src/bin/e_int_border_menu.c:351
 msgid "Iconify"
 msgstr "Опустить"
 
-#: src/bin/e_int_border_menu.c:759 src/bin/e_int_border_prop.c:475
+#: src/bin/e_int_border_menu.c:770 src/bin/e_int_border_prop.c:475
 msgid "Shaded"
 msgstr "Свёрнут"
 
-#: src/bin/e_int_border_menu.c:772 src/bin/e_int_border_prop.c:474
+#: src/bin/e_int_border_menu.c:783 src/bin/e_int_border_prop.c:474
 msgid "Sticky"
 msgstr "Липкий"
 
-#: src/bin/e_int_border_menu.c:785 src/bin/e_int_border_prop.c:479
+#: src/bin/e_int_border_menu.c:796 src/bin/e_int_border_prop.c:479
 #: src/bin/e_int_config_window_manipulation.c:154
 #: src/bin/e_int_config_window_manipulation.c:215
 msgid "Fullscreen"
 msgstr "Полный Экран"
+
+#: src/bin/e_int_border_menu.c:832 src/modules/pager/e_mod_main.c:226
+msgid "Pager"
+msgstr "Пэйджер"
 
 #: src/bin/e_int_border_prop.c:365
 msgid "NetWM"
@@ -1860,15 +1861,15 @@ msgstr "Принимает Фокус"
 
 #: src/bin/e_int_border_prop.c:445
 msgid "Urgent"
-msgstr "Срочный"
+msgstr "Срочное"
 
 #: src/bin/e_int_border_prop.c:446
 msgid "Request Delete"
-msgstr "Запросить Удаление"
+msgstr "Запросил Удаление"
 
 #: src/bin/e_int_border_prop.c:447
 msgid "Request Position"
-msgstr "Запросить Позицию"
+msgstr "Запросил Позицию"
 
 #: src/bin/e_int_border_prop.c:468
 msgid "NetWM Properties"
@@ -1876,19 +1877,19 @@ msgstr "Свойства NetWM"
 
 #: src/bin/e_int_border_prop.c:473
 msgid "Modal"
-msgstr "Модульный"
+msgstr "Модульное"
 
 #: src/bin/e_int_border_prop.c:476
 msgid "Skip Taskbar"
-msgstr "Пропустить Таскбар"
+msgstr "Пропускает Таскбар"
 
 #: src/bin/e_int_border_prop.c:477
 msgid "Skip Pager"
-msgstr "Пропускать Пэйджер"
+msgstr "Пропускает Пэйджер"
 
 #: src/bin/e_int_border_prop.c:478
 msgid "Hidden"
-msgstr "Спрятанный"
+msgstr "Спрятанное"
 
 #: src/bin/e_int_border_remember.c:70
 msgid "Window Remember"
@@ -2018,9 +2019,12 @@ msgid "Virtual Desktop"
 msgstr "Виртуальный Рабочий стол"
 
 #: src/bin/e_int_border_remember.c:502
-#, fuzzy
 msgid "Current Screen"
-msgstr "Особое Запирание Экрана"
+msgstr "Текущий Экран"
+
+#: src/bin/e_int_border_remember.c:504
+msgid "Skip Window List"
+msgstr "Пропуск Окна"
 
 #: src/bin/e_int_border_remember.c:508
 msgid "Match only one window"
@@ -2029,6 +2033,15 @@ msgstr "Совпадает только одно окно"
 #: src/bin/e_int_border_remember.c:513
 msgid "Start this program on login"
 msgstr "Запустить эту программу при логине"
+
+#: src/bin/e_int_config_apps.c:275
+msgid "Application Categories"
+msgstr "Категории Приложений"
+
+#: src/bin/e_int_config_apps.c:289 src/bin/e_int_config_shelf.c:81
+#: src/bin/e_widget_config_list.c:57 src/modules/ibar/e_mod_config.c:109
+msgid "Add"
+msgstr "Добавить"
 
 #: src/bin/e_int_config_borders.c:29 src/bin/e_int_config_borders.c:180
 msgid "Default Border Style"
@@ -2043,9 +2056,8 @@ msgid "Remember this Border for this window next time it appears"
 msgstr "Запомнить границу для этого окна при следующих появлениях"
 
 #: src/bin/e_int_config_dialogs.c:35
-#, fuzzy
 msgid "Dialog Settings"
-msgstr "Настройки Диалога Конфигурации"
+msgstr "Настройки Диалога"
 
 #: src/bin/e_int_config_dialogs.c:84 src/bin/e_int_config_exebuf.c:110
 #: src/bin/e_int_config_exebuf.c:162 src/bin/e_int_config_performance.c:89
@@ -2055,14 +2067,12 @@ msgid "General Settings"
 msgstr "Общие Настройки"
 
 #: src/bin/e_int_config_dialogs.c:86
-#, fuzzy
 msgid "Disable Confirmation Dialogs"
-msgstr "Диалоги Конфигурации"
+msgstr "Отключить Диалоги Подтверждения"
 
 #: src/bin/e_int_config_dialogs.c:93
-#, fuzzy
 msgid "Default Configuration Dialogs Mode"
-msgstr "Диалоги Конфигурации"
+msgstr "Режим Диалогов по Умолчанию"
 
 #: src/bin/e_int_config_dialogs.c:96 src/bin/e_int_config_dialogs.c:134
 msgid "Basic Mode"
@@ -2070,7 +2080,7 @@ msgstr "Базовый Режим"
 
 #: src/bin/e_int_config_dialogs.c:98 src/bin/e_int_config_dialogs.c:136
 msgid "Advanced Mode"
-msgstr "Расширенный Режим"
+msgstr "Разширенный Режим"
 
 #: src/bin/e_int_config_dialogs.c:131
 msgid "Default Dialog Mode"
@@ -2085,7 +2095,7 @@ msgid "Group By"
 msgstr "Группировать По"
 
 #: src/bin/e_int_config_clientlist.c:101 src/bin/e_int_config_clientlist.c:114
-#: src/bin/e_int_config_clientlist.c:124 src/bin/e_int_config_fonts.c:687
+#: src/bin/e_int_config_clientlist.c:124 src/bin/e_int_config_fonts.c:689
 #: src/bin/e_int_config_mousebindings.c:369
 #: src/bin/e_int_config_transitions.c:152
 #: src/bin/e_int_config_transitions.c:204
@@ -2099,7 +2109,7 @@ msgstr "Включая  окна с других экранов"
 
 #: src/bin/e_int_config_clientlist.c:111
 msgid "Separate Groups By"
-msgstr "Разделять Группы По"
+msgstr "Разделять Группы"
 
 #: src/bin/e_int_config_clientlist.c:116
 msgid "Using separator bars"
@@ -2146,153 +2156,137 @@ msgid "Warp to owning desktop"
 msgstr "Перемещать на родной стол"
 
 #: src/bin/e_int_config_clientlist.c:146
-#, fuzzy
 msgid "Menu Item Captions"
-msgstr "Настройки Меню"
+msgstr "Надписи Элементов Меню"
 
 #: src/bin/e_int_config_clientlist.c:147
 msgid "Limit caption length"
-msgstr ""
+msgstr "Ограничить длинну надписи"
 
 #: src/bin/e_int_config_clientlist.c:149
-#, fuzzy, c-format
+#, c-format
 msgid "%1.0f Chars"
-msgstr "%1.0f Ц"
+msgstr "%1.0f Букв"
 
-#: src/bin/e_int_config_color_classes.c:44 src/bin/e_int_config_fonts.c:59
-#, fuzzy
+#: src/bin/e_int_config_color_classes.c:44
 msgid "Window Manager"
-msgstr "Цвета Менеджера Окон"
+msgstr "Менеджер Окон"
 
 #: src/bin/e_int_config_color_classes.c:45
 msgid "About Dialog Title"
-msgstr ""
+msgstr "Заголовок Диалога \"Об\""
 
 #: src/bin/e_int_config_color_classes.c:46
 msgid "About Dialog Version"
-msgstr ""
+msgstr "Версия в \"Диалоге Об\""
 
 #: src/bin/e_int_config_color_classes.c:47
-#, fuzzy
 msgid "Border Title"
-msgstr "Стиль бордюра"
+msgstr "Заголовок Границ"
 
 #: src/bin/e_int_config_color_classes.c:48
-#, fuzzy
 msgid "Configure Dialog Title"
-msgstr "Диалоги Конфигурации"
+msgstr "Заголовок Меню в Конфигурации"
 
 #: src/bin/e_int_config_color_classes.c:49
-#, fuzzy
 msgid "Error Text"
-msgstr "Ошибка"
+msgstr "Текст Ошибки"
 
 #: src/bin/e_int_config_color_classes.c:50 src/bin/e_int_config_fonts.c:62
-#, fuzzy
 msgid "Menu Title"
-msgstr "Заголовок"
+msgstr "Заголовок Меню"
 
 #: src/bin/e_int_config_color_classes.c:51
 msgid "Menu Title Active"
-msgstr ""
+msgstr "Активный Заголовок Меню"
 
 #: src/bin/e_int_config_color_classes.c:52 src/bin/e_int_config_fonts.c:61
-#, fuzzy
 msgid "Menu Item"
-msgstr "Меню"
+msgstr "Пункт Меню"
 
 #: src/bin/e_int_config_color_classes.c:53
 msgid "Menu Item Active"
-msgstr ""
+msgstr "Активный Пункт Меню"
 
 #: src/bin/e_int_config_color_classes.c:54 src/bin/e_int_config_fonts.c:66
-#, fuzzy
 msgid "Move Text"
-msgstr "Двигать Вверх"
+msgstr "Двигать Текст"
 
 #: src/bin/e_int_config_color_classes.c:55 src/bin/e_int_config_fonts.c:67
-#, fuzzy
 msgid "Resize Text"
-msgstr "Измененить Размер"
+msgstr "Текст при Изменении Размера"
 
 #: src/bin/e_int_config_color_classes.c:56
-#, fuzzy
 msgid "Winlist Item"
-msgstr "Список Окон"
+msgstr "Записи Списка Окон"
 
 #: src/bin/e_int_config_color_classes.c:57
 msgid "Winlist Label"
-msgstr ""
+msgstr "Метка Списка Окон"
 
 #: src/bin/e_int_config_color_classes.c:58 src/bin/e_int_config_fonts.c:68
-#, fuzzy
 msgid "Winlist Title"
-msgstr "Показывать Название"
+msgstr "Заголовок Списка Окон"
 
-#: src/bin/e_int_config_color_classes.c:64
-#, fuzzy
+#: src/bin/e_int_config_color_classes.c:64 src/bin/e_int_config_fonts.c:81
 msgid "Widgets"
-msgstr "Цвета Виджета"
+msgstr "Визуальные Элементы"
 
 #: src/bin/e_int_config_color_classes.c:65
-#, fuzzy
 msgid "Button Text"
-msgstr "Кнопка %i"
+msgstr "Текст на Кнопках"
 
 #: src/bin/e_int_config_color_classes.c:66
-#, fuzzy
 msgid "Button Text Disabled"
-msgstr "Настройки Клавиш"
+msgstr "Отключеный Текст на Кнопках"
 
 #: src/bin/e_int_config_color_classes.c:67
 msgid "Check Text"
-msgstr ""
+msgstr "Текст Чекбокса"
 
 #: src/bin/e_int_config_color_classes.c:68
 msgid "Check Text Disabled"
-msgstr ""
+msgstr "Отключеный Текст Чекбокса"
 
 #: src/bin/e_int_config_color_classes.c:69
 msgid "Entry Text"
-msgstr ""
+msgstr "Ввод Текста"
 
 #: src/bin/e_int_config_color_classes.c:70
 msgid "Label Text"
-msgstr ""
+msgstr "Текст Метки"
 
 #: src/bin/e_int_config_color_classes.c:71
 msgid "List Item Text"
-msgstr ""
+msgstr "Текст Пункта в Списке"
 
 #: src/bin/e_int_config_color_classes.c:72
 msgid "List Item Odd Text"
-msgstr ""
+msgstr "Дополнительный Текст Пункта в Списке"
 
 #: src/bin/e_int_config_color_classes.c:73 src/bin/e_int_config_fonts.c:91
-#, fuzzy
 msgid "List Header"
-msgstr "Лидер Клиента"
+msgstr "Заголовок Списка"
 
 #: src/bin/e_int_config_color_classes.c:74
 msgid "Radio Text"
-msgstr ""
+msgstr "Текст Радиобокса"
 
 #: src/bin/e_int_config_color_classes.c:75
 msgid "Radio Text Disabled"
-msgstr ""
+msgstr "Отключеный Текст Радиобокса"
 
 #: src/bin/e_int_config_color_classes.c:76
 msgid "Slider Text"
-msgstr ""
+msgstr "Текст Бегунка"
 
 #: src/bin/e_int_config_color_classes.c:77
 msgid "Slider Text Disabled"
-msgstr ""
+msgstr "Отключеный Текст Бегунка"
 
 #: src/bin/e_int_config_color_classes.c:84
-#, fuzzy
 msgid "Module Label"
-msgstr "Состояние Модуля"
+msgstr "Метка Модуля"
 
 #: src/bin/e_int_config_color_classes.c:348
 msgid "Window Manager Colors"
@@ -2310,7 +2304,7 @@ msgstr "Включено"
 #: src/bin/e_int_config_color_classes.c:368
 #: src/bin/e_int_config_color_classes.c:435 src/bin/e_int_config_modules.c:260
 msgid "Disabled"
-msgstr "Отключено"
+msgstr "Выключено"
 
 #: src/bin/e_int_config_color_classes.c:356
 msgid "Widget Colors"
@@ -2318,7 +2312,7 @@ msgstr "Цвета Виджета"
 
 #: src/bin/e_int_config_color_classes.c:364
 msgid "Module Colors"
-msgstr "Цвета Модуле"
+msgstr "Цвета Модуля"
 
 #: src/bin/e_int_config_color_classes.c:414
 msgid "Color Classes"
@@ -2465,7 +2459,7 @@ msgstr "Указано Темой"
 
 #: src/bin/e_int_config_desklock.c:316
 msgid "Theme Wallpaper"
-msgstr "Темы Обоев"
+msgstr "Обои из Темы"
 
 #: src/bin/e_int_config_desklock.c:328
 msgid "Custom Screenlock"
@@ -2624,7 +2618,7 @@ msgstr ""
 
 #: src/bin/e_int_config_display.c:596
 msgid "No Refresh Rates Found"
-msgstr "Частоты Экрана Не Найдены"
+msgstr "Не Найдены Частоты Экрана"
 
 #: src/bin/e_int_config_display.c:597
 msgid ""
@@ -2719,7 +2713,7 @@ msgstr "Настройки Терминала"
 
 #: src/bin/e_int_config_exebuf.c:187
 msgid "Terminal Command (CTRL+RETURN to utilize)"
-msgstr ""
+msgstr "Комманда Вызова Терминала"
 
 #: src/bin/e_int_config_exebuf.c:193 src/bin/e_int_config_winlist.c:260
 msgid "Size Settings"
@@ -2837,131 +2831,113 @@ msgstr "Фокус на последнем фокусированом окне �
 msgid "Revert focus when hiding or closing a window"
 msgstr "Возвращать фокус при минимизации или закрытии окна"
 
+#: src/bin/e_int_config_fonts.c:59
+msgid "Core"
+msgstr "Ядро"
+
 #: src/bin/e_int_config_fonts.c:60
-#, fuzzy
 msgid "Title Bar"
-msgstr "Заголовок"
+msgstr "Пространство Заголовка"
 
 #: src/bin/e_int_config_fonts.c:63
 msgid "Textblock Plain"
-msgstr ""
+msgstr "Простой Блок Текста"
 
 #: src/bin/e_int_config_fonts.c:64
 msgid "Textblock Light"
-msgstr ""
+msgstr "Малый Блок Текста"
 
 #: src/bin/e_int_config_fonts.c:65
 msgid "Textblock Big"
-msgstr ""
+msgstr "Большой Блок Текста"
 
 #: src/bin/e_int_config_fonts.c:69
-#, fuzzy
 msgid "Configure Heading"
-msgstr "Настройки"
+msgstr "Заголовок Конфигурационной Панели"
 
 #: src/bin/e_int_config_fonts.c:70
-#, fuzzy
 msgid "About Title"
-msgstr "Об Этой Теме"
+msgstr "Заголовок в \"Об\""
 
 #: src/bin/e_int_config_fonts.c:71
 msgid "About Version"
-msgstr ""
+msgstr "Версия в \"Об\""
 
 #: src/bin/e_int_config_fonts.c:72
-#, fuzzy
 msgid "About Text"
-msgstr "О..."
+msgstr "Текст в \"Об\""
 
 #: src/bin/e_int_config_fonts.c:73
-#, fuzzy
 msgid "Desklock Title"
-msgstr "Показывать Название"
+msgstr "Заголовок в \"Запереть Экран\""
 
 #: src/bin/e_int_config_fonts.c:74
 msgid "Desklock Password"
-msgstr ""
+msgstr "Пароль в \"Запереть Экран\""
 
 #: src/bin/e_int_config_fonts.c:75
 msgid "Dialog Error"
-msgstr ""
+msgstr "Диалог Ошибки"
 
 #: src/bin/e_int_config_fonts.c:76
-#, fuzzy
 msgid "Exebuf Command"
-msgstr "Выполнить Комманду"
+msgstr "Комманда Exebuf"
 
 #: src/bin/e_int_config_fonts.c:77
-#, fuzzy
 msgid "Splash Title"
-msgstr "Показывать Название"
+msgstr "Заголовок в Заставке"
 
 #: src/bin/e_int_config_fonts.c:78
 msgid "Splash Text"
-msgstr ""
+msgstr "Текст в Заставке"
 
 #: src/bin/e_int_config_fonts.c:79
 msgid "Splash Version"
-msgstr ""
-
-#: src/bin/e_int_config_fonts.c:81
-#, fuzzy
-msgid "Widget"
-msgstr "Цвета Виджета"
+msgstr "Версия в Заставке"
 
 #: src/bin/e_int_config_fonts.c:82
 msgid "Entry"
-msgstr ""
+msgstr "Запись"
 
 #: src/bin/e_int_config_fonts.c:83
-#, fuzzy
 msgid "Frame"
-msgstr "Частота кадров"
+msgstr "Рамка"
 
 #: src/bin/e_int_config_fonts.c:84
-#, fuzzy
 msgid "Label"
-msgstr "Ярлыки Иконки"
+msgstr "Метка"
 
 #: src/bin/e_int_config_fonts.c:85
-#, fuzzy
 msgid "Buttons"
-msgstr "Кнопка %i"
+msgstr "Кнопки"
 
 #: src/bin/e_int_config_fonts.c:86
-#, fuzzy
 msgid "Slider"
-msgstr "Размер"
+msgstr "Бегунок"
 
 #: src/bin/e_int_config_fonts.c:87
 msgid "Radio Buttons"
-msgstr ""
+msgstr "Кнопки Радиобокс"
 
 #: src/bin/e_int_config_fonts.c:88
 msgid "Check Buttons"
-msgstr ""
+msgstr "Кнопки Чекбокс"
 
 #: src/bin/e_int_config_fonts.c:89
-#, fuzzy
 msgid "Text List Item"
-msgstr "Меню Списка Клиента"
+msgstr "Текст Пункта в Списке"
 
 #: src/bin/e_int_config_fonts.c:90
 msgid "List Item"
-msgstr ""
+msgstr "Пункт Списка"
 
 #: src/bin/e_int_config_fonts.c:93
-msgid "EFM"
-msgstr ""
+msgid "Filemanager"
+msgstr "Управление Файлами"
 
 #: src/bin/e_int_config_fonts.c:94
 msgid "Typebuf"
-msgstr ""
-
-#: src/bin/e_int_config_fonts.c:97
-#, fuzzy
-msgid "Module"
-msgstr "Модули"
+msgstr "Typebuf"
 
 #: src/bin/e_int_config_fonts.c:98 src/bin/e_int_config_fonts.c:254
 #: src/bin/e_int_shelf_config.c:424
@@ -2974,16 +2950,15 @@ msgstr "Большой"
 
 #: src/bin/e_int_config_fonts.c:101
 msgid "Small Styled"
-msgstr ""
+msgstr "Уменьшенный Стиль"
 
 #: src/bin/e_int_config_fonts.c:102
-#, fuzzy
 msgid "Normal Styled"
-msgstr "Нормально"
+msgstr "Обычный Стиль"
 
 #: src/bin/e_int_config_fonts.c:103
 msgid "Large Styled"
-msgstr ""
+msgstr "Увеличенный Стиль"
 
 #: src/bin/e_int_config_fonts.c:166
 msgid "Font Settings"
@@ -2995,69 +2970,68 @@ msgstr "Тини"
 
 #: src/bin/e_int_config_fonts.c:266
 msgid "Big"
-msgstr ""
+msgstr "Большой"
 
 #: src/bin/e_int_config_fonts.c:272
 msgid "Really Big"
-msgstr ""
+msgstr "Очень Большой"
 
 #: src/bin/e_int_config_fonts.c:278 src/bin/e_int_shelf_config.c:430
 msgid "Huge"
 msgstr "Огромный"
 
 #: src/bin/e_int_config_fonts.c:287
-#, fuzzy, c-format
+#, c-format
 msgid "%d pixels"
-msgstr "%1.0f пикс."
+msgstr "%d пикс."
 
 #: src/bin/e_int_config_fonts.c:438
-#, fuzzy
 msgid "Enable Custom Font Classes"
-msgstr "Включить Классы Шрифтов"
+msgstr "Использовать Свои Классы Шрифта"
 
 #: src/bin/e_int_config_fonts.c:460
 msgid "Basic preview text: 123: 我的天空！"
-msgstr ""
+msgstr "Базовая Тестовая Строка: 123:"
 
 #: src/bin/e_int_config_fonts.c:628
 msgid "Font Classes"
-msgstr "Классы Шрифтов"
+msgstr "Классы Шрифта"
 
-#: src/bin/e_int_config_fonts.c:647 src/bin/e_int_shelf_config.c:528
+#: src/bin/e_int_config_fonts.c:647 src/bin/e_int_shelf_config.c:510
 msgid "Styles"
 msgstr "Стили"
 
 #: src/bin/e_int_config_fonts.c:664
 msgid "Enable Font Class"
-msgstr "Включить Классы Шрифтов"
+msgstr "Включить Классы Шрифта"
 
 #: src/bin/e_int_config_fonts.c:670
 msgid "Advanced Preview Text.. 我真的会写中文"
-msgstr ""
+msgstr "Разширеная Тестовая Строка... "
 
-#: src/bin/e_int_config_fonts.c:676
+#: src/bin/e_int_config_fonts.c:678
 msgid "Hinting"
 msgstr "Подсказки"
 
-#: src/bin/e_int_config_fonts.c:679
+#: src/bin/e_int_config_fonts.c:681
 msgid "Bytecode"
 msgstr "Байткод"
 
-#: src/bin/e_int_config_fonts.c:683 src/modules/cpufreq/e_mod_main.c:214
+#: src/bin/e_int_config_fonts.c:685 src/modules/cpufreq/e_mod_main.c:214
 msgid "Automatic"
 msgstr "Автоматически"
 
-#: src/bin/e_int_config_fonts.c:693
+#: src/bin/e_int_config_fonts.c:695
 msgid "Font Fallbacks"
 msgstr "Запасные Шрифты"
 
-#: src/bin/e_int_config_fonts.c:694
+#: src/bin/e_int_config_fonts.c:696
 msgid "Fallback Name"
 msgstr "Запасное Имя"
 
-#: src/bin/e_int_config_fonts.c:707
+#: src/bin/e_int_config_fonts.c:709
 msgid "Enable Fallbacks"
-msgstr "Включить Запасники"
+msgstr "Включить Запасные"
 
 #: src/bin/e_int_config_icon_themes.c:54
 msgid "Icon Theme Settings"
@@ -3089,7 +3063,7 @@ msgstr "Выбор Метода Ввода"
 
 #: src/bin/e_int_config_imc.c:298 src/bin/e_int_config_imc.c:888
 msgid "Use No Input Method"
-msgstr "Использовать Никакой Метод Ввода"
+msgstr "Не Использовать Метод Ввода"
 
 #: src/bin/e_int_config_imc.c:303 src/bin/e_int_config_imc.c:955
 msgid "Setup Selected Input Method"
@@ -3143,1598 +3117,1507 @@ msgstr ""
 
 #: src/bin/e_int_config_intl.c:104 src/bin/e_int_config_intl.c:140
 msgid "Bulgarian"
-msgstr ""
+msgstr "Болгарский"
 
 #: src/bin/e_int_config_intl.c:105 src/bin/e_int_config_intl.c:145
 msgid "Catalan"
-msgstr ""
+msgstr "Каталанский"
 
 #: src/bin/e_int_config_intl.c:106
 msgid "Chinese (Simplified)"
-msgstr ""
+msgstr "Китайская упрощённая"
 
 #: src/bin/e_int_config_intl.c:107
 msgid "Chinese (Traditional)"
-msgstr ""
+msgstr "Китайская традиционная"
 
 #: src/bin/e_int_config_intl.c:108 src/bin/e_int_config_intl.c:147
 msgid "Czech"
-msgstr ""
+msgstr "Чешский"
 
 #: src/bin/e_int_config_intl.c:109 src/bin/e_int_config_intl.c:149
 msgid "Danish"
-msgstr ""
+msgstr "Датский"
 
 #: src/bin/e_int_config_intl.c:110 src/bin/e_int_config_intl.c:213
 msgid "Dutch"
-msgstr ""
+msgstr "Нидерландский"
 
 #: src/bin/e_int_config_intl.c:111 src/bin/e_int_config_intl.c:155
 msgid "English"
-msgstr ""
+msgstr "Английский"
 
 #: src/bin/e_int_config_intl.c:112 src/bin/e_int_config_intl.c:161
 msgid "Finnish"
-msgstr ""
+msgstr "Финский"
 
 #: src/bin/e_int_config_intl.c:113 src/bin/e_int_config_intl.c:163
-#, fuzzy
 msgid "French"
-msgstr "Фаренгейту"
+msgstr "Французский"
 
 #: src/bin/e_int_config_intl.c:114 src/bin/e_int_config_intl.c:150
-#, fuzzy
 msgid "German"
-msgstr "Общие"
+msgstr "Немецкий"
 
 #: src/bin/e_int_config_intl.c:115 src/bin/e_int_config_intl.c:176
 msgid "Hungarian"
-msgstr ""
+msgstr "Венгерский"
 
 #: src/bin/e_int_config_intl.c:116 src/bin/e_int_config_intl.c:182
 msgid "Italian"
-msgstr ""
+msgstr "Итальянский"
 
 #: src/bin/e_int_config_intl.c:117 src/bin/e_int_config_intl.c:185
 msgid "Japanese"
-msgstr ""
+msgstr "Японская"
 
 #: src/bin/e_int_config_intl.c:118 src/bin/e_int_config_intl.c:195
 msgid "Korean"
-msgstr ""
+msgstr "Корейская"
 
 #: src/bin/e_int_config_intl.c:119 src/bin/e_int_config_intl.c:211
 msgid "Norwegian Bokmål"
-msgstr ""
+msgstr "Норвежский Букмол"
 
 #: src/bin/e_int_config_intl.c:120 src/bin/e_int_config_intl.c:223
 msgid "Polish"
-msgstr ""
+msgstr "Польский"
 
 #: src/bin/e_int_config_intl.c:121 src/bin/e_int_config_intl.c:225
-#, fuzzy
 msgid "Portuguese"
-msgstr "Свойства"
+msgstr "Португальский"
 
 #: src/bin/e_int_config_intl.c:122 src/bin/e_int_config_intl.c:227
 msgid "Russian"
-msgstr ""
+msgstr "Русский"
 
 #: src/bin/e_int_config_intl.c:123 src/bin/e_int_config_intl.c:233
-#, fuzzy
 msgid "Slovak"
-msgstr "Медленно"
+msgstr "Словацкий"
 
 #: src/bin/e_int_config_intl.c:124 src/bin/e_int_config_intl.c:234
 msgid "Slovenian"
-msgstr ""
+msgstr "Словенский"
 
 #: src/bin/e_int_config_intl.c:125 src/bin/e_int_config_intl.c:157
 msgid "Spanish"
-msgstr ""
+msgstr "Испанский"
 
 #: src/bin/e_int_config_intl.c:126 src/bin/e_int_config_intl.c:240
 msgid "Swedish"
-msgstr ""
+msgstr "Шведский"
 
 #: src/bin/e_int_config_intl.c:131
 msgid "Afar"
-msgstr ""
+msgstr "Афар"
 
 #: src/bin/e_int_config_intl.c:132
 msgid "Afrikaans"
-msgstr ""
+msgstr "Африкаанс"
 
 #: src/bin/e_int_config_intl.c:133
 msgid "Akan"
-msgstr ""
+msgstr "Акан"
 
 #: src/bin/e_int_config_intl.c:134
-#, fuzzy
 msgid "Amharic"
-msgstr "Автоматически"
+msgstr "Амхарский (Амаринья)"
 
 #: src/bin/e_int_config_intl.c:135
 msgid "Aragonese"
-msgstr ""
+msgstr "Арагонский"
 
 #: src/bin/e_int_config_intl.c:136
 msgid "Arabic"
-msgstr ""
+msgstr "Арабская"
 
 #: src/bin/e_int_config_intl.c:137
-#, fuzzy
 msgid "Assamese"
-msgstr "Сообщения"
+msgstr "Ассамский"
 
 #: src/bin/e_int_config_intl.c:138
 msgid "Azerbaijani"
-msgstr ""
+msgstr "Азербайджанский"
 
 #: src/bin/e_int_config_intl.c:139
 msgid "Belarusian"
-msgstr ""
+msgstr "Белорусский"
 
 #: src/bin/e_int_config_intl.c:141
 msgid "Bengali"
-msgstr ""
+msgstr "Бенгальский"
 
 #: src/bin/e_int_config_intl.c:142
 msgid "Breton"
-msgstr ""
+msgstr "Бретонский"
 
 #: src/bin/e_int_config_intl.c:143
 msgid "Bosnian"
-msgstr ""
+msgstr "Боснийский"
 
 #: src/bin/e_int_config_intl.c:144
-#, fuzzy
 msgid "Blin"
-msgstr "Затемнение"
+msgstr "Блин"
 
 #: src/bin/e_int_config_intl.c:146
 msgid "Atsam"
-msgstr ""
+msgstr "Ацам"
 
 #: src/bin/e_int_config_intl.c:148
 msgid "Welsh"
-msgstr ""
+msgstr "Уэльский (Валлийский)"
 
 #: src/bin/e_int_config_intl.c:151
 msgid "Divehi"
-msgstr ""
+msgstr "Дивехи (Мальдивский)"
 
 #: src/bin/e_int_config_intl.c:152
 msgid "Dzongkha"
-msgstr ""
+msgstr "Дзонг-кэ"
 
 #: src/bin/e_int_config_intl.c:153
 msgid "Ewe"
-msgstr ""
+msgstr "Эве"
 
 #: src/bin/e_int_config_intl.c:154
 msgid "Greek"
-msgstr ""
+msgstr "Греческая"
 
 #: src/bin/e_int_config_intl.c:156
 msgid "Esperanto"
-msgstr ""
+msgstr "Эсперанто"
 
 #: src/bin/e_int_config_intl.c:158
 msgid "Estonian"
-msgstr ""
+msgstr "Эстонский"
 
 #: src/bin/e_int_config_intl.c:159
 msgid "Basque"
-msgstr ""
+msgstr "Баскский"
 
 #: src/bin/e_int_config_intl.c:160
-#, fuzzy
 msgid "Persian"
-msgstr "Личный"
+msgstr "Персидская"
 
 #: src/bin/e_int_config_intl.c:162
-#, fuzzy
 msgid "Faroese"
-msgstr "Далеко"
+msgstr "Фарерский"
 
 #: src/bin/e_int_config_intl.c:164
 msgid "Friulian"
-msgstr ""
+msgstr "Фриулианский"
 
 #: src/bin/e_int_config_intl.c:165
 msgid "Irish"
-msgstr ""
+msgstr "Ирландский"
 
 #: src/bin/e_int_config_intl.c:166
 msgid "Ga"
-msgstr ""
+msgstr "Га"
 
 #: src/bin/e_int_config_intl.c:167
 msgid "Geez"
-msgstr ""
+msgstr "Геэз"
 
 #: src/bin/e_int_config_intl.c:168
 msgid "Galician"
-msgstr ""
+msgstr "Гальский"
 
 #: src/bin/e_int_config_intl.c:169
 msgid "Gujarati"
-msgstr ""
+msgstr "Гуджарати"
 
 #: src/bin/e_int_config_intl.c:170
-#, fuzzy
 msgid "Manx"
-msgstr "Главное"
+msgstr "Мэнкский"
 
 #: src/bin/e_int_config_intl.c:171
 msgid "Hausa"
-msgstr ""
+msgstr "Хауса"
 
 #: src/bin/e_int_config_intl.c:172
 msgid "Hawaiian"
-msgstr ""
+msgstr "Гавайский"
 
 #: src/bin/e_int_config_intl.c:173 src/bin/e_int_config_intl.c:184
 msgid "Hebrew"
-msgstr ""
+msgstr "Иврит"
 
 #: src/bin/e_int_config_intl.c:174
-#, fuzzy
 msgid "Hindi"
-msgstr "Подсказки"
+msgstr "Хинди"
 
 #: src/bin/e_int_config_intl.c:175
-#, fuzzy
 msgid "Croatian"
-msgstr "Оборот"
+msgstr "Хорватская"
 
 #: src/bin/e_int_config_intl.c:177
 msgid "Armenian"
-msgstr ""
+msgstr "Армянская"
 
 #: src/bin/e_int_config_intl.c:178
 msgid "Interlingua"
-msgstr ""
+msgstr "Интерлингва"
 
 #: src/bin/e_int_config_intl.c:179
 msgid "Indonesian"
-msgstr ""
+msgstr "Индонезийский"
 
 #: src/bin/e_int_config_intl.c:180
 msgid "Igbo"
-msgstr ""
+msgstr "Игбо"
 
 #: src/bin/e_int_config_intl.c:181
 msgid "Icelandic"
-msgstr ""
+msgstr "Исландская"
 
 #: src/bin/e_int_config_intl.c:183
-#, fuzzy
 msgid "Inuktitut"
-msgstr "Инициализация"
+msgstr "Инуктитут"
 
 #: src/bin/e_int_config_intl.c:186
 msgid "Georgian"
-msgstr ""
+msgstr "Грузинская"
 
 #: src/bin/e_int_config_intl.c:187
 msgid "Jju"
-msgstr ""
+msgstr "Жжу"
 
 #: src/bin/e_int_config_intl.c:188
 msgid "Kamba"
-msgstr ""
+msgstr "Камба"
 
 #: src/bin/e_int_config_intl.c:189
 msgid "Tyap"
-msgstr ""
+msgstr "Тиап"
 
 #: src/bin/e_int_config_intl.c:190
 msgid "Koro"
-msgstr ""
+msgstr "Коро"
 
 #: src/bin/e_int_config_intl.c:191
 msgid "Kazakh"
-msgstr ""
+msgstr "Казахский"
 
 #: src/bin/e_int_config_intl.c:192
 msgid "Kalaallisut"
-msgstr ""
+msgstr "Эскимосский"
 
 #: src/bin/e_int_config_intl.c:193
-#, fuzzy
 msgid "Khmer"
-msgstr "Тема"
+msgstr "Кхмерский"
 
 #: src/bin/e_int_config_intl.c:194
 msgid "Kannada"
-msgstr ""
+msgstr "Каннада"
 
 #: src/bin/e_int_config_intl.c:196
 msgid "Konkani"
-msgstr ""
+msgstr "Конкани"
 
 #: src/bin/e_int_config_intl.c:197
 msgid "Kurdish"
-msgstr ""
+msgstr "Курдский"
 
 #: src/bin/e_int_config_intl.c:198
-#, fuzzy
 msgid "Cornish"
-msgstr "Цвета"
+msgstr "Корнский"
 
 #: src/bin/e_int_config_intl.c:199
 msgid "Kirghiz"
-msgstr ""
+msgstr "Киргизский"
 
 #: src/bin/e_int_config_intl.c:200
-#, fuzzy
 msgid "Lingala"
-msgstr "Линейно"
+msgstr "Лингала"
 
 #: src/bin/e_int_config_intl.c:201
-#, fuzzy
 msgid "Lao"
-msgstr "Расположение"
+msgstr "Лаосский"
 
 #: src/bin/e_int_config_intl.c:202
-#, fuzzy
 msgid "Lithuanian"
-msgstr "В пределах"
+msgstr "Литовский"
 
 #: src/bin/e_int_config_intl.c:203
 msgid "Latvian"
-msgstr ""
+msgstr "Латвийский"
 
 #: src/bin/e_int_config_intl.c:204
-#, fuzzy
 msgid "Maori"
-msgstr "Главное"
+msgstr "Маори"
 
 #: src/bin/e_int_config_intl.c:205
 msgid "Macedonian"
-msgstr ""
+msgstr "Македонский"
 
 #: src/bin/e_int_config_intl.c:206
 msgid "Malayalam"
-msgstr ""
+msgstr "Малаялам"
 
 #: src/bin/e_int_config_intl.c:207
 msgid "Mongolian"
-msgstr ""
+msgstr "Монгольский"
 
 #: src/bin/e_int_config_intl.c:208
 msgid "Marathi"
-msgstr ""
+msgstr "Маратхи"
 
 #: src/bin/e_int_config_intl.c:209
-#, fuzzy
 msgid "Malay"
-msgstr "Модульный"
+msgstr "Малайский"
 
 #: src/bin/e_int_config_intl.c:210
 msgid "Maltese"
-msgstr ""
+msgstr "Мальтийский"
 
 #: src/bin/e_int_config_intl.c:212
-#, fuzzy
 msgid "Nepali"
-msgstr "Близко"
+msgstr "Непальский"
 
 #: src/bin/e_int_config_intl.c:214
 msgid "Norwegian Nynorsk"
-msgstr ""
+msgstr "Норвежский Нюнорск"
 
 #: src/bin/e_int_config_intl.c:215
 msgid "Norwegian"
-msgstr ""
+msgstr "Норвежский"
 
 #: src/bin/e_int_config_intl.c:216
 msgid "South Ndebele"
-msgstr ""
+msgstr "Ндебеле южный"
 
 #: src/bin/e_int_config_intl.c:217
 msgid "Northern Sotho"
-msgstr ""
+msgstr "Северное Сото"
 
 #: src/bin/e_int_config_intl.c:218
 msgid "Nyanja; Chichewa; Chewa"
-msgstr ""
+msgstr "Чева; Чичева; Ньянджа"
 
 #: src/bin/e_int_config_intl.c:219
 msgid "Occitan"
-msgstr ""
+msgstr "Провансальский"
 
 #: src/bin/e_int_config_intl.c:220
 msgid "Oromo"
-msgstr ""
+msgstr "Оромо"
 
 #: src/bin/e_int_config_intl.c:221
 msgid "Oriya"
-msgstr ""
+msgstr "Ория"
 
 #: src/bin/e_int_config_intl.c:222
 msgid "Punjabi"
-msgstr ""
+msgstr "Пенджаби"
 
 #: src/bin/e_int_config_intl.c:224
-#, fuzzy
 msgid "Pashto"
-msgstr "Быстро"
+msgstr "Пашто"
 
 #: src/bin/e_int_config_intl.c:226
-#, fuzzy
 msgid "Romanian"
-msgstr "Оборот"
+msgstr "Руманский"
 
 #: src/bin/e_int_config_intl.c:228
 msgid "Kinyarwanda"
-msgstr ""
+msgstr "Киньяруанда"
 
 #: src/bin/e_int_config_intl.c:229
-#, fuzzy
 msgid "Sanskrit"
-msgstr "Пуск"
+msgstr "Санскрит"
 
 #: src/bin/e_int_config_intl.c:230
 msgid "Northern Sami"
-msgstr ""
+msgstr "Северо-саамский"
 
 #: src/bin/e_int_config_intl.c:231
-#, fuzzy
 msgid "Serbo-Croatian"
-msgstr "Перезагрузка"
+msgstr "Сербо-Хорватский"
 
 #: src/bin/e_int_config_intl.c:232
 msgid "Sidamo"
-msgstr ""
+msgstr "Сидама"
 
 #: src/bin/e_int_config_intl.c:235
-#, fuzzy
 msgid "Somali"
-msgstr "Маленький"
+msgstr "Сомали"
 
 #: src/bin/e_int_config_intl.c:236
-#, fuzzy
 msgid "Albanian"
-msgstr "Затемнение"
+msgstr "Албанский"
 
 #: src/bin/e_int_config_intl.c:237
 msgid "Serbian"
-msgstr ""
+msgstr "Сербский"
 
 #: src/bin/e_int_config_intl.c:238
-#, fuzzy
 msgid "Swati"
-msgstr "Состояние"
+msgstr "Свати"
 
 #: src/bin/e_int_config_intl.c:239
 msgid "Southern Sotho"
-msgstr ""
+msgstr "Сото Южный"
 
 #: src/bin/e_int_config_intl.c:241
 msgid "Swahili"
-msgstr ""
+msgstr "Суахили"
 
 #: src/bin/e_int_config_intl.c:242
 msgid "Syriac"
-msgstr ""
+msgstr "Сирийский"
 
 #: src/bin/e_int_config_intl.c:243
-#, fuzzy
 msgid "Tamil"
-msgstr "Размножить"
+msgstr "Тамильский"
 
 #: src/bin/e_int_config_intl.c:244
 msgid "Telugu"
-msgstr ""
+msgstr "Телугу"
 
 #: src/bin/e_int_config_intl.c:245
 msgid "Tajik"
-msgstr ""
+msgstr "Таджикский"
 
 #: src/bin/e_int_config_intl.c:246
-#, fuzzy
 msgid "Thai"
-msgstr "Миниатюра"
+msgstr "Тайская"
 
 #: src/bin/e_int_config_intl.c:247
-#, fuzzy
 msgid "Tigrinya"
-msgstr "Тини"
+msgstr "Тигринья"
 
 #: src/bin/e_int_config_intl.c:248
-#, fuzzy
 msgid "Tigre"
-msgstr "Размножить"
+msgstr "Тигре"
 
 #: src/bin/e_int_config_intl.c:249
 msgid "Tagalog"
-msgstr ""
+msgstr "Тагалог"
 
 #: src/bin/e_int_config_intl.c:250
 msgid "Tswana"
-msgstr ""
+msgstr "Тсвана"
 
 #: src/bin/e_int_config_intl.c:251
 msgid "Turkish"
-msgstr ""
+msgstr "Турецкая"
 
 #: src/bin/e_int_config_intl.c:252
 msgid "Tsonga"
-msgstr ""
+msgstr "Тсонга"
 
 #: src/bin/e_int_config_intl.c:253
-#, fuzzy
 msgid "Tatar"
-msgstr "Данные"
+msgstr "Татарский"
 
 #: src/bin/e_int_config_intl.c:254
 msgid "Ukrainian"
-msgstr ""
+msgstr "Украинский"
 
 #: src/bin/e_int_config_intl.c:255
 msgid "Urdu"
-msgstr ""
+msgstr "Урду"
 
 #: src/bin/e_int_config_intl.c:256
 msgid "Uzbek"
-msgstr ""
+msgstr "Узбекский"
 
 #: src/bin/e_int_config_intl.c:257
 msgid "Venda"
-msgstr ""
+msgstr "Венда "
 
 #: src/bin/e_int_config_intl.c:258
-#, fuzzy
 msgid "Vietnamese"
-msgstr "Переименовать"
+msgstr "Вьетнамский"
 
 #: src/bin/e_int_config_intl.c:259
 msgid "Walloon"
-msgstr ""
+msgstr "Валлун"
 
 #: src/bin/e_int_config_intl.c:260
 msgid "Walamo"
-msgstr ""
+msgstr "Воламо"
 
 #: src/bin/e_int_config_intl.c:261
 msgid "Xhosa"
-msgstr ""
+msgstr "Коса"
 
 #: src/bin/e_int_config_intl.c:262
 msgid "Yiddish"
-msgstr ""
+msgstr "Идиш"
 
 #: src/bin/e_int_config_intl.c:263
-#, fuzzy
 msgid "Yoruba"
-msgstr "Вы"
+msgstr "Йоруба"
 
 #: src/bin/e_int_config_intl.c:264
 msgid "Chinese"
-msgstr ""
+msgstr "Китайский"
 
 #: src/bin/e_int_config_intl.c:265
 msgid "Zulu"
-msgstr ""
+msgstr "Зулусский"
 
 #: src/bin/e_int_config_intl.c:270
 msgid "Afghanistan"
-msgstr ""
+msgstr "Афганистан"
 
 #: src/bin/e_int_config_intl.c:271
 msgid "Åland Islands"
-msgstr ""
+msgstr "Аландские острова"
 
 #: src/bin/e_int_config_intl.c:272
 msgid "Albania"
-msgstr ""
+msgstr "Албания"
 
 #: src/bin/e_int_config_intl.c:273
 msgid "Algeria"
-msgstr ""
+msgstr "Алжир"
 
 #: src/bin/e_int_config_intl.c:274
 msgid "American Samoa"
-msgstr ""
+msgstr "Американское Самоа"
 
 #: src/bin/e_int_config_intl.c:275
 msgid "Andorra"
-msgstr ""
+msgstr "Андорра"
 
 #: src/bin/e_int_config_intl.c:276
 msgid "Angola"
-msgstr ""
+msgstr "Ангола"
 
 #: src/bin/e_int_config_intl.c:277
 msgid "Anguilla"
-msgstr ""
+msgstr "Ангилья"
 
 #: src/bin/e_int_config_intl.c:278
-#, fuzzy
 msgid "Antarctica"
-msgstr "Автоматически"
+msgstr "Антарктида"
 
 #: src/bin/e_int_config_intl.c:279
 msgid "Antigua and Barbuda"
-msgstr ""
+msgstr "Антигуа и Барбуда"
 
 #: src/bin/e_int_config_intl.c:280
-#, fuzzy
 msgid "Argentina"
-msgstr "Срочный"
+msgstr "Аргентина"
 
 #: src/bin/e_int_config_intl.c:281
 msgid "Armenia"
-msgstr ""
+msgstr "Армения"
 
 #: src/bin/e_int_config_intl.c:282
 msgid "Aruba"
-msgstr ""
+msgstr "Аруба"
 
 #: src/bin/e_int_config_intl.c:283
-#, fuzzy
 msgid "Australia"
-msgstr "Автоподъём"
+msgstr "Австралия"
 
 #: src/bin/e_int_config_intl.c:284
-#, fuzzy
 msgid "Austria"
-msgstr "Автоподъём"
+msgstr "Австрия"
 
 #: src/bin/e_int_config_intl.c:285
 msgid "Azerbaijan"
-msgstr ""
+msgstr "Азербайджан"
 
 #: src/bin/e_int_config_intl.c:286
 msgid "Bahamas"
-msgstr ""
+msgstr "Багамы"
 
 #: src/bin/e_int_config_intl.c:287
 msgid "Bahrain"
-msgstr ""
+msgstr "Бахрейн"
 
 #: src/bin/e_int_config_intl.c:288
 msgid "Bangladesh"
-msgstr ""
+msgstr "Бангладеш"
 
 #: src/bin/e_int_config_intl.c:289
 msgid "Barbados"
-msgstr ""
+msgstr "Барбадос"
 
 #: src/bin/e_int_config_intl.c:290
 msgid "Belarus"
-msgstr ""
+msgstr "Беларусь"
 
 #: src/bin/e_int_config_intl.c:291
-#, fuzzy
 msgid "Belgium"
-msgstr "Средне"
+msgstr "Бельгия"
 
 #: src/bin/e_int_config_intl.c:292
-#, fuzzy
 msgid "Belize"
-msgstr "Базовый Размер"
+msgstr "Белиз"
 
 #: src/bin/e_int_config_intl.c:293
-#, fuzzy
 msgid "Benin"
-msgstr "Затемнение"
+msgstr "Бенин"
 
 #: src/bin/e_int_config_intl.c:294
 msgid "Bermuda"
-msgstr ""
+msgstr "Бермуды"
 
 #: src/bin/e_int_config_intl.c:295
 msgid "Bhutan"
-msgstr ""
+msgstr "Бутан"
 
 #: src/bin/e_int_config_intl.c:296
 msgid "Bolivia"
-msgstr ""
+msgstr "Боливия"
 
 #: src/bin/e_int_config_intl.c:297
 msgid "Bosnia and Herzegovina"
-msgstr ""
+msgstr "Босния и Герцеговина"
 
 #: src/bin/e_int_config_intl.c:298
 msgid "Botswana"
-msgstr ""
+msgstr "Ботсвана"
 
 #: src/bin/e_int_config_intl.c:299
 msgid "Bouvet Island"
-msgstr ""
+msgstr "Остров Буве"
 
 #: src/bin/e_int_config_intl.c:300
 msgid "Brazil"
-msgstr ""
+msgstr "Бразилия"
 
 #: src/bin/e_int_config_intl.c:301
 msgid "British Indian Ocean Territory"
-msgstr ""
+msgstr "Британская территория в Индийском океане"
 
 #: src/bin/e_int_config_intl.c:302
 msgid "Brunei Darussalam"
-msgstr ""
+msgstr "Бруней-Даруссалам"
 
 #: src/bin/e_int_config_intl.c:303
 msgid "Bulgaria"
-msgstr ""
+msgstr "Болгария"
 
 #: src/bin/e_int_config_intl.c:304
 msgid "Burkina Faso"
-msgstr ""
+msgstr "Буркина-Фасо"
 
 #: src/bin/e_int_config_intl.c:305
 msgid "Burundi"
-msgstr ""
+msgstr "Бурунди"
 
 #: src/bin/e_int_config_intl.c:306
 msgid "Cambodia"
-msgstr ""
+msgstr "Камбоджа"
 
 #: src/bin/e_int_config_intl.c:307
 msgid "Cameroon"
-msgstr ""
+msgstr "Камерун"
 
 #: src/bin/e_int_config_intl.c:308
-#, fuzzy
 msgid "Canada"
-msgstr "Комманда"
+msgstr "Канада"
 
 #: src/bin/e_int_config_intl.c:309
 msgid "Cape Verde"
-msgstr ""
+msgstr "Кабо-Верде"
 
 #: src/bin/e_int_config_intl.c:310
 msgid "Cayman Islands"
-msgstr ""
+msgstr "Острова Кайман"
 
 #: src/bin/e_int_config_intl.c:311
 msgid "Central African Republic"
-msgstr ""
+msgstr "Центрально-Африканская Республика"
 
 #: src/bin/e_int_config_intl.c:312
-#, fuzzy
 msgid "Chad"
-msgstr "Свёрнут"
+msgstr "Чад"
 
 #: src/bin/e_int_config_intl.c:313
-#, fuzzy
 msgid "Chile"
-msgstr "Размножить"
+msgstr "Чили"
 
 #: src/bin/e_int_config_intl.c:314
-#, fuzzy
 msgid "China"
-msgstr "Зарядка"
+msgstr "Китай"
 
 #: src/bin/e_int_config_intl.c:315
 msgid "Christmas Island"
-msgstr ""
+msgstr "Остров Рождества"
 
 #: src/bin/e_int_config_intl.c:316
 msgid "Cocos (keeling) Islands"
-msgstr ""
+msgstr "Кокосовые (Килинг) острова"
 
 #: src/bin/e_int_config_intl.c:317
 msgid "Colombia"
-msgstr ""
+msgstr "Колумбия"
 
 #: src/bin/e_int_config_intl.c:318
-#, fuzzy
 msgid "Comoros"
-msgstr "Цвета"
+msgstr "Коморы"
 
 #: src/bin/e_int_config_intl.c:319 src/bin/e_int_config_intl.c:320
 msgid "Congo"
-msgstr ""
+msgstr "Конго"
 
 #: src/bin/e_int_config_intl.c:321
 msgid "Cook Islands"
-msgstr ""
+msgstr "Острова Кука"
 
 #: src/bin/e_int_config_intl.c:322
 msgid "Costa Rica"
-msgstr ""
+msgstr "Коста-Рика"
 
 #: src/bin/e_int_config_intl.c:323
 msgid "Cote d'Ivoire"
-msgstr ""
+msgstr "Республика Кот д'Ивуар"
 
 #: src/bin/e_int_config_intl.c:324
 msgid "Croatia"
-msgstr ""
+msgstr "Хорватия"
 
 #: src/bin/e_int_config_intl.c:325
 msgid "Cuba"
-msgstr ""
+msgstr "Куба"
 
 #: src/bin/e_int_config_intl.c:326
 msgid "Cyprus"
-msgstr ""
+msgstr "Кипр"
 
 #: src/bin/e_int_config_intl.c:327
 msgid "Czech Republic"
-msgstr ""
+msgstr "Чешская Республика"
 
 #: src/bin/e_int_config_intl.c:328
-#, fuzzy
 msgid "Denmark"
-msgstr "Тёмная"
+msgstr "Дания"
 
 #: src/bin/e_int_config_intl.c:329
-#, fuzzy
 msgid "Djibouti"
-msgstr "О..."
+msgstr "Джибути"
 
 #: src/bin/e_int_config_intl.c:330
 msgid "Dominica"
-msgstr ""
+msgstr "Доминика"
 
 #: src/bin/e_int_config_intl.c:331
 msgid "Dominican Republic"
-msgstr ""
+msgstr "Доминиканская Республика"
 
 #: src/bin/e_int_config_intl.c:332
 msgid "Ecuador"
-msgstr ""
+msgstr "Эквадор"
 
 #: src/bin/e_int_config_intl.c:333
 msgid "Egypt"
-msgstr ""
+msgstr "Египет"
 
 #: src/bin/e_int_config_intl.c:334
 msgid "El Salvador"
-msgstr ""
+msgstr "Сальвадор"
 
 #: src/bin/e_int_config_intl.c:335
 msgid "Equatorial Guinea"
-msgstr ""
+msgstr "Экваториальная Гвинея"
 
 #: src/bin/e_int_config_intl.c:336
 msgid "Eritrea"
-msgstr ""
+msgstr "Эритрея"
 
 #: src/bin/e_int_config_intl.c:337
 msgid "Estonia"
-msgstr ""
+msgstr "Эстония"
 
 #: src/bin/e_int_config_intl.c:338
 msgid "Ethiopia"
-msgstr ""
+msgstr "Эфиопия"
 
 #: src/bin/e_int_config_intl.c:339
 msgid "Falkland Islands (malvinas)"
-msgstr ""
+msgstr "Фолклендские (Мальвинские) острова "
 
 #: src/bin/e_int_config_intl.c:340
 msgid "Faroe Islands"
-msgstr ""
+msgstr "Фарерские острова"
 
 #: src/bin/e_int_config_intl.c:341
 msgid "Fiji"
-msgstr ""
+msgstr "Фиджи"
 
 #: src/bin/e_int_config_intl.c:342
 msgid "Finland"
-msgstr ""
+msgstr "Финляндия"
 
 #: src/bin/e_int_config_intl.c:343
-#, fuzzy
 msgid "France"
-msgstr "Отменить"
+msgstr "Франция"
 
 #: src/bin/e_int_config_intl.c:344
 msgid "French Guiana"
-msgstr ""
+msgstr "Французская Гвиана"
 
 #: src/bin/e_int_config_intl.c:345
 msgid "French Polynesia"
-msgstr ""
+msgstr "Французская Полинезия"
 
 #: src/bin/e_int_config_intl.c:346
 msgid "French Southern Territories"
-msgstr ""
+msgstr "Французские Южные территории"
 
 #: src/bin/e_int_config_intl.c:347
 msgid "Gabon"
-msgstr ""
+msgstr "Габон"
 
 #: src/bin/e_int_config_intl.c:348
 msgid "Gambia"
-msgstr ""
+msgstr "Гамбия"
 
 #: src/bin/e_int_config_intl.c:349
 msgid "Georgia"
-msgstr ""
+msgstr "Грузия"
 
 #: src/bin/e_int_config_intl.c:350
 msgid "Germany"
-msgstr ""
+msgstr "Германия"
 
 #: src/bin/e_int_config_intl.c:351
 msgid "Ghana"
-msgstr ""
+msgstr "Гана"
 
 #: src/bin/e_int_config_intl.c:352
 msgid "Gibraltar"
-msgstr ""
+msgstr "Гибралтар"
 
 #: src/bin/e_int_config_intl.c:353
 msgid "Greece"
-msgstr ""
+msgstr "Греция"
 
 #: src/bin/e_int_config_intl.c:354
 msgid "Greenland"
-msgstr ""
+msgstr "Гренландия"
 
 #: src/bin/e_int_config_intl.c:355
 msgid "Grenada"
-msgstr ""
+msgstr "Гренада"
 
 #: src/bin/e_int_config_intl.c:356
 msgid "Guadeloupe"
-msgstr ""
+msgstr "Гваделупа"
 
 #: src/bin/e_int_config_intl.c:357
 msgid "Guam"
-msgstr ""
+msgstr "Гуам"
 
 #: src/bin/e_int_config_intl.c:358
 msgid "Guatemala"
-msgstr ""
+msgstr "Гватемала"
 
 #: src/bin/e_int_config_intl.c:359
 msgid "Guernsey"
-msgstr ""
+msgstr "Остров Гернси"
 
 #: src/bin/e_int_config_intl.c:360
-#, fuzzy
 msgid "Guinea"
-msgstr "Линейно"
+msgstr "Гвинея"
 
 #: src/bin/e_int_config_intl.c:361
 msgid "Guinea-Bissau"
-msgstr ""
+msgstr "Гвинея-Бисау"
 
 #: src/bin/e_int_config_intl.c:362
 msgid "Guyana"
-msgstr ""
+msgstr "Гайана"
 
 #: src/bin/e_int_config_intl.c:363
-#, fuzzy
 msgid "Haiti"
-msgstr "Подсказки"
+msgstr "Гаити"
 
 #: src/bin/e_int_config_intl.c:364
 msgid "Heard Island and Mcdonald Islands"
-msgstr ""
+msgstr "Остров Херд и острова Макдональд"
 
 #: src/bin/e_int_config_intl.c:365
 msgid "Holy See (Vatican City State)"
-msgstr ""
+msgstr "Ватикан (Папский Престол)"
 
 #: src/bin/e_int_config_intl.c:366
 msgid "Honduras"
-msgstr ""
+msgstr "Гондурас"
 
 #: src/bin/e_int_config_intl.c:367
 msgid "Hong Kong"
-msgstr ""
+msgstr "Гонконг"
 
 #: src/bin/e_int_config_intl.c:368
 msgid "Hungary"
-msgstr ""
+msgstr "Венгрия"
 
 #: src/bin/e_int_config_intl.c:369
 msgid "Iceland"
-msgstr ""
+msgstr "Исландия"
 
 #: src/bin/e_int_config_intl.c:370
-#, fuzzy
 msgid "India"
-msgstr "Инициализация"
+msgstr "Индия"
 
 #: src/bin/e_int_config_intl.c:371
 msgid "Indonesia"
-msgstr ""
+msgstr "Индонезия"
 
 #: src/bin/e_int_config_intl.c:372
 msgid "Iran"
-msgstr ""
+msgstr "Иран"
 
 #: src/bin/e_int_config_intl.c:373
 msgid "Iraq"
-msgstr ""
+msgstr "Ирак"
 
 #: src/bin/e_int_config_intl.c:374
 msgid "Ireland"
-msgstr ""
+msgstr "Ирландия"
 
 #: src/bin/e_int_config_intl.c:375
 msgid "Isle Of Man"
-msgstr ""
+msgstr "Остров Мэн"
 
 #: src/bin/e_int_config_intl.c:376
 msgid "Israel"
-msgstr ""
+msgstr "Израиль"
 
 #: src/bin/e_int_config_intl.c:377
 msgid "Italy"
-msgstr ""
+msgstr "Италия"
 
 #: src/bin/e_int_config_intl.c:378
 msgid "Jamaica"
-msgstr ""
+msgstr "Ямайка"
 
 #: src/bin/e_int_config_intl.c:379
 msgid "Japan"
-msgstr ""
+msgstr "Япония"
 
 #: src/bin/e_int_config_intl.c:380
 msgid "Jersey"
-msgstr ""
+msgstr "Остров Джерси"
 
 #: src/bin/e_int_config_intl.c:381
 msgid "Jordan"
-msgstr ""
+msgstr "Иордания"
 
 #: src/bin/e_int_config_intl.c:382
 msgid "Kazakhstan"
-msgstr ""
+msgstr "Казахстан"
 
 #: src/bin/e_int_config_intl.c:383
 msgid "Kenya"
-msgstr ""
+msgstr "Кения"
 
 #: src/bin/e_int_config_intl.c:384
 msgid "Kiribati"
-msgstr ""
+msgstr "Кирибати"
 
 #: src/bin/e_int_config_intl.c:385 src/bin/e_int_config_intl.c:386
 msgid "Korea"
-msgstr ""
+msgstr "Республика Корея"
 
 #: src/bin/e_int_config_intl.c:387
-#, fuzzy
 msgid "Kuwait"
-msgstr "Качество"
+msgstr "Кувейт"
 
 #: src/bin/e_int_config_intl.c:388
 msgid "Kyrgyzstan"
-msgstr ""
+msgstr "Киргизия"
 
 #: src/bin/e_int_config_intl.c:389
 msgid "Lao People's Democratic Republic"
-msgstr ""
+msgstr "Лаосская Народно-Демократическая Республика"
 
 #: src/bin/e_int_config_intl.c:390
-#, fuzzy
 msgid "Latvia"
-msgstr "Данные"
+msgstr "Латвия"
 
 #: src/bin/e_int_config_intl.c:391
 msgid "Lebanon"
-msgstr ""
+msgstr "Ливан"
 
 #: src/bin/e_int_config_intl.c:392
 msgid "Lesotho"
-msgstr ""
+msgstr "Лесото"
 
 #: src/bin/e_int_config_intl.c:393
-#, fuzzy
 msgid "Liberia"
-msgstr "Заморозить"
+msgstr "Либерия"
 
 #: src/bin/e_int_config_intl.c:394
 msgid "Libyan Arab Jamahiriya"
-msgstr ""
+msgstr "Ливийская Арабская Джамахирия"
 
 #: src/bin/e_int_config_intl.c:395
 msgid "Liechtenstein"
-msgstr ""
+msgstr "Лихтенштейн"
 
 #: src/bin/e_int_config_intl.c:396
 msgid "Lithuania"
-msgstr ""
+msgstr "Литва"
 
 #: src/bin/e_int_config_intl.c:397
 msgid "Luxembourg"
-msgstr ""
+msgstr "Люксембург"
 
 #: src/bin/e_int_config_intl.c:398
 msgid "Macao"
-msgstr ""
+msgstr "Макао"
 
 #: src/bin/e_int_config_intl.c:399
 msgid "Macedonia"
-msgstr ""
+msgstr "Македония"
 
 #: src/bin/e_int_config_intl.c:400
 msgid "Madagascar"
-msgstr ""
+msgstr "Мадагаскар"
 
 #: src/bin/e_int_config_intl.c:401
-#, fuzzy
 msgid "Malawi"
-msgstr "Главное"
+msgstr "Малави"
 
 #: src/bin/e_int_config_intl.c:402
 msgid "Malaysia"
-msgstr ""
+msgstr "Малайзия"
 
 #: src/bin/e_int_config_intl.c:403
 msgid "Maldives"
-msgstr ""
+msgstr "Мальдивы"
 
 #: src/bin/e_int_config_intl.c:404
-#, fuzzy
 msgid "Mali"
-msgstr "Главное"
+msgstr "Мали"
 
 #: src/bin/e_int_config_intl.c:405
-#, fuzzy
 msgid "Malta"
-msgstr "Данные"
+msgstr "Мальта"
 
 #: src/bin/e_int_config_intl.c:406
 msgid "Marshall Islands"
-msgstr ""
+msgstr "Маршалловы Острова"
 
 #: src/bin/e_int_config_intl.c:407
 msgid "Martinique"
-msgstr ""
+msgstr "Мартиника"
 
 #: src/bin/e_int_config_intl.c:408
 msgid "Mauritania"
-msgstr ""
+msgstr "Мавритания"
 
 #: src/bin/e_int_config_intl.c:409
 msgid "Mauritius"
-msgstr ""
+msgstr "Маврикий"
 
 #: src/bin/e_int_config_intl.c:410
-#, fuzzy
 msgid "Mayotte"
-msgstr "Расположение"
+msgstr "Майотта"
 
 #: src/bin/e_int_config_intl.c:411
 msgid "Mexico"
-msgstr ""
+msgstr "Мексика"
 
 #: src/bin/e_int_config_intl.c:412
 msgid "Micronesia"
-msgstr ""
+msgstr "Федеративные штаты Микронезии"
 
 #: src/bin/e_int_config_intl.c:413
-#, fuzzy
 msgid "Moldova"
-msgstr "Модульный"
+msgstr "Молдова"
 
 #: src/bin/e_int_config_intl.c:414
 msgid "Monaco"
-msgstr ""
+msgstr "Монако"
 
 #: src/bin/e_int_config_intl.c:415
 msgid "Mongolia"
-msgstr ""
+msgstr "Монголия"
 
 #: src/bin/e_int_config_intl.c:416
 msgid "Montserrat"
-msgstr ""
+msgstr "Монтсеррат"
 
 #: src/bin/e_int_config_intl.c:417
 msgid "Morocco"
-msgstr ""
+msgstr "Марокко"
 
 #: src/bin/e_int_config_intl.c:418
 msgid "Mozambique"
-msgstr ""
+msgstr "Мозамбик"
 
 #: src/bin/e_int_config_intl.c:419
-#, fuzzy
 msgid "Myanmar"
-msgstr "Управляющий"
+msgstr "Мьянма"
 
 #: src/bin/e_int_config_intl.c:420
 msgid "Namibia"
-msgstr ""
+msgstr "Намибия"
 
 #: src/bin/e_int_config_intl.c:421
-#, fuzzy
 msgid "Nauru"
-msgstr "Близко"
+msgstr "Науру"
 
 #: src/bin/e_int_config_intl.c:422
-#, fuzzy
 msgid "Nepal"
-msgstr "Близко"
+msgstr "Непал"
 
 #: src/bin/e_int_config_intl.c:423
 msgid "Netherlands"
-msgstr ""
+msgstr "Нидерланды"
 
 #: src/bin/e_int_config_intl.c:424
 msgid "Netherlands Antilles"
-msgstr ""
+msgstr "Нидерландские Антилы"
 
 #: src/bin/e_int_config_intl.c:425
 msgid "New Caledonia"
-msgstr ""
+msgstr "Новая Каледония"
 
 #: src/bin/e_int_config_intl.c:426
 msgid "New Zealand"
-msgstr ""
+msgstr "Новая Зеландия"
 
 #: src/bin/e_int_config_intl.c:427
 msgid "Nicaragua"
-msgstr ""
+msgstr "Никарагуа"
 
 #: src/bin/e_int_config_intl.c:428
-#, fuzzy
 msgid "Niger"
-msgstr "Близко"
+msgstr "Нигер"
 
 #: src/bin/e_int_config_intl.c:429
 msgid "Nigeria"
-msgstr ""
+msgstr "Нигерия"
 
 #: src/bin/e_int_config_intl.c:430
 msgid "Niue"
-msgstr ""
+msgstr "Ниуэ"
 
 #: src/bin/e_int_config_intl.c:431
 msgid "Norfolk Island"
-msgstr ""
+msgstr "Остров Норфолк"
 
 #: src/bin/e_int_config_intl.c:432
 msgid "Northern Mariana Islands"
-msgstr ""
+msgstr "Северные Марианские острова"
 
 #: src/bin/e_int_config_intl.c:433
-#, fuzzy
 msgid "Norway"
-msgstr "Нормально"
+msgstr "Норвегия"
 
 #: src/bin/e_int_config_intl.c:434
 msgid "Oman"
-msgstr ""
+msgstr "Оман"
 
 #: src/bin/e_int_config_intl.c:435
-#, fuzzy
 msgid "Pakistan"
-msgstr "Гладко"
+msgstr "Пакистан"
 
 #: src/bin/e_int_config_intl.c:436
-#, fuzzy
 msgid "Palau"
-msgstr "Гладко"
+msgstr "Палау"
 
 #: src/bin/e_int_config_intl.c:437
 msgid "Palestinian Territory"
-msgstr ""
+msgstr "Палестинская территория"
 
 #: src/bin/e_int_config_intl.c:438
-#, fuzzy
 msgid "Panama"
-msgstr "Гладко"
+msgstr "Панама"
 
 #: src/bin/e_int_config_intl.c:439
 msgid "Papua New Guinea"
-msgstr ""
+msgstr "Папуа Новая Гвинея"
 
 #: src/bin/e_int_config_intl.c:440
 msgid "Paraguay"
-msgstr ""
+msgstr "Парагвай"
 
 #: src/bin/e_int_config_intl.c:441
-#, fuzzy
 msgid "Peru"
-msgstr "Пэйджер"
+msgstr "Перу"
 
 #: src/bin/e_int_config_intl.c:442
 msgid "Philippines"
-msgstr ""
+msgstr "Филиппины"
 
 #: src/bin/e_int_config_intl.c:443
-#, fuzzy
 msgid "Pitcairn"
-msgstr "Позицию"
+msgstr "Питкерн"
 
 #: src/bin/e_int_config_intl.c:444
-#, fuzzy
 msgid "Poland"
-msgstr "Гладко"
+msgstr "Польша"
 
 #: src/bin/e_int_config_intl.c:445
-#, fuzzy
 msgid "Portugal"
-msgstr "Виртуальный"
+msgstr "Португалия"
 
 #: src/bin/e_int_config_intl.c:446
 msgid "Puerto Rico"
-msgstr ""
+msgstr "Пуэрто-Рико"
 
 #: src/bin/e_int_config_intl.c:447
-#, fuzzy
 msgid "Qatar"
-msgstr "Данные"
+msgstr "Катар"
 
 #: src/bin/e_int_config_intl.c:448
-#, fuzzy
 msgid "Reunion"
-msgstr "Резолюция"
+msgstr "Реюньон"
 
 #: src/bin/e_int_config_intl.c:449
-#, fuzzy
 msgid "Romania"
-msgstr "Круговой"
+msgstr "Румыния"
 
 #: src/bin/e_int_config_intl.c:450
-#, fuzzy
 msgid "Russian Federation"
-msgstr "Ускорение Мыши"
+msgstr "Россия"
 
 #: src/bin/e_int_config_intl.c:451
-#, fuzzy
 msgid "Rwanda"
-msgstr "Круговой"
+msgstr "Руанда"
 
 #: src/bin/e_int_config_intl.c:452
 msgid "Saint Helena"
-msgstr ""
+msgstr "Святая Елена"
 
 #: src/bin/e_int_config_intl.c:453
 msgid "Saint Kitts and Nevis"
-msgstr ""
+msgstr "Сен-Китс и Невис"
 
 #: src/bin/e_int_config_intl.c:454
 msgid "Saint Lucia"
-msgstr ""
+msgstr "Сент-Люсия"
 
 #: src/bin/e_int_config_intl.c:455
 msgid "Saint Pierre and Miquelon"
-msgstr ""
+msgstr "Сент-Пьер и Микелон"
 
 #: src/bin/e_int_config_intl.c:456
 msgid "Saint Vincent and the Grenadines"
-msgstr ""
+msgstr "Сент-Винсент и Гренадины"
 
 #: src/bin/e_int_config_intl.c:457
-#, fuzzy
 msgid "Samoa"
-msgstr "Маленький"
+msgstr "Самоа"
 
 #: src/bin/e_int_config_intl.c:458
 msgid "San Marino"
-msgstr ""
+msgstr "Сан-Марино"
 
 #: src/bin/e_int_config_intl.c:459
 msgid "Sao Tome and Principe"
-msgstr ""
+msgstr "Сан-Томе и Принсипи"
 
 #: src/bin/e_int_config_intl.c:460
 msgid "Saudi Arabia"
-msgstr ""
+msgstr "Саудовская Аравия"
 
 #: src/bin/e_int_config_intl.c:461
-#, fuzzy
 msgid "Senegal"
-msgstr "Общие"
+msgstr "Сенегал"
 
 #: src/bin/e_int_config_intl.c:462
 msgid "Serbia and Montenegro"
-msgstr ""
+msgstr "Сербия и Черногория"
 
 #: src/bin/e_int_config_intl.c:463
-#, fuzzy
 msgid "Seychelles"
-msgstr "Полки"
+msgstr "Сейшелы"
 
 #: src/bin/e_int_config_intl.c:464
 msgid "Sierra Leone"
-msgstr ""
+msgstr "Сьерра-Леоне"
 
 #: src/bin/e_int_config_intl.c:465
 msgid "Singapore"
-msgstr ""
+msgstr "Сингапур"
 
 #: src/bin/e_int_config_intl.c:466
 msgid "Slovakia"
-msgstr ""
+msgstr "Словакия"
 
 #: src/bin/e_int_config_intl.c:467
 msgid "Slovenia"
-msgstr ""
+msgstr "Словения"
 
 #: src/bin/e_int_config_intl.c:468
 msgid "Solomon Islands"
-msgstr ""
+msgstr "Соломоновы Острова"
 
 #: src/bin/e_int_config_intl.c:469
-#, fuzzy
 msgid "Somalia"
-msgstr "Маленький"
+msgstr "Сомали"
 
 #: src/bin/e_int_config_intl.c:470
 msgid "South Africa"
-msgstr ""
+msgstr "Южная Африка"
 
 #: src/bin/e_int_config_intl.c:471
 msgid "South Georgia and the South Sandwich Islands"
-msgstr ""
+msgstr "Южная Джорджия и Южные Сандвичевы острова"
 
 #: src/bin/e_int_config_intl.c:472
-#, fuzzy
 msgid "Spain"
-msgstr "Главное"
+msgstr "Испания"
 
 #: src/bin/e_int_config_intl.c:473
 msgid "Sri Lanka"
-msgstr ""
+msgstr "Шри-Ланка"
 
 #: src/bin/e_int_config_intl.c:474
 msgid "Sudan"
-msgstr ""
+msgstr "Судан"
 
 #: src/bin/e_int_config_intl.c:475
 msgid "Suriname"
-msgstr ""
+msgstr "Суринам"
 
 #: src/bin/e_int_config_intl.c:476
 msgid "Svalbard and Jan Mayen"
-msgstr ""
+msgstr "Шпицберген и Ян Майен"
 
 #: src/bin/e_int_config_intl.c:477
 msgid "Swaziland"
-msgstr ""
+msgstr "Свазиленд"
 
 #: src/bin/e_int_config_intl.c:478
-#, fuzzy
 msgid "Sweden"
-msgstr "Экран"
+msgstr "Швеция"
 
 #: src/bin/e_int_config_intl.c:479
 msgid "Switzerland"
-msgstr ""
+msgstr "Швейцария"
 
 #: src/bin/e_int_config_intl.c:480
 msgid "Syrian Arab Republic"
-msgstr ""
+msgstr "Сирийская Арабская Республика"
 
 #: src/bin/e_int_config_intl.c:481
-#, fuzzy
 msgid "Taiwan"
-msgstr "Главное"
+msgstr "Тайвань"
 
 #: src/bin/e_int_config_intl.c:482
 msgid "Tajikistan"
-msgstr ""
+msgstr "Таджикистан"
 
 #: src/bin/e_int_config_intl.c:483
 msgid "Tanzania"
-msgstr ""
+msgstr "Объединенная республика Танзания"
 
 #: src/bin/e_int_config_intl.c:484
 msgid "Thailand"
-msgstr ""
+msgstr "Таиланд"
 
 #: src/bin/e_int_config_intl.c:485
 msgid "Timor-Leste"
-msgstr ""
+msgstr "Восточный Тимор"
 
 #: src/bin/e_int_config_intl.c:486
-#, fuzzy
 msgid "Togo"
-msgstr "Логаут"
+msgstr "Того"
 
 #: src/bin/e_int_config_intl.c:487
 msgid "Tokelau"
-msgstr ""
+msgstr "Токелау"
 
 #: src/bin/e_int_config_intl.c:488
 msgid "Tonga"
-msgstr ""
+msgstr "Тонга"
 
 #: src/bin/e_int_config_intl.c:489
 msgid "Trinidad and Tobago"
-msgstr ""
+msgstr "Тринидад и Тобаго"
 
 #: src/bin/e_int_config_intl.c:490
 msgid "Tunisia"
-msgstr ""
+msgstr "Тунис"
 
 #: src/bin/e_int_config_intl.c:491
 msgid "Turkey"
-msgstr ""
+msgstr "Турция"
 
 #: src/bin/e_int_config_intl.c:492
 msgid "Turkmenistan"
-msgstr ""
+msgstr "Туркмения"
 
 #: src/bin/e_int_config_intl.c:493
 msgid "Turks and Caicos Islands"
-msgstr ""
+msgstr "Острова Теркс и Кайкос"
 
 #: src/bin/e_int_config_intl.c:494
 msgid "Tuvalu"
-msgstr ""
+msgstr "Тувалу"
 
 #: src/bin/e_int_config_intl.c:495
 msgid "Uganda"
-msgstr ""
+msgstr "Уганда"
 
 #: src/bin/e_int_config_intl.c:496
 msgid "Ukraine"
-msgstr ""
+msgstr "Украина"
 
 #: src/bin/e_int_config_intl.c:497
 msgid "United Arab Emirates"
-msgstr ""
+msgstr "Объединенные Арабские Эмираты"
 
 #: src/bin/e_int_config_intl.c:498
 msgid "United Kingdom"
-msgstr ""
+msgstr "Великобритания (Соединенное Королевство)"
 
 #: src/bin/e_int_config_intl.c:499
-#, fuzzy
 msgid "United States"
-msgstr "Начальное Состояние"
+msgstr "Соединенные Штаты"
 
 #: src/bin/e_int_config_intl.c:500
 msgid "United States Minor Outlying Islands"
-msgstr ""
+msgstr "Малые Тихоокеанские Отдаленные острова Соединенных Штатов"
 
 #: src/bin/e_int_config_intl.c:501
 msgid "Uruguay"
-msgstr ""
+msgstr "Уругвай"
 
 #: src/bin/e_int_config_intl.c:502
-#, fuzzy
 msgid "Uzbekistan"
-msgstr "Сопротивление"
+msgstr "Узбекистан"
 
 #: src/bin/e_int_config_intl.c:503
-#, fuzzy
 msgid "Vanuatu"
-msgstr "Указать Самому"
+msgstr "Вануату"
 
 #: src/bin/e_int_config_intl.c:504
 msgid "Venezuela"
-msgstr ""
+msgstr "Венесуэла"
 
 #: src/bin/e_int_config_intl.c:505
-#, fuzzy
 msgid "Viet Nam"
-msgstr "Имя Стола"
+msgstr "Вьетнам"
 
 #: src/bin/e_int_config_intl.c:506 src/bin/e_int_config_intl.c:507
 msgid "Virgin Islands"
-msgstr ""
+msgstr "Виргинские острова, США"
 
 #: src/bin/e_int_config_intl.c:508
 msgid "Wallis and Futuna"
-msgstr ""
+msgstr "Уоллис и Футуна"
 
 #: src/bin/e_int_config_intl.c:509
 msgid "Western Sahara"
-msgstr ""
+msgstr "Западная Сахара"
 
 #: src/bin/e_int_config_intl.c:510
-#, fuzzy
 msgid "Yemen"
-msgstr "Тема"
+msgstr "Йемен"
 
 #: src/bin/e_int_config_intl.c:511
 msgid "Zambia"
-msgstr ""
+msgstr "Замбия"
 
 #: src/bin/e_int_config_intl.c:512
 msgid "Zimbabwe"
-msgstr ""
+msgstr "Зимбабве"
 
 #: src/bin/e_int_config_intl.c:582
 msgid "Language Configuration"
@@ -4838,19 +4721,16 @@ msgid "WIN"
 msgstr "WIN"
 
 #: src/bin/e_int_config_menus.c:99 src/bin/e_int_config_menus.c:149
-#, fuzzy
 msgid "Main Menu Settings"
-msgstr "Настройки Меню"
+msgstr "Настройки Главного Меню"
 
 #: src/bin/e_int_config_menus.c:100 src/bin/e_int_config_menus.c:150
-#, fuzzy
 msgid "Show Favorites In Main Menu"
-msgstr "Показать Меню \"Любимые Приложения\""
+msgstr "Показывать \"Избранное\" в Главном Меню"
 
 #: src/bin/e_int_config_menus.c:102 src/bin/e_int_config_menus.c:152
-#, fuzzy
 msgid "Show Applications In Main Menu"
-msgstr "Показ \"Все Приложения\" в Меню"
+msgstr "Показывать \"Приложения\" в Главном Меню"
 
 #: src/bin/e_int_config_menus.c:107 src/bin/e_int_config_menus.c:157
 msgid "Show Name In Menu"
@@ -5194,11 +5074,6 @@ msgstr "Настройки Полки"
 msgid "Configured Shelves"
 msgstr "Настроенные Полки"
 
-#: src/bin/e_int_config_shelf.c:81 src/bin/e_widget_config_list.c:87
-#: src/modules/ibar/e_mod_config.c:109
-msgid "Add"
-msgstr "Добавить"
-
 #: src/bin/e_int_config_shelf.c:133 src/bin/e_int_menus.c:1535
 #: src/bin/e_shelf.c:1025
 msgid "Shelf #"
@@ -5230,23 +5105,20 @@ msgid "Theme Selector"
 msgstr "Выбор Темы"
 
 #: src/bin/e_int_config_theme.c:1058
-#, fuzzy
 msgid "Theme Categories"
-msgstr "Категории"
+msgstr "Категории Тем"
 
 #: src/bin/e_int_config_theme.c:1077
 msgid "Assign"
-msgstr ""
+msgstr "Назначить"
 
 #: src/bin/e_int_config_theme.c:1079
-#, fuzzy
 msgid "Clear"
-msgstr "Близко"
+msgstr "Очистить"
 
 #: src/bin/e_int_config_theme.c:1081
-#, fuzzy
 msgid "Clear All"
-msgstr "Стереть Всё"
+msgstr "Очистить Всё"
 
 #: src/bin/e_int_config_theme_import.c:65
 msgid "Select a Theme..."
@@ -5517,18 +5389,16 @@ msgid "Decelerate"
 msgstr "Замедлять"
 
 #: src/bin/e_int_config_window_display.c:249
-#, fuzzy
 msgid "Window Border"
-msgstr "Роль Окна"
+msgstr "Граница Окна"
 
 #: src/bin/e_int_config_window_display.c:252
 msgid "Prefer user defined icon"
-msgstr ""
+msgstr "Предпочитать пользовательскую иконку"
 
 #: src/bin/e_int_config_window_display.c:254
-#, fuzzy
 msgid "Prefer application provided icon"
-msgstr "Использовать иконку предоставляемую приложением"
+msgstr "Предпочитать иконку предоставляемую приложением"
 
 #: src/bin/e_int_config_window_display.c:258
 msgid "Internal Windows"
@@ -5588,9 +5458,8 @@ msgid "Raise when clicking to focus"
 msgstr "Поднимать при нажатии для фокуса"
 
 #: src/bin/e_int_config_window_manipulation.c:192
-#, fuzzy
 msgid "Allow windows to be above fullscreen window"
-msgstr "Показывать окна с другого экрана"
+msgstr "Позволять окна поверх полноэкранного окна"
 
 #: src/bin/e_int_config_window_manipulation.c:196
 msgid "Resistance"
@@ -5621,9 +5490,8 @@ msgid "Allow window manipulation"
 msgstr "Разрешить манипулирование окном"
 
 #: src/bin/e_int_config_window_manipulation.c:234
-#, fuzzy
 msgid "Automatically move/resize windows on shelf autohide"
-msgstr "Автоматически поднимать окна при проходе мышкой"
+msgstr "Автоматически изменять окна при авто-сокрытии полки"
 
 #: src/bin/e_int_config_winlist.c:55
 msgid "Window List Settings"
@@ -5711,7 +5579,7 @@ msgstr "Главное"
 
 #: src/bin/e_int_menus.c:104
 msgid "Favorite Applications"
-msgstr "Любимые Приложения"
+msgstr "Избранные Приложения"
 
 #: src/bin/e_int_menus.c:122
 msgid "Files"
@@ -5796,7 +5664,7 @@ msgstr "Расположение"
 msgid "Medium"
 msgstr "Средне"
 
-#: src/bin/e_int_shelf_config.c:436 src/bin/e_int_shelf_config.c:559
+#: src/bin/e_int_shelf_config.c:436 src/bin/e_int_shelf_config.c:541
 msgid "Configure Contents..."
 msgstr "Настройка Содержимого..."
 
@@ -5816,50 +5684,47 @@ msgstr "Под Всем"
 msgid "Allow windows to overlap the shelf"
 msgstr "Позволять окнам перекрывать полку"
 
-#: src/bin/e_int_shelf_config.c:497
-#, fuzzy
-msgid "Autohide"
-msgstr "Автоподъём"
-
-#: src/bin/e_int_shelf_config.c:498
-msgid "Auto-hide the shelf"
-msgstr "Прятать полку автоматически"
-
-#: src/bin/e_int_shelf_config.c:501
-#, fuzzy
-msgid "Show on mouse in"
-msgstr "Показывать на экране #:"
-
-#: src/bin/e_int_shelf_config.c:503
-msgid "Show on mouse click"
-msgstr ""
-
-#: src/bin/e_int_shelf_config.c:505
-msgid "Hide timeout"
-msgstr ""
-
-#: src/bin/e_int_shelf_config.c:507 src/bin/e_int_shelf_config.c:511
-#, fuzzy, c-format
-msgid "%.1f seconds"
-msgstr "%1.1f сек"
-
-#: src/bin/e_int_shelf_config.c:509
-#, fuzzy
-msgid "Hide duration"
-msgstr "Заморозка"
-
-#: src/bin/e_int_shelf_config.c:520
+#: src/bin/e_int_shelf_config.c:502
 msgid "Shrink to Content Size"
 msgstr "Ужимать под Размер Содержимого"
 
-#: src/bin/e_int_shelf_config.c:522
+#: src/bin/e_int_shelf_config.c:504
 msgid "Shelf Size"
 msgstr "Размер Полки"
 
-#: src/bin/e_int_shelf_config.c:524
+#: src/bin/e_int_shelf_config.c:506
 #, c-format
 msgid "%3.0f pixels"
 msgstr "%3.0f пикс."
+
+#: src/bin/e_int_shelf_config.c:548
+msgid "Auto Hide"
+msgstr "Авто-сокрытие"
+
+#: src/bin/e_int_shelf_config.c:549
+msgid "Auto-hide the shelf"
+msgstr "Прятать полку автоматически"
+
+#: src/bin/e_int_shelf_config.c:552
+msgid "Show on mouse in"
+msgstr "Показывать при мыши в"
+
+#: src/bin/e_int_shelf_config.c:554
+msgid "Show on mouse click"
+msgstr "Показывать при щелчке мышью"
+
+#: src/bin/e_int_shelf_config.c:556
+msgid "Hide timeout"
+msgstr "Время задержки до сокрытия"
+
+#: src/bin/e_int_shelf_config.c:558 src/bin/e_int_shelf_config.c:562
+#, c-format
+msgid "%.1f seconds"
+msgstr "%.1f сек"
+
+#: src/bin/e_int_shelf_config.c:560
+msgid "Hide duration"
+msgstr "Время сокрытия"
 
 #: src/bin/e_intl.c:362
 msgid "Input Method Error"
@@ -5980,7 +5845,7 @@ msgstr "Запускаю %s"
 
 #: src/bin/e_sys.c:266
 msgid "Logout problems"
-msgstr "Проблемы с выходом"
+msgstr "Проблемы с выходом из сессии"
 
 #: src/bin/e_sys.c:269
 msgid ""
@@ -6116,17 +5981,17 @@ msgstr ""
 msgid "About This Theme"
 msgstr "Об Этой Теме"
 
-#: src/bin/e_widget_config_list.c:57
-msgid "Move Up"
-msgstr "Двигать Вверх"
-
-#: src/bin/e_widget_config_list.c:64
-msgid "Move Down"
-msgstr "Двигать Вниз"
-
-#: src/bin/e_widget_config_list.c:92
+#: src/bin/e_widget_config_list.c:62
 msgid "Remove"
 msgstr "Убрать"
+
+#: src/bin/e_widget_config_list.c:76
+msgid "Up"
+msgstr "Вверх"
+
+#: src/bin/e_widget_config_list.c:83
+msgid "Down"
+msgstr "Вниз"
 
 #: src/bin/e_widget_fsel.c:288
 msgid "Add to Favorites"
@@ -6371,23 +6236,20 @@ msgid "There was no output."
 msgstr "Не было никаких данных."
 
 #: src/bin/e_entry.c:399
-#, fuzzy
 msgid "Cut"
-msgstr "Личные"
+msgstr "Вырезать"
 
 #: src/bin/e_entry.c:410
 msgid "Copy"
-msgstr ""
+msgstr "Копировать"
 
 #: src/bin/e_entry.c:421
-#, fuzzy
 msgid "Paste"
-msgstr "Гладко"
+msgstr "Вставить"
 
 #: src/bin/e_entry.c:433
-#, fuzzy
 msgid "Select All"
-msgstr "Стереть Всё"
+msgstr "Выделить Всё"
 
 #: src/modules/battery/e_mod_config.c:38
 msgid "Battery Monitor Configuration"
@@ -6408,7 +6270,7 @@ msgstr "Дополнительные Настройки"
 
 #: src/modules/battery/e_mod_config.c:116
 msgid "Check battery every:"
-msgstr "Проверять каждые:"
+msgstr "Проверять батарею каждые:"
 
 #: src/modules/battery/e_mod_config.c:119 src/modules/pager/e_mod_config.c:165
 #: src/modules/pager/e_mod_config.c:177
@@ -6419,12 +6281,12 @@ msgstr "%1.1f сек"
 
 #: src/modules/battery/e_mod_config.c:125
 msgid "Alert when battery is down to:"
-msgstr "Предупреждать при уровне"
+msgstr "Предупреждать при уровне близком к:"
 
 #: src/modules/battery/e_mod_config.c:131
-#, fuzzy, c-format
+#, c-format
 msgid "%1.0f percent"
-msgstr "%1.0f сек."
+msgstr "%1.0f проц."
 
 #: src/modules/battery/e_mod_main.c:136
 msgid "Battery"
@@ -6671,7 +6533,7 @@ msgstr "Рядом"
 
 #: src/modules/dropshadow/e_mod_config.c:143
 msgid "Underneath"
-msgstr "Внизу"
+msgstr "Под Собой"
 
 #: src/modules/dropshadow/e_mod_config.c:147
 msgid "Shadow Darkness"
@@ -6712,7 +6574,7 @@ msgstr "Настройки IBar"
 
 #: src/modules/ibar/e_mod_config.c:101
 msgid "Selected Bar Source"
-msgstr "Источник Выбранного Раздела"
+msgstr "Выбранный Источник Раздела"
 
 #: src/modules/ibar/e_mod_config.c:119
 msgid "Icon Labels"
@@ -6753,7 +6615,7 @@ msgstr ""
 
 #: src/modules/ibar/e_mod_config.c:184
 msgid "Are you sure you want to delete this bar source?"
-msgstr "Вы действительно хотите стереть источник этой полки?"
+msgstr "Вы действительно хотите стереть источник этого пространства?"
 
 #: src/modules/ibar/e_mod_main.c:219
 msgid "IBar"
@@ -6809,14 +6671,12 @@ msgid "Display Icon Name"
 msgstr "Показать Имя Иконки"
 
 #: src/modules/ibox/e_mod_config.c:128
-#, fuzzy
 msgid "Show windows from all screens"
-msgstr "Показывать окна с другого экрана"
+msgstr "Показывать окна со всех экранов"
 
 #: src/modules/ibox/e_mod_config.c:133
-#, fuzzy
 msgid "Show windows from current screen"
-msgstr "Показывать окна с текущей зоны"
+msgstr "Показывать окна с текущего экрана"
 
 #: src/modules/ibox/e_mod_config.c:142
 msgid "Show windows from all desktops"
@@ -6848,25 +6708,23 @@ msgstr "Настройки Пэйджера"
 
 #: src/modules/pager/e_mod_config.c:117 src/modules/pager/e_mod_config.c:161
 msgid "Show Popup on desktop change"
-msgstr ""
+msgstr "Показать Подсказку при смене стола"
 
 #: src/modules/pager/e_mod_config.c:140
-#, fuzzy
 msgid "Pager Settings"
-msgstr "Настройки Перехода"
+msgstr "Настройки Пэйджера"
 
 #: src/modules/pager/e_mod_config.c:141
 msgid "Flip desktop on mouse wheel"
 msgstr "Переход по столам колесом мышки"
 
 #: src/modules/pager/e_mod_config.c:143
-#, fuzzy
 msgid "Select and Slide button"
-msgstr "Выбрать Иконку"
+msgstr "Выбор и Передвижение - кнопка"
 
 #: src/modules/pager/e_mod_config.c:145
 msgid "Drag and Drop button (Keeps rel. loc.)"
-msgstr ""
+msgstr "Перетаскивание - кнопка"
 
 #: src/modules/pager/e_mod_config.c:147 src/modules/pager/e_mod_config.c:150
 #: src/modules/pager/e_mod_config.c:213 src/modules/pager/e_mod_config.c:219
@@ -6875,9 +6733,8 @@ msgid "Click to set"
 msgstr "Нажать для установки"
 
 #: src/modules/pager/e_mod_config.c:154
-#, fuzzy
 msgid "Resistance to dragging"
-msgstr "Сопротивление к Двигаемым Окнам:"
+msgstr "Сопротивление к перетаскиванию"
 
 #: src/modules/pager/e_mod_config.c:156
 #, c-format
@@ -6885,28 +6742,24 @@ msgid "%.0f px"
 msgstr "%.0f пикс."
 
 #: src/modules/pager/e_mod_config.c:160
-#, fuzzy
 msgid "Pager Popup Settings"
-msgstr "Настройки Подсказки"
+msgstr "Настройки Подсказок Пэйджера "
 
 #: src/modules/pager/e_mod_config.c:163 src/modules/pager/e_mod_config.c:175
 msgid "Popup Speed"
 msgstr "Скорость Подсказки"
 
 #: src/modules/pager/e_mod_config.c:168
-#, fuzzy
 msgid "Urgent window"
-msgstr "Следующее Окно"
+msgstr "Срочное Окно"
 
 #: src/modules/pager/e_mod_config.c:169
-#, fuzzy
 msgid "Show Popup on urgent window"
-msgstr "Показывать свёрнутые окна"
+msgstr "Показывать Подсказку при срочном окне"
 
 #: src/modules/pager/e_mod_config.c:171
-#, fuzzy
 msgid "Popup on urgent window sticks on the screen"
-msgstr "Включая  окна с других экранов"
+msgstr "Подсказка залипает на экране при срочном окне"
 
 #: src/modules/pager/e_mod_config.c:211 src/modules/pager/e_mod_config.c:217
 #, c-format
@@ -6936,10 +6789,6 @@ msgid ""
 msgstr ""
 "Вы не можете использовать правую кнопку мыши<br>для этого, так какона уже "
 "занята внутренним<br>кодом для контекстных меню."
-
-#: src/modules/pager/e_mod_main.c:226
-msgid "Pager"
-msgstr "Пэйджер"
 
 #: src/modules/pager/e_mod_main.c:649
 msgid "Virtual Desktops Configuration"
@@ -7091,61 +6940,17 @@ msgstr ""
 "<br>Особенно полезен для современных портативных компьютеров с высокой "
 "скоростью<br>ЦПУ, которые производят большую температуру."
 
-#, fuzzy
-#~ msgid "Favorites"
-#~ msgstr "Добавить в Избранное"
+#~ msgid "Widget"
+#~ msgstr "Виджет"
 
-#~ msgid "Window Frame"
-#~ msgstr "Рамка Окна"
+#~ msgid "EFM"
+#~ msgstr "ЕФМ"
 
-#~ msgid "Screen zone"
-#~ msgstr "Зону Экрана"
+#~ msgid "Module"
+#~ msgstr "Модуль"
 
-#~ msgid "Could not create directory:<br><hilight>%s</hilight>"
-#~ msgstr "Не могу создать каталог  <br><hilight>%s</hilight>"
+#~ msgid "Move Up"
+#~ msgstr "Двигать Вверх"
 
-#~ msgid "Could not rename from <hilight>%s</hilight> to <hilight>%s</hilight>"
-#~ msgstr ""
-#~ "Не возможно переименовать <hilight>%s</hilight> в <hilight>%s</hilight>"
-
-#~ msgid "Font Size:"
-#~ msgstr "Размер Шрифта:"
-
-#~ msgid "%2.1f pixels"
-#~ msgstr "%2.1f пикс."
-
-#~ msgid "Font Class Configuration"
-#~ msgstr "Настройки Класса Шрифта"
-
-#~ msgid "Font"
-#~ msgstr "Шрифт"
-
-#~ msgid "Font Size"
-#~ msgstr "Размер Шрифта"
-
-#~ msgid "Edit Application"
-#~ msgstr "Редактировать Приложение"
-
-#~ msgid "Available Applications"
-#~ msgstr "Доступные Приложения"
-
-#~ msgid "Create a new Application"
-#~ msgstr "Создать новое Приложение"
-
-#~ msgid "Terminal Command"
-#~ msgstr "Комманда Терминала"
-
-#~ msgid "Show Popup"
-#~ msgstr "Показывать Подсказку"
-
-#~ msgid "Drag and select button"
-#~ msgstr "Кнопка выбора и передвижения"
-
-#~ msgid "Drag no place button"
-#~ msgstr "Кнопка передвижения"
-
-#~ msgid "Wheel callback"
-#~ msgstr "Колбэк Мыши"
-
-#~ msgid "Show windows from all zones"
-#~ msgstr "Показывать окна со всех зон"
+#~ msgid "Move Down"
+#~ msgstr "Двигать Вниз"
