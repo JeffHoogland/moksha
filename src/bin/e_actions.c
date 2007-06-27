@@ -2480,7 +2480,7 @@ e_action_predef_name_del(const char *act_grp, const char *act_name)
 }
 
 EAPI void
-e_action_predef_name_all_del()
+e_action_predef_name_all_del(void)
 {
    E_Action_Group *actg = NULL;
    E_Action_Description *actd = NULL;
@@ -2511,7 +2511,7 @@ e_action_predef_name_all_del()
 }
 
 EAPI Evas_List *
-e_action_groups_get()
+e_action_groups_get(void)
 {
    return action_groups;
 }
