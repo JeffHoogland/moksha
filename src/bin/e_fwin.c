@@ -122,7 +122,8 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
    fmc.icon.fixed.w = 1;
    fmc.icon.fixed.h = 1;
 #else   
-   fmc.view.mode = E_FM2_VIEW_MODE_CUSTOM_ICONS;
+//   fmc.view.mode = E_FM2_VIEW_MODE_CUSTOM_ICONS;
+   fmc.view.mode = E_FM2_VIEW_MODE_GRID_ICONS;
    fmc.icon.icon.w = 48;
    fmc.icon.icon.h = 48;
    fmc.icon.fixed.w = 0;
