@@ -8,4 +8,5 @@ battery \
 temperature \
 cpufreq \
 ibox \
-start
+start \
+layout

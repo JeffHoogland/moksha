@@ -100,7 +100,9 @@ static void _e_border_pointer_resize_begin(E_Border *bd);
 static void _e_border_pointer_resize_end(E_Border *bd);
 static void _e_border_pointer_move_begin(E_Border *bd);
 static void _e_border_pointer_move_end(E_Border *bd);
-    
+
+static void _e_border_hook_call(E_Border_Hook_Point hookpoint, E_Border *bd);
+
 /* local subsystem globals */
 static Evas_List *handlers = NULL;
 static Evas_List *borders = NULL;
@@ -1704,7 +1706,7 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 
      {
 	int x1, y1, x2, y2;
-	int w, h;
+	int w, h, pw, ph;
 
 	bd->pre_res_change.valid = 0;
 	if (!(bd->maximized & E_MAXIMIZE_HORIZONTAL))
@@ -1753,8 +1755,8 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	       }
 	     w = bd->zone->w;
 	     h = bd->zone->h;
+	     e_border_resize_limit(bd, &w, &h);
 	     /* center x-direction */
-//	     e_border_resize_limit(bd, &w, &h);
 	     x1 = bd->zone->x + (bd->zone->w - w) / 2;
 	     /* center y-direction */
 	     y1 = bd->zone->y + (bd->zone->h - h) / 2;
@@ -1782,7 +1784,13 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	     
 	     w = x2 - x1;
 	     h = y2 - y1;
+	     pw = w;
+	     ph = h;
 	     e_border_resize_limit(bd, &w, &h);
+	     /* center x-direction */
+	     x1 = x1 + (pw - w) / 2;
+	     /* center y-direction */
+	     y1 = y1 + (ph - h) / 2;
 	     if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTH)
 	       e_border_move_resize(bd, x1, y1, w, h);
 	     else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
@@ -1805,7 +1813,13 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	     
 	     w = x2 - x1;
 	     h = y2 - y1;
+	     pw = w;
+	     ph = h;
 	     e_border_resize_limit(bd, &w, &h);
+	     /* center x-direction */
+	     x1 = x1 + (pw - w) / 2;
+	     /* center y-direction */
+	     y1 = y1 + (ph - h) / 2;
 	     if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTH)
 	       e_border_move_resize(bd, x1, y1, w, h);
 	     else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
@@ -5631,6 +5645,8 @@ _e_border_eval(E_Border *bd)
 	       bd->user_skip_winlist = rem->prop.skip_winlist;
 	  }
      }
+
+   _e_border_hook_call(E_BORDER_HOOK_EVAL_POST_FETCH, bd);
    
    if ((bd->client.border.changed) && (!bd->shaded) &&
        (!(((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN))))
@@ -7344,4 +7360,74 @@ static void
 _e_border_pointer_move_end(E_Border *bd)
 {
    e_pointer_type_pop(bd->pointer, bd, "move");
+}
+
+static Evas_List *_e_border_hooks = NULL;
+static int _e_border_hooks_delete = 0;
+static int _e_border_hooks_walking = 0;
+
+static void
+_e_border_hooks_clean(void)
+{
+   Evas_List *l, *pl;
+   
+   for (l = _e_border_hooks; l;)
+     {
+	E_Border_Hook *bh;
+	
+	bh = l->data;
+	pl = l;
+	l = l->next;
+	if (bh->delete_me)
+	  {
+	     _e_border_hooks = evas_list_remove_list(_e_border_hooks, pl);
+	     free(bh);
+	  }
+     }
+}
+
+static void
+_e_border_hook_call(E_Border_Hook_Point hookpoint, E_Border *bd)
+{
+   Evas_List *l;
+
+   _e_border_hooks_walking++;
+   for (l = _e_border_hooks; l; l = l->next)
+     {
+	E_Border_Hook *bh;
+	
+	bh = l->data;
+	if (bh->delete_me) continue;
+	if (bh->hookpoint == hookpoint) bh->func(bh->data, bd);
+     }
+   _e_border_hooks_walking--;
+   if ((_e_border_hooks_walking == 0) && (_e_border_hooks_delete > 0))
+     _e_border_hooks_clean();
+}
+
+EAPI E_Border_Hook *
+e_border_hook_add(E_Border_Hook_Point hookpoint, void (*func) (void *data, E_Border *bd), void *data)
+{
+   E_Border_Hook *bh;
+   
+   bh = E_NEW(E_Border_Hook, 1);
+   if (!bh) return NULL;
+   bh->hookpoint = hookpoint;
+   bh->func = func;
+   bh->data = data;
+   _e_border_hooks = evas_list_append(_e_border_hooks, bh);
+   return bh;
+}
+
+EAPI void
+e_border_hook_del(E_Border_Hook *bh)
+{
+   bh->delete_me = 1;
+   if (_e_border_hooks_walking == 0)
+     {
+	_e_border_hooks = evas_list_remove(_e_border_hooks, bh);
+	free(bh);
+     }
+   else
+     _e_border_hooks_delete++;
 }

@@ -248,6 +248,8 @@ src/modules/ibox/Makefile
 src/modules/ibox/module.desktop
 src/modules/start/Makefile
 src/modules/start/module.desktop
+src/modules/layout/Makefile
+src/modules/layout/module.desktop
 src/preload/Makefile
 data/Makefile
 data/fonts/Makefile
