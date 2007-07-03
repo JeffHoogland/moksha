@@ -714,10 +714,7 @@ _e_int_menus_virtuals_pre_cb(void *data, E_Menu *m)
 static void
 _e_int_menus_desk_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Container *con;
-   
-   con = e_container_current_get(e_manager_current_get());
-   e_int_config_desks(con);
+   e_configure_registry_call("screen/virtual_desktops", m->zone->container);
 }
 
 static void
@@ -731,33 +728,25 @@ _e_int_menus_virtuals_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_int_menus_background_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   e_int_config_wallpaper(m->zone->container);
+   e_configure_registry_call("appearance/wallpaper", m->zone->container);
 }
 
 static void
 _e_int_menus_theme_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   e_int_config_theme(m->zone->container);
+   e_configure_registry_call("appearance/theme", m->zone->container);
 }
 
 static void
 _e_int_menus_module_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   e_int_config_modules(m->zone->container);
+   e_configure_registry_call("extensions/modules", m->zone->container);
 }
 
 static void
 _e_int_menus_shelf_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   e_int_config_shelf(m->zone->container);
-}
-
-static void
-_e_int_menus_applications_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-#if 0
-   e_int_config_apps(m->zone->container);
-#endif
+   e_configure_registry_call("extensions/shelves", m->zone->container);
 }
 
 static void
@@ -776,32 +765,37 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Wallpaper"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/background");
-   e_menu_item_callback_set(mi, _e_int_menus_background_item_cb, NULL);
-
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Theme"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/themes");
-   e_menu_item_callback_set(mi, _e_int_menus_theme_item_cb, NULL);
-
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Modules"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/modules");
-   e_menu_item_callback_set(mi, _e_int_menus_module_item_cb, NULL);
-
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Shelves"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/shelf");
-   e_menu_item_callback_set(mi, _e_int_menus_shelf_item_cb, NULL);
+   if (e_configure_registry_exists("appearance/wallpaper"))
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Wallpaper"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/background");
+	e_menu_item_callback_set(mi, _e_int_menus_background_item_cb, NULL);
+     }
    
-   #if 0
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Application Menus"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/applications");
-   e_menu_item_callback_set(mi, _e_int_menus_applications_item_cb, NULL);
-   #endif
+   if (e_configure_registry_exists("appearance/theme"))
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Theme"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/themes");
+	e_menu_item_callback_set(mi, _e_int_menus_theme_item_cb, NULL);
+     }
+
+   if (e_configure_registry_exists("extensions/modules"))
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Modules"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/modules");
+	e_menu_item_callback_set(mi, _e_int_menus_module_item_cb, NULL);
+     }
+
+   if (e_configure_registry_exists("extensions/shelves"))
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Shelves"));
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/shelf");
+	e_menu_item_callback_set(mi, _e_int_menus_shelf_item_cb, NULL);
+     }
    
    l = evas_hash_find(_e_int_menus_augmentation, "config");
    if (l)
@@ -1635,8 +1629,5 @@ _e_int_menus_shelves_add_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 static void 
 _e_int_menus_shelves_del_cb(void *data, E_Menu *m, E_Menu_Item *mi) 
 {
-   E_Container *con;
-   
-   con = e_container_current_get(e_manager_current_get());
-   e_int_config_shelf(con);
+   e_configure_registry_call("extensions/shelves", m->zone->container);
 }

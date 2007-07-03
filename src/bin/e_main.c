@@ -415,6 +415,9 @@ main(int argc, char **argv)
    
    ecore_x_io_error_handler_set(_e_main_cb_x_fatal, NULL);
 
+   TS("configure");
+   e_configure_init();
+   
    TS("x hints");
    /* Init window manager hints */
    e_hints_init();

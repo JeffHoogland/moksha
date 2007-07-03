@@ -1,18 +1,302 @@
 #include "e.h"
 
+typedef struct _E_Configure_CB E_Configure_CB;
+typedef struct _E_Configure_Category E_Configure_Category;
+typedef struct _E_Configure_Item E_Configure_Item;
+
+typedef struct _E_Configure_Cat E_Configure_Cat;
+typedef struct _E_Configure_It E_Configure_It;
+
 static void _e_configure_free(E_Configure *eco);
 static void _e_configure_cb_del_req(E_Win *win);
 static void _e_configure_cb_resize(E_Win *win);
 static void _e_configure_cb_close(void *data, void *data2);
-static E_Configure_Category *_e_configure_category_add(E_Configure *eco, char *label, char *icon);
+static E_Configure_Category *_e_configure_category_add(E_Configure *eco, const char *label, const char *icon);
 static void _e_configure_category_cb(void *data);
-static void _e_configure_item_add(E_Configure_Category *cat, char *label, char *icon, E_Config_Dialog *(*func) (E_Container *con));
+static void _e_configure_item_add(E_Configure_Category *cat, const char *label, const char *icon, const char *path);
 static void _e_configure_item_cb(void *data);
 static void _e_configure_focus_cb(void *data, Evas_Object *obj);
 static void _e_configure_keydown_cb(void *data, Evas *e, Evas_Object *obj, void *event);
 static void _e_configure_fill_cat_list(void *data);
 
+struct _E_Configure_CB
+{
+   E_Configure *eco;
+   const char *path;
+};
+
+struct _E_Configure_Category
+{
+   E_Configure *eco;
+   const char *label;
+   
+   Evas_List *items;
+};
+
+struct _E_Configure_Item
+{
+   E_Configure_CB *cb;
+   
+   const char *label;
+   const char *icon;
+};
+
+
+
+struct _E_Configure_Cat
+{
+   const char *cat;
+   int         pri;
+   const char *label;
+   const char *icon_file;
+   const char *icon;
+   Evas_List  *items;
+};
+
+struct _E_Configure_It
+{
+   const char        *item;
+   int                pri;
+   const char        *label;
+   const char        *icon_file;
+   const char        *icon;
+   E_Config_Dialog *(*func) (E_Container *con);
+};
+
 static E_Configure *_e_configure = NULL;
+static Evas_List *_e_configure_registry = NULL;
+
+EAPI void
+e_configure_registry_item_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con))
+{
+   Evas_List *l;
+   char *cat;
+   const char *item;
+   E_Configure_It *eci;
+   
+   /* path is "category/item" */
+   cat = ecore_file_get_dir(path);
+   if (!cat) return;
+   item = ecore_file_get_file(path);
+   eci = E_NEW(E_Configure_It, 1);
+   if (!eci) goto done;
+   
+   eci->item = evas_stringshare_add(item);
+   eci->pri = pri;
+   eci->label = evas_stringshare_add(label);
+   if (icon_file) eci->icon_file = evas_stringshare_add(icon_file);
+   if (icon) eci->icon = evas_stringshare_add(icon);
+   eci->func = func;
+   
+   for (l = _e_configure_registry; l; l = l->next)
+     {
+	E_Configure_Cat *ecat;
+	
+	ecat = l->data;
+	if (!strcmp(cat, ecat->cat))
+	  {
+	     Evas_List *ll;
+	     
+	     for (ll = ecat->items; ll; ll = ll->next)
+	       {
+		  E_Configure_It *eci2;
+		  
+		  eci2 = ll->data;
+		  if (eci2->pri > eci->pri)
+		    {
+		       ecat->items = evas_list_prepend_relative_list(ecat->items, eci, ll);
+		       goto done;
+		    }
+	       }
+	     ecat->items = evas_list_append(ecat->items, eci);
+	     goto done;
+	  }
+     }
+   done:
+   free(cat);
+}
+
+EAPI void
+e_configure_registry_item_del(const char *path)
+{
+   Evas_List *l;
+   char *cat;
+   const char *item;
+   
+   /* path is "category/item" */
+   cat = ecore_file_get_dir(path);
+   if (!cat) return;
+   item = ecore_file_get_file(path);
+   for (l = _e_configure_registry; l; l = l->next)
+     {
+	E_Configure_Cat *ecat;
+	
+	ecat = l->data;
+	if (!strcmp(cat, ecat->cat))
+	  {
+	     Evas_List *ll;
+	     
+	     for (ll = ecat->items; ll; ll = ll->next)
+	       {
+		  E_Configure_It *eci;
+		  
+		  eci = ll->data;
+		  if (!strcmp(item, eci->item))
+		    {
+		       ecat->items = evas_list_remove_list(ecat->items, ll);
+		       evas_stringshare_del(eci->item);
+		       evas_stringshare_del(eci->label);
+		       evas_stringshare_del(eci->icon);
+		       free(eci);
+		       goto done;
+		    }
+	       }
+	     goto done;
+	  }
+     }
+   done:
+   free(cat);
+}
+
+EAPI void
+e_configure_registry_category_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon)
+{
+   E_Configure_Cat *ecat, *ecat2;
+   Evas_List *l;
+   
+   ecat = E_NEW(E_Configure_Cat, 1);
+   if (!ecat) return;
+   
+   ecat->cat = evas_stringshare_add(path);
+   ecat->pri = pri;
+   ecat->label = evas_stringshare_add(label);
+   if (icon_file) ecat->icon_file = evas_stringshare_add(icon_file);
+   if (icon) ecat->icon = evas_stringshare_add(icon);
+   for (l = _e_configure_registry; l; l = l->next)
+     {
+	E_Configure_Cat *ecat2;
+	
+	ecat2 = l->data;
+	if (ecat2->pri > ecat->pri)
+	  {
+	     _e_configure_registry = evas_list_prepend_relative_list(_e_configure_registry, ecat, l);
+	     return;
+	  }
+     }
+   _e_configure_registry = evas_list_append(_e_configure_registry, ecat);
+}
+
+EAPI void
+e_configure_registry_category_del(const char *path)
+{
+   Evas_List *l;
+   char *cat;
+   
+   cat = ecore_file_get_dir(path);
+   if (!cat) return;
+   for (l = _e_configure_registry; l; l = l->next)
+     {
+	E_Configure_Cat *ecat;
+	
+	ecat = l->data;
+        if (!strcmp(cat, ecat->cat))
+	  {
+	     if (ecat->items) goto done;
+	     _e_configure_registry = evas_list_remove_list(_e_configure_registry, l);
+	     evas_stringshare_del(ecat->cat);
+	     evas_stringshare_del(ecat->label);
+	     if (ecat->icon) evas_stringshare_del(ecat->icon);
+	     free(ecat);
+	     goto done;
+	  }
+     }
+   done:
+   free(cat);
+}
+
+EAPI void
+e_configure_registry_call(const char *path, E_Container *con)
+{
+   Evas_List *l;
+   char *cat;
+   const char *item;
+   
+   /* path is "category/item" */
+   cat = ecore_file_get_dir(path);
+   if (!cat) return;
+   item = ecore_file_get_file(path);
+   for (l = _e_configure_registry; l; l = l->next)
+     {
+	E_Configure_Cat *ecat;
+	
+	ecat = l->data;
+	if (!strcmp(cat, ecat->cat))
+	  {
+	     Evas_List *ll;
+	     
+	     for (ll = ecat->items; ll; ll = ll->next)
+	       {
+		  E_Configure_It *eci;
+		  
+		  eci = ll->data;
+		  printf("%s == %s\n", item, eci->item);
+		  if (!strcmp(item, eci->item))
+		    {
+		       if (eci->func) eci->func(con);
+		       goto done;
+		    }
+	       }
+	     goto done;
+	  }
+     }
+   done:
+   free(cat);
+}
+
+EAPI int
+e_configure_registry_exists(const char *path)
+{
+   Evas_List *l;
+   char *cat;
+   const char *item;
+   int ret = 0;
+   
+   /* path is "category/item" */
+   cat = ecore_file_get_dir(path);
+   if (!cat) return;
+   item = ecore_file_get_file(path);
+   for (l = _e_configure_registry; l; l = l->next)
+     {
+	E_Configure_Cat *ecat;
+	
+	ecat = l->data;
+	if (!strcmp(cat, ecat->cat))
+	  {
+	     Evas_List *ll;
+
+	     if (!item)
+	       {
+		  ret = 1;
+		  goto done;
+	       }
+	     for (ll = ecat->items; ll; ll = ll->next)
+	       {
+		  E_Configure_It *eci;
+		  
+		  eci = ll->data;
+		  if (!strcmp(item, eci->item))
+		    {
+		       ret = 1;
+		       goto done;
+		    }
+	       }
+	     goto done;
+	  }
+     }
+   done:
+   free(cat);
+   return ret;
+}
 
 EAPI E_Configure *
 e_configure_show(E_Container *con) 
@@ -101,7 +385,7 @@ e_configure_show(E_Container *con)
    e_widget_list_object_append(eco->o_list, of, 1, 1, 0.5);
    
    /* Item List */
-   of = e_widget_framelist_add(eco->evas, _("Configuration Items"), 1);
+   of = e_widget_framelist_add(eco->evas, _("Items"), 1);
    eco->item_list = e_widget_ilist_add(eco->evas, 32, 32, NULL);
    e_widget_ilist_selector_set(eco->item_list, 1);
    e_widget_ilist_go(eco->item_list);
@@ -133,6 +417,69 @@ e_configure_show(E_Container *con)
    return eco;
 }
 
+EAPI void
+e_configure_init(void)
+{
+   /* FIXME: hardcoded - need to move these into modules - except modules config */
+   e_configure_registry_category_add("appearance", 10, _("Appearance"), NULL, "enlightenment/appearance");
+   e_configure_registry_item_add("appearance/wallpaper", 10, _("Wallpaper"), NULL, "enlightenment/background", e_int_config_wallpaper);
+   e_configure_registry_item_add("appearance/theme", 20, _("Theme"), NULL, "enlightenment/themes", e_int_config_theme);
+   e_configure_registry_item_add("appearance/colors", 30, _("Colors"), NULL, "enlightenment/colors", e_int_config_color_classes);
+   e_configure_registry_item_add("appearance/fonts", 40, _("Fonts"), NULL, "enlightenment/fonts", e_int_config_fonts);
+   e_configure_registry_item_add("appearance/borders", 50, _("Borders"), NULL, "enlightenment/windows", e_int_config_borders);
+   e_configure_registry_item_add("appearance/icon_theme", 60, _("Icon Theme"), NULL, "enlightenment/icon_theme", e_int_config_icon_themes);
+   e_configure_registry_item_add("appearance/mouse_cursor", 70, _("Mouse Cursor"), NULL, "enlightenment/mouse", e_int_config_cursor);
+   e_configure_registry_item_add("appearance/transitions", 80, _("Transitions"), NULL, "enlightenment/transitions", e_int_config_transitions);
+   e_configure_registry_item_add("appearance/startup", 90, _("Startup"), NULL, "enlightenment/startup", e_int_config_startup);
+   
+   e_configure_registry_category_add("applications", 20, _("Applications"), NULL, "enlightenment/applications");
+   e_configure_registry_item_add("applications/new_application", 10, _("New Application"), NULL, "enlightenment/add_application", e_int_config_apps_add);
+   e_configure_registry_item_add("applications/ibar_applications", 20, _("IBar Applications"), NULL, "enlightenment/ibar_applications", e_int_config_apps_ibar);
+   e_configure_registry_item_add("applications/restart_applications", 30, _("Restart Applications"), NULL, "enlightenment/restart_applications", e_int_config_apps_restart);
+   e_configure_registry_item_add("applications/startup_applications", 40, _("Startup Applications"), NULL, "enlightenment/startup_applications", e_int_config_apps_startup);
+   
+   e_configure_registry_category_add("screen", 30, _("Screen"), NULL, "enlightenment/screen_setup");
+   e_configure_registry_item_add("screen/virtual_desktops", 10, _("Virtual Desktops"), NULL, "enlightenment/desktops", e_int_config_desks);
+   e_configure_registry_item_add("screen/screen_resolution", 20, _("Screen Resolution"), NULL, "enlightenment/screen_resolution", e_int_config_display);
+   e_configure_registry_item_add("screen/screen_lock", 30, _("Screen Lock"), NULL, "enlightenment/desklock", e_int_config_desklock);
+   e_configure_registry_item_add("screen/screen_saver", 40, _("Screen Saver"), NULL, "enlightenment/screensaver", e_int_config_screensaver);
+   e_configure_registry_item_add("screen/power_management", 50, _("Power Management"), NULL, "enlightenment/power_management", e_int_config_dpms);
+   
+   e_configure_registry_category_add("keyboard_and_mouse", 40, _("Keyboard & Mouse"), NULL, "enlightenment/behavior");
+   e_configure_registry_item_add("keyboard_and_mouse/key_bindings", 10, _("Key Bindings"), NULL, "enlightenment/keys", e_int_config_keybindings);
+   e_configure_registry_item_add("keyboard_and_mouse/mouse_bindings", 20, _("Mouse Bindings"), NULL, "enlightenment/mouse_clean", e_int_config_mousebindings);
+   e_configure_registry_item_add("keyboard_and_mouse/mouse_acceleration", 30, _("Mouse Acceleration"), NULL, "enlightenment/mouse_clean", e_int_config_mouse);
+   
+   e_configure_registry_category_add("windows", 50, _("Windows"), NULL, "enlightenment/windows");
+   e_configure_registry_item_add("windows/window_display", 10, _("Window Display"), NULL, "enlightenment/windows", e_int_config_window_display);
+   e_configure_registry_item_add("windows/window_focus", 20, _("Window Focus"), NULL, "enlightenment/focus", e_int_config_focus);
+   e_configure_registry_item_add("windows/window_manipulation", 30, _("Window Manipulation"), NULL, "enlightenment/window_manipulation", e_int_config_window_manipulation);
+   
+   e_configure_registry_category_add("menus", 60, _("Menus"), NULL, "enlightenment/menus");
+   e_configure_registry_item_add("menus/favorites_menu", 10, _("Favorites Menu"), NULL, "enlightenment/favorites", e_int_config_apps_favs);   
+#if 0
+   e_configure_registry_item_add("menus/applications_menu", 20, _("Application Menus"), NULL, "enlightenment/applications", e_int_config_apps);
+#endif
+   e_configure_registry_item_add("menus/menu_settings", 30, _("Menu Settings"), NULL, "enlightenment/menu_settings", e_int_config_menus);
+   e_configure_registry_item_add("menus/client_list_menu", 40, _("Client List Menu"), NULL, "enlightenment/windows", e_int_config_clientlist);
+   
+   e_configure_registry_category_add("language", 70, _("Language"), NULL, "enlightenment/intl");
+   e_configure_registry_item_add("language/language_settings", 10, _("Language Settings"), NULL, "enlightenment/intl", e_int_config_intl);
+   e_configure_registry_item_add("language/input_method_settings", 20, _("Input Method Settings"), NULL, "enlightenment/imc", e_int_config_imc);
+   
+   e_configure_registry_category_add("advanced", 80, _("Advanced"), NULL, "enlightenment/advanced");
+   e_configure_registry_item_add("advanced/dialogs", 10, _("Dialogs"), NULL, "enlightenment/configuration", e_int_config_dialogs);
+   e_configure_registry_item_add("advanced/performance", 20, _("Performance"), NULL, "enlightenment/performance", e_int_config_performance);   
+   e_configure_registry_item_add("advanced/window_list", 30, _("Window List"), NULL, "enlightenment/winlist", e_int_config_winlist);
+   e_configure_registry_item_add("advanced/run_command", 40, _("Run Command"), NULL, "enlightenment/run", e_int_config_exebuf);
+   e_configure_registry_item_add("advanced/search_directories", 50, _("Search Directories"), NULL, "enlightenment/directories", e_int_config_paths);
+   e_configure_registry_item_add("advanced/file_icons", 60, _("File Icons"), NULL, "enlightenment/file_icons", e_int_config_mime);
+   
+   e_configure_registry_category_add("extensions", 90, _("Extensions"), NULL, "enlightenment/extensions");
+   e_configure_registry_item_add("extensions/modules", 10, _("Modules"), NULL, "enlightenment/modules", e_int_config_modules);
+   e_configure_registry_item_add("extensions/shelves", 20, _("Shelves"), NULL, "enlightenment/shelf", e_int_config_shelf);
+}
+
 static void 
 _e_configure_free(E_Configure *eco) 
 {
@@ -157,7 +504,11 @@ _e_configure_free(E_Configure *eco)
 	     if (ci->icon)
 	       evas_stringshare_del(ci->icon);
 	     if (ci->cb)
-	       free(ci->cb);
+	       {
+		  if (ci->cb->path)
+		    evas_stringshare_del(ci->cb->path);
+		  free(ci->cb);
+	       }
 	     cat->items = evas_list_remove_list(cat->items, cat->items);
 	     E_FREE(ci);
 	  }
@@ -206,7 +557,7 @@ _e_configure_cb_close(void *data, void *data2)
 }
 
 static E_Configure_Category *
-_e_configure_category_add(E_Configure *eco, char *label, char *icon)
+_e_configure_category_add(E_Configure *eco, const char *label, const char *icon)
 {
    Evas_Object *o = NULL;
    E_Configure_Category *cat;
@@ -267,7 +618,7 @@ _e_configure_category_cb(void *data)
 }
 
 static void
-_e_configure_item_add(E_Configure_Category *cat, char *label, char *icon, E_Config_Dialog *(*func) (E_Container *con))
+_e_configure_item_add(E_Configure_Category *cat, const char *label, const char *icon, const char *path)
 {
    E_Configure_Item *ci;
    E_Configure_CB *cb;
@@ -277,11 +628,10 @@ _e_configure_item_add(E_Configure_Category *cat, char *label, char *icon, E_Conf
    ci = E_NEW(E_Configure_Item, 1);
    cb = E_NEW(E_Configure_CB, 1);
    cb->eco = cat->eco;
-   cb->func = func;
+   cb->path = evas_stringshare_add(path);
    ci->cb = cb;
    ci->label = evas_stringshare_add(label);
-   if (icon)
-     ci->icon = evas_stringshare_add(icon);
+   if (icon) ci->icon = evas_stringshare_add(icon);
    cat->items = evas_list_append(cat->items, ci);
 }
 
@@ -294,7 +644,7 @@ _e_configure_item_cb(void *data)
    ci = data;
    if (!ci) return;
    cb = ci->cb;
-   cb->func(cb->eco->con);
+   if (cb->path) e_configure_registry_call(cb->path, cb->eco->con);
 }
 
 static void 
@@ -383,6 +733,7 @@ _e_configure_fill_cat_list(void *data)
    E_Configure *eco;
    Evas_Coord mw, mh;
    E_Configure_Category *cat;
+   Evas_List *l;
 
    eco = data;
    if (!eco) return;
@@ -390,70 +741,27 @@ _e_configure_fill_cat_list(void *data)
    evas_event_freeze(evas_object_evas_get(eco->cat_list));
    edje_freeze();
    e_widget_ilist_freeze(eco->cat_list);
-   
-   /* Add "Categories" & "Items" Here */
-   cat = _e_configure_category_add(eco, _("Appearance"), "enlightenment/appearance");
-   _e_configure_item_add(cat, _("Wallpaper"), "enlightenment/background", e_int_config_wallpaper);
-   _e_configure_item_add(cat, _("Theme"), "enlightenment/themes", e_int_config_theme);
-   _e_configure_item_add(cat, _("Colors"), "enlightenment/colors", e_int_config_color_classes);
-   _e_configure_item_add(cat, _("Fonts"), "enlightenment/fonts", e_int_config_fonts);
-   _e_configure_item_add(cat, _("Borders"), "enlightenment/windows", e_int_config_borders);
-   _e_configure_item_add(cat, _("Icon Theme"), "enlightenment/icon_theme", e_int_config_icon_themes);
-   _e_configure_item_add(cat, _("Mouse Cursor"), "enlightenment/mouse", e_int_config_cursor);
-   _e_configure_item_add(cat, _("Transitions"), "enlightenment/transitions", e_int_config_transitions);
-   _e_configure_item_add(cat, _("Startup"), "enlightenment/startup", e_int_config_startup);
 
-   cat = _e_configure_category_add(eco, _("Applications"), "enlightenment/applications");
-   _e_configure_item_add(cat, _("New Application"), "enlightenment/add_application", e_int_config_apps_add);
-   _e_configure_item_add(cat, _("IBar Applications"), "enlightenment/ibar_applications", e_int_config_apps_ibar);
-   _e_configure_item_add(cat, _("Restart Applications"), "enlightenment/restart_applications", e_int_config_apps_restart);
-   _e_configure_item_add(cat, _("Startup Applications"), "enlightenment/startup_applications", e_int_config_apps_startup);
-   
-   cat = _e_configure_category_add(eco, _("Screen"), "enlightenment/screen_setup");
-   _e_configure_item_add(cat, _("Virtual Desktops"), "enlightenment/desktops", e_int_config_desks);
-   _e_configure_item_add(cat, _("Screen Resolution"), "enlightenment/screen_resolution", e_int_config_display);
-   _e_configure_item_add(cat, _("Screen Lock"), "enlightenment/desklock", e_int_config_desklock);
-   _e_configure_item_add(cat, _("Screen Saver"), "enlightenment/screensaver", e_int_config_screensaver);
-   _e_configure_item_add(cat, _("Power Management"), "enlightenment/power_management", e_int_config_dpms);
-
-   cat = _e_configure_category_add(eco, _("Keyboard & Mouse"), "enlightenment/behavior");
-   _e_configure_item_add(cat, _("Key Bindings"), "enlightenment/keys", e_int_config_keybindings);
-   _e_configure_item_add(cat, _("Mouse Bindings"), "enlightenment/mouse_clean", e_int_config_mousebindings);
-   _e_configure_item_add(cat, _("Mouse Acceleration"), "enlightenment/mouse_clean", e_int_config_mouse);
-
-   cat = _e_configure_category_add(eco, _("Windows"), "enlightenment/windows");
-   _e_configure_item_add(cat, _("Window Display"), "enlightenment/windows", e_int_config_window_display);
-   _e_configure_item_add(cat, _("Window Focus"), "enlightenment/focus", e_int_config_focus);
-   _e_configure_item_add(cat, _("Window Manipulation"), "enlightenment/window_manipulation", e_int_config_window_manipulation);
-
-   cat = _e_configure_category_add(eco, _("Menus"), "enlightenment/menus");
-   _e_configure_item_add(cat, _("Favorites Menu"), "enlightenment/favorites", e_int_config_apps_favs);   
-   #if 0
-   _e_configure_item_add(cat, _("Application Menus"), "enlightenment/applications", e_int_config_apps);
-   #endif
-   _e_configure_item_add(cat, _("Menu Settings"), "enlightenment/menu_settings", e_int_config_menus);
-   _e_configure_item_add(cat, _("Client List Menu"), "enlightenment/windows", e_int_config_clientlist);
-
-   cat = _e_configure_category_add(eco, _("Language"), "enlightenment/intl");
-   _e_configure_item_add(cat, _("Language Settings"), "enlightenment/intl", e_int_config_intl);
-   _e_configure_item_add(cat, _("Input Method Settings"), "enlightenment/imc", e_int_config_imc);
-
-   cat = _e_configure_category_add(eco, _("Advanced"), "enlightenment/advanced");
-   _e_configure_item_add(cat, _("Dialogs"), "enlightenment/configuration", e_int_config_dialogs);
-   _e_configure_item_add(cat, _("Performance"), "enlightenment/performance", e_int_config_performance);   
-   _e_configure_item_add(cat, _("Window List"), "enlightenment/winlist", e_int_config_winlist);
-   _e_configure_item_add(cat, _("Run Command"), "enlightenment/run", e_int_config_exebuf);
-   _e_configure_item_add(cat, _("Search Directories"), "enlightenment/directories", e_int_config_paths);
-   _e_configure_item_add(cat, _("File Icons"), "enlightenment/file_icons", e_int_config_mime);
-
-   cat = _e_configure_category_add(eco, _("Extensions"), "enlightenment/extensions");
-   _e_configure_item_add(cat, _("Modules"), "enlightenment/modules", e_int_config_modules);
-   _e_configure_item_add(cat, _("Shelves"), "enlightenment/shelf", e_int_config_shelf);
-
-   /* FIXME: we should have a way for modules to hook in here and add their own entries 
-    * 
-    * cat = _e_configure_category_add(eco, _("Extension Configuration"), "enlightenment/extension_config");
-    */
+   for (l = _e_configure_registry; l; l = l->next)
+     {
+	Evas_List *ll;
+	E_Configure_Cat *ecat;
+	
+	ecat = l->data;
+	if (ecat->items)
+	  {
+	     cat = _e_configure_category_add(eco, ecat->label, ecat->icon);
+	     for (ll = ecat->items; ll; ll = ll->next)
+	       {
+		  E_Configure_It *eci;
+		  char buf[1024];
+		  
+		  eci = ll->data;
+		  snprintf(buf, sizeof(buf), "%s/%s", ecat->cat, eci->item);
+		  _e_configure_item_add(cat, eci->label, eci->icon, buf);
+	       }
+	  }
+     }
    
    e_widget_ilist_go(eco->cat_list);
    e_widget_min_size_get(eco->cat_list, &mw, &mh);

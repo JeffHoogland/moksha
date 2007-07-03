@@ -158,11 +158,7 @@ e_desklock_show(void)
 	    
 	    zone = e_util_zone_current_get(e_manager_current_get());
 	    if (zone)
-	      {
-		 E_Config_Dialog *cfd;
-		 
-		 cfd = e_int_config_desklock(zone->container);
-	      }
+	      e_configure_registry_call("screen/screen_lock", zone->container);
 	    return 0;
 	 }
 #ifdef HAVE_PAM

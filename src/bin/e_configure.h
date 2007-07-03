@@ -1,10 +1,6 @@
 #ifdef E_TYPEDEFS
 
 typedef struct _E_Configure E_Configure;
-typedef struct _E_Configure_CB E_Configure_CB;
-
-typedef struct _E_Configure_Category E_Configure_Category;
-typedef struct _E_Configure_Item E_Configure_Item;
 
 #else
 #ifndef E_CONFIGURE_H
@@ -29,29 +25,15 @@ struct _E_Configure
    Evas_List *cats;
 };
 
-struct _E_Configure_CB 
-{
-   E_Configure *eco;
-   E_Config_Dialog *(*func) (E_Container *con);
-};
-
-struct _E_Configure_Category 
-{
-   E_Configure *eco;
-   const char *label;
-   
-   Evas_List *items;
-};
-
-struct _E_Configure_Item 
-{
-   E_Configure_CB *cb;
-   
-   const char *label;
-   const char *icon;
-};
+EAPI void e_configure_registry_item_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con));
+EAPI void e_configure_registry_item_del(const char *path);
+EAPI void e_configure_registry_category_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon);
+EAPI void e_configure_registry_category_del(const char *path);
+EAPI void e_configure_registry_call(const char *path, E_Container *con);
+EAPI int  e_configure_registry_exists(const char *path);
 
 EAPI E_Configure *e_configure_show(E_Container *con);
-
+EAPI void e_configure_init(void);
+    
 #endif
 #endif

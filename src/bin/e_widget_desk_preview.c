@@ -259,6 +259,7 @@ _e_wid_desk_cb_config(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	E_Container *con;
 	
 	con = e_container_current_get(e_manager_current_get());
+	/* FIXME: this isn't abstracted like the rest of the config. */
 	e_int_config_desk(con, dd->container, dd->zone, dd->x, dd->y);
      }
 }
