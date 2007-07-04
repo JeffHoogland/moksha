@@ -714,7 +714,7 @@ _e_int_menus_virtuals_pre_cb(void *data, E_Menu *m)
 static void
 _e_int_menus_desk_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   e_configure_registry_call("screen/virtual_desktops", m->zone->container);
+   e_configure_registry_call("screen/virtual_desktops", m->zone->container, NULL);
 }
 
 static void
@@ -728,25 +728,25 @@ _e_int_menus_virtuals_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_int_menus_background_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   e_configure_registry_call("appearance/wallpaper", m->zone->container);
+   e_configure_registry_call("appearance/wallpaper", m->zone->container, NULL);
 }
 
 static void
 _e_int_menus_theme_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   e_configure_registry_call("appearance/theme", m->zone->container);
+   e_configure_registry_call("appearance/theme", m->zone->container, NULL);
 }
 
 static void
 _e_int_menus_module_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   e_configure_registry_call("extensions/modules", m->zone->container);
+   e_configure_registry_call("extensions/modules", m->zone->container, NULL);
 }
 
 static void
 _e_int_menus_shelf_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   e_configure_registry_call("extensions/shelves", m->zone->container);
+   e_configure_registry_call("extensions/shelves", m->zone->container, NULL);
 }
 
 static void
@@ -1629,5 +1629,5 @@ _e_int_menus_shelves_add_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 static void 
 _e_int_menus_shelves_del_cb(void *data, E_Menu *m, E_Menu_Item *mi) 
 {
-   e_configure_registry_call("extensions/shelves", m->zone->container);
+   e_configure_registry_call("extensions/shelves", m->zone->container, NULL);
 }

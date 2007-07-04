@@ -217,7 +217,7 @@ _e_test_dia(E_Container *con)
 {
    E_Config_Dialog *dia;
    
-   dia = e_int_config_focus(con);
+   dia = e_int_config_modules(con);
    return dia;
 }
 

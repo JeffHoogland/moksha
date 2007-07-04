@@ -125,6 +125,7 @@ e_int_config_apps_ibar_other(E_Container *con, const char *path)
 {
    E_Config_Once *once;
 
+   if (!path) return NULL;
    once = E_NEW(E_Config_Once, 1);
    once->title = _("IBar Applications");
    once->icon = "enlightenment/ibar_applications";

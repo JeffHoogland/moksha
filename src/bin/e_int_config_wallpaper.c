@@ -12,6 +12,8 @@ static Evas_Object *_basic_create_widgets    (E_Config_Dialog *cfd, Evas *evas, 
 static int          _advanced_apply_data     (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
+static E_Config_Dialog *_e_int_config_wallpaper_desk(E_Container *con, int con_num, int zone_num, int desk_x, int desk_y);
+
 #define E_CONFIG_WALLPAPER_ALL 0
 #define E_CONFIG_WALLPAPER_DESK 1
 #define E_CONFIG_WALLPAPER_SCREEN 2
@@ -48,16 +50,27 @@ struct _E_Config_Dialog_Data
 EAPI E_Config_Dialog *
 e_int_config_wallpaper(E_Container *con)
 {
-   return e_int_config_wallpaper_desk(-1, -1, -1, -1);
+   return _e_int_config_wallpaper_desk(con, -1, -1, -1, -1);
 }
 
 EAPI E_Config_Dialog *
-e_int_config_wallpaper_desk(int con_num, int zone_num, int desk_x, int desk_y)
+e_int_config_wallpaper_desk(E_Container *con, const char *params)
+{
+   int con_num, zone_num, desk_x, desk_y;
+   
+   if (!params) return NULL;
+   con_num = zone_num = desk_x = desk_y = -1;
+   if (sscanf(params, "%i %i %i %i", &con_num, &zone_num, &desk_x, &desk_y) != 4)
+     return NULL;
+   _e_int_config_wallpaper_desk(con, con_num, zone_num, desk_x, desk_y);
+}
+
+static E_Config_Dialog *
+_e_int_config_wallpaper_desk(E_Container *con, int con_num, int zone_num, int desk_x, int desk_y)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    E_Config_Wallpaper *cw;
-   E_Container *con;
 
    if (e_config_dialog_find("E", "_config_wallpaper_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
@@ -82,8 +95,6 @@ e_int_config_wallpaper_desk(int con_num, int zone_num, int desk_x, int desk_y)
    cw->zone_num = zone_num;
    cw->desk_x = desk_x;
    cw->desk_y = desk_y;
-
-   con = e_container_current_get(e_manager_current_get());
 
    cfd = e_config_dialog_new(con,
 			     _("Wallpaper Settings"),

@@ -8,7 +8,8 @@ typedef struct _E_Config_Wallpaper E_Config_Wallpaper;
 #define E_INT_CONFIG_WALLPAPER_H
 
 EAPI E_Config_Dialog *e_int_config_wallpaper(E_Container *con);
-EAPI E_Config_Dialog *e_int_config_wallpaper_desk(int con_num, int zone_num, int desk_x, int desk_y);
+EAPI E_Config_Dialog *e_int_config_wallpaper_desk(E_Container *con, const char *params);
+
 EAPI void             e_int_config_wallpaper_update(E_Config_Dialog *dia, char *file);
 EAPI void             e_int_config_wallpaper_import_done(E_Config_Dialog *dia);
 EAPI void             e_int_config_wallpaper_gradient_done(E_Config_Dialog *dia);

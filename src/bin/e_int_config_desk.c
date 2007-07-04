@@ -21,12 +21,18 @@ struct _E_Config_Dialog_Data
 };
 
 EAPI E_Config_Dialog *
-e_int_config_desk(E_Container *con, int con_num, int zone_num, int dx, int dy) 
+e_int_config_desk(E_Container *con, const char *params)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    E_Config_Dialog_Data *cfdata;
+   int con_num, zone_num, dx, dy;
 
+   if (!params) return NULL;
+   con_num = zone_num = dx = dy = -1;
+   if (sscanf(params, "%i %i %i %i", &con_num, &zone_num, &dx, &dy) != 4)
+     return NULL;
+   
    if (e_config_dialog_find("E", "_config_desk_dialog")) return NULL;
 
    v = E_NEW(E_Config_Dialog_View, 1);
@@ -169,10 +175,13 @@ static void
 _cb_config(void *data, void *data2) 
 {
    E_Config_Dialog_Data *cfdata;
+   char buf[256];
    
    cfdata = data;
    if (!cfdata) return;
-   e_int_config_wallpaper_desk(cfdata->con_num, cfdata->zone_num, cfdata->desk_x, cfdata->desk_y);
+   snprintf(buf, sizeof(buf), "%i %i %i %i", 
+	    cfdata->con_num, cfdata->zone_num, cfdata->desk_x, cfdata->desk_y);
+   e_configure_registry_call("internal/wallpaper_desk", e_container_current_get(e_manager_current_get()), buf);
 }
 
 static int

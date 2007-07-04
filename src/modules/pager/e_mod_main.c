@@ -684,7 +684,7 @@ _pager_inst_cb_menu_virtual_desktops_dialog(void *data, E_Menu *m, E_Menu_Item *
    Instance *inst;
 
    inst = data;
-   e_int_config_desks(inst->gcc->gadcon->zone->container);
+   e_configure_registry_call("screen/virtual_desktops", inst->gcc->gadcon->zone->container, NULL);
 }
 
 static void

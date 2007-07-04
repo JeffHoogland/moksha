@@ -158,7 +158,7 @@ e_desklock_show(void)
 	    
 	    zone = e_util_zone_current_get(e_manager_current_get());
 	    if (zone)
-	      e_configure_registry_call("screen/screen_lock", zone->container);
+	      e_configure_registry_call("screen/screen_lock", zone->container, NULL);
 	    return 0;
 	 }
 #ifdef HAVE_PAM

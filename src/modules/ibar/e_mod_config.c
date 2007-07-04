@@ -190,13 +190,15 @@ _cb_del(void *data, void *data2)
 static void 
 _cb_config(void *data, void *data2) 
 {
-   char path[4096];
+   char path[PATH_MAX];
    E_Config_Dialog_Data *cfdata;
    
    cfdata = data;
    snprintf(path, sizeof(path), "%s/.e/e/applications/bar/%s/.order", 
 	    e_user_homedir_get(), cfdata->dir);
-   e_int_config_apps_ibar_other(e_container_current_get(e_manager_current_get()), path);
+   e_configure_registry_call("internal/ibar_other",
+			     e_container_current_get(e_manager_current_get()),
+			     path);
 }
 
 static void

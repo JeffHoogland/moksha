@@ -60,14 +60,14 @@ struct _E_Configure_It
    const char        *label;
    const char        *icon_file;
    const char        *icon;
-   E_Config_Dialog *(*func) (E_Container *con);
+   E_Config_Dialog *(*func) (E_Container *con, const char *params);
 };
 
 static E_Configure *_e_configure = NULL;
 static Evas_List *_e_configure_registry = NULL;
 
 EAPI void
-e_configure_registry_item_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con))
+e_configure_registry_item_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func) (E_Container *con, const char *params))
 {
    Evas_List *l;
    char *cat;
@@ -215,7 +215,7 @@ e_configure_registry_category_del(const char *path)
 }
 
 EAPI void
-e_configure_registry_call(const char *path, E_Container *con)
+e_configure_registry_call(const char *path, E_Container *con, const char *params)
 {
    Evas_List *l;
    char *cat;
@@ -242,7 +242,7 @@ e_configure_registry_call(const char *path, E_Container *con)
 		  printf("%s == %s\n", item, eci->item);
 		  if (!strcmp(item, eci->item))
 		    {
-		       if (eci->func) eci->func(con);
+		       if (eci->func) eci->func(con, params);
 		       goto done;
 		    }
 	       }
@@ -478,6 +478,17 @@ e_configure_init(void)
    e_configure_registry_category_add("extensions", 90, _("Extensions"), NULL, "enlightenment/extensions");
    e_configure_registry_item_add("extensions/modules", 10, _("Modules"), NULL, "enlightenment/modules", e_int_config_modules);
    e_configure_registry_item_add("extensions/shelves", 20, _("Shelves"), NULL, "enlightenment/shelf", e_int_config_shelf);
+
+   /* internal calls - not in config dialog but accessible from other code
+    * that knows these config dialogs exist and how to interact. they require
+    * parameters to be passed and will not work without them being set and
+    * set properly
+    */
+   e_configure_registry_category_add("internal", -1, _("Internal"), NULL, "enlightenment/internal");
+   e_configure_registry_item_add("internal/borders_border", -1, _("Border"), NULL, "enlightenment/windows", e_int_config_borders_border);
+   e_configure_registry_item_add("internal/wallpaper_desk", -1, _("Wallpaper"), NULL, "enlightenment/windows", e_int_config_wallpaper_desk);
+   e_configure_registry_item_add("internal/desk", -1, _("Desk"), NULL, "enlightenment/windows", e_int_config_desk);
+   e_configure_registry_item_add("internal/ibar_other", -1, _("IBar Other"), NULL, "enlightenment/windows", e_int_config_apps_ibar_other);
 }
 
 static void 
@@ -644,7 +655,7 @@ _e_configure_item_cb(void *data)
    ci = data;
    if (!ci) return;
    cb = ci->cb;
-   if (cb->path) e_configure_registry_call(cb->path, cb->eco->con);
+   if (cb->path) e_configure_registry_call(cb->path, cb->eco->con, NULL);
 }
 
 static void 
@@ -748,7 +759,7 @@ _e_configure_fill_cat_list(void *data)
 	E_Configure_Cat *ecat;
 	
 	ecat = l->data;
-	if (ecat->items)
+	if ((ecat->pri >= 0) && (ecat->items))
 	  {
 	     cat = _e_configure_category_add(eco, ecat->label, ecat->icon);
 	     for (ll = ecat->items; ll; ll = ll->next)
@@ -757,8 +768,11 @@ _e_configure_fill_cat_list(void *data)
 		  char buf[1024];
 		  
 		  eci = ll->data;
-		  snprintf(buf, sizeof(buf), "%s/%s", ecat->cat, eci->item);
-		  _e_configure_item_add(cat, eci->label, eci->icon, buf);
+		  if (eci->pri >= 0)
+		    {
+		       snprintf(buf, sizeof(buf), "%s/%s", ecat->cat, eci->item);
+		       _e_configure_item_add(cat, eci->label, eci->icon, buf);
+		    }
 	       }
 	  }
      }

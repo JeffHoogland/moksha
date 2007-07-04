@@ -9,8 +9,8 @@ static void _cb_standby_slider_change(void *data, Evas_Object *obj);
 static void _cb_suspend_slider_change(void *data, Evas_Object *obj);
 static void _cb_off_slider_change(void *data, Evas_Object *obj);
 
-static int _e_int_config_dpms_available();
-static int _e_int_config_dpms_capable();
+static int _e_int_config_dpms_available(void);
+static int _e_int_config_dpms_capable(void);
 
 struct _E_Config_Dialog_Data
 {
@@ -44,7 +44,7 @@ _cb_dpms_dialog_ok(void *data, E_Dialog *dia)
 }
 
 static int
-_e_int_config_dpms_capable()
+_e_int_config_dpms_capable(void)
 {
    if (ecore_x_dpms_capable_get()) return 1;
    
@@ -65,7 +65,7 @@ _e_int_config_dpms_capable()
 }
 
 static int
-_e_int_config_dpms_available()
+_e_int_config_dpms_available(void)
 {
    if (ecore_x_dpms_query()) return 1;
    

@@ -431,9 +431,12 @@ static void
 _e_border_menu_cb_border(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
+   char buf[256];
+   
    bd = data;
    if (bd->border_border_dialog) return;
-   e_int_config_borders_border(bd);
+   snprintf(buf, sizeof(buf), "%p", bd);
+   e_configure_registry_call("internal/borders_border", bd->zone->container, buf);
 }
    
 static void
