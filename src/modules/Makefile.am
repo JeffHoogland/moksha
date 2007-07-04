@@ -9,4 +9,5 @@ temperature \
 cpufreq \
 ibox \
 start \
-layout
+layout \
+conf_wallpaper

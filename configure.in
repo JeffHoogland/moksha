@@ -250,6 +250,8 @@ src/modules/start/Makefile
 src/modules/start/module.desktop
 src/modules/layout/Makefile
 src/modules/layout/module.desktop
+src/modules/conf_wallpaper/Makefile
+src/modules/conf_wallpaper/module.desktop
 src/preload/Makefile
 data/Makefile
 data/fonts/Makefile

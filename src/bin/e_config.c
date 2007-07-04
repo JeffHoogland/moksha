@@ -754,6 +754,7 @@ e_config_init(void)
 	CFG_MODULE("cpufreq", 1);
 	CFG_MODULE("temperature", 1);
 	CFG_MODULE("pager", 1);
+	CFG_MODULE("conf_wallpaper", 1);
      }
 #if 0
      {
