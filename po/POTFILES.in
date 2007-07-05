@@ -53,9 +53,6 @@ src/bin/e_int_config_startup.c
 src/bin/e_int_config_theme.c
 src/bin/e_int_config_theme_import.c
 src/bin/e_int_config_transitions.c
-src/bin/e_int_config_wallpaper.c
-src/bin/e_int_config_wallpaper_gradient.c
-src/bin/e_int_config_wallpaper_import.c
 src/bin/e_int_config_window_display.c
 src/bin/e_int_config_window_manipulation.c
 src/bin/e_int_config_winlist.c
