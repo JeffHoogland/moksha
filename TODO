@@ -42,6 +42,8 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
+* after creating a background with the bg config dialog, we need to be able
+  to change its properties (stretch, tile, center, etc...)
 * fm2 removable devices seem to be mounted as root, not user, thus no write
 * fm2 theme needs to not suck
 * fwin initial placement needs to be near icon that spawned the fwin
