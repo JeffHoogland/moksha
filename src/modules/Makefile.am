@@ -10,4 +10,7 @@ cpufreq \
 ibox \
 start \
 layout \
-conf_wallpaper
+conf_wallpaper \
+conf_theme \
+conf_colors \
+conf_fonts

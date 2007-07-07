@@ -423,9 +423,9 @@ e_configure_init(void)
    /* FIXME: hardcoded - need to move these into modules - except modules config */
    e_configure_registry_category_add("appearance", 10, _("Appearance"), NULL, "enlightenment/appearance");
 //   e_configure_registry_item_add("appearance/wallpaper", 10, _("Wallpaper"), NULL, "enlightenment/background", e_int_config_wallpaper);
-   e_configure_registry_item_add("appearance/theme", 20, _("Theme"), NULL, "enlightenment/themes", e_int_config_theme);
-   e_configure_registry_item_add("appearance/colors", 30, _("Colors"), NULL, "enlightenment/colors", e_int_config_color_classes);
-   e_configure_registry_item_add("appearance/fonts", 40, _("Fonts"), NULL, "enlightenment/fonts", e_int_config_fonts);
+//   e_configure_registry_item_add("appearance/theme", 20, _("Theme"), NULL, "enlightenment/themes", e_int_config_theme);
+//   e_configure_registry_item_add("appearance/colors", 30, _("Colors"), NULL, "enlightenment/colors", e_int_config_color_classes);
+//   e_configure_registry_item_add("appearance/fonts", 40, _("Fonts"), NULL, "enlightenment/fonts", e_int_config_fonts);
    e_configure_registry_item_add("appearance/borders", 50, _("Borders"), NULL, "enlightenment/windows", e_int_config_borders);
    e_configure_registry_item_add("appearance/icon_theme", 60, _("Icon Theme"), NULL, "enlightenment/icon_theme", e_int_config_icon_themes);
    e_configure_registry_item_add("appearance/mouse_cursor", 70, _("Mouse Cursor"), NULL, "enlightenment/mouse", e_int_config_cursor);

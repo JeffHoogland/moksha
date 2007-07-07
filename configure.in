@@ -252,6 +252,12 @@ src/modules/layout/Makefile
 src/modules/layout/module.desktop
 src/modules/conf_wallpaper/Makefile
 src/modules/conf_wallpaper/module.desktop
+src/modules/conf_theme/Makefile
+src/modules/conf_theme/module.desktop
+src/modules/conf_colors/Makefile
+src/modules/conf_colors/module.desktop
+src/modules/conf_fonts/Makefile
+src/modules/conf_fonts/module.desktop
 src/preload/Makefile
 data/Makefile
 data/fonts/Makefile

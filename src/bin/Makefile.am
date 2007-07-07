@@ -119,14 +119,11 @@ e_slider.h \
 e_widget_slider.h \
 e_int_config_window_manipulation.h \
 e_int_config_window_display.h \
-e_int_config_theme.h \
-e_int_config_theme_import.h \
 e_int_config_icon_themes.h \
 e_int_config_menus.h \
 e_int_config_keybindings.h \
 e_int_config_mousebindings.h \
 e_int_config_cursor.h \
-e_int_config_fonts.h \
 e_int_config_startup.h \
 e_int_config_performance.h \
 e_int_config_winlist.h \
@@ -135,7 +132,6 @@ e_int_config_desklock.h \
 e_int_config_exebuf.h \
 e_int_config_apps.h \
 e_int_config_dialogs.h \
-e_int_config_color_classes.h \
 e_int_config_mime.h \
 e_int_config_mime_edit.h \
 e_int_config_screensaver.h \
@@ -279,14 +275,11 @@ e_slider.c \
 e_widget_slider.c \
 e_int_config_window_manipulation.c \
 e_int_config_window_display.c \
-e_int_config_theme.c \
-e_int_config_theme_import.c \
 e_int_config_icon_themes.c \
 e_int_config_menus.c \
 e_int_config_keybindings.c \
 e_int_config_mousebindings.c \
 e_int_config_cursor.c \
-e_int_config_fonts.c \
 e_int_config_startup.c \
 e_int_config_performance.c \
 e_int_config_winlist.c \
@@ -298,7 +291,6 @@ e_int_config_dialogs.c \
 e_int_config_intl.c \
 e_int_config_imc.c \
 e_int_config_imc_import.c \
-e_int_config_color_classes.c \
 e_int_config_mime.c \
 e_int_config_mime_edit.c \
 e_int_config_screensaver.c \
