@@ -83,7 +83,6 @@ group {
 	 type: SWALLOW;
 	 description {
 	    state: "default" 0.0;
-	    color: 0 0 0 0;
 	    rel2 {
 	       relative: 0.0  0.0;
 	       offset:   -1   -1;
@@ -6054,7 +6053,6 @@ group {
 	 type: SWALLOW;
 	 description {
 	    state: "default" 0.0;
-	    color: 0 0 0 0;
 	    rel2 {
 	       relative: 0.0  0.0;
 	       offset:   -1   -1;

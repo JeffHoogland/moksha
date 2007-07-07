@@ -83,7 +83,6 @@ group {
 	 clip_to: "list_clip";
 	 description {
 	    state: "default" 0.0;
-	    color: 0 0 0 0;
 	    rel1 {
 	       relative: 0.0 1.0;
 	       offset:   16   16;
@@ -270,7 +269,6 @@ group {
 	 type: SWALLOW;
 	 description {
 	    state: "default" 0.0;
-	    color: 0 0 0 0;
 	    aspect: 1.0 1.0;
 	    align: 0.5 1.0;
 	    min: 32 32;
@@ -713,7 +711,6 @@ group {
 	 type: SWALLOW;
 	 description {
 	    state: "default" 0.0;
-	    color: 0 0 0 0;
 	    aspect: 1.0 1.0;
 	    align: 0.0 0.5;
 	    aspect_preference: VERTICAL;

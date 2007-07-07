@@ -85,7 +85,6 @@ group {
 	 clip_to: "eap_list_clip";
 	 description {
 	    state: "default" 0.0;
-	    color: 0 0 0 0;
 	    min: 32 64;
 	    align: 0.5 0.0;
 	    rel1 {
@@ -171,7 +170,6 @@ group {
 	 clip_to: "exe_list_clip";
 	 description {
 	    state: "default" 0.0;
-	    color: 0 0 0 0;
 	    min: 32 64;
 	    align: 0.5 1.0;
 	    rel1 {
@@ -317,7 +315,6 @@ group {
 	 type: SWALLOW;
 	 description {
 	    state: "default" 0.0;
-	    color: 0 0 0 0;
 	    aspect: 1.0 1.0;
 	    align: 0.0 0.5;
 	    aspect_preference: VERTICAL;
@@ -771,7 +768,6 @@ group {
 	 type: SWALLOW;
 	 description {
 	    state: "default" 0.0;
-	    color: 0 0 0 0;
 	    aspect: 1.0 1.0;
 	    align: 0.0 0.5;
 	    aspect_preference: VERTICAL;

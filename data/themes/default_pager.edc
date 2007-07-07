@@ -202,7 +202,6 @@ group {
 	       to: "overlay";
 	       offset:   -5    -5;
 	    }
-	    color: 0 0 0 0;
 	 }
       }
       part {
@@ -328,7 +327,6 @@ group {
 	    rel2 {
 	       offset:   -3    -3;
 	    }
-	    color: 0 0 0 0;
 	 }
       }
       part {
@@ -663,7 +661,6 @@ group {
 	    rel2 {
 	       offset:   -2  -2;
 	    }
-	    color:       0 0 0 0;
 	 }
       }
    }

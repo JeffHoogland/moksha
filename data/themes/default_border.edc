@@ -1041,7 +1041,6 @@ group {
 	       offset:   -2   -3;
 	       to:       "t1";
 	    }
-	    color: 0 0 0 0;
 	 }
       }
       part {
@@ -2177,7 +2176,6 @@ group {
 	       offset:   -2   -3;
 	       to:       "t1";
 	    }
-	    color: 0 0 0 0;
 	 }
       }
       part {
@@ -3366,7 +3364,6 @@ group {
 	       offset:   -2   -3;
 	       to:       "t1";
 	    }
-	    color: 0 0 0 0;
 	 }
       }
       part {
@@ -4516,7 +4513,6 @@ group {
 	       offset:   -2   -3;
 	       to:       "t1";
 	    }
-	    color: 0 0 0 0;
 	 }
       }
       part {

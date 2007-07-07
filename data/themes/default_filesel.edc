@@ -56,7 +56,6 @@ group {
 	    rel2 {
 	       offset:   -13    -5;
 	    }
-	    color: 0 0 0 0;
 	 }
 	 description {
 	    state:    "top" 0.0;
@@ -86,7 +85,6 @@ group {
 	       relative: 1.0 1.0;
 	       offset:   -13 -5;
 	    }
-	    color:  0 0 0 255;
 	 }
       }
       part {

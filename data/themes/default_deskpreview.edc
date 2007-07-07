@@ -50,7 +50,6 @@ group {
 	    rel2 {
 	       offset:   -3    -3;
 	    }
-	    color: 0 0 0 0;
 	 }
       }
       part {

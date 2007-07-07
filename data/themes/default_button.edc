@@ -66,7 +66,6 @@ group {
 	 description {
 	    state: "default" 0.0;
 	    align: 0.0 0.5;
-	    color: 0 0 0 0;
 	    rel1 {
 	       relative: 0.0 0.0;
 	       offset:   4   8;
@@ -84,7 +83,6 @@ group {
 	    aspect: 1.0 1.0;
 	    aspect_preference: VERTICAL;
 	    align: 0.0 0.5;
-	    color: 0 0 0 0;
 	    rel1 {
 	       relative: 0.0 0.0;
 	       offset:   8  8;

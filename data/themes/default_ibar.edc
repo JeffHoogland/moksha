@@ -40,7 +40,6 @@ group {
 	       relative: 1.0  1.0;
 	       offset:   -3   -3;
 	    }
-	    color: 0 0 0 0;
 	 }
 	 description {
 	    state:    "bigger" 0.0;
@@ -189,7 +188,6 @@ group {
 	    rel2 {
 	       to:       "background";
 	    }
-	    color: 0 0 0 0;
 	 }
       }
       part {      

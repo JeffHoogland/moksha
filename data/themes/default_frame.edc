@@ -22,7 +22,6 @@ group {
 	       relative: 1.0  1.0;
 	       offset:   -4   -4;
 	    }
-	    color:       0 0 0 0;
 	 }
       }
       part {
