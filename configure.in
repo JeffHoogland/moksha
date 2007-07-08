@@ -258,6 +258,16 @@ src/modules/conf_colors/Makefile
 src/modules/conf_colors/module.desktop
 src/modules/conf_fonts/Makefile
 src/modules/conf_fonts/module.desktop
+src/modules/conf_borders/Makefile
+src/modules/conf_borders/module.desktop
+src/modules/conf_icon_theme/Makefile
+src/modules/conf_icon_theme/module.desktop
+src/modules/conf_mouse_cursor/Makefile
+src/modules/conf_mouse_cursor/module.desktop
+src/modules/conf_transitions/Makefile
+src/modules/conf_transitions/module.desktop
+src/modules/conf_startup/Makefile
+src/modules/conf_startup/module.desktop
 src/preload/Makefile
 data/Makefile
 data/fonts/Makefile

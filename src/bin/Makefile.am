@@ -119,12 +119,9 @@ e_slider.h \
 e_widget_slider.h \
 e_int_config_window_manipulation.h \
 e_int_config_window_display.h \
-e_int_config_icon_themes.h \
 e_int_config_menus.h \
 e_int_config_keybindings.h \
 e_int_config_mousebindings.h \
-e_int_config_cursor.h \
-e_int_config_startup.h \
 e_int_config_performance.h \
 e_int_config_winlist.h \
 e_int_config_display.h \
@@ -169,22 +166,20 @@ e_widget_color_well.h \
 e_color_dialog.h  \
 e_sys.h \
 e_obj_dialog.h \
-e_int_config_transitions.h \
 e_fwin.h \
 e_widget_aspect.h \
 e_filereg.h \
 e_widget_desk_preview.h \
-e_int_config_borders.h \
 e_int_config_desk.h \
 e_int_config_clientlist.h \
 e_fm_prop.h \
-e_int_config_mouse.h \
 e_mouse.h \
 e_order.h \
 e_exec.h \
 e_widget_font_preview.h \
 e_fm_custom.h \
-e_fm_shared.h
+e_fm_shared.h \
+e_int_config_mouse.h
  
 enlightenment_src = \
 e_user.c \
@@ -275,12 +270,9 @@ e_slider.c \
 e_widget_slider.c \
 e_int_config_window_manipulation.c \
 e_int_config_window_display.c \
-e_int_config_icon_themes.c \
 e_int_config_menus.c \
 e_int_config_keybindings.c \
 e_int_config_mousebindings.c \
-e_int_config_cursor.c \
-e_int_config_startup.c \
 e_int_config_performance.c \
 e_int_config_winlist.c \
 e_int_config_display.c \
@@ -327,22 +319,20 @@ e_widget_csel.c \
 e_widget_color_well.c \
 e_color_dialog.c \
 e_sys.c \
-e_int_config_transitions.c \
 e_obj_dialog.c \
 e_fwin.c \
 e_widget_aspect.c \
 e_widget_desk_preview.c \
 e_filereg.c \
-e_int_config_borders.c \
 e_int_config_desk.c \
 e_fm_prop.c \
 e_int_config_clientlist.c \
-e_int_config_mouse.c \
 e_mouse.c \
 e_order.c \
 e_exec.c \
 e_widget_font_preview.c \
 e_fm_custom.c \
+e_int_config_mouse.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \
