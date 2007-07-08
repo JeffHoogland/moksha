@@ -40,6 +40,8 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m)
 {
+   E_Config_Dialog *cfd;
+   while ((cfd = e_config_dialog_get("E", "_config_startup_dialog"))) e_object_del(E_OBJECT(cfd));
    e_configure_registry_item_del("appearance/startup");
    e_configure_registry_category_del("appearance");
    conf_module = NULL;
