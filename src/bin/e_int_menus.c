@@ -73,6 +73,7 @@ static void _e_int_menus_shelves_del_cb      (void *data, E_Menu *m, E_Menu_Item
 static void _e_int_menus_main_showhide       (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_desk_item_cb        (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_items_del_hook      (void *obj);
+static void _e_int_menus_item_label_set      (Efreet_Menu *entry, E_Menu_Item *mi);
 
 /* local subsystem globals */
 static Evas_Hash *_e_int_menus_augmentation = NULL;
@@ -534,12 +535,14 @@ _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
    if (menu->entries)
      {
 	Efreet_Menu *entry;
-
+	
         ecore_list_goto_first(menu->entries);
 	while ((entry = ecore_list_next(menu->entries)))
 	  {
 	     mi = e_menu_item_new(m);
-	     if (entry->name) e_menu_item_label_set(mi, entry->name);
+	     
+	     _e_int_menus_item_label_set(entry, mi);
+	     
 	     if (entry->icon)
 	       {
 		  const char *file;
@@ -1630,4 +1633,43 @@ static void
 _e_int_menus_shelves_del_cb(void *data, E_Menu *m, E_Menu_Item *mi) 
 {
    e_configure_registry_call("extensions/shelves", m->zone->container, NULL);
+}
+
+static void 
+_e_int_menus_item_label_set(Efreet_Menu *entry, E_Menu_Item *mi) 
+{
+   Efreet_Desktop *desktop;
+   char label[4096];
+   int opt = 0;
+   
+   if ((!entry) || (!mi)) return;
+   
+   desktop = entry->desktop;
+   if ((e_config->menu_eap_name_show) && (entry->name)) opt |= 0x4;
+   if (desktop) 
+     {
+	if ((e_config->menu_eap_generic_show) && (desktop->generic_name)) 
+	  opt |= 0x2;
+	if ((e_config->menu_eap_comment_show) && (desktop->comment))
+	  opt |= 0x1;
+     }
+   
+   if (opt == 0x7) 
+     snprintf(label, sizeof(label), "%s (%s) [%s]", entry->name, desktop->generic_name, desktop->comment);
+   else if (opt == 0x6) 
+     snprintf(label, sizeof(label), "%s (%s)", entry->name, desktop->generic_name);
+   else if (opt == 0x5) 
+     snprintf(label, sizeof(label), "%s [%s]", entry->name, desktop->comment);
+   else if (opt == 0x4) 
+     snprintf(label, sizeof(label), "%s", entry->name);
+   else if (opt == 0x3) 
+     snprintf(label, sizeof(label), "%s [%s]", desktop->generic_name, desktop->comment);
+   else if (opt == 0x2) 
+     snprintf(label, sizeof(label), "%s", desktop->generic_name);
+   else if (opt == 0x1) 
+     snprintf(label, sizeof(label), "%s", desktop->comment);
+   else
+     snprintf(label, sizeof(label), "%s", entry->name);
+   
+   e_menu_item_label_set(mi, label);
 }
