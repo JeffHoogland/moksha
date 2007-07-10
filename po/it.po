@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-07-08 11:52+0200\n"
+"POT-Creation-Date: 2007-07-10 08:37+0900\n"
 "PO-Revision-Date: 2007-07-08 11:03+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@inwind.it>\n"
 "Language-Team: none\n"
@@ -19,7 +19,7 @@ msgid "About Enlightenment"
 msgstr "Informazioni su Enlightenment"
 
 #: src/bin/e_about.c:74 src/bin/e_actions.c:2271 src/bin/e_actions.c:2275
-#: src/bin/e_actions.c:2279 src/bin/e_actions.c:2283 src/bin/e_int_menus.c:163
+#: src/bin/e_actions.c:2279 src/bin/e_actions.c:2283 src/bin/e_int_menus.c:164
 #: src/bin/e_main.c:834
 msgid "Enlightenment"
 msgstr "Enlightenment"
@@ -270,7 +270,7 @@ msgstr "Commuta stato attaccata"
 #: src/bin/e_actions.c:2159 src/bin/e_actions.c:2161 src/bin/e_actions.c:2163
 #: src/bin/e_actions.c:2165 src/bin/e_actions.c:2167 src/bin/e_actions.c:2169
 #: src/bin/e_actions.c:2312 src/bin/e_actions.c:2317
-#: src/bin/e_int_config_clientlist.c:103 src/bin/e_int_menus.c:138
+#: src/bin/e_int_config_clientlist.c:103 src/bin/e_int_menus.c:139
 #: src/modules/ibox/e_mod_config.c:139
 msgid "Desktop"
 msgstr "Desktop"
@@ -454,11 +454,11 @@ msgstr "Finestra successiva"
 msgid "Previous Window"
 msgstr "Finestra precedente"
 
-#: src/bin/e_actions.c:2271 src/bin/e_int_menus.c:182
+#: src/bin/e_actions.c:2271 src/bin/e_int_menus.c:183
 msgid "Restart"
 msgstr "Riavvia"
 
-#: src/bin/e_actions.c:2275 src/bin/e_int_menus.c:187
+#: src/bin/e_actions.c:2275 src/bin/e_int_menus.c:188
 msgid "Exit"
 msgstr "Esci"
 
@@ -472,7 +472,7 @@ msgstr "Esci immediatamente"
 
 #: src/bin/e_actions.c:2287 src/bin/e_actions.c:2291 src/bin/e_actions.c:2295
 #: src/bin/e_actions.c:2299 src/bin/e_int_config_desklock.c:195
-#: src/bin/e_int_config_imc.c:821 src/bin/e_int_menus.c:207
+#: src/bin/e_int_config_imc.c:821 src/bin/e_int_menus.c:208
 #: src/modules/conf_startup/e_int_config_startup.c:273
 #: src/modules/conf_theme/e_int_config_theme.c:378
 #: src/modules/conf_theme/e_int_config_theme.c:845
@@ -481,15 +481,15 @@ msgstr "Esci immediatamente"
 msgid "System"
 msgstr "Sistema"
 
-#: src/bin/e_actions.c:2287 src/bin/e_int_menus.c:881
+#: src/bin/e_actions.c:2287 src/bin/e_int_menus.c:884
 msgid "Shut Down"
 msgstr "Arresta"
 
-#: src/bin/e_actions.c:2291 src/bin/e_int_menus.c:874
+#: src/bin/e_actions.c:2291 src/bin/e_int_menus.c:877
 msgid "Reboot"
 msgstr "Riavvia"
 
-#: src/bin/e_actions.c:2295 src/bin/e_int_menus.c:860
+#: src/bin/e_actions.c:2295 src/bin/e_int_menus.c:863
 msgid "Suspend"
 msgstr "Sospendi"
 
@@ -505,7 +505,7 @@ msgstr "Finestra di \"Esegui comando\""
 msgid "Desktop Lock"
 msgstr "Bloccaschermo"
 
-#: src/bin/e_actions.c:2317 src/bin/e_int_menus.c:1240
+#: src/bin/e_actions.c:2317 src/bin/e_int_menus.c:1243
 msgid "Cleanup Windows"
 msgstr "Ordina Finestre"
 
@@ -667,7 +667,7 @@ msgstr "Categorie"
 msgid "Items"
 msgstr "Oggetti"
 
-#: src/bin/e_configure.c:435 src/bin/e_int_menus.c:115
+#: src/bin/e_configure.c:435 src/bin/e_int_menus.c:116
 msgid "Applications"
 msgstr "Applicazioni"
 
@@ -724,8 +724,8 @@ msgstr "Combinazioni del mouse"
 msgid "Mouse Acceleration"
 msgstr "Accelerazione mouse"
 
-#: src/bin/e_configure.c:453 src/bin/e_int_menus.c:146
-#: src/bin/e_int_menus.c:1197
+#: src/bin/e_configure.c:453 src/bin/e_int_menus.c:147
+#: src/bin/e_int_menus.c:1200
 msgid "Windows"
 msgstr "Finestre"
 
@@ -786,7 +786,7 @@ msgstr "Prestazioni"
 msgid "Window List"
 msgstr "Lista finestre"
 
-#: src/bin/e_configure.c:474 src/bin/e_int_menus.c:128
+#: src/bin/e_configure.c:474 src/bin/e_int_menus.c:129
 msgid "Run Command"
 msgstr "Esegui comando"
 
@@ -803,14 +803,14 @@ msgid "Extensions"
 msgstr "Estensioni"
 
 #: src/bin/e_configure.c:479 src/bin/e_int_config_modules.c:244
-#: src/bin/e_int_config_paths.c:88 src/bin/e_int_menus.c:787
+#: src/bin/e_int_config_paths.c:88 src/bin/e_int_menus.c:790
 #: src/modules/conf_colors/e_int_config_color_classes.c:83
 #: src/modules/conf_fonts/e_int_config_fonts.c:97
 msgid "Modules"
 msgstr "Moduli"
 
-#: src/bin/e_configure.c:480 src/bin/e_int_menus.c:245
-#: src/bin/e_int_menus.c:795
+#: src/bin/e_configure.c:480 src/bin/e_int_menus.c:246
+#: src/bin/e_int_menus.c:798
 msgid "Shelves"
 msgstr "Mensole portamoduli"
 
@@ -4235,7 +4235,7 @@ msgstr "Disabilitato"
 msgid "Module Actions"
 msgstr "Azioni del modulo"
 
-#: src/bin/e_int_config_modules.c:271 src/bin/e_int_menus.c:169
+#: src/bin/e_int_config_modules.c:271 src/bin/e_int_menus.c:170
 msgid "About"
 msgstr "Informazioni su..."
 
@@ -4490,7 +4490,7 @@ msgstr "Impostazioni mensole portamoduli"
 msgid "Configured Shelves"
 msgstr "Mensole configurate"
 
-#: src/bin/e_int_config_shelf.c:133 src/bin/e_int_menus.c:1529
+#: src/bin/e_int_config_shelf.c:133 src/bin/e_int_menus.c:1532
 #: src/bin/e_shelf.c:1025
 msgid "Shelf #"
 msgstr "Mensola #"
@@ -4801,88 +4801,88 @@ msgstr ""
 "che la configurazione<br>del metodo di input sia giusta e "
 "che<br>l'eseguibile di configurazione sia nel<br>proprio PATH<br>"
 
-#: src/bin/e_int_menus.c:90
+#: src/bin/e_int_menus.c:91
 msgid "Main"
 msgstr "Principale"
 
-#: src/bin/e_int_menus.c:104
+#: src/bin/e_int_menus.c:105
 msgid "Favorite Applications"
 msgstr "Applicazioni preferite"
 
-#: src/bin/e_int_menus.c:122
+#: src/bin/e_int_menus.c:123
 msgid "Files"
 msgstr "File e directory"
 
-#: src/bin/e_int_menus.c:174 src/bin/e_int_menus.c:779
+#: src/bin/e_int_menus.c:175 src/bin/e_int_menus.c:782
 #: src/modules/conf_theme/e_mod_main.c:35
 msgid "Theme"
 msgstr "Tema"
 
-#: src/bin/e_int_menus.c:197 src/modules/battery/e_mod_main.c:175
+#: src/bin/e_int_menus.c:198 src/modules/battery/e_mod_main.c:175
 #: src/modules/ibar/e_mod_main.c:298 src/modules/ibar/e_mod_main.c:775
 #: src/modules/ibox/e_mod_main.c:289 src/modules/ibox/e_mod_main.c:687
 #: src/modules/pager/e_mod_main.c:644 src/modules/temperature/e_mod_main.c:166
 msgid "Configuration"
 msgstr "Configurazione"
 
-#: src/bin/e_int_menus.c:237
+#: src/bin/e_int_menus.c:238
 msgid "Virtual"
 msgstr "Virtuali"
 
-#: src/bin/e_int_menus.c:255
+#: src/bin/e_int_menus.c:256
 msgid "Show/Hide All Windows"
 msgstr "Mostra/nascondi tutte le finestre"
 
-#: src/bin/e_int_menus.c:575
+#: src/bin/e_int_menus.c:578
 msgid "(No Applications)"
 msgstr "(Nessuna Applicazione)"
 
-#: src/bin/e_int_menus.c:710
+#: src/bin/e_int_menus.c:713
 msgid "Configure Virtual Desktops"
 msgstr "Configura desktop virtuali"
 
-#: src/bin/e_int_menus.c:761
+#: src/bin/e_int_menus.c:764
 msgid "Configuration Panel"
 msgstr "Pannello di configurazione"
 
-#: src/bin/e_int_menus.c:771 src/modules/conf_wallpaper/e_mod_main.c:35
+#: src/bin/e_int_menus.c:774 src/modules/conf_wallpaper/e_mod_main.c:35
 #: src/modules/conf_wallpaper/e_mod_main.c:37
 msgid "Wallpaper"
 msgstr "Sfondo"
 
-#: src/bin/e_int_menus.c:845
+#: src/bin/e_int_menus.c:848
 msgid "Lock Screen"
 msgstr "Blocca schermo"
 
-#: src/bin/e_int_menus.c:867
+#: src/bin/e_int_menus.c:870
 msgid "Hibernate"
 msgstr "Iberna"
 
-#: src/bin/e_int_menus.c:890
+#: src/bin/e_int_menus.c:893
 msgid "Logout"
 msgstr "Chiudi sessione"
 
-#: src/bin/e_int_menus.c:1203 src/bin/e_int_menus.c:1398
+#: src/bin/e_int_menus.c:1206 src/bin/e_int_menus.c:1401
 msgid "(No Windows)"
 msgstr "(Nessuna Finestra)"
 
-#: src/bin/e_int_menus.c:1253
+#: src/bin/e_int_menus.c:1256
 msgid "Lost Windows"
 msgstr "Finestre perse"
 
-#: src/bin/e_int_menus.c:1299 src/bin/e_int_menus.c:1411
+#: src/bin/e_int_menus.c:1302 src/bin/e_int_menus.c:1414
 msgid "No name!!"
 msgstr "Nessun nome!!"
 
-#: src/bin/e_int_menus.c:1515
+#: src/bin/e_int_menus.c:1518
 msgid "(No Shelves)"
 msgstr "(Nessuna mensola)"
 
-#: src/bin/e_int_menus.c:1582
+#: src/bin/e_int_menus.c:1585
 msgid "Add A Shelf"
 msgstr "Aggiungi mensola"
 
-#: src/bin/e_int_menus.c:1588
+#: src/bin/e_int_menus.c:1591
 msgid "Delete A Shelf"
 msgstr "Elimina mensola"
 
@@ -6572,11 +6572,11 @@ msgstr ""
 "Enlightenment non ha potuto importare lo sfondo.<br>Siete sicuri che sia uno "
 "sfondo valido?"
 
-#: src/modules/conf_wallpaper/e_mod_main.c:66
+#: src/modules/conf_wallpaper/e_mod_main.c:65
 msgid "Enlightenment Configuration Module - Wallpaper"
 msgstr "Modulo configurazione di Enlightenment - Sfondo"
 
-#: src/modules/conf_wallpaper/e_mod_main.c:67
+#: src/modules/conf_wallpaper/e_mod_main.c:66
 msgid "Configuration dialog for wallpaper configuration."
 msgstr "Finestra di configurazione dello sfondo."
 

@@ -529,4 +529,25 @@ e17_well_overlay.png \
 e17_winlist_bottom.png \
 e17_winlist_top.png \
 entry.png \
-focus.png
+focus.png \
+e17_button_detail_skip.png \
+e17_button_detail_skip_pager.png \
+e17_icon_fileman_hdd.png \
+application-x-executable.png \
+audio-x-generic.png \
+folder_opened.png \
+folder.png \
+font-x-generic.png \
+image-x-generic.png \
+package-x-generic.png \
+text-html.png \
+text-x-generic.png \
+text-x-generic-template.png \
+text-x-script.png \
+user-home.png \
+video-x-generic.png \
+x-office-address-book.png \
+x-office-calendar.png \
+x-office-document.png \
+x-office-presentation.png \
+x-office-spreadsheet.png
