@@ -550,4 +550,5 @@ x-office-address-book.png \
 x-office-calendar.png \
 x-office-document.png \
 x-office-presentation.png \
-x-office-spreadsheet.png
+x-office-spreadsheet.png \
+e17_icon_fileman_desktop.png
