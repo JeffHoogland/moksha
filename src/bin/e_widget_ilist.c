@@ -100,6 +100,79 @@ e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, const char *label, vo
 }
 
 EAPI void
+e_widget_ilist_append_relative(Evas_Object *obj, Evas_Object *icon, const char *label, void (*func) (void *data), void *data, const char *val, int relative)
+{
+   E_Widget_Data *wd;
+   E_Widget_Callback *wcb, *rcb;
+   
+   wd = e_widget_data_get(obj);
+   wcb = E_NEW(E_Widget_Callback, 1);
+   if (!wcb) return;
+   wcb->func = func;
+   wcb->data = data;
+   if (val) wcb->value = strdup(val);
+
+   rcb = evas_list_nth(wd->callbacks, relative);
+   if (rcb) 
+     {
+	wd->callbacks = evas_list_append_relative(wd->callbacks, wcb, rcb);
+	e_ilist_append_relative(wd->o_ilist, icon, label, 0, _e_wid_cb_item_sel, _e_wid_cb_item_hilight, wd, wcb, relative);
+     }
+   else 
+     {
+	wd->callbacks = evas_list_append(wd->callbacks, wcb);
+	e_ilist_append(wd->o_ilist, icon, label, 0, _e_wid_cb_item_sel, _e_wid_cb_item_hilight, wd, wcb);
+     }
+
+   if (icon) evas_object_show(icon);
+}
+
+EAPI void
+e_widget_ilist_prepend(Evas_Object *obj, Evas_Object *icon, const char *label, void (*func) (void *data), void *data, const char *val)
+{
+   E_Widget_Data *wd;
+   E_Widget_Callback *wcb;
+   
+   wd = e_widget_data_get(obj);
+   wcb = E_NEW(E_Widget_Callback, 1);
+   if (!wcb) return;
+   wcb->func = func;
+   wcb->data = data;
+   if (val) wcb->value = strdup(val);
+   wd->callbacks = evas_list_prepend(wd->callbacks, wcb);
+   e_ilist_prepend(wd->o_ilist, icon, label, 0, _e_wid_cb_item_sel, _e_wid_cb_item_hilight, wd, wcb);
+   if (icon) evas_object_show(icon);
+}
+
+EAPI void
+e_widget_ilist_prepend_relative(Evas_Object *obj, Evas_Object *icon, const char *label, void (*func) (void *data), void *data, const char *val, int relative)
+{
+   E_Widget_Data *wd;
+   E_Widget_Callback *wcb, *rcb;
+   
+   wd = e_widget_data_get(obj);
+   wcb = E_NEW(E_Widget_Callback, 1);
+   if (!wcb) return;
+   wcb->func = func;
+   wcb->data = data;
+   if (val) wcb->value = strdup(val);
+   
+   rcb = evas_list_nth(wd->callbacks, relative);
+   if (rcb) 
+     {
+	wd->callbacks = evas_list_prepend_relative(wd->callbacks, wcb, rcb);
+	e_ilist_prepend_relative(wd->o_ilist, icon, label, 0, _e_wid_cb_item_sel, _e_wid_cb_item_hilight, wd, wcb, relative);
+     }
+   else 
+     {
+	wd->callbacks = evas_list_prepend(wd->callbacks, wcb);
+	e_ilist_prepend(wd->o_ilist, icon, label, 0, _e_wid_cb_item_sel, _e_wid_cb_item_hilight, wd, wcb);
+     }
+
+   if (icon) evas_object_show(icon);
+}
+
+EAPI void
 e_widget_ilist_header_append(Evas_Object *obj, Evas_Object *icon, const char *label)
 {
    E_Widget_Data *wd;

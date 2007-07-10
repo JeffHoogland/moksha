@@ -18,6 +18,8 @@ static void _list_cb_selected(void *data);
 static void _cb_categories(void *data, void *data2);
 static void _cb_add(void *data, void *data2);
 static void _cb_del(void *data, void *data2);
+static void _cb_up(void *data, void *data2);
+static void _cb_down(void *data, void *data2);
 static int _cb_desktop_name_sort(Efreet_Desktop *a, Efreet_Desktop *b);
 
 static int _save_menu(E_Config_Dialog_Data *cfdata);
@@ -41,6 +43,7 @@ struct _E_Config_Dialog_Data
 
    Evas_Object *o_apps, *o_list;
    Evas_Object *o_add, *o_del, *o_categories;
+   Evas_Object *o_up, *o_down;
    Ecore_List *apps;
    const char *category;
    int category_n;
@@ -304,6 +307,18 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 2, 0, 1, 4, 1, 1, 1, 1);
 
+   ob = e_widget_button_add(evas, _("Up"), "widget/up_arrow", 
+			    _cb_up, cfdata, NULL);
+   cfdata->o_up = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_table_object_append(ot, ob, 3, 1, 1, 1, 1, 0, 0, 0);
+
+   ob = e_widget_button_add(evas, _("Down"), "widget/down_arrow", 
+			    _cb_down, cfdata, NULL);
+   cfdata->o_down = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_table_object_append(ot, ob, 3, 2, 1, 1, 1, 0, 0, 0);
+   
    e_dialog_resizable_set(cfd->dia, 1);
    return ot;
 }
@@ -497,9 +512,21 @@ static void
 _list_cb_selected(void *data) 
 {
    E_Config_Dialog_Data *cfdata;
+   int sel, count;
    
    cfdata = data;
    e_widget_disabled_set(cfdata->o_del, 0);
+
+   count = e_widget_ilist_count(cfdata->o_list);
+   sel = e_widget_ilist_selected_get(cfdata->o_list);
+   if (sel == 0) 
+     e_widget_disabled_set(cfdata->o_up, 1);
+   else
+     e_widget_disabled_set(cfdata->o_up, 0);
+   if (sel < (count -1))
+     e_widget_disabled_set(cfdata->o_down, 0);
+   else
+     e_widget_disabled_set(cfdata->o_down, 1);
 }
 
 static void 
@@ -578,4 +605,96 @@ _cb_del(void *data, void *data2)
    if (!desk) return;
    if (ecore_list_goto(cfdata->apps, desk))
      ecore_list_remove(cfdata->apps);
+}
+
+static void 
+_cb_up(void *data, void *data2) 
+{
+   E_Config_Dialog_Data *cfdata;
+   Efreet_Desktop *desk;
+   Evas *evas;
+   Evas_Object *icon;
+   Evas_Coord w;
+   int sel, i;
+
+   cfdata = data;
+   if (!cfdata->apps) return;
+   
+   sel = e_widget_ilist_selected_get(cfdata->o_list);
+   if (sel < 0) return;
+
+   desk = efreet_desktop_get(cfdata->fav);
+   if (!desk) return;
+
+   evas = evas_object_evas_get(cfdata->o_list);
+   evas_event_freeze(evas);
+   edje_freeze();
+   e_widget_ilist_freeze(cfdata->o_list);
+   e_widget_ilist_remove_num(cfdata->o_list, sel);
+   e_widget_ilist_go(cfdata->o_list);
+   
+   icon = e_util_desktop_icon_add(desk, "24x24", evas);
+   e_widget_ilist_prepend_relative(cfdata->o_list, icon, desk->name, 
+			 _list_cb_selected, cfdata, cfdata->fav, (sel - 1));
+   e_widget_ilist_selected_set(cfdata->o_list, (sel - 1));
+   e_widget_ilist_go(cfdata->o_list);
+   e_widget_min_size_get(cfdata->o_list, &w, NULL);
+   e_widget_min_size_set(cfdata->o_list, w, 200);
+   e_widget_ilist_thaw(cfdata->o_list);
+   edje_thaw();
+   evas_event_thaw(evas);
+
+   if (ecore_list_goto(cfdata->apps, desk)) 
+     {
+	i = ecore_list_index(cfdata->apps);
+	ecore_list_remove(cfdata->apps);
+	ecore_list_goto_index(cfdata->apps, (i - 1));
+	ecore_list_insert(cfdata->apps, desk);
+     }
+}
+
+static void 
+_cb_down(void *data, void *data2) 
+{
+   E_Config_Dialog_Data *cfdata;
+   Efreet_Desktop *desk;
+   Evas *evas;
+   Evas_Object *icon;
+   Evas_Coord w;
+   int sel, i;
+
+   cfdata = data;
+   if (!cfdata->apps) return;
+   
+   sel = e_widget_ilist_selected_get(cfdata->o_list);
+   if (sel < 0) return;
+
+   desk = efreet_desktop_get(cfdata->fav);
+   if (!desk) return;
+
+   evas = evas_object_evas_get(cfdata->o_list);
+   evas_event_freeze(evas);
+   edje_freeze();
+   e_widget_ilist_freeze(cfdata->o_list);
+   e_widget_ilist_remove_num(cfdata->o_list, sel);
+   e_widget_ilist_go(cfdata->o_list);
+   
+   icon = e_util_desktop_icon_add(desk, "24x24", evas);
+   e_widget_ilist_append_relative(cfdata->o_list, icon, desk->name, 
+			 _list_cb_selected, cfdata, cfdata->fav, sel);
+   e_widget_ilist_selected_set(cfdata->o_list, (sel + 1));
+   e_widget_ilist_go(cfdata->o_list);
+   e_widget_min_size_get(cfdata->o_list, &w, NULL);
+   e_widget_min_size_set(cfdata->o_list, w, 200);
+   e_widget_ilist_thaw(cfdata->o_list);
+   edje_thaw();
+   evas_event_thaw(evas);
+
+   if (ecore_list_goto(cfdata->apps, desk)) 
+     {
+	i = ecore_list_index(cfdata->apps);
+	ecore_list_remove(cfdata->apps);
+	ecore_list_goto_index(cfdata->apps, (i + 1));
+	ecore_list_insert(cfdata->apps, desk);
+     }
 }

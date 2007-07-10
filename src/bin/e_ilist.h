@@ -21,6 +21,9 @@ struct _E_Ilist_Item
 
 EAPI Evas_Object *e_ilist_add                   (Evas *evas);
 EAPI void         e_ilist_append                (Evas_Object *obj, Evas_Object *icon, const char *label, int header, void (*func) (void *data, void *data2), void (*func_hilight) (void *data, void *data2), void *data, void *data2);
+EAPI void         e_ilist_append_relative       (Evas_Object *obj, Evas_Object *icon, const char *label, int header, void (*func) (void *data, void *data2), void (*func_hilight) (void *data, void *data2), void *data, void *data2, int relative);
+EAPI void         e_ilist_prepend               (Evas_Object *obj, Evas_Object *icon, const char *label, int header, void (*func) (void *data, void *data2), void (*func_hilight) (void *data, void *data2), void *data, void *data2);
+EAPI void         e_ilist_prepend_relative      (Evas_Object *obj, Evas_Object *icon, const char *label, int header, void (*func) (void *data, void *data2), void (*func_hilight) (void *data, void *data2), void *data, void *data2, int relative);
 EAPI void         e_ilist_clear                 (Evas_Object *obj);
 EAPI void         e_ilist_freeze                (Evas_Object *obj);
 EAPI void         e_ilist_thaw                  (Evas_Object *obj);
