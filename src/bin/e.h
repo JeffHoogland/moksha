@@ -71,7 +71,6 @@
 #include <Ecore_File.h>
 #include <Ecore_X_Atoms.h>
 #include <Ecore_X_Cursor.h>
-#include <Ecore_DBus.h>
 #include <Eet.h>
 #include <Edje.h>
 #include <Efreet.h>

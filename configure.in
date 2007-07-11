@@ -169,7 +169,6 @@ PKG_CHECK_MODULES(E, [
   ecore
   ecore-evas
   ecore-config
-  ecore-dbus
   ecore-file
   edje
   eet
