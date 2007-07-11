@@ -231,6 +231,11 @@ _temperature_sensor_init(Config_Face *inst)
 		  inst->sensor_type = SENSOR_TYPE_OMNIBOOK;
 		  inst->sensor_name = evas_stringshare_add("dummy");
 	       }
+	     else if (ecore_file_exists("/sys/devices/temperatures/sensor1_temperature"))
+	       {
+		  inst->sensor_type = SENSOR_TYPE_LINUX_PBOOK;
+		  inst->sensor_name = evas_stringshare_add("dummy");
+	       }
 	     else if (ecore_file_exists("/sys/devices/temperatures/cpu_temperature"))
 	       {
 		  inst->sensor_type = SENSOR_TYPE_LINUX_MACMINI;
@@ -287,6 +292,9 @@ _temperature_sensor_init(Config_Face *inst)
 	      break;
 	   case SENSOR_TYPE_LINUX_MACMINI:
 		  inst->sensor_path = evas_stringshare_add("/sys/devices/temperatures/cpu_temperature");
+	      break;
+	   case SENSOR_TYPE_LINUX_PBOOK:
+		  inst->sensor_path = evas_stringshare_add("/sys/devices/temperatures/sensor1_temperature");
 	      break;
 	   case SENSOR_TYPE_LINUX_I2C:
 	      therms = ecore_file_ls("/sys/bus/i2c/devices");
@@ -369,6 +377,7 @@ _temperature_cb_check(void *data)
 	   goto error;
 	 break;
       case SENSOR_TYPE_LINUX_MACMINI:
+      case SENSOR_TYPE_LINUX_PBOOK:
 	 f = fopen(inst->sensor_path, "rb");
 	 if (f)
 	   {
