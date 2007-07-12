@@ -278,18 +278,13 @@ _e_dbus_cb_dev_all(void *user_data, void *reply_data, DBusError *error)
    while ((device = ecore_list_next(ret->strings)))
      {
 //	printf("DB INIT DEV+: %s\n", device);
-	if (!strncmp(device, "/org/freedesktop/Hal/devices/storage",
-		     strlen("/org/freedesktop/Hal/devices/storage")))
-	  {
-	     char *udi;
-	     int ret;
-	     
-	     udi = device;
-	     ret = e_hal_device_query_capability(_e_dbus_conn, udi, "storage",
-						 _e_dbus_cb_store_is, strdup(udi));
-	     e_hal_device_query_capability(_e_dbus_conn, udi, "volume", 
-					   _e_dbus_cb_vol_is, strdup(udi));
-	  }
+	char *udi;
+
+	udi = device;
+	e_hal_device_query_capability(_e_dbus_conn, udi, "storage",
+	      _e_dbus_cb_store_is, strdup(udi));
+	e_hal_device_query_capability(_e_dbus_conn, udi, "volume", 
+	      _e_dbus_cb_vol_is, strdup(udi));
      }
 }
 
