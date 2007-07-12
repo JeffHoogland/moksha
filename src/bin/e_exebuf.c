@@ -3,7 +3,7 @@
  */
 #include "e.h"
 
-/* currently default bind is alt+` buf alt+space has been suggested */
+/* currently default bind is alt+esc buf alt+space has been suggested */
 
 /* local subsystem functions */
 typedef struct _E_Exebuf_Exe E_Exebuf_Exe;
