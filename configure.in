@@ -267,6 +267,10 @@ src/modules/conf_transitions/Makefile
 src/modules/conf_transitions/module.desktop
 src/modules/conf_startup/Makefile
 src/modules/conf_startup/module.desktop
+src/modules/conf_intl/Makefile
+src/modules/conf_intl/module.desktop
+src/modules/conf_imc/Makefile
+src/modules/conf_imc/module.desktop
 src/preload/Makefile
 data/Makefile
 data/fonts/Makefile

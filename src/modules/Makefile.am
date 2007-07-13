@@ -18,4 +18,6 @@ conf_borders \
 conf_icon_theme \
 conf_mouse_cursor \
 conf_transitions \
-conf_startup
+conf_startup \
+conf_intl \
+conf_imc

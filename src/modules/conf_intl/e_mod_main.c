@@ -25,14 +25,14 @@ static E_Module *conf_module = NULL;
 EAPI E_Module_Api e_modapi =
 {
    E_MODULE_API_VERSION,
-   "Configuration - Fonts"
+   "Configuration - Language"
 };
 
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   e_configure_registry_category_add("appearance", 10, _("Appearance"), NULL, "enlightenment/appearance");
-   e_configure_registry_item_add("appearance/fonts", 40, _("Fonts"), NULL, "enlightenment/fonts", e_int_config_fonts);
+   e_configure_registry_category_add("language", 70, _("Language"), NULL, "enlightenment/intl");
+   e_configure_registry_item_add("language/language_settings", 10, _("Language Settings"), NULL, "enlightenment/intl", e_int_config_intl);
    conf_module = m;
    return m;
 }
@@ -41,9 +41,9 @@ EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    E_Config_Dialog *cfd;
-   while ((cfd = e_config_dialog_get("E", "_config_fonts_dialog"))) e_object_del(E_OBJECT(cfd));
-   e_configure_registry_item_del("appearance/fonts");
-   e_configure_registry_category_del("appearance");
+   while ((cfd = e_config_dialog_get("E", "_config_intl_dialog"))) e_object_del(E_OBJECT(cfd));
+   e_configure_registry_item_del("language/language_settings");
+   e_configure_registry_category_del("language");
    conf_module = NULL;
    return 1;
 }
@@ -58,7 +58,7 @@ EAPI int
 e_modapi_about(E_Module *m)
 {
    e_module_dialog_show(m,
-			_("Enlightenment Configuration Module - Fonts"),
-			_("Configuration dialog for fonts."));
+			_("Enlightenment Configuration Module - Language"),
+			_("Configuration dialog for language and locale."));
    return 1;
 }

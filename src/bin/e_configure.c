@@ -463,10 +463,6 @@ e_configure_init(void)
    e_configure_registry_item_add("menus/menu_settings", 30, _("Menu Settings"), NULL, "enlightenment/menu_settings", e_int_config_menus);
    e_configure_registry_item_add("menus/client_list_menu", 40, _("Client List Menu"), NULL, "enlightenment/windows", e_int_config_clientlist);
    
-   e_configure_registry_category_add("language", 70, _("Language"), NULL, "enlightenment/intl");
-   e_configure_registry_item_add("language/language_settings", 10, _("Language Settings"), NULL, "enlightenment/intl", e_int_config_intl);
-   e_configure_registry_item_add("language/input_method_settings", 20, _("Input Method Settings"), NULL, "enlightenment/imc", e_int_config_imc);
-   
    e_configure_registry_category_add("advanced", 80, _("Advanced"), NULL, "enlightenment/advanced");
    e_configure_registry_item_add("advanced/dialogs", 10, _("Dialogs"), NULL, "enlightenment/configuration", e_int_config_dialogs);
    e_configure_registry_item_add("advanced/performance", 20, _("Performance"), NULL, "enlightenment/performance", e_int_config_performance);   
