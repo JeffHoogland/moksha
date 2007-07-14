@@ -60,9 +60,9 @@ src/bin/e_int_config_display.c
 src/bin/e_int_config_dpms.c
 src/bin/e_int_config_exebuf.c
 src/bin/e_int_config_focus.c
-src/bin/e_int_config_imc.c
-src/bin/e_int_config_imc_import.c
-src/bin/e_int_config_intl.c
+src/modules/conf_imc/e_int_config_imc.c
+src/modules/conf_imc/e_int_config_imc_import.c
+src/modules/conf_intl/e_int_config_intl.c
 src/bin/e_int_config_keybindings.c
 src/bin/e_int_config_menus.c
 src/bin/e_int_config_mime.c
