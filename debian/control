@@ -2,7 +2,7 @@ Source: enlightenment
 Section: x11
 Priority: optional
 Maintainer: E17 Debian Team <debian@edevelop.org>
-Build-Depends: libevas-dev, libecore-dev, libeet-dev, libedje-dev, edje-bin, libembryo-dev, libefreet-dev, libx11-dev, x-dev, libxext-dev, automake1.7 | automaken, libtool, debhelper (>= 4.0)
+Build-Depends: cdbs, debhelper (>= 5), libevas-dev, libecore-dev, libeet-dev, libedje-dev, edje-bin, libembryo-dev, libefreet-dev, libx11-dev, x-dev, libxext-dev
 Standards-Version: 3.7.2
 
 Package: enlightenment

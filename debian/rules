@@ -3,13 +3,12 @@
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
 
-DEB_MAKE_CLEAN_TARGET := clean
-
 install/enlightenment::
 	mkdir debian/enlightenment/etc
 	mv debian/tmp/usr/etc/enlightenment debian/enlightenment/etc/
 	find debian/tmp/usr/lib/enlightenment/modules/cpufreq/ -name 'freqset' -exec chmod 4755 {} \;
+	chmod 4511 debian/enlightenment/usr/bin/enlightenment_sys
 
 clean::
-	if [ -f $(CURDIR)/../../snapshot ]; then ./autogen.sh --prefix=/usr; fi
+	./autogen.sh --prefix=/usr
 	
