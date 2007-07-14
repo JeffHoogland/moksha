@@ -7,7 +7,7 @@ install/enlightenment::
 	mkdir debian/enlightenment/etc
 	mv debian/tmp/usr/etc/enlightenment debian/enlightenment/etc/
 	find debian/tmp/usr/lib/enlightenment/modules/cpufreq/ -name 'freqset' -exec chmod 4755 {} \;
-	chmod 4511 debian/enlightenment/usr/bin/enlightenment_sys
+	chmod 4511 debian/tmp/usr/bin/enlightenment_sys
 
 clean::
 	./autogen.sh --prefix=/usr

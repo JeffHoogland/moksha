@@ -21,9 +21,9 @@ debian/tmp/usr/lib/enlightenment/modules/conf_icon_theme/*.edj
 debian/tmp/usr/lib/enlightenment/modules/conf_imc/*/*.so
 debian/tmp/usr/lib/enlightenment/modules/conf_imc/*.desktop
 debian/tmp/usr/lib/enlightenment/modules/conf_imc/*.edj
-debian/tmp/usr/lib/enlightenment/modules/onf_intl*/*.so
-debian/tmp/usr/lib/enlightenment/modules/onf_intl*.desktop
-debian/tmp/usr/lib/enlightenment/modules/onf_intl*.edj
+debian/tmp/usr/lib/enlightenment/modules/conf_intl/*/*.so
+debian/tmp/usr/lib/enlightenment/modules/conf_intl/*.desktop
+debian/tmp/usr/lib/enlightenment/modules/conf_intl/*.edj
 debian/tmp/usr/lib/enlightenment/modules/conf_mouse_cursor/*/*.so
 debian/tmp/usr/lib/enlightenment/modules/conf_mouse_cursor/*.desktop
 debian/tmp/usr/lib/enlightenment/modules/conf_mouse_cursor/*.edj
