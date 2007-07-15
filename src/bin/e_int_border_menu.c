@@ -832,6 +832,7 @@ _e_border_menu_cb_border_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    e_menu_item_radio_set(submi, 1);
    e_menu_item_radio_group_set(submi, 2);
    e_menu_item_toggle_set(submi, (bd->icon_preference == E_ICON_PREF_E_DEFAULT ? 1 : 0));
+   e_menu_item_realize_callback_set(submi, _e_border_menu_cb_default_icon, bd);
    e_menu_item_callback_set(submi, _e_border_menu_cb_iconpref_e, bd);
 
    submi = e_menu_item_new(subm);
@@ -840,6 +841,7 @@ _e_border_menu_cb_border_pre(void *data, E_Menu *m, E_Menu_Item *mi)
    e_menu_item_radio_set(submi, 1);
    e_menu_item_radio_group_set(submi, 2);
    e_menu_item_toggle_set(submi, (bd->icon_preference == E_ICON_PREF_NETWM ? 1 : 0));
+   e_menu_item_realize_callback_set(submi, _e_border_menu_cb_netwm_icon, bd);
    e_menu_item_callback_set(submi, _e_border_menu_cb_iconpref_netwm, bd);
 
    submi = e_menu_item_new(subm);
