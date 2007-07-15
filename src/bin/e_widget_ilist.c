@@ -365,10 +365,19 @@ e_widget_ilist_selected_label_get(Evas_Object *obj)
 EAPI Evas_Object *
 e_widget_ilist_selected_icon_get(Evas_Object *obj)
 {
-    E_Widget_Data *wd;
+   E_Widget_Data *wd;
    
    wd = e_widget_data_get(obj);
    return e_ilist_selected_icon_get(wd->o_ilist);
+}
+
+EAPI int 
+e_widget_ilist_selected_count_get(Evas_Object *obj) 
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   return e_ilist_selected_count_get(wd->o_ilist);
 }
 
 EAPI void

@@ -488,6 +488,25 @@ e_ilist_selected_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y, Ev
    *y -= sd->y;
 }
 
+EAPI int 
+e_ilist_selected_count_get(Evas_Object *obj) 
+{
+   Evas_List *l = NULL;
+   int count = 0;
+   
+   API_ENTRY return 0;
+   if (!sd->items) return 0;
+   for (l = sd->items; l; l = l->next) 
+     {
+	E_Ilist_Item *si;
+	
+	si = l->data;
+	if (!si) continue;
+	if (si->selected) count++;
+     }
+   return count;
+}
+
 EAPI void 
 e_ilist_remove_num(Evas_Object *obj, int n) 
 {
