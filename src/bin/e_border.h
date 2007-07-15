@@ -3,7 +3,7 @@
  */
 #ifdef E_TYPEDEFS
 
-typedef enum _E_Icon_Preferece
+typedef enum _E_Icon_Preference
 {
    E_ICON_PREF_E_DEFAULT,
    E_ICON_PREF_NETWM,

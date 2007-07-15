@@ -64,7 +64,7 @@ e_config_init(void)
 	  {
 	     char *data;
 	     int data_len = 0;
-	     
+
 	     data = eet_read(ef, "config", &data_len);
 	     if ((data) && (data_len > 0))
 	       {
