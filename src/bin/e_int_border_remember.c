@@ -43,6 +43,7 @@ struct _E_Config_Dialog_Data
       int apply_zone;
       int apply_skip_winlist;
       int apply_run;
+      int apply_icon_pref;
    } remember;
 };
 
@@ -98,6 +99,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_ZONE) cfdata->remember.apply_zone = 1;
 	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_SKIP_WINLIST) cfdata->remember.apply_skip_winlist = 1;
 	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_RUN) cfdata->remember.apply_run = 1;
+	if (cfdata->border->remember->apply & E_REMEMBER_APPLY_ICON_PREF) cfdata->remember.apply_icon_pref = 1;
      }
    if (!cfdata->border->remember) cfdata->mode = MODE_NOTHING;
    else if ((cfdata->remember.apply_pos) && (cfdata->remember.apply_size) && 
@@ -289,7 +291,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	 (cfdata->remember.apply_border) || (cfdata->remember.apply_sticky) ||
 	 (cfdata->remember.apply_desktop) || (cfdata->remember.apply_shade) ||
 	 (cfdata->remember.apply_zone) || (cfdata->remember.apply_skip_winlist) ||
-	 (cfdata->remember.apply_run)))
+	 (cfdata->remember.apply_run) || (cfdata->remember.apply_icon_pref)))
      {
 	if (cfdata->border->remember)
 	  {
@@ -397,6 +399,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if (cfdata->remember.apply_zone) cfdata->border->remember->apply |= E_REMEMBER_APPLY_ZONE;
 	if (cfdata->remember.apply_skip_winlist) cfdata->border->remember->apply |= E_REMEMBER_APPLY_SKIP_WINLIST;
 	if (cfdata->remember.apply_run) cfdata->border->remember->apply |= E_REMEMBER_APPLY_RUN;
+	if (cfdata->remember.apply_icon_pref) cfdata->border->remember->apply |= E_REMEMBER_APPLY_ICON_PREF;
 	cfdata->border->remember->apply_first_only = cfdata->remember.apply_first_only;
 	e_remember_update(cfdata->border->remember, cfdata->border);
      }
@@ -493,6 +496,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Border style"), &(cfdata->remember.apply_border));
    e_widget_frametable_object_append(of, ob, 0, 4, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_check_add(evas, _("Icon Preference"), &(cfdata->remember.apply_icon_pref));
+   e_widget_frametable_object_append(of, ob, 0, 5, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Stickiness"), &(cfdata->remember.apply_sticky));
    e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Virtual Desktop"), &(cfdata->remember.apply_desktop));

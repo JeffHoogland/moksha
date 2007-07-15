@@ -3,6 +3,13 @@
  */
 #ifdef E_TYPEDEFS
 
+typedef enum _E_Icon_Preferece
+{
+   E_ICON_PREF_E_DEFAULT,
+   E_ICON_PREF_NETWM,
+   E_ICON_PREF_USER
+} E_Icon_Preference;
+
 typedef enum _E_Direction
 {
    E_DIRECTION_UP,
@@ -390,7 +397,8 @@ struct _E_Border
    double          ping;
  
    unsigned char   changed : 1;
-   
+  
+   unsigned char   icon_preference; 
    unsigned char   ignore_first_unmap;
    unsigned char   resize_mode;
    

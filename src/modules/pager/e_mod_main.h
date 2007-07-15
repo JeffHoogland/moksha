@@ -27,7 +27,7 @@ struct _Config
    unsigned int    popup_urgent_stick;
    double          popup_urgent_speed;
    unsigned int    drag_resist;
-   unsigned char   scale;
+   unsigned int    scale;
    unsigned char   resize;
    Evas_List      *items; /* FIXME: save/load this */
    /* just config state */
@@ -37,8 +37,9 @@ struct _Config
    E_Menu          *menu;
    Evas_List       *handlers;
 
-   unsigned char    btn_drag;
-   unsigned char    btn_noplace;
+   unsigned int     btn_drag;
+   unsigned int     btn_noplace;
+   unsigned int     btn_desk;
    unsigned int     flip_desk;
 };
 

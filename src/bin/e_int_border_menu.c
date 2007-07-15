@@ -35,6 +35,10 @@ static void _e_border_menu_cb_skip(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_fav_add(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_ibar_add_pre(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_ibar_add(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_border_pre(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_iconpref_e(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_iconpref_netwm(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_iconpref_user(void *data, E_Menu *m, E_Menu_Item *mi);
 
 EAPI void
 e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_Time timestamp)
@@ -164,16 +168,13 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 			     "e/widgets/border/default/remember");
    if (!bd->lock_border)
      {
-	if (e_configure_registry_exists("internal/borders_border"))
-	  {
-	     mi = e_menu_item_new(m);
-	     e_menu_item_label_set(mi, _("Borders"));
-	     e_menu_item_callback_set(mi, _e_border_menu_cb_border, bd);
-	     e_menu_item_icon_edje_set(mi,
-				       e_theme_edje_file_get("base/theme/borders",
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Border"));
+	e_menu_item_submenu_pre_callback_set(mi, _e_border_menu_cb_border_pre, bd);
+	e_menu_item_icon_edje_set(mi,
+				  e_theme_edje_file_get("base/theme/borders",
 							"e/widgets/border/default/borderless"),
-				       "e/widgets/border/default/borderless");
-	  }
+				  "e/widgets/border/default/borderless");
      }
 
    if (!bd->sticky)
@@ -754,6 +755,99 @@ _e_border_menu_cb_lower(void *data, E_Menu *m, E_Menu_Item *mi)
      {
 	e_border_lower(bd);
      }   
+}
+
+static void
+_e_border_menu_cb_border_pre(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Menu *subm;
+   E_Menu_Item *submi;
+   E_Border *bd;
+   Evas_Object *o;
+   Evas *evas;
+
+   bd = data;
+   if (!bd) return;
+
+   subm = e_menu_new();
+   e_object_data_set(E_OBJECT(subm), bd);
+   e_menu_item_submenu_set(mi, subm);
+
+   if (!bd->lock_border)
+     {
+	if (e_configure_registry_exists("internal/borders_border"))
+	  {
+	     submi = e_menu_item_new(subm);
+	     e_menu_item_label_set(submi, _("Select Border Style"));
+	     e_menu_item_callback_set(submi, _e_border_menu_cb_border, bd);
+	     e_menu_item_icon_edje_set(submi,
+				       e_theme_edje_file_get("base/theme/borders",
+							     "e/widgets/border/default/borderless"),
+				       "e/widgets/border/default/borderless");
+	  }
+     }
+
+   submi = e_menu_item_new(subm);
+   e_menu_item_label_set(submi, _("Use E17 Default Icon Preference"));
+   e_menu_item_radio_set(submi, 1);
+   e_menu_item_radio_group_set(submi, 2);
+   e_menu_item_toggle_set(submi, (bd->icon_preference == E_ICON_PREF_E_DEFAULT ? 1 : 0));
+   e_menu_item_callback_set(submi, _e_border_menu_cb_iconpref_e, bd);
+   
+   submi = e_menu_item_new(subm);
+   evas = submi->menu->evas;
+   e_menu_item_label_set(submi, _("Use Application Provided Icon "));
+   e_menu_item_radio_set(submi, 1);
+   e_menu_item_radio_group_set(submi, 2);
+   e_menu_item_toggle_set(submi, (bd->icon_preference == E_ICON_PREF_NETWM ? 1 : 0));
+   e_menu_item_callback_set(submi, _e_border_menu_cb_iconpref_netwm, bd);
+
+   submi = e_menu_item_new(subm);
+   e_menu_item_label_set(submi, _("Use User Defined Icon"));
+   e_menu_item_radio_set(submi, 1);
+   e_menu_item_radio_group_set(submi, 2);
+   e_menu_item_toggle_set(submi, (bd->icon_preference == E_ICON_PREF_USER ? 1 : 0));
+   e_util_desktop_menu_item_icon_add(bd->desktop, "16x16", submi);
+   e_menu_item_callback_set(submi, _e_border_menu_cb_iconpref_user, bd);
+}
+
+static void 
+_e_border_menu_cb_iconpref_e(void *data, E_Menu *m, E_Menu_Item *mi) 
+{
+   E_Border *bd;
+
+   bd = data;
+   if (!bd) return;
+
+   bd->icon_preference = E_ICON_PREF_E_DEFAULT;
+   bd->changes.icon = 1;
+   bd->changed = 1;
+}
+
+static void 
+_e_border_menu_cb_iconpref_user(void *data, E_Menu *m, E_Menu_Item *mi) 
+{
+   E_Border *bd;
+
+   bd = data;
+   if (!bd) return;
+
+   bd->icon_preference = E_ICON_PREF_USER;
+   bd->changes.icon = 1;
+   bd->changed = 1;
+}
+
+static void 
+_e_border_menu_cb_iconpref_netwm(void *data, E_Menu *m, E_Menu_Item *mi) 
+{
+   E_Border *bd;
+
+   bd = data;
+   if (!bd) return;
+
+   bd->icon_preference = E_ICON_PREF_NETWM;
+   bd->changes.icon = 1;
+   bd->changed = 1;
 }
 
 static void 

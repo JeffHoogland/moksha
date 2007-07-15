@@ -303,6 +303,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, prop.zone, INT);
    E_CONFIG_VAL(D, T, prop.head, INT);
    E_CONFIG_VAL(D, T, prop.command, STR);
+   E_CONFIG_VAL(D, T, prop.icon_preference, UCHAR);
    
    _e_config_color_class_edd = E_CONFIG_DD_NEW("E_Color_Class", E_Color_Class);
 #undef T
@@ -1060,6 +1061,10 @@ e_config_init(void)
 		       "e.event.shade",
 		       E_BINDING_MODIFIER_NONE, 1,
 		       "window_shaded_toggle", "up");
+	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,clicked,?", 
+		       "e.event.lower",
+		       E_BINDING_MODIFIER_NONE, 1,
+		       "window_lower", NULL);	       
 	CFG_SIGNALBIND(E_BINDING_CONTEXT_BORDER, "mouse,down,1", 
 		       "e.event.icon",
 		       E_BINDING_MODIFIER_NONE, 1, 

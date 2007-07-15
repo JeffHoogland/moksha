@@ -5,7 +5,8 @@ typedef enum _Pager_Grab_Button Pager_Grab_Button;
 enum _Pager_Grab_Button
 {
    GRAB_BUTTON_DRAG,
-   GRAB_BUTTON_NOPLACE
+   GRAB_BUTTON_NOPLACE,
+   GRAB_BUTTON_DESK
 };
 
 struct _E_Config_Dialog_Data
@@ -16,8 +17,9 @@ struct _E_Config_Dialog_Data
    int popup_urgent_stick;
    double popup_urgent_speed;
    int drag_resist;
-   unsigned char btn_drag;
-   unsigned char btn_noplace;
+   unsigned int btn_drag;
+   unsigned int btn_noplace;
+   unsigned int btn_desk;
    int flip_desk;
 
    struct {
@@ -32,6 +34,7 @@ struct _E_Config_Dialog_Data
       Evas_Object *o_urgent_speed;
       Evas_Object *o_btn1;
       Evas_Object *o_btn2;
+      Evas_Object *o_btn3;
    } gui;
 };
 
@@ -85,6 +88,7 @@ _fill_data(Config_Item *ci, E_Config_Dialog_Data *cfdata)
    cfdata->drag_resist = pager_config->drag_resist;
    cfdata->btn_drag = pager_config->btn_drag;
    cfdata->btn_noplace = pager_config->btn_noplace;
+   cfdata->btn_desk = pager_config->btn_desk;
    cfdata->flip_desk = pager_config->flip_desk;
 }
 
@@ -144,17 +148,22 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 1);
    ob = e_widget_label_add(evas, _("Drag and Drop button (Keeps rel. loc.)"));
    e_widget_frametable_object_append(of, ob, 1, 3, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_label_add(evas, _("Drag whole desktop (Move every windowsof a desk)"));
+   e_widget_frametable_object_append(of, ob, 1, 4, 1, 1, 1, 1, 1, 1);
    ob = e_widget_button_add(evas, _("Click to set"), NULL, _grab_wnd_show, (void *)GRAB_BUTTON_DRAG, cfdata);
    e_widget_frametable_object_append(of, ob, 2, 2, 1, 1, 1, 1, 0, 0);
    cfdata->gui.o_btn1 = ob;
    ob = e_widget_button_add(evas, _("Click to set"), NULL, _grab_wnd_show, (void *)GRAB_BUTTON_NOPLACE, cfdata);
    e_widget_frametable_object_append(of, ob, 2, 3, 1, 1, 1, 1, 0, 0);
    cfdata->gui.o_btn2 = ob;
+   ob = e_widget_button_add(evas, _("Click to set"), NULL, _grab_wnd_show, (void *)GRAB_BUTTON_DESK, cfdata);
+   e_widget_frametable_object_append(of, ob, 2, 4, 1, 1, 1, 1, 0, 0);
+   cfdata->gui.o_btn3 = ob;
    _advanced_update_button_label(cfdata);
    ob = e_widget_label_add(evas, _("Resistance to dragging"));
-   e_widget_frametable_object_append(of, ob, 1, 4, 1, 1, 1, 1, 0, 0);
+   e_widget_frametable_object_append(of, ob, 1, 5, 1, 1, 1, 1, 0, 0);
    ob = e_widget_slider_add(evas, 1, 0, _("%.0f px"), 0.0, 10.0, 1.0, 0, NULL, &(cfdata->drag_resist), 200);
-   e_widget_frametable_object_append(of, ob, 1, 5, 2, 1, 1, 1, 0, 0);
+   e_widget_frametable_object_append(of, ob, 1, 6, 2, 1, 1, 1, 0, 0);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Pager Popup Settings"), 0);   
@@ -196,6 +205,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    pager_config->drag_resist = cfdata->drag_resist;
    pager_config->btn_drag = cfdata->btn_drag;
    pager_config->btn_noplace = cfdata->btn_noplace;
+   pager_config->btn_desk = cfdata->btn_desk;
    pager_config->flip_desk = cfdata->flip_desk;
    _pager_cb_config_updated();
    e_config_save_queue();
@@ -218,6 +228,12 @@ _advanced_update_button_label(E_Config_Dialog_Data *cfdata)
    else
      snprintf(label, sizeof(label), _("Click to set"));
    e_widget_button_label_set(cfdata->gui.o_btn2, label);
+   
+   if (cfdata->btn_desk)
+     snprintf(label, sizeof(label), _("Button %i"), cfdata->btn_desk);
+   else
+     snprintf(label, sizeof(label), _("Click to set"));
+   e_widget_button_label_set(cfdata->gui.o_btn3, label);
 }
 
 static void
@@ -231,6 +247,8 @@ _grab_wnd_show(void *data1, void *data2)
 
    if ((Pager_Grab_Button)data1 == GRAB_BUTTON_DRAG)
      cfdata->grab.btn = 1;
+   else if ((Pager_Grab_Button)data1 == GRAB_BUTTON_NOPLACE)
+     cfdata->grab.btn = 2;
    else
      cfdata->grab.btn = 0;
 
@@ -290,8 +308,10 @@ _grab_mouse_down_cb(void *data, int type, void *event)
      {
 	if (cfdata->grab.btn == 1)
 	  cfdata->btn_drag = ev->button;
-	else
+	else if (cfdata->grab.btn == 2)
 	  cfdata->btn_noplace = ev->button;
+	else
+	  cfdata->btn_desk = ev->button;
      }
    else
      {
@@ -320,8 +340,10 @@ _grab_key_down_cb(void *data, int type, void *event)
      {
 	if (cfdata->grab.btn == 1)
 	  cfdata->btn_drag = 0;
-	else
+	else if (cfdata->grab.btn == 2)
 	  cfdata->btn_noplace = 0;
+	else
+	  cfdata->btn_desk = 0;
 	_grab_wnd_hide(cfdata);
      }
    return 1;

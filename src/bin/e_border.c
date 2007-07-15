@@ -2628,7 +2628,7 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 	  }
 	return o;
      }
-   if (e_config->use_app_icon)
+   if ((e_config->use_app_icon) && (bd->icon_preference != E_ICON_PREF_USER))
      {
 	if (bd->client.netwm.icons)
 	  {
@@ -2642,10 +2642,11 @@ e_border_icon_add(E_Border *bd, Evas *evas)
      }
    if (!o)
      {
-	if (bd->desktop)
+	if ((bd->desktop) && (bd->icon_preference != E_ICON_PREF_NETWM))
 	  {
 	     o = e_util_desktop_icon_add(bd->desktop, "24x24", evas);
-	     return o;
+	     if (o)
+	       return o;
 	  }
 	else if (bd->client.netwm.icons)
 	  {
@@ -5643,6 +5644,8 @@ _e_border_eval(E_Border *bd)
 	       }
 	     if (rem->apply & E_REMEMBER_APPLY_SKIP_WINLIST)
 	       bd->user_skip_winlist = rem->prop.skip_winlist;
+	     if (rem->apply & E_REMEMBER_APPLY_ICON_PREF)
+	       bd->icon_preference = rem->prop.icon_preference;
 	  }
      }
 
