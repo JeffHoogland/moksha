@@ -825,6 +825,9 @@ _e_border_menu_cb_border_pre(void *data, E_Menu *m, E_Menu_Item *mi)
      }
 
    submi = e_menu_item_new(subm);
+   e_menu_item_separator_set(submi, 1);
+
+   submi = e_menu_item_new(subm);
    e_menu_item_label_set(submi, _("Use E17 Default Icon Preference"));
    e_menu_item_radio_set(submi, 1);
    e_menu_item_radio_group_set(submi, 2);
