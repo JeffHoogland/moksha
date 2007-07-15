@@ -41,6 +41,7 @@ e_int_gadcon_config(E_Gadcon *gc)
 				  "E", "_gadcon_config_dialog",
 				  "enlightenment/shelf", 0, v, gc);
 	gc->config_dialog = cfd;
+	e_dialog_resizable_set(cfd->dia, 1);
      }
 }
 
@@ -145,7 +146,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    o = e_widget_list_add(evas, 0, 1);
 
-   of = e_widget_framelist_add(evas, _("Available Gadgets"), 0);
+   of = e_widget_frametable_add(evas, _("Available Gadgets"), 0);
 
    oi = e_widget_ilist_add(evas, 24, 24, &(cfdata->name_add));
    cfdata->o_avail = oi;
@@ -153,28 +154,28 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_min_size_get(oi, &wmw, &wmh);
    if (wmw < 200) wmw = 200;
    e_widget_min_size_set(oi, wmw, 250);
-   e_widget_framelist_object_append(of, oi);
+   e_widget_frametable_object_append(of, oi, 0, 0, 1, 1, 1, 1, 1, 1);
 
    ob = e_widget_button_add(evas, _("Add Gadget"), NULL, _cb_add_instance, cfdata, NULL);
    e_widget_disabled_set(ob, 1);
    cfdata->o_add = ob;
-   e_widget_framelist_object_append(of, ob);
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 0);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Selected Gadgets"), 0);
+   of = e_widget_frametable_add(evas, _("Selected Gadgets"), 0);
    oi = e_widget_ilist_add(evas, 24, 24, &(cfdata->id_remove));
    cfdata->o_instances = oi;
    _load_selected_gadgets(cfdata);
    e_widget_min_size_get(oi, &wmw, &wmh);
    if (wmw < 200) wmw = 200;
    e_widget_min_size_set(oi, wmw, 250);
-   e_widget_framelist_object_append(of, oi);
+   e_widget_frametable_object_append(of, oi, 0, 0, 1, 1, 1, 1, 1, 1);
 
    ob = e_widget_button_add(evas, _("Remove Gadget"), NULL, _cb_remove_instance, cfdata, NULL);
    e_widget_disabled_set(ob, 1);
    cfdata->o_remove = ob;
-   e_widget_framelist_object_append(of, ob);
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 0);
    
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
