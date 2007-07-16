@@ -20,4 +20,5 @@ conf_mouse_cursor \
 conf_transitions \
 conf_startup \
 conf_intl \
-conf_imc
+conf_imc \
+conf_profiles
