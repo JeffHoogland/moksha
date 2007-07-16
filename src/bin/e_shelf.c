@@ -1193,7 +1193,9 @@ _e_shelf_cb_id_sort(void *data1, void *data2)
 
    es1 = data1;
    es2 = data2;
-   return (es1->id) > (es2->id);
+   if ((es1->id) < (es2->id)) return -1;
+   else if (es1->id > es2->id) return 1;
+   return 0;
 }
 
 static int
