@@ -608,7 +608,6 @@ _cb_mod_update(void *data, int type, void *event)
    ev = event;
    if (!cfdata) return 1;
    
-   _load_modules(cfdata);
    _fill_all(cfdata);
    _fill_loaded(cfdata);
 }
