@@ -74,6 +74,7 @@
 #include <Eet.h>
 #include <Edje.h>
 #include <Efreet.h>
+#include <Efreet_Mime.h>
 
 #if HAVE___ATTRIBUTE__
 #define __UNUSED__ __attribute__((unused))

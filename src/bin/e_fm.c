@@ -383,6 +383,7 @@ e_fm2_init(void)
 				 NULL); /* data*/
 //   _e_fm2_client_spawn();
    e_fm2_custom_file_init();
+   efreet_mime_init();
    return 1;
 }
 
@@ -394,6 +395,7 @@ e_fm2_shutdown(void)
    E_FREE(_e_fm2_meta_path);
    e_fm2_custom_file_shutdown();
    _e_storage_volume_edd_shutdown();
+   efreet_mime_shutdown();
    return 1;
 }
 
@@ -3600,7 +3602,7 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
    
    if (S_ISDIR(ic->info.statinfo.st_mode))
      {
-       ic->info.mime = evas_stringshare_add("x-directory/normal");
+       ic->info.mime = evas_stringshare_add("inode/directory");
      }
    if (!ic->info.mime)
      {
