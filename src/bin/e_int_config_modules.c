@@ -610,4 +610,5 @@ _cb_mod_update(void *data, int type, void *event)
    
    _fill_all(cfdata);
    _fill_loaded(cfdata);
+   return 1;
 }

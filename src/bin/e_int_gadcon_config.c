@@ -287,4 +287,5 @@ _cb_mod_update(void *data, int type, void *event)
    
    _load_available_gadgets(cfdata);
    _load_selected_gadgets(cfdata);
+   return 1;
 }
