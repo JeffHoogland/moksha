@@ -271,6 +271,8 @@ src/modules/conf_intl/Makefile
 src/modules/conf_intl/module.desktop
 src/modules/conf_imc/Makefile
 src/modules/conf_imc/module.desktop
+src/modules/conf_profiles/Makefile
+src/modules/conf_profiles/module.desktop
 src/preload/Makefile
 data/Makefile
 data/fonts/Makefile
