@@ -9,6 +9,7 @@ static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _load_available_gadgets(void *data);
 static void _load_selected_gadgets(void *data);
+static int _cb_mod_update(void *data, int type, void *event);
 
 /* Actual config data we will be playing with whil the dialog is active */
 struct _E_Config_Dialog_Data
@@ -19,6 +20,8 @@ struct _E_Config_Dialog_Data
    Evas_Object *o_add, *o_remove, *o_instances, *o_avail;
 
    E_Config_Gadcon *cf_gc;
+   
+   Ecore_Event_Handler *hdl;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -70,6 +73,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    cfdata->gc->config_dialog = NULL;
    if (cfdata->name_add) free(cfdata->name_add);
    if (cfdata->id_remove) free(cfdata->id_remove);
+   if (cfdata->hdl) ecore_event_handler_del(cfdata->hdl);
    E_FREE(cfdata);
 }
 
@@ -77,8 +81,8 @@ static void
 _cb_select_client(void *data)
 {
    E_Config_Dialog_Data *cfdata;
-   cfdata = data;
 
+   cfdata = data;
    e_widget_disabled_set(cfdata->o_add, 0);
 }
 
@@ -86,8 +90,8 @@ static void
 _cb_select_client_instance(void *data)
 {
    E_Config_Dialog_Data *cfdata;
-   cfdata = data;
 
+   cfdata = data;
    e_widget_disabled_set(cfdata->o_remove, 0);
 }
 
@@ -147,7 +151,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_list_add(evas, 0, 1);
 
    of = e_widget_frametable_add(evas, _("Available Gadgets"), 0);
-
    oi = e_widget_ilist_add(evas, 24, 24, &(cfdata->name_add));
    cfdata->o_avail = oi;
    _load_available_gadgets(cfdata);
@@ -155,12 +158,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    if (wmw < 200) wmw = 200;
    e_widget_min_size_set(oi, wmw, 250);
    e_widget_frametable_object_append(of, oi, 0, 0, 1, 1, 1, 1, 1, 1);
-
    ob = e_widget_button_add(evas, _("Add Gadget"), NULL, _cb_add_instance, cfdata, NULL);
    e_widget_disabled_set(ob, 1);
    cfdata->o_add = ob;
    e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 0);
-
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_frametable_add(evas, _("Selected Gadgets"), 0);
@@ -171,13 +172,14 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    if (wmw < 200) wmw = 200;
    e_widget_min_size_set(oi, wmw, 250);
    e_widget_frametable_object_append(of, oi, 0, 0, 1, 1, 1, 1, 1, 1);
-
    ob = e_widget_button_add(evas, _("Remove Gadget"), NULL, _cb_remove_instance, cfdata, NULL);
    e_widget_disabled_set(ob, 1);
    cfdata->o_remove = ob;
    e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 0);
-   
    e_widget_list_object_append(o, of, 1, 1, 0.5);
+
+   if (cfdata->hdl) ecore_event_handler_del(cfdata->hdl);
+   cfdata->hdl = ecore_event_handler_add(E_EVENT_MODULE_UPDATE, _cb_mod_update, cfdata);
 
    return o;
 }
@@ -269,4 +271,20 @@ _load_selected_gadgets(void *data)
    e_widget_ilist_thaw(oi);
    edje_thaw();
    evas_event_thaw(evas);
+}
+
+static int 
+_cb_mod_update(void *data, int type, void *event) 
+{
+   E_Event_Module_Update *ev;
+   E_Config_Dialog_Data *cfdata;
+   
+   if (type != E_EVENT_MODULE_UPDATE) return 1;
+   
+   cfdata = data;
+   ev = event;
+   if (!cfdata) return 1;
+   
+   _load_available_gadgets(cfdata);
+   _load_selected_gadgets(cfdata);
 }

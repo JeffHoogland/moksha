@@ -8,11 +8,21 @@
 typedef struct _E_Module     E_Module;
 typedef struct _E_Module_Api E_Module_Api;
 
+typedef struct _E_Event_Module_Update E_Event_Module_Update;
+
 #else
 #ifndef E_MODULE_H
 #define E_MODULE_H
 
 #define E_MODULE_TYPE 0xE0b0100b
+
+extern EAPI int E_EVENT_MODULE_UPDATE;
+
+struct _E_Event_Module_Update
+{
+   char *name;
+   unsigned char enabled : 1;
+};
 
 struct _E_Module
 {

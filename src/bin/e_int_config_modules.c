@@ -24,6 +24,7 @@ static void _cb_load(void *data, void *data2);
 static void _cb_unload(void *data, void *data2);
 static void _cb_about(void *data, void *data2);
 static void _cb_config(void *data, void *data2);
+static int  _cb_mod_update(void *data, int type, void *event);
 
 struct _E_Config_Dialog_Data 
 {
@@ -31,6 +32,8 @@ struct _E_Config_Dialog_Data
    Evas_Object *o_all, *o_loaded;
    Evas_Object *b_load, *b_unload;
    Evas_Object *b_about, *b_configure;
+   
+   Ecore_Event_Handler *hdl;
 };
 
 static Evas_List *monitors = NULL;
@@ -94,6 +97,9 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
+   /* Remove module update event handler */
+   if (cfdata->hdl) ecore_event_handler_del(cfdata->hdl);
+   
    /* Remove file monitors for module directories */
    if (mod_mon) ecore_file_monitor_del(mod_mon);
    if (dir_mon) ecore_file_monitor_del(dir_mon);
@@ -156,6 +162,12 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 0, 0, 0);
    
    e_widget_table_object_append(o, of, 1, 0, 1, 1, 1, 1, 1, 1);
+   
+   /* Setup Module update handler */
+   if (cfdata->hdl) ecore_event_handler_del(cfdata->hdl);
+   cfdata->hdl = ecore_event_handler_add(E_EVENT_MODULE_UPDATE, 
+					 _cb_mod_update, cfdata);
+   
    return o;   
 }
 
@@ -512,10 +524,6 @@ _cb_load(void *data, void *data2)
 	  e_module_enable(mod);
      }
    if (l) evas_list_free(l);
-   
-   /* Refill the lists */
-   _fill_all(cfdata);
-   _fill_loaded(cfdata);
 }
 
 static void 
@@ -552,10 +560,6 @@ _cb_unload(void *data, void *data2)
 	if ((mod) && (mod->enabled)) e_module_disable(mod);
      }
    if (l) evas_list_free(l);
-   
-   /* Refill the lists */
-   _fill_all(cfdata);
-   _fill_loaded(cfdata);
 }
 
 static void 
@@ -590,4 +594,21 @@ _cb_config(void *data, void *data2)
    mod = _get_module(cfdata, lbl);
    if (!mod) return;
    if ((mod) && (mod->func.config)) mod->func.config(mod);
+}
+
+static int 
+_cb_mod_update(void *data, int type, void *event) 
+{
+   E_Event_Module_Update *ev;
+   E_Config_Dialog_Data *cfdata;
+   
+   if (type != E_EVENT_MODULE_UPDATE) return 1;
+
+   cfdata = data;
+   ev = event;
+   if (!cfdata) return 1;
+   
+   _load_modules(cfdata);
+   _fill_all(cfdata);
+   _fill_loaded(cfdata);
 }

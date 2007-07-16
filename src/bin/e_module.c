@@ -14,14 +14,18 @@
 static void _e_module_free(E_Module *m);
 static void _e_module_dialog_disable_show(const char *title, const char *body, E_Module *m);
 static void _e_module_cb_dialog_disable(void *data, E_Dialog *dia);
+static void _e_module_event_update_free(void *data, void *event);
 
 /* local subsystem globals */
 static Evas_List *_e_modules = NULL;
+
+EAPI int E_EVENT_MODULE_UPDATE = 0;
 
 /* externally accessible functions */
 EAPI int
 e_module_init(void)
 {
+   E_EVENT_MODULE_UPDATE = ecore_event_type_new();
    return 1;
 }
 
@@ -246,6 +250,7 @@ EAPI int
 e_module_enable(E_Module *m)
 {
    Evas_List *l;
+   E_Event_Module_Update *ev;
    
    E_OBJECT_CHECK_RETURN(m, 0);
    E_OBJECT_TYPE_CHECK_RETURN(m, E_MODULE_TYPE, 0);
@@ -263,6 +268,12 @@ e_module_enable(E_Module *m)
 	       {
 		  em->enabled = 1;
 		  e_config_save_queue();
+		  
+		  ev = E_NEW(E_Event_Module_Update, 1);
+		  ev->name = strdup(em->name);
+		  ev->enabled = 1;
+		  ecore_event_add(E_EVENT_MODULE_UPDATE, ev, 
+				  _e_module_event_update_free, NULL);
 		  break;
 	       }
 	  }
@@ -274,6 +285,7 @@ e_module_enable(E_Module *m)
 EAPI int
 e_module_disable(E_Module *m)
 {
+   E_Event_Module_Update *ev;
    Evas_List *l;
    int ret;
    
@@ -292,6 +304,12 @@ e_module_disable(E_Module *m)
 	  {
 	     em->enabled = 0;
 	     e_config_save_queue();
+	     
+	     ev = E_NEW(E_Event_Module_Update, 1);
+	     ev->name = strdup(em->name);
+	     ev->enabled = 0;
+	     ecore_event_add(E_EVENT_MODULE_UPDATE, ev, 
+			     _e_module_event_update_free, NULL);
 	     break;
 	  }
      }
@@ -374,7 +392,7 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
 	     if (!icon)
 	       {
 		  snprintf(buf, sizeof(buf), "%s/%s.edj",
-			e_module_dir_get(m), desktop->icon);
+			   e_module_dir_get(m), desktop->icon);
 		  icon = buf;
 	       }
 	     dia->icon_object = e_util_icon_add(icon, e_win_evas_get(dia->win));
@@ -461,4 +479,15 @@ _e_module_cb_dialog_disable(void *data, E_Dialog *dia)
    e_object_del(E_OBJECT(m));
    e_object_del(E_OBJECT(dia));
    e_config_save_queue();
+}
+
+static void 
+_e_module_event_update_free(void *data, void *event) 
+{
+   E_Event_Module_Update *ev;
+   
+   ev = event;
+   if (!ev) return;
+   E_FREE(ev->name);
+   E_FREE(ev);
 }
