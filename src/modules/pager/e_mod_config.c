@@ -148,7 +148,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 1);
    ob = e_widget_label_add(evas, _("Drag and Drop button (Keeps rel. loc.)"));
    e_widget_frametable_object_append(of, ob, 1, 3, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_label_add(evas, _("Drag whole desktop (Move every windowsof a desk)"));
+   ob = e_widget_label_add(evas, _("Drag whole desktop (Move all windows of a desktop)"));
    e_widget_frametable_object_append(of, ob, 1, 4, 1, 1, 1, 1, 1, 1);
    ob = e_widget_button_add(evas, _("Click to set"), NULL, _grab_wnd_show, (void *)GRAB_BUTTON_DRAG, cfdata);
    e_widget_frametable_object_append(of, ob, 2, 2, 1, 1, 1, 1, 0, 0);
