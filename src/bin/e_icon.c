@@ -222,6 +222,7 @@ _e_icon_smart_reconfigure(E_Smart_Data *sd)
    int iw, ih;
    Evas_Coord x, y, w, h;
    
+   if (!sd->obj) return;
    if (!strcmp(evas_object_type_get(sd->obj), "edje"))
      {
 	w = sd->w;
