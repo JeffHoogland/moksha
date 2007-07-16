@@ -241,6 +241,11 @@ _temperature_sensor_init(Config_Face *inst)
 		  inst->sensor_type = SENSOR_TYPE_LINUX_MACMINI;
 		  inst->sensor_name = evas_stringshare_add("dummy");
 	       }
+	     else if (ecore_file_exists("/sys/devices/platform/coretemp.0/temp1_input"))
+	       {
+	          inst->sensor_type = SENSOR_TYPE_LINUX_INTELCORETEMP;
+		  inst->sensor_name = evas_stringshare_add("dummy");
+	       }
 	     else
 	       {
                   therms = temperature_get_i2c_files();
@@ -295,6 +300,9 @@ _temperature_sensor_init(Config_Face *inst)
 	      break;
 	   case SENSOR_TYPE_LINUX_PBOOK:
 		  inst->sensor_path = evas_stringshare_add("/sys/devices/temperatures/sensor1_temperature");
+	      break;
+	   case SENSOR_TYPE_LINUX_INTELCORETEMP:
+	   	  inst->sensor_path = evas_stringshare_add("/sys/devices/platform/coretemp.0/temp1_input");
 	      break;
 	   case SENSOR_TYPE_LINUX_I2C:
 	      therms = ecore_file_ls("/sys/bus/i2c/devices");
@@ -391,6 +399,7 @@ _temperature_cb_check(void *data)
 	 else
 	   goto error;
 	 break;
+      case SENSOR_TYPE_LINUX_INTELCORETEMP:
       case SENSOR_TYPE_LINUX_I2C:
 	 f = fopen(inst->sensor_path, "r");
 	 if (f)
