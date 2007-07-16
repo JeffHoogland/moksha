@@ -10,13 +10,6 @@
  * 
  */
 
-typedef struct _Module_Menu_Data Module_Menu_Data;
-
-struct _Module_Menu_Data
-{
-   Evas_List *submenus;
-};
-
 /* local subsystem functions */
 static void _e_module_free(E_Module *m);
 static void _e_module_dialog_disable_show(const char *title, const char *body, E_Module *m);
