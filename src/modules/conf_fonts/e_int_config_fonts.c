@@ -205,7 +205,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 			    E_Font_Properties *efp;
 
 			    efp = e_font_fontconfig_name_parse(efd->font);
-			    tc->font = evas_stringshare_add(efp->name);
+			    if (efp->name)
+			      tc->font = evas_stringshare_add(efp->name);
 			    if (efp->styles) 
 			      tc->style = evas_stringshare_add(efp->styles->data);
 			    e_font_properties_free(efp);
@@ -226,7 +227,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 			    E_Font_Properties *efp;
 
 			    efp = e_font_fontconfig_name_parse(efd->font);
-			    tc->font = evas_stringshare_add(efp->name);
+			    if (efp->name)
+			      tc->font = evas_stringshare_add(efp->name);
 			    if (efp->styles) 
 			      tc->style = evas_stringshare_add(efp->styles->data);
 			    e_font_properties_free(efp);
@@ -399,11 +401,14 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	if (tc->font) evas_stringshare_del(tc->font);
 	if (cfdata->cur_font)
 	  tc->font = evas_stringshare_add(cfdata->cur_font);
-
+	else
+	  tc->font = NULL;
+	
 	if (tc->style) evas_stringshare_del(tc->style);
 	if (cfdata->cur_style)
 	  tc->style = evas_stringshare_add(cfdata->cur_style);
-
+	else
+	  tc->style = NULL;
 	tc->enabled = cfdata->cur_enabled;
      }
 
@@ -784,9 +789,13 @@ _adv_class_cb_change(void *data, Evas_Object *obj)
 	if (tc->font) evas_stringshare_del(tc->font);
 	if (cfdata->cur_font)
 	  tc->font = evas_stringshare_add(cfdata->cur_font);
+	else
+	  tc->font = NULL;
 	if (tc->style) evas_stringshare_del(tc->style);
 	if (cfdata->cur_style)
 	  tc->style = evas_stringshare_add(cfdata->cur_style);
+	else
+	  tc->style = NULL;
 	if (cfdata->gui.style_list)
 	  e_widget_ilist_unselect(cfdata->gui.style_list);
 	if (cfdata->gui.size_list)
@@ -1120,6 +1129,8 @@ _adv_style_cb_change(void *data, Evas_Object *obj)
 	if (tc->style) evas_stringshare_del(tc->style);
 	if (cfdata->cur_style)
 	  tc->style = evas_stringshare_add(cfdata->cur_style);
+	else
+	  tc->style = NULL;
      }
 
    _font_preview_update(cfdata);
