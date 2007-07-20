@@ -212,7 +212,7 @@ _cb_delete(void *data, void *data2)
 
    snprintf(buf, sizeof(buf), _("You requested to delete \"%s\".<br><br>"
 				"Are you sure you want to delete this profile?"),
-                                cfdata->sel_profile);
+                                d->cfdata->sel_profile);
    e_confirm_dialog_show(_("Are you sure you want to delete this profile?"), 
 			   "enlightenment/exit", buf, NULL, NULL, _cb_dialog_yes, NULL, d, NULL, 
                            _cb_dialog_destroy, d);
@@ -247,7 +247,7 @@ _dia_new_profile(E_Config_Dialog_Data *cfdata)
 {
    E_Dialog *dia;
    Evas *evas;
-   Evas_Coord mw, mh;
+   Evas_Coord mh;
    Evas_Object *ol, *ob;
 
    dia = e_dialog_new(cfdata->cfd->con, "E", "profiles_new_profile_dialog");
@@ -268,8 +268,8 @@ _dia_new_profile(E_Config_Dialog_Data *cfdata)
    e_widget_table_object_append(ol, ob,
 				     1, 0, 1, 1,
 				     1, 1, 1, 1);
-   e_widget_min_size_get(ol, &mw, &mh);
-   e_dialog_content_set(dia, ol, mw, mh);
+   e_widget_min_size_get(ol, NULL, &mh);
+   e_dialog_content_set(dia, ol, 150, mh);
 
    e_dialog_button_add(dia, _("OK"), NULL, _new_profile_cb_ok, cfdata);
    e_dialog_button_add(dia, _("Cancel"), NULL, _new_profile_cb_close, cfdata);
