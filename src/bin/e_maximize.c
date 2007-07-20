@@ -160,8 +160,7 @@ e_maximize_border_border_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2, 
    bl = e_container_border_list_first(bd->zone->container);
    while ((bd2 = e_container_border_list_next(bl)))
      {
-	if ((bd2->zone != bd->zone) ||
-	    (bd == bd2))
+	if ((bd2->zone != bd->zone) || (bd == bd2) || (bd2->desk != bd->desk))
 	  continue;
 	OBSTACLE(bd2->x, bd2->y, bd2->x + bd2->w, bd2->y + bd2->h);
      }
