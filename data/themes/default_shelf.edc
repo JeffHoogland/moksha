@@ -1077,7 +1077,6 @@ group {
 	    rel2 {
 	       offset:   -5    -5;
 	    }
-	    color: 0 0 0 0;
 	 }
       }
       part {
