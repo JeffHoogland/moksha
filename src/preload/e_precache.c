@@ -117,7 +117,7 @@ evas_object_image_file_set(Evas_Object *obj, const char *file, const char *key)
 long long
 ecore_file_mod_time(const char *file)
 {
-   static time_t (*func) (const char *file) = NULL;
+   static long long (*func) (const char *file) = NULL;
    if (!func)
      func = lib_func("libecore_file.so", "libecore_file.so.1", 
 		     "ecore_file_mod_time", "lib_ecore_file", &lib_ecore_file);
