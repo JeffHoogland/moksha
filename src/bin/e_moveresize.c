@@ -166,6 +166,7 @@ e_move_update(int x, int y)
 EAPI void
 e_move_resize_object_coords_set(int x, int y, int w, int h)
 {
+   if (!_disp_pop) return;
    obj_x = x;
    obj_y = y;
    obj_w = w;
