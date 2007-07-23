@@ -361,6 +361,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, zone_desks_x_count, INT); /**/
    E_CONFIG_VAL(D, T, zone_desks_y_count, INT); /**/
    E_CONFIG_VAL(D, T, use_virtual_roots, INT); /* should not make this a config option (for now) */
+   E_CONFIG_VAL(D, T, show_desktop_icons, INT); /**/
    E_CONFIG_VAL(D, T, edge_flip_dragging, INT); /**/
    E_CONFIG_VAL(D, T, edge_flip_moving, INT); /**/
    E_CONFIG_VAL(D, T, edge_flip_timeout, DOUBLE); /**/
@@ -1433,6 +1434,10 @@ e_config_init(void)
    e_config->allow_above_fullscreen = 0;
    IFCFGEND;
 
+   IFCFG(0x0120);
+   e_config->show_desktop_icons = 1;
+   IFCFGEND;
+
    e_config->config_version = E_CONFIG_FILE_VERSION;   
      
 #if 0 /* example of new config */
@@ -1456,6 +1461,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->cache_flush_interval, 0.0, 600.0);
    E_CONFIG_LIMIT(e_config->zone_desks_x_count, 1, 64);
    E_CONFIG_LIMIT(e_config->zone_desks_y_count, 1, 64);
+   E_CONFIG_LIMIT(e_config->show_desktop_icons, 0, 1);
    E_CONFIG_LIMIT(e_config->edge_flip_dragging, 0, 1);
    E_CONFIG_LIMIT(e_config->edge_flip_moving, 0, 1);
    E_CONFIG_LIMIT(e_config->edge_flip_timeout, 0.0, 2.0);

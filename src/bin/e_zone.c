@@ -619,6 +619,33 @@ e_zone_flip_win_restore(void)
      }
 }
 
+EAPI void
+e_zone_fm_set(E_Zone *zone, int set)
+{
+   E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
+   
+   if (set)
+     {
+	if (zone->bg_fwin) return;
+	if ((zone->container->num == 0) && (zone->num == 0))
+	  _e_zone_fm_add(zone, "desktop", "/");
+	else
+	  {
+	     char buf[256];
+
+	     snprintf(buf, sizeof(buf), "%i", zone->container->num + zone->num);
+	     _e_zone_fm_add(zone, "desktop", buf);
+	  }
+     }
+   else
+     {
+	if (!zone->bg_fwin) return;
+	e_object_del(E_OBJECT(zone->bg_fwin));
+	zone->bg_fwin = NULL;
+     }
+}
+
 /* local subsystem functions */
 static void
 _e_zone_free(E_Zone *zone)
@@ -1012,15 +1039,7 @@ _e_zone_fm_deferred(void *data)
    E_Zone *zone;
    
    zone = data;
-   if ((zone->container->num == 0) && (zone->num == 0))
-     _e_zone_fm_add(zone, "desktop", "/");
-   else
-     {
-	char buf[256];
-	
-	snprintf(buf, sizeof(buf), "%i", zone->container->num + zone->num);
-	_e_zone_fm_add(zone, "desktop", buf);
-     }
+   e_zone_fm_set(zone, e_config->show_desktop_icons);
    zone->deferred_fm_timer = NULL;
    return 0;
 }

@@ -339,6 +339,9 @@ _e_fwin_free(E_Fwin *fwin)
 	fwin->fad = NULL;
      }
    if (fwin->win) e_object_del(E_OBJECT(fwin->win));
+   if (fwin->fm_obj) evas_object_del(fwin->fm_obj);
+   if (fwin->scrollframe_obj) evas_object_del(fwin->scrollframe_obj);
+
    fwins = evas_list_remove(fwins, fwin);
    if (fwin->wallpaper_file) evas_stringshare_del(fwin->wallpaper_file);
    if (fwin->overlay_file) evas_stringshare_del(fwin->overlay_file);

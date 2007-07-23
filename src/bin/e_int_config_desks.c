@@ -22,6 +22,7 @@ struct _E_Config_Dialog_Data
    int flip_animate;
    
    /*- ADVANCED -*/
+   int show_desktop_icons;
    int edge_flip_moving;
    int edge_flip_dragging;
    double edge_flip_timeout;
@@ -67,6 +68,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->y = e_config->zone_desks_y_count;
    cfdata->edge_flip_basic = e_config->edge_flip_moving || e_config->edge_flip_dragging;
    cfdata->flip_animate = e_config->desk_flip_animate_mode > 0;
+   cfdata->show_desktop_icons = e_config->show_desktop_icons;
    cfdata->edge_flip_moving = e_config->edge_flip_moving;
    cfdata->edge_flip_dragging = e_config->edge_flip_dragging;
    cfdata->edge_flip_timeout = e_config->edge_flip_timeout;   
@@ -155,13 +157,16 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	for (ll = man->containers; ll; ll = ll->next)
 	  {
 	     con = ll->data;
-	     for (lll = con ->zones; lll; lll = lll->next)
+	     for (lll = con->zones; lll; lll = lll->next)
 	       {
 		  zone = lll->data;
 		  e_zone_desk_count_set(zone, cfdata->x, cfdata->y);
+		  e_zone_fm_set(zone, cfdata->show_desktop_icons);
 	       }
 	  }
      }
+
+   e_config->show_desktop_icons = cfdata->show_desktop_icons;
 
    e_config->desk_flip_animate_mode = cfdata->flip_mode;
    e_config->desk_flip_animate_interpolation = cfdata->flip_interp;
@@ -226,7 +231,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    o = e_widget_list_add(evas, 0, 0);
    ott = e_widget_table_add(evas, 0);
    
-   of = e_widget_framelist_add(evas, _("Number of Desktops"), 0);
+   of = e_widget_framelist_add(evas, _("Desktops"), 0);
    ot = e_widget_table_add(evas, 0);
 
    ob = e_widget_desk_preview_add(evas, cfdata->x, cfdata->y);
@@ -240,6 +245,9 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 12.0, 1.0, 0, NULL, &(cfdata->x), 200);
    e_widget_on_change_hook_set(ob, _cb_slider_change, cfdata);
    e_widget_table_object_append(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0);
+
+   ob = e_widget_check_add(evas, _("Show desktop icons"), &(cfdata->show_desktop_icons));
+   e_widget_table_object_append(ot, ob, 0, 2, 2, 1, 1, 1, 1, 1);
 
    e_widget_framelist_object_append(of, ot);
    e_widget_table_object_append(ott, of, 0, 0, 1, 2, 1, 1, 1, 1);
