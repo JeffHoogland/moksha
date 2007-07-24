@@ -460,15 +460,16 @@ ACT_FN_GO(window_fullscreen)
 	  {
 	     int v;
 	     char buf[32];
+	     buf[0] = 0;
 	     if (sscanf(params, "%i %20s", &v, buf) == 2)
 	       {
 		  if (v == 1)
 		    {
-		      if (buf == 0 || *buf == '\0')
+		      if (*buf == '\0')
 			e_border_fullscreen(bd, e_config->fullscreen_policy);
-		      else if (! strcmp(buf, "resize"))
+		      else if (!strcmp(buf, "resize"))
 			e_border_fullscreen(bd, E_FULLSCREEN_RESIZE);
-		      else if (! strcmp(buf, "zoom"))
+		      else if (!strcmp(buf, "zoom"))
 			e_border_fullscreen(bd, E_FULLSCREEN_ZOOM);
 		    }
 		  else if (v == 0)
