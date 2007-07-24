@@ -743,6 +743,7 @@ e_util_file_time_get(time_t ftime)
 
    ltime = time(NULL);
    diff = ltime - ftime;
+   buf[0] = 0;
    if (ftime > ltime)
      {
 	snprintf(buf, sizeof(buf), _("In the Future"));
@@ -765,7 +766,7 @@ e_util_file_time_get(time_t ftime)
 	  snprintf(buf, sizeof(buf), _("%li Minutes ago"), (diff / 60));
      }
 
-   if (buf)
+   if (buf[0])
      s = strdup(buf);
    else
      s = strdup(_("Unknown"));
