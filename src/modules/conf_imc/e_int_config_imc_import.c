@@ -1,4 +1,5 @@
 #include "e.h"
+#include "e_int_config_imc.h"
 
 typedef struct _Import Import;
 
@@ -35,7 +36,7 @@ static void _imc_import_cb_key_down  (void *data, Evas *e, Evas_Object *obj,
 					void *event);
 
 EAPI E_Win *
-e_int_config_imc_import(E_Config_Dialog *parent) 
+e_int_config_imc_import(E_Config_Dialog *parent)
 {
    Evas *evas;
    E_Win *win;

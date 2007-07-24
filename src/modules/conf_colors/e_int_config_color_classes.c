@@ -105,7 +105,7 @@ static void         _color3_cb_change     (void *data, Evas_Object *obj);
 static void         _button_cb            (void *data, void *data2);
 
 EAPI E_Config_Dialog *
-e_int_config_color_classes(E_Container *con) 
+e_int_config_color_classes(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;

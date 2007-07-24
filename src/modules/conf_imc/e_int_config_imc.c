@@ -3,6 +3,7 @@
  */
 #include "e.h"
 #include "e_int_config_imc.h"
+#include "e_int_config_imc_import.h"
 
 typedef struct _E_Imc_Update_Data E_Imc_Update_Data;
 
@@ -89,7 +90,7 @@ struct _E_Config_Dialog_Data
 };
 
 EAPI E_Config_Dialog *
-e_int_config_imc(E_Container *con)
+e_int_config_imc(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;

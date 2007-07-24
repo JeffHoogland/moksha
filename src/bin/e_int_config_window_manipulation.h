@@ -6,7 +6,7 @@
 #ifndef E_INT_CONFIG_WINDOW_MANIPULATION_H
 #define E_INT_CONFIG_WINDOW_MANIPULATION_H
 
-EAPI E_Config_Dialog *e_int_config_window_manipulation(E_Container *con);
+EAPI E_Config_Dialog *e_int_config_window_manipulation(E_Container *con, const char *params __UNUSED__);
 
 #endif
 #endif

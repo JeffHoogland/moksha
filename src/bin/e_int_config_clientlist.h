@@ -22,7 +22,7 @@
 
 #define E_CLIENTLIST_MAX_CAPTION_LEN 256
 
-EAPI E_Config_Dialog *e_int_config_clientlist(E_Container *con);
+EAPI E_Config_Dialog *e_int_config_clientlist(E_Container *con, const char *params __UNUSED__);
 
 #endif
 #endif

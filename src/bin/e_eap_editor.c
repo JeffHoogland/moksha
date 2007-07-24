@@ -765,8 +765,6 @@ _e_desktop_edit_cb_exec_select_cancel(void *data, E_Dialog *dia)
 static void
 _e_desktop_editor_exec_update(E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o;
-   
    if (!cfdata->editor->entry_widget) return;
 
    e_widget_entry_text_set(cfdata->editor->entry_widget, cfdata->exec);

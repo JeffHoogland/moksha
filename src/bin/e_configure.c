@@ -161,7 +161,7 @@ e_configure_registry_item_del(const char *path)
 EAPI void
 e_configure_registry_category_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon)
 {
-   E_Configure_Cat *ecat, *ecat2;
+   E_Configure_Cat *ecat;
    Evas_List *l;
    
    ecat = E_NEW(E_Configure_Cat, 1);
@@ -263,7 +263,7 @@ e_configure_registry_exists(const char *path)
    
    /* path is "category/item" */
    cat = ecore_file_get_dir(path);
-   if (!cat) return;
+   if (!cat) return 0;
    item = ecore_file_get_file(path);
    for (l = _e_configure_registry; l; l = l->next)
      {

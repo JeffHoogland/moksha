@@ -225,7 +225,7 @@ _surebox_new(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
 
 EAPI E_Config_Dialog *
-e_int_config_display(E_Container *con) 
+e_int_config_display(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;

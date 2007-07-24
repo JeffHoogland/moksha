@@ -48,7 +48,7 @@ struct _E_Config_Dialog_Data
 };
 
 EAPI E_Config_Dialog *
-e_int_config_paths(E_Container *con)
+e_int_config_paths(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;

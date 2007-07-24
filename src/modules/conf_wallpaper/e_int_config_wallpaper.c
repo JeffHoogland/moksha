@@ -48,7 +48,7 @@ struct _E_Config_Dialog_Data
 };
 
 EAPI E_Config_Dialog *
-e_int_config_wallpaper(E_Container *con)
+e_int_config_wallpaper(E_Container *con, const char *params __UNUSED__)
 {
    return _e_int_config_wallpaper_desk(con, -1, -1, -1, -1);
 }
@@ -62,7 +62,7 @@ e_int_config_wallpaper_desk(E_Container *con, const char *params)
    con_num = zone_num = desk_x = desk_y = -1;
    if (sscanf(params, "%i %i %i %i", &con_num, &zone_num, &desk_x, &desk_y) != 4)
      return NULL;
-   _e_int_config_wallpaper_desk(con, con_num, zone_num, desk_x, desk_y);
+   return _e_int_config_wallpaper_desk(con, con_num, zone_num, desk_x, desk_y);
 }
 
 static E_Config_Dialog *

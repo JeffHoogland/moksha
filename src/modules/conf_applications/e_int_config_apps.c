@@ -52,7 +52,7 @@ struct _E_Config_Dialog_Data
 };
 
 EAPI E_Config_Dialog *
-e_int_config_apps_add(E_Container *con)
+e_int_config_apps_add(E_Container *con, const char *params __UNUSED__)
 {
    E_Desktop_Edit *ed;
    Efreet_Desktop *de = NULL;
@@ -89,7 +89,7 @@ e_int_config_apps_add(E_Container *con)
 }
 
 EAPI E_Config_Dialog *
-e_int_config_apps_favs(E_Container *con) 
+e_int_config_apps_favs(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Once *once;
    char buf[4096];
@@ -106,7 +106,7 @@ e_int_config_apps_favs(E_Container *con)
 }
 
 EAPI E_Config_Dialog *
-e_int_config_apps_ibar(E_Container *con) 
+e_int_config_apps_ibar(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Once *once;
    char buf[4096];
@@ -139,7 +139,7 @@ e_int_config_apps_ibar_other(E_Container *con, const char *path)
 }
 
 EAPI E_Config_Dialog *
-e_int_config_apps_startup(E_Container *con) 
+e_int_config_apps_startup(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Once *once;
    char buf[4096];
@@ -157,7 +157,7 @@ e_int_config_apps_startup(E_Container *con)
 }
 
 EAPI E_Config_Dialog *
-e_int_config_apps_restart(E_Container *con) 
+e_int_config_apps_restart(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Once *once;
    char buf[4096];

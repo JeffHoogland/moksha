@@ -858,7 +858,7 @@ main(int argc, char **argv)
      e_module_all_load();
    else
      {
-	e_int_config_modules(e_container_current_get(e_manager_current_get()));
+	e_int_config_modules(e_container_current_get(e_manager_current_get()), NULL);
 	e_error_message_show
 	  (_("Enlightenment crashed early on start and has<br>"
 	     "been restarted. All modules have been disabled<br>"

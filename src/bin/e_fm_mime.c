@@ -6,7 +6,6 @@
 /* local subsystem functions */
 static Evas_Bool _e_fm_mime_icon_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata);
 
-static Evas_List *mimes = NULL;
 static Evas_Hash *icon_map = NULL;
 
 /* externally accessible functions */

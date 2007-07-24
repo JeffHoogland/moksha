@@ -440,8 +440,6 @@ _pager_desk_find(Pager *p, E_Desk *desk)
 static void
 _pager_desk_switch(Pager_Desk *pd1, Pager_Desk *pd2)
 {
-   int d1, d2;
-   int tmp_x, tmp_y;
    int c;
    E_Zone     *zone1, *zone2;
    E_Desk     *desk1, *desk2;
@@ -1443,39 +1441,6 @@ _pager_cb_event_border_property(void *data, int type, void *event)
 }
 
 static int
-_pager_cb_event_border_skip_winlist(void *data, int type, void *event)
-{
-   E_Event_Border_Property *ev;
-   Evas_List		   *l, *l2;
-
-   ev = event;
-   for (l = pager_config->instances; l; l = l->next)
-     {
-	Instance *inst;
-
-	inst = l->data;
-	if (inst->pager->zone != ev->border->zone) continue;
-	for (l2 = inst->pager->desks; l2; l2 = l2->next)
-	  {
-	     Pager_Desk *pd;
-	     Pager_Win *pw;
-
-	     pd = l2->data;
-	     pw = _pager_desk_window_find(pd, ev->border);
-	     if (pw && ev->border->client.netwm.state.skip_pager != pw->skip_winlist)
-	       {
-		  pw->skip_winlist = ev->border->client.netwm.state.skip_pager;
-		  if (pw->skip_winlist)
-		    evas_object_hide(pw->o_window);
-		  else
-		    evas_object_show(pw->o_window);
-	       }
-	  }
-     }
-   return 1;
-}
-
-static int
 _pager_cb_event_zone_desk_count_set(void *data, int type, void *event)
 {
    Evas_List *l;
@@ -2051,7 +2016,6 @@ _pager_desk_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	E_Drag *drag;
 	Evas_Object *o, *oo, *o_icon;
 	Evas_Coord x, y, w, h;
-	const char *file = NULL, *part = NULL;
 	const char *drag_types[] = { "enlightenment/vdesktop" };
 	Pager_Win *pw;
 	Evas_List *l;

@@ -40,7 +40,7 @@ static Evas_List *monitors = NULL;
 Ecore_File_Monitor *mod_mon, *dir_mon;
 
 EAPI E_Config_Dialog *
-e_int_config_modules(E_Container *con) 
+e_int_config_modules(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
@@ -196,7 +196,7 @@ _load_modules(E_Config_Dialog_Data *cfdata)
 	dirs = ecore_file_ls(epd->dir);
 	if (!dirs) continue;
 	ecore_list_goto_first(dirs);
-	while (mod = ecore_list_next(dirs)) 
+	while ((mod = ecore_list_next(dirs)))
 	  {
 	     E_Module *module;
 	     char buf[4096];

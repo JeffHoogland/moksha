@@ -1,4 +1,5 @@
 #include "e.h"
+#include "e_int_config_theme.h"
 
 typedef struct _Import Import;
 

@@ -1,6 +1,5 @@
 #include "e.h"
 
-EAPI E_Config_Dialog *e_int_config_profiles(E_Container *con);
 static void *_create_data(E_Config_Dialog *cfd);
 static void  _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
@@ -37,7 +36,7 @@ struct _Del_Profile_Confirm_Data
 };
 
 EAPI E_Config_Dialog *
-e_int_config_profiles(E_Container *con) 
+e_int_config_profiles(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
@@ -201,7 +200,6 @@ _cb_select(void *data, void *data2)
 static void 
 _cb_delete(void *data, void *data2) 
 {
-   E_Config_Dialog_Data *cfdata;
    Del_Profile_Confirm_Data *d;
    char buf[4096];
 

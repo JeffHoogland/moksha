@@ -117,12 +117,11 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    switch (cfdata->inst->sensor_type)
      {
       case SENSOR_TYPE_NONE:
-	 break;
       case SENSOR_TYPE_FREEBSD:
-	 break;
       case SENSOR_TYPE_OMNIBOOK:
-	 break;
       case SENSOR_TYPE_LINUX_MACMINI:
+      case SENSOR_TYPE_LINUX_PBOOK:
+      case SENSOR_TYPE_LINUX_INTELCORETEMP:
 	 break;
       case SENSOR_TYPE_LINUX_I2C:
 	 therms = temperature_get_i2c_files();

@@ -16,7 +16,6 @@ static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E
 
 static void _basic_font_cb_change(void *data, Evas_Object *obj);
 static void _basic_enable_cb_change(void *data, Evas_Object *obj);
-static void _basic_style_cb_change(void *data, Evas_Object *obj);
 static void _basic_init_data_fill(E_Config_Dialog_Data *cfdata);
 
 static void _adv_class_cb_change(void *data, Evas_Object *obj);
@@ -148,7 +147,7 @@ struct _E_Config_Dialog_Data
 };
 
 EAPI E_Config_Dialog *
-e_int_config_fonts(E_Container *con)
+e_int_config_fonts(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
@@ -470,17 +469,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    e_dialog_resizable_set(cfd->dia, 1);
    return ot;
-}
-
-static void
-_basic_style_cb_change(void *data, Evas_Object *obj)
-{
-   E_Config_Dialog_Data *cfdata;
-   
-   cfdata = data;
-   if (!cfdata) return;
-
-   _font_preview_update(cfdata);
 }
 
 static void
