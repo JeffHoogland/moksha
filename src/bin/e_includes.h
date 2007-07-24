@@ -98,7 +98,6 @@
 #include "e_int_config_screensaver.h"
 #include "e_int_config_dpms.h"
 #include "e_int_config_exebuf.h"
-#include "e_int_config_apps.h"
 #include "e_int_config_dialogs.h"
 #include "e_int_config_mime.h"
 #include "e_int_config_mime_edit.h"
