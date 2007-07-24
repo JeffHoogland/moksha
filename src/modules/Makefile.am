@@ -21,4 +21,5 @@ conf_transitions \
 conf_startup \
 conf_intl \
 conf_imc \
-conf_profiles
+conf_profiles \
+conf_applications

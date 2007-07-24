@@ -765,6 +765,7 @@ e_config_init(void)
 	CFG_MODULE("conf_mouse_cursor", 1);
 	CFG_MODULE("conf_transitions", 1);
 	CFG_MODULE("conf_startup", 1);
+	CFG_MODULE("conf_applications", 1);
      }
 #if 0
      {

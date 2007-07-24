@@ -432,11 +432,11 @@ e_configure_init(void)
 //   e_configure_registry_item_add("appearance/transitions", 80, _("Transitions"), NULL, "enlightenment/transitions", e_int_config_transitions);
 //   e_configure_registry_item_add("appearance/startup", 90, _("Startup"), NULL, "enlightenment/startup", e_int_config_startup);
    
-   e_configure_registry_category_add("applications", 20, _("Applications"), NULL, "enlightenment/applications");
-   e_configure_registry_item_add("applications/new_application", 10, _("New Application"), NULL, "enlightenment/add_application", e_int_config_apps_add);
-   e_configure_registry_item_add("applications/ibar_applications", 20, _("IBar Applications"), NULL, "enlightenment/ibar_applications", e_int_config_apps_ibar);
-   e_configure_registry_item_add("applications/restart_applications", 30, _("Restart Applications"), NULL, "enlightenment/restart_applications", e_int_config_apps_restart);
-   e_configure_registry_item_add("applications/startup_applications", 40, _("Startup Applications"), NULL, "enlightenment/startup_applications", e_int_config_apps_startup);
+//   e_configure_registry_category_add("applications", 20, _("Applications"), NULL, "enlightenment/applications");
+//   e_configure_registry_item_add("applications/new_application", 10, _("New Application"), NULL, "enlightenment/add_application", e_int_config_apps_add);
+//   e_configure_registry_item_add("applications/ibar_applications", 20, _("IBar Applications"), NULL, "enlightenment/ibar_applications", e_int_config_apps_ibar);
+//   e_configure_registry_item_add("applications/restart_applications", 30, _("Restart Applications"), NULL, "enlightenment/restart_applications", e_int_config_apps_restart);
+//   e_configure_registry_item_add("applications/startup_applications", 40, _("Startup Applications"), NULL, "enlightenment/startup_applications", e_int_config_apps_startup);
    
    e_configure_registry_category_add("screen", 30, _("Screen"), NULL, "enlightenment/screen_setup");
    e_configure_registry_item_add("screen/virtual_desktops", 10, _("Virtual Desktops"), NULL, "enlightenment/desktops", e_int_config_desks);
@@ -456,9 +456,9 @@ e_configure_init(void)
    e_configure_registry_item_add("windows/window_manipulation", 30, _("Window Manipulation"), NULL, "enlightenment/window_manipulation", e_int_config_window_manipulation);
    
    e_configure_registry_category_add("menus", 60, _("Menus"), NULL, "enlightenment/menus");
-   e_configure_registry_item_add("menus/favorites_menu", 10, _("Favorites Menu"), NULL, "enlightenment/favorites", e_int_config_apps_favs);   
+//   e_configure_registry_item_add("menus/favorites_menu", 10, _("Favorites Menu"), NULL, "enlightenment/favorites", e_int_config_apps_favs);   
 #if 0
-   e_configure_registry_item_add("menus/applications_menu", 20, _("Application Menus"), NULL, "enlightenment/applications", e_int_config_apps);
+//   e_configure_registry_item_add("menus/applications_menu", 20, _("Application Menus"), NULL, "enlightenment/applications", e_int_config_apps);
 #endif
    e_configure_registry_item_add("menus/menu_settings", 30, _("Menu Settings"), NULL, "enlightenment/menu_settings", e_int_config_menus);
    e_configure_registry_item_add("menus/client_list_menu", 40, _("Client List Menu"), NULL, "enlightenment/windows", e_int_config_clientlist);
@@ -484,7 +484,7 @@ e_configure_init(void)
 //   e_configure_registry_item_add("internal/borders_border", -1, _("Border"), NULL, "enlightenment/windows", e_int_config_borders_border);
 //   e_configure_registry_item_add("internal/wallpaper_desk", -1, _("Wallpaper"), NULL, "enlightenment/windows", e_int_config_wallpaper_desk);
    e_configure_registry_item_add("internal/desk", -1, _("Desk"), NULL, "enlightenment/windows", e_int_config_desk);
-   e_configure_registry_item_add("internal/ibar_other", -1, _("IBar Other"), NULL, "enlightenment/windows", e_int_config_apps_ibar_other);
+//   e_configure_registry_item_add("internal/ibar_other", -1, _("IBar Other"), NULL, "enlightenment/windows", e_int_config_apps_ibar_other);
 }
 
 static void 
