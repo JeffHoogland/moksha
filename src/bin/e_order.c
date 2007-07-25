@@ -178,7 +178,7 @@ _e_order_read(E_Order *eo)
    eo->desktops = evas_list_free(eo->desktops);
    if (!eo->path) return;
 
-   dir = ecore_file_get_dir(eo->path);
+   dir = ecore_file_dir_get(eo->path);
    f = fopen(eo->path, "rb");
    if (f)
      {
@@ -204,9 +204,9 @@ _e_order_read(E_Order *eo)
 		       if (buf[0] == '/')
 		         desktop = efreet_desktop_get(buf);
 		       if (!desktop)
-		         desktop = efreet_desktop_get(ecore_file_get_file(buf));
+		         desktop = efreet_desktop_get(ecore_file_file_get(buf));
 		       if (!desktop)
-			 desktop = efreet_util_desktop_file_id_find(ecore_file_get_file(buf));
+			 desktop = efreet_util_desktop_file_id_find(ecore_file_file_get(buf));
 		       if (desktop) eo->desktops = evas_list_append(eo->desktops, desktop);
 		    }
 	       }

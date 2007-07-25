@@ -2010,7 +2010,7 @@ _e_fm2_file_force_update(const char *path)
    char *dir;
    Evas_List *l;
    
-   dir = ecore_file_get_dir(path);
+   dir = ecore_file_dir_get(path);
    if (!dir) return;
    for (l = _e_fm2_list; l; l = l->next)
      {
@@ -2020,7 +2020,7 @@ _e_fm2_file_force_update(const char *path)
 	  {
 	     E_Fm2_Icon *ic;
 	     
-	     ic = _e_fm2_icon_find(l->data, ecore_file_get_file(path));
+	     ic = _e_fm2_icon_find(l->data, ecore_file_file_get(path));
 	     if (ic)
 	       {
 		  E_Fm2_Finfo finf;
@@ -2034,7 +2034,7 @@ _e_fm2_file_force_update(const char *path)
 		  if (ic->info.real_link)
 		    finf.rlnk = evas_stringshare_add(ic->info.real_link);
 		  ic->removable_state_change = 1;
-		  _e_fm2_live_file_changed(l->data, ecore_file_get_file(path),
+		  _e_fm2_live_file_changed(l->data, ecore_file_file_get(path),
 					   &finf);
 		  if (ic->info.link)
 		    evas_stringshare_del(ic->info.link);
@@ -2083,7 +2083,7 @@ _e_storage_write(E_Storage *s)
    FILE *f;
    const char *id;
    
-   id = ecore_file_get_file(s->udi);
+   id = ecore_file_file_get(s->udi);
    printf("sto write %s\n", id);
    snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/|%s.desktop",
 	    e_user_homedir_get(), id);
@@ -2134,7 +2134,7 @@ _e_storage_erase(E_Storage *s)
    char buf[PATH_MAX];
    const char *id;
    
-   id = ecore_file_get_file(s->udi);
+   id = ecore_file_file_get(s->udi);
    snprintf(buf, sizeof(buf), "%s/Desktop/|%s.desktop",
 	    e_user_homedir_get(), id);
    ecore_file_unlink(buf);
@@ -2150,7 +2150,7 @@ _e_volume_write(E_Volume *v)
    FILE *f;
    const char *id;
   
-   id = ecore_file_get_file(v->storage->udi);
+   id = ecore_file_file_get(v->storage->udi);
    printf("vol write %s\n", id);
    snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/|%s.desktop",
 	    e_user_homedir_get(), id);
@@ -2205,7 +2205,7 @@ _e_volume_erase(E_Volume *v)
    char buf[PATH_MAX];
    const char *id;
   
-   id = ecore_file_get_file(v->storage->udi);
+   id = ecore_file_file_get(v->storage->udi);
    snprintf(buf, sizeof(buf), "%s/Desktop/|%s.desktop",
 	    e_user_homedir_get(), id);
    ecore_file_unlink(buf);
@@ -2290,7 +2290,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 		  finf.lnk = lnk;
 		  finf.rlnk = rlnk;
 		  
-		  evdir = ecore_file_get_dir(path);
+		  evdir = ecore_file_dir_get(path);
 		  if ((sd->id == e->ref_to) && 
 		      ((!strcmp(evdir, "") || (!strcmp(dir, evdir)))))
 		    {
@@ -2299,13 +2299,13 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 			    if (e->minor == 3)/*file add*/
 			      {
 				 _e_fm2_live_file_add
-				   (obj, ecore_file_get_file(path),
+				   (obj, ecore_file_file_get(path),
 				    NULL, 0, &finf);
 			      }
 			    else if (e->minor == 5)/*file change*/
 			      {
 				 _e_fm2_live_file_changed
-				   (obj, (char *)ecore_file_get_file(path),
+				   (obj, (char *)ecore_file_file_get(path),
 				    &finf);
 			      }
 			 }
@@ -2325,7 +2325,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 				   }
 				 if (path[0] != 0)
 				   {			   
-				      file = ecore_file_get_file(path);
+				      file = ecore_file_file_get(path);
 				      if ((!strcmp(file, ".order")))
 					sd->order_file = 1;
 				      else
@@ -2383,11 +2383,11 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	     break;
 	   case 4:/*file del*/
 	     path = e->data;
-	     evdir = ecore_file_get_dir(path);
+	     evdir = ecore_file_dir_get(path);
 	     if ((sd->id == e->ref_to) && (!strcmp(dir, evdir)))
 	       {
 		  _e_fm2_live_file_del
-		    (obj, ecore_file_get_file(path));
+		    (obj, ecore_file_file_get(path));
 	       }
 	     free(evdir);
 	     break;
@@ -3409,7 +3409,7 @@ _e_fm2_file_fm2_find(const char *file)
    char *dir;
    Evas_List *l;
    
-   dir = ecore_file_get_dir(file);
+   dir = ecore_file_dir_get(file);
    if (!dir) return NULL;
    for (l = _e_fm2_list; l; l = l->next)
      {
@@ -3462,7 +3462,7 @@ _e_fm2_uri_icon_list_get(Evas_List *uri)
 	     fm = _e_fm2_file_fm2_find(path);
 	     if (fm)
 	       {
-		  file = ecore_file_get_file(path);
+		  file = ecore_file_file_get(path);
 		  ic = _e_fm2_icon_find(fm, file);
 	       }
 	  }
@@ -4846,7 +4846,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	     fp = _e_fm2_icon_desktop_url_eval(ll->data);
 	     if (!fp) continue;
 	     snprintf(buf, sizeof(buf), "%s/%s",
-		      sd->realpath, ecore_file_get_file(fp));
+		      sd->realpath, ecore_file_file_get(fp));
 	     printf("mv %s %s\n", (char *)fp, buf);
 	     if ((ic) && (sd->config->view.mode == E_FM2_VIEW_MODE_CUSTOM_ICONS))
 	       {
@@ -4904,7 +4904,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		  if (!fp) continue;
 		  /* move the file into the subdir */
 		  snprintf(buf, sizeof(buf), "%s/%s/%s",
-			   sd->realpath, sd->drop_icon->info.file, ecore_file_get_file(fp));
+			   sd->realpath, sd->drop_icon->info.file, ecore_file_file_get(fp));
 		  printf("mv %s %s\n", (char *)fp, buf);
 		  _e_fm2_client_file_move(sd->id, fp, buf, "", 0, -9999, -9999, sd->w, sd->h);
 		  evas_stringshare_del(fp);
@@ -4924,7 +4924,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 				 fp = _e_fm2_icon_desktop_url_eval(ll->data);
 				 if (!fp) continue;
 				 snprintf(buf, sizeof(buf), "%s/%s",
-					  sd->realpath, ecore_file_get_file(fp));
+					  sd->realpath, ecore_file_file_get(fp));
 				 if (sd->config->view.link_drop)
 				   {
 				      printf("ln -s %s %s\n", (char *)fp, buf);
@@ -4946,7 +4946,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 				 fp = _e_fm2_icon_desktop_url_eval(ll->data);
 				 if (!fp) continue;
 				 snprintf(buf, sizeof(buf), "%s/%s",
-					  sd->realpath, ecore_file_get_file(fp));
+					  sd->realpath, ecore_file_file_get(fp));
 				 if (sd->config->view.link_drop)
 				   {
 				      printf("ln -s %s %s\n", (char *)fp, buf);
@@ -4970,7 +4970,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 			    if (!fp) continue;
 			    /* move the file into the subdir */
 			    snprintf(buf, sizeof(buf), "%s/%s",
-				     sd->realpath, ecore_file_get_file(fp));
+				     sd->realpath, ecore_file_file_get(fp));
 			    printf("mv %s %s\n", (char *)fp, buf);
 			    _e_fm2_client_file_move(sd->id, fp, buf, "", 0, -9999, -9999, sd->w, sd->h);
 			    evas_stringshare_del(fp);
@@ -4986,7 +4986,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		       if (!fp) continue;
 		       /* move the file into the subdir */
 		       snprintf(buf, sizeof(buf), "%s/%s",
-				sd->realpath, ecore_file_get_file(fp));
+				sd->realpath, ecore_file_file_get(fp));
 		       printf("mv %s %s\n", (char *)fp, buf);
 		       _e_fm2_client_file_move(sd->id, fp, buf, "", 0, -9999, -9999, sd->w, sd->h);
 		       evas_stringshare_del(fp);

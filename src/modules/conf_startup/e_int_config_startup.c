@@ -237,7 +237,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	  {
 	     const char *f;
 	     
-	     f = ecore_file_get_file(cfdata->splash);
+	     f = ecore_file_file_get(cfdata->splash);
 	     e_config->init_default_theme = evas_stringshare_add(f);
 	  }
      }

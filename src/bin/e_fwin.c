@@ -200,7 +200,7 @@ e_fwin_new(E_Container *con, const char *dev, const char *path)
    
    snprintf(buf, sizeof(buf), "_fwin::/%s", e_fm2_real_path_get(fwin->fm_obj));
    e_win_name_class_set(fwin->win, "E", buf);
-   file = ecore_file_get_file(e_fm2_real_path_get(fwin->fm_obj));
+   file = ecore_file_file_get(e_fm2_real_path_get(fwin->fm_obj));
    if (file)
      snprintf(buf, sizeof(buf), "%s", file);
    else
@@ -313,7 +313,7 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
 
    e_fm2_path_set(fwin->fm_obj, dev, path);
 
-   file = ecore_file_get_file(e_fm2_real_path_get(fwin->fm_obj));
+   file = ecore_file_file_get(e_fm2_real_path_get(fwin->fm_obj));
    if (file)
      snprintf(buf, sizeof(buf), "%s", file);
    else
@@ -652,7 +652,7 @@ _e_fwin_cb_open(void *data, E_Dialog *dia)
 	if (selected)
 	  {
 	     files = ecore_list_new();
-	     ecore_list_set_free_cb(files, free);
+	     ecore_list_free_cb_set(files, free);
 	     for (l = selected; l; l = l->next)
 	       {
 		  E_Fwin_Exec_Type ext;
@@ -1030,7 +1030,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	     ml = efreet_util_desktop_mime_list(l->data);
 	     if (ml)
 	       {
-		  ecore_list_goto_first(ml);
+		  ecore_list_first_goto(ml);
 		  while ((desktop = ecore_list_next(ml)))
 		    apps = evas_list_append(apps, desktop);
 		  ecore_list_destroy(ml);
@@ -1066,7 +1066,7 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	     chdir(e_fm2_real_path_get(fwin->fm_obj));
 	     
 	     files_list = ecore_list_new();
-	     ecore_list_set_free_cb(files_list, free);
+	     ecore_list_free_cb_set(files_list, free);
 	     for (l = files; l; l = l->next)
 	       {
 		  ici = l->data;

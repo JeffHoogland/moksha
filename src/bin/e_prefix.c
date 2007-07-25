@@ -261,7 +261,7 @@ _e_prefix_share_hunt(void)
 	  {
 	     char *file;
 	     
-	     ecore_list_goto_first(files);
+	     ecore_list_first_goto(files);
 	     while ((file = ecore_list_current(files)))
 	       {
 		  snprintf(buf2, sizeof(buf2), "%s/%s/"MAGIC_DAT, buf, file);

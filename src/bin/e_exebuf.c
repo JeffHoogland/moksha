@@ -877,7 +877,7 @@ _e_exebuf_matches_update(void)
      {
 	Efreet_Desktop *desktop;
 
-	ecore_list_goto_first(list);
+	ecore_list_first_goto(list);
 	while ((desktop = ecore_list_next(list)))
 	  {
 	     char *exe;
@@ -902,7 +902,7 @@ _e_exebuf_matches_update(void)
      {
 	Efreet_Desktop *desktop;
 
-	ecore_list_goto_first(list);
+	ecore_list_first_goto(list);
 	while ((desktop = ecore_list_next(list)))
 	  {
 	     char *exe;
@@ -927,7 +927,7 @@ _e_exebuf_matches_update(void)
      {
 	Efreet_Desktop *desktop;
 
-	ecore_list_goto_first(list);
+	ecore_list_first_goto(list);
 	while ((desktop = ecore_list_next(list)))
 	  {
 	     char *exe;
@@ -952,7 +952,7 @@ _e_exebuf_matches_update(void)
      {
 	Efreet_Desktop *desktop;
 
-	ecore_list_goto_first(list);
+	ecore_list_first_goto(list);
 	while ((desktop = ecore_list_next(list)))
 	  {
 	     char *exe;
@@ -982,7 +982,7 @@ _e_exebuf_matches_update(void)
 	for (l = exe_list; l; l = l->next)
 	  {
 	     path = l->data;
-	     file = (char *)ecore_file_get_file(path);
+	     file = (char *)ecore_file_file_get(path);
 	     if (file)
 	       {
 		  if (e_util_glob_match(file, buf))

@@ -1688,7 +1688,7 @@ e_config_profile_list(void)
      {
 	char *file;
 	
-	ecore_list_goto_first(files);
+	ecore_list_first_goto(files);
 	while ((file = ecore_list_current(files)))
 	  {
 	     snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", homedir, file);
@@ -1726,7 +1726,7 @@ e_config_profile_del(char *prof)
      {
 	char *file;
 	
-	ecore_list_goto_first(files);
+	ecore_list_first_goto(files);
 	while ((file = ecore_list_current(files)))
 	  {
 	     snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/%s",

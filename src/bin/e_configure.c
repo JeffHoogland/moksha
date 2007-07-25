@@ -75,9 +75,9 @@ e_configure_registry_item_add(const char *path, int pri, const char *label, cons
    E_Configure_It *eci;
    
    /* path is "category/item" */
-   cat = ecore_file_get_dir(path);
+   cat = ecore_file_dir_get(path);
    if (!cat) return;
-   item = ecore_file_get_file(path);
+   item = ecore_file_file_get(path);
    eci = E_NEW(E_Configure_It, 1);
    if (!eci) goto done;
    
@@ -124,9 +124,9 @@ e_configure_registry_item_del(const char *path)
    const char *item;
    
    /* path is "category/item" */
-   cat = ecore_file_get_dir(path);
+   cat = ecore_file_dir_get(path);
    if (!cat) return;
-   item = ecore_file_get_file(path);
+   item = ecore_file_file_get(path);
    for (l = _e_configure_registry; l; l = l->next)
      {
 	E_Configure_Cat *ecat;
@@ -192,7 +192,7 @@ e_configure_registry_category_del(const char *path)
    Evas_List *l;
    char *cat;
    
-   cat = ecore_file_get_dir(path);
+   cat = ecore_file_dir_get(path);
    if (!cat) return;
    for (l = _e_configure_registry; l; l = l->next)
      {
@@ -222,9 +222,9 @@ e_configure_registry_call(const char *path, E_Container *con, const char *params
    const char *item;
    
    /* path is "category/item" */
-   cat = ecore_file_get_dir(path);
+   cat = ecore_file_dir_get(path);
    if (!cat) return;
-   item = ecore_file_get_file(path);
+   item = ecore_file_file_get(path);
    for (l = _e_configure_registry; l; l = l->next)
      {
 	E_Configure_Cat *ecat;
@@ -262,9 +262,9 @@ e_configure_registry_exists(const char *path)
    int ret = 0;
    
    /* path is "category/item" */
-   cat = ecore_file_get_dir(path);
+   cat = ecore_file_dir_get(path);
    if (!cat) return 0;
-   item = ecore_file_get_file(path);
+   item = ecore_file_file_get(path);
    for (l = _e_configure_registry; l; l = l->next)
      {
 	E_Configure_Cat *ecat;

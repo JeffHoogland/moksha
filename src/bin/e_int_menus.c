@@ -536,7 +536,7 @@ _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
      {
 	Efreet_Menu *entry;
 	
-        ecore_list_goto_first(menu->entries);
+        ecore_list_first_goto(menu->entries);
 	while ((entry = ecore_list_next(menu->entries)))
 	  {
 	     mi = e_menu_item_new(m);

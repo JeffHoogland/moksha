@@ -588,7 +588,7 @@ _e_intl_language_dir_scan(const char *dir)
    files = ecore_file_ls(dir);
    if (!files) return NULL;
 
-   ecore_list_goto_first(files);
+   ecore_list_first_goto(files);
    if (files)
      {
 	while ((file = ecore_list_next(files)))
@@ -1126,7 +1126,7 @@ _e_intl_imc_dir_scan(const char *dir)
    files = ecore_file_ls(dir);
    if (!files) return NULL;
 
-   ecore_list_goto_first(files);
+   ecore_list_first_goto(files);
    if (files)
      {
 	while ((file = ecore_list_next(files)))

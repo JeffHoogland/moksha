@@ -228,7 +228,7 @@ _load_menu(const char *path)
    menu = efreet_menu_parse(path);
    if (!menu) return apps;
 
-   ecore_list_goto_first(menu->entries);
+   ecore_list_first_goto(menu->entries);
    while ((entry = ecore_list_next(menu->entries))) 
      {
 	if (entry->type != EFREET_MENU_ENTRY_DESKTOP) continue;
@@ -350,7 +350,7 @@ _save_menu(E_Config_Dialog_Data *cfdata)
    int ret;
 
    menu = efreet_menu_new();
-   ecore_list_goto_first(cfdata->apps);
+   ecore_list_first_goto(cfdata->apps);
    while ((desk = ecore_list_next(cfdata->apps)))
      efreet_menu_desktop_insert(menu, desk, -1);
 
@@ -368,7 +368,7 @@ _save_order(E_Config_Dialog_Data *cfdata)
    order = e_order_new(cfdata->once->filename);
    if (!order) return 0;
    e_order_clear(order);
-   ecore_list_goto_first(cfdata->apps);
+   ecore_list_first_goto(cfdata->apps);
    while ((desk = ecore_list_next(cfdata->apps)))
      e_order_append(order, desk);
 
@@ -392,7 +392,7 @@ _fill_categories(E_Config_Dialog_Data *cfdata)
 
    cats = efreet_util_desktop_categories_list();
    ecore_list_sort(cats, ECORE_COMPARE_CB(strcmp), ECORE_SORT_MIN);
-   ecore_list_goto_first(cats);
+   ecore_list_first_goto(cats);
    while ((category = ecore_list_next(cats))) 
      e_widget_ilist_append(cfdata->o_apps, NULL, category, 
 			   _category_cb_selected, cfdata, category);
@@ -431,7 +431,7 @@ _fill_apps(E_Config_Dialog_Data *cfdata)
 
    desktops = (Ecore_List *)efreet_util_desktop_category_list(cfdata->category);
    ecore_list_sort(desktops, ECORE_COMPARE_CB(_cb_desktop_name_sort), ECORE_SORT_MIN);
-   ecore_list_goto_first(desktops);
+   ecore_list_first_goto(desktops);
    while ((desktop = ecore_list_next(desktops))) 
      {
 	Evas_Object *icon;
@@ -467,7 +467,7 @@ _fill_list(E_Config_Dialog_Data *cfdata)
    edje_freeze();
    e_widget_ilist_freeze(cfdata->o_list);
 
-   ecore_list_goto_first(cfdata->apps);
+   ecore_list_first_goto(cfdata->apps);
    while ((desktop = ecore_list_next(cfdata->apps))) 
      {
 	Evas_Object *icon = NULL;
@@ -648,7 +648,7 @@ _cb_up(void *data, void *data2)
      {
 	i = ecore_list_index(cfdata->apps);
 	ecore_list_remove(cfdata->apps);
-	ecore_list_goto_index(cfdata->apps, (i - 1));
+	ecore_list_index_goto(cfdata->apps, (i - 1));
 	ecore_list_insert(cfdata->apps, desk);
      }
 }
@@ -694,7 +694,7 @@ _cb_down(void *data, void *data2)
      {
 	i = ecore_list_index(cfdata->apps);
 	ecore_list_remove(cfdata->apps);
-	ecore_list_goto_index(cfdata->apps, (i + 1));
+	ecore_list_index_goto(cfdata->apps, (i + 1));
 	ecore_list_insert(cfdata->apps, desk);
      }
 }

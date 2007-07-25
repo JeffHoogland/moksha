@@ -190,12 +190,12 @@ init_done:
    m->name = evas_stringshare_add(name);
    if (modpath)
      {
-	s =  ecore_file_get_dir(modpath);
+	s =  ecore_file_dir_get(modpath);
 	if (s)
 	  {
 	     char *s2;
 	     
-	     s2 = ecore_file_get_dir(s);
+	     s2 = ecore_file_dir_get(s);
 	     free(s);
 	     if (s2)
 	       {

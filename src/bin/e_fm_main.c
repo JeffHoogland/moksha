@@ -274,7 +274,7 @@ _e_dbus_cb_dev_all(void *user_data, void *reply_data, DBusError *error)
 	return;
      }
 
-   ecore_list_goto_first(ret->strings);
+   ecore_list_first_goto(ret->strings);
    while ((device = ecore_list_next(ret->strings)))
      {
 //	printf("DB INIT DEV+: %s\n", device);
@@ -302,7 +302,7 @@ _e_dbus_cb_dev_store(void *user_data, void *reply_data, DBusError *error)
 	return;
      }
    
-   ecore_list_goto_first(ret->strings);
+   ecore_list_first_goto(ret->strings);
    while ((device = ecore_list_next(ret->strings)))
      {
 //	printf("DB STORE+: %s\n", device);
@@ -324,7 +324,7 @@ _e_dbus_cb_dev_vol(void *user_data, void *reply_data, DBusError *error)
 	return;
      }
    
-   ecore_list_goto_first(ret->strings);
+   ecore_list_first_goto(ret->strings);
    while ((device = ecore_list_next(ret->strings)))
      {
 //	printf("DB VOL+: %s\n", device);
@@ -1032,7 +1032,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	     dst = src + strlen(src) + 1;
 	     ecore_file_mv(src, dst);
 	     /* FIXME: send back if succeeded or failed - why */
-	     _e_path_fix_order(dst, ecore_file_get_file(src), 2, -9999, -9999);
+	     _e_path_fix_order(dst, ecore_file_file_get(src), 2, -9999, -9999);
 	  }
 	break;
       case 6: /* fop mv file/dir */
@@ -1216,8 +1216,8 @@ _e_cb_file_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, c
    const char *file;
    Evas_List *l;
 
-   dir = ecore_file_get_dir(path);
-   file = ecore_file_get_file(path);
+   dir = ecore_file_dir_get(path);
+   file = ecore_file_file_get(path);
    /* FIXME: get no create events if dir is empty */
    if ((event == ECORE_FILE_EVENT_CREATED_FILE) ||
        (event == ECORE_FILE_EVENT_CREATED_DIRECTORY))
@@ -1880,10 +1880,10 @@ _e_path_fix_order(const char *path, const char *rel, int rel_to, int x, int y)
    
    if (!path) return;
    if (!rel[0]) return;
-   f = ecore_file_get_file(path);
+   f = ecore_file_file_get(path);
    if (!f) return;
    if (!strcmp(f, rel)) return;
-   d = ecore_file_get_dir(path);
+   d = ecore_file_dir_get(path);
    if (!d) return;
    snprintf(buf, sizeof(buf), "%s/.order", d);
    if (ecore_file_exists(buf))

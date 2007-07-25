@@ -213,7 +213,7 @@ _theme_import_cb_changed(void *data, Evas_Object *obj)
      {
 	char *strip; 
 	
-	file = ecore_file_get_file(import->cfdata->file);
+	file = ecore_file_file_get(import->cfdata->file);
 	strip = ecore_file_strip_ext(file);
 	if (!strip) 
 	  {
@@ -259,7 +259,7 @@ _theme_import_cb_ok(void *data, void *data2)
      {
 	char *strip;
 	
-	file = ecore_file_get_file(import->cfdata->file);
+	file = ecore_file_file_get(import->cfdata->file);
 	snprintf(buf, sizeof(buf), "%s/.e/e/themes/%s", homedir, file);
 
 	strip = ecore_file_strip_ext(file);

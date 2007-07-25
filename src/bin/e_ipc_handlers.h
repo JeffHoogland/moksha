@@ -7556,7 +7556,7 @@ break;
      {
 	const char *i;
 	const char *f;
-	f = ecore_file_get_file(s);
+	f = ecore_file_file_get(s);
 	i = e_path_find(path_init, f);
 	if (!e_util_edje_collection_exists(i, "init/splash")) 
 	  {

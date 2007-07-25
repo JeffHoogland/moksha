@@ -308,7 +308,7 @@ _import_edj_gen(Import *import)
    FILE *f;
    
    evas = e_win_evas_get(import->win);
-   file = ecore_file_get_file(import->cfdata->file);
+   file = ecore_file_file_get(import->cfdata->file);
    homedir = e_user_homedir_get();
    fstrip = ecore_file_strip_ext(file);
    if (!fstrip) return;
@@ -335,7 +335,7 @@ _import_edj_gen(Import *import)
 	return;
      }
    
-   imgdir = ecore_file_get_dir(import->cfdata->file);
+   imgdir = ecore_file_dir_get(import->cfdata->file);
    if (!imgdir) ipart[0] = '\0';
    else
      {
@@ -526,7 +526,7 @@ _import_cb_ok(void *data, void *data2)
    if (path) import->cfdata->file = strdup(path);
    if (import->cfdata->file)
      {
-	file = ecore_file_get_file(import->cfdata->file);
+	file = ecore_file_file_get(import->cfdata->file);
 	if (!e_util_glob_case_match(file, "*.edj"))
 	  _import_edj_gen(import);
 	else 

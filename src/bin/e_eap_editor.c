@@ -265,7 +265,7 @@ _e_desktop_edit_create_data(E_Config_Dialog *cfd)
 	  {
 	     /* file not in user's dir, so create new desktop that points there */
 	     if (!ecore_file_exists(dir)) ecore_file_mkdir(dir);
-	     file = ecore_file_get_file(cfdata->editor->desktop->orig_path);
+	     file = ecore_file_file_get(cfdata->editor->desktop->orig_path);
 	     snprintf(path, sizeof(path), "%s/%s", dir, file);
 	     /*
 	      * if a file already exists in the user dir with this name, we
@@ -585,7 +585,7 @@ _e_desktop_editor_cb_icon_select(void *data1, void *data2)
    /* XXX change this to a generic icon selector (that can do either
     * files from a dir, or icons in the current theme */
    if (cfdata->icon) 
-     dir = ecore_file_get_dir(cfdata->icon);
+     dir = ecore_file_dir_get(cfdata->icon);
 
    if (dir)
      {
@@ -639,7 +639,7 @@ _e_desktop_editor_cb_exec_select(void *data1, void *data2)
 
    /* absolute path to exe */
    if (cfdata->exec) 
-     dir = ecore_file_get_dir(cfdata->exec);
+     dir = ecore_file_dir_get(cfdata->exec);
 
    if (dir)
      {

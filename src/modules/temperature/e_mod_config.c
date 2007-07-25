@@ -135,7 +135,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 		     {
 		        int len;
 
-			sprintf(path, "%s", ecore_file_get_file(name));
+			sprintf(path, "%s", ecore_file_file_get(name));
 			len = strlen(path);
 			if (len > 6)
 			   path[len - 6] = '\0';
@@ -151,7 +151,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	      ecore_list_destroy(therms);
 	   }
 
-	 ecore_list_goto_first(cfdata->sensors);
+	 ecore_list_first_goto(cfdata->sensors);
 	 while ((name = ecore_list_next(cfdata->sensors)))
 	   {
 	      if (!strcmp(cfdata->inst->sensor_name, name)) 
@@ -188,7 +188,7 @@ _create_data(E_Config_Dialog *cfd)
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->inst = cfd->data;
    cfdata->sensors = ecore_list_new();
-   ecore_list_set_free_cb(cfdata->sensors, free);
+   ecore_list_free_cb_set(cfdata->sensors, free);
    _fill_data(cfdata);
    return cfdata;
 }
@@ -320,7 +320,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   if (!ecore_list_is_empty(cfdata->sensors))
+   if (!ecore_list_empty_is(cfdata->sensors))
      {
 	/* TODO: Notify user which thermal system is in use */
 	/* TODO: Let the user choose the wanted thermal system */
@@ -329,7 +329,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
 	of = e_widget_framelist_add(evas, _("Sensors"), 0);
 	rg = e_widget_radio_group_new(&(cfdata->sensor));
-	ecore_list_goto_first(cfdata->sensors);
+	ecore_list_first_goto(cfdata->sensors);
 	while ((name = ecore_list_next(cfdata->sensors)))
 	  {
 	     ob = e_widget_radio_add(evas, _(name), n, rg);
@@ -409,7 +409,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->inst->sensor_name)
      evas_stringshare_del(cfdata->inst->sensor_name);
    cfdata->inst->sensor_name =
-     evas_stringshare_add(ecore_list_goto_index(cfdata->sensors, cfdata->sensor));
+     evas_stringshare_add(ecore_list_index_goto(cfdata->sensors, cfdata->sensor));
 
    temperature_face_update_config(cfdata->inst);
    e_config_save_queue();

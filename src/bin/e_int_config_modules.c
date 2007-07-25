@@ -195,7 +195,7 @@ _load_modules(E_Config_Dialog_Data *cfdata)
 	if (!ecore_file_is_dir(epd->dir)) continue;
 	dirs = ecore_file_ls(epd->dir);
 	if (!dirs) continue;
-	ecore_list_goto_first(dirs);
+	ecore_list_first_goto(dirs);
 	while ((mod = ecore_list_next(dirs)))
 	  {
 	     E_Module *module;
@@ -343,7 +343,7 @@ _get_icon(Efreet_Desktop *desk)
 	     char *path;
 	     char buf[4096];
 	     
-	     path = ecore_file_get_dir(desk->orig_path);
+	     path = ecore_file_dir_get(desk->orig_path);
 	     snprintf(buf, sizeof(buf), "%s/%s.edj", path, desk->icon);
 	     icon = buf;
 	     free(path);
@@ -391,7 +391,7 @@ _cb_monitor(void *data, Ecore_File_Monitor *monitor, Ecore_File_Event event, con
    switch (event) 
      {
       case ECORE_FILE_EVENT_CREATED_DIRECTORY:
-	file = ecore_file_get_file(path);
+	file = ecore_file_file_get(path);
 	if (mod_mon) ecore_file_monitor_del(mod_mon);
 	mod_mon = ecore_file_monitor_add(path, _cb_mod_monitor, cfdata);
 	break;
@@ -417,7 +417,7 @@ _cb_mod_monitor(void *data, Ecore_File_Monitor *monitor, Ecore_File_Event event,
    switch (event) 
      {
       case ECORE_FILE_EVENT_CREATED_DIRECTORY:
-	file = ecore_file_get_file(path);
+	file = ecore_file_file_get(path);
 	if (!e_util_glob_case_match(file, MODULE_ARCH)) break;
 	if (dir_mon) ecore_file_monitor_del(dir_mon);
 	dir_mon = ecore_file_monitor_add(path, _cb_dir_monitor, cfdata);

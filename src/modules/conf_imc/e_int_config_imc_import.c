@@ -214,7 +214,7 @@ _imc_import_cb_changed(void *data, Evas_Object *obj)
      {
 	char *strip;
 	
-	file = ecore_file_get_file(import->cfdata->file);
+	file = ecore_file_file_get(import->cfdata->file);
 	strip = ecore_file_strip_ext(file);
 	if (!strip) 
 	  {
@@ -258,7 +258,7 @@ _imc_import_cb_ok(void *data, void *data2)
 	E_Input_Method_Config *imc;
 	char *strip;
 	
-	file = ecore_file_get_file(import->cfdata->file);
+	file = ecore_file_file_get(import->cfdata->file);
 
 	strip = ecore_file_strip_ext(file);
 	if (!strip) 

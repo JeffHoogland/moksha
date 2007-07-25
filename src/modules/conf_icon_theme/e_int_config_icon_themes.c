@@ -67,7 +67,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      {
 	Efreet_Icon_Theme *theme;
 
-	ecore_list_goto_first(icon_themes);
+	ecore_list_first_goto(icon_themes);
 	while ((theme = ecore_list_next(icon_themes)))
 	  cfdata->icon_themes = evas_list_append(cfdata->icon_themes, theme);
 	cfdata->icon_themes = evas_list_sort(cfdata->icon_themes,
@@ -365,7 +365,7 @@ _ilist_cb_change(void *data, Evas_Object *obj)
 	char *path;
 	int first = 1;
 
-	ecore_list_goto_first(theme->paths.path);
+	ecore_list_first_goto(theme->paths.path);
 	while ((path = ecore_list_next(theme->paths.path)))
 	  {
 	     length += strlen(theme->paths.path) + 16;
@@ -394,7 +394,7 @@ _ilist_cb_change(void *data, Evas_Object *obj)
 	const char *inherit;
 	int first = 1;
 
-	ecore_list_goto_first(theme->inherits);
+	ecore_list_first_goto(theme->inherits);
 	while ((inherit = ecore_list_next(theme->inherits)))
 	  {
 	     length += strlen(theme->paths.path) + 32;
@@ -421,7 +421,7 @@ _ilist_cb_change(void *data, Evas_Object *obj)
    free(text);
    if (dir)
      {
-	dir = ecore_file_get_dir(dir);
+	dir = ecore_file_dir_get(dir);
 	e_fm2_path_set(cfdata->gui.o_fm, dir, "/");
 	free(dir);
      }

@@ -81,7 +81,7 @@ _e_wid_fsel_favorites_add(void *data1, void *data2)
    if (!ecore_file_is_dir(current_path)) return;
    homedir = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/%s", 
-	    homedir, ecore_file_get_file(current_path));
+	    homedir, ecore_file_file_get(current_path));
    if (stat(buf, &st) < 0) symlink(current_path, buf);
    else
      {
@@ -90,13 +90,13 @@ _e_wid_fsel_favorites_add(void *data1, void *data2)
 	     snprintf(buf, sizeof(buf),
 		      "%s/.e/e/fileman/favorites/%s-%d",
 		      homedir,
-		      ecore_file_get_file(current_path), i);
+		      ecore_file_file_get(current_path), i);
 	     i++;
 	  }
 	symlink(current_path, buf);  
      }
-   fname = alloca(strlen(ecore_file_get_file(buf)) + 1);
-   strcpy(fname, ecore_file_get_file(buf));
+   fname = alloca(strlen(ecore_file_file_get(buf)) + 1);
+   strcpy(fname, ecore_file_file_get(buf));
    snprintf(buf, sizeof(buf), "%s/.e/e/fileman/favorites/.order", homedir);
    if (ecore_file_exists(buf))
      {
