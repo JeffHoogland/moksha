@@ -119,7 +119,7 @@ typedef struct _E_Rect E_Rect;
 #define E_REALLOC(p, s, n) p = (s *)realloc(p, sizeof(s) * n)
 #define E_NEW(s, n) (s *)calloc(n, sizeof(s))
 #define E_NEW_BIG(s, n) (s *)malloc(n * sizeof(s))
-#define E_FREE(p) { if (p) {free(p); p = NULL;} }
+#define E_FREE(p) do { if (p) {free(p); p = NULL;} } while (0)
 
 #define E_CLAMP(x, min, max) (x < min ? min : (x > max ? max : x))
 
