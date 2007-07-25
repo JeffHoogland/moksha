@@ -179,6 +179,8 @@ src/modules/conf_wallpaper/e_int_config_wallpaper.c
 src/modules/conf_wallpaper/e_int_config_wallpaper_gradient.c
 src/modules/conf_wallpaper/e_int_config_wallpaper_import.c
 src/modules/conf_wallpaper/e_mod_main.c
+src/modules/conf_applications/e_int_config_apps.c
+src/modules/conf_applications/e_mod_main.c
 src/modules/cpufreq/e_mod_main.c
 src/modules/cpufreq/freqset.c
 src/modules/dropshadow/e_mod_config.c
