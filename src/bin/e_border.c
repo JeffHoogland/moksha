@@ -6520,12 +6520,17 @@ _e_border_eval(E_Border *bd)
 	     bd->icon_object = NULL;
 	  }
 	if (!bd->desktop)
-	  bd->desktop = efreet_util_desktop_wm_class_find(bd->client.icccm.name,
-							  bd->client.icccm.class);
+	  {
+	     bd->desktop = efreet_util_desktop_wm_class_find(bd->client.icccm.name,
+							     bd->client.icccm.class);
+	     if (bd->desktop) efreet_desktop_ref(bd->desktop);
+	  }
 	if (!bd->desktop)
-	  bd->desktop = e_exec_startup_id_pid_find(bd->client.netwm.startup_id,
-						   bd->client.netwm.pid);
-	if (bd->desktop) efreet_desktop_ref(bd->desktop);
+	  {
+	     bd->desktop = e_exec_startup_id_pid_find(bd->client.netwm.startup_id,
+						      bd->client.netwm.pid);
+	     if (bd->desktop) efreet_desktop_ref(bd->desktop);
+	  }
 	bd->icon_object = e_border_icon_add(bd, bd->bg_evas);
 	if ((bd->focused) && (bd->icon_object))
 	  edje_object_signal_emit(bd->icon_object, "e,state,focused", "e");

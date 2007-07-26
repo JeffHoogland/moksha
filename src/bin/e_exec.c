@@ -240,6 +240,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
      {
 	Evas_List *l;
 
+	efreet_desktop_ref(desktop);
 	inst->desktop = desktop;
 	inst->exe = exe;
 	inst->startup_id = startup_id;
@@ -340,6 +341,7 @@ _e_exec_cb_exit(void *data, int type, void *event)
      }
    e_exec_start_pending = evas_list_remove(e_exec_start_pending, inst->desktop);
    if (inst->expire_timer) ecore_timer_del(inst->expire_timer);
+   if (inst->desktop) efreet_desktop_free(inst->desktop);
    free(inst);
    return 1;
 }
