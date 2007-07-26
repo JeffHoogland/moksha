@@ -4358,6 +4358,7 @@ _e_border_cb_efreet_desktop_change(void *data, int ev_type, void *ev)
 	      bd = l->data;
 	      if (bd->desktop == event->current)
 		{
+		   efreet_desktop_free(bd->desktop);
 		   bd->desktop = NULL;
 		   bd->changes.icon = 1;
 		   bd->changed = 1;
@@ -4374,6 +4375,8 @@ _e_border_cb_efreet_desktop_change(void *data, int ev_type, void *ev)
 
 	      if (bd->desktop == event->previous)
 		{
+		   efreet_desktop_free(bd->desktop);
+		   efreet_desktop_ref(event->current);
 		   bd->desktop = event->current;
 		   bd->changes.icon = 1;
 		   bd->changed = 1;
@@ -6522,6 +6525,7 @@ _e_border_eval(E_Border *bd)
 	if (!bd->desktop)
 	  bd->desktop = e_exec_startup_id_pid_find(bd->client.netwm.startup_id,
 						   bd->client.netwm.pid);
+	if (bd->desktop) efreet_desktop_ref(bd->desktop);
 	bd->icon_object = e_border_icon_add(bd, bd->bg_evas);
 	if ((bd->focused) && (bd->icon_object))
 	  edje_object_signal_emit(bd->icon_object, "e,state,focused", "e");
