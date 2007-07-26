@@ -314,7 +314,7 @@ _e_desktop_edit_create_data(E_Config_Dialog *cfd)
 static void
 _e_desktop_edit_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   if (cfdata->desktop && cfdata->editor->new_desktop && !cfdata->editor->saved)
+   if (cfdata->desktop)
 	efreet_desktop_free(cfdata->desktop);
 
    if (cfdata->editor->tmp_image_path) 
