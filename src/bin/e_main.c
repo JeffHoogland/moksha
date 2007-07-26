@@ -903,11 +903,6 @@ main(int argc, char **argv)
    /* if we were flagged to restart, then  restart. */
    if (restart)
      {
-	/* selected shutdown */
-#if 0
-	e_ipc_shutdown();
-	ecore_file_shutdown();
-#endif
 	e_util_env_set("E_RESTART_OK", "1");
 	ecore_app_restart();
      }

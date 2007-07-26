@@ -68,10 +68,15 @@ e_order_update_callback_set(E_Order *eo, void (*cb)(void *data, E_Order *eo), vo
 EAPI void
 e_order_remove(E_Order *eo, Efreet_Desktop *desktop)
 {
+   Evas_List *tmp;
+
    E_OBJECT_CHECK(eo);
    E_OBJECT_TYPE_CHECK(eo, E_ORDER_TYPE);
 
-   eo->desktops = evas_list_remove(eo->desktops, desktop);
+   tmp = evas_list_find_list(eo->desktops, desktop);
+   if (!tmp) return;
+   efreet_desktop_free(tmp->data);
+   eo->desktops = evas_list_remove_list(eo->desktops, tmp);
    _e_order_save(eo);
 }
 
@@ -81,6 +86,7 @@ e_order_append(E_Order *eo, Efreet_Desktop *desktop)
    E_OBJECT_CHECK(eo);
    E_OBJECT_TYPE_CHECK(eo, E_ORDER_TYPE);
 
+   efreet_desktop_ref(desktop);
    eo->desktops = evas_list_append(eo->desktops, desktop);
    _e_order_save(eo);
 }
@@ -91,6 +97,7 @@ e_order_prepend_relative(E_Order *eo, Efreet_Desktop *desktop, Efreet_Desktop *b
    E_OBJECT_CHECK(eo);
    E_OBJECT_TYPE_CHECK(eo, E_ORDER_TYPE);
 
+   efreet_desktop_ref(desktop);
    eo->desktops = evas_list_prepend_relative(eo->desktops, desktop, before);
    _e_order_save(eo);
 }
@@ -144,7 +151,10 @@ e_order_clear(E_Order *eo)
    E_OBJECT_TYPE_CHECK(eo, E_ORDER_TYPE);
 
    while (eo->desktops)
-     eo->desktops = evas_list_remove_list(eo->desktops, eo->desktops);
+     {
+	efreet_desktop_free(eo->desktops->data);
+	eo->desktops = evas_list_remove_list(eo->desktops, eo->desktops);
+     }
    _e_order_save(eo);
 }
 
@@ -152,7 +162,11 @@ e_order_clear(E_Order *eo)
 static void
 _e_order_free(E_Order *eo)
 {
-   evas_list_free(eo->desktops);
+   while (eo->desktops)
+     {
+	efreet_desktop_free(eo->desktops->data);
+	eo->desktops = evas_list_remove_list(eo->desktops, eo->desktops);
+     }
    if (eo->path) evas_stringshare_del(eo->path);
    if (eo->monitor) ecore_file_monitor_del(eo->monitor);
    orders = evas_list_remove(orders, eo);
@@ -177,7 +191,11 @@ _e_order_read(E_Order *eo)
    FILE *f;
    char *dir;
 
-   eo->desktops = evas_list_free(eo->desktops);
+   while (eo->desktops)
+     {
+	efreet_desktop_free(eo->desktops->data);
+	eo->desktops = evas_list_remove_list(eo->desktops, eo->desktops);
+     }
    if (!eo->path) return;
 
    dir = ecore_file_dir_get(eo->path);
@@ -208,7 +226,11 @@ _e_order_read(E_Order *eo)
 		       if (!desktop)
 		         desktop = efreet_desktop_get(ecore_file_file_get(buf));
 		       if (!desktop)
-			 desktop = efreet_util_desktop_file_id_find(ecore_file_file_get(buf));
+			 {
+			    desktop = efreet_util_desktop_file_id_find(ecore_file_file_get(buf));
+			    /* Need to ref this as we only get a cache pointer from efreet_util */
+			    if (desktop) efreet_desktop_ref(desktop);
+			 }
 		       if (desktop) eo->desktops = evas_list_append(eo->desktops, desktop);
 		    }
 	       }
@@ -283,6 +305,7 @@ _e_order_cb_efreet_desktop_change(void *data, int ev_type, void *ev)
 		{
 		   if (l2->data == event->current)
 		     {
+			efreet_desktop_free(l2->data);
 			eo->desktops = evas_list_remove_list(eo->desktops, l2);
 			changed = 1;
 		     }
@@ -303,6 +326,8 @@ _e_order_cb_efreet_desktop_change(void *data, int ev_type, void *ev)
 		{
 		   if (l2->data == event->previous)
 		     {
+			efreet_desktop_free(l2->data);
+			efreet_desktop_ref(event->current);
 			l2->data = event->current;
 			changed = 1;
 		     }
