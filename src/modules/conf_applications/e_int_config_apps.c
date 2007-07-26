@@ -224,6 +224,7 @@ _load_menu(const char *path)
    Ecore_List *apps;
 
    apps = ecore_list_new();
+   ecore_list_free_cb_set(apps, ECORE_FREE_CB(efreet_desktop_free));
 
    menu = efreet_menu_parse(path);
    if (!menu) return apps;
@@ -232,6 +233,7 @@ _load_menu(const char *path)
    while ((entry = ecore_list_next(menu->entries))) 
      {
 	if (entry->type != EFREET_MENU_ENTRY_DESKTOP) continue;
+	efreet_desktop_ref(entry->desktop);
 	ecore_list_append(apps, entry->desktop);
      }
    efreet_menu_free(menu);
@@ -246,10 +248,15 @@ _load_order(const char *path)
    Ecore_List *apps;
 
    apps = ecore_list_new();
+   ecore_list_free_cb_set(apps, ECORE_FREE_CB(efreet_desktop_free));
    order = e_order_new(path);
    for (l = order->desktops; l; l = l->next) 
-     ecore_list_append(apps, l->data);
+     {
+	efreet_desktop_ref(l->data);
+	ecore_list_append(apps, l->data);
+     }
 
+   e_object_del(E_OBJECT(order));
    return apps;
 }
 
@@ -372,7 +379,7 @@ _save_order(E_Config_Dialog_Data *cfdata)
    while ((desk = ecore_list_next(cfdata->apps)))
      e_order_append(order, desk);
 
-   //XXX need a way to free an E_Order
+   e_object_del(E_OBJECT(order));
    return 1;
 }
 
@@ -604,7 +611,13 @@ _cb_del(void *data, void *data2)
    desk = efreet_desktop_get(cfdata->fav);
    if (!desk) return;
    if (ecore_list_goto(cfdata->apps, desk))
-     ecore_list_remove(cfdata->apps);
+     {
+	Efreet_Desktop *tmp;
+
+	tmp = ecore_list_remove(cfdata->apps);
+	efreet_desktop_free(tmp);
+     }
+   efreet_desktop_free(desk);
 }
 
 static void 
@@ -646,11 +659,16 @@ _cb_up(void *data, void *data2)
 
    if (ecore_list_goto(cfdata->apps, desk)) 
      {
+	Efreet_Desktop *tmp;
+
 	i = ecore_list_index(cfdata->apps);
-	ecore_list_remove(cfdata->apps);
+	tmp = ecore_list_remove(cfdata->apps);
 	ecore_list_index_goto(cfdata->apps, (i - 1));
 	ecore_list_insert(cfdata->apps, desk);
+	efreet_desktop_free(tmp);
      }
+   else
+     efreet_desktop_free(desk);
 }
 
 static void 
@@ -692,9 +710,14 @@ _cb_down(void *data, void *data2)
 
    if (ecore_list_goto(cfdata->apps, desk)) 
      {
+	Efreet_Desktop *tmp;
+
 	i = ecore_list_index(cfdata->apps);
-	ecore_list_remove(cfdata->apps);
+	tmp = ecore_list_remove(cfdata->apps);
 	ecore_list_index_goto(cfdata->apps, (i + 1));
 	ecore_list_insert(cfdata->apps, desk);
+	efreet_desktop_free(tmp);
      }
+   else
+     efreet_desktop_free(desk);
 }
