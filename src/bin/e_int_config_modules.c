@@ -11,7 +11,7 @@ static void _load_modules(E_Config_Dialog_Data *cfdata);
 static int _sort_modules(void *data1, void *data2);
 static void _fill_all(E_Config_Dialog_Data *cfdata);
 static void _fill_loaded(E_Config_Dialog_Data *cfdata);
-static const char *_get_icon(Efreet_Desktop *desk);
+static char *_get_icon(Efreet_Desktop *desk);
 static E_Module *_get_module(E_Config_Dialog_Data *cfdata, const char *lbl);
 
 /* Callbacks */
@@ -264,8 +264,13 @@ _fill_all(E_Config_Dialog_Data *cfdata)
 	desk = efreet_desktop_get(buf);
 	if (!desk) continue;
 	icon = _get_icon(desk);
-	if (icon) oc = e_util_icon_add(icon, evas);
+	if (icon)
+	  {
+	     oc = e_util_icon_add(icon, evas);
+	     free(icon);
+	  }
 	e_widget_ilist_append(cfdata->o_all, oc, desk->name, NULL, NULL, NULL);
+	efreet_desktop_free(desk);
      }
 
    /* Unfreeze ilist */
@@ -312,8 +317,13 @@ _fill_loaded(E_Config_Dialog_Data *cfdata)
 	desk = efreet_desktop_get(buf);
 	if (!desk) continue;
 	icon = _get_icon(desk);
-	if (icon) oc = e_util_icon_add(icon, evas);
+	if (icon)
+	  {
+	     oc = e_util_icon_add(icon, evas);
+	     free(icon);
+	  }
 	e_widget_ilist_append(cfdata->o_loaded, oc, desk->name, NULL, NULL, NULL);
+	efreet_desktop_free(desk);
      }
 
    /* Unfreeze ilist */
@@ -329,10 +339,10 @@ _fill_loaded(E_Config_Dialog_Data *cfdata)
    e_widget_disabled_set(cfdata->b_configure, 1);
 }
 
-static const char *
+static char *
 _get_icon(Efreet_Desktop *desk) 
 {
-   const char *icon;
+   char *icon;
    
    if (!desk) return NULL;
    if (desk->icon) 
@@ -345,7 +355,7 @@ _get_icon(Efreet_Desktop *desk)
 	     
 	     path = ecore_file_dir_get(desk->orig_path);
 	     snprintf(buf, sizeof(buf), "%s/%s.edj", path, desk->icon);
-	     icon = buf;
+	     icon = strdup(buf);
 	     free(path);
 	  }
 	return icon;
@@ -373,7 +383,12 @@ _get_module(E_Config_Dialog_Data *cfdata, const char *lbl)
 	if (!ecore_file_exists(buf)) continue;
 	desk = efreet_desktop_get(buf);
 	if (!desk) continue;
-	if (!strcmp(desk->name, lbl)) break;
+	if (!strcmp(desk->name, lbl))
+	  {
+	     efreet_desktop_free(desk);
+	     break;
+	  }
+	efreet_desktop_free(desk);
      }
    return mod;
 }

@@ -545,11 +545,12 @@ _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
 	     
 	     if (entry->icon)
 	       {
-		  const char *file;
+		  char *file;
 
 		  if (entry->icon[0] == '/') file = entry->icon;
 		  else file = efreet_icon_path_find(e_config->icon_theme, entry->icon, "24x24");
 		  e_menu_item_icon_file_set(mi, file);
+		  E_FREE(file);
 	       }
 	     if (entry->type == EFREET_MENU_ENTRY_SEPARATOR)
 	       e_menu_item_separator_set(mi, 1);

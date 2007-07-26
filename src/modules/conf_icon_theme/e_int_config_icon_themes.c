@@ -179,7 +179,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 	theme = l->data;
 	if (theme->example_icon)
 	  {
-	     const char *path;
+	     char *path;
 
 	     path = efreet_icon_path_find(theme->name.internal, theme->example_icon, "24x24");
 	     if (path)
@@ -187,6 +187,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 		  oc = e_icon_add(evas);
 		  e_icon_file_set(oc, path);
 		  e_icon_fill_inside_set(oc, 1);
+		  free(path);
 	       }
 	  }
 	e_widget_ilist_append(ilist, oc, theme->name.name, NULL, NULL, theme->name.internal);
@@ -291,7 +292,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	theme = l->data;
 	if (theme->example_icon)
 	  {
-	     const char *path;
+	     char *path;
 
 	     path = efreet_icon_path_find(theme->name.internal, theme->example_icon, "24x24");
 	     if (path)
@@ -299,6 +300,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 		  oc = e_icon_add(evas);
 		  e_icon_file_set(oc, path);
 		  e_icon_fill_inside_set(oc, 1);
+		  free(path);
 	       }
 	  }
 	e_widget_ilist_append(ilist, oc, theme->name.name, NULL, NULL, theme->name.internal);
