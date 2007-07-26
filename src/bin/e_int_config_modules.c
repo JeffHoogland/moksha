@@ -254,7 +254,7 @@ _fill_all(E_Config_Dialog_Data *cfdata)
 	Efreet_Desktop *desk = NULL;
 	Evas_Object *oc = NULL;
 	char buf[4096];
-	const char *icon;
+	char *icon;
 	
 	mod = l->data;
 	if (!mod) continue;
@@ -307,7 +307,7 @@ _fill_loaded(E_Config_Dialog_Data *cfdata)
 	Efreet_Desktop *desk = NULL;
 	Evas_Object *oc = NULL;
 	char buf[4096];
-	const char *icon;
+	char *icon;
 	
 	mod = l->data;
 	if (!mod) continue;
