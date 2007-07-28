@@ -98,7 +98,6 @@ e_widget_entry.h \
 e_widget_image.h \
 e_config_dialog.h \
 e_int_config_focus.h \
-e_int_config_desks.h \
 e_configure.h \
 e_int_border_locks.h \
 e_thumb.h \
@@ -121,14 +120,10 @@ e_int_config_keybindings.h \
 e_int_config_mousebindings.h \
 e_int_config_performance.h \
 e_int_config_winlist.h \
-e_int_config_display.h \
-e_int_config_desklock.h \
 e_int_config_exebuf.h \
 e_int_config_dialogs.h \
 e_int_config_mime.h \
 e_int_config_mime_edit.h \
-e_int_config_screensaver.h \
-e_int_config_dpms.h \
 e_exebuf.h \
 e_desklock.h \
 e_screensaver.h \
@@ -166,7 +161,6 @@ e_fwin.h \
 e_widget_aspect.h \
 e_filereg.h \
 e_widget_desk_preview.h \
-e_int_config_desk.h \
 e_int_config_clientlist.h \
 e_fm_prop.h \
 e_mouse.h \
@@ -248,7 +242,6 @@ e_widget_entry.c \
 e_widget_image.c \
 e_config_dialog.c \
 e_int_config_focus.c \
-e_int_config_desks.c \
 e_configure.c \
 e_int_border_locks.c \
 e_thumb.c \
@@ -271,14 +264,10 @@ e_int_config_keybindings.c \
 e_int_config_mousebindings.c \
 e_int_config_performance.c \
 e_int_config_winlist.c \
-e_int_config_display.c \
-e_int_config_desklock.c \
 e_int_config_exebuf.c \
 e_int_config_dialogs.c \
 e_int_config_mime.c \
 e_int_config_mime_edit.c \
-e_int_config_screensaver.c \
-e_int_config_dpms.c \
 e_exebuf.c \
 e_desklock.c \
 e_screensaver.c \
@@ -316,7 +305,6 @@ e_fwin.c \
 e_widget_aspect.c \
 e_widget_desk_preview.c \
 e_filereg.c \
-e_int_config_desk.c \
 e_fm_prop.c \
 e_int_config_clientlist.c \
 e_mouse.c \

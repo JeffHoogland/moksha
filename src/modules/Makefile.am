@@ -22,4 +22,10 @@ conf_startup \
 conf_intl \
 conf_imc \
 conf_profiles \
-conf_applications
+conf_applications \
+conf_desks \
+conf_desk \
+conf_display \
+conf_desklock \
+conf_screensaver \
+conf_dpms

@@ -438,12 +438,12 @@ e_configure_init(void)
 //   e_configure_registry_item_add("applications/restart_applications", 30, _("Restart Applications"), NULL, "enlightenment/restart_applications", e_int_config_apps_restart);
 //   e_configure_registry_item_add("applications/startup_applications", 40, _("Startup Applications"), NULL, "enlightenment/startup_applications", e_int_config_apps_startup);
    
-   e_configure_registry_category_add("screen", 30, _("Screen"), NULL, "enlightenment/screen_setup");
-   e_configure_registry_item_add("screen/virtual_desktops", 10, _("Virtual Desktops"), NULL, "enlightenment/desktops", e_int_config_desks);
-   e_configure_registry_item_add("screen/screen_resolution", 20, _("Screen Resolution"), NULL, "enlightenment/screen_resolution", e_int_config_display);
-   e_configure_registry_item_add("screen/screen_lock", 30, _("Screen Lock"), NULL, "enlightenment/desklock", e_int_config_desklock);
-   e_configure_registry_item_add("screen/screen_saver", 40, _("Screen Saver"), NULL, "enlightenment/screensaver", e_int_config_screensaver);
-   e_configure_registry_item_add("screen/power_management", 50, _("Power Management"), NULL, "enlightenment/power_management", e_int_config_dpms);
+//   e_configure_registry_category_add("screen", 30, _("Screen"), NULL, "enlightenment/screen_setup");
+//   e_configure_registry_item_add("screen/virtual_desktops", 10, _("Virtual Desktops"), NULL, "enlightenment/desktops", e_int_config_desks);
+//   e_configure_registry_item_add("screen/screen_resolution", 20, _("Screen Resolution"), NULL, "enlightenment/screen_resolution", e_int_config_display);
+//   e_configure_registry_item_add("screen/screen_lock", 30, _("Screen Lock"), NULL, "enlightenment/desklock", e_int_config_desklock);
+//   e_configure_registry_item_add("screen/screen_saver", 40, _("Screen Saver"), NULL, "enlightenment/screensaver", e_int_config_screensaver);
+//   e_configure_registry_item_add("screen/power_management", 50, _("Power Management"), NULL, "enlightenment/power_management", e_int_config_dpms);
    
    e_configure_registry_category_add("keyboard_and_mouse", 40, _("Keyboard & Mouse"), NULL, "enlightenment/behavior");
    e_configure_registry_item_add("keyboard_and_mouse/key_bindings", 10, _("Key Bindings"), NULL, "enlightenment/keys", e_int_config_keybindings);
@@ -483,7 +483,7 @@ e_configure_init(void)
    e_configure_registry_category_add("internal", -1, _("Internal"), NULL, "enlightenment/internal");
 //   e_configure_registry_item_add("internal/borders_border", -1, _("Border"), NULL, "enlightenment/windows", e_int_config_borders_border);
 //   e_configure_registry_item_add("internal/wallpaper_desk", -1, _("Wallpaper"), NULL, "enlightenment/windows", e_int_config_wallpaper_desk);
-   e_configure_registry_item_add("internal/desk", -1, _("Desk"), NULL, "enlightenment/windows", e_int_config_desk);
+//   e_configure_registry_item_add("internal/desk", -1, _("Desk"), NULL, "enlightenment/windows", e_int_config_desk);
 //   e_configure_registry_item_add("internal/ibar_other", -1, _("IBar Other"), NULL, "enlightenment/windows", e_int_config_apps_ibar_other);
 }
 

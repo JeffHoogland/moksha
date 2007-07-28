@@ -766,6 +766,12 @@ e_config_init(void)
 	CFG_MODULE("conf_transitions", 1);
 	CFG_MODULE("conf_startup", 1);
 	CFG_MODULE("conf_applications", 1);
+	CFG_MODULE("conf_desks", 1);
+	CFG_MODULE("conf_desk", 1);
+	CFG_MODULE("conf_display", 1);
+	CFG_MODULE("conf_desklock", 1);
+	CFG_MODULE("conf_screensaver", 1);
+	CFG_MODULE("conf_dpms", 1);
      }
 #if 0
      {
