@@ -781,6 +781,12 @@ e_config_init(void)
 	CFG_MODULE("conf_window_manipulation", 1);
 	CFG_MODULE("conf_menus", 1);
 	CFG_MODULE("conf_clientlist", 1);
+	CFG_MODULE("conf_dialogs", 1);
+	CFG_MODULE("conf_performance", 1);
+	CFG_MODULE("conf_winlist", 1);
+	CFG_MODULE("conf_exebuf", 1);
+	CFG_MODULE("conf_paths", 1);
+	CFG_MODULE("conf_mime", 1);
      }
 #if 0
      {

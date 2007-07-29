@@ -463,13 +463,13 @@ e_configure_init(void)
 //   e_configure_registry_item_add("menus/menu_settings", 30, _("Menu Settings"), NULL, "enlightenment/menu_settings", e_int_config_menus);
 //   e_configure_registry_item_add("menus/client_list_menu", 40, _("Client List Menu"), NULL, "enlightenment/windows", e_int_config_clientlist);
    
-   e_configure_registry_category_add("advanced", 80, _("Advanced"), NULL, "enlightenment/advanced");
-   e_configure_registry_item_add("advanced/dialogs", 10, _("Dialogs"), NULL, "enlightenment/configuration", e_int_config_dialogs);
-   e_configure_registry_item_add("advanced/performance", 20, _("Performance"), NULL, "enlightenment/performance", e_int_config_performance);   
-   e_configure_registry_item_add("advanced/window_list", 30, _("Window List"), NULL, "enlightenment/winlist", e_int_config_winlist);
-   e_configure_registry_item_add("advanced/run_command", 40, _("Run Command"), NULL, "enlightenment/run", e_int_config_exebuf);
-   e_configure_registry_item_add("advanced/search_directories", 50, _("Search Directories"), NULL, "enlightenment/directories", e_int_config_paths);
-   e_configure_registry_item_add("advanced/file_icons", 60, _("File Icons"), NULL, "enlightenment/file_icons", e_int_config_mime);
+//   e_configure_registry_category_add("advanced", 80, _("Advanced"), NULL, "enlightenment/advanced");
+//   e_configure_registry_item_add("advanced/dialogs", 10, _("Dialogs"), NULL, "enlightenment/configuration", e_int_config_dialogs);
+//   e_configure_registry_item_add("advanced/performance", 20, _("Performance"), NULL, "enlightenment/performance", e_int_config_performance);   
+//   e_configure_registry_item_add("advanced/window_list", 30, _("Window List"), NULL, "enlightenment/winlist", e_int_config_winlist);
+//   e_configure_registry_item_add("advanced/run_command", 40, _("Run Command"), NULL, "enlightenment/run", e_int_config_exebuf);
+//   e_configure_registry_item_add("advanced/search_directories", 50, _("Search Directories"), NULL, "enlightenment/directories", e_int_config_paths);
+//   e_configure_registry_item_add("advanced/file_icons", 60, _("File Icons"), NULL, "enlightenment/file_icons", e_int_config_mime);
    
    e_configure_registry_category_add("extensions", 90, _("Extensions"), NULL, "enlightenment/extensions");
    e_configure_registry_item_add("extensions/modules", 10, _("Modules"), NULL, "enlightenment/modules", e_int_config_modules);

@@ -37,4 +37,11 @@ conf_window_display \
 conf_window_focus \
 conf_window_manipulation \
 conf_menus \
-conf_clientlist
+conf_clientlist \
+conf_dialogs \
+conf_performance \
+conf_winlist \
+conf_exebuf \
+conf_paths \
+conf_mime
+

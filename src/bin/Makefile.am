@@ -112,12 +112,6 @@ e_widget_tlist.h \
 e_widget_config_list.h \
 e_slider.h \
 e_widget_slider.h \
-e_int_config_performance.h \
-e_int_config_winlist.h \
-e_int_config_exebuf.h \
-e_int_config_dialogs.h \
-e_int_config_mime.h \
-e_int_config_mime_edit.h \
 e_exebuf.h \
 e_desklock.h \
 e_screensaver.h \
@@ -130,7 +124,6 @@ e_stolen.h \
 e_gadcon.h \
 e_shelf.h \
 e_widget_preview.h \
-e_int_config_paths.h \
 e_int_shelf_config.h \
 e_int_gadcon_config.h \
 e_confirm_dialog.h \
@@ -247,12 +240,6 @@ e_widget_tlist.c \
 e_widget_config_list.c \
 e_slider.c \
 e_widget_slider.c \
-e_int_config_performance.c \
-e_int_config_winlist.c \
-e_int_config_exebuf.c \
-e_int_config_dialogs.c \
-e_int_config_mime.c \
-e_int_config_mime_edit.c \
 e_exebuf.c \
 e_desklock.c \
 e_screensaver.c \
@@ -265,7 +252,6 @@ e_stolen.c \
 e_gadcon.c \
 e_shelf.c \
 e_widget_preview.c \
-e_int_config_paths.c \
 e_int_shelf_config.c \
 e_int_gadcon_config.c \
 e_confirm_dialog.c \
