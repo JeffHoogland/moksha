@@ -779,6 +779,8 @@ e_config_init(void)
 	CFG_MODULE("conf_window_display", 1);
 	CFG_MODULE("conf_window_focus", 1);
 	CFG_MODULE("conf_window_manipulation", 1);
+	CFG_MODULE("conf_menus", 1);
+	CFG_MODULE("conf_clientlist", 1);
      }
 #if 0
      {

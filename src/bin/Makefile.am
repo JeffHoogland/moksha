@@ -112,7 +112,6 @@ e_widget_tlist.h \
 e_widget_config_list.h \
 e_slider.h \
 e_widget_slider.h \
-e_int_config_menus.h \
 e_int_config_performance.h \
 e_int_config_winlist.h \
 e_int_config_exebuf.h \
@@ -155,7 +154,6 @@ e_fwin.h \
 e_widget_aspect.h \
 e_filereg.h \
 e_widget_desk_preview.h \
-e_int_config_clientlist.h \
 e_fm_prop.h \
 e_mouse.h \
 e_order.h \
@@ -249,7 +247,6 @@ e_widget_tlist.c \
 e_widget_config_list.c \
 e_slider.c \
 e_widget_slider.c \
-e_int_config_menus.c \
 e_int_config_performance.c \
 e_int_config_winlist.c \
 e_int_config_exebuf.c \
@@ -293,7 +290,6 @@ e_widget_aspect.c \
 e_widget_desk_preview.c \
 e_filereg.c \
 e_fm_prop.c \
-e_int_config_clientlist.c \
 e_mouse.c \
 e_order.c \
 e_exec.c \

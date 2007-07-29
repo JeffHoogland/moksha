@@ -302,6 +302,10 @@ src/modules/conf_window_focus/Makefile
 src/modules/conf_window_focus/module.desktop
 src/modules/conf_window_manipulation/Makefile
 src/modules/conf_window_manipulation/module.desktop
+src/modules/conf_menus/Makefile
+src/modules/conf_menus/module.desktop
+src/modules/conf_clientlist/Makefile
+src/modules/conf_clientlist/module.desktop
 src/preload/Makefile
 data/Makefile
 data/fonts/Makefile

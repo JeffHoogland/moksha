@@ -35,4 +35,6 @@ conf_mousebindings \
 conf_mouse \
 conf_window_display \
 conf_window_focus \
-conf_window_manipulation
+conf_window_manipulation \
+conf_menus \
+conf_clientlist

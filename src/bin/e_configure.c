@@ -455,13 +455,13 @@ e_configure_init(void)
 //   e_configure_registry_item_add("windows/window_focus", 20, _("Window Focus"), NULL, "enlightenment/focus", e_int_config_focus);
 //   e_configure_registry_item_add("windows/window_manipulation", 30, _("Window Manipulation"), NULL, "enlightenment/window_manipulation", e_int_config_window_manipulation);
    
-   e_configure_registry_category_add("menus", 60, _("Menus"), NULL, "enlightenment/menus");
+//   e_configure_registry_category_add("menus", 60, _("Menus"), NULL, "enlightenment/menus");
 ////   e_configure_registry_item_add("menus/favorites_menu", 10, _("Favorites Menu"), NULL, "enlightenment/favorites", e_int_config_apps_favs);   
 #if 0
 ////   e_configure_registry_item_add("menus/applications_menu", 20, _("Application Menus"), NULL, "enlightenment/applications", e_int_config_apps);
 #endif
-   e_configure_registry_item_add("menus/menu_settings", 30, _("Menu Settings"), NULL, "enlightenment/menu_settings", e_int_config_menus);
-   e_configure_registry_item_add("menus/client_list_menu", 40, _("Client List Menu"), NULL, "enlightenment/windows", e_int_config_clientlist);
+//   e_configure_registry_item_add("menus/menu_settings", 30, _("Menu Settings"), NULL, "enlightenment/menu_settings", e_int_config_menus);
+//   e_configure_registry_item_add("menus/client_list_menu", 40, _("Client List Menu"), NULL, "enlightenment/windows", e_int_config_clientlist);
    
    e_configure_registry_category_add("advanced", 80, _("Advanced"), NULL, "enlightenment/advanced");
    e_configure_registry_item_add("advanced/dialogs", 10, _("Dialogs"), NULL, "enlightenment/configuration", e_int_config_dialogs);
