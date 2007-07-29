@@ -97,7 +97,6 @@ e_widget_table.h \
 e_widget_entry.h \
 e_widget_image.h \
 e_config_dialog.h \
-e_int_config_focus.h \
 e_configure.h \
 e_int_border_locks.h \
 e_thumb.h \
@@ -113,11 +112,7 @@ e_widget_tlist.h \
 e_widget_config_list.h \
 e_slider.h \
 e_widget_slider.h \
-e_int_config_window_manipulation.h \
-e_int_config_window_display.h \
 e_int_config_menus.h \
-e_int_config_keybindings.h \
-e_int_config_mousebindings.h \
 e_int_config_performance.h \
 e_int_config_winlist.h \
 e_int_config_exebuf.h \
@@ -138,7 +133,6 @@ e_shelf.h \
 e_widget_preview.h \
 e_int_config_paths.h \
 e_int_shelf_config.h \
-e_int_config_shelf.h \
 e_int_gadcon_config.h \
 e_confirm_dialog.h \
 e_int_border_prop.h \
@@ -168,8 +162,7 @@ e_order.h \
 e_exec.h \
 e_widget_font_preview.h \
 e_fm_custom.h \
-e_fm_shared.h \
-e_int_config_mouse.h
+e_fm_shared.h
  
 enlightenment_src = \
 e_user.c \
@@ -241,7 +234,6 @@ e_widget_table.c \
 e_widget_entry.c \
 e_widget_image.c \
 e_config_dialog.c \
-e_int_config_focus.c \
 e_configure.c \
 e_int_border_locks.c \
 e_thumb.c \
@@ -257,11 +249,7 @@ e_widget_tlist.c \
 e_widget_config_list.c \
 e_slider.c \
 e_widget_slider.c \
-e_int_config_window_manipulation.c \
-e_int_config_window_display.c \
 e_int_config_menus.c \
-e_int_config_keybindings.c \
-e_int_config_mousebindings.c \
 e_int_config_performance.c \
 e_int_config_winlist.c \
 e_int_config_exebuf.c \
@@ -282,7 +270,6 @@ e_shelf.c \
 e_widget_preview.c \
 e_int_config_paths.c \
 e_int_shelf_config.c \
-e_int_config_shelf.c \
 e_int_gadcon_config.c \
 e_confirm_dialog.c \
 e_int_border_prop.c \
@@ -312,7 +299,6 @@ e_order.c \
 e_exec.c \
 e_widget_font_preview.c \
 e_fm_custom.c \
-e_int_config_mouse.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \

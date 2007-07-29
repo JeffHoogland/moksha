@@ -772,6 +772,13 @@ e_config_init(void)
 	CFG_MODULE("conf_desklock", 1);
 	CFG_MODULE("conf_screensaver", 1);
 	CFG_MODULE("conf_dpms", 1);
+	CFG_MODULE("conf_shelves", 1);
+	CFG_MODULE("conf_keybindings", 1);
+	CFG_MODULE("conf_mousebindings", 1);
+	CFG_MODULE("conf_mouse", 1);
+	CFG_MODULE("conf_window_display", 1);
+	CFG_MODULE("conf_window_focus", 1);
+	CFG_MODULE("conf_window_manipulation", 1);
      }
 #if 0
      {

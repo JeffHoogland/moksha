@@ -28,4 +28,11 @@ conf_desk \
 conf_display \
 conf_desklock \
 conf_screensaver \
-conf_dpms
+conf_dpms \
+conf_shelves \
+conf_keybindings \
+conf_mousebindings \
+conf_mouse \
+conf_window_display \
+conf_window_focus \
+conf_window_manipulation

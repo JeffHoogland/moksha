@@ -445,20 +445,20 @@ e_configure_init(void)
 //   e_configure_registry_item_add("screen/screen_saver", 40, _("Screen Saver"), NULL, "enlightenment/screensaver", e_int_config_screensaver);
 //   e_configure_registry_item_add("screen/power_management", 50, _("Power Management"), NULL, "enlightenment/power_management", e_int_config_dpms);
    
-   e_configure_registry_category_add("keyboard_and_mouse", 40, _("Keyboard & Mouse"), NULL, "enlightenment/behavior");
-   e_configure_registry_item_add("keyboard_and_mouse/key_bindings", 10, _("Key Bindings"), NULL, "enlightenment/keys", e_int_config_keybindings);
-   e_configure_registry_item_add("keyboard_and_mouse/mouse_bindings", 20, _("Mouse Bindings"), NULL, "enlightenment/mouse_clean", e_int_config_mousebindings);
-   e_configure_registry_item_add("keyboard_and_mouse/mouse_acceleration", 30, _("Mouse Acceleration"), NULL, "enlightenment/mouse_clean", e_int_config_mouse);
+//   e_configure_registry_category_add("keyboard_and_mouse", 40, _("Keyboard & Mouse"), NULL, "enlightenment/behavior");
+//   e_configure_registry_item_add("keyboard_and_mouse/key_bindings", 10, _("Key Bindings"), NULL, "enlightenment/keys", e_int_config_keybindings);
+//   e_configure_registry_item_add("keyboard_and_mouse/mouse_bindings", 20, _("Mouse Bindings"), NULL, "enlightenment/mouse_clean", e_int_config_mousebindings);
+//   e_configure_registry_item_add("keyboard_and_mouse/mouse_acceleration", 30, _("Mouse Acceleration"), NULL, "enlightenment/mouse_clean", e_int_config_mouse);
    
-   e_configure_registry_category_add("windows", 50, _("Windows"), NULL, "enlightenment/windows");
-   e_configure_registry_item_add("windows/window_display", 10, _("Window Display"), NULL, "enlightenment/windows", e_int_config_window_display);
-   e_configure_registry_item_add("windows/window_focus", 20, _("Window Focus"), NULL, "enlightenment/focus", e_int_config_focus);
-   e_configure_registry_item_add("windows/window_manipulation", 30, _("Window Manipulation"), NULL, "enlightenment/window_manipulation", e_int_config_window_manipulation);
+//   e_configure_registry_category_add("windows", 50, _("Windows"), NULL, "enlightenment/windows");
+//   e_configure_registry_item_add("windows/window_display", 10, _("Window Display"), NULL, "enlightenment/windows", e_int_config_window_display);
+//   e_configure_registry_item_add("windows/window_focus", 20, _("Window Focus"), NULL, "enlightenment/focus", e_int_config_focus);
+//   e_configure_registry_item_add("windows/window_manipulation", 30, _("Window Manipulation"), NULL, "enlightenment/window_manipulation", e_int_config_window_manipulation);
    
    e_configure_registry_category_add("menus", 60, _("Menus"), NULL, "enlightenment/menus");
-//   e_configure_registry_item_add("menus/favorites_menu", 10, _("Favorites Menu"), NULL, "enlightenment/favorites", e_int_config_apps_favs);   
+////   e_configure_registry_item_add("menus/favorites_menu", 10, _("Favorites Menu"), NULL, "enlightenment/favorites", e_int_config_apps_favs);   
 #if 0
-//   e_configure_registry_item_add("menus/applications_menu", 20, _("Application Menus"), NULL, "enlightenment/applications", e_int_config_apps);
+////   e_configure_registry_item_add("menus/applications_menu", 20, _("Application Menus"), NULL, "enlightenment/applications", e_int_config_apps);
 #endif
    e_configure_registry_item_add("menus/menu_settings", 30, _("Menu Settings"), NULL, "enlightenment/menu_settings", e_int_config_menus);
    e_configure_registry_item_add("menus/client_list_menu", 40, _("Client List Menu"), NULL, "enlightenment/windows", e_int_config_clientlist);
@@ -473,14 +473,14 @@ e_configure_init(void)
    
    e_configure_registry_category_add("extensions", 90, _("Extensions"), NULL, "enlightenment/extensions");
    e_configure_registry_item_add("extensions/modules", 10, _("Modules"), NULL, "enlightenment/modules", e_int_config_modules);
-   e_configure_registry_item_add("extensions/shelves", 20, _("Shelves"), NULL, "enlightenment/shelf", e_int_config_shelf);
+//   e_configure_registry_item_add("extensions/shelves", 20, _("Shelves"), NULL, "enlightenment/shelf", e_int_config_shelf);
 
    /* internal calls - not in config dialog but accessible from other code
     * that knows these config dialogs exist and how to interact. they require
     * parameters to be passed and will not work without them being set and
     * set properly
     */
-   e_configure_registry_category_add("internal", -1, _("Internal"), NULL, "enlightenment/internal");
+//   e_configure_registry_category_add("internal", -1, _("Internal"), NULL, "enlightenment/internal");
 //   e_configure_registry_item_add("internal/borders_border", -1, _("Border"), NULL, "enlightenment/windows", e_int_config_borders_border);
 //   e_configure_registry_item_add("internal/wallpaper_desk", -1, _("Wallpaper"), NULL, "enlightenment/windows", e_int_config_wallpaper_desk);
 //   e_configure_registry_item_add("internal/desk", -1, _("Desk"), NULL, "enlightenment/windows", e_int_config_desk);
