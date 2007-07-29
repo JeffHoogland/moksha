@@ -4,7 +4,7 @@ MODULE = conf_window_manipulation
 # data files for the module
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)
 files_DATA = \
-e-module-$(MODULE).edj module.desktop
+e-module-conf_winmanip.edj module.desktop
 
 EXTRA_DIST = $(files_DATA)
 
