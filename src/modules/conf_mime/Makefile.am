@@ -21,7 +21,7 @@ pkg_LTLIBRARIES        = module.la
 module_la_SOURCES      = e_mod_main.c \
                          e_mod_main.h \
 			 e_int_config_mime.c \
-                         e_int_config_mime.h \                        
+                         e_int_config_mime.h \
                          e_int_config_mime_edit.c \
                          e_int_config_mime_edit.h
 			 
