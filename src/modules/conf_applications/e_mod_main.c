@@ -41,6 +41,7 @@ e_modapi_init(E_Module *m)
    e_configure_registry_category_add("menus", 60, _("Menus"), NULL, "enlightenment/menus");
    e_configure_registry_item_add("menus/favorites_menu", 10, _("Favorites Menu"), NULL, "enlightenment/favorites", e_int_config_apps_favs);
    conf_module = m;
+   e_module_delayed_set(m, 1);
    return m;
 }
 

@@ -34,6 +34,7 @@ e_modapi_init(E_Module *m)
    e_configure_registry_category_add("menus", 60, _("Menus"), NULL, "enlightenment/menus");
    e_configure_registry_item_add("menus/client_list_menu", 40, _("Client List Menu"), NULL, "enlightenment/winlist", e_int_config_clientlist);
    conf_module = m;
+   e_module_delayed_set(m, 1);
    return m;
 }
 

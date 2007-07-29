@@ -34,6 +34,7 @@ e_modapi_init(E_Module *m)
    e_configure_registry_category_add("internal", -1, _("Internal"), NULL, "enlightenment/internal");
    e_configure_registry_item_add("internal/desk", -1, _("Desk"), NULL, "enlightenment/windows", e_int_config_desk);
    conf_module = m;
+   e_module_delayed_set(m, 1);
    return m;
 }
 

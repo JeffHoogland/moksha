@@ -36,6 +36,7 @@ e_modapi_init(E_Module *m)
    e_configure_registry_category_add("internal", -1, _("Internal"), NULL, "enlightenment/internal");
    e_configure_registry_item_add("internal/borders_border", -1, _("Border"), NULL, "enlightenment/windows", e_int_config_borders_border);
    conf_module = m;
+   e_module_delayed_set(m, 1);
    return m;
 }
 

@@ -34,6 +34,7 @@ e_modapi_init(E_Module *m)
    e_configure_registry_category_add("screen", 30, _("Screen"), NULL, "enlightenment/screen_setup");
    e_configure_registry_item_add("screen/virtual_desktops", 10, _("Virtual Desktops"), NULL, "enlightenment/desktops", e_int_config_desks);
    conf_module = m;
+   e_module_delayed_set(m, 1);
    return m;
 }
 

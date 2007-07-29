@@ -34,6 +34,7 @@ e_modapi_init(E_Module *m)
    e_configure_registry_category_add("extensions", 90, _("Extensions"), NULL, "enlightenment/extensions");
    e_configure_registry_item_add("extensions/shelves", 20, _("Shelves"), NULL, "enlightenment/shelf", e_int_config_shelf);
    conf_module = m;
+   e_module_delayed_set(m, 1);
    return m;
 }
 

@@ -34,6 +34,7 @@ e_modapi_init(E_Module *m)
    e_configure_registry_category_add("appearance", 10, _("Appearance"), NULL, "enlightenment/appearance");
    e_configure_registry_item_add("appearance/transitions", 80, _("Transitions"), NULL, "enlightenment/transitions", e_int_config_transitions);
    conf_module = m;
+   e_module_delayed_set(m, 1);
    return m;
 }
 

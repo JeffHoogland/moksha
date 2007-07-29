@@ -305,6 +305,7 @@ struct _E_Config_Module
 {
    const char    *name;
    unsigned char  enabled;
+   unsigned char  delayed;
 };
 
 struct _E_Config_Theme

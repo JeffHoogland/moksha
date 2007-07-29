@@ -15,9 +15,12 @@ static void _e_module_free(E_Module *m);
 static void _e_module_dialog_disable_show(const char *title, const char *body, E_Module *m);
 static void _e_module_cb_dialog_disable(void *data, E_Dialog *dia);
 static void _e_module_event_update_free(void *data, void *event);
+static int _e_module_cb_idler(void *data);
 
 /* local subsystem globals */
 static Evas_List *_e_modules = NULL;
+static Ecore_Idler *_e_module_idler = NULL;
+static Evas_List *_e_modules_delayed = NULL;
 
 EAPI int E_EVENT_MODULE_UPDATE = 0;
 
@@ -54,28 +57,30 @@ e_module_shutdown(void)
 EAPI void
 e_module_all_load(void)
 {
-   Evas_List *pl = NULL, *l;
+   Evas_List *l;
    
-   for (l = e_config->modules; l;)
+   for (l = e_config->modules; l; l = l->next)
      {
 	E_Config_Module *em;
 	E_Module *m;
 	
 	em = l->data;
-	pl = l;
-	l = l->next;
-	m = NULL;
-	if (em->name) m = e_module_new(em->name);
-	if (m)
+	if ((em->delayed) && (em->enabled))
 	  {
-	     if (em->enabled) e_module_enable(m);
+	     if (!_e_module_idler)
+	       _e_module_idler = ecore_idler_add(_e_module_cb_idler, NULL);
+	     _e_modules_delayed = 
+	       evas_list_append(_e_modules_delayed,
+				evas_stringshare_add(em->name));
 	  }
 	else
 	  {
-	     if (em->name) evas_stringshare_del(em->name);
-	     E_FREE(em);
-	     e_config->modules = evas_list_remove_list(e_config->modules, pl);
-	     e_config_save_queue();
+	     m = NULL;
+	     if (em->name) m = e_module_new(em->name);
+	     if (m)
+	       {
+		  if (em->enabled) e_module_enable(m);
+	       }
 	  }
      }
 }
@@ -417,6 +422,28 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
    free(icon);
 }
 
+EAPI void
+e_module_delayed_set(E_Module *m, int delayed)
+{
+   Evas_List *l;
+   
+   for (l = e_config->modules; l; l = l->next)
+     {
+        E_Config_Module *em;
+	
+	em = l->data;
+	if ((em->name) && (!strcmp(m->name, em->name)))
+	  {
+	     if (em->delayed != delayed)
+	       {
+		  em->delayed = delayed;
+		  e_config_save_queue();
+	       }
+	     break;
+	  }
+     }
+}
+
 /* local subsystem functions */
 
 static void
@@ -492,4 +519,27 @@ _e_module_event_update_free(void *data, void *event)
    if (!ev) return;
    E_FREE(ev->name);
    E_FREE(ev);
+}
+
+static int
+_e_module_cb_idler(void *data)
+{
+   if (_e_modules_delayed)
+     {
+	const char *name;
+	E_Module *m;
+	
+	name = _e_modules_delayed->data;
+	_e_modules_delayed = evas_list_remove_list(_e_modules_delayed, _e_modules_delayed);
+	m = NULL;
+	if (name) m = e_module_new(name);
+	if (m)
+	  {
+	     e_module_enable(m);
+	  }
+	evas_stringshare_del(name);
+     }
+   if (_e_modules_delayed) return 1;
+   _e_module_idler = NULL;
+   return 0;
 }

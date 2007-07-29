@@ -34,6 +34,7 @@ e_modapi_init(E_Module *m)
    e_configure_registry_category_add("advanced", 80, _("Advanced"), NULL, "enlightenment/advanced");
    e_configure_registry_item_add("advanced/file_icons", 60, _("File Icons"), NULL, "enlightenment/file_icons", e_int_config_mime);
    conf_module = m;
+   e_module_delayed_set(m, 1);
    return m;
 }
 

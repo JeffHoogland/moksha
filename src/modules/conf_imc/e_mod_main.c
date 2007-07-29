@@ -34,6 +34,7 @@ e_modapi_init(E_Module *m)
    e_configure_registry_category_add("language", 70, _("Language"), NULL, "enlightenment/intl");
    e_configure_registry_item_add("language/input_method_settings", 20, _("Input Method Settings"), NULL, "enlightenment/imc", e_int_config_imc);
    conf_module = m;
+   e_module_delayed_set(m, 1);
    return m;
 }
 

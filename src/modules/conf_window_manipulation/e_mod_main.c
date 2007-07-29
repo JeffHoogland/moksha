@@ -34,6 +34,7 @@ e_modapi_init(E_Module *m)
    e_configure_registry_category_add("windows", 50, _("Windows"), NULL, "enlightenment/windows");
    e_configure_registry_item_add("windows/window_manipulation", 30, _("Window Manipulation"), NULL, "enlightenment/window_manipulation", e_int_config_window_manipulation);
    conf_module = m;
+   e_module_delayed_set(m, 1);
    return m;
 }
 

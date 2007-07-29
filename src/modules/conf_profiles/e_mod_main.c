@@ -34,6 +34,7 @@ e_modapi_init(E_Module *m)
    e_configure_registry_category_add("advanced", 80, _("Advanced"), NULL, "enlightenment/advanced");
    e_configure_registry_item_add("advanced/profiles", 50, _("Profiles"), NULL, "enlightenment/profiles", e_int_config_profiles);
    conf_module = m;
+   e_module_delayed_set(m, 1);
    return m;
 }
 
