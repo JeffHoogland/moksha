@@ -118,7 +118,8 @@ e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
 	launch->zone = zone;
 	e_object_ref(E_OBJECT(launch->zone));
      }
-   if (launch_method) launch->launch_method = evas_stringshare_add(launch_method);
+   if (launch_method) 
+     launch->launch_method = evas_stringshare_add(launch_method);
 
    if (desktop)
      {
@@ -128,9 +129,7 @@ e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
 	  efreet_desktop_command_get(desktop, files, _e_exec_cb_exec, launch);
      }
    else
-     {
-	_e_exec_cb_exec(launch, NULL, strdup(exec), 0);
-     }
+     _e_exec_cb_exec(launch, NULL, strdup(exec), 0);
    return 1;
 }
 
@@ -260,8 +259,9 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 	  }
 	e_exec_start_pending = evas_list_append(e_exec_start_pending, desktop);
      }
-   else
+   else if (exe) 
      ecore_exe_free(exe);
+   
    if (!remaining)
      {
 	if (launch->launch_method) evas_stringshare_del(launch->launch_method);
@@ -291,7 +291,7 @@ _e_exec_cb_exit(void *data, int type, void *event)
    ev = event;
    if (!ev->exe) return 1;
    if (!(ecore_exe_tag_get(ev->exe) && 
-	(!strcmp(ecore_exe_tag_get(ev->exe), "E/exec")))) return 1;
+	 (!strcmp(ecore_exe_tag_get(ev->exe), "E/exec")))) return 1;
    inst = ecore_exe_data_get(ev->exe);
    if (!inst) return 1;
 
