@@ -170,6 +170,10 @@ PKG_CHECK_MODULES(E, [
   ecore-evas
   ecore-config
   ecore-file
+  ecore-ipc
+  ecore-con
+  ecore-job
+  ecore-txt
   edje
   eet
   embryo
