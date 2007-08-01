@@ -112,7 +112,6 @@ e_widget_tlist.h \
 e_widget_config_list.h \
 e_slider.h \
 e_widget_slider.h \
-e_exebuf.h \
 e_desklock.h \
 e_screensaver.h \
 e_dpms.h \
@@ -240,7 +239,6 @@ e_widget_tlist.c \
 e_widget_config_list.c \
 e_slider.c \
 e_widget_slider.c \
-e_exebuf.c \
 e_desklock.c \
 e_screensaver.c \
 e_dpms.c \

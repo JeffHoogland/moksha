@@ -758,6 +758,7 @@ e_config_init(void)
 	CFG_MODULE("cpufreq", 1, 0);
 	CFG_MODULE("temperature", 1, 0);
 	CFG_MODULE("pager", 1, 0);
+	CFG_MODULE("exebuf", 1, 1);
 	CFG_MODULE("conf_applications", 1, 1);
 	CFG_MODULE("conf_borders", 1, 1);
 	CFG_MODULE("conf_clientlist", 1, 1);

@@ -26,7 +26,6 @@ src/bin/e_editable.c
 src/bin/e_entry.c
 src/bin/e_entry_dialog.c
 src/bin/e_error.c
-src/bin/e_exebuf.c
 src/bin/e_exec.c
 src/bin/e_exehist.c
 src/bin/e_filereg.c
@@ -210,6 +209,8 @@ src/modules/cpufreq/e_mod_main.c
 src/modules/cpufreq/freqset.c
 src/modules/dropshadow/e_mod_config.c
 src/modules/dropshadow/e_mod_main.c
+src/modules/exebuf/e_mod_config.c
+src/modules/exebuf/e_exebuf.c
 src/modules/ibar/e_mod_config.c
 src/modules/ibar/e_mod_main.c
 src/modules/ibox/e_mod_config.c

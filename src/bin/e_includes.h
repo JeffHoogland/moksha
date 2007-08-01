@@ -84,7 +84,6 @@
 #include "e_widget_config_list.h"
 #include "e_slider.h"
 #include "e_widget_slider.h"
-#include "e_exebuf.h"
 #include "e_desklock.h"
 #include "e_screensaver.h"
 #include "e_dpms.h"

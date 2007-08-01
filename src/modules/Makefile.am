@@ -10,6 +10,7 @@ cpufreq \
 ibox \
 start \
 layout \
+exebuf \
 conf_wallpaper \
 conf_theme \
 conf_colors \
@@ -44,4 +45,3 @@ conf_winlist \
 conf_exebuf \
 conf_paths \
 conf_mime
-

@@ -1964,16 +1964,6 @@ ACT_FN_GO(pointer_resize_pop)
 }
 
 /***************************************************************************/
-ACT_FN_GO(exebuf)
-{
-   E_Zone *zone;
-   
-   zone = _e_actions_zone_get(obj);
-   if (zone)
-     e_exebuf_show(zone);
-}
-
-/***************************************************************************/
 ACT_FN_GO(desk_lock)
 {
 /*  E_Zone *zone;
@@ -2303,11 +2293,6 @@ e_actions_init(void)
    ACT_GO(pointer_resize_push);
    ACT_GO(pointer_resize_pop);
    
-   /* exebuf */
-   ACT_GO(exebuf);
-   e_action_predef_name_set(_("Launch"), _("Run Command Dialog"), "exebuf", 
-			    NULL, NULL, 0);
-
    /* desk_lock */
    ACT_GO(desk_lock);
    e_action_predef_name_set(_("Desktop"), _("Desktop Lock"), "desk_lock", 

@@ -772,14 +772,6 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_shelf_shutdown);
-   TS("exebuf");
-   /* setup exebuf */
-   if (!e_exebuf_init())
-     {
-	e_error_message_show(_("Enlightenment cannot set up its exebuf system."));
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_exebuf_shutdown);
 
    TS("dpms");     
    /* setup dpms */
