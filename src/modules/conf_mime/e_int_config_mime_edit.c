@@ -1,4 +1,5 @@
 #include "e.h"
+#include "e_int_config_mime.h"
 
 static void        *_create_data    (E_Config_Dialog *cfd);
 static void         _fill_data      (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
