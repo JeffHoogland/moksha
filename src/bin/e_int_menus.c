@@ -95,10 +95,7 @@ e_int_menus_main_new(void)
    e_menu_category_set(m, "main");
 
    l = evas_hash_find(_e_int_menus_augmentation, "main/0");
-   if (l)
-     {
-	_e_int_menus_augmentation_add(m, l);
-     }
+   if (l) _e_int_menus_augmentation_add(m, l);
 
    if (e_config->menu_favorites_show) 
      {
@@ -131,19 +128,13 @@ e_int_menus_main_new(void)
 #endif
    
    l = evas_hash_find(_e_int_menus_augmentation, "main/1");
-   if (l)
-     {
-	_e_int_menus_augmentation_add(m, l);
-     }
+   if (l) _e_int_menus_augmentation_add(m, l);
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
    l = evas_hash_find(_e_int_menus_augmentation, "main/2");
-   if (l)
-     {
-	_e_int_menus_augmentation_add(m, l);
-     }
+   if (l) _e_int_menus_augmentation_add(m, l);
 
    subm = e_int_menus_desktops_new();
    dat->desktops = subm;
@@ -170,19 +161,13 @@ e_int_menus_main_new(void)
  */
 
    l = evas_hash_find(_e_int_menus_augmentation, "main/3");
-   if (l)
-     {
-	_e_int_menus_augmentation_add(m, l);
-     }
+   if (l) _e_int_menus_augmentation_add(m, l);
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
    l = evas_hash_find(_e_int_menus_augmentation, "main/4");
-   if (l)
-     {
-	_e_int_menus_augmentation_add(m, l);
-     }
+   if (l) _e_int_menus_augmentation_add(m, l);
 
    subm = e_menu_new();
    mi = e_menu_item_new(m);
@@ -202,19 +187,13 @@ e_int_menus_main_new(void)
    e_menu_item_callback_set(mi, _e_int_menus_themes_about, NULL);
    
    l = evas_hash_find(_e_int_menus_augmentation, "main/5");
-   if (l)
-     {
-	_e_int_menus_augmentation_add(m, l);
-     }
+   if (l) _e_int_menus_augmentation_add(m, l);
 
    mi = e_menu_item_new(subm);
    e_menu_item_separator_set(mi, 1);
    
    l = evas_hash_find(_e_int_menus_augmentation, "main/6");
-   if (l)
-     {
-	_e_int_menus_augmentation_add(m, l);
-     }
+   if (l) _e_int_menus_augmentation_add(m, l);
 
    mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("Restart"));
@@ -227,19 +206,13 @@ e_int_menus_main_new(void)
    e_menu_item_callback_set(mi, _e_int_menus_main_exit, NULL);
 
    l = evas_hash_find(_e_int_menus_augmentation, "main/7");
-   if (l)
-     {
-	_e_int_menus_augmentation_add(m, l);
-     }
+   if (l) _e_int_menus_augmentation_add(m, l);
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
    l = evas_hash_find(_e_int_menus_augmentation, "main/8");
-   if (l)
-     {
-	_e_int_menus_augmentation_add(m, l);
-     }
+   if (l) _e_int_menus_augmentation_add(m, l);
 
    subm = e_int_menus_config_new();
    dat->config = subm;
@@ -249,19 +222,13 @@ e_int_menus_main_new(void)
    e_menu_item_submenu_set(mi, subm);
 
    l = evas_hash_find(_e_int_menus_augmentation, "main/9");
-   if (l)
-     {
-	_e_int_menus_augmentation_add(m, l);
-     }
+   if (l) _e_int_menus_augmentation_add(m, l);
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
    l = evas_hash_find(_e_int_menus_augmentation, "main/10");
-   if (l)
-     {
-	_e_int_menus_augmentation_add(m, l);
-     }
+   if (l) _e_int_menus_augmentation_add(m, l);
 
    subm = e_int_menus_sys_new();
    dat->sys = subm;
@@ -271,10 +238,7 @@ e_int_menus_main_new(void)
    e_menu_item_submenu_set(mi, subm);
 
    l = evas_hash_find(_e_int_menus_augmentation, "main/11");
-   if (l)
-     {
-	_e_int_menus_augmentation_add(m, l);
-     }
+   if (l) _e_int_menus_augmentation_add(m, l);
 
    return m;
 }
@@ -829,10 +793,7 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    e_menu_pre_activate_callback_set(m, NULL, NULL);
    
    l = evas_hash_find(_e_int_menus_augmentation, "config/0");
-   if (l)
-     {
-	_e_int_menus_augmentation_add(m, l);
-     }
+   if (l) _e_int_menus_augmentation_add(m, l);
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Configuration Panel"));
