@@ -1048,4 +1048,5 @@ _e_border_menu_cb_ibar_add(void *data, E_Menu *m, E_Menu_Item *mi)
    od = e_order_new(buf);
    if (!od) return;
    e_order_append(od, bd->desktop);
+   e_object_del(E_OBJECT(od));
 }
