@@ -27,6 +27,7 @@ struct _E_Config_Dialog_Data
 
    E_Dialog *dia_new_profile;
    char *new_profile;
+   int new_profile_type;
 };
 
 typedef struct _Del_Profile_Confirm_Data Del_Profile_Confirm_Data;
@@ -61,7 +62,7 @@ _create_data(E_Config_Dialog *cfd)
    E_Config_Dialog_Data *cfdata;
    
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
-	cfdata->cfd = cfd;
+   cfdata->cfd = cfd;
    return cfdata;
 }
 
@@ -244,9 +245,10 @@ EAPI E_Dialog *
 _dia_new_profile(E_Config_Dialog_Data *cfdata)
 {
    E_Dialog *dia;
+   E_Radio_Group *rg;
    Evas *evas;
-   Evas_Coord mh;
-   Evas_Object *ol, *ob;
+   Evas_Coord mw, mh;
+   Evas_Object *ot, *ob;
 
    dia = e_dialog_new(cfdata->cfd->con, "E", "profiles_new_profile_dialog");
    if (!dia) return NULL;
@@ -258,16 +260,30 @@ _dia_new_profile(E_Config_Dialog_Data *cfdata)
    evas = e_win_evas_get(dia->win);
 
    e_dialog_title_set(dia, _("Add New Profile"));
-   ol = e_widget_table_add(evas, 0);
-   e_widget_table_object_append(ol, e_widget_label_add(evas, _("Name:")),
+
+   ot = e_widget_table_add(evas, 0);
+   ob = e_widget_label_add(evas, _("Name:"));
+   e_widget_table_object_append(ot, ob,
 				     0, 0, 1, 1,
-				     1, 1, 0, 1);
+				     0, 1, 0, 0);
    ob = e_widget_entry_add(evas, &(cfdata->new_profile));
-   e_widget_table_object_append(ol, ob,
+   e_widget_min_size_set(ob, 100, 1);
+   e_widget_table_object_append(ot, ob,
 				     1, 0, 1, 1,
-				     1, 1, 1, 1);
-   e_widget_min_size_get(ol, NULL, &mh);
-   e_dialog_content_set(dia, ol, 150, mh);
+				     1, 1, 1, 0);
+
+   rg = e_widget_radio_group_new(&cfdata->new_profile_type);
+   ob = e_widget_radio_add(evas, _("Plain Profile"), 0, rg);   
+   e_widget_table_object_append(ot, ob,
+				     0, 1, 2, 1,
+				     1, 1, 1, 0);
+   ob = e_widget_radio_add(evas, _("Clone Current Profile"), 1, rg);   
+   e_widget_table_object_append(ot, ob,
+				     0, 2, 2, 1,
+				     1, 1, 1, 0);
+
+   e_widget_min_size_get(ot, &mw, &mh);
+   e_dialog_content_set(dia, ot, mw, mh);
 
    e_dialog_button_add(dia, _("OK"), NULL, _new_profile_cb_ok, cfdata);
    e_dialog_button_add(dia, _("Cancel"), NULL, _new_profile_cb_close, cfdata);
@@ -294,13 +310,26 @@ static void
 _new_profile_cb_ok(void *data, E_Dialog *dia) 
 {
    E_Config_Dialog_Data *cfdata;
+   char cur_profile[1024];
+   
    cfdata = data;
    if (!cfdata) return;
+   
+   snprintf (cur_profile, sizeof (cur_profile), "%s", e_config_profile_get ());
+
+   if (cfdata->new_profile)
+     {
+   e_config_profile_add(cfdata->new_profile);
+   if (cfdata->new_profile_type)
+     {
+   e_config_profile_set (cfdata->new_profile);
+   e_config_save();
+   e_config_profile_set (cur_profile);
+     }
+     }
 
    e_object_unref(E_OBJECT(dia));
    cfdata->dia_new_profile = NULL;
-
-   if (cfdata->new_profile) e_config_profile_add(cfdata->new_profile);
    cfdata->new_profile = NULL;
    _ilist_fill(cfdata);
 }

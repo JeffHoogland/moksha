@@ -1809,12 +1809,6 @@ e_config_domain_load(char *domain, E_Config_DD *edd)
    snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/%s.cfg",
 	    homedir, _e_config_profile, domain);
    ef = eet_open(buf, EET_FILE_MODE_READ);
-   if (!ef)
-     {
-	snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/%s.cfg",
-		 homedir, "default", domain);
-	ef = eet_open(buf, EET_FILE_MODE_READ);
-     }
    if (ef)
      {
 	data = eet_data_read(ef, edd, "config");
