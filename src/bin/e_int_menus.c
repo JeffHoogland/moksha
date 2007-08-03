@@ -761,27 +761,9 @@ _e_int_menus_virtuals_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_int_menus_background_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   e_configure_registry_call("appearance/wallpaper", m->zone->container, NULL);
-}
-
-static void
-_e_int_menus_theme_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   e_configure_registry_call("appearance/theme", m->zone->container, NULL);
-}
-
-static void
 _e_int_menus_module_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    e_configure_registry_call("extensions/modules", m->zone->container, NULL);
-}
-
-static void
-_e_int_menus_shelf_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   e_configure_registry_call("extensions/shelves", m->zone->container, NULL);
 }
 
 static void
@@ -800,33 +782,8 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
    e_menu_item_callback_set(mi, _e_int_menus_config_item_cb, NULL);
 
-   l = evas_hash_find(_e_int_menus_augmentation, "config/1");
-   if (l)
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_separator_set(mi, 1);
-
-	_e_int_menus_augmentation_add(m, l);
-     }
-
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
-
-   if (e_configure_registry_exists("appearance/wallpaper"))
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Wallpaper"));
-	e_util_menu_item_edje_icon_set(mi, "enlightenment/background");
-	e_menu_item_callback_set(mi, _e_int_menus_background_item_cb, NULL);
-     }
-   
-   if (e_configure_registry_exists("appearance/theme"))
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Theme"));
-	e_util_menu_item_edje_icon_set(mi, "enlightenment/themes");
-	e_menu_item_callback_set(mi, _e_int_menus_theme_item_cb, NULL);
-     }
 
    if (e_configure_registry_exists("extensions/modules"))
      {
@@ -836,14 +793,12 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
 	e_menu_item_callback_set(mi, _e_int_menus_module_item_cb, NULL);
      }
 
-   if (e_configure_registry_exists("extensions/shelves"))
+   l = evas_hash_find(_e_int_menus_augmentation, "config/1");
+   if (l)
      {
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Shelves"));
-	e_util_menu_item_edje_icon_set(mi, "enlightenment/shelf");
-	e_menu_item_callback_set(mi, _e_int_menus_shelf_item_cb, NULL);
+	_e_int_menus_augmentation_add(m, l);
      }
-   
+
    l = evas_hash_find(_e_int_menus_augmentation, "config/2");
    if (l)
      {
@@ -1515,22 +1470,12 @@ _e_int_menus_augmentation_add(E_Menu *m, Evas_List *augmentation)
 {
    Evas_List *l;
    E_Menu_Item *mi;
-   int i = 0;
 
    for (l = augmentation; l; l = l->next)
      {
 	E_Int_Menu_Augmentation *aug;
 
 	aug = l->data;
-
-	if (i)
-	  {
-	     mi = e_menu_item_new(m);
-	     e_menu_item_separator_set(mi, 1);
-	  }
-	else
-	  i++;
-
 	if (aug->add.func)
 	  aug->add.func(aug->add.data, m);
      }

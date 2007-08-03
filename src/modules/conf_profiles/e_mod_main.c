@@ -48,6 +48,12 @@ EAPI int
 e_modapi_shutdown(E_Module *m)
 {
    E_Config_Dialog *cfd;
+   /* remove module-supplied menu additions */
+   if (maug)
+     {
+	e_int_menus_menu_augmentation_del("config/1", maug);
+	maug = NULL;
+     }
    while ((cfd = e_config_dialog_get("E", "_config_profiles_dialog"))) e_object_del(E_OBJECT(cfd));
    e_configure_registry_item_del("advanced/profiles");
    e_configure_registry_category_del("advanced");
