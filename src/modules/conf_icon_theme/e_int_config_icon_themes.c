@@ -73,6 +73,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 	cfdata->icon_themes = evas_list_sort(cfdata->icon_themes,
 					     evas_list_count(cfdata->icon_themes),
 					     _sort_icon_themes);
+	ecore_list_destroy(icon_themes);
      }
    cfdata->themename = strdup(e_config->icon_theme);
 
