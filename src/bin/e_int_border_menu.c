@@ -821,10 +821,10 @@ _e_border_menu_cb_border_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 	      e_theme_edje_file_get("base/theme/borders",
 		 "e/widgets/border/default/borderless"),
 	      "e/widgets/border/default/borderless");
-     }
 
-   submi = e_menu_item_new(subm);
-   e_menu_item_separator_set(submi, 1);
+	submi = e_menu_item_new(subm);
+	e_menu_item_separator_set(submi, 1);
+     }
 
    submi = e_menu_item_new(subm);
    e_menu_item_label_set(submi, _("Use E17 Default Icon Preference"));
