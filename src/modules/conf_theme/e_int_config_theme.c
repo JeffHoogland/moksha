@@ -475,10 +475,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    
    /* Actually take our cfdata settings and apply them in real life */
    ct = e_theme_config_get("theme");
-   if (ct) 
-     {
-	if (!strcmp(ct->file, cfdata->theme)) return 1;
-     }
+   if ((ct) && (!strcmp(ct->file, cfdata->theme))) return 1;
    
    e_theme_config_set("theme", cfdata->theme);
    e_config_save_queue();

@@ -77,10 +77,7 @@ e_module_all_load(void)
 	  {
 	     m = NULL;
 	     if (em->name) m = e_module_new(em->name);
-	     if (m)
-	       {
-		  if (em->enabled) e_module_enable(m);
-	       }
+	     if ((m) && (em->enabled)) e_module_enable(m);
 	  }
      }
 }
@@ -533,10 +530,7 @@ _e_module_cb_idler(void *data)
 	_e_modules_delayed = evas_list_remove_list(_e_modules_delayed, _e_modules_delayed);
 	m = NULL;
 	if (name) m = e_module_new(name);
-	if (m)
-	  {
-	     e_module_enable(m);
-	  }
+	if (m) e_module_enable(m);
 	evas_stringshare_del(name);
      }
    if (_e_modules_delayed) return 1;
