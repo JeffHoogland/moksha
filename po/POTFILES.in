@@ -209,7 +209,7 @@ src/modules/cpufreq/e_mod_main.c
 src/modules/cpufreq/freqset.c
 src/modules/dropshadow/e_mod_config.c
 src/modules/dropshadow/e_mod_main.c
-src/modules/exebuf/e_mod_config.c
+src/modules/exebuf/e_mod_main.c
 src/modules/exebuf/e_exebuf.c
 src/modules/ibar/e_mod_config.c
 src/modules/ibar/e_mod_main.c
