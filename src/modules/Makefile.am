@@ -23,6 +23,7 @@ conf_startup \
 conf_intl \
 conf_imc \
 conf_profiles \
+conf_engine \
 conf_applications \
 conf_desks \
 conf_desk \
