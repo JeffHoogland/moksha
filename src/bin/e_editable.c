@@ -74,18 +74,22 @@ e_editable_add(Evas *evas)
 {
    if (!_e_editable_smart)
      {
-        _e_editable_smart = evas_smart_new("e_editable",
-				    _e_editable_smart_add, /* add */
-				    _e_editable_smart_del, /* del */
-				    NULL, NULL, NULL, NULL, NULL, /* stacking */
-				    _e_editable_smart_move, /* move */
-				    _e_editable_smart_resize, /* resize */
-				    _e_editable_smart_show, /* show */
-				    _e_editable_smart_hide, /* hide */
-				    _e_editable_color_set, /* color_set */
-				    _e_editable_clip_set, /* clip_set */
-				    _e_editable_clip_unset, /* clip_unset */
-				    NULL); /* data*/
+	static const Evas_Smart_Class sc =
+	  {
+	     "e_editable",
+	       EVAS_SMART_CLASS_VERSION,
+	       _e_editable_smart_add,
+	       _e_editable_smart_del,
+	       _e_editable_smart_move,
+	       _e_editable_smart_resize,
+	       _e_editable_smart_show,
+	       _e_editable_smart_hide,
+	       _e_editable_color_set,
+	       _e_editable_clip_set,
+	       _e_editable_clip_unset,
+	       NULL
+	  };
+	_e_editable_smart = evas_smart_class_new(&sc);
         _e_editable_smart_use = 0;
      }
    

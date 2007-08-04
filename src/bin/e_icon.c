@@ -272,18 +272,24 @@ static void
 _e_icon_smart_init(void)
 {
    if (_e_smart) return;
-   _e_smart = evas_smart_new("e_icon",
-			     _e_icon_smart_add,
-			     _e_icon_smart_del,
-			     NULL, NULL, NULL, NULL, NULL,
-			     _e_icon_smart_move,
-			     _e_icon_smart_resize,
-			     _e_icon_smart_show,
-			     _e_icon_smart_hide,
-			     _e_icon_smart_color_set,
-			     _e_icon_smart_clip_set,
-			     _e_icon_smart_clip_unset,
-			     NULL);
+     {
+	static const Evas_Smart_Class sc =
+	  {
+	     "e_icon",
+	       EVAS_SMART_CLASS_VERSION,
+	       _e_icon_smart_add,
+	       _e_icon_smart_del,
+	       _e_icon_smart_move,
+	       _e_icon_smart_resize,
+	       _e_icon_smart_show,
+	       _e_icon_smart_hide,
+	       _e_icon_smart_color_set,
+	       _e_icon_smart_clip_set,
+	       _e_icon_smart_clip_unset,
+	       NULL
+	  };
+	_e_smart = evas_smart_class_new(&sc);
+     }
 }
 
 static void

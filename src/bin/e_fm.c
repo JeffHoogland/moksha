@@ -369,18 +369,24 @@ e_fm2_init(void)
    ecore_file_mkpath(path);
    _e_fm2_meta_path = strdup(path);
 
-   _e_fm2_smart = evas_smart_new("e_fm",
-				 _e_fm2_smart_add, /* add */
-				 _e_fm2_smart_del, /* del */
-				 NULL, NULL, NULL, NULL, NULL,
-				 _e_fm2_smart_move, /* move */
-				 _e_fm2_smart_resize, /* resize */
-				 _e_fm2_smart_show,/* show */
-				 _e_fm2_smart_hide,/* hide */
-				 _e_fm2_smart_color_set, /* color_set */
-				 _e_fm2_smart_clip_set, /* clip_set */
-				 _e_fm2_smart_clip_unset, /* clip_unset */
-				 NULL); /* data*/
+     {
+	static const Evas_Smart_Class sc =
+	  {
+	     "e_fm",
+	       EVAS_SMART_CLASS_VERSION,
+	       _e_fm2_smart_add, /* add */
+	       _e_fm2_smart_del, /* del */
+	       _e_fm2_smart_move, /* move */
+	       _e_fm2_smart_resize, /* resize */
+	       _e_fm2_smart_show,/* show */
+	       _e_fm2_smart_hide,/* hide */
+	       _e_fm2_smart_color_set, /* color_set */
+	       _e_fm2_smart_clip_set, /* clip_set */
+	       _e_fm2_smart_clip_unset, /* clip_unset */
+	       NULL
+	  };
+	_e_fm2_smart = evas_smart_class_new(&sc);
+     }
 //   _e_fm2_client_spawn();
    e_fm2_custom_file_init();
    efreet_mime_init();

@@ -572,7 +572,14 @@ _cb_unload(void *data, void *data2)
 	if (!item->selected) continue;
 	lbl = e_widget_ilist_nth_label_get(cfdata->o_loaded, idx);
 	mod = _get_module(cfdata, lbl);
-	if ((mod) && (mod->enabled)) e_module_disable(mod);
+	if ((mod) && (mod->enabled))
+	  {
+	     e_module_disable(mod);
+// FIXME: we need to UNLOAD modules by deleting their objects too! right now
+// this is done next restart
+//	     cfdata->modules = evas_list_remove(cfdata->modules, mod);
+//	     e_object_del(E_OBJECT(mod));
+	  }
      }
    if (l) evas_list_free(l);
 }

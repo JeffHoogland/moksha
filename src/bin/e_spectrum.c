@@ -152,19 +152,25 @@ _e_spectrum_smart_clip_unset(Evas_Object *o)
 static void
 _e_spectrum_smart_init()
 {
-   if ( _e_spectrum_smart ) return;
-   _e_spectrum_smart = evas_smart_new("e_spectrum",
-				      _e_spectrum_smart_add,
-				      _e_spectrum_smart_del,
-				      NULL, NULL, NULL, NULL, NULL,
-				      _e_spectrum_smart_move,
-				      _e_spectrum_smart_resize,
-				      _e_spectrum_smart_show,
-				      _e_spectrum_smart_hide,
-				      _e_spectrum_smart_color_set,
-				      _e_spectrum_smart_clip_set,
-				      _e_spectrum_smart_clip_unset,
-				      NULL);
+   if (_e_spectrum_smart) return;
+     {
+	static const Evas_Smart_Class sc =
+	  {
+	     "e_spectrum",
+	       EVAS_SMART_CLASS_VERSION,
+	       _e_spectrum_smart_add,
+	       _e_spectrum_smart_del,
+	       _e_spectrum_smart_move,
+	       _e_spectrum_smart_resize,
+	       _e_spectrum_smart_show,
+	       _e_spectrum_smart_hide,
+	       _e_spectrum_smart_color_set,
+	       _e_spectrum_smart_clip_set,
+	       _e_spectrum_smart_clip_unset,
+	       NULL
+	  };
+        _e_spectrum_smart = evas_smart_class_new(&sc);
+     }
 }
 
 void

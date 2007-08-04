@@ -73,11 +73,11 @@ e_module_all_load(void)
 	       evas_list_append(_e_modules_delayed,
 				evas_stringshare_add(em->name));
 	  }
-	else
+	else if (em->enabled)
 	  {
 	     m = NULL;
 	     if (em->name) m = e_module_new(em->name);
-	     if ((m) && (em->enabled)) e_module_enable(m);
+	     if (m) e_module_enable(m);
 	  }
      }
 }
