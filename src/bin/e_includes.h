@@ -48,7 +48,6 @@
 #include "e_prefix.h"
 #include "e_datastore.h"
 #include "e_msg.h"
-#include "e_winlist.h"
 #include "e_alert.h"
 #include "e_maximize.h"
 #include "e_grabinput.h"

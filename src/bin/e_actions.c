@@ -1441,100 +1441,6 @@ ACT_FN_GO(app)
 }
 
 /***************************************************************************/
-ACT_FN_GO(winlist)
-{
-   E_Zone *zone;
-   
-   zone = _e_actions_zone_get(obj);
-   if (zone)
-     {
-	if (params)
-	  {
-	     if (!strcmp(params, "next"))
-	       {
-		  if (!e_winlist_show(zone))
-		    e_winlist_next();
-	       }
-	     else if (!strcmp(params, "prev"))
-	       {
-		  if (!e_winlist_show(zone))
-		    e_winlist_prev();
-	       }
-	  }
-	else
-	  {
-	     if (!e_winlist_show(zone))
-	       e_winlist_next();
-	  }
-     }
-}
-ACT_FN_GO_MOUSE(winlist)
-{
-   E_Zone *zone;
-   
-   zone = _e_actions_zone_get(obj);
-   if (zone)
-     {
-	if (params)
-	  {
-	     if (!strcmp(params, "next"))
-	       {
-		  if (e_winlist_show(zone))
-		    e_winlist_modifiers_set(ev->modifiers);
-		  else
-		    e_winlist_next();
-	       }
-	     else if (!strcmp(params, "prev"))
-	       {
-		  if (e_winlist_show(zone))
-		    e_winlist_modifiers_set(ev->modifiers);
-		  else
-		    e_winlist_prev();
-	       }
-	  }
-	else
-	  {
-	     if (e_winlist_show(zone))
-	       e_winlist_modifiers_set(ev->modifiers);
-	     else
-	       e_winlist_next();
-	  }
-     }
-}
-ACT_FN_GO_KEY(winlist)
-{
-   E_Zone *zone;
-   
-   zone = _e_actions_zone_get(obj);
-   if (zone)
-     {
-	if (params)
-	  {
-	     if (!strcmp(params, "next"))
-	       {
-		  if (e_winlist_show(zone))
-		    e_winlist_modifiers_set(ev->modifiers);
-		  else
-		    e_winlist_next();
-	       }
-	     else if (!strcmp(params, "prev"))
-	       {
-		  if (e_winlist_show(zone))
-		    e_winlist_modifiers_set(ev->modifiers);
-		  else
-		    e_winlist_prev();
-	       }
-	  }
-	else
-	  {
-	     if (e_winlist_show(zone))
-	       e_winlist_modifiers_set(ev->modifiers);
-	     else
-	       e_winlist_next();
-	  }
-     }
-}
-
 ACT_FN_GO(desk_deskshow_toggle)
 {
    E_Zone *zone;
@@ -2248,15 +2154,6 @@ e_actions_init(void)
    ACT_GO(app);
    e_action_predef_name_set(_("Launch"), _("Application"), "app", NULL, 
 			    "syntax: , example:", 1);
-   
-   /* winlist */
-   ACT_GO(winlist);
-   e_action_predef_name_set(_("Window : List"), _("Next Window"), "winlist", 
-			    "next", NULL, 0);
-   e_action_predef_name_set(_("Window : List"), _("Previous Window"), 
-			    "winlist", "prev", NULL, 0);
-   ACT_GO_MOUSE(winlist);
-   ACT_GO_KEY(winlist);
    
    ACT_GO(restart);
    e_action_predef_name_set(_("Enlightenment"), _("Restart"), "restart", 

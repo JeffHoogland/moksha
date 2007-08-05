@@ -72,7 +72,6 @@ e_ipc_codec.h \
 e_prefix.h \
 e_datastore.h \
 e_msg.h \
-e_winlist.h \
 e_alert.h \
 e_maximize.h \
 e_grabinput.h \
@@ -199,7 +198,6 @@ e_ipc_codec.c \
 e_prefix.c \
 e_datastore.c \
 e_msg.c \
-e_winlist.c \
 e_alert.c \
 e_maximize.c \
 e_grabinput.c \

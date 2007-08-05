@@ -256,6 +256,8 @@ src/modules/layout/Makefile
 src/modules/layout/module.desktop
 src/modules/exebuf/Makefile
 src/modules/exebuf/module.desktop
+src/modules/winlist/Makefile
+src/modules/winlist/module.desktop
 src/modules/conf_wallpaper/Makefile
 src/modules/conf_wallpaper/module.desktop
 src/modules/conf_theme/Makefile

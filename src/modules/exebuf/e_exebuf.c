@@ -148,7 +148,6 @@ e_exebuf_show(E_Zone *zone)
    E_OBJECT_CHECK_RETURN(zone, 0);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
 
-   if (e_winlist_active_get()) return 0;
    if (exebuf) return 0;
 
    input_window = ecore_x_window_input_new(zone->container->win, zone->x,

@@ -2,6 +2,7 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 #include "e.h"
+#include "e_winlist.h"
 
 /* local subsystem functions */
 typedef struct _E_Winlist_Win E_Winlist_Win;
@@ -115,6 +116,7 @@ e_winlist_show(E_Zone *zone)
    
    winlist = e_popup_new(zone, x, y, w, h); 
    if (!winlist) return 0;
+   e_border_focus_track_freeze();
    
    evas_event_feed_mouse_in(winlist->evas, ecore_x_current_time_get(), NULL);
    evas_event_feed_mouse_move(winlist->evas, -1000000, -1000000, ecore_x_current_time_get(), NULL);
@@ -243,6 +245,7 @@ e_winlist_hide(void)
    bg_object = NULL;
    evas_event_thaw(winlist->evas);
    e_object_del(E_OBJECT(winlist));
+   e_border_focus_track_thaw();
    winlist = NULL;
    hold_count = 0;
    hold_mod = 0;
@@ -300,13 +303,6 @@ e_winlist_hide(void)
 			       warp_to_y);
 	e_object_unref(E_OBJECT(bd));
      }
-}
-
-EAPI int
-e_winlist_active_get(void)
-{
-   if (winlist) return 1;
-   return 0;
 }
 
 EAPI void

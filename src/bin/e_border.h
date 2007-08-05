@@ -668,6 +668,8 @@ EAPI void e_border_resize_limit(E_Border *bd, int *w, int *h);
 
 EAPI E_Border_Hook *e_border_hook_add(E_Border_Hook_Point hookpoint, void (*func) (void *data, E_Border *bd), void *data);
 EAPI void e_border_hook_del(E_Border_Hook *bh);
+EAPI void e_border_focus_track_freeze(void);
+EAPI void e_border_focus_track_thaw(void);
 
 extern EAPI int E_EVENT_BORDER_RESIZE;
 extern EAPI int E_EVENT_BORDER_MOVE;

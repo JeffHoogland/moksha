@@ -11,6 +11,7 @@ ibox \
 start \
 layout \
 exebuf \
+winlist \
 conf_wallpaper \
 conf_theme \
 conf_colors \

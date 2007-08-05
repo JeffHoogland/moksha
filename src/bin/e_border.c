@@ -118,6 +118,8 @@ static Evas_List *focus_stack = NULL;
 
 static Ecore_X_Screen_Size screen_size = { -1, -1 };
 
+static int focus_track_frozen = 0;
+
 EAPI int E_EVENT_BORDER_ADD = 0;
 EAPI int E_EVENT_BORDER_REMOVE = 0;
 EAPI int E_EVENT_BORDER_ZONE_SET = 0;
@@ -1324,7 +1326,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	  }
 	if (bd->visible)
 	  {
-	     if (!e_winlist_active_get())
+	     if (focus_track_frozen > 0)
 	       e_border_focus_latest_set(bd);
 	  }
 //	printf("EMIT 0x%x activeve\n", bd->client.win);
@@ -7439,4 +7441,16 @@ e_border_hook_del(E_Border_Hook *bh)
      }
    else
      _e_border_hooks_delete++;
+}
+
+EAPI void
+e_border_focus_track_freeze(void)
+{
+   focus_track_frozen++;
+}
+
+EAPI void
+e_border_focus_track_thaw(void)
+{
+   focus_track_frozen--;
 }

@@ -126,7 +126,6 @@ src/bin/e_widget_table.c
 src/bin/e_widget_textblock.c
 src/bin/e_widget_tlist.c
 src/bin/e_win.c
-src/bin/e_winlist.c
 src/bin/e_xinerama.c
 src/bin/e_zone.c
 src/modules/battery/e_mod_config.c
@@ -211,6 +210,8 @@ src/modules/dropshadow/e_mod_config.c
 src/modules/dropshadow/e_mod_main.c
 src/modules/exebuf/e_mod_main.c
 src/modules/exebuf/e_exebuf.c
+src/modules/winlist/e_mod_main.c
+src/modules/winlist/e_winlist.c
 src/modules/ibar/e_mod_config.c
 src/modules/ibar/e_mod_main.c
 src/modules/ibox/e_mod_config.c
