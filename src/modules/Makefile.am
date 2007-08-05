@@ -12,6 +12,7 @@ start \
 layout \
 exebuf \
 winlist \
+conf \
 conf_wallpaper \
 conf_theme \
 conf_colors \

@@ -30,7 +30,7 @@ static E_Action *act = NULL;
 EAPI E_Module_Api e_modapi =
 {
    E_MODULE_API_VERSION,
-     "Exebuf"
+     "Winlist"
 };
 
 EAPI void *
@@ -102,7 +102,7 @@ _e_mod_action_winlist_cb(E_Object *obj, const char *params)
 	else
 	  zone = e_util_zone_current_get(e_manager_current_get());
      }
-   zone = e_util_zone_current_get(e_manager_current_get());
+   if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
    if (zone)
      {
 	if (params)
@@ -142,7 +142,7 @@ _e_mod_action_winlist_mouse_cb(E_Object *obj, const char *params, Ecore_X_Event_
 	else
 	  zone = e_util_zone_current_get(e_manager_current_get());
      }
-   zone = e_util_zone_current_get(e_manager_current_get());
+   if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
    if (zone)
      {
 	if (params)
@@ -188,7 +188,7 @@ _e_mod_action_winlist_key_cb(E_Object *obj, const char *params, Ecore_X_Event_Ke
 	else
 	  zone = e_util_zone_current_get(e_manager_current_get());
      }
-   zone = e_util_zone_current_get(e_manager_current_get());
+   if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
    if (zone)
      {
 	if (params)

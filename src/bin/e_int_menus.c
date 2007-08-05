@@ -38,7 +38,6 @@ static void _e_int_menus_apps_run            (void *data, E_Menu *m, E_Menu_Item
 static void _e_int_menus_apps_drag           (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_config_pre_cb       (void *data, E_Menu *m);
 static void _e_int_menus_config_free_hook    (void *obj);
-static void _e_int_menus_config_item_cb      (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_clients_pre_cb      (void *data, E_Menu *m);
 static void _e_int_menus_clients_item_create (E_Border *bd, E_Menu *m);
 static void _e_int_menus_clients_free_hook   (void *obj);
@@ -775,16 +774,13 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    e_menu_pre_activate_callback_set(m, NULL, NULL);
    
    l = evas_hash_find(_e_int_menus_augmentation, "config/0");
-   if (l) _e_int_menus_augmentation_add(m, l);
-
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Configuration Panel"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
-   e_menu_item_callback_set(mi, _e_int_menus_config_item_cb, NULL);
-
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-
+   if (l)
+     {
+	_e_int_menus_augmentation_add(m, l);
+	mi = e_menu_item_new(m);
+	e_menu_item_separator_set(mi, 1);
+     }
+   
    if (e_configure_registry_exists("extensions/modules"))
      {
 	mi = e_menu_item_new(m);
