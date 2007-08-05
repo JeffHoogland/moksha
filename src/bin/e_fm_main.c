@@ -215,26 +215,26 @@ main(int argc, char **argv)
    e_dbus_init();
    _e_dbus_conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
    if (_e_dbus_conn)
-   {
-      e_hal_manager_get_all_devices(_e_dbus_conn, _e_dbus_cb_dev_all, NULL);
-      e_hal_manager_find_device_by_capability(_e_dbus_conn, "storage",
-	    _e_dbus_cb_dev_store, NULL);
-      e_hal_manager_find_device_by_capability(_e_dbus_conn, "volume",
-	    _e_dbus_cb_dev_vol, NULL);
-
-      e_dbus_signal_handler_add(_e_dbus_conn, "org.freedesktop.Hal",
-	    "/org/freedesktop/Hal/Manager",
-	    "org.freedesktop.Hal.Manager",
-	    "DeviceAdded", _e_dbus_cb_dev_add, NULL);
-      e_dbus_signal_handler_add(_e_dbus_conn, "org.freedesktop.Hal",
-	    "/org/freedesktop/Hal/Manager",
-	    "org.freedesktop.Hal.Manager",
-	    "DeviceRemoved", _e_dbus_cb_dev_del, NULL);
-      e_dbus_signal_handler_add(_e_dbus_conn, "org.freedesktop.Hal",
-	    "/org/freedesktop/Hal/Manager",
-	    "org.freedesktop.Hal.Manager",
-	    "NewCapability", _e_dbus_cb_cap_add, NULL);
-   }
+     {
+	e_hal_manager_get_all_devices(_e_dbus_conn, _e_dbus_cb_dev_all, NULL);
+	e_hal_manager_find_device_by_capability(_e_dbus_conn, "storage",
+						_e_dbus_cb_dev_store, NULL);
+	e_hal_manager_find_device_by_capability(_e_dbus_conn, "volume",
+						_e_dbus_cb_dev_vol, NULL);
+	
+	e_dbus_signal_handler_add(_e_dbus_conn, "org.freedesktop.Hal",
+				  "/org/freedesktop/Hal/Manager",
+				  "org.freedesktop.Hal.Manager",
+				  "DeviceAdded", _e_dbus_cb_dev_add, NULL);
+	e_dbus_signal_handler_add(_e_dbus_conn, "org.freedesktop.Hal",
+				  "/org/freedesktop/Hal/Manager",
+				  "org.freedesktop.Hal.Manager",
+				  "DeviceRemoved", _e_dbus_cb_dev_del, NULL);
+	e_dbus_signal_handler_add(_e_dbus_conn, "org.freedesktop.Hal",
+				  "/org/freedesktop/Hal/Manager",
+				  "org.freedesktop.Hal.Manager",
+				  "NewCapability", _e_dbus_cb_cap_add, NULL);
+     }
 #endif
    
    if (_e_ipc_init()) ecore_main_loop_begin();
@@ -709,7 +709,7 @@ e_volume_mount(E_Volume *v)
    static int mount_id = 1;
    char buf[4096];
    char *mount_point;
-   Ecore_List *opt;
+   Ecore_List *opt = NULL;
    
    if (v->mount_point && v->mount_point[0])
      mount_point = v->mount_point;
@@ -730,9 +730,13 @@ e_volume_mount(E_Volume *v)
    printf("mount %s %s\n", v->udi, v->mount_point);
 // FIXME; need to mount AS the USER - not root!!! seems it mounts as root
 //   opt = ecore_list_new();
-//   ecore_list_append(opt, "user");
+//   snprintf(buf, sizeof(buf), "uid=%i", (int)getuid());
+//// hmmm - so how do these work?
+//   ecore_list_append(opt, buf);
+////   ecore_list_append(opt, "user");
+////   ecore_list_append(opt, "utf8");
    e_hal_device_volume_mount(_e_dbus_conn, v->udi, v->mount_point,
-			     v->fstype, NULL, _e_dbus_cb_vol_mounted, v);
+			     v->fstype, opt, _e_dbus_cb_vol_mounted, v);
 //   ecore_list_destroy(opt);
 }
 
