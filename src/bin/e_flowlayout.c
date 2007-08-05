@@ -826,6 +826,7 @@ _e_flowlayout_smart_init(void)
 	static const Evas_Smart_Class sc =
 	  {
 	     "e_flowlayout",
+	       EVAS_SMART_CLASS_VERSION,
 	       _e_flowlayout_smart_add,
 	       _e_flowlayout_smart_del,
 	       _e_flowlayout_smart_move,
