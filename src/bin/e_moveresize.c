@@ -166,12 +166,11 @@ e_move_update(int x, int y)
 EAPI void
 e_move_resize_object_coords_set(int x, int y, int w, int h)
 {
-   if (!_disp_pop) return;
    obj_x = x;
    obj_y = y;
    obj_w = w;
    obj_h = h;
-   if (e_config->move_info_visible && visible)
+   if ((_disp_pop) && (e_config->move_info_visible) && (visible))
      {
 	e_popup_move(_disp_pop,
 		     (obj_x - _disp_pop->zone->x) +
