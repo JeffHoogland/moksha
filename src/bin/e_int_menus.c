@@ -819,12 +819,6 @@ _e_int_menus_config_free_hook(void *obj)
 }
 
 static void
-_e_int_menus_config_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   e_configure_show(m->zone->container);
-}
-
-static void
 _e_int_menus_sys_pre_cb(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
