@@ -760,10 +760,13 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
 	e_menu_item_callback_set(mi, _pager_inst_cb_menu_configure, NULL);
 	
-	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, _("Virtual Desktops Configuration"));
-	e_util_menu_item_edje_icon_set(mi, "enlightenment/vdesktops");
-	e_menu_item_callback_set(mi, _pager_inst_cb_menu_virtual_desktops_dialog, inst);
+	if (e_configure_registry_exists("screen/virtual_desktops"))
+	  {
+	     mi = e_menu_item_new(mn);
+	     e_menu_item_label_set(mi, _("Virtual Desktops Configuration"));
+	     e_util_menu_item_edje_icon_set(mi, "enlightenment/vdesktops");
+	     e_menu_item_callback_set(mi, _pager_inst_cb_menu_virtual_desktops_dialog, inst);
+	  }
 	
 	e_gadcon_client_util_menu_items_append(inst->gcc, mn, 0);
 	
