@@ -375,6 +375,9 @@ e_int_menus_menu_augmentation_add(const char *menu,
    maug->del.data = data_del;
 
    l = evas_hash_find(_e_int_menus_augmentation, menu);
+   if (l) 
+     _e_int_menus_augmentation = evas_hash_del(_e_int_menus_augmentation, menu, l);
+
    l = evas_list_append(l, maug);
    _e_int_menus_augmentation = evas_hash_add(_e_int_menus_augmentation, menu, l);
 
