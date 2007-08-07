@@ -164,8 +164,8 @@ _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char
    wid = data;
    if (!wid || e_widget_disabled_get(wid)) return;
    e_widget_focus_steal(wid);
-   _e_wid_activate_hook(wid);
    e_widget_change(wid);
+   _e_wid_activate_hook(wid);
 }
 
 static void

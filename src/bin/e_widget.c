@@ -409,16 +409,16 @@ EAPI void
 e_widget_activate(Evas_Object *obj)
 {
    API_ENTRY return;
-   if (sd->activate_func) sd->activate_func(obj);
    e_widget_change(obj);
+   if (sd->activate_func) sd->activate_func(obj);
 }
 
 EAPI void
 e_widget_change(Evas_Object *obj)
 {
    API_ENTRY return;
-   if (sd->on_change_func) sd->on_change_func(sd->on_change_data, obj);
    e_widget_change(e_widget_parent_get(obj));
+   if (sd->on_change_func) sd->on_change_func(sd->on_change_data, obj);
 }
 
 EAPI void
