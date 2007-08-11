@@ -12,6 +12,7 @@ struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
 
+   int use_composite;
    int evas_engine_default;
 };
 
@@ -50,6 +51,7 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata) 
 {
+   cfdata->use_composite = e_config->use_composite;
    cfdata->evas_engine_default = e_config->evas_engine_default;
 }
 
@@ -62,6 +64,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {   
+   e_config->use_composite = cfdata->use_composite;
    e_config->evas_engine_default = cfdata->evas_engine_default;
    e_config_save_queue();
    return 1;
@@ -76,7 +79,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    int engine;
 
    o = e_widget_list_add(evas, 0, 0);
-   
+
+   of = e_widget_framelist_add(evas, _("General Settings"), 0);
+   ob = e_widget_check_add(evas, _("Enable Composite"), &(cfdata->use_composite));
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);   
+
    of = e_widget_framelist_add(evas, _("Default Engine"), 0);
    rg = e_widget_radio_group_new(&(cfdata->evas_engine_default));
    for (l = e_config_engine_list(); l; l = l->next)

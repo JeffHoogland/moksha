@@ -103,7 +103,7 @@ struct _E_Config
    int         edge_flip_dragging; // GUI
    int         edge_flip_moving; // GUI
    double      edge_flip_timeout; // GUI
-   int         evas_engine_default;
+   int         evas_engine_default; // GUI
    int         evas_engine_container; // NO GUI - maybe remove?
    int         evas_engine_init; // NO GUI - maybe remove?
    int         evas_engine_menus; // NO GUI - maybe remove?
@@ -113,7 +113,7 @@ struct _E_Config
    int         evas_engine_drag; // NO GUI - maybe remove?
    int         evas_engine_win; // NO GUI - maybe remove?
    int         evas_engine_zone; // NO GUI - maybe remove?
-   int	       use_composite; // NO GUI
+   int	       use_composite; // GUI
    const char *language; // GUI
    Evas_List  *modules; // GUI
    Evas_List  *font_fallbacks; // GUI
