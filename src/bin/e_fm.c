@@ -6214,11 +6214,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 	  }
 	     
 	if (sd->icon_menu.end.func)
-	  {
-	     mi = e_menu_item_new(mn);
-	     e_menu_item_separator_set(mi, 1);
-	     sd->icon_menu.end.func(sd->icon_menu.end.data, sd->obj, mn, NULL);
-	  }
+	  sd->icon_menu.end.func(sd->icon_menu.end.data, sd->obj, mn, NULL);
      }
    
    man = e_manager_current_get();
@@ -6434,11 +6430,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 	e_menu_item_callback_set(mi, _e_fm2_file_properties, ic);
 	
 	if (sd->icon_menu.end.func)
-	  {
-	     mi = e_menu_item_new(mn);
-	     e_menu_item_separator_set(mi, 1);
-	     sd->icon_menu.end.func(sd->icon_menu.end.data, sd->obj, mn, &(ic->info));
-	  }
+	  sd->icon_menu.end.func(sd->icon_menu.end.data, sd->obj, mn, &(ic->info));
      }
    
    man = e_manager_current_get();

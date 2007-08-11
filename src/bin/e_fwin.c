@@ -514,6 +514,9 @@ _e_fwin_menu_extend(void *data, Evas_Object *obj, E_Menu *m, E_Fm2_Icon_Info *in
    if (e_fm2_has_parent_get(obj))
      {
 	mi = e_menu_item_new(m);
+	e_menu_item_separator_set(mi, 1);
+
+	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Go to Parent Directory"));
 	e_menu_item_icon_edje_set(mi,
 				  e_theme_edje_file_get("base/theme/fileman",
