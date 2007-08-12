@@ -260,6 +260,8 @@ src/modules/winlist/Makefile
 src/modules/winlist/module.desktop
 src/modules/fileman/Makefile
 src/modules/fileman/module.desktop
+src/modules/wizard/Makefile
+src/modules/wizard/module.desktop
 src/modules/conf/Makefile
 src/modules/conf/module.desktop
 src/modules/conf_wallpaper/Makefile

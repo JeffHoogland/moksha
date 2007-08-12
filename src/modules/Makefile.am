@@ -13,6 +13,7 @@ layout \
 exebuf \
 winlist \
 fileman \
+wizard \
 conf \
 conf_wallpaper \
 conf_theme \
