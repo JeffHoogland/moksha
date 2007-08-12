@@ -77,5 +77,6 @@ collections {
 #include "default_sys.edc"
 #include "default_deskpreview.edc"
 #include "default_fontpreview.edc"
+#include "default_wizard.edc"
 }
 

@@ -59,7 +59,8 @@ default_spectrum.edc \
 default_color_well.edc \
 default_sys.edc \
 default_deskpreview.edc \
-default_fontpreview.edc
+default_fontpreview.edc \
+default_wizard.edc
 
 default.edj: Makefile $(EXTRA_DIST)
 	$(EDJE_CC) $(EDJE_FLAGS) \
