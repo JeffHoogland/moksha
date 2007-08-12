@@ -77,6 +77,7 @@ Some of the things (in very short form) that need to be done to E17...
 * fm2 needs to not unrealize then re-realize on re-sort/arrange - keep objects
   around.
 * fm2 needs a mime/extension/glob filter
+* fwin doesn't change window icon when using view.open_in_place
 * dnd needs to do xdnd properly.
 * language packs: need to have a tool to load/setup a language pack (which
   means .mo compiled files from a .po, an optional font and a config file that
