@@ -1428,8 +1428,7 @@ _e_fwin_config_set(E_Fwin *fwin)
 	fmc.icon.fixed.w = 1;
 	fmc.icon.fixed.h = 1;
 #else   
-	//   fmc.view.mode = E_FM2_VIEW_MODE_CUSTOM_ICONS;
-	fmc.view.mode = E_FM2_VIEW_MODE_GRID_ICONS;
+	fmc.view.mode = fileman_config->view.mode;
 	fmc.icon.icon.w = fileman_config->icon.icon.w;
 	fmc.icon.icon.h = fileman_config->icon.icon.h;
 	fmc.icon.fixed.w = 0;
