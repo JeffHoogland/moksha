@@ -116,7 +116,7 @@
 #include "e_color_dialog.h"
 #include "e_sys.h"
 #include "e_obj_dialog.h"
-#include "e_fwin.h"
+//#include "e_fwin.h"
 #include "e_filereg.h"
 #include "e_widget_aspect.h"
 #include "e_widget_desk_preview.h"

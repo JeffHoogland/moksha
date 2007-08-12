@@ -141,7 +141,6 @@ e_widget_color_well.h \
 e_color_dialog.h  \
 e_sys.h \
 e_obj_dialog.h \
-e_fwin.h \
 e_widget_aspect.h \
 e_filereg.h \
 e_widget_desk_preview.h \
@@ -267,7 +266,6 @@ e_widget_color_well.c \
 e_color_dialog.c \
 e_sys.c \
 e_obj_dialog.c \
-e_fwin.c \
 e_widget_aspect.c \
 e_widget_desk_preview.c \
 e_filereg.c \

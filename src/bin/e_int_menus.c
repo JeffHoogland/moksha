@@ -20,7 +20,7 @@ struct _Main_Data
 /* local subsystem functions */
 static void _e_int_menus_main_del_hook       (void *obj);
 static void _e_int_menus_main_about          (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_fwin_favorites_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+//static void _e_int_menus_fwin_favorites_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static int  _e_int_menus_main_lock_defer_cb  (void *data);
 static void _e_int_menus_main_lock           (void *data, E_Menu *m, E_Menu_Item*mi);
 static void _e_int_menus_main_restart        (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -118,13 +118,14 @@ e_int_menus_main_new(void)
 	e_util_menu_item_edje_icon_set(mi, "enlightenment/applications");
 	e_menu_item_submenu_set(mi, subm);
      }
-   
+/*   
 #ifdef ENABLE_FILES
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Files"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/fileman");
    e_menu_item_callback_set(mi, _e_int_menus_fwin_favorites_item_cb, NULL);
 #endif
+*/
    
    l = evas_hash_find(_e_int_menus_augmentation, "main/1");
    if (l) _e_int_menus_augmentation_add(m, l);
@@ -459,11 +460,14 @@ _e_int_menus_themes_about(void *data, E_Menu *m, E_Menu_Item *mi)
    if (about) e_theme_about_show(about);
 }
 
+/*
 static void
 _e_int_menus_fwin_favorites_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    e_fwin_new(m->zone->container, "favorites", "/");
 }
+*/
+
 /* FIXME: this is a workaround for menus' haveing a key grab AND exebuf
  * wanting one too
  */

@@ -701,6 +701,7 @@ main(int argc, char **argv)
        _e_main_shutdown(-1);
     }
    _e_main_shutdown_push(e_fm2_shutdown);
+/*
    TS("fwin");
    if (!e_fwin_init())
     {
@@ -708,6 +709,7 @@ main(int argc, char **argv)
        _e_main_shutdown(-1);
     }
    _e_main_shutdown_push(e_fwin_shutdown);
+*/
    TS("msg");
    /* setup generic msg handling etc */
    if (!e_msg_init())
