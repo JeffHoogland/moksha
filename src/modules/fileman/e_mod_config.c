@@ -139,7 +139,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_config_save_queue();
    
    /* FIXME: reload/refresh existing fm's */
-   
+   e_fwin_reload_all();
    return 1;
 }
 

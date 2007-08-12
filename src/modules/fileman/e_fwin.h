@@ -13,6 +13,7 @@ EAPI void e_fwin_new           (E_Container *con, const char *dev, const char *p
 EAPI void e_fwin_zone_new      (E_Zone *zone, const char *dev, const char *path);
 EAPI void e_fwin_zone_shutdown (E_Zone *zone);
 EAPI void e_fwin_all_unsel     (void *data);
+EAPI void e_fwin_reload_all    (void);
 
 #endif
 #endif

@@ -66,10 +66,13 @@ e_modapi_init(E_Module *m)
 		    {
 		       char buf[256];
 		       
-		       snprintf(buf, sizeof(buf), "%i", 
+		       if (fileman_config->view.show_desktop_icons) 
+			 {
+			    snprintf(buf, sizeof(buf), "%i", 
 				(zone->container->num + zone->num));
-		       if (fileman_config->view.show_desktop_icons)
-			 e_fwin_zone_new(zone, "desktop", buf);
+			    e_fwin_zone_new(zone, "desktop", buf);
+			 }
+		       
 		    }
 	       }
 	  }
