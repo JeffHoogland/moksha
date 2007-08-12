@@ -55,7 +55,6 @@ Some of the things (in very short form) that need to be done to E17...
 * fm2 needs a way to specify a multiplier, explicit size or "use original icon"
   config per icon and per dir, as well as globally.
 * fm2 should remember scroll pos per dir
-* fwin should have option to display full path in window
 * fm2 thumbnails - should display an icon while generating thumb
 * fm2 needs to be able to handle signals from the fm fwin theme wallpaper and
   overlay - to exec or do things (eg go to parent, close, refresh, top, bottom)
@@ -136,7 +135,6 @@ Some of the things (in very short form) that need to be done to E17...
 -------------------------------------------------------------------------------
 
 * insets in shelf needs to rottate with shelf
-* a way for modules to add config panel items
 * a way for external apps to register config panel items (and be executed)
 * option for svg icon render resolution size
 * for startup - apps that say "wait for me befofe running the next app" have
