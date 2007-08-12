@@ -239,11 +239,13 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
 
    e_fm2_path_set(fwin->fm_obj, dev, path);
 
+   /*
    file = ecore_file_file_get(e_fm2_real_path_get(fwin->fm_obj));
    if (file)
      snprintf(buf, sizeof(buf), "%s", file);
    else
      snprintf(buf, sizeof(buf), "%s", e_fm2_real_path_get(fwin->fm_obj));
+    */
 //   return fwin;
 }
 
@@ -509,6 +511,7 @@ _e_fwin_changed(void *data, Evas_Object *obj, void *event_info)
    E_Fwin *fwin;
    Efreet_Desktop *ef;
    char buf[PATH_MAX];
+   const char *file;
    
    fwin = data;
    /* FIXME: first look in E config for a special override for this dir's bg
@@ -566,6 +569,14 @@ _e_fwin_changed(void *data, Evas_Object *obj, void *event_info)
      e_fm2_custom_theme_set(obj, fwin->theme_file);
    else
      e_fm2_custom_theme_set(obj, NULL);
+   
+   if (fwin->zone) return;
+   file = ecore_file_file_get(e_fm2_real_path_get(fwin->fm_obj));
+   if (file)
+     snprintf(buf, sizeof(buf), "%s", file);
+   else
+     snprintf(buf, sizeof(buf), "%s", e_fm2_real_path_get(fwin->fm_obj));
+   e_win_title_set(fwin->win, buf);
 }
 
 static void
