@@ -795,6 +795,7 @@ e_config_init(void)
 	CFG_MODULE("conf_window_focus", 1, 1);
 	CFG_MODULE("conf_window_manipulation", 1, 1);
 	CFG_MODULE("conf_winlist", 1, 1);
+	CFG_MODULE("fileman", 1, 1);
      }
 #if 0
      {
