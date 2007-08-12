@@ -258,6 +258,8 @@ src/modules/exebuf/Makefile
 src/modules/exebuf/module.desktop
 src/modules/winlist/Makefile
 src/modules/winlist/module.desktop
+src/modules/fileman/Makefile
+src/modules/fileman/module.desktop
 src/modules/conf/Makefile
 src/modules/conf/module.desktop
 src/modules/conf_wallpaper/Makefile
