@@ -177,7 +177,7 @@ e_fwin_zone_new(E_Zone *zone, const char *dev, const char *path)
    fmc.icon.fixed.h = 0;
 #endif
    
-   fmc.view.open_dirs_in_place = fileman_config->view.open_dirs_in_place;
+   fmc.view.open_dirs_in_place = 0;
    fmc.view.selector = 0;
    fmc.view.single_click = fileman_config->view.single_click;
    fmc.view.no_subdir_jump = 0;
