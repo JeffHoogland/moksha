@@ -15,6 +15,8 @@ struct _E_Config_Dialog_Data
       int   always_order;
       int   link_drop;
       int   fit_custom_pos;
+      int   show_full_path;
+      int   show_desktop_icons;
    } view;
    /* display of icons */
    struct {
@@ -101,6 +103,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    
    cfdata->view.open_dirs_in_place = fileman_config->view.open_dirs_in_place;
    cfdata->view.single_click = fileman_config->view.single_click;
+   cfdata->view.show_full_path = fileman_config->view.show_full_path;
+   cfdata->view.show_desktop_icons = fileman_config->view.show_desktop_icons;
    cfdata->icon.icon.w = fileman_config->icon.icon.w;
    cfdata->icon.icon.h = fileman_config->icon.icon.h;
    cfdata->icon.extension.show = fileman_config->icon.extension.show;
@@ -121,6 +125,8 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    
    fileman_config->view.open_dirs_in_place = cfdata->view.open_dirs_in_place;
    fileman_config->view.single_click = cfdata->view.single_click;
+   fileman_config->view.show_full_path = cfdata->view.show_full_path;
+   fileman_config->view.show_desktop_icons = cfdata->view.show_desktop_icons;
    fileman_config->icon.extension.show = cfdata->icon.extension.show;
 
    /* Make these two equal so that icons are proportioned correctly */
@@ -161,6 +167,12 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Show Icon Extension"), 
 			   &(cfdata->icon.extension.show));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Show Full Path"), 
+			   &(cfdata->view.show_full_path));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Show Desktop Icons"), 
+			   &(cfdata->view.show_desktop_icons));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    
    return o;

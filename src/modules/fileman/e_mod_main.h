@@ -25,6 +25,8 @@ struct _Config
       unsigned char   always_order;
       unsigned char   link_drop;
       unsigned char   fit_custom_pos;
+      unsigned char   show_full_path;
+      unsigned char   show_desktop_icons;
    } view;
    /* display of icons */
    struct {

@@ -59,7 +59,8 @@ e_modapi_init(E_Module *m)
 	     for (lll = con->zones; lll; lll = lll->next)
 	       {
 		  zone = lll->data;
-		  if ((zone->container->num == 0) && (zone->num == 0))
+		  if ((zone->container->num == 0) && (zone->num == 0) && 
+		      (fileman_config->view.show_desktop_icons))
 		    e_fwin_zone_new(zone, "desktop", "/");
 		  else 
 		    {
@@ -67,7 +68,8 @@ e_modapi_init(E_Module *m)
 		       
 		       snprintf(buf, sizeof(buf), "%i", 
 				(zone->container->num + zone->num));
-		       e_fwin_zone_new(zone, "desktop", buf);
+		       if (fileman_config->view.show_desktop_icons)
+			 e_fwin_zone_new(zone, "desktop", buf);
 		    }
 	       }
 	  }
@@ -216,6 +218,8 @@ _e_mod_fileman_config_load(void)
    E_CONFIG_VAL(D, T, view.always_order, UCHAR);
    E_CONFIG_VAL(D, T, view.link_drop, UCHAR);
    E_CONFIG_VAL(D, T, view.fit_custom_pos, UCHAR);
+   E_CONFIG_VAL(D, T, view.show_full_path, UCHAR);
+   E_CONFIG_VAL(D, T, view.show_desktop_icons, UCHAR);
    E_CONFIG_VAL(D, T, icon.icon.w, INT);
    E_CONFIG_VAL(D, T, icon.icon.h, INT);
    E_CONFIG_VAL(D, T, icon.list.w, INT);
@@ -238,14 +242,16 @@ _e_mod_fileman_config_load(void)
      {
 	fileman_config = E_NEW(Config, 1);
 	fileman_config->view.mode = E_FM2_VIEW_MODE_GRID_ICONS;
-	fileman_config->icon.icon.w = 48;
-	fileman_config->icon.icon.h = 48;
-	fileman_config->icon.fixed.w = 0;
-	fileman_config->icon.fixed.h = 0;
 	fileman_config->view.open_dirs_in_place = 0;
 	fileman_config->view.selector = 0;
 	fileman_config->view.single_click = 0;
 	fileman_config->view.no_subdir_jump = 0;
+	fileman_config->view.show_full_path = 0;
+	fileman_config->view.show_desktop_icons = 1;
+	fileman_config->icon.icon.w = 48;
+	fileman_config->icon.icon.h = 48;
+	fileman_config->icon.fixed.w = 0;
+	fileman_config->icon.fixed.h = 0;
 	fileman_config->icon.extension.show = 1;
 	fileman_config->list.sort.no_case = 1;
 	fileman_config->list.sort.dirs.first = 1;

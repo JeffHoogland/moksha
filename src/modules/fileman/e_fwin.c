@@ -393,12 +393,18 @@ _e_fwin_new(E_Container *con, const char *dev, const char *path)
    
    snprintf(buf, sizeof(buf), "_fwin::/%s", e_fm2_real_path_get(fwin->fm_obj));
    e_win_name_class_set(fwin->win, "E", buf);
-   file = ecore_file_file_get(e_fm2_real_path_get(fwin->fm_obj));
-   if (file)
-     snprintf(buf, sizeof(buf), "%s", file);
+   
+   if (fileman_config->view.show_full_path) 
+     file = e_fm2_real_path_get(fwin->fm_obj);
    else
-     snprintf(buf, sizeof(buf), "%s", e_fm2_real_path_get(fwin->fm_obj));
-   e_win_title_set(fwin->win, buf);
+     file = ecore_file_file_get(e_fm2_real_path_get(fwin->fm_obj));
+   
+   if (file) 
+     {
+	snprintf(buf, sizeof(buf), "%s", file);
+	e_win_title_set(fwin->win, buf);
+     }
+   
    e_win_size_min_set(fwin->win, 24, 24);
    e_win_resize(fwin->win, 280, 200);
    e_win_show(fwin->win);
@@ -571,12 +577,16 @@ _e_fwin_changed(void *data, Evas_Object *obj, void *event_info)
      e_fm2_custom_theme_set(obj, NULL);
    
    if (fwin->zone) return;
-   file = ecore_file_file_get(e_fm2_real_path_get(fwin->fm_obj));
-   if (file)
-     snprintf(buf, sizeof(buf), "%s", file);
+   if (fileman_config->view.show_full_path) 
+     file = e_fm2_real_path_get(fwin->fm_obj);
    else
-     snprintf(buf, sizeof(buf), "%s", e_fm2_real_path_get(fwin->fm_obj));
-   e_win_title_set(fwin->win, buf);
+     file = ecore_file_file_get(e_fm2_real_path_get(fwin->fm_obj));
+   
+   if (file) 
+     {
+	snprintf(buf, sizeof(buf), "%s", file);
+	e_win_title_set(fwin->win, buf);
+     }
 }
 
 static void
