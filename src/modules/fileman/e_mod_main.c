@@ -3,6 +3,7 @@
  */
 #include "e.h"
 #include "e_mod_main.h"
+#include "e_mod_config.h"
 
 /* actual module specifics */
 static void  _e_mod_action_fileman_cb(E_Object *obj, const char *params);
@@ -34,6 +35,13 @@ e_modapi_init(E_Module *m)
    
    conf_module = m;
 
+   /* Setup Entry in Config Panel */
+   e_configure_registry_category_add("fileman", 100, _("File Manager"), 
+				     NULL, "enlightenment/fileman");
+   e_configure_registry_item_add("fileman/fileman", 10, _("File Manager"), 
+				 NULL, "enlightenment/fileman", 
+				 e_int_config_fileman);
+   
    /* Setup Config edd */
    _e_mod_fileman_config_load();
    
@@ -118,6 +126,9 @@ e_modapi_shutdown(E_Module *m)
 	e_action_del("fileman");
 	act = NULL;
      }
+   /* remove fileman category from config panel */
+   e_configure_registry_item_del("fileman/fileman");
+   e_configure_registry_category_del("fileman");
    
    E_FREE(fileman_config);
    E_CONFIG_DD_FREE(conf_edd);
@@ -147,7 +158,7 @@ e_modapi_config(E_Module *m)
    E_Container *con;
    
    con = e_container_current_get(e_manager_current_get());
-   _config_fileman_module(con);
+   e_int_config_fileman(con, NULL);
    return 1;
 }
 

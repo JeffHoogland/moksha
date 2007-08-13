@@ -68,13 +68,13 @@ static void  _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int   _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
-void
-_config_fileman_module(E_Container *con) 
+EAPI E_Config_Dialog *
+e_int_config_fileman(E_Container *con, const char *params __UNUSED__) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
    
-   if (e_config_dialog_find("E", "_config_fileman_dialog")) return;
+   if (e_config_dialog_find("E", "_config_fileman_dialog")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    v->create_cfdata = _create_data;
    v->free_cfdata = _free_data;
@@ -83,6 +83,7 @@ _config_fileman_module(E_Container *con)
    cfd = e_config_dialog_new(con, _("Fileman Settings"), "E", 
 			     "_config_fileman_dialog",
 			     "enlightenment/fileman", 0, v, NULL);
+   return cfd;
 }
 
 static void *
@@ -91,6 +92,8 @@ _create_data(E_Config_Dialog *cfd)
    E_Config_Dialog_Data *cfdata;
    
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   cfd->cfdata = cfdata;
+   cfdata->cfd = cfd;
    _fill_data(cfdata);
    return cfdata;
 }
@@ -112,6 +115,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 static void 
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
+   E_FREE(cfd->data);
    E_FREE(cfdata);
 }
 
