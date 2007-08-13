@@ -94,7 +94,7 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m)
 {
-   Evas_List *l, *ll, *lll, *f;
+   Evas_List *l, *ll, *lll;
    E_Manager *man;
    E_Container *con;
    E_Zone *zone;
