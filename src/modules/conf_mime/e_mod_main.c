@@ -31,8 +31,8 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   e_configure_registry_category_add("advanced", 80, _("Advanced"), NULL, "enlightenment/advanced");
-   e_configure_registry_item_add("advanced/file_icons", 60, _("File Icons"), NULL, "enlightenment/file_icons", e_int_config_mime);
+   e_configure_registry_category_add("fileman", 100, _("File Manager"), NULL, "enlightenment/fileman");
+   e_configure_registry_item_add("fileman/file_icons", 20, _("File Icons"), NULL, "enlightenment/file_icons", e_int_config_mime);
    conf_module = m;
    e_module_delayed_set(m, 1);
    return m;
@@ -43,8 +43,8 @@ e_modapi_shutdown(E_Module *m)
 {
    E_Config_Dialog *cfd;
    while ((cfd = e_config_dialog_get("E", "_config_mime_dialog"))) e_object_del(E_OBJECT(cfd));
-   e_configure_registry_item_del("advanced/file_icons");
-   e_configure_registry_category_del("advanced");
+   e_configure_registry_item_del("fileman/file_icons");
+   e_configure_registry_category_del("fileman");
    conf_module = NULL;
    return 1;
 }

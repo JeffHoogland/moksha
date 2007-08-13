@@ -567,5 +567,5 @@ _cb_config(void *data, void *data2)
 	mi->mime = evas_stringshare_add(m);
      }
    
-   cfdata->edit_dlg = e_int_config_mime_edit(mi, cfdata);
+   cfdata->edit_dlg = (E_Config_Dialog *)e_int_config_mime_edit(mi, cfdata);
 }
