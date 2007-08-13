@@ -8,7 +8,6 @@
  */
 
 static void _e_zone_free(E_Zone *zone);
-static void _e_zone_fm_add(E_Zone *zone, const char *dev, const char *path);
 static void _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_zone_cb_bg_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_zone_cb_bg_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event_info);
