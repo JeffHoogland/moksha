@@ -292,7 +292,7 @@ _e_mod_fileman_config_load(void)
    if ((fileman_config->config_version & 0xffff) < (v)) {
 #define IFMODCFGEND }
 
-   IFMODCFG(0x0001);
+   IFMODCFG(0x008d);
    fileman_config->view.mode = E_FM2_VIEW_MODE_GRID_ICONS;
    fileman_config->view.open_dirs_in_place = 0;
    fileman_config->view.selector = 0;
@@ -310,7 +310,9 @@ _e_mod_fileman_config_load(void)
    fileman_config->list.sort.dirs.last = 0;
    fileman_config->selection.single = 0;
    fileman_config->selection.windows_modifiers = 0;
-IFMODCFGEND;
+   IFMODCFGEND;
+   
+   fileman_config->config_version = MOD_CONFIG_FILE_VERSION;
    
    /* UCHAR's give nasty compile warnings about comparisons so not gonna limit those */
    E_CONFIG_LIMIT(fileman_config->view.mode, E_FM2_VIEW_MODE_ICONS, E_FM2_VIEW_MODE_LIST);
@@ -318,6 +320,8 @@ IFMODCFGEND;
    E_CONFIG_LIMIT(fileman_config->icon.icon.h, 16, 256);
    E_CONFIG_LIMIT(fileman_config->icon.list.w, 16, 256);
    E_CONFIG_LIMIT(fileman_config->icon.list.h, 16, 256);
+   
+   e_config_save_queue();
 }
 
 static void
