@@ -51,14 +51,13 @@ Some of the things (in very short form) that need to be done to E17...
 * fm2 custom icon view mode needs to have cleanup, align etc.
 * fm2 custom icon view mode initial placement needs some fixing - better
   placement, more efficient etc.
-* fm2 fwin needs options for view mode
 * fm2 needs a way to specify a multiplier, explicit size or "use original icon"
   config per icon and per dir, as well as globally.
 * fm2 should remember scroll pos per dir
 * fm2 thumbnails - should display an icon while generating thumb
 * fm2 needs to be able to handle signals from the fm fwin theme wallpaper and
   overlay - to exec or do things (eg go to parent, close, refresh, top, bottom)
-* fm2 on desktop needs option to turn off and select which dir on which zone
+* fm2 on desktop needs option to select which dir on which zone
 * fm2 needs to show icons again if drag was aborted
 * fm2 needs to handle dnd of e apps too
 * need a default desktop dir & file setup
