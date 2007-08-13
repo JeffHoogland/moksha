@@ -2,6 +2,7 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 #include "e.h"
+#include "e_int_config_mime_edit.h"
 
 typedef struct _Config_Glob Config_Glob;
 typedef struct _Config_Mime Config_Mime;
@@ -567,5 +568,5 @@ _cb_config(void *data, void *data2)
 	mi->mime = evas_stringshare_add(m);
      }
    
-   cfdata->edit_dlg = (E_Config_Dialog *)e_int_config_mime_edit(mi, cfdata);
+   cfdata->edit_dlg = e_int_config_mime_edit(mi, cfdata);
 }
