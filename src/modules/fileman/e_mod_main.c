@@ -10,6 +10,8 @@ static void  _e_mod_action_fileman_cb(E_Object *obj, const char *params);
 static void  _e_mod_fileman_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void  _e_mod_menu_add(void *data, E_Menu *m);
 static void  _e_mod_fileman_config_load(void);
+static void  _e_mod_fileman_config_free(void);
+static int   _e_mod_cb_config_timer(void *data);
 
 static E_Module *conf_module = NULL;
 static E_Action *act = NULL;
@@ -130,7 +132,7 @@ e_modapi_shutdown(E_Module *m)
    e_configure_registry_item_del("fileman/fileman");
    e_configure_registry_category_del("fileman");
    
-   E_FREE(fileman_config);
+   _e_mod_fileman_config_free();
    E_CONFIG_DD_FREE(conf_edd);
    conf_module = NULL;
    return 1;
@@ -223,6 +225,7 @@ _e_mod_fileman_config_load(void)
    #undef D
    #define T Config
    #define D conf_edd
+   E_CONFIG_VAL(D, T, config_version, INT);
    E_CONFIG_VAL(D, T, view.mode, INT);
    E_CONFIG_VAL(D, T, view.open_dirs_in_place, UCHAR);
    E_CONFIG_VAL(D, T, view.selector, UCHAR);
@@ -252,31 +255,86 @@ _e_mod_fileman_config_load(void)
    E_CONFIG_VAL(D, T, theme.fixed, UCHAR);
    
    fileman_config = e_config_domain_load("module.fileman", conf_edd);
+   if (fileman_config) 
+     {
+	if ((fileman_config->config_version >> 16) < MOD_CONFIG_FILE_EPOCH) 
+	  {
+	     _e_mod_fileman_config_free();
+	     ecore_timer_add(1.0, _e_mod_cb_config_timer,
+			     _("Fileman Module Configuration data needed upgrading. Your old configuration<br>"
+			       "has been wiped and a new set of defaults initialized. This<br>"
+			       "will happen regularly during development, so don't report a<br>"
+			       "bug. This simply means Fileman module needs new configuration<br>"
+			       "data by default for usable functionality that your old<br>"
+			       "configuration simply lacks. This new set of defaults will fix<br>"
+			       "that by adding it in. You can re-configure things now to your<br>"
+			       "liking. Sorry for the hiccup in your configuration.<br>"));
+	  }
+	else if (fileman_config->config_version > MOD_CONFIG_FILE_VERSION) 
+	  {
+	     _e_mod_fileman_config_free();
+	     ecore_timer_add(1.0, _e_mod_cb_config_timer, 
+			     _("Your Fileman Module configuration is NEWER than Fileman Module version. This is very<br>"
+			       "strange. This should not happen unless you downgraded<br>"
+			       "the Fileman Module or copied the configuration from a place where<br>"
+			       "a newer version of the Fileman Module was running. This is bad and<br>"
+			       "as a precaution your configuration has been now restored to<br>"
+			       "defaults. Sorry for the inconvenience.<br>"));
+	  }
+     }
+   
    if (!fileman_config) 
      {
 	fileman_config = E_NEW(Config, 1);
-	fileman_config->view.mode = E_FM2_VIEW_MODE_GRID_ICONS;
-	fileman_config->view.open_dirs_in_place = 0;
-	fileman_config->view.selector = 0;
-	fileman_config->view.single_click = 0;
-	fileman_config->view.no_subdir_jump = 0;
-	fileman_config->view.show_full_path = 0;
-	fileman_config->view.show_desktop_icons = 1;
-	fileman_config->icon.icon.w = 48;
-	fileman_config->icon.icon.h = 48;
-	fileman_config->icon.fixed.w = 0;
-	fileman_config->icon.fixed.h = 0;
-	fileman_config->icon.extension.show = 1;
-	fileman_config->list.sort.no_case = 1;
-	fileman_config->list.sort.dirs.first = 1;
-	fileman_config->list.sort.dirs.last = 0;
-	fileman_config->selection.single = 0;
-	fileman_config->selection.windows_modifiers = 0;
+	fileman_config->config_version = (MOD_CONFIG_FILE_EPOCH << 16);
      }
+#define IFMODCFG(v) \
+   if ((fileman_config->config_version & 0xffff) < (v)) {
+#define IFMODCFGEND }
+
+   IFMODCFG(0x0001);
+   fileman_config->view.mode = E_FM2_VIEW_MODE_GRID_ICONS;
+   fileman_config->view.open_dirs_in_place = 0;
+   fileman_config->view.selector = 0;
+   fileman_config->view.single_click = 0;
+   fileman_config->view.no_subdir_jump = 0;
+   fileman_config->view.show_full_path = 0;
+   fileman_config->view.show_desktop_icons = 1;
+   fileman_config->icon.icon.w = 48;
+   fileman_config->icon.icon.h = 48;
+   fileman_config->icon.fixed.w = 0;
+   fileman_config->icon.fixed.h = 0;
+   fileman_config->icon.extension.show = 1;
+   fileman_config->list.sort.no_case = 1;
+   fileman_config->list.sort.dirs.first = 1;
+   fileman_config->list.sort.dirs.last = 0;
+   fileman_config->selection.single = 0;
+   fileman_config->selection.windows_modifiers = 0;
+IFMODCFGEND;
+   
    /* UCHAR's give nasty compile warnings about comparisons so not gonna limit those */
    E_CONFIG_LIMIT(fileman_config->view.mode, E_FM2_VIEW_MODE_ICONS, E_FM2_VIEW_MODE_LIST);
    E_CONFIG_LIMIT(fileman_config->icon.icon.w, 16, 256);
    E_CONFIG_LIMIT(fileman_config->icon.icon.h, 16, 256);
    E_CONFIG_LIMIT(fileman_config->icon.list.w, 16, 256);
    E_CONFIG_LIMIT(fileman_config->icon.list.h, 16, 256);
+}
+
+static void
+_e_mod_fileman_config_free(void) 
+{
+   if (fileman_config->theme.background)
+     evas_stringshare_del(fileman_config->theme.background);
+   if (fileman_config->theme.frame)
+     evas_stringshare_del(fileman_config->theme.frame);
+   if (fileman_config->theme.icons)
+     evas_stringshare_del(fileman_config->theme.icons);
+   E_FREE(fileman_config);   
+}
+
+static int 
+_e_mod_cb_config_timer(void *data) 
+{
+   e_util_dialog_show(_("Fileman Configuration Updated"), data);
+   return 0;
 }

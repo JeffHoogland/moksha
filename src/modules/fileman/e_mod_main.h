@@ -4,6 +4,12 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
+/* Increment for Major Changes */
+#define MOD_CONFIG_FILE_EPOCH 0x0001
+/* Increment for Minor Changes (ie: user doesn't need a new config) */
+#define MOD_CONFIG_FILE_GENERATION 0x0001
+#define MOD_CONFIG_FILE_VERSION ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
+
 typedef struct _Config Config;
 
 #define E_TYPEDEFS 1
@@ -14,7 +20,8 @@ typedef struct _Config Config;
 
 struct _Config 
 {
-   /* general view mode */
+   int config_version;
+   
    struct {
       E_Fm2_View_Mode mode;
       unsigned char   open_dirs_in_place;
