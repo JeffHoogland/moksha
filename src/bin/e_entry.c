@@ -188,8 +188,8 @@ e_entry_min_size_get(Evas_Object *entry, Evas_Coord *minw, Evas_Coord *minh)
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
    
-   if (minw)   *minw = sd->min_width;
-   if (minh)   *minh = sd->height;
+   if (minw) *minw = sd->min_width;
+   if (minh) *minh = sd->height;
 }
 
 /**
@@ -928,6 +928,15 @@ _e_entry_smart_del(Evas_Object *object)
    
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
+
+   evas_object_event_callback_del(object, EVAS_CALLBACK_KEY_DOWN,
+                                  _e_entry_key_down_cb);
+   evas_object_event_callback_del(object, EVAS_CALLBACK_MOUSE_DOWN,
+                                  _e_entry_mouse_down_cb);
+   evas_object_event_callback_del(object, EVAS_CALLBACK_MOUSE_UP,
+                                  _e_entry_mouse_up_cb);
+   evas_object_event_callback_del(object, EVAS_CALLBACK_MOUSE_MOVE,
+                                  _e_entry_mouse_move_cb);
    
    ecore_event_handler_del(sd->selection_handler);
    evas_object_del(sd->editable_object);

@@ -18,7 +18,8 @@ static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *even
 static void _e_wid_in(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_wid_out(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_wid_changed_cb(void *data, Evas_Object *obj, void *event_info);
-
+static void _e_wid_key_down_cb(void *data, Evas_Object *obj, void *event_info);
+static void _e_wid_keydown(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
 /* externally accessible functions */
 
@@ -55,7 +56,8 @@ e_widget_entry_add(Evas *evas, char **text_location)
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_focus_steal, obj);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN, _e_wid_in, obj);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_OUT, _e_wid_out, obj);
-   
+   evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _e_wid_keydown, obj);
+
    if ((text_location) && (*text_location))
      e_entry_text_set(o, *text_location);
    
@@ -63,7 +65,7 @@ e_widget_entry_add(Evas *evas, char **text_location)
    e_widget_min_size_set(obj, minw, minh);
 
    evas_object_smart_callback_add(o, "changed", _e_wid_changed_cb, obj);
-   
+
    return obj;
 }
 
@@ -253,4 +255,10 @@ _e_wid_changed_cb(void *data, Evas_Object *obj, void *event_info)
      }
    
    e_widget_change(data);
+}
+
+static void 
+_e_wid_keydown(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   evas_object_smart_callback_call(data, "key_down", event_info);
 }
