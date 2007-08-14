@@ -18,7 +18,6 @@ static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *even
 static void _e_wid_in(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_wid_out(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_wid_changed_cb(void *data, Evas_Object *obj, void *event_info);
-static void _e_wid_key_down_cb(void *data, Evas_Object *obj, void *event_info);
 static void _e_wid_keydown(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
 /* externally accessible functions */
