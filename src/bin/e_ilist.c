@@ -354,6 +354,7 @@ e_ilist_unselect(Evas_Object *obj)
 	if (!si) continue;
 	if (!si->selected) continue;
 	edje_object_signal_emit(si->o_base, "e,state,unselected", "e");
+	si->selected = 0;
      }
    sd->selected = -1;
 }
