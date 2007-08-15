@@ -119,6 +119,22 @@ typedef struct _E_Rect E_Rect;
 #define E_NEW(s, n) (s *)calloc(n, sizeof(s))
 #define E_NEW_BIG(s, n) (s *)malloc(n * sizeof(s))
 #define E_FREE(p) do { if (p) {free(p); p = NULL;} } while (0)
+#define E_FREE_LIST(list, free) \
+  do \
+    { \
+       if (list) \
+	 { \
+	    Evas_List *tmp; \
+	    tmp = list; \
+	    list = NULL; \
+	    while (tmp) \
+	      { \
+		 free(tmp->data); \
+		 tmp = evas_list_remove_list(tmp, tmp); \
+	      } \
+	 } \
+    } \
+  while (0)
 
 #define E_CLAMP(x, min, max) (x < min ? min : (x > max ? max : x))
 

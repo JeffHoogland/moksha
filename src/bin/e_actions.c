@@ -2206,20 +2206,12 @@ e_actions_init(void)
 EAPI int
 e_actions_shutdown(void)
 {
-   Evas_List *l;
-
    e_action_predef_name_all_del();
    action_names = evas_list_free(action_names);
    evas_hash_free(actions);
    actions = NULL;
 
-   l = action_list;
-   action_list = NULL;
-   while (l)
-     {
-	e_object_del(E_OBJECT(l->data));
-	l = evas_list_remove_list(l, l);
-     }
+   E_FREE_LIST(action_list, e_object_del);
    return 1;
 }
 
