@@ -99,7 +99,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    for (l = mdirs; l; l = l->next) 
      {
 	E_Path_Dir *epd;
-	Ecore_File_Monitor *mon;
 	
 	epd = l->data;
 	if (!epd) continue;
