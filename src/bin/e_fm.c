@@ -3494,7 +3494,7 @@ _e_fm2_uri_parse(const char *val)
 {
    E_Fm2_Uri *uri;
    const char *p;
-   char hostname[HOST_NAME_MAX], path[PATH_MAX];
+   char hostname[_POSIX_HOST_NAME_MAX], path[PATH_MAX];
    int i = 0;
 
    /* The shortest possible path is file:/// 
@@ -3507,7 +3507,7 @@ _e_fm2_uri_parse(const char *val)
    p = val + 7;
    if (*p != '/')
      {
-	for (i = 0; *p != '/' && *p != '\0' && i < HOST_NAME_MAX; p++, i++)
+	for (i = 0; *p != '/' && *p != '\0' && i < _POSIX_HOST_NAME_MAX; p++, i++)
 	  hostname[i] = *p;
      }
    hostname[i] = '\0';
@@ -3540,9 +3540,9 @@ _e_fm2_uri_path_list_get(Evas_List *uri_list)
 {
    E_Fm2_Uri *uri;
    Evas_List *l, *path_list = NULL;
-   char current_hostname[HOST_NAME_MAX];
+   char current_hostname[_POSIX_HOST_NAME_MAX];
    
-   if (gethostname(current_hostname, HOST_NAME_MAX) == -1)
+   if (gethostname(current_hostname, _POSIX_HOST_NAME_MAX) == -1)
      current_hostname[0] = '\0';
 
    for (l = uri_list; l; l = l->next)
