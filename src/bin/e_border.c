@@ -5736,23 +5736,12 @@ _e_border_eval(E_Border *bd)
 
 		  bd->bg_object = o;
 		  shape_option = edje_object_data_get(o, "shaped");
-		  if (shape_option)
+		  if (shape_option && !strcmp(shape_option, "1"))
 		    {
-		       if (!strcmp(shape_option, "1"))
+		       if (!bd->shaped)
 			 {
-			    if (!bd->shaped)
-			      {
-				 bd->shaped = 1;
-				 ecore_evas_shaped_set(bd->bg_ecore_evas, bd->shaped);
-			      }
-			 }
-		       else
-			 {
-			    if (bd->shaped)
-			      {
-				 bd->shaped = 0;
-				 ecore_evas_shaped_set(bd->bg_ecore_evas, bd->shaped);
-			      }
+			    bd->shaped = 1;
+			    ecore_evas_shaped_set(bd->bg_ecore_evas, bd->shaped);
 			 }
 		    }
 		  else

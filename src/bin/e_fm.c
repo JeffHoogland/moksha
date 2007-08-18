@@ -28,6 +28,7 @@ typedef struct _E_Fm2_Finfo      E_Fm2_Finfo;
 typedef struct _E_Fm2_Action     E_Fm2_Action;
 typedef struct _E_Fm2_Client     E_Fm2_Client;
 typedef struct _E_Fm2_Mount      E_Fm2_Mount;
+typedef struct _E_Fm2_Uri        E_Fm2_Uri;
 
 struct _E_Fm2_Smart_Data
 {
@@ -188,6 +189,12 @@ struct _E_Fm2_Mount
    
    unsigned char mounted : 1;
    unsigned char delete_me : 1;
+};
+
+struct _E_Fm2_Uri
+{
+   const char *hostname;
+   const char *path;
 };
 
 static E_Fm2_Mount *_e_fm2_mount(E_Volume *v, void (*mount_ok) (void *data), void (*mount_fail) (void *data), void (*unmount_ok) (void *data), void (*unmount_fail) (void *data), void *data);
@@ -3448,6 +3455,116 @@ _e_fm2_icon_find(Evas_Object *obj, const char *file)
    return NULL;
 }
 
+/* Escape illegal caracters within an uri and return an evas_stringshare */
+static const char *
+_e_fm2_uri_escape(const char *path)
+{
+   char dest[PATH_MAX * 3 + 7];
+   const char *p;
+   int i;
+
+   if (!path) return NULL;
+   memset(dest, 0, PATH_MAX * 3 + 7);
+
+   snprintf(dest, 8, "file://");
+
+   /* Most app doesn't handle the hostname in the uri so it's put to NULL */
+   for (i = 7, p = path; *p != '\0'; p++, i++)
+     {
+	if (isalnum(*p) || strchr("/$-_.+!*'()", *p))
+	  dest[i] = *p;
+	else
+	  {
+	     char escaped[3];
+	     snprintf(&(dest[i]), 4, "%%%02X", *p);
+	     i += 2;
+	  }
+     }
+
+   return evas_stringshare_add(dest);
+}
+
+/* Parse a single uri and return an E_Fm2_Uri struct.
+ * If the parsing have failed it return NULL.
+ * The E_Fm2_Uri may have hostname parameter and always a path.
+ * If there's no hostname in the uri then the hostname parameter is NULL
+ */
+static E_Fm2_Uri *
+_e_fm2_uri_parse(const char *val)
+{
+   E_Fm2_Uri *uri;
+   const char *p;
+   char hostname[HOST_NAME_MAX], path[PATH_MAX];
+   int i = 0;
+
+   /* The shortest possible path is file:/// 
+    * anything smaller than that can't be a valid uri 
+    */
+   if (strlen(val) <= 7 && strncmp(val, "file://", 7)) return NULL;
+   memset(path, 0, PATH_MAX);
+
+   /* An uri should be in a form file://<hostname>/<path> */
+   p = val + 7;
+   if (*p != '/')
+     {
+	for (i = 0; *p != '/' && *p != '\0' && i < HOST_NAME_MAX; p++, i++)
+	  hostname[i] = *p;
+     }
+   hostname[i] = '\0';
+
+   /* See http://www.faqs.org/rfcs/rfc1738.html for the escaped chars */
+   for (p, i = 0; *p != '\0' && i < PATH_MAX; i++, p++)
+     {
+	if (*p == '%')
+	  {
+	     path[i] = *(++p);
+	     path[i+1] = *(++p);
+	     path[i] = (char)strtol(&(path[i]), NULL, 16);
+	     path[i+1] = '\0';
+	  }
+	else
+	  path[i] = *p;
+     }
+
+   uri = E_NEW(E_Fm2_Uri, 1);
+   if (strlen(hostname) > 0) uri->hostname = evas_stringshare_add(hostname);
+   else uri->hostname = NULL;
+   uri->path = evas_stringshare_add(path);
+
+   return uri;
+}
+
+/* Takes an Evas_List of uri and return an Evas_List of real paths */
+static Evas_List *
+_e_fm2_uri_path_list_get(Evas_List *uri_list)
+{
+   E_Fm2_Uri *uri;
+   Evas_List *l, *path_list = NULL;
+   char current_hostname[HOST_NAME_MAX];
+   
+   if (gethostname(current_hostname, HOST_NAME_MAX) == -1)
+     current_hostname[0] = '\0';
+
+   for (l = uri_list; l; l = l->next)
+     {
+	if (!(uri = _e_fm2_uri_parse(l->data)))
+	  continue;
+
+	if (!uri->hostname || !strcmp(uri->hostname, "localhost") 
+	    || !strcmp(uri->hostname, current_hostname))
+	  {
+	     path_list = evas_list_append(path_list, uri->path);
+	  }
+	else
+	  evas_stringshare_del(uri->path);
+
+	if (uri->hostname) evas_stringshare_del(uri->hostname);
+	E_FREE(uri);
+     }
+
+   return path_list;
+}
+
 static Evas_List *
 _e_fm2_uri_icon_list_get(Evas_List *uri)
 {
@@ -3456,21 +3573,18 @@ _e_fm2_uri_icon_list_get(Evas_List *uri)
    
    for (l = uri; l; l = l->next)
      {
-	const char *u, *path, *file;
+	const char *path, *file;
 	Evas_Object *fm;
 	E_Fm2_Icon *ic;
 	
-	u = l->data;
+	path = l->data;
 	ic = NULL;
-	if (strlen(u) > 7)
+
+	fm = _e_fm2_file_fm2_find(path);
+	if (fm)
 	  {
-	     path = u + 7;
-	     fm = _e_fm2_file_fm2_find(path);
-	     if (fm)
-	       {
-		  file = ecore_file_file_get(path);
-		  ic = _e_fm2_icon_find(fm, file);
-	       }
+	     file = ecore_file_file_get(path);
+	     ic = _e_fm2_icon_find(fm, file);
 	  }
 	icons = evas_list_append(icons, ic);
      }
@@ -4738,7 +4852,7 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 		      (!ic->sd->config->view.no_subdir_drop))
 		    _e_fm2_dnd_drop_show(ic, -1);
 		  else
-		    _e_fm2_dnd_drop_hide(sd->obj);
+		    _e_fm2_dnd_drop_all_show(sd->obj);
 	       }
 	     return;
 	  }
@@ -4807,8 +4921,9 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
    if (!type) return;
    if (strcmp(type, "text/uri-list")) return;
    ev = (E_Event_Dnd_Drop *)event;
-   fsel = ev->data;
+
    printf("DROP: %i %i\n", ev->x, ev->y);
+   fsel = _e_fm2_uri_path_list_get(ev->data);
    isel = _e_fm2_uri_icon_list_get(fsel);
    if (!isel) return;
    for (l = fsel; l; l = l->next)
@@ -4821,7 +4936,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
    for (l = isel; l; l = l->next)
      {
 	ic = l->data;
-	if (ic->drag.src)
+	if (ic && ic->drag.src)
 	  {
 	     ox = ic->x;
 	     oy = ic->y;
@@ -4835,6 +4950,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	     break;
 	  }
      }
+
    /* note - logic.
     * if drop file prefix path matches extra_file_source then it can be
     * and indirect link - dont MOVE the file just add filename to list.
@@ -4849,7 +4965,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	for (ll = fsel, il = isel; ll && il; ll = ll->next, il = il->next)
 	  {
 	     ic = il->data;
-	     fp = _e_fm2_icon_desktop_url_eval(ll->data);
+	     fp = ll->data;
 	     if (!fp) continue;
 	     snprintf(buf, sizeof(buf), "%s/%s",
 		      sd->realpath, ecore_file_file_get(fp));
@@ -4906,7 +5022,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	     for (ll = fsel, il = isel; ll && il; ll = ll->next, il = il->next)
 	       {
 		  ic = il->data;
-		  fp = _e_fm2_icon_desktop_url_eval(ll->data);
+		  fp = ll->data;
 		  if (!fp) continue;
 		  /* move the file into the subdir */
 		  snprintf(buf, sizeof(buf), "%s/%s/%s",
@@ -4927,7 +5043,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 			    for (ll = fsel, il = isel; ll && il; ll = ll->next, il = il->next)
 			      {
 				 ic = il->data;
-				 fp = _e_fm2_icon_desktop_url_eval(ll->data);
+				 fp = ll->data;
 				 if (!fp) continue;
 				 snprintf(buf, sizeof(buf), "%s/%s",
 					  sd->realpath, ecore_file_file_get(fp));
@@ -4949,7 +5065,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 			    for (ll = fsel, il = isel; ll && il; ll = ll->next, il = il->next)
 			      {
 				 ic = il->data;
-				 fp = _e_fm2_icon_desktop_url_eval(ll->data);
+				 fp = ll->data;
 				 if (!fp) continue;
 				 snprintf(buf, sizeof(buf), "%s/%s",
 					  sd->realpath, ecore_file_file_get(fp));
@@ -4972,7 +5088,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		       for (ll = fsel, il = isel; ll && il; ll = ll->next, il = il->next)
 			 {
 			    ic = il->data;
-			    fp = _e_fm2_icon_desktop_url_eval(ll->data);
+			    fp = ll->data;
 			    if (!fp) continue;
 			    /* move the file into the subdir */
 			    snprintf(buf, sizeof(buf), "%s/%s",
@@ -4988,7 +5104,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 		  for (ll = fsel, il = isel; ll && il; ll = ll->next, il = il->next)
 		    {
 		       ic = il->data;
-		       fp = _e_fm2_icon_desktop_url_eval(ll->data);
+		       fp = ll->data;
 		       if (!fp) continue;
 		       /* move the file into the subdir */
 		       snprintf(buf, sizeof(buf), "%s/%s",
@@ -5000,6 +5116,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	       }
 	  }
      }
+
    _e_fm2_dnd_drop_hide(sd->obj);
    _e_fm2_dnd_drop_all_hide(sd->obj);
    _e_fm2_list_walking++;
@@ -5018,6 +5135,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 	     _e_fm2_list_remove = evas_list_remove_list(_e_fm2_list_remove, _e_fm2_list_remove);
 	  }
      }
+   evas_list_free(fsel);
    evas_list_free(isel);
 }
 
@@ -5222,16 +5340,44 @@ _e_fm2_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 static void
 _e_fm2_cb_drag_finished(E_Drag *drag, int dropped)
 {
-   Evas_List *fsel;
-   char *f;
+   E_Fm2_Uri *uri;
+   const char *p;
+   char buf[PATH_MAX * 3 + 7];
+   Evas_Object *fm;
+   int i;
    
-   fsel = drag->data;
-   while (fsel)
+   memset(buf, 0, sizeof(buf));
+   for (p = drag->data, i = 0; p && *p != '\0'; p++, i++) 
      {
-	f = fsel->data;
-	free(f);
-	fsel = evas_list_remove_list(fsel, fsel);
+	if (*p == '\r')
+	  {
+	     p++;
+	     i = -1;
+	     uri = _e_fm2_uri_parse(buf);
+	     memset(buf, 0, sizeof(buf));
+	     if (!uri) continue;
+
+	     fm = _e_fm2_file_fm2_find(uri->path);
+	     if (fm)
+	       {
+		  const char *file;
+		  E_Fm2_Icon *ic;
+
+		  file = ecore_file_file_get(uri->path);
+		  ic = _e_fm2_icon_find(fm, file);
+		  ic->drag.dnd = 0;
+		  if (ic->obj) evas_object_show(ic->obj);
+		  if (ic->obj_icon) evas_object_show(ic->obj_icon);
+	       }
+
+	     if (uri->hostname) evas_stringshare_del(uri->hostname);
+	     evas_stringshare_del(uri->path);
+	     E_FREE(uri);
+	  }
+	else
+	  buf[i] = *p;
      }
+   free(drag->data);
 }
 
 static void
@@ -5256,10 +5402,10 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     Evas_Object *o, *o2;
 	     Evas_Coord x, y, w, h;
 	     const char *drag_types[] = { "text/uri-list" }, *realpath;
-	     char buf[4096];
+	     char buf[PATH_MAX + 8], *sel = NULL;
 	     E_Container *con = NULL;
 	     Evas_List *l, *sl, *fsel = NULL;
-	     int i;
+	     int i, sel_length = 0;
 	     
 	     switch (ic->sd->eobj->type)
 	       {
@@ -5293,21 +5439,39 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     sl = e_fm2_selected_list_get(ic->sd->obj);
 	     for (l = sl, i = 0; l; l = l->next, i++)
 	       {
+		  const char *s;
 		  ici = l->data;
-		  /* file:///path is correct: file://<host>/<path> with null <host> */
-		  if (!strcmp(realpath, "/"))
-		    snprintf(buf, sizeof(buf), "file:///%s", ici->file);
+		  snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+
+		  s = _e_fm2_uri_escape(buf);
+		  if (!s) continue;
+		  if (sel_length == 0)
+		    {
+		       sel_length = strlen(s) + 2;
+		       sel = malloc(sel_length + 1);
+		       if (!sel) break;
+		       sel[0] = '\0';
+		    }
 		  else
-		    snprintf(buf, sizeof(buf), "file://%s/%s", realpath, ici->file);
-		  fsel = evas_list_append(fsel, strdup(buf));
+		    {
+		       sel_length += strlen(s) + 2;
+		       sel = realloc(sel, sel_length+1);
+		       if (!sel) break;
+		    }
+		  sel = strcat(sel, s);
+		  sel = strcat(sel, "\r\n");
+		  evas_stringshare_del(s);
+
 		  ici->ic->drag.dnd = 1;
 		  if (ici->ic->obj) evas_object_hide(ici->ic->obj);
 		  if (ici->ic->obj_icon) evas_object_hide(ici->ic->obj_icon);
 	       }
 	     evas_list_free(sl);
+	     if (!sel) return;
+	     
 	     d = e_drag_new(con,
 			    x, y, drag_types, 1,
-			    fsel, -1, NULL, _e_fm2_cb_drag_finished);
+			    sel, strlen(sel), NULL, _e_fm2_cb_drag_finished);
 	     o = edje_object_add(e_drag_evas_get(d));
 	     if (ic->sd->config->view.mode == E_FM2_VIEW_MODE_LIST)
 	       {
@@ -5353,9 +5517,10 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     edje_object_signal_emit(o2, "e,state,selected", "e");
 	     e_drag_object_set(d, o);
 	     e_drag_resize(d, w, h);
-	     e_drag_start(d,
-			  ic->drag.x + ic->x + ic->sd->x - ic->sd->pos.x,
-			  ic->drag.y + ic->y + ic->sd->y - ic->sd->pos.y);
+
+	     e_drag_xdnd_start(d,
+			       ic->drag.x + ic->x + ic->sd->x - ic->sd->pos.x,
+			       ic->drag.y + ic->y + ic->sd->y - ic->sd->pos.y);
 	     e_util_evas_fake_mouse_up_later(evas_object_evas_get(ic->sd->obj),
 					     1);
 	  }

@@ -59,7 +59,7 @@ static Ecore_X_Window _drag_win = 0;
 static Evas_List *_drag_list = NULL;
 static E_Drag    *_drag_current = NULL;
 
-static XDnd *_xdnd;
+static XDnd *_xdnd = NULL;
 
 /* externally accessible functions */
 
@@ -290,10 +290,15 @@ e_drag_start(E_Drag *drag, int x, int y)
 EAPI int
 e_drag_xdnd_start(E_Drag *drag, int x, int y)
 {
+   Ecore_X_Atom actions[] = {ECORE_X_DND_ACTION_MOVE, ECORE_X_DND_ACTION_PRIVATE, 
+			     ECORE_X_DND_ACTION_COPY, ECORE_X_DND_ACTION_ASK,
+			     ECORE_X_DND_ACTION_LINK};
    if (_drag_win) return 0;
    _drag_win = ecore_x_window_input_new(drag->container->win, 
 					drag->container->x, drag->container->y,
 					drag->container->w, drag->container->h);
+
+
    ecore_x_window_show(_drag_win);
    if (!e_grabinput_get(_drag_win, 1, _drag_win))
      {
@@ -308,6 +313,7 @@ e_drag_xdnd_start(E_Drag *drag, int x, int y)
 
    ecore_x_dnd_aware_set(_drag_win, 1);
    ecore_x_dnd_types_set(_drag_win, drag->types, drag->num_types);
+   ecore_x_dnd_actions_set(_drag_win, actions, 5);
    ecore_x_dnd_begin(_drag_win, drag->data, drag->data_size);
 
    _drag_current = drag;
@@ -347,6 +353,7 @@ e_drop_handler_add(E_Object *obj,
    handler->h = h;
 
    handler->obj = obj;
+   handler->entered = 0;
    
    _drop_handlers = evas_list_append(_drop_handlers, handler);
 
@@ -676,8 +683,7 @@ _e_drag_update(int x, int y)
 	     move_ev.y = y - dy;
 	     leave_ev.x = x - dx;
 	     leave_ev.y = y - dy;
-	     if ((_e_drag_win_matches(h, win)) &&
-		 (E_INSIDE(x, y, dx, dy, dw, dh)))
+	     if (E_INSIDE(x, y, dx, dy, dw, dh))
 	       {
 		  if (!h->entered)
 		    {
@@ -725,8 +731,7 @@ _e_drag_update(int x, int y)
 	     move_ev.y = y - dy;
 	     leave_ev.x = x - dx;
 	     leave_ev.y = y - dy;
-	     if ((_e_drag_win_matches(h, win)) &&
-		 (E_INSIDE(x, y, dx, dy, dw, dh)))
+	     if (E_INSIDE(x, y, dx, dy, dw, dh))
 	       {
 		  if (!h->entered)
 		    {
@@ -773,12 +778,21 @@ _e_drag_end(int x, int y)
    e_grabinput_release(_drag_win, _drag_win);
    if (_drag_current->type == E_DRAG_XDND)
      {
-	e_object_del(E_OBJECT(_drag_current));
-	_drag_current = NULL;
-	if (!ecore_x_dnd_drop())
+	int dropped;
+
+	if (!(dropped = ecore_x_dnd_drop()))
 	  {
 	     ecore_x_window_del(_drag_win);
 	     _drag_win = 0;
+	  }
+
+	if (_drag_current->cb.finished)
+	  _drag_current->cb.finished(_drag_current, dropped);
+
+	if (_drag_current && !_xdnd)
+	  {
+	     e_object_del(E_OBJECT(_drag_current));
+	     _drag_current = NULL;
 	  }
 	return;
      }
@@ -883,9 +897,8 @@ _e_drag_xdnd_end(int x, int y)
 	     _e_drag_coords_update(h, &dx, &dy, &dw, &dh);
 	     ev.x = x - dx;
 	     ev.y = y - dy;
-	     if ((_e_drag_win_matches(h, win)) &&
-		 ((h->cb.drop) &&
-		  (E_INSIDE(x, y, dx, dy, dw, dh))))
+	     if (_e_drag_win_matches(h, win) && h->cb.drop 
+		 && E_INSIDE(x, y, dx, dy, dw, dh))
 	       {
 		  h->cb.drop(h->cb.data, h->active_type, &ev);
 		  dropped = 1;
@@ -993,7 +1006,6 @@ _e_dnd_cb_event_dnd_enter(void *data, int type, void *event)
    int i, j;
 
    ev = event;
-   if (ev->source == _drag_win) return 1;
    id = e_util_winid_str_get(ev->win);
    if (!evas_hash_find(_drop_win_hash, id)) return 1;
    for (l = _drop_handlers; l; l = l->next)
@@ -1066,7 +1078,6 @@ _e_dnd_cb_event_dnd_leave(void *data, int type, void *event)
 
    ev = event;
 
-   if (ev->source == _drag_win) return 1;
    id = e_util_winid_str_get(ev->win);
    if (!evas_hash_find(_drop_win_hash, id)) return 1;
    printf("Xdnd leave\n");
@@ -1114,7 +1125,6 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
    int active;
 
    ev = event;
-   if (ev->source == _drag_win) return 1;
    id = e_util_winid_str_get(ev->win);
    if (!evas_hash_find(_drop_win_hash, id)) return 1;
 
@@ -1160,21 +1170,22 @@ _e_dnd_cb_event_dnd_finished(void *data, int type, void *event)
 {
    Ecore_X_Event_Xdnd_Finished *ev;
 
-   /*
-    * TODO:
-    * - Check action
-    * - Do something if not completed
-    */
-
    ev = event;
-   if (ev->win != _drag_win) return 1;
    printf("Xdnd finished\n");
 
    if (!ev->completed)
-     printf("FIXME: XDnd not completed, need to delay deleting _drag_win!!\n");
+     return 1;
 
+   if (_drag_current)
+     {
+	e_object_del(E_OBJECT(_drag_current));
+	_drag_current = NULL;
+     }
+
+   e_grabinput_release(_drag_win, _drag_win);
    ecore_x_window_del(_drag_win);
    _drag_win = 0;
+
    return 1;
 }
 
@@ -1185,7 +1196,6 @@ _e_dnd_cb_event_dnd_drop(void *data, int type, void *event)
    const char *id;
 
    ev = event;
-   if (ev->source == _drag_win) return 1;
    id = e_util_winid_str_get(ev->win);
    if (!evas_hash_find(_drop_win_hash, id)) return 1;
    printf("Xdnd drop\n");
@@ -1194,6 +1204,7 @@ _e_dnd_cb_event_dnd_drop(void *data, int type, void *event)
 
    _xdnd->x = ev->position.x;
    _xdnd->y = ev->position.y;
+
    return 1;
 }
 
