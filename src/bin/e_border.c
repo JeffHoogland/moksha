@@ -1326,7 +1326,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	  }
 	if (bd->visible)
 	  {
-	     if (focus_track_frozen > 0)
+	     if (focus_track_frozen == 0)
 	       e_border_focus_latest_set(bd);
 	  }
 //	printf("EMIT 0x%x activeve\n", bd->client.win);
