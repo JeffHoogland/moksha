@@ -3513,7 +3513,7 @@ _e_fm2_uri_parse(const char *val)
    hostname[i] = '\0';
 
    /* See http://www.faqs.org/rfcs/rfc1738.html for the escaped chars */
-   for (p, i = 0; *p != '\0' && i < PATH_MAX; i++, p++)
+   for (i = 0; *p != '\0' && i < PATH_MAX; i++, p++)
      {
 	if (*p == '%')
 	  {
@@ -3527,7 +3527,7 @@ _e_fm2_uri_parse(const char *val)
      }
 
    uri = E_NEW(E_Fm2_Uri, 1);
-   if (strlen(hostname) > 0) uri->hostname = evas_stringshare_add(hostname);
+   if (hostname[0]) uri->hostname = evas_stringshare_add(hostname);
    else uri->hostname = NULL;
    uri->path = evas_stringshare_add(path);
 
