@@ -182,12 +182,10 @@ e_configure_show(E_Container *con)
 EAPI void 
 e_configure_del(void) 
 {
-   E_Configure *eco;
-
    if (_e_configure) 
      {
-	eco = _e_configure;
-	e_object_del(E_OBJECT(eco));
+	e_object_del(E_OBJECT(_e_configure));
+	_e_configure = NULL;
      }
 }
 
