@@ -179,6 +179,18 @@ e_configure_show(E_Container *con)
    _e_configure = eco;
 }
 
+EAPI void 
+e_configure_del(void) 
+{
+   E_Configure *eco;
+
+   if (_e_configure) 
+     {
+	eco = _e_configure;
+	e_object_del(E_OBJECT(eco));
+     }
+}
+
 static void 
 _e_configure_free(E_Configure *eco) 
 {

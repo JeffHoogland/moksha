@@ -54,6 +54,7 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m)
 {
+   e_configure_del();
    /* remove module-supplied menu additions */
    if (maug)
      {
