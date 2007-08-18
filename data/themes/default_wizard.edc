@@ -2,6 +2,7 @@ images {
    image: "e17_tl_corner_logo.png" COMP;
    image: "e17_tl_corner_logo_shadow.png" LOSSY 90;
    image: "e17_whitev.png" COMP;
+   image: "e17_winlist_bottom.png" COMP;
 }
 
 group {
@@ -34,8 +35,48 @@ group {
 	 }
       }
       part {
-	 name: "e.title";
+	 name: "e.swallow.content";
+	 type: SWALLOW;
+	 description {
+	    state: "default" 0.0;
+	    rel1 {
+	       relative: 0.0 1.0;
+	       offset: 8 8;
+	       to_y: "e.text.title";
+	    }
+	    rel2 {
+	       relative: 1.0 0.0;
+	       offset: -9 -1;
+	       to_y: "bottom";
+	    }
+	 }
+      }
+      part {
+	 name:          "bottom";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  1.0;
+	       offset:   0    -40;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
+	    }
+	    image {
+	       normal: "e17_winlist_bottom.png";
+	       border: 0 0 4 0;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+      }
+      part {
+	 name: "e.text.title";
 	 type: TEXT;
+	 effect: SOFT_SHADOW;
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
@@ -47,9 +88,11 @@ group {
 	       relative: 1.0 0.0;
 	       offset: -9 8;
 	    }
-	    color: 0 0 0 255;
+	    align: 0.5 0.0;
+	    color: 255 255 255 255;
+	    color3: 0 0 0 16;
 	    text {
-	       text: "Welcome to Enlightenment";
+	       text: "Title";
 	       font: "Edje Vera Bold";
 	       size: 20;
 	       min:  0 1;
