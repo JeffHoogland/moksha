@@ -686,7 +686,8 @@ _e_desktop_edit_cb_icon_select_destroy(void *obj)
    E_Dialog *dia = obj;
    E_Config_Dialog_Data *cfdata = dia->data;
 
-   e_object_unref(E_OBJECT(dia));
+/* extra unref isn't needed - there is no extra ref() anywhere i saw */   
+/*   e_object_unref(E_OBJECT(dia));*/
    _e_desktop_edit_cb_icon_select_cancel(cfdata, NULL);
 }
 
