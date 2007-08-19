@@ -197,7 +197,7 @@ _load_modules(const char *dir)
    files = ecore_file_ls(dir);
    if (!files) return;
 
-   ecore_list_goto_first(files);
+   ecore_list_first_goto(files);
    while ((mod = ecore_list_next(files))) 
      {
 	char buf[4096];
