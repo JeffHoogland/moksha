@@ -293,6 +293,9 @@ ACT_FN_GO(window_kill)
 	obj = E_OBJECT(e_border_focused_get());
 	if (!obj) return;
      }
+   bd = (E_Border *)obj;
+   if ((bd->lock_close) || (bd->internal)) return;
+   
    if (kill_dialog) e_object_del(E_OBJECT(kill_dialog));
 
    if (e_config->cnfmdlg_disabled)
@@ -301,7 +304,6 @@ ACT_FN_GO(window_kill)
 	return;
      }
 
-   bd = (E_Border *)obj;
    snprintf(dialog_text, sizeof(dialog_text),
 	    _("You are about to kill %s.<br><br>"
 	    "Please keep in mind that all data of this window,<br>"
