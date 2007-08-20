@@ -1,3 +1,4 @@
+# vim: set keymap=bulgarian-phonetic:
 # English translation of Enlightenment.
 # This file is put in the public domain.
 # Viktor Kojouharov <vkojouharov@abv.bg>, 2006.
@@ -8,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-08-12 13:18+0300\n"
-"PO-Revision-Date: 2007-08-12 14:11+0300\n"
+"PO-Revision-Date: 2007-08-16 20:38+0300\n"
 "Last-Translator: Viktor Kojouharov <vkojouharov@abv.bg>\n"
 "Language-Team: English <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +37,7 @@ msgid ""
 "is not stable. Many features are incomplete or even non-existant yet and may "
 "have many bugs. You have been <hilight>WARNED!</hilight>"
 msgstr ""
-"&copy Всички права запазени; 1999-2006, Екипът  на Enlightenment."
+"&copy; Всички права запазени; 1999-2006, Екипът  на Enlightenment."
 "<br><br>Надяваме се, че използването на средата ще ви хареса колкото на нас "
 "ни харесва да я пишем.<br><br>Този софтуер се предлага без никаква гаранция."
 "Обуславя се на лицензионните условия, описани в файловете COPYING и COPYING-"

@@ -68,6 +68,7 @@ e_bindings.h \
 e_moveresize.h \
 e_actions.h \
 e_popup.h \
+e_gadcon_popup.h \
 e_ipc_codec.h \
 e_prefix.h \
 e_datastore.h \
@@ -193,6 +194,7 @@ e_bindings.c \
 e_moveresize.c \
 e_actions.c \
 e_popup.c \
+e_gadcon_popup.c \
 e_ipc_codec.c \
 e_prefix.c \
 e_datastore.c \
