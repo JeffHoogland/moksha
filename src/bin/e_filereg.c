@@ -8,108 +8,92 @@
  * currently being used by E in core components should be registered
  * here and will be protected as best as E can. :)
  */
-
-/* Local subsystem globals */
-static Evas_List *_e_filereg = NULL;
+static Evas_Hash *_e_filereg = NULL;
 
 typedef struct _Filereg_Item Filereg_Item;
-
 struct _Filereg_Item
 {
-   char * path;
+   const char *path;
    int ref_count;
 };
 
+static Evas_Bool _filereg_hash_cb_free(Evas_Hash *hash __UNUSED__, 
+				       const char *key __UNUSED__, 
+				       void *data, void *fdata __UNUSED__);
+
 /* Externally accessible functions */
 EAPI int
-e_filereg_init(void)
+e_filereg_init(void) 
 {
    return 1;
 }
 
 EAPI int
-e_filereg_shutdown(void)
+e_filereg_shutdown(void) 
 {
-   Evas_List * ll;
-   Filereg_Item * item;
-
-   /* Delete all strings in the hash */
-   for (ll = _e_filereg; ll; ll = ll->next)
-     {
-	item = ll->data;	
-	E_FREE(item->path);
-	E_FREE(item);
-     }
-
-   _e_filereg = evas_list_free(_e_filereg);
+   evas_hash_foreach(_e_filereg, _filereg_hash_cb_free, NULL);
+   evas_hash_free(_e_filereg);
+   _e_filereg = NULL;
    return 1;
 }
 
 EAPI int
-e_filereg_register(const char * path)
+e_filereg_register(const char *path) 
 {
-   Evas_List * ll;
-   Filereg_Item * item;
-
-   for (ll = _e_filereg; ll; ll = ll->next)
+   Filereg_Item *fi = NULL;
+   
+   fi = evas_hash_find(_e_filereg, path);
+   if (fi) 
      {
-	item = ll->data;	
-	if (!strcmp(item->path, path))
-	  {
-	     /* File already registered, increment ref. count */
-	     item->ref_count++;
-	     return 1;
-	  }
+	fi->ref_count++;
+	return 1;
      }
-
-   /* Doesn't exist so add to list. */
-   item = E_NEW(Filereg_Item, 1);
-   if (!item) return 0;
-
-   item->path = strdup(path);
-   item->ref_count = 1;
-   _e_filereg = evas_list_append(_e_filereg, item);
-
+   fi = E_NEW(Filereg_Item, 1);
+   if (!fi) return 0;
+   fi->path = evas_stringshare_add(path);
+   fi->ref_count = 1;
+   _e_filereg = evas_hash_add(_e_filereg, path, fi);
    return 1;
 }
 
 EAPI void
-e_filereg_deregister(const char * path)
+e_filereg_deregister(const char *path) 
 {
-   Evas_List * ll;
-   Filereg_Item * item;
-
-   for (ll = _e_filereg; ll; ll = ll->next)
+   Filereg_Item *fi = NULL;
+   
+   fi = evas_hash_find(_e_filereg, path);
+   if (fi) 
      {
-	item = ll->data;	
-	if (!strcmp(item->path, path))
+	fi->ref_count--;
+	if (fi->ref_count == 0) 
 	  {
-	     item->ref_count--;
-	     if (item->ref_count == 0) 
-	       {
-		_e_filereg = evas_list_remove_list(_e_filereg, ll);	
-		E_FREE(item->path);
-		E_FREE(item);
-	       }
-
-	     return;
+	     _e_filereg = evas_hash_del(_e_filereg, path, fi);
+	     if (fi->path) evas_stringshare_del(fi->path);
+	     E_FREE(fi);
 	  }
      }
 }
 
 EAPI Evas_Bool
-e_filereg_file_protected(const char * path)
+e_filereg_file_protected(const char *path) 
 {
-   Evas_List * ll;
-   Filereg_Item * item;
-
-   for (ll = _e_filereg; ll; ll = ll->next)
-     {
-	item = ll->data;	
-	if (!strcmp(item->path, path))
-	     return 1;
-     }
-
-   return 0;
+   Filereg_Item *fi = NULL;
+   
+   fi = evas_hash_find(_e_filereg, path);
+   if (!fi) return 0;
+   else return 1;
 }
 
+/* Private Functions */
+static Evas_Bool 
+_filereg_hash_cb_free(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, 
+		      void *data, void *fdata __UNUSED__) 
+{
+   Filereg_Item *fi;
+   
+   fi = data;
+   if (!fi) return 1;
+   if (fi->path) evas_stringshare_del(fi->path);
+   E_FREE(fi);
+   return 1;
+}
