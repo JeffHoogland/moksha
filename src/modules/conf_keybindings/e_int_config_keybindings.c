@@ -1006,10 +1006,10 @@ _grab_key_down_cb(void *data, int type, void *event)
 	  ;
 	else
 	  {
-	     E_Config_Binding_Key *bi, *bi2;
-	     Evas_List *l;
+	     E_Config_Binding_Key *bi = NULL, *bi2 = NULL;
+	     Evas_List *l = NULL;
 	     int mod = E_BINDING_MODIFIER_NONE; 
-	     int found, n;
+	     int found = 0, n;
 	     
 	     if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) 
 	       mod |= E_BINDING_MODIFIER_SHIFT;
