@@ -5,9 +5,6 @@
 #include "e_mod_main.h"
 
 /* actual module specifics */
-static void  _e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static void  _e_mod_menu_add(void *data, E_Menu *m);
-
 static E_Module *conf_module = NULL;
 
 /* module setup */
@@ -56,23 +53,4 @@ e_modapi_about(E_Module *m)
 			_("Enlightenment Configuration Module - Profiles"),
 			_("Configuration dialog for config profiles."));
    return 1;
-}
-
-/* menu item callback(s) */
-static void 
-_e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   e_configure_registry_call("advanced/profiles", m->zone->container, NULL);
-}
-
-/* menu item add hook */
-static void
-_e_mod_menu_add(void *data, E_Menu *m)
-{
-   E_Menu_Item *mi;
-   
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Profiles"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/profiles");
-   e_menu_item_callback_set(mi, _e_mod_run_cb, NULL);
 }
