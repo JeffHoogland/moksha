@@ -381,7 +381,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    E_Radio_Group *rg;
    E_Manager *man;
    Ecore_X_Screen_Size *sizes;
-   int i, s, sel;
+   int i, s, sel = 0;
 
    o = e_widget_list_add(evas, 0, 1);
 
