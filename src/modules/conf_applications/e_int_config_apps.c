@@ -333,7 +333,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 static int 
 _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
-   int ret;
+   int ret = 0;
    char *ext;
  
    if (!cfdata->apps || !cfdata->once || !cfdata->once->filename) return 1;
