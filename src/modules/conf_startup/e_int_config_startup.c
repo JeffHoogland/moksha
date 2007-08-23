@@ -251,7 +251,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
    Evas_Object *o, *ot, *of, *il, *ol;
    char path[4096];
-   const char *f, *homedir;
+   const char *homedir;
    E_Fm2_Config fmc;
    E_Zone *z;
    E_Radio_Group *rg;
@@ -338,8 +338,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_preview_add(evas, 320, (320 * z->h) / z->w);
    cfdata->o_preview = o;
    if (cfdata->splash)
-     f = cfdata->splash;
-   e_widget_preview_edje_set(o, f, "e/init/splash");
+     e_widget_preview_edje_set(o, cfdata->splash, "e/init/splash");
    e_widget_list_object_append(of, o, 0, 0, 0.5);
    
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 0, 0, 0, 0);
