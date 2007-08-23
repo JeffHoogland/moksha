@@ -177,7 +177,7 @@ static void
 _event_cb_changed(void *data) 
 {
    E_Config_Dialog_Data *cfdata;
-   const char *list, *trans;
+   const char *list, *trans = NULL;
    int sel, i;
    
    cfdata = data;
