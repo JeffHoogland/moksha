@@ -1466,7 +1466,6 @@ static void
 _e_int_menus_augmentation_add(E_Menu *m, Evas_List *augmentation)
 {
    Evas_List *l;
-   E_Menu_Item *mi;
 
    for (l = augmentation; l; l = l->next)
      {

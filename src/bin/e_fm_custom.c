@@ -5,8 +5,8 @@
 
 static Evas_Bool _e_fm2_custom_file_hash_foreach_list(Evas_Hash *hash, const char *key, void *data, void *fdata);
 static Evas_List *_e_fm2_custom_hash_key_base_list(Evas_Hash *hash, const char *str);
-static Evas_Bool _e_fm2_custom_file_hash_foreach_sub_list(Evas_Hash *hash, const char *key, void *data, void *fdata);
-static Evas_List *_e_fm2_custom_hash_key_sub_list(Evas_Hash *hash, const char *str);
+//static Evas_Bool _e_fm2_custom_file_hash_foreach_sub_list(Evas_Hash *hash, const char *key, void *data, void *fdata);
+//static Evas_List *_e_fm2_custom_hash_key_sub_list(Evas_Hash *hash, const char *str);
 static Evas_Bool _e_fm2_custom_file_hash_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata);
 static Evas_Bool _e_fm2_custom_file_hash_foreach_save(Evas_Hash *hash, const char *key, void *data, void *fdata);
 static void _e_fm2_custom_file_info_load(void);
@@ -240,6 +240,7 @@ _e_fm2_custom_hash_key_base_list(Evas_Hash *hash, const char *str)
    return cl.l;
 }
 
+/*
 static Evas_Bool
 _e_fm2_custom_file_hash_foreach_sub_list(Evas_Hash *hash, const char *key, void *data, void *fdata)
 {
@@ -250,7 +251,9 @@ _e_fm2_custom_file_hash_foreach_sub_list(Evas_Hash *hash, const char *key, void 
      cl->l = evas_list_append(cl->l, key);
    return 1;
 }
-    
+*/
+
+/*
 static Evas_List *
 _e_fm2_custom_hash_key_sub_list(Evas_Hash *hash, const char *str)
 {
@@ -262,6 +265,7 @@ _e_fm2_custom_hash_key_sub_list(Evas_Hash *hash, const char *str)
 		     _e_fm2_custom_file_hash_foreach_sub_list, &cl);
    return cl.l;
 }
+*/
 
 static Evas_Bool
 _e_fm2_custom_file_hash_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata)

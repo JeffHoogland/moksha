@@ -33,7 +33,6 @@ static void _btn_cb_load           (void *data, void *data2);
 static void _btn_cb_about          (void *data, void *data2);
 static void _btn_cb_config         (void *data, void *data2);
 static int  _upd_hdl_cb            (void *data, int type, void *event);
-static void _reload_modules        (E_Config_Dialog_Data *cfdata);
 
 /* Hash callback Protos */
 static Evas_Bool _modules_hash_cb_free   (Evas_Hash *hash __UNUSED__, 
@@ -516,6 +515,7 @@ _upd_hdl_cb(void *data, int type, void *event)
    ev = event;
    _fill_avail_list(cfdata);
    _fill_loaded_list(cfdata);
+   return 1;
 }
 
 /* Hash callback Functions */

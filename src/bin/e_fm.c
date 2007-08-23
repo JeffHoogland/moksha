@@ -3475,7 +3475,6 @@ _e_fm2_uri_escape(const char *path)
 	  dest[i] = *p;
 	else
 	  {
-	     char escaped[3];
 	     snprintf(&(dest[i]), 4, "%%%02X", *p);
 	     i += 2;
 	  }
@@ -5404,7 +5403,7 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     const char *drag_types[] = { "text/uri-list" }, *realpath;
 	     char buf[PATH_MAX + 8], *sel = NULL;
 	     E_Container *con = NULL;
-	     Evas_List *l, *sl, *fsel = NULL;
+	     Evas_List *l, *sl;
 	     int i, sel_length = 0;
 	     
 	     switch (ic->sd->eobj->type)
