@@ -1390,7 +1390,7 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_SHUTDOWN
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-shutdown", 0, "Shutdown (exit) Enlightenment", 0, HDL)
+   OP("-exit", 0, "Exit Enlightenment", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
@@ -7769,6 +7769,23 @@ break;
    GENERIC(HDL);
    E_Action  *act;
    act = e_action_find("suspend");
+   if (act && act->func.go)
+      act->func.go(NULL, NULL);
+   END_GENERIC();
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_HALT
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-shutdown", 0, "Halt (shutdown) the computer", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   GENERIC(HDL);
+   E_Action  *act;
+   act = e_action_find("halt");
    if (act && act->func.go)
       act->func.go(NULL, NULL);
    END_GENERIC();
