@@ -544,6 +544,7 @@ _modules_hash_cb_free(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
    if (module->short_name) evas_stringshare_del(module->short_name);
    if (module->name) evas_stringshare_del(module->name);
    if (module->icon) evas_stringshare_del(module->icon);
+   if (module->comment) evas_stringshare_del(module->comment);
    if (module->orig_path) evas_stringshare_del(module->orig_path);
    E_FREE(module);
    return 1;
