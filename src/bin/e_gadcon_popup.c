@@ -43,6 +43,7 @@ e_gadcon_popup_content_set(E_Gadcon_Popup *pop, Evas_Object *o)
    Evas_Coord w = 0, h = 0;
    Evas_Object *old_o;
 
+   if (!pop) return;
    E_OBJECT_CHECK(pop);
    E_OBJECT_TYPE_CHECK(pop, E_GADCON_POPUP_TYPE);
 
@@ -68,6 +69,7 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
 {
    Evas_Coord gx, gy, gw, gh, zw, zh, px, py, ww, wh;
 
+   if (!pop) return;
    E_OBJECT_CHECK(pop);
    E_OBJECT_TYPE_CHECK(pop, E_GADCON_POPUP_TYPE);
 
@@ -131,6 +133,7 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
 EAPI void
 e_gadcon_popup_hide(E_Gadcon_Popup *pop)
 {
+   if (!pop) return;
    E_OBJECT_CHECK(pop);
    E_OBJECT_TYPE_CHECK(pop, E_GADCON_POPUP_TYPE);
    if (pop->pinned) return;
@@ -140,6 +143,7 @@ e_gadcon_popup_hide(E_Gadcon_Popup *pop)
 EAPI void
 e_gadcon_popup_toggle_pinned(E_Gadcon_Popup *pop)
 {
+   if (!pop) return;
    E_OBJECT_CHECK(pop);
    E_OBJECT_TYPE_CHECK(pop, E_GADCON_POPUP_TYPE);
 
