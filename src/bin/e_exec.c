@@ -208,10 +208,13 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
    e_util_env_set("DESKTOP_STARTUP_ID", buf);
 
    e_util_library_path_strip();
-   exe = ecore_exe_pipe_run(exec,
-			    ECORE_EXE_PIPE_AUTO | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR |
-			    ECORE_EXE_PIPE_READ_LINE_BUFFERED | ECORE_EXE_PIPE_ERROR_LINE_BUFFERED,
-			    inst);
+//// FIXME: seem to be some issues with the pipe and filling up ram - need to
+//// check. for now disable.   
+//   exe = ecore_exe_pipe_run(exec,
+//			    ECORE_EXE_PIPE_AUTO | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR |
+//			    ECORE_EXE_PIPE_READ_LINE_BUFFERED | ECORE_EXE_PIPE_ERROR_LINE_BUFFERED,
+//			    inst);
+   exe = ecore_exe_run(exec, inst);
    e_util_library_path_restore();
    if (penv_display)
      {
@@ -232,7 +235,9 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
    if (launch->launch_method) e_exehist_add(launch->launch_method, exec);
    free(exec);
    /* 20 lines at start and end, 20x100 limit on bytes at each end. */
-   ecore_exe_auto_limits_set(exe, 2000, 2000, 20, 20);
+//// FIXME: seem to be some issues with the pipe and filling up ram - need to
+//// check. for now disable.   
+//   ecore_exe_auto_limits_set(exe, 2000, 2000, 20, 20);
    ecore_exe_tag_set(exe, "E/exec");
 
    if (desktop)
