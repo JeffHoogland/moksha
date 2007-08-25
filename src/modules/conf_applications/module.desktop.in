@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Applications
 Icon=e-module-conf_applications
+Comment=<hilight>E17 Configuration Applet</hilight><br>Allows configuration of Ibar, Restart, <br>and Startup applications.
