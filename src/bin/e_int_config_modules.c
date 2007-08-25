@@ -152,6 +152,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    _fill_avail_list(cfdata);
    e_widget_frametable_object_append(of, ow, 0, 0, 1, 1, 1, 1, 1, 1);
    ow = e_widget_textblock_add(evas);
+   e_widget_min_size_set(ow, 200, 65);
    cfdata->o_desc = ow;
    e_widget_textblock_markup_set(ow, "Description: Unavailable.");
    e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 1, 1, 1);
