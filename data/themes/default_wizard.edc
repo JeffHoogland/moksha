@@ -3,6 +3,8 @@ images {
    image: "e17_tl_corner_logo_shadow.png" LOSSY 90;
    image: "e17_whitev.png" COMP;
    image: "e17_winlist_bottom.png" COMP;
+   image: "e17_wiz_b1.png" COMP;
+   image: "e17_wiz_b2.png" COMP;
 }
 
 group {
@@ -98,6 +100,26 @@ group {
 	       min:  0 1;
 	       align: 0.5 0.0;
 	       text_class: "wizard_title";
+	    }
+	 }
+      }
+      /* FIXME: adding button here */
+      part {
+	 name: "b1";
+	 mouse_events: 1;
+	 description {
+	    state: "default" 0.0;
+	    align: 0.0 1.0;
+	    image {
+	       normal: "e17_wiz_b1.png";
+	       border: 7 7 7 7;
+	    }
+	 }
+	 description {
+	    state: "pressed" 0.0;
+	    inherit: "default" 0.0;
+	    image {
+	       normal: "e17_wiz_b2.png";
 	    }
 	 }
       }

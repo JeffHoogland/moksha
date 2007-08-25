@@ -554,4 +554,6 @@ x-office-spreadsheet.png \
 e17_icon_fileman_desktop.png \
 e17_tl_corner_logo.png \
 e17_tl_corner_logo_shadow.png \
-e17_whitev.png
+e17_whitev.png \
+e17_wiz_b1.png \
+e17_wiz_b2.png

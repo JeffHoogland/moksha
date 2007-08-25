@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-08-24 12:54+0200\n"
+"POT-Creation-Date: 2007-08-25 17:31+0900\n"
 "PO-Revision-Date: 2007-08-23 20:41+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@inwind.it>\n"
 "Language-Team: none\n"
@@ -633,7 +633,7 @@ msgid "Basic"
 msgstr "Basilari"
 
 #: src/bin/e_config_dialog.c:218 src/bin/e_eap_editor.c:611
-#: src/bin/e_eap_editor.c:667 src/bin/e_entry_dialog.c:56 src/bin/e_exec.c:319
+#: src/bin/e_eap_editor.c:667 src/bin/e_entry_dialog.c:56 src/bin/e_exec.c:324
 #: src/bin/e_fm_prop.c:513 src/bin/e_int_border_remember.c:250
 #: src/bin/e_int_border_remember.c:325 src/bin/e_int_border_remember.c:367
 #: src/bin/e_module.c:411 src/bin/e_sys.c:392 src/bin/e_sys.c:437
@@ -844,13 +844,13 @@ msgstr "Incolla"
 msgid "Select All"
 msgstr "Seleziona tutto"
 
-#: src/bin/e_exec.c:224 src/bin/e_utils.c:227
+#: src/bin/e_exec.c:227 src/bin/e_utils.c:227
 #: src/modules/conf_imc/e_int_config_imc.c:278
 #: src/modules/conf_imc/e_int_config_imc.c:516
 msgid "Run Error"
 msgstr "Errore di esecuzione"
 
-#: src/bin/e_exec.c:225 src/bin/e_utils.c:228
+#: src/bin/e_exec.c:228 src/bin/e_utils.c:228
 #: src/modules/conf_imc/e_int_config_imc.c:279
 #: src/modules/conf_imc/e_int_config_imc.c:517
 #, c-format
@@ -858,11 +858,11 @@ msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
 msgstr ""
 "Enlightenment non ha potuto fare il fork di un processo figlio:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:310
+#: src/bin/e_exec.c:315
 msgid "Application run error"
 msgstr "Errore d'esecuzione dell'applicazione"
 
-#: src/bin/e_exec.c:312
+#: src/bin/e_exec.c:317
 #, c-format
 msgid ""
 "Enlightenment was unable to run the application:<br><br>%s<br><br>The "
@@ -871,106 +871,106 @@ msgstr ""
 "Enlightenment non ha potuto avviare l'applicazione:<br><br>%"
 "s<br><br>L'applicazione non è partita"
 
-#: src/bin/e_exec.c:402
+#: src/bin/e_exec.c:407
 msgid "Application Execution Error"
 msgstr "Errore d'esecuzione dell'applicazione"
 
-#: src/bin/e_exec.c:414
+#: src/bin/e_exec.c:419
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "L'esecuzione di %s è terminata inaspettatamente"
 
-#: src/bin/e_exec.c:420
+#: src/bin/e_exec.c:425
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "Un codice d'uscita %i è stato restituito da %s"
 
-#: src/bin/e_exec.c:427
+#: src/bin/e_exec.c:432
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s è stato fermato da un segnale d'interruzione"
 
-#: src/bin/e_exec.c:429
+#: src/bin/e_exec.c:434
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s è stato fermato da un segnale di uscita"
 
-#: src/bin/e_exec.c:433
+#: src/bin/e_exec.c:438
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s è stato fermato da un segnale di aborto"
 
-#: src/bin/e_exec.c:436
+#: src/bin/e_exec.c:441
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s è stato fermato da un errore di virgola mobile"
 
-#: src/bin/e_exec.c:439
+#: src/bin/e_exec.c:444
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr "%s è stato fermato da un segnale di uccisione ininterrompibile"
 
-#: src/bin/e_exec.c:442
+#: src/bin/e_exec.c:447
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s è stato fermato da un errore di segmentazione"
 
-#: src/bin/e_exec.c:445
+#: src/bin/e_exec.c:450
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s è stato fermato da una pipe rotta"
 
-#: src/bin/e_exec.c:448
+#: src/bin/e_exec.c:453
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s è stato fermato da un segnale di terminazione"
 
-#: src/bin/e_exec.c:451
+#: src/bin/e_exec.c:456
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s è stato fermato da un errore del bus"
 
-#: src/bin/e_exec.c:454
+#: src/bin/e_exec.c:459
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s è stato fermato dal segnale numero %i"
 
-#: src/bin/e_exec.c:510
+#: src/bin/e_exec.c:515
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
 "***L'output rimanente è stato troncato. Salvare l'output per vederlo.***\n"
 
-#: src/bin/e_exec.c:574 src/bin/e_exec.c:648 src/bin/e_exec.c:654
+#: src/bin/e_exec.c:579 src/bin/e_exec.c:653 src/bin/e_exec.c:659
 msgid "Error Logs"
 msgstr "Log di errore"
 
-#: src/bin/e_exec.c:579 src/bin/e_exec.c:655
+#: src/bin/e_exec.c:584 src/bin/e_exec.c:660
 msgid "There was no error message."
 msgstr "Non ci sono messaggi d'errore."
 
-#: src/bin/e_exec.c:583 src/bin/e_exec.c:662
+#: src/bin/e_exec.c:588 src/bin/e_exec.c:667
 msgid "Save This Message"
 msgstr "Salva questo messaggio"
 
-#: src/bin/e_exec.c:587 src/bin/e_exec.c:665
+#: src/bin/e_exec.c:592 src/bin/e_exec.c:670
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "Questo log di errore verrà salvato come %s/%s.log"
 
-#: src/bin/e_exec.c:613
+#: src/bin/e_exec.c:618
 msgid "Error Information"
 msgstr "Informazioni sull'errore"
 
-#: src/bin/e_exec.c:621
+#: src/bin/e_exec.c:626
 msgid "Error Signal Information"
 msgstr "Informazioni sui segnali d'errore"
 
-#: src/bin/e_exec.c:632 src/bin/e_exec.c:638
+#: src/bin/e_exec.c:637 src/bin/e_exec.c:643
 msgid "Output Data"
 msgstr "Dati dell'output"
 
-#: src/bin/e_exec.c:639
+#: src/bin/e_exec.c:644
 msgid "There was no output."
 msgstr "Non ci sono output."
 
