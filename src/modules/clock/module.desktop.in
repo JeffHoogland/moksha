@@ -2,3 +2,4 @@
 Type=Link
 Name=Clock
 Icon=e-module-clock
+Comment=<hilight>Clock Gadget</hilight><br>Nice clock gadget to show current<br>time.

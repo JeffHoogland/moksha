@@ -2,3 +2,4 @@
 Type=Link
 Name=Battery
 Icon=e-module-battery
+Comment=<hilight>Battery Gadget</hilight><br>A gadget to visualize your battery<br>status.

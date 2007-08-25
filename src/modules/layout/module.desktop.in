@@ -2,3 +2,4 @@
 Type=Link
 Name=Layout
 Icon=e-module-layout
+Comment=<hilight>Layout Module</hilight><br>Used to enforce layout policies.<br>Generally not applicable for a<br>desktop PC.

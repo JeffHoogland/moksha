@@ -2,3 +2,4 @@
 Type=Link
 Name=First Run Wizard
 Icon=e-module-wizard
+Comment=<hilight>First Run Wizzard</hilight><br>The first run wizard will help<br>configure E, when E is started<br>for the first time.

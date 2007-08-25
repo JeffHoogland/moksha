@@ -2,3 +2,4 @@
 Type=Link
 Name=Cpufreq
 Icon=e-module-cpufreq
+Comment=<hilight>CPU Gadget</hilight><br>Gadget to moitor CPU utilization.

@@ -2,3 +2,4 @@
 Type=Link
 Name=Window Switcher List
 Icon=e-module-winlist
+Comment=<hilight>Window List Module</hilight><br>A module to show the list of<br>client applications presently running.
