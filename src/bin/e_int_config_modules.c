@@ -1,8 +1,12 @@
+/*
+    * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+*/
+
 #include "e.h"
 
 typedef struct _CFModule 
 {
-   const char *short_name, *name;
+   const char *short_name, *name, *comment;
    const char *icon, *orig_path;
    int enabled, selected;
 } CFModule;
@@ -12,6 +16,7 @@ struct _E_Config_Dialog_Data
    Evas_Object *o_avail, *o_loaded;
    Evas_Object *b_load, *b_unload;
    Evas_Object *b_about, *b_config;
+   Evas_Object *o_desc;
 };
 
 static void        *_create_data  (E_Config_Dialog *cfd);
@@ -146,11 +151,15 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_on_change_hook_set(ow, _avail_list_cb_change, cfdata);
    _fill_avail_list(cfdata);
    e_widget_frametable_object_append(of, ow, 0, 0, 1, 1, 1, 1, 1, 1);
+   ow = e_widget_textblock_add(evas);
+   cfdata->o_desc = ow;
+   e_widget_textblock_markup_set(ow, "Description: Unavailable.");
+   e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 1, 1, 1);
    ow = e_widget_button_add(evas, _("Load Module"), NULL, _btn_cb_load, 
 			    cfdata, NULL);
    cfdata->b_load = ow;
    e_widget_disabled_set(ow, 1);
-   e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 1, 1, 0);
+   e_widget_frametable_object_append(of, ow, 0, 2, 1, 1, 1, 1, 1, 0);
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
    
    of = e_widget_frametable_add(evas, _("Loaded Modules"), 0);
@@ -217,6 +226,7 @@ _load_modules(const char *dir)
 	module->short_name = evas_stringshare_add(mod);
 	if (desktop->name) module->name = evas_stringshare_add(desktop->name);
 	if (desktop->icon) module->icon = evas_stringshare_add(desktop->icon);
+	if (desktop->comment) module->comment = evas_stringshare_add(desktop->comment);
 	if (desktop->orig_path) 
 	  module->orig_path = evas_stringshare_add(desktop->orig_path);
 	if (e_module_find(mod)) module->enabled = 1;
@@ -389,6 +399,10 @@ _avail_list_cb_change(void *data, Evas_Object *obj)
 	lbl = e_widget_ilist_nth_label_get(cfdata->o_avail, i);
 	module = evas_hash_find(modules, lbl);
 	if (!module) continue;
+	if (module->comment)
+		e_widget_textblock_markup_set(cfdata->o_desc, module->comment);
+	else
+		e_widget_textblock_markup_set(cfdata->o_desc, "Description: Unavailable.");
 	module->selected = 1;
      }
    if (l) evas_list_free(l);
