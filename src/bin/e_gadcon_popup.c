@@ -73,7 +73,7 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
 
    if (pop->win->visible) return;
 
-   if (o = edje_object_part_swallow_get(pop->o_bg, "e.swallow.content"))
+   if ((o = edje_object_part_swallow_get(pop->o_bg, "e.swallow.content")))
      {
 	Evas_Coord w = 0, h = 0;
 
