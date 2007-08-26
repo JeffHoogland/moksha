@@ -449,6 +449,10 @@ _loaded_list_cb_change(void *data, Evas_Object *obj)
 	lbl = e_widget_ilist_nth_label_get(cfdata->o_loaded, i);
 	module = evas_hash_find(modules, lbl);
 	if (!module) continue;
+	if (module->comment)
+		e_widget_textblock_markup_set(cfdata->o_desc, module->comment);
+	else
+		e_widget_textblock_markup_set(cfdata->o_desc, "Description: Unavailable.");
 	module->selected = 1;
 	if (c == 1) 
 	  {
