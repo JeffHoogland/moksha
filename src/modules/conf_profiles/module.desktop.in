@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Profiles
 Icon=e-module-conf_profiles
+Comment=<hilight>E17 Configuration Applet</hilight><br>Allows to manage configuration profiles.

@@ -304,6 +304,7 @@ _new_profile_cb_close(void *data, E_Dialog *dia)
    e_object_unref(E_OBJECT(dia));
    cfdata->dia_new_profile = NULL;
    cfdata->new_profile = NULL;
+   cfdata->new_profile_type = 0;
 }
 
 static void 
@@ -331,6 +332,7 @@ _new_profile_cb_ok(void *data, E_Dialog *dia)
    e_object_unref(E_OBJECT(dia));
    cfdata->dia_new_profile = NULL;
    cfdata->new_profile = NULL;
+   cfdata->new_profile_type = 0;
    _ilist_fill(cfdata);
 }
 
@@ -342,5 +344,6 @@ _new_profile_cb_dia_del(void *obj)
      
    cfdata->dia_new_profile = NULL;
    cfdata->new_profile = NULL;
+   cfdata->new_profile_type = 0;
    e_object_unref(E_OBJECT(dia));
 }
