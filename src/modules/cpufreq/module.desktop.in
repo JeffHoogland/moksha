@@ -2,4 +2,4 @@
 Type=Link
 Name=Cpufreq
 Icon=e-module-cpufreq
-Comment=<hilight>CPU Gadget</hilight><br>Gadget to moitor CPU utilization.
+Comment=<hilight>CPUfreq Gadget</hilight><br>Gadget to moitor and change<br>the CPU frequency.
