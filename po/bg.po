@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-08-25 17:31+0900\n"
+"POT-Creation-Date: 2007-08-26 21:18+0900\n"
 "PO-Revision-Date: 2007-08-16 20:38+0300\n"
 "Last-Translator: Viktor Kojouharov <vkojouharov@abv.bg>\n"
 "Language-Team: English <en@li.org>\n"
@@ -1610,31 +1610,31 @@ msgstr "Съответствие само на този прозорец"
 msgid "Start this program on login"
 msgstr "Стартиране на тази програма при влизане"
 
-#: src/bin/e_int_config_modules.c:74
+#: src/bin/e_int_config_modules.c:79
 msgid "Module Settings"
 msgstr "Настройки на модули"
 
-#: src/bin/e_int_config_modules.c:142
+#: src/bin/e_int_config_modules.c:147
 msgid "Available Modules"
 msgstr "Налични модули"
 
-#: src/bin/e_int_config_modules.c:149
+#: src/bin/e_int_config_modules.c:159
 msgid "Load Module"
 msgstr "Зареждане на модул"
 
-#: src/bin/e_int_config_modules.c:156
+#: src/bin/e_int_config_modules.c:166
 msgid "Loaded Modules"
 msgstr "Заредени модули"
 
-#: src/bin/e_int_config_modules.c:163
+#: src/bin/e_int_config_modules.c:173
 msgid "Unload Module"
 msgstr "Изключване на модул"
 
-#: src/bin/e_int_config_modules.c:168 src/bin/e_int_menus.c:180
+#: src/bin/e_int_config_modules.c:178 src/bin/e_int_menus.c:180
 msgid "About"
 msgstr "За"
 
-#: src/bin/e_int_config_modules.c:173
+#: src/bin/e_int_config_modules.c:183
 #: src/modules/conf_desk/e_int_config_desk.c:162
 #: src/modules/conf_mime/e_int_config_mime.c:203
 #: src/modules/conf_shelves/e_int_config_shelf.c:85

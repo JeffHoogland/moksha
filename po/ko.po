@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-08-25 17:31+0900\n"
+"POT-Creation-Date: 2007-08-26 21:18+0900\n"
 "PO-Revision-Date: 2007-04-29 23:06+0200\n"
 "Last-Translator: Michael Kim <lavnrose@gmail.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
@@ -1599,35 +1599,35 @@ msgstr "하나의 창만 일치"
 msgid "Start this program on login"
 msgstr "로그인시 이 프로그램 시작"
 
-#: src/bin/e_int_config_modules.c:74
+#: src/bin/e_int_config_modules.c:79
 msgid "Module Settings"
 msgstr "모듈 설정"
 
-#: src/bin/e_int_config_modules.c:142
+#: src/bin/e_int_config_modules.c:147
 #, fuzzy
 msgid "Available Modules"
 msgstr "사용가능한 도구"
 
-#: src/bin/e_int_config_modules.c:149
+#: src/bin/e_int_config_modules.c:159
 #, fuzzy
 msgid "Load Module"
 msgstr "모듈"
 
-#: src/bin/e_int_config_modules.c:156
+#: src/bin/e_int_config_modules.c:166
 #, fuzzy
 msgid "Loaded Modules"
 msgstr "모듈"
 
-#: src/bin/e_int_config_modules.c:163
+#: src/bin/e_int_config_modules.c:173
 #, fuzzy
 msgid "Unload Module"
 msgstr "모듈 읽기 오류"
 
-#: src/bin/e_int_config_modules.c:168 src/bin/e_int_menus.c:180
+#: src/bin/e_int_config_modules.c:178 src/bin/e_int_menus.c:180
 msgid "About"
 msgstr "대하여"
 
-#: src/bin/e_int_config_modules.c:173
+#: src/bin/e_int_config_modules.c:183
 #: src/modules/conf_desk/e_int_config_desk.c:162
 #: src/modules/conf_mime/e_int_config_mime.c:203
 #: src/modules/conf_shelves/e_int_config_shelf.c:85

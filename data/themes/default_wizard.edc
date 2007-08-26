@@ -95,7 +95,7 @@ group {
 	    color3: 0 0 0 16;
 	    text {
 	       text: "Title";
-	       font: "Edje Vera Bold";
+	       font: "Edje-Vera-Bold";
 	       size: 20;
 	       min:  0 1;
 	       align: 0.5 0.0;

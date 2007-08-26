@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Marc Furtià  i Puig\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-08-25 17:31+0900\n"
+"POT-Creation-Date: 2007-08-26 21:18+0900\n"
 "PO-Revision-Date: 2007-08-13 12:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1654,35 +1654,35 @@ msgstr ""
 msgid "Start this program on login"
 msgstr "Arrenca aquest programa al iniciar"
 
-#: src/bin/e_int_config_modules.c:74
+#: src/bin/e_int_config_modules.c:79
 msgid "Module Settings"
 msgstr "Configuració del Mòdul"
 
-#: src/bin/e_int_config_modules.c:142
+#: src/bin/e_int_config_modules.c:147
 #, fuzzy
 msgid "Available Modules"
 msgstr "Mode avanÃ§at"
 
-#: src/bin/e_int_config_modules.c:149
+#: src/bin/e_int_config_modules.c:159
 #, fuzzy
 msgid "Load Module"
 msgstr "MÃ²duls"
 
-#: src/bin/e_int_config_modules.c:156
+#: src/bin/e_int_config_modules.c:166
 #, fuzzy
 msgid "Loaded Modules"
 msgstr "MÃ²duls"
 
-#: src/bin/e_int_config_modules.c:163
+#: src/bin/e_int_config_modules.c:173
 #, fuzzy
 msgid "Unload Module"
 msgstr "Error Carregant el MÃ²dul "
 
-#: src/bin/e_int_config_modules.c:168 src/bin/e_int_menus.c:180
+#: src/bin/e_int_config_modules.c:178 src/bin/e_int_menus.c:180
 msgid "About"
 msgstr "Quant a..."
 
-#: src/bin/e_int_config_modules.c:173
+#: src/bin/e_int_config_modules.c:183
 #: src/modules/conf_desk/e_int_config_desk.c:162
 #: src/modules/conf_mime/e_int_config_mime.c:203
 #: src/modules/conf_shelves/e_int_config_shelf.c:85

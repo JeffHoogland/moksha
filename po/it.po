@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-08-25 17:31+0900\n"
+"POT-Creation-Date: 2007-08-26 21:18+0900\n"
 "PO-Revision-Date: 2007-08-23 20:41+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@inwind.it>\n"
 "Language-Team: none\n"
@@ -1685,31 +1685,31 @@ msgstr "Ricorda solo una istanza"
 msgid "Start this program on login"
 msgstr "Avvia questo programma al login"
 
-#: src/bin/e_int_config_modules.c:74
+#: src/bin/e_int_config_modules.c:79
 msgid "Module Settings"
 msgstr "Gestione moduli"
 
-#: src/bin/e_int_config_modules.c:142
+#: src/bin/e_int_config_modules.c:147
 msgid "Available Modules"
 msgstr "Moduli disponibili"
 
-#: src/bin/e_int_config_modules.c:149
+#: src/bin/e_int_config_modules.c:159
 msgid "Load Module"
 msgstr "Carica modulo"
 
-#: src/bin/e_int_config_modules.c:156
+#: src/bin/e_int_config_modules.c:166
 msgid "Loaded Modules"
 msgstr "Moduli caricati"
 
-#: src/bin/e_int_config_modules.c:163
+#: src/bin/e_int_config_modules.c:173
 msgid "Unload Module"
 msgstr "Scarica modulo"
 
-#: src/bin/e_int_config_modules.c:168 src/bin/e_int_menus.c:180
+#: src/bin/e_int_config_modules.c:178 src/bin/e_int_menus.c:180
 msgid "About"
 msgstr "Informazioni su..."
 
-#: src/bin/e_int_config_modules.c:173
+#: src/bin/e_int_config_modules.c:183
 #: src/modules/conf_desk/e_int_config_desk.c:162
 #: src/modules/conf_mime/e_int_config_mime.c:203
 #: src/modules/conf_shelves/e_int_config_shelf.c:85
