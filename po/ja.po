@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-08-26 21:18+0900\n"
-"PO-Revision-Date: 2007-07-24 21:55+0900\n"
+"POT-Creation-Date: 2007-08-26 16:07+0900\n"
+"PO-Revision-Date: 2007-08-26 22:29+0900\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: E17-jp <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2812,13 +2812,12 @@ msgid "Configuration Panel"
 msgstr "設定パネル"
 
 #: src/modules/conf/e_mod_main.c:85
-#, fuzzy
 msgid "Enlightenment Conf Module"
-msgstr "Enlightenment 時計モジュール"
+msgstr "Enlightenment 設定モジュール"
 
 #: src/modules/conf/e_mod_main.c:86
 msgid "A module for displaying a configuration panel."
-msgstr ""
+msgstr "設定パネル表示モジュール"
 
 #: src/modules/conf_applications/e_int_config_apps.c:101
 #: src/modules/conf_applications/e_mod_main.c:42
@@ -2867,14 +2866,12 @@ msgid "Menus"
 msgstr "メニュー"
 
 #: src/modules/conf_applications/e_mod_main.c:76
-#, fuzzy
 msgid "Enlightenment Configuration Module - Applications"
-msgstr "Enlightenment 設定モジュール - Transitions"
+msgstr "Enlightenment 設定モジュール - アプリケーション"
 
 #: src/modules/conf_applications/e_mod_main.c:77
-#, fuzzy
 msgid "Configuration dialog for applications."
-msgstr "Transitions設定ダイアログ"
+msgstr "アプリケーション設定ダイアログ"
 
 #
 #: src/modules/conf_borders/e_int_config_borders.c:29
@@ -2991,14 +2988,12 @@ msgid "Client List Menu"
 msgstr "クライアントリストメニュー"
 
 #: src/modules/conf_clientlist/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Client List Menu"
-msgstr "Enlightenment 設定モジュール - フォント"
+msgstr "Enlightenment 設定モジュール - クライアントリストメニュー"
 
 #: src/modules/conf_clientlist/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for client list menu."
-msgstr "アイコンテーマ設定ダイアログ"
+msgstr "クライアントリストメニュー設定ダイアログ"
 
 #: src/modules/conf_colors/e_int_config_color_classes.c:44
 msgid "Window Manager"
@@ -3210,17 +3205,15 @@ msgstr "デスクトップの壁紙"
 #
 #: src/modules/conf_desk/e_mod_main.c:35
 msgid "Desk"
-msgstr ""
+msgstr "デスク"
 
 #: src/modules/conf_desk/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Desk"
-msgstr "Enlightenment 設定モジュール - ボーダー"
+msgstr "Enlightenment 設定モジュール - デスク"
 
 #: src/modules/conf_desk/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for desk."
-msgstr "ボーダー設定ダイアログ"
+msgstr "デスク設定ダイアログ"
 
 #: src/modules/conf_desklock/e_int_config_desklock.c:71
 msgid "Screen Lock Settings"
@@ -3312,14 +3305,12 @@ msgid "Screen Lock"
 msgstr "スクリーンロック"
 
 #: src/modules/conf_desklock/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Screen Lock"
-msgstr "Enlightenment 設定モジュール - テーマ"
+msgstr "Enlightenment 設定モジュール - スクリーンロック"
 
 #: src/modules/conf_desklock/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for screen lock."
-msgstr "色設定ダイアログ"
+msgstr "スクリーンロック設定ダイアログ"
 
 #: src/modules/conf_desks/e_int_config_desks.c:56
 msgid "Virtual Desktops Settings"
@@ -3390,14 +3381,12 @@ msgid "Virtual Desktops"
 msgstr "仮想デスクトップ"
 
 #: src/modules/conf_desks/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Virtual Desktops"
-msgstr "Enlightenment 設定モジュール - Transitions"
+msgstr "Enlightenment 設定モジュール - 仮想デスクトップ"
 
 #: src/modules/conf_desks/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for virtual desktops."
-msgstr "Transitions設定ダイアログ"
+msgstr "仮想デスクトップ設定ダイアログ"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:35
 msgid "Dialog Settings"
@@ -3441,14 +3430,12 @@ msgid "Dialogs"
 msgstr "設定ダイアログ"
 
 #: src/modules/conf_dialogs/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Dialogs"
-msgstr "Enlightenment 設定モジュール - 色"
+msgstr "Enlightenment 設定モジュール - ダイアログ"
 
 #: src/modules/conf_dialogs/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for dialogs."
-msgstr "色設定ダイアログ"
+msgstr "ダイアログ設定ダイアログ"
 
 #: src/modules/conf_display/e_int_config_display.c:132
 #, c-format
@@ -3561,14 +3548,12 @@ msgid "Screen Resolution"
 msgstr "画面の解像度"
 
 #: src/modules/conf_display/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Screen Resolution"
-msgstr "Enlightenment 設定モジュール - Transitions"
+msgstr "Enlightenment 設定モジュール - 画面解像度"
 
 #: src/modules/conf_display/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for screen resolution."
-msgstr "Transitions設定ダイアログ"
+msgstr "画面解像度設定ダイアログ"
 
 #: src/modules/conf_dpms/e_int_config_dpms.c:56
 #: src/modules/conf_dpms/e_int_config_dpms.c:77
@@ -3612,44 +3597,36 @@ msgid "Power Management"
 msgstr "電源管理"
 
 #: src/modules/conf_dpms/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Power Management"
-msgstr "Enlightenment 設定モジュール - フォント"
+msgstr "Enlightenment 設定モジュール - 電源管理"
 
 #: src/modules/conf_dpms/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for power management."
-msgstr "アイコンテーマ設定ダイアログ"
+msgstr "電源管理設定ダイアログ"
 
 #: src/modules/conf_engine/e_int_config_engine.c:33
-#, fuzzy
 msgid "Engine Settings"
-msgstr "ウィンドウリストの大きさ"
+msgstr "エンジンの設定"
 
 #: src/modules/conf_engine/e_int_config_engine.c:83
-#, fuzzy
 msgid "Enable Composite"
-msgstr "ポップアップを有効にする"
+msgstr "コンポジットを有効にする"
 
 #: src/modules/conf_engine/e_int_config_engine.c:87
-#, fuzzy
 msgid "Default Engine"
-msgstr "デフォルト"
+msgstr "デフォルトのエンジン"
 
 #: src/modules/conf_engine/e_mod_main.c:35
-#, fuzzy
 msgid "Engine"
-msgstr "英語"
+msgstr "エンジン"
 
 #: src/modules/conf_engine/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Engine"
-msgstr "Enlightenment 設定モジュール - 壁紙"
+msgstr "Enlightenment 設定モジュール - エンジン"
 
 #: src/modules/conf_engine/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for engine."
-msgstr "テーマ設定ダイアログ"
+msgstr "エンジン設定ダイアログ"
 
 #: src/modules/conf_exebuf/e_int_config_exebuf.c:46
 msgid "Run Command Settings"
@@ -3766,14 +3743,12 @@ msgid "Run Command"
 msgstr "コマンド実行"
 
 #: src/modules/conf_exebuf/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Run Command"
-msgstr "Enlightenment 設定モジュール - フォント"
+msgstr "Enlightenment 設定モジュール - コマンド実行"
 
 #: src/modules/conf_exebuf/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for run command."
-msgstr "フォント設定ダイアログ"
+msgstr "コマンド実行設定ダイアログ"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:58
 msgid "Core"
@@ -3821,7 +3796,7 @@ msgstr "ロック解除用パスワード"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:74
 msgid "Dialog Error"
-msgstr ""
+msgstr "エラーダイアログ"
 
 #: src/modules/conf_fonts/e_int_config_fonts.c:75
 msgid "Exebuf Command"
@@ -4067,14 +4042,12 @@ msgid "Input Method Settings"
 msgstr "入力方式の設定"
 
 #: src/modules/conf_imc/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Input Methods"
-msgstr "Enlightenment 設定モジュール - フォント"
+msgstr "Enlightenment 設定モジュール - 入力方式"
 
 #: src/modules/conf_imc/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for input methods."
-msgstr "フォント設定ダイアログ"
+msgstr "入力方式設定ダイアログ"
 
 #: src/modules/conf_intl/e_int_config_intl.c:104
 #: src/modules/conf_intl/e_int_config_intl.c:140
@@ -5629,14 +5602,12 @@ msgid "Language Settings"
 msgstr "言語の設定"
 
 #: src/modules/conf_intl/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Language"
-msgstr "Enlightenment 設定モジュール - 壁紙"
+msgstr "Enlightenment 設定モジュール - 言語"
 
 #: src/modules/conf_intl/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for language and locale."
-msgstr "テーマ設定ダイアログ"
+msgstr "言語,ロケール設定ダイアログ"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:7
@@ -5731,14 +5702,12 @@ msgid "Keyboard & Mouse"
 msgstr "キーボード & マウス"
 
 #: src/modules/conf_keybindings/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Key Bindings"
-msgstr "Enlightenment 設定モジュール - ボーダー"
+msgstr "Enlightenment 設定モジュール - キーバインド"
 
 #: src/modules/conf_keybindings/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for key bindings."
-msgstr "ボーダー設定ダイアログ"
+msgstr "キーバインド設定ダイアログ"
 
 #: src/modules/conf_menus/e_int_config_menus.c:44
 #: src/modules/conf_menus/e_int_config_menus.c:106
@@ -5832,14 +5801,12 @@ msgid "%2.2f seconds"
 msgstr "%2.2f 秒"
 
 #: src/modules/conf_menus/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Menu Settings"
-msgstr "Enlightenment 設定モジュール - フォント"
+msgstr "Enlightenment 設定モジュール - メニュー"
 
 #: src/modules/conf_menus/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for menus settings."
-msgstr "Transitions設定ダイアログ"
+msgstr "メニュー設定ダイアログ"
 
 #: src/modules/conf_mime/e_int_config_mime.c:64
 #: src/modules/conf_mime/e_mod_main.c:35
@@ -5885,19 +5852,16 @@ msgstr "Edj ファイルを選択する"
 #: src/modules/conf_mime/e_mod_main.c:34 src/modules/fileman/e_mod_main.c:41
 #: src/modules/fileman/e_mod_main.c:43 src/modules/fileman/e_mod_main.c:55
 #: src/modules/fileman/e_mod_main.c:127
-#, fuzzy
 msgid "File Manager"
 msgstr "ファイルマネージャ"
 
 #: src/modules/conf_mime/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - File Icons"
-msgstr "Enlightenment 設定モジュール - フォント"
+msgstr "Enlightenment 設定モジュール - ファイルアイコン"
 
 #: src/modules/conf_mime/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for file icons."
-msgstr "フォント設定ダイアログ"
+msgstr "ファイルアイコン設定ダイアログ"
 
 #: src/modules/conf_mousebindings/e_int_config_mousebindings.c:7
 msgid ""
@@ -5967,14 +5931,12 @@ msgid "Mouse Binding Sequence"
 msgstr "マウスバインドシーケンス"
 
 #: src/modules/conf_mousebindings/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Mouse Bindings"
-msgstr "Enlightenment 設定モジュール - マウスカーソル"
+msgstr "Enlightenment 設定モジュール - マウスバインド"
 
 #: src/modules/conf_mousebindings/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for mouse bindings."
-msgstr "マウスカーソル設定ダイアログ"
+msgstr "マウスバインド設定ダイアログ"
 
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:35
 #: src/modules/conf_mouse_cursor/e_int_config_cursor.c:97
@@ -6031,14 +5993,12 @@ msgid "Threshold"
 msgstr "しきい値"
 
 #: src/modules/conf_mouse/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Mouse Acceleration"
-msgstr "Enlightenment 設定モジュール - マウスカーソル"
+msgstr "Enlightenment 設定モジュール - マウスアクセラレーション"
 
 #: src/modules/conf_mouse/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for mouse acceleration."
-msgstr "マウスカーソル設定ダイアログ"
+msgstr "マウスアクセラレーション設定ダイアログ"
 
 #: src/modules/conf_paths/e_int_config_paths.c:65
 msgid "Search Path Configuration"
@@ -6091,14 +6051,12 @@ msgid "Search Directories"
 msgstr "検索パス"
 
 #: src/modules/conf_paths/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Search Directories"
-msgstr "Enlightenment 設定モジュール - ボーダー"
+msgstr "Enlightenment 設定モジュール - 検索パス"
 
 #: src/modules/conf_paths/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for search directories."
-msgstr "ボーダー設定ダイアログ"
+msgstr "検索パス設定ダイアログ"
 
 #: src/modules/conf_performance/e_int_config_performance.c:39
 msgid "Performance Settings"
@@ -6170,70 +6128,59 @@ msgid "Performance"
 msgstr "性能"
 
 #: src/modules/conf_performance/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Performance"
-msgstr "Enlightenment 設定モジュール - テーマ"
+msgstr "Enlightenment 設定モジュール - 性能"
 
 #: src/modules/conf_performance/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for performance."
-msgstr "フォント設定ダイアログ"
+msgstr "性能設定ダイアログ"
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:53
-#, fuzzy
 msgid "Profile Selector"
-msgstr "テーマの選択"
+msgstr "プロファイルの選択"
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:82
-#, fuzzy
 msgid "Available Profiles"
-msgstr "利用できるモジュール"
+msgstr "利用できるプロファイル"
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:91
-#, fuzzy
 msgid "Select"
-msgstr "すべて選択"
+msgstr "選択"
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:212
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
 "profile?"
-msgstr ""
-"\"%s\" を削除しようとしています.<br><br>本当にこのシェルフを削除しますか."
+msgstr "\"%s\" を削除しようとしています.<br><br>本当にこのプロファイルを削除しますか."
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:215
-#, fuzzy
 msgid "Are you sure you want to delete this profile?"
-msgstr "このシェルフを本当に削除しますか."
+msgstr "このプロファイルを本当に削除しますか."
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:262
 msgid "Add New Profile"
-msgstr ""
+msgstr "新しいプロファイルの追加"
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:276
-#, fuzzy
 msgid "Plain Profile"
-msgstr "プロパティ"
+msgstr "通常のプロファイル"
 
 #: src/modules/conf_profiles/e_int_config_profiles.c:280
 msgid "Clone Current Profile"
-msgstr ""
+msgstr "現在のプロファイルのコピー"
 
 #: src/modules/conf_profiles/e_mod_main.c:22
-#, fuzzy
 msgid "Profiles"
-msgstr "プロパティ"
+msgstr "プロファイル"
 
 #: src/modules/conf_profiles/e_mod_main.c:53
-#, fuzzy
 msgid "Enlightenment Configuration Module - Profiles"
-msgstr "Enlightenment 設定モジュール - 色"
+msgstr "Enlightenment 設定モジュール - プロファイル"
 
 #: src/modules/conf_profiles/e_mod_main.c:54
-#, fuzzy
 msgid "Configuration dialog for config profiles."
-msgstr "色設定ダイアログ"
+msgstr "プロファイル設定ダイアログ"
 
 #: src/modules/conf_screensaver/e_int_config_screensaver.c:49
 msgid "Screen Saver Settings"
@@ -6287,14 +6234,12 @@ msgid "Screen Saver"
 msgstr "スクリーンセーバー"
 
 #: src/modules/conf_screensaver/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Screen Saver"
-msgstr "Enlightenment 設定モジュール - ボーダー"
+msgstr "Enlightenment 設定モジュール - スクリーンセーバー"
 
 #: src/modules/conf_screensaver/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for screen saver."
-msgstr "色設定ダイアログ"
+msgstr "スクリーンセーバー設定ダイアログ"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:45
 msgid "Shelf Settings"
@@ -6313,14 +6258,12 @@ msgstr ""
 "\"%s\" を削除しようとしています.<br><br>本当にこのシェルフを削除しますか."
 
 #: src/modules/conf_shelves/e_mod_main.c:74
-#, fuzzy
 msgid "Enlightenment Configuration Module - Shelves"
-msgstr "Enlightenment 設定モジュール - テーマ"
+msgstr "Enlightenment 設定モジュール - シェルフ"
 
 #: src/modules/conf_shelves/e_mod_main.c:75
-#, fuzzy
 msgid "Configuration dialog for shelves."
-msgstr "テーマ設定ダイアログ"
+msgstr "シェルフ設定ダイアログ"
 
 #: src/modules/conf_startup/e_int_config_startup.c:39
 msgid "Startup Settings"
@@ -6695,14 +6638,12 @@ msgid "Always remember internal windows"
 msgstr "常に内部ウィンドウを記憶する"
 
 #: src/modules/conf_window_display/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Window Display"
-msgstr "Enlightenment 設定モジュール - フォント"
+msgstr "Enlightenment 設定モジュール - ウィンドウ表示"
 
 #: src/modules/conf_window_display/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for window display."
-msgstr "ボーダー設定ダイアログ"
+msgstr "ウィンドウ表示設定ダイアログ"
 
 #: src/modules/conf_window_focus/e_int_config_focus.c:49
 msgid "Focus Settings"
@@ -6788,14 +6729,12 @@ msgid "Window Focus"
 msgstr "ウィンドウフォーカス"
 
 #: src/modules/conf_window_focus/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Window Focus"
-msgstr "Enlightenment 設定モジュール - フォント"
+msgstr "Enlightenment 設定モジュール - ウィンドウフォーカス"
 
 #: src/modules/conf_window_focus/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for window focus."
-msgstr "フォント設定ダイアログ"
+msgstr "ウィンドウフォーカス設定ダイアログ"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_manipulation.c:53
 #: src/modules/conf_window_manipulation/e_mod_main.c:35
@@ -6888,14 +6827,12 @@ msgid "Automatically move/resize windows on shelf autohide"
 msgstr "シェルフの隠蔽動作に合わせてその上のウィンドウの位置, 大きさを調整する"
 
 #: src/modules/conf_window_manipulation/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Window Manipulation"
-msgstr "Enlightenment 設定モジュール - Transitions"
+msgstr "Enlightenment 設定モジュール - ウィンドウ動作"
 
 #: src/modules/conf_window_manipulation/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for window manipulation."
-msgstr "Transitions設定ダイアログ"
+msgstr "ウィンドウ動作設定ダイアログ"
 
 #: src/modules/conf_winlist/e_int_config_winlist.c:55
 msgid "Window List Settings"
@@ -6966,14 +6903,12 @@ msgid "Warp Speed"
 msgstr "ワープ速度"
 
 #: src/modules/conf_winlist/e_mod_main.c:62
-#, fuzzy
 msgid "Enlightenment Configuration Module - Window List"
-msgstr "Enlightenment 設定モジュール - フォント"
+msgstr "Enlightenment 設定モジュール - ウィンドウリスト"
 
 #: src/modules/conf_winlist/e_mod_main.c:63
-#, fuzzy
 msgid "Configuration dialog for window list."
-msgstr "色設定ダイアログ"
+msgstr "ウィンドウリスト設定ダイアログ"
 
 #: src/modules/cpufreq/e_mod_main.c:129
 msgid "Cpufreq"
@@ -7187,29 +7122,26 @@ msgid "Run Command Dialog"
 msgstr "コマンド実行ダイアログ"
 
 #: src/modules/exebuf/e_mod_main.c:87
-#, fuzzy
 msgid "Enlightenment Exebuf Module"
-msgstr "Enlightenment IBox モジュール"
+msgstr "Enlightenment Exebuf モジュール"
 
 #: src/modules/exebuf/e_mod_main.c:88
 msgid "A module for executing apps just by typing names."
-msgstr ""
+msgstr "タイプした名前のアプリケーションを実行するモジュール"
 
 #: src/modules/fileman/e_mod_main.c:152
-#, fuzzy
 msgid "Enlightenment File Manager"
-msgstr "Enlightenment テストモジュール"
+msgstr "Enlightenment ファイルマネージャ"
 
 #: src/modules/fileman/e_mod_main.c:153
 msgid "A module for providing a file manager."
-msgstr ""
+msgstr "ファイルマネージャモジュール"
 
 #: src/modules/fileman/e_mod_main.c:213
 msgid "Files"
 msgstr "ファイル"
 
 #: src/modules/fileman/e_mod_main.c:264
-#, fuzzy
 msgid ""
 "Fileman Module Configuration data needed upgrading. Your old "
 "configuration<br>has been wiped and a new set of defaults initialized. "
@@ -7219,15 +7151,16 @@ msgid ""
 "new set of defaults will fix<br>that by adding it in. You can re-configure "
 "things now to your<br>liking. Sorry for the hiccup in your configuration.<br>"
 msgstr ""
-"設定情報の更新が必要です. それまでの古い設定情報は消去され, 新しいデフォルト"
-"の<br>設定で初期化されました. これは開発中は定期的に行なわれるものですから, "
-"バグ報告<br>は不要です. つまり, Enlightenment で使われる新しい諸機能にデフォ"
-"ルトで必要<br>になる新しい設定が, それまでの古い設定に無いだけです. この新し"
-"いデフォルト設定<br>を追加すれば更新されます. これで好きなように設定できます."
-"ちょっと面倒ですが, <br>よろしくお願いします.<br>"
+"ファイルマネージャの設定データを更新する必要があります.<br>\n"
+"それまでの古い設定情報は消去され, 新しいデフォルトの設定で初期化されました.<br>\n"
+"これは開発中は定期的に行なわれるものですから, バグ報告は不要です. <br>\n"
+"つまり, ファイルマネージャで使われる新しい諸機能にデフォルトで必要になる<br>\n"
+"新しい設定が, それまでの古い設定に無いだけです. <br>\n"
+"この新しいデフォルト設定を追加すれば更新されます. <br>\n"
+"これで好きなように設定できます.<br>\n"
+"ちょっと面倒ですがよろしくお願いします.<br>"
 
 #: src/modules/fileman/e_mod_main.c:277
-#, fuzzy
 msgid ""
 "Your Fileman Module configuration is NEWER than Fileman Module version. This "
 "is very<br>strange. This should not happen unless you downgraded<br>the "
@@ -7236,50 +7169,44 @@ msgid ""
 "precaution your configuration has been now restored to<br>defaults. Sorry "
 "for the inconvenience.<br>"
 msgstr ""
-"設定が Enlightenment よりも新しくなっています. これは極めて不自然です."
-"<br>Enlightenment をダウングレードするとか, 新しいバージョンの "
-"Enlightenment<br>が動いていたところから設定をコピーしない限りあり得ません."
-"<br>これではまずいので, 念のためデフォルトの設定に置き換えました.<br>ご不便を"
-"おかけしますが, よろしくお願いします.<br>"
+"ファイルマネージャモジュールの設定が ファイルマネージャのバージョン よりも<br>\n"
+"新しくなっています. これは極めて不自然です.<br>\n"
+"ファイルマネージャモジュール をダウングレードするとか, 新しいバージョンの<br>\n"
+"ファイルマネージャが動いていたところから設定をコピーしない限りあり得ません.<br>\n"
+"これではまずいので, 念のためデフォルトの設定に置き換えました.<br>\n"
+"ご不便をおかけしますが, よろしくお願いします.<br>"
 
 #: src/modules/fileman/e_mod_main.c:342
-#, fuzzy
 msgid "Fileman Configuration Updated"
-msgstr "設定をアップグレードしました"
+msgstr "ファイルマネージャの設定を更新しました"
 
 #: src/modules/fileman/e_mod_config.c:83
-#, fuzzy
 msgid "Fileman Settings"
-msgstr "ウィンドウリストの大きさ"
+msgstr "ファイルマネージャの設定"
 
 #: src/modules/fileman/e_mod_config.c:153
-#, fuzzy
 msgid "View Mode"
-msgstr "編集モード"
+msgstr "表示モード"
 
 #: src/modules/fileman/e_mod_config.c:158
-#, fuzzy
 msgid "Grid Icons"
-msgstr "ファイルアイコン"
+msgstr "グリッドアイコン"
 
 #: src/modules/fileman/e_mod_config.c:160
-#, fuzzy
 msgid "Custom Icons"
-msgstr "アイコンの自動調整"
+msgstr "カスタムアイコン"
 
 #: src/modules/fileman/e_mod_config.c:162
-#, fuzzy
 msgid "Custom Grid Icons"
-msgstr "アイコンの自動調整"
+msgstr "カスタムグリッドアイコン"
 
 #: src/modules/fileman/e_mod_config.c:165
 msgid "Custom Smart Grid Icons"
-msgstr ""
+msgstr "カスタムスマートグリッドアイコン"
 
 #: src/modules/fileman/e_mod_config.c:168
-#, fuzzy
 msgid "List"
-msgstr "ウィンドウリスト"
+msgstr "リスト"
 
 #: src/modules/fileman/e_mod_config.c:173
 msgid "Icon Size"
@@ -7287,27 +7214,25 @@ msgstr "アイコンサイズ"
 
 #: src/modules/fileman/e_mod_config.c:179
 msgid "Open Dirs In Place"
-msgstr ""
+msgstr "開くウィンドウは変えない"
 
 #: src/modules/fileman/e_mod_config.c:182
 msgid "Sort Dirs First"
-msgstr ""
+msgstr "初めにディレクトリをソートする"
 
 #: src/modules/fileman/e_mod_config.c:185
 msgid "Use Single Click"
-msgstr ""
+msgstr "シングルクリックで開く"
 
 #: src/modules/fileman/e_mod_config.c:188
-#, fuzzy
 msgid "Show Icon Extension"
-msgstr "アイコンのラベルを表示する"
+msgstr "拡張子を表示する"
 
 #: src/modules/fileman/e_mod_config.c:191
 msgid "Show Full Path"
-msgstr ""
+msgstr "完全パス名を表示する"
 
 #: src/modules/fileman/e_mod_config.c:194
-#, fuzzy
 msgid "Show Desktop Icons"
 msgstr "デスクトップにアイコンを表示する"
 
@@ -7345,13 +7270,12 @@ msgid "Previous Window"
 msgstr "前のウィンドウ"
 
 #: src/modules/winlist/e_mod_main.c:83
-#, fuzzy
 msgid "Enlightenment Winlist Module"
-msgstr "Enlightenment テストモジュール"
+msgstr "Enlightenment ウィンドウリストモジュール"
 
 #: src/modules/winlist/e_mod_main.c:84
 msgid "A module for displaying a list of windows to switch between."
-msgstr ""
+msgstr "切り替えるウィンドウをリスト表示するモジュール"
 
 #: src/modules/winlist/e_winlist.c:141
 msgid "Select a window"
@@ -7749,28 +7673,25 @@ msgstr ""
 "量に発熱する高速 CPU を装備した最近のラップトップでは特に便利です."
 
 #: src/modules/wizard/e_mod_main.c:57
-#, fuzzy
 msgid "Enlightenment First Run Wizard Module"
-msgstr "Enlightenment スタート モジュール"
+msgstr "Enlightenment 設定ウィザードモジュール"
 
 #: src/modules/wizard/e_mod_main.c:58
 msgid ""
 "A module for setting up configuration for Enlightenment for the first time."
-msgstr ""
+msgstr "初めて使う Enlightenment を設定するモジュール"
 
 #: src/modules/wizard/e_wizard.c:102
-#, fuzzy
 msgid "Welcome to Enlightenment"
-msgstr "Enlightenment について"
+msgstr "Enlightenment にようこそ"
 
 #: src/modules/wizard/e_wizard.c:104
 msgid "Next"
-msgstr ""
+msgstr "次へ"
 
 #: src/modules/wizard/e_wizard.c:105
-#, fuzzy
 msgid "Back"
-msgstr "基本設定"
+msgstr "戻る"
 
 #~ msgid "Enlightenment cannot set up its window list system."
 #~ msgstr "Enlightenment でウィンドウリストシステムが準備できません."
