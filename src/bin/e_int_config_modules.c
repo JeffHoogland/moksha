@@ -155,7 +155,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_min_size_set(ow, 200, 65);
    cfdata->o_desc = ow;
    e_widget_textblock_markup_set(ow, "Description: Unavailable.");
-   e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 1, 1, 0);
    ow = e_widget_button_add(evas, _("Load Module"), NULL, _btn_cb_load, 
 			    cfdata, NULL);
    cfdata->b_load = ow;
