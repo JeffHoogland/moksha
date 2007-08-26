@@ -24,8 +24,7 @@ e_gadcon_popup_new(
    e_popup_layer_set(pop->win, 990);
 
    o = edje_object_add(pop->win->evas);
-   e_theme_edje_object_set(o, "base/theme/gadman",
-			   "e/gadman/popup");
+   e_theme_edje_object_set(o, "base/theme/gadman", "e/gadman/popup");
    evas_object_show(o);
    evas_object_move(o, 0, 0);
    e_popup_edje_bg_object_set(pop->win, o);
@@ -47,9 +46,7 @@ e_gadcon_popup_content_set(E_Gadcon_Popup *pop, Evas_Object *o)
    E_OBJECT_CHECK(pop);
    E_OBJECT_TYPE_CHECK(pop, E_GADCON_POPUP_TYPE);
 
-   old_o =
-      edje_object_part_swallow_get(pop->o_bg,
-	    "e.swallow.content");
+   old_o = edje_object_part_swallow_get(pop->o_bg, "e.swallow.content");
    if (old_o)
      {
 	edje_object_part_unswallow(pop->o_bg, old_o);
@@ -67,13 +64,24 @@ e_gadcon_popup_content_set(E_Gadcon_Popup *pop, Evas_Object *o)
 EAPI void
 e_gadcon_popup_show(E_Gadcon_Popup *pop)
 {
+   Evas_Object *o;
    Evas_Coord gx, gy, gw, gh, zw, zh, px, py, ww, wh;
 
    if (!pop) return;
    E_OBJECT_CHECK(pop);
    E_OBJECT_TYPE_CHECK(pop, E_GADCON_POPUP_TYPE);
 
-   if (pop->pinned) return;
+   if (pop->win->visible) return;
+
+   if (o = edje_object_part_swallow_get(pop->o_bg, "e.swallow.content"))
+     {
+	Evas_Coord w = 0, h = 0;
+
+	e_widget_min_size_get(o, &w, &h);
+	if (!w || !h)
+	  edje_object_size_min_calc(o, &w, &h);
+	edje_extern_object_min_size_set(o, w, h);
+     }
 
    evas_object_show(pop->o_bg);
    edje_object_size_min_calc(pop->o_bg, &ww, &wh);
