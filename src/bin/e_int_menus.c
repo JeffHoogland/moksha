@@ -118,14 +118,6 @@ e_int_menus_main_new(void)
 	e_util_menu_item_edje_icon_set(mi, "enlightenment/applications");
 	e_menu_item_submenu_set(mi, subm);
      }
-/*   
-#ifdef ENABLE_FILES
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Files"));
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/fileman");
-   e_menu_item_callback_set(mi, _e_int_menus_fwin_favorites_item_cb, NULL);
-#endif
-*/
    
    l = evas_hash_find(_e_int_menus_augmentation, "main/1");
    if (l) _e_int_menus_augmentation_add(m, l);
