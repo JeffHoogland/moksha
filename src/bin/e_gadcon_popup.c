@@ -87,7 +87,7 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
    edje_object_size_min_calc(pop->o_bg, &ww, &wh);
    e_popup_show(pop->win);
 
-   if (pop->resize_func) pop->resize_func(pop->o_bg, &ww, &wh);
+   if (pop->resize_func) pop->resize_func(o, &ww, &wh);
    evas_object_resize(pop->o_bg, ww, wh);
    pop->w = ww;
    pop->h = wh;
