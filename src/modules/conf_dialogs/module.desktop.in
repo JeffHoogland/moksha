@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Dialogs
 Icon=e-module-conf_dialogs
+Comment=<hilight>E17 Configuration Applet</hilight><br>Configure default dialog properties.

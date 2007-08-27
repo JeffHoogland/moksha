@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Mouse Cursor
 Icon=e-module-conf_mouse_cursor
+Comment=<hilight>E17 Configuration Applet</hilight><br>Select the mouse cursor style.

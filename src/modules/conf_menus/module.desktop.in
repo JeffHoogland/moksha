@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Menu Settings
 Icon=e-module-conf_menus
+Comment=<hilight>E17 Configuration Applet</hilight><br>Configures menu behavior.

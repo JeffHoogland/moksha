@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Screen Resolution
 Icon=e-module-conf_display
+Comment=<hilight>E17 Configuration Applet</hilight><br>Used to configure your screen's<br>resolution.

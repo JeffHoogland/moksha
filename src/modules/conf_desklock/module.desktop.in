@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Screen Lock
 Icon=e-module-conf_desklock
+Comment=<hilight>E17 Configuration Applet</hilight><br>Configures the integrated desk lock.

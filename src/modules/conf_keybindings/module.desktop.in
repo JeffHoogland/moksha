@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Key Bindings
 Icon=e-module-conf_keybindings
+Comment=<hilight>E17 Configuration Applet</hilight><br>Configure your keybindings here.

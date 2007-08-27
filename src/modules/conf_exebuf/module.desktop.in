@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Run Command
 Icon=e-module-conf_exebuf
+Comment=<hilight>E17 Configuration Applet</hilight><br>Used to configure the settings of<br>the run command GUI.

@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Virtual Desktops
 Icon=e-module-conf_desks
+Comment=<hilight>E17 Configuration Applet</hilight><br>Configure the the virtual desktop<br>properties.

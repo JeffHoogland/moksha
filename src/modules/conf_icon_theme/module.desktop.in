@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Icon Theme
 Icon=e-module-conf_icon_theme
+Comment=<hilight>E17 Configuration Applet</hilight><br>Configuration applet used to select<br>an icon theme for E17.

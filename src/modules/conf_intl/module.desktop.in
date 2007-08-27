@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Language
 Icon=e-module-conf_intl
+Comment=<hilight>E17 Configuration Applet</hilight><br>Used to select a default language.

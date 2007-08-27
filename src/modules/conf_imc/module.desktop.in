@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Input Methods
 Icon=e-module-conf_imc
+Comment=<hilight>E17 Configuration Applet</hilight><br>Used to select an input method.

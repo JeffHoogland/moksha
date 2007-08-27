@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Colors
 Icon=e-module-conf_colors
+Comment=<hilight>E17 Configuration Applet</hilight><br>Used to customize the color classes.

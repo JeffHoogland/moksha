@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Desk
 Icon=e-module-conf_desk
+Comment=<hilight>E17 Configuration Applet (internal)</hilight><br>Used to configure the desktop name<br>and wallpaper for individual<br>virtual desktops.

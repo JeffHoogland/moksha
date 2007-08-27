@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Client List Menu
 Icon=e-module-conf_clientlist
+Comment=<hilight>E17 Configuration Applet</hilight><br>Allows customization of the client<br>list menu.
