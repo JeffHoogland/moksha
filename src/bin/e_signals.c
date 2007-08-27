@@ -37,7 +37,7 @@ e_sigseg_act(int x, siginfo_t *info, void *data)
 		"Please help us debug this by compiling Enlightenment and\n"
 		"all its dependency libraries with gdb debugging enabled\n"
 		"and gdb attach to E when this happens and try figure out\n"
-		"what's going on and set us gdb backtraces, variable dumps\n"
+		"what's going on and send us gdb backtraces, variable dumps\n"
 		"etc.");
    exit(-11); 
 }
