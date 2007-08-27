@@ -56,6 +56,9 @@ e_widget_textblock_markup_set(Evas_Object *obj, const char *text)
    Evas_Coord mw, mh, vw, vh;
 
    wd = e_widget_data_get(obj);
+
+   evas_object_resize(wd->o_textblock, 0, 0);
+
    edje_object_part_text_set(wd->o_textblock, "e.textblock.text", text);
    edje_object_size_min_calc(wd->o_textblock, &mw, &mh);
    e_scrollframe_child_viewport_size_get(wd->o_scrollframe, &vw, &vh);
