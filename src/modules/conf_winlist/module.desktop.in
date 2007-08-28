@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Window List
 Icon=e-module-conf_winlist
+Comment=<hilight>E17 Configuration Applet</hilight><br>Configure your window list<br>properties.

@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Window Display
 Icon=e-module-conf_window_display
+Comment=<hilight>E17 Configuration Applet</hilight><br>Configures default window<br>properties such as default<br>geometries, border icons,<br>placement styles, etc.

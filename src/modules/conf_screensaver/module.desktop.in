@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Screen Saver
 Icon=e-module-conf_screensaver
+Comment=<hilight>E17 Configuration Applet</hilight><br>Configures the X screensaver.

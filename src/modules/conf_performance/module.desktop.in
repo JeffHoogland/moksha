@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Performance
 Icon=e-module-conf_performance
+Comment=<hilight>E17 Configuration Applet</hilight><br>Used to configure certain<br>performance related items as<br>frame rates and cache settings.

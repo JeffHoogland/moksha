@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Search Directories
 Icon=e-module-conf_paths
+Comment=<hilight>E17 Configuration Applet</hilight><br>Specifies the E17 search paths<br>and default directories.

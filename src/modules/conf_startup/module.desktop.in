@@ -2,3 +2,4 @@
 Type=Link
 Name=Configuration - Startup
 Icon=e-module-conf_startup
+Comment=<hilight>E17 Configuration Applet</hilight><br>Used to configure the E17 splash<br>screen.
