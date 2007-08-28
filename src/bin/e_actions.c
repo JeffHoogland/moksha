@@ -860,13 +860,13 @@ ACT_FN_GO(window_push)
         y = bd->y;
 
         if (dir == E_DIRECTION_LEFT)
-          x = 0;
+          x = bd->zone->x;
         else if (dir == E_DIRECTION_RIGHT)
-          x = bd->zone->w - bd->w;
+          x = bd->zone->x + bd->zone->w - bd->w;
         else if (dir == E_DIRECTION_UP)
-          y = 0;
+          y = bd->zone->y;
         else /* dir == E_DIRECTION_DOWN */
-          y = bd->zone->h - bd->h;
+          y = bd->zone->y + bd->zone->h - bd->h;
 
         bd_list = e_container_border_list_first(bd->zone->container);
         cur = e_container_border_list_next(bd_list);
@@ -882,7 +882,7 @@ ACT_FN_GO(window_push)
                   else if ((dir == E_DIRECTION_RIGHT)
                            && (cur->x > bd->x + bd->w)
                            && (E_SPANS_COMMON(bd->y, bd->h, cur->y, cur->h)))
-                    x = MIN(x, cur->x - bd->w);
+                    x = MIN(x, bd->zone->x + cur->x - bd->w);
                   else if ((dir == E_DIRECTION_UP)
                            && (cur->y + cur->h < bd->y)
                            && (E_SPANS_COMMON(bd->x, bd->w, cur->x, cur->w)))
@@ -890,7 +890,7 @@ ACT_FN_GO(window_push)
                   else if ((dir == E_DIRECTION_DOWN)
                            && (cur->y > bd->y + bd->h)
                            && (E_SPANS_COMMON(bd->x, bd->w, cur->x, cur->w)))
-                    y = MIN(y, cur->y - bd->h);
+                    y = MIN(y, bd->zone->y + cur->y - bd->h);
                }
              cur = e_container_border_list_next(bd_list);
           }
