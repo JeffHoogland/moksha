@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 #export REDRAW_DEBUG=1        # To cause redraw- to happen slovly and obviously.
 #export ECORE_ERROR_ABORT=1   # To cause ecore to abort on errors.
