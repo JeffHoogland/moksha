@@ -3,6 +3,10 @@
  */
 #include "e.h"
 
+#ifndef MAX
+# define MAX(x, y) (((x) > (y)) ? (x) : (y))
+#endif
+
 #define INITS 
 #define ACT_GO(name) \
    { \
