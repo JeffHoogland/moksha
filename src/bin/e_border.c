@@ -3059,7 +3059,11 @@ e_border_resize_limit(E_Border *bd, int *w, int *h)
 static void
 _e_border_free(E_Border *bd)
 {
-   e_object_del(E_OBJECT(bd->pointer));
+   if (bd->pointer) 
+     {
+	e_object_del(E_OBJECT(bd->pointer));
+	bd->pointer = NULL;
+     }
    if (bd->focused)
      {
 	if (e_config->focus_revert_on_hide_or_close)
