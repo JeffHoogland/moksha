@@ -87,7 +87,28 @@ e_shelf_config_init(void)
 		  e_shelf_orient(es, cf_es->orient);
 		  e_shelf_position_calc(es);
 		  e_shelf_populate(es);
-		  e_shelf_show(es);
+
+		  if (cf_es->desk_show_mode)
+		    {
+		       E_Desk *desk;
+		       Evas_List *ll;
+
+		       desk = e_desk_current_get(zone);
+		       for (ll = cf_es->desk_list; ll; ll = ll->next)
+			 {
+			    E_Config_Shelf_Desk *sd;
+
+			    sd = ll->data;
+			    if ((desk->x == sd->x) && (desk->y == sd->y))
+			      {
+				 e_shelf_show(es);
+				 break;
+			      }
+			 }
+		    }
+		  else
+		    e_shelf_show(es);
+
 		  e_shelf_toggle(es, 0);
 	       }
 	  }

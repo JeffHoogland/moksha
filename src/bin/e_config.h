@@ -37,6 +37,7 @@ typedef struct _E_Config_Desktop_Name       E_Config_Desktop_Name;
 typedef struct _E_Config_Gadcon             E_Config_Gadcon;
 typedef struct _E_Config_Gadcon_Client      E_Config_Gadcon_Client;
 typedef struct _E_Config_Shelf              E_Config_Shelf;
+typedef struct _E_Config_Shelf_Desk         E_Config_Shelf_Desk;
 typedef struct _E_Config_Mime_Icon          E_Config_Mime_Icon;
 
 typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
@@ -412,6 +413,13 @@ struct _E_Config_Shelf
    int           autohide_show_action;
    float	 hide_timeout;
    float	 hide_duration;
+   int		 desk_show_mode;
+   Evas_List    *desk_list;
+};
+
+struct _E_Config_Shelf_Desk
+{
+   int x, y;
 };
 
 struct _E_Config_Mime_Icon

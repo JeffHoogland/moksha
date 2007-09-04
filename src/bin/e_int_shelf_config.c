@@ -39,6 +39,11 @@ struct _E_Config_Dialog_Data
    int autohiding_show_action;
    double hide_timeout;
    double hide_duration;
+
+   int desk_show_mode;
+   Evas_List *desk_list; 
+
+   Evas_Object *desk_sel_list;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -123,6 +128,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->autohiding_show_action = cfdata->escfg->autohide_show_action;
    cfdata->hide_timeout = cfdata->escfg->hide_timeout;
    cfdata->hide_duration = cfdata->escfg->hide_duration;
+   cfdata->desk_show_mode = cfdata->escfg->desk_show_mode;
+   cfdata->desk_list = cfdata->escfg->desk_list;
    if (cfdata->size <= 24)
      cfdata->basic_size = 24;
    else if (cfdata->size <= 32)
@@ -145,6 +152,46 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      cfdata->layering = 2;
    else
      cfdata->layering = 2;
+}
+
+static void 
+_desk_sel_list_load(E_Config_Dialog_Data *cfdata) 
+{
+   Evas *evas;
+   int x, y;
+   
+   if (!cfdata->desk_sel_list) return;
+   evas = evas_object_evas_get(cfdata->desk_sel_list);
+   evas_event_freeze(evas);
+   edje_freeze();
+   e_widget_ilist_freeze(cfdata->desk_sel_list);
+   e_widget_ilist_clear(cfdata->desk_sel_list);
+
+   for (y = 0; y < e_config->zone_desks_y_count; y++)
+   for (x = 0; x < e_config->zone_desks_x_count; x++)
+     {
+	E_Desk *desk;
+	Evas_List *l = NULL;
+
+	desk = e_desk_at_xy_get(cfdata->es->zone, x, y);
+	e_widget_ilist_append(cfdata->desk_sel_list, NULL, desk->name, NULL, NULL, NULL);
+
+	for (l = cfdata->desk_list; l; l = l->next)
+	    {
+	       E_Config_Shelf_Desk *sd;
+
+	       sd = l->data;
+	       if (!sd) continue;
+	       if ((sd->x != x) || (sd->y != y)) continue;
+
+	       e_widget_ilist_multi_select(cfdata->desk_sel_list, e_widget_ilist_count(cfdata->desk_sel_list));
+	       break;
+	    }
+     }
+   e_widget_ilist_go(cfdata->desk_sel_list);
+   e_widget_ilist_thaw(cfdata->desk_sel_list);
+   edje_thaw();
+   evas_event_thaw(evas);
 }
 
 static void *
@@ -253,7 +300,7 @@ static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    E_Zone *zone;
-   int id;
+   int id, idx, x, y;
    int restart = 0;
 
    /* Only change style is we need to */
@@ -354,6 +401,32 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    else if (!cfdata->escfg->autohide && cfdata->es->hidden)
      e_shelf_toggle(cfdata->es, 1);
    
+   cfdata->escfg->desk_show_mode = cfdata->desk_show_mode;
+   cfdata->escfg->desk_list = NULL;
+   if (cfdata->desk_show_mode)
+     {
+	Evas_List *l;
+	Evas_List *desk_list = NULL;
+	for (idx = 0, l = e_widget_ilist_items_get(cfdata->desk_sel_list); l; l = l->next, idx++)
+	  {
+	     E_Ilist_Item *item;
+	     E_Desk *desk;
+	     E_Config_Shelf_Desk *sd;
+
+	     item = l->data;
+	     if ((!item) || (!item->selected)) continue;
+
+	     desk = e_desk_at_pos_get(cfdata->es->zone, idx);
+	     if (!desk) continue;
+
+	     sd = E_NEW(E_Config_Shelf_Desk, 1);
+	     sd->x = desk->x;
+	     sd->y = desk->y;
+	     desk_list = evas_list_append(desk_list, sd);
+	  }
+	cfdata->escfg->desk_list = desk_list;
+     }
+
    if (restart) 
      {
 	zone = cfdata->es->zone;
@@ -371,8 +444,31 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	e_shelf_orient(cfdata->es, cfdata->escfg->orient);
 	e_shelf_position_calc(cfdata->es);
 	e_shelf_populate(cfdata->es);
-	e_shelf_show(cfdata->es);
      }
+   if (cfdata->escfg->desk_show_mode)
+     {
+	E_Desk *desk;
+	Evas_List *l;
+	int show_shelf=0;
+
+	desk = e_desk_current_get(cfdata->es->zone);
+	for (l = cfdata->escfg->desk_list; l; l = l->next)
+          {
+             E_Config_Shelf_Desk *sd;
+             sd = l->data;
+             if ((desk->x == sd->x) && (desk->y == sd->y))
+               {
+	          show_shelf=1;
+		  break;
+               }
+          }
+	if (show_shelf)
+	  e_shelf_show(cfdata->es);
+	else  
+	  e_shelf_hide(cfdata->es);
+     }
+   else
+     e_shelf_show(cfdata->es);
 
    e_config_save_queue();   
    cfdata->es->config_dialog = cfd;
@@ -561,6 +657,23 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%.1f seconds"), 0.1, 2.0, 0.1, 0, &(cfdata->hide_duration), NULL, 60);
    e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o2, of, 1, 1, 0.5);
+
+   of = e_widget_framelist_add(evas, _("Desktop"), 0);
+   rg = e_widget_radio_group_new(&(cfdata->desk_show_mode));
+   ob = e_widget_radio_add(evas, _("Show on all Desktops"), 0, rg);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Show on specified Desktops"), 1, rg);
+   e_widget_framelist_object_append(of, ob);
+
+   ob = e_widget_ilist_add(evas, 16, 16, NULL);
+   cfdata->desk_sel_list = ob;
+   e_widget_ilist_multi_select_set(ob, 1);
+   _desk_sel_list_load(cfdata);
+   e_widget_min_size_get(ob, &wmw, &wmh);
+   e_widget_min_size_set(ob, wmw, 64);
+   e_widget_framelist_object_append(of, ob);
+
    e_widget_list_object_append(o2, of, 1, 1, 0.5);
 
    e_widget_list_object_append(o, o2, 0, 0, 0.0);

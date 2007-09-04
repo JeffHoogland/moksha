@@ -39,6 +39,7 @@ static E_Config_DD *_e_config_color_class_edd = NULL;
 static E_Config_DD *_e_config_gadcon_edd = NULL;
 static E_Config_DD *_e_config_gadcon_client_edd = NULL;
 static E_Config_DD *_e_config_shelf_edd = NULL;
+static E_Config_DD *_e_config_shelf_desk_edd = NULL;
 static E_Config_DD *_e_config_mime_icon_edd = NULL;
 
 EAPI int E_EVENT_CONFIG_ICON_THEME = 0;
@@ -108,6 +109,14 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, name, STR);
    E_CONFIG_VAL(D, T, id, STR);
    E_CONFIG_LIST(D, T, clients, _e_config_gadcon_client_edd);
+
+   _e_config_shelf_desk_edd = E_CONFIG_DD_NEW("E_Config_Shelf_Desk", E_Config_Shelf_Desk);
+#undef T
+#undef D
+#define T E_Config_Shelf_Desk
+#define D _e_config_shelf_desk_edd
+   E_CONFIG_VAL(D, T, x, INT);
+   E_CONFIG_VAL(D, T, y, INT);
    
    _e_config_shelf_edd = E_CONFIG_DD_NEW("E_Config_Shelf", E_Config_Shelf);
 #undef T
@@ -129,7 +138,9 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, autohide_show_action, INT);
    E_CONFIG_VAL(D, T, hide_timeout, FLOAT);
    E_CONFIG_VAL(D, T, hide_duration, FLOAT);
-   
+   E_CONFIG_VAL(D, T, desk_show_mode, INT);
+   E_CONFIG_LIST(D, T, desk_list, _e_config_shelf_desk_edd);
+
    _e_config_desktop_bg_edd = E_CONFIG_DD_NEW("E_Config_Desktop_Background", E_Config_Desktop_Background);
 #undef T
 #undef D
@@ -1220,7 +1231,7 @@ e_config_init(void)
      {
 	E_Config_Shelf *cf_es;
 	
-#define CFG_SHELF(_name, _con, _zone, _pop, _lay, _orient, _fita, _fits, _style, _size, _overlap, _autohide, _autohide_show_action, _hide_timeout, _hide_duration) \
+#define CFG_SHELF(_name, _con, _zone, _pop, _lay, _orient, _fita, _fits, _style, _size, _overlap, _autohide, _autohide_show_action, _hide_timeout, _hide_duration, _desk_show_mode, _desk_list) \
    cf_es = E_NEW(E_Config_Shelf, 1); \
    cf_es->name = evas_stringshare_add(_name); \
    cf_es->container = _con; \
@@ -1237,30 +1248,32 @@ e_config_init(void)
    cf_es->autohide_show_action = _autohide_show_action; \
    cf_es->hide_timeout = _hide_timeout; \
    cf_es->hide_duration = _hide_duration; \
+   cf_es->desk_show_mode = _desk_show_mode; \
+   cf_es->desk_list = evas_list_append(cf_es->desk_list, cf_es); \
    e_config->shelves = evas_list_append(e_config->shelves, cf_es)
 	/* shelves for 4 zones on head 0 by default */
 	CFG_SHELF("shelf", 0, 0,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0);
+		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0, 0, NULL);
 	CFG_SHELF("shelf", 0, 1,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0);
+		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0, 0, NULL);
 	CFG_SHELF("shelf", 0, 2,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0);
+		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0, 0, NULL);
 	CFG_SHELF("shelf", 0, 3,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0);
+		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0, 0, NULL);
 	/* shelves for heada 1, 2, and 3 by default */
 	CFG_SHELF("shelf", 1, 0,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0);
+		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0, 0, NULL);
 	CFG_SHELF("shelf", 2, 0,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0);
+		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0, 0, NULL);
 	CFG_SHELF("shelf", 3, 0,
 		  1, 200, E_GADCON_ORIENT_BOTTOM,
-		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0);
+		  1, 0, "default", 40, 0, 0, 0, 1.0, 1.0, 0, NULL);
      }
    IFCFGEND;
    
@@ -1633,6 +1646,7 @@ e_config_shutdown(void)
    E_CONFIG_DD_FREE(_e_config_gadcon_edd);
    E_CONFIG_DD_FREE(_e_config_gadcon_client_edd);
    E_CONFIG_DD_FREE(_e_config_shelf_edd);
+   E_CONFIG_DD_FREE(_e_config_shelf_desk_edd);
    return 1;
 }
 
