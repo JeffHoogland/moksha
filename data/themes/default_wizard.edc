@@ -43,12 +43,12 @@ group {
 	    state: "default" 0.0;
 	    rel1 {
 	       relative: 0.0 1.0;
-	       offset: 8 8;
+	       offset: 16 8;
 	       to_y: "e.text.title";
 	    }
 	    rel2 {
 	       relative: 1.0 0.0;
-	       offset: -9 -1;
+	       offset: -17 -9;
 	       to_y: "bottom";
 	    }
 	 }
@@ -59,8 +59,9 @@ group {
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       relative: 0.0  1.0;
-	       offset:   0    -40;
+	       to: "b1";
+	       relative: 0.0  0.0;
+	       offset:   0    -8;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
@@ -103,24 +104,130 @@ group {
 	    }
 	 }
       }
-      /* FIXME: adding button here */
       part {
 	 name: "b1";
 	 mouse_events: 1;
 	 description {
 	    state: "default" 0.0;
 	    align: 0.0 1.0;
+	    rel1 {
+	       to: "e.button.back.label";
+	       relative: 0.0 0.0;
+	       offset: -9 -9;
+	    }
+	    rel2 {
+               to: "e.button.back.label";
+	       relative: 1.0 1.0;
+	       offset: 8 8;
+	    }
 	    image {
 	       normal: "e17_wiz_b1.png";
 	       border: 7 7 7 7;
 	    }
 	 }
 	 description {
-	    state: "pressed" 0.0;
+	    state: "clicked" 0.0;
 	    inherit: "default" 0.0;
 	    image {
 	       normal: "e17_wiz_b2.png";
 	    }
+	 }
+      }
+      part {
+	 name: "e.button.back.label";
+	 type: TEXT;
+	 effect: SOFT_SHADOW;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0 1.0;
+	       offset: 16 -17;
+	    }
+	    rel2 {
+	       relative: 0.0 1.0;
+	       offset: 16 -17;
+	    }
+	    align: 0.0 1.0;
+	    color: 255 255 255 255;
+	    color3: 0 0 0 16;
+	    text {
+	       text: "Back";
+	       font: "Edje-Vera-Bold";
+	       size: 12;
+	       min:  1 1;
+	       align: 0.0 1.0;
+	       text_class: "wizard_button";
+	    }
+	 }
+	 description {
+	    state: "clicked" 0.0;
+	    inherit: "default" 0.0;
+	    color: 255 255 255 255;
+	    color3: 0 0 0 8;
+	 }
+      }
+      part {
+	 name: "b2";
+	 mouse_events: 1;
+	 description {
+	    state: "default" 0.0;
+	    align: 0.0 1.0;
+	    rel1 {
+	       to: "e.button.next.label";
+	       relative: 0.0 0.0;
+	       offset: -9 -9;
+	    }
+	    rel2 {
+               to: "e.button.next.label";
+	       relative: 1.0 1.0;
+	       offset: 8 8;
+	    }
+	    image {
+	       normal: "e17_wiz_b1.png";
+	       border: 7 7 7 7;
+	    }
+	 }
+	 description {
+	    state: "clicked" 0.0;
+	    inherit: "default" 0.0;
+	    image {
+	       normal: "e17_wiz_b2.png";
+	    }
+	 }
+      }
+      part {
+	 name: "e.button.next.label";
+	 type: TEXT;
+	 effect: SOFT_SHADOW;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 1.0 1.0;
+	       offset: -17 -17;
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset: -17 -17;
+	    }
+	    align: 1.0 1.0;
+	    color: 255 255 255 255;
+	    color3: 0 0 0 16;
+	    text {
+	       text: "Next";
+	       font: "Edje-Vera-Bold";
+	       size: 12;
+	       min:  1 1;
+	       align: 1.0 1.0;
+	       text_class: "wizard_button";
+	    }
+	 }
+	 description {
+	    state: "clicked" 0.0;
+	    inherit: "default" 0.0;
+	    color: 255 255 255 255;
+	    color3: 0 0 0 8;
 	 }
       }
       part {
@@ -153,6 +260,40 @@ group {
 	       normal: "e17_tl_corner_logo.png";
 	    }
 	 }
+      }
+   }
+   programs {
+      program {      
+	 name:   "b1_click";
+	 signal: "mouse,down,1";
+	 source: "b1";
+	 action: STATE_SET "clicked" 0.0;
+	 target: "b1";
+	 target: "e.button.back.label";
+      }
+      program {
+	 name:   "b1_unclick";
+	 signal: "mouse,up,1";
+	 source: "b1";
+	 action: STATE_SET "default" 0.0;
+	 target: "b1";
+	 target: "e.button.back.label";
+      }
+      program {      
+	 name:   "b2_click";
+	 signal: "mouse,down,1";
+	 source: "b2";
+	 action: STATE_SET "clicked" 0.0;
+	 target: "b2";
+	 target: "e.button.next.label";
+      }
+      program {
+	 name:   "b2_unclick";
+	 signal: "mouse,up,1";
+	 source: "b2";
+	 action: STATE_SET "default" 0.0;
+	 target: "b2";
+	 target: "e.button.next.label";
       }
    }
 }
