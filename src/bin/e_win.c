@@ -381,6 +381,22 @@ e_win_border_icon_set(E_Win *win, const char *icon)
      border->internal_icon = evas_stringshare_add(icon);
 }
 
+EAPI void 
+e_win_border_icon_key_set(E_Win *win, const char *key) 
+{
+   E_Border *border;
+   
+   border = win->border;
+   if (!border) return;
+   if (border->internal_icon_key) 
+     {
+	evas_stringshare_del(border->internal_icon_key);
+	border->internal_icon_key = NULL;
+     }
+   if (key)
+     border->internal_icon_key = evas_stringshare_add(key);
+}
+
 /* local subsystem functions */
 static void
 _e_win_free(E_Win *win)
