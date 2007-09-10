@@ -2218,6 +2218,17 @@ _e_config_cb_timer(void *data)
    return 0;
 }
 
+static E_Dialog *_e_config_error_dialog = NULL;
+
+static void
+_e_config_error_dialog_cb_delete(E_Dialog *dia)
+{
+   if (dia == _e_config_error_dialog)
+     {
+	_e_config_error_dialog = NULL;
+     }
+}
+
 static int
 _e_config_eet_close_handle(Eet_File *ef, char *file)
 {
@@ -2291,8 +2302,27 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
      {
 	/* delete any partially-written file */
 	ecore_file_unlink(file);
-	e_util_dialog_show(_("Enlightenment Configration Write Problems"),
-			   erstr, file);
+	if (!_e_config_error_dialog)
+	  {
+             E_Dialog *dia;
+	     
+	     dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_sys_error_logout_slow");
+	     if (dia)
+	       {
+		  char buf[8192];
+		  
+		  e_dialog_title_set(dia, _("Enlightenment Configration Write Problems"));
+		  e_dialog_icon_set(dia, "enlightenment/error", 64);
+		  snprintf(buf, sizeof(buf), erstr, file);
+		  e_dialog_text_set(dia, buf);
+		  e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
+		  e_dialog_button_focus_num(dia, 0);
+		  e_win_centered_set(dia->win, 1);
+		  e_object_del_attach_func_set(E_OBJECT(dia), _e_config_error_dialog_cb_delete);
+		  e_dialog_show(dia);
+		  _e_config_error_dialog = dia;
+	       }
+	  }
 	return 0;
      }
    return 1;
