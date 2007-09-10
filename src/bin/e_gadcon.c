@@ -3459,7 +3459,8 @@ _e_gadcon_layout_smart_sync_clients(E_Gadcon *gc)
 	gcc = l->data;
 	_e_gadcon_client_save(gcc);
      }
-} 
+}
+
 static void
 _e_gadcon_client_current_position_sync(E_Gadcon_Client *gcc)
 {
@@ -3468,7 +3469,8 @@ _e_gadcon_client_current_position_sync(E_Gadcon_Client *gcc)
 
    o = gcc->o_frame ? gcc->o_frame : gcc->o_base;
    bi = evas_object_data_get(o, "e_gadcon_layout_data");
-
+   if (!bi) return;
+   
    gcc->state_info.prev_pos = gcc->config.pos;
    gcc->state_info.prev_size = gcc->config.size;
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container)) 
