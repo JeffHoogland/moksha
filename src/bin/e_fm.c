@@ -3493,7 +3493,7 @@ _e_fm2_uri_parse(const char *val)
 {
    E_Fm2_Uri *uri;
    const char *p;
-   char hostname[_POSIX_HOST_NAME_MAX], path[PATH_MAX];
+   char hostname[PATH_MAX], path[PATH_MAX];
    int i = 0;
 
    /* The shortest possible path is file:/// 
