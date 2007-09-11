@@ -22,7 +22,7 @@ static Font         font = 0;
 static XFontStruct *fs = NULL;
 static GC           gc = 0;
 static Window       win = 0, b1 = 0, b2 = 0;
-static int          ww = 600, hh = 440;   
+static int          ww = 320, hh = 240;
 
 /* externally accessible functions */
 EAPI int

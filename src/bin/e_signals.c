@@ -25,20 +25,15 @@ e_sigseg_act(int x, siginfo_t *info, void *data)
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
    ecore_x_sync();
-   e_alert_show("This is very bad. Enlightenment has segfaulted.\n"
-		"This is not meant to happen and is likely a sign of a\n"
-		"bug in Enlightenment or the libraries it relies on.\n"
+   e_alert_show("This is very bad. Enlightenment SEGV'd.\n"
 		"\n"
-		"You can gdb attach to this process now to try debug it\n"
-		"or you could exit, or just hit restart to try and get\n"
-		"your desktop back the way it was. This may not always\n"
-		"work perfectly, but it is the best we can do for now.\n"
+		"This is not meant to happen and is likely a sign of\n"
+		"a bug in Enlightenment or the libraries it relies\n"
+		"on. You can gdb attach to this process now to try\n"
+		"debug it or you could exit, or just hit restart to\n"
+		"try and get your desktop back the way it was.\n"
 		"\n"
-		"Please help us debug this by compiling Enlightenment and\n"
-		"all its dependency libraries with gdb debugging enabled\n"
-		"and gdb attach to E when this happens and try figure out\n"
-		"what's going on and send us gdb backtraces, variable dumps\n"
-		"etc.");
+		"Please compile everything with -g in your CFLAGS\n");
    exit(-11); 
 }
 #else
@@ -50,20 +45,15 @@ e_sigseg_act(int x, siginfo_t *info, void *data)
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
    ecore_x_sync();
-   e_alert_show("This is very bad. Enlightenment has segfaulted.\n"
-		"This is not meant to happen and is likely a sign of a\n"
-		"bug in Enlightenment or the libraries it relies on.\n"
+   e_alert_show("This is very bad. Enlightenment SEGV'd.\n"
 		"\n"
-		"You can gdb attach to this process now to try debug it\n"
-		"or you could exit, or just hit restart to try and get\n"
-		"your desktop back the way it was. This may not always\n"
-		"work perfectly, but it is the best we can do for now.\n"
+		"This is not meant to happen and is likely a sign of\n"
+		"a bug in Enlightenment or the libraries it relies\n"
+		"on. You can gdb attach to this process now to try\n"
+		"debug it or you could exit, or just hit restart to\n"
+		"try and get your desktop back the way it was.\n"
 		"\n"
-		"Please help us debug this by compiling Enlightenment and\n"
-		"all its dependency libraries with gdb debugging enabled\n"
-		"and gdb attach to E when this happens and try figure out\n"
-		"what's going on and send us gdb backtraces, variable dumps\n"
-		"etc.");
+		"Please compile everything with -g in your CFLAGS\n");
    exit(-11);
 }
 #endif
@@ -76,21 +66,15 @@ e_sigill_act(int x, siginfo_t *info, void *data)
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
    ecore_x_sync();
-   e_alert_show("This is very bad. Enlightenment has executed and illegal\n"
-		"instruction. This is most likely because Enlightenment or\n"
-		"a library it depends on has been compiled for a CPU type\n"
-		"that you don't have.\n"
+   e_alert_show("This is very bad. Enlightenment SIGILL'd.\n"
 		"\n"
-		"You can gdb attach to this process now to try debug it\n"
-		"or you could exit, or just hit restart to try and get\n"
-		"your desktop back the way it was. This may not always\n"
-		"work perfectly, but it is the best we can do for now.\n"
+		"This is not meant to happen and is likely a sign of\n"
+		"a bug in Enlightenment or the libraries it relies\n"
+		"on. You can gdb attach to this process now to try\n"
+		"debug it or you could exit, or just hit restart to\n"
+		"try and get your desktop back the way it was.\n"
 		"\n"
-		"Please help us debug this by compiling Enlightenment and\n"
-		"all its dependency libraries with gdb debugging enabled\n"
-		"and gdb attach to E when this happens and try figure out\n"
-		"what's going on and send us gdb backtraces, variable dumps\n"
-		"etc.");
+		"Please compile everything with -g in your CFLAGS\n");
    exit(-11);
 }
 
@@ -102,20 +86,15 @@ e_sigfpe_act(int x, siginfo_t *info, void *data)
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
    ecore_x_sync();
-   e_alert_show("This is very bad. Enlightenment has recieved a floating\n"
-		"point exception. This is probably due to a divide by 0\n"
-		"in Enlightenment or a library it depends on.\n"
+   e_alert_show("This is very bad. Enlightenment SIGFPE'd.\n"
 		"\n"
-		"You can gdb attach to this process now to try debug it\n"
-		"or you could exit, or just hit restart to try and get\n"
-		"your desktop back the way it was. This may not always\n"
-		"work perfectly, but it is the best we can do for now.\n"
+		"This is not meant to happen and is likely a sign of\n"
+		"a bug in Enlightenment or the libraries it relies\n"
+		"on. You can gdb attach to this process now to try\n"
+		"debug it or you could exit, or just hit restart to\n"
+		"try and get your desktop back the way it was.\n"
 		"\n"
-		"Please help us debug this by compiling Enlightenment and\n"
-		"all its dependency libraries with gdb debugging enabled\n"
-		"and gdb attach to E when this happens and try figure out\n"
-		"what's going on and send us gdb backtraces, variable dumps\n"
-		"etc.");
+		"Please compile everything with -g in your CFLAGS\n");
    exit(-11);
 }
 
@@ -127,20 +106,15 @@ e_sigbus_act(int x, siginfo_t *info, void *data)
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
    ecore_x_sync();
-   e_alert_show("This is very bad. Enlightenment has recieved a bus error.\n"
-		"This could be for many reasons - accessing memory not in\n"
-		"its available address space or unable to be paged in.\n"
+   e_alert_show("This is very bad. Enlightenment SIGILL'd.\n"
 		"\n"
-		"You can gdb attach to this process now to try debug it\n"
-		"or you could exit, or just hit restart to try and get\n"
-		"your desktop back the way it was. This may not always\n"
-		"work perfectly, but it is the best we can do for now.\n"
+		"This is not meant to happen and is likely a sign of\n"
+		"a bug in Enlightenment or the libraries it relies\n"
+		"on. You can gdb attach to this process now to try\n"
+		"debug it or you could exit, or just hit restart to\n"
+		"try and get your desktop back the way it was.\n"
 		"\n"
-		"Please help us debug this by compiling Enlightenment and\n"
-		"all its dependency libraries with gdb debugging enabled\n"
-		"and gdb attach to E when this happens and try figure out\n"
-		"what's going on and send us gdb backtraces, variable dumps\n"
-		"etc.");
+		"Please compile everything with -g in your CFLAGS\n");
    exit(-11);
 }
 
@@ -152,19 +126,14 @@ e_sigabrt_act(int x, siginfo_t *info, void *data)
    ecore_x_keyboard_ungrab();
    ecore_x_ungrab();
    ecore_x_sync();
-   e_alert_show("This is very bad. Enlightenment has recieved an abort.\n"
-		"This could be for many reasons - accessing memory not in\n"
-		"its available address space or unable to be paged in.\n"
+   e_alert_show("This is very bad. Enlightenment SIGABRT'd.\n"
 		"\n"
-		"You can gdb attach to this process now to try debug it\n"
-		"or you could exit, or just hit restart to try and get\n"
-		"your desktop back the way it was. This may not always\n"
-		"work perfectly, but it is the best we can do for now.\n"
+		"This is not meant to happen and is likely a sign of\n"
+		"a bug in Enlightenment or the libraries it relies\n"
+		"on. You can gdb attach to this process now to try\n"
+		"debug it or you could exit, or just hit restart to\n"
+		"try and get your desktop back the way it was.\n"
 		"\n"
-		"Please help us debug this by compiling Enlightenment and\n"
-		"all its dependency libraries with gdb debugging enabled\n"
-		"and gdb attach to E when this happens and try figure out\n"
-		"what's going on and send us gdb backtraces, variable dumps\n"
-		"etc.");
+		"Please compile everything with -g in your CFLAGS\n");
    exit(-11);
 }
