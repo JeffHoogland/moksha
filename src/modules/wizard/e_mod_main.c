@@ -28,11 +28,73 @@ EAPI E_Module_Api e_modapi =
      "Wizard"
 };
 
+
+static int t_init     (E_Wizard_Page *pg){
+   return 1;
+}
+static int t_shutdown (E_Wizard_Page *pg){
+   return 1;
+}
+static int t_show     (E_Wizard_Page *pg){
+   Evas_Object *ob, *o;
+   
+   ob = e_widget_list_add(pg->evas, 1, 0);
+   o = e_widget_button_add(pg->evas,
+			    "Hello World", NULL, 
+			    NULL, NULL, NULL);
+   e_widget_list_object_append(ob, o, 0, 0, 0.5);
+   evas_object_show(o);
+   e_wizard_page_show(ob);
+   pg->data = ob;
+   return 0;
+}
+static int t_hide     (E_Wizard_Page *pg){
+   evas_object_del(pg->data);
+   return 1;
+}
+static int t_apply    (E_Wizard_Page *pg){
+   return 1;
+}
+
+static int t2_init     (E_Wizard_Page *pg){
+   return 1;
+}
+static int t2_shutdown (E_Wizard_Page *pg){
+   return 1;
+}
+static int t2_show     (E_Wizard_Page *pg){
+   Evas_Object *ob, *o;
+   
+   ob = e_widget_list_add(pg->evas, 1, 0);
+   o = e_widget_button_add(pg->evas,
+			    "Hello to Another World", NULL, 
+			    NULL, NULL, NULL);
+   e_widget_list_object_append(ob, o, 0, 0, 0.5);
+   evas_object_show(o);
+   e_wizard_page_show(ob);
+   pg->data = ob;
+   return 0;
+}
+static int t2_hide     (E_Wizard_Page *pg){
+   evas_object_del(pg->data);
+   return 1;
+}
+static int t2_apply    (E_Wizard_Page *pg){
+   return 1;
+}
+
+
 EAPI void *
 e_modapi_init(E_Module *m)
 {
    conf_module = m;
    e_wizard_init();
+   
+   e_wizard_page_add(t_init, t_shutdown, t_show, t_hide, t_apply);
+   e_wizard_page_add(t2_init, t2_shutdown, t2_show, t2_hide, t2_apply);
+   
+   e_wizard_go();
+   
    return m;
 }
 

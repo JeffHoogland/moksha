@@ -14,6 +14,8 @@ static E_Popup *pop = NULL;
 static Evas_List *pops = NULL;
 static Evas_Object *o_bg = NULL;
 static Evas_Object *o_content = NULL;
+static Evas_List *pages = NULL;
+static E_Wizard_Page *curpage = NULL;
 
 EAPI int
 e_wizard_init(void)
@@ -63,6 +65,136 @@ e_wizard_shutdown(void)
    return 1;
 }
 
+EAPI void
+e_wizard_go(void)
+{
+   if (!curpage)
+     {
+	if (pages) curpage = pages->data;
+     }
+   if (curpage)
+     {
+	if (!curpage->data) curpage->init(curpage);
+	curpage->show(curpage);
+     }
+}
+
+EAPI void
+e_wizard_next(void)
+{
+   Evas_List *l;
+   
+   for (l = pages; l; l = l->next)
+     {
+	if (l->data == curpage)
+	  {
+	     if (l->next)
+	       {
+		  if (curpage)
+		    {
+		       curpage->hide(curpage);
+		    }
+		  curpage = l->next->data;
+		  if (!curpage->data)
+		    {
+		       curpage->init(curpage);
+		    }
+		  if (curpage->show(curpage))
+		    {
+		       break;
+		    }
+	       }
+	     else
+	       {
+		  /* FINISH */
+		  break;
+	       }
+	  }
+     }
+}
+
+EAPI void
+e_wizard_back(void)
+{
+   Evas_List *l;
+   
+   for (l = evas_list_last(pages); l; l = l->prev)
+     {
+	if (l->data == curpage)
+	  {
+	     if (l->prev)
+	       {
+		  if (curpage)
+		    {
+		       curpage->hide(curpage);
+		    }
+		  curpage = l->prev->data;
+		  if (!curpage->data)
+		    {
+		       curpage->init(curpage);
+		    }
+		  if (curpage->show(curpage))
+		    {
+		       break;
+		    }
+	       }
+	     else
+	       {
+		  break;
+	       }
+	  }
+     }
+}
+
+EAPI void
+e_wizard_page_show(Evas_Object *obj)
+{
+   Evas_Coord minw, minh;
+
+   if (o_content) evas_object_del(o_content);
+   o_content = obj;
+   if (obj)
+     {
+	e_widget_min_size_get(obj, &minw, &minh);
+	edje_extern_object_min_size_set(obj, minw, minh);
+	edje_object_part_swallow(o_bg, "e.swallow.content", obj);
+	evas_object_show(obj);
+	e_widget_focus_set(obj, 1);
+	edje_object_signal_emit(o_bg, "e,action,page,new", "e");
+     }
+}
+
+/* FIXME: decide how pages are defined - how about an array of page structs? */
+EAPI E_Wizard_Page *
+e_wizard_page_add(int (*init)     (E_Wizard_Page *pg),
+		  int (*shutdown) (E_Wizard_Page *pg),
+		  int (*show)     (E_Wizard_Page *pg),
+		  int (*hide)     (E_Wizard_Page *pg),
+		  int (*apply)    (E_Wizard_Page *pg)
+		  )
+{
+   E_Wizard_Page *pg;
+   
+   pg = E_NEW(E_Wizard_Page, 1);
+   if (!pg) return NULL;
+   
+   pages = evas_list_append(pages, pg);
+   pg->evas = pop->evas;
+   pg->init = init;
+   pg->shutdown = shutdown;
+   pg->show = show;
+   pg->hide = hide;
+   pg->apply = apply;
+   return pg;
+}
+
+EAPI void
+e_wizard_page_del(E_Wizard_Page *pg)
+{
+   pages = evas_list_remove(pages, pg);
+   free(pg);
+}
+
 static E_Popup *
 _e_wizard_main_new(E_Zone *zone)
 {
@@ -79,9 +211,9 @@ _e_wizard_main_new(E_Zone *zone)
    evas_object_move(o, 0, 0);
    evas_object_resize(o, zone->w, zone->h);
    evas_object_show(o);
-   edje_object_signal_callback_add(o_bg, "e,action,next", "e",
+   edje_object_signal_callback_add(o, "e,action,next", "",
 				   _e_wizard_cb_next, pop);
-   edje_object_signal_callback_add(o_bg, "e,action,back", "e",
+   edje_object_signal_callback_add(o, "e,action,back", "",
 				   _e_wizard_cb_back, pop);
    o_bg = o;
    
@@ -154,7 +286,7 @@ _e_wizard_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
    if (!o_content) return;
    if (!strcmp(ev->keyname, "Tab"))
      {
-	if (evas_key_modifier_is_set(pop->evas, "Shift"))
+	if (evas_key_modifier_is_set(ev->modifiers, "Shift"))
 	  e_widget_focus_jump(o_content, 0);
 	else
 	  e_widget_focus_jump(o_content, 1);
@@ -168,14 +300,20 @@ _e_wizard_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
 	o = e_widget_focused_object_get(o_content);
 	if (o) e_widget_activate(o);
      }
+   else if (!strcmp(ev->keyname, "Escape"))
+     {
+	e_wizard_shutdown();
+     }
 }
 
 static void
 _e_wizard_cb_next(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
+   e_wizard_next();
 }
 
 static void
 _e_wizard_cb_back(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
+   e_wizard_back();
 }

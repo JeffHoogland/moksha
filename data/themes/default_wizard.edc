@@ -278,6 +278,7 @@ group {
 	 action: STATE_SET "default" 0.0;
 	 target: "b1";
 	 target: "e.button.back.label";
+	 after: "b1";
       }
       program {      
 	 name:   "b2_click";
@@ -294,6 +295,15 @@ group {
 	 action: STATE_SET "default" 0.0;
 	 target: "b2";
 	 target: "e.button.next.label";
+	 after: "b2";
+      }
+      program {
+	 name:   "b1";
+	 action: SIGNAL_EMIT "e,action,back" "";
+      }
+      program {
+	 name:   "b2";
+	 action: SIGNAL_EMIT "e,action,next" "";
       }
    }
 }

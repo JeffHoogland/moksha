@@ -3,12 +3,38 @@
  */
 #ifdef E_TYPEDEFS
 
+typedef struct _E_Wizard_Page E_Wizard_Page;
+
 #else
 #ifndef E_WIZARD_H
 #define E_WIZARD_H
 
+struct _E_Wizard_Page
+{
+   Evas *evas;
+   int (*init)     (E_Wizard_Page *pg);
+   int (*shutdown) (E_Wizard_Page *pg);
+   int (*show)     (E_Wizard_Page *pg);
+   int (*hide)     (E_Wizard_Page *pg);
+   int (*apply)    (E_Wizard_Page *pg);
+   void *data;
+};
+
 EAPI int e_wizard_init(void);
 EAPI int e_wizard_shutdown(void);
-
+EAPI void e_wizard_go(void);
+EAPI void e_wizard_next(void);
+EAPI void e_wizard_prev(void);
+EAPI void e_wizard_page_show(Evas_Object *obj);
+EAPI E_Wizard_Page *
+  e_wizard_page_add(int (*init)     (E_Wizard_Page *pg),
+		    int (*shutdown) (E_Wizard_Page *pg),
+		    int (*show)     (E_Wizard_Page *pg),
+		    int (*hide)     (E_Wizard_Page *pg),
+		    int (*apply)    (E_Wizard_Page *pg)
+		    );
+EAPI void
+  e_wizard_page_del(E_Wizard_Page *pg);
+    
 #endif
 #endif
