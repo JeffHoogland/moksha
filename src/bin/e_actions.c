@@ -567,7 +567,7 @@ ACT_FN_GO(window_maximized)
 		  else
 		    max = E_MAXIMIZE_BOTH;
 	       }
-	     if (ret > 1);
+	     if (ret > 1)
 	       {
 		  if (v == 1)
 		    {

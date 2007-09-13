@@ -72,11 +72,11 @@ static int _e_desklock_cb_mouse_move(void *data, int type, void *event);
 static int _e_desklock_cb_custom_desklock_exit(void *data, int type, void *event);
 static int _e_desklock_cb_idle_timer(void *data);
 
-static void _e_desklock_passwd_update();
-static void _e_desklock_backspace();
-static void _e_desklock_delete();
-static int  _e_desklock_zone_num_get();
-static int _e_desklock_check_auth();
+static void _e_desklock_passwd_update(void);
+static void _e_desklock_backspace(void);
+static void _e_desklock_delete(void);
+static int  _e_desklock_zone_num_get(void);
+static int _e_desklock_check_auth(void);
 static void _e_desklock_state_set(int state);
 
 #ifdef HAVE_PAM
@@ -485,7 +485,7 @@ _e_desklock_cb_mouse_move(void *data, int type, void *event)
 }
 
 static void
-_e_desklock_passwd_update()
+_e_desklock_passwd_update(void)
 {
    char passwd_hidden[PASSWD_LEN] = "", *p, *pp;
    E_Desklock_Popup_Data *edp;
@@ -506,7 +506,7 @@ _e_desklock_passwd_update()
 }
 
 static void
-_e_desklock_backspace()
+_e_desklock_backspace(void)
 {
    int len, val, pos;
    
@@ -525,13 +525,13 @@ _e_desklock_backspace()
 }
 
 static void
-_e_desklock_delete()
+_e_desklock_delete(void)
 {
    _e_desklock_backspace();
 }
 
 static int
-_e_desklock_zone_num_get()
+_e_desklock_zone_num_get(void)
 {
    int num;
    Evas_List *l, *l2;
@@ -553,7 +553,7 @@ _e_desklock_zone_num_get()
 }
 
 static int
-_e_desklock_check_auth()
+_e_desklock_check_auth(void)
 {
    if (!edd) return 0;
 #ifdef HAVE_PAM

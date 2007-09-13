@@ -180,7 +180,7 @@ e_fm2_custom_file_rename(const char *path, const char *new_path)
 		  char buf[PATH_MAX];
 		  
 		  strcpy(buf, new_path);
-		  strcat(buf, l->data + strlen(path));
+		  strcat(buf, (char *)l->data + strlen(path));
 		  _e_fm2_custom_hash = evas_hash_del(_e_fm2_custom_hash,
 						     l->data, cf2);
 		  cf = evas_hash_find(_e_fm2_custom_hash, buf);

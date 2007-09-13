@@ -150,7 +150,7 @@ _e_spectrum_smart_clip_unset(Evas_Object *o)
 }
 
 static void
-_e_spectrum_smart_init()
+_e_spectrum_smart_init(void)
 {
    if (_e_spectrum_smart) return;
      {
@@ -266,7 +266,7 @@ _e_spectrum_redraw(void *d)
   int *data;
   int i, j;
   int r, g, b;
-  float vx, vy, vz;
+  float vx, vy, vz = 0;
 
   data = evas_object_image_data_get(sp->o_spectrum, 1);
   if (!data) 
