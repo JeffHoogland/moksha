@@ -1,6 +1,6 @@
 #include "e.h"
 
-static E_Config_Dialog_View *_config_view_new();
+static E_Config_Dialog_View *_config_view_new(void);
 
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -54,7 +54,7 @@ e_int_config_borders_border(E_Container *con, const char *params)
 }
 
 static E_Config_Dialog_View *
-_config_view_new() 
+_config_view_new(void) 
 {
    E_Config_Dialog_View *v;
    
