@@ -168,7 +168,7 @@ e_modapi_config(E_Module *m)
 static void
 _e_mod_action_fileman_cb(E_Object *obj, const char *params)
 {
-   E_Zone *zone;
+   E_Zone *zone = NULL;
    
    if (obj)
      {
