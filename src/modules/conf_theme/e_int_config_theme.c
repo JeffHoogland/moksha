@@ -5,15 +5,15 @@
 #include "e.h"
 #include "e_int_config_theme_import.h"
 
-static void        *_create_data          (E_Config_Dialog *cfd);
-static void         _free_data            (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static void         _fill_data            (E_Config_Dialog_Data *cfdata);
-static int          _basic_apply_data     (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create_widgets (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int          _advanced_apply_data     (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_advanced_create_widgets (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static Evas_List   *_get_theme_categories_list(); 
-static Evas_List   *_get_parts_list(); 
+static void        *_create_data               (E_Config_Dialog *cfd);
+static void         _free_data                 (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void         _fill_data                 (E_Config_Dialog_Data *cfdata);
+static int          _basic_apply_data          (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create_widgets      (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int          _advanced_apply_data       (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_advanced_create_widgets   (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static Evas_List   *_get_theme_categories_list (void);
+static Evas_List   *_get_parts_list            (void);
 
 struct _E_Config_Dialog_Data
 {
@@ -505,7 +505,7 @@ _cb_sort(void *data1, void *data2)
 }
 
 static Evas_List *
-_get_parts_list()
+_get_parts_list(void)
 {
    Evas_List *parts = NULL;
 
@@ -544,7 +544,7 @@ _get_parts_list()
 }
 
 static Evas_List *
-_get_theme_categories_list() 
+_get_theme_categories_list(void) 
 {
    Evas_List *themes, *tcl = NULL;
    Evas_List *cats = NULL, *g = NULL, *cats2 = NULL;
@@ -677,10 +677,10 @@ _preview_set(void *data)
 	  }
 	if (p)
 	  ret = e_widget_preview_edje_set(cfdata->o_preview, theme, 
-		p->data + strlen(c_label));
-        if (!ret)	
+					  (char *)p->data + strlen(c_label));
+        if (!ret) 
 	  ret = e_widget_preview_edje_set(cfdata->o_preview, theme, 
-		"e/desktop/background");
+					  "e/desktop/background");
      }
 }
 
