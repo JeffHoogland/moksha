@@ -1022,8 +1022,8 @@ static void
 _auto_apply_changes(E_Config_Dialog_Data *cfdata)
 {
    int n, g, a;
-   E_Config_Binding_Mouse *eb;
-   E_Config_Binding_Wheel *bw;
+   E_Config_Binding_Mouse *eb = NULL;
+   E_Config_Binding_Wheel *bw = NULL;
 
    E_Action_Group *actg;
    E_Action_Description *actd;
@@ -1443,8 +1443,8 @@ static int
 _grab_mouse_wheel_cb(void *data, int type, void *event)
 {
    Evas_List *l;
-   E_Config_Binding_Wheel *bw;
-   E_Config_Binding_Mouse *eb;
+   E_Config_Binding_Wheel *bw = NULL;
+   E_Config_Binding_Mouse *eb = NULL;
    E_Config_Dialog_Data *cfdata;
    Ecore_X_Event_Mouse_Wheel *ev; 
    int mod = E_BINDING_MODIFIER_NONE, n;
