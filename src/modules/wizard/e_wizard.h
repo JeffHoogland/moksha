@@ -24,7 +24,7 @@ EAPI int e_wizard_init(void);
 EAPI int e_wizard_shutdown(void);
 EAPI void e_wizard_go(void);
 EAPI void e_wizard_next(void);
-EAPI void e_wizard_prev(void);
+EAPI void e_wizard_back(void);
 EAPI void e_wizard_page_show(Evas_Object *obj);
 EAPI E_Wizard_Page *
   e_wizard_page_add(int (*init)     (E_Wizard_Page *pg),
