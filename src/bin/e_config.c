@@ -2221,7 +2221,7 @@ _e_config_cb_timer(void *data)
 static E_Dialog *_e_config_error_dialog = NULL;
 
 static void
-_e_config_error_dialog_cb_delete(E_Dialog *dia)
+_e_config_error_dialog_cb_delete(void *dia)
 {
    if (dia == _e_config_error_dialog)
      {

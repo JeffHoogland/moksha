@@ -300,7 +300,7 @@ static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    E_Zone *zone;
-   int id, idx, x, y;
+   int id, idx;
    int restart = 0;
 
    /* Only change style is we need to */
