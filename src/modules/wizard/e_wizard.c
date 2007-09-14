@@ -62,6 +62,7 @@ e_wizard_shutdown(void)
 	e_object_del(E_OBJECT(pops->data));
 	pops = evas_list_remove_list(pops, pops);
      }
+   /* FIXME: remove wizard module */
    return 1;
 }
 
@@ -74,8 +75,25 @@ e_wizard_go(void)
      }
    if (curpage)
      {
-	if (!curpage->data) curpage->init(curpage);
-	curpage->show(curpage);
+	if ((!curpage->data) && (curpage->init)) curpage->init(curpage);
+	if ((curpage->show) && (!curpage->show(curpage)))
+	  {
+	     e_wizard_next();
+	  }
+     }
+}
+
+EAPI void
+e_wizard_apply(void)
+{
+   Evas_List *l;
+   
+   for (l = pages; l; l = l->next)
+     {  
+	E_Wizard_Page *pg;
+	
+	pg = l->data;
+	if (pg->apply) pg->apply(pg);
      }
 }
 
@@ -92,14 +110,16 @@ e_wizard_next(void)
 	       {
 		  if (curpage)
 		    {
-		       curpage->hide(curpage);
+		       if (curpage->hide)
+			 curpage->hide(curpage);
 		    }
 		  curpage = l->next->data;
 		  if (!curpage->data)
 		    {
-		       curpage->init(curpage);
+                       if (curpage->init)
+			 curpage->init(curpage);
 		    }
-		  if (curpage->show(curpage))
+		  if ((curpage->show) && (curpage->show(curpage)))
 		    {
 		       break;
 		    }
@@ -107,7 +127,9 @@ e_wizard_next(void)
 	     else
 	       {
 		  /* FINISH */
-		  break;
+		  e_wizard_apply();
+		  e_wizard_shutdown();
+		  return;
 	       }
 	  }
      }
@@ -126,14 +148,16 @@ e_wizard_back(void)
 	       {
 		  if (curpage)
 		    {
-		       curpage->hide(curpage);
+                       if (curpage->hide)
+			 curpage->hide(curpage);
 		    }
 		  curpage = l->prev->data;
 		  if (!curpage->data)
 		    {
-		       curpage->init(curpage);
+                       if (curpage->init)
+			 curpage->init(curpage);
 		    }
-		  if (curpage->show(curpage))
+                  if ((curpage->show) && (curpage->show(curpage)))
 		    {
 		       break;
 		    }
