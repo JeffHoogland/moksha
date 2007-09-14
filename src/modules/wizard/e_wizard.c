@@ -62,7 +62,10 @@ e_wizard_shutdown(void)
 	e_object_del(E_OBJECT(pops->data));
 	pops = evas_list_remove_list(pops, pops);
      }
-   /* FIXME: remove wizard module */
+   while (pages)
+     {
+	e_wizard_page_del(pages->data);
+     }
    return 1;
 }
 
@@ -190,7 +193,8 @@ e_wizard_page_show(Evas_Object *obj)
 
 /* FIXME: decide how pages are defined - how about an array of page structs? */
 EAPI E_Wizard_Page *
-e_wizard_page_add(int (*init)     (E_Wizard_Page *pg),
+e_wizard_page_add(void *handle,
+		  int (*init)     (E_Wizard_Page *pg),
 		  int (*shutdown) (E_Wizard_Page *pg),
 		  int (*show)     (E_Wizard_Page *pg),
 		  int (*hide)     (E_Wizard_Page *pg),
@@ -202,19 +206,24 @@ e_wizard_page_add(int (*init)     (E_Wizard_Page *pg),
    pg = E_NEW(E_Wizard_Page, 1);
    if (!pg) return NULL;
    
-   pages = evas_list_append(pages, pg);
+   pg->handle = handle;
    pg->evas = pop->evas;
+   
    pg->init = init;
    pg->shutdown = shutdown;
    pg->show = show;
    pg->hide = hide;
    pg->apply = apply;
+   
+   pages = evas_list_append(pages, pg);
+   
    return pg;
 }
 
 EAPI void
 e_wizard_page_del(E_Wizard_Page *pg)
 {
+   if (pg->handle) dlclose(pg->handle);
    pages = evas_list_remove(pages, pg);
    free(pg);
 }

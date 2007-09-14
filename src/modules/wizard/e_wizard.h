@@ -11,6 +11,7 @@ typedef struct _E_Wizard_Page E_Wizard_Page;
 
 struct _E_Wizard_Page
 {
+   void *handle;
    Evas *evas;
    int (*init)     (E_Wizard_Page *pg);
    int (*shutdown) (E_Wizard_Page *pg);
@@ -23,11 +24,13 @@ struct _E_Wizard_Page
 EAPI int e_wizard_init(void);
 EAPI int e_wizard_shutdown(void);
 EAPI void e_wizard_go(void);
+EAPI void e_wizard_apply(void);
 EAPI void e_wizard_next(void);
 EAPI void e_wizard_back(void);
 EAPI void e_wizard_page_show(Evas_Object *obj);
 EAPI E_Wizard_Page *
-  e_wizard_page_add(int (*init)     (E_Wizard_Page *pg),
+  e_wizard_page_add(void *handle,
+		    int (*init)     (E_Wizard_Page *pg),
 		    int (*shutdown) (E_Wizard_Page *pg),
 		    int (*show)     (E_Wizard_Page *pg),
 		    int (*hide)     (E_Wizard_Page *pg),
