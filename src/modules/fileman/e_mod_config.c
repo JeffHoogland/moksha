@@ -19,46 +19,52 @@ struct _E_Config_Dialog_Data
       int   show_desktop_icons;
    } view;
    /* display of icons */
-   struct {
-      struct {
-	 int           w, h;
-      } icon;
-      struct {
-	 int           w, h;
-      } list;
-      struct {
-	 int w;
-	 int h;
-      } fixed;
-      struct {
-	 int show;
-      } extension;
-      const char      *key_hint;
-   } icon;
+   struct 
+     {
+	struct 
+	  {
+	     int w, h;
+	  } icon;
+	struct 
+	  {
+	     int w, h;
+	  } list;
+	struct 
+	  {
+	     int w, h;
+	  } fixed;
+	struct 
+	  {
+	     int show;
+	  } extension;
+	const char *key_hint;
+     } icon;
    /* how to sort files */
-   struct {
-      struct {
-	 int    no_case;
-	 struct {
-	    int first;
-	    int last;
-	 } dirs;
-      } sort;
-   } list;
+   struct 
+     {
+	struct 
+	  {
+	     int no_case;
+	     struct {
+		int first, last;
+	     } dirs;
+	  } sort;
+     } list;
    /* control how you can select files */
-   struct {
-      int    single;
-      int    windows_modifiers;
-   } selection;
+   struct 
+     {
+	int single;
+	int windows_modifiers;
+     } selection;
    /* the background - if any, and how to handle it */
    /* FIXME: not implemented yet */
-   struct {
-      const char      *background;
-      const char      *frame;
-      const char      *icons;
-      int    fixed;
-   } theme;
-   
+   struct 
+     {
+	const char *background;
+	const char *frame, *icons;
+	int fixed;
+     } theme;
+
    E_Config_Dialog *cfd;
 };
 
@@ -166,7 +172,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_disabled_set(ob, 1);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("List"), 5, rg);
-   e_widget_disabled_set(ob, 1);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
