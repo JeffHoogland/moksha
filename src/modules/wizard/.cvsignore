@@ -3,5 +3,5 @@
 Makefile
 Makefile.in
 *.lo
-module.la
+*.la
 module.desktop
