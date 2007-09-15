@@ -182,7 +182,6 @@ e_configure_registry_call(const char *path, E_Container *con, const char *params
 		  E_Configure_It *eci;
 		  
 		  eci = ll->data;
-		  printf("%s == %s\n", item, eci->item);
 		  if (!strcmp(item, eci->item))
 		    {
 		       if (eci->func) eci->func(con, params);
