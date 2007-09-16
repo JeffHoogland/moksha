@@ -4,6 +4,8 @@
 #include "e.h"
 #include "e_mod_main.h"
 
+static void _e_wizard_back_eval(void);
+static void _e_wizard_next_eval(void);
 static E_Popup *_e_wizard_main_new(E_Zone *zone);
 static E_Popup *_e_wizard_extra_new(E_Zone *zone);
 static void _e_wizard_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event);
@@ -16,6 +18,12 @@ static Evas_Object *o_bg = NULL;
 static Evas_Object *o_content = NULL;
 static Evas_List *pages = NULL;
 static E_Wizard_Page *curpage = NULL;
+static int next_ok = 1;
+static int back_ok = 1;
+static int next_can = 0;
+static int back_can = 0;
+static int next_prev = 0;
+static int back_prev = 0;
 
 EAPI int
 e_wizard_init(void)
@@ -74,11 +82,17 @@ e_wizard_go(void)
 {
    if (!curpage)
      {
-	if (pages) curpage = pages->data;
+	if (pages)
+	  {
+	     curpage = pages->data;
+	     if (pages->next) next_can = 1;
+	  }
      }
    if (curpage)
      {
 	if ((!curpage->data) && (curpage->init)) curpage->init(curpage);
+	_e_wizard_back_eval();
+	_e_wizard_next_eval();
 	if ((curpage->show) && (!curpage->show(curpage)))
 	  {
 	     e_wizard_next();
@@ -122,6 +136,11 @@ e_wizard_next(void)
                        if (curpage->init)
 			 curpage->init(curpage);
 		    }
+		  next_can = 1;
+		  if (l->prev) back_can = 1;
+		  else back_can = 0;
+		  _e_wizard_back_eval();
+		  _e_wizard_next_eval();
 		  if ((curpage->show) && (curpage->show(curpage)))
 		    {
 		       break;
@@ -160,6 +179,11 @@ e_wizard_back(void)
                        if (curpage->init)
 			 curpage->init(curpage);
 		    }
+		  next_can = 1;
+		  if (l->prev) back_can = 1;
+		  else back_can = 0;
+		  _e_wizard_back_eval();
+		  _e_wizard_next_eval();
                   if ((curpage->show) && (curpage->show(curpage)))
 		    {
 		       break;
@@ -226,6 +250,50 @@ e_wizard_page_del(E_Wizard_Page *pg)
    if (pg->handle) dlclose(pg->handle);
    pages = evas_list_remove(pages, pg);
    free(pg);
+}
+
+EAPI void
+e_wizard_button_back_enable_set(int enable)
+{
+   back_ok = enable;
+   _e_wizard_back_eval();
+}
+
+EAPI void
+e_wizard_button_next_enable_set(int enable)
+{
+   next_ok = enable;
+   _e_wizard_next_eval();
+}
+
+static void
+_e_wizard_back_eval(void)
+{
+   int ok;
+   
+   ok = back_can;
+   if (!back_ok) ok = 0;
+   if (back_prev != ok)
+     {
+	if (ok) edje_object_signal_emit(o_bg, "e,state,back,enable", "e");
+	else edje_object_signal_emit(o_bg, "e,state,back,disable", "e");
+	back_prev = ok;
+     }
+}
+
+static void
+_e_wizard_next_eval(void)
+{
+   int ok;
+   
+   ok = next_can;
+   if (!next_ok) ok = 0;
+   if (next_prev != ok)
+     {
+	if (ok) edje_object_signal_emit(o_bg, "e,state,next,enable", "e");
+	else edje_object_signal_emit(o_bg, "e,state,next,disable", "e");
+	next_prev = ok;
+     }
 }
 
 static E_Popup *
@@ -332,10 +400,6 @@ _e_wizard_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
 	
 	o = e_widget_focused_object_get(o_content);
 	if (o) e_widget_activate(o);
-     }
-   else if (!strcmp(ev->keyname, "Escape"))
-     {
-	e_wizard_shutdown();
      }
 }
 

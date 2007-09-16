@@ -36,8 +36,9 @@ EAPI E_Wizard_Page *
 		    int (*hide)     (E_Wizard_Page *pg),
 		    int (*apply)    (E_Wizard_Page *pg)
 		    );
-EAPI void
-  e_wizard_page_del(E_Wizard_Page *pg);
+EAPI void e_wizard_page_del(E_Wizard_Page *pg);
+EAPI void e_wizard_button_back_enable_set(int enable);
+EAPI void e_wizard_button_next_enable_set(int enable);
     
 #endif
 #endif
