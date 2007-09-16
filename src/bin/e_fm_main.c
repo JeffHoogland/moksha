@@ -707,7 +707,7 @@ EAPI void
 e_volume_mount(E_Volume *v)
 {
    static int mount_id = 1;
-   char buf[4096];
+   char buf[4096], buf2[256], buf3[256];
    char *mount_point;
    Ecore_List *opt = NULL;
    
@@ -728,13 +728,19 @@ e_volume_mount(E_Volume *v)
 	v->mount_point = strdup(mount_point);
      }
    printf("mount %s %s\n", v->udi, v->mount_point);
+// *******************************************   
 // FIXME; need to mount AS the USER - not root!!! seems it mounts as root
+// this doesn't work below. i add ANY mount options and dbus ignores the
+// request
+// *******************************************
 //   opt = ecore_list_new();
-//   snprintf(buf, sizeof(buf), "uid=%i", (int)getuid());
-//// hmmm - so how do these work?
-//   ecore_list_append(opt, buf);
-////   ecore_list_append(opt, "user");
-////   ecore_list_append(opt, "utf8");
+//   snprintf(buf2, sizeof(buf2), "uid=%i", (int)getuid());
+//   ecore_list_append(opt, buf2);
+//   snprintf(buf3, sizeof(buf3), "gid=%i", (int)getgid());
+//   ecore_list_append(opt, buf3);
+//   ecore_list_append(opt, "uni_xlate");
+//   ecore_list_append(opt, "user");
+//   ecore_list_append(opt, "utf8");
    e_hal_device_volume_mount(_e_dbus_conn, v->udi, v->mount_point,
 			     v->fstype, opt, _e_dbus_cb_vol_mounted, v);
 //   ecore_list_destroy(opt);
