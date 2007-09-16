@@ -121,6 +121,8 @@ static int  _ibar_cb_config_icon_theme(void *data, int ev_type, void *ev);
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_item_edd = NULL;
 
+static int uuid = 0;
+
 Config *ibar_config = NULL;
 
 static E_Gadcon_Client *
@@ -455,17 +457,7 @@ _ibar_config_item_get(const char *id)
 
    if (!id)
      {
-	int  num = 0;
-
-	/* Create id */
-	if (ibar_config->items)
-	  {
-	     const char *p;
-	     ci = evas_list_last(ibar_config->items)->data;
-	     p = strrchr(ci->id, '.');
-	     if (p) num = atoi(p + 1) + 1;
-	  }
-	snprintf(buf, sizeof(buf), "%s.%d", _gadcon_class.name, num);
+	snprintf(buf, sizeof(buf), "%s.%d", _gadcon_class.name, ++uuid);
 	id = buf;
      }
    else
@@ -1204,7 +1196,17 @@ e_modapi_init(E_Module *m)
 	ci->eap_label = 0;
 	ibar_config->items = evas_list_append(ibar_config->items, ci);
      }
-   
+   else
+     {
+	Config_Item *ci;
+	const char *p;
+
+	/* Init uuid */
+	ci = evas_list_last(ibar_config->items)->data;
+	p = strrchr(ci->id, '.');
+	if (p) uuid = atoi(p + 1);
+     }
+ 
    ibar_config->module = m;
 
    ibar_config->handlers = evas_list_append(ibar_config->handlers,

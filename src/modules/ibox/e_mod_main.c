@@ -123,6 +123,8 @@ static Config_Item *_ibox_config_item_get(const char *id);
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_item_edd = NULL;
 
+static int uuid = 0;
+
 Config *ibox_config = NULL;
 
 static E_Gadcon_Client *
@@ -1248,22 +1250,12 @@ _ibox_config_item_get(const char *id)
 
    if (!id)
      {
-	int  num = 0;
-
-	/* Create id */
-	if (ibox_config->items)
-	  {
-	     const char *p;
-	     ci = evas_list_last(ibox_config->items)->data;
-	     p = strrchr(ci->id, '.');
-	     if (p) num = atoi(p + 1) + 1;
-	  }
-	snprintf(buf, sizeof(buf), "%s.%d", _gadcon_class.name, num);
+	snprintf(buf, sizeof(buf), "%s.%d", _gadcon_class.name, ++uuid);
 	id = buf;
      }
    else
      {
-	/* Find old config, or reuse supplied id */
+	/* Find old config */
 	for (l = ibox_config->items; l; l = l->next)
 	  {
 	     ci = l->data;
@@ -1366,6 +1358,16 @@ e_modapi_init(E_Module *m)
 	ci->show_desk = 0;
 	ci->icon_label = 0;
 	ibox_config->items = evas_list_append(ibox_config->items, ci);
+     }
+   else
+     {
+	Config_Item *ci;
+	const char *p;
+
+	/* Init uuid */
+	ci = evas_list_last(ibox_config->items)->data;
+	p = strrchr(ci->id, '.');
+	if (p) uuid = atoi(p + 1);
      }
 
    ibox_config->module = m;
