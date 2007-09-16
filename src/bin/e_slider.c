@@ -273,9 +273,9 @@ _e_smart_value_limit(E_Smart_Data *sd)
 	     s = (sd->val_max - sd->val_min) / sd->step_count;
 	     p = sd->val / s;
 	     if (sd->direction == 1)
-	       p = (int)(p + 1);
+	       p = ceil(p);
 	     else if (sd->direction == -1)
-	       p = (int)p;
+	       p = floor(p);
 	     else
 	       p = round(p);
 	     sd->val = p * s;
@@ -286,9 +286,9 @@ _e_smart_value_limit(E_Smart_Data *sd)
 
 	     p = sd->val / sd->step_size;
 	     if (sd->direction == 1)
-	       p = (int)(p + 1);
+	       p = ceil(p);
 	     else if (sd->direction == -1)
-	       p = (int)p;
+	       p = floor(p);
 	     else
 	       p = round(p);
 	     sd->val = p * sd->step_size;
