@@ -76,7 +76,6 @@ struct _IBar_Icon
       unsigned char  start : 1;
       unsigned char  dnd : 1;
       int            x, y;
-      int            dx, dy;
    } drag;
 };
 
