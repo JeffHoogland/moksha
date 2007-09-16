@@ -60,7 +60,7 @@ static void e_gadcon_layout_pack_aspect_set(Evas_Object *obj, int w, int h);
 static void e_gadcon_layout_pack_aspect_pad_set(Evas_Object *obj, int w, int h);
 static void e_gadcon_layout_unpack(Evas_Object *obj);
 
-static int _e_gadcon_client_class_version_check(E_Gadcon_Client_Class *cc);
+static int _e_gadcon_client_class_feature_check(E_Gadcon_Client_Class *cc, const char *name, void *feature);
 
 /********************/
 #define E_LAYOUT_ITEM_DRAG_RESIST_LEVEL 10
@@ -370,7 +370,8 @@ e_gadcon_populate(E_Gadcon *gc)
 	  {
 	     E_Gadcon_Client *gcc;
 
-	     if ((!cf_gcc->id) && (_e_gadcon_client_class_version_check(cc)))
+	     if ((!cf_gcc->id) &&
+		 (_e_gadcon_client_class_feature_check(cc, "id_new", cc->func.id_new)))
 	       cf_gcc->id = evas_stringshare_add(cc->func.id_new());
 
 	     if (!cf_gcc->style)
@@ -683,7 +684,7 @@ e_gadcon_client_config_new(E_Gadcon *gc, const char *name)
 
    cc = evas_hash_find(providers, name);
    if (!cc) return NULL;
-   if (!_e_gadcon_client_class_version_check(cc)) return NULL;
+   if (!_e_gadcon_client_class_feature_check(cc, "id_new", cc->func.id_new)) return NULL;
 
    cf_gcc = E_NEW(E_Config_Gadcon_Client, 1);
    if (!cf_gcc) return NULL;
@@ -4786,11 +4787,14 @@ _e_gadcon_layout_smart_restore_gadcons_position_before_move(E_Smart_Data *sd, E_
 }
 
 static int
-_e_gadcon_client_class_version_check(E_Gadcon_Client_Class *cc)
+_e_gadcon_client_class_feature_check(E_Gadcon_Client_Class *cc, const char *name, void *feature)
 {
-   if (cc->version == GADCON_CLIENT_CLASS_VERSION) return 1;
-   e_util_dialog_show("Old module version",
-	 "Module %s is version %d, it must be<br>"
-	 "version %d to work with e17", cc->name, cc->version, GADCON_CLIENT_CLASS_VERSION);
-   return 0;
+   if (!feature)
+     {
+	e_util_dialog_show("Insufficent gadcon support",
+	                   "Module %s needs to support %s",
+			   cc->name, name);
+	return 0;
+     }
+   return 1;
 }
