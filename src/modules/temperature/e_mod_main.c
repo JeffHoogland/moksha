@@ -49,6 +49,8 @@ static Evas_Bool _temperature_face_id_max(Evas_Hash *hash, const char *key, void
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_face_edd = NULL;
 
+static int uuid = 0;
+
 static Config *temperature_config = NULL;
 
 static E_Gadcon_Client *
@@ -150,10 +152,8 @@ _gc_id_new(void)
 {
    Config_Face *inst;
    char         id[128];
-   int          num = 0;
 
-   evas_hash_foreach(temperature_config->faces, _temperature_face_id_max, &num);
-   snprintf(id, sizeof(id), "%s.%d", _gadcon_class.name, num + 1);
+   snprintf(id, sizeof(id), "%s.%d", _gadcon_class.name, ++uuid);
 
    inst = E_NEW(Config_Face, 1);
    inst->id = evas_stringshare_add(id);
@@ -581,7 +581,7 @@ _temperature_face_id_max(Evas_Hash *hash, const char *key, void *hdata, void *fd
    int        *max;
    int         num = -1;
 
-   max = (int *)fdata;
+   max = fdata;
    p = strrchr(key, '.');
    if (p) num = atoi(p + 1);
    if (num > *max) *max = num;
@@ -691,6 +691,10 @@ e_modapi_init(E_Module *m)
    if (!temperature_config)
      {
 	temperature_config = E_NEW(Config, 1);
+     }
+   else
+     {
+	evas_hash_foreach(temperature_config->faces, _temperature_face_id_max, &uuid);
      }
    temperature_config->module = m;
    
