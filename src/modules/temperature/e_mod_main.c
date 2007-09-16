@@ -17,13 +17,15 @@ static void _gc_shutdown(E_Gadcon_Client *gcc);
 static void _gc_orient(E_Gadcon_Client *gcc);
 static char *_gc_label(void);
 static Evas_Object *_gc_icon(Evas *evas);
+static const char *_gc_id_new(void);
+static void _gc_id_del(const char *id);
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
 {
    GADCON_CLIENT_CLASS_VERSION,
      "temperature",
      {
-        _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon
+        _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, _gc_id_del
      },
    E_GADCON_CLIENT_STYLE_PLAIN
 };
@@ -42,6 +44,7 @@ static void _temperature_face_level_set(Config_Face *inst, double level);
 static void _temperature_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static Evas_Bool _temperature_face_shutdown(Evas_Hash *hash, const char *key, void *hdata, void *fdata);
+static Evas_Bool _temperature_face_id_max(Evas_Hash *hash, const char *key, void *hdata, void *fdata);
 
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_face_edd = NULL;
@@ -59,7 +62,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    if (!inst)
      {
 	inst = E_NEW(Config_Face, 1);
-	temperature_config->faces = evas_hash_add(temperature_config->faces, id, inst);
+	inst->id = evas_stringshare_add(id);
 	inst->poll_time = 10.0;
 	inst->low = 30;
 	inst->high = 80;
@@ -67,7 +70,9 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 	inst->sensor_name = NULL;
 	inst->sensor_path = NULL;
 	inst->units = CELCIUS;
+	temperature_config->faces = evas_hash_direct_add(temperature_config->faces, inst->id, inst);
      }
+   if (!inst->id) evas_stringshare_add(id);
    E_CONFIG_LIMIT(inst->poll_time, 0.5, 1000.0);
    E_CONFIG_LIMIT(inst->low, 0, 100);
    E_CONFIG_LIMIT(inst->high, 0, 220);
@@ -139,6 +144,45 @@ _gc_icon(Evas *evas)
    edje_object_file_set(o, buf, "icon");
    return o;
 }
+
+static const char *
+_gc_id_new(void)
+{
+   Config_Face *inst;
+   char         id[128];
+   int          num = 0;
+
+   evas_hash_foreach(temperature_config->faces, _temperature_face_id_max, &num);
+   snprintf(id, sizeof(id), "%s.%d", _gadcon_class.name, num + 1);
+
+   inst = E_NEW(Config_Face, 1);
+   inst->id = evas_stringshare_add(id);
+   inst->poll_time = 10.0;
+   inst->low = 30;
+   inst->high = 80;
+   inst->sensor_type = SENSOR_TYPE_NONE;
+   inst->sensor_name = NULL;
+   inst->sensor_path = NULL;
+   inst->units = CELCIUS;
+   temperature_config->faces = evas_hash_direct_add(temperature_config->faces, inst->id, inst);
+   return inst->id;
+}
+
+static void
+_gc_id_del(const char *id)
+{
+   Config_Face *inst;
+
+   inst = evas_hash_find(temperature_config->faces, id);
+   if (inst)
+     {
+	temperature_config->faces = evas_hash_del(temperature_config->faces, id, inst);
+	if (inst->sensor_name) evas_stringshare_del(inst->sensor_name);
+	if (inst->sensor_path) evas_stringshare_del(inst->sensor_path);
+	free(inst);
+     }
+}
+
 /**/
 /***************************************************************************/
 
@@ -525,7 +569,22 @@ _temperature_face_shutdown(Evas_Hash *hash, const char *key, void *hdata, void *
 
    if (inst->sensor_name) evas_stringshare_del(inst->sensor_name);
    if (inst->sensor_path) evas_stringshare_del(inst->sensor_path);
+   if (inst->id) evas_stringshare_del(inst->id);
    free(inst);
+   return 1;
+}
+
+static Evas_Bool
+_temperature_face_id_max(Evas_Hash *hash, const char *key, void *hdata, void *fdata)
+{
+   const char *p;
+   int        *max;
+   int         num = -1;
+
+   max = (int *)fdata;
+   p = strrchr(key, '.');
+   if (p) num = atoi(p + 1);
+   if (num > *max) *max = num;
    return 1;
 }
 
@@ -595,6 +654,7 @@ temperature_get_i2c_files()
    return result;
 }
 
+
 /***************************************************************************/
 /**/
 /* module setup */
@@ -612,6 +672,7 @@ e_modapi_init(E_Module *m)
 #undef D
 #define T Config_Face
 #define D conf_face_edd
+   E_CONFIG_VAL(D, T, id, STR);
    E_CONFIG_VAL(D, T, poll_time, DOUBLE);
    E_CONFIG_VAL(D, T, low, INT);
    E_CONFIG_VAL(D, T, high, INT);

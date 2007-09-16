@@ -35,7 +35,7 @@ EAPI int   e_modapi_save     (E_Module *m);
 EAPI int   e_modapi_info     (E_Module *m);
 EAPI int   e_modapi_about    (E_Module *m);
 
-void _ibar_config_update(void);
+void _ibar_config_update(Config_Item *ci);
 void _config_ibar_module(Config_Item *ci);
 extern Config *ibar_config;
 

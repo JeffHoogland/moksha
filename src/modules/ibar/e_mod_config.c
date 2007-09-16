@@ -153,7 +153,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->dir) ci->dir = evas_stringshare_add(cfdata->dir);
    ci->show_label = cfdata->show_label;
    ci->eap_label = cfdata->eap_label;
-   _ibar_config_update();
+   _ibar_config_update(ci);
    e_config_save_queue();
    return 1;
 }

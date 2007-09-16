@@ -12,13 +12,15 @@ static void _gc_shutdown(E_Gadcon_Client *gcc);
 static void _gc_orient(E_Gadcon_Client *gcc);
 static char *_gc_label(void);
 static Evas_Object *_gc_icon(Evas *evas);
+static const char *_gc_id_new(void);
+static void _gc_id_del(const char *id);
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
 {
    GADCON_CLIENT_CLASS_VERSION,
      "ibox",
      {
-	_gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon
+        _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, _gc_id_del
      },
    E_GADCON_CLIENT_STYLE_INSET
 };
@@ -40,6 +42,7 @@ struct _Instance
    Evas_Object     *o_ibox;
    IBox            *ibox;
    E_Drop_Handler  *drop_handler;
+   Config_Item     *ci;
 };
 
 struct _IBox
@@ -52,10 +55,6 @@ struct _IBox
    IBox_Icon      *ic_drop_before;
    int             drop_before;
    Evas_List      *icons;
-   int             show_label;
-   int		   show_zone;
-   int		   show_desk;
-   int             icon_label;
    E_Zone          *zone;
    Evas_Coord      dnd_x, dnd_y;
 };
@@ -140,16 +139,12 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst = E_NEW(Instance, 1);
 
    ci = _ibox_config_item_get(id);
+   inst->ci = ci;
 
    b = _ibox_new(gc->evas, gc->zone);
-   b->show_label = ci->show_label;
-   b->show_zone = ci->show_zone;
-   b->show_desk = ci->show_desk;
-   b->icon_label = ci->icon_label;
-   _ibox_fill(b);
-
    b->inst = inst;
    inst->ibox = b;
+   _ibox_fill(b);
    o = b->o_box;
    gcc = e_gadcon_client_new(gc, name, id, style, o);
    gcc->data = inst;
@@ -236,6 +231,29 @@ _gc_icon(Evas *evas)
    edje_object_file_set(o, buf, "icon");
    return o;
 }
+
+static const char *
+_gc_id_new(void)
+{
+   Config_Item *ci;
+
+   ci = _ibox_config_item_get(NULL);
+   return ci->id;
+}
+
+static void
+_gc_id_del(const char *id)
+{
+   Config_Item *ci;
+
+   ci = _ibox_config_item_get(id);
+   if (ci)
+     {
+	if (ci->id) evas_stringshare_del(ci->id);
+	ibox_config->items = evas_list_remove(ibox_config->items, ci);
+     }
+}
+
 /**/
 /***************************************************************************/
 
@@ -352,17 +370,17 @@ _ibox_fill(IBox *b)
    while ((bd = e_container_border_list_next(bl)))
      {
 	ok = 0;
-	if ((b->show_zone == 0) && (bd->iconic))
+	if ((b->inst->ci->show_zone == 0) && (bd->iconic))
 	  {
 	     ok = 1;
 	  }
-	else if((b->show_zone == 1) && (bd->iconic))
+	else if((b->inst->ci->show_zone == 1) && (bd->iconic))
 	  {
-	     if ((b->show_desk == 0) && (bd->zone == b->zone))
+	     if ((b->inst->ci->show_desk == 0) && (bd->zone == b->zone))
 	       {
 		  ok = 1;
 	       }
-	     else if((b->show_desk == 1) && (bd->zone == b->zone) &&
+	     else if((b->inst->ci->show_desk == 1) && (bd->zone == b->zone) &&
 		     (bd->desk == e_desk_current_get(b->zone)))
 	       {
 		  ok = 1;
@@ -538,7 +556,7 @@ _ibox_icon_fill_label(IBox_Icon *ic)
 {
    char *label = NULL;
 
-   switch (ic->ibox->icon_label)
+   switch (ic->ibox->inst->ci->icon_label)
      {
       case 0:
 	label = ic->border->client.netwm.name;
@@ -594,18 +612,12 @@ _ibox_zone_find(E_Zone *zone)
    for (l = ibox_config->instances; l; l = l->next)
      {
 	Instance *inst;
-	Config_Item *ci;
 
 	inst = l->data;
-	ci = _ibox_config_item_get(inst->gcc->id);
-	if (!ci) continue;
-
-	if (ci->show_zone == 0)
+	if (inst->ci->show_zone == 0)
 	  ibox = evas_list_append(ibox, inst->ibox);
-	else if (ci->show_zone == 1)
-	  {
-	     if (inst->ibox->zone == zone) ibox = evas_list_append(ibox, inst->ibox);
-	  }
+	else if ((inst->ci->show_zone == 1) && (inst->ibox->zone == zone))
+	  ibox = evas_list_append(ibox, inst->ibox);
      }
    return ibox;
 }
@@ -637,7 +649,7 @@ _ibox_cb_icon_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ev = event_info;
    ic = data;
    _ibox_icon_signal_emit(ic, "e,state,focused", "e");
-   if (ic->ibox->show_label)
+   if (ic->ibox->inst->ci->show_label)
      {
 	_ibox_icon_fill_label(ic);
 	_ibox_icon_signal_emit(ic, "e,action,show,label", "e");
@@ -653,7 +665,7 @@ _ibox_cb_icon_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ev = event_info;
    ic = data;
    _ibox_icon_signal_emit(ic, "e,state,unfocused", "e");
-   if (ic->ibox->show_label)
+   if (ic->ibox->inst->ci->show_label)
      _ibox_icon_signal_emit(ic, "e,action,hide,label", "e");
 }
 
@@ -1022,7 +1034,7 @@ _ibox_cb_event_border_add(void *data, int type, void *event)
 	  {
 	     b = l->data;
 	     if (_ibox_icon_find(b, ev->border)) continue;
-	     if ((b->show_desk) && (ev->border->desk != desk)) continue;
+	     if ((b->inst->ci->show_desk) && (ev->border->desk != desk)) continue;
 	     ic = _ibox_icon_new(b, ev->border);
 	     if (!ic) continue;
 	     b->icons = evas_list_append(b->icons, ic);
@@ -1084,7 +1096,7 @@ _ibox_cb_event_border_iconify(void *data, int type, void *event)
      {
 	b = l->data;
 	if (_ibox_icon_find(b, ev->border)) continue;
-	if ((b->show_desk) && (ev->border->desk != desk)) continue;
+	if ((b->inst->ci->show_desk) && (ev->border->desk != desk)) continue;
 	ic = _ibox_icon_new(b, ev->border);
 	if (!ic) continue;
 	b->icons = evas_list_append(b->icons, ic);
@@ -1212,7 +1224,7 @@ _ibox_cb_event_desk_show(void *data, int type, void *event)
    for (l = ibox; l; l = l->next)
      {
 	b = l->data;
-	if (b->show_desk)
+	if (b->inst->ci->show_desk)
 	  {
 	     _ibox_empty(b);
 	     _ibox_fill(b);
@@ -1232,39 +1244,61 @@ _ibox_config_item_get(const char *id)
 {
    Evas_List *l;
    Config_Item *ci;
-
-   for (l = ibox_config->items; l; l = l->next)
+   if (!id)
      {
-	ci = l->data;
-	if ((ci->id) && (!strcmp(ci->id, id)))
-	  return ci;
+	char buf[128];
+	int  num = 0;
+
+	/* Create id */
+	if (ibox_config->items)
+	  {
+	     char *p;
+	     ci = evas_list_last(ibox_config->items)->data;
+	     p = strrchr(ci->id, '.');
+	     if (p) num = atoi(p + 1) + 1;
+	  }
+	snprintf(buf, sizeof(buf), "%s.%d", _gadcon_class.name, num);
+
+	/* Create new config */
+	ci = E_NEW(Config_Item, 1);
+	ci->id = evas_stringshare_add(buf);
+	ci->show_label = 0;
+	ci->show_zone = 1;
+	ci->show_desk = 0;
+	ci->icon_label = 0;
+	ibox_config->items = evas_list_append(ibox_config->items, ci);
      }
-   ci = E_NEW(Config_Item, 1);
-   ci->id = evas_stringshare_add(id);
-   ci->show_label = 0;
-   ci->show_zone = 1;
-   ci->show_desk = 0;
-   ci->icon_label = 0;
-   ibox_config->items = evas_list_append(ibox_config->items, ci);
+   else
+     {
+	/* Find old config, or reuse supplied id */
+	for (l = ibox_config->items; l; l = l->next)
+	  {
+	     ci = l->data;
+	     if ((ci->id) && (!strcmp(ci->id, id)))
+	       return ci;
+	  }
+	ci = E_NEW(Config_Item, 1);
+	ci->id = evas_stringshare_add(id);
+	ci->show_label = 0;
+	ci->show_zone = 1;
+	ci->show_desk = 0;
+	ci->icon_label = 0;
+	ibox_config->items = evas_list_append(ibox_config->items, ci);
+     }
    return ci;
 }
 
 void
-_ibox_config_update(void)
+_ibox_config_update(Config_Item *ci)
 {
    Evas_List *l;
    for (l = ibox_config->instances; l; l = l->next)
      {
 	Instance *inst;
-	Config_Item *ci;
 
 	inst = l->data;
-	ci = _ibox_config_item_get(inst->gcc->id);
-	inst->ibox->show_label = ci->show_label;
-	inst->ibox->show_zone = ci->show_zone;
-	inst->ibox->show_desk = ci->show_desk;
-	inst->ibox->icon_label = ci->icon_label;
-	
+	if (inst->ci != ci) continue;
+
 	_ibox_empty(inst->ibox);
 	_ibox_fill(inst->ibox);
 	_ibox_resize_handle(inst->ibox);
@@ -1281,13 +1315,12 @@ _ibox_cb_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi)
    Evas_List *l;
 
    b = data;
-   ci = _ibox_config_item_get(b->inst->gcc->id);
    for (l = ibox_config->config_dialog; l; l = l->next)
      {
 	E_Config_Dialog *cfd;
 
 	cfd = l->data;
-	if (cfd->data == ci)
+	if (cfd->data == b->inst->ci)
 	  {
 	     ok = 0;
 	     break;

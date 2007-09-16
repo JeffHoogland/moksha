@@ -16,13 +16,15 @@ static void _gc_shutdown(E_Gadcon_Client *gcc);
 static void _gc_orient(E_Gadcon_Client *gcc);
 static char *_gc_label(void);
 static Evas_Object *_gc_icon(Evas *evas);
+static const char *_gc_id_new(void);
+static void _gc_id_del(const char *id);
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
 {
    GADCON_CLIENT_CLASS_VERSION,
      "ibar",
      {
-	_gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon
+        _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, _gc_id_del
      },
    E_GADCON_CLIENT_STYLE_INSET
 };
@@ -44,7 +46,7 @@ struct _Instance
    Evas_Object     *o_ibar;
    IBar            *ibar;
    E_Drop_Handler  *drop_handler;
-   const char      *dir;
+   Config_Item     *ci;
 };
 
 struct _IBar
@@ -58,8 +60,6 @@ struct _IBar
    int             drop_before;
    E_Order        *apps;
    Evas_List      *icons;
-   int             show_label;
-   int             eap_label;
    Evas_Coord	   dnd_x, dnd_y;
 };
 
@@ -80,7 +80,7 @@ struct _IBar_Icon
    } drag;
 };
 
-static IBar *_ibar_new(Evas *evas, const char *dir);
+static IBar *_ibar_new(Evas *evas, Instance *inst);
 static void _ibar_free(IBar *b);
 static void _ibar_cb_empty_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _ibar_empty_handle(IBar *b);
@@ -137,13 +137,9 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst = E_NEW(Instance, 1);
 
    ci = _ibar_config_item_get(id);
+   inst->ci = ci;
    if (!ci->dir) ci->dir = evas_stringshare_add("default");
-   inst->dir = evas_stringshare_add(ci->dir);
-   b = _ibar_new(gc->evas, ci->dir);
-   b->show_label = ci->show_label;
-   b->eap_label = ci->eap_label;
-   b->inst = inst;
-   inst->ibar = b;
+   b = _ibar_new(gc->evas, inst);
    o = b->o_box;
    gcc = e_gadcon_client_new(gc, name, id, style, o);
    gcc->data = inst;
@@ -171,7 +167,6 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    Instance *inst;
    
    inst = gcc->data;
-   evas_stringshare_del(inst->dir);
    ibar_config->instances = evas_list_remove(ibar_config->instances, inst);
    e_drop_handler_del(inst->drop_handler);
    _ibar_free(inst->ibar);
@@ -231,6 +226,29 @@ _gc_icon(Evas *evas)
    edje_object_file_set(o, buf, "icon");
    return o;
 }
+
+static const char *
+_gc_id_new(void)
+{
+   Config_Item *ci;
+
+   ci = _ibar_config_item_get(NULL);
+   return ci->id;
+}
+
+static void
+_gc_id_del(const char *id)
+{
+   Config_Item *ci;
+
+   ci = _ibar_config_item_get(id);
+   if (ci)
+     {
+	if (ci->id) evas_stringshare_del(ci->id);
+	ibar_config->items = evas_list_remove(ibar_config->items, ci);
+     }
+}
+
 /**/
 /***************************************************************************/
 
@@ -238,25 +256,27 @@ _gc_icon(Evas *evas)
 /**/
 
 static IBar *
-_ibar_new(Evas *evas, const char *dir)
+_ibar_new(Evas *evas, Instance *inst)
 {
    IBar *b;
    char buf[4096];
    
    b = E_NEW(IBar, 1);
+   inst->ibar = b;
+   b->inst = inst;
    b->o_box = e_box_add(evas);
    e_box_homogenous_set(b->o_box, 1);
    e_box_orientation_set(b->o_box, 1);
    e_box_align_set(b->o_box, 0.5, 0.5);
-   if (dir[0] != '/')
+   if (inst->ci->dir[0] != '/')
      {
 	const char *homedir;
 
 	homedir = e_user_homedir_get();
-	snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s/.order", homedir, dir);
+	snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s/.order", homedir, inst->ci->dir);
      }
    else
-     snprintf(buf, sizeof(buf), dir);
+     snprintf(buf, sizeof(buf), inst->ci->dir);
    b->apps = e_order_new(buf);
    e_order_update_callback_set(b->apps, _ibar_cb_app_change, b);
    _ibar_fill(b);
@@ -431,23 +451,49 @@ _ibar_config_item_get(const char *id)
 {
    Evas_List *l;
    Config_Item *ci;
-   
-   for (l = ibar_config->items; l; l = l->next)
+ 
+   if (!id)
      {
-	ci = l->data;
-	if ((ci->id) && (ci->dir) && (!strcmp(ci->id, id)))
-	  return ci;
+	char buf[128];
+	int  num = 0;
+
+	/* Create id */
+	if (ibar_config->items)
+	  {
+	     char *p;
+	     ci = evas_list_last(ibar_config->items)->data;
+	     p = strrchr(ci->id, '.');
+	     if (p) num = atoi(p + 1) + 1;
+	  }
+	snprintf(buf, sizeof(buf), "%s.%d", _gadcon_class.name, num);
+
+	/* Create new config */
+	ci = E_NEW(Config_Item, 1);
+	ci->id = evas_stringshare_add(buf);
+	ci->show_label = 1;
+	ci->eap_label = 0;
+	ibar_config->items = evas_list_append(ibar_config->items, ci);
      }
-   ci = E_NEW(Config_Item, 1);
-   ci->id = evas_stringshare_add(id);
-   ci->show_label = 1;
-   ci->eap_label = 0;
-   ibar_config->items = evas_list_append(ibar_config->items, ci);
+   else
+     {
+	/* Find old config, or reuse supplied id */
+	for (l = ibar_config->items; l; l = l->next)
+	  {
+	     ci = l->data;
+	     if ((ci->id) && (ci->dir) && (!strcmp(ci->id, id)))
+	       return ci;
+	  }
+	ci = E_NEW(Config_Item, 1);
+	ci->id = evas_stringshare_add(id);
+	ci->show_label = 1;
+	ci->eap_label = 0;
+	ibar_config->items = evas_list_append(ibar_config->items, ci);
+     }
    return ci;
 }
 
 void
-_ibar_config_update(void)
+_ibar_config_update(Config_Item *ci)
 {
    Evas_List *l;
    Evas_List *i;
@@ -455,35 +501,27 @@ _ibar_config_update(void)
    for (l = ibar_config->instances; l; l = l->next)
      {
 	Instance *inst;
-	Config_Item *ci;
-	
+	char buf[4096];
+
 	inst = l->data;
-	ci = _ibar_config_item_get(inst->gcc->id);
-	if ((inst->dir) && (ci->dir) && (strcmp(ci->dir, inst->dir)))
-	  {
-	     char buf[4096];
+	if (inst->ci != ci) continue;
 	     
-	     evas_stringshare_del(inst->dir);
-	     inst->dir = evas_stringshare_add(ci->dir);
-	     _ibar_empty(inst->ibar);
-	     if (inst->ibar->apps)
-	       e_object_del(E_OBJECT(inst->ibar->apps));
-	     if (inst->dir[0] != '/')
-	       {
-		  const char *homedir;
-		  
-		  homedir = e_user_homedir_get();
-		  snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s/.order", homedir, inst->dir);
-	       }
-	     else
-	       snprintf(buf, sizeof(buf), inst->dir);
-	     inst->ibar->apps = e_order_new(buf);
-	     _ibar_fill(inst->ibar);
-	     _ibar_resize_handle(inst->ibar);
-	     _gc_orient(inst->gcc);
+	_ibar_empty(inst->ibar);
+	if (inst->ibar->apps)
+	  e_object_del(E_OBJECT(inst->ibar->apps));
+	if (inst->ci->dir[0] != '/')
+	  {
+	     const char *homedir;
+
+	     homedir = e_user_homedir_get();
+	     snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/%s/.order", homedir, inst->ci->dir);
 	  }
-	inst->ibar->show_label = ci->show_label;
-	inst->ibar->eap_label = ci->eap_label;
+	else
+	  snprintf(buf, sizeof(buf), inst->ci->dir);
+	inst->ibar->apps = e_order_new(buf);
+	_ibar_fill(inst->ibar);
+	_ibar_resize_handle(inst->ibar);
+	_gc_orient(inst->gcc);
 
 	for (i = inst->ibar->icons; i; i = i->next) 
 	  {
@@ -589,7 +627,7 @@ _ibar_icon_fill(IBar_Icon *ic)
    evas_object_pass_events_set(ic->o_icon2, 1);
    evas_object_show(ic->o_icon2);
    
-   switch (ic->ibar->eap_label) 
+   switch (ic->ibar->inst->ci->eap_label) 
      {
       case 0: /* Eap Name */
 	edje_object_part_text_set(ic->o_holder, "e.text.label", ic->app->name);
@@ -679,11 +717,9 @@ static void
 _ibar_cb_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    IBar *b;
-   Config_Item *ci;
-   
+ 
    b = data;
-   ci = _ibar_config_item_get(b->inst->gcc->id);
-   _config_ibar_module(ci);
+   _config_ibar_module(b->inst->ci);
 }
 
 static void
@@ -714,7 +750,7 @@ _ibar_cb_icon_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ev = event_info;
    ic = data;
    _ibar_icon_signal_emit(ic, "e,state,focused", "e");
-   if (ic->ibar->show_label)
+   if (ic->ibar->inst->ci->show_label)
      _ibar_icon_signal_emit(ic, "e,action,show,label", "e");
 }
 
@@ -727,7 +763,7 @@ _ibar_cb_icon_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ev = event_info;
    ic = data;
    _ibar_icon_signal_emit(ic, "e,state,unfocused", "e");
-   if (ic->ibar->show_label)
+   if (ic->ibar->inst->ci->show_label)
      _ibar_icon_signal_emit(ic, "e,action,hide,label", "e");
 }
 
@@ -1222,19 +1258,6 @@ e_modapi_shutdown(E_Module *m)
 EAPI int
 e_modapi_save(E_Module *m)
 {
-   Evas_List *l;
-   
-   for (l = ibar_config->instances; l; l = l->next)
-     {
-	Instance *inst;
-	Config_Item *ci;
-	
-	inst = l->data;
-	ci = _ibar_config_item_get(inst->gcc->id);
-	if (ci->dir) evas_stringshare_del(ci->dir);
-	/* FIXME: path should be recorded from setup */
-	ci->dir = evas_stringshare_add(inst->dir);
-     }
    e_config_domain_save("module.ibar", conf_edd, ibar_config);
    return 1;
 }

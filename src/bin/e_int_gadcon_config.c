@@ -11,12 +11,13 @@ static void _load_available_gadgets(void *data);
 static void _load_selected_gadgets(void *data);
 static int _cb_mod_update(void *data, int type, void *event);
 
-/* Actual config data we will be playing with whil the dialog is active */
+/* Actual config data we will be playing with while the dialog is active */
 struct _E_Config_Dialog_Data
 {
    E_Gadcon *gc;
    char *name_add;
    char *id_remove;
+   Evas_Hash *ids;
    Evas_Object *o_add, *o_remove, *o_instances, *o_avail;
 
    E_Config_Gadcon *cf_gc;
@@ -51,9 +52,19 @@ e_int_gadcon_config(E_Gadcon *gc)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
+   Evas_List *l;
+
    cfdata->name_add = NULL;
    cfdata->id_remove = NULL;
-   cfdata->cf_gc = e_gadcon_config_get(cfdata->gc->name, cfdata->gc->id);
+   cfdata->cf_gc = cfdata->gc->cf;
+
+   for (l = cfdata->cf_gc->clients; l; l = l->next)
+     {
+	char buf[32];
+
+	snprintf(buf, sizeof(buf), "%p", l->data);
+	cfdata->ids = evas_hash_add(cfdata->ids, buf, l->data);
+     }
 }
 
 static void *
@@ -71,6 +82,7 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    cfdata->gc->config_dialog = NULL;
+   evas_hash_free(cfdata->ids);
    if (cfdata->name_add) free(cfdata->name_add);
    if (cfdata->id_remove) free(cfdata->id_remove);
    if (cfdata->hdl) ecore_event_handler_del(cfdata->hdl);
@@ -103,7 +115,7 @@ _cb_add_instance(void *data, void *data2)
    cfdata = data;
    if (!cfdata) return;
    
-   e_gadcon_client_config_new(cfdata->gc, cfdata->name_add);
+   if (!e_gadcon_client_config_new(cfdata->gc, cfdata->name_add)) return;
  
    e_gadcon_unpopulate(cfdata->gc);
    e_gadcon_populate(cfdata->gc);
@@ -123,7 +135,7 @@ _cb_remove_instance(void *data, void *data2)
    cfdata = data;
    i = e_widget_ilist_selected_get(cfdata->o_instances);
 
-   e_gadcon_client_config_del(cfdata->gc, cfdata->id_remove);
+   e_gadcon_client_config_del(cfdata->cf_gc, evas_hash_find(cfdata->ids, cfdata->id_remove));
 
    _load_selected_gadgets(cfdata);
 
@@ -259,11 +271,14 @@ _load_selected_gadgets(void *data)
 	     if ((cc->name) && (cf_gcc->name) &&
 		 (!strcmp(cc->name, cf_gcc->name))) 
 	       {
+		  char buf[32];
+
+		  snprintf(buf, sizeof(buf), "%p", cf_gcc);
 		  if (cc->func.label) label = cc->func.label();
 		  if (!label) label = cc->name;
 		  if (cc->func.icon) icon = cc->func.icon(evas);
 		  e_widget_ilist_append(oi, icon, label, _cb_select_client_instance,
-					cfdata, cf_gcc->id);
+					cfdata, buf);
 	       }
 	  }
      }

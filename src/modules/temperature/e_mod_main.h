@@ -27,6 +27,7 @@ typedef enum _Sensor_Type
 
 struct _Config_Face
 {
+   const char      *id;
    /* saved * loaded config values */
    double           poll_time;
    int              low, high;

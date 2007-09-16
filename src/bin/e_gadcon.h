@@ -3,6 +3,8 @@
  */
 #ifdef E_TYPEDEFS
 
+#define E_GADCON_CLIENT(x)   ((E_Gadcon_Client *)(x))
+
 /* different layout policies - only 1 supported for now */
 typedef enum _E_Gadcon_Layout_Policy
 {
@@ -84,9 +86,11 @@ struct _E_Gadcon
    E_Shelf            *shelf;
 
    E_Drop_Handler *drop_handler;
+
+   E_Config_Gadcon *cf;
 };
 
-#define GADCON_CLIENT_CLASS_VERSION 1
+#define GADCON_CLIENT_CLASS_VERSION 2
 struct _E_Gadcon_Client_Class
 {
    int   version;
@@ -99,6 +103,11 @@ struct _E_Gadcon_Client_Class
       char            *(*label)    (void);
       Evas_Object     *(*icon)     (Evas *evas);
       /* All members below are part of version 2 */
+      /* Create new id, so that the gadcon client can refer to a config set inside the module */
+      const char      *(*id_new)   (void);
+      /* Del an id when a gadcon client is removed from the system */
+      void             (*id_del)   (const char *id);
+      /* All members below are part of version 3 */
    } func;
    char *default_style;
 };
@@ -108,7 +117,7 @@ struct _E_Gadcon_Client
    E_Object               e_obj_inherit;
    E_Gadcon              *gadcon;
    const char            *name;
-   const char            *id;
+   int                    id;
    Evas_Object           *o_base;
    Evas_Object           *o_box;
    Evas_Object           *o_frame;
@@ -153,15 +162,16 @@ struct _E_Gadcon_Client
    } drag;
 
    unsigned char       hidden : 1;
+
+   E_Config_Gadcon_Client *cf;
 };
 
 EAPI int              e_gadcon_init(void);
 EAPI int              e_gadcon_shutdown(void);
-EAPI E_Config_Gadcon *e_gadcon_config_get(const char *name, const char *id);
 EAPI void             e_gadcon_provider_register(const E_Gadcon_Client_Class *cc);
 EAPI void             e_gadcon_provider_unregister(const E_Gadcon_Client_Class *cc);
 EAPI Evas_List       *e_gadcon_provider_list(void);
-EAPI E_Gadcon        *e_gadcon_swallowed_new(const char *name, char *id, Evas_Object *obj, char *swallow_name);
+EAPI E_Gadcon        *e_gadcon_swallowed_new(const char *name, const char *id, Evas_Object *obj, char *swallow_name);
 EAPI void             e_gadcon_swallowed_min_size_set(E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 EAPI void             e_gadcon_min_size_request_callback_set(E_Gadcon *gc, void (*func) (void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h), void *data);
 EAPI void             e_gadcon_size_request_callback_set(E_Gadcon *gc, void (*func) (void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h), void *data);
@@ -186,8 +196,7 @@ EAPI void             e_gadcon_shelf_set(E_Gadcon *gc, E_Shelf *shelf);
 EAPI E_Shelf         *e_gadcon_shelf_get(E_Gadcon *gc);
     
 EAPI E_Config_Gadcon_Client *e_gadcon_client_config_new(E_Gadcon *gc, const char *name);
-EAPI E_Config_Gadcon_Client *e_gadcon_client_config_get(E_Gadcon *gc, const char *id);
-EAPI void             e_gadcon_client_config_del(E_Gadcon *gc, const char *id);
+EAPI void             e_gadcon_client_config_del(E_Config_Gadcon *cf_gc, E_Config_Gadcon_Client *cf_gcc);
 EAPI E_Gadcon_Client *e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id, const char *style, Evas_Object *base_obj);
 EAPI void             e_gadcon_client_edit_begin(E_Gadcon_Client *gcc);
 EAPI void             e_gadcon_client_edit_end(E_Gadcon_Client *gcc);
@@ -205,7 +214,5 @@ EAPI int	      e_gadcon_client_geometry_get(E_Gadcon_Client *gcc, int *x, int *y
 EAPI void             e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu, int flags);
 EAPI void             e_gadcon_client_util_menu_attach(E_Gadcon_Client *gcc);
 
-EAPI E_Gadcon_Client *e_gadcon_client_find(E_Gadcon *gc, const char *id);
-    
 #endif
 #endif

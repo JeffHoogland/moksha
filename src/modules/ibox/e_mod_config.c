@@ -165,7 +165,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    ci->show_zone = cfdata->zone_policy;
    ci->show_desk = cfdata->desk_policy;
 
-   _ibox_config_update();
+   _ibox_config_update(ci);
    e_config_save_queue();
    return 1;
 }

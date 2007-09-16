@@ -29,7 +29,6 @@ struct _Config
    unsigned int    drag_resist;
    unsigned int    scale;
    unsigned char   resize;
-   Evas_List      *items; /* FIXME: save/load this */
    /* just config state */
    E_Module        *module;
    E_Config_Dialog *config_dialog;
@@ -41,12 +40,6 @@ struct _Config
    unsigned int     btn_noplace;
    unsigned int     btn_desk;
    unsigned int     flip_desk;
-};
-
-struct _Config_Item
-{
-   char *id;
-   int   zone_num;
 };
 
 EAPI extern E_Module_Api e_modapi;
