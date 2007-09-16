@@ -1244,9 +1244,10 @@ _ibox_config_item_get(const char *id)
 {
    Evas_List *l;
    Config_Item *ci;
+   char buf[128];
+
    if (!id)
      {
-	char buf[128];
 	int  num = 0;
 
 	/* Create id */
@@ -1258,15 +1259,7 @@ _ibox_config_item_get(const char *id)
 	     if (p) num = atoi(p + 1) + 1;
 	  }
 	snprintf(buf, sizeof(buf), "%s.%d", _gadcon_class.name, num);
-
-	/* Create new config */
-	ci = E_NEW(Config_Item, 1);
-	ci->id = evas_stringshare_add(buf);
-	ci->show_label = 0;
-	ci->show_zone = 1;
-	ci->show_desk = 0;
-	ci->icon_label = 0;
-	ibox_config->items = evas_list_append(ibox_config->items, ci);
+	id = buf;
      }
    else
      {
@@ -1277,14 +1270,14 @@ _ibox_config_item_get(const char *id)
 	     if ((ci->id) && (!strcmp(ci->id, id)))
 	       return ci;
 	  }
-	ci = E_NEW(Config_Item, 1);
-	ci->id = evas_stringshare_add(id);
-	ci->show_label = 0;
-	ci->show_zone = 1;
-	ci->show_desk = 0;
-	ci->icon_label = 0;
-	ibox_config->items = evas_list_append(ibox_config->items, ci);
      }
+   ci = E_NEW(Config_Item, 1);
+   ci->id = evas_stringshare_add(id);
+   ci->show_label = 0;
+   ci->show_zone = 1;
+   ci->show_desk = 0;
+   ci->icon_label = 0;
+   ibox_config->items = evas_list_append(ibox_config->items, ci);
    return ci;
 }
 

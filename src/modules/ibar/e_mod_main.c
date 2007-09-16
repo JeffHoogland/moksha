@@ -451,10 +451,10 @@ _ibar_config_item_get(const char *id)
 {
    Evas_List *l;
    Config_Item *ci;
- 
+   char buf[128];
+
    if (!id)
      {
-	char buf[128];
 	int  num = 0;
 
 	/* Create id */
@@ -466,13 +466,7 @@ _ibar_config_item_get(const char *id)
 	     if (p) num = atoi(p + 1) + 1;
 	  }
 	snprintf(buf, sizeof(buf), "%s.%d", _gadcon_class.name, num);
-
-	/* Create new config */
-	ci = E_NEW(Config_Item, 1);
-	ci->id = evas_stringshare_add(buf);
-	ci->show_label = 1;
-	ci->eap_label = 0;
-	ibar_config->items = evas_list_append(ibar_config->items, ci);
+	id = buf;
      }
    else
      {
@@ -483,12 +477,12 @@ _ibar_config_item_get(const char *id)
 	     if ((ci->id) && (ci->dir) && (!strcmp(ci->id, id)))
 	       return ci;
 	  }
-	ci = E_NEW(Config_Item, 1);
-	ci->id = evas_stringshare_add(id);
-	ci->show_label = 1;
-	ci->eap_label = 0;
-	ibar_config->items = evas_list_append(ibar_config->items, ci);
      }
+   ci = E_NEW(Config_Item, 1);
+   ci->id = evas_stringshare_add(id);
+   ci->show_label = 1;
+   ci->eap_label = 0;
+   ibar_config->items = evas_list_append(ibar_config->items, ci);
    return ci;
 }
 
