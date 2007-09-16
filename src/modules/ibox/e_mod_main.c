@@ -1252,7 +1252,7 @@ _ibox_config_item_get(const char *id)
 	/* Create id */
 	if (ibox_config->items)
 	  {
-	     char *p;
+	     const char *p;
 	     ci = evas_list_last(ibox_config->items)->data;
 	     p = strrchr(ci->id, '.');
 	     if (p) num = atoi(p + 1) + 1;
