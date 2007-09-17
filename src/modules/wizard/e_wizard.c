@@ -266,6 +266,12 @@ e_wizard_button_next_enable_set(int enable)
    _e_wizard_next_eval();
 }
 
+EAPI void
+e_wizard_title_set(const char *title)
+{
+   edje_object_part_text_set(o_bg, "e.text.title", title);
+}
+
 static void
 _e_wizard_back_eval(void)
 {
@@ -332,18 +338,12 @@ _e_wizard_main_new(E_Zone *zone)
    o_ev = o;
 
    /* set up next/prev buttons */
-   edje_object_part_text_set(o_bg, "e.text.title", _("Welcome to Enlightenment"));
+   edje_object_part_text_set(o_bg, "e.text.title", _("Welcome to Enlightenment 東京"));
    edje_object_part_text_set(o_bg, "e.text.page", "");
    edje_object_part_text_set(o_bg, "e.text.next", _("Next"));
    edje_object_part_text_set(o_bg, "e.text.back", _("Back"));
    edje_object_signal_emit(o_bg, "e,state,next,disable", "e");
    edje_object_signal_emit(o_bg, "e,state,back,disable", "e");
-   
-   /* set up rest here */
-   //evas_object_show(o);
-   //edje_object_part_swallow(o_bg, "e.swallow.content", o);
-   //e_widget_focus_set(o, 1);
-   //o_content = o;
    
    e_popup_edje_bg_object_set(pop, o_bg);
    e_popup_show(pop);
