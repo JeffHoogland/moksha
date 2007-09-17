@@ -162,7 +162,7 @@ group {
 	    color_class: "module_label";
 	    text {
 	       text:     "100%";
-	       font:     "Edje-Vera-Bold";
+               font: "Sans:style=Bold,Edje-Vera-Bold";
 	       size:     8;
 	       min:      1 1;
 	       align:    1.0 0.0;

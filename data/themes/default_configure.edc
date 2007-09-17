@@ -89,7 +89,7 @@ group {
 	    color_class: "configure_title";
 	    text {
 	       text:     "Enlightenment Configuration";
-	       font:     "Edje-Vera-Bold";
+               font: "Sans:style=Bold,Edje-Vera-Bold";
 	       size:     16;
 	       min:      1 1;
 	       align:    0.5 0.5;

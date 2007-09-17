@@ -4,11 +4,7 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-static void
-button_cb(void *data, void *data2)
-{
-   e_wizard_button_next_enable_set(1);
-}
+static char *lang = NULL;
 
 EAPI int
 wizard_page_init(E_Wizard_Page *pg)
@@ -23,18 +19,18 @@ wizard_page_shutdown(E_Wizard_Page *pg)
 EAPI int
 wizard_page_show(E_Wizard_Page *pg)
 {
-   Evas_Object *ob, *o;
+   Evas_Object *o, *of, *ob;
     
-   printf("t1\n");
-   ob = e_widget_list_add(pg->evas, 1, 0);
-   o = e_widget_button_add(pg->evas,
-			   "Hello World", NULL,
-			   button_cb, NULL, NULL);
-   e_widget_list_object_append(ob, o, 0, 0, 0.5);
-   evas_object_show(o);
-   e_wizard_page_show(ob);
-   pg->data = ob;
-   e_wizard_button_next_enable_set(0);
+   o = e_widget_list_add(pg->evas, 1, 0);
+   of = e_widget_framelist_add(pg->evas, _("Choose Language"), 0);
+   ob = e_widget_ilist_add(pg->evas, 16, 16, &lang);
+   e_widget_min_size_set(ob, 175, 175);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, of, 0, 0, 0.5);
+   evas_object_show(ob);
+   evas_object_show(of);
+   e_wizard_page_show(o);
+   pg->data = of;
    return 1; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 EAPI int
@@ -46,6 +42,6 @@ wizard_page_hide(E_Wizard_Page *pg)
 EAPI int
 wizard_page_apply(E_Wizard_Page *pg)
 {
-   printf("a1\n");
+   printf("a2\n");
    return 1;
 }

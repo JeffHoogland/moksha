@@ -425,7 +425,7 @@ group {
 	    color_class: "about_title";
 	    text {
 	       text:     "Enlightenment";
-	       font:     "Edje-Vera-Bold";
+               font: "Sans:style=Bold,Edje-Vera-Bold";
 	       size:     16;
 	       min:      1 1;
 	       align:    0.5 0.5;
@@ -457,7 +457,7 @@ group {
 	    color_class: "about_version";
 	    text {
 	       text:     "0.17.0.000";
-	       font:     "Edje-Vera-Bold";
+               font: "Sans:style=Bold,Edje-Vera-Bold";
 	       size:     12;
 	       min:      1 1;
 	       align:    0.5 0.5;

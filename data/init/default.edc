@@ -56,8 +56,8 @@
 #endif
 
 fonts {                            
-   font: "Vera.ttf"   "Edje Vera";
-   font: "VeraBd.ttf" "Edje Vera Bold";
+   font: "Vera.ttf"   "Edje-Vera";
+   font: "VeraBd.ttf" "Edje-Vera-Bold";
 }                                  
 
 images {
@@ -560,7 +560,7 @@ collections {
 	       color3: 0 0 0 32;
 	       text {
 		  text: "Enlightenment";
-		  font: "Edje Vera Bold";
+                  font: "Serif:style=Bold,Edje-Vera-Bold";
 		  size: TSIZE;
 		  min:  1 1;
 		  align: 0.5 0.5;
@@ -587,7 +587,7 @@ collections {
 	       color3: 255 255 255 128;
 	       text {
 		  text: "0.17.0";
-		  font: "Edje Vera";
+		  font: "Edje-Vera";
 		  size: VSIZE;
 		  min:  1 1;
 		  align: 0.0 0.0;
@@ -617,7 +617,7 @@ collections {
 	       color3: 255 255 255 128;
 	       text {
 		  text: "Starting Enlightenment. Please wait.";
-		  font: "Edje Vera";
+		  font: "Edje-Vera";
 		  size: SSIZE;
 		  min:  1 1;
 		  align: 0.5 0.5;
@@ -645,7 +645,7 @@ collections {
 	       color3: 255 255 255 128;
 	       text {
 		  text: "Disable this splash screen in future.";
-		  font: "Edje Vera";
+		  font: "Edje-Vera";
 		  size: SSIZE;
 		  min:   1 1;
 		  align: 0.0 0.5;

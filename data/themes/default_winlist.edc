@@ -181,7 +181,7 @@ group {
 	    color_class: "winlist_title";
 	    text {
 	       text: "Title goes here";
-	       font: "Edje-Vera-Bold";
+               font: "Sans:style=Bold,Edje-Vera-Bold";
 	       size: 10;
 	       min:  0 1;
 	       align: 0.5 0.0;
@@ -230,7 +230,7 @@ group {
 	    color_class: "winlist_label";
 	    text {
 	       text: "Title goes here";
-	       font: "Edje-Vera-Bold";
+               font: "Sans:style=Bold,Edje-Vera-Bold";
 	       size: 10;
 	       min:  0 1;
 	       align: 0.0 0.5;

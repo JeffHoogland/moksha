@@ -4153,7 +4153,7 @@ group {
 	    color3: 0 0 0 24;
 	    text {
 	       text: "";
-	       font: "Edje-Vera-Bold";
+               font: "Sans:style=Bold,Edje-Vera-Bold";
 	       size: 10;
 	       min:  0 0;
 	       align: 0.5 0.5;
@@ -4216,7 +4216,7 @@ group {
 	    color3: 0 0 0 24;
 	    text {
 	       text: "";
-	       font: "Edje-Vera-Bold";
+               font: "Sans:style=Bold,Edje-Vera-Bold";
 	       size: 10;
 	       min:  1 1;
 	       align: 1.0 0.5;
@@ -6945,7 +6945,7 @@ group {
 	    text {
 	       text:     "No Title";
 	       size:     10;
-	       font:     "Edje-Vera-Bold";
+               font: "Sans:style=Bold,Edje-Vera-Bold";
 	       min:      0 1;
 	       align:    0.5 1.0;
 	       elipsis:  0.0;
@@ -7266,7 +7266,7 @@ group {
 	    text {
 	       text:     "No Title";
 	       size:     10;
-	       font:     "Edje-Vera-Bold";
+               font: "Sans:style=Bold,Edje-Vera-Bold";
 	       min:      0 1;
 	       align:    0.5 1.0;
 	       elipsis:  0.0;

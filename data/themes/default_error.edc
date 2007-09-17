@@ -125,7 +125,7 @@ group {
 	    color_class: "error_title";
 	    text {
 	       text:     "Title";
-	       font:     "Edje-Vera-Bold";
+               font: "Sans:style=Bold,Edje-Vera-Bold";
 	       size:     12;
 	       min:      1 1;
 	       align:    0.0 0.5;

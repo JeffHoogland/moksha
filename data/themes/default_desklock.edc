@@ -80,7 +80,7 @@ group
 	       color3: 255 255 255 128;
 	       text {
 		  text: "Please enter your unlock password";
-		  font: "Edje-Vera-Bold";
+                  font: "Sans:style=Bold,Edje-Vera-Bold";
 		  size: 10;
 		  align: 0.0 0.5;
 		  min: 1 1;
@@ -183,7 +183,7 @@ group
 		  color3: 255 255 255 128;
 		  text {
 		     text: "****";
-		     font: "Edje-Vera-Bold";
+                     font: "Sans:style=Bold,Edje-Vera-Bold";
 		     size: 16;
 		     align: 0.0 0.5;
 		     min: 1 1;

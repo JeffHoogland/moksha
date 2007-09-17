@@ -101,7 +101,7 @@ group {
 	    color_class: "menu_title";
 	    text {
 	       text:     "Menu Title";
-	       font:     "Edje-Vera-Bold";
+               font: "Sans:style=Bold,Edje-Vera-Bold";
 	       size:     10;
 	       min:      0 0;
 	       align:    0.5 0.0;
