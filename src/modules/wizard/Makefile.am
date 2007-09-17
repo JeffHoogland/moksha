@@ -19,8 +19,8 @@ INCLUDES               = -I. \
 pkgdir                 = $(libdir)/enlightenment/modules/$(MODULE)/$(MODULE_ARCH)
 pkg_LTLIBRARIES        = module.la \
                          page_000.la \
-                         page_100.la \
-                         page_200.la
+                         page_010.la \
+                         page_020.la
 			 
 module_la_SOURCES      = e_mod_main.c \
                          e_mod_main.h \
@@ -36,15 +36,15 @@ page_000_la_LIBADD       = @e_libs@ @dlopen_libs@
 page_000_la_LDFLAGS      = -module -avoid-version
 page_000_la_DEPENDENCIES = $(top_builddir)/config.h
 
-page_100_la_SOURCES      = page_100.c
-page_100_la_LIBADD       = @e_libs@ @dlopen_libs@
-page_100_la_LDFLAGS      = -module -avoid-version
-page_100_la_DEPENDENCIES = $(top_builddir)/config.h
+page_010_la_SOURCES      = page_010.c
+page_010_la_LIBADD       = @e_libs@ @dlopen_libs@
+page_010_la_LDFLAGS      = -module -avoid-version
+page_010_la_DEPENDENCIES = $(top_builddir)/config.h
 
-page_200_la_SOURCES      = page_200.c
-page_200_la_LIBADD       = @e_libs@ @dlopen_libs@
-page_200_la_LDFLAGS      = -module -avoid-version
-page_200_la_DEPENDENCIES = $(top_builddir)/config.h
+page_020_la_SOURCES      = page_020.c
+page_020_la_LIBADD       = @e_libs@ @dlopen_libs@
+page_020_la_LDFLAGS      = -module -avoid-version
+page_020_la_DEPENDENCIES = $(top_builddir)/config.h
 
 uninstall:
 	rm -rf $(DESTDIR)$(libdir)/enlightenment/modules/$(MODULE)
