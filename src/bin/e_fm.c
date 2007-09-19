@@ -40,6 +40,7 @@ struct _E_Fm2_Smart_Data
    Evas_Object      *overlay;
    Evas_Object      *drop;
    Evas_Object      *drop_in;
+   Evas_Object      *sel_rect;
    const char       *dev;
    const char       *path;
    const char       *realpath;
@@ -77,7 +78,7 @@ struct _E_Fm2_Smart_Data
    unsigned char     typebuf_visible : 1;
    unsigned char     show_hidden_files : 1;
    unsigned char     listing : 1;
-
+   
    E_Fm2_Config     *config;
    const char       *custom_theme;
    const char       *custom_theme_content;
@@ -111,6 +112,12 @@ struct _E_Fm2_Smart_Data
    unsigned char       drop_in_show : 1;
    unsigned char       drop_all : 1;
    unsigned char       drag : 1;
+   unsigned char       selecting : 1;
+   struct 
+     {
+	int ox, oy;
+	int x, y, w, h;
+     } selrect;
 };
  
 struct _E_Fm2_Region
@@ -335,6 +342,7 @@ static void _e_fm2_client_file_symlink(int id, const char *path, const char *des
 static void _e_fm2_client_file_copy(int id, const char *path, const char *dest, const char *rel, int rel_to, int x, int y, int res_w, int res_h);
 static void _e_fm2_client_mount(const char *udi, const char *mountpoint);
 static void _e_fm2_client_unmount(const char *udi);
+static void _e_fm2_sel_rect_update(void *data);
 
 static char *_e_fm2_meta_path = NULL;
 static Evas_Smart *_e_fm2_smart = NULL;
@@ -5782,6 +5790,13 @@ _e_fm2_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	  }
 	if (sel_change)
 	  evas_object_smart_callback_call(sd->obj, "selection_change", NULL);
+	
+	if (!sd->config->selection.single) 
+	  {
+	     sd->selrect.ox = ev->canvas.x;
+	     sd->selrect.oy = ev->canvas.y;
+	     sd->selecting = 1;
+	  }
      }
    else if (ev->button == 3)
      {
@@ -5799,6 +5814,11 @@ _e_fm2_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    
    sd = data;
    ev = event_info;
+   if (!sd->selecting) return;
+   sd->selecting = 0;
+   sd->selrect.ox = 0;
+   sd->selrect.oy = 0;
+   evas_object_hide(sd->sel_rect);
 }
 
 static void
@@ -5809,8 +5829,70 @@ _e_fm2_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
    
    sd = data;
    ev = event_info;
+   if (!sd->selecting) return;
+
+   if (ev->cur.canvas.x < sd->selrect.ox) 
+     {
+	sd->selrect.x = ev->cur.canvas.x;
+	sd->selrect.w = (sd->selrect.ox - sd->selrect.x);
+     }
+   else 
+     {
+	sd->selrect.x = MIN(sd->selrect.ox, ev->cur.canvas.x);
+	sd->selrect.w = abs(sd->selrect.x - ev->cur.canvas.x);
+     }
+   if (ev->cur.canvas.y < sd->selrect.oy) 
+     {
+	sd->selrect.y = ev->cur.canvas.y;
+	sd->selrect.h = (sd->selrect.oy - sd->selrect.y);
+     }
+   else 
+     {
+	sd->selrect.y = MIN(sd->selrect.oy, ev->cur.canvas.y);
+	sd->selrect.h = abs(sd->selrect.y - ev->cur.canvas.y);
+     }
+   
+   _e_fm2_sel_rect_update(sd);
 }
-    
+
+static void 
+_e_fm2_sel_rect_update(void *data) 
+{
+   E_Fm2_Smart_Data *sd;
+   Evas_List *l = NULL;
+   int sel_change = 0;
+   
+   sd = data;
+   evas_object_move(sd->sel_rect, sd->selrect.x, sd->selrect.y);
+   evas_object_resize(sd->sel_rect, sd->selrect.w, sd->selrect.h);
+   evas_object_show(sd->sel_rect);
+   for (l = sd->icons; l; l = l->next)
+     {
+	E_Fm2_Icon *ic;
+	
+	ic = l->data;
+	if E_INTERSECTS(sd->selrect.x, sd->selrect.y, sd->selrect.w, sd->selrect.h,
+			ic->x, ic->y, ic->w, ic->h) 
+	  {
+	     if (!ic->selected)
+	       {
+		  _e_fm2_icon_select(ic);
+		  sel_change = 1;
+	       }
+	  }
+	else 
+	  {
+	     if (ic->selected) 
+	       {
+		  _e_fm2_icon_deselect(ic);
+		  sel_change = 1;
+	       }
+	  }
+     }
+   if (sel_change)
+     evas_object_smart_callback_call(sd->obj, "selection_change", NULL);
+}
+
 static void
 _e_fm2_cb_scroll_job(void *data)
 {
@@ -6093,6 +6175,12 @@ _e_fm2_smart_add(Evas_Object *obj)
 				"overlay");
    evas_object_smart_member_add(sd->overlay, obj);
    evas_object_show(sd->overlay);
+
+   sd->sel_rect = edje_object_add(evas_object_evas_get(obj));
+   evas_object_clip_set(sd->sel_rect, sd->clip);
+   _e_fm2_theme_edje_object_set(sd, sd->sel_rect, "base/theme/fileman",
+				"rubberband");
+   evas_object_smart_member_add(sd->sel_rect, obj);
    
    evas_object_smart_data_set(obj, sd);
    evas_object_move(obj, 0, 0);
@@ -6150,6 +6238,7 @@ _e_fm2_smart_del(Evas_Object *obj)
    evas_object_del(sd->overlay);
    evas_object_del(sd->drop);
    evas_object_del(sd->drop_in);
+   evas_object_del(sd->sel_rect);
    evas_object_del(sd->clip);
    if (sd->drop_handler) e_drop_handler_del(sd->drop_handler);
    if (_e_fm2_list_walking == 0)
