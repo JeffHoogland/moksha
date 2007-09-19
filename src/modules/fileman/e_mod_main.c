@@ -182,7 +182,13 @@ _e_mod_action_fileman_cb(E_Object *obj, const char *params)
 	  zone = e_util_zone_current_get(e_manager_current_get());
      }
    if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
-   if (zone) e_fwin_new(zone->container, "favorites", "/");
+   if (zone)
+     {
+	if (params)
+	  e_fwin_new(zone->container, NULL, params);
+	else
+	  e_fwin_new(zone->container, "favorites", "/");
+     }
 }
 
 /* menu item callback(s) */
