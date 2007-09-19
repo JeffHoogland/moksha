@@ -832,12 +832,12 @@ _ibar_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	  e_exec(ic->ibar->inst->gcc->gadcon->zone, ic->app, NULL, NULL, "ibar");
 	else if (ic->app->type == EFREET_DESKTOP_TYPE_LINK)
 	  {
-	     if (strncasecmp (ic->app->url, "file:", 5) == 0)
+	     if (!strncasecmp(ic->app->url, "file:", 5))
 	       {
 		  E_Action *act;
 
 		  act = e_action_find("fileman");
-		  if (act) act->func.go (E_OBJECT(obj), ic->app->url+5);
+		  if (act) act->func.go(E_OBJECT(obj), ic->app->url + 5);
 	       }
 	  }
 
