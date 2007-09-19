@@ -9000,6 +9000,50 @@ group {
    }
 }
 
+images 
+{
+   image: "e17_fileman_rubberband.png" COMP;
+}
+
+group 
+{
+   name: "e/fileman/default/rubberband";
+   parts 
+     {
+	part 
+	  {
+	     name: "base";
+	     mouse_events: 0;
+	     type: IMAGE;
+	     description 
+	       {
+		  state: "default" 0.0;
+		  image 
+		    {
+		       normal: "e17_fileman_rubberband.png";
+		       border: 4 4 4 4;
+		       middle: 0;
+		    }
+	       }
+	  }
+	part 
+	  {
+	     name: "grad";
+	     mouse_events: 0;
+	     type: GRADIENT;
+	     description 
+	       {
+		  state: "default" 0.0;
+		  rel1.offset: 2 2;
+		  rel2.offset: -3 -3;
+		  gradient.spectrum: "rubberband";
+		  gradient.rel1.relative: 0.0 0.5;
+		  gradient.rel2.relative: 1.0 0.5;
+		  gradient.rel2.offset: -1 0;
+	       }
+	  }
+     }
+}
 
 
 
