@@ -124,6 +124,8 @@ _e_place_coverage_shelf_add(E_Zone *zone, int ar, int x, int y, int w, int h)
 	if (es->zone != zone) continue;
 	x2 = es->x; y2 = es->y; w2 = es->w; h2 = es->h;
 	if (E_INTERSECTS(x, y, w, h, x2, y2, w2, h2))
+	  return 0x7fffffff;
+/*	
 	  {
 	     x0 = x;
 	     if (x < x2) x0 = x2;
@@ -136,12 +138,13 @@ _e_place_coverage_shelf_add(E_Zone *zone, int ar, int x, int y, int w, int h)
 	     iw = x00 - x0;
 	     ih = y00 - y0;
 	     tmp = (iw * ih);
-	     /* 100 times the weight for avoidance */
+	     // 100 times the weight for avoidance
 	     if (tmp > (0x7ffffff / 100)) tmp = 0x7fffffff;
 	     else tmp *= 100;
 	     if ((0x7fffffff - ar) <= tmp) ar = 0x7fffffff;
 	     else ar += tmp;
 	  }
+ */
      }
    return ar;
 }
