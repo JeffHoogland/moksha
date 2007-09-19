@@ -829,8 +829,8 @@ _ibar_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if ((ev->button == 1) && (!ic->drag.dnd) && (ic->mouse_down == 1))
      {
 	if (ic->app->type == EFREET_DESKTOP_TYPE_APPLICATION)
-	     e_exec(ic->ibar->inst->gcc->gadcon->zone, ic->app, NULL, NULL, "ibar");
-	if (ic->app->type == EFREET_DESKTOP_TYPE_LINK)
+	  e_exec(ic->ibar->inst->gcc->gadcon->zone, ic->app, NULL, NULL, "ibar");
+	else if (ic->app->type == EFREET_DESKTOP_TYPE_LINK)
 	  {
 	     if (strncasecmp (ic->app->url, "file:", 5) == 0)
 	       {
