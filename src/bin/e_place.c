@@ -160,18 +160,16 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
    E_Border_List      *bl;
    E_Border           *bd;
 
-#if 0
-   /* DISABLE placement entirely for speed testing */
    *rx = x;
    *ry = y;
+#if 0
+   /* DISABLE placement entirely for speed testing */
    return 1;
 #endif
 
    if ((w <= 0) || (h <= 0))
      {
 	printf("EEEK! trying to place 0x0 window!!!!\n");
-	*rx = x;
-	*ry = y;
 	return 1;
      }
    
@@ -378,8 +376,8 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 	{
 	   for (i = 0; i < a_w - 1; i++)
 	     {
-		if ((a_x[i] < (zw - w)) &&
-		    (a_y[j] < (zh - h)))
+		if ((a_x[i] <= (zw - w)) &&
+		    (a_y[j] <= (zh - h)))
 		  {
 		     int ar = 0;
 
@@ -398,7 +396,7 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 			  if (ar == 0) goto done;
 		       }
 		  }
-		if ((a_x[i + 1] - w > 0) && (a_y[j] < (zh - h)))
+		if ((a_x[i + 1] - w > 0) && (a_y[j] <= (zh - h)))
 		  {
 		     int ar = 0;
 
@@ -436,7 +434,7 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 			  if (ar == 0) goto done;
 		       }
 		  }
-		if ((a_x[i] < (zw - w)) && (a_y[j + 1] - h > 0))
+		if ((a_x[i] <= (zw - w)) && (a_y[j + 1] - h > 0))
 		  {
 		     int ar = 0;
 
@@ -461,11 +459,13 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
  done:
    E_FREE(a_x);
    E_FREE(a_y);
-   
+
    if ((*rx + w) > zone->w) *rx = zone->w - w;
    if (*rx < 0) *rx = 0;
    if ((*ry + h) > zone->h) *ry = zone->h - h;
    if (*ry < 0) *ry = 0;
+
+   printf("0 - PLACE %i %i | %ix%i\n", *rx, *ry, w, h);
    
    *rx += zone->x;
    *ry += zone->y;
