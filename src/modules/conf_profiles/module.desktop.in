@@ -1,5 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Profiles
+Name[it]=Configurazione - Profili
 Icon=e-module-conf_profiles
 Comment=<hilight>E17 Configuration Applet</hilight><br>Allows management of configuration<br>profiles.
+Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Consente la gestione dei<br>profili di configurazione.

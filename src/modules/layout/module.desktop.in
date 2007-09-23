@@ -3,3 +3,4 @@ Type=Link
 Name=Layout
 Icon=e-module-layout
 Comment=<hilight>Layout Module</hilight><br>Used to enforce layout policies.<br>Generally not applicable for a<br>desktop PC.
+Comment[it]=<hilight>Modulo Layout</hilight><br>Usato per forzare delle regole di<br>layout. In genere non applicabile<br>ad un PC desktop.

@@ -1,5 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - File Icons
+Name[it]=Configurazione - Icone dei file
 Icon=e-module-conf_mime
 Comment=<hilight>E17 Configuration Applet</hilight><br>Configure E17 mime icons.
+Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Configura le icone dei tipi<br>MIME in E17.

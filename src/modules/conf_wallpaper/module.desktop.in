@@ -1,5 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Wallpaper
+Name[it]=Configurazione - Sfondo
 Icon=e-module-conf_wallpaper
 Comment=<hilight>E17 Configuration Applet</hilight><br>Used to pick a wallpaper.
+Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Usato per selezionare uno sfondo.

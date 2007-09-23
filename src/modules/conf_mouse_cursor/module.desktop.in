@@ -1,5 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Mouse Cursor
+Name[it]=Configurazione - Cursore del mouse
 Icon=e-module-conf_mouse_cursor
 Comment=<hilight>E17 Configuration Applet</hilight><br>Select the mouse cursor style.
+Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Seleziona lo stile di puntatore<br>per il mouse.

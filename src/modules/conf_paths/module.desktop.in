@@ -1,5 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Search Directories
+Name[it]=Configurazione - Percorsi di ricerca
 Icon=e-module-conf_paths
 Comment=<hilight>E17 Configuration Applet</hilight><br>Specifies the E17 search paths<br>and default directories.
+Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Specifica i percorsi di ricerca e<br>le directory predefinite in E17.

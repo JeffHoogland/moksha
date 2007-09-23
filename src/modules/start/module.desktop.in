@@ -3,3 +3,4 @@ Type=Link
 Name=Start
 Icon=e-module-start
 Comment=<hilight>Start Button Gadget</hilight><br>E17's "Start" button equivalent.
+Comment[it]=<hilight>Modulo Start</hilight><br>L'equivalente del pulsante "Avvio" in E17.

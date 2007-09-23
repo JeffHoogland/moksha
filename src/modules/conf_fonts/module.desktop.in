@@ -1,5 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Fonts
+Name[it]=Configurazione - Font
 Icon=e-module-conf_fonts
 Comment=<hilight>E17 Configuration Applet</hilight><br>Font configuration dialog.
+Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Interfaccia per la configurazione<br>dei font.

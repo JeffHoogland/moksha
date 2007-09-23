@@ -1,5 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Engine
+Name[it]=Configurazione - Motore
 Icon=e-module-conf_engine
 Comment=<hilight>E17 Configuration Applet</hilight><br>Used to select the rendering engine.
+Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Usato per selezionere il<br>motore di rendering.

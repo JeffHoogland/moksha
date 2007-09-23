@@ -1,5 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Screen Resolution
+Name[it]=Configurazione - Risoluzione schermo
 Icon=e-module-conf_display
 Comment=<hilight>E17 Configuration Applet</hilight><br>Used to configure your screen's<br>resolution.
+Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Usato per configurare la<br>risoluzione del vostro schermo.

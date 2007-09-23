@@ -1,5 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Window List
+Name[it]=Configurazione - Lista finestre
 Icon=e-module-conf_winlist
 Comment=<hilight>E17 Configuration Applet</hilight><br>Configure your window list<br>properties.
+Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Configura le proprietà della<br>lista delle finestre.

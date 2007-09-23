@@ -1,5 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Theme
+Name[it]=Configurazione - Temi
 Icon=e-module-conf_theme
 Comment=<hilight>E17 Configuration Applet</hilight><br>Used to configure your theme<br>preferences.
+Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Usato per configurare le preferenze<br>per il vostro tema.

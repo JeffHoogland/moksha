@@ -1,5 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Run Command
+Name[it]=Lanciacomandi
 Icon=e-module-exebuf
 Comment=<hilight>Run Command Module</hilight><br>The run command module provides<br>an application launcher dialog.
+Comment[it]=<hilight>Modulo lanciacomandi</hilight><br>Questo modulo fornisce una voce<br>di menù per l'esecuzione di comandi.

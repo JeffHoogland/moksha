@@ -1,5 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Dialogs
+Name[it]=Configurazione - Finestre di dialogo
 Icon=e-module-conf_dialogs
 Comment=<hilight>E17 Configuration Applet</hilight><br>Configure default dialog properties.
+Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Configura le proprietà predefinite<br>per le finestre di dialogo.

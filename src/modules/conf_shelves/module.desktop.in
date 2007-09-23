@@ -1,5 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Configuration - Shelves
+Name[it]=Configurazione - Mensole
 Icon=e-module-conf_shelves
 Comment=<hilight>E17 Configuration Applet</hilight><br>Shelf configuration dialog.
+Comment[it]=<hilight>Applet configurazione di E17</hilight><br>Interfaccia per la configurazione<br>delle mensole portamoduli.
