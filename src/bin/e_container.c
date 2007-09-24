@@ -123,6 +123,7 @@ e_container_new(E_Manager *man)
    for (i = 0; i < 7; i++)
      {
 	con->layers[i].win = ecore_x_window_input_new(con->win, 0, 0, 1, 1);
+	ecore_x_window_lower(con->layers[i].win);
 
 	if (i > 0)
 	  ecore_x_window_configure(con->layers[i].win,
@@ -130,8 +131,6 @@ e_container_new(E_Manager *man)
 				   ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
 				   0, 0, 0, 0, 0,
 				   con->layers[i - 1].win, ECORE_X_WINDOW_STACK_ABOVE);
-	else
-	  ecore_x_window_raise(con->layers[i].win);
      }
 
    /* Put init win on top */

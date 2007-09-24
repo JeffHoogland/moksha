@@ -48,6 +48,13 @@ static Ecore_X_Window *initwins = NULL;
 static int initwins_num = 0;
 static Ecore_Ipc_Server *server = NULL;
 
+static int
+delayed_ok(void *data)
+{
+   kill(getppid(), SIGUSR2);
+   return 0;
+}
+
 int
 main(int argc, char **argv)
 {
@@ -81,6 +88,7 @@ main(int argc, char **argv)
    evas_init();
    ecore_evas_init();
    edje_init();
+   edje_frametime_set(1.0 / 60.0);
    ecore_file_init();
    ecore_ipc_init();
 
@@ -91,6 +99,7 @@ main(int argc, char **argv)
 	e_init_title_set(title);
 	e_init_version_set(verstr);
 	e_init_status_set("");
+	ecore_timer_add(0.2, delayed_ok, NULL);
 	ecore_main_loop_begin();
      }
    
@@ -430,19 +439,12 @@ _e_init_evas_new(Ecore_X_Window root, int w, int h, Ecore_X_Window *winret)
    Evas *e;
    Evas_List *l;
    
-   if (engine == 0)
+   if ((engine == 0) || (engine == 1))
      {
 	ee = ecore_evas_software_x11_new(NULL, root, 0, 0, w, h);
 	ecore_evas_override_set(ee, 1);
 	ecore_evas_software_x11_direct_resize_set(ee, 1);
 	*winret = ecore_evas_software_x11_window_get(ee);
-     }
-   else if (engine == 1)
-     {
-	ee = ecore_evas_xrender_x11_new(NULL, root, 0, 0, w, h);
-	ecore_evas_override_set(ee, 1);
-	ecore_evas_xrender_x11_direct_resize_set(ee, 1);
-	*winret = ecore_evas_xrender_x11_window_get(ee);
      }
    else if (engine == 2)
      {
@@ -450,6 +452,13 @@ _e_init_evas_new(Ecore_X_Window root, int w, int h, Ecore_X_Window *winret)
 	ecore_evas_override_set(ee, 1);
 	ecore_evas_gl_x11_direct_resize_set(ee, 1);
 	*winret = ecore_evas_gl_x11_window_get(ee);
+     }
+   else if (engine == 3)
+     {
+	ee = ecore_evas_xrender_x11_new(NULL, root, 0, 0, w, h);
+	ecore_evas_override_set(ee, 1);
+	ecore_evas_xrender_x11_direct_resize_set(ee, 1);
+	*winret = ecore_evas_xrender_x11_window_get(ee);
      }
    
    e = ecore_evas_get(ee);

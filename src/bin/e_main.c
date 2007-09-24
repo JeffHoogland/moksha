@@ -446,6 +446,94 @@ main(int argc, char **argv)
 			       "Ecore and check they support the Software Buffer rendering engine."));
 	_e_main_shutdown(-1);
      }
+// ecore_evas closes evas - deletes objs - deletes fm widgets which tries to
+// ipc to slave to stop monitoring - but ipc has been shut down. dont shut
+// down.   
+//   _e_main_shutdown_push(ecore_evas_shutdown);        
+   TS("test done");
+   
+   /*** Finished loading subsystems, Loading WM Specifics ***/
+	 
+   TS("dirs");
+   /* setup directories we will be using for configurations storage etc. */
+   if (!_e_main_dirs_init())
+     {
+	e_error_message_show(_("Enlightenment cannot create directories in your home directory.\n"
+			       "Perhaps you have no home directory or the disk is full?"));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(_e_main_dirs_shutdown);
+   TS("filereg");
+   /* setup file registry */
+   if (!e_filereg_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its file registry system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_filereg_shutdown);
+   TS("config");
+   /* init config system */
+   if (!e_config_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its config system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_config_shutdown);
+   TS("path");
+   /* setup paths for finding things */
+   if (!_e_main_path_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up paths for finding files.\n"
+			       "Perhaps you are out of memory?"));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(_e_main_path_shutdown);
+   TS("ipc");
+   /* setup e ipc service */
+   if (e_ipc_init())
+     _e_main_shutdown_push(e_ipc_shutdown);
+   
+   /* setup edje to animate @ e_config->framerate frames per sec. */
+   edje_frametime_set(1.0 / e_config->framerate);
+
+   TS("font");
+   /* init font system */
+   if (!e_font_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its font system."));
+        _e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_font_shutdown);
+   e_font_apply();
+   e_canvas_recache();
+
+   TS("theme");
+   /* init theme system */
+   if (!e_theme_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its theme system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_theme_shutdown);
+   
+   TS("splash");
+   if (!((!e_config->show_splash) || (after_restart)))
+     {
+	/* setup init status window/screen */
+	if (!e_init_init())
+	  {
+	     e_error_message_show(_("Enlightenment cannot set up init screen.\n"
+				    "Perhaps you are out of memory?"));
+	     _e_main_shutdown(-1);
+	  }
+	e_init_title_set(_("Enlightenment"));
+	e_init_version_set(VERSION);
+	e_init_show();
+	_e_main_shutdown_push(e_init_shutdown);
+	pause();
+     }
+   
+   e_init_status_set(_("Testing Format Support"));
    TS("test file format support");   
      {
 	Ecore_Evas *ee;
@@ -490,48 +578,8 @@ main(int argc, char **argv)
 	evas_object_del(im);
 	ecore_evas_free(ee);
      }
-// ecore_evas closes evas - deletes objs - deletes fm widgets which tries to
-// ipc to slave to stop monitoring - but ipc has been shut down. dont shut
-// down.   
-//   _e_main_shutdown_push(ecore_evas_shutdown);        
-   TS("test done");
    
-   /*** Finished loading subsystems, Loading WM Specifics ***/
-	 
-   TS("dirs");
-   /* setup directories we will be using for configurations storage etc. */
-   if (!_e_main_dirs_init())
-     {
-	e_error_message_show(_("Enlightenment cannot create directories in your home directory.\n"
-			       "Perhaps you have no home directory or the disk is full?"));
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(_e_main_dirs_shutdown);
-   TS("filereg");
-   /* setup file registry */
-   if (!e_filereg_init())
-     {
-	e_error_message_show(_("Enlightenment cannot set up its file registry system."));
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_filereg_shutdown);
-   TS("config");
-   /* init config system */
-   if (!e_config_init())
-     {
-	e_error_message_show(_("Enlightenment cannot set up its config system."));
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_config_shutdown);
-   TS("path");
-   /* setup paths for finding things */
-   if (!_e_main_path_init())
-     {
-	e_error_message_show(_("Enlightenment cannot set up paths for finding files.\n"
-			       "Perhaps you are out of memory?"));
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(_e_main_path_shutdown);
+   e_init_status_set(_("Starting International Support"));
    TS("intl post");
    /* init intl system */
    if (!e_intl_post_init())
@@ -540,50 +588,6 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_intl_post_shutdown);
-   TS("ipc");
-   /* setup e ipc service */
-   if (e_ipc_init())
-     _e_main_shutdown_push(e_ipc_shutdown);
-   
-   /* setup edje to animate @ e_config->framerate frames per sec. */
-   edje_frametime_set(1.0 / e_config->framerate);
-
-   TS("font");
-   /* init font system */
-   if (!e_font_init())
-     {
-	e_error_message_show(_("Enlightenment cannot set up its font system."));
-        _e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_font_shutdown);
-   e_font_apply();
-   e_canvas_recache();
-
-   TS("theme");
-   /* init theme system */
-   if (!e_theme_init())
-     {
-	e_error_message_show(_("Enlightenment cannot set up its theme system."));
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_theme_shutdown);
-   
-   TS("splash");
-   if (!((!e_config->show_splash) || (after_restart)))
-     {
-	/* setup init status window/screen */
-	if (!e_init_init())
-	  {
-	     e_error_message_show(_("Enlightenment cannot set up init screen.\n"
-				    "Perhaps you are out of memory?"));
-	     _e_main_shutdown(-1);
-	  }
-	e_init_title_set(_("Enlightenment"));
-	e_init_version_set(VERSION);
-	e_init_show();
-	_e_main_shutdown_push(e_init_shutdown);
-     }
-   
    TS("efreet");
    e_init_status_set(_("Starting Efreet"));
    /* init FDO desktop */

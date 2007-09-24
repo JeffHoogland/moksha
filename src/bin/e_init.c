@@ -12,6 +12,7 @@ static Ecore_Event_Handler *exe_del_handler = NULL;
 static Ecore_Ipc_Client *client = NULL;
 static int done = 0;
 static int undone = 0;
+static Evas_List *stats = NULL;
 
 static int
 _e_init_cb_exe_event_del(void *data, int type, void *event)
@@ -115,8 +116,14 @@ e_init_version_set(const char *str)
 EAPI void
 e_init_status_set(const char *str)
 {
+   if (!init_exe) return;
    printf("---STAT %p %s\n", client, str);
-   if (!client) return;
+   if (!client)
+     {
+	stats = evas_list_append(stats, evas_stringshare_add(str));
+	return;
+     }
+   printf("---SEND\n");
    ecore_ipc_client_send(client, E_IPC_DOMAIN_INIT, 1, 0, 0, 0, str, strlen(str) + 1);
    ecore_ipc_client_flush(client);
 }
@@ -170,6 +177,16 @@ e_init_client_data(Ecore_Ipc_Event_Client_Data *e)
 			 }
 		    }
 	       }
+	  }
+	while (stats)
+	  {
+	     const char *s;
+	     
+	     s = stats->data;
+	     stats = evas_list_remove_list(stats, stats);
+	     printf("---SPOOL %s\n", s);
+	     e_init_status_set(s);
+	     evas_stringshare_del(s);
 	  }
      }
    else if (e->minor == 2)

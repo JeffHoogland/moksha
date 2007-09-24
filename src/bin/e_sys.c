@@ -41,8 +41,8 @@ e_sys_init(void)
    /* this is not optimal - but it does work cleanly */
    _e_sys_exe_exit_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
 						     _e_sys_cb_exit, NULL);
-   /* delay this for 2.0 seconds while the rest of e starts up */
-   ecore_timer_add(2.0, _e_sys_cb_timer, NULL);
+   /* delay this for 1.0 seconds while the rest of e starts up */
+   ecore_timer_add(1.0, _e_sys_cb_timer, NULL);
    return 1;
 }
 
@@ -124,7 +124,8 @@ _e_sys_cb_timer(void *data)
     * things
     */
    char buf[4096];
-
+   
+   e_init_status_set(_("Checking System Permissions"));
    snprintf(buf, sizeof(buf), "%s/enlightenment_sys -t halt", e_prefix_bin_get());
    _e_sys_halt_check_exe = ecore_exe_run(buf, NULL);
    snprintf(buf, sizeof(buf), "%s/enlightenment_sys -t reboot", e_prefix_bin_get());
@@ -161,6 +162,7 @@ _e_sys_cb_exit(void *data, int type, void *event)
      }
    if ((_e_sys_halt_check_exe) && (ev->exe == _e_sys_halt_check_exe))
      {
+	e_init_status_set(_("System Check Done"));
 	/* exit_code: 0 == OK, 5 == suid root removed, 7 == group id error
 	 * 10 == permission denied, 20 == action undefined */
 	if (ev->exit_code == 0)
@@ -171,6 +173,7 @@ _e_sys_cb_exit(void *data, int type, void *event)
      }
    else if ((_e_sys_reboot_check_exe) && (ev->exe == _e_sys_reboot_check_exe))
      {
+	e_init_status_set(_("System Check Done"));
 	if (ev->exit_code == 0)
 	  {
 	     _e_sys_can_reboot = 1;
@@ -179,6 +182,7 @@ _e_sys_cb_exit(void *data, int type, void *event)
      }
    else if ((_e_sys_suspend_check_exe) && (ev->exe == _e_sys_suspend_check_exe))
      {
+	e_init_status_set(_("System Check Done"));
 	if (ev->exit_code == 0)
 	  {
 	     _e_sys_can_suspend = 1;
@@ -187,6 +191,7 @@ _e_sys_cb_exit(void *data, int type, void *event)
      }
    else if ((_e_sys_hibernate_check_exe) && (ev->exe == _e_sys_hibernate_check_exe))
      {
+	e_init_status_set(_("System Check Done"));
 	if (ev->exit_code == 0)
 	  {
 	     _e_sys_can_hibernate = 1;
