@@ -135,9 +135,8 @@ e_container_new(E_Manager *man)
      }
 
    /* Put init win on top */
-   mwin = e_init_window_get();
-   if (mwin)
-     ecore_x_window_configure(mwin,
+   if (man->initwin)
+     ecore_x_window_configure(man->initwin,
 			      ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
 			      ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
 			      0, 0, 0, 0, 0,

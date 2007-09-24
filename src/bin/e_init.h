@@ -13,10 +13,10 @@ EAPI void           e_init_hide(void);
 EAPI void           e_init_title_set(const char *str);
 EAPI void           e_init_version_set(const char *str);
 EAPI void           e_init_status_set(const char *str);
-EAPI Ecore_X_Window e_init_window_get(void);
 EAPI void           e_init_done(void);
+EAPI void           e_init_undone(void);
+EAPI void           e_init_client_data(Ecore_Ipc_Event_Client_Data *e);
+EAPI void           e_init_client_del(Ecore_Ipc_Event_Client_Del *e);
     
-EAPI void           e_init_icons_desktop_add(Efreet_Desktop *desktop);
-
 #endif
 #endif

@@ -321,7 +321,7 @@ precache(void)
 int
 main(int argc, char **argv)
 {
-   int i, do_precache = 1;
+   int i, do_precache = 0;
    char buf[16384], **args, *p;
 
    prefix_determine(argv[0]);

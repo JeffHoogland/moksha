@@ -24,6 +24,7 @@ struct _E_Manager
    Evas_List           *containers;
 
    E_Pointer           *pointer;
+   Ecore_X_Window       initwin;
 };
 
 EAPI int        e_manager_init(void);

@@ -100,15 +100,7 @@ e_manager_new(Ecore_X_Window root, int num)
 	ecore_x_icccm_title_set(man->win, "Enlightenment Manager");
 	ecore_x_netwm_name_set(man->win, "Enlightenment Manager");
 	mwin = e_menu_grab_window_get();
-	if (!mwin) mwin = e_init_window_get();
-	if (!mwin)
-	  ecore_x_window_raise(man->win);
-	else
-	  ecore_x_window_configure(man->win,
-				   ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
-				   ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
-				   0, 0, 0, 0, 0,
-				   mwin, ECORE_X_WINDOW_STACK_BELOW);
+	ecore_x_window_raise(man->win);
      }
    else
      {
@@ -183,7 +175,32 @@ e_manager_manage_windows(E_Manager *man)
 	     int ret;
 
 	     ecore_x_window_attributes_get(windows[i], &att);
-	     if ((att.override) || (att.input_only)) continue;
+	     if ((att.override) || (att.input_only))
+	       {
+		  if (att.override)
+		    {
+		       char *wname = NULL, *wclass = NULL;
+		       
+		       ecore_x_icccm_name_class_get(windows[i], 
+						    &wname, &wclass);
+		       if ((wname) && (wclass) &&
+			   (!strcmp(wname, "E")) &&
+			   (!strcmp(wclass, "Init_Window")))
+			 {
+			    free(wname);
+			    free(wclass);
+			    man->initwin = windows[i];
+			 }
+		       else
+			 {
+			    if (wname) free(wname);
+			    if (wclass) free(wclass);
+			    continue;
+			 }
+		    }
+		  else
+		    continue;
+	       }
 	     if (!ecore_x_window_prop_property_get(windows[i],
 						   atom_xmbed,
 						   atom_xmbed, 32,
@@ -298,7 +315,7 @@ e_manager_show(E_Manager *man)
 	Ecore_X_Window mwin;
 	
 	mwin = e_menu_grab_window_get();
-	if (!mwin) mwin = e_init_window_get();
+	if (!mwin) mwin = man->initwin;
 	if (!mwin)
 	  ecore_x_window_raise(man->win);
 	else
@@ -406,7 +423,7 @@ e_manager_raise(E_Manager *man)
 	Ecore_X_Window mwin;
 	
 	mwin = e_menu_grab_window_get();
-	if (!mwin) mwin = e_init_window_get();
+	if (!mwin) mwin = man->initwin;
 	if (!mwin)
 	  ecore_x_window_raise(man->win);
 	else

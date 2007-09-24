@@ -20,7 +20,8 @@ enlightenment_imc \
 enlightenment_start \
 enlightenment_thumb \
 enlightenment_sys \
-enlightenment_fm
+enlightenment_fm \
+enlightenment_init
 
 ENLIGHTENMENTHEADERS = \
 e.h \
@@ -290,7 +291,7 @@ e.h \
 e_ipc_codec.c \
 e_remote_main.c
 
-enlightenment_remote_LDFLAGS = @e_libs@ @dlopen_libs@
+enlightenment_remote_LDFLAGS = @e_libs@
 
 enlightenment_imc_SOURCES = \
 e.h \
@@ -309,7 +310,7 @@ e_thumb_main.c \
 e_user.c \
 e_sha1.c
 
-enlightenment_thumb_LDFLAGS = @e_libs@ @dlopen_libs@
+enlightenment_thumb_LDFLAGS = @e_libs@
 
 enlightenment_fm_SOURCES = \
 e_fm_main.c \
@@ -322,7 +323,13 @@ enlightenment_fm_CFLAGS = $(INCLUDES) @E_DBUS_CFLAGS@ @E_HAL_CFLAGS@
 enlightenment_sys_SOURCES = \
 e_sys_main.c
 
-enlightenment_sys_LDFLAGS = @e_libs@ @dlopen_libs@
+enlightenment_sys_LDFLAGS = @e_libs@
+
+enlightenment_init_SOURCES = \
+e_init_main.c \
+e_xinerama.c
+
+enlightenment_init_LDFLAGS = @e_libs@
 
 setuid_root_mode = a=rx,u+xs
 install-exec-hook:
