@@ -35,11 +35,20 @@ e_msgbus_init(void)
    e_dbus_init();
 
    _e_msgbus_data->conn = e_dbus_bus_get(DBUS_BUS_SESSION);
+   if (!_e_msgbus_data->conn)
+     {
+	printf("WARNING: Cannot get DBUS_BUS_SESSION\n");
+	return 0;
+     }
    e_dbus_request_name(_e_msgbus_data->conn, "org.enlighenment.wm.service", 0, _e_msgbus_request_name_cb, NULL);
    _e_msgbus_data->obj = e_dbus_object_add(_e_msgbus_data->conn, "/org/enlightenment/wm/RemoteObject", NULL);
 
    iface = e_dbus_interface_new("org.enlightenment.wm.Core");
-   if (!iface) return 0;
+   if (!iface)
+     {
+	printf("WARNING: Cannot add org.enlightenment.wm.Core interface\n");
+	return 0;
+     }
    e_dbus_object_interface_attach(_e_msgbus_data->obj, iface);
  
    /* Hardcore methods */
@@ -47,7 +56,11 @@ e_msgbus_init(void)
    e_dbus_interface_method_add(iface, "Shutdown", "", "", _e_msgbus_core_shutdown_cb);
   
    iface = e_dbus_interface_new("org.enlightenment.wm.Module");
-   if (!iface) return 0;
+   if (!iface)
+     {
+	printf("WARNING: Cannot add org.enlightenment.wm.Module interface\n");
+	return 0;
+     }
    e_dbus_object_interface_attach(_e_msgbus_data->obj, iface);
 
    /* Module methods */
@@ -58,7 +71,11 @@ e_msgbus_init(void)
    e_dbus_interface_method_add(iface, "List", "", "a(si)", _e_msgbus_module_list_cb);
 
    iface = e_dbus_interface_new("org.enlightenment.wm.Profile");
-   if (!iface) return 0;
+   if (!iface)
+     {
+	printf("WARNING: Cannot add org.enlightenment.wm.Profile interface\n");
+	return 0;
+     }
    e_dbus_object_interface_attach(_e_msgbus_data->obj, iface);
 
    /* Profile methods */
@@ -97,6 +114,7 @@ EAPI void
 e_msgbus_interface_attach(E_DBus_Interface *iface)
 {
 #ifdef HAVE_EDBUS
+   if (!_e_msgbus_data->obj) return;
    e_dbus_object_interface_attach(_e_msgbus_data->obj, iface);
 #endif
 }
@@ -105,6 +123,7 @@ EAPI void
 e_msgbus_interface_detach(E_DBus_Interface *iface)
 {
 #ifdef HAVE_EDBUS
+   if (!_e_msgbus_data->obj) return;
    e_dbus_object_interface_detach(_e_msgbus_data->obj, iface);
 #endif
 }
