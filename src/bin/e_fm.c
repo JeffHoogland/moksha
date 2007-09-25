@@ -330,6 +330,8 @@ static int _e_fm2_cb_live_timer(void *data);
 static int _e_fm2_theme_edje_object_set(E_Fm2_Smart_Data *sd, Evas_Object *o, const char *category, const char *group);
 static int _e_fm2_theme_edje_icon_object_set(E_Fm2_Smart_Data *sd, Evas_Object *o, const char *category, const char *group);
 
+static void _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, Evas_Modifier *modifiers);
+
 static void _e_fm2_client_spawn(void);
 static E_Fm2_Client *_e_fm2_client_get(void);
 static void _e_fm2_client_monitor_add(int id, const char *path);
@@ -3186,7 +3188,6 @@ _e_fm2_icons_place_icon(E_Fm2_Icon *ic)
  _e_fm2_icon_place_relative(ic, ic2, 0, 1, 1, 0);
  if (_e_fm2_icons_icon_row_ok(ic) && !_e_fm2_icons_icon_overlaps(ic)) return;
  */
-   printf("PLACE %s\n", ic->info.file);
 //   for (l = ic->sd->icons_place; l; l = l->next)
    for (l = ic->sd->icons; l; l = l->next)
      {
@@ -3233,7 +3234,6 @@ _e_fm2_icons_place_icon(E_Fm2_Icon *ic)
 	  }
      }
    done:
-   printf("PLACED at %i %i\n", ic->x, ic->y);
    return;
 }
 
@@ -3676,7 +3676,6 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
    const char *mime;
    E_Fm2_Custom_File *cf;
 
-   printf("FILL %s\n", ic->info.file);
    snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ic->info.file);
    cf = e_fm2_custom_file_get(buf);
    if (finf)
@@ -3976,7 +3975,7 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
 	edje_object_signal_emit(ic->obj, "e,state,selected", "e");
 	edje_object_signal_emit(ic->obj_icon, "e,state,selected", "e");
      }
-   printf("realize %s full = %i\n", ic->info.file, (int)ic->info.removable_full);
+//   printf("realize %s full = %i\n", ic->info.file, (int)ic->info.removable_full);
    if (ic->info.removable_full)
      edje_object_signal_emit(ic->obj_icon, "e,state,removable,full", "e");
 //   else
@@ -5292,9 +5291,7 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     E_FREE(dev);
 	  }
 	else
-	  {
-	     evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
-	  }
+	  evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
 	/* if its in file selector mode then signal that a selection has
 	 * taken place and dont do anything more */
 	
@@ -5310,7 +5307,7 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	  {
 	     ic->drag.x = ev->output.x - ic->x - ic->sd->x + ic->sd->pos.x;
 	     ic->drag.y = ev->output.y - ic->y - ic->sd->y + ic->sd->pos.y;
-	     printf("DX: %i %i\n", ic->drag.x, ic->drag.y);
+//	     printf("DX: %i %i\n", ic->drag.x, ic->drag.y);
 	     ic->drag.start = 1;
 	     ic->drag.dnd = 0;
 	     ic->drag.src = 1;
@@ -5809,12 +5806,9 @@ _e_fm2_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 static void
 _e_fm2_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   Evas_Event_Mouse_Up *ev;
    E_Fm2_Smart_Data *sd;
    
    sd = data;
-   ev = event_info;
-   if (!sd->selecting) return;
    sd->selecting = 0;
    sd->selrect.ox = 0;
    sd->selrect.oy = 0;
@@ -5826,7 +5820,10 @@ _e_fm2_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Move *ev;
    E_Fm2_Smart_Data *sd;
-   
+   Evas_List *l = NULL;
+   int x, y, w, h;
+   int sel_change = 0;
+
    sd = data;
    ev = event_info;
    if (!sd->selecting) return;
@@ -5851,28 +5848,18 @@ _e_fm2_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	sd->selrect.y = MIN(sd->selrect.oy, ev->cur.canvas.y);
 	sd->selrect.h = abs(sd->selrect.y - ev->cur.canvas.y);
      }
-   
    _e_fm2_sel_rect_update(sd);
-}
 
-static void 
-_e_fm2_sel_rect_update(void *data) 
-{
-   E_Fm2_Smart_Data *sd;
-   Evas_List *l = NULL;
-   int sel_change = 0;
-   
-   sd = data;
-   evas_object_move(sd->sel_rect, sd->selrect.x, sd->selrect.y);
-   evas_object_resize(sd->sel_rect, sd->selrect.w, sd->selrect.h);
-   evas_object_show(sd->sel_rect);
+   evas_object_geometry_get(sd->sel_rect, &x, &y, &w, &h);
    for (l = sd->icons; l; l = l->next)
      {
 	E_Fm2_Icon *ic;
+	int ix, iy, iw, ih;
 	
 	ic = l->data;
-	if E_INTERSECTS(sd->selrect.x, sd->selrect.y, sd->selrect.w, sd->selrect.h,
-			ic->x, ic->y, ic->w, ic->h) 
+	if (!ic) continue;
+	evas_object_geometry_get(ic->obj_icon, &ix, &iy, &iw, &ih);
+	if E_INTERSECTS(x, y, w, h, ix, iy, iw, ih)
 	  {
 	     if (!ic->selected)
 	       {
@@ -5880,9 +5867,9 @@ _e_fm2_sel_rect_update(void *data)
 		  sel_change = 1;
 	       }
 	  }
-	else 
+	else
 	  {
-	     if (ic->selected) 
+	     if (ic->selected)
 	       {
 		  _e_fm2_icon_deselect(ic);
 		  sel_change = 1;
@@ -5891,6 +5878,17 @@ _e_fm2_sel_rect_update(void *data)
      }
    if (sel_change)
      evas_object_smart_callback_call(sd->obj, "selection_change", NULL);
+}
+
+static void 
+_e_fm2_sel_rect_update(void *data) 
+{
+   E_Fm2_Smart_Data *sd;
+   
+   sd = data;
+   evas_object_move(sd->sel_rect, sd->selrect.x, sd->selrect.y);
+   evas_object_resize(sd->sel_rect, sd->selrect.w, sd->selrect.h);
+   evas_object_show(sd->sel_rect);
 }
 
 static void
