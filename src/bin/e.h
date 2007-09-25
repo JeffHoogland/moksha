@@ -74,6 +74,9 @@
 #include <Edje.h>
 #include <Efreet.h>
 #include <Efreet_Mime.h>
+#ifdef HAVE_EDBUS
+#include <E_DBus.h>
+#endif
 
 #if HAVE___ATTRIBUTE__
 #define __UNUSED__ __attribute__((unused))

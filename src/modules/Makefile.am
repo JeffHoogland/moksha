@@ -26,6 +26,7 @@ conf_transitions \
 conf_startup \
 conf_intl \
 conf_imc \
+msgbus_lang \
 conf_profiles \
 conf_engine \
 conf_applications \

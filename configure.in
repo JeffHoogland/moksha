@@ -187,18 +187,21 @@ PKG_CHECK_MODULES(E, [
 # if ecore-txt isn't available.
 PKG_CHECK_MODULES(ECORE_TXT, ecore-txt)
 
-e_libs=$E_LIBS" "$LIBINTL" "$fnmatch_libs" "
-e_cflags="-DUSE_E_CONFIG_H "$E_CFLAGS" "
-AC_SUBST(e_libs)
-AC_SUBST(e_cflags)
-
 PKG_CHECK_MODULES(E_DBUS, edbus, have_edbus=yes, have_edbus=no)
 PKG_CHECK_MODULES(E_HAL, ehal, have_ehal=yes, have_ehal=no)
+
+# this is used to conditionally build modules which depend on E_DBUS
+AM_CONDITIONAL(HAVE_EDBUS, test x$have_edbus = "xyes")
 if test x$have_edbus = "xyes"; then
   if test x$have_ehal = "xyes"; then
     AC_DEFINE(HAVE_EDBUS, 1, [E_Dbus support])
   fi
 fi
+
+e_libs=$E_LIBS" "$LIBINTL" "$fnmatch_libs" "
+e_cflags="-DUSE_E_CONFIG_H "$E_CFLAGS" "$E_DBUS_CFLAGS" "
+AC_SUBST(e_libs)
+AC_SUBST(e_cflags)
 
 profile="SLOW_PC"
 AC_ARG_WITH(profile,
@@ -288,6 +291,8 @@ src/modules/conf_imc/Makefile
 src/modules/conf_imc/module.desktop
 src/modules/conf_profiles/Makefile
 src/modules/conf_profiles/module.desktop
+src/modules/msgbus_lang/Makefile
+src/modules/msgbus_lang/module.desktop
 src/modules/conf_engine/Makefile
 src/modules/conf_engine/module.desktop
 src/modules/conf_applications/Makefile

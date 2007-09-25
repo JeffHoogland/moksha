@@ -4164,7 +4164,7 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 		  if ((!e_storage_find(ic->info.link)) &&
 		       (!e_volume_find(ic->info.link)))
 		    {
-		       printf("REMOVE IT\n");
+		       printf("REMOVE IT %s\n", ic->info.file);
 		       _e_fm2_live_file_del(ic->sd->obj, ic->info.file);
 		       efreet_desktop_free(desktop);
 		       goto error;

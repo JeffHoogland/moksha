@@ -21,8 +21,6 @@ static char *_e_intl_orig_gtk_im_module = NULL;
 static const char *_e_intl_imc_personal_path = NULL;
 static const char *_e_intl_imc_system_path = NULL;
 
-static Eet_Data_Descriptor *_e_intl_input_method_config_edd = NULL;
-
 #define E_EXE_STOP(EXE) if (EXE != NULL) { ecore_exe_terminate(EXE); ecore_exe_free(EXE); EXE = NULL; }
 #define E_EXE_IS_VALID(EXE) (!((EXE == NULL) || (EXE[0] == 0)))
 
@@ -60,14 +58,7 @@ e_intl_init(void)
 {
    char *s;
 
-   _e_intl_input_method_config_edd = E_CONFIG_DD_NEW("input_method_config", E_Input_Method_Config);
-   E_CONFIG_VAL(_e_intl_input_method_config_edd, E_Input_Method_Config, version, INT);
-   E_CONFIG_VAL(_e_intl_input_method_config_edd, E_Input_Method_Config, e_im_name, STR);
-   E_CONFIG_VAL(_e_intl_input_method_config_edd, E_Input_Method_Config, gtk_im_module, STR);
-   E_CONFIG_VAL(_e_intl_input_method_config_edd, E_Input_Method_Config, qt_im_module, STR);
-   E_CONFIG_VAL(_e_intl_input_method_config_edd, E_Input_Method_Config, xmodifiers, STR);
-   E_CONFIG_VAL(_e_intl_input_method_config_edd, E_Input_Method_Config, e_im_exec, STR);
-   E_CONFIG_VAL(_e_intl_input_method_config_edd, E_Input_Method_Config, e_im_setup_exec, STR);
+   e_intl_data_init();
 
    if ((s = getenv("LC_MESSAGES"))) _e_intl_orig_lc_messages = strdup(s);
    if ((s = getenv("LANGUAGE"))) _e_intl_orig_language = strdup(s);
@@ -99,7 +90,7 @@ e_intl_shutdown(void)
    if (_e_intl_imc_system_path)
      evas_stringshare_del(_e_intl_imc_system_path);
 
-   E_CONFIG_DD_FREE(_e_intl_input_method_config_edd);
+   e_intl_data_shutdown();
 
    return 1;
 }
@@ -437,48 +428,6 @@ e_intl_imc_system_path_get(void)
      }
    return _e_intl_imc_system_path;
 
-}
-
-/* Get the input method configuration from the file */
-EAPI E_Input_Method_Config *
-e_intl_input_method_config_read(Eet_File *imc_file)
-{
-   E_Input_Method_Config *imc;
-
-   imc = NULL;
-   if (imc_file)
-     {
-	imc = (E_Input_Method_Config *) eet_data_read(imc_file, _e_intl_input_method_config_edd, "imc");
-     }
-   return imc;
-}
-
-/* Write the input method configuration to the file */
-EAPI int
-e_intl_input_method_config_write(Eet_File *imc_file, E_Input_Method_Config *imc)
-{
-   int ok = 0;
-
-   if (imc_file)
-     {
-	ok = eet_data_write(imc_file, _e_intl_input_method_config_edd, "imc", imc, 0);
-     }
-   return ok;
-}
-
-EAPI void
-e_intl_input_method_config_free(E_Input_Method_Config *imc)
-{
-   if (imc != NULL)
-     {
-	if (imc->e_im_name) evas_stringshare_del(imc->e_im_name);
-	if (imc->gtk_im_module) evas_stringshare_del(imc->gtk_im_module);
-	if (imc->qt_im_module) evas_stringshare_del(imc->qt_im_module);
-	if (imc->xmodifiers) evas_stringshare_del(imc->xmodifiers);
-	if (imc->e_im_exec) evas_stringshare_del(imc->e_im_exec);
-	if (imc->e_im_setup_exec) evas_stringshare_del(imc->e_im_setup_exec);
-	E_FREE(imc);
-     }
 }
 
 static int

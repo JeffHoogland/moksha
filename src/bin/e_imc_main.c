@@ -101,7 +101,7 @@ main(int argc, char **argv)
     }
 
    eet_init();
-   e_intl_init();
+   e_intl_data_init();
    
    if (write_ops != 0 && ecore_file_exists(file))
      {
@@ -176,7 +176,7 @@ main(int argc, char **argv)
    e_intl_input_method_config_free(read_imc);
    E_FREE(write_imc); 
    eet_close(ef);
-   e_intl_shutdown();
+   e_intl_data_shutdown();
    eet_shutdown();
    /* just return 0 to keep the compiler quiet */
    return 0;

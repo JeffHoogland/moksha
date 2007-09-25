@@ -11,41 +11,16 @@
  */
 #define N_(str) (str)
 
-typedef struct _E_Input_Method_Config E_Input_Method_Config;
-typedef struct _E_Language_Pack E_Language_Pack;
 typedef struct _E_Locale_Parts E_Locale_Parts;
 
 #else
 #ifndef E_INTL_H
 #define E_INTL_H
 
-#define E_INTL_LANGUAGE_PACK_VERSION 1
-#define E_INTL_INPUT_METHOD_CONFIG_VERSION 2
-
 #define E_INTL_LOC_CODESET   1 << 0
 #define E_INTL_LOC_REGION    1 << 1
 #define E_INTL_LOC_MODIFIER  1 << 2
 #define E_INTL_LOC_LANG      1 << 3
-
-struct _E_Language_Pack
-{
-   int		 language_pack_version;
-   char		*language_pack_name;
-   char		*language;
-   char		*input_method;
-   Evas_List	*font_fallbacks;
-};
-
-struct _E_Input_Method_Config
-{
-   int version;
-   const char *e_im_name;
-   const char *gtk_im_module;
-   const char *qt_im_module;
-   const char *xmodifiers;
-   const char *e_im_exec;
-   const char *e_im_setup_exec;
-};
 
 struct _E_Locale_Parts
 {
@@ -69,9 +44,6 @@ EAPI Evas_List		*e_intl_language_list(void);
 EAPI void                e_intl_input_method_set(const char *method);
 EAPI const char         *e_intl_input_method_get(void);
 EAPI Evas_List		*e_intl_input_method_list(void);
-EAPI E_Input_Method_Config *e_intl_input_method_config_read (Eet_File *imc_file);
-EAPI int		 e_intl_input_method_config_write (Eet_File *imc_file, E_Input_Method_Config *imc);
-EAPI void		 e_intl_input_method_config_free (E_Input_Method_Config *imc);
 EAPI const char		*e_intl_imc_personal_path_get(void);
 EAPI const char		*e_intl_imc_system_path_get(void);
 
