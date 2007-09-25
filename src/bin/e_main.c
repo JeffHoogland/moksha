@@ -493,11 +493,6 @@ main(int argc, char **argv)
    if (e_ipc_init())
      _e_main_shutdown_push(e_ipc_shutdown);
       
-   TS("msgbus");
-   /* setup e msgbus (DBUS) service */
-   if (e_msgbus_init())
-     _e_main_shutdown_push(e_msgbus_shutdown);
-
    /* setup edje to animate @ e_config->framerate frames per sec. */
    edje_frametime_set(1.0 / e_config->framerate);
 
@@ -584,6 +579,11 @@ main(int argc, char **argv)
 	ecore_evas_free(ee);
      }
    
+   TS("msgbus");
+   /* setup e msgbus (DBUS) service */
+   if (e_msgbus_init())
+     _e_main_shutdown_push(e_msgbus_shutdown);
+
    e_init_status_set(_("Starting International Support"));
    TS("intl post");
    /* init intl system */
