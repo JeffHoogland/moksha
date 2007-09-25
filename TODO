@@ -64,7 +64,6 @@ Some of the things (in very short form) that need to be done to E17...
 * fm2 needs to auto-scroll if dnd hovers on edge of fm2 for a while
 * fm2 needs spring-loaded folder opens
 * fm2 needs to be able to specify dir customisations other than magic dot file
-* fm2 needs rubber band select in icon mode
 * fm2 needs to display symlink info on files somehow
 * fm2 needs to display more than 1 file being dragged (if more than 1 is being
   dragged)
