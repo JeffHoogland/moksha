@@ -26,7 +26,10 @@ typedef enum _E_Fm2_Menu_Flags
    E_FM2_MENU_NO_REMEMBER_ORDERING = (1 << 2),
    E_FM2_MENU_NO_NEW_DIRECTORY     = (1 << 3),
    E_FM2_MENU_NO_DELETE            = (1 << 4),
-   E_FM2_MENU_NO_RENAME            = (1 << 5)
+   E_FM2_MENU_NO_RENAME            = (1 << 5),
+   E_FM2_MENU_NO_CUT               = (1 << 6),
+   E_FM2_MENU_NO_COPY              = (1 << 7),
+   E_FM2_MENU_NO_PASTE             = (1 << 8)
 } E_Fm2_Menu_Flags;
 
 typedef struct _E_Fm2_Config      E_Fm2_Config;
@@ -54,19 +57,15 @@ struct _E_Fm2_Config
    /* display of icons */
    struct {
       struct {
-	 int           w, h;
-      } icon;
+	 int w, h;
+      } icon, list;
       struct {
-	 int           w, h;
-      } list;
-      struct {
-	 unsigned char w;
-	 unsigned char h;
+	 unsigned char w, h;
       } fixed;
       struct {
 	 unsigned char show;
       } extension;
-      const char      *key_hint;
+      const char *key_hint;
    } icon;
    /* how to sort files */
    struct {
@@ -80,15 +79,12 @@ struct _E_Fm2_Config
    } list;
    /* control how you can select files */
    struct {
-      unsigned char    single;
-      unsigned char    windows_modifiers;
+      unsigned char    single, windows_modifiers;
    } selection;
    /* the background - if any, and how to handle it */
    /* FIXME: not implemented yet */
    struct {
-      const char      *background;
-      const char      *frame;
-      const char      *icons;
+      const char      *background, *frame, *icons;
       unsigned char    fixed;
    } theme;
 };
