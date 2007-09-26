@@ -281,10 +281,18 @@ e_desk_show(E_Desk *desk)
      {
 	Evas_List *ll;
 	E_Shelf *es;
+	E_Config_Shelf *cf_es;
+	E_Zone *zone;
 	int show_shelf=0;
 
 	es = l->data;
+	if (!es) continue;
 	if (!es->cfg->desk_show_mode) continue;
+	cf_es = es->cfg;
+	if (!cf_es) continue;
+
+	zone = e_zone_current_get(e_container_current_get(e_manager_current_get()));
+	if (cf_es->zone != zone->num) continue;
 
 	for (ll = es->cfg->desk_list; ll; ll = ll->next)
 	  {
