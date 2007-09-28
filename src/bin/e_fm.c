@@ -113,14 +113,11 @@ struct _E_Fm2_Smart_Data
    unsigned char       drop_all : 1;
    unsigned char       drag : 1;
    unsigned char       selecting : 1;
-   unsigned char       copying : 1;
-   unsigned char       cutting : 1;
    struct 
      {
 	int ox, oy;
 	int x, y, w, h;
      } selrect;
-   Evas_List *file_queue;
 };
  
 struct _E_Fm2_Region
@@ -320,9 +317,6 @@ static void _e_fm2_file_delete_delete_cb(void *obj);
 static void _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog);
 static void _e_fm2_file_delete_no_cb(void *data, E_Dialog *dialog);
 static void _e_fm2_refresh_job_cb(void *data);
-static void _e_fm2_file_cut(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_fm2_file_copy(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_fm2_file_paste(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static void _e_fm2_live_file_add(Evas_Object *obj, const char *file, const char *file_rel, int after, E_Fm2_Finfo *finf);
 static void _e_fm2_live_file_del(Evas_Object *obj, const char *file);
@@ -1102,7 +1096,7 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 	  }
 	else
 	  {
-	     if ((ic->info.mime) && (ic->info.file))
+	     if ((ic->info.mime) && (ici->info.file))
 	       {
 		  const char *icon;
 		  
@@ -2808,7 +2802,9 @@ _e_fm2_file_add(Evas_Object *obj, const char *file, int unique, const char *file
 		    }
 	       }
 	     if (!l)
-	       sd->icons = evas_list_append(sd->icons, ic);
+	       {
+		  sd->icons = evas_list_append(sd->icons, ic);
+	       }
 	     sd->icons_place = evas_list_append(sd->icons_place, ic);
 	  }
 	sd->tmp.last_insert = NULL;
@@ -2841,116 +2837,6 @@ _e_fm2_file_del(Evas_Object *obj, const char *file)
 	     return;
 	  }
      }
-}
-
-static void 
-_e_fm2_file_cut(void *data, E_Menu *m, E_Menu_Item *mi) 
-{
-   E_Fm2_Smart_Data *sd;
-   Evas_List *sel = NULL, *l = NULL;
-   const char *realpath;
-
-   sd = data;
-   if (!sd) return;
-   sel = e_fm2_selected_list_get(sd->obj);
-   if (!sel) return;
-   realpath = e_fm2_real_path_get(sd->obj);
-   sd->cutting = 1;
-   for (l = sel; l; l = l->next) 
-     {
-	E_Fm2_Icon_Info *ici;
-	char buf[4096];
-
-	ici = l->data;
-	if (!ici) continue;
-	snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
-	printf("Cutting: %s\n", buf);
-	sd->file_queue = evas_list_append(sd->file_queue, strdup(buf));
-     }
-}
-
-static void 
-_e_fm2_file_copy(void *data, E_Menu *m, E_Menu_Item *mi) 
-{
-   E_Fm2_Smart_Data *sd;
-   Evas_List *sel = NULL, *l = NULL;
-   const char *realpath;
-
-   sd = data;
-   if (!sd) return;
-   sel = e_fm2_selected_list_get(sd->obj);
-   if (!sel) return;
-   realpath = e_fm2_real_path_get(sd->obj);
-   sd->copying = 1;
-   for (l = sel; l; l = l->next) 
-     {
-	E_Fm2_Icon_Info *ici;
-	char buf[4096];
-
-	ici = l->data;
-	if (!ici) continue;
-	snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
-	sd->file_queue = evas_list_append(sd->file_queue, strdup(buf));
-     }
-}
-
-static void 
-_e_fm2_file_paste(void *data, E_Menu *m, E_Menu_Item *mi) 
-{
-   E_Fm2_Smart_Data *sd;
-   const char *realpath;
-   
-   sd = data;
-   if (!sd) return;
-   realpath = e_fm2_real_path_get(sd->obj);
-   while (sd->file_queue) 
-     {
-	char *f;
-	const char *tmp;
-	char buf[4096];
-	int can_w, protect = 0;
-	struct stat st;
-
-	f = sd->file_queue->data;
-	if (!f) continue;
-	tmp = ecore_file_file_get(f);
-	snprintf(buf, sizeof(buf), "%s/%s", realpath, tmp);
-	protect = e_filereg_file_protected(f);
-	if (lstat(buf, &st) == 0)
-	  {
-	     if (st.st_uid == getuid())
-	       {
-		  if (st.st_mode & S_IWUSR) can_w = 1;
-	       }
-	     else if (st.st_gid == getgid())
-	       {
-		  if (st.st_mode & S_IWGRP) can_w = 1;
-	       }
-	     else
-	       {
-		  if (st.st_mode & S_IWOTH) can_w = 1;
-	       }
-	  }
-	if ((!can_w) || (protect)) 
-	  {
-	     sd->file_queue = evas_list_remove_list(sd->file_queue, sd->file_queue);
-	     continue;
-	  }
-	
-	if (sd->copying) 
-	  {
-	     _e_fm2_client_file_copy(sd->id, f, buf, "", 0, 
-				     -9999, -9999, sd->w, sd->h);
-	  }
-	else if (sd->cutting) 
-	  {
-	     _e_fm2_client_file_move(sd->id, f, buf, "", 0, 
-				     -9999, -9999, sd->w, sd->h);
-	  }
-	sd->file_queue = evas_list_remove_list(sd->file_queue, sd->file_queue);
-     }
-   if (sd->copying) sd->copying = 0;
-   if (sd->cutting) sd->cutting = 0;
 }
 
 static void
@@ -5001,7 +4887,9 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
 	       _e_fm2_dnd_drop_all_show(sd->obj);
 	  }
 	else
-	  _e_fm2_dnd_drop_all_show(sd->obj);
+	  {
+	     _e_fm2_dnd_drop_all_show(sd->obj);
+	  }
 	return;
      }
    /* outside fm view */
@@ -6496,7 +6384,9 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
    e_menu_category_set(mn, "e/fileman/action");
 
    if (sd->icon_menu.replace.func)
-     sd->icon_menu.replace.func(sd->icon_menu.replace.data, sd->obj, mn, NULL);
+     {
+	sd->icon_menu.replace.func(sd->icon_menu.replace.data, sd->obj, mn, NULL);
+     }
    else
      {
 	if (sd->icon_menu.start.func)
@@ -6573,22 +6463,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 		  e_menu_item_callback_set(mi, _e_fm2_new_directory, sd);
 	       }
 	  }
-
-	if ((!(sd->icon_menu.flags & E_FM2_MENU_NO_PASTE)) && 
-	    (evas_list_count(sd->file_queue) > 0))
-	  {
-	     mi = e_menu_item_new(mn);
-	     e_menu_item_separator_set(mi, 1);
-		  
-	     mi = e_menu_item_new(mn);
-	     e_menu_item_label_set(mi, _("Paste"));
-	     e_menu_item_icon_edje_set(mi,
-				       e_theme_edje_file_get("base/theme/fileman",
-							     "e/fileman/default/button/paste"),
-				       "e/fileman/default/button/paste");
-	     e_menu_item_callback_set(mi, _e_fm2_file_paste, sd);
-	  }
-	
+	     
 	if (sd->icon_menu.end.func)
 	  sd->icon_menu.end.func(sd->icon_menu.end.data, sd->obj, mn, NULL);
      }
@@ -6647,7 +6522,9 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
    e_menu_category_set(mn, "e/fileman/action");
 
    if (sd->icon_menu.replace.func)
-     sd->icon_menu.replace.func(sd->icon_menu.replace.data, sd->obj, mn, NULL);
+     {
+	sd->icon_menu.replace.func(sd->icon_menu.replace.data, sd->obj, mn, NULL);
+     }
    else
      {
 	if (sd->icon_menu.start.func)
@@ -6724,42 +6601,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 		  e_menu_item_callback_set(mi, _e_fm2_new_directory, sd);
 	       }
 	  }
-	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_CUT)) 
-	  {
-	     mi = e_menu_item_new(mn);
-	     e_menu_item_separator_set(mi, 1);
-		  
-	     mi = e_menu_item_new(mn);
-	     e_menu_item_label_set(mi, _("Cut"));
-	     e_menu_item_icon_edje_set(mi,
-				       e_theme_edje_file_get("base/theme/fileman",
-							     "e/fileman/default/button/cut"),
-				       "e/fileman/default/button/cut");
-	     e_menu_item_callback_set(mi, _e_fm2_file_cut, sd);
-	  }
-	if (!(sd->icon_menu.flags & E_FM2_MENU_NO_COPY)) 
-	  {
-	     mi = e_menu_item_new(mn);
-	     e_menu_item_label_set(mi, _("Copy"));
-	     e_menu_item_icon_edje_set(mi,
-				       e_theme_edje_file_get("base/theme/fileman",
-							     "e/fileman/default/button/copy"),
-				       "e/fileman/default/button/copy");
-	     e_menu_item_callback_set(mi, _e_fm2_file_copy, sd);
-	  }
-	
-	if ((!(sd->icon_menu.flags & E_FM2_MENU_NO_PASTE)) && 
-	    (evas_list_count(sd->file_queue) > 0))
-	  {
-	     mi = e_menu_item_new(mn);
-	     e_menu_item_label_set(mi, _("Paste"));
-	     e_menu_item_icon_edje_set(mi,
-				       e_theme_edje_file_get("base/theme/fileman",
-							     "e/fileman/default/button/paste"),
-				       "e/fileman/default/button/paste");
-	     e_menu_item_callback_set(mi, _e_fm2_file_paste, sd);
-	  }
-	
+   
 	can_w = 0;
 	can_w2 = 1;
 	if (ic->sd->order_file)
