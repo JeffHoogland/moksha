@@ -1096,7 +1096,7 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 	  }
 	else
 	  {
-	     if ((ic->info.mime) && (ici->info.file))
+	     if ((ic->info.mime) && (ic->info.file))
 	       {
 		  const char *icon;
 		  
