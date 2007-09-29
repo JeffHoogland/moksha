@@ -714,7 +714,8 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
 
 		  evas_object_resize(o, 1000, 1000);
 		  edje_object_calc_force(o);
-		  edje_object_part_geometry_get(o, "client", &x, &y, &w, &h);
+		  edje_object_part_geometry_get(o, "e.swallow.client", 
+						&x, &y, &w, &h);
 		  extents->l = x;
 		  extents->r = 1000 - (x + w);
 		  extents->t = y;
