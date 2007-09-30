@@ -24,6 +24,7 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
    E_Resist_Rect *r;
    E_Border_List *bl;
    E_Border *bd;
+   E_Desk *desk;
    
    if (!e_config->use_resist)
      {
@@ -85,15 +86,36 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
      }
    e_container_border_list_free(bl);
 
+   desk = e_desk_current_get(e_zone_current_get(con));
    for (l = e_shelf_list(); l; l = l->next)
      {
 	E_Shelf *es;
+	Evas_List *ll;
 
 	es = l->data;
 	if (es->zone->container == con)
 	  {
-	     OBSTACLE(es->x + es->zone->x, es->y + es->zone->y, es->w, es->h,
-		      e_config->gadget_resist);
+	     if (es->cfg->desk_show_mode)
+	       {
+		  for (ll = es->cfg->desk_list; ll; ll = ll->next)
+		    {
+		       E_Config_Shelf_Desk *sd;
+
+		       sd = ll->data;
+		       if (!sd) continue;
+		       if ((sd->x == desk->x) && (sd->y == desk->y))
+			 {
+			    OBSTACLE(es->x + es->zone->x, es->y + es->zone->y, es->w, es->h,
+				     e_config->gadget_resist);
+			    break;
+			 }
+		    }
+	       }
+	     else
+	       {
+		  OBSTACLE(es->x + es->zone->x, es->y + es->zone->y, es->w, es->h,
+			   e_config->gadget_resist);
+	       }
 	  }
      }
    if (rects)
