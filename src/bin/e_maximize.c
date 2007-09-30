@@ -133,12 +133,32 @@ e_maximize_border_shelf_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2, E
    for (l = e_shelf_list(); l; l = l->next)
      {
 	E_Shelf *es;
+	Evas_List *ll;
 
 	es = l->data;
 	if (es->cfg->overlap) continue;
 	if (es->zone != bd->zone) continue;
-	OBSTACLE(es->x + es->zone->x, es->y + es->zone->y, 
-		 es->x + es->zone->x + es->w, es->y + es->zone->y + es->h);
+	if (es->cfg->desk_show_mode)
+	  {
+	     for (ll = es->cfg->desk_list; ll; ll = ll->next)
+	       {
+		  E_Config_Shelf_Desk *sd;
+
+		  sd = ll->data;
+		  if (!sd) continue;
+		  if ((sd->x == bd->desk->x) && (sd->y == bd->desk->y))
+		    {
+		       OBSTACLE(es->x + es->zone->x, es->y + es->zone->y, 
+				es->x + es->zone->x + es->w, es->y + es->zone->y + es->h);
+		       break;
+		    }
+	       }
+	  }
+	else
+	  {
+	     OBSTACLE(es->x + es->zone->x, es->y + es->zone->y, 
+		      es->x + es->zone->x + es->w, es->y + es->zone->y + es->h);
+	  }
      }
    if (rects)
      {
