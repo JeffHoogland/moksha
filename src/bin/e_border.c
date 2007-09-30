@@ -4319,7 +4319,6 @@ _e_border_cb_efreet_desktop_list_change(void *data, int ev_type, void *ev)
 {
    Evas_List *l;
    
-   printf("EFREET DESKTOP LIST CHANGE\n");
    /* mark all borders for desktop/icon updates */
    for (l = borders; l; l = l->next)
      {
@@ -4344,7 +4343,6 @@ _e_border_cb_efreet_desktop_change(void *data, int ev_type, void *ev)
    Evas_List *l;
 
    event = ev;
-   printf("EFREET DESKTOP DESKTOP CHANGE\n");
    e_init_status_set(_("Desktop file scan"));
    switch (event->change)
      {
