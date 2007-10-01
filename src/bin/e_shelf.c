@@ -1133,9 +1133,24 @@ static void
 _e_shelf_cb_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Shelf *es;
+   E_Config_Shelf *cfg;
   
    es = data;
 
+   if (e_config->cnfmdlg_disabled) 
+     {
+	cfg = es->cfg;
+	if (e_object_is_del(E_OBJECT(es))) return;
+	e_object_del(E_OBJECT(es));
+	e_config->shelves = evas_list_remove(e_config->shelves, cfg);
+	if (cfg->name) evas_stringshare_del(cfg->name);
+	if (cfg->style) evas_stringshare_del(cfg->style);
+	E_FREE(cfg);
+	
+	e_config_save_queue();
+	return;
+     }
+   
    e_object_ref(E_OBJECT(es));
    e_confirm_dialog_show(_("Are you sure you want to delete this shelf?"), "enlightenment/e",
 			 _("You requested to delete this shelf.<br>"
