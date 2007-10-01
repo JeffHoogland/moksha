@@ -64,7 +64,6 @@ e_path_default_path_append(E_Path *ep, const char *path)
 EAPI void
 e_path_user_path_set(E_Path *ep, Evas_List **user_dir_list)
 {
-
    E_OBJECT_CHECK(ep);
    E_OBJECT_TYPE_CHECK(ep, E_PATH_TYPE);
    
