@@ -168,7 +168,6 @@ PKG_CHECK_MODULES(E, [
   evas
   ecore
   ecore-evas
-  ecore-config
   ecore-file
   ecore-ipc
   ecore-con
