@@ -14,7 +14,7 @@ typedef struct _E_Path_Dir E_Path_Dir;
 
 struct _E_Path_Dir
 {
-   const char * dir;
+   const char *dir;
 };
 
 struct _E_Path
