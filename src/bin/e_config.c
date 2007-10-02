@@ -1852,7 +1852,7 @@ e_config_domain_save(char *domain, E_Config_DD *edd, void *data)
    Eet_File *ef;
    char buf[4096], buf2[4096];
    const char *homedir;
-   int ok = 0;
+   int ok = 0, ret;
 
    if (_e_config_save_block) return 0;
    /* FIXME: check for other sessions fo E running */
@@ -1869,8 +1869,8 @@ e_config_domain_save(char *domain, E_Config_DD *edd, void *data)
 	ok = eet_data_write(ef, edd, "config", data, 1);
 	if (_e_config_eet_close_handle(ef, buf2))
 	  {
-	     rename(buf2, buf);
-	     /* FIXME: get rename err */
+	     ret = rename(buf2, buf);
+	     if (ret < 0) perror("rename");
 	  }
 	ecore_file_unlink(buf2);
      }
