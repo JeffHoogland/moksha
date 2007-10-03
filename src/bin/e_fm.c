@@ -189,6 +189,7 @@ struct _E_Fm2_Mount
 {
    const char   *udi;
    const char   *mount_point;
+   int           instances;
    
    Ecore_Timer  *timeout;
    void        (*mount_ok) (void *data);
@@ -213,6 +214,7 @@ static E_Volume *e_volume_find(const char *udi);
 static E_Storage *e_storage_find(const char *udi);
 
 static const char *_e_fm2_dev_path_map(const char *dev, const char *path);
+static char *_e_fm2_vol_mountpoint_resolve(E_Volume *v);
 static void _e_fm2_file_add(Evas_Object *obj, const char *file, int unique, const char *file_rel, int after, E_Fm2_Finfo *finf);
 static void _e_fm2_file_del(Evas_Object *obj, const char *file);
 static void _e_fm2_queue_process(Evas_Object *obj); 
@@ -468,9 +470,10 @@ EAPI void
 e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
 {
    E_Fm2_Smart_Data *sd;
+   Evas_List *l;
 
    sd = evas_object_smart_data_get(obj);
-   if (!sd) return; // safety
+   if (!sd || !path) return; // safety
    if (!evas_object_type_get(obj)) return; // safety
    if (strcmp(evas_object_type_get(obj), "e_fm")) return; // safety
 
@@ -510,12 +513,6 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
    
    if (sd->dev) evas_stringshare_del(sd->dev);
    if (sd->path) evas_stringshare_del(sd->path);
-   if (sd->mount)
-     {
-	printf("UM2\n");
-	_e_fm2_unmount(sd->mount);
-	sd->mount = NULL;
-     }
    if (sd->realpath)
      {
 	evas_stringshare_del(sd->realpath);
@@ -531,8 +528,30 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
    _e_fm2_regions_free(obj);
    _e_fm2_icons_free(obj);
    edje_object_part_text_set(sd->overlay, "e.text.busy_label", "");
+
+   if (!sd->mount && !sd->dev)
+     {
+	for (l = _e_fm2_mounts; l; l = l->next)
+	  {
+	     E_Fm2_Mount *m;
+	     m = l->data;
+	     if (!strncmp(m->mount_point, sd->realpath, strlen(m->mount_point)))
+	       {
+		  sd->mount = m;
+		  m->instances++;
+		  break;
+	       }
+	  }
+     }
+   if (!l && sd->mount && strncmp(sd->mount->mount_point, sd->realpath, 
+				  strlen(sd->mount->mount_point)))
+     {
+	printf("UM2\n");
+	_e_fm2_unmount(sd->mount);
+	sd->mount = NULL;
+     }
    
-   if ((sd->dev) && (!strncmp(sd->dev, "removable:", 10)))
+   if ((!sd->mount) && (sd->dev) && (!strncmp(sd->dev, "removable:", 10)))
      {
 	E_Volume *v;
 	
@@ -1371,21 +1390,21 @@ _e_fm2_mount_flush(void)
    E_Fm2_Mount *m;
    Evas_List *l, *dels = NULL;
 
-   if (_e_fm2_mount_stack > 1) return;
    for (l = _e_fm2_mounts; l; l = l->next)
      {
 	m = l->data;
-	if (m->delete_me) dels = evas_list_append(dels, m);
-     }
-   while (dels)
-     {
-	m = dels->data;
-	_e_fm2_mounts = evas_list_remove(_e_fm2_mounts, m);
-	dels = evas_list_remove_list(dels, dels);
-	evas_stringshare_del(m->udi);
-	evas_stringshare_del(m->mount_point);
-	if (m->timeout) ecore_timer_del(m->timeout);
-	free(m);
+	if (m->instances == 0) 
+	  {
+	     _e_fm2_mounts = evas_list_remove(_e_fm2_mounts, m);
+	     evas_stringshare_del(m->udi);
+	     evas_stringshare_del(m->mount_point);
+	     if (m->timeout) 
+	       {
+		  ecore_timer_del(m->timeout);
+		  m->timeout = NULL;
+	       }
+	     free(m);
+	  }
      }
 }
 
@@ -1405,7 +1424,7 @@ _e_fm2_mount_ok(const char *udi)
    for (l = _e_fm2_mounts; l; l = l->next)
      {
 	m = l->data;
-	if ((!m->delete_me) && (!strcmp(m->udi, udi)) && (m->mount_ok))
+	if ((!strcmp(m->udi, udi)) && (m->mount_ok))
 	  {
 	     m->mounted = 1;
 	     m->mount_ok(m->data);
@@ -1416,7 +1435,7 @@ _e_fm2_mount_ok(const char *udi)
 	       }
 	  }
      }
-   _e_fm2_mount_flush();
+   //_e_fm2_mount_flush();
    _e_fm2_mount_stack--;
 }
 
@@ -1512,18 +1531,19 @@ _e_fm2_mount(E_Volume *v, void (*mount_ok) (void *data), void (*mount_fail) (voi
    int exists = 0;
    int mounted = 0;
 
-   m = calloc(1, sizeof(E_Fm2_Mount));
-   if (!m) return NULL;
    for (l = _e_fm2_mounts; l; l = l->next)
      {
 	m2 = l->data;
 	if (!strcmp(v->udi, m2->udi))
 	  {
-	     exists = 1;
-	     mounted = m2->mounted;
+	     m = m2;
+	     m->instances++;
 	     break;
 	  }
      }
+
+   m = calloc(1, sizeof(E_Fm2_Mount));
+   if (!m) return NULL;
    m->udi          = evas_stringshare_add(v->udi);
    m->mount_point  = evas_stringshare_add(v->mount_point);
    m->mount_ok     = mount_ok;
@@ -1531,13 +1551,14 @@ _e_fm2_mount(E_Volume *v, void (*mount_ok) (void *data), void (*mount_fail) (voi
    m->unmount_ok   = unmount_ok;
    m->unmount_fail = unmount_fail;
    m->data         = data;
-   m->mounted      = mounted;
-   if (!exists)
+   m->mounted      = v->mounted;
+   m->instances++;
+   if (!v->mounted)
      {
 	m->timeout = ecore_timer_add(10.0, _e_fm2_cb_mount_timeout, m);
 	_e_fm2_client_mount(m->udi, m->mount_point);
+	_e_fm2_mounts = evas_list_prepend(_e_fm2_mounts, m);
      }
-   _e_fm2_mounts = evas_list_prepend(_e_fm2_mounts, m);
    return m;
 }
 
@@ -1549,12 +1570,13 @@ _e_fm2_unmount(E_Fm2_Mount *m)
    int exists = 0;
 
    _e_fm2_mount_stack++;
+   m->instances--;
    for (l = _e_fm2_mounts; l; l = l->next)
      {
 	m2 = l->data;
-	if (!strcmp(m->udi, m2->udi)) exists++;
+	if (!strcmp(m->udi, m2->udi)) break;
      }
-   if (exists == 1)
+   if (l && !m->instances)
      {
 	printf("_e_fm2_unmount UM\n");
 	_e_fm2_client_unmount(m->udi);
@@ -1944,15 +1966,20 @@ _e_fm2_client_mount(const char *udi, const char *mountpoint)
 {
    E_Fm2_Client *cl;
    char *d;
+   const char *mp;
    int l, l1, l2;
    
+   if (!strncmp(mountpoint, "/media/", 7))
+     mp = mountpoint + 7;
+   else
+     mp = mountpoint;   
    l1 = strlen(udi);
-   l2 = strlen(mountpoint);
+   l2 = strlen(mp);
    l = l1 + 1 + l2 + 1;
    d = alloca(l);
    strcpy(d, udi);
-   strcpy(d + l1 + 1, mountpoint);
-   printf("SEND %s %s\n", udi, mountpoint);
+   strcpy(d + l1 + 1, mp);
+   printf("SEND %s %s\n", udi, mp);   
    cl = _e_fm2_client_get();
    if (!cl)
      {
@@ -2525,21 +2552,21 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 		  s = e_storage_find(v->parent);
 		  if (!v->mount_point)
 		    {
+		       char buf[512];
 		       if (v->uuid)
-			 v->mount_point = strdup(v->uuid);
+			 snprintf(buf, sizeof(buf), "/media/%s", strdup(v->uuid));
 		       else if (v->label)
-			 v->mount_point = strdup(v->label);
+			 snprintf(buf, sizeof(buf), "/media/%s", strdup(v->label));
 		       else if ((v->storage) && (v->storage->serial))
-			 v->mount_point = strdup(v->storage->serial);
+			 snprintf(buf, sizeof(buf), "/media/%s", strdup(v->storage->serial));
 		       else
 			 {
-			    char buf[256];
 			    static int mount_count = 0;
 			    
 			    snprintf(buf, sizeof(buf), "unknown-%i\n", mount_count);
 			    mount_count++;
-			    v->mount_point = strdup(buf);
 			 }
+		       v->mount_point = strdup(buf);
 		    }
 		  if (s)
 		    {
@@ -2587,8 +2614,11 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	       {
 		  v->mounted = 1;
 		  if (v->mount_point) free(v->mount_point);
-		  v->mount_point = strdup(mountpoint);
-		  printf("MOUNT %s %s\n", udi, mountpoint);
+		  if (mountpoint[0] == 0)
+		    v->mount_point = _e_fm2_vol_mountpoint_resolve(v);
+		  else 
+		    v->mount_point = strdup(mountpoint);
+		  printf("MOUNT %s %s\n", v->udi, v->mount_point);
 	       }
 	     _e_fm2_mount_ok(udi);
 	  }
@@ -2605,7 +2635,12 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 	     if (v)
 	       {
 		  v->mounted = 0;
-		  printf("UNMOUNT %s %s\n", udi, mountpoint);
+		  if (v->mount_point) free(v->mount_point);
+		  if (mountpoint[0] == 0)
+		    v->mount_point = _e_fm2_vol_mountpoint_resolve(v);
+		  else 
+		    v->mount_point = strdup(mountpoint);
+		  printf("UNMOUNT %s %s\n", v->udi, v->mount_point);
 	       }
 	     _e_fm2_unmount_ok(udi);
 	  }
@@ -2693,9 +2728,9 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
       E_Volume *v;
       
       v = e_volume_find(dev + strlen("removable:"));
-      if (v)
+      if (v && v->mount_point)
 	{
-	   snprintf(buf, sizeof(buf), "/media/%s", v->mount_point);
+	   snprintf(buf, sizeof(buf), "%s%s", v->mount_point, path);
 	}
    }
    else if (CMP("dvd") || CMP("dvd-*"))  {
@@ -2738,6 +2773,27 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
 	len--;
      }
    return evas_stringshare_add(buf);
+}
+ 
+static char *
+_e_fm2_vol_mountpoint_resolve(E_Volume *v)
+{
+   if (!v) return;
+   char buf[512];
+   if (v->uuid)
+     snprintf(buf, sizeof(buf), "/media/%s", strdup(v->uuid));
+   else if (v->label)
+     snprintf(buf, sizeof(buf), "/media/%s", strdup(v->label));
+   else if ((v->storage) && (v->storage->serial))
+     snprintf(buf, sizeof(buf), "/media/%s", strdup(v->storage->serial));
+   else
+     {
+	static int mount_count = 0;
+
+	snprintf(buf, sizeof(buf), "/media/unknown-%i", mount_count);
+	mount_count++;
+     }
+   return strdup(buf);
 }
 
 static void
@@ -5403,7 +5459,7 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	     snprintf(buf, sizeof(buf), "%s/%s", ic->sd->path, ic->info.file);
 	     e_fm2_path_set(ic->sd->obj, dev, buf);
 	     E_FREE(dev);
-	  }
+	  }	
 	else
 	  evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
 	/* if its in file selector mode then signal that a selection has

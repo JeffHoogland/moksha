@@ -964,16 +964,14 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
    Evas_Coord mw, mh;
    Evas_Object *o, *ocon, *of, *oi, *mt;
    Evas *evas;
-   Evas_List *l;
-   Evas_List *apps;
+   Evas_List *l = NULL, *apps = NULL, *mlist = NULL;
+   Evas_Hash *mimes = NULL;
    E_Fwin_Apps_Dialog *fad;
    E_Fm2_Config fmc;
    E_Fm2_Icon_Info *ici;
    char buf[PATH_MAX];
    const char *f;
    int need_dia = 0;
-   Evas_Hash *mimes = NULL;
-   Evas_List *mlist = NULL;
 
    if (fwin->fad)
      {
@@ -985,30 +983,53 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 	for (l = files; l; l = l->next)
 	  {
 	     ici = l->data;
-	     printf("O: %s -- %i\n", ici->link, ici->removable);
 	     if ((ici->link) && (ici->mount))
 	       {
-		  if (fwin->win)
-		    fwin2 = _e_fwin_new(fwin->win->container, ici->link, "/");
-		  else if (fwin->zone)
-		    fwin2 = _e_fwin_new(fwin->zone->container, ici->link, "/");
+		  if (!fileman_config->view.open_dirs_in_place || fwin->zone) 
+		    {
+		       if (fwin->win)
+			 fwin2 = _e_fwin_new(fwin->win->container, ici->link, "/");
+		       else if (fwin->zone)
+			 fwin2 = _e_fwin_new(fwin->zone->container, ici->link, "/");
+		    }
+		  else 
+		    {
+		       e_fm2_path_set(fwin->fm_obj, ici->link, "/");
+		       _e_fwin_window_title_set(fwin);
+		    }
 	       }
 	     else if ((ici->link) && (ici->removable))
 	       {
 		  snprintf(buf, sizeof(buf), "removable:%s", ici->link);
-		  if (fwin->win)
-		    fwin2 = _e_fwin_new(fwin->win->container, buf, "/");
-		  else if (fwin->zone)
-		    fwin2 = _e_fwin_new(fwin->zone->container, buf, "/");
+		  if (!fileman_config->view.open_dirs_in_place || fwin->zone) 
+		    {
+		       if (fwin->win)
+			 fwin2 = _e_fwin_new(fwin->win->container, buf, "/");
+		       else if (fwin->zone)
+			 fwin2 = _e_fwin_new(fwin->zone->container, buf, "/");
+		    }
+		  else 
+		    {
+		       e_fm2_path_set(fwin->fm_obj, buf, "/");
+		       _e_fwin_window_title_set(fwin);
+		    }
 	       }
 	     else if (ici->real_link)
 	       {
 		  if (S_ISDIR(ici->statinfo.st_mode))
 		    {
-		       if (fwin->win)
-			 fwin2 = _e_fwin_new(fwin->win->container, NULL, ici->real_link);
-		       else if (fwin->zone)
-			 fwin2 = _e_fwin_new(fwin->zone->container, NULL, ici->real_link);
+		       if (!fileman_config->view.open_dirs_in_place || fwin->zone) 
+			 {
+			    if (fwin->win)
+			      fwin2 = _e_fwin_new(fwin->win->container, NULL, ici->real_link);
+			    else if (fwin->zone)
+			      fwin2 = _e_fwin_new(fwin->zone->container, NULL, ici->real_link);
+			 }
+		       else 
+			 {
+			    e_fm2_path_set(fwin->fm_obj, NULL, ici->real_link);
+			    _e_fwin_window_title_set(fwin);
+			 }
 		    }
 		  else
 		    need_dia = 1;
@@ -1019,10 +1040,18 @@ _e_fwin_file_open_dialog(E_Fwin *fwin, Evas_List *files, int always)
 			   e_fm2_real_path_get(fwin->fm_obj), ici->file);
 		  if (S_ISDIR(ici->statinfo.st_mode))
 		    {
-		       if (fwin->win)
-			 fwin2 = _e_fwin_new(fwin->win->container, NULL, buf);
-		       else
-			 fwin2 = _e_fwin_new(fwin->zone->container, NULL, buf);
+		       if (!fileman_config->view.open_dirs_in_place || fwin->zone) 
+			 {
+			    if (fwin->win)
+			      fwin2 = _e_fwin_new(fwin->win->container, NULL, buf);
+			    else
+			      fwin2 = _e_fwin_new(fwin->zone->container, NULL, buf);
+			 }
+		       else 
+			 {
+			    e_fm2_path_set(fwin->fm_obj, NULL, buf);
+			    _e_fwin_window_title_set(fwin);
+			 }
 		    }
 		  else
 		    need_dia = 1;
