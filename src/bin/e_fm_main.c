@@ -142,10 +142,8 @@ static void _e_dbus_cb_vol_is(void *user_data, void *reply_data, DBusError *erro
 static void _e_dbus_cb_dev_add(void *data, DBusMessage *msg);
 static void _e_dbus_cb_dev_del(void *data, DBusMessage *msg);
 static void _e_dbus_cb_cap_add(void *data, DBusMessage *msg);
-static void _e_dbus_cb_prop_modified(void *data, DBusMessage *msg);
 static void _e_dbus_cb_store_prop(void *data, void *reply_data, DBusError *error);
 static void _e_dbus_cb_vol_prop(void *data, void *reply_data, DBusError *error);
-static void _e_dbus_cb_vol_prop_mount_modified(void *data, void *reply_data, DBusError *error);
 static void _e_dbus_cb_vol_mounted(void *user_data, void *method_return, DBusError *error);
 static void _e_dbus_cb_vol_unmounted(void *user_data, void *method_return, DBusError *error);
 
@@ -431,54 +429,6 @@ _e_dbus_cb_cap_add(void *data, DBusMessage *msg)
 }
 
 static void
-_e_dbus_cb_prop_modified(void *data, DBusMessage *msg)
-{
-   E_Volume *v;
-   DBusMessageIter iter, sub, subsub;
-   struct {
-	const char *name;
-	int added;
-	int removed;
-   } prop;
-   int num_changes = 0, i;
-   
-   if (!(v = data)) return;
-   
-   if (dbus_message_get_error_name(msg)) 
-     {
-	printf("DBUS ERROR: %s\n", dbus_message_get_error_name(msg)); 
-	return; 
-     }
-   if (!dbus_message_iter_init(msg, &iter)) return;
-
-   if (dbus_message_iter_get_arg_type(&iter) != DBUS_TYPE_INT32) return;
-   dbus_message_iter_get_basic(&iter, &num_changes);
-   if (num_changes == 0) return;
-
-   dbus_message_iter_next(&iter);
-   if (dbus_message_iter_get_arg_type(&iter) != DBUS_TYPE_ARRAY) return;
-   dbus_message_iter_recurse(&iter, &sub);
-
-   for (i = 0; i < num_changes; i++, dbus_message_iter_next(&sub))
-     {
-	dbus_message_iter_recurse(&sub, &subsub);
-
-	if (dbus_message_iter_get_arg_type(&subsub) != DBUS_TYPE_STRING) break;
-	dbus_message_iter_get_basic(&subsub, &(prop.name));
-	if (!strcmp(prop.name, "volume.mount_point"))
-	  {
-	     e_hal_device_get_all_properties(_e_dbus_conn, v->udi,
-					     _e_dbus_cb_vol_prop_mount_modified,
-					     v);
-	     return;
-	  }
-
-	dbus_message_iter_next(&subsub);
-	dbus_message_iter_next(&subsub);
-     }
-}
-
-static void
 _e_dbus_cb_store_prop(void *data, void *reply_data, DBusError *error)
 {
    E_Storage *s = data;
@@ -537,7 +487,7 @@ _e_dbus_cb_store_prop(void *data, void *reply_data, DBusError *error)
    return;
    
    error: 
-   printf("ERR on %s \n    name : %s\n    msg : %s\n", s->udi, error->name, error->message);
+   printf("ERR %s\n", s->udi);
    e_storage_del(s->udi);
 }
 
@@ -680,52 +630,6 @@ _e_dbus_cb_vol_prop(void *data, void *reply_data, DBusError *error)
    return;
 }
 
-static void
-_e_dbus_cb_vol_prop_mount_modified(void *data, void *reply_data, DBusError *error)
-{
-   E_Volume *v = data;
-   E_Storage *s = NULL;
-   E_Hal_Device_Get_All_Properties_Return *ret = reply_data;
-   int err = 0;
-   char *str = NULL;
-
-   if (!ret) return;
-   if (dbus_error_is_set(error))
-     {
-	dbus_error_free(error);
-	return;
-     }
-   
-   v->mounted = e_hal_property_bool_get(ret, "volume.is_mounted", &err);
-   if (err) printf("HAL Error : can't get volume.is_mounted property");
-   
-   if (v->mount_point) free(v->mount_point);
-   v->mount_point = e_hal_property_string_get(ret, "volume.mount_point", &err);
-   if (err) printf("HAL Error : can't get volume.is_mount_point property");
-   
-   printf("**VOL udi: %s mount_point: %s mounted: %d\n", v->udi, v->mount_point, v->mounted);
-     {
-	char *buf;
-	int size;
-	
-	size = strlen(v->udi) + 1 + strlen(v->mount_point) + 1;
-	buf = alloca(size);
-	strcpy(buf, v->udi);
-	strcpy(buf + strlen(buf) + 1, v->mount_point);
-	if (v->mounted)
-	ecore_ipc_server_send(_e_ipc_server,
-			      6/*E_IPC_DOMAIN_FM*/,
-			      12/*mount done*/,
-			      0, 0, 0, buf, size);
-	else
-	ecore_ipc_server_send(_e_ipc_server,
-			      6/*E_IPC_DOMAIN_FM*/,
-			      13/*unmount done*/,
-			      0, 0, 0, buf, size);
-     }
-   return;
-}
-
 static Evas_List *_e_vols = NULL;
 
 EAPI E_Volume *
@@ -742,10 +646,6 @@ e_volume_add(const char *udi)
    _e_vols = evas_list_append(_e_vols, v);
    e_hal_device_get_all_properties(_e_dbus_conn, v->udi,
 				   _e_dbus_cb_vol_prop, v);
-   e_dbus_signal_handler_add(_e_dbus_conn, "org.freedesktop.Hal",
-			     udi,
-			     "org.freedesktop.Hal.Device",
-			     "PropertyModified", _e_dbus_cb_prop_modified, v);
    return v;
 }
 
@@ -793,7 +693,6 @@ _e_dbus_cb_vol_mounted(void *user_data, void *method_return, DBusError *error)
    
    v->mounted = 1;
    printf("MOUNT: %s from %s\n", v->udi, v->mount_point);
-   printf("DBus Error name: %s \nmsg : %s\n", error->name, error->message);
    size = strlen(v->udi) + 1 + strlen(v->mount_point) + 1;
    buf = alloca(size);
    strcpy(buf, v->udi);
@@ -843,7 +742,7 @@ e_volume_mount(E_Volume *v)
 //   ecore_list_append(opt, "user");
 //   ecore_list_append(opt, "utf8");
    e_hal_device_volume_mount(_e_dbus_conn, v->udi, v->mount_point,
-			     v->fstype, opt, NULL, v);
+			     v->fstype, opt, _e_dbus_cb_vol_mounted, v);
 //   ecore_list_destroy(opt);
 }
 
@@ -1001,11 +900,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		    {
 		       if ((!strcmp(dp->d_name, ".")) || (!strcmp(dp->d_name, "..")))
 			 continue;
-		       if (!strcmp(dp->d_name, ".order")) 
-			 {
-			    dot_order = 1;
-			    continue;
-			 }
+		       if (!strcmp(dp->d_name, ".order")) dot_order = 1;
 		       files = evas_list_append(files, strdup(dp->d_name));
 		    }
 		  closedir(dir);
