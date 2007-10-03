@@ -101,7 +101,7 @@ e_container_new(E_Manager *man)
    if (getenv("REDRAW_DEBUG"))
      ecore_evas_avoid_damage_set(con->bg_ecore_evas, !atoi(getenv("REDRAW_DEBUG")));
    else
-     ecore_evas_avoid_damage_set(con->bg_ecore_evas, 1);
+     ecore_evas_avoid_damage_set(con->bg_ecore_evas, ECORE_EVAS_AVOID_DAMAGE_BUILT_IN);
    ecore_x_window_lower(con->bg_win);
 
    o = evas_object_rectangle_add(con->bg_evas);

@@ -477,6 +477,11 @@ struct _E_Border
 
    Efreet_Desktop *desktop;
    E_Pointer *pointer;
+   
+   unsigned char post_move   : 1;
+   unsigned char post_resize : 1;
+   unsigned char post_show : 1;
+   Ecore_Idle_Enterer *post_job;
 };
 
 struct _E_Border_Pending_Move_Resize 
