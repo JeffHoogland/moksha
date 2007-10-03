@@ -85,7 +85,7 @@ e_canvas_recache(void)
 	evas_font_cache_set(e, e_config->font_cache * 1024);
      }
    edje_file_cache_set(e_config->edje_cache);
-   edje_collection_cache_set(e_config->edje_cache);
+   edje_collection_cache_set(e_config->edje_collection_cache);
    if (_e_canvas_cache_flush_timer)
      {
 	ecore_timer_del(_e_canvas_cache_flush_timer);
