@@ -241,7 +241,8 @@ _e_pointer_canvas_add(E_Pointer *p)
    p->pointer_object = o;
    /* Create the hotspot object */
    o = evas_object_rectangle_add(p->evas);
-   p->hot_object = o;
+   evas_object_color_set(o, 0, 0, 0, 0);
+   p->hot_object = o;   
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOVE,
 				  _e_pointer_cb_move, p);
    /* init edje */
@@ -320,6 +321,7 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
 
 	if (!p->evas) _e_pointer_canvas_add(p);
 	o = p->pointer_object;
+	printf("## P SET EDJE\n");
 	if (p->color)
 	  {
 	     snprintf(cursor, sizeof(cursor), "e/pointer/enlightenment/%s/color", type);
@@ -334,6 +336,7 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
 	  }
 	edje_object_part_swallow(p->pointer_object, "e.swallow.hotspot", p->hot_object);
 	p->hot.update = 1;
+	printf("## P SET EDJE - DONE OK\n");
 	return 1;
      }
    fallback:
@@ -424,5 +427,6 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
 	  }
 	if (cursor) ecore_x_cursor_free(cursor);
      }
+   printf("## P SET EDJE - DONE FALLBACK\n");
    return 1;
 }
