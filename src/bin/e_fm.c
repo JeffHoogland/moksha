@@ -386,6 +386,7 @@ e_fm2_init(void)
    const char *homedir;
    char  path[PATH_MAX];
 
+   ecore_job_init();
    _e_storage_volume_edd_init();
    homedir = e_user_homedir_get();
    snprintf(path, sizeof(path), "%s/.e/e/fileman/metadata", homedir);
@@ -425,6 +426,7 @@ e_fm2_shutdown(void)
    e_fm2_custom_file_shutdown();
    _e_storage_volume_edd_shutdown();
    efreet_mime_shutdown();
+   ecore_job_shutdown();
    return 1;
 }
 
